@@ -1,0 +1,246 @@
+
+var Scope		= null
+var RequestNum	= {};
+var DigestUpdate = 0;
+var ServerTypes = {};
+var FirstTime = true;
+
+function ControllerServers( $scope, $element, $rootScope, $location )
+{
+	Scope = $rootScope;
+	Scope.ShowTab = 'internet';
+
+	if ( !Scope.CurrentGamemode )
+		Scope.CurrentGamemode = null;
+
+	$scope.Refresh = function()
+	{
+		if ( !Scope.ServerType ) return;
+
+		if ( !RequestNum[ Scope.ServerType ] ) RequestNum[ Scope.ServerType ] = 1; else RequestNum[ Scope.ServerType ]++;
+
+		//
+		// Clear out all of the servers
+		//
+		var gm = ServerTypes[Scope.ServerType].gamemodes;
+		for ( k in gm )
+		{
+			gm[k].servers.length	= 0
+			gm[k].num_servers		= 0
+			gm[k].num_players		= 0
+		}
+		
+		if ( !IN_ENGINE )
+			TestUpdateServers( Scope.ServerType, RequestNum[ Scope.ServerType ] );
+
+		//
+		// Get the server list from the engine
+		//
+		lua.Run( "GetServers( '"+Scope.ServerType+"', '"+RequestNum[Scope.ServerType ]+"' )" );
+	}
+
+	$scope.SelectServer = function( server )
+	{
+		Scope.CurrentGamemode.Selected = server;
+
+		if ( !IN_ENGINE )
+			SetPlayerList( server.address, { "1": { "time": 3037.74, "score": 5, "name": "Sethxi" }, "2": { "time": 2029.34, "score": 0, "name": "RedDragon124" }, "3": { "time": 1405.02, "score": 0, "name": "Joke (0_0)" }, "4": { "time": 462.15, "score": 0, "name": "TheAimBot" }, "5": { "time": 301.32, "score": 0, "name": "DesanPL"} } );
+
+		lua.Run( "GetPlayerList( '"+server.address+"' )" );
+	}
+
+	$scope.SelectGamemode = function( gm )
+	{
+		Scope.CurrentGamemode = gm;
+	}
+
+	$scope.ServerClass = function( sv )
+	{
+		var tags = "";
+
+		if ( !sv.hasmap ) tags += " missingmap ";
+		if ( sv.players == 0 ) tags += " empty ";
+
+		return tags;
+	}
+
+	$scope.ServerRank = function( sv )
+	{
+		if ( sv.recommended < 50 )	return "rank5";
+		if ( sv.recommended < 100 )	return "rank4";
+		if ( sv.recommended < 200 )	return "rank3";
+		if ( sv.recommended < 300 )	return "rank2";
+		return "rank1";
+	}
+
+	$scope.ChangeOrder = function( gm, order )
+	{
+		if ( gm.OrderBy == order )
+		{
+			gm.OrderReverse = !gm.OrderReverse;
+			return;
+		}
+
+		gm.OrderBy = order;
+		gm.OrderReverse = false;
+	}
+
+	$scope.GamemodeName = function( gm )
+	{
+		if ( !gm ) return "Unknown Gamemode";
+
+		if ( gm.info && gm.info.title )
+			return gm.info.title;
+
+		return gm.name;
+	}
+
+	$scope.JoinServer = function ( gm )
+	{
+		if ( gm.password )
+			lua.Run( "RunConsoleCommand( \"password\", \""+gm.password+"\" )" )
+
+		lua.Run( "JoinServer( \""+gm.address+"\" )" )
+	}
+
+	$scope.SwitchType = function( type )
+	{	
+		if ( Scope.ServerType == type ) return;
+
+		var FirstTime = false;
+		if ( !ServerTypes[type] )
+		{
+			ServerTypes[type] = 
+			{
+				gamemodes: {},
+				list: []
+			};
+
+			FirstTime = true;
+		}
+
+		Scope.ServerType		= type;
+		Scope.Gamemodes			= ServerTypes[type].gamemodes;
+		Scope.GamemodeList		= ServerTypes[type].list
+		Scope.CurrentGamemode	= null
+
+		if ( FirstTime )
+		{
+			$scope.Refresh();
+		}
+	}
+
+	$scope.InstallGamemode = function( gm )
+	{
+		lua.Run( "steamworks.Subscribe( \"" + gm.info.workshopid + "\" )" );
+	}
+
+	$scope.ShouldShowInstall = function( gm )
+	{
+		if ( !gm ) return false;
+		if ( !gm.info ) return false;
+		if ( !gm.info.workshopid ) return false;
+		if ( gm.info.workshopid == "" ) return false;
+		if ( subscriptions.Contains( String(gm.info.workshopid) ) ) return false;
+
+		return true;
+	}
+
+	$rootScope.ShowBack = true;	
+
+	if ( FirstTime )
+	{
+		FirstTime = false;
+		$scope.SwitchType( 'internet' );
+	}
+}
+
+function GetGamemode( name, type )
+{
+	if ( !ServerTypes[type] ) return;
+
+	if ( ServerTypes[type].gamemodes[name] ) return ServerTypes[type].gamemodes[name]
+
+	ServerTypes[type].gamemodes[name] = 
+	{
+		name:			name,
+		servers:		[],
+		num_servers:	0,
+		num_players:	0,
+		OrderBy:		'recommended',
+		info:			GetGamemodeInfo( name )
+	};
+
+	ServerTypes[type].list.push( ServerTypes[type].gamemodes[name] )
+
+	return ServerTypes[type].gamemodes[name];
+}
+
+function AddServer( type, id, ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid )
+{
+	if ( id != RequestNum[ type ] ) return;
+
+	if ( !gamemode ) gamemode = desc;
+	if ( maxplayers <= 1 ) return;
+
+	var data =
+	{
+		ping:			parseInt( ping ),
+		name:			name,
+		desc:			desc,
+		map:			map,
+		players:		parseInt( players ),
+		maxplayers:		parseInt( maxplayers ),
+		botplayers:		parseInt( botplayers ),
+		pass:			pass,
+		lastplayed:		parseInt( lastplayed ),
+		address:		address,
+		gamemode:		gamemode,
+		password:		'',
+		workshopid:		workshopid
+	};
+
+	data.hasmap = DoWeHaveMap( data.map );
+
+	data.recommended = data.ping;
+	if ( !data.hasmap ) data.recommended += 20;
+	if ( data.players == 0 ) data.recommended += 100;
+	if ( data.players == data.maxplayers ) data.recommended += 75;
+	if ( data.botplayers > 0 ) data.recommended += data.botplayers * 10;
+
+	data.listen = data.desc.indexOf('[L]') >= 0;
+	if ( data.listen ) data.desc = data.desc.substr( 4 );
+
+	var gm = GetGamemode( data.gamemode, type );
+	gm.servers.push( data );
+
+	UpdateGamemodeInfo( data )
+
+	gm.num_servers += 1;
+	gm.num_players += data.players - data.botplayers;
+
+	gm.element_class = "";
+	if ( gm.num_players == 0 ) gm.element_class = "noplayers";
+	if ( gm.num_players > 50 ) gm.element_class = "lotsofplayers";
+
+	gm.order = gm.num_players + Math.random();
+
+	UpdateDigest( Scope, 50 );
+	
+}
+
+function MissingGamemodeIcon( element )
+{
+	element.src = "../gamemodes/base/icon24.png";
+	return true;
+}
+
+function SetPlayerList( serverip, players )
+{
+	if ( !Scope.CurrentGamemode.Selected ) return;
+	if ( Scope.CurrentGamemode.Selected.address != serverip ) return;
+
+	Scope.CurrentGamemode.Selected.playerlist = players
+
+	UpdateDigest( Scope, 50 );
+}

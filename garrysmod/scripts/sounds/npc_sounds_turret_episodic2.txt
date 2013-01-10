@@ -1,0 +1,22 @@
+"NPC_FloorTurret.AlarmPing"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.000000"
+	"pitch"			"180"
+
+	"soundlevel"		"SNDLVL_85dB"
+
+	"wave"			"npc\roller\code2.wav"
+}
+
+"NPC_FloorTurret.Destruct"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"1.000000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"		"SNDLVL_95dB"
+
+	"wave"			"npc\turret_floor\detonate.wav"
+}
+

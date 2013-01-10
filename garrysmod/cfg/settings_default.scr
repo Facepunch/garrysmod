@@ -1,0 +1,8 @@
+// This isn't needed because we don't use Valve's server creation crap
+
+VERSION 1.0
+
+DESCRIPTION SERVER_OPTIONS
+{
+	
+}

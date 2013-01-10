@@ -1,0 +1,65 @@
+soundscapes_manifest
+{
+	"file"		"scripts/soundscapes.txt"
+
+	// Gmod
+	
+	"file"		"scripts/soundscapes_garrysmod.txt"
+	
+	// HL2
+	
+	"file"		"scripts/soundscapes_lostcoast.txt"
+	"file"		"scripts/soundscapes_citadel_episodic.txt"
+	"file"		"scripts/soundscapes_city_episodic.txt"
+		
+	"file"		"scripts/soundscapes_canals.txt"
+	"file"		"scripts/soundscapes_klab.txt"
+	"file"		"scripts/soundscapes_elab.txt"
+	"file"		"scripts/soundscapes_streetwar.txt"
+	"file"		"scripts/soundscapes_citadel.txt"
+	"file"		"scripts/soundscapes_town.txt"
+	"file"		"scripts/soundscapes_coast.txt"
+	"file"		"scripts/soundscapes_prison.txt"
+	"file"		"scripts/soundscapes_trainyard.txt"
+
+	// EP2
+	
+	"file"		"scripts/soundscapes_silo.txt"
+	"file"		"scripts/soundscapes_outland.txt"	
+	"file"		"scripts/soundscapes_outland2.txt"
+
+	// TF2
+	
+	"file"		"scripts/soundscapes_2fort.txt"
+	"file"		"scripts/soundscapes_dustbowl.txt"
+	"file"		"scripts/soundscapes_well.txt"
+	"file"		"scripts/soundscapes_badlands.txt"
+	"file"		"scripts/soundscapes_gravelpit.txt"
+	"file"		"scripts/soundscapes_hydro.txt"
+	"file"		"scripts/soundscapes_granary.txt"
+	"file"		"scripts/soundscapes_goldrush.txt"
+	"file"		"scripts/soundscapes_ravine.txt"
+	"file"		"scripts/soundscapes_lumberyard.txt"
+	"file"		"scripts/soundscapes_pipeline.txt"
+	"file"		"scripts/soundscapes_sawmill.txt"
+	"file"		"scripts/soundscapes_egypt.txt"
+	"file"		"scripts/soundscapes_nucleus.txt"
+	"file"		"scripts/soundscapes_viaduct.txt"
+	"file"		"scripts/soundscapes_gorge.txt"
+	"file"		"scripts/soundscapes_doublecross.txt"
+	"file"		"scripts/soundscapes_medieval.txt"
+	"file"		"scripts/soundscapes_thundermountain.txt"
+	"file"		"scripts/soundscapes_hightower.txt"
+	"file"		"scripts/soundscapes_upward.txt"
+	"file"		"scripts/soundscapes_cp_coldfront.txt"
+	"file"		"scripts/soundscapes_halloween.txt"
+	"file"		"scripts/soundscapes_mountainlab.txt"
+	"file"		"scripts/soundscapes_nightfall.txt"
+	"file"		"scripts/soundscapes_lakeside.txt"
+	"file"		"scripts/soundscapes_barnblitz.txt"
+	"file"		"scripts/soundscapes_harbor.txt"
+	"file"		"scripts/soundscapes_deathpit.txt"
+	"file"		"scripts/soundscapes_mannworks.txt"
+	"file"		"scripts/soundscapes_cactusvalley.txt"
+	"file"		"scripts/soundscapes_soho.txt"	
+}

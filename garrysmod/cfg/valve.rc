@@ -1,0 +1,18 @@
+// load the base configuration
+//exec default.cfg
+// Setup custom controller
+exec joystick.cfg
+
+// run a user script file if present
+exec autoexec.cfg
+
+// Run network settings
+exec network.cfg
+
+//
+// stuff command line statements
+//
+stuffcmds
+
+
+//startupmenu

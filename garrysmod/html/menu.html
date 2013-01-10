@@ -1,0 +1,144 @@
+<html>
+<head>
+
+	<title>Garry's Mod Main Menu</title>
+
+	<link rel="stylesheet" type="text/css" href="css/menu/Menu.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu/NavBar.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu/PageOptions.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu/NewGame.css" />
+	<link rel="stylesheet" type="text/css" href="css/menu/Servers.css" />
+	<link rel="stylesheet" type="text/css" href="css/Workshop.css" />
+
+	<script type="text/javascript" src="js/lua.js"></script>
+
+	<script type="text/javascript" src="js/3rdParty/jquery.js"></script>
+	<script type="text/javascript" src="js/3rdParty/jquery-color.js"></script>
+	<script type="text/javascript" src="js/3rdParty/angular.js"></script>
+
+	<script type="text/javascript" src="js/menu/WorkshopFiles.js"></script>
+	<script type="text/javascript" src="js/menu/Subscriptions.js"></script>
+	<script type="text/javascript" src="js/menu/menuApp.js?2"></script>
+	<script type="text/javascript" src="js/menu/control.Menu.js?2"></script>
+	<script type="text/javascript" src="js/menu/control.Main.js?2"></script>
+	<script type="text/javascript" src="js/menu/control.NewGame.js"></script>
+	<script type="text/javascript" src="js/menu/control.Servers.js"></script>
+	<script type="text/javascript" src="js/menu/control.Addons.js"></script>
+	<script type="text/javascript" src="js/menu/control.Demos.js"></script>
+	<script type="text/javascript" src="js/menu/control.Saves.js"></script>
+
+	<script type="text/javascript" src="js/svc.Tranny.js"></script>
+
+	<script type="text/javascript" src="js/menu/TestData.js"></script>
+	<script type="text/javascript" src="js/menu/TestServers.js"></script>
+	
+</head>
+
+<body ng-app="MenuApp" ng-controller="MenuController">
+
+<div id="version" ng-click="ShowNews()">{{Version}}</div>
+
+<div ng-view>
+
+</div>
+
+<div id="NavBar">
+
+	<div class="left" ng-show="ShowBack">
+
+		<a href="#/" class="button ui_sound_return"><img src='img/back_to_main_menu.png'><span ng-Tranny="'back_to_main_menu'"></span></a>
+
+	</div>
+
+	<ul class="right">
+		<li style="" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></li>
+		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleLanguage()"><img style="margin-top: 9px; margin-left: 7px;" ng-src='../resource/localization/{{Language}}.png' /><span></span></li>
+		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleGames()"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/games.png' /><span></span></li>		
+		<li ng-show="kinect.available" style="width: 40px; padding: 0; text-align: center;" ng-click="TogglePopup('.kinect_settings')"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/kinect.png' /><span></span></li>		
+	</ul>
+
+	<ul class="center" ng-show="InGame">
+
+		<li ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png'><span ng-Tranny="'back_to_game'"></span></a></li>
+		<!--
+		<li ng-click="Disconnect()"><a href="#/"><img src='img/disconnect.png'><span ng-Tranny="'disconnect'"></span></a></li>
+		-->
+
+	</ul>
+
+</div>
+
+<ul class="gamemode_list popup">
+	<li ng-repeat="gm in Gamemodes|filter:{menusystem:true}|orderBy:'name'" ng-click="SelectGamemode( gm )">
+		<img ng-src='../gamemodes/{{gm.name}}/icon24.png'><span>{{gm.title}}</span>
+	</li>
+
+</ul>
+
+<ul class="language_list popup">
+	<li  ng-repeat="lang in Languages" ng-click="SelectLanguage( lang )">
+		<img ng-src='../resource/localization/{{lang}}.png'>
+	</li>
+</ul>
+
+<ul class="games_list popup">
+
+	<li ng-repeat="game in Games|orderBy:'title'" class="{{IfElse( !game.owned, 'notowned', '' )}} {{IfElse( !game.installed, 'notinstalled', '' )}}">
+
+		<input type=checkbox ng-model="game.mounted" ng-show="game.installed" ng-change="GameMountChanged( game )"/> 
+		<img src='img/notowned.png' ng-show="!game.owned" width=16 height=16>
+		<img src='img/notinstalled.png' ng-show="game.owned && !game.installed" width=16 height=16>
+		
+		<span>{{game.title}}</span>
+
+	</li>
+
+</ul>
+
+<ul class="kinect_settings popup">
+
+	<li>
+		<div>
+
+			<p>
+				<label style="display: block">
+					<input type="checkbox" ng-model="kinect.show_color" ng-change="kinect.update()">  <span ng-Tranny="'motionsensor.showcolor'"></span>	
+				</label>
+			</p>
+
+
+			<div ng-show="kinect.show_color">
+
+				<span ng-Tranny="'motionsensor.colorpos'"></span>	
+		
+				<p style="margin-left: 5px;">
+					<label ng-repeat="option in kinect.color_options" style="display: block">
+						<input type="radio" name="kinect.color" ng-model="kinect.color" value="{{option}}" ng-change="kinect.update()">                
+							<span ng-Tranny="'motionsensor.showcolor.'+ option"></span>
+					</label>
+				</p>
+			<div>
+
+			<div  ng-show="kinect.show_color">
+				<span ng-Tranny="'motionsensor.colorsize'"></span>	
+		
+				<p style="margin-left: 5px;">
+					<label ng-repeat="option in kinect.size_options" style="display: block">
+						<input type="radio" name="kinect.color_size" ng-model="kinect.color_size" value="{{option}}" ng-change="kinect.update()">                
+							<span ng-Tranny="'motionsensor.colorsize.'+ option"></span>
+					</label>
+				</p>
+			<div>
+
+		<div>
+
+
+
+	</li>
+	
+
+</ul>
+
+</body>
+</html>
+

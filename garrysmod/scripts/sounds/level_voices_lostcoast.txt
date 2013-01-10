@@ -1,0 +1,1592 @@
+//
+//
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+//
+// VOL_NORM		1.0f
+//
+//-----------------------------------------------------------------------------
+// common attenuation values
+//-----------------------------------------------------------------------------
+//
+// DON'T USE THESE - USE SNDLVL_ INSTEAD!!!
+//	ATTN_NONE		0.0f	
+//	ATTN_NORM		0.8f
+//	ATTN_IDLE		2.0f
+//	ATTN_STATIC		1.25f 
+//	ATTN_RICOCHET	1.5f
+//	ATTN_GUNFIRE	0.27f
+//
+//	SNDLVL_NONE		= 0,
+//	SNDLVL_25dB		= 25,
+//	SNDLVL_30dB		= 30,
+//	SNDLVL_35dB		= 35,
+//	SNDLVL_40dB		= 40,
+//	SNDLVL_45dB		= 45,
+//	SNDLVL_50dB		= 50,	= 3.9
+//	SNDLVL_55dB		= 55,	= 3.0
+//	SNDLVL_IDLE		= 60,	= 2.0
+//	SNDLVL_TALKING		= 60,	= 2.0
+//	SNDLVL_60dB		= 60,	= 2.0
+//	SNDLVL_65dB		= 65,	= 1.5
+//	SNDLVL_STATIC		= 66,	= 1.25
+//	SNDLVL_70dB		= 70,	= 1.0
+//	SNDLVL_NORM		= 75,
+//	SNDLVL_75dB		= 75,	= 0.8
+//	SNDLVL_80dB		= 80,	= 0.7
+//	SNDLVL_85dB		= 85,	= 0.6
+//	SNDLVL_90dB		= 90,	= 0.5
+//	SNDLVL_95dB		= 95,
+//	SNDLVL_100dB	= 100,	= 0.4
+//	SNDLVL_105dB	= 105,
+//	SNDLVL_120dB	= 120,
+//	SNDLVL_130dB	= 130,
+//	SNDLVL_GUNFIRE	= 140, = 0.27
+//	SNDLVL_140dB	= 140,	= 0.2
+//	SNDLVL_150dB	= 150,	= 0.2
+//
+
+
+
+
+"lostcoast.fish_hey"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hey.wav"
+}
+
+"lostcoast.fish_youthere"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		".95"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_youthere.wav"
+}
+
+"lostcoast.fish_canyouhearme"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_canyouhearme.wav"
+}
+
+"lostcoast.fish_youallright"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_youallright.wav"
+}
+
+"lostcoast.fish_youalive"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.750000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_youalive.wav"
+}
+
+"lostcoast.fish_getup"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_getup.wav"
+}
+
+"lostcoast.fish_headingout"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_headingout.wav"
+}
+
+"lostcoast.fish_gettoshelter"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_gettoshelter.wav"
+}
+
+"lostcoast.fish_shellingbeach"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_shellingbeach.wav"
+}
+
+"lostcoast.fish_strand"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.720000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_strand.wav"
+}
+
+"lostcoast.fish_fishman01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_fishman01.wav"
+}
+
+"lostcoast.fish_fishman02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_fishman02.wav"
+}
+
+"lostcoast.fish_zombiegun"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_zombiegun.wav"
+}
+
+"lostcoast.fish_takeoncombine"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.720000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_takeoncombine.wav"
+}
+
+"lostcoast.fish_takeyouthere"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_takeyouthere.wav"
+}
+
+"lostcoast.fish_taketobase"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_taketobase.wav"
+}
+
+"lostcoast.fish_stayclosetome"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.570000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_stayclosetome.wav"
+}
+
+"lostcoast.fish_ontherock"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.730000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_ontherock.wav"
+}
+
+"lostcoast.fish_wheretheyare"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		".92"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_wheretheyare.wav"
+}
+
+"lostcoast.fish_wipeouttown01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_wipeouttown01.wav"
+}
+
+"lostcoast.fish_wipeouttown02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_wipeouttown02.wav"
+}
+
+"lostcoast.fish_wipeouttown03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_wipeouttown03.wav"
+}
+
+"lostcoast.fish_takeoutgun"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_takeoutgun.wav"
+}
+
+"lostcoast.fish_path"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_path.wav"
+}
+
+"lostcoast.fish_followmelad"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_followmelad.wav"
+}
+
+"lostcoast.fish_hurryuplad"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.690000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hurryuplad.wav"
+}
+
+"lostcoast.fish_keepclose"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.750000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_keepclose.wav"
+}
+
+"lostcoast.fish_stayoutwater"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.750000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_stayoutwater.wav"
+}
+
+"lostcoast.fish_infernalleeches"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.690000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_infernalleeches.wav"
+}
+
+"lostcoast.fish_bullsquidtrap"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_bullsquidtrap.wav"
+}
+
+"lostcoast.fish_hook_take"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_take.wav"
+}
+
+"lostcoast.fish_hook_nowpull"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.750000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_nowpull.wav"
+}
+
+"lostcoast.fish_hook_keeppulling"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.750000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_keeppulling.wav"
+}
+
+"lostcoast.fish_hook_keepup"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.750000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_keepup.wav"
+}
+
+"lostcoast.fish_hook_slipover"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.750000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_slipover.wav"
+}
+
+"lostcoast.fish_hook_thereyougo"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.770000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_thereyougo.wav"
+}
+
+"lostcoast.fish_hook_thatsit"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.770000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_thatsit.wav"
+}
+
+"lostcoast.fish_hook_nag01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.530000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_nag01.wav"
+}
+
+"lostcoast.fish_hook_nag02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.850000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_nag02.wav"
+}
+
+"lostcoast.fish_hook_good"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.780000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_good.wav"
+}
+
+"lostcoast.fish_hook_grunt01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.400000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_grunt01.wav"
+}
+
+"lostcoast.fish_hook_grunt02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_grunt02.wav"
+}
+
+"lostcoast.fish_hook_grunt03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_grunt03.wav"
+}
+
+"lostcoast.fish_hook_grunt04"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_grunt04.wav"
+}
+
+"lostcoast.fish_hook_sigh01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.550000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_sigh01.wav"
+}
+
+"lostcoast.fish_hook_sigh02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.530000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_sigh02.wav"
+}
+
+"lostcoast.fish_hook_nicework"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.580000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hook_nicework.wav"
+}
+
+"lostcoast.fish_beyondrocks"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_beyondrocks.wav"
+}
+
+"lostcoast.fish_watchstep"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_watchstep.wav"
+}
+
+"lostcoast.fish_cantprance"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.900000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_cantprance.wav"
+}
+
+"lostcoast.fish_lookoutbelow"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_lookoutbelow.wav"
+}
+
+"lostcoast.fish_myback"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.700000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_myback.wav"
+}
+
+"lostcoast.fish_oldleg"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.720000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_oldleg.wav"
+}
+
+"lostcoast.fish_holdon"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.780000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_holdon.wav"
+}
+
+"lostcoast.fish_hearthat"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.580000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_hearthat.wav"
+}
+
+"lostcoast.fish_warmingupgun"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_warmingupgun.wav"
+}
+
+"lostcoast.fish_holymother"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.900000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_holymother.wav"
+}
+
+"lostcoast.fish_bequick"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_bequick.wav"
+}
+
+"lostcoast.fish_theresgate"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.530000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_theresgate.wav"
+}
+
+"lostcoast.fish_unlockgateforya"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.550000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_unlockgateforya.wav"
+}
+
+"lostcoast.fish_key_gotrighthere"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.630000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_key_gotrighthere.wav"
+}
+
+"lostcoast.fish_key_notit"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.320000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_key_notit.wav"
+}
+
+"lostcoast.fish_key_notthatone"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.600000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_key_notthatone.wav"
+}
+
+"lostcoast.fish_key_notneither"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_key_notneither.wav"
+}
+
+"lostcoast.fish_key_ahno"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.670000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_key_ahno.wav"
+}
+
+"lostcoast.fish_key_therewego"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.720000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_key_therewego.wav"
+}
+
+"lostcoast.fish_gothru"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.780000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_gothru.wav"
+}
+
+"lostcoast.fish_destroygun"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.710000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_destroygun.wav"
+}
+
+"lostcoast.fish_illbehere"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_illbehere.wav"
+}
+
+"lostcoast.fish_pathupcliff"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_pathupcliff.wav"
+}
+
+"lostcoast.fish_getuppath"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.850000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_getuppath.wav"
+}
+
+"lostcoast.fish_getgoing"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.800000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_getgoing.wav"
+}
+
+"lostcoast.fish_youdidit"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.850000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_youdidit.wav"
+}
+
+"lostcoast.fish_cometostolga"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_cometostolga.wav"
+}
+
+"lostcoast.fish_feast"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.770000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_feast.wav"
+}
+
+"lostcoast.fish_likeleeches"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_likeleeches.wav"
+}
+
+"lostcoast.fish_whereyagoing"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.620000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_whereyagoing.wav"
+}
+
+"lostcoast.fish_gettingfuzzy"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.750000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_gettingfuzzy.wav"
+}
+
+"lostcoast.fish_otherplaces"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_otherplaces.wav"
+}
+
+"lostcoast.fish_niceknowingya"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_niceknowingya.wav"
+}
+
+"lostcoast.fish_guide01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.750000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_guide01.wav"
+}
+
+"lostcoast.fish_guide02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.780000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_guide02.wav"
+}
+
+"lostcoast.fish_guide03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.750000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_guide03.wav"
+}
+
+"lostcoast.fish_guide04"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_guide04.wav"
+}
+
+"lostcoast.fish_guide05"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_guide05.wav"
+}
+
+"lostcoast.fish_guide06"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_guide06.wav"
+}
+
+"lostcoast.fish_guide07"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_guide07.wav"
+}
+
+"lostcoast.fish_wait01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.770000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_wait01.wav"
+}
+
+"lostcoast.fish_wait02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.680000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_wait02.wav"
+}
+
+"lostcoast.fish_wait03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.700000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_wait03.wav"
+}
+
+"lostcoast.fish_wait04"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.750000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_wait04.wav"
+}
+
+"lostcoast.fish_waterwarn01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.770000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_waterwarn01.wav"
+}
+
+"lostcoast.fish_waterwarn02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.770000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_waterwarn02.wav"
+}
+
+"lostcoast.fish_waterwarn03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_waterwarn03.wav"
+}
+
+"lostcoast.fish_waterwarn04"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_waterwarn04.wav"
+}
+
+"lostcoast.fish_resumetalk01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_resumetalk01.wav"
+}
+
+"lostcoast.fish_resumetalk02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_resumetalk02.wav"
+}
+
+"lostcoast.fish_resumetalk03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_resumetalk03.wav"
+}
+
+"lostcoast.fish_resumetalk04"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_resumetalk04.wav"
+}
+
+"lostcoast.fish_resumetalk05"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_resumetalk05.wav"
+}
+
+"lostcoast.fish_resumetalk06"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_resumetalk06.wav"
+}
+
+"lostcoast.fish_mumble01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.250000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_mumble01.wav"
+}
+
+"lostcoast.fish_mumble02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.250000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_mumble02.wav"
+}
+
+"lostcoast.fish_mumble03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.400000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_mumble03.wav"
+}
+
+"lostcoast.fish_mumble04"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.400000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_mumble04.wav"
+}
+
+"lostcoast.fish_mumble05"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.400000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_mumble05.wav"
+}
+
+"lostcoast.fish_mumble06"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.400000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_mumble06.wav"
+}
+
+"lostcoast.fish_whistling01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.300000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_whistling01.wav"
+}
+
+"lostcoast.fish_whistling02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.300000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_whistling02.wav"
+}
+
+"lostcoast.fish_whistling03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.300000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_whistling03.wav"
+}
+
+"lostcoast.fish_whistling04"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.300000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_whistling04.wav"
+}
+
+"lostcoast.fish_whistling05"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.300000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_whistling05.wav"
+}
+
+"lostcoast.fish_whistling06"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.300000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_whistling06.wav"
+}
+
+"lostcoast.fish_cough01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_cough01.wav"
+}
+
+"lostcoast.fish_cough02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.800000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_cough02.wav"
+}
+
+"lostcoast.fish_cough03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.420000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_cough03.wav"
+}
+
+"lostcoast.fish_cough04"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.500000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_cough04.wav"
+}
+
+"lostcoast.fish_grieve01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_grieve01.wav"
+}
+
+"lostcoast.fish_grieve02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_grieve02.wav"
+}
+
+"lostcoast.fish_grieve03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_grieve03.wav"
+}
+
+"lostcoast.fish_grieve04"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_grieve04.wav"
+}
+
+"lostcoast.fish_watchitupthere"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.930000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_watchitupthere.wav"
+}
+
+"lostcoast.fish_tooclose"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_tooclose.wav"
+}
+
+"lostcoast.fish_waitforme"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_waitforme.wav"
+}
+
+"lostcoast.fish_slowdown"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_slowdown.wav"
+}
+
+"lostcoast.fish_waitup"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_waitup.wav"
+}
+
+"lostcoast.fish_cliffclimb01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.900000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_cliffclimb01.wav"
+}
+
+"lostcoast.fish_cliffclimb02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.900000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_cliffclimb02.wav"
+}
+
+"lostcoast.fish_cliffclimb03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.760000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_cliffclimb03.wav"
+}
+
+"lostcoast.fish_crabpot01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.630000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_crabpot01.wav"
+}
+
+"lostcoast.fish_crabpot02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.610000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_crabpot02.wav"
+}
+
+"lostcoast.fish_crabpot03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_crabpot03.wav"
+}
+
+"lostcoast.fish_crabpot04"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.770000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_crabpot04.wav"
+}
+
+"lostcoast.fish_shootgull01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.950000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_shootgull01.wav"
+}
+
+"lostcoast.fish_shootgull02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_shootgull02.wav"
+}
+
+"lostcoast.fish_shootgull03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.880000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_shootgull03.wav"
+}
+
+"lostcoast.fish_shootgull04"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.650000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_shootgull04.wav"
+}
+
+"lostcoast.fish_outofbreath01"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.350000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_outofbreath01.wav"
+}
+
+"lostcoast.fish_outofbreath02"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.300000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_outofbreath02.wav"
+}
+
+"lostcoast.fish_outofbreath03"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.400000"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_TALKING"
+
+	"wave"			"*lostcoast/vo/fisherman/fish_outofbreath03.wav"
+}
+

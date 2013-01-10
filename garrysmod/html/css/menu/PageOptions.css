@@ -1,0 +1,99 @@
+
+DIV.page DIV.options
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 300px;
+	bottom: 0px;
+	padding-top: 50px;
+	padding-left: 50px;
+}
+
+DIV.page DIV.innerpage
+{
+	position: absolute; 
+	left: 300px; 
+	top: 16px; 
+	bottom: 16px; 
+	right: 16px; 
+	padding: 16px; 
+	padding-top: 0;
+}
+
+DIV.page DIV.options UL
+{
+	list-style-type: none;
+	padding: 2px 0px;
+	margin-left: 20px;
+}
+
+DIV.page DIV.options UL LI
+{
+	padding: 0px 16px;
+	margin-bottom: 1px;
+}
+
+DIV.page DIV.options, DIV.page DIV.options A
+{
+	font-size: 23px;
+	letter-spacing: -1.0px;
+	text-decoration: none;
+	color: #fff;
+	font-weight: bolder;
+	text-shadow: 2px 2px 0px #000;
+}
+
+DIV.page DIV.options .submenu A
+{
+	font-size: 17px;
+	letter-spacing: 0px;
+	text-shadow: 1px 1px 0px #000;
+}
+
+DIV.page DIV.options UL.submenu LI
+{
+	padding: 0;
+	margin: 0;
+}
+
+DIV.page DIV.options A:hover
+{
+	color: #ffa;
+}
+
+DIV.page DIV.options.active, DIV.page DIV.options A.active
+{
+	color: #ff5;
+}
+
+DIV.page DIV.options A.active:hover
+{
+	
+}
+
+
+@media screen and (max-width: 1280px)
+{
+	DIV.page DIV.options
+	{
+		width: 150px;
+		font-size: 70%;
+		padding-left: 5px;
+	}
+	
+	DIV.page DIV.innerpage
+	{
+		left: 150px;
+	}
+	
+	DIV.page DIV.options, DIV.page DIV.options A
+	{
+		font-size: 16px;
+	}
+	
+	DIV.page DIV.options UL
+	{
+		margin-left: 5px;
+	}
+}

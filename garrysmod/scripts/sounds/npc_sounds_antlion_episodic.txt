@@ -1,0 +1,191 @@
+
+"NPC_Antlion.MeleeAttackSingle_Muffled"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.250, 1.000"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion/attack_muffled_single1.wav"
+		"wave"	"npc/antlion/attack_muffled_single2.wav"
+		"wave"	"npc/antlion/attack_muffled_single3.wav"
+	}
+}
+
+"NPC_Antlion.MeleeAttackDouble_Muffled"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.250, 1.000"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion/attack_muffled_double1.wav"
+		"wave"	"npc/antlion/attack_muffled_double2.wav"
+		"wave"	"npc/antlion/attack_muffled_double3.wav"
+	}
+}
+
+"NPC_Antlion.Trapped_Muffled"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.250, 0.7"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_80dB"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion/muffled_concrete_break3.wav"
+		"wave"	"npc/antlion/muffled_boulder_impact_hard1.wav"	
+		"wave"	"npc/antlion/muffled_boulder_impact_hard2.wav"	
+		
+	}
+}
+
+"NPC_Antlion.TrappedMetal"
+{
+	"channel"		"CHAN_STATIC"
+	"soundlevel"		"SNDLVL_80db"
+	"volume"		"0.5, 1.0"
+	"pitch"			"90, 110"
+	"rndwave"
+	{
+		"wave"	"physics/metal/metal_box_break1.wav"
+		"wave"	"physics/metal/metal_box_break2.wav"
+		"wave"	"physics/metal/metal_solid_strain2.wav"
+		"wave"	"physics/metal/metal_solid_strain3.wav"
+		"wave"	"physics/metal/metal_sheet_impact_hard8.wav"
+	}
+}
+
+
+"NPC_Antlion.MeleeAttack_Muffled"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.8, 1.000"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion/attack_muffled_single1.wav"
+		"wave"	"npc/antlion/attack_muffled_single2.wav"
+		"wave"	"npc/antlion/attack_muffled_single3.wav"
+		"wave"	"npc/antlion/attack_muffled_double1.wav"
+		"wave"	"npc/antlion/attack_muffled_double2.wav"
+		"wave"	"npc/antlion/attack_muffled_double3.wav"
+	}
+}
+
+"NPC_Antlion.PoisonBurstScream"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.8"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion/antlion_preburst_scream1.wav"
+		"wave"	"npc/antlion/antlion_preburst_scream2.wav"
+	}
+}
+
+"NPC_Antlion.PoisonBurstScreamSubmerged"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.6"
+	"pitch"			"80,100"
+
+	"soundlevel"	"SNDLVL_80db"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion/antlion_preburst_scream_uw1.wav"
+		"wave"	"npc/antlion/antlion_preburst_scream_uw2.wav"
+	}
+}
+
+"NPC_Antlion.PoisonBurstExplode"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.8"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion/antlion_burst1.wav"
+		"wave"	"npc/antlion/antlion_burst2.wav"
+	}
+}
+
+"NPC_Antlion.ZappedFlip"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"115,125"
+
+	"soundlevel"	"SNDLVL_80dB"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion/pain1.wav"	
+		"wave"	"npc/antlion/pain2.wav"	
+		
+	}
+}
+
+"NPC_Antlion.PoisonShoot"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.8"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion/antlion_shoot3.wav"
+		"wave"	"npc/antlion/antlion_shoot2.wav"
+	}
+}
+
+"NPC_Antlion.PoisonBall"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"1.0"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion/antlion_poisonball1.wav"
+		"wave"	"npc/antlion/antlion_poisonball2.wav"
+	}
+}
+
+"GrenadeSpit.Hit"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.8"
+	"pitch"			"145, 175"
+	"soundlevel"		"SNDLVL_70db"
+
+	"rndwave"
+	{
+		"wave"	"npc/antlion/antlion_shoot1.wav"
+		"wave"	"npc/antlion/antlion_shoot2.wav"
+		"wave"	"npc/antlion/antlion_shoot3.wav"
+	}
+}

@@ -1,0 +1,24 @@
+"GameInfo"
+{
+	game	"Garry's Mod"
+	title	""
+	title2	""
+	type 	multiplayer_only
+
+	"developer" 		"TEAM GARRY"
+	"developer_url" 	"http://www.garrysmod.com/"
+	"manual"           	"http://wiki.garrysmod.com/"
+
+	FileSystem
+	{
+		SteamAppId				4000 // 218
+		ToolsAppId				211
+		
+		SearchPaths
+		{
+			Game				|gameinfo_path|.
+			Game				hl2
+			Game                            |all_source_engine_paths|hl2
+		}
+	}
+}

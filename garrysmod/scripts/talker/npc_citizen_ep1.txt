@@ -1,0 +1,202 @@
+//============================================================================================================
+// Citizen criteria
+
+criterion "IsMapep1_c17_05" "map" "ep1_c17_05" required
+
+criterion "IsCitizen" "classname" "npc_citizen" "required"
+criterion "HurtByFire" "hurt_by_fire" "1" required
+
+criterion "SquadNearPlayer"            "distancetoplayer"               "<240"   required
+criterion "SquadNotNearPlayer"         "distancetoplayer"               ">=240"  required
+//criterion "ConceptCitizenEvac" "Concept" "TLK_CIT_EVAC" required  - is not defined 
+criterion "ConceptCitizenEvacThanks" "Concept" "TLK_CITIZEN_EVAC_THANKS" required
+criterion "ConceptCitizenEvacReachTrainLast" "Concept" "TLK_CITIZEN_EVAC_REACHTRAINLAST" required
+criterion "ConceptCitizenPlayerDenyTrain" "Concept" "TLK_CITIZEN_PLAYER_DENYTRAIN" required
+criterion "ConceptCitizenNotDoorMan" "c17_05_doorman" "0"
+criterion "c17_01_StreetMedics"	"c17_01_streetmedics" "1" required
+criterion "ConceptBoredCitizens" "ConceptBoredCitizens" "1" required
+
+
+//============================================================================================================
+
+response CitizenEvacUndefended
+{
+
+
+
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty08.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_defendus01.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_defendus02.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_defendus03.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_defendus06.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_defendus09.vcd"
+}
+
+rule CitizenEvacUndefended
+{
+	criteria		IsCitizen ConceptTalkWound IsMapep1_c17_05 
+	response		CitizenEvacUndefended
+}
+
+
+	//ConceptCitizenEvac
+
+
+response CitizenEvacKilled
+{
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty01.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty02.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty03.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty04.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty05.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty06.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty07.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty09.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty10.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty11.vcd"
+
+}
+
+rule CitizenEvacKilled
+{
+	criteria		IsCitizen ConceptTalkAllyKilled IsMapep1_c17_05 
+	response		CitizenEvacKilled
+}
+
+
+response CitizenEvacThanks
+{
+	scene "scenes/episode_1/npc/$gender01/cit_evac_thanks01.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_thanks02.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_thanks03.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_thanks04.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_thanks05.vcd"
+}
+
+rule CitizenEvacThanks
+{
+	criteria		IsCitizen ConceptCitizenEvacThanks ConceptCitizenNotDoorMan
+	response		CitizenEvacThanks
+}
+
+response CitizenEvacReachTrainLast
+{
+	scene "scenes/episode_1/npc/$gender01/cit_reachtrain01.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_reachtrain02.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_reachtrain03.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_reachtrain04.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_reachtrain05.vcd"
+}
+
+rule CitizenEvacReachTrainLast
+{
+	criteria		IsCitizen ConceptCitizenEvacReachTrainLast ConceptCitizenNotDoorMan
+	response		CitizenEvacReachTrainLast
+}
+
+response CitizenEvacPlayerDenyTrain
+{
+	scene "scenes/episode_1/npc/$gender01/cit_denytrain01.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_denytrain02.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_denytrain03.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_denytrain04.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_denytrain05.vcd"
+}
+
+rule CitizenEvacPlayerDenyTrain
+{
+	criteria		IsCitizen ConceptCitizenPlayerDenyTrain
+	response		CitizenEvacPlayerDenyTrain
+}
+
+
+response response_CitizensEvacNo
+{
+  sequential
+	scene "scenes/episode_1/npc/$gender01/cit_evac_no02.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_no03.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_no04.vcd"
+}
+
+rule rule_CitizensEvacNo_Use
+{
+	criteria c17_01_StreetMedics ConceptTalkUse
+	response response_CitizensEvacNo
+}
+
+
+
+response "CitizenTalkPlayerPushedEP1_c17_05"
+{
+
+}
+
+rule CitizenTalkPlayerPushedEP1_c17_05
+{
+	criteria		IsCitizen  ConceptTalkPlayerPushed SeenByPlayer NoRecentCombat IsMapep1_c17_05
+	response		CitizenTalkPlayerPushedEP1_c17_05
+}
+
+
+//============================================================================================================
+// Citizen leader in c17_02
+
+//jake: removing the response.  RR's dont support scenes with more than one actor, which is what this scene is
+criterion CitNameIscourtyard_citizens_lead "name" "courtyard_citizens_lead" required
+
+response "Cit02LeadStart"
+{
+	//scene "scenes/episode_1/c17/cit_c17_02_entering_apartments_01.vcd"
+}
+
+rule ExitLeadStart
+{
+	criteria		IsCitizen CitNameIscourtyard_citizens_lead ConceptLeadWaitOver
+	response		Cit02LeadStart
+}
+
+
+//============================================================================================================
+// Citizen Questions & Responses with each other
+//============================================================================================================
+response "CitizensKillingTime"
+{
+	sequential
+	scene "scenes/episode_1/npc/$gender01/cit_remarks13.vcd" delay 1  //I blame Odessa Cubbage...	
+	scene "scenes/episode_1/npc/$gender01/cit_remarks12.vcd" delay 1  //I met Odessa Cubbage one time.  What an idiot.
+	scene "scenes/episode_1/npc/$gender01/cit_remarks17.vcd" delay 1  //Between you and me, I don't trust those Vortigaunts.
+	scene "scenes/episode_1/npc/$gender01/cit_remarks11.vcd" delay 3  //I blame Black Mesa...
+
+
+	scene "scenes/episode_1/npc/$gender01/cit_remarks07.vcd" delay 1  //So much for better living through science.
+	scene "scenes/episode_1/npc/$gender01/cit_remarks08.vcd" delay 1  //Dr. Kleiner says we can mate now.  Not that I needed his permission. 
+	scene "scenes/episode_1/npc/$gender01/cit_remarks22.vcd" delay 3  //what idiot put kleiner in charge
+
+	scene "scenes/episode_1/npc/$gender01/cit_remarks21.vcd" delay 1  //Sometimes I think everybody's a doctor but me.
+	scene "scenes/episode_1/npc/$gender01/cit_remarks02.vcd" delay 1  //Everything we do seems to make things worse.
+	scene "scenes/episode_1/npc/$gender01/cit_remarks04.vcd" delay 1  //This was such a nice neighborhood too.
+	scene "scenes/episode_1/npc/$gender01/cit_remarks03.vcd" delay 1  //It used to be safer here.
+	scene "scenes/episode_1/npc/$gender01/cit_remarks06.vcd" delay 1  //We're sitting ducks in here.  Or maybe fish in a barrel.  Anyway…it's not good.
+	scene "scenes/episode_1/npc/$gender01/cit_remarks01.vcd" delay 3  //I hear it's a lot better out in the country.
+
+
+
+	scene "scenes/episode_1/npc/$gender01/cit_remarks18.vcd" delay 3  //How 'bout this weather? 
+
+	scene "scenes/episode_1/npc/$gender01/cit_remarks09.vcd" delay 1  //I don't miss Dr. Breen, but I do miss his show.  Remember when he had the jugglers on?
+	scene "scenes/episode_1/npc/$gender01/cit_remarks20.vcd" delay 1  //This is gonna sound crazy, but I kinda miss the Combine.
+	scene "scenes/episode_1/npc/$gender01/cit_remarks05.vcd" delay 3  //Somehow I thought things would be better by now.
+
+
+	scene "scenes/episode_1/npc/$gender01/cit_remarks23.vcd" delay 1  //We're all starving and Kleiner's headcrab's probably eating Grade A head.
+	scene "scenes/episode_1/npc/$gender01/cit_remarks19.vcd" delay 1  //They might call 'em crabs, but I'll tell you what, they don't taste like crab.
+
+}
+
+rule CitizensKillingTime
+{
+	criteria		IsCitizen ConceptBoredCitizens
+	response 		CitizensKillingTime
+}
+
+

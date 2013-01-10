@@ -1,0 +1,17 @@
+// Barney nags for episodic
+criterion "IsWaitForPlayerToLeave" "concept" "LeaveBarneyRoom" "required"
+
+
+//============================================================================================================
+// Nags to get player to leave Barney's raid room in c17_02
+//============================================================================================================
+response "Response_LeaveBarneyRoom"
+{
+	scene "scenes/episode_1/ba_c17_02_leavenag_01.vcd"
+}
+
+rule Rule_LeaveBarneyRoom
+{
+	criteria		IsWaitForPlayerToLeave
+	response		Response_LeaveBarneyRoom
+}

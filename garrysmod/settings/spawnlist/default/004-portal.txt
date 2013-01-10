@@ -1,0 +1,393 @@
+"TableToKeyValues"
+{
+	"parentid"		"0"
+	"icon"		"games/16/portal.png"
+	"id"		"4"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"model"
+			"model"		"models/Player/chell.mdl"
+			"wide"		"128"
+			"tall"		"256"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/props/metal_box.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/props/switch001.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/props/sphere.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/props/round_elevator_body.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/props/pedestal_center_reference.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/props/radio_reference.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/props/toilet_body_reference.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/props/table_reference.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/props/lift_platform.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/props/door_01_frame_wide_reference.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/props/button_base_reference.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/props/button_top_reference.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/props/bed_body_reference.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/bts_chair.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/bts_chair_static.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/props/turret_01.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/bts_clipboard.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/bts_stool_static.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/bts_table_static.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/bts_turret.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/cage_light.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/clear_tube_90deg.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/clear_tube_broken.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/clear_tube_straight.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/clear_tube_tjoint.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/fan01.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/fan01_small.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/Glados_Aperturedoor.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_ball_reference.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_body.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/Glados_bunker.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_disc_01.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_disc_02.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_disc_03.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_disc_04.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/Glados_Floorlight.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_platform_reference.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/Glados_Screenborder_Curve.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/horizontal_piston_base.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/horizontal_piston_body.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/Lab_Floorlight.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/ladder_01.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/metal_block.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/mini_piston_body.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/mini_piston_inside.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/phone_body.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/phone_reciever.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/projector.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/rocket.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/rocket_sentry.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/vertical_large_piston_base.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/vertical_large_piston_body.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/vertical_med_piston_base.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/vertical_med_piston_body.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/vertical_small_piston_base.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/vertical_small_piston_body.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/Weapons/w_portalgun.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/props/water_bottle/water_bottle.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/props/saucepan/saucepan.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/props/pc_case_open/pc_case_open.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/props/pc_case02/pc_case02.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/props/milk_carton/milk_carton.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/props/milk_carton/milk_carton_open.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_monitor_pose01/lab_monitor_pose01.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_desk05/lab_desk05.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_desk04/lab_desk04.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_desk01/lab_desk01.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_chair/lab_chair.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/props/kb_mouse/keyboard.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/props/kb_mouse/mouse.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/props/glados_pillar/glados_pillar.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/props/claw/claw.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/props/cake/cake.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/props/bts_bed/bts_bed.mdl"
+		}
+	}
+	"needsapp"		"portal"
+	"name"		"Portal"
+	"version"		"3"
+}

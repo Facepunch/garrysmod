@@ -1,0 +1,8 @@
+
+"Event.HostageKilled"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"1.0"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"wave"		"radio/hosdown.wav"
+}

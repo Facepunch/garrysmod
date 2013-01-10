@@ -1,0 +1,872 @@
+// "prop data name" 
+// { 
+// "property" 	"value"
+// ...
+// }
+//
+// 
+// "base"		: Specify a base propdata class to derive from (base types can be found in propdata.txt)
+//
+// "blockLOS"		: Override whether this prop should block NPC's Line-Of-Sight.
+// "AIWalkable"		: Override whether AI should consider this prop as walkable on.
+// "dmg.bullets"	: Mod damage done by bullets to this prop.
+// "dmg.club"		: Mod damage done by clubs to this prop.
+// "dmg.explosive"	: Mod damage done by explosives to this prop.
+//		NOTE: Use damage modifiers to reflect differences between the amount of
+//			  damage that an object takes from different damage types. Don't
+//			  use them to reflect overall damage strength. i.e. Stone is resilient
+//			  to everything. To reflect this, increase the health of all stone
+//			  objects, don't set the damage modifiers lower.
+//
+// "damage_table"	: Specify a custom physics impact damage table for this prop.
+// "health"		: Amount of damage this prop should take before breaking.
+//
+// "explosion_type"	: (molotov/grenade/normal).  If normal, explosive_damage/explosive_radius are used as usual
+//
+// "explosive_damage"	: Explosive damage done by this prop.
+// "explosive_radius"	: Radius of the explosion caused by this prop when it breaks.
+//		NOTE: If these two fields are specified for a prop, then the prop will automatically
+//			  create an explosion with the specified values when the prop is broken.
+//
+// "breakable_model"	: The type of breakable gibs this prop should break into. This list is at the bottom of this file.
+// "breakable_count"	: The number of breakable gibs to break into.
+// "allowstatic"	: Allow this prop to be static as well as physically simulated.
+// "physicsmode"	: Set multiplayer physics behaviour (1=full, =non-solid,3=clientside)
+// "multiplayer_break"	: Set multiplayer breakable spawn behavior (default/server/client/both)
+//		NOTE: if multiplayer_break is "both", each piece is spawned by the default dll unless its
+//			  "break" section has a "multiplayer_break" key with a value of "client" or "server".
+//		NOTE: if specifying non-default behavior, the top-level breakable and the breakable pieces
+//			  need to "agree".
+// 		NOTE:	Make sure you add a prop data heading to all children that are labeled "debris"	"0" and "multiplayer_break" "server"
+//
+//
+"PropData.txt"
+{
+
+
+//=================================================================================
+//		CLOTH
+//=================================================================================
+	// Base damage modifiers for cloth objects
+	// DON'T USE THIS FOR A PROP. USE THE NON.BASE ONES.
+	"Cloth.Base"
+	{
+		"dmg.bullets"		"0.5"
+		"dmg.club"		"0.75"
+		"dmg.explosive" 	"1.5"
+	}
+
+	// Small / thin cloth objects 
+	//	i.e. shorts, shirts, pants.
+	"Cloth.Small"
+	{
+		"base"		"Cloth.Base"
+		"health"	"30"
+	}
+
+	// Heavier cloth / leather objects
+	//	i.e. briefcases 
+	"Cloth.Medium"
+	{
+		"base"		"Cloth.Base"
+		"health"	"50"
+	}
+
+	// Large / thick cloth objects
+	//	i.e. armchairs, mattresses
+	"Cloth.Large"
+	{
+		"base"		"Cloth.Base"
+		"health"	"100"
+		"physicsmode"	"1"
+	}
+
+	// Misc cloth objects
+	//	i.e. stuffed animals, hats, etc.
+	"Cloth.Object"
+	{
+		"base"		"Cloth.Base"
+		"physicsmode"	"3"
+	}
+
+	// Medium undamageable objects / luggage
+	//	i.e. suitcases, luggage
+	"Cloth.MediumNonBreak"
+	{
+		"base"		"Cloth.Base"
+		"physicsmode"	"1"
+	}
+
+
+
+
+
+//=================================================================================
+//		DOORS
+//=================================================================================
+	// Base damage modifiers for doors
+	// All doors have the same propdata - metal/wood/etc is handled in the door QC!
+	"Door.Standard"
+	{
+		"dmg.bullets"		"1.0"
+		"dmg.club"			"1.25"
+		"dmg.explosive" 	"1.5"
+		"health"			"1000"
+	}
+
+
+//=================================================================================
+//		FLESH
+//=================================================================================
+	// Base damage modifiers for flesh objects
+	// DON'T USE THIS FOR A PROP. USE THE NON.BASE ONES.
+	"Flesh.Base"
+	{
+		"dmg.bullets"		"1.25"
+		"dmg.club"		"1.0"
+		"dmg.explosive" 	"1.5"
+	}
+
+	// Flesh blocks that should die in a single hit
+	// i.e. fruit, food items, gibs.
+	"Flesh.Tiny"
+	{
+		"base"		"Flesh.Base"
+		"health"	"3"
+	}
+
+	// Flesh blocks, less than 1 foot cubed
+	// i.e. fruit, food items, gibs.
+	"Flesh.Small"
+	{
+		"base"		"Flesh.Base"
+		"health"	"10"
+	}
+
+//=================================================================================
+//		GLASS
+//=================================================================================
+	// Base damage modifiers for glass objects
+	// DON'T USE THIS FOR A PROP. USE THE NON.BASE ONES.
+	"Glass.Base"
+	{
+		"dmg.bullets"		"1.0"
+		"dmg.club"		"1.0"
+		"dmg.explosive" 	"0.1"		// Trial: Get knocked around more than destroyed?
+	}
+
+	// Glass blocks, less than 1 foot cubed
+	// i.e. bottles, jugs, glasses.
+	"Glass.Small"
+	{
+		"base"		"Glass.Base"
+		"health"	"5"
+		"physicsmode"	"3"
+		"damage_table"		"glass"
+	}
+
+	"Glass.Window"
+	{
+		"base"			"Glass.Base"
+		"dmg.explosive" 	"1.0"		// Override base glass explosive behavior
+		"dmg.bullets"		"0.5"
+		"health"			"1"
+		"physicsmode"		"1"
+		"damage_table"		"glass"
+	}
+
+	"Glass.CSWindow"
+	{
+		"base"			"Glass.Window"
+		"health"		"1"				// Shatter immediately, even from grenades.
+		
+	}
+
+	"Glass.picture"
+	{
+		"base"			"Glass.Base"
+		"physicsmode"		"3"
+	}
+	"Glass.CSWindow2"
+	{
+		"base"			"Glass.Window"
+		"health"		"1"				// Shatter immediately, even from grenades.
+		"physicsmode"		"1"
+		
+	}
+
+//=================================================================================
+//		ITEMS
+//=================================================================================
+	// Base damage modifiers for items
+	// DON'T USE THIS FOR A PROP. USE THE NON.BASE ONES.
+	"Item.Base"
+	{
+		"dmg.bullets"		"1.0"
+		"dmg.club"			"1.0"
+		"dmg.explosive" 	"1.0"
+
+		"health"			"0"		// By default, metal objects aren't breakable
+	}
+
+	// Plastic blocks, less than 2 foot cubed
+	// i.e. plastic cups, plastic milk crates, phones
+	"Item.Small"
+	{
+		"base"		"Item.Base"
+	}
+
+	// Plastic blocks, less than 4 foot cubed
+	// i.e. plastic chairs, tables, barrels
+	"Item.Medium"
+	{
+		"base"		"Item.Base"
+	}
+	
+	// Large Plastic objects, or medium objects with mixes of plastic & metal that you still want destructable
+	// i.e. computer equipment
+	"Item.Large"
+	{
+		"base"		"Item.Base"
+		"physicsmode"	"1"
+	}
+
+//=================================================================================
+//		METAL
+//=================================================================================
+	// Base damage modifiers for metal objects
+	// DON'T USE THIS FOR A PROP. USE THE NON.BASE ONES.
+	"Metal.Base"
+	{
+		"dmg.bullets"		"1.0"
+		"dmg.club"		"1.0"
+		"dmg.explosive" 	"1.0"
+
+		"health"			"0"		// By default, metal objects aren't breakable
+	}
+
+	// Small metal blocks, less than 1 foot cubed
+	// i.e. tin cans, paint tins, metal buckets.
+	"Metal.Small"
+	{
+		"base"		"Metal.Base"
+	}
+
+	// Medium metal objects.
+	// i.e. wheelbarrows, metal boxes, bicycles, barrels, ladders, filing cabinets.
+	"Metal.Medium"
+	{
+		"base"		"Metal.Base"
+		"physicsmode"	"1"
+	}
+
+	// Large metal objects.
+	// i.e. ibeams, dumpsters, car bodies, refridgerators
+	"Metal.Large"
+	{
+		"base"		"Metal.Base"
+		"physicsmode"	"1"
+	}
+
+	// Breakable Medium Metal objects
+	"Metal.break"
+	{
+		"base"		"Metal.Base"
+		"physicsmode"	"1"
+		"health"	"10"
+	}
+
+	// Breakable Medium Metal objects
+	"Metal.break2"
+	{
+		"base"		"Metal.Base"
+		"physicsmode"	"1"
+		"health"	"100"
+	}
+
+	// Breakable Large Metal objects
+	// i.e. gas pumps
+	"Metal.break3"
+	{
+		"base"		"Metal.Base"
+		"physicsmode"	"1"
+		"health"	"100"
+	}
+
+	// Medium metal objects (Client Side).
+	// i.e. wheelbarrows, metal boxes, bicycles, barrels, ladders, filing cabinets.
+	"Metal.MediumClient"
+	{
+		"base"		"Metal.Base"
+		"physicsmode"	"3"
+	}
+
+	"Metal.GasCan"
+	{
+		"base" "Metal.Small"
+		"dmg.bullets"		"1.0"
+		"dmg.club"		"0"
+		"dmg.explosive" 	"1.0"
+		"health"		"20"
+		"explosion_type"	"molotov"
+	}
+
+	"Metal.PropaneTank"
+	{
+		"base" "Metal.GasCan"
+		"explosion_type"	"grenade"
+	}
+
+	"Metal.OxygenTank"
+	{
+		"base" "Metal.GasCan"
+		"explosion_type"	"grenade"
+		"explosive_damage"	"90"
+		"explosive_radius"	"200"
+		"explosion_delay"	"2"
+		"explosion_buildup"	"OxygenTank.Whine"
+	}
+
+	// Large metal objects with health.
+	// i.e. ibeams, dumpsters, car bodies, refridgerators
+	"Metal.LargeHealth"
+	{
+		"base"		"Metal.Base"
+		"physicsmode"	"1"
+		"health"		"200"
+	}
+
+
+//=================================================================================
+//		PAPER
+//=================================================================================
+	// Base damage modifiers for paper objects
+	// DON'T USE THIS FOR A PROP. USE THE NON.BASE ONES.
+	"Cardboard.Base"
+	{
+		"dmg.bullets"		"0.5"
+		"dmg.club"		"1.25"
+		"dmg.explosive" 	"1.5"
+	}
+
+	// Cardboard / Paper blocks, less than 1 foot cubed.
+	//	i.e. small cardboard boxes, notepads, newspapers, thin books.
+	"Cardboard.Small"
+	{
+		"base"		"Cardboard.Base"
+		"health"	"10"
+	}
+
+	// Cardboard / Paper blocks, less than 3 foot cubed.
+	//	i.e. cardboard boxes. thick books
+	"Cardboard.Medium"
+	{
+		"base"		"Cardboard.Base"
+		"health"	"20"
+	}
+
+	// Large Cardboard / Paper blocks
+	//	i.e. solid cardboard boxes
+	"Cardboard.Large"
+	{
+		"base"		"Cardboard.Base"
+		"health"	"40"
+		"physicsmode"	"1"
+	}
+
+	// Cardboard Boxes full of paper
+	//	i.e. fileboxes, boxes of paper
+	"Cardboard.break"
+	{
+		"base"		"Cardboard.Base"
+		"health"	"10"
+		"physicsmode"	"1"
+	}
+	// Cardboard / Paper blocks, less than 1 foot cubed.
+	//	i.e. small cardboard boxes, notepads, newspapers, thin books.
+	"Cardboard.Indestructable"
+	{
+		"base"		"Cardboard.Base"
+	}
+
+	// Cardboard Boxes full of paper
+	//	i.e. fileboxes, boxes of paper
+	"Cardboard.breakclient"
+	{
+		"base"		"Cardboard.Base"
+		"health"	"10"
+		"physicsmode"	"3"
+	}
+
+	// Cardboard Boxes (non-breakable physics)
+	//	i.e. fileboxes, boxes of paper
+	"Cardboard.physics"
+	{
+		"base"		"Cardboard.Base"
+		"physicsmode"	"3"
+	}
+
+
+//=================================================================================
+//		PLASTIC
+//=================================================================================
+	// Base damage modifiers for plastic objects
+	// DON'T USE THIS FOR A PROP. USE THE NON.BASE ONES.
+	"Plastic.Base"
+	{
+		"dmg.bullets"		"1.0"
+		"dmg.club"		"1.0"
+		"dmg.explosive" 	"1.0"
+		"health"		"0"
+	}
+
+	// Plastic blocks, less than 2 foot cubed
+	// i.e. plastic cups, plastic milk crates, phones
+	"Plastic.Small"
+	{
+		"base"		"Plastic.Base"
+	}
+
+	// Plastic blocks, less than 4 foot cubed
+	// i.e. plastic chairs, tables, barrels
+	"Plastic.Medium"
+	{
+		"base"		"Plastic.Base"
+	}
+	
+	// Large Plastic objects, or medium objects with mixes of plastic & metal that you still want destructable
+	// i.e. computer equipment
+	"Plastic.Large"
+	{
+		"base"		"Plastic.Base"
+		"physicsmode"	"1"
+	}
+
+
+	// Breakable medium plastic objects
+	"Plastic.break"
+	{
+		"base"		"Plastic.Base"
+		"physicsmode"	"1"
+		"health"	"10"
+	}
+
+	// Breakable small plastic objects
+	"PlasticSmall.break"
+	{
+		"base"		"Plastic.Base"
+		"physicsmode"	"3"
+		"health"	"10"
+	}
+
+
+	// Breakable small plastic objects
+	"Plastic.Small2"
+	{
+		"base"		"Plastic.Base"
+		"physicsmode"	"1"
+	}
+
+
+	// Plastic blocks, less than 2 foot cubed
+	// i.e. plastic cups, plastic milk crates, phones
+	"Plastic.SmallClient"
+	{
+		"base"		"Plastic.Base"
+		"physicsmode"	"3"
+	}
+
+//=================================================================================
+//		POTTERY
+//=================================================================================
+	// Base damage modifiers for pottery objects
+	// DON'T USE THIS FOR A PROP. USE THE NON.BASE ONES.
+	"Pottery.Base"
+	{
+		"dmg.bullets"		"1.0"
+		"dmg.club"		"1.25"
+		"dmg.explosive" 	"1.5"
+	}
+
+	// Pottery blocks, less than 2 foot cubed
+	// i.e. flowerpots.
+	"Pottery.Small"
+	{
+		"base"		"Pottery.Base"
+		"health"	"5"
+		"damage_table"		"glass"
+	}
+
+	// Medium pottery objects
+	// i.e. large flowerpots.
+	"Pottery.Medium"
+	{
+		"base"		"Pottery.Base"
+		"health"	"40"
+	}
+
+	// Large pottery objects
+	// i.e. big chunks of wall plaster
+	"Pottery.Large"
+	{
+		"base"		"Pottery.Base"
+		"health"	"70"
+		"physicsmode"	"1"
+	}
+
+	// Huge pottery objects.
+	// i.e. big ornate pottery vessels.
+	"Pottery.Huge"
+	{
+		"base"		"Pottery.Base"
+		"health"	"100"
+		"physicsmode"	"1"
+	}
+
+	// Breakable small pottery
+	"Pottery.break"
+	{
+		"base"		"Pottery.Base"
+		"physicsmode"	"3"
+		"health"	"20"
+	}
+
+	// small potted plants
+	"Pottery.Plant"
+	{
+		"base"		"Pottery.Base"
+		"physicsmode"	"3"
+	}
+
+	// Breakable small pottery (Server Side)
+	"Pottery.break2"
+	{
+		"base"		"Pottery.Base"
+		"physicsmode"	"1"
+		"health"	"20"
+	}
+
+	// small potted plants (Breakable)
+	"Pottery.PlantBreak"
+	{
+		"base"		"Pottery.Base"
+		"physicsmode"	"3"
+		"health"	"20"
+	}
+
+
+
+//=================================================================================
+//		STONE
+//=================================================================================
+	// Base damage modifiers for stone objects
+	// DON'T USE THIS FOR A PROP. USE THE NON.BASE ONES.
+	"Stone.Base"
+	{
+		"dmg.bullets"		"1.0"
+		"dmg.club"		"1.0"
+		"dmg.explosive" 	"1.0"
+	}
+
+	// Stone blocks, less than 1 foot cubed
+	// i.e. cinderblocks, small rocks.
+	"Stone.Small"
+	{
+		"base"		"Stone.Base"
+		"health"	"50"
+		"physicsmode"	"3"
+	}
+
+	// Medium stone blocks, less than 3 foot cubed
+	// i.e. rubble chunks
+	"Stone.Medium"
+	{
+		"base"		"Stone.Base"
+		"health"	"100"
+	}
+
+	// Large stone blocks, less than 5 foot cubed
+	// i.e. big rubble chunks
+	"Stone.Large"
+	{
+		"base"		"Stone.Base"
+		"health"	"200"
+		"physicsmode"	"1"
+	}
+
+
+	// Large stone blocks, less than 5 foot cubed
+	// i.e. big rubble chunks 	CLIENT SIDE
+	"Stone.LargeClient"
+	{
+		"base"		"Stone.Base"
+		"health"	"200"
+		"physicsmode"	"3"
+	}
+
+	// Huge stone blocks, less than 5 foot cubed
+	// i.e. enormous rubble chunks
+	"Stone.Huge"
+	{
+		"base"		"Stone.Base"
+		"health"	"400"
+		"physicsmode"	"1"
+	}
+
+	// Gigantic stone blocks, more than 5 foot cubed
+	// i.e. only damaged by the bomb
+	"Stone.Gigantic"
+	{
+		"base"		"Stone.Base"
+		"health"	"600"
+		"physicsmode"	"1"
+	}
+
+	// Large stone blocks, less than 5 foot cubed
+	// i.e. big rubble chunks
+	"Stone.LargeServerCollision"
+	{
+		"base"		"Stone.Base"
+		"health"	"100"
+		"physicsmode"	"1"
+		"multiplayer_break" "server"
+	}
+
+
+	// Large stone blocks, less than 5 foot cubed
+	// i.e. big rubble chunks
+	"Stone.LargeBreak"
+	{
+		"base"		"Stone.Base"
+		"health"	"200"
+		"physicsmode"	"1"
+		"breakable_model" "ConcreteChunks"
+		"breakable_count" "2"
+	}
+
+
+
+//=================================================================================
+//		WOOD
+//=================================================================================
+	// Base damage modifiers for wooden objects
+	// DON'T USE THIS FOR A PROP. USE THE NON.BASE ONES.
+	"Wooden.Base"
+	{
+		"dmg.bullets"		"0.75"
+		"dmg.club"		"2.0"
+		"dmg.explosive" 	"1.5"
+		
+		"breakable_model"	"WoodChunks"
+		"breakable_skin"	"0"
+	}
+
+	// Tiny Wooden pieces that should die in one hit
+	//	i.e splinters
+	"Wooden.Tiny"
+	{
+		"base"			"Wooden.Base"
+		"health"		"6"
+		"physicsmode"		"3"
+
+		"breakable_count"	"0"
+		
+	}
+
+	// Wooden blocks, less than 1 foot cubed.
+	//	i.e pieces of board, branches.
+	"Wooden.Small"
+	{
+		"base"			"Wooden.Base"
+		"health"		"20"
+		
+		"breakable_count"	"2"
+	}
+
+	// Wooden blocks, less than 1 foot cubed.
+	//	i.e pieces of board, branches. Client side
+	"Wooden.Small_Client"
+	{
+		"base"			"Wooden.Base"
+		"health"		"20"
+		"physicsmode"		"3"
+		"breakable_count"	"2"
+	}
+
+	"Wooden.Chair"
+	{
+		"base"			"Wooden.Base"
+		"health"		"30"
+		"physicsmode"	"3"
+		"breakable_count"	"4"
+	}
+
+	// Wooden blocks, less than 3 foot cubed.
+	//	i.e boards, small crates, pallettes, ladders, chairs.
+	"Wooden.Medium"
+	{
+		"base"			"Wooden.Base"
+		"health"		"30"
+		
+		"breakable_count"	"4"
+	}
+
+	// Wooden blocks, less than 3 foot cubed.
+	//	i.e boards, small crates, pallettes, ladders, chairs.
+	// Infected will always decide to break these instead of climb on them
+	"Wooden.Medium.NoStand"
+	{
+		"base"			"Wooden.Medium"
+		"AIWalkable"	"0"
+	}
+
+	// Large wooden blocks, less than 5 foot cubed.
+	//	i.e Crates, benches.
+	"Wooden.Large"
+	{
+		"base"			"Wooden.Base"
+		"health"		"50"
+		"physicsmode"		"1"
+		"breakable_count"	"6"
+	}
+
+	// Huge wooden objects.
+	//	i.e Big Wardrobes, bookcases
+	"Wooden.Huge"
+	{
+		"base"			"Wooden.Base"
+		"health"		"130"
+		"physicsmode"		"1"
+
+		"breakable_count"	"10"
+	}
+
+	// small wooden objects
+	//	i.e sticks
+	"Wooden.sticks"
+	{
+		"base"			"Wooden.Base"
+		"physicsmode"		"3"
+		"breakable_count"	"0"
+		
+	}
+
+	// Breakable Barrels
+	// i.e Wine Barrel in de_Inferno
+	"Wooden.Barrel"
+	{
+		"base"			"Wooden.Base"
+		"health"		"50"
+		"physicsmode"		"1"
+
+		"breakable_count"	"0"
+		
+	}
+
+	// Wooden blocks, less than 1 foot cubed.
+	//	i.e pieces of board, branches. (Server side version)
+	"Wooden.Small2"
+	{
+		"base"			"Wooden.Base"
+		"health"		"1"
+		"physicsmode"		"1"
+		"breakable_count"	"2"
+	}
+
+	// Breakable Barrels
+	// i.e Wine Barrel in de_Inferno
+	"Wooden.Barrel2"
+	{
+		"base"			"Wooden.Base"
+		"health"		"201"
+		"physicsmode"		"1"
+
+		"breakable_count"	"0"
+		
+	}
+
+	"Wood.LargeServerCollision"
+	{
+		"base"		"wood.Base"
+		"health"	"100"
+		"physicsmode"	"1"
+		"multiplayer_break" "server"
+	}
+
+	// Large wooden blocks, less than 5 foot cubed.
+	//	i.e Crates, benches.
+	"Wooden.LargeNoBreak"
+	{
+		"base"			"Wooden.Base"
+		"health"		"0"
+		"physicsmode"		"1"
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+//=================================================================================
+//		BREAKABLE DATA. NOT PROPDATA TYPES.
+//=================================================================================
+	"BreakableModels"
+	{
+		// Sorted in order of smallest to largest
+
+		"WoodChunks"
+		{
+			"models\Gibs\wood_gib01e.mdl"	"1"
+			"models\Gibs\wood_gib01d.mdl"	"1"
+			"models\Gibs\wood_gib01c.mdl"	"1"
+			"models\Gibs\wood_gib01b.mdl"	"1"
+			"models\Gibs\wood_gib01a.mdl"	"1"
+		}
+		"GlassChunks"
+		{
+			"models\Gibs\Glass_shard01.mdl"	"1"
+			"models\Gibs\Glass_shard02.mdl"	"1"
+			"models\Gibs\Glass_shard03.mdl"	"1"
+			"models\Gibs\Glass_shard04.mdl"	"1"
+			"models\Gibs\Glass_shard05.mdl"	"1"
+			"models\Gibs\Glass_shard06.mdl"	"1"
+		}
+		"ConcreteChunks"
+		{
+			"models\props_debris\concrete_chunk08a.mdl"	"1"
+			"models\props_debris\concrete_chunk09a.mdl"	"1"
+			"models\props_debris\concrete_chunk03a.mdl"	"1"
+			"models\props_debris\concrete_chunk07a.mdl"	"1"
+			"models\props_debris\concrete_chunk09a.mdl"	"1"
+			"models\props_debris\concrete_chunk02a.mdl"	"1"
+		}
+		"MetalChunks"
+		{
+			"models\Gibs\metal_gib1.mdl"			"1"
+			"models\Gibs\metal_gib2.mdl"			"1"
+			"models\Gibs\metal_gib3.mdl"			"1"
+			"models\Gibs\metal_gib4.mdl"			"1"
+			"models\Gibs\metal_gib5.mdl"			"1"
+		}
+	}
+}

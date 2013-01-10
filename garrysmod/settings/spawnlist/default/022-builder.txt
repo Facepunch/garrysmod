@@ -1,0 +1,8 @@
+"TableToKeyValues"
+{
+	"parentid"		"0"
+	"icon"		"icon16/folder.png"
+	"id"		"22"
+	"name"		"Builder"
+	"version"		"3"
+}

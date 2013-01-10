@@ -1,0 +1,108 @@
+
+<div class="page" ng-controller="ControllerAddons">
+
+		<div class="options">
+
+			<ul>
+
+				<li><h2 ng-tranny="'addons'"></h2></li>
+
+				<li>&nbsp;</li>
+
+				<li><a class="{{IfElse( Category == 'subscribed', 'active', '' )}}" ng-click="Switch( 'subscribed', 0 )" ng-Tranny="'addons.subscribed'"></a>
+					<ul ng-show="Tagged == 'subscribed'" class="submenu">
+						<li><a ng-click="DisableAllSubscribed()" ng-Tranny="'addons.disableall'"></a></li>
+						<li><a ng-click="EnableAllSubscribed()" ng-Tranny="'addons.enableall'"></a></li>
+					</ul>
+				</li>
+
+				<li>&nbsp;</li>
+
+				<li ng-repeat="typename in AddonTypes">
+
+					<a class="{{IfElse( Tagged == typename, 'active', '' )}}" ng-click="SwitchWithTag( 'trending', 0, typename )" ng-Tranny="'addons.'+typename"></a>
+
+					<ul ng-show="Tagged == typename" class="submenu">
+						<li><a class="{{IfElse( Category == 'trending', 'active', '' )}}" ng-click="SwitchWithTag( 'trending', 0, Tagged )" ng-Tranny="'addons.trending'"></a></li>
+						<li><a class="{{IfElse( Category == 'popular', 'active', '' )}}" ng-click="SwitchWithTag( 'popular', 0, Tagged )" ng-Tranny="'addons.toprated'"></a></li>
+						<li><a class="{{IfElse( Category == 'latest', 'active', '' )}}" ng-click="SwitchWithTag( 'latest', 0, Tagged )" ng-Tranny="'addons.newest'"></a></li>
+					</ul>
+				</li>
+
+				<li>&nbsp;</li>
+
+				<li><a class="{{IfElse( Category == 'friends', 'active', '' )}}" ng-click="Switch( 'friends', 0 )" ng-Tranny="'addons.friends'"></a></li>
+				<li><a class="{{IfElse( Category == 'mine', 'active', '' )}}" ng-click="Switch( 'mine', 0 )" ng-Tranny="'addons.mine'"></a></li>
+
+				<li>&nbsp;</li>
+
+				<li><a ng-click="OpenWorkshop()" ng-Tranny="'addons.openworkshop'"></a></li>
+
+			</ul>
+
+		</div>
+
+		<div style="position: absolute; left: 320px; top: 16px; bottom: 16px; right: 16px; padding: 16px; padding-top: 0;">
+			
+			<h1 class="menuheader">
+				<span ng-Tranny="'addons.'+Tagged">...</span>
+				<small ng-Tranny="'addons.'+Tagged + '.subtitle'">...</small>
+			</h1>
+
+			<workshopcontainer>
+
+				<workshopmessage ng-show="Loading" ng-Tranny="'addons.loading'">...</workshopmessage>
+				<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'addons.none'">...</workshopmessage>
+				
+
+				<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px"  class="{{IfElse( IsSubscribed( file ) && !IsEnabled( file ), 'disabled', '' )}} {{IfElse( IsSubscribed( file ), 'installed', '' )}}">
+
+					<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
+						<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
+					</preview>
+
+					<name ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}</name>
+					<author ng-hide="file.local">{{file.info.ownername}}</author>
+					<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
+					<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
+					<description>{{file.info.description}}</description>
+
+					<controls>
+
+						<left>
+							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>	
+							<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
+							<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'demos.publish'">..</control>
+							<control ng-show="file.local" ng-click="DeleteLocal( file )" ng-Tranny="'demos.delete'">..</control>
+						</left>
+
+						<right>
+							<control ng-show="IsSubscribed( file ) && IsEnabled( file )" ng-click="Disable( file )" ng-Tranny="'addon.disable'">..</control>
+							<control ng-show="IsSubscribed( file ) && !IsEnabled( file )" ng-click="Enable( file )" ng-Tranny="'addon.enable'">..</control>
+
+							<control ng-hide="IsSubscribed( file )" ng-click="Subscribe( file )" ng-Tranny="'addon.subscribe'">..</control>
+							<control ng-show="IsSubscribed( file )" ng-click="Unsubscribe( file )" ng-Tranny="'addon.unsubscribe'">..</control>
+						</right>
+
+					</controls>
+
+				</workshopicon>
+
+			</workshopcontainer>
+
+				<center>
+					<pagnation ng-hide="Loading || TotalResults == 0">
+
+					<a class="back" ng-click="Go( PerPage * -1 )">&nbsp;</a>
+					<a class="next" ng-click="Go( PerPage * 1 )">&nbsp;</a>
+
+					<div style="overflow: hidden; margin-top: 3px;">
+						<span ng-repeat="p in Pages"><a ng-show="p == Page" ng-click="GoToPage( p )"><img src='img/page_active.png?1' /></a><a ng-hide="p == Page"ng-click="GoToPage( p )"><img src='img/page_active.png?1' style="opacity: 0.5"/></a></span>
+					</div>
+
+					</pagnation>
+				</center>
+			
+		</div>
+
+	</div>

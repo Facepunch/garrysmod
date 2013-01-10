@@ -1,0 +1,34 @@
+"Eye"
+{
+	"decals/eye" 	"1"
+}
+
+"Smile"
+{
+	"decals/smile" 	"1"
+}
+
+"Light"
+{
+	"decals/light" 	"1"
+}
+
+"Dark"
+{
+	"decals/dark" 	"1"
+}
+
+"Noughtsncrosses"
+{
+	"decals/noughtsncrosses" 	"1"
+}
+
+"Nought"
+{
+	"decals/nought" 	"1"
+}
+
+"Cross"
+{
+	"decals/cross" 	"1"
+}

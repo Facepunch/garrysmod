@@ -1,0 +1,85 @@
+
+<div class="page" ng-controller="ControllerDemos">
+
+		<div class="options">
+
+			<ul>
+
+				<li><h2 ng-tranny="'demos'"></h2></li>
+
+				<li>&nbsp;</li>
+
+				<li><a class="{{IfElse( Category == 'local', 'active', '' )}}" ng-click="Switch( 'local', 0 )" ng-Tranny="'demos.local'"></a></li>
+
+				<li>&nbsp;</li>
+
+				<li><a class="{{IfElse( Category == 'popular', 'active', '' )}}" ng-click="Switch( 'popular', 0 )" ng-Tranny="'demos.popular'"></a></li>
+				<li><a class="{{IfElse( Category == 'latest', 'active', '' )}}" ng-click="Switch( 'latest', 0 )" ng-Tranny="'demos.latest'"></a></li>
+				<li><a class="{{IfElse( Category == 'friends', 'active', '' )}}" ng-click="Switch( 'friends', 0 )" ng-Tranny="'demos.friends'"></a></li>
+				<li><a class="{{IfElse( Category == 'mine', 'active', '' )}}" ng-click="Switch( 'mine', 0 )" ng-Tranny="'demos.mine'"></a></li>
+				<li>&nbsp;</li>
+
+				<li><a ng-click="OpenFolder( 'demos' )" ng-Tranny="'demos.openfolder'"></a></li>
+
+			</ul>
+
+		</div>
+
+		<div style="position: absolute; left: 320px; top: 16px; bottom: 16px; right: 16px; padding: 16px; padding-top: 0;">
+			
+			<h1 class="menuheader"><span ng-Tranny="'demos.'+Category">...</span><small ng-Tranny="'demos.'+Category + '.subtitle'">...</small></h1>
+
+			<workshopcontainer>
+
+				<workshopmessage ng-show="Loading" ng-Tranny="'demos.loading'">...</workshopmessage>
+				<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'demos.none'">...</workshopmessage>
+				
+
+				<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px">
+
+					<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
+						<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
+					</preview>
+
+					<name ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}</name>
+					<author ng-hide="file.local">{{file.info.ownername}}</author>
+					<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
+					<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
+					<description>{{file.info.description}}</description>
+
+					<controls>
+
+						<left>
+							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>	
+							<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
+							<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'demos.publish'">..</control>
+							<control ng-show="file.local" ng-click="DeleteLocal( file )" ng-Tranny="'demos.delete'">..</control>
+						</left>
+
+						<right>
+							<control ng-click="DemoToVideo( file )" ng-Tranny="'demos.video'">..</control>
+							<control ng-click="PlayDemo( file )" ng-Tranny="'demos.play'">..</control>
+						</right>
+
+					</controls>
+
+				</workshopicon>
+
+				<center>
+					<pagnation ng-hide="Loading || TotalResults == 0">
+
+					<a class="back" ng-click="Go( PerPage * -1 )">&nbsp;</a>
+					<a class="next" ng-click="Go( PerPage * 1 )">&nbsp;</a>
+
+					<div style="overflow: hidden; margin-top: 3px;">
+						<span ng-repeat="p in Pages"><a ng-show="p == Page" ng-click="GoToPage( p )"><img src='img/page_active.png?1' /></a><a ng-hide="p == Page"ng-click="GoToPage( p )"><img src='img/page_active.png?1' style="opacity: 0.5"/></a></span>
+					</div>
+
+					</pagnation>
+				</center>
+
+			</workshopcontainer>
+			
+		</div>
+
+	</div>

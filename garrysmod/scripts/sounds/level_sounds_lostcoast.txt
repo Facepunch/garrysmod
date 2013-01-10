@@ -1,0 +1,165 @@
+//
+//
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+//
+// VOL_NORM		1.0f
+//
+//-----------------------------------------------------------------------------
+// common attenuation values
+//-----------------------------------------------------------------------------
+//
+// DON'T USE THESE - USE SNDLVL_ INSTEAD!!!
+//	ATTN_NONE		0.0f	
+//	ATTN_NORM		0.8f
+//	ATTN_IDLE		2.0f
+//	ATTN_STATIC		1.25f 
+//	ATTN_RICOCHET	1.5f
+//	ATTN_GUNFIRE	0.27f
+//
+//	SNDLVL_NONE		= 0,
+//	SNDLVL_25dB		= 25,
+//	SNDLVL_30dB		= 30,
+//	SNDLVL_35dB		= 35,
+//	SNDLVL_40dB		= 40,
+//	SNDLVL_45dB		= 45,
+//	SNDLVL_50dB		= 50,	= 3.9
+//	SNDLVL_55dB		= 55,	= 3.0
+//	SNDLVL_IDLE		= 60,	= 2.0
+//	SNDLVL_TALKING		= 60,	= 2.0
+//	SNDLVL_60dB		= 60,	= 2.0
+//	SNDLVL_65dB		= 65,	= 1.5
+//	SNDLVL_STATIC		= 66,	= 1.25
+//	SNDLVL_70dB		= 70,	= 1.0
+//	SNDLVL_NORM		= 75,
+//	SNDLVL_75dB		= 75,	= 0.8
+//	SNDLVL_80dB		= 80,	= 0.7
+//	SNDLVL_85dB		= 85,	= 0.6
+//	SNDLVL_90dB		= 90,	= 0.5
+//	SNDLVL_95dB		= 95,
+//	SNDLVL_100dB	= 100,	= 0.4
+//	SNDLVL_105dB	= 105,
+//	SNDLVL_120dB	= 120,
+//	SNDLVL_130dB	= 130,
+//	SNDLVL_GUNFIRE	= 140, = 0.27
+//	SNDLVL_140dB	= 140,	= 0.2
+//	SNDLVL_150dB	= 150,	= 0.2
+//
+
+
+"lostcoast.wind_01"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_100dB"
+
+	"wave"			"ambient\wind\wind_rooftop1.wav"
+}
+
+"lostcoast.siren_citizen"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_100dB"
+
+	"wave"			"ambient/alarms/alarm_citizen_loop1.wav"
+}
+
+"lostcoast.bomb_beep"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"npc/turret_floor/ping.wav"
+}
+
+"lostcoast.gate_shut"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"0.15,0.25"
+	"soundlevel"  "SNDLVL_75dB"
+                "pitch"       "120,135"
+                "rndwave"
+                {
+	   		        "wave"	"doors/vent_open2.wav"
+                    "wave"	"doors/vent_open3.wav"
+                }
+}
+
+"lostcoast.church_music0"
+{
+	"channel"  "CHAN_STATIC"
+	"volume"  "0.45000"
+	"pitch"   "100"
+ 
+	"soundlevel" "0"
+ 
+	"wave"   "*#music/VLVX_Song3.mp3"
+}
+ 
+"NPC_Combine.Zipline_Start"
+{
+	"channel"	"CHAN_ITEM"
+	"volume"	"0.80"
+	"pitch"		"95,103"
+
+	"soundlevel"	"SNDLVL_90dB"
+	"rndwave"
+	{
+		"wave"		"npc/combine_soldier/zipline_clip1.wav"
+		"wave"		"npc/combine_soldier/zipline_clip2.wav"	
+	}
+}
+
+
+"NPC_Combine.Zipline_Mid"
+{
+	"channel"	"CHAN_ITEM"
+	"volume"	"0.80"
+	"pitch"		"95,103"
+
+	"soundlevel"	"SNDLVL_90dB"
+	"rndwave"
+	{
+		"wave"		"npc/combine_soldier/zipline1.wav"
+		"wave"		"npc/combine_soldier/zipline2.wav"	
+	}
+}
+
+"NPC_Combine.Zipline_MidClothing"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"0.80"
+	"pitch"		"95,103"
+
+	"soundlevel"	"SNDLVL_90dB"
+	"rndwave"
+	{
+		"wave"		"npc/combine_soldier/zipline_clothing1.wav"
+		"wave"		"npc/combine_soldier/zipline_clothing2.wav"	
+	}
+}
+
+"NPC_Combine.Zipline_End"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"0.80"
+	"pitch"		"95,103"
+
+	"soundlevel"	"SNDLVL_90dB"
+	"rndwave"
+	{
+		"wave"		"npc/combine_soldier/zipline_hitground1.wav"
+		"wave"		"npc/combine_soldier/zipline_hitground2.wav"	
+	}
+}
+
+

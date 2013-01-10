@@ -1,0 +1,54 @@
+"NPC_FastZombie.CarScream"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"1.0"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"wave"			"npc/fast_zombie/car_scream1.wav"
+}
+
+"NPC_FastZombie.CarEnter1"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"1.0"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"wave"			"npc/fast_zombie/zombie_on_car_01.wav"
+}
+
+"NPC_FastZombie.CarEnter2"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"1.0"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"wave"			"npc/fast_zombie/zombie_on_car_02.wav"
+}
+
+"NPC_FastZombie.CarEnter3"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"1.0"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"wave"			"npc/fast_zombie/zombie_on_car_03.wav"
+}
+
+"NPC_FastZombie.CarEnter4"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"1.0"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"wave"			"npc/fast_zombie/zombie_on_car_04.wav"
+}

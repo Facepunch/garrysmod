@@ -1,0 +1,321 @@
+BODY
+{
+	overflow: hidden;
+	background-color: transparent;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	-webkit-user-select: none;
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+}
+
+INPUT
+{
+	-webkit-user-select: auto;
+	font-size: 12px;
+}
+
+A
+{
+	text-decoration: none;
+}
+
+DIV.page
+{
+	position: absolute;
+	left: 200px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+}
+
+UL.category
+{
+	margin: 10px;
+	padding: 0;
+}
+
+UL.category LI:first-child
+{
+	list-style: none;
+	padding: 5px;
+	font-size: 32px;
+	color: #444;
+}
+
+UL.category LI:first-child small
+{
+	font-size: 14px;
+	color: #999;
+}
+
+UL.category LI.icon
+{
+	display: inline-block;
+}
+
+
+.scrollable
+{
+	overflow: auto;
+	right: 0px;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	position: absolute;
+}
+
+.btn-primary
+{
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08C), to(#05C));
+	border: 1px solid #CCC;
+	border-color: #05C #05C #003580;
+	color: white;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	border-radius: 6px;
+	cursor: pointer;
+	vertical-align: middle;
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover
+{
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e)); 
+}
+
+.btn-back
+{
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08C), to(#05C));
+	border: 1px solid #CCC;
+	border-color: #05C #05C #003580;
+	color: white;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	border-radius: 3px;
+	cursor: pointer;
+	vertical-align: middle;
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	height: 24px;
+}
+
+.btn-back:hover
+{
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e)); 
+}
+
+DIV.gridicon
+{
+	position: relative;
+	-webkit-background-size: cover;
+	height: 100px;
+	width: 300px;
+	float: left;
+	margin: 3px;
+	//border-radius: 2px;
+	background-position:center; 
+}
+
+DIV.gridicon name
+{
+	position: absolute;
+	display: block;
+	left: 0px;
+	right: 0px;
+	height: 18px;
+	top: 0px;
+	font-size: 14px;
+	font-weight: bold;
+	cursor: pointer;
+	overflow: hidden;
+	white-space: nowrap;
+	text-align: left;
+	color: #333;
+	padding: 8px;
+	background-color: rgba( 255, 255, 255, 0.8 );
+}
+
+DIV.disabled name
+{
+	text-decoration: line-through;
+	color: red;
+}
+
+
+DIV.disabled
+{
+	opacity: 0.6;
+}
+
+.whiterounded
+{
+	background-color: white;
+	border-radius: 4px;
+}
+
+pagnation
+{
+	position: absolute;
+	bottom: 4px;
+	left: 0px;
+	right: 0px;
+	text-align: center;
+	font-size: 17px;
+	font-weight: bolder;
+}
+
+
+left
+{
+	float: left;
+}
+
+right
+{
+	float: right;
+}
+
+loading 
+{
+	font-size: 48px;
+	font-weight: bolder;
+	color: #999;
+	text-align: center;
+	display: block;
+	margin: 64px;
+}
+
+.options
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	width: 200px;
+}
+
+workshopcontainer
+{
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	top: 0px;
+	background-color: transparent;
+}
+
+workshopmessage
+{
+	color: #fff;
+	text-shadow: 2px 2px black;
+}
+
+.options UL
+{
+	background-color: #5bF;
+	border: 3px solid #fff;
+	margin: 8px;
+	border-radius: 6px;
+	list-style: none;
+	padding: 4px;
+}
+
+.options UL LI
+{
+	padding: 1px;
+	margin: 0px;
+	border-radius: 2px;
+	-webkit-transition: all 0.2s;
+	color: #fff;
+	font-weight: bold;
+}
+
+.options UL LI.headline
+{
+	padding: 0px;
+	text-align: center;
+	font-size: 32px;
+	font-weight: bolder;
+	letter-spacing: -2px;
+	border-radius: 4px 4px 0 0;
+	color: #fff;
+	text-shadow: 1px 1px 4px rgba( 0, 0, 0, 0.3 );
+}
+
+.options UL LI.subtitle
+{
+	padding: 0px;
+	text-align: center;
+	font-size: 10px;
+	color: rgba( 255, 255, 255, 0.9);
+	margin-bottom: 10px;
+	border-radius: 0;
+	padding-bottom: 4px;
+	letter-spacing: 1px;
+	border-bottom: 1px solid rgba( 255, 255, 255, 0.6 );
+}
+
+.options UL LI button
+{
+	border: 1px solid rgba( 255, 255, 255, 0.5 );
+	border-radius: 2px;
+	padding: 4px 8px;
+	width: 100%;
+	background-color: rgba( 255, 255, 255, 0.5 );
+	margin: 0px;
+	cursor: pointer;
+	font-weight: bolder;
+	font-size: 18px;
+	color: #fff;
+	text-shadow: 0px 0px 6px rgba( 0, 0, 0, 0.1 );
+}
+
+.options UL LI button:hover
+{
+	background-color: rgba( 255, 255, 255, 0.8 );
+}
+
+.options UL LI A
+{
+	display: block;
+	color: #fff;
+}
+
+.options UL LI.active A
+{
+
+}
+
+.clickable
+{
+	cursor: pointer;
+	padding-left: 20px !important;
+}
+
+.disabled
+{
+	opacity: 0.3;
+	pointer-events: none;
+}
+
+.options UL LI UL, .options UL LI UL LI, .options UL LI.active
+{
+	margin: 0;
+	border: 0;
+	padding: 0;
+}
+
+.options UL LI UL
+{
+	font-size: 11px;
+}
+
+.options UL LI a
+{
+	//text-shadow: 1px 1px 1px rgba( 0, 0, 0, 0.5 );
+	color: rgba( 255, 255, 255, 0.9 );
+}
+
+.options UL LI a.active
+{
+	color: #fff;
+	text-shadow: 0px 0px 8px rgba( 255, 255, 255, 1.0 );
+}
+

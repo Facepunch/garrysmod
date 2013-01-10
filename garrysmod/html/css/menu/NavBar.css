@@ -1,0 +1,254 @@
+
+#NavBar
+{
+	position: absolute;
+	bottom: 0px;
+	height: 50px;
+	left: 0;
+	right: 0;
+	background-color: rgba( 0, 0, 0, 0.5 );
+}
+
+#NavBar UL
+{
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+#NavBar .left 
+{
+	text-align: left;
+	margin-left: 10px;
+	float: left;
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+#NavBar .right 
+{
+	float: right;
+	text-align: right;
+	margin-right: 6px;
+	width: 350px;
+	right: 0;
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+#NavBar UL.center 
+{
+	text-align: center;
+	left: 0;
+	right: 0;
+}
+
+
+#NavBar LI, UL.popup LI, #NavBar .button
+{
+	display: inline-block;
+	background-color: #fff;
+	border-radius: 4px;
+	height: 40px;
+	padding-left: 35px;
+	position: relative;
+	margin-right: 3px;
+	margin-top: 5px;
+	font-size: 11px;
+	text-align: left;
+	font-weight: bold;
+	cursor: pointer;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#NavBar .button
+{
+	display: block;
+	padding: 4px 5px 0px 5px;
+	height: 36px;
+	margin-left: 5px;
+	vertical-align: top;
+}
+
+#NavBar .button:hover
+{
+	box-shadow: 0px 0px 20px #fff;
+}
+
+#NavBar .button span
+{
+	position: relative;
+	top: -12px;
+	padding: 0px 10px;
+	color: #333;
+}
+
+#NavBar LI
+{
+	display: block;
+	float: right;
+}
+
+#NavBar LI SPAN, UL.gamemode_list LI SPAN, UL.language_list LI SPAN
+{
+	color: #333;
+	position: relative;
+	top: 11px;
+	padding-left: 8px;
+	padding-right: 16px;
+}
+
+#NavBar LI IMG, UL.gamemode_list LI IMG, UL.language_list LI IMG
+{
+	position: absolute;
+	left: 5px;
+	top: 5px;
+}
+
+UL.games_list
+{
+	right: 150px;
+	width: 230px;
+	overflow: auto;
+	max-height: 300px;
+	padding: 0;
+	border: 3px solid #333;
+}
+
+UL.games_list LI
+{
+	padding: 0;
+	height: 20px;
+	line-height: inherit;
+	white-space: nowrap;
+	overflow: hidden;
+	display: block;
+	border-radius: 2px;
+	margin: 0;
+	margin-right: 2px;
+	margin-bottom: 2px;
+	position: relative;
+}
+
+UL.games_list LI span
+{
+	position: absolute;
+	left: 25px;
+	right: 22px;
+	top: 3px;
+}
+
+UL.games_list LI IMG
+{
+	position: absolute;
+	left: 2px;
+	top: 2px;
+}
+
+UL.games_list LI.notinstalled
+{
+	opacity: 0.7;
+	cursor: default;
+}
+
+UL.games_list LI.notowned
+{
+	opacity: 0.7;
+	cursor: default;
+}
+
+UL.gamemode_list LI
+{
+	display: inherit;
+	margin: 3px;
+	border-radius: 0;
+}
+
+UL.gamemode_list LI:first-child
+{
+	border-radius: 3px 3px 0 0;
+}
+
+UL.gamemode_list LI:last-child
+{
+	border-radius: 0 0 3px 3px;
+}
+
+UL.language_list
+{
+	right: 100px;
+	background-color: #eee;
+	text-align: center;
+	border: 3px solid #333;
+}
+
+UL.language_list LI
+{
+	display: inline-block;
+	width: 26px;
+	height: 24px;
+	padding: 0;
+	background-color: transparent;
+}
+
+UL.language_list LI IMG
+{
+	border: 1px solid #888;
+}
+
+UL.language_list LI:hover
+{
+	background-color: #fff;
+}
+
+::-webkit-scrollbar
+{
+	width: 8px;
+	height: 8px;
+	background-color: rgb( 250, 250, 250 );
+	border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: rgb( 180, 180, 180);
+	border-radius: 2px;
+}
+
+.popup
+{
+	position: absolute;
+	bottom: 50px;
+	right: 10px;
+	width: 230px;
+	background-color: #333;
+	z-index: 1000;
+	padding: 0px;
+	border-radius: 3px;
+	list-style: none;
+	margin: 3px;
+	cursor: pointer;
+	display: none;
+}
+
+.kinect_settings
+{
+	right: 150px;
+	width: 230px;
+	overflow: auto;
+	max-height: 300px;
+	padding: 0;
+	border: 3px solid #333;
+}
+
+.kinect_settings LI
+{
+	display: block !important;
+	margin: 0 !important;
+	height: auto !important;
+	padding: 2px 16px !important;
+}

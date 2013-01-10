@@ -1,0 +1,211 @@
+ //-------------------------------------------------------------------------
+//
+// Game data for TTT
+//
+//-------------------------------------------------------------------------
+
+@include "base.fgd" 
+
+@BaseClass color(0 0 200) base(Targetname, Angles, Shadow) = Item
+[
+	output OnPlayerTouch(void) : "Fires when the player touches this object"
+]
+
+@PointClass base(Item) studio("models/items/boxsrounds.mdl")= item_ammo_pistol_ttt : "Box of Pistol ammo" []
+@PointClass base(Item) studio("models/items/boxmrounds.mdl")= item_ammo_smg1_ttt : "MAC10 ammo" []
+@PointClass base(Item) studio("models/items/357ammo.mdl")= item_ammo_357_ttt : "Box of Carbine ammo" []
+@PointClass base(Item) studio("models/items/BoxBuckshot.mdl")= item_box_buckshot_ttt : "Box Buckshot" []
+@PointClass base(Item) studio("models/items/357ammo.mdl")= item_ammo_revolver_ttt : "Box of Deagle ammo" []
+
+@PointClass base(Item) studio("models/items/boxflares.mdl")= ttt_random_ammo : "Random ammo" []
+@PointClass base(Item) studio("models/weapons/w_shotgun.mdl")= ttt_random_weapon : "Random weapon" [
+	auto_ammo(integer) : "Autospawn ammo items" : 0 : "Number of matching ammo entities to spawn around the weapon. Leave some room above this entity for the ammo, it will be spawned there, fall and end up around the gun. Set to 0 to disable."
+]
+
+@BaseClass color(0 0 200) base(Targetname, Angles) = Weapon
+[
+	spawnflags(Flags) =
+	[
+		1 : "Start constrained" : 0
+	]
+
+	output OnPlayerUse(void) : "Fires when the player +uses this weapon"
+	output OnPlayerPickup(void) : "Fires when the player picks up this weapon"
+	output OnNPCPickup(void) : "Fires when an NPC picks up this weapon"
+]
+
+@PointClass base(Weapon) studio("models/weapons/w_shot_xm1014.mdl") = weapon_zm_shotgun : "Shotgun" []
+@PointClass base(Weapon) studio("models/weapons/w_crowbar.mdl") = weapon_zm_improvised : "Crowbar" []
+@PointClass base(Weapon) studio("models/weapons/w_pist_fiveseven.mdl") = weapon_zm_pistol : "Pistol" []
+@PointClass base(Weapon) studio("models/weapons/w_snip_scout.mdl") = weapon_zm_rifle : "Carbine" []
+@PointClass base(Weapon) studio("models/weapons/w_eq_flashbang.mdl") = weapon_zm_molotov : "Incendiary Grenade" []
+@PointClass base(Weapon) studio("models/weapons/w_eq_smokegrenade.mdl") = weapon_ttt_smokegrenade : "Smoke Grenade" []
+@PointClass base(Weapon) studio("models/weapons/w_eq_fraggrenade.mdl") = weapon_ttt_confgrenade : "Discombobulator" []
+@PointClass base(Weapon) studio("models/weapons/w_smg_mac10.mdl") = weapon_zm_mac10 : "MAC 10" []
+@PointClass base(Weapon) studio("models/weapons/w_pist_deagle.mdl") = weapon_zm_revolver : "Deagle" []
+@PointClass base(Weapon) studio("models/weapons/w_mach_m249para.mdl") = weapon_zm_sledge : "HUGE249" []
+@PointClass base(Weapon) studio("models/weapons/w_rif_m4a1.mdl") = weapon_ttt_m16 : "M16" []
+@PointClass base(Weapon) studio("models/weapons/w_pist_glock18.mdl") = weapon_ttt_glock : "Glock" []
+
+@SolidClass base(Trigger, Targetname) iconsprite("editor/obsolete.vmt") = ttt_traitor_check :
+	"A trigger volume that checks if there is a traitor inside."
+[
+	input CheckForTraitor(void) : "Performs a traitor test and will fire TraitorsFound output"
+	
+	output TraitorsFound(integer) : "Fires when CheckForTraitor input was received. Parameter will be the number of traitors in the volume."
+]
+
+@SolidClass base(Trigger, Targetname) = ttt_weapon_check :
+	"A trigger volume that checks if a player with a certain weapon or weapon type is inside."
+[
+	input CheckForType(integer) : "Performs a weapon test and will fire WeaponsFound output. If parameter is 1: will check for any primary weapon. If parameter is 2: will check for secondary weapon. If parameter is 3: will check for traitor equipment. If parameter is 4: will check for grenades. If parameter is 5: will check for any weapon players do not spawn with."
+	input CheckForClass(string) : "Performs a weapon test and will fire WeaponsFound output. Parameter is a string: the entity name of the weapon to look for, eg. weapon_zm_shotgun. Only that weapon will be tested for."
+	
+	output WeaponsFound(integer) : "Fires when CheckForWeapons input was received. Parameter is 0 if no player with the requested weapon (type) is found, else it is 1."
+]
+
+@PointClass base(PlayerClass, Angles) studio("models/editor/playerstart.mdl") = info_player_deathmatch :
+	"This entity indicates the position and facing direction at which the player will spawn during a deathmatch map. Any number of "+
+	"info_player_deathmatch entities may be placed in a map."
+[
+]
+
+@PointClass base(Targetname, Parentname, Origin, Angles) = ttt_win :
+	"Point ent allowing map to trigger a victory for traitors or innocent."
+[
+	input TraitorWin(void) : "Traitors win the round."
+	input InnocentWin(void) : "Innocent terrorists win the round."
+
+]
+
+@PointClass base(Targetname, Origin, Angles) = ttt_map_settings :
+	"Point ent allowing map to specify some behaviors, such as whether crowbars unlock things."
+[
+	cbar_doors(choices) : "Crowbar unlocks doors" : 1 : "Enable crowbar unlocking func_door and func_door_rotating entities that have a targetname set, using an Unlock input." =
+	[
+		0 : "No"
+		1 : "Yes"
+	] 
+
+	cbar_buttons(choices) : "Crowbar unlocks buttons" : 1  : "Enable crowbar unlocking func_button entities that have a targetname set, using an Unlock input." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	cbar_other(choices) : "Crowbar opens func_movelinear" : 1 : "Enable crowbar opening func_movelinear entities that have a targetname set, using an Open input." =
+	[
+		0 : "No"
+		1 : "Yes"
+	] 
+	
+	plymodel(string) : "Force player model" : "" : "Sets playermodels. Should look like 'models/player/phoenix.mdl'. Set to empty for random."
+
+	propspec_allow_named(choices) : "Spectators can possess props that have a targetname set" : 0 : "Allow spectators to 'possess' named props that might be involved in map logic." = 
+	[
+		0 : "No"
+		1 : "Yes"
+	] 
+
+
+	input SetPlayerModels(string) : "Sets playermodel to use to the given model path. Because entities are spawned before players, you can use this to set a random playermodel using logic entities."
+
+	output MapSettingsSpawned(void) : "Fires when this entity spawns."
+	output RoundPreparation(void) : "Fires when the Preparation phase of a round starts."
+	output RoundStart(void) : "Fires when a round begins, meaning traitors have been selected."
+	output RoundEnd(integer) : "Fires when a round has ended. The type of win/loss is a parameter of the output: 2 = traitors win, 3 = innocent win, 4 = timelimit."
+]
+
+@PointClass base(Targetname, Origin, Angles) = ttt_logic_role :
+	"Point ent a bit like a combination of a filter and a logic ent (because it is currently not possible to write proper filters in Lua). Tests if !activator is a certain role (detective/traitor/innocent/any) and fires output OnPass if true, or OnFail if not."
+[
+	Role(choices) : "Player role to test for" : 1 : "Specifies what role the !activator of TestActivator should be for this entity to fire the OnPass output." =
+	[
+		0 : "Innocent"
+		1 : "Traitor"
+		2 : "Detective"
+		3 : "Any role"
+	] 
+
+	// Inputs
+	input TestActivator(void) : "Test the activator for the given Role (ie. if it's a traitor/detective/etc) and fires OnPass or OnFail output. If activator is not a valid player it will always fail."
+
+	// Outputs
+	output OnPass(void) : "Fired in response to TestActivator input if the activator player is of the role set in this ent."
+	output OnFail(void) : "Fired in response to TestActivator input if the activator player is NOT of the role set in this ent."
+]
+
+
+@PointClass base(Targetname) iconsprite("editor/game_text.vmt") = ttt_game_text : 
+	"An entity that displays a message in the top right message area."
+[
+	receive(choices) : "Players that should receive the message" : 0 : "Specifies what player or group of players should receive this message." =
+	[
+		0 : "Activator only"
+		1 : "All players"
+		2 : "Detectives only"
+		3 : "Traitors only"
+		4 : "All except traitors"
+	] 
+
+	message(string) : "Message Text" : "" : "Message to display in the top right."
+
+	color(color255) : "Color" : "255 255 0"
+
+	// Inputs
+	input Display(void) : "Display the message text."
+]
+
+@PointClass base(Targetname, Parentname, Origin) = ttt_traitor_button :
+	"A button only usable by traitors, and only shown on their HUD. Can be used from any point within 1024 units of the button."
+[
+	description(string) : "Description" : "" : "Text describing the function of this button, shown on player HUD."
+
+	wait(integer) : "Delay Before Reset" : 0 : "Amount of time in seconds, after the button has been used, before it can be used again. If the value is negative it will be single-use (same as Remove On Press)."
+	
+	RemoveOnPress(choices) : "Remove On Press" : 0 : "Button is single-use: removed after the first time it is pressed." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	input Lock(void) : "Lock and hide the button, preventing it from being used."
+	input Unlock(void) : "Unlock the button, showing it to players and allowing it to function."
+	
+	output OnPressed(void) : "Fired when the button is pressed."
+	
+	spawnflags(flags) =
+	[
+		2048: "Starts locked" : 0
+	]
+]
+
+@PointClass base(Targetname, Origin) = ttt_damageowner :
+	"Used to specify that a player is responsible for the damage dealt and kills made by a given entity, like a trigger_hurt."
+[
+	damager(string) : "Target entity" : "" : "Name of the entity for which we will specify the damage owner and round report name"
+
+	killname(string) : "Target entity's name in round report" : "" : "Name of the target entity in the Round Report event log, ie. 'Bob was killed by Joe using <name>'. Should be short, like 'the gas trap' or 'a boulder'. This name takes effect the first time the SetActivatorAsDamageOwner input is fired."
+
+	input SetActivatorAsDamageOwner(void) : "The !activator of this input will be set as the damage owner for our target entity, meaning the damage the entity deals is attributed to that player (for points, karma, round report)."
+	input ClearDamageOwner(void) : "Clears out the damage owner for the target entity."
+]
+
+@PointClass base(Targetname, Origin) = ttt_credit_adjust :
+	"Give or take credits to the !activator."
+[
+	credits(integer) : "Credits" : 0 : "Number of credits to take. Set this to a negative number to give credits."
+
+	// Inputs
+	input TakeCredits(void) : "Attempts to take the number of credits specified in this entity from the !activator. If the player does not have sufficient credits, the OnFail output is fired. Otherwise, OnSuccess is fired. Obviously when giving credits it never fails."
+
+	// Outputs
+	output OnSuccess(void) : "Fired in response to TakeCredits input if the activator player has successfully received or paid the credits."
+	output OnFail(void) : "Fired in response to TakeCredits input if the activator player did not have sufficient credits."
+]
+
+@PointClass base(Targetname, Parentname, Origin, Angles) = ttt_spectator_spawn :
+	"Spectators will be moved here as soon as they stop viewing their ragdoll. If more than one of these exists, a random one is used. The angles of this entity determine the eye angles of the player, ie. where they are facing after being moved here."
+[
+
+]

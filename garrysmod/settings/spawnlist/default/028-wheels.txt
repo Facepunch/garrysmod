@@ -1,0 +1,426 @@
+"TableToKeyValues"
+{
+	"parentid"		"22"
+	"icon"		"icon16/page.png"
+	"id"		"28"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/magnetic_small_base.mdl"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/magnetic_small.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/magnetic_med_base.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/magnetic_medium.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/magnetic_large_base.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/magnetic_large.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/smallwheel.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/normal_tire.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/breakable_tire.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/drugster_front.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/drugster_back.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/metal_wheel1.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/metal_wheel2.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/moped_tire.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/trucktire.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/trucktire2.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/wooden_wheel1.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/wooden_wheel2.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/747wheel.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheels/monster_truck.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/NatesWheel/nateswheel.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/NatesWheel/nateswheelwide.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/wheels/bmw.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/wheels/bmwl.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/wheels/rim_1.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/wheels/wheel_2.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/wheels/wheel_2l.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/wheels/wheel_extruded_48.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/Mechanics/wheels/wheel_race.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/XQM/airplanewheel1.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/XQM/airplanewheel1medium.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/XQM/airplanewheel1big.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/XQM/airplanewheel1huge.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/XQM/airplanewheel1large.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/tractor.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/tractors.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_rounded_36.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_rounded_36s.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_rounded_72.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_rugged_24.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_rugged_24w.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_rugged_48.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_rugged_48w.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_smooth_18r.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_smooth_24.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_smooth_24f.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_smooth_48.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_smooth_72.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_smooth2.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_smooth_72w.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_smooth_96.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_speed_72.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_spike_24.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/wheels/wheel_spike_48.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/offroad/off-road-20.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/offroad/off-road-30.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/offroad/off-road-40.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/offroad/off-road-50.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/offroad/off-road-60.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/offroad/off-road-70.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/offroad/off-road-80.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheel/race-wheel-30.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheel/race-wheel-35.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheel/race-wheel-40.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheel/race-wheel-45.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheel/race-wheel-50.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheel/race-wheel-55.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheel/race-wheel-60.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheel/race-wheel-65.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheel/race-wheel-70.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheel/race-wheel-75.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheel/race-wheel-80.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheelskinny/race-wheel-30_s.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheelskinny/race-wheel-35_s.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheelskinny/race-wheel-40_s.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheelskinny/race-wheel-45_s.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheelskinny/race-wheel-50_s.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheelskinny/race-wheel-55_s.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheelskinny/race-wheel-60_s.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheelskinny/race-wheel-65_s.mdl"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheelskinny/race-wheel-70_s.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheelskinny/race-wheel-75_s.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/racewheelskinny/race-wheel-80_s.mdl"
+		}
+	}
+	"name"		"Wheels"
+	"version"		"3"
+}

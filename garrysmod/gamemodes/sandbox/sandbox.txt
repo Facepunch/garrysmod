@@ -1,0 +1,244 @@
+"sandbox"
+{
+	"base"		"base"
+	"title"		"Sandbox"
+	"maps"		"^gm_|^gmod_"
+	"menusystem"	"1"
+	
+	"settings"
+	{
+		1
+		{
+			"name"		"physgun_limited"
+			"text"		"limit_physgun"
+			"help"		"When enabled the physgun can only pick up props and ragdolls"
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+
+		
+		2
+		{
+			"name"		"sbox_noclip"
+			"text"		"noclip"
+			"help"		"When enabled players will be able to noclip"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+		
+		3
+		{
+			"name"		"sbox_godmode"
+			"text"		"god_mode"
+			"help"		"When enabled all players will be invincible"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		4
+		{
+			"name"		"sbox_playershurtplayers"	
+			"text"		"players_damage_players"
+			"help"		"If enabled player's will be able to hurt each other"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		5
+		{
+			"name"		"sbox_maxprops"
+			"text"		"max_props"
+			"help"		"Maximum props a single player can create"
+			"type"		"Numeric"
+			"default"	"200"
+		}
+		
+		6
+		{
+			"name"		"sbox_maxragdolls"
+			"text"		"max_ragdolls"
+			"help"		"Maximum ragdolls a single player can create"
+			"type"		"Numeric"
+			"default"	"10"
+		}
+		
+		7
+		{
+			"name"		"sbox_maxvehicles"
+			"text"		"max_vehicles"
+			"help"		"Maximum vehicles a single player can create"
+			"type"		"Numeric"
+			"default"	"3"
+		}
+		
+		8
+		{
+			"name"		"sbox_maxeffects"
+			"text"		"max_effects"
+			"help"		"Maximum effect props a single player can create"
+			"type"		"Numeric"
+			"default"	"200"
+		}
+		
+		9
+		{
+			"name"		"sbox_maxballoons"
+			"text"		"max_balloons"
+			"help"		"Maximum balloons a single player can create"
+			"type"		"Numeric"
+			"default"	"100"
+		}
+		
+		10
+		{
+			"name"		"sbox_maxnpcs"
+			"text"		"max_npcs"
+			"help"		"Maximum NPCs a single player can create"
+			"type"		"Numeric"
+			"default"	"10"
+		}
+
+		11
+		{
+			"name"		"sbox_maxsents"
+			"text"		"max_entities"
+			"help"		"Maximum entities a single player can create"
+			"type"		"Numeric"
+			"default"	"300"
+		}
+
+		12
+		{
+			"name"		"sbox_maxdynamite"
+			"text"		"max_dynamite"
+			"help"		"Maximum dynamites a single player can create"
+			"type"		"Numeric"
+			"default"	"10"
+		}
+		
+		13
+		{
+			"name"		"sbox_maxlamps"
+			"text"		"max_lamps"
+			"help"		"Maximum lamps a single player can create"
+			"type"		"Numeric"
+			"default"	"3"
+		}
+		
+		14
+		{
+			"name"		"sbox_maxlights"
+			"text"		"max_lights"
+			"help"		"Maximum lights a single player can create"
+			"type"		"Numeric"
+			"default"	"5"
+		}
+		
+		15
+		{
+			"name"		"sbox_maxwheels"
+			"text"		"max_wheels"
+			"help"		"Maximum wheels a single player can create"
+			"type"		"Numeric"
+			"default"	"50"
+		}
+		
+		16
+		{
+			"name"		"sbox_maxthrusters"
+			"text"		"max_thrusters"
+			"help"		"Maximum thrusters a single player can create"
+			"type"		"Numeric"
+			"default"	"50"
+		}
+		
+		17
+		{
+			"name"		"sbox_maxhoverballs"
+			"text"		"max_hoverballs"
+			"help"		"Maximum hoverballs a single player can create"
+			"type"		"Numeric"
+			"default"	"50"
+		}
+	
+		18
+		{
+			"name"		"sbox_maxbuttons"
+			"text"		"max_buttons"
+			"help"		"Maximum buttons a single player can create"
+			"type"		"Numeric"
+			"default"	"50"
+		}
+	
+		19
+		{
+			"name"		"sbox_maxemitters"
+			"text"		"max_emitters"
+			"help"		"Maximum emitters a single player can create"
+			"type"		"Numeric"
+			"default"	"20"
+		}
+	
+		20
+		{
+			"name"		"sbox_maxspawners"
+			"text"		"max_spawners"
+			"help"		"Maximum spawners a single player can create"
+			"type"		"Numeric"
+			"default"	"10"
+		}
+	
+		21
+		{
+			"name"		"sbox_maxturrets"
+			"text"		"max_turrets"
+			"help"		"Maximum props a single player can create"
+			"type"		"Numeric"
+			"default"	"4"
+		}
+		
+		22
+		{
+			"name"		"sbox_weapons"
+			"text"		"enable_weapons"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		23
+		{
+			"name"		"sbox_bonemanip_npc"
+			"text"		"bone_manipulate_npcs"
+			"help"		"If enabled then manipulating NPC bones will be allowed"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		24
+		{
+			"name"		"sbox_bonemanip_player"
+			"text"		"bone_manipulate_players"
+			"help"		"If enabled then manipulating Player bones will be allowed"
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+
+		25
+		{
+			"name"		"sbox_bonemanip_misc"
+			"text"		"bone_manipulate_others"
+			"help"		"If enabled then manipulating the bones of other entities will be allowed"
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+
+		26
+		{
+			"name"		"sbox_persist"
+			"text"		"persistent_mode"
+			"help"		"Set to anything but 0 to enable persistence mode"
+			"type"		"Text"
+			"default"	""
+		}
+	}
+}

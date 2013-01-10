@@ -1,0 +1,241 @@
+UL.category LI.mapicon IMG
+{
+	width: 128px;
+	height: 128px;
+}
+
+UL.category LI.mapicon
+{
+	width: 128px;
+	text-align: center;
+	font-size: 10px;
+	padding: 6px;
+	margin: 2px;
+	cursor: pointer;
+}
+
+.maplist
+{
+	right: 256px;
+	top: 16px;
+	left: 16px;
+	bottom: 16px;
+	position: absolute;
+	background-color: white;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.maplist .controls
+{
+	width: 190px;
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	bottom: 10px;
+}
+
+UL.category LI.mapicon.selected
+{
+	background-color: #97c5ff;
+	border-radius: 3px;
+}
+
+gamesettings
+{
+	right: 16px;
+	top: 16px;
+	width: 226px;
+	bottom: 16px;
+	position: absolute;
+	background-color: white;
+	border-radius: 5px;
+}
+
+gamesettings bottom 
+{
+	bottom: 0px;
+	left: 0;
+	right: 0;
+	position: absolute;
+}
+
+gamesettings bottom button
+{
+	left: 16px;
+	right: 16px;
+	bottom: 8px;
+	padding: 10px;
+	position: absolute;
+	margin: 10px;
+	font-size: 20px;
+}
+
+gamesettings select
+{
+	width: 100%;
+	padding: 5px;
+	border-radius: 3px;
+	border: 1px solid #AAA;
+}
+
+.dropdown
+{
+	position: relative;
+	z-index: 100;
+}
+
+.dropdown .label
+{
+	border-radius: 3px;
+	height: 28px;
+	padding-left: 10px;
+	line-height: 28px;
+	cursor: pointer;
+	
+	font-weight: bold;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5C5), to(#2C2));
+	border: 1px solid #CCC;
+	border-color: #2a2 #2a2 #181;
+	color: white;
+	cursor: pointer;
+	vertical-align: middle;
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.dropdown .contents
+{
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 31px;
+	background-color: #fff;
+	border-radius: 4px;
+	border: 1px solid #AAA;
+	display: none;
+	cursor: pointer;
+	font-size: 13px;
+	-webkit-box-shadow: 2px 2px 8px rgba( 0, 0, 0, 0.5 );
+}
+
+.dropdown .contents div
+{
+	padding: 4px 15px;
+}
+
+.dropdown .contents div:hover
+{
+	background-color: #acf;
+}
+
+.caret
+{
+	width: 0;
+	height: 0;
+	vertical-align: top;
+	border-top: 5px solid white;
+	border-right: 5px solid transparent;
+	border-left: 5px solid transparent;
+	content: "";
+	float: right;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
+gamesettings .control
+{
+	margin-top: 8px;
+}
+
+gamesettings .control LABEL
+{
+	font-size: 11px;
+	color: #666;
+}
+
+gamesettings .control input[type=text]
+{
+	width: 100%;
+	padding: 4px;
+}
+
+gamesettings .control-numeric
+{
+	height: 20px;
+	overflow: hidden;
+	margin-top: 4px;
+}
+
+gamesettings .control-numeric input[type=text]
+{
+	width: 50px;
+	margin-right: 8px;
+	padding: 2px;
+	float: right;
+	height: 20px;
+}
+
+.controls .search
+{
+	position: absolute;
+	bottom: 0px;
+	left: 0;
+	right: 0;
+}
+
+.controls UL
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	overflow: auto;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 32px;
+}
+
+.controls LI.category
+{
+	background-color: #ddd;
+	margin: 0;
+	margin-bottom: 5px;
+	font-size: 11px;
+	font-weight: bold;
+	border-radius: 3px;
+	color: #555;
+	height: 26px;
+	cursor: pointer;
+	position: relative;
+}
+
+.controls LI.active
+{
+	background-color: #9cf;
+	color: #333;
+}
+
+.controls LI.category .name
+{
+	position: absolute;
+	left: 6px;
+	top: 6px;
+	bottom: 0;
+	right: 32px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.controls LI.category .count
+{
+	float: right;
+	background-color: #fff;
+	border-radius: 3px;
+	padding: 2px 5px;
+	margin: 5px;
+	color: #aaa;
+	font-size: 10px;
+	overflow: hidden;
+	white-space: nowrap;
+}

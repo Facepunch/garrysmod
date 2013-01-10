@@ -1,0 +1,5 @@
+"0"
+{
+	"Text"				"#Tool_remover_name"
+	"Description"		"#Tool_remover_desc"	
+}

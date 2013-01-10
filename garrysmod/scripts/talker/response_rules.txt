@@ -1,0 +1,23 @@
+
+// Grrrr
+#include "talker/response_criteria.txt"
+
+// Test rules
+#include "talker/interjections.txt" 
+
+#include "talker/npc_citizen_scenes.txt"
+#include "talker/npc_combine.txt"
+#include "talker/response_k_lab.txt"
+#include "talker/response_eli_lab.txt"
+#include "talker/npc_vortigaunt.txt"
+#include "talker/npc_citizen.txt"
+#include "talker/npc_grigori.txt"
+#include "talker/npc_barney.txt"
+#include "talker/npc_barney_episodic.txt"
+#include "talker/npc_alyx.txt"
+#include "talker/hl1_npc_barney.txt"
+#include "talker/hl1_npc_scientist.txt"
+#include "talker/npc_fisherman.txt"
+#include "talker/npc_alyx_episodic.txt"
+#include "talker/npc_alyx_episodic_scenes.txt"
+#include "talker/npc_alyx_vehicle.txt"

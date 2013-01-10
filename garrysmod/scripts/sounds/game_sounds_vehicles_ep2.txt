@@ -1,0 +1,273 @@
+// ******************************
+// 454 JUNKER ENGINE
+
+
+"JNK_engine_idle"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+
+	"wave"		"vehicles/junker/jnk_idle_loop1.wav"
+}
+
+
+"JNK_engine_start"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"wave"		"vehicles/junker/jnk_start_loop1.wav"
+}
+
+"JNK_engine_stop"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+
+	//"wave"		"common/null.wav"
+	"wave"		"vehicles/junker/jnk_stop1.wav"
+}
+
+"JNK_rev"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.9"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"85,95"
+	"wave"		"vehicles/junker/jnk_rev_short_loop1.wav"
+}
+
+"JNK_reverse"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"			"95"
+	"wave"			"vehicles/junker/jnk_firstgear_rev_loop1.wav"
+}
+
+
+"JNK_firstgear"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"95"
+	"wave"		"vehicles/junker/jnk_first.wav"
+}
+
+"JNK_secondgear"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"85,95"
+	"wave"		"vehicles/junker/jnk_second.wav"
+}
+
+"JNK_thirdgear"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"85,95"
+
+	"wave"		"vehicles/junker/jnk_third.wav"
+}
+
+"JNK_fourthgear"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"95,95"
+	"wave"		"vehicles/junker/jnk_fourth_cruise_loop2.wav"
+}
+
+"JNK_firstgear_noshift"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"95,95"
+	// NOTE: This needs to be a looping sound
+	"wave"		"vehicles/junker/jnk_first.wav"
+}
+"JNK_secondgear_noshift"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"95,95"
+	// NOTE: This needs to be a looping sound
+	"wave"		"vehicles/junker/jnk_first.wav"
+}
+"JNK_thirdgear_noshift"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"95,95"
+	// NOTE: This needs to be a looping sound
+	"wave"		"vehicles/junker/jnk_first.wav"
+}
+
+"JNK_fourthgear_noshift"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"95,95"
+	// NOTE: This needs to be a looping sound
+	"wave"		"vehicles/junker/jnk_fourth_cruise_loop2.wav"
+}
+
+
+
+"JNK_throttleoff_slowspeed"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"85,95"
+	"wave"		"vehicles/junker/jnk_throttle_off_slow_loop2.wav"
+
+}
+
+"JNK_throttleoff_fastspeed"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"85,95"
+
+	"wave"		"vehicles/junker/jnk_throttle_off_fast_loop1.wav"
+}
+
+"JNK_turbo_on"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"85,95"
+
+	"wave"		"vehicles/junker/jnk_turbo_on_loop1.wav"
+}
+
+
+"JNK_skid_lowfriction"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.8"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"90,110"
+	//"wave"		"vehicles/junker/skid_lowfriction1.wav"
+	//"wave"		"vehicles/junker/skid_lowfriction_loop1.wav"
+	"wave"		"vehicles/junker/skid_lowfriction_nostartdelay.wav"
+}
+
+"JNK_skid_normalfriction"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.5"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"90,110"
+	//"wave"		"vehicles/junker/skid_normalfriction_loop1.wav"
+	//"wave"		"vehicles/junker/skid_normalfriction_loop2.wav"
+	"wave"		"vehicles/junker/skid_lowfriction_nostartdelay.wav"
+}
+
+"JNK_skid_highfriction"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.8"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"90,110"
+	//"wave"		"vehicles/junker/skid_highfriction1.wav"
+	//"wave"		"vehicles/junker/skid_highfriction_loop1.wav"
+	"wave"		"vehicles/junker/skid_normalfriction_nostartdelay.wav"
+}
+
+"JNK_skid_lowfriction_short"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.6"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"90,110"
+	"rndwave"
+	{
+		"wave"		"vehicles/junker/skid_lowfriction_short1.wav"
+		"wave"		"vehicles/junker/skid_lowfriction_short2.wav"
+		"wave"		"vehicles/junker/skid_lowfriction_short3.wav"
+	}
+}
+
+"JNK_skid_normalfriction_short"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.6"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"90,110"
+	"rndwave"
+	{
+		"wave"		"vehicles/junker/skid_lowfriction_short1.wav"
+		"wave"		"vehicles/junker/skid_lowfriction_short2.wav"
+		"wave"		"vehicles/junker/skid_lowfriction_short3.wav"
+	}
+}
+
+"JNK_skid_highfriction_short"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.8"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"90,110"
+	"rndwave"
+	{
+		"wave"		"vehicles/junker/skid_highfriction_short1.wav"
+		"wave"		"vehicles/junker/skid_highfriction_short2.wav"
+		"wave"		"vehicles/junker/skid_highfriction_short3.wav"
+		"wave"		"vehicles/junker/skid_highfriction_short4.wav"
+		"wave"		"vehicles/junker/skid_highfriction_short5.wav"
+	}
+}
+
+"JNK_suspension"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.25"
+	"soundlevel"	"SNDLVL_80dB"
+	"pitch"		"90,110"
+	"rndwave"
+	{
+		"wave"		"vehicles/junker/suspension1.wav"
+		"wave"		"vehicles/junker/suspension2.wav"
+		"wave"		"vehicles/junker/suspension3.wav"
+		"wave"		"vehicles/junker/suspension4.wav"
+		"wave"		"vehicles/junker/suspension5.wav"
+		"wave"		"vehicles/junker/suspension6.wav"
+		"wave"		"vehicles/junker/suspension7.wav"
+	}
+}
+
+"JNK_Radar_Ping_Friendly"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"1.0"
+	"soundlevel"		"SNDLVL_100dB"
+	"pitch"			"100"
+
+	"wave"			"vehicles/junker/radar_ping_friendly1.wav"
+}
+
+"JNK_Radar_Ping_Enemy"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"1.0"
+	"soundlevel"		"SNDLVL_100dB"
+	"pitch"			"100"
+
+	"wave"		"vehicles/junker/radar_ping_enemy1.wav"
+}

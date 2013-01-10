@@ -1,0 +1,40 @@
+//============================================================================================================
+// Barney criteria
+criterion "IsBarney" "classname" "npc_barney" "required"
+criterion "ConceptTalkBarneyEscort" "Concept" "TLK_BARNEY_ESCORT" required
+
+//============================================================================================================
+
+
+
+//============================================================================================================
+// Barney Escort Speech
+//============================================================================================================
+//----------------------------------------------------------------------------
+
+response "BarneyEscort"
+{
+	scene "scenes/episode_1/barn_c17_05_defendthecitizens.vcd"
+	scene "scenes/episode_1/barn_c17_05_followfreeman.vcd"
+	scene "scenes/episode_1/barn_c17_05_theseareourpeople.vcd"
+	scene "scenes/episode_1/barn_c17_05_thenextgroupisready.vcd"
+	scene "scenes/episode_1/barn_c17_05_runthisgrouptothetrain.vcd"
+	scene "scenes/episode_1/barn_c17_05_keepthemsafe.vcd"
+	scene "scenes/episode_1/barn_c17_05_protectthecitizens.vcd"
+	scene "scenes/episode_1/barn_c17_05_moveemout.vcd"
+	scene "scenes/episode_1/barn_c17_05_takethesefolkstothetrain.vcd"
+	scene "scenes/episode_1/barn_c17_05_takethemtothetrain.vcd"
+	scene "scenes/episode_1/barn_c17_05_theyregettingaboard.vcd"
+
+
+}
+rule BarneyEscort
+{
+	criteria IsBarney ConceptTalkBarneyEscort
+	response BarneyEscort
+}
+
+
+//----------------------------------------------------------------------------
+
+//============================================================================================================

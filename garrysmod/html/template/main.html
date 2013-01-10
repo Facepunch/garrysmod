@@ -1,0 +1,34 @@
+
+	<div class="page" ng-controller="ControllerMain">
+
+		<div class="options">
+
+			<ul>
+
+				<li><img ng-src='../gamemodes/{{Gamemode}}/logo.png' /></li>
+				<li>&nbsp;</li>
+				<li ng-show="InGame"><a ng-click="MenuOption( this, 'ResumeGame')" ng-Tranny="'resume_game'"></a></li>
+				<li ng-show="InGame">&nbsp;</li>
+				<li><a ng-href="#/newgame/" ng-Tranny="'new_game'"></a></li>
+
+				<li><a ng-href="#/servers/" ng-Tranny="'find_mp_game'"></a></li>
+
+				<li>&nbsp;</li>
+				<li><a ng-href="#/addons/" ng-Tranny="'addons'"></a></li>
+				<li><a ng-href="#/demos/" ng-Tranny="'demos'"></a></li>
+				<li><a ng-href="#/saves/" ng-Tranny="'saves'"></a></li>
+
+				<li>&nbsp;</li>
+				<li><a ng-click="MenuOption( this, 'OpenOptionsDialog')" ng-Tranny="'options'"></a></li>
+
+				<li>&nbsp;</li>
+				<li ng-show="InGame">
+					<a ng-click="MenuOption( this, 'engine disconnect');" ng-Tranny="'disconnect'"></a>
+				</li>
+				<li><a ng-click="MenuOption( this, 'Quit')" ng-Tranny="'quit'"></a></li>
+
+			</ul>
+
+		</div>
+
+	</div>

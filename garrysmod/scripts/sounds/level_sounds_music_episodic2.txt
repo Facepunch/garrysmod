@@ -1,0 +1,205 @@
+//
+//
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+// NOTE:  AUTOMATICALLY GENERATED FILE, ANY HAND EDITED COMMENTS WILL BE LOST!!!
+//
+// VOL_NORM		1.0f
+//
+//-----------------------------------------------------------------------------
+// common attenuation values
+//-----------------------------------------------------------------------------
+//
+// DON'T USE THESE - USE SNDLVL_ INSTEAD!!!
+//	ATTN_NONE		0.0f	
+//	ATTN_NORM		0.8f
+//	ATTN_IDLE		2.0f
+//	ATTN_STATIC		1.25f 
+//	ATTN_RICOCHET	1.5f
+//	ATTN_GUNFIRE	0.27f
+//
+//	SNDLVL_NONE		= 0,
+//	SNDLVL_25dB		= 25,
+//	SNDLVL_30dB		= 30,
+//	SNDLVL_35dB		= 35,
+//	SNDLVL_40dB		= 40,
+//	SNDLVL_45dB		= 45,
+//	SNDLVL_50dB		= 50,	= 3.9
+//	SNDLVL_55dB		= 55,	= 3.0
+//	SNDLVL_IDLE		= 60,	= 2.0
+//	SNDLVL_TALKING		= 60,	= 2.0
+//	SNDLVL_60dB		= 60,	= 2.0
+//	SNDLVL_65dB		= 65,	= 1.5
+//	SNDLVL_STATIC		= 66,	= 1.25
+//	SNDLVL_70dB		= 70,	= 1.0
+//	SNDLVL_NORM		= 75,
+//	SNDLVL_75dB		= 75,	= 0.8
+//	SNDLVL_80dB		= 80,	= 0.7
+//	SNDLVL_85dB		= 85,	= 0.6
+//	SNDLVL_90dB		= 90,	= 0.5
+//	SNDLVL_95dB		= 95,
+//	SNDLVL_100dB	= 100,	= 0.4
+//	SNDLVL_105dB	= 105,
+//	SNDLVL_120dB	= 120,
+//	SNDLVL_130dB	= 130,
+//	SNDLVL_GUNFIRE	= 140, = 0.27
+//	SNDLVL_140dB	= 140,	= 0.2
+//	SNDLVL_150dB	= 150,	= 0.2
+//
+
+// VORTAL COMBAT - indi rock - play in 02, antlion tunnel battle with turrets & vorts
+"ep2_song0"				
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.70000"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song22.mp3"
+}
+
+// SECTOR SWEEP - tech beat1 - play in 07, when soldiers attack
+"ep2_song1"				
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.70000"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song23.mp3"
+}
+
+// SHU'ULATHOI - ambient1 - lost - play in 07 when ariving at farm, exploring advisor room
+"ep2_song2"				
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.35000"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song23ambient.mp3"
+}
+
+// LAST LEGS - rawk1 - play 12 when last strider is spawned before end of final battle
+"ep2_song3"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.72000"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song24.mp3"
+}
+
+// ABANDONED IN PLACE - d&b groove - play in 11a when silo battle starts
+"ep2_song4"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.68000"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song25.mp3"
+}
+
+// INHUMAN FREQUENCY - ambient2 revive - play in 04, 1 minute and 1 second BEFORE alyx awakens from vort healing
+"ep2_song5"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.1"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song26.mp3"
+}
+
+// NECTARIUM - ambient hive - play in 04 when entering 'honeycomb' area with vortescence
+"ep2_song6"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.35000"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song15.mp3"
+}
+
+// EXTINCTION EVENT HORIZON - ambient awakening -  play in 01, on game intro, in train car
+"ep2_song7"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.23000"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song20.mp3"
+}
+
+// NO ONE RIDES FOR FREE - techwork - play in 09, inside base when car is repaired
+"ep2_song8"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.60000"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song0.mp3"
+}
+
+// DARK INTERVAL - ambient orchestral minor -  play in 12a, preceding and into final sequence
+"ep2_song9"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.70000"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song3.mp3"
+}
+
+// CRAWLYARD - ambient pits - play in 09, as gordon enters poison pools with zombies 
+"ep2_song10"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.70000"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song9.mp3"
+}
+
+// HUNTING PARTY - tech rock - play in 06a, as hunters attack alyx & g in room
+"ep2_song11"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.65000"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song27.mp3"
+}
+
+// EON TRAP - tech rock - play in 10, just before attack begins on farm (time such that music picks up when attack starts)
+"ep2_song12"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.70000"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/VLVX_song28.mp3"
+}
+

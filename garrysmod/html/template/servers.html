@@ -1,0 +1,142 @@
+
+	<div class="page" ng-controller="ControllerServers">
+
+		<div class="options">
+
+			<ul>
+
+				<li><h2 ng-tranny="'server_list'"></h2></li>
+				<li>&nbsp;</li>
+				<li><a class="{{IfElse( ServerType == 'internet', 'active', '' )}}" ng-tranny="'servers_internet'" ng-click="SwitchType( 'internet' )"></a></li>
+				<li><a class="{{IfElse( ServerType == 'lan', 'active', '' )}}" ng-tranny="'servers_local'" ng-click="SwitchType( 'lan' )"></a></li>
+				<li><a class="{{IfElse( ServerType == 'history', 'active', '' )}}" ng-tranny="'servers_history'" ng-click="SwitchType( 'history' )"></a></li>
+				<li><a class="{{IfElse( ServerType == 'favorite', 'active', '' )}}" ng-tranny="'servers_favorites'" ng-click="SwitchType( 'favorite' )"></a></li>
+				<li>&nbsp;</li>
+				<li>&nbsp;</li>
+				<li><a ng-tranny="'servers_refresh'" ng-click="Refresh()">refresh</a></li>
+				<li>&nbsp;</li>
+				<li><a ng-click="MenuOption( this, 'OpenServerBrowser')" ng-Tranny="'legacy_browser'"></a></li>
+
+			</ul>
+
+		</div>
+
+		<div class="innerpage" ng-hide="CurrentGamemode != null">
+
+			<h1 class="menuheader"><span>Gamemode</span><small>pick a gamemode from the list below</small></h1>
+
+			<div class=' ' style="">
+
+				<div style="width: 280px; float: right;">
+					<div style="padding: 16px;">
+						
+					</div>
+				</div>
+
+				<div style="width: 280px; float: left;">
+					<div style="padding: 16px;">
+						
+					</div>
+				</div>
+
+				<div class='server_gamemodes whiterounded scrollable'>
+
+					<div class='gamemode {{gamemode.element_class}}' ng-repeat="gamemode in GamemodeList|orderBy:'-(order)'" ng-click="SelectGamemode( gamemode )">
+					
+						<img ng-src='../gamemodes/{{gamemode.name}}/icon24.png'  onerror="MissingGamemodeIcon(this)"/>
+
+						<div class='stats'>{{gamemode.num_players}} players on {{gamemode.num_servers}} servers</div>
+						<div class='name'>
+					
+						{{GamemodeName(gamemode)}}
+					
+						</div>
+
+						<span class='installgamemode' ng-show="ShouldShowInstall( gamemode )" ng-click="InstallGamemode( gamemode );$event.stopPropagation()">&nbsp;</span>
+					
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="innerpage" ng-show="CurrentGamemode != null">
+
+			<h1 class="menuheader">
+				<span>{{GamemodeName(CurrentGamemode)}}</span>
+				<small ng-tranny="'join_a_server'">pick a server to join</small>
+			</h1>
+
+			<div class='installgamemode' ng-show="ShouldShowInstall( CurrentGamemode )" ng-click="InstallGamemode( CurrentGamemode );$event.stopPropagation()">Install Gamemode</div>
+
+			<div class='controls' style='position: absolute; left: 0; right: 0; margin-top: 5px;'>
+				<input ng-model="CurrentGamemode.Search.$" style="float: right; border:0; border-radius: 3px; height: 24px; margin-right: 360px;"/>
+				<a class='bglink' ng-click="SelectGamemode(null)"><img src='img/bg_arrow_left.png' /> <span ng-tranny="'return_to_gamemodes'"></span></a>
+			</div>
+
+			<div class='serverlist'>
+
+				<div class='header' style="top: 8px; left: 8px; right: 8px;">
+						<name ng-click="ChangeOrder( CurrentGamemode, 'name' )" ng-tranny="'server_name_header'"></name>
+						<ping ng-click="ChangeOrder( CurrentGamemode, 'ping' )" ng-tranny="'server_ping'"></ping>
+						<players ng-click="ChangeOrder( CurrentGamemode, '-players' )" ng-tranny="'server_players'"></players>
+						<map ng-click="ChangeOrder( CurrentGamemode, 'map' )" ng-tranny="'server_mapname'"></map>
+						<rank ng-click="ChangeOrder( CurrentGamemode, 'recommended' )" ng-tranny="'server_ranking'"></rank>
+				</div>
+
+				<div class='body scrollable' style="top: 32px; left: 8px; right: 8px; bottom: 8px;">
+					
+					<div ng-repeat="server in CurrentGamemode.servers|filter:CurrentGamemode.Search|orderBy:CurrentGamemode.OrderBy:CurrentGamemode.OrderReverse|limitTo:100" class="server {{ServerClass(server)}} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-click="SelectServer( server )">
+						<name><img src='img/server-passworded.png' style="margin-right: 8px;" ng-show="server.pass"/>{{server.name}}</name>
+						<ping>{{server.ping}}</ping>
+						<players>{{server.players}} / {{server.maxplayers}}</players>
+						<map>{{server.map}}</map>
+						<rank class='{{ServerRank(server)}}'>&nbsp;
+						</rank>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class='serverinfo'>
+				<div ng-show="CurrentGamemode.Selected">
+
+					<name>{{CurrentGamemode.Selected.name}}</name>
+					<address>{{CurrentGamemode.Selected.address}}</address>
+					<players>
+
+						<table style="font-size: 12px; padding: 8px; width: 100%;">
+
+							<tr style="color: #999; font-weight: bold;">
+								<td>name</td>
+								<td style="text-align: center;">score</td>
+								<td style="text-align: right;">time</td>
+							</tr>
+
+							<tr ng-repeat="player in CurrentGamemode.Selected.playerlist|orderBy:'time'">
+								<td>{{player.name}}</td>
+								<td style="text-align: center;">{{player.score}}</td>
+								<td style="text-align: right;" ng-Seconds="player.time"></td>
+							</tr>
+						</table>
+
+					</players>
+
+					<password ng-show="CurrentGamemode.Selected.pass">
+						<input type='password' ng-model="CurrentGamemode.Selected.password"/>
+						<span>Password:</span>
+					</password>
+
+					<button class="btn-primary" ng-click="JoinServer( CurrentGamemode.Selected )">Join Server</button>
+
+				</div>
+			</div>
+
+		</div>
+		
+
+	</div>
+	

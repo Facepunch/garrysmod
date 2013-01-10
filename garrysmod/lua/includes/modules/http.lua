@@ -1,0 +1,114 @@
+
+local hook 			= hook
+local HTTP 			= HTTP
+local pairs 		= pairs
+local table			= table
+local ErrorNoHalt	= ErrorNoHalt
+
+--[[---------------------------------------------------------
+	HTTP Module. Interaction with HTTP.
+-----------------------------------------------------------]]
+
+module( "http" )
+
+--[[---------------------------------------------------------
+
+	Get the contents of a webpage.
+	
+	Callback should be 
+	
+	function callback( (args optional), contents, size )
+	
+-----------------------------------------------------------]]
+function Fetch( url, onsuccess, onfailure )
+
+	local request = 
+	{
+		url			= url,
+		method		= "get",
+
+		success		= function( code, body, headers )
+	
+			if ( !onsuccess ) then return end
+
+			onsuccess( body, body:len(), headers, code )
+
+		end,
+
+		failed		= function( err )
+
+			if ( !onfailure ) then return end
+
+			onfailure( err )
+
+		end
+	}
+
+	HTTP( request )
+
+end
+
+
+function Post( url, params, onsuccess, onfailure )
+
+	local request = 
+	{
+		url			= url,
+		method		= "post",
+		parameters	= params,
+
+		success		= function( code, body, headers )
+	
+			if ( !onsuccess ) then return end
+
+			onsuccess( body, body:len(), headers, code )
+
+		end,
+
+		failed		= function( err )
+
+			if ( !onfailure ) then return end
+
+			onfailure( err )
+
+		end
+	}
+
+	HTTP( request )
+
+end
+
+--[[
+
+Or use HTTP( table )
+
+local request = 
+{
+	url			= "http://pastebin.com/raw.php?i=3jsf50nL",
+
+	method		= "post",
+
+	parameters  = 
+	{
+			id			=	"548",
+			country		=	"England"
+	}
+
+	success		= function( code, body, headers )
+	
+		Msg( "Request Successful\n" )
+		Msg( "Code: ", code, "\n" )
+		Msg( "Body Length:\n", body:len(), "\n" )
+		Msg( "Body:\n", body, "\n" )
+		PrintTable( headers )
+
+	end,
+
+	failed		= function( reason )
+		Msg( "Request failed: ", reason, "\n" )
+	end
+}
+
+HTTP( request )
+
+---]]

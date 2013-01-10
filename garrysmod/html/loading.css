@@ -1,0 +1,99 @@
+BODY
+{
+	background: #fff url( 'img/bg.jpg' );
+	-webkit-background-size: 100% 100%;
+	overflow: hidden;
+}
+
+#container
+{
+	position: fixed;
+	text-align: center;
+	left: 50%;
+	top: 45%;
+	margin-top: -120px;
+	margin-left: -150px;
+	width: 300px;
+}
+
+.progressbar
+{
+	margin: 0 auto;
+	width: 150px;
+	border-radius: 3px;
+	text-align: left;
+	padding: 1px;
+	background-color: rgba( 0, 0, 0, 0.6);
+	float: right;
+}
+
+.reflection
+{
+	-webkit-box-reflect: below -1px -webkit-gradient(linear, left top, left bottom, from(transparent), from(rgba(0, 0, 0, 0.0)), to(rgba(255, 255, 255, 0.5)));
+}
+
+.progressbar .inner 
+{
+	border-radius: 2px;
+	background-color: rgba( 0, 240, 0, 1.0);
+	width: 0.2%;
+	height: 11px;
+}
+
+#progress_text
+{
+	position: absolute;
+	width: 500px;
+	right: 170px;
+	bottom: 0px;
+	margin: 0 auto;
+	text-align: right;
+	font-size: 12px;
+	font-family: helvetica;
+	color: rgba( 0, 0, 0, 0.4);
+	letter-spacing: -1px;
+	text-shadow: 0px 0px 3px white;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+
+@-webkit-keyframes walk 
+{
+	0% 
+	{
+		-webkit-transform: rotateZ(0deg);
+	}
+		
+	50% 
+	{
+		-webkit-transform: rotateZ(180deg);
+	}
+	
+	100% 
+	{
+		-webkit-transform: rotateZ(360deg);
+	}
+}
+
+
+.walk
+{
+	-webkit-animation-name: walk;
+	-webkit-animation-duration: 10.0s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
+	-webkit-perspective: 6000px;
+	text-align: center;
+	background-color: #fe7;
+	width: 24px;
+	height: 24px;
+	color: #999;
+	font-size: 16px;
+	font-family: arial;
+	font-weight: bold;
+	border-radius: 3px;
+	display: inline-block;
+	border: 2px solid #999;
+}
+

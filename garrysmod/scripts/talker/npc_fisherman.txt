@@ -1,0 +1,74 @@
+//============================================================================================================
+// Fisherman criteria
+criterion "IsFisherman" "classname" "npc_fisherman" "required"
+criterion "ConceptShootGull" "Concept" "FishermanShootGull" "required"
+criterion "ConceptFishermanBored" "Concept" "FishermanBored" "required"
+//============================================================================================================
+
+
+
+
+
+response FishermanShootGull
+{
+   	scene "scenes/lostcoast/fisherman_shootgull01.vcd" 	
+   	scene "scenes/lostcoast/fisherman_shootgull02.vcd"	
+   	scene "scenes/lostcoast/fisherman_shootgull03.vcd"
+   	scene "scenes/lostcoast/fisherman_shootgull04.vcd"	
+}
+
+rule FishermanShootGullRule
+{
+	criteria IsFisherman ConceptShootGull
+	response FishermanShootGull
+}
+
+//------------------------------------------------------------------------------------------------------------
+response FishermanWaiting
+{
+	scene "scenes/lostcoast/fisherman_Guide01.vcd"
+	scene "scenes/lostcoast/fisherman_Guide02.vcd"
+	scene "scenes/lostcoast/fisherman_Guide03.vcd"
+}
+
+rule FishermanComingBack
+{
+	criteria		IsFisherman ConceptLeadComingBack
+	response		FishermanWaiting
+}
+
+//------------------------------------------------------------------------------------------------------------
+response FishermanResumedLeading
+{
+	scene "scenes/lostcoast/fisherman_Guide01.vcd"
+	scene "scenes/lostcoast/fisherman_Guide02.vcd"
+	scene "scenes/lostcoast/fisherman_Guide03.vcd"
+}
+
+rule FishermanResumedLeading
+{
+	criteria		IsFisherman ConceptLeadRetrieve
+	response		FishermanResumedLeading
+}
+
+
+//---------------------
+
+//============================================================================================================
+// Fisherman resume monolog speech
+//============================================================================================================
+response "FishermanTalkResume"
+{
+ 	scene "scenes/lostcoast/fisherman_resumetalk01.vcd"
+	scene "scenes/lostcoast/fisherman_resumetalk02.vcd"
+	scene "scenes/lostcoast/fisherman_resumetalk03.vcd"
+	scene "scenes/lostcoast/fisherman_resumetalk04.vcd"
+	scene "scenes/lostcoast/fisherman_resumetalk05.vcd"
+	scene "scenes/lostcoast/fisherman_resumetalk06.vcd"
+}
+ 
+rule FishermanTalkResume
+{
+ criteria      IsFisherman ConceptTalkResume
+ response  	FishermanTalkResume
+}
