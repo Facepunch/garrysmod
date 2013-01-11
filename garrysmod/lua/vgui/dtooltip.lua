@@ -55,6 +55,15 @@ end
 --[[---------------------------------------------------------
 
 -----------------------------------------------------------]]
+function PANEL:SetDelay( delay )
+
+	self.Delay = delay
+
+end
+
+--[[---------------------------------------------------------
+
+-----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	if ( self.Contents ) then
@@ -125,21 +134,26 @@ end
 -----------------------------------------------------------]]
 function PANEL:OpenForPanel( panel )
 	
+	local DelayOpenTime = tooltip_delay:GetFloat()
+
+	if ( self.Delay ) then DelayOpenTime = self.Delay end
+
 	self.TargetPanel = panel
 	self:PositionTooltip();	
 	
-	if ( tooltip_delay:GetFloat() > 0 ) then
+	if ( DelayOpenTime > 0 ) then
 	
 		self:SetVisible( false )
-		timer.Simple( tooltip_delay:GetFloat(), function() 
+		timer.Simple( DelayOpenTime, function() 
 		
-													if ( !IsValid( self ) ) then return end
-													if ( !IsValid( panel ) ) then return end
+			if ( !IsValid( self ) ) then return end
+			if ( !IsValid( panel ) ) then return end
 
-													self:PositionTooltip();	
-													self:SetVisible( true )
-												
-												end )
+			self:PositionTooltip();	
+			self:SetVisible( true )
+									
+		end )
+		
 	end
 
 end
