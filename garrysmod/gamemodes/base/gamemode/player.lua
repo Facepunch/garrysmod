@@ -691,7 +691,7 @@ local sv_alltalk = GetConVar( "sv_alltalk" )
 function GM:PlayerCanHearPlayersVoice( pListener, pTalker )
 	
 	local alltalk = sv_alltalk:GetInt()
-	if ( alltalk > 1 ) then return true, alltalk == 2 end
+	if ( alltalk >= 1 ) then return true, alltalk == 2 end
 
 	return pListener:Team() == pTalker:Team(), false
 	
