@@ -121,7 +121,7 @@ function PANEL:AddSubMenu( strText, funcFunction )
 	
 	self:AddPanel( pnl )
 	
-	return SubMenu
+	return SubMenu, pnl
 
 end
 
