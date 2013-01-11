@@ -5,4 +5,4 @@ This repo consists of the 'light' stuff from the Garry's Mod client install. Nam
 
 This stuff is svn external'd into the main Garry's Mod client repo - at http://svn.facepunchstudios.com/svn/gm/
 
-Push requests are welcome :)
+Pull requests are welcome :)
