@@ -139,28 +139,6 @@ function PANEL:SelectPanel(pnl)
 end
 vgui.Register("EquipSelect", PANEL, "DPanelSelect")
 
--- need an OnTabChanged hook in propertysheet
-local PANEL = {}
-
-function PANEL:OnTabChanged(old, new) end
-
-function PANEL:SetActiveTab(new)
-   local old = self.m_pActiveTab
-   if old == new then return end
-
-   if old then
-      self.animFade:Start( self:GetFadeTime(), { OldTab = old, NewTab = new } )
-   end
-
-   self.m_pActiveTab = new
-
-   self:OnTabChanged(old, new)
-
-   self:InvalidateLayout()
-end
-
-vgui.Register("EquipPropertySheet", PANEL, "DPropertySheet")
-
 
 local SafeTranslate = LANG.TryTranslation
 
@@ -194,11 +172,19 @@ local function TraitorMenuPopup()
    dframe:SetMouseInputEnabled(true)
    dframe:SetDeleteOnClose(true)
 
-   --dframe.OnKeyCodePressed = util.BasicKeyHandler
-
    local m = 5
 
-   local dsheet = vgui.Create("EquipPropertySheet", dframe)
+   local dsheet = vgui.Create("DPropertySheet", dframe)
+
+   -- Add a callback when switching tabs
+   local oldfunc = dsheet.SetActiveTab
+   dsheet.SetActiveTab = function(self, new)
+      if self.m_pActiveTab != new and self.OnTabChanged then
+         self:OnTabChanged(self.m_pActiveTab, new)
+      end
+      oldfunc(self, new)
+   end
+
    dsheet:SetPos(0,0)
    dsheet:StretchToParent(m,m + 25,m,m)
    local padding = dsheet:GetPadding()
