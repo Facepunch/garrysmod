@@ -117,19 +117,17 @@ end
 			 string.FormattedTime( 123.456 )        		==> {h = 0, m = 2, s = 3, ms = 45}
 -------------------------------------------------------------------]]
 
-function string.FormattedTime( TimeInSeconds, Format )
-	if not TimeInSeconds then TimeInSeconds = 0 end
-
-	local i = math.floor( TimeInSeconds )
-	local h,m,s,ms	=	( i/3600 ),
-				( i/60 )-( math.floor( i/3600 )*3600 ),
-				TimeInSeconds-( math.floor( i/60 )*60 ),
-				( TimeInSeconds-i )*100
-
+function string.FormattedTime( seconds, Format )
+	if not seconds then seconds = 0 end
+	local hours = math.floor(seconds / 3600)
+	local minutes = math.floor((seconds / 60) % 60)
+	local millisecs = ( seconds - math.floor( seconds ) ) * 100
+	seconds = seconds % 60
+	
 	if Format then
-		return string.format( Format, m, s, ms )
+		return string.format( Format, minutes, seconds, millisecs )
 	else
-		return { h=h, m=m, s=s, ms=ms }
+		return { h=hours, m=minutes, s=seconds, ms=millisecs }
 	end
 end
 
