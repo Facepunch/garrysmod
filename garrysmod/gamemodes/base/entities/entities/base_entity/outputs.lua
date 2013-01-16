@@ -66,10 +66,12 @@ function ENT:TriggerOutput(name, activator)
 	if (!self.Outputs) then return end
 	if (!self.Outputs[name]) then return end
 	
-	for idx,op in pairs(self.Outputs[name]) do
-		
-		if ( !FireSingleOutput(op, self.Entity, activator) ) then
-			
+	local OutputList = self.Outputs[name]
+
+	for idx = #OutputList, 1, -1 do
+
+		if ( !FireSingleOutput( OutputList[idx], self.Entity, activator ) ) then
+
 			self.Outputs[name][idx] = nil
 
 		end
