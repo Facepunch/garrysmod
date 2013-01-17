@@ -1,4 +1,3 @@
-
 AddCSLuaFile()
 
 -- Variables that are used on both client and server
@@ -66,7 +65,7 @@ function SWEP:SetupDataTables()
 	self:NetworkVar( "Float", 1, "Roll" );
 
 	if ( SERVER ) then
-		self:SetZoom( 70 )
+		self:SetZoom( GetConVarNumber("fov_desired") or 70 )
 		self:SetRoll( 0 )
 	end
 
@@ -97,7 +96,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:Reload()
 
-	self:SetZoom( 70 )
+	self:SetZoom( GetConVarNumber("fov_desired") or 70 )
 	self:SetRoll( 0 )
 		
 end
