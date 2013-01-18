@@ -77,6 +77,7 @@ function PANEL:Init()
 	self.label = vgui.Create( "DLabel", self )
 	self.label:SetText( "" )
 	self.label:Dock( TOP )
+	self.label:SetDark( true )
 	self.label:SetVisible( false )
 
 	--The number stuff

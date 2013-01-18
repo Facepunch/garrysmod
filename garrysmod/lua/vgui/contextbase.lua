@@ -10,6 +10,7 @@ function PANEL:Init()
 
 	self.Label = vgui.Create( "DLabel", self )
 	self.Label:SetText( "" )
+	self.Label:SetDark( true )
 
 end
 
