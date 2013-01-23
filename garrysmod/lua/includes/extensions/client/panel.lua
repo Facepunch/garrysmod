@@ -275,8 +275,9 @@ end
 --[[---------------------------------------------------------
    Name: SetTooltip
 -----------------------------------------------------------]]
-function meta:SetTooltip( tooltip )
+function meta:SetTooltip( tooltip, delay )
 	self.strTooltipText = tooltip
+	self.numTooltipDelay = delay
 end
 
 meta.SetToolTip = meta.SetTooltip

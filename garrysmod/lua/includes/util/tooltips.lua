@@ -34,7 +34,7 @@ function FindTooltip( panel )
 	while ( panel && panel:IsValid() ) do
 	
 		if ( panel.strTooltipText || panel.pnlTooltipPanel ) then
-			return panel.strTooltipText, panel.pnlTooltipPanel, panel
+			return panel.strTooltipText, panel.numTooltipDelay, panel.pnlTooltipPanel, panel
 		end
 		
 		panel = panel:GetParent()
@@ -51,7 +51,7 @@ function ChangeTooltip( panel )
 
 	RemoveTooltip()
 	
-	local Text, Panel, PositionPanel = FindTooltip( panel )
+	local Text, Delay, Panel, PositionPanel = FindTooltip( panel )
 	
 	if ( !Text && !Panel ) then return end
 
@@ -65,6 +65,12 @@ function ChangeTooltip( panel )
 	
 		Tooltip:SetContents( Panel, false )
 	
+	end
+
+	if ( Delay ) then
+
+		Tooltip:SetDelay( Delay )
+
 	end
 
 	Tooltip:OpenForPanel( PositionPanel )
