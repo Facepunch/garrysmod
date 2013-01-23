@@ -1,4 +1,3 @@
-
 -- Return if there's nothing to add on to
 if ( !util ) then return end
 
@@ -93,8 +92,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: LocalToWorld( ent, lpos, bone )
-   Desc: Convert the local position on an entity to world pos
+   Returns year, month, day and hour, minute, second in a formatted string.
 -----------------------------------------------------------]]
 function util.DateStamp()
 
