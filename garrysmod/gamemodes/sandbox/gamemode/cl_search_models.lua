@@ -75,7 +75,7 @@ search.AddProvider( function( str )
 	local results = {}
 
 	local ents = {}
-	table.Add( ents, scripted_ents.GetSpawnable() );
+	--table.Add( ents, scripted_ents.GetSpawnable() );
 	table.Add( ents, list.Get( "SpawnableEntities" ) );
 
 	for k, v in pairs( list.Get( "Vehicles" ) ) do
@@ -96,6 +96,14 @@ search.AddProvider( function( str )
 			
 	end
 
+	for k, v in pairs( list.Get( "Weapon" ) ) do
+			
+		v.ClassName = k
+		v.PrintName = v.PrintName
+		v.ScriptedEntityType = 'weapon'
+		table.insert( ents, v )
+			
+	end
 
 	for k, v in pairs( ents ) do
 
