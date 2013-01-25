@@ -23,6 +23,7 @@ function PANEL:Init()
 	self:SetMouseInputEnabled( true )
 	self:SetTextInset( 5, 0 )
 	self:SetTall( 19 )
+	self:SetDark( true )
 
 end
 
