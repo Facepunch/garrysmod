@@ -1118,3 +1118,8 @@ function GM:AllowPlayerPickup(ply, obj)
    return false
 end
 
+function GM:PlayerShouldTaunt(ply, actid)
+   -- Disable taunts, we don't have a system for them (camera freezing etc).
+   -- Mods/plugins that add such a system should override this.
+   return false
+end
