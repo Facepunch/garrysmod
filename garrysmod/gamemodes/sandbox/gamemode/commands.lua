@@ -353,6 +353,13 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment )
 	end
 	
 	--
+	-- This NPC has a special texture we want to define
+	--
+	if ( NPCData.Material ) then
+		NPC:SetMaterial( NPCData.Material )
+	end
+	
+	--
 	-- Spawn Flags
 	--
 	local SpawnFlags = bit.bor( SF_NPC_FADE_CORPSE, SF_NPC_ALWAYSTHINK )
