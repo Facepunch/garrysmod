@@ -62,4 +62,9 @@ soundscapes_manifest
 	"file"		"scripts/soundscapes_mannworks.txt"
 	"file"		"scripts/soundscapes_cactusvalley.txt"
 	"file"		"scripts/soundscapes_soho.txt"	
+
+	// Portal
+	"file"		"scripts/soundscapes_portal.txt"
+	"file"		"scripts/soundscapes_testchmb_portal.txt"
+	"file"		"scripts/soundscapes_escape_portal.txt"
 }
