@@ -18,7 +18,8 @@ killicon.AddFont( "weapon_pistol", 		"HL2MPTypeDeath", 	"-", 	Color_Icon )
 killicon.AddFont( "prop_combine_ball", 	"HL2MPTypeDeath", 	"8", 	Color_Icon )
 killicon.AddFont( "grenade_ar2", 		"HL2MPTypeDeath", 	"7", 	Color_Icon )
 killicon.AddFont( "weapon_stunstick", 	"HL2MPTypeDeath", 	"!", 	Color_Icon )
-killicon.AddFont( "weapon_slam", 		"HL2MPTypeDeath", 	"*", 	Color_Icon )
+killicon.AddFont( "npc_satchel", 		"HL2MPTypeDeath", 	"*", 	Color_Icon )
+killicon.AddFont( "npc_tripmine", 		"HL2MPTypeDeath", 	"*", 	Color_Icon )
 killicon.AddFont( "weapon_crowbar", 	"HL2MPTypeDeath", 	"6", 	Color_Icon )
 
 
