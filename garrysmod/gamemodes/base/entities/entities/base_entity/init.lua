@@ -70,21 +70,3 @@ function ENT:RemoveIfInvalidPhysics()
 	error( "No Physics Object available for entity '" .. self.ClassName .. "'! Do you have the model '" .. Model .. "' installed?", 2 )
 end
 
---[[---------------------------------------------------------
-   Name: WakeIfValidPhysics
-   Desc: If the entity has a valid physics object, wake it.
------------------------------------------------------------]]
-function ENT:WakeIfValidPhysics()
-	local PhysObj = self:GetPhysicsObject()
-	if ( IsValid( PhysObj ) ) then
-		PhysObj:Wake()
-	end
-end
-
---[[---------------------------------------------------------
-   Name: WakePhysics
-   Desc: Wake the entity's physobj without checking if it's valid first
------------------------------------------------------------]]
-function ENT:WakePhysics()
-	self:GetPhysicsObject():Wake()
-end
