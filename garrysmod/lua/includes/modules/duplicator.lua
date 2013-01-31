@@ -230,7 +230,7 @@ function GenericDuplicatorFunction( Player, data )
 	
 	DoGenericPhysics( Entity, Player, data )	
 	
-	table.Add( Entity:GetTable(), data )
+	table.Merge( Entity:GetTable(), data )
 	
 	return Entity
 	
