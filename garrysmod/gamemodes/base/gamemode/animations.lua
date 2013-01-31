@@ -65,9 +65,7 @@ end
 
 function GM:HandlePlayerNoClipping( ply, velocity )
 
-	if ( ply:InVehicle() ) then return end
-
-	if ( ply:GetMoveType() != MOVETYPE_NOCLIP ) then 
+	if ( ply:GetMoveType() != MOVETYPE_NOCLIP || ply:InVehicle() ) then 
 
 		if ( ply.m_bWasNoclipping ) then
 
@@ -304,7 +302,7 @@ function GM:CalcMainActivity( ply, velocity )
 	end
 
 	ply.m_bWasOnGround = ply:IsOnGround()
-	ply.m_bWasNoclipping = (ply:GetMoveType() == MOVETYPE_NOCLIP)
+	ply.m_bWasNoclipping = ( ply:GetMoveType() == MOVETYPE_NOCLIP && !ply:InVehicle() )
 
 	return ply.CalcIdeal, ply.CalcSeqOverride
 
