@@ -55,3 +55,18 @@ end
 -----------------------------------------------------------]]
 function ENT:Think()
 end
+
+--[[---------------------------------------------------------
+   Name: RemoveIfInvalidPhysics
+   Desc: Deletes the entity and prints an error if it has no valid physobj
+-----------------------------------------------------------]]
+function ENT:RemoveIfInvalidPhysics()
+	local PhysObj = self:GetPhysicsObject()
+	if ( IsValid( PhysObj ) ) then
+		return
+	end
+	local Model = self:GetModel()
+	self:Remove()
+	error( "No Physics Object available for entity '" .. self.ClassName .. "'! Do you have the model '" .. Model .. "' installed?", 2 )
+end
+
