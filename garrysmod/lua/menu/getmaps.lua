@@ -20,6 +20,7 @@ local function UpdateMapPatterns()
 	MapPatterns[ "^plr_" ] = "Team Fortress 2"
 	MapPatterns[ "^arena_" ] = "Team Fortress 2"
 	MapPatterns[ "^koth_" ] = "Team Fortress 2"
+	MapPatterns[ "itemtest" ] = "Team Fortress 2"
 
 	MapPatterns[ "^dod_" ] = "Day Of Defeat"
 
