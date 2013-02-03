@@ -133,7 +133,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "PropSelect", { Label = "#tool.balloon.model",
 										ConVar = "balloon_model",
-										Height = 6,
+										Height = 4,
 										ModelsTable = list.Get( "BalloonModels" ) } )
 						
 end
