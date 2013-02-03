@@ -57,7 +57,7 @@ function GM:ScaleNPCDamage( npc, hitgroup, dmginfo )
 	-- More damage if we're shot in the head
 	 if ( hitgroup == HITGROUP_HEAD ) then
 	 
-		dmginfo:ScaleDamage( 10 )
+		dmginfo:ScaleDamage( 2 )
 	 
 	 end
 	 
