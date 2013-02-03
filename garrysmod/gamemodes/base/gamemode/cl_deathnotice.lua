@@ -21,6 +21,7 @@ killicon.AddFont( "weapon_stunstick", 	"HL2MPTypeDeath", 	"!", 	Color_Icon )
 killicon.AddFont( "npc_satchel", 		"HL2MPTypeDeath", 	"*", 	Color_Icon )
 killicon.AddFont( "npc_tripmine", 		"HL2MPTypeDeath", 	"*", 	Color_Icon )
 killicon.AddFont( "weapon_crowbar", 	"HL2MPTypeDeath", 	"6", 	Color_Icon )
+killicon.AddFont( "weapon_physcannon",	"HL2MPTypeDeath",	",",	Color_Icon )
 
 
 local Deaths = {}

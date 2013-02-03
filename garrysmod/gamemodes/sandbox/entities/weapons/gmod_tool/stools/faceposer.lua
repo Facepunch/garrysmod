@@ -142,6 +142,16 @@ if ( SERVER ) then
 		
 	end
 	
+	function TOOL:Reload( trace )
+	
+		if ( !IsValid( self:GetOwner() ) ) then return end
+		if ( self:GetOwner():GetFlexNum() == 0 ) then return end
+		
+		self.FaceTimer = 0;
+		self:SetFacePoserEntity( self:GetOwner() )
+		
+	end
+	
 	function CC_Face_Randomize( pl, command, arguments )
 	
 		for i=0, 64 do
@@ -152,6 +162,16 @@ if ( SERVER ) then
 	end
 	
 	concommand.Add( "faceposer_randomize", CC_Face_Randomize )
+
+	function CC_Face_Reset( pl, command, arguments )
+	
+		for i=0, 64 do
+			pl:ConCommand( "faceposer_flex"..i.." 0.00" )
+		end
+
+	end
+	
+	concommand.Add( "faceposer_reset", CC_Face_Reset )
 	
 end
 
@@ -364,6 +384,11 @@ if ( CLIENT ) then
 			params.Command = "faceposer_randomize"
 		CPanel:AddControl( "Button", params )
 		
+		local params = {}
+			params.Text = "#tool.faceposer.reset"
+			params.Command = "faceposer_reset"
+		CPanel:AddControl( "Button", params )
+		
 		for i=0, FlexNum-1 do
 		
 			local Name = FaceEntity:GetFlexName( i )
@@ -402,6 +427,7 @@ if ( CLIENT ) then
 		
 		if ( !IsValid( selected ) ) then return end
 		if ( selected:IsWorld() ) then return end
+		if ( selected == self:GetOwner() && self:GetOwner():GetViewEntity() == self:GetOwner() ) then return end
 		
 		local vEyePos = selected:EyePos()
 		

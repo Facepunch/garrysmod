@@ -12,6 +12,7 @@ TOOL.ClientConVar[ "fov" ]				= "90"
 TOOL.ClientConVar[ "distance" ]			= "1024"
 TOOL.ClientConVar[ "brightness" ]		= "10"
 TOOL.ClientConVar[ "texture" ]			= "effects/flashlight001"
+TOOL.ClientConVar[ "model" ]			= "models/MaxOfS2D/lamp_flashlight.mdl"
 
 cleanup.Register( "lamps" )
 
@@ -29,6 +30,7 @@ function TOOL:LeftClick( trace )
 	local b 		= math.Clamp( self:GetClientNumber( "b" ), 0, 255 )
 	local key 		= self:GetClientNumber( "key" )
 	local texture 	= self:GetClientInfo( "texture" )
+	local mdl 		= self:GetClientInfo( "model" )
 	local fov 		= self:GetClientNumber( "fov" )
 	local distance	= self:GetClientNumber( "distance" )
 	local bright	= self:GetClientNumber( "brightness" )
@@ -58,7 +60,7 @@ function TOOL:LeftClick( trace )
 	
 	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
 
-	lamp = MakeLamp( ply, r, g, b, key, texture, fov, distance, bright, true, { Pos = pos, Angle = Angle(0, 0, 0) } )
+	lamp = MakeLamp( ply, r, g, b, key, texture, mdl, fov, distance, bright, true, { Pos = pos, Angle = Angle(0, 0, 0) } )
 	
 	undo.Create("Lamp")
 		undo.AddEntity( lamp )
@@ -77,7 +79,7 @@ end
 
 if ( SERVER ) then
 
-	function MakeLamp( pl, r, g, b, KeyDown, Texture, fov, distance, brightness, on, Data )
+	function MakeLamp( pl, r, g, b, KeyDown, Texture, Model, fov, distance, brightness, on, Data )
 	
 		if ( IsValid( pl ) ) then
 			if ( !pl:CheckLimit( "lamps" ) ) then return false end
@@ -86,11 +88,8 @@ if ( SERVER ) then
 		local lamp = ents.Create( "gmod_lamp" )
 		
 			if ( !IsValid( lamp ) ) then return end
-		
-		-- todo: add model selection
-			--lamp:SetModel( "models/props_wasteland/light_spotlight02_lamp.mdl" )
-			--lamp:SetModel( "models/MaxOfS2D/lamp_projector.mdl" )
-			lamp:SetModel( "models/MaxOfS2D/lamp_flashlight.mdl" )
+
+			lamp:SetModel( Model )
 			lamp:SetFlashlightTexture( Texture )
 			lamp:SetLightFOV( fov )
 			lamp:SetColor( Color( r, g, b, 255 ) )
@@ -128,7 +127,7 @@ if ( SERVER ) then
 
 	end
 	
-	duplicator.RegisterEntityClass( "gmod_lamp", MakeLamp, "r", "g", "b", "KeyDown", "Texture", "fov", "distance", "brightness", "on", "Data" )
+	duplicator.RegisterEntityClass( "gmod_lamp", MakeLamp, "r", "g", "b", "KeyDown", "Texture", "Model", "fov", "distance", "brightness", "on", "Data" )
 
 
 	local function Toggle( pl, ent, onoff )
@@ -193,7 +192,12 @@ function TOOL.BuildCPanel( CPanel )
 	for k, v in pairs( list.Get( "LampTextures" ) ) do
 		MatSelect:AddMaterial( v.Name or k, k )
 	end
-										
+
+	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model",
+									 ConVar = "lamp_model",
+									 Category = "Lamps",
+									 Height = 3,
+									 Models = list.Get( "LampModels" ) } )
 end
 
 list.Set( "LampTextures", "effects/flashlight001", { Name = "Default" } )
@@ -212,3 +216,6 @@ list.Set( "LampTextures", "effects/flashlight/camera", { Name = "Camera" } )
 list.Set( "LampTextures", "effects/flashlight/view", { Name = "View" } )
 --list.Set( "LampTextures", "effects/flashlight/spider", { Name = "Spider" } )
 --list.Set( "LampTextures", "_rt_Camera", { Name = "RenderTarget" } )
+
+list.Set( "LampModels", "models/MaxOfS2D/lamp_flashlight.mdl", {} )
+list.Set( "LampModels", "models/MaxOfS2D/lamp_projector.mdl", {} )
