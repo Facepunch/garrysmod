@@ -164,7 +164,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Slider", 	{ Label = "#tool.hoverball.speed", Type = "Float", 	Command = "hoverball_speed", 	Min = "0", 	Max = "20", Help = true }  )
 	CPanel:AddControl( "Slider", 	{ Label = "#tool.hoverball.resistance", Type = "Float", 	Command = "hoverball_resistance", 	Min = "0", 	Max = "10", Help = true }  )
 	CPanel:AddControl( "Slider", 	{ Label = "#tool.hoverball.strength", Type = "Float", 	Command = "hoverball_strength", 	Min = "0.1", 	Max = "10", Help = true }  )
-	CPanel:AddControl( "PropSelect", { Label = "#tool.hoverball.model", ConVar = "hoverball_model", Models = list.Get( "HoverballModels" ), Height = 6 } )
+	CPanel:AddControl( "PropSelect", { Label = "#tool.hoverball.model", ConVar = "hoverball_model", Models = list.Get( "HoverballModels" ), Height = 4 } )
 
 									
 end

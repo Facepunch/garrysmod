@@ -222,6 +222,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "PropSelect", { Label = "#tool.thruster.model",
 									 ConVar = "thruster_model",
 									 Category = "Thrusters",
+									 Height = 4,
 									 Models = list.Get( "ThrusterModels" ) } )
 									 
 									 
