@@ -358,7 +358,7 @@ function PANEL:AddLine( ... )
 	Line:SetListView( self ) 
 	Line:SetID( ID )
 	
-	-- This assurs that there will be an entry for every column
+	-- This assures that there will be an entry for every column
 	for k, v in pairs( self.Columns ) do
 		Line:SetColumnText( k, "" )
 	end
