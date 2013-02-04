@@ -194,7 +194,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "PropSelect", { Label = "#tool.button.model",
 									 ConVar = "button_model",
 									 Category = "Buttons",
-									 Height = 6,
+									 Height = 4,
 									 Models = list.Get( "ButtonModels" ) } )
 									
 end
@@ -206,6 +206,7 @@ list.Set( "ButtonModels", "models/MaxOfS2D/button_03.mdl", {} )
 list.Set( "ButtonModels", "models/MaxOfS2D/button_04.mdl", {} )
 list.Set( "ButtonModels", "models/MaxOfS2D/button_05.mdl", {} )
 list.Set( "ButtonModels", "models/MaxOfS2D/button_06.mdl", {} )
+list.Set( "ButtonModels", "models/MaxOfS2D/button_slider.mdl", {} )
 
 
 --list.Set( "ButtonModels", "models/dav0r/buttons/button.mdl", {} )

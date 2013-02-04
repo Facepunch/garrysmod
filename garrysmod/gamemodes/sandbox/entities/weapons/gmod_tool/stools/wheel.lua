@@ -284,7 +284,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "PropSelect", { Label = "#tool.wheel.model",
 									 ConVar = "wheel_model",
 									 Category = "Wheels",
-									 Height = 6,
+									 Height = 4,
 									 Models = list.Get( "WheelModels" ) } )
 									 
 	CPanel:AddControl( "Slider", { Label = "#tool.wheel.torque",
