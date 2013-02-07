@@ -1,4 +1,3 @@
-
 -- Serverside only.
 if ( CLIENT ) then return end
 
@@ -51,7 +50,7 @@ function Task:InitEngine( _taskname_, _taskdata_ )
 end
 
 --[[---------------------------------------------------------
-	Creates an engine based task
+	Creates an Lua based task
 -----------------------------------------------------------]]
 function Task:InitFunctionName( _start, _end, _taskdata_ )
 	self.StartFunctionName	= _start
