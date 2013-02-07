@@ -50,7 +50,7 @@ function Task:InitEngine( _taskname_, _taskdata_ )
 end
 
 --[[---------------------------------------------------------
-	Creates an Lua based task
+	Creates a Lua based task
 -----------------------------------------------------------]]
 function Task:InitFunctionName( _start, _end, _taskdata_ )
 	self.StartFunctionName	= _start
