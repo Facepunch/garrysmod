@@ -12,6 +12,12 @@ local ai			= ai
 module( "ai_task" )
 
 --[[---------------------------------------------------------
+	Overloads ai.GetTaskID which returns nil. This should
+	just be a temporary fix rather than permanent.
+-----------------------------------------------------------]]
+include( "ai_task_ids" )
+
+--[[---------------------------------------------------------
 	ENUMs for which kind of task it is.
 -----------------------------------------------------------]]
 local TYPE_ENGINE	= 1
