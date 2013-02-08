@@ -20,7 +20,8 @@ TOOL.ClientConVar[ "decal" ] = "Blood"
 
 local function PlaceDecal( Player, Entity, Data )
 
-	if ( !IsValid( Entity ) ) then return end
+	if ( Entity == nil ) then return end
+	if ( !Entity:IsWorld() && !IsValid( Entity ) ) then return end
 
 	local Bone = Entity:GetPhysicsObjectNum( Data.bone or 0 )
 	if ( !IsValid( Bone ) ) then 
@@ -38,6 +39,9 @@ local function PlaceDecal( Player, Entity, Data )
 
 end
 
+--
+-- Register decal duplicator
+--
 for i=1,32 do
 
 	function PlaceDecal_delayed( Player, Entity, Data )
@@ -56,7 +60,7 @@ end
 
 function TOOL:RightClick( trace, bNoDelay )
 
-	self:GetOwner():EmitSound("SprayCan.Paint")
+	self:GetOwner():EmitSound( "SprayCan.Paint" )
 	local decal	= self:GetClientInfo( "decal" )
 	
 	local Pos1 = trace.HitPos + trace.HitNormal
