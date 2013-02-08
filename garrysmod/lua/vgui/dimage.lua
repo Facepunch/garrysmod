@@ -29,6 +29,9 @@ function PANEL:Init()
 	self:SetKeepAspect( false )
 	
 	self.ImageName = ""
+
+	self.ActualWidth = 10
+	self.ActualHeight = 10
 	
 end
 
@@ -50,19 +53,15 @@ function PANEL:Unloaded()
 	return self.m_strMatName != nil
 end
 
-local g_ImageLoadTime = 0
-
 --[[---------------------------------------------------------
 
 -----------------------------------------------------------]]
 function PANEL:LoadMaterial()
 
 	if ( !self:Unloaded() ) then return end
-	if ( g_ImageLoadTime > SysTime() ) then return end
-	
+
 	self:DoLoadMaterial()
 
-	g_ImageLoadTime = math.max( g_ImageLoadTime, SysTime() ) + 0.1
 	self:SetMatName( nil )
 
 end
@@ -77,6 +76,13 @@ function PANEL:DoLoadMaterial()
 	end
 	
 	self:FixVertexLitMaterial()
+
+	//
+	// This isn't ideal, but it will probably help you out of a jam
+	// in cases where you position the image according to the texture
+	// size and you want to load on view - instead of on load.
+	//
+	self:InvalidateParent()
 
 end
 
@@ -101,8 +107,8 @@ function PANEL:SetMaterial( Mat )
 		self.ActualWidth = Texture:Width()
 		self.ActualHeight = Texture:Height()
 	else
-		self.ActualWidth = 32
-		self.ActualHeight = 32
+		self.ActualWidth = self.m_Material:Width()
+		self.ActualHeight = self.m_Material:Height()
 	end
 
 end

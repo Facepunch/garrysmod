@@ -51,50 +51,6 @@ function PANEL:Init()
 	self.IconLayout:SetBorder( 4 )
 	self.IconLayout:Dock( TOP )
 	
-	/*
-	
-	local Header = vgui.Create( "Panel", self )
-		Header:Dock( TOP )
-		Header:SetTall( 20 )
-		Header:MoveToBack()
-		Header:DockPadding( 2 )
-	
-		local SearchButton = vgui.Create( "DImageButton", Header )
-			SearchButton:SetSize( 16, 16 )
-			SearchButton:SetImage( "icon16/find.png" )
-			SearchButton:Dock( RIGHT )
-			SearchButton:SetIsToggle( true )
-			SearchButton.OnToggled = function( btn, b )
-			
-				if ( b ) then
-				
-					local menu = DermaMenu()
-					menu:SetParent( self )
-				
-						local Search = vgui.Create( "DTextEntry", menu )
-						Search:SetWide( 100 )
-						//Search:Dock( BOTTOM )
-						Search:SetText( "FFF" )
-						Search.OnTextChanged = function()
-						
-							self:FilterByText( Search:GetText() )
-						
-						end
-				
-				
-						menu:AddPanel( Search )
-						
-					menu:Open()	
-					menu:SetKeyboardInputEnabled( true )			
-					Search:RequestFocus()
-				
-				end
-				
-			
-			end
-
-	*/
-
 	self:SetPaintBackground( true )
 	
 end
@@ -117,7 +73,7 @@ function PANEL:Fill()
 		
 				local btn = self.IconLayout:Add( "DImageButton" )
 				btn.FilterText = string.lower( v )
-				btn:SetImage( "icon16/" .. v )
+				btn:SetOnViewMaterial( "icon16/" .. v )
 				btn:SetSize( 22, 22 )
 				btn:SetPos( -22, -22 )
 				btn:SetStretchToFit( false )
