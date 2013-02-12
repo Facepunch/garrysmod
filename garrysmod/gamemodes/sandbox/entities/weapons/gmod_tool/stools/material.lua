@@ -10,6 +10,14 @@ TOOL.ClientConVar[ "override" ] = "debug/env_cubemap_model"
 local function SetMaterial( Player, Entity, Data )
 	
 	if ( SERVER ) then
+
+		--
+		-- Make sure this is in the 'allowed' list in multiplayer - to stop people using exploits
+		--
+		if ( !game.SinglePlayer() && !list.Contains( "OverrideMaterials", Data.MaterialOverride ) ) then
+			return 
+		end
+
 		Entity:SetMaterial( Data.MaterialOverride )
 		duplicator.StoreEntityModifier( Entity, "material", Data )
 	end
