@@ -7,6 +7,9 @@ TOOL.ConfigName		= ""
 
 TOOL.ClientConVar[ "override" ] = "debug/env_cubemap_model"
 
+--
+-- Duplicator function
+--
 local function SetMaterial( Player, Entity, Data )
 	
 	if ( SERVER ) then
@@ -27,12 +30,12 @@ local function SetMaterial( Player, Entity, Data )
 end
 duplicator.RegisterEntityModifier( "material", SetMaterial )
 
+--
+-- Left click applies the current material
+--
 function TOOL:LeftClick( trace )
 
-	if !( trace.Entity &&			-- Hit an entity
-	      trace.Entity:IsValid() && 	-- And the entity is valid
-	      trace.Entity:EntIndex() != 0	-- And isn't worldspawn
-	    ) then return end
+	if ( !IsValid( trace.Entity ) ) then return end
 
 	local mat = self:GetClientInfo( "override" )
 	SetMaterial( self:GetOwner(), trace.Entity, { MaterialOverride = mat } )
@@ -40,14 +43,12 @@ function TOOL:LeftClick( trace )
 
 end
 
-
-
+--
+-- Right click reverts the material
+--
 function TOOL:RightClick( trace )
 
-	if !( trace.Entity &&			-- Hit an entity
-	      trace.Entity:IsValid() && 	-- And the entity is valid
-	      trace.Entity:EntIndex() != 0	-- And isn't worldspawn
-	    ) then return end
+	if ( !IsValid( trace.Entity ) ) then return end
 
 	SetMaterial( self:GetOwner(), trace.Entity, { MaterialOverride = "" } )
 	return true
