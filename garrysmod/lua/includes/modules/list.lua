@@ -1,24 +1,20 @@
---=============================================================================--
---  ___  ___   _   _   _    __   _   ___ ___ __ __
--- |_ _|| __| / \ | \_/ |  / _| / \ | o \ o \\ V /
---  | | | _| | o || \_/ | ( |_n| o ||   /   / \ / 
---  |_| |___||_n_||_| |_|  \__/|_n_||_|\\_|\\ |_|  2007
---										 
+--=============================================================================--							 
 --
 --  A really simple module to allow easy additions to lists of items
 --
 --=============================================================================--
 
 local table 	= table
+local pairs		= pairs
 
 module( "list" )
 
 
 local g_Lists = {}
 
---[[---------------------------------------------------------
-   Get a list
------------------------------------------------------------]]
+--
+--	Get a list
+--
 function Get( list )
 
 	g_Lists[ list ] = g_Lists[ list ] or {}
@@ -26,9 +22,9 @@ function Get( list )
 	
 end
 
---[[---------------------------------------------------------
-   Get a list
------------------------------------------------------------]]
+--
+--	Get a list
+--
 function GetForEdit( list )
 
 	g_Lists[ list ] = g_Lists[ list ] or {}
@@ -36,9 +32,9 @@ function GetForEdit( list )
 	
 end
 
---[[---------------------------------------------------------
-   Set a key value
------------------------------------------------------------]]
+--
+--	Set a key value
+--
 function Set( list, key, value )
 
 	local list = GetForEdit( list )
@@ -47,12 +43,30 @@ function Set( list, key, value )
 end
 
 
---[[---------------------------------------------------------
-   Add a value to a list
------------------------------------------------------------]]
+--
+--   Add a value to a list
+--
 function Add( list, value )
 
 	local list = GetForEdit( list )
 	table.insert( list, value )
+
+end
+
+--
+--	Returns true if the list contains the value (as a value - not a key)
+--
+function Contains( list, value )
+
+	if ( !g_Lists[ list ] ) then return false end
+
+	for k, v in pairs( g_Lists[ list ] ) do
+
+		-- If it contains this entry, bail early
+		if ( v == value ) then return true end
+
+	end
+
+	return false
 
 end
