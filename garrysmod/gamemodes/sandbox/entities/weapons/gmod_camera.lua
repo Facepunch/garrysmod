@@ -65,7 +65,7 @@ function SWEP:SetupDataTables()
 	self:NetworkVar( "Float", 1, "Roll" );
 
 	if ( SERVER ) then
-		self:SetZoom( GetConVarNumber("fov_desired") or 70 )
+		self:SetZoom( 90 )
 		self:SetRoll( 0 )
 	end
 
