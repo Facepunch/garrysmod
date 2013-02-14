@@ -254,6 +254,7 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 	
 	if ( ownerpanel ) then
 		OwnerWidth, OwnerHeight = ownerpanel:GetSize()
+		self:SetSkin( ownerpanel:GetSkin() ) -- Abide by the "parent" skin
 	end
 		
 	self:PerformLayout()
