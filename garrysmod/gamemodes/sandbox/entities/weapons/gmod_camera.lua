@@ -95,8 +95,7 @@ end
 	Reload does nothing
 -----------------------------------------------------------]]
 function SWEP:Reload()
-
-	self:SetZoom( GetConVarNumber("fov_desired") or 70 )
+	self:SetZoom( self.Owner:GetInfoNum("fov_desired") or 70 )
 	self:SetRoll( 0 )
 		
 end
