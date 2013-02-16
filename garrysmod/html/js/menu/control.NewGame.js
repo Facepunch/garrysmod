@@ -81,6 +81,11 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 			lua.Run( 'RunConsoleCommand( "sv_cheats", "0" )' )
 			lua.Run( 'RunConsoleCommand( "commentary", "0" )' )
 		}
+		
+		if ( $rootScope.MaxPlayers == 1 )
+		{
+			lua.Run( 'RunConsoleCommand( "sv_allowcslua", "1" )' )		
+		}
 
 		setTimeout( function()
 		{
