@@ -1,4 +1,3 @@
-
 --[[---------------------------------------------------------
    Name: string.ToTable( string )
 -----------------------------------------------------------]]
@@ -122,7 +121,7 @@ function string.FormattedTime( seconds, Format )
 	local hours = math.floor(seconds / 3600)
 	local minutes = math.floor((seconds / 60) % 60)
 	local millisecs = ( seconds - math.floor( seconds ) ) * 100
-	seconds = seconds % 60
+	seconds = math.floor(seconds % 60)
 	
 	if Format then
 		return string.format( Format, minutes, seconds, millisecs )
