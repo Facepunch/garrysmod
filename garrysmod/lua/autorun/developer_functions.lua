@@ -44,7 +44,7 @@ end
 -----------------------------------------------------------]]   
 local function Find( ply, command, arguments )
 
-	if ( ply && !ply:IsAdmin() ) then return end
+	if ( IsValid(ply) && ply:IsPlayer() && !ply:IsAdmin() ) then return end
 	if ( !arguments[1] ) then return end
 	
 	if ( SERVER ) then 	Msg("Finding '", arguments[1], "' SERVERSIDE:\n\n") else
@@ -55,7 +55,7 @@ local function Find( ply, command, arguments )
 	
 	Msg("\n\n")
 	
-	if ( SERVER && ply ) then
+	if ( SERVER && IsValid(ply) && ply:IsPlayer() && ply:IsListenServerHost() ) then
 		RunConsoleCommand( "lua_find_cl", tostring(arguments[1]) );
 	end
 	
