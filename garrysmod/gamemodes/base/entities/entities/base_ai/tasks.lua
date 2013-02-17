@@ -1,5 +1,4 @@
 
-
 --[[---------------------------------------------------------
    Task: PlaySequence
    
@@ -8,7 +7,8 @@
     data.ID 	- sequence id
 	data.Name 	- sequence name (Must provide either id or name)
 	data.Wait	- Optional. Should we wait for sequence to finish
-	data.Speed	- Optional. Playback speed of sequence   
+	data.Speed	- Optional. Playback speed of sequence
+	data.Loop	- Optional. Should the sequence be looped
    
 -----------------------------------------------------------]]
 function ENT:TaskStart_PlaySequence( data )
@@ -30,13 +30,14 @@ function ENT:TaskStart_PlaySequence( data )
 	end
 	
 	self.TaskSequenceEnd = CurTime() + Duration
+	self.Loop = data.Loop or false
 
 end
 --[[-----------------------------------------------------------]]
 function ENT:Task_PlaySequence( data )
 
 	-- Wait until sequence is finished
-	if ( CurTime() < self.TaskSequenceEnd ) then return end
+	if ( CurTime() < self.TaskSequenceEnd or self.Loop ) then return end
 	
 	
 	self:TaskComplete()
