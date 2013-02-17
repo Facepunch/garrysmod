@@ -143,6 +143,8 @@ function HELPSCRN:Show()
 
    dtabs:AddSheet(GetTranslation("help_settings"), dsettings, "icon16/wrench.png", false, false, GetTranslation("help_settings_tip"))
 
+   hook.Call("TTTSettingsTabs", GAMEMODE, dtabs)
+
    dframe:MakePopup()
 end
 
