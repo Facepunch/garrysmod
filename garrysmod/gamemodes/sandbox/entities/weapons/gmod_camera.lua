@@ -240,7 +240,7 @@ end
 --
 function SWEP:DoRotateThink( cmd, fDelta )
 
-	if ( cmd:KeyDown( IN_ATTACK2 ) ) then
+	if ( cmd:KeyDown( IN_ATTACK2 ) && !cmd:KeyDown( IN_JUMP ) ) then
 
 		self:SetRoll( self:GetRoll() + cmd:GetMouseX() * 0.5 * fDelta )
 		
