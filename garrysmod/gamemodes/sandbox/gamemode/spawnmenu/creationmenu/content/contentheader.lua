@@ -60,6 +60,21 @@ function PANEL:PaintOver( w, h )
 
 end
 
+function PANEL:DoRightClick()
+	local pCanvas = self:GetSelectionCanvas()
+	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 ) then
+		return hook.Run( "SpawnlistOpenGenericMenu", pCanvas )
+	end
+
+	self:OpenMenu()
+end
+
+function PANEL:OpenMenu()
+	local menu = DermaMenu()							
+		menu:AddOption( "Delete", function() self:Remove(); hook.Run( "SpawnlistContentChanged", self ) end )
+	menu:Open()
+end
+
 vgui.Register( "ContentHeader", PANEL, "DLabelEditable" )
 
 
