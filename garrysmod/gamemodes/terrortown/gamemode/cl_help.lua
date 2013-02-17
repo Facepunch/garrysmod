@@ -71,6 +71,16 @@ function HELPSCRN:Show()
    end
    cb:SetTooltip(GetTranslation("set_cross_opacity"))
 
+   cb = dgui:NumSlider(GetTranslation("set_cross_brightness"), "ttt_crosshair_brightness", 0, 1, 1)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+
+   cb = dgui:NumSlider(GetTranslation("set_cross_size"), "ttt_crosshair_size", 0.1, 3, 1)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+
    dgui:CheckBox(GetTranslation("set_cross_disable"), "ttt_disable_crosshair")
 
    dgui:CheckBox(GetTranslation("set_minimal_id"), "ttt_minimal_targetid")

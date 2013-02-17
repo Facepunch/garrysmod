@@ -1056,3 +1056,6 @@ L.set_avoid_det_tip = "Enable this to ask the server not to select you as Detect
 --- v24
 L.drop_no_ammo = "Insufficient ammo in your weapon's clip to drop as an ammo box."
 
+--- v31
+L.set_cross_brightness = "Crosshair brightness"
+L.set_cross_size = "Crosshair size"

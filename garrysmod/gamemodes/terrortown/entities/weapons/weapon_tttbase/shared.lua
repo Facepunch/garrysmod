@@ -134,7 +134,8 @@ local sparkle = CLIENT and CreateConVar("ttt_crazy_sparks", "0", FCVAR_ARCHIVE)
 -- crosshair
 if CLIENT then
    local sights_opacity = CreateConVar("ttt_ironsights_crosshair_opacity", "0.8", FCVAR_ARCHIVE)
-
+   local crosshair_brightness = CreateConVar("ttt_crosshair_brightness", "1.0", FCVAR_ARCHIVE)
+   local crosshair_size = CreateConVar("ttt_crosshair_size", "1.0", FCVAR_ARCHIVE)
    local disable_crosshair = CreateConVar("ttt_disable_crosshair", "0", FCVAR_ARCHIVE)
 
 
@@ -151,18 +152,25 @@ if CLIENT then
       local LastShootTime = self.Weapon:LastShootTime()
       scale = scale * (2 - math.Clamp( (CurTime() - LastShootTime) * 5, 0.0, 1.0 ))
 
-      local alphafactor = sights and sights_opacity:GetFloat() or 1
+      local alpha = sights and sights_opacity:GetFloat() or 1
+      local bright = crosshair_brightness:GetFloat() or 1
 
       -- somehow it seems this can be called before my player metatable
       -- additions have loaded
       if client.IsTraitor and client:IsTraitor() then
-         surface.SetDrawColor( 255, 50, 50, 255 * alphafactor)
+         surface.SetDrawColor(255 * bright,
+                              50 * bright,
+                              50 * bright,
+                              255 * alpha)
       else
-         surface.SetDrawColor( 0, 255, 0, 255 * alphafactor)
+         surface.SetDrawColor(0,
+                              255 * bright,
+                              0,
+                              255 * alpha)
       end
 
-      local gap = 20 * scale * (sights and 0.8 or 1)
-      local length = gap + 20 * scale
+      local gap = 20 * (scale * 1.5) * (sights and 0.8 or 1)
+      local length = gap + (25 * crosshair_size:GetFloat()) * scale
       surface.DrawLine( x - length, y, x - gap, y )
       surface.DrawLine( x + length, y, x + gap, y )
       surface.DrawLine( x, y - length, x, y - gap )
