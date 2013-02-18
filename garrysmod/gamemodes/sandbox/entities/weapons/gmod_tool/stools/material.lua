@@ -1,4 +1,3 @@
-
 TOOL.Category		= "Render"
 TOOL.Name			= "#tool.material.name"
 TOOL.Command		= nil
@@ -17,7 +16,7 @@ local function SetMaterial( Player, Entity, Data )
 		--
 		-- Make sure this is in the 'allowed' list in multiplayer - to stop people using exploits
 		--
-		if ( !game.SinglePlayer() && !list.Contains( "OverrideMaterials", Data.MaterialOverride ) ) then
+		if ( !game.SinglePlayer() && !list.Contains( "OverrideMaterials", Data.MaterialOverride ) && Data.MaterialOverride != "" ) then
 			return 
 		end
 
