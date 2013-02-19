@@ -156,9 +156,9 @@ function GM:PlayerNoClip( pl, on )
 	
 end
 
---[[---------------------------------------------------------
-   Name: gamemode:FindUseEntity( ply, ent )
------------------------------------------------------------]]
+--
+-- FindUseEntity
+--
 function GM:FindUseEntity( ply, ent )
 	
 	-- ent is what the game found to use by default
@@ -168,11 +168,21 @@ function GM:FindUseEntity( ply, ent )
 		
 end
 
+
+--
+-- Player tick
+--
 function GM:PlayerTick( ply, mv )
 	
 end
 
+--
+-- Player is switching weapon. Return true to prevent the switch.
+--
 function GM:PlayerSwitchWeapon( ply, oldwep, newwep )
 	
+
+	return false
+
 end
 
