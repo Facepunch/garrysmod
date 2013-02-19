@@ -121,7 +121,7 @@ list.Add( "PaintMaterials", "Cross" )
 function TOOL.BuildCPanel( CPanel )
 
 	-- HEADER
-	CPanel:AddControl( "Header", { Text = "#tool.paint_name", Description	= "#tool.paint_desc" }  )
+	CPanel:AddControl( "Header", { Text = "#tool.paint.name", Description	= "#tool.paint_desc" }  )
 	
 	local Options = list.Get( "PaintMaterials" )
 	table.sort( Options )
@@ -135,7 +135,7 @@ function TOOL.BuildCPanel( CPanel )
 	
 	end
 		
-	CPanel:AddControl( "ListBox", { Label = "#tool.paint_choose", Height = "300", Options = RealOptions } )
+	CPanel:AddControl( "ListBox", { Label = "#tool.paint.texture", Height = "300", Options = RealOptions } )
 	
 	
 									
