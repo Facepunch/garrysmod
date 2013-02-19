@@ -12,3 +12,7 @@
 <h2>Disable LuaJIT</h2>
 <p>Some people feel that the JIT part in LuaJIT slows their servers down. You can now start with LuaJIT disabled by running with -nojit.</p>
 
+
+<h2>Added entity callback BuildBonePositions</h2>
+<p>You can now call <a href='http://wiki.garrysmod.com/page/Classes/Entity/AddCallback'>AddCallback</a>( "BuildBonePositions", myfunc ) to add a callback that should work the same as the historic BuildBonePositions hook. A lot of coders have requested this as this hook gives a greater degree of freedom (at the cost of a performance overhead) over the <a href='http://wiki.garrysmod.com/page/Classes/Entity/ManipulateBonePosition'>ManipulateBone</a> functions.
+.</p>
