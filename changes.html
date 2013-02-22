@@ -36,3 +36,6 @@
 
 <h2>Dedicated Servers use Workshop Collections</h2>
 <p>Throw away your workshop.vdf file - because you don't need it. The workshop for dedicated server system now works the same way as <a href='https://developer.valvesoftware.com/wiki/CSGO_Workshop_For_Server_Operators'>CS:GO</a>. </p>
+
+<h2>Added CheckPassword hook</h2>
+<p>A long requested hook that allows Lua to control the join process. This should duplicate the functionality of the gatekeeper module that a lot of servers use - and might even break gatekeeper itself - because the engine no longer calls the functions that it hooks.</p>
