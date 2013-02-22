@@ -57,7 +57,9 @@ properties.Add( "bodygroups",
 				local groups = submenu:AddSubMenu( v.name )
 
 				for i=1, v.num do
-					local option = groups:AddOption( "#" .. i, function() self:SetBodyGroup( ent, v.id, i-1 ) end )
+					local modelname = v.submodels[ i-1 ];
+					if ( modelname == "" ) then modelname = "model #" .. i end
+					local option = groups:AddOption( modelname, function() self:SetBodyGroup( ent, v.id, i-1 ) end )
 					if ( ent:GetBodygroup( v.id ) == i-1 ) then
 						option:SetChecked( true )
 					end
