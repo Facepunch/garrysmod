@@ -67,6 +67,10 @@ local function AddOption( data, menu, ent, ply, tr )
 		option:SetImage( data.MenuIcon )
 	end
 
+	if ( data.MenuOpen ) then
+		data.MenuOpen( data, option, ent, tr )
+	end
+
 	return option;
 
 end

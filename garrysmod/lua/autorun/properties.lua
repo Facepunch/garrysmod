@@ -11,4 +11,5 @@ include( "properties/gravity.lua" )
 include( "properties/npc_scale.lua" )
 include( "properties/editentity.lua" )
 include( "properties/kinect_controller.lua" )
+include( "properties/bodygroups.lua" )
 

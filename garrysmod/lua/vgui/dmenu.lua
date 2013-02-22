@@ -110,17 +110,13 @@ end
 function PANEL:AddSubMenu( strText, funcFunction )
 
 	local pnl = vgui.Create( "DMenuOption", self )
-	
-	local SubMenu = DermaMenu( pnl )
-		SubMenu:SetVisible( false )
-		SubMenu:SetParent( pnl )
+	local SubMenu = pnl:AddSubMenu( strText, funcFunction )
 
-	pnl:SetSubMenu( SubMenu )
 	pnl:SetText( strText )
 	if ( funcFunction ) then pnl.DoClick = funcFunction end
-	
+
 	self:AddPanel( pnl )
-	
+
 	return SubMenu, pnl
 
 end

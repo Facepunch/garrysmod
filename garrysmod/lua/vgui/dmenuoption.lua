@@ -44,6 +44,22 @@ function PANEL:SetSubMenu( menu )
 	
 end
 
+--
+-- AddSubMenu
+--
+function PANEL:AddSubMenu()
+
+	local SubMenu = DermaMenu( self )
+		SubMenu:SetVisible( false )
+		SubMenu:SetParent( self )
+
+	self:SetSubMenu( SubMenu )
+	
+	return SubMenu
+
+end
+
+
 --[[---------------------------------------------------------
 
 -----------------------------------------------------------]]
