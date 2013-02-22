@@ -1,4 +1,3 @@
-
 --[[---------------------------------------------------------
    Name: Inherit( t, base )
    Desc: Copies any missing data from base to t
@@ -174,7 +173,7 @@ function table.Random (t)
   local rk = math.random( 1, table.Count( t ) )
   local i = 1
   for k, v in pairs(t) do 
-	if ( i == rk ) then return v end
+	if ( i == rk ) then return v, k end
 	i = i + 1 
   end
 
