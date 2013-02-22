@@ -104,3 +104,31 @@ function GM:ShowTeam( ply )
 	ply:SendLua( "GAMEMODE:ShowTeam()" )
 
 end
+
+--
+-- CheckPassword( steamid, networkid, server_password, password, name )
+--
+-- Called every time a non-localhost player joins the server. steamid is their 64bit
+-- steamid. Return false and a reason to reject their join. Return true to allow
+-- them to join. 
+--
+function GM:CheckPassword( steamid, networkid, server_password, password, name )
+
+	-- The server has sv_password set
+	if ( server_password != "" ) then
+
+		-- The joining clients password doesn't match sv_password
+		if ( server_password != password ) then
+			return false, "#GameUI_ServerRejectBadPassword"
+		end
+
+	end
+	
+	--
+	-- Returning true means they're allowed to join the server
+	--
+	return true
+
+end
+
+
