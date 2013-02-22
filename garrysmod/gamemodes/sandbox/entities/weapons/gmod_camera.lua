@@ -65,7 +65,7 @@ function SWEP:SetupDataTables()
 	self:NetworkVar( "Float", 1, "Roll" );
 
 	if ( SERVER ) then
-		self:SetZoom( 90 )
+		self:SetZoom( 70 )
 		self:SetRoll( 0 )
 	end
 
@@ -95,7 +95,7 @@ end
 	Reload does nothing
 -----------------------------------------------------------]]
 function SWEP:Reload()
-	self:SetZoom( self.Owner:GetInfoNum("fov_desired") or 70 )
+	self:SetZoom( self.Owner:GetInfoNum( "fov_desired", 70 ) )
 	self:SetRoll( 0 )
 		
 end
