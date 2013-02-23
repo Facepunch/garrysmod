@@ -207,6 +207,8 @@ function TOOL.BuildCPanel( CPanel )
 		matselect:SetItemWidth( 64 )
 		matselect:SetItemHeight( 64 )
 		matselect:SetAutoHeight( true )
+		
+		Derma_Hook( matselect.List, "Paint", "Paint", "Panel" )
 	
 		local list = list.Get( "EffectType" )		
 		for k, v in pairs( list ) do

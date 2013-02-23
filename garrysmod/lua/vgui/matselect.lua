@@ -30,8 +30,8 @@ function PANEL:Init()
 	self.List = vgui.Create( "DPanelList", self )
 		self.List:EnableHorizontal( true )
 		self.List:EnableVerticalScrollbar()
-		self.List:SetSpacing( 0 )
-		self.List:SetPadding( 5 )
+		self.List:SetSpacing( 1 )
+		self.List:SetPadding( 3 )
 	
 	self.Controls 	= {}
 	self.Height		= 2
