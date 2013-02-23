@@ -190,7 +190,6 @@ function PANEL:CheckBox( strLabel, strConVar )
 	left:SetText( strLabel )
 	left:SetDark( true )
 	left:SetConVar( strConVar )
-	left:SetIndent( 5 )
 
 	self:AddItem( left, nil )
 	

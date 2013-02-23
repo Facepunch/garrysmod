@@ -196,6 +196,9 @@ if ( CLIENT ) then
 				QuickFace:SetNumRows( 3 )
 				QuickFace:SetItemWidth( 64 )
 				QuickFace:SetItemHeight( 32 )
+
+				QuickFace.List:SetSpacing( 0 )
+				QuickFace.List:SetPadding( 0 )
 				
 				-- Todo: These really need to be the name of the flex.
 				
