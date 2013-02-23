@@ -144,22 +144,14 @@ function TOOL.BuildCPanel( CPanel )
 		
 	CPanel:AddControl( "ComboBox", params )
 	
+	CPanel:AddControl( "Numpad", { Label = "#tool.light.toggle", Command = "light_key", ButtonSize = 22 } )
+	
 	CPanel:AddControl( "Slider",  { Label	= "#tool.light.ropelength",
 									Type	= "Float",
 									Min		= 0,
 									Max		= 256,
 									Command = "light_ropelength" }	 )
-	
-	
-	CPanel:AddControl( "Color",  { Label	= "#tool.light.color",
-									Red			= "light_r",
-									Green		= "light_g",
-									Blue		= "light_b",
-									ShowAlpha	= 0,
-									ShowHSV		= 1,
-									ShowRGB 	= 1,
-									Multiplier	= 255 } )	
-									
+
 	CPanel:AddControl( "Slider",  { Label	= "#tool.light.brightness",
 									Type	= "Float",
 									Min		= 0,
@@ -171,10 +163,16 @@ function TOOL.BuildCPanel( CPanel )
 									Min		= 0,
 									Max		= 1024,
 									Command = "light_size" }	 )
-
-	CPanel:AddControl( "Numpad", { Label = "#tool.light.toggle", Command = "light_key", ButtonSize = 22 } )
-
 									
+	CPanel:AddControl( "Color",  { Label	= "#tool.light.color",
+									Red			= "light_r",
+									Green		= "light_g",
+									Blue		= "light_b",
+									ShowAlpha	= 0,
+									ShowHSV		= 1,
+									ShowRGB 	= 1,
+									Multiplier	= 255 } )
+
 end
 
 if ( SERVER ) then
