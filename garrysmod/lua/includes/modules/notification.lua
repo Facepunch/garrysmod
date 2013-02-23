@@ -1,4 +1,3 @@
-
 surface.CreateFont( "GModNotify",
 {
 	font	= "Arial",
@@ -222,8 +221,7 @@ function PANEL:SetProgress()
 	-- Quick and dirty, just how I like it.
 	self.Paint = function()
 	
-		self.BaseClass.Paint( self )
-		
+		self.BaseClass.Paint( self, self:GetWide(), self:GetTall() )
 	
 		surface.SetDrawColor( 0, 100, 0, 150 )
 		surface.DrawRect( 4, self:GetTall() - 10, self:GetWide() - 8, 5 )
