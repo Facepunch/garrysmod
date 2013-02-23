@@ -31,7 +31,7 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 	end
 
 	ent:SetPlayer( ply )
-	ent:SetLocked( locked )
+	
 
 	ent.toggle		= toggle
 	ent.locked		= locked
@@ -40,7 +40,8 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 	ent:Spawn()
 		
 	ent:SetTracking( NULL, Vector(0) )
-		
+	ent:SetLocked( locked )
+
 	if ( toggle == 1 ) then
 		numpad.OnDown(	ply, key, "Camera_Toggle",  ent )
 	else

@@ -85,6 +85,9 @@ function ENT:SetLocked( locked )
 		if ( phys:IsValid() ) then
 			phys:EnableMotion( false )
 		end
+		
+		self:SetMoveType( MOVETYPE_NONE )
+		self:SetSolid( SOLID_BBOX )
 	
 	else
 	
@@ -100,6 +103,7 @@ end
    Name: OnTakeDamage
 -----------------------------------------------------------]]
 function ENT:OnTakeDamage( dmginfo )
+	if ( self.locked ) then return end
 	self:TakePhysicsDamage( dmginfo )
 end
 
