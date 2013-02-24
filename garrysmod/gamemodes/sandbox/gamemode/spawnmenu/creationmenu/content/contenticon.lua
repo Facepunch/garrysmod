@@ -5,6 +5,7 @@ local PANEL = {}
 
 local matOverlay_Normal = Material( "gui/ContentIcon-normal.png" )
 local matOverlay_Hovered = Material( "gui/ContentIcon-hovered.png" )
+local matOverlay_AdminOnly = Material( "icon16/shield.png" )
 
 AccessorFunc( PANEL, "m_Color", 			"Color" )
 AccessorFunc( PANEL, "m_Type", 				"ContentType" )
@@ -71,7 +72,7 @@ function PANEL:SetMaterial( name )
 end
 
 function PANEL:SetAdminOnly( b )
-	
+	self.AdminOnly = b
 end
 
 function PANEL:DoRightClick()
@@ -126,6 +127,10 @@ function PANEL:Paint( w, h )
 	
 	surface.DrawTexturedRect( self.Border, self.Border, w-self.Border*2, h-self.Border*2 )
 
+	if ( self.AdminOnly ) then
+		surface.SetMaterial( matOverlay_AdminOnly )
+		surface.DrawTexturedRect( self.Border + 8, self.Border + 8, 16, 16 )
+	end
 end
 
 function PANEL:PaintOver( w, h )
@@ -141,6 +146,7 @@ function PANEL:ToTable( bigtable )
 	tab.type		= self:GetContentType();
 	tab.nicename	= self.m_NiceName;
 	tab.material	= self.m_MaterialName;
+	tab.admin		= self.AdminOnly;
 	tab.spawnname	= self:GetSpawnName();
 	tab.weapon		= self:GetNPCWeapon();
 
@@ -157,7 +163,7 @@ function PANEL:Copy()
 	copy:SetName( self.m_NiceName )
 	copy:SetMaterial( self.m_MaterialName )
 	copy:SetNPCWeapon( self:GetNPCWeapon() )
-	-- copy:SetAdminOnly( obj.admin )
+	copy:SetAdminOnly( self.AdminOnly )
 	copy:CopyBase( self )
 	copy.DoClick = self.DoClick
 	copy.OpenMenu = self.OpenMenu
