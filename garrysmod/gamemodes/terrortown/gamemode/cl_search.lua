@@ -247,6 +247,11 @@ local function SearchInfoController(search, dactive, dtext)
                 return
              end
 
+             -- If wrapping is on, the Label's SizeToContentsY misbehaves for
+             -- text that does not need wrapping. I long ago stopped wondering
+             -- "why" when it comes to VGUI. Apply hack, move on.
+             dtext:GetLabel():SetWrap(#data.text > 50)
+
              dtext:SetText(data.text)
              dactive:SetImage(data.img)
           end
@@ -327,9 +332,6 @@ local function ShowSearchScreen(search_raw)
    dtext:SetSize(descw - 120, desch - m*2)
    dtext:MoveRightOf(dactive, m*2)
    dtext:AlignTop(m)
-
-   local dtextlabel = dtext:GetLabel()
-   dtextlabel:SetWrap(true)
    dtext:SetText("...")
 
    -- buttons
