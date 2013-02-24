@@ -672,7 +672,7 @@ function CCGiveSWEP( player, command, arguments )
 	if (swep == nil) then return end
 	
 	-- You're not allowed to spawn this!
-	if ( !swep.Spawnable && !player:IsAdmin() ) then
+	if ( ( !swep.Spawnable && !player:IsAdmin() ) || ( swep.AdminOnly && !player:IsAdmin() ) ) then
 		return
 	end
 	
