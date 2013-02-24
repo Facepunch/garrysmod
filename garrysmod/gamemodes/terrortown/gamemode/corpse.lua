@@ -288,8 +288,13 @@ local function GetKillerSample(victim, attacker, dmg)
 
    if not (IsValid(victim) and IsValid(attacker) and attacker:IsPlayer()) then return end
 
-   local dist = victim:GetPos():Distance(attacker:GetPos())
+   -- NPCs for which a player is damage owner (meaning despite the NPC dealing
+   -- the damage, the attacker is a player) should not cause the player's DNA to
+   -- end up on the corpse.
+   local infl = dmg:GetInflictor()
+   if IsValid(infl) and infl:IsNPC() then return end
 
+   local dist = victim:GetPos():Distance(attacker:GetPos())
    if dist > GetConVarNumber("ttt_killer_dna_range") then return nil end
 
    local sample = {}
