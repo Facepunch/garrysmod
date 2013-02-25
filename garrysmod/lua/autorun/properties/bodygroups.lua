@@ -1,4 +1,3 @@
-
 AddCSLuaFile()
 
 properties.Add( "bodygroups", 
@@ -16,7 +15,8 @@ properties.Add( "bodygroups",
 						--
 						-- Get a list of bodygroups
 						--
-						local options = ent:GetBodyGroups() or {};
+						local options = ent:GetBodyGroups();
+						if ( !options ) then return false end
 
 						--
 						-- If a bodygroup has more than one state - then we can configure it
