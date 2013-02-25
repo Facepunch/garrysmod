@@ -8,7 +8,7 @@ AddCSLuaFile()
 SWEP.Author			= ""
 SWEP.Instructions	= "Shoots flechettes"
 
-SWEP.Spawnable			= false
+SWEP.Spawnable			= true
 SWEP.AdminOnly			= true
 
 SWEP.ViewModel			= "models/weapons/v_pistol.mdl"
