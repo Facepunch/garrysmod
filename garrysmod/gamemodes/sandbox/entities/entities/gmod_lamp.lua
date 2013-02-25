@@ -17,6 +17,7 @@ AccessorFunc( ENT, "Texture", "FlashlightTexture" )
 function ENT:SetupDataTables()
 
 	self:NetworkVar( "Bool", 0, "On" );
+	self:NetworkVar( "Bool", 1, "Toggle" );
 	self:NetworkVar( "Float", 0, "LightFOV" );
 	self:NetworkVar( "Float", 1, "Distance" );
 	self:NetworkVar( "Float", 2, "Brightness" );
