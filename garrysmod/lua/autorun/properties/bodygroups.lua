@@ -16,7 +16,7 @@ properties.Add( "bodygroups",
 						--
 						-- Get a list of bodygroups
 						--
-						local options = ent:GetBodyGroups();
+						local options = ent:GetBodyGroups() or {};
 
 						--
 						-- If a bodygroup has more than one state - then we can configure it
@@ -71,8 +71,8 @@ properties.Add( "bodygroups",
 				local groups = submenu:AddSubMenu( v.name )
 
 				for i=1, v.num do
-					local modelname = v.submodels[ i-1 ];
-					if ( modelname == "" ) then modelname = "model #" .. i end
+					local modelname = "model #" .. i
+					if ( v.submodels && v.submodels[ i-1 ] != "" ) then modelname = v.submodels[ i-1 ] end
 					local option = groups:AddOption( modelname, function() self:SetBodyGroup( ent, v.id, i-1 ) end )
 					if ( ent:GetBodygroup( v.id ) == i-1 ) then
 						option:SetChecked( true )
