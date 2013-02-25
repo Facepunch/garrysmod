@@ -14,7 +14,7 @@ TOOL.ClientConVar[ "length" ] = 5
 TOOL.ClientConVar[ "startsize" ] = 32
 TOOL.ClientConVar[ "endsize" ] = 0
 
-TOOL.ClientConVar[ "material" ] = "sprites/obsolete"
+TOOL.ClientConVar[ "material" ] = "trails/lol"
 
 cleanup.Register( "trails" )
 
@@ -55,6 +55,15 @@ local function SetTrails( Player, Entity, Data )
 		Data.StartSize = 0.0001;
 		
 	end
+
+	--
+	-- Lock down the trail material - only allow what the server allows
+	-- This is here to fix a crash exploit
+	--
+	if ( !game.SinglePlayer() && !list.Contains( "trail_materials", Data.Material ) ) then
+		return 
+	end
+
 	
 	local trail_entity = util.SpriteTrail( Entity,  --Entity
 											0,  --iAttachmentID
