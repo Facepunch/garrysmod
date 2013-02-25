@@ -132,6 +132,17 @@ function DoBoneManipulator( ent, Bones )
 
 end
 
+--
+-- Used by DoGeneric to restore the body groups from dupe info
+--
+local function RestoreBodyGroups( ent, BodyG )
+
+	for k, v in pairs( BodyG ) do
+		ent:SetBodygroup( k, v )
+	end
+
+end
+
 --[[---------------------------------------------------------
    Applies generic every-day entity stuff for ent from table data.
 -----------------------------------------------------------]]
@@ -146,7 +157,7 @@ function DoGeneric( ent, data )
 	if ( data.BoneManip ) then DoBoneManipulator( ent, data.BoneManip ) end
 	if ( data.ModelScale ) then ent:SetModelScale( data.ModelScale, 0 ) end
 	if ( data.ColGroup ) then ent:SetCollisionGroup( data.ColGroup ) end
-
+	if ( data.BodyG ) then RestoreBodyGroups( ent, data.BodyG ) end
 	--
 	-- Restore NetworkVars/DataTable variables (the SetupDataTables values)
 	--
@@ -346,11 +357,26 @@ function CopyEntTable( Ent )
 	local FlexNum = Ent:GetFlexNum()
 	for i = 0, FlexNum do
 	
-		Tab.Flex = Tab.Flex or {}
-		
 		local w = Ent:GetFlexWeight( i );
 		if ( w != 0 ) then
+			Tab.Flex = Tab.Flex or {}
 			Tab.Flex[ i ] = w
+		end
+	
+	end
+
+	-- Body Groups
+	local bg = Ent:GetBodyGroups();
+	for k, v in pairs(bg) do
+	
+		--
+		-- If it has a non default setting, save it.
+		--
+		if ( Ent:GetBodygroup( v.id ) > 0 ) then
+
+			Tab.BodyG = Tab.BodyG or {}
+			Tab.BodyG[ v.id ] = Ent:GetBodygroup( v.id )
+
 		end
 	
 	end
