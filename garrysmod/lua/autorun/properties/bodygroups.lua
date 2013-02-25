@@ -5,7 +5,7 @@ properties.Add( "bodygroups",
 {
 	MenuLabel	=	"#bodygroups",
 	Order		=	600,
-	MenuIcon	=	"icon16/fire.png",
+	MenuIcon	=	"icon16/link_edit.png",
 	
 	Filter		=	function( self, ent, ply ) 
 
@@ -13,7 +13,21 @@ properties.Add( "bodygroups",
 						if ( ent:IsPlayer() ) then return false end
 						if ( !gamemode.Call( "CanProperty", ply, "bodygroups", ent ) ) then return false end
 
-						return table.Count( ent:GetBodyGroups() ) > 1
+						--
+						-- Get a list of bodygroups
+						--
+						local options = ent:GetBodyGroups();
+
+						--
+						-- If a bodygroup has more than one state - then we can configure it
+						--
+						for k, v in pairs( options ) do
+
+							if ( v.num > 1 ) then return true end
+						end
+
+						return false
+
 					end,
 
 	MenuOpen	=	function( self, option, ent, tr )
