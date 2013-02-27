@@ -166,7 +166,7 @@ if ( SERVER ) then
 			end
 			
 			game.CleanUpMap()
-						
+			
 			-- Send tooltip command to client
 			pl:SendLua( "GAMEMODE:OnCleanup( 'all' )" )
 			
