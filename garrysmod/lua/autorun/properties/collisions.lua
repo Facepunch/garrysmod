@@ -41,7 +41,7 @@ properties.Add( "collision_off",
 properties.Add( "collision_on", 
 {
 	MenuLabel	=	"#collision_on",
-	Order		=	-100,
+	Order		=	1500,
 	MenuIcon	=	"icon16/collision_on.png",
 	
 	Filter		=	function( self, ent, ply ) 
