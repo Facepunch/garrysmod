@@ -115,6 +115,7 @@ if ( SERVER ) then
 					
 				end
 				
+				table.Empty( val )
 			end
 			
 			-- Send tooltip command to client
@@ -134,6 +135,8 @@ if ( SERVER ) then
 			if ( ent:IsValid() ) then ent:Remove() end
 			
 		end
+		
+		table.Empty( cleanup_list[id][args[1]] )
 		
 		-- Send tooltip command to client
 		pl:SendLua( "GAMEMODE:OnCleanup( '"..args[1].."' )" )
@@ -155,6 +158,8 @@ if ( SERVER ) then
 						if ( ent:IsValid() ) then ent:Remove() end
 						
 					end
+					
+					table.Empty( type )
 					
 				end
 				
@@ -180,6 +185,8 @@ if ( SERVER ) then
 					if ( ent:IsValid() ) then ent:Remove() end
 					
 				end
+				
+				table.Empty( player[args[1]] )
 				
 			end
 			
