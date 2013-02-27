@@ -12,6 +12,7 @@ properties.Add( "skin",
 						if ( !IsValid( ent ) ) then return false end
 						if ( ent:IsPlayer() ) then return false end
 						if ( !gamemode.Call( "CanProperty", ply, "skin", ent ) ) then return false end
+						if ( !ent:SkinCount() ) then return false end
 
 						return ent:SkinCount() > 1
 
