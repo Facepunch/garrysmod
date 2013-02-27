@@ -12,6 +12,9 @@
 <h2>Added bodygroup properties</h2>
 <p>Open the properties menu on an entity with bodygroups and you'll be able to edit them! Finally!</p>
 
+<h2>Added skin  properties</h2>
+<p>The same as bodygroup properties - but for skins!</p>
+
 <h2>Fixed Scenes not finding !player</h2>
 <p>Sometimes scene sequences in maps couldn't find an entity called !player. Even though the player was there. This would be mostly happening in multiplayer - and should now be fixed!</p>
 
@@ -42,3 +45,31 @@
 
 <h2>Added CheckPassword hook</h2>
 <p>A long requested hook that allows Lua to control the join process. This should duplicate the functionality of the gatekeeper module that a lot of servers use - and might even break gatekeeper itself - because the engine no longer calls the functions that it hooks.</p>
+
+<h2>Fixed trails crash exploit</h2>
+<p>It was possible to crash all clients on a server by specifying an invalid material for the trails tool. This has been fixed by locking down the list of usable materials to a list set by the server.</p>
+
+<h2>Mount any gma files</h2>
+<p>GMA files are Garry's Mod Addon files. You can now copy a GMA into the garrysmod folder (or garrysmod/addons/gma/) and have them mount just like they'd been downloaded from Workshop. This should be useful for people who don't want to use workshop for some reason, and people who want to test their addons offline before uploading them to workshop.</p>
+
+<h2>Legacy Addon Mounting Changes</h2>
+<p>The Legacy Addon System previously required an addon.txt file in the addon folder. This is no longer the case. This requirement has been removed for ease of use. This means that any GMod 12 addons you have in addons/ will start mounting again. These might cause some problems - so be sure to clean them out before complaining.</p>
+
+<h2>Workshop Censorship</h2>
+<p>If you upload a save, demo or dupe that contains a banned word - it will be marked as private so only your friends can see it. I'm hoping this will reduce the number of naked/sex contributions we're seeing!</p>
+
+<h2>Flechette Gun is back</h2>
+<p>Something happened somewhere that stopped the flechette from spawning. Robotboy spotted it! He made a pull request that gave it us back!</p>
+
+<h2>Added Spawnpoints for most mountable games</h2>
+<p>Robotboy submitted a pull request that will let you spawn in a bunch of maps that you couldn't spawn in before.</p>
+
+<h2>TTT changes</h2>
+<p>fix scrollbar showing in search when not needed, fix NPCs leaving DNA traces on corpses </p>
+
+<h2>Added admin only icon</h2>
+<p>Robotboy sorted you out with this fix. Now you can see which entities in the spawnmenu are admin only - so you don't have to bother trying to spawn them!</p>
+
+<h2>Fixed static camera being able to knocked over </h2>
+<p>Yet another update from Git Pull Superstar Robotboy. This makes it so you can't knock or shoot the camera over. I'm sure a lot of people will appreciate this! And everyone else will moan that they loved being able to shoot and knock it over. Oh well.</p>
+
