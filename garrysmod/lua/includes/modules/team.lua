@@ -1,4 +1,3 @@
-
 module( "team", package.seeall )
 
 local TeamInfo = {}
@@ -120,7 +119,7 @@ function GetPlayers(index)
 	local TeamPlayers = {}
 	
 	for id,pl in pairs( player.GetAll() ) do
-		if (pl:Team() == index) then
+		if (IsValid(pl) and pl:Team() == index) then
 			table.insert(TeamPlayers, pl)
 		end
 	end
