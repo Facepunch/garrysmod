@@ -13,6 +13,7 @@ TOOL.ClientConVar[ "distance" ]			= "1024"
 TOOL.ClientConVar[ "brightness" ]		= "10"
 TOOL.ClientConVar[ "texture" ]			= "effects/flashlight001"
 TOOL.ClientConVar[ "model" ]			= "models/MaxOfS2D/lamp_flashlight.mdl"
+TOOL.ClientConVar[ "toggle" ]			= "0"
 
 cleanup.Register( "lamps" )
 
@@ -34,6 +35,7 @@ function TOOL:LeftClick( trace )
 	local fov 		= self:GetClientNumber( "fov" )
 	local distance	= self:GetClientNumber( "distance" )
 	local bright	= self:GetClientNumber( "brightness" )
+	local toggle	= self:GetClientNumber( "toggle" ) != 1
 
 	local mat		= Material( texture );
 	local texture	= mat:GetString( "$basetexture" )
@@ -45,6 +47,7 @@ function TOOL:LeftClick( trace )
 		trace.Entity:SetLightFOV( fov )
 		trace.Entity:SetDistance( distance )
 		trace.Entity:SetBrightness( bright )
+		trace.Entity:SetToggle( !toggle )
 		trace.Entity:UpdateLight()
 
 		-- For duplicator
@@ -60,7 +63,7 @@ function TOOL:LeftClick( trace )
 	
 	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
 
-	lamp = MakeLamp( ply, r, g, b, key, texture, mdl, fov, distance, bright, true, { Pos = pos, Angle = Angle(0, 0, 0) } )
+	lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = Angle(0, 0, 0) } )
 	
 	undo.Create("Lamp")
 		undo.AddEntity( lamp )
@@ -79,7 +82,7 @@ end
 
 if ( SERVER ) then
 
-	function MakeLamp( pl, r, g, b, KeyDown, Texture, Model, fov, distance, brightness, on, Data )
+	function MakeLamp( pl, r, g, b, KeyDown, toggle, Texture, Model, fov, distance, brightness, on, Data )
 	
 		if ( IsValid( pl ) ) then
 			if ( !pl:CheckLimit( "lamps" ) ) then return false end
@@ -96,6 +99,7 @@ if ( SERVER ) then
 			lamp:SetDistance( distance )
 			lamp:SetBrightness( brightness )
 			lamp:Switch( on )
+			lamp:SetToggle( !toggle )
 			duplicator.DoGeneric( lamp, Data )
 			
 		lamp:Spawn()
@@ -127,16 +131,17 @@ if ( SERVER ) then
 
 	end
 	
-	duplicator.RegisterEntityClass( "gmod_lamp", MakeLamp, "r", "g", "b", "KeyDown", "Texture", "Model", "fov", "distance", "brightness", "on", "Data" )
+	duplicator.RegisterEntityClass( "gmod_lamp", MakeLamp, "r", "g", "b", "KeyDown", "Toggle", "Texture", "Model", "fov", "distance", "brightness", "on", "Data" )
 
 
 	local function Toggle( pl, ent, onoff )
 	
 		if ( !IsValid( ent ) ) then return false end
+		if ( !ent:GetToggle() ) then ent:Switch( onoff == 1 ) return end
 
 		if ( numpad.FromButton() ) then
 
-			ent:Switch( onoff == 1 )
+			ent:Toggle()
 			return;
 
 		end
@@ -158,16 +163,16 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Header", { Text = "#tool.lamp.name", Description = "#tool.lamp.desc" }  )
 
 	-- Presets
-	local params = { Label = "#tool.presets", MenuButton = 1, Folder = "lamp", Options = {}, CVars = { "lamp_texture", "lamp_r", "lamp_g", "lamp_b", "lamp_key" } }
+	local params = { Label = "#tool.presets", MenuButton = 1, Folder = "lamp", Options = {}, CVars = { "lamp_texture", "lamp_r", "lamp_g", "lamp_b", "lamp_key", "lamp_model", "lamp_toggle" } }
 		
 		params.Options.default = {
-			lamp_ropelength		= 		64,
-			lamp_ropematerial	=		"cable/rope",
 			lamp_texture		=		"effects/flashlight001",
 			lamp_r				=		255,
 			lamp_g				=		255,
 			lamp_b				=		255,
-			lamp_key			=		-1
+			lamp_key			=		-1,
+			lamp_model			=		"models/MaxOfS2D/lamp_flashlight.mdl",
+			lamp_toggle			=		0
 		}
 					
 	CPanel:AddControl( "ComboBox", params )
@@ -177,7 +182,9 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:NumSlider( "#tool.lamp.fov", "lamp_fov", 10, 170, 2 )
 	CPanel:NumSlider( "#tool.lamp.distance", "lamp_distance", 64, 2048, 0 )
 	CPanel:NumSlider( "#tool.lamp.brightness", "lamp_brightness", 0, 8, 2 )
-									
+
+	CPanel:AddControl( "Checkbox", { Label = "#tool.lamp.toggle", Command = "lamp_toggle" } )
+
 	CPanel:AddControl( "Color",  { Label	= "#tool.lamp.color",
 									Red			= "lamp_r",
 									Green		= "lamp_g",
