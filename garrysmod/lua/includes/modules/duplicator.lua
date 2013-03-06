@@ -1,6 +1,5 @@
 
 
-
 --[[---------------------------------------------------------
    Duplicator module, 
    to add new constraints or entity classes use...
@@ -367,18 +366,20 @@ function CopyEntTable( Ent )
 
 	-- Body Groups
 	local bg = Ent:GetBodyGroups();
-	for k, v in pairs(bg) do
+	if ( bg ) then
+		for k, v in pairs(bg) do
+		
+			--
+			-- If it has a non default setting, save it.
+			--
+			if ( Ent:GetBodygroup( v.id ) > 0 ) then
 	
-		--
-		-- If it has a non default setting, save it.
-		--
-		if ( Ent:GetBodygroup( v.id ) > 0 ) then
-
-			Tab.BodyG = Tab.BodyG or {}
-			Tab.BodyG[ v.id ] = Ent:GetBodygroup( v.id )
-
+				Tab.BodyG = Tab.BodyG or {}
+				Tab.BodyG[ v.id ] = Ent:GetBodygroup( v.id )
+	
+			end
+		
 		end
-	
 	end
 	
 	Tab.FlexScale = Ent:GetFlexScale()
