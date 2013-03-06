@@ -13,7 +13,7 @@ TOOL.ClientConVar[ "distance" ]			= "1024"
 TOOL.ClientConVar[ "brightness" ]		= "10"
 TOOL.ClientConVar[ "texture" ]			= "effects/flashlight001"
 TOOL.ClientConVar[ "model" ]			= "models/MaxOfS2D/lamp_flashlight.mdl"
-TOOL.ClientConVar[ "toggle" ]			= "0"
+TOOL.ClientConVar[ "toggle" ]			= "1"
 
 cleanup.Register( "lamps" )
 
