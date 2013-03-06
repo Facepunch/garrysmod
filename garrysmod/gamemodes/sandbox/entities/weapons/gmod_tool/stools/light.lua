@@ -12,6 +12,7 @@ TOOL.ClientConVar[ "b" ]				= "255"
 TOOL.ClientConVar[ "brightness" ]		= "2"
 TOOL.ClientConVar[ "size" ]				= "256"
 TOOL.ClientConVar[ "key" ]				= "-1"
+TOOL.ClientConVar[ "toggle" ]			= "0"
 
 cleanup.Register( "lights" )
 
@@ -33,6 +34,7 @@ function TOOL:LeftClick( trace, attach )
 	local b 	= math.Clamp( self:GetClientNumber( "b" ), 0, 255 )
 	local brght	= math.Clamp( self:GetClientNumber( "brightness" ), 0, 255 )
 	local size 	= self:GetClientNumber( "size" )
+	local toggle = self:GetClientNumber( "toggle" ) != 1
 	
 	local key 	= self:GetClientNumber( "key" )
 	
@@ -56,13 +58,14 @@ function TOOL:LeftClick( trace, attach )
 		
 		trace.Entity:SetBrightness( brght )
 		trace.Entity:SetLightSize( size )
+		trace.Entity:SetToggle( !toggle )
 		
 		return true
 		
 	end
 	
 	if ( !self:GetSWEP():CheckLimit( "lights" ) ) then return false end
-	lamp = MakeLight( ply, r, g, b, brght, size, true, key, { Pos = pos, Angle = ang } )
+	lamp = MakeLight( ply, r, g, b, brght, size, toggle, !toggle, key, { Pos = pos, Angle = ang } )
 	
 	if (!attach) then 
 	
@@ -141,6 +144,7 @@ function TOOL.BuildCPanel( CPanel )
 		table.insert( params.CVars, "light_b" )
 		table.insert( params.CVars, "light_brightness" )
 		table.insert( params.CVars, "light_size" )
+		table.insert( params.CVars, "light_toggle" )
 		
 	CPanel:AddControl( "ComboBox", params )
 	
@@ -164,6 +168,8 @@ function TOOL.BuildCPanel( CPanel )
 									Max		= 1024,
 									Command = "light_size" }	 )
 									
+	CPanel:AddControl( "Checkbox", { Label = "#tool.light.toggle", Command = "light_toggle" } )
+	
 	CPanel:AddControl( "Color",  { Label	= "#tool.light.color",
 									Red			= "light_r",
 									Green		= "light_g",
@@ -177,7 +183,7 @@ end
 
 if ( SERVER ) then
 
-	function MakeLight( pl, r, g, b, brght, size, on, KeyDown, Data )
+	function MakeLight( pl, r, g, b, brght, size, toggle, on, KeyDown, Data )
 	
 		if ( IsValid( pl ) && !pl:CheckLimit( "lights" ) ) then return false end
 	
@@ -189,6 +195,7 @@ if ( SERVER ) then
 			lamp:SetColor( Color( r, g, b, 255 ) )
 			lamp:SetBrightness( brght )
 			lamp:SetLightSize( size )
+			lamp:SetToggle( !toggle )
 			lamp:SetOn( on )
 			
 		lamp:Spawn()
@@ -217,12 +224,13 @@ if ( SERVER ) then
 		
 	end
 	
-	duplicator.RegisterEntityClass( "gmod_light", MakeLight, "lightr", "lightg", "lightb", "Brightness", "Size", "on", "KeyDown", "Data" )
+	duplicator.RegisterEntityClass( "gmod_light", MakeLight, "lightr", "lightg", "lightb", "Brightness", "Size", "Toggle", "on", "KeyDown", "Data" )
 	
 	
 	local function Toggle( pl, ent, onoff )
 	
 		if ( !IsValid( ent ) ) then return false end
+		if ( !ent:GetToggle() ) then ent:SetOn( onoff == 1 ) return end
 
 		if ( numpad.FromButton() ) then
 
