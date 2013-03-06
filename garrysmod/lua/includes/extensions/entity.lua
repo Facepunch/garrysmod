@@ -6,6 +6,28 @@ if ( !meta ) then return end
 
 AccessorFunc( meta, "m_bPlayPickupSound", "ShouldPlayPickupSound" )
 
+--
+-- Entity index accessor. This used to be done in engine, but it's done in Lua now because it's faster
+--
+function meta:__index( key )
+
+	--
+	-- Search the metatable. We can do this without dipping into C, so we do it first.
+	--
+	local val = meta[key]
+	if ( val ) then return val end
+
+	--
+	-- Search the entity table
+	--
+	local tab = self:GetTable()
+	local val = tab[ key ]
+	if ( val ) then return val end
+	
+	return nil
+	
+end
+
 --[[---------------------------------------------------------
    Name: Short cut to add entities to the table
 -----------------------------------------------------------]]
