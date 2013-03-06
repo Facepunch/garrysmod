@@ -1,4 +1,3 @@
-
 module( "cleanup", package.seeall )
 
 local cleanup_types = {}
@@ -114,7 +113,9 @@ if ( SERVER ) then
 					count = count + 1
 					
 				end
-				
+			
+				table.Empty( val )
+			
 			end
 			
 			-- Send tooltip command to client
@@ -134,6 +135,8 @@ if ( SERVER ) then
 			if ( ent:IsValid() ) then ent:Remove() end
 			
 		end
+		
+		table.Empty( cleanup_list[id][args[1]] )
 		
 		-- Send tooltip command to client
 		pl:SendLua( "GAMEMODE:OnCleanup( '"..args[1].."' )" )
@@ -156,12 +159,14 @@ if ( SERVER ) then
 						
 					end
 					
+					table.Empty( type )
+					
 				end
 				
 			end
 			
 			game.CleanUpMap()
-						
+			
 			-- Send tooltip command to client
 			pl:SendLua( "GAMEMODE:OnCleanup( 'all' )" )
 			
@@ -180,6 +185,8 @@ if ( SERVER ) then
 					if ( ent:IsValid() ) then ent:Remove() end
 					
 				end
+				
+				table.Empty( player[args[1]] )
 				
 			end
 			
