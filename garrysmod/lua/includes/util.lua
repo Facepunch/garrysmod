@@ -9,6 +9,34 @@ math.randomseed( os.time() );
 --
 Format = string.format
 
+--
+-- CurTime is called a lot so we make it a Lua function which accesses a global variable
+-- which is updated by the engine whenever CurTime changes.
+--
+function CurTime()
+
+	return CURTIME
+
+end
+
+--
+-- Ditto with RealTime
+--
+function RealTime()
+
+	return REALTIME
+
+end
+
+--
+-- And Ditto with FrameTime
+--
+function FrameTime()
+
+	return FRAMETIME
+
+end
+
 --[[---------------------------------------------------------
 	IsTableOfEntitiesValid
 -----------------------------------------------------------]]
