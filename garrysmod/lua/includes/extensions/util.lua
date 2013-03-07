@@ -157,3 +157,63 @@ function util.NiceFloat( f )
 	return str
 
 end
+
+
+
+--
+-- Timer
+--
+--
+local T = 
+{
+
+	--
+	-- Resets the timer to nothing
+	--
+	Reset = function( self )
+
+		self.endtime = nil
+
+	end,
+
+	--
+	-- Starts the timer, call with end time
+	--
+	Start = function( self, time )
+
+		self.endtime = CurTime() + time
+
+	end,
+
+	--
+	-- Returns true if the timer has been started
+	--
+	Started = function( self )
+
+		self.endtime = CurTime() + time
+
+	end,
+
+	--
+	-- Returns true if the time has elapsed
+	--
+	Elapsed = function( self, time )
+
+		return self.endtime == nil || self.endtime <= CurTime()
+
+	end
+}
+
+T.__index = T
+
+--
+-- Create a new timer object
+--
+function util.Timer( startdelay )
+
+	local t = {}
+	setmetatable( t, T )
+	t.endtime = CurTime() + startdelay
+	return t
+
+end
