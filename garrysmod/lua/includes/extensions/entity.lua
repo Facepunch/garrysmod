@@ -15,14 +15,22 @@ function meta:__index( key )
 	-- Search the metatable. We can do this without dipping into C, so we do it first.
 	--
 	local val = meta[key]
-	if ( val ) then return val end
+	if ( val != nil ) then return val end
 
 	--
 	-- Search the entity table
 	--
 	local tab = self:GetTable()
-	local val = tab[ key ]
-	if ( val ) then return val end
+	if ( tab ) then
+		local val = tab[ key ]
+		if ( val != nil ) then return val end
+	end
+
+	--
+	-- Legacy: sometimes use self.Owner to get the owner.. so lets carry on supporting that stupidness
+	-- This needs to be retired, just like self.Entity was.
+	--
+	if ( key == "Owner" ) then return meta.GetOwner( self ) end
 	
 	return nil
 	

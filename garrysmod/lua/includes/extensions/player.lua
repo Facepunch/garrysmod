@@ -15,20 +15,22 @@ function meta:__index( key )
 	-- Search the metatable. We can do this without dipping into C, so we do it first.
 	--
 	local val = meta[key]
-	if ( val ) then return val end
+	if ( val != nil ) then return val end
 
 	--
 	-- Search the entity metatable
 	--
 	local val = entity[key]
-	if ( val ) then return val end
+	if ( val != nil ) then return val end
 
 	--
 	-- Search the entity table
 	--
 	local tab = entity.GetTable( self )
-	local val = tab[ key ]
-	if ( val ) then return val end
+	if ( tab ) then
+		local val = tab[ key ]
+		if ( val != nil ) then return val end
+	end
 	
 	return nil
 	
