@@ -211,21 +211,23 @@ end
 --[[---------------------------------------------------------
    Generic function for duplicating stuff
 -----------------------------------------------------------]]
-function GenericDuplicatorFunction( Player, data )
+function GenericDuplicatorFunction( Player, data, force )
 
-	if ( !IsAllowed( data.Class ) ) then
-		-- MsgN( "duplicator: ", data.Class, " isn't allowed to be duplicated!" )
-		return 
-	end
+	if ( !force ) then
+		if ( !IsAllowed( data.Class ) ) then
+			-- MsgN( "duplicator: ", data.Class, " isn't allowed to be duplicated!" )
+			return 
+		end
 
-	--
-	-- Is this entity 'admin only'?
-	--
-	if ( IsValid( Player ) && !Player:IsAdmin() ) then
+		--
+		-- Is this entity 'admin only'?
+		--
+		if ( IsValid( Player ) && !Player:IsAdmin() ) then
 
-		if ( !scripted_ents.GetMember( data.Class, "Spawnable" ) ) then return end 
-		if ( scripted_ents.GetMember( data.Class, "AdminOnly" ) ) then return end
+			if ( !scripted_ents.GetMember( data.Class, "Spawnable" ) ) then return end 
+			if ( scripted_ents.GetMember( data.Class, "AdminOnly" ) ) then return end
 
+		end
 	end
 
 	local Entity = ents.Create( data.Class )
