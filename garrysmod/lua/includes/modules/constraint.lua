@@ -1,9 +1,8 @@
-
 if ( SERVER ) then
 
 	-- If you're a server admin and you want your physics to spazz out less you can
 	-- use the convar. The higher you set it the more accurate physics will be.
-	-- This is set to 2 by default, since we are a physics mod.
+	-- This is set to 4 by default, since we are a physics mod.
 
 	CreateConVar( "gmod_physiterations", "4", { FCVAR_REPLICATED, FCVAR_ARCHIVE } )
 	
