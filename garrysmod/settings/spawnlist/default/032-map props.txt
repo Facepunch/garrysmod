@@ -1,0 +1,8 @@
+"TableToKeyValues"
+{
+	"parentid"		"30"
+	"icon"		"icon16/folder.png"
+	"id"		"32"
+	"name"		"Map Props"
+	"version"		"3"
+}
