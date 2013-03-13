@@ -1,0 +1,8 @@
+"TableToKeyValues"
+{
+	"parentid"		"0"
+	"icon"		"icon16/folder.png"
+	"id"		"30"
+	"name"		"CS: Global Offensive"
+	"version"		"3"
+}
