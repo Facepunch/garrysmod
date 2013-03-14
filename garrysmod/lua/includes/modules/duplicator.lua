@@ -11,6 +11,272 @@
 
 module( "duplicator", package.seeall )
 
+--
+-- When saving or loading all coordinates are saved relative to these
+--
+local LocalPos = Vector( 0, 0, 0 )
+local LocalAng = Angle( 0, 0, 0 )
+
+--
+-- Should be set to the player that is creating/copying stuff. Can be nil.
+--
+local ActionPlayer = nil
+
+--
+-- The physics object Saver/Loader
+--
+local PhysicsObject = 
+{
+	Save = function( data, phys )
+
+		data.Pos = phys:GetPos()
+		data.Angle = phys:GetAngles()
+		data.Frozen = !phys:IsMoveable()
+		if ( phys:IsGravityEnabled() == false ) then data.NoGrav = true end
+
+		data.Pos, data.Angle = WorldToLocal( data.Pos, data.Angle, LocalPos, LocalAng )
+
+	end,
+
+	Load = function( data, phys )
+
+		if ( isvector( data.Pos ) && isangle( data.Angle ) ) then
+
+			local pos, ang = LocalToWorld( data.Pos, data.Angle, LocalPos, LocalAng )
+			phys:SetPos( pos )
+			phys:SetAngles( ang )
+
+		end
+
+		if ( data.Frozen == true ) then 
+
+			phys:EnableMotion( false ) 
+
+			-- If we're being created by a player then add these to their frozen list so they can unfreeze them all
+			if ( IsValid( ActionPlayer ) ) then
+				ActionPlayer:AddFrozenPhysicsObject( Entity, phys )
+			end
+
+		end
+
+		if ( data.NoGrav == true ) then phys:EnableGravity( false ) end
+
+	end,
+}
+
+--
+-- Entity physics saver
+--
+local EntityPhysics = 
+{
+	--
+	-- Loop each bone, calling PhysicsObject.Save
+	--
+	Save = function( data, Entity )
+
+		local num = Entity:GetPhysicsObjectCount()
+
+		for objectid = 0, num-1 do 
+	
+			local obj = Entity:GetPhysicsObjectNum( objectid )
+			if ( !obj:IsValid() ) then continue end
+
+			data[ objectid ] = {}
+			PhysicsObject.Save( data[ objectid ], obj )			
+	
+		end
+
+	end,
+
+	--
+	-- Loop each bone, calling PhysicsObject.Load
+	--
+	Load = function( data, Entity )
+
+		if ( !istable( data ) ) then return end
+	
+		for objectid, objectdata in pairs( data ) do
+	
+			local Phys = Entity:GetPhysicsObjectNum( objectid )
+			if ( !IsValid( Phys ) ) then continue end
+		
+			PhysicsObject.Load( objectdata, Phys )		
+		
+		end
+
+	end,
+}
+
+--
+-- Entity saver
+--
+local EntitySaver = 
+{
+	--
+	-- Called on each entity when saving
+	--
+	Save = function( data, ent )
+
+		--
+		-- Merge the entities actual table with the table we're saving
+		-- this is terrible behaviour - but it's what we've always done.
+		--
+		if ( ent.PreEntityCopy ) then ent:PreEntityCopy() end
+		table.Merge( data, ent:GetTable() )
+		if ( ent.PostEntityCopy ) then ent:PostEntityCopy() end
+
+		--
+		-- Set so me generic variables that pretty much all entities
+		-- would like to save.
+		--
+		data.Pos				= ent:GetPos()
+		data.Angle				= ent:GetAngles()
+		data.Class				= ent:GetClass()
+		data.Model				= ent:GetModel()
+		data.Skin				= ent:GetSkin()
+		data.Mins, data.Maxs	= ent:GetCollisionBounds()
+		data.ColGroup			= ent:GetCollisionGroup()
+
+		data.Pos, data.Angle	= WorldToLocal( data.Pos, data.Angle, LocalPos, LocalAng )
+
+		data.ModelScale			= ent:GetModelScale()
+		if ( data.ModelScale == 1 ) then data.ModelScale = nil end
+
+		-- Allow the entity to override the class
+		-- (this is a hack for the jeep, since it's real class is different from the one it reports as)
+		if ( ent.ClassOverride ) then Tab.Class = ent.ClassOverride end
+
+		-- Save the physics
+		data.PhysicsObjects = data.PhysicsObjects or {}
+		EntityPhysics.Save( data.PhysicsObjects, ent )
+
+	
+		-- Flexes
+		data.FlexScale = ent:GetFlexScale()
+		for i = 0, ent:GetFlexNum() do
+	
+			local w = ent:GetFlexWeight( i );
+			if ( w != 0 ) then
+				data.Flex = data.Flex or {}
+				data.Flex[ i ] = w
+			end
+	
+		end
+
+		-- Body Groups
+		local bg = ent:GetBodyGroups();
+		if ( bg ) then
+
+			for k, v in pairs( bg ) do
+		
+				--
+				-- If it has a non default setting, save it.
+				--
+				if ( ent:GetBodygroup( v.id ) > 0 ) then
+	
+					data.BodyG = data.BodyG or {}
+					data.BodyG[ v.id ] = ent:GetBodygroup( v.id )
+	
+				end
+		
+			end
+
+		end
+		
+		-- Bone Manipulator
+		if ( ent:HasBoneManipulations() ) then
+	
+			data.BoneManip = {}
+	
+			for i=0, ent:GetBoneCount() do
+		
+				local t = {}
+			
+				local s = ent:GetManipulateBoneScale( i )
+				local a = ent:GetManipulateBoneAngles( i )
+				local p = ent:GetManipulateBonePosition( i )
+			
+				if ( s != Vector( 1, 1, 1 ) ) then	t[ 's' ] = s end -- scale
+				if ( a != Angle( 0, 0, 0 ) ) then	t[ 'a' ] = a end -- angle
+				if ( p != Vector( 0, 0, 0 ) ) then	t[ 'p' ] = p end -- position
+		
+				if ( table.Count( t ) > 0 ) then
+					data.BoneManip[ i ] = t
+				end
+		
+			end
+	
+		end
+
+		--
+		-- Store networks vars/DT vars (assigned using SetupDataTables)
+		--
+		if ( ent.GetNetworkVars ) then
+			data.DT = ent:GetNetworkVars();
+		end
+		
+	
+		-- Make this function on your SENT if you want to modify the
+		--  returned table specifically for your entity.
+		if ( ent.OnEntityCopyTableFinish ) then
+			ent:OnEntityCopyTableFinish( data )
+		end
+	
+		-- Store the map creation ID, so if we clean the map and load this
+		-- entity we can replace the map entity rather than creating a new one.
+		if ( ent:CreatedByMap() ) then
+			data.MapCreationID = ent:MapCreationID();
+		end
+
+		--
+		-- Exclude this crap
+		--
+		for k, v in pairs( data ) do
+
+			if ( isfunction(v) ) then
+				data[k] = nil
+			end
+
+		end
+
+		data.OnDieFunctions			= nil
+		data.AutomaticFrameAdvance	= nil
+		data.BaseClass				= nil
+
+	end,
+
+	--
+	-- Fill in the data!
+	--
+	Load = function( data, ent )
+
+		if ( !data ) then return end
+		if ( data.Model ) then ent:SetModel( data.Model ) end
+		if ( data.Angle ) then ent:SetAngles( data.Angle ) end
+		if ( data.Pos ) then ent:SetPos( data.Pos ) end
+		if ( data.Skin ) then ent:SetSkin( data.Skin ) end
+		if ( data.Flex ) then DoFlex( ent, data.Flex, data.FlexScale ) end
+		if ( data.BoneManip ) then DoBoneManipulator( ent, data.BoneManip ) end
+		if ( data.ModelScale ) then ent:SetModelScale( data.ModelScale, 0 ) end
+		if ( data.ColGroup ) then ent:SetCollisionGroup( data.ColGroup ) end
+
+		-- Body Groups
+		if ( data.BodyG ) then 
+			for k, v in pairs( BodyG ) do
+				ent:SetBodygroup( k, v )
+			end
+		end
+
+		--
+		-- Restore NetworkVars/DataTable variables (the SetupDataTables values)
+		--
+		if ( ent.RestoreNetworkVars ) then
+			ent:RestoreNetworkVars( data.DT )
+		end
+
+	end,
+}
+
 
 local DuplicateAllowed = {}
 
@@ -34,9 +300,6 @@ end
 
 
 ConstraintType 	= ConstraintType or {} 
-
-local LocalPos = Vector( 0, 0, 0 )
-local LocalAng = Angle( 0, 0, 0 )
 
 --
 -- When a copy is copied it will be translated according to these
@@ -93,7 +356,7 @@ EntityModifiers				= EntityModifiers or {}
 function RegisterBoneModifier( _name_, _function_ )		BoneModifiers[ _name_ ] 			= _function_ end
 function RegisterEntityModifier( _name_, _function_ )	EntityModifiers[ _name_ ] 			= _function_ end
 
-if (!SERVER) then return end
+if ( !SERVER ) then return end
 
 --[[---------------------------------------------------------
    Restore's the flex data
@@ -131,83 +394,6 @@ function DoBoneManipulator( ent, Bones )
 
 end
 
---
--- Used by DoGeneric to restore the body groups from dupe info
---
-local function RestoreBodyGroups( ent, BodyG )
-
-	for k, v in pairs( BodyG ) do
-		ent:SetBodygroup( k, v )
-	end
-
-end
-
---[[---------------------------------------------------------
-   Applies generic every-day entity stuff for ent from table data.
------------------------------------------------------------]]
-function DoGeneric( ent, data )
-
-	if ( !data ) then return end
-	if ( data.Model ) then ent:SetModel( data.Model ) end
-	if ( data.Angle ) then ent:SetAngles( data.Angle ) end
-	if ( data.Pos ) then ent:SetPos( data.Pos ) end
-	if ( data.Skin ) then ent:SetSkin( data.Skin ) end
-	if ( data.Flex ) then DoFlex( ent, data.Flex, data.FlexScale ) end
-	if ( data.BoneManip ) then DoBoneManipulator( ent, data.BoneManip ) end
-	if ( data.ModelScale ) then ent:SetModelScale( data.ModelScale, 0 ) end
-	if ( data.ColGroup ) then ent:SetCollisionGroup( data.ColGroup ) end
-	if ( data.BodyG ) then RestoreBodyGroups( ent, data.BodyG ) end
-	--
-	-- Restore NetworkVars/DataTable variables (the SetupDataTables values)
-	--
-	if ( ent.RestoreNetworkVars ) then
-		ent:RestoreNetworkVars( data.DT )
-	end
-
-end
-
-
---[[---------------------------------------------------------
-   Applies bone data, generically. 
------------------------------------------------------------]]
-function DoGenericPhysics( Entity, Player, data )
-
-	if (!data) then return end
-	if (!data.PhysicsObjects) then return end
-	
-	for Bone, Args in pairs( data.PhysicsObjects ) do
-	
-		local Phys = Entity:GetPhysicsObjectNum(Bone)
-		
-		if ( Phys && Phys:IsValid() && isvector( Args.Pos ) && isangle( Args.Angle ) ) then	
-
-			--
-			-- Convert to `local`
-			--
-			local pos = Args.Pos
-			local ang = Args.Angle
-			if ( pos && ang ) then
-
-				pos, ang = LocalToWorld( pos, ang, LocalPos, LocalAng )
-
-			end
-
-			Phys:SetPos( pos )
-			Phys:SetAngles( ang )
-
-			if ( Args.Frozen == true ) then 
-				Phys:EnableMotion( false ) 
-				if ( IsValid( Player ) ) then
-					Player:AddFrozenPhysicsObject( Entity, Phys )
-				end
-			end
-							
-		end
-		
-	end
-
-end
-
 --[[---------------------------------------------------------
    Generic function for duplicating stuff
 -----------------------------------------------------------]]
@@ -238,7 +424,7 @@ function GenericDuplicatorFunction( Player, data )
 	Entity:Spawn()
 	Entity:Activate()
 	
-	DoGenericPhysics( Entity, Player, data )	
+	EntityPhysics.Load( data.PhysicsObjects, Entity )
 	
 	table.Merge( Entity:GetTable(), data )
 	
@@ -302,149 +488,9 @@ end
 -----------------------------------------------------------]]
 function CopyEntTable( Ent )
 
-	local Tab = {}
-
-	if ( Ent.PreEntityCopy ) then
-		Ent:PreEntityCopy()
-	end
-	
-	table.Merge( Tab, Ent:GetTable() )
-	
-	if ( Ent.PostEntityCopy ) then
-		Ent:PostEntityCopy()
-	end
-
-	Tab.Pos = Ent:GetPos()
-	Tab.Angle = Ent:GetAngles()
-	Tab.Class = Ent:GetClass()
-	Tab.Model = Ent:GetModel()
-	Tab.Skin = Ent:GetSkin()
-	Tab.Mins, Tab.Maxs = Ent:GetCollisionBounds()
-	Tab.ColGroup = Ent:GetCollisionGroup()
-
-	Tab.Pos, Tab.Angle = WorldToLocal( Tab.Pos, Tab.Angle, LocalPos, LocalAng )
-
-	Tab.ModelScale = Ent:GetModelScale()
-	if ( Tab.ModelScale == 1 ) then Tab.ModelScale = nil end
-	
-	-- Allow the entity to override the class
-	-- This is a hack for the jeep, since it's real class is different from the one it reports as
-	-- (It reports a different class to avoid compatibility problems)
-	if ( Ent.ClassOverride ) then Tab.Class = Ent.ClassOverride end
-	
-	Tab.PhysicsObjects = Tab.PhysicsObjects or {}
-	
-	-- Physics Objects
-	local iNumPhysObjects = Ent:GetPhysicsObjectCount()
-	for Bone = 0, iNumPhysObjects-1 do 
-	
-		local PhysObj = Ent:GetPhysicsObjectNum( Bone )
-		if ( PhysObj:IsValid() ) then
-		
-			Tab.PhysicsObjects[ Bone ] = Tab.PhysicsObjects[ Bone ] or {}
-			Tab.PhysicsObjects[ Bone ].Pos = PhysObj:GetPos()
-			Tab.PhysicsObjects[ Bone ].Angle = PhysObj:GetAngles()
-			Tab.PhysicsObjects[ Bone ].Frozen = !PhysObj:IsMoveable()
-
-			Tab.PhysicsObjects[ Bone ].Pos, Tab.PhysicsObjects[ Bone ].Angle = WorldToLocal( Tab.PhysicsObjects[ Bone ].Pos, Tab.PhysicsObjects[ Bone ].Angle, LocalPos, LocalAng )
-			
-		end
-	
-	end
-	
-	-- Flexes
-	local FlexNum = Ent:GetFlexNum()
-	for i = 0, FlexNum do
-	
-		local w = Ent:GetFlexWeight( i );
-		if ( w != 0 ) then
-			Tab.Flex = Tab.Flex or {}
-			Tab.Flex[ i ] = w
-		end
-	
-	end
-
-	-- Body Groups
-	local bg = Ent:GetBodyGroups();
-	if ( bg ) then
-		for k, v in pairs(bg) do
-		
-			--
-			-- If it has a non default setting, save it.
-			--
-			if ( Ent:GetBodygroup( v.id ) > 0 ) then
-	
-				Tab.BodyG = Tab.BodyG or {}
-				Tab.BodyG[ v.id ] = Ent:GetBodygroup( v.id )
-	
-			end
-		
-		end
-	end
-	
-	Tab.FlexScale = Ent:GetFlexScale()
-	
-	-- Bone Manipulator
-	if ( Ent:HasBoneManipulations() ) then
-	
-		Tab.BoneManip = {}
-	
-		for i=0, Ent:GetBoneCount() do
-		
-			local t = {}
-			
-			local s = Ent:GetManipulateBoneScale( i )
-			local a = Ent:GetManipulateBoneAngles( i )
-			local p = Ent:GetManipulateBonePosition( i )
-			
-			if ( s != Vector( 1, 1, 1 ) ) then	t[ 's' ] = s end
-			if ( a != Angle( 0, 0, 0 ) ) then	t[ 'a' ] = a end
-			if ( p != Vector( 0, 0, 0 ) ) then	t[ 'p' ] = p end
-		
-			if ( table.Count( t ) > 0 ) then
-				Tab.BoneManip[ i ] = t
-			end
-		
-		end
-	
-	end
-
-	--
-	-- Store networks vars/DT vars (assigned using SetupDataTables)
-	--
-	if ( Ent.GetNetworkVars ) then
-		Tab.DT = Ent:GetNetworkVars();
-	end
-		
-	
-	-- Make this function on your SENT if you want to modify the
-	--  returned table specifically for your entity.
-	if ( Ent.OnEntityCopyTableFinish ) then
-		Ent:OnEntityCopyTableFinish( Tab )
-	end
-	
-	-- Store the map creation ID, so if we clean the map and load this
-	-- entity we can replace the map entity rather than creating a new one.
-	if ( Ent:CreatedByMap() ) then
-		Tab.MapCreationID = Ent:MapCreationID();
-	end
-
-	--
-	-- Exclude this crap
-	--
-	for k, v in pairs( Tab ) do
-
-		if ( isfunction(v) ) then
-			Tab[k] = nil
-		end
-
-	end
-
-	Tab.OnDieFunctions			= nil
-	Tab.AutomaticFrameAdvance	= nil
-	Tab.BaseClass				= nil
-
-	return Tab
+	local output = {}
+	EntitySaver.Save( output, Ent )
+	return output
 
 end
 
@@ -657,6 +703,12 @@ end
 function Paste( Player, EntityList, ConstraintList )
 
 	--
+	-- Store the player
+	--
+	local oldplayer = ActionPlayer
+	ActionPlayer = Player
+
+	--
 	-- Copy the table - because we're gonna be changing some stuff on it.	
 	--
 	local EntityList = table.Copy( EntityList );
@@ -734,6 +786,7 @@ function Paste( Player, EntityList, ConstraintList )
 	
 	end
 
+	ActionPlayer = oldplayer
 
 	return CreatedEntities, CreatedConstraints
 	
@@ -845,3 +898,24 @@ function GetAllConstrainedEntitiesAndConstraints( ent, EntTable, ConstraintTable
 	
 end
 
+
+
+
+--
+-- BACKWARDS COMPATIBILITY - PHASE OUT, RENAME?
+--
+function DoGenericPhysics( Entity, Player, data )
+
+	if ( !data.PhysicsObjects ) then return end
+	EntityPhysics.Load( data.PhysicsObjects, Entity )
+
+end
+
+--
+--
+--
+function DoGeneric( ent, data )
+
+	EntitySaver.Load( data, ent )
+
+end
