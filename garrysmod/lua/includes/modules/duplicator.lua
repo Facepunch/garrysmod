@@ -33,6 +33,7 @@ local PhysicsObject =
 		data.Angle = phys:GetAngles()
 		data.Frozen = !phys:IsMoveable()
 		if ( phys:IsGravityEnabled() == false ) then data.NoGrav = true end
+		if ( phys:IsAsleep() == true ) then data.Sleep = true end
 
 		data.Pos, data.Angle = WorldToLocal( data.Pos, data.Angle, LocalPos, LocalAng )
 
@@ -46,6 +47,12 @@ local PhysicsObject =
 			phys:SetPos( pos )
 			phys:SetAngles( ang )
 
+		end
+
+		if ( data.Sleep == true ) then
+			phys:Sleep();
+		else
+			phys:Wake();
 		end
 
 		if ( data.Frozen == true ) then 
@@ -136,11 +143,18 @@ local EntitySaver =
 		data.Skin				= ent:GetSkin()
 		data.Mins, data.Maxs	= ent:GetCollisionBounds()
 		data.ColGroup			= ent:GetCollisionGroup()
+		data.Name				= ent:GetName()
+		data.WorkshopID			= ent:GetWorkshopID()
 
 		data.Pos, data.Angle	= WorldToLocal( data.Pos, data.Angle, LocalPos, LocalAng )
 
 		data.ModelScale			= ent:GetModelScale()
 		if ( data.ModelScale == 1 ) then data.ModelScale = nil end
+
+		-- We have no reason to keep the creation ID anymore - but we will
+		if ( ent:CreatedByMap() ) then
+			data.MapCreationID = ent:MapCreationID();
+		end
 
 		-- Allow the entity to override the class
 		-- (this is a hack for the jeep, since it's real class is different from the one it reports as)
@@ -221,12 +235,6 @@ local EntitySaver =
 		if ( ent.OnEntityCopyTableFinish ) then
 			ent:OnEntityCopyTableFinish( data )
 		end
-	
-		-- Store the map creation ID, so if we clean the map and load this
-		-- entity we can replace the map entity rather than creating a new one.
-		if ( ent:CreatedByMap() ) then
-			data.MapCreationID = ent:MapCreationID();
-		end
 
 		--
 		-- Exclude this crap
@@ -259,6 +267,7 @@ local EntitySaver =
 		if ( data.BoneManip ) then DoBoneManipulator( ent, data.BoneManip ) end
 		if ( data.ModelScale ) then ent:SetModelScale( data.ModelScale, 0 ) end
 		if ( data.ColGroup ) then ent:SetCollisionGroup( data.ColGroup ) end
+		if ( data.Name ) then ent:SetName( data.Name ) end
 
 		-- Body Groups
 		if ( data.BodyG ) then 
@@ -610,13 +619,6 @@ function CreateEntityFromTable( Player, EntTable )
 
 	local EntityClass = FindEntityClass( EntTable.Class )
 	
-	if ( ReplaceMapEntities && EntTable.MapCreationID != nil ) then
-		
-		local del = ents.GetMapCreatedEntity( EntTable.MapCreationID )
-		if ( IsValid( del ) ) then del:Remove(); end
-		
-	end
-	
 	-- This class is unregistered. Instead of failing try using a generic
 	-- Duplication function to make a new copy..
 	if ( !EntityClass ) then
@@ -899,7 +901,39 @@ function GetAllConstrainedEntitiesAndConstraints( ent, EntTable, ConstraintTable
 end
 
 
+--
+-- Return true if this entity should be removed when RemoveMapCreatedEntities is called
+-- We don't want to remove all entities.
+--
+local function ShouldMapEntityBeRemoved( ent, classname )
 
+	if ( classname == "prop_physics" ) then return true end
+	if ( classname == "prop_physics_multiplayer" ) then return true end
+	if ( classname == "prop_ragdoll" ) then return true end
+	if ( ent:IsNPC() ) then return true end
+
+	return false
+
+end
+
+--
+-- Help to remove certain map created entities before creating the saved entities
+-- This is obviously so we don't get duplicate props everywhere. It should be called
+-- before calling Paste.
+--
+function RemoveMapCreatedEntities()
+
+	local list = ents.GetAll()
+
+	for k, v in pairs( list ) do
+
+		if ( ShouldMapEntityBeRemoved( v, v:GetClass() ) ) then 
+			v:Remove()
+		end
+
+	end
+
+end
 
 --
 -- BACKWARDS COMPATIBILITY - PHASE OUT, RENAME?

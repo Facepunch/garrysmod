@@ -54,10 +54,9 @@ if ( SERVER ) then
 		timer.Simple( 0.1, function() 
 
 				DisablePropCreateEffect = true
-				ReplaceMapEntities = true
+				duplicator.RemoveMapCreatedEntities();
 				duplicator.Paste( ply, tab.Entities, tab.Constraints )
 				DisablePropCreateEffect = nil
-				ReplaceMapEntities = nil
 
 				if ( IsValid( ply ) ) then
 					gmsave.PlayerLoad( ply, tab.Player ) 
