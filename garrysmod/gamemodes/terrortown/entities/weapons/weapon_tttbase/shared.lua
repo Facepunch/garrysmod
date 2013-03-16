@@ -416,6 +416,8 @@ function SWEP:DampenDrop()
    end
 end
 
+local SF_WEAPON_START_CONSTRAINED = 1
+
 -- Picked up by player. Transfer of stored ammo and such.
 function SWEP:Equip(newowner)
    if SERVER then
@@ -427,6 +429,14 @@ function SWEP:Equip(newowner)
 
       if not table.HasValue(self.fingerprints, newowner) then
          table.insert(self.fingerprints, newowner)
+      end
+
+      if self:HasSpawnFlags(SF_WEAPON_START_CONSTRAINED) then
+         -- If this weapon started constrained, unset that spawnflag, or the
+         -- weapon will be re-constrained and float
+         local flags = self:GetSpawnFlags()
+         local newflags = bit.band(flags, bit.bnot(SF_WEAPON_START_CONSTRAINED))
+         self:SetKeyValue("spawnflags", newflags)
       end
    end
 
