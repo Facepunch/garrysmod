@@ -113,6 +113,7 @@ function MakeProp( Player, Pos, Ang, Model, PhysicsObjects, Data )
 end
 
 duplicator.RegisterEntityClass( "prop_physics", MakeProp, "Pos", "Ang", "Model", "PhysicsObjects", "Data" )
+duplicator.RegisterEntityClass( "prop_physics_multiplayer", MakeProp, "Pos", "Ang", "Model", "PhysicsObjects", "Data" )
 
 --[[---------------------------------------------------------
    Name: FixInvalidPhysicsObject
