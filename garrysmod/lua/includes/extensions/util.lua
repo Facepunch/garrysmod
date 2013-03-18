@@ -211,9 +211,97 @@ T.__index = T
 --
 function util.Timer( startdelay )
 
+	startdelay = startdelay or 0
+
 	local t = {}
 	setmetatable( t, T )
 	t.endtime = CurTime() + startdelay
+	return t
+
+end
+
+
+--
+-- Stack
+--
+--
+local T = 
+{
+
+	--
+	-- Name: Stack:Push
+	-- Desc: Push an item onto the stack
+	-- Arg1: any|object|The item you want to push
+	-- Ret1:
+	--
+	Push = function( self, obj )
+
+		self.top = obj
+		self.objs[ #self.objs + 1 ] = obj
+
+	end,
+
+	--
+	-- Name: Stack:Pop
+	-- Desc: Pop an item from the stack
+	-- Arg1: number|amount|Optional amount of items you want to pop (defaults to 1)
+	-- Ret1:
+	--
+	Pop = function( self, num )
+		
+		local num = num or 1
+
+		if ( num > #self.objs ) then
+			error( "Overpopped stack!" );
+		end
+
+		for i = num, 1, -1 do
+			table.remove( self.objs )
+		end
+
+		self.top = self.objs[ #self.objs ]
+
+	end,
+
+	--
+	-- Name: Stack:Top
+	-- Desc: Get the item at the top of the stack
+	-- Arg1:
+	-- Ret1: any|The item
+	--
+	Top = function( self, time )
+
+		return self.top
+
+	end,
+
+	--
+	-- Name: Stack:Size
+	-- Desc: Returns the size of the stack
+	-- Arg1:
+	-- Ret1: number|The size of the stack
+	--
+	Size = function( self, time )
+
+		return #self.objs
+
+	end,
+
+}
+
+T.__index = T
+
+--
+-- Name: util.Stack
+-- Desc: Returns a new Stack object
+-- Arg1:
+-- Ret1: Stack|a brand new stack object
+--
+function util.Stack()
+
+	local t = {}
+	setmetatable( t, T )
+	t.objs = {}
 	return t
 
 end
