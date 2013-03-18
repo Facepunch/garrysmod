@@ -11,7 +11,6 @@ ENT.RenderGroup		= RENDERGROUP_OPAQUE
 
 function ENT:Initialize()
 
-	self.BehaveStack = util.Stack()
 	
 end
 
@@ -29,6 +28,29 @@ function ENT:Behave_Switch( behaviour, init )
 	setmetatable( init, behaviour )
 
 	self.BehaveStack:Push( behaviour );
+
+end
+
+--
+-- Name: ENT:BehaviourInit
+-- Desc: Should be called in your child class to initialize the behaviour stuff
+-- Arg1: behaviour|behaviour|The initial behaviour state to use
+-- Ret1:
+--
+function ENT:BehaviourInit( behaviour )
+
+	-- This should only be called once!
+	if ( self.BehaveStack ) then
+		error( "BehaviourInit called twice!" )
+	end
+
+	-- Create the Behaviour Stack
+	self.BehaveStack = util.Stack()
+
+	-- If they gave us a behaviour then add it
+	if ( behaviour ) then
+		self:Behave_Switch( behaviour )
+	end	
 
 end
 
