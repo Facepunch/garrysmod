@@ -1,8 +1,11 @@
-
 menubar = {}
 
 function menubar.Init()
-
+	
+	if IsValid( menubar.Control ) then
+		menubar.Control:Remove()
+	end
+	
 	menubar.Control = vgui.Create( "DMenuBar" )
 	menubar.Control:Dock( TOP )
 	menubar.Control:SetVisible( false )
@@ -30,3 +33,5 @@ hook.Add( "OnGamemodeLoaded", "CreateMenuBar", function()
 	menubar.Init()
 
 end )
+
+concommand.Add("menubar_reload",menubar.Init)
