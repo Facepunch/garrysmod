@@ -123,4 +123,11 @@ game_sounds_manifest
 	"precache_file"		"scripts/level_sounds_aftermath_episodic.txt"
 	"precache_file"		"scripts/level_sounds_outland_episodic.txt"
 	"precache_file"		"scripts/level_sounds_c17_02a.txt"
+
+	// Team Fortress 2
+	"precache_file"		"scripts/game_sounds_mvm.txt"
+	"precache_file"		"scripts/game_sounds_vo.txt"
+	"precache_file"		"scripts/game_sounds_vo_mvm.txt"
+	"precache_file"		"scripts/game_sounds_vo_mvm_handmade.txt"
+	"precache_file"		"scripts/game_sounds_vo_mvm_mighty.txt"
 }
