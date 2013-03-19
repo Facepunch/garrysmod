@@ -27,7 +27,7 @@ function ENT:Behave_Switch( behaviour, init )
 	behaviour.__index = behaviour;
 	setmetatable( init, behaviour )
 
-	self.BehaveStack:Push( behaviour );
+	self.BehaveStack:Push( init );
 
 end
 
