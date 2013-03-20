@@ -314,7 +314,7 @@ function PANEL:Rebuild()
 					if ( self.m_fAnimTime > 0 && self.m_iBuilds > 1 ) then
 						panel:MoveTo( (self:GetCanvas():GetWide() - panel:GetWide()) * 0.5, self.Padding + Offset, self.m_fAnimTime, 0, self.m_fAnimEase )
 					else
-						panel:SetPos( (self:GetCanvas():GetWide() - panel:GetWide()) * 0.5, 0, self.Padding + Offset )
+						panel:SetPos( (self:GetCanvas():GetWide() - panel:GetWide()) * 0.5, self.Padding + Offset )
 					end
 				else
 					panel:SetSize( self:GetCanvas():GetWide() - self.Padding * 2, panel:GetTall() )
