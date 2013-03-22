@@ -2,7 +2,7 @@
 --
 -- Should never really happen.
 --
-if ( !motionsensor ) then return end
+motionsensor = motionsensor or {}
 
 
 
