@@ -1,6 +1,6 @@
 
 --
--- Name: ENT:BehaveStart
+-- Name: NEXTBOT:BehaveStart
 -- Desc: Called to initialize the behaviour.\n\n You shouldn't override this - it's used to kick off the coroutine that runs the bot's behaviour. \n\nThis is called automatically when the NPC is created, there should be no need to call it manually.
 -- Arg1: 
 -- Ret1:
@@ -13,7 +13,7 @@ function ENT:BehaveStart()
 end
 
 --
--- Name: ENT:BehaveUpdate
+-- Name: NEXTBOT:BehaveUpdate
 -- Desc: Called to update the bot's behaviour
 -- Arg1: number|interval|How long since the last update
 -- Ret1:
@@ -33,43 +33,43 @@ function ENT:BehaveUpdate( fInterval )
 end
 
 --
--- Name: ENT:BodyUpdate
+-- Name: NEXTBOT:BodyUpdate
 -- Desc: Called to update the bot's animation
 -- Arg1:
 -- Ret1:
 --
-function ENT:BodyUpdate()
+function NEXTBOT:BodyUpdate()
 
 	--MsgN( "BodyUpdate" )
 
 end
 
 --
--- Name: ENT:OnLeaveGround
+-- Name: NEXTBOT:OnLeaveGround
 -- Desc: Called when the bot's feet leave the ground - for whatever reason
 -- Arg1:
 -- Ret1:
 --
-function ENT:OnLeaveGround()
+function NEXTBOT:OnLeaveGround()
 
 	MsgN( "OnLeaveGround" )
 
 end
 
 --
--- Name: ENT:OnLeaveGround
+-- Name: NEXTBOT:OnLeaveGround
 -- Desc: Called when the bot's feet return to the ground
 -- Arg1:
 -- Ret1:
 --
-function ENT:OnLandOnGround()
+function NEXTBOT:OnLandOnGround()
 
 	MsgN( "OnLandOnGround" )
 
 end
 
 --
--- Name: ENT:OnStuck
+-- Name: NEXTBOT:OnStuck
 -- Desc: Called when the bot thinks it is stuck
 -- Arg1:
 -- Ret1:
@@ -81,7 +81,7 @@ function ENT:OnStuck()
 end
 
 --
--- Name: ENT:OnUnStuck
+-- Name: NEXTBOT:OnUnStuck
 -- Desc: Called when the bot thinks it is un-stuck
 -- Arg1:
 -- Ret1:
@@ -93,7 +93,7 @@ function ENT:OnUnStuck()
 end
 
 --
--- Name: ENT:OnInjured
+-- Name: NEXTBOT:OnInjured
 -- Desc: Called when the bot gets hurt
 -- Arg1:
 -- Ret1:
@@ -105,7 +105,7 @@ function ENT:OnInjured()
 end
 
 --
--- Name: ENT:OnKilled
+-- Name: NEXTBOT:OnKilled
 -- Desc: Called when the bot gets killed
 -- Arg1:
 -- Ret1:
@@ -117,7 +117,7 @@ function ENT:OnKilled( damageinfo )
 end
 
 --
--- Name: ENT:OnOtherKilled
+-- Name: NEXTBOT:OnOtherKilled
 -- Desc: Called when someone else or something else has been killed
 -- Arg1:
 -- Ret1:
