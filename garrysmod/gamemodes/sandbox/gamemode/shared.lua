@@ -312,6 +312,11 @@ function GM:CanProperty( pl, property, ent )
 
 	end
 
+	-- Give the entity a chance to decide
+	if ( ent.CanProperty ) then
+		return ent:CanProperty( pl, property )
+	end
+
 	return true
 	
 end
