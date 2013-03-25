@@ -127,6 +127,11 @@ function ENT:Think()
 
 	BaseClass.Think( self )
 	
+	if ( SERVER && self.SwitchOffTime && self.SwitchOffTime < CurTime() ) then
+		self.SwitchOffTime = nil
+		self:Switch( false )
+	end
+	
 	if ( CLIENT ) then
 		
 		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" )
@@ -414,8 +419,7 @@ function ENT:OnTakeDamage( dmginfo )
 
 	self:Switch( true )
 
-	-- Switch off in 5 seconds.. (this is dumb)
-	timer.Simple( 5, function() self:Switch( false ) end )
+	self.SwitchOffTime = CurTime() + 5
 
 end
 
