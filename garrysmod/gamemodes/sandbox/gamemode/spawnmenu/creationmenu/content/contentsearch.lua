@@ -1,4 +1,3 @@
-
 AddCSLuaFile()
 
 PANEL.Base = "Panel"
@@ -15,16 +14,21 @@ function PANEL:Init()
 	self.Search:Dock( FILL )
 	--self.Search:SetWidth( 150 )
 
-	self.Search.OnChange = function() self:RefreshResults() end
+	self.Search.OnEnter = function() self:RefreshResults() end
 	self.Search.OnFocusChanged = function( _, b ) if ( b ) then self:RefreshResults() end end
-
-	local btn = self.Search:Add( "DImage" )
+	self.Search:SetTooltip( "Press enter to search" )
+	
+	local btn = self.Search:Add( "DImageButton" )
 
 	btn:SetImage( "icon16/magnifier.png" )
 	btn:SetText( "" )
 	btn:Dock( RIGHT )
 	btn:DockMargin( 4, 2, 4, 2 )
 	btn:SetSize( 16, 16 )
+	btn:SetTooltip( "Press to search" )
+	btn.DoClick = function()
+		self:RefreshResults()
+	end
 
 	self.Search.OnKeyCode = function( p, code )
 
