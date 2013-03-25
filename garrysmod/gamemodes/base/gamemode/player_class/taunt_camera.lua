@@ -61,7 +61,8 @@ function TauntCamera()
 		-- Simple 3rd person camera
 		--
 		local TargetOrigin = view.origin - CustomAngles:Forward() * 100
-
+		local tr = util.TraceHull( {start = view.origin, endpos = TargetOrigin, mask = MASK_SHOT, filter = player.GetAll(), mins = Vector(-8,-8,-8), maxs = Vector(8,8,8)} )
+		TargetOrigin = tr.HitPos + tr.HitNormal
 
 		if ( InLerp < 1 ) then
 
