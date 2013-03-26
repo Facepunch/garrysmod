@@ -97,6 +97,8 @@ function PANEL:OnActivate()
 
 	self:ShowURL( GetDefaultLoadingHTML() )
 
+	self.NumDownloadables = 0
+
 end
 
 --[[---------------------------------------------------------
@@ -106,6 +108,111 @@ function PANEL:OnDeactivate()
 
 	if ( IsValid( self.HTML ) ) then self.HTML:Remove() end
 	self.LoadedURL = nil
+	self.NumDownloadables = 0
+	
+end
+
+--[[---------------------------------------------------------
+
+-----------------------------------------------------------]]
+function PANEL:Think()
+	
+	self:CheckForStatusChanges()
+	self:CheckDownloadTables()
+	
+end
+
+--[[---------------------------------------------------------
+
+-----------------------------------------------------------]]
+function PANEL:StatusChanged( strStatus )
+
+	if ( string.find( strStatus, "Downloading " ) ) then
+	
+		local Filename = string.gsub( strStatus, "Downloading ", "" )
+		Filename = string.gsub( Filename, "'", "\'" )
+		self:RunJavascript( "DownloadingFile( '" .. Filename .. "' )" );
+	
+	return end
+	
+	strStatus = string.gsub( strStatus, "'", "\'" )
+	self:RunJavascript( "SetStatusChanged( '" .. strStatus .. "' )" );
+	
+end
+
+--[[---------------------------------------------------------
+
+-----------------------------------------------------------]]
+function PANEL:CheckForStatusChanges()
+
+	local str = GetLoadStatus()
+	if ( !str ) then return end
+	
+	str = string.Trim( str )
+	str = string.Trim( str, "\n" )
+	str = string.Trim( str, "\t" )
+	
+	str = string.gsub( str, ".bz2", "" )
+	str = string.gsub( str, ".ztmp", "" )
+	str = string.gsub( str, "\\", "/" )
+	
+	if ( self.OldStatus && self.OldStatus == str ) then return end
+	
+	self.OldStatus = str
+	self:StatusChanged( str )
+
+end
+
+--[[---------------------------------------------------------
+
+-----------------------------------------------------------]]
+function PANEL:RefreshDownloadables()
+
+	self.Downloadables = GetDownloadables()
+	if ( !self.Downloadables ) then return end
+	
+	local iDownloading = 0
+	local iFileCount = 0
+	for k, v in pairs( self.Downloadables ) do
+	
+		v = string.gsub( v, ".bz2", "" )
+		v = string.gsub( v, ".ztmp", "" )
+		v = string.gsub( v, "\\", "/" )
+	
+		iDownloading = iDownloading + self:FileNeedsDownload( v )
+		iFileCount = iFileCount + 1
+
+	end
+	
+	if ( iDownloading == 0 ) then return end
+	
+	self:RunJavascript( "SetFilesNeeded( " .. iDownloading .. ")" );
+	self:RunJavascript( "SetFilesTotal( " .. iFileCount .. ")" );
+
+end
+
+function PANEL:FileNeedsDownload( filename )
+
+	local iReturn = 0
+	local bExists = file.Exists( filename, true )
+	if ( bExists ) then	return 0 end
+	
+	return 1
+	
+end
+
+--[[---------------------------------------------------------
+
+-----------------------------------------------------------]]
+function PANEL:CheckDownloadTables()
+
+	local NumDownloadables = NumDownloadables()
+	if ( !NumDownloadables ) then return end
+	
+	if ( self.NumDownloadables && NumDownloadables == self.NumDownloadables ) then return end
+		
+	self.NumDownloadables = NumDownloadables
+	self:RefreshDownloadables()
 	
 end
 
