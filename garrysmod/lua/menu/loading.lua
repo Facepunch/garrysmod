@@ -194,7 +194,7 @@ end
 function PANEL:FileNeedsDownload( filename )
 
 	local iReturn = 0
-	local bExists = file.Exists( filename, true )
+	local bExists = file.Exists( filename, "GAME" )
 	if ( bExists ) then	return 0 end
 	
 	return 1
