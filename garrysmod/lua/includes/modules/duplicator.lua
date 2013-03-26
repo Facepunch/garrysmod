@@ -940,7 +940,8 @@ end
 --
 function DoGenericPhysics( Entity, Player, data )
 
-	if ( !data.PhysicsObjects ) then return end
+	if ( !data || !data.PhysicsObjects ) then return end
+
 	EntityPhysics.Load( data.PhysicsObjects, Entity )
 
 end
