@@ -38,7 +38,7 @@ end
 -- Arg1:
 -- Ret1:
 --
-function NEXTBOT:BodyUpdate()
+function ENT:BodyUpdate()
 
 	--MsgN( "BodyUpdate" )
 
@@ -50,7 +50,7 @@ end
 -- Arg1:
 -- Ret1:
 --
-function NEXTBOT:OnLeaveGround()
+function ENT:OnLeaveGround()
 
 	MsgN( "OnLeaveGround" )
 
@@ -62,7 +62,7 @@ end
 -- Arg1:
 -- Ret1:
 --
-function NEXTBOT:OnLandOnGround()
+function ENT:OnLandOnGround()
 
 	MsgN( "OnLandOnGround" )
 
