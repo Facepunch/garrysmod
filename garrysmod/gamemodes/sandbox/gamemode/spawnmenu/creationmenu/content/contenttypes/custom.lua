@@ -1,5 +1,5 @@
 
-
+local AddCustomizableNode = nil
 
 local function SetupCustomNode( node, pnlContent, needsapp )
 
