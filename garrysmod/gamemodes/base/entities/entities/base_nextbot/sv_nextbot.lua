@@ -139,7 +139,6 @@ end
 -- Arg1: table|specs|This table should contain the search info.\n\n * 'type' - the type (either 'hiding')\n * 'pos' - the position to search.\n * 'radius' - the radius to search.\n * 'stepup' - the highest step to step up.\n * 'stepdown' - the highest we can step down without being hurt.
 -- Ret1: table|An unsorted table of tables containing\n * 'vector' - the position of the hiding spot\n * 'distance' - the distance to that position
 --
-
 function ENT:FindSpots( tbl )
 
 	local tbl = tbl or {}
@@ -180,6 +179,37 @@ function ENT:FindSpots( tbl )
 	end
 
 	return found
+
+end
+
+--
+-- Name: NextBot:FindSpot
+-- Desc: Like FindSpots but only returns a vector
+-- Arg1: string|type|Either "random", "near", "far"
+-- Arg2: table|options|A table containing a bunch of tweakable options. See the function definition for more details
+-- Ret1: vector|If it finds a spot it will return a vector. If not it will return nil.
+--
+function ENT:FindSpot( type,  options )
+
+	local spots = self:FindSpots( options )
+	if ( !spots || #spots == 0 ) then return end
+
+	if ( type == "near" ) then
+
+		table.SortByMember( spots, "distance", true )
+		return spots[1].vector
+
+	end
+
+	if ( type == "far" ) then
+
+		table.SortByMember( spots, "distance", false )
+		return spots[1].vector
+
+	end
+
+	-- random
+	return spots[ #spots ].vector
 
 end
 
@@ -255,3 +285,5 @@ function ENT:MoveToPos( pos, options )
 	return "ok"
 
 end
+
+

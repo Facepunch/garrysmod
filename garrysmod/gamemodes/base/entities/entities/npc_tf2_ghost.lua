@@ -1,4 +1,5 @@
 
+
 AddCSLuaFile()
 
 ENT.Base 			= "base_nextbot"
@@ -16,37 +17,39 @@ function ENT:BehaveAct()
 
 end
 
+
 function ENT:RunBehaviour()
-
-	local timerRepath	= util.Timer()
-	local path			= Path( "Follow" )
-
-	path:SetMinLookAheadDistance( 100 )
 
 	while ( true ) do
 
-		if ( timerRepath:Elapsed() ) then
+		coroutine.wait( 1 )					-- wait a second
+		self.loco:Jump()					-- jump
+		coroutine.wait( 1 )					-- wait another second
 
-			timerRepath:Start( 10 )	
+		-- walk somewhere random
+		self:StartActivity( ACT_WALK )							-- walk anims
+		self.loco:SetDesiredSpeed( 100 )						-- walk speeds
+		self:MoveToPos( self:GetPos() + Vector( 200 * math.Rand( -1, 1 ), 200 * math.Rand( -1, 1 ), 0 ) ) -- walk to a random place within about 200 units (yielding)
 
-			local spots = self:FindSpots( { radius = 5000, type = 'hiding' } )
+		self:StartActivity( ACT_IDLE )		-- revert to idle activity
 
-			if ( #spots > 0 ) then
+		coroutine.wait( self:PlayScene( "scenes/eli_lab/mo_gowithalyx01.vcd" ) ) -- play a scene and wait for it to finish before progressing
+		
+		-- find the furthest away hiding spot
+		local pos = self:FindSpot( "near", { type = 'hiding', radius = 3000 } )
 
-				table.SortByMember( spots, "distance", false )
-				path:Compute( self, spots[1].vector, 1 );
+		-- if the position is valid
+		if ( pos ) then
+			self:StartActivity( ACT_RUN )											-- run anim
+			self.loco:SetDesiredSpeed( 200 )										-- run speed
+			self:PlayScene( "scenes/npc/female01/watchout.vcd" )					-- shout something while we run just for a laugh
+			self:MoveToPos( pos )													-- move to position (yielding)
+			self:StartActivity( ACT_IDLE )											-- when we finished, go into the idle anim
+		else
 
-			end
+			-- some activity to signify that we didn't find shit
 
 		end
-
-		-- Walk along path
-		path:Update( self )
-
-		--for i=1,1000000 do
-		--	local a = 10
-		--	a = a+ 10
-		--end
 
 		coroutine.yield()
 
