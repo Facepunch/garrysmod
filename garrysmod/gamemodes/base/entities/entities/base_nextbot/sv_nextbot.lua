@@ -178,3 +178,18 @@ function ENT:FindSpots( tbl )
 	return found
 
 end
+
+--
+-- Name: NextBot:HandleStuck
+-- Desc: Called from Lua when the NPC is stuck. This should only be called from the behaviour coroutine - so if you want to override this function and do something special that yields - then go for it.\n\nYou should always call self.loco:ClearStuck() in this function to reset the stuck status - so it knows it's unstuck.
+-- Arg1: 
+-- Ret1: 
+--
+function ENT:HandleStuck()
+
+	--
+	-- Clear the stuck status
+	--
+	self.loco:ClearStuck();
+
+end
