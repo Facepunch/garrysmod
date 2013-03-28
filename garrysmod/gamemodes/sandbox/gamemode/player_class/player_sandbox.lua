@@ -11,6 +11,10 @@ end
 
 local PLAYER = {}
 
+
+PLAYER.DuckSpeed			= 0.1		-- How fast to go from not ducking, to ducking
+PLAYER.UnDuckSpeed			= 0.1		-- How fast to go from ducking, to not ducking
+
 --
 -- Creates a Taunt Camera
 --
