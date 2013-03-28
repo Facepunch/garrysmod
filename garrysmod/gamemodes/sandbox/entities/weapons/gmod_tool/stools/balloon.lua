@@ -211,3 +211,8 @@ list.Set( "BalloonModels", "mossman",
 	model = "models/MaxOfS2D/balloon_mossman.mdl", 
 	nocolor = true,	
 })
+
+list.Set( "BalloonModels", "dog", 
+{ 
+	model = "models/balloons/balloon_dog.mdl"
+})
