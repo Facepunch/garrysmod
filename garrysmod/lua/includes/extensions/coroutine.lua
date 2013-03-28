@@ -1,4 +1,9 @@
 
+--
+-- The client needs this file
+--
+AddCSLuaFile()
+
 if ( !coroutine ) then return end
 
 --
