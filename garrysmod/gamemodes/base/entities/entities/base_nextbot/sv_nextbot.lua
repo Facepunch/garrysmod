@@ -40,11 +40,23 @@ end
 --
 function ENT:BodyUpdate()
 
+	local act = self:GetActivity()
+
 	--
 	-- This helper function does a lot of useful stuff for us. 
 	-- It sets the bot's move_x move_y pose parameters, sets their animation speed relative to the ground speed, and calls FrameAdvance.
 	--
-	self:BodyMoveXY()
+	-- 
+	if ( act == ACT_RUN || act == ACT_WALK ) then
+
+		self:BodyMoveXY()
+
+	end
+
+	-- 
+	-- If we're not walking or running we probably just want to update the anim system
+	--
+	self:FrameAdvance()
 
 end
 
@@ -209,7 +221,7 @@ function ENT:FindSpot( type,  options )
 	end
 
 	-- random
-	return spots[ #spots ].vector
+	return spots[ math.random( 1, #spots ) ].vector
 
 end
 
@@ -286,4 +298,22 @@ function ENT:MoveToPos( pos, options )
 
 end
 
+--
+-- Name: NextBot:PlaySequenceAndWait
+-- Desc: To be called in the behaviour coroutine only! Plays an animation sequence and waits for it to end before returning.
+-- Arg1: string|name|The sequence name
+-- Arg2: number|the speed (default 1)
+-- Ret1: 
+--
+function ENT:PlaySequenceAndWait( name, speed )
 
+	local len = self:SetSequence( name )
+
+	self:SetCycle( 0 )
+	self:SetPlaybackRate( speed or 1 );
+	self:ResetSequenceInfo()
+
+	-- wait for it to finish
+	coroutine.wait( len )
+
+end
