@@ -46,7 +46,7 @@ function PANEL:ScreenshotScan( folder )
 	local bReturn = false;
 	local htmlfolder = "../" .. folder;
 
-	local Screenshots = file.Find( folder .. "*.jpg", "MOD" )		
+	local Screenshots = file.Find( folder .. "*.jpg", "GAME" )		
 	for k, v in RandomPairs( Screenshots ) do
 
 		AddBackgroundImage( htmlfolder..v )
