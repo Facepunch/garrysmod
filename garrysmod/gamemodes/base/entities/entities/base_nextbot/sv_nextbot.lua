@@ -40,7 +40,11 @@ end
 --
 function ENT:BodyUpdate()
 
-	--MsgN( "BodyUpdate" )
+	--
+	-- This helper function does a lot of useful stuff for us. 
+	-- It sets the bot's move_x move_y pose parameters, sets their animation speed relative to the ground speed, and calls FrameAdvance.
+	--
+	self:BodyMoveXY()
 
 end
 
@@ -191,5 +195,63 @@ function ENT:HandleStuck()
 	-- Clear the stuck status
 	--
 	self.loco:ClearStuck();
+
+end
+
+--
+-- Name: NextBot:MoveToPos
+-- Desc: To be called in the behaviour coroutine only! Will yield until the bot has reached the goal or is stuck
+-- Arg1: Vector|pos|The position we want to get to
+-- Arg2: table|options|A table containing a bunch of tweakable options. See the function definition for more details
+-- Ret1: string|Either "failed", "stuck", "timeout" or "ok" - depending on how the NPC got on
+--
+function ENT:MoveToPos( pos, options )
+
+	local options = options or {}
+
+	local path = Path( "Follow" )
+	path:SetMinLookAheadDistance( options.lookahead or 300 )
+	path:SetGoalTolerance( options.tolerance or 20 )
+	path:Compute( self, pos )
+
+	if ( !path:IsValid() ) then return "failed" end
+
+	while ( path:IsValid() ) do
+
+		path:Update( self )
+
+		-- Draw the path (only visible on listen servers or single player)
+		if ( options.draw ) then
+			path:Draw()
+		end
+
+		-- If we're stuck then call the HandleStuck function and abandon
+		if ( self.loco:IsStuck() ) then
+
+			self:HandleStuck();
+			
+			return "stuck"
+
+		end
+
+		--
+		-- If they set maxage on options then make sure the path is younger than it
+		--
+		if ( options.maxage ) then
+			if ( path:GetAge() > options.maxage ) then return "timeout" end
+		end
+
+		--
+		-- If they set repath then rebuild the path every x seconds
+		--
+		if ( options.repath ) then
+			if ( path:GetAge() > options.repath ) then path:Compute( self, pos ) end
+		end
+
+		coroutine.yield()
+
+	end
+
+	return "ok"
 
 end
