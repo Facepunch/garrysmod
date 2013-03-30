@@ -179,11 +179,12 @@ function CreateContextMenu()
 
 
 	local IconLayout = g_ContextMenu:Add( "DIconLayout" )
-	IconLayout:Dock( FILL )
+	IconLayout:Dock( LEFT )
 	IconLayout:SetWorldClicker( true )
 	IconLayout:SetBorder( 8 )
 	IconLayout:SetSpaceX( 8 )
 	IconLayout:SetSpaceY( 8 )
+	IconLayout:SetWide( 200 )
 	IconLayout:SetLayoutDir( LEFT )
 
 	for k, v in pairs( list.Get( "DesktopWindows" ) ) do
