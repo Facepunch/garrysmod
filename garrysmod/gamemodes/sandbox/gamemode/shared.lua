@@ -1,4 +1,3 @@
-
 --[[---------------------------------------------------------
 
   Sandbox Gamemode
@@ -322,8 +321,8 @@ function GM:CanProperty( pl, property, ent )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:CanProperty( pl, property, ent )
-   Desc: Can the player do this property, to this entity?
+   Name: gamemode:CanDrive( pl, ent )
+   Desc: Return true to let the entity drive.
 -----------------------------------------------------------]]
 function GM:CanDrive( pl, ent )
 	
