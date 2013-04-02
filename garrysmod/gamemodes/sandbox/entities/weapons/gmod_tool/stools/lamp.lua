@@ -10,9 +10,9 @@ TOOL.ClientConVar[ "b" ]				= "255"
 TOOL.ClientConVar[ "key" ]				= "-1"
 TOOL.ClientConVar[ "fov" ]				= "90"
 TOOL.ClientConVar[ "distance" ]			= "1024"
-TOOL.ClientConVar[ "brightness" ]		= "10"
+TOOL.ClientConVar[ "brightness" ]		= "7.5"
 TOOL.ClientConVar[ "texture" ]			= "effects/flashlight001"
-TOOL.ClientConVar[ "model" ]			= "models/MaxOfS2D/lamp_flashlight.mdl"
+TOOL.ClientConVar[ "model" ]			= "models/MaxOfS2D/lamp_projector.mdl"
 TOOL.ClientConVar[ "toggle" ]			= "1"
 
 cleanup.Register( "lamps" )
@@ -171,7 +171,7 @@ function TOOL.BuildCPanel( CPanel )
 			lamp_g				=		255,
 			lamp_b				=		255,
 			lamp_key			=		-1,
-			lamp_model			=		"models/MaxOfS2D/lamp_flashlight.mdl",
+			lamp_model			=		"models/MaxOfS2D/lamp_projector.mdl",
 			lamp_toggle			=		0
 		}
 					
