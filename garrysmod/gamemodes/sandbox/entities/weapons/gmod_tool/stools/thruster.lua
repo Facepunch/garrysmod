@@ -260,6 +260,7 @@ function TOOL.BuildCPanel( CPanel )
 end
 
 list.Set( "ThrusterModels", "models/dav0r/thruster.mdl", {} )
+list.Set( "ThrusterModels", "models/MaxOfS2D/thruster_projector.mdl", {} )
 list.Set( "ThrusterModels", "models/props_junk/plasticbucket001a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_junk/PropaneCanister001a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_junk/propane_tank001a.mdl", {} )
