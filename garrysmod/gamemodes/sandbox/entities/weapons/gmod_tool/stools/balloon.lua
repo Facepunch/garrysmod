@@ -216,3 +216,8 @@ list.Set( "BalloonModels", "dog",
 { 
 	model = "models/balloons/balloon_dog.mdl"
 })
+
+list.Set( "BalloonModels", "heart", 
+{ 
+	model = "models/balloons/balloon_classicheart.mdl"
+})
