@@ -1,4 +1,35 @@
 <!-- changes for 159 -->
 
+<h2>New Balloon Models</h2>
+<p>There's a couple of new balloon models available by default now! Enjoy!</p>
+
+<h2>Fixed infinite loop when spawning entities</h2>
+<p>If your GMod was freezing up when trying to spawn some entities - you were getting the infinite loop bug. This is now fixed!</p>
+
+<h2>Fixed Crouch Cheating</h2>
+<p>There was a bug with crouching where you could crouch, uncrouch and then crouch again while you were still uncrouching - and your view would stay in place. This was being exploited by people to shoot over boxes while being fully ducked behind them.</p>
+
+<h2>Fixed Coroutines</h2>
+<p>One for the coders.. coroutines should now work flawlessly! Now you just need to find a use for them!</p>
+
+<h2>Added Nextbot Stuff</h2>
+<p>Another one for the coders. I exposed a lot of nextbot stuff. This means that we can code better AI. I'm not done with this yet but it should be safe enough to start using it.</p>
+
+<h2>SteamPipe Mounting</h2>
+<p>Valve are switching all their games over to Steam Pipe. This affects us because we like to mount their games. Don't worry though - I have updated the mounting stuff so it'll mount games using SteamPipe now too! This includes games like CS:GO and Left 4 Dead!</p>
+
+<h2>Fixed Lua errors when saving</h2>
+<p>Some people were getting Lua errors when creating a save via the spawn menu. This should be fixed now - it was my fault! Sorry guys!</p>
+
+<h2>Fixed fastdl downloads</h2>
+<p>Server owners were having trouble with fastdl downloads. They didn't download properly if they were compressed. This is also my fault - and should now be fixed!</p>
+
+<h2>Fixed Duplicate Props when loading a save</h2>
+<p>Sometimes when you loaded a save the props would get duplicated because it was restoring them first, then creating the saved version. This code was all a bit sticky. So I nuked the lot so it will delete all the props on the map and restore them from the save versions.</p>
+
+<h2>Lua Performance Fixes</h2>
+<p>I added a few small optimizations to improve the performance of Lua. A lot of the slowdown in Lua is when it has to call back to c. So I try to avoid that in a few common places. I make CurTime, RealTime and FrameTime all Lua functions - which don't call into c in any way. The entity meta tables are also done in Lua now too.</p>
+
+
 <h2></h2>
 <p></p>
