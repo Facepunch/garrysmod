@@ -606,6 +606,7 @@ function Spawn_SENT( player, EntityName, tr )
 		ClassName = EntityName
 		
 			local SpawnFunction = scripted_ents.GetMember( EntityName, "SpawnFunction" )
+			if ( !SpawnFunction ) then return end
 			entity = SpawnFunction( sent, player, tr, EntityName )
 			
 		ClassName = nil
