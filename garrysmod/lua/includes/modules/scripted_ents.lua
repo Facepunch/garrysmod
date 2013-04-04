@@ -260,6 +260,9 @@ function GetMember( entity_name, membername )
 	local member = ent.t[ membername ]
 	if ( member != nil ) then return member end
 
+	-- If our base is the same as us - don't infinite loop!
+	if ( entity_name == ent.Base ) then return end
+
 	return GetMember( ent.Base, membername )
 	
 end
