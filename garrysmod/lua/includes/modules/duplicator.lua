@@ -271,7 +271,7 @@ local EntitySaver =
 
 		-- Body Groups
 		if ( data.BodyG ) then 
-			for k, v in pairs( BodyG ) do
+			for k, v in pairs( data.BodyG ) do
 				ent:SetBodygroup( k, v )
 			end
 		end
@@ -664,24 +664,28 @@ function CreateConstraintFromTable( Constraint, EntityList )
 
 	local Factory = ConstraintType[ Constraint.Type ]
 	if ( !Factory ) then return end
-	
+
 	local Args = {}
 	for k, Key in pairs( Factory.Args ) do
 	
 		local Val = Constraint[ Key ]
 		
 		for i=1, 6 do 
+
 			if ( Constraint.Entity[ i ] ) then
+
 				if ( Key == "Ent"..i ) then	
 					Val = EntityList[ Constraint.Entity[ i ].Index ] 
 					if ( Constraint.Entity[ i ].World ) then
 						Val = game.GetWorld()
 					end
 				end
-				if ( Key == "Bone"..i ) then Val = Constraint.Entity[ i ].Bone end
+
+				if ( Key == "Bone"..i ) then Val = Constraint.Entity[ i ].Bone or 0 end
 				if ( Key == "LPos"..i ) then Val = Constraint.Entity[ i ].LPos end
 				if ( Key == "WPos"..i ) then Val = Constraint.Entity[ i ].WPos end
-				if ( Key == "Length"..i ) then Val = Constraint.Entity[ i ].Length end
+				if ( Key == "Length"..i ) then Val = Constraint.Entity[ i ].Length or 0 end
+
 			end
 		end
 		
@@ -691,7 +695,7 @@ function CreateConstraintFromTable( Constraint, EntityList )
 		table.insert( Args, Val )
 	
 	end
-	
+
 	local Entity = Factory.Func( unpack(Args) )
 	
 	return Entity
