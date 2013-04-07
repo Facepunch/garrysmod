@@ -55,12 +55,7 @@ function SWEP:SetWeaponHoldType( t )
 	if t == "normal" then
 		self.ActivityTranslate [ ACT_MP_JUMP ] = ACT_HL2MP_JUMP_SLAM
 	end
-	
-	-- these two aren't defined in ACTs for whatever reason
-	if t == "knife" || t == "melee2" then
-		self.ActivityTranslate [ ACT_MP_CROUCH_IDLE ] = nil
-	end
-	
+
 	self:SetupWeaponHoldTypeForAI( t )
 
 end
