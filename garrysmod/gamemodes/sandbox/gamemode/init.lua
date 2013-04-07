@@ -184,3 +184,13 @@ function GM:CanEditVariable( ent, ply, key, val, editor )
 	return true
 
 end
+
+--[[---------------------------------------------------------
+   Name: gamemode:CanArmDupe( ply )
+   Desc: Can a player "arm" a dupelication from the workshop?
+  	 Allow by default
+-----------------------------------------------------------]]
+
+function GM:CanArmDupe( ply )
+	return true
+end
