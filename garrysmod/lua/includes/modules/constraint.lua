@@ -281,6 +281,7 @@ end
 function CanConstrain( Ent, Bone )
 
 	if ( !Ent )	then return false end
+	if ( !isnumber( Bone ) ) then return false end
 	if ( !Ent:IsWorld() && !Ent:IsValid() )	then return false end
 	if ( !Ent:GetPhysicsObjectNum( Bone ) || !Ent:GetPhysicsObjectNum( Bone ):IsValid() )	then return false end
 	
