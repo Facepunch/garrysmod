@@ -158,7 +158,7 @@ local EntitySaver =
 
 		-- Allow the entity to override the class
 		-- (this is a hack for the jeep, since it's real class is different from the one it reports as)
-		if ( ent.ClassOverride ) then Tab.Class = ent.ClassOverride end
+		if ( ent.ClassOverride ) then data.Class = ent.ClassOverride end
 
 		-- Save the physics
 		data.PhysicsObjects = data.PhysicsObjects or {}
