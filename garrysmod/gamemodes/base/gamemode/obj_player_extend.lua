@@ -115,7 +115,7 @@ function meta:UnfreezePhysicsObjects()
 	
 		-- Make sure the entity to which the physics object
 		-- is attached is still valid (still exists)
-		if (v.ent:IsValid()) then
+		if ( IsValid( v.ent ) ) then
 		
 			-- We can't directly test to see if EnableMotion is false right now
 			-- but IsMovable seems to do the job just fine.
