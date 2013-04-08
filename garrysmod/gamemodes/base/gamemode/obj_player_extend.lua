@@ -138,7 +138,6 @@ function meta:UnfreezePhysicsObjects()
 					
 				end
 			
-				local physobject = v.ent:GetPhysicsObjectNum( i )
 				Count = Count + PlayerUnfreezeObject( self, v.ent, v.phys )
 				
 			end
