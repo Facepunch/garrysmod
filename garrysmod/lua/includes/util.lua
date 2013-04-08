@@ -1,4 +1,3 @@
-
 --
 -- Seed the rand!
 --
@@ -15,7 +14,7 @@ Format = string.format
 --
 function CurTime()
 
-	return CURTIME
+	return CURTIME or 0
 
 end
 
@@ -24,7 +23,7 @@ end
 --
 function RealTime()
 
-	return REALTIME
+	return REALTIME or 0
 
 end
 
@@ -33,7 +32,7 @@ end
 --
 function FrameTime()
 
-	return FRAMETIME
+	return FRAMETIME or 0
 
 end
 
