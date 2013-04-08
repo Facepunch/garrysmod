@@ -11,6 +11,8 @@ GM.PickupHistoryCorner	= surface.GetTextureID( "gui/corner8" )
 function GM:HUDWeaponPickedUp( wep )
 
 	if (!LocalPlayer():Alive()) then return end
+	if ( !IsValid( wep ) ) then return end
+	if ( !isfunction( wep.GetPrintName ) ) then return end
 		
 	local pickup = {}
 	pickup.time 		= CurTime()
