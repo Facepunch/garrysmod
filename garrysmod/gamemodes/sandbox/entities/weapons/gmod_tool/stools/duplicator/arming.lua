@@ -1,4 +1,3 @@
-
 if ( CLIENT ) then
 
 	--
@@ -48,28 +47,30 @@ if ( SERVER ) then
 
 			if ( !IsValid( client ) ) then return end
 
-			-- Hook.. can arn dupe..
-
-			local uncompressed = util.Decompress( data )
-			if ( !uncompressed ) then 
-				MsgN( "Couldn't decompress dupe!" )
-			return end
-
-			local Dupe = util.JSONToTable( uncompressed )
-			if ( !istable( Dupe ) ) then return end
-			if ( !isvector( Dupe.Mins ) ) then return end
-			if ( !isvector( Dupe.Maxs ) ) then return end
-
-			client.CurrentDupe = Dupe;
-
-			client:ConCommand( "gmod_tool duplicator" );
-
-			--
-			-- Disable the Spawn Button
-			--
-			net.Start( "CopiedDupe" )
-				net.WriteUInt( 0, 1 );
-			net.Send( client )
+			local canArm = hook.Run( "CanArmDupe", client )
+			
+			if ( canArm ) then
+				local uncompressed = util.Decompress( data )
+				if ( !uncompressed ) then 
+					MsgN( "Couldn't decompress dupe!" )
+				return end
+	
+				local Dupe = util.JSONToTable( uncompressed )
+				if ( !istable( Dupe ) ) then return end
+				if ( !isvector( Dupe.Mins ) ) then return end
+				if ( !isvector( Dupe.Maxs ) ) then return end
+	
+				client.CurrentDupe = Dupe;
+	
+				client:ConCommand( "gmod_tool duplicator" );
+	
+				--
+				-- Disable the Spawn Button
+				--
+				net.Start( "CopiedDupe" )
+					net.WriteUInt( 0, 1 );
+				net.Send( client )
+			end
 	end )
 
 end
