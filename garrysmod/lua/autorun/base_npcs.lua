@@ -117,13 +117,14 @@ local NPC = { 	Name = "Citizen",
 list.Set( "NPC", NPC.Class, NPC )
 
 -- Lost Coast
-list.Set("NPC", "npc_fisherman", 
-{
-	Name = "Fisherman",
-	Class = "npc_fisherman",
-	Weapons = {"weapon_oldmanharpoon"},
-	Category = Category
-})
+if ( IsMounted( "lostcoast" ) ) then
+	list.Set("NPC", "npc_fisherman", {
+		Name = "Fisherman",
+		Class = "npc_fisherman",
+		Weapons = { "weapon_oldmanharpoon" },
+		Category = Category
+	})
+end
 
 Category = "Zombies + Enemy Aliens"
 
