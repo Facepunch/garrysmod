@@ -1,4 +1,3 @@
-
 AddCSLuaFile();
 
 include( 'duplicator/transport.lua' )
@@ -97,7 +96,12 @@ function TOOL:RightClick( trace )
 
 	if ( !IsValid( trace.Entity ) ) then return false end
 	if ( CLIENT ) then return true end
-
+	
+	-- See if the client is allowed to arm a dupe from the game.
+	if (hook.Run("CanArmDupe", self:GetOwner(), false) == false) then
+		return;
+	end;
+	
 	--
 	-- Set the position to our local position (so we can paste relative to our `hold`)
 	--
