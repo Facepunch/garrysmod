@@ -12,7 +12,7 @@ TOOL.ClientConVar[ "fov" ]				= "90"
 TOOL.ClientConVar[ "distance" ]			= "1024"
 TOOL.ClientConVar[ "brightness" ]		= "7.5"
 TOOL.ClientConVar[ "texture" ]			= "effects/flashlight001"
-TOOL.ClientConVar[ "model" ]			= "models/MaxOfS2D/lamp_projector.mdl"
+TOOL.ClientConVar[ "model" ]			= "models/lamps/torch.mdl"
 TOOL.ClientConVar[ "toggle" ]			= "1"
 
 cleanup.Register( "lamps" )
@@ -224,5 +224,6 @@ list.Set( "LampTextures", "effects/flashlight/view", { Name = "View" } )
 --list.Set( "LampTextures", "effects/flashlight/spider", { Name = "Spider" } )
 --list.Set( "LampTextures", "_rt_Camera", { Name = "RenderTarget" } )
 
+list.Set( "LampModels", "models/lamps/torch.mdl", {} )
 list.Set( "LampModels", "models/MaxOfS2D/lamp_flashlight.mdl", {} )
 list.Set( "LampModels", "models/MaxOfS2D/lamp_projector.mdl", {} )
