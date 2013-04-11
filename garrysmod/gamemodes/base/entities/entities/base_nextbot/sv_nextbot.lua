@@ -1,4 +1,3 @@
-
 --
 -- Name: NEXTBOT:BehaveStart
 -- Desc: Called to initialize the behaviour.\n\n You shouldn't override this - it's used to kick off the coroutine that runs the bot's behaviour. \n\nThis is called automatically when the NPC is created, there should be no need to call it manually.
@@ -308,12 +307,13 @@ end
 function ENT:PlaySequenceAndWait( name, speed )
 
 	local len = self:SetSequence( name )
-
-	self:SetCycle( 0 )
-	self:SetPlaybackRate( speed or 1 );
+	speed = speed or 1
+	
 	self:ResetSequenceInfo()
+	self:SetCycle( 0 )
+	self:SetPlaybackRate( speed  );
 
 	-- wait for it to finish
-	coroutine.wait( len )
+	coroutine.wait( len / speed )
 
 end
