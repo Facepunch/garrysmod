@@ -703,7 +703,7 @@ function Spawn_Weapon( Player, wepname, tr )
 	if ( swep == nil ) then return end
 	
 	-- You're not allowed to spawn this!
-	if ( !swep.Spawnable && !Player:IsAdmin() ) then
+	if ( ( !swep.Spawnable && !Player:IsAdmin() ) || ( swep.AdminOnly && !Player:IsAdmin() ) ) then
 		return
 	end
 	
