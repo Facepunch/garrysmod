@@ -261,6 +261,8 @@ end
 
 list.Set( "ThrusterModels", "models/dav0r/thruster.mdl", {} )
 list.Set( "ThrusterModels", "models/MaxOfS2D/thruster_projector.mdl", {} )
+list.Set( "ThrusterModels", "models/MaxOfS2D/thruster_propeller.mdl", {} )
+list.Set( "ThrusterModels", "models/thrusters/jetpack.mdl", {} )
 list.Set( "ThrusterModels", "models/props_junk/plasticbucket001a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_junk/PropaneCanister001a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_junk/propane_tank001a.mdl", {} )
@@ -296,8 +298,6 @@ list.Set( "ThrusterModels", "models/XQM/AfterBurner1Medium.mdl", {} )
 list.Set( "ThrusterModels", "models/XQM/AfterBurner1Big.mdl", {} )
 list.Set( "ThrusterModels", "models/XQM/AfterBurner1Huge.mdl", {} )
 list.Set( "ThrusterModels", "models/XQM/AfterBurner1Large.mdl", {} )
-
-list.Set( "ThrusterModels", "models/MaxOfS2D/thruster_propeller.mdl", {} )
 
 list.Set( "ThrusterEffects", "#No_Effects", { thruster_effect = "none" } )
 list.Set( "ThrusterEffects", "#Flames", 	{ thruster_effect = "fire" } )
