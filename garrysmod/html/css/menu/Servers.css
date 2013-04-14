@@ -35,6 +35,7 @@
 	left: 40px;
 	top: 5px;
 	font-size: 20px;
+	white-space: nowrap;
 }
 
 .gamemode .stats
