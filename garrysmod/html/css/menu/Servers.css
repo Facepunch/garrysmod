@@ -401,10 +401,17 @@ SPAN.installgamemode:hover
 
 .server_gamemodes
 {
-	margin-right: 300px; 
-	margin-left: 300px; 
 	top: 64px; 
 	border: 5px solid white;
+}
+
+@media screen and (min-width: 1280px)
+{
+	.server_gamemodes {
+		margin: 0 auto;
+		width: 80%;
+		max-width: 1000px;
+	}
 }
 
 .noplayers
