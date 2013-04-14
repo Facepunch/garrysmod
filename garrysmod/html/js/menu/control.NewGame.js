@@ -19,6 +19,17 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 	]
 
 	$scope.MaxPlayersOption = $scope.Players[0];
+
+	if ( localStorage.MaxPlayers ) {
+		var maxPlayers = localStorage.MaxPlayers;
+		for (var i = 0; i < $scope.Players.length; i++) {
+			if ( $scope.Players[i].num == maxPlayers ) {
+				$scope.MaxPlayersOption = $scope.Players[i];
+				$rootScope.MaxPlayers = maxPlayers;
+				break;
+			}
+		}
+	}
 	
 	if ( !$rootScope.Map )				$rootScope.Map = "gm_flatgrass";
 	if ( !$rootScope.MaxPlayers )		$rootScope.MaxPlayers = 1;
@@ -113,6 +124,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 	{
 		$scope.MaxPlayersOption = mp;
 		$rootScope.MaxPlayers = $scope.MaxPlayersOption.num;
+		localStorage.MaxPlayers = mp.num;
 	}
 
 	$scope.CountFiltered = function( maps )
