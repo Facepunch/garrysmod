@@ -72,7 +72,7 @@
 			<div class='installgamemode' ng-show="ShouldShowInstall( CurrentGamemode )" ng-click="InstallGamemode( CurrentGamemode );$event.stopPropagation()">Install Gamemode</div>
 
 			<div class='controls' style='position: absolute; left: 0; right: 0; margin-top: 5px;'>
-				<input ng-model="CurrentGamemode.Search.$" style="float: right; border:0; border-radius: 3px; height: 24px; margin-right: 360px;"/>
+				<input ng-model="CurrentGamemode.Search.$" class="searchbox" placeholder="Search" />
 				<a class='bglink' ng-click="SelectGamemode(null)"><img src='img/bg_arrow_left.png' /> <span ng-tranny="'return_to_gamemodes'"></span></a>
 			</div>
 
