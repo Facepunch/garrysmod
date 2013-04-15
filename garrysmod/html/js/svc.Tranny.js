@@ -1,4 +1,9 @@
-
+if (!IN_ENGINE)
+{
+	window.language = {
+		Update: function( str ) { return str; }
+	}
+}
 
 
 angular.module( 'tranny', [] )
