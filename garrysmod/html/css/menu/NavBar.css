@@ -166,6 +166,12 @@ UL.gamemode_list LI
 	display: inherit;
 	margin: 3px;
 	border-radius: 0;
+	background-color: #eee;
+}
+
+UL.gamemode_list LI:hover
+{
+	background-color: #fff;
 }
 
 UL.gamemode_list LI:first-child
