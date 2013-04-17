@@ -1,4 +1,3 @@
-
 function GM:HandlePlayerJumping( ply, velocity )
 	
 	if ( ply:GetMoveType() == MOVETYPE_NOCLIP ) then
@@ -276,29 +275,19 @@ function GM:CalcMainActivity( ply, velocity )
 	ply.CalcSeqOverride = -1
 
 	self:HandlePlayerLanding( ply, velocity, ply.m_bWasOnGround );
-	
+
 	if ( self:HandlePlayerNoClipping( ply, velocity ) ||
 		self:HandlePlayerDriving( ply ) ||
 		self:HandlePlayerVaulting( ply, velocity ) ||
 		self:HandlePlayerJumping( ply, velocity ) ||
 		self:HandlePlayerDucking( ply, velocity ) ||
 		self:HandlePlayerSwimming( ply, velocity ) ) then
-		
+
 	else
 
 		local len2d = velocity:Length2D()
 		if ( len2d > 150 ) then ply.CalcIdeal = ACT_MP_RUN elseif ( len2d > 0.5 ) then ply.CalcIdeal = ACT_MP_WALK end
 
-	end
-	
-	-- a bit of a hack because we're missing ACTs for a couple holdtypes
-	local weapon = ply:GetActiveWeapon()
-	local ht = "pistol"
-
-	if ( IsValid( weapon ) ) then ht = weapon:GetHoldType() end
-	
-	if ( ply.CalcIdeal == ACT_MP_CROUCH_IDLE &&	( ht == "knife" || ht == "melee2" ) ) then
-		ply.CalcSeqOverride = ply:LookupSequence("cidle_" .. ht)
 	end
 
 	ply.m_bWasOnGround = ply:IsOnGround()
@@ -327,14 +316,28 @@ local IdleActivityTranslate = {}
 -- it is preferred you return ACT_MP_* in CalcMainActivity, and if you have a specific need to not tranlsate through the weapon do it here
 function GM:TranslateActivity( ply, act )
 
-	local act = act
-	local newact = ply:TranslateWeaponActivity( act )
+	local newact = ply:TranslateWeaponActivity( act )	
+	
+	-- a bit of a hack because we're missing ACTs for a couple holdtypes
+	if ( act == ACT_MP_CROUCH_IDLE ) then
+		local wep = ply:GetActiveWeapon()
+		
+		if ( IsValid(wep) ) then
+			-- there really needs to be a way to get the holdtype set in sweps with SWEP.SetWeaponHoldType
+			-- people just tend to use wep.HoldType because that's what most of1the SWEP examples do
+			if wep.HoldType == "melee2" or wep:GetHoldType() == "melee2" then
+				newact = ACT_HL2MP_IDLE_CROUCH_MELEE2
+			elseif wep.HoldType == "knife" or wep:GetHoldType() == "knife" then
+				newact = ACT_HL2MP_IDLE_CROUCH_KNIFE
+			end
+		end
+	end
 	
 	-- select idle anims if the weapon didn't decide
 	if ( act == newact ) then
 		return IdleActivityTranslate[ act ]
 	end
-	
+
 	return newact
 
 end
