@@ -28,6 +28,28 @@ soundscapes_manifest
 	"file"		"scripts/soundscapes_outland.txt"	
 	"file"		"scripts/soundscapes_outland2.txt"
 
+	// CS:S
+	
+	"file"		"scripts/soundscapes_dust.txt"
+	"file"		"scripts/soundscapes_italy.txt"
+	"file"		"scripts/soundscapes_aztec.txt"
+	"file"		"scripts/soundscapes_dust2.txt"
+	"file"		"scripts/soundscapes_cbble.txt"
+	"file"		"scripts/soundscapes_havana.txt"
+	"file"		"scripts/soundscapes_piranesi.txt"
+	"file"		"scripts/soundscapes_chateau.txt"
+	"file"		"scripts/soundscapes_office.txt"
+	"file"		"scripts/soundscapes_prodigy.txt"
+	"file"		"scripts/soundscapes_tides.txt"
+	"file"		"scripts/soundscapes_compound.txt"
+	"file"		"scripts/soundscapes_train.txt"
+	"file"		"scripts/soundscapes_general.txt"
+	"file"		"scripts/soundscapes_inferno.txt"
+	"file"		"scripts/soundscapes_port.txt"
+	"file"		"scripts/soundscapes_assault.txt"
+	"file"		"scripts/soundscapes_nuke.txt"
+	"file"		"scripts/soundscapes_militia.txt"
+	
 	// TF2
 	
 	"file"		"scripts/soundscapes_2fort.txt"
