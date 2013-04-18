@@ -22,12 +22,6 @@ soundscapes_manifest
 	"file"		"scripts/soundscapes_prison.txt"
 	"file"		"scripts/soundscapes_trainyard.txt"
 
-	// EP2
-	
-	"file"		"scripts/soundscapes_silo.txt"
-	"file"		"scripts/soundscapes_outland.txt"	
-	"file"		"scripts/soundscapes_outland2.txt"
-
 	// CS:S
 	
 	"file"		"scripts/soundscapes_dust.txt"
@@ -49,6 +43,12 @@ soundscapes_manifest
 	"file"		"scripts/soundscapes_assault.txt"
 	"file"		"scripts/soundscapes_nuke.txt"
 	"file"		"scripts/soundscapes_militia.txt"
+	
+	// EP2
+	
+	"file"		"scripts/soundscapes_silo.txt"
+	"file"		"scripts/soundscapes_outland.txt"	
+	"file"		"scripts/soundscapes_outland2.txt"
 	
 	// TF2
 	
@@ -84,6 +84,18 @@ soundscapes_manifest
 	"file"		"scripts/soundscapes_mannworks.txt"
 	"file"		"scripts/soundscapes_cactusvalley.txt"
 	"file"		"scripts/soundscapes_soho.txt"	
+	
+	// DOD:S
+	
+	"file"		"scripts/soundscapes_colmar.txt"
+	"file"		"scripts/soundscapes_kalt.txt"
+	"file"		"scripts/soundscapes_flash.txt"
+	"file"		"scripts/soundscapes_anzio.txt"
+	"file"		"scripts/soundscapes_avalanche.txt"
+	"file"		"scripts/soundscapes_donner.txt"	
+	"file"		"scripts/soundscapes_argentan.txt"
+	"file"		"scripts/soundscapes_jagd.txt"
+	"file"		"scripts/soundscapes_dod_palermo.txt"
 
 	// Portal
 	"file"		"scripts/soundscapes_portal.txt"
