@@ -358,8 +358,9 @@ A.bglink
 
 DIV.installgamemode
 {
-	margin-left: 50%;
+	margin-right: 360px;
 	height: 25px;
+	line-height: 26px;
 	font-size: 24px;
 	font-weight: bold;
 	background-color: #5AF;
@@ -369,7 +370,7 @@ DIV.installgamemode
 	border-radius: 5px;
 	position: absolute;
 	top: 10px;
-	left: -100px;
+	right: 0;
 	border: 2px solid white;
 	z-index: 100;
 	cursor: pointer;
