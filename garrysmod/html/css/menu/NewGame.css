@@ -181,6 +181,7 @@ gamesettings .control-numeric input[type=text]
 	bottom: 0px;
 	left: 0;
 	right: 0;
+	padding: 4px;
 }
 
 .controls UL
