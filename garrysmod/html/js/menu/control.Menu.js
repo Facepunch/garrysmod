@@ -1,3 +1,9 @@
+if (!IN_ENGINE)
+{
+	window.util = {
+		MotionSensorAvailable: function() { return false; }
+	}
+}
 
 var gScope = null;
 var GamemodeDetails = {}
