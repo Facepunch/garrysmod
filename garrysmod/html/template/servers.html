@@ -126,7 +126,7 @@
 					</players>
 
 					<password ng-show="CurrentGamemode.Selected.pass">
-						<input type='password' ng-model="CurrentGamemode.Selected.password"/>
+						<input type='password' ng-model="CurrentGamemode.Selected.password" ui-keypress="{'enter':'JoinServer( CurrentGamemode.Selected )'}" />
 						<span>Password:</span>
 					</password>
 
