@@ -6,8 +6,8 @@ SWEP.Contact		= ""
 SWEP.Purpose		= ""
 SWEP.Instructions	= "Shoot a prop to attach a Manhack.\nRight click to attach a rollermine."
 
-SWEP.Spawnable			= false
-SWEP.AdminSpawnable		= true
+SWEP.Spawnable			= true
+SWEP.AdminOnly			= true
 
 SWEP.ViewModel			= "models/weapons/v_pistol.mdl"
 SWEP.WorldModel			= "models/weapons/w_pistol.mdl"
