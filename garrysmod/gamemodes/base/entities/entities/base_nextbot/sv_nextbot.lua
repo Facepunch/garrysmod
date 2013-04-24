@@ -317,3 +317,26 @@ function ENT:PlaySequenceAndWait( name, speed )
 	coroutine.wait( len / speed )
 
 end
+
+--
+-- Name: NEXTBOT:Use
+-- Desc: Called when a player 'uses' the entity
+-- Arg1: entity|activator|The entity that activated the use
+-- Arg2: entity|called|The entity that called the use
+-- Arg3: number|type|The type of use (USE_ON, USE_OFF, USE_TOGGLE, USE_SET)
+-- Arg4: number|value|Any passed value
+-- Ret1: 
+--
+function ENT:Use( activator, caller, type, value )
+
+end
+
+--
+-- Name: NEXTBOT:Think
+-- Desc: Called periodically
+-- Arg1:
+-- Ret1: 
+--
+function ENT:Think()
+
+end
