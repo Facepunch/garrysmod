@@ -181,6 +181,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( id != RequestNum[ type ] ) return;
 
 	if ( !gamemode ) gamemode = desc;
+	if ( $.isNumeric(gamemode.charAt(gamemode.length-1) - 0) ) gamemode = gamemode.slice(0,-1);
 	if ( maxplayers <= 1 ) return;
 
 	var data =
