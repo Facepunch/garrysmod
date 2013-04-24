@@ -110,19 +110,17 @@ end
 --
 -- Name: NEXTBOT:OnInjured
 -- Desc: Called when the bot gets hurt
--- Arg1:
+-- Arg1: CTakeDamageInfo|info|damage info
 -- Ret1:
 --
-function ENT:OnInjured()
-
-	MsgN( "OnInjured" )
+function ENT:OnInjured( damageinfo )
 
 end
 
 --
 -- Name: NEXTBOT:OnKilled
 -- Desc: Called when the bot gets killed
--- Arg1:
+-- Arg1: CTakeDamageInfo|info|damage info
 -- Ret1:
 --
 function ENT:OnKilled( damageinfo )
