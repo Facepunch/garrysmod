@@ -236,7 +236,7 @@ end
 function GM:OnContextMenuOpen()
 
 	-- Let the gamemode decide whether we should open or not..
-	if ( !hook.Call( "SpawnMenuOpen", GAMEMODE ) ) then return end
+	if ( !hook.Call( "ContextMenuOpen", GAMEMODE ) ) then return end
 		
 	if ( IsValid( g_ContextMenu ) && !g_ContextMenu:IsVisible() ) then 
 		g_ContextMenu:Open() 
