@@ -488,6 +488,16 @@ function GM:PostDrawSkyBox()
 	
 end
 
+--
+-- Name: GM:PostDraw2DSkyBox
+-- Desc: Called right after the 2D skybox has been drawn - allowing you to draw over it.
+-- Arg1:
+-- Ret1:
+--
+function GM:PostDraw2DSkyBox()
+
+end
+
 --[[---------------------------------------------------------
    Name: gamemode:PreDrawOpaqueRenderables()
    Desc: Called before drawing opaque entities
