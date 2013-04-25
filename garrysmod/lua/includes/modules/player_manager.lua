@@ -72,70 +72,145 @@ end
 -----------------------------------------------------------]]
 
 AddValidModel( "alyx",			"models/player/alyx.mdl" )
-AddValidHands( "alyx",			"models/weapons/c_arms_citizen.mdl",		0,		"1000000" )
+AddValidHands( "alyx",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "barney",		"models/player/barney.mdl" )	
-AddValidHands( "barney",		"models/weapons/c_arms_citizen.mdl",		1,		"1000000" )
+AddValidHands( "barney",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
 
-AddValidModel( "breen",			"models/player/breen.mdl" )	
-AddValidModel( "charple",		"models/player/charple.mdl" )	
-AddValidModel( "corpse",		"models/player/corpse1.mdl" )	
-AddValidModel( "combine",		"models/player/combine_soldier.mdl" )				
+AddValidModel( "breen",			"models/player/breen.mdl" )
+AddValidHands( "breen",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+
+AddValidModel( "charple",		"models/player/charple.mdl" )
+AddValidHands( "charple",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+
+AddValidModel( "corpse",		"models/player/corpse1.mdl" )
+AddValidHands( "corpse",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+	
+AddValidModel( "combine",		"models/player/combine_soldier.mdl" )
+AddValidHands( "combine",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+			
 AddValidModel( "combineprison",	"models/player/combine_soldier_prisonguard.mdl" )
-AddValidModel( "combineelite",	"models/player/combine_super_soldier.mdl" )				
-AddValidModel( "eli",			"models/player/eli.mdl" )			
-AddValidModel( "gman",			"models/player/gman_high.mdl" )		
+AddValidHands( "combineprison",	"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+
+AddValidModel( "combineelite",	"models/player/combine_super_soldier.mdl" )
+AddValidHands( "combineelite",	"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+		
+AddValidModel( "eli",			"models/player/eli.mdl" )
+AddValidHands( "eli",			"models/weapons/c_arms_citizen.mdl",		1,		"0000000" )
+			
+AddValidModel( "gman",			"models/player/gman_high.mdl" )	
+AddValidHands( "gman",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+
 AddValidModel( "kleiner",		"models/player/kleiner.mdl" )
+AddValidHands( "kleiner",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+
 AddValidModel( "scientist",		"models/player/kleiner.mdl" )
+AddValidHands( "scientist",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+
 AddValidModel( "monk",			"models/player/monk.mdl" )
-AddValidModel( "mossman",		"models/player/mossman.mdl" )	
-AddValidModel( "mossmanarctic",	"models/player/mossman_arctic.mdl" )	
+AddValidHands( "monk",		"models/weapons/c_arms_citizen.mdl",			0,		"0000000" )
+
+AddValidModel( "mossman",		"models/player/mossman.mdl" )
+AddValidHands( "mossman",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+
+AddValidModel( "mossmanarctic",	"models/player/mossman_arctic.mdl" )
+AddValidHands( "mossmanarctic",	"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+
 AddValidModel( "gina",			"models/player/mossman.mdl" )
-AddValidModel( "odessa",		"models/player/odessa.mdl" )		
-AddValidModel( "police",		"models/player/police.mdl" )		
+AddValidHands( "gina",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+
+AddValidModel( "odessa",		"models/player/odessa.mdl" )
+AddValidHands( "odessa",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+
+AddValidModel( "police",		"models/player/police.mdl" )
+AddValidHands( "police",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+
 AddValidModel( "magnusson",		"models/player/magnusson.mdl" )
+AddValidHands( "magnusson",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+
 AddValidModel( "stripped",		"models/player/soldier_stripped.mdl" )
+AddValidHands( "stripped",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+
 AddValidModel( "zombie",		"models/player/zombie_classic.mdl" )
+AddValidHands( "zombie",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+
 AddValidModel( "zombiefast",	"models/player/zombie_fast.mdl" )
+AddValidHands( "zombiefast",	"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+
 AddValidModel( "zombine",		"models/player/zombie_soldier.mdl" )
+AddValidHands( "zombine",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
 
 AddValidModel( "female01",		"models/player/Group01/female_01.mdl" )
+AddValidHands( "female01",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "female02",		"models/player/Group01/female_02.mdl" )
+AddValidHands( "female02",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "female03",		"models/player/Group01/female_03.mdl" )
+AddValidHands( "female03",		"models/weapons/c_arms_citizen.mdl",		1,		"0000000" )
 AddValidModel( "female04",		"models/player/Group01/female_04.mdl" )
+AddValidHands( "female04",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "female05",		"models/player/Group01/female_05.mdl" )
+AddValidHands( "female05",		"models/weapons/c_arms_citizen.mdl",		1,		"0000000" )
 AddValidModel( "female06",		"models/player/Group01/female_06.mdl" )
+AddValidHands( "female06",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "female07",		"models/player/Group03/female_01.mdl" )
+AddValidHands( "female07",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "female08",		"models/player/Group03/female_02.mdl" )
+AddValidHands( "female08",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "female09",		"models/player/Group03/female_03.mdl" )
+AddValidHands( "female09",		"models/weapons/c_arms_citizen.mdl",		1,		"0000000" )
 AddValidModel( "female10",		"models/player/Group03/female_04.mdl" )
+AddValidHands( "female10",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "female11",		"models/player/Group03/female_05.mdl" )
+AddValidHands( "female11",		"models/weapons/c_arms_citizen.mdl",		1,		"0000000" )
 AddValidModel( "female12",		"models/player/Group03/female_06.mdl" )
+AddValidHands( "female12",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "male01",		"models/player/Group01/male_01.mdl" )
+AddValidHands( "male01",		"models/weapons/c_arms_citizen.mdl",		1,		"0000000" )
 AddValidModel( "male02",		"models/player/Group01/male_02.mdl" )
+AddValidHands( "male02",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "male03",		"models/player/Group01/male_03.mdl" )
+AddValidHands( "male03",		"models/weapons/c_arms_citizen.mdl",		1,		"0000000" )
 AddValidModel( "male04",		"models/player/Group01/male_04.mdl" )
+AddValidHands( "male04",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "male05",		"models/player/Group01/male_05.mdl" )
+AddValidHands( "male05",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "male06",		"models/player/Group01/male_06.mdl" )
+AddValidHands( "male06",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "male07",		"models/player/Group01/male_07.mdl" )
+AddValidHands( "male07",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "male08",		"models/player/Group01/male_08.mdl" )
+AddValidHands( "male08",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "male09",		"models/player/Group01/male_09.mdl" )
+AddValidHands( "male09",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "male10",		"models/player/Group03/male_01.mdl" )
+AddValidHands( "male10",		"models/weapons/c_arms_citizen.mdl",		1,		"0000000" )
 AddValidModel( "male11",		"models/player/Group03/male_02.mdl" )
+AddValidHands( "male11",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "male12",		"models/player/Group03/male_03.mdl" )
+AddValidHands( "male12",		"models/weapons/c_arms_citizen.mdl",		1,		"0000000" )
 AddValidModel( "male13",		"models/player/Group03/male_04.mdl" )
+AddValidHands( "male13",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "male14",		"models/player/Group03/male_05.mdl" )
+AddValidHands( "male14",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "male15",		"models/player/Group03/male_06.mdl" )
+AddValidHands( "male15",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "male16",		"models/player/Group03/male_07.mdl" )
+AddValidHands( "male16",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "male17",		"models/player/Group03/male_08.mdl" )
+AddValidHands( "male17",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "male18",		"models/player/Group03/male_09.mdl" )
+AddValidHands( "male18",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "refugee01",		"models/player/Group02/male_02.mdl" )
+AddValidHands( "refugee01",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "refugee02",		"models/player/Group02/male_04.mdl" )
+AddValidHands( "refugee02",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "refugee03",		"models/player/Group02/male_06.mdl" )
+AddValidHands( "refugee03",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "refugee04",		"models/player/Group02/male_08.mdl" )
+AddValidHands( "refugee04",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 --
 -- Player Class Stuff
