@@ -213,6 +213,46 @@ AddValidModel( "refugee04",		"models/player/Group02/male_08.mdl" )
 AddValidHands( "refugee04",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 --
+-- Game specific player models! (EP2, CSS, DOD)
+-- Moving them to here since we're now shipping all required files / fallbacks
+
+list.Set( "PlayerOptionsModel", "magnusson", "models/player/magnusson.mdl" )
+player_manager.AddValidModel( "magnusson", "models/player/magnusson.mdl" )
+
+list.Set( "zombine", "models/player/zombie_soldier.mdl" )
+AddValidModel( "zombine",	"models/player/zombie_soldier.mdl" )
+AddValidHands( "zombine",	"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+
+--AddValidModel( "s_hostage_01", "models/player/hostage/hostage_01.mdl" )
+--AddValidModel( "s_hostage_02", "models/player/hostage/hostage_02.mdl" )
+--AddValidModel( "s_hostage_03", "models/player/hostage/hostage_03.mdl" )
+--AddValidModel( "s_hostage_04", "models/player/hostage/hostage_04.mdl" )
+
+AddValidModel( "arctic",		"models/player/arctic.mdl" )
+AddValidHands( "arctic",		"models/weapons/c_arms_cstrike.mdl",		0,		"10000000" )
+AddValidModel( "gasmask",		"models/player/gasmask.mdl" )
+AddValidHands( "gasmask",		"models/weapons/c_arms_cstrike.mdl",		0,		"10000000" )
+AddValidModel( "guerilla",		"models/player/guerilla.mdl" )
+AddValidHands( "guerilla",		"models/weapons/c_arms_cstrike.mdl",		0,		"10000000" )
+AddValidModel( "leet",			"models/player/leet.mdl" )
+AddValidHands( "leet",			"models/weapons/c_arms_cstrike.mdl",		0,		"10000000" )
+AddValidModel( "phoenix",		"models/player/phoenix.mdl" )
+AddValidHands( "phoenix",		"models/weapons/c_arms_cstrike.mdl",		0,		"10000000" )
+AddValidModel( "riot",			"models/player/riot.mdl" )
+AddValidHands( "riot",			"models/weapons/c_arms_cstrike.mdl",		0,		"10000000" )
+AddValidModel( "swat",			"models/player/swat.mdl" )
+AddValidHands( "swat",			"models/weapons/c_arms_cstrike.mdl",		0,		"10000000" )
+AddValidModel( "urban",		"models/player/urban.mdl" )
+AddValidHands( "urban",			"models/weapons/c_arms_cstrike.mdl",		7,		"10000000" )
+
+AddValidModel( "dod_american", "models/player/dod_american.mdl" )
+AddValidHands( "dod_american", "models/weapons/c_arms_dod.mdl",		0,		"10000000" )
+AddValidModel( "dod_german", "models/player/dod_german.mdl" )
+AddValidHands( "dod_german", "models/weapons/c_arms_dod.mdl",		1,		"10000000" )
+
+
+
+--
 -- Player Class Stuff
 --
 
