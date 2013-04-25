@@ -8,6 +8,9 @@ ENT.RenderGroup		= RENDERGROUP_OTHER
 function ENT:Initialize()
 	
 	hook.Add( "OnViewModelChanged", self, self.ViewModelChanged )
+
+	self:SetNotSolid( true )
+	self:DrawShadow( false )
 	
 end
 
@@ -15,7 +18,7 @@ function ENT:DoSetup( ply )
 
 	-- Set these hands to the player
 	ply:SetHands( self )
-	
+	self:SetOwner( ply )
 
 	-- Which hands should we use?
 	local info = player_manager.RunClass( ply, "GetHandsModel" )
@@ -31,6 +34,12 @@ function ENT:DoSetup( ply )
 
 	vm:DeleteOnRemove( self )
 	ply:DeleteOnRemove( self )
+
+end
+
+function ENT:GetPlayerColor()
+
+	return self:GetOwner():GetPlayerColor()
 
 end
 
