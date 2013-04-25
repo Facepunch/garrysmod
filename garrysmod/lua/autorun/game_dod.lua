@@ -1,6 +1,6 @@
 
 
-if ( !IsMounted( "dods" ) ) then return end
+if ( !IsMounted( "dod" ) ) then return end
 
 ---Americans
 list.Set( "PlayerOptionsModel", "american_assault", "models/player/dod_american.mdl" )
