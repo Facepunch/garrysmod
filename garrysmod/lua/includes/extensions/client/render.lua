@@ -208,7 +208,7 @@ function render.Model( tbl, ent )
 	local inent = ent
 
 	if ( ent == nil ) then
-		ent = ClientsideModel( tbl.model or "error.mdl", RENDER_GROUP_OTHER )
+		ent = ClientsideModel( tbl.model or "error.mdl", RENDERGROUP_OTHER )
 	end
 	
 	if ( !IsValid( ent ) ) then return end

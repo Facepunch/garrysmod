@@ -12,17 +12,26 @@ local util = util
 module( "player_manager" )
 
 
--- If a player doesn't have a valid model set they will use this one by default
-local DefaultPlayerModel = "models/player/kleiner.mdl"
-
 -- Stores a table of valid player models
 local ModelList = {}
+local HandNames = {}
 
 --[[---------------------------------------------------------
    Utility to add models to the acceptable model list
 -----------------------------------------------------------]]
 function AddValidModel( name, model )
+
 	ModelList[ name ] = model
+
+end
+
+--
+-- Valid hands
+--
+function AddValidHands( name, model, skin, body )
+
+	HandNames[ name ] = { model = model, skin = skin, body = body }
+
 end
 
 --[[---------------------------------------------------------
@@ -43,37 +52,52 @@ function TranslatePlayerModel( name )
 		return ModelList[ name ]
 	end
 	
-	return DefaultPlayerModel
+	return "models/player/kleiner.mdl"
 end
 
+--
+-- Translate hands based on model
+--
+function TranslatePlayerHands( name )
+
+	if ( HandNames[ name ] != nil ) then
+		return HandNames[ name ]
+	end
+	
+	return { model = "models/weapons/c_arms_citizen.mdl", skin = 0, body = "100000000" }
+end
 
 --[[---------------------------------------------------------
    Compile a list of valid player models
 -----------------------------------------------------------]]
 
-AddValidModel( "alyx",		"models/player/alyx.mdl" )
-AddValidModel( "barney",	"models/player/barney.mdl" )	
-AddValidModel( "breen",		"models/player/breen.mdl" )	
-AddValidModel( "charple",	"models/player/charple.mdl" )	
-AddValidModel( "corpse",	"models/player/corpse1.mdl" )	
-AddValidModel( "combine",	"models/player/combine_soldier.mdl" )				
+AddValidModel( "alyx",			"models/player/alyx.mdl" )
+AddValidHands( "alyx",			"models/weapons/c_arms_citizen.mdl",		0,		"1000000" )
+
+AddValidModel( "barney",		"models/player/barney.mdl" )	
+AddValidHands( "barney",		"models/weapons/c_arms_citizen.mdl",		1,		"1000000" )
+
+AddValidModel( "breen",			"models/player/breen.mdl" )	
+AddValidModel( "charple",		"models/player/charple.mdl" )	
+AddValidModel( "corpse",		"models/player/corpse1.mdl" )	
+AddValidModel( "combine",		"models/player/combine_soldier.mdl" )				
 AddValidModel( "combineprison",	"models/player/combine_soldier_prisonguard.mdl" )
 AddValidModel( "combineelite",	"models/player/combine_super_soldier.mdl" )				
-AddValidModel( "eli",		"models/player/eli.mdl" )			
-AddValidModel( "gman",		"models/player/gman_high.mdl" )		
-AddValidModel( "kleiner",	"models/player/kleiner.mdl" )
-AddValidModel( "scientist",	"models/player/kleiner.mdl" )
-AddValidModel( "monk",		"models/player/monk.mdl" )
-AddValidModel( "mossman",	"models/player/mossman.mdl" )	
+AddValidModel( "eli",			"models/player/eli.mdl" )			
+AddValidModel( "gman",			"models/player/gman_high.mdl" )		
+AddValidModel( "kleiner",		"models/player/kleiner.mdl" )
+AddValidModel( "scientist",		"models/player/kleiner.mdl" )
+AddValidModel( "monk",			"models/player/monk.mdl" )
+AddValidModel( "mossman",		"models/player/mossman.mdl" )	
 AddValidModel( "mossmanarctic",	"models/player/mossman_arctic.mdl" )	
-AddValidModel( "gina",		"models/player/mossman.mdl" )
-AddValidModel( "odessa",	"models/player/odessa.mdl" )		
-AddValidModel( "police",	"models/player/police.mdl" )		
-AddValidModel( "magnusson",	"models/player/magnusson.mdl" )
-AddValidModel( "stripped",	"models/player/soldier_stripped.mdl" )
-AddValidModel( "zombie",	"models/player/zombie_classic.mdl" )
-AddValidModel( "zombiefast", "models/player/zombie_fast.mdl" )
-AddValidModel( "zombine",	"models/player/zombie_soldier.mdl" )
+AddValidModel( "gina",			"models/player/mossman.mdl" )
+AddValidModel( "odessa",		"models/player/odessa.mdl" )		
+AddValidModel( "police",		"models/player/police.mdl" )		
+AddValidModel( "magnusson",		"models/player/magnusson.mdl" )
+AddValidModel( "stripped",		"models/player/soldier_stripped.mdl" )
+AddValidModel( "zombie",		"models/player/zombie_classic.mdl" )
+AddValidModel( "zombiefast",	"models/player/zombie_fast.mdl" )
+AddValidModel( "zombine",		"models/player/zombie_soldier.mdl" )
 
 AddValidModel( "female01",		"models/player/Group01/female_01.mdl" )
 AddValidModel( "female02",		"models/player/Group01/female_02.mdl" )
@@ -207,7 +231,7 @@ function RunClass( ply, funcname, ... )
 	if ( !class ) then return end
 
 	local func = class[funcname]
-	if ( !func ) then ErrorNoHalt( "Function "..funcname.." not found on player class! " ) return end
+	if ( !func ) then ErrorNoHalt( "Function "..funcname.." not found on player class!\n" ) return end
 
 	return func( class, ... )
 
