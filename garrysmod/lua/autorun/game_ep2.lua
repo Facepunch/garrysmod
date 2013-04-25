@@ -43,15 +43,6 @@ Category = "Combine"
 								
 								
 --
--- Player Models
---
-
-list.Set( "PlayerOptionsModel", "magnusson", "models/player/magnusson.mdl" )
-player_manager.AddValidModel( "magnusson", "models/player/magnusson.mdl" )
-
-list.Set( "zombine", "models/player/zombie_soldier.mdl" )
-player_manager.AddValidModel( "zombine",	"models/player/zombie_soldier.mdl" )
---
 -- Vehicles
 --
 
