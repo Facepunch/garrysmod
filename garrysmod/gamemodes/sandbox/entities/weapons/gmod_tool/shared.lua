@@ -5,9 +5,11 @@ SWEP.Contact			= ""
 SWEP.Purpose			= ""
 SWEP.Instructions		= ""
 
-SWEP.ViewModel			= "models/weapons/v_toolgun.mdl"
+SWEP.ViewModel			= "models/weapons/c_toolgun.mdl"
 SWEP.WorldModel			= "models/weapons/w_toolgun.mdl"
 SWEP.AnimPrefix			= "python"
+
+SWEP.UseHands			= true
 
 -- Be nice, precache the models
 util.PrecacheModel( SWEP.ViewModel )
