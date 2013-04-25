@@ -31,9 +31,10 @@ PLAYER.RunSpeed				= 400
 --
 function PLAYER:SetupDataTables()
 
-	-- as needed.
+	BaseClass.SetupDataTables( self )
 
 end
+
 
 function PLAYER:Loadout()
 
@@ -80,6 +81,8 @@ end
 -- Called when the player spawns
 --
 function PLAYER:Spawn()
+
+	BaseClass.Spawn( self )
 
 	local col = self.Player:GetInfo( "cl_playercolor" )
 	self.Player:SetPlayerColor( Vector( col ) )
