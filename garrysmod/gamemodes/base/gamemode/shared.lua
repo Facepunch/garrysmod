@@ -305,3 +305,20 @@ end
 function GM:PostGamemodeLoaded()
 	
 end
+
+--
+-- Name: GM:OnViewModelChanged
+-- Desc: Called when the player changes their weapon to another one - and their viewmodel model changes
+-- Arg1: Entity|viewmodel|The viewmodel that is changing
+-- Arg2: string|old|The old model
+-- Arg3: string|new|The new model
+-- Ret1:
+--
+function GM:OnViewModelChanged( vm, old, new ) 
+
+	local ply = vm:GetOwner()
+	if ( IsValid( ply ) ) then
+		player_manager.RunClass( ply, "ViewModelChanged", vm, old, new );
+	end
+
+end

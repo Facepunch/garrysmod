@@ -50,7 +50,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 
 		if ( v.Class == "prop_ragdoll" ) then
 
-			entities[k] = ClientsideRagdoll( v.Model or "error.mdl", RENDER_GROUP_OTHER )
+			entities[k] = ClientsideRagdoll( v.Model or "error.mdl", RENDERGROUP_OTHER )
 
 			if ( istable( v.PhysicsObjects ) ) then
 			
@@ -70,7 +70,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 
 		else
 
-			entities[ k ] = ClientsideModel( v.Model or "error.mdl", RENDER_GROUP_OTHER )
+			entities[ k ] = ClientsideModel( v.Model or "error.mdl", RENDERGROUP_OTHER )
 
 		end
 

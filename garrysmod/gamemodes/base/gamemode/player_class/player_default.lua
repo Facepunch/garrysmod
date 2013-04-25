@@ -20,33 +20,58 @@ PLAYER.StartArmor			= 0			-- How much armour we start with
 PLAYER.DropWeaponOnDie		= false		-- Do we drop our weapon when we die
 PLAYER.TeammateNoCollide 	= true		-- Do we collide with teammates or run straight through them
 PLAYER.AvoidPlayers			= true		-- Automatically swerves around other players
+PLAYER.UseVMHands			= true		-- Uses viewmodel hands
 
 
 --
--- Set up the network table accessors
+-- Name: PLAYER:SetupDataTables
+-- Desc: Set up the network table accessors
+-- Arg1:
+-- Ret1:
 --
 function PLAYER:SetupDataTables()
-
+	
+	self.Player:NetworkVar( "Entity", 0, "Hands" );	
 
 end
 
 --
--- Called when the class object is created (shared)
+-- Name: PLAYER:Init
+-- Desc: Called when the class object is created (shared)
+-- Arg1:
+-- Ret1:
 --
 function PLAYER:Init()
 
+
 end
 
 --
--- Called serverside only when the player spawns
+-- Name: PLAYER:Spawn
+-- Desc: Called serverside only when the player spawns
+-- Arg1:
+-- Ret1:
 --
 function PLAYER:Spawn()
 
+	local oldhands = self.Player:GetHands();
+	if ( IsValid( oldhands ) ) then
+		oldhands:Remove()
+	end
+
+	local hands = ents.Create( "gmod_hands" )
+	if ( IsValid( hands ) ) then
+		hands:DoSetup( self.Player )
+		hands:Spawn()
+	end	
 
 end
 
 --
--- Called on spawn to give the player their default loadout
+-- Name: PLAYER:Loadout
+-- Desc: Called on spawn to give the player their default loadout
+-- Arg1:
+-- Ret1:
 --
 function PLAYER:Loadout()
 
@@ -65,5 +90,64 @@ function PLAYER:StartMove( cmd, mv ) end	-- Copies from the user command to the 
 function PLAYER:Move( mv ) end				-- Runs the move (can run multiple times for the same client)
 function PLAYER:FinishMove( mv ) end		-- Copy the results of the move back to the Player
 
+
+--
+-- Name: PLAYER:ViewModelChanged
+-- Desc: Called when the player changes their weapon to another one causing their viewmodel model to change
+-- Arg1: Entity|viewmodel|The viewmodel that is changing
+-- Arg2: string|old|The old model
+-- Arg3: string|new|The new model
+-- Ret1:
+--
+function PLAYER:ViewModelChanged( vm, old, new )
+
+
+end
+
+--
+-- Name: PLAYER:PreDrawViewmodel
+-- Desc: Called before the viewmodel is being drawn (clientside)
+-- Arg1: Entity|viewmodel|The viewmodel
+-- Arg2: Entity|weapon|The weapon
+-- Ret1:
+--
+function PLAYER:PreDrawViewModel( vm, weapon )
+
+end
+
+--
+-- Name: PLAYER:PostDrawViewModel
+-- Desc: Called after the viewmodel has been drawn (clientside)
+-- Arg1: Entity|viewmodel|The viewmodel
+-- Arg2: Entity|weapon|The weapon
+-- Ret1:
+--
+function PLAYER:PostDrawViewModel( vm, weapon )
+
+	if ( weapon.UseHands || !weapon:IsScripted() ) then
+
+		local hands = self.Player:GetHands()
+		if ( IsValid( hands ) ) then
+			hands:DrawModel()
+		end
+
+	end
+
+end
+
+--
+-- Name: PLAYER:GetHandsModel
+-- Desc: Called on player spawn to determine which hand model to use
+-- Arg1: 
+-- Ret1: table|info|A table containing model, skin and body
+--
+function PLAYER:GetHandsModel()
+
+	-- return { model = "models/weapons/c_arms_cstrike.mdl", skin = 1, body = "0100000" }
+
+	local cl_playermodel = self.Player:GetInfo( "cl_playermodel" )
+	return player_manager.TranslatePlayerHands( cl_playermodel )
+
+end
 
 player_manager.RegisterClass( "player_default", PLAYER, nil )

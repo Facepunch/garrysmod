@@ -554,11 +554,13 @@ end
    Name: gamemode:PreDrawViewModel()
    Desc: Called before drawing the view model
 -----------------------------------------------------------]]
-function GM:PreDrawViewModel( ViewModel, Weapon, Player )
+function GM:PreDrawViewModel( ViewModel, Player, Weapon )
 		
 	if ( !IsValid( Weapon ) ) then return false end
+
+	player_manager.RunClass( Player, "PreDrawViewModel", ViewModel, Weapon )
+
 	if ( Weapon.PreDrawViewModel == nil ) then return false end
-		
 	return Weapon:PreDrawViewModel( ViewModel, Weapon, Player )
 	
 end
@@ -567,11 +569,13 @@ end
    Name: gamemode:PostDrawViewModel()
    Desc: Called after drawing the view model
 -----------------------------------------------------------]]
-function GM:PostDrawViewModel( ViewModel, Weapon, Player )
+function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 
 	if ( !IsValid( Weapon ) ) then return false end
-	if ( Weapon.PostDrawViewModel == nil ) then return false end
-		
+
+	player_manager.RunClass( Player, "PostDrawViewModel", ViewModel, Weapon )
+
+	if ( Weapon.PostDrawViewModel == nil ) then return false end		
 	return Weapon:PostDrawViewModel( ViewModel, Weapon, Player )
 	
 end
