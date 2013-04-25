@@ -4,7 +4,7 @@ WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
 	"printname"	"#HL2_StunBaton"
-	"viewmodel"				"models/weapons/v_stunstick.mdl"
+	"viewmodel"				"models/weapons/c_stunstick.mdl"
 	"playermodel"			"models/weapons/w_stunbaton.mdl"
 	"anim_prefix"			"stunbaton"
 	"bucket"				"0"

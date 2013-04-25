@@ -4,7 +4,7 @@ WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
 	"printname"	"#HL2_RPG"
-	"viewmodel"				"models/weapons/v_rpg.mdl"
+	"viewmodel"				"models/weapons/c_rpg.mdl"
 	"playermodel"			"models/weapons/w_rocket_launcher.mdl"
 	"anim_prefix"			"missile launcher"
 	"bucket"				"4"
