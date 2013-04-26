@@ -216,7 +216,7 @@ AddValidHands( "refugee04",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000"
 -- Moving them to here since we're now shipping all required files / fallbacks
 
 AddValidModel( "magnusson", "models/player/magnusson.mdl" )
-
+AddValidHands( "magnusson","models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "zombine",	"models/player/zombie_soldier.mdl" )
 AddValidHands( "zombine",	"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
 
