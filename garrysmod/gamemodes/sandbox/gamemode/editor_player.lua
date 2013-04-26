@@ -154,3 +154,6 @@ list.Set( "PlayerOptionsModel", "refugee01",	"models/player/Group02/male_02.mdl"
 list.Set( "PlayerOptionsModel", "refugee02",	"models/player/Group02/male_04.mdl" )
 list.Set( "PlayerOptionsModel", "refugee03",	"models/player/Group02/male_06.mdl" )
 list.Set( "PlayerOptionsModel", "refugee04",	"models/player/Group02/male_08.mdl" )
+
+list.Set( "PlayerOptionsModel", "magnusson", "models/player/magnusson.mdl" )
+list.Set( "PlayerOptionsModel", "zombine", "models/player/zombie_soldier.mdl" )
