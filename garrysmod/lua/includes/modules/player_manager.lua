@@ -215,10 +215,8 @@ AddValidHands( "refugee04",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000"
 -- Game specific player models! (EP2, CSS, DOD)
 -- Moving them to here since we're now shipping all required files / fallbacks
 
-list.Set( "PlayerOptionsModel", "magnusson", "models/player/magnusson.mdl" )
 AddValidModel( "magnusson", "models/player/magnusson.mdl" )
 
-list.Set( "zombine", "models/player/zombie_soldier.mdl" )
 AddValidModel( "zombine",	"models/player/zombie_soldier.mdl" )
 AddValidHands( "zombine",	"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
 
