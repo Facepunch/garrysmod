@@ -28,9 +28,6 @@ end
 	UpdateColours
 -----------------------------------------------------------]]
 function PANEL:UpdateColours( skin )
-	-- PrintTable( skin.Colours )
-	-- skin.Colours.TooltipText = COLOR_RED
-	-- skin.Colours.Tooltip = COLOR_RED
 	return self:SetTextStyleColor( skin.Colours.TooltipText )
 end
 
@@ -99,19 +96,15 @@ end
 function PANEL:Paint( w, h )
 	self:PositionTooltip();
 	derma.SkinHook( "Paint", "Tooltip", self, w, h )
-
 end
 
 --[[---------------------------------------------------------
 
 -----------------------------------------------------------]]
 function PANEL:OpenForPanel( panel )
-	
 	self.TargetPanel = panel
 	self:PositionTooltip();	
-	
 	if ( tooltip_delay:GetFloat() > 0 ) then
-	
 		self:SetVisible( false )
 		timer.Simple( tooltip_delay:GetFloat(), function() 
 			if ( !IsValid( self ) ) then return end
@@ -119,7 +112,6 @@ function PANEL:OpenForPanel( panel )
 
 			self:PositionTooltip();	
 			self:SetVisible( true )
-
 		end )
 	end
 end
