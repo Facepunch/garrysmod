@@ -269,7 +269,7 @@ function SafeRemoveEntity( ent )
 end
 
 --
--- Name: Global.SafeRemoveEntity
+-- Name: Global.SafeRemoveEntityDelayed
 -- Realm: Shared
 -- Desc: Waits n seconds, then if an object is valid and if it is removes it
 -- Arg1: Entity|ent|The ent that should be deleted
