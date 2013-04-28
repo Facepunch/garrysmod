@@ -59,7 +59,7 @@ end
 
 -- If true AND SWEP.Kind is not WEAPON_EQUIP, then this gun can be spawned as
 -- random weapon by a ttt_random_weapon entity.
-SWEP.Autospawnable = false
+SWEP.AutoSpawnable = false
 
 -- Set to true if weapon can be manually dropped by players (with Q)
 SWEP.AllowDrop = true
