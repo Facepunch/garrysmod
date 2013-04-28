@@ -169,7 +169,7 @@ if CLIENT then
                               255 * alpha)
       end
 
-      local gap = 20 * (scale * 1.5) * (sights and 0.8 or 1)
+      local gap = 20 * scale * (sights and 0.8 or 1)
       local length = gap + (25 * crosshair_size:GetFloat()) * scale
       surface.DrawLine( x - length, y, x - gap, y )
       surface.DrawLine( x + length, y, x + gap, y )
