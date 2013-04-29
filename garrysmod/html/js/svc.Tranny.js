@@ -1,10 +1,3 @@
-if (!IN_ENGINE)
-{
-	window.language = {
-		Update: function( str ) { return str; }
-	}
-}
-
 
 angular.module( 'tranny', [] )
 
@@ -16,6 +9,8 @@ angular.module( 'tranny', [] )
 
 		var update = function()
 		{
+			if ( IN_ENGINE == false ) return;
+			
 			$(element).html( language.Update( strName ) );
 		}
 		
