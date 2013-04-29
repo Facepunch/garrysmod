@@ -80,10 +80,10 @@ AddValidModel( "breen",			"models/player/breen.mdl" )
 AddValidHands( "breen",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "charple",		"models/player/charple.mdl" )
-AddValidHands( "charple",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+AddValidHands( "charple",		"models/weapons/c_arms_citizen.mdl",		2,		"0000000" )
 
 AddValidModel( "corpse",		"models/player/corpse1.mdl" )
-AddValidHands( "corpse",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+AddValidHands( "corpse",		"models/weapons/c_arms_citizen.mdl",		2,		"0000000" )
 	
 AddValidModel( "combine",		"models/player/combine_soldier.mdl" )
 AddValidHands( "combine",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
@@ -128,16 +128,16 @@ AddValidModel( "magnusson",		"models/player/magnusson.mdl" )
 AddValidHands( "magnusson",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "stripped",		"models/player/soldier_stripped.mdl" )
-AddValidHands( "stripped",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+AddValidHands( "stripped",		"models/weapons/c_arms_hev.mdl",			2,		"0000000" )
 
 AddValidModel( "zombie",		"models/player/zombie_classic.mdl" )
-AddValidHands( "zombie",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+AddValidHands( "zombie",		"models/weapons/c_arms_citizen.mdl",		2,		"0000000" )
 
 AddValidModel( "zombiefast",	"models/player/zombie_fast.mdl" )
-AddValidHands( "zombiefast",	"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+AddValidHands( "zombiefast",	"models/weapons/c_arms_citizen.mdl",		2,		"0000000" )
 
 AddValidModel( "zombine",		"models/player/zombie_soldier.mdl" )
-AddValidHands( "zombine",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+AddValidHands( "zombine",		"models/weapons/c_arms_hev.mdl",			2,		"0000000" )
 
 AddValidModel( "female01",		"models/player/Group01/female_01.mdl" )
 AddValidHands( "female01",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
