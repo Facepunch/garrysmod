@@ -30,8 +30,6 @@ PLAYER.UseVMHands			= true		-- Uses viewmodel hands
 -- Ret1:
 --
 function PLAYER:SetupDataTables()
-	
-	self.Player:NetworkVar( "Entity", 0, "Hands" );	
 
 end
 
