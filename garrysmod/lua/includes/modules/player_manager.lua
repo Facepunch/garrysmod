@@ -137,7 +137,7 @@ AddValidModel( "zombiefast",	"models/player/zombie_fast.mdl" )
 AddValidHands( "zombiefast",	"models/weapons/c_arms_citizen.mdl",		2,		"0000000" )
 
 AddValidModel( "zombine",		"models/player/zombie_soldier.mdl" )
-AddValidHands( "zombine",		"models/weapons/c_arms_hev.mdl",			2,		"0000000" )
+AddValidHands( "zombine",		"models/weapons/c_arms_citizen.mdl",			2,		"0000000" )
 
 AddValidModel( "female01",		"models/player/Group01/female_01.mdl" )
 AddValidHands( "female01",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
