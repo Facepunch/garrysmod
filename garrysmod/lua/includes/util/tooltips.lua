@@ -13,7 +13,7 @@ local TooltippedPanel = nil
 	Name: ChangeTooltip
 		Called from engine on hovering over a panel
 -----------------------------------------------------------]] 
-local function RemoveTooltip( PositionPanel )
+function RemoveTooltip( PositionPanel )
 
 	if ( !IsValid( Tooltip ) ) then return true end
 		
