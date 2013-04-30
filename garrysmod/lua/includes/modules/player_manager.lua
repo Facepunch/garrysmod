@@ -96,7 +96,10 @@ AddValidHands( "combineelite",	"models/weapons/c_arms_hev.mdl",			0,		"0000000" 
 		
 AddValidModel( "eli",			"models/player/eli.mdl" )
 AddValidHands( "eli",			"models/weapons/c_arms_citizen.mdl",		1,		"0000000" )
-			
+
+AddValidModel( "fisherman",		"models/player/fisherman.mdl" )
+AddValidHands( "fisherman",		"models/weapons/c_arms_dod.mdl",			1,		"0000000" )
+
 AddValidModel( "gman",			"models/player/gman_high.mdl" )	
 AddValidHands( "gman",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
