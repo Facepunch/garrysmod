@@ -16,6 +16,9 @@ function EFFECT:Init( data )
 	self.EndPos = data:GetOrigin()
 	
 	self.Alpha = 255
+	self.Life = 0.0;
+
+	self:SetRenderBoundsWS( self.StartPos, self.EndPos )
 
 end
 
@@ -24,13 +27,10 @@ end
 -----------------------------------------------------------]]
 function EFFECT:Think( )
 
-	self.Alpha = self.Alpha - FrameTime() * 2048
+	self.Life = self.Life + FrameTime() * 2;
+	self.Alpha = 255 * ( 1 - self.Life )	
 	
-	self.StartPos = self:GetTracerShootPos( self.Position, self.WeaponEnt, self.Attachment )
-	self:SetRenderBoundsWS( self.StartPos, self.EndPos )
-	
-	if (self.Alpha < 0) then return false end
-	return true
+	return (self.Life < 1)
 
 end
 
@@ -40,26 +40,22 @@ end
 function EFFECT:Render( )
 
 	if ( self.Alpha < 1 ) then return end
-	
-	
-		
-	
-	self.Length = (self.StartPos - self.EndPos):Length()
-		
+			
 	render.SetMaterial( self.Mat )
 	local texcoord = math.Rand( 0, 1 )
 	
+	local norm = (self.StartPos - self.EndPos) * self.Life
+
+	self.Length = norm:Length()
 	
-	for i=1, 6 do
-	
+	for i=1, 6 do		
 		
-		
-		render.DrawBeam( self.StartPos, 										-- Start
+		render.DrawBeam( self.StartPos - norm, 										-- Start
 					 self.EndPos,											-- End
-					 8,													-- Width
+					 32,													-- Width
 					 texcoord,														-- Start tex coord
 					 texcoord + self.Length / 128,									-- End tex coord
-					 Color( 255, 255, 255, self.Alpha ) )		-- Color (optional)
+					 Color( 255, 255, 255, 255 ) )		-- Color (optional)
 	end
 
 end

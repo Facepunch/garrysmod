@@ -16,7 +16,6 @@ gamemodes\base\entities\entities\base_entity\cl_init.lua
 gamemodes\base\entities\entities\base_entity\shared.lua
 gamemodes\base\entities\entities\prop_effect.lua
 gamemodes\base\entities\effects\base\init.lua
-gamemodes\base\entities\effects\ToolTracer\init.lua
 gamemodes\base\entities\effects\dof_node\init.lua
 gamemodes\base\gamemode\cl_init.lua
 gamemodes\base\gamemode\shared.lua
