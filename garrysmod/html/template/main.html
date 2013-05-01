@@ -5,7 +5,7 @@
 
 			<ul>
 
-				<li><img ng-src='../gamemodes/{{Gamemode}}/logo.png' /></li>
+				<li><img ng-src='../gamemodes/{{Gamemode}}/logo.png' onerror="MissingGamemodeLogo(this)" /></li>
 				<li>&nbsp;</li>
 				<li ng-show="InGame"><a ng-click="BackToGame()" ng-Tranny="'resume_game'"></a></li>
 				<li ng-show="InGame">&nbsp;</li>
