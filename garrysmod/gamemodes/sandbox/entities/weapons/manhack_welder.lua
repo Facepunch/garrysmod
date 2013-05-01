@@ -9,7 +9,7 @@ SWEP.Instructions	= "Shoot a prop to attach a Manhack.\nRight click to attach a 
 SWEP.Spawnable			= true
 SWEP.AdminOnly			= true
 
-SWEP.ViewModel			= "models/weapons/v_pistol.mdl"
+SWEP.ViewModel			= "models/weapons/c_pistol.mdl"
 SWEP.WorldModel			= "models/weapons/w_pistol.mdl"
 
 SWEP.Primary.ClipSize		= -1
@@ -31,6 +31,7 @@ SWEP.Slot				= 3
 SWEP.SlotPos			= 1
 SWEP.DrawAmmo			= false
 SWEP.DrawCrosshair		= true
+SWEP.UseHands			= true
 
 
 
