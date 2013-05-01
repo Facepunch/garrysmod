@@ -11,6 +11,7 @@ function ENT:Initialize()
 
 	self:SetNotSolid( true )
 	self:DrawShadow( false )
+	self:SetTransmitWithParent( true ) -- Transmit only when the viewmodel does!
 	
 end
 
@@ -44,6 +45,9 @@ function ENT:GetPlayerColor()
 end
 
 function ENT:ViewModelChanged( vm, old, new )
+
+	-- Ignore other peoples viewmodel changes!
+	if ( vm:GetOwner() != self:GetOwner() ) then return end
 
 	self:AttachToViewmodel( vm )
 
