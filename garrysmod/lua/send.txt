@@ -193,10 +193,8 @@ lua\autorun\properties\ignite.lua
 lua\autorun\properties\collisions.lua
 lua\autorun\properties\gravity.lua
 lua\autorun\properties\npc_scale.lua
-lua\autorun\game_dod.lua
 lua\autorun\game_ep2.lua
 lua\autorun\game_hl2.lua
-lua\autorun\game_css.lua
 lua\autorun\menubar.lua
 lua\autorun\properties.lua
 lua\autorun\client\demo_recording.lua
