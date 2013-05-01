@@ -24,8 +24,9 @@ local string = string
 -----------------------------------------------------------]]
 module("concommand")
 
-local CommandList 	= {}
-local CompleteList 	= {}
+local CommandList 		= {}
+local CompleteList 		= {}
+local CommandInfoList	= {}
 
 --[[---------------------------------------------------------
    Name: concommand.GetTable( )
@@ -36,6 +37,14 @@ function GetTable()
 end
 
 --[[---------------------------------------------------------
+   Name: concommand.Get( )
+   Desc: Returns info about the console command, such as helptext and flags.
+-----------------------------------------------------------]]
+function Get( cmd )
+	return CommandInfoList[ cmd ]
+end
+
+--[[---------------------------------------------------------
    Name: concommand.Add( name, func, completefunc )
    Desc: Register a new console command
 -----------------------------------------------------------]]
@@ -43,6 +52,7 @@ function Add( name, func, completefunc, help, flags )
 	local LowerName = string.lower( name )
 	CommandList[ LowerName ] = func
 	CompleteList[ LowerName ] = completefunc
+	CommandInfoList[ LowerName ] = { help = help, flags = flags, func = func, autocomplete = completefunc }
 	AddConsoleCommand( name, help, flags )
 end
 
@@ -54,6 +64,7 @@ function Remove( name )
 	local LowerName = string.lower( name )
 	CommandList[ LowerName ] = nil
 	CompleteList[ LowerName ] = nil
+	CommandInfoList[ LowerName] = nil
 end
 
 
