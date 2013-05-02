@@ -221,9 +221,11 @@ function meta:InstallDataTable()
 	--
 	-- Adds an editable variable.
 	--
-	self.SetupEditing = function( ent, keyname, data )
+	self.SetupEditing = function( ent, name, keyname, data )
 
 		if ( !data ) then return end
+
+		if ( !data.title ) then data.title = name end
 
 		editing[ keyname ] = data
 
@@ -276,7 +278,7 @@ function meta:InstallDataTable()
 
 		if ( other_data.KeyName ) then
 			ent:SetupKeyValue( other_data.KeyName, typename, ent[ 'Set' .. name ], ent[ 'Get' .. name ], other_data )
-			ent:SetupEditing( other_data.KeyName, other_data.Edit )
+			ent:SetupEditing( name, other_data.KeyName, other_data.Edit )
 		end		
 							
 	end
@@ -315,9 +317,8 @@ function meta:InstallDataTable()
 
 		if ( other_data.KeyName ) then
 			ent:SetupKeyValue( other_data.KeyName, "float", ent[ 'Set' .. name ], ent[ 'Get' .. name ], other_data )
+			ent:SetupEditing( name, other_data.KeyName, other_data.Edit )
 		end
-
-		ent:SetupEditing( name, other_data.Edit )
 							
 	end
 
@@ -423,7 +424,6 @@ function meta:InstallDataTable()
 		--
 		if ( CLIENT ) then
 
-			MsgN( "EDIT VAR: ", self:EntIndex(), variable, value  )
 			net.Start( "editvariable" )
 				net.WriteUInt( self:EntIndex(), 32 )
 				net.WriteString( variable )
@@ -437,7 +437,6 @@ function meta:InstallDataTable()
 		--
 		if ( SERVER ) then
 
-			MsgN( "EDIT VAR: ", self, variable, value  )
 			self:SetNetworkKeyValue( variable, value )
 
 		end
@@ -452,21 +451,18 @@ function meta:InstallDataTable()
 		
 			local iIndex = net.ReadUInt( 32 )
 			local ent = Entity( iIndex )
-			MsgN( ent )
+
 			if ( !IsValid( ent ) ) then return end
 			if ( !isfunction( ent.GetEditingData ) ) then return end
 
 			local key = net.ReadString()
 
-			MsgN( key )
 
 			-- Is this key in our edit table?
 			local editor = ent:GetEditingData()[ key ]
 			if ( !istable( editor ) ) then return end
 
 			local val = net.ReadString()
-			MsgN( "VariableEdited", ent, client, key, val, editor )
-
 			hook.Run( "VariableEdited", ent, client, key, val, editor )
 				
 		end )
