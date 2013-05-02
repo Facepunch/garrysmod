@@ -39,8 +39,16 @@ function ENT:DoSetup( ply )
 end
 
 function ENT:GetPlayerColor()
-
-	return self:GetOwner():GetPlayerColor()
+	
+	--
+	-- Make sure there's an owner and they have this function
+	-- before trying to call it!
+	--
+	local owner = self:GetOwner()
+	if ( !IsValid( owner ) ) then return end
+	if ( !owner.GetPlayerColor ) then return end
+	
+	return owner:GetPlayerColor()
 
 end
 
