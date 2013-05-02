@@ -48,6 +48,21 @@ function meta:GetVar( name, default )
 	
 end
 
+--
+--
+--
+if ( SERVER ) then
+
+	function meta:SetCreator( ply )
+		self.m_PlayerCreator = ply
+	end
+
+	function meta:GetCreator()
+		return self.m_PlayerCreator;
+	end
+
+end
+
 --[[---------------------------------------------------------
    Name: Returns true if the entity has constraints attached to it
 -----------------------------------------------------------]]
