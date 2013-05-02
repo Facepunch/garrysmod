@@ -55,3 +55,29 @@ end
 -----------------------------------------------------------]]
 function ENT:Think()
 end
+
+
+--
+-- Default generic spawn function
+-- So you don't have to add one your entitie unless you want to.
+--
+function ENT:SpawnFunction( ply, tr, ClassName )
+
+	if ( !tr.Hit ) then return end
+	
+	local SpawnPos = tr.HitPos + tr.HitNormal * 10
+	local SpawnAng = ply:EyeAngles()
+	SpawnAng.p = 0
+	SpawnAng.y = SpawnAng.y + 180
+	
+	local ent = ents.Create( ClassName )
+		ent:SetPos( SpawnPos )
+		ent:SetAngles( SpawnAng )
+	ent:Spawn()
+	ent:Activate()
+
+	ent:DropToFloor()
+	
+	return ent
+	
+end

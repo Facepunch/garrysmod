@@ -276,9 +276,8 @@ function meta:InstallDataTable()
 
 		if ( other_data.KeyName ) then
 			ent:SetupKeyValue( other_data.KeyName, typename, ent[ 'Set' .. name ], ent[ 'Get' .. name ], other_data )
-		end
-
-		ent:SetupEditing( name, other_data.Edit )
+			ent:SetupEditing( other_data.KeyName, other_data.Edit )
+		end		
 							
 	end
 
@@ -336,6 +335,18 @@ function meta:InstallDataTable()
 
 		k.Set( self, v );
 		return true
+
+	end
+
+
+	self.GetNetworkKeyValue = function( self, key )
+		
+		key = key:lower()
+
+		local k = keytable[ key ]
+		if ( !k ) then return end
+
+		return k.Get( self );
 
 	end
 
@@ -412,6 +423,7 @@ function meta:InstallDataTable()
 		--
 		if ( CLIENT ) then
 
+			MsgN( "EDIT VAR: ", self:EntIndex(), variable, value  )
 			net.Start( "editvariable" )
 				net.WriteUInt( self:EntIndex(), 32 )
 				net.WriteString( variable )
@@ -425,6 +437,7 @@ function meta:InstallDataTable()
 		--
 		if ( SERVER ) then
 
+			MsgN( "EDIT VAR: ", self, variable, value  )
 			self:SetNetworkKeyValue( variable, value )
 
 		end
@@ -439,16 +452,20 @@ function meta:InstallDataTable()
 		
 			local iIndex = net.ReadUInt( 32 )
 			local ent = Entity( iIndex )
+			MsgN( ent )
 			if ( !IsValid( ent ) ) then return end
 			if ( !isfunction( ent.GetEditingData ) ) then return end
 
 			local key = net.ReadString()
+
+			MsgN( key )
 
 			-- Is this key in our edit table?
 			local editor = ent:GetEditingData()[ key ]
 			if ( !istable( editor ) ) then return end
 
 			local val = net.ReadString()
+			MsgN( "VariableEdited", ent, client, key, val, editor )
 
 			hook.Run( "VariableEdited", ent, client, key, val, editor )
 				

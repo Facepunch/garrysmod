@@ -71,8 +71,6 @@ function PANEL:EditVariable( varname, editdata )
 	--
 	row:Setup( editdata.type, editdata )
 
-	local getfunc = self.m_Entity["Get"..varname]
-
 	--
 	-- These functions need to be implemented for each row. This is how it
 	-- gets and sets the data from the entity. DataUpdate is called peridocailly
@@ -80,7 +78,7 @@ function PANEL:EditVariable( varname, editdata )
 	--
 	row.DataUpdate = function( _ )
 		if ( !IsValid( self.m_Entity ) ) then self:EntityLost() return end
-		row:SetValue( getfunc( self.m_Entity ) )
+		row:SetValue( self.m_Entity:GetNetworkKeyValue( varname ) )
 	end
 
 	--

@@ -12,6 +12,11 @@ function PANEL:Init()
 
 end
 
+function PANEL:GetDecimals()
+	return 2
+end
+
+
 
 function PANEL:Setup( vars )
 
@@ -19,6 +24,7 @@ function PANEL:Setup( vars )
 
 	local ctrl = self:Add( "DNumSlider" )
 	ctrl:Dock( FILL )
+	ctrl:SetDecimals( self:GetDecimals() )
 
 	-- Apply vars
 	ctrl:SetMin( vars.min or 0 )

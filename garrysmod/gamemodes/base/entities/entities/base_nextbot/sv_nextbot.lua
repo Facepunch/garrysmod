@@ -67,7 +67,7 @@ end
 --
 function ENT:OnLeaveGround()
 
-	MsgN( "OnLeaveGround" )
+	--MsgN( "OnLeaveGround" )
 
 end
 
@@ -79,7 +79,7 @@ end
 --
 function ENT:OnLandOnGround()
 
-	MsgN( "OnLandOnGround" )
+	--MsgN( "OnLandOnGround" )
 
 end
 
@@ -91,7 +91,7 @@ end
 --
 function ENT:OnStuck()
 
-	MsgN( "OnStuck" )
+	--MsgN( "OnStuck" )
 
 end
 
@@ -103,7 +103,7 @@ end
 --
 function ENT:OnUnStuck()
 
-	MsgN( "OnUnStuck" )
+	--MsgN( "OnUnStuck" )
 
 end
 
@@ -137,7 +137,7 @@ end
 --
 function ENT:OnOtherKilled()
 
-	MsgN( "OnOtherKilled" )
+	--MsgN( "OnOtherKilled" )
 
 end
 
