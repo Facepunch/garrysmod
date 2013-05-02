@@ -52,7 +52,7 @@
 	</div>
 
 	<ul class="right">
-		<li style="" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></li>
+		<li style="" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png' onerror="MissingGamemodeIcon(this)"><span>{{GamemodeTitle}}</span></li>
 		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleLanguage()"><img style="margin-top: 9px; margin-left: 7px;" ng-src='../resource/localization/{{Language}}.png' /><span></span></li>
 		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleGames()"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/games.png' /><span></span></li>		
 		<li ng-show="kinect.available" style="width: 40px; padding: 0; text-align: center;" ng-click="TogglePopup('.kinect_settings')"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/kinect.png' /><span></span></li>		
@@ -71,7 +71,7 @@
 
 <ul class="gamemode_list popup">
 	<li ng-repeat="gm in Gamemodes|filter:{menusystem:true}|orderBy:'name'" ng-click="SelectGamemode( gm )">
-		<img ng-src='../gamemodes/{{gm.name}}/icon24.png'><span>{{gm.title}}</span>
+		<img ng-src='../gamemodes/{{gm.name}}/icon24.png' onerror="MissingGamemodeIcon(this)"><span>{{gm.title}}</span>
 	</li>
 
 </ul>

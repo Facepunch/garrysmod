@@ -197,6 +197,12 @@ function UpdateGamemodes( gm )
 	UpdateDigest( gScope, 50 );
 }
 
+function MissingGamemodeLogo( element )
+{
+	element.src = "../gamemodes/sandbox/logo.png";
+	return true;
+}
+
 function UpdateCurrentGamemode( gm )
 {
 	if ( gScope.Gamemode == gm ) return;
