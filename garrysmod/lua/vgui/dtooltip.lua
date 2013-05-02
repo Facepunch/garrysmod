@@ -23,7 +23,7 @@ function PANEL:Init()
 	self:SetDrawOnTop( true )
 	self.DeleteContentsOnClose = false
 	self:SetText( "" )
-	self:SetFont( "DefaultSmall" )
+	self:SetFont( "Default" )
 
 end
 
@@ -106,7 +106,8 @@ function PANEL:PositionTooltip()
 	y = math.min( y, ly - h * 1.5 )
 	if ( y < 2 ) then y = 2 end
 	
-	self:SetPos( x - w * 0.5, y )
+	// Fixes being able to be drawn off screen - Acecool
+	self:SetPos( math.Clamp( x - w * 0.5, 0, ScrW( ) - self:GetWide( ) ), math.Clamp( y, 0, ScrH( ) - self:GetTall( ) ) )
 
 end
 
