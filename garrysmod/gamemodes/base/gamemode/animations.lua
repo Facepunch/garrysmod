@@ -316,7 +316,7 @@ local IdleActivityTranslate = {}
 -- it is preferred you return ACT_MP_* in CalcMainActivity, and if you have a specific need to not tranlsate through the weapon do it here
 function GM:TranslateActivity( ply, act )
 
-	local newact = ply:TranslateWeaponActivity( act )	
+	local newact = ply:TranslateWeaponActivity( act )
 	
 	-- a bit of a hack because we're missing ACTs for a couple holdtypes
 	if ( act == ACT_MP_CROUCH_IDLE ) then
@@ -325,9 +325,7 @@ function GM:TranslateActivity( ply, act )
 		if ( IsValid(wep) ) then
 			-- there really needs to be a way to get the holdtype set in sweps with SWEP.SetWeaponHoldType
 			-- people just tend to use wep.HoldType because that's what most of1the SWEP examples do
-			if wep.HoldType == "melee2" or wep:GetHoldType() == "melee2" then
-				newact = ACT_HL2MP_IDLE_CROUCH_MELEE2
-			elseif wep.HoldType == "knife" or wep:GetHoldType() == "knife" then
+			if wep.HoldType == "knife" or wep:GetHoldType() == "knife" then
 				newact = ACT_HL2MP_IDLE_CROUCH_KNIFE
 			end
 		end
