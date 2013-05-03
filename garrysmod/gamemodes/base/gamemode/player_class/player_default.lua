@@ -122,9 +122,11 @@ end
 --
 function PLAYER:PostDrawViewModel( vm, weapon )
 
-	if ( weapon.UseHands || !weapon:IsScripted() ) then
+	local owner = weapon:GetOwner()
 
-		local hands = self.Player:GetHands()
+	if ( weapon.UseHands || !weapon:IsScripted() ) and IsValid( owner ) then
+
+		local hands = owner:GetHands()
 		if ( IsValid( hands ) ) then
 			hands:DrawModel()
 		end
