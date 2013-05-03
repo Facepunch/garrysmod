@@ -11,8 +11,10 @@ local hook = hook
 local tostring = tostring
 local debug = debug
 local isnumber = isnumber
+local isentity = isentity
 local isfunction = isfunction
 local isstring = isstring
+local IsValid = IsValid
 local error = error
 
 --[[---------------------------------------------------------
@@ -58,7 +60,7 @@ end
 -----------------------------------------------------------]]
 function Create( name, delay, reps, func, a, b, c )
 
-	if ( !isstring( name ) || !isfunction( func ) || a != nil || b != nil || c != nil || !isnumber( delay ) || !isnumber( reps ) ) then
+	if ( !isfunction( func ) || a != nil || b != nil || c != nil || !isnumber( delay ) || !isnumber( reps ) ) then
 		error( "timer.Create - called wrong!\n" )
 		return
 	end
@@ -160,6 +162,15 @@ end
 function Check()
 
 	for key, value in pairs( Timer ) do
+
+		-- The timer is not a string, assume IsValid to work on it
+		if ( !isstring( key ) && !IsValid( key ) ) then
+
+			Timer[key] = nil
+
+			continue
+
+		end
 	
 		if ( value.Status == PAUSED ) then
 		
@@ -174,7 +185,7 @@ function Check()
 				Stop( key )
 			end
 
-			value.Func()
+			value.Func(key)
 				
 		end
 		
