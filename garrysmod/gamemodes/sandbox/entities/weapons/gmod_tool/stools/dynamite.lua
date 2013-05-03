@@ -172,3 +172,5 @@ end
 
 
 list.Set( "DynamiteModels", "models/dav0r/tnt/tnt.mdl", {} )
+list.Set( "DynamiteModels", "models/dav0r/tnt/tnttimed.mdl", {} )
+list.Set( "DynamiteModels", "models/dynamite/dynamite.mdl", {} )
