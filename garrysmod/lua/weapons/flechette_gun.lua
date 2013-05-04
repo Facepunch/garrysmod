@@ -12,8 +12,8 @@ SWEP.Spawnable			= true
 SWEP.AdminOnly			= true
 SWEP.UseHands			= true
 
-SWEP.ViewModel			= "models/weapons/c_pistol.mdl"
-SWEP.WorldModel			= "models/weapons/w_pistol.mdl"
+SWEP.ViewModel			= "models/weapons/c_smg1.mdl"
+SWEP.WorldModel			= "models/weapons/w_smg1.mdl"
 
 SWEP.Primary.ClipSize		= -1
 SWEP.Primary.DefaultClip	= -1
@@ -25,15 +25,13 @@ SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo			= "none"
 
-SWEP.Weight				= 5
 SWEP.AutoSwitchTo		= false
 SWEP.AutoSwitchFrom		= false
 
-SWEP.PrintName			= "Flechette Gun"			
+SWEP.PrintName			= "Flechette Gun"
 SWEP.Slot				= 1
 SWEP.SlotPos			= 2
 SWEP.DrawAmmo			= false
-SWEP.DrawCrosshair		= true
 
 game.AddParticles( "particles/hunter_flechette.pcf" )
 game.AddParticles( "particles/hunter_projectile.pcf" )
@@ -49,7 +47,7 @@ end
 /*---------------------------------------------------------
    Think does nothing
 ---------------------------------------------------------*/
-function SWEP:Think()	
+function SWEP:Think()
 end
 
 
@@ -58,7 +56,7 @@ end
 ---------------------------------------------------------*/
 function SWEP:PrimaryAttack()
 
-	self.Weapon:SetNextPrimaryFire( CurTime() + 0.1 )
+	self:SetNextPrimaryFire( CurTime() + 0.1 )
 
 	self:EmitSound( ShootSound )
 	self:ShootEffects( self )
@@ -76,11 +74,10 @@ function SWEP:PrimaryAttack()
 		ent:Spawn()
 		
 		ent:SetVelocity( Forward * 2000 )
-		
+		ent:SetOwner( self.Owner )
+
 	end
-	
-	ent:SetOwner( self.Owner )
-	
+
 end
 
 /*---------------------------------------------------------
