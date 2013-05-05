@@ -739,7 +739,7 @@ end
 function SKIN:PaintComboDownArrow( panel, w, h )
 
 	if ( panel.ComboBox:GetDisabled() ) then
-		return self.Input.ComboBox.Button.Disabled( 0, 0, w, h );	
+		return self.tex.Input.ComboBox.Button.Disabled( 0, 0, w, h );	
 	end	
 	
 	if ( panel.ComboBox.Depressed || panel.ComboBox:IsMenuOpen() ) then
@@ -760,7 +760,7 @@ end
 function SKIN:PaintComboBox( panel, w, h )
 	
 	if ( panel:GetDisabled() ) then
-		return self.Input.ComboBox.Disabled( 0, 0, w, h );	
+		return self.tex.Input.ComboBox.Disabled( 0, 0, w, h );	
 	end	
 	
 	if ( panel.Depressed || panel:IsMenuOpen() ) then
