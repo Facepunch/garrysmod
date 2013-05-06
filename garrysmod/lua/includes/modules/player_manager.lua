@@ -124,6 +124,9 @@ AddValidHands( "odessa",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "police",		"models/player/police.mdl" )
 AddValidHands( "police",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
 
+AddValidModel( "policefem",		"models/player/police_fem.mdl" )
+AddValidHands( "policefem",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+
 AddValidModel( "magnusson",		"models/player/magnusson.mdl" )
 AddValidHands( "magnusson",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 

@@ -100,6 +100,7 @@ list.Set( "PlayerOptionsModel", "combine", 		"models/player/combine_soldier.mdl"
 list.Set( "PlayerOptionsModel", "combineprison", "models/player/combine_soldier_prisonguard.mdl" )
 list.Set( "PlayerOptionsModel", "combineelite", "models/player/combine_super_soldier.mdl" )
 list.Set( "PlayerOptionsModel", "police", 		"models/player/police.mdl" )
+list.Set( "PlayerOptionsModel", "policefem", 	"models/player/police_fem.mdl" )
 list.Set( "PlayerOptionsModel", "stripped", 	"models/player/soldier_stripped.mdl" )
 
 list.Set( "PlayerOptionsModel", "alyx", 		"models/player/alyx.mdl" )
