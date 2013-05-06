@@ -4,7 +4,6 @@ AddCSLuaFile()
 SWEP.Author			= "robotboy655"
 
 SWEP.Spawnable			= true
-SWEP.AdminOnly			= true
 SWEP.UseHands			= true
 
 SWEP.ViewModel			= "models/weapons/c_medkit.mdl"
