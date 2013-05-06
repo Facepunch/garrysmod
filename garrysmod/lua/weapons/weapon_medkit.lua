@@ -46,7 +46,7 @@ function SWEP:PrimaryAttack()
 
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
-		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * 86,
+		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * 64,
 		filter = self.Owner
 	} )
 
@@ -61,7 +61,7 @@ function SWEP:PrimaryAttack()
 
 		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 
-		self:SetNextPrimaryFire( CurTime() + self:SequenceDuration() )
+		self:SetNextPrimaryFire( CurTime() + self:SequenceDuration() + 0.5 )
 		self.Owner:SetAnimation( PLAYER_ATTACK1 )
 
 	else
@@ -88,7 +88,7 @@ function SWEP:SecondaryAttack()
 
 		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 
-		self:SetNextPrimaryFire( CurTime() + self:SequenceDuration() )
+		self:SetNextPrimaryFire( CurTime() + self:SequenceDuration() + 1 )
 		self.Owner:SetAnimation( PLAYER_ATTACK1 )
 
 	else
