@@ -47,7 +47,7 @@ function SWEP:PreDrawViewModel( vm, wep, ply )
 
 end
 
-SWEP.Distance = 54
+SWEP.Distance = 67
 SWEP.AttackAnims = { "fists_left", "fists_right", "fists_uppercut" }
 function SWEP:PrimaryAttack()
 	self.Owner:SetAnimation( PLAYER_ATTACK1 )
@@ -114,8 +114,8 @@ function SWEP:DealDamage( anim )
 			start = self.Owner:GetShootPos(),
 			endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.Distance,
 			filter = self.Owner,
-			mins = self.Owner:OBBMins(),
-			maxs = self.Owner:OBBMaxs()
+			mins = self.Owner:OBBMins() / 3,
+			maxs = self.Owner:OBBMaxs() / 3
 		} )
 	end
 
