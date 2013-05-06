@@ -154,8 +154,10 @@ end
 
 function SWEP:OnRemove()
 
-	local vm = self.Owner:GetViewModel()
-	vm:SetMaterial( "" )
+	if ( IsValid( self.Owner ) ) then
+		local vm = self.Owner:GetViewModel()
+		vm:SetMaterial( "" )
+	end
 
 	timer.Stop( "fists_idle" .. self:EntIndex() )
 
@@ -163,8 +165,10 @@ end
 
 function SWEP:Holster( wep )
 
-	local vm = self.Owner:GetViewModel()
-	vm:SetMaterial( "" )
+	if ( IsValid( self.Owner ) ) then
+		local vm = self.Owner:GetViewModel()
+		vm:SetMaterial( "" )
+	end
 
 	timer.Stop( "fists_idle" .. self:EntIndex() )
 
