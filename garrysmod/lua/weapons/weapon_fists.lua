@@ -10,7 +10,7 @@ SWEP.UseHands			= true
 SWEP.ViewModel			= "models/weapons/c_arms_citizen.mdl"
 SWEP.WorldModel			= ""
 
-SWEP.ViewModelFOV		= 54
+SWEP.ViewModelFOV		= 52
 
 SWEP.Primary.ClipSize		= -1
 SWEP.Primary.DefaultClip	= -1
@@ -94,12 +94,12 @@ function SWEP:PrimaryAttack()
 		
 	end )
 
-	timer.Simple( 0.25, function()
+	timer.Simple( 0.2, function()
 		if ( !IsValid( self ) || !IsValid( self.Owner ) || !self.Owner:GetActiveWeapon() || self.Owner:GetActiveWeapon() != self ) then return end
 		self:DealDamage( anim )
 	end )
 
-	self:SetNextPrimaryFire( CurTime() + 1 )
+	self:SetNextPrimaryFire( CurTime() + 0.9 )
 
 end
 
