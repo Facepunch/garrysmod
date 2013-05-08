@@ -299,10 +299,7 @@ A.bglink
 
 .serverinfo button
 {
-	position: absolute;
-	bottom: 8px;
-	right: 16px;
-	left: 16px;
+	width: 100%;
 	font-size: 30px;
 }
 
@@ -315,40 +312,49 @@ A.bglink
 .serverinfo subinfo
 {
 	display: block;
-	color: 
-	#444;
+	color: #444;
 }
 
-.serverinfo password
+.serverinfo > div
 {
-	position: absolute;
-	bottom: 60px;
-	left: 32px;
-	right: 32px;
+	display: table;
+	width: 100%;
+	height: 100%;
+	table-layout: fixed;
 }
 
-.serverinfo password SPAN
+.serverinfo div.cell
 {
-	line-height: 25px;
-	color: #666;
+	display: table-cell;
 }
 
-.serverinfo password INPUT
+.serverinfo header
 {
-	width: 200px;
-	float: right;
+	display: table-row;
+	height: 0;
 }
 
 .serverinfo players
 {
+	display: block;
+	height: 100%;
 	background-color: #EEE;
-	position: absolute;
-	left: 20px;
-	right: 20px;
-	top: 55px;
-	bottom: 85px;
 	border-radius: 4px;
 	overflow: auto;
+}
+
+.serverinfo footer
+{
+	display: table-row;
+	height: 0;
+	margin-top: 5px;
+}
+
+.serverinfo footer input[type=password]
+{
+	width: 100%;
+	padding: 4px;
+	margin-bottom: 5px;
 }
 
 .activeserver

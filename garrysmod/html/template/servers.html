@@ -104,10 +104,14 @@
 			<div class='serverinfo'>
 				<div ng-show="CurrentGamemode.Selected">
 
-					<name>{{CurrentGamemode.Selected.name}}</name>
-					<address>{{CurrentGamemode.Selected.address}}</address>
-					<players>
+					<header>
+						<div class="cell" style="padding-bottom: 5px;">
+							<name>{{CurrentGamemode.Selected.name}}</name>
+							<address>{{CurrentGamemode.Selected.address}}</address>
+						</div>
+					</header>
 
+					<players>
 						<table style="font-size: 12px; padding: 8px; width: 100%;">
 
 							<tr style="color: #999; font-weight: bold;">
@@ -122,15 +126,15 @@
 								<td style="text-align: right;" ng-Seconds="player.time"></td>
 							</tr>
 						</table>
-
 					</players>
 
-					<password ng-show="CurrentGamemode.Selected.pass">
-						<input type='password' ng-model="CurrentGamemode.Selected.password" ui-keypress="{'enter':'JoinServer( CurrentGamemode.Selected )'}" />
-						<span>Password:</span>
-					</password>
+					<footer>
+						<div class="cell" style="padding-top: 5px;">
+							<input type='password' ng-model="CurrentGamemode.Selected.password" ng-show="CurrentGamemode.Selected.pass" ui-keypress="{'enter':'JoinServer( CurrentGamemode.Selected )'}" placeholder="Password" />
 
-					<button class="btn-primary" ng-click="JoinServer( CurrentGamemode.Selected )">Join Server</button>
+							<button class="btn-primary" ng-click="JoinServer( CurrentGamemode.Selected )">Join Server</button>
+						</div>
+					</footer>
 
 				</div>
 			</div>
