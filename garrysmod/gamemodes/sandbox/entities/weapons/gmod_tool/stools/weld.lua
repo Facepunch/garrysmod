@@ -247,18 +247,21 @@ function TOOL:LeftClick( trace )
 		local Ent1,  Ent2  = self:GetEnt(1),  self:GetEnt(2)
 		local Bone1, Bone2 = self:GetBone(1), self:GetBone(2)
 
-		local constraint = constraint.Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide )
-		if ( constraint ) then 
-		
-			undo.Create( "Weld" )
-				undo.AddEntity( constraint )
-				undo.SetPlayer( self:GetOwner() )
-			undo.Finish()
+		if( Ent1:EntIndex() != 0 && Ent2:GetModel() != "models/props_junk/popcan01a.mdl" ) then
 			
-			self:GetOwner():AddCleanup( "constraints", constraint )
-		
-		end
+			local constraint = constraint.Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide )
+			if ( constraint ) then 
+			
+				undo.Create( "Weld" )
+					undo.AddEntity( constraint )
+					undo.SetPlayer( self:GetOwner() )
+				undo.Finish()
+				
+				self:GetOwner():AddCleanup( "constraints", constraint )
+			
+			end
 
+		end
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()	
 	
