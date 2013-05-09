@@ -86,13 +86,13 @@ AddValidModel( "corpse",		"models/player/corpse1.mdl" )
 AddValidHands( "corpse",		"models/weapons/c_arms_citizen.mdl",		2,		"0000000" )
 	
 AddValidModel( "combine",		"models/player/combine_soldier.mdl" )
-AddValidHands( "combine",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+AddValidHands( "combine",		"models/weapons/c_arms_combine.mdl",		0,		"0000000" )
 			
 AddValidModel( "combineprison",	"models/player/combine_soldier_prisonguard.mdl" )
-AddValidHands( "combineprison",	"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+AddValidHands( "combineprison",	"models/weapons/c_arms_combine.mdl",		0,		"0000000" )
 
 AddValidModel( "combineelite",	"models/player/combine_super_soldier.mdl" )
-AddValidHands( "combineelite",	"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+AddValidHands( "combineelite",	"models/weapons/c_arms_combine.mdl",		0,		"0000000" )
 		
 AddValidModel( "eli",			"models/player/eli.mdl" )
 AddValidHands( "eli",			"models/weapons/c_arms_citizen.mdl",		1,		"0000000" )
@@ -122,10 +122,10 @@ AddValidModel( "odessa",		"models/player/odessa.mdl" )
 AddValidHands( "odessa",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "police",		"models/player/police.mdl" )
-AddValidHands( "police",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+AddValidHands( "police",		"models/weapons/c_arms_combine.mdl",		0,		"0000000" )
 
 AddValidModel( "policefem",		"models/player/police_fem.mdl" )
-AddValidHands( "policefem",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+AddValidHands( "policefem",		"models/weapons/c_arms_combine.mdl",		0,		"0000000" )
 
 AddValidModel( "magnusson",		"models/player/magnusson.mdl" )
 AddValidHands( "magnusson",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
@@ -140,7 +140,7 @@ AddValidModel( "zombiefast",	"models/player/zombie_fast.mdl" )
 AddValidHands( "zombiefast",	"models/weapons/c_arms_citizen.mdl",		2,		"0000000" )
 
 AddValidModel( "zombine",		"models/player/zombie_soldier.mdl" )
-AddValidHands( "zombine",		"models/weapons/c_arms_citizen.mdl",			2,		"0000000" )
+AddValidHands( "zombine",		"models/weapons/c_arms_combine.mdl",		0,		"0000000" )
 
 AddValidModel( "female01",		"models/player/Group01/female_01.mdl" )
 AddValidHands( "female01",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
@@ -242,7 +242,7 @@ AddValidModel( "css_riot",			"models/player/riot.mdl" )
 AddValidHands( "css_riot",			"models/weapons/c_arms_cstrike.mdl",		0,		"10000000" )
 AddValidModel( "css_swat",			"models/player/swat.mdl" )
 AddValidHands( "css_swat",			"models/weapons/c_arms_cstrike.mdl",		0,		"10000000" )
-AddValidModel( "css_urban",		"models/player/urban.mdl" )
+AddValidModel( "css_urban",		    "models/player/urban.mdl" )
 AddValidHands( "css_urban",			"models/weapons/c_arms_cstrike.mdl",		7,		"10000000" )
 
 AddValidModel( "dod_american", "models/player/dod_american.mdl" )
