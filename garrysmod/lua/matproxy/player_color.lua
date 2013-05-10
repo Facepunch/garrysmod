@@ -40,7 +40,10 @@ matproxy.Add(
 		-- in player_sandbox.lua in SetupDataTables
 		--
 		if ( ent.GetPlayerColor ) then
-			mat:SetVector( self.ResultTo, ent:GetPlayerColor() )
+			local col = ent:GetPlayerColor()
+			if ( isvector( col ) ) then
+				mat:SetVector( self.ResultTo, col )
+			end
 		else
 			mat:SetVector( self.ResultTo, Vector( 62.0/255.0, 88.0/255.0, 106.0/255.0 ) )
 		end

@@ -17,6 +17,7 @@ matproxy.Add(
 		if ( !IsValid( owner ) ) then return end
 
 		local col = owner:GetWeaponColor();
+		if ( !isvector( col ) ) then return end
 
 		local mul = (1 + math.sin( CurTime() * 5 ) ) * 0.5
 
