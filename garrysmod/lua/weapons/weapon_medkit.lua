@@ -1,7 +1,7 @@
 
 AddCSLuaFile()
 
-SWEP.Author			= "robotboy655"
+SWEP.Author			= "robotboy655 & MaxOfS2D"
 
 SWEP.Spawnable			= true
 SWEP.UseHands			= true
