@@ -2,6 +2,7 @@
 AddCSLuaFile()
 
 SWEP.Author			= "robotboy655 & MaxOfS2D"
+SWEP.Purpose    	= "Heal people with your primary attack, or yourself with the secondary."
 
 SWEP.Spawnable			= true
 SWEP.UseHands			= true
