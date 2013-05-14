@@ -74,7 +74,7 @@ AddValidModel( "alyx",			"models/player/alyx.mdl" )
 AddValidHands( "alyx",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "barney",		"models/player/barney.mdl" )	
-AddValidHands( "barney",		"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+AddValidHands( "barney",		"models/weapons/c_arms_combine.mdl",		0,		"0000000" )
 
 AddValidModel( "breen",			"models/player/breen.mdl" )
 AddValidHands( "breen",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
@@ -138,9 +138,6 @@ AddValidHands( "zombie",		"models/weapons/c_arms_citizen.mdl",		2,		"0000000" )
 
 AddValidModel( "zombiefast",	"models/player/zombie_fast.mdl" )
 AddValidHands( "zombiefast",	"models/weapons/c_arms_citizen.mdl",		2,		"0000000" )
-
-AddValidModel( "zombine",		"models/player/zombie_soldier.mdl" )
-AddValidHands( "zombine",		"models/weapons/c_arms_combine.mdl",		0,		"0000000" )
 
 AddValidModel( "female01",		"models/player/Group01/female_01.mdl" )
 AddValidHands( "female01",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
@@ -221,7 +218,7 @@ AddValidHands( "refugee04",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000"
 AddValidModel( "magnusson", "models/player/magnusson.mdl" )
 AddValidHands( "magnusson","models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "zombine",	"models/player/zombie_soldier.mdl" )
-AddValidHands( "zombine",	"models/weapons/c_arms_hev.mdl",			0,		"0000000" )
+AddValidHands( "zombine",	"models/weapons/c_arms_combine.mdl",			0,		"0000000" )
 
 --AddValidModel( "s_hostage_01", "models/player/hostage/hostage_01.mdl" )
 --AddValidModel( "s_hostage_02", "models/player/hostage/hostage_02.mdl" )
