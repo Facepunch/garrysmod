@@ -7,7 +7,7 @@ SWEP.Spawnable			= true
 SWEP.UseHands			= true
 
 SWEP.ViewModel			= "models/weapons/c_medkit.mdl"
-SWEP.WorldModel			= "models/Items/HealthKit.mdl"
+SWEP.WorldModel			= "models/weapons/w_medkit.mdl"
 
 SWEP.ViewModelFOV		= 54
 
