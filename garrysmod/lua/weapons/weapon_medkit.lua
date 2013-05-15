@@ -36,6 +36,7 @@ function SWEP:Initialize()
 	self:SetWeaponHoldType( "slam" )
 
 	timer.Create( "medkit_ammo" .. self:EntIndex(), 0.5, 0, function()
+		if ( !IsValid( self.Owner ) ) then return end
 		if ( self:Clip1() < 100 ) then self:TakePrimaryAmmo( -1 ) end
 	end )
 
