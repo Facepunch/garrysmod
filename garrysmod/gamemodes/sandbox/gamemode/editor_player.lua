@@ -1,8 +1,10 @@
 
 AddCSLuaFile()
 
-list.Set( "DesktopWindows", "PlayerEditor",
-{
+local default_animations = { "pose_standing_01", "pose_standing_02", "pose_standing_03", "pose_standing_04" }
+
+list.Set( "DesktopWindows", "PlayerEditor", {
+
 	title		= "Player Model",
 	icon		= "icon64/playermodel.png",
 	width		= 960,
@@ -11,65 +13,85 @@ list.Set( "DesktopWindows", "PlayerEditor",
 	init		= function( icon, window )
 
 		local mdl = window:Add( "DModelPanel" )
-			mdl:Dock( FILL )
-			mdl:SetFOV(40)
-			mdl:SetCamPos(Vector(90,0,75))
-			mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 160, 64, 255 ) )
-			mdl:SetDirectionalLight( BOX_LEFT, Color( 64, 160, 255, 255 ) )
-			mdl:SetAmbientLight( Vector( 80, 80, 80 ) )
+		mdl:Dock( FILL )
+		mdl:SetFOV( 45 )
+		mdl:SetCamPos( Vector( 90, 0, 60 ) )
+		mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 160, 64, 255 ) )
+		mdl:SetDirectionalLight( BOX_LEFT, Color( 64, 160, 255, 255 ) )
+		mdl:SetAmbientLight( Vector( 80, 80, 80 ) )
+		mdl:SetAnimated( true )
+		mdl.Angles = Angle( 0, 0, 0 )
 
 		local sheet = window:Add( "DPropertySheet" )
-			sheet:Dock( RIGHT )
-			sheet:SetSize( 370, 0 )
+		sheet:Dock( RIGHT )
+		sheet:SetSize( 370, 0 )
 
-			local PanelSelect = sheet:Add( "DPanelSelect" )
-	
-				for name, model in SortedPairs( list.Get( "PlayerOptionsModel" ) ) do
-	
-					local icon = vgui.Create( "SpawnIcon" )
-					icon:SetModel( model )
-					icon:SetSize( 64, 64 )
-					icon:SetTooltip( name )
-		
-					PanelSelect:AddPanel( icon, { cl_playermodel = name } )
-	
-				end
+		local PanelSelect = sheet:Add( "DPanelSelect" )
+
+		for name, model in SortedPairs( player_manager.AllValidModels() ) do
+
+			local icon = vgui.Create( "SpawnIcon" )
+			icon:SetModel( model )
+			icon:SetSize( 64, 64 )
+			icon:SetTooltip( name )
+			icon.playermodel = name
+
+			PanelSelect:AddPanel( icon, { cl_playermodel = name } )
+
+		end
 
 		sheet:AddSheet( "Model", PanelSelect )
 
 		local controls = window:Add( "DPanel" )
-			controls:DockPadding( 8, 8, 8, 8 )
+		controls:DockPadding( 8, 8, 8, 8 )
 
 		local lbl = controls:Add( "DLabel" )
-			lbl:SetText( "Player Color:" )
-			lbl:SetTextColor( Color( 0, 0, 0, 255 ) )
-			lbl:Dock( TOP )
+		lbl:SetText( "Player Color:" )
+		lbl:SetTextColor( Color( 0, 0, 0, 255 ) )
+		lbl:Dock( TOP )
 
 		local plycol = controls:Add( "DColorMixer" )
-			plycol:SetAlphaBar( false )
-			plycol:SetPalette( false )
-			plycol:Dock( TOP )
-			plycol:SetSize( 200, 250 )
-			
+		plycol:SetAlphaBar( false )
+		plycol:SetPalette( false )
+		plycol:Dock( TOP )
+		plycol:SetSize( 200, 250 )
 
 		local lbl = controls:Add( "DLabel" )
-			lbl:SetText( "Weapon Color:" )
-			lbl:SetTextColor( Color( 0, 0, 0, 255 ) )
-			lbl:DockMargin( 0, 32, 0, 0 )
-			lbl:Dock( TOP )
+		lbl:SetText( "Weapon Color:" )
+		lbl:SetTextColor( Color( 0, 0, 0, 255 ) )
+		lbl:DockMargin( 0, 32, 0, 0 )
+		lbl:Dock( TOP )
 
 		local wepcol = controls:Add( "DColorMixer" )
-			wepcol:SetAlphaBar( false )
-			wepcol:SetPalette( false )
-			wepcol:Dock( TOP )
-			wepcol:SetSize( 200, 250 )
-			wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
-			
+		wepcol:SetAlphaBar( false )
+		wepcol:SetPalette( false )
+		wepcol:Dock( TOP )
+		wepcol:SetSize( 200, 250 )
+		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
+
 		sheet:AddSheet( "Colors", controls )
+
+		local function PlayPreviewAnimation( panel, playermodel )
+
+			if ( !panel or !IsValid( panel.Entity ) ) then return end
+
+			local anims = list.Get( "PlayerOptionsAnimations" )
+
+			local anim = default_animations[ math.random( 1, #default_animations ) ]
+			if ( anims[ playermodel ] ) then
+				anims = anims[ playermodel ]
+				anim = anims[ math.random( 1, #anims ) ]
+			end
+
+			local iSeq = panel.Entity:LookupSequence( anim )
+			if (iSeq > 0) then panel.Entity:ResetSequence( iSeq ) end
+
+		end
 
 		local function UpdateFromConvars()
 
-			local modelname = player_manager.TranslatePlayerModel( LocalPlayer():GetInfo( "cl_playermodel" ) )
+			local model = LocalPlayer():GetInfo( "cl_playermodel" )
+			local modelname = player_manager.TranslatePlayerModel( model )
 			util.PrecacheModel( modelname )
 			mdl:SetModel( modelname )
 			mdl.Entity.GetPlayerColor = function() return Vector( GetConVarString( "cl_playercolor" ) ) end
@@ -77,8 +99,10 @@ list.Set( "DesktopWindows", "PlayerEditor",
 			plycol:SetVector( Vector( GetConVarString( "cl_playercolor" ) ) );
 			wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
 
+			PlayPreviewAnimation( mdl, model )
+
 		end
-			
+
 		local function UpdateFromControls()
 
 			RunConsoleCommand( "cl_playercolor", tostring( plycol:GetVector() ) )
@@ -88,89 +112,46 @@ list.Set( "DesktopWindows", "PlayerEditor",
 
 		UpdateFromConvars();
 
-		plycol.ValueChanged					= UpdateFromControls
-		wepcol.ValueChanged					= UpdateFromControls
-		PanelSelect.OnActivePanelChanged	= function() timer.Simple( 0.1, UpdateFromConvars ) end
+		plycol.ValueChanged = UpdateFromControls
+		wepcol.ValueChanged = UpdateFromControls
+
+		function mdl:DragMousePress()
+			self.PressX, self.PressY = gui.MousePos()
+			self.Pressed = true
+		end
+
+		function mdl:DragMouseRelease() self.Pressed = false end
+
+		function mdl:LayoutEntity( Entity )
+			if ( self.bAnimated ) then self:RunAnimation() end
+
+			if ( self.Pressed ) then
+				local mx, my = gui.MousePos()
+				self.Angles = self.Angles - Angle( 0, ( self.PressX or mx ) - mx, 0 )
+				
+				self.PressX, self.PressY = gui.MousePos()
+			end
+
+			Entity:SetAngles( self.Angles )
+		end
+
+		function PanelSelect:OnActivePanelChanged() timer.Simple( 0.1, UpdateFromConvars ) end
 
 	end
 } )
 
---
--- Default player models
---
+list.Set( "PlayerOptionsAnimations", "css_arctic", {
+	"pose_ducking_01", "pose_ducking_02"
+} )
 
-list.Set( "PlayerOptionsModel", "combine", 		"models/player/combine_soldier.mdl" )
-list.Set( "PlayerOptionsModel", "combineprison", "models/player/combine_soldier_prisonguard.mdl" )
-list.Set( "PlayerOptionsModel", "combineelite", "models/player/combine_super_soldier.mdl" )
-list.Set( "PlayerOptionsModel", "police", 		"models/player/police.mdl" )
-list.Set( "PlayerOptionsModel", "policefem", 	"models/player/police_fem.mdl" )
-list.Set( "PlayerOptionsModel", "stripped", 	"models/player/soldier_stripped.mdl" )
+list.Set( "PlayerOptionsAnimations", "zombine", {
+	"taunt_zombie_original"
+} )
 
-list.Set( "PlayerOptionsModel", "alyx", 		"models/player/alyx.mdl" )
-list.Set( "PlayerOptionsModel", "barney", 		"models/player/barney.mdl" )
-list.Set( "PlayerOptionsModel", "breen", 		"models/player/breen.mdl" )
-list.Set( "PlayerOptionsModel", "eli", 		    "models/player/eli.mdl" )
-list.Set( "PlayerOptionsModel", "gman", 		"models/player/gman_high.mdl" )
-list.Set( "PlayerOptionsModel", "kleiner", 		"models/player/kleiner.mdl" )
-list.Set( "PlayerOptionsModel", "magnusson", 	"models/player/magnusson.mdl" )
-list.Set( "PlayerOptionsModel", "monk", 		"models/player/monk.mdl" )
-list.Set( "PlayerOptionsModel", "mossman", 		"models/player/mossman.mdl" )
-list.Set( "PlayerOptionsModel", "mossmanarctic", "models/player/mossman_arctic.mdl" )
-list.Set( "PlayerOptionsModel", "odessa", 		"models/player/odessa.mdl" )
+list.Set( "PlayerOptionsAnimations", "zombiefast", {
+	"taunt_zombie_original"
+} )
 
-list.Set( "PlayerOptionsModel", "charple", 		"models/player/charple.mdl" )
-list.Set( "PlayerOptionsModel", "corpse", 		"models/player/corpse1.mdl" )
-list.Set( "PlayerOptionsModel", "zombie", 		"models/player/zombie_classic.mdl" )
-list.Set( "PlayerOptionsModel", "zombiefast", 	"models/player/zombie_fast.mdl" )
-list.Set( "PlayerOptionsModel", "zombine", 		"models/player/zombie_soldier.mdl" )
-list.Set( "PlayerOptionsModel", "zombine",      "models/player/zombie_soldier.mdl" )
-
-list.Set( "PlayerOptionsModel", "female01",		"models/player/Group01/female_01.mdl" )
-list.Set( "PlayerOptionsModel", "female02",		"models/player/Group01/female_02.mdl" )
-list.Set( "PlayerOptionsModel", "female03",		"models/player/Group01/female_03.mdl" )
-list.Set( "PlayerOptionsModel", "female04",		"models/player/Group01/female_04.mdl" )
-list.Set( "PlayerOptionsModel", "female05",		"models/player/Group01/female_05.mdl" )
-list.Set( "PlayerOptionsModel", "female06",		"models/player/Group01/female_06.mdl" )
-list.Set( "PlayerOptionsModel", "female07",		"models/player/Group03/female_01.mdl" )
-list.Set( "PlayerOptionsModel", "female08",		"models/player/Group03/female_02.mdl" )
-list.Set( "PlayerOptionsModel", "female09",		"models/player/Group03/female_03.mdl" )
-list.Set( "PlayerOptionsModel", "female10",		"models/player/Group03/female_04.mdl" )
-list.Set( "PlayerOptionsModel", "female11",		"models/player/Group03/female_05.mdl" )
-list.Set( "PlayerOptionsModel", "female12",		"models/player/Group03/female_06.mdl" )
-
-list.Set( "PlayerOptionsModel", "male01",		"models/player/Group01/male_01.mdl" )
-list.Set( "PlayerOptionsModel", "male02",		"models/player/Group01/male_02.mdl" )
-list.Set( "PlayerOptionsModel", "male03",		"models/player/Group01/male_03.mdl" )
-list.Set( "PlayerOptionsModel", "male04",		"models/player/Group01/male_04.mdl" )
-list.Set( "PlayerOptionsModel", "male05",		"models/player/Group01/male_05.mdl" )
-list.Set( "PlayerOptionsModel", "male06",		"models/player/Group01/male_06.mdl" )
-list.Set( "PlayerOptionsModel", "male07",		"models/player/Group01/male_07.mdl" )
-list.Set( "PlayerOptionsModel", "male08",		"models/player/Group01/male_08.mdl" )
-list.Set( "PlayerOptionsModel", "male09",		"models/player/Group01/male_09.mdl" )
-
-list.Set( "PlayerOptionsModel", "male10",		"models/player/Group03/male_01.mdl" )
-list.Set( "PlayerOptionsModel", "male11",		"models/player/Group03/male_02.mdl" )
-list.Set( "PlayerOptionsModel", "male12",		"models/player/Group03/male_03.mdl" )
-list.Set( "PlayerOptionsModel", "male13",		"models/player/Group03/male_04.mdl" )
-list.Set( "PlayerOptionsModel", "male14",		"models/player/Group03/male_05.mdl" )
-list.Set( "PlayerOptionsModel", "male15",		"models/player/Group03/male_06.mdl" )
-list.Set( "PlayerOptionsModel", "male16",		"models/player/Group03/male_07.mdl" )
-list.Set( "PlayerOptionsModel", "male17",		"models/player/Group03/male_08.mdl" )
-list.Set( "PlayerOptionsModel", "male18",		"models/player/Group03/male_09.mdl" )
-
-list.Set( "PlayerOptionsModel", "refugee01",	"models/player/Group02/male_02.mdl" )
-list.Set( "PlayerOptionsModel", "refugee02",	"models/player/Group02/male_04.mdl" )
-list.Set( "PlayerOptionsModel", "refugee03",	"models/player/Group02/male_06.mdl" )
-list.Set( "PlayerOptionsModel", "refugee04",	"models/player/Group02/male_08.mdl" )
-
-list.Set( "PlayerOptionsModel", "css_arctic",		"models/player/arctic.mdl" )
-list.Set( "PlayerOptionsModel", "css_gasmask",		"models/player/gasmask.mdl" )
-list.Set( "PlayerOptionsModel", "css_guerilla",		"models/player/guerilla.mdl" )
-list.Set( "PlayerOptionsModel", "css_leet",			"models/player/leet.mdl" )
-list.Set( "PlayerOptionsModel", "css_phoenix",		"models/player/phoenix.mdl" )
-list.Set( "PlayerOptionsModel", "css_riot",			"models/player/riot.mdl" )
-list.Set( "PlayerOptionsModel", "css_swat",			"models/player/swat.mdl" )
-list.Set( "PlayerOptionsModel", "css_urban",		"models/player/urban.mdl" )
-
-list.Set( "PlayerOptionsModel", "dod_american", "models/player/dod_american.mdl" )
-list.Set( "PlayerOptionsModel", "dod_german", "models/player/dod_german.mdl" )
+list.Set( "PlayerOptionsAnimations", "zombie", {
+	"taunt_zombie_original"
+} )
