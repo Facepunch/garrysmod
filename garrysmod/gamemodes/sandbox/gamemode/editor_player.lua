@@ -14,17 +14,17 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		local mdl = window:Add( "DModelPanel" )
 		mdl:Dock( FILL )
-		mdl:SetFOV( 40 )
+		mdl:SetFOV( 36 )
 		mdl:SetCamPos( Vector( 100, 0, 60 ) )
-		mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 192, 80, 255 ) )
-		mdl:SetDirectionalLight( BOX_LEFT, Color( 80, 192, 255, 255 ) )
-		mdl:SetAmbientLight( Vector( 0, 0, 0 ) )
+		mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 160, 80, 255 ) )
+		mdl:SetDirectionalLight( BOX_LEFT, Color( 80, 160, 255, 255 ) )
+		mdl:SetAmbientLight( Vector( -64, -64, -64 ) )
 		mdl:SetAnimated( true )
 		mdl.Angles = Angle( 0, 0, 0 )
 
 		local sheet = window:Add( "DPropertySheet" )
 		sheet:Dock( RIGHT )
-		sheet:SetSize( 370, 0 )
+		sheet:SetSize( 430, 0 )
 
 		local PanelSelect = sheet:Add( "DPanelSelect" )
 
