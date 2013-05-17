@@ -103,9 +103,6 @@ AddValidHands( "gman",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "kleiner",		"models/player/kleiner.mdl" )
 AddValidHands( "kleiner",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
-AddValidModel( "scientist",		"models/player/kleiner.mdl" )
-AddValidHands( "scientist",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
-
 AddValidModel( "monk",			"models/player/monk.mdl" )
 AddValidHands( "monk",		"models/weapons/c_arms_citizen.mdl",			0,		"0000000" )
 
@@ -114,9 +111,6 @@ AddValidHands( "mossman",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "mossmanarctic",	"models/player/mossman_arctic.mdl" )
 AddValidHands( "mossmanarctic",	"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
-
-AddValidModel( "gina",			"models/player/mossman.mdl" )
-AddValidHands( "gina",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "odessa",		"models/player/odessa.mdl" )
 AddValidHands( "odessa",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
