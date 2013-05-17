@@ -1,7 +1,7 @@
 
 AddCSLuaFile()
 
-local default_animations = { "pose_standing_01", "pose_standing_02", "pose_standing_03", "pose_standing_04" }
+local default_animations = { "idle_all_01", "menu_walk" }
 
 list.Set( "DesktopWindows", "PlayerEditor", {
 
@@ -14,11 +14,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		local mdl = window:Add( "DModelPanel" )
 		mdl:Dock( FILL )
-		mdl:SetFOV( 45 )
-		mdl:SetCamPos( Vector( 90, 0, 60 ) )
-		mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 160, 64, 255 ) )
-		mdl:SetDirectionalLight( BOX_LEFT, Color( 64, 160, 255, 255 ) )
-		mdl:SetAmbientLight( Vector( 80, 80, 80 ) )
+		mdl:SetFOV( 40 )
+		mdl:SetCamPos( Vector( 100, 0, 60 ) )
+		mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 192, 80, 255 ) )
+		mdl:SetDirectionalLight( BOX_LEFT, Color( 80, 192, 255, 255 ) )
+		mdl:SetAmbientLight( Vector( 0, 0, 0 ) )
 		mdl:SetAnimated( true )
 		mdl.Angles = Angle( 0, 0, 0 )
 
@@ -46,7 +46,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		controls:DockPadding( 8, 8, 8, 8 )
 
 		local lbl = controls:Add( "DLabel" )
-		lbl:SetText( "Player Color:" )
+		lbl:SetText( "Player color" )
 		lbl:SetTextColor( Color( 0, 0, 0, 255 ) )
 		lbl:Dock( TOP )
 
@@ -54,10 +54,10 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		plycol:SetAlphaBar( false )
 		plycol:SetPalette( false )
 		plycol:Dock( TOP )
-		plycol:SetSize( 200, 250 )
+		plycol:SetSize( 200, 260 )
 
 		local lbl = controls:Add( "DLabel" )
-		lbl:SetText( "Weapon Color:" )
+		lbl:SetText( "Physgun color" )
 		lbl:SetTextColor( Color( 0, 0, 0, 255 ) )
 		lbl:DockMargin( 0, 32, 0, 0 )
 		lbl:Dock( TOP )
@@ -66,7 +66,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		wepcol:SetAlphaBar( false )
 		wepcol:SetPalette( false )
 		wepcol:Dock( TOP )
-		wepcol:SetSize( 200, 250 )
+		wepcol:SetSize( 200, 260 )
 		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
 
 		sheet:AddSheet( "Colors", controls )
@@ -140,18 +140,24 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 	end
 } )
 
-list.Set( "PlayerOptionsAnimations", "css_arctic", {
-	"pose_ducking_01", "pose_ducking_02"
-} )
+list.Set( "PlayerOptionsAnimations", "gman", { "menu_gman" } )
 
-list.Set( "PlayerOptionsAnimations", "zombine", {
-	"taunt_zombie_original"
-} )
+list.Set( "PlayerOptionsAnimations", "zombine", { "menu_zombie_01" } )
+list.Set( "PlayerOptionsAnimations", "corpse", { "menu_zombie_01" } )
+list.Set( "PlayerOptionsAnimations", "zombiefast", { "menu_zombie_01" } )
+list.Set( "PlayerOptionsAnimations", "zombie", { "menu_zombie_01" } )
 
-list.Set( "PlayerOptionsAnimations", "zombiefast", {
-	"taunt_zombie_original"
-} )
+list.Set( "PlayerOptionsAnimations", "combine", { "menu_combine" } )
+list.Set( "PlayerOptionsAnimations", "combineprison", { "menu_combine" } )
+list.Set( "PlayerOptionsAnimations", "combineelite", { "menu_combine" } )
+list.Set( "PlayerOptionsAnimations", "police", { "menu_combine" } )
+list.Set( "PlayerOptionsAnimations", "policefem", { "menu_combine" } )
 
-list.Set( "PlayerOptionsAnimations", "zombie", {
-	"taunt_zombie_original"
-} )
+list.Set( "PlayerOptionsAnimations", "css_arctic", { "pose_standing_02", "idle_fist" } )
+list.Set( "PlayerOptionsAnimations", "css_gasmask", { "pose_standing_02", "idle_fist" } )
+list.Set( "PlayerOptionsAnimations", "css_guerilla", { "pose_standing_02", "idle_fist" } )
+list.Set( "PlayerOptionsAnimations", "css_leet", { "pose_standing_02", "idle_fist" } )
+list.Set( "PlayerOptionsAnimations", "css_phoenix", { "pose_standing_02", "idle_fist" } )
+list.Set( "PlayerOptionsAnimations", "css_riot", { "pose_standing_02", "idle_fist" } )
+list.Set( "PlayerOptionsAnimations", "css_swat", { "pose_standing_02", "idle_fist" } )
+list.Set( "PlayerOptionsAnimations", "css_urban", { "pose_standing_02", "idle_fist" } )
