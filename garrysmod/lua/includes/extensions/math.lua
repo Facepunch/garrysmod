@@ -243,3 +243,10 @@ end
 function math.TimeFraction( Start, End, Current )
 	return ( Current - Start ) / ( End - Start )
 end
+
+--[[---------------------------------------------------------
+    Name: Remap( value, inMin, inMax, outMin, outMax )
+-----------------------------------------------------------]]
+function math.Remap( value, inMin, inMax, outMin, outMax )
+	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
+end
