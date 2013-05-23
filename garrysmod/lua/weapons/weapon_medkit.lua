@@ -66,6 +66,9 @@ function SWEP:PrimaryAttack()
 		self:SetNextPrimaryFire( CurTime() + self:SequenceDuration() + 0.5 )
 		self.Owner:SetAnimation( PLAYER_ATTACK1 )
 
+		-- Even though the viewmodel has looping IDLE anim at all times, we need this ti make fire animation work in multiplayer
+		timer.Simple( self:SequenceDuration(), function() if ( !IsValid( self ) ) then return end self:SendWeaponAnim( ACT_VM_IDLE ) end )
+
 	else
 
 		self.Owner:EmitSound( DenySound )
@@ -90,13 +93,15 @@ function SWEP:SecondaryAttack()
 
 		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 
-		self:SetNextPrimaryFire( CurTime() + self:SequenceDuration() + 1 )
+		self:SetNextSecondaryFire( CurTime() + self:SequenceDuration() + 1 )
 		self.Owner:SetAnimation( PLAYER_ATTACK1 )
+
+		timer.Simple( self:SequenceDuration(), function() if ( !IsValid( self ) ) then return end self:SendWeaponAnim( ACT_VM_IDLE ) end )
 
 	else
 
 		ent:EmitSound( DenySound )
-		self:SetNextPrimaryFire( CurTime() + 1 )
+		self:SetNextSecondaryFire( CurTime() + 1 )
 
 	end
 
