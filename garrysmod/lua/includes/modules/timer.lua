@@ -87,19 +87,19 @@ function Start( name )
 end
 
 --[[---------------------------------------------------------
-   Name: NextTick( name )
+   Name: NextCall( name )
    Desc: Returns how long time until the next time the timer will run.
 -----------------------------------------------------------]]
-function NextTick( name )
+function NextCall( name )
 	if ( !Exists( name ) ) then return -1; end
 	return ( Timer[name].Last + Timer[name].Delay ) - CurTime()
 end
 
 --[[---------------------------------------------------------
-   Name: TicksLeft( name )
+   Name: RepetitionsLeft( name )
    Desc: Returns how many times the timer has to run.
 -----------------------------------------------------------]]
-function TicksLeft( name )
+function RepetitionsLeft( name )
 	if ( !Exists( name ) ) then return -1; end
 	if ( Timer[name].Repetitions == 0 ) then return 0; end -- If it's infinite
 	
