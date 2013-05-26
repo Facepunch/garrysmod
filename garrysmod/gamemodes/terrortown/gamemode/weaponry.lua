@@ -424,10 +424,11 @@ local function OrderEquipment(ply, cmd, args)
                       end
                       umsg.End()
                    end)
+
+      hook.Call("TTTOrderedEquipment", GAMEMODE, ply, id, is_item)
    end
 end
 concommand.Add("ttt_order_equipment", OrderEquipment)
-
 
 local function SetDisguise(ply, cmd, args)
    if not IsValid(ply) or not ply:IsActiveTraitor() then return end

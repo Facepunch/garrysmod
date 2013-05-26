@@ -4,7 +4,7 @@ if SERVER then
    AddCSLuaFile( "shared.lua" )
 end
 
-   
+
 SWEP.HoldType = "normal"
 
 if CLIENT then
@@ -84,7 +84,6 @@ SWEP.NextCharge = 0
 function SWEP:SetupDataTables()
    self:DTVar("Int", 0, "charge")
    self:DTVar("Int", 1, "last_scanned")
-   --self:DTVar("Bool", 0, "repeating")
 
    return self.BaseClass.SetupDataTables(self)
 end
@@ -152,7 +151,7 @@ function SWEP:GatherRagdollSample(ent)
       end
 
       local added = self:AddPlayerSample(ent, ply)
-      
+
       if not added then
          self:Report("dna_limit")
       else
@@ -161,7 +160,7 @@ function SWEP:GatherRagdollSample(ent)
          if self:GetRepeating() and self:GetCharge() == MAX_CHARGE then
             self:PerformScan(#self.ItemSamples)
          end
-      end 
+      end
    elseif ply != nil then
       -- not valid but not nil -> disconnected?
       self:Report("dna_no_killer")
@@ -195,6 +194,8 @@ function SWEP:AddPlayerSample(corpse, killer)
          table.insert(self.ItemSamples, prnt)
 
          DamageLog("SAMPLE:\t " .. self.Owner:Nick() .. " retrieved DNA of " .. (IsValid(killer) and killer:Nick() or "<disconnected>") .. " from corpse of " .. (IsValid(corpse) and CORPSE.GetPlayerNick(corpse) or "<invalid>"))
+
+         hook.Call("TTTFoundDNA", GAMEMODE, self.Owner, killer, corpse)
       end
       return true
    end
@@ -221,6 +222,7 @@ function SWEP:AddItemSample(ent)
             DamageLog("SAMPLE:\t " .. self.Owner:Nick() .. " retrieved DNA of " .. (IsValid(p) and p:Nick() or "<disconnected>") .. " from " .. ent:GetClass())
 
             new = new + 1
+            hook.Call("TTTFoundDNA", GAMEMODE, self.Owner, p, ent)
          end
       end
       return new, old, own

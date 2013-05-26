@@ -2,7 +2,7 @@ GM.Name = "Trouble in Terrorist Town"
 GM.Author = "Bad King Urgrain"
 GM.Email = "thegreenbunny@gmail.com"
 GM.Website = "ttt.badking.net"
-GM.Version = "33"
+GM.Version = "34"
 
 
 GM.Customized = false
