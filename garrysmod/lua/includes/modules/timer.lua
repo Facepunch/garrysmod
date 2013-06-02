@@ -44,6 +44,73 @@ local function CreateTimer( name )
 
 end
 
+-- Timer class stuff.
+
+local TIMER_CLASS = {__index = TIMER_CLASS};
+
+function TIMER_CLASS.New()
+	local object = {};
+		setmetatable(object, TIMER_CLASS);
+		TIMER_CLASS.__index = TIMER_CLASS;
+	return object;
+end;
+
+function TIMER_CLASS:IsRunning()
+	if (not Exists(self.name)) then return false; end;
+	return (Timer[self.name].Status == RUNNING);
+end;
+
+function TIMER_CLASS:IsPaused()
+	if (not Exists(self.name)) then return false; end;
+	return (Timer[self.name].Status == PAUSED);
+end;
+
+function TIMER_CLASS:GetReps()
+	if (not Exists(self.name)) then return 0; end;
+	return Timer[self.name].Repetitions;
+end;
+
+function TIMER_CLASS:GetDelay()
+	if (not Exists(self.name)) then return 0; end;
+	return Timer[self.name].Delay;
+end;
+
+function TIMER_CLASS:GetRepsLeft()
+	if (not IsRunning()) then return -1; end;
+	if (Timer[self.name].Repetitions == 0) then return 0; end;
+	return (Timer[self.name].Repetitions - Timer[self.name].n);
+end;
+
+function TIMER_CLASS:GetNextCallTime()
+	if (not IsRunning()) then return -1; end;
+	return (Timer[self.name].Last + Timer[self.name].Delay) - CurTime();
+end;
+
+function TIMER_CLASS:Destroy()
+	if (not Exists(self.name)) then return; end;
+	Destroy(self.name);
+end;
+
+function TIMER_CLASS:Pause()
+	if (not Exists(self.name)) then return; end;
+	Pause(self.name);
+end;
+
+function TIMER_CLASS:UnPause()
+	if (not Exists(self.name)) then return; end;
+	UnPause(self.name);
+end;
+
+function TIMER_CLASS:Toggle()
+	if (not Exists(self.name)) then return; end;
+	Toggle(self.name);
+end;
+
+function TIMER_CLASS:Stop()
+	if (not Exists(self.name)) then return; end;
+	Stop(self.name);
+end;
+	
 --[[---------------------------------------------------------
    Name: Exists( name )
    Desc: Returns boolean whether or not name is a timer.
@@ -68,10 +135,13 @@ function Create( name, delay, reps, func, a, b, c )
 	if ( Exists( name ) ) then
 		Destroy( name )
 	end
-
+	
 	Adjust( name, delay, reps, func )
 	Start( name )
 
+	local timerObj = TIMER_CLASS.New();
+		timerObj.name = name;
+	return timerObj;
 end
 
 --[[---------------------------------------------------------
