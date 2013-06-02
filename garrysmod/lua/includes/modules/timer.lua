@@ -1,4 +1,3 @@
-
 require( 'hook' )
 
 -- Globals that we need.
