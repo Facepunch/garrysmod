@@ -146,6 +146,7 @@ list.Set( "PlayerOptionsAnimations", "zombine", { "menu_zombie_01" } )
 list.Set( "PlayerOptionsAnimations", "corpse", { "menu_zombie_01" } )
 list.Set( "PlayerOptionsAnimations", "zombiefast", { "menu_zombie_01" } )
 list.Set( "PlayerOptionsAnimations", "zombie", { "menu_zombie_01" } )
+list.Set( "PlayerOptionsAnimations", "skeleton", { "menu_zombie_01" } )
 
 list.Set( "PlayerOptionsAnimations", "combine", { "menu_combine" } )
 list.Set( "PlayerOptionsAnimations", "combineprison", { "menu_combine" } )
