@@ -246,6 +246,8 @@ AddValidHands( "refugee04",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000"
 
 AddValidModel( "magnusson", "models/player/magnusson.mdl" )
 AddValidHands( "magnusson","models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+AddValidModel( "skeleton",	"models/player/skeleton.mdl" )
+AddValidHands( "skeleton",	"models/weapons/c_arms_citizen.mdl",			2,		"0000000" )
 AddValidModel( "zombine",	"models/player/zombie_soldier.mdl" )
 AddValidHands( "zombine",	"models/weapons/c_arms_combine.mdl",			0,		"0000000" )
 
