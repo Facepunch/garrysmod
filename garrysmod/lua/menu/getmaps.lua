@@ -166,7 +166,21 @@ local function RefreshMaps()
 			local name = string.gsub( v, ".bsp", "" )
 			local lowername = string.lower( v )
 		
-			Mat = "../maps/"..name..".png"
+			--
+			-- This thumbnail search might just be faster if we get all the files
+			-- in /maps/ and then check in that table.. than checking for each thumb
+			--
+			if ( Mat == nil && file.Exists( "maps/thumb/"..name..".png", "GAME" ) ) then
+				Mat = "../maps/thumb/"..name..".png"
+			end
+
+			if ( Mat == nil && file.Exists( "maps/"..name..".png", "GAME" ) ) then
+				Mat = "../maps/"..name..".png"
+			end
+
+			if ( Mat == nil ) then
+				Mat = "../maps/noicon.png"
+			end
 			
 			for pattern, category in pairs( MapPatterns ) do
 				if ( string.find( lowername, pattern ) ) then
