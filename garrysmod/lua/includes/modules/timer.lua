@@ -87,6 +87,26 @@ function Start( name )
 end
 
 --[[---------------------------------------------------------
+   Name: NextCall( name )
+   Desc: Returns how long time until the next time the timer will run.
+-----------------------------------------------------------]]
+function NextCall( name )
+	if ( !Exists( name ) ) then return -1; end
+	return ( Timer[name].Last + Timer[name].Delay ) - CurTime()
+end
+
+--[[---------------------------------------------------------
+   Name: RepetitionsLeft( name )
+   Desc: Returns how many times the timer has to run.
+-----------------------------------------------------------]]
+function RepetitionsLeft( name )
+	if ( !Exists( name ) ) then return -1; end
+	if ( Timer[name].Repetitions == 0 ) then return 0; end -- If it's infinite
+	
+	return Timer[name].Repetitions - Timer[name].n
+end
+
+--[[---------------------------------------------------------
    Name: Adjust( name, delay, reps, func )
    Desc: Adjust a running, stopped or paused timer by name.
 -----------------------------------------------------------]]
