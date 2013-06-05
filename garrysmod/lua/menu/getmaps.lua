@@ -179,7 +179,7 @@ local function RefreshMaps()
 			end
 
 			if ( Mat == nil ) then
-				Mat = "../maps/noicon.png"
+				Mat = "../maps/thumb/noicon.png"
 			end
 			
 			for pattern, category in pairs( MapPatterns ) do
