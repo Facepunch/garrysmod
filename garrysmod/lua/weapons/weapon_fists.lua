@@ -48,7 +48,7 @@ function SWEP:PreDrawViewModel( vm, wep, ply )
 
 end
 
-SWEP.Distance = 67
+SWEP.HitDistance = 67
 SWEP.AttackAnims = { "fists_left", "fists_right", "fists_uppercut" }
 function SWEP:PrimaryAttack()
 	self.Owner:SetAnimation( PLAYER_ATTACK1 )
@@ -106,14 +106,14 @@ end
 function SWEP:DealDamage( anim )
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
-		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.Distance,
+		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
 		filter = self.Owner
 	} )
 
 	if ( !IsValid( tr.Entity ) ) then 
 		tr = util.TraceHull( {
 			start = self.Owner:GetShootPos(),
-			endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.Distance,
+			endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
 			filter = self.Owner,
 			mins = self.Owner:OBBMins() / 3,
 			maxs = self.Owner:OBBMaxs() / 3
@@ -157,12 +157,7 @@ function SWEP:OnRemove()
 
 	if ( IsValid( self.Owner ) ) then
 		local vm = self.Owner:GetViewModel()
-		if ( IsValid( vm ) ) then
-			vm:SetMaterial( "" )
-		else
-			local vm = self.Owner:GetViewModel( 0 )
-			if ( IsValid( vm ) ) then vm:SetMaterial( "" ) end
-		end
+		if ( IsValid( vm ) ) then vm:SetMaterial( "" ) end
 	end
 
 	timer.Stop( "fists_idle" .. self:EntIndex() )
