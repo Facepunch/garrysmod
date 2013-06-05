@@ -146,7 +146,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 
 function MapImageError( element )
 {
-	element.src = "../maps/noicon.png";
+	element.src = "../maps/thumb/noicon.png";
 	return true;
 }
 
