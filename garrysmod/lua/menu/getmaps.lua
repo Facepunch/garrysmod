@@ -148,9 +148,10 @@ local function RefreshMaps()
 
 	g_MapList = {}
 	g_MapListCategorised = {}
-
-	for k, v in pairs( file.Find( "maps/*.bsp", "GAME" ) ) do
-
+	
+	local maps 			= file.Find( "maps/*.bsp", "GAME" )
+	
+	for k, v in pairs( maps ) do
 		local Ignore = false
 		for _, ignore in pairs( IgnoreMaps ) do
 			if ( string.find( v, ignore ) ) then
@@ -161,26 +162,9 @@ local function RefreshMaps()
 		-- Don't add useless maps
 		if ( !Ignore ) then
 		
-			local Mat = nil
 			local Category = "Other"
 			local name = string.gsub( v, ".bsp", "" )
 			local lowername = string.lower( v )
-		
-			--
-			-- This thumbnail search might just be faster if we get all the files
-			-- in /maps/ and then check in that table.. than checking for each thumb
-			--
-			if ( Mat == nil && file.Exists( "maps/thumb/"..name..".png", "GAME" ) ) then
-				Mat = "../maps/thumb/"..name..".png"
-			end
-
-			if ( Mat == nil && file.Exists( "maps/"..name..".png", "GAME" ) ) then
-				Mat = "../maps/"..name..".png"
-			end
-
-			if ( Mat == nil ) then
-				Mat = "../maps/thumb/noicon.png"
-			end
 			
 			for pattern, category in pairs( MapPatterns ) do
 				if ( string.find( lowername, pattern ) ) then
@@ -190,7 +174,7 @@ local function RefreshMaps()
 
 			if ( MapPatterns[ name ] ) then Category = MapPatterns[ name ] end
 			
-			g_MapList[ v ] = { Material = Mat, Name = name, Category = Category }
+			g_MapList[ v ] = { Name = name, Category = Category }
 			
 		end
 
