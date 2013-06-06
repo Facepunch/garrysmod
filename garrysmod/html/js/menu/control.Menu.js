@@ -129,7 +129,7 @@ function MenuController( $scope, $rootScope )
 	$scope.ShowNews = function()
 	{
 		console.log( "Opening News!" );
-		lua.Run( "gui.OpenURL( 'http://www.garrysmod.com/' )" );
+		lua.Run( "gui.OpenURL( 'http://www.garrysmod.com/updates/' )" );
 	}
 	
 
@@ -331,9 +331,11 @@ function UpdateGames( games )
 	UpdateDigest( gScope, 50 );
 }
 
-function UpdateVersion( version )
+function UpdateVersion( version, branch )
 {
-	gScope.Version = version;
+	gScope.Version 	= 	version;
+	gScope.Branch 	= 	branch;
+	
 	UpdateDigest( gScope, 100 );
 }
 
