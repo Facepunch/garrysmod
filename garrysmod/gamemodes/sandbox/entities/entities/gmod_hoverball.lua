@@ -186,7 +186,7 @@ function ENT:SetZVelocity( z )
 		local phys = self:GetPhysicsObject()
 		if ( phys:IsValid() ) then
 			phys:Wake()
-		edn
+		end
 	end
 
 	self.ZVelocity = z * FrameTime() * 5000
