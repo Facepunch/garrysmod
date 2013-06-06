@@ -82,7 +82,7 @@ AddValidHands( "breen",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "charple",		"models/player/charple.mdl" )
 AddValidHands( "charple",		"models/weapons/c_arms_citizen.mdl",		2,		"0000000" )
 
-AddValidModel( "chell",			"models/player/chell.mdl" )
+AddValidModel( "chell",			"models/player/p2_chell.mdl" )
 AddValidHands( "chell",			"models/weapons/c_arms_chell.mdl",			0,		"0000000" )
 
 AddValidModel( "corpse",		"models/player/corpse1.mdl" )
