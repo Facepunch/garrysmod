@@ -315,8 +315,7 @@ end );
 timer.Simple( 0, function()
 
 	pnlMainMenu = vgui.Create( "MainMenuPanel" );
-
-	pnlMainMenu:Call( "UpdateVersion( "..VERSION..", '"..BRANCH.."' )" );
+	pnlMainMenu:Call( "UpdateVersion( '"..VERSIONSTR.."', '"..BRANCH.."' )" );
 
 	local language = GetConVarString( "gmod_language" )
 	LanguageChanged( language )
