@@ -23,7 +23,7 @@
 					<li>{{category.category}} <small>{{category.maps.length}} maps</small></li>
 
 					<li class="icon mapicon {{MapClass( map )}}" ng-repeat="map in category.maps | orderBy:'Name' | filter:SearchText" ng-click="ClickMap( map )">
-						<img ng-src="{{map.Material}}" onerror="MapImageError(this)"/><br />
+						<img ng-src="asset://mapimage/{{map.Name}}"/><br />
 						{{map.Name}}
 					</li>
 
