@@ -45,7 +45,8 @@ SWEP.WeaponID = AMMO_PUSH
 SWEP.Primary.Sound = Sound( "weapons/ar2/fire1.wav" )
 SWEP.Primary.SoundLevel = 54
 
-SWEP.ViewModel  = "models/weapons/v_superphyscannon.mdl"
+SWEP.UseHands			= true
+SWEP.ViewModel  = "models/weapons/c_superphyscannon.mdl"
 SWEP.WorldModel = "models/weapons/w_physics.mdl"
 AccessorFuncDT(SWEP, "charge", "Charge")
 

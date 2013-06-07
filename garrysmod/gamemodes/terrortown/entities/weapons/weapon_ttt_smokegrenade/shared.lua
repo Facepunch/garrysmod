@@ -20,7 +20,10 @@ SWEP.AdminSpawnable = true
 SWEP.WeaponID = AMMO_SMOKE
 SWEP.Kind = WEAPON_NADE
 
-SWEP.ViewModel			= "models/weapons/v_eq_smokegrenade.mdl"
+SWEP.UseHands			= true
+SWEP.ViewModelFlip		= false
+SWEP.ViewModelFOV		= 54
+SWEP.ViewModel			= "models/weapons/cstrike/c_eq_smokegrenade.mdl"
 SWEP.WorldModel			= "models/weapons/w_eq_smokegrenade.mdl"
 SWEP.Weight			= 5
 SWEP.AutoSpawnable      = true

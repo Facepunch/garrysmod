@@ -20,8 +20,10 @@ SWEP.AdminSpawnable = true
 SWEP.Kind = WEAPON_NADE
 SWEP.WeaponID = AMMO_MOLOTOV
 
-
-SWEP.ViewModel			= "models/weapons/v_eq_flashbang.mdl"
+SWEP.UseHands			= true
+SWEP.ViewModelFlip		= false
+SWEP.ViewModelFOV		= 54
+SWEP.ViewModel			= "models/weapons/cstrike/c_eq_flashbang.mdl"
 SWEP.WorldModel			= "models/weapons/w_eq_flashbang.mdl"
 SWEP.Weight			= 5
 SWEP.AutoSpawnable      = true

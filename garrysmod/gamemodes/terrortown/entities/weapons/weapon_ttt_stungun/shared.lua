@@ -38,13 +38,17 @@ SWEP.AutoSpawnable      = false
 SWEP.AmmoEnt = "item_ammo_smg1_ttt"
 SWEP.Primary.Recoil		= 1.2
 SWEP.Primary.Sound		= Sound( "Weapon_UMP45.Single" )
-SWEP.ViewModel			= "models/weapons/v_smg_ump45.mdl"
+
+SWEP.UseHands			= true
+SWEP.ViewModelFlip		= false
+SWEP.ViewModelFOV		= 54
+SWEP.ViewModel			= "models/weapons/cstrike/c_smg_ump45.mdl"
 SWEP.WorldModel			= "models/weapons/w_smg_ump45.mdl"
 
 SWEP.HeadshotMultiplier = 4.5 -- brain fizz
 
-SWEP.IronSightsPos = Vector( 7.3, -5.5, 3.2 )
-SWEP.IronSightsAng = Vector( -1.5, 0.35, 2 )
+SWEP.IronSightsPos = Vector( -8.78, -4.2, 4.2 )
+SWEP.IronSightsAng = Vector( -1.5, -0.2, -2 )
 
 --SWEP.DeploySpeed = 3
 

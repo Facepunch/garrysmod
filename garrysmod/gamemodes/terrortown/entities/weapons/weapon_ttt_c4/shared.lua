@@ -26,7 +26,10 @@ SWEP.Kind = WEAPON_EQUIP
 SWEP.CanBuy = {ROLE_TRAITOR} -- only traitors can buy
 SWEP.WeaponID = AMMO_C4
 
-SWEP.ViewModel  = Model("models/weapons/v_c4.mdl")
+SWEP.UseHands			= true
+SWEP.ViewModelFlip		= false
+SWEP.ViewModelFOV		= 54
+SWEP.ViewModel  = Model("models/weapons/cstrike/c_c4.mdl")
 SWEP.WorldModel = Model("models/weapons/w_c4.mdl")
 
 SWEP.DrawCrosshair      = false
