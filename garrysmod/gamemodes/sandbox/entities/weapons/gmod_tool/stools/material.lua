@@ -98,6 +98,7 @@ list.Add( "OverrideMaterials", "phoenix_storms/wire/pcb_red" )
 list.Add( "OverrideMaterials", "phoenix_storms/wire/pcb_blue" )
 
 list.Add( "OverrideMaterials", "hunter/myplastic" )
+list.Add( "OverrideMaterials", "models/XQM/LightLinesRed_tool" )
 
 
 function TOOL.BuildCPanel( CPanel )
