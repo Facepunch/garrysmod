@@ -142,6 +142,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 list.Set( "PlayerOptionsAnimations", "gman", { "menu_gman" } )
 
+list.Set( "PlayerOptionsAnimations", "hostage01", { "idle_all_scared" } )
+list.Set( "PlayerOptionsAnimations", "hostage02", { "idle_all_scared" } )
+list.Set( "PlayerOptionsAnimations", "hostage03", { "idle_all_scared" } )
+list.Set( "PlayerOptionsAnimations", "hostage04", { "idle_all_scared" } )
+
 list.Set( "PlayerOptionsAnimations", "zombine", { "menu_zombie_01" } )
 list.Set( "PlayerOptionsAnimations", "corpse", { "menu_zombie_01" } )
 list.Set( "PlayerOptionsAnimations", "zombiefast", { "menu_zombie_01" } )
