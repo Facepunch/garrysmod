@@ -1,14 +1,6 @@
 
 include("shared.lua")
 
-COLOR_WHITE = Color(255,255,255,255)
-COLOR_BLACK = Color(0,0,0,255)
-COLOR_GREEN = Color(0,255,0,255)
-COLOR_RED = Color(255, 0, 0, 255)
-COLOR_YELLOW = Color(200, 200, 0, 255)
-COLOR_LGRAY = Color(200, 200, 200, 255)
-COLOR_BLUE = Color(0,0,255, 255)
-
 -- Define GM12 fonts for compatibility
 surface.CreateFont("DefaultBold", {font = "Tahoma",
                                    size = 13,

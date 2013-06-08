@@ -236,6 +236,8 @@ function GM:PlayerSetModel(ply)
    local mdl = GAMEMODE.playermodel or "models/player/phoenix.mdl"
    util.PrecacheModel(mdl)
    ply:SetModel(mdl)
+
+   ply:SetColor(GAMEMODE.playercolor or COLOR_WHITE)
 end
 
 -- Only active players can use kill cmd

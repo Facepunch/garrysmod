@@ -2,7 +2,7 @@ GM.Name = "Trouble in Terrorist Town"
 GM.Author = "Bad King Urgrain"
 GM.Email = "thegreenbunny@gmail.com"
 GM.Website = "ttt.badking.net"
-GM.Version = "34"
+GM.Version = "35"
 
 
 GM.Customized = false
@@ -63,6 +63,20 @@ OPEN_ROT  = 2
 OPEN_BUT  = 3
 OPEN_NOTOGGLE = 4 --movelinear
 
+
+COLOR_WHITE  = Color(255, 255, 255, 255)
+COLOR_BLACK  = Color(0, 0, 0, 255)
+COLOR_GREEN  = Color(0, 255, 0, 255)
+COLOR_DGREEN = Color(0, 100, 0, 255)
+COLOR_RED    = Color(255, 0, 0, 255)
+COLOR_YELLOW = Color(200, 200, 0, 255)
+COLOR_LGRAY  = Color(200, 200, 200, 255)
+COLOR_BLUE   = Color(0, 0, 255, 255)
+COLOR_NAVY   = Color(0, 0, 100, 255)
+COLOR_PINK   = Color(255,0,255, 255)
+COLOR_ORANGE = Color(250, 100, 0, 255)
+COLOR_OLIVE  = Color(100, 100, 0, 255)
+
 include("util.lua")
 include("lang_shd.lua") -- uses some of util
 include("equip_items_shd.lua")
@@ -93,6 +107,48 @@ local ttt_playermodels = {
 
 function GetRandomPlayerModel()
    return table.Random(ttt_playermodels)
+end
+
+local ttt_playercolors = {
+   all = {
+      COLOR_WHITE,
+      COLOR_BLACK,
+      COLOR_GREEN,
+      COLOR_DGREEN,
+      COLOR_RED,
+      COLOR_YELLOW,
+      COLOR_LGRAY,
+      COLOR_BLUE,
+      COLOR_NAVY,
+      COLOR_PINK,
+      COLOR_OLIVE,
+      COLOR_ORANGE
+   },
+
+   serious = {
+      COLOR_WHITE,
+      COLOR_BLACK,
+      COLOR_NAVY,
+      COLOR_LGRAY,
+      COLOR_DGREEN,
+      COLOR_OLIVE
+   }
+};
+
+CreateConVar("ttt_playercolor_mode", "1")
+function GM:TTTPlayerColor()
+   local mode = GetConVarNumber("ttt_playercolor_mode") or 1
+   if mode == 1 then
+      return table.Random(ttt_playercolors.serious)
+   elseif mode == 2 then
+      return table.Random(ttt_playercolors.all)
+   elseif mode == 3 then
+      -- Full randomness
+      return Color(math.random(0, 255), math.random(0, 255), math.random(0, 255))
+   else
+      -- No coloring
+      return COLOR_WHITE
+   end
 end
 
 -- Kill footsteps on player and client

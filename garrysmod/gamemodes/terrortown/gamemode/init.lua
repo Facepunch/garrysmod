@@ -157,6 +157,7 @@ function GM:Initialize()
    GAMEMODE.DamageLog = {}
    GAMEMODE.LastRole = {}
    GAMEMODE.playermodel = GetRandomPlayerModel()
+   GAMEMODE.playercolor = COLOR_WHITE
 
    -- Delay reading of cvars until config has definitely loaded
    GAMEMODE.cvar_init = false
@@ -457,6 +458,7 @@ function PrepareRound()
 
    -- New look. Random if no forced model set.
    GAMEMODE.playermodel = GAMEMODE.force_plymodel == "" and GetRandomPlayerModel() or GAMEMODE.force_plymodel
+   GAMEMODE.playercolor = hook.Call("TTTPlayerColor", GAMEMODE)
 
    if CheckForAbort() then return end
 
