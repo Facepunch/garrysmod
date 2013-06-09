@@ -33,11 +33,14 @@ SWEP.AutoSpawnable = true
 
 SWEP.AmmoEnt = "item_ammo_smg1_ttt"
 
-SWEP.ViewModel  = "models/weapons/v_smg_mac10.mdl"
+SWEP.UseHands			= true
+SWEP.ViewModelFlip		= false
+SWEP.ViewModelFOV		= 54
+SWEP.ViewModel  = "models/weapons/cstrike/c_smg_mac10.mdl"
 SWEP.WorldModel = "models/weapons/w_smg_mac10.mdl"
 
-SWEP.IronSightsPos = Vector( 6.62, -3, 2.9 )
-SWEP.IronSightsAng = Vector( 0.7, 5.3, 7 )
+SWEP.IronSightsPos = Vector( -9.82, -3, 2.9 )
+SWEP.IronSightsAng = Vector( 0.7, -5.3, -7 )
 
 SWEP.DeploySpeed = 3
 

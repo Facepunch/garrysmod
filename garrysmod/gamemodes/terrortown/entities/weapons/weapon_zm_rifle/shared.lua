@@ -35,7 +35,11 @@ SWEP.HeadshotMultiplier = 4
 
 SWEP.AutoSpawnable      = true
 SWEP.AmmoEnt = "item_ammo_357_ttt"
-SWEP.ViewModel          = Model("models/weapons/v_snip_scout.mdl")
+
+SWEP.UseHands			= true
+SWEP.ViewModelFlip		= false
+SWEP.ViewModelFOV		= 54
+SWEP.ViewModel          = Model("models/weapons/cstrike/c_snip_scout.mdl")
 SWEP.WorldModel         = Model("models/weapons/w_snip_scout.mdl")
 
 SWEP.Primary.Sound = Sound(")weapons/scout/scout_fire-1.wav")

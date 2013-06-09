@@ -35,13 +35,17 @@ SWEP.Primary.ClipMax = 60
 SWEP.Primary.DefaultClip = 20
 SWEP.AutoSpawnable      = true
 SWEP.AmmoEnt = "item_ammo_pistol_ttt"
-SWEP.ViewModel			= "models/weapons/v_rif_m4a1.mdl"
+
+SWEP.UseHands			= true
+SWEP.ViewModelFlip		= false
+SWEP.ViewModelFOV		= 64
+SWEP.ViewModel			= "models/weapons/cstrike/c_rif_m4a1.mdl"
 SWEP.WorldModel			= "models/weapons/w_rif_m4a1.mdl"
 
 SWEP.Primary.Sound = Sound( "Weapon_M4A1.Single" )
 
-SWEP.IronSightsPos 		= Vector( 6, 0, 0.95 )
-SWEP.IronSightsAng 		= Vector( 2.6, 1.37, 3.5 )
+SWEP.IronSightsPos 		= Vector( -8, 0, 0.95 )
+SWEP.IronSightsAng 		= Vector( 3, -2.1, -3.5 )
 
 
 function SWEP:SetZoom(state)

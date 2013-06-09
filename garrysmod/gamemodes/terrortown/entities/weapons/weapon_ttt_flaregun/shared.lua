@@ -41,7 +41,8 @@ SWEP.WeaponID = AMMO_FLARE
 -- handling strategy, because you never need to pick up ammo for it
 SWEP.Primary.Ammo = "AR2AltFire"
 
-SWEP.ViewModel	= Model("models/weapons/v_357.mdl")
+SWEP.UseHands			= true
+SWEP.ViewModel	= Model("models/weapons/c_357.mdl")
 SWEP.WorldModel	= Model("models/weapons/w_357.mdl")
 
 SWEP.Primary.Sound = Sound( "Weapon_USP.SilencedShot" )

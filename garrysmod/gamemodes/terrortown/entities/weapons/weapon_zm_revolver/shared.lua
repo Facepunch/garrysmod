@@ -37,7 +37,11 @@ SWEP.HeadshotMultiplier = 4
 SWEP.AutoSpawnable      = true
 SWEP.AmmoEnt = "item_ammo_revolver_ttt"
 SWEP.Primary.Sound			= Sound( "Weapon_Deagle.Single" )
-SWEP.ViewModel			= "models/weapons/v_pist_deagle.mdl"
+
+SWEP.UseHands			= true
+SWEP.ViewModelFlip		= false
+SWEP.ViewModelFOV		= 54
+SWEP.ViewModel			= "models/weapons/cstrike/c_pist_deagle.mdl"
 SWEP.WorldModel			= "models/weapons/w_pist_deagle.mdl"
 
-SWEP.IronSightsPos 		= Vector( 5.15, -2, 2.6 )
+SWEP.IronSightsPos 		= Vector( -6.36, -3.4613, 2.04 )
