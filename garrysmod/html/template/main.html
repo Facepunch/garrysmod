@@ -1,4 +1,3 @@
-
 	<div class="page" ng-controller="ControllerMain">
 
 		<div class="options">
@@ -8,6 +7,8 @@
 				<li><img ng-src='../gamemodes/{{Gamemode}}/logo.png' /></li>
 				<li>&nbsp;</li>
 				<li ng-show="InGame"><a ng-click="BackToGame()" ng-Tranny="'resume_game'"></a></li>
+				<li ng-show="InGame">&nbsp;</li>
+				<li ng-show="InGame"><a ng-click="MenuOption( this, 'OpenPlayerListDialog')" ng-Tranny="'mute_players'"></a></li>
 				<li ng-show="InGame">&nbsp;</li>
 				<li><a ng-href="#/newgame/" ng-Tranny="'new_game'"></a></li>
 
