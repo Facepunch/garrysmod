@@ -37,7 +37,8 @@ SWEP.Kind = WEAPON_EQUIP2
 SWEP.CanBuy = {ROLE_TRAITOR} -- only traitors can buy
 SWEP.WeaponID = AMMO_POLTER
 
-SWEP.ViewModel	= "models/weapons/v_IRifle.mdl"
+SWEP.UseHands			= true
+SWEP.ViewModel	= "models/weapons/c_irifle.mdl"
 SWEP.WorldModel	= "models/weapons/w_IRifle.mdl"
 
 SWEP.Primary.Sound = Sound( "weapons/airboat/airboat_gun_energy1.wav" )

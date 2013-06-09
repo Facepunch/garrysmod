@@ -22,7 +22,10 @@ end
 
 SWEP.Base               = "weapon_tttbase"
 
-SWEP.ViewModel          = "models/weapons/v_knife_t.mdl"
+SWEP.UseHands			= true
+SWEP.ViewModelFlip		= false
+SWEP.ViewModelFOV		= 54
+SWEP.ViewModel          = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.WorldModel         = "models/weapons/w_knife_t.mdl"
 
 SWEP.DrawCrosshair      = false

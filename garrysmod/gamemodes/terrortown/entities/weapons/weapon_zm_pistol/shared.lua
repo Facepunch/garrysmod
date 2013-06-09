@@ -29,9 +29,12 @@ SWEP.Primary.Ammo = "Pistol"
 SWEP.AutoSpawnable = true
 SWEP.AmmoEnt = "item_ammo_pistol_ttt"
 
-SWEP.ViewModel  = "models/weapons/v_pist_fiveseven.mdl"
+SWEP.UseHands			= true
+SWEP.ViewModelFlip		= false
+SWEP.ViewModelFOV		= 54
+SWEP.ViewModel  = "models/weapons/cstrike/c_pist_fiveseven.mdl"
 SWEP.WorldModel = "models/weapons/w_pist_fiveseven.mdl"
 
 SWEP.Primary.Sound = Sound( "Weapon_FiveSeven.Single" )
-SWEP.IronSightsPos = Vector( 4.53, -4, 3.2 )
+SWEP.IronSightsPos = Vector( -5.95, -4, 3.5 )
 
