@@ -45,7 +45,7 @@ SWEP.WorldModel			= "models/weapons/w_pist_usp.mdl"
 SWEP.Primary.Sound = Sound( "weapons/usp/usp1.wav" )
 SWEP.Primary.SoundLevel = 50
 
-SWEP.IronSightsPos = Vector( -5.9784, -4, 2.74 )
+SWEP.IronSightsPos = Vector( -5.91, -4, 2.84 )
 SWEP.IronSightsAng = Vector(-0.5, 0, 0)
 
 SWEP.PrimaryAnim = ACT_VM_PRIMARYATTACK_SILENCED

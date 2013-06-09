@@ -44,4 +44,5 @@ SWEP.ViewModelFOV		= 54
 SWEP.ViewModel			= "models/weapons/cstrike/c_pist_deagle.mdl"
 SWEP.WorldModel			= "models/weapons/w_pist_deagle.mdl"
 
-SWEP.IronSightsPos 		= Vector( -6.36, -3.4613, 2.04 )
+SWEP.IronSightsPos = Vector(-6.361, -3.701, 2.15)
+SWEP.IronSightsAng = Vector(0, 0, 0)

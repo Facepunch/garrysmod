@@ -39,8 +39,8 @@ SWEP.ViewModelFOV		= 54
 SWEP.ViewModel  = "models/weapons/cstrike/c_smg_mac10.mdl"
 SWEP.WorldModel = "models/weapons/w_smg_mac10.mdl"
 
-SWEP.IronSightsPos = Vector( -9.82, -3, 2.9 )
-SWEP.IronSightsAng = Vector( 0.7, -5.3, -7 )
+SWEP.IronSightsPos = Vector(-8.921, -9.528, 2.9)
+SWEP.IronSightsAng = Vector(0.699, -5.301, -7)
 
 SWEP.DeploySpeed = 3
 

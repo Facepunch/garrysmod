@@ -44,8 +44,8 @@ SWEP.WorldModel			= "models/weapons/w_rif_m4a1.mdl"
 
 SWEP.Primary.Sound = Sound( "Weapon_M4A1.Single" )
 
-SWEP.IronSightsPos 		= Vector( -8, 0, 0.95 )
-SWEP.IronSightsAng 		= Vector( 3, -2.1, -3.5 )
+SWEP.IronSightsPos = Vector(-7.58, -9.2, 0.55)
+SWEP.IronSightsAng = Vector(2.599, -1.3, -3.6)
 
 
 function SWEP:SetZoom(state)

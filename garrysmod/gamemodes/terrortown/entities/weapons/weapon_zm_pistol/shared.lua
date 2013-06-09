@@ -36,5 +36,5 @@ SWEP.ViewModel  = "models/weapons/cstrike/c_pist_fiveseven.mdl"
 SWEP.WorldModel = "models/weapons/w_pist_fiveseven.mdl"
 
 SWEP.Primary.Sound = Sound( "Weapon_FiveSeven.Single" )
-SWEP.IronSightsPos = Vector( -5.95, -4, 3.5 )
-
+SWEP.IronSightsPos = Vector(-5.95, -4, 2.799)
+SWEP.IronSightsAng = Vector(0, 0, 0)
