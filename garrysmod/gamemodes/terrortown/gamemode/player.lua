@@ -92,8 +92,8 @@ function GM:PlayerSpawn(ply)
       hands:SetOwner(ply)
 
       -- Which hands should we use?
-      local cl_playermodel = ply:GetInfo("cl_playermodel")
-      local info = player_manager.TranslatePlayerHands(cl_playermodel)
+      local simplemodel = util.GetSimpleModelName(ply:GetModel())
+      local info = player_manager.TranslatePlayerHands(simplemodel)
       if info then
          hands:SetModel(info.model)
          hands:SetSkin(info.skin)
