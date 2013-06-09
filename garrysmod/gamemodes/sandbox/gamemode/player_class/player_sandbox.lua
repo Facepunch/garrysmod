@@ -6,6 +6,8 @@ if ( CLIENT ) then
 
 	CreateConVar( "cl_playercolor", "0.24 0.34 0.41", { FCVAR_ARCHIVE, FCVAR_USERINFO, FCVAR_DONTRECORD }, "The value is a Vector - so between 0-1 - not between 0-255" )
 	CreateConVar( "cl_weaponcolor", "0.30 1.80 2.10", { FCVAR_ARCHIVE, FCVAR_USERINFO, FCVAR_DONTRECORD }, "The value is a Vector - so between 0-1 - not between 0-255" )
+	CreateConVar( "cl_playerskin", "0", { FCVAR_ARCHIVE, FCVAR_USERINFO, FCVAR_DONTRECORD }, "The skin to use, if the model has any" )
+	CreateConVar( "cl_playerbodygroups", "0", { FCVAR_ARCHIVE, FCVAR_USERINFO, FCVAR_DONTRECORD }, "The bodygroups to use, if the model has any" )
 
 end
 
@@ -89,6 +91,17 @@ function PLAYER:Spawn()
 
 	local col = self.Player:GetInfo( "cl_weaponcolor" )
 	self.Player:SetWeaponColor( Vector( col ) )
+
+	-- It is here because it must be in sandbox and GM:PlayerSetModel must really be inside a player class instead of the gamemode itself.
+	timer.Simple( 0, function()
+		local skin = self.Player:GetInfo( "cl_playerskin" )
+		self.Player:SetSkin( tonumber( skin ) )
+
+		local groups = string.Explode( " ", self.Player:GetInfo( "cl_playerbodygroups" ) )
+		for k = 0, self.Player:GetNumBodyGroups() - 1 do
+			self.Player:SetBodygroup( k, groups[ k + 1 ] or 0 )
+		end
+	end)
 
 end
 

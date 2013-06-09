@@ -71,6 +71,24 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		sheet:AddSheet( "Colors", controls )
 
+		/* BODY GROUPS */
+
+		local bdcontrols = window:Add( "DPanel" )
+		bdcontrols:DockPadding( 8, 8, 8, 8 )
+
+		sheet:AddSheet( "Bodygroups", bdcontrols )
+
+		local function MakeNiceName( str )
+			local newname = {}
+
+			for _, s in pairs( string.Explode( "_", str ) ) do
+				if ( string.len( s ) == 1 ) then table.insert( newname, string.upper( s ) ) continue end
+				table.insert( newname, string.upper( string.Left( s, 1 ) ) .. string.Right( s, string.len( s ) - 1 ) ) -- Ugly way to capitalize first letters.
+			end
+
+			return string.Implode( " ", newname )
+		end
+
 		local function PlayPreviewAnimation( panel, playermodel )
 
 			if ( !panel or !IsValid( panel.Entity ) ) then return end
@@ -88,7 +106,68 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		end
 
-		local function UpdateFromConvars()
+		local function UpdateBodyGroups( pnl, val )
+			if pnl.type == "bgroup" then
+				mdl.Entity:SetBodygroup( pnl.typenum, math.Round( val ) )
+				local str = string.Explode( " ", GetConVarString( "cl_playerbodygroups" ) )
+				if ( #str < pnl.typenum + 1 ) then for i = 1, pnl.typenum + 1 do str[ i ] = str[ i ] or 0 end end
+				str[ pnl.typenum + 1 ] = math.Round( val )
+				RunConsoleCommand( "cl_playerbodygroups", table.concat( str, " " ) )
+			elseif pnl.type == "skin" then
+				mdl.Entity:SetSkin( math.Round( val ) )
+				RunConsoleCommand( "cl_playerskin", math.Round( val ) )
+			end
+		end
+
+		local function RebuildBodygroups()
+			bdcontrols:Clear()
+			
+			if ( mdl.Entity:GetNumBodyGroups() - 1 <= 0 && mdl.Entity:SkinCount() - 1 <= 0 ) then
+				local skins = bdcontrols:Add( "DLabel" )
+				skins:Dock( TOP )
+				skins:SetDark( true )
+				skins:SetText( "This model doesn't have any bodygroups or skins" )
+				skins:SizeToContents()
+				return
+			end
+
+			local nskins = mdl.Entity:SkinCount() - 1
+			if ( nskins > 0 ) then
+				local skins = bdcontrols:Add( "DNumSlider" )
+				skins:Dock( TOP )
+				skins:SetText( "Skin" )
+				skins:SetDark( true )
+				skins:SetTall( 50 )
+				skins:SetDecimals( 0 )
+				skins:SetMax( nskins )
+				skins:SetValue( GetConVarNumber( "cl_playerskin" ) )
+				skins.type = "skin"
+				skins.OnValueChanged = UpdateBodyGroups
+
+				mdl.Entity:SetSkin( GetConVarNumber( "cl_playerskin" ) )
+			end
+
+			local groups = string.Explode( " ", GetConVarString( "cl_playerbodygroups" ) )
+			for k = 0, mdl.Entity:GetNumBodyGroups() - 1 do
+				if ( mdl.Entity:GetBodygroupCount( k ) <= 1 ) then continue end
+
+				local bgroup = bdcontrols:Add( "DNumSlider" )
+				bgroup:Dock( TOP )
+				bgroup:SetText( MakeNiceName( mdl.Entity:GetBodygroupName( k ) ) )
+				bgroup:SetDark( true )
+				bgroup:SetTall( 50 )
+				bgroup:SetDecimals( 0 )
+				bgroup.type = "bgroup"
+				bgroup.typenum = k
+				bgroup:SetMax( mdl.Entity:GetBodygroupCount( k ) - 1 )
+				bgroup:SetValue( groups[ k + 1 ] or 0 )
+				bgroup.OnValueChanged = UpdateBodyGroups
+	
+				mdl.Entity:SetBodygroup( k, groups[ k + 1 ] or 0 )
+			end
+		end
+
+		local function UpdateFromConvars( haschanged )
 
 			local model = LocalPlayer():GetInfo( "cl_playermodel" )
 			local modelname = player_manager.TranslatePlayerModel( model )
@@ -99,7 +178,13 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			plycol:SetVector( Vector( GetConVarString( "cl_playercolor" ) ) );
 			wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
 
+			if ( haschanged ) then
+				RunConsoleCommand( "cl_playerbodygroups", 0 )
+				RunConsoleCommand( "cl_playerskin", 0 )
+			end
+			
 			PlayPreviewAnimation( mdl, model )
+			RebuildBodygroups()
 
 		end
 
@@ -135,7 +220,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			Entity:SetAngles( self.Angles )
 		end
 
-		function PanelSelect:OnActivePanelChanged() timer.Simple( 0.1, UpdateFromConvars ) end
+		function PanelSelect:OnActivePanelChanged() timer.Simple( 0.1, function() UpdateFromConvars( true ) end ) end
 
 	end
 } )
