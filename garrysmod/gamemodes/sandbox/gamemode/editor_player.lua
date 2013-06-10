@@ -71,12 +71,12 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		sheet:AddSheet( "Colors", controls )
 
-		/* BODY GROUPS */
-
 		local bdcontrols = window:Add( "DPanel" )
 		bdcontrols:DockPadding( 8, 8, 8, 8 )
 
 		sheet:AddSheet( "Bodygroups", bdcontrols )
+
+		-- Helper functions
 
 		local function MakeNiceName( str )
 			local newname = {}
@@ -102,24 +102,31 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			end
 
 			local iSeq = panel.Entity:LookupSequence( anim )
-			if (iSeq > 0) then panel.Entity:ResetSequence( iSeq ) end
+			if ( iSeq > 0 ) then panel.Entity:ResetSequence( iSeq ) end
 
 		end
 
+		-- Updating
+
 		local function UpdateBodyGroups( pnl, val )
-			if pnl.type == "bgroup" then
+			if ( pnl.type == "bgroup" ) then
+
 				mdl.Entity:SetBodygroup( pnl.typenum, math.Round( val ) )
+
 				local str = string.Explode( " ", GetConVarString( "cl_playerbodygroups" ) )
 				if ( #str < pnl.typenum + 1 ) then for i = 1, pnl.typenum + 1 do str[ i ] = str[ i ] or 0 end end
 				str[ pnl.typenum + 1 ] = math.Round( val )
 				RunConsoleCommand( "cl_playerbodygroups", table.concat( str, " " ) )
-			elseif pnl.type == "skin" then
+
+			elseif ( pnl.type == "skin" ) then
+
 				mdl.Entity:SetSkin( math.Round( val ) )
 				RunConsoleCommand( "cl_playerskin", math.Round( val ) )
+
 			end
 		end
 
-		local function RebuildBodygroups()
+		local function RebuildBodygroupTab()
 			bdcontrols:Clear()
 			
 			if ( mdl.Entity:GetNumBodyGroups() - 1 <= 0 && mdl.Entity:SkinCount() - 1 <= 0 ) then
@@ -167,7 +174,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			end
 		end
 
-		local function UpdateFromConvars( haschanged )
+		local function UpdateFromConvars()
 
 			local model = LocalPlayer():GetInfo( "cl_playermodel" )
 			local modelname = player_manager.TranslatePlayerModel( model )
@@ -175,16 +182,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			mdl:SetModel( modelname )
 			mdl.Entity.GetPlayerColor = function() return Vector( GetConVarString( "cl_playercolor" ) ) end
 
-			plycol:SetVector( Vector( GetConVarString( "cl_playercolor" ) ) );
-			wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
+			plycol:SetVector( Vector( GetConVarString( "cl_playercolor" ) ) )
+			wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) )
 
-			if ( haschanged ) then
-				RunConsoleCommand( "cl_playerbodygroups", 0 )
-				RunConsoleCommand( "cl_playerskin", 0 )
-			end
-			
 			PlayPreviewAnimation( mdl, model )
-			RebuildBodygroups()
+			RebuildBodygroupTab()
 
 		end
 
@@ -195,10 +197,23 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		end
 
-		UpdateFromConvars();
-
 		plycol.ValueChanged = UpdateFromControls
 		wepcol.ValueChanged = UpdateFromControls
+
+		UpdateFromConvars()
+
+		function PanelSelect:OnActivePanelChanged( old, new )
+
+			if ( old != new ) then -- Only reset if we changed the model
+				RunConsoleCommand( "cl_playerbodygroups", "0" )
+				RunConsoleCommand( "cl_playerskin", "0" )
+			end
+
+			timer.Simple( 0.1, function() UpdateFromConvars() end )
+
+		end
+
+		-- Hold to rotate
 
 		function mdl:DragMousePress()
 			self.PressX, self.PressY = gui.MousePos()
@@ -219,8 +234,6 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 			Entity:SetAngles( self.Angles )
 		end
-
-		function PanelSelect:OnActivePanelChanged() timer.Simple( 0.1, function() UpdateFromConvars( true ) end ) end
 
 	end
 } )

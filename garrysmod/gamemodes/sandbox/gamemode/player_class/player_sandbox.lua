@@ -94,14 +94,16 @@ function PLAYER:Spawn()
 
 	-- It is here because it must be in sandbox and GM:PlayerSetModel must really be inside a player class instead of the gamemode itself.
 	timer.Simple( 0, function()
-		local skin = self.Player:GetInfo( "cl_playerskin" )
-		self.Player:SetSkin( tonumber( skin ) )
+
+		local skin = self.Player:GetInfoNum( "cl_playerskin", 0 )
+		self.Player:SetSkin( skin )
 
 		local groups = string.Explode( " ", self.Player:GetInfo( "cl_playerbodygroups" ) )
 		for k = 0, self.Player:GetNumBodyGroups() - 1 do
-			self.Player:SetBodygroup( k, groups[ k + 1 ] or 0 )
+			self.Player:SetBodygroup( k, tonumber( groups[ k + 1 ] ) or 0 )
 		end
-	end)
+
+	end )
 
 end
 
