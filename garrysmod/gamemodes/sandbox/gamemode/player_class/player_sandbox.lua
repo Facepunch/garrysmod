@@ -94,6 +94,9 @@ function PLAYER:Spawn()
 
 	-- It is here because it must be in sandbox and GM:PlayerSetModel must really be inside a player class instead of the gamemode itself.
 	timer.Simple( 0, function()
+		
+		if ( !IsValid( self.Player ) ) then return end
+		
 		local skin = self.Player:GetInfo( "cl_playerskin" )
 		if ( skin == nil ) then skin = 0 end
 		self.Player:SetSkin( tonumber( skin ) )
