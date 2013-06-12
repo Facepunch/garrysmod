@@ -1,4 +1,3 @@
-
 AddCSLuaFile()
 
 local default_animations = { "idle_all_01", "menu_walk" }
@@ -74,6 +73,10 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		local bdcontrols = window:Add( "DPanel" )
 		bdcontrols:DockPadding( 8, 8, 8, 8 )
 
+		local bdcontrolspanel = bdcontrols:Add( "DPanelList" )
+		bdcontrols:EnableVerticalScrollbar( true )
+		bdcontrolspanel:Dock( FILL )
+
 		sheet:AddSheet( "Bodygroups", bdcontrols )
 
 		-- Helper functions
@@ -127,10 +130,10 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		end
 
 		local function RebuildBodygroupTab()
-			bdcontrols:Clear()
+			bdcontrolspanel:Clear()
 			
 			if ( mdl.Entity:GetNumBodyGroups() - 1 <= 0 && mdl.Entity:SkinCount() - 1 <= 0 ) then
-				local skins = bdcontrols:Add( "DLabel" )
+				local skins = bdcontrolspanel:Add( "DLabel" )
 				skins:Dock( TOP )
 				skins:SetDark( true )
 				skins:SetText( "This model doesn't have any bodygroups or skins" )
@@ -140,7 +143,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 			local nskins = mdl.Entity:SkinCount() - 1
 			if ( nskins > 0 ) then
-				local skins = bdcontrols:Add( "DNumSlider" )
+				local skins = vgui.Create( "DNumSlider" )
 				skins:Dock( TOP )
 				skins:SetText( "Skin" )
 				skins:SetDark( true )
@@ -150,6 +153,8 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				skins:SetValue( GetConVarNumber( "cl_playerskin" ) )
 				skins.type = "skin"
 				skins.OnValueChanged = UpdateBodyGroups
+				
+				bdcontrolspanel:AddItem( skins )
 
 				mdl.Entity:SetSkin( GetConVarNumber( "cl_playerskin" ) )
 			end
@@ -158,7 +163,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			for k = 0, mdl.Entity:GetNumBodyGroups() - 1 do
 				if ( mdl.Entity:GetBodygroupCount( k ) <= 1 ) then continue end
 
-				local bgroup = bdcontrols:Add( "DNumSlider" )
+				local bgroup = vgui.Create( "DNumSlider" )
 				bgroup:Dock( TOP )
 				bgroup:SetText( MakeNiceName( mdl.Entity:GetBodygroupName( k ) ) )
 				bgroup:SetDark( true )
@@ -169,6 +174,8 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				bgroup:SetMax( mdl.Entity:GetBodygroupCount( k ) - 1 )
 				bgroup:SetValue( groups[ k + 1 ] or 0 )
 				bgroup.OnValueChanged = UpdateBodyGroups
+				
+				bdcontrolspanel:AddItem( bgroup )
 	
 				mdl.Entity:SetBodygroup( k, groups[ k + 1 ] or 0 )
 			end
