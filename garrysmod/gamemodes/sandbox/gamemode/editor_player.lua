@@ -74,7 +74,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		bdcontrols:DockPadding( 8, 8, 8, 8 )
 
 		local bdcontrolspanel = bdcontrols:Add( "DPanelList" )
-		bdcontrols:EnableVerticalScrollbar( true )
+		bdcontrolspanel:EnableVerticalScrollbar( true )
 		bdcontrolspanel:Dock( FILL )
 
 		sheet:AddSheet( "Bodygroups", bdcontrols )
