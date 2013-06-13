@@ -133,11 +133,14 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			bdcontrolspanel:Clear()
 			
 			if ( mdl.Entity:GetNumBodyGroups() - 1 <= 0 && mdl.Entity:SkinCount() - 1 <= 0 ) then
-				local skins = bdcontrolspanel:Add( "DLabel" )
+				local skins = vgui.Create( "DLabel" )
 				skins:Dock( TOP )
 				skins:SetDark( true )
 				skins:SetText( "This model doesn't have any bodygroups or skins" )
 				skins:SizeToContents()
+
+				bdcontrolspanel:AddItem( skins )
+
 				return
 			end
 
