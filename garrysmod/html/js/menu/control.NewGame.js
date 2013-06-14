@@ -79,6 +79,16 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 		}, 500 )
 	}
 
+	$scope.FavMap = function ( m )
+	{
+		if (m.Category == "Favourites") {
+			lua.Run( 'removeFavourite("' + m.Name + '")' );
+		} else {
+			lua.Run( 'addFavourite("' + m.Name + '")' );
+		}
+		lua.Run( "engine.SetMounted( 0, false )" ); // needs to call js function UpdateMaps from the engine
+	}
+	
 	$scope.StartGame = function()
 	{
 		lua.Run( 'hook.Run( "StartGame" )' )

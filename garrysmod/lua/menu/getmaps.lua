@@ -136,7 +136,10 @@ end
 
 
 
-
+local function getFavourites()
+	local favs = string.Explode(";",file.Read("favmaps.txt","DATA") or "") or {} // Should use the settings folder instead
+	return favs
+end
 
 local IgnoreMaps = { "background", "^test_", "^styleguide", "^devtest" }
 
@@ -150,6 +153,7 @@ local function RefreshMaps()
 	g_MapListCategorised = {}
 	
 	local maps 			= file.Find( "maps/*.bsp", "GAME" )
+	local favourites = getFavourites()
 	
 	for k, v in pairs( maps ) do
 		local Ignore = false
@@ -173,6 +177,10 @@ local function RefreshMaps()
 			end
 
 			if ( MapPatterns[ name ] ) then Category = MapPatterns[ name ] end
+			
+			if table.HasValue(favourites, name) then
+				Category = "Favourites"
+			end
 			
 			g_MapList[ v ] = { Name = name, Category = Category }
 			
@@ -203,3 +211,17 @@ hook.Add( "GameContentChanged", "RefreshMaps", function()
 	RefreshMaps()
 
 end )
+
+function addFavourite(map)
+	local favs = getFavourites()
+	table.insert(favs, map)
+	file.Write("favmaps.txt", table.concat(favs, ";")) // Should use the settings folder instead
+end
+
+function removeFavourite(map)
+	local favs = getFavourites()
+	if table.HasValue(favs, map) then
+		table.remove(favs, table.KeysFromValue(favs, map)[1])
+		file.Write("favmaps.txt", table.concat(favs, ";")) // Should use the settings folder instead
+	end
+end
