@@ -333,6 +333,15 @@ function plymeta:Spectate(type)
    end
 end
 
+local oldSpectateEntity = plymeta.SpectateEntity
+function plymeta:SpectateEntity(ent)
+   oldSpectateEntity(self, ent)
+
+   if IsValid(ent) and ent:IsPlayer() then
+      self:SetPlayerHands(ent)
+   end
+end
+
 local oldUnSpectate = plymeta.UnSpectate
 function plymeta:UnSpectate()
    oldUnSpectate(self)
@@ -341,4 +350,28 @@ end
 
 function plymeta:GetAvoidDetective()
    return self:GetInfoNum("ttt_avoid_detective", 0) > 0
+end
+
+-- Sets hands to be the correct model for given player and attaches to their
+-- viewmodel. Note that the player is not necessarily *self*, but can be a
+-- spectated player.
+function plymeta:SetPlayerHands(ply)
+   local hands = self:GetHands()
+   if not IsValid(hands) or not IsValid(ply) then return end
+
+   -- Find hands model
+   local simplemodel = util.GetSimpleModelName(ply:GetModel())
+   local info = player_manager.TranslatePlayerHands(simplemodel)
+   if info then
+      hands:SetModel(info.model)
+      hands:SetSkin(info.skin)
+      hands:SetBodyGroups(info.body)
+   end
+
+   -- Attach to vm
+   local vm = ply:GetViewModel(0)
+   if vm then
+      hands:AttachToViewmodel(vm)
+      vm:DeleteOnRemove(hands)
+   end
 end

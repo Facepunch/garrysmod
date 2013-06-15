@@ -91,22 +91,9 @@ function GM:PlayerSpawn(ply)
       ply:SetHands(hands)
       hands:SetOwner(ply)
 
-      -- Which hands should we use?
-      local simplemodel = util.GetSimpleModelName(ply:GetModel())
-      local info = player_manager.TranslatePlayerHands(simplemodel)
-      if info then
-         hands:SetModel(info.model)
-         hands:SetSkin(info.skin)
-         hands:SetBodyGroups(info.body)
-      end
-
-      -- Attach them to the viewmodel
-      local vm = ply:GetViewModel(0)
-      hands:AttachToViewmodel(vm)
-
-      vm:DeleteOnRemove(hands)
+      -- Find model and attach to vm, currently ours
+      ply:SetPlayerHands(ply)
       ply:DeleteOnRemove(hands)
-
       hands:Spawn()
    end
 
