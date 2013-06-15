@@ -55,6 +55,8 @@ function SWEP:PrimaryAttack()
    self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
    self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
 
+   if not IsValid(self.Owner) then return end
+
    self.Owner:LagCompensation(true)
 
    local spos = self.Owner:GetShootPos()
@@ -206,10 +208,10 @@ function SWEP:SecondaryAttack()
    self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
 
    if SERVER then
-      self.Owner:SetAnimation( PLAYER_ATTACK1 )
-
       local ply = self.Owner
       if not IsValid(ply) then return end
+
+      ply:SetAnimation( PLAYER_ATTACK1 )
 
       local ang = ply:EyeAngles()
 
