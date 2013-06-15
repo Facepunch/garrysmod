@@ -2,7 +2,7 @@ GM.Name = "Trouble in Terrorist Town"
 GM.Author = "Bad King Urgrain"
 GM.Email = "thegreenbunny@gmail.com"
 GM.Website = "ttt.badking.net"
-GM.Version = "35"
+GM.Version = "36"
 
 
 GM.Customized = false
@@ -109,6 +109,15 @@ function GetRandomPlayerModel()
    return table.Random(ttt_playermodels)
 end
 
+function GM:TTTShouldColorModel(mdl)
+   local colorable =  {
+      "models/player/phoenix.mdl",
+      "models/player/guerilla.mdl",
+      "models/player/leet.mdl"
+   };
+   return table.HasValue(colorable, mdl)
+end
+
 local ttt_playercolors = {
    all = {
       COLOR_WHITE,
@@ -136,19 +145,20 @@ local ttt_playercolors = {
 };
 
 CreateConVar("ttt_playercolor_mode", "1")
-function GM:TTTPlayerColor()
-   local mode = GetConVarNumber("ttt_playercolor_mode") or 1
-   if mode == 1 then
-      return table.Random(ttt_playercolors.serious)
-   elseif mode == 2 then
-      return table.Random(ttt_playercolors.all)
-   elseif mode == 3 then
-      -- Full randomness
-      return Color(math.random(0, 255), math.random(0, 255), math.random(0, 255))
-   else
-      -- No coloring
-      return COLOR_WHITE
+function GM:TTTPlayerColor(model)
+   if hook.Call("TTTShouldColorModel", GAMEMODE, model) then
+      local mode = GetConVarNumber("ttt_playercolor_mode") or 0
+      if mode == 1 then
+         return table.Random(ttt_playercolors.serious)
+      elseif mode == 2 then
+         return table.Random(ttt_playercolors.all)
+      elseif mode == 3 then
+         -- Full randomness
+         return Color(math.random(0, 255), math.random(0, 255), math.random(0, 255))
+      end
    end
+   -- No coloring
+   return COLOR_WHITE
 end
 
 -- Kill footsteps on player and client
