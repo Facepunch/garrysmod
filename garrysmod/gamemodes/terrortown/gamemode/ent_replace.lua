@@ -498,13 +498,14 @@ local function ImportSettings(map)
    local lines = string.Explode("\n", buf)
    for k, line in pairs(lines) do
       if string.match(line, "^setting") then
-         local key, val = string.match(line, "^setting:\t(%w*) ([0-9]*)$")
+         print(line)
+         local key, val = string.match(line, "^setting:\t(%w*) ([0-9]*)")
          val = tonumber(val)
 
          if key and val then
             settings[key] = val
          else
-            ErrorNoHalt("Invalid line " .. k .. " in " .. fname .. "\n")
+            ErrorNoHalt("Invalid setting line " .. k .. " in " .. fname .. "\n")
          end
       end
    end
