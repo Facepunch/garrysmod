@@ -137,7 +137,7 @@ end
 
 
 local function getFavourites()
-	local favs = string.Explode(";",file.Read("favmaps.txt","DATA") or "") or {} // Should use the settings folder instead
+	local favs = string.Explode(";",cookie.GetString("favmaps", "")) or {}
 	return favs
 end
 
@@ -212,16 +212,14 @@ hook.Add( "GameContentChanged", "RefreshMaps", function()
 
 end )
 
-function addFavourite(map)
+function toggleFavourite(map)
 	local favs = getFavourites()
-	table.insert(favs, map)
-	file.Write("favmaps.txt", table.concat(favs, ";")) // Should use the settings folder instead
-end
-
-function removeFavourite(map)
-	local favs = getFavourites()
-	if table.HasValue(favs, map) then
+	if table.HasValue(favs, map) then -- is favourite, remove it
 		table.remove(favs, table.KeysFromValue(favs, map)[1])
-		file.Write("favmaps.txt", table.concat(favs, ";")) // Should use the settings folder instead
+	else -- not favourite, add it
+		table.insert(favs, map)
 	end
+	cookie.Set("favmaps", table.concat(favs, ";"))
+	RefreshMaps()
+	UpdateMapList()
 end
