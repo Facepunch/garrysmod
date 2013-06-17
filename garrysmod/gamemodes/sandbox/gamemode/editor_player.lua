@@ -14,12 +14,13 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		local mdl = window:Add( "DModelPanel" )
 		mdl:Dock( FILL )
 		mdl:SetFOV( 36 )
-		mdl:SetCamPos( Vector( 100, 0, 60 ) )
+		mdl:SetCamPos( Vector( 0, 0, 0 ) )
 		mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 160, 80, 255 ) )
 		mdl:SetDirectionalLight( BOX_LEFT, Color( 80, 160, 255, 255 ) )
 		mdl:SetAmbientLight( Vector( -64, -64, -64 ) )
 		mdl:SetAnimated( true )
 		mdl.Angles = Angle( 0, 0, 0 )
+		mdl:SetLookAt( Vector( -100, 0, -22 ) )
 
 		local sheet = window:Add( "DPropertySheet" )
 		sheet:Dock( RIGHT )
@@ -191,6 +192,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			util.PrecacheModel( modelname )
 			mdl:SetModel( modelname )
 			mdl.Entity.GetPlayerColor = function() return Vector( GetConVarString( "cl_playercolor" ) ) end
+			mdl.Entity:SetPos( Vector( -100, 0, -61 ) )
 
 			plycol:SetVector( Vector( GetConVarString( "cl_playercolor" ) ) )
 			wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) )
