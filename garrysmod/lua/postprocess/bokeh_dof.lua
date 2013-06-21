@@ -1,4 +1,3 @@
-
 local mat = 
 {
 	blur = Material( "pp/bokehblur" ),
@@ -20,6 +19,8 @@ local function DrawBokehDOF()
 	mat.blur:SetFloat( "$size", pp_bokeh_blur:GetFloat() )
 	mat.blur:SetFloat( "$focus", pp_bokeh_distance:GetFloat() )
 	mat.blur:SetFloat( "$focusradius", pp_bokeh_focus:GetFloat() )
+
+	DOFModeHack( true )
 
 	render.SetMaterial( mat.blur )
 	render.DrawScreenQuad()
