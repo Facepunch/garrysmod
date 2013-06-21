@@ -1,3 +1,4 @@
+
 local mat = 
 {
 	blur = Material( "pp/bokehblur" ),
@@ -20,12 +21,25 @@ local function DrawBokehDOF()
 	mat.blur:SetFloat( "$focus", pp_bokeh_distance:GetFloat() )
 	mat.blur:SetFloat( "$focusradius", pp_bokeh_focus:GetFloat() )
 
-	DOFModeHack( true )
-
 	render.SetMaterial( mat.blur )
 	render.DrawScreenQuad()
 	
 end
+
+
+local function OnChange( name, oldvalue, newvalue )
+
+	if ( !GAMEMODE:PostProcessPermitted( "bokeh" ) ) then	return end
+
+	if ( newvalue != "0" ) then
+		DOFModeHack( true )
+	else
+		DOFModeHack( false )
+	end
+
+end
+
+cvars.AddChangeCallback( "pp_bokeh", OnChange )
 
 
 hook.Add( "RenderScreenspaceEffects", "RenderBokeh", function()
