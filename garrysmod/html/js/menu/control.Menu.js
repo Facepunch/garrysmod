@@ -131,7 +131,14 @@ function MenuController( $scope, $rootScope )
 		console.log( "Opening News!" );
 		lua.Run( "gui.OpenURL( 'http://www.garrysmod.com/updates/' )" );
 	}
-	
+	$scope.ToggleConsole = function()
+	{
+		lua.Run( "RawConsoleCommand( 'toggleconsole' )" );
+	} 
+	$scope.ReloadMenu = function()
+	{
+		lua.Run( "RunConsoleCommand( 'menu_reload' )" );
+	} 
 
 	// Background
 	ChangeBackground();
