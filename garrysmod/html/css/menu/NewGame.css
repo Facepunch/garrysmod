@@ -22,6 +22,7 @@ UL.category LI.mapicon IMG.favtoggle:hover
 
 UL.category LI.mapicon
 {
+	position:relative;
 	width: 128px;
 	text-align: center;
 	font-size: 10px;
