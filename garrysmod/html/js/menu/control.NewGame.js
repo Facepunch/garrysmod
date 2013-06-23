@@ -6,6 +6,12 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 {
 	$scope.CurrentCategory = "Sandbox";
 
+	for (var i = 0; i < gScope.MapList.length; i++) {
+		if (gScope.MapList[i]["category"] == "Favourites") {
+			$scope.CurrentCategory = "Favourites";
+		}
+	} 
+
 	$scope.Players = 
 	[
 		{ num: 1, label: 'Single player' },
@@ -78,6 +84,11 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 			m.DoubleClick = false;
 		}, 500 )
 	}
+	
+	$scope.FavMap = function ( m )
+	{
+		lua.Run( 'toggleFavourite("' + m.Name + '")' );
+	} 
 
 	$scope.StartGame = function()
 	{

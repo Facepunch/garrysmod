@@ -1,8 +1,24 @@
-UL.category LI.mapicon IMG
+UL.category LI.mapicon IMG.thumbnail
 {
 	width: 128px;
 	height: 128px;
 }
+UL.category LI.mapicon IMG.favtoggle 
+{
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  visibility: hidden;
+}
+UL.category LI.mapicon:hover IMG.favtoggle
+{
+  visibility: visible;
+}
+UL.category LI.mapicon IMG.favtoggle:hover 
+{
+  background-color: #97c5ff;
+  border-radius: 3px;
+} 
 
 UL.category LI.mapicon
 {

@@ -135,8 +135,10 @@ local function UpdateMapPatterns()
 end
 
 
-
-
+local favmaps
+local function loadFavourites()
+	favmaps = favmaps or string.Explode(";",cookie.GetString("favmaps", ""))
+end 
 
 local IgnoreMaps = { "background", "^test_", "^styleguide", "^devtest" }
 
@@ -150,6 +152,7 @@ local function RefreshMaps()
 	g_MapListCategorised = {}
 	
 	local maps 			= file.Find( "maps/*.bsp", "GAME" )
+	loadFavourites()
 	
 	for k, v in pairs( maps ) do
 		local Ignore = false
@@ -173,6 +176,10 @@ local function RefreshMaps()
 			end
 
 			if ( MapPatterns[ name ] ) then Category = MapPatterns[ name ] end
+			
+			if table.HasValue(favmaps, name) then
+				Category = "Favourites"
+			end
 			
 			g_MapList[ v ] = { Name = name, Category = Category }
 			
@@ -203,3 +210,15 @@ hook.Add( "GameContentChanged", "RefreshMaps", function()
 	RefreshMaps()
 
 end )
+
+function toggleFavourite(map)
+	loadFavourites()
+	if table.HasValue(favmaps, map) then -- is favourite, remove it
+		table.remove(favmaps, table.KeysFromValue(favmaps, map)[1])
+	else -- not favourite, add it
+		table.insert(favmaps, map)
+	end
+	cookie.Set("favmaps", table.concat(favmaps, ";"))
+	RefreshMaps()
+	UpdateMapList()
+end
