@@ -69,8 +69,8 @@ SKIN.colNumberWangBG			= Color( 255, 240, 150, 255 )
 SKIN.colTextEntryBG				= Color( 240, 240, 240, 255 )
 SKIN.colTextEntryBorder			= Color( 20, 20, 20, 255 )
 SKIN.colTextEntryText			= Color( 20, 20, 20, 255 )
-SKIN.colTextEntryTextHighlight	= Color( 20, 200, 250, 255 )
-SKIN.colTextEntryTextHighlight	= Color( 20, 200, 250, 255 )
+SKIN.colTextEntryTextHighlight		= Color( 20, 200, 250, 255 )
+SKIN.colTextEntryTextCursor		= Color( 0, 0, 100, 255 )
 
 SKIN.colMenuBG					= Color( 255, 255, 255, 200 )
 SKIN.colMenuBorder				= Color( 0, 0, 0, 200 )
@@ -463,7 +463,7 @@ function SKIN:SchemeTextEntry( panel ) ---------------------- TODO
 	
 	panel:SetTextColor( self.colTextEntryText )
 	panel:SetHighlightColor( self.colTextEntryTextHighlight )
-	panel:SetCursorColor( Color( 0, 0, 100, 255 ) )
+	panel:SetCursorColor( self.colTextEntryTextCursor )
 
 end
 
