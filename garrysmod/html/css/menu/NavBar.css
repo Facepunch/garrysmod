@@ -134,6 +134,11 @@ UL.games_list LI
 	position: relative;
 }
 
+UL.games_list LI:last-child
+{
+	margin-bottom: 0px;
+}
+
 UL.games_list LI span
 {
 	position: absolute;
@@ -161,12 +166,20 @@ UL.games_list LI.notowned
 	cursor: default;
 }
 
+UL.gamemode_list
+{
+	overflow: auto;
+	max-height: 80%;
+	border: 3px solid #333;
+}
+
 UL.gamemode_list LI
 {
 	display: inherit;
 	margin: 3px;
 	border-radius: 0;
 	background-color: #eee;
+	margin: 0 2px 2px 0;
 }
 
 UL.gamemode_list LI:hover
@@ -181,6 +194,7 @@ UL.gamemode_list LI:first-child
 
 UL.gamemode_list LI:last-child
 {
+	margin-bottom: 0;
 	border-radius: 0 0 3px 3px;
 }
 
