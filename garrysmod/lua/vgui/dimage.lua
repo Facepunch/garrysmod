@@ -42,6 +42,7 @@ function PANEL:SetOnViewMaterial( MatName, MatNameBackup )
 
 	self:SetMatName( MatName )
 	self:SetFailsafeMatName( MatNameBackup )
+	self.ImageName = MatName
 
 end
 
