@@ -131,12 +131,12 @@ function PANEL:StatusChanged( strStatus )
 	
 		local Filename = string.gsub( strStatus, "Downloading ", "" )
 		Filename = string.gsub( Filename, "'", "\'" )
-		self:RunJavascript( "DownloadingFile( '" .. Filename .. "' )" );
+		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. Filename .. "' )" );
 	
 	return end
 	
 	strStatus = string.gsub( strStatus, "'", "\'" )
-	self:RunJavascript( "SetStatusChanged( '" .. strStatus .. "' )" );
+	self:RunJavascript( "if ( window.SetStatusChanged ) SetStatusChanged( '" .. strStatus .. "' )" );
 	
 end
 
@@ -186,8 +186,8 @@ function PANEL:RefreshDownloadables()
 	
 	if ( iDownloading == 0 ) then return end
 	
-	self:RunJavascript( "SetFilesNeeded( " .. iDownloading .. ")" );
-	self:RunJavascript( "SetFilesTotal( " .. iFileCount .. ")" );
+	self:RunJavascript( "if ( window.SetFilesNeeded ) SetFilesNeeded( " .. iDownloading .. ")" );
+	self:RunJavascript( "if ( window.SetFilesTotal ) SetFilesTotal( " .. iFileCount .. ")" );
 
 end
 
@@ -264,6 +264,7 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 		pnlLoading:ShowURL( serverurl, true ) 
 	end
 
-	pnlLoading.JavascriptRun = string.format( "GameDetails( \"%s\", \"%s\", \"%s\", %i, \"%s\", \"%s\" );", servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe() )
+	pnlLoading.JavascriptRun = string.format( "if ( window.GameDetails ) GameDetails( \"%s\", \"%s\", \"%s\", %i, \"%s\", \"%s\" );",
+		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe() )
 
 end
