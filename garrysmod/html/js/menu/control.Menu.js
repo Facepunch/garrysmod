@@ -277,7 +277,7 @@ function UpdateMaps( inmaps )
 		for ( v in inmaps[k] )
 		{
 			maps.push( inmaps[k][v] );
-			MapIndex[v.toLowerCase()] = inmaps[k][v];
+			MapIndex[v.toLowerCase()] = true;
 		}
 
 		mapList.push( 
@@ -294,8 +294,7 @@ function UpdateMaps( inmaps )
 
 function DoWeHaveMap( map )
 {
-	if ( MapIndex[map.toLowerCase()] ) return true;
-	return false;
+	return MapIndex[map.toLowerCase()] || false;
 }
 
 function UpdateLanguages( lang )
