@@ -361,7 +361,7 @@ local function CleanUp()
 
    et.FixParentedPreCleanup()
 
-   game.CleanUpMap(false, {"env_beam"})
+   game.CleanUpMap()
 
    et.FixParentedPostCleanup()
 
