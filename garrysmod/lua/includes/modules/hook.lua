@@ -4,6 +4,7 @@ local pairs			= pairs
 local isfunction	= isfunction
 local isstring		= isstring
 local IsValid		= IsValid
+local unpack = unpack
 
 module( "hook" )
 
@@ -70,7 +71,7 @@ function Call( name, gm, ... )
 	local HookTable = Hooks[ name ]
 	if ( HookTable != nil ) then
 	
-		local a, b, c, d, e, f;
+		local ret;
 
 		for k, v in pairs( HookTable ) do 
 			
@@ -79,7 +80,7 @@ function Call( name, gm, ... )
 				--
 				-- If it's a string, it's cool
 				--
-				a, b, c, d, e, f = v( ... )
+				ret = { v( ... ) }
 
 			else
 
@@ -91,7 +92,7 @@ function Call( name, gm, ... )
 					--
 					-- If the object is valid - pass it as the first argument (self)
 					--
-					a, b, c, d, e, f = v( k, ... )
+					ret = { v( k, ... ) }
 				else
 					--
 					-- If the object has become invalid - remove it
@@ -103,8 +104,8 @@ function Call( name, gm, ... )
 			--
 			-- Hook returned a value - it overrides the gamemode function
 			--
-			if ( a != nil ) then
-				return a, b, c, d, e, f
+			if ( ret and #ret > 0 ) then
+				return unpack( ret )
 			end
 			
 		end
