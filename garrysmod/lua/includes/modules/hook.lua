@@ -104,7 +104,7 @@ function Call( name, gm, ... )
 			--
 			-- Hook returned a value - it overrides the gamemode function
 			--
-			if ( #ret > 0 ) then
+			if ( ret and #ret > 0 ) then
 				return unpack( ret )
 			end
 			
