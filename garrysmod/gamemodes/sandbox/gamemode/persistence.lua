@@ -1,5 +1,4 @@
 
-
 if ( SERVER ) then 
 
 local PersistPage = GetConVarString( "sbox_persist" )
@@ -40,8 +39,6 @@ hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
 	if ( !tab ) then return end
 	if ( !tab.Entities ) then return end
 	if ( !tab.Constraints ) then return end
-
-	game.CleanUpMap()
 
 	local Ents, Constraints = duplicator.Paste( nil, tab.Entities, tab.Constraints )
 
