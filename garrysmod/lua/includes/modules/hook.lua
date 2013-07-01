@@ -51,13 +51,10 @@ function Run( name, ... )
 	return Call( name, nil, ... )
 end
 
-
-
 --
--- Called by the engine
--- Call( name, gamemode, ... )
+-- function Call( name, gm, ... )
 --
-Call = (function()
+do
 	local ret
 	local function setRet(first, ...)
 		if(first == nil)then
@@ -65,7 +62,10 @@ Call = (function()
 		end
 		ret = { first, ... }
 	end
-	return function( name, gm, ... )
+	--
+	-- Called by the engine
+	--
+	function Call( name, gm, ... )
 		--
 		-- Run hooks
 		--
@@ -129,4 +129,4 @@ Call = (function()
 		return GamemodeFunction( gm, ... )	
 		
 	end
-end)()
+end
