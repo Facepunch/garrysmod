@@ -60,7 +60,7 @@ end
 Call = (function()
 	local ret
 	local function setRet(first, ...)
-		if(first ~= nil)then
+		if(first == nil)then
 			return
 		end
 		ret = { first, ... }
