@@ -51,7 +51,7 @@ search.AddProvider( function( str )
 			{
 				text = v:GetFileFromFilename(),
 				func = function() RunConsoleCommand( "gm_spawn", v ) end,
-				icon = spawnmenu.CreateContentIcon( "model", nil, { model = v } ),
+				icon = spawnmenu.CreateContentIcon( "model", g_SpawnMenu.SearchPropPanel, { model = v } ),
 				words = { v }
 			}
 			
