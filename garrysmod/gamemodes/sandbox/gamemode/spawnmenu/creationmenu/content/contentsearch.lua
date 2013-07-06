@@ -68,6 +68,8 @@ function PANEL:Init()
 	self.PropPanel:SetVisible( false )
 	self.PropPanel:SetTriggerSpawnlistChange( false )
 	
+	g_SpawnMenu.SearchPropPanel = self.PropPanel
+	
 end
 
 function PANEL:RefreshResults() 
