@@ -40,7 +40,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		end
 
-		sheet:AddSheet( "Model", PanelSelect )
+		sheet:AddSheet( "Model", PanelSelect, "icon16/user.png" )
 
 		local controls = window:Add( "DPanel" )
 		controls:DockPadding( 8, 8, 8, 8 )
@@ -69,7 +69,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		wepcol:SetSize( 200, 260 )
 		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
 
-		sheet:AddSheet( "Colors", controls )
+		sheet:AddSheet( "Colors", controls, "icon16/color_wheel.png" )
 
 		local bdcontrols = window:Add( "DPanel" )
 		bdcontrols:DockPadding( 8, 8, 8, 8 )
@@ -78,7 +78,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		bdcontrolspanel:EnableVerticalScrollbar( true )
 		bdcontrolspanel:Dock( FILL )
 
-		sheet:AddSheet( "Bodygroups", bdcontrols )
+		local bgtab = sheet:AddSheet( "Bodygroups", bdcontrols, "icon16/cog.png" )
 
 		-- Helper functions
 
@@ -133,17 +133,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		local function RebuildBodygroupTab()
 			bdcontrolspanel:Clear()
 			
-			if ( mdl.Entity:GetNumBodyGroups() - 1 <= 0 && mdl.Entity:SkinCount() - 1 <= 0 ) then
-				local skins = vgui.Create( "DLabel" )
-				skins:Dock( TOP )
-				skins:SetDark( true )
-				skins:SetText( "This model doesn't have any bodygroups or skins" )
-				skins:SizeToContents()
-
-				bdcontrolspanel:AddItem( skins )
-
-				return
-			end
+			bgtab.Tab:SetVisible( false )
 
 			local nskins = mdl.Entity:SkinCount() - 1
 			if ( nskins > 0 ) then
@@ -161,6 +151,8 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				bdcontrolspanel:AddItem( skins )
 
 				mdl.Entity:SetSkin( GetConVarNumber( "cl_playerskin" ) )
+				
+				bgtab.Tab:SetVisible( true )
 			end
 
 			local groups = string.Explode( " ", GetConVarString( "cl_playerbodygroups" ) )
@@ -182,6 +174,8 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				bdcontrolspanel:AddItem( bgroup )
 	
 				mdl.Entity:SetBodygroup( k, groups[ k + 1 ] or 0 )
+				
+				bgtab.Tab:SetVisible( true )
 			end
 		end
 
