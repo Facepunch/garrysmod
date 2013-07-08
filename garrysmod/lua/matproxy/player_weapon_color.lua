@@ -1,7 +1,7 @@
 
-matproxy.Add( 
+matproxy.Add(
 {
-	name	=	"PlayerWeaponColor", 
+	name	=	"PlayerWeaponColor",
 
 	init	=	function( self, mat, values )
 
@@ -14,7 +14,7 @@ matproxy.Add(
 		if ( !IsValid( ent ) ) then return end
 
 		local owner = ent:GetOwner();
-		if ( !IsValid( owner ) ) then return end
+		if ( !IsValid( owner ) or !owner:IsPlayer() ) then return end
 
 		local col = owner:GetWeaponColor();
 		if ( !isvector( col ) ) then return end
@@ -23,5 +23,5 @@ matproxy.Add(
 
 		mat:SetVector( self.ResultTo, col + col * mul );
 
-	end 
+	end
 })
