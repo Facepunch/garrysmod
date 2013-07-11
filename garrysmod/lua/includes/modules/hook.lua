@@ -1,5 +1,6 @@
 
 local gmod			= gmod
+local table 		= table
 local pairs			= pairs
 local isfunction	= isfunction
 local isstring		= isstring
@@ -26,7 +27,12 @@ function Add( event_name, name, func )
 		Hooks[ event_name ] = {}
 	end
 
-	Hooks[ event_name ][ name ] = func
+	if ( !isstring( name ) && IsValid( name ) ) then
+		Hooks[ event_name ][ name ] = Hooks[ event_name ][ name ] or {}
+		return table.insert( Hooks[ event_name ][ name ], func )
+	else
+		Hooks[ event_name ][ name ] = func
+	end
 
 end
 
@@ -34,12 +40,16 @@ end
 --
 -- Remove a hook
 --
-function Remove( event_name, name )
+function Remove( event_name, name, ent_id )
 
 	if ( !isstring( event_name ) ) then return end
 	if ( !Hooks[ event_name ] ) then return end
 
-	Hooks[ event_name ][ name ] = nil
+	if ( ent_id && Hooks[ event_name ][ name ] ) then
+		Hooks[ event_name ][ name ][ ent_id ] = nil
+	else
+		Hooks[ event_name ][ name ] = nil
+	end
 
 end
 
@@ -88,10 +98,12 @@ function Call( name, gm, ... )
 				-- Or panel, or something else that IsValid works on.
 				--
 				if ( IsValid( k ) ) then
-					--
-					-- If the object is valid - pass it as the first argument (self)
-					--
-					a, b, c, d, e, f = v( k, ... )
+					for HookID, func in pairs( v ) do
+						--
+						-- If the object is valid - pass it as the first argument (self)
+						--
+						a, b, c, d, e, f = func( k, ... )
+					end
 				else
 					--
 					-- If the object has become invalid - remove it
