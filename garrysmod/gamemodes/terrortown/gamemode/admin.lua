@@ -165,6 +165,8 @@ local function DetectServerPlugin()
       return "ulx"
    elseif evolve and evolve.Ban then
       return "evolve"
+   elseif exsto and exsto.GetPlugin('administration') then
+      return "exsto"
    else
       return "gmod"
    end
@@ -184,6 +186,13 @@ local ban_functions = {
 
    sm     = function(p, l, r)
                game.ConsoleCommand(Format("sm_ban \"#%s\" %d \"%s\"\n", p:SteamID(), l, r))
+            end,
+
+   exsto  = function(p, l, r)
+               local adm = exsto.GetPlugin('administration')
+               if adm and adm.Ban then
+                  adm:Ban(nil, p, l, r)
+               end
             end,
 
    gmod   = StandardBan
