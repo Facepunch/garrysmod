@@ -299,7 +299,15 @@ function ENT:IsDetectiveNear()
 end
 
 local beep = Sound("weapons/c4/c4_beep1.wav")
+local MAX_MOVE_RANGE = 1000000 -- sq of 1000
 function ENT:Think()
+   if not self:GetArmed() then return end
+
+   local curpos = self:GetPos()
+   if self.LastPos and self.LastPos:DistToSqr(curpos) > MAX_MOVE_RANGE then
+      self:Disarm(nil)
+   end
+   self.LastPos = curpos
 
    local etime = self:GetExplodeTime()
    if self:GetArmed() and etime != 0 and etime < CurTime() then
