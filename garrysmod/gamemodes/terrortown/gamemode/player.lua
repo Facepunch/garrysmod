@@ -1079,7 +1079,7 @@ function GM:Tick()
 
          -- Slow down ironsighters
          local wep = ply:GetActiveWeapon()
-         if IsValid(wep) and wep:GetIronsights() then
+         if IsValid(wep) and wep.GetIronsights and wep:GetIronsights() then
             ply:SetSpeed(true)
          else
             ply:SetSpeed(false)

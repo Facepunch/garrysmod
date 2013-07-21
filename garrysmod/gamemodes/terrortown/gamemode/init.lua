@@ -391,10 +391,7 @@ local function SpawnEntities()
       et.PlaceExtraWeapons()
    end
 
-   --et.MarkAreaPortalDoors()
-
    -- Finally, get players in there
-   --timer.Simple(0.01, SpawnWillingPlayers)
    SpawnWillingPlayers()
 end
 
@@ -986,8 +983,3 @@ function AnnounceVersion()
       end
    end
 end
-
-function GM:AcceptStream(ply, handler, id)
-   return false -- not used, so reject all to avoid "unhandled stream" errors
-end
-

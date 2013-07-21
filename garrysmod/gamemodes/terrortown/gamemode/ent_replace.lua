@@ -498,7 +498,6 @@ local function ImportSettings(map)
    local lines = string.Explode("\n", buf)
    for k, line in pairs(lines) do
       if string.match(line, "^setting") then
-         print(line)
          local key, val = string.match(line, "^setting:\t(%w*) ([0-9]*)")
          val = tonumber(val)
 
