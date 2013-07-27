@@ -39,6 +39,18 @@ local tblRow = vgui.RegisterTable( {
 
 	end,
 
+	SetEnabled = function( self, bEnabled )
+		
+		local Inner = self.Inner
+		if ( !IsValid( Inner ) ) then return end
+		
+		self.m_bEnabled = bEnabled
+		
+		local Children = Inner:GetChildren()
+		Children[1]:SetEnabled(bEnabled)
+		
+	end,
+		
 	SetValue = function( self, val ) 
 
 		--
