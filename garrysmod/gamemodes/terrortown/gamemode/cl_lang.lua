@@ -141,7 +141,7 @@ function LANG.SetActiveLanguage(lang_name)
          hook.Call("TTTLanguageChanged", GAMEMODE, old_name, lang_name)
       end
    else
-      ErrorNoHalt(Format("The language '%s' does not exist on this server. Falling back to English...\n", lang_name))
+      MsgN(Format("The language '%s' does not exist on this server. Falling back to English...", lang_name))
 
       -- fall back to default if possible
       if lang_name != LANG.DefaultLanguage then
