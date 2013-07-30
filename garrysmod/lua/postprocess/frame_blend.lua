@@ -211,7 +211,7 @@ list.Set( "PostProcess", "Frame Blend",
 	
 	cpanel		= function( CPanel )
 
-		CPanel:AddControl( "Header", { Text = "#Frame Blend", Description = "This will lower your FPS. This text isn't shown so why bother." }  )
+		CPanel:AddControl( "Header", { Text = "#Frame Blend", Description = "This will lower your FPS." }  )
 		CPanel:AddControl( "CheckBox", { Label = "#Enable", Command = "pp_fb" }  )
 
 		CPanel:AddControl( "Slider", 
