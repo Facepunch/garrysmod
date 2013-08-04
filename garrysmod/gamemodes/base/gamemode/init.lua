@@ -132,3 +132,8 @@ function GM:CheckPassword( steamid, networkid, server_password, password, name )
 end
 
 
+--
+-- Called after game.CleanUpMap() is run
+--
+function GM:OnCleanUpMap( )
+end
