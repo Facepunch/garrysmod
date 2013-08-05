@@ -1,4 +1,3 @@
-
 TOOL.Category		= "Construction"
 TOOL.Name			= "#tool.button.name"
 TOOL.Command		= nil
@@ -117,7 +116,9 @@ if (SERVER) then
 		end
 		
 		DoPropSpawnedEffect( button )
-
+		
+		hook.Call("PlayerSpawnedButton", nil, pl, button)
+		
 		return button
 		
 	end
