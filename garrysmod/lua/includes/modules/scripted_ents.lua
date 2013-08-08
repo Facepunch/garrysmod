@@ -210,6 +210,9 @@ function GetList()
 	for k,v in pairs(SEntList) do
 		result[ k ] = v
 	end
+	for k,v in pairs(Aliases) do
+		result[ k ] = SEntList[ v ]
+	end
 	
 	return result
 end
