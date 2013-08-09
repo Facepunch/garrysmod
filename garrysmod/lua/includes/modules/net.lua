@@ -5,10 +5,8 @@ net.Receivers = {}
 -- Set up a function to receive network messages
 --
 function net.Receive( name, func )
-	
-	net.Receivers[ name:lower() ] = net.Receivers[ name:lower() ] or {}
-	
-	table.insert( net.Receivers[ name:lower() ], func )
+		
+	net.Receivers[ name:lower() ] = func
 
 end
 
@@ -22,17 +20,15 @@ function net.Incoming( len, client )
 	
 	if ( !strName ) then return end
 	
-	local t = net.Receivers[ strName:lower() ]
-	if ( !t ) then return end
+	local func = net.Receivers[ strName:lower() ]
+	if ( !func ) then return end
 
 	--
 	-- len includes the 16 byte int which told us the message name
 	--
 	len = len - 16
 	
-	for k, v in pairs( t ) do
-		v( len, client )
-	end
+	func( len, client )
 
 end
 
