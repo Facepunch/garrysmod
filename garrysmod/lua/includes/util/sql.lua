@@ -7,17 +7,21 @@ if ( !sql ) then return end
     Attempts to make a string safe to put into the database
 ------------------------------------------------------------]]
 function sql.SQLStr( str_in, bNoQuotes )
- 
-    local str = tostring( str_in )
- 
-    str = str:gsub( [["]], [[""]] )
- 
-    if ( bNoQuotes ) then
-        return str
-    end
- 
-    return [["]] .. str .. [["]];
- 
+	
+	local str = tostring( str_in )
+	
+	str = str:gsub( "'", "''" )
+	
+	local null_chr = string.find( str, "\0" )
+	if null_chr then
+		str = string.sub( str, 1, null_chr - 1 )
+	end
+	
+	if ( bNoQuotes ) then
+		return str
+	end
+	
+	return "'" .. str .. "'"
 end
 
 SQLStr = sql.SQLStr
