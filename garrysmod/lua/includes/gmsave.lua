@@ -37,6 +37,7 @@ if ( SERVER ) then
 		end
 		
 		game.CleanUpMap()
+		gamemode.Call( "OnCleanUpMap" )
 		
 		if ( IsValid( ply ) ) then
 
