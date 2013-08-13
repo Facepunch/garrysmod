@@ -640,14 +640,14 @@ end
 
 function table.GetLastKey( t )
 
-	local k, v = next( t, table.Count(t) )
+	local k, v = next( t, table.Count(t) - 1 )
 	return k
 	
 end
 
 function table.GetLastValue( t )
 
-	local k, v = next( t, table.Count(t) )
+	local k, v = next( t, table.Count(t) - 1 )
 	return v
 	
 end
