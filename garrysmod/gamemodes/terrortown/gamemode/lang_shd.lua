@@ -3,6 +3,7 @@
 
 -- tbl is first created here on both server and client
 -- could make it a module but meh
+if LANG then return end
 LANG = {}
 
 util.IncludeClientFile("cl_lang.lua")
