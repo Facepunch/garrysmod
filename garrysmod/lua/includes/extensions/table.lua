@@ -143,9 +143,9 @@ function table.SortByKey( Table, Desc )
 
 	for key, _ in pairs(Table) do table.insert(temp, key) end
 	if ( Desc ) then
-		table.sort(temp, function(a, b) return Table[a] < Table[b] end)
-	else
 		table.sort(temp, function(a, b) return Table[a] > Table[b] end)
+	else
+		table.sort(temp, function(a, b) return Table[a] < Table[b] end)
 	end
 
 	return temp
