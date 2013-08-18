@@ -7,7 +7,7 @@ SWEP.Contact		= ""
 SWEP.Purpose		= ""
 SWEP.Instructions	= ""
 
-SWEP.ViewModel		= "models/weapons/v_pistol.mdl"
+SWEP.ViewModel		= "models/weapons/c_arms_animations.mdl"
 SWEP.WorldModel		= "models/MaxOfS2D/camera.mdl"
 
 util.PrecacheModel( SWEP.ViewModel )
@@ -95,7 +95,8 @@ end
 	Reload does nothing
 -----------------------------------------------------------]]
 function SWEP:Reload()
-	self:SetZoom( self.Owner:GetInfoNum( "fov_desired", 70 ) )
+
+	if ( !self.Owner:KeyDown( IN_ATTACK2 ) ) then self:SetZoom( self.Owner:GetInfoNum( "fov_desired", 75 ) ) end
 	self:SetRoll( 0 )
 		
 end
@@ -258,13 +259,23 @@ function SWEP:TranslateFOV( current_fov )
 end
 
 --
--- Turn off viewmodel drawing
+-- Allow lastinv
 --
 function SWEP:Deploy()
 
-	self.Owner:DrawViewModel( false )
-
+	return true
+	
 end
 
+--
+-- Set FOV to players desired FOV
+--
+function SWEP:Equip()
+
+	if ( self:GetZoom() == 70 ) then
+		self:SetZoom( self.Owner:GetInfoNum( "fov_desired", 75 ) )
+	end
+
+end
 
 function SWEP:ShouldDropOnDie() return false end
