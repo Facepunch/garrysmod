@@ -406,7 +406,7 @@ function AddConstraintTableNoDelete(  Ent, Constraint, Ent2, Ent3, Ent4 )
 	end
 	
 	if (Ent2 && Ent2!=Ent) then
-		AddConstraintTable( Ent2, Constraint, Ent3, Ent4 )
+		AddConstraintTableNoDelete( Ent2, Constraint, Ent3, Ent4 )
 	end
 
 end
