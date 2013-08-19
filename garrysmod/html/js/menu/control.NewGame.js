@@ -60,6 +60,14 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 
 		return "";
 	}
+	
+	$scope.HoverAdd = function( m )
+	{
+		if ( m.Category == "Favourites" )
+			return "faviconremove";
+
+		return "faviconadd";
+	}
 
 	$scope.SelectMap = function ( m )
 	{
