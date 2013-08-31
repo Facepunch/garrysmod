@@ -140,6 +140,18 @@ function PANEL:LoadControlsFromTextFile( strName )
 end
 
 --[[---------------------------------------------------------
+   Name: ControlValues
+-----------------------------------------------------------]]
+function PANEL:ControlValues( data )
+	if ( data.label) then
+		self:SetLabel( data.label );
+	end
+	if ( data.closed ) then
+		self:SetExpanded( false );
+	end
+end
+
+--[[---------------------------------------------------------
    Name: AddControl
 -----------------------------------------------------------]]
 function PANEL:AddControl( control, data )
