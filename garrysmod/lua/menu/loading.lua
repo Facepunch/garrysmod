@@ -130,12 +130,12 @@ function PANEL:StatusChanged( strStatus )
 	if ( string.find( strStatus, "Downloading " ) ) then
 	
 		local Filename = string.gsub( strStatus, "Downloading ", "" )
-		Filename = string.gsub( Filename, "'", "\'" )
+		Filename = string.gsub( Filename, "'", "\\'" )
 		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. Filename .. "' )" );
 	
 	return end
 	
-	strStatus = string.gsub( strStatus, "'", "\'" )
+	strStatus = string.gsub( strStatus, "'", "\\'" )
 	self:RunJavascript( "if ( window.SetStatusChanged ) SetStatusChanged( '" .. strStatus .. "' )" );
 	
 end
