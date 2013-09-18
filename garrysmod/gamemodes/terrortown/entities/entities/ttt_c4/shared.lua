@@ -582,7 +582,9 @@ if CLIENT then
       self:DrawModel()
 
       if self:GetArmed() then
-         local angpos_ur = self:GetAttachment(self:LookupAttachment("controlpanel0_ur"))
+         local ang = self:GetAngles() ang:RotateAroundAxis(self:GetUp(),-90)
+         local angpos_ur = self:GetAttachment(self:LookupAttachment("controlpanel0_ur")) or --Doesn't work, wrong attachment?
+            {Pos=self:GetPos()+self:GetForward()*4.5+self:GetUp()*8.8+self:GetRight()*7.8,Ang=ang} --Relative position failsafe
          if angpos_ur then
             cam.Start3D2D(angpos_ur.Pos, angpos_ur.Ang, 0.2)
             draw.DrawText(strtime(max(0, self:GetExplodeTime() - CurTime()), "%02i:%02i"), "C4ModelTimer", -1, 1, COLOR_RED, TEXT_ALIGN_RIGHT)
