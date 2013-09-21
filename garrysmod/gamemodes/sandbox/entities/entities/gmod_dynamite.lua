@@ -2,11 +2,7 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.PrintName			= ""
-ENT.Author				= ""
-ENT.Contact				= ""
 ENT.Spawnable			= false
-ENT.AdminSpawnable		= false
 ENT.RenderGroup 		= RENDERGROUP_OPAQUE
 
 AccessorFunc( ENT, "m_ShouldRemove", "ShouldRemove" )

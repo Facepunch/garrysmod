@@ -2,18 +2,12 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.PrintName			= ""
-ENT.Author				= ""
-ENT.Contact				= ""
-ENT.Purpose				= ""
-ENT.Instructions		= ""
 ENT.Spawnable			= false
-ENT.AdminSpawnable		= false
-ENT.RenderGroup 		= RENDERGROUP_TRANSLUCENT
+ENT.RenderGroup 		= RENDERGROUP_BOTH
 
 local matLight 		= Material( "sprites/light_ignorez" )
-local matBeam		= Material( "effects/lamp_beam" )
 local MODEL			= Model( "models/MaxOfS2D/light_tubular.mdl" )
+
 --
 -- Set up our data table
 --
@@ -21,7 +15,6 @@ function ENT:SetupDataTables()
 
 	self:NetworkVar( "Bool", 0, "On" );
 	self:NetworkVar( "Bool", 1, "Toggle" );
-	--self:NetworkVar( "Float", 0, "LightFOV" );
 	self:NetworkVar( "Float", 1, "LightSize" );
 	self:NetworkVar( "Float", 2, "Brightness" );
 
@@ -60,13 +53,15 @@ end
 function ENT:Draw()
 
 	BaseClass.Draw( self, true )
-	
+
 end
 
 --[[---------------------------------------------------------
    Name: Think
 -----------------------------------------------------------]]
 function ENT:Think()
+
+	self.BaseClass.Think( self )
 
 	if ( CLIENT ) then
 
@@ -114,11 +109,7 @@ function ENT:DrawTranslucent()
 	
 	if ( !Visibile || Visibile < 0.1 ) then return end
 	
-	if ( !self:GetOn() ) then 
-	
-		render.DrawSprite( LightPos, 20, 20, Color(70, 70, 70, 255 * Visibile) )
-	
-	return end
+	if ( !self:GetOn() ) then return end
 	
 	local c = self:GetColor()
 	local Alpha = 255 * Visibile

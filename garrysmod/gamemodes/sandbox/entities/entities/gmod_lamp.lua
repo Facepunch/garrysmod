@@ -3,7 +3,6 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.Spawnable			= false
-ENT.AdminSpawnable		= false
 ENT.RenderGroup 		= RENDERGROUP_BOTH
 
 local matLight 			= Material( "sprites/light_ignorez" )
