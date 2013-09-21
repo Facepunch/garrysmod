@@ -12,9 +12,6 @@ ENT.Spawnable			= false
 ENT.AdminOnly			= false
 ENT.Editable			= true
 
---
---
---
 function ENT:Initialize()
 
 	if ( CLIENT ) then return end
