@@ -137,6 +137,10 @@ function GM:PlayerDeath( Victim, Inflictor, Attacker )
 	Victim.NextSpawnTime = CurTime() + 2
 	Victim.DeathTime = CurTime()
 	
+	if ( IsValid( Attacker ) && Attacker:IsVehicle() && IsValid( Attacker:GetDriver() ) ) then
+		Attacker = Attacker:GetDriver()
+	end
+
 	if ( !IsValid( Inflictor ) && IsValid( Attacker ) ) then
 		Inflictor = Attacker
 	end
@@ -148,9 +152,9 @@ function GM:PlayerDeath( Victim, Inflictor, Attacker )
 	
 		Inflictor = Inflictor:GetActiveWeapon()
 		if ( !IsValid( Inflictor ) ) then Inflictor = Attacker end
-	
+
 	end
-	
+
 	if (Attacker == Victim) then
 	
 		umsg.Start( "PlayerKilledSelf" )
