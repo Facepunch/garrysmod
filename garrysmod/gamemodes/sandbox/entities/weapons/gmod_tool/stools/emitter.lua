@@ -12,20 +12,6 @@ TOOL.ClientConVar[ "effect" ] 		= "sparks"
 
 cleanup.Register( "emitter" )
 
--- Add Default Language translation (saves adding it to the txt files)
-if ( CLIENT ) then
-
-	language.Add( "Tool_emitter_name", "Emitter" )
-	language.Add( "Tool_emitter_desc", "Emitter Emits effects eh?" )
-	language.Add( "Tool_emitter_0", "Click somewhere to spawn an emitter. Click on an existing emitter to change it." )
-
-	language.Add( "Undone_emitter", "Undone Emitter" )
-	language.Add( "Cleanup_emitter", "Emitter" )
-	language.Add( "Cleaned_emitter", "Cleaned up all Emitters" )
-
-end
-
-
 function TOOL:LeftClick( trace, worldweld )
 
 	worldweld = worldweld or false
@@ -35,7 +21,7 @@ function TOOL:LeftClick( trace, worldweld )
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 	
-	if (CLIENT) then return true end
+	if ( CLIENT ) then return true end
 	
 	local ply = self:GetOwner()
 	
@@ -46,7 +32,7 @@ function TOOL:LeftClick( trace, worldweld )
 	local effect	 	= self:GetClientInfo( "effect" ) 
 	
 	-- Safe(ish) limits
-	delay 	= math.Clamp( delay, 0.05, 20 )
+	delay = math.Clamp( delay, 0.05, 20 )
 	
 	-- We shot an existing emitter - just change its values
 	if ( trace.Entity:IsValid() && trace.Entity:GetClass() == "gmod_emitter" && trace.Entity.pl == ply ) then
@@ -61,25 +47,22 @@ function TOOL:LeftClick( trace, worldweld )
 	
 	if ( !self:GetSWEP():CheckLimit( "emitters" ) ) then return false end
 	
-	if ( trace.Entity != NULL && (!trace.Entity:IsWorld() || worldweld) ) then
-	
-		trace.HitPos = trace.HitPos + trace.HitNormal * -5
-	
-	else
-	
-		trace.HitPos = trace.HitPos + trace.HitNormal * 2
+	local Pos = trace.HitPos
+	if ( trace.Entity != NULL && ( !trace.Entity:IsWorld() || worldweld ) ) then else
+
+		Pos = Pos + trace.HitNormal
 	
 	end
 	
 	local Ang = trace.HitNormal:Angle()
 	Ang:RotateAroundAxis( trace.HitNormal, 0 )
 
-	local emitter = MakeEmitter( ply, key, delay, toggle, effect, starton, nil, nil, nil, nil, { Pos = trace.HitPos, Angle = Ang } )
+	local emitter = MakeEmitter( ply, key, delay, toggle, effect, starton, nil, nil, nil, nil, { Pos = Pos, Angle = Ang } )
 		
 	local weld
 	
 	-- Don't weld to world
-	if ( trace.Entity != NULL && (!trace.Entity:IsWorld() || worldweld) ) then
+	if ( trace.Entity != NULL && ( !trace.Entity:IsWorld() || worldweld ) ) then
 	
 		weld = constraint.Weld( emitter, trace.Entity, 0, trace.PhysicsBone, 0, true, true )
 		
@@ -110,7 +93,7 @@ if (SERVER) then
 		if ( IsValid( ply ) && !ply:CheckLimit( "emitters" ) ) then return nil end
 	
 		local emitter = ents.Create( "gmod_emitter" )
-		if (!emitter:IsValid()) then return false end
+		if ( !emitter:IsValid() ) then return false end
 
 
 
@@ -158,6 +141,37 @@ if (SERVER) then
 
 end
 
+function TOOL:UpdateGhostEmitter( ent, player )
+
+	if ( !IsValid( ent ) ) then return end
+	
+	local tr	= util.GetPlayerTrace( player )
+	local trace	= util.TraceLine( tr )
+	if ( !trace.Hit ) then return end
+	
+	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_emitter" ) then
+	
+		ent:SetNoDraw( true )
+		return
+		
+	end
+	
+	ent:SetPos( trace.HitPos )
+	ent:SetAngles( trace.HitNormal:Angle() )
+	
+	ent:SetNoDraw( false )
+	
+end
+
+function TOOL:Think()
+
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != /*self:GetClientInfo( "model" )*/ "models/props_lab/tpplug.mdl" ) then
+		self:MakeGhostEntity( "models/props_lab/tpplug.mdl", Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+	end
+	
+	self:UpdateGhostEmitter( self.GhostEntity, self:GetOwner() )
+	
+end
 
 -- NOTE!! The . instead of : here - there is no 'self' argument!!
 -- This is just a function on the table - not a member function!

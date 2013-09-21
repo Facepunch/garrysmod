@@ -150,6 +150,40 @@ if (SERVER) then
 
 end
 
+function TOOL:UpdateGhostHoverball( ent, player )
+
+	if ( !IsValid( ent ) ) then return end
+	
+	local tr	= util.GetPlayerTrace( player )
+	local trace	= util.TraceLine( tr )
+	if ( !trace.Hit ) then return end
+	
+	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_hoverball" ) then
+	
+		ent:SetNoDraw( true )
+		return
+		
+	end
+
+	if ( trace.Entity:IsWorld() ) then
+		trace.HitPos = trace.HitPos + trace.HitNormal * 8
+	end
+	
+	ent:SetPos( trace.HitPos )
+
+	ent:SetNoDraw( false )
+	
+end
+
+function TOOL:Think()
+
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
+		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+	end
+	
+	self:UpdateGhostHoverball( self.GhostEntity, self:GetOwner() )
+	
+end
 
 function TOOL.BuildCPanel( CPanel )
 
@@ -175,7 +209,4 @@ list.Set( "HoverballModels", "models/MaxOfS2D/hover_propeller.mdl", {} )
 list.Set( "HoverballModels", "models/dav0r/hoverball.mdl", {} )
 list.Set( "HoverballModels", "models/MaxOfS2D/hover_rings.mdl", {} )
 list.Set( "HoverballModels", "models/MaxOfS2D/hover_classic.mdl", {} )
-list.Set( "HoverballModels", "models/MaxOfS2D/hover_basic.mdl", {} )
-list.Set( "HoverballModels", "models/MaxOfS2D/hover_basic.mdl", {} )
-list.Set( "HoverballModels", "models/MaxOfS2D/hover_basic.mdl", {} )
 list.Set( "HoverballModels", "models/MaxOfS2D/hover_basic.mdl", {} )

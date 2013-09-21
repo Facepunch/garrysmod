@@ -61,10 +61,10 @@ function TOOL:LeftClick( trace )
 	wheelEnt:SetAngles( TargetAngle )
 	
 	local CurPos = wheelEnt:GetPos()
-	local NearestPoint = wheelEnt:NearestPoint( CurPos - (trace.HitNormal * 512) )
+	local NearestPoint = wheelEnt:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
 	local wheelOffset = CurPos - NearestPoint
 		
-	wheelEnt:SetPos( trace.HitPos + wheelOffset + trace.HitNormal )
+	wheelEnt:SetPos( trace.HitPos + wheelOffset )
 	
 	-- Wake up the physics object so that the entity updates
 	wheelEnt:GetPhysicsObject():Wake()
@@ -233,7 +233,7 @@ function TOOL:UpdateGhostWheel( ent, player )
 	local WheelOffset = CurPos - NearestPoint
 	
 	local min = ent:OBBMins()
-	ent:SetPos( trace.HitPos + trace.HitNormal + WheelOffset )
+	ent:SetPos( trace.HitPos + WheelOffset )
 	ent:SetAngles( Ang )
 	
 	ent:SetNoDraw( false )
