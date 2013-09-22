@@ -39,7 +39,6 @@ AddCSLuaFile("vgui/sb_row.lua")
 AddCSLuaFile("vgui/sb_team.lua")
 AddCSLuaFile("vgui/sb_info.lua")
 
-include("resources.lua")
 include("shared.lua")
 
 include("karma.lua")
