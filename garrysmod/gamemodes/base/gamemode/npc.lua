@@ -21,6 +21,10 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 
 		AttackerClass = attacker:GetClass() 
 
+		if ( attacker:IsVehicle() && IsValid( attacker:GetDriver() ) ) then
+			attacker = attacker:GetDriver()
+		end
+		
 		if ( attacker:IsPlayer() ) then
 
 			umsg.Start( "PlayerKilledNPC" )
