@@ -22,9 +22,9 @@ function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
-	
+
 	local ply = self:GetOwner()
-	local pos, ang = trace.HitPos + trace.HitNormal * 10, trace.HitNormal:Angle()
+	local pos = trace.HitPos
 
 	local r 		= math.Clamp( self:GetClientNumber( "r" ), 0, 255 )
 	local g 		= math.Clamp( self:GetClientNumber( "g" ), 0, 255 )
@@ -64,6 +64,12 @@ function TOOL:LeftClick( trace )
 	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
 
 	lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = Angle(0, 0, 0) } )
+	
+	local CurPos = lamp:GetPos()
+	local NearestPoint = lamp:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
+	local LampOffset = CurPos - NearestPoint
+	
+	lamp:SetPos( trace.HitPos + LampOffset )
 	
 	undo.Create("Lamp")
 		undo.AddEntity( lamp )
@@ -156,6 +162,40 @@ if ( SERVER ) then
 	
 end
 
+function TOOL:UpdateGhostLamp( ent, player )
+
+	if ( !IsValid( ent ) ) then return end
+	
+	local tr	= util.GetPlayerTrace( player )
+	local trace	= util.TraceLine( tr )
+	if ( !trace.Hit ) then return end
+	
+	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_lamp" ) then
+	
+		ent:SetNoDraw( true )
+		return
+		
+	end
+
+	local CurPos = ent:GetPos()
+	local NearestPoint = ent:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
+	local LampOffset = CurPos - NearestPoint
+	
+	ent:SetPos( trace.HitPos + LampOffset )
+	
+	ent:SetNoDraw( false )
+	
+end
+
+function TOOL:Think()
+
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
+		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+	end
+	
+	self:UpdateGhostLamp( self.GhostEntity, self:GetOwner() )
+	
+end
 
 function TOOL.BuildCPanel( CPanel )
 

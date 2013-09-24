@@ -19,15 +19,15 @@ cleanup.Register( "lights" )
 function TOOL:LeftClick( trace, attach )
 
 	if trace.Entity && trace.Entity:IsPlayer() then return false end
-	if (CLIENT) then return true end
-	if (attach == nil) then attach = true end
+	if ( CLIENT ) then return true end
+	if ( attach == nil ) then attach = true end
 	
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && attach && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 	
 	local ply = self:GetOwner()
 	
-	local pos, ang = trace.HitPos + trace.HitNormal * 10, trace.HitNormal:Angle() - Angle( 90, 0, 0 )
+	local pos, ang = trace.HitPos + trace.HitNormal * 8, trace.HitNormal:Angle() - Angle( 90, 0, 0 )
 
 	local r 	= math.Clamp( self:GetClientNumber( "r" ), 0, 255 )
 	local g 	= math.Clamp( self:GetClientNumber( "g" ), 0, 255 )
@@ -117,6 +117,38 @@ function TOOL:RightClick( trace )
 
 	return self:LeftClick( trace, false )
 
+end
+
+function TOOL:UpdateGhostLight( ent, player )
+
+	if ( !IsValid( ent ) ) then return end
+	
+	local tr	= util.GetPlayerTrace( player )
+	local trace	= util.TraceLine( tr )
+	if ( !trace.Hit ) then return end
+	
+	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_light" ) then
+	
+		ent:SetNoDraw( true )
+		return
+		
+	end
+
+	ent:SetPos( trace.HitPos + trace.HitNormal * 8 )
+	ent:SetAngles( trace.HitNormal:Angle() - Angle( 90, 0, 0 ) )
+	
+	ent:SetNoDraw( false )
+	
+end
+
+function TOOL:Think()
+
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != /*self:GetClientInfo( "model" )*/ "models/MaxOfS2D/light_tubular.mdl" ) then
+		self:MakeGhostEntity( "models/MaxOfS2D/light_tubular.mdl", Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+	end
+	
+	self:UpdateGhostLight( self.GhostEntity, self:GetOwner() )
+	
 end
 
 function TOOL.BuildCPanel( CPanel )
