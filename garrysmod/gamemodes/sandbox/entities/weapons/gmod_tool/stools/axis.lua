@@ -61,11 +61,7 @@ function TOOL:LeftClick( trace )
 		Phys1:SetAngles( TargetAngle )
 		
 		-- Move the object so that the hitpos on our object is at the second hitpos
-		local TargetPos = WPos2 + (Phys1:GetPos() - self:GetPos(1))
-		local TargetPos = WPos2 + (Phys1:GetPos() - self:GetPos(1)) + (Norm2)
-
-		-- Offset slightly so it can rotate
-		TargetPos = TargetPos + Norm2
+		local TargetPos = WPos2 + ( Phys1:GetPos() - self:GetPos( 1 ) ) + ( Norm2 * 0.2 )
 		
 		-- Set the position
 		Phys1:SetPos( TargetPos )
@@ -144,8 +140,7 @@ function TOOL:RightClick( trace )
 		
 		--Phys1:SetAngles( TargetAngle )
 		
-		local TargetPos = WPos2 + (Phys1:GetPos() - self:GetPos(1)) + (Norm2)
-
+		local TargetPos = WPos2 + ( Phys1:GetPos() - self:GetPos( 1 ) ) + ( Norm2 * 0.2 )
 
 		Phys1:Wake()
 

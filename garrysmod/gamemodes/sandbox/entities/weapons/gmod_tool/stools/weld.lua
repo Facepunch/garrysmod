@@ -74,7 +74,7 @@ function TOOL:RightClick( trace )
 		Phys1:SetAngles( TargetAngle )
 		
 		-- Move the object so that the hitpos on our object is at the second hitpos
-		local TargetPos = WPos2 + (Phys1:GetPos() - self:GetPos(1)) + (Norm2)
+		local TargetPos = WPos2 + ( Phys1:GetPos() - self:GetPos( 1 ) )
 		
 		-- Set the position
 		Phys1:SetPos( TargetPos )
@@ -127,7 +127,7 @@ function TOOL:RightClick( trace )
 		
 			Phys1:EnableMotion( true )
 			
-			undo.Create("Weld")
+			undo.Create( "Weld" )
 				undo.AddEntity( constraint )
 				undo.SetPlayer( self:GetOwner() )
 			undo.Finish()
@@ -135,7 +135,7 @@ function TOOL:RightClick( trace )
 			self:GetOwner():AddCleanup( "constraints", constraint )
 			
 			local WPos1, WPos2 = self:GetPos(1), self:GetPos(2)
-			local Norm1, Norm2 = self:GetNormal(1),   self:GetNormal(2)
+			local Norm1, Norm2 = self:GetNormal(1), self:GetNormal(2)
 
 		end
 		
@@ -182,19 +182,15 @@ function TOOL:Think()
 			Phys1:SetAngles( angle )
 			
 			-- Move so spots join up
-			local Norm2 = self:GetNormal(2)
-			local TargetPos = WPos2 + (Phys1:GetPos() - self:GetPos(1)) + (Norm2)
+			local Norm2 = self:GetNormal( 2 )
+			local TargetPos = WPos2 + ( Phys1:GetPos() - self:GetPos( 1 ) )
 			Phys1:SetPos( TargetPos )
 			Phys1:Wake()
 		
 		end
 	
 	end
-	
 
-	
-
-	
 end
 
 function TOOL:Reload( trace )
