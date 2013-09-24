@@ -2,13 +2,7 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.PrintName			= ""
-ENT.Author				= ""
-ENT.Contact				= ""
-ENT.Purpose				= ""
-ENT.Instructions		= ""
 ENT.Spawnable			= false
-ENT.AdminSpawnable		= false
 ENT.RenderGroup 		= RENDERGROUP_OPAQUE
 
 local matLight 			= Material( "sprites/light_ignorez" )

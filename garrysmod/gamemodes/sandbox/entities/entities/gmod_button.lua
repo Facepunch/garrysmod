@@ -30,7 +30,7 @@ function ENT:Initialize()
 
 	else
 
-		self.PosePosition = 0.5;
+		self.PosePosition = 0;
 
 	end
 	
@@ -86,6 +86,8 @@ function ENT:Use( activator, caller, type, value )
 end
 
 function ENT:Think()
+
+	self.BaseClass.Think( self )
 
 	--
 	-- Add a world tip if the player is looking at it
@@ -147,13 +149,12 @@ function ENT:UpdateLever()
 	local TargetPos = 0.0;
 	if ( self:GetOn() ) then TargetPos = 1.0; end
 
-	self.PosePosition = math.Approach( self.PosePosition, TargetPos, FrameTime() * 2.0 )	
+	self.PosePosition = math.Approach( self.PosePosition, TargetPos, FrameTime() * 5.0 )	
 
 	self:SetPoseParameter( "switch", self.PosePosition )
 	self:InvalidateBoneCache()
 
 end
-
 
 function ENT:Draw()	
 

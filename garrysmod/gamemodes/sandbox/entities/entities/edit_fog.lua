@@ -1,3 +1,4 @@
+
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_edit" )
 
@@ -5,13 +6,8 @@ ENT.Spawnable			= true
 ENT.AdminOnly			= true
 
 ENT.PrintName			= "Fog Editor"
-ENT.Author				= ""
-ENT.Information			= ""
 ENT.Category			= "Editors"
 
---
---
---
 function ENT:Initialize()
 
 	BaseClass.Initialize( self )

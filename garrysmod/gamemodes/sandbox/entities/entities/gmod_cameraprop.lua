@@ -7,14 +7,7 @@ end
 
 ENT.Type = "anim"
 ENT.Spawnable			= false
-ENT.AdminSpawnable		= false
 ENT.RenderGroup 		= RENDERGROUP_BOTH
-
-ENT.PrintName		= ""
-ENT.Author			= ""
-ENT.Contact			= ""
-ENT.Purpose			= ""
-ENT.Instructions	= ""
 
 local CAMERA_MODEL = Model( "models/dav0r/camera.mdl" )
 
