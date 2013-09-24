@@ -2,15 +2,8 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.PrintName		= ""
-ENT.Author			= ""
-ENT.Contact			= ""
-ENT.Purpose			= ""
-ENT.Instructions	= ""
-ENT.RenderGroup 	= RENDERGROUP_BOTH
-
 ENT.Spawnable			= false
-ENT.AdminSpawnable		= false
+ENT.RenderGroup 		= RENDERGROUP_BOTH
 
 local matHeatWave		= Material( "sprites/heatwave" )
 local matFire			= Material( "effects/fire_cloud1" )

@@ -2,15 +2,8 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.PrintName		= "Hover Ball"
-ENT.Author			= ""
-ENT.Contact			= ""
-ENT.Purpose			= ""
-ENT.Instructions	= ""
+ENT.Spawnable		= false
 ENT.RenderGroup 	= RENDERGROUP_BOTH
-
-ENT.Spawnable			= false
-ENT.AdminSpawnable		= false
 
 function ENT:SetupDataTables()
 

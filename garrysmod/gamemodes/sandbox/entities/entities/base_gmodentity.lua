@@ -1,6 +1,5 @@
 
-AddCSLuaFile( )
-
+AddCSLuaFile()
 DEFINE_BASECLASS( "base_anim" )
 
 ENT.PrintName		= ""
@@ -10,8 +9,6 @@ ENT.Purpose			= ""
 ENT.Instructions	= ""
 
 ENT.Spawnable			= false
-ENT.AdminSpawnable		= false
-
 
 if ( CLIENT ) then
 
@@ -33,8 +30,7 @@ function ENT:Think()
 	if ( CLIENT && self:BeingLookedAtByLocalPlayer() && self:GetOverlayText() != ""  ) then
 	
 		AddWorldTip( self:EntIndex(), self:GetOverlayText(), 0.5, self:GetPos(), self.Entity  )
-		
-		--effects.halo.Add( {self}, Color( 0, 0, 0, 255 ), 5, 5, 10, false, true )
+
 		effects.halo.Add( {self}, Color( 255, 255, 255, 255 ), 1, 1, 1, true, true )
 		
 	end
@@ -99,4 +95,3 @@ function ENT:GetPlayerName()
 	return self:GetNetworkedString( "FounderName" )
 	
 end
-
