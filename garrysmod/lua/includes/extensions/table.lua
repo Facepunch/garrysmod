@@ -156,7 +156,7 @@ end
    Desc: Returns the number of keys in a table
 -----------------------------------------------------------]]
 
-function table.Count (t)
+function table.Count(t)
   local i = 0
   for k in pairs(t) do i = i + 1 end
   return i
@@ -168,7 +168,7 @@ end
    Desc: Return a random key
 -----------------------------------------------------------]]
 
-function table.Random (t)
+function table.Random(t)
   
   local rk = math.random( 1, table.Count( t ) )
   local i = 1
@@ -178,6 +178,30 @@ function table.Random (t)
   end
 
 end
+
+
+--[[---------------------------------------------------------
+   Name: table.Shuffle( table [, times] )
+   Desc: Randomizes a table ( without recursing ) 1 to many times as specified
+   Author: Josh 'Acecool' Moser
+-----------------------------------------------------------]]
+function table.Shuffle( _table, _times )
+	_times = ( _times && _times > 1 ) and _times or 1;
+
+	for i = 1, _times do
+		local _new = table.Copy( _table );
+		table.Empty( _table );
+
+		while ( #_new > 0 ) do
+			local _value, _key = table.Random( _new );
+			local _random = table.remove( _new, _key );
+			table.insert( _table, _random );
+		end
+	end
+
+	return _table;
+end
+
 
 
 --[[----------------------------------------------------------------------
