@@ -30,23 +30,25 @@ end
 function PANEL:UpdateText()
 
 	local str = input.GetKeyName( self.m_iSelectedNumber )
-	if ( !str ) then str = "NONE"; end
+	if ( !str ) then str = "NONE" end
 	
-	self:SetText( str );
+	str = language.GetPhrase( str )
+	
+	self:SetText( str )
 
 end
 
 function PANEL:DoClick()
 
-	self:SetText( "PRESS A KEY" );
-	input.StartKeyTrapping();
-	self.Trapping = true;
-	
+	self:SetText( "PRESS A KEY" )
+	input.StartKeyTrapping()
+	self.Trapping = true
+
 end
 
 function PANEL:DoRightClick()
 	
-	self:SetText( "NONE" );
+	self:SetText( "NONE" )
 	self:SetValue( 0 )
 
 end
