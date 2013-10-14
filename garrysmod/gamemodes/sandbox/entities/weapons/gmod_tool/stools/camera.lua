@@ -6,7 +6,7 @@ TOOL.Command		= nil
 TOOL.ConfigName		= nil
 
 TOOL.ClientConVar[ "locked" ] 	= "0"
-TOOL.ClientConVar[ "key" ] 	= "0"
+TOOL.ClientConVar[ "key" ] 	= "37"
 TOOL.ClientConVar[ "toggle" ] 	= "1"
 
 cleanup.Register( "cameras" )
