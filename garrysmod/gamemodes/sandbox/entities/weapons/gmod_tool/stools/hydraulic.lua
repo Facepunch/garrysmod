@@ -5,7 +5,7 @@ TOOL.Command		= nil
 TOOL.ConfigName		= nil
 
 
-TOOL.ClientConVar[ "group" ] = "1"
+TOOL.ClientConVar[ "group" ] = "37"
 TOOL.ClientConVar[ "width" ] = "3"
 TOOL.ClientConVar[ "addlength" ] = "100"
 TOOL.ClientConVar[ "fixed" ] = "1"
