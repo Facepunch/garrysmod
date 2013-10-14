@@ -1,13 +1,11 @@
 
-if ( SERVER ) then 
-
-local PersistPage = GetConVarString( "sbox_persist" )
+if ( CLIENT ) then return end
 
 hook.Add( "ShutDown", "SavePersistenceOnShutdown", function() hook.Run( "PersistenceSave" ) end )
 
-
 hook.Add( "PersistenceSave", "PersistenceSave", function() 
 
+	local PersistPage = GetConVarString( "sbox_persist" )
 	if ( PersistPage == "0" ) then return end
 
 	local Ents = ents.GetAll()
@@ -50,12 +48,9 @@ end )
 
 hook.Add( "InitPostEntity", "PersistenceInit", function() 
 
+	local PersistPage = GetConVarString( "sbox_persist" )
 	if ( PersistPage == "0" ) then return end
 
 	hook.Run( "PersistenceLoad", PersistPage );
 	
 end )
-
-
-
-end
