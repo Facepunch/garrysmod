@@ -2,7 +2,7 @@
 TOOL.Category		= "Construction"
 TOOL.Name			= "#tool.dynamite.name"
 
-TOOL.ClientConVar[ "group" ]		= 65	-- Current group
+TOOL.ClientConVar[ "group" ]		= 52	-- Current group
 TOOL.ClientConVar[ "damage" ]		= 200	-- Damage to inflict
 TOOL.ClientConVar[ "delay" ]		= 0		-- Delay before explosions start
 TOOL.ClientConVar[ "model" ]		= "models/dav0r/tnt/tnt.mdl"
@@ -29,6 +29,7 @@ function TOOL:LeftClick( trace )
 	-- If we shot a button change its keygroup
 	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_dynamite" && trace.Entity:GetPlayer() == ply ) then
 		trace.Entity:Setup( _damage )
+		trace.Entity:SetShouldRemove( _remove )
 		return true
 	end
 	

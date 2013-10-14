@@ -5,8 +5,8 @@ TOOL.Command		= nil
 TOOL.ConfigName		= nil
 
 
-TOOL.ClientConVar[ "keyup" ] = "9"
-TOOL.ClientConVar[ "keydn" ] = "6"
+TOOL.ClientConVar[ "keyup" ] = "46"
+TOOL.ClientConVar[ "keydn" ] = "43"
 TOOL.ClientConVar[ "speed" ] = "1"
 TOOL.ClientConVar[ "resistance" ] = "0"
 TOOL.ClientConVar[ "strength" ] = "1"

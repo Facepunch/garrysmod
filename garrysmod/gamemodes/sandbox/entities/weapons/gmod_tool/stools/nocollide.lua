@@ -32,12 +32,14 @@ function TOOL:LeftClick( trace )
 
 		local constraint = constraint.NoCollide(Ent1, Ent2, Bone1, Bone2)
 	
-		undo.Create( "NoCollide" )
-		undo.AddEntity( constraint )
-		undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-		
-		self:GetOwner():AddCleanup( "nocollide", constraint )
+		if ( constraint ) then
+			undo.Create( "NoCollide" )
+			undo.AddEntity( constraint )
+			undo.SetPlayer( self:GetOwner() )
+			undo.Finish()
+			
+			self:GetOwner():AddCleanup( "nocollide", constraint )
+		end
 		
 		self:ClearObjects()
 	
@@ -50,6 +52,12 @@ function TOOL:LeftClick( trace )
 	return true
 	
 end
+
+hook.Add( "EntityRemoved", "nocollide_fix", function( ent )
+	if ( ent:GetClass() == "logic_collision_pair" ) then
+		ent:Input( "EnableCollisions", nil, nil, nil )
+	end
+end )
 
 function TOOL:RightClick( trace )
 

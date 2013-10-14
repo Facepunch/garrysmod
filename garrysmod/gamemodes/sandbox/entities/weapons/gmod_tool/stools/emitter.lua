@@ -4,7 +4,7 @@ TOOL.Name			= "#tool.emitter.name"
 TOOL.Command		= nil
 TOOL.ConfigName		= ""
 
-TOOL.ClientConVar[ "key" ] 			= "10"
+TOOL.ClientConVar[ "key" ] 			= "51"
 TOOL.ClientConVar[ "delay" ] 		= "1"
 TOOL.ClientConVar[ "toggle" ] 		= "1"
 TOOL.ClientConVar[ "starton" ] 		= "0"
