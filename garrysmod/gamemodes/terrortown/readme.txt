@@ -1,5 +1,5 @@
 Trouble in Terrorist Town
-Garry's Mod 10 (Fretta) gamemode
+Garry's Mod 13 gamemode
 By Bad King Urgrain
 http://ttt.badking.net/
 
@@ -9,38 +9,11 @@ Disaster strikes in the Terrorist team! These plucky bomb-planting fighters
 have traitors in their midst who are looking to kill them all! But who are 
 the traitors... and who will come out of this alive?
 
-
-*** Fretta notes:
-TTT is Fretta-compatible, which in this case means players get the chance to
-vote in order to switch to a different Fretta gamemode.
-
-If you run a server with only TTT on it, you can disable the voting by putting:
-  fretta_voting 0
-In your server.cfg file. This will pretty much make TTT act like a non-Fretta
-gamemode. Note that it will also automatically switch maps according to the
-mapcycle.txt, so you should make sure you have one.
-
-You may want to use the Fretta voting system just for selecting the next
-map. This is possible using the cvar:
-  ttt_fretta_mapvoting 1
-Whenever a vote starts, it will skip the gamemode part and just let players vote
-on the map to play.
-
-The convar fretta_votesneeded sets the fraction of the players who need to have
-voted to change map/gamemode before a vote starts. Votes also start when the
-time or round limit is reached, which is when a non-fretta_voting server would
-automatically switch maps.
-
-A Fretta server does not have a mapcycle.txt for specific gamemodes, so TTT will
-not automatically switch the map as long as that is enabled. You can manually
-enable it even when Fretta is on using ttt_always_use_mapcycle.
-
-
 *** Installation:
 If you're looking at a version of TTT included in gmod, you're already done!
 
 If you're dealing with a .zip version, extract .zip contents into:
-  X:\Steam\steamapps\your@account\garrysmod\garrysmod\
+  X:\Steam\steamapps\common\garrysmod\garrysmod\
 
 Or for a dedicated server:
   X:\srcds\orangebox\garrysmod\
@@ -53,7 +26,7 @@ Installing is never necessary if you only want to play on servers.
 *** Dedicated server (srcds) preparation:
 The gamemode _requires_ CS:S content to be installed. The Garry's Mod wiki
 has some information on this (and other srcds setup procedures) here:
-  http://wiki.garrysmod.com/?title=Dedicated_Server_Setup#Extra_content
+  http://wiki.garrysmod.com/page/Mounting_Content_on_a_DS
   
 If you want TTT to automatically switch maps every few rounds, place a
 mapcycle.txt in the \garrysmod\ directory. It should contain a list of map
@@ -73,13 +46,12 @@ You'll also want to turn off sv_alltalk if it's on. It will override TTT's
 voice handling, and let dead people talk to living players during a round (bad).
 So put sv_alltalk 0 in your server.cfg.
 
-Note that you should enable GMod's ScriptEnforcer functionality. Without it,
-cheating will be very easy. All you should need to do is set sv_scriptenforcer
-to 1.
+Note that you should disable sv_allowcslua (disabled by default, but you should add "sv_allowcslua 0" just incase) functionality. With it on,
+cheating will be very easy. All you should need to do is set sv_allowcslua
+to 0.
 
 For sv_downloadurl/FastDL, the gamemode files will also have to be on the
-download server. This includes an up-to-date version of the Lua cache in
-\garrysmod\cache\. You may also have to move the stuff in:
+download server. You may also have to move the stuff in:
   \garrysmod\gamemodes\terrortown\contents\
 .. into the main \garrysmod\ directory of the download server. In practice,
 players probably don't need to download those files though, because their
