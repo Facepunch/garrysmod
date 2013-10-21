@@ -29,6 +29,7 @@ function Derma_DrawBackgroundBlur( panel, starttime )
 		
 	for i=0.33, 1, 0.33 do
 		matBlurScreen:SetFloat( "$blur", Fraction * 5 * i )
+		matBlurScreen:Recompute()
 		if ( render ) then render.UpdateScreenEffectTexture() end -- Todo: Make this available to menu Lua
 		surface.DrawTexturedRect( x * -1, y * -1, ScrW(), ScrH() )
 	end
