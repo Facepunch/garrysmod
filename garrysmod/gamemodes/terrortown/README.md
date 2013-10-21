@@ -16,12 +16,12 @@ Installation
 If you're looking at a version of TTT included in gmod, you're already done!
 
 If you're dealing with a .zip version, extract .zip contents into:
-  X:\Steam\steamapps\common\garrysmod\garrysmod\
+  "X:\Steam\steamapps\common\garrysmod\garrysmod\"
 
 Or for a dedicated server:
-  X:\srcds\orangebox\garrysmod\
+  "X:\srcds\orangebox\garrysmod\"
 
-So that you get a \garrysmod\gamemodes\terrortown\ directory.
+So that you get a "\garrysmod\gamemodes\terrortown\" directory.
 
 Installing is never necessary if you only want to play on servers.
 
@@ -43,13 +43,12 @@ instant reloading. These are all caused by the server not having CS:S content
 installed. If the issues persist despite making sure the CS:S content is there,
 try moving the "cstrike" directory into the "orangebox" one, so you get "\servername\orangebox\cstrike\".
 
-While TTT tries to do this automatically, you'll also want to turn off sv_alltalk if it's on. 
+While TTT tries to do this automatically, you'll also want to turn off "sv_alltalk" if it's on. 
 It will override TTT's voice handling, and let dead people talk to living players during a round (bad). 
-So put sv_alltalk 0 in your server.cfg.
+So put "sv_alltalk 0" in your server.cfg.
 
-Note that you should disable sv_allowcslua (disabled by default, but you should add "sv_allowcslua 0" just incase) functionality. With it on,
-cheating will be very easy. All you should need to do is set sv_allowcslua
-to 0.
+Note that you should disable "sv_allowcslua" (disabled by default, but you should add "sv_allowcslua 0" just incase) functionality. With it on,
+cheating will be very easy. All you should need to do is set "sv_allowcslua" to 0.
 
 Modding the gamemode
 ====================
