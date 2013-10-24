@@ -166,7 +166,7 @@ function BestAutoJoinTeam()
 	
 	for id, tm in pairs( team.GetAllTeams() ) do
 	
-		if ( id != TEAM_SPECTATOR && id != TEAM_UNASSIGNED && id != TEAM_CONNECTING ) then
+		if ( id != TEAM_SPECTATOR && id != TEAM_UNASSIGNED && id != TEAM_CONNECTING && tm.Joinable ) then
 			
 			local PlayerCount = team.NumPlayers( id )
 			if ( PlayerCount < SmallestPlayers || (PlayerCount == SmallestPlayers && id < SmallestTeam ) ) then
