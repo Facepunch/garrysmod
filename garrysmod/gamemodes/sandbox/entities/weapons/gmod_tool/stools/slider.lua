@@ -21,9 +21,7 @@ function TOOL:LeftClick( trace )
 	self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
 	
 	if ( iNum > 0 ) then
-	
-		if ( !self:GetEnt(1):IsValid() && !self:GetEnt(2):IsValid() ) then return end
-		
+
 		if ( CLIENT ) then
 			self:ClearObjects()
 			return true
