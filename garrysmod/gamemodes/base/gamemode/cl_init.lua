@@ -1,4 +1,3 @@
-
 include( 'shared.lua' )
 include( 'cl_scoreboard.lua' )
 include( 'cl_targetid.lua' )
@@ -262,7 +261,7 @@ end
 -----------------------------------------------------------]]
 function GM:GetVehicles()
 
-	return vehicles.GetTable()
+	return list.Get( "Vehicles" )
 	
 end
 
