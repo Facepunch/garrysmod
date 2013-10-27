@@ -66,6 +66,11 @@ function ENT:HitPlayer(other, tr)
          self:BecomeWeaponDelayed()
       end
    end
+   
+   -- As a thrown knife, after we hit a target we can never hit one again.
+   -- If we are picked up and re-thrown, a new knife_proj entity is created.
+   -- To make sure we can never deal damage twice, make HitPlayer do nothing.
+   self.HitPlayer = util.noop
 end
 
 function ENT:KillPlayer(other, tr)
