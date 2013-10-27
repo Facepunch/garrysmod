@@ -47,8 +47,7 @@ function TOOL:LeftClick( trace, attach )
 	if	( IsValid( trace.Entity ) && 
 			trace.Entity:GetClass() == "gmod_light" &&
 			trace.Entity:GetPlayer() == ply ) then
-		
-		
+
 		trace.Entity:SetColor( Color( r, g, b, 255 ) )
 		trace.Entity.r = r
 		trace.Entity.g = g
@@ -59,6 +58,14 @@ function TOOL:LeftClick( trace, attach )
 		trace.Entity:SetBrightness( brght )
 		trace.Entity:SetLightSize( size )
 		trace.Entity:SetToggle( !toggle )
+		
+		trace.Entity.KeyDown = key
+		
+		numpad.Remove( trace.Entity.NumDown )
+		numpad.Remove( trace.Entity.NumUp )
+
+		trace.Entity.NumDown = numpad.OnDown( ply, key, "LightToggle", trace.Entity, 1 )
+		trace.Entity.NumUp = numpad.OnUp( ply, key, "LightToggle", trace.Entity, 0 )
 		
 		return true
 		
@@ -249,8 +256,8 @@ if ( SERVER ) then
 		lamp.KeyDown = KeyDown
 		lamp.on = on
 		
-		numpad.OnDown( pl, KeyDown, "LightToggle", lamp, 1 )
-		numpad.OnUp( pl, KeyDown, "LightToggle", lamp, 0 )
+		lamp.NumDown = numpad.OnDown( pl, KeyDown, "LightToggle", lamp, 1 )
+		lamp.NumUp = numpad.OnUp( pl, KeyDown, "LightToggle", lamp, 0 )
 
 		return lamp
 		

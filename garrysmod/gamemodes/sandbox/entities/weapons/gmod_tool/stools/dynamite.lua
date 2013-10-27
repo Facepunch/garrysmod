@@ -30,9 +30,13 @@ function TOOL:LeftClick( trace )
 	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_dynamite" && trace.Entity:GetPlayer() == ply ) then
 		trace.Entity:Setup( _damage )
 		trace.Entity:SetShouldRemove( _remove )
+		trace.Entity.delay = _delay
+		
+		numpad.Remove( trace.Entity.NumDown )
+		trace.Entity.key = _group
+		trace.Entity.NumDown = numpad.OnDown( ply, _group, "DynamiteBlow", trace.Entity, _delay )
 		return true
 	end
-	
 
 	if ( !self:GetSWEP():CheckLimit( "dynamite" ) ) then return false end
 
@@ -92,7 +96,7 @@ if ( SERVER ) then
 		}
 		
 		table.Merge( dynamite:GetTable(), ttable )
-		numpad.OnDown( pl, key, "DynamiteBlow", dynamite, delay )
+		dynamite.NumDown = numpad.OnDown( pl, key, "DynamiteBlow", dynamite, delay )
 		
 		if ( IsValid( pl ) ) then
 
