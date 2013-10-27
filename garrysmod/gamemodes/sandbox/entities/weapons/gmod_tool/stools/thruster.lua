@@ -23,7 +23,7 @@ function TOOL:LeftClick( trace )
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 	
-	if (CLIENT) then return true end
+	if ( CLIENT ) then return true end
 	
 	local ply = self:GetOwner()
 	
@@ -45,7 +45,20 @@ function TOOL:LeftClick( trace )
 		trace.Entity:SetToggle( toggle == 1 )
 		trace.Entity.ActivateOnDamage = ( damageable == 1 )
 		trace.Entity:SetSound( soundname )
+		
+		numpad.Remove( trace.Entity.NumDown )
+		numpad.Remove( trace.Entity.NumUp )
+		numpad.Remove( trace.Entity.NumBackDown )
+		numpad.Remove( trace.Entity.NumBackUp )
+		
+		trace.Entity.NumDown = numpad.OnDown( ply, key, "Thruster_On", trace.Entity, 1 )
+		trace.Entity.NumUp = numpad.OnUp( ply, key, "Thruster_Off", trace.Entity, 1 )
+		
+		trace.Entity.NumBackDown = numpad.OnDown( ply, key_bk, "Thruster_On", trace.Entity, -1 )
+		trace.Entity.NumBackUp = numpad.OnUp( ply, key_bk, "Thruster_Off", trace.Entity, -1 )
 
+		trace.Entity.key	= key
+		trace.Entity.key_bk = key_bk
 		trace.Entity.force	= force
 		trace.Entity.toggle	= toggle
 		trace.Entity.effect	= effect
@@ -56,8 +69,8 @@ function TOOL:LeftClick( trace )
 	
 	if ( !self:GetSWEP():CheckLimit( "thrusters" ) ) then return false end
 
-	if (!util.IsValidModel(model)) then return false end
-	if (!util.IsValidProp(model)) then return false end		-- Allow ragdolls to be used?
+	if ( !util.IsValidModel( model ) ) then return false end
+	if ( !util.IsValidProp( model ) ) then return false end		-- Allow ragdolls to be used?
 
 	local Ang = trace.HitNormal:Angle()
 	Ang.pitch = Ang.pitch + 90
@@ -107,7 +120,7 @@ if (SERVER) then
 		end
 	
 		local thruster = ents.Create( "gmod_thruster" )
-		if (!thruster:IsValid()) then return false end
+		if ( !thruster:IsValid() ) then return false end
 		thruster:SetModel( Model )
 
 		thruster:SetAngles( Ang )
@@ -121,11 +134,11 @@ if (SERVER) then
 		thruster:SetPlayer( pl )
 		thruster:SetSound( soundname )
 
-		numpad.OnDown( 	 pl, 	key, 	"Thruster_On", 		thruster, 1 )
-		numpad.OnUp( 	 pl, 	key, 	"Thruster_Off", 	thruster, 1 )
+		thruster.NumDown = numpad.OnDown( pl, key, "Thruster_On", thruster, 1 )
+		thruster.NumUp = numpad.OnUp( pl, key, "Thruster_Off", thruster, 1 )
 		
-		numpad.OnDown( 	 pl, 	key_bck, 	"Thruster_On", 		thruster, -1 )
-		numpad.OnUp( 	 pl, 	key_bck, 	"Thruster_Off", 	thruster, -1 )
+		thruster.NumBackDown = numpad.OnDown( pl, key_bck, "Thruster_On", thruster, -1 )
+		thruster.NumBackUp = numpad.OnUp( pl, key_bck, "Thruster_Off", thruster, -1 )
 
 		if ( nocollide == true && IsValid( thruster:GetPhysicsObject() ) ) then thruster:GetPhysicsObject():EnableCollisions( false ) end
 
@@ -139,9 +152,9 @@ if (SERVER) then
 			nocollide = nocollide,
 			damageable = damageable,
 			soundname = soundname
-			}
+		}
 
-		table.Merge(thruster:GetTable(), ttable )
+		table.Merge( thruster:GetTable(), ttable )
 		
 		if ( IsValid( pl ) ) then
 			pl:AddCount( "thrusters", thruster )

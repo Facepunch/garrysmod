@@ -50,13 +50,20 @@ function TOOL:LeftClick( trace )
 		trace.Entity:SetToggle( !toggle )
 		trace.Entity:UpdateLight()
 
+		numpad.Remove( trace.Entity.NumDown )
+		numpad.Remove( trace.Entity.NumUp )
+
+		trace.Entity.NumDown = numpad.OnDown( ply, key, "LampToggle", trace.Entity, 1 )
+		trace.Entity.NumUp = numpad.OnUp( ply, key, "LampToggle", trace.Entity, 0 )
+		
 		-- For duplicator
 		trace.Entity.Texture	= texture
 		trace.Entity.fov		= fov
 		trace.Entity.distance	= distance
 		trace.Entity.r = r trace.Entity.g = g trace.Entity.b = b
 		trace.Entity.brightness	= bright
-		
+		trace.Entity.KeyDown = key
+
 		return true
 		
 	end
@@ -130,8 +137,8 @@ if ( SERVER ) then
 		lamp.b			= b
 		lamp.brightness	= brightness
 
-		numpad.OnDown( pl, KeyDown, "LampToggle", lamp, 1 )
-		numpad.OnUp( pl, KeyDown, "LampToggle", lamp, 0 )
+		lamp.NumDown = numpad.OnDown( pl, KeyDown, "LampToggle", lamp, 1 )
+		lamp.NumUp = numpad.OnUp( pl, KeyDown, "LampToggle", lamp, 0 )
 		
 		return lamp
 

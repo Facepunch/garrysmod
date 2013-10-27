@@ -42,6 +42,19 @@ function TOOL:LeftClick( trace )
 		trace.Entity:SetAirResistance( resistance )
 		trace.Entity:SetStrength( strength )
 
+		numpad.Remove( trace.Entity.NumDown )
+		numpad.Remove( trace.Entity.NumUp )
+		numpad.Remove( trace.Entity.NumBackDown )
+		numpad.Remove( trace.Entity.NumBackUp )
+		
+		trace.Entity.NumDown = numpad.OnDown( ply, key_u, "Hoverball_Up", trace.Entity, true )
+		trace.Entity.NumUp = numpad.OnUp( ply, key_u, "Hoverball_Up", trace.Entity, false )
+		
+		trace.Entity.NumBackDown = numpad.OnDown( ply, key_d, "Hoverball_Down", trace.Entity, true )
+		trace.Entity.NumBackUp = numpad.OnUp( ply, key_d, "Hoverball_Down", trace.Entity, false )
+
+		trace.Entity.key_u		= key_u
+		trace.Entity.key_d		= key_d
 		trace.Entity.speed		= speed
 		trace.Entity.strength	= strength
 		trace.Entity.resistance	= resistance
@@ -114,11 +127,11 @@ if (SERVER) then
 			ball:SetPlayer( ply )
 		end
 
-		numpad.OnDown( 	 ply, 	key_u, 	"Hoverball_Up", 	ball, true )
-		numpad.OnUp( 	 ply, 	key_u, 	"Hoverball_Up", 	ball, false )
+		ball.NumDown = numpad.OnDown( ply, key_u, "Hoverball_Up", ball, true )
+		ball.NumUp = numpad.OnUp( ply, key_u, "Hoverball_Up", ball, false )
 
-		numpad.OnDown( 	 ply, 	key_d, 	"Hoverball_Down", 	ball, true )
-		numpad.OnUp( 	 ply, 	key_d, 	"Hoverball_Down", 	ball, false )
+		ball.NumBackDown = numpad.OnDown( ply, key_d, "Hoverball_Down", ball, true )
+		ball.NumBackUp = numpad.OnUp( ply, key_d, "Hoverball_Down", ball, false )
 
 		if ( nocollide == true ) then ball:GetPhysicsObject():EnableCollisions( false ) end
 

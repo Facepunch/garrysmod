@@ -40,6 +40,14 @@ function TOOL:LeftClick( trace, worldweld )
 		trace.Entity:SetEffect( effect )
 		trace.Entity:SetDelay( delay )
 		trace.Entity:SetToggle( toggle )
+		
+		numpad.Remove( trace.Entity.NumDown )
+		numpad.Remove( trace.Entity.NumUp )
+		
+		trace.Entity.NumDown = numpad.OnDown( ply, key, "Emitter_On", trace.Entity )
+		trace.Entity.NumUp = numpad.OnUp( ply, key, "Emitter_Off", trace.Entity )
+
+		trace.Entity.key = key
 	
 		return true
 		
@@ -95,8 +103,6 @@ if (SERVER) then
 		local emitter = ents.Create( "gmod_emitter" )
 		if ( !emitter:IsValid() ) then return false end
 
-
-
 		duplicator.DoGeneric( emitter, Data )
 		emitter:SetEffect( effect )
 		emitter:SetPlayer( ply )
@@ -107,11 +113,9 @@ if (SERVER) then
 		emitter:Spawn()
 		
 		DoPropSpawnedEffect( emitter )
-		
 
-
-		numpad.OnDown( 	 ply, 	key, 	"Emitter_On", 	emitter )
-		numpad.OnUp( 	 ply, 	key, 	"Emitter_Off", 	emitter )
+		emitter.NumDown = numpad.OnDown( ply, key, "Emitter_On", emitter )
+		emitter.NumUp = numpad.OnUp( ply, key, "Emitter_Off", emitter )
 
 		if ( nocollide == true ) then emitter:GetPhysicsObject():EnableCollisions( false ) end
 
