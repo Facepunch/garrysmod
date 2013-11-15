@@ -304,6 +304,8 @@ function SWEP:OnRemove()
 
 	if ( !self:GetToolObject() ) then return end
 	
+	
+	self:GetToolObject():OnRemove()
 	self:GetToolObject():ReleaseGhostEntity()
 	
 end
