@@ -20,7 +20,7 @@ SWEP.Primary.Ammo			= "none"
 
 SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= false
+SWEP.Secondary.Automatic	= true
 SWEP.Secondary.Ammo			= "none"
 
 SWEP.Weight				= 5
@@ -48,7 +48,7 @@ function SWEP:PreDrawViewModel( vm, wep, ply )
 
 end
 
-SWEP.HitDistance = 67
+SWEP.HitDistance = 48
 SWEP.AttackAnims = { "fists_left", "fists_right", "fists_uppercut" }
 function SWEP:PrimaryAttack()
 	self.Owner:SetAnimation( PLAYER_ATTACK1 )
@@ -100,7 +100,12 @@ function SWEP:PrimaryAttack()
 	end )
 
 	self:SetNextPrimaryFire( CurTime() + 0.9 )
+	self:SetNextSecondaryFire( CurTime() + 0.9 )
 
+end
+
+function SWEP:SecondaryAttack()
+	self:PrimaryAttack()
 end
 
 function SWEP:DealDamage( anim )
@@ -115,22 +120,23 @@ function SWEP:DealDamage( anim )
 			start = self.Owner:GetShootPos(),
 			endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
 			filter = self.Owner,
-			mins = self.Owner:OBBMins() / 3,
-			maxs = self.Owner:OBBMaxs() / 3
+			mins = Vector( -10, -10, -8 ),
+			maxs = Vector( 10, 10, 8 )
 		} )
 	end
 
 	if ( tr.Hit ) then self.Owner:EmitSound( HitSound ) end
 
-	if ( IsValid( tr.Entity ) && ( tr.Entity:IsNPC() || tr.Entity:IsPlayer() ) ) then
+	if ( IsValid( tr.Entity ) && ( tr.Entity:IsNPC() || tr.Entity:IsPlayer() || tr.Entity:Health() > 0 ) ) then
 		local dmginfo = DamageInfo()
-		dmginfo:SetDamage( self.Primary.Damage )
+		dmginfo:SetDamage( math.random( 8, 12 ) )
 		if ( anim == "fists_left" ) then
 			dmginfo:SetDamageForce( self.Owner:GetRight() * 49125 + self.Owner:GetForward() * 99984 ) -- Yes we need those specific numbers
 		elseif ( anim == "fists_right" ) then
 			dmginfo:SetDamageForce( self.Owner:GetRight() * -49124 + self.Owner:GetForward() * 99899 )
 		elseif ( anim == "fists_uppercut" ) then
 			dmginfo:SetDamageForce( self.Owner:GetUp() * 51589 + self.Owner:GetForward() * 100128 )
+			dmginfo:SetDamage( math.random( 12, 16 ) )
 		end
 		dmginfo:SetInflictor( self )
 		local attacker = self.Owner
@@ -139,9 +145,6 @@ function SWEP:DealDamage( anim )
 
 		tr.Entity:TakeDamageInfo( dmginfo )
 	end
-end
-
-function SWEP:SecondaryAttack()
 end
 
 function SWEP:Idle()
