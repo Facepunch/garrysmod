@@ -7,10 +7,10 @@ local matOverlay_Normal = Material( "gui/ContentIcon-normal.png" )
 local matOverlay_Hovered = Material( "gui/ContentIcon-hovered.png" )
 local matOverlay_AdminOnly = Material( "icon16/shield.png" )
 
-AccessorFunc( PANEL, "m_Color", 	"Color" )
-AccessorFunc( PANEL, "m_Type", 		"ContentType" )
-AccessorFunc( PANEL, "m_SpawnName", "SpawnName" )
-AccessorFunc( PANEL, "m_NPCWeapon", "NPCWeapon" )
+AccessorFunc( PANEL, "m_Color", 			"Color" )
+AccessorFunc( PANEL, "m_Type", 				"ContentType" )
+AccessorFunc( PANEL, "m_SpawnName", 		"SpawnName" )
+AccessorFunc( PANEL, "m_NPCWeapon", 		"NPCWeapon" )
 
 --[[---------------------------------------------------------
    Name: Paint
@@ -43,7 +43,6 @@ function PANEL:SetName( name )
 	self:SetTooltip( name )
 	self.Label:SetText( name )
 	self.m_NiceName = name
-	
 
 end
 
@@ -83,7 +82,6 @@ function PANEL:DoRightClick()
 	end
 
 	self:OpenMenu()
-
 end
 
 function PANEL:DoClick()
@@ -99,12 +97,12 @@ function PANEL:Paint( w, h )
 
 	if ( self.Depressed && !self.Dragging ) then
 		if ( self.Border != 8 ) then
-			self.Border = 8 
+			self.Border = 8
 			self:OnDepressionChanged( true )
 		end
 	else
 		if ( self.Border != 0 ) then
-			self.Border = 0 
+			self.Border = 0
 			self:OnDepressionChanged( false )
 		end
 	end
@@ -182,26 +180,26 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 	if ( !obj.spawnname ) then return end
 	
 	local icon = vgui.Create( "ContentIcon", container )
-	icon:SetContentType( "entity" )
-	icon:SetSpawnName( obj.spawnname )
-	icon:SetName( obj.nicename )
-	icon:SetMaterial( obj.material )
-	icon:SetAdminOnly( obj.admin )
-	icon:SetColor( Color( 205, 92, 92, 255 ) )
-	icon.DoClick = function()
-		RunConsoleCommand( "gm_spawnsent", obj.spawnname )
-		surface.PlaySound( "ui/buttonclickrelease.wav" ) 
-	end
-	icon.OpenMenu = function( icon ) 
+		icon:SetContentType( "entity" )
+		icon:SetSpawnName( obj.spawnname )
+		icon:SetName( obj.nicename )
+		icon:SetMaterial( obj.material )
+		icon:SetAdminOnly( obj.admin )
+		icon:SetColor( Color( 205, 92, 92, 255 ) )
+		icon.DoClick = function()
+						RunConsoleCommand( "gm_spawnsent", obj.spawnname )
+						surface.PlaySound( "ui/buttonclickrelease.wav" )
+					end
+		icon.OpenMenu = function( icon ) 
 
-		local menu = DermaMenu()
-			menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
-			menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "0" ) RunConsoleCommand( "creator_name", obj.spawnname ) end )
-			menu:AddSpacer()							
-			menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
-		menu:Open()
-
-	end
+						local menu = DermaMenu()
+							menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
+							menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "0" ) RunConsoleCommand( "creator_name", obj.spawnname ) end )
+							menu:AddSpacer()
+							menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
+						menu:Open()
+						
+					end
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )
@@ -218,26 +216,26 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 	if ( !obj.spawnname ) then return end
 	
 	local icon = vgui.Create( "ContentIcon", container )
-	icon:SetContentType( "vehicle" )
-	icon:SetSpawnName( obj.spawnname )
-	icon:SetName( obj.nicename )
-	icon:SetMaterial( obj.material )
-	icon:SetAdminOnly( obj.admin )
-	icon:SetColor( Color( 0, 0, 0, 255 ) )
-	icon.DoClick = function() 
-		RunConsoleCommand( "gm_spawnvehicle", obj.spawnname )
-		surface.PlaySound( "ui/buttonclickrelease.wav" ) 
-	end
-	icon.OpenMenu = function( icon ) 
+		icon:SetContentType( "vehicle" )
+		icon:SetSpawnName( obj.spawnname )
+		icon:SetName( obj.nicename )
+		icon:SetMaterial( obj.material )
+		icon:SetAdminOnly( obj.admin )
+		icon:SetColor( Color( 0, 0, 0, 255 ) )
+		icon.DoClick = function()
+						RunConsoleCommand( "gm_spawnvehicle", obj.spawnname )
+						surface.PlaySound( "ui/buttonclickrelease.wav" )
+					end
+		icon.OpenMenu = function( icon ) 
 
-		local menu = DermaMenu()
-			menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
-			menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "1" ) RunConsoleCommand( "creator_name", obj.spawnname ) end )
-			menu:AddSpacer()							
-			menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
-		menu:Open()
+						local menu = DermaMenu()
+							menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
+							menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "1" ) RunConsoleCommand( "creator_name", obj.spawnname ) end )
+							menu:AddSpacer()
+							menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
+						menu:Open()
 						
-	end
+					end
 		
 	if ( IsValid( container ) ) then
 		container:Add( icon )
@@ -256,42 +254,42 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 	if ( !obj.spawnname ) then return end
 
 	if ( !obj.weapon ) then obj.weapon = { "" } end
-
-	local icon = vgui.Create( "ContentIcon", container )
-	icon:SetContentType( "npc" )
-	icon:SetSpawnName( obj.spawnname )
-	icon:SetName( obj.nicename )
-	icon:SetMaterial( obj.material )
-	icon:SetAdminOnly( obj.admin )
-	icon:SetNPCWeapon( obj.weapon )
-	icon:SetColor( Color( 244, 164, 96, 255 ) )
-
-	icon.DoClick = function() 
-
-		local weapon = table.Random( obj.weapon )
-		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
-
-		RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, weapon )
-		surface.PlaySound( "ui/buttonclickrelease.wav" )
-
-	end
-
-	icon.OpenMenu = function( icon ) 
-
-		local menu = DermaMenu()
-
-			local weapon = table.Random( obj.weapon )
-			if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
-
-			menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
-			menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "2" ) RunConsoleCommand( "creator_name", obj.spawnname ) RunConsoleCommand( "creator_arg", weapon ) end )
-			menu:AddSpacer()							
-			menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
-
-		menu:Open()
-						
-	end
 	
+	local icon = vgui.Create( "ContentIcon", container )
+		icon:SetContentType( "npc" )
+		icon:SetSpawnName( obj.spawnname )
+		icon:SetName( obj.nicename )
+		icon:SetMaterial( obj.material )
+		icon:SetAdminOnly( obj.admin )
+		icon:SetNPCWeapon( obj.weapon )
+		icon:SetColor( Color( 244, 164, 96, 255 ) )
+
+		icon.DoClick = function() 
+						
+						local weapon = table.Random( obj.weapon )
+						if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
+
+						RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, weapon ) 
+						surface.PlaySound( "ui/buttonclickrelease.wav" ) 
+					end
+
+		icon.OpenMenu = function( icon ) 
+
+						local menu = DermaMenu()
+
+							local weapon = table.Random( obj.weapon )
+							if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
+
+							menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
+							menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "2" ) RunConsoleCommand( "creator_name", obj.spawnname ) RunConsoleCommand( "creator_arg", weapon ) end )
+							menu:AddSpacer()
+							menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
+						menu:Open()
+						
+					end
+
+
+		
 	if ( IsValid( container ) ) then
 		container:Add( icon )
 	end
@@ -307,37 +305,39 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 	if ( !obj.spawnname ) then return end
 	
 	local icon = vgui.Create( "ContentIcon", container )
-	icon:SetContentType( "weapon" )
-	icon:SetSpawnName( obj.spawnname )
-	icon:SetName( obj.nicename )
-	icon:SetMaterial( obj.material )
-	icon:SetAdminOnly( obj.admin )
-	icon:SetColor( Color( 135, 206, 250, 255 ) )
-	icon.DoClick = function()
+		icon:SetContentType( "weapon" )
+		icon:SetSpawnName( obj.spawnname )
+		icon:SetName( obj.nicename )
+		icon:SetMaterial( obj.material )
+		icon:SetAdminOnly( obj.admin )
+		icon:SetColor( Color( 135, 206, 250, 255 ) )
+		icon.DoClick = function() 
+		
+						RunConsoleCommand( "gm_giveswep", obj.spawnname )
+						surface.PlaySound( "ui/buttonclickrelease.wav" )
+						
+					end
 
-		RunConsoleCommand( "gm_giveswep", obj.spawnname )
-		surface.PlaySound( "ui/buttonclickrelease.wav" )
+		icon.DoMiddleClick = function() 
+		
+						RunConsoleCommand( "gm_spawnswep", obj.spawnname )
+						surface.PlaySound( "ui/buttonclickrelease.wav" )
+						
+					end
+					
 
-	end
+		icon.OpenMenu = function( icon ) 
 
-	icon.DoMiddleClick = function()
+						local menu = DermaMenu()
+							menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
+							menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "3" ) RunConsoleCommand( "creator_name", obj.spawnname ) end )
+							menu:AddSpacer()
+							menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
+						menu:Open()
 
-		RunConsoleCommand( "gm_spawnswep", obj.spawnname )
-		surface.PlaySound( "ui/buttonclickrelease.wav" )
-
-	end
-
-	icon.OpenMenu = function( icon )
-
-		local menu = DermaMenu()
-			menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
-			menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "3" ) RunConsoleCommand( "creator_name", obj.spawnname ) end )
-			menu:AddSpacer()							
-			menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
-		menu:Open()
-
-	end
-
+						end
+				
+		
 	if ( IsValid( container ) ) then
 		container:Add( icon )
 	end
