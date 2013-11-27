@@ -64,7 +64,8 @@ function PANEL:Init()
 	self:SetEnterAllowed( true )
 	self:SetUpdateOnType( false )
 	self:SetNumeric( false )
-	
+	self:SetAllowNonAsciiCharacters( true )
+		
 	
 	-- Nicer default height
 	self:SetTall( 20 )
