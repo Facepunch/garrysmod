@@ -4,15 +4,17 @@ var scope = null;
 
 function ControllerNewGame( $scope, $element, $rootScope, $location )
 {
-	$scope.CurrentCategory = "Sandbox";
+	lua.Run( "LoadLastMap()" );
 
 	for ( var i = 0; i < gScope.MapList.length; i++ )
 	{
 		if ( gScope.MapList[i][ "category" ] == "Favourites" ) 
 		{
-			$scope.CurrentCategory = "Favourites";
+			if ( !$scope.CurrentCategory ) $scope.CurrentCategory = "Favourites";
 		}
-	} 
+	}
+	
+	if ( !$scope.CurrentCategory ) $scope.CurrentCategory = "Sandbox";
 
 	$scope.Players = 
 	[
@@ -42,6 +44,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 	if ( !$rootScope.Map )				$rootScope.Map = "gm_flatgrass";
 	if ( !$rootScope.MaxPlayers )		$rootScope.MaxPlayers = 1;
 	if ( !$rootScope.ServerSettings )	$rootScope.ServerSettings = ServerSettings;
+	if ( !$scope.LastCategory )			$scope.LastCategory = $scope.CurrentCategory;
 
 	lua.Run( "UpdateServerSettings()" );
 
@@ -72,6 +75,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 	$scope.SelectMap = function ( m )
 	{
 		$rootScope.Map = m;
+		$scope.LastCategory = $scope.CurrentCategory
 	}
 
 	$scope.ClickMap = function ( m )
@@ -102,6 +106,8 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 
 	$scope.StartGame = function()
 	{
+		lua.Run( 'SaveLastMap( "' + $rootScope.Map + '", "' + $scope.LastCategory + '" )' );
+
 		lua.Run( 'hook.Run( "StartGame" )' )
 		lua.Run( 'RunConsoleCommand( "progress_enable" )' )
 
@@ -160,6 +166,19 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 		}
 
 		return iCount;
+	}
+}
+
+function SetLastMap( map, category )
+{
+	CurrentCategory = category
+	Map = map
+	
+	if ( scope )
+	{
+		scope.CurrentCategory = category;
+		scope.Map = map;
+		UpdateDigest( scope, 0 );
 	}
 }
 
