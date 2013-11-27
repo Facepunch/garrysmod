@@ -8,7 +8,7 @@ local Category = "Humans + Resistance"
 
 local NPC = { 	Name = "Alyx Vance", 
 				Class = "npc_alyx",
-				Weapons = { "weapon_alyxgun", "weapon_smg1" },
+				Weapons = { "weapon_alyxgun", "weapon_smg1", "weapon_shotgun" },
 				Category = Category	}
 
 list.Set( "NPC", NPC.Class, NPC )
@@ -16,7 +16,7 @@ list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = { 	Name = "Barney", 
 				Class = "npc_barney",
-				Weapons = { "weapon_pistol", "weapon_smg1" },
+				Weapons = { "weapon_smg1", "weapon_shotgun", "weapon_ar2" },
 				Category = Category	}
 
 list.Set( "NPC", NPC.Class, NPC )
@@ -42,11 +42,11 @@ list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = { 	Name = "G-Man", 
 				Class = "npc_gman",
-				Weapons = { "weapon_pistol", "weapon_smg1" },
 				Category = Category	}
 
 list.Set( "NPC", NPC.Class, NPC )
 
+-- Did you know that this MAN can shoot annabelle like he's been doing it his whole life?
 local NPC = { 	Name = "Dr. Kleiner", 
 				Class = "npc_kleiner",
 				Category = Category	}
@@ -55,7 +55,7 @@ list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = { 	Name = "Metro Police", 
 				Class = "npc_metropolice",
-				Weapons = { "weapon_stunstick", "weapon_pistol" },
+				Weapons = { "weapon_stunstick", "weapon_pistol", "weapon_smg1" },
 				Category = Category	}
 
 list.Set( "NPC", NPC.Class, NPC )
@@ -77,7 +77,7 @@ local NPC = { 	Name = "Rebel",
 				Class = "npc_citizen",
 				SpawnFlags = SF_CITIZEN_RANDOM_HEAD,
 				KeyValues = { citizentype = CT_REBEL },
-				Weapons = { "weapon_pistol", "weapon_smg1" },
+				Weapons = { "weapon_pistol", "weapon_ar2", "weapon_smg1", "weapon_ar2", "weapon_shotgun" },
 				Category = Category	}
 
 list.Set( "NPC", "Rebel", NPC )
@@ -95,7 +95,7 @@ local NPC = { 	Name = "Medic",
 				Class = "npc_citizen",
 				SpawnFlags = SF_CITIZEN_MEDIC,
 				KeyValues = { citizentype = CT_REBEL },
-				Weapons = { "weapon_pistol", "weapon_smg1" },
+				Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" },
 				Category = Category	}
 
 list.Set( "NPC", "Medic", NPC )
@@ -111,7 +111,6 @@ list.Set( "NPC", "Refugee", NPC )
 local NPC = { 	Name = "Citizen", 
 				Class = "npc_citizen",
 				KeyValues = { citizentype = CT_DOWNTRODDEN },
-				Weapons = { "weapon_pistol", "weapon_smg1" },
 				Category = Category	}
 
 list.Set( "NPC", NPC.Class, NPC )
@@ -235,7 +234,7 @@ list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = { 	Name = "Father Grigori", 
 				Class = "npc_monk",
-				Weapons = { "weapon_annabelle", "weapon_pistol", "weapon_smg1" },
+				Weapons = { "weapon_annabelle" },
 				Category = Category	}
 
 list.Set( "NPC", NPC.Class, NPC )
@@ -264,7 +263,7 @@ list.Set( "NPC", NPC.Class, NPC )
 local NPC = { 	Name = "Combine Soldier", 
 				Class = "npc_combine_s",
 				Model = "models/combine_soldier.mdl",
-				Weapons = { "weapon_smg1" },
+				Weapons = { "weapon_smg1", "weapon_ar2", "weapon_shotgun" },
 				Category = Category	}
 
 list.Set( "NPC", NPC.Class, NPC )
@@ -274,7 +273,7 @@ list.Set( "NPC", NPC.Class, NPC )
 local NPC = { 	Name = "Prison Guard", 
 				Class = "npc_combine_s",
 				Model = "models/combine_soldier_prisonguard.mdl",
-				Weapons = { "weapon_shotgun" },
+				Weapons = { "weapon_smg1", "weapon_ar2", "weapon_shotgun" },
 				Category = Category	}
 
 list.Set( "NPC", "CombinePrison", NPC )

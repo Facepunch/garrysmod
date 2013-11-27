@@ -297,7 +297,9 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment )
 			Player:SendLua( "Derma_Message( \"Sorry! You can't spawn that NPC!\" )" );
 		end
 	return end
-	
+
+	if ( NPCData.AdminOnly && !Player:IsAdmin() ) then return end
+
 	local bDropToFloor = false
 		
 	--

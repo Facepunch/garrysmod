@@ -21,7 +21,7 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
 	for CategoryName, v in SortedPairs( Categories ) do
 		
 		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, "icon16/monkey.png" );
+		local node = tree:AddNode( CategoryName, "icon16/monkey.png" )
 		
 
 		-- When we click on the node - populate it using this function
@@ -36,19 +36,14 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
 			self.PropPanel:SetTriggerSpawnlistChange( false )
 
 			for name, ent in SortedPairsByMemberValue( v, "Name" ) do
-			
-				local weapon = "";
-				if ( ent.Weapons ) then
-					weapon = ent.Weapons[1];
-				end
 
 				spawnmenu.CreateContentIcon( "npc", self.PropPanel, 
 				{ 
 					nicename	= ent.Name or name,
 					spawnname	= name,
 					material	= "entities/"..name..".png",
-					weapon		= weapon,
-					admin		= false
+					weapon		= ent.Weapons,
+					admin		= ent.AdminOnly
 				})
 				
 			end
@@ -59,7 +54,7 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
 		node.DoClick = function( self )
 	
 			self:DoPopulate()		
-			pnlContent:SwitchPanel( self.PropPanel );
+			pnlContent:SwitchPanel( self.PropPanel )
 	
 		end
 			
@@ -77,7 +72,7 @@ end )
 spawnmenu.AddCreationTab( "#spawnmenu.category.npcs", function()
 
 	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
-	ctrl:CallPopulateHook( "PopulateNPCs" );
+	ctrl:CallPopulateHook( "PopulateNPCs" )
 	return ctrl
 
 end, "icon16/monkey.png", 20 )
