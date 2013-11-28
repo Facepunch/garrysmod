@@ -51,7 +51,7 @@ local function UpdateMapPatterns()
         MapPatterns[ "^pb_" ] = "Dystopia"
         
         MapPatterns[ "credits" ] = "Half-Life 2"
-	    MapPatterns[ "^d1_" ] = "Half-Life 2"
+	MapPatterns[ "^d1_" ] = "Half-Life 2"
         MapPatterns[ "^d2_" ] = "Half-Life 2"
         MapPatterns[ "^d3_" ] = "Half-Life 2"
         MapPatterns[ "intro" ] = "Half-Life 2"
