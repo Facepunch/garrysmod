@@ -306,3 +306,44 @@ function util.Stack()
 	return t
 
 end
+
+--Helper for the following functions.
+local function GetUniqueID( sid )
+	return util.CRC( "gm_"..sid.."_gm" )
+end
+
+--[[---------------------------------------------------------
+   Name: GetPData( steamid, name, default )
+   Desc: Gets the persistant data from a player by steamid
+-----------------------------------------------------------]]
+function util.GetPData( steamid, name, default )
+
+	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
+	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr(name) .. " LIMIT 1" )
+	if ( val == nil ) then return default end
+	
+	return val
+	
+end
+
+--[[---------------------------------------------------------
+   Name: SetPData( steamid, name, value )
+   Desc: Sets the persistant data of a player by steamid
+-----------------------------------------------------------]]
+function util.SetPData( steamid, name, value )
+
+	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
+	sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( "..SQLStr(name)..", "..SQLStr(value).." )" )
+	
+end
+
+--[[---------------------------------------------------------
+   Name: RemovePData( steamid, name )
+   Desc: Removes the persistant data from a player by steamid
+-----------------------------------------------------------]]
+function util.RemovePData( steamid, name )
+
+	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
+	sql.Query( "DELETE FROM playerpdata WHERE infoid = "..SQLStr(name) )
+	
+end
