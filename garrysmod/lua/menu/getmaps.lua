@@ -152,15 +152,24 @@ local function UpdateMapPatterns()
         MapPatterns[ "^zps_" ] = "Zombie Panic! Source"
 
         MapPatterns[ "^achievement_" ] = "Achievement" -- Custom maps
+        MapPatterns[ "^cinema_" ] = "Cinema"
+        MapPatterns[ "^theater_" ] = "Cinema"
+        MapPatterns[ "^xc_" ] = "Climb"
         MapPatterns[ "^deathrun_" ] = "Deathrun"
         MapPatterns[ "^dr_" ] = "Deathrun"
+        MapPatterns[ "^gmt_" ] = "GMod Tower"
         MapPatterns[ "^jb_" ] = "Jailbreak"
         MapPatterns[ "^ba_jail_" ] = "Jailbreak"
+        MapPatterns[ "^mg_" ] = "Minigames"
+        MapPatterns[ "^pw_" ] = "Pirate Ship Wars"
         MapPatterns[ "^ph_" ] = "Prop Hunt"
         MapPatterns[ "^rp_" ] = "Roleplay"
         MapPatterns[ "^sb_" ] = "Spacebuild"
+        MapPatterns[ "^slender_" ] = "Stop it Slender"
         MapPatterns[ "^gms_" ] = "Stranded"
         MapPatterns[ "^surf_" ] = "Surf"
+        MapPatterns[ "^zm_" ] = "Zombie Survival"
+        MapPatterns[ "^zombiesurvival_" ] = "Zombie Survival"
         MapPatterns[ "^zs_" ] = "Zombie Survival"
 
 	local GamemodeList = engine.GetGamemodes()
@@ -191,7 +200,7 @@ local function LoadFavourites()
 	
 end 
 
-local IgnoreMaps = { "background", "^test_", "^styleguide", "^devtest" }
+local IgnoreMaps = { "background", "^test_", "^styleguide", "^devtest", "sdk_shader_samples" }
 
 local function RefreshMaps()
 
