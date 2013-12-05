@@ -55,7 +55,7 @@ end
 function ENT:StartSchedule( schedule )
 
 	self.CurrentSchedule 	= schedule
-	self.CurrentTaskID 		= 1
+	self.CurTaskID 		= 1
 	self:SetTask( schedule:GetTask( 1 ) )
 
 end
@@ -86,7 +86,7 @@ function ENT:ScheduleFinished()
 
 	self.CurrentSchedule 	= nil
 	self.CurrentTask 		= nil
-	self.CurrentTaskID 		= nil
+	self.CurTaskID 		= nil
 
 end
 
@@ -113,10 +113,10 @@ end
 function ENT:NextTask( schedule )
 
 	-- Increment task id
-	self.CurrentTaskID = self.CurrentTaskID + 1
+	self.CurTaskID = self.CurTaskID + 1
 	
 	-- If this was the last task then finish up.
-	if ( self.CurrentTaskID > schedule:NumTasks() ) then
+	if ( self.CurTaskID > schedule:NumTasks() ) then
 	
 		self:ScheduleFinished( schedule )
 		return
@@ -124,7 +124,7 @@ function ENT:NextTask( schedule )
 	end
 	
 	-- Switch to next task
-	self:SetTask( schedule:GetTask( self.CurrentTaskID ) )	
+	self:SetTask( schedule:GetTask( self.CurTaskID ) )	
 
 end
 
