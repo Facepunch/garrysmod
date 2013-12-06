@@ -55,7 +55,7 @@ end
 
 hook.Add( "EntityRemoved", "nocollide_fix", function( ent )
 	if ( ent:GetClass() == "logic_collision_pair" ) then
-		ent:Input( "EnableCollisions", nil, nil, nil )
+		ent:Fire( "EnableCollisions" )
 	end
 end )
 
