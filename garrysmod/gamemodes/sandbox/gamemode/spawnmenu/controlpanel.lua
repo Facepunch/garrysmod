@@ -361,6 +361,8 @@ function PANEL:AddControl( control, data )
 			ctrl:Dock( TOP )
 	
 			self:AddItem( left, ctrl )
+		
+			return ctrl
 			
 		else
 			
@@ -381,9 +383,9 @@ function PANEL:AddControl( control, data )
 	
 			self:AddItem( left, ctrl )
 		
-		end
+			return ctrl
 		
-		return ctrl
+		end
 	
 	end 
 	
