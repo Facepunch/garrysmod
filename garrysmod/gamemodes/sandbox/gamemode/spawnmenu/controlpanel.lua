@@ -157,6 +157,7 @@ end
 function PANEL:AddControl( control, data )
 
 	local data = table.LowerKeyNames( data )
+	local original = control
 	control = string.lower( control )
 
 	-- Retired
@@ -415,15 +416,19 @@ function PANEL:AddControl( control, data )
 		
 	end
 	
-	local control = vgui.Create( control, self )
-	if ( control ) then
+	local ctrl = vgui.Create( original, self )
+	-- Fallback for scripts that relied on the old behaviour
+	if ( ! ctrl  ) then
+		ctrl = vgui.Create( control, self )
+	end
+	if ( ctrl ) then
 		
-		if ( control.ControlValues ) then
-			control:ControlValues( data ) 
+		if ( ctrl.ControlValues ) then
+			ctrl:ControlValues( data ) 
 		end
 		
-		self:AddPanel( control )
-		return control
+		self:AddPanel( ctrl )
+		return ctrl
 		
 	end
 	
