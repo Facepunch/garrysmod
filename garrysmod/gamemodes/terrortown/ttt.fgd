@@ -169,6 +169,8 @@
 		1 : "Yes"
 	]
 
+    UsableRange(integer) : "Usable Range": 1024 : "Range in number of units at which a traitor will be able to see and use the button. Default is 1024 units (which was the range of all buttons before it was made configurable here)."
+
 	input Lock(void) : "Lock and hide the button, preventing it from being used."
 	input Unlock(void) : "Unlock the button, showing it to players and allowing it to function."
 	

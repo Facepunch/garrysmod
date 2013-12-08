@@ -1,11 +1,10 @@
-
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 -- serverside only
 ENT.RemoveOnPress = false
 
-ENT.Model = Model("models/weapons/w_bugbait.mdl")                  
+ENT.Model = Model("models/weapons/w_bugbait.mdl")
 
 function ENT:Initialize()
    self:SetModel(self.Model)
@@ -22,16 +21,20 @@ function ENT:Initialize()
       -- mimic that here
       self.RemoveOnPress = true
    end
-   
+
    if self.RemoveOnPress then
       self:SetDelay(-1) -- tells client we're single use
+   end
+
+   if self:GetUsableRange() < 1 then
+      self:SetUsableRange(1024)
    end
 
    self:SetNextUseTime(0)
    self:SetLocked(self:HasSpawnFlags(2048))
 
    self:SetDescription(self.RawDescription or "?")
-   
+
    self.RawDelay = nil
    self.RawDescription = nil
 end
@@ -49,7 +52,9 @@ function ENT:KeyValue(key, value)
       end
    elseif key == "RemoveOnPress" then
       self[key] = tobool(value)
-   end 
+   else
+      self:SetNetworkKeyValue(key, value)
+   end
 end
 
 
@@ -66,20 +71,17 @@ function ENT:AcceptInput(name, activator)
    end
 end
 
-local range = 1024 -- mirror to client
 function ENT:TraitorUse(ply)
    if not (IsValid(ply) and ply:IsActiveTraitor()) then return false end
    if not self:IsUsable() then return false end
 
-   if self:GetPos():Distance(ply:GetPos()) > range then return false end
+   if self:GetPos():Distance(ply:GetPos()) > self:GetUsableRange() then return false end
 
    -- confirm with an empty packet
    SendUserMessage("ttt_confirm_use_tbutton", ply)
 
    -- send output to all entities linked to us
    self:TriggerOutput("OnPressed", ply)
-
-   --self:SetLocked(true)
 
    if self.RemoveOnPress then
       self:SetLocked(true)
