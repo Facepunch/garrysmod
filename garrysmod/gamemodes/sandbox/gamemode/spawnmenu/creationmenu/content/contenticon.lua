@@ -107,7 +107,13 @@ function PANEL:Paint( w, h )
 		end
 	end
 	
+	render.PushFilterMag( TEXFILTER.ANISOTROPIC )
+	render.PushFilterMin( TEXFILTER.ANISOTROPIC )
+	
 	self.Image:PaintAt( 3 + self.Border, 3 + self.Border, 128-8-self.Border*2, 128-8-self.Border*2 )
+	
+	render.PopFilterMag()
+	render.PopFilterMin()
 
 	surface.SetDrawColor( 255, 255, 255, 255 )
 	
