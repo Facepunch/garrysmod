@@ -11,15 +11,13 @@ ENT.Model = Model("models/weapons/w_eq_flashbang_thrown.mdl")
 
 AccessorFunc( ENT, "thrower", "Thrower")
 
-AccessorFuncDT( ENT, "explode_time", "ExplodeTime" )
-
 function ENT:SetupDataTables()
-   self:DTVar("Float", 0, "explode_time")
+   self:NetworkVar("Float", 0, "ExplodeTime")
 end
 
 function ENT:Initialize()
    self.Entity:SetModel(self.Model)
-   
+
    self.Entity:PhysicsInit(SOLID_VPHYSICS)
    self.Entity:SetMoveType(MOVETYPE_VPHYSICS)
    self.Entity:SetSolid(SOLID_BBOX)

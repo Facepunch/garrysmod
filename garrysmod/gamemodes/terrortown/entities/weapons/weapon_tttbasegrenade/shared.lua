@@ -47,25 +47,19 @@ SWEP.Secondary.Ammo		= "none"
 SWEP.IsGrenade = true
 SWEP.NoSights = true
 
-SWEP.pin_pulled = false
-SWEP.throw_time = 0
-
 SWEP.was_thrown = false
 
 SWEP.detonate_timer = 5
 
 SWEP.DeploySpeed = 1.5
 
-AccessorFuncDT( SWEP, "pin_pulled", "Pin")
-AccessorFuncDT( SWEP, "throw_time", "ThrowTime")
-
 AccessorFunc(SWEP, "det_time", "DetTime")
 
 CreateConVar("ttt_no_nade_throw_during_prep", "0")
 
 function SWEP:SetupDataTables()
-   self:DTVar("Bool", 0, "pin_pulled")
-   self:DTVar("Int", 0, "throw_time")
+   self:NetworkVar("Bool", 0, "Pin")
+   self:NetworkVar("Int", 0, "ThrowTime")
 end
 
 function SWEP:PrimaryAttack()

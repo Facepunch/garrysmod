@@ -125,8 +125,6 @@ SWEP.DeploySpeed = 1.4
 SWEP.PrimaryAnim = ACT_VM_PRIMARYATTACK
 SWEP.ReloadAnim = ACT_VM_RELOAD
 
-AccessorFuncDT(SWEP, "ironsights", "Ironsights")
-
 SWEP.fingerprints = {}
 
 local sparkle = CLIENT and CreateConVar("ttt_crazy_sparks", "0", FCVAR_ARCHIVE)
@@ -143,7 +141,7 @@ if CLIENT then
       local client = LocalPlayer()
       if disable_crosshair:GetBool() or (not IsValid(client)) then return end
 
-      local sights = self:GetIronsights()
+      local sights = (not self.NoSights) and self:GetIronsights()
 
       local x = ScrW() / 2.0
       local y = ScrH() / 2.0
@@ -454,12 +452,17 @@ end
 function SWEP:WasBought(buyer)
 end
 
+-- Dummy functions that will be replaced when SetupDataTables runs. These are
+-- here for when that does not happen (due to e.g. stacking base classes)
+function SWEP:GetIronsights() return false end
+function SWEP:SetIronsights() end
+
 -- Set up ironsights dt bool. Weapons using their own DT vars will have to make
 -- sure they call this.
 function SWEP:SetupDataTables()
    -- Put it in the last slot, least likely to interfere with derived weapon's
    -- own stuff.
-   self:DTVar("Bool", 3, "ironsights")
+   self:NetworkVar("Bool", 3, "Ironsights")
 end
 
 function SWEP:Initialize()
