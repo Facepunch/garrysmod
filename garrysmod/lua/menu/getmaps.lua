@@ -119,8 +119,6 @@ local function UpdateMapPatterns()
         MapPatterns[ "silo" ] = "Nuclear Dawn"
         MapPatterns[ "sk_metro" ] = "Nuclear Dawn"
         MapPatterns[ "training" ] = "Nuclear Dawn"
-
-        MapPatterns[ "^phys_" ] = "Physics Maps"
         
         MapPatterns[ "^bt_" ] = "Pirates, Vikings, & Knights II"
         MapPatterns[ "^lts_" ] = "Pirates, Vikings, & Knights II"
@@ -161,6 +159,7 @@ local function UpdateMapPatterns()
         MapPatterns[ "^jb_" ] = "Jailbreak"
         MapPatterns[ "^ba_jail_" ] = "Jailbreak"
         MapPatterns[ "^mg_" ] = "Minigames"
+        MapPatterns[ "^phys_" ] = "Physics Maps"
         MapPatterns[ "^pw_" ] = "Pirate Ship Wars"
         MapPatterns[ "^ph_" ] = "Prop Hunt"
         MapPatterns[ "^rp_" ] = "Roleplay"
@@ -168,6 +167,7 @@ local function UpdateMapPatterns()
         MapPatterns[ "^slender_" ] = "Stop it Slender"
         MapPatterns[ "^gms_" ] = "Stranded"
         MapPatterns[ "^surf_" ] = "Surf"
+        MapPatterns[ "^ts_" ] = "The Stalker"
         MapPatterns[ "^zm_" ] = "Zombie Survival"
         MapPatterns[ "^zombiesurvival_" ] = "Zombie Survival"
         MapPatterns[ "^zs_" ] = "Zombie Survival"
