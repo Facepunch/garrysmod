@@ -297,6 +297,10 @@ local function WinChecker()
       else
          local win = CheckForWin()
          if win != WIN_NONE then
+            -- A chance for hooks to override the winner or even abort ending round by returning WIN_NONE
+            win = hook.Call("TTTOverrideWin", GAMEMODE, win) or win
+         end
+         if win != WIN_NONE then
             EndRound(win)
             return
          end
