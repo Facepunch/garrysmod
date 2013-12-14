@@ -205,6 +205,7 @@ function SetLastMap( map, category )
 	
 	if ( rootScope ) {
 		rootScope.Map = map;
+		rootScope.LastCategory = category;
 		UpdateDigest( rootScope, 50 );
 	}
 
