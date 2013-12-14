@@ -3,7 +3,7 @@ UL.category LI.mapicon IMG.thumbnail
 	width: 128px;
 	height: 128px;
 }
-UL.category LI.mapicon IMG.favtoggle 
+UL.category LI.mapicon IMG.favtoggle
 {
 	position: absolute;
 	top: 8px;
@@ -16,11 +16,19 @@ UL.category LI.mapicon:hover IMG.favtoggle
 {
 	visibility: visible;
 }
-UL.category LI.mapicon IMG.faviconadd:hover 
+UL.category LI.mapicon IMG.favtoggle_always
+{
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	
+	background-image: url( '../../img/favourite.png?1' );
+}
+UL.category LI.mapicon IMG.faviconadd:hover
 {
 	background-image: url( '../../img/favourite_add.png?1' );
 }
-UL.category LI.mapicon IMG.faviconremove:hover 
+UL.category LI.mapicon IMG.faviconremove:hover
 {
 	background-image: url( '../../img/favourite_remove.png?1' );
 } 
