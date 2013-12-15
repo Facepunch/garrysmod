@@ -31,7 +31,6 @@ SWEP.SlotPos			= 1
 SWEP.DrawAmmo			= false
 SWEP.DrawCrosshair		= false
 SWEP.Spawnable			= false
-SWEP.AdminSpawnable		= false
 
 if ( SERVER ) then
 
