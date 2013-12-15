@@ -30,10 +30,10 @@
 	{
 		"ControlName"		"Button"
 		"fieldName"		"ChatFiltersButton"
-		"xpos"			"272"
+		"xpos"			"270"
 		"ypos"			"120"
 		"wide"			"45"
-		"tall"			"14"
+		"tall"			"10"
 		"autoResize"		"1"
 		"pinCorner"		"0"
 		"visible"		"1"
