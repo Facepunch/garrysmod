@@ -318,7 +318,7 @@ end
 function GM:HUDPaint()
    local client = LocalPlayer()
 
-   GAMEMODE:HUDDrawTargetID()
+   hook.Call( "HUDDrawTargetID", GAMEMODE )
 
    MSTACK:Draw(client)
 
@@ -336,7 +336,7 @@ function GM:HUDPaint()
    VOICE.Draw(client)
    DISGUISE.Draw(client)
 
-   GAMEMODE:HUDDrawPickupHistory()
+   hook.Call( "HUDDrawPickupHistory", GAMEMODE )
 
    -- Draw bottom left info panel
    InfoPaint(client)
