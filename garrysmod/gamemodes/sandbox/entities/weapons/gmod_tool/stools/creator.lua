@@ -1,4 +1,3 @@
-
 TOOL.AddToMenu		= false
 TOOL.ClientConVar[ "type" ]	= "0"
 TOOL.ClientConVar[ "name" ]	= "0"
@@ -44,6 +43,13 @@ function TOOL:LeftClick( trace, attach )
 	--
 	if ( SERVER && type == 3 ) then
 		Spawn_Weapon( self:GetOwner(), name, trace )
+	end
+	
+	--
+	-- type 4 = props
+	--
+	if ( SERVER && type == 4 ) then
+		CCSpawn( self:GetOwner(), nil, { name } )
 	end
 
 	return true;
