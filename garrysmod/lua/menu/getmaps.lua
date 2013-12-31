@@ -4,15 +4,15 @@ local MapPatterns = {}
 
 local function UpdateMapPatterns()
 
-	MapPatterns = {}
+  MapPatterns = {}
   
-	MapPatterns[ "^aoc_" ] = "Age of Chivalry"
+  MapPatterns[ "^aoc_" ] = "Age of Chivalry"
+  MapPatterns[ "^asi-" ] = "Alien Swarm"
+
+  MapPatterns[ "lobby" ] = "Alien Swarm"
   
-	MapPatterns[ "^asi-" ] = "Alien Swarm"
-	MapPatterns[ "lobby" ] = "Alien Swarm"
-  
-	MapPatterns[ "^ar_" ] = "Counter-Strike"
-	MapPatterns[ "^cs_" ] = "Counter-Strike"
+  MapPatterns[ "^ar_" ] = "Counter-Strike"
+  MapPatterns[ "^cs_" ] = "Counter-Strike"
   MapPatterns[ "^de_" ] = "Counter-Strike"
   MapPatterns[ "^es_" ] = "Counter-Strike"
   MapPatterns[ "^fy_" ] = "Counter-Strike"
