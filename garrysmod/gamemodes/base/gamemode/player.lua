@@ -293,7 +293,7 @@ function GM:PlayerSelectTeamSpawn( TeamID, pl )
 	for i=0, 6 do
 	
 		local ChosenSpawnPoint = table.Random( SpawnPoints )
-		if ( GAMEMODE:IsSpawnpointSuitable( pl, ChosenSpawnPoint, i==6 ) ) then
+		if ( hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ChosenSpawnPoint, i == 6 ) ) then
 			return ChosenSpawnPoint
 		end
 	
@@ -317,7 +317,7 @@ function GM:IsSpawnpointSuitable( pl, spawnpointent, bMakeSuitable )
 	-- (HL2DM kills everything within a 128 unit radius)
 	local Ents = ents.FindInBox( Pos + Vector( -16, -16, 0 ), Pos + Vector( 16, 16, 64 ) )
 	
-	if ( pl:Team() == TEAM_SPECTATOR || pl:Team() == TEAM_UNASSIGNED ) then return true end
+	if ( pl:Team() == TEAM_SPECTATOR ) then return true end
 	
 	local Blockers = 0
 	
@@ -408,15 +408,6 @@ function GM:PlayerSelectSpawn( pl )
 		-- ZM Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_deathmatch" ) )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombiemaster" ) )  		
-		
-		-- If any of the spawnpoints have a MASTER flag then only use that one.
-		for k, v in pairs( self.SpawnPoints ) do
-		
-			if ( v:HasSpawnFlags( 1 ) ) then
-				return v;
-			end
-		
-		end
 
 	end
 	
@@ -427,10 +418,20 @@ function GM:PlayerSelectSpawn( pl )
 		return nil 
 	end
 	
+	-- If any of the spawnpoints have a MASTER flag then only use that one.
+	-- This is needed for single player maps.
+	for k, v in pairs( self.SpawnPoints ) do
+		
+		if ( v:HasSpawnFlags( 1 ) ) then
+			return v
+		end
+		
+	end
+	
 	local ChosenSpawnPoint = nil
 	
-	-- Try to work out the best, random spawnpoint (in 6 goes)
-	for i=0, 6 do
+	-- Try to work out the best, random spawnpoint
+	for i=0, Count do
 	
 		ChosenSpawnPoint = table.Random( self.SpawnPoints )
 
@@ -440,7 +441,7 @@ function GM:PlayerSelectSpawn( pl )
 			ChosenSpawnPoint != pl:GetVar( "LastSpawnpoint" ) &&
 			ChosenSpawnPoint != self.LastSpawnPoint ) then
 			
-			if ( GAMEMODE:IsSpawnpointSuitable( pl, ChosenSpawnPoint, i==6 ) ) then
+			if ( hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ChosenSpawnPoint, i == Count ) ) then
 			
 				self.LastSpawnPoint = ChosenSpawnPoint
 				pl:SetVar( "LastSpawnpoint", ChosenSpawnPoint )
