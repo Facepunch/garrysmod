@@ -187,31 +187,31 @@ L.search_role_d = "This person was a Detective."
 L.search_role_i = "This person was an innocent terrorist."
 
 L.search_words  = "Something tells you some of this person's last words were: '{lastwords}'"
-L.search_armor  = "He was wearing nonstandard body armor."
-L.search_disg   = "He was carrying a device that could hide his identity."
-L.search_radar  = "He was carrying some sort of radar. It is no longer functioning."
+L.search_armor  = "They were wearing nonstandard body armor."
+L.search_disg   = "They were carrying a device that could hidetheir identity."
+L.search_radar  = "They were carrying some sort of radar. It is no longer functioning."
 L.search_c4     = "In a pocket you found a note. It states that cutting wire {num} will safely disarm the bomb."
 
-L.search_dmg_crush  = "Many of his bones are broken. It seems the impact of a heavy object killed him."
-L.search_dmg_bullet = "It is obvious he was shot to death."
-L.search_dmg_fall   = "He fell to his death."
-L.search_dmg_boom   = "His wounds and singed clothes indicate an explosion caused his end."
-L.search_dmg_club   = "The body is bruised and battered. Clearly he was clubbed to death."
+L.search_dmg_crush  = "Many of their bones are broken. It seems the impact of a heavy object killed them."
+L.search_dmg_bullet = "It is obvious they were shot to death."
+L.search_dmg_fall   = "They fell to their death."
+L.search_dmg_boom   = "Their wounds and singed clothes indicate an explosion caused their end."
+L.search_dmg_club   = "The body is bruised and battered. Clearly they were clubbed to death."
 L.search_dmg_drown  = "The body shows the telltale signs of drowning."
-L.search_dmg_stab   = "He was stabbed and cut before quickly bleeding to death."
+L.search_dmg_stab   = "They were stabbed and cut before quickly bleeding to death."
 L.search_dmg_burn   = "Smells like roasted terrorist around here..."
-L.search_dmg_tele   = "It looks like his DNA was scrambled by tachyon emissions!"
-L.search_dmg_car    = "When this terrorist crossed the road, he was run over by a reckless driver."
+L.search_dmg_tele   = "It looks like their DNA was scrambled by tachyon emissions!"
+L.search_dmg_car    = "When this terrorist crossed the road, they were run over by a reckless driver."
 L.search_dmg_other  = "You cannot find a specific cause of this terrorist's death."
 
-L.search_weapon = "It appears a {weapon} was used to kill him."
+L.search_weapon = "It appears a {weapon} was used to kill them."
 L.search_head   = "The fatal wound was a headshot. No time to scream."
-L.search_time   = "He died roughly {time} before you conducted the search."
+L.search_time   = "They died roughly {time} before you conducted the search."
 L.search_dna    = "Retrieve a sample of the killer's DNA with a DNA Scanner. The DNA sample will decay roughly {time} from now."
 
 L.search_kills1 = "You found a list of kills that confirms the death of {player}."
 L.search_kills2 = "You found a list of kills with these names:"
-L.search_eyes   = "Using your detective skills, you identified the last person he saw: {player}. The killer, or a coincidence?"
+L.search_eyes   = "Using your detective skills, you identified the last person they saw: {player}. The killer, or a coincidence?"
 
 
 -- Scoreboard
@@ -323,7 +323,7 @@ or press Numpad Enter.]]
 
 -- C4
 L.c4_hint         = "Press {usekey} to arm or disarm."
-L.c4_no_disarm    = "You cannot disarm another Traitor's C4 unless he is dead."
+L.c4_no_disarm    = "You cannot disarm another Traitor's C4 unless they are dead."
 L.c4_disarm_warn  = "A C4 explosive you planted has been disarmed."
 L.c4_armed        = "You have successfully armed the bomb."
 L.c4_disarmed     = "You have successfully disarmed the bomb."
@@ -491,7 +491,7 @@ Collect DNA samples from things
 and use them to find the DNA's owner.
 
 Use on fresh corpses to get the killer's DNA
-and track him down.]]
+and track them down.]]
 
 L.dna_menu_title  = "DNA scanning controls"
 L.dna_menu_sample = "DNA sample found on {source}"
@@ -675,11 +675,11 @@ L.tip1 = "Traitors can search a corpse silently, without confirming the death, b
 
 L.tip2 = "Arming a C4 explosive with a longer timer will increase the number of wires that cause it to explode instantly when an innocent attempts to disarm it. It will also beep softer and less often."
 
-L.tip3 = "Detectives can search a corpse to find who is 'reflected in its eyes'. This is the last person the dead guy saw. That does not have to be the killer if he was shot in the back."
+L.tip3 = "Detectives can search a corpse to find who is 'reflected in its eyes'. This is the last person the dead guy saw. That does not have to be the killer if they were shot in the back."
 
 L.tip4 = "No one will know you have died until they find your dead body and identify you by searching it."
 
-L.tip5 = "When a Traitor kills a Detective, he instantly receives a credit reward."
+L.tip5 = "When a Traitor kills a Detective, they instantly receive a credit reward."
 
 L.tip6 = "When a Traitor dies, all Detectives are rewarded equipment credits."
 
@@ -797,13 +797,13 @@ L.something      = "something"
 L.ev_blowup      = "{victim} blew himself up"
 L.ev_blowup_trap = "{victim} was blown up by {trap}"
 
-L.ev_tele_self   = "{victim} telefragged himself"
-L.ev_sui         = "{victim} couldn't take it and killed himself"
-L.ev_sui_using   = "{victim} killed himself using {tool}"
+L.ev_tele_self   = "{victim} telefragged themselves"
+L.ev_sui         = "{victim} couldn't take it and killed themselves"
+L.ev_sui_using   = "{victim} killed themselves using {tool}"
 
-L.ev_fall        = "{victim} fell to his death"
-L.ev_fall_pushed = "{victim} fell to his death after {attacker} pushed him"
-L.ev_fall_pushed_using = "{victim} fell to his death after {attacker} used {trap} to push him"
+L.ev_fall        = "{victim} fell to their death"
+L.ev_fall_pushed = "{victim} fell to their death after {attacker} pushed him"
+L.ev_fall_pushed_using = "{victim} fell to their death after {attacker} used {trap} to push him"
 
 L.ev_shot        = "{victim} was shot by {attacker}"
 L.ev_shot_using  = "{victim} was shot by {attacker} using a {weapon}"
@@ -856,10 +856,10 @@ L.aw_sui2_title = "Lonely and Depressed"
 L.aw_sui2_text  = "was the only one who killed himself."
 
 L.aw_exp1_title = "Explosives Research Grant"
-L.aw_exp1_text  = "was recognized for his research on explosions. {num} test subjects helped out."
+L.aw_exp1_text  = "was recognized for their research on explosions. {num} test subjects helped out."
 
 L.aw_exp2_title = "Field Research"
-L.aw_exp2_text  = "tested his own resistance to explosions. It was not high enough."
+L.aw_exp2_text  = "tested their own resistance to explosions. It was not high enough."
 
 L.aw_fst1_title = "First Blood"
 L.aw_fst1_text  = "delivered the first innocent death at a traitor's hands."
@@ -904,16 +904,16 @@ L.aw_nki3_title = "Do Traitors Dream Of Traitorous Sheep?"
 L.aw_nki3_text  = "put three traitors to rest."
 
 L.aw_nki4_title = "Internal Affairs Employee"
-L.aw_nki4_text  = "gets paid per kill. Can now order his fifth swimming pool."
+L.aw_nki4_text  = "gets paid per kill. Can now order their fifth swimming pool."
 
 L.aw_fal1_title = "No Mr. Bond, I Expect You To Fall"
 L.aw_fal1_text  = "pushed someone off a great height."
 
 L.aw_fal2_title = "Floored"
-L.aw_fal2_text  = "let his body hit the floor after falling from a significant altitude."
+L.aw_fal2_text  = "let their body hit the floor after falling from a significant altitude."
 
 L.aw_fal3_title = "The Human Meteorite"
-L.aw_fal3_text  = "crushed a man by falling on him from a great height."
+L.aw_fal3_text  = "crushed someone by falling on them from a great height."
 
 L.aw_hed1_title = "Efficiency"
 L.aw_hed1_text  = "discovered the joy of headshots and made {num}."
@@ -922,16 +922,16 @@ L.aw_hed2_title = "Neurology"
 L.aw_hed2_text  = "removed the brains from {num} heads for a closer examination."
 
 L.aw_hed3_title = "Videogames Made Me Do It"
-L.aw_hed3_text  = "applied his murder simulation training and headshotted {num} foes."
+L.aw_hed3_text  = "applied their murder simulation training and headshotted {num} foes."
 
 L.aw_cbr1_title = "Thunk Thunk Thunk"
 L.aw_cbr1_text  = "has a mean swing with the crowbar, as {num} victims found out."
 
 L.aw_cbr2_title = "Freeman"
-L.aw_cbr2_text  = "covered his crowbar in the brains of no less than {num} people."
+L.aw_cbr2_text  = "covered their crowbar in the brains of no less than {num} people."
 
 L.aw_pst1_title = "Persistent Little Bugger"
-L.aw_pst1_text  = "scored {num} kills using the pistol. Then he went on to hug someone to death."
+L.aw_pst1_text  = "scored {num} kills using the pistol. Then they went on to hug someone to death."
 
 L.aw_pst2_title = "Small Caliber Slaughter"
 L.aw_pst2_text  = "killed a small army of {num} with a pistol. Presumably installed a tiny shotgun inside the barrel."
@@ -940,13 +940,13 @@ L.aw_sgn1_title = "Easy Mode"
 L.aw_sgn1_text  = "applies the buckshot where it hurts, murdering {num} targets."
 
 L.aw_sgn2_title = "A Thousand Little Pellets"
-L.aw_sgn2_text  = "didn't really like his buckshot, so he gave it all away. {num} recipients did not live to enjoy it."
+L.aw_sgn2_text  = "didn't really like their buckshot, so they gave it all away. {num} recipients did not live to enjoy it."
 
 L.aw_rfl1_title = "Point and Click"
 L.aw_rfl1_text  = "shows all you need for {num} kills is a rifle and a steady hand."
 
 L.aw_rfl2_title = "I Can See Your Head From Here"
-L.aw_rfl2_text  = "knows his rifle. Now {num} other people know his rifle too."
+L.aw_rfl2_text  = "knows their rifle. Now {num} other people know the rifle too."
 
 L.aw_dgl1_title = "It's Like A Tiny Rifle"
 L.aw_dgl1_text  = "is getting the hang of the Desert Eagle and killed {num} people."
@@ -955,10 +955,10 @@ L.aw_dgl2_title = "Eagle Master"
 L.aw_dgl2_text  = "blew away {num} people with the deagle."
 
 L.aw_mac1_title = "Pray and Slay"
-L.aw_mac1_text  = "killed {num} people with the MAC10, but won't say how much ammo he needed."
+L.aw_mac1_text  = "killed {num} people with the MAC10, but won't say how much ammo they needed."
 
 L.aw_mac2_title = "Mac and Cheese"
-L.aw_mac2_text  = "wonders what would happen if he could wield two MAC10s. {num} times two?"
+L.aw_mac2_text  = "wonders what would happen if they could wield two MAC10s. {num} times two?"
 
 L.aw_sip1_title = "Be Quiet"
 L.aw_sip1_text  = "shut {num} people up with the silenced pistol."
@@ -979,16 +979,16 @@ L.aw_knf4_title = "World's Knifest Man"
 L.aw_knf4_text  = "killed {num} people with a knife. Don't ask me how."
 
 L.aw_flg1_title = "To The Rescue"
-L.aw_flg1_text  = "used his flares to signal for {num} deaths."
+L.aw_flg1_text  = "used their flares to signal for {num} deaths."
 
 L.aw_flg2_title = "Flare Indicates Fire"
 L.aw_flg2_text  = "taught {num} men about the danger of wearing flammable clothing."
 
 L.aw_hug1_title = "A H.U.G.E Spread"
-L.aw_hug1_text  = "was in tune with his H.U.G.E, somehow managing to make his bullets hit {num} people."
+L.aw_hug1_text  = "was in tune with their H.U.G.E, somehow managing to make their bullets hit {num} people."
 
 L.aw_hug2_title = "A Patient Para"
-L.aw_hug2_text  = "just kept firing, and saw his H.U.G.E patience rewarded with {num} kills."
+L.aw_hug2_text  = "just kept firing, and saw their H.U.G.E patience rewarded with {num} kills."
 
 L.aw_msx1_title = "Putt Putt Putt"
 L.aw_msx1_text  = "picked off {num} people with the M16."
@@ -997,40 +997,40 @@ L.aw_msx2_title = "Mid-range Madness"
 L.aw_msx2_text  = "knows how to take down targets with the M16, scoring {num} kills."
 
 L.aw_tkl1_title = "Made An Oopsie"
-L.aw_tkl1_text  = "had his finger slip just when he was aiming at a buddy."
+L.aw_tkl1_text  = "had their finger slip just when they were aiming at a buddy."
 
 L.aw_tkl2_title = "Double-Oops"
-L.aw_tkl2_text  = "thought he got a Traitor twice, but he was wrong both times."
+L.aw_tkl2_text  = "thought they got a Traitor twice, but was wrong both times."
 
 L.aw_tkl3_title = "Karma-conscious"
-L.aw_tkl3_text  = "couldn't stop after killing two teammates. Three is his lucky number."
+L.aw_tkl3_text  = "couldn't stop after killing two teammates. Three is their lucky number."
 
 L.aw_tkl4_title = "Teamkiller"
-L.aw_tkl4_text  = "murdered the entirety of his team. OMGBANBANBAN."
+L.aw_tkl4_text  = "murdered the entirety of their team. OMGBANBANBAN."
 
 L.aw_tkl5_title = "Roleplayer"
-L.aw_tkl5_text  = "was roleplaying a madman, honest. That's why he killed most of his team."
+L.aw_tkl5_text  = "was roleplaying a madman, honest. That's why they killed most of their team."
 
 L.aw_tkl6_title = "Moron"
-L.aw_tkl6_text  = "couldn't figure out which side he was on, and killed over half of his comrades."
+L.aw_tkl6_text  = "couldn't figure out which side they were on, and killed over half of their comrades."
 
 L.aw_tkl7_title = "Redneck"
-L.aw_tkl7_text  = "protected his turf real good by killing over a quarter of his teammates."
+L.aw_tkl7_text  = "protected their turf real good by killing over a quarter of their teammates."
 
 L.aw_brn1_title = "Like Grandma Used To Make Them"
 L.aw_brn1_text  = "fried several people to a nice crisp."
 
 L.aw_brn2_title = "Pyroid"
-L.aw_brn2_text  = "was heard cackling loudly after burning one of his many victims."
+L.aw_brn2_text  = "was heard cackling loudly after burning one of their many victims."
 
 L.aw_brn3_title = "Pyrrhic Burnery"
-L.aw_brn3_text  = "burned them all, but is now all out of incendiary grenades! How will he cope!?"
+L.aw_brn3_text  = "burned them all, but is now all out of incendiary grenades! How will they cope!?"
 
 L.aw_fnd1_title = "Coroner"
 L.aw_fnd1_text  = "found {num} bodies lying around."
 
 L.aw_fnd2_title = "Gotta Catch Em All"
-L.aw_fnd2_text  = "found {num} corpses for his collection."
+L.aw_fnd2_text  = "found {num} corpses for their collection."
 
 L.aw_fnd3_title = "Death Scent"
 L.aw_fnd3_text  = "keeps stumbling on random corpses, {num} times this round."
@@ -1039,7 +1039,7 @@ L.aw_crd1_title = "Recycler"
 L.aw_crd1_text  = "scrounged up {num} leftover credits from corpses."
 
 L.aw_tod1_title = "Pyrrhic Victory"
-L.aw_tod1_text  = "died only seconds before his team won the round."
+L.aw_tod1_text  = "died only seconds before their team won the round."
 
 L.aw_tod2_title = "I Hate This Game"
 L.aw_tod2_text  = "died right after the start of the round."
