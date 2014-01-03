@@ -8,6 +8,7 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, no
 	if ( SpawnableEntities ) then
 		for k, v in pairs( SpawnableEntities ) do
 			
+			v.SpawnName = k
 			v.Category = v.Category or "Other"
 			Categorised[ v.Category ] = Categorised[ v.Category ] or {}
 			table.insert( Categorised[ v.Category ], v )
@@ -39,8 +40,8 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, no
 				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", self.PropPanel, 
 				{ 
 					nicename	= ent.PrintName or ent.ClassName,
-					spawnname	= ent.ClassName,
-					material	= "entities/"..ent.ClassName..".png",
+					spawnname	= ent.SpawnName,
+					material	= "entities/"..ent.SpawnName..".png",
 					admin		= ent.AdminOnly
 							
 				})
