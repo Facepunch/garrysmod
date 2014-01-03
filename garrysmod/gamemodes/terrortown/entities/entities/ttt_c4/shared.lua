@@ -303,11 +303,14 @@ local MAX_MOVE_RANGE = 1000000 -- sq of 1000
 function ENT:Think()
    if not self:GetArmed() then return end
 
-   local curpos = self:GetPos()
-   if self.LastPos and self.LastPos:DistToSqr(curpos) > MAX_MOVE_RANGE then
-      self:Disarm(nil)
+   if SERVER then
+      local curpos = self:GetPos()
+      if self.LastPos and self.LastPos:DistToSqr(curpos) > MAX_MOVE_RANGE then
+         self:Disarm(nil)
+         return
+      end
+      self.LastPos = curpos
    end
-   self.LastPos = curpos
 
    local etime = self:GetExplodeTime()
    if self:GetArmed() and etime != 0 and etime < CurTime() then
