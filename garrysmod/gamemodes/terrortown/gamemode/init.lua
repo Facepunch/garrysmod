@@ -56,7 +56,6 @@ include("corpse.lua")
 include("player_ext_shd.lua")
 include("player_ext.lua")
 include("player.lua")
-include("tags.lua")
 
 CreateConVar("ttt_roundtime_minutes", "10", FCVAR_NOTIFY)
 CreateConVar("ttt_preptime_seconds", "30", FCVAR_NOTIFY)
@@ -181,14 +180,6 @@ function GM:Initialize()
    if not cstrike then
       ErrorNoHalt("TTT WARNING: CS:S does not appear to be mounted by GMod. Things may break in strange ways. Server admin? Check the TTT readme for help.\n")
    end
-
-   GAMEMODE:CheckFileConsistency()
-end
-
-function GM:InitPostEntity()
-   self.Customized = WEPS.HasCustomEquipment()
-
-   self:UpdateServerTags()
 end
 
 -- Used to do this in Initialize, but server cfg has not always run yet by that
@@ -424,8 +415,6 @@ function GM:TTTDelayRoundStartForVote()
 end
 
 function PrepareRound()
-   GAMEMODE:UpdateServerTags()
-
    -- Check playercount
    if CheckForAbort() then return end
 

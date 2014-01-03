@@ -490,46 +490,6 @@ function GM:WeaponEquip(wep)
    end
 end
 
-
-function WEPS.HasCustomEquipment()
-   -- first look at SWEPs
-   for _, wep in pairs(weapons.GetList()) do
-      if wep and wep.Kind then
-         local roles = nil
-         if IsEquipment(wep) then
-            -- this will be nil if weapon is disabled
-            roles = wep.CanBuy
-         else
-            -- normal weapons not only buyable by a specific role, can be
-            -- map-placed or spawned from a random weapon
-            roles = { ROLE_NONE }
-         end
-
-         if roles then
-            for _, role in pairs(roles) do
-               if not table.HasValue(DefaultEquipment[role], WEPS.GetClass(wep)) then
-                  return true
-               end
-            end
-         end
-      end
-   end
-
-   -- then at items
-   for role, items in pairs(EquipmentItems) do
-      local deq = DefaultEquipment[role]
-      for _, item in pairs(items) do
-         if item and item.id then
-            if not table.HasValue(deq, item.id) then
-               return true
-            end
-         end
-      end
-   end
-
-   return false
-end
-
 -- non-cheat developer commands can reveal precaching the first time equipment
 -- is bought, so trigger it at the start of a round instead
 function WEPS.ForcePrecache()
