@@ -239,17 +239,23 @@ function ToggleFavourite(map)
 end
 
 function SaveLastMap( map, cat )
+
 	local t = string.Explode( ";", cookie.GetString( "lastmap", "" ) )
 	if ( !map ) then map = t[ 1 ] or "" end
 	if ( !cat ) then cat = t[ 2 ] or "" end
 	
 	cookie.Set( "lastmap", map .. ";" .. cat )
+
 end
 
 function LoadLastMap()
+
 	local t = string.Explode( ";", cookie.GetString( "lastmap", "" ) )
 	local map = t[ 1 ] or ""
 	local cat = t[ 2 ] or ""
-	
+
+	cat = string.gsub( cat, "'", "\\'" )
+
 	pnlMainMenu:Call( "SetLastMap('" .. map .. "','" .. cat .. "')" );
+
 end
