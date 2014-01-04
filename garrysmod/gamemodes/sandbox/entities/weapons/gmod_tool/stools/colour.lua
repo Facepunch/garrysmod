@@ -4,7 +4,6 @@ TOOL.Name			= "#tool.color.name"
 TOOL.Command		= nil
 TOOL.ConfigName		= nil
 
-
 TOOL.ClientConVar[ "r" ] = 255
 TOOL.ClientConVar[ "g" ] = 0
 TOOL.ClientConVar[ "b" ] = 255
@@ -35,14 +34,12 @@ duplicator.RegisterEntityModifier( "colour", SetColour )
 
 function TOOL:LeftClick( trace )
 
-	if trace.Entity && 		-- Hit an entity
-	   trace.Entity:IsValid() && 	-- And the entity is valid
-	   trace.Entity:EntIndex() != 0 -- And isn't worldspawn
-	then
+	local ent = trace.Entity
+	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
 
-		if (CLIENT) then
-			return true 
-		end
+	if IsValid( ent ) then -- The entity is valid and isn't worldspawn
+
+		if ( CLIENT ) then return true end
 	
 		local r		= self:GetClientNumber( "r", 0 )
 		local g		= self:GetClientNumber( "g", 0 )
@@ -51,7 +48,7 @@ function TOOL:LeftClick( trace )
 		local mode	= self:GetClientNumber( "mode", 0 )
 		local fx	= self:GetClientNumber( "fx", 0 )
 
-		SetColour( self:GetOwner(), trace.Entity, { Color = Color( r, g, b, a ), RenderMode = mode, RenderFX = fx } )
+		SetColour( self:GetOwner(), ent, { Color = Color( r, g, b, a ), RenderMode = mode, RenderFX = fx } )
 
 		return true
 		
@@ -61,12 +58,14 @@ end
 
 function TOOL:RightClick( trace )
 
-	if trace.Entity && 		-- Hit an entity
-	   trace.Entity:IsValid() && 	-- And the entity is valid
-	   trace.Entity:EntIndex() != 0 -- And isn't worldspawn
-	then
+	local ent = trace.Entity
+	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
 
-		SetColour( self:GetOwner(), trace.Entity, { Color = Color( 255, 255, 255, 255 ), RenderMode = 0, RenderFX = 0 } )	
+	if IsValid( ent ) then -- The entity is valid and isn't worldspawn
+
+		if ( CLIENT ) then return true end
+	
+		SetColour( self:GetOwner(), ent, { Color = Color( 255, 255, 255, 255 ), RenderMode = 0, RenderFX = 0 } )	
 		return true
 	
 	end
