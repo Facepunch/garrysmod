@@ -1,4 +1,3 @@
-
 local matHover = Material( "vgui/spawnmenu/hover" )
 
 local PANEL = {}
@@ -217,7 +216,7 @@ spawnmenu.AddContentType( "model", function( container, obj )
 
 						local menu = DermaMenu()
 							menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.model ) end )
-							--menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ); RunConsoleCommand( "creator_type", "4" ); RunConsoleCommand( "creator_name", obj.model ) end )
+							menu:AddOption( "Spawn using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ); RunConsoleCommand( "creator_type", "4" ); RunConsoleCommand( "creator_name", obj.model ) end )
 
 							local submenu = menu:AddSubMenu( "Re-Render", function() icon:RebuildSpawnIcon() end )
 								submenu:AddOption( "This Icon", function() icon:RebuildSpawnIcon() end )
