@@ -57,66 +57,6 @@ include("player_ext_shd.lua")
 include("player_ext.lua")
 include("player.lua")
 
-CreateConVar("ttt_roundtime_minutes", "10", FCVAR_NOTIFY)
-CreateConVar("ttt_preptime_seconds", "30", FCVAR_NOTIFY)
-CreateConVar("ttt_posttime_seconds", "30", FCVAR_NOTIFY)
-CreateConVar("ttt_firstpreptime", "60")
-
-local ttt_haste = CreateConVar("ttt_haste", "1", FCVAR_NOTIFY)
-CreateConVar("ttt_haste_starting_minutes", "5", FCVAR_NOTIFY)
-CreateConVar("ttt_haste_minutes_per_death", "0.5", FCVAR_NOTIFY)
-
-CreateConVar("ttt_spawn_wave_interval", "0")
-
-CreateConVar("ttt_traitor_pct", "0.25")
-CreateConVar("ttt_traitor_max", "32")
-
-CreateConVar("ttt_detective_pct", "0.13", FCVAR_NOTIFY)
-CreateConVar("ttt_detective_max", "32")
-CreateConVar("ttt_detective_min_players", "8")
-CreateConVar("ttt_detective_karma_min", "600")
-
-
--- Traitor credits
-CreateConVar("ttt_credits_starting", "2")
-CreateConVar("ttt_credits_award_pct", "0.35")
-CreateConVar("ttt_credits_award_size", "1")
-CreateConVar("ttt_credits_award_repeat", "1")
-CreateConVar("ttt_credits_detectivekill", "1")
-
-CreateConVar("ttt_credits_alonebonus", "1")
-
--- Detective credits
-CreateConVar("ttt_det_credits_starting", "1")
-CreateConVar("ttt_det_credits_traitorkill", "0")
-CreateConVar("ttt_det_credits_traitordead", "1")
-
-
-CreateConVar("ttt_announce_deaths", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
-
-CreateConVar("ttt_use_weapon_spawn_scripts", "1")
-
-CreateConVar("ttt_always_use_mapcycle", "0")
-
-CreateConVar("ttt_round_limit", "6", FCVAR_ARCHIVE + FCVAR_NOTIFY + FCVAR_REPLICATED)
-CreateConVar("ttt_time_limit_minutes", "75", FCVAR_NOTIFY + FCVAR_REPLICATED)
-
-CreateConVar("ttt_idle_limit", "180", FCVAR_NOTIFY)
-
-CreateConVar("ttt_voice_drain", "0", FCVAR_NOTIFY)
-CreateConVar("ttt_voice_drain_normal", "0.2", FCVAR_NOTIFY)
-CreateConVar("ttt_voice_drain_admin", "0.05", FCVAR_NOTIFY)
-CreateConVar("ttt_voice_drain_recharge", "0.05", FCVAR_NOTIFY)
-
-CreateConVar("ttt_namechange_kick", "1", FCVAR_NOTIFY)
-CreateConVar("ttt_namechange_bantime", "10")
-
-local ttt_detective = CreateConVar("ttt_sherlock_mode", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
-local ttt_minply = CreateConVar("ttt_minimum_players", "2", FCVAR_ARCHIVE + FCVAR_NOTIFY)
-
--- debuggery
-local ttt_dbgwin = CreateConVar("ttt_debug_preventwin", "0")
-
 -- Localise stuff we use often. It's like Lua go-faster stripes.
 local math = math
 local table = table
@@ -200,8 +140,8 @@ function GM:GetGameDescription() return self.Name end
 -- Convar replication is broken in gmod, so we do this.
 -- I don't like it any more than you do, dear reader.
 function GM:SyncGlobals()
-   SetGlobalBool("ttt_detective", ttt_detective:GetBool())
-   SetGlobalBool("ttt_haste", ttt_haste:GetBool())
+   SetGlobalBool("ttt_detective", GetConVar("ttt_sherlock_mode"):GetBool())
+   SetGlobalBool("ttt_haste", GetConVar("ttt_haste"):GetBool())
    SetGlobalInt("ttt_time_limit_minutes", GetConVar("ttt_time_limit_minutes"):GetInt())
    SetGlobalBool("ttt_highlight_admins", GetConVar("ttt_highlight_admins"):GetBool())
    SetGlobalBool("ttt_locational_voice", GetConVar("ttt_locational_voice"):GetBool())
@@ -773,7 +713,7 @@ end
 
 -- The most basic win check is whether both sides have one dude alive
 function CheckForWin()
-   if ttt_dbgwin:GetBool() then return WIN_NONE end
+   if GetConVar("ttt_debug_preventwin"):GetBool() then return WIN_NONE end
 
    if GAMEMODE.MapWin == WIN_TRAITOR or GAMEMODE.MapWin == WIN_INNOCENT then
       local mw = GAMEMODE.MapWin

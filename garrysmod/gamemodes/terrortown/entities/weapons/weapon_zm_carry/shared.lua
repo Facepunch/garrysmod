@@ -49,14 +49,14 @@ SWEP.PrevOwner = nil
 local allow_rag  = CreateConVar("ttt_ragdoll_carrying", "1")
 local prop_force = CreateConVar("ttt_prop_carrying_force", "60000")
 local no_throw   = CreateConVar("ttt_no_prop_throwing", "0")
-local pin_rag    = CreateConVar("ttt_ragdoll_pinning", "1")
-local pin_rag_inno = CreateConVar("ttt_ragdoll_pinning_innocents", "0")
+local pin_rag    = GetConVar("ttt_ragdoll_pinning")
+local pin_rag_inno = GetConVar("ttt_ragdoll_pinning_innocents")
 
 -- Allowing weapon pickups can allow players to cause a crash in the physics
 -- system (ie. not fixable). Tuning the range seems to make this more
 -- difficult. Not sure why. It's that kind of crash.
-local allow_wep = CreateConVar("ttt_weapon_carrying", "1")
-local wep_range = CreateConVar("ttt_weapon_carrying_range", "50")
+local allow_wep = GetConVar("ttt_weapon_carrying")
+local wep_range = GetConVar("ttt_weapon_carrying_range")
 
 -- not customizable via convars as some objects rely on not being carryable for
 -- gameplay purposes

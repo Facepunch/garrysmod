@@ -145,7 +145,6 @@ local ttt_playercolors = {
    }
 };
 
-CreateConVar("ttt_playercolor_mode", "1")
 function GM:TTTPlayerColor(model)
    if hook.Call("TTTShouldColorModel", GAMEMODE, model) then
       local mode = GetConVarNumber("ttt_playercolor_mode") or 0

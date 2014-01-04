@@ -356,7 +356,7 @@ local function GetSceneData(victim, attacker, dmginfo)
    return scene
 end
 
-local rag_collide = CreateConVar("ttt_ragdoll_collide", "0")
+local rag_collide = GetConVar("ttt_ragdoll_collide")
 
 -- Creates client or server ragdoll depending on settings
 function CORPSE.Create(ply, attacker, dmginfo)

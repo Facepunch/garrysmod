@@ -149,7 +149,7 @@ function MuteForRestart(state)
 end
 
 
-local loc_voice = CreateConVar("ttt_locational_voice", "0")
+local loc_voice = GetConVar("ttt_locational_voice")
 
 -- Of course voice has to be limited as well
 function GM:PlayerCanHearPlayersVoice( listener, speaker )
