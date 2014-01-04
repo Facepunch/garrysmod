@@ -1,4 +1,3 @@
-
 --[[---------------------------------------------------------
    Name:	KickId2
    Desc:	Allows admins to use the kickid2 command to kick people.
@@ -19,7 +18,7 @@ concommand.Add( "kickid2", KickId, nil, "", { FCVAR_DONTRECORD } )
 
 --[[---------------------------------------------------------
    Name:	BanId2
-   Desc:	Allows admins to use the kickid2 command to kick people.
+   Desc:	Allows admins to use the banid2 command to kick people.
 -----------------------------------------------------------]]   
 local function BanID( player, command, arguments )
 
