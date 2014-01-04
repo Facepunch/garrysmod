@@ -185,7 +185,7 @@ local function EnoughPlayers()
          ready = ready + 1
       end
    end
-   return ready >= ttt_minply:GetInt()
+   return ready >= GetConVar("ttt_minimum_players"):GetInt()
 end
 
 -- Used to be in Think/Tick, now in a timer
