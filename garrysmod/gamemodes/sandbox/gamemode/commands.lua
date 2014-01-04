@@ -601,6 +601,7 @@ function Spawn_SENT( player, EntityName, tr )
 	local entity = nil
 	local PrintName = nil
 	local sent = scripted_ents.GetStored( EntityName )
+
 	if ( sent ) then
 	
 		local sent = sent.t
@@ -623,9 +624,9 @@ function Spawn_SENT( player, EntityName, tr )
 	
 		-- Spawn from list table
 		local SpawnableEntities = list.Get( "SpawnableEntities" )
-		if (!SpawnableEntities) then return end
+		if ( !SpawnableEntities ) then return end
 		local EntTable = SpawnableEntities[ EntityName ]
-		if (!EntTable) then return end
+		if ( !EntTable ) then return end
 		
 		PrintName = EntTable.PrintName
 		
@@ -633,7 +634,14 @@ function Spawn_SENT( player, EntityName, tr )
 		if ( EntTable.NormalOffset ) then SpawnPos = SpawnPos + tr.HitNormal * EntTable.NormalOffset end
 	
 		entity = ents.Create( EntTable.ClassName )
-			entity:SetPos( SpawnPos )
+		entity:SetPos( SpawnPos )
+			
+		if ( EntTable.KeyValues ) then
+			for k, v in pairs( EntTable.KeyValues ) do
+				entity:SetKeyValue( k, v )
+			end
+		end
+
 		entity:Spawn()
 		entity:Activate()
 		
