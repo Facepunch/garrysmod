@@ -38,12 +38,6 @@ function dragndrop.HandleDroppedInGame()
 	if ( !IsValid( panel ) ) then return end
 	if ( panel:GetClassName() != "CGModBase" ) then return end
 	
-	local tr = util.TraceLine( util.GetPlayerTrace( LocalPlayer() ) )
-	
-	MsgN( "DROPPED ON ", panel )
-	MsgN( "Create spawn at " ) 
-	PrintTable( tr )
-	
 end
 
 function dragndrop.Drop()
