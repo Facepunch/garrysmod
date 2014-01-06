@@ -323,6 +323,15 @@ function SetPlayerClass( ply, classname )
 
 end
 
+function GetPlayerClass( ply )
+
+	local id = ply:GetClassID()
+	if ( id == 0 ) then return end
+
+	return util.NetworkIDToString( id )
+
+end
+
 function ClearPlayerClass( ply )
 
 	ply:SetClassID( 0 )
