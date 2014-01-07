@@ -1,4 +1,3 @@
-
 ---- Unlike sandbox, we have teams to deal with, so here's an extra panel in the
 ---- hierarchy that handles a set of player rows belonging to its team.
 
@@ -74,9 +73,10 @@ function PANEL:Paint()
    end
 
    -- Column darkening
+   local scr = sboard_panel.ply_frame.scroll.Enabled and 16 or 0
    surface.SetDrawColor(0,0,0, 80)
-   surface.DrawRect(self:GetWide() - 175, 0, 50, self:GetTall())
-   surface.DrawRect(self:GetWide() - 75, 0, 50, self:GetTall())
+   surface.DrawRect(self:GetWide() - 175 - scr, 0, 50, self:GetTall())
+   surface.DrawRect(self:GetWide() - 75 - scr, 0, 50, self:GetTall())
 end
 
 function PANEL:AddPlayerRow(ply)
