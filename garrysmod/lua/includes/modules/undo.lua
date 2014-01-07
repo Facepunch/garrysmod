@@ -1,6 +1,6 @@
 
-require ( "usermessage" )
 require ( "timer" )
+require ( "net" )
 
 module( "undo", package.seeall )
 
@@ -57,10 +57,10 @@ if ( CLIENT ) then
 		AddUndo
 		Called from server. Adds a new undo to our UI
 	-----------------------------------------------------------]]
-	local function AddUndo( message )
+	local function AddUndo( _ )
 
-		local k 	= message:ReadLong();
-		local v 	= message:ReadString();
+		local k 	= net.ReadInt(16);
+		local v 	= net.ReadString();
 		
 		table.insert( ClientUndos, 1, { Key = k, Name = v } )
 		
@@ -68,7 +68,7 @@ if ( CLIENT ) then
 
 	end
 	
-	usermessage.Hook( "AddUndo", AddUndo )
+	net.Receive( "Undo_AddUndo", AddUndo )
 	
 	
 	--[[---------------------------------------------------------
@@ -77,9 +77,9 @@ if ( CLIENT ) then
 		has been undone or made redundant. We act by updating 
 		out data (We wait until the UI is viewed until updating)
 	-----------------------------------------------------------]]
-	local function Undone( message )
+	local function Undone( _ )
 
-		local key = message:ReadLong();
+		local key = net.ReadInt(16);
 		
 		local NewUndo = {}
 		local i = 1
@@ -98,7 +98,7 @@ if ( CLIENT ) then
 
 	end
 	
-	usermessage.Hook( "Undone", Undone )
+	net.Receive( "Undo_Undone", Undone )
 	
 	--[[---------------------------------------------------------
 		MakeUIDirty
@@ -164,6 +164,9 @@ local PlayerUndo = {}
 --			- Owner (player)
 
 local Current_Undo = nil
+
+util.AddNetworkString("Undo_Undone")
+util.AddNetworkString("Undo_AddUndo")
 
 --[[---------------------------------------------------------
 	GetTable
@@ -293,9 +296,9 @@ local function SendUndoneMessage( ent, id, ply )
 	-- For further optimization we could queue up the ids and send them
 	-- in one batch ever 0.5 seconds or something along those lines.
 	
-	umsg.Start( "Undone", ply )
-		umsg.Long( id )
-	umsg.End()
+	net.Start( "Undo_Undone" )
+	    net.WriteInt( id, 16 )
+	net.Send( ply )
 
 end
 
@@ -315,10 +318,10 @@ function Finish( NiceText )
 	
 	NiceText = NiceText or Current_Undo.Name
 	
-	umsg.Start( "AddUndo", Current_Undo.Owner )
-		umsg.Long( id )
-		umsg.String( NiceText )
-	umsg.End()
+	net.Start( "Undo_AddUndo" )
+		net.WriteInt( id, 16 )
+		net.WriteString( NiceText )
+	net.Send( Current_Undo.Owner )
 	
 	-- Have one of the entities in the undo tell us when it gets undone.
 	if ( Current_Undo.Entities[1] ) then
@@ -404,9 +407,9 @@ local function CC_UndoLast( pl, command, args )
 	
 	local count = Do_Undo( last )
 	
-	umsg.Start( "Undone", pl )
-		umsg.Long( lastk )
-	umsg.End()
+	net.Start( "Undo_Undone" )
+		net.WriteInt( lastk, 16 )
+	net.Send( pl )
 	
 	PlayerUndo[ index ][ lastk ] = nil
 	
