@@ -1,4 +1,3 @@
-
 ---- VGUI panel version of the scoreboard, based on TEAM GARRY's sandbox mode
 ---- scoreboard.
 
@@ -235,7 +234,7 @@ function PANEL:PerformLayout()
    local cy = y_logo_off + 90
    for k,v in ipairs(self.cols) do
       v:SizeToContents()
-      v:SetPos( w - (50*k) - v:GetWide()/2 - 8, cy)
+      v:SetPos( w - (50*k) - v:GetWide()/2 - 8 -(scrolling and 16 or 0), cy)
    end
 end
 
