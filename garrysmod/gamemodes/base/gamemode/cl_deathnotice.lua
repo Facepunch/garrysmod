@@ -42,11 +42,11 @@ local function PlayerIDOrNameToString( var )
 end
 
 
-local function RecvPlayerKilledByPlayer( message )
+local function RecvPlayerKilledByPlayer( _ )
 
-	local victim 	= message:ReadEntity();
-	local inflictor	= message:ReadString();
-	local attacker 	= message:ReadEntity();
+	local victim 	= net.ReadEntity();
+	local inflictor	= net.ReadString();
+	local attacker 	= net.ReadEntity();
 
 	if ( !IsValid( attacker ) ) then return end
 	if ( !IsValid( victim ) ) then return end
@@ -55,39 +55,38 @@ local function RecvPlayerKilledByPlayer( message )
 
 end
 	
-usermessage.Hook( "PlayerKilledByPlayer", RecvPlayerKilledByPlayer )
+net.Receive( "PlayerKilledByPlayer", RecvPlayerKilledByPlayer )
 
+local function RecvPlayerKilledSelf( _ )
 
-local function RecvPlayerKilledSelf( message )
-
-	local victim 	= message:ReadEntity();
+	local victim 	= net.ReadEntity();
 	if ( !IsValid( victim ) ) then return end
 	GAMEMODE:AddDeathNotice( nil, 0, "suicide", victim:Name(), victim:Team() )
 
 end
 	
-usermessage.Hook( "PlayerKilledSelf", RecvPlayerKilledSelf )
+net.Receive( "PlayerKilledSelf", RecvPlayerKilledSelf )
 
 
-local function RecvPlayerKilled( message )
+local function RecvPlayerKilled( _ )
 
-	local victim 	= message:ReadEntity();
+	local victim 	= net.ReadEntity();
 	if ( !IsValid( victim ) ) then return end
-	local inflictor	= message:ReadString();
-	local attacker 	= "#" .. message:ReadString();
+	local inflictor	= net.ReadString();
+	local attacker 	= "#" .. net.ReadString();
 			
 	GAMEMODE:AddDeathNotice( attacker, -1, inflictor, victim:Name(), victim:Team() )
 
 end
 	
-usermessage.Hook( "PlayerKilled", RecvPlayerKilled )
+net.Receive( "PlayerKilled", RecvPlayerKilled )
 
-local function RecvPlayerKilledNPC( message )
+local function RecvPlayerKilledNPC( _ )
 
-	local victimtype = message:ReadString();
+	local victimtype = net.ReadString();
 	local victim 	= "#" .. victimtype;
-	local inflictor	= message:ReadString();
-	local attacker 	= message:ReadEntity();
+	local inflictor	= net.ReadString();
+	local attacker 	= net.ReadEntity();
 
 	--
 	-- For some reason the killer isn't known to us, so don't proceed.
@@ -115,20 +114,20 @@ local function RecvPlayerKilledNPC( message )
 
 end
 	
-usermessage.Hook( "PlayerKilledNPC", RecvPlayerKilledNPC )
+net.Receive( "PlayerKilledNPC", RecvPlayerKilledNPC )
 
 
-local function RecvNPCKilledNPC( message )
+local function RecvNPCKilledNPC( _ )
 
-	local victim 	= "#" .. message:ReadString();
-	local inflictor	= message:ReadString();
-	local attacker 	= "#" .. message:ReadString();
+	local victim 	= "#" .. net.ReadString();
+	local inflictor	= net.ReadString();
+	local attacker 	= "#" .. net.ReadString();
 			
 	GAMEMODE:AddDeathNotice( attacker, -1, inflictor, victim, -1 )
 
 end
 	
-usermessage.Hook( "NPCKilledNPC", RecvNPCKilledNPC )
+net.Receive( "NPCKilledNPC", RecvNPCKilledNPC )
 
 
 

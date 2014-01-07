@@ -1,4 +1,3 @@
-
 --[[---------------------------------------------------------
    Name: gamemode:OnPhysgunFreeze( weapon, phys, ent, player )
    Desc: The physgun wants to freeze a prop
@@ -127,6 +126,11 @@ function GM:PlayerSilentDeath( Victim )
 
 end
 
+-- Pool network strings used for PlayerDeaths.
+util.AddNetworkString("PlayerKilledSelf")
+util.AddNetworkString("PlayerKilledByPlayer")
+util.AddNetworkString("PlayerKilled")
+
 --[[---------------------------------------------------------
    Name: gamemode:PlayerDeath( )
    Desc: Called when a player dies.
@@ -157,9 +161,9 @@ function GM:PlayerDeath( Victim, Inflictor, Attacker )
 
 	if (Attacker == Victim) then
 	
-		umsg.Start( "PlayerKilledSelf" )
-			umsg.Entity( Victim )
-		umsg.End()
+		net.Start( "PlayerKilledSelf" )
+			net.WriteEntity( Victim )
+		net.Broadcast()
 		
 		MsgAll( Attacker:Nick() .. " suicided!\n" )
 		
@@ -167,25 +171,25 @@ function GM:PlayerDeath( Victim, Inflictor, Attacker )
 
 	if ( Attacker:IsPlayer() ) then
 	
-		umsg.Start( "PlayerKilledByPlayer" )
+		net.Start( "PlayerKilledByPlayer" )
 		
-			umsg.Entity( Victim )
-			umsg.String( Inflictor:GetClass() )
-			umsg.Entity( Attacker )
+			net.WriteEntity( Victim )
+			net.WriteString( Inflictor:GetClass() )
+			net.WriteEntity( Attacker )
 		
-		umsg.End()
+		net.Broadcast()
 		
 		MsgAll( Attacker:Nick() .. " killed " .. Victim:Nick() .. " using " .. Inflictor:GetClass() .. "\n" )
 		
 	return end
 	
-	umsg.Start( "PlayerKilled" )
+	net.Start( "PlayerKilled" )
 	
-		umsg.Entity( Victim )
-		umsg.String( Inflictor:GetClass() )
-		umsg.String( Attacker:GetClass() )
+		net.WriteEntity( Victim )
+		net.WriteString( Inflictor:GetClass() )
+		net.WriteString( Attacker:GetClass() )
 
-	umsg.End()
+	net.Broadcast()
 	
 	MsgAll( Victim:Nick() .. " was killed by " .. Attacker:GetClass() .. "\n" )
 	
