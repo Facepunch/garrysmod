@@ -228,6 +228,9 @@ function PANEL:PerformLayout()
    self.avatar:SetPos(0,0)
    self.avatar:SetSize(SB_ROW_HEIGHT,SB_ROW_HEIGHT)
 
+   local fw = sboard_panel.ply_frame:GetWide()
+   self:SetWide( sboard_panel.ply_frame.scroll.Enabled and fw-16 or fw )
+
    if not self.open then
       self:SetSize(self:GetWide(), SB_ROW_HEIGHT)
 
