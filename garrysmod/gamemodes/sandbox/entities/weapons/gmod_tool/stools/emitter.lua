@@ -9,8 +9,9 @@ TOOL.ClientConVar[ "delay" ] 		= "1"
 TOOL.ClientConVar[ "toggle" ] 		= "1"
 TOOL.ClientConVar[ "starton" ] 		= "0"
 TOOL.ClientConVar[ "effect" ] 		= "sparks"
+TOOL.ClientConVar[ "scale" ] 		= "1"
 
-cleanup.Register( "emitter" )
+cleanup.Register( "emitters" )
 
 function TOOL:LeftClick( trace, worldweld )
 
@@ -25,12 +26,13 @@ function TOOL:LeftClick( trace, worldweld )
 	
 	local ply = self:GetOwner()
 	
-	local key	 		= self:GetClientNumber( "key" ) 
-	local delay 		= self:GetClientNumber( "delay" ) 
+	local key	 		= self:GetClientNumber( "key" )
+	local delay 		= self:GetClientNumber( "delay" )
 	local toggle 		= self:GetClientNumber( "toggle" ) == 1
 	local starton 		= self:GetClientNumber( "starton" ) == 1
-	local effect	 	= self:GetClientInfo( "effect" ) 
-	
+	local effect	 	= self:GetClientInfo( "effect" )
+	local scale	 		= math.Clamp( self:GetClientNumber( "scale" ), 0.1, 6 )
+
 	-- Safe(ish) limits
 	delay = math.Clamp( delay, 0.05, 20 )
 	
@@ -40,6 +42,7 @@ function TOOL:LeftClick( trace, worldweld )
 		trace.Entity:SetEffect( effect )
 		trace.Entity:SetDelay( delay )
 		trace.Entity:SetToggle( toggle )
+		trace.Entity:SetScale( scale )
 		
 		numpad.Remove( trace.Entity.NumDown )
 		numpad.Remove( trace.Entity.NumUp )
@@ -65,7 +68,7 @@ function TOOL:LeftClick( trace, worldweld )
 	local Ang = trace.HitNormal:Angle()
 	Ang:RotateAroundAxis( trace.HitNormal, 0 )
 
-	local emitter = MakeEmitter( ply, key, delay, toggle, effect, starton, nil, nil, nil, nil, { Pos = Pos, Angle = Ang } )
+	local emitter = MakeEmitter( ply, key, delay, toggle, effect, starton, nil, nil, nil, nil, { Pos = Pos, Angle = Ang }, scale )
 		
 	local weld
 	
@@ -80,7 +83,7 @@ function TOOL:LeftClick( trace, worldweld )
 		
 	end
 	
-	undo.Create("Emitter")
+	undo.Create( "Emitter" )
 		undo.AddEntity( emitter )
 		undo.AddEntity( weld )
 		undo.SetPlayer( ply )
@@ -94,9 +97,9 @@ function TOOL:RightClick( trace )
 	return self:LeftClick( trace, true )
 end
 
-if (SERVER) then
+if ( SERVER ) then
 
-	function MakeEmitter( ply, key, delay, toggle, effect, starton, Vel, aVel, frozen, nocollide, Data )
+	function MakeEmitter( ply, key, delay, toggle, effect, starton, Vel, aVel, frozen, nocollide, Data, scale )
 	
 		if ( IsValid( ply ) && !ply:CheckLimit( "emitters" ) ) then return nil end
 	
@@ -109,6 +112,7 @@ if (SERVER) then
 		emitter:SetDelay( delay )
 		emitter:SetToggle( toggle )
 		emitter:SetOn( starton )
+		emitter:SetScale( scale )
 
 		emitter:Spawn()
 		
@@ -127,21 +131,22 @@ if (SERVER) then
 			effect 		= effect,
 			pl			= ply,
 			nocollide 	= nocollide,
-			starton		= starton
+			starton		= starton,
+			scale		= scale
 		}
 
 		table.Merge( emitter:GetTable(), ttable )
 		
 		if ( IsValid( ply ) ) then
 			ply:AddCount( "emitters", emitter )
-			ply:AddCleanup( "emitter", emitter )
+			ply:AddCleanup( "emitters", emitter )
 		end
 
 		return emitter
 		
 	end
 	
-	duplicator.RegisterEntityClass( "gmod_emitter", MakeEmitter, "key", "delay", "toggle", "effect", "starton", "Vel", "aVel", "frozen", "nocollide", "Data" )
+	duplicator.RegisterEntityClass( "gmod_emitter", MakeEmitter, "key", "delay", "toggle", "effect", "starton", "Vel", "aVel", "frozen", "nocollide", "Data", "scale" )
 
 end
 
@@ -193,6 +198,7 @@ function TOOL.BuildCPanel( CPanel )
 			emitter_delay		=		0.1,
 			emitter_toggle		=		1,
 			emitter_starton		=		1,
+			emitter_scale		=		1,
 			emitter_effect		=		"sparks" }
 			
 		table.insert( params.CVars, "emitter_key" )
@@ -200,6 +206,7 @@ function TOOL.BuildCPanel( CPanel )
 		table.insert( params.CVars, "emitter_toggle" )
 		table.insert( params.CVars, "emitter_starton" )
 		table.insert( params.CVars, "emitter_effect" )
+		table.insert( params.CVars, "emitter_scale" )
 		
 	CPanel:AddControl( "ComboBox", params )
 	
@@ -214,6 +221,13 @@ function TOOL.BuildCPanel( CPanel )
 									Max		= 0.5,
 									Command = "emitter_delay" }	 )
 	
+	CPanel:AddControl( "Slider",  { Label	= "#tool.emitter.scale",
+									Type	= "Float",
+									Min		= 0.1,
+									Max		= 6,
+									Command = "emitter_scale",
+									Help 	= true } )
+	
 	-- TOGGLE
 	CPanel:AddControl( "Checkbox", { Label = "#tool.emitter.toggle", Command = "emitter_toggle" } )
 	
@@ -222,18 +236,18 @@ function TOOL.BuildCPanel( CPanel )
 
 	-- SELECT
 	local matselect = vgui.Create( "MatSelect", CPanel )
-		matselect:SetItemWidth( 64 )
-		matselect:SetItemHeight( 64 )
-		matselect:SetAutoHeight( true )
+	matselect:SetItemWidth( 64 )
+	matselect:SetItemHeight( 64 )
+	matselect:SetAutoHeight( true )
+	matselect:SetConVar( "emitter_effect" )
 		
-		Derma_Hook( matselect.List, "Paint", "Paint", "Panel" )
+	Derma_Hook( matselect.List, "Paint", "Paint", "Panel" )
 	
-		local list = list.Get( "EffectType" )		
-		for k, v in pairs( list ) do
-			matselect:AddMaterialEx( v.print, v.material, nil, { emitter_effect = k } )
-		end	
+	local list = list.Get( "EffectType" )		
+	for k, v in pairs( list ) do
+		matselect:AddMaterialEx( v.print, v.material, k, { emitter_effect = k } )
+	end	
 
 	CPanel:AddItem( matselect )	
-
 
 end
