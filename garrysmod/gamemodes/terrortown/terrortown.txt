@@ -7,6 +7,697 @@
 
 	"settings"
 	{
-		// TODO: put some settings here
+        1
+        {
+            "name"      "ttt_preptime_seconds"
+            "text"      "Round Prep Time"
+            "help"      "The length of the preparation phase that occurs after players spawn in and before traitors are selected and a new round begins. Specified in seconds."
+            "type"      "Numeric"
+            "default"   "30"
+        }
+
+        2
+        {
+            "name"      "ttt_firstpreptime"
+            "text"      "Round Prep Time (First)"
+            "help"      "The length of the preparation phase for only the first round after a map loads. It is useful to make this higher than ttt_preptime_seconds so that players do not have to sit out a round just because they loaded slightly too slowly."
+            "type"      "Numeric"
+            "default"   "60"
+        }
+
+        3
+        {
+            "name"      "ttt_posttime_seconds"
+            "text"      "Round Post Time"
+            "help"      "The length of time after a round has ended before the next preparation phase begins. The round report is displayed at the start of this phase. During this phase, stats/points are no longer tracked."
+            "type"      "Numeric"
+            "default"   "30"
+        }
+
+        4
+        {
+            "name"      "ttt_roundtime_minutes"
+            "text"      "Round Time Limit"
+            "help"      "The time limit for each round, given in minutes, when Haste Mode is disabled."
+            "type"      "Numeric"
+            "default"   "10"
+        }
+
+        5
+        {
+            "name"      "ttt_haste"
+            "text"      "Haste Mode"
+            "help"      "In Haste Mode, the initial round time is short. Every death increases it by some amount. Puts pressure on traitors to keep things moving, which is more interesting for the innocent players."
+            "type"      "CheckBox"
+            "default"   "1"
+        }
+
+        6
+        {
+            "name"      "ttt_haste_starting_minutes"
+            "text"      "Haste Initial Time Limit"
+            "help"      "Replaces ttt_roundtime_minutes when Haste Mode is on. Sets the initial time limit. (Haste Mode only)"
+            "type"      "Numeric"
+            "default"   "5"
+        }
+
+        7
+        {
+            "name"      "ttt_haste_minutes_per_death"
+            "text"      "Haste Time Added Per Death"
+            "help"      "Specifies the number of minutes that is added to the round time for each death. Setting this to 0.5 will result in 0.5 * 60 = 30 seconds being added. (Haste Mode only)"
+            "type"      "Numeric"
+            "default"   "0.5"
+        }
+
+        8
+        {
+            "name"      "ttt_round_limit"
+            "text"      "Number Of Rounds Per Map"
+            "help"      "The max number of rounds until the map is switched."
+            "type"      "Numeric"
+            "default"   "6"
+        }
+
+        9
+        {
+            "name"      "ttt_time_limit_minutes"
+            "text"      "Time Limit Per Map"
+            "help"      "The max number of minutes until the map is switched or a vote is started."
+            "type"      "Numeric"
+            "default"   "75"
+        }
+
+        10
+        {
+            "name"      "ttt_always_use_mapcycle"
+            "text"      "Always Use Mapcycle"
+            "help"      "Enables the use of your mapcycle.txt even if voting is enabled. Since GMod 13 no voting exists (at the time of writing), so this does nothing."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        11
+        {
+            "name"      "ttt_traitor_pct"
+            "text"      "Percentage Of Traitors"
+            "help"      "Percentage of total players that will be a traitor. The number of players will be multiplied by this number, and then rounded down. If the result is less than 1 or more than the player count, it is clamped to those values."
+            "type"      "Numeric"
+            "default"   "0.25"
+        }
+
+        12
+        {
+            "name"      "ttt_traitor_max"
+            "text"      "Max Traitors"
+            "help"      "Maximum number of traitors. Customize this if you want to finetune the number of traitors at your server's max playercount, for example to make sure there are max 3 traitors on a 16 player server. By default there is basically no max."
+            "type"      "Numeric"
+            "default"   "32"
+        }
+
+        13
+        {
+            "name"      "ttt_detective_pct"
+            "text"      "Percentage Of Detectives"
+            "help"      "Percentage of total players that will be a detective (detective innocent). Handled similar to traitor_pct (rounded down etc)."
+            "type"      "Numeric"
+            "default"   "0.13"
+        }
+
+        14
+        {
+            "name"      "ttt_detective_max"
+            "text"      "Max Detectives"
+            "help"      "Maximum number of detectives. Can be used to cap or disable detectives."
+            "type"      "Numeric"
+            "default"   "32"
+        }
+
+        15
+        {
+            "name"      "ttt_detective_min_players"
+            "text"      "Min Players For Detective"
+            "help"      "Minimum number of players before detectives enter play. At lower playercounts it will be purely normal innocents vs traitors, at higher ones some innocents will be detective."
+            "type"      "Numeric"
+            "default"   "10"
+        }
+
+        16
+        {
+            "name"      "ttt_detective_karma_min"
+            "text"      "Detective Min Karma"
+            "help"      "If a player's Karma falls below this point, his chances of being selected as detective are reduced."
+            "type"      "Numeric"
+            "default"   "600"
+        }
+
+        17
+        {
+            "name"      "ttt_killer_dna_range"
+            "text"      "Killer DNA Range"
+            "help"      "Maximum range within which a DNA sample of the killer is planted on the corpse of the victim."
+            "type"      "Numeric"
+            "default"   "550"
+        }
+
+        18
+        {
+            "name"      "ttt_killer_dna_basetime"
+            "text"      "Killer DNA Base Time"
+            "help"      "Killer's DNA samples time out depending on how near he was to the victim. After that time has passed, the sample cannot be gathered anymore. This cvar sets the time in seconds when the killer was 0 units away. The time is lower when the range was higher, via a falloff curve. Note that due to the shape of the curve the time can sink below 0 even if the killer is within range according to the ttt_killer_dna_range convar, if the basetime is too low."
+            "type"      "Numeric"
+            "default"   "100"
+        }
+
+        19
+        {
+            "name"      "ttt_voice_drain"
+            "text"      "Voice Battery"
+            "help"      "Enables the voicechat battery feature. Voicechatting reduces a battery meter, when it's empty the player can't voicechat and must wait a few seconds for it to recharge."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        20
+        {
+            "name"      "ttt_voice_drain_normal"
+            "text"      "Voice Battery Drain"
+            "help"      "Battery drain per tick of voicechat for normal players. "Tick" refers to a game tick, ie. 1/66th of a second."
+            "type"      "Numeric"
+            "default"   "0.2"
+        }
+
+        21
+        {
+            "name"      "ttt_voice_drain_admin"
+            "text"      "Voice Battery Drain (Admin)"
+            "help"      "Battery drain per tick of voicechat for both admins and Detectives. Set to 0 to allow infinite mic usage."
+            "type"      "Numeric"
+            "default"   "0.05"
+        }
+
+        22
+        {
+            "name"      "ttt_voice_drain_recharge"
+            "text"      "Voice Battery Recharge"
+            "help"      "Battery recharge rate per tick of not voicechatting."
+            "type"      "Numeric"
+            "default"   "0.05"
+        }
+
+        23
+        {
+            "name"      "ttt_minimum_players"
+            "text"      "Round Min Players"
+            "help"      "Number of players that must be present before the round begins. This is checked before the preparation phase starts, and before the actual round begins."
+            "type"      "Numeric"
+            "default"   "2"
+        }
+
+        24
+        {
+            "name"      "ttt_postround_dm"
+            "text"      "Post-Round DM"
+            "help"      "Enables damage after a round has ended. Kills are not recorded for scoring purposes, so it's a free for all."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        25
+        {
+            "name"      "ttt_dyingshot"
+            "text"      "Dying Shot"
+            "help"      "Experimental. Enables a feature that causes a player who is using his ironsights and is killed (by a gun, and not a headshot) to fire an inaccurate dying shot."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        26
+        {
+            "name"      "ttt_no_nade_throw_during_prep"
+            "text"      "Disable Nades Prep"
+            "help"      "Prevents the throwing of grenades during the preparation phase."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        27
+        {
+            "name"      "ttt_weapon_carrying"
+            "text"      "Weapon Carrying"
+            "help"      "Enables the carrying of weapons with the Magneto-stick. If you are experiencing crashes, try disabling this. When the pickup range is short, as it is by default, crashes seem very rare."
+            "type"      "CheckBox"
+            "default"   "1"
+        }
+
+        28
+        {
+            "name"      "ttt_weapon_carrying_range"
+            "text"      "Weapon Carrying Range"
+            "help"      "Range at which weapons can be picked up for carrying with the Magneto-stick, see ttt_weapon_carrying."
+            "type"      "Numeric"
+            "default"   "50"
+        }
+
+        29
+        {
+            "name"      "ttt_teleport_telefrags"
+            "text"      "Teleporter Kills"
+            "help"      "If 1, the Teleporter weapon will kill players standing on the teleport destination. If 0, the teleporter user will instead not be able to teleport if someone is in the way."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        30
+        {
+            "name"      "ttt_ragdoll_pinning"
+            "text"      "Traitors Pinning Corpses"
+            "help"      "Lets traitors pin corpses to walls using the Magneto-stick. If you are experiencing lag due to the increased physics simulation required due to players moving ragdolls around often, it may be best to disable this."
+            "type"      "CheckBox"
+            "default"   "1"
+        }
+
+        31
+        {
+            "name"      "ttt_ragdoll_pinning_innocents"
+            "text"      "Innocents Pinning Corpses"
+            "help"      "Lets non-traitor players pin corpses as well. Not recommended."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        32
+        {
+            "name"      "ttt_karma"
+            "text"      "Karma"
+            "help"      "Enables the karma system. Players start with a certain amount of karma, and lose it when they damage/kill "teammates" (ie. innocent if they're innocent, traitor if traitor). The amount you lose is dependent on the karma of the person you hurt or killed."
+            "type"      "CheckBox"
+            "default"   "1"
+        }
+
+        33
+        {
+            "name"      "ttt_karma_strict"
+            "text"      "Karma Strict"
+            "help"      "If enabled, the damage penalty increases more quickly as karma goes down. When strict is off, the damage penalty is very low when people stay above 800. Enabling strict mode makes karma play a larger role in discouraging any unnecessary kills, while disabling it results in a more "loose" game where karma only hurts players who constantly teamkill."
+            "type"      "CheckBox"
+            "default"   "1"
+        }
+
+        34
+        {
+            "name"      "ttt_karma_starting"
+            "text"      "Karma Starting Value"
+            "help"      "Karma players start out with. If you want players to be able to "earn" a damage bonus, you could set this to 850 or so. Playing clean rounds will let them increase it to a 1000 and do a few percent more damage than a new player."
+            "type"      "Numeric"
+            "default"   "1000"
+        }
+
+        35
+        {
+            "name"      "ttt_karma_max"
+            "text"      "Karma Max Value"
+            "help"      "Maximum karma a player can have. Note that increasing it above 1000 does not mean players with 1100 karma will get a damage bonus. It would just give them a "buffer" before they get a damage penalty."
+            "type"      "Numeric"
+            "default"   "1000"
+        }
+
+        36
+        {
+            "name"      "ttt_karma_ratio"
+            "text"      "Karma Damage Ratio"
+            "help"      "The ratio of the damage that is used to compute how much of the victim's karma is subtracted from the attacker's. You can make penalties larger by slightly(!) increasing this, to eg. 0.0015, or smaller by reducing it."
+            "type"      "Numeric"
+            "default"   "0.001"
+        }
+
+        37
+        {
+            "name"      "ttt_karma_kill_penalty"
+            "text"      "Karma Kill Penalty"
+            "help"      "All karma penalties are based on damage dealt. The kill penalty is just an extra amount of "damage" dealt when you kill someone. So if this was 100, and you headshot someone with a rifle, it would penalise you as if you dealt 200 damage."
+            "type"      "Numeric"
+            "default"   "15"
+        }
+
+        38
+        {
+            "name"      "ttt_karma_round_increment"
+            "text"      "Karma Round Increment"
+            "help"      "The base amount by which everyone's karma is "healed" at the end of every round."
+            "type"      "Numeric"
+            "default"   "5"
+        }
+
+        39
+        {
+            "name"      "ttt_karma_clean_bonus"
+            "text"      "Karma Clean Bonus"
+            "help"      "If a player has not hurt or killed a teammate this round, he will be "healed" an extra 30 karma (for a total of 35, under default settings). So if you have bad karma it is rewarding to lie low."
+            "type"      "Numeric"
+            "default"   "30"
+        }
+
+        40
+        {
+            "name"      "ttt_karma_traitordmg_ratio"
+            "text"      "Karma Traitor Ratio"
+            "help"      "Like ttt_karma_ratio, but for the karma reward for damaging a traitor. By default damaging a traitor is rewarded roughly 1/4th of the penalty you'd get if it were a full-karma innocent."
+            "type"      "Numeric"
+            "default"   "0.0003"
+        }
+
+        41
+        {
+            "name"      "ttt_karma_traitorkill_bonus"
+            "text"      "Karma Traitor Kill"
+            "help"      "Like ttt_karma_ratio, but for the karma reward for damaging a traitor. By default damaging a traitor is rewarded roughly 1/4th of the penalty you'd get if it were a full-karma innocent."
+            "type"      "Numeric"
+            "default"   "40"
+        }
+
+        42
+        {
+            "name"      "ttt_karma_low_autokick"
+            "text"      "Karma Low Autokick"
+            "help"      "Automatically kick players who get a low karma level at the end of a round."
+            "type"      "CheckBox"
+            "default"   "1"
+        }
+
+        43
+        {
+            "name"      "ttt_karma_low_amount"
+            "text"      "Karma Low Amount"
+            "help"      "The karma threshold at which players get kicked."
+            "type"      "Numeric"
+            "default"   "450"
+        }
+
+        44
+        {
+            "name"      "ttt_karma_low_ban"
+            "text"      "Karma Low Autoban"
+            "help"      "When autokicking, also ban players if this is enabled. No effect if autokick is off."
+            "type"      "CheckBox"
+            "default"   "1"
+        }
+
+        45
+        {
+            "name"      "ttt_karma_low_ban_minutes"
+            "text"      "Karma Low Ban Time"
+            "help"      "Minutes to ban players, 0 should be perma. Of course has no effect if banning is off."
+            "type"      "Numeric"
+            "default"   "60"
+        }
+
+        46
+        {
+            "name"      "ttt_karma_persist"
+            "text"      "Karma Persistent"
+            "help"      "Stores the karma of a player in persistent storage, at the end of the round or if they disconnect. Then upon reconnection it will be loaded. This means the karma will persist even when the map changes."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        47
+        {
+            "name"      "ttt_karma_clean_half"
+            "text"      "Karma Clean Half"
+            "help"      "When a player's Karma is above the starting level (meaning the karma max has been configured to be higher than that), all his karma increases will be reduced based on how far his karma is above that starting level. So it goes up slower the higher it is."
+            "type"      "Numeric"
+            "default"   "0.25"
+        }
+
+        48
+        {
+            "name"      "ttt_use_weapon_spawn_scripts"
+            "text"      "Use Weapon Spawn Scripts"
+            "help"      "Toggles whether weapon scripts will be used. These .txt files in the /maps/ folder can be used to override or add weapon, ammo and player spawnpoints in a map. This is very useful for CS:S or HL2DM maps."
+            "type"      "CheckBox"
+            "default"   "1"
+        }
+
+        49
+        {
+            "name"      "ttt_credits_starting"
+            "text"      "Traitor Credits"
+            "help"      "Number of credits traitors start with. Traitors can spend credits on special equipment."
+            "type"      "Numeric"
+            "default"   "2"
+        }
+
+        50
+        {
+            "name"      "ttt_credits_award_pct"
+            "text"      "Traitor Credit Award %"
+            "help"      "When this percentage of the innocent players are dead, traitors are awarded more credits."
+            "type"      "Numeric"
+            "default"   "0.35"
+        }
+
+        51
+        {
+            "name"      "ttt_credits_award_size"
+            "text"      "Traitor Credit Award"
+            "help"      "The number of credits awarded."
+            "type"      "Numeric"
+            "default"   "1"
+        }
+
+        52
+        {
+            "name"      "ttt_credits_award_repeat"
+            "text"      "Traitor Credit Award Repeated"
+            "help"      "Whether the credit award is handed out multiple times. if for example you set the percentage to 0.25, and enable this, traitors will be awarded credits at 25% killed, 50% killed, and 75% killed."
+            "type"      "CheckBox"
+            "default"   "1"
+        }
+
+        53
+        {
+            "name"      "ttt_credits_detectivekill"
+            "text"      "Traitor Credits Det Kill"
+            "help"      "Number of credits a traitor receives when he kills a detective (detective) player."
+            "type"      "Numeric"
+            "default"   "1"
+        }
+
+        54
+        {
+            "name"      "ttt_det_credits_starting"
+            "text"      "Detective Credits"
+            "help"      "Number of credits detective players start with."
+            "type"      "Numeric"
+            "default"   "1"
+        }
+
+        55
+        {
+            "name"      "ttt_det_credits_traitorkill"
+            "text"      "Detective Credits Per T Kill"
+            "help"      "Number of credits detectives receive when they kill a traitor."
+            "type"      "Numeric"
+            "default"   "0"
+        }
+
+        56
+        {
+            "name"      "ttt_det_credits_traitordead"
+            "text"      "Detective Credits Per T Dead"
+            "help"      "Number of credits detectives receive when a traitor dies, no matter what killed him."
+            "type"      "Numeric"
+            "default"   "1"
+        }
+
+        57
+        {
+            "name"      "ttt_spec_prop_control"
+            "text"      "Spec Prop Control"
+            "help"      "Toggle whether spectators can possess props."
+            "type"      "CheckBox"
+            "default"   "1"
+        }
+
+        58
+        {
+            "name"      "ttt_spec_prop_base"
+            "text"      "Spec Prop Punches"
+            "help"      "Number of prop punches in a filled punch-o-meter with no score modifier."
+            "type"      "Numeric"
+            "default"   "8"
+        }
+
+        59
+        {
+            "name"      "ttt_spec_prop_maxpenalty"
+            "text"      "Spec Prop Max Penalty"
+            "help"      "Maximum decrease of the punch-o-meter limit for a negative score."
+            "type"      "Numeric"
+            "default"   "-6"
+        }
+
+        60
+        {
+            "name"      "ttt_spec_prop_maxbonus"
+            "text"      "Spec Prop Max Bonus"
+            "help"      "Maximum increase of the punch-o-meter limit for a positive score."
+            "type"      "Numeric"
+            "default"   "16"
+        }
+
+        61
+        {
+            "name"      "ttt_spec_prop_force"
+            "text"      "Spec Prop Force"
+            "help"      "Amount of force by which each punch moves the prop."
+            "type"      "Numeric"
+            "default"   "110"
+        }
+
+        62
+        {
+            "name"      "ttt_spec_prop_rechargetime"
+            "text"      "Spec Prop Recharge Time"
+            "help"      "Number of seconds for one point in the punch-o-meter to recharge."
+            "type"      "Numeric"
+            "default"   "1"
+        }
+
+        63
+        {
+            "name"      "ttt_idle_limit"
+            "text"      "Idle Limit"
+            "help"      "Time in seconds a player is allowed to be idle after a round has started before he is moved to spectator."
+            "type"      "Numeric"
+            "default"   "180"
+        }
+
+        64
+        {
+            "name"      "ttt_namechange_kick"
+            "text"      "Kick On Name Change"
+            "help"      "Check for name changes during an active round, and kick players who did one."
+            "type"      "CheckBox"
+            "default"   "1"
+        }
+
+        65
+        {
+            "name"      "ttt_namechange_bantime"
+            "text"      "Name Change Ban Time"
+            "help"      "Time in minutes to ban players who changed their name. Set to 0 to disable."
+            "type"      "Numeric"
+            "default"   "10"
+        }
+
+        66
+        {
+            "name"      "ttt_ban_type"
+            "text"      "Ban Type"
+            "help"      "Specifies how automatic bans made by TTT (low karma, namechange, etc) should be performed. This lets you specify whether TTT should use an admin plugin to ban, which can then make it easier to remove or adjust those bans using your admin plugin's interface. Can be: autodetect / ulx / evolve / sm / gmod"
+            "type"      "Text"
+            "default"   "autodetect"
+        }
+
+        67
+        {
+            "name"      "ttt_detective_hats"
+            "text"      "Detective Hats"
+            "help"      "Enable to make detectives get a special hat. May be buggy."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        68
+        {
+            "name"      "ttt_playercolor_mode"
+            "text"      "Player Color Mode"
+            "help"      "Sets player coloring mode. 0 = off, 1 =  muted/dark colors only, 2 = select from a larger list of colors including brighter ones, 3 = fully random colors."
+            "type"      "Numeric"
+            "default"   "1"
+        }
+
+        69
+        {
+            "name"      "ttt_ragdoll_collide"
+            "text"      "Ragdoll Collision"
+            "help"      "By default ragdolls will not collide with other ragdolls and some small physics objects (or doors set not to collide with debris). Enabling ragdoll collision will change that. Earlier versions of TTT had ragdoll collision, but this allowed griefers to create situations where ragdolls were physics-glitched to constantly collide, causing serious lag. Some maps may expect ragdolls to collide though. Use with care."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        70
+        {
+            "name"      "ttt_bots_are_spectators"
+            "text"      "Bots Are Spectators"
+            "help"      "Bots are spawned as spectators and will never be traitor. Useful for sourceTV."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        71
+        {
+            "name"      "ttt_locational_voice"
+            "text"      "Locational 3D Voicechat"
+            "help"      "Toggles locational 3D voicechat sound for living players."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        72
+        {
+            "name"      "ttt_allow_discomb_jump"
+            "text"      "Discombobulator Jumps"
+            "help"      "Enable to make the Discombobulator push force reliable for the thrower. This means you can easily perform discomb jumps, which is fun but exploitable on certain maps."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        73
+        {
+            "name"      "ttt_spawn_wave_interval"
+            "text"      "Spawn Wave Interval"
+            "help"      "If 0, spawns all players at once, and will attempt to rig extra spawnpoints if there are not enough. Can result in players spawning in walls. If larger than 0, spawns players in waves, where each wave spawns as many players as there are spawnpoints. The time between each wave is the value of the convar in seconds, so setting it to 5 will mean waves are 5 seconds apart. Spawn waves are probably the best method for large servers."
+            "type"      "Numeric"
+            "default"   "0"
+        }
+
+        74
+        {
+            "name"      "ttt_sherlock_mode"
+            "text"      "Detectives Enabled"
+            "help"      "If 0, detectives will be disabled."
+            "type"      "CheckBox"
+            "default"   "1"
+        }
+
+        75
+        {
+            "name"      "ttt_credits_alonebonus"
+            "text"      "Alone Credit Bonus"
+            "help"      "The number of extra credits to award a detective or traitor if they are alone. 0 to disable."
+            "type"      "Numeric"
+            "default"   "1"
+        }
+
+        76
+        {
+            "name"      "ttt_debug_preventwin"
+            "text"      "DEBUG: Prevent Win"
+            "help"      "Prevents the round from ending, useful for testing on your own, but little else."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
+
+        77
+        {
+            "name"      "ttt_karma_debugspam"
+            "text"      "DEBUG: Karma Debug Spam"
+            "help"      "Enables debug output to console about karma changes."
+            "type"      "CheckBox"
+            "default"   "0"
+        }
 	}
 }

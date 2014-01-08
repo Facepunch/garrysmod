@@ -52,7 +52,7 @@ SWEP.CSMuzzleFlashes = false
 local delay_beamup = 1
 local delay_beamdown = 1
 
-local ttt_telefrags = CreateConVar("ttt_teleport_telefrags", "0")
+local ttt_telefrags = GetConVar("ttt_teleport_telefrags")
 
 function SWEP:SetTeleportMark(pos, ang)
    self.teleport = {pos = pos, ang = ang}

@@ -158,7 +158,7 @@ function DamageLog(txt)
 end
 
 
-local ttt_bantype = CreateConVar("ttt_ban_type", "autodetect")
+local ttt_bantype = GetConVar("ttt_ban_type")
 
 local function DetectServerPlugin()
    if ULib and ULib.kickban then

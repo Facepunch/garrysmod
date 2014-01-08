@@ -7,25 +7,25 @@ KARMA.RememberedPlayers = {}
 
 -- Convars, more convenient access than GetConVar bla bla
 KARMA.cv = {}
-KARMA.cv.enabled     = CreateConVar("ttt_karma", "1", FCVAR_ARCHIVE)
-KARMA.cv.strict      = CreateConVar("ttt_karma_strict", "1")
-KARMA.cv.starting    = CreateConVar("ttt_karma_starting", "1000")
-KARMA.cv.max         = CreateConVar("ttt_karma_max", "1000")
-KARMA.cv.ratio       = CreateConVar("ttt_karma_ratio", "0.001")
-KARMA.cv.killpenalty = CreateConVar("ttt_karma_kill_penalty", "15")
-KARMA.cv.roundheal   = CreateConVar("ttt_karma_round_increment", "5")
-KARMA.cv.clean  = CreateConVar("ttt_karma_clean_bonus", "30")
-KARMA.cv.tbonus = CreateConVar("ttt_karma_traitorkill_bonus", "40")
-KARMA.cv.tratio = CreateConVar("ttt_karma_traitordmg_ratio", "0.0003")
-KARMA.cv.debug  = CreateConVar("ttt_karma_debugspam", "0")
+KARMA.cv.enabled     = GetConVar("ttt_karma")
+KARMA.cv.strict      = GetConVar("ttt_karma_strict")
+KARMA.cv.starting    = GetConVar("ttt_karma_starting")
+KARMA.cv.max         = GetConVar("ttt_karma_max")
+KARMA.cv.ratio       = GetConVar("ttt_karma_ratio")
+KARMA.cv.killpenalty = GetConVar("ttt_karma_kill_penalty")
+KARMA.cv.roundheal   = GetConVar("ttt_karma_round_increment")
+KARMA.cv.clean  = GetConVar("ttt_karma_clean_bonus")
+KARMA.cv.tbonus = GetConVar("ttt_karma_traitorkill_bonus")
+KARMA.cv.tratio = GetConVar("ttt_karma_traitordmg_ratio")
+KARMA.cv.debug  = GetConVar("ttt_karma_debugspam")
 
-KARMA.cv.persist = CreateConVar("ttt_karma_persist", "0")
-KARMA.cv.falloff = CreateConVar("ttt_karma_clean_half", "0.25")
+KARMA.cv.persist = GetConVar("ttt_karma_persist")
+KARMA.cv.falloff = GetConVar("ttt_karma_clean_half")
 
-KARMA.cv.autokick  = CreateConVar("ttt_karma_low_autokick", "1")
-KARMA.cv.kicklevel = CreateConVar("ttt_karma_low_amount", "450")
-KARMA.cv.autoban   = CreateConVar("ttt_karma_low_ban", "1")
-KARMA.cv.bantime   = CreateConVar("ttt_karma_low_ban_minutes", "60")
+KARMA.cv.autokick  = GetConVar("ttt_karma_low_autokick")
+KARMA.cv.kicklevel = GetConVar("ttt_karma_low_amount")
+KARMA.cv.autoban   = GetConVar("ttt_karma_low_ban")
+KARMA.cv.bantime   = GetConVar("ttt_karma_low_ban_minutes")
 
 local config = KARMA.cv
 
