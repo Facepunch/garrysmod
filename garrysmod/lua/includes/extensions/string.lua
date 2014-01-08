@@ -138,7 +138,7 @@ function string.ToMinutesSecondsMilliseconds( TimeInSeconds )	return string.Form
 function string.ToMinutesSeconds( TimeInSeconds )		return string.FormattedTime( TimeInSeconds, "%02i:%02i")	end
 
 local function pluralizeString(str, quantity)
-    return str .. ((quantity ~= 1) and "s" or "")
+	return str .. ((quantity ~= 1) and "s" or "")
 end
 
 function string.NiceTime( seconds )
@@ -146,31 +146,31 @@ function string.NiceTime( seconds )
 	if ( seconds == nil ) then return "a few seconds" end
 
 	if ( seconds < 60 ) then
-	        local t = math.floor( seconds )
+		local t = math.floor( seconds )
 		return t .. pluralizeString(" second", t);
 	end
 
 	if ( seconds < 60 * 60 ) then
-	        local t = math.floor( seconds / 60 )
+		local t = math.floor( seconds / 60 )
 		return t .. pluralizeString(" minute", t);
 	end
 
 	if ( seconds < 60 * 60 * 24 ) then
-	        local t = math.floor( seconds / (60 * 60) )
+		local t = math.floor( seconds / (60 * 60) )
 		return t .. pluralizeString(" hour", t);
 	end
 
 	if ( seconds < 60 * 60 * 24 * 7 ) then
-	        local t = math.floor( seconds / (60 * 60 * 24) )
+		local t = math.floor( seconds / (60 * 60 * 24) )
 		return t .. pluralizeString(" day", t);
 	end
 	
 	if ( seconds < 60 * 60 * 24 * 7 * 52 ) then
-	        local t = math.floor( seconds / (60 * 60 * 24 * 7) )
+		local t = math.floor( seconds / (60 * 60 * 24 * 7) )
 		return t .. pluralizeString(" week", t);
 	end
 
-        local t = math.floor( seconds / (60 * 60 * 24 * 7 * 52) )
+	local t = math.floor( seconds / (60 * 60 * 24 * 7 * 52) )
 	return t .. pluralizeString(" year", t);
 
 end
