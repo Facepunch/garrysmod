@@ -71,6 +71,10 @@ for key, tab in pairs( UsersKV ) do
     end
 end
 
+function util.GetUserGroups()
+    return SteamIDs
+end
+
 hook.Add("PlayerInitialSpawn", "PlayerAuthSpawn", function(ply)
     local steamid = ply:SteamID()
     
