@@ -202,27 +202,27 @@ function MSTACK:Draw(client)
 end
 
 -- Game state message channel
-local function ReceiveGameMsg(um)
-   local text = um:ReadString()
-   local special = um:ReadBool()
+local function ReceiveGameMsg()
+   local text = net.ReadString()
+   local special = net.ReadBit() == 1
 
    print(text)
 
    MSTACK:AddMessage(text, special)
 end
-usermessage.Hook("game_msg", ReceiveGameMsg)
+net.Receive("TTT_GameMsg", ReceiveGameMsg)
 
-local function ReceiveCustomMsg(um)
-   local text = um:ReadString()
+local function ReceiveCustomMsg()
+   local text = net.ReadString()
    local clr = Color(255, 255, 255)
 
-   clr.r = um:ReadShort()
-   clr.g = um:ReadShort()
-   clr.b = um:ReadShort()
+   clr.r = net.ReadUInt(8)
+   clr.g = net.ReadUInt(8)
+   clr.b = net.ReadUInt(8)
 
    print(text)
 
    MSTACK:AddColoredMessage(text, clr)
 end
-usermessage.Hook("game_msg_color", ReceiveCustomMsg)
+net.Receive("TTT_GameMsgColor", ReceiveCustomMsg)
 

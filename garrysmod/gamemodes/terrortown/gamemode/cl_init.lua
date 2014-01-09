@@ -167,9 +167,9 @@ GM.TTTEndRound = PlaySoundCue
 
 --- usermessages
 
-local function ReceiveRole(um)
+local function ReceiveRole()
    local client = LocalPlayer()
-   local role = um:ReadChar()
+   local role = net.ReadUInt(2)
 
    -- after a mapswitch, server might have sent us this before we are even done
    -- loading our code
@@ -182,14 +182,14 @@ local function ReceiveRole(um)
    elseif client:IsDetective() then MsgN("DETECTIVE")
    else MsgN("INNOCENT") end
 end
-usermessage.Hook("ttt_role", ReceiveRole)
+net.Receive("TTT_Role", ReceiveRole)
 
-local function ReceiveRoleList(um)
-   local role = um:ReadChar()
-   local num_ids = um:ReadChar()
+local function ReceiveRoleList()
+   local role = net.ReadUInt(2)
+   local num_ids = net.ReadUInt(8)
 
    for i=1, num_ids do
-      local eidx = um:ReadShort()
+      local eidx = net.ReadUInt(7) + 1 -- we - 1 worldspawn=0
 
       local ply = player.GetByID(eidx)
       if IsValid(ply) and ply.SetRole then
@@ -203,12 +203,12 @@ local function ReceiveRoleList(um)
       end
    end
 end
-usermessage.Hook("role_list", ReceiveRoleList)
+net.Receive("TTT_RoleList", ReceiveRoleList)
 
 -- Round state comm
-local function ReceiveRoundState(um)
+local function ReceiveRoundState()
    local o = GetRoundState()
-   GAMEMODE.round_state = um:ReadChar()
+   GAMEMODE.round_state = net.ReadUInt(3)
 
    if o != GAMEMODE.round_state then
       RoundStateChange(o, GAMEMODE.round_state)
@@ -216,7 +216,7 @@ local function ReceiveRoundState(um)
 
    MsgN("Round state: " .. GAMEMODE.round_state)
 end
-usermessage.Hook("round_state", ReceiveRoundState)
+net.Receive("TTT_RoundState", ReceiveRoundState)
 
 -- Cleanup at start of new round
 function GM:ClearClientState()
@@ -251,7 +251,7 @@ function GM:ClearClientState()
       gui.EnableScreenClicker(false)
    end
 end
-usermessage.Hook("clearclientstate", GM.ClearClientState)
+net.Receive("TTT_ClearClientState", GM.ClearClientState)
 
 function GM:CleanUpMap()
    -- Ragdolls sometimes stay around on clients. Deleting them can create issues
@@ -273,20 +273,20 @@ function GM:CleanUpMap()
 end
 
 -- server tells us to call this when our LocalPlayer has spawned
-local function PlayerSpawn(um)
-   local as_spec = um:ReadBool()
+local function PlayerSpawn()
+   local as_spec = net.ReadBit() == 1
    if as_spec then
       TIPS.Show()
    else
       TIPS.Hide()
    end
 end
-usermessage.Hook("plyspawned", PlayerSpawn)
+net.Receive("TTT_PlayerSpawned", PlayerSpawn)
 
 local function PlayerDeath()
    TIPS.Show()
 end
-usermessage.Hook("plydied", PlayerDeath)
+net.Receive("TTT_PlayerDied", PlayerDeath)
 
 function GM:ShouldDrawLocalPlayer(ply) return false end
 

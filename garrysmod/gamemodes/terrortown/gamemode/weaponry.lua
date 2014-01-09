@@ -1,13 +1,6 @@
 
 include("weaponry_shd.lua") -- inits WEPS tbl
 
--- Pool all SWEP classnames, as we will be sending some over the wire regularly
-for k, w in pairs(weapons.GetList()) do
-   if w then
-      umsg.PoolString(WEPS.GetClass(w))
-   end
-end
-
 ---- Weapon system, pickup limits, etc
 
 local IsEquipment = WEPS.IsEquipment
@@ -415,14 +408,14 @@ local function OrderEquipment(ply, cmd, args)
       timer.Simple(0.5,
                    function()
                       if not IsValid(ply) then return end
-                      umsg.Start("bought_item", ply)
-                      umsg.Bool(is_item)
+                      net.Start("TTT_BoughtItem")
+                      net.WriteBit(is_item)
                       if is_item then
-                         umsg.Short(id)
+                         net.WriteUInt(id, 16)
                       else
-                         umsg.String(id)
+                         net.WriteString(id)
                       end
-                      umsg.End()
+                      net.Send(ply)
                    end)
 
       hook.Call("TTTOrderedEquipment", GAMEMODE, ply, id, is_item)

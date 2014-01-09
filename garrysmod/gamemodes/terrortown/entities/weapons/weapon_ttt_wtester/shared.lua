@@ -263,25 +263,25 @@ if SERVER then
    -- samples and 20 item samples (with 20 matches) has been verified as
    -- working in the old DNA sampler.
    function SWEP:SendPrints(should_open)
-      umsg.Start("showprints", self.Owner)
-      umsg.Bool(should_open)
+      net.Start("TTT_ShowPrints", self.Owner)
+        net.WriteBit(should_open)
+        net.WriteUInt(#self.ItemSamples, 8)
 
-      umsg.Char(#self.ItemSamples)
-      for k,v in ipairs(self.ItemSamples) do
-         umsg.String(v.cls)
-      end
+        for k, v in ipairs(self.ItemSamples) do
+          net.WriteString(v.cls)
+        end
 
-      umsg.End()
+      net.Send(self.Owner)
    end
 
    function SWEP:SendScan(pos)
       local clear = (pos == nil) or (not IsValid(self.Owner))
-      umsg.Start("scanresult", self.Owner)
-      umsg.Bool(clear)
-      if not clear then
-         umsg.Vector(pos)
-      end
-      umsg.End()
+      net.Start("TTT_ScanResult", self.Owner)
+        net.WriteBit(clear)
+        if not clear then
+          net.WriteVector(pos)
+        end
+      net.Send(self.Owner)
    end
 
    function SWEP:ClearScanState()
@@ -686,13 +686,13 @@ if CLIENT then
    end
 
    local printspanel = nil
-   local function RecvPrints(um)
-      local should_open = um:ReadBool()
+   local function RecvPrints()
+      local should_open = net.ReadBit() == 1
 
-      local num = um:ReadChar()
+      local num = net.ReadUInt(8)
       local item_prints = {}
       for i=1, num do
-         local ent = um:ReadString()
+         local ent = net.ReadString()
          table.insert(item_prints, ent)
       end
 
@@ -710,19 +710,19 @@ if CLIENT then
          end
       end
    end
-   usermessage.Hook("showprints", RecvPrints)
+   net.Receive("TTT_ShowPrints", RecvPrints)
 
    local beep_success = Sound("buttons/blip2.wav")
    --local beep_fail = Sound("buttons/button11.wav")
-   local function RecvScan(um)
-      local clear = um:ReadBool()
+   local function RecvScan()
+      local clear = net.ReadBit() == 1
       if clear then
          RADAR.samples = {}
          RADAR.samples_count = 0
          return
       end
 
-      local target_pos = um:ReadVector()
+      local target_pos = net.ReadVector()
       if not target_pos then return end
 
       RADAR.samples = {
@@ -733,7 +733,7 @@ if CLIENT then
 
       surface.PlaySound(beep_success)
    end
-   usermessage.Hook("scanresult", RecvScan)
+   net.Receive("TTT_ScanResult", RecvScan)
 
    function SWEP:ClosePrintsPanel()
       if ValidPanel(printspanel) then

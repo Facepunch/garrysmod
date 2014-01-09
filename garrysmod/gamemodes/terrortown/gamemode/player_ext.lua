@@ -65,9 +65,9 @@ function plymeta:SetDefaultCredits()
 end
 
 function plymeta:SendCredits()
-   umsg.Start("credits", self)
-   umsg.Char(self:GetCredits())
-   umsg.End()
+   net.Start("TTT_Credits")
+       net.WriteUInt(self:GetCredits(), 8)
+   net.Send(self)
 end
 
 --- Equipment items
@@ -81,9 +81,9 @@ end
 
 -- We do this instead of an NW var in order to limit the info to just this ply
 function plymeta:SendEquipment()
-   umsg.Start("equipment", self)
-   umsg.Short(self.equipment_items)
-   umsg.End()
+   net.Start("TTT_Equipment")
+      net.WriteUInt(self.equipment_items, 16)
+   net.Send(self)
 end
 
 function plymeta:ResetEquipment()
@@ -93,12 +93,12 @@ end
 
 function plymeta:SendBought()
    -- Send all as string, even though equipment are numbers, for simplicity
-   umsg.Start("bought", self)
-   umsg.Short(#self.bought)
-   for k,v in pairs(self.bought) do
-      umsg.String(v)
-   end
-   umsg.End()
+   net.Start("TTT_Bought")
+      net.WriteUInt(#self.bought, 8)
+      for k, v in pairs(self.bought) do
+         net.WriteString(v)
+      end
+   net.Send(self)
 end
 
 local function ResendBought(ply)
@@ -237,9 +237,9 @@ function plymeta:SendLastWords(dmginfo)
 
    self.death_type = dtype
 
-   umsg.Start("interrupt_chat", self)
-   umsg.Long(self.last_words_id)
-   umsg.End()
+   net.Start("TTT_InterruptChat")
+      net.WriteUInt(self.last_words_id, 32)
+   net.Send(self)
 
    -- any longer than this and you're out of luck
    local ply = self

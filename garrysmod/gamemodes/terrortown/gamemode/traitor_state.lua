@@ -15,24 +15,25 @@ function CountTraitors() return #GetTraitors() end
 -- Send every player their role
 local function SendPlayerRoles()
    for k, v in pairs(player.GetAll()) do
-      umsg.Start("ttt_role", v)
-      umsg.Char(v:GetRole())
-      umsg.End()
+      net.Start("TTT_Role")
+         net.WriteUInt(v:GetRole(), 2)
+      net.Send(v)
    end
 end
 
 local function SendRoleListMessage(role, role_ids, ply_or_rf)
-   umsg.Start("role_list", ply_or_rf)
-   -- send what kind of list this is
-   umsg.Char(role)
+   net.Start("TTT_RoleList")
+      net.WriteUInt(role, 2)
 
-   -- list contents
-   local num_ids = #role_ids
-   umsg.Char(num_ids)
-   for i=1, num_ids do
-      umsg.Short(role_ids[i])
-   end
-   umsg.End()
+      -- list contents
+      local num_ids = #role_ids
+      net.WriteUInt(num_ids, 8)
+      for i=1, num_ids do
+         net.WriteUInt(role_ids[i] - 1, 7)
+      end
+
+   if ply_or_rf then net.Send(ply_or_rf)
+   else net.Broadcast() end
 end
 
 local function SendRoleList(role, ply_or_rf, pred)
@@ -93,13 +94,17 @@ end
 
 function SendRoleReset(ply_or_rf)
    local plys = player.GetAll()
-   umsg.Start("role_list", ply_or_rf)
-   umsg.Char(ROLE_INNOCENT)
-   umsg.Char(#plys)
-   for k, v in pairs(plys) do
-      umsg.Short(v:EntIndex())
-   end
-   umsg.End()
+
+   net.Start("TTT_RoleList")
+      net.WriteUInt(ROLE_INNOCENT, 2)
+
+      net.WriteUInt(#plys, 8)
+      for k, v in pairs(plys) do
+         net.WriteUInt(v:EntIndex() - 1, 7)
+      end
+      
+   if ply_or_rf then net.Send(ply_or_rf)
+   else net.Broadcast() end
 end
 
 ---- Console commands

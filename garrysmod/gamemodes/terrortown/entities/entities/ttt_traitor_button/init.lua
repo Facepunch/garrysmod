@@ -77,8 +77,7 @@ function ENT:TraitorUse(ply)
 
    if self:GetPos():Distance(ply:GetPos()) > self:GetUsableRange() then return false end
 
-   -- confirm with an empty packet
-   SendUserMessage("ttt_confirm_use_tbutton", ply)
+   net.Start("TTT_ConfirmUseTButton") net.Send(ply)
 
    -- send output to all entities linked to us
    self:TriggerOutput("OnPressed", ply)
