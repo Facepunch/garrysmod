@@ -121,7 +121,7 @@ function PANEL:Init()
 		Origin:DockMargin( 2, 0, 0, 0 )
 		Origin:SetWide( 50 )
 		Origin:SetTooltip( "Center" )
-		
+
 		local Render = pnl2:Add( "DButton" )
 		Render:SetText( "RENDER" )
 		Render.DoClick = function() self:RenderIcon() end
@@ -129,7 +129,34 @@ function PANEL:Init()
 		Render:DockMargin( 2, 0, 0, 0 )
 		Render:SetWide( 50 )
 		Render:SetTooltip( "Render Icon" )
-					
+		
+		local Picker = pnl2:Add( "DImageButton" )
+		Picker:SetImage( "icon32/color_picker.png" )
+		Picker:SetStretchToFit( false )
+		Picker:SetDrawBackground( true )
+		Picker.DoClick = function() 
+
+			self:SetVisible( false )
+
+			util.worldpicker.Start( function( tr )
+
+				self:SetVisible( true )
+				
+				print( tr.Entity )
+
+				if ( !IsValid( tr.Entity ) ) then return end
+
+				
+				
+				self:SetFromEntity( tr.Entity )
+
+			end )
+		end
+
+		Picker:Dock( RIGHT )
+		Picker:DockMargin( 2, 0, 0, 0 )
+		Picker:SetWide( 50 )     
+
 	local pnl3 = pnl2:Add( "Panel" )
 	pnl3:SetSize( 400, 20 )
 	pnl3:Dock( TOP )
@@ -388,6 +415,16 @@ function PANEL:FillAnimations( ent )
 		combo.OnSelect = function( pnl, index, value, data ) data() end
 
 	end
+
+end
+
+function PANEL:SetFromEntity( ent )
+
+	if ( !IsValid( ent ) ) then return end
+
+	self.SpawnIcon:SetModel( ent:GetModel(), ent:GetSkin() )//, ent:GetBodyGroup() )
+	self:SetModel( ent:GetModel() )
+	self:Refresh()
 
 end
 
