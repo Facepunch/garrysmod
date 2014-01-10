@@ -24,39 +24,47 @@ end
 
 local function ServerSettings( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#Server Settings" }  )
+	CPanel:AddControl( "Header", { Description = "#Server Settings" } )
 		
-	CPanel:AddControl( "TextBox", 	{ Label = "#Server Password",			Command = "sv_password", 	WaitForEnter =	"1" }  )	
+	CPanel:AddControl( "TextBox", 	{ Label = "#Server Password",	Command = "sv_password", WaitForEnter =	"1" } )
+
+	CPanel:AddControl( "Slider", 	{ Label = "#Gravity",			Type = "Float",		Command = "sv_gravity", Min = "-200", Max = "600" } )
+	CPanel:AddControl( "Slider", 	{ Label = "#Physics Timescale",	Type = "Float", 	Command = "phys_timescale", Min = "0", Max = "2" } )
+	CPanel:AddControl( "Slider", 	{ Label = "#Physics Iterations", Type = "Integer", 	Command = "gmod_physiterations", Min = "1", Max = "10" } )
 	
-	-- Not needed anymore
-	--CPanel:AddControl( "Button", 	{ Label = "#Enable/Disable AI",			Command = "ai_disable", 	Text = "Toggle" }  )	
+	CPanel:AddControl( "Header", { Description = "#Sandbox Settings" } )
+
+	CPanel:AddControl( "TextBox", 	{ Label = "#persistent_mode",			Command = "sbox_persist", WaitForEnter = "1" } )
 	
-	-- sbox_maxnpcs 0
-	--CPanel:AddControl( "CheckBox", 	{ Label = "#Allow NPCs",				Command = "sbox_allownpcs" }  )	
+	CPanel:AddControl( "CheckBox", 	{ Label = "#noclip",					Command = "sbox_noclip" } )
+	CPanel:AddControl( "CheckBox", 	{ Label = "#enable_weapons",			Command = "sbox_weapons" } )
+	CPanel:AddControl( "CheckBox", 	{ Label = "#god_mode",					Command = "sbox_godmode" } )
+	CPanel:AddControl( "CheckBox", 	{ Label = "#players_damage_players",	Command = "sbox_playershurtplayers" } )
+	CPanel:AddControl( "CheckBox", 	{ Label = "#limit_physgun",				Command = "physgun_limited" } )
 	
-	CPanel:AddControl( "CheckBox", 	{ Label = "#Allow Flying (Noclip)",		Command = "sbox_noclip" }  )	
-	CPanel:AddControl( "CheckBox", 	{ Label = "#Allow Weapons",				Command = "sbox_weapons" }  )
-	CPanel:AddControl( "CheckBox", 	{ Label = "#God Mode",					Command = "sbox_godmode" }  )	
-	CPanel:AddControl( "CheckBox", 	{ Label = "#Enable PvP Damage",			Command = "sbox_playershurtplayers" }  )	
+	CPanel:AddControl( "CheckBox", 	{ Label = "#bone_manipulate_npcs",		Command = "sbox_bonemanip_npc" } )
+	CPanel:AddControl( "CheckBox", 	{ Label = "#bone_manipulate_players",	Command = "sbox_bonemanip_player" } )
+	CPanel:AddControl( "CheckBox", 	{ Label = "#bone_manipulate_others",	Command = "sbox_bonemanip_misc" } )
 	
-	CPanel:AddControl( "Slider", 	{ Label = "#Gravity", Type = "Float", 	Command = "sv_gravity", 	Min = "-200", 	Max = "600" }  )
-	CPanel:AddControl( "Slider", 	{ Label = "#Physics Timescale",	Type = "Float", 	Command = "phys_timescale", 	Min = "0", 	Max = "2" }  )
-	CPanel:AddControl( "Slider", 	{ Label = "#Physics Iterations", Type = "Integer", 	Command = "gmod_physiterations", 	Min = "1", 	Max = "10" }  )
-	
+	for id, str in pairs( cleanup.GetTable() ) do
+		if ( !GetConVar( "sbox_max" .. str ) ) then continue end
+		CPanel:AddControl( "Slider", { Label = "#max_" .. str, Command = "sbox_max" .. str, Min = "0", Max = "300" } )
+	end
+
 end
 
 
-	
+
 --[[
 -- Tool Menu
 --]]
 local function PopulateUtilityMenus()
 
-	spawnmenu.AddToolMenuOption( "Utilities", "User", 	"User_Cleanup",	"#Cleanup", 	"", 	"", 	User_Cleanup )
-	spawnmenu.AddToolMenuOption( "Utilities", "User", 	"Undo", 	"#Undo", 			"", 	"", 	Undo )
+	spawnmenu.AddToolMenuOption( "Utilities", "User", "User_Cleanup",	"#Cleanup", "", "", User_Cleanup )
+	spawnmenu.AddToolMenuOption( "Utilities", "User", "Undo",			"#Undo", "", "", Undo )
 	
-	spawnmenu.AddToolMenuOption( "Utilities", "Admin", 	"Admin_Cleanup", 	"#Cleanup", 	"", 	"", 	User_Cleanup )
-	spawnmenu.AddToolMenuOption( "Utilities", "Admin", 	"ServerSettings", 	"#Settings", 	"", 	"", 	ServerSettings )
+	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "Admin_Cleanup",		"#Cleanup", "", "", User_Cleanup )
+	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "ServerSettings", 	"#spawnmenu.utilities.settings", "", "", ServerSettings )
 
 end
 
@@ -67,8 +75,8 @@ hook.Add( "PopulateToolMenu", "PopulateUtilityMenus", PopulateUtilityMenus )
 --]]
 local function CreateUtilitiesCategories()
 
-	spawnmenu.AddToolCategory( "Utilities", 	"User", 	"#User" )
-	spawnmenu.AddToolCategory( "Utilities", 	"Admin", 	"#Admin" )
+	spawnmenu.AddToolCategory( "Utilities", 	"User", 	"#spawnmenu.utilities.user" )
+	spawnmenu.AddToolCategory( "Utilities", 	"Admin", 	"#spawnmenu.utilities.admin" )
 
 end	
 
