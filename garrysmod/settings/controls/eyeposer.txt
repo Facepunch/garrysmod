@@ -1,5 +1,0 @@
-"0"
-{
-	"Text"			"#Tool_eyeposer_name"
-	"Description"		"#Tool_eyeposer_desc"	
-}

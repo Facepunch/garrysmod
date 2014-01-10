@@ -1,24 +1,21 @@
 "0"
 {
-	"Text"			"#Tool_camera_name"
-	"Description"	"#Tool_camera_desc"
-	
 	"Numpad"
 	{
-		"Label"				"#Camera_Key"
+		"Label"				"#tool.camera.key"
 		"Command"			"camera_key"
 		"ButtonSize"		"28"
 	}
 	
 	"CheckBox"
 	{
-		"Label"				"#Camera_Static"
-		"Description"		"#Camera_Static_Description"
+		"Label"				"#tool.camera.static"
 		"Command"			"camera_locked"
+		"Help"				"true"
 	}
 	"CheckBox"
 	{
-		"Label"				"#Toggle"
+		"Label"				"#tool.toggle"
 		"Command"			"camera_toggle"
 	}
 	
