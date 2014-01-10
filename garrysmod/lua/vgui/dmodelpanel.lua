@@ -27,6 +27,7 @@ function PANEL:Init()
 	self.Entity = nil
 	self.LastPaint = 0
 	self.DirectionalLight = {}
+	self.FarZ = 4096
 	
 	self:SetCamPos( Vector( 50, 50, 50 ) )
 	self:SetLookAt( Vector( 0, 0, 40 ) )
@@ -69,15 +70,15 @@ function PANEL:SetModel( strModelName )
 	
 	self.Entity = ClientsideModel( strModelName, RENDER_GROUP_OPAQUE_ENTITY )
 	if ( !IsValid(self.Entity) ) then return end
-	
+
 	self.Entity:SetNoDraw( true )
 	
 	-- Try to find a nice sequence to play
 	local iSeq = self.Entity:LookupSequence( "walk_all" );
-	if (iSeq <= 0) then iSeq = self.Entity:LookupSequence( "WalkUnarmed_all" ) end
-	if (iSeq <= 0) then iSeq = self.Entity:LookupSequence( "walk_all_moderate" ) end
+	if ( iSeq <= 0 ) then iSeq = self.Entity:LookupSequence( "WalkUnarmed_all" ) end
+	if ( iSeq <= 0 ) then iSeq = self.Entity:LookupSequence( "walk_all_moderate" ) end
 	
-	if (iSeq > 0) then self.Entity:ResetSequence( iSeq ) end
+	if ( iSeq > 0 ) then self.Entity:ResetSequence( iSeq ) end
 	
 	
 end
@@ -99,7 +100,7 @@ function PANEL:Paint()
 	end
 	
 	local w, h = self:GetSize()
-	cam.Start3D( self.vCamPos, ang, self.fFOV, x, y, w, h, 5, 4096 )
+	cam.Start3D( self.vCamPos, ang, self.fFOV, x, y, w, h, 5, self.FarZ )
 	cam.IgnoreZ( true )
 	
 	render.SuppressEngineLighting( true )
