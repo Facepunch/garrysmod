@@ -17,7 +17,6 @@ TOOL.ClientConVar[ "toggle" ]			= "1"
 
 cleanup.Register( "lamps" )
 
-
 function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
@@ -37,10 +36,10 @@ function TOOL:LeftClick( trace )
 	local bright	= self:GetClientNumber( "brightness" )
 	local toggle	= self:GetClientNumber( "toggle" ) != 1
 
-	local mat		= Material( texture );
+	local mat		= Material( texture )
 	local texture	= mat:GetString( "$basetexture" )
 
-	if	( trace.Entity:IsValid() && trace.Entity:GetClass() == "gmod_lamp" && trace.Entity:GetPlayer() == ply ) then
+	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_lamp" && trace.Entity:GetPlayer() == ply ) then
 	
 		trace.Entity:SetColor( Color( r, g, b, 255 ) )
 		trace.Entity:SetFlashlightTexture( texture )
@@ -70,7 +69,7 @@ function TOOL:LeftClick( trace )
 	
 	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
 
-	lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = Angle(0, 0, 0) } )
+	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = Angle(0, 0, 0) } )
 	
 	local CurPos = lamp:GetPos()
 	local NearestPoint = lamp:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )

@@ -73,8 +73,7 @@ function PANEL:AddModelEx( name, model, skin )
 
 	-- Creeate a spawnicon and set the model
 	local Icon = vgui.Create( "SpawnIcon", self )
-	Icon:SetModel( model )
-	Icon:SetSkin( skin )
+	Icon:SetModel( model, skin )
 	Icon:SetToolTip( model )
 	Icon.Model = model
 	Icon.Value = name
