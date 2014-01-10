@@ -186,28 +186,27 @@ function TOOL:UpdateGhostBalloon( ent, ply )
 	local Offset = CurPos - NearestPoint
 	
 	local pos = trace.HitPos + Offset
-	
-	
+
 	local modeltable = list.Get( "BalloonModels" )[ self:GetClientInfo( "model" ) ]
 	if ( modeltable.skin ) then ent:SetSkin( modeltable.skin ) end
-	
+
 	ent:SetPos( pos )
 	ent:SetAngles( Angle( 0, 0, 0 ) )
 	
 	ent:SetNoDraw( false )
-	
+
 end
 
 function TOOL:Think()
 
-	if ( !SERVER ) then return end
-	
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity.model != self:GetClientInfo( "model" ) ) then
 	
 		local modeltable = list.Get( "BalloonModels" )[ self:GetClientInfo( "model" ) ]
 		self:MakeGhostEntity( modeltable.model, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
-		self.GhostEntity.model = self:GetClientInfo( "model" )
+		if ( IsValid( self.GhostEntity ) ) then self.GhostEntity.model = self:GetClientInfo( "model" ) end
+
 	end
+
 	self:UpdateGhostBalloon( self.GhostEntity, self:GetOwner() )
 	
 end
@@ -223,7 +222,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Slider", 	{ Label = "#tool.balloon.ropelength", Type = "Float", 	Command = "balloon_ropelength", 	Min = "5", 	Max = "1000" }  )
 	CPanel:AddControl( "Slider", 	{ Label = "#tool.balloon.force", Type = "Float", 	Command = "balloon_force", 	Min = "-1000", 	Max = "2000", Help = true }  )
-	CPanel:AddControl( "Color", { Label = "#tool.balloon.color", Red = "balloon_r", Green = "balloon_g", Blue = "balloon_b", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" }  )			
+	CPanel:AddControl( "Color",		{ Label = "#tool.balloon.color", Red = "balloon_r", Green = "balloon_g", Blue = "balloon_b", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" }  )			
 
 	CPanel:AddControl( "PropSelect", { Label = "#tool.balloon.model",
 										ConVar = "balloon_model",
