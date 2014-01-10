@@ -102,22 +102,20 @@ if ( SERVER ) then
 	
 		local lamp = ents.Create( "gmod_lamp" )
 		
-			if ( !IsValid( lamp ) ) then return end
+		if ( !IsValid( lamp ) ) then return end
 
-			lamp:SetModel( Model )
-			lamp:SetFlashlightTexture( Texture )
-			lamp:SetLightFOV( fov )
-			lamp:SetColor( Color( r, g, b, 255 ) )
-			lamp:SetDistance( distance )
-			lamp:SetBrightness( brightness )
-			lamp:Switch( on )
-			lamp:SetToggle( !toggle )
-			duplicator.DoGeneric( lamp, Data )
+		lamp:SetModel( Model )
+		lamp:SetFlashlightTexture( Texture )
+		lamp:SetLightFOV( fov )
+		lamp:SetColor( Color( r, g, b, 255 ) )
+		lamp:SetDistance( distance )
+		lamp:SetBrightness( brightness )
+		lamp:Switch( on )
+		lamp:SetToggle( !toggle )
+		duplicator.DoGeneric( lamp, Data )
 			
 		lamp:Spawn()
 
-		
-		
 		duplicator.DoGenericPhysics( lamp, pl, Data )
 		
 		lamp:SetPlayer( pl )
