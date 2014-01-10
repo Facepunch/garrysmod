@@ -354,13 +354,8 @@ function PANEL:AddControl( control, data )
 					RunConsoleCommand( k, v )
 				end
 			end
-
-			local left = vgui.Create( "DLabel", self )
-			left:SetText( data.label )
-			left:SetDark( true )
-			ctrl:Dock( TOP )
 	
-			self:AddItem( left, ctrl )
+			self:AddItem( ctrl )
 		
 			return ctrl
 			
