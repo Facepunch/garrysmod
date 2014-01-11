@@ -35,7 +35,8 @@ if ( CLIENT ) then
 		if ( !Panel ) then return end
 		
 		Panel:ClearControls()
-		
+		Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.undo.help" } )
+
 		local ComboBox = Panel:ListBox()
 		ComboBox:SetTall( 500 )
 		

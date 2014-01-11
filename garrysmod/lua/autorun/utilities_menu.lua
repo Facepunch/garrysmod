@@ -8,31 +8,27 @@ if ( SERVER ) then AddCSLuaFile( "utilities_menu.lua" ) return end
 
 local function Undo( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#Undo" }  )
-	
-	-- The rest is added by the undo module dynamically
+	-- This is added by the undo module dynamically
 	
 end
 
 local function User_Cleanup( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#Cleanup" }  )
-	
-	-- The rest is added by the undo module dynamically
+	-- This is added by the cleanup module dynamically
 	
 end
 
 local function ServerSettings( CPanel )
 
-	CPanel:AddControl( "Header", { Description = "#Server Settings" } )
+	CPanel:AddControl( "Header", { Description = "#utilities.serversettings" } )
 		
-	CPanel:AddControl( "TextBox", 	{ Label = "#Server Password",	Command = "sv_password", WaitForEnter =	"1" } )
+	CPanel:AddControl( "TextBox",	{ Label = "#utilities.password", Command = "sv_password", WaitForEnter = "1" } )
 
-	CPanel:AddControl( "Slider", 	{ Label = "#Gravity",			Type = "Float",		Command = "sv_gravity", Min = "-200", Max = "600" } )
-	CPanel:AddControl( "Slider", 	{ Label = "#Physics Timescale",	Type = "Float", 	Command = "phys_timescale", Min = "0", Max = "2" } )
-	CPanel:AddControl( "Slider", 	{ Label = "#Physics Iterations", Type = "Integer", 	Command = "gmod_physiterations", Min = "1", Max = "10" } )
+	CPanel:AddControl( "Slider",	{ Label = "#utilities.gravity",		Type = "Float",		Command = "sv_gravity", Min = "-200", Max = "600" } )
+	CPanel:AddControl( "Slider", 	{ Label = "#utilities.timescale",	Type = "Float", 	Command = "phys_timescale", Min = "0", Max = "2" } )
+	CPanel:AddControl( "Slider", 	{ Label = "#utilities.iterations",	Type = "Integer", 	Command = "gmod_physiterations", Min = "1", Max = "10" } )
 	
-	CPanel:AddControl( "Header", { Description = "#Sandbox Settings" } )
+	CPanel:AddControl( "Header", { Description = "#utilities.sandboxsettingss" } )
 
 	CPanel:AddControl( "TextBox", 	{ Label = "#persistent_mode",			Command = "sbox_persist", WaitForEnter = "1" } )
 	
@@ -60,10 +56,10 @@ end
 --]]
 local function PopulateUtilityMenus()
 
-	spawnmenu.AddToolMenuOption( "Utilities", "User", "User_Cleanup",	"#Cleanup", "", "", User_Cleanup )
-	spawnmenu.AddToolMenuOption( "Utilities", "User", "Undo",			"#Undo", "", "", Undo )
+	spawnmenu.AddToolMenuOption( "Utilities", "User", "User_Cleanup",	"#spawnmenu.utilities.cleanup", "", "", User_Cleanup )
+	spawnmenu.AddToolMenuOption( "Utilities", "User", "Undo",			"#spawnmenu.utilities.undo", "", "", Undo )
 	
-	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "Admin_Cleanup",		"#Cleanup", "", "", User_Cleanup )
+	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "Admin_Cleanup",		"#spawnmenu.utilities.cleanup", "", "", User_Cleanup )
 	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "ServerSettings", 	"#spawnmenu.utilities.settings", "", "", ServerSettings )
 
 end
