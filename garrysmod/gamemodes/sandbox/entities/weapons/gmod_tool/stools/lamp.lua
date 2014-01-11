@@ -221,7 +221,7 @@ function TOOL.BuildCPanel( CPanel )
 					
 	CPanel:AddControl( "ComboBox", params )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.lamp.toggle", Command = "lamp_key" } )
+	CPanel:AddControl( "Numpad", { Label = "#tool.lamp.key", Command = "lamp_key" } )
 
 	CPanel:NumSlider( "#tool.lamp.fov", "lamp_fov", 10, 170, 2 )
 	CPanel:NumSlider( "#tool.lamp.distance", "lamp_distance", 64, 2048, 0 )
@@ -229,6 +229,12 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Checkbox", { Label = "#tool.lamp.toggle", Command = "lamp_toggle" } )
 
+	local MatSelect = CPanel:MatSelect( "lamp_texture", nil, true, 0.33, 0.33 )
+	
+	for k, v in pairs( list.Get( "LampTextures" ) ) do
+		MatSelect:AddMaterial( v.Name or k, k )
+	end
+	
 	CPanel:AddControl( "Color",  { Label	= "#tool.lamp.color",
 									Red			= "lamp_r",
 									Green		= "lamp_g",
@@ -238,12 +244,6 @@ function TOOL.BuildCPanel( CPanel )
 									ShowRGB 	= 1,
 									Multiplier	= 255 } )	
 	
-	local MatSelect = CPanel:MatSelect( "lamp_texture", nil, true, 0.33, 0.33 )
-	
-	for k, v in pairs( list.Get( "LampTextures" ) ) do
-		MatSelect:AddMaterial( v.Name or k, k )
-	end
-
 	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model",
 									 ConVar = "lamp_model",
 									 Category = "Lamps",
