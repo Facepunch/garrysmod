@@ -1,8 +1,7 @@
-
 AddCSLuaFile()
 
 SWEP.Author			= "robotboy655 & MaxOfS2D"
-SWEP.Purpose		= "Well we sure as heck didn't use guns! We would wrestle Hunters to the ground with our bare hands! I would get ten, twenty a day, just using my fists."
+SWEP.Purpose		= "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
 
 SWEP.Spawnable			= true
 SWEP.UseHands			= true
