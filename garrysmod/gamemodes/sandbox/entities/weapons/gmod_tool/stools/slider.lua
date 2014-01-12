@@ -1,9 +1,6 @@
 
 TOOL.Category		= "Constraints"
 TOOL.Name			= "#tool.slider.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
-
 
 TOOL.ClientConVar[ "width" ] = "1.5"
 TOOL.ClientConVar[ "material" ] = "cable/cable"
@@ -145,7 +142,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.slider.name", Description	= "#tool.slider.help" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.slider.help" } )
 	
 	CPanel:AddControl( "ComboBox", 
 	{ 

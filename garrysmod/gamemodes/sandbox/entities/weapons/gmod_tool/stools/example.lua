@@ -5,8 +5,8 @@ TOOL.AddToMenu		= false
 -- Define these!
 TOOL.Category		= "My Category"		-- Name of the category
 TOOL.Name			= "#Example"		-- Name to display
-TOOL.Command		= nil				-- Command on click (nil for default)
-TOOL.ConfigName		= nil				-- Config file name (nil for default)
+TOOL.Command		= nil				-- Command on click (nil for default), can be removed
+TOOL.ConfigName		= nil				-- Config file name (nil for default), can be removed
 
 if ( true ) then return end
 

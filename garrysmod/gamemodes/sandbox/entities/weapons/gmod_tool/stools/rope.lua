@@ -1,9 +1,6 @@
 
 TOOL.Category		= "Constraints"
 TOOL.Name			= "#tool.rope.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
-
 
 TOOL.ClientConVar[ "forcelimit" ] = "0"
 TOOL.ClientConVar[ "addlength" ] = "0"
@@ -146,7 +143,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.rope.name", Description	= "#tool.rope.help" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.rope.help" } )
 	
 	CPanel:AddControl( "ComboBox", 
 	{ 

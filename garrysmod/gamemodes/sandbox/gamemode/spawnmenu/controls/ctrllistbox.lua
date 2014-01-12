@@ -40,8 +40,8 @@ end
 function PANEL:OnSelect( index, value, data )
 
 	for k, v in pairs( data ) do
-	
-		RunConsoleCommand( k, v )
+
+		RunConsoleCommand( k, tostring( v ) )
 	
 	end
 

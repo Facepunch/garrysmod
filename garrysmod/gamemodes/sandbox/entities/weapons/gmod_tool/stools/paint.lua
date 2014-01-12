@@ -1,8 +1,6 @@
 
 TOOL.Category		= "Render"
 TOOL.Name			= "#tool.paint.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
 
 game.AddDecal( "Eye",					"decals/eye" );
 game.AddDecal( "Smile",					"decals/smile" );

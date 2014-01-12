@@ -1,9 +1,6 @@
 
 TOOL.Category		= "Render"
 TOOL.Name			= "#tool.trails.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
-
 
 TOOL.ClientConVar[ "r" ] = 255
 TOOL.ClientConVar[ "g" ] = 255
@@ -17,18 +14,6 @@ TOOL.ClientConVar[ "endsize" ] = 0
 TOOL.ClientConVar[ "material" ] = "trails/lol"
 
 cleanup.Register( "trails" )
-
--- Add Default Language translation (saves adding it to the txt files)
-if ( CLIENT ) then
-
-	language.Add( "Undone_trails", "Undone Trail" )
-	
-	language.Add( "Cleanup_trails", "Trails" )
-	language.Add( "Cleaned_trails", "Cleaned up all Trails" )
-
-end
-
-
 
 local function SetTrails( Player, Entity, Data )
 
@@ -144,16 +129,18 @@ end
 -- Note: Addons can easily add to this list in their 
 -- own file placed in autorun or something.
 --
-list.Set( "trail_materials", "#Plasma", 	"trails/plasma" )
-list.Set( "trail_materials", "#Tube", 		"trails/tube" )
-list.Set( "trail_materials", "#Electric", 	"trails/electric" )
-list.Set( "trail_materials", "#Smoke", 		"trails/smoke" )
-list.Set( "trail_materials", "#Laser", 		"trails/laser" )
-list.Set( "trail_materials", "#PhysBeam", 	"trails/physbeam" )
-list.Set( "trail_materials", "#Love", 		"trails/love" )
-list.Set( "trail_materials", "#LoL", 		"trails/lol" )
+list.Set( "trail_materials", "#trail.plasma", 	"trails/plasma" )
+list.Set( "trail_materials", "#trail.tube", 		"trails/tube" )
+list.Set( "trail_materials", "#trail.electric", 	"trails/electric" )
+list.Set( "trail_materials", "#trail.smoke", 		"trails/smoke" )
+list.Set( "trail_materials", "#trail.laser", 		"trails/laser" )
+list.Set( "trail_materials", "#trail.physbeam", 	"trails/physbeam" )
+list.Set( "trail_materials", "#trail.love", 		"trails/love" )
+list.Set( "trail_materials", "#trail.lol", 		"trails/lol" )
 
 function TOOL.BuildCPanel( CPanel )
+
+	CPanel:AddControl( "Header", { Description	= "#tool.trails.desc" }  )
 
 	-- Presets
 	local params = { Label = "#tool.presets", MenuButton = 1, Folder = "trails", Options = {}, CVars = {} }

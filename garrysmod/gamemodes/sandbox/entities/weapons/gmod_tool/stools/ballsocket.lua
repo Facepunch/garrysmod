@@ -1,9 +1,6 @@
 
 TOOL.Category		= "Constraints"
 TOOL.Name			= "#tool.ballsocket.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
-
 
 TOOL.ClientConVar[ "forcelimit" ] = "0"
 TOOL.ClientConVar[ "torquelimit" ] = "0"
@@ -73,7 +70,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.ballsocket.name", Description	= "#tool.ballsocket.help" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.ballsocket.help" }  )
 	
 	CPanel:AddControl( "ComboBox", { Label = "#tool.presets",
 									 MenuButton = 1,

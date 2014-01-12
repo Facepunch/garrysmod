@@ -1,9 +1,6 @@
 
 TOOL.Category		= "Constraints"
 TOOL.Name			= "#tool.muscle.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
-
 
 TOOL.ClientConVar[ "group" ] = "37"
 TOOL.ClientConVar[ "width" ] = "2"
@@ -197,7 +194,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.muscle.name", Description	= "#tool.muscle.help" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.muscle.help" } )
 	
 	CPanel:AddControl( "ComboBox", { Label = "#tool.presets",
 									 MenuButton = 1,

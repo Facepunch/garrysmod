@@ -1,9 +1,6 @@
 
 TOOL.Category		= "Constraints"
 TOOL.Name			= "#tool.winch.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
-
 
 TOOL.ClientConVar[ "rope_material" ] = "cable/rope"
 TOOL.ClientConVar[ "rope_width" ] = "3"
@@ -167,7 +164,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.winch.name", Description	= "#tool.winch.help" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.winch.help" }  )
 	
 	CPanel:AddControl( "ComboBox", 
 	{ 

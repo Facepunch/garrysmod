@@ -1,8 +1,6 @@
 
 TOOL.Category		= "Render"
 TOOL.Name			= "#tool.material.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
 
 TOOL.ClientConVar[ "override" ] = "debug/env_cubemap_model"
 
@@ -114,7 +112,7 @@ list.Add( "OverrideMaterials", "models/XQM/LightLinesRed_tool" )
 function TOOL.BuildCPanel( CPanel )
 
 	-- HEADER
-	CPanel:AddControl( "Header", { Text = "#tool.material.name", Description = "#tool.material.help" } )
+	CPanel:AddControl( "Header", { Description = "#tool.material.help" } )
 
 	CPanel:MatSelect( "material_override", list.Get( "OverrideMaterials" ), true, 0.33, 0.33 )
 									

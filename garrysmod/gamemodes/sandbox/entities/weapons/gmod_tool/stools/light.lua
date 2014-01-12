@@ -1,8 +1,6 @@
 
 TOOL.Category		= "Construction"
 TOOL.Name			= "#tool.light.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
 
 TOOL.ClientConVar[ "ropelength" ]		= "64"
 TOOL.ClientConVar[ "ropematerial" ]		= "cable/rope"
@@ -161,7 +159,7 @@ end
 function TOOL.BuildCPanel( CPanel )
 
 	-- HEADER
-	CPanel:AddControl( "Header", { Text = "#tool.light.name", Description	= "#tool.light.desc" }  )
+	CPanel:AddControl( "Header", { Description = "#tool.light.desc" } )
 	
 	-- Presets
 	local params = { Label = "#tool.presets", MenuButton = 1, Folder = "light", Options = {}, CVars = {} }

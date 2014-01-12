@@ -1,9 +1,6 @@
 
 TOOL.Category		= "Constraints"
 TOOL.Name			= "#tool.pulley.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
-
 
 TOOL.ClientConVar[ "width" ] = "3"
 TOOL.ClientConVar[ "forcelimit" ] = "0"
@@ -83,7 +80,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.pulley.name", Description	= "#tool.pulley.help" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.pulley.help" }  )
 	
 	CPanel:AddControl( "ComboBox", { 
 

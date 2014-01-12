@@ -1,15 +1,8 @@
+
 TOOL.AddToMenu		= false
 TOOL.ClientConVar[ "type" ]	= "0"
 TOOL.ClientConVar[ "name" ]	= "0"
 TOOL.ClientConVar[ "arg" ]	= "0"
-
-if ( CLIENT ) then
-
-	language.Add( "Tool_creator_name", "Creator" )
-	language.Add( "Tool_creator_desc", "Spawn an entity from the spawnmenu" )
-	language.Add( "Tool_creator_0", "Click anywhere to create the entity you selected from the spawnmenu" )
-
-end
 
 function TOOL:LeftClick( trace, attach )
 
@@ -52,7 +45,6 @@ function TOOL:LeftClick( trace, attach )
 		CCSpawn( self:GetOwner(), nil, { name } )
 	end
 
-	return true;
+	return true
 
 end
-

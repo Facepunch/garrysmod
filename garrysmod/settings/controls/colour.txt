@@ -33,7 +33,7 @@
 	
 	"Color"
 	{
-		"Label"				"#tool.color.color"
+		"Label"				"#tool.colour.color"
 		"Red"				"colour_r"
 		"Green"				"colour_g"
 		"Blue"				"colour_b"
@@ -44,148 +44,121 @@
 		"Multiplier"			"255" // if you want colours to range from 0 - 255 change this to 255
 	}
 	
-	"ComboBox"
+	"listbox"
 	{
-		"Label"				"#tool.color.mode"
-		"MenuButton"			"0"
+		"Label"				"#tool.colour.mode"
 		"Command"			"colour_mode"
 
 		"Options"
 		{
-			"#Normal"
+			"#rendermode.normal"
 			{
-				"ID"			"0"
 				"colour_mode"	"0"
 			}
-			"#TransColor"
+			"#rendermode.transcolor"
 			{
-				"ID"			"1"
 				"colour_mode"	"1"
 			}
-			"#TransTexture"
+			"#rendermode.transtexture"
 			{
-				"ID"			"2"
 				"colour_mode"	"2"
 			}
-			"#Glow"
+			"#rendermode.glow"
 			{
-				"ID"			"3"
 				"colour_mode"	"3"
 			}
-			"#TransAlpha"
+			"#rendermode.transalpha"
 			{
-				"ID"			"4"
 				"colour_mode"	"4"
 			}
-			"#TransAdd"
+			"#rendermode.transadd"
 			{
-				"ID"			"5"
 				"colour_mode"	"5"
 			}
-			"#TransAlphaAdd"
+			"#rendermode.transalphaadd"
 			{
-				"ID"			"8"
 				"colour_mode"	"8"
 			}
-			"#WorldGlow"
+			"#rendermode.worldglow"
 			{
-				"ID"			"9"
 				"colour_mode"	"9"
 			}
 		}
 	}
 
-	"ComboBox"
+	"listbox"
 	{
-		"Label"				"#tool.color.fx"
-		"MenuButton"			"0"
+		"Label"				"#tool.colour.fx"
 		"Command"				"colour_fx"
 
 		"Options"
 		{
-			"#None"
+			"#renderfx.none"
 			{
-				"ID"			"0"
 				"colour_fx"	"0"
 			}
-			"#PulseSlow"
+			"#renderfx.pulseslow"
 			{
-				"ID"			"1"
 				"colour_fx"	"1"
 			}
-			"#PulseFast"
+			"#renderfx.pulsefast"
 			{
-				"ID"			"2"
 				"colour_fx"	"2"
 			}
-			"#PulseSlowWide"
+			"#renderfx.pulseslowwide"
 			{
-				"ID"			"3"
 				"colour_fx"	"3"
 			}
-			"#PulseFastWide"
+			"#renderfx.pulsefastwide"
 			{
-				"ID"			"4"
 				"colour_fx"	"4"
 			}
-			"#FadeSlow"
+			"#renderfx.fadeslow"
 			{
-				"ID"			"5"
 				"colour_fx"	"5"
 			}
-			"#FadeFast"
+			"#renderfx.fadefast"
 			{
-				"ID"			"6"
 				"colour_fx"	"6"
 			}
-			"#SolidSlow"
+			"#renderfx.solidslow"
 			{
-				"ID"			"7"
 				"colour_fx"	"7"
 			}
-			"#SolidFast"
+			"#renderfx.solidfast"
 			{
-				"ID"			"8"
 				"colour_fx"	"8"
 			}
-			"#StrobeSlow"
+			"#renderfx.strobeslow"
 			{
-				"ID"			"9"
 				"colour_fx"	"9"
 			}
-			"#StrobeFast"
+			"#renderfx.strobefast"
 			{
-				"ID"			"10"
 				"colour_fx"	"10"
 			}
-			"#StrobeFaster"
+			"#renderfx.strobefaster"
 			{
-				"ID"			"11"
 				"colour_fx"	"11"
 			}
-			"#FlickerSlow"
+			"#renderfx.flickerslow"
 			{
-				"ID"			"12"
 				"colour_fx"	"12"
 			}
-			"#FlickerFast"
+			"#renderfx.flickerfast"
 			{
-				"ID"			"13"
 				"colour_fx"	"13"
 			}
-			"#Distort"
+			"#renderfx.distort"
 			{
-				"ID"			"15"
 				"colour_fx"	"15"
 			}
-			"#Hologram"
+			"#renderfx.hologram"
 			{
-				"ID"			"16"
 				"colour_fx"	"16"
 			}
-			"#PulseFastWider"
+			"#renderfx.pulsefastwider"
 			{
-				"ID"			"25"
 				"colour_fx"	"25"
 			}
 		}

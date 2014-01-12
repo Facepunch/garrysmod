@@ -7,6 +7,7 @@
 		"Undone_Ragdoll"		"Undone Ragdoll"
 		"Undone_Prop"			"Undone Prop"
 		"Undone_Effect"			"Undone Effect"
+		"Undone_Emitter"			"Undone Emitter"
 		"Undone_NPC"			"Undone NPC"
 		"Undone_Axis"			"Undone Axis"
 		"Undone_Balloon"		"Undone Balloon"
@@ -39,5 +40,6 @@
 		"Undone_RT Camera"		"Undone RT Camera"
 		"Undone_manhack"		"Undone Manhack"
 		"Undone_rollermine"		"Undone Rollermine"
+		"Undone_trails"			"Undone Trail"
 	}
 }

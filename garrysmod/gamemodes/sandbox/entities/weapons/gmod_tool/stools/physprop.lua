@@ -1,17 +1,13 @@
 
 TOOL.Category		= "Construction"
 TOOL.Name			= "#tool.physprop.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
-
 
 TOOL.ClientConVar[ "gravity_toggle" ] 	= "1"
 TOOL.ClientConVar[ "material" ] 		= "metal_bouncy"
 
 function TOOL:LeftClick( trace )
 
-	if (!trace.Entity) then return false end
-	if (!trace.Entity:IsValid() ) then return false end
+	if ( !IsValid( trace.Entity ) ) then return false end
 	if (trace.Entity:IsPlayer()) then return false end
 	if (trace.Entity:IsWorld()) then return false end
 

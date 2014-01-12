@@ -1,9 +1,6 @@
 
 TOOL.Category		= "Constraints"
 TOOL.Name			= "#tool.elastic.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
-
 
 TOOL.ClientConVar[ "constant" ] = "500"
 TOOL.ClientConVar[ "damping" ] = "3"
@@ -83,7 +80,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.elastic.name", Description	= "#tool.elastic.help" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.elastic.help" }  )
 	
 	CPanel:AddControl( "ComboBox", { Label = "#tool.presets",
 									 MenuButton = 1,

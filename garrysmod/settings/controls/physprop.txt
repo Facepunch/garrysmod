@@ -35,67 +35,67 @@
 	
 		"Options"
 		{
-			"#Metal Bouncy"
+			"#physprop.metalbouncy"
 			{
 				"physprop_material"		"metal_bouncy"
 			}
 			
-			"#Metal"
+			"#physprop.metal"
 			{
 				"physprop_material"		"metal"
 			}
 			
-			"#Dirt"
+			"#physprop.dirt"
 			{
 				"physprop_material"		"dirt"
 			}
 					
-			"#Slime"
+			"#physprop.slime"
 			{
 				"physprop_material"		"slipperyslime"
 			}
 			
-			"#Wood"
+			"#physprop.wood"
 			{
 				"physprop_material"		"wood"
 			}
 			
-			"#Glass"
+			"#physprop.glass"
 			{
 				"physprop_material"		"glass"
 			}
 			
-			"#Concrete"
+			"#physprop.concrete"
 			{
 				"physprop_material"		"concrete_block"
 			}
 			
-			"#Ice"
+			"#physprop.ice"
 			{
 				"physprop_material"		"ice"
 			}
 			
-			"#Rubber"
+			"#physprop.rubber"
 			{
 				"physprop_material"		"rubber"
 			}
 			
-			"#Paper"
+			"#physprop.paper"
 			{
 				"physprop_material"		"paper"
 			}		
 			
-			"#Flesh"
+			"#physprop.flesh"
 			{
 				"physprop_material"		"zombieflesh"
 			}
 			
-			"#Super Ice"
+			"#physprop.superice"
 			{
 				"physprop_material"		"gmod_ice"
 			}
 			
-			"#Super Bouncy"
+			"#physprop.superbouncy"
 			{
 				"physprop_material"		"gmod_bouncy"
 			}

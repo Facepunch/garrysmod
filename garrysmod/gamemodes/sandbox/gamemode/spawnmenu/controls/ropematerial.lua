@@ -6,13 +6,13 @@
 --										 
 --
 
-list.Set( "RopeMaterials", "Rope", 				"cable/rope" )
-list.Set( "RopeMaterials", "Cable 2", 			"cable/cable2" )
-list.Set( "RopeMaterials", "XBeam", 			"cable/xbeam" )
-list.Set( "RopeMaterials", "Red Laser", 		"cable/redlaser" )
-list.Set( "RopeMaterials", "Blue Electric", 	"cable/blue_elec" )
-list.Set( "RopeMaterials", "Physics Beam", 		"cable/physbeam" )
-list.Set( "RopeMaterials", "Hydra", 			"cable/hydra" )
+list.Set( "RopeMaterials", "#ropematerial.rope",		"cable/rope" )
+list.Set( "RopeMaterials", "#ropematerial.cable",		"cable/cable2" )
+list.Set( "RopeMaterials", "#ropematerial.xbeam",		"cable/xbeam" )
+list.Set( "RopeMaterials", "#ropematerial.laser",		"cable/redlaser" )
+list.Set( "RopeMaterials", "#ropematerial.electric",	"cable/blue_elec" )
+list.Set( "RopeMaterials", "#ropematerial.physbeam",	"cable/physbeam" )
+list.Set( "RopeMaterials", "#ropematerial.hydra",		"cable/hydra" )
 
 local PANEL = {}
 

@@ -2,7 +2,6 @@
 TOOL.Category		= "Construction"
 TOOL.Name			= "#tool.nocollide.name"
 
-
 cleanup.Register( "nocollide" )
 
 function TOOL:LeftClick( trace )
@@ -89,4 +88,10 @@ function TOOL:Reload( trace )
 	local  bool = constraint.RemoveConstraints( trace.Entity, "NoCollide" )
 	return bool
 	
+end
+
+function TOOL.BuildCPanel( CPanel )
+
+	CPanel:AddControl( "Header", { Description	= "#tool.nocollide.desc" }  )
+
 end
