@@ -288,6 +288,10 @@ local function WinChecker()
       else
          local win = CheckForWin()
          if win != WIN_NONE then
+            -- A chance for hooks to override the winner or even abort ending round by returning WIN_NONE
+            win = hook.Call("TTTOverrideWin", GAMEMODE, win) or win
+         end
+         if win != WIN_NONE then
             EndRound(win)
             return
          end
@@ -422,10 +426,14 @@ function PrepareRound()
       GAMEMODE:FinishContinueVote() -- may start a gamemode vote
    end
 
-   if hook.Call("TTTDelayRoundStartForVote", GAMEMODE) then
-      LANG.Msg("round_voting", {num = 30})
+   local delay_round, delay_length = hook.Call("TTTDelayRoundStartForVote", GAMEMODE)
 
-      timer.Create("delayedprep", 30, 1, PrepareRound)
+   if delay_round then
+      delay_length = delay_length or 30
+
+      LANG.Msg("round_voting", {num = delay_length})
+
+      timer.Create("delayedprep", delay_length, 1, PrepareRound)
       return
    end
 

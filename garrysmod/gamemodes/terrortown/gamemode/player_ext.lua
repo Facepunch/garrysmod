@@ -205,14 +205,15 @@ end
 
 
 function plymeta:SetSpeed(slowed)
+   local mul = hook.Call("TTTPlayerSpeed", GAMEMODE, self, slowed) or 1
    if slowed then
-      self:SetWalkSpeed(120)
-      self:SetRunSpeed(120)
-      self:SetMaxSpeed(120)
+      self:SetWalkSpeed(120 * mul)
+      self:SetRunSpeed(120 * mul)
+      self:SetMaxSpeed(120 * mul)
    else
-      self:SetWalkSpeed(220)
-      self:SetRunSpeed(220)
-      self:SetMaxSpeed(220)
+      self:SetWalkSpeed(220 * mul)
+      self:SetRunSpeed(220 * mul)
+      self:SetMaxSpeed(220 * mul)
    end
 end
 
