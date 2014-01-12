@@ -21,10 +21,6 @@ cleanup.Register( "trails" )
 -- Add Default Language translation (saves adding it to the txt files)
 if ( CLIENT ) then
 
-	language.Add( "Tool_trails_name", "Trails" )
-	language.Add( "Tool_trails_desc", "Add entity trail beams" )
-	language.Add( "Tool_trails_0", "Left click on an entity to add a trail. Right click to remove" )
-	
 	language.Add( "Undone_trails", "Undone Trail" )
 	
 	language.Add( "Cleanup_trails", "Trails" )
@@ -159,9 +155,6 @@ list.Set( "trail_materials", "#LoL", 		"trails/lol" )
 
 function TOOL.BuildCPanel( CPanel )
 
-	-- HEADER
-	CPanel:AddControl( "Header", { Text = "#tool.trails.name", Description	= "#tool.trails.name" }  )
-	
 	-- Presets
 	local params = { Label = "#tool.presets", MenuButton = 1, Folder = "trails", Options = {}, CVars = {} }
 		
@@ -185,7 +178,7 @@ function TOOL.BuildCPanel( CPanel )
 		
 	CPanel:AddControl( "ComboBox", params )
 	
-	CPanel:AddControl( "Color",  { Label	= "Color:",
+	CPanel:AddControl( "Color",  { Label	= "#tool.trails.color",
 									Red			= "trails_r",
 									Green		= "trails_g",
 									Blue		= "trails_b",

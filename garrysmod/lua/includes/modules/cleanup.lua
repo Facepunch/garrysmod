@@ -208,8 +208,7 @@ else
 		if (!Panel) then return end
 		
 		Panel:ClearControls()
-		Panel:AddControl( "Header", { Text = "#CleanUp" }  )
-		
+		Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.cleanup.help" } )
 		Panel:Button( "#CleanupAll", "gmod_cleanup" )
 
 		table.sort( cleanup_types )
@@ -224,7 +223,7 @@ else
 		if (!Panel) then return end
 		
 		Panel:ClearControls()
-		Panel:AddControl( "Header", { Text = "#CleanUp" }  )
+		Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.cleanup.help" } )
 		Panel:Button( "#CleanupAll", "gmod_admin_cleanup" )
 		
 		table.sort( cleanup_types )

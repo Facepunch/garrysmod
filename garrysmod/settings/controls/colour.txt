@@ -1,11 +1,8 @@
 "0"
 {
-	"Text"				"#Tool_colour_name"
-	"Description"			"#Tool_colour_desc"
-
 	"ComboBox"
 	{
-		"Label"				"#Presets"
+		"Label"				"#tool.presets"
 		"MenuButton"		"1"
 		"Folder"			"colour"
 		
@@ -36,7 +33,7 @@
 	
 	"Color"
 	{
-		"Label"				"#Tool_colour_colour"
+		"Label"				"#tool.color.color"
 		"Red"				"colour_r"
 		"Green"				"colour_g"
 		"Blue"				"colour_b"
@@ -49,7 +46,7 @@
 	
 	"ComboBox"
 	{
-		"Label"				"#Tool_colour_mode"
+		"Label"				"#tool.color.mode"
 		"MenuButton"			"0"
 		"Command"			"colour_mode"
 
@@ -100,7 +97,7 @@
 
 	"ComboBox"
 	{
-		"Label"				"#Tool_colour_fx"
+		"Label"				"#tool.color.fx"
 		"MenuButton"			"0"
 		"Command"				"colour_fx"
 

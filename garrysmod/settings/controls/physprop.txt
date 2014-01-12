@@ -1,11 +1,8 @@
 "0"
 {
-	"Text"				"#Tool_physprop_name"
-	"Description"		"#Tool_physprop_desc"
-
 	"ComboBox"
 	{
-		"Label"				"#Presets"
+		"Label"				"#tool.presets"
 		"MenuButton"			"1"
 		"Folder"			"physprop"
 		
@@ -27,13 +24,13 @@
 
 	"Toggle"
 	{
-		"Label"				"#Gravity Toggle"
+		"Label"				"#tool.physprop.gravity"
 		"Command"			"physprop_gravity_toggle"
 	}
 	
 	"ComboBox"
 	{
-		"Label"				"#Material"
+		"Label"				"#tool.physprop.material"
 		"MenuButton"			"0"
 	
 		"Options"

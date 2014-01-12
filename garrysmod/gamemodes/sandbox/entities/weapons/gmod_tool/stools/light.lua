@@ -187,7 +187,7 @@ function TOOL.BuildCPanel( CPanel )
 		
 	CPanel:AddControl( "ComboBox", params )
 	
-	CPanel:AddControl( "Numpad", { Label = "#tool.light.toggle", Command = "light_key", ButtonSize = 22 } )
+	CPanel:AddControl( "Numpad", { Label = "#tool.light.key", Command = "light_key", ButtonSize = 22 } )
 	
 	CPanel:AddControl( "Slider",  { Label	= "#tool.light.ropelength",
 									Type	= "Float",

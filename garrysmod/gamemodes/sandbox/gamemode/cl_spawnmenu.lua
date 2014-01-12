@@ -61,7 +61,7 @@ function GM:AddGamemodeToolMenuTabs( )
 	
 	-- This is named like this to force it to be the first tab
 	spawnmenu.AddToolTab( "Main", 		"#spawnmenu.tools_tab", "icon16/wrench.png" )
-	spawnmenu.AddToolTab( "Utilities", 		"#Utilities", "icon16/page_white_wrench.png" )
+	spawnmenu.AddToolTab( "Utilities", 	"#spawnmenu.utilities_tab", "icon16/page_white_wrench.png" )
 
 end
 
