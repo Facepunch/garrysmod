@@ -16,8 +16,7 @@ function TOOL:LeftClick( trace )
 	if ( trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 	
-	local ply		= self:GetOwner()
-	local eyeangles = ply:EyeAngles()
+	local ply 			= self:GetOwner()
 
 	-- Get client's CVars
 	local _group		= self:GetClientNumber( "group" ) 
@@ -40,10 +39,13 @@ function TOOL:LeftClick( trace )
 
 	if ( !self:GetSWEP():CheckLimit( "dynamite" ) ) then return false end
 
-	local dynamite = MakeDynamite( ply, trace.HitPos, Angle( 0, eyeangles.yaw, 0 ), _group, _damage, _model, _remove, _delay )
+	local dynamite = MakeDynamite( ply, trace.HitPos, Angle( 0, 0, 0 ), _group, _damage, _model, _remove, _delay )
 	
-	local min = dynamite:OBBMins()
-	dynamite:SetPos( trace.HitPos - trace.HitNormal * min.z )
+	local CurPos = dynamite:GetPos()
+	local NearestPoint = dynamite:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
+	local Offset = CurPos - NearestPoint
+
+	dynamite:SetPos( trace.HitPos + Offset )
 
 	undo.Create( "Dynamite" )
 		undo.AddEntity( dynamite )
@@ -70,10 +72,10 @@ if ( SERVER ) then
 		if ( IsValid( pl ) && !pl:CheckLimit( "dynamite" ) ) then return nil end
 
 		local dynamite = ents.Create( "gmod_dynamite" )
-			dynamite:SetPos( Pos )	
-			dynamite:SetAngles( Ang )
-			dynamite:SetModel( Model )
-			dynamite:SetShouldRemove( Remove )
+		dynamite:SetPos( Pos )	
+		dynamite:SetAngles( Ang )
+		dynamite:SetModel( Model )
+		dynamite:SetShouldRemove( Remove )
 		dynamite:Spawn()
 		dynamite:Activate()
 		
@@ -135,12 +137,14 @@ function TOOL:UpdateGhostDynamite( ent, player )
 		ent:SetNoDraw( true )
 		return
 	end
-	
-	local Ang = Angle( 0, player:EyeAngles().yaw, 0 )
-	ent:SetAngles( Ang )	
 
-	local min = ent:OBBMins()
-	ent:SetPos( trace.HitPos - trace.HitNormal * min.z )
+	ent:SetAngles( Angle( 0, 0, 0 ) )	
+
+	local CurPos = ent:GetPos()
+	local NearestPoint = ent:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
+	local Offset = CurPos - NearestPoint
+
+	ent:SetPos( trace.HitPos + Offset )
 	
 	ent:SetNoDraw( false )
 

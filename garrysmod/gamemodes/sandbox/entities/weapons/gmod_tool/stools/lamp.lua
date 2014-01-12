@@ -17,7 +17,6 @@ TOOL.ClientConVar[ "toggle" ]			= "1"
 
 cleanup.Register( "lamps" )
 
-
 function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
@@ -37,10 +36,10 @@ function TOOL:LeftClick( trace )
 	local bright	= self:GetClientNumber( "brightness" )
 	local toggle	= self:GetClientNumber( "toggle" ) != 1
 
-	local mat		= Material( texture );
+	local mat		= Material( texture )
 	local texture	= mat:GetString( "$basetexture" )
 
-	if	( trace.Entity:IsValid() && trace.Entity:GetClass() == "gmod_lamp" && trace.Entity:GetPlayer() == ply ) then
+	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_lamp" && trace.Entity:GetPlayer() == ply ) then
 	
 		trace.Entity:SetColor( Color( r, g, b, 255 ) )
 		trace.Entity:SetFlashlightTexture( texture )
@@ -70,7 +69,7 @@ function TOOL:LeftClick( trace )
 	
 	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
 
-	lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = Angle(0, 0, 0) } )
+	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = Angle(0, 0, 0) } )
 	
 	local CurPos = lamp:GetPos()
 	local NearestPoint = lamp:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -103,22 +102,20 @@ if ( SERVER ) then
 	
 		local lamp = ents.Create( "gmod_lamp" )
 		
-			if ( !IsValid( lamp ) ) then return end
+		if ( !IsValid( lamp ) ) then return end
 
-			lamp:SetModel( Model )
-			lamp:SetFlashlightTexture( Texture )
-			lamp:SetLightFOV( fov )
-			lamp:SetColor( Color( r, g, b, 255 ) )
-			lamp:SetDistance( distance )
-			lamp:SetBrightness( brightness )
-			lamp:Switch( on )
-			lamp:SetToggle( !toggle )
-			duplicator.DoGeneric( lamp, Data )
+		lamp:SetModel( Model )
+		lamp:SetFlashlightTexture( Texture )
+		lamp:SetLightFOV( fov )
+		lamp:SetColor( Color( r, g, b, 255 ) )
+		lamp:SetDistance( distance )
+		lamp:SetBrightness( brightness )
+		lamp:Switch( on )
+		lamp:SetToggle( !toggle )
+		duplicator.DoGeneric( lamp, Data )
 			
 		lamp:Spawn()
 
-		
-		
 		duplicator.DoGenericPhysics( lamp, pl, Data )
 		
 		lamp:SetPlayer( pl )
@@ -224,7 +221,7 @@ function TOOL.BuildCPanel( CPanel )
 					
 	CPanel:AddControl( "ComboBox", params )
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.lamp.toggle", Command = "lamp_key" } )
+	CPanel:AddControl( "Numpad", { Label = "#tool.lamp.key", Command = "lamp_key" } )
 
 	CPanel:NumSlider( "#tool.lamp.fov", "lamp_fov", 10, 170, 2 )
 	CPanel:NumSlider( "#tool.lamp.distance", "lamp_distance", 64, 2048, 0 )
@@ -232,6 +229,12 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Checkbox", { Label = "#tool.lamp.toggle", Command = "lamp_toggle" } )
 
+	local MatSelect = CPanel:MatSelect( "lamp_texture", nil, true, 0.33, 0.33 )
+	
+	for k, v in pairs( list.Get( "LampTextures" ) ) do
+		MatSelect:AddMaterial( v.Name or k, k )
+	end
+	
 	CPanel:AddControl( "Color",  { Label	= "#tool.lamp.color",
 									Red			= "lamp_r",
 									Green		= "lamp_g",
@@ -241,12 +244,6 @@ function TOOL.BuildCPanel( CPanel )
 									ShowRGB 	= 1,
 									Multiplier	= 255 } )	
 	
-	local MatSelect = CPanel:MatSelect( "lamp_texture", nil, true, 0.33, 0.33 )
-	
-	for k, v in pairs( list.Get( "LampTextures" ) ) do
-		MatSelect:AddMaterial( v.Name or k, k )
-	end
-
 	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model",
 									 ConVar = "lamp_model",
 									 Category = "Lamps",

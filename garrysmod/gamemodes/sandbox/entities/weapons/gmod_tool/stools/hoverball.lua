@@ -64,13 +64,14 @@ function TOOL:LeftClick( trace )
 	end
 	
 	if ( !self:GetSWEP():CheckLimit( "hoverballs" ) ) then return false end
-	
-	-- If we hit the world then offset the spawn position
-	if ( trace.Entity:IsWorld() ) then
-		trace.HitPos = trace.HitPos + trace.HitNormal * 8
-	end
 
 	local ball = MakeHoverBall( ply, trace.HitPos, key_d, key_u, speed, resistance, strength, model )
+	
+	local CurPos = ball:GetPos()
+	local NearestPoint = ball:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
+	local Offset = CurPos - NearestPoint
+
+	ball:SetPos( trace.HitPos + Offset )
 	
 	local const, nocollide
 	
@@ -105,7 +106,7 @@ function TOOL:RightClick( trace )
 	
 end
 
-if (SERVER) then
+if ( SERVER ) then
 
 	function MakeHoverBall( ply, Pos, key_d, key_u, speed, resistance, strength, model, Vel, aVel, frozen, nocollide )
 	
@@ -178,11 +179,11 @@ function TOOL:UpdateGhostHoverball( ent, player )
 		
 	end
 
-	if ( trace.Entity:IsWorld() ) then
-		trace.HitPos = trace.HitPos + trace.HitNormal * 8
-	end
-	
-	ent:SetPos( trace.HitPos )
+	local CurPos = ent:GetPos()
+	local NearestPoint = ent:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
+	local Offset = CurPos - NearestPoint
+
+	ent:SetPos( trace.HitPos + Offset )
 
 	ent:SetNoDraw( false )
 	
