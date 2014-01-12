@@ -226,13 +226,13 @@ if CLIENT then
 
    function GM:GrabEarAnimation(ply) end
 
-   usermessage.Hook("ttt_performgesture", function(um)
-                                             local ply = um:ReadEntity()
-                                             local act = um:ReadLong()
-                                             if IsValid(ply) and act then
-                                                ply:AnimPerformGesture(act)
-                                             end
-                                          end)
+   net.Receive("TTT_PerformGesture", function()
+      local ply = net.ReadEntity()
+      local act = net.ReadUInt(16)
+      if IsValid(ply) and act then
+         ply:AnimPerformGesture(act)
+      end
+   end)
 
 else -- SERVER
 
@@ -240,6 +240,12 @@ else -- SERVER
    -- performing a gesture. This allows the client to decide whether it should
    -- play, depending on eg. a cvar.
    function plymeta:AnimPerformGesture(act)
-      SendUserMessage("ttt_performgesture", nil, self, act)
+
+      if not act then return end
+
+      net.Start("TTT_PerformGesture")
+         net.WriteEntity(self)
+         net.WriteUInt(act, 16)
+      net.Broadcast()
    end
 end

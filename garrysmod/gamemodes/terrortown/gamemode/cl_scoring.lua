@@ -555,7 +555,7 @@ local function ReceiveReportStream(len)
       buff = ""
    end
 end
-net.Receive("report_stream", ReceiveReportStream)
+net.Receive("TTT_ReportStream", ReceiveReportStream)
 
 local function SaveLog(ply, cmd, args)
    CLSCORE:SaveLog()

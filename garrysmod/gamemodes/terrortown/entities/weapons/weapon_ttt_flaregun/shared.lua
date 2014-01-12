@@ -68,31 +68,31 @@ end
 local SendScorches
 
 if CLIENT then
-   local function ReceiveScorches(um)
-      local ent = um:ReadEntity()
-      local num = um:ReadChar()
+   local function ReceiveScorches()
+      local ent = net.ReadEntity()
+      local num = net.ReadUInt(16)
       for i=1, num do
-         util.PaintDown(um:ReadVector(), "FadingScorch", ent)
+         util.PaintDown(net.ReadVector(), "FadingScorch", ent)
       end
 
       if IsValid(ent) then
          util.PaintDown(ent:LocalToWorld(ent:OBBCenter()), "Scorch", ent)
       end
    end
-   usermessage.Hook("flare_scorch", ReceiveScorches)
+   net.Receive("TTT_FlareScorch", ReceiveScorches)
 else
    -- it's sad that decals are so unreliable when drawn serverside, failing to
    -- draw more often than they work, that I have to do this
    SendScorches = function(ent, tbl)
-      umsg.Start("flare_scorch")
-      umsg.Entity(ent)
-      umsg.Char(#tbl)
-      for _, p in pairs(tbl) do
-         umsg.Vector(p)
-      end
-      umsg.End()
+      net.Start("TTT_FlareScorch")
+         net.WriteEntity(ent)
+         net.WriteUInt(#tbl, 8)
+         for _, p in pairs(tbl) do
+            net.WriteVector(p)
+         end
+      net.Broadcast()
    end
-   usermessage.Hook("flare_scorch") -- pools it
+
 end
 
 

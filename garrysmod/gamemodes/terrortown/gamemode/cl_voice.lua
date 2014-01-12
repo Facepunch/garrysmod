@@ -4,9 +4,9 @@ local GetTranslation = LANG.GetTranslation
 local GetPTranslation = LANG.GetParamTranslation
 local string = string
 
-local function LastWordsRecv(um)
-   local sender = um:ReadEntity()
-   local words  = um:ReadString()
+local function LastWordsRecv()
+   local sender = net.ReadEntity()
+   local words  = net.ReadString()
 
    local was_detective = IsValid(sender) and sender:IsDetective()
    local nick = IsValid(sender) and sender:Nick() or "<Unknown>"
@@ -18,15 +18,15 @@ local function LastWordsRecv(um)
                 COLOR_WHITE,
                 ": " .. words)
 end
-usermessage.Hook("lastwords_msg", LastWordsRecv)
+net.Receive("TTT_LastWordsMsg", LastWordsRecv)
 
-local function RoleChatRecv(um)
+local function RoleChatRecv()
    -- virtually always our role, but future equipment might allow listening in
-   local role = um:ReadChar()
-   local sender = um:ReadEntity()
+   local role = net.ReadUInt(2)
+   local sender = net.ReadEntity()
    if not IsValid(sender) then return end
 
-   local text = um:ReadString()
+   local text = net.ReadString()
 
    if role == ROLE_TRAITOR then
       chat.AddText(Color( 255, 30, 40 ),
@@ -45,7 +45,7 @@ local function RoleChatRecv(um)
                    ": " .. text)
    end
 end
-usermessage.Hook("role_chat", RoleChatRecv)
+net.Receive("TTT_RoleChat", RoleChatRecv)
 
 -- special processing for certain special chat types
 function GM:ChatText(idx, name, text, type)
@@ -91,9 +91,9 @@ function GM:ChatTextChanged(text)
    last_chat = text
 end
 
-function ChatInterrupt(um)
+function ChatInterrupt()
    local client = LocalPlayer()
-   local id = um:ReadLong()
+   local id = net.ReadUInt(32)
 
    local last_seen = IsValid(client.last_id) and client.last_id:EntIndex() or 0
 
@@ -108,7 +108,7 @@ function ChatInterrupt(um)
 
    RunConsoleCommand("_deathrec", tostring(id), tostring(last_seen), last_words)
 end
-usermessage.Hook("interrupt_chat", ChatInterrupt)
+net.Receive("TTT_InterruptChat", ChatInterrupt)
 
 --- Radio
 
@@ -352,10 +352,10 @@ end
 concommand.Add("ttt_radio", RadioCommand, RadioComplete)
 
 
-local function RadioMsgRecv(um)
-   local sender = um:ReadEntity()
-   local msg    = um:ReadString()
-   local param  = um:ReadString()
+local function RadioMsgRecv()
+   local sender = net.ReadEntity()
+   local msg    = net.ReadString()
+   local param  = net.ReadString()
 
    if not (IsValid(sender) and sender:IsPlayer()) then return end
 
@@ -367,7 +367,7 @@ local function RadioMsgRecv(um)
    if lang_param then
       if lang_param == "quick_corpse_id" then
          -- special case where nested translation is needed
-         param = GetPTranslation(lang_param, {player = um:ReadString()})
+         param = GetPTranslation(lang_param, {player = net.ReadString()})
       else
          param = GetTranslation(lang_param)
       end
@@ -388,7 +388,7 @@ local function RadioMsgRecv(um)
                    ": " .. text)
    end
 end
-usermessage.Hook("ttt_radio_msg", RadioMsgRecv)
+net.Receive("TTT_RadioMsg", RadioMsgRecv)
 
 
 local radio_gestures = {
@@ -495,9 +495,9 @@ function GM:PlayerStartVoice( ply )
    end
 end
 
-local function ReceiveVoiceState(um)
-   local idx = um:ReadShort()
-   local state = um:ReadBool()
+local function ReceiveVoiceState()
+   local idx = net.ReadUInt(7) + 1 -- we -1 serverside
+   local state = net.ReadBit() == 1
 
    -- prevent glitching due to chat starting/ending across round boundary
    if GAMEMODE.round_state != ROUND_ACTIVE then return end
@@ -512,7 +512,7 @@ local function ReceiveVoiceState(um)
       end
    end
 end
-usermessage.Hook("tvo", ReceiveVoiceState)
+net.Receive("TTT_TraitorVoiceState", ReceiveVoiceState)
 
 local function VoiceClean()
    for ply, pnl in pairs( PlayerVoicePanels ) do

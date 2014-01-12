@@ -444,31 +444,31 @@ function GM:OnContextMenuOpen()
    RunConsoleCommand("ttt_cl_traitorpopup")
 end
 
-local function ReceiveEquipment(um)
+local function ReceiveEquipment()
    local ply = LocalPlayer()
    if not IsValid(ply) then return end
 
-   ply.equipment_items = um:ReadShort()
+   ply.equipment_items = net.ReadUInt(16)
 end
-usermessage.Hook("equipment", ReceiveEquipment)
+net.Receive("TTT_Equipment", ReceiveEquipment)
 
-local function ReceiveCredits(um)
+local function ReceiveCredits()
    local ply = LocalPlayer()
    if not IsValid(ply) then return end
 
-   ply.equipment_credits = um:ReadChar()
+   ply.equipment_credits = net.ReadUInt(8)
 end
-usermessage.Hook("credits", ReceiveCredits)
+net.Receive("TTT_Credits", ReceiveCredits)
 
 local r = 0
-local function ReceiveBought(um)
+local function ReceiveBought()
    local ply = LocalPlayer()
    if not IsValid(ply) then return end
 
    ply.bought = {}
-   local num = um:ReadShort()
+   local num = net.ReadUInt(8)
    for i=1,num do
-      local s = um:ReadString()
+      local s = net.ReadString()
       if s != "" then
          table.insert(ply.bought, s)
       end
@@ -484,14 +484,14 @@ local function ReceiveBought(um)
       r = 0
    end
 end
-usermessage.Hook("bought", ReceiveBought)
+net.Receive("TTT_Bought", ReceiveBought)
 
 -- Player received the item he has just bought, so run clientside init
-local function ReceiveBoughtItem(um)
-   local is_item = um:ReadBool()
-   local id = is_item and um:ReadShort() or um:ReadString()
+local function ReceiveBoughtItem()
+   local is_item = net.ReadBit() == 1
+   local id = is_item and net.ReadUInt(16) or net.ReadString()
 
    -- I can imagine custom equipment wanting this, so making a hook
    hook.Run("TTTBoughtItem", is_item, id)
 end
-usermessage.Hook("bought_item", ReceiveBoughtItem)
+net.Receive("TTT_BoughtItem", ReceiveBoughtItem)

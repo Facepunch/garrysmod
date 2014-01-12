@@ -120,9 +120,43 @@ local ttt_dbgwin = CreateConVar("ttt_debug_preventwin", "0")
 -- Localise stuff we use often. It's like Lua go-faster stripes.
 local math = math
 local table = table
-local umsg = umsg
+local net = net
 local player = player
 local timer = timer
+local util = util
+
+-- Pool some network names.
+util.AddNetworkString("TTT_RoundState")
+util.AddNetworkString("TTT_RagdollSearch")
+util.AddNetworkString("TTT_GameMsg")
+util.AddNetworkString("TTT_GameMsgColor")
+util.AddNetworkString("TTT_RoleChat")
+util.AddNetworkString("TTT_TraitorVoiceState")
+util.AddNetworkString("TTT_LastWordsMsg")
+util.AddNetworkString("TTT_RadioMsg")
+util.AddNetworkString("TTT_ReportStream")
+util.AddNetworkString("TTT_LangMsg")
+util.AddNetworkString("TTT_ServerLang")
+util.AddNetworkString("TTT_Equipment")
+util.AddNetworkString("TTT_Credits")
+util.AddNetworkString("TTT_Bought")
+util.AddNetworkString("TTT_BoughtItem")
+util.AddNetworkString("TTT_InterruptChat")
+util.AddNetworkString("TTT_PlayerSpawned")
+util.AddNetworkString("TTT_PlayerDied")
+util.AddNetworkString("TTT_CorpseCall")
+util.AddNetworkString("TTT_ClearClientState")
+util.AddNetworkString("TTT_PerformGesture")
+util.AddNetworkString("TTT_Role")
+util.AddNetworkString("TTT_RoleList")
+util.AddNetworkString("TTT_ConfirmUseTButton")
+util.AddNetworkString("TTT_C4Config")
+util.AddNetworkString("TTT_C4DisarmResult")
+util.AddNetworkString("TTT_C4Warn")
+util.AddNetworkString("TTT_ShowPrints")
+util.AddNetworkString("TTT_ScanResult")
+util.AddNetworkString("TTT_FlareScorch")
+util.AddNetworkString("TTT_Radar")
 
 ---- Round mechanics
 function GM:Initialize()
@@ -214,13 +248,9 @@ function GM:SyncGlobals()
 end
 
 function SendRoundState(state, ply)
-   if ply then
-      umsg.Start("round_state", ply)
-   else
-      umsg.Start("round_state")
-   end
-   umsg.Char(state)
-   umsg.End()
+   net.Start("TTT_RoundState")
+      net.WriteUInt(state, 3)
+   return ply and net.Send(ply) or net.Broadcast()
 end
 
 -- Round state is encapsulated by set/get so that it can easily be changed to
@@ -476,7 +506,7 @@ function PrepareRound()
    -- selectmute timer.
    timer.Create("restartmute", 1, 1, function() MuteForRestart(false) end)
 
-   SendUserMessage("clearclientstate")
+   net.Start("TTT_ClearClientState") net.Broadcast()
 
    -- In case client's cleanup fails, make client set all players to innocent role
    timer.Simple(1, SendRoleReset)

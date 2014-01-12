@@ -1,6 +1,6 @@
 ---- Communicating game state to players
 
-local umsg = umsg
+local net = net
 local string = string
 local table = table
 local pairs = pairs
@@ -10,29 +10,31 @@ local pairs = pairs
 -- removed and can safely be used by SWEPs and the like.
 
 function GameMsg(msg)
-   umsg.Start("game_msg")
-   umsg.String(msg)
-   umsg.Bool(false)
-   umsg.End()
+   net.Start("TTT_GameMsg")
+      net.WriteString(msg)
+      net.WriteBit(false)
+   net.Broadcast()
 end
 
-function CustomMsg(ply_or_rfilter, msg, clr)
+function CustomMsg(ply_or_rf, msg, clr)
    clr = clr or COLOR_WHITE
 
-   umsg.Start("game_msg_color", ply_or_rfilter)
-   umsg.String(msg)
-   umsg.Short(clr.r)
-   umsg.Short(clr.g)
-   umsg.Short(clr.b)
-   umsg.End()
+   net.Start("TTT_GameMsgColor")
+      net.WriteString(msg)
+      net.WriteUInt(clr.r, 8)
+      net.WriteUInt(clr.g, 8)
+      net.WriteUInt(clr.b, 8)
+   if ply_or_rf then net.Send(ply_or_rf)
+   else net.Broadcast() end
 end
 
 -- Basic status message to single player or a recipientfilter
-function PlayerMsg(ply_or_rfilter, msg, traitor_only)
-   umsg.Start("game_msg", ply_or_rfilter)
-   umsg.String(msg)
-   umsg.Bool(traitor_only)
-   umsg.End()
+function PlayerMsg(ply_or_rf, msg, traitor_only)
+   net.Start("TTT_GameMsg")
+      net.WriteString(msg)
+      net.WriteBit(traitor_only)
+   if ply_or_rf then net.Send(ply_or_rf)
+   else net.Broadcast() end
 end
 
 -- Traitor-specific message that will appear in a special color
@@ -42,11 +44,11 @@ end
 
 -- Traitorchat
 local function RoleChatMsg(sender, role, msg)
-   umsg.Start("role_chat", GetRoleFilter(role))
-   umsg.Char(role)
-   umsg.Entity(sender)
-   umsg.String(msg)
-   umsg.End()
+   net.Start("TTT_RoleChat")
+      net.WriteUInt(role, 2)
+      net.WriteEntity(sender)
+      net.WriteString(msg)
+   net.Send(GetRoleFilter(role))
 end
 
 
@@ -60,10 +62,10 @@ function ShowRoundStartPopup()
 end
 
 local function GetPlayerFilter(pred)
-   local filter = RecipientFilter()
+   local filter = {}
    for k, v in pairs(player.GetAll()) do
       if IsValid(v) and pred(v) then
-         filter:AddPlayer(v)
+         table.insert(filter, v)
       end
    end
    return filter
@@ -199,11 +201,13 @@ local function SendTraitorVoiceState(speaker, state)
    -- send umsg to living traitors that this is traitor-only talk
    local rf = GetTraitorFilter(true)
 
-   -- tiny umsg in the hope of it arriving asap
-   umsg.Start("tvo", rf)
-   umsg.Short(speaker:EntIndex())
-   umsg.Bool(state)
-   umsg.End()
+   -- make it as small as possible, to get there as fast as possible
+   -- we can fit it into a mere byte by being cheeky.
+   net.Start("TTT_TraitorVoiceState")
+      net.WriteUInt(speaker:EntIndex() - 1, 7) -- player ids can only be 1-128
+      net.WriteBit(state)
+   if rf then net.Send(rf)
+   else net.Broadcast() end
 end
 
 
@@ -250,10 +254,10 @@ local function LastWordsMsg(ply, words)
    -- add optional context relating to death type
    local context = LastWordContext[ply.death_type] or ""
 
-   umsg.Start("lastwords_msg")
-   umsg.Entity(ply)
-   umsg.String(words .. (final and "" or "--") .. context)
-   umsg.End()
+   net.Start("TTT_LastWordsMsg")
+      net.WriteEntity(ply)
+      net.WriteString(words .. (final and "" or "--") .. context)
+   net.Broadcast()
 end
 
 local function LastWords(ply, cmd, args)
@@ -333,16 +337,14 @@ local function RadioCommand(ply, cmd, args)
          return
       end
 
-      umsg.Start("ttt_radio_msg")
-      umsg.Entity(ply)
-      umsg.String(msg_name)
-      umsg.String(name)
-
-      -- special case for id'd ragdolls, kind of ugly
-      if rag_name then
-         umsg.String(rag_name)
-      end
-      umsg.End()
+      net.Start("TTT_RadioMsg")
+         net.WriteEntity(ply)
+         net.WriteString(msg_name)
+         net.WriteString(name)
+         if rag_name then
+            net.WriteString(rag_name)
+         end
+      net.Broadcast()
    end
 end
 concommand.Add("_ttt_radio_send", RadioCommand)

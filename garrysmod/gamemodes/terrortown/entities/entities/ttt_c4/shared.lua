@@ -362,14 +362,14 @@ end
 if SERVER then
    -- Inform traitors about us
    function ENT:SendWarn(armed)
-      umsg.Start("c4_warn", GetTraitorFilter(true))
-      umsg.Short(self:EntIndex())
-      umsg.Bool(armed)
-      if armed then
-         umsg.Vector(self:GetPos())
-         umsg.Float(self:GetExplodeTime())
-      end
-      umsg.End()
+      net.Start("TTT_C4Warn")
+         net.WriteUInt(self:EntIndex(), 16)
+         net.WriteBit(armed)
+         if armed then
+            net.WriteVector(self:GetPos())
+            net.WriteFloat(self:GetExplodeTime())
+         end
+      net.Send(GetTraitorFilter(true))
    end
 
    function ENT:OnRemove()
@@ -455,9 +455,9 @@ if SERVER then
 
    function ENT:ShowC4Config(ply)
       -- show menu to player to configure or disarm us
-      umsg.Start("c4_config", ply)
-      umsg.Short(self:EntIndex())
-      umsg.End()
+      net.Start("TTT_C4Config")
+         net.WriteUInt(self:EntIndex(), 16)
+      net.Send(ply)
    end
 
    local function ReceiveC4Config(ply, cmd, args)
@@ -488,10 +488,10 @@ if SERVER then
    concommand.Add("ttt_c4_config", ReceiveC4Config)
 
    local function SendDisarmResult(ply, idx, result)
-      umsg.Start("c4_disarm_result", ply)
-      umsg.Short(idx)
-      umsg.Bool(result)
-      umsg.End()
+      net.Start("TTT_C4DisarmResult")
+         net.WriteUInt(idx, 15) -- it'll fit, trust me
+         net.WriteBit(result) -- this way we can squeeze this bit into 16
+      net.Send(ply)
    end
 
    local function ReceiveC4Disarm(ply, cmd, args)

@@ -147,7 +147,9 @@ local function CallDetective(ply, cmd, args)
    if IsValid(rag) and rag:GetPos():Distance(ply:GetPos()) < 128 then
       if CORPSE.GetFound(rag, false) then
          -- show indicator to detectives
-         SendUserMessage("corpse_call", GetDetectiveFilter(true), rag:GetPos())
+         net.Start("TTT_CorpseCall")
+            net.WriteVector(rag:GetPos())
+         net.Send(GetDetectiveFilter(true))
 
          LANG.Msg("body_call", {player = ply:Nick(),
                                 victim = CORPSE.GetPlayerNick(rag, "someone")})
@@ -158,6 +160,15 @@ local function CallDetective(ply, cmd, args)
    end
 end
 concommand.Add("ttt_call_detective", CallDetective)
+
+local function bitsRequired(num)
+   local bits, max = 0, 1
+   while max <= num do
+      bits = bits + 1
+      max = max + max
+   end
+   return bits
+end
 
 -- Send a usermessage to client containing search results
 function CORPSE.ShowSearch(ply, rag, covert, long_range)
@@ -230,50 +241,41 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
       lastid = IsValid(rag.lastid.ent) and rag.lastid.ent:EntIndex() or -1
    end
 
-   -- If found by detective, send to all, else just the finder
-   local receiver = ply
-   if ply:IsActiveDetective() then receiver = nil end
-
    -- Send a message with basic info
-   umsg.Start("ragsrch", receiver)
-   umsg.Short(rag:EntIndex()) -- 2 bytes
-   umsg.Short(owner)  -- 2 bytes
-   umsg.String(nick)
-   umsg.Short(eq)     -- 2 bytes
-   umsg.Char(role)    -- 1 byte
-   umsg.Char(c4)      -- 1 byte
-   umsg.Long(dmg)     -- 4 bytes, enum goes high
-   umsg.String(wep)   -- 2 bytes(?)
-   umsg.Bool(hshot)   -- 1 byte
-   umsg.Short(dtime)  -- 2 bytes
-   umsg.Short(stime)  -- 2 bytes
+   net.Start("TTT_RagdollSearch")
+      net.WriteUInt(rag:EntIndex(), 16) -- 16 bits
+      net.WriteUInt(owner, 8) -- 128 max players. ( 8 bits )
+      net.WriteString(nick)
+      net.WriteUInt(eq, 16) -- Equipment ( 16 = max. )
+      net.WriteUInt(role, 2) -- ( 2 bits )
+      net.WriteInt(c4, bitsRequired(C4_WIRE_COUNT) + 1) -- -1 -> 2^bits ( default c4: 4 bits )
+      net.WriteUInt(dmg, 30) -- DMG_BUCKSHOT is the highest. ( 30 bits )
+      net.WriteString(wep)
+      net.WriteBit(hshot) -- ( 1 bit )
+      net.WriteInt(dtime, 16)
+      net.WriteInt(stime, 16)
 
-   umsg.Char(#kill_entids)  -- 1 byte + (2 * #kills) bytes
-   for k, idx in pairs(kill_entids) do
-      -- might be possible to use chars here but this is safer
-      umsg.Short(idx)
-   end
-
-   umsg.Short(lastid)
-
-   -- Who found this, so if we get this from a detective we can decide not to
-   -- show a window
-   umsg.Short(ply:EntIndex())
-
-   -- Will there be a last words umsg coming up?
-   umsg.Bool(words != "") -- 1b
-   umsg.End()
-
-   if words != "" then
-      -- umsgs only have 128 bytes of room, so if last words is really long we
-      -- have to truncate
-      if string.len(words) > 127 then
-         words = string.sub(words, -127)
+      net.WriteUInt(#kill_entids, 8)
+      for k, idx in pairs(kill_entids) do
+         net.WriteUInt(idx, 8) -- first game.MaxPlayers() of entities are for players.
       end
 
-      umsg.Start("ragsrch_lw", ply)
-      umsg.String(words)
-      umsg.End()
+      net.WriteUInt(lastid, 8)
+
+      -- Who found this, so if we get this from a detective we can decide not to
+      -- show a window
+      net.WriteUInt(ply:EntIndex(), 8)
+
+      net.WriteString(words)
+
+      -- 133 + string data + #kill_entids * 8
+      -- 200
+
+   -- If found by detective, send to all, else just the finder
+   if ply:IsActiveDetective() then
+      net.Broadcast()
+   else
+      net.Send(ply)
    end
 end
 

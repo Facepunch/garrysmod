@@ -69,7 +69,9 @@ function GM:PlayerSpawn(ply)
    ply.has_spawned = true
 
    -- let the client do things on spawn
-   SendUserMessage("plyspawned", ply, ply:IsSpec())
+   net.Start("TTT_PlayerSpawned")
+      net.WriteBit(ply:IsSpec())
+   net.Send(ply)
 
    if ply:IsSpec() then
       ply:StripAll()
@@ -663,7 +665,7 @@ function GM:PlayerDeath( victim, infl, attacker)
 
    victim:Extinguish()
 
-   SendUserMessage("plydied", victim)
+   net.Start("TTT_PlayerDied") net.Send(ply)
 
    if HasteMode() and GetRoundState() == ROUND_ACTIVE then
       IncRoundEnd(GetConVar("ttt_haste_minutes_per_death"):GetFloat() * 60)
