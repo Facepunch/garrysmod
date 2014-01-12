@@ -70,7 +70,7 @@ local SendScorches
 if CLIENT then
    local function ReceiveScorches()
       local ent = net.ReadEntity()
-      local num = net.ReadUInt(16)
+      local num = net.ReadUInt(8)
       for i=1, num do
          util.PaintDown(net.ReadVector(), "FadingScorch", ent)
       end
