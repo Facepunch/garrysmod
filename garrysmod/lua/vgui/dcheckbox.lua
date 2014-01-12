@@ -103,6 +103,12 @@ function PANEL:SetDark( b )
 	end
 end
 
+function PANEL:SetBright( b )
+	if ( self.Label ) then
+		self.Label:SetBright( b )
+	end
+end
+
 --[[---------------------------------------------------------
    Name: SetConVar
 -----------------------------------------------------------]]
@@ -132,7 +138,7 @@ function PANEL:GetChecked( val )
 end
 
 --[[---------------------------------------------------------
-   Name: SetValue
+   Name: Toggle
 -----------------------------------------------------------]]
 function PANEL:Toggle()
 	self.Button:Toggle()
@@ -178,7 +184,7 @@ function PANEL:SizeToContents()
 end
 
 --[[---------------------------------------------------------
-   Name: SetConVar
+   Name: SetText
 -----------------------------------------------------------]]
 function PANEL:SetText( text )
 
@@ -190,6 +196,16 @@ function PANEL:SetText( text )
 	
 	self.Label:SetText( text )
 	self:InvalidateLayout()
+
+end
+
+--[[---------------------------------------------------------
+   Name: GetText
+-----------------------------------------------------------]]
+function PANEL:GetText()
+
+	if ( !self.Label ) then return "" end
+	return self.Label:GetText()
 
 end
 

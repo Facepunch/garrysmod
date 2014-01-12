@@ -92,7 +92,7 @@ function PANEL:Init()
 		self.txtR:SetMinMax( 0, 255 )
 		self.txtR:SetTall( 20 )
 		self.txtR:Dock( TOP )
-		self.txtR:DockMargin( 0, 4, 0, 0 )
+		self.txtR:DockMargin( 0, 0, 0, 0 )
 		self.txtR:SetTextColor( Color( 150, 0, 0, 255 ) )
 
 	self.txtG = self.WangsPanel:Add( "DNumberWang" )
