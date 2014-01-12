@@ -286,14 +286,9 @@ local function WinChecker()
       if CurTime() > GetGlobalFloat("ttt_round_end", 0) then
          EndRound(WIN_TIMELIMIT)
       else
-         local win = CheckForWin()
-         if win != WIN_NONE then
-            -- A chance for hooks to override the winner or even abort ending round by returning WIN_NONE
-            win = hook.Call("TTTOverrideWin", GAMEMODE, win) or win
-         end
+         local win = hook.Call("TTTCheckForWin", GAMEMODE)
          if win != WIN_NONE then
             EndRound(win)
-            return
          end
       end
    end
@@ -780,7 +775,7 @@ function GM:MapTriggeredEnd(wintype)
 end
 
 -- The most basic win check is whether both sides have one dude alive
-function CheckForWin()
+function GM:TTTCheckForWin()
    if ttt_dbgwin:GetBool() then return WIN_NONE end
 
    if GAMEMODE.MapWin == WIN_TRAITOR or GAMEMODE.MapWin == WIN_INNOCENT then
