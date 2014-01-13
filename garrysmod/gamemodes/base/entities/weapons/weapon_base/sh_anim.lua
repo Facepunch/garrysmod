@@ -16,6 +16,7 @@ local ActIndex = {
 	[ "knife" ]			= ACT_HL2MP_IDLE_KNIFE,
 	[ "duel" ]			= ACT_HL2MP_IDLE_DUEL,
 	[ "camera" ]		= ACT_HL2MP_IDLE_CAMERA,
+	[ "magic" ]			= ACT_HL2MP_IDLE_MAGIC,
 	[ "revolver" ]		= ACT_HL2MP_IDLE_REVOLVER	
 }
 	
