@@ -1,5 +1,5 @@
 
-AddCSLuaFile();
+AddCSLuaFile()
 
 include( 'duplicator/transport.lua' )
 include( 'duplicator/arming.lua' )
@@ -10,17 +10,15 @@ if ( CLIENT ) then
 
 else
 
-	AddCSLuaFile( 'duplicator/arming.lua' );
-	AddCSLuaFile( 'duplicator/transport.lua' );
-	AddCSLuaFile( 'duplicator/icon.lua' );
+	AddCSLuaFile( 'duplicator/arming.lua' )
+	AddCSLuaFile( 'duplicator/transport.lua' )
+	AddCSLuaFile( 'duplicator/icon.lua' )
 	util.AddNetworkString( "CopiedDupe" )
 
 end
 
 TOOL.Category		= "Construction"
 TOOL.Name			= "#tool.duplicator.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
 TOOL.Stored			= true
 
 
@@ -134,7 +132,7 @@ end
 -----------------------------------------------------------]]
 function TOOL.BuildCPanel( CPanel )
 	
-	CPanel:AddControl( "Header", { Text = "#tool.duplicator.name", Description	= "#tool.duplicator.desc" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.duplicator.desc" }  )
 
 		local params = {}
 		params.Text = "#tool.duplicator.showsaves"

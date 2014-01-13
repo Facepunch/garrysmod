@@ -1,8 +1,6 @@
 
 TOOL.Category		= "Poser"
 TOOL.Name			= "#tool.eyeposer.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
 
 local function ConvertRelativeToEyesAttachment( Entity, Pos )
 
@@ -133,3 +131,8 @@ if ( CLIENT ) then
 
 end
 
+function TOOL.BuildCPanel( CPanel )
+
+	CPanel:AddControl( "Header", { Description	= "#tool.eyeposer.desc" }  )
+
+end

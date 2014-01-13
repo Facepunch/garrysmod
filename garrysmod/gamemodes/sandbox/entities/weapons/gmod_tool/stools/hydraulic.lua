@@ -1,9 +1,6 @@
 
 TOOL.Category		= "Constraints"
 TOOL.Name			= "#tool.hydraulic.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
-
 
 TOOL.ClientConVar[ "group" ] = "37"
 TOOL.ClientConVar[ "width" ] = "3"
@@ -183,7 +180,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.hydraulic.name", Description	= "#tool.hydraulic.help" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.hydraulic.help" }  )
 	
 	CPanel:AddControl( "ComboBox", { Label = "#tool.presets",
 									 MenuButton = 1,

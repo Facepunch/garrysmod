@@ -26,7 +26,8 @@
 		"Cleanup_Duplicates"		"Duplicates"
 		"Cleanup_Sents"			"Scripted Weapons"
 		"Cleanup_Vehicles"		"Vehicles"
-		
+		"Cleanup_trails"		"Trails"
+
 		"Cleaned_All"			"Cleaned up everything!"
 		"Cleaned_Ragdolls"		"Cleaned up all Ragdolls"
 		"Cleaned_Props"			"Cleaned up all Props"
@@ -47,5 +48,6 @@
 		"Cleaned_Buttons"		"Cleaned up all Buttons"
 		"Cleaned_Duplicates"		"Cleaned up all Duplicates"
 		"Cleaned_Vehicles"		"Cleaned up all Vehicles"
+		"Cleaned_trails"			"Cleaned up all Trails"
 	}
 }

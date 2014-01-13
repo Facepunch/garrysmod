@@ -1,8 +1,6 @@
 
 TOOL.Category		= "Construction"
 TOOL.Name			= "#tool.emitter.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
 
 TOOL.ClientConVar[ "key" ] 			= "51"
 TOOL.ClientConVar[ "delay" ] 		= "1"
@@ -188,7 +186,7 @@ end
 function TOOL.BuildCPanel( CPanel )
 
 	-- HEADER
-	CPanel:AddControl( "Header", { Text = "#tool.emitter.name", Description	= "#tool.emitter.desc" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.emitter.desc" } )
 	
 	-- PRESETS
 	local params = { Label = "#tool.presets", MenuButton = 1, Folder = "emitter", Options = {}, CVars = {} }

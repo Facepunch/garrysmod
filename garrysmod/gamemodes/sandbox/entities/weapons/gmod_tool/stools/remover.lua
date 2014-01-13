@@ -1,9 +1,6 @@
 
 TOOL.Category		= "Construction"
 TOOL.Name			= "#tool.remover.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
-
 
 local function RemoveEntity( ent )
 
@@ -98,5 +95,11 @@ function TOOL:Reload( trace )
 	if ( CLIENT ) then return true end
 
 	return constraint.RemoveAll( trace.Entity )
+
+end
+
+function TOOL.BuildCPanel( CPanel )
+
+	CPanel:AddControl( "Header", { Description	= "#tool.remover.desc" }  )
 
 end

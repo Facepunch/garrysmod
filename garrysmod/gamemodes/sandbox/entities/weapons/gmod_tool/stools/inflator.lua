@@ -1,8 +1,6 @@
 
 TOOL.Category		= "Poser"
 TOOL.Name			= "#tool.inflator.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
 
 TOOL.LeftClickAutomatic = true
 TOOL.RightClickAutomatic = true
@@ -10,13 +8,9 @@ TOOL.RequiresTraceHit = true
 
 if ( CLIENT ) then
 
-	language.Add( "Tool_inflator_name", "Ragdoll Inflator" )
-	language.Add( "Tool_inflator_desc", "Inflate and deflate ragdolls and NPCs" )
-	language.Add( "Tool_inflator_0", "Left click to inflate, Right click to deflate, Reload to reset" )
-	
 	function TOOL.BuildCPanel( CPanel )
 
-		CPanel:AddControl( "Header", { Text = "#tool.inflator.name", Description	= "#tool.inflator.desc" }  )
+		CPanel:AddControl( "Header", { Description	= "#tool.inflator.desc" }  )
 	
 	end
 

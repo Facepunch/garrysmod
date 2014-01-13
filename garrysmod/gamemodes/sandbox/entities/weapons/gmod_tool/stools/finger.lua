@@ -1,8 +1,6 @@
 
 TOOL.Category		= "Poser"
 TOOL.Name			= "#tool.finger.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
 
 TOOL.RequiresTraceHit = true
 
@@ -397,13 +395,9 @@ if ( !CLIENT ) then return end
 -- Notice the return above.
 -- The rest of this file CLIENT ONLY.
 
-language.Add( "Tool_finger_name", "Finger Poser" )
-language.Add( "Tool_finger_desc", "Adjust the fingers of ragdolls" )
-language.Add( "Tool_finger_0", "Right click to copy/select. Left click to apply." )
-
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.finger.name", Description	= "#tool.finger.desc" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.finger.desc" }  )
 
 end
 

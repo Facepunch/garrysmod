@@ -1,8 +1,6 @@
 
 TOOL.Category		= "Constraints"
 TOOL.Name			= "#tool.axis.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
 
 TOOL.ClientConVar[ "forcelimit" ] = 0
 TOOL.ClientConVar[ "torquelimit" ] = 0
@@ -192,7 +190,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.axis.name", Description	= "#tool.axis.help" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.axis.help" }  )
 	
 	CPanel:AddControl( "ComboBox", { Label = "#tool.presets",
 									 MenuButton = 1,

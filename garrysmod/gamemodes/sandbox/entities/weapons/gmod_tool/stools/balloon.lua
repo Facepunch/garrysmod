@@ -213,7 +213,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.balloon.name", Description	= "#tool.balloon.help" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.balloon.help" }  )
 	
 	CPanel:AddControl( "ComboBox", { Label = "#tool.presets",
 									 MenuButton = 1,

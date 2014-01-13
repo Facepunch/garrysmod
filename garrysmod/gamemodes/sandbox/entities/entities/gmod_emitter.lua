@@ -126,7 +126,7 @@ game.AddParticles( "particles/gmod_effects.pcf" )
 PrecacheParticleSystem( "generic_smoke" )
 
 list.Set( "EffectType", "smoke", {
-	print		=	"Generic Smoke",
+	print		=	"#effecttype.smoke",
 	material	=	"gui/effects/smoke.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -136,7 +136,7 @@ list.Set( "EffectType", "smoke", {
 })
 
 list.Set( "EffectType", "sparks", {
-	print		=	"Sparks",
+	print		=	"#effecttype.sparks",
 	material	=	"gui/effects/sparks.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -151,7 +151,7 @@ list.Set( "EffectType", "sparks", {
 })
 
 list.Set( "EffectType", "stunstickimpact", {
-	print		=	"Stunstick Impact",
+	print		=	"#effecttype.stunstick",
 	material	=	"gui/effects/stunstickimpact.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -164,7 +164,7 @@ list.Set( "EffectType", "stunstickimpact", {
 })
 
 list.Set( "EffectType", "manhacksparks", {
-	print		=	"Manhack Sparks",
+	print		=	"#effecttype.manhack",
 	material	=	"gui/effects/manhacksparks.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -177,7 +177,7 @@ list.Set( "EffectType", "manhacksparks", {
 })
 
 list.Set( "EffectType", "bloodspray", {
-	print		=	"Blood Spray",
+	print		=	"#effecttype.blood",
 	material	=	"gui/effects/bloodspray.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -194,7 +194,7 @@ list.Set( "EffectType", "bloodspray", {
 })
 
 list.Set( "EffectType", "striderblood", {
-	print		=	"Strider Blood Spray",
+	print		=	"#effecttype.strider",
 	material	=	"gui/effects/striderblood.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -208,7 +208,7 @@ list.Set( "EffectType", "striderblood", {
 })
 
 list.Set( "EffectType", "shells", {
-	print		=	"Pistol Shells",
+	print		=	"#effecttype.pistol",
 	material	=	"gui/effects/shells.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -221,7 +221,7 @@ list.Set( "EffectType", "shells", {
 })
 
 list.Set( "EffectType", "rifleshells", {
-	print		=	"Rifle Shells",
+	print		=	"#effecttype.rifle",
 	material	=	"gui/effects/rifleshells.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -234,7 +234,7 @@ list.Set( "EffectType", "rifleshells", {
 })
 
 list.Set( "EffectType", "shotgunshells", {
-	print		=	"Shotgun Shells",
+	print		=	"#effecttype.shotgun",
 	material	=	"gui/effects/shotgunshells.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -247,7 +247,7 @@ list.Set( "EffectType", "shotgunshells", {
 })
 
 list.Set( "EffectType", "cball_explode", {
-	print		=	"Combine Ball Sparks",
+	print		=	"#effecttype.cball_explode",
 	material	=	"gui/effects/cball_explode.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -259,7 +259,7 @@ list.Set( "EffectType", "cball_explode", {
 })
 
 list.Set( "EffectType", "cball_bounce", {
-	print		=	"Combine Ball Bounce",
+	print		=	"#effecttype.cball_bounce",
 	material	=	"gui/effects/cball_bounce.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -273,7 +273,7 @@ list.Set( "EffectType", "cball_bounce", {
 })
 
 list.Set( "EffectType", "thumperdust", {
-	print		=	"Thumper Dust",
+	print		=	"#effecttype.thumperdust",
 	material	=	"gui/effects/thumperdust.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -286,7 +286,7 @@ list.Set( "EffectType", "thumperdust", {
 })
 
 list.Set( "EffectType", "ar2impact", {
-	print		=	"AR2 Impact",
+	print		=	"#effecttype.ar2impact",
 	material	=	"gui/effects/ar2impact.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -299,20 +299,21 @@ list.Set( "EffectType", "ar2impact", {
 })
 
 list.Set( "EffectType", "ar2explosion", {
-	print		=	"AR2 Explosion",
+	print		=	"#effecttype.ar2explosion",
 	material	=	"gui/effects/ar2explosion.png",
 	func		=	function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
 		effectdata:SetRadius( scale * 4 )
+		effectdata:SetNormal( angle:Forward() )
 		util.Effect( "AR2Explosion", effectdata, true, true )
 
 	end
 })
 
 list.Set( "EffectType", "explosion", {
-	print		=	"explosion",
+	print		=	"#effecttype.explosion",
 	material	=	"gui/effects/explosion.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -324,7 +325,7 @@ list.Set( "EffectType", "explosion", {
 })
 
 list.Set( "EffectType", "helicoptermegabomb", {
-	print		=	"Helicopter Bomb Explosion",
+	print		=	"#effecttype.helicoptermegabomb",
 	material	=	"gui/effects/helicoptermegabomb.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -336,7 +337,7 @@ list.Set( "EffectType", "helicoptermegabomb", {
 })
 
 list.Set( "EffectType", "underwaterexplosion", {
-	print		=	"Water Surface Explosion",
+	print		=	"#effecttype.waterexplosion",
 	material	=	"gui/effects/waterexplosion.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -348,7 +349,7 @@ list.Set( "EffectType", "underwaterexplosion", {
 })
 
 list.Set( "EffectType", "watersplash", {
-	print		=	"Water Splash",
+	print		=	"#effecttype.watersplash",
 	material	=	"gui/effects/watersplash.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -362,7 +363,7 @@ list.Set( "EffectType", "watersplash", {
 })
 
 list.Set( "EffectType", "dirtywatersplash", {
-	print		=	"Water Splash",
+	print		=	"#effecttype.dirtywatersplash",
 	material	=	"gui/effects/dirtywatersplash.png",
 	func		=	function( ent, pos, angle, scale )
 
@@ -376,7 +377,7 @@ list.Set( "EffectType", "dirtywatersplash", {
 })
 
 list.Set( "EffectType", "glassimpact", {
-	print		=	"Glass Impact",
+	print		=	"#effecttype.glassimpact",
 	material	=	"gui/effects/glassimpact.png",
 	func		=	function( ent, pos, angle, scale )
 

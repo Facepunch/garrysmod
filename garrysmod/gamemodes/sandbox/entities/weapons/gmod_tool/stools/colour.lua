@@ -1,15 +1,13 @@
 
 TOOL.Category		= "Render"
-TOOL.Name			= "#tool.color.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
+TOOL.Name			= "#tool.colour.name"
 
 TOOL.ClientConVar[ "r" ] = 255
 TOOL.ClientConVar[ "g" ] = 0
 TOOL.ClientConVar[ "b" ] = 255
 TOOL.ClientConVar[ "a" ] = 255
-TOOL.ClientConVar[ "mode" ] = 0
-TOOL.ClientConVar[ "fx" ] = 0
+TOOL.ClientConVar[ "mode" ] = "0"
+TOOL.ClientConVar[ "fx" ] = "0"
 
 local function SetColour( Player, Entity, Data )
 

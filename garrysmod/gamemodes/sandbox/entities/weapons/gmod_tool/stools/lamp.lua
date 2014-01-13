@@ -1,8 +1,6 @@
 
 TOOL.Category		= "Construction"
 TOOL.Name			= "#tool.lamp.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
 
 TOOL.ClientConVar[ "r" ]				= "255"
 TOOL.ClientConVar[ "g" ]				= "255"
@@ -204,7 +202,7 @@ end
 function TOOL.BuildCPanel( CPanel )
 
 	-- HEADER
-	CPanel:AddControl( "Header", { Text = "#tool.lamp.name", Description = "#tool.lamp.desc" }  )
+	CPanel:AddControl( "Header", { Description = "#tool.lamp.desc" }  )
 
 	-- Presets
 	local params = { Label = "#tool.presets", MenuButton = 1, Folder = "lamp", Options = {}, CVars = { "lamp_texture", "lamp_r", "lamp_g", "lamp_b", "lamp_key", "lamp_model", "lamp_toggle" } }
@@ -251,22 +249,20 @@ function TOOL.BuildCPanel( CPanel )
 									 Models = list.Get( "LampModels" ) } )
 end
 
-list.Set( "LampTextures", "effects/flashlight001", { Name = "Default" } )
-list.Set( "LampTextures", "effects/flashlight/slit", { Name = "Slit" } )
-list.Set( "LampTextures", "effects/flashlight/circles", { Name = "Circles" } )
-list.Set( "LampTextures", "effects/flashlight/window", { Name = "Window" } )
-list.Set( "LampTextures", "effects/flashlight/logo", { Name = "Logo" } )
-list.Set( "LampTextures", "effects/flashlight/gradient", { Name = "Gradient" } )
-list.Set( "LampTextures", "effects/flashlight/bars", { Name = "Bars" } )
-list.Set( "LampTextures", "effects/flashlight/tech", { Name = "Techdemo" } )
-list.Set( "LampTextures", "effects/flashlight/soft", { Name = "Soft" } )
-list.Set( "LampTextures", "effects/flashlight/hard", { Name = "Hard" } )
-list.Set( "LampTextures", "effects/flashlight/caustics", { Name = "Caustics" } )
-list.Set( "LampTextures", "effects/flashlight/square", { Name = "Square" } )
-list.Set( "LampTextures", "effects/flashlight/camera", { Name = "Camera" } )
-list.Set( "LampTextures", "effects/flashlight/view", { Name = "View" } )
---list.Set( "LampTextures", "effects/flashlight/spider", { Name = "Spider" } )
---list.Set( "LampTextures", "_rt_Camera", { Name = "RenderTarget" } )
+list.Set( "LampTextures", "effects/flashlight001", { Name = "#lamptexture.default" } )
+list.Set( "LampTextures", "effects/flashlight/slit", { Name = "#lamptexture.slit" } )
+list.Set( "LampTextures", "effects/flashlight/circles", { Name = "#lamptexture.circles" } )
+list.Set( "LampTextures", "effects/flashlight/window", { Name = "#lamptexture.window" } )
+list.Set( "LampTextures", "effects/flashlight/logo", { Name = "#lamptexture.logo" } )
+list.Set( "LampTextures", "effects/flashlight/gradient", { Name = "#lamptexture.gradient" } )
+list.Set( "LampTextures", "effects/flashlight/bars", { Name = "#lamptexture.bars" } )
+list.Set( "LampTextures", "effects/flashlight/tech", { Name = "#lamptexture.techdemo" } )
+list.Set( "LampTextures", "effects/flashlight/soft", { Name = "#lamptexture.soft" } )
+list.Set( "LampTextures", "effects/flashlight/hard", { Name = "#lamptexture.hard" } )
+list.Set( "LampTextures", "effects/flashlight/caustics", { Name = "#lamptexture.caustics" } )
+list.Set( "LampTextures", "effects/flashlight/square", { Name = "#lamptexture.square" } )
+list.Set( "LampTextures", "effects/flashlight/camera", { Name = "#lamptexture.camera" } )
+list.Set( "LampTextures", "effects/flashlight/view", { Name = "#lamptexture.view" } )
 
 list.Set( "LampModels", "models/lamps/torch.mdl", {} )
 list.Set( "LampModels", "models/MaxOfS2D/lamp_flashlight.mdl", {} )

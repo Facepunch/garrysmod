@@ -1,8 +1,6 @@
 
 TOOL.Category		= "Constraints"
 TOOL.Name			= "#tool.weld.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
 
 TOOL.ClientConVar[ "forcelimit" ] = "0"
 
@@ -278,7 +276,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.weld.name", Description	= "#tool.weld.help" }  )
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit",		Type = "Float", 	Command = "weld_forcelimit", 	Min = "0", 	Max = "1000", Help=true }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.weld.help" }  )
+	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Type = "Float", Command = "weld_forcelimit", Min = "0", Max = "1000", Help = true } )
 									
 end

@@ -164,7 +164,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Text = "#tool.dynamite.name", Description	= "#tool.dynamite.help" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.dynamite.help" } )
 	
 	CPanel:AddControl( "ComboBox", { Label = "#tool.presets",
 									 MenuButton = 1,

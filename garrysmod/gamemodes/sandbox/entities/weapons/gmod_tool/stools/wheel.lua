@@ -1,9 +1,6 @@
 
 TOOL.Category		= "Construction"
 TOOL.Name			= "#tool.wheel.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
-
 
 TOOL.ClientConVar[ "torque" ] 		= "3000"
 TOOL.ClientConVar[ "friction" ] 	= "1"
@@ -259,7 +256,7 @@ end
 function TOOL.BuildCPanel( CPanel )
 
 	-- HEADER
-	CPanel:AddControl( "Header", { Text = "#tool.wheel.name", Description	= "#tool.wheel.desc" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.wheel.desc" }  )
 	
 	local Options = { Default = { wheel_torque = "3000",
 									wheel_friction = "0",

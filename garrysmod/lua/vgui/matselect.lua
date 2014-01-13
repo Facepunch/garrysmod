@@ -64,12 +64,12 @@ function PANEL:AddMaterial( label, value )
 	Mat.AutoSize = false
 	Mat.Value = value
 	Mat:SetSize( self.ItemWidth, self.ItemHeight )
-	Mat:SetToolTip( value )
+	Mat:SetToolTip( label )
 	
 	-- Run a console command when the Icon is clicked
-	Mat.DoClick = 	function ( button ) 
-						RunConsoleCommand( self:ConVar(), value )
-					end
+	Mat.DoClick = function( button ) 
+		RunConsoleCommand( self:ConVar(), value )
+	end
 
 	-- Add the Icon us
 	self.List:AddItem( Mat )
@@ -175,7 +175,7 @@ function PANEL:PerformLayout()
 	local h = self.ItemHeight
 	if ( h < 1 ) then h = ( self:GetWide() - self.List:GetPadding()*2 ) * h end
 	
-	local Height = (h * self.Height) + (self.List:GetPadding() * 2) + 1
+	local Height = (h * self.Height) + (self.List:GetPadding() * 2) + self.List:GetSpacing() * (self.Height - 1)
 	
 	self.List:SetSize( self:GetWide(), Height )
 	self:SetTall( Height + 5 )

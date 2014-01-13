@@ -241,6 +241,8 @@ end
 function PANEL:Open( x, y, skipanimation, ownerpanel )
 
 	RegisterDermaMenuForClose( self )
+	
+	local maunal = x and y
 
 	x = x or gui.MouseX()
 	y = y or gui.MouseY()
@@ -260,8 +262,8 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 	self:SetSize( w, h )
 	
 	
-	if ( y + h > ScrH() ) then y = y - h + OwnerHeight end
-	if ( x + w > ScrW() ) then x = x - w end
+	if ( y + h > ScrH() ) then y = ((maunal and ScrH()) or (y + OwnerHeight)) - h end
+	if ( x + w > ScrW() ) then x = ((maunal and ScrW()) or x) - w end
 	if ( y < 1 ) then y = 1 end
 	if ( x < 1 ) then x = 1 end
 	

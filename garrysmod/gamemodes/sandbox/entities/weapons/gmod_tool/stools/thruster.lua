@@ -1,8 +1,6 @@
 
 TOOL.Category		= "Construction"
 TOOL.Name			= "#tool.thruster.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
 
 TOOL.ClientConVar[ "force" ]			= "1500"
 TOOL.ClientConVar[ "model" ]			= "models/props_c17/lampShade001a.mdl"
@@ -212,7 +210,7 @@ end
 function TOOL.BuildCPanel( CPanel )
 
 	-- HEADER
-	CPanel:AddControl( "Header", { Text = "#tool.thruster.name", Description	= "#tool.thruster.desc" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.thruster.desc" } )
 	
 	local Options = { Default = { thruster_force = "20",
 									thruster_model = "models/props_junk/plasticbucket001a.mdl",
@@ -312,20 +310,20 @@ list.Set( "ThrusterModels", "models/XQM/AfterBurner1Big.mdl", {} )
 list.Set( "ThrusterModels", "models/XQM/AfterBurner1Huge.mdl", {} )
 list.Set( "ThrusterModels", "models/XQM/AfterBurner1Large.mdl", {} )
 
-list.Set( "ThrusterEffects", "#No_Effects", { thruster_effect = "none" } )
-list.Set( "ThrusterEffects", "#Flames", 	{ thruster_effect = "fire" } )
-list.Set( "ThrusterEffects", "#Plasma", 	{ thruster_effect = "plasma" } )
-list.Set( "ThrusterEffects", "#Magic",	 	{ thruster_effect = "magic" } )
-list.Set( "ThrusterEffects", "#Rings", 		{ thruster_effect = "rings" } )
-list.Set( "ThrusterEffects", "#Smoke", 		{ thruster_effect = "smoke" } )
+list.Set( "ThrusterEffects", "#thrustereffect.none", { thruster_effect = "none" } )
+list.Set( "ThrusterEffects", "#thrustereffect.flames", 	{ thruster_effect = "fire" } )
+list.Set( "ThrusterEffects", "#thrustereffect.plasma", 	{ thruster_effect = "plasma" } )
+list.Set( "ThrusterEffects", "#thrustereffect.magic",	{ thruster_effect = "magic" } )
+list.Set( "ThrusterEffects", "#thrustereffect.rings",	{ thruster_effect = "rings" } )
+list.Set( "ThrusterEffects", "#thrustereffect.smoke",	{ thruster_effect = "smoke" } )
 
-list.Set( "ThrusterSounds", "#None", { thruster_soundname = "" } )
-list.Set( "ThrusterSounds", "#Steam Low", { thruster_soundname = "PhysicsCannister.ThrusterLoop" } )
-list.Set( "ThrusterSounds", "#Electric Zappy", { thruster_soundname = "WeaponDissolve.Charge" } )
-list.Set( "ThrusterSounds", "#Electric Beam", { thruster_soundname = "WeaponDissolve.Beam" } )
-list.Set( "ThrusterSounds", "#Elevator", { thruster_soundname = "eli_lab.elevator_move" } )
-list.Set( "ThrusterSounds", "#Energy", { thruster_soundname = "combine.sheild_loop" } )
-list.Set( "ThrusterSounds", "#Ring Flutter", { thruster_soundname = "k_lab.ringsrotating" } )
-list.Set( "ThrusterSounds", "#Resonance", { thruster_soundname = "k_lab.teleport_rings_high" } )
-list.Set( "ThrusterSounds", "#Drop Ship", { thruster_soundname = "k_lab2.DropshipRotorLoop" } )
-list.Set( "ThrusterSounds", "#Little Machine", { thruster_soundname = "Town.d1_town_01_spin_loop" } )
+list.Set( "ThrusterSounds", "#thrustersounds.none", { thruster_soundname = "" } )
+list.Set( "ThrusterSounds", "#thrustersounds.steam", { thruster_soundname = "PhysicsCannister.ThrusterLoop" } )
+list.Set( "ThrusterSounds", "#thrustersounds.zap", { thruster_soundname = "WeaponDissolve.Charge" } )
+list.Set( "ThrusterSounds", "#thrustersounds.beam", { thruster_soundname = "WeaponDissolve.Beam" } )
+list.Set( "ThrusterSounds", "#thrustersounds.elevator", { thruster_soundname = "eli_lab.elevator_move" } )
+list.Set( "ThrusterSounds", "#thrustersounds.energy", { thruster_soundname = "combine.sheild_loop" } )
+list.Set( "ThrusterSounds", "#thrustersounds.ring", { thruster_soundname = "k_lab.ringsrotating" } )
+list.Set( "ThrusterSounds", "#thrustersounds.resonance", { thruster_soundname = "k_lab.teleport_rings_high" } )
+list.Set( "ThrusterSounds", "#thrustersounds.dropship", { thruster_soundname = "k_lab2.DropshipRotorLoop" } )
+list.Set( "ThrusterSounds", "#thrustersounds.machine", { thruster_soundname = "Town.d1_town_01_spin_loop" } )

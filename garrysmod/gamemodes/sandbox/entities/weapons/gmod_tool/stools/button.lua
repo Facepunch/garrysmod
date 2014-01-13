@@ -1,8 +1,6 @@
 
 TOOL.Category		= "Construction"
 TOOL.Name			= "#tool.button.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
 
 TOOL.ClientConVar[ "model" ]			= "models/dav0r/buttons/button.mdl"
 TOOL.ClientConVar[ "keygroup" ]			= "37"
@@ -169,7 +167,7 @@ end
 function TOOL.BuildCPanel( CPanel )
 
 	-- HEADER
-	CPanel:AddControl( "Header", { Text = "#tool.button.name", Description	= "#tool.button.desc" }  )
+	CPanel:AddControl( "Header", { Description	= "#tool.button.desc" }  )
 	
 	local Options = { Default = { button_model = "models/dav0r/buttons/button.mdl" } }
 									
@@ -199,7 +197,6 @@ function TOOL.BuildCPanel( CPanel )
 									
 end
 
-
 list.Set( "ButtonModels", "models/MaxOfS2D/button_01.mdl", {} )
 list.Set( "ButtonModels", "models/MaxOfS2D/button_02.mdl", {} )
 list.Set( "ButtonModels", "models/MaxOfS2D/button_03.mdl", {} )
@@ -207,7 +204,6 @@ list.Set( "ButtonModels", "models/MaxOfS2D/button_04.mdl", {} )
 list.Set( "ButtonModels", "models/MaxOfS2D/button_05.mdl", {} )
 list.Set( "ButtonModels", "models/MaxOfS2D/button_06.mdl", {} )
 list.Set( "ButtonModels", "models/MaxOfS2D/button_slider.mdl", {} )
-
 
 --list.Set( "ButtonModels", "models/dav0r/buttons/button.mdl", {} )
 --list.Set( "ButtonModels", "models/dav0r/buttons/switch.mdl", {} )

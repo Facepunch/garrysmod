@@ -1,16 +1,12 @@
 
-
 TOOL.Category		= "Render"
 TOOL.Name			= "#tool.camera.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= nil
 
 TOOL.ClientConVar[ "locked" ] 	= "0"
 TOOL.ClientConVar[ "key" ] 	= "37"
 TOOL.ClientConVar[ "toggle" ] 	= "1"
 
 cleanup.Register( "cameras" )
-
 
 local function MakeCamera( ply, key, locked, toggle, Data )
 	
@@ -110,5 +106,3 @@ function TOOL:RightClick( trace )
 	return true
 	
 end
-
-
