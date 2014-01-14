@@ -11,6 +11,7 @@ function PANEL:Init()
 	self.Tree:SetClickOnDragHover( true );
 	self.Tree.OnNodeSelected = function( Tree, Node ) hook.Call( "ContentSidebarSelection", GAMEMODE, self:GetParent(), Node ) end
 	self.Tree:Dock( FILL )
+	self.Tree.pnlCanvas:DockPadding( 0, 0, 0, 256 )
 	self.Tree:SetBackgroundColor( Color( 240, 240, 240, 255 ) )
 	
 	self:SetPaintBackground( false )
