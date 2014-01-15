@@ -204,7 +204,6 @@ end
 
 
 function plymeta:SetSpeed(slowed)
-   if hook.Call("TTTPlayerSpeed", GAMEMODE, self, slowed) then return end
    if slowed then
       self:SetWalkSpeed(120)
       self:SetRunSpeed(120)
