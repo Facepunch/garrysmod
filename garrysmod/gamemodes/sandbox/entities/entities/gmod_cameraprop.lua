@@ -74,13 +74,10 @@ function ENT:SetLocked( locked )
 	
 		self.PhysgunDisabled = true
 		
-		local phys = self:GetPhysicsObject()
-		if ( phys:IsValid() ) then
-			phys:EnableMotion( false )
-		end
-		
 		self:SetMoveType( MOVETYPE_NONE )
 		self:SetSolid( SOLID_BBOX )
+		
+		self:SetCollisionGroup( COLLISION_GROUP_WORLD )
 	
 	else
 	

@@ -17,14 +17,14 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 	duplicator.DoGeneric( ent, Data )
 
 	if ( key ) then 
-		ent:SetKey( key ) 
-		ent.controlkey = key
-		
 		for id, camera in pairs( ents.FindByClass( "gmod_cameraprop" ) ) do
 			if ( camera.controlkey && camera.controlkey == key ) then
 				camera:Remove()
 			end
 		end
+
+		ent:SetKey( key ) 
+		ent.controlkey = key
 	end
 
 	ent:SetPlayer( ply )
