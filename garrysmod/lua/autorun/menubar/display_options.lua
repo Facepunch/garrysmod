@@ -8,10 +8,12 @@ hook.Add( "PopulateMenuBar", "DisplayOptions_MenuBar", function( menubar )
 	
 	m:AddSpacer()
 	
+	m:AddCVar( "Draw HUD", "cl_drawhud", "1", "0" )
 	m:AddCVar( "Draw Freeze", "effects_freeze", "1", "0" )
+	m:AddCVar( "Draw Cameras", "cl_drawcameras", "1", "0" )
 	m:AddCVar( "Draw Unfreeze", "effects_unfreeze", "1", "0" )
 	m:AddCVar( "Draw Thrusters", "cl_drawthrusterseffects", "1", "0" )
-	m:AddCVar( "Draw Cameras", "cl_drawcameras", "1", "0" )
+	m:AddCVar( "Draw Effect Rings", "cl_draweffectrings", "1", "0" )
 	m:AddCVar( "Draw Spawn Effect", "cl_drawspawneffect", "1", "0" )
 	m:AddCVar( "Draw World Tooltips", "cl_drawworldtooltips", "1", "0" )
 	
@@ -31,4 +33,3 @@ hook.Add( "PopulateMenuBar", "DisplayOptions_MenuBar", function( menubar )
 	m:AddCVar( "Hints", "cl_showhints", "1", "0" )
 	
 end )
-
