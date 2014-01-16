@@ -214,7 +214,7 @@ end
 
 function ENT:Draw()	
 
-	if ( self.ShouldDraw == 0 ) then return end
+	if ( GetConVarNumber( "cl_drawcameras" ) == 0 ) then return end
 
 	-- Don't draw the camera if we're taking pics
 	local ply = LocalPlayer()
