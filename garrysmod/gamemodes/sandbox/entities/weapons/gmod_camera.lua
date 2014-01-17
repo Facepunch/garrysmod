@@ -121,14 +121,14 @@ function SWEP:DoShootEffect()
 		local vForward = self.Owner:GetAimVector()
 
 		local trace = {}
-			trace.start = vPos
-			trace.endpos = vPos + vForward * 256
-			trace.filter = self.Owner
+		trace.start = vPos
+		trace.endpos = vPos + vForward * 256
+		trace.filter = self.Owner
 
-		tr = util.TraceLine( trace )
+		local tr = util.TraceLine( trace )
 
 		local effectdata = EffectData()
-			effectdata:SetOrigin( tr.HitPos )
+		effectdata:SetOrigin( tr.HitPos )
 		util.Effect( "camera_flash", effectdata, true )
 
 	end

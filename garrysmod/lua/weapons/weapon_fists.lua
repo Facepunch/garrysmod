@@ -1,8 +1,9 @@
+
 AddCSLuaFile()
 
 SWEP.PrintName			= "Fists"
 
-SWEP.Author			= "robotboy655 & MaxOfS2D"
+SWEP.Author			= "robotboy655 & MaxOfS2D, Tenrys"
 SWEP.Purpose		= "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
 
 SWEP.Spawnable			= true
@@ -42,8 +43,7 @@ function SWEP:PreDrawViewModel( vm, wep, ply )
 end
 
 SWEP.HitDistance = 48
-SWEP.AttackAnims = { "fists_left", "fists_right", "fists_uppercut" }
-function SWEP:PrimaryAttack()
+function SWEP:PrimaryAttack( right )
 
 	self.Owner:SetAnimation( PLAYER_ATTACK1 )
 
@@ -53,7 +53,9 @@ function SWEP:PrimaryAttack()
 	local vm = self.Owner:GetViewModel()
 	vm:ResetSequence( vm:LookupSequence( "fists_idle_01" ) )
 
-	local anim = self.AttackAnims[ math.random( 1, #self.AttackAnims ) ]
+	local anim = "fists_left"
+	if ( right ) then anim = "fists_right" end
+	if ( math.random( 1, 10 ) == 1 ) then anim = "fists_uppercut" end
 
 	timer.Simple( 0, function()
 		if ( !IsValid( self ) || !IsValid( self.Owner ) || !self.Owner:GetActiveWeapon() || self.Owner:GetActiveWeapon() != self ) then return end
@@ -99,7 +101,7 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-	self:PrimaryAttack()
+	self:PrimaryAttack( true )
 end
 
 function SWEP:DealDamage( anim )
@@ -130,7 +132,7 @@ function SWEP:DealDamage( anim )
 			dmginfo:SetDamageForce( self.Owner:GetRight() * -49124 + self.Owner:GetForward() * 99899 )
 		elseif ( anim == "fists_uppercut" ) then
 			dmginfo:SetDamageForce( self.Owner:GetUp() * 51589 + self.Owner:GetForward() * 100128 )
-			dmginfo:SetDamage( math.random( 12, 16 ) )
+			dmginfo:SetDamage( math.random( 12, 24 ) )
 		end
 		dmginfo:SetInflictor( self )
 		local attacker = self.Owner
