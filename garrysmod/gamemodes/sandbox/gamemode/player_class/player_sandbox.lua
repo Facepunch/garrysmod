@@ -79,6 +79,22 @@ function PLAYER:Loadout()
 
 end
 
+function PLAYER:SetModel()
+
+	BaseClass.SetModel( self )
+	
+	local skin = self.Player:GetInfoNum( "cl_playerskin", 0 )
+	self.Player:SetSkin( skin )
+
+	local groups = self.Player:GetInfo( "cl_playerbodygroups" )
+	if ( groups == nil ) then groups = "" end
+	local groups = string.Explode( " ", groups )
+	for k = 0, self.Player:GetNumBodyGroups() - 1 do
+		self.Player:SetBodygroup( k, tonumber( groups[ k + 1 ] ) or 0 )
+	end
+
+end
+
 --
 -- Called when the player spawns
 --
@@ -91,23 +107,6 @@ function PLAYER:Spawn()
 
 	local col = self.Player:GetInfo( "cl_weaponcolor" )
 	self.Player:SetWeaponColor( Vector( col ) )
-
-	-- It is here because it must be in sandbox and GM:PlayerSetModel must really be inside a player class instead of the gamemode itself.
-	timer.Simple( 0, function()
-	
-		if ( !IsValid( self.Player ) ) then return end
-
-		local skin = self.Player:GetInfoNum( "cl_playerskin", 0 )
-		self.Player:SetSkin( skin )
-
-		local groups = self.Player:GetInfo( "cl_playerbodygroups" );
-		if ( groups == nil ) then groups = "" end
-		local groups = string.Explode( " ", groups )
-		for k = 0, self.Player:GetNumBodyGroups() - 1 do
-			self.Player:SetBodygroup( k, tonumber( groups[ k + 1 ] ) or 0 )
-		end
-
-	end )
 
 end
 

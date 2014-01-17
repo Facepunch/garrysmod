@@ -78,6 +78,15 @@ function PLAYER:Loadout()
 
 end
 
+function PLAYER:SetModel()
+
+	local cl_playermodel = self.Player:GetInfo( "cl_playermodel" )
+	local modelname = player_manager.TranslatePlayerModel( cl_playermodel )
+	util.PrecacheModel( modelname )
+	self.Player:SetModel( modelname )
+
+end
+
 -- Clientside only
 function PLAYER:CalcView( view ) end		-- Setup the player's view
 function PLAYER:CreateMove( cmd ) end		-- Creates the user command on the client
