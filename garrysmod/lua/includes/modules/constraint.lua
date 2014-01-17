@@ -176,7 +176,7 @@ function RemoveConstraints( Ent, Type )
 	if ( !Ent:GetTable().Constraints ) then return end
 	
 	local c = Ent:GetTable().Constraints
-	i = 0
+	local i = 0
 
 	for k, v in pairs( c ) do
 	

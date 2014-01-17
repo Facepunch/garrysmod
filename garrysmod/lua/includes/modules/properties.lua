@@ -151,7 +151,7 @@ if ( CLIENT ) then
 		local ent = properties.GetHovered( LocalPlayer():EyePos(), LocalPlayer():GetAimVector() )
 		if ( !IsValid( ent ) ) then return end
 		
-		c = Color( 255, 255, 255, 255 )
+		local c = Color( 255, 255, 255, 255 )
 		c.r = 200 + math.sin( RealTime() * 50 ) * 55
 		c.g = 200 + math.sin( RealTime() * 20 ) * 55
 		c.b = 200 + math.cos( RealTime() * 60 ) * 55

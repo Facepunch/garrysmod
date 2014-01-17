@@ -113,7 +113,7 @@ if SERVER then
 		magnet:Spawn()
 		
 		if magnet:GetPhysicsObject():IsValid() then
-			Phys = magnet:GetPhysicsObject()
+			local Phys = magnet:GetPhysicsObject()
 			if Vel then Phys:SetVelocity(Vel) end
 			if aVel then Phys:AddAngleVelocity(aVel) end
 			Phys:EnableMotion(frozen != true)

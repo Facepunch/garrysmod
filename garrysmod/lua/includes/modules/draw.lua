@@ -61,6 +61,7 @@ end
 -----------------------------------------------------------]]
 function SimpleText(text, font, x, y, colour, xalign, yalign)
 
+	text 	= tostring( text )
 	font 	= font 		or "DermaDefault"
 	x 		= x 		or 0
 	y 		= y 		or 0
@@ -134,9 +135,10 @@ end
 function DrawText(text, font, x, y, colour, xalign )
 
 	if (font == nil) then font = "DermaDefault" end
+	if (text != nil) then text = tostring( text ) end
 	if (x == nil) then x = 0 end
 	if (y == nil) then y = 0 end
-	
+
 	local curX = x
 	local curY = y
 	local curString = ""
@@ -259,11 +261,11 @@ end
 -----------------------------------------------------------]]
 function Text( tab )
 
-	font 	= tab.font 		or "DermaDefault"
-	x 		= tab.pos[1]	or 0
-	y 		= tab.pos[2]	or 0
-	xalign 	= tab.xalign 	or TEXT_ALIGN_LEFT
-	yalign 	= tab.yalign 	or TEXT_ALIGN_TOP
+	local font 		= tab.font 		or "DermaDefault"
+	local x 		= tab.pos[1]	or 0
+	local y 		= tab.pos[2]	or 0
+	local xalign 	= tab.xalign 	or TEXT_ALIGN_LEFT
+	local yalign 	= tab.yalign 	or TEXT_ALIGN_TOP
 	
 	surface.SetFont(font)
 	
