@@ -11,6 +11,7 @@ local setmetatable = setmetatable
 local ScrW = ScrW
 local ScrH = ScrH
 local Color = Color
+local tostring = tostring
 local color_white = color_white
 
 module( "draw" )
