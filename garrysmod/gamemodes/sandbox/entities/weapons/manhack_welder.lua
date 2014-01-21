@@ -1,9 +1,6 @@
 
 -- Variables that are used on both client and server
 
-SWEP.Author			= ""
-SWEP.Contact		= ""
-SWEP.Purpose		= ""
 SWEP.Instructions	= "Shoot a prop to attach a Manhack.\nRight click to attach a rollermine."
 
 SWEP.Spawnable			= true
@@ -34,9 +31,6 @@ SWEP.DrawAmmo			= false
 SWEP.DrawCrosshair		= true
 SWEP.UseHands			= true
 
-
-
-
 local ShootSound = Sound( "Metal.SawbladeStick" )
 
 --[[---------------------------------------------------------
@@ -51,7 +45,6 @@ end
 function SWEP:Think()	
 end
 
-
 --[[---------------------------------------------------------
 	PrimaryAttack
 -----------------------------------------------------------]]
@@ -60,28 +53,30 @@ function SWEP:PrimaryAttack()
 	local tr = self.Owner:GetEyeTrace()
 	--if ( tr.HitWorld ) then return end
 	
-	local effectdata = EffectData()
+	if ( IsFirstTimePredicted() ) then
+		local effectdata = EffectData()
 		effectdata:SetOrigin( tr.HitPos )
 		effectdata:SetNormal( tr.HitNormal )
 		effectdata:SetMagnitude( 8 )
 		effectdata:SetScale( 1 )
 		effectdata:SetRadius( 16 )
-	util.Effect( "Sparks", effectdata )
+		util.Effect( "Sparks", effectdata )
+	end
 	
 	self:EmitSound( ShootSound )
 
 	self:ShootEffects( self )
 	
 	-- The rest is only done on the server
-	if ( !SERVER ) then return end
+	if ( CLIENT ) then return end
 	
 	-- Make a manhack
 	local ent = ents.Create( "npc_manhack" )
-		ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
-		ent:SetAngles( tr.HitNormal:Angle() )
+	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
+	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
 
-	local weld = nil;
+	local weld = nil
 
 	if ( tr.HitWorld ) then
 
@@ -115,22 +110,24 @@ function SWEP:SecondaryAttack()
 	self:EmitSound( ShootSound )
 	self:ShootEffects( self )
 	
-	local effectdata = EffectData()
+	if ( IsFirstTimePredicted() ) then
+		local effectdata = EffectData()
 		effectdata:SetOrigin( tr.HitPos )
 		effectdata:SetNormal( tr.HitNormal )
 		effectdata:SetMagnitude( 8 )
 		effectdata:SetScale( 1 )
 		effectdata:SetRadius( 16 )
-	util.Effect( "Sparks", effectdata )
+		util.Effect( "Sparks", effectdata )
+	end
 	
 	
 	-- The rest is only done on the server
-	if (!SERVER) then return end
+	if ( CLIENT ) then return end
 	
 	-- Make a manhack
 	local ent = ents.Create( "npc_rollermine" )
-		ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
-		ent:SetAngles( tr.HitNormal:Angle() )
+	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
+	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
 
 	local weld = nil;
