@@ -17,7 +17,7 @@ cleanup.Register( "trails" )
 
 local function SetTrails( Player, Entity, Data )
 
-	if ( Entity.SToolTrail ) then
+	if ( IsValid( Entity.SToolTrail ) ) then
 	
 		Entity.SToolTrail:Remove()
 		Entity.SToolTrail = nil
@@ -96,14 +96,17 @@ function TOOL:LeftClick( trace )
 	
 	end
 
-	local Trail = SetTrails( self:GetOwner(), trace.Entity, { Color = Color( r, g, b, a ), 
-																	Length = length, 
-																	StartSize = startsize, 
-																	EndSize = endsize,
-																	Material = Mat } )
+	local Trail = SetTrails( self:GetOwner(), trace.Entity, {
+		Color = Color( r, g, b, a ), 
+		Length = length, 
+		StartSize = startsize, 
+		EndSize = endsize,
+		Material = Mat
+	} )
+
 	undo.Create("Trail")
 		undo.AddEntity( Trail )
-		undo.SetPlayer( ply )
+		undo.SetPlayer( self:GetOwner() )
 	undo.Finish()
 
 	return true

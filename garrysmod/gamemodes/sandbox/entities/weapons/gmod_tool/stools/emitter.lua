@@ -110,7 +110,7 @@ if ( SERVER ) then
 		emitter:SetDelay( delay )
 		emitter:SetToggle( toggle )
 		emitter:SetOn( starton )
-		emitter:SetScale( scale )
+		emitter:SetScale( scale or 1 )
 
 		emitter:Spawn()
 		

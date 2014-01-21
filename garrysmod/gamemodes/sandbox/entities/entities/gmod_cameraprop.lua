@@ -74,13 +74,10 @@ function ENT:SetLocked( locked )
 	
 		self.PhysgunDisabled = true
 		
-		local phys = self:GetPhysicsObject()
-		if ( phys:IsValid() ) then
-			phys:EnableMotion( false )
-		end
-		
 		self:SetMoveType( MOVETYPE_NONE )
 		self:SetSolid( SOLID_BBOX )
+		
+		self:SetCollisionGroup( COLLISION_GROUP_WORLD )
 	
 	else
 	
@@ -217,7 +214,7 @@ end
 
 function ENT:Draw()	
 
-	if ( self.ShouldDraw == 0 ) then return end
+	if ( GetConVarNumber( "cl_drawcameras" ) == 0 ) then return end
 
 	-- Don't draw the camera if we're taking pics
 	local ply = LocalPlayer()
