@@ -261,11 +261,8 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerSetModel( pl )
 
-	local cl_playermodel = pl:GetInfo( "cl_playermodel" )
-	local modelname = player_manager.TranslatePlayerModel( cl_playermodel )
-	util.PrecacheModel( modelname )
-	pl:SetModel( modelname )
-	
+	player_manager.RunClass( pl, "SetModel" )
+
 end
 
 --[[---------------------------------------------------------
@@ -414,7 +411,7 @@ function GM:PlayerSelectSpawn( pl )
 	
 	if ( Count == 0 ) then
 		Msg("[PlayerSelectSpawn] Error! No spawn points!\n")
-		return nil 
+		return nil
 	end
 	
 	-- If any of the spawnpoints have a MASTER flag then only use that one.

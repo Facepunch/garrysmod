@@ -33,7 +33,7 @@ function math.IntToBin(int)
 			["0"]="000",["1"]="001", ["2"]="010",["3"]="011",
         		["4"]="100",["5"]="101", ["6"]="110",["7"]="111"
 		  }
-	bin = string.gsub( str, "(.)", function ( d ) return a[ d ] end )
+	local bin = string.gsub( str, "(.)", function ( d ) return a[ d ] end )
 	return bin
 
 end

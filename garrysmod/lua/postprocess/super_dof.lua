@@ -7,7 +7,7 @@ local Passes			= 12
 local Steps				= 24
 local Shape				= 0.5
 
-local Window 			= nil
+local SuperDOFWindow 			= nil
 local Status 			= "Preview"
 
 
@@ -208,10 +208,8 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 			-- Rotate around the focus point
 			VA:RotateAroundAxis( VRot:Right(), 	math.sin( i + (mul) ) * fAngleSize * mul * (Shape) * 2 )
 			VA:RotateAroundAxis( VRot:Up(), 	math.cos( i + (mul) ) * fAngleSize * mul * (1-Shape) * 2 )
-			
-			ViewOrigin = vFocus - VA:Forward() * fDistance
-			
-			view.origin = ViewOrigin
+
+			view.origin = vFocus - VA:Forward() * fDistance
 			view.angles = VA
 			
 			-- Render to the front buffer
@@ -278,7 +276,7 @@ function RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
 		local x, y = gui.MousePos()
 		local dir = util.AimVector( ViewAngles, ViewFOV, x, y, ScrW(), ScrH() )
 
-		tr = util.TraceLine( util.GetPlayerTrace( LocalPlayer(), dir ) )
+		local tr = util.TraceLine( util.GetPlayerTrace( LocalPlayer(), dir ) )
 		Distance = tr.HitPos:Distance( ViewOrigin )
 		Status = "Preview"
 
