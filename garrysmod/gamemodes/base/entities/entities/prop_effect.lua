@@ -1,6 +1,10 @@
 
 AddCSLuaFile()
 
+if ( CLIENT ) then
+	CreateConVar( "cl_draweffectrings", "1", 0, "Should the effect green rings be visible?" )
+end
+
 ENT.Type = "anim"
 
 ENT.PrintName			= ""
@@ -70,6 +74,8 @@ end
    Name: Draw
 -----------------------------------------------------------]]
 function ENT:Draw()
+
+	if ( GetConVarNumber( "cl_draweffectrings" ) == 0 ) then return end
 	
 	-- Don't draw the grip if there's no chance of us picking it up
 	local ply = LocalPlayer()
