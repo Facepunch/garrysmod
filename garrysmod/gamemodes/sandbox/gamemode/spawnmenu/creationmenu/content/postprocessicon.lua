@@ -20,13 +20,14 @@ function PANEL:OnDepressionChanged( b )
 
 end
 
-function PANEL:Setup( name, icon )
+function PANEL:Setup( name, icon, label )
 
+	self.label = label
 	self.name = name
 	self.icon = icon
 
 	self:SetMaterial( icon )
-	self:SetName( name )
+	self:SetName( label or name )
 	
 	self.PP = list.Get( "PostProcess" )[ name ]
 	if ( !self.PP ) then return end
@@ -131,6 +132,7 @@ function PANEL:ToTable( bigtable )
 	
 	tab.type	= "postprocess"
 	tab.name	= self.name
+	tab.label	= self.label
 	tab.icon	= self.icon
 	tab.convars	= self.ConVars
 
@@ -144,7 +146,7 @@ function PANEL:Copy()
 	local copy = vgui.Create( "PostProcessIcon", self:GetParent() )
 	copy:CopyBounds( self )
 	copy.ConVars = self.ConVars
-	copy:Setup( self.name, self.icon )	
+	copy:Setup( self.name, self.icon, self.label )	
 	
 	return copy;
 	
@@ -164,7 +166,7 @@ spawnmenu.AddContentType( "postprocess", function( container, obj )
 		icon.ConVars = obj.convars
 	end
 	
-	icon:Setup( obj.name, obj.icon )
+	icon:Setup( obj.name, obj.icon, obj.label )
 		
 	container:Add( icon )
 
