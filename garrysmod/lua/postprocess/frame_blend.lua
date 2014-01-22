@@ -5,14 +5,14 @@ local function FixupCurve( num )
 
 	local overflow = num;
 	for k, v in pairs( FrameCurves[num] ) do
-		overflow = overflow - v;
+		overflow = overflow - v
 	end
 
 	overflow = overflow * math.Rand( 0, 0.5 )
 
 	for i=0, num-1 do
 
-		FrameCurves[num][i] = FrameCurves[num][i] + (overflow / num);
+		FrameCurves[ num ][ i ] = FrameCurves[ num ][ i ] + ( overflow / num )
 
 	end
 
@@ -28,8 +28,8 @@ local function FrameCurve( f, num )
 
 	for i=0, num-1 do
 
-		local delta = (i+1) / (num);
-		curve[i] = math.sin( delta * math.pi );
+		local delta = ( i + 1 ) / num
+		curve[ i ] = math.sin( delta * math.pi )
 
 	end
 
@@ -84,7 +84,7 @@ frame_blend.IsLastFrame = function()
 
 	local padding = math.floor( pp_fb_frames:GetInt() * pp_fb_shutter:GetFloat() * 0.5 )
 
-	return (NumFramesTaken) == (pp_fb_frames:GetInt() - padding - 1);
+	return NumFramesTaken == ( pp_fb_frames:GetInt() - padding - 1 )
 
 end
 
@@ -125,7 +125,7 @@ frame_blend.CompleteFrame = function()
 	matFSB:SetFloat( "$alpha", 1.0 )
 	matFSB:SetTexture( "$basetexture", texMB0 )
 
-	local OldRT = render.GetRenderTarget();
+	local OldRT = render.GetRenderTarget()
 	render.SetRenderTarget( texMB1 )
 		render.SetMaterial( matFSB )
 		render.DrawScreenQuad()
@@ -139,7 +139,7 @@ end
 
 frame_blend.AddFrame = function()
 
-	NumFramesTaken = NumFramesTaken + 1;
+	NumFramesTaken = NumFramesTaken + 1
 
 	if ( NumFramesTaken >= pp_fb_frames:GetInt() ) then
 		frame_blend.CompleteFrame()
@@ -201,37 +201,35 @@ hook.Add( "PreRender", "PreRenderFrameBlend", function()
 
 end )
 
-list.Set( "PostProcess", "Frame Blend",
-{
-	icon		= "gui/postprocess/frame_blend.png",
+list.Set( "PostProcess", "#frame_blend_pp", {
 
+	icon		= "gui/postprocess/frame_blend.png",
 	convar		= "pp_fb",
-	
-	category	= "Effects",
-	
+	category	= "#effects_pp",
+
 	cpanel		= function( CPanel )
 
-		CPanel:AddControl( "Header", { Text = "#Frame Blend", Description = "This will lower your FPS." }  )
-		CPanel:AddControl( "CheckBox", { Label = "#Enable", Command = "pp_fb" }  )
+		CPanel:AddControl( "Header", { Description = "#frame_blend_pp.desc" } )
+		CPanel:AddControl( "Header", { Description = "#frame_blend_pp.desc2" } )
 
-		CPanel:AddControl( "Slider", 
-		{
-			Label = "#Shutter",
+		CPanel:AddControl( "CheckBox", { Label = "#frame_blend_pp.enable", Command = "pp_fb" } )
+
+		CPanel:AddControl( "Slider", {
+			Label = "#frame_blend_pp.frames",
 			Command = "pp_fb_frames",
 			Type = "Int",
 			Min = "3",
 			Max = "64"
-		});
+		} )
 			
-		CPanel:AddControl( "Slider", 
-		{
-			Label = "#Shutter",
+		CPanel:AddControl( "Slider", {
+			Label = "#frame_blend_pp.shutter",
 			Command = "pp_fb_shutter",
 			Type = "Float",
 			Min = "0",
 			Max = "1"
-		});
-		
-	end,
-	
-})
+		} )
+
+	end
+
+} )

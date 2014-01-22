@@ -1,7 +1,5 @@
 
-
-
-local mat_ColorMod		= Material( "pp/colour" )
+local mat_ColorMod = Material( "pp/colour" )
 
 mat_ColorMod:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 
@@ -23,7 +21,7 @@ function DrawColorModify( tab )
 
 	render.UpdateScreenEffectTexture()
 
-	for k, v in pairs(tab) do
+	for k, v in pairs( tab ) do
 	
 		mat_ColorMod:SetFloat( k, v )
 		
@@ -51,37 +49,34 @@ local function DrawInternal()
 	tab[ "$pp_colour_mulg" ] 		= pp_colormod_mulg:GetFloat() * 0.1
 	tab[ "$pp_colour_mulb" ] 		= pp_colormod_mulb:GetFloat() * 0.1
 	
-	DrawColorModify( tab );
+	DrawColorModify( tab )
 
 end
-
 hook.Add( "RenderScreenspaceEffects", "RenderColorModify", DrawInternal )
 
-list.Set( "PostProcess", "Color Modification",
-{
+list.Set( "PostProcess", "#colormod_pp", {
+
 	icon		= "gui/postprocess/colourmod.png",
-	
 	convar		= "pp_colormod",
-	
-	category	= "Shaders",
+	category	= "#shaders_pp",
 	
 	cpanel		= function( CPanel )
 
-		CPanel:AddControl( "Header", { Text = "#Color_Mod", Description = "#Color_Mod_Information" }  )
-		CPanel:AddControl( "CheckBox", { Label = "#Color_Mod_Toggle", Command = "pp_colormod" }  )
+		CPanel:AddControl( "Header", { Description = "#colormod_pp.desc" } )
+		CPanel:AddControl( "CheckBox", { Label = "#colormod_pp.enable", Command = "pp_colormod" } )
 		
 		local params = { Options = {}, CVars = {}, Label = "#tool.presets", MenuButton = "1", Folder = "colormod" }
-		params.Options[ "#Default" ] = { pp_colormod = "1", pp_colormod_addr = "0", pp_colormod_addg = "0", pp_colormod_addb = "0", pp_colormod_brightness = "0", pp_colormod_contrast = "1", pp_colormod_color = "1", pp_colormod_mulr = "0", pp_colormod_mulg = "0", pp_colormod_mulb = "0" }
+		params.Options[ "#preset.default" ] = { pp_colormod = "1", pp_colormod_addr = "0", pp_colormod_addg = "0", pp_colormod_addb = "0", pp_colormod_brightness = "0", pp_colormod_contrast = "1", pp_colormod_color = "1", pp_colormod_mulr = "0", pp_colormod_mulg = "0", pp_colormod_mulb = "0" }
 		params.CVars = { "pp_colormod", "pp_colormod_addr", "pp_colormod_addg", "pp_colormod_addb", "pp_colormod_brightness", "pp_colormod_contrast", "pp_colormod_color", "pp_colormod_mulr", "pp_colormod_mulg", "pp_colormod_mulb" }
-		CPanel:AddControl( "ComboBox", 	params )
+		CPanel:AddControl( "ComboBox", params )
 		
-		CPanel:AddControl( "Slider", { Label = "#Colormod_Brightness", Command = "pp_colormod_brightness", Type = "Float", Min = "-2", Max = "2" }  )
-		CPanel:AddControl( "Slider", { Label = "#Colormod_Contrast", Command = "pp_colormod_contrast", Type = "Float", Min = "0", Max = "10" }  )
-		CPanel:AddControl( "Slider", { Label = "#Colormod_Color", Command = "pp_colormod_color", Type = "Float", Min = "0", Max = "5" }  )	
+		CPanel:AddControl( "Slider", { Label = "#colormod_pp.brightness", Command = "pp_colormod_brightness", Type = "Float", Min = "-2", Max = "2" } )
+		CPanel:AddControl( "Slider", { Label = "#colormod_pp.contrast", Command = "pp_colormod_contrast", Type = "Float", Min = "0", Max = "10" } )
+		CPanel:AddControl( "Slider", { Label = "#colormod_pp.color", Command = "pp_colormod_color", Type = "Float", Min = "0", Max = "5" } )	
 		
-		CPanel:AddControl( "Color", { Label = "#Colormod_Color_Add", Red = "pp_colormod_addr", Green = "pp_colormod_addg", Blue = "pp_colormod_addb", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" }  )	
-		CPanel:AddControl( "Color", { Label = "#Colormod_Color_Multiply",  Red = "pp_colormod_mulr", Green = "pp_colormod_mulg", Blue = "pp_colormod_mulb", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" }  )	
+		CPanel:AddControl( "Color", { Label = "#colormod_pp.color_add", Red = "pp_colormod_addr", Green = "pp_colormod_addg", Blue = "pp_colormod_addb", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" } )	
+		CPanel:AddControl( "Color", { Label = "#colormod_pp.color_multiply",  Red = "pp_colormod_mulr", Green = "pp_colormod_mulg", Blue = "pp_colormod_mulb", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" } )	
 
-	end,
-	
-})
+	end
+
+} )

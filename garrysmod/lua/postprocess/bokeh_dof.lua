@@ -1,8 +1,5 @@
 
-local mat = 
-{
-	blur = Material( "pp/bokehblur" ),
-}
+local blur_mat = Material( "pp/bokehblur" )
 
 local pp_bokeh_blur 		= CreateClientConVar( "pp_bokeh_blur", "5", false, false )
 local pp_bokeh_distance		= CreateClientConVar( "pp_bokeh_distance", "0.1", false, false )
@@ -14,22 +11,21 @@ local function DrawBokehDOF()
 
 	render.UpdateScreenEffectTexture()
 
-	mat.blur:SetTexture( "$BASETEXTURE", render.GetScreenEffectTexture() )
-	mat.blur:SetTexture( "$DEPTHTEXTURE", render.GetResolvedFullFrameDepth() )
+	blur_mat:SetTexture( "$BASETEXTURE", render.GetScreenEffectTexture() )
+	blur_mat:SetTexture( "$DEPTHTEXTURE", render.GetResolvedFullFrameDepth() )
 
-	mat.blur:SetFloat( "$size", pp_bokeh_blur:GetFloat() )
-	mat.blur:SetFloat( "$focus", pp_bokeh_distance:GetFloat() )
-	mat.blur:SetFloat( "$focusradius", pp_bokeh_focus:GetFloat() )
+	blur_mat:SetFloat( "$size", pp_bokeh_blur:GetFloat() )
+	blur_mat:SetFloat( "$focus", pp_bokeh_distance:GetFloat() )
+	blur_mat:SetFloat( "$focusradius", pp_bokeh_focus:GetFloat() )
 
-	render.SetMaterial( mat.blur )
+	render.SetMaterial( blur_mat )
 	render.DrawScreenQuad()
 	
 end
 
-
 local function OnChange( name, oldvalue, newvalue )
 
-	if ( !GAMEMODE:PostProcessPermitted( "bokeh" ) ) then	return end
+	if ( !GAMEMODE:PostProcessPermitted( "bokeh" ) ) then return end
 
 	if ( newvalue != "0" ) then
 		DOFModeHack( true )
@@ -38,16 +34,14 @@ local function OnChange( name, oldvalue, newvalue )
 	end
 
 end
-
 cvars.AddChangeCallback( "pp_bokeh", OnChange )
-
 
 hook.Add( "RenderScreenspaceEffects", "RenderBokeh", function()
 
 	if ( !pp_bokeh:GetBool() ) then return end
 	if ( !GAMEMODE:PostProcessPermitted( "bokeh" ) ) then return end
 
-	DrawBokehDOF();
+	DrawBokehDOF()
 
 end )
 

@@ -1,5 +1,5 @@
 
-local _Material			= Material( "pp/sharpen" )
+local _Material = Material( "pp/sharpen" )
 _Material:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 
 --[[---------------------------------------------------------
@@ -28,29 +28,26 @@ local function DrawInternal()
 	if ( !pp_sharpen:GetBool() ) then return end
 	if ( !GAMEMODE:PostProcessPermitted( "sharpen" ) ) then return end
 
-	DrawSharpen( pp_sharpen_contrast:GetFloat(), pp_sharpen_distance:GetFloat() );
+	DrawSharpen( pp_sharpen_contrast:GetFloat(), pp_sharpen_distance:GetFloat() )
 
 end
-
 hook.Add( "RenderScreenspaceEffects", "RenderSharpen", DrawInternal )
 
 
-list.Set( "PostProcess", "Sharpen",
-{
+list.Set( "PostProcess", "#sharpen_pp", {
+
 	icon		= "gui/postprocess/sharpen.png",
-	
 	convar		= "pp_sharpen",
-	
-	category	= "Shaders",
+	category	= "#shaders_pp",
 	
 	cpanel		= function( CPanel )
 
-		CPanel:AddControl( "Header", { Text = "#Sharpen", Description = "" }  )
-		CPanel:AddControl( "CheckBox", { Label = "#Enable", Command = "pp_sharpen" }  )
+		CPanel:AddControl( "Header", { Description = "#sharpen_pp.desc" } )
+		CPanel:AddControl( "CheckBox", { Label = "#sharpen_pp.enable", Command = "pp_sharpen" } )
 		
-		CPanel:AddControl( "Slider", { Label = "#Distance", Command = "pp_sharpen_distance", Type = "Float", Min = "-5", Max = "5" }  )
-		CPanel:AddControl( "Slider", { Label = "#Contrast", Command = "pp_sharpen_contrast", Type = "Float", Min = "0", Max = "20" }  )
+		CPanel:AddControl( "Slider", { Label = "#sharpen_pp.distance", Command = "pp_sharpen_distance", Type = "Float", Min = "-5", Max = "5" } )
+		CPanel:AddControl( "Slider", { Label = "#sharpen_pp.contrast", Command = "pp_sharpen_contrast", Type = "Float", Min = "0", Max = "20" } )
 		
-	end,
+	end
 	
-})
+} )

@@ -1,26 +1,25 @@
 
 local SobelMaterial = Material( "pp/sobel" )
-SobelMaterial:SetTexture( "$fbtexture", render.GetScreenEffectTexture() );
+SobelMaterial:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 
 -- convars
-local pp_sobel_threshold = CreateClientConVar( "pp_sobel_threshold", "0.11", false, false );
-local pp_sobel = CreateClientConVar( "pp_sobel", "0", false, false );
+local pp_sobel_threshold = CreateClientConVar( "pp_sobel_threshold", "0.11", false, false )
+local pp_sobel = CreateClientConVar( "pp_sobel", "0", false, false )
 
 --[[------------------------------------
 	DrawSobel()
 --------------------------------------]]
 function DrawSobel( threshold )
 
-	render.UpdateScreenEffectTexture();
+	render.UpdateScreenEffectTexture()
 
 	-- update threshold value
-	SobelMaterial:SetFloat( "$threshold", threshold );
+	SobelMaterial:SetFloat( "$threshold", threshold )
 
-	render.SetMaterial( SobelMaterial );
-	render.DrawScreenQuad();
+	render.SetMaterial( SobelMaterial )
+	render.DrawScreenQuad()
 	
 end
-
 
 --[[------------------------------------
 	DrawInternal()
@@ -30,33 +29,30 @@ local function DrawInternal()
 	if ( !pp_sobel:GetBool() ) then return; end
 	if ( !GAMEMODE:PostProcessPermitted( "sobel" ) ) then return; end
 
-	DrawSobel( pp_sobel_threshold:GetFloat() );
+	DrawSobel( pp_sobel_threshold:GetFloat() )
 
 end
-hook.Add( "RenderScreenspaceEffects", "RenderSobel", DrawInternal );
+hook.Add( "RenderScreenspaceEffects", "RenderSobel", DrawInternal )
 
+list.Set( "PostProcess", "#sobel_pp", {
 
-list.Set( "PostProcess", "Sobel",
-{
 	icon		= "gui/postprocess/sobel.png",
-	
 	convar		= "pp_sobel",
-	
-	category	= "Shaders",
+	category	= "#shaders_pp",
 	
 	cpanel		= function( CPanel )
 
-		CPanel:AddControl( "Header", { Text = "#Sobel", Description = "" }  )
-		CPanel:AddControl( "CheckBox", { Label = "#Enable", Command = "pp_sobel" }  )
+		CPanel:AddControl( "Header", { Description = "#sobel_pp.desc" } )
+		CPanel:AddControl( "CheckBox", { Label = "#sobel_pp.enable", Command = "pp_sobel" } )
 		
 		CPanel:AddControl( "Slider", {
-			Label = "#Threshold",
+			Label = "#sobel_pp.threshold",
 			Command = "pp_sobel_threshold",
 			Type = "Float",
 			Min = "0",
 			Max = "1"
-		} );
-		
-	end,
+		} )
 	
-})
+	end
+
+} )

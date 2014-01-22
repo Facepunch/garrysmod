@@ -13,11 +13,11 @@ mat_Downsample:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 --[[---------------------------------------------------------
    Register the convars that will control this effect
 -----------------------------------------------------------]]   
-local pp_bloom 			= CreateClientConVar( "pp_bloom", 			"0", 	true, 	false )				-- On/Off
-local pp_bloom_darken 	= CreateClientConVar( "pp_bloom_darken", 	"0.65", false, 	false )		-- Decides the strength of the bloom
+local pp_bloom 			= CreateClientConVar( "pp_bloom", 			"0", 	true, 	false ) -- On/Off
+local pp_bloom_darken 	= CreateClientConVar( "pp_bloom_darken", 	"0.65", false, 	false ) -- Decides the strength of the bloom
 local pp_bloom_multiply = CreateClientConVar( "pp_bloom_multiply", 	"2.0", 	false, 	false )	-- Decides the strength of the bloom
-local pp_bloom_sizex 	= CreateClientConVar( "pp_bloom_sizex", 	"9.0", 	false, 	false )		-- Horizontal blur size
-local pp_bloom_sizey 	= CreateClientConVar( "pp_bloom_sizey", 	"9.0", 	false, 	false )		-- Vertical blur size
+local pp_bloom_sizex 	= CreateClientConVar( "pp_bloom_sizex", 	"9.0", 	false, 	false ) -- Horizontal blur size
+local pp_bloom_sizey 	= CreateClientConVar( "pp_bloom_sizey", 	"9.0", 	false, 	false ) -- Vertical blur size
 local pp_bloom_color 	= CreateClientConVar( "pp_bloom_color", 	"1.0", 	false, 	false )
 local pp_bloom_color_r 	= CreateClientConVar( "pp_bloom_color_r", 	"255", 	false, 	false )
 local pp_bloom_color_g 	= CreateClientConVar( "pp_bloom_color_g", 	"255", 	false, 	false )
@@ -44,7 +44,7 @@ function DrawBloom( darken, multiply, sizex, sizey, passes, color, colr, colg, c
 	
 	-- The downsample material adjusts the contrast
 	mat_Downsample:SetFloat( "$darken", darken )
-	mat_Downsample:SetFloat( "$multiply", multiply  )
+	mat_Downsample:SetFloat( "$multiply", multiply )
 	
 		
 	-- Downsample to BloomTexture0
@@ -55,7 +55,7 @@ function DrawBloom( darken, multiply, sizex, sizey, passes, color, colr, colg, c
 					 
 	render.BlurRenderTarget( tex_Bloom0, sizex, sizey, passes )
 			 
-	render.SetRenderTarget( OldRT );
+	render.SetRenderTarget( OldRT )
 	
 	mat_Bloom:SetFloat( "$levelr", colr )
 	mat_Bloom:SetFloat( "$levelg", colg )
@@ -80,69 +80,67 @@ local function DrawInternal()
 	if ( !pp_bloom:GetBool() ) then return end
 	if ( !GAMEMODE:PostProcessPermitted( "bloom" ) ) then return end
 	
-	DrawBloom( pp_bloom_darken:GetFloat(), 
+	DrawBloom(	pp_bloom_darken:GetFloat(), 
 				pp_bloom_multiply:GetFloat(),
 				pp_bloom_sizex:GetFloat(),
 				pp_bloom_sizey:GetFloat(),
 				pp_bloom_passes:GetFloat(),
 				pp_bloom_color:GetFloat(),
-				pp_bloom_color_r:GetFloat()/255,
-				pp_bloom_color_g:GetFloat()/255,
-				pp_bloom_color_b:GetFloat()/255 )
-	
+				pp_bloom_color_r:GetFloat() / 255,
+				pp_bloom_color_g:GetFloat() / 255,
+				pp_bloom_color_b:GetFloat() / 255 )
 
 end
-
-
-
 hook.Add( "RenderScreenspaceEffects", "RenderBloom", DrawInternal )
 
+list.Set( "PostProcess", "#bloom_pp", {
 
-list.Set( "PostProcess", "Bloom",
-{
 	icon		= "gui/postprocess/bloom.png",
-	
 	convar		= "pp_bloom",
-	
-	category	= "Shaders",
-	
+	category	= "#shaders_pp",
+
 	cpanel		= function( CPanel )
 
-		CPanel:AddControl( "Header", { Text = "#Bloom", Description = "#Bloom_Information" }  )
-		CPanel:AddControl( "CheckBox", { Label = "#Bloom_Toggle", Command = "pp_bloom" }  )
+		CPanel:AddControl( "Header", { Description = "#bloom_pp.desc" } )
+		CPanel:AddControl( "CheckBox", { Label = "#bloom_pp.enable", Command = "pp_bloom" } )
 		
 		local params = { Options = {}, CVars = {}, Label = "#tool.presets", MenuButton = "1", Folder = "bloom" }
-		params.Options[ "#Default" ] = {pp_bloom_passes	=		"1",
-										pp_bloom_darken	=		"0.65",
-										pp_bloom_multiply =		"2.0",
-										pp_bloom_sizex =		"9",
-										pp_bloom_sizey = 		"9",
-										pp_bloom_color =		"1.0",
-										pp_bloom_color_r =		"255",
-										pp_bloom_color_g =		"255",
-										pp_bloom_color_b =		"255" }
+
+		params.Options[ "#preset.default" ] = {
+			pp_bloom_passes		= "1",
+			pp_bloom_darken		= "0.65",
+			pp_bloom_multiply	= "2.0",
+			pp_bloom_sizex		= "9",
+			pp_bloom_sizey		= "9",
+			pp_bloom_color		= "1.0",
+			pp_bloom_color_r	= "255",
+			pp_bloom_color_g	= "255",
+			pp_bloom_color_b	= "255"
+		}
 										
-		params.CVars = { "pp_bloom_passes",
-							"pp_bloom_darken",
-							"pp_bloom_multiply",
-							"pp_bloom_sizex",
-							"pp_bloom_sizey",
-							"pp_bloom_color",
-							"pp_bloom_color_r",
-							"pp_bloom_color_g",
-							"pp_bloom_color_b" }
+		params.CVars = {
+			"pp_bloom_passes",
+			"pp_bloom_darken",
+			"pp_bloom_multiply",
+			"pp_bloom_sizex",
+			"pp_bloom_sizey",
+			"pp_bloom_color",
+			"pp_bloom_color_r",
+			"pp_bloom_color_g",
+			"pp_bloom_color_b"
+		}
 							
-		CPanel:AddControl( "ComboBox", 	params )
+		CPanel:AddControl( "ComboBox", params )
 		
-		CPanel:AddControl( "Slider", { Label = "#Bloom_Passes", Command = "pp_bloom_passes", Type = "Integer", Min = "0", Max = "30" }  )
-		CPanel:AddControl( "Slider", { Label = "#Bloom_Darken", Command = "pp_bloom_darken", Type = "Float", Min = "0", Max = "1" }  )
-		CPanel:AddControl( "Slider", { Label = "#Bloom_Multiply", Command = "pp_bloom_multiply", Type = "Float", Min = "0", Max = "5" }  )	
-		CPanel:AddControl( "Slider", { Label = "#Bloom_BlurX", Command = "pp_bloom_sizex", Type = "Float", Min = "0", Max = "50" }  )	
-		CPanel:AddControl( "Slider", { Label = "#Bloom_BlurY", Command = "pp_bloom_sizey", Type = "Float", Min = "0", Max = "50" }  )	
-		CPanel:AddControl( "Slider", { Label = "#Bloom_Color_Multiplier", Command = "pp_bloom_color", Type = "Float", Min = "0", Max = "20" }  )	
+		CPanel:AddControl( "Slider", { Label = "#bloom_pp.passes", Command = "pp_bloom_passes", Type = "Integer", Min = "0", Max = "30" } )
+		CPanel:AddControl( "Slider", { Label = "#bloom_pp.darken", Command = "pp_bloom_darken", Type = "Float", Min = "0", Max = "1" } )
+		CPanel:AddControl( "Slider", { Label = "#bloom_pp.multiply", Command = "pp_bloom_multiply", Type = "Float", Min = "0", Max = "5" } )	
+		CPanel:AddControl( "Slider", { Label = "#bloom_pp.blurx", Command = "pp_bloom_sizex", Type = "Float", Min = "0", Max = "50" } )	
+		CPanel:AddControl( "Slider", { Label = "#bloom_pp.blury", Command = "pp_bloom_sizey", Type = "Float", Min = "0", Max = "50" } )	
+		CPanel:AddControl( "Slider", { Label = "#bloom_pp.multiplier", Command = "pp_bloom_color", Type = "Float", Min = "0", Max = "20" } )	
 
-		CPanel:AddControl( "Color", { Label = "#Bloom_Color", Red = "pp_bloom_color_r", Green = "pp_bloom_color_g", Blue = "pp_bloom_color_b", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" }  )			
+		CPanel:AddControl( "Color", { Label = "#bloom_pp.color", Red = "pp_bloom_color_r", Green = "pp_bloom_color_g", Blue = "pp_bloom_color_b", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" } )			
 
-	end,
-	
-})
+	end
+
+} )

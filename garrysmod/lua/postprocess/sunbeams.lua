@@ -1,5 +1,5 @@
 
-local _Material			= Material( "pp/sunbeams" )
+local _Material = Material( "pp/sunbeams" )
 _Material:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 
 --[[---------------------------------------------------------
@@ -7,7 +7,7 @@ _Material:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 -----------------------------------------------------------]]   
 local pp_sunbeams 			= CreateClientConVar( "pp_sunbeams", 				"0", 		true, false )
 local pp_sunbeams_darken	= CreateClientConVar( "pp_sunbeams_darken", 		"0.95", 	false, false )
-local pp_sunbeams_multiply  = CreateClientConVar( "pp_sunbeams_multiply", 	"1.0", 		false, false )
+local pp_sunbeams_multiply  = CreateClientConVar( "pp_sunbeams_multiply", 		"1.0", 		false, false )
 local pp_sunbeams_sunsize	= CreateClientConVar( "pp_sunbeams_sunsize", 		"0.075", 	false, false )
 
 
@@ -36,44 +36,45 @@ local function DrawInternal()
 	
 	local sun = util.GetSunInfo()
 	
-	if (!sun) then return end
-	if (sun.obstruction == 0) then return end
+	if ( !sun ) then return end
+	if ( sun.obstruction == 0 ) then return end
 	
 	local sunpos = EyePos() + sun.direction * 4096
 	local scrpos = sunpos:ToScreen()
 	
-	local dot = (sun.direction:Dot( EyeVector() ) - 0.8) * 5
-	if (dot <= 0) then return end
+	local dot = ( sun.direction:Dot( EyeVector() ) - 0.8 ) * 5
+	if ( dot <= 0 ) then return end
 	
 	DrawSunbeams( pp_sunbeams_darken:GetFloat(),
 				  pp_sunbeams_multiply:GetFloat() * dot * sun.obstruction,
 				  pp_sunbeams_sunsize:GetFloat(), 
 				  scrpos.x / ScrW(), 
-				  scrpos.y / ScrH()
-				  );
+				  scrpos.y / ScrH() )
 
 end
-
 hook.Add( "RenderScreenspaceEffects", "RenderSunbeams", DrawInternal )
 
 
-list.Set( "PostProcess", "Sun Rays",
-{
+list.Set( "PostProcess", "#sunbeams_pp", {
+
 	icon		= "gui/postprocess/sunrays.png",
-	
 	convar		= "pp_sunbeams",
-	
-	category	= "Shaders",
-	
+	category	= "#shaders_pp",
+
 	cpanel		= function( CPanel )
 
-		CPanel:AddControl( "Header", { Text = "#Sun Beams", Description = "#Sun Beams" }  )
-		CPanel:AddControl( "CheckBox", { Label = "#Enable", Command = "pp_sunbeams" }  )
+		CPanel:AddControl( "Header", { Description = "#sunbeams_pp.desc" } )
+		CPanel:AddControl( "CheckBox", { Label = "#sunbeams_pp.enable", Command = "pp_sunbeams" } )
 		
-		CPanel:AddControl( "Slider", { Label = "#Multiply", Command = "pp_sunbeams_multiply", Type = "Float", Min = "0", Max = "1" }  )
-		CPanel:AddControl( "Slider", { Label = "#Darken", Command = "pp_sunbeams_darken", Type = "Float", Min = "0", Max = "1" }  )
-		CPanel:AddControl( "Slider", { Label = "#Sun Size", Command = "pp_sunbeams_sunsize", Type = "Float", Min = "0.01", Max = "0.25" }  )
+		local params = { Options = {}, CVars = {}, Label = "#tool.presets", MenuButton = "1", Folder = "sunbeams" }
+		params.Options[ "#preset.default" ] = { pp_sunbeams = "0", pp_sunbeams_darken = "0.95", pp_sunbeams_multiply = "1", pp_sunbeams_sunsize = "0.075" }
+		params.CVars = { "pp_sunbeams", "pp_sunbeams_darken", "pp_sunbeams_multiply", "pp_sunbeams_sunsize" }
+		CPanel:AddControl( "ComboBox", params )
+
+		CPanel:AddControl( "Slider", { Label = "#sunbeams_pp.multiply", Command = "pp_sunbeams_multiply", Type = "Float", Min = "0", Max = "1" } )
+		CPanel:AddControl( "Slider", { Label = "#sunbeams_pp.darken", Command = "pp_sunbeams_darken", Type = "Float", Min = "0", Max = "1" } )
+		CPanel:AddControl( "Slider", { Label = "#sunbeams_pp.size", Command = "pp_sunbeams_sunsize", Type = "Float", Min = "0.01", Max = "0.25" } )
 		
-	end,
-	
-})
+	end
+
+} )
