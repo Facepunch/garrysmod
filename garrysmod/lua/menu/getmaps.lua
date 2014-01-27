@@ -204,7 +204,7 @@ local IgnoreMaps = { "background", "^test_", "^styleguide", "^devtest", "sdk_sha
 
 local function RefreshMaps()
 
-	UpdateMapPatterns();
+	UpdateMapPatterns()
 
 	g_MapList = {}
 	g_MapListCategorised = {}
@@ -301,11 +301,17 @@ end
 function LoadLastMap()
 
 	local t = string.Explode( ";", cookie.GetString( "lastmap", "" ) )
+
 	local map = t[ 1 ] or ""
 	local cat = t[ 2 ] or ""
 
+	local mapinfo = g_MapList[ map .. ".bsp" ]
+
+	if ( !mapinfo ) then map = "gm_flatgrass" end
+	if ( !g_MapListCategorised[ cat ] ) then cat = mapinfo and mapinfo.Category or "Sandbox" end
+
 	cat = string.gsub( cat, "'", "\\'" )
 
-	pnlMainMenu:Call( "SetLastMap('" .. map .. "','" .. cat .. "')" );
+	pnlMainMenu:Call( "SetLastMap('" .. map .. "','" .. cat .. "')" )
 
 end
