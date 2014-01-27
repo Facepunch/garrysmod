@@ -181,31 +181,13 @@
 	
 		20
 		{
-			"name"		"sbox_maxspawners"
-			"text"		"max_spawners"
-			"help"		"Maximum spawners a single player can create"
-			"type"		"Numeric"
-			"default"	"10"
-		}
-	
-		21
-		{
-			"name"		"sbox_maxturrets"
-			"text"		"max_turrets"
-			"help"		"Maximum props a single player can create"
-			"type"		"Numeric"
-			"default"	"4"
-		}
-		
-		22
-		{
 			"name"		"sbox_weapons"
 			"text"		"enable_weapons"
 			"type"		"CheckBox"
 			"default"	"1"
 		}
 
-		23
+		21
 		{
 			"name"		"sbox_bonemanip_npc"
 			"text"		"bone_manipulate_npcs"
@@ -214,7 +196,7 @@
 			"default"	"1"
 		}
 
-		24
+		22
 		{
 			"name"		"sbox_bonemanip_player"
 			"text"		"bone_manipulate_players"
@@ -223,7 +205,7 @@
 			"default"	"0"
 		}
 
-		25
+		23
 		{
 			"name"		"sbox_bonemanip_misc"
 			"text"		"bone_manipulate_others"
@@ -232,7 +214,7 @@
 			"default"	"0"
 		}
 
-		26
+		24
 		{
 			"name"		"sbox_persist"
 			"text"		"persistent_mode"

@@ -1,6 +1,4 @@
 
-
-
 local mat_MotionBlur	= Material( "pp/motionblur" )
 local mat_Screen		= Material( "pp/fb" )
 local tex_MotionBlur	= render.GetMoBlurTex0()
@@ -28,7 +26,7 @@ function DrawMotionBlur( addalpha, drawalpha, delay )
 	
 		mat_Screen:SetFloat( "$alpha", 1 )
 		
-		local OldRT = render.GetRenderTarget();
+		local OldRT = render.GetRenderTarget()
 		render.SetRenderTarget( tex_MotionBlur )
 			render.SetMaterial( mat_Screen )
 			render.DrawScreenQuad()
@@ -45,7 +43,7 @@ function DrawMotionBlur( addalpha, drawalpha, delay )
 		NextDraw = CurTime() + delay
 
 		mat_Screen:SetFloat( "$alpha", addalpha )
-		local OldRT = render.GetRenderTarget();
+		local OldRT = render.GetRenderTarget()
 		render.SetRenderTarget( tex_MotionBlur )
 
 		render.SetMaterial( mat_Screen )
@@ -54,7 +52,6 @@ function DrawMotionBlur( addalpha, drawalpha, delay )
 		render.SetRenderTarget( OldRT )
 
 	end
-
 
 	render.SetMaterial( mat_MotionBlur )
 	render.DrawScreenQuad()
@@ -70,36 +67,31 @@ local function DrawInternal()
 
 	DrawMotionBlur( pp_motionblur_addalpha:GetFloat(),
 			pp_motionblur_drawalpha:GetFloat(),
-			pp_motionblur_delay:GetFloat() );
+			pp_motionblur_delay:GetFloat() )
 
 end
-
-
 hook.Add( "RenderScreenspaceEffects", "RenderMotionBlur", DrawInternal )
 
+list.Set( "PostProcess", "#motion_blur_pp", {
 
-list.Set( "PostProcess", "Accumulation Motion Blur",
-{
 	icon		= "gui/postprocess/accummotionblur.png",
-	
 	convar		= "pp_motionblur",
-	
-	category	= "Effects",
+	category	= "#effects_pp",
 	
 	cpanel		= function( CPanel )
 
-		CPanel:AddControl( "Header", { Text = "#MotionBlur", Description = "#MotionBlur_Information" }  )
-		CPanel:AddControl( "CheckBox", { Label = "#MotionBlur_Toggle", Command = "pp_motionblur" }  )
+		CPanel:AddControl( "Header", { Description = "#motion_blur_pp.desc" } )
+		CPanel:AddControl( "CheckBox", { Label = "#motion_blur_pp.enable", Command = "pp_motionblur" } )
 		
 		local params = { Options = {}, CVars = {}, Label = "#tool.presets", MenuButton = "1", Folder = "motionblur" }
-		params.Options[ "#Default" ] = { pp_motionblur_addalpha = "0.2", pp_motionblur_delay = "0.05", pp_motionblur_drawalpha = "0.99" }
+		params.Options[ "#preset.default" ] = { pp_motionblur_addalpha = "0.2", pp_motionblur_delay = "0.05", pp_motionblur_drawalpha = "0.99" }
 		params.CVars = { "pp_motionblur_addalpha", "pp_motionblur_drawalpha", "pp_motionblur_delay" }
-		CPanel:AddControl( "ComboBox", 	params )
+		CPanel:AddControl( "ComboBox", params )
 		
-		CPanel:AddControl( "Slider", { Label = "#MotionBlur_Add_Alpha", Command = "pp_motionblur_addalpha", Type = "Float", Min = "0", Max = "1" }  )
-		CPanel:AddControl( "Slider", { Label = "#MotionBlur_DrawAlpha", Command = "pp_motionblur_drawalpha", Type = "Float", Min = "0", Max = "1" }  )
-		CPanel:AddControl( "Slider", { Label = "#MotionBlur_Delay", Command = "pp_motionblur_delay", Type = "Float", Min = "0", Max = "1" }  )	
+		CPanel:AddControl( "Slider", { Label = "#motion_blur_pp.add_alpha", Command = "pp_motionblur_addalpha", Type = "Float", Min = "0", Max = "1" } )
+		CPanel:AddControl( "Slider", { Label = "#motion_blur_pp.draw_alpha", Command = "pp_motionblur_drawalpha", Type = "Float", Min = "0", Max = "1" } )
+		CPanel:AddControl( "Slider", { Label = "#motion_blur_pp.delay", Command = "pp_motionblur_delay", Type = "Float", Min = "0", Max = "1" } )	
 
-	end,
-	
-})
+	end
+
+} )

@@ -2,7 +2,7 @@
 --[[---------------------------------------------------------
    Register the convars that will control this effect
 -----------------------------------------------------------]]   
-local pp_stereoscopy			= CreateClientConVar( "pp_stereoscopy", "0", false, false )				-- On/Off
+local pp_stereoscopy			= CreateClientConVar( "pp_stereoscopy", "0", false, false ) -- On/Off
 local pp_stereoscopy_size		= CreateClientConVar( "pp_stereoscopy_size", "6", false, false )
 
 
@@ -20,10 +20,10 @@ function RenderStereoscopy( ViewOrigin, ViewAngles )
 	
 	local view = {}
 	
-		view.y = ScrH() / 2 - h / 2
-		view.w = w
-		view.h = h
-		view.angles = ViewAngles
+	view.y = ScrH() / 2 - h / 2
+	view.w = w
+	view.h = h
+	view.angles = ViewAngles
 	
 	-- Left
 	view.x = ScrW() / 2 - w - 10
@@ -51,17 +51,12 @@ local function DrawInternal( ViewOrigin, ViewAngles, ViewFOV )
 	return true
 
 end
-
-
-
 hook.Add( "RenderScene", "RenderStereoscopy", DrawInternal )
 
-list.Set( "PostProcess", "Stereoscopy",
-{
+list.Set( "PostProcess", "#stereoscopy_pp", {
+
 	icon		= "gui/postprocess/stereoscopy.png",
-	
 	convar		= "pp_stereoscopy",
+	category	= "#effects_pp"
 	
-	category	= "Effects"
-	
-})
+} )
