@@ -1,4 +1,3 @@
-
 net.Receivers = {}
 
 --
@@ -38,16 +37,38 @@ end
 function net.WriteEntity( ent )
 
 	if ( !IsValid( ent ) ) then 
-		net.WriteUInt( 0, 32 )
+		net.WriteUInt( 0, 16 )
 	else
-		net.WriteUInt( ent:EntIndex(), 32 )
+		net.WriteUInt( ent:EntIndex(), 16 )
 	end
 
 end
 
-function net.ReadEntity( ent )
+function net.ReadEntity()
 
-	local i = net.ReadUInt( 32 )
+	local i = net.ReadUInt( 16 )
+	if ( !i ) then return end
+	
+	return Entity( i )
+	
+end
+
+--
+-- Read/Write a player to the stream
+--
+function net.WritePlayer( ent )
+
+	if ( !IsValid( ent ) ) then 
+		net.WriteUInt( 0, 8 )
+	else
+		net.WriteUInt( ent:EntIndex(), 8 )
+	end
+
+end
+
+function net.ReadPlayer()
+
+	local i = net.ReadUInt( 8 )
 	if ( !i ) then return  end
 	
 	return Entity( i )
