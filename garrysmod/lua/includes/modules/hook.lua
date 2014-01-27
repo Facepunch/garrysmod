@@ -1,123 +1,94 @@
-
-local gmod			= gmod
-local pairs			= pairs
+local gmod		= gmod
+local pairs		= pairs
 local isfunction	= isfunction
 local isstring		= isstring
 local IsValid		= IsValid
+local unpack		= unpack
 
 module( "hook" )
 
-Hooks = {}
+local Hooks = {}
 
---
--- For access to the Hooks table.. for some reason.
---
-function GetTable() return Hooks end
+--[[---------------------------------------------------------
+    Name: GetTable
+    Desc: Returns a table of all hooks.
+-----------------------------------------------------------]]
+function GetTable()
+	return Hooks
+end
 
---
--- Add a hook
---
+--[[---------------------------------------------------------
+    Name: Add
+    Args: string hookName, any identifier, function func
+    Desc: Add a hook to listen to the specified event.
+-----------------------------------------------------------]]
 function Add( event_name, name, func )
+	if not isfunction( func ) then return end
+	if not isstring( event_name ) then return end
 
-	if ( !isfunction( func ) ) then return end
-	if ( !isstring( event_name ) ) then return end
-
-	if (Hooks[ event_name ] == nil) then
+	if Hooks[ event_name ] == nil then
 		Hooks[ event_name ] = {}
 	end
 
 	Hooks[ event_name ][ name ] = func
-
 end
 
-
---
--- Remove a hook
---
+--[[---------------------------------------------------------
+    Name: Remove
+    Args: string hookName, identifier
+    Desc: Removes the hook with the given indentifier.
+-----------------------------------------------------------]]
 function Remove( event_name, name )
-
-	if ( !isstring( event_name ) ) then return end
-	if ( !Hooks[ event_name ] ) then return end
+	if not isstring( event_name ) then return end
+	if not Hooks[ event_name ] then return end
 
 	Hooks[ event_name ][ name ] = nil
-
 end
 
---
--- Run a hook (this replaces Call)
---
+--[[---------------------------------------------------------
+    Name: Run
+    Args: string hookName, vararg args
+    Desc: Calls hooks associated with the hook name.
+-----------------------------------------------------------]]
 function Run( name, ... )
-	return Call( name, nil, ... )
+	return Call( name, gmod.GetGamemode(), ... )
 end
 
---
--- Called by the engine
---
+--[[---------------------------------------------------------
+    Name: Run
+    Args: string hookName, table gamemodeTable, vararg args
+    Desc: Calls hooks associated with the hook name.
+-----------------------------------------------------------]]
 function Call( name, gm, ... )
-
-	local ret
-
-	--
-	-- If called from hook.Run then gm will be nil.
-	--
-	if ( gm == nil && gmod != nil ) then
-		gm = gmod.GetGamemode()
-	end
-
-	--
-	-- Run hooks
-	--
 	local HookTable = Hooks[ name ]
-	if ( HookTable != nil ) then
-	
-		local a, b, c, d, e, f;
-
+	if HookTable ~= nil then
 		for k, v in pairs( HookTable ) do 
-			
-			if ( isstring( k ) ) then
-				
-				--
-				-- If it's a string, it's cool
-				--
-				a, b, c, d, e, f = v( ... )
+			local ret
 
+			if isstring( k ) then
+				ret = { v( ... ) }
 			else
-
-				--
 				-- If the key isn't a string - we assume it to be an entity
 				-- Or panel, or something else that IsValid works on.
-				--
-				if ( IsValid( k ) ) then
-					--
-					-- If the object is valid - pass it as the first argument (self)
-					--
-					a, b, c, d, e, f = v( k, ... )
+				if IsValid( k ) then
+					ret = { v( k, ... ) } -- If the object is valid - pass it as the first argument (self)
 				else
-					--
-					-- If the object has become invalid - remove it
-					--
-					HookTable[ k ] = nil
+					HookTable[ k ] = nil -- If the object has become invalid - remove it
 				end
 			end
 
-			--
 			-- Hook returned a value - it overrides the gamemode function
-			--
-			if ( a != nil ) then
-				return a, b, c, d, e, f
+			if ret and #ret > 0 then
+				return unpack( ret )
 			end
-			
 		end
 	end
 	
-	--
 	-- Call the gamemode function
-	--
-	if ( !gm ) then return end
+	if not gm then return end
 	
 	local GamemodeFunction = gm[ name ]
-	if ( GamemodeFunction == nil ) then return end
+	if GamemodeFunction == nil then return end
 		
-	return GamemodeFunction( gm, ... )	
-	
+	return GamemodeFunction( gm, ... )
 end
