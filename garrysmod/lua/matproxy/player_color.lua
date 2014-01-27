@@ -1,44 +1,29 @@
+--[[---------------------------------------------------------
+    PlayerColor Material Proxy
+      Sets the clothing colour of custom made models to
+      ent.GetPlayerColor, a normalized vector colour.
+-----------------------------------------------------------]]
 
--- Proxy Example:
---
---	Proxies
---	{
---		PlayerColor
---		{
---			resultVar	$color2
---		}
---	}
+matproxy.Add( {
+	name = "PlayerColor",
 
-matproxy.Add( 
-{
-	name	=	"PlayerColor", 
-
-	init	=	function( self, mat, values )
-
+	init = function( self, mat, values )
 		-- Store the name of the variable we want to set
 		self.ResultTo = values.resultvar
-
 	end,
 
-	bind	=	function( self, mat, ent )
+	bind = function( self, mat, ent )
+		if not IsValid( ent ) then return end
 
-		if ( !IsValid( ent ) ) then return end
-
-		--
 		-- If entity is a ragdoll try to convert it into the player
-		--
+		-- ( this applies to their corpses )
 		if ( ent:IsRagdoll() ) then
-			ent = ent:GetRagdollOwner()
-			if ( !IsValid( ent ) ) then return end
+			local owner = ent:GetRagdollOwner()
+			ent = IsValid(owner) and owner or ent
 		end
 
-		--
 		-- If the target ent has a function called GetPlayerColor then use that
 		-- The function SHOULD return a Vector with the chosen player's colour.
-		--
-		-- In sandbox this function is created as a network function, 
-		-- in player_sandbox.lua in SetupDataTables
-		--
 		if ( ent.GetPlayerColor ) then
 			local col = ent:GetPlayerColor()
 			if ( isvector( col ) ) then
@@ -47,6 +32,5 @@ matproxy.Add(
 		else
 			mat:SetVector( self.ResultTo, Vector( 62.0/255.0, 88.0/255.0, 106.0/255.0 ) )
 		end
-
 	end 
-})
+} )
