@@ -57,7 +57,7 @@ if ( CLIENT ) then
 		AddUndo
 		Called from server. Adds a new undo to our UI
 	-----------------------------------------------------------]]
-	local function AddUndo( _ )
+	local function AddUndo()
 
 		local k 	= net.ReadInt(16);
 		local v 	= net.ReadString();
@@ -77,7 +77,7 @@ if ( CLIENT ) then
 		has been undone or made redundant. We act by updating 
 		out data (We wait until the UI is viewed until updating)
 	-----------------------------------------------------------]]
-	local function Undone( _ )
+	local function Undone()
 
 		local key = net.ReadInt(16);
 		

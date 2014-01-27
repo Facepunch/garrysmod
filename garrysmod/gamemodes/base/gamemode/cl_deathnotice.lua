@@ -42,7 +42,7 @@ local function PlayerIDOrNameToString( var )
 end
 
 
-local function RecvPlayerKilledByPlayer( _ )
+local function RecvPlayerKilledByPlayer()
 
 	local victim 	= net.ReadEntity();
 	local inflictor	= net.ReadString();
@@ -57,7 +57,7 @@ end
 	
 net.Receive( "PlayerKilledByPlayer", RecvPlayerKilledByPlayer )
 
-local function RecvPlayerKilledSelf( _ )
+local function RecvPlayerKilledSelf()
 
 	local victim 	= net.ReadEntity();
 	if ( !IsValid( victim ) ) then return end
@@ -68,7 +68,7 @@ end
 net.Receive( "PlayerKilledSelf", RecvPlayerKilledSelf )
 
 
-local function RecvPlayerKilled( _ )
+local function RecvPlayerKilled()
 
 	local victim 	= net.ReadEntity();
 	if ( !IsValid( victim ) ) then return end
@@ -81,7 +81,7 @@ end
 	
 net.Receive( "PlayerKilled", RecvPlayerKilled )
 
-local function RecvPlayerKilledNPC( _ )
+local function RecvPlayerKilledNPC()
 
 	local victimtype = net.ReadString();
 	local victim 	= "#" .. victimtype;
@@ -117,7 +117,7 @@ end
 net.Receive( "PlayerKilledNPC", RecvPlayerKilledNPC )
 
 
-local function RecvNPCKilledNPC( _ )
+local function RecvNPCKilledNPC()
 
 	local victim 	= "#" .. net.ReadString();
 	local inflictor	= net.ReadString();

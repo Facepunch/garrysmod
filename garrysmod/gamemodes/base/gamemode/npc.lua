@@ -36,7 +36,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 				net.WriteString( InflictorClass )
 				net.WriteEntity( attacker )
 		
-			net.End()
+			net.Broadcast()
 
 			return
 		end
@@ -50,7 +50,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 		net.WriteString( InflictorClass )
 		net.WriteString( AttackerClass )
 	
-	net.End()
+	net.Broadcast()
 
 end
 
