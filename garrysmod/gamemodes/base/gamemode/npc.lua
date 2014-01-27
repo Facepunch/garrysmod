@@ -1,3 +1,6 @@
+-- Add Network Strings we use
+util.AddNetworkString( "PlayerKilledNPC" )
+util.AddNetworkString( "NPCKilledNPC" )
 
 --[[---------------------------------------------------------
    Name: gamemode:OnNPCKilled( entity, attacker, inflictor )
@@ -27,13 +30,13 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 		
 		if ( attacker:IsPlayer() ) then
 
-			umsg.Start( "PlayerKilledNPC" )
+			net.Start( "PlayerKilledNPC" )
 		
-				umsg.String( ent:GetClass() )
-				umsg.String( InflictorClass )
-				umsg.Entity( attacker )
+				net.WriteString( ent:GetClass() )
+				net.WriteString( InflictorClass )
+				net.WriteEntity( attacker )
 		
-			umsg.End()
+			net.Broadcast()
 
 			return
 		end
@@ -41,13 +44,13 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	end
 
 	
-	umsg.Start( "NPCKilledNPC" )
+	net.Start( "NPCKilledNPC" )
 	
-		umsg.String( ent:GetClass() )
-		umsg.String( InflictorClass )
-		umsg.String( AttackerClass )
+		net.WriteString( ent:GetClass() )
+		net.WriteString( InflictorClass )
+		net.WriteString( AttackerClass )
 	
-	umsg.End()
+	net.Broadcast()
 
 end
 
