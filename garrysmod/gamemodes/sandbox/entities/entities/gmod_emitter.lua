@@ -387,3 +387,29 @@ list.Set( "EffectType", "glassimpact", {
 
 	end
 })
+
+list.Set( "EffectType", "bloodimpact", {
+	print		=	"#effecttype.bloodimpact",
+	material	=	"gui/effects/bloodimpact.png",
+	func		=	function( ent, pos, angle, scale )
+
+		local effectdata = EffectData()
+		effectdata:SetOrigin( pos )
+		util.Effect( "BloodImpact", effectdata, true, true )
+
+	end
+})
+
+list.Set( "EffectType", "muzzleeffect", {
+	print		=	"#effecttype.muzzleeffect",
+	material	=	"gui/effects/muzzleeffect.png",
+	func		=	function( ent, pos, angle, scale )
+
+		local effectdata = EffectData()
+		effectdata:SetOrigin( pos + angle:Forward() * 4 )
+		effectdata:SetAngles( angle )
+		effectdata:SetScale( scale )
+		util.Effect( "MuzzleEffect", effectdata, true, true )
+
+	end
+})

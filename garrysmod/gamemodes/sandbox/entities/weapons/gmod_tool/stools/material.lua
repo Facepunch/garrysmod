@@ -62,6 +62,11 @@ function TOOL:RightClick( trace )
 
 end
 
+if ( IsMounted( "tf" ) ) then
+	list.Add( "OverrideMaterials", "models/player/shared/gold_player" )
+	list.Add( "OverrideMaterials", "models/player/shared/ice_player" )
+end
+
 list.Add( "OverrideMaterials", "models/wireframe" )
 list.Add( "OverrideMaterials", "debug/env_cubemap_model" )
 list.Add( "OverrideMaterials", "models/shadertest/shader3" )

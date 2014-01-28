@@ -202,6 +202,7 @@ function TOOL:Think()
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity.model != self:GetClientInfo( "model" ) ) then
 	
 		local modeltable = list.Get( "BalloonModels" )[ self:GetClientInfo( "model" ) ]
+		if ( !modeltable ) then return end
 		self:MakeGhostEntity( modeltable.model, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 		if ( IsValid( self.GhostEntity ) ) then self.GhostEntity.model = self:GetClientInfo( "model" ) end
 
