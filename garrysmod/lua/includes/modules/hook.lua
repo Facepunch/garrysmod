@@ -6,7 +6,7 @@ local IsValid                = IsValid
 
 module( "hook" )
 
-Hooks = {}
+local Hooks = {}
 
 --[[---------------------------------------------------------
     Name: GetTable
