@@ -133,13 +133,25 @@ end
 -- own file placed in autorun or something.
 --
 list.Set( "trail_materials", "#trail.plasma", 	"trails/plasma" )
-list.Set( "trail_materials", "#trail.tube", 		"trails/tube" )
-list.Set( "trail_materials", "#trail.electric", 	"trails/electric" )
-list.Set( "trail_materials", "#trail.smoke", 		"trails/smoke" )
-list.Set( "trail_materials", "#trail.laser", 		"trails/laser" )
-list.Set( "trail_materials", "#trail.physbeam", 	"trails/physbeam" )
-list.Set( "trail_materials", "#trail.love", 		"trails/love" )
+list.Set( "trail_materials", "#trail.tube", 	"trails/tube" )
+list.Set( "trail_materials", "#trail.electric", "trails/electric" )
+list.Set( "trail_materials", "#trail.smoke", 	"trails/smoke" )
+list.Set( "trail_materials", "#trail.laser", 	"trails/laser" )
+list.Set( "trail_materials", "#trail.physbeam", "trails/physbeam" )
+list.Set( "trail_materials", "#trail.love", 	"trails/love" )
 list.Set( "trail_materials", "#trail.lol", 		"trails/lol" )
+
+if ( IsMounted( "tf" ) ) then
+	list.Set( "trail_materials", "#trail.beam001_blu", 		"effects/beam001_blu" )
+	list.Set( "trail_materials", "#trail.beam001_red", 		"effects/beam001_red" )
+	list.Set( "trail_materials", "#trail.beam001_white",	"effects/beam001_white" )
+	list.Set( "trail_materials", "#trail.arrowtrail_blu", 	"effects/arrowtrail_blu" )
+	list.Set( "trail_materials", "#trail.arrowtrail_red", 	"effects/arrowtrail_red" )
+	list.Set( "trail_materials", "#trail.repair_claw_trail_blue", 	"effects/repair_claw_trail_blue" )
+	list.Set( "trail_materials", "#trail.repair_claw_trail_red", 	"effects/repair_claw_trail_red" )
+	list.Set( "trail_materials", "#trail.australiumtrail_red", 		"effects/australiumtrail_red" )
+	list.Set( "trail_materials", "#trail.beam_generic01", 			"effects/beam_generic01" )
+end
 
 function TOOL.BuildCPanel( CPanel )
 

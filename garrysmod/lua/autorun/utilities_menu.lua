@@ -24,11 +24,14 @@ local function ServerSettings( CPanel )
 		
 	CPanel:AddControl( "TextBox",	{ Label = "#utilities.password", Command = "sv_password", WaitForEnter = "1" } )
 
+	CPanel:AddControl( "CheckBox", 	{ Label = "#utilities.kickerrornum",		Command = "sv_kickerrornum" } )
+	CPanel:AddControl( "CheckBox", 	{ Label = "#utilities.allowcslua",			Command = "sv_allowcslua" } )
+
 	CPanel:AddControl( "Slider",	{ Label = "#utilities.gravity",		Type = "Float",		Command = "sv_gravity", Min = "-200", Max = "600" } )
 	CPanel:AddControl( "Slider", 	{ Label = "#utilities.timescale",	Type = "Float", 	Command = "phys_timescale", Min = "0", Max = "2" } )
 	CPanel:AddControl( "Slider", 	{ Label = "#utilities.iterations",	Type = "Integer", 	Command = "gmod_physiterations", Min = "1", Max = "10" } )
 	
-	CPanel:AddControl( "Header", { Description = "#utilities.sandboxsettingss" } )
+	CPanel:AddControl( "Header", { Description = "#utilities.sandboxsettings" } )
 
 	CPanel:AddControl( "TextBox", 	{ Label = "#persistent_mode",			Command = "sbox_persist", WaitForEnter = "1" } )
 	

@@ -51,8 +51,27 @@ list.Set( "OverlayMaterials", "#overlay_pp.shield",			{ Material = "models/props
 list.Set( "OverlayMaterials", "#overlay_pp.froested",		{ Material = "models/props_c17/frostedglass_01a", Icon = "models/props_c17/frostedglass_01a" } )
 list.Set( "OverlayMaterials", "#overlay_pp.tankglass",		{ Material = "models/props_lab/tank_glass001", Icon = "models/props_lab/tank_glass001" } )
 list.Set( "OverlayMaterials", "#overlay_pp.globe",			{ Material = "models/props_combine/tprings_globe", Icon = "models/props_combine/tprings_globe" } )
-list.Set( "OverlayMaterials", "#overlay_pp.fisheye",			{ Material = "models/props_c17/fisheyelens", Icon = "models/props_c17/fisheyelens" } )
+list.Set( "OverlayMaterials", "#overlay_pp.fisheye",		{ Material = "models/props_c17/fisheyelens", Icon = "models/props_c17/fisheyelens" } )
 list.Set( "OverlayMaterials", "#overlay_pp.rendertarget",	{ Material = "models/overlay_rendertarget", Icon = "models/overlay_rendertarget" } )
+list.Set( "OverlayMaterials", "#overlay_pp.strider_pinch_dudv",	{ Material = "models/strider_pinch_dudv", Icon = "effects/strider_pinch_dudv" } )
+list.Set( "OverlayMaterials", "#overlay_pp.teleport",	{ Material = "effects/tp_eyefx/tpeye", Icon = "effects/tp_eyefx/tpeye" } )
+list.Set( "OverlayMaterials", "#overlay_pp.teleport2",	{ Material = "effects/tp_eyefx/tpeye2", Icon = "effects/tp_eyefx/tpeye2" } )
+list.Set( "OverlayMaterials", "#overlay_pp.teleport3",	{ Material = "effects/tp_eyefx/tpeye3", Icon = "effects/tp_eyefx/tpeye3" } )
+list.Set( "OverlayMaterials", "#overlay_pp.tvnoise",	{ Material = "effects/tvscreen_noise002a", Icon = "effects/tvscreen_noise002a" } )
+list.Set( "OverlayMaterials", "#overlay_pp.water_warp01",	{ Material = "effects/water_warp01", Icon = "effects/water_warp01" } )
+
+if ( IsMounted( "tf" ) ) then
+	list.Set( "OverlayMaterials", "#overlay_pp.jarate",				{ Material = "effects/jarate_overlay", Icon = "effects/jarate_overlay" } )
+	list.Set( "OverlayMaterials", "#overlay_pp.invuln_overlay_red",	{ Material = "effects/invuln_overlay_red", Icon = "effects/invuln_overlay_red" } )
+	list.Set( "OverlayMaterials", "#overlay_pp.invuln_overlay_blu",	{ Material = "effects/invuln_overlay_blue", Icon = "effects/invuln_overlay_blue" } )
+	list.Set( "OverlayMaterials", "#overlay_pp.water_warp",			{ Material = "effects/water_warp", Icon = "effects/water_warp" } )
+	list.Set( "OverlayMaterials", "#overlay_pp.water_warp_2fort",	{ Material = "effects/water_warp_2fort", Icon = "effects/water_warp_2fort" } )
+	list.Set( "OverlayMaterials", "#overlay_pp.water_warp_well",	{ Material = "effects/water_warp_well", Icon = "effects/water_warp_well" } )
+	list.Set( "OverlayMaterials", "#overlay_pp.bleed_overlay",	{ Material = "effects/bleed_overlay", Icon = "effects/bleed_overlay" } )
+	list.Set( "OverlayMaterials", "#overlay_pp.bombinomicon_distortion",	{ Material = "effects/bombinomicon_distortion", Icon = "effects/bombinomicon_distortion" } )
+	list.Set( "OverlayMaterials", "#overlay_pp.dodge_overlay",	{ Material = "effects/dodge_overlay", Icon = "effects/dodge_overlay" } )
+	list.Set( "OverlayMaterials", "#overlay_pp.distortion_normal",	{ Material = "effects/distortion_normal001", Icon = "effects/distortion_normal001" } )
+end
 
 list.Set( "PostProcess", "#overlay_pp", {
 
