@@ -51,7 +51,7 @@ end
     Desc: Calls hooks associated with the hook name.
 -----------------------------------------------------------]]
 function Run( name, ... )
-	return Call( name, gmod.GetGamemode(), ... )
+	return Call( name, gmod and gmod.GetGamemode() or nil, ... )
 end
 
 --[[---------------------------------------------------------
