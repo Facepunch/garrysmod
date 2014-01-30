@@ -3,7 +3,7 @@ AddCSLuaFile()
 
 SWEP.PrintName			= "Fists"
 
-SWEP.Author			= "robotboy655 & MaxOfS2D, Tenrys"
+SWEP.Author			= "Killburn, robotboy655, MaxOfS2D & Tenrys"
 SWEP.Purpose		= "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
 
 SWEP.Spawnable			= true
@@ -43,58 +43,40 @@ function SWEP:PreDrawViewModel( vm, wep, ply )
 end
 
 SWEP.HitDistance = 48
+
+function SWEP:SetupDataTables()
+	
+	self:NetworkVar( "Float", 0, "NextMeleeAttack" )
+	self:NetworkVar( "Float", 1, "NextIdle" )
+	self:NetworkVar( "Int", 2, "Combo" )
+	
+end
+
+function SWEP:UpdateNextIdle()
+
+	local vm = self.Owner:GetViewModel()
+	self:SetNextIdle( CurTime() + vm:SequenceDuration() )
+	
+end
+
 function SWEP:PrimaryAttack( right )
 
 	self.Owner:SetAnimation( PLAYER_ATTACK1 )
 
-	if ( !IsFirstTimePredicted() ) then return end
-
-	-- We need this because attack sequences won't work otherwise in multiplayer
-	local vm = self.Owner:GetViewModel()
-	vm:ResetSequence( vm:LookupSequence( "fists_idle_01" ) )
-
 	local anim = "fists_left"
 	if ( right ) then anim = "fists_right" end
-	if ( math.random( 1, 10 ) == 1 ) then anim = "fists_uppercut" end
+	if ( self:GetCombo() >= 2 ) then
+		anim = "fists_uppercut"
+	end
 
-	timer.Simple( 0, function()
-		if ( !IsValid( self ) || !IsValid( self.Owner ) || !self.Owner:GetActiveWeapon() || self.Owner:GetActiveWeapon() != self ) then return end
+	local vm = self.Owner:GetViewModel()
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( anim ) )
+
+	self:EmitSound( SwingSound )
+
+	self:UpdateNextIdle()
+	self:SetNextMeleeAttack( CurTime() + 0.2 )
 	
-		local vm = self.Owner:GetViewModel()
-		vm:ResetSequence( vm:LookupSequence( anim ) )
-
-		self:Idle()
-	end )
-
-	timer.Simple( 0.05, function()
-		if ( !IsValid( self ) || !IsValid( self.Owner ) || !self.Owner:GetActiveWeapon() || self.Owner:GetActiveWeapon() != self ) then return end
-		if ( anim == "fists_left" ) then
-			self.Owner:ViewPunch( Angle( 0, 16, 0 ) )
-		elseif ( anim == "fists_right" ) then
-			self.Owner:ViewPunch( Angle( 0, -16, 0 ) )
-		elseif ( anim == "fists_uppercut" ) then
-			self.Owner:ViewPunch( Angle( 16, -8, 0 ) )
-		end
-	end )
-
-	timer.Simple( 0.2, function()
-		if ( !IsValid( self ) || !IsValid( self.Owner ) || !self.Owner:GetActiveWeapon() || self.Owner:GetActiveWeapon() != self ) then return end
-		if ( anim == "fists_left" ) then
-			self.Owner:ViewPunch( Angle( 4, -16, 0 ) )
-		elseif ( anim == "fists_right" ) then
-			self.Owner:ViewPunch( Angle( 4, 16, 0 ) )
-		elseif ( anim == "fists_uppercut" ) then
-			self.Owner:ViewPunch( Angle( -32, 0, 0 ) )
-		end
-		self.Owner:EmitSound( SwingSound )
-		
-	end )
-
-	timer.Simple( 0.2, function()
-		if ( !IsValid( self ) || !IsValid( self.Owner ) || !self.Owner:GetActiveWeapon() || self.Owner:GetActiveWeapon() != self || CLIENT ) then return end
-		self:DealDamage( anim )
-	end )
-
 	self:SetNextPrimaryFire( CurTime() + 0.9 )
 	self:SetNextSecondaryFire( CurTime() + 0.9 )
 
@@ -104,7 +86,12 @@ function SWEP:SecondaryAttack()
 	self:PrimaryAttack( true )
 end
 
-function SWEP:DealDamage( anim )
+function SWEP:DealDamage()
+
+	local anim = self:GetSequenceName(self.Owner:GetViewModel():GetSequence())
+
+	self.Owner:LagCompensation( true )
+	
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
 		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
@@ -121,11 +108,20 @@ function SWEP:DealDamage( anim )
 		} )
 	end
 
-	if ( tr.Hit ) then self.Owner:EmitSound( HitSound ) end
+	if ( tr.Hit && SERVER ) then self.Owner:EmitSound( HitSound ) end
 
-	if ( IsValid( tr.Entity ) && ( tr.Entity:IsNPC() || tr.Entity:IsPlayer() || tr.Entity:Health() > 0 ) ) then
+	local hit = false
+
+	if ( SERVER && IsValid( tr.Entity ) && ( tr.Entity:IsNPC() || tr.Entity:IsPlayer() || tr.Entity:Health() > 0 ) ) then
 		local dmginfo = DamageInfo()
+	
+		local attacker = self.Owner
+		if ( !IsValid( attacker ) ) then attacker = self end
+		dmginfo:SetAttacker( attacker )
+
+		dmginfo:SetInflictor( self )
 		dmginfo:SetDamage( math.random( 8, 12 ) )
+
 		if ( anim == "fists_left" ) then
 			dmginfo:SetDamageForce( self.Owner:GetRight() * 49125 + self.Owner:GetForward() * 99984 ) -- Yes we need those specific numbers
 		elseif ( anim == "fists_right" ) then
@@ -134,33 +130,38 @@ function SWEP:DealDamage( anim )
 			dmginfo:SetDamageForce( self.Owner:GetUp() * 51589 + self.Owner:GetForward() * 100128 )
 			dmginfo:SetDamage( math.random( 12, 24 ) )
 		end
-		dmginfo:SetInflictor( self )
-		local attacker = self.Owner
-		if ( !IsValid( attacker ) ) then attacker = self end
-		dmginfo:SetAttacker( attacker )
 
 		tr.Entity:TakeDamageInfo( dmginfo )
+		hit = true
+
 	end
-end
 
-function SWEP:Idle()
+	if ( SERVER && IsValid( tr.Entity ) ) then
+		local phys = tr.Entity:GetPhysicsObject()
+		if ( IsValid( phys ) ) then
+			phys:ApplyForceOffset( self.Owner:GetAimVector() * 80 * phys:GetMass(), tr.HitPos )
+		end
+	end
 
-	local vm = self.Owner:GetViewModel()
-	timer.Create( "fists_idle" .. self:EntIndex(), vm:SequenceDuration(), 1, function()
-		vm:ResetSequence( vm:LookupSequence( "fists_idle_0" .. math.random( 1, 2 ) ) )
-	end )
+	if ( SERVER ) then
+		if ( hit && anim != "fists_uppercut" ) then
+			self:SetCombo( self:GetCombo() + 1 )
+		else
+			self:SetCombo( 0 )
+		end
+	end
+
+	self.Owner:LagCompensation( false )
 
 end
 
 function SWEP:OnRemove()
-
+	
 	if ( IsValid( self.Owner ) ) then
 		local vm = self.Owner:GetViewModel()
 		if ( IsValid( vm ) ) then vm:SetMaterial( "" ) end
 	end
-
-	timer.Stop( "fists_idle" .. self:EntIndex() )
-
+	
 end
 
 function SWEP:Holster( wep )
@@ -168,15 +169,52 @@ function SWEP:Holster( wep )
 	self:OnRemove()
 
 	return true
+
 end
 
 function SWEP:Deploy()
 
 	local vm = self.Owner:GetViewModel()
-	vm:ResetSequence( vm:LookupSequence( "fists_draw" ) )
-
-	self:Idle()
-
+	vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_draw" ) )
+	
+	self:UpdateNextIdle()
+	
+	if ( SERVER ) then
+		self:SetCombo( 0 )
+	end
+	
 	return true
 
+end
+
+function SWEP:Think()
+	
+	local vm = self.Owner:GetViewModel()
+	local curtime = CurTime()
+	local idletime = self:GetNextIdle()
+	
+	if ( idletime > 0 && CurTime() > idletime ) then
+
+		vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_idle_0" .. math.random( 1, 2 ) ) )
+		
+		self:UpdateNextIdle()
+
+	end
+	
+	local meleetime = self:GetNextMeleeAttack()
+	
+	if ( meleetime > 0 && CurTime() > meleetime ) then
+
+		self:DealDamage()
+		
+		self:SetNextMeleeAttack( 0 )
+
+	end
+	
+	if ( SERVER && CurTime() > self:GetNextPrimaryFire() + 0.1 ) then
+		
+		self:SetCombo( 0 )
+		
+	end
+	
 end
