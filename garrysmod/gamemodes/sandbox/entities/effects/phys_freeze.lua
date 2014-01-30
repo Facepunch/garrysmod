@@ -37,6 +37,6 @@ function EFFECT:Render()
 	local idelta = 1-delta
 	
 	local size = 1
-	effects.halo.Add( {self.Target}, Color( 0, 255, 0, 255 * idelta ), size, size, 1, true, false )
+	halo.Add( { self.Target }, Color( 0, 255, 0, 255 * idelta ), size, size, 1, true, false )
 
 end

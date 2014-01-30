@@ -31,7 +31,7 @@ function ENT:Think()
 	
 		AddWorldTip( self:EntIndex(), self:GetOverlayText(), 0.5, self:GetPos(), self.Entity  )
 
-		effects.halo.Add( {self}, Color( 255, 255, 255, 255 ), 1, 1, 1, true, true )
+		halo.Add( { self }, Color( 255, 255, 255, 255 ), 1, 1, 1, true, true )
 		
 	end
 

@@ -5,10 +5,7 @@
 -----------------------------------------------------------]]
 module( "effects", package.seeall )
 
-require ( "halo" )
-
 local EffectList = {}
-
 
 --[[---------------------------------------------------------
    Name: Register( table, string )

@@ -156,7 +156,7 @@ if ( CLIENT ) then
 		c.g = 200 + math.sin( RealTime() * 20 ) * 55
 		c.b = 200 + math.cos( RealTime() * 60 ) * 55
 		
-		effects.halo.Add( {ent}, c, 2, 2, 2, true, false )
+		halo.Add( { ent }, c, 2, 2, 2, true, false )
 	
 	end 
 
