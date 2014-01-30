@@ -3,7 +3,7 @@
 AddCSLuaFile()
 
 ENT.Base 			= "base_nextbot"
-ENT.Spawnable		= true
+ENT.Spawnable		= false
 
 function ENT:Initialize()
 
@@ -59,16 +59,11 @@ function ENT:RunBehaviour()
 
 end
 
-
-
-
-
-
-
 --
 -- List the NPC as spawnable
 --
-list.Set( "NPC", "npc_tf2_ghost", 	{	Name = "TF2 Ghost", 
-										Class = "npc_tf2_ghost",
-										Category = "TF2"	
-									})
+list.Set( "NPC", "npc_tf2_ghost", {
+	Name = "Test NPC", 
+	Class = "npc_tf2_ghost",
+	Category = "Nextbot"	
+} )
