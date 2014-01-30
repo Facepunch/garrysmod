@@ -61,6 +61,7 @@ if ( CLIENT ) then
 	require ( "draw" )			-- 2D Draw library
 	require ( "markup" )		-- Text markup library
 	require ( "effects" )
+	require ( "halo" )
 	require ( "killicon" )
 	require ( "spawnmenu" )
 	require ( "controlpanel" )

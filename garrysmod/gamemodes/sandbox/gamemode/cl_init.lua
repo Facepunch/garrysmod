@@ -117,7 +117,7 @@ hook.Add( "PreDrawHalos", "AddPhysgunHalos", function()
 		local size = math.random( 1, 2 )
 		local colr = k:GetWeaponColor() + VectorRand() * 0.3
 		 
-		effects.halo.Add( PhysgunHalos, Color( colr.x * 255, colr.y * 255, colr.z * 255 ), size, size, 1, true, false )
+		halo.Add( PhysgunHalos, Color( colr.x * 255, colr.y * 255, colr.z * 255 ), size, size, 1, true, false )
 		
 	end
 	
