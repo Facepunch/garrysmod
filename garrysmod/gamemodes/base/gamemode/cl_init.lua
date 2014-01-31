@@ -33,15 +33,6 @@ function GM:Think( )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerDeath( )
-   Desc: Called when a player dies. If the attacker was
-		  a player then attacker will become a Player instead
-		  of an Entity. 		 
------------------------------------------------------------]]
-function GM:PlayerDeath( ply, attacker )
-end
-
---[[---------------------------------------------------------
    Name: gamemode:PlayerBindPress( )
    Desc: A player pressed a bound key - return true to override action		 
 -----------------------------------------------------------]]
@@ -140,6 +131,45 @@ function GM:GetTeamNumColor( num )
 
 	return team.GetColor( num )
 
+end
+
+--[[---------------------------------------------------------
+   Name: gamemode:OnPlayerChat()
+		Process the player's chat.. return true for no default
+-----------------------------------------------------------]]
+function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
+	
+	--
+	-- I've made this all look more complicated than it is. Here's the easy version
+	--
+	-- chat.AddText( player, Color( 255, 255, 255 ), ": ", strText )
+	--
+	
+	local tab = {}
+	
+	if ( bPlayerIsDead ) then
+		table.insert( tab, Color( 255, 30, 40 ) )
+		table.insert( tab, "*DEAD* " )
+	end
+	
+	if ( bTeamOnly ) then
+		table.insert( tab, Color( 30, 160, 40 ) )
+		table.insert( tab, "(TEAM) " )
+	end
+	
+	if ( IsValid( player ) ) then
+		table.insert( tab, player )
+	else
+		table.insert( tab, "Console" )
+	end
+	
+	table.insert( tab, Color( 255, 255, 255 ) )
+	table.insert( tab, ": "..strText )
+	
+	chat.AddText( unpack(tab) )
+
+	return true
+	
 end
 
 --[[---------------------------------------------------------
@@ -244,7 +274,7 @@ end
 		 Return true to NOT render this frame for some reason (danger!)
 -----------------------------------------------------------]]
 function GM:PreRender()
-	return false;
+	return false
 end
 
 --[[---------------------------------------------------------
@@ -253,16 +283,6 @@ end
 -----------------------------------------------------------]]
 function GM:PostRender()
 
-end
-
---[[---------------------------------------------------------
-   Name: gamemode:GetVehicles( )
-   Desc: Gets the vehicles table..
------------------------------------------------------------]]
-function GM:GetVehicles()
-
-	return list.Get( "Vehicles" )
-	
 end
 
 --[[---------------------------------------------------------
@@ -298,14 +318,15 @@ function GM:CalcVehicleView( Vehicle, ply, view )
 	local TargetOrigin = view.origin + ( view.angles:Forward() * -radius )
 	local WallOffset = 4;
 		  
-	local tr = util.TraceHull( 
-	{
+	local tr = util.TraceHull( {
 		start	= view.origin,
 		endpos	= TargetOrigin,
-		filter	= Vehicle,
+		filter	= function()
+			return false
+		end,
 		mins	= Vector( -WallOffset, -WallOffset, -WallOffset ),
 		maxs	= Vector( WallOffset, WallOffset, WallOffset ),
-	}) 
+	} ) 
 	
 	view.origin			= tr.HitPos
 	view.drawviewer		= true

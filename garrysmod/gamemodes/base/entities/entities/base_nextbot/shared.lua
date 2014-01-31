@@ -10,8 +10,6 @@ ENT.Instructions	= ""
 ENT.RenderGroup		= RENDERGROUP_OPAQUE
 
 function ENT:Initialize()
-
-	
 end
 
 if ( SERVER ) then
@@ -27,10 +25,4 @@ else
 
 	ENT.Type = "anim"
 
-
 end
-
-
-
-
-

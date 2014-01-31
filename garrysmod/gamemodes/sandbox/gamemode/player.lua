@@ -7,6 +7,16 @@ function GM:PlayerSpawnObject( ply )
 	return true
 end
 
+--[[---------------------------------------------------------
+   Name: gamemode:CanPlayerUnfreeze( )
+   Desc: Can the player unfreeze this entity & physobject
+-----------------------------------------------------------]]
+function GM:CanPlayerUnfreeze( ply, entity, physobject )
+
+	if ( entity:GetPersistent() ) then return false end
+
+	return true
+end
 
 --[[---------------------------------------------------------
    Name: LimitReachedProcess
@@ -47,7 +57,6 @@ function GM:PlayerSpawnProp( ply, model )
 	return LimitReachedProcess( ply, "props" )
 
 end
-
 
 --[[---------------------------------------------------------
    Name: gamemode:PlayerSpawnEffect( ply, model )
@@ -112,7 +121,6 @@ function GM:PlayerSpawnNPC( ply, npc_type, equipment )
 	
 end
 
-
 --[[---------------------------------------------------------
    Name: gamemode:PlayerSpawnedRagdoll( ply, model, ent )
    Desc: Called after the player spawned a ragdoll
@@ -123,7 +131,6 @@ function GM:PlayerSpawnedRagdoll( ply, model, ent )
 
 end
 
-
 --[[---------------------------------------------------------
    Name: gamemode:PlayerSpawnedProp( ply, model, ent )
    Desc: Called after the player spawned a prop
@@ -133,7 +140,6 @@ function GM:PlayerSpawnedProp( ply, model, ent )
 	ply:AddCount( "props", ent )
 	
 end
-
 
 --[[---------------------------------------------------------
    Name: gamemode:PlayerSpawnedEffect( ply, model, ent )
