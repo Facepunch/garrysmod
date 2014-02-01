@@ -282,7 +282,8 @@ function meta:InstallDataTable()
 
 		ent[ 'Set' .. name ] =	function( self, value )		
 									CallProxies( ent, t.Notify, name, self.dt[name], value )
-									self.dt[name] = value			
+									self.dt[name] = value		
+									if ( self.OnDataTableChange && SERVER ) then self:OnDataTableChange( name, value ) end	
 								end
 
 		ent[ 'Get' .. name ] =	function( self )				
