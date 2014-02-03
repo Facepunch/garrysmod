@@ -1,3 +1,4 @@
+
 function GM:HandlePlayerJumping( ply, velocity )
 	
 	if ( ply:GetMoveType() == MOVETYPE_NOCLIP ) then
@@ -85,7 +86,6 @@ function GM:HandlePlayerNoClipping( ply, velocity )
 
 	end
 
-			
 	return true
 
 end
@@ -95,23 +95,20 @@ function GM:HandlePlayerVaulting( ply, velocity )
 	if ( velocity:Length() < 1000 ) then return end
 	if ( ply:IsOnGround() ) then return end
 
-	ply.CalcIdeal = ACT_MP_SWIM		
+	ply.CalcIdeal = ACT_MP_SWIM	
+	
 	return true
 
 end
 
 function GM:HandlePlayerSwimming( ply, velocity )
 
-	if ( ply:WaterLevel() < 2 ) then 
+	if ( ply:WaterLevel() < 2 or ply:IsOnGround() ) then 
 		ply.m_bInSwim = false
 		return false 
 	end
 	
-	if ( velocity:Length2D() > 10 ) then
-		ply.CalcIdeal = ACT_MP_SWIM
-	else
-		ply.CalcIdeal = ACT_MP_SWIM_IDLE
-	end
+	ply.CalcIdeal = ACT_MP_SWIM
 		
 	ply.m_bInSwim = true
 	return true
@@ -299,38 +296,24 @@ end
 
 local IdleActivity = ACT_HL2MP_IDLE
 local IdleActivityTranslate = {}
-	IdleActivityTranslate [ ACT_MP_STAND_IDLE ] 				= IdleActivity
-	IdleActivityTranslate [ ACT_MP_WALK ] 						= IdleActivity+1
-	IdleActivityTranslate [ ACT_MP_RUN ] 						= IdleActivity+2
-	IdleActivityTranslate [ ACT_MP_CROUCH_IDLE ] 				= IdleActivity+3
-	IdleActivityTranslate [ ACT_MP_CROUCHWALK ] 				= IdleActivity+4
-	IdleActivityTranslate [ ACT_MP_ATTACK_STAND_PRIMARYFIRE ] 	= IdleActivity+5
-	IdleActivityTranslate [ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE ]	= IdleActivity+5
-	IdleActivityTranslate [ ACT_MP_RELOAD_STAND ]		 		= IdleActivity+6
-	IdleActivityTranslate [ ACT_MP_RELOAD_CROUCH ]		 		= IdleActivity+6
-	IdleActivityTranslate [ ACT_MP_JUMP ] 						= ACT_HL2MP_JUMP_SLAM
-	IdleActivityTranslate [ ACT_MP_SWIM_IDLE ] 					= ACT_MP_SWIM_IDLE
-	IdleActivityTranslate [ ACT_MP_SWIM ] 						= ACT_MP_SWIM
-	IdleActivityTranslate [ ACT_LAND ] 							= ACT_LAND
-	
+	IdleActivityTranslate[ ACT_MP_STAND_IDLE ] 					= IdleActivity
+	IdleActivityTranslate[ ACT_MP_WALK ] 						= IdleActivity+1
+	IdleActivityTranslate[ ACT_MP_RUN ] 						= IdleActivity+2
+	IdleActivityTranslate[ ACT_MP_CROUCH_IDLE ] 				= IdleActivity+3
+	IdleActivityTranslate[ ACT_MP_CROUCHWALK ] 					= IdleActivity+4
+	IdleActivityTranslate[ ACT_MP_ATTACK_STAND_PRIMARYFIRE ] 	= IdleActivity+5
+	IdleActivityTranslate[ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE ]	= IdleActivity+5
+	IdleActivityTranslate[ ACT_MP_RELOAD_STAND ]		 		= IdleActivity+6
+	IdleActivityTranslate[ ACT_MP_RELOAD_CROUCH ]		 		= IdleActivity+6
+	IdleActivityTranslate[ ACT_MP_JUMP ] 						= ACT_HL2MP_JUMP_SLAM
+	IdleActivityTranslate[ ACT_MP_SWIM ] 						= IdleActivity+9
+	IdleActivityTranslate[ ACT_LAND ] 							= ACT_LAND
+
 -- it is preferred you return ACT_MP_* in CalcMainActivity, and if you have a specific need to not tranlsate through the weapon do it here
 function GM:TranslateActivity( ply, act )
 
 	local newact = ply:TranslateWeaponActivity( act )
-	
-	-- a bit of a hack because we're missing ACTs for a couple holdtypes
-	if ( act == ACT_MP_CROUCH_IDLE ) then
-		local wep = ply:GetActiveWeapon()
-		
-		if ( IsValid(wep) ) then
-			-- there really needs to be a way to get the holdtype set in sweps with SWEP.SetWeaponHoldType
-			-- people just tend to use wep.HoldType because that's what most of1the SWEP examples do
-			if wep.HoldType == "knife" or wep:GetHoldType() == "knife" then
-				newact = ACT_HL2MP_IDLE_CROUCH_KNIFE
-			end
-		end
-	end
-	
+
 	-- select idle anims if the weapon didn't decide
 	if ( act == newact ) then
 		return IdleActivityTranslate[ act ]
