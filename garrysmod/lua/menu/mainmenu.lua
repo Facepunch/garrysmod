@@ -28,6 +28,7 @@ function PANEL:Init()
 	self.HTML:SetKeyboardInputEnabled( true )
 	self.HTML:SetMouseInputEnabled( true );
 	self.HTML:SetAllowLua( true )
+	self.HTML:RequestFocus()
 
 
 	ws_save.HTML	= self.HTML
