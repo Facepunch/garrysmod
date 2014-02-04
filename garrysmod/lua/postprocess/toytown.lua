@@ -20,7 +20,7 @@ function DrawToyTown( NumPasses, H )
 		render.UpdateScreenEffectTexture()
 		
 		surface.DrawTexturedRect( 0, 0, ScrW(), H )
-		surface.DrawTexturedRectRotated( ScrW() * 0.5, ScrH() - H * 0.5 + 1, ScrW(), H, 180 )
+		surface.DrawTexturedRectUV(0, ScrH() - H, ScrW(), H, 0, 1, 1, 0)
 	
 	end
 	
