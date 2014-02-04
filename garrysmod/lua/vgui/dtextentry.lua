@@ -149,6 +149,8 @@ function PANEL:UpdateFromHistory()
 	
 	self:SetText( text )
 	self:SetCaretPos( text:len() )
+
+	self:OnTextChanged()
 	
 	self.HistoryPos = pos
 
@@ -176,6 +178,8 @@ function PANEL:UpdateFromMenu()
 	
 	self:SetText( txt )
 	self:SetCaretPos( txt:len() )
+
+	self:OnTextChanged(true)
 	
 	self.HistoryPos = pos
 
@@ -184,7 +188,7 @@ end
 --[[---------------------------------------------------------
 	OnTextChanged
 -----------------------------------------------------------]]
-function PANEL:OnTextChanged()
+function PANEL:OnTextChanged(noMenuRemoval)
 	
 	self.HistoryPos = 0
 	
@@ -193,7 +197,7 @@ function PANEL:OnTextChanged()
 		self:OnValueChange( self:GetText() )
 	end
 	
-	if ( IsValid( self.Menu ) ) then
+	if ( IsValid( self.Menu ) and not noMenuRemoval ) then
 		self.Menu:Remove()
 	end
 	
