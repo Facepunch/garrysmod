@@ -44,6 +44,13 @@ function GM:OnPhysgunReload( weapon, ply )
 end
 
 --[[---------------------------------------------------------
+--   Name: gamemode:PlayerAuthed( )
+--   Desc: Player's STEAMID has been authed
+-----------------------------------------------------------]]
+function GM:PlayerAuthed( ply, SteamID, UniqueID )
+end
+
+--[[---------------------------------------------------------
    Name: gamemode:PlayerCanPickupWeapon( )
    Desc: Called when a player tries to pickup a weapon.
 		  return true to allow the pickup.
