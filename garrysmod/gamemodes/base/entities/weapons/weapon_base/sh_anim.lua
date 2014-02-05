@@ -1,3 +1,4 @@
+
 local ActIndex = {
 	[ "pistol" ] 		= ACT_HL2MP_IDLE_PISTOL,
 	[ "smg" ] 			= ACT_HL2MP_IDLE_SMG1,
@@ -17,10 +18,9 @@ local ActIndex = {
 	[ "duel" ]			= ACT_HL2MP_IDLE_DUEL,
 	[ "camera" ]		= ACT_HL2MP_IDLE_CAMERA,
 	[ "magic" ]			= ACT_HL2MP_IDLE_MAGIC,
-	[ "revolver" ]		= ACT_HL2MP_IDLE_REVOLVER	
+	[ "revolver" ]		= ACT_HL2MP_IDLE_REVOLVER
 }
-	
-	
+
 --[[---------------------------------------------------------
    Name: SetWeaponHoldType
    Desc: Sets up the translation table, to translate from normal 
@@ -49,7 +49,6 @@ function SWEP:SetWeaponHoldType( t )
 	self.ActivityTranslate [ ACT_MP_RELOAD_CROUCH ]		 		= index+6
 	self.ActivityTranslate [ ACT_MP_JUMP ] 						= index+7
 	self.ActivityTranslate [ ACT_RANGE_ATTACK1 ] 				= index+8
-	self.ActivityTranslate [ ACT_MP_SWIM_IDLE ] 				= index+8
 	self.ActivityTranslate [ ACT_MP_SWIM ] 						= index+9
 	
 	-- "normal" jump animation doesn't exist
