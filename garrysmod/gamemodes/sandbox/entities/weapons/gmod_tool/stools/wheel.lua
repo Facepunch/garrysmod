@@ -50,9 +50,9 @@ function TOOL:LeftClick( trace )
 
 	-- Create the wheel
 	local wheelEnt = MakeWheel( ply, trace.HitPos, Angle(0,0,0), model, fwd, bck, nil, nil, toggle, torque )
-	
+
 	-- Make sure we have our wheel angle
-	self.wheelAngle = Angle( tonumber(self:GetClientInfo( "rx" )), tonumber(self:GetClientInfo( "ry" )), tonumber(self:GetClientInfo( "rz" )) )
+	self.wheelAngle = Angle( self:GetClientNumber( "rx" ), self:GetClientNumber( "ry" ), self:GetClientNumber( "rz" ) )
 	
 	local TargetAngle = trace.HitNormal:Angle() + self.wheelAngle	
 	wheelEnt:SetAngles( TargetAngle )
@@ -243,7 +243,7 @@ end
 function TOOL:Think()
 
 	if (!self.GhostEntity || !self.GhostEntity:IsValid() || self.GhostEntity:GetModel() != self:GetClientInfo( "model" )) then
-		self.wheelAngle = Angle( tonumber(self:GetClientInfo( "rx" )), tonumber(self:GetClientInfo( "ry" )), tonumber(self:GetClientInfo( "rz" )) )
+		self.wheelAngle = Angle( self:GetClientNumber( "rx" ), self:GetClientNumber( "ry" ), self:GetClientNumber( "rz" ) )
 		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector(0,0,0), Angle(0,0,0) )
 	end
 	
