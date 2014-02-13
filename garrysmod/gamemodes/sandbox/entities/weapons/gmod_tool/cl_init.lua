@@ -12,7 +12,6 @@ SWEP.DrawAmmo			= false
 SWEP.DrawCrosshair		= true
 
 SWEP.Spawnable			= false
-SWEP.AdminSpawnable		= false
 
 SWEP.WepSelectIcon		= surface.GetTextureID( "vgui/gmod_tool" )
 SWEP.Gradient			= surface.GetTextureID( "gui/gradient" )

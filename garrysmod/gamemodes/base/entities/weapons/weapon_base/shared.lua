@@ -13,7 +13,6 @@ SWEP.ViewModelFOV	= 62
 SWEP.ViewModelFlip	= false
 SWEP.ViewModel		= "models/weapons/v_pistol.mdl"
 SWEP.WorldModel		= "models/weapons/w_357.mdl"
-SWEP.AnimPrefix		= "python"
 
 SWEP.Spawnable			= false
 SWEP.AdminOnly			= false
@@ -96,13 +95,6 @@ function SWEP:SecondaryAttack()
 
 end
 
---[[---------------------------------------------------------
-   Name: SWEP:CheckReload( )
-   Desc: CheckReload
------------------------------------------------------------]]
-function SWEP:CheckReload()
-	
-end
 
 --[[---------------------------------------------------------
    Name: SWEP:Reload( )
