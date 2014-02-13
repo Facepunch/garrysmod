@@ -15,7 +15,6 @@ end
 
 SWEP.Base				= "weapon_tttbasegrenade"
 SWEP.Spawnable = true
-SWEP.AdminSpawnable = true
 
 SWEP.Kind = WEAPON_NADE
 SWEP.WeaponID = AMMO_MOLOTOV

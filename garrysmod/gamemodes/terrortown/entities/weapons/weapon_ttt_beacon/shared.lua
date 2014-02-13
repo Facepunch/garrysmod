@@ -32,7 +32,6 @@ end
 SWEP.Base = "weapon_tttbase"
 
 SWEP.Spawnable          = true
-SWEP.AdminSpawnable     = false
 SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
 SWEP.WorldModel         = "models/props_lab/reciever01b.mdl"
 SWEP.AutoSwitchTo       = false
