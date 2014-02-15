@@ -1,5 +1,4 @@
 
-
 local Category = ""
 
 local function ADD_ITEM( name, class )
@@ -48,9 +47,9 @@ ADD_WEAPON( "AR2",				"weapon_ar2" )
 ADD_WEAPON( "Bug Bait",			"weapon_bugbait" )
 ADD_WEAPON( "Crossbow",			"weapon_crossbow" )
 ADD_WEAPON( "Crowbar",			"weapon_crowbar" )
---ADD_WEAPON( "Physcannon",			"weapon_physcannon" )
+ADD_WEAPON( "Physcannon",			"weapon_physcannon" )
 ADD_WEAPON( "Frag Grenade",		"weapon_frag" )
---ADD_WEAPON( "Physgun",			"weapon_physgun" )
+ADD_WEAPON( "Physgun",			"weapon_physgun" )
 ADD_WEAPON( "Pistol",				"weapon_pistol" )
 ADD_WEAPON( "RPG Launcher",		"weapon_rpg" )
 ADD_WEAPON( "Shotgun",			"weapon_shotgun" )
