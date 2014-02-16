@@ -57,4 +57,6 @@ ADD_WEAPON( "Shotgun",			"weapon_shotgun" )
 ADD_WEAPON( "SLAM",				"weapon_slam" )
 ADD_WEAPON( "SMG",				"weapon_smg1" )
 ADD_WEAPON( "Stunstick",		"weapon_stunstick" )
---ADD_WEAPON( "Physgun",		"weapon_physgun" )
+
+Category = "Other"
+ADD_WEAPON( "Physics Gun",		"weapon_physgun" )
