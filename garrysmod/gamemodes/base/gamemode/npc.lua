@@ -8,6 +8,9 @@ util.AddNetworkString( "NPCKilledNPC" )
 -----------------------------------------------------------]]
 function GM:OnNPCKilled( ent, attacker, inflictor )
 
+	-- Don't spam the killfeed with scripted stuff
+	if ( ent:GetClass() == "npc_bullseye" ) then return end
+
 	-- Convert the inflictor to the weapon that they're holding if we can.
 	if ( inflictor && inflictor != NULL && attacker == inflictor && (inflictor:IsPlayer() || inflictor:IsNPC()) ) then
 	
@@ -16,8 +19,8 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	
 	end
 	
-	local InflictorClass = "World"
-	local AttackerClass = "World"
+	local InflictorClass = "worldspawn"
+	local AttackerClass = "worldspawn"
 	
 	if ( IsValid( inflictor ) ) then InflictorClass = inflictor:GetClass() end
 	if ( IsValid( attacker ) ) then 
@@ -43,7 +46,8 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 
 	end
 
-	
+	if ( ent:GetClass() == "npc_turret_floor" ) then AttackerClass = ent:GetClass() end
+
 	net.Start( "NPCKilledNPC" )
 	
 		net.WriteString( ent:GetClass() )
