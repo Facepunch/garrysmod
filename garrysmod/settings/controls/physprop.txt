@@ -99,9 +99,6 @@
 			{
 				"physprop_material"		"gmod_bouncy"
 			}
-			
-		}		
-		
+		}
 	}
-	
 }
