@@ -17,8 +17,6 @@ end
 SWEP.Base				= "weapon_tttbase"
 
 SWEP.Spawnable = true
-SWEP.AdminSpawnable = true
-
 SWEP.Kind = WEAPON_PISTOL
 SWEP.WeaponID = AMMO_DEAGLE
 

@@ -21,7 +21,6 @@ SWEP.WeaponID = AMMO_DISCOMB
 SWEP.Kind = WEAPON_NADE
 
 SWEP.Spawnable = true
-SWEP.AdminSpawnable = true
 
 
 SWEP.AutoSpawnable      = true
