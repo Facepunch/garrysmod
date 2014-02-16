@@ -1,4 +1,3 @@
-
 if SERVER then
    AddCSLuaFile( "shared.lua" )
 end
@@ -85,6 +84,7 @@ function SWEP:PreDrop()
 end
 
 function SWEP:Reload()
+    if self.Weapon:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount(self.Primary.Ammo) <= 0 then return end
     self.Weapon:DefaultReload( ACT_VM_RELOAD );
     self:SetIronsights( false )
     self:SetZoom(false)
