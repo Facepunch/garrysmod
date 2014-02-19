@@ -6,7 +6,7 @@
 		"Command"			"camera_key"
 		"ButtonSize"		"28"
 	}
-	
+
 	"CheckBox"
 	{
 		"Label"				"#tool.camera.static"
@@ -18,5 +18,5 @@
 		"Label"				"#tool.toggle"
 		"Command"			"camera_toggle"
 	}
-	
+
 }

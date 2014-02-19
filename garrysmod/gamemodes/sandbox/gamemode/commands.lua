@@ -682,9 +682,10 @@ concommand.Add( "gm_spawnsent", function( ply, cmd, args ) Spawn_SENT( ply, args
 function CCGiveSWEP( player, command, arguments )
 
 	if ( arguments[1] == nil ) then return end
+	if ( !player:Alive() ) then return end
 
 	-- Make sure this is a SWEP
-	local swep = list.Get( "Weapon" )[ arguments[1] ];
+	local swep = list.Get( "Weapon" )[ arguments[1] ]
 	if (swep == nil) then return end
 	
 	-- You're not allowed to spawn this!
