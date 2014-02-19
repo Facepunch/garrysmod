@@ -1,58 +1,49 @@
-
-
-
-local meta = FindMetaTable( "Player" )
-if (!meta) then return end
-
+local meta = FindMetaTable("Player")
+if not meta then return end
 
 --[[---------------------------------------------------------
-    Is an Admin
+    Name: IsAdmin
+    Desc: Returns if a player is an admin.
 -----------------------------------------------------------]]
-function meta:IsAdmin()
+function meta:IsAdmin() 
+    if self:IsSuperAdmin() then return true end
+    if self:IsUserGroup("admin") then return true end
 
-	-- Admin SteamID need to be fully authenticated by Steam!
-	if ( self.IsFullyAuthenticated && !self:IsFullyAuthenticated() ) then return false end
-	
-	if ( self:IsSuperAdmin() ) then return true end
-	if ( self:IsUserGroup("admin") ) then return true end
-
-	return false
-	
+    return false
 end
 
 --[[---------------------------------------------------------
-    Is a Super Admin
+    Name: IsSuperAdmin
+    Desc: Returns if a player is a superadmin.
 -----------------------------------------------------------]]
 function meta:IsSuperAdmin()
-
-	-- Admin SteamID need to be fully authenticated by Steam!
-	if ( self.IsFullyAuthenticated && !self:IsFullyAuthenticated() ) then return false end
-	
-	return ( self:IsUserGroup("superadmin") )
-	
-end
-	
---[[---------------------------------------------------------
-    Is Usergroup X
-	If you're really customizing your server you can add custom
-	usergroups and modify your scripts to accomodate them easily
------------------------------------------------------------]]
-function meta:IsUserGroup( name )
-
-	if ( !self:IsValid() ) then return false end
-	return ( self:GetNetworkedString( "UserGroup" ) == name )
-	
+    return self:IsUserGroup("superadmin")
 end
 
+--[[---------------------------------------------------------
+    Name: IsUserGroup
+    Desc: Returns if a player is in the specified usergroup.
+-----------------------------------------------------------]]
+function meta:IsUserGroup(name)
+    if not self:IsValid() then return false end
+
+    return self:GetNetworkedString("UserGroup") == name
+end
 
 --[[---------------------------------------------------------
-    SetUserGroup
-	Sets the user's group (Server only)
+    Name: SetUserGroup
+    Desc: Sets the player's usergroup. ( Serverside Only )
 -----------------------------------------------------------]]
-function meta:SetUserGroup( name )
+function meta:SetUserGroup(name)
+    self:SetNetworkedString("UserGroup", name)
+end
 
-	self:SetNetworkedString( "UserGroup", name )
-
+--[[---------------------------------------------------------
+    Name: GetUserGroup
+    Desc: Returns the player's usergroup.
+-----------------------------------------------------------]]
+function meta:GetUserGroup()
+    return self:GetNetworkedString("UserGroup", "user")
 end
 
 
@@ -60,50 +51,52 @@ end
     This is the meat and spunk of the player auth system
 -----------------------------------------------------------]]
 
-if ( SERVER ) then
+if not SERVER then return end
 
 -- SteamIds table..
 -- STEAM_0:1:7099:
---	 	 name	=	garry
---	 	 group	=	superadmin
+--     name   =   garry
+--     group  =   superadmin
 local SteamIDs = {}
 
 -- Load the users file
-local UsersKV = util.KeyValuesToTable( file.Read( "settings/users.txt", true ) )
+local UsersKV = util.KeyValuesToTable( file.Read( "settings/users.txt", "GAME" ) )
 
 -- Extract the data into the SteamIDs table
 for key, tab in pairs( UsersKV ) do
-
-	for name, steamid in pairs( tab ) do
-	
-		SteamIDs[ steamid ] = {}
-		SteamIDs[ steamid ].name = name
-		SteamIDs[ steamid ].group = key
-	
-	end
-
+    for name, steamid in pairs( tab ) do
+        SteamIDs[ steamid ] = {}
+        SteamIDs[ steamid ].name = name
+        SteamIDs[ steamid ].group = key
+    end
 end
 
-local function PlayerSpawn( pl )
-
-	local steamid = pl:SteamID()
-	
-	if ( game.SinglePlayer() || pl:IsListenServerHost() ) then
-		pl:SetUserGroup( "superadmin" )
-		return	
-	end
-	
-	if ( SteamIDs[ steamid ] == nil ) then
-		pl:SetUserGroup( "user" )
-		return
-	end
-
-	pl:SetUserGroup( SteamIDs[ steamid ].group )
-	pl:PrintMessage( HUD_PRINTTALK, "Hey '"..SteamIDs[ steamid ].name.."' - You're in the '"..SteamIDs[ steamid ].group.."' group on this server." )
-	
+function util.GetUserGroups()
+    return SteamIDs
 end
 
-hook.Add( "PlayerInitialSpawn", "PlayerAuthSpawn", PlayerSpawn )
+hook.Add("PlayerInitialSpawn", "PlayerAuthSpawn", function(ply)
+    local steamid = ply:SteamID()
+    
+    if game.SinglePlayer() or ply:IsListenServerHost() then
+        ply:SetUserGroup("superadmin")
+        return
+    end
+    
+    if SteamIDs[steamid] == nil then
+        ply:SetUserGroup("user")
+        return
+    end
 
-end
+    -- Admin SteamID need to be fully authenticated by Steam!
+    if ply.IsFullyAuthenticated and not ply:IsFullyAuthenticated() then
+        ply:ChatPrint(string.format("Hey '%s' - Your SteamID wasn't fully authenticated, so your usergroup has not been set to '%s.'",
+            SteamIDs[steamid].name, SteamIDs[steamid].group))
+        ply:ChatPrint("Try restarting Steam.")
+        return
+    end
 
+    ply:SetUserGroup(SteamIDs[steamid].group)
+    ply:ChatPrint(string.format("Hey '%s' - You're in the '%s' group on this server.",
+        SteamIDs[steamid].name, SteamIDs[steamid].group))
+end)
