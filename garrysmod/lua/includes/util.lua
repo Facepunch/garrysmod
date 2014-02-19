@@ -1,4 +1,3 @@
-
 --
 -- Seed the rand!
 --
@@ -171,7 +170,7 @@ end
 -----------------------------------------------------------]]
 function AccessorFuncNW( tab, varname, name, varDefault, iForce )
 
-	ErrorNoHalt( "[AccessorFuncNW] is depreciated. Look up 'SetupDataTables'. Sorry :(" );
+	ErrorNoHalt( "[AccessorFuncNW] is depreciated. Look up 'SetupDataTables'. Sorry :(\n" );
 
 end
 
