@@ -101,7 +101,7 @@ end
 
 local beep_miss = Sound("player/suit_denydevice.wav")
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
    -- will be tracing against players
    self.Owner:LagCompensation(true)
@@ -251,7 +251,7 @@ function SWEP:RemoveItemSample(idx)
 end
 
 function SWEP:SecondaryAttack()
-   self.Weapon:SetNextSecondaryFire( CurTime() + 0.05 )
+   self:SetNextSecondaryFire( CurTime() + 0.05 )
 
    if CLIENT then return end
 
@@ -794,7 +794,7 @@ end
 function SWEP:Deploy()
    if SERVER and IsValid(self.Owner) then
       self.Owner:DrawViewModel(false)
-      self.Owner.scanner_weapon = self.Weapon
+      self.Owner.scanner_weapon = self
    end
    return true
 end

@@ -64,10 +64,10 @@ end
 
 
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + 0.1 )
+   self:SetNextPrimaryFire( CurTime() + 0.1 )
 
    if self:IsTargetingCorpse() and not self.dt.processing then
-      self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+      self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
       if SERVER then
          self.dt.processing = true
@@ -78,7 +78,7 @@ end
 
 local click = Sound("weapons/sniper/sniper_zoomin.wav")
 function SWEP:SecondaryAttack()
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
 
    if CLIENT and IsFirstTimePredicted() then
       LocalPlayer():EmitSound(click)

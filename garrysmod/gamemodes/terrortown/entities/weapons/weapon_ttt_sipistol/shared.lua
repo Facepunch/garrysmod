@@ -52,7 +52,7 @@ SWEP.PrimaryAnim = ACT_VM_PRIMARYATTACK_SILENCED
 SWEP.ReloadAnim = ACT_VM_RELOAD_SILENCED
 
 function SWEP:Deploy()
-   self.Weapon:SendWeaponAnim(ACT_VM_DRAW_SILENCED)
+   self:SendWeaponAnim(ACT_VM_DRAW_SILENCED)
    return true
 end
 

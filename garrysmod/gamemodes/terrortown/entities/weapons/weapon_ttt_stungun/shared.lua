@@ -96,7 +96,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 
 
    self.Owner:FireBullets( bullet )
-   self.Weapon:SendWeaponAnim(self.PrimaryAnim)
+   self:SendWeaponAnim(self.PrimaryAnim)
 
    -- Owner can die after firebullets, giving an error at muzzleflash
    if not IsValid(self.Owner) or not self.Owner:Alive() then return end

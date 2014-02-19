@@ -54,12 +54,12 @@ function SWEP:OnDrop()
 end
 
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
    self:DecoyStick()
 end
 function SWEP:SecondaryAttack()
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
 
    self:DecoyStick()
 end
@@ -103,7 +103,7 @@ function SWEP:DecoyDrop()
       end
    end
 
-   self.Weapon:EmitSound(throwsound)
+   self:EmitSound(throwsound)
 end
 
 function SWEP:DecoyStick()
@@ -113,7 +113,7 @@ function SWEP:DecoyStick()
 
       if self.Planted then return end
 
-      local ignore = {ply, self.Weapon}
+      local ignore = {ply, self}
       local spos = ply:GetShootPos()
       local epos = spos + ply:GetAimVector() * 80
       local tr = util.TraceLine({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID})

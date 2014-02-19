@@ -63,7 +63,7 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
    if GetRoundState() == ROUND_PREP and GetConVar("ttt_no_nade_throw_during_prep"):GetBool() then
       return
@@ -81,7 +81,7 @@ function SWEP:PullPin()
    local ply = self.Owner
    if not IsValid(ply) then return end
 
-   self.Weapon:SendWeaponAnim(ACT_VM_PULLPIN)
+   self:SendWeaponAnim(ACT_VM_PULLPIN)
 
    if self.SetWeaponHoldType then
       self:SetWeaponHoldType(self.HoldReady)
@@ -104,7 +104,7 @@ function SWEP:Think()
          self:StartThrow()
 
          self:SetPin(false)
-         self.Weapon:SendWeaponAnim(ACT_VM_THROW)
+         self:SendWeaponAnim(ACT_VM_THROW)
 
          if SERVER then
             self.Owner:SetAnimation( PLAYER_ATTACK1 )

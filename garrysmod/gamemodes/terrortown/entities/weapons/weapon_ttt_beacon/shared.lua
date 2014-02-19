@@ -66,14 +66,14 @@ function SWEP:OnDrop()
 end
 
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
    if self:CanPrimaryAttack() then
       self:BeaconDrop()
    end
 end
 function SWEP:SecondaryAttack()
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
 
    if self:CanPrimaryAttack() then
       self:BeaconStick()
@@ -121,7 +121,7 @@ function SWEP:BeaconDrop()
       end
    end
 
-   self.Weapon:EmitSound(throwsound)
+   self:EmitSound(throwsound)
 end
 
 function SWEP:BeaconStick()
@@ -131,7 +131,7 @@ function SWEP:BeaconStick()
 
       if self.Planted then return end
 
-      local ignore = {ply, self.Weapon}
+      local ignore = {ply, self}
       local spos = ply:GetShootPos()
       local epos = spos + ply:GetAimVector() * 80
       local tr = util.TraceLine({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID})
@@ -180,17 +180,17 @@ function SWEP:PlacedBeacon()
 end
 
 function SWEP:PickupBeacon()
-   if self.Weapon:Clip1() >= self.Primary.ClipSize then
+   if self:Clip1() >= self.Primary.ClipSize then
       return false
    else
-      self.Weapon:SetClip1(self.Weapon:Clip1() + 1)
+      self:SetClip1(self:Clip1() + 1)
       return true
    end
 end
 
 -- Ammo hackery after getting bought
 function SWEP:WasBought(buyer)
-   self.Weapon:SetClip1(self.Weapon:Clip1() + 2)
+   self:SetClip1(self:Clip1() + 2)
 end
 
 function SWEP:Reload()
@@ -227,7 +227,7 @@ end
 
 -- not able to do DrawModel stuff in Deploy, so here's a hack
 function SWEP:Think()
-   if SERVER and not hidden and IsValid(self.Owner) and self.Owner:GetActiveWeapon() == self.Weapon then
+   if SERVER and not hidden and IsValid(self.Owner) and self.Owner:GetActiveWeapon() == self then
       self.Owner:DrawViewModel(false)
       self.Owner:DrawWorldModel(false)
       hidden = true
