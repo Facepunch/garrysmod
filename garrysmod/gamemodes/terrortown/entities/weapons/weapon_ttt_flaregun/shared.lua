@@ -184,13 +184,13 @@ function SWEP:ShootFlare()
 end
 
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
    if not self:CanPrimaryAttack() then return end
 
-   self.Weapon:EmitSound( self.Primary.Sound )
+   self:EmitSound( self.Primary.Sound )
 
-   self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
+   self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 
    self:ShootFlare()
 
@@ -203,7 +203,7 @@ function SWEP:PrimaryAttack()
    end
 
    if ( (game.SinglePlayer() && SERVER) || CLIENT ) then
-      self.Weapon:SetNetworkedFloat( "LastShootTime", CurTime() )
+      self:SetNetworkedFloat( "LastShootTime", CurTime() )
    end
 end
 

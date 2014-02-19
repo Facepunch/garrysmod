@@ -61,9 +61,9 @@ end
 function SWEP:GetTeleportMark() return self.teleport end
 
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
-   if self.Weapon:Clip1() <= 0 then
+   if self:Clip1() <= 0 then
       self:DryFire(self.SetNextSecondaryFire)
       return
    end
@@ -79,7 +79,7 @@ function SWEP:PrimaryAttack()
    end
 end
 function SWEP:SecondaryAttack()
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
 
    if SERVER then
       self:TeleportStore()

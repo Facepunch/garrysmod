@@ -49,12 +49,12 @@ SWEP.AllowDrop = false
 SWEP.DeathScanDelay = 15
 
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
    self:DropDevice()
 end
 
 function SWEP:SecondaryAttack()
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
    self:DropDevice()
 end
 
@@ -120,7 +120,7 @@ function SWEP:DropDevice()
       end
    end
 
-   self.Weapon:EmitSound(throwsound)
+   self:EmitSound(throwsound)
 
    return cse
 end

@@ -63,7 +63,7 @@ end
 -- Add some zoom to ironsights for this gun
 function SWEP:SecondaryAttack()
     if not self.IronSightsPos then return end
-    if self.Weapon:GetNextSecondaryFire() > CurTime() then return end
+    if self:GetNextSecondaryFire() > CurTime() then return end
     
     bIronsights = not self:GetIronsights()
     
@@ -75,7 +75,7 @@ function SWEP:SecondaryAttack()
         self:EmitSound(self.Secondary.Sound)
     end
     
-    self.Weapon:SetNextSecondaryFire( CurTime() + 0.3)
+    self:SetNextSecondaryFire( CurTime() + 0.3)
 end
 
 function SWEP:PreDrop()
@@ -85,9 +85,10 @@ function SWEP:PreDrop()
 end
 
 function SWEP:Reload()
-    self.Weapon:DefaultReload( ACT_VM_RELOAD );
+	if ( self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
+    self:DefaultReload( ACT_VM_RELOAD )
     self:SetIronsights( false )
-    self:SetZoom(false)
+    self:SetZoom( false )
 end
 
 

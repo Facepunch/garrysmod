@@ -146,7 +146,7 @@ if CLIENT then
       local y = ScrH() / 2.0
       local scale = math.max(0.2,  10 * self:GetPrimaryCone())
 
-      local LastShootTime = self.Weapon:LastShootTime()
+      local LastShootTime = self:LastShootTime()
       scale = scale * (2 - math.Clamp( (CurTime() - LastShootTime) * 5, 0.0, 1.0 ))
 
       local alpha = sights and sights_opacity:GetFloat() or 1
@@ -230,13 +230,13 @@ end
 -- Shooting functions largely copied from weapon_cs_base
 function SWEP:PrimaryAttack(worldsnd)
 
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
    if not self:CanPrimaryAttack() then return end
 
    if not worldsnd then
-      self.Weapon:EmitSound( self.Primary.Sound, self.Primary.SoundLevel )
+      self:EmitSound( self.Primary.Sound, self.Primary.SoundLevel )
    elseif SERVER then
       sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
    end
@@ -264,7 +264,7 @@ end
 function SWEP:CanPrimaryAttack()
    if not IsValid(self.Owner) then return end
 
-   if self.Weapon:Clip1() <= 0 then
+   if self:Clip1() <= 0 then
       self:DryFire(self.SetNextPrimaryFire)
       return false
    end
@@ -274,7 +274,7 @@ end
 function SWEP:CanSecondaryAttack()
    if not IsValid(self.Owner) then return end
 
-   if self.Weapon:Clip2() <= 0 then
+   if self:Clip2() <= 0 then
       self:DryFire(self.SetNextSecondaryFire)
       return false
    end
@@ -292,7 +292,7 @@ end
 
 function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 
-   self.Weapon:SendWeaponAnim(self.PrimaryAnim)
+   self:SendWeaponAnim(self.PrimaryAnim)
 
    self.Owner:MuzzleFlash()
    self.Owner:SetAnimation( PLAYER_ATTACK1 )
@@ -366,7 +366,8 @@ function SWEP:Deploy()
 end
 
 function SWEP:Reload()
-   self.Weapon:DefaultReload(self.ReloadAnim)
+	if ( self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
+   self:DefaultReload(self.ReloadAnim)
    self:SetIronsights( false )
 end
 
@@ -465,8 +466,8 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:Initialize()
-   if CLIENT and self.Weapon:Clip1() == -1 then
-      self.Weapon:SetClip1(self.Primary.DefaultClip)
+   if CLIENT and self:Clip1() == -1 then
+      self:SetClip1(self.Primary.DefaultClip)
    elseif SERVER then
       self.fingerprints = {}
 
@@ -489,7 +490,7 @@ function SWEP:DyingShot()
    if self:GetIronsights() then
       self:SetIronsights(false)
 
-      if self.Weapon:GetNextPrimaryFire() > CurTime() then
+      if self:GetNextPrimaryFire() > CurTime() then
          return fired
       end
 
@@ -505,7 +506,7 @@ function SWEP:DyingShot()
 
          MsgN(self.Owner:Nick() .. " fired his DYING SHOT")
 
-         self.Owner.dying_wep = self.Weapon
+         self.Owner.dying_wep = self
 
          self:PrimaryAttack(true)
 

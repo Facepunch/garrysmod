@@ -51,12 +51,12 @@ SWEP.NoSights = true
 local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
 
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
    self:BombDrop()
 end
 
 function SWEP:SecondaryAttack()
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
    self:BombStick()
 end
 
@@ -104,8 +104,8 @@ function SWEP:BombDrop()
       ply:SetAnimation( PLAYER_ATTACK1 )
    end
 
-   self.Weapon:EmitSound(throwsound)
-   self.Weapon:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
+   self:EmitSound(throwsound)
+   self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
 end
 
 -- again replicating slam, now its attach fn
@@ -116,7 +116,7 @@ function SWEP:BombStick()
 
       if self.Planted then return end
 
-      local ignore = {ply, self.Weapon}
+      local ignore = {ply, self}
       local spos = ply:GetShootPos()
       local epos = spos + ply:GetAimVector() * 80
       local tr = util.TraceLine({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID})

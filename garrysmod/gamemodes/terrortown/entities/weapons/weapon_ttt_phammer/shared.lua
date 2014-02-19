@@ -100,7 +100,7 @@ function SWEP:PreDrop()
    self:SetCharge(0)
 
    -- OnDrop does not happen on client
-   self.Weapon:CallOnClient("HideGhost", "")
+   self:CallOnClient("HideGhost", "")
 end
 
 function SWEP:HideGhost()
@@ -110,7 +110,7 @@ function SWEP:HideGhost()
 end
 
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire(CurTime() + 0.1)
+   self:SetNextPrimaryFire(CurTime() + 0.1)
    if not self:CanPrimaryAttack() then return end
 
    if SERVER then
@@ -125,11 +125,11 @@ function SWEP:PrimaryAttack()
 
          self:CreateHammer(tr.Entity, tr.HitPos)
 
-         self.Weapon:EmitSound(self.Primary.Sound)
+         self:EmitSound(self.Primary.Sound)
 
          self:TakePrimaryAmmo(1)
 
-         self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+         self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
       end
    end
 end
@@ -137,7 +137,7 @@ end
 function SWEP:SecondaryAttack()
    if self.IsCharging then return end
 
-   self.Weapon:SetNextSecondaryFire( CurTime() + 0.1 )
+   self:SetNextSecondaryFire( CurTime() + 0.1 )
 
    if not (self:CanPrimaryAttack() and (self:GetNextPrimaryFire() - CurTime()) <= 0) then return end
 
@@ -215,11 +215,11 @@ if SERVER then
             if self:GetCharge() >= 1 then
                self:CreateHammer(tr.Entity, tr.HitPos)
 
-               self.Weapon:EmitSound(self.Primary.Sound)
+               self:EmitSound(self.Primary.Sound)
 
                self:TakePrimaryAmmo(1)
 
-               self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+               self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
                self.IsCharging = false
                self:SetCharge(0)
@@ -318,7 +318,7 @@ if CLIENT then
       surface.DrawOutlinedRect(0, 0, 50, 15)
 
       local sz = 48
-      local next = self.Weapon:GetNextPrimaryFire()
+      local next = self:GetNextPrimaryFire()
       local ready = (next - CurTime()) <= 0
       local frac = 1.0
       if not ready then

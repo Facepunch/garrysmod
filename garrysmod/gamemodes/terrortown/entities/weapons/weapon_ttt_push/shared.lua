@@ -1,3 +1,4 @@
+
 if SERVER then
    AddCSLuaFile("shared.lua")
 end
@@ -70,8 +71,8 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
 
    self:FirePulse(600, 300)
 end
@@ -79,8 +80,8 @@ end
 function SWEP:SecondaryAttack()
    if self.IsCharging then return end
 
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
 
    self.IsCharging = true
 end
@@ -90,9 +91,9 @@ function SWEP:FirePulse(force_fwd, force_up)
 
    self.Owner:SetAnimation( PLAYER_ATTACK1 )
 
-   sound.Play(self.Primary.Sound, self.Weapon:GetPos(), self.Primary.SoundLevel)
+   sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
 
-   self.Weapon:SendWeaponAnim(ACT_VM_IDLE)
+   self:SendWeaponAnim(ACT_VM_IDLE)
 
    local cone = self.Primary.Cone or 0.1
    local num = 6
@@ -151,8 +152,8 @@ function SWEP:ChargedAttack()
 
    local force_up = ((charge * diff) - diff) + max
 
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
 
    self:FirePulse(force_fwd, force_up)
 end
@@ -205,7 +206,7 @@ if CLIENT then
       local x = ScrW() / 2.0
       local y = ScrH() / 2.0
 
-      local nxt = self.Weapon:GetNextPrimaryFire()
+      local nxt = self:GetNextPrimaryFire()
       local charge = self.dt.charge
 
       if LocalPlayer():IsTraitor() then
