@@ -10,6 +10,7 @@ SWEP.WorldModel			= "models/weapons/w_toolgun.mdl"
 SWEP.AnimPrefix			= "python"
 
 SWEP.UseHands			= true
+SWEP.Spawnable			= true
 
 -- Be nice, precache the models
 util.PrecacheModel( SWEP.ViewModel )
