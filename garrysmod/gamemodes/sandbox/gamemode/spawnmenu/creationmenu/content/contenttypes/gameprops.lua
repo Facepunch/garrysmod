@@ -70,7 +70,7 @@ hook.Add( "PopulateContent", "GameProps", function( pnlContent, tree, node )
 		
 			if ( !game.mounted ) then continue end
 
-			AddBrowseContent( ViewPanel, MyNode, game.folder, "games/16/" .. game.folder .. ".png", "", game.folder, pnlContent )
+			AddBrowseContent( ViewPanel, MyNode, game.title, "games/16/" .. game.folder .. ".png", "", game.folder, pnlContent )
 		
 		end
 
