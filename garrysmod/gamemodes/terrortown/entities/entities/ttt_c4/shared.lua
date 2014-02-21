@@ -120,9 +120,9 @@ function ENT:WeldToGround(state)
       -- getgroundentity does not work for non-players
       -- so sweep ent downward to find what we're lying on
       local ignore = player.GetAll()
-      table.insert(ignore, self.Entity)
+      table.insert(ignore, self)
 
-      local tr = util.TraceEntity({start=self:GetPos(), endpos=self:GetPos() - Vector(0,0,16), filter=ignore, mask=MASK_SOLID}, self.Entity)
+      local tr = util.TraceEntity({start=self:GetPos(), endpos=self:GetPos() - Vector(0,0,16), filter=ignore, mask=MASK_SOLID}, self)
 
       -- Start by increasing weight/making uncarryable
       local phys = self:GetPhysicsObject()
@@ -148,7 +148,7 @@ function ENT:WeldToGround(state)
          -- Worst case, we are still uncarryable
       end
    else
-      constraint.RemoveConstraints(self.Entity, "Weld")
+      constraint.RemoveConstraints(self, "Weld")
       local phys = self:GetPhysicsObject()
       if IsValid(phys) then
          phys:EnableMotion(true)
@@ -185,7 +185,7 @@ function ENT:SphereDamage(dmgowner, center, radius)
             local dmginfo = DamageInfo()
             dmginfo:SetDamage(dmg)
             dmginfo:SetAttacker(dmgowner)
-            dmginfo:SetInflictor(self.Entity)
+            dmginfo:SetInflictor(self)
             dmginfo:SetDamageType(DMG_BLAST)
             dmginfo:SetDamageForce(center - ent:GetPos())
             dmginfo:SetDamagePosition(ent:GetPos())
@@ -215,7 +215,7 @@ function ENT:Explode(tr)
       end
 
       local dmgowner = self:GetThrower()
-      dmgowner = IsValid(dmgowner) and dmgowner or self.Entity
+      dmgowner = IsValid(dmgowner) and dmgowner or self
 
       local r_inner = 750
       local r_outer = self:GetRadius()
