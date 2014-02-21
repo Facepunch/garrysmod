@@ -1,5 +1,5 @@
 #
-# These files aren't filly sent to the client because they
+# These files aren't fully sent to the client because they
 # should never change. Instead we send the CRC of this file
 # so the client can load their version - and we know it's kewl.
 #
@@ -103,14 +103,14 @@ gamemodes\sandbox\entities\entities\gmod_light.lua
 gamemodes\sandbox\entities\entities\gmod_thruster.lua
 gamemodes\sandbox\entities\entities\gmod_wheel.lua
 gamemodes\sandbox\entities\entities\gmod_ghost.lua
-gamemodes\sandbox\entities\effects\LaserTracer\init.lua
+gamemodes\sandbox\entities\effects\LaserTracer.lua
 gamemodes\sandbox\entities\effects\balloon_pop.lua
-gamemodes\sandbox\entities\effects\entity_remove\init.lua
-gamemodes\sandbox\entities\effects\inflator_magic\init.lua
+gamemodes\sandbox\entities\effects\entity_remove.lua
+gamemodes\sandbox\entities\effects\inflator_magic.lua
 gamemodes\sandbox\entities\effects\phys_freeze.lua
 gamemodes\sandbox\entities\effects\camera_flash.lua
 gamemodes\sandbox\entities\effects\phys_unfreeze.lua
 gamemodes\sandbox\entities\effects\propspawn.lua
-gamemodes\sandbox\entities\effects\selection_indicator\init.lua
-gamemodes\sandbox\entities\effects\selection_ring\init.lua
-gamemodes\sandbox\entities\effects\wheel_indicator\init.lua
+gamemodes\sandbox\entities\effects\selection_indicator.lua
+gamemodes\sandbox\entities\effects\selection_ring.lua
+gamemodes\sandbox\entities\effects\wheel_indicator.lua
