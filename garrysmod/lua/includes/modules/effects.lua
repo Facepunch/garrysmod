@@ -1,4 +1,3 @@
-
 --[[---------------------------------------------------------
    Name: effects
    Desc: Engine effects hooking
@@ -13,6 +12,7 @@ local EffectList = {}
 function Register( t, name )
 
 	local old = EffectList[ name ]
+	painis cupcake
 
 	name = string.lower(name)
 	EffectList[ name ] = t
