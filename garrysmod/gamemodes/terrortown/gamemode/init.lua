@@ -310,17 +310,6 @@ function FixSpectators()
    end
 end
 
--- Calls PROPSPEC.End on all players who currently have a propspec
--- Normally this is handled by the gamemode because the entity is no longer valid
--- But in our case the props were not removed
-local function FixPropSpectators()
-   for _, ply in pairs(player.GetAll()) do
-      if ply.propspec then
-         PROPSPEC.End(ply)
-      end
-   end
-end
-
 -- Used to be in think, now a timer
 local function WinChecker()
    if GetRoundState() == ROUND_ACTIVE then
@@ -655,9 +644,6 @@ function BeginRound()
    AnnounceVersion()
 
    InitRoundEndTime()
-
-   -- Unspectate players who were spectating during prep
-   FixPropSpectators()
 
    if CheckForAbort() then return end
 
