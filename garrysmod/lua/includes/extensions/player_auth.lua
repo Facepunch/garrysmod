@@ -1,3 +1,4 @@
+
 local meta = FindMetaTable("Player")
 if not meta then return end
 
@@ -31,14 +32,6 @@ function meta:IsUserGroup(name)
 end
 
 --[[---------------------------------------------------------
-    Name: SetUserGroup
-    Desc: Sets the player's usergroup. ( Serverside Only )
------------------------------------------------------------]]
-function meta:SetUserGroup(name)
-    self:SetNetworkedString("UserGroup", name)
-end
-
---[[---------------------------------------------------------
     Name: GetUserGroup
     Desc: Returns the player's usergroup.
 -----------------------------------------------------------]]
@@ -53,10 +46,20 @@ end
 
 if not SERVER then return end
 
+--[[---------------------------------------------------------
+    Name: SetUserGroup
+    Desc: Sets the player's usergroup. ( Serverside Only )
+-----------------------------------------------------------]]
+function meta:SetUserGroup(name)
+    self:SetNetworkedString("UserGroup", name)
+end
+
+
 -- SteamIds table..
 -- STEAM_0:1:7099:
 --     name   =   garry
 --     group  =   superadmin
+
 local SteamIDs = {}
 
 -- Load the users file
