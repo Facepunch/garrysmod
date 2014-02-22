@@ -1,16 +1,12 @@
-
 AddCSLuaFile()
 
 SWEP.HoldType           = "ar2"
 
 if CLIENT then
    SWEP.PrintName          = "rifle_name"
-
    SWEP.Slot               = 2
-
    SWEP.Icon = "VGUI/ttt/icon_scout"
 end
-
 
 SWEP.Base               = "weapon_tttbase"
 SWEP.Spawnable = true
@@ -47,7 +43,7 @@ SWEP.IronSightsPos      = Vector( 5, -15, -2 )
 SWEP.IronSightsAng      = Vector( 2.6, 1.37, 3.5 )
 
 function SWEP:SetZoom(state)
-    if CLIENT then 
+    if CLIENT then
        return
     elseif IsValid(self.Owner) and self.Owner:IsPlayer() then
        if state then
@@ -62,17 +58,17 @@ end
 function SWEP:SecondaryAttack()
     if not self.IronSightsPos then return end
     if self:GetNextSecondaryFire() > CurTime() then return end
-    
+
     bIronsights = not self:GetIronsights()
-    
+
     self:SetIronsights( bIronsights )
-    
+
     if SERVER then
         self:SetZoom(bIronsights)
      else
         self:EmitSound(self.Secondary.Sound)
     end
-    
+
     self:SetNextSecondaryFire( CurTime() + 0.3)
 end
 
