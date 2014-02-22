@@ -736,3 +736,15 @@ function table.ForEach( tab, funcname )
 	end
 
 end
+
+function table.GetKeys( tab )
+	
+	local keys = {}
+
+	for k, v in pairs( tab ) do
+		table.insert( keys, k )
+	end
+	
+	return keys
+
+end
