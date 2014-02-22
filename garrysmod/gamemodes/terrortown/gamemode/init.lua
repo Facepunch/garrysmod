@@ -656,6 +656,9 @@ function BeginRound()
 
    InitRoundEndTime()
 
+   -- Unspectate players who were spectating during prep
+   FixPropSpectators()
+
    if CheckForAbort() then return end
 
    -- Respawn dumb people who died during prep
@@ -667,9 +670,6 @@ function BeginRound()
    WEPS.ForcePrecache()
 
    if CheckForAbort() then return end
-   
-   -- Unspectate players who were spectating during prep
-   FixPropSpectators()
 
    -- Select traitors & co. This is where things really start so we can't abort
    -- anymore.
