@@ -46,14 +46,20 @@ function PROPSPEC.Target(ply, ent)
    PROPSPEC.Start(ply, ent)
 end
 
-function PROPSPEC.End(ply)
-   local ent = ply.propspec.ent or ply:GetObserverTarget()
+-- Clear any propspec state a player has. Safe even if player is not currently
+-- spectating.
+function PROPSPEC.Clear(ply)
+   local ent = (ply.propspec and ply.propspec.ent) or ply:GetObserverTarget()
    if IsValid(ent) then
       ent:SetNWEntity("spec_owner", nil)
    end
 
    ply.propspec = nil
    ply:SpectateEntity(nil)
+end
+
+function PROPSPEC.End(ply)
+   PROPSPEC.Clear(ply)
    ply:Spectate(OBS_MODE_ROAMING)
    ply:ResetViewRoll()
 

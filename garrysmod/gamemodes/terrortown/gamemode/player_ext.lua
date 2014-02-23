@@ -281,6 +281,9 @@ function plymeta:SpawnForRound(dead_only)
 
    if not self:ShouldSpawn() then return false end
 
+   -- reset propspec state that they may have gotten during prep
+   PROPSPEC.Clear(self)
+
    -- respawn anyone else
    if self:Team() == TEAM_SPEC then
       self:UnSpectate()
