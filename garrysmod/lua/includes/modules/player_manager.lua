@@ -296,7 +296,7 @@ function RegisterClass( name, table, base )
 	--
 	if ( base ) then
 
-		if ( !Type[ name ] ) then ErrorNoHalt( "RegisterClass - deriving "..name.." from unknown class "..base.."!" ) end
+		if ( !Type[ name ] ) then ErrorNoHalt( "RegisterClass - deriving "..name.." from unknown class "..base.."!\n" ) end
 		setmetatable( Type[ name ], { __index = Type[ base ] } )
 
 	end
@@ -316,7 +316,7 @@ end
 function SetPlayerClass( ply, classname )
 
 	local t = Type[ classname ]
-	if ( !Type[ classname ] ) then ErrorNoHalt( "SetPlayerClass - attempt to use unknown player class "..classname ) end
+	if ( !Type[ classname ] ) then ErrorNoHalt( "SetPlayerClass - attempt to use unknown player class "..classname .. "!\n" ) end
 
 	local id = util.NetworkStringToID( classname )
 	ply:SetClassID( id )

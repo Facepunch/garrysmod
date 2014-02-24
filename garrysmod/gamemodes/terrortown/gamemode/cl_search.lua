@@ -243,7 +243,7 @@ local function SearchInfoController(search, dactive, dtext)
              local t = pnew.info_type
              local data = search[t]
              if not data then
-                ErrorNoHalt("Search: data not found", t, data)
+                ErrorNoHalt("Search: data not found", t, data,"\n")
                 return
              end
 
