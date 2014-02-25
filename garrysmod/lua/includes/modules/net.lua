@@ -1,4 +1,3 @@
-
 net.Receivers = {}
 
 --
@@ -38,22 +37,21 @@ end
 function net.WriteEntity( ent )
 
 	if ( !IsValid( ent ) ) then 
-		net.WriteUInt( 0, 32 )
+		net.WriteUInt( 0, 16 )
 	else
-		net.WriteUInt( ent:EntIndex(), 32 )
+		net.WriteUInt( ent:EntIndex(), 16 )
 	end
 
 end
 
-function net.ReadEntity( ent )
+function net.ReadEntity()
 
-	local i = net.ReadUInt( 32 )
-	if ( !i ) then return  end
+	local i = net.ReadUInt( 16 )
+	if ( !i ) then return end
 	
 	return Entity( i )
 	
 end
-
 
 --
 -- Write a whole table to the stream
