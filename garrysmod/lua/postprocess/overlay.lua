@@ -53,7 +53,7 @@ list.Set( "OverlayMaterials", "#overlay_pp.tankglass",		{ Material = "models/pro
 list.Set( "OverlayMaterials", "#overlay_pp.waves",			{ Material = "models/props_combine/tprings_globe", Icon = "models/props_combine/tprings_globe" } )
 list.Set( "OverlayMaterials", "#overlay_pp.fisheye",		{ Material = "models/props_c17/fisheyelens", Icon = "models/props_c17/fisheyelens" } )
 list.Set( "OverlayMaterials", "#overlay_pp.rendertarget",	{ Material = "models/overlay_rendertarget", Icon = "models/overlay_rendertarget" } )
-list.Set( "OverlayMaterials", "#overlay_pp.strider_pinch_dudv", { Material = "models/strider_pinch_dudv", Icon = "effects/strider_pinch_dudv" } )
+list.Set( "OverlayMaterials", "#overlay_pp.strider_pinch_dudv", { Material = "effects/strider_pinch_dudv", Icon = "effects/strider_pinch_dudv" } )
 list.Set( "OverlayMaterials", "#overlay_pp.teleport",		{ Material = "effects/tp_eyefx/tpeye", Icon = "effects/tp_eyefx/tpeye" } )
 list.Set( "OverlayMaterials", "#overlay_pp.teleport2",		{ Material = "effects/tp_eyefx/tpeye2", Icon = "effects/tp_eyefx/tpeye2" } )
 list.Set( "OverlayMaterials", "#overlay_pp.teleport3",		{ Material = "effects/tp_eyefx/tpeye3", Icon = "effects/tp_eyefx/tpeye3" } )
