@@ -54,29 +54,6 @@ function net.ReadEntity()
 end
 
 --
--- Read/Write a player to the stream
---
-function net.WritePlayer( ent )
-
-	if ( !IsValid( ent ) ) then 
-		net.WriteUInt( 0, 8 )
-	else
-		net.WriteUInt( ent:EntIndex(), 8 )
-	end
-
-end
-
-function net.ReadPlayer()
-
-	local i = net.ReadUInt( 8 )
-	if ( !i ) then return  end
-	
-	return Entity( i )
-	
-end
-
-
---
 -- Write a whole table to the stream
 -- This is less optimal than writing each
 -- item indivdually and in a specific order
