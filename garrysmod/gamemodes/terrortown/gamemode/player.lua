@@ -84,6 +84,7 @@ function GM:PlayerSpawn(ply)
    -- ye olde hooks
    hook.Call("PlayerLoadout", GAMEMODE, ply)
    hook.Call("PlayerSetModel", GAMEMODE, ply)
+   hook.Call("TTTPlayerSetColor", GAMEMODE, ply)
 
    local oldhands = ply:GetHands()
    if IsValid(oldhands) then oldhands:Remove() end
@@ -253,8 +254,23 @@ function GM:PlayerSetModel(ply)
    util.PrecacheModel(mdl)
    ply:SetModel(mdl)
 
-   ply:SetColor(GAMEMODE.playercolor or COLOR_WHITE)
+   -- Always clear color state, may later be changed in TTTPlayerSetColor
+   ply:SetColor(COLOR_WHITE)
 end
+
+
+function GM:TTTPlayerSetColor(ply)
+   local clr = COLOR_WHITE
+   local should_color = hook.Call("TTTShouldColorModel", GAMEMODE, ply:GetModel())
+   if GAMEMODE.playercolor and should_color then
+      -- If this player has a colorable model, always use the same color as all
+      -- other colorable players, so color will never be the factor that lets
+      -- you tell players apart.
+      clr = GAMEMODE.playercolor
+   end
+   ply:SetColor(clr)
+end
+
 
 -- Only active players can use kill cmd
 function GM:CanPlayerSuicide(ply)

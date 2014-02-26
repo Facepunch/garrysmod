@@ -270,6 +270,7 @@ end
 -- true, only spawns if player is dead, else just makes sure he is healed.
 function plymeta:SpawnForRound(dead_only)
    hook.Call("PlayerSetModel", GAMEMODE, self)
+   hook.Call("TTTPlayerSetColor", GAMEMODE, self)
 
    -- wrong alive status and not a willing spec who unforced after prep started
    -- (and will therefore be "alive")
