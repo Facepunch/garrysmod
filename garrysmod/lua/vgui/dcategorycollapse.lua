@@ -42,6 +42,12 @@ local PANEL =
 	
 		// Do nothing!
 	
+	end,
+
+	GenerateExample = function()
+
+		// Do nothing!
+
 	end
 
 }

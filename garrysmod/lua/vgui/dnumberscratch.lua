@@ -337,6 +337,14 @@ function PANEL:OnValueChanged() end
 
 PANEL.AllowAutoRefresh = true
 
+function PANEL:GenerateExample()
+
+	-- The concommand derma_controls currently runs in the menu realm
+	-- DNumberScratch uses the render library which is currently unavailable in this realm
+	-- Therefor we cannot generate an example without spitting errors
+
+end
+
 derma.DefineControl( "DNumberScratch", "", PANEL, "DImageButton" )
 
 

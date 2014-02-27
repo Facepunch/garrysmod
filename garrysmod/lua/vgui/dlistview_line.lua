@@ -26,6 +26,12 @@ function PANEL:UpdateColours( skin )
 
 end
 
+function PANEL:GenerateExample()
+
+	// Do nothing!
+
+end
+
 derma.DefineControl( "DListViewLabel", "", PANEL, "DLabel" )
 
 local PANEL = {}

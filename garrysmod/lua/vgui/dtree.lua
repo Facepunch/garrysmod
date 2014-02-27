@@ -178,7 +178,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 			end
 			local cnode = node:AddNode( "Node 2.6" )
 		local node = ctrl:AddNode( "Node Three ( Maps Folder )" )
-			node:MakeFolder( "maps", true )
+			node:MakeFolder( "maps", "GAME" )
 		local node = ctrl:AddNode( "Node Four" )
 		
 	
