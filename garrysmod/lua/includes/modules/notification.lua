@@ -15,11 +15,11 @@ module( "notification", package.seeall )
 
 local NoticeMaterial = {}
 
-NoticeMaterial[ NOTIFY_GENERIC ] 	= "vgui/notices/generic" 
-NoticeMaterial[ NOTIFY_ERROR ] 		= "vgui/notices/error" 
-NoticeMaterial[ NOTIFY_UNDO ] 		= "vgui/notices/undo" 
-NoticeMaterial[ NOTIFY_HINT ] 		= "vgui/notices/hint" 
-NoticeMaterial[ NOTIFY_CLEANUP ] 	= "vgui/notices/cleanup" 
+NoticeMaterial[ NOTIFY_GENERIC ] 	= Material( "vgui/notices/generic" )
+NoticeMaterial[ NOTIFY_ERROR ] 		= Material( "vgui/notices/error" )
+NoticeMaterial[ NOTIFY_UNDO ] 		= Material( "vgui/notices/undo" )
+NoticeMaterial[ NOTIFY_HINT ] 		= Material( "vgui/notices/hint" )
+NoticeMaterial[ NOTIFY_CLEANUP ] 	= Material( "vgui/notices/cleanup" )
 
 local Notices = {}
 
