@@ -24,6 +24,10 @@ surface.CreateFont("treb_small", {font = "Trebuchet18",
 
 local logo = surface.GetTextureID("VGUI/ttt/score_logo")
 
+TTT_COLUMN_HEADING = 0
+TTT_COLUMN_ROW = 1
+TTT_COLUMN_BACKGROUND = 2
+
 local PANEL = {}
 
 local max = math.max
@@ -120,22 +124,26 @@ function PANEL:Init()
 
    -- the various score column headers
    self.cols = {}
-   self.cols[1] = vgui.Create( "DLabel", self )
-   self.cols[1]:SetText( GetTranslation("sb_ping") )
-
-   self.cols[2] = vgui.Create( "DLabel", self )
-   self.cols[2]:SetText( GetTranslation("sb_deaths") )
-
-   self.cols[3] = vgui.Create( "DLabel", self )
-   self.cols[3]:SetText( GetTranslation("sb_score") )
+   self:AddColumn( GetTranslation("sb_ping") )
+   self:AddColumn( GetTranslation("sb_deaths") )
+   self:AddColumn( GetTranslation("sb_score") )
 
    if KARMA.IsEnabled() then
-      self.cols[4] = vgui.Create("DLabel", self)
-      self.cols[4]:SetText(GetTranslation("sb_karma"))
+      self:AddColumn( GetTranslation("sb_karma") )
    end
+   
+   hook.Call( "TTTScoreboardColumns", nil, self, TTT_COLUMN_HEADING ) --We'll grab custom headers here, same hook as the rows for ease of use
 
    self:UpdateScoreboard()
    self:StartUpdateTimer()
+end
+
+function PANEL:AddColumn( label, func )
+   local lbl = vgui.Create( "DLabel", self )
+   lbl:SetText( label )
+   
+   table.insert( self.cols, lbl )
+   return lbl
 end
 
 function PANEL:StartUpdateTimer()
