@@ -80,8 +80,27 @@ function PANEL:SetKeepAspect( bKeep )
 
 end
 
--- This makes it compatible with the older ImageButton
-PANEL.SetMaterial = PANEL.SetImage
+-- We might actually want to keep the original SetMaterial behavior
+function PANEL:SetMaterial( Mat )
+
+	if ( type( Mat ) == "string" ) then
+		self:SetImage( Mat )
+	return end
+
+	self.m_Material = Mat
+
+	if (!self.m_Material) then return end
+
+	local Texture = self.m_Material:GetTexture( "$basetexture" )
+	if ( Texture ) then
+		self.ActualWidth = Texture:Width()
+		self.ActualHeight = Texture:Height()
+	else
+		self.ActualWidth = self.m_Material:Width()
+		self.ActualHeight = self.m_Material:Height()
+	end
+
+end
 
 
 --[[---------------------------------------------------------
