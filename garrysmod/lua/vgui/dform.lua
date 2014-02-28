@@ -107,7 +107,7 @@ function PANEL:TextEntry( strLabel, strConVar )
 	
 	local right = vgui.Create( "DTextEntry", self )
 	right:SetConVar( strConVar )
-	right:Dock( FILL )
+	right:Dock( TOP )
 	
 	self:AddItem( left, right )
 	
