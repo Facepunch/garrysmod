@@ -1,4 +1,3 @@
-
 include( "ContentIcon.lua" )
 include( "PostProcessIcon.lua" )
 
@@ -38,6 +37,15 @@ function PANEL:Init()
 	self.ContentNavBar:SetSize( 190, 10 );
 	self.ContentNavBar:DockMargin( 0, 0, 4, 0 )
 	
+	
+	self.HorizontalDivider = vgui.Create( "DHorizontalDivider", self );	
+	self.HorizontalDivider:Dock( FILL );
+	self.HorizontalDivider:SetLeftWidth( 175 )
+	self.HorizontalDivider:SetLeftMin( 175 )
+	self.HorizontalDivider:SetRightMin( 450 )
+	
+	self.HorizontalDivider:SetLeft( self.ContentNavBar );
+	
 end
 
 function PANEL:EnableModify()
@@ -62,7 +70,9 @@ function PANEL:SwitchPanel( panel )
 	self.SelectedPanel:Dock( FILL )
 	self.SelectedPanel:SetVisible( true )
 	self:InvalidateParent()
-
+	
+	self.HorizontalDivider:SetRight( self.SelectedPanel );
+	
 end
 
 
