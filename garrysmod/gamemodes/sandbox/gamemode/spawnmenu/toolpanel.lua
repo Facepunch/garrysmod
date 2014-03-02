@@ -1,7 +1,7 @@
+
 include( 'controlpanel.lua' )
 
 local PANEL = {}
-
 
 AccessorFunc( PANEL, "m_TabID", 			"TabID" )
 
@@ -62,7 +62,7 @@ function PANEL:AddCategory( Name, Label, tItems )
 
 	local Category = self.List:Add( Label )
 
-	Category:SetCookieName( "ToolMenu."..tostring(Name) )
+	Category:SetCookieName( "ToolMenu." .. tostring( Name ) )
 	
 	local bAlt = true
 	
@@ -70,26 +70,17 @@ function PANEL:AddCategory( Name, Label, tItems )
 	
 		local item = Category:Add( v.Text )
 		
-		item.DoClick = function( button ) 
-		
-			local cp = controlpanel.Get( button.Name )
-			if ( !cp:GetInitialized() ) then
-				cp:FillViaTable( button )
-			end
-			
-			spawnmenu.ActivateToolPanel( self:GetTabID(), cp )
-			
-			if ( button.Command ) then
-				LocalPlayer():ConCommand( button.Command )
-			end
-		
+		item.DoClick = function( button )
+
+			spawnmenu.ActivateTool( button.Name )
+
 		end
 		
-		item.ControlPanelBuildFunction		= v.CPanelFunction
-		item.Command						= v.Command
-		item.Name							= v.ItemName
-		item.Controls						= v.Controls
-		item.Text							= v.Text
+		item.ControlPanelBuildFunction	= v.CPanelFunction
+		item.Command					= v.Command
+		item.Name						= v.ItemName
+		item.Controls					= v.Controls
+		item.Text						= v.Text
 	
 	end
 	

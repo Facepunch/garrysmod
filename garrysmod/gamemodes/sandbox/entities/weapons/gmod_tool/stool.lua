@@ -63,6 +63,17 @@ function ToolObj:GetServerInfo( property )
 	
 end
 
+function ToolObj:BuildConVarList()
+
+	local mode = self:GetMode()
+	local convars = {}
+
+	for k, v in pairs( self.ClientConVar ) do convars[ mode .. "_" .. k ] = v end
+
+	return convars
+	
+end
+
 function ToolObj:GetClientInfo( property )
 
 	local mode = self:GetMode()
@@ -180,10 +191,9 @@ if ( CLIENT ) then
 
 			if ( !k:find( str ) ) then continue end
 
-			local entry = 
-			{
-				text = v.Name or "#"..k,
-				icon = spawnmenu.CreateContentIcon( "tool", nil, { type = k } ),
+			local entry = {
+				text = v.Name or "#" .. k,
+				icon = spawnmenu.CreateContentIcon( "tool", nil, { type = k, title = v.Name or "#" .. k } ),
 				words = { k }
 			}
 			
@@ -195,7 +205,7 @@ if ( CLIENT ) then
 
 		return list
 
-	end );
+	end )
 
 	--
 	-- Tool spawnmenu icon
@@ -205,29 +215,32 @@ if ( CLIENT ) then
 		if ( !obj.type ) then return end
 	
 		local icon = vgui.Create( "ContentIcon", container )
-			icon:SetContentType( "tool" )
-			icon:SetSpawnName( obj.type )
-			icon:SetName( obj.type )
-			icon:SetMaterial( "gui/tool.png" )
+		icon:SetContentType( "tool" )
+		icon:SetSpawnName( obj.type )
+		icon:SetName( obj.title or "#tool." .. obj.type .. ".name" )
+		icon:SetMaterial( "gui/tool.png" )
 
-			icon.DoClick = function() 
-							RunConsoleCommand( "gmod_tool", obj.type ); 
-							surface.PlaySound( "ui/buttonclickrelease.wav" ) 
-						end
+		icon.DoClick = function() 
 
-			icon.OpenMenu = function( icon ) 
+			spawnmenu.ActivateTool( obj.type )
+							
+			surface.PlaySound( "ui/buttonclickrelease.wav" )
+	
+		end
 
-							local menu = DermaMenu()
-								menu:AddOption( "Delete", function() icon:Remove(); hook.Run( "SpawnlistContentChanged", icon ) end )
-							menu:Open()
+		icon.OpenMenu = function( icon ) 
+
+			local menu = DermaMenu()
+				menu:AddOption( "Delete", function() icon:Remove(); hook.Run( "SpawnlistContentChanged", icon ) end )
+			menu:Open()
 						
-						end
+		end
 		
 		if ( IsValid( container ) ) then
 			container:Add( icon )
 		end
 
-		return icon;
+		return icon
 
 	end )
 
