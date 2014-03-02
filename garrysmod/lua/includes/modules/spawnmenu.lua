@@ -37,7 +37,7 @@ function GetToolMenu( name, label, icon )
 	--
 	-- This is a dirty hack so that Main stays at the front of the tabs.
 	--
-	if ( name == "Main" ) then name = "#AAAAAAA_Main" end
+	if ( name == "Main" ) then name = "AAAAAAA_Main" end
 
 	label = label or name
 	icon = icon or "icon16/wrench.png"
