@@ -15,22 +15,17 @@ function ENT:Initialize()
 	
 end
 
-function ENT:DoSetup( ply )
+function ENT:DoSetup( ply, spec )
 
 	-- Set these hands to the player
 	ply:SetHands( self )
 	self:SetOwner( ply )
 
-	-- Which hands should we use?
-	local info = player_manager.RunClass( ply, "GetHandsModel" )
-	if ( info ) then
-		self:SetModel( info.model )
-		self:SetSkin( info.skin )
-		self:SetBodyGroups( info.body )
-	end
+	-- Which hands should we use? Let the gamemode decide
+	hook.Call( "PlayerSetHandsModel", GAMEMODE, spec or ply, self )
 
 	-- Attach them to the viewmodel
-	local vm = ply:GetViewModel( 0 )
+	local vm = ( spec or ply ):GetViewModel( 0 )
 	self:AttachToViewmodel( vm )
 
 	vm:DeleteOnRemove( self )

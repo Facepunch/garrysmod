@@ -256,6 +256,8 @@ function GM:PlayerSpawn( pl )
 	-- Stop observer mode
 	pl:UnSpectate()
 
+	pl:SetupHands()
+
 	player_manager.OnPlayerSpawn( pl )
 	player_manager.RunClass( pl, "Spawn" )
 
@@ -274,6 +276,21 @@ end
 function GM:PlayerSetModel( pl )
 
 	player_manager.RunClass( pl, "SetModel" )
+
+end
+
+--[[---------------------------------------------------------
+   Name: gamemode:PlayerSetHandsModel( )
+   Desc: Sets the player's view model hands model
+-----------------------------------------------------------]]
+function GM:PlayerSetHandsModel( pl, ent )
+
+	local info = player_manager.RunClass( pl, "GetHandsModel" )
+	if ( info ) then
+		ent:SetModel( info.model )
+		ent:SetSkin( info.skin )
+		ent:SetBodyGroups( info.body )
+	end
 
 end
 

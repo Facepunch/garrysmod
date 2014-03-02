@@ -86,21 +86,19 @@ function GM:PlayerSpawn(ply)
    hook.Call("PlayerSetModel", GAMEMODE, ply)
    hook.Call("TTTPlayerSetColor", GAMEMODE, ply)
 
-   local oldhands = ply:GetHands()
-   if IsValid(oldhands) then oldhands:Remove() end
-
-   local hands = ents.Create( "gmod_hands" )
-   if IsValid(hands) then
-      ply:SetHands(hands)
-      hands:SetOwner(ply)
-
-      -- Find model and attach to vm, currently ours
-      ply:SetPlayerHands(ply)
-      ply:DeleteOnRemove(hands)
-      hands:Spawn()
-   end
+   ply:SetupHands()
 
    SCORE:HandleSpawn(ply)
+end
+
+function GM:PlayerSetHandsModel( pl, ent )
+   local simplemodel = util.GetSimpleModelName(pl:GetModel())
+   local info = player_manager.TranslatePlayerHands(simplemodel)
+   if info then
+      ent:SetModel(info.model)
+      ent:SetSkin(info.skin)
+      ent:SetBodyGroups(info.body)
+   end
 end
 
 function GM:IsSpawnpointSuitable(ply, spwn, force, rigged)

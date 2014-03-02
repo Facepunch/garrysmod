@@ -41,7 +41,6 @@ end
 --
 function PLAYER:Init()
 
-
 end
 
 --
@@ -51,17 +50,6 @@ end
 -- Ret1:
 --
 function PLAYER:Spawn()
-
-	local oldhands = self.Player:GetHands();
-	if ( IsValid( oldhands ) ) then
-		oldhands:Remove()
-	end
-
-	local hands = ents.Create( "gmod_hands" )
-	if ( IsValid( hands ) ) then
-		hands:DoSetup( self.Player )
-		hands:Spawn()
-	end	
 
 end
 
@@ -130,15 +118,6 @@ end
 -- Ret1:
 --
 function PLAYER:PostDrawViewModel( vm, weapon )
-
-	if ( weapon.UseHands || !weapon:IsScripted() ) then
-
-		local hands = self.Player:GetHands()
-		if ( IsValid( hands ) ) then
-			hands:DrawModel()
-		end
-
-	end
 
 end
 
