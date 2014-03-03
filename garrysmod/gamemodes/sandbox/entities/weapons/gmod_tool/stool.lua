@@ -193,7 +193,10 @@ if ( CLIENT ) then
 
 			local entry = {
 				text = v.Name or "#" .. k,
-				icon = spawnmenu.CreateContentIcon( "tool", nil, { type = k, title = v.Name or "#" .. k } ),
+				icon = spawnmenu.CreateContentIcon( "tool", nil, {
+					spawnname = k,
+					nicename = v.Name or "#" .. k
+				} ),
 				words = { k }
 			}
 			
@@ -212,26 +215,26 @@ if ( CLIENT ) then
 	--
 	spawnmenu.AddContentType( "tool", function( container, obj )
 
-		if ( !obj.type ) then return end
-	
+		if ( !obj.spawnname ) then return end
+
 		local icon = vgui.Create( "ContentIcon", container )
 		icon:SetContentType( "tool" )
-		icon:SetSpawnName( obj.type )
-		icon:SetName( obj.title or "#tool." .. obj.type .. ".name" )
+		icon:SetSpawnName( obj.spawnname )
+		icon:SetName( obj.nicename or "#tool." .. obj.spawnname .. ".name" )
 		icon:SetMaterial( "gui/tool.png" )
 
-		icon.DoClick = function() 
+		icon.DoClick = function()
 
-			spawnmenu.ActivateTool( obj.type )
-							
+			spawnmenu.ActivateTool( obj.spawnname )
+
 			surface.PlaySound( "ui/buttonclickrelease.wav" )
 	
 		end
 
-		icon.OpenMenu = function( icon ) 
+		icon.OpenMenu = function( icon )
 
 			local menu = DermaMenu()
-				menu:AddOption( "Delete", function() icon:Remove(); hook.Run( "SpawnlistContentChanged", icon ) end )
+				menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
 			menu:Open()
 						
 		end
