@@ -24,10 +24,6 @@ surface.CreateFont("treb_small", {font = "Trebuchet18",
 
 local logo = surface.GetTextureID("VGUI/ttt/score_logo")
 
-TTT_COLUMN_HEADING = 0
-TTT_COLUMN_ROW = 1
-TTT_COLUMN_BACKGROUND = 2
-
 local PANEL = {}
 
 local max = math.max
@@ -107,19 +103,23 @@ function PANEL:Init()
    local t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
    t:SetGroupInfo(GetTranslation("terrorists"), Color(0,200,0,100), GROUP_TERROR)
    self.ply_groups[GROUP_TERROR] = t
+   t.TTTPlayerFrame = self
 
    t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
    t:SetGroupInfo(GetTranslation("spectators"), Color(200, 200, 0, 100), GROUP_SPEC)
    self.ply_groups[GROUP_SPEC] = t
+   t.TTTPlayerFrame = self
 
    if DetectiveMode() then
       t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
       t:SetGroupInfo(GetTranslation("sb_mia"), Color(130, 190, 130, 100), GROUP_NOTFOUND)
       self.ply_groups[GROUP_NOTFOUND] = t
+      t.TTTPlayerFrame = self
 
       t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
       t:SetGroupInfo(GetTranslation("sb_confirmed"), Color(130, 170, 10, 100), GROUP_FOUND)
       self.ply_groups[GROUP_FOUND] = t
+      t.TTTPlayerFrame = self
    end
 
    -- the various score column headers
@@ -132,7 +132,7 @@ function PANEL:Init()
       self:AddColumn( GetTranslation("sb_karma") )
    end
    
-   hook.Call( "TTTScoreboardColumns", nil, self, TTT_COLUMN_HEADING ) --We'll grab custom headers here, same hook as the rows for ease of use
+   hook.Call( "TTTScoreboardColumns", nil, self ) --We'll grab custom headers here, same hook as the rows for ease of use
 
    self:UpdateScoreboard()
    self:StartUpdateTimer()
@@ -141,6 +141,7 @@ end
 function PANEL:AddColumn( label, func )
    local lbl = vgui.Create( "DLabel", self )
    lbl:SetText( label )
+   lbl.IsHeading = true
    
    table.insert( self.cols, lbl )
    return lbl

@@ -31,14 +31,6 @@ function PANEL:Init()
    self.rows_sorted = {}
    
    self.group = "spec"
-   
-   self.cols = {true,true,true, KARMA.IsEnabled() and true or nil} --We want to see the columns, so the darkening effect can match. 3 static columns, karma optional fourth
-   
-   hook.Call( "TTTScoreboardColumns", nil, self, TTT_COLUMN_BACKGROUND ) --Grab custom columns
-end
-
-function PANEL:AddColumn()
-   table.insert( self.cols, true ) --We don't keed to know anything about the column, only that it exists
 end
 
 function PANEL:SetGroupInfo(name, color, group)
@@ -83,8 +75,13 @@ function PANEL:Paint()
    -- Column darkening
    local scr = sboard_panel.ply_frame.scroll.Enabled and 16 or 0
    surface.SetDrawColor(0,0,0, 80)
-   for i=1,#self.cols,2 do --Odd numbers
-      surface.DrawRect(self:GetWide() - (50*i) - 25 - scr, 0, 50, self:GetTall())
+   if self.TTTPlayerFrame.cols then
+     for i=1,#self.TTTPlayerFrame.cols,2 do --Odd numbers
+        surface.DrawRect(self:GetWide() - (50*i) - 25 - scr, 0, 50, self:GetTall())
+     end
+   else --This shouldn't paint before the columns are set up, but you never know...
+      surface.DrawRect(self:GetWide() - 175 - 25 - scr, 0, 50, self:GetTall())
+      surface.DrawRect(self:GetWide() - 75 - 25 - scr, 0, 50, self:GetTall())
    end
 end
 

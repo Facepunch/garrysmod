@@ -27,7 +27,7 @@ function PANEL:Init()
       self:AddColumn( GetTranslation("sb_karma"), function(ply) return math.Round(ply:GetBaseKarma()) end )
    end
    
-   hook.Call( "TTTScoreboardColumns", nil, self, TTT_COLUMN_ROW ) --Let coders add their own columns, first arg panel
+   hook.Call( "TTTScoreboardColumns", nil, self ) --Let coders add their own columns, first arg panel
 
    for _, c in ipairs(self.cols) do
       c:SetMouseInputEnabled(false)
@@ -58,6 +58,7 @@ function PANEL:AddColumn( label, func )
    local lbl = vgui.Create( "DLabel", self )
    lbl:SetText( label )
    lbl.func = func
+   lbl.IsHeading = false
    
    table.insert( self.cols, lbl )
    return lbl
