@@ -372,20 +372,3 @@ function util.SimpleTime(seconds, fmt)
 
     return string.format(fmt, m, s, ms)
 end
-
-
--- Find the simple name that player_manager likes
-local simplemodel_cache = {}
-function util.GetSimpleModelName(model)
-   local cached = simplemodel_cache[model]
-   if cached then return cached end
-
-   local lst = player_manager.AllValidModels()
-   for simple, mdl in pairs(lst) do
-      if mdl == model then
-         simplemodel_cache[mdl] = simple
-         return simple
-      end
-   end
-   return "css_phoenix"
-end
