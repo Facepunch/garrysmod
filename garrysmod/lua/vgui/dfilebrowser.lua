@@ -26,9 +26,9 @@ function PANEL:Init()
 	self.Tree:SetWidth( 200 )
 	
 	self.Tree.DoClick = function( _, node )
-	
-		if ( !node.FileName ) then return end
-		self:ShowFolder( node.FileName )
+
+		if ( !node:GetFolder() ) then return end
+		self:ShowFolder( node:GetFolder() )
 	
 	end
 	
@@ -43,16 +43,18 @@ function PANEL:Paint( w, h )
 	DPanel.Paint( self, w, h )
 
 	if ( !self.bSetup ) then
-		self:Setup()
-		self.bSetup = true
+		self.bSetup = self:Setup()
 	end
 
 end
 
 function PANEL:Setup()
 
-	local root = self.Tree.RootNode:AddFolder( self.m_strName, self.m_strPath, false );
-	root:SetExpanded( true );
+	if ( !self.m_strName || !self.m_strPath ) then return false end
+
+	local root = self.Tree.RootNode:AddFolder( self.m_strName, self.m_strPath, false )
+
+	return true
 
 end
 
@@ -60,7 +62,7 @@ function PANEL:ShowFolder( path )
 
 	self.Icons:Clear()
 	
-	local files = file.Find( path .. "/" .. self.m_strFilter, "GAME" )
+	local files = file.Find( path .. "/" .. (self.m_strFilter or "*.*"), "GAME" )
 	
 	for k, v in pairs( files ) do
 	
