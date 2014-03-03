@@ -131,6 +131,12 @@ function PANEL:DragHoverClick( HoverTime )
 
 end
 
+function PANEL:GenerateExample()
+
+	// Do nothing!
+
+end
+
 derma.DefineControl( "DTab", "A Tab for use on the PropertySheet", PANEL, "DButton" )
 
 --[[   _                                

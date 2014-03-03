@@ -49,4 +49,10 @@ function PANEL:UpdateColours( skin )
 
 end
 
+function PANEL:GenerateExample()
+
+	// Do nothing!
+
+end
+
 derma.DefineControl( "DTree_Node_Button", "Tree Node Button", PANEL, "DButton" )

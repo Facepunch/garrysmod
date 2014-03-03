@@ -193,6 +193,10 @@ function PANEL:PerformLayout()
 		
 end
 
+function PANEL:GenerateExample()
 
+	// Do nothing!
+
+end
 
 derma.DefineControl( "DMenuOption", "Menu Option Line", PANEL, "DButton" )
