@@ -169,7 +169,7 @@ function PANEL:AddScroll( dlta )
 	dlta = dlta * 25
 	self:SetScroll( self:GetScroll() + dlta )
 	
-	return OldScroll == self:GetScroll()
+	return OldScroll != self:GetScroll()
 	
 end
 
@@ -210,7 +210,7 @@ function PANEL:AnimateTo( scrll, length, delay, ease )
 	anim.TargetPos = scrll
 	anim.Think = function( anim, pnl, fraction )
 	
-		pnl:SetScroll( Lerp( fraction, anim.StartPos, anim.TargetPos ) );
+		pnl:SetScroll( Lerp( fraction, anim.StartPos, anim.TargetPos ) )
 	
 	end
 	
