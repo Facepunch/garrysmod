@@ -13,6 +13,7 @@ module( "player_manager" )
 
 -- Stores a table of valid player models
 local ModelList = {}
+local ModelListRev = {}
 local HandNames = {}
 
 --[[---------------------------------------------------------
@@ -21,6 +22,7 @@ local HandNames = {}
 function AddValidModel( name, model )
 
 	ModelList[ name ] = model
+	ModelList[ model ] = name
 
 end
 
@@ -52,6 +54,16 @@ function TranslatePlayerModel( name )
 	end
 	
 	return "models/player/kleiner.mdl"
+end
+
+-- Translate from the full model name to simple model name
+function TranslateToPlayerModelName( model )
+
+	if ( ModelListRev[ model ] != nil ) then
+		return ModelListRev[ model ]
+	end
+	
+	return "kleiner"
 end
 
 --

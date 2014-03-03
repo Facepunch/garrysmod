@@ -131,8 +131,8 @@ function PLAYER:GetHandsModel()
 
 	-- return { model = "models/weapons/c_arms_cstrike.mdl", skin = 1, body = "0100000" }
 
-	local cl_playermodel = self.Player:GetInfo( "cl_playermodel" )
-	return player_manager.TranslatePlayerHands( cl_playermodel )
+	local playermodel = player_manager.TranslateToPlayerModelName( self.Player:GetModel() )
+	return player_manager.TranslatePlayerHands( playermodel )
 
 end
 

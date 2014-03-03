@@ -92,7 +92,7 @@ function GM:PlayerSpawn(ply)
 end
 
 function GM:PlayerSetHandsModel( pl, ent )
-   local simplemodel = util.GetSimpleModelName(pl:GetModel())
+   local simplemodel = player_manager.TranslateToPlayerModelName(pl:GetModel())
    local info = player_manager.TranslatePlayerHands(simplemodel)
    if info then
       ent:SetModel(info.model)
