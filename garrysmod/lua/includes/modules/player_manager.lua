@@ -22,7 +22,7 @@ local HandNames = {}
 function AddValidModel( name, model )
 
 	ModelList[ name ] = model
-	ModelList[ model ] = name
+	ModelListRev[ model ] = name
 
 end
 
