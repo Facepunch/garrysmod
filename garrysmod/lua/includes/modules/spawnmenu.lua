@@ -1,5 +1,5 @@
 
-local spawnmenu_engine	= spawnmenu
+local spawnmenu_engine = spawnmenu
 
 --[[---------------------------------------------------------
 
@@ -77,6 +77,7 @@ function AddToolTab( strName, strLabel, Icon )
 	GetToolMenu( strName, strLabel, Icon )
 
 end
+
 
 
 --[[---------------------------------------------------------
@@ -233,7 +234,7 @@ function GetContentType( name, func )
 	if ( !cp[ name ] ) then
 	
 		cp[ name ] = function() end
-		Msg( "spawnmenu.GetContentType( ", name, " ) - not found!\n" );
+		Msg( "spawnmenu.GetContentType( ", name, " ) - not found!\n" )
 	
 	end
 
@@ -242,7 +243,7 @@ end
 
 function CreateContentIcon( type, parent, tbl )
 
-	local cp = GetContentType( type );
+	local cp = GetContentType( type )
 	if ( cp ) then return cp( parent, tbl ) end
 	
 end
@@ -264,9 +265,40 @@ function ActivateToolPanel( id, cp )
 	spawnmenu.SetActiveControlPanel( cp )
 			
 	if ( cp ) then
-		Tab:SetActive( cp );
+		Tab:SetActive( cp )
 	end
 	
 	SwitchToolTab( id )
+
+end
+
+-- While technically tool class names CAN be duplicate, it normally should never happen.
+function ActivateTool( strName )
+
+	-- Hacky code to get table of a tool and its tab
+	local tool = {}
+	local tab = 1
+	for Tab, v in ipairs( g_ToolMenu ) do
+		for _, items in pairs( v.Items ) do
+			for _, item in pairs( items ) do
+				if ( istable( item ) && item.ItemName && item.ItemName == strName ) then
+					tool = item
+					tab = Tab
+					break
+				end
+			end
+		end
+	
+	end
+
+	RunConsoleCommand( unpack( string.Explode( " ", tool.Command ) ) )
+	
+	local cp = controlpanel.Get( strName )
+	if ( !cp:GetInitialized() ) then
+		cp:FillViaTable( { Text = tool.Text, ControlPanelBuildFunction = tool.CPanelFunction, Controls = tool.Controls } )
+	end
+
+	ActivateToolPanel( tab, cp )
+	SwitchToolTab( tab )
 
 end
