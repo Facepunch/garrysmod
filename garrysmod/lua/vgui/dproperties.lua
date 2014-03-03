@@ -8,11 +8,11 @@ local tblRow = vgui.RegisterTable( {
 
 		self:Dock( TOP )
 
-		self.Label		= self:Add( "DLabel" )
+		self.Label = self:Add( "DLabel" )
 		self.Label:Dock( LEFT )
 		self.Label:DockMargin( 4, 2, 2, 2 )
 
-		self.Container	= self:Add( "Panel" )
+		self.Container = self:Add( "Panel" )
 		self.Container:Dock( FILL )
 
 	end,
@@ -28,7 +28,7 @@ local tblRow = vgui.RegisterTable( {
 
 		self.Container:Clear()
 
-		local Name = "DProperty_" .. type;
+		local Name = "DProperty_" .. type
 
 		self.Inner = self.Container:Add( Name )
 		if ( !IsValid( self.Inner ) ) then self.Inner = self.Container:Add( "DProperty_Generic" ) end
@@ -57,7 +57,7 @@ local tblRow = vgui.RegisterTable( {
 
 		local Skin = self:GetSkin()
 		if ( !IsValid( self.Inner ) ) then return end
-		local editing = self.Inner:IsEditing();
+		local editing = self.Inner:IsEditing()
 
 		if ( editing ) then
 			surface.SetDrawColor( Skin.Colours.Properties.Column_Selected )
@@ -70,9 +70,9 @@ local tblRow = vgui.RegisterTable( {
 		surface.DrawRect( 0, h-1, w, 1 )
 
 		if ( editing ) then
-			self.Label:SetTextColor( Skin.Colours.Properties.Label_Selected );
+			self.Label:SetTextColor( Skin.Colours.Properties.Label_Selected )
 		else
-			self.Label:SetTextColor( Skin.Colours.Properties.Label_Normal );
+			self.Label:SetTextColor( Skin.Colours.Properties.Label_Normal )
 		end
 
 	end
@@ -100,9 +100,11 @@ local tblCategory = vgui.RegisterTable( {
 		self.Expand:Dock( LEFT )
 		self.Expand:SetSize( 16, 16 )
 		self.Expand:DockMargin( 0, 4, 0, 4 )
+		self.Expand:SetExpanded( true )
 		self.Expand.DoClick = function()
 			
 			self.Container:SetVisible( !self.Container:IsVisible() )
+			self.Expand:SetExpanded( self.Container:IsVisible() )
 			self:InvalidateLayout()
 
 		end
@@ -126,7 +128,7 @@ local tblCategory = vgui.RegisterTable( {
 		self:SizeToChildren( false, true )
 
 		local Skin = self:GetSkin()
-		self.Label:SetTextColor( Skin.Colours.Properties.Title );
+		self.Label:SetTextColor( Skin.Colours.Properties.Title )
 		self.Label:DockMargin( 4, 0, 0, 0 )
 
 	end,
@@ -186,7 +188,7 @@ function PANEL:GetCanvas()
 
 	end
 
-	return self.Canvas;
+	return self.Canvas
 
 end
 
