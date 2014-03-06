@@ -23,6 +23,10 @@ Derma_Hook( PANEL, 	"PerformLayout", "Layout", "ListViewHeaderLabel" )
 function PANEL:Init()
 end
 
+-- No example for this control. Why do we have this control?
+function PANEL:GenerateExample( class, tabs, w, h )
+end
+
 derma.DefineControl( "DListViewHeaderLabel", "", PANEL, "DLabel" )
 
 local PANEL = {}
@@ -57,6 +61,10 @@ function PANEL:OnCursorMoved()
 		self:GetParent():ResizeColumn( x )
 	end
 
+end
+
+-- No example for this control
+function PANEL:GenerateExample( class, tabs, w, h )
 end
 
 derma.DefineControl( "DListView_DraggerBar", "", PANEL, "DButton" )

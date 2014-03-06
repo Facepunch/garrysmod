@@ -39,6 +39,14 @@ function PANEL:OnMousePressed( mcode )
 	self:SetTextColor( Color( 0, 0, 0, 255 ) )
 end
 
+function PANEL:Paint( w, h )
+	if ( self.m_pMother:GetSelectedValues() == self:GetText() ) then
+		draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 128, 255, 200 ) )
+	elseif ( self.Hovered ) then
+		draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 128, 255, 128 ) )
+	end
+end
+
 --[[---------------------------------------------------------
    Name: OnCursorMoved
 -----------------------------------------------------------]]
@@ -129,7 +137,7 @@ function PANEL:Rebuild()
 
 	local Offset = 0
 	
-	local x, y = self.Padding, self.Padding;
+	local x, y = self.Padding, self.Padding
 	for k, panel in pairs( self.Items ) do
 	
 		local w = panel:GetWide()
@@ -170,7 +178,8 @@ function PANEL:SelectItem( item, onlyme )
 		self.m_pSelected = nil
 		
 	end
-	
+
+	if ( self.OnSelect ) then self:OnSelect( item ) end
 	
 	self.m_pSelected = item
 	item:SetSelected( true )
@@ -198,19 +207,19 @@ end
 -----------------------------------------------------------]]
 function PANEL:GetSelectedValues() 
  
-    local items = self:GetSelectedItems();  
-	
+    local items = self:GetSelectedItems()
+
     if ( #items > 1 ) then
 	
-        local ret = {};  
+        local ret = {}  
         for _, v in pairs( items ) do table.insert( ret, v:GetValue() ) end  
-        return ret;  
+        return ret  
 		
-    else  
+    elseif ( #items == 1 ) then
 	
         return items[1]:GetValue()  
 		
-    end  
+    end
 	
 end  
 

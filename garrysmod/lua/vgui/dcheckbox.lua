@@ -80,6 +80,10 @@ function PANEL:Think()
 
 end
 
+-- No example for this control
+function PANEL:GenerateExample( class, tabs, w, h )
+end
+
 derma.DefineControl( "DCheckBox", "Simple Checkbox", PANEL, "DButton" )
 
 

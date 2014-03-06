@@ -14,7 +14,7 @@ function PANEL:SetEntity( entity )
 
 	if ( self.m_Entity == entity ) then return end
 
-	self.m_Entity = entity;
+	self.m_Entity = entity
 	self:RebuildControls()
 
 end
@@ -122,12 +122,7 @@ function PANEL:PostAutoRefresh()
 
 	self:RebuildControls()
 
-
 end
 
 
 derma.DefineControl( "DEntityProperties", "", PANEL, "DProperties" )
-
-
-
-
