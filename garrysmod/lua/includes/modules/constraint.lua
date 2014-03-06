@@ -569,6 +569,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 	local WPos2 = Phys2:LocalToWorld( LPos2 )
 
 	local Constraint 	= nil
+	local rope 	= nil
 
 	-- Make Constraint
 	if ( Phys1 != Phys2 ) then
@@ -615,17 +616,14 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 
 		Constraint:SetTable( ctable )
 	
+		-- Make Rope
+		local kv =  { 
+			Collide 	= 1,
+			Type 		= 0
+		}
+		
+		rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
 	end
-
-	-- Make Rope
-	local kv = 
-	{ 
-		Collide 	= 1,
-		Type 		= 0
-	}
-	
-	local rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
-	
 
 	return Constraint, rope
 end
@@ -1408,7 +1406,7 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 		
 		Constraint:DeleteOnRemove( controller )
 
-		numpad.OnDown( 	 pl, 	key, 	"HydraulicToggle", 	controller )
+		numpad.OnDown( pl, key, "HydraulicToggle", controller )
 
 		return Constraint,rope,controller,slider
 	else
@@ -1445,7 +1443,7 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 	local ctable = 
 	{
 			Type 		= "Muscle",
-			pl		= pl,
+			pl			= pl,
 			Ent1		= Ent1,
 			Ent2		= Ent2,
 			Bone1		= Bone1,
@@ -1479,7 +1477,7 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 		controller:SetKeyValue("minlength", Length2)
 		controller:SetKeyValue("maxlength", Length1)
 	end
-	controller:SetKeyValue("type", 1)
+	controller:SetKeyValue( "type", 1 )
 	controller:GetTable():SetConstraint( Constraint )
 	controller:Spawn()
 		
@@ -1488,7 +1486,7 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 	
 	Constraint:DeleteOnRemove( controller )
 
-	numpad.OnDown( 	 pl, 	key, 	"MuscleToggle", 	controller )
+	numpad.OnDown( pl, key, "MuscleToggle", controller )
 
 	if ( starton ) then
 		controller:SetDirection( 1 )
