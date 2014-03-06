@@ -308,4 +308,8 @@ function PANEL:Rebuild()
 
 end
 
+-- No example for this control
+function PANEL:GenerateExample( class, tabs, w, h )
+end
+
 derma.DefineControl( "DForm", "WHAT", PANEL, "DCollapsibleCategory" )

@@ -36,6 +36,7 @@ function PANEL:Init()
 			-- TODO: ICON!
 			self.btnDelete = vgui.Create( "DButton", self.pnlModify )
 			self.btnDelete.DoClick = function() self:Delete() end
+			self.btnDelete:SetText( "#Delete" )
 			
 			self.txtRename = vgui.Create( "DTextEntry", self.pnlModify )
 		
@@ -117,7 +118,7 @@ function PANEL:PerformLayout()
 		self.txtName:StretchRightTo( self.btnAdd, 5 )
 		self.txtName:CenterVertical()
 	
-	self.PresetList:StretchToParent( 10, 25, 5, 5 )
+	self.PresetList:StretchToParent( 10, 30, 5, 5 )
 	self.PresetList:StretchBottomTo( self.pnlAdd, 10 )
 	self.PresetList:SetWide( 130 )
 	
@@ -129,7 +130,7 @@ function PANEL:PerformLayout()
 		self.pnlModify:SetTall( 30 )
 		self.pnlModify:AlignBottom( 5 )
 		
-			self.btnDelete:SetSize( 20, 20 )
+			self.btnDelete:SetSize( 40, 20 )
 			self.btnDelete:AlignRight( 5 ) 
 			self.btnDelete:CenterVertical()
 			
@@ -152,10 +153,10 @@ end
 -----------------------------------------------------------]]
 function PANEL:Delete()
 
-	local Selected = self.PresetList:GetSelected()
-	if (!Selected) then return end
+	local Selected = self.PresetList:GetSelectedValues()
+	if ( !Selected ) then return end
 	
-	presets.Remove( self.m_strType, Selected:GetValue() )
+	presets.Remove( self.m_strType, Selected )
 	self:Update()
 	
 	if ( self.m_PresetControl ) then
@@ -169,7 +170,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:Rename()
 
-	local Selected = self.PresetList:GetSelected()
+	local Selected = self.PresetList:GetSelectedValues()
 	if (!Selected) then return end
 	
 	local ToName = self.txtRename:GetValue()
@@ -177,7 +178,7 @@ function PANEL:Rename()
 	
 	-- Todo, Handle name collision
 	
-	presets.Rename( self.m_strType, Selected:GetValue(), ToName )
+	presets.Rename( self.m_strType, Selected, ToName )
 	self:Update()
 	
 	self.PresetList:SelectByName( ToName )

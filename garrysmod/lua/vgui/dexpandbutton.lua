@@ -24,4 +24,8 @@ function PANEL:Init()
 
 end
 
+-- No example for this control
+function PANEL:GenerateExample( class, tabs, w, h )
+end
+
 derma.DefineControl( "DExpandButton", "", PANEL, "DButton" )

@@ -74,7 +74,7 @@ function PANEL:SetModel( strModelName )
 	self.Entity:SetNoDraw( true )
 	
 	-- Try to find a nice sequence to play
-	local iSeq = self.Entity:LookupSequence( "walk_all" );
+	local iSeq = self.Entity:LookupSequence( "walk_all" )
 	if ( iSeq <= 0 ) then iSeq = self.Entity:LookupSequence( "WalkUnarmed_all" ) end
 	if ( iSeq <= 0 ) then iSeq = self.Entity:LookupSequence( "walk_all_moderate" ) end
 	
@@ -163,6 +163,12 @@ function PANEL:LayoutEntity( Entity )
 	
 	Entity:SetAngles( Angle( 0, RealTime()*10,  0) )
 
+end
+
+function PANEL:OnRemove()
+	if ( IsValid( self.Entity ) ) then
+		self.Entity:Remove()
+	end
 end
 
 --[[---------------------------------------------------------

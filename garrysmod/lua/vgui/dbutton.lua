@@ -183,9 +183,6 @@ local PANEL = derma.DefineControl( "DButton", "A standard Button", PANEL, "DLabe
 
 PANEL = table.Copy( PANEL )
 
--- No example here!
-PANEL.GenerateExample = nil
-
 --[[---------------------------------------------------------
    Name: SetActionFunction
 -----------------------------------------------------------]]
@@ -193,6 +190,10 @@ function PANEL:SetActionFunction( func )
 
 	self.DoClick = function( self, val ) func( self, "Command", 0, 0 ) end
 
+end
+
+-- No example for this control. Should we remove this completely?
+function PANEL:GenerateExample( class, tabs, w, h )
 end
 
 derma.DefineControl( "Button", "Backwards Compatibility", PANEL, "DLabel" )
