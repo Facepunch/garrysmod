@@ -1,10 +1,10 @@
 
-local matMaterial		= Material( "pp/texturize" )
+local matMaterial = Material( "pp/texturize" )
 
 matMaterial:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 
-local pp_texturize 				= CreateClientConVar( "pp_texturize", "", false, false )
-local pp_texturize_scale		= CreateClientConVar( "pp_texturize_scale", "1", false, false )
+local pp_texturize			= CreateClientConVar( "pp_texturize", "", true, false )
+local pp_texturize_scale	= CreateClientConVar( "pp_texturize_scale", "1", true, false )
 
 function DrawTexturize( scale, pMaterial )
 
@@ -56,9 +56,9 @@ list.Set( "PostProcess", "#texturize_pp", {
 						off = ""
 					}
 				}
-			} )	
+			} )
 
-		end 
+		end
 
 	end
 

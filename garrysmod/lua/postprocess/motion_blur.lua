@@ -5,11 +5,11 @@ local tex_MotionBlur	= render.GetMoBlurTex0()
 
 --[[---------------------------------------------------------
    Register the convars that will control this effect
------------------------------------------------------------]]   
-local pp_motionblur 			= CreateConVar( "pp_motionblur", "0", { FCVAR_DONTRECORD }  )
-local pp_motionblur_addalpha 	= CreateConVar( "pp_motionblur_addalpha", "0.2", { FCVAR_DONTRECORD } )
-local pp_motionblur_drawalpha	= CreateConVar( "pp_motionblur_drawalpha", "0.99", { FCVAR_DONTRECORD } )
-local pp_motionblur_delay		= CreateConVar( "pp_motionblur_delay", "0.0", { FCVAR_DONTRECORD } )
+-----------------------------------------------------------]]
+local pp_motionblur 			= CreateClientConVar( "pp_motionblur", "0", true, false )
+local pp_motionblur_addalpha 	= CreateClientConVar( "pp_motionblur_addalpha", "0.2", true, false )
+local pp_motionblur_drawalpha	= CreateClientConVar( "pp_motionblur_drawalpha", "0.99", true, false )
+local pp_motionblur_delay		= CreateClientConVar( "pp_motionblur_delay", "0.05", true, false )
 
 local NextDraw = 0
 local LastDraw = 0
@@ -83,14 +83,14 @@ list.Set( "PostProcess", "#motion_blur_pp", {
 		CPanel:AddControl( "Header", { Description = "#motion_blur_pp.desc" } )
 		CPanel:AddControl( "CheckBox", { Label = "#motion_blur_pp.enable", Command = "pp_motionblur" } )
 		
-		local params = { Options = {}, CVars = {}, Label = "#tool.presets", MenuButton = "1", Folder = "motionblur" }
+		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "motionblur" }
 		params.Options[ "#preset.default" ] = { pp_motionblur_addalpha = "0.2", pp_motionblur_delay = "0.05", pp_motionblur_drawalpha = "0.99" }
-		params.CVars = { "pp_motionblur_addalpha", "pp_motionblur_drawalpha", "pp_motionblur_delay" }
+		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
 		CPanel:AddControl( "ComboBox", params )
 		
 		CPanel:AddControl( "Slider", { Label = "#motion_blur_pp.add_alpha", Command = "pp_motionblur_addalpha", Type = "Float", Min = "0", Max = "1" } )
 		CPanel:AddControl( "Slider", { Label = "#motion_blur_pp.draw_alpha", Command = "pp_motionblur_drawalpha", Type = "Float", Min = "0", Max = "1" } )
-		CPanel:AddControl( "Slider", { Label = "#motion_blur_pp.delay", Command = "pp_motionblur_delay", Type = "Float", Min = "0", Max = "1" } )	
+		CPanel:AddControl( "Slider", { Label = "#motion_blur_pp.delay", Command = "pp_motionblur_delay", Type = "Float", Min = "0", Max = "1" } )
 
 	end
 

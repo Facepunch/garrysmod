@@ -1,9 +1,9 @@
 
 --[[---------------------------------------------------------
    Register the convars that will control this effect
------------------------------------------------------------]]   
-local pp_mat_overlay 				= CreateClientConVar( "pp_mat_overlay", "", false, false )
-local pp_mat_overlay_refractamount	= CreateClientConVar( "pp_mat_overlay_refractamount", "0.3", false, false )
+-----------------------------------------------------------]]
+local pp_mat_overlay 				= CreateClientConVar( "pp_mat_overlay", "", true, false )
+local pp_mat_overlay_refractamount	= CreateClientConVar( "pp_mat_overlay_refractamount", "0.3", true, false )
 
 local lastTexture = nil
 local mat_Overlay = nil
@@ -79,7 +79,7 @@ list.Set( "PostProcess", "#overlay_pp", {
 	
 		for k, overlay in pairs( list.Get( "OverlayMaterials" ) ) do
 		
-			spawnmenu.CreateContentIcon( "postprocess", content, { 
+			spawnmenu.CreateContentIcon( "postprocess", content, {
 				name	= "#overlay_pp",
 				label	= k,
 				icon	= overlay.Icon,
@@ -89,16 +89,22 @@ list.Set( "PostProcess", "#overlay_pp", {
 						off = ""
 					}
 				}
-			} )	
+			} )
 			
-		end 
+		end
 	
 	end,
 
 	cpanel = function( CPanel )
 
-		CPanel:AddControl( "Header", { Description = "#overlay_pp.desc" }  )		
-		CPanel:AddControl( "Slider", { Label = "#overlay_pp.refract", Command = "pp_mat_overlay_refractamount", Type = "Float", Min = "-1", Max = "1" }  )	
+		CPanel:AddControl( "Header", { Description = "#overlay_pp.desc" } )
+		
+		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "overlay" }
+		params.Options[ "#preset.default" ] = { pp_mat_overlay_refractamount = "0.3" }
+		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
+		CPanel:AddControl( "ComboBox", params )
+		
+		CPanel:AddControl( "Slider", { Label = "#overlay_pp.refract", Command = "pp_mat_overlay_refractamount", Type = "Float", Min = "-1", Max = "1" } )
 		
 	end
 

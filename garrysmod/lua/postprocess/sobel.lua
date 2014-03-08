@@ -3,8 +3,8 @@ local SobelMaterial = Material( "pp/sobel" )
 SobelMaterial:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 
 -- convars
-local pp_sobel_threshold = CreateClientConVar( "pp_sobel_threshold", "0.11", false, false )
-local pp_sobel = CreateClientConVar( "pp_sobel", "0", false, false )
+local pp_sobel_threshold = CreateClientConVar( "pp_sobel_threshold", "0.11", true, false )
+local pp_sobel = CreateClientConVar( "pp_sobel", "0", true, false )
 
 --[[------------------------------------
 	DrawSobel()
@@ -26,8 +26,8 @@ end
 --------------------------------------]]
 local function DrawInternal()
 
-	if ( !pp_sobel:GetBool() ) then return; end
-	if ( !GAMEMODE:PostProcessPermitted( "sobel" ) ) then return; end
+	if ( !pp_sobel:GetBool() ) then return end
+	if ( !GAMEMODE:PostProcessPermitted( "sobel" ) ) then return end
 
 	DrawSobel( pp_sobel_threshold:GetFloat() )
 
@@ -45,13 +45,12 @@ list.Set( "PostProcess", "#sobel_pp", {
 		CPanel:AddControl( "Header", { Description = "#sobel_pp.desc" } )
 		CPanel:AddControl( "CheckBox", { Label = "#sobel_pp.enable", Command = "pp_sobel" } )
 		
-		CPanel:AddControl( "Slider", {
-			Label = "#sobel_pp.threshold",
-			Command = "pp_sobel_threshold",
-			Type = "Float",
-			Min = "0",
-			Max = "1"
-		} )
+		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "sobel" }
+		params.Options[ "#preset.default" ] = { pp_sobel_threshold = "0.11" }
+		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
+		CPanel:AddControl( "ComboBox", params )
+		
+		CPanel:AddControl( "Slider", { Label = "#sobel_pp.threshold", Command = "pp_sobel_threshold", Type = "Float", Min = "0", Max = "1" } )
 	
 	end
 
