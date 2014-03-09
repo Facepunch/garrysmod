@@ -29,7 +29,7 @@ function PANEL:Init()
    self.rowcount = 0
 
    self.rows_sorted = {}
-   
+
    self.group = "spec"
 end
 
@@ -50,7 +50,7 @@ function PANEL:Paint()
    local txt = self.name .. " (" .. self.rowcount .. ")"
    local w, h = surface.GetTextSize(txt)
    draw.RoundedBox(8, 0, 0, w + 24, 20, self.color)
-   
+
    -- Shadow
    surface.SetTextPos(11, 11 - h/2)
    surface.SetTextColor(0,0,0, 200)
@@ -68,18 +68,21 @@ function PANEL:Paint()
          surface.SetDrawColor(75,75,75, 100)
          surface.DrawRect(0, y, self:GetWide(), row:GetTall())
       end
-      
+
       y = y + row:GetTall() + 1
    end
 
    -- Column darkening
    local scr = sboard_panel.ply_frame.scroll.Enabled and 16 or 0
    surface.SetDrawColor(0,0,0, 80)
-   if self.TTTPlayerFrame.cols then
-     for i=1,#self.TTTPlayerFrame.cols,2 do --Odd numbers
-        surface.DrawRect(self:GetWide() - (50*i) - 25 - scr, 0, 50, self:GetTall())
-     end
-   else --This shouldn't paint before the columns are set up, but you never know...
+   if sboard_panel.cols then
+      -- Draw for odd numbered columns
+      for i=1, #sboard_panel.cols, 2 do
+         surface.DrawRect(self:GetWide() - (50*i) - 25 - scr, 0, 50, self:GetTall())
+      end
+   else
+      -- If columns are not setup yet, fall back to darkening the areas for the
+      -- default columns
       surface.DrawRect(self:GetWide() - 175 - 25 - scr, 0, 50, self:GetTall())
       surface.DrawRect(self:GetWide() - 75 - 25 - scr, 0, 50, self:GetTall())
    end

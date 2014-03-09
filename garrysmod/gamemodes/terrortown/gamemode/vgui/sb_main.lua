@@ -103,23 +103,19 @@ function PANEL:Init()
    local t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
    t:SetGroupInfo(GetTranslation("terrorists"), Color(0,200,0,100), GROUP_TERROR)
    self.ply_groups[GROUP_TERROR] = t
-   t.TTTPlayerFrame = self
 
    t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
    t:SetGroupInfo(GetTranslation("spectators"), Color(200, 200, 0, 100), GROUP_SPEC)
    self.ply_groups[GROUP_SPEC] = t
-   t.TTTPlayerFrame = self
 
    if DetectiveMode() then
       t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
       t:SetGroupInfo(GetTranslation("sb_mia"), Color(130, 190, 130, 100), GROUP_NOTFOUND)
       self.ply_groups[GROUP_NOTFOUND] = t
-      t.TTTPlayerFrame = self
 
       t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
       t:SetGroupInfo(GetTranslation("sb_confirmed"), Color(130, 170, 10, 100), GROUP_FOUND)
       self.ply_groups[GROUP_FOUND] = t
-      t.TTTPlayerFrame = self
    end
 
    -- the various score column headers
@@ -131,18 +127,21 @@ function PANEL:Init()
    if KARMA.IsEnabled() then
       self:AddColumn( GetTranslation("sb_karma") )
    end
-   
-   hook.Call( "TTTScoreboardColumns", nil, self ) --We'll grab custom headers here, same hook as the rows for ease of use
+
+   -- Let hooks add their column headers (via AddColumn())
+   hook.Call( "TTTScoreboardColumns", nil, self )
 
    self:UpdateScoreboard()
    self:StartUpdateTimer()
 end
 
+-- For headings only the label parameter is relevant, func is included for
+-- parity with sb_row
 function PANEL:AddColumn( label, func )
    local lbl = vgui.Create( "DLabel", self )
    lbl:SetText( label )
    lbl.IsHeading = true
-   
+
    table.insert( self.cols, lbl )
    return lbl
 end
@@ -335,4 +334,3 @@ function PANEL:PerformLayout()
    self.pnlCanvas:SetSize( self:GetWide() - (self.scroll.Enabled and 16 or 0), self.pnlCanvas:GetTall() )
 end
 vgui.Register( "TTTPlayerFrame", PANEL, "Panel" )
-

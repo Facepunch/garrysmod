@@ -1,4 +1,3 @@
-
 ---- Scoreboard player score row, based on sandbox version
 
 include("sb_info.lua")
@@ -26,8 +25,9 @@ function PANEL:Init()
    if KARMA.IsEnabled() then
       self:AddColumn( GetTranslation("sb_karma"), function(ply) return math.Round(ply:GetBaseKarma()) end )
    end
-   
-   hook.Call( "TTTScoreboardColumns", nil, self ) --Let coders add their own columns, first arg panel
+
+   -- Let hooks add their custom columns
+   hook.Call("TTTScoreboardColumns", nil, self)
 
    for _, c in ipairs(self.cols) do
       c:SetMouseInputEnabled(false)
@@ -56,10 +56,9 @@ end
 
 function PANEL:AddColumn( label, func )
    local lbl = vgui.Create( "DLabel", self )
-   lbl:SetText( label )
-   lbl.func = func
+   lbl.GetPlayerText = func
    lbl.IsHeading = false
-   
+
    table.insert( self.cols, lbl )
    return lbl
 end
@@ -160,7 +159,9 @@ function PANEL:UpdatePlayerData()
 
    local ply = self.Player
    for i=1,#self.cols do
-      self.cols[i]:SetText( self.cols[i].func(ply, self.cols[i]) ) --Set text from function. First arg player, second arg label (For colours or whatever)
+       -- Set text from function, passing the label along so stuff like text
+       -- color can be changed
+      self.cols[i]:SetText( self.cols[i].GetPlayerText(ply, self.cols[i]) )
    end
 
    self.nick:SetText(ply:Nick())
@@ -279,13 +280,13 @@ function PANEL:SetOpen(o)
 end
 
 function PANEL:DoRightClick()
-	local menu = DermaMenu()
-	menu.Player = self:GetPlayer()
-	
-	local close = hook.Call( "TTTScoreboardMenu", nil, menu )
-	if close then menu:Remove() return end
-	
-	menu:Open()
+   local menu = DermaMenu()
+   menu.Player = self:GetPlayer()
+
+   local close = hook.Call( "TTTScoreboardMenu", nil, menu )
+   if close then menu:Remove() return end
+
+   menu:Open()
 end
 
 vgui.Register( "TTTScorePlayerRow", PANEL, "Button" )

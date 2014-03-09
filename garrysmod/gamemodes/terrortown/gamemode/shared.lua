@@ -3,7 +3,7 @@ GM.Author = "Bad King Urgrain"
 GM.Email = "thegreenbunny@gmail.com"
 GM.Website = "ttt.badking.net"
 -- Date of latest changes (YYYY-MM-DD)
-GM.Version = "2014-02-26"
+GM.Version = "2014-03-09"
 
 
 GM.Customized = false
