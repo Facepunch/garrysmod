@@ -75,8 +75,14 @@ function PANEL:Paint()
    -- Column darkening
    local scr = sboard_panel.ply_frame.scroll.Enabled and 16 or 0
    surface.SetDrawColor(0,0,0, 80)
-   surface.DrawRect(self:GetWide() - 175 - scr, 0, 50, self:GetTall())
-   surface.DrawRect(self:GetWide() - 75 - scr, 0, 50, self:GetTall())
+   if self.TTTPlayerFrame.cols then
+     for i=1,#self.TTTPlayerFrame.cols,2 do --Odd numbers
+        surface.DrawRect(self:GetWide() - (50*i) - 25 - scr, 0, 50, self:GetTall())
+     end
+   else --This shouldn't paint before the columns are set up, but you never know...
+      surface.DrawRect(self:GetWide() - 175 - 25 - scr, 0, 50, self:GetTall())
+      surface.DrawRect(self:GetWide() - 75 - 25 - scr, 0, 50, self:GetTall())
+   end
 end
 
 function PANEL:AddPlayerRow(ply)

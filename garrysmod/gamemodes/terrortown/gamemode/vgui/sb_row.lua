@@ -19,19 +19,15 @@ function PANEL:Init()
    self.open = false
 
    self.cols = {}
-   self.cols[1] = vgui.Create("DLabel", self)
-   self.cols[1]:SetText(GetTranslation("sb_ping"))
-
-   self.cols[2] = vgui.Create("DLabel", self)
-   self.cols[2]:SetText(GetTranslation("sb_deaths"))
-
-   self.cols[3] = vgui.Create("DLabel", self)
-   self.cols[3]:SetText(GetTranslation("sb_score"))
+   self:AddColumn( GetTranslation("sb_ping"), function(ply) return ply:Ping() end )
+   self:AddColumn( GetTranslation("sb_deaths"), function(ply) return ply:Deaths() end )
+   self:AddColumn( GetTranslation("sb_score"), function(ply) return ply:Frags() end )
 
    if KARMA.IsEnabled() then
-      self.cols[4] = vgui.Create("DLabel", self)
-      self.cols[4]:SetText(GetTranslation("sb_karma"))
+      self:AddColumn( GetTranslation("sb_karma"), function(ply) return math.Round(ply:GetBaseKarma()) end )
    end
+   
+   hook.Call( "TTTScoreboardColumns", nil, self ) --Let coders add their own columns, first arg panel
 
    for _, c in ipairs(self.cols) do
       c:SetMouseInputEnabled(false)
@@ -56,6 +52,16 @@ function PANEL:Init()
    self.voice:SetSize(16,16)
 
    self:SetCursor( "hand" )
+end
+
+function PANEL:AddColumn( label, func )
+   local lbl = vgui.Create( "DLabel", self )
+   lbl:SetText( label )
+   lbl.func = func
+   lbl.IsHeading = false
+   
+   table.insert( self.cols, lbl )
+   return lbl
 end
 
 
@@ -153,12 +159,8 @@ function PANEL:UpdatePlayerData()
    if not IsValid(self.Player) then return end
 
    local ply = self.Player
-   self.cols[1]:SetText(ply:Ping())
-   self.cols[2]:SetText(ply:Deaths())
-   self.cols[3]:SetText(ply:Frags())
-
-   if self.cols[4] then
-      self.cols[4]:SetText(math.Round(ply:GetBaseKarma()))
+   for i=1,#self.cols do
+      self.cols[i]:SetText( self.cols[i].func(ply, self.cols[i]) ) --Set text from function. First arg player, second arg label (For colours or whatever)
    end
 
    self.nick:SetText(ply:Nick())
@@ -219,9 +221,9 @@ function PANEL:LayoutColumns()
    end
 
    self.tag:SizeToContents()
-   self.tag:SetPos(self:GetWide() - (50 * 6) - self.tag:GetWide()/2, (SB_ROW_HEIGHT - self.tag:GetTall()) / 2)
+   self.tag:SetPos(self:GetWide() - (50 * (#self.cols+1)) - self.tag:GetWide()/2, (SB_ROW_HEIGHT - self.tag:GetTall()) / 2)
 
-   self.sresult:SetPos(self:GetWide() - (50*6) - 8, (SB_ROW_HEIGHT - 16) / 2)
+   self.sresult:SetPos(self:GetWide() - (50*(#self.cols+1)) - 8, (SB_ROW_HEIGHT - 16) / 2)
 end
 
 function PANEL:PerformLayout()
@@ -277,6 +279,13 @@ function PANEL:SetOpen(o)
 end
 
 function PANEL:DoRightClick()
+	local menu = DermaMenu()
+	menu.Player = self:GetPlayer()
+	
+	local close = hook.Call( "TTTScoreboardMenu", nil, menu )
+	if close then menu:Remove() return end
+	
+	menu:Open()
 end
 
 vgui.Register( "TTTScorePlayerRow", PANEL, "Button" )

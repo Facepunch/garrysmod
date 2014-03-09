@@ -103,39 +103,48 @@ function PANEL:Init()
    local t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
    t:SetGroupInfo(GetTranslation("terrorists"), Color(0,200,0,100), GROUP_TERROR)
    self.ply_groups[GROUP_TERROR] = t
+   t.TTTPlayerFrame = self
 
    t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
    t:SetGroupInfo(GetTranslation("spectators"), Color(200, 200, 0, 100), GROUP_SPEC)
    self.ply_groups[GROUP_SPEC] = t
+   t.TTTPlayerFrame = self
 
    if DetectiveMode() then
       t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
       t:SetGroupInfo(GetTranslation("sb_mia"), Color(130, 190, 130, 100), GROUP_NOTFOUND)
       self.ply_groups[GROUP_NOTFOUND] = t
+      t.TTTPlayerFrame = self
 
       t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
       t:SetGroupInfo(GetTranslation("sb_confirmed"), Color(130, 170, 10, 100), GROUP_FOUND)
       self.ply_groups[GROUP_FOUND] = t
+      t.TTTPlayerFrame = self
    end
 
    -- the various score column headers
    self.cols = {}
-   self.cols[1] = vgui.Create( "DLabel", self )
-   self.cols[1]:SetText( GetTranslation("sb_ping") )
-
-   self.cols[2] = vgui.Create( "DLabel", self )
-   self.cols[2]:SetText( GetTranslation("sb_deaths") )
-
-   self.cols[3] = vgui.Create( "DLabel", self )
-   self.cols[3]:SetText( GetTranslation("sb_score") )
+   self:AddColumn( GetTranslation("sb_ping") )
+   self:AddColumn( GetTranslation("sb_deaths") )
+   self:AddColumn( GetTranslation("sb_score") )
 
    if KARMA.IsEnabled() then
-      self.cols[4] = vgui.Create("DLabel", self)
-      self.cols[4]:SetText(GetTranslation("sb_karma"))
+      self:AddColumn( GetTranslation("sb_karma") )
    end
+   
+   hook.Call( "TTTScoreboardColumns", nil, self ) --We'll grab custom headers here, same hook as the rows for ease of use
 
    self:UpdateScoreboard()
    self:StartUpdateTimer()
+end
+
+function PANEL:AddColumn( label, func )
+   local lbl = vgui.Create( "DLabel", self )
+   lbl:SetText( label )
+   lbl.IsHeading = true
+   
+   table.insert( self.cols, lbl )
+   return lbl
 end
 
 function PANEL:StartUpdateTimer()
