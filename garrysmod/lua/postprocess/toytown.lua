@@ -1,13 +1,13 @@
 
-local _Material			= Material( "pp/toytown-top" )
+local _Material = Material( "pp/toytown-top" )
 _Material:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 
 --[[---------------------------------------------------------
    Register the convars that will control this effect
 -----------------------------------------------------------]]   
-local pp_toytown 			= CreateClientConVar( "pp_toytown", 		"0",	true, false )
-local pp_toytown_passes		= CreateClientConVar( "pp_toytown_passes", 	"3",	false, false )
-local pp_toytown_size		= CreateClientConVar( "pp_toytown_size", 	"0.4",	false, false )
+local pp_toytown		= CreateClientConVar( "pp_toytown", 		"0",	true, false )
+local pp_toytown_passes	= CreateClientConVar( "pp_toytown_passes", 	"3",	true, false )
+local pp_toytown_size	= CreateClientConVar( "pp_toytown_size", 	"0.4",	true, false )
 
 function DrawToyTown( NumPasses, H )
 	cam.Start2D()
@@ -20,7 +20,7 @@ function DrawToyTown( NumPasses, H )
 		render.UpdateScreenEffectTexture()
 		
 		surface.DrawTexturedRect( 0, 0, ScrW(), H )
-		surface.DrawTexturedRectUV(0, ScrH() - H, ScrW(), H, 0, 1, 1, 0)
+		surface.DrawTexturedRectUV( 0, ScrH() - H, ScrW(), H, 0, 1, 1, 0 )
 	
 	end
 	
@@ -51,6 +51,11 @@ list.Set( "PostProcess", "#toytown_pp", {
 
 		CPanel:AddControl( "Header", { Description = "#toytown_pp.desc" } )
 		CPanel:AddControl( "CheckBox", { Label = "#toytown_pp.enable", Command = "pp_toytown" } )
+		
+		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "frame_blend" }
+		params.Options[ "#preset.default" ] = { pp_toytown_passes = "3", pp_toytown_size = "0.5" }
+		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
+		CPanel:AddControl( "ComboBox", params )
 		
 		CPanel:AddControl( "Slider", { Label = "#toytown_pp.passes", Command = "pp_toytown_passes", Type = "Int", Min = "1", Max = "100" } )
 		CPanel:AddControl( "Slider", { Label = "#toytown_pp.height", Command = "pp_toytown_size", Type = "Float", Min = "0", Max = "1" } )

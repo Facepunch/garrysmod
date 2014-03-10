@@ -3,8 +3,8 @@ local FrameCurves = {}
 
 local function FixupCurve( num )
 
-	local overflow = num;
-	for k, v in pairs( FrameCurves[num] ) do
+	local overflow = num
+	for k, v in pairs( FrameCurves[ num ] ) do
 		overflow = overflow - v
 	end
 
@@ -20,8 +20,8 @@ end
 
 local function FrameCurve( f, num )
 
-	if ( FrameCurves[num] ) then
-		return FrameCurves[num][f]
+	if ( FrameCurves[ num ] ) then
+		return FrameCurves[ num ][ f ]
 	end
 
 	local curve = {}
@@ -33,9 +33,9 @@ local function FrameCurve( f, num )
 
 	end
 
-	FrameCurves[num] = curve;
+	FrameCurves[ num ] = curve
 
-	for  i=0, 10 do
+	for i=0, 10 do
 		FixupCurve( num )
 	end
 
@@ -46,18 +46,18 @@ end
 --
 -- The number of frames to blend
 --
-local pp_fb = CreateConVar( "pp_fb", "0", { FCVAR_DONTRECORD } )
+local pp_fb = CreateClientConVar( "pp_fb", "0", true, false )
 
 --
 -- The number of frames to blend
 --
-local pp_fb_frames = CreateConVar( "pp_fb_frames", "16", { FCVAR_DONTRECORD } )
+local pp_fb_frames = CreateClientConVar( "pp_fb_frames", "16", true, false )
 
 --
 -- The amount of time the shutter is open. If this is 0.5 then we will blend only
 -- 50% of the frames. This is normally 0.5. Lowering it will make it more blurry.
 --
-local pp_fb_shutter = CreateConVar( "pp_fb_shutter", "0.5", { FCVAR_DONTRECORD }  )
+local pp_fb_shutter = CreateClientConVar( "pp_fb_shutter", "0.5", true, false )
 
 -- 8 low
 -- 16 avg
@@ -91,7 +91,7 @@ end
 frame_blend.RenderableFrames = function()
 
 	local padding = math.floor( pp_fb_frames:GetInt() * pp_fb_shutter:GetFloat() * 0.5 ) * 2
-	return pp_fb_frames:GetInt()-padding
+	return pp_fb_frames:GetInt() - padding
 
 end
 
@@ -112,7 +112,7 @@ frame_blend.ShouldSkipFrame = function()
 
 	local padding = math.floor( pp_fb_frames:GetInt() * pp_fb_shutter:GetFloat() * 0.5 )
 
-	if ( NumFramesTaken < padding || NumFramesTaken >= pp_fb_frames:GetInt()-padding ) then 
+	if ( NumFramesTaken < padding || NumFramesTaken >= pp_fb_frames:GetInt() - padding ) then 
 		return true
 	end
 
@@ -148,8 +148,6 @@ frame_blend.AddFrame = function()
 
 end
 
-
-
 frame_blend.BlendFrame = function()
 
 	local padding	= math.floor( pp_fb_frames:GetInt() * pp_fb_shutter:GetFloat() * 0.5 )
@@ -157,15 +155,15 @@ frame_blend.BlendFrame = function()
 
 	render.UpdateScreenEffectTexture()
 
-	local delta = (NumFramesTaken-padding) / (frames-padding*2)
-	local curve = FrameCurve( (NumFramesTaken-padding), (frames-padding*2) )
+	local delta = ( NumFramesTaken - padding ) / ( frames - padding * 2 )
+	local curve = FrameCurve( ( NumFramesTaken - padding ), ( frames-padding * 2 ) )
 	if ( !curve ) then return end
 
-	curve = ( 1 / (NumFramesTaken-padding) ) * curve
+	curve = ( 1 / ( NumFramesTaken - padding ) ) * curve
 
 	matFB:SetFloat( "$alpha", curve )
 
-	local OldRT = render.GetRenderTarget();
+	local OldRT = render.GetRenderTarget()
 	render.SetRenderTarget( texMB0 )
 		render.SetMaterial( matFB )
 		render.DrawScreenQuad()
@@ -194,10 +192,10 @@ hook.Add( "PreRender", "PreRenderFrameBlend", function()
 	frame_blend.AddFrame()
 
 	if ( frame_blend.ShouldSkipFrame() ) then
-		return true 
+		return true
 	end
 
-	return 
+	return
 
 end )
 
@@ -213,22 +211,14 @@ list.Set( "PostProcess", "#frame_blend_pp", {
 		CPanel:AddControl( "Header", { Description = "#frame_blend_pp.desc2" } )
 
 		CPanel:AddControl( "CheckBox", { Label = "#frame_blend_pp.enable", Command = "pp_fb" } )
+		
+		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "frame_blend" }
+		params.Options[ "#preset.default" ] = { pp_fb_frames = "16", pp_fb_shutter = "0.5" }
+		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
+		CPanel:AddControl( "ComboBox", params )
 
-		CPanel:AddControl( "Slider", {
-			Label = "#frame_blend_pp.frames",
-			Command = "pp_fb_frames",
-			Type = "Int",
-			Min = "3",
-			Max = "64"
-		} )
-			
-		CPanel:AddControl( "Slider", {
-			Label = "#frame_blend_pp.shutter",
-			Command = "pp_fb_shutter",
-			Type = "Float",
-			Min = "0",
-			Max = "1"
-		} )
+		CPanel:AddControl( "Slider", { Label = "#frame_blend_pp.frames", Command = "pp_fb_frames", Type = "Int", Min = "3", Max = "64" } )
+		CPanel:AddControl( "Slider", { Label = "#frame_blend_pp.shutter", Command = "pp_fb_shutter", Type = "Float", Min = "0", Max = "1" } )
 
 	end
 

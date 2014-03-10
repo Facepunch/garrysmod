@@ -4,11 +4,11 @@ _Material:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 
 --[[---------------------------------------------------------
    Register the convars that will control this effect
------------------------------------------------------------]]   
-local pp_sunbeams 			= CreateClientConVar( "pp_sunbeams", 				"0", 		true, false )
-local pp_sunbeams_darken	= CreateClientConVar( "pp_sunbeams_darken", 		"0.95", 	false, false )
-local pp_sunbeams_multiply  = CreateClientConVar( "pp_sunbeams_multiply", 		"1.0", 		false, false )
-local pp_sunbeams_sunsize	= CreateClientConVar( "pp_sunbeams_sunsize", 		"0.075", 	false, false )
+-----------------------------------------------------------]]
+local pp_sunbeams 			= CreateClientConVar( "pp_sunbeams",			"0", 		true, false )
+local pp_sunbeams_darken	= CreateClientConVar( "pp_sunbeams_darken",		"0.95", 	true, false )
+local pp_sunbeams_multiply  = CreateClientConVar( "pp_sunbeams_multiply",	"1.0",		true, false )
+local pp_sunbeams_sunsize	= CreateClientConVar( "pp_sunbeams_sunsize",	"0.075",	true, false )
 
 
 function DrawSunbeams( darken, multiply, sunsize, sunx, suny )
@@ -66,9 +66,9 @@ list.Set( "PostProcess", "#sunbeams_pp", {
 		CPanel:AddControl( "Header", { Description = "#sunbeams_pp.desc" } )
 		CPanel:AddControl( "CheckBox", { Label = "#sunbeams_pp.enable", Command = "pp_sunbeams" } )
 		
-		local params = { Options = {}, CVars = {}, Label = "#tool.presets", MenuButton = "1", Folder = "sunbeams" }
+		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "sunbeams" }
 		params.Options[ "#preset.default" ] = { pp_sunbeams = "0", pp_sunbeams_darken = "0.95", pp_sunbeams_multiply = "1", pp_sunbeams_sunsize = "0.075" }
-		params.CVars = { "pp_sunbeams", "pp_sunbeams_darken", "pp_sunbeams_multiply", "pp_sunbeams_sunsize" }
+		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
 		CPanel:AddControl( "ComboBox", params )
 
 		CPanel:AddControl( "Slider", { Label = "#sunbeams_pp.multiply", Command = "pp_sunbeams_multiply", Type = "Float", Min = "0", Max = "1" } )
