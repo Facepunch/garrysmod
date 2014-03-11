@@ -1,5 +1,3 @@
-
-
 local Category = ""
 
 local function ADD_ITEM( name, class )
@@ -32,7 +30,7 @@ ADD_ITEM( "RPG",				"item_rpg_round" )
 -- Items
 ADD_ITEM( "Suit Battery",		"item_battery" )
 ADD_ITEM( "Health Vial",		"item_healthvial" )
-ADD_ITEM( "Health kit",			"item_healthkit" )
+ADD_ITEM( "Health Kit",			"item_healthkit" )
 ADD_ITEM( "Suit Charger",		"item_suitcharger" )
 ADD_ITEM( "Health Charger",		"item_healthcharger" )
 ADD_ITEM( "Suit",				"item_suit" )
@@ -42,8 +40,15 @@ ADD_ITEM( "Combine Mine",		"combine_mine" )
 ADD_ITEM( "Helicopter Grenade",	"grenade_helicopter" )
 ADD_ITEM( "Zombine Grenade",	"npc_grenade_frag" )
 
+if ( IsMounted( "ep2" ) ) then
+    game.AddParticles( "particles/striderbuster.pcf" )
+    ADD_ITEM( "Magnusson",   "weapon_striderbuster" )
+    --ADD_ITEM( "Helicopter Grenade EP2", "grenade_helicopter", { Skin = 1 } ) --Skin doesn't set to EP2 skin for some reason
+end
+
 -- Weapons
 ADD_WEAPON( "357",				"weapon_357" )
+ADD_WEAPON( "Alyx Gun",         "weapon_alyxgun" )
 ADD_WEAPON( "Annabelle",		"weapon_annabelle" )
 ADD_WEAPON( "AR2",				"weapon_ar2" )
 ADD_WEAPON( "Bug Bait",			"weapon_bugbait" )
