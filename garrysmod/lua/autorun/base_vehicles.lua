@@ -59,6 +59,24 @@ local V = {
 }
 list.Set( "Vehicles", "Pod", V )
 
+local V = { 	
+	-- Required information
+	Name = "Jalopy", 
+	Class = "prop_vehicle_jeep",
+	Category = Category,
+
+	-- Optional information
+	Author = "VALVe",
+	Information = "The muscle car from Episode 2",
+	Model = "models/vehicle.mdl",
+									
+	KeyValues = {
+		vehiclescript = "scripts/vehicles/jalopy.txt"
+	}
+}
+if ( IsMounted( "ep2" ) ) then list.Set ( "Vehicles", "Jalopy", V ) end
+
+
 local Category = "Chairs"
 
 local V = { 	
@@ -180,25 +198,6 @@ local V = {
 	}
 }
 list.Set( "Vehicles", "Chair_Office2", V )
-
---EP2
-
-local V = { 	
-	-- Required information
-	Name = "Jalopy", 
-	Class = "prop_vehicle_jeep",
-	Category = Category,
-
-	-- Optional information
-	Author = "VALVe",
-	Information = "The muscle car from Episode 2",
-	Model = "models/vehicle.mdl",
-									
-	KeyValues = {
-		vehiclescript = "scripts/vehicles/jalopy.txt"
-	}
-}
-if ( IsMounted( "ep2" ) ) then list.Set ( "Vehicles", "Jalopy", V ) end
 
 local V = { 	
 	-- Required information
