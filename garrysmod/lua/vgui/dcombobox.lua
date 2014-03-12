@@ -60,6 +60,15 @@ function PANEL:GetOptionText( id )
 end
 
 --[[---------------------------------------------------------
+   Name: GetOptionData
+-----------------------------------------------------------]]
+function PANEL:GetOptionData( id )
+
+	return self.Data[ id ]
+
+end
+
+--[[---------------------------------------------------------
    Name: PerformLayout
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
@@ -81,6 +90,8 @@ function PANEL:ChooseOption( value, index )
 	end
 
 	self:SetText( value )
+	
+	self.selected = index
 	self:OnSelect( index, value, self.Data[index] )
 	
 end
@@ -90,18 +101,32 @@ end
 -----------------------------------------------------------]]
 function PANEL:ChooseOptionID( index )
 
-	if ( self.Menu ) then
-		self.Menu:Remove()
-		self.Menu = nil
-	end
-
 	local value = self:GetOptionText( index )
-	self:SetText( value )
-
-	self:OnSelect( index, value, self.Data[index] )
+	self:ChooseOption( value, index )
 	
 end
 
+--[[---------------------------------------------------------
+   Name: GetSelected
+-----------------------------------------------------------]]
+function PANEL:GetSelectedID()
+	
+	return self.selected
+	
+end
+
+
+
+--[[---------------------------------------------------------
+   Name: GetSelected
+-----------------------------------------------------------]]
+function PANEL:GetSelected()
+	
+	if ( !self.selected ) then return end
+	
+	return self:GetOptionText(self.selected), self:GetOptionData(self.selected)
+	
+end
 
 
 --[[---------------------------------------------------------
