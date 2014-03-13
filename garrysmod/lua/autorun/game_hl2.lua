@@ -43,7 +43,7 @@ ADD_ITEM( "Zombine Grenade",	"npc_grenade_frag" )
 if ( IsMounted( "ep2" ) ) then
     game.AddParticles( "particles/striderbuster.pcf" )
     ADD_ITEM( "Magnusson",   "weapon_striderbuster" )
-    --ADD_ITEM( "Helicopter Grenade EP2", "grenade_helicopter", { Skin = 1 } ) --Skin doesn't set to EP2 skin for some reason
+    --Find out how to add the other helicopter grenade skin
 end
 
 -- Weapons
