@@ -560,11 +560,9 @@ end
 -----------------------------------------------------------]]
 function GM:CanExitVehicle( vehicle, ply )
 	
-	if ( ply:GetMoveType() == MOVETYPE_NOCLIP ) then 
-		ply:SetMoveType( MOVETYPE_WALK )
-	end 
-
+	ply:SetMoveType( MOVETYPE_WALK )
 	return true
+	
 end
 
 --[[---------------------------------------------------------
