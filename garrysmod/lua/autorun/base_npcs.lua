@@ -79,10 +79,10 @@ local NPC = {
 list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = { 
-    Name = "Vortigaunt Slave",
-    Class = "npc_vortigaunt",
-    Category = Category,
-    Model = "models/vortigaunt_slave.mdl"
+    	Name = "Vortigaunt Slave",
+    	Class = "npc_vortigaunt",
+    	Category = Category,
+    	Model = "models/vortigaunt_slave.mdl"
 }
 list.Set( "NPC", "VortigauntSlave", NPC )
 
@@ -135,17 +135,17 @@ list.Set( "NPC", NPC.Class, NPC )
 --EP2
 
 local NPC = { 
-    Name = "Uriah",
-    Class = "npc_vortigaunt",
-    Category = Category,
-    Model = "models/vortigaunt_doctor.mdl"
+    	Name = "Uriah",
+    	Class = "npc_vortigaunt",
+    	Category = Category,
+    	Model = "models/vortigaunt_doctor.mdl"
 }
 if ( IsMounted( "ep2" ) ) then list.Set( "NPC", "Uriah", NPC ) end
 
 local NPC = {
-    Name = "Dr. Magnusson",
-    Class = "npc_magnusson",
-    Category = Category
+    	Name = "Dr. Magnusson",
+    	Class = "npc_magnusson",
+    	Category = Category
 }
 if ( IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
 
@@ -201,7 +201,7 @@ list.Set( "NPC", NPC.Class, NPC )
 local NPC = {
 	Name = "Barnacle", 
 	Class = "npc_barnacle",
-    Category = Category,
+    	Category = Category,
 	OnCeiling = true,
 	Offset = 2,
 }
@@ -247,11 +247,11 @@ if ( IsMounted( "episodic" ) || IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.C
 --EP2
 
 local NPC = {
-    Name = "Antlion Guardian",	
-    Class = "npc_antlionguard",		
-    Category = Category, 
-    KeyValues = { cavernbreed = 1, incavern = 1 },	
-    Material = "Models/antlion_guard/antlionGuard2" 
+    	Name = "Antlion Guardian",	
+    	Class = "npc_antlionguard",		
+    	Category = Category, 
+    	KeyValues = { cavernbreed = 1, incavern = 1 },	
+    	Material = "Models/antlion_guard/antlionGuard2" 
 }
 if ( IsMounted( "ep2" ) ) then list.Set( "NPC", "npc_antlionguardian", NPC ) end
 
@@ -259,8 +259,8 @@ local NPC = {
 	Name = "Antlion Grub", 
 	Class = "npc_antlion_grub",
 	Category = Category,
-    NoDrop = true,
-    Offset = 1
+    	NoDrop = true,
+    	Offset = 1
 }
 if ( IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
 
@@ -343,11 +343,11 @@ local NPC = {
 list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = { 
-    Name = "Shotgun Soldier",
+    	Name = "Shotgun Soldier",
 	Class = "npc_combine_s",
-    Category = Category,
+    	Category = Category,
 	Model = "models/Combine_Soldier.mdl",
-    Skin = 1,
+    	Skin = 1,
 	Weapons = { "weapon_shotgun" }
 }
 list.Set( "NPC", "ShotgunSoldier", NPC )
@@ -362,11 +362,11 @@ local NPC = {
 list.Set( "NPC", "CombinePrison", NPC )
 
 local NPC = { 
-    Name = "Prison Shotgun Guard",
+    	Name = "Prison Shotgun Guard",
 	Class = "npc_combine_s",
-    Category = Category,
-    Model = "models/Combine_Soldier_PrisonGuard.mdl",
-    Skin = 1,
+    	Category = Category,
+    	Model = "models/Combine_Soldier_PrisonGuard.mdl",
+    	Skin = 1,
 	Weapons = { "weapon_shotgun" }
 }	
 list.Set( "NPC", "PrisonShotgunner", NPC )
