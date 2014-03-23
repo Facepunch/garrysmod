@@ -1,8 +1,5 @@
-
---
 -- Don't try to edit this file if you're trying to add new NPCs.
 -- Just make a new file and copy the format below.
---
 
 local Category = "Humans + Resistance"
 
@@ -59,10 +56,10 @@ local NPC = {
 list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = {
-	Name = "Metro Police", 
-	Class = "npc_metropolice",
+	Name = "Father Grigori", 
+	Class = "npc_monk",
 	Category = Category,
-	Weapons = { "weapon_stunstick", "weapon_pistol", "weapon_smg1" }
+	Weapons = { "weapon_annabelle" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -80,6 +77,14 @@ local NPC = {
 	Category = Category
 }
 list.Set( "NPC", NPC.Class, NPC )
+
+local NPC = { 
+    	Name = "Vortigaunt Slave",
+    	Class = "npc_vortigaunt",
+    	Category = Category,
+    	Model = "models/vortigaunt_slave.mdl"
+}
+list.Set( "NPC", "VortigauntSlave", NPC )
 
 local NPC = {
 	Name = "Rebel", 
@@ -127,8 +132,26 @@ local NPC = {
 }
 list.Set( "NPC", NPC.Class, NPC )
 
+--EP2
+
+local NPC = { 
+    	Name = "Uriah",
+    	Class = "npc_vortigaunt",
+    	Category = Category,
+    	Model = "models/vortigaunt_doctor.mdl"
+}
+if ( IsMounted( "ep2" ) ) then list.Set( "NPC", "Uriah", NPC ) end
+
+local NPC = {
+    	Name = "Dr. Magnusson",
+    	Class = "npc_magnusson",
+    	Category = Category
+}
+if ( IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
+
 -- Lost Coast
 
+--Has no death sequence
 local NPC = {
 	Name = "Fisherman",
 	Class = "npc_fisherman",
@@ -136,6 +159,7 @@ local NPC = {
 	Weapons = { "weapon_oldmanharpoon" }
 }
 if ( IsMounted( "lostcoast" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
+
 
 Category = "Zombies + Enemy Aliens"
 
@@ -177,9 +201,9 @@ list.Set( "NPC", NPC.Class, NPC )
 local NPC = {
 	Name = "Barnacle", 
 	Class = "npc_barnacle",
+    	Category = Category,
 	OnCeiling = true,
 	Offset = 2,
-	Category = Category
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -189,13 +213,6 @@ local NPC = {
 	Category = Category
 }
 list.Set( "NPC", NPC.Class, NPC )
-
-local NPC = {
-	Name = "Fast Zomb Torso", 
-	Class = "npc_fastzombie_torso",
-	Category = Category
-}
-if ( IsMounted( "episodic" ) || IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
 
 local NPC = {
 	Name = "Headcrab", 
@@ -217,6 +234,50 @@ local NPC = {
 	Category = Category
 }
 list.Set( "NPC", NPC.Class, NPC )
+
+--EP1 or EP2
+
+local NPC = {
+	Name = "Fast Zombie Torso", 
+	Class = "npc_fastzombie_torso",
+	Category = Category
+}
+if ( IsMounted( "episodic" ) || IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
+
+--EP2
+
+local NPC = {
+    	Name = "Antlion Guardian",	
+    	Class = "npc_antlionguard",		
+    	Category = Category, 
+    	KeyValues = { cavernbreed = 1, incavern = 1 },	
+    	Material = "Models/antlion_guard/antlionGuard2" 
+}
+if ( IsMounted( "ep2" ) ) then list.Set( "NPC", "npc_antlionguardian", NPC ) end
+
+local NPC = {
+	Name = "Antlion Grub", 
+	Class = "npc_antlion_grub",
+	Category = Category,
+    	NoDrop = true,
+    	Offset = 1
+}
+if ( IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
+
+local NPC = {
+	Name = "Antlion Worker", 
+	Class = "npc_antlion_worker",
+	Category = Category
+}
+if ( IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
+
+local NPC = {
+	Name = "Zombine", 
+	Class = "npc_zombine",
+	Category = Category
+}
+if ( IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
+
 
 Category = "Animals"
 
@@ -241,17 +302,17 @@ local NPC = {
 }
 list.Set( "NPC", NPC.Class, NPC )
 
--- Countdown to "This is in the wrong category" emails, prompted by this hilarious joke
-
-local NPC = {
-	Name = "Father Grigori", 
-	Class = "npc_monk",
-	Category = Category,
-	Weapons = { "weapon_annabelle" }
-}
-list.Set( "NPC", NPC.Class, NPC )
 
 Category = "Combine"
+
+--Yes, they are human, however, they are still associated with the combine
+local NPC = {
+	Name = "Metro Police", 
+	Class = "npc_metropolice",
+	Category = Category,
+	Weapons = { "weapon_stunstick", "weapon_pistol", "weapon_smg1" }
+}
+list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = {
 	Name = "Rollermine", 
@@ -277,18 +338,38 @@ local NPC = {
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier.mdl",
-	Weapons = { "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+	Weapons = { "weapon_smg1", "weapon_ar2" }
 }
 list.Set( "NPC", NPC.Class, NPC )
+
+local NPC = { 
+    	Name = "Shotgun Soldier",
+	Class = "npc_combine_s",
+    	Category = Category,
+	Model = "models/Combine_Soldier.mdl",
+    	Skin = 1,
+	Weapons = { "weapon_shotgun" }
+}
+list.Set( "NPC", "ShotgunSoldier", NPC )
 
 local NPC = {
 	Name = "Prison Guard", 
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier_prisonguard.mdl",
-	Weapons = { "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+	Weapons = { "weapon_smg1", "weapon_ar2" }
 }
 list.Set( "NPC", "CombinePrison", NPC )
+
+local NPC = { 
+    	Name = "Prison Shotgun Guard",
+	Class = "npc_combine_s",
+    	Category = Category,
+    	Model = "models/Combine_Soldier_PrisonGuard.mdl",
+    	Skin = 1,
+	Weapons = { "weapon_shotgun" }
+}	
+list.Set( "NPC", "PrisonShotgunner", NPC )
 
 local NPC = {
 	Name = "Combine Elite", 
@@ -298,6 +379,14 @@ local NPC = {
 	Weapons = { "weapon_ar2" }
 }
 list.Set( "NPC", "CombineElite", NPC )
+
+--Guy has a few issues: No holdtype and won't shoot the player after he has died once
+--[[local NPC = { 
+    Name = "Combine Sniper",
+    Class = "npc_sniper",
+    Category = Category 
+}
+list.Set( "NPC", NPC.Class, NPC )]]--
 
 local NPC = {
 	Name = "City Scanner", 
@@ -352,7 +441,7 @@ local NPC = {
 	Name = "Ceiling Turret", 
 	Class = "npc_turret_ceiling",
 	Category = Category,
-	SpawnFlags = 32, // SF_NPC_TURRET_AUTOACTIVATE
+	SpawnFlags = 32, -- SF_NPC_TURRET_AUTOACTIVATE
 	OnCeiling = true,
 	Offset = 0
 }
@@ -380,6 +469,15 @@ local NPC = {
 	Category = Category
 }
 list.Set( "NPC", NPC.Class, NPC )
+
+--EP2
+
+local NPC = {
+	Name = "Hunter", 
+	Class = "npc_hunter",
+	Category = Category
+}
+if ( IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
 
 
 if ( IsMounted( "hl1" ) ) then

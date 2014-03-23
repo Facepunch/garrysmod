@@ -1,8 +1,5 @@
-
---
 -- Don't try to edit this file if you're trying to add new vehicles
 -- Just make a new file and copy the format below.
---
 
 local Category = "Half-Life 2"
 
@@ -61,6 +58,24 @@ local V = {
 	}
 }
 list.Set( "Vehicles", "Pod", V )
+
+local V = { 	
+	-- Required information
+	Name = "Jalopy", 
+	Class = "prop_vehicle_jeep",
+	Category = Category,
+
+	-- Optional information
+	Author = "VALVe",
+	Information = "The muscle car from Episode 2",
+	Model = "models/vehicle.mdl",
+									
+	KeyValues = {
+		vehiclescript = "scripts/vehicles/jalopy.txt"
+	}
+}
+if ( IsMounted( "ep2" ) ) then list.Set ( "Vehicles", "Jalopy", V ) end
+
 
 local Category = "Chairs"
 
