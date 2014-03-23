@@ -74,6 +74,8 @@ function PANEL:DropAction_Simple( Drops, bDoDrop, Command, x, y )
 			
 		end
 		
+		self:OnModified()
+		
 	end
 
 end
