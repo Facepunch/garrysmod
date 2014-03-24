@@ -378,11 +378,6 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 	
 	if ( IsValid( Weapon ) ) then
 	
-		local func = Weapon.GetViewModelPosition
-		if ( func ) then
-			view.vm_origin,  view.vm_angles = func( Weapon, origin*1, angles*1 ) -- Note: *1 to copy the object so the child function can't edit it.
-		end
-		
 		local func = Weapon.CalcView
 		if ( func ) then
 			view.origin, view.angles, view.fov = func( Weapon, ply, origin*1, angles*1, fov ) -- Note: *1 to copy the object so the child function can't edit it.
@@ -560,13 +555,27 @@ end
 -----------------------------------------------------------]]
 function GM:CalcViewModelView( Weapon, ViewModel, OldEyePos, OldEyeAng, EyePos, EyeAng )
 		
-	--OldEyePos = OldEyePos + VectorRand() * 2
-	--ViewModel:SetPos( OldEyePos, OldEyeAng )
-		
 	if ( !IsValid( Weapon ) ) then return end
-	if ( Weapon.CalcViewModelView == nil ) then return end
-		
-	Weapon:CalcViewModelView( ViewModel, OldEyePos, OldEyeAng, EyePos, EyeAng )
+	
+	local vm_origin, vm_angles = EyePos, EyeAng
+	
+	-- Controls the position of all viewmodels
+	local func = Weapon.GetViewModelPosition
+	if ( func ) then
+		local pos, ang = func( Weapon, EyePos*1, EyeAng*1 )
+		vm_origin = pos or vm_origin
+		vm_angles = ang or vm_angles
+	end
+	
+	-- Controls the position of individual viewmodels
+	func = Weapon.CalcViewModelView
+	if ( func ) then
+		local pos, ang = func( Weapon, ViewModel, OldEyePos*1, OldEyeAng*1, EyePos*1, EyeAng*1 )
+		vm_origin = pos or vm_origin
+		vm_angles = ang or vm_angles
+	end
+	
+	return vm_origin, vm_angles
 	
 end
 
