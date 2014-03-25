@@ -181,8 +181,6 @@ lua\autorun\developer_functions.lua
 lua\drive\drive_base.lua
 lua\drive\drive_noclip.lua
 lua\drive\drive_sandbox.lua
-lua\autorun\menubar\display_options.lua
-lua\autorun\menubar\ai_options.lua
 lua\autorun\properties\bone_manipulate.lua
 lua\autorun\properties\remove.lua
 lua\autorun\properties\statue.lua
