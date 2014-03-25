@@ -92,7 +92,7 @@ function PANEL:FillViaTable( Table )
 	--
 	if ( Table.ControlPanelBuildFunction ) then
 	
-		self:FillViaFunction( Table.ControlPanelBuildFunction );
+		self:FillViaFunction( Table.ControlPanelBuildFunction )
 		
 	--
 	-- If not, use the txt file
@@ -133,7 +133,7 @@ function PANEL:LoadControlsFromTextFile( strName )
 			local kv = table.CollapseKeyValue( data.Value )
 			local ctrl = self:AddControl( data.Key, kv )
 			if ( ctrl && kv.description ) then
-				ctrl:SetTooltip( kv.description );
+				ctrl:SetTooltip( kv.description )
 			end
 		end
 		
@@ -146,10 +146,10 @@ end
 -----------------------------------------------------------]]
 function PANEL:ControlValues( data )
 	if ( data.label) then
-		self:SetLabel( data.label );
+		self:SetLabel( data.label )
 	end
 	if ( data.closed ) then
-		self:SetExpanded( false );
+		self:SetExpanded( false )
 	end
 end
 
@@ -292,7 +292,7 @@ function PANEL:AddControl( control, data )
 	
 	if ( control == "combobox" ) then
 		
-		if ( tostring(data.menubutton) == "1" ) then
+		if ( tostring( data.menubutton ) == "1" ) then
 		
 			local ctrl = vgui.Create( "ControlPresets", self )
 			ctrl:SetPreset( data.folder )

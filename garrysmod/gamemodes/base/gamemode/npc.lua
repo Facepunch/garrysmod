@@ -9,7 +9,7 @@ util.AddNetworkString( "NPCKilledNPC" )
 function GM:OnNPCKilled( ent, attacker, inflictor )
 
 	-- Don't spam the killfeed with scripted stuff
-	if ( ent:GetClass() == "npc_bullseye" ) then return end
+	if ( ent:GetClass() == "npc_bullseye" || ent:GetClass() == "npc_launcher" ) then return end
 
 	-- Convert the inflictor to the weapon that they're holding if we can.
 	if ( inflictor && inflictor != NULL && attacker == inflictor && (inflictor:IsPlayer() || inflictor:IsNPC()) ) then

@@ -263,7 +263,7 @@ function DoPlayerEntitySpawn( player, entity_name, model, iSkin, strBody )
 	
 		-- Set new position
 		ent:SetPos( vFlushPoint )
-		player:SendLua( "achievements.SpawnedProp()" );
+		player:SendLua( "achievements.SpawnedProp()" )
 	
 	else
 	
@@ -274,7 +274,7 @@ function DoPlayerEntitySpawn( player, entity_name, model, iSkin, strBody )
 			phys:SetPos( phys:GetPos() + VecOffset )
 		end
 		
-		player:SendLua( "achievements.SpawnedRagdoll()" );
+		player:SendLua( "achievements.SpawnedRagdoll()" )
 		
 	end
 
@@ -294,7 +294,7 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment )
 	-- We don't want them spawning any entity they like!
 	if ( !NPCData ) then 
 		if ( IsValid( Player ) ) then
-			Player:SendLua( "Derma_Message( \"Sorry! You can't spawn that NPC!\" )" );
+			Player:SendLua( "Derma_Message( \"Sorry! You can't spawn that NPC!\" )" )
 		end
 	return end
 
@@ -390,7 +390,13 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment )
 	-- What weapon should this mother be carrying
 	--
 	
-	if ( Equipment && Equipment != "none" ) then
+	-- Check if this is a valid entity from the list, or the user is trying to fool us.
+	local valid = false
+	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
+		if v.class == Equipment then valid = true end
+	end
+	
+	if ( Equipment && Equipment != "none" && valid ) then
 		NPC:SetKeyValue( "additionalequipment", Equipment )
 		NPC.Equipment = Equipment 
 	end
@@ -457,7 +463,7 @@ function Spawn_NPC( player, NPCClassName, WeaponName, tr )
 	-- And cleanup
 	player:AddCleanup( "npcs", SpawnedNPC )
 	
-	player:SendLua( "achievements.SpawnedNPC()" );
+	player:SendLua( "achievements.SpawnedNPC()" )
 
 end
 
@@ -591,7 +597,7 @@ function Spawn_SENT( player, EntityName, tr )
 
 		local trace = {}
 		trace.start = vStart
-		trace.endpos = vStart + (vForward * 4096)
+		trace.endpos = vStart + ( vForward * 4096 )
 		trace.filter = player
 
 		tr = util.TraceLine( trace )
@@ -641,6 +647,10 @@ function Spawn_SENT( player, EntityName, tr )
 				entity:SetKeyValue( k, v )
 			end
 		end
+		
+		if ( EntTable.Material ) then
+			entity:SetMaterial( EntTable.Material )
+		end
 
 		entity:Spawn()
 		entity:Activate()
@@ -658,9 +668,9 @@ function Spawn_SENT( player, EntityName, tr )
 			gamemode.Call( "PlayerSpawnedSENT", player, entity )
 		end
 		
-		undo.Create("SENT")
-			undo.SetPlayer(player)
-			undo.AddEntity(entity)
+		undo.Create( "SENT" )
+			undo.SetPlayer( player )
+			undo.AddEntity( entity )
 			if ( PrintName ) then
 				undo.SetCustomUndoText( "Undone "..PrintName )
 			end
@@ -670,8 +680,7 @@ function Spawn_SENT( player, EntityName, tr )
 		entity:SetVar( "Player", player )
 
 	end
-	
-	
+
 end
 
 concommand.Add( "gm_spawnsent", function( ply, cmd, args ) Spawn_SENT( ply, args[1] ) end )
@@ -712,7 +721,7 @@ function Spawn_Weapon( Player, wepname, tr )
 
 	if ( wepname == nil ) then return end
 
-	local swep = list.Get( "Weapon" )[ wepname ];
+	local swep = list.Get( "Weapon" )[ wepname ]
 
 	-- Make sure this is a SWEP
 	if ( swep == nil ) then return end
@@ -820,7 +829,7 @@ function Spawn_Vehicle( Player, vname, tr )
 	
 	if ( vehicle.Members ) then
 		table.Merge( Ent, vehicle.Members )
-		duplicator.StoreEntityModifier( Ent, "VehicleMemDupe", vehicle.Members );
+		duplicator.StoreEntityModifier( Ent, "VehicleMemDupe", vehicle.Members )
 	end
 	
 	undo.Create( "Vehicle" )
@@ -838,7 +847,7 @@ concommand.Add( "gm_spawnvehicle", function( ply, cmd, args ) Spawn_Vehicle( ply
 
 local function VehicleMemDupe( Player, Entity, Data )
 
-	table.Merge( Entity, Data );
+	table.Merge( Entity, Data )
 	
 end
-duplicator.RegisterEntityModifier( "VehicleMemDupe", VehicleMemDupe );
+duplicator.RegisterEntityModifier( "VehicleMemDupe", VehicleMemDupe )

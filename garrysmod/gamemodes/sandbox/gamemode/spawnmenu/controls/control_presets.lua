@@ -135,8 +135,9 @@ end
 function PANEL:ReloadPresets()
 	self:Clear()
 	
-	--reload our given defaults
-	self:SetOptions()
+	for name, data in pairs( self.Options ) do
+		self:AddOption( name, data )
+	end
 	
 	local Presets = presets.GetTable( self.m_strPreset )
 	local sortedPresets, i = {}, 1
@@ -147,7 +148,7 @@ function PANEL:ReloadPresets()
 	table.sort( sortedPresets )
 	
 	for _, name in ipairs( sortedPresets ) do
-		self:AddOption( name, Presets[name] )
+		self.DropDown:AddChoice( strName, data )
 	end
 
 end

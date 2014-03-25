@@ -181,8 +181,6 @@ lua\autorun\developer_functions.lua
 lua\drive\drive_base.lua
 lua\drive\drive_noclip.lua
 lua\drive\drive_sandbox.lua
-lua\autorun\menubar\display_options.lua
-lua\autorun\menubar\ai_options.lua
 lua\autorun\properties\bone_manipulate.lua
 lua\autorun\properties\remove.lua
 lua\autorun\properties\statue.lua
@@ -193,7 +191,6 @@ lua\autorun\properties\ignite.lua
 lua\autorun\properties\collisions.lua
 lua\autorun\properties\gravity.lua
 lua\autorun\properties\npc_scale.lua
-lua\autorun\game_ep2.lua
 lua\autorun\game_hl2.lua
 lua\autorun\menubar.lua
 lua\autorun\properties.lua

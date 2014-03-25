@@ -1,3 +1,4 @@
+
 -- Don't try to edit this file if you're trying to add new NPCs.
 -- Just make a new file and copy the format below.
 
@@ -132,33 +133,34 @@ local NPC = {
 }
 list.Set( "NPC", NPC.Class, NPC )
 
---EP2
+if ( IsMounted( "ep2" ) ) then
 
-local NPC = { 
-    	Name = "Uriah",
-    	Class = "npc_vortigaunt",
-    	Category = Category,
-    	Model = "models/vortigaunt_doctor.mdl"
-}
-if ( IsMounted( "ep2" ) ) then list.Set( "NPC", "Uriah", NPC ) end
+	local NPC = { 
+		Name = "Uriah",
+		Class = "npc_vortigaunt",
+		Category = Category,
+		Model = "models/vortigaunt_doctor.mdl"
+	}
+	list.Set( "NPC", "VortigauntUriah", NPC )
 
-local NPC = {
-    	Name = "Dr. Magnusson",
-    	Class = "npc_magnusson",
-    	Category = Category
-}
-if ( IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
+	local NPC = {
+		Name = "Dr. Magnusson",
+		Class = "npc_magnusson",
+		Category = Category
+	}
+	list.Set( "NPC", NPC.Class, NPC )
 
--- Lost Coast
+end
 
---Has no death sequence
-local NPC = {
-	Name = "Fisherman",
-	Class = "npc_fisherman",
-	Category = Category,
-	Weapons = { "weapon_oldmanharpoon" }
-}
-if ( IsMounted( "lostcoast" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
+if ( IsMounted( "lostcoast" ) ) then 
+	local NPC = {
+		Name = "Fisherman",
+		Class = "npc_fisherman",
+		Category = Category,
+		Weapons = { "weapon_oldmanharpoon" }
+	}
+	list.Set( "NPC", NPC.Class, NPC ) -- Has no death sequence
+end
 
 
 Category = "Zombies + Enemy Aliens"
@@ -201,9 +203,9 @@ list.Set( "NPC", NPC.Class, NPC )
 local NPC = {
 	Name = "Barnacle", 
 	Class = "npc_barnacle",
-    	Category = Category,
+    Category = Category,
 	OnCeiling = true,
-	Offset = 2,
+	Offset = 2
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -235,48 +237,46 @@ local NPC = {
 }
 list.Set( "NPC", NPC.Class, NPC )
 
---EP1 or EP2
-
 local NPC = {
 	Name = "Fast Zombie Torso", 
 	Class = "npc_fastzombie_torso",
 	Category = Category
 }
-if ( IsMounted( "episodic" ) || IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
+list.Set( "NPC", NPC.Class, NPC )
 
---EP2
+if ( IsMounted( "ep2" ) ) then
+	local NPC = {
+			Name = "Antlion Guardian",	
+			Class = "npc_antlionguard",		
+			Category = Category, 
+			KeyValues = { cavernbreed = 1, incavern = 1 },	
+			Material = "Models/antlion_guard/antlionGuard2" 
+	}
+	list.Set( "NPC", "npc_antlionguardian", NPC )
 
-local NPC = {
-    	Name = "Antlion Guardian",	
-    	Class = "npc_antlionguard",		
-    	Category = Category, 
-    	KeyValues = { cavernbreed = 1, incavern = 1 },	
-    	Material = "Models/antlion_guard/antlionGuard2" 
-}
-if ( IsMounted( "ep2" ) ) then list.Set( "NPC", "npc_antlionguardian", NPC ) end
+	local NPC = {
+		Name = "Antlion Grub", 
+		Class = "npc_antlion_grub",
+		Category = Category,
+			NoDrop = true,
+			Offset = 1
+	}
+	list.Set( "NPC", NPC.Class, NPC )
 
-local NPC = {
-	Name = "Antlion Grub", 
-	Class = "npc_antlion_grub",
-	Category = Category,
-    	NoDrop = true,
-    	Offset = 1
-}
-if ( IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
+	local NPC = {
+		Name = "Antlion Worker", 
+		Class = "npc_antlion_worker",
+		Category = Category
+	}
+	list.Set( "NPC", NPC.Class, NPC )
 
-local NPC = {
-	Name = "Antlion Worker", 
-	Class = "npc_antlion_worker",
-	Category = Category
-}
-if ( IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
-
-local NPC = {
-	Name = "Zombine", 
-	Class = "npc_zombine",
-	Category = Category
-}
-if ( IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
+	local NPC = {
+		Name = "Zombine", 
+		Class = "npc_zombine",
+		Category = Category
+	}
+	list.Set( "NPC", NPC.Class, NPC )
+end
 
 
 Category = "Animals"
@@ -305,7 +305,6 @@ list.Set( "NPC", NPC.Class, NPC )
 
 Category = "Combine"
 
---Yes, they are human, however, they are still associated with the combine
 local NPC = {
 	Name = "Metro Police", 
 	Class = "npc_metropolice",
@@ -343,11 +342,11 @@ local NPC = {
 list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = { 
-    	Name = "Shotgun Soldier",
+    Name = "Shotgun Soldier",
 	Class = "npc_combine_s",
-    	Category = Category,
-	Model = "models/Combine_Soldier.mdl",
-    	Skin = 1,
+    Category = Category,
+	Model = "models/combine_soldier.mdl",
+    Skin = 1,
 	Weapons = { "weapon_shotgun" }
 }
 list.Set( "NPC", "ShotgunSoldier", NPC )
@@ -362,11 +361,11 @@ local NPC = {
 list.Set( "NPC", "CombinePrison", NPC )
 
 local NPC = { 
-    	Name = "Prison Shotgun Guard",
+    Name = "Prison Shotgun Guard",
 	Class = "npc_combine_s",
-    	Category = Category,
-    	Model = "models/Combine_Soldier_PrisonGuard.mdl",
-    	Skin = 1,
+    Category = Category,
+    Model = "models/combine_soldier_prisonguard.mdl",
+    Skin = 1,
 	Weapons = { "weapon_shotgun" }
 }	
 list.Set( "NPC", "PrisonShotgunner", NPC )
@@ -379,14 +378,6 @@ local NPC = {
 	Weapons = { "weapon_ar2" }
 }
 list.Set( "NPC", "CombineElite", NPC )
-
---Guy has a few issues: No holdtype and won't shoot the player after he has died once
---[[local NPC = { 
-    Name = "Combine Sniper",
-    Class = "npc_sniper",
-    Category = Category 
-}
-list.Set( "NPC", NPC.Class, NPC )]]--
 
 local NPC = {
 	Name = "City Scanner", 
@@ -470,41 +461,40 @@ local NPC = {
 }
 list.Set( "NPC", NPC.Class, NPC )
 
---EP2
-
-local NPC = {
-	Name = "Hunter", 
-	Class = "npc_hunter",
-	Category = Category
-}
-if ( IsMounted( "ep2" ) ) then list.Set( "NPC", NPC.Class, NPC ) end
-
+if ( IsMounted( "ep2" ) ) then 
+	local NPC = {
+		Name = "Hunter", 
+		Class = "npc_hunter",
+		Category = Category
+	}
+	list.Set( "NPC", NPC.Class, NPC )
+end
 
 if ( IsMounted( "hl1" ) ) then
 
 	Category = "Half-Life: Source"
 
-	local NPC = { Name = "Alien Grunt", Class = "monster_alien_grunt", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Nihilanth", Class = "monster_nihilanth", Category = Category, Offset = 1200 }; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Tentacle", Class = "monster_tentacle", Category = Category }; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Alien Slave", Class = "monster_alien_slave", Category = Category }; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Big Momma", Class = "monster_bigmomma", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Bull Chicken", Class = "monster_bullchicken", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Gargantua", Class = "monster_gargantua", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Assassin", Class = "monster_human_assassin", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Baby Crab", Class = "monster_babycrab", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Grunt", Class = "monster_human_grunt", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Cockroach", Class = "monster_cockroach", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Houndeye", Class = "monster_houndeye", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Scientist", Class = "monster_scientist", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Snark", Class = "monster_snark", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Zombie", Class = "monster_zombie", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Headcrab", Class = "monster_headcrab", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Controller", Class = "monster_alien_controller", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Barney", Class = "monster_barney", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Alien Grunt", Class = "monster_alien_grunt", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Nihilanth", Class = "monster_nihilanth", Category = Category, Offset = 1200 } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Tentacle", Class = "monster_tentacle", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Alien Slave", Class = "monster_alien_slave", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Big Momma", Class = "monster_bigmomma", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Bull Chicken", Class = "monster_bullchicken", Category = Category	} list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Gargantua", Class = "monster_gargantua", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Assassin", Class = "monster_human_assassin", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Baby Crab", Class = "monster_babycrab", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Grunt", Class = "monster_human_grunt", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Cockroach", Class = "monster_cockroach", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Houndeye", Class = "monster_houndeye", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Scientist", Class = "monster_scientist", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Snark", Class = "monster_snark", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Zombie", Class = "monster_zombie", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Headcrab", Class = "monster_headcrab", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Controller", Class = "monster_alien_controller", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Barney", Class = "monster_barney", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	
-	--local NPC = { Name = "Turret", Class = "monster_turret", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	--local NPC = { Name = "Mini Turret", Class = "monster_miniturret", Category = Category	}; list.Set( "NPC", NPC.Class, NPC )
-	--local NPC = { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = -20, OnFloor = true	}; list.Set( "NPC", NPC.Class, NPC )
+	--local NPC = { Name = "Turret", Class = "monster_turret", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	--local NPC = { Name = "Mini Turret", Class = "monster_miniturret", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	--local NPC = { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = -20, OnFloor = true } list.Set( "NPC", NPC.Class, NPC )
 
 end
