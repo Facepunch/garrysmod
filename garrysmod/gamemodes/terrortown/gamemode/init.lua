@@ -127,6 +127,7 @@ local util = util
 
 -- Pool some network names.
 util.AddNetworkString("TTT_RoundState")
+util.AddNetworkString("TTT_RoundEnd")
 util.AddNetworkString("TTT_RagdollSearch")
 util.AddNetworkString("TTT_GameMsg")
 util.AddNetworkString("TTT_GameMsgColor")
@@ -796,6 +797,10 @@ function EndRound(type)
    -- server plugins might want to start a map vote here or something
    -- these hooks are not used by TTT internally
    hook.Call("TTTEndRound", GAMEMODE, type)
+   
+   net.Start("TTT_RoundEnd")
+   net.WriteUInt(type, 4)
+   net.Broadcast()
 
    ents.TTT.TriggerRoundStateOutputs(ROUND_POST, type)
 end
