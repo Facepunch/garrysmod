@@ -358,7 +358,7 @@ function ENT:SetForce( force, mul )
 	
 	-- Calculate the velocity
 	ThrusterWorldForce = ThrusterWorldForce * self.force * mul * 50
-	self.ForceLinear, self.ForceAngle = phys:CalculateVelocityOffset( ThrusterWorldForce, ThrusterWorldPos );
+	self.ForceLinear, self.ForceAngle = phys:CalculateVelocityOffset( ThrusterWorldForce, ThrusterWorldPos )
 	self.ForceLinear = phys:WorldToLocalVector( self.ForceLinear )
 	
 	if ( mul > 0 ) then
@@ -478,7 +478,14 @@ end
 -----------------------------------------------------------]]
 function ENT:StartThrustSound()
 
-	if ( !self.SoundName || self.SoundName == "" ) then return; end
+	if ( !self.SoundName || self.SoundName == "" ) then return end
+	
+	local valid = false
+	for _, v in pairs( list.Get( "ThrusterSounds" ) ) do
+		if ( v.thruster_soundname == self.SoundName ) then valid = true end
+	end
+	
+	if ( !valid ) then return end
 
 	if ( !self.Sound ) then
 		self.Sound = CreateSound( self.Entity, self.SoundName )
