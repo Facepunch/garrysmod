@@ -1,5 +1,4 @@
 
-
 local function GetAllFiles( tab, folder, extension, path )
 
 	local files, folders = file.Find( folder .. "/*", path )
@@ -65,7 +64,8 @@ search.AddProvider( function( str )
 
 	return list
 
-end );
+end )
+
 
 --
 -- Entity, vehicles
@@ -75,8 +75,8 @@ search.AddProvider( function( str )
 	local results = {}
 
 	local ents = {}
-	--table.Add( ents, scripted_ents.GetSpawnable() );
-	table.Add( ents, list.Get( "SpawnableEntities" ) );
+	--table.Add( ents, scripted_ents.GetSpawnable() )
+	table.Add( ents, list.Get( "SpawnableEntities" ) )
 
 	for k, v in pairs( list.Get( "Vehicles" ) ) do
 			
@@ -135,4 +135,4 @@ search.AddProvider( function( str )
 
 	return results
 
-end );
+end )
