@@ -13,12 +13,9 @@ if ( CLIENT ) then
 	CreateConVar( "cl_drawthrusterseffects", "1" )
 end
 
-
-
 function ENT:SetEffect( name )
 	self:SetNetworkedString( "Effect", name )
 end
-
 
 function ENT:GetEffect( name )
 	return self:GetNetworkedString( "Effect", "" )
@@ -482,7 +479,7 @@ function ENT:StartThrustSound()
 	
 	local valid = false
 	for _, v in pairs( list.Get( "ThrusterSounds" ) ) do
-		if ( v.thruster_soundname == self.SoundName ) then valid = true end
+		if ( v.thruster_soundname == self.SoundName ) then valid = true break end
 	end
 	
 	if ( !valid ) then return end
