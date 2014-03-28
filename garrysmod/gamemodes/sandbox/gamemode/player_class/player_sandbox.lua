@@ -139,6 +139,15 @@ function PLAYER:CalcView( view )
 
 end
 
+function PLAYER:GetHandsModel()
+
+	-- return { model = "models/weapons/c_arms_cstrike.mdl", skin = 1, body = "0100000" }
+
+	local cl_playermodel = self.Player:GetInfo( "cl_playermodel" )
+	return player_manager.TranslatePlayerHands( cl_playermodel )
+
+end
+
 --
 -- Reproduces the jump boost from HL2 singleplayer
 --
