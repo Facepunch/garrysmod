@@ -11,11 +11,21 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	-- Don't spam the killfeed with scripted stuff
 	if ( ent:GetClass() == "npc_bullseye" || ent:GetClass() == "npc_launcher" ) then return end
 
+	if ( IsValid( attacker ) && attacker:GetClass() == "trigger_hurt" ) then attacker = ent end
+	
+	if ( IsValid( attacker ) && attacker:IsVehicle() && IsValid( attacker:GetDriver() ) ) then
+		attacker = attacker:GetDriver()
+	end
+
+	if ( !IsValid( inflictor ) && IsValid( attacker ) ) then
+		inflictor = attacker
+	end
+	
 	-- Convert the inflictor to the weapon that they're holding if we can.
-	if ( inflictor && inflictor != NULL && attacker == inflictor && (inflictor:IsPlayer() || inflictor:IsNPC()) ) then
+	if ( IsValid( inflictor ) && attacker == inflictor && ( inflictor:IsPlayer() || inflictor:IsNPC() ) ) then
 	
 		inflictor = inflictor:GetActiveWeapon()
-		if ( attacker == NULL ) then inflictor = attacker end
+		if ( !IsValid( attacker ) ) then inflictor = attacker end
 	
 	end
 	
@@ -25,12 +35,8 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	if ( IsValid( inflictor ) ) then InflictorClass = inflictor:GetClass() end
 	if ( IsValid( attacker ) ) then 
 
-		AttackerClass = attacker:GetClass() 
-
-		if ( attacker:IsVehicle() && IsValid( attacker:GetDriver() ) ) then
-			attacker = attacker:GetDriver()
-		end
-		
+		AttackerClass = attacker:GetClass()
+	
 		if ( attacker:IsPlayer() ) then
 
 			net.Start( "PlayerKilledNPC" )

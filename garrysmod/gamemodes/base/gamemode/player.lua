@@ -142,63 +142,65 @@ util.AddNetworkString("PlayerKilled")
    Name: gamemode:PlayerDeath( )
    Desc: Called when a player dies.
 -----------------------------------------------------------]]
-function GM:PlayerDeath( Victim, Inflictor, Attacker )
+function GM:PlayerDeath( ply, inflictor, attacker )
 
 	-- Don't spawn for at least 2 seconds
-	Victim.NextSpawnTime = CurTime() + 2
-	Victim.DeathTime = CurTime()
+	ply.NextSpawnTime = CurTime() + 2
+	ply.DeathTime = CurTime()
 	
-	if ( IsValid( Attacker ) && Attacker:IsVehicle() && IsValid( Attacker:GetDriver() ) ) then
-		Attacker = Attacker:GetDriver()
+	if ( IsValid( attacker ) && attacker:GetClass() == "trigger_hurt" ) then attacker = ply end
+	
+	if ( IsValid( attacker ) && attacker:IsVehicle() && IsValid( attacker:GetDriver() ) ) then
+		attacker = attacker:GetDriver()
 	end
 
-	if ( !IsValid( Inflictor ) && IsValid( Attacker ) ) then
-		Inflictor = Attacker
+	if ( !IsValid( inflictor ) && IsValid( attacker ) ) then
+		inflictor = attacker
 	end
 
 	-- Convert the inflictor to the weapon that they're holding if we can.
 	-- This can be right or wrong with NPCs since combine can be holding a 
 	-- pistol but kill you by hitting you with their arm.
-	if ( Inflictor && Inflictor == Attacker && (Inflictor:IsPlayer() || Inflictor:IsNPC()) ) then
+	if ( IsValid( inflictor ) && inflictor == attacker && ( inflictor:IsPlayer() || inflictor:IsNPC() ) ) then
 	
-		Inflictor = Inflictor:GetActiveWeapon()
-		if ( !IsValid( Inflictor ) ) then Inflictor = Attacker end
+		inflictor = inflictor:GetActiveWeapon()
+		if ( !IsValid( inflictor ) ) then inflictor = attacker end
 
 	end
 
-	if (Attacker == Victim) then
+	if ( attacker == ply ) then
 	
 		net.Start( "PlayerKilledSelf" )
-			net.WriteEntity( Victim )
+			net.WriteEntity( ply )
 		net.Broadcast()
 		
-		MsgAll( Attacker:Nick() .. " suicided!\n" )
+		MsgAll( attacker:Nick() .. " suicided!\n" )
 		
 	return end
 
-	if ( Attacker:IsPlayer() ) then
+	if ( attacker:IsPlayer() ) then
 	
 		net.Start( "PlayerKilledByPlayer" )
 		
-			net.WriteEntity( Victim )
-			net.WriteString( Inflictor:GetClass() )
-			net.WriteEntity( Attacker )
+			net.WriteEntity( ply )
+			net.WriteString( inflictor:GetClass() )
+			net.WriteEntity( attacker )
 		
 		net.Broadcast()
 		
-		MsgAll( Attacker:Nick() .. " killed " .. Victim:Nick() .. " using " .. Inflictor:GetClass() .. "\n" )
+		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 		
 	return end
 	
 	net.Start( "PlayerKilled" )
 	
-		net.WriteEntity( Victim )
-		net.WriteString( Inflictor:GetClass() )
-		net.WriteString( Attacker:GetClass() )
+		net.WriteEntity( ply )
+		net.WriteString( inflictor:GetClass() )
+		net.WriteString( attacker:GetClass() )
 
 	net.Broadcast()
 	
-	MsgAll( Victim:Nick() .. " was killed by " .. Attacker:GetClass() .. "\n" )
+	MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
 	
 end
 

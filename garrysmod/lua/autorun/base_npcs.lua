@@ -13,7 +13,7 @@ local NPC = {
 list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = {
-	Name = "Barney", 
+	Name = "Barney Calhoun", 
 	Class = "npc_barney",
 	Category = Category,
 	Weapons = { "weapon_smg1", "weapon_shotgun", "weapon_ar2" }
@@ -50,7 +50,7 @@ list.Set( "NPC", NPC.Class, NPC )
 
 -- Did you know that this MAN can shoot annabelle like he's been doing it his whole life?
 local NPC = {
-	Name = "Dr. Kleiner", 
+	Name = "Dr. Isaac Kleiner", 
 	Class = "npc_kleiner",
 	Category = Category
 }
@@ -65,7 +65,7 @@ local NPC = {
 list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = {
-	Name = "Mossman", 
+	Name = "Dr. Judith Mossman", 
 	Class = "npc_mossman",
 	Category = Category
 }
@@ -98,7 +98,7 @@ local NPC = {
 list.Set( "NPC", "Rebel", NPC )
 
 local NPC = {
-	Name = "Odessa",
+	Name = "Odessa Cubbage",
 	Class = "npc_citizen",
 	Category = Category,
 	Model = "models/odessa.mdl",
@@ -144,7 +144,7 @@ if ( IsMounted( "ep2" ) ) then
 	list.Set( "NPC", "VortigauntUriah", NPC )
 
 	local NPC = {
-		Name = "Dr. Magnusson",
+		Name = "Dr. Arne Magnusson",
 		Class = "npc_magnusson",
 		Category = Category
 	}
@@ -224,14 +224,14 @@ local NPC = {
 list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = {
-	Name = "Headcrab Black", 
+	Name = "Poison Headcrab", 
 	Class = "npc_headcrab_black",
 	Category = Category
 }
 list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = {
-	Name = "Headcrab Fast", 
+	Name = "Fast Headcrab", 
 	Class = "npc_headcrab_fast",
 	Category = Category
 }
@@ -388,7 +388,7 @@ local NPC = {
 list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = {
-	Name = "Claw Scanner", 
+	Name = "Shield Scanner", 
 	Class = "npc_clawscanner",
 	Category = Category,
 	Offset = 20
@@ -412,7 +412,7 @@ local NPC = {
 list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = {
-	Name = "Helicopter", 
+	Name = "Hunter-Chopper", 
 	Class = "npc_helicopter",
 	Category = Category,
 	Offset = 300
@@ -478,8 +478,8 @@ if ( IsMounted( "hl1" ) ) then
 	local NPC = { Name = "Nihilanth", Class = "monster_nihilanth", Category = Category, Offset = 1200 } list.Set( "NPC", NPC.Class, NPC )
 	local NPC = { Name = "Tentacle", Class = "monster_tentacle", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	local NPC = { Name = "Alien Slave", Class = "monster_alien_slave", Category = Category } list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Big Momma", Class = "monster_bigmomma", Category = Category } list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Bullsquid", Class = "monster_bullchicken", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Gonarch", Class = "monster_bigmomma", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Bullsquid", Class = "monster_bullchicken", Category = Category	} list.Set( "NPC", NPC.Class, NPC )
 	local NPC = { Name = "Gargantua", Class = "monster_gargantua", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	local NPC = { Name = "Assassin", Class = "monster_human_assassin", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	local NPC = { Name = "Baby Crab", Class = "monster_babycrab", Category = Category } list.Set( "NPC", NPC.Class, NPC )
@@ -491,7 +491,7 @@ if ( IsMounted( "hl1" ) ) then
 	local NPC = { Name = "Zombie", Class = "monster_zombie", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	local NPC = { Name = "Headcrab", Class = "monster_headcrab", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	local NPC = { Name = "Controller", Class = "monster_alien_controller", Category = Category } list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Barney", Class = "monster_barney", Category = Category } list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Security Officer", Class = "monster_barney", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	
 	--local NPC = { Name = "Turret", Class = "monster_turret", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	--local NPC = { Name = "Mini Turret", Class = "monster_miniturret", Category = Category } list.Set( "NPC", NPC.Class, NPC )
