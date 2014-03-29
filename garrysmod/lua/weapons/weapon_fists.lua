@@ -108,7 +108,10 @@ function SWEP:DealDamage()
 		} )
 	end
 
-	if ( tr.Hit ) then self:EmitSound( HitSound ) end
+	-- We need the second part for single player because SWEP:Think is ran shared in SP.
+	if ( tr.Hit && !( game.SinglePlayer() && CLIENT ) ) then
+		self:EmitSound( HitSound )
+	end
 
 	local hit = false
 
@@ -123,11 +126,11 @@ function SWEP:DealDamage()
 		dmginfo:SetDamage( math.random( 8, 12 ) )
 
 		if ( anim == "fists_left" ) then
-			dmginfo:SetDamageForce( self.Owner:GetRight() * 49125 + self.Owner:GetForward() * 99984 ) -- Yes we need those specific numbers
+			dmginfo:SetDamageForce( self.Owner:GetRight() * 4912 + self.Owner:GetForward() * 9998 ) -- Yes we need those specific numbers
 		elseif ( anim == "fists_right" ) then
-			dmginfo:SetDamageForce( self.Owner:GetRight() * -49124 + self.Owner:GetForward() * 99899 )
+			dmginfo:SetDamageForce( self.Owner:GetRight() * -4912 + self.Owner:GetForward() * 9989 )
 		elseif ( anim == "fists_uppercut" ) then
-			dmginfo:SetDamageForce( self.Owner:GetUp() * 51589 + self.Owner:GetForward() * 100128 )
+			dmginfo:SetDamageForce( self.Owner:GetUp() * 5158 + self.Owner:GetForward() * 10012 )
 			dmginfo:SetDamage( math.random( 12, 24 ) )
 		end
 
