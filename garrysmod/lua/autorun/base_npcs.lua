@@ -269,6 +269,7 @@ if ( IsMounted( "ep2" ) ) then
 		Category = Category
 	}
 	list.Set( "NPC", NPC.Class, NPC )
+	game.AddParticles( "particles/antlion_worker.pcf" )
 
 	local NPC = {
 		Name = "Zombine", 
