@@ -27,7 +27,6 @@ require ( "draw" )
 require ( "http" )
 require ( "cvars" )
 require ( "cookie" )
-require ( "timer" )
 require ( "baseclass" )
 
 
