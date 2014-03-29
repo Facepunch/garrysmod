@@ -17,7 +17,6 @@ require ( "saverestore" )		-- Save/Restore
 require ( "gamemode" )			-- Gamemode manager
 require ( "weapons" )			-- SWEP manager
 require ( "hook" )				-- Gamemode hooks
-require ( "timer" )				-- Timer manager
 require ( "scripted_ents" )		-- Scripted Entities
 require ( "player_manager" )	-- Player models/class manager
 require ( "numpad" )
