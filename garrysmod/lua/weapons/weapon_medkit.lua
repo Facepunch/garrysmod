@@ -36,9 +36,8 @@ function SWEP:Initialize()
 	self:SetWeaponHoldType( "slam" )
 
 	if ( CLIENT ) then return end
-	
+
 	timer.Create( "medkit_ammo" .. self:EntIndex(), 1, 0, function()
-		if ( !IsValid( self.Owner ) ) then return end
 		if ( self:Clip1() < self.MaxAmmo ) then self:SetClip1( math.min( self:Clip1() + 2, self.MaxAmmo ) ) end
 	end )
 
