@@ -108,7 +108,6 @@ lua\includes\modules\gamemode.lua
 lua\includes\modules\hook.lua
 lua\includes\modules\weapons.lua
 lua\includes\modules\properties.lua
-lua\includes\modules\timer.lua
 lua\includes\modules\scripted_ents.lua
 lua\includes\modules\matproxy.lua
 lua\includes\modules\player_manager.lua
