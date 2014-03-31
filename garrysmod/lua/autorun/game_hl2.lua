@@ -49,8 +49,8 @@ end
 
 -- Weapons
 ADD_WEAPON( "357",				"weapon_357" )
-ADD_WEAPON( "Alyx Gun",			"weapon_alyxgun" )
-ADD_WEAPON( "Annabelle",		"weapon_annabelle" )
+--ADD_WEAPON( "Alyx Gun",			"weapon_alyxgun" )
+--ADD_WEAPON( "Annabelle",		"weapon_annabelle" )
 ADD_WEAPON( "AR2",				"weapon_ar2" )
 ADD_WEAPON( "Bug Bait",			"weapon_bugbait" )
 ADD_WEAPON( "Crossbow",			"weapon_crossbow" )
