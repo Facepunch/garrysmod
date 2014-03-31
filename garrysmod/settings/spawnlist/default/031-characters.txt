@@ -202,230 +202,225 @@
 		}
 		"40"
 		{
-			"type"		"model"
-			"model"		"models/player/t_animations.mdl"
-		}
-		"41"
-		{
 			"type"		"header"
 			"text"		"Bad guys"
 		}
-		"42"
+		"41"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_anarchist.mdl"
 		}
-		"43"
+		"42"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_anarchist_varianta.mdl"
 		}
-		"44"
+		"43"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_anarchist_variantb.mdl"
 		}
-		"45"
+		"44"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_anarchist_variantc.mdl"
 		}
-		"46"
+		"45"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_anarchist_variantd.mdl"
 		}
-		"47"
+		"46"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_balkan_varianta.mdl"
 		}
-		"48"
+		"47"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_balkan_variantb.mdl"
 		}
-		"49"
+		"48"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_balkan_variantc.mdl"
 		}
-		"50"
+		"49"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_balkan_variantd.mdl"
 		}
-		"51"
+		"50"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_balkan_variante.mdl"
 		}
-		"52"
+		"51"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_leet_varianta.mdl"
 		}
-		"53"
+		"52"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_leet_variantb.mdl"
 		}
-		"54"
+		"53"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_leet_variantc.mdl"
 		}
-		"55"
+		"54"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_leet_variantd.mdl"
 		}
-		"56"
+		"55"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_leet_variante.mdl"
 		}
-		"57"
+		"56"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_phoenix.mdl"
 		}
-		"58"
+		"57"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_phoenix_varianta.mdl"
 		}
-		"59"
+		"58"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_phoenix_variantb.mdl"
 		}
-		"60"
+		"59"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_phoenix_variantc.mdl"
 		}
-		"61"
+		"60"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_phoenix_variantd.mdl"
 		}
-		"62"
+		"61"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_pirate.mdl"
 		}
-		"63"
+		"62"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_pirate_variantb.mdl"
 		}
-		"64"
+		"63"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_pirate_variantc.mdl"
 		}
-		"65"
+		"64"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_pirate_variantd.mdl"
 		}
-		"66"
+		"65"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_professional.mdl"
 		}
-		"67"
+		"66"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_professional_var1.mdl"
 		}
-		"68"
+		"67"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_professional_var2.mdl"
 		}
-		"69"
+		"68"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_professional_var3.mdl"
 		}
-		"70"
+		"69"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_professional_var4.mdl"
 		}
-		"71"
+		"70"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_separatist.mdl"
 		}
-		"72"
+		"71"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_separatist_varianta.mdl"
 		}
-		"73"
+		"72"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_separatist_variantb.mdl"
 		}
-		"74"
+		"73"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_separatist_variantd.mdl"
 		}
-		"75"
+		"74"
 		{
 			"type"		"model"
 			"model"		"models/player/tm_separatist_variantc.mdl"
 		}
-		"76"
+		"75"
 		{
 			"type"		"header"
 			"text"		"Dumb guys"
 		}
-		"77"
+		"76"
 		{
 			"type"		"model"
 			"model"		"models/hostage/hostage.mdl"
 		}
-		"78"
+		"77"
 		{
 			"type"		"model"
 			"model"		"models/hostage/hostage_varianta.mdl"
 		}
-		"79"
+		"78"
 		{
 			"type"		"model"
 			"model"		"models/hostage/hostage_variantb.mdl"
 		}
-		"80"
+		"79"
 		{
 			"type"		"model"
 			"model"		"models/hostage/hostage_variantc.mdl"
 		}
-		"81"
+		"80"
 		{
 			"type"		"model"
 			"model"		"models/hostage/hostage_variantd.mdl"
 		}
-		"82"
+		"81"
 		{
 			"type"		"model"
 			"model"		"models/hostage/hostage_variante.mdl"
 		}
-		"83"
+		"82"
 		{
 			"type"		"model"
 			"model"		"models/hostage/hostage_variantf.mdl"
 		}
-		"84"
+		"83"
 		{
 			"type"		"model"
 			"model"		"models/hostage/hostage_variantg.mdl"
 		}
-		"85"
+		"84"
 		{
 			"type"		"model"
 			"model"		"models/player/zombie.mdl"

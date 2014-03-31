@@ -753,324 +753,309 @@
 		"150"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/food_pile01.mdl"
+			"model"		"models/props_lab/bewaredog.mdl"
 		}
 		"151"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/food_pile02.mdl"
+			"model"		"models/props_lab/binderblue.mdl"
 		}
 		"152"
 		{
 			"type"		"model"
-			"model"		"models/props_junk/food_pile03.mdl"
+			"model"		"models/props_lab/binderbluelabel.mdl"
 		}
 		"153"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/bewaredog.mdl"
+			"model"		"models/props_lab/bindergraylabel01a.mdl"
 		}
 		"154"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/binderblue.mdl"
+			"model"		"models/props_lab/bindergreen.mdl"
 		}
 		"155"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/binderbluelabel.mdl"
+			"model"		"models/props_lab/bindergraylabel01b.mdl"
 		}
 		"156"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/bindergraylabel01a.mdl"
+			"model"		"models/props_lab/bindergreenlabel.mdl"
 		}
 		"157"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/bindergreen.mdl"
+			"model"		"models/props_lab/binderredlabel.mdl"
 		}
 		"158"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/bindergraylabel01b.mdl"
+			"model"		"models/props_lab/blastwindow.mdl"
 		}
 		"159"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/bindergreenlabel.mdl"
+			"model"		"models/props_lab/box01a.mdl"
 		}
 		"160"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/binderredlabel.mdl"
+			"model"		"models/props_lab/box01b.mdl"
 		}
 		"161"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/blastwindow.mdl"
+			"model"		"models/props_lab/cactus.mdl"
 		}
 		"162"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/box01a.mdl"
+			"model"		"models/props_lab/chess.mdl"
 		}
 		"163"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/box01b.mdl"
+			"model"		"models/props_lab/citizenradio.mdl"
 		}
 		"164"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/cactus.mdl"
+			"model"		"models/props_lab/Cleaver.mdl"
 		}
 		"165"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/chess.mdl"
+			"model"		"models/props_lab/clipboard.mdl"
 		}
 		"166"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/citizenradio.mdl"
+			"model"		"models/props_lab/corkboard001.mdl"
 		}
 		"167"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/Cleaver.mdl"
+			"model"		"models/props_lab/corkboard002.mdl"
 		}
 		"168"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/clipboard.mdl"
+			"model"		"models/props_lab/crematorcase.mdl"
 		}
 		"169"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/corkboard001.mdl"
+			"model"		"models/props_lab/desklamp01.mdl"
 		}
 		"170"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/corkboard002.mdl"
+			"model"		"models/props_lab/eyescanner.mdl"
 		}
 		"171"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/crematorcase.mdl"
+			"model"		"models/props_lab/frame001a.mdl"
 		}
 		"172"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/desklamp01.mdl"
+			"model"		"models/props_lab/frame002a.mdl"
 		}
 		"173"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/eyescanner.mdl"
+			"model"		"models/props_lab/harddrive02.mdl"
 		}
 		"174"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/frame001a.mdl"
+			"model"		"models/props_lab/harddrive01.mdl"
 		}
 		"175"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/frame002a.mdl"
+			"model"		"models/props_lab/headcrabprep.mdl"
 		}
 		"176"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/harddrive02.mdl"
+			"model"		"models/props_lab/hevplate.mdl"
 		}
 		"177"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/harddrive01.mdl"
+			"model"		"models/props_lab/huladoll.mdl"
 		}
 		"178"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/headcrabprep.mdl"
+			"model"		"models/props_lab/jar01a.mdl"
 		}
 		"179"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/hevplate.mdl"
+			"model"		"models/props_lab/jar01b.mdl"
 		}
 		"180"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/huladoll.mdl"
+			"model"		"models/props_lab/kennel_physics.mdl"
 		}
 		"181"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/jar01a.mdl"
+			"model"		"models/props_lab/Ladel.mdl"
 		}
 		"182"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/jar01b.mdl"
+			"model"		"models/props_lab/monitor01a.mdl"
 		}
 		"183"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/kennel_physics.mdl"
+			"model"		"models/props_lab/monitor01b.mdl"
 		}
 		"184"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/Ladel.mdl"
+			"model"		"models/props_lab/monitor02.mdl"
 		}
 		"185"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/monitor01a.mdl"
+			"model"		"models/props_lab/partsbin01.mdl"
 		}
 		"186"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/monitor01b.mdl"
+			"model"		"models/props_lab/plotter.mdl"
 		}
 		"187"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/monitor02.mdl"
+			"model"		"models/props_lab/reciever01a.mdl"
 		}
 		"188"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/partsbin01.mdl"
+			"model"		"models/props_lab/reciever01b.mdl"
 		}
 		"189"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/plotter.mdl"
+			"model"		"models/props_lab/reciever01c.mdl"
 		}
 		"190"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/reciever01a.mdl"
+			"model"		"models/props_lab/reciever01d.mdl"
 		}
 		"191"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/reciever01b.mdl"
+			"model"		"models/props_lab/reciever_cart.mdl"
 		}
 		"192"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/reciever01c.mdl"
+			"model"		"models/props_lab/securitybank.mdl"
 		}
 		"193"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/reciever01d.mdl"
+			"model"		"models/props_lab/servers.mdl"
 		}
 		"194"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/reciever_cart.mdl"
+			"model"		"models/props_lab/tpplug.mdl"
 		}
 		"195"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/securitybank.mdl"
+			"model"		"models/props_lab/tpplugholder_single.mdl"
 		}
 		"196"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/servers.mdl"
+			"model"		"models/props_lab/tpplugholder.mdl"
 		}
 		"197"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/tpplug.mdl"
+			"model"		"models/props_lab/workspace001.mdl"
 		}
 		"198"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/tpplugholder_single.mdl"
+			"model"		"models/props_lab/workspace002.mdl"
 		}
 		"199"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/tpplugholder.mdl"
+			"model"		"models/props_lab/workspace003.mdl"
 		}
 		"200"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/workspace001.mdl"
+			"model"		"models/props_lab/workspace004.mdl"
 		}
 		"201"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/workspace002.mdl"
+			"model"		"models/props_trainstation/BenchOutdoor01a.mdl"
 		}
 		"202"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/workspace003.mdl"
+			"model"		"models/props_trainstation/bench_indoor001a.mdl"
 		}
 		"203"
 		{
 			"type"		"model"
-			"model"		"models/props_lab/workspace004.mdl"
+			"model"		"models/props_trainstation/payphone001a.mdl"
 		}
 		"204"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/BenchOutdoor01a.mdl"
+			"model"		"models/props_trainstation/payphone_reciever001a.mdl"
 		}
 		"205"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/bench_indoor001a.mdl"
+			"model"		"models/props_trainstation/traincar_seats001.mdl"
 		}
 		"206"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/payphone001a.mdl"
+			"model"		"models/props_trainstation/trainstation_clock001.mdl"
 		}
 		"207"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/payphone_reciever001a.mdl"
+			"model"		"models/props_vehicles/carparts_axel01a.mdl"
 		}
 		"208"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/traincar_seats001.mdl"
+			"model"		"models/props_vehicles/carparts_door01a.mdl"
 		}
 		"209"
 		{
 			"type"		"model"
-			"model"		"models/props_trainstation/trainstation_clock001.mdl"
+			"model"		"models/props_vehicles/carparts_muffler01a.mdl"
 		}
 		"210"
 		{
 			"type"		"model"
-			"model"		"models/props_vehicles/carparts_axel01a.mdl"
-		}
-		"211"
-		{
-			"type"		"model"
-			"model"		"models/props_vehicles/carparts_door01a.mdl"
-		}
-		"212"
-		{
-			"type"		"model"
-			"model"		"models/props_vehicles/carparts_muffler01a.mdl"
-		}
-		"213"
-		{
-			"type"		"model"
 			"model"		"models/props_vehicles/carparts_tire01a.mdl"
 		}
-		"214"
+		"211"
 		{
 			"type"		"model"
 			"model"		"models/props_vehicles/carparts_wheel01a.mdl"

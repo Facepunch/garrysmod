@@ -151,6 +151,6 @@
 			"model"		"models/Items/ammocrate_grenade.mdl"
 		}
 	}
-	"name"		"Items"
+	"name"		" Items"
 	"version"		"3"
 }
