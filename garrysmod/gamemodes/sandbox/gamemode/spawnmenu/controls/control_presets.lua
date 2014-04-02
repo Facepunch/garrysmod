@@ -148,7 +148,7 @@ function PANEL:ReloadPresets()
 	table.sort( sortedPresets )
 	
 	for _, name in ipairs( sortedPresets ) do
-		self.DropDown:AddChoice( strName, data )
+		self.DropDown:AddChoice( name, Presets[ name ] )
 	end
 
 end
