@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
- "$basetexture" "VGUI/ttt/icon_mac"
+ "$basetexture" "vgui/ttt/icon_mac"
  "$vertexcolor" 1
  "$vertexalpha" 1
  "$translucent" 1
