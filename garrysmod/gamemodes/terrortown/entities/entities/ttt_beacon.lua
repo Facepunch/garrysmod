@@ -5,7 +5,7 @@
 
 if CLIENT then
    -- this entity can be DNA-sampled so we need some display info
-   ENT.Icon = "VGUI/ttt/icon_beacon"
+   ENT.Icon = "vgui/ttt/icon_beacon"
    ENT.PrintName = "Beacon"
 end
 

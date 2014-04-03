@@ -15,7 +15,7 @@ if CLIENT then
       desc = "polter_desc"
    };
 
-   SWEP.Icon = "VGUI/ttt/icon_polter"
+   SWEP.Icon = "vgui/ttt/icon_polter"
 end
 
 SWEP.Base = "weapon_tttbase"

@@ -12,7 +12,7 @@ if CLIENT then
       desc = "sipistol_desc"
    };
 
-   SWEP.Icon = "VGUI/ttt/icon_silenced"
+   SWEP.Icon = "vgui/ttt/icon_silenced"
 end
 
 SWEP.Base = "weapon_tttbase"

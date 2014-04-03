@@ -26,7 +26,7 @@ EQUIP_DISGUISE = 4
 
 
 -- Icon doesn't have to be in this dir, but all default ones are in here
-local mat_dir = "VGUI/ttt/"
+local mat_dir = "vgui/ttt/"
 
 
 -- Stick to around 35 characters per description line, and add a "\n" where you

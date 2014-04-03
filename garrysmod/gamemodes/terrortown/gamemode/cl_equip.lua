@@ -23,7 +23,7 @@ function GetEquipmentForRole(role)
                limited  = v.LimitedStock,
                kind     = v.Kind or WEAPON_NONE,
                slot     = (v.Slot or 0) + 1,
-               material = v.Icon or "VGUI/ttt/icon_id",
+               material = v.Icon or "vgui/ttt/icon_id",
                -- the below should be specified in EquipMenuData, in which case
                -- these values are overwritten
                type     = "Type not specified",
@@ -228,7 +228,7 @@ local function TraitorMenuPopup()
             ic = vgui.Create("LayeredIcon", dlist)
 
             local marker = vgui.Create("DImage")
-            marker:SetImage("VGUI/ttt/custom_marker")
+            marker:SetImage("vgui/ttt/custom_marker")
             marker.PerformLayout = function(s)
                                       s:AlignBottom(2)
                                       s:AlignRight(2)
@@ -248,7 +248,7 @@ local function TraitorMenuPopup()
          -- Slot marker icon
          if ItemIsWeapon(item) then
             local slot = vgui.Create("SimpleIconLabelled")
-            slot:SetIcon("VGUI/ttt/slotcap")
+            slot:SetIcon("vgui/ttt/slotcap")
             slot:SetIconColor(color_slot[ply:GetRole()] or COLOR_GREY)
             slot:SetIconSize(16)
 

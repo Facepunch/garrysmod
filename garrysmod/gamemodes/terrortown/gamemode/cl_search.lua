@@ -58,7 +58,7 @@ end
 
 local function WeaponToIcon(d)
    local wep = util.WeaponForClass(d)
-   return wep and wep.Icon or "VGUI/ttt/icon_nades"
+   return wep and wep.Icon or "vgui/ttt/icon_nades"
 end
 
 local TypeToMat = {
@@ -80,7 +80,7 @@ local TypeToMat = {
 
 -- Accessor for better fail handling
 local function IconForInfoType(t, data)
-   local base = "VGUI/ttt/icon_"
+   local base = "vgui/ttt/icon_"
    local mat = TypeToMat[t]
 
    if type(mat) == "table" then
@@ -324,7 +324,7 @@ local function ShowSearchScreen(search_raw)
    ddesc:SetSize(descw, desch)
 
    local dactive = vgui.Create("DImage", ddesc)
-   dactive:SetImage("VGUI/ttt/icon_id")
+   dactive:SetImage("vgui/ttt/icon_id")
    dactive:SetPos(m, m)
    dactive:SetSize(64, 64)
 

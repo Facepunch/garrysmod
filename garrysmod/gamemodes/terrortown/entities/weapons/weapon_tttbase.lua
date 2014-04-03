@@ -34,18 +34,18 @@ if CLIENT then
 
    -- This sets the icon shown for the weapon in the DNA sampler, search window,
    -- equipment menu (if buyable), etc.
-   SWEP.Icon = "VGUI/ttt/icon_nades" -- most generic icon I guess
+   SWEP.Icon = "vgui/ttt/icon_nades" -- most generic icon I guess
 
    -- You can make your own weapon icon using the template in:
    --   /garrysmod/gamemodes/terrortown/template/
 
    -- Open one of TTT's icons with VTFEdit to see what kind of settings to use
    -- when exporting to VTF. Once you have a VTF and VMT, you can
-   -- resource.AddFile("materials/VGUI/...") them here. GIVE YOUR ICON A UNIQUE
+   -- resource.AddFile("materials/vgui/...") them here. GIVE YOUR ICON A UNIQUE
    -- FILENAME, or it WILL be overwritten by other servers! Gmod does not check
    -- if the files are different, it only looks at the name. I recommend you
    -- create your own directory so that this does not happen,
-   -- eg. /materials/VGUI/ttt/mycoolserver/mygun.vmt
+   -- eg. /materials/vgui/ttt/mycoolserver/mygun.vmt
 end
 
 ---- MISC TTT-SPECIFIC BEHAVIOUR CONFIGURATION

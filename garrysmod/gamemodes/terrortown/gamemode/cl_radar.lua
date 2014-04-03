@@ -105,9 +105,9 @@ local function DrawTarget(tgt, size, offset, no_shrink)
 end
 
 local indicator   = surface.GetTextureID("effects/select_ring")
-local c4warn      = surface.GetTextureID("VGUI/ttt/icon_c4warn")
-local sample_scan = surface.GetTextureID("VGUI/ttt/sample_scan")
-local det_beacon  = surface.GetTextureID("VGUI/ttt/det_beacon")
+local c4warn      = surface.GetTextureID("vgui/ttt/icon_c4warn")
+local sample_scan = surface.GetTextureID("vgui/ttt/sample_scan")
+local det_beacon  = surface.GetTextureID("vgui/ttt/det_beacon")
 
 local GetPTranslation = LANG.GetParamTranslation
 local FormatTime = util.SimpleTime

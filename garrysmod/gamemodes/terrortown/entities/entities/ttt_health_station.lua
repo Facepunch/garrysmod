@@ -4,7 +4,7 @@ AddCSLuaFile()
 
 if CLIENT then
    -- this entity can be DNA-sampled so we need some display info
-   ENT.Icon = "VGUI/ttt/icon_health"
+   ENT.Icon = "vgui/ttt/icon_health"
    ENT.PrintName = "hstation_name"
 
    local GetPTranslation = LANG.GetParamTranslation

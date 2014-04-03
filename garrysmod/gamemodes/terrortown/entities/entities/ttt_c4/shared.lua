@@ -9,7 +9,7 @@ end
 
 if CLIENT then
    -- this entity can be DNA-sampled so we need some display info
-   ENT.Icon = "VGUI/ttt/icon_c4"
+   ENT.Icon = "vgui/ttt/icon_c4"
    ENT.PrintName = "C4"
 
    local GetPTranslation = LANG.GetParamTranslation

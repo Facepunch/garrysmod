@@ -10,7 +10,7 @@ if CLIENT then
 
    SWEP.Slot				= 2
 
-   SWEP.Icon = "VGUI/ttt/icon_m249"
+   SWEP.Icon = "vgui/ttt/icon_m249"
 
    SWEP.ViewModelFlip		= false
 end

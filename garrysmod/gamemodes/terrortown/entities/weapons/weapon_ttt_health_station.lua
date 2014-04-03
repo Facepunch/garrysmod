@@ -15,7 +15,7 @@ if CLIENT then
       desc = "hstation_desc"
    };
 
-   SWEP.Icon = "VGUI/ttt/icon_health"
+   SWEP.Icon = "vgui/ttt/icon_health"
 end
 
 SWEP.Base = "weapon_tttbase"

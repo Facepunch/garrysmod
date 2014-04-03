@@ -156,10 +156,10 @@ end
 local disarm_beep    = Sound("buttons/blip2.wav")
 local wire_cut       = Sound("ttt/wirecut.mp3")
 
-local c4_bomb_mat    = Material("VGUI/ttt/c4_bomb")
-local c4_cut_mat     = Material("VGUI/ttt/c4_cut")
-local c4_wire_mat    = Material("VGUI/ttt/c4_wire")
-local c4_wirecut_mat = Material("VGUI/ttt/c4_wire_cut")
+local c4_bomb_mat    = Material("vgui/ttt/c4_bomb")
+local c4_cut_mat     = Material("vgui/ttt/c4_cut")
+local c4_wire_mat    = Material("vgui/ttt/c4_wire")
+local c4_wirecut_mat = Material("vgui/ttt/c4_wire_cut")
 
 --- Disarm panels
 local on_wire_cut = nil

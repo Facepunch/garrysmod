@@ -4,7 +4,7 @@ AddCSLuaFile()
 
 if CLIENT then
    ENT.PrintName = "knife_thrown"
-   ENT.Icon = "VGUI/ttt/icon_knife"
+   ENT.Icon = "vgui/ttt/icon_knife"
 end
 
 

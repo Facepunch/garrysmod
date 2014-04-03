@@ -4,7 +4,7 @@ AddCSLuaFile()
 
 if CLIENT then
    -- this entity can be DNA-sampled so we need some display info
-   ENT.Icon = "VGUI/ttt/icon_radio"
+   ENT.Icon = "vgui/ttt/icon_radio"
    ENT.PrintName = "radio_name"
 end
 
