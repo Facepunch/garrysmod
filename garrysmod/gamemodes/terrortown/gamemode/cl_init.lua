@@ -283,7 +283,7 @@ net.Receive("TTT_PlayerDied", PlayerDeath)
 
 function GM:ShouldDrawLocalPlayer(ply) return false end
 
-local view = {origin = vector_origin, angles = angle_zero, fov=0, vm_origin = vector_origin, vm_angles = angle_zero}
+local view = {origin = vector_origin, angles = angle_zero, fov=0}
 function GM:CalcView( ply, origin, angles, fov )
    view.origin = origin
    view.angles = angles
@@ -307,12 +307,15 @@ function GM:CalcView( ply, origin, angles, fov )
    local wep = ply:GetActiveWeapon()
    if IsValid(wep) then
 
+	-- viewmodel repositioning is now done in GM:CalcViewModelView
+--[[
       local func = wep.GetViewModelPosition
       if func then
          view.vm_origin,  view.vm_angles = func( wep, origin*1, angles*1 )
       end
+]]
 
-      func = wep.CalcView
+      local func = wep.CalcView
       if func then
          view.origin, view.angles, view.fov = func( wep, ply, origin*1, angles*1, fov )
       end
