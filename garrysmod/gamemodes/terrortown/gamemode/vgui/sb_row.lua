@@ -225,7 +225,7 @@ function PANEL:LayoutColumns()
    end
 
    self.tag:SizeToContents()
-   cx = cx - 70
+   cx = cx - 90
    self.tag:SetPos(cx - self.tag:GetWide()/2, (SB_ROW_HEIGHT - self.tag:GetTall()) / 2)
 
    self.sresult:SetPos(cx - 8, (SB_ROW_HEIGHT - 16) / 2)
