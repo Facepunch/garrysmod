@@ -137,10 +137,11 @@ end
 
 -- For headings only the label parameter is relevant, func is included for
 -- parity with sb_row
-function PANEL:AddColumn( label, func )
+function PANEL:AddColumn( label, func, width )
    local lbl = vgui.Create( "DLabel", self )
    lbl:SetText( label )
    lbl.IsHeading = true
+   lbl.Width = width or 50 -- Retain compatibility with existing code
 
    table.insert( self.cols, lbl )
    return lbl
@@ -240,9 +241,11 @@ function PANEL:PerformLayout()
 
    -- score columns
    local cy = y_logo_off + 90
+   local cx = w - 8 -(scrolling and 16 or 0)
    for k,v in ipairs(self.cols) do
       v:SizeToContents()
-      v:SetPos( w - (50*k) - v:GetWide()/2 - 8 -(scrolling and 16 or 0), cy)
+	  cx = cx - v.Width
+      v:SetPos(cx - v:GetWide()/2, cy)
    end
 end
 
