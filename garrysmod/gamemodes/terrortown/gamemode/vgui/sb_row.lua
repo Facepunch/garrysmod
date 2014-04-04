@@ -220,7 +220,7 @@ function PANEL:LayoutColumns()
    local cx = self:GetWide()
    for k,v in ipairs(self.cols) do
       v:SizeToContents()
-	  cx = cx - v.Width
+      cx = cx - v.Width
       v:SetPos(cx - v:GetWide()/2, (SB_ROW_HEIGHT - v:GetTall()) / 2)
    end
 
