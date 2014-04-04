@@ -6,7 +6,7 @@ if CLIENT then
    SWEP.PrintName			= "M16"
    SWEP.Slot				= 2
 
-   SWEP.Icon = "VGUI/ttt/icon_m16"
+   SWEP.Icon = "vgui/ttt/icon_m16"
 end
 
 SWEP.Base				= "weapon_tttbase"

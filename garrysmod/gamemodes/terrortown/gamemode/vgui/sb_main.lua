@@ -22,7 +22,7 @@ surface.CreateFont("treb_small", {font = "Trebuchet18",
                                   size = 14,
                                   weight = 700})
 
-local logo = surface.GetTextureID("VGUI/ttt/score_logo")
+local logo = surface.GetTextureID("vgui/ttt/score_logo")
 
 local PANEL = {}
 

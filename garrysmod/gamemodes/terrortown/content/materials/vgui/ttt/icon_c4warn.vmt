@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
- "$basetexture" "VGUI/ttt/icon_c4warn"
+ "$basetexture" "vgui/ttt/icon_c4warn"
  "$vertexcolor" 1
  "$vertexalpha" 1
  "$translucent" 1

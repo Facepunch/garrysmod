@@ -8,7 +8,7 @@ if CLIENT then
 
    SWEP.Slot				= 0
 
-   SWEP.Icon = "VGUI/ttt/icon_cbar"   
+   SWEP.Icon = "vgui/ttt/icon_cbar"   
    SWEP.ViewModelFOV = 54
 end
 

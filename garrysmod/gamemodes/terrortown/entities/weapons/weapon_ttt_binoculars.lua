@@ -14,7 +14,7 @@ if CLIENT then
       desc  = "binoc_desc"
    };
 
-   SWEP.Icon = "VGUI/ttt/icon_binoc"
+   SWEP.Icon = "vgui/ttt/icon_binoc"
 end
 
 SWEP.Base = "weapon_tttbase"

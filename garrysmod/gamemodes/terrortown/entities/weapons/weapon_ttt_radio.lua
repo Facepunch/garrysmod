@@ -16,7 +16,7 @@ if CLIENT then
       desc = "radio_desc"
    };
 
-   SWEP.Icon = "VGUI/ttt/icon_radio"
+   SWEP.Icon = "vgui/ttt/icon_radio"
 end
 
 SWEP.Base = "weapon_tttbase"

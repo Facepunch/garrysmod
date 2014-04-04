@@ -26,7 +26,7 @@ end
 
 ---- "T" indicator above traitors
 
-local indicator_mat = Material("VGUI/ttt/sprite_traitor")
+local indicator_mat = Material("vgui/ttt/sprite_traitor")
 local indicator_col = Color(255, 255, 255, 130)
 
 local client, plys, ply, pos, dir, tgt

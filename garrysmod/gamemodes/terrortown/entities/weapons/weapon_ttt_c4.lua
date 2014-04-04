@@ -15,7 +15,7 @@ if CLIENT then
       desc  = "c4_desc"
    };
 
-   SWEP.Icon = "VGUI/ttt/icon_c4"
+   SWEP.Icon = "vgui/ttt/icon_c4"
 end
 
 SWEP.Base = "weapon_tttbase"

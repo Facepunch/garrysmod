@@ -7,7 +7,7 @@ if CLIENT then
    SWEP.PrintName = "UMP Prototype"
    SWEP.Slot      = 6
 
-   SWEP.Icon = "VGUI/ttt/icon_ump"
+   SWEP.Icon = "vgui/ttt/icon_ump"
 
    SWEP.ViewModelFOV = 72
 

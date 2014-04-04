@@ -24,7 +24,7 @@ if CLIENT then
       desc="Broadcasts a location to everyone.\n\nUse to warn or group innocents."
    };
 
-   SWEP.Icon = "VGUI/ttt/icon_beacon"
+   SWEP.Icon = "vgui/ttt/icon_beacon"
 end
 
 SWEP.Base = "weapon_tttbase"

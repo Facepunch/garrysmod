@@ -5,7 +5,7 @@ SWEP.HoldType           = "ar2"
 if CLIENT then
    SWEP.PrintName          = "rifle_name"
    SWEP.Slot               = 2
-   SWEP.Icon = "VGUI/ttt/icon_scout"
+   SWEP.Icon = "vgui/ttt/icon_scout"
 end
 
 SWEP.Base               = "weapon_tttbase"

@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "VGUI/ttt/sprite_traitor"
+	"$basetexture" "vgui/ttt/sprite_traitor"
 	"$nocull" 1
 	"$ignorez" 1
 	"$nodecal" 1

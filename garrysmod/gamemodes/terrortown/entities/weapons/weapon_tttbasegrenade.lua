@@ -13,7 +13,7 @@ if CLIENT then
    SWEP.SlotPos			= 0
 
 
-   SWEP.Icon = "VGUI/ttt/icon_nades"
+   SWEP.Icon = "vgui/ttt/icon_nades"
 end
 
 SWEP.Base				= "weapon_tttbase"

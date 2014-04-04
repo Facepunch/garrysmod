@@ -15,7 +15,7 @@ if CLIENT then
       desc = "dna_desc"
    };
 
-   SWEP.Icon = "VGUI/ttt/icon_wtester"
+   SWEP.Icon = "vgui/ttt/icon_wtester"
 end
 
 SWEP.Base = "weapon_tttbase"
@@ -421,7 +421,7 @@ if CLIENT then
       end
    end
 
-   local basedir = "VGUI/ttt/icon_"
+   local basedir = "vgui/ttt/icon_"
    local function GetDisplayData(cls)
       local wep = util.WeaponForClass(cls)
 

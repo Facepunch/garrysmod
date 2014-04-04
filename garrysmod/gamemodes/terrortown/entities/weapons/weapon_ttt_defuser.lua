@@ -15,7 +15,7 @@ if CLIENT then
       desc = "defuser_desc"
    };
 
-   SWEP.Icon = "VGUI/ttt/icon_defuser"
+   SWEP.Icon = "vgui/ttt/icon_defuser"
 end
 
 SWEP.Base = "weapon_tttbase"

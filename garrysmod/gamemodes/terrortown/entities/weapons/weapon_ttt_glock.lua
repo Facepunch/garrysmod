@@ -8,7 +8,7 @@ if CLIENT then
    SWEP.PrintName = "Glock"
    SWEP.Slot = 1
 
-   SWEP.Icon = "VGUI/ttt/icon_glock"
+   SWEP.Icon = "vgui/ttt/icon_glock"
 end
 
 SWEP.Kind = WEAPON_PISTOL
