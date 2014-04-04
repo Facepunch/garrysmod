@@ -244,7 +244,7 @@ function PANEL:PerformLayout()
    local cx = w - 8 -(scrolling and 16 or 0)
    for k,v in ipairs(self.cols) do
       v:SizeToContents()
-	  cx = cx - v.Width
+      cx = cx - v.Width
       v:SetPos(cx - v:GetWide()/2, cy)
    end
 end
