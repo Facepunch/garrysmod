@@ -78,10 +78,10 @@ function PANEL:Paint()
    if sboard_panel.cols then
       local cx = self:GetWide() - scr
       for k,v in ipairs(sboard_panel.cols) do
-	     cx = cx - v.Width
+         cx = cx - v.Width
          if k % 2 == 1 then -- Draw for odd numbered columns
             surface.DrawRect(cx-v.Width/2, 0, v.Width, self:GetTall())
-		 end
+         end
       end
    else
       -- If columns are not setup yet, fall back to darkening the areas for the
