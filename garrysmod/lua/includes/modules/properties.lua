@@ -1,6 +1,8 @@
 
 module( "properties", package.seeall )
 
+local effects_hover = CreateClientConVar( "effects_hover", "1", true, false )
+
 local meta = 
 {
 	MsgStart =	function( self )
@@ -147,6 +149,8 @@ end
 if ( CLIENT ) then
 
 	function HaloThink()
+
+		if ( effects_hover:GetBool() == false ) then return end
 
 		local ent = properties.GetHovered( LocalPlayer():EyePos(), LocalPlayer():GetAimVector() )
 		if ( !IsValid( ent ) ) then return end
