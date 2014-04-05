@@ -204,3 +204,29 @@ function meta:SetupHands( ply )
 	end
 
 end
+
+if ( SERVER ) then
+
+	util.AddNetworkString( "PlayerChatText" )
+	
+	function meta:ChatText( ... )
+	
+		local text = { ... }
+		
+		net.Start( "PlayerChatText" )
+			net.WriteTable( text )
+		net.Send( self )
+		
+	end
+
+else
+
+	local function ReceiveChatText()
+	
+		local text = net.ReadTable()
+		chat.AddText( unpack( text ) )
+		
+	end
+	net.Receive( "PlayerChatText", ReceiveChatText )
+	
+end
