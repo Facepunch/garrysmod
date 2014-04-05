@@ -76,9 +76,12 @@ function PANEL:Paint()
    local scr = sboard_panel.ply_frame.scroll.Enabled and 16 or 0
    surface.SetDrawColor(0,0,0, 80)
    if sboard_panel.cols then
-      -- Draw for odd numbered columns
-      for i=1, #sboard_panel.cols, 2 do
-         surface.DrawRect(self:GetWide() - (50*i) - 25 - scr, 0, 50, self:GetTall())
+      local cx = self:GetWide() - scr
+      for k,v in ipairs(sboard_panel.cols) do
+         cx = cx - v.Width
+         if k % 2 == 1 then -- Draw for odd numbered columns
+            surface.DrawRect(cx-v.Width/2, 0, v.Width, self:GetTall())
+         end
       end
    else
       -- If columns are not setup yet, fall back to darkening the areas for the
