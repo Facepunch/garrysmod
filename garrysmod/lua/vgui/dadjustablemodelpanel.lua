@@ -65,7 +65,7 @@ function PANEL:FirstPersonControls()
 	x = x * -0.5 * scale
 	y = y * 0.5 * scale
 	
-	if ( self.MouseKey == 107 ) then
+	if ( self.MouseKey == MOUSE_LEFT ) then
 	
 		if ( input.IsShiftDown() ) then y = 0 end
 		
@@ -81,6 +81,7 @@ function PANEL:FirstPersonControls()
 	
 	local Movement = Vector( 0, 0, 0 )
 	
+	-- TODO: Use actual key bindings, not hardcoded keys.
 	if ( input.IsKeyDown( KEY_W ) || input.IsKeyDown( KEY_UP ) ) then Movement = Movement + self.aLookAngle:Forward() end
 	if ( input.IsKeyDown( KEY_S ) || input.IsKeyDown( KEY_DOWN ) ) then Movement = Movement - self.aLookAngle:Forward() end
 	if ( input.IsKeyDown( KEY_A ) || input.IsKeyDown( KEY_LEFT ) ) then Movement = Movement - self.aLookAngle:Right() end
