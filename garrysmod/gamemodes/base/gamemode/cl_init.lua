@@ -297,7 +297,7 @@ end
 -----------------------------------------------------------]]
 function GM:CalcVehicleView( Vehicle, ply, view )
 
-	if ( Vehicle.GetThirdPersonMode == nil ) then
+	if ( Vehicle.GetThirdPersonMode == nil || ply:GetViewEntity() != ply ) then
 		-- This hsouldn't ever happen.
 		return
 	end
