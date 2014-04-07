@@ -1,12 +1,12 @@
 
 -- Remove this to add it to the menu
-TOOL.AddToMenu		= false
+TOOL.AddToMenu	= false
 
 -- Define these!
-TOOL.Category		= "My Category"		-- Name of the category
-TOOL.Name			= "#Example"		-- Name to display
-TOOL.Command		= nil				-- Command on click (nil for default), can be removed
-TOOL.ConfigName		= nil				-- Config file name (nil for default), can be removed
+TOOL.Category	= "My Category"	-- Name of the category
+TOOL.Name		= "#Example"	-- Name to display
+TOOL.Command	= nil			-- Command on click (nil for default), can be removed
+TOOL.ConfigName	= nil			-- Config file name (nil for default), can be removed
 
 if ( true ) then return end
 
