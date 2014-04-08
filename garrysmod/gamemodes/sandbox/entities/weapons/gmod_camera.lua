@@ -145,8 +145,10 @@ function SWEP:PrimaryAttack()
 	-- If we're multiplayer this can be done totally clientside
 	if ( !game.SinglePlayer() && SERVER ) then return end
 	if ( CLIENT && !IsFirstTimePredicted() ) then return end
-	
-	self.Owner:ConCommand( "jpeg" )
+	local arg = hook.Run("CameraTakePicture", self.Owner)
+	if arg != false then
+		self.Owner:ConCommand( "jpeg" )
+	end
 	
 end
 
