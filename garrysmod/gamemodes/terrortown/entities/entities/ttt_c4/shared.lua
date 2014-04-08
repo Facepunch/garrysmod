@@ -31,6 +31,7 @@ ENT.Model = Model("models/weapons/w_c4_planted.mdl")
 
 ENT.CanHavePrints = true
 ENT.CanUseKey = true
+ENT.Avoidable = true
 
 AccessorFunc( ENT, "thrower", "Thrower")
 
