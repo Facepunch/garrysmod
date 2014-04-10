@@ -251,12 +251,12 @@ local function StartTeleport(ply, teleport)
    util.Effect("teleport_beamup", edata_up)
 
    local edata_dn = EffectData()
-   edata_up:SetOrigin(teleport.pos)
+   edata_dn:SetOrigin(teleport.pos)
    ang = Angle(0, ang.y, ang.r) -- deep copy
-   edata_up:SetAngles(ang)
-   edata_up:SetEntity(ply)
-   edata_up:SetMagnitude(delay_beamup)
-   edata_up:SetRadius(delay_beamdown)
+   edata_dn:SetAngles(ang)
+   edata_dn:SetEntity(ply)
+   edata_dn:SetMagnitude(delay_beamup)
+   edata_dn:SetRadius(delay_beamdown)
 
    util.Effect("teleport_beamdown", edata_dn)
 end
