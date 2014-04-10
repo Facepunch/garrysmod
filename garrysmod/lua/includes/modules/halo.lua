@@ -1,6 +1,8 @@
 
 module( "halo", package.seeall )
 
+local halo_enable = CreateClientConVar( "halo_enable", "1", true, false )
+
 local matColor	= Material( "model_color" )
 local mat_Copy	= Material( "pp/copy" )
 local mat_Add	= Material( "pp/add" )
@@ -11,6 +13,8 @@ local rt_Store		= render.GetScreenEffectTexture( 0 )
 local List = {}
 
 function Add( ents, color, blurx, blury, passes, add, ignorez )
+
+	if ( halo_enable:GetBool() == false ) then return end
 
 	if ( add == nil ) then add = true end
 	if ( ignorez == nil ) then ignorez = false end
@@ -164,8 +168,8 @@ hook.Add( "PostDrawEffects", "RenderHalos", function()
 
 	if ( #List == 0 ) then return end
 	
-	for k, v in pairs( List ) do
-		Render( v )
+	for i = 1, #List do
+		Render( List[i] )
 	end
 		
 	List = {}
