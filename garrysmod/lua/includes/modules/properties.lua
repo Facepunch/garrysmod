@@ -1,22 +1,22 @@
 
 module( "properties", package.seeall )
 
-local meta = 
-{
-	MsgStart =	function( self )
+local meta = {
+	MsgStart = function( self )
 	
-					net.Start( "properties" )
-						net.WriteUInt( util.NetworkStringToID( self.InternalName ), 32 )
-				end,
-				
-	MsgEnd =	function( self )
+		net.Start( "properties" )
+		net.WriteUInt( util.NetworkStringToID( self.InternalName ), 32 )
 	
-					net.SendToServer()
-					
-				end
+	end,
+	
+	MsgEnd = function( self )
+	
+		net.SendToServer()
+	
+	end
 }
 
-meta.__index = meta;
+meta.__index = meta
 
 List = {}
 -- .MenuLabel				[string]	Label to show on opened menu
@@ -49,7 +49,7 @@ local function AddToggleOption( data, menu, ent, ply, tr )
 	local option = menu:AddOption( data.MenuLabel, function() data:Action( ent, tr ) end )
 	option:SetChecked( data:Checked( ent, ply ) )
 	option:SetZPos( 501 )
-	return option;
+	return option
 
 end
 
@@ -71,7 +71,7 @@ local function AddOption( data, menu, ent, ply, tr )
 		data.MenuOpen( data, option, ent, tr )
 	end
 
-	return option;
+	return option
 
 end
 
@@ -96,14 +96,15 @@ end
 
 function GetHovered( eyepos, eyevec )
 
-	local trace 	= util.TraceLine(	
-										{
-											start = eyepos,
-											endpos = eyepos + eyevec * 1024,
-											filter = LocalPlayer()
-										}
-									)
-	 
+	local filter = { LocalPlayer():GetViewEntity() }
+	if ( LocalPlayer():GetViewEntity() == LocalPlayer() && IsValid( LocalPlayer():GetVehicle() ) ) then table.insert( filter, LocalPlayer():GetVehicle() ) end
+
+	local trace = util.TraceLine( {
+		start = eyepos,
+		endpos = eyepos + eyevec * 1024,
+		filter = filter
+	} )
+	
 	if ( !trace.Hit ) then return end
 	if ( !IsValid( trace.Entity ) ) then return end
 	
@@ -127,19 +128,19 @@ if ( SERVER ) then
 	util.AddNetworkString( "properties" )
 
 	net.Receive( "properties", function( len, client )
-		
-			local i = net.ReadUInt( 32 )
-			local name = util.NetworkIDToString( i )
+	
+		local i = net.ReadUInt( 32 )
+		local name = util.NetworkIDToString( i )
 
-			if ( !name ) then return end
-			if ( !IsValid( client ) ) then return end
-			
-			local prop = List[ name ]
-			if ( !prop ) then return end
-			if ( !prop.Receive ) then return end
-			
-			prop:Receive( len, client );
-				
+		if ( !name ) then return end
+		if ( !IsValid( client ) ) then return end
+		
+		local prop = List[ name ]
+		if ( !prop ) then return end
+		if ( !prop.Receive ) then return end
+		
+		prop:Receive( len, client )
+		
 	end )
 
 end
@@ -148,7 +149,7 @@ if ( CLIENT ) then
 
 	function HaloThink()
 
-		local ent = properties.GetHovered( LocalPlayer():EyePos(), LocalPlayer():GetAimVector() )
+		local ent = properties.GetHovered( EyePos(), LocalPlayer():GetAimVector() )
 		if ( !IsValid( ent ) ) then return end
 		
 		local c = Color( 255, 255, 255, 255 )
@@ -170,7 +171,7 @@ if ( CLIENT ) then
 			OnScreenClick( EyePos(), vector )
 		end
 
-	end );
+	end )
 
 	--
 	-- Hook the GUIMousePressed call, which is called when the client clicks on the
@@ -198,7 +199,6 @@ if ( CLIENT ) then
 
 		end
 
-	end );
-	
+	end )
 
 end
