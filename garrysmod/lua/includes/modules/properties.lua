@@ -97,7 +97,7 @@ end
 function GetHovered( eyepos, eyevec )
 
 	local filter = { LocalPlayer():GetViewEntity() }
-	if ( LocalPlayer():GetViewEntity() == LocalPlayer() && IsValid( LocalPlayer():GetVehicle() ) ) then table.insert( filter, LocalPlayer():GetVehicle() ) end
+	if ( LocalPlayer():GetViewEntity() == LocalPlayer() && IsValid( LocalPlayer():GetVehicle() ) && !LocalPlayer():GetVehicle():GetThirdPersonMode() ) then table.insert( filter, LocalPlayer():GetVehicle() ) end
 
 	local trace = util.TraceLine( {
 		start = eyepos,
