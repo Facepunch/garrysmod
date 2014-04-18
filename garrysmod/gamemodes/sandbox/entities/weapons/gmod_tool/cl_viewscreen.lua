@@ -48,7 +48,7 @@ end
 function SWEP:RenderScreen()
 	
 	local TEX_SIZE = 256
-	local mode 	= gmod_toolmode:GetString()
+	local mode = GetConVarString( "gmod_toolmode" )
 	local NewRT = RTTexture
 	local oldW = ScrW()
 	local oldH = ScrH()

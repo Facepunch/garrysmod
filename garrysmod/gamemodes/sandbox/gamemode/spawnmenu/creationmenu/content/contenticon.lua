@@ -251,7 +251,7 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 
 end )
 
-gmod_npcweapon = CreateConVar( "gmod_npcweapon", "", { FCVAR_ARCHIVE } )
+local gmod_npcweapon = CreateConVar( "gmod_npcweapon", "", { FCVAR_ARCHIVE } )
 
 spawnmenu.AddContentType( "npc", function( container, obj )
 
