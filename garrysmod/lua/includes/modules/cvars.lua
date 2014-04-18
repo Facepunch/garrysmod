@@ -1,10 +1,13 @@
+local Msg               = Msg
+local table             = table
+local pairs             = pairs
+local type              = type
+local assert            = assert
+local format            = string.format
+local GetConVarString   = GetConVarString
+local GetConVarNumber   = GetConVarNumber
+local ConVarExists      = ConVarExists
 
-local Msg 				= Msg
-local table 			= table
-local pairs 			= pairs
-local GetConVarString	= GetConVarString
-local GetConVarNumber	= GetConVarNumber
-local ConVarExists		= ConVarExists
 --[[---------------------------------------------------------
    Name: cvar
    Desc: Callbacks when cvars change
@@ -37,27 +40,69 @@ function OnConVarChanged( name, oldvalue, newvalue )
 
 	local Callbacks = GetConVarCallbacks( name )
 	if (!Callbacks) then return end
-	
+
 	for k, v in pairs( Callbacks ) do
-	
-		v( name, oldvalue, newvalue )
+
+		if type( v ) == "table" then
+			v[ 1 ]( name, oldvalue, newvalue )
+		else
+			v( name, oldvalue, newvalue )
+		end
 	
 	end
 
 end
 
-
 --[[---------------------------------------------------------
    Name: OnConvarChanged
    Desc: Called by the engine
 -----------------------------------------------------------]]
-function AddChangeCallback( name, func )
+function AddChangeCallback( name, func, sIdentifier )
+
+	if ( sIdentifier ) then
+		assert( type( sIdentifier ) == "string", format( "bad argument #%i (string expected, got %s)", 3, type( sIdentifier ) ) )
+	end
 
 	local tab = GetConVarCallbacks( name, true )
-	table.insert( tab, func )
+
+	if sIdentifier then
+		for i = 1, #tab do
+			local a = tab[ i ];
+			if type( a ) == "table" and a[ 2 ] == sIdentifier then
+				tab[ i ][ 1 ] = func
+				return
+			end
+		end
+
+		table.insert( tab, { func, sIdentifier } )
+	else
+		table.insert( tab, func )
+	end
 
 end
 
+--[[---------------------------------------------------------
+   Name: RemoveChangeCallback
+   Desc: Removes callback with identifier
+-----------------------------------------------------------]]
+function RemoveChangeCallback( name, sIdentifier )
+
+	if ( sIdentifier ) then
+		assert( type( sIdentifier ) == "string", format( "bad argument #%i (string expected, got %s)", 2, type( sIdentifier ) ) )
+	end
+
+	local tab = GetConVarCallbacks( name, true )
+
+	for i = 1, #tab do
+		local a = tab[ i ]
+
+		if type( a ) == "table" and a[ 2 ] == sIdentifier then
+			table.remove( tab, i )
+			break
+		end
+	end
+
+end
 
 --[[---------------------------------------------------------
    String
