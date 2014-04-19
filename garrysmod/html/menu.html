@@ -47,22 +47,22 @@
 
 	<div class="left" ng-show="ShowBack">
 
-		<a href="#/" class="button ui_sound_return"><img src='img/back_to_main_menu.png'/><span ng-Tranny="'back_to_main_menu'" ></span></a>
+		<a href="#/" class="button ui_sound_return"><img src='img/back_to_main_menu.png'><span ng-Tranny="'back_to_main_menu'" ></span></a>
 
 	</div>
 
 	<ul class="right">
-		<li style="" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'/><span>{{GamemodeTitle}}</span></li>
-		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleLanguage()"><img style="margin-top: 9px; margin-left: 7px;" ng-src='../resource/localization/{{Language}}.png' /><span></span></li>
-		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleGames()"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/games.png' /><span></span></li>		
-		<li ng-show="kinect.available" style="width: 40px; padding: 0; text-align: center;" ng-click="TogglePopup('.kinect_settings')"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/kinect.png' /><span></span></li>		
+		<li style="" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></li>
+		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleLanguage()"><img style="margin-top: 9px; margin-left: 7px;" ng-src='../resource/localization/{{Language}}.png'><span></span></li>
+		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleGames()"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/games.png'><span></span></li>		
+		<li ng-show="kinect.available" style="width: 40px; padding: 0; text-align: center;" ng-click="TogglePopup('.kinect_settings')"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/kinect.png'><span></span></li>		
 	</ul>
 
 	<ul class="center" ng-show="InGame">
 
-		<li ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png'/><span ng-Tranny="'back_to_game'"></span></a></li>
+		<li ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png'><span ng-Tranny="'back_to_game'"></span></a></li>
 		<!--
-		<li ng-click="Disconnect()"><a href="#/"><img src='img/disconnect.png'/><span ng-Tranny="'disconnect'"></span></a></li>
+		<li ng-click="Disconnect()"><a href="#/"><img src='img/disconnect.png'><span ng-Tranny="'disconnect'"></span></a></li>
 		-->
 
 	</ul>
@@ -71,14 +71,14 @@
 
 <ul class="gamemode_list popup">
 	<li ng-repeat="gm in Gamemodes|filter:{menusystem:true}|orderBy:'name'" ng-click="SelectGamemode( gm )">
-		<img ng-src='../gamemodes/{{gm.name}}/icon24.png'/><span>{{gm.title}}</span>
+		<img ng-src='../gamemodes/{{gm.name}}/icon24.png'><span>{{gm.title}}</span>
 	</li>
 
 </ul>
 
 <ul class="language_list popup">
 	<li  ng-repeat="lang in Languages" ng-click="SelectLanguage( lang )">
-		<img ng-src='../resource/localization/{{lang}}.png'/>
+		<img ng-src='../resource/localization/{{lang}}.png'>
 	</li>
 </ul>
 
@@ -87,8 +87,8 @@
 	<li ng-repeat="game in Games|orderBy:'title'" class="{{IfElse( !game.owned, 'notowned', '' )}} {{IfElse( !game.installed, 'notinstalled', '' )}}">
 
 		<input type=checkbox ng-model="game.mounted" ng-show="game.installed" ng-change="GameMountChanged( game )"/> 
-		<img src='img/notowned.png' ng-show="!game.owned" width=16 height=16/>
-		<img src='img/notinstalled.png' ng-show="game.owned && !game.installed" width=16 height=16/>
+		<img src='img/notowned.png' ng-show="!game.owned" width=16 height=16>
+		<img src='img/notinstalled.png' ng-show="game.owned && !game.installed" width=16 height=16>
 		
 		<span>{{game.title}}</span>
 
@@ -103,7 +103,7 @@
 
 			<p>
 				<label style="display: block">
-					<input type="checkbox" ng-model="kinect.show_color" ng-change="kinect.update()"/>  <span ng-Tranny="'motionsensor.showcolor'"></span>	
+					<input type="checkbox" ng-model="kinect.show_color" ng-change="kinect.update()">  <span ng-Tranny="'motionsensor.showcolor'"></span>	
 				</label>
 			</p>
 
@@ -114,7 +114,7 @@
 		
 				<p style="margin-left: 5px;">
 					<label ng-repeat="option in kinect.color_options" style="display: block">
-						<input type="radio" name="kinect.color" ng-model="kinect.color" value="{{option}}" ng-change="kinect.update()"/>                
+						<input type="radio" name="kinect.color" ng-model="kinect.color" value="{{option}}" ng-change="kinect.update()">                
 						<span ng-Tranny="'motionsensor.showcolor.'+ option"></span>
 					</label>
 				</p>
