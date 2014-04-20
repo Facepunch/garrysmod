@@ -65,6 +65,9 @@ SWEP.AllowDrop = true
 -- Set to true if weapon kills silently (no death scream)
 SWEP.IsSilent = false
 
+-- Does your SWEP fire under water?
+SWEP.FiresUnderwater = true
+
 -- If this weapon should be given to players upon spawning, set a table of the
 -- roles this should happen for here
 --  SWEP.InLoadoutFor = { ROLE_TRAITOR, ROLE_DETECTIVE, ROLE_INNOCENT }
@@ -231,6 +234,12 @@ function SWEP:PrimaryAttack(worldsnd)
    self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
+   -- no fire under water
+   if self.Owner:WaterLevel( ) == 3 and !self.FiresUnderwater then 
+      self:EmitSound( "Weapon_Pistol.Empty" )
+      return 
+   end
+   
    if not self:CanPrimaryAttack() then return end
 
    if not worldsnd then
