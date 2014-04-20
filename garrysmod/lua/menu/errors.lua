@@ -31,7 +31,7 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, addontitle, ad
 		--	steamworks.ApplyAddons()
 		--end )
 
-		text = "The addon \""..addontitle.."\" is creating errors, check the console for details"
+		text = "The addon \"" .. addontitle .. "\" is creating errors, check the console for details"
 
 	end
 
@@ -39,8 +39,8 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, addontitle, ad
 
 	if ( Errors[ addonid ] ) then
 
-		Errors[ addonid ].times		= Errors[ addonid ].times + 1
-		Errors[ addonid ].last		= SysTime()
+		Errors[ addonid ].times	= Errors[ addonid ].times + 1
+		Errors[ addonid ].last	= SysTime()
 
 		return
 	end
@@ -52,7 +52,7 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, addontitle, ad
 		times	= 1,
 		title	= addontitle,
 		x		= 32,
-		text	= text,
+		text	= text
 	}
 
 	Errors[ addonid ] = error
@@ -74,15 +74,15 @@ hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 
 		surface.SetFont( "DermaDefaultBold" )
 		if ( v.y == nil ) then v.y = idealy end
-		if ( v.w == nil ) then v.w = surface.GetTextSize( v.text ) v.w = v.w + 48 end
+		if ( v.w == nil ) then v.w = surface.GetTextSize( v.text ) + 48 end
 
 		
-		draw.RoundedBox( 2, v.x+2, v.y+2, v.w, height, Color( 40, 40, 40, 255 ) )
+		draw.RoundedBox( 2, v.x + 2, v.y + 2, v.w, height, Color( 40, 40, 40, 255 ) )
 		draw.RoundedBox( 2, v.x, v.y, v.w, height, Color( 240, 240, 240, 255 ) )
 
 		if ( v.last > Recent ) then
 
-			draw.RoundedBox( 2, v.x, v.y, v.w, height, Color( 255, 200, 0, (v.last - Recent) * 255 * 2 ) )
+			draw.RoundedBox( 2, v.x, v.y, v.w, height, Color( 255, 200, 0, ( v.last - Recent ) * 510 ) )
 
 		end
 
@@ -96,7 +96,7 @@ hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 
 		v.y = idealy
 
-		idealy = idealy + 32 + 8
+		idealy = idealy + 40
 
 		if ( v.last < EndTime ) then
 			Errors[k] = nil
