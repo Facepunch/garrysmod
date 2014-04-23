@@ -124,10 +124,6 @@ function PANEL:SetValue( val )
 
 	self.Scratch:SetValue( val )
 
-	if ( self.TextArea != vgui.GetKeyboardFocus() ) then
-		self.TextArea:SetValue( self.Scratch:GetTextValue() )
-	end
-
 	self:ValueChanged( self:GetValue() )
 
 end
