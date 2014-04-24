@@ -144,6 +144,12 @@ if ( SERVER ) then
 		-- The camera was deleted or something - return false to remove this entry
 		if ( !IsValid( ent ) ) then return false end
 		if ( !IsValid( pl ) ) then return false end
+		
+		-- Something else changed players view entity
+		if ( pl.UsingCamera && pl.UsingCamera == ent && pl:GetViewEntity() != ent ) then
+			pl.UsingCamera = nil
+			ent.UsingPlayer = nil
+		end
 
 		if ( pl.UsingCamera && pl.UsingCamera == ent ) then
 

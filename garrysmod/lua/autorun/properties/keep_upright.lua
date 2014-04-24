@@ -34,29 +34,14 @@ properties.Add( "keepupright",
 						if ( ent:GetClass() != "prop_physics" ) then return false end
 						if ( ent:GetNWBool( "IsUpright" ) ) then return end
 						if ( !self:Filter( ent, player ) ) then return end
-																	
+						
 						local Phys = ent:GetPhysicsObjectNum( 0 )
 						if ( !IsValid( Phys ) ) then return end
 						
 						local constraint = constraint.Keepupright( ent, Phys:GetAngles(), 0, 999999 )
 						
 						if ( constraint ) then
-						
-							undo.Create( "KeepUpright" )
-							
-								undo.AddEntity( constraint )
-								undo.SetPlayer( player )
-								
-								undo.AddFunction( function() 
-							
-									if ( IsValid( ent ) ) then
-										ent:SetNWBool( "IsUpright", false )
-									end
-								
-								end )
-								
-							undo.Finish()
-							
+
 							player:AddCleanup( "constraints", constraint )
 							ent:SetNWBool( "IsUpright", true )
 						
@@ -64,7 +49,7 @@ properties.Add( "keepupright",
 						
 					end	
 
-});
+})
 
 
 properties.Add( "keepupright_stop", 
@@ -103,4 +88,4 @@ properties.Add( "keepupright_stop",
 						
 					end	
 
-});
+})
