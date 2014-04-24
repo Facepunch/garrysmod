@@ -48,7 +48,7 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerFootstep( ply, vPos, iFoot, strSoundName, fVolume, pFilter )
 	
-	
+	if( ply:WaterLevel() >= 2 ) then return true end
 	--[[
 	-- Draw effect on footdown
 	local effectdata = EffectData()

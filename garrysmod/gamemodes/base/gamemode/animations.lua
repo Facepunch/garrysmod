@@ -103,7 +103,7 @@ end
 
 function GM:HandlePlayerSwimming( ply, velocity )
 
-	if ( ply:WaterLevel() < 2 or ply:IsOnGround() ) then 
+	if ( ply:WaterLevel() < 2 ) then 
 		ply.m_bInSwim = false
 		return false 
 	end
