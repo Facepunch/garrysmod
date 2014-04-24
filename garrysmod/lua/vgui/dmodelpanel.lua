@@ -84,6 +84,30 @@ function PANEL:SetModel( strModelName )
 end
 
 --[[---------------------------------------------------------
+   Name: DrawModel
+-----------------------------------------------------------]]
+function PANEL:DrawModel()
+	local curparent = self
+	local rightx = self:GetWide()
+	local leftx = 0
+	local topy = 0
+	local bottomy = self:GetTall()
+	local previous = curparent
+	while(curparent:GetParent() != nil) do
+		curparent = curparent:GetParent()
+		local x,y = previous:GetPos()
+		topy = math.Max(y, topy+y)
+		leftx = math.Max(x, leftx+x)
+		bottomy = math.Min(y+previous:GetTall(), bottomy + y)
+		rightx = math.Min(x+previous:GetWide(), rightx + x)
+		previous = curparent
+	end
+	render.SetScissorRect(leftx,topy,rightx, bottomy, true)
+	self.Entity:DrawModel()
+	render.SetScissorRect(0,0,0,0, false)
+end
+
+--[[---------------------------------------------------------
    Name: OnMousePressed
 -----------------------------------------------------------]]
 function PANEL:Paint()
@@ -115,8 +139,7 @@ function PANEL:Paint()
 			render.SetModelLighting( i, col.r/255, col.g/255, col.b/255 )
 		end
 	end
-		
-	self.Entity:DrawModel()
+	self:DrawModel()
 	
 	render.SuppressEngineLighting( false )
 	cam.IgnoreZ( false )
