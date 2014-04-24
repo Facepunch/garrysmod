@@ -560,8 +560,11 @@ end
    Name: gamemode:CanExitVehicle()
 			If the player is allowed to leave the vehicle, return true
 -----------------------------------------------------------]]
-function GM:CanExitVehicle( veichle, passenger )
+function GM:CanExitVehicle( vehicle, ply )
+	
+	ply:SetMoveType( MOVETYPE_WALK )
 	return true
+	
 end
 
 --[[---------------------------------------------------------
