@@ -4,8 +4,8 @@ AddCSLuaFile()
 
 if ( SERVER ) then
 
-sensor_debugragdoll		= CreateConVar( "sensor_debugragdoll", "0", FCVAR_NOTIFY )
-sensor_stretchragdoll	= CreateConVar( "sensor_stretchragdoll", "0", FCVAR_NOTIFY )
+	CreateConVar( "sensor_debugragdoll", "0", FCVAR_NOTIFY )
+	CreateConVar( "sensor_stretchragdoll", "0", FCVAR_NOTIFY )
 
 end
 

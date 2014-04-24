@@ -1,5 +1,5 @@
 
-spawnmenu_border = CreateConVar( "spawnmenu_border",	"0.1", { FCVAR_ARCHIVE } )
+local spawnmenu_border = CreateConVar( "spawnmenu_border", "0.1", { FCVAR_ARCHIVE } )
 
 include( 'toolmenu.lua' )
 include( 'contextmenu.lua' )
