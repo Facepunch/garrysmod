@@ -120,7 +120,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetImage( strImage, strBackup )
 
-	if ( strBackup && !file.Exists( "materials/"..strImage..".vmt", "GAME" ) ) then
+	if ( strBackup && !file.Exists( "materials/" .. strImage .. ".vmt", "GAME" ) && !file.Exists( "materials/" .. strImage, "GAME" ) ) then
 		strImage = strBackup
 	end
 
