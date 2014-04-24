@@ -242,6 +242,7 @@ local function RefreshMaps()
 			
 			g_MapList[ v ] = { Name = name, Category = Category }
 			
+			g_MapList[ v .. "  " ] = { Name = name, Category = "All" } -- Put map in "All" category too. (more hacks)
 		end
 
 	end
