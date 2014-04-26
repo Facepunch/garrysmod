@@ -68,7 +68,7 @@
 			"text"		"max_vehicles"
 			"help"		"Maximum vehicles a single player can create"
 			"type"		"Numeric"
-			"default"	"3"
+			"default"	"4"
 		}
 		
 		8
@@ -104,7 +104,7 @@
 			"text"		"max_entities"
 			"help"		"Maximum entities a single player can create"
 			"type"		"Numeric"
-			"default"	"300"
+			"default"	"100"
 		}
 
 		12

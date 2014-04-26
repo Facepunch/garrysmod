@@ -191,14 +191,14 @@ local T =
 	--
 	Started = function( self )
 
-		self.endtime = CurTime() + time
+		return self.endtime != nil
 
 	end,
 
 	--
 	-- Returns true if the time has elapsed
 	--
-	Elapsed = function( self, time )
+	Elapsed = function( self )
 
 		return self.endtime == nil || self.endtime <= CurTime()
 

@@ -1,6 +1,6 @@
 
 local gmod_drawhelp = CreateClientConVar( "gmod_drawhelp", "1", true, false )
-gmod_toolmode = CreateClientConVar( "gmod_toolmode", "rope", true, true )
+local gmod_toolmode = CreateClientConVar( "gmod_toolmode", "rope", true, true )
 
 include('shared.lua')
 include('cl_viewscreen.lua')

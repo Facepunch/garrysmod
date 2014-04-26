@@ -170,16 +170,16 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 	local movement = 1.0
 	
 	if ( len > 0.2 ) then
-			movement =  ( len / maxseqgroundspeed )
+		movement =  ( len / maxseqgroundspeed )
 	end
 	
-	rate = math.min( movement, 2 )
+	local rate = math.min( movement, 2 )
 
 	-- if we're under water we want to constantly be swimming..
 	if ( ply:WaterLevel() >= 2 ) then
 		rate = math.max( rate, 0.5 )
 	elseif ( !ply:IsOnGround() && len >= 1000 ) then 
-		rate = 0.1;
+		rate = 0.1
 	end
 	
 	ply:SetPlaybackRate( rate )

@@ -47,15 +47,15 @@
 
 	<div class="left" ng-show="ShowBack">
 
-		<a href="#/" class="button ui_sound_return"><img src='img/back_to_main_menu.png'><span ng-Tranny="'back_to_main_menu'"></span></a>
+		<a href="#/" class="button ui_sound_return"><img src='img/back_to_main_menu.png'><span ng-Tranny="'back_to_main_menu'" ></span></a>
 
 	</div>
 
 	<ul class="right">
 		<li style="" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></li>
-		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleLanguage()"><img style="margin-top: 9px; margin-left: 7px;" ng-src='../resource/localization/{{Language}}.png' /><span></span></li>
-		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleGames()"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/games.png' /><span></span></li>		
-		<li ng-show="kinect.available" style="width: 40px; padding: 0; text-align: center;" ng-click="TogglePopup('.kinect_settings')"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/kinect.png' /><span></span></li>		
+		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleLanguage()"><img style="margin-top: 9px; margin-left: 7px;" ng-src='../resource/localization/{{Language}}.png'><span></span></li>
+		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleGames()"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/games.png'><span></span></li>		
+		<li ng-show="kinect.available" style="width: 40px; padding: 0; text-align: center;" ng-click="TogglePopup('.kinect_settings')"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/kinect.png'><span></span></li>		
 	</ul>
 
 	<ul class="center" ng-show="InGame">
@@ -115,10 +115,10 @@
 				<p style="margin-left: 5px;">
 					<label ng-repeat="option in kinect.color_options" style="display: block">
 						<input type="radio" name="kinect.color" ng-model="kinect.color" value="{{option}}" ng-change="kinect.update()">                
-							<span ng-Tranny="'motionsensor.showcolor.'+ option"></span>
+						<span ng-Tranny="'motionsensor.showcolor.'+ option"></span>
 					</label>
 				</p>
-			<div>
+			</div>
 
 			<div  ng-show="kinect.show_color">
 				<span ng-Tranny="'motionsensor.colorsize'"></span>	
@@ -126,20 +126,16 @@
 				<p style="margin-left: 5px;">
 					<label ng-repeat="option in kinect.size_options" style="display: block">
 						<input type="radio" name="kinect.color_size" ng-model="kinect.color_size" value="{{option}}" ng-change="kinect.update()">                
-							<span ng-Tranny="'motionsensor.colorsize.'+ option"></span>
+						<span ng-Tranny="'motionsensor.colorsize.'+ option"></span>
 					</label>
 				</p>
-			<div>
+			</div>
 
-		<div>
-
-
+		</div>
 
 	</li>
-	
 
 </ul>
 
 </body>
 </html>
-

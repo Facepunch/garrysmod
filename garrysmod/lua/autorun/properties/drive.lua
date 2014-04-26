@@ -10,8 +10,7 @@ properties.Add( "drive",
 	Filter		=	function( self, ent, ply ) 
 				
 						if ( !IsValid( ent ) || !IsValid( ply ) ) then return false end
-						if ( ent:IsPlayer() ) then return false end
-						if ( !IsValid( ent ) ) then return false end
+						if ( ent:IsPlayer() || IsValid( ply:GetVehicle() ) ) then return false end
 						if ( !gamemode.Call( "CanProperty", ply, "drive", ent ) ) then return false end
 						if ( !gamemode.Call( "CanDrive", ply, ent ) ) then return false end
 						
@@ -45,4 +44,4 @@ properties.Add( "drive",
 						
 					end	
 
-});
+})

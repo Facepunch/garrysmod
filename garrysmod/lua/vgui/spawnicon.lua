@@ -1,3 +1,4 @@
+
 local matHover = Material( "vgui/spawnmenu/hover" )
 
 local PANEL = {}
@@ -20,9 +21,9 @@ function PANEL:Init()
 	self.Icon:SetMouseInputEnabled( false )
 	self.Icon:SetKeyboardInputEnabled( false )
 	
-	self:SetSize( 64, 64 )	
+	self:SetSize( 64, 64 )
 	
-	self.m_strBodyGroups = "000000000";
+	self.m_strBodyGroups = "000000000"
 
 end
 
@@ -38,8 +39,6 @@ end
 
 function PANEL:DoClick()
 end
-
-
 
 function PANEL:OpenMenu()
 end
@@ -101,7 +100,7 @@ function PANEL:SetModel( mdl, iSkin, BodyGorups )
 		BodyGorups = "000000000"
 	end
 	
-	self.m_strBodyGroups = BodyGorups;
+	self.m_strBodyGroups = BodyGorups
 
 	self.Icon:SetModel( mdl, iSkin, BodyGorups )
 	
@@ -130,14 +129,14 @@ function PANEL:ToTable( bigtable )
 	local tab = {}
 	
 	tab.type	= "model"
-	tab.model	= self:GetModelName();
+	tab.model	= self:GetModelName()
 	
 	if ( self:GetSkinID() != 0 ) then
-		tab.skin	= self:GetSkinID();
+		tab.skin	= self:GetSkinID()
 	end
 	
 	if ( self:GetBodyGroup() != "000000000" ) then
-		tab.body	= "B" .. self:GetBodyGroup();
+		tab.body	= "B" .. self:GetBodyGroup()
 	end
 	
 	if ( self:GetWide() != 64 ) then
@@ -160,7 +159,7 @@ function PANEL:Copy()
 	copy.DoClick = self.DoClick
 	copy.OpenMenu = self.OpenMenu
 	
-	return copy;
+	return copy
 
 end
 
@@ -212,69 +211,69 @@ spawnmenu.AddContentType( "model", function( container, obj )
 	icon:SetTooltip( string.Replace( string.GetFileFromFilename(obj.model), ".mdl", "" ) )
 
 	icon.DoClick = function( icon ) surface.PlaySound( "ui/buttonclickrelease.wav") RunConsoleCommand( "gm_spawn", icon:GetModelName(), icon:GetSkinID() or 0, icon:GetBodyGroup() or "" ) end
-	icon.OpenMenu = function( icon ) 
+	icon.OpenMenu = function( icon )
 
-						local menu = DermaMenu()
-							menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.model ) end )
-							menu:AddOption( "Spawn using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ); RunConsoleCommand( "creator_type", "4" ); RunConsoleCommand( "creator_name", obj.model ) end )
+		local menu = DermaMenu()
+		menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.model ) end )
+		menu:AddOption( "Spawn using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "4" ) RunConsoleCommand( "creator_name", obj.model ) end )
 
-							local submenu = menu:AddSubMenu( "Re-Render", function() icon:RebuildSpawnIcon() end )
-								submenu:AddOption( "This Icon", function() icon:RebuildSpawnIcon() end )
-								submenu:AddOption( "All Icons", function() container:RebuildAll() end )
-							menu:AddOption( "Edit Icon", function() 
-						
-								local editor = vgui.Create( "IconEditor" )
-									editor:SetIcon( icon )
-									editor:Refresh()
-									editor:MakePopup()
-									editor:Center()
+		local submenu = menu:AddSubMenu( "Re-Render", function() icon:RebuildSpawnIcon() end )
+			submenu:AddOption( "This Icon", function() icon:RebuildSpawnIcon() end )
+			submenu:AddOption( "All Icons", function() container:RebuildAll() end )
 
-							end )
-							
-							local ChangeIconSize = function( w, h )
-							
-								icon:SetSize( w, h ); 
-								icon:InvalidateLayout( true ); 
-								container:OnModified(); 
-								container:Layout(); 
-								icon:SetModel( obj.model, obj.skin or 0, obj.body )
-							
-							end
-								
-							local submenu = menu:AddSubMenu( "Resize", function() icon:RebuildSpawnIcon() end )
-							
-								submenu:AddOption( "64 x 64 (default)", function() ChangeIconSize( 64, 64 ) end )
-								submenu:AddOption( "64 x 128", function() ChangeIconSize( 64, 128 ) end )
-								submenu:AddOption( "64 x 256", function() ChangeIconSize( 64, 256 ) end )
-								submenu:AddOption( "64 x 512", function() ChangeIconSize( 64, 512 ) end )
-								submenu:AddSpacer()
-								submenu:AddOption( "128 x 64", function() ChangeIconSize( 128, 64 ) end )
-								submenu:AddOption( "128 x 128", function() ChangeIconSize( 128, 128 ) end )
-								submenu:AddOption( "128 x 256", function() ChangeIconSize( 128, 256 ) end )
-								submenu:AddOption( "128 x 512", function() ChangeIconSize( 128, 512 ) end )
-								submenu:AddSpacer()
-								submenu:AddOption( "256 x 64", function() ChangeIconSize( 256, 64 ) end )
-								submenu:AddOption( "256 x 128", function() ChangeIconSize( 256, 128 ) end )
-								submenu:AddOption( "256 x 256", function() ChangeIconSize( 256, 256 ) end )
-								submenu:AddOption( "256 x 512", function() ChangeIconSize( 256, 512 ) end )
-								submenu:AddSpacer()
-								submenu:AddOption( "512 x 64", function() ChangeIconSize( 512, 64 ) end )
-								submenu:AddOption( "512 x 128", function() ChangeIconSize( 512, 128 ) end )
-								submenu:AddOption( "512 x 256", function() ChangeIconSize( 512, 256 ) end )
-								submenu:AddOption( "512 x 512", function() ChangeIconSize( 512, 512 ) end )
-								
-							menu:AddSpacer()
-							menu:AddOption( "Delete", function() icon:Remove(); hook.Run( "SpawnlistContentChanged" ) end )
-						menu:Open()
-						
-					end
-					
+		menu:AddOption( "Edit Icon", function()
+			
+			local editor = vgui.Create( "IconEditor" )
+			editor:SetIcon( icon )
+			editor:Refresh()
+			editor:MakePopup()
+			editor:Center()
+		
+		end )
+	
+		local ChangeIconSize = function( w, h )
+			
+			icon:SetSize( w, h )
+			icon:InvalidateLayout( true )
+			container:OnModified()
+			container:Layout()
+			icon:SetModel( obj.model, obj.skin or 0, obj.body )
+		
+		end
+
+		local submenu = menu:AddSubMenu( "Resize", function() end )
+			submenu:AddOption( "64 x 64 (default)", function() ChangeIconSize( 64, 64 ) end )
+			submenu:AddOption( "64 x 128", function() ChangeIconSize( 64, 128 ) end )
+			submenu:AddOption( "64 x 256", function() ChangeIconSize( 64, 256 ) end )
+			submenu:AddOption( "64 x 512", function() ChangeIconSize( 64, 512 ) end )
+			submenu:AddSpacer()
+			submenu:AddOption( "128 x 64", function() ChangeIconSize( 128, 64 ) end )
+			submenu:AddOption( "128 x 128", function() ChangeIconSize( 128, 128 ) end )
+			submenu:AddOption( "128 x 256", function() ChangeIconSize( 128, 256 ) end )
+			submenu:AddOption( "128 x 512", function() ChangeIconSize( 128, 512 ) end )
+			submenu:AddSpacer()
+			submenu:AddOption( "256 x 64", function() ChangeIconSize( 256, 64 ) end )
+			submenu:AddOption( "256 x 128", function() ChangeIconSize( 256, 128 ) end )
+			submenu:AddOption( "256 x 256", function() ChangeIconSize( 256, 256 ) end )
+			submenu:AddOption( "256 x 512", function() ChangeIconSize( 256, 512 ) end )
+			submenu:AddSpacer()
+			submenu:AddOption( "512 x 64", function() ChangeIconSize( 512, 64 ) end )
+			submenu:AddOption( "512 x 128", function() ChangeIconSize( 512, 128 ) end )
+			submenu:AddOption( "512 x 256", function() ChangeIconSize( 512, 256 ) end )
+			submenu:AddOption( "512 x 512", function() ChangeIconSize( 512, 512 ) end )
+
+		menu:AddSpacer()
+		menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged" ) end )
+		menu:Open()
+		
+	end
+
 	icon:InvalidateLayout( true )
 	
 	if ( IsValid( container ) ) then
 		container:Add( icon )
 	end
-		
+	
 /*
 	if ( iSkin != 0 ) then return end
 	
