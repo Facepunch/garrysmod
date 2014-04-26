@@ -42,18 +42,6 @@ function PANEL:Init()
 	self.btnClose.DoClick = function ( button ) self:Close() end
 	self.btnClose.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "WindowCloseButton", panel, w, h ) end
 	
-	self.btnMaxim = vgui.Create( "DButton", self )
-	self.btnMaxim:SetText( "" )
-	self.btnMaxim.DoClick = function ( button ) self:Close() end
-	self.btnMaxim.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "WindowMaximizeButton", panel, w, h ) end
-	self.btnMaxim:SetDisabled( true )
-
-	self.btnMinim = vgui.Create( "DButton", self )
-	self.btnMinim:SetText( "" )
-	self.btnMinim.DoClick = function ( button ) self:Close() end
-	self.btnMinim.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "WindowMinimizeButton", panel, w, h ) end
-	self.btnMinim:SetDisabled( true )
-
 	self.lblTitle = vgui.Create( "DLabel", self )
 	self.lblTitle.UpdateColours = function( label, skin )
 	
@@ -61,7 +49,7 @@ function PANEL:Init()
 		
 		return label:SetTextStyleColor( skin.Colours.Window.TitleInactive )
 			
-		end
+	end
 	
 	self:SetDraggable( true )
 	self:SetSizable( false )
@@ -88,8 +76,6 @@ end
 function PANEL:ShowCloseButton( bShow )
 
 	self.btnClose:SetVisible( bShow );
-	self.btnMaxim:SetVisible( bShow );
-	self.btnMinim:SetVisible( bShow );
 
 end
 
@@ -264,12 +250,6 @@ function PANEL:PerformLayout()
 
 	self.btnClose:SetPos( self:GetWide() - 31 - 4, 0 )
 	self.btnClose:SetSize( 31, 31 )
-
-	self.btnMaxim:SetPos( self:GetWide() - 31*2 - 4, 0 )
-	self.btnMaxim:SetSize( 31, 31 )
-
-	self.btnMinim:SetPos( self:GetWide() - 31*3 - 4, 0 )
-	self.btnMinim:SetSize( 31, 31 )
 	
 	self.lblTitle:SetPos( 8, 2 )
 	self.lblTitle:SetSize( self:GetWide() - 25, 20 )
