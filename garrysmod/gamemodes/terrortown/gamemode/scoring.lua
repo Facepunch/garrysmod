@@ -5,9 +5,8 @@ local string = string
 local table = table
 local pairs = pairs
 
-SCORE = {}
-SCORE.Events = {}
---SCORE.Scores = {}
+SCORE = SCORE or {}
+SCORE.Events = SCORE.Events or {}
 
 -- One might wonder why all the key names in the event tables are so annoyingly
 -- short. Well, the serialisation module in gmod (glon) does not do any
