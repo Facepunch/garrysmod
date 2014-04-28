@@ -52,12 +52,12 @@ function GM:Initialize()
    LANG.Init()
 
    self.BaseClass:Initialize()
+
+   RunConsoleCommand("ttt_spectate", GetConVar("ttt_spectator_mode"):GetInt())
 end
 
 function GM:InitPostEntity()
    MsgN("TTT Client post-init...")
-
-   RunConsoleCommand("ttt_spectate", GetConVar("ttt_spectator_mode"):GetInt())
 
    if not game.SinglePlayer() then
       timer.Create("idlecheck", 5, 0, CheckIdle)
