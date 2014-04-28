@@ -123,6 +123,10 @@ function SWEP:Reset(keep_velocity)
       if (not keep_velocity) and (no_throw:GetBool() or self.EntHolding:GetClass() == "prop_ragdoll") then
          KillVelocity(self.EntHolding)
       end
+
+      if self.EntHolding:IsWeapon() then
+         hook.Remove("WeaponEquip", "TTT_WeaponOwnerFix"..self:EntIndex())
+      end
    end
 
    self.dt.carried_rag = nil
@@ -399,7 +403,19 @@ function SWEP:Pickup()
 
          self.Constr = constraint.Weld(self.CarryHack, self.EntHolding, 0, bone, max_force, true)
 
-
+         if ent:IsWeapon() then
+            -- If the player picks up a weapon while it's being held with a magento stick, the owner won't be set properly.
+            hook.Add("WeaponEquip", "TTT_WeaponOwnerFix"..self:EntIndex(), function(wep)
+               if not IsValid(self) then return end
+               if not IsValid(self.EntHolding) then
+                  hook.Remove("WeaponEquip", "TTT_WeaponOwnerFix"..self:EntIndex())
+                  return
+               end
+               if self.EntHolding == wep then
+                  self:Drop()
+               end
+            end)
+         end
       end
    end
 end
