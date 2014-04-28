@@ -685,7 +685,7 @@ function BeginRound()
    -- Sound start alarm
    SetRoundState(ROUND_ACTIVE)
    LANG.Msg("round_started")
-   ServerLog("Round proper has begun...\n")
+   ServerLog("Round started.\n")
 
    GAMEMODE:UpdatePlayerLoadouts() -- needs to happen when round_active
 
