@@ -32,8 +32,6 @@ function GM:PlayerInitialSpawn( ply )
    -- Game has started, tell this guy where the round is at
    if rstate != ROUND_WAIT then
       SendRoundState(rstate, ply)
-      SendConfirmedTraitors(ply)
-      SendDetectiveList(ply)
    end
 
    -- Handle spec bots
