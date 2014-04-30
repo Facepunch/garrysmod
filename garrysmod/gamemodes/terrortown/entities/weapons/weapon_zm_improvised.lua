@@ -220,6 +220,10 @@ function SWEP:SecondaryAttack()
    self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
    self.Weapon:SetNextSecondaryFire( CurTime() + 0.1 )
 
+   if self.Owner.LagCompensation then
+      self.Owner:LagCompensation(true)
+   end
+
    local tr = self.Owner:GetEyeTrace(MASK_SHOT)
 
    if tr.Hit and IsValid(tr.Entity) and tr.Entity:IsPlayer() and (self.Owner:EyePos() - tr.HitPos):Length() < 100 then
@@ -241,6 +245,10 @@ function SWEP:SecondaryAttack()
       self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
 
       self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   end
+   
+   if self.Owner.LagCompensation then
+      self.Owner:LagCompensation(false)
    end
 end
 
