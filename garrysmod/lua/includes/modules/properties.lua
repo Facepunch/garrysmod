@@ -149,6 +149,8 @@ if ( CLIENT ) then
 
 	function HaloThink()
 
+		if ( vgui.GetHoveredPanel() != vgui.GetWorldPanel() && vgui.GetHoveredPanel() != g_ContextMenu ) then return end
+	
 		local ent = properties.GetHovered( EyePos(), LocalPlayer():GetAimVector() )
 		if ( !IsValid( ent ) ) then return end
 		
