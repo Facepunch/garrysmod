@@ -288,6 +288,11 @@ end
 function GM:PlayerSetHandsModel( pl, ent )
 
 	local info = player_manager.RunClass( pl, "GetHandsModel" )
+	if ( !info ) then
+		local playermodel = player_manager.TranslateToPlayerModelName( pl:GetModel() )
+		info = player_manager.TranslatePlayerHands( playermodel )
+	end
+
 	if ( info ) then
 		ent:SetModel( info.model )
 		ent:SetSkin( info.skin )
