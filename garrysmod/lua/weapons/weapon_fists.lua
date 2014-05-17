@@ -32,7 +32,7 @@ local HitSound = Sound( "Flesh.ImpactHard" )
 
 function SWEP:Initialize()
 
-	self:SetWeaponHoldType( "fist" )
+	self:SetHoldType( "fist" )
 
 end
 

@@ -39,17 +39,19 @@ game.AddParticles( "particles/hunter_projectile.pcf" )
 local ShootSound = Sound( "NPC_Hunter.FlechetteShoot" )
 
 /*---------------------------------------------------------
+	Initialize
+---------------------------------------------------------*/
+function SWEP:Initialize()
+
+	self:SetHoldType( "smg" )
+
+end
+
+/*---------------------------------------------------------
 	Reload does nothing
 ---------------------------------------------------------*/
 function SWEP:Reload()
 end
-
-/*---------------------------------------------------------
-   Think does nothing
----------------------------------------------------------*/
-function SWEP:Think()
-end
-
 
 /*---------------------------------------------------------
 	PrimaryAttack
@@ -88,7 +90,6 @@ function SWEP:SecondaryAttack()
 	-- Right click does nothing..
 	
 end
-
 
 /*---------------------------------------------------------
    Name: ShouldDropOnDie
