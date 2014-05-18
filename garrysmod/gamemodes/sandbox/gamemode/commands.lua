@@ -756,12 +756,14 @@ end
 concommand.Add( "gm_spawnswep", function( ply, cmd, args ) Spawn_Weapon( ply, args[1] ) end )
 
 
-local function MakeVehicle( Player, Pos, Ang, Model, Class, VName, VTable )
+local function MakeVehicle( Player, Pos, Ang, Model, Class, VName, VTable, data )
 
 	if (!gamemode.Call( "PlayerSpawnVehicle", Player, Model, VName, VTable )) then return end
 	
 	local Ent = ents.Create( Class )
 	if (!Ent) then return NULL end
+	
+	duplicator.DoGeneric( Ent, data )
 	
 	Ent:SetModel( Model )
 	
@@ -795,10 +797,10 @@ local function MakeVehicle( Player, Pos, Ang, Model, Class, VName, VTable )
 	
 end
 
-duplicator.RegisterEntityClass( "prop_vehicle_jeep_old",   		MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "VehicleTable" )
-duplicator.RegisterEntityClass( "prop_vehicle_jeep",    		MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "VehicleTable" )
-duplicator.RegisterEntityClass( "prop_vehicle_airboat", 		MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "VehicleTable" )
-duplicator.RegisterEntityClass( "prop_vehicle_prisoner_pod", 	MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "VehicleTable" )
+duplicator.RegisterEntityClass( "prop_vehicle_jeep_old",   		MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "VehicleTable", "Data" )
+duplicator.RegisterEntityClass( "prop_vehicle_jeep",    		MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "VehicleTable", "Data" )
+duplicator.RegisterEntityClass( "prop_vehicle_airboat", 		MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "VehicleTable", "Data" )
+duplicator.RegisterEntityClass( "prop_vehicle_prisoner_pod", 	MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "VehicleTable", "Data" )
 
 
 --[[---------------------------------------------------------
