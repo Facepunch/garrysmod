@@ -77,7 +77,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:Initialize()
 
-	self:SetWeaponHoldType( "camera" )
+	self:SetHoldType( "camera" )
 
 end
 

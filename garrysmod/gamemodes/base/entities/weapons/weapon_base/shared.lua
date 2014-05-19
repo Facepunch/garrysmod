@@ -35,7 +35,7 @@ SWEP.Secondary.Ammo			= "Pistol"
 -----------------------------------------------------------]]
 function SWEP:Initialize()
 
-	self:SetWeaponHoldType( "pistol" )
+	self:SetHoldType( "pistol" )
 
 end
 
