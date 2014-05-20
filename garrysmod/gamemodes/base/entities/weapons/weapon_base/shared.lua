@@ -14,8 +14,8 @@ SWEP.ViewModelFlip	= false
 SWEP.ViewModel		= "models/weapons/v_pistol.mdl"
 SWEP.WorldModel		= "models/weapons/w_357.mdl"
 
-SWEP.Spawnable			= false
-SWEP.AdminOnly			= false
+SWEP.Spawnable		= false
+SWEP.AdminOnly		= false
 
 SWEP.Primary.ClipSize		= 8					-- Size of a clip
 SWEP.Primary.DefaultClip	= 32				-- Default number of bullets in a clip
@@ -26,7 +26,6 @@ SWEP.Secondary.ClipSize		= 8					-- Size of a clip
 SWEP.Secondary.DefaultClip	= 32				-- Default number of bullets in a clip
 SWEP.Secondary.Automatic	= false				-- Automatic/Semi Auto
 SWEP.Secondary.Ammo			= "Pistol"
-
 
 
 --[[---------------------------------------------------------
@@ -55,10 +54,10 @@ end
 function SWEP:PrimaryAttack()
 
 	-- Make sure we can shoot first
-	if ( !self:CanPrimaryAttack() ) then return end
+	if ( not self:CanPrimaryAttack() ) then return end
 
 	-- Play shoot sound
-	self.Weapon:EmitSound("Weapon_AR2.Single")
+	self.Weapon:EmitSound( "Weapon_AR2.Single" )
 	
 	-- Shoot 9 bullets, 150 damage, 0.75 aimcone
 	self:ShootBullet( 150, 1, 0.01 )
@@ -79,10 +78,10 @@ end
 function SWEP:SecondaryAttack()
 
 	-- Make sure we can shoot first
-	if ( !self:CanSecondaryAttack() ) then return end
+	if ( not self:CanSecondaryAttack() ) then return end
 
 	-- Play shoot sound
-	self.Weapon:EmitSound("Weapon_Shotgun.Single")
+	self.Weapon:EmitSound( "Weapon_Shotgun.Single" )
 	
 	-- Shoot 9 bullets, 150 damage, 0.75 aimcone
 	self:ShootBullet( 150, 9, 0.2 )
@@ -101,7 +100,9 @@ end
    Desc: Reload is being pressed
 -----------------------------------------------------------]]
 function SWEP:Reload()
-	self.Weapon:DefaultReload( ACT_VM_RELOAD );
+
+	self.Weapon:DefaultReload( ACT_VM_RELOAD )
+	
 end
 
 
@@ -119,15 +120,20 @@ end
    RetV: Return true to allow the weapon to holster
 -----------------------------------------------------------]]
 function SWEP:Holster( wep )
+
 	return true
+	
 end
+
 
 --[[---------------------------------------------------------
    Name: SWEP:Deploy( )
    Desc: Whip it out
 -----------------------------------------------------------]]
 function SWEP:Deploy()
+
 	return true
+	
 end
 
 
@@ -168,7 +174,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: SWEP:TakePrimaryAmmo(   )
+   Name: SWEP:TakePrimaryAmmo( )
    Desc: A convenience function to remove ammo
 -----------------------------------------------------------]]
 function SWEP:TakePrimaryAmmo( num )
@@ -247,7 +253,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: OnRemove
+   Name: SWEP:OnRemove( )
    Desc: Called just before entity is deleted
 -----------------------------------------------------------]]
 function SWEP:OnRemove()
@@ -255,7 +261,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: OwnerChanged
+   Name: SWEP:OwnerChanged( )
    Desc: When weapon is dropped or picked up by a new player
 -----------------------------------------------------------]]
 function SWEP:OwnerChanged()
@@ -263,38 +269,46 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: Ammo1
+   Name: SWEP:Ammo1( )
    Desc: Returns how much of ammo1 the player has
 -----------------------------------------------------------]]
 function SWEP:Ammo1()
+
 	return self.Owner:GetAmmoCount( self.Weapon:GetPrimaryAmmoType() )
+	
 end
 
 
 --[[---------------------------------------------------------
-   Name: Ammo2
+   Name: SWEP:Ammo2( )
    Desc: Returns how much of ammo2 the player has
 -----------------------------------------------------------]]
 function SWEP:Ammo2()
+
 	return self.Owner:GetAmmoCount( self.Weapon:GetSecondaryAmmoType() )
+	
 end
 
+
 --[[---------------------------------------------------------
-   Name: SetDeploySpeed
+   Name: SWEP:SetDeploySpeed( )
    Desc: Sets the weapon deploy speed. 
 		 This value needs to match on client and server.
 -----------------------------------------------------------]]
 function SWEP:SetDeploySpeed( speed )
+
 	self.m_WeaponDeploySpeed = tonumber( speed )
+	
 end
 
+
 --[[---------------------------------------------------------
-   Name: DoImpactEffect
+   Name: SWEP:DoImpactEffect( )
    Desc: Callback so the weapon can override the impact effects it makes
 		 return true to not do the default thing - which is to call UTIL_ImpactTrace in c++
 -----------------------------------------------------------]]
 function SWEP:DoImpactEffect( tr, nDamageType )
-		
-	return false;
+
+	return false
 	
 end

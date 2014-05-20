@@ -1,6 +1,5 @@
 
-include('shared.lua')
-
+include( "shared.lua" )
 
 SWEP.PrintName			= "Scripted Weapon"		-- 'Nice' Weapon name (Shown on HUD)	
 SWEP.Slot				= 0						-- Slot in the weapon selection menu
@@ -20,17 +19,20 @@ SWEP.WepSelectIcon		= surface.GetTextureID( "weapons/swep" )
 -- This is the corner of the speech bubble
 SWEP.SpeechBubbleLid	= surface.GetTextureID( "gui/speech_lid" )
 
+
 --[[---------------------------------------------------------
-	You can draw to the HUD here - it will only draw when
-	the client has the weapon deployed..
+   Name: SWEP:DrawHUD( )
+   Desc: You can draw to the HUD here - it will only draw when
+		 the client has the weapon deployed..
 -----------------------------------------------------------]]
 function SWEP:DrawHUD()
 end
 
 
 --[[---------------------------------------------------------
-	Checks the objects before any action is taken
-	This is to make sure that the entities haven't been removed
+   Name: SWEP:DrawWeaponSelection( )
+   Desc: Checks the objects before any action is taken
+		 This is to make sure that the entities haven't been removed
 -----------------------------------------------------------]]
 function SWEP:DrawWeaponSelection( x, y, wide, tall, alpha )
 	
@@ -60,22 +62,23 @@ end
 
 
 --[[---------------------------------------------------------
-	This draws the weapon info box
+   Name: SWEP:PrintWeaponInfo( )
+   Desc: This draws the weapon info box
 -----------------------------------------------------------]]
 function SWEP:PrintWeaponInfo( x, y, alpha )
 
 	if ( self.DrawWeaponInfoBox == false ) then return end
 
-	if (self.InfoMarkup == nil ) then
+	if ( self.InfoMarkup == nil ) then
 		local str
 		local title_color = "<color=230,230,230,255>"
 		local text_color = "<color=150,150,150,255>"
 		
 		str = "<font=HudSelectionText>"
-		if ( self.Author != "" ) then str = str .. title_color .. "Author:</color>\t"..text_color..self.Author.."</color>\n" end
-		if ( self.Contact != "" ) then str = str .. title_color .. "Contact:</color>\t"..text_color..self.Contact.."</color>\n\n" end
-		if ( self.Purpose != "" ) then str = str .. title_color .. "Purpose:</color>\n"..text_color..self.Purpose.."</color>\n\n" end
-		if ( self.Instructions != "" ) then str = str .. title_color .. "Instructions:</color>\n"..text_color..self.Instructions.."</color>\n" end
+		if ( self.Author ~= "" ) then str = str .. title_color .. "Author:</color>\t" .. text_color .. self.Author .. "</color>\n" end
+		if ( self.Contact ~= "" ) then str = str .. title_color .. "Contact:</color>\t" .. text_color .. self.Contact .. "</color>\n\n" end
+		if ( self.Purpose ~= "" ) then str = str .. title_color .. "Purpose:</color>\n" .. text_color .. self.Purpose .. "</color>\n\n" end
+		if ( self.Instructions ~= "" ) then str = str .. title_color .. "Instructions:</color>\n" .. text_color .. self.Instructions .. "</color>\n" end
 		str = str .. "</font>"
 		
 		self.InfoMarkup = markup.Parse( str, 250 )
@@ -93,11 +96,13 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: SWEP:FreezeMovement()
+   Name: SWEP:FreezeMovement( )
    Desc: Return true to freeze moving the view
 -----------------------------------------------------------]]
 function SWEP:FreezeMovement()
+
 	return false
+	
 end
 
 
@@ -110,28 +115,31 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: OnRestore
+   Name: SWEP:OnRestore( )
    Desc: Called immediately after a "load"
 -----------------------------------------------------------]]
 function SWEP:OnRestore()
 end
 
+
 --[[---------------------------------------------------------
-   Name: OnRemove
+   Name: SWEP:OnRemove( )
    Desc: Called just before entity is deleted
 -----------------------------------------------------------]]
 function SWEP:OnRemove()
 end
 
+
 --[[---------------------------------------------------------
-   Name: CustomAmmoDisplay
+   Name: SWEP:CustomAmmoDisplay( )
    Desc: Return a table
 -----------------------------------------------------------]]
 function SWEP:CustomAmmoDisplay()
 end
 
+
 --[[---------------------------------------------------------
-   Name: GetViewModelPosition
+   Name: SWEP:GetViewModelPosition( )
    Desc: Allows you to re-position the view model
 -----------------------------------------------------------]]
 function SWEP:GetViewModelPosition( pos, ang )
@@ -140,8 +148,9 @@ function SWEP:GetViewModelPosition( pos, ang )
 	
 end
 
+
 --[[---------------------------------------------------------
-   Name: TranslateFOV
+   Name: SWEP:TranslateFOV( )
    Desc: Allows the weapon to translate the player's FOV (clientside)
 -----------------------------------------------------------]]
 function SWEP:TranslateFOV( current_fov )
@@ -152,7 +161,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: DrawWorldModel
+   Name: SWEP:DrawWorldModel( )
    Desc: Draws the world model (not the viewmodel)
 -----------------------------------------------------------]]
 function SWEP:DrawWorldModel()
@@ -163,7 +172,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: DrawWorldModelTranslucent
+   Name: SWEP:DrawWorldModelTranslucent( )
    Desc: Draws the world model (not the viewmodel)
 -----------------------------------------------------------]]
 function SWEP:DrawWorldModelTranslucent()
@@ -174,7 +183,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: AdjustMouseSensitivity()
+   Name: SWEP:AdjustMouseSensitivity( )
    Desc: Allows you to adjust the mouse sensitivity.
 -----------------------------------------------------------]]
 function SWEP:AdjustMouseSensitivity()
@@ -183,8 +192,9 @@ function SWEP:AdjustMouseSensitivity()
 	
 end
 
+
 --[[---------------------------------------------------------
-   Name: GetTracerOrigin()
+   Name: SWEP:GetTracerOrigin( )
    Desc: Allows you to override where the tracer comes from (in first person view)
 		 returning anything but a vector indicates that you want the default action
 -----------------------------------------------------------]]
@@ -197,4 +207,3 @@ function SWEP:GetTracerOrigin()
 --]]
 
 end
-

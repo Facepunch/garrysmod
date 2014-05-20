@@ -22,7 +22,7 @@ local ActIndex = {
 }
 
 --[[---------------------------------------------------------
-   Name: SetWeaponHoldType
+   Name: SWEP:SetWeaponHoldType( )
    Desc: Sets up the translation table, to translate from normal 
 			standing idle pose, to holding weapon pose.
 -----------------------------------------------------------]]
@@ -52,7 +52,7 @@ function SWEP:SetWeaponHoldType( t )
 	self.ActivityTranslate [ ACT_MP_SWIM ] 						= index+9
 	
 	-- "normal" jump animation doesn't exist
-	if t == "normal" then
+	if ( t == "normal" ) then
 		self.ActivityTranslate [ ACT_MP_JUMP ] = ACT_HL2MP_JUMP_SLAM
 	end
 
@@ -64,7 +64,7 @@ end
 SWEP:SetWeaponHoldType( "pistol" )
 
 --[[---------------------------------------------------------
-   Name: weapon:TranslateActivity( )
+   Name: SWEP:TranslateActivity( )
    Desc: Translate a player's Activity into a weapon's activity
 		 So for example, ACT_HL2MP_RUN becomes ACT_HL2MP_RUN_PISTOL
 		 Depending on how you want the player to be holding the weapon
@@ -78,7 +78,7 @@ function SWEP:TranslateActivity( act )
 		return -1
 	end
 
-	if ( self.ActivityTranslate[ act ] != nil ) then
+	if ( self.ActivityTranslate[ act ] ~= nil ) then
 		return self.ActivityTranslate[ act ]
 	end
 	
