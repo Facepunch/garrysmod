@@ -161,7 +161,7 @@ end
 
 local function SetPhysicsCollisions( Ent, b )
 
-	if (!Ent || !Ent:IsValid() || !Ent:GetPhysicsObject()) then return end
+	if ( !IsValid( Ent ) || !IsValid( Ent:GetPhysicsObject() ) ) then return end
 	
 	Ent:GetPhysicsObject():EnableCollisions( b )
 
