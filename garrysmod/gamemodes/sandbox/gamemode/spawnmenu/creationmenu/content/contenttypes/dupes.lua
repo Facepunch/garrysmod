@@ -10,7 +10,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 		HTML:OpenURL( "asset://garrysmod/html/dupes.html" );
 		HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ).. " );" );		
 
-	ws_dupe = WorkshopFileBase( "dupe", { "dupe" } )
+	local ws_dupe = WorkshopFileBase( "dupe", { "dupe" } )
 	ws_dupe.HTML = HTML
 
 	function ws_dupe:FetchLocal( offset, perpage )

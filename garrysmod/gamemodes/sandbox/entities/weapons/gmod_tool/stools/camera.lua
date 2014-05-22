@@ -83,7 +83,7 @@ end
 
 function TOOL:RightClick( trace )
 
-	_, camera = self:LeftClick( trace, true )
+	local _, camera = self:LeftClick( trace, true )
 	
 	if ( CLIENT ) then return true end
 

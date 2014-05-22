@@ -683,8 +683,9 @@ duplicator.RegisterConstraint( "Keepupright", Keepupright, "Ent1", "Ang", "Bone"
 function CreateStaticAnchorPoint( Pos )
 
 	-- Creates an invisible frozen, not interactive prop.
-	Anchor = ents.Create( "gmod_anchor" )
-		Anchor:SetPos( Pos )
+	local Anchor = ents.Create( "gmod_anchor" )
+	
+	Anchor:SetPos( Pos )
 	Anchor:Spawn()
 	Anchor:Activate()
 	
@@ -1463,6 +1464,8 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 	}
 	Constraint:SetTable( ctable )
 	
+	local slider = nil
+
 	if fixed == 1 then  
 		slider = Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, 0 )
 		slider:SetTable( {} ) -- ??
@@ -1492,7 +1495,7 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 		controller:SetDirection( 1 )
 	end
 
-	return Constraint,rope,controller,slider
+	return Constraint, rope, controller, slider
 
 end
 duplicator.RegisterConstraint( "Muscle", Muscle, "pl", "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "Length1", "Length2", "width", "key", "fixed", "period", "amplitude", "starton", "material" )

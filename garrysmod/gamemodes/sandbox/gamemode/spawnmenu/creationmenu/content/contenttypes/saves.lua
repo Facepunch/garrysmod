@@ -9,7 +9,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 		HTML:OpenURL( "asset://garrysmod/html/saves.html" );
 		HTML:Call( "SetMap( '" .. game.GetMap() .. "' );" );	
 
-	ws_save = WorkshopFileBase( "save", { "save" } )
+	local ws_save = WorkshopFileBase( "save", { "save" } )
 	ws_save.HTML = HTML
 
 	function ws_save:FetchLocal( offset, perpage )

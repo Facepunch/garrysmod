@@ -50,7 +50,7 @@ if ( CLIENT ) then
 			local len		= net.ReadUInt( 32 )
 			local data		= net.ReadData( len )
 
-			uncompressed = util.Decompress( data )
+			local uncompressed = util.Decompress( data )
 			if ( !uncompressed ) then 
 				Msg( "Received dupe - but couldn't decompress!?\n" );
 				return

@@ -310,10 +310,9 @@ end
 
 function string.Comma( number )
 
-	local number = tostring( number )
+	local number, k = tostring( number ), nil
 
 	while true do  
-
 		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", '%1,%2')
 		if ( k == 0 ) then break end
 	end

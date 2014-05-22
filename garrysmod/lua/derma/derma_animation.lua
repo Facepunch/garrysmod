@@ -55,7 +55,6 @@ function DermaAnimation:Stop()
 	
 	self.Finished = true
 	self.Running = nil
-	delta = 1
 
 end
 

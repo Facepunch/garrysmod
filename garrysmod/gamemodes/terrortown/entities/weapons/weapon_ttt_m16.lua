@@ -54,7 +54,7 @@ function SWEP:SecondaryAttack()
    if not self.IronSightsPos then return end
    if self:GetNextSecondaryFire() > CurTime() then return end
 
-   bIronsights = not self:GetIronsights()
+   local bIronsights = not self:GetIronsights()
 
    self:SetIronsights( bIronsights )
 

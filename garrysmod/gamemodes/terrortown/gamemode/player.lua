@@ -529,6 +529,8 @@ local function CheckCreditAward(victim, attacker)
    if (not victim:IsTraitor()) and (not GAMEMODE.AwardedCredits or GetConVar("ttt_credits_award_repeat"):GetBool()) then
       local inno_alive = 0
       local inno_dead = 0
+      local inno_total = 0
+      
       for _, ply in pairs(player.GetAll()) do
          if not ply:GetTraitor() then
             if ply:IsTerror() then

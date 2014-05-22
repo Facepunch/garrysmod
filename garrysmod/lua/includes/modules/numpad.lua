@@ -180,7 +180,7 @@ function OnDown( ply, key, name, ... )
 	if (!key) then ErrorNoHalt("ERROR: numpad.OnDown key is nil!\n"); return end
 	keys_in[ key ] = keys_in[ key ] or {}
 	
-	impulse = {}
+	local impulse = {}
 	impulse.name = name
 	impulse.arg = {...}
 	
@@ -198,7 +198,7 @@ function OnUp( ply, key, name, ... )
 	if (!key) then ErrorNoHalt("ERROR: numpad.OnUp key is nil!\n"); return end
 	keys_out[ key ] = keys_out[ key ] or {}
 	
-	impulse = {}
+	local impulse = {}
 	impulse.name = name
 	impulse.arg = {...}
 	
