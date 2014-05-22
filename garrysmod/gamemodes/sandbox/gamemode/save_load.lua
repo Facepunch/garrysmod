@@ -27,7 +27,7 @@ if ( SERVER ) then
 		local save = gmsave.SaveMap( ply )
 		if ( !save ) then return end
 
-		compressed_save = util.Compress( save )
+		local compressed_save = util.Compress( save )
 		if ( !compressed_save ) then compressed_save = save end
 
 		local len = string.len(compressed_save)
@@ -72,7 +72,7 @@ else
 			--MsgN( "Received Data ", len )
 			--MsgN( data )
 
-			uncompressed = util.Decompress( data )
+			local uncompressed = util.Decompress( data )
 			if ( !uncompressed ) then 
 				Msg( "Received save - but couldn't decompress!?\n" );
 				return

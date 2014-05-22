@@ -43,7 +43,7 @@ function TOOL:RightClick( trace )
 	local Ang = trace.HitNormal:Angle()
 	Ang.pitch = Ang.pitch + 90
 
-	button = MakeButton( ply, model, Ang, trace.HitPos, key, description, toggle )
+	local button = MakeButton( ply, model, Ang, trace.HitPos, key, description, toggle )
 	
 	local min = button:OBBMins()
 	button:SetPos( trace.HitPos - trace.HitNormal * min.z )

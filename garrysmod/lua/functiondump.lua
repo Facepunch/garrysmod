@@ -1,7 +1,7 @@
 
 -- Outputs functions and stuff in wiki format
 
-OUTPUT = ""
+local OUTPUT = ""
 
 if ( SERVER ) then
 	xside = file.Read( "ClientFunctions.txt" )
@@ -21,7 +21,7 @@ local function XSide( class, name )
 	
 end
 
-IDelay = 1
+local IDelay = 1
 
 local function AddWikiInfo( pagename, name, funcname )
 
@@ -116,7 +116,7 @@ end
 
 local function DoMetaTable( name )
 	
-	func = GetFunctions( _R[ name ] )
+	local func = GetFunctions( _R[ name ] )
 	
 	if ( type(_R[ name ]) != "table" ) then
 		Msg("Error: _R["..name.."] is not a table!\n")
@@ -136,7 +136,7 @@ local function DoLibrary( name )
 		Msg("Error: _G["..name.."] is not a table!\n")
 	end
 	
-	func = GetFunctions( _G[ name ] )
+	local func = GetFunctions( _G[ name ] )
 	for k, v in pairs( func ) do
 		--OUTPUT = OUTPUT .. XSide( name, v ) .. " [["..name.."]].[["..name.."."..v.."|"..v.."]]<br />\n"
 		OUTPUT = OUTPUT.."library	"..name.."	"..v.."	"..XSide( name, v ).."	"..AddWikiInfo( name.."."..v, name, v ).."\n"
@@ -146,7 +146,7 @@ end
 
 local function DoGlobals()
 	
-	func = GetFunctions( _G )
+	local func = GetFunctions( _G )
 	for k, v in pairs( func ) do
 		OUTPUT = OUTPUT.."global	global	"..v.."	"..XSide( "global", v ).."	"..AddWikiInfo( "G."..v, v, v ).."\n"
 	end

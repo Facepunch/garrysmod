@@ -102,7 +102,7 @@ function TOOL:RightClick( trace )
 	duplicator.SetLocalPos( trace.HitPos )
 	duplicator.SetLocalAng( Angle( 0, self:GetOwner():EyeAngles().yaw, 0 ) )
 
-	Dupe = duplicator.Copy( trace.Entity )
+	local Dupe = duplicator.Copy( trace.Entity )
 
 	duplicator.SetLocalPos( Vector( 0, 0, 0 ) )
 	duplicator.SetLocalAng( Angle( 0, 0, 0 ) )
