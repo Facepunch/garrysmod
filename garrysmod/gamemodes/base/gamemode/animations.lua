@@ -154,9 +154,12 @@ function GM:HandlePlayerDriving( ply )
 				
 				if ( ply:GetAllowWeaponsInVehicle() && IsValid( ply:GetActiveWeapon() ) ) then
 					local holdtype = ply:GetActiveWeapon():GetHoldType()
-					if ( !holdtype ) then return true end
 					if ( holdtype == "smg" ) then holdtype = "smg1" end
-					ply.CalcSeqOverride = ply:LookupSequence( "sit_" .. holdtype )
+
+					local seqid = ply:LookupSequence( "sit_" .. holdtype )
+					if ( seqid != -1 ) then
+						ply.CalcSeqOverride = seqid
+					end
 				end
 			end
 			
