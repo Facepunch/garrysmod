@@ -151,6 +151,13 @@ function GM:HandlePlayerDriving( ply )
 				ply.CalcSeqOverride = ply:LookupSequence( "drive_pd" )
 			else
 				ply.CalcSeqOverride = ply:LookupSequence( "sit_rollercoaster" )
+				
+				if ( ply:GetAllowWeaponsInVehicle() && IsValid( ply:GetActiveWeapon() ) ) then
+					local holdtype = ply:GetActiveWeapon():GetHoldType()
+					if ( !holdtype ) then return true end
+					if ( holdtype == "smg" ) then holdtype = "smg1" end
+					ply.CalcSeqOverride = ply:LookupSequence( "sit_" .. holdtype )
+				end
 			end
 			
 			return true
