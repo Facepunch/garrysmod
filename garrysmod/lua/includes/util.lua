@@ -50,14 +50,24 @@ function PrintTable ( t, indent, done )
 
 	done = done or {}
 	indent = indent or 0
+	local keys = {}
 
 	for key, value in pairs (t) do
 
+		table.insert(keys, key)
+
+	end
+
+	table.sort(keys)
+
+	for i = 1, #keys do
+		key = keys[i]
+		value = t[key]
 		Msg( string.rep ("\t", indent) )
 
-		if  ( istable(value) && !done[value] ) then
+		if  ( istable(value) and not done[value] ) then
 
-			done [value] = true
+			done[value] = true
 			Msg( tostring(key) .. ":" .. "\n" );
 			PrintTable (value, indent + 2, done)
 
@@ -412,4 +422,3 @@ function Add_NPC_Class( name )
 	NUM_AI_CLASSES = NUM_AI_CLASSES + 1
 
 end
-
