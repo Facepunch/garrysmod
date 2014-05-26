@@ -25,7 +25,7 @@ function TOOL:LeftClick( trace )
 	
 	local ply = self:GetOwner()
 	
-	local force			= self:GetClientNumber( "force" )
+	local force			= math.Clamp( self:GetClientNumber( "force" ), 0, 1E35 ) -- prevent high force value crash
 	local model			= self:GetClientInfo( "model" )
 	local key 			= self:GetClientNumber( "keygroup" ) 
 	local key_bk 		= self:GetClientNumber( "keygroup_back" ) 
@@ -124,7 +124,9 @@ if (SERVER) then
 		thruster:SetAngles( Ang )
 		thruster:SetPos( Pos )
 		thruster:Spawn()
-
+		
+		force = math.Clamp( force, 0, 1E35 ) -- prevent high force value crash
+		
 		thruster:SetEffect( effect )
 		thruster:SetForce( force )
 		thruster:SetToggle( toggle == 1 )
