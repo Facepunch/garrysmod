@@ -72,7 +72,7 @@ H1 small
 	top: 90px;
 	bottom: 0px;
 	left: 0px;
-	right: 360px;
+	right: 320px;
 	background-color: white;
 	padding: 10px;
 	border-radius: 4px;
@@ -88,13 +88,42 @@ H1 small
 	overflow: hidden;
 	height: 16px;
 	position: absolute;
+	text-align: center;
+}
+
+.serverlist name
+{
+	position: absolute;
+	overflow: hidden;
+	white-space: nowrap;
+	left: 4px;
+	right: 240px;
+	font-size: 13px;
+}
+
+.serverlist map
+{
+	right: 148px;
+	width: 90px;
+	text-align: left;
+}
+
+.serverlist players
+{
+	right: 100px;
+	width: 48px;
+}
+
+.serverlist ping
+{
+	right: 68px;
+	width: 32px;
 }
 
 .serverlist rank
 {
-	right: 8px;
+	right: 4px;
 	width: 64px;
-	text-align: right;
 }
 
 .serverlist .server rank
@@ -122,36 +151,7 @@ H1 small
 	background-image: url( '../../img/rank2.png?1' );
 }
 
-.serverlist ping
-{
-	right: 80px;
-	width: 50px;
-	text-align: right;
-}
 
-.serverlist players
-{
-	right: 110px;
-	width: 40px;
-	text-align: right;
-}
-
-.serverlist map
-{
-	right: 150px;
-	text-align: left;
-	width: 80px;
-}
-
-.serverlist name
-{
-	position: absolute;
-	overflow: hidden;
-	white-space: nowrap;
-	left: 8px;
-	right: 240px;
-	font-size: 13px;
-}
 
 .serverlist .server
 {
@@ -190,11 +190,11 @@ H1 small
 .serverlist .header 
 {
 	background-color: #6af;
-	height: 31px;
+	height: 30px;
 	position: absolute;
 	border-radius: 4px 4px 0 0;
 	padding-top: 4px;
-	font-size: 10px;
+	font-size: 11px;
 }
 
 .serverlist .header ping, .serverlist .header maxplayers, .serverlist .header players, .serverlist .header map, .serverlist .header name, .serverlist .header rank
@@ -216,35 +216,20 @@ H1 small
 	
 	.serverlist name
 	{
-		font-size: 14px;
+		font-size: 13px;
 		font-weight: bold;
-		padding-top: 3px;
 		right: 280px;
 	}
-	
-	.serverlist .server
-	{
-		height: 24px;
-	}
-	
+
 	.serverlist map
 	{
-		width: 100px;
-		right: 170px;
-	}
-	
-	.serverlist players
-	{
-		right: 130px;
-		width: 80px;
-		text-align: right;
+		width: 130px;
 	}
 	
 	.serverlist .header name
 	{
 		padding: 0;
 	}
-
 }
 
 
@@ -279,7 +264,7 @@ A.bglink
 	position: absolute;
 	top: 90px;
 	bottom: 0px;
-	width: 320px;
+	width: 280px;
 	right: 0px;
 	background-color: white;
 	padding: 10px 15px;
