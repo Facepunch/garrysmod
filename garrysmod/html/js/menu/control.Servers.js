@@ -189,7 +189,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		name:			name,
 		desc:			desc,
 		map:			map,
-		players:		parseInt( players ),
+		players:		parseInt( players ) - parseInt( botplayers ),
 		maxplayers:		parseInt( maxplayers ),
 		botplayers:		parseInt( botplayers ),
 		pass:			pass,
@@ -203,10 +203,10 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	data.hasmap = DoWeHaveMap( data.map );
 
 	data.recommended = data.ping;
-	if ( !data.hasmap ) data.recommended += 20;
-	if ( data.players == 0 ) data.recommended += 100;
-	if ( data.players == data.maxplayers ) data.recommended += 75;
-	if ( data.botplayers > 0 ) data.recommended += data.botplayers * 10;
+	if ( !data.hasmap ) data.recommended += 20; // We don't have that map
+	if ( data.players == 0 ) data.recommended += 100; // Server is empty
+	if ( data.players == data.maxplayers ) data.recommended += 75; // Server is full
+	if ( data.pass ) data.recommended += 300; // If we can't join it, don't put it to the top
 
 	data.listen = data.desc.indexOf('[L]') >= 0;
 	if ( data.listen ) data.desc = data.desc.substr( 4 );
@@ -217,7 +217,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	UpdateGamemodeInfo( data )
 
 	gm.num_servers += 1;
-	gm.num_players += data.players - data.botplayers;
+	gm.num_players += data.players
 
 	gm.element_class = "";
 	if ( gm.num_players == 0 ) gm.element_class = "noplayers";
