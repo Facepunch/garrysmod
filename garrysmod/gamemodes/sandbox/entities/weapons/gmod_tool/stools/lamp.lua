@@ -1,17 +1,17 @@
 
-TOOL.Category		= "Construction"
-TOOL.Name			= "#tool.lamp.name"
+TOOL.Category = "Construction"
+TOOL.Name = "#tool.lamp.name"
 
-TOOL.ClientConVar[ "r" ]				= "255"
-TOOL.ClientConVar[ "g" ]				= "255"
-TOOL.ClientConVar[ "b" ]				= "255"
-TOOL.ClientConVar[ "key" ]				= "-1"
-TOOL.ClientConVar[ "fov" ]				= "90"
-TOOL.ClientConVar[ "distance" ]			= "1024"
-TOOL.ClientConVar[ "brightness" ]		= "7.5"
-TOOL.ClientConVar[ "texture" ]			= "effects/flashlight001"
-TOOL.ClientConVar[ "model" ]			= "models/lamps/torch.mdl"
-TOOL.ClientConVar[ "toggle" ]			= "1"
+TOOL.ClientConVar[ "r" ] = "255"
+TOOL.ClientConVar[ "g" ] = "255"
+TOOL.ClientConVar[ "b" ] = "255"
+TOOL.ClientConVar[ "key" ] = "-1"
+TOOL.ClientConVar[ "fov" ] = "90"
+TOOL.ClientConVar[ "distance" ] = "1024"
+TOOL.ClientConVar[ "brightness" ] = "4"
+TOOL.ClientConVar[ "texture" ] = "effects/flashlight001"
+TOOL.ClientConVar[ "model" ] = "models/lamps/torch.mdl"
+TOOL.ClientConVar[ "toggle" ] = "1"
 
 cleanup.Register( "lamps" )
 
@@ -23,19 +23,19 @@ function TOOL:LeftClick( trace )
 	local ply = self:GetOwner()
 	local pos = trace.HitPos
 
-	local r 		= math.Clamp( self:GetClientNumber( "r" ), 0, 255 )
-	local g 		= math.Clamp( self:GetClientNumber( "g" ), 0, 255 )
-	local b 		= math.Clamp( self:GetClientNumber( "b" ), 0, 255 )
-	local key 		= self:GetClientNumber( "key" )
-	local texture 	= self:GetClientInfo( "texture" )
-	local mdl 		= self:GetClientInfo( "model" )
-	local fov 		= self:GetClientNumber( "fov" )
-	local distance	= self:GetClientNumber( "distance" )
-	local bright	= self:GetClientNumber( "brightness" )
-	local toggle	= self:GetClientNumber( "toggle" ) != 1
+	local r = math.Clamp( self:GetClientNumber( "r" ), 0, 255 )
+	local g = math.Clamp( self:GetClientNumber( "g" ), 0, 255 )
+	local b = math.Clamp( self:GetClientNumber( "b" ), 0, 255 )
+	local key = self:GetClientNumber( "key" )
+	local texture = self:GetClientInfo( "texture" )
+	local mdl = self:GetClientInfo( "model" )
+	local fov = self:GetClientNumber( "fov" )
+	local distance = self:GetClientNumber( "distance" )
+	local bright = self:GetClientNumber( "brightness" )
+	local toggle = self:GetClientNumber( "toggle" ) != 1
 
-	local mat		= Material( texture )
-	local texture	= mat:GetString( "$basetexture" )
+	local mat = Material( texture )
+	local texture = mat:GetString( "$basetexture" )
 
 	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_lamp" && trace.Entity:GetPlayer() == ply ) then
 	
@@ -54,10 +54,12 @@ function TOOL:LeftClick( trace )
 		trace.Entity.NumUp = numpad.OnUp( ply, key, "LampToggle", trace.Entity, 0 )
 		
 		-- For duplicator
-		trace.Entity.Texture	= texture
-		trace.Entity.fov		= fov
-		trace.Entity.distance	= distance
-		trace.Entity.r = r trace.Entity.g = g trace.Entity.b = b
+		trace.Entity.Texture = texture
+		trace.Entity.fov = fov
+		trace.Entity.distance = distance
+		trace.Entity.r = r
+		trace.Entity.g = g
+		trace.Entity.b = b
 		trace.Entity.brightness	= bright
 		trace.Entity.KeyDown = key
 
@@ -67,7 +69,7 @@ function TOOL:LeftClick( trace )
 	
 	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
 
-	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = Angle(0, 0, 0) } )
+	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = Angle( 0, 0, 0 ) } )
 	
 	local CurPos = lamp:GetPos()
 	local NearestPoint = lamp:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -75,7 +77,7 @@ function TOOL:LeftClick( trace )
 	
 	lamp:SetPos( trace.HitPos + LampOffset )
 	
-	undo.Create("Lamp")
+	undo.Create( "Lamp" )
 		undo.AddEntity( lamp )
 		undo.SetPlayer( self:GetOwner() )
 	undo.Finish()
@@ -86,7 +88,29 @@ end
 
 function TOOL:RightClick( trace )
 
-	return false
+	if ( !IsValid( trace.Entity ) || trace.Entity:GetClass() != "gmod_lamp" ) then return false end
+	if ( CLIENT ) then return true end
+	
+	local ent = trace.Entity
+	local pl = self:GetOwner()
+
+	pl:ConCommand( "lamp_fov " .. ent:GetLightFOV() )
+	pl:ConCommand( "lamp_distance " .. ent:GetDistance() )
+	pl:ConCommand( "lamp_brightness " .. ent:GetBrightness() )
+	pl:ConCommand( "lamp_texture " .. ent:GetFlashlightTexture() )
+	
+	if ( ent:GetToggle() ) then
+		pl:ConCommand( "lamp_toggle 1" )
+	else
+		pl:ConCommand( "lamp_toggle 0" )
+	end
+	
+	local clr = ent:GetColor()
+	pl:ConCommand( "lamp_r " .. clr.r )
+	pl:ConCommand( "lamp_g " .. clr.g )
+	pl:ConCommand( "lamp_b " .. clr.b )
+
+	return true
 
 end
 
@@ -94,9 +118,7 @@ if ( SERVER ) then
 
 	function MakeLamp( pl, r, g, b, KeyDown, toggle, Texture, Model, fov, distance, brightness, on, Data )
 	
-		if ( IsValid( pl ) ) then
-			if ( !pl:CheckLimit( "lamps" ) ) then return false end
-		end
+		if ( IsValid( pl ) && !pl:CheckLimit( "lamps" ) ) then return false end
 	
 		local lamp = ents.Create( "gmod_lamp" )
 		
@@ -110,8 +132,9 @@ if ( SERVER ) then
 		lamp:SetBrightness( brightness )
 		lamp:Switch( on )
 		lamp:SetToggle( !toggle )
+
 		duplicator.DoGeneric( lamp, Data )
-			
+	
 		lamp:Spawn()
 
 		duplicator.DoGenericPhysics( lamp, pl, Data )
@@ -123,13 +146,13 @@ if ( SERVER ) then
 			pl:AddCleanup( "lamps", lamp )
 		end
 		
-		lamp.Texture	= Texture
-		lamp.KeyDown	= KeyDown
-		lamp.fov		= fov
-		lamp.distance	= distance
-		lamp.r			= r
-		lamp.g			= g
-		lamp.b			= b
+		lamp.Texture = Texture
+		lamp.KeyDown = KeyDown
+		lamp.fov = fov
+		lamp.distance = distance
+		lamp.r = r
+		lamp.g = g
+		lamp.b = b
 		lamp.brightness	= brightness
 
 		lamp.NumDown = numpad.OnDown( pl, KeyDown, "LampToggle", lamp, 1 )
@@ -138,9 +161,7 @@ if ( SERVER ) then
 		return lamp
 
 	end
-	
 	duplicator.RegisterEntityClass( "gmod_lamp", MakeLamp, "r", "g", "b", "KeyDown", "Toggle", "Texture", "Model", "fov", "distance", "brightness", "on", "Data" )
-
 
 	local function Toggle( pl, ent, onoff )
 	
@@ -150,7 +171,7 @@ if ( SERVER ) then
 		if ( numpad.FromButton() ) then
 
 			ent:Toggle()
-			return;
+			return
 
 		end
 
@@ -159,7 +180,6 @@ if ( SERVER ) then
 		return ent:Toggle()
 		
 	end
-	
 	numpad.Register( "LampToggle", Toggle )
 	
 end
@@ -168,7 +188,7 @@ function TOOL:UpdateGhostLamp( ent, player )
 
 	if ( !IsValid( ent ) ) then return end
 	
-	local tr	= util.GetPlayerTrace( player )
+	local tr = util.GetPlayerTrace( player )
 	local trace	= util.TraceLine( tr )
 	if ( !trace.Hit ) then return end
 	
@@ -199,31 +219,19 @@ function TOOL:Think()
 	
 end
 
+local ConVarsDefault = TOOL:BuildConVarList()
+
 function TOOL.BuildCPanel( CPanel )
 
-	-- HEADER
-	CPanel:AddControl( "Header", { Description = "#tool.lamp.desc" }  )
+	CPanel:AddControl( "Header", { Description = "#tool.lamp.desc" } )
 
-	-- Presets
-	local params = { Label = "#tool.presets", MenuButton = 1, Folder = "lamp", Options = {}, CVars = { "lamp_texture", "lamp_r", "lamp_g", "lamp_b", "lamp_key", "lamp_model", "lamp_toggle" } }
-		
-		params.Options.default = {
-			lamp_texture		=		"effects/flashlight001",
-			lamp_r				=		255,
-			lamp_g				=		255,
-			lamp_b				=		255,
-			lamp_key			=		-1,
-			lamp_model			=		"models/MaxOfS2D/lamp_projector.mdl",
-			lamp_toggle			=		0
-		}
-					
-	CPanel:AddControl( "ComboBox", params )
+	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "lamp", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.lamp.key", Command = "lamp_key" } )
 
-	CPanel:NumSlider( "#tool.lamp.fov", "lamp_fov", 10, 170, 2 )
-	CPanel:NumSlider( "#tool.lamp.distance", "lamp_distance", 64, 2048, 0 )
-	CPanel:NumSlider( "#tool.lamp.brightness", "lamp_brightness", 0, 8, 2 )
+	CPanel:AddControl( "Slider", { Label = "#tool.lamp.fov", Command = "lamp_fov", Type = "Float", Min = 10, Max = 170 } )
+	CPanel:AddControl( "Slider", { Label = "#tool.lamp.distance", Command = "lamp_distance", Min = 64, Max = 2048 } )
+	CPanel:AddControl( "Slider", { Label = "#tool.lamp.brightness", Command = "lamp_brightness", Type = "Float", Min = 0, Max = 8 } )
 
 	CPanel:AddControl( "Checkbox", { Label = "#tool.lamp.toggle", Command = "lamp_toggle" } )
 
@@ -232,21 +240,10 @@ function TOOL.BuildCPanel( CPanel )
 	for k, v in pairs( list.Get( "LampTextures" ) ) do
 		MatSelect:AddMaterial( v.Name or k, k )
 	end
+
+	CPanel:AddControl( "Color", { Label = "#tool.lamp.color", Red = "lamp_r", Green = "lamp_g", Blue = "lamp_b" } )
 	
-	CPanel:AddControl( "Color",  { Label	= "#tool.lamp.color",
-									Red			= "lamp_r",
-									Green		= "lamp_g",
-									Blue		= "lamp_b",
-									ShowAlpha	= 0,
-									ShowHSV		= 1,
-									ShowRGB 	= 1,
-									Multiplier	= 255 } )	
-	
-	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model",
-									 ConVar = "lamp_model",
-									 Category = "Lamps",
-									 Height = 3,
-									 Models = list.Get( "LampModels" ) } )
+	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model", ConVar = "lamp_model", Height = 3, Models = list.Get( "LampModels" ) } )
 end
 
 list.Set( "LampTextures", "effects/flashlight001", { Name = "#lamptexture.default" } )
@@ -265,5 +262,5 @@ list.Set( "LampTextures", "effects/flashlight/camera", { Name = "#lamptexture.ca
 list.Set( "LampTextures", "effects/flashlight/view", { Name = "#lamptexture.view" } )
 
 list.Set( "LampModels", "models/lamps/torch.mdl", {} )
-list.Set( "LampModels", "models/MaxOfS2D/lamp_flashlight.mdl", {} )
-list.Set( "LampModels", "models/MaxOfS2D/lamp_projector.mdl", {} )
+list.Set( "LampModels", "models/maxofs2d/lamp_flashlight.mdl", {} )
+list.Set( "LampModels", "models/maxofs2d/lamp_projector.mdl", {} )

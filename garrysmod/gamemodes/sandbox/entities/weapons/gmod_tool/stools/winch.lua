@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Constraints"
-TOOL.Name		= "#tool.winch.name"
+TOOL.Category = "Constraints"
+TOOL.Name = "#tool.winch.name"
 
 TOOL.ClientConVar[ "rope_material" ] = "cable/rope"
 TOOL.ClientConVar[ "rope_width" ] = "3"
@@ -30,26 +30,26 @@ function TOOL:LeftClick( trace )
 		end
 		
 		-- Get client's CVars
-		local material	= self:GetClientInfo( "rope_material" ) or "cable/rope"
-		local width		= self:GetClientNumber( "rope_width" ) or 3
-		local fwd_bind	= self:GetClientNumber( "fwd_group" ) or 1
-		local bwd_bind	= self:GetClientNumber( "bwd_group" ) or 1
-		local fwd_speed	= self:GetClientNumber( "fwd_speed" ) or 64
-		local bwd_speed	= self:GetClientNumber( "bwd_speed" ) or 64
-		local toggle	= false
+		local material = self:GetClientInfo( "rope_material", "cable/rope" )
+		local width = self:GetClientNumber( "rope_width", 3 )
+		local fwd_bind = self:GetClientNumber( "fwd_group", 44 )
+		local bwd_bind = self:GetClientNumber( "bwd_group", 41 )
+		local fwd_speed = self:GetClientNumber( "fwd_speed", 64 )
+		local bwd_speed = self:GetClientNumber( "bwd_speed", 64 )
+		local toggle = false
 
 		-- Get information we're about to use
-		local Ent1, Ent2 = self:GetEnt( 1 ),		self:GetEnt( 2 )
-		local Bone1, Bone2 = self:GetBone( 1 ),		self:GetBone( 2 )
+		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
+		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
 
 		local constraint, rope, controller = constraint.Winch( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material, toggle )
 
 		undo.Create( "Winch" )
-		if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
-		if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-		if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
-		undo.SetPlayer( self:GetOwner() )
+			if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
+			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+			if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
+			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
 
 		if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
@@ -85,9 +85,9 @@ function TOOL:RightClick( trace )
 	tr.start = trace.HitPos
 	tr.endpos = tr.start + ( trace.HitNormal * 16384 )
 	tr.filter = {}
-	tr.filter[1] = self:GetOwner()
+	tr.filter[ 1 ] = self:GetOwner()
 	if ( IsValid( trace.Entity ) ) then
-		tr.filter[2] = trace.Entity
+		tr.filter[ 2 ] = trace.Entity
 	end
 	
 	local tr = util.TraceLine( tr )
@@ -120,25 +120,25 @@ function TOOL:RightClick( trace )
 	end
 	
 	-- Get client's CVars
-	local material	= self:GetClientInfo( "rope_material" ) or "cable/rope"
-	local width		= self:GetClientNumber( "rope_width" ) or 3
-	local fwd_bind	= self:GetClientNumber( "fwd_group" ) or 1
-	local bwd_bind	= self:GetClientNumber( "bwd_group" ) or 1
-	local fwd_speed	= self:GetClientNumber( "fwd_speed" ) or 64
-	local bwd_speed	= self:GetClientNumber( "bwd_speed" ) or 64
+	local material = self:GetClientInfo( "rope_material", "cable/rope" )
+	local width = self:GetClientNumber( "rope_width", 3 )
+	local fwd_bind = self:GetClientNumber( "fwd_group", 44 )
+	local bwd_bind = self:GetClientNumber( "bwd_group", 41 )
+	local fwd_speed = self:GetClientNumber( "fwd_speed", 64 )
+	local bwd_speed = self:GetClientNumber( "bwd_speed", 64 )
 		
 	-- Get information we're about to use
-	local Ent1, Ent2 = self:GetEnt( 1 ),		self:GetEnt( 2 )
-	local Bone1, Bone2 = self:GetBone( 1 ),		self:GetBone( 2 )
-	local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
+	local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
+	local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
+	local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 
 	local constraint, rope, controller = constraint.Winch( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material )
 
 	undo.Create( "Winch" )
-	if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
-	if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-	if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
-	undo.SetPlayer( self:GetOwner() )
+		if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
+		if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+		if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
+		undo.SetPlayer( self:GetOwner() )
 	undo.Finish()
 	
 	if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
@@ -171,10 +171,10 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.winch.forward", Command = "winch_fwd_group", Label2 = "#tool.winch.backward", Command2 = "winch_bwd_group" } )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.winch.fspeed", Command = "winch_fwd_speed", Type = "Float", Min = "0", Max = "1000", Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.winch.bspeed", Command = "winch_bwd_speed", Type = "Float", Min = "0", Max = "1000", Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.winch.fspeed", Command = "winch_fwd_speed", Type = "Float", Min = 0, Max = 1000, Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.winch.bspeed", Command = "winch_bwd_speed", Type = "Float", Min = 0, Max = 1000, Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.winch.width", Command = "winch_rope_width", Type = "Float", Min = 0, Max = 10 } )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.winch.width", Command = "winch_rope_width", Type = "Float", Min = "0", Max = "10" } )
 	CPanel:AddControl( "RopeMaterial", { Label = "#tool.winch.material", ConVar = "winch_rope_material" } )
 
 end

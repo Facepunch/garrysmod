@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Constraints"
-TOOL.Name		= "#tool.pulley.name"
+TOOL.Category = "Constraints"
+TOOL.Name = "#tool.pulley.name"
 
 TOOL.ClientConVar[ "width" ] = "3"
 TOOL.ClientConVar[ "forcelimit" ] = "0"
@@ -24,10 +24,10 @@ function TOOL:LeftClick( trace )
 	
 		if ( CLIENT ) then return true end
 		
-		local width			= self:GetClientNumber( "width" )
-		local forcelimit	= self:GetClientNumber( "forcelimit" )
-		local rigid			= self:GetClientNumber( "rigid" ) == 1
-		local material		= self:GetClientInfo( "material" )
+		local width = self:GetClientNumber( "width" )
+		local forcelimit = self:GetClientNumber( "forcelimit" )
+		local rigid = self:GetClientNumber( "rigid" ) == 1
+		local material = self:GetClientInfo( "material" )
 		
 		-- Get information we're about to use
 		local Ent1 = self:GetEnt( 1 )
@@ -42,8 +42,8 @@ function TOOL:LeftClick( trace )
 		local constraint = constraint.Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimit, rigid, width, material )
 
 		undo.Create( "Pulley" )
-		undo.AddEntity( constraint )
-		undo.SetPlayer( self:GetOwner() )
+			undo.AddEntity( constraint )
+			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
 		
 		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
@@ -83,10 +83,10 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "pulley", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "pulley_forcelimit", Type = "Float", Min = "0", Max = "1000", Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "pulley_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.pulley.rigid", Command = "pulley_rigid", Help = true } )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.pulley.width", Command = "pulley_width", Type = "Float", Min = "0", Max = "10" } )
+	CPanel:AddControl( "Slider", { Label = "#tool.pulley.width", Command = "pulley_width", Type = "Float", Min = 0, Max = 10 } )
 	CPanel:AddControl( "RopeMaterial", { Label = "#tool.pulley.material", ConVar = "pulley_material" } )
 
 end

@@ -1,6 +1,6 @@
 
-TOOL.Category		= "Construction"
-TOOL.Name			= "#tool.nocollide.name"
+TOOL.Category = "Construction"
+TOOL.Name = "#tool.nocollide.name"
 
 cleanup.Register( "nocollide" )
 
@@ -20,21 +20,21 @@ function TOOL:LeftClick( trace )
 	if ( CLIENT ) then
 	
 		if ( iNum > 0 ) then self:ClearObjects() end
-		return true 
-		
+		return true
+
 	end
 	
 	if ( iNum > 0 ) then
 		
-		local Ent1,  Ent2  = self:GetEnt(1),	self:GetEnt(2)
-		local Bone1, Bone2 = self:GetBone(1),	self:GetBone(2)
+		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
+		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 
-		local constraint = constraint.NoCollide(Ent1, Ent2, Bone1, Bone2)
+		local constraint = constraint.NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	
 		if ( constraint ) then
 			undo.Create( "NoCollide" )
-			undo.AddEntity( constraint )
-			undo.SetPlayer( self:GetOwner() )
+				undo.AddEntity( constraint )
+				undo.SetPlayer( self:GetOwner() )
 			undo.Finish()
 			
 			self:GetOwner():AddCleanup( "nocollide", constraint )
@@ -44,7 +44,7 @@ function TOOL:LeftClick( trace )
 	
 	else
 		
-		self:SetStage( iNum+1 )
+		self:SetStage( iNum + 1 )
 	
 	end
 		
@@ -60,9 +60,8 @@ end )
 
 function TOOL:RightClick( trace )
 
-	if (!trace.Entity ) then return end
-	if (!trace.Entity:IsValid()) then return end
-	if (trace.Entity:IsPlayer()) then return end
+	if ( !IsValid( trace.Entity ) ) then return end
+	if ( trace.Entity:IsPlayer() ) then return end
 	
 	if ( CLIENT ) then return true end
 	
@@ -82,16 +81,15 @@ end
 
 function TOOL:Reload( trace )
 
-	if (!trace.Entity:IsValid() || trace.Entity:IsPlayer() ) then return false end
+	if ( !IsValid( trace.Entity ) || trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 	
-	local  bool = constraint.RemoveConstraints( trace.Entity, "NoCollide" )
-	return bool
+	return constraint.RemoveConstraints( trace.Entity, "NoCollide" )
 	
 end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description	= "#tool.nocollide.desc" }  )
+	CPanel:AddControl( "Header", { Description = "#tool.nocollide.desc" } )
 
 end

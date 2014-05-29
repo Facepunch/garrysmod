@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Constraints"
-TOOL.Name		= "#tool.axis.name"
+TOOL.Category = "Constraints"
+TOOL.Name = "#tool.axis.name"
 
 TOOL.ClientConVar[ "forcelimit" ] = 0
 TOOL.ClientConVar[ "torquelimit" ] = 0
@@ -43,15 +43,15 @@ function TOOL:LeftClick( trace )
 		end
 	
 		-- Get client's CVars
-		local nocollide		= self:GetClientNumber( "nocollide", 0 )
-		local forcelimit	= self:GetClientNumber( "forcelimit", 0 )
-		local torquelimit	= self:GetClientNumber( "torquelimit", 0 )
-		local friction		= self:GetClientNumber( "hingefriction", 0 )
+		local nocollide = self:GetClientNumber( "nocollide", 0 )
+		local forcelimit = self:GetClientNumber( "forcelimit", 0 )
+		local torquelimit = self:GetClientNumber( "torquelimit", 0 )
+		local friction = self:GetClientNumber( "hingefriction", 0 )
 		
-		local Ent1, Ent2 = self:GetEnt( 1 ),	 	self:GetEnt( 2 )
-		local Bone1, Bone2 = self:GetBone( 1 ),	 	self:GetBone( 2 )
-		local Norm1, Norm2 = self:GetNormal( 1 ),	self:GetNormal( 2 )
-		local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
+		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
+		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
+		local Norm1, Norm2 = self:GetNormal( 1 ), self:GetNormal( 2 )
+		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 		local Phys1 = self:GetPhys( 1 )
 		local WPos2 = self:GetPos( 2 )
 		
@@ -77,8 +77,8 @@ function TOOL:LeftClick( trace )
 		local constraint = constraint.Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, friction, nocollide )
 		
 		undo.Create( "Axis" )
-		undo.AddEntity( constraint )
-		undo.SetPlayer( self:GetOwner() )
+			undo.AddEntity( constraint )
+			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
 		
 		self:GetOwner():AddCleanup( "constraints", constraint )
@@ -125,15 +125,15 @@ function TOOL:RightClick( trace )
 		end
 		
 		-- Get client's CVars
-		local nocollide		= self:GetClientNumber( "nocollide", 0 )
-		local forcelimit	= self:GetClientNumber( "forcelimit", 0 )
-		local torquelimit	= self:GetClientNumber( "torquelimit", 0 )
-		local friction		= self:GetClientNumber( "hingefriction", 0 )
+		local nocollide = self:GetClientNumber( "nocollide", 0 )
+		local forcelimit = self:GetClientNumber( "forcelimit", 0 )
+		local torquelimit = self:GetClientNumber( "torquelimit", 0 )
+		local friction = self:GetClientNumber( "hingefriction", 0 )
 		
-		local Ent1, Ent2 = self:GetEnt( 1 ), 		self:GetEnt( 2 )
-		local Bone1, Bone2 = self:GetBone( 1 ), 	self:GetBone( 2 )
-		local Norm1, Norm2 = self:GetNormal( 1 ),	self:GetNormal( 2 )
-		local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
+		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
+		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
+		local Norm1, Norm2 = self:GetNormal( 1 ), self:GetNormal( 2 )
+		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 		local Phys1 = self:GetPhys( 1 )
 		local WPos2 = self:GetPos( 2 )
 		
@@ -153,8 +153,8 @@ function TOOL:RightClick( trace )
 		local constraint = constraint.Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, friction, nocollide )
 
 		undo.Create( "Axis" )
-		undo.AddEntity( constraint )
-		undo.SetPlayer( self:GetOwner() )
+			undo.AddEntity( constraint )
+			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
 
 		self:GetOwner():AddCleanup( "constraints", constraint )
@@ -204,9 +204,9 @@ function TOOL.BuildCPanel( CPanel )
 	
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "axis", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "axis_forcelimit", Type = "Float", Min = "0", Max = "50000", Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "axis_torquelimit", Type = "Float", Min = "0", Max = "50000", Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hingefriction", Command = "axis_hingefriction", Type = "Float", Min = "0", Max = "200", Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "axis_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "axis_torquelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.hingefriction", Command = "axis_hingefriction", Type = "Float", Min = 0, Max = 200, Help = true } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "axis_nocollide" } )
 
 end

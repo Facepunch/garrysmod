@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Constraints"
-TOOL.Name		= "#tool.weld.name"
+TOOL.Category = "Constraints"
+TOOL.Name = "#tool.weld.name"
 
 TOOL.ClientConVar[ "forcelimit" ] = "0"
 
@@ -46,8 +46,8 @@ function TOOL:LeftClick( trace )
 		if ( constraint ) then
 		
 			undo.Create( "Weld" )
-			undo.AddEntity( constraint )
-			undo.SetPlayer( self:GetOwner() )
+				undo.AddEntity( constraint )
+				undo.SetPlayer( self:GetOwner() )
 			undo.Finish()
 			
 			self:GetOwner():AddCleanup( "constraints", constraint )
@@ -182,8 +182,8 @@ function TOOL:RightClick( trace )
 			Phys1:EnableMotion( true )
 			
 			undo.Create( "Weld" )
-			undo.AddEntity( constraint )
-			undo.SetPlayer( self:GetOwner() )
+				undo.AddEntity( constraint )
+				undo.SetPlayer( self:GetOwner() )
 			undo.Finish()
 			
 			self:GetOwner():AddCleanup( "constraints", constraint )
@@ -267,6 +267,6 @@ end
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Header", { Description	= "#tool.weld.help" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "weld_forcelimit", Type = "Float", Min = "0", Max = "1000", Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "weld_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
 
 end

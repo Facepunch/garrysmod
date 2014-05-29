@@ -1,6 +1,6 @@
 
-TOOL.Category		= "Render"
-TOOL.Name			= "#tool.material.name"
+TOOL.Category = "Render"
+TOOL.Name = "#tool.material.name"
 
 TOOL.ClientConVar[ "override" ] = "debug/env_cubemap_model"
 
@@ -14,9 +14,7 @@ local function SetMaterial( Player, Entity, Data )
 		--
 		-- Make sure this is in the 'allowed' list in multiplayer - to stop people using exploits
 		--
-		if ( !game.SinglePlayer() && !list.Contains( "OverrideMaterials", Data.MaterialOverride ) && Data.MaterialOverride != "" ) then
-			return 
-		end
+		if ( !game.SinglePlayer() && !list.Contains( "OverrideMaterials", Data.MaterialOverride ) && Data.MaterialOverride != "" ) then return end
 
 		Entity:SetMaterial( Data.MaterialOverride )
 		duplicator.StoreEntityModifier( Entity, "material", Data )
@@ -113,12 +111,10 @@ list.Add( "OverrideMaterials", "phoenix_storms/wire/pcb_blue" )
 list.Add( "OverrideMaterials", "hunter/myplastic" )
 list.Add( "OverrideMaterials", "models/XQM/LightLinesRed_tool" )
 
-
 function TOOL.BuildCPanel( CPanel )
 
-	-- HEADER
 	CPanel:AddControl( "Header", { Description = "#tool.material.help" } )
 
-	CPanel:MatSelect( "material_override", list.Get( "OverrideMaterials" ), true, 0.33, 0.33 )
-									
+	CPanel:MatSelect( "material_override", list.Get( "OverrideMaterials" ), true, 64, 64 )
+
 end

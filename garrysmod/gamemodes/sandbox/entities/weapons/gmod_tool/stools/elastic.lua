@@ -31,25 +31,25 @@ function TOOL:LeftClick( trace )
 		end
 		
 		-- Get client's CVars
-		local constant		= self:GetClientNumber( "constant" )
-		local damping		= self:GetClientNumber( "damping" )
-		local rdamping		= self:GetClientNumber( "rdamping" )
-		local width 		= self:GetClientNumber( "width" )
-		local stretchonly	= self:GetClientNumber( "stretch_only" )
-		local material 		= self:GetClientInfo( "material" )
+		local width = self:GetClientNumber( "width" )
+		local material = self:GetClientInfo( "material" )
+		local damping = self:GetClientNumber( "damping" )
+		local rdamping = self:GetClientNumber( "rdamping" )
+		local constant = self:GetClientNumber( "constant" )
+		local stretchonly = self:GetClientNumber( "stretch_only" )
 		
 		-- Get information we're about to use
-		local Ent1, Ent2 = self:GetEnt( 1 ),	 	self:GetEnt( 2 )
-		local Bone1, Bone2 = self:GetBone( 1 ),	 	self:GetBone( 2 )
+		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
+		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
 		local constraint, rope = constraint.Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rdamping, material, width, stretchonly )
 
 		-- Add The constraint to the players undo table
 
 		undo.Create( "Elastic" )
-		undo.AddEntity( constraint )
-		if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-		undo.SetPlayer( self:GetOwner() )
+			undo.AddEntity( constraint )
+			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
 		
 		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
@@ -91,12 +91,12 @@ function TOOL.BuildCPanel( CPanel )
 	
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "elastic", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.elastic.constant", Command = "elastic_constant", Type = "Float", Min = "0", Max = "4000", Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.elastic.damping", Command = "elastic_damping", Type = "Float", Min = "0", Max = "50", Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.elastic.rdamping", Command = "elastic_rdamping", Type = "Float", Min = "0", Max = "1", Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.elastic.constant", Command = "elastic_constant", Type = "Float", Min = 0, Max = 4000, Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.elastic.damping", Command = "elastic_damping", Type = "Float", Min = 0, Max = 50, Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.elastic.rdamping", Command = "elastic_rdamping", Type = "Float", Min = 0, Max = 1, Help = true } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.elastic.stretchonly", Command = "elastic_stretch_only", Help = true } )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.elastic.width", Command = "elastic_width", Type = "Float", Min = "0", Max = "20" } )
+	CPanel:AddControl( "Slider", { Label = "#tool.elastic.width", Command = "elastic_width", Type = "Float", Min = 0, Max = 20 } )
 	CPanel:AddControl( "RopeMaterial", { Label = "#tool.elastic.material", ConVar = "elastic_material" } )
 
 end

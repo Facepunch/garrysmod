@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Poser"
-TOOL.Name		= "#tool.inflator.name"
+TOOL.Category = "Poser"
+TOOL.Name = "#tool.inflator.name"
 
 TOOL.LeftClickAutomatic = true
 TOOL.RightClickAutomatic = true
