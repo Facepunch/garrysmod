@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Constraints"
-TOOL.Name		= "#tool.slider.name"
+TOOL.Category = "Constraints"
+TOOL.Name = "#tool.slider.name"
 
 TOOL.ClientConVar[ "width" ] = "1.5"
 TOOL.ClientConVar[ "material" ] = "cable/cable"
@@ -26,20 +26,20 @@ function TOOL:LeftClick( trace )
 		end
 		
 		-- Get client's CVars
-		local width		= self:GetClientNumber( "width" ) or 1.5
-		local material	= self:GetClientInfo( "material" )
+		local width = self:GetClientNumber( "width", 1.5 )
+		local material = self:GetClientInfo( "material" )
 		
 		-- Get information we're about to use
-		local Ent1, Ent2 = self:GetEnt( 1 ),		self:GetEnt( 2 )
-		local Bone1, Bone2 = self:GetBone( 1 ),		self:GetBone( 2 )
-		local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
+		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
+		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
+		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 
 		local constraint, rope = constraint.Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 
 		undo.Create( "Slider" )
-		undo.AddEntity( constraint )
-		if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-		undo.SetPlayer( self:GetOwner() )
+			undo.AddEntity( constraint )
+			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
 		
 		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
@@ -71,9 +71,9 @@ function TOOL:RightClick( trace )
 	tr.start = trace.HitPos
 	tr.endpos = tr.start + ( trace.HitNormal * 16384 )
 	tr.filter = {}
-	tr.filter[1] = self:GetOwner()
+	tr.filter[ 1 ] = self:GetOwner()
 	if ( IsValid( trace.Entity ) ) then
-		tr.filter[2] = trace.Entity
+		tr.filter[ 2 ] = trace.Entity
 	end
 	
 	local tr = util.TraceLine( tr )
@@ -105,20 +105,20 @@ function TOOL:RightClick( trace )
 		return true
 	end
 	
-	local width		= self:GetClientNumber( "width" ) or 1.5
-	local material	= self:GetClientInfo( "material" )
+	local width = self:GetClientNumber( "width", 1.5 )
+	local material = self:GetClientInfo( "material" )
 		
 	-- Get information we're about to use
-	local Ent1, Ent2 = self:GetEnt( 1 ),		self:GetEnt( 2 )
-	local Bone1, Bone2 = self:GetBone( 1 ),		self:GetBone( 2 )
+	local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
+	local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 	local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
 
 	local constraint, rope = constraint.Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 
 	undo.Create( "Slider" )
-	undo.AddEntity( constraint )
-	if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-	undo.SetPlayer( self:GetOwner() )
+		undo.AddEntity( constraint )
+		if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+		undo.SetPlayer( self:GetOwner() )
 	undo.Finish()
 	
 	self:GetOwner():AddCleanup( "ropeconstraints", constraint )
@@ -154,7 +154,7 @@ function TOOL.BuildCPanel( CPanel )
 	
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "slider", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.slider.width", Command = "slider_width", Type = "Float", Min = "0", Max = "10" } )
+	CPanel:AddControl( "Slider", { Label = "#tool.slider.width", Command = "slider_width", Type = "Float", Min = 0, Max = 10 } )
 	CPanel:AddControl( "RopeMaterial", { Label = "#tool.slider.material", ConVar = "slider_material" } )
 
 end

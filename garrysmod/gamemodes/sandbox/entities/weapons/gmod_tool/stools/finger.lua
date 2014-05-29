@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Poser"
-TOOL.Name		= "#tool.finger.name"
+TOOL.Category = "Poser"
+TOOL.Name = "#tool.finger.name"
 
 TOOL.RequiresTraceHit = true
 

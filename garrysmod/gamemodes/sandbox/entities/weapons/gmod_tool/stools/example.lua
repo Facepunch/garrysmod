@@ -8,14 +8,13 @@ TOOL.Name		= "#Example"	-- Name to display
 TOOL.Command	= nil			-- Command on click (nil for default), can be removed
 TOOL.ConfigName	= nil			-- Config file name (nil for default), can be removed
 
-if ( true ) then return end
-
+if ( true ) then return end -- Don't actually run anything below, remove this to make everything below functional
 
 -- An example clientside convar
-TOOL.ClientConVar["CLIENTSIDE"] = "default"
+TOOL.ClientConVar[ "CLIENTSIDE" ] = "default"
 
 -- An example serverside convar
-TOOL.ServerConVar["SERVERSIDE"] = "default"
+TOOL.ServerConVar[ "SERVERSIDE" ] = "default"
 
 function TOOL:LeftClick( trace )
 	Msg( "PRIMARY FIRE\n" )

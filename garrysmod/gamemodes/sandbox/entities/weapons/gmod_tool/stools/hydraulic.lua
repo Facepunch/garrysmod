@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Constraints"
-TOOL.Name		= "#tool.hydraulic.name"
+TOOL.Category = "Constraints"
+TOOL.Name = "#tool.hydraulic.name"
 
 TOOL.ClientConVar[ "group" ] = "37"
 TOOL.ClientConVar[ "width" ] = "3"
@@ -37,18 +37,18 @@ function TOOL:LeftClick( trace )
 		end
 		
 		-- Get client's CVars
-		local width		= self:GetClientNumber( "width", 3 )
-		local bind		= self:GetClientNumber( "group", 1 )
-		local AddLength	= self:GetClientNumber( "addlength", 0 )
-		local fixed		= self:GetClientNumber( "fixed", 1 )
-		local speed		= self:GetClientNumber( "speed", 64 )
-		local material	= self:GetClientInfo( "material" )
+		local width = self:GetClientNumber( "width", 3 )
+		local bind = self:GetClientNumber( "group", 1 )
+		local AddLength = self:GetClientNumber( "addlength", 0 )
+		local fixed = self:GetClientNumber( "fixed", 1 )
+		local speed = self:GetClientNumber( "speed", 64 )
+		local material = self:GetClientInfo( "material" )
 		
 		-- Get information we're about to use
-		local Ent1, Ent2 = self:GetEnt( 1 ),		self:GetEnt( 2 )
-		local Bone1, Bone2 = self:GetBone( 1 ),	 	self:GetBone( 2 )
-		local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
-		local WPos1, WPos2 = self:GetPos( 1 ),		self:GetPos( 2 )
+		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
+		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
+		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
+		local WPos1, WPos2 = self:GetPos( 1 ), self:GetPos( 2 )
 
 		local Length1 = ( WPos1 - WPos2 ):Length()
 		local Length2 = Length1 + AddLength
@@ -56,11 +56,11 @@ function TOOL:LeftClick( trace )
 		local constraint, rope, controller, slider = constraint.Hydraulic( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, speed, material )
 
 		undo.Create( "Hydraulic" )
-		if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
-		if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-		if ( IsValid( slider ) ) then undo.AddEntity( slider ) end
-		if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
-		undo.SetPlayer( self:GetOwner() )
+			if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
+			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+			if ( IsValid( slider ) ) then undo.AddEntity( slider ) end
+			if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
+			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
 		
 		if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
@@ -97,9 +97,9 @@ function TOOL:RightClick( trace )
 	tr.start = trace.HitPos
 	tr.endpos = tr.start + ( trace.HitNormal * 16384 )
 	tr.filter = {}
-	tr.filter[1] = self:GetOwner()
+	tr.filter[ 1 ] = self:GetOwner()
 	if ( IsValid( trace.Entity ) ) then
-		tr.filter[2] = trace.Entity
+		tr.filter[ 2 ] = trace.Entity
 	end
 	
 	local tr = util.TraceLine( tr )
@@ -118,6 +118,7 @@ function TOOL:RightClick( trace )
 		self:ClearObjects()
 		return
 	end
+
 	if ( IsValid( tr.Entity ) && tr.Entity:IsPlayer() ) then
 		self:ClearObjects()
 		return
@@ -132,30 +133,30 @@ function TOOL:RightClick( trace )
 	end
 	
 	-- Get client's CVars
-	local width		= self:GetClientNumber( "width", 3 )
-	local bind		= self:GetClientNumber( "group", 1 )
-	local AddLength	= self:GetClientNumber( "addlength", 0 )
-	local fixed		= self:GetClientNumber( "fixed", 1 )
-	local speed		= self:GetClientNumber( "speed", 64 )
-	local material	= self:GetClientInfo( "material" )
+	local width = self:GetClientNumber( "width", 3 )
+	local bind = self:GetClientNumber( "group", 1 )
+	local AddLength = self:GetClientNumber( "addlength", 0 )
+	local fixed = self:GetClientNumber( "fixed", 1 )
+	local speed = self:GetClientNumber( "speed", 64 )
+	local material = self:GetClientInfo( "material" )
 	
 	-- Get information we're about to use
-	local Ent1, Ent2 = self:GetEnt( 1 ),		self:GetEnt( 2 )
-	local Bone1, Bone2 = self:GetBone( 1 ),		self:GetBone( 2 )
-	local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
-	local WPos1, WPos2 = self:GetPos( 1 ),		self:GetPos( 2 )
+	local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
+	local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
+	local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
+	local WPos1, WPos2 = self:GetPos( 1 ), self:GetPos( 2 )
 
 	local Length1 = ( WPos1 - WPos2 ):Length()
 	local Length2 = Length1 + AddLength
 
 	local constraint, rope, controller, slider = constraint.Hydraulic( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, speed, material )
 
-	undo.Create("Hydraulic")
-	if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
-	if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-	if ( IsValid( slider ) ) then undo.AddEntity( slider ) end
-	if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
-	undo.SetPlayer( self:GetOwner() )
+	undo.Create( "Hydraulic" )
+		if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
+		if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+		if ( IsValid( slider ) ) then undo.AddEntity( slider ) end
+		if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
+		undo.SetPlayer( self:GetOwner() )
 	undo.Finish()
 	
 	if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
@@ -194,11 +195,11 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "hydraulic", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.hydraulic.controls", Command = "hydraulic_group" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.addlength", Command = "hydraulic_addlength", Type = "Float", Min = "-1000", Max = "1000", Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.speed", Command = "hydraulic_speed", Type = "Float", Min = "0", Max = "50", Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.addlength", Command = "hydraulic_addlength", Type = "Float", Min = -1000, Max = 1000, Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.speed", Command = "hydraulic_speed", Type = "Float", Min = 0, Max = 50, Help = true } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.hydraulic.fixed", Command = "hydraulic_fixed", Help = true } )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.width", Command = "hydraulic_width", Type = "Float", Min = "0", Max = "5" } )
+	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.width", Command = "hydraulic_width", Type = "Float", Min = 0, Max = 5 } )
 	CPanel:AddControl( "RopeMaterial", { Label = "#tool.hydraulic.material", ConVar = "hydraulic_material" } )
 
 end

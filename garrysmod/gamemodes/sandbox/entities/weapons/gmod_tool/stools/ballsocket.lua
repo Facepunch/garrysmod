@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Constraints"
-TOOL.Name		= "#tool.ballsocket.name"
+TOOL.Category = "Constraints"
+TOOL.Name = "#tool.ballsocket.name"
 
 TOOL.ClientConVar[ "forcelimit" ] = "0"
 TOOL.ClientConVar[ "torquelimit" ] = "0"
@@ -27,9 +27,9 @@ function TOOL:LeftClick( trace )
 		end
 		
 		-- Get client's CVars
-		local nocollide 	= self:GetClientNumber( "nocollide", 0 )
-		local forcelimit 	= self:GetClientNumber( "forcelimit", 0 )
-		local torquelimit	= self:GetClientNumber( "torquelimit", 0 )
+		local nocollide = self:GetClientNumber( "nocollide", 0 )
+		local forcelimit = self:GetClientNumber( "forcelimit", 0 )
+		local torquelimit = self:GetClientNumber( "torquelimit", 0 )
 
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
@@ -39,8 +39,8 @@ function TOOL:LeftClick( trace )
 		local constraint = constraint.Ballsocket( Ent1, Ent2, Bone1, Bone2, LPos, forcelimit, torquelimit, nocollide )
 
 		undo.Create( "BallSocket" )
-		undo.AddEntity( constraint )
-		undo.SetPlayer( self:GetOwner() )
+			undo.AddEntity( constraint )
+			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
 		
 		self:GetOwner():AddCleanup( "constraints", constraint )
@@ -81,8 +81,8 @@ function TOOL.BuildCPanel( CPanel )
 	
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "ballsocket", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "ballsocket_forcelimit", Type = "Float", Min = "0", Max = "50000", Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "ballsocket_torquelimit", Type = "Float", Min = "0", Max = "50000", Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "ballsocket_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "ballsocket_torquelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "ballsocket_nocollide", Help = true } )
 
 end

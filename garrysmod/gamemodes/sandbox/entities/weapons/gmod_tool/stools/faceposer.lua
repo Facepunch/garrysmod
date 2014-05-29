@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Poser"
-TOOL.Name		= "#tool.faceposer.name"
+TOOL.Category = "Poser"
+TOOL.Name = "#tool.faceposer.name"
 
 local gLastFacePoseEntity = NULL
 TOOL.FaceTimer = 0
@@ -91,11 +91,11 @@ function TOOL:RightClick( trace )
 	
 		-- This stops it applying the current sliders to the newly selected face..
 		-- it should probably be linked to the ping somehow.. but 1 second seems pretty safe
-		self.FaceTimer = CurTime() + 1	
+		self.FaceTimer = CurTime() + 1
 		
 		-- In multiplayer the rest is only done on the client to save bandwidth.
 		-- We can't do that in single player because these functions don't get called on the client
-		if ( !game.SinglePlayer() ) then return end		
+		if ( !game.SinglePlayer() ) then return end
 
 	end
 	
@@ -235,7 +235,7 @@ if ( CLIENT ) then
 			faceposer_flex15 = "0.5"
 		} )
 		
-		QuickFace:AddMaterialEx( "#faceposer.normaleyebrows", "vgui/face/normal_eyebrows", nil, {			
+		QuickFace:AddMaterialEx( "#faceposer.normaleyebrows", "vgui/face/normal_eyebrows", nil, {
 			faceposer_flex10 = "0",
 			faceposer_flex11 = "0",
 			faceposer_flex12 = "0",
@@ -337,7 +337,7 @@ if ( CLIENT ) then
 		
 		CPanel:AddItem( QuickFace )
 
-		CPanel:AddControl( "Slider", { Label = "#tool.faceposer.scale", Command = "faceposer_scale", Type = "Float", Min = "-5", Max = "5", Help = true } )
+		CPanel:AddControl( "Slider", { Label = "#tool.faceposer.scale", Command = "faceposer_scale", Type = "Float", Min = -5, Max = 5, Help = true } )
 		CPanel:AddControl( "Button", { Text = "#tool.faceposer.randomize", Command = "faceposer_randomize" } )
 
 		for i=0, FaceEntity:GetFlexNum() - 1 do

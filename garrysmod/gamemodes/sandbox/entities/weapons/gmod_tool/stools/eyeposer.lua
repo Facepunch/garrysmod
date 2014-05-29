@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Poser"
-TOOL.Name		= "#tool.eyeposer.name"
+TOOL.Category = "Poser"
+TOOL.Name = "#tool.eyeposer.name"
 
 local function ConvertRelativeToEyesAttachment( Entity, Pos )
 
@@ -31,8 +31,11 @@ function TOOL:LeftClick( trace )
 	
 		self.SelectedEntity = trace.Entity
 		
+		local eyeattachment = self.SelectedEntity:LookupAttachment( "eyes" )
+		if ( eyeattachment == 0 ) then return end
+		
 		self:GetWeapon():SetNetworkedEntity( 0, self.SelectedEntity )
-	
+
 	return true end
 
 	local selectedent = self.SelectedEntity

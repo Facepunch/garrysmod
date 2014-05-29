@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Constraints"
-TOOL.Name		= "#tool.motor.name"
+TOOL.Category = "Constraints"
+TOOL.Name = "#tool.motor.name"
 
 TOOL.ClientConVar[ "torque" ] = "500"
 TOOL.ClientConVar[ "friction" ] = "1"
@@ -42,19 +42,19 @@ function TOOL:LeftClick( trace )
 		end
 		
 		-- Get client's CVars
-		local torque	= self:GetClientNumber( "torque" )
-		local friction 	= self:GetClientNumber( "friction" )
-		local nocollide	= self:GetClientNumber( "nocollide" )
-		local time		= self:GetClientNumber( "forcetime" )
-		local forekey	= self:GetClientNumber( "fwd" )
-		local backkey	= self:GetClientNumber( "bwd" )
-		local toggle	= self:GetClientNumber( "toggle" )
-		local limit		= self:GetClientNumber( "forcelimit" )
+		local torque = self:GetClientNumber( "torque" )
+		local friction = self:GetClientNumber( "friction" )
+		local nocollide = self:GetClientNumber( "nocollide" )
+		local time = self:GetClientNumber( "forcetime" )
+		local forekey = self:GetClientNumber( "fwd" )
+		local backkey = self:GetClientNumber( "bwd" )
+		local toggle = self:GetClientNumber( "toggle" )
+		local limit = self:GetClientNumber( "forcelimit" )
 		
-		local Ent1, Ent2 = self:GetEnt( 1 ),		self:GetEnt( 2 )
-		local Bone1, Bone2 = self:GetBone( 1 ),		self:GetBone( 2 )
-		local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
-		local Norm1, Norm2 = self:GetNormal( 1 ),	self:GetNormal( 2 )
+		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
+		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
+		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
+		local Norm1, Norm2 = self:GetNormal( 1 ), self:GetNormal( 2 )
 		local Phys1 = self:GetPhys( 1 )
 		local WPos2 = self:GetPos( 2 )
 		
@@ -79,9 +79,9 @@ function TOOL:LeftClick( trace )
 		local constraint, axis = constraint.Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, time, nocollide, toggle, self:GetOwner(), limit, forekey, backkey, 1 )
 
 		undo.Create( "Motor" )
-		undo.AddEntity( axis )
-		undo.AddEntity( constraint )
-		undo.SetPlayer( self:GetOwner() )
+			undo.AddEntity( axis )
+			undo.AddEntity( constraint )
+			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
 		
 		self:GetOwner():AddCleanup( "constraints", axis )
@@ -134,10 +134,10 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "motor", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.motor.numpad1", Command = "motor_fwd", Label2 = "#tool.motor.numpad2", Command2 = "motor_bwd" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.motor.torque", Command = "motor_torque", Type = "Float", Min = "0", Max = "10000" } )
-	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "motor_forcelimit", Type = "Float", Min = "0", Max = "50000", Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.hingefriction", Command = "motor_friction", Type = "Float", Min = "0", Max = "100", Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.motor.forcetime", Command = "motor_forcetime", Type = "Float", Min = "0", Max = "120", Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.motor.torque", Command = "motor_torque", Type = "Float", Min = 0, Max = 10000 } )
+	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "motor_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.hingefriction", Command = "motor_friction", Type = "Float", Min = 0, Max = 100, Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.motor.forcetime", Command = "motor_forcetime", Type = "Float", Min = 0, Max = 120, Help = true } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "motor_nocollide", Help = true } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.toggle", Command = "motor_toggle", Help = true } )
 
