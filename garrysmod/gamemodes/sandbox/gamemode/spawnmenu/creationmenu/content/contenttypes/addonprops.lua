@@ -7,9 +7,9 @@ local function AddRecursive( pnl, folder, path, wildcard )
 		
 		if ( !string.EndsWith( v, ".mdl" ) ) then continue end
 
-		local cp = spawnmenu.GetContentType( "model" );
-		if ( cp ) then 
-			cp( pnl, { model = folder .. v } ) 
+		local cp = spawnmenu.GetContentType( "model" )
+		if ( cp ) then
+			cp( pnl, { model = folder .. v } )
 		end
 
 	end
@@ -26,27 +26,24 @@ end
 hook.Add( "PopulateContent", "AddonProps", function( pnlContent, tree, node )
 
 	local ViewPanel = vgui.Create( "ContentContainer", pnlContent )
-	ViewPanel:SetVisible( false );
+	ViewPanel:SetVisible( false )
 
-	local MyNode = node:AddNode( "#spawnmenu.category.addons", "icon16/folder_database.png" );
+	local MyNode = node:AddNode( "#spawnmenu.category.addons", "icon16/folder_database.png" )
 
-		local addons = engine.GetAddons()
-		for _, addon in SortedPairs( addons ) do
-		
-			if ( !addon.downloaded ) then continue end
-			if ( !addon.mounted ) then continue end
+	for _, addon in SortedPairsByMemberValue( engine.GetAddons(), "title" ) do
+	
+		if ( !addon.downloaded || !addon.mounted ) then continue end
+		if ( addon.models <= 0 ) then continue end
 
-			if ( addon.models <= 0 ) then continue end
+		local models = MyNode:AddNode( addon.title .. " ("..addon.models..")", "icon16/bricks.png" )
+		models.DoClick = function()
 
-			local models = MyNode:AddNode( addon.title .. " ("..addon.models..")", "icon16/bricks.png" );
-			models.DoClick = function()
+			ViewPanel:Clear( true )
+			AddRecursive( ViewPanel, "models/", addon.title, "*.mdl" )
+			pnlContent:SwitchPanel( ViewPanel )
 
-				ViewPanel:Clear( true )
-				AddRecursive( ViewPanel, "models/", addon.title, "*.mdl" )
-				pnlContent:SwitchPanel( ViewPanel )
-
-			end
-		
 		end
+	
+	end
 
 end )
