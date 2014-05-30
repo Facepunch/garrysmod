@@ -269,7 +269,7 @@ function LanguageChanged( lang )
 	if ( !IsValid( pnlMainMenu ) ) then return end
 
 	UpdateLanguages();
-	pnlMainMenu:Call( "UpdateLanguage( '"..lang.."' )" );
+	pnlMainMenu:Call( "UpdateLanguage( \""..lang:JavascriptSafe().."\" )" );
 
 end
 
