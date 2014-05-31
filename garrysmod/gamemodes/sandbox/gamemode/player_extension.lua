@@ -26,8 +26,6 @@ function meta:GetCount( str, minus )
 		return self:GetNetworkedInt( "Count."..str, 0 )
 	end
 	
-	minus = minus or 0
-	
 	if ( !self:IsValid() ) then return end
 
 	local key = self:UniqueID()
@@ -52,7 +50,7 @@ function meta:GetCount( str, minus )
 	
 	end
 	
-	self:SetNetworkedInt( "Count."..str, c - minus )
+	self:SetNetworkedInt( "Count."..str, c )
 
 	return c
 
@@ -73,7 +71,7 @@ function meta:AddCount( str, ent )
 		-- Update count (for client)
 		self:GetCount( str )
 		
-		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, str ) ply:GetCount(str, 1) end, self, str )
+		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, str ) ply:GetCount(str) end, self, str )
 	
 	end
 
