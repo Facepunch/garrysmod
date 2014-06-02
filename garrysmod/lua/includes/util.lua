@@ -58,14 +58,16 @@ function PrintTable ( t, indent, done )
 
 	end
 
-	table.sort(keys)
+	table.sort(keys, function(a, b)
+		return tostring(a) < tostring(b)
+	end)
 
 	for i = 1, #keys do
 		key = keys[i]
 		value = t[key]
 		Msg( string.rep ("\t", indent) )
 
-		if  ( istable(value) and not done[value] ) then
+		if  ( istable(value) && !done[value] ) then
 
 			done[value] = true
 			Msg( tostring(key) .. ":" .. "\n" );
