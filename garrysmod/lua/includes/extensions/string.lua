@@ -38,7 +38,7 @@ function string.Explode(separator, str, withpattern)
 	local index,lastPosition = 1,1
 	 
 	-- Escape all magic characters in separator
-	if not withpattern then separator = string_gsub( separator, "[%-%^%$%(%)%%%.%[%]%*%+%-%?]", "%%%1" ) end
+	if not withpattern then separator = string_gsub( separator, "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" ) end
 	 
 	-- Find the parts
 	for startPosition,endPosition in string_gmatch( str, "()" .. separator.."()" ) do
@@ -185,7 +185,7 @@ end
 
 
 function string.Replace( str, tofind, toreplace )
-	tofind = tofind:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%-%?]", "%%%1" )
+	tofind = tofind:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" )
 	toreplace = toreplace:gsub( "%%", "%%%1" )
 	return ( str:gsub( tofind, toreplace ) )
 end
@@ -196,8 +196,8 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.Trim( s, char )
-	if ( !char ) then char = "%s" end
-	return ( s:gsub( "^" .. char .. "*(.-)" .. char .. "*$", "%1" ) )
+	char = char or "%s"
+	return string.match( s, "^" .. char .. "*(.-)" .. char .. "*$" )
 end
 
 --[[---------------------------------------------------------
@@ -206,14 +206,7 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimRight( s, char )
-	if ( !char ) then char = " " end
-	
-	if ( string.sub( s, -1 ) == char ) then
-		s = string.sub( s, 0, -2 )
-		s = string.TrimRight( s, char )
-	end
-	
-	return s
+	return string.match( s, "^(.-)" .. (char or "%s") .. "*$" )
 end
 
 --[[---------------------------------------------------------
@@ -222,14 +215,7 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimLeft( s, char )
-	if ( !char ) then char = " " end
-	
-	if ( string.sub( s, 1 ) == char ) then
-		s = string.sub( s, 1 )
-		s = string.TrimLeft( s, char )
-	end
-	
-	return s
+	return string.match( s, "^" .. (char or "%s") .. "*(.+)$" )
 end
 
 function string.NiceSize( size )
