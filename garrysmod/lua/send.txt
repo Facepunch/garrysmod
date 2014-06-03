@@ -98,6 +98,7 @@ lua\vgui\vgui_panellist.lua
 lua\skins\default.lua
 lua\includes\init.lua
 lua\includes\util.lua
+lua\includes\util\color.lua
 lua\includes\util\sql.lua
 lua\includes\modules\baseclass.lua
 lua\includes\modules\net.lua

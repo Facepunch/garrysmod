@@ -30,7 +30,7 @@ end
 	file
 -----------------------------------------------------------]]
 
-include( "color.lua" )
+include( "util/color.lua" )
 
 --[[---------------------------------------------------------
 	Prints a table to the console
