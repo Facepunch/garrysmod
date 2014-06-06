@@ -274,6 +274,6 @@ end
 -----------------------------------------------------------]]  
 function meta:Remove()
     if SERVER then
-		self:Kick( "Player has been removed from the server." )
+	self:Kick( "Player has been removed from the server." )
     end
 end
