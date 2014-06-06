@@ -10,50 +10,44 @@
 -- The default font used by everything Derma
 --
 
---[[if ( system.IsOSX() ) then
+if ( system.IsLinux() ) then
 
-surface.CreateFont( "DermaDefault",
-{
-	font		= "Helvetica",
-	size		= 13,
-	antialias	= false,
-	weight		= 500
-})
+	surface.CreateFont( "DermaDefault",
+	{
+		font		= "DejaVu Sans",
+		size		= 14,
+		weight		= 500
+	})
 
-surface.CreateFont( "DermaDefaultBold",
-{
-	font		= "Helvetica",
-	size		= 13,
-	antialias	= false,
-	weight		= 800
-})
+	surface.CreateFont( "DermaDefaultBold",
+	{
+		font		= "DejaVu Sans",
+		size		= 14,
+		weight		= 800
+	})
 
+else
 
-else]]
+	surface.CreateFont( "DermaDefault",
+	{
+		font		= "Tahoma",
+		size		= 13,
+		weight		= 500
+	})
 
-surface.CreateFont( "DermaDefault",
-{
-	font		= "Tahoma",
-	size		= 13,
-	antialias	= true,
-	weight		= 500
-})
+	surface.CreateFont( "DermaDefaultBold",
+	{
+		font		= "Tahoma",
+		size		= 13,
+		weight		= 800
+	})
 
-surface.CreateFont( "DermaDefaultBold",
-{
-	font		= "Tahoma",
-	size		= 13,
-	antialias	= false,
-	weight		= 800
-})
-
---end
+end
 
 surface.CreateFont( "DermaLarge",
 {
 	font		= "Roboto",
 	size		= 32,
-	antialias	= true,
 	weight		= 500
 })
 
