@@ -6,6 +6,7 @@ local ErrorNoHalt = ErrorNoHalt
 local baseclass = baseclass
 local setmetatable = setmetatable
 local SERVER = SERVER
+local string = string
 local util = util
 
 module( "player_manager" )
@@ -22,7 +23,7 @@ local HandNames = {}
 function AddValidModel( name, model )
 
 	ModelList[ name ] = model
-	ModelListRev[ model ] = name
+	ModelListRev[ string.lower( model ) ] = name
 
 end
 
@@ -44,7 +45,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Translate the simple name of a model 
+   Translate the simple name of a model
    into the full model name
 -----------------------------------------------------------]]
 function TranslatePlayerModel( name )
@@ -52,17 +53,19 @@ function TranslatePlayerModel( name )
 	if ( ModelList[ name ] != nil ) then
 		return ModelList[ name ]
 	end
-	
+
 	return "models/player/kleiner.mdl"
 end
 
 -- Translate from the full model name to simple model name
 function TranslateToPlayerModelName( model )
 
+	model = string.lower( model )
+
 	if ( ModelListRev[ model ] != nil ) then
 		return ModelListRev[ model ]
 	end
-	
+
 	return "kleiner"
 end
 
@@ -74,7 +77,7 @@ function TranslatePlayerHands( name )
 	if ( HandNames[ name ] != nil ) then
 		return HandNames[ name ]
 	end
-	
+
 	return { model = "models/weapons/c_arms_citizen.mdl", skin = 0, body = "100000000" }
 end
 
@@ -85,7 +88,7 @@ end
 AddValidModel( "alyx",			"models/player/alyx.mdl" )
 AddValidHands( "alyx",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
-AddValidModel( "barney",		"models/player/barney.mdl" )	
+AddValidModel( "barney",		"models/player/barney.mdl" )
 AddValidHands( "barney",		"models/weapons/c_arms_combine.mdl",		0,		"0000000" )
 
 AddValidModel( "breen",			"models/player/breen.mdl" )
@@ -99,20 +102,20 @@ AddValidHands( "chell",			"models/weapons/c_arms_chell.mdl",			0,		"0000000" )
 
 AddValidModel( "corpse",		"models/player/corpse1.mdl" )
 AddValidHands( "corpse",		"models/weapons/c_arms_citizen.mdl",		2,		"0000000" )
-	
+
 AddValidModel( "combine",		"models/player/combine_soldier.mdl" )
 AddValidHands( "combine",		"models/weapons/c_arms_combine.mdl",		0,		"0000000" )
-			
+
 AddValidModel( "combineprison",	"models/player/combine_soldier_prisonguard.mdl" )
 AddValidHands( "combineprison",	"models/weapons/c_arms_combine.mdl",		0,		"0000000" )
 
 AddValidModel( "combineelite",	"models/player/combine_super_soldier.mdl" )
 AddValidHands( "combineelite",	"models/weapons/c_arms_combine.mdl",		0,		"0000000" )
-		
+
 AddValidModel( "eli",			"models/player/eli.mdl" )
 AddValidHands( "eli",			"models/weapons/c_arms_citizen.mdl",		1,		"0000000" )
 
-AddValidModel( "gman",			"models/player/gman_high.mdl" )	
+AddValidModel( "gman",			"models/player/gman_high.mdl" )
 AddValidHands( "gman",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "kleiner",		"models/player/kleiner.mdl" )
@@ -303,7 +306,7 @@ function RegisterClass( name, table, base )
 	Type[ name ] = table;
 
 	--
-	-- If we have a base method then hook 
+	-- If we have a base method then hook
 	-- it up in the meta table
 	--
 	if ( base ) then
@@ -377,7 +380,7 @@ local function LookupPlayerClass( ply )
 		method.Player	= ply
 		method.ClassID	= id
 		method.Func		= function() end
-	
+
 	setmetatable( method, { __index = t } )
 
 	ply.m_CurrentPlayerClass	= method
