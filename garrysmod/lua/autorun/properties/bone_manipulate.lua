@@ -1,105 +1,102 @@
 
 AddCSLuaFile()
 
-properties.Add( "bone_manipulate", 
-{
-	MenuLabel	=	"#edit_bones",
-	Order		=	500,
-	MenuIcon	=	"icon16/vector.png",
+properties.Add( "bone_manipulate", {
+	MenuLabel = "#edit_bones",
+	Order = 500,
+	MenuIcon = "icon16/vector.png",
 	
-	Filter		=	function( self, ent, ply ) 
+	Filter = function( self, ent, ply ) 
 	
-						if ( !gamemode.Call( "CanProperty", ply, "bonemanipulate", ent ) ) then return false end
+		if ( !gamemode.Call( "CanProperty", ply, "bonemanipulate", ent ) ) then return false end
 
-						local bonecount = ent:GetBoneCount()
-						if ( !bonecount || bonecount <= 1 ) then return false end
-						return ents.FindByClassAndParent( "widget_bones", ent ) == nil
-						
-					end,
-					
-	Action		=	function( self, ent )
+		local bonecount = ent:GetBoneCount()
+		if ( !bonecount || bonecount <= 1 ) then return false end
+		return ents.FindByClassAndParent( "widget_bones", ent ) == nil
+		
+	end,
+
+	Action = function( self, ent )
 	
-						self:MsgStart()
-							net.WriteEntity( ent )
-						self:MsgEnd()
-						
-					end,
-					
-	Receive		=	function( self, length, player )
-					
-						local ent = net.ReadEntity()
-						if ( !IsValid( ent ) ) then return end
-						if ( !self:Filter( ent, player ) ) then return end
-						
-						ent.widget = ents.Create( "widget_bones" )
-							ent.widget:Setup( ent )
-							ent.widget:Spawn()
-							ent.widget.LastBonePress = 0
-							ent.widget.BonePressCount = 0
-							
-							-- What happens when we click on a bone?
-							ent.widget.OnBoneClick =	function( w, boneid, ply )
-													
-														-- If we have an old axis, remove it		
-														if ( IsValid( w.axis ) ) then w.axis:Remove() end
-														
-														--  We clicked on the same bone
-														if ( w.LastBonePress == boneid ) then
-															w.BonePressCount = w.BonePressCount + 1
-															if ( w.BonePressCount >= 3 ) then w.BonePressCount = 0 end
-														-- We clicked on a new bone!
-														else
-															w.BonePressCount = 0
-															w.LastBonePress = boneid
-														end
-														
-														local EntityCycle = { "widget_bonemanip_move", "widget_bonemanip_rotate", "widget_bonemanip_scale" }
-																
-														w.axis = ents.Create( EntityCycle[ w.BonePressCount + 1 ] )
-															w.axis:Setup( ent, boneid, w.BonePressCount == 1 )
-															w.axis:Spawn()
-															w.axis:SetPriority( 0.5 )
-															w:DeleteOnRemove( w.axis )
+		self:MsgStart()
+			net.WriteEntity( ent )
+		self:MsgEnd()
+		
+	end,
 
-													end
-					end				
+	Receive = function( self, length, player )
 
-});
+		local ent = net.ReadEntity()
+		if ( !IsValid( ent ) ) then return end
+		if ( !self:Filter( ent, player ) ) then return end
+		
+		ent.widget = ents.Create( "widget_bones" )
+		ent.widget:Setup( ent )
+		ent.widget:Spawn()
+		ent.widget.LastBonePress = 0
+		ent.widget.BonePressCount = 0
 
-properties.Add( "bone_manipulate_end", 
-{
-	MenuLabel	=	"#stop_editing_bones",
-	Order		=	-100,
-	MenuIcon	=	"icon16/vector_delete.png",
+		-- What happens when we click on a bone?
+		ent.widget.OnBoneClick =	function( w, boneid, ply )
 
-	Filter		=	function( self, ent ) 
-	
-						return ents.FindByClassAndParent( "widget_bones", ent ) != nil
+			-- If we have an old axis, remove it		
+			if ( IsValid( w.axis ) ) then w.axis:Remove() end
+			
+			--  We clicked on the same bone
+			if ( w.LastBonePress == boneid ) then
+				w.BonePressCount = w.BonePressCount + 1
+				if ( w.BonePressCount >= 3 ) then w.BonePressCount = 0 end
+			-- We clicked on a new bone!
+			else
+				w.BonePressCount = 0
+				w.LastBonePress = boneid
+			end
+			
+			local EntityCycle = { "widget_bonemanip_move", "widget_bonemanip_rotate", "widget_bonemanip_scale" }
 
-					end,
-					
-	Action		=	function( self, ent )
-	
-						self:MsgStart()
-							net.WriteEntity( ent )
-						self:MsgEnd()
-						
-					end,
-					
-	Receive		=	function( self, length, player )
-					
-						local ent = net.ReadEntity()
-						if ( !IsValid( ent ) ) then return end
-						if ( !IsValid( ent.widget ) ) then return end
-						
-						ent.widget:Remove()
-						
-					end		
-});
+			w.axis = ents.Create( EntityCycle[ w.BonePressCount + 1 ] )
+			w.axis:Setup( ent, boneid, w.BonePressCount == 1 )
+			w.axis:Spawn()
+			w.axis:SetPriority( 0.5 )
+			w:DeleteOnRemove( w.axis )
+
+		end
+	end				
+
+} )
+
+properties.Add( "bone_manipulate_end", {
+	MenuLabel = "#stop_editing_bones",
+	Order = 500,
+	MenuIcon = "icon16/vector_delete.png",
+
+	Filter = function( self, ent ) 
+
+		return ents.FindByClassAndParent( "widget_bones", ent ) != nil
+
+	end,
+
+	Action = function( self, ent )
+
+		self:MsgStart()
+			net.WriteEntity( ent )
+		self:MsgEnd()
+		
+	end,
+
+	Receive = function( self, length, player )
+
+		local ent = net.ReadEntity()
+		if ( !IsValid( ent ) ) then return end
+		if ( !IsValid( ent.widget ) ) then return end
+		
+		ent.widget:Remove()
+		
+	end
+} )
 
 
-local widget_bonemanip_move = 
-{
+local widget_bonemanip_move = {
 	Base = "widget_axis",
 	
 	OnArrowDragged = function( self, num, dist, pl, mv )
@@ -141,8 +138,7 @@ local widget_bonemanip_move =
 
 scripted_ents.Register( widget_bonemanip_move, "widget_bonemanip_move" )
 
-local widget_bonemanip_rotate = 
-{
+local widget_bonemanip_rotate = {
 	Base = "widget_axis",
 	
 	OnArrowDragged = function( self, num, dist, pl, mv )
@@ -165,13 +161,9 @@ local widget_bonemanip_rotate =
 		
 	end
 }
-
 scripted_ents.Register( widget_bonemanip_rotate, "widget_bonemanip_rotate" )
 
-
-
-local widget_bonemanip_scale = 
-{
+local widget_bonemanip_scale = {
 	Base = "widget_axis",
 	
 	OnArrowDragged = function( self, num, dist, pl, mv )
@@ -215,5 +207,4 @@ local widget_bonemanip_scale =
 	
 	end
 }
-
 scripted_ents.Register( widget_bonemanip_scale, "widget_bonemanip_scale" )
