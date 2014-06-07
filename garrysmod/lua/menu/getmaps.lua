@@ -202,7 +202,7 @@ end
 
 local IgnoreMaps = {
 	"background", "^test_", "^styleguide", "^devtest", "sdk_shader_samples", "^vst_",
-	"d2_coast_02", "c4a1y" // Do not load
+	"d2_coast_02", "c4a1y", // Do not load
 	"d3_c17_02_camera", "ep1_citadel_00_demo", "credits", "intro"
 }
 
