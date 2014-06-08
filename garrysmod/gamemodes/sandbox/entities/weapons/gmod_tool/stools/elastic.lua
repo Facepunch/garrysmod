@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Constraints"
-TOOL.Name		= "#tool.elastic.name"
+TOOL.Category = "Constraints"
+TOOL.Name = "#tool.elastic.name"
 
 TOOL.ClientConVar[ "constant" ] = "500"
 TOOL.ClientConVar[ "damping" ] = "3"
