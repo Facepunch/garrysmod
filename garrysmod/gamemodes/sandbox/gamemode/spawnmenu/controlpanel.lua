@@ -86,9 +86,18 @@ function PANEL:FillViaTable( Table )
 	--
 	if ( Table.ControlPanelBuildFunction ) then
 
-		Table.ControlPanelBuildFunction( self )
+		self:FillViaFunction( Table.ControlPanelBuildFunction )
 
 	end
+
+end
+
+--[[---------------------------------------------------------
+	Name: FillViaFunction
+-----------------------------------------------------------]]
+function PANEL:FillViaFunction( func )
+
+	func( self )
 
 end
 

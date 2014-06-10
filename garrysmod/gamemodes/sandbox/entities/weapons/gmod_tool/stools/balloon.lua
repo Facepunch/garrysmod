@@ -1,6 +1,6 @@
 
-TOOL.Category	= "Construction"
-TOOL.Name		= "#tool.balloon.name"
+TOOL.Category = "Construction"
+TOOL.Name = "#tool.balloon.name"
 
 TOOL.ClientConVar[ "ropelength" ] = "64"
 TOOL.ClientConVar[ "force" ] = "500"
