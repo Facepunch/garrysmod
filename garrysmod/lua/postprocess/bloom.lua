@@ -12,7 +12,7 @@ mat_Downsample:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 --[[---------------------------------------------------------
    Register the convars that will control this effect
 -----------------------------------------------------------]]
-local pp_bloom 			= CreateClientConVar( "pp_bloom", 			"0", 	true, 	false ) -- On/Off
+local pp_bloom 			= CreateClientConVar( "pp_bloom", 			"0", 	false, 	false ) -- On/Off
 local pp_bloom_darken 	= CreateClientConVar( "pp_bloom_darken", 	"0.65", true, 	false ) -- Decides the strength of the bloom
 local pp_bloom_multiply = CreateClientConVar( "pp_bloom_multiply", 	"1.0", 	true, 	false )	-- Decides the strength of the bloom
 local pp_bloom_sizex 	= CreateClientConVar( "pp_bloom_sizex", 	"4.0", 	true, 	false ) -- Horizontal blur size

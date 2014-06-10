@@ -3,8 +3,8 @@ local SobelMaterial = Material( "pp/sobel" )
 SobelMaterial:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 
 -- convars
+local pp_sobel = CreateClientConVar( "pp_sobel", "0", false, false )
 local pp_sobel_threshold = CreateClientConVar( "pp_sobel_threshold", "0.11", true, false )
-local pp_sobel = CreateClientConVar( "pp_sobel", "0", true, false )
 
 --[[------------------------------------
 	DrawSobel()

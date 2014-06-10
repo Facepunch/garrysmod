@@ -2,7 +2,7 @@
 --[[---------------------------------------------------------
    Register the convars that will control this effect
 -----------------------------------------------------------]]
-local pp_stereoscopy		= CreateClientConVar( "pp_stereoscopy", "0", true, false ) -- On/Off
+local pp_stereoscopy		= CreateClientConVar( "pp_stereoscopy", "0", false, false )
 local pp_stereoscopy_size	= CreateClientConVar( "pp_stereoscopy_size", "6", true, false )
 
 

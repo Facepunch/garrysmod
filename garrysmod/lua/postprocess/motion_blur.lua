@@ -6,7 +6,7 @@ local tex_MotionBlur	= render.GetMoBlurTex0()
 --[[---------------------------------------------------------
    Register the convars that will control this effect
 -----------------------------------------------------------]]
-local pp_motionblur 			= CreateClientConVar( "pp_motionblur", "0", true, false )
+local pp_motionblur 			= CreateClientConVar( "pp_motionblur", "0", false, false )
 local pp_motionblur_addalpha 	= CreateClientConVar( "pp_motionblur_addalpha", "0.2", true, false )
 local pp_motionblur_drawalpha	= CreateClientConVar( "pp_motionblur_drawalpha", "0.99", true, false )
 local pp_motionblur_delay		= CreateClientConVar( "pp_motionblur_delay", "0.05", true, false )

@@ -2,7 +2,7 @@
 --[[---------------------------------------------------------
    Register the convars that will control this effect
 -----------------------------------------------------------]]
-local pp_mat_overlay 				= CreateClientConVar( "pp_mat_overlay", "", true, false )
+local pp_mat_overlay 				= CreateClientConVar( "pp_mat_overlay", "", false, false )
 local pp_mat_overlay_refractamount	= CreateClientConVar( "pp_mat_overlay_refractamount", "0.3", true, false )
 
 local lastTexture = nil

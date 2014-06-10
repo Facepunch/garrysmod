@@ -5,7 +5,7 @@ _Material:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 --[[---------------------------------------------------------
    Register the convars that will control this effect
 -----------------------------------------------------------]]   
-local pp_toytown		= CreateClientConVar( "pp_toytown", 		"0",	true, false )
+local pp_toytown		= CreateClientConVar( "pp_toytown", 		"0",	false, false )
 local pp_toytown_passes	= CreateClientConVar( "pp_toytown_passes", 	"3",	true, false )
 local pp_toytown_size	= CreateClientConVar( "pp_toytown_size", 	"0.4",	true, false )
 

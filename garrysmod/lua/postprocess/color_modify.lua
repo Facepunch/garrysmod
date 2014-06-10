@@ -6,7 +6,7 @@ mat_ColorMod:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 --[[---------------------------------------------------------
    Register the convars that will control this effect
 -----------------------------------------------------------]]
-local pp_colormod 				= CreateClientConVar( "pp_colormod", "0", true, false )
+local pp_colormod 				= CreateClientConVar( "pp_colormod", "0", false, false )
 local pp_colormod_addr 			= CreateClientConVar( "pp_colormod_addr", "0", true, false )
 local pp_colormod_addg			= CreateClientConVar( "pp_colormod_addg", "0", true, false )
 local pp_colormod_addb			= CreateClientConVar( "pp_colormod_addb", "0", true, false )

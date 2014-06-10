@@ -5,9 +5,9 @@ _Material:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 --[[---------------------------------------------------------
    Register the convars that will control this effect
 -----------------------------------------------------------]]
+local pp_sharpen			= CreateClientConVar( "pp_sharpen", "0", false, false )
 local pp_sharpen_contrast	= CreateClientConVar( "pp_sharpen_contrast", "1", true, false )
 local pp_sharpen_distance	= CreateClientConVar( "pp_sharpen_distance", "1", true, false )
-local pp_sharpen			= CreateClientConVar( "pp_sharpen", "0", true, false )
 
 
 function DrawSharpen( contrast, distance )
