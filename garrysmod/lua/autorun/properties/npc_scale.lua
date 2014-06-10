@@ -1,72 +1,70 @@
 
 AddCSLuaFile()
 
-properties.Add( "npc_bigger", 
-{
-	MenuLabel	=	"#biggify",
-	Order		=	1799,
-	MenuIcon	=	"icon16/magnifier_zoom_in.png",
+properties.Add( "npc_bigger", {
+	MenuLabel = "#biggify",
+	Order = 1799,
+	MenuIcon = "icon16/magnifier_zoom_in.png",
 	
-	Filter		=	function( self, ent, ply ) 
-				
-						if ( !gamemode.Call( "CanProperty", ply, "npc_bigger", ent ) ) then return false end
-						if ( !IsValid( ent ) ) then return false end
-						if ( !ent:IsNPC() ) then return false end
+	Filter = function( self, ent, ply ) 
 
-						return true 
+		if ( !gamemode.Call( "CanProperty", ply, "npc_bigger", ent ) ) then return false end
+		if ( !IsValid( ent ) ) then return false end
+		if ( !ent:IsNPC() ) then return false end
 
-					end,
-					
-	Action		=	function( self, ent )
+		return true 
+
+	end,
+
+	Action = function( self, ent )
+
+		self:MsgStart()
+			net.WriteEntity( ent )
+		self:MsgEnd()
+		
+	end,
 	
-						self:MsgStart()
-							net.WriteEntity( ent )
-						self:MsgEnd()
-						
-					end,
-					
-	Receive		=	function( self, length, player )
-					
-						local ent = net.ReadEntity()
-						if ( !self:Filter( ent, player ) ) then return false end
-
-						ent:SetModelScale( ent:GetModelScale() * 1.25, 1 );
-						
-					end	
-
-});
-
-properties.Add( "npc_smaller", 
-{
-	MenuLabel	=	"#smallify",
-	Order		=	1800,
-	MenuIcon	=	"icon16/magifier_zoom_out.png",
+	Receive = function( self, length, player )
 	
-	Filter		=	function( self, ent, ply ) 
-				
-						if ( !gamemode.Call( "CanProperty", ply, "npc_smaller", ent ) ) then return false end
-						if ( !IsValid( ent ) ) then return false end
-						if ( !ent:IsNPC() ) then return false end
+		local ent = net.ReadEntity()
+		if ( !self:Filter( ent, player ) ) then return false end
 
-						return true 
+		ent:SetModelScale( ent:GetModelScale() * 1.25, 1 )
+		
+	end	
 
-					end,
-					
-	Action		=	function( self, ent )
+} )
+
+properties.Add( "npc_smaller", {
+	MenuLabel = "#smallify",
+	Order = 1800,
+	MenuIcon = "icon16/magifier_zoom_out.png",
 	
-						self:MsgStart()
-							net.WriteEntity( ent )
-						self:MsgEnd()
-						
-					end,
-					
-	Receive		=	function( self, length, player )
-					
-						local ent = net.ReadEntity()
-						if ( !self:Filter( ent, player ) ) then return false end
+	Filter = function( self, ent, ply ) 
 
-						ent:SetModelScale( ent:GetModelScale() * 0.8, 1 );
-						
-					end	
+		if ( !gamemode.Call( "CanProperty", ply, "npc_smaller", ent ) ) then return false end
+		if ( !IsValid( ent ) ) then return false end
+		if ( !ent:IsNPC() ) then return false end
 
-});
+		return true 
+
+	end,
+	
+	Action = function( self, ent )
+
+		self:MsgStart()
+			net.WriteEntity( ent )
+		self:MsgEnd()
+		
+	end,
+	
+	Receive = function( self, length, player )
+	
+		local ent = net.ReadEntity()
+		if ( !self:Filter( ent, player ) ) then return false end
+
+		ent:SetModelScale( ent:GetModelScale() * 0.8, 1 )
+		
+	end	
+
+} )

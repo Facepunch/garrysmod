@@ -1,36 +1,35 @@
 AddCSLuaFile()
 
-properties.Add( "bodygroups", 
-{
-	MenuLabel	=	"#bodygroups",
-	Order		=	600,
-	MenuIcon	=	"icon16/link_edit.png",
+properties.Add( "bodygroups", {
+	MenuLabel = "bodygroups",
+	Order = 600,
+	MenuIcon = "icon16/link_edit.png",
 	
-	Filter		=	function( self, ent, ply ) 
+	Filter = function( self, ent, ply ) 
 
-						if ( !IsValid( ent ) ) then return false end
-						if ( ent:IsPlayer() ) then return false end
-						if ( !gamemode.Call( "CanProperty", ply, "bodygroups", ent ) ) then return false end
+		if ( !IsValid( ent ) ) then return false end
+		if ( ent:IsPlayer() ) then return false end
+		if ( !gamemode.Call( "CanProperty", ply, "bodygroups", ent ) ) then return false end
 
-						--
-						-- Get a list of bodygroups
-						--
-						local options = ent:GetBodyGroups();
-						if ( !options ) then return false end
+		--
+		-- Get a list of bodygroups
+		--
+		local options = ent:GetBodyGroups();
+		if ( !options ) then return false end
 
-						--
-						-- If a bodygroup has more than one state - then we can configure it
-						--
-						for k, v in pairs( options ) do
+		--
+		-- If a bodygroup has more than one state - then we can configure it
+		--
+		for k, v in pairs( options ) do
 
-							if ( v.num > 1 ) then return true end
-						end
+			if ( v.num > 1 ) then return true end
+		end
 
-						return false
+		return false
 
-					end,
+	end,
 
-	MenuOpen	=	function( self, option, ent, tr )
+	MenuOpen = function( self, option, ent, tr )
 
 		--
 		-- Get a list of bodygroups
@@ -83,36 +82,34 @@ properties.Add( "bodygroups",
 
 		end
 
+	end,
+
+	Action = function( self, ent )
+
+		-- Nothing - we use SetBodyGroup below
 		
+	end,
+
+	SetBodyGroup = function( self, ent, body, id )
+
+		self:MsgStart()
+			net.WriteEntity( ent )
+			net.WriteUInt( body, 8 )
+			net.WriteUInt( id, 8 )
+		self:MsgEnd()
 
 	end,
-					
-	Action		=	function( self, ent )
+
+	Receive = function( self, length, player )
 	
-						-- Nothing - we use SetBodyGroup below
-						
-					end,
+		local ent = net.ReadEntity()
+		local body = net.ReadUInt( 8 )
+		local id = net.ReadUInt( 8 )
+		
+		if ( !self:Filter( ent, player ) ) then return end
 
-	SetBodyGroup =	function( self, ent, body, id )
+		ent:SetBodygroup( body, id )
+		
+	end	
 
-						self:MsgStart()
-							net.WriteEntity( ent )
-							net.WriteUInt( body, 8 )
-							net.WriteUInt( id, 8 )
-						self:MsgEnd()
-
-					end,
-					
-	Receive		=	function( self, length, player )
-					
-						local ent		= net.ReadEntity()
-						local body		= net.ReadUInt( 8 )
-						local id		= net.ReadUInt( 8 )
-						
-						if ( !self:Filter( ent, player ) ) then return end
-																	
-						ent:SetBodygroup( body, id )
-						
-					end	
-
-});
+} )
