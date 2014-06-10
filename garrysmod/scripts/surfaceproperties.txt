@@ -697,6 +697,9 @@
 	"base"		"dirt"
 	"density"	"800"
 	"friction"	"0.35"
+	
+	"stepleft"		"Snow.StepLeft"
+	"stepright"		"Snow.StepRight"
 
 	"audiohardnessfactor" "0.25"
 }
