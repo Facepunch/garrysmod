@@ -3,7 +3,7 @@ if ( CLIENT ) then return end
 
 hook.Add( "ShutDown", "SavePersistenceOnShutdown", function() hook.Run( "PersistenceSave" ) end )
 
-hook.Add( "PersistenceSave", "PersistenceSave", function() 
+hook.Add( "PersistenceSave", "PersistenceSave", function()
 
 	local PersistPage = GetConVarString( "sbox_persist" )
 	if ( PersistPage == "0" ) then return end
@@ -24,13 +24,13 @@ hook.Add( "PersistenceSave", "PersistenceSave", function()
 	local out = util.TableToJSON( tab )
 
 	file.CreateDir( "persist" )
-	file.Write( "persist/"..game.GetMap().."_"..PersistPage..".txt", out )
+	file.Write( "persist/" .. game.GetMap() .. "_" .. PersistPage .. ".txt", out )
 	
 end )
 
-hook.Add( "PersistenceLoad", "PersistenceLoad", function( name ) 
+hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
 
-	local file = file.Read( "persist/"..game.GetMap().."_"..name..".txt", out )
+	local file = file.Read( "persist/" .. game.GetMap() .. "_" .. name .. ".txt" )
 	if ( !file ) then return end
 
 	local tab = util.JSONToTable( file )
@@ -46,7 +46,7 @@ hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
 
 end )
 
-hook.Add( "InitPostEntity", "PersistenceInit", function() 
+hook.Add( "InitPostEntity", "PersistenceInit", function()
 
 	local PersistPage = GetConVarString( "sbox_persist" )
 	if ( PersistPage == "0" ) then return end
