@@ -71,6 +71,7 @@ function GM:InitPostEntity()
 
    timer.Create("cache_ents", 1, 0, GAMEMODE.DoCacheEnts)
 
+   RunConsoleCommand("_ttt_request_rolelist")
    RunConsoleCommand("_ttt_request_serverlang")
 end
 
@@ -192,7 +193,7 @@ local function ReceiveRoleList()
             ply.traitor_gvoice = false -- assume traitorchat by default
          end
 
-         --print(ply, "is", RoleToString(ply))
+         --print(ply, "is", ply:GetRoleString())
       end
    end
 end
@@ -307,7 +308,7 @@ function GM:CalcView( ply, origin, angles, fov )
    local wep = ply:GetActiveWeapon()
    if IsValid(wep) then
 
-	-- viewmodel repositioning is now done in GM:CalcViewModelView
+   -- viewmodel repositioning is now done in GM:CalcViewModelView
 --[[
       local func = wep.GetViewModelPosition
       if func then

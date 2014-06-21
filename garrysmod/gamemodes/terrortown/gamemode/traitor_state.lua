@@ -109,6 +109,24 @@ end
 
 ---- Console commands
 
+local function request_rolelist(ply)
+   -- The player has just joined and their client state has intialised
+   -- If they joined in the middle of the round, they do not know who's detective or confirmed traitor.
+   -- If they joined at the last second before the round started, it is possible, if they are traitor, that they do not know who their fellow traitors are.
+   -- This concommand is called in the InitPostEntity hook clientside.
+   -- If called before (eg. PlayerInitialSpawn serverside), player.GetByID(idx) will always return NULL.
+
+   if (GetRoundState() or ROUND_WAIT) != ROUND_WAIT then
+      SendDetectiveList(ply)
+      if ply:IsTraitor() then
+         SendTraitorList(ply)
+      else
+         SendConfirmedTraitors(ply)
+      end
+   end
+end
+concommand.Add("_ttt_request_rolelist", request_rolelist)
+
 local function force_terror(ply)
    if cvars.Bool("sv_cheats", 0) then
       ply:SetRole(ROLE_INNOCENT)
