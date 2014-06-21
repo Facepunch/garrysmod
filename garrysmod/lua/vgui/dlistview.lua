@@ -106,7 +106,7 @@ end
 --[[---------------------------------------------------------
    Name: AddColumn
 -----------------------------------------------------------]]
-function PANEL:AddColumn( strName, strMaterial, iPosition )
+function PANEL:AddColumn( strName, iPosition )
 
 	local pColumn = nil
 	
@@ -116,13 +116,16 @@ function PANEL:AddColumn( strName, strMaterial, iPosition )
 		pColumn = vgui.Create( "DListView_ColumnPlain", self )
 	end
 		pColumn:SetName( strName )
-		pColumn:SetMaterial( strMaterial )
 		pColumn:SetZPos( 10 )
 
 		
 	if ( iPosition ) then
 	
-		-- Todo, insert in specific position
+		table.insert( self.Columns, iPosition, pColumn )
+		
+		for i = 1,#self.Columns do
+			self.Columns[ i ]:SetColumnID( i )
+		end
 		
 	else
 	
