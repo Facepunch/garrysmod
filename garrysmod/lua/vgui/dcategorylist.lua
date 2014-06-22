@@ -1,11 +1,13 @@
---[[   _
-	( )
-   _| |   __   _ __   ___ ___     _ _
+--[[   _                                
+	( )                               
+   _| |   __   _ __   ___ ___     _ _ 
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
 
-	DCategoryList
+	DPanelList
+	
+	A window.
 
 --]]
 local PANEL = {}
@@ -27,7 +29,7 @@ function PANEL:AddItem( item )
 	item:Dock( TOP )
 	DScrollPanel.AddItem( self, item )
 	self:InvalidateLayout()
-
+	
 end
 
 --[[---------------------------------------------------------
@@ -38,15 +40,15 @@ function PANEL:Add( name )
 	local Category = vgui.Create( "DCollapsibleCategory", self )
 	Category:SetLabel( name )
 	Category:SetList( self )
-
+	
 	self:AddItem( Category )
-
-	return Category
+	
+	return Category	
 
 end
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Paint
 -----------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
@@ -55,17 +57,14 @@ function PANEL:Paint( w, h )
 
 end
 
---[[---------------------------------------------------------
-   Name: UnselectAll
------------------------------------------------------------]]
 function PANEL:UnselectAll()
 
 	for k, v in pairs( self:GetChildren() ) do
-
+	
 		if ( v.UnselectAll ) then
 			v:UnselectAll()
 		end
-
+	
 	end
 
 end

@@ -1,13 +1,4 @@
---[[   _
-    ( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	ContextBase
-
---]]
 local PANEL = {}
 
 local Padding = 5
@@ -27,18 +18,14 @@ end
    Name: SetConVar
 -----------------------------------------------------------]]
 function PANEL:SetConVar( cvar )
-
 	self.ConVarValue = cvar
-
 end
 
 --[[---------------------------------------------------------
    Name: ConVar
 -----------------------------------------------------------]]
 function PANEL:ConVar()
-
 	return self.ConVarValue
-
 end
 
 --[[---------------------------------------------------------
@@ -59,10 +46,10 @@ function PANEL:PerformLayout()
 	local y = 5
 	self.Label:SetPos( 5, y )
 	self.Label:SetWide( self:GetWide() )
-
+	
 	y = y + self.Label:GetTall()
 	y = y + 5
-
+	
 	return y
 
 end
@@ -83,9 +70,9 @@ end
 function PANEL:Think()
 
 	if ( self.NextPoll && self.NextPoll > CurTime() ) then return end
-
+	
 	self.NextPoll = CurTime() + 0.1
-
+	
 	self:TestForChanges()
 
 end

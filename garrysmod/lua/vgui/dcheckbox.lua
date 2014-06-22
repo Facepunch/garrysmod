@@ -1,15 +1,4 @@
---[[
-	 _
-	( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DCheckBox
-	DCheckBoxLabel
-
---]]
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bChecked", 		"Checked", 		FORCE_BOOL )
@@ -21,7 +10,7 @@ Derma_Hook( PANEL, "PerformLayout", "Layout", "CheckBox" )
 Derma_Install_Convar_Functions( PANEL )
 
 --[[---------------------------------------------------------
-   Name: Init
+	
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -30,13 +19,8 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-   Name: IsEditing
------------------------------------------------------------]]
 function PANEL:IsEditing()
-
 	return self.Depressed
-
 end
 
 --[[---------------------------------------------------------
@@ -48,10 +32,10 @@ function PANEL:SetValue( val )
 
 	self:SetChecked( val )
 	self.m_bValue = val
-
+	
 	self:OnChange( val )
-
-	if ( val ) then val = "1" else val = "0" end
+	
+	if ( val ) then val = "1" else val = "0" end	
 	self:ConVarChanged( val )
 
 end
@@ -88,7 +72,7 @@ function PANEL:OnChange( bVal )
 end
 
 --[[---------------------------------------------------------
-   Name: Think
+	Think
 -----------------------------------------------------------]]
 function PANEL:Think()
 
@@ -107,7 +91,7 @@ local PANEL = {}
 AccessorFunc( PANEL, "m_iIndent", 		"Indent" )
 
 --[[---------------------------------------------------------
-   Name: Init
+	
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -117,71 +101,51 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-   Name: SetDark
------------------------------------------------------------]]
 function PANEL:SetDark( b )
-
 	if ( self.Label ) then
 		self.Label:SetDark( b )
 	end
-
 end
 
---[[---------------------------------------------------------
-   Name: SetBright
------------------------------------------------------------]]
 function PANEL:SetBright( b )
-
 	if ( self.Label ) then
 		self.Label:SetBright( b )
 	end
-
 end
 
 --[[---------------------------------------------------------
    Name: SetConVar
 -----------------------------------------------------------]]
 function PANEL:SetConVar( cvar )
-
 	self.Button:SetConVar( cvar )
-
 end
 
 --[[---------------------------------------------------------
    Name: SetValue
 -----------------------------------------------------------]]
 function PANEL:SetValue( val )
-
 	self.Button:SetValue( val )
-
 end
 
 --[[---------------------------------------------------------
    Name: SetChecked
 -----------------------------------------------------------]]
 function PANEL:SetChecked( val )
-
 	self.Button:SetChecked( val )
-
 end
 
 --[[---------------------------------------------------------
    Name: GetChecked
 -----------------------------------------------------------]]
 function PANEL:GetChecked( val )
-
 	return self.Button:GetChecked()
-
 end
 
 --[[---------------------------------------------------------
    Name: Toggle
 -----------------------------------------------------------]]
 function PANEL:Toggle()
-
 	self.Button:Toggle()
-
 end
 
 
@@ -194,7 +158,7 @@ function PANEL:PerformLayout()
 
 	self.Button:SetSize( 15, 15 )
 	self.Button:SetPos( x, 0 )
-
+	
 	if ( self.Label ) then
 		self.Label:SizeToContents()
 		self.Label:SetPos( x + 14 + 10, 0 )
@@ -220,7 +184,7 @@ function PANEL:SizeToContents()
 	self:PerformLayout( true )
 	self:SetWide( self.Label.x + self.Label:GetWide() )
 	self:SetTall( self.Button:GetTall() )
-
+	
 end
 
 --[[---------------------------------------------------------
@@ -233,7 +197,7 @@ function PANEL:SetText( text )
 		self.Label:SetMouseInputEnabled( true )
 		self.Label.DoClick = function() self:Toggle() end
 	end
-
+	
 	self.Label:SetText( text )
 	self:InvalidateLayout()
 
@@ -272,7 +236,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	local ctrl = vgui.Create( ClassName )
 		ctrl:SetText( "CheckBox" )
 		ctrl:SetWide( 200 )
-
+	
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end

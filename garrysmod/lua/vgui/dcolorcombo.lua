@@ -6,8 +6,7 @@
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DColorCombo
-
+	DColorMixer
 --]]
 
 
@@ -15,9 +14,6 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "m_Color", "Color" )
 
---[[---------------------------------------------------------
-   Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetSize( 256, 256 )
@@ -26,9 +22,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-   Name: BuildControls
------------------------------------------------------------]]
 function PANEL:BuildControls()
 
 	--
@@ -61,32 +54,21 @@ function PANEL:BuildControls()
 
 end
 
---[[---------------------------------------------------------
-   Name: IsEditing
------------------------------------------------------------]]
 function PANEL:IsEditing()
 
 	return self.m_bEditing
 
 end
 
---[[---------------------------------------------------------
-   Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 end
 
---[[---------------------------------------------------------
-   Name: OnValueChanged
------------------------------------------------------------]]
+
 function PANEL:OnValueChanged( newcol )
 
 end
 
---[[---------------------------------------------------------
-   Name: SetColor
------------------------------------------------------------]]
 function PANEL:SetColor( newcol )
 
 	self.Mixer:SetColor( newcol )

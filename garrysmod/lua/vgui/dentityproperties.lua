@@ -1,29 +1,15 @@
---[[   _
-    ( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
-
-	DEntityProperties
-
---]]
 local PANEL = {}
 
---[[---------------------------------------------------------
-   Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	-- Nothing :)
 
 end
 
---[[---------------------------------------------------------
-   Name: SetEntity
-   Desc: Sets the entity to edit. This can be called any time,
-   even when another entity has been set.
------------------------------------------------------------]]
+--
+-- Sets the entity to edit. 
+-- This can be called any time, even when another entity has been set.
+--
 function PANEL:SetEntity( entity )
 
 	if ( self.m_Entity == entity ) then return end
@@ -33,11 +19,9 @@ function PANEL:SetEntity( entity )
 
 end
 
---[[---------------------------------------------------------
-   Name: RebuildControls
-   Desc: Clears and rebuilds the controls. Should only really
-   be called internally.
------------------------------------------------------------]]
+--
+-- Clears and rebuilds the controls. Should only really be called internally.
+--
 function PANEL:RebuildControls()
 
 	--
@@ -68,10 +52,9 @@ function PANEL:RebuildControls()
 
 end
 
---[[---------------------------------------------------------
-   Name: EditVariable
-   Desc: Called internally. Adds an entity variable to watch.
------------------------------------------------------------]]
+--
+-- Called internally. Adds an entity variable to watch.
+--
 function PANEL:EditVariable( varname, editdata )
 
 	if ( !istable( editdata ) ) then return end
@@ -109,11 +92,9 @@ function PANEL:EditVariable( varname, editdata )
 
 end
 
---[[---------------------------------------------------------
-   Name: EntityLost
-   Desc: Called when we were editing an entity and then it
-   became invalid (probably removed)
------------------------------------------------------------]]
+--
+-- Called when we were editing an entity and then it became invalid (probably removed)
+--
 function PANEL:EntityLost()
 
 	self:Clear()
@@ -121,9 +102,6 @@ function PANEL:EntityLost()
 
 end
 
---[[---------------------------------------------------------
-   Name: OnEntityLost
------------------------------------------------------------]]
 function PANEL:OnEntityLost()
 
 	-- For override
@@ -131,31 +109,20 @@ function PANEL:OnEntityLost()
 end
 
 --
+-- Auto-refreshing - these functions are just for the benefit
+-- of development. So that when this control gets auto-reloaded
+-- due to editing - we can rebuild things using the new function(s).
 --
---
---
---
-
 PANEL.AllowAutoRefresh = true
 
---[[---------------------------------------------------------
-   Name: PreAutoRefresh
-   Desc: Auto-refreshing - these functions are just for the
-   benefit of development. So that when this control gets
-   auto-reloaded due to editing - we can rebuild things using
-   the new function(s).
------------------------------------------------------------]]
 function PANEL:PreAutoRefresh()
-
 end
 
---[[---------------------------------------------------------
-   Name: PostAutoRefresh
------------------------------------------------------------]]
 function PANEL:PostAutoRefresh()
 
 	self:RebuildControls()
 
 end
+
 
 derma.DefineControl( "DEntityProperties", "", PANEL, "DProperties" )

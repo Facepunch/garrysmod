@@ -1,13 +1,4 @@
---[[   _
-    ( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DNumberScratch
-
---]]
 DEFINE_BASECLASS( "DImageButton" )
 
 local g_Active = nil
@@ -24,9 +15,6 @@ AccessorFunc( PANEL, "m_bDrawScreen", 	"ShouldDrawScreen" )
 
 Derma_Install_Convar_Functions( PANEL )
 
---[[---------------------------------------------------------
-   Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetMin( 0 )
@@ -49,9 +37,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-   Name: SetValue
------------------------------------------------------------]]
 function PANEL:SetValue( val )
 
 	local val = tonumber( val );
@@ -64,45 +49,28 @@ function PANEL:SetValue( val )
 
 end
 
---[[---------------------------------------------------------
-   Name: SetFraction
------------------------------------------------------------]]
 function PANEL:SetFraction( fFraction )
 
 	self:SetFloatValue( self:GetMin() + (fFraction * self:GetRange()) )
 
 end
 
---[[---------------------------------------------------------
-   Name: GetFraction
------------------------------------------------------------]]
 function PANEL:GetFraction()
 
 	return (self:GetFloatValue() - self:GetMin()) / ( self:GetRange() )
 
 end
 
---[[---------------------------------------------------------
-   Name: GetRange
------------------------------------------------------------]]
 function PANEL:GetRange()
-
 	return ( self:GetMax() - self:GetMin() )
-
 end
 
---[[---------------------------------------------------------
-   Name: IdealZoom
------------------------------------------------------------]]
 function PANEL:IdealZoom()
 
 	return 400 / self:GetRange();
 
 end
 
---[[---------------------------------------------------------
-   Name: OnMousePressed
------------------------------------------------------------]]
 function PANEL:OnMousePressed( mousecode )
 
 	if ( self:GetZoom() == 0 ) then self:SetZoom( self:IdealZoom() ) end
@@ -119,9 +87,6 @@ function PANEL:OnMousePressed( mousecode )
 
 end
 
---[[---------------------------------------------------------
-   Name: OnMouuseReleased
------------------------------------------------------------]]
 function PANEL:OnMouseReleased( mousecode )
 
 	g_Active = nil
@@ -132,9 +97,6 @@ function PANEL:OnMouseReleased( mousecode )
 
 end
 
---[[---------------------------------------------------------
-   Name: LookCursor
------------------------------------------------------------]]
 function PANEL:LockCursor()
 
 	local x, y = self:LocalToScreen( math.floor( self:GetWide() * 0.5),  math.floor( self:GetTall() * 0.5 ) )
@@ -142,9 +104,6 @@ function PANEL:LockCursor()
 
 end
 
---[[---------------------------------------------------------
-   Name: OnCursorMoved
------------------------------------------------------------]]
 function PANEL:OnCursorMoved( x, y )
 
 	if ( !self:GetActive() ) then return end
@@ -161,7 +120,7 @@ function PANEL:OnCursorMoved( x, y )
 	if ( self:GetDecimals() ) then
 		maxzoom = 10000
 	end
-
+	
 	zoom = math.Clamp( zoom + ((y * -0.6) / ControlScale), 0.01, maxzoom );
 	self:SetZoom( zoom )
 
@@ -176,9 +135,6 @@ function PANEL:OnCursorMoved( x, y )
 
 end
 
---[[---------------------------------------------------------
-   Name: GetTextValue
------------------------------------------------------------]]
 function PANEL:GetTextValue()
 
 	local iDecimals = self:GetDecimals()
@@ -190,18 +146,13 @@ function PANEL:GetTextValue()
 
 end
 
---[[---------------------------------------------------------
-   Name: UpdateConvar
------------------------------------------------------------]]
 function PANEL:UpdateConVar()
 
 	self:ConVarChanged( self:GetTextValue() )
 
 end
 
---[[---------------------------------------------------------
-   Name: DrawNotches
------------------------------------------------------------]]
+
 function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 
 	local size = level * self:GetZoom();
@@ -212,7 +163,7 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 
 	if ( size < 150 )  then alpha = alpha * ((size - 2) / 140) end
 	if ( size > (w*2) - 100 )  then alpha = alpha * (1 - ((size - (w - 50)) / 50)) end
-
+	
 	local halfw = w * 0.5
 	local span = math.ceil( w / size )
 	local realmid = x + w * 0.5 - (value * self:GetZoom());
@@ -227,13 +178,13 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 	surface.DrawRect( frame_min, y + top, frame_width, 2 );
 
 	surface.SetFont( "DermaDefault" )
-
+	
 	for n = -span, span, 1 do
 
 		local nx = ((mid) + n * size)
-
+		
 		local dist = 1 - (math.abs( halfw - nx + x ) / w);
-
+		
 		local val = (nx - realmid) / self:GetZoom();
 
 		if ( val <= min+0.001 ) then continue end
@@ -280,9 +231,6 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 
 end
 
---[[---------------------------------------------------------
-   Name: Think
------------------------------------------------------------]]
 function PANEL:Think()
 
 	if ( !self:GetActive() ) then
@@ -291,18 +239,10 @@ function PANEL:Think()
 
 end
 
---[[---------------------------------------------------------
-   Name: IsEditing
------------------------------------------------------------]]
 function PANEL:IsEditing()
-
 	return self:GetActive()
-
 end
 
---[[---------------------------------------------------------
-   Name: DrawScreen
------------------------------------------------------------]]
 function PANEL:DrawScreen( x, y, w, h )
 
 	if ( !self:GetShouldDrawScreen() ) then return end
@@ -332,7 +272,7 @@ function PANEL:DrawScreen( x, y, w, h )
 	self:DrawNotches( 1000, x, y, w, h, range, value, min, max )
 	self:DrawNotches( 100, x, y, w, h, range, value, min, max )
 	self:DrawNotches( 10, x, y, w, h, range, value, min, max )
-
+	
 	if ( self:GetDecimals() ) then
 		self:DrawNotches( 1, x, y, w, h, range, value, min, max )
 		self:DrawNotches( 0.1, x, y, w, h, range, value, min, max )
@@ -352,7 +292,7 @@ function PANEL:DrawScreen( x, y, w, h )
 	--
 	surface.SetTextColor( 255, 255, 255, 255 )
 	surface.SetFont( "DermaLarge" )
-
+	
 	local str = Format( "%i", self:GetFloatValue() );
 	if ( self:GetDecimals() ) then
 		str = Format( "%.2f", self:GetFloatValue() );
@@ -367,9 +307,6 @@ function PANEL:DrawScreen( x, y, w, h )
 
 end
 
---[[---------------------------------------------------------
-   Name: PaintScratchWindow
------------------------------------------------------------]]
 function PANEL:PaintScratchWindow()
 
 	if ( !self:GetActive() ) then return end
@@ -378,7 +315,7 @@ function PANEL:PaintScratchWindow()
 
 	local w, h = 512, 256
 	local x, y = self:LocalToScreen( 0, 0 )
-
+		
 	x = x + self:GetWide() * 0.5 - w * 0.5
 	y = y + -8 - h
 
@@ -393,20 +330,13 @@ function PANEL:PaintScratchWindow()
 
 end
 
---[[---------------------------------------------------------
-   Name: OnValueChanged
------------------------------------------------------------]]
-function PANEL:OnValueChanged()
-
-	// Callback
-
-end
+--
+-- For your pleasure.
+--
+function PANEL:OnValueChanged() end
 
 PANEL.AllowAutoRefresh = true
 
---[[---------------------------------------------------------
-   Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample()
 
 	-- The concommand derma_controls currently runs in the menu realm
@@ -418,10 +348,7 @@ end
 derma.DefineControl( "DNumberScratch", "", PANEL, "DImageButton" )
 
 
---[[---------------------------------------------------------
-   Name: DrawOverlay:DrawNumberScratch
------------------------------------------------------------]]
-hook.Add( "DrawOverlay", "DrawNumberScratch", function()
+hook.Add( "DrawOverlay", "DrawNumberScratch", function() 
 
 	if ( !IsValid( g_Active ) ) then return end
 
