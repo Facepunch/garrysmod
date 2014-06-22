@@ -317,6 +317,7 @@ function GM:KeyPress(ply, key)
       if key == IN_ATTACK then
          -- snap to random guy
          ply:Spectate(OBS_MODE_ROAMING)
+         ply:SetEyeAngles(angle_zero) -- After exiting propspec, this could be set to awkward values
          ply:SpectateEntity(nil)
 
          local alive = util.GetAlivePlayers()
@@ -326,6 +327,7 @@ function GM:KeyPress(ply, key)
          local target = table.Random(alive)
          if IsValid(target) then
             ply:SetPos(target:EyePos())
+            ply:SetEyeAngles(target:EyeAngles())
          end
       elseif key == IN_ATTACK2 then
          -- spectate either the next guy or a random guy in chase
