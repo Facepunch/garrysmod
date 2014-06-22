@@ -7,6 +7,7 @@
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DColorButton
+
 --]]
 
 local matGrid = Material( "gui/bg-lines.png", "nocull" )
@@ -68,7 +69,7 @@ function PANEL:Paint( w, h )
 		surface.SetMaterial( matGrid )
 
 		local size = math.max( 128, math.max( w, h ) )
-		local x, y = w / 2 - size / 2, h / 2 - size / 2 
+		local x, y = w / 2 - size / 2, h / 2 - size / 2
 		surface.DrawTexturedRect( x, y , size, size )
 
 	end
@@ -88,7 +89,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetDisabled( bDisabled )
 
-	self.m_bDisabled = bDisabled	
+	self.m_bDisabled = bDisabled
 	self:InvalidateLayout()
 
 end

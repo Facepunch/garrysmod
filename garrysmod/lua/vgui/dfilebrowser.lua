@@ -1,11 +1,11 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+    ( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DSlider
+	DFileBrowser
 
 --]]
 local PANEL = {}
@@ -17,27 +17,30 @@ AccessorFunc( PANEL, "m_strCurrentFolder", 	"CurrentFolder" )
 AccessorFunc( PANEL, "m_bModels", 			"Models" )
 
 --[[---------------------------------------------------------
-	
+   Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
 	self.Tree = self:Add( "DTree" )
 	self.Tree:Dock( LEFT )
 	self.Tree:SetWidth( 200 )
-	
+
 	self.Tree.DoClick = function( _, node )
 
 		if ( !node:GetFolder() ) then return end
 		self:ShowFolder( node:GetFolder() )
-	
+
 	end
-	
+
 	self.Icons = self:Add( "DIconBrowser" )
 	self.Icons:SetManual( true )
 	self.Icons:Dock( FILL )
 
 end
 
+--[[---------------------------------------------------------
+   Name: Paint
+-----------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	DPanel.Paint( self, w, h )
@@ -48,6 +51,9 @@ function PANEL:Paint( w, h )
 
 end
 
+--[[---------------------------------------------------------
+   Name: Setup
+-----------------------------------------------------------]]
 function PANEL:Setup()
 
 	if ( !self.m_strName || !self.m_strPath ) then return false end
@@ -58,37 +64,43 @@ function PANEL:Setup()
 
 end
 
+--[[---------------------------------------------------------
+   Name: ShowFolder
+-----------------------------------------------------------]]
 function PANEL:ShowFolder( path )
 
 	self.Icons:Clear()
-	
+
 	local files = file.Find( path .. "/" .. (self.m_strFilter or "*.*"), "GAME" )
-	
+
 	for k, v in pairs( files ) do
-	
+
 		if ( self.m_bModels ) then
-		
+
 			local button = self.Icons:Add( "SpawnIcon" )
 			button:SetModel( path .. "/" .. v )
 			button.DoClick = function()
 				self:OnSelect( path .. "/" .. v, button )
 			end
-				
+
 		else
-	
+
 			local button = self.Icons:Add( "DButton" )
 			button:SetText( v )
 			button:SetSize( 150, 20 )
 			button.DoClick = function()
 				self:OnSelect( path .. "/" .. v, button )
 			end
-			
+
 		end
-				
+
 	end
 
 end
 
+--[[---------------------------------------------------------
+   Name: OnSelect
+-----------------------------------------------------------]]
 function PANEL:OnSelect( path, button )
 
 	-- Override

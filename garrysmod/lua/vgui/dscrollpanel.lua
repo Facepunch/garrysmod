@@ -1,9 +1,11 @@
---[[   _                                
-	( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+
+	DScrollPanel
 
 --]]
 local PANEL = {}
@@ -20,19 +22,19 @@ function PANEL:Init()
 	self.pnlCanvas.OnMousePressed = function( self, code ) self:GetParent():OnMousePressed( code ) end
 	self.pnlCanvas:SetMouseInputEnabled( true )
 	self.pnlCanvas.PerformLayout = function( pnl )
-	
+
 		self:PerformLayout()
 		self:InvalidateParent()
-	
+
 	end
-	
+
 	-- Create the scroll bar
 	self.VBar = vgui.Create( "DVScrollBar", self )
 	self.VBar:Dock( RIGHT )
 
 	self:SetPadding( 0 )
 	self:SetMouseInputEnabled( true )
-	
+
 	-- This turns off the engine drawing
 	self:SetPaintBackgroundEnabled( false )
 	self:SetPaintBorderEnabled( false )
@@ -46,9 +48,12 @@ end
 function PANEL:AddItem( pnl )
 
 	pnl:SetParent( self:GetCanvas() )
-	
+
 end
 
+--[[---------------------------------------------------------
+   Name: OnChildAdded
+-----------------------------------------------------------]]
 function PANEL:OnChildAdded( child )
 
 	self:AddItem( child )
@@ -61,7 +66,7 @@ end
 function PANEL:SizeToContents()
 
 	self:SetSize( self.pnlCanvas:GetSize() )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -70,7 +75,7 @@ end
 function PANEL:GetVBar()
 
 	return self.VBar
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -82,6 +87,9 @@ function PANEL:GetCanvas()
 
 end
 
+--[[---------------------------------------------------------
+   Name: InnerWidth
+-----------------------------------------------------------]]
 function PANEL:InnerWidth()
 
 	return self:GetCanvas():GetWide()
@@ -94,14 +102,14 @@ end
 function PANEL:Rebuild()
 
 	self:GetCanvas():SizeToChildren( false, true )
-		
+
 	-- Although this behaviour isn't exactly implied, center vertically too
 	if ( self.m_bNoSizing && self:GetCanvas():GetTall() < self:GetTall() ) then
 
 		self:GetCanvas():SetPos( 0, (self:GetTall()-self:GetCanvas():GetTall()) * 0.5 )
-	
+
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -110,7 +118,7 @@ end
 function PANEL:OnMouseWheeled( dlta )
 
 	return self.VBar:OnMouseWheeled( dlta )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -119,7 +127,7 @@ end
 function PANEL:OnVScroll( iOffset )
 
 	self.pnlCanvas:SetPos( 0, iOffset )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -128,17 +136,16 @@ end
 function PANEL:ScrollToChild( panel )
 
 	self:PerformLayout()
-	
+
 	local x, y = self.pnlCanvas:GetChildPosition( panel )
 	local w, h = panel:GetSize()
-	
+
 	y = y + h * 0.5;
 	y = y - self:GetTall() * 0.5;
 
 	self.VBar:AnimateTo( y, 0.5, 0, 0.5 );
-	
-end
 
+end
 
 --[[---------------------------------------------------------
    Name: PerformLayout
@@ -147,27 +154,29 @@ function PANEL:PerformLayout()
 
 	local Wide = self:GetWide()
 	local YPos = 0
-	
+
 	self:Rebuild()
-	
+
 	self.VBar:SetUp( self:GetTall(), self.pnlCanvas:GetTall() )
 	YPos = self.VBar:GetOffset()
-		
+
 	if ( self.VBar.Enabled ) then Wide = Wide - self.VBar:GetWide() end
 
 	self.pnlCanvas:SetPos( 0, YPos )
 	self.pnlCanvas:SetWide( Wide )
-	
+
 	self:Rebuild()
 
 
 end
 
+--[[---------------------------------------------------------
+   Name: Clear
+-----------------------------------------------------------]]
 function PANEL:Clear()
 
 	return self.pnlCanvas:Clear()
 
 end
-
 
 derma.DefineControl( "DScrollPanel", "", PANEL, "DPanel" )

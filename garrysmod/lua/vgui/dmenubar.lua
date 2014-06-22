@@ -1,11 +1,11 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+    ( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DPanel
+	DMenuBar
 
 --]]
 local PANEL = {}
@@ -20,7 +20,7 @@ AccessorFunc( PANEL, "m_bgColor", 		"BackgroundColor" )
 Derma_Hook( PANEL, "Paint", "Paint", "MenuBar" )
 
 --[[---------------------------------------------------------
-	
+   Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -31,16 +31,22 @@ function PANEL:Init()
 
 end
 
+--[[---------------------------------------------------------
+   Name: GetOpenMenu
+-----------------------------------------------------------]]
 function PANEL:GetOpenMenu()
 
 	for k, v in pairs( self.Menus ) do
 		if ( v:IsVisible() ) then return v end
 	end
-	
+
 	return nil
 
 end
 
+--[[---------------------------------------------------------
+   Name: AddOrGetMenu
+-----------------------------------------------------------]]
 function PANEL:AddOrGetMenu( label )
 
 	if ( self.Menus[ label ] ) then return self.Menus[ label ] end
@@ -48,6 +54,9 @@ function PANEL:AddOrGetMenu( label )
 
 end
 
+--[[---------------------------------------------------------
+   Name: AddMenu
+-----------------------------------------------------------]]
 function PANEL:AddMenu( label )
 
 	local m = DermaMenu()
@@ -55,7 +64,7 @@ function PANEL:AddMenu( label )
 		m:SetDrawColumn( true )
 		m:Hide()
 	self.Menus[ label ] = m
-	
+
 	local b = self:Add( "DButton" )
 	b:SetText( label )
 	b:Dock( LEFT )
@@ -63,25 +72,25 @@ function PANEL:AddMenu( label )
 	b:SetIsMenu( true )
 	b:SetDrawBackground( false )
 	b:SizeToContentsX( 16 )
-	b.DoClick = function() 
-	
+	b.DoClick = function()
+
 		if ( m:IsVisible() ) then
-			m:Hide() 
-			return 
+			m:Hide()
+			return
 		end
-	
+
 		local x, y = b:LocalToScreen( 0, 0 )
 		m:Open( x, y + b:GetTall(), false, b )
-		
+
 	end
-	
+
 	b.OnCursorEntered = function()
 		local opened = self:GetOpenMenu()
 		if ( !IsValid( opened ) || opened == m ) then return end
 		opened:Hide()
 		b:DoClick()
 	end
-	
+
 	return m
 
 end
@@ -104,10 +113,9 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 			m:AddOption( "Copy", function() Msg( "Chose Copy\n" ) end )
 			m:AddOption( "Paste", function() Msg( "Chose Paste\n" ) end )
 			m:AddOption( "Blah", function() Msg( "Chose Blah\n" ) end )
-	
+
 	PropertySheet:AddSheet( ClassName, pnl, nil, true, true )
 
 end
-
 
 derma.DefineControl( "DMenuBar", "", PANEL, "DPanel" )

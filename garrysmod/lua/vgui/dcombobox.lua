@@ -1,9 +1,9 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+    ( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DComboBox
 
@@ -16,7 +16,7 @@ Derma_Hook( PANEL, "Paint", "Paint", "ComboBox" )
 Derma_Install_Convar_Functions( PANEL )
 
 --[[---------------------------------------------------------
-
+   Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -24,10 +24,10 @@ function PANEL:Init()
 	self.DropButton.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ComboDownArrow", panel, w, h ) end
 	self.DropButton:SetMouseInputEnabled( false )
 	self.DropButton.ComboBox = self
-		
+
 	self:SetTall( 22 )
 	self:Clear()
-	
+
 	self:SetContentAlignment( 4 )
 	self:SetTextInset( 8, 0 )
 	self:SetIsMenu( true )
@@ -47,7 +47,7 @@ function PANEL:Clear()
 		self.Menu:Remove()
 		self.Menu = nil
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -82,7 +82,7 @@ function PANEL:ChooseOption( value, index )
 
 	self:SetText( value )
 	self:OnSelect( index, value, self.Data[index] )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -99,10 +99,8 @@ function PANEL:ChooseOptionID( index )
 	self:SetText( value )
 
 	self:OnSelect( index, value, self.Data[index] )
-	
+
 end
-
-
 
 --[[---------------------------------------------------------
    Name: OnSelect
@@ -119,7 +117,7 @@ end
 function PANEL:AddChoice( value, data, select )
 
 	local i = table.insert( self.Choices, value )
-	
+
 	if ( data ) then
 		self.Data[ i ] = data
 	end
@@ -129,11 +127,14 @@ function PANEL:AddChoice( value, data, select )
 		self:ChooseOption( value, i )
 
 	end
-	
+
 	return i
 
 end
 
+--[[---------------------------------------------------------
+   Name: IsMenuOpen
+-----------------------------------------------------------]]
 function PANEL:IsMenuOpen()
 
 	return IsValid( self.Menu ) && self.Menu:IsVisible()
@@ -153,7 +154,7 @@ function PANEL:OpenMenu( pControlOpener )
 
 	-- Don't do anything if there aren't any options..
 	if ( #self.Choices == 0 ) then return end
-	
+
 	-- If the menu still exists and hasn't been deleted
 	-- then just close it and don't open a new one.
 	if ( IsValid( self.Menu ) ) then
@@ -162,45 +163,56 @@ function PANEL:OpenMenu( pControlOpener )
 	end
 
 	self.Menu = DermaMenu()
-	
+
 		for k, v in pairs( self.Choices ) do
 			self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
 		end
-		
+
 		local x, y = self:LocalToScreen( 0, self:GetTall() )
-		
+
 		self.Menu:SetMinimumWidth( self:GetWide() )
-		self.Menu:Open( x, y, false, self )		
-		
+		self.Menu:Open( x, y, false, self )
 
 end
 
+--[[---------------------------------------------------------
+   Name: CloseMenu
+-----------------------------------------------------------]]
 function PANEL:CloseMenu()
-	
+
 	if ( IsValid( self.Menu ) ) then
 		self.Menu:Remove()
-	end	
-	
+	end
+
 end
 
+--[[---------------------------------------------------------
+   Name: Think
+-----------------------------------------------------------]]
 function PANEL:Think()
 
 	self:ConVarNumberThink()
 
 end
 
+--[[---------------------------------------------------------
+   Name: SetValue
+-----------------------------------------------------------]]
 function PANEL:SetValue( strValue )
 
 	self:SetText( strValue )
 
 end
 
+--[[---------------------------------------------------------
+   Name: DoClick
+-----------------------------------------------------------]]
 function PANEL:DoClick()
 
 	if ( self:IsMenuOpen() ) then
 		return self:CloseMenu()
 	end
-	
+
 	self:OpenMenu()
 
 end
@@ -214,7 +226,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 		ctrl:AddChoice( "Some Choice" )
 		ctrl:AddChoice( "Another Choice" )
 		ctrl:SetWide( 150 )
-	
+
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end
