@@ -1,13 +1,12 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+    ( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DPanelList
-	
-	A window.
+	DListBoxItem
+	DListBox
 
 --]]
 
@@ -39,6 +38,9 @@ function PANEL:OnMousePressed( mcode )
 	self:SetTextColor( Color( 0, 0, 0, 255 ) )
 end
 
+--[[---------------------------------------------------------
+   Name:
+-----------------------------------------------------------]]
 function PANEL:Paint( w, h )
 	if ( self.m_pMother:GetSelectedValues() == self:GetText() ) then
 		draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 128, 255, 200 ) )
@@ -65,7 +67,7 @@ end
 function PANEL:Select( bOnlyMe )
 
 	self.m_pMother:SelectItem( self, bOnlyMe )
-	
+
 	self:DoClick()
 
 end
@@ -98,9 +100,9 @@ function PANEL:Init()
 	self:SetMultiple( true )
 	self:EnableHorizontal( false )
 	self:EnableVerticalScrollbar( true )
-	
+
 	self:SetPadding( 1 )
-	
+
 	self.SelectedItems = {}
 
 end
@@ -125,7 +127,7 @@ function PANEL:AddItem( strLabel )
 	item:SetText( strLabel )
 
 	DPanelList.AddItem( self, item )
-	
+
 	return item
 
 end
@@ -136,27 +138,27 @@ end
 function PANEL:Rebuild()
 
 	local Offset = 0
-	
+
 	local x, y = self.Padding, self.Padding
 	for k, panel in pairs( self.Items ) do
-	
+
 		local w = panel:GetWide()
 		local h = panel:GetTall()
-		
-		
+
+
 
 		panel:SetPos( self.Padding, y )
 		panel:SetWide( self:GetCanvas():GetWide() - self.Padding * 2 )
-		
+
 		x = x + w + self.Spacing
-		
+
 		y = y + h + self.Spacing
-		
+
 		Offset = y + h + self.Spacing
-	
+
 	end
-		
-	self:GetCanvas():SetTall( Offset + (self.Padding * 2) - self.Spacing ) 
+
+	self:GetCanvas():SetTall( Offset + (self.Padding * 2) - self.Spacing )
 
 end
 
@@ -166,21 +168,21 @@ end
 function PANEL:SelectItem( item, onlyme )
 
 	if ( !onlyme && item:IsSelected() ) then return end
-	
+
 	-- Unselect old items
 	if ( onlyme || !self.m_bSelectMultiple ) then
-	
+
 		for k, v in pairs( self.SelectedItems ) do
 			v:SetSelected( false )
 		end
-		
+
 		self.SelectedItems = {}
 		self.m_pSelected = nil
-		
+
 	end
 
 	if ( self.OnSelect ) then self:OnSelect( item ) end
-	
+
 	self.m_pSelected = item
 	item:SetSelected( true )
 	table.insert( self.SelectedItems, item )
@@ -193,11 +195,11 @@ end
 function PANEL:SelectByName( strName )
 
 	for k, panel in pairs( self.Items ) do
-	
+
 		if ( panel:GetValue() == strName ) then
 			self:SelectItem( panel, true )
 		return end
-	
+
 	end
 
 end
@@ -205,23 +207,23 @@ end
 --[[---------------------------------------------------------
    Name: GetSelectedValues
 -----------------------------------------------------------]]
-function PANEL:GetSelectedValues() 
- 
+function PANEL:GetSelectedValues()
+
     local items = self:GetSelectedItems()
 
     if ( #items > 1 ) then
-	
-        local ret = {}  
-        for _, v in pairs( items ) do table.insert( ret, v:GetValue() ) end  
-        return ret  
-		
+
+        local ret = {}
+        for _, v in pairs( items ) do table.insert( ret, v:GetValue() ) end
+        return ret
+
     elseif ( #items == 1 ) then
-	
-        return items[1]:GetValue()  
-		
+
+        return items[1]:GetValue()
+
     end
-	
-end  
+
+end
 
 --[[---------------------------------------------------------
    Name: GenerateExample
@@ -235,7 +237,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 		ctrl:AddItem( "Air Freshner" )
 		ctrl:AddItem( "Shovel" )
 		ctrl:SetSize( 100, 300 )
-		
+
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end

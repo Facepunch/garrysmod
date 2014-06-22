@@ -1,9 +1,9 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+    ( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DImageButton
 
@@ -13,7 +13,7 @@ PANEL = {}
 AccessorFunc( PANEL, "m_bStretchToFit", 			"StretchToFit" )
 
 --[[---------------------------------------------------------
-
+   Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -23,26 +23,25 @@ function PANEL:Init()
 
 	self:SetCursor( "hand" )
 	self.m_Image = vgui.Create( "DImage", self )
-	
+
 	self:SetText( "" )
-	
+
 	self:SetColor( Color( 255, 255, 255, 255 ) )
 
 end
 
---
--- SetImageVisible
--- Hide the button's image
---
+--[[---------------------------------------------------------
+   Name: SetImageVisible
+   Desc: Hide the button's image
+-----------------------------------------------------------]]
 function PANEL:SetImageVisible( bBool )
 
 	self.m_Image:SetVisible( bBool )
 
 end
 
-
 --[[---------------------------------------------------------
-	SetImage
+   Name: SetImage
 -----------------------------------------------------------]]
 function PANEL:SetImage( strImage, strBackup )
 
@@ -50,10 +49,15 @@ function PANEL:SetImage( strImage, strBackup )
 
 end
 
+--[[---------------------------------------------------------
+   Name: SetIcon / SetMaterial
+   Desc: This makes it compatible with the older ImageButton
+-----------------------------------------------------------]]
 PANEL.SetIcon = PANEL.SetImage
+PANEL.SetMaterial = PANEL.SetImage
 
 --[[---------------------------------------------------------
-	SetColor
+   Name: SetColor
 -----------------------------------------------------------]]
 function PANEL:SetColor( col )
 
@@ -63,7 +67,7 @@ function PANEL:SetColor( col )
 end
 
 --[[---------------------------------------------------------
-	GetImage
+   Name: GetImage
 -----------------------------------------------------------]]
 function PANEL:GetImage()
 
@@ -72,7 +76,7 @@ function PANEL:GetImage()
 end
 
 --[[---------------------------------------------------------
-	SetKeepAspect
+   Name: SetKeepAspect
 -----------------------------------------------------------]]
 function PANEL:SetKeepAspect( bKeep )
 
@@ -80,12 +84,9 @@ function PANEL:SetKeepAspect( bKeep )
 
 end
 
--- This makes it compatible with the older ImageButton
-PANEL.SetMaterial = PANEL.SetImage
-
 
 --[[---------------------------------------------------------
-	SizeToContents
+   Name: SizeToContents
 -----------------------------------------------------------]]
 function PANEL:SizeToContents( )
 
@@ -95,86 +96,85 @@ function PANEL:SizeToContents( )
 end
 
 --[[---------------------------------------------------------
-	OnMousePressed
+   Name: OnMousePressed
 -----------------------------------------------------------]]
 function PANEL:OnMousePressed( mousecode )
 
 	DButton.OnMousePressed( self, mousecode )
 
-	
+
 	if ( self.m_bStretchToFit ) then
-			
+
 		self.m_Image:SetPos( 2, 2 )
 		self.m_Image:SetSize( self:GetWide() - 4, self:GetTall() - 4 )
-		
+
 	else
-	
+
 		self.m_Image:SizeToContents()
 		self.m_Image:SetSize( self.m_Image:GetWide() * 0.8, self.m_Image:GetTall() * 0.8 )
 		self.m_Image:Center()
-		
+
 	end
 
 end
 
 --[[---------------------------------------------------------
-	OnMouseReleased
+   Name: OnMouseReleased
 -----------------------------------------------------------]]
 function PANEL:OnMouseReleased( mousecode )
 
 	DButton.OnMouseReleased( self, mousecode )
 
 	if ( self.m_bStretchToFit ) then
-			
+
 		self.m_Image:SetPos( 0, 0 )
 		self.m_Image:SetSize( self:GetSize() )
-		
+
 	else
-	
+
 		self.m_Image:SizeToContents()
 		self.m_Image:Center()
-		
+
 	end
 
 end
 
-
 --[[---------------------------------------------------------
-
+   Name: PerformLayout
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	if ( self.m_bStretchToFit ) then
-			
+
 		self.m_Image:SetPos( 0, 0 )
 		self.m_Image:SetSize( self:GetSize() )
-		
+
 	else
-	
+
 		self.m_Image:SizeToContents()
 		self.m_Image:Center()
-		
+
 	end
 
 end
 
 --[[---------------------------------------------------------
-
+   Name: SetDisabled
 -----------------------------------------------------------]]
 function PANEL:SetDisabled( bDisabled )
 
 	DButton.SetDisabled( self, bDisabled )
 
 	if ( bDisabled ) then
-		self.m_Image:SetAlpha( self.ImageColor.a * 0.4 ) 
+		self.m_Image:SetAlpha( self.ImageColor.a * 0.4 )
 	else
-		self.m_Image:SetAlpha( self.ImageColor.a ) 
+		self.m_Image:SetAlpha( self.ImageColor.a )
 	end
 
 end
 
 --[[---------------------------------------------------------
-
+   Name: SetOnViewMaterial
 -----------------------------------------------------------]]
 function PANEL:SetOnViewMaterial( MatName, Backup )
 
@@ -190,7 +190,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	local ctrl = vgui.Create( ClassName )
 		ctrl:SetImage( "brick/brick_model" )
 		ctrl:SetSize( 200, 200 )
-		
+
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end
