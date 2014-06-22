@@ -71,6 +71,7 @@ function GM:InitPostEntity()
    timer.Create("cache_ents", 1, 0, GAMEMODE.DoCacheEnts)
 
    RunConsoleCommand("_ttt_request_serverlang")
+   RunConsoleCommand("_ttt_request_rolelist")
 end
 
 function GM:DoCacheEnts()

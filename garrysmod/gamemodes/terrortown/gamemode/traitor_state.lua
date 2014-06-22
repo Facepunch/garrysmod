@@ -102,12 +102,29 @@ function SendRoleReset(ply_or_rf)
       for k, v in pairs(plys) do
          net.WriteUInt(v:EntIndex() - 1, 7)
       end
-      
+
    if ply_or_rf then net.Send(ply_or_rf)
    else net.Broadcast() end
 end
 
 ---- Console commands
+
+local function request_rolelist(ply)
+   -- Client requested a state update. Note that the client can only use this
+   -- information after entities have been initialised (e.g. in InitPostEntity).
+   if GetRoundState() != ROUND_WAIT then
+
+      SendRoleReset(ply)
+      SendDetectiveList(ply)
+
+      if ply:IsTraitor() then
+         SendTraitorList(ply)
+      else
+         SendConfirmedTraitors(ply)
+      end
+   end
+end
+concommand.Add("_ttt_request_rolelist", request_rolelist)
 
 local function force_terror(ply)
    if cvars.Bool("sv_cheats", 0) then

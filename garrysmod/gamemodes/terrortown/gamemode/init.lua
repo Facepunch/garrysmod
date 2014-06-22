@@ -667,6 +667,7 @@ function BeginRound()
    -- traitor, but for whatever reason does not get the traitor state msg. So
    -- re-send after a second just to make sure everyone is getting it.
    timer.Simple(1, SendFullStateUpdate)
+   timer.Simple(10, SendFullStateUpdate)
 
    SCORE:HandleSelection() -- log traitors and detectives
 
