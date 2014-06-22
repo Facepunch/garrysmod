@@ -932,6 +932,8 @@ function GM:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
          -- barrel bangs can hurt us even if we threw them, but that's our fault
       elseif hurter and ent == hurter:GetPhysicsAttacker() and dmginfo:IsDamageType(DMG_BLAST) then
          owner = ent
+      elseif hurter and hurter:IsVehicle() and IsValid(hurter:GetDriver()) then
+         owner = hurter:GetDriver()
       end
 
 
