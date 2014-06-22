@@ -1,13 +1,10 @@
---[[   _
-    ( )
-   _| |   __   _ __   ___ ___     _ _
+--[[   _                                
+    ( )                               
+   _| |   __   _ __   ___ ___     _ _ 
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
-
-	DVerticalDividerBar
-	DVerticalDivider
-
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+	
 --]]
 
 local PANEL = {}
@@ -33,7 +30,11 @@ function PANEL:OnMousePressed( mcode )
 
 end
 
+
+
 derma.DefineControl( "DVerticalDividerBar", "", PANEL, "DPanel" )
+
+
 
 
 local PANEL = {}
@@ -58,20 +59,20 @@ function PANEL:Init()
 
 	self:SetDividerHeight( 8 )
 	self:SetTopHeight( 100 )
-
+	
 	self:SetTopMin( 50 )
 	self:SetTopMax( 4096 )
-
+	
 	self:SetBottomMin( 50 )
-
+	
 	self:SetPaintBackground( false )
-
+	
 	self.m_DragBar = vgui.Create( "DVerticalDividerBar", self )
 
 end
 
 --[[---------------------------------------------------------
-   Name: LoadCookies
+	
 -----------------------------------------------------------]]
 function PANEL:LoadCookies()
 
@@ -103,12 +104,13 @@ end
    Name: DoConstraints
 -----------------------------------------------------------]]
 function PANEL:DoConstraints()
-
+	
 	if ( self:GetTall() == 0 ) then return end
-
+	
 	self.m_iTopHeight = math.Clamp( self.m_iTopHeight, self:GetTopMin(), self:GetTall() - self:GetBottomMin() - self:GetDividerHeight() )
 
 end
+
 
 --[[---------------------------------------------------------
    Name: PerformLayout
@@ -118,24 +120,24 @@ function PANEL:PerformLayout()
 	self:DoConstraints()
 
 	if ( self.m_pTop ) then
-
+	
 		self.m_pTop:StretchToParent( 0, 0, 0, nil )
 		self.m_pTop:SetTall( self.m_iTopHeight )
 		self.m_pTop:InvalidateLayout()
-
+	
 	end
-
+	
 	if ( self.m_pBottom ) then
-
+	
 		self.m_pBottom:StretchToParent( 0, self.m_iTopHeight + self.m_iDividerHeight, 0, 0 )
 		self.m_pBottom:InvalidateLayout()
-
+		
 	end
-
+	
 	self.m_DragBar:StretchToParent( 0, self.m_iTopHeight, 0, 0 )
 	self.m_DragBar:SetTall( self.m_iDividerHeight )
 	self.m_DragBar:SetZPos( -1 )
-
+	
 	if ( self.m_pMiddle ) then
 
 		self.m_pMiddle:StretchToParent( 0, 0, 0, 0 )
@@ -145,53 +147,55 @@ function PANEL:PerformLayout()
 
 end
 
+
 --[[---------------------------------------------------------
-   Name: SetMiddle
+
 -----------------------------------------------------------]]
 function PANEL:SetMiddle( Middle )
 
 	self.m_pMiddle = Middle
 
 	if ( Middle ) then
-
+	
 		Middle:SetParent( self.m_DragBar )
-
+	
 	end
 
+	
 end
 
 --[[---------------------------------------------------------
-   Name: OnCursorMoved
+
 -----------------------------------------------------------]]
 function PANEL:OnCursorMoved( x, y )
 
 	if ( !self:GetDragging() ) then return end
-
+	
 	self.m_iTopHeight = y - self:GetHoldPos()
-
+	
 	self.m_iTopHeight = math.min( self.m_iTopHeight, self:GetTopMax() )
-
+	
 	self:InvalidateLayout( true )
-
+	
 end
 
 --[[---------------------------------------------------------
-   Name: StartGrab
+	
 -----------------------------------------------------------]]
 function PANEL:StartGrab()
 
 	self:SetCursor( "sizens" )
-
+	
 	local x, y = self.m_DragBar:CursorPos()
 	self:SetHoldPos( y )
-
+	
 	self:SetDragging( true )
 	self:MouseCapture( true )
 
 end
 
 --[[---------------------------------------------------------
-   Name: OnMouseReleased
+	
 -----------------------------------------------------------]]
 function PANEL:OnMouseReleased( mcode )
 
@@ -204,6 +208,7 @@ function PANEL:OnMouseReleased( mcode )
 
 end
 
+
 --[[---------------------------------------------------------
    Name: GenerateExample
 -----------------------------------------------------------]]
@@ -214,9 +219,11 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 		ctrl:SetSize( 256, 256 )
 		ctrl:SetTop( vgui.Create( "DButton" ) )
 		ctrl:SetBottom( vgui.Create( "DButton" ) )
-
+	
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end
+
+
 
 derma.DefineControl( "DVerticalDivider", "", PANEL, "DPanel" )

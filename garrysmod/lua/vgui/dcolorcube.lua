@@ -7,7 +7,6 @@
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DColorCube
-
 --]]
 
 local PANEL = {}
@@ -23,14 +22,14 @@ function PANEL:Init()
 
 	self:SetImage( "vgui/minixhair" )
 	self.Knob:NoClipping( false )
-
+	
 	self.BGSaturation = vgui.Create( "DImage", self )
 	self.BGSaturation:SetImage( "vgui/gradient-r" )
-
+	
 	self.BGValue = vgui.Create( "DImage", self )
 	self.BGValue:SetImage( "vgui/gradient-d" )
 	self.BGValue:SetImageColor( Color( 0, 0, 0, 255 ) )
-
+	
 	self:SetBaseRGB( Color( 255, 0, 0 ) )
 	self:SetRGB( Color( 255, 0, 0 ) )
 	self:SetColor( Color( 255, 0, 0 ) )
@@ -46,10 +45,10 @@ end
 function PANEL:PerformLayout()
 
 	DSlider.PerformLayout( self )
-
+	
 	self.BGSaturation:StretchToParent( 0,0,0,0 )
 	self.BGSaturation:SetZPos( -9 )
-
+	
 	self.BGValue:StretchToParent( 0,0,0,0 )
 	self.BGValue:SetZPos( -8 )
 
@@ -82,7 +81,7 @@ function PANEL:TranslateValues( x, y )
 
 	self:UpdateColor( x, y )
 	self:OnUserChanged( self.m_OutRGB )
-
+	
 	return x, y
 
 end
@@ -94,13 +93,13 @@ function PANEL:UpdateColor( x, y )
 
 	x = x or self:GetSlideX()
 	y = y or self:GetSlideY()
-
+	
 	local value = 1 - y
 	local saturation = 1 - x
 	local h = ColorToHSV( self.m_BaseRGB )
-
+	
 	local color = HSVToColor( h, saturation, value )
-
+	
 	self:SetRGB( color )
 
 end
@@ -120,9 +119,9 @@ end
 function PANEL:SetColor( color )
 
 	local h, s, v = ColorToHSV( color )
-
+	
 	self:SetBaseRGB( HSVToColor( h, 1, 1 ) )
-
+	
 	self:SetSlideY( 1 - v )
 	self:SetSlideX( 1 - s )
 	self:UpdateColor()

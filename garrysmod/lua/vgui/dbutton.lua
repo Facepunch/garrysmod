@@ -1,12 +1,13 @@
---[[   _
-	( )
-   _| |   __   _ __   ___ ___     _ _
+--[[   _                                
+	( )                               
+   _| |   __   _ __   ___ ___     _ _ 
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
 
 	DButton
-	Button
+	
+	Default Button
 
 --]]
 
@@ -18,19 +19,19 @@ AccessorFunc( PANEL, "m_FontName", 			"Font" )
 
 
 --[[---------------------------------------------------------
-   Name: Init
+
 -----------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetContentAlignment( 5 )
-
+	
 	--
 	-- These are Lua side commands
 	-- Defined above using AccessorFunc
 	--
 	self:SetDrawBorder( true )
 	self:SetDrawBackground( true )
-
+	
 	--
 	self:SetTall( 22 )
 	self:SetMouseInputEnabled( true )
@@ -42,7 +43,7 @@ function PANEL:Init()
 end
 
 --[[---------------------------------------------------------
-   Name: IsDown
+	IsDown
 -----------------------------------------------------------]]
 function PANEL:IsDown()
 
@@ -51,23 +52,23 @@ function PANEL:IsDown()
 end
 
 --[[---------------------------------------------------------
-   Name: SetImage
+	SetImage
 -----------------------------------------------------------]]
 function PANEL:SetImage( img )
 
 	if ( !img ) then
-
+	
 		if ( IsValid( self.m_Image ) ) then
 			self.m_Image:Remove()
 		end
-
+	
 		return
 	end
 
 	if ( !IsValid( self.m_Image ) ) then
 		self.m_Image = vgui.Create( "DImage", self )
 	end
-
+	
 	self.m_Image:SetImage( img )
 	self.m_Image:SizeToContents()
 	self:InvalidateLayout()
@@ -77,12 +78,12 @@ end
 PANEL.SetIcon = PANEL.SetImage
 
 --[[---------------------------------------------------------
-   Name: Paint
+
 -----------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "Button", self, w, h )
-
+	
 	--
 	-- Draw the button text
 	--
@@ -91,7 +92,7 @@ function PANEL:Paint( w, h )
 end
 
 --[[---------------------------------------------------------
-   Name: UpdateColours
+	UpdateColours
 -----------------------------------------------------------]]
 function PANEL:UpdateColours( skin )
 
@@ -107,18 +108,18 @@ end
    Name: PerformLayout
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
-
+		
 	--
 	-- If we have an image we have to place the image on the left
 	-- and make the text align to the left, then set the inset
 	-- so the text will be to the right of the icon.
 	--
 	if ( IsValid( self.m_Image ) ) then
-
+			
 		self.m_Image:SetPos( 4, (self:GetTall() - self.m_Image:GetTall()) * 0.5 )
-
+		
 		self:SetTextInset( self.m_Image:GetWide() + 16, 0 )
-
+		
 	end
 
 	DLabel.PerformLayout( self )
@@ -126,11 +127,11 @@ function PANEL:PerformLayout()
 end
 
 --[[---------------------------------------------------------
-   Name: SetDisabled
+	SetDisabled
 -----------------------------------------------------------]]
 function PANEL:SetDisabled( bDisabled )
 
-	self.m_bDisabled = bDisabled
+	self.m_bDisabled = bDisabled	
 	self:InvalidateLayout()
 
 end
@@ -140,8 +141,8 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetConsoleCommand( strName, strArgs )
 
-	self.DoClick = function( self, val )
-						RunConsoleCommand( strName, strArgs )
+	self.DoClick = function( self, val ) 
+						RunConsoleCommand( strName, strArgs ) 
 				   end
 
 end
@@ -154,13 +155,13 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	local ctrl = vgui.Create( ClassName )
 		ctrl:SetText( "Example Button" )
 		ctrl:SetWide( 200 )
-
+	
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end
 
 --[[---------------------------------------------------------
-   Name: OnMousePressed
+	OnMousePressed
 -----------------------------------------------------------]]
 function PANEL:OnMousePressed( mousecode )
 
@@ -169,7 +170,7 @@ function PANEL:OnMousePressed( mousecode )
 end
 
 --[[---------------------------------------------------------
-   Name: OnMouseReleased
+	OnMouseReleased
 -----------------------------------------------------------]]
 function PANEL:OnMouseReleased( mousecode )
 

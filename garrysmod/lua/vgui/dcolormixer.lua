@@ -7,10 +7,11 @@
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DColorMixer
-
 --]]
 
+
 local PANEL = {}
+
 
 AccessorFunc( PANEL, "m_ConVarR", "ConVarR" )
 AccessorFunc( PANEL, "m_ConVarG", "ConVarG" )
@@ -25,9 +26,6 @@ AccessorFunc( PANEL, "m_Color", "Color" )
 
 local BarWide = 26
 
---[[---------------------------------------------------------
-	Name: CreateWangFunction
------------------------------------------------------------]]
 local function CreateWangFunction( self, colindex )
 	local function OnValueChanged( ptxt, strvar )
 		if ( ptxt.notuserchange ) then return end
@@ -44,7 +42,7 @@ local function CreateWangFunction( self, colindex )
 		end
 
 		self:UpdateColor( self.m_Color )
-	end
+	end 
 
 	return OnValueChanged
 end
@@ -73,7 +71,7 @@ function PANEL:Init()
 	self.Palette.OnRightClickButton = function( ctrl, btn )
 		ctrl:SaveColor( btn, self:GetColor() );
 	end
-
+	
 
 	-- The label
 	self.label = vgui.Create( "DLabel", self )
@@ -154,6 +152,8 @@ function PANEL:Init()
 	end
 
 
+
+
 	-- Layout
 	self:UpdateColor( self.m_Color )
 	self:SetSize( 256, 230 )
@@ -168,7 +168,7 @@ function PANEL:SetLabel( text )
 
 	if ( !text or ( text == "" ) ) then
 		self.label:SetVisible( false )
-
+	
 		return
 	end
 
@@ -176,7 +176,6 @@ function PANEL:SetLabel( text )
 	self.label:SetVisible( true )
 
 	self:InvalidateLayout()
-
 end
 
 
@@ -184,21 +183,18 @@ end
 	Name: SetPalette
 -----------------------------------------------------------]]
 function PANEL:SetPalette( bEnabled )
-
 	self.m_bPalette = bEnabled
 
 	local Palette = self.Palette
 	Palette:SetVisible( bEnabled )
 
 	self:InvalidateLayout()
-
 end
 
 --[[---------------------------------------------------------
 	Name: SetAlphaBar
 -----------------------------------------------------------]]
 function PANEL:SetAlphaBar( bEnabled )
-
 	self.m_bAlpha = bEnabled
 
 	local Alpha = self.Alpha
@@ -208,58 +204,47 @@ function PANEL:SetAlphaBar( bEnabled )
 	AlphaWang:SetVisible( bEnabled )
 
 	self:InvalidateLayout()
-
 end
 
 --[[---------------------------------------------------------
 	Name: SetWangs
 -----------------------------------------------------------]]
 function PANEL:SetWangs( bEnabled )
-
 	self.m_bWangsPanel = bEnabled
 
 	local WangsPanel = self.WangsPanel
 	WangsPanel:SetVisible( bEnabled )
 
 	self:InvalidateLayout()
-
 end
 
 --[[---------------------------------------------------------
-	Name: SetConVarR
+	Name: ConVarR
 -----------------------------------------------------------]]
 function PANEL:SetConVarR( cvar )
-
 	self.m_ConVarR = cvar
-
 end
 
 --[[---------------------------------------------------------
-	Name: SetConVarG
+	Name: ConVarG
 -----------------------------------------------------------]]
 function PANEL:SetConVarG( cvar )
-
 	self.m_ConVarG = cvar
-
 end
 
 --[[---------------------------------------------------------
-	Name: SetConVarB
+	Name: ConVarB
 -----------------------------------------------------------]]
 function PANEL:SetConVarB( cvar )
-
 	self.m_ConVarB = cvar
-
 end
 
 --[[---------------------------------------------------------
 	Name: SetConVarA
 -----------------------------------------------------------]]
 function PANEL:SetConVarA( cvar )
-
 	self.m_ConVarA = cvar
 	self:SetAlphaBar( cvar != nil )
-
 end
 
 --[[---------------------------------------------------------
@@ -276,35 +261,29 @@ end
 	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Paint()
-
 	-- Invisible background!
-
 end
 
 --[[---------------------------------------------------------
 	Name: TranslateValues ( Todo? )
 -----------------------------------------------------------]]
 function PANEL:TranslateValues( x, y )
-
+	
 end
 
 --[[---------------------------------------------------------
 	Name: SetColor
 -----------------------------------------------------------]]
 function PANEL:SetColor( color )
-
 	local h, s, v = ColorToHSV( color )
 	self.RGB.LastY = ( 1 - h / 360 ) * self.RGB:GetTall()
 
 	self.HSV:SetColor( color )
 
 	self:UpdateColor( color )
-
 end
 
---[[---------------------------------------------------------
-	Name: SetVector
------------------------------------------------------------]]
+
 function PANEL:SetVector( vec )
 
 	self:SetColor( Color( vec.x * 255, vec.y * 255, vec.z * 255, 255 ) )
@@ -315,10 +294,8 @@ end
 	Name: SetBaseColor
 -----------------------------------------------------------]]
 function PANEL:SetBaseColor( color )
-
 	self.HSV:SetBaseRGB( color )
 	self.HSV:TranslateValues()
-
 end
 
 
@@ -333,7 +310,6 @@ function PANEL:UpdateConVar( strName, strKey, color )
 	RunConsoleCommand( strName, tostring( col ) )
 
 	self[ 'ConVarOld'..strName ] = col
-
 end
 
 --[[---------------------------------------------------------
@@ -354,7 +330,6 @@ end
 	Name: UpdateColor
 -----------------------------------------------------------]]
 function PANEL:UpdateColor( color )
-
 	self.Alpha:SetBarColor( ColorAlpha( color, 255 ) )
 	self.Alpha:SetValue( color.a / 255 )
 
@@ -389,16 +364,13 @@ function PANEL:UpdateColor( color )
 	self:ValueChanged( color )
 
 	self.m_Color = color
-
 end
 
 --[[---------------------------------------------------------
 	Name: ValueChanged
 -----------------------------------------------------------]]
 function PANEL:ValueChanged( color )
-
 	-- Override
-
 end
 
 --[[---------------------------------------------------------
@@ -412,12 +384,8 @@ function PANEL:GetColor()
 	end
 
 	return self.m_Color
-
 end
 
---[[---------------------------------------------------------
-	Name: GetVector
------------------------------------------------------------]]
 function PANEL:GetVector()
 
 	local col = self:GetColor();
@@ -448,14 +416,13 @@ function PANEL:ConVarThink()
 	local b, changed_b = self:DoConVarThink( self.m_ConVarB )
 	local a, changed_a = 255, false
 
-	if ( self.m_ConVarA ) then
+	if ( self.m_ConVarA ) then 
 		a, changed_a = self:DoConVarThink( self.m_ConVarA, 'a' )
 	end
 
 	if ( changed_r or changed_g or changed_b or changed_a ) then
 		self:SetColor( Color( r, g, b, a ) )
 	end
-
 end
 
 --[[---------------------------------------------------------

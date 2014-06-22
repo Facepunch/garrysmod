@@ -7,7 +7,6 @@
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DColorPalette
-
 --]]
 
 local color_Error = Color( 255, 0, 255 )
@@ -24,14 +23,14 @@ AccessorFunc( PANEL, "m_buttonsize", "ButtonSize", FORCE_NUMBER )
 AccessorFunc( PANEL, "m_NumRows", "NumRows", FORCE_NUMBER )
 
 --[[---------------------------------------------------------
-	Name: CreateColorTable
+	Default palette
 -----------------------------------------------------------]]
 local function CreateColorTable( rows )
 
 	local rows = rows or 8
 	local index = 0
 	local ColorTable = {}
-	for i=0, rows * 2 - 1 do -- HSV
+	for i=0, rows * 2 - 1 do -- HSV 
 		local col = math.Round( math.min( i * ( 360 / ( rows * 2 ) ), 359 ) )
 		index = index + 1
 		ColorTable[index] = HSVToColor( 360 - col, 1, 1 )
@@ -65,9 +64,6 @@ local function CreateColorTable( rows )
 
 end
 
---[[---------------------------------------------------------
-	Name: AddButton
------------------------------------------------------------]]
 local function AddButton( panel, color, size, id )
 
 	local button = vgui.Create( "DColorButton", panel )
@@ -108,7 +104,7 @@ function PANEL:Init()
 	self:SetNumRows( 8 )
 	self:Reset()
 	self:SetCookieName( "palette" )
-
+	
 	self:SetButtonSize( 10 )
 
 end
@@ -131,9 +127,6 @@ function PANEL:Reset()
 
 end
 
---[[---------------------------------------------------------
-	Name: PaintOver
------------------------------------------------------------]]
 function PANEL:PaintOver( w, h )
 
 	surface.SetDrawColor( 0, 0, 0, 200 )
@@ -169,7 +162,7 @@ function PANEL:SetButtonSize( val )
 	self.m_buttonsize = math.floor( val )
 
 	for k, v in pairs( self:GetChildren() ) do
-		v:SetSize( self.m_buttonsize, self.m_buttonsize )
+		v:SetSize( self.m_buttonsize, self.m_buttonsize )	
 	end
 
 	self:InvalidateLayout()
@@ -205,37 +198,29 @@ end
 function PANEL:SaveColor( btn, color )
 
 	-- Avoid unintended color changing.
-	color = table.Copy( color or color_Error )
+	color = table.Copy( color or color_Error ) 
 
 	btn:SetColor( color )
 	self:SetCookie( "col."..btn:GetID(), string.FromColor( color ) );
 
 end
 
---[[---------------------------------------------------------
-   Name: SetColor
------------------------------------------------------------]]
+--
+-- TODO: This should mark this colour as selected..
+--
 function PANEL:SetColor( newcol )
 
-	-- TODO: This should mark this colour as selected..
-
 end
 
---[[---------------------------------------------------------
-   Name: OnValueChanged
------------------------------------------------------------]]
+--
+-- For override
+--
+
 function PANEL:OnValueChanged( newcol )
 
-	-- For override
-
 end
 
---[[---------------------------------------------------------
-   Name: OnRightClickButton
------------------------------------------------------------]]
 function PANEL:OnRightClickButton( btn )
-
-	-- For override
 
 end
 

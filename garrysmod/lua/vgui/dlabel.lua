@@ -1,13 +1,13 @@
---[[   _
-	( )
-   _| |   __   _ __   ___ ___     _ _
+--[[   _                                
+	( )                               
+   _| |   __   _ __   ___ ___     _ _ 
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
 
 	DLabel
-
 --]]
+
 PANEL = {}
 
 AccessorFunc( PANEL, "m_bIsMenuComponent", 		"IsMenu", 			FORCE_BOOL )
@@ -27,7 +27,7 @@ AccessorFunc( PANEL, "m_bDark", 				"Dark", 					FORCE_BOOL )
 AccessorFunc( PANEL, "m_bHighlight", 			"Highlight", 				FORCE_BOOL )
 
 --[[---------------------------------------------------------
-   Name: Init
+	Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -40,62 +40,50 @@ function PANEL:Init()
 
 	-- Nicer default height
 	self:SetTall( 20 )
-
+	
 	-- This turns off the engine drawing
 	self:SetPaintBackgroundEnabled( false )
 	self:SetPaintBorderEnabled( false )
-
-	self:SetFont( "DermaDefault" )
-
+	
+	self:SetFont( "DermaDefault" )	
+	
 end
 
---[[---------------------------------------------------------
-   Name: SetFont
------------------------------------------------------------]]
 function PANEL:SetFont( strFont )
 
 	self.m_FontName = strFont
-	self:SetFontInternal( self.m_FontName )
+	self:SetFontInternal( self.m_FontName )	
 	self:ApplySchemeSettings()
 
 end
 
---[[---------------------------------------------------------
-   Name: ApplySchemeSettings
------------------------------------------------------------]]
 function PANEL:ApplySchemeSettings()
 
 	self:SetFontInternal( self.m_FontName )
 	self:UpdateColours( self:GetSkin() );
-
+	
 	local col = self.m_colTextStyle
 	if ( self.m_colText ) then col = self.m_colText end
-
+	
 	self:SetFGColor( col.r, col.g, col.b, col.a )
 
 end
 
---[[---------------------------------------------------------
-   Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	self:ApplySchemeSettings()
-
+	
 	if ( self.m_bAutoStretchVertical ) then
 		self:SizeToContentsY()
 	end
 
 end
 
---[[---------------------------------------------------------
-   Name: SetColor
-   Desc: Compatibility
------------------------------------------------------------]]
+
 PANEL.SetColor = PANEL.SetTextColor
 
 --[[---------------------------------------------------------
-   Name: GetColor
+	SetColor
 -----------------------------------------------------------]]
 function PANEL:GetColor()
 
@@ -103,59 +91,60 @@ function PANEL:GetColor()
 
 end
 
+
 --[[---------------------------------------------------------
-   Name: OnCursorEntered
+	Exited
 -----------------------------------------------------------]]
 function PANEL:OnCursorEntered()
-
+	
 	self:InvalidateLayout( true )
-
+	
 end
 
 --[[---------------------------------------------------------
-   Name: OnCursorExited
+	Entered
 -----------------------------------------------------------]]
 function PANEL:OnCursorExited()
 
 	self:InvalidateLayout( true )
-
+	
 end
 
 --[[---------------------------------------------------------
-   Name: OnMousePressed
+	OnMousePressed
 -----------------------------------------------------------]]
 function PANEL:OnMousePressed( mousecode )
 
 	if ( self:GetDisabled() ) then return end
-
+	
 	if ( mousecode == MOUSE_LEFT && !dragndrop.IsDragging() && self.m_bDoubleClicking ) then
-
+	
 		if ( self.LastClickTime && SysTime() - self.LastClickTime < 0.2 ) then
-
+		
 			self:DoDoubleClickInternal()
-			self:DoDoubleClick()
-			return
-
+			self:DoDoubleClick()	
+			return 
+			
 		end
-
+		
 		self.LastClickTime = SysTime()
 	end
-
+	
 	-- If we're selectable and have shift held down then go up
 	-- the parent until we find a selection canvas and start box selection
 	if ( self:IsSelectable() && mousecode == MOUSE_LEFT ) then
-
-		if ( input.IsShiftDown() ) then
+	
+		if ( input.IsShiftDown() ) then 
 			return self:StartBoxSelection()
 		end
-
+		
 	end
-
+	
 	self:MouseCapture( true )
 	self.Depressed = true
 	self:OnDepressed();
 	self:InvalidateLayout();
-
+	
 	--
 	-- Tell DragNDrop that we're down, and might start getting dragged!
 	--
@@ -163,23 +152,20 @@ function PANEL:OnMousePressed( mousecode )
 
 end
 
---[[---------------------------------------------------------
-   Name: OnDepressed
------------------------------------------------------------]]
 function PANEL:OnDepressed()
 
 end
 
 --[[---------------------------------------------------------
-   Name: OnMouseReleased
+	OnMouseReleased
 -----------------------------------------------------------]]
 function PANEL:OnMouseReleased( mousecode )
 
 	self:MouseCapture( false )
-
+	
 	if ( self:GetDisabled() ) then return end
 	if ( !self.Depressed ) then return end
-
+	
 	self.Depressed = nil
 	self:OnReleased();
 	self:InvalidateLayout();
@@ -189,20 +175,20 @@ function PANEL:OnMouseReleased( mousecode )
 	if ( self:DragMouseRelease( mousecode ) ) then
 		return
 	end
-
+	
 	if ( self:IsSelectable() && mousecode == MOUSE_LEFT ) then
-
+			
 		local canvas = self:GetSelectionCanvas()
 		if ( canvas ) then
 			canvas:UnselectAll()
 		end
-
+		
 	end
-
+	
 	if ( !self.Hovered ) then return end
 
 	--
-	-- For the purposes of these callbacks we want to
+	-- For the purposes of these callbacks we want to 
 	-- keep depressed true. This helps us out in controls
 	-- like the checkbox in the properties dialog. Because
 	-- the properties dialog will only manualloy change the value
@@ -214,8 +200,8 @@ function PANEL:OnMouseReleased( mousecode )
 	if ( mousecode == MOUSE_RIGHT ) then
 		self:DoRightClick()
 	end
-
-	if ( mousecode == MOUSE_LEFT ) then
+	
+	if ( mousecode == MOUSE_LEFT ) then	
 		self:DoClickInternal()
 		self:DoClick()
 	end
@@ -228,29 +214,26 @@ function PANEL:OnMouseReleased( mousecode )
 
 end
 
---[[---------------------------------------------------------
-   Name: OnReleased
------------------------------------------------------------]]
 function PANEL:OnReleased()
 
 end
 
 --[[---------------------------------------------------------
-   Name: DoRightClick
+	DoRightClick
 -----------------------------------------------------------]]
 function PANEL:DoRightClick()
 
 end
 
 --[[---------------------------------------------------------
-   Name: DoMiddleClick
+	DoMiddleClick
 -----------------------------------------------------------]]
 function PANEL:DoMiddleClick()
 
 end
 
 --[[---------------------------------------------------------
-   Name: DoClick
+	DoClick
 -----------------------------------------------------------]]
 function PANEL:DoClick()
 
@@ -258,48 +241,43 @@ function PANEL:DoClick()
 
 end
 
---[[---------------------------------------------------------
-   Name:
------------------------------------------------------------]]
 function PANEL:Toggle()
 
 	if ( !self:GetIsToggle() ) then return end
-
+	
 	self.m_bToggle = !self.m_bToggle
 	self:OnToggled( self.m_bToggle )
 
 end
 
---[[---------------------------------------------------------
-   Name: OnToggled
------------------------------------------------------------]]
 function PANEL:OnToggled( bool )
 
 end
 
+
 --[[---------------------------------------------------------
-   Name: DoClickInternal
+	DoClickInternal
 -----------------------------------------------------------]]
 function PANEL:DoClickInternal()
 
 end
 
 --[[---------------------------------------------------------
-   Name: DoDoubleClick
+	DoDoubleClick
 -----------------------------------------------------------]]
 function PANEL:DoDoubleClick()
 
 end
 
 --[[---------------------------------------------------------
-   Name: DoDoubleClickInternal
+	DoDoubleClickInternal
 -----------------------------------------------------------]]
 function PANEL:DoDoubleClickInternal()
-
+	
 end
 
 --[[---------------------------------------------------------
-   Name: UpdateColours
+	UpdateColours
 -----------------------------------------------------------]]
 function PANEL:UpdateColours( skin )
 
@@ -319,22 +297,23 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	local ctrl = vgui.Create( ClassName )
 		ctrl:SetText( "This is a label example." )
 		ctrl:SizeToContents()
-
+		
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end
 
+
 derma.DefineControl( "DLabel", "A Label", PANEL, "Label" )
 
+
 --[[---------------------------------------------------------
-   Name: Label
-   Desc: Convenience Function
+   Name: Convenience Function
 -----------------------------------------------------------]]
 function Label( strText, parent )
 
 	local lbl = vgui.Create( "DLabel", parent )
 	lbl:SetText( strText )
-
+	
 	return lbl
 
 end

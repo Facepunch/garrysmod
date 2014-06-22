@@ -1,13 +1,14 @@
---[[   _
-    ( )
-   _| |   __   _ __   ___ ___     _ _
+--[[   _                                
+    ( )                               
+   _| |   __   _ __   ___ ___     _ _ 
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
 
 	DScrollBarGrip
 
 --]]
+
 local PANEL = {}
 
 --[[---------------------------------------------------------
@@ -29,10 +30,10 @@ end
    Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Paint( w, h )
-
+	
 	derma.SkinHook( "Paint", "ScrollBarGrip", self, w, h )
 	return true
-
+	
 end
 
 derma.DefineControl( "DScrollBarGrip", "A Scrollbar Grip", PANEL, "DPanel" )

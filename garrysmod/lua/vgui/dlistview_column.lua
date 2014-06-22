@@ -1,14 +1,13 @@
---[[   _
-    ( )
-   _| |   __   _ __   ___ ___     _ _
+--[[   _                                
+    ( )                               
+   _| |   __   _ __   ___ ___     _ _ 
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
 
-	DListViewHeaderLabel
-	DListView_DraggerBar
-	DListView_Column
-	DListView_ColumnPlain
+	DListView
+	
+	Columned list view
 
 --]]
 
@@ -24,13 +23,8 @@ Derma_Hook( PANEL, 	"PerformLayout", "Layout", "ListViewHeaderLabel" )
 function PANEL:Init()
 end
 
---[[---------------------------------------------------------
-   Name: GenerateExample
------------------------------------------------------------]]
+-- No example for this control. Why do we have this control?
 function PANEL:GenerateExample( class, tabs, w, h )
-
-	-- No example for this control
-
 end
 
 derma.DefineControl( "DListViewHeaderLabel", "", PANEL, "DLabel" )
@@ -61,25 +55,19 @@ end
 function PANEL:OnCursorMoved()
 
 	if ( self.Depressed ) then
-
+	
 		local x, y = self:GetParent():CursorPos()
-
+	
 		self:GetParent():ResizeColumn( x )
 	end
 
 end
 
---[[---------------------------------------------------------
-   Name: GenerateExample
------------------------------------------------------------]]
+-- No example for this control
 function PANEL:GenerateExample( class, tabs, w, h )
-
-	-- No example for this control
-
 end
 
 derma.DefineControl( "DListView_DraggerBar", "", PANEL, "DButton" )
-
 
 local PANEL = {}
 
@@ -104,9 +92,9 @@ function PANEL:Init()
 	self.Header = vgui.Create( "DButton", self )
 	self.Header.DoClick = function() self:DoClick() end
 	self.Header.DoRightClick = function() self:DoRightClick() end
-
+	
 	self.DraggerBar = vgui.Create( "DListView_DraggerBar", self )
-
+	
 	self:SetMinWidth( 10 )
 	self:SetMaxWidth( 1920 * 10 )
 
@@ -148,10 +136,13 @@ function PANEL:SetName( strName )
 
 end
 
+
 --[[---------------------------------------------------------
    Name: SetMaterial
 -----------------------------------------------------------]]
 function PANEL:SetMaterial( strMaterial )
+
+	
 
 end
 
@@ -159,9 +150,7 @@ end
    Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Paint()
-
 	return true
-
 end
 
 --[[---------------------------------------------------------
@@ -169,13 +158,13 @@ end
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
-	if ( self.m_iTextAlign ) then
-		self.Header:SetContentAlignment( self.m_iTextAlign )
+	if ( self.m_iTextAlign ) then 
+		self.Header:SetContentAlignment( self.m_iTextAlign ) 
 	end
-
+		
 	self.Header:SetPos( 0, 0 )
 	self.Header:SetSize( self:GetWide(), self:GetParent():GetHeaderHeight() )
-
+	
 	self.DraggerBar:SetWide( 4 )
 	self.DraggerBar:StretchToParent( nil, 0, nil, 0 )
 	self.DraggerBar:AlignRight()
@@ -197,7 +186,7 @@ end
 function PANEL:SetWidth( iSize )
 
 	iSize = math.Clamp( iSize, self.m_iMinWidth, self.m_iMaxWidth )
-
+	
 	-- If the column changes size we need to lay the data out too
 	if ( iSize != self:GetWide() ) then
 		self:GetParent():SetDirty( true )
@@ -208,8 +197,9 @@ function PANEL:SetWidth( iSize )
 
 end
 
-derma.DefineControl( "DListView_Column", "", table.Copy( PANEL ), "Panel" )
 
+
+derma.DefineControl( "DListView_Column", "", table.Copy( PANEL ), "Panel" )
 
 --[[---------------------------------------------------------
    Name: Init
@@ -217,9 +207,9 @@ derma.DefineControl( "DListView_Column", "", table.Copy( PANEL ), "Panel" )
 function PANEL:Init()
 
 	self.Header = vgui.Create( "DListViewHeaderLabel", self )
-
+	
 	self.DraggerBar = vgui.Create( "DListView_DraggerBar", self )
-
+	
 	self:SetMinWidth( 10 )
 	self:SetMaxWidth( 1920 * 10 )
 

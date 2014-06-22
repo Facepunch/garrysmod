@@ -1,9 +1,9 @@
---[[   _
-	( )
-   _| |   __   _ __   ___ ___     _ _
+--[[   _                                
+	( )                               
+   _| |   __   _ __   ___ ___     _ _ 
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
 
 	DForm
 
@@ -22,12 +22,12 @@ AccessorFunc( PANEL, "m_Padding", 				"Padding" )
 function PANEL:Init()
 
 	self.Items = {}
-
+	
 	self:SetSpacing( 4 )
 	self:SetPadding( 10 )
-
+	
 	self:SetDrawBackground( true )
-
+	
 	self:SetMouseInputEnabled( true )
 	self:SetKeyboardInputEnabled( true )
 
@@ -49,13 +49,13 @@ end
 function PANEL:Clear()
 
 	for k, v in pairs( self.Items ) do
-
+		
 		if ( IsValid(v) ) then v:Remove() end
 
 	end
 
 	self.Items = {}
-
+	
 end
 
 
@@ -63,29 +63,29 @@ end
    Name: AddItem
 -----------------------------------------------------------]]
 function PANEL:AddItem( left, right )
-
+	
 	self:InvalidateLayout()
-
+	
 	local Panel = vgui.Create( "DSizeToContents", self )
 --	Panel.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "CategoryButton", panel, w, h ) end
 	Panel:SetSizeX( false )
 	Panel:Dock( TOP )
 	Panel:DockPadding( 10, 10, 10, 0 );
 	Panel:InvalidateLayout()
-
+		
 	if ( IsValid( right ) ) then
-
+	
 		left:SetParent( Panel )
 		left:Dock( LEFT )
 		left:InvalidateLayout( true )
 		left:SetSize( 100, 20 )
-
+		
 		right:SetParent( Panel )
 		right:SetPos( 110, 0 )
 		right:InvalidateLayout( true )
 
 	elseif ( IsValid( left ) ) then
-
+	
 		left:SetParent( Panel )
 		left:Dock( TOP )
 
@@ -104,13 +104,13 @@ function PANEL:TextEntry( strLabel, strConVar )
 	local left = vgui.Create( "DLabel", self )
 	left:SetText( strLabel )
 	left:SetDark( true )
-
+	
 	local right = vgui.Create( "DTextEntry", self )
 	right:SetConVar( strConVar )
 	right:Dock( TOP )
-
+	
 	self:AddItem( left, right )
-
+	
 	return right, left
 
 end
@@ -124,13 +124,13 @@ function PANEL:ComboBox( strLabel, strConVar )
 	local left = vgui.Create( "DLabel", self )
 	left:SetText( strLabel )
 	left:SetDark( true )
-
+	
 	local right = vgui.Create( "DComboBox", self )
 	right:SetConVar( strConVar )
 	right:Dock( FILL )
-
+	
 	self:AddItem( left, right )
-
+	
 	return right, left
 
 end
@@ -143,17 +143,17 @@ function PANEL:NumberWang( strLabel, strConVar, numMin, numMax, numDecimals )
 	local left = vgui.Create( "DLabel", self )
 	left:SetText( strLabel )
 	left:SetDark( true )
-
+	
 	local right = vgui.Create( "DNumberWang", self )
 	right:SetMinMax( numMin, numMax )
-
+	
 	if ( numDecimals != nil ) then right:SetDecimals( numDecimals ) end
-
+	
 	right:SetConVar( strConVar )
 	right:SizeToContents()
-
+	
 	self:AddItem( left, right )
-
+	
 	return right, left
 
 end
@@ -167,14 +167,14 @@ function PANEL:NumSlider( strLabel, strConVar, numMin, numMax, numDecimals )
 	left:SetText( strLabel )
 	left:SetMinMax( numMin, numMax )
 	left:SetDark( true )
-
+	
 	if ( numDecimals != nil ) then left:SetDecimals( numDecimals ) end
-
+	
 	left:SetConVar( strConVar )
 	left:SizeToContents()
-
+	
 	self:AddItem( left, nil )
-
+	
 	return left
 
 end
@@ -192,7 +192,7 @@ function PANEL:CheckBox( strLabel, strConVar )
 	left:SetConVar( strConVar )
 
 	self:AddItem( left, nil )
-
+	
 	return left
 
 end
@@ -211,11 +211,11 @@ function PANEL:Help( strHelp )
 	left:SetContentAlignment( 7 )
 	left:SetAutoStretchVertical( true )
 	left:DockMargin( 8, 0, 8, 8 )
-
+	
 	self:AddItem( left, nil )
-
+	
 	left:InvalidateLayout( true )
-
+	
 	return left
 
 end
@@ -260,10 +260,10 @@ function PANEL:Button( strName, strConCommand, ... --[[ console command args!! -
 	if ( strConCommand ) then
 		left:SetConsoleCommand( strConCommand, ... )
 	end
-
+		
 	left:SetText( strName )
 	self:AddItem( left, nil )
-
+	
 	return left
 
 end
@@ -290,13 +290,13 @@ function PANEL:ListBox( strLabel )
 		self:AddItem( left )
 		left:SetDark( true )
 	end
-
+	
 	local right = vgui.Create( "DListBox", self )
 	--right:SetConVar( strConVar )
 	right.Stretch = true
-
+	
 	self:AddItem( right )
-
+	
 	return right, left
 
 end
@@ -308,13 +308,8 @@ function PANEL:Rebuild()
 
 end
 
---[[---------------------------------------------------------
-   Name: GenerateExample
------------------------------------------------------------]]
+-- No example for this control
 function PANEL:GenerateExample( class, tabs, w, h )
-
-	-- No example for this control
-
 end
 
 derma.DefineControl( "DForm", "WHAT", PANEL, "DCollapsibleCategory" )
