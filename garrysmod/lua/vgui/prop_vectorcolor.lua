@@ -1,23 +1,36 @@
+--[[   _
+    ( )
+   _| |   __   _ __   ___ ___     _ _
+ /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
+( (_| |(  ___/| |   | ( ) ( ) |( (_| |
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+
+	DProperty_VectorColor
+
+--]]
 
 --
--- prop_generic is the base for all other properties. 
+-- prop_generic is the base for all other properties.
 -- All the business should be done in :Setup using inline functions.
 -- So when you derive from this class - you should ideally only override Setup.
 --
 
 DEFINE_BASECLASS( "DProperty_Generic" )
 
-
 local PANEL = {}
 
+--[[---------------------------------------------------------
+   Name:
+-----------------------------------------------------------]]
 function PANEL:Init()
-
 
 end
 
---
--- Called by this control, or a derived control, to alert the row of the change
---
+--[[---------------------------------------------------------
+   Name: ValueChanged
+   Desc: Called by this control, or a derived control, to
+   alert the row of the change
+-----------------------------------------------------------]]
 function PANEL:ValueChanged( newval, bForce )
 
 	BaseClass.ValueChanged( self, newval, bForce )
@@ -27,6 +40,9 @@ function PANEL:ValueChanged( newval, bForce )
 end
 
 
+--[[---------------------------------------------------------
+   Name: Setup
+-----------------------------------------------------------]]
 function PANEL:Setup( vars )
 
 	BaseClass.Setup( self, vars )
@@ -60,7 +76,7 @@ function PANEL:Setup( vars )
 		local color = vgui.Create( "DColorCombo", self )
 		color:SetupCloseButton( function() CloseDermaMenus() end )
 		color.OnValueChanged = function( color, newcol )
-			
+
 			-- convert color to vector
 			local vec = Vector( newcol.r / 255, newcol.g / 255, newcol.b / 255 )
 
@@ -79,7 +95,6 @@ function PANEL:Setup( vars )
 
 	end
 
-	
 	-- Set the value
 	self.SetValue = function( self, val )
 		__SetValue( self, val )

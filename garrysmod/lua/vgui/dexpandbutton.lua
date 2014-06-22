@@ -1,9 +1,9 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+    ( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DExpandButton
 
@@ -15,7 +15,7 @@ AccessorFunc( PANEL, "m_bExpanded",	"Expanded", FORCE_BOOL )
 Derma_Hook( PANEL, "Paint", "Paint", "ExpandButton" )
 
 --[[---------------------------------------------------------
-
+   Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -24,8 +24,13 @@ function PANEL:Init()
 
 end
 
--- No example for this control
+--[[---------------------------------------------------------
+   Name: GenerateExample
+-----------------------------------------------------------]]
 function PANEL:GenerateExample( class, tabs, w, h )
+
+	-- No example for this control
+
 end
 
 derma.DefineControl( "DExpandButton", "", PANEL, "DButton" )

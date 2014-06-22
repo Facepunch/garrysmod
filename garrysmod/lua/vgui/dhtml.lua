@@ -1,9 +1,9 @@
---[[   _                                
-	( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DHTML
 
@@ -16,10 +16,10 @@ AccessorFunc( PANEL, "m_bScrollbars", 			"Scrollbars", 		FORCE_BOOL )
 AccessorFunc( PANEL, "m_bAllowLua", 			"AllowLua", 		FORCE_BOOL )
 
 --[[---------------------------------------------------------
-
+   Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
-	
+
 	self:SetScrollbars( true )
 	self:SetAllowLua( false )
 
@@ -30,9 +30,12 @@ function PANEL:Init()
 	-- Implement a console.log - because awesomium doesn't provide it for us anymore.
 	--
 	self:AddFunction( "console", "log", function( param ) self:ConsoleMessage( param ) end )
-	
+
 end
 
+--[[---------------------------------------------------------
+   Name: Think
+-----------------------------------------------------------]]
 function PANEL:Think()
 
 	if ( self.JS && !self:IsLoading() ) then
@@ -49,6 +52,9 @@ function PANEL:Think()
 
 end
 
+--[[---------------------------------------------------------
+   Name: Paint
+-----------------------------------------------------------]]
 function PANEL:Paint()
 
 	if ( self:IsLoading() ) then
@@ -57,6 +63,9 @@ function PANEL:Paint()
 
 end
 
+--[[---------------------------------------------------------
+   Name: QueueJavascript
+-----------------------------------------------------------]]
 function PANEL:QueueJavascript( js )
 
 	--
@@ -73,33 +82,42 @@ function PANEL:QueueJavascript( js )
 
 end
 
+--[[---------------------------------------------------------
+   Name: Call
+-----------------------------------------------------------]]
 function PANEL:Call( js )
+
 	self:QueueJavascript( js )
+
 end
 
+--[[---------------------------------------------------------
+   Name: ConsoleMessage
+-----------------------------------------------------------]]
 function PANEL:ConsoleMessage( msg )
 
 	if ( !isstring( msg ) ) then msg = "*js variable*" end
 
 	if ( self.m_bAllowLua && msg:StartWith( "RUNLUA:" ) ) then
-	
+
 		local strLua = msg:sub( 8 )
 
 		SELF = self
 		RunString( strLua );
 		SELF = nil
-		return; 
+		return;
 
 	end
 
 	MsgC( Color( 255, 160, 255 ), "[HTML] " );
-	MsgC( Color( 255, 255, 255 ), msg, "\n" )	
+	MsgC( Color( 255, 255, 255 ), msg, "\n" )
 
 end
 
---
--- Called by the engine when a callback function is called
---
+--[[---------------------------------------------------------
+   Name: OnCallback
+   Desc: Called by the engine when a callback function is called
+-----------------------------------------------------------]]
 function PANEL:OnCallback( obj, func, args )
 
 	--
@@ -113,9 +131,10 @@ function PANEL:OnCallback( obj, func, args )
 
 end
 
---
--- Add a function to Javascript
---
+--[[---------------------------------------------------------
+   Name: AddFunction
+   Desc: Add a function to Javascript
+-----------------------------------------------------------]]
 function PANEL:AddFunction( obj, funcname, func )
 
 	--
@@ -137,6 +156,5 @@ function PANEL:AddFunction( obj, funcname, func )
 	self.Callbacks[ obj .. "." .. funcname ] = func;
 
 end
-
 
 derma.DefineControl( "DHTML", "A shape", PANEL, "Awesomium" )

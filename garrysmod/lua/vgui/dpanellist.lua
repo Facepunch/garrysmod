@@ -1,10 +1,11 @@
---[[   _                                
-	( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
+	DPanelList
 
 --]]
 local PANEL = {}
@@ -33,46 +34,55 @@ function PANEL:Init()
 	self.pnlCanvas.OnChildRemoved = function() self:OnChildRemoved() end
 	self.pnlCanvas:SetMouseInputEnabled( true )
 	self.pnlCanvas.InvalidateLayout = function() self:InvalidateLayout() end
-	
+
 	self.Items = {}
 	self.YOffset = 0
 	self.m_fAnimTime = 0;
 	self.m_fAnimEase = -1; -- means ease in out
 	self.m_iBuilds = 0
-	
+
 	self:SetSpacing( 0 )
 	self:SetPadding( 0 )
 	self:EnableHorizontal( false )
 	self:SetAutoSize( false )
 	self:SetDrawBackground( true )
 	self:SetNoSizing( false )
-	
+
 	self:SetMouseInputEnabled( true )
-	
+
 	-- This turns off the engine drawing
 	self:SetPaintBackgroundEnabled( false )
 	self:SetPaintBorderEnabled( false )
 
 end
 
+--[[---------------------------------------------------------
+   Name: OnModified
+-----------------------------------------------------------]]
 function PANEL:OnModified()
 
 	-- Override me
 
 end
 
+--[[---------------------------------------------------------
+   Name: SizeToContents
+-----------------------------------------------------------]]
 function PANEL:SizeToContents()
 
 	self:SetSize( self.pnlCanvas:GetSize() )
-	
+
 end
 
+--[[---------------------------------------------------------
+   Name: GetItems
+-----------------------------------------------------------]]
 function PANEL:GetItems()
 
-	-- Should we return a copy of this to stop 
+	-- Should we return a copy of this to stop
 	-- people messing with it?
 	return self.Items
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -81,7 +91,7 @@ end
 function PANEL:EnableHorizontal( bHoriz )
 
 	self.Horizontal = bHoriz
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -90,9 +100,9 @@ end
 function PANEL:EnableVerticalScrollbar()
 
 	if (self.VBar) then return end
-	
+
 	self.VBar = vgui.Create( "DVScrollBar", self )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -110,21 +120,20 @@ end
 function PANEL:Clear( bDelete )
 
 	for k, panel in pairs( self.Items ) do
-	
+
 		if ( !IsValid( panel ) ) then continue end
-		
+
 		panel:SetVisible( false )
-	
+
 		if ( bDelete ) then
 			panel:Remove()
 		end
-		
+
 	end
-	
+
 	self.Items = {}
 
 end
-
 
 --[[---------------------------------------------------------
    Name: AddItem
@@ -137,28 +146,31 @@ function PANEL:AddItem( item, strLineState )
 	item:SetParent( self:GetCanvas() )
 	item.m_strLineState = strLineState or item.m_strLineState;
 	table.insert( self.Items, item )
-	
+
 	if ( self.m_bSortable ) then
-	
+
 		//local DragSlot = item:MakeDraggable( self:GetDraggableName(), self );
 		//DragSlot.OnDrop = self.DropAction
-			
+
 	end
-	
+
 	item:SetSelectable( self.m_bSelectionCanvas );
-	
+
 	self:InvalidateLayout()
 
 end
 
+--[[---------------------------------------------------------
+   Name: InsertBefore
+-----------------------------------------------------------]]
 function PANEL:InsertBefore( before, insert, strLineState )
 
 	table.RemoveByValue( self.Items, insert )
-	
+
 	self:AddItem( insert, strLineState )
-	
+
 	local key = table.KeyFromValue( self.Items, before )
-	
+
 	if ( key ) then
 		table.RemoveByValue( self.Items, insert )
 		table.insert( self.Items, key, insert )
@@ -166,13 +178,16 @@ function PANEL:InsertBefore( before, insert, strLineState )
 
 end
 
+--[[---------------------------------------------------------
+   Name: InsertAfter
+-----------------------------------------------------------]]
 function PANEL:InsertAfter( before, insert, strLineState )
 
 	table.RemoveByValue( self.Items, insert )
 	self:AddItem( insert, strLineState )
-	
+
 	local key = table.KeyFromValue( self.Items, before )
-	
+
 	if ( key ) then
 		table.RemoveByValue( self.Items, insert )
 		table.insert( self.Items, key+1, insert )
@@ -180,37 +195,43 @@ function PANEL:InsertAfter( before, insert, strLineState )
 
 end
 
+--[[---------------------------------------------------------
+   Name: InsertAtTop
+-----------------------------------------------------------]]
 function PANEL:InsertAtTop( insert, strLineState )
 
 	table.RemoveByValue( self.Items, insert )
 	self:AddItem( insert, strLineState )
-	
+
 	local key = 1
 	if ( key ) then
 		table.RemoveByValue( self.Items, insert )
 		table.insert( self.Items, key, insert )
 	end
-	
+
 end
 
+--[[---------------------------------------------------------
+   Name: DropAction
+-----------------------------------------------------------]]
 function PANEL.DropAction( Slot, RcvSlot )
 
-	local PanelToMove = Slot.Panel;	
+	local PanelToMove = Slot.Panel;
 	if ( dragndrop.m_MenuData == "copy" ) then
-	
+
 		if ( PanelToMove.Copy ) then
-			
+
 			PanelToMove = Slot.Panel:Copy()
-			
+
 			PanelToMove.m_strLineState = Slot.Panel.m_strLineState
 		else
 			return
 		end
-	
+
 	end
-	
+
 	PanelToMove:SetPos( RcvSlot.Data.pnlCanvas:ScreenToLocal( gui.MouseX() - dragndrop.m_MouseLocalX, gui.MouseY() - dragndrop.m_MouseLocalY ) )
-	
+
 	if ( dragndrop.DropPos == 4 || dragndrop.DropPos == 8 ) then
 		RcvSlot.Data:InsertBefore( RcvSlot.Panel, PanelToMove )
 	else
@@ -225,31 +246,34 @@ end
 function PANEL:RemoveItem( item, bDontDelete )
 
 	for k, panel in pairs( self.Items ) do
-	
+
 		if ( panel == item ) then
-		
+
 			self.Items[ k ] = nil
-			
+
 			if (!bDontDelete) then
 				panel:Remove()
 			end
-		
+
 			self:InvalidateLayout()
-		
+
 		end
-	
+
 	end
 
 end
 
+--[[---------------------------------------------------------
+   Name: CleanList
+-----------------------------------------------------------]]
 function PANEL:CleanList()
 
 	for k, panel in pairs( self.Items ) do
-	
+
 		if ( !IsValid( panel ) || panel:GetParent() != self.pnlCanvas ) then
 			self.Items[k] = nil
 		end
-	
+
 	end
 
 end
@@ -263,52 +287,52 @@ function PANEL:Rebuild()
 	self.m_iBuilds = self.m_iBuilds + 1;
 
 	self:CleanList()
-	
+
 	if ( self.Horizontal ) then
-	
+
 		local x, y = self.Padding, self.Padding;
 		for k, panel in pairs( self.Items ) do
-		
+
 			if ( panel:IsVisible() ) then
-			
+
 				local OwnLine = (panel.m_strLineState && panel.m_strLineState == "ownline");
-			
+
 				local w = panel:GetWide()
 				local h = panel:GetTall()
-				
+
 				if ( x > self.Padding && (x + w  > self:GetWide() || OwnLine) ) then
-				
+
 					x = self.Padding
 					y = y + h + self.Spacing
-				
+
 				end
-				
+
 				if ( self.m_fAnimTime > 0 && self.m_iBuilds > 1 ) then
 					panel:MoveTo( x, y, self.m_fAnimTime, 0, self.m_fAnimEase )
 				else
 					panel:SetPos( x, y )
 				end
-				
+
 				x = x + w + self.Spacing
 				Offset = y + h + self.Spacing
-				
+
 				if ( OwnLine ) then
-				
+
 					x = self.Padding
 					y = y + h + self.Spacing
-				
+
 				end
-			
+
 			end
-		
+
 		end
-	
+
 	else
-	
+
 		for k, panel in pairs( self.Items ) do
-		
+
 			if ( panel:IsVisible() ) then
-				
+
 				if ( self.m_bNoSizing ) then
 					panel:SizeToContents()
 					if ( self.m_fAnimTime > 0 && self.m_iBuilds > 1 ) then
@@ -324,32 +348,32 @@ function PANEL:Rebuild()
 						panel:SetPos( self.Padding, self.Padding + Offset )
 					end
 				end
-				
+
 				-- Changing the width might ultimately change the height
-				-- So give the panel a chance to change its height now, 
+				-- So give the panel a chance to change its height now,
 				-- so when we call GetTall below the height will be correct.
 				-- True means layout now.
 				panel:InvalidateLayout( true )
-				
+
 				Offset = Offset + panel:GetTall() + self.Spacing
-				
+
 			end
-		
+
 		end
-		
+
 		Offset = Offset + self.Padding
-		
+
 	end
-	
-	self:GetCanvas():SetTall( Offset + self.Padding - self.Spacing ) 
+
+	self:GetCanvas():SetTall( Offset + self.Padding - self.Spacing )
 
 	-- Although this behaviour isn't exactly implied, center vertically too
 	if ( self.m_bNoSizing && self:GetCanvas():GetTall() < self:GetTall() ) then
 
 		self:GetCanvas():SetPos( 0, (self:GetTall()-self:GetCanvas():GetTall()) * 0.5 )
-	
+
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -360,17 +384,17 @@ function PANEL:OnMouseWheeled( dlta )
 	if ( self.VBar ) then
 		return self.VBar:OnMouseWheeled( dlta )
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
    Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Paint( w, h )
-	
+
 	derma.SkinHook( "Paint", "PanelList", self, w, h )
 	return true
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -379,7 +403,7 @@ end
 function PANEL:OnVScroll( iOffset )
 
 	self.pnlCanvas:SetPos( 0, iOffset )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -389,44 +413,46 @@ function PANEL:PerformLayout()
 
 	local Wide = self:GetWide()
 	local YPos = 0
-	
+
 	if ( !self.Rebuild ) then
 		debug.Trace()
 	end
-	
+
 	self:Rebuild()
-	
+
 	if ( self.VBar && !m_bSizeToContents ) then
 
 		self.VBar:SetPos( self:GetWide() - 13, 0 )
 		self.VBar:SetSize( 13, self:GetTall() )
 		self.VBar:SetUp( self:GetTall(), self.pnlCanvas:GetTall() )
 		YPos = self.VBar:GetOffset()
-		
+
 		if ( self.VBar.Enabled ) then Wide = Wide - 13 end
 
 	end
 
 	self.pnlCanvas:SetPos( 0, YPos )
 	self.pnlCanvas:SetWide( Wide )
-	
+
 	self:Rebuild()
-	
+
 	if ( self:GetAutoSize() ) then
-	
+
 		self:SetTall( self.pnlCanvas:GetTall() )
 		self.pnlCanvas:SetPos( 0, 0 )
-	
-	end	
+
+	end
 
 end
 
-
+--[[---------------------------------------------------------
+   Name: OnChildRemoved
+-----------------------------------------------------------]]
 function PANEL:OnChildRemoved()
 
 	self:CleanList()
 	self:InvalidateLayout()
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -436,14 +462,13 @@ function PANEL:ScrollToChild( panel )
 
 	local x, y = self.pnlCanvas:GetChildPosition( panel )
 	local w, h = panel:GetSize()
-	
+
 	y = y + h * 0.5;
 	y = y - self:GetTall() * 0.5;
 
 	self.VBar:AnimateTo( y, 0.5, 0, 0.5 );
-	
-end
 
+end
 
 --[[---------------------------------------------------------
    Name: SortByMember
@@ -452,23 +477,23 @@ function PANEL:SortByMember( key, desc )
 
 	desc = desc or true
 
-	table.sort( self.Items, function( a, b ) 
+	table.sort( self.Items, function( a, b )
 
 								if ( desc ) then
-								
+
 									local ta = a
 									local tb = b
-									
+
 									a = tb
 									b = ta
-								
+
 								end
-	
+
 								if ( a[ key ] == nil ) then return false end
 								if ( b[ key ] == nil ) then return true end
-								
+
 								return a[ key ] > b[ key ]
-								
+
 							end )
 
 end
