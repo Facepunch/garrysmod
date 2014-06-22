@@ -3,11 +3,11 @@ local HTML = nil
 
 spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 
-	HTML = vgui.Create( "DHTML" );
-		JS_Language( HTML )
-		HTML:SetAllowLua( true );
-		HTML:OpenURL( "asset://garrysmod/html/saves.html" );
-		HTML:Call( "SetMap( '" .. game.GetMap() .. "' );" );	
+	HTML = vgui.Create( "DHTML" )
+	JS_Language( HTML )
+	HTML:SetAllowLua( true )
+	HTML:OpenURL( "asset://garrysmod/html/saves.html" )
+	HTML:Call( "SetMap( '" .. game.GetMap() .. "' );" )
 
 	ws_save = WorkshopFileBase( "save", { "save" } )
 	ws_save.HTML = HTML
@@ -23,25 +23,25 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 			if ( k <= offset ) then continue end
 			if ( k > offset + perpage ) then break end
 
-			local entry = 
+			local entry =
 			{
 				file	= "saves/" .. v,
 				name	= v:StripExtension(),
 				preview	= "saves/" .. v:StripExtension() .. ".jpg"
 			}
 
-			table.insert( saves, entry );
+			table.insert( saves, entry )
 
 		end
 
-		local results = 
+		local results =
 		{
 			totalresults	= #f,
 			results			= saves
 		}
 
-		local json = util.TableToJSON( results, false );
-		HTML:Call( "save.ReceiveLocal( "..json.." )" );
+		local json = util.TableToJSON( results, false )
+		HTML:Call( "save.ReceiveLocal( "..json.." )" )
 
 	end
 
@@ -50,7 +50,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 
 		steamworks.Download( id, true, function( name )
 
-			ws_save:Load( name ); 
+			ws_save:Load( name )
 
 		end )
 
@@ -69,7 +69,7 @@ hook.Add( "PostGameSaved", "OnCreationsSaved", function()
 
 	if ( !HTML ) then return end
 
-	HTML:Call( "OnGameSaved()" );
+	HTML:Call( "OnGameSaved()" )
 
 end )
 

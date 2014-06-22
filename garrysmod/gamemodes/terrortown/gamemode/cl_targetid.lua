@@ -187,6 +187,7 @@ function GM:HUDDrawTargetID()
          client.last_id = ent
       end
 
+      local _ -- Stop global clutter
       -- in minimalist targetID, colour nick with health level
       if minimal then
          _, color = util.HealthToString(ent:Health())

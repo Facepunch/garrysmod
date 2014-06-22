@@ -72,6 +72,8 @@ end
 -----------------------------------------------------------]]
 function SWEP:Initialize()
 
+	self:SetHoldType( "pistol" )
+
 	self:InitializeTools()
 	
 	-- We create these here. The problem is that these are meant to be constant values.

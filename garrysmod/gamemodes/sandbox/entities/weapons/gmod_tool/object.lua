@@ -154,7 +154,7 @@ function ToolObj:SetObject( i, ent, pos, phys, bone, norm )
 		norm = norm + pos
 	
 		-- Convert the position to a local position - so it's still valid when the object moves
-		if (phys != nil && phys:IsValid()) then
+		if ( IsValid( phys ) ) then
 			self.Objects[i].Normal = self.Objects[i].Phys:WorldToLocal(norm)
 			self.Objects[i].Pos = self.Objects[i].Phys:WorldToLocal(pos)
 		else
@@ -192,7 +192,7 @@ end
 -----------------------------------------------------------]]
 function ToolObj:GetHelpText()
 
-	return "#tool."..gmod_toolmode:GetString().."."..self:GetStage()
+	return "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. self:GetStage()
 	
 end
 

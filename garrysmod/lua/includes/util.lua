@@ -25,23 +25,12 @@ function IsTableOfEntitiesValid( tab )
 end
 
 --[[---------------------------------------------------------
-	To easily create a colour table
+	Color related functions - they now have their own
+	metatable so better put them in their own separate
+	file
 -----------------------------------------------------------]]
-function Color( r, g, b, a )
 
-	a = a or 255
-	return { r = math.min( tonumber(r), 255 ), g =  math.min( tonumber(g), 255 ), b =  math.min( tonumber(b), 255 ), a =  math.min( tonumber(a), 255 ) }
-	
-end
-
---[[---------------------------------------------------------
-	Change the alpha of a color
------------------------------------------------------------]]
-function ColorAlpha( c, a )
-
-	return { r = c.r, g = c.g, b = c.b, a =  math.min( tonumber(a * 255), 255 ) }
-	
-end
+include( "util/color.lua" )
 
 --[[---------------------------------------------------------
 	Prints a table to the console
@@ -87,7 +76,7 @@ end
 -----------------------------------------------------------]]
 function AngleRand()
 
-	return Angle( math.Rand(-180, 180), math.Rand(-180, 180), math.Rand(-180, 180) )
+	return Angle( math.Rand(-90, 90), math.Rand(-180, 180), math.Rand(-180, 180) )
 end
 
 

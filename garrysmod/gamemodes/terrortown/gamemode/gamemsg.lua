@@ -288,6 +288,11 @@ local function LastWords(ply, cmd, args)
          -- nothing of interest
          if string.len(words) < 2 then return end
 
+         -- ignore admin commands
+         local firstchar = string.GetChar(words, 1)
+         if firstchar == "!" or firstchar == "@" or firstchar == "/" then return end
+
+
          if ttt_lastwords:GetBool() or ply.death_type == KILL_FALL then
             LastWordsMsg(ply, words)
          end

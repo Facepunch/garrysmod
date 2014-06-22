@@ -97,7 +97,7 @@ net.WriteVars =
 {
 	[TYPE_NIL]			= function ( t, v )	net.WriteUInt( t, 8 )								end,
 	[TYPE_STRING]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteString( v )		end,
-	[TYPE_NUMBER]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteFloat( v )			end,
+	[TYPE_NUMBER]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteDouble( v )		end,
 	[TYPE_TABLE]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteTable( v )			end,
 	[TYPE_BOOL]			= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteBit( v )			end,
 	[TYPE_ENTITY]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteEntity( v )		end,
@@ -120,7 +120,7 @@ net.ReadVars =
 {
 	[TYPE_NIL]		= function ()	return end,
 	[TYPE_STRING]	= function ()	return net.ReadString() end,
-	[TYPE_NUMBER]	= function ()	return net.ReadFloat() end,
+	[TYPE_NUMBER]	= function ()	return net.ReadDouble() end,
 	[TYPE_TABLE]	= function ()	return net.ReadTable() end,
 	[TYPE_BOOL]		= function ()	return net.ReadBit() == 1 end,
 	[TYPE_ENTITY]	= function ()	return net.ReadEntity() end,

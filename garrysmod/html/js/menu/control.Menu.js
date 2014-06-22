@@ -341,9 +341,9 @@ function UpdateVersion( version, branch )
 //
 // Setup sounds..
 //
-$( ".options a" ).live( "mouseenter",			function () { lua.PlaySound( "garrysmod/ui_hover.wav" ); } );
-$( ".options a" ).live( "click",				function () { lua.PlaySound( "garrysmod/ui_click.wav" ); } );
-$( ".noisy" ).live( "mouseenter",				function () { lua.PlaySound( "garrysmod/ui_hover.wav" ); } );
-$( ".noisy" ).live( "click",					function () { lua.PlaySound( "garrysmod/ui_click.wav" ); } );
-$( ".ui_sound_return" ).live( "mouseenter",		function () { lua.PlaySound( "garrysmod/ui_hover.wav" ); } );
-$( ".ui_sound_return" ).live( "click",			function () { lua.PlaySound( "garrysmod/ui_return.wav" ); } );
+$(document).on( "mouseenter", ".options a",			function () { lua.PlaySound( "garrysmod/ui_hover.wav" ); } );
+$(document).on( "click", ".options a",				function () { lua.PlaySound( "garrysmod/ui_click.wav" ); } );
+$(document).on( "mouseenter", ".noisy",				function () { lua.PlaySound( "garrysmod/ui_hover.wav" ); } );
+$(document).on( "click", ".noisy",					function () { lua.PlaySound( "garrysmod/ui_click.wav" ); } );
+$(document).on( "mouseenter", ".ui_sound_return",	function () { lua.PlaySound( "garrysmod/ui_hover.wav" ); } );
+$(document).on( "click", ".ui_sound_return",		function () { lua.PlaySound( "garrysmod/ui_return.wav" ); } );

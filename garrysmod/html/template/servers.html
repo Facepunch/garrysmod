@@ -79,16 +79,16 @@
 			<div class='serverlist'>
 
 				<div class='header' style="top: 8px; left: 8px; right: 8px;">
-						<name ng-click="ChangeOrder( CurrentGamemode, 'name' )" ng-tranny="'server_name_header'"></name>
-						<ping ng-click="ChangeOrder( CurrentGamemode, 'ping' )" ng-tranny="'server_ping'"></ping>
-						<players ng-click="ChangeOrder( CurrentGamemode, '-players' )" ng-tranny="'server_players'"></players>
-						<map ng-click="ChangeOrder( CurrentGamemode, 'map' )" ng-tranny="'server_mapname'"></map>
-						<rank ng-click="ChangeOrder( CurrentGamemode, 'recommended' )" ng-tranny="'server_ranking'"></rank>
+					<name ng-click="ChangeOrder( CurrentGamemode, 'name' )" ng-tranny="'server_name_header'"></name>
+					<ping ng-click="ChangeOrder( CurrentGamemode, 'ping' )" ng-tranny="'server_ping'"></ping>
+					<players ng-click="ChangeOrder( CurrentGamemode, '-players' )" ng-tranny="'server_players'"></players>
+					<map ng-click="ChangeOrder( CurrentGamemode, 'map' )" ng-tranny="'server_mapname'"></map>
+					<rank ng-click="ChangeOrder( CurrentGamemode, 'recommended' )" ng-tranny="'server_ranking'"></rank>
 				</div>
 
 				<div class='body scrollable' style="top: 32px; left: 8px; right: 8px; bottom: 8px;">
 					
-					<div ng-repeat="server in CurrentGamemode.servers|filter:CurrentGamemode.Search|orderBy:CurrentGamemode.OrderBy:CurrentGamemode.OrderReverse|limitTo:100" class="server {{ServerClass(server)}} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-click="SelectServer( server )" ng-dblclick="JoinServer( server )">
+					<div ng-repeat="server in CurrentGamemode.servers|filter:CurrentGamemode.Search|orderBy:CurrentGamemode.OrderBy:CurrentGamemode.OrderReverse|limitTo:128" class="server {{ServerClass(server)}} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-click="SelectServer( server )" ng-dblclick="JoinServer( server )">
 						<name><img src='img/server-passworded.png' style="margin-right: 8px;" ng-show="server.pass"/>{{server.name}}</name>
 						<ping>{{server.ping}}</ping>
 						<players>{{server.players}} / {{server.maxplayers}}</players>
@@ -140,7 +140,6 @@
 			</div>
 
 		</div>
-		
 
 	</div>
 	

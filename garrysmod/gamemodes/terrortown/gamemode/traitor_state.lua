@@ -155,7 +155,6 @@ local function force_spectate(ply, cmd, arg)
 
          GAMEMODE:PlayerSpawnAsSpectator(ply)
          ply:SetTeam(TEAM_SPEC)
-         ply:SetRole(ROLE_INNOCENT)
          ply:SetForceSpec(true)
          ply:Spawn()
 

@@ -4,17 +4,17 @@
 -- better instead to use the right click properties?
 --
 
-TOOL.AddToMenu		= false
+TOOL.AddToMenu = false
 
-TOOL.Category		= "Construction"
-TOOL.Name			= "#tool.editentity.name"
+TOOL.Category = "Construction"
+TOOL.Name = "#tool.editentity.name"
 
 function TOOL:LeftClick( trace )
 
 	if ( !trace.Hit ) then return false end
-	
+
 	self.Weapon:SetTargetEntity1( trace.Entity )
-		
+
 	return true
 	
 end
@@ -43,13 +43,12 @@ function TOOL:Think()
 	
 end
 
-function TOOL.BuildCPanel( CPanel, Entity )
+function TOOL.BuildCPanel( CPanel, ent )
 
 	local control = vgui.Create( "DEntityProperties" )
-		control:SetEntity( Entity )
-		control:SetSize( 10, 500 )
+	control:SetEntity( ent )
+	control:SetSize( 10, 500 )
 
 	CPanel:AddPanel( control )
 
 end
-

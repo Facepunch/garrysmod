@@ -94,14 +94,11 @@ function KARMA.ApplyKarma(ply)
    end
 end
 
--- Return true if a traitor could have avoided the damage/death
+-- Return true if a traitor could have easily avoided the damage/death
 local function WasAvoidable(attacker, victim, dmginfo)
-   -- C4 deaths are avoidable for traitors, indicated on HUD
-   if attacker:IsTraitor() and victim:IsTraitor() and dmginfo:IsExplosionDamage() then
-      local infl = dmginfo:GetInflictor()
-      if IsValid(infl) and infl:GetClass() == "ttt_c4" then
-         return true
-      end
+   local infl = dmginfo:GetInflictor()
+   if attacker:IsTraitor() and victim:IsTraitor() and IsValid(infl) and infl.Avoidable then
+      return true
    end
 
    return false

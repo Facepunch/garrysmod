@@ -54,10 +54,11 @@ function PANEL:Init()
    self:SetCursor( "hand" )
 end
 
-function PANEL:AddColumn( label, func )
+function PANEL:AddColumn( label, func, width )
    local lbl = vgui.Create( "DLabel", self )
    lbl.GetPlayerText = func
    lbl.IsHeading = false
+   lbl.Width = width or 50 -- Retain compatibility with existing code
 
    table.insert( self.cols, lbl )
    return lbl
@@ -216,15 +217,18 @@ function PANEL:ApplySchemeSettings()
 end
 
 function PANEL:LayoutColumns()
+   local cx = self:GetWide()
    for k,v in ipairs(self.cols) do
       v:SizeToContents()
-      v:SetPos(self:GetWide() - (50*k) - v:GetWide()/2, (SB_ROW_HEIGHT - v:GetTall()) / 2)
+      cx = cx - v.Width
+      v:SetPos(cx - v:GetWide()/2, (SB_ROW_HEIGHT - v:GetTall()) / 2)
    end
 
    self.tag:SizeToContents()
-   self.tag:SetPos(self:GetWide() - (50 * (#self.cols+1)) - self.tag:GetWide()/2, (SB_ROW_HEIGHT - self.tag:GetTall()) / 2)
+   cx = cx - 90
+   self.tag:SetPos(cx - self.tag:GetWide()/2, (SB_ROW_HEIGHT - self.tag:GetTall()) / 2)
 
-   self.sresult:SetPos(self:GetWide() - (50*(#self.cols+1)) - 8, (SB_ROW_HEIGHT - 16) / 2)
+   self.sresult:SetPos(cx - 8, (SB_ROW_HEIGHT - 16) / 2)
 end
 
 function PANEL:PerformLayout()

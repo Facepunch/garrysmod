@@ -184,10 +184,8 @@ function GM:OnChatTab( str )
 	end
 	
 	if (LastWord == nil) then return str end
-	
-	playerlist = player.GetAll()
-	
-	for k, v in pairs( playerlist ) do
+
+	for k, v in pairs( player.GetAll() ) do
 		
 		local nickname = v:Nick()
 		
@@ -297,7 +295,7 @@ end
 -----------------------------------------------------------]]
 function GM:CalcVehicleView( Vehicle, ply, view )
 
-	if ( Vehicle.GetThirdPersonMode == nil ) then
+	if ( Vehicle.GetThirdPersonMode == nil || ply:GetViewEntity() != ply ) then
 		-- This hsouldn't ever happen.
 		return
 	end

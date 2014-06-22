@@ -8,7 +8,7 @@ WeaponData
 	"playermodel"		"models/weapons/w_annabelle.mdl"
 	"anim_prefix"		"shotgun"
 	"bucket"			"2"
-	"bucket_position"		"1"
+	"bucket_position"		"2"
 	"clip_size"		"2"
 	"primary_ammo"		"357"
 	"secondary_ammo"	"None"

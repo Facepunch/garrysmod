@@ -1,5 +1,5 @@
 
-CreateClientConVar( "pp_dof", "0", true, false )	
+CreateClientConVar( "pp_dof", "0", false, false )	
 local pp_dof_initlength = CreateClientConVar( "pp_dof_initlength", "256", true, false )
 local pp_dof_spacing	= CreateClientConVar( "pp_dof_spacing", "512", true, false )
 

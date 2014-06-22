@@ -77,12 +77,12 @@ util.tobool = tobool
    Desc: Convert the local position on an entity to world pos
 -----------------------------------------------------------]]
 function util.LocalToWorld( ent, lpos, bone )
-	_bone = bone or 0
+	bone = bone or 0
 	if (ent:EntIndex() == 0) then
 		return lpos
 	else
-		if (ent:GetPhysicsObjectNum(_bone) ~= nil && ent:GetPhysicsObjectNum(_bone):IsValid()) then
-			return ent:GetPhysicsObjectNum(_bone):LocalToWorld(lpos)
+		if (ent:GetPhysicsObjectNum(bone) ~= nil && ent:GetPhysicsObjectNum(bone):IsValid()) then
+			return ent:GetPhysicsObjectNum(bone):LocalToWorld(lpos)
 		else
 			return ent:LocalToWorld(lpos)
 		end
@@ -191,14 +191,14 @@ local T =
 	--
 	Started = function( self )
 
-		self.endtime = CurTime() + time
+		return self.endtime != nil
 
 	end,
 
 	--
 	-- Returns true if the time has elapsed
 	--
-	Elapsed = function( self, time )
+	Elapsed = function( self )
 
 		return self.endtime == nil || self.endtime <= CurTime()
 

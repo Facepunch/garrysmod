@@ -1,13 +1,13 @@
 
-TOOL.Category		= "Construction"
-TOOL.Name			= "#tool.balloon.name"
+TOOL.Category = "Construction"
+TOOL.Name = "#tool.balloon.name"
 
-TOOL.ClientConVar[ "ropelength" ]	= "64"
-TOOL.ClientConVar[ "force" ]		= "500"
-TOOL.ClientConVar[ "r" ]			= "255"
-TOOL.ClientConVar[ "g" ]			= "255"
-TOOL.ClientConVar[ "b" ]			= "0"
-TOOL.ClientConVar[ "model" ]		= "models/MaxOfS2D/balloon_classic.mdl"
+TOOL.ClientConVar[ "ropelength" ] = "64"
+TOOL.ClientConVar[ "force" ] = "500"
+TOOL.ClientConVar[ "r" ] = "255"
+TOOL.ClientConVar[ "g" ] = "255"
+TOOL.ClientConVar[ "b" ] = "0"
+TOOL.ClientConVar[ "model" ] = "models/maxofs2d/balloon_classic.mdl"
 
 cleanup.Register( "balloons" )
 
@@ -19,25 +19,25 @@ function TOOL:LeftClick( trace, attach )
 	--
 	-- Right click calls this with attach = false
 	--
-	if ( attach == nil ) then 
-		attach = true 
+	if ( attach == nil ) then
+		attach = true
 	end
 	
 	-- If there's no physics object then we can't constraint it!
-	if ( SERVER && attach && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then 
-		return false 
+	if ( SERVER && attach && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then
+		return false
 	end
 	
-	local ply			= self:GetOwner()
-	local length 		= self:GetClientNumber( "ropelength", 64 )
-	local material 		= "cable/rope"
-	local force 		= self:GetClientNumber( "force", 500 )
-	local r 			= self:GetClientNumber( "r", 255 )
-	local g 			= self:GetClientNumber( "g", 0 )
-	local b 			= self:GetClientNumber( "b", 0 )
-	local model 		= self:GetClientInfo( "model" )
+	local ply = self:GetOwner()
+	local material = "cable/rope"
+	local r = self:GetClientNumber( "r", 255 )
+	local g = self:GetClientNumber( "g", 0 )
+	local b = self:GetClientNumber( "b", 0 )
+	local model = self:GetClientInfo( "model" )
+	local force = self:GetClientNumber( "force", 500 )
+	local length = self:GetClientNumber( "ropelength", 64 )
 
-	local modeltable	= list.Get( "BalloonModels" )[ model ]
+	local modeltable = list.Get( "BalloonModels" )[ model ]
 
 	--
 	-- Model is a table index on BalloonModels
@@ -84,7 +84,7 @@ function TOOL:LeftClick( trace, attach )
 	balloon:SetPos( Pos )
 
 	undo.Create( "Balloon" )
-	undo.AddEntity( balloon )
+		undo.AddEntity( balloon )
 
 	if ( attach ) then
 	
@@ -110,7 +110,7 @@ function TOOL:LeftClick( trace, attach )
 
 	end
 	
-	undo.SetPlayer( ply )
+		undo.SetPlayer( ply )
 	undo.Finish()
 	
 	ply:AddCleanup( "balloons", balloon )
@@ -133,7 +133,7 @@ if ( SERVER ) then
 
 		local balloon = ents.Create( "gmod_balloon" )
 
-		if ( !balloon:IsValid() ) then return end
+		if ( !IsValid( balloon ) ) then return end
 
 		duplicator.DoGeneric( balloon, Data )
 
@@ -170,7 +170,7 @@ function TOOL:UpdateGhostBalloon( ent, ply )
 
 	if ( !IsValid( ent ) ) then return end
 	
-	local tr	= util.GetPlayerTrace( ply )
+	local tr = util.GetPlayerTrace( ply )
 	local trace	= util.TraceLine( tr )
 	if ( !trace.Hit ) then return end
 	
@@ -212,64 +212,30 @@ function TOOL:Think()
 	
 end
 
+local ConVarsDefault = TOOL:BuildConVarList()
+
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description	= "#tool.balloon.help" }  )
+	CPanel:AddControl( "Header", { Description = "#tool.balloon.help" } )
 	
-	CPanel:AddControl( "ComboBox", { Label = "#tool.presets",
-									 MenuButton = 1,
-									 Folder = "balloon",
-									 CVars = { "balloon_ropelength", "balloon_force", "balloon_r", "balloon_g", "balloon_b", "balloon_skin" } } )
+	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "balloon", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
-	CPanel:AddControl( "Slider", 	{ Label = "#tool.balloon.ropelength", Type = "Float", 	Command = "balloon_ropelength", 	Min = "5", 	Max = "1000" }  )
-	CPanel:AddControl( "Slider", 	{ Label = "#tool.balloon.force", Type = "Float", 	Command = "balloon_force", 	Min = "-1000", 	Max = "2000", Help = true }  )
-	CPanel:AddControl( "Color",		{ Label = "#tool.balloon.color", Red = "balloon_r", Green = "balloon_g", Blue = "balloon_b", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" }  )			
+	CPanel:AddControl( "Slider", { Label = "#tool.balloon.ropelength", Type = "Float", Command = "balloon_ropelength", Min = 5, Max = 1000 } )
+	CPanel:AddControl( "Slider", { Label = "#tool.balloon.force", Type = "Float", Command = "balloon_force", Min = -1000, Max = 2000, Help = true } )
+	CPanel:AddControl( "Color", { Label = "#tool.balloon.color", Red = "balloon_r", Green = "balloon_g", Blue = "balloon_b" } )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.balloon.model",
-										ConVar = "balloon_model",
-										Height = 4,
-										ModelsTable = list.Get( "BalloonModels" ) } )
-						
+	CPanel:AddControl( "PropSelect", { Label = "#tool.balloon.model", ConVar = "balloon_model", Height = 4, ModelsTable = list.Get( "BalloonModels" ) } )
+
 end
 
-list.Set( "BalloonModels", "normal", { 
-	model = "models/MaxOfS2D/balloon_classic.mdl", 
-	skin = 0,
-})
+list.Set( "BalloonModels", "normal", { model = "models/maxofs2d/balloon_classic.mdl", skin = 0 } )
+list.Set( "BalloonModels", "normal_skin1", { model = "models/maxofs2d/balloon_classic.mdl", skin = 1 } )
+list.Set( "BalloonModels", "normal_skin2", { model = "models/maxofs2d/balloon_classic.mdl", skin = 2 } )
+list.Set( "BalloonModels", "normal_skin3", { model = "models/maxofs2d/balloon_classic.mdl", skin = 3 } )
 
-list.Set( "BalloonModels", "normal_skin1", { 
-	model = "models/MaxOfS2D/balloon_classic.mdl", 
-	skin = 1,
-})
+list.Set( "BalloonModels", "gman", { model = "models/maxofs2d/balloon_gman.mdl", nocolor = true } )
+list.Set( "BalloonModels", "mossman", { model = "models/maxofs2d/balloon_mossman.mdl", nocolor = true } )
 
-list.Set( "BalloonModels", "normal_skin2", { 
-	model = "models/MaxOfS2D/balloon_classic.mdl", 
-	skin = 2,
-})
-
-list.Set( "BalloonModels", "normal_skin3", { 
-	model = "models/MaxOfS2D/balloon_classic.mdl", 
-	skin = 3,
-})
-
-list.Set( "BalloonModels", "gman", { 
-	model = "models/MaxOfS2D/balloon_gman.mdl",
-	nocolor = true,
-})
-
-list.Set( "BalloonModels", "mossman", { 
-	model = "models/MaxOfS2D/balloon_mossman.mdl", 
-	nocolor = true,	
-})
-
-list.Set( "BalloonModels", "dog", { 
-	model = "models/balloons/balloon_dog.mdl"
-})
-
-list.Set( "BalloonModels", "heart", { 
-	model = "models/balloons/balloon_classicheart.mdl"
-})
-
-list.Set( "BalloonModels", "star", { 
-	model = "models/balloons/balloon_star.mdl"
-})
+list.Set( "BalloonModels", "dog", { model = "models/balloons/balloon_dog.mdl" } )
+list.Set( "BalloonModels", "heart", { model = "models/balloons/balloon_classicheart.mdl" } )
+list.Set( "BalloonModels", "star", { model = "models/balloons/balloon_star.mdl" } )

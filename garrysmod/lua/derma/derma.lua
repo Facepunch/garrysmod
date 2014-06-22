@@ -208,33 +208,32 @@ end
 
 
 --[[---------------------------------------------------------
-   SkinTexture( strName )
+   SkinTexture( strName, panel, default )
 -----------------------------------------------------------]]
-function SkinTexture( strName )
+function SkinTexture( strName, panel, default )
 
 	local Skin = panel:GetSkin()
 
-	if ( !Skin ) then return end
-	local Textures = Skin.Textures
-	if ( !Textures ) then return end
+	if ( !Skin ) then return default end
 	
-	return Textures[ strName ]
+	local Textures = Skin.tex
+
+	if ( !Textures ) then return default end
+	
+	return Textures[ strName ] or default
 	
 end
 
 --[[---------------------------------------------------------
-   SkinHook( strType, strName, panel )
+   Color( strName, panel, default )
 -----------------------------------------------------------]]
 function Color( strName, panel, default )
 
 	local Skin = panel:GetSkin()
 
-	if ( !Skin ) then return end
-	local color = Skin[ strName ]
-	
-	if ( !color ) then return default end
-	
-	return color
+	if ( !Skin ) then return default end
+
+	return Skin[ strName ] or default
 	
 end
 

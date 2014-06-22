@@ -106,7 +106,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:GetFloatValue( max )
 
-	if ( !self.m_fFloatValue ) then m_fFloatValue = 0 end
+	if ( !self.m_fFloatValue ) then self.m_fFloatValue = 0 end
 
 	return tonumber( self.m_fFloatValue ) or 0
 

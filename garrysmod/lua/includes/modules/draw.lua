@@ -68,26 +68,20 @@ function SimpleText(text, font, x, y, colour, xalign, yalign)
 	y 		= y 		or 0
 	xalign 	= xalign 	or TEXT_ALIGN_LEFT
 	yalign 	= yalign 	or TEXT_ALIGN_TOP
-	local w, h = 0, 0
-	surface.SetFont(font)
 	
+	surface.SetFont(font)
+	local w, h = surface.GetTextSize( text )
+
 	if (xalign == TEXT_ALIGN_CENTER) then
-		w, h = surface.GetTextSize( text )
 		x = x - w/2
 	elseif (xalign == TEXT_ALIGN_RIGHT) then
-		w, h = surface.GetTextSize( text )
 		x = x - w
 	end
 	
 	if (yalign == TEXT_ALIGN_CENTER) then
-		w, h = surface.GetTextSize( text )
 		y = y - h/2
-		
 	elseif ( yalign == TEXT_ALIGN_BOTTOM ) then
-	
-		w, h = surface.GetTextSize( text );
-		y = y - h;
-	
+		y = y - h
 	end
 	
 	surface.SetTextPos( math.ceil( x ), math.ceil( y ) );
@@ -123,7 +117,7 @@ function SimpleTextOutlined(text, font, x, y, colour, xalign, yalign, outlinewid
 		end
 	end
 	
-	SimpleText(text, font, x, y, colour, xalign, yalign)
+	return SimpleText(text, font, x, y, colour, xalign, yalign)
 	
 end
 

@@ -1,4 +1,22 @@
 
+--
+-- The number of frames to blend
+--
+local pp_fb = CreateClientConVar( "pp_fb", "0", false, false )
+
+--
+-- The number of frames to blend
+--
+local pp_fb_frames = CreateClientConVar( "pp_fb_frames", "16", true, false )
+
+--
+-- The amount of time the shutter is open. If this is 0.5 then we will blend only
+-- 50% of the frames. This is normally 0.5. Lowering it will make it more blurry.
+--
+local pp_fb_shutter = CreateClientConVar( "pp_fb_shutter", "0.5", true, false )
+
+
+
 local FrameCurves = {}
 
 local function FixupCurve( num )
@@ -42,26 +60,6 @@ local function FrameCurve( f, num )
 	return 1.0
 
 end
-
---
--- The number of frames to blend
---
-local pp_fb = CreateClientConVar( "pp_fb", "0", true, false )
-
---
--- The number of frames to blend
---
-local pp_fb_frames = CreateClientConVar( "pp_fb_frames", "16", true, false )
-
---
--- The amount of time the shutter is open. If this is 0.5 then we will blend only
--- 50% of the frames. This is normally 0.5. Lowering it will make it more blurry.
---
-local pp_fb_shutter = CreateClientConVar( "pp_fb_shutter", "0.5", true, false )
-
--- 8 low
--- 16 avg
--- 32 vhigh
 
 local texFSB			= render.GetSuperFPTex()
 local matFSB			= Material( "pp/motionblur" )

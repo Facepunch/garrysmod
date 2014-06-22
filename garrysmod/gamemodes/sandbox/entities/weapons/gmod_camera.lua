@@ -77,7 +77,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:Initialize()
 
-	self:SetWeaponHoldType( "camera" )
+	self:SetHoldType( "camera" )
 
 end
 
@@ -271,7 +271,7 @@ end
 --
 function SWEP:Equip()
 
-	if ( self:GetZoom() == 70 ) then
+	if ( self:GetZoom() == 70 && self.Owner:IsPlayer() ) then
 		self:SetZoom( self.Owner:GetInfoNum( "fov_desired", 75 ) )
 	end
 

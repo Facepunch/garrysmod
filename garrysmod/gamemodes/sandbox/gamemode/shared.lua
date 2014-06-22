@@ -42,7 +42,7 @@ cleanup.Register( "sents" )
 cleanup.Register( "vehicles" )
 
 
-physgun_limited = CreateConVar( "physgun_limited", "0", FCVAR_REPLICATED )
+local physgun_limited = CreateConVar( "physgun_limited", "0", FCVAR_REPLICATED )
 
 --[[---------------------------------------------------------
    Name: gamemode:CanTool( ply, trace, mode )

@@ -5,7 +5,7 @@ _Material:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 --[[---------------------------------------------------------
    Register the convars that will control this effect
 -----------------------------------------------------------]]
-local pp_sunbeams 			= CreateClientConVar( "pp_sunbeams",			"0", 		true, false )
+local pp_sunbeams 			= CreateClientConVar( "pp_sunbeams",			"0", 		false, false )
 local pp_sunbeams_darken	= CreateClientConVar( "pp_sunbeams_darken",		"0.95", 	true, false )
 local pp_sunbeams_multiply  = CreateClientConVar( "pp_sunbeams_multiply",	"1.0",		true, false )
 local pp_sunbeams_sunsize	= CreateClientConVar( "pp_sunbeams_sunsize",	"0.075",	true, false )
