@@ -1,13 +1,4 @@
---[[   _
-    ( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	SpawnIcon
-
---]]
 local matHover = Material( "vgui/spawnmenu/hover" )
 
 local PANEL = {}
@@ -19,26 +10,23 @@ AccessorFunc( PANEL, "m_strIconName", 		"IconName" )
 
 
 --[[---------------------------------------------------------
-   Name: Init
+   Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetDoubleClickingEnabled( false )
 	self:SetText( "" )
-
+	
 	self.Icon = vgui.Create( "ModelImage", self )
 	self.Icon:SetMouseInputEnabled( false )
 	self.Icon:SetKeyboardInputEnabled( false )
-
+	
 	self:SetSize( 64, 64 )
-
+	
 	self.m_strBodyGroups = "000000000"
 
 end
 
---[[---------------------------------------------------------
-   Name: DoRightClick
------------------------------------------------------------]]
 function PANEL:DoRightClick()
 
 	local pCanvas = self:GetSelectionCanvas()
@@ -47,54 +35,36 @@ function PANEL:DoRightClick()
 	end
 
 	self:OpenMenu()
-
 end
 
---[[---------------------------------------------------------
-   Name: DoClick
------------------------------------------------------------]]
 function PANEL:DoClick()
-
 end
 
---[[---------------------------------------------------------
-   Name: OpenMenu
------------------------------------------------------------]]
 function PANEL:OpenMenu()
-
 end
 
---[[---------------------------------------------------------
-   Name: Paint
------------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	if ( !self.Hovered ) then return end
-
+	
 	//derma.SkinHook( "Paint", "Shadow", self, w, h )
 
 end
 
---[[---------------------------------------------------------
-   Name: PaintOver
------------------------------------------------------------]]
 function PANEL:PaintOver( w, h)
 
 	self:DrawSelections()
-
+	
 	if ( !self.Hovered ) then return end
-
+	
 	surface.SetDrawColor( 255, 255, 255, 255 )
 	surface.SetMaterial( matHover )
 	self:DrawTexturedRect()
 
 end
 
---[[---------------------------------------------------------
-   Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
-
+	
 	if ( self:IsDown() && !self.Dragging ) then
 		self.Icon:StretchToParent( 6, 6, 6, 6 )
 	else
@@ -103,48 +73,37 @@ function PANEL:PerformLayout()
 
 end
 
---[[---------------------------------------------------------
-   Name: SetSpawnIcon
------------------------------------------------------------]]
 function PANEL:SetSpawnIcon( name )
-
 	self.m_strIconName = name
 	self.Icon:SetSpawnIcon( name )
-
 end
 
---[[---------------------------------------------------------
-   Name: SetBodyGroup
------------------------------------------------------------]]
 function PANEL:SetBodyGroup( k, v )
 
 	if ( k < 0 ) then return end
 	if ( k > 9 ) then return end
 	if ( v < 0 ) then return end
 	if ( v > 9 ) then return end
-
+	
 	self.m_strBodyGroups = self.m_strBodyGroups:SetChar( k+1, v )
 
 end
 
---[[---------------------------------------------------------
-   Name: SetModel
------------------------------------------------------------]]
 function PANEL:SetModel( mdl, iSkin, BodyGorups )
 
 	if (!mdl) then debug.Trace() return end
 
 	self:SetModelName( mdl )
 	self:SetSkinID( iSkin )
-
+	
 	if ( tostring(BodyGorups):len() != 9 ) then
 		BodyGorups = "000000000"
 	end
-
+	
 	self.m_strBodyGroups = BodyGorups
 
 	self.Icon:SetModel( mdl, iSkin, BodyGorups )
-
+	
 	if ( iSkin && iSkin > 0 ) then
 		self:SetToolTip( Format( "%s (Skin %i)", mdl, iSkin+1 ) )
 	else
@@ -153,57 +112,45 @@ function PANEL:SetModel( mdl, iSkin, BodyGorups )
 
 end
 
---[[---------------------------------------------------------
-   Name: RebuildSpawnIcon
------------------------------------------------------------]]
 function PANEL:RebuildSpawnIcon()
 
 	self.Icon:RebuildSpawnIcon()
 
 end
 
---[[---------------------------------------------------------
-   Name: RebuildSpawnIconEx
------------------------------------------------------------]]
 function PANEL:RebuildSpawnIconEx( t )
 
 	self.Icon:RebuildSpawnIconEx( t )
 
 end
 
---[[---------------------------------------------------------
-   Name: ToTable
------------------------------------------------------------]]
 function PANEL:ToTable( bigtable )
 
 	local tab = {}
-
+	
 	tab.type	= "model"
 	tab.model	= self:GetModelName()
-
+	
 	if ( self:GetSkinID() != 0 ) then
 		tab.skin	= self:GetSkinID()
 	end
-
+	
 	if ( self:GetBodyGroup() != "000000000" ) then
 		tab.body	= "B" .. self:GetBodyGroup()
 	end
-
+	
 	if ( self:GetWide() != 64 ) then
 		tab.wide = self:GetWide()
 	end
-
+	
 	if ( self:GetTall() != 64 ) then
 		tab.tall = self:GetTall()
 	end
-
+	
 	table.insert( bigtable, tab )
 
 end
 
---[[---------------------------------------------------------
-   Name: Copy
------------------------------------------------------------]]
 function PANEL:Copy()
 
 	local copy = vgui.Create( "SpawnIcon", self:GetParent() )
@@ -211,61 +158,56 @@ function PANEL:Copy()
 	copy:CopyBase( self )
 	copy.DoClick = self.DoClick
 	copy.OpenMenu = self.OpenMenu
-
+	
 	return copy
 
 end
 
 -- Icon has been editied, they changed the skin
 -- what should we do?
---[[---------------------------------------------------------
-   Name: SkinChanged
------------------------------------------------------------]]
 function PANEL:SkinChanged( i )
 
 	-- Change the skin, and change the model
 	-- this way we can edit the spawnmenu....
 	self:SetSkinID( i )
 	self:SetModel( self:GetModelName(), self:GetSkinID(), self:GetBodyGroup() )
-
+	
 end
 
---[[---------------------------------------------------------
-   Name: BodyGroupChanged
------------------------------------------------------------]]
 function PANEL:BodyGroupChanged( k, v )
 
 	self:SetBodyGroup( k, v )
 	self:SetModel( self:GetModelName(), self:GetSkinID(), self:GetBodyGroup() )
-
+	
 end
 
-vgui.Register( "SpawnIcon", PANEL, "DButton" )
 
+vgui.Register( "SpawnIcon", PANEL, "DButton" )
 
 --
 -- Action on creating a model from the spawnlist
 --
+
 spawnmenu.AddContentType( "model", function( container, obj )
 
 	local icon = vgui.Create( "SpawnIcon", container )
-
+	
 	if ( obj.body ) then
 		obj.body = string.Trim( tostring(obj.body), "B" )
 	end
-
+	
 	if ( obj.wide ) then
 		icon:SetWide( obj.wide )
 	end
-
+	
 	if ( obj.tall ) then
 		icon:SetTall( obj.tall )
 	end
-
+	
 	icon:InvalidateLayout( true )
-
+	
 	icon:SetModel( obj.model, obj.skin or 0, obj.body )
-
+	
 	icon:SetTooltip( string.Replace( string.GetFileFromFilename(obj.model), ".mdl", "" ) )
 
 	icon.DoClick = function( icon ) surface.PlaySound( "ui/buttonclickrelease.wav") RunConsoleCommand( "gm_spawn", icon:GetModelName(), icon:GetSkinID() or 0, icon:GetBodyGroup() or "" ) end
@@ -280,23 +222,23 @@ spawnmenu.AddContentType( "model", function( container, obj )
 			submenu:AddOption( "All Icons", function() container:RebuildAll() end )
 
 		menu:AddOption( "Edit Icon", function()
-
+			
 			local editor = vgui.Create( "IconEditor" )
 			editor:SetIcon( icon )
 			editor:Refresh()
 			editor:MakePopup()
 			editor:Center()
-
+		
 		end )
-
+	
 		local ChangeIconSize = function( w, h )
-
+			
 			icon:SetSize( w, h )
 			icon:InvalidateLayout( true )
 			container:OnModified()
 			container:Layout()
 			icon:SetModel( obj.model, obj.skin or 0, obj.body )
-
+		
 		end
 
 		local submenu = menu:AddSubMenu( "Resize", function() end )
@@ -323,25 +265,25 @@ spawnmenu.AddContentType( "model", function( container, obj )
 		menu:AddSpacer()
 		menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged" ) end )
 		menu:Open()
-
+		
 	end
 
 	icon:InvalidateLayout( true )
-
+	
 	if ( IsValid( container ) ) then
 		container:Add( icon )
 	end
-
+	
 /*
 	if ( iSkin != 0 ) then return end
-
+	
 	local iSkinCount = NumModelSkins( strModel )
 	if ( iSkinCount <= 1 ) then return end
-
+	
 	for i=1, iSkinCount-1, 1 do
-
+	
 		self:AddModel( strModel, i )
-
+	
 	end
 */
 

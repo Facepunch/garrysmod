@@ -1,24 +1,9 @@
---[[   _
-    ( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
-
-	"the row"
-	"the category"
-	DProperties
-
---]]
 
 --
 -- The row - contained in a category.
 --
 local tblRow = vgui.RegisterTable( {
 
-	--[[---------------------------------------------------------
-	   Name: Init
-	-----------------------------------------------------------]]
 	Init = function( self )
 
 		self:Dock( TOP )
@@ -32,9 +17,6 @@ local tblRow = vgui.RegisterTable( {
 
 	end,
 
-	--[[---------------------------------------------------------
-	   Name: PerformLayout
-	-----------------------------------------------------------]]
 	PerformLayout = function( self )
 
 		self:SetTall( 20 )
@@ -42,9 +24,6 @@ local tblRow = vgui.RegisterTable( {
 
 	end,
 
-	--[[---------------------------------------------------------
-	   Name: Setup
-	-----------------------------------------------------------]]
 	Setup = function( self, type, vars )
 
 		self.Container:Clear()
@@ -60,10 +39,7 @@ local tblRow = vgui.RegisterTable( {
 
 	end,
 
-	--[[---------------------------------------------------------
-	   Name: SetValue
-	-----------------------------------------------------------]]
-	SetValue = function( self, val )
+	SetValue = function( self, val ) 
 
 		--
 		-- Don't update the value if our cache'd value is the same.
@@ -77,9 +53,6 @@ local tblRow = vgui.RegisterTable( {
 
 	end,
 
-	--[[---------------------------------------------------------
-	   Name: Paint
-	-----------------------------------------------------------]]
 	Paint = function( self, w, h )
 
 		local Skin = self:GetSkin()
@@ -104,6 +77,7 @@ local tblRow = vgui.RegisterTable( {
 
 	end
 
+
 }, "Panel" )
 
 --
@@ -111,9 +85,6 @@ local tblRow = vgui.RegisterTable( {
 --
 local tblCategory = vgui.RegisterTable( {
 
-	--[[---------------------------------------------------------
-	   Name: Init
-	-----------------------------------------------------------]]
 	Init = function( self )
 
 		self:Dock( TOP )
@@ -131,7 +102,7 @@ local tblCategory = vgui.RegisterTable( {
 		self.Expand:DockMargin( 0, 4, 0, 4 )
 		self.Expand:SetExpanded( true )
 		self.Expand.DoClick = function()
-
+			
 			self.Container:SetVisible( !self.Container:IsVisible() )
 			self.Expand:SetExpanded( self.Container:IsVisible() )
 			self:InvalidateLayout()
@@ -151,9 +122,6 @@ local tblCategory = vgui.RegisterTable( {
 
 	end,
 
-	--[[---------------------------------------------------------
-	   Name: PerformLayout
-	-----------------------------------------------------------]]
 	PerformLayout = function( self )
 
 		self.Container:SizeToChildren( false, true )
@@ -165,16 +133,13 @@ local tblCategory = vgui.RegisterTable( {
 
 	end,
 
-	--[[---------------------------------------------------------
-	   Name: GetRow
-	-----------------------------------------------------------]]
 	GetRow = function( self, name, bCreate )
 
 		if ( IsValid( self.Rows[ name ] ) ) then return self.Rows[ name ] end
 		if ( !bCreate ) then return end
 
 		local row = self.Container:Add( tblRow )
-
+		
 			row.Label:SetText( name )
 
 			self.Rows[ name ] = row
@@ -183,9 +148,6 @@ local tblCategory = vgui.RegisterTable( {
 
 	end,
 
-	--[[---------------------------------------------------------
-	   Name: Paint
-	-----------------------------------------------------------]]
 	Paint = function( self, w, h )
 
 		local Skin = self:GetSkin()
@@ -194,6 +156,7 @@ local tblCategory = vgui.RegisterTable( {
 
 	end
 
+
 }, "Panel" )
 
 --
@@ -201,28 +164,21 @@ local tblCategory = vgui.RegisterTable( {
 --
 local PANEL = {}
 
---[[---------------------------------------------------------
-   Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.Categories = {}
 
 end
 
---[[---------------------------------------------------------
-   Name: PerformLayout
-   Desc: Size to children vertically
------------------------------------------------------------]]
+--
+-- Size to children vertically
+--
 function PANEL:PerformLayout()
 
 	self:SizeToChildren( false, true )
 
 end
 
---[[---------------------------------------------------------
-   Name: GetCanvas
------------------------------------------------------------]]
 function PANEL:GetCanvas()
 
 	if ( !IsValid( self.Canvas ) ) then
@@ -236,10 +192,9 @@ function PANEL:GetCanvas()
 
 end
 
---[[---------------------------------------------------------
-   Name: GetCategory
-   Desc: Get or create a category
------------------------------------------------------------]]
+--
+-- Get or create a category
+--
 function PANEL:GetCategory( name, bCreate )
 
 	local cat = self.Categories[name]
@@ -254,11 +209,10 @@ function PANEL:GetCategory( name, bCreate )
 
 end
 
---[[---------------------------------------------------------
-   Name: CreateRow
-   Desc: Creates a row under the specified category. You
-   should then call :Setup on the row.
------------------------------------------------------------]]
+--
+-- Creates a row under the specified category.
+-- You should then call :Setup on the row.
+--
 function PANEL:CreateRow( category, name )
 
 	local cat = self:GetCategory( category, true )

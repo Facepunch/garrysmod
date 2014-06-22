@@ -1,21 +1,8 @@
---[[   _
-	( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
-
-	DBubbleContainer
-
---]]
 
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bgColor", "BackgroundColor" )
 
---[[---------------------------------------------------------
-   Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.matPoint = Material( "gui/point.png" )
@@ -24,9 +11,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-   Name: OpenForPos
------------------------------------------------------------]]
 function PANEL:OpenForPos( x, y, w, h )
 
 	local center = x;
@@ -44,17 +28,12 @@ function PANEL:OpenForPos( x, y, w, h )
 
 end
 
---[[---------------------------------------------------------
-   Name: PerformLayout
------------------------------------------------------------]]
+
 function PANEL:PerformLayout()
 
 
 end
 
---[[---------------------------------------------------------
-   Name: Paint
------------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	local top = h - 32
@@ -67,7 +46,8 @@ function PANEL:Paint( w, h )
 	surface.SetDrawColor( self.m_bgColor )
 	surface.SetMaterial( self.matPoint );
 	surface.DrawTexturedRect( self.Center - 32, top, 64, 32 )
-
+	
 end
+
 
 derma.DefineControl( "DBubbleContainer", "", PANEL, "DPanel" )

@@ -1,16 +1,6 @@
---[[   _
-    ( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
-
-	DProperty_Generic
-
---]]
 
 --
--- prop_generic is the base for all other properties.
+-- prop_generic is the base for all other properties. 
 -- All the business should be done in :Setup using inline functions.
 -- So when you derive from this class - you should ideally only override Setup.
 --
@@ -19,16 +9,11 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "m_pRow", 		"Row" )
 
---[[---------------------------------------------------------
-   Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
+
 
 end
 
---[[---------------------------------------------------------
-   Name: Think
------------------------------------------------------------]]
 function PANEL:Think()
 
 	--
@@ -42,24 +27,19 @@ function PANEL:Think()
 
 end
 
---[[---------------------------------------------------------
-   Name: ValueChanged
-   Desc: Called by this control, or a derived control, to
-   alert the row of the change
------------------------------------------------------------]]
+--
+-- Called by this control, or a derived control, to alert the row of the change
+--
 function PANEL:ValueChanged( newval, bForce )
 
 	if ( (self:IsEditing() || bForce) && isfunction( self.m_pRow.DataChanged ) ) then
-
+	
 		self.m_pRow:DataChanged( newval )
 
 	end
 
 end
 
---[[---------------------------------------------------------
-   Name: Setup
------------------------------------------------------------]]
 function PANEL:Setup( vars )
 
 	self:Clear()
@@ -76,12 +56,12 @@ function PANEL:Setup( vars )
 
 	-- Set the value
 	self.SetValue = function( self, val )
-		text:SetText( util.TypeToString( val ) )
+		text:SetText( util.TypeToString( val ) ) 
 	end
 
 	-- Alert row that value changed
 	text.OnValueChange = function( text, newval )
-
+			
 		self:ValueChanged( newval )
 
 	end

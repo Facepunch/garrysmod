@@ -1,13 +1,11 @@
---[[   _
-    ( )
-   _| |   __   _ __   ___ ___     _ _
+--[[   _                                
+    ( )                               
+   _| |   __   _ __   ___ ___     _ _ 
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
 
-	DHorizontalDividerBar
-	DHorizontalDivider: modified from DVerticalDivider by TAD2020
-
+DHorizontalDivider: modified from DVerticalDivider by TAD2020
 --]]
 
 local PANEL = {}
@@ -33,7 +31,11 @@ function PANEL:OnMousePressed( mcode )
 
 end
 
+
+
 derma.DefineControl( "DHorizontalDividerBar", "", PANEL, "DPanel" )
+
+
 
 
 local PANEL = {}
@@ -57,12 +59,12 @@ function PANEL:Init()
 
 	self:SetDividerWidth( 8 )
 	self:SetLeftWidth( 100 )
-
+	
 	self:SetLeftMin( 50 )
 	self:SetRightMin( 50 )
-
+	
 	self:SetPaintBackground( false )
-
+	
 	self.m_DragBar = vgui.Create( "DHorizontalDividerBar", self )
 
 end
@@ -102,24 +104,24 @@ end
 function PANEL:PerformLayout()
 
 	if ( self.m_pLeft ) then
-
+	
 		self.m_pLeft:StretchToParent( 0, 0, nil, 0 )
 		self.m_pLeft:SetWide( self.m_iLeftWidth )
 		self.m_pLeft:InvalidateLayout()
-
+	
 	end
-
+	
 	if ( self.m_pRight ) then
-
+	
 		self.m_pRight:StretchToParent( self.m_iLeftWidth + self.m_iDividerWidth, 0, 0, 0 )
 		self.m_pRight:InvalidateLayout()
-
+		
 	end
-
+	
 	self.m_DragBar:StretchToParent( self.m_iLeftWidth, 0, 0, 0 )
 	self.m_DragBar:SetWide( self.m_iDividerWidth )
 	self.m_DragBar:SetZPos( -1 )
-
+	
 	if ( self.m_pMiddle ) then
 
 		self.m_pMiddle:StretchToParent( 0, 0, 0, 0 )
@@ -138,11 +140,12 @@ function PANEL:SetMiddle( Middle )
 	self.m_pMiddle = Middle
 
 	if ( Middle ) then
-
+	
 		Middle:SetParent( self.m_DragBar )
-
+	
 	end
 
+	
 end
 
 --[[---------------------------------------------------------
@@ -151,12 +154,13 @@ end
 function PANEL:OnCursorMoved( x, y )
 
 	if ( !self:GetDragging() ) then return end
-
+	
 	x = math.Clamp( x - self:GetHoldPos(), self:GetLeftMin(), self:GetWide() - self:GetRightMin() - self:GetDividerWidth() )
-
+	
 	self:SetLeftWidth( x )
 	self:InvalidateLayout()
 
+	
 end
 
 --[[---------------------------------------------------------
@@ -165,10 +169,10 @@ end
 function PANEL:StartGrab()
 
 	self:SetCursor( "sizewe" )
-
+	
 	local x, y = self.m_DragBar:CursorPos()
 	self:SetHoldPos( x )
-
+	
 	self:SetDragging( true )
 	self:MouseCapture( true )
 
@@ -198,7 +202,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 		ctrl:SetSize( 256, 256 )
 		ctrl:SetLeft( vgui.Create( "DButton" ) )
 		ctrl:SetRight( vgui.Create( "DButton" ) )
-
+	
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end

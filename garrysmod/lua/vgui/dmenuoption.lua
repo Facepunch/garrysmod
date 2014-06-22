@@ -1,13 +1,14 @@
---[[   _
-    ( )
-   _| |   __   _ __   ___ ___     _ _
+--[[   _                                
+    ( )                               
+   _| |   __   _ __   ___ ___     _ _ 
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
 
 	DMenuOption
 
 --]]
+
 PANEL = {}
 
 AccessorFunc( PANEL, "m_pMenu", 		"Menu" )
@@ -15,7 +16,7 @@ AccessorFunc( PANEL, "m_bChecked", 		"Checked" )
 AccessorFunc( PANEL, "m_bCheckable", 	"IsCheckable" )
 
 --[[---------------------------------------------------------
-   Name: Init
+
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -26,25 +27,26 @@ function PANEL:Init()
 
 end
 
+
 --[[---------------------------------------------------------
-   Name: SetSubMenu
+
 -----------------------------------------------------------]]
 function PANEL:SetSubMenu( menu )
 
-	self.SubMenu = menu
-
+	self.SubMenu = menu	
+	
 	if ( !self.SubMenuArrow ) then
-
+	
 		self.SubMenuArrow = vgui.Create( "DPanel", self )
 		self.SubMenuArrow.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "MenuRightArrow", panel, w, h ) end
-
+	
 	end
-
+	
 end
 
---[[---------------------------------------------------------
-   Name: AddSubMenu
------------------------------------------------------------]]
+--
+-- AddSubMenu
+--
 function PANEL:AddSubMenu()
 
 	local SubMenu = DermaMenu( self )
@@ -52,40 +54,42 @@ function PANEL:AddSubMenu()
 		SubMenu:SetParent( self )
 
 	self:SetSubMenu( SubMenu )
-
+	
 	return SubMenu
 
 end
 
+
 --[[---------------------------------------------------------
-   Name: OnCursorEntered
+
 -----------------------------------------------------------]]
 function PANEL:OnCursorEntered()
 
 	if ( IsValid( self.ParentMenu ) ) then
-		self.ParentMenu:OpenSubMenu( self, self.SubMenu )
+		self.ParentMenu:OpenSubMenu( self, self.SubMenu )	
 		return
 	end
-
-	self:GetParent():OpenSubMenu( self, self.SubMenu )
-
+	
+	self:GetParent():OpenSubMenu( self, self.SubMenu )	
+	
 end
 
 --[[---------------------------------------------------------
-   Name: OnCursorExited
+
 -----------------------------------------------------------]]
 function PANEL:OnCursorExited()
 
 end
 
 
+
 --[[---------------------------------------------------------
-   Name: Paint
+
 -----------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "MenuOption", self, w, h )
-
+	
 	--
 	-- Draw the button text
 	--
@@ -94,7 +98,7 @@ function PANEL:Paint( w, h )
 end
 
 --[[---------------------------------------------------------
-   Name: OnMousePressed
+	OnMousePressed
 -----------------------------------------------------------]]
 function PANEL:OnMousePressed( mousecode )
 
@@ -105,23 +109,23 @@ function PANEL:OnMousePressed( mousecode )
 end
 
 --[[---------------------------------------------------------
-   Name: OnMouseReleased
+	OnMouseReleased
 -----------------------------------------------------------]]
 function PANEL:OnMouseReleased( mousecode )
 
 	DButton.OnMouseReleased( self, mousecode )
 
 	if ( self.m_MenuClicking && mousecode == MOUSE_LEFT ) then
-
+		
 		self.m_MenuClicking = false
 		CloseDermaMenus()
-
+		
 	end
 
 end
 
 --[[---------------------------------------------------------
-   Name: DoRightclick
+	DoRightClick
 -----------------------------------------------------------]]
 function PANEL:DoRightClick()
 
@@ -132,7 +136,7 @@ function PANEL:DoRightClick()
 end
 
 --[[---------------------------------------------------------
-   Name: DoClickInternal
+	DoClickInternal
 -----------------------------------------------------------]]
 function PANEL:DoClickInternal()
 
@@ -141,15 +145,15 @@ function PANEL:DoClickInternal()
 	end
 
 	if ( self.m_pMenu ) then
-
+	
 		self.m_pMenu:OptionSelectedInternal( self )
-
+	
 	end
 
 end
 
 --[[---------------------------------------------------------
-   Name: ToggleCheck
+	ToggleCheck
 -----------------------------------------------------------]]
 function PANEL:ToggleCheck()
 
@@ -159,7 +163,7 @@ function PANEL:ToggleCheck()
 end
 
 --[[---------------------------------------------------------
-   Name: OnChecked
+	OnChecked
 -----------------------------------------------------------]]
 function PANEL:OnChecked( b )
 
@@ -172,26 +176,23 @@ function PANEL:PerformLayout()
 
 	self:SizeToContents()
 	self:SetWide( self:GetWide() + 30 )
-
+	
 	local w = math.max( self:GetParent():GetWide(), self:GetWide() )
 
 	self:SetSize( w, 22 )
-
+	
 	if ( self.SubMenuArrow ) then
-
+	
 		self.SubMenuArrow:SetSize( 15, 15 )
 		self.SubMenuArrow:CenterVertical()
 		self.SubMenuArrow:AlignRight( 4 )
-
+		
 	end
 
 	DButton.PerformLayout( self )
-
+		
 end
 
---[[---------------------------------------------------------
-   Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample()
 
 	// Do nothing!
