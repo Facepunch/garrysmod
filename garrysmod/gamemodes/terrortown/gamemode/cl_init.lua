@@ -1,4 +1,3 @@
-
 include("shared.lua")
 
 -- Define GM12 fonts for compatibility
@@ -139,7 +138,6 @@ local function RoundStateChange(o, n)
    end
 end
 
-
 concommand.Add("ttt_print_playercount", function() print(GAMEMODE.StartingPlayers) end)
 
 --- optional sound cues on round start and end
@@ -191,8 +189,6 @@ local function ReceiveRoleList()
          if ply:IsTraitor() then
             ply.traitor_gvoice = false -- assume traitorchat by default
          end
-
-         --print(ply, "is", RoleToString(ply))
       end
    end
 end
@@ -306,20 +302,10 @@ function GM:CalcView( ply, origin, angles, fov )
 
    local wep = ply:GetActiveWeapon()
    if IsValid(wep) then
-
-	-- viewmodel repositioning is now done in GM:CalcViewModelView
---[[
-      local func = wep.GetViewModelPosition
-      if func then
-         view.vm_origin,  view.vm_angles = func( wep, origin*1, angles*1 )
-      end
-]]
-
       local func = wep.CalcView
       if func then
          view.origin, view.angles, view.fov = func( wep, ply, origin*1, angles*1, fov )
       end
-
    end
 
    return view
@@ -389,4 +375,3 @@ function CheckIdle()
       end
    end
 end
-
