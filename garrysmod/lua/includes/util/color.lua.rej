@@ -1,0 +1,6 @@
+diff a/garrysmod/lua/includes/util/color.lua b/garrysmod/lua/includes/util/color.lua	(rejected hunks)
+@@ -57,3 +57,3 @@
+ --[[---------------------------------------------------------
+-	Converts Color To Vector - Acecool
++	Converts Color To Vector
+ -----------------------------------------------------------]]
