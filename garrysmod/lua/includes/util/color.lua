@@ -15,7 +15,7 @@ function Color( r, g, b, a )
 
 	a = a or 255
 	return setmetatable( { r = math.min( tonumber(r), 255 ), g =  math.min( tonumber(g), 255 ), b =  math.min( tonumber(b), 255 ), a =  math.min( tonumber(a), 255 ) }, COLOR_M )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -24,32 +24,41 @@ end
 function ColorAlpha( c, a )
 
 	return Color( c.r, c.g, c.b, a )
-	
+
 end
 
 --[[---------------------------------------------------------
 	Returns color as a string
 -----------------------------------------------------------]]
 function COLOR_M:__tostring()
-	
+
 	return string.format( "%d %d %d", self.r, self.g, self.b )
-	
+
 end
 
 --[[---------------------------------------------------------
 	Compares two colors
 -----------------------------------------------------------]]
 function COLOR_M:__eq( c )
-	
+
 	return self.r == c.r and self.g == c.g and self.b == c.b and self.a == c.a
-	
+
 end
 
 --[[---------------------------------------------------------
 	Converts a color to HSV
 -----------------------------------------------------------]]
 function COLOR:ToHSV()
-	
+
 	return ColorToHSV( self )
-	
+
+end
+
+--[[---------------------------------------------------------
+	Converts Color To Vector
+-----------------------------------------------------------]]
+function COLOR:ToVector( )
+
+	return Vector( self.r / 255, self.g / 255, self.b / 255 )
+
 end
