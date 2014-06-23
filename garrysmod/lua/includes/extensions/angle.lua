@@ -16,3 +16,11 @@ function meta:SnapTo( component, degrees )
 	return self
 
 end
+
+function meta:__mul(a, b)
+	return Angle(a[1] * b[1], a[2] * b[2], a[3] * b[3])
+end
+
+function meta:__div(a, b)
+	return Angle(a[1] / b[1], a[2] / b[2], a[3] / b[3])
+end
