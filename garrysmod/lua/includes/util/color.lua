@@ -1,12 +1,11 @@
-
 local COLOR = {}
-local COLOR_M = { __index = COLOR }
+COLOR.__index = COLOR
 
 --[[---------------------------------------------------------
 	Register our metatable to make it accessible using FindMetaTable
 -----------------------------------------------------------]]
 
-debug.getregistry().Color = COLOR_M
+debug.getregistry().Color = COLOR
 
 --[[---------------------------------------------------------
 	To easily create a colour table
@@ -14,7 +13,7 @@ debug.getregistry().Color = COLOR_M
 function Color( r, g, b, a )
 
 	a = a or 255
-	return setmetatable( { r = math.min( tonumber(r), 255 ), g =  math.min( tonumber(g), 255 ), b =  math.min( tonumber(b), 255 ), a =  math.min( tonumber(a), 255 ) }, COLOR_M )
+	return setmetatable( { r = math.min( tonumber(r), 255 ), g =  math.min( tonumber(g), 255 ), b =  math.min( tonumber(b), 255 ), a =  math.min( tonumber(a), 255 ) }, COLOR )
 	
 end
 
@@ -30,7 +29,7 @@ end
 --[[---------------------------------------------------------
 	Returns color as a string
 -----------------------------------------------------------]]
-function COLOR_M:__tostring()
+function COLOR:__tostring()
 	
 	return string.format( "%d %d %d", self.r, self.g, self.b )
 	
@@ -39,7 +38,7 @@ end
 --[[---------------------------------------------------------
 	Compares two colors
 -----------------------------------------------------------]]
-function COLOR_M:__eq( c )
+function COLOR:__eq( c )
 	
 	return self.r == c.r and self.g == c.g and self.b == c.b and self.a == c.a
 	
@@ -52,4 +51,13 @@ function COLOR:ToHSV()
 	
 	return ColorToHSV( self )
 	
+end
+
+--[[---------------------------------------------------------
+	Converts Color To Vector - loss of precision / alpha lost
+-----------------------------------------------------------]]
+function COLOR:ToVector( )
+
+	return Vector( self.r / 255, self.g / 255, self.b / 255 )
+
 end
