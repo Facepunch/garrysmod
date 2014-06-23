@@ -55,7 +55,7 @@ function COLOR:ToHSV()
 end
 
 --[[---------------------------------------------------------
-	Converts Color To Vector - Acecool
+	Converts Color To Vector
 -----------------------------------------------------------]]
 function COLOR:ToVector( )
 
