@@ -1,9 +1,9 @@
---[[   _                                
-	( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DImage
 
@@ -18,25 +18,25 @@ AccessorFunc( PANEL, "m_strMatName", 			"MatName" )
 AccessorFunc( PANEL, "m_strMatNameFailsafe", 	"FailsafeMatName" )
 
 --[[---------------------------------------------------------
-
+   Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetImageColor( Color( 255, 255, 255, 255 ) )
 	self:SetMouseInputEnabled( false )
 	self:SetKeyboardInputEnabled( false )
-	
+
 	self:SetKeepAspect( false )
-	
+
 	self.ImageName = ""
 
 	self.ActualWidth = 10
 	self.ActualHeight = 10
-	
+
 end
 
 --[[---------------------------------------------------------
-
+   Name: SetOnViewMaterial
 -----------------------------------------------------------]]
 function PANEL:SetOnViewMaterial( MatName, MatNameBackup )
 
@@ -46,16 +46,15 @@ function PANEL:SetOnViewMaterial( MatName, MatNameBackup )
 
 end
 
-
 --[[---------------------------------------------------------
-
+   Name: Unloaded
 -----------------------------------------------------------]]
 function PANEL:Unloaded()
 	return self.m_strMatName != nil
 end
 
 --[[---------------------------------------------------------
-
+   Name: LoadMaterial
 -----------------------------------------------------------]]
 function PANEL:LoadMaterial()
 
@@ -67,15 +66,18 @@ function PANEL:LoadMaterial()
 
 end
 
+--[[---------------------------------------------------------
+   Name: DoLoadMaterial
+-----------------------------------------------------------]]
 function PANEL:DoLoadMaterial()
 
 	local mat = Material( self:GetMatName() )
 	self:SetMaterial( mat )
-		
+
 	if ( self.m_Material:IsError() && self:GetFailsafeMatName()  ) then
 		self:SetMaterial( Material( self:GetFailsafeMatName() ) )
 	end
-	
+
 	self:FixVertexLitMaterial()
 
 	//
@@ -87,22 +89,21 @@ function PANEL:DoLoadMaterial()
 
 end
 
-
 --[[---------------------------------------------------------
-
+   Name: SetMaterial
 -----------------------------------------------------------]]
 function PANEL:SetMaterial( Mat )
 
-	-- Everybody makes mistakes, 
+	-- Everybody makes mistakes,
 	-- that's why they put erasers on pencils.
 	if ( type( Mat ) == "string" ) then
 		self:SetImage( Mat )
 	return end
 
 	self.m_Material = Mat
-	
+
 	if (!self.m_Material) then return end
-	
+
 	local Texture = self.m_Material:GetTexture( "$basetexture" )
 	if ( Texture ) then
 		self.ActualWidth = Texture:Width()
@@ -114,9 +115,8 @@ function PANEL:SetMaterial( Mat )
 
 end
 
-
 --[[---------------------------------------------------------
-
+   Name: SetImage
 -----------------------------------------------------------]]
 function PANEL:SetImage( strImage, strBackup )
 
@@ -129,62 +129,64 @@ function PANEL:SetImage( strImage, strBackup )
 	local Mat = Material( strImage )
 	self:SetMaterial( Mat )
 	self:FixVertexLitMaterial()
-	
+
 end
 
 --[[---------------------------------------------------------
-
+   Name: GetImage
 -----------------------------------------------------------]]
 function PANEL:GetImage()
 
 	return self.ImageName
-	
+
 end
 
+--[[---------------------------------------------------------
+   Name: FixVertexLitMaterial
+-----------------------------------------------------------]]
 function PANEL:FixVertexLitMaterial()
-	
+
 	--
 	-- If it's a vertexlitgeneric material we need to change it to be
 	-- UnlitGeneric so it doesn't go dark when we enter a dark room
 	-- and flicker all about
 	--
-	
+
 	local Mat = self:GetMaterial()
 	local strImage = Mat:GetName()
-	
+
 	if ( string.find( Mat:GetShader(), "VertexLitGeneric" ) || string.find( Mat:GetShader(), "Cable" ) ) then
-	
+
 		local t = Mat:GetString( "$basetexture" )
-		
+
 		if ( t ) then
-		
+
 			local params = {}
 			params[ "$basetexture" ] = t
 			params[ "$vertexcolor" ] = 1
 			params[ "$vertexalpha" ] = 1
-			
+
 			Mat = CreateMaterial( strImage .. "_DImage", "UnlitGeneric", params )
-		
+
 		end
-		
+
 	end
-	
+
 	self:SetMaterial( Mat )
-	
+
 end
 
-
 --[[---------------------------------------------------------
-
+   Name: GetImage
 -----------------------------------------------------------]]
 function PANEL:GetImage()
 
 	return self.ImageName
-	
+
 end
 
 --[[---------------------------------------------------------
-
+   Name:
 -----------------------------------------------------------]]
 function PANEL:SizeToContents( strImage )
 
@@ -192,9 +194,8 @@ function PANEL:SizeToContents( strImage )
 
 end
 
-
 --[[---------------------------------------------------------
-
+   Name:
 -----------------------------------------------------------]]
 function PANEL:Paint()
 
@@ -202,6 +203,9 @@ function PANEL:Paint()
 
 end
 
+--[[---------------------------------------------------------
+   Name:
+-----------------------------------------------------------]]
 function PANEL:PaintAt( x, y, dw, dh )
 
 	self:LoadMaterial()
@@ -210,59 +214,59 @@ function PANEL:PaintAt( x, y, dw, dh )
 
 	surface.SetMaterial( self.m_Material )
 	surface.SetDrawColor( self.m_Color.r, self.m_Color.g, self.m_Color.b, self.m_Color.a )
-	
+
 	if ( self:GetKeepAspect() ) then
-	
+
 		local w = self.ActualWidth
 		local h = self.ActualHeight
-		
+
 		-- Image is bigger than panel, shrink to suitable size
 		if ( w > dw && h > dh ) then
-		
+
 			if ( w > dw ) then
-			
+
 				local diff = dw / w
 				w = w * diff
 				h = h * diff
-			
+
 			end
-			
+
 			if ( h > dh ) then
-			
+
 				local diff = dh / h
 				w = w * diff
 				h = h * diff
-			
+
 			end
 
 		end
-		
+
 		if ( w < dw ) then
-		
+
 			local diff = dw / w
 			w = w * diff
 			h = h * diff
-		
+
 		end
-		
+
 		if ( h < dh ) then
-		
+
 			local diff = dh / h
 			w = w * diff
 			h = h * diff
-		
+
 		end
-		
+
 		local OffX = (dw - w) * 0.5
 		local OffY = (dh - h) * 0.5
-			
+
 		surface.DrawTexturedRect( OffX+x, OffY+y, w, h )
-	
+
 		return true
-	
+
 	end
-	
-	
+
+
 	surface.DrawTexturedRect( x, y, dw, dh )
 	return true
 
@@ -276,7 +280,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	local ctrl = vgui.Create( ClassName )
 		ctrl:SetImage( "brick/brick_model" )
 		ctrl:SetSize( 200, 200 )
-		
+
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end

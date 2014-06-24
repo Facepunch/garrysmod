@@ -1,23 +1,41 @@
+--[[   _
+    ( )
+   _| |   __   _ __   ___ ___     _ _
+ /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
+( (_| |(  ___/| |   | ( ) ( ) |( (_| |
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+
+	DProperty_Float
+
+--]]
 
 --
--- prop_generic is the base for all other properties. 
+-- prop_generic is the base for all other properties.
 -- All the business should be done in :Setup using inline functions.
 -- So when you derive from this class - you should ideally only override Setup.
 --
 
 local PANEL = {}
 
+--[[---------------------------------------------------------
+   Name:
+-----------------------------------------------------------]]
 function PANEL:Init()
 
-
 end
 
+--[[---------------------------------------------------------
+   Name:
+-----------------------------------------------------------]]
 function PANEL:GetDecimals()
+
 	return 2
+
 end
 
-
-
+--[[---------------------------------------------------------
+   Name:
+-----------------------------------------------------------]]
 function PANEL:Setup( vars )
 
 	self:Clear()
@@ -48,12 +66,12 @@ function PANEL:Setup( vars )
 
 	-- Set the value
 	self.SetValue = function( self, val )
-		ctrl:SetValue( val ) 
+		ctrl:SetValue( val )
 	end
 
 	-- Alert row that value changed
 	ctrl.OnValueChanged = function( ctrl, newval )
-			
+
 		self:ValueChanged( newval )
 
 	end

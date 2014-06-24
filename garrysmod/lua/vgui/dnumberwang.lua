@@ -1,9 +1,9 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+    ( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DNumberWang
 
@@ -17,33 +17,36 @@ AccessorFunc( PANEL, "m_iDecimals", 	"Decimals" )		-- The number of decimal plac
 AccessorFunc( PANEL, "m_fFloatValue", 	"FloatValue" )
 
 --[[---------------------------------------------------------
-	
+   Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetDecimals( 2 )
 	self:SetTall( 20 )
 	self:SetMinMax( 0, 100 )
-	
+
 	self:SetUpdateOnType( true )
 	self:SetNumeric( true )
 
 	self.OnChange = function() self:OnValueChanged( self:GetValue() ) end
-		
+
 	self.Up = vgui.Create( "DButton", self )
 	self.Up:SetText( "" );
 	self.Up.DoClick = function( button, mcode ) self:SetValue( self:GetValue() + 1 ) end
 	self.Up.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "NumberUp", panel, w, h ) end
-	
+
 	self.Down = vgui.Create( "DButton", self )
 	self.Down:SetText( "" );
 	self.Down.DoClick = function( button, mcode ) self:SetValue( self:GetValue() - 1 ) end
 	self.Down.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "NumberDown", panel, w, h ) end
-		
+
 	self:SetValue( 0 )
 
 end
 
+--[[---------------------------------------------------------
+   Name: HideWang
+-----------------------------------------------------------]]
 function PANEL:HideWang()
 
 	self.Up:Hide();
@@ -52,7 +55,7 @@ function PANEL:HideWang()
 end
 
 --[[---------------------------------------------------------
-	
+   Name: SetDecimals
 -----------------------------------------------------------]]
 function PANEL:SetDecimals( num )
 
@@ -61,9 +64,8 @@ function PANEL:SetDecimals( num )
 
 end
 
-
 --[[---------------------------------------------------------
-	OnMouseReleased
+   Name: OnMouseReleased
 -----------------------------------------------------------]]
 function PANEL:OnMouseReleased( mousecode )
 
@@ -74,7 +76,7 @@ function PANEL:OnMouseReleased( mousecode )
 end
 
 --[[---------------------------------------------------------
-	SetMinMax
+   Name: SetMinMax
 -----------------------------------------------------------]]
 function PANEL:SetMinMax( min, max )
 
@@ -84,7 +86,7 @@ function PANEL:SetMinMax( min, max )
 end
 
 --[[---------------------------------------------------------
-	SetMin
+   Name: SetMin
 -----------------------------------------------------------]]
 function PANEL:SetMin( min )
 
@@ -93,7 +95,7 @@ function PANEL:SetMin( min )
 end
 
 --[[---------------------------------------------------------
-	SetMax
+   Name: SetMax
 -----------------------------------------------------------]]
 function PANEL:SetMax( max )
 
@@ -102,11 +104,11 @@ function PANEL:SetMax( max )
 end
 
 --[[---------------------------------------------------------
-	GetFloatValue
+   Name: GetFloatValue
 -----------------------------------------------------------]]
 function PANEL:GetFloatValue( max )
 
-	if ( !self.m_fFloatValue ) then self.m_fFloatValue = 0 end
+	if ( !self.m_fFloatValue ) then m_fFloatValue = 0 end
 
 	return tonumber( self.m_fFloatValue ) or 0
 
@@ -118,33 +120,33 @@ end
 function PANEL:SetValue( val )
 
 	if ( val == nil ) then return end
-	
+
 	local OldValue = val
 	val = tonumber( val )
 	val = val or 0
-	
+
 	if ( self.m_numMax != nil ) then
 		val = math.min( self.m_numMax, val )
 	end
-	
+
 	if ( self.m_numMin != nil ) then
 		val = math.max( self.m_numMin, val )
 	end
-	
+
 	if ( self.m_iDecimals == 0 ) then
-	
+
 		val = Format( "%i", val )
-	
+
 	elseif ( val != 0 ) then
-	
+
 		val = Format( "%."..self.m_iDecimals.."f", val )
-			
+
 		-- Trim trailing 0's and .'s 0 this gets rid of .00 etc
-		val = string.TrimRight( val, "0" )		
+		val = string.TrimRight( val, "0" )
 		val = string.TrimRight( val, "." )
-		
+
 	end
-	
+
 	--
 	-- Don't change the value while we're typing into it!
 	-- It causes confusion!
@@ -153,7 +155,7 @@ function PANEL:SetValue( val )
 		self:SetText( val )
 		self:ConVarChanged( val )
 	end
-	
+
 	self:OnValueChanged( val )
 
 end
@@ -179,7 +181,7 @@ function PANEL:PerformLayout()
 	self.Up:SetSize( s, s-1 )
 	self.Up:AlignRight( 3 );
 	self.Up:AlignTop(0);
-	
+
 	self.Down:SetSize( s, s-1 )
 	self.Down:AlignRight( 3 );
 	self.Down:AlignBottom(2);
@@ -187,35 +189,34 @@ function PANEL:PerformLayout()
 end
 
 --[[---------------------------------------------------------
-	SizeToContents
+   Name: SizeToContents
 -----------------------------------------------------------]]
 function PANEL:SizeToContents()
 
 	-- Size based on the max number and max amount of decimals
-	
+
 	local chars = 0
-	
+
 	local min = math.Round( self:GetMin(), self:GetDecimals() )
 	local max = math.Round( self:GetMax(), self:GetDecimals() )
-	
+
 	local minchars = string.len( ""..min.."" )
 	local maxchars = string.len( ""..max.."" )
-	
+
 	chars = chars + math.max( minchars, maxchars )
-	
+
 	if ( self:GetDecimals() && self:GetDecimals() > 0 ) then
-	
+
 		chars = chars + 1 -- .
 		chars = chars + self:GetDecimals()
-	
+
 	end
-	
+
 	self:InvalidateLayout( true )
 	self:SetWide( chars * 6 + 10 + 5 + 5 )
 	self:InvalidateLayout()
 
 end
-
 
 --[[---------------------------------------------------------
    Name: GetFraction
@@ -238,7 +239,6 @@ function PANEL:SetFraction( val )
 	self:SetValue( Fraction )
 
 end
-
 
 --[[---------------------------------------------------------
    Name: OnValueChanged
@@ -265,7 +265,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 		ctrl:SetDecimals( 0 )
 		ctrl:SetMinMax( 0, 255 )
 		ctrl:SetValue( 3 )
-	
+
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end
