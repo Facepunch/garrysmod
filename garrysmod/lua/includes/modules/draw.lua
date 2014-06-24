@@ -127,6 +127,11 @@ end
           color is a table with r/g/b/a elements
    Usage: 
 -----------------------------------------------------------]]
+local gmatch = string.gmatch
+local find = string.find
+local ceil = math.ceil
+local GetTextSize = surface.GetTextSize
+local max = math.max
 function DrawText(text, font, x, y, colour, xalign )
 
 	if (font == nil) then font = "DermaDefault" end
@@ -139,31 +144,29 @@ function DrawText(text, font, x, y, colour, xalign )
 	local curString = ""
 	
 	surface.SetFont(font)
-	local sizeX, lineHeight = surface.GetTextSize("\n")
+	local sizeX, lineHeight = GetTextSize("\n")
+	local tabWidth = 50
 	
-	for i=1, string.len(text) do
-		local ch = string.sub(text,i,i)
-		if (ch == "\n") then
-			if (string.len(curString) > 0) then
-				SimpleText(curString, font, curX, curY, colour, xalign)
+	for str in gmatch( text, "[^\n]*" ) do
+		if #str > 0 then
+			if find( str, "\t" ) then -- there's tabs, some more calculations required
+				for tabs, str2 in gmatch( str, "(\t*)([^\t]*)" ) do
+					curX = ceil( (curX + tabWidth * max(#tabs-1,0)) / tabWidth ) * tabWidth
+					
+					if #str2 > 0 then
+						SimpleText( str2, font, curX, curY, colour, xalign )
+					
+						local w, _ = GetTextSize( str2 )
+						curX = curX + w
+					end
+				end
+			else -- there's no tabs, this is easy
+				SimpleText( str, font, curX, curY, colour, xalign )
 			end
 			
-			curY = curY + (lineHeight/2)
 			curX = x
-			curString = ""
-		elseif (ch == "\t") then
-			if (string.len(curString) > 0) then
-				SimpleText(curString, font, curX, curY, colour, xalign)
-			end
-			local tmpSizeX,tmpSizeY =  surface.GetTextSize(curString)
-			curX = math.ceil( (curX + tmpSizeX) / 50 ) * 50
-			curString = ""
-		else
-			curString = curString .. ch
+			curY = curY + (lineHeight/2)
 		end
-	end	
-	if (string.len(curString) > 0) then
-		SimpleText(curString, font, curX, curY, colour, xalign)
 	end
 end
 
