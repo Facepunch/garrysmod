@@ -101,9 +101,9 @@ function ENT:GiveHealth(ply, max_heal)
          -- constant clamping, no risks
          local healed = self:TakeFromStorage(math.min(max_heal, dmg))
          local new = math.min(ply:GetMaxHealth(), ply:Health() + healed)
-         
+
          ply:SetHealth(new)
-         hook.Run("TTTPlayerUsedHealthstation", ply, self, healed)
+         hook.Run("TTTPlayerUsedHealthStation", ply, self, healed)
 
          if last_sound_time + 2 < CurTime() then
             self:EmitSound(healsound)
