@@ -69,10 +69,11 @@ end
 
 function net.ReadColor()
 
-    local r, g, b, a = net.ReadUInt( 8 ),
-                       net.ReadUInt( 8 ),
-                       net.ReadUInt( 8 ),
-                       net.ReadUInt( 8 )
+    local r, g, b, a = 
+    				net.ReadUInt( 8 ),
+                    net.ReadUInt( 8 ),
+                    net.ReadUInt( 8 ),
+                    net.ReadUInt( 8 )
 
     return Color( r, g, b, a )
 
