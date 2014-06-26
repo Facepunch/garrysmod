@@ -11,7 +11,7 @@ function meta:SnapTo( component, degrees )
 	if ( !self[ component ] ) then ErrorNoHalt( "You must choose a valid component of Angle( p || pitch, y || yaw, r || roll ) to snap such as Angle( 80, 40, 30 ):SnapTo( \"p\", 90 ):SnapTo( \"y\", 45 ):SnapTo( \"r\", 40 ); and yes, you can keep adding snaps.\n" ); return self; end
 
 	self[ component ] = math.Round( self[ component ] / degrees ) * degrees
-	self[ component ] = math.NormalizeAngle( self[ component ] 
+	self[ component ] = math.NormalizeAngle( self[ component ] )
 
 	return self
 
