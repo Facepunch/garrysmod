@@ -61,21 +61,21 @@ function net.WriteColor( col )
 	assert( IsColor( col ), "net.WriteColor: color expected, got ".. type( col ) )
 
 	net.WriteUInt( col.r, 8 )
-    net.WriteUInt( col.g, 8 )
-    net.WriteUInt( col.b, 8 )
-    net.WriteUInt( col.a, 8 )
+	net.WriteUInt( col.g, 8 )
+	net.WriteUInt( col.b, 8 )
+	net.WriteUInt( col.a, 8 )
 
 end
 
 function net.ReadColor()
 
-    local r, g, b, a = 
-    				net.ReadUInt( 8 ),
-                    net.ReadUInt( 8 ),
-                    net.ReadUInt( 8 ),
-                    net.ReadUInt( 8 )
+	local r, g, b, a = 
+					net.ReadUInt( 8 ),
+					net.ReadUInt( 8 ),
+					net.ReadUInt( 8 ),
+					net.ReadUInt( 8 )
 
-    return Color( r, g, b, a )
+	return Color( r, g, b, a )
 
 end
 
