@@ -216,7 +216,18 @@ function PANEL:Toggle()
 	local cookie = '1'
 	if ( !self:GetExpanded() ) then cookie = '0' end
 	self:SetCookie( "Open", cookie )
-	
+
+	self:OnToggle( self:GetExpanded( ) )
+
+end
+
+--[[---------------------------------------------------------
+   Name: OnToggle
+-----------------------------------------------------------]]
+function PANEL:OnToggle( expanded )
+
+	-- Do nothing / For developers to overwrite
+
 end
 
 --[[---------------------------------------------------------
