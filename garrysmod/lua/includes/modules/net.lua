@@ -138,7 +138,7 @@ function net.WriteType( v )
 	local wv = net.WriteVars[ typeid ]
 	if ( wv ) then return wv( typeid, v ) end
 	
-	Error( "Couldn't write type " .. typeid )
+	error( "net.WriteType: Couldn't write " .. type( v ) .. " (type " .. typeid .. ")" )
 
 end
 
