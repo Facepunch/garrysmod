@@ -27,6 +27,16 @@ function ColorAlpha( c, a )
 end
 
 --[[---------------------------------------------------------
+	Checks if the given varible is a color object
+-----------------------------------------------------------]]
+function IsColor( obj )
+
+	return getmetatable(obj) == COLOR
+
+end
+
+
+--[[---------------------------------------------------------
 	Returns color as a string
 -----------------------------------------------------------]]
 function COLOR:__tostring()
