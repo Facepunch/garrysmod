@@ -54,6 +54,32 @@ function net.ReadEntity()
 end
 
 --
+-- Read/Write a color to/from the stream
+--
+function net.WriteColor( col )
+
+	assert( IsColor( col ), "net.WriteColor: color expected, got ".. type( col ) )
+
+	net.WriteUInt( col.r, 8 )
+    net.WriteUInt( col.g, 8 )
+    net.WriteUInt( col.b, 8 )
+    net.WriteUInt( col.a, 8 )
+
+end
+
+function net.ReadColor()
+
+    local r, g, b, a = 
+    				net.ReadUInt( 8 ),
+                    net.ReadUInt( 8 ),
+                    net.ReadUInt( 8 ),
+                    net.ReadUInt( 8 )
+
+    return Color( r, g, b, a )
+
+end
+
+--
 -- Write a whole table to the stream
 -- This is less optimal than writing each
 -- item indivdually and in a specific order
