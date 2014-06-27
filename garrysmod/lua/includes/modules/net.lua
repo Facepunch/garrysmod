@@ -70,10 +70,10 @@ end
 function net.ReadColor()
 
 	local r, g, b, a = 
-					net.ReadUInt( 8 ),
-					net.ReadUInt( 8 ),
-					net.ReadUInt( 8 ),
-					net.ReadUInt( 8 )
+		net.ReadUInt( 8 ),
+		net.ReadUInt( 8 ),
+		net.ReadUInt( 8 ),
+		net.ReadUInt( 8 )
 
 	return Color( r, g, b, a )
 
@@ -138,7 +138,7 @@ function net.WriteType( v )
 	local wv = net.WriteVars[ typeid ]
 	if ( wv ) then return wv( typeid, v ) end
 	
-	Error( "Couldn't write type " .. typeid )
+	error( "net.WriteType: Couldn't write " .. type( v ) .. " (type " .. typeid .. ")" )
 
 end
 
@@ -158,7 +158,6 @@ function net.ReadType( typeid )
 
 	local rv = net.ReadVars[ typeid ]
 	if ( rv ) then return rv( v ) end
-	
-	Error( "Couldn't read type " .. typeid )
 
+	error( "net.ReadType: Couldn't read type " .. typeid )
 end
