@@ -103,6 +103,7 @@ function ENT:GiveHealth(ply, max_heal)
          local new = math.min(ply:GetMaxHealth(), ply:Health() + healed)
 
          ply:SetHealth(new)
+         hook.Run("TTTPlayerUsedHealthStation", ply, self, healed)
 
          if last_sound_time + 2 < CurTime() then
             self:EmitSound(healsound)
