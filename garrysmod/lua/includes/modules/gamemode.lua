@@ -1,7 +1,5 @@
 
-require( "hook" )
-
--- Globals that we need 
+-- Globals that we need
 local gmod 			= gmod
 local pairs 		= pairs
 local Msg 			= Msg
@@ -27,7 +25,7 @@ local GameList = {}
 function Register( t, name, derived )
 
 	local CurrentGM = gmod.GetGamemode()
-	
+
 	if ( CurrentGM ) then
 
 		if ( CurrentGM.FolderName == name ) then
@@ -81,11 +79,11 @@ end
 function Call( name, ... )
 
 	local CurrentGM = gmod.GetGamemode()
-	
+
 	-- If the gamemode function doesn't exist just return false
 	if ( CurrentGM && CurrentGM[name] == nil ) then return false end
-	
+
 	return hook.Call( name, CurrentGM, ... )
-	
+
 end
 
