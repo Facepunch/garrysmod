@@ -1,3 +1,5 @@
+TYPE_COLOR = 255
+
 net.Receivers = {}
 
 --
@@ -129,12 +131,19 @@ net.WriteVars =
 	[TYPE_ENTITY]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteEntity( v )		end,
 	[TYPE_VECTOR]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteVector( v )		end,
 	[TYPE_ANGLE]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteAngle( v )			end,
+	[TYPE_COLOR]		= function ( t, v ) net.WriteUInt( t, 8 )	net.WriteColor( v )			end,
 		
 }
 
 function net.WriteType( v )
+	local typeid = nil
 
-	local typeid = TypeID( v )
+	if IsColor( v ) then
+		typeid = TYPE_COLOR
+	else
+		typeid = TypeID( v )
+	end
+
 	local wv = net.WriteVars[ typeid ]
 	if ( wv ) then return wv( typeid, v ) end
 	
@@ -152,6 +161,7 @@ net.ReadVars =
 	[TYPE_ENTITY]	= function ()	return net.ReadEntity() end,
 	[TYPE_VECTOR]	= function ()	return net.ReadVector() end,
 	[TYPE_ANGLE]	= function ()	return net.ReadAngle() end,
+	[TYPE_COLOR]	= function ()	return net.ReadColor() end,
 }
 
 function net.ReadType( typeid )
