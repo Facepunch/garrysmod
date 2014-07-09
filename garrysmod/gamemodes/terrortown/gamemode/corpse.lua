@@ -77,10 +77,9 @@ local function IdentifyBody(ply, rag)
             -- update innocent's list of traitors
             SendConfirmedTraitors(GetInnocentFilter(false))
          end
-
          SCORE:HandleBodyFound(ply, deadply)
       end
-
+      hook.Call( "TTTBodyFound", GAMEMODE, ply, deadply, rag )
       CORPSE.SetFound(rag, true)
    else
       -- re-set because nwvars are unreliable
