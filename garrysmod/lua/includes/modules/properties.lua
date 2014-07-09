@@ -147,7 +147,7 @@ end
 
 if ( CLIENT ) then
 
-	function HaloThink()
+	hook.Add( "PreDrawHalos", "PropertiesHover", function()
 
 		if ( vgui.GetHoveredPanel() != vgui.GetWorldPanel() && vgui.GetHoveredPanel() != g_ContextMenu ) then return end
 	
@@ -161,7 +161,7 @@ if ( CLIENT ) then
 		
 		halo.Add( { ent }, c, 2, 2, 2, true, false )
 	
-	end 
+	end )
 
 	--
 	-- Hook the GUIMousePressed call, which is called when the client clicks on the
@@ -193,9 +193,9 @@ if ( CLIENT ) then
 			--
 			-- Are we hovering an entity? If so, then stomp the action
 			--
-			local hovered = GetHovered( ply:EyePos(), ply:GetAimVector() )
+			local hovered = GetHovered( EyePos(), ply:GetAimVector() )
 
-			if ( IsValid( hovered )  ) then
+			if ( IsValid( hovered ) ) then
 				return true
 			end
 
