@@ -86,6 +86,14 @@ function PANEL:AddMenu( label )
 
 end
 
+function PANEL:OnRemove()
+
+	for id, pnl in pairs( self.Menus ) do
+		pnl:Remove()
+	end
+
+end
+
 --[[---------------------------------------------------------
    Name: GenerateExample
 -----------------------------------------------------------]]
