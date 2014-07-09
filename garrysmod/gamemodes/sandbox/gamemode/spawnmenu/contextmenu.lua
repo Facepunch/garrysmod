@@ -144,13 +144,6 @@ function PANEL:RestoreControlPanel()
 
 end
 
-function PANEL:Think()
-
-	-- Draw the halo if we're hovered a properties entity
-	properties.HaloThink()
-
-end
-
 --
 -- Note here: EditablePanel is important! Child panels won't be able to get
 -- keyboard input if it's a DPanel or a Panel. You need to either have an EditablePanel
