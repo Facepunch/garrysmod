@@ -41,7 +41,7 @@ end
 -----------------------------------------------------------]]
 function COLOR:__tostring()
 	
-	return string.format( "%d %d %d", self.r, self.g, self.b )
+	return string.format( "%d %d %d %d", self.r, self.g, self.b, self.a )
 	
 end
 
