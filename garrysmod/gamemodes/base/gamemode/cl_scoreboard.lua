@@ -35,6 +35,7 @@ local PLAYER_LINE =
 		self.Name		= self:Add( "DLabel" )
 		self.Name:Dock( FILL )
 		self.Name:SetFont( "ScoreboardDefault" )
+		self.Name:SetDark( true )
 		self.Name:DockMargin( 8, 0, 0, 0 )
 
 		self.Mute		= self:Add( "DImageButton" )
@@ -45,18 +46,21 @@ local PLAYER_LINE =
 		self.Ping:Dock( RIGHT )
 		self.Ping:SetWidth( 50 )
 		self.Ping:SetFont( "ScoreboardDefault" )
+		self.Ping:SetDark( true )
 		self.Ping:SetContentAlignment( 5 )
 
 		self.Deaths		= self:Add( "DLabel" )
 		self.Deaths:Dock( RIGHT )
 		self.Deaths:SetWidth( 50 )
 		self.Deaths:SetFont( "ScoreboardDefault" )
+		self.Deaths:SetDark( true )
 		self.Deaths:SetContentAlignment( 5 )
 
 		self.Kills		= self:Add( "DLabel" )
 		self.Kills:Dock( RIGHT )
 		self.Kills:SetWidth( 50 )
 		self.Kills:SetFont( "ScoreboardDefault" )
+		self.Kills:SetDark( true )
 		self.Kills:SetContentAlignment( 5 )
 
 		self:Dock( TOP )
