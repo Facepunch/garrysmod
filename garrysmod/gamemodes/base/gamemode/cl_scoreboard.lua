@@ -72,7 +72,6 @@ local PLAYER_LINE = {
 		self.Player = pl
 
 		self.Avatar:SetPlayer( pl )
-		self.Name:SetText( pl:Nick() )
 
 		self:Think( self )
 
@@ -90,7 +89,7 @@ local PLAYER_LINE = {
 
 		if ( self.PName == nil || self.PName != self.Player:Nick() ) then
 			self.PName = self.Player:Nick()
-			self.Name:SetText( self.Player:Nick() )
+			self.Name:SetText( self.PName )
 		end
 		
 		if ( self.NumKills == nil || self.NumKills != self.Player:Frags() ) then
