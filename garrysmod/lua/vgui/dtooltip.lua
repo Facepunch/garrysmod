@@ -91,7 +91,7 @@ function PANEL:PositionTooltip()
 
 	if ( !IsValid( self.TargetPanel ) ) then
 		self:Remove()
-		return;
+		return
 	end
 
 	self:PerformLayout()
@@ -116,7 +116,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
-	self:PositionTooltip();
+	self:PositionTooltip()
 	derma.SkinHook( "Paint", "Tooltip", self, w, h )
 
 end
@@ -127,7 +127,7 @@ end
 function PANEL:OpenForPanel( panel )
 	
 	self.TargetPanel = panel
-	self:PositionTooltip();	
+	self:PositionTooltip()
 	
 	if ( tooltip_delay:GetFloat() > 0 ) then
 	
@@ -137,7 +137,7 @@ function PANEL:OpenForPanel( panel )
 			if ( !IsValid( self ) ) then return end
 			if ( !IsValid( panel ) ) then return end
 
-			self:PositionTooltip();	
+			self:PositionTooltip()
 			self:SetVisible( true )
 												
 		end )
