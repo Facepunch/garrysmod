@@ -34,6 +34,15 @@ function net.Incoming( len, client )
 end
 
 --
+-- Read/Write a boolean to the stream
+--
+net.WriteBool = net.WriteBit
+
+function net.ReadBool()
+	return net.ReadBit() == 1
+end
+
+--
 -- Read/Write an entity to the stream
 --
 function net.WriteEntity( ent )
