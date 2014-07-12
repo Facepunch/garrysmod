@@ -9,7 +9,7 @@
 
 --]]
 
-PANEL = {}
+local PANEL = {}
 AccessorFunc( PANEL, "m_bStretchToFit", 			"StretchToFit" )
 
 --[[---------------------------------------------------------

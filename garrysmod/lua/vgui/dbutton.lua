@@ -11,7 +11,7 @@
 
 --]]
 
-PANEL = {}
+local PANEL = {}
 
 AccessorFunc( PANEL, "m_bBorder", 			"DrawBorder", 		FORCE_BOOL )
 AccessorFunc( PANEL, "m_bDisabled", 		"Disabled", 		FORCE_BOOL )

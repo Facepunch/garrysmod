@@ -12,7 +12,7 @@
 --
 local tooltip_delay = CreateClientConVar( "tooltip_delay", "0.5", true, false ) 
 
-PANEL = {}
+local PANEL = {}
 
 
 --[[---------------------------------------------------------

@@ -17,7 +17,7 @@ function VGUIRect( x, y, w, h )
 	return shape
 end
 
-PANEL = {}
+local PANEL = {}
 
 AccessorFunc( PANEL, "m_Color", 		"Color" )
 AccessorFunc( PANEL, "m_BorderColor", 	"BorderColor" )

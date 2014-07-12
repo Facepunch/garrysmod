@@ -12,7 +12,7 @@
 local InnerCorner8	= surface.GetTextureID( "gui/icorner8" )
 
 
-PANEL = {}
+local PANEL = {}
 
 AccessorFunc( PANEL, "m_Color", 				"Color" )
 AccessorFunc( PANEL, "m_Type", 					"Type" )

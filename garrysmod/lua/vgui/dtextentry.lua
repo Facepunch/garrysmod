@@ -14,7 +14,7 @@
 
 --]]
 
-PANEL = {}
+local PANEL = {}
 
 local strAllowedNumericCharacters = "1234567890.-"
 
