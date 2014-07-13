@@ -8,8 +8,8 @@ include('tasks.lua')
 
 -- Variables
 
-ENT.m_fMaxYawSpeed 				= 200 -- Max turning speed
-ENT.m_iClass					= CLASS_CITIZEN_REBEL -- NPC Class
+ENT.m_fMaxYawSpeed = 200 -- Max turning speed
+ENT.m_iClass       = CLASS_CITIZEN_REBEL -- NPC Class
 
 
 

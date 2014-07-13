@@ -2,8 +2,8 @@
 
 AddCSLuaFile()
 
-ENT.Base 			= "base_nextbot"
-ENT.Spawnable		= false
+ENT.Base      = "base_nextbot"
+ENT.Spawnable = false
 
 function ENT:Initialize()
 
