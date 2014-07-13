@@ -5,33 +5,33 @@ if ( !IsMounted( "ep2" ) ) then return end
 
 AddCSLuaFile()
 
-SWEP.Author			= ""
-SWEP.Instructions	= "Shoots flechettes"
+SWEP.Author                = ""
+SWEP.Instructions          = "Shoots flechettes"
 
-SWEP.Spawnable			= true
-SWEP.AdminOnly			= true
-SWEP.UseHands			= true
+SWEP.Spawnable             = true
+SWEP.AdminOnly             = true
+SWEP.UseHands              = true
 
-SWEP.ViewModel			= "models/weapons/c_smg1.mdl"
-SWEP.WorldModel			= "models/weapons/w_smg1.mdl"
+SWEP.ViewModel             = "models/weapons/c_smg1.mdl"
+SWEP.WorldModel            = "models/weapons/w_smg1.mdl"
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo			= "none"
+SWEP.Primary.ClipSize      = -1
+SWEP.Primary.DefaultClip   = -1
+SWEP.Primary.Automatic     = true
+SWEP.Primary.Ammo          = "none"
 
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo			= "none"
+SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic   = false
+SWEP.Secondary.Ammo        = "none"
 
-SWEP.AutoSwitchTo		= false
-SWEP.AutoSwitchFrom		= false
+SWEP.AutoSwitchTo          = false
+SWEP.AutoSwitchFrom        = false
 
-SWEP.PrintName			= "Flechette Gun"
-SWEP.Slot				= 1
-SWEP.SlotPos			= 2
-SWEP.DrawAmmo			= false
+SWEP.PrintName             = "Flechette Gun"
+SWEP.Slot                  = 1
+SWEP.SlotPos               = 2
+SWEP.DrawAmmo              = false
 
 game.AddParticles( "particles/hunter_flechette.pcf" )
 game.AddParticles( "particles/hunter_projectile.pcf" )
