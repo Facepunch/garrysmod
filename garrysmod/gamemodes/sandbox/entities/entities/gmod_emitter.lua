@@ -2,11 +2,11 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.Spawnable			= false
-ENT.RenderGroup 		= RENDERGROUP_OPAQUE
+ENT.Spawnable   = false
+ENT.RenderGroup = RENDERGROUP_OPAQUE
 
-local matLight 			= Material( "sprites/light_ignorez" )
-local matBeam			= Material( "effects/lamp_beam" )
+local matLight  = Material( "sprites/light_ignorez" )
+local matBeam   = Material( "effects/lamp_beam" )
 
 function ENT:SetupDataTables()
 

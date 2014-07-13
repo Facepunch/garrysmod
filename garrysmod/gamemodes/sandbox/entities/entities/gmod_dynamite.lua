@@ -2,8 +2,8 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.Spawnable			= false
-ENT.RenderGroup 		= RENDERGROUP_OPAQUE
+ENT.Spawnable   = false
+ENT.RenderGroup = RENDERGROUP_OPAQUE
 
 AccessorFunc( ENT, "m_ShouldRemove", "ShouldRemove" )
 

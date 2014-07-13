@@ -1,9 +1,9 @@
 
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.Type 			= "anim"
+ENT.Type      = "anim"
 
-ENT.Spawnable			= false
+ENT.Spawnable = false
 
 --[[---------------------------------------------------------
 
