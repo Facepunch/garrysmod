@@ -3,33 +3,33 @@
 
 SWEP.Instructions	= "Shoot a prop to attach a Manhack.\nRight click to attach a rollermine."
 
-SWEP.Spawnable			= true
-SWEP.AdminOnly			= true
-SWEP.UseHands			= true
+SWEP.Spawnable             = true
+SWEP.AdminOnly             = true
+SWEP.UseHands              = true
 
-SWEP.ViewModel			= "models/weapons/c_pistol.mdl"
-SWEP.WorldModel			= "models/weapons/w_pistol.mdl"
+SWEP.ViewModel             = "models/weapons/c_pistol.mdl"
+SWEP.WorldModel            = "models/weapons/w_pistol.mdl"
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo			= "none"
+SWEP.Primary.ClipSize      = -1
+SWEP.Primary.DefaultClip   = -1
+SWEP.Primary.Automatic     = false
+SWEP.Primary.Ammo          = "none"
 
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo			= "none"
+SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic   = false
+SWEP.Secondary.Ammo        = "none"
 
-SWEP.Weight				= 5
-SWEP.AutoSwitchTo		= false
-SWEP.AutoSwitchFrom		= false
+SWEP.Weight                = 5
+SWEP.AutoSwitchTo          = false
+SWEP.AutoSwitchFrom        = false
 
-SWEP.PrintName			= "Manhack Gun"			
-SWEP.Slot				= 3
-SWEP.SlotPos			= 1
-SWEP.DrawAmmo			= false
-SWEP.DrawCrosshair		= true
-SWEP.UseHands			= true
+SWEP.PrintName             = "Manhack Gun"			
+SWEP.Slot                  = 3
+SWEP.SlotPos               = 1
+SWEP.DrawAmmo              = false
+SWEP.DrawCrosshair         = true
+SWEP.UseHands              = true
 
 local ShootSound = Sound( "Metal.SawbladeStick" )
 

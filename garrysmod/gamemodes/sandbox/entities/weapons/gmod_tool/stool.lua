@@ -15,16 +15,16 @@ function ToolObj:Create()
 	setmetatable( o, self )
 	self.__index = self
 	
-	o.Mode				= nil
-	o.SWEP				= nil
-	o.Owner				= nil
-	o.ClientConVar		= {}
-	o.ServerConVar		= {}
-	o.Objects			= {}
-	o.Stage				= 0
-	o.Message			= "start"
-	o.LastMessage		= 0
-	o.AllowedCVar		= 0
+	o.Mode         = nil
+	o.SWEP         = nil
+	o.Owner        = nil
+	o.ClientConVar = {}
+	o.ServerConVar = {}
+	o.Objects      = {}
+	o.Stage        = 0
+	o.Message      = "start"
+	o.LastMessage  = 0
+	o.AllowedCVar  = 0
 	
 	return o
 	

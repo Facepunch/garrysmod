@@ -5,38 +5,38 @@ local gmod_toolmode = CreateClientConVar( "gmod_toolmode", "rope", true, true )
 include('shared.lua')
 include('cl_viewscreen.lua')
 
-SWEP.PrintName			= "Tool Gun"			
-SWEP.Slot				= 5	
-SWEP.SlotPos			= 6	
-SWEP.DrawAmmo			= false
-SWEP.DrawCrosshair		= true
+SWEP.PrintName      = "Tool Gun"			
+SWEP.Slot           = 5	
+SWEP.SlotPos        = 6	
+SWEP.DrawAmmo       = false
+SWEP.DrawCrosshair  = true
 
-SWEP.WepSelectIcon		= surface.GetTextureID( "vgui/gmod_tool" )
-SWEP.Gradient			= surface.GetTextureID( "gui/gradient" )
-SWEP.InfoIcon			= surface.GetTextureID( "gui/info" )
+SWEP.WepSelectIcon  = surface.GetTextureID( "vgui/gmod_tool" )
+SWEP.Gradient       = surface.GetTextureID( "gui/gradient" )
+SWEP.InfoIcon       = surface.GetTextureID( "gui/info" )
 
-SWEP.ToolNameHeight		= 0
-SWEP.InfoBoxHeight		= 0
+SWEP.ToolNameHeight = 0
+SWEP.InfoBoxHeight  = 0
 
 surface.CreateFont( "GModToolName",
 {
-	font		= "Roboto Bk",
-	size		= 80,
-	weight		= 1000
+	font   = "Roboto Bk",
+	size   = 80,
+	weight = 1000
 })
 
 surface.CreateFont( "GModToolSubtitle",
 {
-	font		= "Roboto Bk",
-	size		= 24,
-	weight		= 1000
+	font   = "Roboto Bk",
+	size   = 24,
+	weight = 1000
 })
 
 surface.CreateFont( "GModToolHelp",
 {
-	font		= "Roboto Bk",
-	size		= 17,
-	weight		= 1000
+	font   = "Roboto Bk",
+	size   = 17,
+	weight = 1000
 })
 
 
