@@ -1,12 +1,11 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType = "normal"
-
+SWEP.HoldType        = "normal"
 
 if CLIENT then
-   SWEP.PrintName = "hstation_name"
-   SWEP.Slot = 6
+   SWEP.PrintName    = "hstation_name"
+   SWEP.Slot         = 6
 
    SWEP.ViewModelFOV = 10
 
@@ -18,35 +17,35 @@ if CLIENT then
    SWEP.Icon = "vgui/ttt/icon_health"
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel         = "models/props/cs_office/microwave.mdl"
+SWEP.ViewModel             = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel            = "models/props/cs_office/microwave.mdl"
 
-SWEP.DrawCrosshair      = false
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = true
-SWEP.Primary.Ammo       = "none"
-SWEP.Primary.Delay = 1.0
+SWEP.DrawCrosshair         = false
+SWEP.Primary.ClipSize      = -1
+SWEP.Primary.DefaultClip   = -1
+SWEP.Primary.Automatic     = true
+SWEP.Primary.Ammo          = "none"
+SWEP.Primary.Delay         = 1.0
 
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
-SWEP.Secondary.Delay = 1.0
+SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic   = true
+SWEP.Secondary.Ammo        = "none"
+SWEP.Secondary.Delay       = 1.0
 
 -- This is special equipment
 
 
-SWEP.Kind = WEAPON_EQUIP
-SWEP.CanBuy = {ROLE_DETECTIVE} -- only detectives can buy
-SWEP.LimitedStock = true -- only buyable once
-SWEP.WeaponID = AMMO_HEALTHSTATION
+SWEP.Kind                  = WEAPON_EQUIP
+SWEP.CanBuy                = {ROLE_DETECTIVE} -- only detectives can buy
+SWEP.LimitedStock          = true -- only buyable once
+SWEP.WeaponID              = AMMO_HEALTHSTATION
 
-SWEP.AllowDrop = false
+SWEP.AllowDrop             = false
 
-SWEP.NoSights = true
+SWEP.NoSights              = true
 
 function SWEP:OnDrop()
    self:Remove()

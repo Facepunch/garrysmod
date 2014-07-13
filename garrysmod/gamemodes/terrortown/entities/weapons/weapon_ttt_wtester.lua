@@ -2,12 +2,12 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType = "normal"
+SWEP.HoldType        = "normal"
 
 if CLIENT then
-   SWEP.PrintName = "dna_name"
-   SWEP.Slot = 8
-
+   SWEP.PrintName    = "dna_name"
+   SWEP.Slot         = 8
+   
    SWEP.ViewModelFOV = 10
 
    SWEP.EquipMenuData = {
@@ -18,17 +18,17 @@ if CLIENT then
    SWEP.Icon = "vgui/ttt/icon_wtester"
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.ViewModel  = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel = "models/props_lab/huladoll.mdl"
+SWEP.ViewModel             = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel            = "models/props_lab/huladoll.mdl"
 
-SWEP.DrawCrosshair       = false
-SWEP.Primary.ClipSize    = -1
-SWEP.Primary.DefaultClip = -1
-SWEP.Primary.Automatic   = false
-SWEP.Primary.Delay       = 1
-SWEP.Primary.Ammo        = "none"
+SWEP.DrawCrosshair         = false
+SWEP.Primary.ClipSize      = -1
+SWEP.Primary.DefaultClip   = -1
+SWEP.Primary.Automatic     = false
+SWEP.Primary.Delay         = 1
+SWEP.Primary.Ammo          = "none"
 
 SWEP.Secondary.ClipSize    = -1
 SWEP.Secondary.DefaultClip = -1
@@ -36,23 +36,23 @@ SWEP.Secondary.Automatic   = false
 SWEP.Secondary.Ammo        = "none"
 SWEP.Secondary.Delay       = 2
 
-SWEP.Kind = WEAPON_ROLE
-SWEP.CanBuy = nil -- no longer a buyable thing
-SWEP.WeaponID = AMMO_WTESTER
---SWEP.LimitedStock = true
+SWEP.Kind                  = WEAPON_ROLE
+SWEP.CanBuy                = nil -- no longer a buyable thing
+SWEP.WeaponID              = AMMO_WTESTER
+--SWEP.LimitedStock        = true
 
-SWEP.InLoadoutFor = {ROLE_DETECTIVE}
+SWEP.InLoadoutFor          = {ROLE_DETECTIVE}
 
---SWEP.AllowDrop = false
-SWEP.AutoSpawnable = false
+--SWEP.AllowDrop           = false
+SWEP.AutoSpawnable         = false
 
-SWEP.NoSights = true
+SWEP.NoSights              = true
 
-SWEP.Range = 175
+SWEP.Range                 = 175
 
-SWEP.ItemSamples = {}
+SWEP.ItemSamples           = {}
 
-SWEP.NowRepeating = nil
+SWEP.NowRepeating          = nil
 
 local MAX_ITEM = 30
 SWEP.MaxItemSamples = MAX_ITEM

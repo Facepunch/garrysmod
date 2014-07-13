@@ -1,59 +1,59 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType = "physgun"
+SWEP.HoldType         = "physgun"
 
 if CLIENT then
-   SWEP.PrintName = "newton_name"
-   SWEP.Slot = 7
+   SWEP.PrintName     = "newton_name"
+   SWEP.Slot          = 7
 
    SWEP.EquipMenuData = {
-      type = "item_weapon",
-      desc = "newton_desc"
+   type               = "item_weapon",
+   desc               = "newton_desc"
    };
 
-   SWEP.Icon = "vgui/ttt/icon_launch"
+   SWEP.Icon          = "vgui/ttt/icon_launch"
 
    SWEP.ViewModelFlip = false
-   SWEP.ViewModelFOV = 54
+   SWEP.ViewModelFOV  = 54
 end
 
-SWEP.Base				= "weapon_tttbase"
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.Primary.Ammo   = "none"
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= true
-SWEP.Primary.Delay = 3
-SWEP.Primary.Ammo  = "none"
-SWEP.Primary.Cone  = 0.005
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo  = "none"
-SWEP.Secondary.Delay = 0.5
+SWEP.Primary.Ammo          = "none"
+SWEP.Primary.ClipSize      = -1
+SWEP.Primary.DefaultClip   = -1
+SWEP.Primary.Automatic     = true
+SWEP.Primary.Delay         = 3
+SWEP.Primary.Ammo          = "none"
+SWEP.Primary.Cone          = 0.005
+SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic   = false
+SWEP.Secondary.Ammo        = "none"
+SWEP.Secondary.Delay       = 0.5
 
-SWEP.AutoSpawnable = false
-SWEP.NoSights = true
+SWEP.AutoSpawnable         = false
+SWEP.NoSights              = true
 
-SWEP.Kind = WEAPON_EQUIP2
-SWEP.CanBuy = {ROLE_TRAITOR}
+SWEP.Kind                  = WEAPON_EQUIP2
+SWEP.CanBuy                = {ROLE_TRAITOR}
 
-SWEP.WeaponID = AMMO_PUSH
+SWEP.WeaponID              = AMMO_PUSH
 
-SWEP.Primary.Sound = Sound( "weapons/ar2/fire1.wav" )
-SWEP.Primary.SoundLevel = 54
+SWEP.Primary.Sound         = Sound( "weapons/ar2/fire1.wav" )
+SWEP.Primary.SoundLevel    = 54
 
-SWEP.UseHands			= true
-SWEP.ViewModel  = "models/weapons/c_superphyscannon.mdl"
-SWEP.WorldModel = "models/weapons/w_physics.mdl"
+SWEP.UseHands              = true
+SWEP.ViewModel             = "models/weapons/c_superphyscannon.mdl"
+SWEP.WorldModel            = "models/weapons/w_physics.mdl"
 AccessorFuncDT(SWEP, "charge", "Charge")
 
-SWEP.IsCharging = false
-SWEP.NextCharge = 0
+SWEP.IsCharging            = false
+SWEP.NextCharge            = 0
 
-local CHARGE_AMOUNT = 0.02
-local CHARGE_DELAY = 0.025
+local CHARGE_AMOUNT        = 0.02
+local CHARGE_DELAY         = 0.025
 
 local math = math
 
