@@ -39,7 +39,9 @@ end
 net.WriteBool = net.WriteBit
 
 function net.ReadBool()
+
 	return net.ReadBit() == 1
+	
 end
 
 --
