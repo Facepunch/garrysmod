@@ -3,10 +3,10 @@ include( 'controlpanel.lua' )
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_TabID", 			"TabID" )
+AccessorFunc( PANEL, "m_TabID", "TabID" )
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -28,7 +28,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: LoadToolsFromTable
+	Name: LoadToolsFromTable
 -----------------------------------------------------------]]
 function PANEL:LoadToolsFromTable( inTable )
 
@@ -39,9 +39,9 @@ function PANEL:LoadToolsFromTable( inTable )
 		if ( istable( v ) ) then
 		
 			-- Remove these from the table so we can
-			-- send the rest of the table to the other 
+			-- send the rest of the table to the other
 			-- function
-					
+			
 			local Name = v.ItemName
 			local Label = v.Text
 			v.ItemName = nil
@@ -56,7 +56,7 @@ function PANEL:LoadToolsFromTable( inTable )
 end
 
 --[[---------------------------------------------------------
-   Name: AddCategory
+	Name: AddCategory
 -----------------------------------------------------------]]
 function PANEL:AddCategory( Name, Label, tItems )
 
@@ -66,8 +66,13 @@ function PANEL:AddCategory( Name, Label, tItems )
 	
 	local bAlt = true
 	
+	local tools = {}
 	for k, v in pairs( tItems ) do
-	
+		tools[ language.GetPhrase( v.Text:sub( 2 ) ) ] = v
+	end
+
+	for k, v in SortedPairs( tools ) do
+
 		local item = Category:Add( v.Text )
 		
 		item.DoClick = function( button )
