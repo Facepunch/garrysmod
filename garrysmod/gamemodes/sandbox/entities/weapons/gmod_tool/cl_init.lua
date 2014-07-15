@@ -2,6 +2,11 @@
 local gmod_drawhelp = CreateClientConVar( "gmod_drawhelp", "1", true, false )
 local gmod_toolmode = CreateClientConVar( "gmod_toolmode", "rope", true, true )
 
+cvars.AddChangeCallback( "gmod_toolmode", function( name, old, new )
+	if ( old == new ) then return end
+	spawnmenu.ActivateTool( new )
+end, "gmod_toolmode_panel" )
+
 include('shared.lua')
 include('cl_viewscreen.lua')
 
