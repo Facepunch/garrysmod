@@ -149,9 +149,9 @@ if ( CLIENT ) then
 
 	hook.Add( "PreDrawHalos", "PropertiesHover", function()
 
-		if ( vgui.GetHoveredPanel() != vgui.GetWorldPanel() && vgui.GetHoveredPanel() != g_ContextMenu ) then return end
-	
-		local ent = properties.GetHovered( EyePos(), LocalPlayer():GetAimVector() )
+		if ( !IsValid( vgui.GetHoveredPanel() ) || vgui.GetHoveredPanel() != g_ContextMenu ) then return end
+
+		local ent = GetHovered( EyePos(), LocalPlayer():GetAimVector() )
 		if ( !IsValid( ent ) ) then return end
 		
 		local c = Color( 255, 255, 255, 255 )
@@ -168,6 +168,8 @@ if ( CLIENT ) then
 	-- gui.
 	--
 	hook.Add( "GUIMousePressed", "PropertiesClick", function( code, vector )
+	
+		if ( !IsValid( vgui.GetHoveredPanel() ) || vgui.GetHoveredPanel() != g_ContextMenu ) then return end
 
 		if ( code == MOUSE_RIGHT && !input.IsButtonDown( MOUSE_LEFT ) ) then
 			OnScreenClick( EyePos(), vector )
@@ -180,6 +182,8 @@ if ( CLIENT ) then
 	-- gui.
 	--
 	hook.Add( "PreventScreenClicks", "PropertiesPreventClicks", function()
+	
+		if ( !IsValid( vgui.GetHoveredPanel() ) || vgui.GetHoveredPanel() != g_ContextMenu ) then return end
 
 		local ply = LocalPlayer()
 		if ( !IsValid( ply ) ) then return end
