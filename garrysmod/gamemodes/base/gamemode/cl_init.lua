@@ -604,7 +604,10 @@ function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 
 		local hands = Player:GetHands()
 		if ( IsValid( hands ) ) then
-			hands:DrawModel()
+			if ( not hook.Call( "PreDrawPlayerHands", self, Hands, ViewModel, Player, Weapon ) ) then
+				hands:DrawModel()
+				hook.Call( "PostDrawPlayerHands", self, Hands, ViewModel, Player, Weapon )
+			end
 		end
 
 	end
