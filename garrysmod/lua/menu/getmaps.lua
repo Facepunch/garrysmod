@@ -144,6 +144,7 @@ local function UpdateMapPatterns()
 	MapPatterns[ "^sd_" ] = "Team Fortress 2"
 	MapPatterns[ "^tc_" ] = "Team Fortress 2"
 	MapPatterns[ "^tr_" ] = "Team Fortress 2"
+	MapPatterns[ "^rd_" ] = "Team Fortress 2"
 
 	MapPatterns[ "^zpa_" ] = "Zombie Panic! Source"
 	MapPatterns[ "^zpl_" ] = "Zombie Panic! Source"
