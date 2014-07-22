@@ -197,9 +197,12 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		end
 
 		local function UpdateFromControls()
-
-			RunConsoleCommand( "cl_playercolor", tostring( plycol:GetVector() ) )
-			RunConsoleCommand( "cl_weaponcolor", tostring( wepcol:GetVector() ) )
+			local pColor = plycol:GetVector()
+			local wColor = wepcol:GetVector()
+			local CpColor = Vector(math.Clamp(pColor.x),0,1),math.Clamp(pColor.y),0,1),math.Clamp(pColor.z),0,1))
+			local CwColor = Vector(math.Clamp(wColor.x),0,1),math.Clamp(wColor.y),0,1),math.Clamp(wColor.z),0,1))
+			RunConsoleCommand( "cl_playercolor", tostring( CpColor ) )
+			RunConsoleCommand( "cl_weaponcolor", tostring( CwColor ) )
 
 		end
 
