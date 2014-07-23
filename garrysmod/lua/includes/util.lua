@@ -181,7 +181,7 @@ end
 -----------------------------------------------------------]]
 function SafeRemoveEntity( ent )
 
-	if ( !ent || ( ent.IsValid && !ent:IsValid() ) || ent:IsPlayer() ) then return end
+	if ( !IsValid( ent ) || ent:IsPlayer() ) then return end
 	
 	ent:Remove()
 	
@@ -192,7 +192,7 @@ end
 -----------------------------------------------------------]]
 function SafeRemoveEntityDelayed( ent, timedelay )
 
-	if ( !ent || ( ent.IsValid && !ent:IsValid() ) ) then return end
+	if ( !IsValid( ent ) || ent:IsPlayer() ) then return end
 	
 	timer.Simple( timedelay, function() SafeRemoveEntity( ent ) end )
 	
