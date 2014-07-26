@@ -36,12 +36,12 @@ function GWEN.CreateTextureBorder( _x, _y, _w, _h, l, t, r, b )
 		
 		-- top 
 		surface.DrawTexturedRectUV( x, y, l, t, _x, _y, _x+_l, _y+_t )
-		surface.DrawTexturedRectUV( x+l, y, w-l-r, t, _x+_l, _y, _x+_w-_l-_r, _y+_t )
+		surface.DrawTexturedRectUV( x+l, y, w-l-r, t, _x+_l, _y, _x+_w-_r, _y+_t )
 		surface.DrawTexturedRectUV( x+w-r, y, r, t, _x+_w-_r, _y, _x+_w, _y+_t )
 	
 		-- bottom 
 		surface.DrawTexturedRectUV( x, y+h-b, l, b, _x, _y+_h-_b, _x+_l, _y+_h )
-		surface.DrawTexturedRectUV( x+l, y+h-b, w-l-r, b, _x+_l, _y+_h-_b, _x+_w-_l-_r, _y+_h )
+		surface.DrawTexturedRectUV( x+l, y+h-b, w-l-r, b, _x+_l, _y+_h-_b, _x+_w-_r, _y+_h )
 		surface.DrawTexturedRectUV( x+w-r, y+h-b, r, b, _x+_w-_r, _y+_h-_b, _x+_w, _y+_h )
 		
 		-- middle. 
