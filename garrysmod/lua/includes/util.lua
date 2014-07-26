@@ -396,9 +396,7 @@ end
 -----------------------------------------------------------]]
 function Either( iff, aa, bb ) 
 
-	if ( iff ) then return aa end
-	return bb
-
+	return iff && aa || bb
 end
 
 --
