@@ -178,10 +178,7 @@ end
 -----------------------------------------------------------]]
 function GM:OnChatTab( str )
 
-	local LastWord
-	for word in string.gmatch( str, "%a+" ) do
-	     LastWord = word;
-	end
+	local LastWord = string.match(str, "%a-$")
 	
 	if (LastWord == nil) then return str end
 
