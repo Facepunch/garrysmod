@@ -9,7 +9,7 @@
 
 --]]
 
-PANEL = {}
+local PANEL = {}
 
 DEFINE_BASECLASS( "DMenuOption" )
 

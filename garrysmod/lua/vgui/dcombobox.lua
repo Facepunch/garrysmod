@@ -9,7 +9,7 @@
 
 --]]
 
-PANEL = {}
+local PANEL = {}
 
 Derma_Hook( PANEL, "Paint", "Paint", "ComboBox" )
 

@@ -11,7 +11,7 @@
 
 --]]
 
-PANEL = {}
+local PANEL = {}
 
 AccessorFunc( PANEL, "m_bIsMenuComponent", 		"IsMenu", 			FORCE_BOOL )
 AccessorFunc( PANEL, "m_bDraggable", 			"Draggable", 		FORCE_BOOL )

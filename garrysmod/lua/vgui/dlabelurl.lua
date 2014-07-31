@@ -8,7 +8,7 @@
 	DLabelURL
 --]]
 
-PANEL = {}
+local PANEL = {}
 
 AccessorFunc( PANEL, "m_colText", 				"TextColor" )
 AccessorFunc( PANEL, "m_colTextStyle", 			"TextStyleColor" )

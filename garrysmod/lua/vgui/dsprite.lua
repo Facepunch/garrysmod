@@ -15,7 +15,7 @@ function CreateSprite( mat )
 	return sprite
 end
 
-PANEL = {}
+local PANEL = {}
 
 AccessorFunc( PANEL, "m_Material", 		"Material" )
 AccessorFunc( PANEL, "m_Color", 		"Color" )

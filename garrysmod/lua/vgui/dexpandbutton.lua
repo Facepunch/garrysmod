@@ -9,7 +9,7 @@
 
 --]]
 
-PANEL = {}
+local PANEL = {}
 
 AccessorFunc( PANEL, "m_bExpanded",	"Expanded", FORCE_BOOL )
 Derma_Hook( PANEL, "Paint", "Paint", "ExpandButton" )

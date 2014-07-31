@@ -9,7 +9,7 @@
 
 --]]
 
-PANEL = {}
+local PANEL = {}
 
 AccessorFunc( PANEL, "m_bBorder", 			"DrawBorder" )
 AccessorFunc( PANEL, "m_bDeleteSelf", 		"DeleteSelf" )
