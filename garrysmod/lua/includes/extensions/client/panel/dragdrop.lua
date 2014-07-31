@@ -20,7 +20,7 @@ function dragndrop.Clear()
 	dragndrop.m_DraggingMain	= nil
 	dragndrop.m_Dragging		= nil
 	dragndrop.m_DropMenu		= nil
-	
+
 end
 
 function dragndrop.IsDragging()
@@ -36,40 +36,43 @@ function dragndrop.HandleDroppedInGame()
 	local panel = vgui.GetHoveredPanel()
 	if ( !IsValid( panel ) ) then return end
 	if ( panel:GetClassName() != "CGModBase" ) then return end
-	
+
 end
 
 function dragndrop.Drop()
 
 	if ( dragndrop.HandleDroppedInGame() ) then
 		dragndrop.StopDragging()
-		return 
+		return
 	end
 	
 	-- Show the menu
 	if ( dragndrop.m_MouseCode == MOUSE_RIGHT && dragndrop.m_ReceiverSlot && dragndrop.m_ReceiverSlot.Menu ) then
 
 		local x, y = dragndrop.m_Receiver:LocalCursorPos()
-		
+
 		local menu = DermaMenu()
+		menu.OnRemove = function( m ) dragndrop.StopDragging() end // If user clicks outside of the menu - drop the dragging
 		
 		for k, v in pairs( dragndrop.m_ReceiverSlot.Menu ) do
 		
 			menu:AddOption( v, function()
 			
-					dragndrop.CallReceiverFunction( true, k, x, y )
-					dragndrop.StopDragging()
+				dragndrop.CallReceiverFunction( true, k, x, y )
+				dragndrop.StopDragging()
 			
-				end )
+			end )
 		
 		end
-				
+		
 		menu:Open()
+	
 		dragndrop.m_DropMenu = menu
+	
 		return
 	
 	end
-	
+
 	dragndrop.CallReceiverFunction( true, nil, nil, nil )
 	dragndrop.StopDragging()
 
@@ -79,31 +82,31 @@ function dragndrop.StartDragging()
 	
 	if ( !dragndrop.m_DragWatch:IsSelected() ) then
 		
-		dragndrop.m_Dragging = { dragndrop.m_DragWatch } 
+		dragndrop.m_Dragging = { dragndrop.m_DragWatch }
 		
 	else
-			
+		
 		local canvas = dragndrop.m_DragWatch:GetSelectionCanvas()
 		dragndrop.m_Dragging = {}
 		
 		for k, v in pairs( canvas:GetSelectedChildren() ) do
 		
 			if ( !v.m_DragSlot ) then continue end
-						
+			
 			table.insert( dragndrop.m_Dragging, v )
 		
 		end
-				
+	
 	end
 
 	for k, v in pairs( dragndrop.m_Dragging ) do
 
-		if ( !IsValid( v ) ) then continue end 
+		if ( !IsValid( v ) ) then continue end
 		
 		v:OnStartDragging()
 
 	end
-	
+
 	dragndrop.m_DraggingMain = dragndrop.m_DragWatch
 	dragndrop.m_DraggingMain:MouseCapture( true )
 	dragndrop.m_DragWatch = nil
@@ -112,13 +115,13 @@ end
 
 function dragndrop.StopDragging()
 
-	if ( IsValid(dragndrop.m_Receiver) ) then
+	if ( IsValid( dragndrop.m_Receiver ) ) then
 		dragndrop.m_Receiver:DragHoverEnd()
 		dragndrop.m_Receiver = nil
 	end
-	
+
 	dragndrop.Clear()
-	
+
 end
 
 function dragndrop.UpdateReceiver()
@@ -126,7 +129,7 @@ function dragndrop.UpdateReceiver()
 	local hovered = vgui.GetHoveredPanel()
 	local receiver = nil
 	local receiverslot = nil
-	
+
 	if ( IsValid( hovered ) ) then
 		receiver, receiverslot = hovered:GetValidReceiverSlot()
 	end
@@ -138,14 +141,14 @@ function dragndrop.UpdateReceiver()
 		dragndrop.m_Receiver:DragHoverEnd()
 		
 	end
-	
-	if ( !IsValid( receiver ) ) then 
-		dragndrop.m_Receiver		= nil
-		dragndrop.m_ReceiverSlot	= nil
+
+	if ( !IsValid( receiver ) ) then
+		dragndrop.m_Receiver = nil
+		dragndrop.m_ReceiverSlot = nil
 	end
-	
-	dragndrop.m_Receiver		= receiver
-	dragndrop.m_ReceiverSlot	= receiverslot
+
+	dragndrop.m_Receiver = receiver
+	dragndrop.m_ReceiverSlot = receiverslot
 
 end
 
@@ -189,7 +192,7 @@ function dragndrop.Think()
 	if ( IsValid( dragndrop.m_DropMenu ) ) then return end
 	
 	--
-	-- We're dragging but no mouse buttons are down.. 
+	-- We're dragging but no mouse buttons are down..
 	-- So force the drop whereever it is!
 	--
 	if ( dragndrop.m_Dragging != nil && !input.IsMouseDown( MOUSE_LEFT ) && !input.IsMouseDown( MOUSE_RIGHT ) ) then
@@ -216,10 +219,10 @@ function dragndrop.Think()
 		dragndrop.UpdateReceiver()
 
 		if ( IsValid( dragndrop.m_Receiver ) ) then
-			dragndrop.CallReceiverFunction( false )		
+			dragndrop.CallReceiverFunction( false )
 		end
 		
-	end	
+	end
 
 end
 
@@ -235,11 +238,11 @@ hook.Add( "DrawOverlay", "DragNDropPaint", function()
 	-- Find the top, left most panel
 	for k, v in pairs( dragndrop.m_Dragging ) do
 
-		if ( !IsValid( v ) ) then continue end 
+		if ( !IsValid( v ) ) then continue end
 
 		hold_offset_x = math.min( hold_offset_x, v.x )
 		hold_offset_y = math.min( hold_offset_y, v.y )
-			
+		
 	end
 
 	DisableClipping( true )
@@ -247,13 +250,13 @@ hook.Add( "DrawOverlay", "DragNDropPaint", function()
 		local Alpha = 0.7
 		if ( IsValid( dragndrop.m_Hovered ) ) then Alpha = 0.8 end
 		surface.SetAlphaMultiplier( Alpha )
-				
+			
 			local ox = gui.MouseX() - hold_offset_x + 8
 			local oy = gui.MouseY() - hold_offset_y + 8
 		
 			for k, v in pairs( dragndrop.m_Dragging ) do
-					
-				if ( !IsValid( v ) ) then continue end 
+				
+				if ( !IsValid( v ) ) then continue end
 
 				local dist = 512 - v:Distance( dragndrop.m_DraggingMain )
 				
@@ -271,7 +274,6 @@ hook.Add( "DrawOverlay", "DragNDropPaint", function()
 	DisableClipping( false )
 
 end )
-
 hook.Add( "Think", "DragNDropThink", dragndrop.Think )
 
 
@@ -286,7 +288,6 @@ hook.Add( "Think", "DragNDropThink", dragndrop.Think )
 --
 --
 
-
 local meta = FindMetaTable( "Panel" )
 
 --
@@ -295,9 +296,9 @@ local meta = FindMetaTable( "Panel" )
 function meta:Droppable( name )
 
 	self.m_DragSlot = self.m_DragSlot or {}
-	
+
 	self.m_DragSlot[ name ] = {}
-	
+
 	return self.m_DragSlot[ name ]
 
 end
@@ -308,7 +309,7 @@ end
 function meta:Receiver( name, func, menu )
 
 	self.m_ReceiverSlot = self.m_ReceiverSlot or {}
-	
+
 	self.m_ReceiverSlot[ name ] = {}
 	self.m_ReceiverSlot[ name ].Name = name
 	self.m_ReceiverSlot[ name ].Func = func
@@ -318,14 +319,12 @@ end
 
 --
 -- Drag parent means that when we start to
--- drag this panel, we'll really start 
+-- drag this panel, we'll really start
 -- dragging the defined parent
 --
 function meta:SetDragParent( parent )
 	self.m_pDragParent = parent
 end
-
-
 
 function meta:GetValidReceiverSlot()
 
@@ -344,11 +343,11 @@ function meta:GetValidReceiverSlot()
 		end
 		
 	end
-	
+
 	if ( !IsValid( self:GetParent() ) ) then
 		return false
 	end
-	
+
 	return self:GetParent():GetValidReceiverSlot()
 
 end
@@ -367,11 +366,27 @@ function meta:IsDragging()
 
 end
 
+function meta:DroppedOn( pnl )
+	-- For override.
+end
+
+function meta:OnDrop()
+
+	-- We're being dropped on something
+	-- we can create a new panel here and return it, so that instead of
+	-- dropping us - it drops the new panel instead! We remain where we are!
+
+	-- By default we return ourself
+
+	return self
+
+end
+
 function meta:OnStartDragging()
 
 	self.Dragging = true
 	self:InvalidateLayout()
-	
+
 	if ( self:IsSelectable() ) then
 	
 		local canvas = self:GetSelectionCanvas()
@@ -381,7 +396,7 @@ function meta:OnStartDragging()
 		end
 	
 	end
-	
+
 end
 
 function meta:OnStopDragging()
@@ -424,30 +439,76 @@ function meta:DragMouseRelease( mcode )
 	if ( dragndrop.IsDragging() && dragndrop.m_MouseCode != mcode ) then
 	
 		return self:DragClick( mcode )
-		
-	end
 	
+	end
+
 	if ( !dragndrop.IsDragging() ) then
 		dragndrop.Clear()
-		return false 
+		return false
 	end
 
 	for k, v in pairs( dragndrop.m_Dragging ) do
 
-		if ( !IsValid( v ) ) then continue end 
+		if ( !IsValid( v ) ) then continue end
 		v:OnStopDragging()
 
-	end	
+	end
 
 	dragndrop.Drop()
 	
 	-- Todo.. we should only do this if we enabled it!
-	if ( gui.EnableScreenClicker ) then 
-		gui.EnableScreenClicker( false ) 
+	if ( gui.EnableScreenClicker ) then
+		gui.EnableScreenClicker( false )
 	end
-	
-	self:MouseCapture( false )	
+
+	self:MouseCapture( false )
 	return true
+
+end
+
+function meta:SetDropTarget( x, y, w, h )
+	
+	if ( !self.m_bDrawingPaintOver ) then
+		self.m_OldPaintOver = self.PaintOver
+		self.m_bDrawingPaintOver = true
+	end
+
+	self.PaintOver = function()
+	
+		if ( self.m_OldPaintOver ) then
+			self:m_OldPaintOver()
+		end
+
+		self:DrawDragHover( x, y, w, h )
+	
+	end
+
+end
+
+
+
+--
+-- Drag Hover
+--
+-- These functions are used for things like trees
+-- So that when you hover over the tree while dragging something
+-- it will open up the tree. This works regardless of whether the
+-- is droppable or not.
+--
+-- Implement DragHoverClick in your panel class to get this functionality
+--
+function meta:DragHover( HoverTime )
+
+	//
+	// Call DragHoverClick if we've been hovering for 0.5 seconds..
+	//
+	if ( HoverTime < 0.1 ) then dragndrop.m_bHoverClick = false end
+	if ( HoverTime > 0.1 && !dragndrop.m_bHoverClick ) then
+	
+		self:DragHoverClick( HoverTime )
+		dragndrop.m_bHoverClick = true
+	
+	end
 
 end
 
@@ -465,26 +526,7 @@ function meta:DrawDragHover( x, y, w, h )
 	surface.DrawOutlinedRect( x-1, y-1, w+2, h+2 )
 	
 	DisableClipping( false )
-	
-end
 
-function meta:SetDropTarget( x, y, w, h )
-		
-	if ( !self.m_bDrawingPaintOver ) then
-		self.m_OldPaintOver = self.PaintOver
-		self.m_bDrawingPaintOver = true
-	end
-	
-	self.PaintOver = function()
-	
-		if ( self.m_OldPaintOver ) then
-			self:m_OldPaintOver()
-		end
-
-		self:DrawDragHover( x, y, w, h )
-	
-	end
-	
 end
 
 function meta:DragHoverEnd()
@@ -496,57 +538,12 @@ function meta:DragHoverEnd()
 	
 end
 
-
-
-
---
--- Drag Hover
---
--- These functions are used for things like trees
--- So that when you hover over the tree while dragging something
--- it will open up the tree. This works regardless of whether the 
--- is droppable or not.
---
--- Implement DragHoverClick in your panel class to get this functionality
---
-function meta:DragHover( HoverTime )
-
-	//
-	// Call DragHoverClick if we've been hovering for 0.5 seconds..
-	//
-	if ( HoverTime < 0.1 ) then dragndrop.m_bHoverClick = false end
-	if ( HoverTime > 0.1 && !dragndrop.m_bHoverClick ) then
-	
-		self:DragHoverClick( HoverTime )
-		dragndrop.m_bHoverClick = true
-	
-	end	
-
-end
-
 function meta:DragHoverClick( HoverTime )
-
-end
-
-function meta:DroppedOn( pnl )
-	-- Fpr override.
-end
-
-function meta:OnDrop()
-	
-	-- We're being dropped on something
-	-- we can create a new panel here and return it, so that instead of
-	-- dropping us - it drops the new panel instead! We remain where we are!
-	
-	-- By default we return ourself
-	
-	return self
-	
-	
 end
 
 
---
+
+
 --
 --
 -- This is called to open stuff when you're hovering over it.
@@ -568,10 +565,10 @@ function dragndrop.HoverThink()
 	if ( LastHoverThink != hovered || x != LastX || y != LastY ) then
 		
 		LastHoverChangeTime = SysTime()
-		LastHoverThink		= hovered
+		LastHoverThink = hovered
 		
 	end
-	
+
 	-- Hovered panel might do stuff when we're hovering it
 	-- so give it a chance to do that now.
 	if ( IsValid( LastHoverThink ) ) then
