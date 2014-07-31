@@ -34,6 +34,17 @@ function net.Incoming( len, client )
 end
 
 --
+-- Read/Write a boolean to the stream
+--
+net.WriteBool = net.WriteBit
+
+function net.ReadBool()
+
+	return net.ReadBit() == 1
+	
+end
+
+--
 -- Read/Write an entity to the stream
 --
 function net.WriteEntity( ent )
@@ -127,7 +138,7 @@ net.WriteVars =
 	[TYPE_STRING]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteString( v )		end,
 	[TYPE_NUMBER]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteDouble( v )		end,
 	[TYPE_TABLE]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteTable( v )			end,
-	[TYPE_BOOL]			= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteBit( v )			end,
+	[TYPE_BOOL]			= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteBool( v )			end,
 	[TYPE_ENTITY]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteEntity( v )		end,
 	[TYPE_VECTOR]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteVector( v )		end,
 	[TYPE_ANGLE]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteAngle( v )			end,
@@ -157,7 +168,7 @@ net.ReadVars =
 	[TYPE_STRING]	= function ()	return net.ReadString() end,
 	[TYPE_NUMBER]	= function ()	return net.ReadDouble() end,
 	[TYPE_TABLE]	= function ()	return net.ReadTable() end,
-	[TYPE_BOOL]		= function ()	return net.ReadBit() == 1 end,
+	[TYPE_BOOL]		= function ()	return net.ReadBool() end,
 	[TYPE_ENTITY]	= function ()	return net.ReadEntity() end,
 	[TYPE_VECTOR]	= function ()	return net.ReadVector() end,
 	[TYPE_ANGLE]	= function ()	return net.ReadAngle() end,
