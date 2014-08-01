@@ -2,12 +2,12 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.Spawnable			= false
-ENT.RenderGroup 		= RENDERGROUP_BOTH
+ENT.Spawnable     = false
+ENT.RenderGroup   = RENDERGROUP_BOTH
 
-local matHeatWave		= Material( "sprites/heatwave" )
-local matFire			= Material( "effects/fire_cloud1" )
-local matPlasma			= Material( "effects/strider_muzzle" )
+local matHeatWave = Material( "sprites/heatwave" )
+local matFire     = Material( "effects/fire_cloud1" )
+local matPlasma   = Material( "effects/strider_muzzle" )
 
 if ( CLIENT ) then
 	CreateConVar( "cl_drawthrusterseffects", "1" )

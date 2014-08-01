@@ -1,12 +1,12 @@
 
-ENT.Base = "base_entity"
-ENT.Type = "ai"
+ENT.Base                  = "base_entity"
+ENT.Type                  = "ai"
 
-ENT.PrintName		= ""
-ENT.Author			= ""
-ENT.Contact			= ""
-ENT.Purpose			= ""
-ENT.Instructions	= ""
+ENT.PrintName             = ""
+ENT.Author                = ""
+ENT.Contact               = ""
+ENT.Purpose               = ""
+ENT.Instructions          = ""
 
 ENT.AutomaticFrameAdvance = false
 

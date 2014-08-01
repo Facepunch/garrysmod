@@ -1,10 +1,10 @@
 
 AddCSLuaFile()
 
-ENT.Type				= "anim"
-ENT.Spawnable			= false
-ENT.AdminOnly			= false
-ENT.Editable			= true
+ENT.Type      = "anim"
+ENT.Spawnable = false
+ENT.AdminOnly = false
+ENT.Editable  = true
 
 local matBone = Material( "widgets/bone.png", "unlitsmooth" )
 

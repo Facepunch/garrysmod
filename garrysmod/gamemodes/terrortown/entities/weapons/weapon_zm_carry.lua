@@ -3,59 +3,59 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType           = "pistol"
+SWEP.HoldType     = "pistol"
 
 if CLIENT then
-   SWEP.PrintName       = "magnet_name"
-   SWEP.Slot            = 4
+   SWEP.PrintName = "magnet_name"
+   SWEP.Slot      = 4
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.AutoSpawnable      = false
+SWEP.AutoSpawnable         = false
 
-SWEP.ViewModel          = Model("models/weapons/v_stunbaton.mdl")
-SWEP.WorldModel         = Model("models/weapons/w_stunbaton.mdl")
+SWEP.ViewModel             = Model("models/weapons/v_stunbaton.mdl")
+SWEP.WorldModel            = Model("models/weapons/w_stunbaton.mdl")
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = true
-SWEP.Primary.Ammo       = "none"
-SWEP.Primary.Delay = 0.1
+SWEP.DrawCrosshair         = false
+SWEP.ViewModelFlip         = false
+SWEP.Primary.ClipSize      = -1
+SWEP.Primary.DefaultClip   = -1
+SWEP.Primary.Automatic     = true
+SWEP.Primary.Ammo          = "none"
+SWEP.Primary.Delay         = 0.1
 
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
-SWEP.Secondary.Delay = 0.1
+SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic   = true
+SWEP.Secondary.Ammo        = "none"
+SWEP.Secondary.Delay       = 0.1
 
-SWEP.Kind = WEAPON_CARRY
+SWEP.Kind         = WEAPON_CARRY
 
 SWEP.InLoadoutFor = {ROLE_INNOCENT, ROLE_TRAITOR, ROLE_DETECTIVE}
 
-SWEP.AllowDelete = false
-SWEP.AllowDrop = false
+SWEP.AllowDelete  = false
+SWEP.AllowDrop    = false
 
-SWEP.NoSights = true
+SWEP.NoSights     = true
 
-SWEP.EntHolding = nil
-SWEP.CarryHack = nil
-SWEP.Constr = nil
-SWEP.PrevOwner = nil
+SWEP.EntHolding   = nil
+SWEP.CarryHack    = nil
+SWEP.Constr       = nil
+SWEP.PrevOwner    = nil
 
-local allow_rag  = CreateConVar("ttt_ragdoll_carrying", "1")
-local prop_force = CreateConVar("ttt_prop_carrying_force", "60000")
-local no_throw   = CreateConVar("ttt_no_prop_throwing", "0")
-local pin_rag    = CreateConVar("ttt_ragdoll_pinning", "1")
+local allow_rag    = CreateConVar("ttt_ragdoll_carrying", "1")
+local prop_force   = CreateConVar("ttt_prop_carrying_force", "60000")
+local no_throw     = CreateConVar("ttt_no_prop_throwing", "0")
+local pin_rag      = CreateConVar("ttt_ragdoll_pinning", "1")
 local pin_rag_inno = CreateConVar("ttt_ragdoll_pinning_innocents", "0")
 
 -- Allowing weapon pickups can allow players to cause a crash in the physics
 -- system (ie. not fixable). Tuning the range seems to make this more
 -- difficult. Not sure why. It's that kind of crash.
-local allow_wep = CreateConVar("ttt_weapon_carrying", "1")
-local wep_range = CreateConVar("ttt_weapon_carrying_range", "50")
+local allow_wep    = CreateConVar("ttt_weapon_carrying", "1")
+local wep_range    = CreateConVar("ttt_weapon_carrying_range", "50")
 
 -- not customizable via convars as some objects rely on not being carryable for
 -- gameplay purposes

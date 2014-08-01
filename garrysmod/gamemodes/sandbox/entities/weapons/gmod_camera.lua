@@ -2,41 +2,41 @@ AddCSLuaFile()
 
 -- Variables that are used on both client and server
 
-SWEP.Author			= ""
-SWEP.Contact		= ""
-SWEP.Purpose		= ""
-SWEP.Instructions	= ""
+SWEP.Author                = ""
+SWEP.Contact               = ""
+SWEP.Purpose               = ""
+SWEP.Instructions          = ""
 
-SWEP.ViewModel		= "models/weapons/c_arms_animations.mdl"
-SWEP.WorldModel		= "models/MaxOfS2D/camera.mdl"
+SWEP.ViewModel             = "models/weapons/c_arms_animations.mdl"
+SWEP.WorldModel            = "models/MaxOfS2D/camera.mdl"
 
 util.PrecacheModel( SWEP.ViewModel )
 util.PrecacheModel( SWEP.WorldModel )
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo			= "none"
+SWEP.Primary.ClipSize      = -1
+SWEP.Primary.DefaultClip   = -1
+SWEP.Primary.Automatic     = false
+SWEP.Primary.Ammo          = "none"
 
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= true
-SWEP.Secondary.Ammo			= "none"
+SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic   = true
+SWEP.Secondary.Ammo        = "none"
 
-SWEP.ShootSound				= "NPC_CScanner.TakePhoto"
+SWEP.ShootSound            = "NPC_CScanner.TakePhoto"
 
-SWEP.PrintName			= "#GMOD_Camera"			
-SWEP.Slot				= 5
-SWEP.SlotPos			= 1
-SWEP.DrawAmmo			= false
-SWEP.DrawCrosshair		= false
-SWEP.Spawnable			= true
+SWEP.PrintName             = "#GMOD_Camera"			
+SWEP.Slot                  = 5
+SWEP.SlotPos               = 1
+SWEP.DrawAmmo              = false
+SWEP.DrawCrosshair         = false
+SWEP.Spawnable             = true
 
 if ( SERVER ) then
 
-	SWEP.Weight				= 5
-	SWEP.AutoSwitchTo		= false
-	SWEP.AutoSwitchFrom		= false
+	SWEP.Weight         = 5
+	SWEP.AutoSwitchTo   = false
+	SWEP.AutoSwitchFrom = false
 
 	--
 	-- A concommand to quickly switch to the camera

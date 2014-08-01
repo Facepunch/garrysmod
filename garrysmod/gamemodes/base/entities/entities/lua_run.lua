@@ -1,6 +1,6 @@
 
-ENT.Type				= "point"
-ENT.DisableDuplicator	= true
+ENT.Type              = "point"
+ENT.DisableDuplicator = true
 
 AccessorFunc( ENT, "m_bDefaultCode", "DefaultCode" )
 

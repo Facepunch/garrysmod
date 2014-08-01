@@ -3,12 +3,12 @@ if ( CLIENT ) then return end
 
 ENT.Type = "point"
 
-local DIR_BACKWARD 	= -1
-local DIR_NONE 		= 0
-local DIR_FORWARD 	= 1
+local DIR_BACKWARD = -1
+local DIR_NONE     = 0
+local DIR_FORWARD  = 1
 
-local TYPE_NORMAL	= 0
-local TYPE_MUSCLE	= 1
+local TYPE_NORMAL  = 0
+local TYPE_MUSCLE  = 1
 
 --[[---------------------------------------------------------
    Name: Initialize

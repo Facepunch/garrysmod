@@ -1,13 +1,13 @@
 
 AddCSLuaFile()
 
-ENT.Base 			= "base_entity"
-ENT.PrintName		= ""
-ENT.Author			= ""
-ENT.Contact			= ""
-ENT.Purpose			= ""
-ENT.Instructions	= ""
-ENT.RenderGroup		= RENDERGROUP_OPAQUE
+ENT.Base         = "base_entity"
+ENT.PrintName    = ""
+ENT.Author       = ""
+ENT.Contact      = ""
+ENT.Purpose      = ""
+ENT.Instructions = ""
+ENT.RenderGroup  = RENDERGROUP_OPAQUE
 
 function ENT:Initialize()
 end

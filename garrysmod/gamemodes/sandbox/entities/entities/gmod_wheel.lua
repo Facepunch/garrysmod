@@ -2,14 +2,14 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.PrintName		= ""
-ENT.Author			= ""
-ENT.Contact			= ""
-ENT.Purpose			= ""
-ENT.Instructions	= ""
+ENT.PrintName    = ""
+ENT.Author       = ""
+ENT.Contact      = ""
+ENT.Purpose      = ""
+ENT.Instructions = ""
 
-ENT.Spawnable			= false
-ENT.RenderGroup 		= RENDERGROUP_OPAQUE
+ENT.Spawnable    = false
+ENT.RenderGroup  = RENDERGROUP_OPAQUE
 
 
 --

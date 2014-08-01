@@ -12,10 +12,10 @@
 SWEP.HoldType = "normal"
 
 if CLIENT then
-   SWEP.PrintName			= "Beacon"
-   SWEP.Slot				= 6
-   SWEP.SlotPos			= 0
-
+   SWEP.PrintName    = "Beacon"
+   SWEP.Slot         = 6
+   SWEP.SlotPos      = 0
+   
    SWEP.ViewModelFOV = 10
 
    SWEP.EquipMenuData = {
@@ -29,35 +29,35 @@ end
 
 SWEP.Base = "weapon_tttbase"
 
-SWEP.Spawnable          = true
-SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel         = "models/props_lab/reciever01b.mdl"
-SWEP.AutoSwitchTo       = false
-SWEP.AutoSwitchFrom     = false
-SWEP.DrawCrosshair      = true
-SWEP.ViewModelFlip      = false
-SWEP.Primary.ClipSize       = 3
-SWEP.Primary.DefaultClip    = 1
-SWEP.Primary.Automatic      = true
-SWEP.Primary.Ammo       = "slam"
-SWEP.Primary.Delay = 1.0
+SWEP.Spawnable             = true
+SWEP.ViewModel             = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel            = "models/props_lab/reciever01b.mdl"
+SWEP.AutoSwitchTo          = false
+SWEP.AutoSwitchFrom        = false
+SWEP.DrawCrosshair         = true
+SWEP.ViewModelFlip         = false
+SWEP.Primary.ClipSize      = 3
+SWEP.Primary.DefaultClip   = 1
+SWEP.Primary.Automatic     = true
+SWEP.Primary.Ammo          = "slam"
+SWEP.Primary.Delay         = 1.0
 
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
-SWEP.Secondary.Delay = 1.0
+SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic   = true
+SWEP.Secondary.Ammo        = "none"
+SWEP.Secondary.Delay       = 1.0
 
-SWEP.Kind = WEAPON_EQUIP
+SWEP.Kind                  = WEAPON_EQUIP
 -- DISABLED
---SWEP.CanBuy = {ROLE_DETECTIVE} -- only detectives can buy
-SWEP.LimitedStock = true -- only buyable once
-SWEP.WeaponID = AMMO_BEACON
+--SWEP.CanBuy              = {ROLE_DETECTIVE} -- only detectives can buy
+SWEP.LimitedStock          = true -- only buyable once
+SWEP.WeaponID              = AMMO_BEACON
 
 
-SWEP.AllowDrop = false
+SWEP.AllowDrop             = false
 
-SWEP.NoSights = true
+SWEP.NoSights              = true
 
 function SWEP:OnDrop()
    self:Remove()

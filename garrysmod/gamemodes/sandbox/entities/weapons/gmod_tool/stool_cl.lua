@@ -4,7 +4,7 @@
    Tool should return true if freezing the view angles
 -----------------------------------------------------------]]
 function ToolObj:FreezeMovement()
-		return false 
+	return false 
 end
 
 

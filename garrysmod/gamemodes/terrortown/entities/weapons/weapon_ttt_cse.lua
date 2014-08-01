@@ -4,8 +4,8 @@ AddCSLuaFile()
 SWEP.HoldType = "normal"
 
 if CLIENT then
-   SWEP.PrintName = "vis_name"
-   SWEP.Slot = 6
+   SWEP.PrintName    = "vis_name"
+   SWEP.Slot         = 6
 
    SWEP.ViewModelFOV = 10
 
@@ -17,34 +17,34 @@ if CLIENT then
    SWEP.Icon = "vgui/ttt/icon_cse"
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.ViewModel  = Model("models/weapons/v_crowbar.mdl")
-SWEP.WorldModel = Model("models/Items/battery.mdl")
+SWEP.ViewModel             = Model("models/weapons/v_crowbar.mdl")
+SWEP.WorldModel            = Model("models/Items/battery.mdl")
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = false
-SWEP.Primary.Ammo       = "none"
-SWEP.Primary.Delay = 1.0
+SWEP.DrawCrosshair         = false
+SWEP.ViewModelFlip         = false
+SWEP.Primary.ClipSize      = -1
+SWEP.Primary.DefaultClip   = -1
+SWEP.Primary.Automatic     = false
+SWEP.Primary.Ammo          = "none"
+SWEP.Primary.Delay         = 1.0
 
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
-SWEP.Secondary.Delay = 0.2
+SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic   = true
+SWEP.Secondary.Ammo        = "none"
+SWEP.Secondary.Delay       = 0.2
 
-SWEP.Kind = WEAPON_EQUIP
-SWEP.CanBuy = {ROLE_DETECTIVE} -- only detectives can buy
-SWEP.WeaponID = AMMO_CSE
+SWEP.Kind                  = WEAPON_EQUIP
+SWEP.CanBuy                = {ROLE_DETECTIVE} -- only detectives can buy
+SWEP.WeaponID              = AMMO_CSE
 
-SWEP.LimitedStock = true -- only buyable once
-SWEP.NoSights = true
-SWEP.AllowDrop = false
+SWEP.LimitedStock          = true -- only buyable once
+SWEP.NoSights              = true
+SWEP.AllowDrop             = false
 
-SWEP.DeathScanDelay = 15
+SWEP.DeathScanDelay        = 15
 
 function SWEP:PrimaryAttack()
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )

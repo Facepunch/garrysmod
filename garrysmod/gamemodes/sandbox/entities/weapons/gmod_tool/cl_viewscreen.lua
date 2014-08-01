@@ -1,14 +1,14 @@
 
-local matScreen 	= Material( "models/weapons/v_toolgun/screen" )
-local txBackground	= surface.GetTextureID( "models/weapons/v_toolgun/screen_bg" )
+local matScreen    = Material( "models/weapons/v_toolgun/screen" )
+local txBackground = surface.GetTextureID( "models/weapons/v_toolgun/screen_bg" )
 
 -- GetRenderTarget returns the texture if it exists, or creates it if it doesn't
-local RTTexture 	= GetRenderTarget( "GModToolgunScreen", 256, 256 )
+local RTTexture    = GetRenderTarget( "GModToolgunScreen", 256, 256 )
 
 surface.CreateFont( "GModToolScreen", {
-	font	= "Helvetica",
-	size	= 60,
-	weight	= 900
+	font   = "Helvetica",
+	size   = 60,
+	weight = 900
 } )
 
 

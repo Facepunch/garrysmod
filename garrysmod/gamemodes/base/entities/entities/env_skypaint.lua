@@ -1,8 +1,8 @@
 
 AddCSLuaFile()
 
-ENT.Type				= "point"
-ENT.DisableDuplicator	= true
+ENT.Type              = "point"
+ENT.DisableDuplicator = true
 
 
 --

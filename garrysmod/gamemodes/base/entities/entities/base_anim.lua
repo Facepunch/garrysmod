@@ -1,15 +1,15 @@
 
 AddCSLuaFile()
 
-ENT.Base = "base_entity"
-ENT.Type = "anim"
+ENT.Base         = "base_entity"
+ENT.Type         = "anim"
 
-ENT.PrintName		= ""
-ENT.Author			= ""
-ENT.Contact			= ""
-ENT.Purpose			= ""
-ENT.Instructions	= ""
-ENT.RenderGroup		= RENDERGROUP_OPAQUE
+ENT.PrintName    = ""
+ENT.Author       = ""
+ENT.Contact      = ""
+ENT.Purpose      = ""
+ENT.Instructions = ""
+ENT.RenderGroup  = RENDERGROUP_OPAQUE
 
 -- Defaulting this to OFF. This will automatically save bandwidth
 -- on stuff that is already out there, but might break a few things

@@ -2,13 +2,13 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_anim" )
 
-ENT.PrintName		= ""
-ENT.Author			= ""
-ENT.Contact			= ""
-ENT.Purpose			= ""
-ENT.Instructions	= ""
+ENT.PrintName    = ""
+ENT.Author       = ""
+ENT.Contact      = ""
+ENT.Purpose      = ""
+ENT.Instructions = ""
 
-ENT.Spawnable			= false
+ENT.Spawnable    = false
 
 if ( CLIENT ) then
 

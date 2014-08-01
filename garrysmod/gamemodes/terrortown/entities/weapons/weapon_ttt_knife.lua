@@ -1,13 +1,13 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType = "knife"
+SWEP.HoldType     = "knife"
 
 if CLIENT then
 
-   SWEP.PrintName    = "knife_name"
-   SWEP.Slot         = 6
-  
+   SWEP.PrintName = "knife_name"
+   SWEP.Slot      = 6
+
    SWEP.ViewModelFlip = false
 
    SWEP.EquipMenuData = {
@@ -18,33 +18,33 @@ if CLIENT then
    SWEP.Icon = "vgui/ttt/icon_knife"
 end
 
-SWEP.Base               = "weapon_tttbase"
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.UseHands			= true
-SWEP.ViewModelFlip		= false
-SWEP.ViewModelFOV		= 54
-SWEP.ViewModel          = "models/weapons/cstrike/c_knife_t.mdl"
-SWEP.WorldModel         = "models/weapons/w_knife_t.mdl"
+SWEP.UseHands              = true
+SWEP.ViewModelFlip         = false
+SWEP.ViewModelFOV          = 54
+SWEP.ViewModel             = "models/weapons/cstrike/c_knife_t.mdl"
+SWEP.WorldModel            = "models/weapons/w_knife_t.mdl"
 
-SWEP.DrawCrosshair      = false
-SWEP.Primary.Damage         = 50
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = true
-SWEP.Primary.Delay = 1.1
-SWEP.Primary.Ammo       = "none"
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
-SWEP.Secondary.Delay = 1.4
+SWEP.DrawCrosshair         = false
+SWEP.Primary.Damage        = 50
+SWEP.Primary.ClipSize      = -1
+SWEP.Primary.DefaultClip   = -1
+SWEP.Primary.Automatic     = true
+SWEP.Primary.Delay         = 1.1
+SWEP.Primary.Ammo          = "none"
+SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic   = true
+SWEP.Secondary.Ammo        = "none"
+SWEP.Secondary.Delay       = 1.4
 
-SWEP.Kind = WEAPON_EQUIP
-SWEP.CanBuy = {ROLE_TRAITOR} -- only traitors can buy
-SWEP.LimitedStock = true -- only buyable once
-SWEP.WeaponID = AMMO_KNIFE
+SWEP.Kind                  = WEAPON_EQUIP
+SWEP.CanBuy                = {ROLE_TRAITOR} -- only traitors can buy
+SWEP.LimitedStock          = true -- only buyable once
+SWEP.WeaponID              = AMMO_KNIFE
 
-SWEP.IsSilent = true
+SWEP.IsSilent              = true
 
 -- Pull out faster than standard guns
 SWEP.DeploySpeed = 2

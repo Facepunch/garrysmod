@@ -2,8 +2,8 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.Spawnable		= false
-ENT.RenderGroup 	= RENDERGROUP_BOTH
+ENT.Spawnable   = false
+ENT.RenderGroup = RENDERGROUP_BOTH
 
 function ENT:SetupDataTables()
 
