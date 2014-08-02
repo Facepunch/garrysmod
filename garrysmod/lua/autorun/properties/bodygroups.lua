@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 properties.Add( "bodygroups", {
-	MenuLabel = "bodygroups",
+	MenuLabel = "#bodygroups",
 	Order = 600,
 	MenuIcon = "icon16/link_edit.png",
 	
