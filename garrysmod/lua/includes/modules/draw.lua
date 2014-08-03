@@ -163,7 +163,7 @@ function DrawText(text, font, x, y, colour, xalign )
 			else -- there's no tabs, this is easy
 				SimpleText( str, font, curX, curY, colour, xalign )
 			end
-			
+		else
 			curX = x
 			curY = curY + (lineHeight/2)
 		end
