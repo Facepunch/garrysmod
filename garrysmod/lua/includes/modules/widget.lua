@@ -35,7 +35,7 @@ local function UpdateHovered( pl, mv )
 		endpos	= pl:EyePos() + pl:GetAimVector() * 256,
 		filter	= function( ent )
 		
-					  return ent:IsValid() && ent:IsWidget()
+					  return ent.IsValid && ent:IsValid() && ent:IsWidget()
 		
 				  end
 	}
