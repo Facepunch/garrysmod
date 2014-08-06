@@ -205,11 +205,14 @@ end
 
 function PANEL:SetLegacyType( t )
 	
-	self.Image = vgui.Create( "DImage", self )
+	self.Image = vgui.Create( "DImageButton", self )
 	self.Image:SetMaterial( NoticeMaterial[ t ] )
 	self.Image:SetSize( 32, 32 )
 	self.Image:Dock( LEFT )
 	self.Image:DockMargin( 0, 0, 8, 0 )
+	self.Image.DoClick = function()
+		self.StartTime = 0
+	end
 	
 	self:SizeToContents()
 	
