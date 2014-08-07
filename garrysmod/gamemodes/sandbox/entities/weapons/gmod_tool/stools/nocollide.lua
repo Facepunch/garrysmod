@@ -53,7 +53,7 @@ function TOOL:LeftClick( trace )
 end
 
 hook.Add( "EntityRemoved", "nocollide_fix", function( ent )
-	if ( ent.GetClass and ent:GetClass() == "logic_collision_pair" ) then
+	if ( IsValid( ent ) && ent:GetClass() == "logic_collision_pair" ) then
 		ent:Fire( "EnableCollisions" )
 	end
 end )
