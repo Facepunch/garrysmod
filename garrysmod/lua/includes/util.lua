@@ -256,7 +256,7 @@ function util.IsUselessModel( modelname )
 	return false
 
 end
-
+UTIL_IsUslessModel = util.IsUselessModel
 
 --[[---------------------------------------------------------
 	Remember/Restore cursor position..
