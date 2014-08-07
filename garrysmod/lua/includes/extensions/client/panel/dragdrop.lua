@@ -265,8 +265,10 @@ hook.Add( "DrawOverlay", "DragNDropPaint", function()
 				dist = dist / 512
 				surface.SetAlphaMultiplier( Alpha * dist )
 				
+				v.PaintingDragging = true
 				v:PaintAt( ox + v.x - v:GetWide() / 2, oy + v.y - v:GetTall() / 2 ) // fill the gap between the top left corner and the mouse position
-			
+				v.PaintingDragging = nil
+
 			end
 			
 		surface.SetAlphaMultiplier( 1.0 )
