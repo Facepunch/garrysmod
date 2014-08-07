@@ -246,6 +246,8 @@
 	"base"		"dirt"
 	"stepleft"	"Grass.StepLeft"
 	"stepright"	"Grass.StepRight"
+
+	"gamematerial"	"U"
 }
 
 "tile"
@@ -292,7 +294,7 @@
 
 "Wood_lowdensity"
 {
-	"base"		"wood"
+	"base"		"Wood"
 	"density"	"300"
 }
 
@@ -444,6 +446,8 @@
 	"audioreflectivity" "0.33"
 	"audiohardnessfactor" "0.0"
 	"audioroughnessfactor" "1.0"
+
+	"gamematerial" "N"
 }
 
 // wade is a water material for walking in/on water at knee height
@@ -554,6 +558,12 @@
 
 }
 
+//For the materials that use it
+"stone"
+{
+	"base"		"rock"
+}
+
 // tubs, urinals, sinks
 
 "porcelain"
@@ -574,7 +584,7 @@
 "gravel"
 {
 	"base"		"rock"
-	"friction"	"0.4"
+	"friction"	"0.4"  //0.8 for cs
 	"stepleft"	"Gravel.StepLeft"
 	"stepright""Gravel.StepRight"
 }
@@ -696,12 +706,14 @@
 {
 	"base"		"dirt"
 	"density"	"800"
-	"friction"	"0.35"
+	"friction"	"0.35" //0.8 for cs
 	
 	"stepleft"		"Snow.StepLeft"
 	"stepright"		"Snow.StepRight"
 
 	"audiohardnessfactor" "0.25"
+
+	"gamematerial"	"J"
 }
 
 "ice"
@@ -871,6 +883,8 @@
 	"bulletimpact"	"Sand.BulletImpact"
 
 	"audioreflectivity" "0.03"
+
+	"gamematerial"	"N"
 }
 
 // solid rubber floor mat, solid rubber tire
@@ -1311,10 +1325,8 @@
 	"scraperough"	"MetalVehicle.ScrapeRough"
 	"scrapesmooth"	"MetalVehicle.ScrapeSmooth"
 
-
 	"gamematerial"	"M"
 }
-	
 
 "crowbar"
 {
@@ -1326,8 +1338,6 @@
 "antlionsand"
 {
 	"base"		"sand"
-
-	"gamematerial"	"N"
 }
 
 "metal_seafloorcar"
@@ -1559,4 +1569,33 @@
 	"impacthard"	"Grenade.ImpactHard"
 	"impactsoft"	"Grenade.ImpactSoft"
 	"rolling"	"Grenade.Roll"
+}
+
+// Counter-Strike: Source
+
+"brass_bell_large"
+{
+	"bulletimpact"	"BrassBell.C"
+}
+
+"brass_bell_medium"
+{
+	"bulletimpact"	"BrassBell.D"
+}
+
+"brass_bell_small"
+{
+	"bulletimpact"	"BrassBell.E"
+}
+
+"brass_bell_smallest"
+{
+	"bulletimpact"	"BrassBell.F"
+}
+
+"hay"
+{
+	"base"		"wood"
+	"stepleft"	"Grass.StepLeft"
+	"stepright"	"Grass.StepRight"
 }
