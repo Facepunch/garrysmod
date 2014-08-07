@@ -233,7 +233,7 @@ end
 --[[---------------------------------------------------------
 	Universal function to filter out crappy models by name
 -----------------------------------------------------------]]
-function UTIL_IsUselessModel( modelname ) 
+function util.IsUselessModel( modelname ) 
 
 	local modelname = modelname:lower()
 
