@@ -11,17 +11,39 @@ function string.ToTable ( str )
 	return tbl
 end
 
-
+--[[---------------------------------------------------------
+   Name: string.JavascriptSafe( string )
+   Desc: Takes a string and escapes it for insertion in to a JavaScript string
+-----------------------------------------------------------]]
 function string.JavascriptSafe( str )
 
-	str = str:Replace( "\\", "\\\\" )
-	str = str:Replace( "\"", "\\\"" )
-	str = str:Replace( "\n", "\\n" )
-	str = str:Replace( "\r", "\\r" )
-	
+	local replacements = {
+		["\\"] = "\\\\",
+		["%z"] = "\\0" ,
+		["\b"] = "\\b" ,
+		["\t"] = "\\t" ,
+		["\n"] = "\\n" ,
+		["\v"] = "\\v" ,
+		["\f"] = "\\f" ,
+		["\r"] = "\\r" ,
+		["\""] = "\\\"",
+		["\'"] = "\\\'",
+
+		-- U+2028 and U+2029 are treated as line separators in JavaScript
+		["\226\128\168"] = "\\\226\128\168",
+		["\226\128\169"] = "\\\226\128\169"
+	}
+
+	for char, replacement in pairs( replacements ) do
+
+		str = str:gsub( char, replacement )
+
+	end
+
 	return str
 
 end
+
 --[[---------------------------------------------------------
    Name: explode(seperator ,string)
    Desc: Takes a string and turns it into a table
