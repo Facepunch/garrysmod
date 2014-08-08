@@ -196,8 +196,8 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.Trim( s, char )
-	char = char or "%s"
-	return string.match( s, "^" .. char .. "*(.-)" .. char .. "*$" )
+	if char then char = char:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" ) else char = "%s" end
+	return string.match( s, "^" .. char .. "*(.-)" .. char .. "*$" ) or s
 end
 
 --[[---------------------------------------------------------
@@ -206,7 +206,8 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimRight( s, char )
-	return string.match( s, "^(.-)" .. (char or "%s") .. "*$" )
+	if char then char = char:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" ) else char = "%s" end
+	return string.match( s, "^(.-)" .. char .. "*$" ) or s
 end
 
 --[[---------------------------------------------------------
@@ -215,7 +216,8 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimLeft( s, char )
-	return string.match( s, "^" .. (char or "%s") .. "*(.+)$" )
+	if char then char = char:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" ) else char = "%s" end
+	return string.match( s, "^" .. char .. "*(.+)$" ) or s
 end
 
 function string.NiceSize( size )
