@@ -14,6 +14,7 @@ local PANEL = {}
 AccessorFunc( PANEL, "m_pMenu", 		"Menu" )
 AccessorFunc( PANEL, "m_bChecked", 		"Checked" )
 AccessorFunc( PANEL, "m_bCheckable", 	"IsCheckable" )
+AccessorFunc( PANEL, "m_bDisabled", 	"Disabled", FORCE_BOOL )
 
 --[[---------------------------------------------------------
 
@@ -65,6 +66,8 @@ end
 -----------------------------------------------------------]]
 function PANEL:OnCursorEntered()
 
+	if ( self:GetDisabled() ) then return end
+	
 	if ( IsValid( self.ParentMenu ) ) then
 		self.ParentMenu:OpenSubMenu( self, self.SubMenu )	
 		return
@@ -109,13 +112,26 @@ function PANEL:OnMousePressed( mousecode )
 end
 
 --[[---------------------------------------------------------
+	SetDisabled
+-----------------------------------------------------------]]
+function PANEL:SetDisabled( bDisabled )
+	
+	self.m_bDisabled = bDisabled
+	self:InvalidateLayout()
+	
+	local skin = self:GetSkin()
+	self:SetTextColor( bDisabled and skin.Colours.Button.Disabled or skin.Colours.Label.Dark )
+
+end
+
+--[[---------------------------------------------------------
 	OnMouseReleased
 -----------------------------------------------------------]]
 function PANEL:OnMouseReleased( mousecode )
 
 	DButton.OnMouseReleased( self, mousecode )
 
-	if ( self.m_MenuClicking && mousecode == MOUSE_LEFT ) then
+	if ( self.m_MenuClicking && mousecode == MOUSE_LEFT && not self:GetDisabled() ) then
 		
 		self.m_MenuClicking = false
 		CloseDermaMenus()
@@ -129,7 +145,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:DoRightClick()
 
-	if ( self:GetIsCheckable() ) then
+	if ( self:GetIsCheckable() && not self:GetDisabled() ) then
 		self:ToggleCheck()
 	end
 
@@ -139,7 +155,9 @@ end
 	DoClickInternal
 -----------------------------------------------------------]]
 function PANEL:DoClickInternal()
-
+	
+	if ( self:GetDisabled() ) then return end
+	
 	if ( self:GetIsCheckable() ) then
 		self:ToggleCheck()
 	end
