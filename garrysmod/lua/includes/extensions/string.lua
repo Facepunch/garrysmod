@@ -15,30 +15,26 @@ end
    Name: string.JavascriptSafe( string )
    Desc: Takes a string and escapes it for insertion in to a JavaScript string
 -----------------------------------------------------------]]
+local javascript_escape_replacements = {
+	["\\"] = "\\\\",
+	["\0"] = "\\0" ,
+	["\b"] = "\\b" ,
+	["\t"] = "\\t" ,
+	["\n"] = "\\n" ,
+	["\v"] = "\\v" ,
+	["\f"] = "\\f" ,
+	["\r"] = "\\r" ,
+	["\""] = "\\\"",
+	["\'"] = "\\\'"
+}
+
 function string.JavascriptSafe( str )
 
-	local replacements = {
-		["\\"] = "\\\\",
-		["%z"] = "\\0" ,
-		["\b"] = "\\b" ,
-		["\t"] = "\\t" ,
-		["\n"] = "\\n" ,
-		["\v"] = "\\v" ,
-		["\f"] = "\\f" ,
-		["\r"] = "\\r" ,
-		["\""] = "\\\"",
-		["\'"] = "\\\'",
+	str = str:gsub( ".", javascript_escape_replacements )
 
-		-- U+2028 and U+2029 are treated as line separators in JavaScript
-		["\226\128\168"] = "\\\226\128\168",
-		["\226\128\169"] = "\\\226\128\169"
-	}
-
-	for char, replacement in pairs( replacements ) do
-
-		str = str:gsub( char, replacement )
-
-	end
+	-- U+2028 and U+2029 are treated as line separators in JavaScript, handle separately as they aren't single-byte
+	str = str:gsub( "\226\128\168", "\\\226\128\168" )
+	str = str:gsub( "\226\128\169", "\\\226\128\169" )
 
 	return str
 
