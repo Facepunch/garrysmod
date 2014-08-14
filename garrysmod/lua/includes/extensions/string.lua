@@ -82,7 +82,7 @@ function string.Explode(separator, str, withpattern)
 	local index,lastPosition = 1,1
 	 
 	-- Escape all magic characters in separator
-	if not withpattern then separator = string_gsub( separator, "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" ) end
+	if not withpattern then separator = separator:PatternSafe() end
 	 
 	-- Find the parts
 	for startPosition,endPosition in string_gmatch( str, "()" .. separator.."()" ) do
@@ -229,7 +229,7 @@ end
 
 
 function string.Replace( str, tofind, toreplace )
-	tofind = tofind:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" )
+	tofind = tofind:PatternSafe()
 	toreplace = toreplace:gsub( "%%", "%%%1" )
 	return ( str:gsub( tofind, toreplace ) )
 end
@@ -240,7 +240,7 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.Trim( s, char )
-	if char then char = char:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" ) else char = "%s" end
+	if char then char = char:PatternSafe() else char = "%s" end
 	return string.match( s, "^" .. char .. "*(.-)" .. char .. "*$" ) or s
 end
 
@@ -250,7 +250,7 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimRight( s, char )
-	if char then char = char:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" ) else char = "%s" end
+	if char then char = char:PatternSafe() else char = "%s" end
 	return string.match( s, "^(.-)" .. char .. "*$" ) or s
 end
 
@@ -260,7 +260,7 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimLeft( s, char )
-	if char then char = char:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" ) else char = "%s" end
+	if char then char = char:PatternSafe() else char = "%s" end
 	return string.match( s, "^" .. char .. "*(.+)$" ) or s
 end
 
