@@ -41,6 +41,32 @@ function string.JavascriptSafe( str )
 end
 
 --[[---------------------------------------------------------
+   Name: string.PatternSafe( string )
+   Desc: Takes a string and escapes it for insertion in to a Lua pattern
+-----------------------------------------------------------]]
+local pattern_escape_replacements = {
+	["("] = "%(",
+	[")"] = "%)",
+	["."] = "%.",
+	["%"] = "%%",
+	["+"] = "%+",
+	["-"] = "%-",
+	["*"] = "%*",
+	["?"] = "%?",
+	["["] = "%[",
+	["]"] = "%]",
+	["^"] = "%^",
+	["$"] = "%$",
+	["\0"] = "%z"
+}
+
+function string.PatternSafe( str )
+
+	return str:gsub( ".", pattern_escape_replacements )
+
+end
+
+--[[---------------------------------------------------------
    Name: explode(seperator ,string)
    Desc: Takes a string and turns it into a table
    Usage: string.explode( " ", "Seperate this string")
