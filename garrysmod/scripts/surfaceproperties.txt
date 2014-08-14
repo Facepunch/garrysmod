@@ -1182,6 +1182,8 @@
 	"gamematerial"	"O"
 }
 
+
+// Episode 2
 "cavern_rock"
 {
 	"base"  "rock"
@@ -1200,28 +1202,28 @@
 
 "advisor_shield"
 {
- "base"  "rock"
- 
- "density" "700"
- "elasticity" "0.1"
- "friction" "0.8"
- "bulletimpact" "NPC_Advisor.shieldblock"
- "scraperough" "NPC_Advisor.shieldblock"
- "scrapesmooth" "NPC_Advisor.shieldblock"
- "impacthard" "NPC_Advisor.shieldblock"
- "impactsoft" "NPC_Advisor.shieldblock"
- 
- "gamematerial" "Z"  // <--- Whatever you make the character index in decals.h
+	"base"  "rock"
+	
+	"density" "700"
+	"elasticity" "0.1"
+	"friction" "0.8"
+	"bulletimpact" "NPC_Advisor.shieldblock"
+	"scraperough" "NPC_Advisor.shieldblock"
+	"scrapesmooth" "NPC_Advisor.shieldblock"
+	"impacthard" "NPC_Advisor.shieldblock"
+	"impactsoft" "NPC_Advisor.shieldblock"
+	
+	"gamematerial" "Z"  // <--- Whatever you make the character index in decals.h
 }
 
 "antlion_eggshell"
 {
- "base"  "flesh"
-"bulletimpact"	"Flesh.ImpactHard"
-"impacthard"	"Flesh.ImpactHard"
-"impactsoft"	"Flesh.ImpactHard"
+	"base"  "flesh"
+	"bulletimpact"	"Flesh.ImpactHard"
+	"impacthard"	"Flesh.ImpactHard"
+	"impactsoft"	"Flesh.ImpactHard"
 
- "gamematerial" "E"
+	"gamematerial" "E"
 }
 
 
@@ -1276,7 +1278,7 @@
 	"impactsoft"	"ATV_impact_medium"
 }
 
-
+//Garry's Mod
 "gmod_ice"
 {
 	"friction"	"0.01"
@@ -1383,12 +1385,11 @@
 
 "zombieflesh"
 {
- 	"base"   	"flesh"
- 
- 	"impacthard"	"Flesh_Bloody.ImpactHard"
+	"base"			"flesh"
+	"impacthard"	"Flesh_Bloody.ImpactHard"
 }
 
- //=============================================
+//=============================================
 //----------------- PHX 2011 ------------------
 //=============================================
 
@@ -1481,8 +1482,8 @@
 	"strain"		"Wood.Strain"
 	"break"			"Wood.Break"
 
-	"audioreflectivity" "0.33"
-	"audiohardnessfactor" "0.25"
+	"audioreflectivity"		"0.33"
+	"audiohardnessfactor"	"0.25"
 
 }
 //Metallic wheels
@@ -1542,6 +1543,7 @@
 	"friction"		"5.0"
 }
 
+// Team Fortress 2?
 "grenade_napalm"
 {
 	"base"		"grenade"
@@ -1598,4 +1600,74 @@
 	"base"		"wood"
 	"stepleft"	"Grass.StepLeft"
 	"stepright"	"Grass.StepRight"
+}
+
+// Half-Life: Source
+
+"metal_barrellight_hl"
+{
+	"base"		"metal_box"
+	"density"	"690"
+	"elasticity"	"0.5"
+	"impacthard"	"Metal_Barrel.ImpactHard"
+	"impactsoft"	"Metal_Barrel.ImpactSoft"
+	"bulletimpact"	"Metal_Barrel.BulletImpact"
+}
+
+"metal_barrel_hl"
+{
+	"base"		"metal_box"
+	"density"	"940"
+	"elasticity"	"0.5"
+	"impacthard"	"Metal_Barrel.ImpactHard"
+	"impactsoft"	"Metal_Barrel.ImpactSoft"
+	"bulletimpact"	"Metal_Barrel.BulletImpact"
+}
+
+"plastic_barrel_verybuoyant"
+{
+	"base"		"plastic_barrel"
+	"density"	"630"
+}
+
+
+// low friction tool materials
+"friction_00"
+{
+	"friction"	"0.0"
+	"density"	"917"
+}
+
+"friction_10"
+{
+	"friction"	"0.1"
+	"density"	"917"
+}
+
+"friction_25"
+{
+	"friction"	"0.25"
+	"density"	"917"
+}
+
+
+"frictionM_00"
+{
+	"base"		"metal"
+	"friction"	"0.0"
+	"density"	"917"
+}
+
+"frictionM_10"
+{
+	"base"		"metal"
+	"friction"	"0.1"
+	"density"	"917"
+}
+
+"frictionM_25"
+{
+	"base"		"metal"
+	"friction"	"0.25"
+	"density"	"917"
 }
