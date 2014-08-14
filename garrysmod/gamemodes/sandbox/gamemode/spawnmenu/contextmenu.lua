@@ -1,7 +1,7 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_bHangOpen", 	"HangOpen" )
+AccessorFunc( PANEL, "m_bHangOpen", "HangOpen" )
 
 
 function PANEL:Init()
@@ -28,7 +28,7 @@ function PANEL:Open()
 	self:SetHangOpen( false )
 	
 	-- If the spawn menu is open, try to close it..
-	if ( g_SpawnMenu:IsVisible() ) then 	
+	if ( g_SpawnMenu:IsVisible() ) then
 		g_SpawnMenu:Close( true )
 	end
 	
@@ -71,7 +71,7 @@ end
 
 function PANEL:Close( bSkipAnim )
 
-	if ( self:GetHangOpen() ) then 
+	if ( self:GetHangOpen() ) then
 		self:SetHangOpen( false )
 		return
 	end
@@ -98,7 +98,7 @@ function PANEL:PerformLayout()
 	self.Canvas:SetWide( 311 )
 	self.Canvas:SetPos( ScrW() - self.Canvas:GetWide() - 50, self.y )
 	
-	if ( spawnmenu.ActiveControlPanel() ) then
+	if ( IsValid( spawnmenu.ActiveControlPanel() ) ) then
 	
 		spawnmenu.ActiveControlPanel():InvalidateLayout( true )
 		
@@ -153,7 +153,12 @@ vgui.Register( "ContextMenu", PANEL, "EditablePanel" )
 
 
 function CreateContextMenu()
-	
+
+	if ( IsValid( g_ContextMenu ) ) then
+		g_ContextMenu:Remove()
+		g_ContextMenu = nil
+	end
+
 	g_ContextMenu = vgui.Create( "ContextMenu" )
 	g_ContextMenu:SetVisible( false )
 	
@@ -231,8 +236,8 @@ function GM:OnContextMenuOpen()
 	-- Let the gamemode decide whether we should open or not..
 	if ( !hook.Call( "ContextMenuOpen", GAMEMODE ) ) then return end
 		
-	if ( IsValid( g_ContextMenu ) && !g_ContextMenu:IsVisible() ) then 
-		g_ContextMenu:Open() 
+	if ( IsValid( g_ContextMenu ) && !g_ContextMenu:IsVisible() ) then
+		g_ContextMenu:Open()
 		menubar.ParentTo( g_ContextMenu )
 	end
 	
@@ -241,8 +246,8 @@ end
 
 function GM:OnContextMenuClose()
 
-	if ( IsValid( g_ContextMenu ) ) then 
-		g_ContextMenu:Close() 
+	if ( IsValid( g_ContextMenu ) ) then
+		g_ContextMenu:Close()
 	end
 	
 end
