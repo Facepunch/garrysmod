@@ -104,7 +104,7 @@ function COLOR:FromHex( hex )
 
 	// Boolean vars to detect shorthand vs standard, if shorthand, set x to -1 to modify rgb string.sub values
 	local bShorthand = ( hexlen == 3 )
-	local bStandard = ( _hexlen == 6 )
+	local bStandard = ( hexlen == 6 )
 	local x = ( bShorthand ) && -1 || 0
 
 	// Error checking; if we're not using shorthand, and not standard, we won't know what to do other than error, nicely...
