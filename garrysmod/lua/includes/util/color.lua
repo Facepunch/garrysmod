@@ -73,60 +73,6 @@ function COLOR:ToVector( )
 end
 
 --[[---------------------------------------------------------
-	Converts Color To CMYK - loss of precision / alpha lost
------------------------------------------------------------]]
-function COLOR:ToCMYK( )
-
-	// Converts RGB to 0-1 range stemming from 1-255 ( clamps to min for higher values ); uses 0 if 0 and avoids division
-	local r = ( self.r > 0 ) && ( math.min( self.r, 255 ) / 255 ) || 0
-	local g = ( self.g > 0 ) && ( math.min( self.g, 255 ) / 255 ) || 0
-	local b = ( self.b > 0 ) && ( math.min( self.b, 255 ) / 255 ) || 0
-
-	// Calculate CMYK from RGB ( and K )
-	local k = 1 - math.max( r, g, b )
-	local c = ( 1 - r - k ) / ( 1 - k )
-	local m = ( 1 - g - k ) / ( 1 - k )
-	local y = ( 1 - b - k ) / ( 1 - k )
-
-	// Prevents NaN when 0 division is attempted; correct it here instead of annoying checks above
-	c = ( c >= 0 ) && c || 0
-	m = ( m >= 0 ) && m || 0
-	y = ( y >= 0 ) && y || 0
-
-	// Return as: local c, m, y, k = Color( 255, 255, 255, 255 ):ToCMYK( ); == 0, 0, 0, 0
-	return c, m, y, k
-
-end
-
---[[---------------------------------------------------------
-	Converts CMYK values to Color. ALTERS Color Object used to
-	access function, also uses alpha from Color object.
-
-	Example: local newcolor = Color( 0, 0, 0, 255 ):FromCMYK( 1, 0, 1, 0 ) -- Green
-		Is the same same as: local newcolor = Color( 0, 255, 0, 255 ) -- Green
------------------------------------------------------------]]
-function COLOR:FromCMYK( c, m, y, k )
-
-	// Ensure CMYK are number, and values are more than or equal to 0, less than or equal to 1
-	local c = ( isnumber( c ) ) && math.Clamp( c, 0, 1 ) || 0
-	local m = ( isnumber( m ) ) && math.Clamp( m, 0, 1 ) || 0
-	local y = ( isnumber( y ) ) && math.Clamp( y, 0, 1 ) || 0
-	local k = ( isnumber( k ) ) && math.Clamp( k, 0, 1 ) || 0
-
-	// Calculate RGB from CMYK
-	self.r = 255 * ( 1 - c ) * ( 1 - k )
-	self.g = 255 * ( 1 - m ) * ( 1 - k )
-	self.b = 255 * ( 1 - y ) * ( 1 - k )
-
-	// Use what was populated in the color-object used, or set at 255 if nil
-	self.a = ( self.a ) && self.a || 255
-
-	// Return the Color in its' new form
-	return self
-
-end
-
---[[---------------------------------------------------------
 	Converts Color to HEX. Some documentation allows ALPHA to
 	be used as first 2, last 2 - 1 ( with a at end hence -1 ),
 	or last 2... While I Initially added it, I left it out to
@@ -153,10 +99,27 @@ function COLOR:FromHex( hex )
 	// Remove # from the string if added
 	local hex = string.gsub( hex, "#", "" )
 
-	// Convert RGB...
-	local r = tonumber( string.sub( hex, 1, 2 ), 16 )
-	local g = tonumber( string.sub( hex, 3, 4 ), 16 )
-	local b = tonumber( string.sub( hex, 5, 6 ), 16 )
+	// String Length for errorchecking
+	local hexlen = string.len( hex )
+
+	// Boolean vars to detect shorthand vs standard, if shorthand, set x to -1 to modify rgb string.sub values
+	local bShorthand = ( hexlen == 3 )
+	local bStandard = ( _hexlen == 6 )
+	local x = ( bShorthand ) && -1 || 0
+
+	// Error checking; if we're not using shorthand, and not standard, we won't know what to do other than error, nicely...
+	if ( !bShorthand && !bStandard ) then
+
+		ErrorNoHalt( "You must enter valid hex-code to convert hex-to-color.\nIf you're using shorthand, valid input is #FFF or FFF, alternatively, if using standard, valid input is #FFFFFF or FFFFFF.\nNOTE: The color is unchanged from default!" )
+
+		return self
+
+	end
+
+	// Convert RGB... If shorthand is used, ensure 1,2,3 using value adjuster x.
+	local r = tonumber( string.rep( string.sub( hex, 1, 2 + x ), ( bShorthand && 2 || 1 ) ), 16 )
+	local g = tonumber( string.rep( string.sub( hex, 3 + x, 4 + x * 2 ), ( bShorthand && 2 || 1 ) ), 16 )
+	local b = tonumber( string.rep( string.sub( hex, 5 + x * 2, 6 + x * 2 ), ( bShorthand && 2 || 1 ) ), 16 )
 
 	// Update THIS color object so there is a way to get a Color object from HEX Strings...
 	self.r = r
@@ -165,15 +128,6 @@ function COLOR:FromHex( hex )
 	self.a = self.a || 255
 
 	return self
-
-end
-
---[[---------------------------------------------------------
-	Converts CMYK Color code to Color Object - loss of precision / alpha lost
------------------------------------------------------------]]
-function CMYKToColor( c, m, y, k )
-
-	return Color( 0, 0, 0, 255 ):FromCMYK(  c, m, y, k );
 
 end
 
