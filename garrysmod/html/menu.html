@@ -37,7 +37,9 @@
 
 <body ng-app="MenuApp" ng-controller="MenuController">
 
-<div id="version" ng-click="ShowNews()">{{Version}}<span ng-show="Branch != 'unknown'"> ({{Branch}})</span></div>
+<div id="version" ng-click="ShowNews()" oncontextmenu="return ShowConsole();">
+	{{Version}}<span ng-show="Branch != 'unknown'"> ({{Branch}})</span>
+</div>
 
 <div ng-view>
 
