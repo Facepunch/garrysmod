@@ -25,7 +25,7 @@ function net.Incoming( len, client )
 	if ( !func ) then return end
 
 	--
-	-- len includes the 16 byte int which told us the message name
+	-- len includes the 16 bit int which told us the message name
 	--
 	len = len - 16
 	
