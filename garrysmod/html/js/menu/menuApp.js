@@ -14,6 +14,11 @@ App.config(function ( $routeProvider, $locationProvider )
 	$routeProvider.when('/saves/', { templateUrl: 'template/saves.html' } );
 } );
 
+function ShowConsole() 
+{
+	lua.Run( "RunConsoleCommand( 'showconsole' )" )
+	return false;
+}
 
 function UpdateDigest( scope, timeout )
 {
