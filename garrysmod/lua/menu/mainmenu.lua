@@ -313,10 +313,16 @@ end );
 --
 -- Initialize
 --
+
+
+RawConsoleCommand( "toggleconsole" )
+
 timer.Simple( 0, function()
 
 	pnlMainMenu = vgui.Create( "MainMenuPanel" );
 	pnlMainMenu:Call( "UpdateVersion( '"..VERSIONSTR.."', '"..BRANCH.."' )" );
+
+	RawConsoleCommand( "toggleconsole" )
 
 	local language = GetConVarString( "gmod_language" )
 	LanguageChanged( language )
