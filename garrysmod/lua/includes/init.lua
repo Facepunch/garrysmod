@@ -38,6 +38,8 @@ require ( "drive" )
 include ( "drive/drive_base.lua" )
 include ( "drive/drive_noclip.lua" )
 
+require ( "cookie" )
+
 --[[---------------------------------------------------------
 	Serverside only modules
 -----------------------------------------------------------]]
@@ -65,7 +67,6 @@ if ( CLIENT ) then
 	require ( "spawnmenu" )
 	require ( "controlpanel" )
 	require ( "presets" )
-	require ( "cookie" )
 	require ( "menubar" )
 	require ( "matproxy" )
 
