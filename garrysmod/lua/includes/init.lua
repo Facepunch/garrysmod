@@ -33,12 +33,11 @@ require ( "http" )
 require ( "net" )
 require ( "properties" )
 require ( "widget" )
+require ( "cookie" )
 
 require ( "drive" )
 include ( "drive/drive_base.lua" )
 include ( "drive/drive_noclip.lua" )
-
-require ( "cookie" )
 
 --[[---------------------------------------------------------
 	Serverside only modules
