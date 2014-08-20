@@ -1,8 +1,7 @@
 
-
 function WorkshopFiles()
 {
-	
+
 }
 
 //
@@ -43,10 +42,10 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 	
 	this.Scope.Switch = function( type, offset )
 	{
-		this.SwitchWithTag(	type, offset, "" );
-		scope.Tagged	= type;
+		this.SwitchWithTag( type, offset, "" );
+		scope.Category = type;
 	}
-		
+	
 	this.Scope.SwitchWithTag = function( type, offset, searchtag, mapname )
 	{
 		// Fills in perpage
@@ -183,7 +182,7 @@ WorkshopFiles.prototype.ReceiveFileInfo = function( id, data )
 		if ( this.Scope.Files[k].id != id ) continue;
 
 		this.Scope.Files[k].filled	= true;
-		this.Scope.Files[k].info		= data;
+		this.Scope.Files[k].info	= data;
 
 		this.Changed();
 	}
@@ -212,7 +211,7 @@ WorkshopFiles.prototype.ReceiveVoteInfo = function( id, data )
 	{
 		if ( this.Scope.Files[k].id != id ) continue;
 
-		this.Scope.Files[k].vote	= data;
+		this.Scope.Files[k].vote = data;
 
 		this.Changed();
 	}
@@ -234,9 +233,8 @@ WorkshopFiles.prototype.Changed = function()
 		self.Scope.$digest();
 
 	}, 10 )
-	
-}
 
+}
 
 WorkshopFiles.prototype.RefreshDimensions = function()
 {

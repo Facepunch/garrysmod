@@ -44,7 +44,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 	if ( !$rootScope.Map )				$rootScope.Map = "gm_flatgrass";
 	if ( !$rootScope.MaxPlayers )		$rootScope.MaxPlayers = 1;
 	if ( !$rootScope.ServerSettings )	$rootScope.ServerSettings = ServerSettings;
-	if ( !$rootScope.LastCategory )			$rootScope.LastCategory = $scope.CurrentCategory;
+	if ( !$rootScope.LastCategory )		$rootScope.LastCategory = $scope.CurrentCategory;
 
 	lua.Run( "UpdateServerSettings()" );
 	lua.Run( "LoadLastMap()" );

@@ -8,9 +8,9 @@
 				<li><h2 ng-tranny="'server_list'"></h2></li>
 				<li>&nbsp;</li>
 				<li><a class="{{IfElse( ServerType == 'internet', 'active', '' )}}" ng-tranny="'servers_internet'" ng-click="SwitchType( 'internet' )"></a></li>
-				<li><a class="{{IfElse( ServerType == 'lan', 'active', '' )}}" ng-tranny="'servers_local'" ng-click="SwitchType( 'lan' )"></a></li>
-				<li><a class="{{IfElse( ServerType == 'history', 'active', '' )}}" ng-tranny="'servers_history'" ng-click="SwitchType( 'history' )"></a></li>
 				<li><a class="{{IfElse( ServerType == 'favorite', 'active', '' )}}" ng-tranny="'servers_favorites'" ng-click="SwitchType( 'favorite' )"></a></li>
+				<li><a class="{{IfElse( ServerType == 'history', 'active', '' )}}" ng-tranny="'servers_history'" ng-click="SwitchType( 'history' )"></a></li>
+				<li><a class="{{IfElse( ServerType == 'lan', 'active', '' )}}" ng-tranny="'servers_local'" ng-click="SwitchType( 'lan' )"></a></li>
 				<li>&nbsp;</li>
 				<li>&nbsp;</li>
 				<li><a ng-tranny="'servers_refresh'" ng-click="Refresh()">refresh</a></li>
@@ -23,7 +23,7 @@
 
 		<div class="innerpage" ng-hide="CurrentGamemode != null">
 
-			<h1 class="menuheader"><span>Gamemode</span><small>pick a gamemode from the list below</small></h1>
+			<h1 class="menuheader"><span ng-Tranny="'servers_gamemodes'"></span><small ng-Tranny="'servers_gamemodes.subtitle'"></small></h1>
 
 			<div class=' ' style="">
 
