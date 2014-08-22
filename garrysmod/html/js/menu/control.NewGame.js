@@ -18,14 +18,14 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 
 	$scope.Players = 
 	[
-		{ num: 1, label: 'Single player' },
-		{ num: 2, label: '2 Players' },
-		{ num: 4, label: '4 Players' },
-		{ num: 8, label: '8 Players' },
-		{ num: 16, label: '16 Players' },
-		{ num: 32, label: '32 Players' },
-		{ num: 64, label: '64 Players' },
-		{ num: 128, label: '128 Players' },
+		{ num: 1, label: 'maxplayers_1' },
+		{ num: 2, label: 'maxplayers_2' },
+		{ num: 4, label: 'maxplayers_4' },
+		{ num: 8, label: 'maxplayers_8' },
+		{ num: 16, label: 'maxplayers_16' },
+		{ num: 32, label: 'maxplayers_32' },
+		{ num: 64, label: 'maxplayers_64' },
+		{ num: 128, label: 'maxplayers_128' },
 	]
 
 	$scope.MaxPlayersOption = $scope.Players[0];
