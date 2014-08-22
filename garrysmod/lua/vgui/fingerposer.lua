@@ -63,10 +63,10 @@ end
 function PANEL:ControlValues( kv )
 
 	if ( kv.hand == 1 ) then
-		self.Label:SetText( "#Right Hand" )
+		self.Label:SetText( "#tool.finger.righthand" )
 		self.Hand = 1
 	else
-		self.Label:SetText( "#Left Hand" )
+		self.Label:SetText( "#tool.finger.lefthand" )
 		self.Hand = 0
 	end
 	
