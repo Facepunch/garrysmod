@@ -38,9 +38,9 @@ function PANEL:CreateSaveNotification()
 
 	local SavePanel = vgui.Create( "DButton", self )
 		SavePanel:Dock( TOP )
-		SavePanel:DockMargin( 32, 1, 32, 4 )
+		SavePanel:DockMargin( 16, 1, 16, 4 )
 		SavePanel:SetIcon( "icon16/disk.png" )
-		SavePanel:SetText( "Save changes" )
+		SavePanel:SetText( "#spawnmenu.savechanges" )
 		SavePanel:SetVisible( false )
 		
 		SavePanel.DoClick = function()
