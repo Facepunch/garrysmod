@@ -292,18 +292,19 @@ end
 	Given a number, returns the right 'th
 -----------------------------------------------------------]]
 function STNDRD( num )
-	local n = tonumber( string.Right( tostring( num ), 1 ) )
-	
-	if ( num > 3 and num < 21 ) then
+	local mod100 = num % 100
+	local mod10 = num % 10
+
+	if ( mod100 > 3 and mod100 < 20 ) then
 		return "th"
-	elseif ( n == 1 ) then
+	elseif ( mod10 == 1 ) then
 		return "st"
-	elseif ( n == 2 ) then
+	elseif ( mod10 == 2 ) then
 		return "nd"
-	elseif ( n == 3 ) then
+	elseif ( mod10 == 3 ) then
 		return "rd"
 	end
-	
+
 	return "th"
 end
 
