@@ -291,21 +291,14 @@ end
 --[[---------------------------------------------------------
 	Given a number, returns the right 'th
 -----------------------------------------------------------]]
+local STNDRD_TBL = {"st", "nd", "rd"}
 function STNDRD( num )
-	local mod100 = num % 100
-	local mod10 = num % 10
-
+	num = num % 100
 	if ( mod100 > 10 and mod100 < 20 ) then
 		return "th"
-	elseif ( mod10 == 1 ) then
-		return "st"
-	elseif ( mod10 == 2 ) then
-		return "nd"
-	elseif ( mod10 == 3 ) then
-		return "rd"
 	end
 
-	return "th"
+	return STNDRD_TBL[num % 10] or "th"
 end
 
 
