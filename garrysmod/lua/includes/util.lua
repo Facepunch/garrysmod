@@ -295,7 +295,7 @@ function STNDRD( num )
 	local mod100 = num % 100
 	local mod10 = num % 10
 
-	if ( mod100 > 3 and mod100 < 20 ) then
+	if ( mod100 > 10 and mod100 < 20 ) then
 		return "th"
 	elseif ( mod10 == 1 ) then
 		return "st"
