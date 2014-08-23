@@ -294,7 +294,7 @@ end
 local STNDRD_TBL = {"st", "nd", "rd"}
 function STNDRD( num )
 	num = num % 100
-	if ( mod100 > 10 and mod100 < 20 ) then
+	if ( num > 10 and num < 20 ) then
 		return "th"
 	end
 
