@@ -15,32 +15,54 @@ end
    Name: string.JavascriptSafe( string )
    Desc: Takes a string and escapes it for insertion in to a JavaScript string
 -----------------------------------------------------------]]
+local javascript_escape_replacements = {
+	["\\"] = "\\\\",
+	["\0"] = "\\0" ,
+	["\b"] = "\\b" ,
+	["\t"] = "\\t" ,
+	["\n"] = "\\n" ,
+	["\v"] = "\\v" ,
+	["\f"] = "\\f" ,
+	["\r"] = "\\r" ,
+	["\""] = "\\\"",
+	["\'"] = "\\\'"
+}
+
 function string.JavascriptSafe( str )
 
-	local replacements = {
-		["\\"] = "\\\\",
-		["%z"] = "\\0" ,
-		["\b"] = "\\b" ,
-		["\t"] = "\\t" ,
-		["\n"] = "\\n" ,
-		["\v"] = "\\v" ,
-		["\f"] = "\\f" ,
-		["\r"] = "\\r" ,
-		["\""] = "\\\"",
-		["\'"] = "\\\'",
+	str = str:gsub( ".", javascript_escape_replacements )
 
-		-- U+2028 and U+2029 are treated as line separators in JavaScript
-		["\226\128\168"] = "\\\226\128\168",
-		["\226\128\169"] = "\\\226\128\169"
-	}
-
-	for char, replacement in pairs( replacements ) do
-
-		str = str:gsub( char, replacement )
-
-	end
+	-- U+2028 and U+2029 are treated as line separators in JavaScript, handle separately as they aren't single-byte
+	str = str:gsub( "\226\128\168", "\\\226\128\168" )
+	str = str:gsub( "\226\128\169", "\\\226\128\169" )
 
 	return str
+
+end
+
+--[[---------------------------------------------------------
+   Name: string.PatternSafe( string )
+   Desc: Takes a string and escapes it for insertion in to a Lua pattern
+-----------------------------------------------------------]]
+local pattern_escape_replacements = {
+	["("] = "%(",
+	[")"] = "%)",
+	["."] = "%.",
+	["%"] = "%%",
+	["+"] = "%+",
+	["-"] = "%-",
+	["*"] = "%*",
+	["?"] = "%?",
+	["["] = "%[",
+	["]"] = "%]",
+	["^"] = "%^",
+	["$"] = "%$",
+	["\0"] = "%z"
+}
+
+function string.PatternSafe( str )
+
+	return str:gsub( ".", pattern_escape_replacements )
 
 end
 
@@ -60,7 +82,7 @@ function string.Explode(separator, str, withpattern)
 	local index,lastPosition = 1,1
 	 
 	-- Escape all magic characters in separator
-	if not withpattern then separator = string_gsub( separator, "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" ) end
+	if not withpattern then separator = separator:PatternSafe() end
 	 
 	-- Find the parts
 	for startPosition,endPosition in string_gmatch( str, "()" .. separator.."()" ) do
@@ -207,7 +229,7 @@ end
 
 
 function string.Replace( str, tofind, toreplace )
-	tofind = tofind:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" )
+	tofind = tofind:PatternSafe()
 	toreplace = toreplace:gsub( "%%", "%%%1" )
 	return ( str:gsub( tofind, toreplace ) )
 end
@@ -218,7 +240,7 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.Trim( s, char )
-	if char then char = char:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" ) else char = "%s" end
+	if char then char = char:PatternSafe() else char = "%s" end
 	return string.match( s, "^" .. char .. "*(.-)" .. char .. "*$" ) or s
 end
 
@@ -228,7 +250,7 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimRight( s, char )
-	if char then char = char:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" ) else char = "%s" end
+	if char then char = char:PatternSafe() else char = "%s" end
 	return string.match( s, "^(.-)" .. char .. "*$" ) or s
 end
 
@@ -238,7 +260,7 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimLeft( s, char )
-	if char then char = char:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%?]", "%%%1" ) else char = "%s" end
+	if char then char = char:PatternSafe() else char = "%s" end
 	return string.match( s, "^" .. char .. "*(.+)$" ) or s
 end
 

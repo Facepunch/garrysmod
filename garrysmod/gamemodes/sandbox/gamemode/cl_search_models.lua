@@ -31,6 +31,8 @@ local model_list = nil
 --
 search.AddProvider( function( str )
 
+	str = str:PatternSafe()
+
 	if ( model_list == nil ) then
 
 		model_list = {}
@@ -71,6 +73,8 @@ end );
 -- Entity, vehicles
 --
 search.AddProvider( function( str )
+
+	str = str:PatternSafe()
 
 	local results = {}
 
