@@ -10,7 +10,7 @@ GM.PickupHistoryCorner	= surface.GetTextureID( "gui/corner8" )
 -----------------------------------------------------------]]
 function GM:HUDWeaponPickedUp( wep )
 
-	if (!LocalPlayer():Alive()) then return end
+	if ( !IsValid( LocalPlayer() ) || !LocalPlayer():Alive()) then return end
 	if ( !IsValid( wep ) ) then return end
 	if ( !isfunction( wep.GetPrintName ) ) then return end
 		
@@ -43,7 +43,7 @@ end
 -----------------------------------------------------------]]
 function GM:HUDItemPickedUp( itemname )
 
-	if (!LocalPlayer():Alive()) then return end
+	if ( !IsValid( LocalPlayer() ) || !LocalPlayer():Alive()) then return end
 		
 	local pickup = {}
 	pickup.time 		= CurTime()
@@ -74,9 +74,7 @@ end
 -----------------------------------------------------------]]
 function GM:HUDAmmoPickedUp( itemname, amount )
 
-	local localplayer = LocalPlayer();
-
-	if ( !IsValid( localplayer ) || !localplayer:Alive() ) then return end
+	if ( !IsValid( LocalPlayer() ) || !LocalPlayer():Alive()) then return end
 	
 	-- Try to tack it onto an exisiting ammo pickup
 	if ( self.PickupHistory ) then

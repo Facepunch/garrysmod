@@ -131,12 +131,47 @@ Scheme
 		// if a font fails to load then the subsequent fonts will replace
 		Default
 		{
-			"21"
+
+			"1"
+			{
+				"name"		"Verdana"
+				"tall"		"9"
+				"weight"	"700"
+				"antialias" "1"
+				"yres"	"1 599"
+			}
+			"2"
 			{
 				"name"		"Verdana"
 				"tall"		"12"
 				"weight"	"700"
 				"antialias" "1"
+				"yres"	"600 767"
+			}
+			"3"
+			{
+				"name"		"Verdana"
+				"tall"		"14"
+				"weight"	"900"
+				"antialias" "1"
+				"yres"	"768 1023"
+			}
+			"4"
+			{
+				"name"		"Verdana"
+				"tall"		"20"
+				"weight"	"900"
+				"antialias" "1"
+				"yres"	"1024 1199"
+			}
+			"5"
+			{
+				"name"		"Verdana"
+				"tall"		"24"
+				"weight"	"900"
+				"antialias" "1"
+				"yres"	"1200 10000"
+				"additive"	"1"
 			}
 		}
 		"DefaultUnderline"

@@ -37,7 +37,7 @@ function Register( t, name )
 	t.ClassName = name
 	WeaponList[ name ] = t	
 	
-	baseclass.Set( name, t )
+	--baseclass.Set( name, t )
 
 	list.Set( "Weapon", name,	{		
 									ClassName		= name, 
@@ -87,6 +87,17 @@ end
 --
 function OnLoaded()
 
+	--
+	-- Once all the scripts are loaded we can set up the baseclass
+	-- - we have to wait until they're all setup because load order
+	-- could cause some entities to load before their bases!
+	--
+	table.ForEach( WeaponList, function( k, v ) 
+
+		baseclass.Set( k, Get( k ) )
+
+	end )
+	
 end
 
 
