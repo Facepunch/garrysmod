@@ -132,7 +132,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 	$scope.InstallGamemode = function( gm )
 	{
-		lua.Run( "steamworks.Subscribe( \"" + gm.info.workshopid + "\" )" );
+		lua.Run( "steamworks.Subscribe( %s )", String( gm.info.workshopid ) );
 	}
 
 	$scope.ShouldShowInstall = function( gm )
