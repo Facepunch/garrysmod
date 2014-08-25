@@ -202,9 +202,11 @@ local function LoadFavourites()
 end
 
 local IgnoreMaps = {
-	"background", "^test_", "^styleguide", "^devtest", "sdk_shader_samples", "^vst_",
-	"d2_coast_02", "c4a1y", // Do not load
-	"d3_c17_02_camera", "ep1_citadel_00_demo", "credits", "intro"
+	"^background", "^ep1_background","^ep2_background", "^test_", "^styleguide", "^devtest", "^vst_",
+
+	// Useless or duplicate maps
+	"d3_c17_02_camera.bsp", "ep1_citadel_00_demo.bsp", "credits.bsp", "intro.bsp", "sdk_shader_samples.bsp"
+	"d2_coast_02.bsp", "c4a1y.bsp" // These do not load
 }
 
 local function RefreshMaps()
@@ -213,11 +215,12 @@ local function RefreshMaps()
 
 	g_MapList = {}
 	g_MapListCategorised = {}
-	
+
 	local maps = file.Find( "maps/*.bsp", "GAME" )
 	LoadFavourites()
-	
+
 	for k, v in pairs( maps ) do
+
 		local Ignore = false
 		for _, ignore in pairs( IgnoreMaps ) do
 			if ( string.find( v, ignore ) ) then
@@ -226,28 +229,26 @@ local function RefreshMaps()
 		end
 		
 		-- Don't add useless maps
-		if ( !Ignore ) then
+		if ( Ignore ) then continue end
 		
-			local Category = "Other"
-			local name = string.gsub( v, ".bsp", "" )
-			local lowername = string.lower( v )
-			
-			for pattern, category in pairs( MapPatterns ) do
-				if ( ( string.StartWith( pattern, "^" ) || string.EndsWith( pattern, "_" ) || string.EndsWith( pattern, "-" ) ) && string.find( lowername, pattern ) ) then
-					Category = category
-				end
+		local Category = "Other"
+		local name = string.gsub( v, ".bsp", "" )
+		local lowername = string.lower( v )
+		
+		for pattern, category in pairs( MapPatterns ) do
+			if ( ( string.StartWith( pattern, "^" ) || string.EndsWith( pattern, "_" ) || string.EndsWith( pattern, "-" ) ) && string.find( lowername, pattern ) ) then
+				Category = category
 			end
-
-			if ( MapPatterns[ name ] ) then Category = MapPatterns[ name ] end
-			
-			if ( table.HasValue( favmaps, name ) ) then
-				-- Hackity hack
-				g_MapList[ v .. " " ] = { Name = name, Category = "Favourites" }
-			end
-			
-			g_MapList[ v ] = { Name = name, Category = Category }
-			
 		end
+
+		if ( MapPatterns[ name ] ) then Category = MapPatterns[ name ] end
+		
+		if ( table.HasValue( favmaps, name ) ) then
+			-- Hackity hack
+			g_MapList[ v .. " " ] = { Name = name, Category = "Favourites" }
+		end
+		
+		g_MapList[ v ] = { Name = name, Category = Category }
 
 	end
 
@@ -257,7 +258,6 @@ local function RefreshMaps()
 		g_MapListCategorised[ v.Category ][ v.Name ] = v
 
 	end
-
 
 end
 
