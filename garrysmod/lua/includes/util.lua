@@ -291,20 +291,14 @@ end
 --[[---------------------------------------------------------
 	Given a number, returns the right 'th
 -----------------------------------------------------------]]
+local STNDRD_TBL = {"st", "nd", "rd"}
 function STNDRD( num )
-	local n = tonumber( string.Right( tostring( num ), 1 ) )
-	
-	if ( num > 3 and num < 21 ) then
+	num = num % 100
+	if ( num > 10 and num < 20 ) then
 		return "th"
-	elseif ( n == 1 ) then
-		return "st"
-	elseif ( n == 2 ) then
-		return "nd"
-	elseif ( n == 3 ) then
-		return "rd"
 	end
-	
-	return "th"
+
+	return STNDRD_TBL[num % 10] or "th"
 end
 
 
