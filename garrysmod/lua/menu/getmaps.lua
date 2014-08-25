@@ -205,7 +205,7 @@ local IgnoreMaps = {
 	"^background", "^ep1_background","^ep2_background", "^test_", "^styleguide", "^devtest", "^vst_",
 
 	// Useless or duplicate maps
-	"d3_c17_02_camera.bsp", "ep1_citadel_00_demo.bsp", "credits.bsp", "intro.bsp", "sdk_shader_samples.bsp"
+	"d3_c17_02_camera.bsp", "ep1_citadel_00_demo.bsp", "credits.bsp", "intro.bsp", "sdk_shader_samples.bsp",
 	"d2_coast_02.bsp", "c4a1y.bsp" // These do not load
 }
 
