@@ -232,7 +232,7 @@ local function RefreshMaps()
 		if ( Ignore ) then continue end
 		
 		local Category = "Other"
-		local name = string.gsub( v, ".bsp", "" )
+		local name = string.gsub( v, "%.bsp$", "" )
 		local lowername = string.lower( v )
 		
 		for pattern, category in pairs( MapPatterns ) do
