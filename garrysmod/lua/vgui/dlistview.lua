@@ -106,7 +106,7 @@ end
 --[[---------------------------------------------------------
    Name: AddColumn
 -----------------------------------------------------------]]
-function PANEL:AddColumn( strName, strMaterial, iPosition )
+function PANEL:AddColumn( strName, iPosition )
 
 	local pColumn = nil
 	
@@ -116,13 +116,16 @@ function PANEL:AddColumn( strName, strMaterial, iPosition )
 		pColumn = vgui.Create( "DListView_ColumnPlain", self )
 	end
 		pColumn:SetName( strName )
-		pColumn:SetMaterial( strMaterial )
 		pColumn:SetZPos( 10 )
 
 		
 	if ( iPosition ) then
 	
-		-- Todo, insert in specific position
+		table.insert( self.Columns, iPosition, pColumn )
+		
+		for i = 1,#self.Columns do
+			self.Columns[ i ]:SetColumnID( i )
+		end
 		
 	else
 	
@@ -548,7 +551,7 @@ end
    Name: SortByColumn
 -----------------------------------------------------------]]
 function PANEL:SortByColumn( ColumnID, Desc )
-
+	
 	table.Copy( self.Sorted, self.Lines )
 	
 	table.sort( self.Sorted, function( a, b ) 
@@ -556,8 +559,11 @@ function PANEL:SortByColumn( ColumnID, Desc )
 									if ( Desc ) then
 										a, b = b, a
 									end
+									
+									local aval = a:GetSortValue( ColumnID ) and a:GetSortValue( ColumnID ) or a:GetColumnText( ColumnID )
+									local bval = b:GetSortValue( ColumnID ) and b:GetSortValue( ColumnID ) or b:GetColumnText( ColumnID )
 			
-									return a:GetColumnText( ColumnID ) < b:GetColumnText( ColumnID )
+									return aval < bval
 							
 						end )
 

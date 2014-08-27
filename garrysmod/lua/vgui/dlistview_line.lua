@@ -53,6 +53,7 @@ function PANEL:Init()
 	self:SetMouseInputEnabled( true )
 	
 	self.Columns = {}
+	self.Data = {}
 
 end
 
@@ -165,6 +166,29 @@ function PANEL:GetColumnText( i )
 end
 
 PANEL.GetValue = PANEL.GetColumnText
+
+--[[---------------------------------------------------------
+   Name: SetSortValue
+	 Allows you to store data per column
+	 
+	 Used in the SortByColumn function for incase you want to
+	 sort with something else than the text
+-----------------------------------------------------------]]
+function PANEL:SetSortValue( i, data )
+	
+	self.Data[ i ] = data
+	
+end
+
+--[[---------------------------------------------------------
+   Name: GetSortValue
+-----------------------------------------------------------]]
+function PANEL:GetSortValue( i )
+	
+	return self.Data[ i ]
+	
+end
+
 
 --[[---------------------------------------------------------
    Name: SetColumnText
