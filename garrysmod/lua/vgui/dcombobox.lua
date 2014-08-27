@@ -16,7 +16,7 @@ Derma_Hook( PANEL, "Paint", "Paint", "ComboBox" )
 Derma_Install_Convar_Functions( PANEL )
 
 --[[---------------------------------------------------------
-
+   Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -24,10 +24,10 @@ function PANEL:Init()
 	self.DropButton.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ComboDownArrow", panel, w, h ) end
 	self.DropButton:SetMouseInputEnabled( false )
 	self.DropButton.ComboBox = self
-		
+
 	self:SetTall( 22 )
 	self:Clear()
-	
+
 	self:SetContentAlignment( 4 )
 	self:SetTextInset( 8, 0 )
 	self:SetIsMenu( true )
@@ -103,16 +103,16 @@ function PANEL:ChooseOptionID( index )
 
 	local value = self:GetOptionText( index )
 	self:ChooseOption( value, index )
-	
+
 end
 
 --[[---------------------------------------------------------
    Name: GetSelected
 -----------------------------------------------------------]]
 function PANEL:GetSelectedID()
-	
+
 	return self.selected
-	
+
 end
 
 
@@ -144,7 +144,7 @@ end
 function PANEL:AddChoice( value, data, select )
 
 	local i = table.insert( self.Choices, value )
-	
+
 	if ( data ) then
 		self.Data[ i ] = data
 	end
@@ -188,23 +188,22 @@ function PANEL:OpenMenu( pControlOpener )
 
 	self.Menu = DermaMenu()
 	
-		for k, v in pairs( self.Choices ) do
-			self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
-		end
-		
-		local x, y = self:LocalToScreen( 0, self:GetTall() )
-		
-		self.Menu:SetMinimumWidth( self:GetWide() )
-		self.Menu:Open( x, y, false, self )		
-		
+	for k, v in SortedPairsByValue( self.Choices ) do
+		self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
+	end
+	
+	local x, y = self:LocalToScreen( 0, self:GetTall() )
+	
+	self.Menu:SetMinimumWidth( self:GetWide() )
+	self.Menu:Open( x, y, false, self )
 
 end
 
 function PANEL:CloseMenu()
-	
+
 	if ( IsValid( self.Menu ) ) then
 		self.Menu:Remove()
-	end	
+	end
 	
 end
 
@@ -236,10 +235,10 @@ end
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-		ctrl:AddChoice( "Some Choice" )
-		ctrl:AddChoice( "Another Choice" )
-		ctrl:SetWide( 150 )
-	
+	ctrl:AddChoice( "Some Choice" )
+	ctrl:AddChoice( "Another Choice" )
+	ctrl:SetWide( 150 )
+
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end
