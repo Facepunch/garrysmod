@@ -606,8 +606,9 @@ function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 		if ( IsValid( hands ) ) then
 			if ( not hook.Call( "PreDrawPlayerHands", self, hands, ViewModel, Player, Weapon ) ) then
 				hands:DrawModel()
-				hook.Call( "PostDrawPlayerHands", self, hands, ViewModel, Player, Weapon )
 			end
+			
+			hook.Call( "PostDrawPlayerHands", self, hands, ViewModel, Player, Weapon )
 		end
 
 	end
