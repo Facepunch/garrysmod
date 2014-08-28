@@ -7,11 +7,9 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_pRow", 		"Row" )
+AccessorFunc( PANEL, "m_pRow", "Row" )
 
 function PANEL:Init()
-
-
 end
 
 function PANEL:Think()
@@ -45,7 +43,7 @@ function PANEL:Setup( vars )
 	self:Clear()
 
 	local text = self:Add( "DTextEntry" )
-	text:SetUpdateOnType( true )
+	if ( !vars.waitforenter ) then text:SetUpdateOnType( true ) end
 	text:SetDrawBackground( false )
 	text:Dock( FILL )
 
@@ -61,7 +59,7 @@ function PANEL:Setup( vars )
 
 	-- Alert row that value changed
 	text.OnValueChange = function( text, newval )
-			
+	
 		self:ValueChanged( newval )
 
 	end
