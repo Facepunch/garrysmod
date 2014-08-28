@@ -188,8 +188,10 @@ function PANEL:OpenMenu( pControlOpener )
 
 	self.Menu = DermaMenu()
 	
-	for k, v in SortedPairsByValue( self.Choices ) do
-		self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
+	local sorted = {}
+	for k, v in pairs( self.Choices ) do table.insert( sorted, { id = k, data = v } ) end
+	for k, v in SortedPairsByMemberValue( sorted, "data" ) do
+		self.Menu:AddOption( v.data, function() self:ChooseOption( v.data, v.id ) end )
 	end
 	
 	local x, y = self:LocalToScreen( 0, self:GetTall() )
