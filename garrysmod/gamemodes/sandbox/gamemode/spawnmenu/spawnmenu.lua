@@ -141,8 +141,8 @@ function PANEL:PerformLayout()
 	self.CreateMenu:DockMargin( MarginX, MarginY, 1, MarginY )
 	self.ToolMenu:DockMargin( 0, MarginY, MarginX, MarginY )
 	
-	self.ToolToggle:AlignRight( 2 )
-	self.ToolToggle:AlignTop( 2 )
+	self.ToolToggle:AlignRight( 6 )
+	self.ToolToggle:AlignTop( 6 )
 
 end
 
