@@ -6,6 +6,8 @@
 include ( "util.lua" )			-- Misc Utilities
 include ( "util/sql.lua" )		-- Include sql here so it's
 								-- available at loadtime to modules.
+							
+include( "extensions/net.lua" )
 
 --[[---------------------------------------------------------
 	Shared Modules
@@ -30,7 +32,6 @@ require ( "usermessage" )
 require ( "list" )
 require ( "cvars" )
 require ( "http" )
-require ( "net" )
 require ( "properties" )
 require ( "widget" )
 
