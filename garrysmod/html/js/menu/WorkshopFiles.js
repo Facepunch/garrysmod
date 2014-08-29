@@ -26,7 +26,7 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		if ( scope.Offset + delta >= scope.TotalResults ) return;
 		if ( scope.Offset + delta < 0 ) return;
 
-		scope.SwitchWithTag( scope.Category, scope.Offset + delta, scope.Tagged )
+		scope.SwitchWithTag( scope.Category, scope.Offset + delta, scope.Tagged, scope.MapName )
 	}
 
 	this.Scope.GoToPage = function( page )
@@ -36,14 +36,14 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		if ( Offset >= scope.TotalResults ) return;
 		if ( Offset < 0 ) return;
 
-		scope.SwitchWithTag( scope.Category, Offset, scope.Tagged )
+		scope.SwitchWithTag( scope.Category, Offset, scope.Tagged, scope.MapName )
 	}
 
 	
 	this.Scope.Switch = function( type, offset )
 	{
-		this.SwitchWithTag( type, offset, "" );
-		scope.Category = type;
+		this.SwitchWithTag( type, offset, "", scope.MapName );
+		scope.Category = type; // Do we need this here?
 	}
 	
 	this.Scope.SwitchWithTag = function( type, offset, searchtag, mapname )
