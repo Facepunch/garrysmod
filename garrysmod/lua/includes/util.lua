@@ -167,16 +167,6 @@ function AccessorFunc( tab, varname, name, iForce )
 end
 
 --[[---------------------------------------------------------
-   AccessorFuncNW - FOR ENTITIES ONLY
-   Quickly make Get/Set accessor fuctions on the specified entity
------------------------------------------------------------]]
-function AccessorFuncNW( tab, varname, name, varDefault, iForce )
-
-	ErrorNoHalt( "[AccessorFuncNW] is depreciated. Look up 'SetupDataTables'. Sorry :(\n" );
-
-end
-
---[[---------------------------------------------------------
 	Returns true if object is valid (is not nil and IsValid)
 -----------------------------------------------------------]]
 function IsValid( object )
