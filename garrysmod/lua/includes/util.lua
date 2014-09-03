@@ -135,10 +135,58 @@ function IncludeCS( filename )
 	
 end
 
+--[[---------------------------------------------------------
+   Adds all Lua files in the directory to the CS file list
+   and all sub directories if enabled
+-----------------------------------------------------------]]
+if SERVER then 
+
+	function AddCSLuaDir( path, recursive )
+
+		local files, dirs = file.Find( path.."/*", "LUA" )
+
+		for _, file in pairs( files ) do
+			if file:EndsWith( ".lua" ) then
+				AddCSLuaFile( path .. "/" .. file )
+			end
+		end
+		
+		if not recursive then return end
+
+		for _, dir in pairs( dirs ) do
+			AddCSLuaDir( path .. "/" .. dir, true )
+		end
+
+	end
+
+end
+
+--[[---------------------------------------------------------
+   Includes all Lua files in the directory
+   and all sub directories if enabled
+-----------------------------------------------------------]]
+function IncludeDir( path, recursive )
+
+	local files, dirs = file.Find( path.."/*", "LUA" )
+
+	for _, file in pairs( files ) do
+		if file:EndsWith( ".lua" ) then
+			include( path .. "/" .. file )
+		end
+	end
+	
+	if not recursive then return end
+
+	for _, dir in pairs( dirs ) do
+		includeDir( path .. "/" .. dir, true )
+	end
+
+end
+
 -- Globals..
 FORCE_STRING 	= 1
 FORCE_NUMBER 	= 2
-FORCE_BOOL		= 3
+FORCE_BOOL	= 3
 
 --[[---------------------------------------------------------
    AccessorFunc
