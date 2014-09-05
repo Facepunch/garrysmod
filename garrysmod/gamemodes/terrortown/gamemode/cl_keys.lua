@@ -50,8 +50,8 @@ function GM:PlayerBindPress(ply, bind, pressed)
       elseif TBHUD:PlayerIsFocused() then
          return TBHUD:UseFocused()
       end
-   elseif string.sub(bind, 1, 4) == "slot" and pressed then
-      local idx = tonumber(string.sub(bind, 5, -1)) or 1
+   elseif bind:sub( 1, 4) == "slot" and pressed then
+      local idx = tonumber(bind:sub( 5, -1)) or 1
 
       -- if radiomenu is open, override weapon select
       if RADIO.Show then
@@ -60,7 +60,7 @@ function GM:PlayerBindPress(ply, bind, pressed)
          WSWITCH:SelectSlot(idx)
       end
       return true
-   elseif string.find(bind, "zoom") and pressed then
+   elseif bind:find( "zoom") and pressed then
       -- open or close radio
       RADIO:ShowRadioCommands(not RADIO.Show)
       return true

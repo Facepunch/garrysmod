@@ -243,7 +243,7 @@ local function InfoPaint(client)
       if ammo_clip != -1 then
          local ammo_y = health_y + bar_height + margin
          PaintBar(x+margin, ammo_y, bar_width, bar_height, ammo_colors, ammo_clip/ammo_max)
-         local text = string.format("%i + %02i", ammo_clip, ammo_inv)
+         local text = ("%i + %02i"):format(ammo_clip, ammo_inv)
 
          ShadowedText(text, "HealthAmmo", bar_width, ammo_y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT)
       end

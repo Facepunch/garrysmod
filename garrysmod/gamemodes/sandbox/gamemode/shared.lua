@@ -131,17 +131,17 @@ function GM:PhysgunPickup( ply, ent )
 	
 	if ( physgun_limited:GetBool() ) then
 	
-		if ( string.find( EntClass, "prop_dynamic" ) ) then return false end
-		if ( string.find( EntClass, "prop_door" ) ) then return false end
+		if ( EntClass:find( "prop_dynamic" ) ) then return false end
+		if ( EntClass:find( "prop_door" ) ) then return false end
 		
 		-- Don't move physboxes if the mapper logic says no
 		if ( EntClass == "func_physbox" && ent:HasSpawnFlags( SF_PHYSBOX_MOTIONDISABLED ) ) then return false  end
 		
 		-- If the physics object is frozen by the mapper, don't allow us to move it.
-		if ( string.find( EntClass, "prop_" ) && ( ent:HasSpawnFlags( SF_PHYSPROP_MOTIONDISABLED ) || ent:HasSpawnFlags( SF_PHYSPROP_PREVENT_PICKUP ) ) ) then return false end
+		if ( EntClass:find( "prop_" ) && ( ent:HasSpawnFlags( SF_PHYSPROP_MOTIONDISABLED ) || ent:HasSpawnFlags( SF_PHYSPROP_PREVENT_PICKUP ) ) ) then return false end
 		
 		-- Allow physboxes, but get rid of all other func_'s (ladder etc)
-		if ( EntClass != "func_physbox" && string.find( EntClass, "func_" ) ) then return false end
+		if ( EntClass != "func_physbox" && EntClass:find( "func_" ) ) then return false end
 
 	
 	end

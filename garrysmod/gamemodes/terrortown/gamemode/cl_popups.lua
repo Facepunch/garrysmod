@@ -28,7 +28,7 @@ local function GetTextForRole(role)
 
          for k, ply in pairs(traitors) do
             if ply != LocalPlayer() then
-               traitorlist = traitorlist .. string.rep(" ", 42) .. ply:Nick()  .. "\n"
+               traitorlist = traitorlist .. (" "):rep(42) .. ply:Nick()  .. "\n"
             end
          end
 

@@ -88,7 +88,7 @@ end
 -----------------------------------------------------------]]
 function ENT:UpdateLabel()
 
-	self:SetOverlayText( string.format( "Speed: %i\nResistance: %.2f", self:GetSpeed(), self:GetAirResistance() ) )
+	self:SetOverlayText(("Speed: %i\nResistance: %.2f"):format( self:GetSpeed(), self:GetAirResistance() ) )
 
 end
 

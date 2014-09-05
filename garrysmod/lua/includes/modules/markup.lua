@@ -72,7 +72,7 @@ local colourmap = {
    Usage: ** INTERNAL ** Do not use!
 -----------------------------------------------------------]]
 local function colourMatch(c)
-	c = string.lower(c)
+	c = c:lower()
 	
 	return colourmap[c]
 end
@@ -84,9 +84,9 @@ end
 -----------------------------------------------------------]]
 local function ExtractParams(p1,p2,p3)
 
-	if (string.sub(p1, 1, 1) == "/") then
+	if (p1:sub( 1, 1) == "/") then
 		
-		local tag = string.sub(p1, 2)
+		local tag = p1:sub( 2)
 		
 		if (tag == "color" or tag == "colour") then
 			table.remove(colour_stack)			
@@ -104,7 +104,7 @@ local function ExtractParams(p1,p2,p3)
 				rgba = {}
 				local x = { "r", "g", "b", "a" }
 				local n = 1
-				for k, v in string.gmatch(p2, "(%d+),?") do
+				for k, v in p2:gmatch( "(%d+),?") do
 					rgba[ x[n] ] = k
 					n = n + 1
 				end
@@ -131,8 +131,8 @@ local function CheckTextOrTag(p)
 	if (p == "") then return end
 	if (p == nil) then return end
 	
-	if (string.sub(p, 1, 1) == "<") then
-		string.gsub(p, "<([/%a]*)=?([^>]*)", ExtractParams)
+	if (p:sub( 1, 1) == "<") then
+		p:gsub( "<([/%a]*)=?([^>]*)", ExtractParams)
 	else
 		
 		local text_block = {}
@@ -245,11 +245,11 @@ function Parse(ml, maxwidth)
 	font_stack = { "DermaDefault" }
 	blocks = {}
 	
-	if (not string.find(ml, "<")) then
+	if (not ml:find( "<")) then
 		ml = ml .. "<nop>"
 	end
 
-	string.gsub(ml, "([^<>]*)(<[^>]+.)([^<>]*)", ProcessMatches)
+	ml:gsub( "([^<>]*)(<[^>]+.)([^<>]*)", ProcessMatches)
 	
 	local xOffset = 0
 	local yOffset = 0
@@ -266,11 +266,9 @@ function Parse(ml, maxwidth)
 		
 		local thisY = 0
 		local curString = ""
-		blocks[i].text = string.gsub(blocks[i].text, "&gt;", ">")
-		blocks[i].text = string.gsub(blocks[i].text, "&lt;", "<")
-		blocks[i].text = string.gsub(blocks[i].text, "&amp;", "&")
-		for j=1,string.len(blocks[i].text) do
-			local ch = string.sub(blocks[i].text,j,j)
+		blocks[i].text = blocks[i].text:gsub("&gt;", ">"):gsub("&lt;", "<"):gsub("&amp;", "&")
+		for j=1, blocks[i].text:len() do
+			local ch = blocks[i].text:sub(j,j)
 			
 			if (ch == "\n") then
 			
@@ -281,7 +279,7 @@ function Parse(ml, maxwidth)
 					lineHeight = thisY
 				end
 			
-				if (string.len(curString) > 0) then
+				if (curString:len() > 0) then
 					local x1,y1 = surface.GetTextSize(curString)
 
 					local new_block = {}
@@ -307,7 +305,7 @@ function Parse(ml, maxwidth)
 				thisMaxY = 0
 			elseif (ch == "\t") then
 			
-				if (string.len(curString) > 0) then
+				if (curString:len() > 0) then
 					local x1,y1 = surface.GetTextSize(curString)
 
 					local new_block = {}
@@ -347,29 +345,29 @@ function Parse(ml, maxwidth)
 						--          and add a -. add the character to ch
 						--          and insert as a new block, incrementing the y etc
 						
-						local lastSpacePos = string.len(curString)
-						for k=1,string.len(curString) do
-							local chspace = string.sub(curString,k,k)
+						local lastSpacePos = curString:len()
+						for k=1,curString:len() do
+							local chspace = curString:sub(k,k)
 							if (chspace == " ") then
 								lastSpacePos = k
 							end
 						end
 						
-						if (lastSpacePos == string.len(curString)) then
-							ch = string.sub(curString,lastSpacePos,lastSpacePos) .. ch
+						if (lastSpacePos == curString:len()) then
+							ch = curString:sub(lastSpacePos,lastSpacePos) .. ch
 							j = lastSpacePos
-							curString = string.sub(curString, 1, lastSpacePos-1)
+							curString = curString:sub( 1, lastSpacePos-1)
 						else
-							ch = string.sub(curString,lastSpacePos+1) .. ch
+							ch = curString:sub(lastSpacePos+1) .. ch
 							j = lastSpacePos+1
-							curString = string.sub(curString, 1, lastSpacePos)
+							curString = curString:sub( 1, lastSpacePos)
 						end
 						
 						local m = 1
-						while string.sub(ch, m, m) == " " do
+						while ch:sub( m, m) == " " do
 							m = m + 1
 						end
-						ch = string.sub(ch, m)
+						ch = ch:sub( m)
 						
 						local x1,y1 = surface.GetTextSize(curString)
 												
@@ -409,7 +407,7 @@ function Parse(ml, maxwidth)
 			end
 		end
 		
-		if (string.len(curString) > 0) then
+		if (curString:len() > 0) then
 			
 			local x1,y1 = surface.GetTextSize(curString)
 	

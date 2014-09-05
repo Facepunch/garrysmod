@@ -547,7 +547,7 @@ function TellTraitorsAboutTraitors()
                   names = names .. name .. ", "
                end
             end
-            names = string.sub(names, 1, -3)
+            names = names:sub( 1, -3)
             LANG.Msg(v, "round_traitors_more", {names = names})
          end
       end
@@ -723,7 +723,7 @@ function CheckForMapSwitch()
 
    local time_left = math.max(0, (GetConVar("ttt_time_limit_minutes"):GetInt() * 60) - CurTime())
    local switchmap = false
-   local nextmap = string.upper(game.GetMapNext())
+   local nextmap = game.GetMapNext():upper()
 
    if ShouldMapSwitch() then
       if rounds_left <= 0 then

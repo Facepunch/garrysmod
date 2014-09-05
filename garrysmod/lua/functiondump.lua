@@ -14,8 +14,8 @@ file.CreateDir( "wikipages" )
 xside = xside or ""
 
 local function XSide( class, name )
-	if ( string.find( xside, class .. "	" .. name ) ) then return "shared" end
-	if ( string.find( xside, class .. "	" .. name ) ) then return "shared" end
+	if ( xside:find( class .. "	" .. name ) ) then return "shared" end
+	if ( xside:find( class .. "	" .. name ) ) then return "shared" end
 	if ( SERVER ) then return "server" end
 	return "client"
 	
@@ -50,7 +50,7 @@ local function AddWikiInfo( pagename, name, funcname )
 
 	local str = file.Read( filename )
 	
-	local lines = string.Split( str, "\n" )
+	local lines = str:Split( "\n" )
 	local lineDesc = 0
 	local lineSyntax = 0
 	
@@ -195,9 +195,9 @@ end
 
 
 -- Add Missing functions...
-local lines = string.Split( xside, "\n" )
+local lines = xside:Split( "\n" )
 for k, v in pairs( lines ) do
-	if ( !string.find( OUTPUT, v ) ) then 
+	if ( !OUTPUT:find( v ) ) then 
 		OUTPUT = OUTPUT .. v .. "\n"
 	end
 end

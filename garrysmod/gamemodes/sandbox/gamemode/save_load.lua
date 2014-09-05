@@ -30,7 +30,7 @@ if ( SERVER ) then
 		local compressed_save = util.Compress( save )
 		if ( !compressed_save ) then compressed_save = save end
 
-		local len = string.len(compressed_save)
+		local len = compressed_save:len()
 
 		local ShowSave = 0;
 		if ( args[1] == 'spawnmenu' ) then ShowSave = 1 end

@@ -179,7 +179,7 @@ local function UpdateMapPatterns()
 	for k, gm in pairs( GamemodeList ) do
 
 		local Name = gm.title or "Unnammed Gamemode"
-		local Maps = string.Split( gm.maps, "|" )
+		local Maps = gm.maps:Split( "|" )
 
 		if ( Maps && gm.maps != "" ) then
 	
@@ -223,7 +223,7 @@ local function RefreshMaps()
 
 		local Ignore = false
 		for _, ignore in pairs( IgnoreMaps ) do
-			if ( string.find( v, ignore ) ) then
+			if ( v:find( ignore ) ) then
 				Ignore = true
 			end
 		end
@@ -232,11 +232,11 @@ local function RefreshMaps()
 		if ( Ignore ) then continue end
 		
 		local Category = "Other"
-		local name = string.gsub( v, "%.bsp$", "" )
-		local lowername = string.lower( v )
+		local name = v:gsub( "%.bsp$", "" )
+		local lowername = v:lower( )
 		
 		for pattern, category in pairs( MapPatterns ) do
-			if ( ( string.StartWith( pattern, "^" ) || string.EndsWith( pattern, "_" ) || string.EndsWith( pattern, "-" ) ) && string.find( lowername, pattern ) ) then
+			if ( ( pattern:StartWith( "^" ) || pattern:EndsWith( "_" ) || pattern:EndsWith( "-" ) ) && lowername:find( pattern ) ) then
 				Category = category
 			end
 		end
@@ -313,7 +313,7 @@ function LoadLastMap()
 	if ( !mapinfo ) then map = "gm_flatgrass" end
 	if ( !g_MapListCategorised[ cat ] ) then cat = mapinfo and mapinfo.Category or "Sandbox" end
 
-	cat = string.gsub( cat, "'", "\\'" )
+	cat = cat:gsub( "'", "\\'" )
 
 	pnlMainMenu:Call( "SetLastMap('" .. map .. "','" .. cat .. "')" )
 

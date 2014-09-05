@@ -143,8 +143,8 @@ function PositionSpawnIcon( model, pos )
 	model:SetAngles( Angle( 0, 180, 0 ) )
 	
 	local ModelName = model:GetModel()
-	ModelName = string.Replace( ModelName, "--", "/" )
-	ModelName = string.Replace( ModelName, "\\", "/" )
+	ModelName = ModelName:Replace( "--", "/" )
+	ModelName = ModelName:Replace( "\\", "/" )
 	
 	local fnc = SpawniconGenFunctions[ ModelName ]
 	if ( fnc ) then return fnc( model, pos, middle, size ) end

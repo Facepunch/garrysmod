@@ -124,7 +124,7 @@ function GM:PlayerSay(ply, text, team_only)
       for k, v in pairs(string.Explode(" ", text)) do
          -- grab word characters and whitelisted interpunction
          -- necessary or leetspeek will be used (by trolls especially)
-         local word, interp = string.match(v, "(%a*)([%.,;!%?]*)")
+         local word, interp = v:match( "(%a*)([%.,;!%?]*)")
          if word != "" then
             table.insert(filtered, mumbles[math.random(1, #mumbles)] .. interp)
          end
@@ -249,7 +249,7 @@ local LastWordContext = {
 
 local function LastWordsMsg(ply, words)
    -- only append "--" if there's no ending interpunction
-   local final = string.match(words, "[\\.\\!\\?]$") != nil
+   local final = words:match( "[\\.\\!\\?]$") != nil
 
    -- add optional context relating to death type
    local context = LastWordContext[ply.death_type] or ""
@@ -283,13 +283,13 @@ local function LastWords(ply, cmd, args)
          end
 
          --- last words
-         local words = string.Trim(args[3])
+         local words = args[3]:Trim()
 
          -- nothing of interest
-         if string.len(words) < 2 then return end
+         if words:len() < 2 then return end
 
          -- ignore admin commands
-         local firstchar = string.GetChar(words, 1)
+         local firstchar = words:GetChar( 1)
          if firstchar == "!" or firstchar == "@" or firstchar == "/" then return end
 
 

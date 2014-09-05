@@ -213,7 +213,7 @@ function table.ToString(t,n,nice)
 		local done = done or {}
 		local indent = indent or 0
 		local idt = ""
-		if nice then idt = string.rep ("\t", indent) end
+		if nice then idt = ("\t"):rep(indent) end
 
 		local sequential = table.IsSequential(t)
 
@@ -436,7 +436,7 @@ function table.LowerKeyNames( Table )
 		if ( isstring( k ) ) then
 	
 			OutTable[ k ]  = nil
-			OutTable[ string.lower( k ) ] = v
+			OutTable[ k:lower( ) ] = v
 		
 		end		
 	

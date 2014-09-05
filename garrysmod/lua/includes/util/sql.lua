@@ -12,9 +12,9 @@ function sql.SQLStr( str_in, bNoQuotes )
 	
 	str = str:gsub( "'", "''" )
 	
-	local null_chr = string.find( str, "\0" )
+	local null_chr = str:find( "\0" )
 	if null_chr then
-		str = string.sub( str, 1, null_chr - 1 )
+		str = str:sub( 1, null_chr - 1 )
 	end
 	
 	if ( bNoQuotes ) then

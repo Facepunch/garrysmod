@@ -17,7 +17,7 @@ function ENT:KeyValue(key, value)
    if key == "message" then
       self.Message = tostring(value) or "ERROR: bad value"
    elseif key == "color" then
-      local mr, mg, mb = string.match(value, "(%d*) (%d*) (%d*)")
+      local mr, mg, mb = value:match( "(%d*) (%d*) (%d*)")
 
       local c = Color(0,0,0)
       c.r = tonumber(mr) or 255

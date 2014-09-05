@@ -38,7 +38,7 @@ function debug.Trace()
 		  
 		else
 		
-			Msg( string.format( "\t%i: Line %d\t\"%s\"\t%s\n", level, info.currentline, info.name, info.short_src ) )
+			Msg( ("\t%i: Line %d\t\"%s\"\t%s\n"):format(level, info.currentline, info.name, info.short_src ) )
 		  
 		end
 		

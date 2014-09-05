@@ -12,7 +12,7 @@ local function LastWordsRecv()
    local nick = IsValid(sender) and sender:Nick() or "<Unknown>"
 
    chat.AddText(Color( 150, 150, 150 ),
-                Format("(%s) ", string.upper(GetTranslation("last_words"))),
+                Format("(%s) ", GetTranslation("last_words"):upper()),
                 was_detective and Color(50, 200, 255) or Color(0, 200, 0),
                 nick,
                 COLOR_WHITE,
@@ -30,7 +30,7 @@ local function RoleChatRecv()
 
    if role == ROLE_TRAITOR then
       chat.AddText(Color( 255, 30, 40 ),
-                   Format("(%s) ", string.upper(GetTranslation("traitor"))),
+                   Format("(%s) ", GetTranslation("traitor"):upper()),
                    Color( 255, 200, 20),
                    sender:Nick(),
                    Color( 255, 255, 200),
@@ -38,7 +38,7 @@ local function RoleChatRecv()
 
    elseif role == ROLE_DETECTIVE then
       chat.AddText(Color( 20, 100, 255 ),
-                   Format("(%s) ", string.upper(GetTranslation("detective"))),
+                   Format("(%s) ", GetTranslation("detective"):upper()),
                    Color( 25, 200, 255),
                    sender:Nick(),
                    Color( 200, 255, 255),
@@ -51,7 +51,7 @@ net.Receive("TTT_RoleChat", RoleChatRecv)
 function GM:ChatText(idx, name, text, type)
 
    if type == "joinleave" then
-      if string.find(text, "Changed name during a round") then
+      if text:find( "Changed name during a round") then
          -- prevent nick from showing up
          chat.AddText(LANG.GetTranslation("name_kick"))
          return true
@@ -59,8 +59,8 @@ function GM:ChatText(idx, name, text, type)
    end
 
    if idx == 0 and type == "none" then
-      if string.sub(text, 1, 6) == "(VOTE)" then
-         chat.AddText(Color(255, 180, 0), string.sub(text, 8))
+      if text:sub( 1, 6) == "(VOTE)" then
+         chat.AddText(Color(255, 180, 0), text:sub( 8))
 
          return true
       end
@@ -194,7 +194,7 @@ function RADIO:ShowRadioCommands(state)
                                  if s.target != tgt then
                                     s.target = tgt
 
-                                    tgt = string.Interp(s.txt, {player = RADIO.ToPrintable(tgt)})
+                                    tgt = s.txt:Interp({player = RADIO.ToPrintable(tgt)})
                                     if v then
                                        tgt = util.Capitalize(tgt)
                                     end
@@ -317,7 +317,7 @@ local function RadioCommand(ply, cmd, arg)
    for _, msg in pairs(RADIO.Commands) do
       if msg.cmd == msg_type then
          local eng = LANG.GetTranslationFromLanguage(msg.text, "english")
-         text = msg.format and string.Interp(eng, {player = RADIO.ToPrintable(target)}) or eng
+         text = msg.format and eng:Interp( {player = RADIO.ToPrintable(target)}) or eng
 
          msg_name = msg.text
          break
@@ -571,7 +571,7 @@ local MuteText = {
 
 local function SetMuteState(state)
    if MutedState then
-      MutedState:SetText(string.upper(GetTranslation(MuteText[state])))
+      MutedState:SetText(GetTranslation(MuteText[state]):upper())
       MutedState:SetVisible(state != MUTE_NONE)
    end
 end

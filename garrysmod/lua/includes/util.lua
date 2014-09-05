@@ -54,7 +54,7 @@ function PrintTable ( t, indent, done )
 	for i = 1, #keys do
 		key = keys[i]
 		value = t[key]
-		Msg( string.rep ("\t", indent) )
+		Msg(("\t"):rep(indent))
 
 		if  ( istable(value) && !done[value] ) then
 

@@ -18,7 +18,7 @@ function Register( t, name )
 
 	local old = EffectList[ name ]
 
-	name = string.lower(name)
+	name = name:lower()
 	EffectList[ name ] = t
 
 	--
@@ -49,7 +49,7 @@ end
 -----------------------------------------------------------]]
 function Create( name )
 
-	name = string.lower(name)
+	name = name:lower()
 
 	--Msg( "Create.. ".. name .. "\n" )
 

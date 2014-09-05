@@ -7,8 +7,8 @@ local math = math
 function string.ToTable ( str )
 	local tbl = {}
 	
-	for i = 1, string.len( str ) do
-		tbl[i] = string.sub( str, i, i )
+	for i = 1, str:len() do
+		tbl[i] = str:sub(1, 1)
 	end
 	
 	return tbl
@@ -171,7 +171,7 @@ function string.FormattedTime( seconds, Format )
 	seconds = math.floor(seconds % 60)
 	
 	if Format then
-		return string.format( Format, minutes, seconds, millisecs )
+		return Format:format( minutes, seconds, millisecs )
 	else
 		return { h=hours, m=minutes, s=seconds, ms=millisecs }
 	end
@@ -223,11 +223,11 @@ function string.NiceTime( seconds )
 end
 
 function string.Left(str, num)
-	return string.sub(str, 1, num)
+	return str:sub( 1, num)
 end
 
 function string.Right(str, num)
-	return string.sub(str, -num)
+	return str:sub( -num)
 end
 
 
@@ -244,7 +244,7 @@ end
 -----------------------------------------------------------]]
 function string.Trim( s, char )
 	if char then char = char:PatternSafe() else char = "%s" end
-	return string.match( s, "^" .. char .. "*(.-)" .. char .. "*$" ) or s
+	return s:match( "^" .. char .. "*(.-)" .. char .. "*$" ) or s
 end
 
 --[[---------------------------------------------------------
@@ -254,7 +254,7 @@ end
 -----------------------------------------------------------]]
 function string.TrimRight( s, char )
 	if char then char = char:PatternSafe() else char = "%s" end
-	return string.match( s, "^(.-)" .. char .. "*$" ) or s
+	return s:match( "^(.-)" .. char .. "*$" ) or s
 end
 
 --[[---------------------------------------------------------
@@ -264,7 +264,7 @@ end
 -----------------------------------------------------------]]
 function string.TrimLeft( s, char )
 	if char then char = char:PatternSafe() else char = "%s" end
-	return string.match( s, "^" .. char .. "*(.+)$" ) or s
+	return s:match( "^" .. char .. "*(.+)$" ) or s
 end
 
 function string.NiceSize( size )
@@ -313,13 +313,13 @@ end
 
 function string.StartWith( String, Start )
 
-   return string.sub( String, 1, string.len (Start ) ) == Start
+   return String:sub( 1, Start:len( ) ) == Start
 
 end
 
 function string.EndsWith( String, End )
 
-   return End == '' or string.sub( String, -string.len( End ) ) == End
+   return End == '' or String:sub( -End:len( ) ) == End
 
 end
 
@@ -349,7 +349,7 @@ function string.Comma( number )
 	local number, k = tostring( number ), nil
 
 	while true do  
-		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", '%1,%2')
+		number, k = number:gsub( "^(-?%d+)(%d%d%d)", '%1,%2')
 		if ( k == 0 ) then break end
 	end
 

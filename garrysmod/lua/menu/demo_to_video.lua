@@ -142,7 +142,7 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 	btnStart.DoClick = function()
 
 		-- Fill in the name here, or we'll be overwriting the same video!
-		local cleanname = string.GetFileFromFilename( demoname )
+		local cleanname = demoname:GetFileFromFilename()
 			cleanname = cleanname:Replace( ".", "_" )
 			cleanname = cleanname .. " " .. util.DateStamp();
 		settings.name = cleanname

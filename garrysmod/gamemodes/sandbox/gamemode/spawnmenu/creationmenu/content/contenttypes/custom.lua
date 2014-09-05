@@ -92,7 +92,7 @@ local function ReadSpawnlists( node, parentid )
 	end
 	
 	if ( SPAWNLIST_ID > 0 ) then
-		SPAWNLISTS[ string.format( "%03d", tab.id ) .. "-" .. tab.name ] = util.TableToKeyValues( tab );
+		SPAWNLISTS[("%03d - %s"):format(tab.id, tab.name)] = util.TableToKeyValues( tab );
 	end
 	
 	SPAWNLIST_ID = SPAWNLIST_ID + 1
