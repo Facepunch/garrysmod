@@ -150,12 +150,7 @@ end
 --
 function util.NiceFloat( f )
 
-	local str = string.format( "%f", f )
-
-	str = str:TrimRight( "0" )
-	str = str:TrimRight( "." )
-
-	return str
+	return ("%g"):format( f )
 
 end
 
