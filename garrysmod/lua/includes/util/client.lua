@@ -135,9 +135,9 @@ function PositionSpawnIcon( model, pos )
 	local mn, mx = model:GetRenderBounds()
 	local middle = (mn + mx) * 0.5
 	local size = 0
-	size = math.max( size, math.abs(mn.x) + math.abs(mx.x) );
-	size = math.max( size, math.abs(mn.y) + math.abs(mx.y) );
-	size = math.max( size, math.abs(mn.z) + math.abs(mx.z) );
+	size = math.max( size, math.abs(mn.x) + math.abs(mx.x) )
+	size = math.max( size, math.abs(mn.y) + math.abs(mx.y) )
+	size = math.max( size, math.abs(mn.z) + math.abs(mx.z) )
 	
 	model:SetPos( pos )
 	model:SetAngles( Angle( 0, 180, 0 ) )

@@ -12,13 +12,13 @@ function TauntCamera()
 
 	local CAM = {}
 
-	local WasOn					= false;
+	local WasOn					= false
 
 	local CustomAngles			= Angle( 0, 0, 0 )
 	local PlayerLockAngles		= nil
 
-	local InLerp				= 0;
-	local OutLerp				= 1;
+	local InLerp				= 0
+	local OutLerp				= 1
 	
 
 	--
@@ -26,7 +26,7 @@ function TauntCamera()
 	--
 	CAM.ShouldDrawLocalPlayer = function( self, ply, on )
 
-		return on || OutLerp < 1;
+		return on || OutLerp < 1
 
 	end
 
@@ -50,7 +50,7 @@ function TauntCamera()
 
 			CustomAngles = view.angles * 1
 			PlayerLockAngles = nil
-			InLerp = 0;
+			InLerp = 0
 			return 
 
 		end
@@ -69,7 +69,7 @@ function TauntCamera()
 			InLerp = InLerp + FrameTime() * 5.0
 			view.origin = LerpVector( InLerp, view.origin, TargetOrigin )
 			view.angles = LerpAngle( InLerp, PlayerLockAngles, CustomAngles )
-			return true;
+			return true
 
 		end
 
@@ -78,13 +78,13 @@ function TauntCamera()
 			OutLerp = OutLerp + FrameTime() * 3.0
 			view.origin = LerpVector( 1-OutLerp, view.origin, TargetOrigin )
 			view.angles = LerpAngle( 1-OutLerp, PlayerLockAngles, CustomAngles )
-			return true;
+			return true
 
 		end
 
 		view.angles = CustomAngles * 1
 		view.origin = TargetOrigin
-		return true;
+		return true
 
 	end
 
@@ -110,15 +110,15 @@ function TauntCamera()
 		--
 		-- Lock the player's controls and angles
 		--
-		cmd:SetViewAngles( PlayerLockAngles );
-		cmd:ClearButtons();
-		cmd:ClearMovement();
+		cmd:SetViewAngles( PlayerLockAngles )
+		cmd:ClearButtons()
+		cmd:ClearMovement()
 		
 		return true
 
 	end
 		
 
-	return CAM;
+	return CAM
 
 end

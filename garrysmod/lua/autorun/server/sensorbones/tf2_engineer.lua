@@ -1,24 +1,24 @@
 --
 -- These are the physics bone numbers
 --
-local PLVS		= 0;
+local PLVS		= 0
 -- coord
-local RTHY		= 2;
-local RCLF		= 3;
-local RFOT		= 4;
-local LTHY		= 5;
-local LCLF		= 6;
-local LFOT		= 7;
+local RTHY		= 2
+local RCLF		= 3
+local RFOT		= 4
+local LTHY		= 5
+local LCLF		= 6
+local LFOT		= 7
 
-local SPNE		= 8;
-local RSLD		= 9;
-local RARM		= 10;
-local LSLD		= 11;
-local LARM		= 12;
-local LHND		= 13;
-local NECK		= 14;
-local HEAD		= 15;
-local RHND		= 16;
+local SPNE		= 8
+local RSLD		= 9
+local RARM		= 10
+local LSLD		= 11
+local LARM		= 12
+local LHND		= 13
+local NECK		= 14
+local HEAD		= 15
+local RHND		= 16
 -- pouch
 
 
@@ -152,7 +152,7 @@ local Builder =
 
 	IsApplicable = function( self, ent ) 
 		
-		local mdl = ent:GetModel();
+		local mdl = ent:GetModel()
 
 		if ( mdl:EndsWith( "models/player/engineer.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/hwm/engineer.mdl" ) ) then return true end

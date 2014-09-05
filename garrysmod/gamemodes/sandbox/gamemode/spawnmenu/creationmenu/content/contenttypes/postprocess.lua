@@ -25,7 +25,7 @@ hook.Add( "PopulatePostProcess", "AddPostProcess", function( pnlContent, tree, n
 	for CategoryName, v in SortedPairs( Categorised ) do
 				
 		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, "icon16/picture.png" );
+		local node = tree:AddNode( CategoryName, "icon16/picture.png" )
 	
 		-- When we click on the node - populate it using this function
 		node.DoPopulate = function( self )
@@ -59,7 +59,7 @@ hook.Add( "PopulatePostProcess", "AddPostProcess", function( pnlContent, tree, n
 		node.DoClick = function( self )
 	
 			self:DoPopulate()		
-			pnlContent:SwitchPanel( self.PropPanel );
+			pnlContent:SwitchPanel( self.PropPanel )
 	
 		end
 		
@@ -79,7 +79,7 @@ end )
 spawnmenu.AddCreationTab( "#spawnmenu.category.postprocess", function()
 
 	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
-	ctrl:CallPopulateHook( "PopulatePostProcess" );
+	ctrl:CallPopulateHook( "PopulatePostProcess" )
 	return ctrl
 
 end, "icon16/picture.png", 100 )

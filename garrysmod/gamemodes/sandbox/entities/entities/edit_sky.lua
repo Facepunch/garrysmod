@@ -36,7 +36,7 @@ function ENT:Think()
 	if ( SERVER && self.EnvSun == nil ) then
 		
 		-- so this closure only gets called once - even if it fails
-		self.EnvSun = false;
+		self.EnvSun = false
 
 		local list = ents.FindByClass( "env_sun" )
 		if ( #list > 0 ) then
@@ -50,7 +50,7 @@ function ENT:Think()
 	--
 	if ( SERVER && IsValid( self.EnvSun ) ) then
 
-		local vec = self.EnvSun:GetInternalVariable( "m_vDirection" );
+		local vec = self.EnvSun:GetInternalVariable( "m_vDirection" )
 		
 		if ( isvector( vec ) ) then
 			self:SetSunNormal( vec )

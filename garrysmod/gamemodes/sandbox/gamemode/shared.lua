@@ -250,7 +250,7 @@ end
 -----------------------------------------------------------]]
 function GM:CanDrive( pl, ent )
 	
-	local classname = ent:GetClass();
+	local classname = ent:GetClass()
 
 	--
 	-- Only let physics based NPCs be driven for now
@@ -307,8 +307,8 @@ function GM:PlayerDriveAnimate( ply )
 	ply:SetPoseParameter( "move_yaw",		0 )
 	ply:SetPoseParameter( "move_scale",		0 )
 
-	AimAng.p = 0;
-	AimAng.r = 0;
+	AimAng.p = 0
+	AimAng.r = 0
 
 	ply:SetRenderAngles( AimAng )
 	ply:SetEyeTarget( driving:GetPos() )

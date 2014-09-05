@@ -172,7 +172,7 @@ function GM:Initialize()
       [OPEN_ROT] = true,
       [OPEN_BUT] = true,
       [OPEN_NOTOGGLE]= true
-   };
+   }
 
    -- More map config ent defaults
    GAMEMODE.force_plymodel = ""
@@ -298,7 +298,7 @@ function WaitForPlayers()
    end
 end
 
--- When a player initially spawns after mapload, everything is a bit strange;
+-- When a player initially spawns after mapload, everything is a bit strange
 -- just making him spectator for some reason does not work right. Therefore,
 -- we regularly check for these broken spectators while we wait for players
 -- and immediately fix them.
@@ -870,7 +870,7 @@ function SelectRoles()
       [ROLE_INNOCENT] = {},
       [ROLE_TRAITOR] = {},
       [ROLE_DETECTIVE] = {}
-   };
+   }
 
    if not GAMEMODE.LastRole then GAMEMODE.LastRole = {} end
 

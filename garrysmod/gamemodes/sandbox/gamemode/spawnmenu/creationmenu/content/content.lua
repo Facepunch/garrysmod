@@ -32,19 +32,19 @@ function PANEL:Init()
 	
 	self.CategoryTable = {}	
 	
-	self.ContentNavBar = vgui.Create( "ContentSidebar", self );
-	self.ContentNavBar:Dock( LEFT );
-	self.ContentNavBar:SetSize( 190, 10 );
+	self.ContentNavBar = vgui.Create( "ContentSidebar", self )
+	self.ContentNavBar:Dock( LEFT )
+	self.ContentNavBar:SetSize( 190, 10 )
 	self.ContentNavBar:DockMargin( 0, 0, 4, 0 )
 	
 	
-	self.HorizontalDivider = vgui.Create( "DHorizontalDivider", self );	
-	self.HorizontalDivider:Dock( FILL );
+	self.HorizontalDivider = vgui.Create( "DHorizontalDivider", self )
+	self.HorizontalDivider:Dock( FILL )
 	self.HorizontalDivider:SetLeftWidth( 175 )
 	self.HorizontalDivider:SetLeftMin( 175 )
 	self.HorizontalDivider:SetRightMin( 450 )
 	
-	self.HorizontalDivider:SetLeft( self.ContentNavBar );
+	self.HorizontalDivider:SetLeft( self.ContentNavBar )
 	
 end
 
@@ -61,8 +61,8 @@ end
 function PANEL:SwitchPanel( panel )
 
 	if ( IsValid( self.SelectedPanel ) ) then
-		self.SelectedPanel:SetVisible( false );
-		self.SelectedPanel = nil;
+		self.SelectedPanel:SetVisible( false )
+		self.SelectedPanel = nil
 	end
 	
 	self.SelectedPanel = panel
@@ -71,7 +71,7 @@ function PANEL:SwitchPanel( panel )
 	self.SelectedPanel:SetVisible( true )
 	self:InvalidateParent()
 	
-	self.HorizontalDivider:SetRight( self.SelectedPanel );
+	self.HorizontalDivider:SetRight( self.SelectedPanel )
 	
 end
 
@@ -88,7 +88,7 @@ local function CreateContentPanel()
 	
 	ctrl:EnableModify()
 	hook.Call( "PopulatePropMenu", GAMEMODE )
-	ctrl:CallPopulateHook( "PopulateContent" );
+	ctrl:CallPopulateHook( "PopulateContent" )
 
 		
 	ctrl.OldSpawnlists:MoveToFront()

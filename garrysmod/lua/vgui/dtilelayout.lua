@@ -29,8 +29,8 @@ function PANEL:Init()
 	self:SetBorder( 0 )
 	self:SetBaseSize( 64 )
 	
-	self.LastW = 0;
-	self.LastH = 0;
+	self.LastW = 0
+	self.LastH = 0
 	
 	self.Tiles = {}
 	
@@ -39,8 +39,8 @@ end
 
 function PANEL:Layout()
 
-	self.LastW = 0;
-	self.LastH = 0;
+	self.LastW = 0
+	self.LastH = 0
 	self:InvalidateLayout()
 
 end
@@ -136,10 +136,10 @@ end
 
 function PANEL:LayoutTiles()
 
-	local StartLine = 1;
-	local LastX		= 1;
-	local tilesize	= self.m_iBaseSize;
-	local MaxWidth	= math.ceil( self:GetWide() / tilesize );
+	local StartLine = 1
+	local LastX		= 1
+	local tilesize	= self.m_iBaseSize
+	local MaxWidth	= math.ceil( self:GetWide() / tilesize )
 	
 	self:ClearTiles()
 	
@@ -174,7 +174,7 @@ end
 
 function PANEL:PerformLayout()
 
-	local ShouldLayout = false;
+	local ShouldLayout = false
 	
 	if ( self.LastW != self:GetWide() )		then ShouldLayout = true end
 	if ( self.LastH != self:GetTall() )		then ShouldLayout = true end
@@ -186,7 +186,7 @@ function PANEL:PerformLayout()
 		self:LayoutTiles()
 	end
 	
-	local w, h = self:ChildrenSize();
+	local w, h = self:ChildrenSize()
 	h = math.max( h, self:GetMinHeight() )
 
 	self:SetHeight( h )
@@ -209,7 +209,7 @@ function PANEL:OnChildAdded( child )
 	
 	local dn = self:GetDnD()
 	if ( dn ) then
-		child:Droppable( self:GetDnD() );			
+		child:Droppable( self:GetDnD() )
 	end
 	
 	if ( self:IsSelectionCanvas() ) then

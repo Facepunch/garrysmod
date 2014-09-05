@@ -21,7 +21,7 @@ function PANEL:Init()
 	Button:Dock( LEFT )
 	Button:SetStretchToFit( false )
 	Button:SetSize( 20, 20 )
-	local slot = Button:Droppable( "SandboxContentPanel" );
+	local slot = Button:Droppable( "SandboxContentPanel" )
 
 	Button.OnDrop =	function( self, target )
 

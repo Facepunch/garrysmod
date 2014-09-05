@@ -45,14 +45,14 @@ function DrawBackground()
 	if ( !IsInGame() ) then 
 
 		if ( Active ) then
-			Think( Active );
-			Render( Active );
+			Think( Active )
+			Render( Active )
 		end
 
 		if ( Outgoing ) then
 
-			Think( Outgoing );
-			Render( Outgoing );
+			Think( Outgoing )
+			Render( Outgoing )
 
 			if ( Outgoing.Alpha <= 0 ) then
 				Outgoing = nil
@@ -91,7 +91,7 @@ function ChangeBackground( currentgm )
 	
 	local img = table.Random( Images )
 
-	Outgoing = Active;
+	Outgoing = Active
 	if ( Outgoing ) then
 		Outgoing.AlphaVel = 255
 	end
@@ -113,7 +113,7 @@ function ChangeBackground( currentgm )
 
 	if ( Active.Ratio < ScrW() / ScrH() ) then
 
-		Active.Size = Active.Size * ( ScrW() / ScrH()  );
+		Active.Size = Active.Size * ( ScrW() / ScrH()  )
 
 	end
 

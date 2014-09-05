@@ -38,7 +38,7 @@ properties.Add( "gravity", {
 		if ( !self:Filter( ent, player ) ) then return end
 
 		local bones = ent:GetPhysicsObjectCount()
-		local b = ent:GetNWBool( "gravity_disabled" );
+		local b = ent:GetNWBool( "gravity_disabled" )
 
 		for  i=0, bones-1 do
 

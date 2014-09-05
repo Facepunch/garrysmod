@@ -87,9 +87,9 @@ end
 -----------------------------------------------------------]]
 function PANEL:ShowCloseButton( bShow )
 
-	self.btnClose:SetVisible( bShow );
-	self.btnMaxim:SetVisible( bShow );
-	self.btnMinim:SetVisible( bShow );
+	self.btnClose:SetVisible( bShow )
+	self.btnMaxim:SetVisible( bShow )
+	self.btnMinim:SetVisible( bShow )
 
 end
 

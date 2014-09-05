@@ -44,9 +44,9 @@ end
 
 local function RecvPlayerKilledByPlayer()
 
-	local victim 	= net.ReadEntity();
-	local inflictor	= net.ReadString();
-	local attacker 	= net.ReadEntity();
+	local victim 	= net.ReadEntity()
+	local inflictor	= net.ReadString()
+	local attacker 	= net.ReadEntity()
 
 	if ( !IsValid( attacker ) ) then return end
 	if ( !IsValid( victim ) ) then return end
@@ -59,7 +59,7 @@ net.Receive( "PlayerKilledByPlayer", RecvPlayerKilledByPlayer )
 
 local function RecvPlayerKilledSelf()
 
-	local victim 	= net.ReadEntity();
+	local victim 	= net.ReadEntity()
 	if ( !IsValid( victim ) ) then return end
 	GAMEMODE:AddDeathNotice( nil, 0, "suicide", victim:Name(), victim:Team() )
 
@@ -70,10 +70,10 @@ net.Receive( "PlayerKilledSelf", RecvPlayerKilledSelf )
 
 local function RecvPlayerKilled()
 
-	local victim 	= net.ReadEntity();
+	local victim 	= net.ReadEntity()
 	if ( !IsValid( victim ) ) then return end
-	local inflictor	= net.ReadString();
-	local attacker 	= "#" .. net.ReadString();
+	local inflictor	= net.ReadString()
+	local attacker 	= "#" .. net.ReadString()
 			
 	GAMEMODE:AddDeathNotice( attacker, -1, inflictor, victim:Name(), victim:Team() )
 
@@ -83,10 +83,10 @@ net.Receive( "PlayerKilled", RecvPlayerKilled )
 
 local function RecvPlayerKilledNPC()
 
-	local victimtype = net.ReadString();
-	local victim 	= "#" .. victimtype;
-	local inflictor	= net.ReadString();
-	local attacker 	= net.ReadEntity();
+	local victimtype = net.ReadString()
+	local victim 	= "#" .. victimtype
+	local inflictor	= net.ReadString()
+	local attacker 	= net.ReadEntity()
 
 	--
 	-- For some reason the killer isn't known to us, so don't proceed.
@@ -101,15 +101,15 @@ local function RecvPlayerKilledNPC()
 	local bIsFriend = IsFriendEntityName( victimtype )
 	
 	if ( bIsLocalPlayer && bIsEnemy ) then
-		achievements.IncBaddies();
+		achievements.IncBaddies()
 	end
 	
 	if ( bIsLocalPlayer && bIsFriend ) then
-		achievements.IncGoodies();
+		achievements.IncGoodies()
 	end
 	
 	if ( bIsLocalPlayer && (!bIsFriend && !bIsEnemy) ) then
-		achievements.IncBystander();
+		achievements.IncBystander()
 	end
 
 end
@@ -119,9 +119,9 @@ net.Receive( "PlayerKilledNPC", RecvPlayerKilledNPC )
 
 local function RecvNPCKilledNPC()
 
-	local victim 	= "#" .. net.ReadString();
-	local inflictor	= net.ReadString();
-	local attacker 	= "#" .. net.ReadString();
+	local victim 	= "#" .. net.ReadString()
+	local inflictor	= net.ReadString()
+	local attacker 	= "#" .. net.ReadString()
 			
 	GAMEMODE:AddDeathNotice( attacker, -1, inflictor, victim, -1 )
 

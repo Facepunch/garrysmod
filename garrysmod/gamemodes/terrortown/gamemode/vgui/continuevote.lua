@@ -13,7 +13,7 @@ PANEL.Votes = {
       keytxt = "[NUMPAD 2]",
       want = true
    }
-};
+}
 
 function PANEL:Init()
    self:SetSkin( GAMEMODE.HudSkin )

@@ -42,7 +42,7 @@ function PANEL:OnChildAdded( child )
 	
 	local dn = self:GetDnD()
 	if ( dn ) then
-		child:Droppable( self:GetDnD() );			
+		child:Droppable( self:GetDnD() )
 	end
 	
 	if ( self:IsSelectionCanvas() ) then

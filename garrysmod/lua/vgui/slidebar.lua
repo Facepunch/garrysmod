@@ -70,7 +70,7 @@ function PANEL:Rebuild( item )
 	
 	if ( self.Horizontal ) then
 	
-		local x, y = 0, 0;
+		local x, y = 0, 0
 		for k, panel in pairs( self.Items ) do
 		
 			local w = panel:GetWide()

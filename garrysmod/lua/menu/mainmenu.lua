@@ -15,8 +15,8 @@ local PANEL = {}
 function PANEL:Init()
 		
 	self:Dock( FILL )
-	self:SetKeyboardInputEnabled( true );
-	self:SetMouseInputEnabled( true );
+	self:SetKeyboardInputEnabled( true )
+	self:SetMouseInputEnabled( true )
 
 	self.HTML = vgui.Create( "DHTML", self )
 
@@ -24,9 +24,9 @@ function PANEL:Init()
 	JS_Utility( self.HTML )
 
 	self.HTML:Dock( FILL )
-	self.HTML:OpenURL( "asset://garrysmod/html/menu.html" );
+	self.HTML:OpenURL( "asset://garrysmod/html/menu.html" )
 	self.HTML:SetKeyboardInputEnabled( true )
-	self.HTML:SetMouseInputEnabled( true );
+	self.HTML:SetMouseInputEnabled( true )
 	self.HTML:SetAllowLua( true )
 	self.HTML:RequestFocus()
 
@@ -44,7 +44,7 @@ end
 
 function PANEL:ScreenshotScan( folder )
 
-	local bReturn = false;
+	local bReturn = false
 
 	local Screenshots = file.Find( folder .. "*.jpg", "GAME" )		
 	for k, v in RandomPairs( Screenshots ) do
@@ -54,7 +54,7 @@ function PANEL:ScreenshotScan( folder )
 	
 	end
 
-	return bReturn;
+	return bReturn
 
 end
 
@@ -64,16 +64,16 @@ function PANEL:Paint()
 
 	if ( self.IsInGame != IsInGame() ) then
 	
-		self.IsInGame = IsInGame();
+		self.IsInGame = IsInGame()
 		
 		if ( self.IsInGame ) then
 		
 			if ( IsValid( self.InnerPanel ) ) then self.InnerPanel:Remove() end
-			self.HTML:QueueJavascript( "SetInGame( true )" );
+			self.HTML:QueueJavascript( "SetInGame( true )" )
 		
 		else 
 		
-			self.HTML:QueueJavascript( "SetInGame( false )" );
+			self.HTML:QueueJavascript( "SetInGame( false )" )
 			
 		end
 		
@@ -90,11 +90,11 @@ end
 
 function PANEL:RefreshGamemodes()
 
-	local json = util.TableToJSON( engine.GetGamemodes() );
+	local json = util.TableToJSON( engine.GetGamemodes() )
 
-	self.HTML:QueueJavascript( "UpdateGamemodes( "..json.." )" );
+	self.HTML:QueueJavascript( "UpdateGamemodes( "..json.." )" )
 	self:UpdateBackgroundImages()
-	self.HTML:QueueJavascript( "UpdateCurrentGamemode( '"..engine.ActiveGamemode().."' )" );
+	self.HTML:QueueJavascript( "UpdateCurrentGamemode( '"..engine.ActiveGamemode().."' )" )
 
 end
 
@@ -128,7 +128,7 @@ end
 
 function PANEL:Call( js )
 
-	self.HTML:QueueJavascript( js );
+	self.HTML:QueueJavascript( js )
 
 end
 
@@ -143,8 +143,8 @@ function UpdateSteamName( id, time )
 	local name = steamworks.GetPlayerName( id )
 	if ( name != "" && name != "[unknown]" ) then
 
-		pnlMainMenu:Call( "SteamName( \""..id.."\", \""..name.."\" )" );
-		return;
+		pnlMainMenu:Call( "SteamName( \""..id.."\", \""..name.."\" )" )
+		return
 
 	end
 
@@ -160,10 +160,10 @@ function UpdateMapList()
 
 	if ( !istable( g_MapListCategorised ) ) then return end
 
-	json = util.TableToJSON( g_MapListCategorised );
+	json = util.TableToJSON( g_MapListCategorised )
 	if ( !isstring( json ) ) then return end
 
-	pnlMainMenu:Call( "UpdateMaps("..json..")" );
+	pnlMainMenu:Call( "UpdateMaps("..json..")" )
 
 end
 
@@ -186,18 +186,18 @@ function UpdateServerSettings()
 
 		if ( Settings.settings ) then
 
-			array.settings = Settings.settings;
+			array.settings = Settings.settings
 
 			for k, v in pairs( array.settings ) do
-				v.Value = GetConVarString( v.name );
+				v.Value = GetConVarString( v.name )
 			end
 
 		end
 
 	end
 
-	local json = util.TableToJSON( array );
-	pnlMainMenu:Call( "UpdateServerSettings("..json..")" );
+	local json = util.TableToJSON( array )
+	pnlMainMenu:Call( "UpdateServerSettings("..json..")" )
 
 end
 
@@ -208,8 +208,8 @@ function GetPlayerList( serverip )
 
 	serverlist.PlayerList( serverip, function( tbl )
 
-		local json = util.TableToJSON( tbl );
-		pnlMainMenu:Call( "SetPlayerList( '"..serverip.."', "..json..")" );
+		local json = util.TableToJSON( tbl )
+		pnlMainMenu:Call( "SetPlayerList( '"..serverip.."', "..json..")" )
 
 	end )
 
@@ -228,16 +228,16 @@ function GetServers( type, id )
 
 		Callback = function( ping , name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid )
 
-			name	= string.JavascriptSafe( name );
-			desc	= string.JavascriptSafe( desc );
-			map		= string.JavascriptSafe( map );
-			address = string.JavascriptSafe( address );
-			gamemode = string.JavascriptSafe( gamemode );
-			workshopid = string.JavascriptSafe( workshopid );
+			name	= string.JavascriptSafe( name )
+			desc	= string.JavascriptSafe( desc )
+			map		= string.JavascriptSafe( map )
+			address = string.JavascriptSafe( address )
+			gamemode = string.JavascriptSafe( gamemode )
+			workshopid = string.JavascriptSafe( workshopid )
 			
 			if ( pass ) then pass = "true" else pass = "false" end
 
-			pnlMainMenu:Call( "AddServer( '"..type.."', '"..id.."', "..ping..", \""..name.."\", \""..desc.."\", \""..map.."\", "..players..", "..maxplayers..", "..botplayers..", "..pass..", "..lastplayed..", \""..address.."\", \""..gamemode.."\", \""..workshopid.."\" )" );
+			pnlMainMenu:Call( "AddServer( '"..type.."', '"..id.."', "..ping..", \""..name.."\", \""..desc.."\", \""..map.."\", "..players..", "..maxplayers..", "..botplayers..", "..pass..", "..lastplayed..", \""..address.."\", \""..gamemode.."\", \""..workshopid.."\" )" )
 
 		end,
 
@@ -256,8 +256,8 @@ end
 function UpdateLanguages()
 
 	local f = file.Find( "resource/localization/*.png", "MOD" )
-	local json = util.TableToJSON( f );
-	pnlMainMenu:Call( "UpdateLanguages("..json..")" );
+	local json = util.TableToJSON( f )
+	pnlMainMenu:Call( "UpdateLanguages("..json..")" )
 
 end
 
@@ -268,8 +268,8 @@ function LanguageChanged( lang )
 
 	if ( !IsValid( pnlMainMenu ) ) then return end
 
-	UpdateLanguages();
-	pnlMainMenu:Call( "UpdateLanguage( \""..lang:JavascriptSafe().."\" )" );
+	UpdateLanguages()
+	pnlMainMenu:Call( "UpdateLanguage( \""..lang:JavascriptSafe().."\" )" )
 
 end
 
@@ -279,18 +279,17 @@ end
 function UpdateGames()
 
 	local games = engine.GetGames()
-	local json = util.TableToJSON( games );
+	local json = util.TableToJSON( games )
 
-	pnlMainMenu:Call( "UpdateGames( "..json..")" );	
-
+	pnlMainMenu:Call( "UpdateGames( "..json..")" )
 end
 
 function UpdateSubscribedAddons()
 
 	local subscriptions = engine.GetAddons()
-	local json = util.TableToJSON( subscriptions );
+	local json = util.TableToJSON( subscriptions )
 
-	pnlMainMenu:Call( "subscriptions.Update( "..json.." )" );
+	pnlMainMenu:Call( "subscriptions.Update( "..json.." )" )
 
 end
 
@@ -300,23 +299,23 @@ hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 
 	pnlMainMenu:RefreshContent()
 
-	UpdateGames();
-	UpdateServerSettings();
-	UpdateSubscribedAddons();
+	UpdateGames()
+	UpdateServerSettings()
+	UpdateSubscribedAddons()
 
 	-- We update the maps with a delay because another hook updates the maps on content changed
 	-- so we really only want to update this after that.
-	timer.Simple( 0.5, function() UpdateMapList(); end )
+	timer.Simple( 0.5, function() UpdateMapList() end )
 
-end );
+end )
 
 --
 -- Initialize
 --
 timer.Simple( 0, function()
 
-	pnlMainMenu = vgui.Create( "MainMenuPanel" );
-	pnlMainMenu:Call( "UpdateVersion( '"..VERSIONSTR.."', '"..BRANCH.."' )" );
+	pnlMainMenu = vgui.Create( "MainMenuPanel" )
+	pnlMainMenu:Call( "UpdateVersion( '"..VERSIONSTR.."', '"..BRANCH.."' )" )
 
 	local language = GetConVarString( "gmod_language" )
 	LanguageChanged( language )

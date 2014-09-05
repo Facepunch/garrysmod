@@ -83,7 +83,7 @@ local function ReloadClass( classname )
 
 			if ( !isfunction( func ) ) then continue end
 
-			v[ name ] = func;
+			v[ name ] = func
 
 		end
 

@@ -275,8 +275,8 @@ function Parse(ml, maxwidth)
 			if (ch == "\n") then
 			
 				if (thisY == 0) then
-					thisY = lineHeight;
-					thisMaxY = lineHeight;
+					thisY = lineHeight
+					thisMaxY = lineHeight
 				else
 					lineHeight = thisY
 				end
@@ -301,7 +301,7 @@ function Parse(ml, maxwidth)
 							
 				xOffset = 0
 				xSize = 0
-				yOffset = yOffset + thisMaxY;
+				yOffset = yOffset + thisMaxY
 				thisY = 0
 				curString = ""
 				thisMaxY = 0
@@ -373,7 +373,7 @@ function Parse(ml, maxwidth)
 						
 						local x1,y1 = surface.GetTextSize(curString)
 												
-						if (y1 > thisMaxY) then thisMaxY = y1; ymaxes[yOffset] = thisMaxY; lineHeight = y1; end
+						if (y1 > thisMaxY) then thisMaxY = y1 ymaxes[yOffset] = thisMaxY lineHeight = y1 end
 
 						local new_block = {}
 						new_block.text = curString
@@ -393,7 +393,7 @@ function Parse(ml, maxwidth)
 						xOffset = 0
 						xSize = 0
 						x,y = surface.GetTextSize(ch)
-						yOffset = yOffset + thisMaxY;
+						yOffset = yOffset + thisMaxY
 						thisY = 0
 						curString = ""
 						thisMaxY = 0
@@ -405,7 +405,7 @@ function Parse(ml, maxwidth)
 				thisY = y
 				xSize = xSize + x
 								
-				if (y > thisMaxY) then thisMaxY = y; ymaxes[yOffset] = thisMaxY; lineHeight = y; end
+				if (y > thisMaxY) then thisMaxY = y ymaxes[yOffset] = thisMaxY lineHeight = y end
 			end
 		end
 		

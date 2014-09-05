@@ -62,7 +62,7 @@ function GM:HUDShouldDraw( name )
 		
 	end
 
-	return true;
+	return true
 end
 
 --[[---------------------------------------------------------
@@ -180,7 +180,7 @@ function GM:OnChatTab( str )
 
 	local LastWord
 	for word in string.gmatch( str, "%a+" ) do
-	     LastWord = word;
+	     LastWord = word
 	end
 	
 	if (LastWord == nil) then return str end
@@ -200,7 +200,7 @@ function GM:OnChatTab( str )
 		
 	end
 		
-	return str;
+	return str
 
 end
 
@@ -310,11 +310,11 @@ function GM:CalcVehicleView( Vehicle, ply, view )
 
 	local mn, mx = Vehicle:GetRenderBounds()
 	local radius = (mn - mx):Length()
-	local radius = radius + radius * Vehicle:GetCameraDistance();
+	local radius = radius + radius * Vehicle:GetCameraDistance()
 
 	-- Trace back from the original eye position, so we don't clip through walls/objects
 	local TargetOrigin = view.origin + ( view.angles:Forward() * -radius )
-	local WallOffset = 4;
+	local WallOffset = 4
 		  
 	local tr = util.TraceHull( {
 		start	= view.origin,
@@ -479,7 +479,7 @@ end
 -----------------------------------------------------------]]
 function GM:OnAchievementAchieved( ply, achid )
 	
-	chat.AddText( ply, Color( 230, 230, 230 ), " earned the achievement ", Color( 255, 200, 0 ), achievements.GetName( achid ) );
+	chat.AddText( ply, Color( 230, 230, 230 ), " earned the achievement ", Color( 255, 200, 0 ), achievements.GetName( achid ) )
 	
 end
 
@@ -489,7 +489,7 @@ end
 -----------------------------------------------------------]]
 function GM:PreDrawSkyBox()
 	
-	--return true;
+	--return true
 	
 end
 
@@ -517,7 +517,7 @@ end
 -----------------------------------------------------------]]
 function GM:PreDrawOpaqueRenderables( bDrawingDepth, bDrawingSkybox )
 	
-	--	return true;
+	--	return true
 	
 end
 

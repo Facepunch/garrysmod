@@ -43,7 +43,7 @@ function PANEL:Open()
 	
 	RestoreCursorPosition()
 
-	local bShouldShow = true;
+	local bShouldShow = true
 
 	-- TODO: Any situation in which we shouldn't show the tool menu on the context menu?
 	

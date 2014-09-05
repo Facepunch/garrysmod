@@ -108,7 +108,7 @@ end
 -----------------------------------------------------------]]
 function GM:ShowHelp( ply )
 
-	ply:SendLua( "hook.Run( 'StartSearch' )" );
+	ply:SendLua( "hook.Run( 'StartSearch' )" )
 	
 end
 

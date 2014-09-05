@@ -1,20 +1,20 @@
 --
 -- These are the physics bone numbers
 --
-local PLVS		= 0;	
-local LTHY		= 1;
-local SPNE		= 2;
-local RSLD		= 3;
-local RARM		= 4;
-local LSLD		= 5;
-local LARM		= 6;
-local LHND		= 7;
-local HEAD		= 8;
-local RHND		= 9;
-local RTHY		= 10;
-local RCLF		= 11;
-local LCLF		= 12;
-local RFOT		= 13;
+local PLVS		= 0
+local LTHY		= 1
+local SPNE		= 2
+local RSLD		= 3
+local RARM		= 4
+local LSLD		= 5
+local LARM		= 6
+local LHND		= 7
+local HEAD		= 8
+local RHND		= 9
+local RTHY		= 10
+local RCLF		= 11
+local LCLF		= 12
+local RFOT		= 13
 
 local Builder = 
 {
@@ -86,7 +86,7 @@ local Builder =
 	--
 	Complete = function( self, player, sensor, rotation, pos, ang )
 
-		pos[SPNE] = LerpVector( 0.4, pos[SPNE], pos[HEAD] );
+		pos[SPNE] = LerpVector( 0.4, pos[SPNE], pos[HEAD] )
 
 		-- Feet are insanely spazzy, so we lock the feet to the angle of the calf
 		ang[RFOT]	= ang[RCLF]:Right():AngleEx( ang[RCLF]:Up() ) + Angle( 20, 0, 0 )
@@ -96,7 +96,7 @@ local Builder =
 	-- Should this entity use this builder?
 	IsApplicable = function( self, ent ) 
 		
-		return ent:GetModel():EndsWith( "models/eli.mdl" );
+		return ent:GetModel():EndsWith( "models/eli.mdl" )
 	
 	end,
 }

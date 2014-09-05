@@ -161,7 +161,7 @@ end
 
 function SetColor( index, color )
 
-	if ( !TeamInfo[ index ] ) then return false; end
+	if ( !TeamInfo[ index ] ) then return false end
 	TeamInfo[ index ].Color = color
 
 	return color

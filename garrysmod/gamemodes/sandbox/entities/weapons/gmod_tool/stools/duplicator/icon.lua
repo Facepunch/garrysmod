@@ -10,7 +10,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	--
 	-- Remove the global straight away
 	--
-	local Dupe = g_ClientSaveDupe;
+	local Dupe = g_ClientSaveDupe
 	g_ClientSaveDupe = nil
 
 	local FOV = 17
@@ -18,12 +18,12 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	--
 	-- This is gonna take some cunning to look awesome!
 	--
-	local Size		= Dupe.Maxs - Dupe.Mins;
-	local Radius	= Size:Length() * 0.5;
+	local Size		= Dupe.Maxs - Dupe.Mins
+	local Radius	= Size:Length() * 0.5
 	local CamDist	= Radius / math.sin( math.rad( FOV ) / 2 ) -- Works out how far the camera has to be away based on radius + fov!
-	local Center	= LerpVector( 0.5, Dupe.Mins, Dupe.Maxs );
-	local CamPos	= Center + Vector( -1, 0, 0.5 ):GetNormal() * CamDist;
-	local EyeAng	= ( Center - CamPos ):GetNormal():Angle();
+	local Center	= LerpVector( 0.5, Dupe.Mins, Dupe.Maxs )
+	local CamPos	= Center + Vector( -1, 0, 0.5 ):GetNormal() * CamDist
+	local EyeAng	= ( Center - CamPos ):GetNormal():Angle()
 	
 	--
 	-- The base view
@@ -225,14 +225,14 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 		w			=	512,
 		h			=	512,
 		quality		=	95
-	});
+	})
 
 	--
 	-- Encode and compress the dupe
 	--
 	local Dupe = util.TableToJSON( Dupe )
 	if ( !isstring( Dupe ) ) then
-		Msg( "There was an error converting the dupe to a json string" );
+		Msg( "There was an error converting the dupe to a json string" )
 	end
 
 	Dupe = util.Compress( Dupe )

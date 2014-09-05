@@ -201,7 +201,7 @@ function PANEL:FindAndSelectMaterial( Value )
 			end
 			
 			-- Add the overlay to this button
-			Mat.PaintOver = HighlightedButtonPaint;
+			Mat.PaintOver = HighlightedButtonPaint
 			self.SelectedMaterial = Mat
 
 		end

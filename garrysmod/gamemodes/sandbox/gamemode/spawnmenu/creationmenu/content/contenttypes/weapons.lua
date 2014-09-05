@@ -21,7 +21,7 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, nod
 	for CategoryName, v in SortedPairs( Categorised ) do
 		
 		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, "icon16/gun.png" );
+		local node = tree:AddNode( CategoryName, "icon16/gun.png" )
 				
 		-- When we click on the node - populate it using this function
 		node.DoPopulate = function( self )
@@ -52,7 +52,7 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, nod
 		node.DoClick = function( self )
 	
 			self:DoPopulate()		
-			pnlContent:SwitchPanel( self.PropPanel );
+			pnlContent:SwitchPanel( self.PropPanel )
 	
 		end
 		
@@ -70,7 +70,7 @@ end )
 spawnmenu.AddCreationTab( "#spawnmenu.category.weapons", function()
 
 	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
-	ctrl:CallPopulateHook( "PopulateWeapons" );
+	ctrl:CallPopulateHook( "PopulateWeapons" )
 	return ctrl
 
 end, "icon16/gun.png", 10 )

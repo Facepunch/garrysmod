@@ -12,7 +12,7 @@ if CLIENT then
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "decoy_desc"
-   };
+   }
 
    SWEP.Icon = "vgui/ttt/icon_beacon"
 end

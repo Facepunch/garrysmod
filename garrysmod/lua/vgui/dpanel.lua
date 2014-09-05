@@ -60,13 +60,13 @@ end
 function PANEL:OnMousePressed( mousecode )
 
 	if ( self.m_bSelectionCanvas && !dragndrop.IsDragging() ) then 
-		self:StartBoxSelection();
+		self:StartBoxSelection()
 	return end
 
 	if ( self:IsDraggable() ) then
 	
 		self:MouseCapture( true )
-		self:DragMousePress( mousecode );
+		self:DragMousePress( mousecode )
 	
 	end
 

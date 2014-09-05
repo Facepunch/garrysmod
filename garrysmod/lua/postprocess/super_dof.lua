@@ -128,7 +128,7 @@ function PANEL:Init()
 	Panel:Dock( BOTTOM )
 	Panel:DockPadding( 4, 4, 4, 4 )
 	Panel:DockMargin( 0, 4, 0, 0 )
-	Panel:SetTall( 28 );
+	Panel:SetTall( 28 )
 	Panel:MoveToBack()
 		
 	self:SetSize( 600, 220 )
@@ -148,7 +148,7 @@ local matFB	 = Material( "pp/fb" )
 
 function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, bSpin, inView, ViewFOV )
 
-	local OldRT 	= render.GetRenderTarget();
+	local OldRT 	= render.GetRenderTarget()
 	local view 		= { x = 0, y = 0, w = ScrW(), h = ScrH() }
 	local fDistance = vOrigin:Distance( vFocus )
 	
@@ -312,7 +312,7 @@ local function RenderSceneHook( ViewOrigin, ViewAngles, ViewFOV )
 	if ( FrameTime() == 0 ) then return end
 	
 	RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
-	return true;
+	return true
 
 end
 hook.Add( "RenderScene", "RenderSuperDoF", RenderSceneHook )

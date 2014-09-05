@@ -32,7 +32,7 @@ SQLStr = sql.SQLStr
 -----------------------------------------------------------]]
 function sql.TableExists( name )
 
-	local r = sql.Query( "select name FROM sqlite_master WHERE name="..SQLStr( name ).." AND type='table'" );
+	local r = sql.Query( "select name FROM sqlite_master WHERE name="..SQLStr( name ).." AND type='table'" )
 	
 	if ( r ) then return true end
 	
@@ -48,7 +48,7 @@ function sql.QueryRow( query, row )
 
 	row = row or 1
 
-	local r = sql.Query( query );
+	local r = sql.Query( query )
 	
 	if ( r ) then return r[ row ] end
 	
@@ -62,7 +62,7 @@ end
 -----------------------------------------------------------]]
 function sql.QueryValue( query )
 
-	local r = sql.QueryRow( query );
+	local r = sql.QueryRow( query )
 	
 	if ( r ) then 
 	

@@ -58,7 +58,7 @@ function ENT:TestCollision( startpos, delta, isbox, extents )
 	local hitpos = util.IntersectRayWithPlane( startpos, delta:GetNormal(), self:GetPos(), fwd )
 	if ( !hitpos ) then return end
 	
-	local dist = self:GetPos():Distance( hitpos );
+	local dist = self:GetPos():Distance( hitpos )
 	if ( dist > size ) then return end
 	if ( dist < size * 0.9 ) then return end
 	
@@ -108,6 +108,6 @@ function ENT:GetGrabPos( Pos, Forward )
 	local angle = math.atan2( hitpos.y, hitpos.z ) + math.pi
 	angle = math.deg(angle) * -1
 	
-	return arrowdir * angle;
+	return arrowdir * angle
 
 end

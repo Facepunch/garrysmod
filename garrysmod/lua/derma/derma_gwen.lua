@@ -12,7 +12,7 @@ GWEN = {}
 
 function GWEN.CreateTextureBorder( _x, _y, _w, _h, l, t, r, b )
 
-	local mat = SKIN.GwenTexture;
+	local mat = SKIN.GwenTexture
 	local tex = mat:GetTexture( "$basetexture" )
 	
 	_x = _x / tex:Width()
@@ -55,7 +55,7 @@ end
 
 function GWEN.CreateTextureNormal( _x, _y, _w, _h )
 
-	local mat = SKIN.GwenTexture;
+	local mat = SKIN.GwenTexture
 	local tex = mat:GetTexture( "$basetexture" )
 	
 	_x = _x / tex:Width()
@@ -81,11 +81,11 @@ end
 
 function GWEN.CreateTextureCentered( _x, _y, _w, _h )
 
-	local mat = SKIN.GwenTexture;
+	local mat = SKIN.GwenTexture
 	local tex = mat:GetTexture( "$basetexture" )
 	
-	local width = _w;
-	local height = _h;
+	local width = _w
+	local height = _h
 	
 	_x = _x / tex:Width()
 	_y = _y / tex:Height()
@@ -94,10 +94,10 @@ function GWEN.CreateTextureCentered( _x, _y, _w, _h )
 		
 	return function( x, y, w, h, col )
 		
-		x = x + (w-width)*0.5;
-		y = y + (h-height)*0.5;
-		w = width;
-		h = height;
+		x = x + (w-width)*0.5
+		y = y + (h-height)*0.5
+		w = width
+		h = height
 		
 		surface.SetMaterial( mat )
 		
@@ -115,7 +115,7 @@ end
 
 function GWEN.TextureColor( x, y )
 
-	local mat = SKIN.GwenTexture;
+	local mat = SKIN.GwenTexture
 	return mat:GetColor( x, y )
 
 end

@@ -42,6 +42,6 @@ function DoPropSpawnedEffect( e )
 
 	if ( DisablePropCreateEffect ) then return end
 
-	e:SetSpawnEffect( true );
+	e:SetSpawnEffect( true )
 
 end

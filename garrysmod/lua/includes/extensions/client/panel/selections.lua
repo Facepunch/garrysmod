@@ -9,32 +9,32 @@ local meta = FindMetaTable( "Panel" )
 
 function meta:SetSelectionCanvas( bSet )
 
-	self.m_bSelectionCanvas = bSet;
+	self.m_bSelectionCanvas = bSet
 	self:SetMouseInputEnabled( true )
 
 end
 
 function meta:IsSelectionCanvas()
 
-	return self.m_bSelectionCanvas;
+	return self.m_bSelectionCanvas
 
 end
 
 function meta:SetSelectable( bSet )
 
-	self.m_bSelectable = bSet;
+	self.m_bSelectable = bSet
 
 end
 
 function meta:ToggleSelection()
 
-	self:SetSelected( !self.m_bSelected );
+	self:SetSelected( !self.m_bSelected )
 
 end
 
 function meta:UnselectAll()
 
-	self:SetSelected( false );
+	self:SetSelected( false )
 
 	local children = self:GetChildren()
 	for k, v in pairs( children ) do
@@ -49,7 +49,7 @@ function meta:SetSelected( bSet )
 
 	if ( self.m_bSelected == bSet ) then return end
 	
-	self.m_bSelected = bSet;
+	self.m_bSelected = bSet
 	
 	if ( self.ApplySchemeSettings ) then
 		self:ApplySchemeSettings()
@@ -60,13 +60,13 @@ end
 function meta:IsSelected( bSet )
 
 	if ( !self:IsSelectable() ) then return false end
-	return self.m_bSelected == true;
+	return self.m_bSelected == true
 
 end
 
 function meta:IsSelectable()
 
-	return self.m_bSelectable == true;
+	return self.m_bSelectable == true
 
 end
 
@@ -180,7 +180,7 @@ function meta:GetChildrenInRect( x, y, w, h )
 			table.insert( tab, v )
 		end
 		
-		table.Add( tab, v:GetChildrenInRect( x - v.x, y - v.y, w, h ) );
+		table.Add( tab, v:GetChildrenInRect( x - v.x, y - v.y, w, h ) )
 	
 	end
 	
@@ -200,7 +200,7 @@ function meta:GetSelectedChildren()
 			table.insert( tab, v )
 		end
 		
-		table.Add( tab, v:GetSelectedChildren() );
+		table.Add( tab, v:GetSelectedChildren() )
 	
 	end
 	
@@ -238,7 +238,7 @@ function meta:EndBoxSelection()
 	local x, y, w, h = GetSelectionRect()
 	
 	
-	local children = self:GetChildrenInRect( x, y, w, h, true );
+	local children = self:GetChildrenInRect( x, y, w, h, true )
 	for k, v in pairs( children ) do
 	
 		v:ToggleSelection()
@@ -246,7 +246,7 @@ function meta:EndBoxSelection()
 	end
 	
 	SelectionCanvas = nil
-	StartX, StartY = 0, 0;
+	StartX, StartY = 0, 0
 	
 	return true
 

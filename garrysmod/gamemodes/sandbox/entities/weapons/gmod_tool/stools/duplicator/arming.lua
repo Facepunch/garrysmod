@@ -13,7 +13,7 @@ if ( CLIENT ) then
 		--
 		local dupe = engine.OpenDupe( arg[1] )
 		if ( !dupe ) then
-			MsgN( "Error loading dupe.. (", arg[1], ")" );
+			MsgN( "Error loading dupe.. (", arg[1], ")" )
 			return 
 		end
 
@@ -60,15 +60,15 @@ if ( SERVER ) then
 			if ( !isvector( Dupe.Mins ) ) then return end
 			if ( !isvector( Dupe.Maxs ) ) then return end
 
-			client.CurrentDupe = Dupe;
+			client.CurrentDupe = Dupe
 
-			client:ConCommand( "gmod_tool duplicator" );
+			client:ConCommand( "gmod_tool duplicator" )
 
 			--
 			-- Disable the Spawn Button
 			--
 			net.Start( "CopiedDupe" )
-				net.WriteUInt( 0, 1 );
+				net.WriteUInt( 0, 1 )
 			net.Send( client )
 	end )
 

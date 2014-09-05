@@ -74,7 +74,7 @@ function Run( player, command, arguments, args )
 		player:ChatPrint( "Unknown Command: '" .. command .. "'\n" )
 	end
 	
-	return false;
+	return false
 end
 
 --[[---------------------------------------------------------

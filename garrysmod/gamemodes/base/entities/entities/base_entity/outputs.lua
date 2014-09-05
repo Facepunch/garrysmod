@@ -8,7 +8,7 @@
 -- the second is value.
 
 function ENT:StoreOutput(name, info)
-	local rawData = string.Explode(",",info);
+	local rawData = string.Explode(",",info)
 	
 	local Output = {}
 	Output.entities = rawData[1] or ""
@@ -20,7 +20,7 @@ function ENT:StoreOutput(name, info)
 	self.Outputs = self.Outputs or {}
 	self.Outputs[name] = self.Outputs[name] or {}
 	
-	table.insert(self.Outputs[name], Output);
+	table.insert(self.Outputs[name], Output)
 end
 
 -- Nice helper function, this does all the work. Returns false if the
@@ -30,18 +30,18 @@ local function FireSingleOutput(output, this, activator)
 
 	if (output.times == 0) then return false end
 
-	local entitiesToFire = {};
+	local entitiesToFire = {}
 
 	if (output.entities == "!activator") then	entitiesToFire = { activator }
 	elseif (output.entities == "!self") then	entitiesToFire = { this }
 	elseif (output.entities == "!player") then	entitiesToFire = player.GetAll()
-	else						entitiesToFire = ents.FindByName( output.entities );
+	else						entitiesToFire = ents.FindByName( output.entities )
 	end
 	
 	for _,ent in pairs(entitiesToFire) do
 		if (ent:IsValid()) then
 			if (output.delay == 0) then
-				ent:Input(output.input, activator, this, output.param);
+				ent:Input(output.input, activator, this, output.param)
 			else
 				timer.Simple(output.delay,
 					     function()
@@ -54,7 +54,7 @@ local function FireSingleOutput(output, this, activator)
 	end
 	
 	if (output.times ~= -1) then
-		output.times = output.times - 1;
+		output.times = output.times - 1
 	end
 
 	return (output.times > 0) || (output.times == -1)

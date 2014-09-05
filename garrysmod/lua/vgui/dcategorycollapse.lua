@@ -74,7 +74,7 @@ function PANEL:Init()
 	self.Header:Dock( TOP )
 	self.Header:SetSize( 20, 20 )
 	
-	self:SetSize( 16, 16 );
+	self:SetSize( 16, 16 )
 	self:SetExpanded( true )
 	self:SetMouseInputEnabled( true )
 	
@@ -236,7 +236,7 @@ end
 function PANEL:DoExpansion( b )
 
 	if ( self.m_bSizeExpanded == b ) then return end
-	self:Toggle();
+	self:Toggle()
 	
 end
 
@@ -272,7 +272,7 @@ function PANEL:PerformLayout()
 	self.Header:ApplySchemeSettings()
 	
 	self.animSlide:Run()
-	self:UpdateAltLines();
+	self:UpdateAltLines()
 
 end
 
@@ -281,7 +281,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:OnMousePressed( mcode )
 
-	if ( !self:GetParent().OnMousePressed ) then return end;
+	if ( !self:GetParent().OnMousePressed ) then return end
 	
 	return self:GetParent():OnMousePressed( mcode )
 

@@ -47,7 +47,7 @@ function GM:HUDItemPickedUp( itemname )
 		
 	local pickup = {}
 	pickup.time 		= CurTime()
-	pickup.name 		= "#"..itemname;
+	pickup.name 		= "#"..itemname
 	pickup.holdtime 	= 5
 	pickup.font 		= "DermaDefaultBold"
 	pickup.fadein		= 0.04
@@ -96,7 +96,7 @@ function GM:HUDAmmoPickedUp( itemname, amount )
 		
 	local pickup = {}
 	pickup.time 		= CurTime()
-	pickup.name 		= "#"..itemname.."_ammo";
+	pickup.name 		= "#"..itemname.."_ammo"
 	pickup.holdtime 	= 5
 	pickup.font 		= "DermaDefaultBold"
 	pickup.fadein		= 0.04

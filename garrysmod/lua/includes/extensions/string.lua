@@ -191,31 +191,31 @@ function string.NiceTime( seconds )
 
 	if ( seconds < 60 ) then
 		local t = math.floor( seconds )
-		return t .. pluralizeString(" second", t);
+		return t .. pluralizeString(" second", t)
 	end
 
 	if ( seconds < 60 * 60 ) then
 		local t = math.floor( seconds / 60 )
-		return t .. pluralizeString(" minute", t);
+		return t .. pluralizeString(" minute", t)
 	end
 
 	if ( seconds < 60 * 60 * 24 ) then
 		local t = math.floor( seconds / (60 * 60) )
-		return t .. pluralizeString(" hour", t);
+		return t .. pluralizeString(" hour", t)
 	end
 
 	if ( seconds < 60 * 60 * 24 * 7 ) then
 		local t = math.floor( seconds / (60 * 60 * 24) )
-		return t .. pluralizeString(" day", t);
+		return t .. pluralizeString(" day", t)
 	end
 	
 	if ( seconds < 60 * 60 * 24 * 7 * 52 ) then
 		local t = math.floor( seconds / (60 * 60 * 24 * 7) )
-		return t .. pluralizeString(" week", t);
+		return t .. pluralizeString(" week", t)
 	end
 
 	local t = math.floor( seconds / (60 * 60 * 24 * 7 * 52) )
-	return t .. pluralizeString(" year", t);
+	return t .. pluralizeString(" year", t)
 
 end
 
@@ -321,7 +321,7 @@ end
 
 function string.FromColor( color )
 
-   return Format( "%i %i %i %i", color.r, color.g, color.b, color.a );
+   return Format( "%i %i %i %i", color.r, color.g, color.b, color.a )
 
 end
 

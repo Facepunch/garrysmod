@@ -2,7 +2,7 @@
 if ( !util ) then return end
 
 if ( CLIENT ) then
-	include( "util/worldpicker.lua" );
+	include( "util/worldpicker.lua" )
 end
 
 --[[---------------------------------------------------------
@@ -253,7 +253,7 @@ local T =
 		local num = num or 1
 
 		if ( num > #self.objs ) then
-			error( "Overpopped stack!" );
+			error( "Overpopped stack!" )
 		end
 
 		for i = num, 1, -1 do

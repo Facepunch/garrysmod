@@ -14,7 +14,7 @@ if CLIENT then
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "ump_desc"
-   };
+   }
 end
 
 

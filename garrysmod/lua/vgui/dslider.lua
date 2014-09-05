@@ -169,8 +169,8 @@ function PANEL:PerformLayout()
 	
 	if ( self.m_bTrappedInside ) then
 	
-		w = w - iw;
-		h = h - ih;
+		w = w - iw
+		h = h - ih
 		self.Knob:SetPos( (self.m_fSlideX or 0) * w, (self.m_fSlideY or 0) * h )
 	
 	else

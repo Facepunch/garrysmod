@@ -7,8 +7,8 @@ local PANEL = {}
 
 function PANEL:Init()
 	
-	self.Tree = vgui.Create( "DTree", self );
-	self.Tree:SetClickOnDragHover( true );
+	self.Tree = vgui.Create( "DTree", self )
+	self.Tree:SetClickOnDragHover( true )
 	self.Tree.OnNodeSelected = function( Tree, Node ) hook.Call( "ContentSidebarSelection", GAMEMODE, self:GetParent(), Node ) end
 	self.Tree:Dock( FILL )
 	self.Tree:SetBackgroundColor( Color( 240, 240, 240, 255 ) )
@@ -46,7 +46,7 @@ function PANEL:CreateSaveNotification()
 		SavePanel.DoClick = function()
 		
 			SavePanel:SlideUp( 0.2 )
-			hook.Run( "OnSaveSpawnlist" );
+			hook.Run( "OnSaveSpawnlist" )
 		
 		end
 		

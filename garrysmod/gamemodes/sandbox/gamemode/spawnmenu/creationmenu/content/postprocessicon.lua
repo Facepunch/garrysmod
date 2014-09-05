@@ -148,7 +148,7 @@ function PANEL:Copy()
 	copy.ConVars = self.ConVars
 	copy:Setup( self.name, self.icon, self.label )	
 	
-	return copy;
+	return copy
 	
 end
 

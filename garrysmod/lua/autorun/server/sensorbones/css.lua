@@ -4,22 +4,22 @@
 -- These are the physics bone numbers
 --
 
-local PLVS		= 0;	
-local SPNE		= 1;
-local TRSO		= 2;
-local RSLD		= 3;
-local LSLD		= 4;
-local LARM		= 5;
-local LWST		= 6;
-local LHND		= 7;
-local RARM		= 8;
-local RWST		= 9;
-local RHND		= 10;
-local RTHY		= 11;
-local RCLF		= 12;
-local LTHY		= 13;
-local LCLF		= 14;
-local HEAD		= 15;
+local PLVS		= 0
+local SPNE		= 1
+local TRSO		= 2
+local RSLD		= 3
+local LSLD		= 4
+local LARM		= 5
+local LWST		= 6
+local LHND		= 7
+local RARM		= 8
+local RWST		= 9
+local RHND		= 10
+local RTHY		= 11
+local RCLF		= 12
+local LTHY		= 13
+local LCLF		= 14
+local HEAD		= 15
 
 local Builder = 
 {
@@ -94,7 +94,7 @@ local Builder =
 	--
 	Complete = function( self, player, sensor, rotation, pos, ang )
 
-		pos[SPNE] = LerpVector( 0.45, pos[SPNE], pos[HEAD] );
+		pos[SPNE] = LerpVector( 0.45, pos[SPNE], pos[HEAD] )
 		pos[RWST] = pos[RARM]
 		pos[LWST] = pos[LARM]
 
@@ -103,7 +103,7 @@ local Builder =
 	-- We're used as a default - no need to return true to anything here.
 	IsApplicable = function( self, ent ) 
 
-		local mdl = ent:GetModel();
+		local mdl = ent:GetModel()
 
 		if ( mdl:EndsWith( "models/player/ct_gign.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/ct_sas.mdl" ) ) then return true end
@@ -114,8 +114,7 @@ local Builder =
 		if ( mdl:EndsWith( "models/player/t_phoenix.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models//player/t_arctic.mdl" ) ) then return true end
 
-		return false; 
-
+		return false
 	end,
 }
 

@@ -69,7 +69,7 @@ function PANEL:Init()
 		self:SetColor( Color( color.r, color.g, color.b, self.m_bAlpha and color.a or 255 ) )
 	end
 	self.Palette.OnRightClickButton = function( ctrl, btn )
-		ctrl:SaveColor( btn, self:GetColor() );
+		ctrl:SaveColor( btn, self:GetColor() )
 	end
 	
 
@@ -388,7 +388,7 @@ end
 
 function PANEL:GetVector()
 
-	local col = self:GetColor();
+	local col = self:GetColor()
 	return Vector( col.r / 255, col.g / 255, col.b / 255 )
 
 end

@@ -78,6 +78,6 @@ function gmsave.ShouldSaveEntity( ent, t )
 	--
 	-- Default action is to save..
 	--
-	return true;
+	return true
 	
 end

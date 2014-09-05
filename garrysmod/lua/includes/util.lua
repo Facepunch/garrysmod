@@ -2,7 +2,7 @@
 --
 -- Seed the rand!
 --
-math.randomseed( os.time() );
+math.randomseed( os.time() )
 
 --
 -- Alias string.Format to global Format
@@ -59,7 +59,7 @@ function PrintTable ( t, indent, done )
 		if  ( istable(value) && !done[value] ) then
 
 			done[value] = true
-			Msg( tostring(key) .. ":" .. "\n" );
+			Msg( tostring(key) .. ":" .. "\n" )
 			PrintTable (value, indent + 2, done)
 
 		else
@@ -172,7 +172,7 @@ end
 -----------------------------------------------------------]]
 function AccessorFuncNW( tab, varname, name, varDefault, iForce )
 
-	ErrorNoHalt( "[AccessorFuncNW] is depreciated. Look up 'SetupDataTables'. Sorry :(\n" );
+	ErrorNoHalt( "[AccessorFuncNW] is depreciated. Look up 'SetupDataTables'. Sorry :(\n" )
 
 end
 
@@ -218,7 +218,7 @@ function Lerp( delta, from, to )
 	if ( delta > 1 ) then return to end
 	if ( delta < 0 ) then return from end
 	
-	return from + (to - from) * delta;
+	return from + (to - from) * delta
 
 end
 
@@ -321,24 +321,24 @@ end
 -----------------------------------------------------------]]
 function IsEnemyEntityName( victimtype )
 
-	if ( victimtype == "npc_combine_s" ) then return true; end
-	if ( victimtype == "npc_cscanner" ) then return true; end
-	if ( victimtype == "npc_manhack" ) then return true; end
-	if ( victimtype == "npc_hunter" ) then return true; end
-	if ( victimtype == "npc_antlion" ) then return true; end
-	if ( victimtype == "npc_antlionguard" ) then return true; end
-	if ( victimtype == "npc_antlion_worker" ) then return true; end
-	if ( victimtype == "npc_fastzombie_torso" ) then return true; end
-	if ( victimtype == "npc_fastzombie" ) then return true; end
-	if ( victimtype == "npc_headcrab" ) then return true; end
-	if ( victimtype == "npc_headcrab_fast" ) then return true; end
-	if ( victimtype == "npc_poisonzombie" ) then return true; end
-	if ( victimtype == "npc_headcrab_poison" ) then return true; end
-	if ( victimtype == "npc_zombie" ) then return true; end
-	if ( victimtype == "npc_zombie_torso" ) then return true; end
-	if ( victimtype == "npc_zombine" ) then return true; end
-	if ( victimtype == "npc_gman" ) then return true; end
-	if ( victimtype == "npc_breen" ) then return true; end
+	if ( victimtype == "npc_combine_s" ) then return true end
+	if ( victimtype == "npc_cscanner" ) then return true end
+	if ( victimtype == "npc_manhack" ) then return true end
+	if ( victimtype == "npc_hunter" ) then return true end
+	if ( victimtype == "npc_antlion" ) then return true end
+	if ( victimtype == "npc_antlionguard" ) then return true end
+	if ( victimtype == "npc_antlion_worker" ) then return true end
+	if ( victimtype == "npc_fastzombie_torso" ) then return true end
+	if ( victimtype == "npc_fastzombie" ) then return true end
+	if ( victimtype == "npc_headcrab" ) then return true end
+	if ( victimtype == "npc_headcrab_fast" ) then return true end
+	if ( victimtype == "npc_poisonzombie" ) then return true end
+	if ( victimtype == "npc_headcrab_poison" ) then return true end
+	if ( victimtype == "npc_zombie" ) then return true end
+	if ( victimtype == "npc_zombie_torso" ) then return true end
+	if ( victimtype == "npc_zombine" ) then return true end
+	if ( victimtype == "npc_gman" ) then return true end
+	if ( victimtype == "npc_breen" ) then return true end
 
 	return false
 
@@ -349,15 +349,15 @@ end
 -----------------------------------------------------------]]
 function IsFriendEntityName( victimtype )
 
-	if ( victimtype == "npc_monk" ) then return true; end
-	if ( victimtype == "npc_alyx" ) then return true; end
-	if ( victimtype == "npc_barney" ) then return true; end
-	if ( victimtype == "npc_citizen" ) then return true; end
-	if ( victimtype == "npc_kleiner" ) then return true; end
-	if ( victimtype == "npc_magnusson" ) then return true; end
-	if ( victimtype == "npc_eli" ) then return true; end
-	if ( victimtype == "npc_mossman" ) then return true; end
-	if ( victimtype == "npc_vortigaunt" ) then return true; end
+	if ( victimtype == "npc_monk" ) then return true end
+	if ( victimtype == "npc_alyx" ) then return true end
+	if ( victimtype == "npc_barney" ) then return true end
+	if ( victimtype == "npc_citizen" ) then return true end
+	if ( victimtype == "npc_kleiner" ) then return true end
+	if ( victimtype == "npc_magnusson" ) then return true end
+	if ( victimtype == "npc_eli" ) then return true end
+	if ( victimtype == "npc_mossman" ) then return true end
+	if ( victimtype == "npc_vortigaunt" ) then return true end
 
 	return false
 

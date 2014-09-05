@@ -84,7 +84,7 @@ function SimpleText(text, font, x, y, colour, xalign, yalign)
 		y = y - h
 	end
 	
-	surface.SetTextPos( math.ceil( x ), math.ceil( y ) );
+	surface.SetTextPos( math.ceil( x ), math.ceil( y ) )
 	
 	if (colour!=nil) then
 		local alpha = 255

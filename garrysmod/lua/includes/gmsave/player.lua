@@ -6,7 +6,7 @@ function gmsave.PlayerSave( ent )
 	tab.Origin = ent:GetPos()
 	tab.Angle = ent:GetAngles()
 
-	return tab;
+	return tab
 
 end
 

@@ -78,7 +78,7 @@ function table.Merge(dest, source)
 	for k,v in pairs(source) do
 	
 		if ( type(v) == 'table' && type(dest[k]) == 'table' ) then
-			-- don't overwrite one table with another;
+			-- don't overwrite one table with another
 			-- instead merge them recurisvely
 			table.Merge(dest[k], v)
 		else
@@ -612,7 +612,7 @@ function RandomPairs( pTable, Desc )
 	end
 	
 	for k, v in pairs( SortedIndex ) do
-		SortedIndex[ k ] = v.key;
+		SortedIndex[ k ] = v.key
 	end
 	
 	pTable.__SortedIndex = SortedIndex
@@ -704,7 +704,7 @@ function table.RemoveByValue( tbl, val )
 	if ( !key ) then return false end
 	
 	table.remove( tbl, key )
-	return key;
+	return key
 	
 end
 
@@ -718,14 +718,14 @@ end
 
 function table.Reverse( tbl )
 
-	 local len = #tbl;
-	 local ret = {};
+	 local len = #tbl
+	 local ret = {}
 	 
 	 for i = len, 1, -1 do
-		  ret[len-i+1] = tbl[i];
+		  ret[len-i+1] = tbl[i]
 	 end
 
-	 return ret;
+	 return ret
   
 end
 

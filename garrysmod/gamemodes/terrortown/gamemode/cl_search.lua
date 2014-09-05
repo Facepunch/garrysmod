@@ -76,7 +76,7 @@ local TypeToMat = {
    stime="wtester",
    lastid="lastid",
    kills="list"
-};
+}
 
 -- Accessor for better fail handling
 local function IconForInfoType(t, data)

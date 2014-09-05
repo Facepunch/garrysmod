@@ -60,7 +60,7 @@ saverestore.AddRestoreHook( "NumpadModule", Restore )
 -----------------------------------------------------------]]
 local function GetPlayerIndex( ply )
 	
-	if ( !IsValid( ply ) ) then return 0; end
+	if ( !IsValid( ply ) ) then return 0 end
 	
 	return ply:UniqueID()
 	
@@ -99,7 +99,7 @@ end
 -----------------------------------------------------------]]
 function Activate( pl, num, bIsButton )
 
-	local key = math.Clamp( tonumber(num), 0, 256 );
+	local key = math.Clamp( tonumber(num), 0, 256 )
 
 	-- Hack. Kinda. Don't call it again until the key has been lifted.
 	-- When holding down 9 or 3 on the numpad it will repeat. Ignore that.
@@ -109,14 +109,14 @@ function Activate( pl, num, bIsButton )
 		pl.keystate[ key ] = true
 	end
 		
-	button_fired = bIsButton;
+	button_fired = bIsButton
 
 		FireImpulse( keys_in[ key ], pl, nil )
 
 		-- And fire `all`
 		FireImpulse( keys_in[ key ], pl, 0 )
 
-	button_fired = false;
+	button_fired = false
 	
 end
 
@@ -125,21 +125,21 @@ end
 -----------------------------------------------------------]]
 function Deactivate( pl, num, bIsButton )
 
-	local key = math.Clamp( tonumber(num) , 0, 256 );
+	local key = math.Clamp( tonumber(num) , 0, 256 )
 	
 	if ( IsValid( pl ) ) then
 		pl.keystate = pl.keystate or {}
 		pl.keystate[ key ] = nil
 	end
 	
-	button_fired = bIsButton;
+	button_fired = bIsButton
 
 		FireImpulse( keys_out[ key ], pl, nil )
 
 		-- And fire `all`
 		FireImpulse( keys_out[ key ], pl, 0 )
 
-	button_fired = false;
+	button_fired = false
 	
 end
 
@@ -148,7 +148,7 @@ end
 -----------------------------------------------------------]]
 function Toggle( pl, num )
 
-	local key = math.Clamp( tonumber(num), 0, 256 );
+	local key = math.Clamp( tonumber(num), 0, 256 )
 	
 	pl.keystate = pl.keystate or {}
 	if ( pl.keystate[ key ] ) then return Deactivate( pl, num ) end
@@ -177,7 +177,7 @@ end
 -----------------------------------------------------------]]
 function OnDown( ply, key, name, ... )
 	
-	if (!key) then ErrorNoHalt("ERROR: numpad.OnDown key is nil!\n"); return end
+	if (!key) then ErrorNoHalt("ERROR: numpad.OnDown key is nil!\n") return end
 	keys_in[ key ] = keys_in[ key ] or {}
 	
 	local impulse = {}
@@ -195,7 +195,7 @@ end
 -----------------------------------------------------------]]
 function OnUp( ply, key, name, ... )
 
-	if (!key) then ErrorNoHalt("ERROR: numpad.OnUp key is nil!\n"); return end
+	if (!key) then ErrorNoHalt("ERROR: numpad.OnUp key is nil!\n") return end
 	keys_out[ key ] = keys_out[ key ] or {}
 	
 	local impulse = {}

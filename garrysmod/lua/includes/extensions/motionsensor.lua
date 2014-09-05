@@ -110,7 +110,7 @@ motionsensor.ProcessAngle = function( translator, sensor, pos, ang, special_vect
 
 	if ( a == nil || b == nil || up == nil ) then return end
 
-	ang[ boneid ]	= (a-b):GetNormal():AngleEx( up:GetNormal() );
+	ang[ boneid ]	= (a-b):GetNormal():AngleEx( up:GetNormal() )
 
 	if ( v.adjust ) then
 		ang[ boneid ] = ang[ boneid ] + v.adjust
@@ -162,7 +162,7 @@ motionsensor.ProcessAnglesTable = function( translator, sensor, pos, rotation )
 
 	for iPasses = 1, 5 do
 
-		local cur_process = reprocess;
+		local cur_process = reprocess
 		reprocess = {}
 
 		for k, v in pairs( cur_process ) do

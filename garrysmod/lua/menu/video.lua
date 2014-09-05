@@ -33,7 +33,7 @@ concommand.Add( "gm_video", function()
 		fps			= vid_fps:GetFloat(),
 		lockfps		= true
 		
-	});
+	})
 	
 	if ( !ActiveVideo ) then
 	
@@ -49,6 +49,6 @@ hook.Add( "DrawOverlay", "CaptureFrames", function()
 
 	if ( !ActiveVideo ) then return end
 	
-	ActiveVideo:AddFrame( FrameTime(), true );
+	ActiveVideo:AddFrame( FrameTime(), true )
 
 end )

@@ -245,7 +245,7 @@ local LastWordContext = {
    [KILL_SUICIDE] = " *kills self*",
    [KILL_FALL] = " *SPLUT*",
    [KILL_BURN] = " *crackle*"
-};
+}
 
 local function LastWordsMsg(ply, words)
    -- only append "--" if there's no ending interpunction

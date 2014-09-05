@@ -56,7 +56,7 @@ function PANEL:OnCursorMoved( x, y )
 	if ( col ) then 
 		self.m_RGB = col
 		self.m_RGB.a = 255
-		self:OnChange( self.m_RGB );
+		self:OnChange( self.m_RGB )
 	end
 	
 	self.LastX = x
@@ -79,7 +79,7 @@ end
 function PANEL:OnMousePressed( mcode )
 
 	self:MouseCapture( true )
-	self:OnCursorMoved( self:CursorPos() );
+	self:OnCursorMoved( self:CursorPos() )
 	
 end
 
@@ -90,7 +90,7 @@ end
 function PANEL:OnMouseReleased( mcode )
 
 	self:MouseCapture( false )
-	self:OnCursorMoved( self:CursorPos() );
+	self:OnCursorMoved( self:CursorPos() )
 
 end
 

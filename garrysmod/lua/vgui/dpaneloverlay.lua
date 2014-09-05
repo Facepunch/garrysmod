@@ -32,9 +32,9 @@ end
 
 function PANEL:PaintInnerCorners( size )
 
-	local w, h = self:GetSize();
+	local w, h = self:GetSize()
 	
-	surface.SetTexture( InnerCorner8 );
+	surface.SetTexture( InnerCorner8 )
 	surface.DrawTexturedRectRotated( size*0.5, size*0.5, size, size, 0 )
 	surface.DrawTexturedRectRotated( w-size*0.5, size*0.5, size, size, -90 )
 	surface.DrawTexturedRectRotated( w-size*0.5, h-size*0.5, size, size, 180 )
@@ -44,9 +44,9 @@ end
 
 function PANEL:PaintDifferentColours( cola, colb, colc, cold, size )
 
-	local w, h = self:GetSize();
+	local w, h = self:GetSize()
 	
-	surface.SetTexture( InnerCorner8 );
+	surface.SetTexture( InnerCorner8 )
 	surface.SetDrawColor( cola )
 	surface.DrawTexturedRectRotated( size*0.5, size*0.5, size, size, 0 )
 	surface.SetDrawColor( colb )

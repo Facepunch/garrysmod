@@ -14,7 +14,7 @@ properties.Add( "bodygroups", {
 		--
 		-- Get a list of bodygroups
 		--
-		local options = ent:GetBodyGroups();
+		local options = ent:GetBodyGroups()
 		if ( !options ) then return false end
 
 		--
@@ -34,7 +34,7 @@ properties.Add( "bodygroups", {
 		--
 		-- Get a list of bodygroups
 		--
-		local options = ent:GetBodyGroups();
+		local options = ent:GetBodyGroups()
 
 		--
 		-- Add a submenu to our automatically created menu option

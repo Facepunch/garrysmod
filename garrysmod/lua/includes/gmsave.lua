@@ -32,18 +32,18 @@ if ( SERVER ) then
 
 		if ( !istable( tab ) ) then
 			-- Error loading save!
-			MsgN( "gm_load: Couldn't decode from json!" );
-			return false;
+			MsgN( "gm_load: Couldn't decode from json!" )
+			return false
 		end
 		
 		game.CleanUpMap()
 		
 		if ( IsValid( ply ) ) then
 
-			ply:SendLua( "hook.Run( \"OnSpawnMenuClose\" )" );
+			ply:SendLua( "hook.Run( \"OnSpawnMenuClose\" )" )
 
 			g_WavSound = g_WavSound + 1
-			if ( g_WavSound > 4 ) then g_WavSound = 1; end
+			if ( g_WavSound > 4 ) then g_WavSound = 1 end
 		
 			ply:SendLua( "surface.PlaySound( \"garrysmod/save_load"..g_WavSound..".wav\" )" )
 
@@ -54,7 +54,7 @@ if ( SERVER ) then
 		timer.Simple( 0.1, function() 
 
 				DisablePropCreateEffect = true
-				duplicator.RemoveMapCreatedEntities();
+				duplicator.RemoveMapCreatedEntities()
 				duplicator.Paste( ply, tab.Entities, tab.Constraints )
 				DisablePropCreateEffect = nil
 
@@ -62,7 +62,7 @@ if ( SERVER ) then
 					gmsave.PlayerLoad( ply, tab.Player ) 
 				end
 
-		end );
+		end )
 
 	end
 

@@ -40,7 +40,7 @@ function PANEL:Init()
 	self:SetDrawProgress( false )
 
 	self.Progress = 0
-	self.TotalProgress = 0;
+	self.TotalProgress = 0
 		
 end
 
@@ -68,16 +68,16 @@ function PANEL:PrepareDownloading( id, title, iSize )
 
 	if ( self.Rocket ) then self.Rocket:Remove() end
 
-	self.Rocket = self:Add( pnlRocket );
+	self.Rocket = self:Add( pnlRocket )
 	self.Rocket:Dock( LEFT )
-	self.Rocket:MoveToBack();
+	self.Rocket:MoveToBack()
 	self.Rocket:DockMargin( 8, 0, 8, 0 )
 	
 end
 
 function PANEL:StartDownloading( id, iImageID, title, iSize )
 
-	self.Label:SetText( "Downloading \"" .. title .. "\"" );
+	self.Label:SetText( "Downloading \"" .. title .. "\"" )
 	
 	self.Rocket:Charging( id, iImageID )
 	self:SetDrawProgress( true )
@@ -109,13 +109,13 @@ function PANEL:Paint()
 	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 50, 50, 50, 255 ) )
 	
 	surface.SetDrawColor( 0, 0, 0, 100 )
-	surface.SetMaterial( matProgressCog );
+	surface.SetMaterial( matProgressCog )
 	surface.DrawTexturedRectRotated( 0, 32, 64 * 4, 64 * 4, SysTime() * -20 )
 	
 	if ( self:GetDrawProgress() ) then
 	
 		-- Overall progress
-		local off = 0;
+		local off = 0
 		local w = (self:GetWide() - 64 - 64 - 100)
 		local x = 80
 		
@@ -131,10 +131,10 @@ function PANEL:Paint()
 	-- Workshop LOGO
 	DisableClipping( true )
 
-		local x = -8;
+		local x = -8
 
 		surface.SetDrawColor( 255, 255, 255, 255 )
-		surface.SetMaterial( matHeader );
+		surface.SetMaterial( matHeader )
 		surface.DrawTexturedRect( x, -22, 128, 32 )
 		
 		surface.SetDrawColor( 255, 255, 255, math.random( 0, 255 ) )
@@ -158,7 +158,7 @@ end
 
 function PANEL:UpdateTotalProgress( completed, iTotal )
 
-	self.TotalsLabel:SetText( "Addon "..completed.." of "..iTotal );
-	self.TotalProgress = completed / iTotal;
+	self.TotalsLabel:SetText( "Addon "..completed.." of "..iTotal )
+	self.TotalProgress = completed / iTotal
 
 end

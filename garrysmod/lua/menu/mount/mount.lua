@@ -62,7 +62,7 @@ hook.Add( "WorkshopDownloadTotals", "WorkshopDownloadTotals", function( iRemain,
 		return
 	end
 
-	local completed = (iTotal-iRemain);
+	local completed = (iTotal-iRemain)
 
 	if ( IsValid( vgui_workshop ) ) then
 		vgui_workshop:UpdateTotalProgress( completed, iTotal )

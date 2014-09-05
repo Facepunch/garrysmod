@@ -26,7 +26,7 @@ function gmsave.ConstraintSave( ent )
 		t.EntOne = gmsave.EntityEncode( t.EntOne )
 		t.EntTwo = gmsave.EntityEncode( t.EntTwo )
 	
-	return t;
+	return t
 
 end
 
@@ -46,7 +46,7 @@ function gmsave.ConstraintSaveList( ents )
 		
 	end
 	
-	return SavedConstraints;
+	return SavedConstraints
 	
 end
 

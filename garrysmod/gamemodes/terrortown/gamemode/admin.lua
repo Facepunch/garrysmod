@@ -196,7 +196,7 @@ local ban_functions = {
             end,
 
    gmod   = StandardBan
-};
+}
 
 local function BanningFunction()
    local bantype = string.lower(ttt_bantype:GetString())
