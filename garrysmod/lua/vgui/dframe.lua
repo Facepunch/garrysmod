@@ -14,9 +14,9 @@
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bIsMenuComponent", 		"IsMenu", 			FORCE_BOOL )
-AccessorFunc( PANEL, "draggable", 			"Draggable", 		FORCE_BOOL )
-AccessorFunc( PANEL, "sizable", 				"Sizable", 			FORCE_BOOL )
-AccessorFunc( PANEL, "screenLock", 			"ScreenLock", 		FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDraggable", 			"Draggable", 		FORCE_BOOL )
+AccessorFunc( PANEL, "m_bSizable", 				"Sizable", 			FORCE_BOOL )
+AccessorFunc( PANEL, "m_bScreenLock", 			"ScreenLock", 		FORCE_BOOL )
 AccessorFunc( PANEL, "m_bDeleteOnClose", 		"DeleteOnClose", 	FORCE_BOOL )
 AccessorFunc( PANEL, "m_bPaintShadow", 			"PaintShadow", 		FORCE_BOOL )
 
@@ -158,7 +158,7 @@ function PANEL:SetIcon( str )
 end
 
 local function setX(self, newX)
-	if self.screenLock then
+	if self.m_bScreenLock then
 		self.x = math.Clamp(newX, 0, self:GetParent():GetWide() - self:GetWide())
 		return
 	end
@@ -166,7 +166,7 @@ local function setX(self, newX)
 end
 
 local function setY(self, newY)
-	if self.screenLock then
+	if self.m_bScreenLock then
 		self.y = math.Clamp(newY, 0, self:GetParent():GetTall() - self:GetTall())
 		return
 	end
@@ -215,7 +215,7 @@ function PANEL:Think()
 	local atRightBorder = localMouseX > width - threshold
 	local atDragBorder = localMouseY < 25
 	
-	if self.sizable then
+	if self.m_bSizable then
 		if (atUpperBorder and atLeftBorder) or (atLowerBorder and atRightBorder) then
 			self:SetCursor("sizenwse")
 			return
@@ -240,7 +240,7 @@ function PANEL:Think()
 		self:SetCursor("sizeall")
 		return
 	end
-	if self.draggable then
+	if self.m_bDraggable then
 		self:SetCursor("arrow")
 	end
 end
@@ -257,11 +257,11 @@ function PANEL:Paint( w, h )
 end
 
 function PANEL:OnMousePressed()
-	if self.sizable or self.draggable then
+	if self.m_bSizable or self.m_bDraggable then
 		local localMouseX, localMouseY = self:CursorPos()
 		
 		
-		if self.sizable then
+		if self.m_bSizable then
 			local width, height = self:GetSize()
 		
 			local threshold = self.borderThreshold
@@ -286,7 +286,7 @@ function PANEL:OnMousePressed()
 				return
 			end
 		end
-		if self.draggable and localMouseY < 25 then
+		if self.m_bDraggable and localMouseY < 25 then
 			self.draggingData = {
 				dragX = localMouseX,
 				dragY = localMouseY
