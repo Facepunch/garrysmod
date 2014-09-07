@@ -195,10 +195,10 @@ end
 -----------------------------------------------------------]]
 function math.Truncate(num, idp)
 	
-	local mult = 10^d
-	local FloorOrCeil = n < 0 and math.ceil or math.floor
+	local mult = 10^(idp or 0)
+	local FloorOrCeil = num < 0 and math.ceil or math.floor
 	
-	return FloorOrCeil( n * mult ) / mult
+	return FloorOrCeil( num * mult ) / mult
 	
 end
 
