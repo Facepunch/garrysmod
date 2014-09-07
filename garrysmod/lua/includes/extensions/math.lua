@@ -180,12 +180,24 @@ end
 
 --[[---------------------------------------------------------
     Name: Round( round )
+    Round to the nearest interger.
 -----------------------------------------------------------]]
 function math.Round(num, idp)
 
 	local mult = 10^(idp or 0)
 	return math.floor(num * mult + 0.5) / mult
   
+end
+
+--[[---------------------------------------------------------
+    Name: Truncate( num, idp )
+    Rounds towards zero.
+-----------------------------------------------------------]]
+function math.Truncate(num, idp)
+	
+	local mult = 10^(idp or 0)
+	return math.floor(num * mult) / mult
+	
 end
 
 --[[---------------------------------------------------------
