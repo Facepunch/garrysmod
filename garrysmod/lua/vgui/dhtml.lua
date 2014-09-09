@@ -69,7 +69,7 @@ function PANEL:QueueJavascript( js )
 	self.JS = self.JS or {}
 
 	table.insert( self.JS, js )
-	self:Think();
+	self:Think()
 
 end
 
@@ -86,13 +86,12 @@ function PANEL:ConsoleMessage( msg )
 		local strLua = msg:sub( 8 )
 
 		SELF = self
-		RunString( strLua );
+		RunString( strLua )
 		SELF = nil
-		return; 
-
+		return
 	end
 
-	MsgC( Color( 255, 160, 255 ), "[HTML] " );
+	MsgC( Color( 255, 160, 255 ), "[HTML] " )
 	MsgC( Color( 255, 255, 255 ), msg, "\n" )	
 
 end
@@ -134,7 +133,7 @@ function PANEL:AddFunction( obj, funcname, func )
 	--
 	-- Store the function so OnCallback can find it and call it
 	--
-	self.Callbacks[ obj .. "." .. funcname ] = func;
+	self.Callbacks[ obj .. "." .. funcname ] = func
 
 end
 

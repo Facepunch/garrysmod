@@ -16,7 +16,7 @@ function EFFECT:Init( data )
 	self.EndPos = data:GetOrigin()
 	
 	self.Alpha = 255
-	self.Life = 0.0;
+	self.Life = 0.0
 
 	self:SetRenderBoundsWS( self.StartPos, self.EndPos )
 
@@ -27,7 +27,7 @@ end
 -----------------------------------------------------------]]
 function EFFECT:Think( )
 
-	self.Life = self.Life + FrameTime() * 4;
+	self.Life = self.Life + FrameTime() * 4
 	self.Alpha = 255 * ( 1 - self.Life )	
 	
 	return (self.Life < 1)

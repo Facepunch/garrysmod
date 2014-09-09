@@ -10,12 +10,12 @@ ENT.Instructions	= ""
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Int",		0,	"Key" );
-	self:NetworkVar( "Bool",	0,	"On" );
-	self:NetworkVar( "Bool",	1,	"IsToggle" );
+	self:NetworkVar( "Int",		0,	"Key" )
+	self:NetworkVar( "Bool",	0,	"On" )
+	self:NetworkVar( "Bool",	1,	"IsToggle" )
 
 	self:SetOn( false )
-	self:SetIsToggle( false );
+	self:SetIsToggle( false )
 
 end
 
@@ -30,7 +30,7 @@ function ENT:Initialize()
 
 	else
 
-		self.PosePosition = 0;
+		self.PosePosition = 0
 
 	end
 	
@@ -61,7 +61,7 @@ function ENT:Use( activator, caller, type, value )
 		if ( type == USE_ON ) then
 			self:Toggle( !self:GetOn(), activator )
 		end
-		return;
+		return
 
 	end
 
@@ -146,8 +146,8 @@ end
 --
 function ENT:UpdateLever()
 
-	local TargetPos = 0.0;
-	if ( self:GetOn() ) then TargetPos = 1.0; end
+	local TargetPos = 0.0
+	if ( self:GetOn() ) then TargetPos = 1.0 end
 
 	self.PosePosition = math.Approach( self.PosePosition, TargetPos, FrameTime() * 5.0 )	
 

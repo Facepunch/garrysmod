@@ -24,8 +24,8 @@ function PANEL:Init()
 	self:SetFloatValue( 1.5 )
 	self:SetShouldDrawScreen( false )
 
-	self.MouseX = 0;
-	self.MouseY = 0;
+	self.MouseX = 0
+	self.MouseY = 0
 	self.UnderMaterial = Material( "gui/numberscratch_under.png" )
 	self.CoverMaterial = Material( "gui/numberscratch_cover.png" )
 
@@ -39,13 +39,13 @@ end
 
 function PANEL:SetValue( val )
 
-	local val = tonumber( val );
+	local val = tonumber( val )
 	if ( val == nil ) then return end
 	if ( val == self:GetFloatValue() ) then return end
 
 	self:SetFloatValue( val )
-	self:OnValueChanged();
-	self:UpdateConVar();
+	self:OnValueChanged()
+	self:UpdateConVar()
 
 end
 
@@ -67,7 +67,7 @@ end
 
 function PANEL:IdealZoom()
 
-	return 400 / self:GetRange();
+	return 400 / self:GetRange()
 
 end
 
@@ -113,7 +113,7 @@ function PANEL:OnCursorMoved( x, y )
 
 	local zoom = self:GetZoom()
 
-	local ControlScale = 100 / zoom;
+	local ControlScale = 100 / zoom
 
 	local maxzoom = 20
 
@@ -121,17 +121,17 @@ function PANEL:OnCursorMoved( x, y )
 		maxzoom = 10000
 	end
 	
-	zoom = math.Clamp( zoom + ((y * -0.6) / ControlScale), 0.01, maxzoom );
+	zoom = math.Clamp( zoom + ((y * -0.6) / ControlScale), 0.01, maxzoom )
 	self:SetZoom( zoom )
 
 	local value = self:GetFloatValue()
-	value = math.Clamp( value + (x * ControlScale * 0.002), self:GetMin(), self:GetMax() );
+	value = math.Clamp( value + (x * ControlScale * 0.002), self:GetMin(), self:GetMax() )
 	self:SetFloatValue( value )
 
 	self:LockCursor()
 
 	self:OnValueChanged( value )
-	self:UpdateConVar();
+	self:UpdateConVar()
 
 end
 
@@ -155,7 +155,7 @@ end
 
 function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 
-	local size = level * self:GetZoom();
+	local size = level * self:GetZoom()
 	if ( size < 5 ) then return end
 	if ( size > w*2 ) then return end
 
@@ -166,16 +166,16 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 	
 	local halfw = w * 0.5
 	local span = math.ceil( w / size )
-	local realmid = x + w * 0.5 - (value * self:GetZoom());
-	local mid = x + w * 0.5 - math.mod( value * self:GetZoom(), size );
-	local top = h * 0.4;
-	local nh = h - (top);
+	local realmid = x + w * 0.5 - (value * self:GetZoom())
+	local mid = x + w * 0.5 - math.mod( value * self:GetZoom(), size )
+	local top = h * 0.4
+	local nh = h - (top)
 
 	local frame_min = realmid + min * self:GetZoom()
 	local frame_width = range * self:GetZoom()
 
 	surface.SetDrawColor( 0, 0, 0, alpha )
-	surface.DrawRect( frame_min, y + top, frame_width, 2 );
+	surface.DrawRect( frame_min, y + top, frame_width, 2 )
 
 	surface.SetFont( "DermaDefault" )
 	
@@ -183,9 +183,9 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 
 		local nx = ((mid) + n * size)
 		
-		local dist = 1 - (math.abs( halfw - nx + x ) / w);
+		local dist = 1 - (math.abs( halfw - nx + x ) / w)
 		
-		local val = (nx - realmid) / self:GetZoom();
+		local val = (nx - realmid) / self:GetZoom()
 
 		if ( val <= min+0.001 ) then continue end
 		if ( val >= max-0.001 ) then continue end
@@ -211,7 +211,7 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 	local nx = realmid + max * self:GetZoom()
 	surface.DrawRect( nx, y+top, 2, nh )
 
-	local val = max;
+	local val = max
 	local tw, th = surface.GetTextSize( val )
 
 	surface.SetTextPos( nx - (tw * 0.5), y + top - th )
@@ -223,7 +223,7 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 	local nx = realmid + min * self:GetZoom()
 	surface.DrawRect( nx, y+top, 2, nh )
 
-	local val = min;
+	local val = min
 	local tw, th = surface.GetTextSize( val )
 
 	surface.SetTextPos( nx - (tw * 0.5), y + top - th )
@@ -258,8 +258,8 @@ function PANEL:DrawScreen( x, y, w, h )
 
 	local min = self:GetMin()
 	local max = self:GetMax()
-	local range = ( self:GetMax()-self:GetMin() );
-	local value = ( self:GetFloatValue() );
+	local range = ( self:GetMax()-self:GetMin() )
+	local value = ( self:GetFloatValue() )
 
 	--
 	-- Background colour block
@@ -293,9 +293,9 @@ function PANEL:DrawScreen( x, y, w, h )
 	surface.SetTextColor( 255, 255, 255, 255 )
 	surface.SetFont( "DermaLarge" )
 	
-	local str = Format( "%i", self:GetFloatValue() );
+	local str = Format( "%i", self:GetFloatValue() )
 	if ( self:GetDecimals() ) then
-		str = Format( "%.2f", self:GetFloatValue() );
+		str = Format( "%.2f", self:GetFloatValue() )
 	end
 	str = string.Comma( str )
 

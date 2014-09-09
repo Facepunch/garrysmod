@@ -20,7 +20,7 @@ function ws_dupe:FetchLocal( offset, perpage )
 			preview	= "dupes/" .. v:StripExtension() .. ".jpg"
 		}
 
-		table.insert( saves, entry );
+		table.insert( saves, entry )
 
 	end
 
@@ -30,21 +30,21 @@ function ws_dupe:FetchLocal( offset, perpage )
 		results			= saves
 	}
 
-	local json = util.TableToJSON( results, false );
-	pnlMainMenu:Call( "dupe.ReceiveLocal( "..json.." )" );
+	local json = util.TableToJSON( results, false )
+	pnlMainMenu:Call( "dupe.ReceiveLocal( "..json.." )" )
 
 end
 
 function ws_dupe:FinishPublish( filename, imagename, name, desc, ChosenTag )
 
-	steamworks.Publish( { "dupe", ChosenTag }, filename, imagename, name, desc );
+	steamworks.Publish( { "dupe", ChosenTag }, filename, imagename, name, desc )
 
 end
 
 function ws_dupe:Publish( filename, image )
 
-	--MsgN( "PUBLISHING ", filename );
-	--MsgN( "Image ", image );
+	--MsgN( "PUBLISHING ", filename )
+	--MsgN( "Image ", image )
 
 	--
 	-- Create the window
@@ -72,7 +72,7 @@ function ws_dupe:Publish( filename, image )
 	--
 	Submit.DoClick = function()
 
-		local ChosenTag = nil;
+		local ChosenTag = nil
 
 		local FindTag = function( tagname )
 			
@@ -80,38 +80,38 @@ function ws_dupe:Publish( filename, image )
 			if ( !cb:GetChecked() ) then return true end
 
 			if ( ChosenTag != nil ) then
-				Error:SetText( "Choose only one tag!" );
-				return false;
+				Error:SetText( "Choose only one tag!" )
+				return false
 			end
 
-			ChosenTag = tagname;
+			ChosenTag = tagname
 			return true
 
 		end
 
-		if ( !FindTag( "posed" ) ) then return; end
-		if ( !FindTag( "scenes" ) ) then return; end
-		if ( !FindTag( "machines" ) ) then return; end
-		if ( !FindTag( "vehicles" ) ) then return; end
-		if ( !FindTag( "buildings" ) ) then return; end
-		if ( !FindTag( "others" ) ) then return; end
+		if ( !FindTag( "posed" ) ) then return end
+		if ( !FindTag( "scenes" ) ) then return end
+		if ( !FindTag( "machines" ) ) then return end
+		if ( !FindTag( "vehicles" ) ) then return end
+		if ( !FindTag( "buildings" ) ) then return end
+		if ( !FindTag( "others" ) ) then return end
 
 		if ( ChosenTag == nil ) then
-			Error:SetText( "Choose a tag!" );
-			return;
+			Error:SetText( "Choose a tag!" )
+			return
 		end
 
 		if ( Title:GetText() == "" ) then
-			Error:SetText( "You must provide a title!" );
-			return;
+			Error:SetText( "You must provide a title!" )
+			return
 		end
 
-		--MsgN( "Publish with tag ", ChosenTag );
+		--MsgN( "Publish with tag ", ChosenTag )
 
-		local error = self:FinishPublish( filename, image, Title:GetText(), Description:GetText(), ChosenTag );
+		local error = self:FinishPublish( filename, image, Title:GetText(), Description:GetText(), ChosenTag )
 		if ( error ) then
-			Error:SetText( error );
-			return;
+			Error:SetText( error )
+			return
 		end
 
 		Window:Remove()
@@ -125,7 +125,7 @@ end
 --
 concommand.Add( "dupe_publish", function( ply, cmd, args )
 
-	ws_dupe:Publish( args[1], args[2] );
-	gui.ActivateGameUI();
+	ws_dupe:Publish( args[1], args[2] )
+	gui.ActivateGameUI()
 
 end, nil, "", { FCVAR_DONTRECORD } )

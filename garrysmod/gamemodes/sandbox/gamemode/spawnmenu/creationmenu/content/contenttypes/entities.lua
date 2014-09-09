@@ -22,7 +22,7 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, no
 	for CategoryName, v in SortedPairs( Categorised ) do
 					
 		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, "icon16/bricks.png" );
+		local node = tree:AddNode( CategoryName, "icon16/bricks.png" )
 
 			-- When we click on the node - populate it using this function
 		node.DoPopulate = function( self )
@@ -54,7 +54,7 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, no
 		node.DoClick = function( self )
 	
 			self:DoPopulate()		
-			pnlContent:SwitchPanel( self.PropPanel );
+			pnlContent:SwitchPanel( self.PropPanel )
 	
 		end
 
@@ -73,7 +73,7 @@ end )
 spawnmenu.AddCreationTab( "#spawnmenu.category.entities", function()
 
 	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
-	ctrl:CallPopulateHook( "PopulateEntities" );
+	ctrl:CallPopulateHook( "PopulateEntities" )
 
 	return ctrl
 

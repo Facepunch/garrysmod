@@ -60,8 +60,8 @@ if ( CLIENT ) then
 	-----------------------------------------------------------]]
 	local function AddUndo()
 
-		local k 	= net.ReadInt(16);
-		local v 	= net.ReadString();
+		local k 	= net.ReadInt(16)
+		local v 	= net.ReadString()
 		
 		table.insert( ClientUndos, 1, { Key = k, Name = v } )
 		
@@ -80,7 +80,7 @@ if ( CLIENT ) then
 	-----------------------------------------------------------]]
 	local function Undone()
 
-		local key = net.ReadInt(16);
+		local key = net.ReadInt(16)
 		
 		local NewUndo = {}
 		local i = 1
@@ -376,7 +376,7 @@ function Do_Undo( undo )
 		end
 	end
 	
-	return count;
+	return count
 	
 end
 

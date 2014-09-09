@@ -18,8 +18,7 @@ end
 function widget_axis_arrow:SetupDataTables()
 
 	BaseClass.SetupDataTables( self )
-	self:NetworkVar( "Int", 0, "AxisIndex" );	
-
+	self:NetworkVar( "Int", 0, "AxisIndex" )
 end
 
 
@@ -48,8 +47,7 @@ end
 function widget_axis_disc:SetupDataTables()
 
 	BaseClass.SetupDataTables( self )
-	self:NetworkVar( "Int", 0, "AxisIndex" );	
-
+	self:NetworkVar( "Int", 0, "AxisIndex" )
 end
 
 
@@ -94,7 +92,7 @@ function ENT:Setup( ent, boneid, rotate )
 		self.ArrowX:Spawn()
 		self.ArrowX:SetLocalPos( Vector( 0, 0, 0 ) )
 		self.ArrowX:SetLocalAngles( Vector(1,0,0):Angle() )
-		self.ArrowX:SetAxisIndex( 1 );
+		self.ArrowX:SetAxisIndex( 1 )
 		
 	self.ArrowY = ents.Create( EntName )
 		self.ArrowY:SetParent( self )
@@ -102,7 +100,7 @@ function ENT:Setup( ent, boneid, rotate )
 		self.ArrowY:Spawn()
 		self.ArrowY:SetLocalPos( Vector( 0, 0, 0 ) )
 		self.ArrowY:SetLocalAngles( Vector(0,1,0):Angle() )
-		self.ArrowY:SetAxisIndex( 2 );
+		self.ArrowY:SetAxisIndex( 2 )
 		
 	self.ArrowZ = ents.Create( EntName )
 		self.ArrowZ:SetParent( self )
@@ -110,7 +108,7 @@ function ENT:Setup( ent, boneid, rotate )
 		self.ArrowZ:Spawn()
 		self.ArrowZ:SetLocalPos( Vector( 0, 0, 0 ) )
 		self.ArrowZ:SetLocalAngles( Vector(0,0,1):Angle() )
-		self.ArrowZ:SetAxisIndex( 3 );
+		self.ArrowZ:SetAxisIndex( 3 )
 			
 end
 

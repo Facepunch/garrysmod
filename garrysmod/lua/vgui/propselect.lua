@@ -164,7 +164,7 @@ function PANEL:FindAndSelectButton( Value )
 			end
 			
 			-- Add the overlay to this button
-			Icon.PaintOver = HighlightedButtonPaint;
+			Icon.PaintOver = HighlightedButtonPaint
 			self.SelectedIcon = Icon
 
 		end

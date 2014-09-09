@@ -45,7 +45,7 @@ function EFFECT:Think( )
 	if ( !cl_drawspawneffect:GetBool() ) then return false end
 	if ( !IsValid( self.ParentEntity ) ) then return false end
 	
-	local PPos = self.ParentEntity:GetPos();
+	local PPos = self.ParentEntity:GetPos()
 	self:SetPos( PPos + (EyePos() - PPos):GetNormal() )
 	
 	if ( self.LifeTime > CurTime() ) then
@@ -107,7 +107,7 @@ function EFFECT:RenderOverlay( entity )
 	-- Set the camera back to how it was
 	cam.End3D()
 	render.PopCustomClipPlane()
-	render.EnableClipping( bClipping );
+	render.EnableClipping( bClipping )
 
 end
 
@@ -117,7 +117,7 @@ function EFFECT:RenderParent()
 	local bClipping = self.SpawnEffect:StartClip( self, 1 )
 		self:DrawModel()
 	render.PopCustomClipPlane()
-	render.EnableClipping( bClipping );
+	render.EnableClipping( bClipping )
 	
 	self.SpawnEffect:RenderOverlay( self )
 
@@ -127,8 +127,8 @@ function EFFECT:StartClip( model, spd )
 
 	local mn, mx = model:GetRenderBounds()
 	local Up = (mx-mn):GetNormal()
-	local Bottom =  model:GetPos() + mn;
-	local Top = model:GetPos() + mx;
+	local Bottom =  model:GetPos() + mn
+	local Top = model:GetPos() + mx
 	
 	local Fraction = (self.LifeTime - CurTime()) / self.Time
 	Fraction = math.Clamp( Fraction / spd, 0, 1 )
@@ -136,10 +136,10 @@ function EFFECT:StartClip( model, spd )
 	local Lerped = LerpVector( Fraction, Bottom, Top )
 
 	local normal = Up 
-	local distance = normal:Dot( Lerped );
+	local distance = normal:Dot( Lerped )
 		
-	local bEnabled = render.EnableClipping( true );
-	render.PushCustomClipPlane( normal, distance );
+	local bEnabled = render.EnableClipping( true )
+	render.PushCustomClipPlane( normal, distance )
 
 	return bEnabled
 	

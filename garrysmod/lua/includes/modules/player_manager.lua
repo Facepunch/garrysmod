@@ -303,7 +303,7 @@ local Type = {}
 
 function RegisterClass( name, table, base )
 
-	Type[ name ] = table;
+	Type[ name ] = table
 
 	--
 	-- If we have a base method then hook
@@ -361,7 +361,7 @@ local function LookupPlayerClass( ply )
 	--
 	-- Check the cache
 	--
-	local method = ply.m_CurrentPlayerClass;
+	local method = ply.m_CurrentPlayerClass
 	if ( method && method.Player == ply && method.ClassID == id && method.Func ) then return method end
 
 	--
@@ -385,7 +385,7 @@ local function LookupPlayerClass( ply )
 
 	ply.m_CurrentPlayerClass	= method
 
-	method.Player:InstallDataTable();
+	method.Player:InstallDataTable()
 	method:SetupDataTables()
 	method:Init()
 	return method

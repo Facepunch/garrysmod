@@ -7,9 +7,9 @@ ENT.Spawnable		= false
 
 function ENT:Initialize()
 
-	--self:SetModel( "models/props_halloween/ghost_no_hat.mdl" );
-	--self:SetModel( "models/props_wasteland/controlroom_filecabinet002a.mdl" );
-	self:SetModel( "models/mossman.mdl" );
+	--self:SetModel( "models/props_halloween/ghost_no_hat.mdl" )
+	--self:SetModel( "models/props_wasteland/controlroom_filecabinet002a.mdl" )
+	self:SetModel( "models/mossman.mdl" )
 
 end
 

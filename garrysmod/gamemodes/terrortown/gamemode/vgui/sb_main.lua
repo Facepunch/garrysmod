@@ -162,7 +162,7 @@ end
 local colors = {
    bg = Color(30,30,30, 235),
    bar = Color(220,180,0,255)
-};
+}
 
 local y_logo_off = 72
 

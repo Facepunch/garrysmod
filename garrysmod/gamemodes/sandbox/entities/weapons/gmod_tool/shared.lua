@@ -60,10 +60,10 @@ end
 
 function SWEP:SetupDataTables()
 
-	self:NetworkVar( "Entity", 0, "TargetEntity1" );
-	self:NetworkVar( "Entity", 1, "TargetEntity2" );
-	self:NetworkVar( "Entity", 2, "TargetEntity3" );
-	self:NetworkVar( "Entity", 3, "TargetEntity4" );
+	self:NetworkVar( "Entity", 0, "TargetEntity1" )
+	self:NetworkVar( "Entity", 1, "TargetEntity2" )
+	self:NetworkVar( "Entity", 2, "TargetEntity3" )
+	self:NetworkVar( "Entity", 3, "TargetEntity4" )
 
 end
 

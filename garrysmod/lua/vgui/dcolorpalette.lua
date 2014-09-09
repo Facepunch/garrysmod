@@ -73,7 +73,7 @@ local function AddButton( panel, color, size, id )
 	--
 	-- If the cookie value exists, then use it
 	--
-	local col_saved = panel:GetCookie( "col."..id, nil );
+	local col_saved = panel:GetCookie( "col."..id, nil )
 	if ( col_saved != nil ) then
 		color = col_saved:ToColor()
 	end
@@ -201,7 +201,7 @@ function PANEL:SaveColor( btn, color )
 	color = table.Copy( color or color_Error ) 
 
 	btn:SetColor( color )
-	self:SetCookie( "col."..btn:GetID(), string.FromColor( color ) );
+	self:SetCookie( "col."..btn:GetID(), string.FromColor( color ) )
 
 end
 

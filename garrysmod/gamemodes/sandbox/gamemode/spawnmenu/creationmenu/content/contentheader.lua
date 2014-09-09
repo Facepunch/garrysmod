@@ -28,8 +28,8 @@ end
 
 function PANEL:PerformLayout()
 
-	self:SizeToContents();
-	self:SetTall( 64 );
+	self:SizeToContents()
+	self:SetTall( 64 )
 
 end
 
@@ -38,7 +38,7 @@ function PANEL:ToTable( bigtable )
 	local tab = {}
 	
 	tab.type	= "header"
-	tab.text	= self:GetText();
+	tab.text	= self:GetText()
 
 	table.insert( bigtable, tab )
 
@@ -50,7 +50,7 @@ function PANEL:Copy()
 	copy:SetText( self:GetText() )
 	copy:CopyBounds( self )
 	
-	return copy;
+	return copy
 
 end
 
@@ -71,7 +71,7 @@ end
 
 function PANEL:OpenMenu()
 	local menu = DermaMenu()							
-		menu:AddOption( "Delete", function() self:Remove(); hook.Run( "SpawnlistContentChanged", self ) end )
+		menu:AddOption( "Delete", function() self:Remove() hook.Run( "SpawnlistContentChanged", self ) end )
 	menu:Open()
 end
 

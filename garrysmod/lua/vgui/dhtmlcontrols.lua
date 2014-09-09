@@ -21,21 +21,21 @@ function PANEL:Init()
 	self.BackButton:SetMaterial( "gui/HTML/back" )
 	self.BackButton:Dock( LEFT )
 	self.BackButton:DockMargin( Spacing*3, Margins, Spacing, Margins )
-	self.BackButton.DoClick = function() self.BackButton:SetDisabled( true ) self.HTML:HTMLBack(); self.Cur = self.Cur - 1; self.Navigating = true end
+	self.BackButton.DoClick = function() self.BackButton:SetDisabled( true ) self.HTML:HTMLBack() self.Cur = self.Cur - 1 self.Navigating = true end
 	
 	self.ForwardButton = vgui.Create( "DImageButton", self )
 	self.ForwardButton:SetSize( ButtonSize, ButtonSize )
 	self.ForwardButton:SetMaterial( "gui/HTML/forward" )
 	self.ForwardButton:Dock( LEFT )
 	self.ForwardButton:DockMargin( Spacing, Margins, Spacing, Margins )
-	self.ForwardButton.DoClick = function() self.ForwardButton:SetDisabled( true ) self.HTML:HTMLForward(); self.Cur = self.Cur + 1; self.Navigating = true end
+	self.ForwardButton.DoClick = function() self.ForwardButton:SetDisabled( true ) self.HTML:HTMLForward() self.Cur = self.Cur + 1 self.Navigating = true end
 	
 	self.RefreshButton = vgui.Create( "DImageButton", self )
 	self.RefreshButton:SetSize( ButtonSize, ButtonSize )
 	self.RefreshButton:SetMaterial( "gui/HTML/refresh" )
 	self.RefreshButton:Dock( LEFT )
 	self.RefreshButton:DockMargin( Spacing, Margins, Spacing, Margins )
-	self.RefreshButton.DoClick = function() self.RefreshButton:SetDisabled( true ) self.Refreshing = true; self.HTML:Refresh() end
+	self.RefreshButton.DoClick = function() self.RefreshButton:SetDisabled( true ) self.Refreshing = true self.HTML:Refresh() end
 	
 	self.HomeButton = vgui.Create( "DImageButton", self )
 	self.HomeButton:SetSize( ButtonSize, ButtonSize )
@@ -58,7 +58,7 @@ function PANEL:Init()
 	
 	self:SetHeight( ButtonSize + Margins * 2 )
 	
-	self.NavStack = 0;
+	self.NavStack = 0
 	self.History = {}
 	self.Cur = 1
 	
@@ -128,7 +128,7 @@ function PANEL:UpdateHistory( url )
 			
 		self.Navigating = false
 		self:UpdateNavButtonStatus()
-		return;
+		return
 
 	end
 	

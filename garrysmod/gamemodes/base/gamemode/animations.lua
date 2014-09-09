@@ -2,7 +2,7 @@
 function GM:HandlePlayerJumping( ply, velocity )
 	
 	if ( ply:GetMoveType() == MOVETYPE_NOCLIP ) then
-		ply.m_bJumping = false;
+		ply.m_bJumping = false
 		return
 	end
 
@@ -71,7 +71,7 @@ function GM:HandlePlayerNoClipping( ply, velocity )
 
 			ply.m_bWasNoclipping = nil
 			ply:AnimResetGestureSlot( GESTURE_SLOT_CUSTOM )
-			if ( CLIENT ) then ply:SetIK( true ); end
+			if ( CLIENT ) then ply:SetIK( true ) end
 
 		end
 
@@ -82,7 +82,7 @@ function GM:HandlePlayerNoClipping( ply, velocity )
 	if ( !ply.m_bWasNoclipping ) then
 
 		ply:AnimRestartGesture( GESTURE_SLOT_CUSTOM, ACT_GMOD_NOCLIP_LAYER, false )
-		if ( CLIENT ) then ply:SetIK( false ); end
+		if ( CLIENT ) then ply:SetIK( false ) end
 
 	end
 
@@ -120,7 +120,7 @@ function GM:HandlePlayerLanding( ply, velocity, WasOnGround )
 	if ( ply:GetMoveType() == MOVETYPE_NOCLIP ) then return end
 
 	if ( ply:IsOnGround() && !WasOnGround ) then
-		ply:AnimRestartGesture( GESTURE_SLOT_JUMP, ACT_LAND, true );
+		ply:AnimRestartGesture( GESTURE_SLOT_JUMP, ACT_LAND, true )
 	end
 
 end
@@ -237,9 +237,9 @@ function GM:GrabEarAnimation( ply )
 	if ( ply:IsPlayingTaunt() ) then return end
 
 	if ( ply:IsTyping() ) then
-		ply.ChatGestureWeight = math.Approach( ply.ChatGestureWeight, 1, FrameTime() * 5.0 );
+		ply.ChatGestureWeight = math.Approach( ply.ChatGestureWeight, 1, FrameTime() * 5.0 )
 	else
-		ply.ChatGestureWeight = math.Approach( ply.ChatGestureWeight, 0, FrameTime()  * 5.0 );
+		ply.ChatGestureWeight = math.Approach( ply.ChatGestureWeight, 0, FrameTime()  * 5.0 )
 	end
 	
 	if ( ply.ChatGestureWeight > 0 ) then
@@ -281,7 +281,7 @@ function GM:CalcMainActivity( ply, velocity )
 	ply.CalcIdeal = ACT_MP_STAND_IDLE
 	ply.CalcSeqOverride = -1
 
-	self:HandlePlayerLanding( ply, velocity, ply.m_bWasOnGround );
+	self:HandlePlayerLanding( ply, velocity, ply.m_bWasOnGround )
 
 	if ( self:HandlePlayerNoClipping( ply, velocity ) ||
 		self:HandlePlayerDriving( ply ) ||

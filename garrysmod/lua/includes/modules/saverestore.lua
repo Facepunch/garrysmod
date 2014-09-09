@@ -169,7 +169,7 @@ function WriteVar( var, save )
 		elseif (itype == TYPE_TABLE) then 
 			WriteTable( var, save )
 		else 
-			Msg("Error! Saving unsupported Type: "..type(var).."\n");
+			Msg("Error! Saving unsupported Type: "..type(var).."\n")
 		end
 	
 	save:EndBlock()
@@ -204,7 +204,7 @@ function ReadVar( restore )
 		elseif (itype == TYPE_TABLE) then 
 			retval = ReadTable( restore )
 		else 
-			Msg("Error! Loading unsupported Type: "..typename.."\n");
+			Msg("Error! Loading unsupported Type: "..typename.."\n")
 		end
 	
 	restore:EndBlock()

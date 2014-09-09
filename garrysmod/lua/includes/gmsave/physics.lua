@@ -17,14 +17,14 @@ function gmsave.PhysicsSave( ent )
 		tab[ k ].angles = tostring( obj:GetAngles() )
 		tab[ k ].mass = tostring( obj:GetMass() )
 		tab[ k ].material = tostring( obj:GetMaterial() )
-		if ( !obj:IsMotionEnabled() ) then tab[ k ].frozen = 1; end
-		if ( !obj:IsCollisionEnabled() ) then tab[ k ].nocollide = 1; end
-		if ( !obj:IsGravityEnabled() ) then tab[ k ].nogravity = 1; end
-		if ( !obj:IsDragEnabled() ) then tab[ k ].nodrag = 1; end
+		if ( !obj:IsMotionEnabled() ) then tab[ k ].frozen = 1 end
+		if ( !obj:IsCollisionEnabled() ) then tab[ k ].nocollide = 1 end
+		if ( !obj:IsGravityEnabled() ) then tab[ k ].nogravity = 1 end
+		if ( !obj:IsDragEnabled() ) then tab[ k ].nodrag = 1 end
 	
 	end
 	
-	return tab;
+	return tab
 
 end
 
@@ -39,14 +39,14 @@ function gmsave.PhysicsSaveList( ents )
 	
 		if ( !IsValid( v ) ) then continue end
 		
-		tabPhys[ v.GMSaveName ] = gmsave.PhysicsSave( v );
+		tabPhys[ v.GMSaveName ] = gmsave.PhysicsSave( v )
 		if ( tabPhys[ v.GMSaveName ] ) then
-			tabPhys[ v.GMSaveName ].entity = v.GMSaveName;
+			tabPhys[ v.GMSaveName ].entity = v.GMSaveName
 		end
 		
 	end
 	
-	return tabPhys;
+	return tabPhys
 	
 end
 
@@ -57,7 +57,7 @@ function gmsave.PhysicsLoad( t, ent )
 
 	for k=0, ent:GetPhysicsObjectCount()-1 do
 	
-		local tab = t[ k ];
+		local tab = t[ k ]
 		if ( !tab ) then continue end
 		
 		local obj = ent:GetPhysicsObjectNum( k )
@@ -68,10 +68,10 @@ function gmsave.PhysicsLoad( t, ent )
 		obj:SetMass( tab.mass )
 		obj:SetMaterial( tab.material )
 		
-		if ( tab.frozen ) then obj:EnableMotion( false ); end
-		if ( tab.nocollide ) then obj:EnableCollisions( false ); end
-		if ( tab.nogravity ) then obj:EnableGravity( false ); end
-		if ( tab.nodrag ) then obj:EnableDrag( false ); end
+		if ( tab.frozen ) then obj:EnableMotion( false ) end
+		if ( tab.nocollide ) then obj:EnableCollisions( false ) end
+		if ( tab.nogravity ) then obj:EnableGravity( false ) end
+		if ( tab.nodrag ) then obj:EnableDrag( false ) end
 	
 	end
 

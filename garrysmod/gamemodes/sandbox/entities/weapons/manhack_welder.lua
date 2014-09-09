@@ -130,7 +130,7 @@ function SWEP:SecondaryAttack()
 	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
 
-	local weld = nil;
+	local weld = nil
 
 	if ( tr.HitWorld ) then
 

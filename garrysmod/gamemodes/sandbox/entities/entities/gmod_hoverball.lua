@@ -7,8 +7,8 @@ ENT.RenderGroup 	= RENDERGROUP_BOTH
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Float", 0, "TargetZ" );
-	self:NetworkVar( "Float", 1, "SpeedVar" );
+	self:NetworkVar( "Float", 0, "TargetZ" )
+	self:NetworkVar( "Float", 1, "SpeedVar" )
 	self:NetworkVar( "Float", 2, "AirResistanceVar" )
 
 end

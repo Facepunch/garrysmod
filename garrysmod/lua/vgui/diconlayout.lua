@@ -27,15 +27,15 @@ function PANEL:Init()
 	self:SetBorder( 0 )
 	self:SetLayoutDir( TOP )
 	
-	self.LastW = 0;
-	self.LastH = 0;
+	self.LastW = 0
+	self.LastH = 0
 
 end
 
 function PANEL:Layout()
 
-	self.LastW = 0;
-	self.LastH = 0;
+	self.LastW = 0
+	self.LastH = 0
 	self:InvalidateLayout()
 
 end
@@ -44,8 +44,8 @@ function PANEL:LayoutIcons_TOP()
 
 	local x			= self.m_iBorder
 	local y			= self.m_iBorder
-	local RowHeight = 0;
-	local MaxWidth	= self:GetWide() - self.m_iBorder * 2;
+	local RowHeight = 0
+	local MaxWidth	= self:GetWide() - self.m_iBorder * 2
 
 	local chld = self:GetChildren()
 	for k, v in pairs( chld ) do
@@ -57,7 +57,7 @@ function PANEL:LayoutIcons_TOP()
 		
 			x = self.m_iBorder
 			y = y + RowHeight + self.m_iSpaceY
-			RowHeight = 0;
+			RowHeight = 0
 		
 		end
 	
@@ -79,8 +79,8 @@ function PANEL:LayoutIcons_LEFT()
 
 	local x			= self.m_iBorder
 	local y			= self.m_iBorder
-	local RowWidth = 0;
-	local MaxHeight	= self:GetTall() - self.m_iBorder * 2;
+	local RowWidth = 0
+	local MaxHeight	= self:GetTall() - self.m_iBorder * 2
 
 	local chld = self:GetChildren()
 	for k, v in pairs( chld ) do
@@ -92,7 +92,7 @@ function PANEL:LayoutIcons_LEFT()
 		
 			y = self.m_iBorder
 			x = x + RowWidth + self.m_iSpaceX
-			RowWidth = 0;
+			RowWidth = 0
 		
 		end
 	
@@ -112,7 +112,7 @@ end
 
 function PANEL:PerformLayout()
 
-	local ShouldLayout = false;
+	local ShouldLayout = false
 	
 	if ( self.LastW != self:GetWide() )		then ShouldLayout = true end
 	if ( self.LastH != self:GetTall() )		then ShouldLayout = true end
@@ -149,7 +149,7 @@ function PANEL:OnChildAdded( child )
 	
 	local dn = self:GetDnD()
 	if ( dn ) then
-		child:Droppable( self:GetDnD() );			
+		child:Droppable( self:GetDnD() )
 	end
 	
 	if ( self:IsSelectionCanvas() ) then

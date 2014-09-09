@@ -215,7 +215,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:TranslateSliderValues( x, y )
 
-	self:SetValue( self.Scratch:GetMin() + (x * self.Scratch:GetRange()) );
+	self:SetValue( self.Scratch:GetMin() + (x * self.Scratch:GetRange()) )
 	
 	return self.Scratch:GetFraction(), y
 

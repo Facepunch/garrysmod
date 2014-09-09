@@ -13,11 +13,11 @@ local PANEL = {}
 function PANEL:Init()
 
 	self.ToolMenu = vgui.Create( "ToolMenu", self )
-	self.ToolMenu:Dock( RIGHT );
+	self.ToolMenu:Dock( RIGHT )
 	self.ToolMenu:DockMargin( 0, 20, 3, 10 )
 	
 	self.CreateMenu = vgui.Create( "CreationMenu", self )
-	self.CreateMenu:Dock( FILL );
+	self.CreateMenu:Dock( FILL )
 	self.CreateMenu:DockMargin( 3, 20, 3, 10 )
 	
 	self.m_bHangOpen = false
@@ -26,10 +26,10 @@ function PANEL:Init()
 	
 	self.ToolToggle = vgui.Create( "DImageButton", self )
 	self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle" )
-	self.ToolToggle:SetSize( 16, 16 );
+	self.ToolToggle:SetSize( 16, 16 )
 	self.ToolToggle.DoClick = function()
 	
-		self.ToolMenu:SetVisible( !self.ToolMenu:IsVisible() );
+		self.ToolMenu:SetVisible( !self.ToolMenu:IsVisible() )
 		self:InvalidateLayout()
 		
 		if ( self.ToolMenu:IsVisible() ) then
@@ -50,7 +50,7 @@ function PANEL:OpenCreationMenuTab( name )
 end
 
 function PANEL:GetToolMenu()
-	return self.ToolMenu;
+	return self.ToolMenu
 end
 
 --[[---------------------------------------------------------

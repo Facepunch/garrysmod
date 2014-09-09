@@ -1,26 +1,26 @@
 --
 -- These are the physics bone numbers
 --
-local PLVS		= 0;
+local PLVS		= 0
 
 -- Coat 1-9
 
-local RTHY		= 10;
-local RCLF		= 11;
+local RTHY		= 10
+local RCLF		= 11
 
 -- Coat 12
 
-local LTHY		= 13;
-local LCLF		= 14;
-local LFOT		= 15;
-local SPNE		= 16;
-local RSLD		= 17;
-local RARM		= 18;
-local LSLD		= 19;
-local LARM		= 20;
-local HEAD		= 21;
-local RHND		= 22;
-local RFOT		= 23;
+local LTHY		= 13
+local LCLF		= 14
+local LFOT		= 15
+local SPNE		= 16
+local RSLD		= 17
+local RARM		= 18
+local LSLD		= 19
+local LARM		= 20
+local HEAD		= 21
+local RHND		= 22
+local RFOT		= 23
 
 
 
@@ -133,7 +133,7 @@ local Builder =
 
 	IsApplicable = function( self, ent ) 
 		
-		local mdl = ent:GetModel();
+		local mdl = ent:GetModel()
 
 		if ( mdl:EndsWith( "models/player/medic.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/hwm/medic.mdl" ) ) then return true end

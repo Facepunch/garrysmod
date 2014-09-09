@@ -15,7 +15,7 @@ local ClassHint = {
 
       fmt = function(ent, txt) return GetPTranslation(txt, key_params) end
    }
-};
+}
 
 -- Basic access for servers to add/modify hints. They override hints stored on
 -- the entities themselves.

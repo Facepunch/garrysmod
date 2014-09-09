@@ -117,11 +117,11 @@ function PANEL:PerformLayout()
 	
 	self.btnLeft:SetSize( 15, 15 )
 	self.btnLeft:AlignLeft( 4 )
-	self.btnLeft.y = 5;
+	self.btnLeft.y = 5
 	
 	self.btnRight:SetSize( 15, 15 )
 	self.btnRight:AlignRight( 4 )
-	self.btnRight.y = 5;
+	self.btnRight.y = 5
 	
 	self.btnLeft:SetVisible( self.pnlCanvas.x < 0 )
 	self.btnRight:SetVisible( self.pnlCanvas.x + self.pnlCanvas:GetWide() > self:GetWide() )

@@ -13,10 +13,10 @@ local MODEL			= Model( "models/MaxOfS2D/light_tubular.mdl" )
 --
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Bool", 0, "On" );
-	self:NetworkVar( "Bool", 1, "Toggle" );
-	self:NetworkVar( "Float", 1, "LightSize" );
-	self:NetworkVar( "Float", 2, "Brightness" );
+	self:NetworkVar( "Bool", 0, "On" )
+	self:NetworkVar( "Bool", 1, "Toggle" )
+	self:NetworkVar( "Float", 1, "LightSize" )
+	self:NetworkVar( "Float", 2, "Brightness" )
 
 end
 

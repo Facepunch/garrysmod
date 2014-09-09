@@ -253,7 +253,7 @@ function GetMember( entity_name, membername )
 
 	if ( !entity_name ) then return end
 
-	local ent = SEntList[ entity_name ];
+	local ent = SEntList[ entity_name ]
 
 	if ( !ent ) then return end
 

@@ -129,7 +129,7 @@ RADIO.Commands = {
    {cmd="traitor",  text="quick_traitor", format=true},
    {cmd="innocent", text="quick_inno", format=true},
    {cmd="check",    text="quick_check", format=false}
-};
+}
 
 local radioframe = nil
 
@@ -397,7 +397,7 @@ local radio_gestures = {
    quick_see     = ACT_GMOD_GESTURE_WAVE,
    quick_check   = ACT_SIGNAL_GROUP,
    quick_suspect = ACT_SIGNAL_HALT
-};
+}
 
 function GM:PlayerSentRadioCommand(ply, name, target)
    local act = radio_gestures[name]
@@ -567,7 +567,7 @@ local MuteText = {
    [MUTE_NONE]   = "",
    [MUTE_TERROR] = "mute_living",
    [MUTE_SPEC]   = "mute_specs"
-};
+}
 
 local function SetMuteState(state)
    if MutedState then

@@ -27,7 +27,7 @@ end
 function PANEL:ShowURL( url, force )
 
 	if ( string.len( url ) < 5 ) then
-		return;
+		return
 	end
 
 	if ( IsValid( self.HTML ) ) then 
@@ -35,10 +35,10 @@ function PANEL:ShowURL( url, force )
 		self.HTML:Remove() 
 	end
 
-	self:SetSize( ScrW(), ScrH() );
+	self:SetSize( ScrW(), ScrH() )
 
 	self.HTML = vgui.Create( "DHTML", self )
-	self.HTML:SetSize( ScrW(), ScrH() );
+	self.HTML:SetSize( ScrW(), ScrH() )
 	self.HTML:Dock( FILL )
 	self.HTML:OpenURL( url )
 		
@@ -79,7 +79,7 @@ function PANEL:RunJavascript( str )
 	if ( !IsValid( self.HTML ) ) then return end
 	if ( self.HTML:IsLoading() ) then return end
 
-	self.HTML:RunJavascript( str );
+	self.HTML:RunJavascript( str )
 	
 end
 
@@ -131,13 +131,13 @@ function PANEL:StatusChanged( strStatus )
 	
 		local Filename = string.gsub( strStatus, "Downloading ", "" )
 
-		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. Filename:JavascriptSafe() .. "' )" );
+		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. Filename:JavascriptSafe() .. "' )" )
 	
 		return
 
 	end
 
-	self:RunJavascript( "if ( window.SetStatusChanged ) SetStatusChanged( '" .. strStatus:JavascriptSafe() .. "' )" );
+	self:RunJavascript( "if ( window.SetStatusChanged ) SetStatusChanged( '" .. strStatus:JavascriptSafe() .. "' )" )
 	
 end
 
@@ -187,8 +187,8 @@ function PANEL:RefreshDownloadables()
 	
 	if ( iDownloading == 0 ) then return end
 	
-	self:RunJavascript( "if ( window.SetFilesNeeded ) SetFilesNeeded( " .. iDownloading .. ")" );
-	self:RunJavascript( "if ( window.SetFilesTotal ) SetFilesTotal( " .. iFileCount .. ")" );
+	self:RunJavascript( "if ( window.SetFilesNeeded ) SetFilesNeeded( " .. iDownloading .. ")" )
+	self:RunJavascript( "if ( window.SetFilesTotal ) SetFilesTotal( " .. iFileCount .. ")" )
 
 end
 

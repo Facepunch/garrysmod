@@ -112,12 +112,12 @@ hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, Vie
 	if ( frame_blend.IsActive() ) then
 
 		frame_blend.BlendFrame()
-		frame_blend.DrawPreview();
+		frame_blend.DrawPreview()
 
 	end
 
 	if ( ShouldRecordThisFrme ) then
-		menu.RecordFrame();
+		menu.RecordFrame()
 	end	
 
 	return true

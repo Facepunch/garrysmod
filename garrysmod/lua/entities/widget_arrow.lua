@@ -97,6 +97,6 @@ function ENT:GetGrabPos( Pos, Forward )
 	-- Get nearest point along the arrow where we touched it
 	local fdist, vpos, falong = util.DistanceToLine( planepos - arrowdir * 1024, planepos + arrowdir * 1024, hitpos )
 	
-	return vpos;
+	return vpos
 
 end

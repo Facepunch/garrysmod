@@ -143,7 +143,7 @@ function Derma_Query( strText, strTitle, ... )
 			Button:SizeToContents()
 			Button:SetTall( 20 )
 			Button:SetWide( Button:GetWide() + 20 )
-			Button.DoClick = function() Window:Close(); Func() end
+			Button.DoClick = function() Window:Close() Func() end
 			Button:SetPos( x, 5 )
 			
 		x = x + Button:GetWide() + 5

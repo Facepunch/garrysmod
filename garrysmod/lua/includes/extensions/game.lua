@@ -41,7 +41,7 @@ game.BuildAmmoTypes = function()
 	--
 	table.SortByMember( AmmoTypes, "name", true )
 
-	return AmmoTypes;
+	return AmmoTypes
 
 end
 

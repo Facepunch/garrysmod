@@ -41,10 +41,10 @@ AccessorFunc( PANEL, "m_strDraggableName", 		"DraggableName" )
 -----------------------------------------------------------]]
 function PANEL:Init()
 
-	self:SetDoubleClickToOpen( true );
+	self:SetDoubleClickToOpen( true )
 	
 	self.Label = vgui.Create( "DTree_Node_Button", self )
-	self.Label:SetDragParent( self );
+	self.Label:SetDragParent( self )
 	self.Label.DoClick = function() self:InternalDoClick() end
 	self.Label.DoDoubleClick = function() self:InternalDoClick() end
 	self.Label.DoRightClick = function() self:InternalDoRightClick() end
@@ -60,7 +60,7 @@ function PANEL:Init()
 	
 	self.animSlide = Derma_Anim( "Anim", self, self.AnimSlide )
 	
-	self.fLastClick = SysTime();
+	self.fLastClick = SysTime()
 	
 	self:SetDrawLines( false )
 	self:SetLastChild( false )
@@ -319,7 +319,7 @@ end
 function PANEL:PerformLayout()
 
 	if ( self:IsRootNode() ) then
-		return self:PerformRootNodeLayout(); 
+		return self:PerformRootNodeLayout()
 	end
 	
 	if ( self.animSlide:Active() ) then return end
@@ -328,9 +328,9 @@ function PANEL:PerformLayout()
 	
 	if ( self.m_bHideExpander ) then
 	
-		self.Expander:SetPos( -11, 0 );
+		self.Expander:SetPos( -11, 0 )
 		self.Expander:SetSize( 15, 15 )
-		self.Expander:SetVisible( false );
+		self.Expander:SetVisible( false )
 	
 	else
 	
@@ -460,8 +460,7 @@ function PANEL:InstallDraggable( pNode )
 	
 	-- Make this node draggable
 	pNode:SetDraggableName( DragName )
-	pNode:Droppable( DragName );	
-	
+	pNode:Droppable( DragName )
 	-- Allow item dropping onto us
 	self.ChildNodes:MakeDroppable( DragName, true, true )
 
@@ -481,7 +480,7 @@ function PANEL:AddFolder( strName, strFolder, strPath, bShowFiles, strWildCard, 
 
 	local node = self:AddNode( strName )
 	node:MakeFolder( strFolder, strPath, bShowFiles, strWildCard, bDontForceExpandable )
-	return node;
+	return node
 
 end
 
@@ -654,7 +653,7 @@ function PANEL:DragHoverClick( HoverTime )
 	
 	if ( self:GetRoot():GetClickOnDragHover() ) then
 	
-		self:InternalDoClick();
+		self:InternalDoClick()
 	
 	end
 
@@ -663,7 +662,7 @@ end
 
 function PANEL:MoveToTop()
 
-	local parent = self:GetParentNode();
+	local parent = self:GetParentNode()
 	if ( !IsValid(parent) ) then return end
 	
 	self:GetParentNode():MoveChildTo( self, 1 )

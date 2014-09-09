@@ -29,7 +29,7 @@ concommand.Add( "dupe_save", function( ply, cmd, arg )
 	--
 	local compressed = util.Compress( json )
 
-	MsgN( "Compressed Dupe for sending: ", json:len(), " => ", compressed:len() );
+	MsgN( "Compressed Dupe for sending: ", json:len(), " => ", compressed:len() )
 
 	--
 	-- And send it(!)
@@ -52,7 +52,7 @@ if ( CLIENT ) then
 
 			local uncompressed = util.Decompress( data )
 			if ( !uncompressed ) then 
-				Msg( "Received dupe - but couldn't decompress!?\n" );
+				Msg( "Received dupe - but couldn't decompress!?\n" )
 				return
 			end
 

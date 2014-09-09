@@ -19,8 +19,8 @@ function PANEL:Init()
 
 	self:SetMouseInputEnabled( true )
 	
-	self:SetSizeX( true );
-	self:SetSizeY( true );
+	self:SetSizeX( true )
+	self:SetSizeY( true )
 
 end
 

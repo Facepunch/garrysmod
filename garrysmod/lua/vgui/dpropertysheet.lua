@@ -62,7 +62,7 @@ end
 
 function PANEL:PerformLayout()
 
-	self:ApplySchemeSettings();
+	self:ApplySchemeSettings()
 		
 	if ( !self.Image ) then return end
 		
@@ -189,7 +189,7 @@ function PANEL:AddSheet( label, panel, material, NoStretchX, NoStretchY, Tooltip
 
 	local Sheet = {}
 	
-	Sheet.Name = label;
+	Sheet.Name = label
 
 	Sheet.Tab = vgui.Create( "DTab", self )
 	Sheet.Tab:SetTooltip( Tooltip )
@@ -212,7 +212,7 @@ function PANEL:AddSheet( label, panel, material, NoStretchX, NoStretchY, Tooltip
 	
 	self.tabScroller:AddPanel( Sheet.Tab )
 	
-	return Sheet;
+	return Sheet
 
 end
 
@@ -380,7 +380,7 @@ function PANEL:SwitchToName( name )
 	
 	end
 	
-	return false;
+	return false
 
 end
 
@@ -388,7 +388,7 @@ function PANEL:SetupCloseButton( func )
 
 	self.CloseButton = self.tabScroller:Add( "DImageButton" )
 	self.CloseButton:SetImage( "icon16/circlecross.png" )
-	self.CloseButton:SetColor( Color( 10, 10, 10, 200 ) );
+	self.CloseButton:SetColor( Color( 10, 10, 10, 200 ) )
 	self.CloseButton:DockMargin( 0, 0, 0, 8 )
 	self.CloseButton:SetWide( 16 )
 	self.CloseButton:Dock( RIGHT )

@@ -7,7 +7,7 @@ AddCSLuaFile()
 --
 --
 
-DEFINE_BASECLASS( "drive_base" );
+DEFINE_BASECLASS( "drive_base" )
 
 
 drive.Register( "drive_sandbox", 
@@ -192,7 +192,7 @@ drive.Register( "drive_sandbox",
 		if ( SERVER && IsValid( self.Entity:GetPhysicsObject() ) ) then
 
 			self.Entity:GetPhysicsObject():EnableMotion( true )
-			self.Entity:GetPhysicsObject():SetPos( mv:GetOrigin() );
+			self.Entity:GetPhysicsObject():SetPos( mv:GetOrigin() )
 			self.Entity:GetPhysicsObject():Wake()
 			self.Entity:GetPhysicsObject():EnableMotion( false )
 
@@ -201,4 +201,4 @@ drive.Register( "drive_sandbox",
 	end
 
 
-}, "drive_base" );
+}, "drive_base" )

@@ -33,7 +33,7 @@ function PANEL:Init()
 
 	self:SetIsToggle( false )
 	self:SetToggle( false )
-	self:SetDisabled( false );
+	self:SetDisabled( false )
 	self:SetMouseInputEnabled( false )
 	self:SetKeyboardInputEnabled( false )
 	self:SetDoubleClickingEnabled( true )
@@ -60,7 +60,7 @@ end
 function PANEL:ApplySchemeSettings()
 
 	self:SetFontInternal( self.m_FontName )
-	self:UpdateColours( self:GetSkin() );
+	self:UpdateColours( self:GetSkin() )
 	
 	local col = self.m_colTextStyle
 	if ( self.m_colText ) then col = self.m_colText end
@@ -142,13 +142,13 @@ function PANEL:OnMousePressed( mousecode )
 	
 	self:MouseCapture( true )
 	self.Depressed = true
-	self:OnDepressed();
-	self:InvalidateLayout();
+	self:OnDepressed()
+	self:InvalidateLayout()
 	
 	--
 	-- Tell DragNDrop that we're down, and might start getting dragged!
 	--
-	self:DragMousePress( mousecode );
+	self:DragMousePress( mousecode )
 
 end
 
@@ -167,8 +167,8 @@ function PANEL:OnMouseReleased( mousecode )
 	if ( !self.Depressed ) then return end
 	
 	self.Depressed = nil
-	self:OnReleased();
-	self:InvalidateLayout();
+	self:OnReleased()
+	self:InvalidateLayout()
 	--
 	-- If we were being dragged then don't do the default behaviour!
 	--

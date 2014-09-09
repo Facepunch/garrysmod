@@ -4,21 +4,21 @@
 -- These are the physics bone numbers
 --
 
-local PLVS		= 0;	
-local SPNE		= 1;
-local RSLD		= 2;
-local LSLD		= 3;
-local LARM		= 4;
-local LHND		= 5;
-local RARM		= 6;
-local RHND		= 7;
-local RTHY		= 8;
-local RCLF		= 9;
-local HEAD		= 10;
-local LTHY		= 11;
-local LCLF		= 12;
-local LFOT		= 13;
-local RFOT		= 14;
+local PLVS		= 0
+local SPNE		= 1
+local RSLD		= 2
+local LSLD		= 3
+local LARM		= 4
+local LHND		= 5
+local RARM		= 6
+local RHND		= 7
+local RTHY		= 8
+local RCLF		= 9
+local HEAD		= 10
+local LTHY		= 11
+local LCLF		= 12
+local LFOT		= 13
+local RFOT		= 14
 
 local Builder = 
 {
@@ -92,7 +92,7 @@ local Builder =
 	--
 	Complete = function( self, player, sensor, rotation, pos, ang )
 
-		pos[SPNE] = LerpVector( 0.45, pos[SPNE], pos[HEAD] );
+		pos[SPNE] = LerpVector( 0.45, pos[SPNE], pos[HEAD] )
 
 		-- Feet are insanely spazzy, so we lock the feet to the angle of the calf
 		ang[LFOT]	= ang[LCLF]:Right():AngleEx( ang[LCLF]:Up() ) + Angle( 20, 0, 0 )
@@ -101,7 +101,7 @@ local Builder =
 	end,
 
 	-- We're used as a default - no need to return true to anything here.
-	IsApplicable = function( self, ent ) return false; end,
+	IsApplicable = function( self, ent ) return false end,
 }
 
 list.Set( "SkeletonConvertor", "ValveBiped", Builder )

@@ -25,7 +25,7 @@ function ENT:BehaveUpdate( fInterval )
 	if ( ok == false ) then
 
 		self.BehaveThread = nil
-		Msg( self, "error: ", message, "\n" );
+		Msg( self, "error: ", message, "\n" )
 
 	end
 
@@ -233,7 +233,7 @@ function ENT:HandleStuck()
 	--
 	-- Clear the stuck status
 	--
-	self.loco:ClearStuck();
+	self.loco:ClearStuck()
 
 end
 
@@ -267,7 +267,7 @@ function ENT:MoveToPos( pos, options )
 		-- If we're stuck then call the HandleStuck function and abandon
 		if ( self.loco:IsStuck() ) then
 
-			self:HandleStuck();
+			self:HandleStuck()
 			
 			return "stuck"
 
@@ -309,7 +309,7 @@ function ENT:PlaySequenceAndWait( name, speed )
 	
 	self:ResetSequenceInfo()
 	self:SetCycle( 0 )
-	self:SetPlaybackRate( speed  );
+	self:SetPlaybackRate( speed  )
 
 	-- wait for it to finish
 	coroutine.wait( len / speed )

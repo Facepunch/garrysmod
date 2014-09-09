@@ -45,7 +45,7 @@ local function AddWikiInfo( pagename, name, funcname )
 		
 		IDelay = IDelay + 0.1
 	
-		 return "";
+		 return ""
 	end
 
 	local str = file.Read( filename )

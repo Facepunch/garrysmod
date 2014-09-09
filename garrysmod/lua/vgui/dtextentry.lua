@@ -109,12 +109,12 @@ function PANEL:OnKeyCodeTyped( code )
 	if ( self.m_bHistory || IsValid( self.Menu ) ) then
 	
 		if ( code == KEY_UP ) then
-			self.HistoryPos = self.HistoryPos - 1;
+			self.HistoryPos = self.HistoryPos - 1
 			self:UpdateFromHistory()
 		end
 		
 		if ( code == KEY_DOWN || code == KEY_TAB ) then	
-			self.HistoryPos = self.HistoryPos + 1;
+			self.HistoryPos = self.HistoryPos + 1
 			self:UpdateFromHistory()
 		end
 	
@@ -401,7 +401,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:AddHistory( txt )
 	
-	if ( !txt || txt == "" ) then return; end
+	if ( !txt || txt == "" ) then return end
 	
 	table.RemoveByValue( self.History, txt )	
 	table.insert( self.History, txt )

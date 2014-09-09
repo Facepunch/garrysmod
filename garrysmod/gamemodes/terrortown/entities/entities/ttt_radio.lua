@@ -100,7 +100,7 @@ local simplesounds = {
    explosion = {
       Sound("BaseExplosionEffect.Sound")
    }
-};
+}
 
 local serialsounds = {
    footsteps = {
@@ -129,7 +129,7 @@ local serialsounds = {
       times = {8, 12},
       ampl = 70
    }
-};
+}
 
 local gunsounds = {
    shotgun = {
@@ -181,7 +181,7 @@ local gunsounds = {
       times = {6, 12},
       burst = true
    }
-};
+}
 
 
 
@@ -263,7 +263,7 @@ if SERVER then
       "pistol", "mac10", "deagle",
       "m16", "rifle", "huge",
       "burning", "beeps", "footsteps"
-   };
+   }
 
 
    local function RadioCmd(ply, cmd, args)

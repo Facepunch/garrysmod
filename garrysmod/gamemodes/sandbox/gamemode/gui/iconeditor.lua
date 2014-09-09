@@ -39,15 +39,15 @@ function PANEL:Init()
 		self.Scenes.DoClick = function( _, node )
 				
 			if ( !node.FileName ) then return end
-			local ext = string.GetExtensionFromFilename( node.FileName );
+			local ext = string.GetExtensionFromFilename( node.FileName )
 			if( ext != "vcd" ) then return end
 					
-			self.ModelPanel:StartScene( node.FileName );
+			self.ModelPanel:StartScene( node.FileName )
 			MsgN( node.FileName )
 				
 		end
 		
-		local materials = self.Scenes.RootNode:AddFolder( "Scenes", "scenes/",	true );
+		local materials = self.Scenes.RootNode:AddFolder( "Scenes", "scenes/",	true )
 		materials:SetIcon( "icon16/photos.png" )		
 */
 			

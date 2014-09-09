@@ -61,7 +61,7 @@ local widget_bone =
 		if ( isbox ) then return end
 		if ( !widgets.Tracing ) then return end
 		
-		local pp = self:GetParentPos();
+		local pp = self:GetParentPos()
 		
 		if ( !pp ) then return end
 		
@@ -96,7 +96,7 @@ local widget_bone =
 		-- we need to update the bones pretty regularly
 		--
 
-		local size = self:GetParent():BoneLength( self:GetParentAttachment() ) * 2;
+		local size = self:GetParent():BoneLength( self:GetParentAttachment() ) * 2
 		size = math.ceil( size )
 		
 		self:SetSize( size )
@@ -111,7 +111,7 @@ DEFINE_BASECLASS( "widget_base" )
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Entity", 0, "Target" );
+	self:NetworkVar( "Entity", 0, "Target" )
 	
 	self.BaseClass.SetupDataTables( self )
 

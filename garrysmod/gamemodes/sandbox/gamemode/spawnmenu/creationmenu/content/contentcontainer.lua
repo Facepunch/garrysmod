@@ -1,7 +1,7 @@
 
 local PANEL = {}
 
-DEFINE_BASECLASS( "DScrollPanel" );
+DEFINE_BASECLASS( "DScrollPanel" )
 
 AccessorFunc( PANEL, "m_pControllerPanel", 				"ControllerPanel" )
 AccessorFunc( PANEL, "m_strCategoryName", 				"CategoryName" )
@@ -129,7 +129,7 @@ hook.Add( "SpawnlistOpenGenericMenu", "SpawnlistOpenGenericMenu", function( canv
 	menu:AddOption( "Delete", function() 
 							
 			for k, v in pairs( selected ) do
-				v:Remove();
+				v:Remove()
 			end
 
 			hook.Run( "SpawnlistContentChanged" ) 

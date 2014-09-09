@@ -9,7 +9,7 @@ local function KickId( player, command, arguments )
 	local id = arguments[1]
 	local reason = arguments[2] or "Kicked"
 	
-	RunConsoleCommand( "kickid", id, Format( "%s (%s)", reason, player:Nick() ) );
+	RunConsoleCommand( "kickid", id, Format( "%s (%s)", reason, player:Nick() ) )
 	
 end
 
@@ -27,7 +27,7 @@ local function BanID( player, command, arguments )
 	local length 	= arguments[1]
 	local id 		= arguments[2]
 	
-	RunConsoleCommand( "banid", length, id );
+	RunConsoleCommand( "banid", length, id )
 	
 end
 

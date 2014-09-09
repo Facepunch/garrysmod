@@ -51,6 +51,6 @@ hook.Add( "InitPostEntity", "PersistenceInit", function()
 	local PersistPage = GetConVarString( "sbox_persist" )
 	if ( PersistPage == "0" ) then return end
 
-	hook.Run( "PersistenceLoad", PersistPage );
+	hook.Run( "PersistenceLoad", PersistPage )
 	
 end )

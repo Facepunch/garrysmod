@@ -43,7 +43,7 @@ function PANEL:UpdateText()
    if ( !self.m_iMin ) then return end
    if ( !self.m_iValue ) then return end
    
-   local fDelta = 0;
+   local fDelta = 0
    
    if ( self.m_iMax-self.m_iMin != 0 ) then
       fDelta = ( self.m_iValue - self.m_iMin ) / (self.m_iMax-self.m_iMin)
@@ -70,7 +70,7 @@ end
 
 function PANEL:Paint()
 
-   local fDelta = 0;
+   local fDelta = 0
    
    if ( self.m_iMax-self.m_iMin != 0 ) then
       fDelta = ( self.m_iValue - self.m_iMin ) / (self.m_iMax-self.m_iMin)

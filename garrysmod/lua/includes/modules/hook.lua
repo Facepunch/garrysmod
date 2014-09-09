@@ -72,7 +72,7 @@ function Call( name, gm, ... )
 	local HookTable = Hooks[ name ]
 	if ( HookTable != nil ) then
 	
-		local a, b, c, d, e, f;
+		local a, b, c, d, e, f
 
 		for k, v in pairs( HookTable ) do 
 			

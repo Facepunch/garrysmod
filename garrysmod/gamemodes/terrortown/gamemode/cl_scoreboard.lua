@@ -8,7 +8,7 @@ local team = team
 
 local namecolor = {
    admin = Color(220, 180, 0, 255)
-};
+}
 
 include("vgui/sb_main.lua")
 

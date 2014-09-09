@@ -68,13 +68,13 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 	
 
 	inFPS.OnChange = function() settings.fps = inFPS:GetInt()  end
-		inFPS:SetText( settings.fps );
+		inFPS:SetText( settings.fps )
 
 	inBitRate.OnChange = function() settings.bitrate = inBitRate:GetInt()  end
-		inBitRate:SetText( settings.bitrate );
+		inBitRate:SetText( settings.bitrate )
 
 	-- TODO!!!
-	inCodec.OnSelect = function( _, index, value, data ) settings.container = data[1]; settings.video = data[2]; settings.audio = data[3] end
+	inCodec.OnSelect = function( _, index, value, data ) settings.container = data[1] settings.video = data[2] settings.audio = data[3] end
 		inCodec:AddChoice( "webm", { "webm", "vp8", "vorbis" }, true )
 		inCodec:AddChoice( "ogg", { "ogg", "theora", "vorbis" } )
 
@@ -106,7 +106,7 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 	--
 	-- DOF
 	--
-	inDOF.OnSelect = function( _, index, value, data ) settings.dofsteps = data[1]; settings.dofpasses = data[2] end
+	inDOF.OnSelect = function( _, index, value, data ) settings.dofsteps = data[1] settings.dofpasses = data[2] end
 		inDOF:AddChoice( "Off",	{ 0, 0 }, true )
 		inDOF:AddChoice( "Draft (21 Samples)",	{ 6, 3 } )
 		inDOF:AddChoice( "Good (72 Samples)",	{ 12, 6 } )
@@ -144,22 +144,22 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 		-- Fill in the name here, or we'll be overwriting the same video!
 		local cleanname = string.GetFileFromFilename( demoname )
 			cleanname = cleanname:Replace( ".", "_" )
-			cleanname = cleanname .. " " .. util.DateStamp();
+			cleanname = cleanname .. " " .. util.DateStamp()
 		settings.name = cleanname
 
 		PrintTable( settings )
-		ActiveVideo, error = video.Record( settings );
+		ActiveVideo, error = video.Record( settings )
 
 		if ( !ActiveVideo ) then
 			MsgN( "Couldn't record video: ", error )
 			return
 		end
 
-		RunConsoleCommand( "sv_cheats",			1 );
-		RunConsoleCommand( "host_framerate",	settings.fps * settings.frameblend );
-		RunConsoleCommand( "snd_fixed_rate",	1 );
-		RunConsoleCommand( "progress_enable",	1 );
-		RunConsoleCommand( "playdemo",			demoname );
+		RunConsoleCommand( "sv_cheats",			1 )
+		RunConsoleCommand( "host_framerate",	settings.fps * settings.frameblend )
+		RunConsoleCommand( "snd_fixed_rate",	1 )
+		RunConsoleCommand( "progress_enable",	1 )
+		RunConsoleCommand( "playdemo",			demoname )
 
 		VideoSettings = table.Copy( settings )
 				
@@ -175,9 +175,9 @@ local function FinishRecording()
 	ActiveVideo:Finish()
 	ActiveVideo = nil
 
-	RunConsoleCommand( "host_framerate",	0 );
-	RunConsoleCommand( "sv_cheats",			0 );
-	RunConsoleCommand( "snd_fixed_rate",	0 );
+	RunConsoleCommand( "host_framerate",	0 )
+	RunConsoleCommand( "sv_cheats",			0 )
+	RunConsoleCommand( "snd_fixed_rate",	0 )
 
 	MsgN( "Rendering Finished - Took ",SysTime()-stats.starttime," seconds" )
 
@@ -234,19 +234,19 @@ local function DrawOverlay()
 	surface.SetDrawColor( 255, 255, 100, 150 )
 	surface.DrawRect( x+1, y+1, w * complete - 2, h - 2 )
 
-	surface.SetTextPos( x, y + h + 10 );
+	surface.SetTextPos( x, y + h + 10 )
 	surface.DrawText( "Time Taken: " .. string.NiceTime( SysTime() - stats.starttime )  )
 
 	local tw, th = surface.GetTextSize( "Time Left: " .. string.NiceTime( stats.timeremaining ) )
-	surface.SetTextPos( x + w - tw, y + h + 10 );
+	surface.SetTextPos( x + w - tw, y + h + 10 )
 	surface.DrawText( "Time Left: " .. string.NiceTime( stats.timeremaining )  )
 
 	local demolength = "Demo Length: ".. string.FormattedTime( engine.GetDemoPlaybackTotalTicks() * engine.TickInterval(), "%2i:%02i" )
 	local tw, th = surface.GetTextSize( demolength )
-	surface.SetTextPos( x + w - tw, y - th - 10 );
+	surface.SetTextPos( x + w - tw, y - th - 10 )
 	surface.DrawText( demolength  )
 
-	local info = "Rendering ".. math.floor( VideoSettings.width ) .. "x" .. math.floor( VideoSettings.height ) .. " at " .. math.floor( VideoSettings.fps ).. "fps ";
+	local info = "Rendering ".. math.floor( VideoSettings.width ) .. "x" .. math.floor( VideoSettings.height ) .. " at " .. math.floor( VideoSettings.fps ).. "fps "
 
 	local with = {}
 	if ( VideoSettings.dofsteps > 0 ) then table.insert( with, "DOF" ) end
@@ -259,17 +259,17 @@ local function DrawOverlay()
 		info = info .. "with " .. with
 	end
 
-	info = info .. " (rendering " .. (VideoSettings.frameblend*VideoSettings.dofsteps*VideoSettings.dofpasses) .. " frames per frame)";
+	info = info .. " (rendering " .. (VideoSettings.frameblend*VideoSettings.dofsteps*VideoSettings.dofpasses) .. " frames per frame)"
 
 	local tw, th = surface.GetTextSize( info )
-	surface.SetTextPos( x, y - th - 10 );
+	surface.SetTextPos( x, y - th - 10 )
 	surface.DrawText( info )
 
 	local demotime = string.FormattedTime( (engine.GetDemoPlaybackTick() * engine.TickInterval()), "%2i:%02i" )
 	local tw, th = surface.GetTextSize( demotime )
 	if ( w * complete > tw + 20 ) then
 		surface.SetTextColor( 0, 0, 0, 200 )
-		surface.SetTextPos( x + w * complete - tw - 10, y + h * 0.5 - th * 0.5 );
+		surface.SetTextPos( x + w * complete - tw - 10, y + h * 0.5 - th * 0.5 )
 		surface.DrawText( demotime  )
 	end
 
@@ -277,7 +277,7 @@ local function DrawOverlay()
 	local tw, th = surface.GetTextSize( demotime )
 	if ( w - w * complete > tw + 20 ) then
 		surface.SetTextColor( 255, 255, 255, 200 )
-		surface.SetTextPos( x + w * complete + 10, y + h * 0.5 - th * 0.5 );
+		surface.SetTextPos( x + w * complete + 10, y + h * 0.5 - th * 0.5 )
 		surface.DrawText( demotime  )
 	end
 	
@@ -313,7 +313,7 @@ function RecordDemoFrame()
 
 	if ( !VideoSettings.started ) then return end
 
-	ActiveVideo:AddFrame( 1 / VideoSettings.fps, true );
+	ActiveVideo:AddFrame( 1 / VideoSettings.fps, true )
 	VideoSettings.framecount = VideoSettings.framecount + 1
 
 end

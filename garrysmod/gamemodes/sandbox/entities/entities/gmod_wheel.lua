@@ -17,8 +17,8 @@ ENT.RenderGroup 		= RENDERGROUP_OPAQUE
 --
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Bool", 0, "Toggle" );
-	self:NetworkVar( "Float", 0, "Direction" );
+	self:NetworkVar( "Bool", 0, "Toggle" )
+	self:NetworkVar( "Float", 0, "Direction" )
 
 end
 

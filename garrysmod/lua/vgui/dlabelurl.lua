@@ -36,7 +36,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:ApplySchemeSettings( col )
 
-	self:UpdateColours( self:GetSkin() );
+	self:UpdateColours( self:GetSkin() )
 	
 	local col = self.m_colTextStyle
 	if ( self.m_colText ) then col = self.m_colText end

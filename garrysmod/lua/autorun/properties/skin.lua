@@ -28,7 +28,7 @@ properties.Add( "skin", {
 		--
 		-- Create a check item for each skin
 		--
-		local num = ent:SkinCount();
+		local num = ent:SkinCount()
 
 		for i=0, num-1 do
 

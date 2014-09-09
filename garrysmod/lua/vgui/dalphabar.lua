@@ -53,7 +53,7 @@ end
 function PANEL:OnMousePressed( mcode )
 
 	self:MouseCapture( true )
-	self:OnCursorMoved( self:CursorPos() );
+	self:OnCursorMoved( self:CursorPos() )
 	
 end
 
@@ -64,7 +64,7 @@ end
 function PANEL:OnMouseReleased( mcode )
 
 	self:MouseCapture( false )
-	self:OnCursorMoved( self:CursorPos() );
+	self:OnCursorMoved( self:CursorPos() )
 
 end
 

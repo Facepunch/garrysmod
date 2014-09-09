@@ -67,7 +67,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		wepcol:SetPalette( false )
 		wepcol:Dock( TOP )
 		wepcol:SetSize( 200, 260 )
-		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
+		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) )
 
 		sheet:AddSheet( "Colors", controls, "icon16/color_wheel.png" )
 

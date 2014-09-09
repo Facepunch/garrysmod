@@ -201,7 +201,7 @@ local widget_bonemanip_scale = {
 		if ( !pbone || pbone <= 0 ) then return end
 		local pos, ang = ent:GetBonePosition( pbone )
 		
-		v = v + (pos-v)*0.5;
+		v = v + (pos-v)*0.5
 
 		return v, ang
 	

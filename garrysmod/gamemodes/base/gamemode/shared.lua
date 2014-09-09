@@ -229,7 +229,7 @@ function GM:VehicleMove( ply, vehicle, mv )
 	-- On duck toggle third person view
 	--
 	if ( mv:KeyPressed( IN_DUCK ) ) then
-		vehicle:SetThirdPersonMode( !vehicle:GetThirdPersonMode() );
+		vehicle:SetThirdPersonMode( !vehicle:GetThirdPersonMode() )
 	end
 
 	--
@@ -241,7 +241,7 @@ function GM:VehicleMove( ply, vehicle, mv )
 		-- Actual camera distance = ( renderradius + renderradius * dist )
 		-- so -1 will be zero.. clamp it there.
 		local newdist = math.Clamp( vehicle:GetCameraDistance() - iWheel * 0.03 * (1.1 + vehicle:GetCameraDistance()), -1, 10 )
-		vehicle:SetCameraDistance( newdist );
+		vehicle:SetCameraDistance( newdist )
 	end
 
 end
@@ -309,7 +309,7 @@ function GM:OnViewModelChanged( vm, old, new )
 
 	local ply = vm:GetOwner()
 	if ( IsValid( ply ) ) then
-		player_manager.RunClass( ply, "ViewModelChanged", vm, old, new );
+		player_manager.RunClass( ply, "ViewModelChanged", vm, old, new )
 	end
 
 end

@@ -31,12 +31,12 @@ function PANEL:Init()
 	self.OnChange = function() self:OnValueChanged( self:GetValue() ) end
 		
 	self.Up = vgui.Create( "DButton", self )
-	self.Up:SetText( "" );
+	self.Up:SetText( "" )
 	self.Up.DoClick = function( button, mcode ) self:SetValue( self:GetValue() + 1 ) end
 	self.Up.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "NumberUp", panel, w, h ) end
 	
 	self.Down = vgui.Create( "DButton", self )
-	self.Down:SetText( "" );
+	self.Down:SetText( "" )
 	self.Down.DoClick = function( button, mcode ) self:SetValue( self:GetValue() - 1 ) end
 	self.Down.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "NumberDown", panel, w, h ) end
 		
@@ -46,8 +46,8 @@ end
 
 function PANEL:HideWang()
 
-	self.Up:Hide();
-	self.Down:Hide();
+	self.Up:Hide()
+	self.Down:Hide()
 
 end
 
@@ -174,15 +174,15 @@ end
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
-	local s = math.floor(self:GetTall() * 0.5);
+	local s = math.floor(self:GetTall() * 0.5)
 
 	self.Up:SetSize( s, s-1 )
-	self.Up:AlignRight( 3 );
-	self.Up:AlignTop(0);
+	self.Up:AlignRight( 3 )
+	self.Up:AlignTop(0)
 	
 	self.Down:SetSize( s, s-1 )
-	self.Down:AlignRight( 3 );
-	self.Down:AlignBottom(2);
+	self.Down:AlignRight( 3 )
+	self.Down:AlignBottom(2)
 
 end
 

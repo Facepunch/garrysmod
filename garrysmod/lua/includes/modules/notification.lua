@@ -137,7 +137,7 @@ local function Update()
 	if ( !Notices ) then return end
 		
 	local i = 0
-	local Count = table.Count( Notices );
+	local Count = table.Count( Notices )
 	for key, Panel in pairs( Notices ) do
 	
 		i = i + 1
@@ -237,7 +237,7 @@ function PANEL:SetProgress()
 		local x = math.fmod( SysTime() * 200, self:GetWide() + w ) - w
 		
 		if ( x + w > self:GetWide() - 11 ) then w = ( self:GetWide() - 11 ) - x end 
-		if ( x < 0 ) then w = w + x; x = 0 end
+		if ( x < 0 ) then w = w + x x = 0 end
 		
 		surface.SetDrawColor( 0, 255, 0, 255 )
 		surface.DrawRect( 5 + x, self:GetTall() - 9, w, 3 )

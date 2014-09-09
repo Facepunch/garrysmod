@@ -15,8 +15,8 @@ ENT.Materials			=
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Float", 0, "SizeVar" );		-- Size (bounds)
-	self:NetworkVar( "Float", 1, "Priority" );		-- Priority above other widgets (clicks, visually)
+	self:NetworkVar( "Float", 0, "SizeVar" )	-- Size (bounds)
+	self:NetworkVar( "Float", 1, "Priority" )	-- Priority above other widgets (clicks, visually)
 
 end
 

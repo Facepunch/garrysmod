@@ -93,7 +93,7 @@ function meta:AnimTail()
 		last = math.max( last, anim.EndTime )
 	end
 
-	return last;
+	return last
 	
 end
 
@@ -109,7 +109,7 @@ function meta:NewAnimation( length, delay, ease, callback )
 	if ( self.m_AnimQueue ) then
 	
 		delay = delay + self:AnimTail()
-		self.m_AnimQueue = false;
+		self.m_AnimQueue = false
 		
 	else
 	
@@ -182,8 +182,8 @@ function meta:SizeTo( w, h, length, delay, ease, callback )
 
 	local anim = self:NewAnimation( length, delay, ease, callback )
 	
-	anim.SizeX = w != -1;
-	anim.SizeY = h != -1;
+	anim.SizeX = w != -1
+	anim.SizeY = h != -1
 	
 	if ( !anim.SizeX ) then  w = self:GetWide() end
 	if ( !anim.SizeY ) then  h = self:GetTall() end
@@ -200,7 +200,7 @@ end
 -----------------------------------------------------------]]  
 function meta:SlideUp( length )
 
-	local height = self:GetTall();
+	local height = self:GetTall()
 	local anim = self:SizeTo( -1, 0, length )
 	anim.OnEnd = function()
 		self:SetVisible( false )
@@ -214,7 +214,7 @@ end
 -----------------------------------------------------------]] 
 function meta:SlideDown( length )
 
-	local height = self:GetTall();
+	local height = self:GetTall()
 	self:SetVisible( true )
 	self:SetTall( 0 )
 	

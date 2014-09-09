@@ -19,7 +19,7 @@ if ( SERVER ) then
 
 		return end 
 
-		ply.m_NextSave = CurTime() + 10;
+		ply.m_NextSave = CurTime() + 10
 
 		ServerLog( "Sending save to player " .. tostring( ply ) .. "\n" )
 
@@ -32,7 +32,7 @@ if ( SERVER ) then
 
 		local len = string.len(compressed_save)
 
-		local ShowSave = 0;
+		local ShowSave = 0
 		if ( args[1] == 'spawnmenu' ) then ShowSave = 1 end
 
 		net.Start( "GModSave" )
@@ -46,11 +46,11 @@ if ( SERVER ) then
 
 	hook.Add( "LoadGModSave", "LoadGModSave", function( savedata, mapname, maptime )
 
-		//MsgN( "SaveData: [", savedata, "]" );
-		//MsgN( "mapname: [", mapname, "]" );
-		//MsgN( "maptime: [", maptime, "]" );
+		//MsgN( "SaveData: [", savedata, "]" )
+		//MsgN( "mapname: [", mapname, "]" )
+		//MsgN( "maptime: [", maptime, "]" )
 
-		savedata = util.Decompress( savedata );
+		savedata = util.Decompress( savedata )
 
 		if ( !isstring( savedata ) ) then 
 			MsgN( "gm_load: Couldn't load save!" )
@@ -59,7 +59,7 @@ if ( SERVER ) then
 
 		gmsave.LoadMap( savedata, nil )
 
-	end );
+	end )
 
 else
 
@@ -74,14 +74,14 @@ else
 
 			local uncompressed = util.Decompress( data )
 			if ( !uncompressed ) then 
-				Msg( "Received save - but couldn't decompress!?\n" );
+				Msg( "Received save - but couldn't decompress!?\n" )
 				return
 			end
 
-			engine.WriteSave( data, game.GetMap() .." ".. util.DateStamp(), CurTime(), game.GetMap() );
+			engine.WriteSave( data, game.GetMap() .." ".. util.DateStamp(), CurTime(), game.GetMap() )
 
 			if ( showsave ) then
-				hook.Run( "PostGameSaved" );
+				hook.Run( "PostGameSaved" )
 			end
 
 	end )

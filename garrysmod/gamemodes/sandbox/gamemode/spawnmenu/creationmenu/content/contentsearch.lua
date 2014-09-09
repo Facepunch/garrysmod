@@ -45,7 +45,7 @@ function PANEL:Init()
 		hook.Run( "OnTextEntryGetFocus", self.Search )		
 
 		self.Search:RequestFocus()
-		self.Search:SetText( "" );
+		self.Search:SetText( "" )
 
 		--
 		-- If we don't call this we'd have to press F1 twice to close it!
@@ -53,16 +53,16 @@ function PANEL:Init()
 		--
 		timer.Simple( 0.1, function() g_SpawnMenu:HangOpen( false ) end )
 
-		ContentPanel:SwitchPanel( self.PropPanel );
+		ContentPanel:SwitchPanel( self.PropPanel )
 
-	end);
+	end)
 
 	hook.Add( "SearchUpdate", "SearchUpdate", function()
 
 		if ( !g_SpawnMenu:IsVisible() ) then return end
 		self:RefreshResults()
 
-	end);
+	end)
 
 	self.PropPanel = vgui.Create( "ContentContainer", self )
 	self.PropPanel:SetVisible( false )
@@ -89,7 +89,7 @@ function PANEL:RefreshResults()
 	end
 
 	self.PropPanel:SetParent( ContentPanel )
-	ContentPanel:SwitchPanel( self.PropPanel );
+	ContentPanel:SwitchPanel( self.PropPanel )
 
 end
 
@@ -106,13 +106,13 @@ end
 hook.Add( "PopulateContent", "AddSearchContent", function( pnlContent, tree, node )
 
 	-- Add a node to the tree
-	--local node = tree:AddNode( "Search", "icon16/magnifier.png" );
+	--local node = tree:AddNode( "Search", "icon16/magnifier.png" )
 	
 	-- If we click on the node populate it and switch to it.
 	--node.DoClick = function( self )
 	
 	--	self:DoPopulate()		
-	--	pnlContent:SwitchPanel( self.PropPanel );
+	--	pnlContent:SwitchPanel( self.PropPanel )
 	
 	--end
 

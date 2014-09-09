@@ -15,13 +15,13 @@ local sound_names = {
    beeps    ="radio_button_c4",
    burning  ="radio_button_burn",
    footsteps="radio_button_steps"
-};
+}
 
 local smatrix = {
    {"scream", "burning", "explosion", "footsteps"},
    {"pistol", "shotgun", "mac10", "deagle"},
    {"m16", "rifle", "huge", "beeps"}
-};
+}
 
 local function PlayRadioSound(snd)
    local r = LocalPlayer().radio

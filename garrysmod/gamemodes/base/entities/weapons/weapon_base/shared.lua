@@ -101,7 +101,7 @@ end
    Desc: Reload is being pressed
 -----------------------------------------------------------]]
 function SWEP:Reload()
-	self.Weapon:DefaultReload( ACT_VM_RELOAD );
+	self.Weapon:DefaultReload( ACT_VM_RELOAD )
 end
 
 
@@ -295,6 +295,6 @@ end
 -----------------------------------------------------------]]
 function SWEP:DoImpactEffect( tr, nDamageType )
 		
-	return false;
+	return false
 	
 end

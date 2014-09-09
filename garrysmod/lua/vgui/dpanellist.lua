@@ -25,7 +25,7 @@ AccessorFunc( PANEL, "Padding", 	"Padding" )
 -----------------------------------------------------------]]
 function PANEL:Init()
 
-	self:SetDraggableName( "GlobalDPanel" );
+	self:SetDraggableName( "GlobalDPanel" )
 
 	self.pnlCanvas 	= vgui.Create( "DPanel", self )
 	self.pnlCanvas:SetPaintBackground( false )
@@ -36,7 +36,7 @@ function PANEL:Init()
 	
 	self.Items = {}
 	self.YOffset = 0
-	self.m_fAnimTime = 0;
+	self.m_fAnimTime = 0
 	self.m_fAnimEase = -1; -- means ease in out
 	self.m_iBuilds = 0
 	
@@ -135,17 +135,17 @@ function PANEL:AddItem( item, strLineState )
 
 	item:SetVisible( true )
 	item:SetParent( self:GetCanvas() )
-	item.m_strLineState = strLineState or item.m_strLineState;
+	item.m_strLineState = strLineState or item.m_strLineState
 	table.insert( self.Items, item )
 	
 	if ( self.m_bSortable ) then
 	
-		//local DragSlot = item:MakeDraggable( self:GetDraggableName(), self );
+		//local DragSlot = item:MakeDraggable( self:GetDraggableName(), self )
 		//DragSlot.OnDrop = self.DropAction
 			
 	end
 	
-	item:SetSelectable( self.m_bSelectionCanvas );
+	item:SetSelectable( self.m_bSelectionCanvas )
 	
 	self:InvalidateLayout()
 
@@ -195,7 +195,7 @@ end
 
 function PANEL.DropAction( Slot, RcvSlot )
 
-	local PanelToMove = Slot.Panel;	
+	local PanelToMove = Slot.Panel
 	if ( dragndrop.m_MenuData == "copy" ) then
 	
 		if ( PanelToMove.Copy ) then
@@ -260,18 +260,18 @@ end
 function PANEL:Rebuild()
 
 	local Offset = 0
-	self.m_iBuilds = self.m_iBuilds + 1;
+	self.m_iBuilds = self.m_iBuilds + 1
 
 	self:CleanList()
 	
 	if ( self.Horizontal ) then
 	
-		local x, y = self.Padding, self.Padding;
+		local x, y = self.Padding, self.Padding
 		for k, panel in pairs( self.Items ) do
 		
 			if ( panel:IsVisible() ) then
 			
-				local OwnLine = (panel.m_strLineState && panel.m_strLineState == "ownline");
+				local OwnLine = (panel.m_strLineState && panel.m_strLineState == "ownline")
 			
 				local w = panel:GetWide()
 				local h = panel:GetTall()
@@ -437,10 +437,10 @@ function PANEL:ScrollToChild( panel )
 	local x, y = self.pnlCanvas:GetChildPosition( panel )
 	local w, h = panel:GetSize()
 	
-	y = y + h * 0.5;
-	y = y - self:GetTall() * 0.5;
+	y = y + h * 0.5
+	y = y - self:GetTall() * 0.5
 
-	self.VBar:AnimateTo( y, 0.5, 0, 0.5 );
+	self.VBar:AnimateTo( y, 0.5, 0, 0.5 )
 	
 end
 

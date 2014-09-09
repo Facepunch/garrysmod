@@ -124,25 +124,25 @@ end
 --[[---------------------------------------------------------
 	Name: Align with the edge of the parent
 -----------------------------------------------------------]]  
-function meta:AlignBottom( m ) m = m or 0; self:SetPos( self.x, self:GetParent():GetTall() - self:GetTall() - m ) end 
-function meta:AlignRight( m ) m = m or 0; self:SetPos( self:GetParent():GetWide() - self:GetWide() - m, self.y ) end
-function meta:AlignTop( m ) m = m or 0; self:SetPos( self.x, m ) end
-function meta:AlignLeft( m ) m = m or 0; self:SetPos( m, self.y ) end
+function meta:AlignBottom( m ) m = m or 0 self:SetPos( self.x, self:GetParent():GetTall() - self:GetTall() - m ) end 
+function meta:AlignRight( m ) m = m or 0 self:SetPos( self:GetParent():GetWide() - self:GetWide() - m, self.y ) end
+function meta:AlignTop( m ) m = m or 0 self:SetPos( self.x, m ) end
+function meta:AlignLeft( m ) m = m or 0 self:SetPos( m, self.y ) end
 
 --[[---------------------------------------------------------
 	Name: Move relative to another panel
 -----------------------------------------------------------]]  
-function meta:MoveAbove( pnl, m ) m = m or 0; self:SetPos( self.x, pnl.y - self:GetTall() - m ) end
-function meta:MoveBelow( pnl, m ) m = m or 0; self:SetPos( self.x, pnl.y + pnl:GetTall() + m ) end
-function meta:MoveRightOf( pnl, m ) m = m or 0; self:SetPos( pnl.x + pnl:GetWide() + m, self.y ) end
-function meta:MoveLeftOf( pnl,  m ) m = m or 0; self:SetPos( pnl.x - self:GetWide() - m, self.y ) end
+function meta:MoveAbove( pnl, m ) m = m or 0 self:SetPos( self.x, pnl.y - self:GetTall() - m ) end
+function meta:MoveBelow( pnl, m ) m = m or 0 self:SetPos( self.x, pnl.y + pnl:GetTall() + m ) end
+function meta:MoveRightOf( pnl, m ) m = m or 0 self:SetPos( pnl.x + pnl:GetWide() + m, self.y ) end
+function meta:MoveLeftOf( pnl,  m ) m = m or 0 self:SetPos( pnl.x - self:GetWide() - m, self.y ) end
 
 
 --[[---------------------------------------------------------
 	Name: StretchRightTo
 -----------------------------------------------------------]]  
-function meta:StretchRightTo( pnl, m ) m = m or 0; self:SetWide( pnl.x - self.x -  m ) end
-function meta:StretchBottomTo( pnl, m ) m = m or 0; self:SetTall( pnl.y - self.y - m ) end
+function meta:StretchRightTo( pnl, m ) m = m or 0 self:SetWide( pnl.x - self.x -  m ) end
+function meta:StretchBottomTo( pnl, m ) m = m or 0 self:SetTall( pnl.y - self.y - m ) end
 
 --[[---------------------------------------------------------
 	Name: CenterVertical
@@ -382,8 +382,8 @@ end
 
 function meta:DistanceFrom( x, y )
 	
-	local x = self.x + self:GetWide() * 0.5 - x;
-	local y = self.y + self:GetTall() * 0.5 - y;
+	local x = self.x + self:GetWide() * 0.5 - x
+	local y = self.y + self:GetTall() * 0.5 - y
 	
 	return math.sqrt( x * x + y *y )
 	
@@ -396,19 +396,19 @@ end
 function meta:GetChildPosition( pnl )
 
 
-	local x = 0;
-	local y = 0;
+	local x = 0
+	local y = 0
 
 	while ( IsValid( pnl ) && pnl != self ) do
 		
 		x = x + pnl.x
 		y = y + pnl.y
 		
-		pnl = pnl:GetParent();
+		pnl = pnl:GetParent()
 
 	end
 
-	return x, y;
+	return x, y
 
 end
 
@@ -498,7 +498,7 @@ function meta:GetClosestChild( x, y )
 	
 		local dist = v:DistanceFrom( x, y )
 		if ( dist < distance ) then
-			distance = dist;
+			distance = dist
 			closest = v
 		end
 	end
@@ -527,7 +527,7 @@ function meta:MoveToAfter( pnl )
 		-- insert us where we wanna be
 		table.insert( children, key+1, self )
 	else
-		return false;
+		return false
 	end
 	
 	for k, v in pairs( children ) do

@@ -5,7 +5,7 @@ AddCSLuaFile()
 -- Note that this just controls what BaseClass provides.
 -- If you're changing the base scroll to the bottom of the file too.
 --
-DEFINE_BASECLASS( "drive_base" );
+DEFINE_BASECLASS( "drive_base" )
 
 
 drive.Register( "drive_noclip", 
@@ -99,7 +99,7 @@ drive.Register( "drive_noclip",
 		if ( SERVER && IsValid( self.Entity:GetPhysicsObject() ) ) then
 
 			self.Entity:GetPhysicsObject():EnableMotion( true )
-			self.Entity:GetPhysicsObject():SetPos( mv:GetOrigin() );
+			self.Entity:GetPhysicsObject():SetPos( mv:GetOrigin() )
 			self.Entity:GetPhysicsObject():Wake()
 			self.Entity:GetPhysicsObject():EnableMotion( false )
 
@@ -121,4 +121,4 @@ drive.Register( "drive_noclip",
 
 	end,
 
-}, "drive_base" );
+}, "drive_base" )
