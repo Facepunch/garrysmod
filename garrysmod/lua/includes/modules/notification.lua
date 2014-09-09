@@ -1,25 +1,25 @@
-surface.CreateFont( "GModNotify",
-{
+
+surface.CreateFont( "GModNotify", {
 	font	= "Arial",
 	size	= 20,
 	weight	= 1000
 })
 
-NOTIFY_GENERIC			= 0
-NOTIFY_ERROR			= 1
-NOTIFY_UNDO				= 2
-NOTIFY_HINT				= 3
-NOTIFY_CLEANUP			= 4
+NOTIFY_GENERIC	= 0
+NOTIFY_ERROR	= 1
+NOTIFY_UNDO		= 2
+NOTIFY_HINT		= 3
+NOTIFY_CLEANUP	= 4
 
 module( "notification", package.seeall )
 
 local NoticeMaterial = {}
 
-NoticeMaterial[ NOTIFY_GENERIC ] 	= Material( "vgui/notices/generic" )
-NoticeMaterial[ NOTIFY_ERROR ] 		= Material( "vgui/notices/error" )
-NoticeMaterial[ NOTIFY_UNDO ] 		= Material( "vgui/notices/undo" )
-NoticeMaterial[ NOTIFY_HINT ] 		= Material( "vgui/notices/hint" )
-NoticeMaterial[ NOTIFY_CLEANUP ] 	= Material( "vgui/notices/cleanup" )
+NoticeMaterial[ NOTIFY_GENERIC ]	= Material( "vgui/notices/generic" )
+NoticeMaterial[ NOTIFY_ERROR ]		= Material( "vgui/notices/error" )
+NoticeMaterial[ NOTIFY_UNDO ]		= Material( "vgui/notices/undo" )
+NoticeMaterial[ NOTIFY_HINT ]		= Material( "vgui/notices/hint" )
+NoticeMaterial[ NOTIFY_CLEANUP ]	= Material( "vgui/notices/cleanup" )
 
 local Notices = {}
 
@@ -29,16 +29,16 @@ function AddProgress( uid, text )
 	if ( GetOverlayPanel ) then parent = GetOverlayPanel() end
 
 	local Panel = vgui.Create( "NoticePanel", parent )
-		Panel.StartTime 	= SysTime()
-		Panel.Length 		= 1000000
-		Panel.VelX			= -5
-		Panel.VelY			= 0
-		Panel.fx = ScrW() + 200
-		Panel.fy = ScrH()
-		Panel:SetAlpha( 255 )
-		Panel:SetText( text )
-		Panel:SetPos( Panel.fx, Panel.fy )
-		Panel:SetProgress()
+	Panel.StartTime = SysTime()
+	Panel.Length = 1000000
+	Panel.VelX = -5
+	Panel.VelY = 0
+	Panel.fx = ScrW() + 200
+	Panel.fy = ScrH()
+	Panel:SetAlpha( 255 )
+	Panel:SetText( text )
+	Panel:SetPos( Panel.fx, Panel.fy )
+	Panel:SetProgress()
 	
 	Notices[ uid ] = Panel
 
@@ -48,8 +48,8 @@ function Kill( uid )
 
 	if ( !IsValid( Notices[ uid ] ) ) then return end
 	
-	Notices[ uid ].StartTime 	= SysTime()
-	Notices[ uid ].Length 		= 0.8
+	Notices[ uid ].StartTime = SysTime()
+	Notices[ uid ].Length = 0.8
 
 end
 
@@ -59,10 +59,10 @@ function AddLegacy( text, type, length )
 	if ( GetOverlayPanel ) then parent = GetOverlayPanel() end
 
 	local Panel = vgui.Create( "NoticePanel", parent )
-	Panel.StartTime 	= SysTime()
-	Panel.Length 		= length
-	Panel.VelX			= -5
-	Panel.VelY			= 0
+	Panel.StartTime = SysTime()
+	Panel.Length = length
+	Panel.VelX = -5
+	Panel.VelY = 0
 	Panel.fx = ScrW() + 200
 	Panel.fy = ScrH()
 	Panel:SetAlpha( 255 )
@@ -71,12 +71,6 @@ function AddLegacy( text, type, length )
 	Panel:SetPos( Panel.fx, Panel.fy )
 	
 	table.insert( Notices, Panel )
-
-end
-
-function Die( uid, delay )
-
-	MsgN( "Die", uid, delay )
 
 end
 
@@ -137,7 +131,7 @@ local function Update()
 	if ( !Notices ) then return end
 		
 	local i = 0
-	local Count = table.Count( Notices );
+	local Count = table.Count( Notices )
 	for key, Panel in pairs( Notices ) do
 	
 		i = i + 1
