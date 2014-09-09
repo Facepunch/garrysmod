@@ -1,3 +1,6 @@
+local string = string
+local math = math
+
 --[[---------------------------------------------------------
    Name: string.ToTable( string )
 -----------------------------------------------------------]]
@@ -298,8 +301,9 @@ end
 local meta = getmetatable( "" )
 
 function meta:__index( key )
-	if ( string[key] ) then
-		return string[key]
+	local val = string[ key ]
+	if ( val ) then
+		return val
 	elseif ( tonumber( key ) ) then
 		return self:sub( key, key )
 	else
