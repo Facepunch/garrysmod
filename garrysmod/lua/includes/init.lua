@@ -33,6 +33,7 @@ require ( "http" )
 require ( "net" )
 require ( "properties" )
 require ( "widget" )
+require ( "cookie" )
 
 require ( "drive" )
 include ( "drive/drive_base.lua" )
@@ -65,7 +66,6 @@ if ( CLIENT ) then
 	require ( "spawnmenu" )
 	require ( "controlpanel" )
 	require ( "presets" )
-	require ( "cookie" )
 	require ( "menubar" )
 	require ( "matproxy" )
 
