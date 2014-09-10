@@ -14,7 +14,7 @@ Format = string.format
 -----------------------------------------------------------]]
 function IsTableOfEntitiesValid( tab )
 
-	if (!tab) then return false end
+	if ( !tab ) then return false end
 
 	for k, v in pairs( tab ) do
 		if ( !IsValid( v ) ) then return false end
@@ -309,47 +309,30 @@ end
 --[[---------------------------------------------------------
 	IsEnemyEntityName
 -----------------------------------------------------------]]
+local EnemyNames = {
+	npc_antlion = true, npc_antlionguard = true, npc_breen = true, npc_combine_s = true, 
+	npc_cscanner = true, npc_fastzombie = true, npc_fastzombie_torso = true, npc_gman = true, 
+	npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true, npc_hunter = true, 
+	npc_manhack = true, npc_poisonzombie = true, npc_zombie = true, npc_zombie_torso = true
+}
+
 function IsEnemyEntityName( victimtype )
 
-	if ( victimtype == "npc_combine_s" ) then return true; end
-	if ( victimtype == "npc_cscanner" ) then return true; end
-	if ( victimtype == "npc_manhack" ) then return true; end
-	if ( victimtype == "npc_hunter" ) then return true; end
-	if ( victimtype == "npc_antlion" ) then return true; end
-	if ( victimtype == "npc_antlionguard" ) then return true; end
-	if ( victimtype == "npc_antlion_worker" ) then return true; end
-	if ( victimtype == "npc_fastzombie_torso" ) then return true; end
-	if ( victimtype == "npc_fastzombie" ) then return true; end
-	if ( victimtype == "npc_headcrab" ) then return true; end
-	if ( victimtype == "npc_headcrab_fast" ) then return true; end
-	if ( victimtype == "npc_poisonzombie" ) then return true; end
-	if ( victimtype == "npc_headcrab_poison" ) then return true; end
-	if ( victimtype == "npc_zombie" ) then return true; end
-	if ( victimtype == "npc_zombie_torso" ) then return true; end
-	if ( victimtype == "npc_zombine" ) then return true; end
-	if ( victimtype == "npc_gman" ) then return true; end
-	if ( victimtype == "npc_breen" ) then return true; end
-
-	return false
+	return EnemyNames[ victimtype ] or false
 
 end
 
 --[[---------------------------------------------------------
 	IsFriendEntityName
 -----------------------------------------------------------]]
+local FriendlyNames = {
+	 npc_alyx = true, npc_barney = true, npc_citizen = true, npc_eli = true, npc_kleiner = true, 
+	 npc_magnusson = true, npc_monk = true, npc_mossman = true, npc_vortigaunt = true
+}
+
 function IsFriendEntityName( victimtype )
 
-	if ( victimtype == "npc_monk" ) then return true; end
-	if ( victimtype == "npc_alyx" ) then return true; end
-	if ( victimtype == "npc_barney" ) then return true; end
-	if ( victimtype == "npc_citizen" ) then return true; end
-	if ( victimtype == "npc_kleiner" ) then return true; end
-	if ( victimtype == "npc_magnusson" ) then return true; end
-	if ( victimtype == "npc_eli" ) then return true; end
-	if ( victimtype == "npc_mossman" ) then return true; end
-	if ( victimtype == "npc_vortigaunt" ) then return true; end
-
-	return false
+	return FriendlyNames[ victimtype ] or false
 
 end
 
