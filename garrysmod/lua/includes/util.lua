@@ -14,7 +14,7 @@ Format = string.format
 -----------------------------------------------------------]]
 function IsTableOfEntitiesValid( tab )
 
-	if (!tab) then return false end
+	if ( !tab ) then return false end
 
 	for k, v in pairs( tab ) do
 		if ( !IsValid( v ) ) then return false end
@@ -87,7 +87,7 @@ end
    Returns a random angle
 -----------------------------------------------------------]]
 function AngleRand()
-
+	
 	return Angle( math.Rand(-90, 90), math.Rand(-180, 180), math.Rand(-180, 180) )
 end
 
@@ -114,12 +114,12 @@ end
 -- Some nice globals so we don't keep creating objects for no reason
 
 vector_origin 		= Vector( 0, 0, 0 )
-vector_up	 		= Vector( 0, 0, 1 )
-angle_zero			= Angle( 0, 0, 0 )
+vector_up	 	= Vector( 0, 0, 1 )
+angle_zero		= Angle( 0, 0, 0 )
 
-color_white 		= Color( 255, 	255, 	255, 	255 )
-color_black 		= Color( 0, 	0, 		0, 		255 )
-color_transparent 	= Color( 255, 	255, 	255, 	0 )
+color_white 		= Color( 255, 255, 255, 255 )
+color_black 		= Color( 0, 0, 0, 255 )
+color_transparent 	= Color( 255, 255, 255, 0 )
 
 
 --[[---------------------------------------------------------
@@ -138,7 +138,7 @@ end
 -- Globals..
 FORCE_STRING 	= 1
 FORCE_NUMBER 	= 2
-FORCE_BOOL		= 3
+FORCE_BOOL	= 3
 
 --[[---------------------------------------------------------
    AccessorFunc
@@ -223,29 +223,28 @@ end
 --[[---------------------------------------------------------
 	Universal function to filter out crappy models by name
 -----------------------------------------------------------]]
-function UTIL_IsUselessModel( modelname ) 
+local UselessModels = { 
+	"_gesture", "_anim", "_gst", "_pst", "_shd", "_ss", "_posture", "_anm", 
+	"ghostanim","_paths", "_shared", "anim_", "gestures_", "shared_ragdoll_"
+}
+	
+function IsUselessModel( modelname ) 
 
 	local modelname = modelname:lower()
 
-	if ( modelname:find( "_gesture" ) ) then return true end
-	if ( modelname:find( "_anim" ) ) then return true end
-	if ( modelname:find( "_gst" ) ) then return true end
-	if ( modelname:find( "_pst" ) ) then return true end
-	if ( modelname:find( "_shd" ) ) then return true end
-	if ( modelname:find( "_ss" ) ) then return true end
-	if ( modelname:find( "_posture" ) ) then return true end
-	if ( modelname:find( "_anm" ) ) then return true end
-	if ( modelname:find( "ghostanim" ) ) then return true end
-	if ( modelname:find( "_paths" ) ) then return true end
-	if ( modelname:find( "_shared" ) ) then return true end
-	if ( modelname:find( "anim_" ) ) then return true end
-	if ( modelname:find( "gestures_" ) ) then return true end
-	if ( modelname:find( "shared_ragdoll_" ) ) then return true end
 	if ( !modelname:find( ".mdl" ) ) then return true end
+	
+	for k, v in pairs( UselessModels ) do
+		if ( modelname:find( v ) ) then 
+			return true 
+		end
+	end
 	
 	return false
 
 end
+
+UTIL_IsUselessModel = IsUselessModel	-- Backwards compatibility
 
 
 --[[---------------------------------------------------------
@@ -281,75 +280,59 @@ end
 --[[---------------------------------------------------------
 	Given a number, returns the right 'th
 -----------------------------------------------------------]]
-local STNDRD_TBL = {"st", "nd", "rd"}
+local STNDRD_TBL = { "st", "nd", "rd" }
+
 function STNDRD( num )
 	num = num % 100
 	if ( num > 10 and num < 20 ) then
 		return "th"
 	end
 
-	return STNDRD_TBL[num % 10] or "th"
+	return STNDRD_TBL[ num % 10 ] or "th"
 end
 
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
-function TimedSin(freq,min,max,offset)
-	return math.sin(freq * math.pi * 2 * CurTime() + offset) * (max-min) * 0.5 + min
+function TimedSin( freq ,min, max, offset)
+	return math.sin( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
 end 
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
-function TimedCos(freq,min,max,offset)
-	return math.cos(freq * math.pi * 2 * CurTime() + offset) * (max-min) * 0.5 + min
+function TimedCos( freq, min, max, offset )
+	return math.cos( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
 end 
 
 --[[---------------------------------------------------------
 	IsEnemyEntityName
 -----------------------------------------------------------]]
+local EnemyNames = {
+	npc_antlion = true, npc_antlionguard = true, npc_breen = true, npc_combine_s = true, 
+	npc_cscanner = true, npc_fastzombie = true, npc_fastzombie_torso = true, npc_gman = true, 
+	npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true, npc_hunter = true, 
+	npc_manhack = true, npc_poisonzombie = true, npc_zombie = true, npc_zombie_torso = true
+}
+
 function IsEnemyEntityName( victimtype )
 
-	if ( victimtype == "npc_combine_s" ) then return true; end
-	if ( victimtype == "npc_cscanner" ) then return true; end
-	if ( victimtype == "npc_manhack" ) then return true; end
-	if ( victimtype == "npc_hunter" ) then return true; end
-	if ( victimtype == "npc_antlion" ) then return true; end
-	if ( victimtype == "npc_antlionguard" ) then return true; end
-	if ( victimtype == "npc_antlion_worker" ) then return true; end
-	if ( victimtype == "npc_fastzombie_torso" ) then return true; end
-	if ( victimtype == "npc_fastzombie" ) then return true; end
-	if ( victimtype == "npc_headcrab" ) then return true; end
-	if ( victimtype == "npc_headcrab_fast" ) then return true; end
-	if ( victimtype == "npc_poisonzombie" ) then return true; end
-	if ( victimtype == "npc_headcrab_poison" ) then return true; end
-	if ( victimtype == "npc_zombie" ) then return true; end
-	if ( victimtype == "npc_zombie_torso" ) then return true; end
-	if ( victimtype == "npc_zombine" ) then return true; end
-	if ( victimtype == "npc_gman" ) then return true; end
-	if ( victimtype == "npc_breen" ) then return true; end
-
-	return false
+	return EnemyNames[ victimtype ] or false
 
 end
 
 --[[---------------------------------------------------------
 	IsFriendEntityName
 -----------------------------------------------------------]]
+local FriendlyNames = {
+	 npc_alyx = true, npc_barney = true, npc_citizen = true, npc_eli = true, npc_kleiner = true, 
+	 npc_magnusson = true, npc_monk = true, npc_mossman = true, npc_vortigaunt = true
+}
+
 function IsFriendEntityName( victimtype )
 
-	if ( victimtype == "npc_monk" ) then return true; end
-	if ( victimtype == "npc_alyx" ) then return true; end
-	if ( victimtype == "npc_barney" ) then return true; end
-	if ( victimtype == "npc_citizen" ) then return true; end
-	if ( victimtype == "npc_kleiner" ) then return true; end
-	if ( victimtype == "npc_magnusson" ) then return true; end
-	if ( victimtype == "npc_eli" ) then return true; end
-	if ( victimtype == "npc_mossman" ) then return true; end
-	if ( victimtype == "npc_vortigaunt" ) then return true; end
-
-	return false
+	return FriendlyNames[ victimtype ] or false
 
 end
 

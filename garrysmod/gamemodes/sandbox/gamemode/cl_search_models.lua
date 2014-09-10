@@ -47,7 +47,7 @@ search.AddProvider( function( str )
 
 		if ( v:find( str ) ) then
 
-			if ( UTIL_IsUselessModel( v ) ) then continue end
+			if ( IsUselessModel( v ) ) then continue end
 
 			local entry = 
 			{
