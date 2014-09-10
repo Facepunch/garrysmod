@@ -87,7 +87,7 @@ end
    Returns a random angle
 -----------------------------------------------------------]]
 function AngleRand()
-
+	
 	return Angle( math.Rand(-90, 90), math.Rand(-180, 180), math.Rand(-180, 180) )
 end
 
@@ -114,12 +114,12 @@ end
 -- Some nice globals so we don't keep creating objects for no reason
 
 vector_origin 		= Vector( 0, 0, 0 )
-vector_up	 		= Vector( 0, 0, 1 )
-angle_zero			= Angle( 0, 0, 0 )
+vector_up	 	= Vector( 0, 0, 1 )
+angle_zero		= Angle( 0, 0, 0 )
 
-color_white 		= Color( 255, 	255, 	255, 	255 )
-color_black 		= Color( 0, 	0, 		0, 		255 )
-color_transparent 	= Color( 255, 	255, 	255, 	0 )
+color_white 		= Color( 255, 255, 255, 255 )
+color_black 		= Color( 0, 0, 0, 255 )
+color_transparent 	= Color( 255, 255, 255, 0 )
 
 
 --[[---------------------------------------------------------
@@ -138,7 +138,7 @@ end
 -- Globals..
 FORCE_STRING 	= 1
 FORCE_NUMBER 	= 2
-FORCE_BOOL		= 3
+FORCE_BOOL	= 3
 
 --[[---------------------------------------------------------
    AccessorFunc
@@ -223,29 +223,28 @@ end
 --[[---------------------------------------------------------
 	Universal function to filter out crappy models by name
 -----------------------------------------------------------]]
-function UTIL_IsUselessModel( modelname ) 
+local UselessModels = { 
+	"_gesture", "_anim", "_gst", "_pst", "_shd", "_ss", "_posture", "_anm", 
+	"ghostanim","_paths", "_shared", "anim_", "gestures_", "shared_ragdoll_"
+}
+	
+function IsUselessModel( modelname ) 
 
 	local modelname = modelname:lower()
 
-	if ( modelname:find( "_gesture" ) ) then return true end
-	if ( modelname:find( "_anim" ) ) then return true end
-	if ( modelname:find( "_gst" ) ) then return true end
-	if ( modelname:find( "_pst" ) ) then return true end
-	if ( modelname:find( "_shd" ) ) then return true end
-	if ( modelname:find( "_ss" ) ) then return true end
-	if ( modelname:find( "_posture" ) ) then return true end
-	if ( modelname:find( "_anm" ) ) then return true end
-	if ( modelname:find( "ghostanim" ) ) then return true end
-	if ( modelname:find( "_paths" ) ) then return true end
-	if ( modelname:find( "_shared" ) ) then return true end
-	if ( modelname:find( "anim_" ) ) then return true end
-	if ( modelname:find( "gestures_" ) ) then return true end
-	if ( modelname:find( "shared_ragdoll_" ) ) then return true end
 	if ( !modelname:find( ".mdl" ) ) then return true end
+	
+	for k, v in pairs( UselessModels ) do
+		if ( modelname:find( v ) ) then 
+			return true 
+		end
+	end
 	
 	return false
 
 end
+
+UTIL_IsUselessModel = IsUselessModel	-- Backwards compatibility
 
 
 --[[---------------------------------------------------------
@@ -281,29 +280,30 @@ end
 --[[---------------------------------------------------------
 	Given a number, returns the right 'th
 -----------------------------------------------------------]]
-local STNDRD_TBL = {"st", "nd", "rd"}
+local STNDRD_TBL = { "st", "nd", "rd" }
+
 function STNDRD( num )
 	num = num % 100
 	if ( num > 10 and num < 20 ) then
 		return "th"
 	end
 
-	return STNDRD_TBL[num % 10] or "th"
+	return STNDRD_TBL[ num % 10 ] or "th"
 end
 
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
-function TimedSin(freq,min,max,offset)
-	return math.sin(freq * math.pi * 2 * CurTime() + offset) * (max-min) * 0.5 + min
+function TimedSin( freq ,min, max, offset)
+	return math.sin( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
 end 
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
-function TimedCos(freq,min,max,offset)
-	return math.cos(freq * math.pi * 2 * CurTime() + offset) * (max-min) * 0.5 + min
+function TimedCos( freq, min, max, offset )
+	return math.cos( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
 end 
 
 --[[---------------------------------------------------------
