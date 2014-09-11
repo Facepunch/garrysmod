@@ -38,7 +38,7 @@ local function UntilMapChange()
    time_left = time_left - floor(m * 60)
    local s = floor(time_left)
 
-   return rounds_left, string.format("%02i:%02i:%02i", h, m, s)
+   return rounds_left, ("%02i:%02i:%02i"):format(h, m, s)
 end
 
 
@@ -230,7 +230,7 @@ function PANEL:PerformLayout()
    local hname = self.hostname:GetValue()
    local tw, _ = surface.GetTextSize(hname)
    while tw > hw do
-      hname = string.sub(hname, 1, -6) .. "..."
+      hname = hname:sub( 1, -6) .. "..."
       tw, th = surface.GetTextSize(hname)
    end
 

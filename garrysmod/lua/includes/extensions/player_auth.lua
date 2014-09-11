@@ -93,13 +93,21 @@ hook.Add("PlayerInitialSpawn", "PlayerAuthSpawn", function(ply)
 
     -- Admin SteamID need to be fully authenticated by Steam!
     if ply.IsFullyAuthenticated and not ply:IsFullyAuthenticated() then
-        ply:ChatPrint(string.format("Hey '%s' - Your SteamID wasn't fully authenticated, so your usergroup has not been set to '%s.'",
-            SteamIDs[steamid].name, SteamIDs[steamid].group))
+        ply:ChatPrint(
+			("Hey %q - Your SteamID wasn't fully authenticated, so your usergroup has not been set to '%s.'"):format(
+				SteamIDs[steamid].name,
+				SteamIDs[steamid].group
+			)
+		)
         ply:ChatPrint("Try restarting Steam.")
         return
     end
 
     ply:SetUserGroup(SteamIDs[steamid].group)
-    ply:ChatPrint(string.format("Hey '%s' - You're in the '%s' group on this server.",
-        SteamIDs[steamid].name, SteamIDs[steamid].group))
+    ply:ChatPrint(
+		("Hey '%s' - You're in the '%s' group on this server."):format(
+			SteamIDs[steamid].name,
+			SteamIDs[steamid].group
+		)
+	)
 end)

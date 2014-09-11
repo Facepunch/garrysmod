@@ -297,7 +297,7 @@ function PANEL:DrawScreen( x, y, w, h )
 	if ( self:GetDecimals() ) then
 		str = Format( "%.2f", self:GetFloatValue() );
 	end
-	str = string.Comma( str )
+	str = str:Comma( )
 
 	local tw, th = surface.GetTextSize( str )
 	surface.SetTextPos( x + w * 0.5 - tw * 0.5, y + h - th - 5 )

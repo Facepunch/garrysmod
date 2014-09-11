@@ -72,7 +72,7 @@ function PANEL:Fill()
 				if ( !IsValid( self.IconLayout ) ) then return end
 		
 				local btn = self.IconLayout:Add( "DImageButton" )
-				btn.FilterText = string.lower( v )
+				btn.FilterText = v:lower( )
 				btn:SetOnViewMaterial( "icon16/" .. v )
 				btn:SetSize( 22, 22 )
 				btn:SetPos( -22, -22 )
@@ -109,7 +109,7 @@ end
 
 function PANEL:FilterByText( text )
 
-	local text = string.lower( text )
+	local text = text:lower( )
 	
 	for k, v in pairs( self.IconLayout:GetChildren() ) do
 	

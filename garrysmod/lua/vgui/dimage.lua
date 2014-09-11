@@ -152,7 +152,7 @@ function PANEL:FixVertexLitMaterial()
 	local Mat = self:GetMaterial()
 	local strImage = Mat:GetName()
 	
-	if ( string.find( Mat:GetShader(), "VertexLitGeneric" ) || string.find( Mat:GetShader(), "Cable" ) ) then
+	if ( Mat:GetShader():find( "VertexLitGeneric" ) || Mat:GetShader():find( "Cable" ) ) then
 	
 		local t = Mat:GetString( "$basetexture" )
 		

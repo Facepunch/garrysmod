@@ -24,8 +24,8 @@ function PROPSPEC.Start(ply, ent)
 end
 
 local function IsWhitelistedClass(cls)
-   return (string.match(cls, "prop_physics*") or
-           string.match(cls, "func_physbox*"))
+   return (cls:match( "prop_physics*") or
+           cls:match( "func_physbox*"))
 end
 
 function PROPSPEC.Target(ply, ent)

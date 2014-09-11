@@ -27,7 +27,7 @@ end
 -----------------------------------------------------------]]
 function OnModelLoaded( ModelName, NumPoseParams, NumSeq, NumAttachments, NumBoneControllers, NumSkins, Size )
 
-	local ModelName = string.lower( string.gsub( ModelName, "\\", "/" ) )
+	local ModelName = ModelName:gsub( "\\", "/" ):lower(  )
 	ModelName = "models/".. ModelName
 
 	-- No need to store a model more than once per session
@@ -83,7 +83,7 @@ end
 -----------------------------------------------------------]]
 function NumModelSkins( ModelName )
 
-	local ModelName = string.lower( ModelName )
+	local ModelName = ModelName:lower( )
 	local safeModelName = SQLStr( ModelName )
 	local num = sql.QueryValue( "SELECT numskins FROM modelinfo WHERE name = " .. safeModelName )
 	if ( num == nil ) then return 0 end

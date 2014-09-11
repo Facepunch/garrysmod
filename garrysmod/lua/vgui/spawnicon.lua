@@ -193,7 +193,7 @@ spawnmenu.AddContentType( "model", function( container, obj )
 	local icon = vgui.Create( "SpawnIcon", container )
 	
 	if ( obj.body ) then
-		obj.body = string.Trim( tostring(obj.body), "B" )
+		obj.body = tostring(obj.body):Trim( "B" )
 	end
 	
 	if ( obj.wide ) then
@@ -208,7 +208,7 @@ spawnmenu.AddContentType( "model", function( container, obj )
 	
 	icon:SetModel( obj.model, obj.skin or 0, obj.body )
 	
-	icon:SetTooltip( string.Replace( string.GetFileFromFilename(obj.model), ".mdl", "" ) )
+	icon:SetTooltip( obj.model:GetFileFromFilename():Replace( ".mdl", "" ) )
 
 	icon.DoClick = function( icon ) surface.PlaySound( "ui/buttonclickrelease.wav") RunConsoleCommand( "gm_spawn", icon:GetModelName(), icon:GetSkinID() or 0, icon:GetBodyGroup() or "" ) end
 	icon.OpenMenu = function( icon )

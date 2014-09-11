@@ -6,7 +6,7 @@ local L = LANG.CreateLanguage("Swedish chef")
 local gsub = string.gsub
 
 local function Borkify(word)
-   local b = string.byte(word:sub(1, 1))
+   local b = word:sub(1, 1):byte()
    if b > 64 and b < 91 then
       return "Bork"
    end

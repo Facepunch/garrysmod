@@ -140,8 +140,8 @@ function PANEL:SetValue( val )
 		val = Format( "%."..self.m_iDecimals.."f", val )
 			
 		-- Trim trailing 0's and .'s 0 this gets rid of .00 etc
-		val = string.TrimRight( val, "0" )		
-		val = string.TrimRight( val, "." )
+		val = val:TrimRight( "0" )		
+		val = val:TrimRight( "." )
 		
 	end
 	
@@ -198,8 +198,8 @@ function PANEL:SizeToContents()
 	local min = math.Round( self:GetMin(), self:GetDecimals() )
 	local max = math.Round( self:GetMax(), self:GetDecimals() )
 	
-	local minchars = string.len( ""..min.."" )
-	local maxchars = string.len( ""..max.."" )
+	local minchars = tostring(min):len()
+	local maxchars = tostring(max):len()
 	
 	chars = chars + math.max( minchars, maxchars )
 	

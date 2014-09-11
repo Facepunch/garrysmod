@@ -14,7 +14,7 @@ local files, dirs = file.Find(dir .. "/gamemode/lang/*.lua", "LUA" )
 for _, fname in pairs(files) do
    local path = "lang/" .. fname
    -- filter out directories and temp files (like .lua~)
-   if string.Right(fname, 3) == "lua" then
+   if fname:Right( 3) == "lua" then
       util.IncludeClientFile(path)
       MsgN("Included TTT language file: " .. fname)
    end
@@ -103,7 +103,7 @@ else -- CLIENT
 
    local function RecvServerLang()
       local lang_name = net.ReadString()
-      lang_name = lang_name and string.lower(lang_name)
+      lang_name = lang_name and lang_name:lower()
       if LANG.Strings[lang_name] then
          if LANG.IsServerDefault(GetConVarString("ttt_language")) then
             LANG.SetActiveLanguage(lang_name)
@@ -127,5 +127,5 @@ end
 LANG.Param = LANG.NameParam
 
 function LANG.GetNameParam(str)
-   return string.match(str, "^LID\t([%w_]+)$")
+   return str:match( "^LID\t([%w_]+)$")
 end

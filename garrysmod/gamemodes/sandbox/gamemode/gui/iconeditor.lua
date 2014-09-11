@@ -39,7 +39,7 @@ function PANEL:Init()
 		self.Scenes.DoClick = function( _, node )
 				
 			if ( !node.FileName ) then return end
-			local ext = string.GetExtensionFromFilename( node.FileName );
+			local ext = node.FileName:GetExtensionFromFilename(  );
 			if( ext != "vcd" ) then return end
 					
 			self.ModelPanel:StartScene( node.FileName );
@@ -342,7 +342,7 @@ function PANEL:FillAnimations( ent )
 
 	for k, v in SortedPairsByValue( ent:GetSequenceList() ) do
 	
-		local line = self.AnimList:AddLine( string.lower( v ) )
+		local line = self.AnimList:AddLine( v:lower( ) )
 		
 		line.OnSelect = function()
 		

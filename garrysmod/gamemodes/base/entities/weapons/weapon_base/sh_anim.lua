@@ -28,7 +28,7 @@ local ActIndex = {
 -----------------------------------------------------------]]
 function SWEP:SetWeaponHoldType( t )
 
-	t = string.lower( t )
+	t = t:lower( )
 	local index = ActIndex[ t ]
 	
 	if ( index == nil ) then

@@ -139,7 +139,7 @@ if ( SERVER ) then
 	
 		for i=0, 64 do
 			local num = math.Rand( 0, 1 )
-			pl:ConCommand( "faceposer_flex" .. i .. " " .. string.format( "%.3f", num ) )
+			pl:ConCommand( "faceposer_flex" .. i .. " " .. ("%.3f"):format( num ) )
 		end
 
 	end

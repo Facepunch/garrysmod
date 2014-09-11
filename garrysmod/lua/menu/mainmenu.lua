@@ -228,12 +228,12 @@ function GetServers( type, id )
 
 		Callback = function( ping , name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid )
 
-			name	= string.JavascriptSafe( name );
-			desc	= string.JavascriptSafe( desc );
-			map		= string.JavascriptSafe( map );
-			address = string.JavascriptSafe( address );
-			gamemode = string.JavascriptSafe( gamemode );
-			workshopid = string.JavascriptSafe( workshopid );
+			name	= name:JavascriptSafe( );
+			desc	= desc:JavascriptSafe( );
+			map		= map:JavascriptSafe( );
+			address = address:JavascriptSafe( );
+			gamemode = gamemode:JavascriptSafe( );
+			workshopid = workshopid:JavascriptSafe( );
 			
 			if ( pass ) then pass = "true" else pass = "false" end
 

@@ -5,7 +5,7 @@ local function AddRecursive( pnl, folder, path, wildcard )
 
 	for k, v in pairs( files ) do
 		
-		if ( !string.EndsWith( v, ".mdl" ) ) then continue end
+		if ( !v:EndsWith( ".mdl" ) ) then continue end
 
 		local cp = spawnmenu.GetContentType( "model" )
 		if ( cp ) then

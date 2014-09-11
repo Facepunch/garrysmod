@@ -40,7 +40,7 @@ end
    Desc: Register a new console command
 -----------------------------------------------------------]]
 function Add( name, func, completefunc, help, flags )
-	local LowerName = string.lower( name )
+	local LowerName = name:lower( )
 	CommandList[ LowerName ] = func
 	CompleteList[ LowerName ] = completefunc
 	AddConsoleCommand( name, help, flags )
@@ -51,7 +51,7 @@ end
    Desc: Removes a console command
 -----------------------------------------------------------]]
 function Remove( name )
-	local LowerName = string.lower( name )
+	local LowerName = name:lower( )
 	CommandList[ LowerName ] = nil
 	CompleteList[ LowerName ] = nil
 end
@@ -63,7 +63,7 @@ end
 -----------------------------------------------------------]]
 function Run( player, command, arguments, args )
 
-	local LowerCommand = string.lower( command )
+	local LowerCommand = command:lower( )
 
 	if ( CommandList[ LowerCommand ] != nil ) then
 		CommandList[ LowerCommand ]( player, command, arguments, args )
@@ -83,7 +83,7 @@ end
 -----------------------------------------------------------]]
 function AutoComplete( command, arguments )
 
-	local LowerCommand = string.lower( command )
+	local LowerCommand = command:lower( )
 
 	if ( CompleteList[ LowerCommand ] != nil ) then
 		return CompleteList[ LowerCommand ]( command, arguments )

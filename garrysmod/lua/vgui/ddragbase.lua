@@ -23,11 +23,11 @@ end
 --
 function PANEL:SetDropPos( strPos )
 
-	self.bDropLeft		= string.find( strPos, "4" )
-	self.bDropCenter	= string.find( strPos, "5" )
-	self.bDropRight		= string.find( strPos, "6" )
-	self.bDropTop		= string.find( strPos, "8" )
-	self.bDropBottom	= string.find( strPos, "2" )
+	self.bDropLeft		= strPos:find( "4" )
+	self.bDropCenter	= strPos:find( "5" )
+	self.bDropRight		= strPos:find( "6" )
+	self.bDropTop		= strPos:find( "8" )
+	self.bDropBottom	= strPos:find( "2" )
 
 end
 

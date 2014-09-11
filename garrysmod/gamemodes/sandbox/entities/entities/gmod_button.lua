@@ -39,8 +39,8 @@ end
 
 function ENT:SetLabel( text )
 
-	text = string.gsub( text, "\\", "" )
-	text = string.sub( text, 0, 20 )
+	text = text:gsub( "\\", "" )
+	text = text:sub( 0, 20 )
 	
 	if ( text != "" ) then
 	

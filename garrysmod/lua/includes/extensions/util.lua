@@ -127,7 +127,7 @@ function util.TypeToString( v )
 	t = t:lower()
 
 	if ( t == "vector" ) then
-		return string.format( "%.2f %.2f %.2f", v.x, v.y, v.z )
+		return ("%.2f %.2f %.2f"):format(v.x, v.y, v.z)
 	end
 
 	if ( t == "number" ) then
@@ -150,7 +150,7 @@ end
 --
 function util.NiceFloat( f )
 
-	local str = string.format( "%f", f )
+	local str = ("%f"):format( f )
 
 	str = str:TrimRight( "0" )
 	str = str:TrimRight( "." )

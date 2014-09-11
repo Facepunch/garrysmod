@@ -23,7 +23,7 @@ local HandNames = {}
 function AddValidModel( name, model )
 
 	ModelList[ name ] = model
-	ModelListRev[ string.lower( model ) ] = name
+	ModelListRev[ model:lower( ) ] = name
 
 end
 
@@ -60,7 +60,7 @@ end
 -- Translate from the full model name to simple model name
 function TranslateToPlayerModelName( model )
 
-	model = string.lower( model )
+	model = model:lower( )
 
 	if ( ModelListRev[ model ] != nil ) then
 		return ModelListRev[ model ]

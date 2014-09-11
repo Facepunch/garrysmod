@@ -120,7 +120,7 @@ function PANEL:AddControl( control, data )
 
 	local data = table.LowerKeyNames( data )
 	local original = control
-	control = string.lower( control )
+	control = control:lower( )
 
 	-- Retired
 	if ( control == "header" ) then
@@ -162,7 +162,7 @@ function PANEL:AddControl( control, data )
 	if ( control == "slider" ) then
 
 		local Decimals = 0
-		if ( data.type && string.lower(data.type) == "float" ) then Decimals = 2 end
+		if ( data.type && data.type:lower() == "float" ) then Decimals = 2 end
 		
 		local ctrl = self:NumSlider( data.label or "Untitled", data.command, data.min or 0, data.max or 100, Decimals )
 

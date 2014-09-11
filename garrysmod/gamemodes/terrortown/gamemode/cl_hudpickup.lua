@@ -22,7 +22,7 @@ function GM:HUDWeaponPickedUp( wep )
 
    local pickup = {}
    pickup.time      = CurTime()
-   pickup.name      = string.upper(name)
+   pickup.name      = name:upper()
    pickup.holdtime  = 5
    pickup.font      = "DefaultBold"
    pickup.fadein    = 0.04
@@ -81,11 +81,11 @@ end
 function GM:HUDAmmoPickedUp( itemname, amount )
    if (not IsValid(LocalPlayer())) or (not LocalPlayer():Alive()) then return end
 
-   local itemname_trans = LANG.TryTranslation(string.lower("ammo_" .. itemname))
+   local itemname_trans = LANG.TryTranslation(("ammo_" .. itemname):lower())
 
    if self.PickupHistory then
 
-      local localized_name = string.upper(itemname_trans)
+      local localized_name = itemname_trans:upper()
       for k, v in pairs( self.PickupHistory ) do
          if v.name == localized_name then
 
@@ -98,7 +98,7 @@ function GM:HUDAmmoPickedUp( itemname, amount )
 
    local pickup = {}
    pickup.time      = CurTime()
-   pickup.name      = string.upper(itemname_trans)
+   pickup.name      = itemname_trans:upper()
    pickup.holdtime  = 5
    pickup.font      = "DefaultBold"
    pickup.fadein    = 0.04

@@ -13,16 +13,16 @@ if ( SERVER ) then
 		-- TODO: Do this in engine before sending it to this function.
 		
 		-- Strip off any crap before the start char..
-		local startchar = string.find( strMapContents, '' )
+		local startchar = strMapContents:find( '' )
 		if ( startchar != nil ) then
-			strMapContents = string.sub( strMapContents, startchar )
+			strMapContents = strMapContents:sub( startchar )
 		end
 		
 		-- Stip off any crap after the end char..
 		strMapContents = strMapContents:reverse()
-		local startchar = string.find( strMapContents, '' )
+		local startchar = strMapContents:find( '' )
 		if ( startchar != nil ) then
-			strMapContents = string.sub( strMapContents, startchar )
+			strMapContents = strMapContents:sub( startchar )
 		end
 			strMapContents = strMapContents:reverse()
 			

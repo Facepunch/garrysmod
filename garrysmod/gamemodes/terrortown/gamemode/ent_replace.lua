@@ -108,7 +108,7 @@ end
 function ents.TTT.RemoveRagdolls(player_only)
    for k, ent in pairs(ents.FindByClass("prop_ragdoll")) do
       if IsValid(ent) then
-         if not player_only and string.find(ent:GetModel(), "zm_", 6, true) then
+         if not player_only and ent:GetModel():find( "zm_", 6, true) then
             ent:Remove()
          elseif ent.player_ragdoll then
             -- cleanup ought to catch these but you know
@@ -497,8 +497,8 @@ local function ImportSettings(map)
 
    local lines = string.Explode("\n", buf)
    for k, line in pairs(lines) do
-      if string.match(line, "^setting") then
-         local key, val = string.match(line, "^setting:\t(%w*) ([0-9]*)")
+      if line:match( "^setting") then
+         local key, val = line:match( "^setting:\t(%w*) ([0-9]*)")
          val = tonumber(val)
 
          if key and val then
@@ -525,7 +525,7 @@ local function ImportEntities(map)
    local lines = string.Explode("\n", buf)
    local num = 0
    for k, line in ipairs(lines) do
-      if (not string.match(line, "^#")) and (not string.match(line, "^setting")) and line != "" and string.byte(line) != 0 then
+      if (not line:match( "^#")) and (not line:match( "^setting")) and line != "" and line:byte() != 0 then
          local data = string.Explode("\t", line)
 
          local fail = true -- pessimism

@@ -327,7 +327,7 @@ function PANEL:CheckNumeric( strValue )
 	if ( !self:GetNumeric() ) then return false end
 	
 	-- God I hope numbers look the same in every language
-	if ( !string.find ( strAllowedNumericCharacters, strValue, 1, true ) ) then
+	if ( !strAllowedNumericCharacters:find( strValue, 1, true ) ) then
 	
 		-- Noisy Error?
 		return true

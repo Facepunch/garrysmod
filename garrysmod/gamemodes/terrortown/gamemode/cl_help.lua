@@ -128,7 +128,7 @@ function HELPSCRN:Show()
 
    dlang:AddChoice("Server default", "auto")
    for _, lang in pairs(LANG.GetLanguages()) do
-      dlang:AddChoice(string.Capitalize(lang), lang)
+      dlang:AddChoice(lang:Capitalize(), lang)
    end
    -- Why is DComboBox not updating the cvar by default?
    dlang.OnSelect = function(idx, val, data)

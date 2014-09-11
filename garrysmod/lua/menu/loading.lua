@@ -26,7 +26,7 @@ end
 
 function PANEL:ShowURL( url, force )
 
-	if ( string.len( url ) < 5 ) then
+	if ( url:len( ) < 5 ) then
 		return;
 	end
 
@@ -127,9 +127,9 @@ end
 -----------------------------------------------------------]]
 function PANEL:StatusChanged( strStatus )
 
-	if ( string.find( strStatus, "Downloading " ) ) then
+	if ( strStatus:find( "Downloading " ) ) then
 	
-		local Filename = string.gsub( strStatus, "Downloading ", "" )
+		local Filename = strStatus:gsub( "Downloading ", "" )
 
 		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. Filename:JavascriptSafe() .. "' )" );
 	
@@ -149,13 +149,13 @@ function PANEL:CheckForStatusChanges()
 	local str = GetLoadStatus()
 	if ( !str ) then return end
 	
-	str = string.Trim( str )
-	str = string.Trim( str, "\n" )
-	str = string.Trim( str, "\t" )
+	str = str:Trim( )
+	str = str:Trim( "\n" )
+	str = str:Trim( "\t" )
 	
-	str = string.gsub( str, ".bz2", "" )
-	str = string.gsub( str, ".ztmp", "" )
-	str = string.gsub( str, "\\", "/" )
+	str = str:gsub( ".bz2", "" )
+	str = str:gsub( ".ztmp", "" )
+	str = str:gsub( "\\", "/" )
 	
 	if ( self.OldStatus && self.OldStatus == str ) then return end
 	
@@ -176,9 +176,9 @@ function PANEL:RefreshDownloadables()
 	local iFileCount = 0
 	for k, v in pairs( self.Downloadables ) do
 	
-		v = string.gsub( v, ".bz2", "" )
-		v = string.gsub( v, ".ztmp", "" )
-		v = string.gsub( v, "\\", "/" )
+		v = v:gsub( ".bz2", "" )
+		v = v:gsub( ".ztmp", "" )
+		v = v:gsub( "\\", "/" )
 	
 		iDownloading = iDownloading + self:FileNeedsDownload( v )
 		iFileCount = iFileCount + 1
@@ -265,7 +265,13 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 		pnlLoading:ShowURL( serverurl, true ) 
 	end
 
-	pnlLoading.JavascriptRun = string.format( "if ( window.GameDetails ) GameDetails( \"%s\", \"%s\", \"%s\", %i, \"%s\", \"%s\" );",
-		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe() )
+	pnlLoading.JavascriptRun = ("if ( window.GameDetails ) GameDetails( \"%s\", \"%s\", \"%s\", %i, \"%s\", \"%s\" );"):format(
+		servername:JavascriptSafe(),
+		serverurl:JavascriptSafe(),
+		mapname:JavascriptSafe(),
+		maxplayers,
+		steamid:JavascriptSafe(),
+		g_GameMode:JavascriptSafe()
+	)
 
 end

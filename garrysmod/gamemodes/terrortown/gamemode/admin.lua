@@ -199,7 +199,7 @@ local ban_functions = {
 };
 
 local function BanningFunction()
-   local bantype = string.lower(ttt_bantype:GetString())
+   local bantype = ttt_bantype:GetString():lower()
    if bantype == "autodetect" then
       bantype = DetectServerPlugin()
    end

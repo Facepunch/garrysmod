@@ -19,7 +19,7 @@ local cached_default, cached_active
 
 function LANG.CreateLanguage(lang_name)
    if not lang_name then return end
-   lang_name = string.lower(lang_name)
+   lang_name = lang_name:lower()
 
    if not LANG.IsLanguage(lang_name) then
       -- Empty string is very convenient to have, so init with that.
@@ -45,7 +45,7 @@ end
 -- Add a string to a language. Should not be used in a language file, only for
 -- adding strings elsewhere, such as a SWEP script.
 function LANG.AddToLanguage(lang_name, string_name, string_text)
-   lang_name = lang_name and string.lower(lang_name)
+   lang_name = lang_name and lang_name:lower()
 
    if not LANG.IsLanguage(lang_name) then
       ErrorNoHalt(Format("Failed to add '%s' to language '%s': language does not exist.\n", tostring(string_name), tostring(lang_name)))
@@ -124,7 +124,7 @@ local function SetFallback(tbl)
 end
 
 function LANG.SetActiveLanguage(lang_name)
-   lang_name = lang_name and string.lower(lang_name)
+   lang_name = lang_name and lang_name:lower()
 
    if LANG.IsLanguage(lang_name) then
       local old_name = LANG.ActiveLanguage
@@ -163,12 +163,12 @@ function LANG.Init()
 end
 
 function LANG.IsServerDefault(lang_name)
-   lang_name = string.lower(lang_name)
+   lang_name = lang_name:lower()
    return lang_name == "server default" or lang_name == "auto"
 end
 
 function LANG.IsLanguage(lang_name)
-   lang_name = lang_name and string.lower(lang_name)
+   lang_name = lang_name and lang_name:lower()
    return LANG.Strings[lang_name]
 end
 

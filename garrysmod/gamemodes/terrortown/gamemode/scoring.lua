@@ -236,10 +236,10 @@ function SCORE:StreamToClients()
    local cut = {}
    local max = 65500
    while #s != 0 do
-      local bit = string.sub(s, 1, max - 1)
+      local bit = s:sub( 1, max - 1)
       table.insert(cut, bit)
 
-      s = string.sub(s, max, -1)
+      s = s:sub( max, -1)
    end
 
    local parts = #cut

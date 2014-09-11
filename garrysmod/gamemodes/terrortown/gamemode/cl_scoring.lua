@@ -209,7 +209,7 @@ end
 function CLSCORE:AddAward(y, pw, award, dpanel)
    local nick = award.nick
    local text = award.text
-   local title = string.upper(award.title)
+   local title = award.title:upper()
 
    local titlelbl = vgui.Create("DLabel", dpanel)
    titlelbl:SetText(title)
@@ -445,16 +445,16 @@ function CLSCORE:SaveLog()
    end
 
    local logname = logdir .. "/ttt_events_" .. os.time() .. ".txt"
-   local log = "Trouble in Terrorist Town - Round Events Log\n".. string.rep("-", 50) .."\n"
+   local log = "Trouble in Terrorist Town - Round Events Log\n".. ("-"):rep(50) .."\n"
 
-   log = log .. string.format("%s | %-25s | %s\n", " TIME", "TYPE", "WHAT HAPPENED") .. string.rep("-", 50) .."\n"
+   log = log .. (" %s | %-25s | %s\n%s\n"):format("TIME", "TYPE", "WHAT HAPPENED", ("-"):rep(50))
 
    for _, e in pairs(self.Events) do
       local etxt = self:TextForEvent(e)
       local etime = self:TimeForEvent(e)
       local _, etype = self:IconForEvent(e)
       if etxt then
-         log = log .. string.format("%s | %-25s | %s\n", etime, etype, etxt)
+         log = log .. ("%s | %-25s | %s\n"):format(etime, etype, etxt)
       end
    end
 

@@ -330,7 +330,7 @@ if CLIENT then
       surface.SetTextColor(255,255,255,15)
       surface.SetFont("Default")
       surface.SetTextPos(2,0)
-      surface.DrawText(string.format("%.3f", around(frac)))
+      surface.DrawText(("%.3f"):format(around(frac)))
 
       surface.SetDrawColor(0,0,0, 80)
       surface.DrawRect(linex, 1, 3, 13)

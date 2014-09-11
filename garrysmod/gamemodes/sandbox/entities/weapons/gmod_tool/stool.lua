@@ -133,7 +133,7 @@ local toolmodes = file.Find( SWEP.Folder.."/stools/*.lua", "LUA" )
 
 for key, val in pairs( toolmodes ) do
 
-	local char1,char2,toolmode = string.find( val, "([%w_]*).lua" )
+	local char1,char2,toolmode = val:find( "([%w_]*).lua" )
 
 	TOOL = ToolObj:Create()
 	TOOL.Mode = toolmode
