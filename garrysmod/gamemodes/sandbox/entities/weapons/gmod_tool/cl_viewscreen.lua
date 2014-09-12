@@ -17,7 +17,7 @@ local function DrawScrollingText( text, y, texwide )
 	local w, h = surface.GetTextSize( text  )
 	w = w + 64
 
-	local x = RealTime() * 400 % w * -1
+	local x = RealTime() * 250 % w * -1
 
 	while ( x < texwide ) do
 	
