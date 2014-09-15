@@ -41,11 +41,17 @@ drive.Register( "drive_sandbox",
 	SetupControls = function( self, cmd )				
 	
 		--
-		-- If we're holding the reload key down then don't alter the view angles
+		-- If we're holding the reload key down then freeze the view angles
 		--
-		if ( cmd:KeyDown( IN_RELOAD ) ) then
+		if cmd:KeyDown( IN_RELOAD ) then
 
-			cmd:SetViewAngles( EyeAngles() )
+			self.CameraForceViewAngles = self.CameraForceViewAngles or cmd:GetViewAngles()
+
+			cmd:SetViewAngles( self.CameraForceViewAngles )
+
+		else
+
+			self.CameraForceViewAngles = nil
 
 		end
 
