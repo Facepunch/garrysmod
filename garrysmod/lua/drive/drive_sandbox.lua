@@ -43,7 +43,7 @@ drive.Register( "drive_sandbox",
 		--
 		-- If we're holding the reload key down then freeze the view angles
 		--
-		if cmd:KeyDown( IN_RELOAD ) then
+		if ( cmd:KeyDown( IN_RELOAD ) ) then
 
 			self.CameraForceViewAngles = self.CameraForceViewAngles or cmd:GetViewAngles()
 
