@@ -82,9 +82,9 @@ drive.Register( "drive_sandbox",
 		--
 		mv:SetOrigin( self.Entity:GetNetworkOrigin() )
 		mv:SetVelocity( self.Entity:GetAbsVelocity() )
-		mv:SetMoveAngles( self.Player:EyeAngles() )		-- Always move relative to the player's eyes
+		mv:SetMoveAngles( mv:GetAngles() )		-- Always move relative to the player's eyes
 
-		local entity_angle		= self.Player:EyeAngles()
+		local entity_angle		= mv:GetAngles()
 		entity_angle.roll		= self.Entity:GetAngles().roll
 
 		--
