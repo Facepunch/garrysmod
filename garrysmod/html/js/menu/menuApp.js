@@ -1,6 +1,6 @@
 
 var IN_ENGINE = navigator.userAgent.indexOf( "Valve Source Client" ) != -1;
-var IS_SPAWN_MENU = false
+var IS_SPAWN_MENU = false;
 
 var App = angular.module( 'MenuApp', [ 'tranny', 'ui' ] );
 
@@ -14,6 +14,11 @@ App.config(function ( $routeProvider, $locationProvider )
 	$routeProvider.when('/saves/', { templateUrl: 'template/saves.html' } );
 } );
 
+function ShowConsole() 
+{
+	lua.Run( "RunConsoleCommand( 'showconsole' )" );
+	return false;
+}
 
 function UpdateDigest( scope, timeout )
 {
@@ -25,7 +30,7 @@ function UpdateDigest( scope, timeout )
 		scope.DigestUpdate = 0;
 		scope.$digest();
 
-	}, timeout )
+	}, timeout );
 }
 
 //We already have a limitTo filter built-in to angular,
