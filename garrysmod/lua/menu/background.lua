@@ -30,8 +30,8 @@ local function Render( tbl )
 	surface.SetMaterial( tbl.mat )
 	surface.SetDrawColor( 255, 255, 255, tbl.Alpha )
 
-	local w =  ScrH() * tbl.Size * tbl.Ratio
-	local h =  ScrH() * tbl.Size
+	local w = ScrH() * tbl.Size * tbl.Ratio
+	local h = ScrH() * tbl.Size
 
 	local x = ScrW() * 0.5
 	local y = ScrH() * 0.5
@@ -65,8 +65,6 @@ function DrawBackground()
 	surface.SetMaterial( MenuGradient )
 	surface.SetDrawColor( 255, 255, 255, 255 )
 	surface.DrawTexturedRect( 0, 0, 1024, ScrH() )
-
-	
 
 end
 
@@ -113,7 +111,7 @@ function ChangeBackground( currentgm )
 
 	if ( Active.Ratio < ScrW() / ScrH() ) then
 
-		Active.Size = Active.Size * ( ScrW() / ScrH()  );
+		Active.Size = Active.Size + ( ( ScrW() / ScrH() ) - Active.Ratio )
 
 	end
 
