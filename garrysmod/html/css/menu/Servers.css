@@ -237,7 +237,7 @@ H1.menuheader
 {
 	color: white;
 	margin-bottom: 0;
-	text-shadow: 2px 2px 0px black;
+	text-shadow: 2px 2px 1px black;
 
 }
 
@@ -245,7 +245,7 @@ H1.menuheader small
 {
 	color: white;
 	font-weight: bold;
-	text-shadow: 1px 1px 0px black;
+	text-shadow: 1px 1px 1px black;
 }
 
 A.bglink
