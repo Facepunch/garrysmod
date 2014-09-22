@@ -36,7 +36,7 @@ function PANEL:Init()
 
 	self:MakePopup()
 	self:SetPopupStayAtBack( true )
-	self:MoveToBack()
+	--self:MoveToBack() --Breaks Awesomium input 
 
 end
 
