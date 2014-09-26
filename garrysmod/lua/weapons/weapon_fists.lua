@@ -12,7 +12,7 @@ SWEP.Spawnable			= true
 SWEP.UseHands			= true
 SWEP.DrawAmmo			= false
 
-SWEP.ViewModel			= "models/weapons/c_arms_citizen.mdl"
+SWEP.ViewModel			= Model( "models/weapons/c_arms_citizen.mdl" )
 SWEP.WorldModel			= ""
 SWEP.ViewModelFlip		= false
 SWEP.ViewModelFOV		= 52
