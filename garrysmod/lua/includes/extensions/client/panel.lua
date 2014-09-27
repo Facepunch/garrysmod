@@ -444,16 +444,7 @@ function meta:InvalidateChildren( bRecurse )
 end
 
 function meta:IsOurChild( child )
-	local curr = child
-	
-	while IsValid(curr) do
-		if self == curr then
-			return true
-		end
-		curr = curr:GetParent()
-	end
-	
-	return false
+	return child:HasParent(self)
 end
 
 function meta:CopyBase( pnl )
