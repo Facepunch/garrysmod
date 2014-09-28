@@ -183,6 +183,8 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 
 	if ( !gamemode ) gamemode = desc;
 	if ( maxplayers <= 1 ) return;
+	var modifiedplayers = Math.min( parseInt( players ) - parseInt( botplayers), parseInt( maxplayers ) );
+	if ( pass ) modifiedplayers = 0;
 
 	var data =
 	{
@@ -193,7 +195,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		players:		parseInt( players ) - parseInt( botplayers ),
 		maxplayers:		parseInt( maxplayers ),
 		botplayers:		parseInt( botplayers ),
-		fullness: 		( parseInt( players ) - parseInt( botplayers) ) / parseInt( maxplayers ),
+		fullness: 		parseInt( modifiedplayers ) / parseInt( maxplayers ),
 		pass:			pass,
 		lastplayed:		parseInt( lastplayed ),
 		address:		address,
@@ -213,13 +215,11 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	data.listen = data.desc.indexOf('[L]') >= 0;
 	if ( data.listen ) data.desc = data.desc.substr( 4 );
 
-	if ( !(data.maxplayers < 4 || data.pass) )
+	if ( data.maxplayers >= 4 )
 	{
 
 		var gm = GetGamemode( data.gamemode, type );
 		gm.servers.push( data );
-
-		UpdateGamemodeInfo( data )
 
 		gm.num_servers += 1;
 		gm.num_players += data.players
@@ -231,9 +231,10 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		if ( gm.num_players == 0 ) empty = 500;
 
 		gm.order = gm.fullness / gm.num_servers - empty
-
-		UpdateDigest( Scope, 50 );
+		
 	}
+	UpdateGamemodeInfo( data )
+	UpdateDigest( Scope, 50 );
 }
 
 function MissingGamemodeIcon( element )
