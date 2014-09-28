@@ -1,61 +1,48 @@
 
-if ( !IsMounted( "ep2" ) ) then return end
+if ( IsMounted( "ep2" ) ) then AddCSLuaFile() else return end
 
--- Variables that are used on both client and server
+SWEP.PrintName			= "Flechette Gun"
+SWEP.Author			= "garry"
+SWEP.Purpose			= "Shoot flechettes with primary attack"
 
-AddCSLuaFile()
-
-SWEP.Author			= ""
-SWEP.Instructions	= "Shoots flechettes"
+SWEP.Slot			= 1
+SWEP.SlotPos			= 2
 
 SWEP.Spawnable			= true
 SWEP.AdminOnly			= true
-SWEP.UseHands			= true
+SWEP.DrawAmmo			= false
 
-SWEP.ViewModel			= "models/weapons/c_smg1.mdl"
-SWEP.WorldModel			= "models/weapons/w_smg1.mdl"
+SWEP.ViewModel			= Model( "models/weapons/c_smg1.mdl" )
+SWEP.WorldModel			= Model( "models/weapons/w_smg1.mdl" )
+SWEP.ViewModelFlip 		= false
+SWEP.ViewModelFOV		= 54
+SWEP.UseHands			= true
 
 SWEP.Primary.ClipSize		= -1
 SWEP.Primary.DefaultClip	= -1
 SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo			= "none"
+SWEP.Primary.Ammo		= "none"
 
 SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo			= "none"
-
-SWEP.AutoSwitchTo		= false
-SWEP.AutoSwitchFrom		= false
-
-SWEP.PrintName			= "Flechette Gun"
-SWEP.Slot				= 1
-SWEP.SlotPos			= 2
-SWEP.DrawAmmo			= false
+SWEP.Secondary.Ammo		= "none"
 
 game.AddParticles( "particles/hunter_flechette.pcf" )
 game.AddParticles( "particles/hunter_projectile.pcf" )
 
 local ShootSound = Sound( "NPC_Hunter.FlechetteShoot" )
 
-/*---------------------------------------------------------
-	Initialize
----------------------------------------------------------*/
 function SWEP:Initialize()
 
 	self:SetHoldType( "smg" )
 
 end
 
-/*---------------------------------------------------------
-	Reload does nothing
----------------------------------------------------------*/
 function SWEP:Reload()
+	
 end
 
-/*---------------------------------------------------------
-	PrimaryAttack
----------------------------------------------------------*/
 function SWEP:PrimaryAttack()
 
 	self:SetNextPrimaryFire( CurTime() + 0.1 )
@@ -82,19 +69,14 @@ function SWEP:PrimaryAttack()
 
 end
 
-/*---------------------------------------------------------
-	SecondaryAttack
----------------------------------------------------------*/
 function SWEP:SecondaryAttack()
 
-	-- Right click does nothing..
+	-- TODO: Reimplement the old rollermine secondary attack?
 	
 end
 
-/*---------------------------------------------------------
-   Name: ShouldDropOnDie
-   Desc: Should this weapon be dropped when its owner dies?
----------------------------------------------------------*/
 function SWEP:ShouldDropOnDie()
+	
 	return false
+	
 end
