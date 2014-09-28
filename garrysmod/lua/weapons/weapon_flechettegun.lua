@@ -1,32 +1,32 @@
 
 if ( IsMounted( "ep2" ) ) then AddCSLuaFile() else return end
 
-SWEP.PrintName			= "Flechette Gun"
-SWEP.Author			= "garry"
-SWEP.Purpose			= "Shoot flechettes with primary attack"
+SWEP.PrintName				= "Flechette Gun"
+SWEP.Author					= "garry"
+SWEP.Purpose				= "Shoot flechettes with primary attack"
 
-SWEP.Slot			= 1
-SWEP.SlotPos			= 2
+SWEP.Slot					= 1
+SWEP.SlotPos				= 2
 
-SWEP.Spawnable			= true
-SWEP.AdminOnly			= true
-SWEP.DrawAmmo			= false
+SWEP.Spawnable				= true
 
-SWEP.ViewModel			= Model( "models/weapons/c_smg1.mdl" )
-SWEP.WorldModel			= Model( "models/weapons/w_smg1.mdl" )
-SWEP.ViewModelFlip 		= false
-SWEP.ViewModelFOV		= 54
-SWEP.UseHands			= true
+SWEP.ViewModel				= Model( "models/weapons/c_smg1.mdl" )
+SWEP.WorldModel				= Model( "models/weapons/w_smg1.mdl" )
+SWEP.ViewModelFOV			= 54
+SWEP.UseHands				= true
 
 SWEP.Primary.ClipSize		= -1
 SWEP.Primary.DefaultClip	= -1
 SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo		= "none"
+SWEP.Primary.Ammo			= "none"
 
 SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo		= "none"
+SWEP.Secondary.Ammo			= "none"
+
+SWEP.DrawAmmo				= false
+SWEP.AdminOnly				= true
 
 game.AddParticles( "particles/hunter_flechette.pcf" )
 game.AddParticles( "particles/hunter_projectile.pcf" )
