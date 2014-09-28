@@ -86,7 +86,7 @@ end
 --[[---------------------------------------------------------
    Name: OnMousePressed
 -----------------------------------------------------------]]
-function PANEL:Paint()
+function PANEL:Paint( w, h )
 
 	if ( !IsValid( self.Entity ) ) then return end
 	
@@ -99,9 +99,7 @@ function PANEL:Paint()
 		ang = (self.vLookatPos-self.vCamPos):Angle()
 	end
 	
-	local w, h = self:GetSize()
 	cam.Start3D( self.vCamPos, ang, self.fFOV, x, y, w, h, 5, self.FarZ )
-	cam.IgnoreZ( true )
 	
 	render.SuppressEngineLighting( true )
 	render.SetLightingOrigin( self.Entity:GetPos() )
@@ -119,7 +117,6 @@ function PANEL:Paint()
 	self.Entity:DrawModel()
 	
 	render.SuppressEngineLighting( false )
-	cam.IgnoreZ( false )
 	cam.End3D()
 	
 	self.LastPaint = RealTime()
