@@ -232,10 +232,10 @@ function IsUselessModel( modelname )
 
 	local modelname = modelname:lower()
 
-	if ( !modelname:find( ".mdl" ) ) then return true end
+	if ( !modelname:find( ".mdl", 1, true ) ) then return true end
 	
 	for k, v in pairs( UselessModels ) do
-		if ( modelname:find( v ) ) then 
+		if ( modelname:find( v, 1, true ) ) then 
 			return true 
 		end
 	end
@@ -245,6 +245,7 @@ function IsUselessModel( modelname )
 end
 
 UTIL_IsUselessModel = IsUselessModel
+
 
 --[[---------------------------------------------------------
 	Remember/Restore cursor position..
