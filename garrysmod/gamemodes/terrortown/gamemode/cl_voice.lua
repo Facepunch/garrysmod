@@ -419,7 +419,7 @@ g_VoicePanelList = nil
 -- 255 at 100
 -- 5 at 5000
 local function VoiceNotifyThink(pnl)
-   if not (ValidPanel(pnl) and LocalPlayer() and IsValid(pnl.ply)) then return end
+   if not (IsValid(pnl) and LocalPlayer() and IsValid(pnl.ply)) then return end
    if not (GetGlobalBool("ttt_locational_voice", false) and (not pnl.ply:IsSpec()) and (pnl.ply != LocalPlayer())) then return end
    if LocalPlayer():IsActiveTraitor() && pnl.ply:IsActiveTraitor() then return end
    

@@ -4,8 +4,8 @@
 include("sb_row.lua")
 
 local function CompareScore(pa, pb)
-   if not ValidPanel(pa) then return false end
-   if not ValidPanel(pb) then return true end
+   if not IsValid(pa) then return false end
+   if not IsValid(pb) then return true end
 
    local a = pa:GetPlayer()
    local b = pb:GetPlayer()
@@ -127,7 +127,7 @@ function PANEL:UpdatePlayerData()
    local to_remove = {}
    for k,v in pairs(self.rows) do
       -- Player still belongs in this group?
-      if ValidPanel(v) and IsValid(v:GetPlayer()) and ScoreGroup(v:GetPlayer()) == self.group then
+      if IsValid(v) and IsValid(v:GetPlayer()) and ScoreGroup(v:GetPlayer()) == self.group then
          v:UpdatePlayerData()
       else
          -- can't remove now, will break pairs
@@ -139,7 +139,7 @@ function PANEL:UpdatePlayerData()
 
    for k,ply in pairs(to_remove) do
       local pnl = self.rows[ply]
-      if ValidPanel(pnl) then
+      if IsValid(pnl) then
          pnl:Remove()
       end
 

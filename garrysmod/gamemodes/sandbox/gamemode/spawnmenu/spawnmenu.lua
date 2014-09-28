@@ -298,7 +298,7 @@ hook.Add( "GUIMousePressed", "SpawnMenuOpenGUIMousePressed", SpawnMenuOpenGUIMou
 -----------------------------------------------------------]]
 local function SpawnMenuOpenGUIMouseReleased()
 
-	if ( !ValidPanel( g_SpawnMenu ) ) then return end
+	if ( !IsValid( g_SpawnMenu ) ) then return end
 	if ( !g_SpawnMenu:IsVisible() ) then return end
 	
 	g_SpawnMenu:Close()

@@ -53,7 +53,7 @@ function PANEL:SetText(txt)
    -- but it does.
    local pnl = self.Panel
    timer.Simple(0, function()
-                      if ValidPanel(pnl) then
+                      if IsValid(pnl) then
                          pnl:UpdateScrollState()
                       end
                    end)
