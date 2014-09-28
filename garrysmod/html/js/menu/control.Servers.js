@@ -132,7 +132,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 	$scope.InstallGamemode = function( gm )
 	{
-		lua.Run( "steamworks.Subscribe( %s )", String( gm.info.workshopid ) );
+		lua.Run( "steamworks.Subscribe( \"" + gm.info.workshopid + "\" )" );
 	}
 
 	$scope.ShouldShowInstall = function( gm )
@@ -167,6 +167,7 @@ function GetGamemode( name, type )
 		servers:		[],
 		num_servers:	0,
 		num_players:	0,
+		fullness: 		0,
 		OrderBy:		'recommended',
 		info:			GetGamemodeInfo( name )
 	};
@@ -192,6 +193,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		players:		parseInt( players ) - parseInt( botplayers ),
 		maxplayers:		parseInt( maxplayers ),
 		botplayers:		parseInt( botplayers ),
+		fullness: 		( parseInt( players ) - parseInt( botplayers) ) / parseInt( maxplayers ),
 		pass:			pass,
 		lastplayed:		parseInt( lastplayed ),
 		address:		address,
@@ -211,22 +213,27 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	data.listen = data.desc.indexOf('[L]') >= 0;
 	if ( data.listen ) data.desc = data.desc.substr( 4 );
 
-	var gm = GetGamemode( data.gamemode, type );
-	gm.servers.push( data );
+	if ( !(data.maxplayers < 4 || data.pass) )
+	{
 
-	UpdateGamemodeInfo( data )
+		var gm = GetGamemode( data.gamemode, type );
+		gm.servers.push( data );
 
-	gm.num_servers += 1;
-	gm.num_players += data.players
+		UpdateGamemodeInfo( data )
 
-	gm.element_class = "";
-	if ( gm.num_players == 0 ) gm.element_class = "noplayers";
-	if ( gm.num_players > 50 ) gm.element_class = "lotsofplayers";
+		gm.num_servers += 1;
+		gm.num_players += data.players
 
-	gm.order = gm.num_players + Math.random();
+		gm.element_class = "";
+		if ( gm.num_players == 0 ) gm.element_class = "noplayers";
+		if ( gm.num_players > 50 ) gm.element_class = "lotsofplayers";
+		var empty = 0
+		if ( gm.num_players == 0 ) empty = 500;
 
-	UpdateDigest( Scope, 50 );
-	
+		gm.order = gm.fullness / gm.num_servers - empty
+
+		UpdateDigest( Scope, 50 );
+	}
 }
 
 function MissingGamemodeIcon( element )
