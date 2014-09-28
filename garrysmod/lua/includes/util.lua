@@ -223,25 +223,22 @@ end
 --[[---------------------------------------------------------
 	Universal function to filter out crappy models by name
 -----------------------------------------------------------]]
+local UselessModels = { 
+	"_gesture", "_anim", "_gst", "_pst", "_shd", "_ss", "_posture", "_anm", 
+	"ghostanim","_paths", "_shared", "anim_", "gestures_", "shared_ragdoll_"
+}
+	
 function UTIL_IsUselessModel( modelname ) 
 
 	local modelname = modelname:lower()
 
-	if ( modelname:find( "_gesture" ) ) then return true end
-	if ( modelname:find( "_anim" ) ) then return true end
-	if ( modelname:find( "_gst" ) ) then return true end
-	if ( modelname:find( "_pst" ) ) then return true end
-	if ( modelname:find( "_shd" ) ) then return true end
-	if ( modelname:find( "_ss" ) ) then return true end
-	if ( modelname:find( "_posture" ) ) then return true end
-	if ( modelname:find( "_anm" ) ) then return true end
-	if ( modelname:find( "ghostanim" ) ) then return true end
-	if ( modelname:find( "_paths" ) ) then return true end
-	if ( modelname:find( "_shared" ) ) then return true end
-	if ( modelname:find( "anim_" ) ) then return true end
-	if ( modelname:find( "gestures_" ) ) then return true end
-	if ( modelname:find( "shared_ragdoll_" ) ) then return true end
 	if ( !modelname:find( ".mdl" ) ) then return true end
+	
+	for k, v in pairs( UselessModels ) do
+		if ( modelname:find( v ) ) then 
+			return true 
+		end
+	end
 	
 	return false
 
