@@ -228,7 +228,7 @@ local UselessModels = {
 	"ghostanim","_paths", "_shared", "anim_", "gestures_", "shared_ragdoll_"
 }
 	
-function UTIL_IsUselessModel( modelname ) 
+function IsUselessModel( modelname ) 
 
 	local modelname = modelname:lower()
 
@@ -244,6 +244,7 @@ function UTIL_IsUselessModel( modelname )
 
 end
 
+UTIL_IsUselessModel = IsUselessModel
 
 --[[---------------------------------------------------------
 	Remember/Restore cursor position..
