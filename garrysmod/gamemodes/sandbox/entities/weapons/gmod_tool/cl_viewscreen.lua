@@ -17,7 +17,9 @@ local function DrawScrollingText( text, y, texwide )
 	local w, h = surface.GetTextSize( text  )
 	w = w + 64
 
-	local x = math.fmod( CurTime() * 400, w ) * -1
+	y = y - h / 2 -- Center text to y position
+
+	local x = RealTime() * 250 % w * -1
 
 	while ( x < texwide ) do
 	
@@ -69,7 +71,7 @@ function SWEP:RenderScreen()
 		else
 			
 			surface.SetFont( "GModToolScreen" )
-			DrawScrollingText( "#tool." .. mode .. ".name", 64, TEX_SIZE )
+			DrawScrollingText( "#tool." .. mode .. ".name", 104, TEX_SIZE )
 				
 		end
 
