@@ -5,17 +5,18 @@ SWEP.PrintName			= "Medkit"
 SWEP.Author			= "robotboy655 & MaxOfS2D"
 SWEP.Purpose    		= "Heal people with your primary attack, or yourself with the secondary."
 
+SWEP.Slot			= 5
+SWEP.SlotPos			= 3
+
 SWEP.Spawnable			= true
-SWEP.UseHands			= true
+SWEP.AdminOnly			= false
 SWEP.DrawAmmo			= true
 
 SWEP.ViewModel			= Model( "models/weapons/c_medkit.mdl" )
 SWEP.WorldModel			= Model( "models/weapons/w_medkit.mdl" )
 SWEP.ViewModelFlip		= false
 SWEP.ViewModelFOV		= 54
-
-SWEP.Slot			= 5
-SWEP.SlotPos			= 3
+SWEP.UseHands			= true
 
 SWEP.Primary.ClipSize		= 100
 SWEP.Primary.DefaultClip	= 100
