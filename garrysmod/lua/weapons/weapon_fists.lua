@@ -1,21 +1,19 @@
 
 AddCSLuaFile()
 
-SWEP.PrintName	= "Fists"
+SWEP.PrintName				= "Fists"
+SWEP.Author					= "Kilburn, robotboy655, MaxOfS2D & Tenrys"
+SWEP.Purpose				= "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
 
-SWEP.Author		= "Kilburn, robotboy655, MaxOfS2D & Tenrys"
-SWEP.Purpose	= "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
+SWEP.Slot					= 0
+SWEP.SlotPos				= 4
 
-SWEP.Spawnable	= true
-SWEP.UseHands	= true
-SWEP.DrawAmmo	= false
+SWEP.Spawnable				= true
 
-SWEP.ViewModel	= "models/weapons/c_arms_citizen.mdl"
-SWEP.WorldModel	= ""
-
-SWEP.ViewModelFOV	= 52
-SWEP.Slot			= 0
-SWEP.SlotPos		= 5
+SWEP.ViewModel				= Model( "models/weapons/c_arms_citizen.mdl" )
+SWEP.WorldModel				= ""
+SWEP.ViewModelFOV			= 54
+SWEP.UseHands				= true
 
 SWEP.Primary.ClipSize		= -1
 SWEP.Primary.DefaultClip	= -1
@@ -26,6 +24,10 @@ SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= true
 SWEP.Secondary.Ammo			= "none"
+
+SWEP.DrawAmmo				= false
+
+SWEP.HitDistance 			= 48
 
 local SwingSound = Sound( "weapons/slam/throw.wav" )
 local HitSound = Sound( "Flesh.ImpactHard" )
@@ -41,8 +43,6 @@ function SWEP:PreDrawViewModel( vm, wep, ply )
 	vm:SetMaterial( "engine/occlusionproxy" ) -- Hide that view model with hacky material
 
 end
-
-SWEP.HitDistance = 48
 
 function SWEP:SetupDataTables()
 	
@@ -83,7 +83,9 @@ function SWEP:PrimaryAttack( right )
 end
 
 function SWEP:SecondaryAttack()
+	
 	self:PrimaryAttack( true )
+	
 end
 
 function SWEP:DealDamage()
@@ -108,7 +110,7 @@ function SWEP:DealDamage()
 		} )
 	end
 
-	-- We need the second part for single player because SWEP:Think is ran shared in SP.
+	-- We need the second part for single player because SWEP:Think is ran shared in SP
 	if ( tr.Hit && !( game.SinglePlayer() && CLIENT ) ) then
 		self:EmitSound( HitSound )
 	end
