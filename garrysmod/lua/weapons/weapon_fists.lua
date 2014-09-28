@@ -9,13 +9,14 @@ SWEP.Slot			= 0
 SWEP.SlotPos			= 4
 
 SWEP.Spawnable			= true
-SWEP.UseHands			= true
+SWEP.AdminOnly			= false
 SWEP.DrawAmmo			= false
 
 SWEP.ViewModel			= Model( "models/weapons/c_arms_citizen.mdl" )
 SWEP.WorldModel			= ""
 SWEP.ViewModelFlip		= false
-SWEP.ViewModelFOV		= 52
+SWEP.ViewModelFOV		= 54
+SWEP.UseHands			= true
 
 SWEP.Primary.ClipSize		= -1
 SWEP.Primary.DefaultClip	= -1
