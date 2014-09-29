@@ -64,10 +64,28 @@ function COLOR:ToHSV()
 end
 
 --[[---------------------------------------------------------
-	Converts Color To Vector - loss of precision / alpha lost
+	Converts color to vector - loss of precision / alpha lost
 -----------------------------------------------------------]]
-function COLOR:ToVector( )
+function COLOR:ToVector()
 
 	return Vector( self.r / 255, self.g / 255, self.b / 255 )
+
+end
+
+--[[---------------------------------------------------------
+	Converts color to hex value
+-----------------------------------------------------------]]
+function COLOR:ToHex()
+	
+	return bit.lshift( self.r, 16 ) + bit.lshift( self.g, 8 ) + bit.lshift( self.b, 0 )
+	
+end
+
+--[[---------------------------------------------------------
+	Converts hex to color
+-----------------------------------------------------------]]
+function HexToColor( hex )
+	
+	return Color( bit.band( bit.rshift( hex, 16 ), 0xFF ), bit.band( bit.rshift( hex, 8 ), 0xFF ), bit.band( bit.rshift( hex, 0 ), 0xFF ) )
 
 end
