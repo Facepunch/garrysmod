@@ -1,30 +1,29 @@
---[[   _                                
-	( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DLabel
 --]]
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_bIsMenuComponent", 		"IsMenu", 			FORCE_BOOL )
-
-AccessorFunc( PANEL, "m_colText", 				"TextColor" )
-AccessorFunc( PANEL, "m_colTextStyle", 			"TextStyleColor" )
-AccessorFunc( PANEL, "m_FontName", 				"Font" )
-AccessorFunc( PANEL, "m_bAutoStretchVertical", 	"AutoStretchVertical", 		FORCE_BOOL )
-AccessorFunc( PANEL, "m_bDisabled", 			"Disabled", 				FORCE_BOOL )
-AccessorFunc( PANEL, "m_bDoubleClicking", 		"DoubleClickingEnabled", 	FORCE_BOOL )
-AccessorFunc( PANEL, "m_bBackground", 			"PaintBackground",			FORCE_BOOL )
-AccessorFunc( PANEL, "m_bBackground", 			"DrawBackground", 			FORCE_BOOL )
-AccessorFunc( PANEL, "m_bIsToggle", 			"IsToggle", 				FORCE_BOOL )
-AccessorFunc( PANEL, "m_bToggle", 				"Toggle", 					FORCE_BOOL )
-AccessorFunc( PANEL, "m_bBright", 				"Bright", 					FORCE_BOOL )
-AccessorFunc( PANEL, "m_bDark", 				"Dark", 					FORCE_BOOL )
-AccessorFunc( PANEL, "m_bHighlight", 			"Highlight", 				FORCE_BOOL )
+AccessorFunc( PANEL, "m_colText",				"TextColor" )
+AccessorFunc( PANEL, "m_colTextStyle",			"TextStyleColor" )
+AccessorFunc( PANEL, "m_FontName",				"Font" )
+AccessorFunc( PANEL, "m_bDoubleClicking",		"DoubleClickingEnabled",	FORCE_BOOL )
+AccessorFunc( PANEL, "m_bAutoStretchVertical",	"AutoStretchVertical",		FORCE_BOOL )
+AccessorFunc( PANEL, "m_bBackground",			"PaintBackground",			FORCE_BOOL ) -- Why do we have both?
+AccessorFunc( PANEL, "m_bBackground",			"DrawBackground",			FORCE_BOOL ) -- Why do we have both?
+AccessorFunc( PANEL, "m_bHighlight",			"Highlight",				FORCE_BOOL )
+AccessorFunc( PANEL, "m_bIsToggle",				"IsToggle",					FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDisabled",				"Disabled",					FORCE_BOOL )
+AccessorFunc( PANEL, "m_bToggle",				"Toggle",					FORCE_BOOL )
+AccessorFunc( PANEL, "m_bIsMenuComponent",		"IsMenu",					FORCE_BOOL )
+AccessorFunc( PANEL, "m_bBright",				"Bright",					FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDark",					"Dark",						FORCE_BOOL )
 
 --[[---------------------------------------------------------
 	Init
@@ -33,7 +32,7 @@ function PANEL:Init()
 
 	self:SetIsToggle( false )
 	self:SetToggle( false )
-	self:SetDisabled( false );
+	self:SetDisabled( false )
 	self:SetMouseInputEnabled( false )
 	self:SetKeyboardInputEnabled( false )
 	self:SetDoubleClickingEnabled( true )
@@ -45,23 +44,22 @@ function PANEL:Init()
 	self:SetPaintBackgroundEnabled( false )
 	self:SetPaintBorderEnabled( false )
 	
-	self:SetFont( "DermaDefault" )	
-	
+	self:SetFont( "DermaDefault" )
+
 end
 
 function PANEL:SetFont( strFont )
 
 	self.m_FontName = strFont
-	self:SetFontInternal( self.m_FontName )	
+	self:SetFontInternal( self.m_FontName )
 	self:ApplySchemeSettings()
 
 end
 
 function PANEL:ApplySchemeSettings()
 
-	self:SetFontInternal( self.m_FontName )
-	self:UpdateColours( self:GetSkin() );
-	
+	self:UpdateColours( self:GetSkin() )
+
 	local col = self.m_colTextStyle
 	if ( self.m_colText ) then col = self.m_colText end
 	
@@ -69,16 +67,17 @@ function PANEL:ApplySchemeSettings()
 
 end
 
-function PANEL:PerformLayout()
-
-	self:ApplySchemeSettings()
-	
+function PANEL:Think()
 	if ( self.m_bAutoStretchVertical ) then
 		self:SizeToContentsY()
 	end
-
 end
 
+function PANEL:PerformLayout()
+
+	self:ApplySchemeSettings()
+
+end
 
 PANEL.SetColor = PANEL.SetTextColor
 
@@ -90,7 +89,6 @@ function PANEL:GetColor()
 	return self.m_colTextStyle
 
 end
-
 
 --[[---------------------------------------------------------
 	Exited
@@ -107,7 +105,7 @@ end
 function PANEL:OnCursorExited()
 
 	self:InvalidateLayout( true )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -122,7 +120,7 @@ function PANEL:OnMousePressed( mousecode )
 		if ( self.LastClickTime && SysTime() - self.LastClickTime < 0.2 ) then
 		
 			self:DoDoubleClickInternal()
-			self:DoDoubleClick()	
+			self:DoDoubleClick()
 			return 
 			
 		end
@@ -142,13 +140,13 @@ function PANEL:OnMousePressed( mousecode )
 	
 	self:MouseCapture( true )
 	self.Depressed = true
-	self:OnDepressed();
-	self:InvalidateLayout();
+	self:OnDepressed()
+	self:InvalidateLayout()
 	
 	--
 	-- Tell DragNDrop that we're down, and might start getting dragged!
 	--
-	self:DragMousePress( mousecode );
+	self:DragMousePress( mousecode )
 
 end
 
@@ -167,8 +165,8 @@ function PANEL:OnMouseReleased( mousecode )
 	if ( !self.Depressed ) then return end
 	
 	self.Depressed = nil
-	self:OnReleased();
-	self:InvalidateLayout();
+	self:OnReleased()
+	self:InvalidateLayout()
 	--
 	-- If we were being dragged then don't do the default behaviour!
 	--
@@ -177,7 +175,7 @@ function PANEL:OnMouseReleased( mousecode )
 	end
 	
 	if ( self:IsSelectable() && mousecode == MOUSE_LEFT ) then
-			
+		
 		local canvas = self:GetSelectionCanvas()
 		if ( canvas ) then
 			canvas:UnselectAll()
@@ -273,7 +271,7 @@ end
 	DoDoubleClickInternal
 -----------------------------------------------------------]]
 function PANEL:DoDoubleClickInternal()
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -290,24 +288,23 @@ function PANEL:UpdateColours( skin )
 end
 
 --[[---------------------------------------------------------
-   Name: GenerateExample
+	Name: GenerateExample
 -----------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-		ctrl:SetText( "This is a label example." )
-		ctrl:SizeToContents()
-		
+	ctrl:SetText( "This is a label example." )
+	ctrl:SizeToContents()
+
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end
-
 
 derma.DefineControl( "DLabel", "A Label", PANEL, "Label" )
 
 
 --[[---------------------------------------------------------
-   Name: Convenience Function
+	Name: Convenience Function
 -----------------------------------------------------------]]
 function Label( strText, parent )
 
