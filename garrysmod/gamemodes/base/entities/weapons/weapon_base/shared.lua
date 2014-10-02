@@ -1,6 +1,6 @@
 
-IncludeCS( "ai_translations.lua" )
-IncludeCS( "sh_anim.lua" )
+include( "ai_translations.lua" )
+include( "sh_anim.lua" )
 
 -- Variables that are used on both client and server
 

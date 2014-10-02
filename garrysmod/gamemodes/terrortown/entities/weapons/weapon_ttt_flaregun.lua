@@ -201,7 +201,7 @@ function SWEP:PrimaryAttack()
    end
 
    if ( (game.SinglePlayer() && SERVER) || CLIENT ) then
-      self:SetNetworkedFloat( "LastShootTime", CurTime() )
+      self:SetNWFloat( "LastShootTime", CurTime() )
    end
 end
 
