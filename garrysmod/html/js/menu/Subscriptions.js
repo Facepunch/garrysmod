@@ -31,6 +31,15 @@ Subscriptions.prototype.Enabled = function ( id )
 }
 
 //
+// ToggleMountTrick
+//
+
+Subscriptions.prototype.ToggleMountTrick = function( id )
+{
+	this.Files[id].mounted = !this.Files[id].mounted;
+}
+
+//
 // IsEnabled
 //
 Subscriptions.prototype.SetAllEnabled = function( bBool ) 
