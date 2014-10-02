@@ -3,20 +3,20 @@ var ServerSettings = []
 var scope = null;
 var rootScope = null;
 
-function ControllerNewGame( $scope, $element, $rootScope, $location )
+function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 {
 
 	for ( var i = 0; i < gScope.MapList.length; i++ )
 	{
-		if ( gScope.MapList[i][ "category" ] == "Favourites" ) 
+		if ( gScope.MapList[i][ "category" ] == "Favourites" )
 		{
 			if ( !$scope.CurrentCategory ) $scope.CurrentCategory = "Favourites";
 		}
 	}
-	
+
 	if ( !$scope.CurrentCategory ) $scope.CurrentCategory = "Sandbox";
 
-	$scope.Players = 
+	$scope.Players =
 	[
 		{ num: 1, label: 'maxplayers_1' },
 		{ num: 2, label: 'maxplayers_2' },
@@ -40,7 +40,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 			}
 		}
 	}
-	
+
 	if ( !$rootScope.Map )				$rootScope.Map = "gm_flatgrass";
 	if ( !$rootScope.MaxPlayers )		$rootScope.MaxPlayers = 1;
 	if ( !$rootScope.ServerSettings )	$rootScope.ServerSettings = ServerSettings;
@@ -51,7 +51,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 
 	rootScope = $rootScope;
 	scope = $scope;
-	
+
 	$rootScope.ShowBack = true;
 
 	$scope.SwitchCategory = function( cat )
@@ -118,7 +118,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -166,14 +166,14 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 			{
 				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettings.CheckBox[k].name + '", "' + ($scope.ServerSettings.CheckBox[k].Value?1:0) + '" )' )
 			}
-				
+
 			lua.Run( 'RunConsoleCommand( "hostname", "'+$rootScope.ServerSettings.hostname+'" )' )
 			lua.Run( 'RunConsoleCommand( "sv_lan", "'+($rootScope.ServerSettings.sv_lan?1:0)+'" )' )
 			lua.Run( 'RunConsoleCommand( "maxplayers", "'+$rootScope.MaxPlayers+'" )' )
 			lua.Run( 'RunConsoleCommand( "map", "'+$rootScope.Map+'" )' )
 			lua.Run( 'RunConsoleCommand( "hostname", "'+$rootScope.ServerSettings.hostname+'" )' )
 		}, 200 );
-		
+
 		$location.url( "/" )
 	}
 
@@ -189,13 +189,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 		if ( !$scope.SearchText )
 			return maps.length;
 
-		var iCount = 0;
-		for ( k in maps )
-		{
-			if ( maps[k].search( $scope.SearchText ) != -1 ) iCount++;
-		}
-
-		return iCount;
+		return $filter('filter')(maps, $scope.SearchText).length;
 	}
 }
 
@@ -206,7 +200,7 @@ function SetLastMap( map, category )
 		scope.CurrentCategory = category;
 		UpdateDigest( scope, 50 );
 	}
-	
+
 	if ( rootScope ) {
 		rootScope.Map = map;
 		rootScope.LastCategory = category;
@@ -234,7 +228,7 @@ function UpdateServerSettings( sttngs )
 			if ( s.type == "Text" ){	sttngs.Text.push( s ); }
 		}
 	}
-	
+
 	if ( rootScope )
 	{
 		rootScope.ServerSettings = sttngs;
