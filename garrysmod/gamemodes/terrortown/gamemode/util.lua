@@ -276,8 +276,6 @@ function math.ExponentialDecay(halflife, dt)
    return exp((-0.69314718 / halflife) * dt)
 end
 
-Warning = ErrorNoHalt
-
 function Dev(level, ...)
    if cvars and cvars.Number("developer", 0) >= level then
       Msg("[TTT dev]")
