@@ -7,6 +7,6 @@ local meta = FindMetaTable( "Vector" )
 -----------------------------------------------------------]]
 function meta:ToColor( )
 
-	return Vector( self.x * 255, self.y * 255, self.z * 255, 255 )
+	return Color( self.x * 255, self.y * 255, self.z * 255 )
 
 end
