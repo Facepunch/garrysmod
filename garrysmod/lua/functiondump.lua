@@ -2,6 +2,7 @@
 -- Outputs functions and stuff in wiki format
 
 local OUTPUT = ""
+local xside
 
 if ( SERVER ) then
 	xside = file.Read( "ClientFunctions.txt" )
@@ -14,7 +15,6 @@ file.CreateDir( "wikipages" )
 xside = xside or ""
 
 local function XSide( class, name )
-	if ( string.find( xside, class .. "	" .. name ) ) then return "shared" end
 	if ( string.find( xside, class .. "	" .. name ) ) then return "shared" end
 	if ( SERVER ) then return "server" end
 	return "client"
