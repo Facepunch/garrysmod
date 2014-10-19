@@ -175,7 +175,7 @@ local broken_parenting_ents = {
 function ents.TTT.FixParentedPreCleanup()
    for _, rcls in pairs(broken_parenting_ents) do
       for k,v in pairs(ents.FindByClass(rcls)) do
-         if IsValid(v:GetParent()) then
+         if v.GetParent and IsValid(v:GetParent()) then
             v.CachedParentName = v:GetParent():GetName()
             v:SetParent(nil)
 
