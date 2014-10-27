@@ -493,41 +493,45 @@ if ( SERVER ) then
 
 end
 
-
-saverestore.AddSaveHook( "NetworkedVars", function ( save )
-
-	-- Note: BuildNetworkedVarsTable should only ever be called when saving
-	-- It is quite slow, and should definitiely not be used to select and find
-	-- networked vars.
+--
+-- Networked var proxies
+--
+function meta:SetNetworkedVarProxy( name, func )
 	
-	local NetworkVars = BuildNetworkedVarsTable()
-	saverestore.WriteTable( NetworkVars, save )
-
-end )
-
-
-saverestore.AddRestoreHook( "NetworkedVars", function ( restore )
-
-	local NetworkVars = saverestore.ReadTable( restore )
+	if not self.NWVarProxies then
+		self.NWVarProxies = {}
+	end
 	
-	-- First load the global vars. They have an index of 0.
-	local Globals = NetworkVars[ 0 ]
-	-- Remove it from the table so we don't process it again.
-	NetworkVars[ 0 ] = nil
+	self.NWVarProxies[ name ] = func
 	
-	if ( Globals ) then
-		for k, v in pairs( Globals ) do
-			SetGlobalVar( k, v )
+end
+
+function meta:GetNetworkedVarProxy( name )
+	
+	if self.NWVarProxies then
+		local func = self.NWVarProxies[ name ]
+		if isfunction( func ) then
+			return func
 		end
-	end	
+	end
 	
-	-- Now load the entity vars.
-	for ent, enttab in pairs( NetworkVars ) do
-		for k, v in pairs( enttab ) do
-			ent:SetNetworkedVar( k, v )
-		end
-	end	
+	return nil
+	
+end
 
+meta.SetNWVarProxy = meta.SetNetworkedVarProxy
+meta.GetNWVarProxy = meta.GetNetworkedVarProxy
+
+hook.Add( "EntityNetworkedVarChanged", "NetworkedVars", function( ent, name, oldValue, newValue )
+	
+	if ent.NWVarProxies then
+		local func = ent.NWVarProxies[ name ]
+		
+		if isfunction( func ) then
+			func( ent, oldValue, newValue )
+		end
+	end
+	
 end )
 
 --
