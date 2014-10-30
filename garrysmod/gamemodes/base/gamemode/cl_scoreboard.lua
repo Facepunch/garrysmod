@@ -1,16 +1,15 @@
 
 surface.CreateFont( "ScoreboardDefault", {
-	font		= "Helvetica",
-	size		= 22,
-	weight		= 800
-})
+	font	= "Helvetica",
+	size	= 22,
+	weight	= 800
+} )
 
 surface.CreateFont( "ScoreboardDefaultTitle", {
-	font		= "Helvetica",
-	size		= 32,
-	weight		= 800
-})
-
+	font	= "Helvetica",
+	size	= 32,
+	weight	= 800
+} )
 
 --
 -- This defines a new panel type for the player row. The player row is given a player
@@ -62,7 +61,7 @@ local PLAYER_LINE = {
 
 		self:Dock( TOP )
 		self:DockPadding( 3, 3, 3, 3 )
-		self:SetHeight( 32 + 3*2 )
+		self:SetHeight( 32 + 3 * 2 )
 		self:DockMargin( 2, 0, 2, 2 )
 
 	end,
@@ -135,7 +134,7 @@ local PLAYER_LINE = {
 		-- so if we set the z order according to kills they'll be ordered that way!
 		-- Careful though, it's a signed short internally, so needs to range between -32,768k and +32,767
 		--
-		self:SetZPos( (self.NumKills * -50) + self.NumDeaths )
+		self:SetZPos( ( self.NumKills * -50 ) + self.NumDeaths )
 
 	end,
 
@@ -154,7 +153,7 @@ local PLAYER_LINE = {
 			return
 		end
 
-		if  ( !self.Player:Alive() ) then
+		if ( !self.Player:Alive() ) then
 			draw.RoundedBox( 4, 0, 0, w, h, Color( 230, 200, 200, 255 ) )
 			return
 		end
@@ -272,11 +271,9 @@ function GM:ScoreboardHide()
 
 end
 
-
 --[[---------------------------------------------------------
 	Name: gamemode:HUDDrawScoreBoard( )
 	Desc: If you prefer to draw your scoreboard the stupid way (without vgui)
 -----------------------------------------------------------]]
 function GM:HUDDrawScoreBoard()
-
 end

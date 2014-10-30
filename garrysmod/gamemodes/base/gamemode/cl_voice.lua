@@ -1,3 +1,4 @@
+
 local PANEL = {}
 local PlayerVoicePanels = {}
 
@@ -65,7 +66,7 @@ function PANEL:FadeOut( anim, delta, data )
 		
 	return end
 	
-	self:SetAlpha( 255 - (255 * delta) )
+	self:SetAlpha( 255 - ( 255 * delta ) )
 
 end
 
@@ -100,7 +101,7 @@ function GM:PlayerStartVoice( ply )
 	pnl:Setup( ply )
 	
 	PlayerVoicePanels[ ply ] = pnl
-	
+
 end
 
 local function VoiceClean()
@@ -117,7 +118,7 @@ end
 timer.Create( "VoiceClean", 10, 0, VoiceClean )
 
 function GM:PlayerEndVoice( ply )
-	
+
 	if ( IsValid( PlayerVoicePanels[ ply ] ) ) then
 
 		if ( PlayerVoicePanels[ ply ].fadeAnim ) then return end
@@ -126,7 +127,7 @@ function GM:PlayerEndVoice( ply )
 		PlayerVoicePanels[ ply ].fadeAnim:Start( 2 )
 
 	end
-	
+
 end
 
 local function CreateVoiceVGUI()
@@ -139,4 +140,5 @@ local function CreateVoiceVGUI()
 	g_VoicePanelList:SetDrawBackground( false )
 
 end
+
 hook.Add( "InitPostEntity", "CreateVoiceVGUI", CreateVoiceVGUI )

@@ -1,5 +1,4 @@
 
-
 --
 -- Called when we've received a call from a client who wants to edit
 -- a particular entity.
@@ -14,7 +13,6 @@ function GM:VariableEdited( ent, ply, key, val, editor )
 	--
 	local CanEdit = hook.Run( "CanEditVariable", ent, ply, key, val, editor )
 	if ( !CanEdit ) then return end
-
 
 	--
 	-- Actually apply the edited value

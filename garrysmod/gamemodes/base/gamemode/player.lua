@@ -17,22 +17,21 @@ function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
 	
 		local objects = ent:GetPhysicsObjectCount()
 		
-		for i=0, objects-1 do
+		for i = 0, objects - 1 do
 		
 			local physobject = ent:GetPhysicsObjectNum( i )
 			physobject:EnableMotion( false )
-			
+		
 		end
 	
 	end
-	
+
 	-- Add it to the player's frozen props
 	ply:AddFrozenPhysicsObject( ent, phys )
 	
 	return true
-	
-end
 
+end
 
 --[[---------------------------------------------------------
 	Name: gamemode:OnPhysgunReload( weapon, player )
@@ -57,7 +56,9 @@ end
 		return true to allow the pickup.
 -----------------------------------------------------------]]
 function GM:PlayerCanPickupWeapon( player, entity )
+
 	return true
+
 end
 
 --[[---------------------------------------------------------
@@ -66,19 +67,20 @@ end
 		 return true to allow the pickup.
 -----------------------------------------------------------]]
 function GM:PlayerCanPickupItem( player, entity )
+
 	return true
+
 end
-
-
 
 --[[---------------------------------------------------------
 	Name: gamemode:CanPlayerUnfreeze( )
 	Desc: Can the player unfreeze this entity & physobject
 -----------------------------------------------------------]]
 function GM:CanPlayerUnfreeze( ply, entity, physobject )
-	return true
-end
 
+	return true
+
+end
 
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerDisconnected( )
@@ -94,7 +96,9 @@ end
 		 player should say nothing.
 -----------------------------------------------------------]]
 function GM:PlayerSay( player, text, teamonly )
+
 	return text
+
 end
 
 
@@ -109,7 +113,7 @@ function GM:PlayerDeathThink( pl )
 	if ( pl:KeyPressed( IN_ATTACK ) || pl:KeyPressed( IN_ATTACK2 ) || pl:KeyPressed( IN_JUMP ) ) then
 	
 		pl:Spawn()
-		
+	
 	end
 	
 end
@@ -120,7 +124,9 @@ end
 		Return true if the player can use it
 ------------------------------------------------------------]]
 function GM:PlayerUse( pl, entity )
+
 	return true
+
 end
 
 --[[---------------------------------------------------------
@@ -135,9 +141,9 @@ function GM:PlayerSilentDeath( Victim )
 end
 
 -- Pool network strings used for PlayerDeaths.
-util.AddNetworkString("PlayerKilledSelf")
-util.AddNetworkString("PlayerKilledByPlayer")
-util.AddNetworkString("PlayerKilled")
+util.AddNetworkString( "PlayerKilled" )
+util.AddNetworkString( "PlayerKilledSelf" )
+util.AddNetworkString( "PlayerKilledByPlayer" )
 
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerDeath( )
@@ -269,7 +275,7 @@ function GM:PlayerSpawn( pl )
 	
 	-- Set player model
 	hook.Call( "PlayerSetModel", GAMEMODE, pl )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -309,7 +315,7 @@ end
 function GM:PlayerLoadout( pl )
 
 	player_manager.RunClass( pl, "Loadout" )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -323,7 +329,7 @@ function GM:PlayerSelectTeamSpawn( TeamID, pl )
 	
 	local ChosenSpawnPoint = nil
 	
-	for i=0, 6 do
+	for i = 0, 6 do
 	
 		local ChosenSpawnPoint = table.Random( SpawnPoints )
 		if ( hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ChosenSpawnPoint, i == 6 ) ) then
@@ -464,7 +470,7 @@ function GM:PlayerSelectSpawn( pl )
 	local ChosenSpawnPoint = nil
 	
 	-- Try to work out the best, random spawnpoint
-	for i=1, Count do
+	for i = 1, Count do
 
 		ChosenSpawnPoint = table.Random( self.SpawnPoints )
 
@@ -484,7 +490,7 @@ function GM:PlayerSelectSpawn( pl )
 	end
 	
 	return ChosenSpawnPoint
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -585,7 +591,7 @@ function GM:PlayerCanJoinTeam( ply, teamid )
 	local TimeBetweenSwitches = GAMEMODE.SecondsBetweenTeamSwitches or 10
 	if ( ply.LastTeamSwitch && RealTime()-ply.LastTeamSwitch < TimeBetweenSwitches ) then
 		ply.LastTeamSwitch = ply.LastTeamSwitch + 1
-		ply:ChatPrint( Format( "Please wait %i more seconds before trying to change team again", (TimeBetweenSwitches - (RealTime()-ply.LastTeamSwitch)) + 1 ) )
+		ply:ChatPrint( Format( "Please wait %i more seconds before trying to change team again", ( TimeBetweenSwitches - ( RealTime() - ply.LastTeamSwitch ) ) + 1 ) )
 		return false
 	end
 	
@@ -604,7 +610,7 @@ end
 	Desc: Player wants to change team
 -----------------------------------------------------------]]
 function GM:PlayerRequestTeam( ply, teamid )
-	
+
 	-- No changing teams if not teambased!
 	if ( !GAMEMODE.TeamBased ) then return end
 	
@@ -619,7 +625,7 @@ function GM:PlayerRequestTeam( ply, teamid )
 	return end
 	
 	GAMEMODE:PlayerJoinTeam( ply, teamid )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -627,11 +633,11 @@ end
 	Desc: Make player join this team
 -----------------------------------------------------------]]
 function GM:PlayerJoinTeam( ply, teamid )
-	
+
 	local iOldTeam = ply:Team()
 	
 	if ( ply:Alive() ) then
-		if (iOldTeam == TEAM_SPECTATOR || iOldTeam == TEAM_UNASSIGNED) then
+		if ( iOldTeam == TEAM_SPECTATOR || iOldTeam == TEAM_UNASSIGNED ) then
 			ply:KillSilent()
 		else
 			ply:Kill()
@@ -642,7 +648,7 @@ function GM:PlayerJoinTeam( ply, teamid )
 	ply.LastTeamSwitch = RealTime()
 	
 	GAMEMODE:OnPlayerChangedTeam( ply, iOldTeam, teamid )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -682,9 +688,9 @@ end
 	Desc: Return true to prevent player spraying
 -----------------------------------------------------------]]
 function GM:PlayerSpray( ply )
-	
+
 	return false
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -707,11 +713,11 @@ end
 function GM:GetFallDamage( ply, flFallSpeed )
 
 	if( GetConVarNumber( "mp_falldamage" ) > 0 ) then -- realistic fall damage is on
-		return ( flFallSpeed - 526.5 ) * (100 / 396) -- the Source SDK value
+		return ( flFallSpeed - 526.5 ) * ( 100 / 396 ) -- the Source SDK value
 	end
 	
 	return 10
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -719,14 +725,14 @@ end
 	Desc: Can this player see the other player's chat?
 -----------------------------------------------------------]]
 function GM:PlayerCanSeePlayersChat( strText, bTeamOnly, pListener, pSpeaker )
-	
+
 	if ( bTeamOnly ) then
 		if ( !IsValid( pSpeaker ) || !IsValid( pListener ) ) then return false end
 		if ( pListener:Team() != pSpeaker:Team() ) then return false end
 	end
 	
 	return true
-	
+
 end
 
 local sv_alltalk = GetConVar( "sv_alltalk" )
@@ -739,12 +745,12 @@ local sv_alltalk = GetConVar( "sv_alltalk" )
 		2. Can they hear them spacially
 -----------------------------------------------------------]]
 function GM:PlayerCanHearPlayersVoice( pListener, pTalker )
-	
+
 	local alltalk = sv_alltalk:GetInt()
 	if ( alltalk >= 1 ) then return true, alltalk == 2 end
 
 	return pListener:Team() == pTalker:Team(), false
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -752,40 +758,38 @@ end
 	Desc: Called when Steam has validated this as a valid player
 -----------------------------------------------------------]]
 function GM:NetworkIDValidated( name, steamid )
-	
+
 	-- MsgN( "GM:NetworkIDValidated", name, steamid )
-	
+
 end
 
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerShouldTaunt( ply, actid )
 -----------------------------------------------------------]]
 function GM:PlayerShouldTaunt( ply, actid )
-	
+
 	-- The default behaviour is to always let them act
 	-- Some gamemodes will obviously want to stop this for certain players by returning false
 	return true
-	
+
 end
 
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerStartTaunt( ply, actid, length )
 -----------------------------------------------------------]]
 function GM:PlayerStartTaunt( ply, actid, length )
-
 end
-
 
 --[[---------------------------------------------------------
 	Name: gamemode:AllowPlayerPickup( ply, object )
 -----------------------------------------------------------]]
 function GM:AllowPlayerPickup( ply, object )
-	
+
 	-- Should the player be allowed to pick this object up (using ENTER)?
 	-- If no then return false. Default is HELL YEAH
 
 	return true
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -795,5 +799,4 @@ end
 function GM:PlayerButtonDown( ply, btn ) end
 function GM:PlayerButtonUp( ply, btn ) end
 
-
-concommand.Add( "changeteam", function( pl, cmd, args ) hook.Call( "PlayerRequestTeam", GAMEMODE, pl, tonumber(args[1]) ) end )
+concommand.Add( "changeteam", function( pl, cmd, args ) hook.Call( "PlayerRequestTeam", GAMEMODE, pl, tonumber( args[ 1 ] ) ) end )

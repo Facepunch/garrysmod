@@ -1,3 +1,4 @@
+
 -- Add Network Strings we use
 util.AddNetworkString( "PlayerKilledNPC" )
 util.AddNetworkString( "NPCKilledNPC" )
@@ -33,7 +34,7 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	local AttackerClass = "worldspawn"
 	
 	if ( IsValid( inflictor ) ) then InflictorClass = inflictor:GetClass() end
-	if ( IsValid( attacker ) ) then 
+	if ( IsValid( attacker ) ) then
 
 		AttackerClass = attacker:GetClass()
 	
@@ -64,7 +65,6 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 
 end
 
-
 --[[---------------------------------------------------------
    Name: gamemode:ScaleNPCDamage( ply, hitgroup, dmginfo )
    Desc: Scale the damage based on being shot in a hitbox
@@ -72,22 +72,21 @@ end
 function GM:ScaleNPCDamage( npc, hitgroup, dmginfo )
 
 	-- More damage if we're shot in the head
-	 if ( hitgroup == HITGROUP_HEAD ) then
-	 
+	if ( hitgroup == HITGROUP_HEAD ) then
+	
 		dmginfo:ScaleDamage( 2 )
-	 
-	 end
-	 
+	
+	end
+	
 	-- Less damage if we're shot in the arms or legs
 	if ( hitgroup == HITGROUP_LEFTARM ||
-		 hitgroup == HITGROUP_RIGHTARM || 
+		 hitgroup == HITGROUP_RIGHTARM ||
 		 hitgroup == HITGROUP_LEFTLEG ||
 		 hitgroup == HITGROUP_RIGHTLEG ||
 		 hitgroup == HITGROUP_GEAR ) then
-	 
+	
 		dmginfo:ScaleDamage( 0.25 )
-	 
-	 end
+	
+	end
 
 end
-

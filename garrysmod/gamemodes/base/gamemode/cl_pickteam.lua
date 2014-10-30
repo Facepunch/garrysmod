@@ -1,11 +1,11 @@
 
 --[[---------------------------------------------------------
-   Name: gamemode:ShowTeam( )
-   Desc: 
+   Name: gamemode:ShowTeam()
+   Desc:
 -----------------------------------------------------------]]
 function GM:ShowTeam()
 
-	if ( IsValid(self.TeamSelectFrame) ) then return end
+	if ( IsValid( self.TeamSelectFrame ) ) then return end
 	
 	-- Simple team selection box
 	self.TeamSelectFrame = vgui.Create( "DFrame" )
@@ -18,16 +18,16 @@ function GM:ShowTeam()
 		if ( ID != TEAM_CONNECTING && ID != TEAM_UNASSIGNED ) then
 	
 			local Team = vgui.Create( "DButton", self.TeamSelectFrame )
-				function Team.DoClick() self:HideTeam() RunConsoleCommand( "changeteam", ID ) end
-				Team:SetPos( 10, y )
-				Team:SetSize( 130, 20 )
-				Team:SetText( TeamInfo.Name )
-				
-			if (  IsValid( LocalPlayer() ) && LocalPlayer():Team() == ID ) then
+			function Team.DoClick() self:HideTeam() RunConsoleCommand( "changeteam", ID ) end
+			Team:SetPos( 10, y )
+			Team:SetSize( 130, 20 )
+			Team:SetText( TeamInfo.Name )
+			
+			if ( IsValid( LocalPlayer() ) && LocalPlayer():Team() == ID ) then
 				Team:SetDisabled( true )
 			end
-				
-				y = y + 30
+			
+			y = y + 30
 		
 		end
 		
@@ -41,7 +41,7 @@ function GM:ShowTeam()
 		Team:SetSize( 130, 20 )
 		Team:SetText( "Auto" )
 		y = y + 30
-				
+	
 	end
 	
 	self.TeamSelectFrame:SetSize( 150, y )
@@ -52,8 +52,8 @@ function GM:ShowTeam()
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:HideTeam( )
-   Desc: 
+   Name: gamemode:HideTeam()
+   Desc:
 -----------------------------------------------------------]]
 function GM:HideTeam()
 

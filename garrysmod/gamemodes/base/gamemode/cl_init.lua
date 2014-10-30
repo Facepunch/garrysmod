@@ -1,3 +1,4 @@
+
 include( 'shared.lua' )
 include( 'cl_scoreboard.lua' )
 include( 'cl_targetid.lua' )
@@ -8,38 +9,37 @@ include( 'cl_pickteam.lua' )
 include( 'cl_voice.lua' )
 
 --[[---------------------------------------------------------
-   Name: gamemode:Initialize( )
-   Desc: Called immediately after starting the gamemode 
+   Name: gamemode:Initialize()
+   Desc: Called immediately after starting the gamemode
 -----------------------------------------------------------]]
-function GM:Initialize( )
+function GM:Initialize()
 
 	GAMEMODE.ShowScoreboard = false
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:InitPostEntity( )
+   Name: gamemode:InitPostEntity()
    Desc: Called as soon as all map entities have been spawned
 -----------------------------------------------------------]]
-function GM:InitPostEntity( )	
+function GM:InitPostEntity()
 end
 
-
 --[[---------------------------------------------------------
-   Name: gamemode:Think( )
+   Name: gamemode:Think()
    Desc: Called every frame
 -----------------------------------------------------------]]
-function GM:Think( )
+function GM:Think()
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerBindPress( )
-   Desc: A player pressed a bound key - return true to override action		 
+   Name: gamemode:PlayerBindPress()
+   Desc: A player pressed a bound key - return true to override action
 -----------------------------------------------------------]]
 function GM:PlayerBindPress( pl, bind, down )
 
-	return false	
-	
+	return false
+
 end
 
 --[[---------------------------------------------------------
@@ -54,19 +54,20 @@ function GM:HUDShouldDraw( name )
 	
 		local wep = ply:GetActiveWeapon()
 		
-		if (wep && wep:IsValid() && wep.HUDShouldDraw != nil) then
+		if ( IsValid( wep ) && wep.HUDShouldDraw != nil ) then
 		
 			return wep.HUDShouldDraw( wep, name )
-			
-		end
 		
+		end
+	
 	end
 
-	return true;
+	return true
+
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:HUDPaint( )
+   Name: gamemode:HUDPaint()
    Desc: Use this section to paint your HUD
 -----------------------------------------------------------]]
 function GM:HUDPaint()
@@ -78,7 +79,7 @@ function GM:HUDPaint()
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:HUDPaintBackground( )
+   Name: gamemode:HUDPaintBackground()
    Desc: Same as HUDPaint except drawn before
 -----------------------------------------------------------]]
 function GM:HUDPaintBackground()
@@ -89,7 +90,7 @@ end
    Desc: The mouse was double clicked
 -----------------------------------------------------------]]
 function GM:GUIMouseDoublePressed( mousecode, AimVector )
-	-- We don't capture double clicks by default, 
+	-- We don't capture double clicks by default,
 	-- We just treat them as regular presses
 	GAMEMODE:GUIMousePressed( mousecode, AimVector )
 end
@@ -98,7 +99,7 @@ end
    Name: gamemode:ShutDown( )
    Desc: Called when the Lua system is about to shut down
 -----------------------------------------------------------]]
-function GM:ShutDown( )
+function GM:ShutDown()
 end
 
 
@@ -117,7 +118,7 @@ end
 function GM:GetTeamColor( ent )
 
 	local team = TEAM_UNASSIGNED
-	if (ent.Team) then team = ent:Team() end
+	if ( ent.Team ) then team = ent:Team() end
 	return GAMEMODE:GetTeamNumColor( team )
 
 end
@@ -164,12 +165,12 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 	end
 	
 	table.insert( tab, Color( 255, 255, 255 ) )
-	table.insert( tab, ": "..strText )
+	table.insert( tab, ": " .. strText )
 	
 	chat.AddText( unpack(tab) )
 
 	return true
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -180,34 +181,34 @@ function GM:OnChatTab( str )
 
 	local LastWord
 	for word in string.gmatch( str, "%a+" ) do
-	     LastWord = word;
+		LastWord = word
 	end
 	
-	if (LastWord == nil) then return str end
+	if ( LastWord == nil ) then return str end
 
 	for k, v in pairs( player.GetAll() ) do
 		
 		local nickname = v:Nick()
 		
-		if ( string.len(LastWord) < string.len(nickname) &&
-			 string.find( string.lower(nickname), string.lower(LastWord) ) == 1 ) then
-				
-			str = string.sub( str, 1, (string.len(LastWord) * -1) - 1)
+		if ( string.len( LastWord ) < string.len( nickname ) &&
+			 string.find( string.lower( nickname ), string.lower( LastWord ) ) == 1 ) then
+			
+			str = string.sub( str, 1, ( string.len( LastWord ) * -1 ) - 1 )
 			str = str .. nickname
 			return str
 			
-		end		
+		end
 		
 	end
-		
-	return str;
+	
+	return str
 
 end
 
 --[[---------------------------------------------------------
    Name: gamemode:StartChat( teamsay )
    Desc: Start Chat.
-   
+
 		 If you want to display your chat shit different here's what you'd do:
 			In StartChat show your text box and return true to hide the default
 			Update the text in your box with the text passed to ChatTextChanged
@@ -216,7 +217,9 @@ end
 			
 -----------------------------------------------------------]]
 function GM:StartChat( teamsay )
+
 	return false
+
 end
 
 --[[---------------------------------------------------------
@@ -230,7 +233,6 @@ end
 -----------------------------------------------------------]]
 function GM:ChatTextChanged( text )
 end
-
 
 --[[---------------------------------------------------------
    Name: ChatText
@@ -257,7 +259,6 @@ function GM:PostProcessPermitted( str )
 	return true
 
 end
-
 
 --[[---------------------------------------------------------
    Name: gamemode:PostRenderVGUI( )
@@ -305,26 +306,26 @@ function GM:CalcVehicleView( Vehicle, ply, view )
 	--
 	if ( !Vehicle:GetThirdPersonMode() ) then return view end
 
-	-- Don't roll the camera 
+	-- Don't roll the camera
 	-- view.angles.roll = 0
 
 	local mn, mx = Vehicle:GetRenderBounds()
-	local radius = (mn - mx):Length()
-	local radius = radius + radius * Vehicle:GetCameraDistance();
+	local radius = ( mn - mx ):Length()
+	local radius = radius + radius * Vehicle:GetCameraDistance()
 
 	-- Trace back from the original eye position, so we don't clip through walls/objects
 	local TargetOrigin = view.origin + ( view.angles:Forward() * -radius )
-	local WallOffset = 4;
-		  
+	local WallOffset = 4
+	
 	local tr = util.TraceHull( {
-		start	= view.origin,
-		endpos	= TargetOrigin,
-		filter	= function()
+		start = view.origin,
+		endpos = TargetOrigin,
+		filter = function()
 			return false
 		end,
-		mins	= Vector( -WallOffset, -WallOffset, -WallOffset ),
-		maxs	= Vector( WallOffset, WallOffset, WallOffset ),
-	} ) 
+		mins = Vector( -WallOffset, -WallOffset, -WallOffset ),
+		maxs = Vector( WallOffset, WallOffset, WallOffset ),
+	} )
 	
 	view.origin			= tr.HitPos
 	view.drawviewer		= true
@@ -350,12 +351,12 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 	local Weapon	= ply:GetActiveWeapon()
 	
 	local view = {}
-	view.origin 		= origin
-	view.angles			= angles
-	view.fov 			= fov
-	view.znear			= znear
-	view.zfar			= zfar
-	view.drawviewer		= false
+	view.origin		= origin
+	view.angles		= angles
+	view.fov		= fov
+	view.znear		= znear
+	view.zfar		= zfar
+	view.drawviewer	= false
 
 	--
 	-- Let the vehicle override the view
@@ -373,12 +374,11 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 	player_manager.RunClass( ply, "CalcView", view )
 
 	-- Give the active weapon a go at changing the viewmodel position
-	
 	if ( IsValid( Weapon ) ) then
 	
 		local func = Weapon.CalcView
 		if ( func ) then
-			view.origin, view.angles, view.fov = func( Weapon, ply, origin*1, angles*1, fov ) -- Note: *1 to copy the object so the child function can't edit it.
+			view.origin, view.angles, view.fov = func( Weapon, ply, origin * 1, angles * 1, fov ) -- Note: *1 to copy the object so the child function can't edit it.
 		end
 	
 	end
@@ -388,9 +388,9 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 end
 
 --
--- If return true: 		Will draw the local player
--- If return false: 	Won't draw the local player
--- If return nil:	 	Will carry out default action
+-- If return true:		Will draw the local player
+-- If return false:		Won't draw the local player
+-- If return nil:		Will carry out default action
 --
 function GM:ShouldDrawLocalPlayer( ply )
 
@@ -407,7 +407,7 @@ end
 function GM:AdjustMouseSensitivity( fDefault )
 
 	local ply = LocalPlayer()
-	if (!ply || !ply:IsValid()) then return -1 end
+	if ( !IsValid( ply ) ) then return -1 end
 
 	local wep = ply:GetActiveWeapon()
 	if ( wep && wep.AdjustMouseSensitivity ) then
@@ -415,7 +415,7 @@ function GM:AdjustMouseSensitivity( fDefault )
 	end
 
 	return -1
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -427,7 +427,7 @@ function GM:ForceDermaSkin()
 
 	--return "example"
 	return nil
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -435,8 +435,6 @@ end
    Desc: The player has just been drawn.
 -----------------------------------------------------------]]
 function GM:PostPlayerDraw( ply )
-
-	
 end
 
 --[[---------------------------------------------------------
@@ -444,8 +442,6 @@ end
    Desc: The player is just about to be drawn.
 -----------------------------------------------------------]]
 function GM:PrePlayerDraw( ply )
-
-	
 end
 
 --[[---------------------------------------------------------
@@ -457,30 +453,28 @@ function GM:GetMotionBlurValues( x, y, fwd, spin )
 	-- fwd = 0.5 + math.sin( CurTime() * 5 ) * 0.5
 
 	return x, y, fwd, spin
-	
-end
 
+end
 
 --[[---------------------------------------------------------
    Name: gamemode:InputMouseApply()
    Desc: Allows you to control how moving the mouse affects the view angles
 -----------------------------------------------------------]]
 function GM:InputMouseApply( cmd, x, y, angle )
-	
-	--angle.roll = angle.roll + 1	
+
+	--angle.roll = angle.roll + 1
 	--cmd:SetViewAngles( Ang )
 	--return true
-	
-end
 
+end
 
 --[[---------------------------------------------------------
    Name: gamemode:OnAchievementAchieved()
 -----------------------------------------------------------]]
 function GM:OnAchievementAchieved( ply, achid )
-	
-	chat.AddText( ply, Color( 230, 230, 230 ), " earned the achievement ", Color( 255, 200, 0 ), achievements.GetName( achid ) );
-	
+
+	chat.AddText( ply, Color( 230, 230, 230 ), " earned the achievement ", Color( 255, 200, 0 ), achievements.GetName( achid ) )
+
 end
 
 --[[---------------------------------------------------------
@@ -488,9 +482,9 @@ end
    Desc: Called before drawing the skybox. Return true to not draw the skybox.
 -----------------------------------------------------------]]
 function GM:PreDrawSkyBox()
-	
-	--return true;
-	
+
+	--return true
+
 end
 
 --[[---------------------------------------------------------
@@ -498,7 +492,6 @@ end
    Desc: Called after drawing the skybox
 -----------------------------------------------------------]]
 function GM:PostDrawSkyBox()
-	
 end
 
 --
@@ -508,7 +501,6 @@ end
 -- Ret1:
 --
 function GM:PostDraw2DSkyBox()
-
 end
 
 --[[---------------------------------------------------------
@@ -516,9 +508,9 @@ end
    Desc: Called before drawing opaque entities
 -----------------------------------------------------------]]
 function GM:PreDrawOpaqueRenderables( bDrawingDepth, bDrawingSkybox )
-	
-	--	return true;
-	
+
+	-- return true
+
 end
 
 --[[---------------------------------------------------------
@@ -526,7 +518,6 @@ end
    Desc: Called before drawing opaque entities
 -----------------------------------------------------------]]
 function GM:PostDrawOpaqueRenderables( bDrawingDepth, bDrawingSkybox )
-		
 end
 
 --[[---------------------------------------------------------
@@ -534,9 +525,9 @@ end
    Desc: Called before drawing opaque entities
 -----------------------------------------------------------]]
 function GM:PreDrawTranslucentRenderables( bDrawingDepth, bDrawingSkybox )
-	
+
 	-- return true
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -544,7 +535,6 @@ end
    Desc: Called before drawing opaque entities
 -----------------------------------------------------------]]
 function GM:PostDrawTranslucentRenderables( bDrawingDepth, bDrawingSkybox )
-		
 end
 
 --[[---------------------------------------------------------
@@ -552,7 +542,7 @@ end
    Desc: Called to set the view model's position
 -----------------------------------------------------------]]
 function GM:CalcViewModelView( Weapon, ViewModel, OldEyePos, OldEyeAng, EyePos, EyeAng )
-		
+
 	if ( !IsValid( Weapon ) ) then return end
 	
 	local vm_origin, vm_angles = EyePos, EyeAng
@@ -574,7 +564,7 @@ function GM:CalcViewModelView( Weapon, ViewModel, OldEyePos, OldEyeAng, EyePos, 
 	end
 	
 	return vm_origin, vm_angles
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -582,14 +572,14 @@ end
    Desc: Called before drawing the view model
 -----------------------------------------------------------]]
 function GM:PreDrawViewModel( ViewModel, Player, Weapon )
-		
+	
 	if ( !IsValid( Weapon ) ) then return false end
 
 	player_manager.RunClass( Player, "PreDrawViewModel", ViewModel, Weapon )
 
 	if ( Weapon.PreDrawViewModel == nil ) then return false end
 	return Weapon:PreDrawViewModel( ViewModel, Weapon, Player )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -604,16 +594,18 @@ function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 
 		local hands = Player:GetHands()
 		if ( IsValid( hands ) ) then
+			if ( Weapon.ViewModelFlip ) then render.CullMode( MATERIAL_CULLMODE_CW ) end
 			hands:DrawModel()
+			render.CullMode( MATERIAL_CULLMODE_CCW )
 		end
 
 	end
 
 	player_manager.RunClass( Player, "PostDrawViewModel", ViewModel, Weapon )
 
-	if ( Weapon.PostDrawViewModel == nil ) then return false end		
+	if ( Weapon.PostDrawViewModel == nil ) then return false end
 	return Weapon:PostDrawViewModel( ViewModel, Weapon, Player )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -632,12 +624,11 @@ end
    Desc: Entity is created over the network
 -----------------------------------------------------------]]
 function GM:NetworkEntityCreated( ent )
-
 end
 
 --[[---------------------------------------------------------
    Name: gamemode:CreateMove( command )
-   Desc: Allows the client to change the move commands 
+   Desc: Allows the client to change the move commands
 			before it's send to the server
 -----------------------------------------------------------]]
 function GM:CreateMove( cmd )
@@ -656,7 +647,7 @@ function GM:PreventScreenClicks( cmd )
 
 	--
 	-- Returning true in this hook will prevent screen clicking sending IN_ATTACK
-	-- commands to the weapons. We want to do this in the properties system, so 
+	-- commands to the weapons. We want to do this in the properties system, so
 	-- that you don't fire guns when opening the properties menu. Holla!
 	--
 
@@ -669,7 +660,6 @@ end
    Desc: The mouse has been pressed on the game screen
 -----------------------------------------------------------]]
 function GM:GUIMousePressed( mousecode, AimVector )
-
 end
 
 --[[---------------------------------------------------------
@@ -677,41 +667,31 @@ end
    Desc: The mouse has been released on the game screen
 -----------------------------------------------------------]]
 function GM:GUIMouseReleased( mousecode, AimVector )
-
 end
 
 function GM:PreDrawHUD()
-
 end
 
 function GM:PostDrawHUD()
-
 end
 
 function GM:DrawOverlay()
-
 end
 
 function GM:DrawMonitors()
-
 end
 
 function GM:PreDrawEffects()
-
 end
 
 function GM:PostDrawEffects()
-
 end
 
 function GM:PreDrawHalos()
-
 end
 
 function GM:CloseDermaMenus()
-
 end
 
 function GM:CreateClientsideRagdoll( entity, ragdoll )
-
 end
