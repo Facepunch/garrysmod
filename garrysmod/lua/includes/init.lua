@@ -122,3 +122,4 @@ if ( CLIENT ) then
 
 end
 
+include ( "deprecation.lua" )

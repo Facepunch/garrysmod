@@ -96,10 +96,10 @@ function PANEL:DrawModel()
 	while(curparent:GetParent() != nil) do
 		curparent = curparent:GetParent()
 		local x,y = previous:GetPos()
-		topy = math.Max(y, topy+y)
-		leftx = math.Max(x, leftx+x)
-		bottomy = math.Min(y+previous:GetTall(), bottomy + y)
-		rightx = math.Min(x+previous:GetWide(), rightx + x)
+		topy = math.max(y, topy+y)
+		leftx = math.max(x, leftx+x)
+		bottomy = math.min(y+previous:GetTall(), bottomy + y)
+		rightx = math.min(x+previous:GetWide(), rightx + x)
 		previous = curparent
 	end
 	render.SetScissorRect(leftx,topy,rightx, bottomy, true)
