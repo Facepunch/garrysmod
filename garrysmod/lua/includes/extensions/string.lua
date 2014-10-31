@@ -65,7 +65,7 @@ local pattern_escape_replacements = {
 
 function string.PatternSafe( str )
 
-	return str:gsub( ".", pattern_escape_replacements )
+	return ( str:gsub( ".", pattern_escape_replacements ) )
 
 end
 
