@@ -11,9 +11,10 @@
 	
 --]]
 
-local PANEL = {}
+PANEL = {}
 
-AccessorFunc( PANEL, "m_iOverlap", 					"Overlap" )
+AccessorFunc( PANEL, "m_iOverlap", 			"Overlap" )
+AccessorFunc( PANEL, "m_bShowDropTargets", 	"ShowDropTargets", FORCE_BOOL )
 
 --[[---------------------------------------------------------
 
@@ -24,7 +25,42 @@ function PANEL:Init()
 	self.OffsetX = 0
 	self.FrameTime = 0
 	
-	self.pnlCanvas 	= vgui.Create( "Panel", self )
+	self.pnlCanvas 	= vgui.Create( "DDragBase", self )
+	self.pnlCanvas:SetDropPos( "6" )
+	self.pnlCanvas:SetUseLiveDrag( false )
+	self.pnlCanvas.OnModified = self.OnDragModified
+	
+	self.pnlCanvas.UpdateDropTarget = function( Canvas, drop, pnl )
+		if not self:GetShowDropTargets() then return end
+		DDragBase.UpdateDropTarget( Canvas, drop, pnl )
+	end
+	
+	self.pnlCanvas.OnChildAdded = function( Canvas, child )
+		
+		local dn = Canvas:GetDnD()
+		if ( dn ) then
+			
+			child:Droppable( dn )
+			child.OnDrop = function()
+				
+				local x, y = Canvas:LocalCursorPos()
+				local closest, id = self.pnlCanvas:GetClosestChild( x, Canvas:GetTall() / 2 ), 0
+				
+				for k, v in pairs( self.Panels ) do
+					if v == closest then id = k break end
+				end
+				
+				table.RemoveByValue( self.Panels, child )
+				table.insert( self.Panels, id, child )
+				
+				self:InvalidateLayout()
+				
+				return child
+				
+			end
+		end
+		
+	end
 	
 	self:SetOverlap( 0 )
 	
@@ -36,6 +72,18 @@ function PANEL:Init()
 	self.btnRight:SetText( "" )
 	self.btnRight.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonRight", panel, w, h ) end
 
+end
+
+function PANEL:OnDragModified()
+	-- Override me
+end
+
+function PANEL:SetUseLiveDrag( bool )
+	self.pnlCanvas:SetUseLiveDrag( bool )
+end
+
+function PANEL:MakeDroppable( name )
+	self.pnlCanvas:MakeDroppable( name )
 end
 
 --[[---------------------------------------------------------
@@ -81,7 +129,21 @@ function PANEL:Think()
 		self.OffsetX = self.OffsetX - (500 * FrameRate)
 		self:InvalidateLayout( true )
 	end
-
+	
+	if ( dragndrop.IsDragging() ) then
+		
+		local x, y = self:LocalCursorPos()
+		
+		if x < 30 then
+			self.OffsetX = self.OffsetX - (350 * FrameRate)
+		elseif x > self:GetWide() - 30 then
+			self.OffsetX = self.OffsetX + (350 * FrameRate)
+		end
+		
+		self:InvalidateLayout( true )
+		
+	end
+	
 end 
 
 --[[---------------------------------------------------------
@@ -117,11 +179,11 @@ function PANEL:PerformLayout()
 	
 	self.btnLeft:SetSize( 15, 15 )
 	self.btnLeft:AlignLeft( 4 )
-	self.btnLeft.y = 5;
+	self.btnLeft:AlignBottom( 5 )
 	
 	self.btnRight:SetSize( 15, 15 )
 	self.btnRight:AlignRight( 4 )
-	self.btnRight.y = 5;
+	self.btnRight:AlignBottom( 5 )
 	
 	self.btnLeft:SetVisible( self.pnlCanvas.x < 0 )
 	self.btnRight:SetVisible( self.pnlCanvas.x + self.pnlCanvas:GetWide() > self:GetWide() )
