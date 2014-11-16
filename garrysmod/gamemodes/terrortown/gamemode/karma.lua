@@ -196,11 +196,13 @@ function KARMA.RoundIncrement()
    local cleanbonus = config.clean:GetFloat()
 
    for _, ply in pairs(player.GetAll()) do
-      local bonus = healbonus + (ply:GetCleanRound() and cleanbonus or 0)
-      KARMA.GiveReward(ply, bonus)
+      if not ply:IsSpec() then
+         local bonus = healbonus + (ply:GetCleanRound() and cleanbonus or 0)
+         KARMA.GiveReward(ply, bonus)
 
-      if IsDebug() then
-         print(ply, "gets roundincr", incr)
+         if IsDebug() then
+            print(ply, "gets roundincr", incr)
+         end
       end
    end
 
