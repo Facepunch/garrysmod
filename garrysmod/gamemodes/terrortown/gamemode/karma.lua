@@ -196,7 +196,7 @@ function KARMA.RoundIncrement()
    local cleanbonus = config.clean:GetFloat()
 
    for _, ply in pairs(player.GetAll()) do
-      if not ply:IsSpec() then
+      if ply:IsDeadTerror() and ply.death_type ~= KILL_SUICIDE or not ply:IsSpec() then
          local bonus = healbonus + (ply:GetCleanRound() and cleanbonus or 0)
          KARMA.GiveReward(ply, bonus)
 
