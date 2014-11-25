@@ -46,7 +46,7 @@ function SWEP:DrawWorldModel()
 	self:DrawModel()
 end
 
-function SWEP:DrawViewModel( vm )
+function SWEP:PreDrawViewModel( vm )
 	if ( vm:ViewModelIndex() == 0 ) then
 		self:RenderToolGunScreen()
 	end
