@@ -190,7 +190,7 @@ function meta:InstallDataTable()
 		local dt = datatable[ key ]
 		if ( dt == nil ) then return end	
 		
-		return dt.GetFunc( self, dt.index, key )
+		return dt.GetFunc( self, dt.index )
 		
 	end
 	
@@ -205,8 +205,8 @@ function meta:InstallDataTable()
 	
 	self.DTVar = function( ent, typename, index, name )
 	
-		local SetFunc = ent[ "SetDT"..typename ]
-		local GetFunc = ent[ "GetDT"..typename ]
+		local SetFunc = ent[ "SetNW"..typename ]
+		local GetFunc = ent[ "GetNW"..typename ]
 		
 		if ( !SetFunc || !GetFunc ) then
 			MsgN( "Couldn't addvar " , name, " - type ", typename," is invalid!" )
@@ -214,7 +214,7 @@ function meta:InstallDataTable()
 		end
 
 		datatable[ name ] = { 
-							index = index,
+							index = name,
 							SetFunc = SetFunc,
 							GetFunc = GetFunc,
 							typename = typename,
@@ -268,9 +268,10 @@ function meta:InstallDataTable()
 
 	end
 
-	local CallProxies = function( ent, tbl, name, oldval, newval )
-
-		for k, v in pairs( tbl ) do
+	self.CallNetworkProxies = function( ent, name, oldval, newval )
+		if ( !datatable[ name ] || !datatable[ name ].Notify ) then return end
+		
+		for k, v in pairs( datatable[ name ].Notify ) do
 			v( ent, name, oldval, newval )
 		end
 
@@ -281,7 +282,6 @@ function meta:InstallDataTable()
 		local t = ent.DTVar( ent, typename, index, name )
 
 		ent[ 'Set' .. name ] =	function( self, value )		
-									CallProxies( ent, t.Notify, name, self.dt[name], value )
 									self.dt[name] = value			
 								end
 
@@ -369,14 +369,14 @@ function meta:InstallDataTable()
 	--
 	-- Called by the duplicator system to get the network vars
 	--
-	self.GetNetworkVars = function( ent )
+	self.GetNetworkVars = function( ent , getentities )
 	
 		local dt = {}
 
 		for k, v in pairs( datatable ) do
 
-			-- Don't try to save entities (yet?)
-			if ( v.typename == "Entity" ) then continue end
+			-- Don't try to save entities , default behaviour
+			if ( v.typename == "Entity" && !getentities ) then continue end
 
 			dt[ k ] = v.GetFunc( ent, v.index );
 
@@ -532,40 +532,45 @@ hook.Add( "EntityNetworkedVarChanged", "NetworkedVars", function( ent, name, old
 		end
 	end
 	
+	if ent.CallNetworkProxies then
+		ent:CallNetworkProxies( name , oldValue , newValue )
+	end
+	
 end )
 
 --
 -- Vehicle Extensions
 --
-local vehicle = FindMetaTable( "Vehicle" )
 
 --
--- We steal some DT slots by default for vehicles
+-- We steal some NW slots by default for vehicles
 -- to control the third person view. You should use
 -- these functions if you want to play with them because
 -- they might eventually be moved into the engine - so manually
--- editing the DT values will stop working.
+-- editing the NW values will stop working.
 --
+local vehicle = FindMetaTable( "Vehicle" )
+
 function vehicle:SetThirdPersonMode( b )
 
-	self:SetDTBool( 3, b );
+	self:SetNWBool( "thirdpersonmode", b );
 	
 end
 
 function vehicle:GetThirdPersonMode()
 
-	return self:GetDTBool( 3 );
+	return self:GetNWBool( "thirdpersonmode" , false );
 	
 end
 
 function vehicle:SetCameraDistance( dist )
 
-	self:SetDTFloat( 3, dist );
+	self:SetNWFloat( "cameradistance", dist );
 	
 end
 
 function vehicle:GetCameraDistance()
 
-	return self:GetDTFloat( 3 );
+	return self:GetNWFloat( "cameradistance" , 10 );
 	
 end
