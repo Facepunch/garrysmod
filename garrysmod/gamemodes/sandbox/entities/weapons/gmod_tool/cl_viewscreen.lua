@@ -41,10 +41,21 @@ end
 	We use this opportunity to draw to the toolmode
 		screen's rendertarget texture.
 -----------------------------------------------------------]]
-function SWEP:RenderScreen()
+function SWEP:DrawWorldModel()
+	self:RenderToolGunScreen()
+	self:DrawModel()
+end
+
+function SWEP:DrawViewModel( vm )
+	if ( vm:ViewModelIndex() == 0 ) then
+		self:RenderToolGunScreen()
+	end
+end
+
+function SWEP:RenderToolGunScreen()
 	
 	local TEX_SIZE = 256
-	local mode = GetConVarString( "gmod_toolmode" )
+	local mode = self:GetMode()
 	local oldW = ScrW()
 	local oldH = ScrH()
 	

@@ -52,7 +52,7 @@ function SWEP:DrawHUD()
 
 	if ( !gmod_drawhelp:GetBool() ) then return end
 	
-	local mode = gmod_toolmode:GetString()
+	local mode = self:GetMode()
 	
 	-- Don't draw help for a nonexistant tool!
 	if ( !self:GetToolObject() ) then return end
