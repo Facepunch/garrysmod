@@ -173,7 +173,7 @@ function PANEL:Paint( w, h )
 	local ent = wep:GetNetworkedEntity( "HandEntity" )
 	if ( !IsValid( ent ) || !ent.FingerIndex ) then return end
 
-	local boneid = ent.FingerIndex[ tonumber( self.VarName:sub( 8 ) ) + 1 + 15 * wep:GetNetworkedEntity( "HandNum", 0 ) ]
+	local boneid = ent.FingerIndex[ tonumber( self.VarName:sub( 8 ) ) + 1 + 15 * wep:GetNWInt( "HandNum", 0 ) ]
 	if ( !boneid || ent:GetBoneName( boneid ) == "__INVALIDBONE__" ) then return end
 
 	local v = self:GetValue()
