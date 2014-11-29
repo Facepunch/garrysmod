@@ -13,7 +13,8 @@
 				<li><a class="{{IfElse( ServerType == 'lan', 'active', '' )}}" ng-tranny="'servers_local'" ng-click="SwitchType( 'lan' )"></a></li>
 				<li>&nbsp;</li>
 				<li>&nbsp;</li>
-				<li><a ng-tranny="'servers_refresh'" ng-click="Refresh()">refresh</a></li>
+				<li><a ng-hide="Refreshing[ ServerType ] == 'true'" ng-tranny="'servers_refresh'" ng-click="Refresh()">refresh</a></li>
+				<li><a ng-hide="Refreshing[ ServerType ] == 'false'" ng-tranny="'servers_stoprefresh'" ng-click="DoStopRefresh()">Stop refresh</a></li>
 				<li>&nbsp;</li>
 				<li><a ng-click="MenuOption( this, 'OpenServerBrowser')" ng-Tranny="'legacy_browser'"></a></li>
 

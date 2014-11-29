@@ -214,15 +214,13 @@ function GetPlayerList( serverip )
 end
 
 local Servers = {}
+local ShouldStop = {}
 
 function GetServers( type, id )
 
-	local data =
-	{
-		Finished = function()
-		
-		end,
+	ShouldStop[ type ] = false
 
+	local data = {
 		Callback = function( ping , name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid )
 
 			name	= string.JavascriptSafe( name )
@@ -236,6 +234,12 @@ function GetServers( type, id )
 
 			pnlMainMenu:Call( "AddServer( '"..type.."', '"..id.."', "..ping..", \""..name.."\", \""..desc.."\", \""..map.."\", "..players..", "..maxplayers..", "..botplayers..", "..pass..", "..lastplayed..", \""..address.."\", \""..gamemode.."\", \""..workshopid.."\" )" )
 
+			return !ShouldStop[ type ]
+			
+		end,
+		
+		Finished = function()
+			pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
 		end,
 
 		Type = type,
@@ -243,8 +247,14 @@ function GetServers( type, id )
 		AppID = 4000,
 	}
 
+	
 	serverlist.Query( data )
 
+end
+
+function DoStopServers( type )
+	pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
+	ShouldStop[ type ] = true
 end
 
 --

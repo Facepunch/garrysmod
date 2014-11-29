@@ -12,6 +12,14 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 	if ( !Scope.CurrentGamemode )
 		Scope.CurrentGamemode = null;
+	
+	if ( !Scope.Refreshing )
+		Scope.Refreshing = {}
+
+	$scope.DoStopRefresh = function()
+	{
+		lua.Run( "DoStopServers( '" + Scope.ServerType + "' )" );
+	}
 
 	$scope.Refresh = function()
 	{
@@ -37,6 +45,9 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		// Get the server list from the engine
 		//
 		lua.Run( "GetServers( '"+Scope.ServerType+"', '"+RequestNum[Scope.ServerType ]+"' )" );
+
+		Scope.Refreshing[Scope.ServerType] = "true";
+		UpdateDigest( Scope, 50 );
 	}
 
 	$scope.SelectServer = function( server )
@@ -105,7 +116,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	}
 
 	$scope.SwitchType = function( type )
-	{	
+	{
 		if ( Scope.ServerType == type ) return;
 
 		var FirstTime = false;
@@ -127,6 +138,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 		if ( FirstTime )
 		{
+			//lua.Run( "DoStopServers()" );
 			$scope.Refresh();
 		}
 	}
@@ -147,13 +159,19 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		return true;
 	}
 
-	$rootScope.ShowBack = true;	
+	$rootScope.ShowBack = true;
 
 	if ( FirstTime )
 	{
 		FirstTime = false;
 		$scope.SwitchType( 'internet' );
 	}
+}
+
+function FinishedServeres( type )
+{
+	Scope.Refreshing[type] = "false";
+	UpdateDigest( Scope, 50 );
 }
 
 function GetGamemode( name, type )
