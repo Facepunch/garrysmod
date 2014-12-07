@@ -99,6 +99,12 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 		lua.Run( 'ToggleFavourite( "' + m.Name + '" )' );
 	}
 
+	$scope.MapIcon = function ( m, cat )
+	{
+		if ( cat == "Left 4 Dead 2" || cat == "Portal 2"  || cat == "CS: Global Offensive" ) { return "img/incompatible.png" }
+		return "asset://mapimage/" + m.Name
+	}
+
 	$scope.IsFavMap = function( m )
 	{
 		if ( m.Category == "Favourites" ) return true;
