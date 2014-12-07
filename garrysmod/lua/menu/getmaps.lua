@@ -247,6 +247,16 @@ local function RefreshMaps()
 			-- Hackity hack
 			g_MapList[ v .. " " ] = { Name = name, Category = "Favourites" }
 		end
+
+		if ( Category == "Counter-Strike" ) then
+			if ( file.Exists( "maps/" .. name .. ".bsp", "csgo" ) ) then
+				if ( file.Exists( "maps/" .. name .. ".bsp", "cstrike" ) ) then -- Map also exists in CS:GO
+					g_MapList[ " " .. v ] = { Name = name, Category = "CS: Global Offensive" }
+				else
+					Category = "CS: Global Offensive"
+				end
+			end
+		end
 		
 		g_MapList[ v ] = { Name = name, Category = Category }
 
