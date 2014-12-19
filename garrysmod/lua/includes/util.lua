@@ -135,10 +135,45 @@ function IncludeCS( filename )
 	
 end
 
+local function fileTreeTraverse( path, recursive, func )
+	
+        local files, dirs = file.Find( path.."/*", "LUA" )
+
+        for _, file in pairs( files ) do
+            if file:EndsWith( ".lua" ) then
+                func( path .. "/" .. file )
+            end
+        end
+
+        if not recursive then return end
+
+        for _, dir in pairs( dirs ) do
+            fileTreeTraverse( path .. "/" .. dir, func, true )
+        end
+
+end
+
+--[[---------------------------------------------------------
+   Adds all Lua files in the directory to the CS file list
+   and all sub directories if enabled
+-----------------------------------------------------------]]
+function AddCSLuaDir(path, recursive)
+    fileTreeTraverse(path, recursive, AddCSLuaFile )
+end
+
+--[[---------------------------------------------------------
+   Includes all Lua files in the directory
+   and all sub directories if enabled
+-----------------------------------------------------------]]
+function includeDir(path, recursive)
+    fileTreeTraverse(path, recursive, include )
+end
+
+
 -- Globals..
 FORCE_STRING 	= 1
 FORCE_NUMBER 	= 2
-FORCE_BOOL		= 3
+FORCE_BOOL	= 3
 
 --[[---------------------------------------------------------
    AccessorFunc
