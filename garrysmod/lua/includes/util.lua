@@ -35,37 +35,32 @@ include( "util/color.lua" )
 --[[---------------------------------------------------------
 	Prints a table to the console
 -----------------------------------------------------------]]
-function PrintTable ( t, indent, done )
+function PrintTable( t, indent, done )
 
 	done = done or {}
 	indent = indent or 0
-	local keys = {}
+	local keys = table.GetKeys( t )
 
-	for key, value in pairs (t) do
-
-		table.insert(keys, key)
-
-	end
-
-	table.sort(keys, function(a, b)
-		return tostring(a) < tostring(b)
-	end)
+	table.sort( keys, function( a, b )
+		if ( isnumber( a ) && isnumber( b ) ) then return a < b end
+		return tostring( a ) < tostring( b )
+	end )
 
 	for i = 1, #keys do
-		key = keys[i]
-		value = t[key]
-		Msg( string.rep ("\t", indent) )
+		key = keys[ i ]
+		value = t[ key ]
+		Msg( string.rep( "\t", indent ) )
 
-		if  ( istable(value) && !done[value] ) then
+		if  ( istable( value ) && !done[ value ] ) then
 
-			done[value] = true
-			Msg( tostring(key) .. ":" .. "\n" );
-			PrintTable (value, indent + 2, done)
+			done[ value ] = true
+			Msg( tostring( key ) .. ":" .. "\n" )
+			PrintTable ( value, indent + 2, done )
 
 		else
 
-			Msg( tostring (key) .. "\t=\t" )
-			Msg( tostring(value) .. "\n" )
+			Msg( tostring( key ) .. "\t=\t" )
+			Msg( tostring( value ) .. "\n" )
 
 		end
 
@@ -113,13 +108,13 @@ end
 
 -- Some nice globals so we don't keep creating objects for no reason
 
-vector_origin 		= Vector( 0, 0, 0 )
-vector_up	 		= Vector( 0, 0, 1 )
+vector_origin		= Vector( 0, 0, 0 )
+vector_up			= Vector( 0, 0, 1 )
 angle_zero			= Angle( 0, 0, 0 )
 
-color_white 		= Color( 255, 	255, 	255, 	255 )
-color_black 		= Color( 0, 	0, 		0, 		255 )
-color_transparent 	= Color( 255, 	255, 	255, 	0 )
+color_white			= Color( 255, 255, 255, 255 )
+color_black			= Color( 0, 0, 0, 255 )
+color_transparent	= Color( 255, 255, 255, 0 )
 
 
 --[[---------------------------------------------------------
@@ -136,8 +131,8 @@ function IncludeCS( filename )
 end
 
 -- Globals..
-FORCE_STRING 	= 1
-FORCE_NUMBER 	= 2
+FORCE_STRING	= 1
+FORCE_NUMBER	= 2
 FORCE_BOOL		= 3
 
 --[[---------------------------------------------------------
@@ -184,9 +179,9 @@ end
 function SafeRemoveEntity( ent )
 
 	if ( !IsValid( ent ) || ent:IsPlayer() ) then return end
-	
+
 	ent:Remove()
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -195,9 +190,9 @@ end
 function SafeRemoveEntityDelayed( ent, timedelay )
 
 	if ( !IsValid( ent ) || ent:IsPlayer() ) then return end
-	
+
 	timer.Simple( timedelay, function() SafeRemoveEntity( ent ) end )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -288,22 +283,22 @@ function STNDRD( num )
 		return "th"
 	end
 
-	return STNDRD_TBL[num % 10] or "th"
+	return STNDRD_TBL[ num % 10 ] or "th"
 end
 
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
-function TimedSin(freq,min,max,offset)
-	return math.sin(freq * math.pi * 2 * CurTime() + offset) * (max-min) * 0.5 + min
+function TimedSin( freq, min, max, offset )
+	return math.sin( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
 end 
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
-function TimedCos(freq,min,max,offset)
-	return math.cos(freq * math.pi * 2 * CurTime() + offset) * (max-min) * 0.5 + min
+function TimedCos( freq, min, max, offset )
+	return math.cos( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
 end 
 
 --[[---------------------------------------------------------
@@ -372,7 +367,7 @@ end
 -- You can use this function to add your own CLASS_ var.
 -- Adding in this way will ensure your CLASS_ doesn't collide with another
 --
--- ie  Add_NPC_Class( "MY_CLASS" )
+-- ie Add_NPC_Class( "MY_CLASS" )
 
 function Add_NPC_Class( name )
 

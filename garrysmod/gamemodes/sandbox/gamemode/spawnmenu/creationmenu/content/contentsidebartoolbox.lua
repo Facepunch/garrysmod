@@ -45,7 +45,7 @@ function PANEL:Init()
 	--
 	hook.Add( "ContentSidebarSelection", "SidebarToolboxSelection", function( pnlContent, node )
 		
-		if ( !IsValid( node ) ) then return end
+		if ( !IsValid( node ) || !IsValid( label ) || !IsValid( icons ) ) then return end
 		
 		label:SetText( node:GetText() )
 		icons:SelectIcon( node:GetIcon() )
@@ -64,7 +64,5 @@ function PANEL:Init()
 	end )
 	
 end
-
-
 
 vgui.Register( "ContentSidebarToolbox", PANEL, "DDrawer" )
