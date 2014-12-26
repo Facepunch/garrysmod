@@ -316,8 +316,6 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
    bullet.Damage = dmg
    if CLIENT and sparkle:GetBool() then
       bullet.Callback = Sparklies
-   elseif not sparkle:GetBool() then
-      bullet.Callback = self:BulletHit()		
    end
 
    self.Owner:FireBullets( bullet )
