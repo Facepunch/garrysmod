@@ -105,6 +105,23 @@ function Model( name )
 	return name
 end
 
+--[[---------------------------------------------------------
+	Returns a player object from a string
+-----------------------------------------------------------]]
+function GetPlayerByNick( nick, bExact )
+	for k, v in pairs( player.GetAll() ) do
+		if ( bExact ) then 
+			if ( v:Nick() == nick )  then
+				return v
+			end
+		else
+			if ( v:Nick():lower() == nick:lower() ) then
+				return v
+			end
+		end
+	end
+end
+
 
 -- Some nice globals so we don't keep creating objects for no reason
 
