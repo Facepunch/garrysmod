@@ -11,7 +11,7 @@ local function DrawColorBox()
 	local mat = motionsensor.GetColourMaterial()
 	if ( !mat ) then return end
 
-	local size = sensor_color_scale:GetFloat();
+	local size = sensor_color_scale:GetFloat()
 	local w = 640 * size
 	local h = 480 * size
 	local x = sensor_color_x:GetInt()
@@ -49,6 +49,6 @@ end
 
 hook.Add( "DrawOverlay", "DrawMotionSensor", function()
 
-	DrawColorBox();
+	DrawColorBox()
 
 end )

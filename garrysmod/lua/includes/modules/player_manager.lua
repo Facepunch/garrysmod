@@ -18,7 +18,7 @@ local ModelListRev = {}
 local HandNames = {}
 
 --[[---------------------------------------------------------
-   Utility to add models to the acceptable model list
+	Utility to add models to the acceptable model list
 -----------------------------------------------------------]]
 function AddValidModel( name, model )
 
@@ -37,7 +37,7 @@ function AddValidHands( name, model, skin, body )
 end
 
 --[[---------------------------------------------------------
-   Return list of all valid player models
+	Return list of all valid player models
 -----------------------------------------------------------]]
 function AllValidModels( )
 	return ModelList
@@ -45,8 +45,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Translate the simple name of a model
-   into the full model name
+	Translate the simple name of a model
+	into the full model name
 -----------------------------------------------------------]]
 function TranslatePlayerModel( name )
 
@@ -82,7 +82,7 @@ function TranslatePlayerHands( name )
 end
 
 --[[---------------------------------------------------------
-   Compile a list of valid player models
+	Compile a list of valid player models
 -----------------------------------------------------------]]
 
 AddValidModel( "alyx",			"models/player/alyx.mdl" )
@@ -122,7 +122,7 @@ AddValidModel( "kleiner",		"models/player/kleiner.mdl" )
 AddValidHands( "kleiner",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "monk",			"models/player/monk.mdl" )
-AddValidHands( "monk",		"models/weapons/c_arms_citizen.mdl",			0,		"0000000" )
+AddValidHands( "monk",			"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 
 AddValidModel( "mossman",		"models/player/mossman.mdl" )
 AddValidHands( "mossman",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
@@ -260,7 +260,7 @@ AddValidHands( "refugee04",		"models/weapons/c_arms_citizen.mdl",		0,		"0000000"
 -- Moving them to here since we're now shipping all required files / fallbacks
 
 AddValidModel( "magnusson", "models/player/magnusson.mdl" )
-AddValidHands( "magnusson","models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
+AddValidHands( "magnusson", "models/weapons/c_arms_citizen.mdl",		0,		"0000000" )
 AddValidModel( "skeleton",	"models/player/skeleton.mdl" )
 AddValidHands( "skeleton",	"models/weapons/c_arms_citizen.mdl",			2,		"0000000" )
 AddValidModel( "zombine",	"models/player/zombie_soldier.mdl" )
@@ -285,7 +285,7 @@ AddValidModel( "css_riot",			"models/player/riot.mdl" )
 AddValidHands( "css_riot",			"models/weapons/c_arms_cstrike.mdl",		0,		"10000000" )
 AddValidModel( "css_swat",			"models/player/swat.mdl" )
 AddValidHands( "css_swat",			"models/weapons/c_arms_cstrike.mdl",		0,		"10000000" )
-AddValidModel( "css_urban",		    "models/player/urban.mdl" )
+AddValidModel( "css_urban",			"models/player/urban.mdl" )
 AddValidHands( "css_urban",			"models/weapons/c_arms_cstrike.mdl",		7,		"10000000" )
 
 AddValidModel( "dod_american", "models/player/dod_american.mdl" )
@@ -303,7 +303,7 @@ local Type = {}
 
 function RegisterClass( name, table, base )
 
-	Type[ name ] = table;
+	Type[ name ] = table
 
 	--
 	-- If we have a base method then hook
@@ -361,7 +361,7 @@ local function LookupPlayerClass( ply )
 	--
 	-- Check the cache
 	--
-	local method = ply.m_CurrentPlayerClass;
+	local method = ply.m_CurrentPlayerClass
 	if ( method && method.Player == ply && method.ClassID == id && method.Func ) then return method end
 
 	--
@@ -385,7 +385,7 @@ local function LookupPlayerClass( ply )
 
 	ply.m_CurrentPlayerClass	= method
 
-	method.Player:InstallDataTable();
+	method.Player:InstallDataTable()
 	method:SetupDataTables()
 	method:Init()
 	return method

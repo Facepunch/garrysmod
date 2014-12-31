@@ -1,4 +1,3 @@
-
 local MsgN			= MsgN
 local IsValid		= IsValid
 local setmetatable	= setmetatable
@@ -16,10 +15,10 @@ local Type = {}
 
 function Register( name, table, base )
 
-	Type[ name ] = table;
+	Type[ name ] = table
 
 	--
-	-- If we have a base method then hook 
+	-- If we have a base method then hook
 	-- it up in the meta table
 	--
 	if ( base ) then
@@ -41,7 +40,7 @@ end
 function PlayerStartDriving( ply, ent, mode )
 
 	local method = Type[mode]
-	if ( !method ) then ErrorNoHalt( "Unknown drive type " .. (mode) .. "!\n" ) return; end
+	if ( !method ) then ErrorNoHalt( "Unknown drive type " .. (mode) .. "!\n" ) return end
 
 	local id = util.NetworkStringToID( mode )
 
@@ -62,8 +61,8 @@ function GetMethod( ply )
 	--
 	if ( !ply:IsDrivingEntity() ) then return end
 
-	local ent = ply:GetDrivingEntity();
-	local modeid = ply:GetDrivingMode();
+	local ent = ply:GetDrivingEntity()
+	local modeid = ply:GetDrivingMode()
 
 	--
 	-- Entity is invalid or mode isn't set - return out
@@ -73,7 +72,7 @@ function GetMethod( ply )
 	--
 	-- Have we already got a drive method? If so then reuse.
 	--
-	local method = ply.m_CurrentDriverMethod;
+	local method = ply.m_CurrentDriverMethod
 	if ( method && method.Entity == ent && method.ModeID == modeid ) then return method end
 
 	--
@@ -92,7 +91,7 @@ function GetMethod( ply )
 		method.Entity = ent
 		method.Player = ply
 		method.ModeID = modeid
-	
+
 	setmetatable( method, { __index = type } )
 
 	ply.m_CurrentDriverMethod = method
@@ -106,11 +105,11 @@ function DestroyMethod( pl )
 
 	if ( !IsValid( pl ) ) then return end
 
-	pl.m_CurrentDriverMethod = nil;
+	pl.m_CurrentDriverMethod = nil
 
 end
 --
--- Called when the player first 
+-- Called when the player first
 -- starts driving this entity
 --
 function Start( ply, ent )
@@ -125,7 +124,7 @@ function Start( ply, ent )
 		ply.m_PreDriveObserveMode = ply:GetObserverMode()
 
 		-- Lock the player's eye angles to our angles
-		local ang = ent:GetAngles() 
+		local ang = ent:GetAngles()
 		ply:SetEyeAngles( ang )
 
 		-- Hide the controlling player's world model
@@ -237,7 +236,7 @@ function End( ply, ent )
 
 	end
 
-	DestroyMethod( ply );
+	DestroyMethod( ply )
 
 end
 

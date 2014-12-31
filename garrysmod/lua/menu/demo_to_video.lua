@@ -1,6 +1,6 @@
---[[__                                       _     
- / _| __ _  ___ ___ _ __  _   _ _ __   ___| |__  
-| |_ / _` |/ __/ _ \ '_ \| | | | '_ \ / __| '_ \ 
+--[[__                                       _
+ / _| __ _  ___ ___ _ __  _   _ _ __   ___| |__
+| |_ / _` |/ __/ _ \ '_ \| | | | '_ \ / __| '_ \
 |  _| (_| | (_|  __/ |_) | |_| | | | | (__| | | |
 |_|  \__,_|\___\___| .__/ \__,_|_| |_|\___|_| |_|
 				   |_| 2012 --]]
@@ -9,7 +9,7 @@ local ActiveVideo = nil
 
 VideoSettings = nil
 
-local stats = 
+local stats =
 {
 	reset = 0,
 	encodetime = 0,
@@ -21,10 +21,10 @@ local stats =
 
 concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 
-	local demoname = args[1] 
+	local demoname = args[1]
 	if ( !demoname ) then return end
-	
-	local settings = 
+
+	local settings =
 	{
 		name		= "filled_in_later",
 		container	= "webm",
@@ -65,13 +65,13 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 	local inDOFSize		= Window:Find( "inDOFBlurSize" )
 	local inViewSmooth	= Window:Find( "inViewSmooth" )
 	local inPosSmooth	= Window:Find( "inPosSmooth" )
-	
 
-	inFPS.OnChange = function() settings.fps = inFPS:GetInt()  end
-		inFPS:SetText( settings.fps );
 
-	inBitRate.OnChange = function() settings.bitrate = inBitRate:GetInt()  end
-		inBitRate:SetText( settings.bitrate );
+	inFPS.OnChange = function() settings.fps = inFPS:GetInt() end
+		inFPS:SetText( settings.fps )
+
+	inBitRate.OnChange = function() settings.bitrate = inBitRate:GetInt() end
+		inBitRate:SetText( settings.bitrate )
 
 	-- TODO!!!
 	inCodec.OnSelect = function( _, index, value, data ) settings.container = data[1]; settings.video = data[2]; settings.audio = data[3] end
@@ -112,10 +112,10 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 		inDOF:AddChoice( "Good (72 Samples)",	{ 12, 6 } )
 		inDOF:AddChoice( "Best (288 Samples)",	{ 24, 12 } )
 
-	inDOFSpeed.OnChange = function() settings.doffocusspeed = inDOFSpeed:GetFloat()  end
+	inDOFSpeed.OnChange = function() settings.doffocusspeed = inDOFSpeed:GetFloat() end
 	inDOFSpeed:SetText( "1.0" )
 
-	inDOFSize.OnChange = function() settings.dofsize = inDOFSize:GetFloat()  end
+	inDOFSize.OnChange = function() settings.dofsize = inDOFSize:GetFloat() end
 	inDOFSize:SetText( "1.0" )
 
 	--
@@ -126,7 +126,7 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 		inViewSmooth:AddChoice( "Minimal",		0.2 )
 		inViewSmooth:AddChoice( "Low",			0.4 )
 		inViewSmooth:AddChoice( "Medium",		0.7 )
-		inViewSmooth:AddChoice( "High",			0.8  )
+		inViewSmooth:AddChoice( "High",			0.8 )
 		inViewSmooth:AddChoice( "Lots",			0.9 )
 		inViewSmooth:AddChoice( "Too Smooth",	0.97 )
 
@@ -144,25 +144,25 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 		-- Fill in the name here, or we'll be overwriting the same video!
 		local cleanname = string.GetFileFromFilename( demoname )
 			cleanname = cleanname:Replace( ".", "_" )
-			cleanname = cleanname .. " " .. util.DateStamp();
+			cleanname = cleanname .. " " .. util.DateStamp()
 		settings.name = cleanname
 
 		PrintTable( settings )
-		ActiveVideo, error = video.Record( settings );
+		ActiveVideo, error = video.Record( settings )
 
 		if ( !ActiveVideo ) then
 			MsgN( "Couldn't record video: ", error )
 			return
 		end
 
-		RunConsoleCommand( "sv_cheats",			1 );
-		RunConsoleCommand( "host_framerate",	settings.fps * settings.frameblend );
-		RunConsoleCommand( "snd_fixed_rate",	1 );
-		RunConsoleCommand( "progress_enable",	1 );
-		RunConsoleCommand( "playdemo",			demoname );
+		RunConsoleCommand( "sv_cheats",			1 )
+		RunConsoleCommand( "host_framerate",	settings.fps * settings.frameblend )
+		RunConsoleCommand( "snd_fixed_rate",	1 )
+		RunConsoleCommand( "progress_enable",	1 )
+		RunConsoleCommand( "playdemo",			demoname )
 
 		VideoSettings = table.Copy( settings )
-				
+
 		--Window:Remove()
 
 	end
@@ -175,9 +175,9 @@ local function FinishRecording()
 	ActiveVideo:Finish()
 	ActiveVideo = nil
 
-	RunConsoleCommand( "host_framerate",	0 );
-	RunConsoleCommand( "sv_cheats",			0 );
-	RunConsoleCommand( "snd_fixed_rate",	0 );
+	RunConsoleCommand( "host_framerate",	0 )
+	RunConsoleCommand( "sv_cheats",			0 )
+	RunConsoleCommand( "snd_fixed_rate",	0 )
 
 	MsgN( "Rendering Finished - Took ",SysTime()-stats.starttime," seconds" )
 
@@ -187,8 +187,8 @@ end
 
 local function UpdateFrame()
 
-	if ( !engine.IsPlayingDemo() ) then 
-	
+	if ( !engine.IsPlayingDemo() ) then
+
 		if ( !VideoSettings.started ) then return end
 		FinishRecording()
 		return
@@ -213,7 +213,7 @@ local function DrawOverlay()
 	if ( !VideoSettings ) then return end
 
 	local complete = engine.GetDemoPlaybackTick() / engine.GetDemoPlaybackTotalTicks()
-		
+
 	local x = ScrW()*0.1
 	local y = ScrH()*0.8
 	local w = ScrW()*0.8
@@ -234,19 +234,19 @@ local function DrawOverlay()
 	surface.SetDrawColor( 255, 255, 100, 150 )
 	surface.DrawRect( x+1, y+1, w * complete - 2, h - 2 )
 
-	surface.SetTextPos( x, y + h + 10 );
-	surface.DrawText( "Time Taken: " .. string.NiceTime( SysTime() - stats.starttime )  )
+	surface.SetTextPos( x, y + h + 10 )
+	surface.DrawText( "Time Taken: " .. string.NiceTime( SysTime() - stats.starttime ) )
 
 	local tw, th = surface.GetTextSize( "Time Left: " .. string.NiceTime( stats.timeremaining ) )
-	surface.SetTextPos( x + w - tw, y + h + 10 );
-	surface.DrawText( "Time Left: " .. string.NiceTime( stats.timeremaining )  )
+	surface.SetTextPos( x + w - tw, y + h + 10 )
+	surface.DrawText( "Time Left: " .. string.NiceTime( stats.timeremaining ) )
 
 	local demolength = "Demo Length: ".. string.FormattedTime( engine.GetDemoPlaybackTotalTicks() * engine.TickInterval(), "%2i:%02i" )
 	local tw, th = surface.GetTextSize( demolength )
-	surface.SetTextPos( x + w - tw, y - th - 10 );
-	surface.DrawText( demolength  )
+	surface.SetTextPos( x + w - tw, y - th - 10 )
+	surface.DrawText( demolength )
 
-	local info = "Rendering ".. math.floor( VideoSettings.width ) .. "x" .. math.floor( VideoSettings.height ) .. " at " .. math.floor( VideoSettings.fps ).. "fps ";
+	local info = "Rendering ".. math.floor( VideoSettings.width ) .. "x" .. math.floor( VideoSettings.height ) .. " at " .. math.floor( VideoSettings.fps ).. "fps "
 
 	local with = {}
 	if ( VideoSettings.dofsteps > 0 ) then table.insert( with, "DOF" ) end
@@ -259,41 +259,41 @@ local function DrawOverlay()
 		info = info .. "with " .. with
 	end
 
-	info = info .. " (rendering " .. (VideoSettings.frameblend*VideoSettings.dofsteps*VideoSettings.dofpasses) .. " frames per frame)";
+	info = info .. " (rendering " .. (VideoSettings.frameblend*VideoSettings.dofsteps*VideoSettings.dofpasses) .. " frames per frame)"
 
 	local tw, th = surface.GetTextSize( info )
-	surface.SetTextPos( x, y - th - 10 );
+	surface.SetTextPos( x, y - th - 10 )
 	surface.DrawText( info )
 
 	local demotime = string.FormattedTime( (engine.GetDemoPlaybackTick() * engine.TickInterval()), "%2i:%02i" )
 	local tw, th = surface.GetTextSize( demotime )
 	if ( w * complete > tw + 20 ) then
 		surface.SetTextColor( 0, 0, 0, 200 )
-		surface.SetTextPos( x + w * complete - tw - 10, y + h * 0.5 - th * 0.5 );
-		surface.DrawText( demotime  )
+		surface.SetTextPos( x + w * complete - tw - 10, y + h * 0.5 - th * 0.5 )
+		surface.DrawText( demotime )
 	end
 
 	local demotime = string.FormattedTime( ((engine.GetDemoPlaybackTotalTicks()-engine.GetDemoPlaybackTick()) * engine.TickInterval()), "%2i:%02i" )
 	local tw, th = surface.GetTextSize( demotime )
 	if ( w - w * complete > tw + 20 ) then
 		surface.SetTextColor( 255, 255, 255, 200 )
-		surface.SetTextPos( x + w * complete + 10, y + h * 0.5 - th * 0.5 );
-		surface.DrawText( demotime  )
+		surface.SetTextPos( x + w * complete + 10, y + h * 0.5 - th * 0.5 )
+		surface.DrawText( demotime )
 	end
-	
+
 end
 
-hook.Add( "CaptureVideo", "CaptureDemoFrames", function() 
+hook.Add( "CaptureVideo", "CaptureDemoFrames", function()
 
 	if ( !ActiveVideo ) then return end
 	if ( !VideoSettings ) then return end
 
-	UpdateFrame() 
+	UpdateFrame()
 
 	DrawOverlay()
 
 	if ( stats.reset < SysTime() ) then
-		
+
 		stats.reset = SysTime() + 1
 
 		stats.last_encodetime = stats.encodetime
@@ -313,7 +313,7 @@ function RecordDemoFrame()
 
 	if ( !VideoSettings.started ) then return end
 
-	ActiveVideo:AddFrame( 1 / VideoSettings.fps, true );
+	ActiveVideo:AddFrame( 1 / VideoSettings.fps, true )
 	VideoSettings.framecount = VideoSettings.framecount + 1
 
 end

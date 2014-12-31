@@ -42,17 +42,17 @@ end
 
 function DrawBackground()
 
-	if ( !IsInGame() ) then 
+	if ( !IsInGame() ) then
 
 		if ( Active ) then
-			Think( Active );
-			Render( Active );
+			Think( Active )
+			Render( Active )
 		end
 
 		if ( Outgoing ) then
 
-			Think( Outgoing );
-			Render( Outgoing );
+			Think( Outgoing )
+			Render( Outgoing )
 
 			if ( Outgoing.Alpha <= 0 ) then
 				Outgoing = nil
@@ -86,10 +86,10 @@ function ChangeBackground( currentgm )
 
 	if ( currentgm && currentgm == LastGamemode ) then return end
 	if ( currentgm ) then LastGamemode = currentgm end
-	
+
 	local img = table.Random( Images )
 
-	Outgoing = Active;
+	Outgoing = Active
 	if ( Outgoing ) then
 		Outgoing.AlphaVel = 255
 	end
@@ -97,7 +97,7 @@ function ChangeBackground( currentgm )
 	local mat = Material( img, "nocull smooth" )
 	if ( !mat || mat:IsError() ) then return end
 
-	Active = 
+	Active =
 	{
 		Ratio = mat:GetInt( "$realwidth" ) / mat:GetInt( "$realheight" ),
 		Size = 1,

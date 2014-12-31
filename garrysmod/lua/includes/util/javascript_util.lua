@@ -3,7 +3,7 @@ function JS_Language( html )
 
 	html:AddFunction( "language", "Update", function( phrase )
 
-		return language.GetPhrase( phrase );
+		return language.GetPhrase( phrase )
 
 	end )
 
