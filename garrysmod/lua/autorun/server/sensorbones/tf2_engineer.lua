@@ -1,33 +1,33 @@
 --
 -- These are the physics bone numbers
 --
-local PLVS		= 0;
+local PLVS		= 0
 -- coord
-local RTHY		= 2;
-local RCLF		= 3;
-local RFOT		= 4;
-local LTHY		= 5;
-local LCLF		= 6;
-local LFOT		= 7;
+local RTHY		= 2
+local RCLF		= 3
+local RFOT		= 4
+local LTHY		= 5
+local LCLF		= 6
+local LFOT		= 7
 
-local SPNE		= 8;
-local RSLD		= 9;
-local RARM		= 10;
-local LSLD		= 11;
-local LARM		= 12;
-local LHND		= 13;
-local NECK		= 14;
-local HEAD		= 15;
-local RHND		= 16;
+local SPNE		= 8
+local RSLD		= 9
+local RARM		= 10
+local LSLD		= 11
+local LARM		= 12
+local LHND		= 13
+local NECK		= 14
+local HEAD		= 15
+local RHND		= 16
 -- pouch
 
 
 
-local Builder = 
+local Builder =
 {
 	PrePosition = function( self, sensor )
 
-		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] )  * 0.6
+		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] ) * 0.6
 
 		local acrossshoulders = (sensor[SENSORBONE.SHOULDER_RIGHT] - sensor[SENSORBONE.SHOULDER_LEFT]):GetNormal() * 0.08
 
@@ -63,7 +63,7 @@ local Builder =
 	--
 	-- Which on the sensor should we use for which ones on our model
 	--
-	PositionTable = 
+	PositionTable =
 	{
 		[PLVS]	= SENSORBONE.HIP,
 		[RSLD]	= SENSORBONE.SHOULDER_RIGHT,
@@ -86,12 +86,12 @@ local Builder =
 	--
 	-- Which bones should we use to determine our bone angles
 	--
-	AnglesTable = 
+	AnglesTable =
 	{
 		[PLVS]	= { from = PLVS, to = SPNE, up = "hips_back" },
 		[SPNE]	= { from = PLVS, to = SPNE, up = "chest_bck" },
 		[HEAD]	= { from = SPNE, to = HEAD, up = "head_back" },
-	
+
 		[RSLD]	= { from = RARM, to = RSLD, up_rgt = SPNE },
 		[RARM]	= { from = RHND, to = RARM, up_rgt = RSLD },
 		[RHND]	= { from_sensor = SENSORBONE.HAND_RIGHT, to_sensor = SENSORBONE.WRIST_RIGHT, up_fwd = RARM },
@@ -150,9 +150,9 @@ local Builder =
 
 	end,
 
-	IsApplicable = function( self, ent ) 
-		
-		local mdl = ent:GetModel();
+	IsApplicable = function( self, ent )
+
+		local mdl = ent:GetModel()
 
 		if ( mdl:EndsWith( "models/player/engineer.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/hwm/engineer.mdl" ) ) then return true end
@@ -160,7 +160,7 @@ local Builder =
 		if ( mdl:EndsWith( "models/bots/demo_engineer/bot_demo_engineer.mdl" ) ) then return true end
 
 		return false
-	
+
 	end,
 }
 

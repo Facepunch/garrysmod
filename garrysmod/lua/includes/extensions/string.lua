@@ -2,21 +2,21 @@ local string = string
 local math = math
 
 --[[---------------------------------------------------------
-   Name: string.ToTable( string )
+	Name: string.ToTable( string )
 -----------------------------------------------------------]]
 function string.ToTable ( str )
 	local tbl = {}
-	
+
 	for i = 1, string.len( str ) do
 		tbl[i] = string.sub( str, i, i )
 	end
-	
+
 	return tbl
 end
 
 --[[---------------------------------------------------------
-   Name: string.JavascriptSafe( string )
-   Desc: Takes a string and escapes it for insertion in to a JavaScript string
+	Name: string.JavascriptSafe( string )
+	Desc: Takes a string and escapes it for insertion in to a JavaScript string
 -----------------------------------------------------------]]
 local javascript_escape_replacements = {
 	["\\"] = "\\\\",
@@ -44,8 +44,8 @@ function string.JavascriptSafe( str )
 end
 
 --[[---------------------------------------------------------
-   Name: string.PatternSafe( string )
-   Desc: Takes a string and escapes it for insertion in to a Lua pattern
+	Name: string.PatternSafe( string )
+	Desc: Takes a string and escapes it for insertion in to a Lua pattern
 -----------------------------------------------------------]]
 local pattern_escape_replacements = {
 	["("] = "%(",
@@ -70,9 +70,9 @@ function string.PatternSafe( str )
 end
 
 --[[---------------------------------------------------------
-   Name: explode(seperator ,string)
-   Desc: Takes a string and turns it into a table
-   Usage: string.explode( " ", "Seperate this string")
+	Name: explode(seperator ,string)
+	Desc: Takes a string and turns it into a table
+	Usage: string.explode( " ", "Seperate this string")
 -----------------------------------------------------------]]
 local totable = string.ToTable
 local string_sub = string.sub
@@ -80,22 +80,22 @@ local string_gsub = string.gsub
 local string_gmatch = string.gmatch
 function string.Explode(separator, str, withpattern)
 	if (separator == "") then return totable( str ) end
-	 
+
 	local ret = {}
 	local index,lastPosition = 1,1
-	 
+
 	-- Escape all magic characters in separator
 	if not withpattern then separator = separator:PatternSafe() end
-	 
+
 	-- Find the parts
 	for startPosition,endPosition in string_gmatch( str, "()" .. separator.."()" ) do
 		ret[index] = string_sub( str, lastPosition, startPosition-1)
 		index = index + 1
-		 
+
 		-- Keep track of the position
 		lastPosition = endPosition
 	end
-	 
+
 	-- Add last part by using the position we stored
 	ret[index] = string_sub( str, lastPosition)
 	return ret
@@ -106,25 +106,25 @@ function string.Split( str, delimiter )
 end
 
 --[[---------------------------------------------------------
-   Name: Implode(seperator ,Table)
-   Desc: Takes a table and turns it into a string
-   Usage: string.Implode( " ", {"This", "Is", "A", "Table"})
+	Name: Implode(seperator ,Table)
+	Desc: Takes a table and turns it into a string
+	Usage: string.Implode( " ", {"This", "Is", "A", "Table"})
 -----------------------------------------------------------]]
-function string.Implode(seperator,Table) return 
-	table.concat(Table,seperator) 
+function string.Implode(seperator,Table) return
+	table.concat(Table,seperator)
 end
 
 --[[---------------------------------------------------------
-   Name: GetExtensionFromFilename(path)
-   Desc: Returns extension from path
-   Usage: string.GetExtensionFromFilename("garrysmod/lua/modules/string.lua")
+	Name: GetExtensionFromFilename(path)
+	Desc: Returns extension from path
+	Usage: string.GetExtensionFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetExtensionFromFilename( path )
 	return path:match( "%.([^%.]+)$" )
 end
 
 --[[---------------------------------------------------------
-   Name: StripExtension( path )
+	Name: StripExtension( path )
 -----------------------------------------------------------]]
 function string.StripExtension( path )
 
@@ -135,32 +135,32 @@ function string.StripExtension( path )
 end
 
 --[[---------------------------------------------------------
-   Name: GetPathFromFilename(path)
-   Desc: Returns path from filepath
-   Usage: string.GetPathFromFilename("garrysmod/lua/modules/string.lua")
+	Name: GetPathFromFilename(path)
+	Desc: Returns path from filepath
+	Usage: string.GetPathFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetPathFromFilename(path)
 	return path:match( "^(.*[/\\])[^/\\]-$" ) or ""
 end
 --[[---------------------------------------------------------
-   Name: GetFileFromFilename(path)
-   Desc: Returns file with extension from path
-   Usage: string.GetFileFromFilename("garrysmod/lua/modules/string.lua")
+	Name: GetFileFromFilename(path)
+	Desc: Returns file with extension from path
+	Usage: string.GetFileFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetFileFromFilename(path)
 	return path:match( "[\\/]([^/\\]+)$" ) or ""
 end
 
 --[[-----------------------------------------------------------------
-   Name: FormattedTime( TimeInSeconds, Format )
-   Desc: Given a time in seconds, returns formatted time
-		 If 'Format' is not specified the function returns a table 
+	Name: FormattedTime( TimeInSeconds, Format )
+	Desc: Given a time in seconds, returns formatted time
+		 If 'Format' is not specified the function returns a table
 		 conatining values for hours, mins, secs, ms
 
-   Examples: string.FormattedTime( 123.456, "%02i:%02i:%02i")  ==> "02:03:45"
-			 string.FormattedTime( 123.456, "%02i:%02i")       ==> "02:03"
-			 string.FormattedTime( 123.456, "%2i:%02i")        ==> " 2:03"
-			 string.FormattedTime( 123.456 )        		==> {h = 0, m = 2, s = 3, ms = 45}
+	Examples: string.FormattedTime( 123.456, "%02i:%02i:%02i")	==> "02:03:45"
+			 string.FormattedTime( 123.456, "%02i:%02i")		==> "02:03"
+			 string.FormattedTime( 123.456, "%2i:%02i")			==> " 2:03"
+			 string.FormattedTime( 123.456 )					==> {h = 0, m = 2, s = 3, ms = 45}
 -------------------------------------------------------------------]]
 
 function string.FormattedTime( seconds, Format )
@@ -169,7 +169,7 @@ function string.FormattedTime( seconds, Format )
 	local minutes = math.floor((seconds / 60) % 60)
 	local millisecs = ( seconds - math.floor( seconds ) ) * 100
 	seconds = math.floor(seconds % 60)
-	
+
 	if Format then
 		return string.format( Format, minutes, seconds, millisecs )
 	else
@@ -178,7 +178,7 @@ function string.FormattedTime( seconds, Format )
 end
 
 --[[---------------------------------------------------------
-   Name: Old time functions
+	Name: Old time functions
 -----------------------------------------------------------]]
 
 function string.ToMinutesSecondsMilliseconds( TimeInSeconds )	return string.FormattedTime( TimeInSeconds, "%02i:%02i:%02i")	end
@@ -194,31 +194,31 @@ function string.NiceTime( seconds )
 
 	if ( seconds < 60 ) then
 		local t = math.floor( seconds )
-		return t .. pluralizeString(" second", t);
+		return t .. pluralizeString(" second", t)
 	end
 
 	if ( seconds < 60 * 60 ) then
 		local t = math.floor( seconds / 60 )
-		return t .. pluralizeString(" minute", t);
+		return t .. pluralizeString(" minute", t)
 	end
 
 	if ( seconds < 60 * 60 * 24 ) then
 		local t = math.floor( seconds / (60 * 60) )
-		return t .. pluralizeString(" hour", t);
+		return t .. pluralizeString(" hour", t)
 	end
 
 	if ( seconds < 60 * 60 * 24 * 7 ) then
 		local t = math.floor( seconds / (60 * 60 * 24) )
-		return t .. pluralizeString(" day", t);
+		return t .. pluralizeString(" day", t)
 	end
-	
+
 	if ( seconds < 60 * 60 * 24 * 7 * 52 ) then
 		local t = math.floor( seconds / (60 * 60 * 24 * 7) )
-		return t .. pluralizeString(" week", t);
+		return t .. pluralizeString(" week", t)
 	end
 
 	local t = math.floor( seconds / (60 * 60 * 24 * 7 * 52) )
-	return t .. pluralizeString(" year", t);
+	return t .. pluralizeString(" year", t)
 
 end
 
@@ -238,8 +238,8 @@ function string.Replace( str, tofind, toreplace )
 end
 
 --[[---------------------------------------------------------
-   Name: Trim(s)
-   Desc: Removes leading and trailing spaces from a string.
+	Name: Trim(s)
+	Desc: Removes leading and trailing spaces from a string.
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.Trim( s, char )
@@ -248,8 +248,8 @@ function string.Trim( s, char )
 end
 
 --[[---------------------------------------------------------
-   Name: TrimRight(s)
-   Desc: Removes trailing spaces from a string.
+	Name: TrimRight(s)
+	Desc: Removes trailing spaces from a string.
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimRight( s, char )
@@ -258,8 +258,8 @@ function string.TrimRight( s, char )
 end
 
 --[[---------------------------------------------------------
-   Name: TrimLeft(s)
-   Desc: Removes leading spaces from a string.
+	Name: TrimLeft(s)
+	Desc: Removes leading spaces from a string.
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimLeft( s, char )
@@ -268,14 +268,14 @@ function string.TrimLeft( s, char )
 end
 
 function string.NiceSize( size )
-	
+
 	size = tonumber( size )
 
 	if ( size <= 0 ) then return "0" end
 	if ( size < 1024 ) then return size .. " Bytes" end
 	if ( size < 1024 * 1024 ) then return math.Round( size / 1024, 2 ) .. " KB" end
 	if ( size < 1024 * 1024 * 1024 ) then return math.Round( size / (1024*1024), 2 ) .. " MB" end
-	
+
 	return math.Round( size / (1024*1024*1024), 2 ) .. " GB"
 
 end
@@ -287,7 +287,7 @@ function string.SetChar( s, k, v )
 
 	local start = s:sub( 0, k-1 )
 	local send = s:sub( k+1 )
-	
+
 	return start .. v .. send
 
 end
@@ -313,19 +313,19 @@ end
 
 function string.StartWith( String, Start )
 
-   return string.sub( String, 1, string.len (Start ) ) == Start
+	return string.sub( String, 1, string.len (Start ) ) == Start
 
 end
 
 function string.EndsWith( String, End )
 
-   return End == '' or string.sub( String, -string.len( End ) ) == End
+	return End == '' or string.sub( String, -string.len( End ) ) == End
 
 end
 
 function string.FromColor( color )
 
-   return Format( "%i %i %i %i", color.r, color.g, color.b, color.a );
+	return Format( "%i %i %i %i", color.r, color.g, color.b, color.a )
 
 end
 
@@ -348,7 +348,7 @@ function string.Comma( number )
 
 	local number, k = tostring( number ), nil
 
-	while true do  
+	while true do
 		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", '%1,%2')
 		if ( k == 0 ) then break end
 	end

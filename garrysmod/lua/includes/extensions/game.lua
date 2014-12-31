@@ -4,12 +4,12 @@ local AmmoTypes = {}
 --
 -- Called by modders to add a new ammo type.
 -- Ammo types aren't something you can add on the fly. You have one
--- opportunity during loadtime. The ammo types should also be IDENTICAL on 
--- server and client. 
+-- opportunity during loadtime. The ammo types should also be IDENTICAL on
+-- server and client.
 -- If they're not you will receive errors and maybe even crashes.
 --
 --
---		game.AddAmmoType( 
+--		game.AddAmmoType(
 --		{
 --			name		=	"customammo",
 --			dmgtype		=	DMG_BULLET,
@@ -30,7 +30,7 @@ game.AddAmmoType = function ( tbl )
 end
 
 --
--- Called by the engine to retrive the ammo types. 
+-- Called by the engine to retrive the ammo types.
 -- You should never have to call this manually.
 --
 game.BuildAmmoTypes = function()
@@ -41,7 +41,7 @@ game.BuildAmmoTypes = function()
 	--
 	table.SortByMember( AmmoTypes, "name", true )
 
-	return AmmoTypes;
+	return AmmoTypes
 
 end
 

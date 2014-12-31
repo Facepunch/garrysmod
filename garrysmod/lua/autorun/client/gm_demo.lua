@@ -1,7 +1,7 @@
 concommand.Add( "gm_demo", function( ply, cmd, arg )
 
 	if ( engine.IsRecordingDemo() ) then
-		RunConsoleCommand( "stop" );
+		RunConsoleCommand( "stop" )
 		return
 	end
 

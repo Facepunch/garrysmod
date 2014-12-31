@@ -4,27 +4,27 @@
 -- These are the physics bone numbers
 --
 
-local PLVS		= 0;	
-local SPNE		= 1;
-local RSLD		= 2;
-local LSLD		= 3;
-local LARM		= 4;
-local LHND		= 5;
-local RARM		= 6;
-local RHND		= 7;
-local RTHY		= 8;
-local RCLF		= 9;
-local HEAD		= 10;
-local LTHY		= 11;
-local LCLF		= 12;
-local LFOT		= 13;
-local RFOT		= 14;
+local PLVS		= 0
+local SPNE		= 1
+local RSLD		= 2
+local LSLD		= 3
+local LARM		= 4
+local LHND		= 5
+local RARM		= 6
+local RHND		= 7
+local RTHY		= 8
+local RCLF		= 9
+local HEAD		= 10
+local LTHY		= 11
+local LCLF		= 12
+local LFOT		= 13
+local RFOT		= 14
 
-local Builder = 
+local Builder =
 {
 	PrePosition = function( self, sensor )
 
-		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] )  * 0.7
+		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] ) * 0.7
 
 		sensor[SENSORBONE.SHOULDER]:Add( spinestretch * 0.7 )
 		sensor[SENSORBONE.SHOULDER_RIGHT]:Add( spinestretch )
@@ -48,7 +48,7 @@ local Builder =
 	--
 	-- Which on the sensor should we use for which ones on our model
 	--
-	PositionTable = 
+	PositionTable =
 	{
 		[PLVS]	= SENSORBONE.HIP,
 		[RSLD]	= SENSORBONE.SHOULDER_RIGHT,
@@ -70,14 +70,14 @@ local Builder =
 	--
 	-- Which bones should we use to determine our bone angles
 	--
-	AnglesTable = 
+	AnglesTable =
 	{
 		[PLVS]	= { from = LTHY, to = RTHY, up = "hips_fwd" },
 		[SPNE]	= { from_sensor = SENSORBONE.HEAD,	to_sensor = SENSORBONE.SPINE, up = "chest_rgt" },
 		[HEAD]	= { from_sensor = SENSORBONE.HEAD,	to_sensor = SENSORBONE.SHOULDER, up = "chest_lft" },
 		[RSLD]	= { from = RARM, to = RSLD, up = "chest_up" },
 		[LSLD]	= { from = LARM, to = LSLD, up = "chest_dn" },
-		[RARM]	= { from = RHND, to = RARM, up_up = RSLD },	
+		[RARM]	= { from = RHND, to = RARM, up_up = RSLD },
 		[LARM]	= { from = LHND, to = LARM, up_up = LSLD },
 		[RTHY]	= { from = RCLF, to = RTHY, up_up = SPNE },
 		[RCLF]	= { from = RFOT, to = RCLF, up_up = RTHY },
@@ -92,7 +92,7 @@ local Builder =
 	--
 	Complete = function( self, player, sensor, rotation, pos, ang )
 
-		pos[SPNE] = LerpVector( 0.45, pos[SPNE], pos[HEAD] );
+		pos[SPNE] = LerpVector( 0.45, pos[SPNE], pos[HEAD] )
 
 		-- Feet are insanely spazzy, so we lock the feet to the angle of the calf
 		ang[LFOT]	= ang[LCLF]:Right():AngleEx( ang[LCLF]:Up() ) + Angle( 20, 0, 0 )
@@ -101,7 +101,7 @@ local Builder =
 	end,
 
 	-- We're used as a default - no need to return true to anything here.
-	IsApplicable = function( self, ent ) return false; end,
+	IsApplicable = function( self, ent ) return false end,
 }
 
 list.Set( "SkeletonConvertor", "ValveBiped", Builder )

@@ -7,11 +7,11 @@ motionsensor = motionsensor or {}
 
 
 --
--- These bones are used to draw the debug 
+-- These bones are used to draw the debug
 -- kinect skeleton. You just need to loop through
 -- and draw a line between each of these bones.
 --
-motionsensor.DebugBones = 
+motionsensor.DebugBones =
 {
 	-- Torso
 	{ SENSORBONE.HEAD,				SENSORBONE.SHOULDER },
@@ -44,7 +44,7 @@ motionsensor.DebugBones =
 }
 
 motionsensor.ChooseBuilderFromEntity = function( ent )
-	
+
 	local builders = list.Get( "SkeletonConvertor" )
 
 	for k, v in pairs( builders ) do
@@ -65,32 +65,32 @@ motionsensor.ProcessAngle = function( translator, sensor, pos, ang, special_vect
 
 	--
 	-- Using a vector from another angle.
-	-- If the angle isn't processed yet return 
+	-- If the angle isn't processed yet return
 	-- we will be added to the list to process again.
 	--
-	if ( v.up_up ) then	
-		if ( !ang[ v.up_up ] ) then return end			
-		up = ang[ v.up_up ]:Up()			
+	if ( v.up_up ) then
+		if ( !ang[ v.up_up ] ) then return end
+		up = ang[ v.up_up ]:Up()
 	end
 
-	if ( v.up_dn ) then	
-		if ( !ang[ v.up_dn ] ) then return end			
-		up = ang[ v.up_dn ]:Up() * -1			
+	if ( v.up_dn ) then
+		if ( !ang[ v.up_dn ] ) then return end
+		up = ang[ v.up_dn ]:Up() * -1
 	end
 
-	if ( v.up_fwd ) then		
-		if ( !ang[ v.up_fwd ] ) then return end		
-		up = ang[ v.up_fwd ]:Forward()		
+	if ( v.up_fwd ) then
+		if ( !ang[ v.up_fwd ] ) then return end
+		up = ang[ v.up_fwd ]:Forward()
 	end
 
-	if ( v.up_lft ) then			
-		if ( !ang[ v.up_lft ] ) then return end	
-		up = ang[ v.up_lft ]:Right() * -1	
+	if ( v.up_lft ) then
+		if ( !ang[ v.up_lft ] ) then return end
+		up = ang[ v.up_lft ]:Right() * -1
 	end
 
-	if ( v.up_rgt ) then	
-		if ( !ang[ v.up_rgt ] ) then return end			
-		up = ang[ v.up_rgt ]:Right()		
+	if ( v.up_rgt ) then
+		if ( !ang[ v.up_rgt ] ) then return end
+		up = ang[ v.up_rgt ]:Right()
 	end
 
 	--
@@ -104,13 +104,13 @@ motionsensor.ProcessAngle = function( translator, sensor, pos, ang, special_vect
 	--
 	-- We can offer special vectors to define 'up'
 	--
-	if ( isstring( v.up ) ) then	
-		up = special_vectors[ v.up ]		
+	if ( isstring( v.up ) ) then
+		up = special_vectors[ v.up ]
 	end
 
 	if ( a == nil || b == nil || up == nil ) then return end
 
-	ang[ boneid ]	= (a-b):GetNormal():AngleEx( up:GetNormal() );
+	ang[ boneid ]	= (a-b):GetNormal():AngleEx( up:GetNormal() )
 
 	if ( v.adjust ) then
 		ang[ boneid ] = ang[ boneid ] + v.adjust
@@ -162,7 +162,7 @@ motionsensor.ProcessAnglesTable = function( translator, sensor, pos, rotation )
 
 	for iPasses = 1, 5 do
 
-		local cur_process = reprocess;
+		local cur_process = reprocess
 		reprocess = {}
 
 		for k, v in pairs( cur_process ) do
@@ -243,7 +243,7 @@ motionsensor.BuildSkeleton = function( translator, player, rotation )
 	--
 	local pos = motionsensor.ProcessPositionTable( translator, sensor )
 
-	
+
 	--
 	-- Fill out the angles
 	--

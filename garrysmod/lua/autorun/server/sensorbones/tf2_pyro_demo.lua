@@ -1,28 +1,28 @@
 --
 -- These are the physics bone numbers
 --
-local PLVS		= 0;
-local RTHY		= 1;
-local RCLF		= 2;
-local LTHY		= 3;
-local LCLF		= 4;
-local LFOT		= 5;
-local SPNE		= 6;
-local RSLD		= 7;
-local RARM		= 8;
-local LSLD		= 9;
-local LARM		= 10;
-local LHND		= 11;
-local HEAD		= 12;
-local RHND		= 13;
-local RFOT		= 14;
+local PLVS		= 0
+local RTHY		= 1
+local RCLF		= 2
+local LTHY		= 3
+local LCLF		= 4
+local LFOT		= 5
+local SPNE		= 6
+local RSLD		= 7
+local RARM		= 8
+local LSLD		= 9
+local LARM		= 10
+local LHND		= 11
+local HEAD		= 12
+local RHND		= 13
+local RFOT		= 14
 
 
-local Builder = 
+local Builder =
 {
 	PrePosition = function( self, sensor )
 
-		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] )  * 0.6
+		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] ) * 0.6
 
 		local acrossshoulders = (sensor[SENSORBONE.SHOULDER_RIGHT] - sensor[SENSORBONE.SHOULDER_LEFT]):GetNormal() * 0.08
 
@@ -58,7 +58,7 @@ local Builder =
 	--
 	-- Which on the sensor should we use for which ones on our model
 	--
-	PositionTable = 
+	PositionTable =
 	{
 		[PLVS]	= SENSORBONE.HIP,
 		[RSLD]	= SENSORBONE.SHOULDER_RIGHT,
@@ -80,12 +80,12 @@ local Builder =
 	--
 	-- Which bones should we use to determine our bone angles
 	--
-	AnglesTable = 
+	AnglesTable =
 	{
 		[PLVS]	= { from = PLVS, to = SPNE, up = "hips_back" },
 		[SPNE]	= { from = PLVS, to = SPNE, up = "chest_bck" },
 		[HEAD]	= { from = SPNE, to = HEAD, up = "head_back" },
-	
+
 		[RSLD]	= { from = RARM, to = RSLD, up_rgt = SPNE },
 		[RARM]	= { from = RHND, to = RARM, up_rgt = RSLD },
 		[RHND]	= { from_sensor = SENSORBONE.HAND_RIGHT, to_sensor = SENSORBONE.WRIST_RIGHT, up_fwd = RARM },
@@ -129,8 +129,8 @@ local Builder =
 
 	end,
 
-	IsApplicable = function( self, ent ) 
-		
+	IsApplicable = function( self, ent )
+
 		local mdl = ent:GetModel();
 
 		if ( mdl:EndsWith( "models/player/pyro.mdl" ) ) then return true end
@@ -143,7 +143,7 @@ local Builder =
 		if ( mdl:EndsWith( "models/bots/demo_boss/bot_demo_boss.mdl" ) ) then return true end
 
 		return false
-	
+
 	end,
 }
 

@@ -1,9 +1,9 @@
---[[   _                                
-	( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 --]]
 local meta = FindMetaTable( "Panel" )
@@ -12,67 +12,67 @@ GWEN = {}
 
 function GWEN.CreateTextureBorder( _x, _y, _w, _h, l, t, r, b )
 
-	local mat = SKIN.GwenTexture;
+	local mat = SKIN.GwenTexture
 	local tex = mat:GetTexture( "$basetexture" )
-	
+
 	_x = _x / tex:Width()
 	_y = _y / tex:Height()
 	_w = _w / tex:Width()
 	_h = _h / tex:Height()
-	
+
 	local _l = l / tex:Width()
 	local _t = t / tex:Height()
 	local _r = r / tex:Width()
 	local _b = b / tex:Height()
-	
+
 	return function( x, y, w, h, col )
-		
+
 		surface.SetMaterial( mat )
-		if ( col ) then 
+		if ( col ) then
 			surface.SetDrawColor( col )
 		else
 			surface.SetDrawColor( 255, 255, 255, 255 )
 		end
-		
-		-- top 
+
+		-- top
 		surface.DrawTexturedRectUV( x, y, l, t, _x, _y, _x+_l, _y+_t )
 		surface.DrawTexturedRectUV( x+l, y, w-l-r, t, _x+_l, _y, _x+_w-_r, _y+_t )
 		surface.DrawTexturedRectUV( x+w-r, y, r, t, _x+_w-_r, _y, _x+_w, _y+_t )
-	
-		-- bottom 
+
+		-- bottom
 		surface.DrawTexturedRectUV( x, y+h-b, l, b, _x, _y+_h-_b, _x+_l, _y+_h )
 		surface.DrawTexturedRectUV( x+l, y+h-b, w-l-r, b, _x+_l, _y+_h-_b, _x+_w-_r, _y+_h )
 		surface.DrawTexturedRectUV( x+w-r, y+h-b, r, b, _x+_w-_r, _y+_h-_b, _x+_w, _y+_h )
-		
-		-- middle. 
+
+		-- middle.
 		surface.DrawTexturedRectUV( x+l, y+t, w-l-r, h-t-b, _x+_l, _y+_t, _x+_w-_r, _y+_h-_b )
 		surface.DrawTexturedRectUV( x, y+t, l, h-t-b, _x, _y+_t, _x+_l, _y+_h-_b )
 		surface.DrawTexturedRectUV( x+w-r, y+t, r, h-t-b, _x+_w-_r, _y+_t, _x+_w, _y+_h-_b )
-	
+
 	end
 
 end
 
 function GWEN.CreateTextureNormal( _x, _y, _w, _h )
 
-	local mat = SKIN.GwenTexture;
+	local mat = SKIN.GwenTexture
 	local tex = mat:GetTexture( "$basetexture" )
-	
+
 	_x = _x / tex:Width()
 	_y = _y / tex:Height()
 	_w = _w / tex:Width()
 	_h = _h / tex:Height()
-		
+
 	return function( x, y, w, h, col )
-		
+
 		surface.SetMaterial( mat )
-		
-		if ( col ) then 
+
+		if ( col ) then
 			surface.SetDrawColor( col )
 		else
 			surface.SetDrawColor( 255, 255, 255, 255 )
 		end
-		
+
 		surface.DrawTexturedRectUV( x, y, w, h, _x, _y, _x+_w, _y+_h )
 
 	end
@@ -81,32 +81,32 @@ end
 
 function GWEN.CreateTextureCentered( _x, _y, _w, _h )
 
-	local mat = SKIN.GwenTexture;
+	local mat = SKIN.GwenTexture
 	local tex = mat:GetTexture( "$basetexture" )
-	
-	local width = _w;
-	local height = _h;
-	
+
+	local width = _w
+	local height = _h
+
 	_x = _x / tex:Width()
 	_y = _y / tex:Height()
 	_w = _w / tex:Width()
 	_h = _h / tex:Height()
-		
+
 	return function( x, y, w, h, col )
-		
-		x = x + (w-width)*0.5;
-		y = y + (h-height)*0.5;
-		w = width;
-		h = height;
-		
+
+		x = x + (w-width)*0.5
+		y = y + (h-height)*0.5
+		w = width
+		h = height
+
 		surface.SetMaterial( mat )
-		
-		if ( col ) then 
+
+		if ( col ) then
 			surface.SetDrawColor( col )
 		else
 			surface.SetDrawColor( 255, 255, 255, 255 )
 		end
-		
+
 		surface.DrawTexturedRectUV( x, y, w, h, _x, _y, _x+_w, _y+_h )
 
 	end
@@ -115,7 +115,7 @@ end
 
 function GWEN.TextureColor( x, y )
 
-	local mat = SKIN.GwenTexture;
+	local mat = SKIN.GwenTexture
 	return mat:GetColor( x, y )
 
 end
@@ -149,7 +149,7 @@ end
 --
 -- Convert GWEN types into Derma Types
 --
-local GwenTypes = 
+local GwenTypes =
 {
 	Base				= "Panel",
 	Button				= "DButton",
@@ -171,7 +171,7 @@ function meta:ApplyGWEN( tbl )
 
 	for k, v in pairs( tbl.Properties ) do
 
-		if ( self[ "GWEN_Set" .. k ] ) then	
+		if ( self[ "GWEN_Set" .. k ] ) then
 			self[ "GWEN_Set" .. k ]( self, v )
 		end
 
@@ -183,7 +183,7 @@ function meta:ApplyGWEN( tbl )
 
 		local type = GwenTypes[ v.Type ]
 		if ( type ) then
-			
+
 			local pnl = self:Add( type )
 			pnl:ApplyGWEN( v )
 		else

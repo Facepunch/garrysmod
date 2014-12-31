@@ -5,8 +5,8 @@ properties.Add( "skin", {
 	MenuLabel = "#skin",
 	Order = 601,
 	MenuIcon = "icon16/picture_edit.png",
-	
-	Filter = function( self, ent, ply ) 
+
+	Filter = function( self, ent, ply )
 
 		if ( !IsValid( ent ) ) then return false end
 		if ( ent:IsPlayer() ) then return false end
@@ -28,7 +28,7 @@ properties.Add( "skin", {
 		--
 		-- Create a check item for each skin
 		--
-		local num = ent:SkinCount();
+		local num = ent:SkinCount()
 
 		for i=0, num-1 do
 
@@ -38,14 +38,14 @@ properties.Add( "skin", {
 			end
 
 		end
-		
+
 
 	end,
 
 	Action = function( self, ent )
 
 		-- Nothing - we use SetBodyGroup below
-		
+
 	end,
 
 	SetSkin = function( self, ent, id )
@@ -58,14 +58,14 @@ properties.Add( "skin", {
 	end,
 
 	Receive = function( self, length, player )
-	
+
 		local ent = net.ReadEntity()
 		local skinid = net.ReadUInt( 8 )
-		
+
 		if ( !self:Filter( ent, player ) ) then return end
 
 		ent:SetSkin( skinid )
-		
-	end	
+
+	end
 
 } )

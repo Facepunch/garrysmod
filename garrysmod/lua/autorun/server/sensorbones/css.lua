@@ -4,28 +4,28 @@
 -- These are the physics bone numbers
 --
 
-local PLVS		= 0;	
-local SPNE		= 1;
-local TRSO		= 2;
-local RSLD		= 3;
-local LSLD		= 4;
-local LARM		= 5;
-local LWST		= 6;
-local LHND		= 7;
-local RARM		= 8;
-local RWST		= 9;
-local RHND		= 10;
-local RTHY		= 11;
-local RCLF		= 12;
-local LTHY		= 13;
-local LCLF		= 14;
-local HEAD		= 15;
+local PLVS		= 0
+local SPNE		= 1
+local TRSO		= 2
+local RSLD		= 3
+local LSLD		= 4
+local LARM		= 5
+local LWST		= 6
+local LHND		= 7
+local RARM		= 8
+local RWST		= 9
+local RHND		= 10
+local RTHY		= 11
+local RCLF		= 12
+local LTHY		= 13
+local LCLF		= 14
+local HEAD		= 15
 
-local Builder = 
+local Builder =
 {
 	PrePosition = function( self, sensor )
 
-		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] )  * 1.0
+		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] ) * 1.0
 
 		sensor[SENSORBONE.SHOULDER]:Add( spinestretch * 0.7 )
 		sensor[SENSORBONE.SHOULDER_RIGHT]:Add( spinestretch )
@@ -47,7 +47,7 @@ local Builder =
 	--
 	-- Which on the sensor should we use for which ones on our model
 	--
-	PositionTable = 
+	PositionTable =
 	{
 		[PLVS]	= SENSORBONE.HIP,
 		[TRSO]	= SENSORBONE.SPINE,
@@ -68,7 +68,7 @@ local Builder =
 	--
 	-- Which bones should we use to determine our bone angles
 	--
-	AnglesTable = 
+	AnglesTable =
 	{
 		[PLVS]	= { from = LTHY, to = RTHY, up = "hips_fwd" },
 		[SPNE]	= { from_sensor = SENSORBONE.HEAD,	to_sensor = SENSORBONE.SPINE, up = "chest_rgt" },
@@ -76,9 +76,9 @@ local Builder =
 		[HEAD]	= { from_sensor = SENSORBONE.HEAD,	to_sensor = SENSORBONE.SHOULDER, up = "chest_lft" },
 		[RSLD]	= { from = RSLD, to = LSLD, up = "chest_bck" },
 		[LSLD]	= { from = LSLD, to = RSLD, up = "chest_fwd" },
-		[RARM]	= { from = RARM, to = RSLD, up = "chest_up" },	
+		[RARM]	= { from = RARM, to = RSLD, up = "chest_up" },
 		[LARM]	= { from = LARM, to = LSLD, up = "chest_dn" },
-		[RWST]	= { from = RHND, to = RARM, up = "chest_up" },	
+		[RWST]	= { from = RHND, to = RARM, up = "chest_up" },
 		[LWST]	= { from = LHND, to = LARM, up = "chest_dn" },
 		[RTHY]	= { from = RCLF, to = RTHY, up_up = SPNE },
 		[RCLF]	= { from_sensor = SENSORBONE.ANKLE_RIGHT,	to_sensor = SENSORBONE.KNEE_RIGHT, up_up = RTHY },
@@ -94,16 +94,16 @@ local Builder =
 	--
 	Complete = function( self, player, sensor, rotation, pos, ang )
 
-		pos[SPNE] = LerpVector( 0.45, pos[SPNE], pos[HEAD] );
+		pos[SPNE] = LerpVector( 0.45, pos[SPNE], pos[HEAD] )
 		pos[RWST] = pos[RARM]
 		pos[LWST] = pos[LARM]
 
 	end,
 
 	-- We're used as a default - no need to return true to anything here.
-	IsApplicable = function( self, ent ) 
+	IsApplicable = function( self, ent )
 
-		local mdl = ent:GetModel();
+		local mdl = ent:GetModel()
 
 		if ( mdl:EndsWith( "models/player/ct_gign.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/ct_sas.mdl" ) ) then return true end
@@ -114,7 +114,7 @@ local Builder =
 		if ( mdl:EndsWith( "models/player/t_phoenix.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models//player/t_arctic.mdl" ) ) then return true end
 
-		return false; 
+		return false
 
 	end,
 }

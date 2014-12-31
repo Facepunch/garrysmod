@@ -5,28 +5,28 @@ local C_Material = Material
 function Material( name, words )
 
 	if ( !words ) then return C_Material( name ) end
-	
-	local str = "";
-	
-	if ( words:find( "vertexlitgeneric" ) ) then str = str .. "1" 
-	elseif ( words:find( "unlitgeneric" ) ) then str = str .. "0" 
+
+	local str = ""
+
+	if ( words:find( "vertexlitgeneric" ) ) then str = str .. "1"
+	elseif ( words:find( "unlitgeneric" ) ) then str = str .. "0"
 	else str = str .. "0" end
-	
-	if ( words:find( "nocull" ) ) then str = str .. "1" 
+
+	if ( words:find( "nocull" ) ) then str = str .. "1"
 	else str = str .. "0" end
-	
-	if ( words:find( "alphatest" ) ) then str = str .. "1" 
+
+	if ( words:find( "alphatest" ) ) then str = str .. "1"
 	else str = str .. "0" end
-	
-	if ( words:find( "mips" ) ) then str = str .. "1" 
+
+	if ( words:find( "mips" ) ) then str = str .. "1"
 	else str = str .. "0" end
-	
-	if ( words:find( "noclamp" ) ) then str = str .. "1" 
+
+	if ( words:find( "noclamp" ) ) then str = str .. "1"
 	else str = str .. "0" end
-	
-	if ( words:find( "smooth" ) ) then str = str .. "1" 
+
+	if ( words:find( "smooth" ) ) then str = str .. "1"
 	else str = str .. "0" end
-	
+
 	return C_Material( name, str )
 
 end
@@ -34,8 +34,8 @@ end
 if ( !render ) then return end
 
 --[[---------------------------------------------------------
-  Short aliases for stencil constants
------------------------------------------------------------]]  
+	Short aliases for stencil constants
+-----------------------------------------------------------]]
 
 STENCIL_NEVER = STENCILCOMPARISONFUNCTION_NEVER
 STENCIL_LESS = STENCILCOMPARISONFUNCTION_LESS
@@ -56,13 +56,13 @@ STENCIL_INCR = STENCILOPERATION_INCR
 STENCIL_DECR = STENCILOPERATION_DECR
 
 --[[---------------------------------------------------------
-   Name:	ClearRenderTarget
-   Params: 	<texture> <color>
-   Desc:	Clear a render target
------------------------------------------------------------]]   
+	Name:	ClearRenderTarget
+	Params: 	<texture> <color>
+	Desc:	Clear a render target
+-----------------------------------------------------------]]
 function render.ClearRenderTarget( rt, color )
 
-	local OldRT = render.GetRenderTarget();
+	local OldRT = render.GetRenderTarget()
 		render.SetRenderTarget( rt )
 		render.Clear( color.r, color.g, color.b, color.a )
 	render.SetRenderTarget( OldRT )
@@ -71,31 +71,31 @@ end
 
 
 --[[---------------------------------------------------------
-   Name:	SupportsHDR
-   Params: 	
-   Desc:	Return true if the client supports HDR
------------------------------------------------------------]]   
+	Name:	SupportsHDR
+	Params:
+	Desc:	Return true if the client supports HDR
+-----------------------------------------------------------]]
 function render.SupportsHDR( )
 
 	if ( render.GetDXLevel() < 80 ) then return false end
 
 	return true
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   Name:	CopyTexture
-   Params: 	<texture from> <texture to>
-   Desc:	Copy the contents of one texture to another
------------------------------------------------------------]]   
+	Name:	CopyTexture
+	Params: 	<texture from> <texture to>
+	Desc:	Copy the contents of one texture to another
+-----------------------------------------------------------]]
 function render.CopyTexture( from, to )
 
-	local OldRT = render.GetRenderTarget();
-		
+	local OldRT = render.GetRenderTarget()
+
 		render.SetRenderTarget( from )
 		render.CopyRenderTargetToTexture( to )
-		
+
 	render.SetRenderTarget( OldRT )
 
 end
@@ -119,10 +119,10 @@ local tex_Bloom1		= render.GetBloomTex1()
 function render.BlurRenderTarget( rt, sizex, sizey, passes )
 
 	mat_BlurX:SetTexture( "$basetexture", rt )
-	mat_BlurY:SetTexture( "$basetexture", tex_Bloom1  )
+	mat_BlurY:SetTexture( "$basetexture", tex_Bloom1 )
 	mat_BlurX:SetFloat( "$size", sizex )
 	mat_BlurY:SetFloat( "$size", sizey )
-	
+
 	for i=1, passes+1 do
 
 		render.SetRenderTarget( tex_Bloom1 )
@@ -147,7 +147,7 @@ function cam.Start3D( pos, ang, fov, x, y, w, h, znear, zfar )
 
 	local tab = {}
 
-	tab.type = '3D';
+	tab.type = '3D'
 	tab.origin = pos
 	tab.angles = ang
 
@@ -198,8 +198,8 @@ end
 
 
 --
--- This isn't very fast. If you're doing something every frame you should find a way to 
--- cache a ClientsideModel and keep it around! This is fine for rendering to a render 
+-- This isn't very fast. If you're doing something every frame you should find a way to
+-- cache a ClientsideModel and keep it around! This is fine for rendering to a render
 -- target once - or something.
 --
 
@@ -210,7 +210,7 @@ function render.Model( tbl, ent )
 	if ( ent == nil ) then
 		ent = ClientsideModel( tbl.model or "error.mdl", RENDERGROUP_OTHER )
 	end
-	
+
 	if ( !IsValid( ent ) ) then return end
 
 	ent:SetModel( tbl.model or "error.mdl" )

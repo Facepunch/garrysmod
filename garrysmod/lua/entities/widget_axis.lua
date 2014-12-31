@@ -12,13 +12,13 @@ local widget_axis_arrow = { Base = "widget_arrow" }
 function widget_axis_arrow:Initialize()
 
 	BaseClass.Initialize( self )
-		
+
 end
 
 function widget_axis_arrow:SetupDataTables()
 
 	BaseClass.SetupDataTables( self )
-	self:NetworkVar( "Int", 0, "AxisIndex" );	
+	self:NetworkVar( "Int", 0, "AxisIndex" )
 
 end
 
@@ -42,13 +42,13 @@ local widget_axis_disc = { Base = "widget_disc" }
 function widget_axis_disc:Initialize()
 
 	BaseClass.Initialize( self )
-		
+
 end
 
 function widget_axis_disc:SetupDataTables()
 
 	BaseClass.SetupDataTables( self )
-	self:NetworkVar( "Int", 0, "AxisIndex" );	
+	self:NetworkVar( "Int", 0, "AxisIndex" )
 
 end
 
@@ -73,10 +73,10 @@ DEFINE_BASECLASS( "widget_base" )
 function ENT:Initialize()
 
 	BaseClass.Initialize( self )
-	
+
 	self:SetCollisionBounds( Vector( -1, -1, -1 ), Vector( 1, 1, 1 ) )
 	self:SetSolid( SOLID_NONE )
-		
+
 end
 
 function ENT:Setup( ent, boneid, rotate )
@@ -84,7 +84,7 @@ function ENT:Setup( ent, boneid, rotate )
 	self:FollowBone( ent, boneid )
 	self:SetLocalPos( Vector( 0, 0, 0 ) )
 	self:SetLocalAngles( Angle( 0, 0, 0 ) )
-	
+
 	local EntName = "widget_axis_arrow"
 	if ( rotate ) then EntName = "widget_axis_disc" end
 
@@ -94,24 +94,24 @@ function ENT:Setup( ent, boneid, rotate )
 		self.ArrowX:Spawn()
 		self.ArrowX:SetLocalPos( Vector( 0, 0, 0 ) )
 		self.ArrowX:SetLocalAngles( Vector(1,0,0):Angle() )
-		self.ArrowX:SetAxisIndex( 1 );
-		
+		self.ArrowX:SetAxisIndex( 1 )
+
 	self.ArrowY = ents.Create( EntName )
 		self.ArrowY:SetParent( self )
 		self.ArrowY:SetColor( Color( 0, 230, 50, 255 ) )
 		self.ArrowY:Spawn()
 		self.ArrowY:SetLocalPos( Vector( 0, 0, 0 ) )
 		self.ArrowY:SetLocalAngles( Vector(0,1,0):Angle() )
-		self.ArrowY:SetAxisIndex( 2 );
-		
+		self.ArrowY:SetAxisIndex( 2 )
+
 	self.ArrowZ = ents.Create( EntName )
 		self.ArrowZ:SetParent( self )
 		self.ArrowZ:SetColor( Color( 50, 100, 255, 255 ) )
 		self.ArrowZ:Spawn()
 		self.ArrowZ:SetLocalPos( Vector( 0, 0, 0 ) )
 		self.ArrowZ:SetLocalAngles( Vector(0,0,1):Angle() )
-		self.ArrowZ:SetAxisIndex( 3 );
-			
+		self.ArrowZ:SetAxisIndex( 3 )
+
 end
 
 function ENT:SetPriority( x )
@@ -119,10 +119,10 @@ function ENT:SetPriority( x )
 	if ( IsValid( self.ArrowX ) ) then self.ArrowX:SetPriority( x ) end
 	if ( IsValid( self.ArrowY ) ) then self.ArrowY:SetPriority( x ) end
 	if ( IsValid( self.ArrowZ ) ) then self.ArrowZ:SetPriority( x ) end
-	
+
 end
 
-function ENT:Draw()	
+function ENT:Draw()
 end
 
 function ENT:OnArrowDragged( num, dist, pl, mv )
