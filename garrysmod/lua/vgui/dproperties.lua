@@ -39,7 +39,7 @@ local tblRow = vgui.RegisterTable( {
 
 	end,
 
-	SetValue = function( self, val ) 
+	SetValue = function( self, val )
 
 		--
 		-- Don't update the value if our cache'd value is the same.
@@ -102,7 +102,7 @@ local tblCategory = vgui.RegisterTable( {
 		self.Expand:DockMargin( 0, 4, 0, 4 )
 		self.Expand:SetExpanded( true )
 		self.Expand.DoClick = function()
-			
+
 			self.Container:SetVisible( !self.Container:IsVisible() )
 			self.Expand:SetExpanded( self.Container:IsVisible() )
 			self:InvalidateLayout()
@@ -139,7 +139,7 @@ local tblCategory = vgui.RegisterTable( {
 		if ( !bCreate ) then return end
 
 		local row = self.Container:Add( tblRow )
-		
+
 			row.Label:SetText( name )
 
 			self.Rows[ name ] = row

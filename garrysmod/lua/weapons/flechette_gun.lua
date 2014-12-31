@@ -62,19 +62,19 @@ function SWEP:PrimaryAttack()
 
 	self:EmitSound( ShootSound )
 	self:ShootEffects( self )
-	
+
 	-- The rest is only done on the server
 	if (!SERVER) then return end
-	
+
 	local Forward = self.Owner:EyeAngles():Forward()
-	
+
 	local ent = ents.Create( "hunter_flechette" )
 	if ( IsValid( ent ) ) then
-	
+
 			ent:SetPos( self.Owner:GetShootPos() + Forward * 32 )
 			ent:SetAngles( self.Owner:EyeAngles() )
 		ent:Spawn()
-		
+
 		ent:SetVelocity( Forward * 2000 )
 		ent:SetOwner( self.Owner )
 
@@ -88,12 +88,12 @@ end
 function SWEP:SecondaryAttack()
 
 	-- Right click does nothing..
-	
+
 end
 
 /*---------------------------------------------------------
-   Name: ShouldDropOnDie
-   Desc: Should this weapon be dropped when its owner dies?
+	Name: ShouldDropOnDie
+	Desc: Should this weapon be dropped when its owner dies?
 ---------------------------------------------------------*/
 function SWEP:ShouldDropOnDie()
 	return false
