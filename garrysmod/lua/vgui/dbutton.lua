@@ -16,7 +16,7 @@ AccessorFunc( PANEL, "m_bBorder", "DrawBorder", FORCE_BOOL )
 function PANEL:Init()
 
 	self:SetContentAlignment( 5 )
-	
+
 	--
 	-- These are Lua side commands
 	-- Defined above using AccessorFunc
@@ -48,18 +48,18 @@ end
 function PANEL:SetImage( img )
 
 	if ( !img ) then
-	
+
 		if ( IsValid( self.m_Image ) ) then
 			self.m_Image:Remove()
 		end
-	
+
 		return
 	end
 
 	if ( !IsValid( self.m_Image ) ) then
 		self.m_Image = vgui.Create( "DImage", self )
 	end
-	
+
 	self.m_Image:SetImage( img )
 	self.m_Image:SizeToContents()
 	self:InvalidateLayout()
@@ -93,21 +93,21 @@ function PANEL:UpdateColours( skin )
 end
 
 --[[---------------------------------------------------------
-   Name: PerformLayout
+	Name: PerformLayout
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
-	
+
 	--
 	-- If we have an image we have to place the image on the left
 	-- and make the text align to the left, then set the inset
 	-- so the text will be to the right of the icon.
 	--
 	if ( IsValid( self.m_Image ) ) then
-		
+
 		self.m_Image:SetPos( 4, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
-		
+
 		self:SetTextInset( self.m_Image:GetWide() + 16, 0 )
-	
+
 	end
 
 	DLabel.PerformLayout( self )
@@ -137,8 +137,8 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetConsoleCommand( strName, strArgs )
 
-	self.DoClick = function( self, val ) 
-		RunConsoleCommand( strName, strArgs ) 
+	self.DoClick = function( self, val )
+		RunConsoleCommand( strName, strArgs )
 	end
 
 end
@@ -151,7 +151,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	local ctrl = vgui.Create( ClassName )
 	ctrl:SetText( "Example Button" )
 	ctrl:SetWide( 200 )
-	
+
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end

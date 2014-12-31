@@ -1,9 +1,9 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+    ( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 
 --]]
@@ -16,26 +16,26 @@ AccessorFunc( PANEL, "m_iBorder", 				"Border" )
 AccessorFunc( PANEL, "m_iLayoutDir", 			"LayoutDir" )
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetDropPos( "46" )
-	
+
 	self:SetSpaceX( 0 )
 	self:SetSpaceY( 0 )
 	self:SetBorder( 0 )
 	self:SetLayoutDir( TOP )
-	
-	self.LastW = 0;
-	self.LastH = 0;
+
+	self.LastW = 0
+	self.LastH = 0
 
 end
 
 function PANEL:Layout()
 
-	self.LastW = 0;
-	self.LastH = 0;
+	self.LastW = 0
+	self.LastH = 0
 	self:InvalidateLayout()
 
 end
@@ -44,91 +44,91 @@ function PANEL:LayoutIcons_TOP()
 
 	local x			= self.m_iBorder
 	local y			= self.m_iBorder
-	local RowHeight = 0;
-	local MaxWidth	= self:GetWide() - self.m_iBorder * 2;
+	local RowHeight = 0
+	local MaxWidth	= self:GetWide() - self.m_iBorder * 2
 
 	local chld = self:GetChildren()
 	for k, v in pairs( chld ) do
-	
+
 		if ( !v:IsVisible() ) then continue end
-	
+
 		local w, h = v:GetSize()
 		if ( x + w > MaxWidth || ( v.OwnLine && x > self.m_iBorder ) ) then
-		
+
 			x = self.m_iBorder
 			y = y + RowHeight + self.m_iSpaceY
-			RowHeight = 0;
-		
+			RowHeight = 0
+
 		end
-	
+
 		v:SetPos( x, y )
-		
+
 		x = x + v:GetWide() + self.m_iSpaceX
 		RowHeight = math.max( RowHeight, v:GetTall() )
-		
+
 		-- Start a new line if this panel is meant to be on its own line
 		if ( v.OwnLine ) then
 			x = MaxWidth + 1
 		end
-	
+
 	end
-	
+
 end
 
 function PANEL:LayoutIcons_LEFT()
 
 	local x			= self.m_iBorder
 	local y			= self.m_iBorder
-	local RowWidth = 0;
-	local MaxHeight	= self:GetTall() - self.m_iBorder * 2;
+	local RowWidth = 0
+	local MaxHeight	= self:GetTall() - self.m_iBorder * 2
 
 	local chld = self:GetChildren()
 	for k, v in pairs( chld ) do
-	
+
 		if ( !v:IsVisible() ) then continue end
-	
+
 		local w, h = v:GetSize()
 		if ( y + h > MaxHeight || ( v.OwnLine && y > self.m_iBorder ) ) then
-		
+
 			y = self.m_iBorder
 			x = x + RowWidth + self.m_iSpaceX
-			RowWidth = 0;
-		
+			RowWidth = 0
+
 		end
-	
+
 		v:SetPos( x, y )
-		
+
 		y = y + v:GetTall() + self.m_iSpaceY
 		RowWidth = math.max( RowWidth, v:GetWide() )
-		
+
 		-- Start a new line if this panel is meant to be on its own line
 		if ( v.OwnLine ) then
 			y = MaxHeight + 1
 		end
-	
+
 	end
-	
+
 end
 
 function PANEL:PerformLayout()
 
-	local ShouldLayout = false;
-	
+	local ShouldLayout = false
+
 	if ( self.LastW != self:GetWide() )		then ShouldLayout = true end
 	if ( self.LastH != self:GetTall() )		then ShouldLayout = true end
-	
+
 	self.LastW = self:GetWide()
 	self.LastH = self:GetTall()
 
-	
+
 
 	if ( ShouldLayout ) then
 
 		if ( self.m_iLayoutDir == LEFT ) then self:LayoutIcons_LEFT() end
 		if ( self.m_iLayoutDir == TOP ) then self:LayoutIcons_TOP() end
-		
+
 	end
-	
+
 	self:SizeToChildren( false, true )
 
 end
@@ -142,22 +142,22 @@ end
 function PANEL:OnChildRemoved()
 
 	self:Layout()
-	
+
 end
 
 function PANEL:OnChildAdded( child )
-	
+
 	local dn = self:GetDnD()
 	if ( dn ) then
-		child:Droppable( self:GetDnD() );			
+		child:Droppable( self:GetDnD() )
 	end
-	
+
 	if ( self:IsSelectionCanvas() ) then
 		child:SetSelectable( true )
 	end
-	
+
 	self:Layout()
-	
+
 end
 
 function PANEL:Copy()
@@ -172,9 +172,9 @@ function PANEL:Copy()
 	copy:SetBorder( self:GetBorder() )
 	copy:SetSelectionCanvas( self:GetSelectionCanvas() )
 	copy.OnModified = self.OnModified
-	
+
 	copy:CopyContents( self )
-	
+
 	return copy
 
 end
@@ -182,15 +182,15 @@ end
 function PANEL:CopyContents( from )
 
 	for k, v in pairs( from:GetChildren() ) do
-	
+
 		v:Copy():SetParent( self )
-	
+
 	end
 
 end
 
 --[[---------------------------------------------------------
-   Name: GenerateExample
+	Name: GenerateExample
 -----------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
@@ -201,18 +201,17 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	pnl:SetSelectionCanvas( true )
 	pnl:SetSpaceX( 4 )
 	pnl:SetSpaceY( 4 )
-	
+
 	for i=1, 32 do
-		
+
 		local btn = pnl:Add( "DButton" )
 		btn:SetSize( 32, 32 )
 		btn:SetText( i )
-		
+
 	end
-		
+
 	PropertySheet:AddSheet( ClassName, pnl, nil, true, true )
 
 end
 
 derma.DefineControl( "DIconLayout", "", PANEL, "DDragBase" )
-

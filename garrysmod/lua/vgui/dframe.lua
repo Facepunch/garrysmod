@@ -1,12 +1,12 @@
---[[   _                                
-	( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DFrame
-	
+
 	A window.
 
 --]]
@@ -267,4 +267,4 @@ function PANEL:PerformLayout()
 
 end
 
-derma.DefineControl( "DFrame", "A simpe window", PANEL, "EditablePanel" )
+derma.DefineControl( "DFrame", "A simple window", PANEL, "EditablePanel" )

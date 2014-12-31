@@ -1,9 +1,9 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+    ( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DPanel
 
@@ -25,12 +25,12 @@ Derma_Hook( PANEL, "ApplySchemeSettings", "Scheme", "Panel" )
 Derma_Hook( PANEL, "PerformLayout", "Layout", "Panel" )
 
 --[[---------------------------------------------------------
-	
+
 -----------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetPaintBackground( true )
-	
+
 	-- This turns off the engine drawing
 	self:SetPaintBackgroundEnabled( false )
 	self:SetPaintBorderEnabled( false )
@@ -38,12 +38,12 @@ function PANEL:Init()
 end
 
 --[[---------------------------------------------------------
-	
+
 -----------------------------------------------------------]]
 function PANEL:SetDisabled( bDisabled )
 
 	self.m_bDisabled = bDisabled
-	
+
 	if ( bDisabled ) then
 		self:SetAlpha( 75 )
 		self:SetMouseInputEnabled( false )
@@ -59,15 +59,15 @@ end
 -----------------------------------------------------------]]
 function PANEL:OnMousePressed( mousecode )
 
-	if ( self.m_bSelectionCanvas && !dragndrop.IsDragging() ) then 
-		self:StartBoxSelection();
+	if ( self.m_bSelectionCanvas && !dragndrop.IsDragging() ) then
+		self:StartBoxSelection()
 	return end
 
 	if ( self:IsDraggable() ) then
-	
+
 		self:MouseCapture( true )
-		self:DragMousePress( mousecode );
-	
+		self:DragMousePress( mousecode )
+
 	end
 
 end
@@ -80,7 +80,7 @@ function PANEL:OnMouseReleased( mousecode )
 	if ( self:EndBoxSelection() ) then return end
 
 	self:MouseCapture( false )
-	
+
 	if ( self:DragMouseRelease( mousecode ) ) then
 		return
 	end
@@ -93,6 +93,5 @@ end
 function PANEL:UpdateColours()
 
 end
-
 
 derma.DefineControl( "DPanel", "", PANEL, "Panel" )

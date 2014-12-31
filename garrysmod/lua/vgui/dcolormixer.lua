@@ -42,7 +42,7 @@ local function CreateWangFunction( self, colindex )
 		end
 
 		self:UpdateColor( self.m_Color )
-	end 
+	end
 
 	return OnValueChanged
 end
@@ -69,9 +69,9 @@ function PANEL:Init()
 		self:SetColor( Color( color.r, color.g, color.b, self.m_bAlpha and color.a or 255 ) )
 	end
 	self.Palette.OnRightClickButton = function( ctrl, btn )
-		ctrl:SaveColor( btn, self:GetColor() );
+		ctrl:SaveColor( btn, self:GetColor() )
 	end
-	
+
 
 	-- The label
 	self.label = vgui.Create( "DLabel", self )
@@ -168,7 +168,7 @@ function PANEL:SetLabel( text )
 
 	if ( !text or ( text == "" ) ) then
 		self.label:SetVisible( false )
-	
+
 		return
 	end
 
@@ -268,7 +268,7 @@ end
 	Name: TranslateValues ( Todo? )
 -----------------------------------------------------------]]
 function PANEL:TranslateValues( x, y )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -388,7 +388,7 @@ end
 
 function PANEL:GetVector()
 
-	local col = self:GetColor();
+	local col = self:GetColor()
 	return Vector( col.r / 255, col.g / 255, col.b / 255 )
 
 end
@@ -416,7 +416,7 @@ function PANEL:ConVarThink()
 	local b, changed_b = self:DoConVarThink( self.m_ConVarB )
 	local a, changed_a = 255, false
 
-	if ( self.m_ConVarA ) then 
+	if ( self.m_ConVarA ) then
 		a, changed_a = self:DoConVarThink( self.m_ConVarA, 'a' )
 	end
 

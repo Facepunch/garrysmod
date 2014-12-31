@@ -30,7 +30,7 @@ local function CreateColorTable( rows )
 	local rows = rows or 8
 	local index = 0
 	local ColorTable = {}
-	for i=0, rows * 2 - 1 do -- HSV 
+	for i=0, rows * 2 - 1 do -- HSV
 		local col = math.Round( math.min( i * ( 360 / ( rows * 2 ) ), 359 ) )
 		index = index + 1
 		ColorTable[index] = HSVToColor( 360 - col, 1, 1 )
@@ -73,7 +73,7 @@ local function AddButton( panel, color, size, id )
 	--
 	-- If the cookie value exists, then use it
 	--
-	local col_saved = panel:GetCookie( "col."..id, nil );
+	local col_saved = panel:GetCookie( "col."..id, nil )
 	if ( col_saved != nil ) then
 		color = col_saved:ToColor()
 	end
@@ -104,7 +104,7 @@ function PANEL:Init()
 	self:SetNumRows( 8 )
 	self:Reset()
 	self:SetCookieName( "palette" )
-	
+
 	self:SetButtonSize( 10 )
 
 end
@@ -162,7 +162,7 @@ function PANEL:SetButtonSize( val )
 	self.m_buttonsize = math.floor( val )
 
 	for k, v in pairs( self:GetChildren() ) do
-		v:SetSize( self.m_buttonsize, self.m_buttonsize )	
+		v:SetSize( self.m_buttonsize, self.m_buttonsize )
 	end
 
 	self:InvalidateLayout()
@@ -198,10 +198,10 @@ end
 function PANEL:SaveColor( btn, color )
 
 	-- Avoid unintended color changing.
-	color = table.Copy( color or color_Error ) 
+	color = table.Copy( color or color_Error )
 
 	btn:SetColor( color )
-	self:SetCookie( "col."..btn:GetID(), string.FromColor( color ) );
+	self:SetCookie( "col."..btn:GetID(), string.FromColor( color ) )
 
 end
 
@@ -225,7 +225,7 @@ function PANEL:OnRightClickButton( btn )
 end
 
 --[[---------------------------------------------------------
-   Name: GenerateExample
+	Name: GenerateExample
 -----------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
