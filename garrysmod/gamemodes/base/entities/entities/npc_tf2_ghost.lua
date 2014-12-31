@@ -1,5 +1,4 @@
 
-
 AddCSLuaFile()
 
 ENT.Base 			= "base_nextbot"
@@ -7,9 +6,9 @@ ENT.Spawnable		= false
 
 function ENT:Initialize()
 
-	--self:SetModel( "models/props_halloween/ghost_no_hat.mdl" );
-	--self:SetModel( "models/props_wasteland/controlroom_filecabinet002a.mdl" );
-	self:SetModel( "models/mossman.mdl" );
+	--self:SetModel( "models/props_halloween/ghost_no_hat.mdl" )
+	--self:SetModel( "models/props_wasteland/controlroom_filecabinet002a.mdl" )
+	self:SetModel( "models/mossman.mdl" )
 
 end
 
@@ -34,7 +33,7 @@ function ENT:RunBehaviour()
 		self:SetSequence( "sit_ground" )											-- Stay sitting
 		coroutine.wait( self:PlayScene( "scenes/eli_lab/mo_gowithalyx01.vcd" ) )	-- play a scene and wait for it to finish before progressing
 		self:PlaySequenceAndWait( "sit_ground_to_idle" )							-- Get up
-		
+
 		-- find the furthest away hiding spot
 		local pos = self:FindSpot( "random", { type = 'hiding', radius = 5000 } )
 
@@ -63,7 +62,7 @@ end
 -- List the NPC as spawnable
 --
 list.Set( "NPC", "npc_tf2_ghost", {
-	Name = "Test NPC", 
+	Name = "Test NPC",
 	Class = "npc_tf2_ghost",
-	Category = "Nextbot"	
+	Category = "Nextbot"
 } )
