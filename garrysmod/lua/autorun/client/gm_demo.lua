@@ -1,4 +1,3 @@
-
 concommand.Add( "gm_demo", function( ply, cmd, arg )
 
 	if ( engine.IsRecordingDemo() ) then
@@ -17,7 +16,7 @@ end )
 local matRecording = nil
 local drawicon = CreateClientConVar( "gm_demo_icon", 1, true )
 hook.Add( "HUDPaint", "DrawRecordingIcon", function()
-	
+
 	if !( engine.IsRecordingDemo() and drawicon:GetBool() ) then return end
 
 	if ( !matRecording ) then
@@ -26,6 +25,6 @@ hook.Add( "HUDPaint", "DrawRecordingIcon", function()
 
 	surface.SetDrawColor( 255, 255, 255, 255 )
 	surface.SetMaterial( matRecording )
-	surface.DrawTexturedRect( ScrW()-512, 0, 512, 256, 0 ) 
+	surface.DrawTexturedRect( ScrW()-512, 0, 512, 256, 0 )
 
 end )
