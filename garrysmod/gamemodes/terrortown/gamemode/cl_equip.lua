@@ -368,6 +368,8 @@ local function TraitorMenuPopup()
       dsheet:AddSheet(GetTranslation("xfer_name"), dtransfer, "icon16/group_gear.png", false,false, "Transfer credits")
    end
 
+   hook.Run("TTTEquipmentTabs", dsheet)
+
 
    -- couple panelselect with info
    dlist.OnActivePanelChanged = function(self, _, new)
