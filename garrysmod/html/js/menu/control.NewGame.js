@@ -61,7 +61,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 
 	$scope.MapClass = function( m )
 	{
-		if ( m.Name == $rootScope.Map )
+		if ( m == $rootScope.Map )
 			return "selected";
 
 		return "";
@@ -73,9 +73,9 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 		$rootScope.LastCategory = $scope.CurrentCategory
 	}
 
-	$scope.ClickMap = function ( m )
+	$scope.ClickMap = function( m )
 	{
-		$scope.SelectMap( m.Name );
+		$scope.SelectMap( m );
 
 		if ( m.DoubleClick )
 		{
@@ -94,21 +94,19 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 		}, 500 )
 	}
 
-	$scope.FavMap = function ( m )
+	$scope.FavMap = function( m )
 	{
-		lua.Run( 'ToggleFavourite( "' + m.Name + '" )' );
+		lua.Run( 'ToggleFavourite( "' + m + '" )' );
 	}
 
-	$scope.MapIcon = function ( m, cat )
+	$scope.MapIcon = function( m, cat )
 	{
 		if ( cat == "Left 4 Dead 2" || cat == "Portal 2"  || cat == "CS: Global Offensive" ) { return "img/incompatible.png" }
-		return "asset://mapimage/" + m.Name
+		return "asset://mapimage/" + m
 	}
 
 	$scope.IsFavMap = function( m )
 	{
-		if ( m.Category == "Favourites" ) return true;
-
 		for ( var i = 0; i < gScope.MapList.length; i++ )
 		{
 			if ( gScope.MapList[i][ "category" ] == "Favourites" )
@@ -116,7 +114,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 				var obj = gScope.MapList[i][ "maps" ]
 				for ( var map in obj )
 				{
-					if ( m.Name == ( obj[ map ].Name ) ) return true
+					if ( m == ( obj[ map ] ) ) return true
 				}
 			}
 		}
@@ -194,7 +192,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 		var iCount = 0;
 		for ( k in maps )
 		{
-			if ( maps[k].Name.search( $scope.SearchText ) != -1 ) iCount++;
+			if ( maps[k].search( $scope.SearchText ) != -1 ) iCount++;
 		}
 
 		return iCount;

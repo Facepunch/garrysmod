@@ -20,12 +20,12 @@
 
 				<ul class="category" ng-repeat="category in MapList | orderBy:'order'" ng-hide="category.maps.length == 0" ng-show="CurrentCategory == category.category">
 				
-					<li>{{category.category}} <small>{{category.maps.length}} </small><small ng-tranny="category.maps.length == 1 && 'newgame_map' || 'newgame_maps'"></small></li>
+					<li>{{category.category}} <small>{{CountFiltered(category.maps)}} </small><small ng-tranny="category.maps.length == 1 && 'newgame_map' || 'newgame_maps'"></small></li>
 
-					<li class="icon mapicon {{MapClass( map )}}" ng-repeat="map in category.maps | orderBy:'Name' | filter:SearchText" >
+					<li class="icon mapicon {{MapClass( map )}}" ng-repeat="map in category.maps | orderBy:'toString()' | filter:SearchText" >
 						<img ng-click="FavMap( map )" class="{{FavMapClass( map )}} {{FavMapHover( map )}}" src="img/empty.png" />
 						<img ng-click="ClickMap( map )" ng-src="{{MapIcon( map, category.category )}}" class="thumbnail" /><br /> 
-						{{map.Name}}
+						{{map}}
 					</li>
 
 				</ul>
@@ -66,14 +66,15 @@
 					</div>
 
 					<div class='control control-numeric' ng-repeat="s in ServerSettings.Numeric">
-						<label ng-Tranny="s.text"></label><input type="text" ng-model="s.Value"/>
+						<label ng-Tranny="s.text"></label>
+						<input type="text" ng-model="s.Value"/>
 					</div>
 
 					<div class='control' ng-repeat="s in ServerSettings.CheckBox">
 						<input type="checkbox" ng-model="s.Value" />
 						<label ng-Tranny="s.text"></label>
-					</div>		
-							
+					</div>
+					
 				</div>
 
 

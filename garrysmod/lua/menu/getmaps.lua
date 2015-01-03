@@ -265,7 +265,7 @@ local function RefreshMaps()
 	for k, v in pairs( g_MapList ) do
 
 		g_MapListCategorised[ v.Category ] = g_MapListCategorised[ v.Category ] or {}
-		g_MapListCategorised[ v.Category ][ v.Name ] = v
+		g_MapListCategorised[ v.Category ][ #g_MapListCategorised[ v.Category ] + 1 ] = v.Name
 
 	end
 
@@ -283,7 +283,7 @@ hook.Add( "GameContentChanged", "RefreshMaps", function()
 
 end )
 
-function ToggleFavourite(map)
+function ToggleFavourite( map )
 
 	LoadFavourites()
 	
