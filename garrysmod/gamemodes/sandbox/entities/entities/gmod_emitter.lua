@@ -26,19 +26,19 @@ function ENT:Initialize()
 		self:PhysicsInit( SOLID_VPHYSICS )
 		self:SetMoveType( MOVETYPE_VPHYSICS )
 		self:SetSolid( SOLID_VPHYSICS )
-	
+
 		self:DrawShadow( false )
 		self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
-	
+
 		local phys = self:GetPhysicsObject()
 		if ( IsValid( phys ) ) then phys:Wake() end
 
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: Draw
+	Name: Draw
 -----------------------------------------------------------]]
 function ENT:Draw()
 
@@ -46,30 +46,30 @@ function ENT:Draw()
 	local ply = LocalPlayer()
 	local wep = ply:GetActiveWeapon()
 
-	if ( wep:IsValid() ) then 
+	if ( wep:IsValid() ) then
 
 		local weapon_name = wep:GetClass()
 		if ( weapon_name == "gmod_camera" ) then return end
 
 	end
-	
+
 	BaseClass.Draw( self )
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: Think
+	Name: Think
 -----------------------------------------------------------]]
 function ENT:Think()
 
 	if ( SERVER ) then return end
 
 	BaseClass.Think( self )
-	
+
 	if ( !self:GetOn() ) then return end
-		
+
 	self.Delay = self.Delay or 0
-	
+
 	if ( self.Delay > CurTime() ) then return end
 	self.Delay = CurTime() + self:GetDelay()
 
@@ -80,20 +80,20 @@ function ENT:Think()
 	local list = list.Get( "EffectType" )
 	local EffectTable = list[ Effect ]
 	if ( !EffectTable ) then return end
-	
+
 	local Angle = self:GetAngles()
 	EffectTable.func( self, self:GetPos() + Angle:Forward() * 12, Angle, self:GetScale() )
-	
+
 end
 
 --[[---------------------------------------------------------
-   Overridden because I want to show the name of the 
-   player that spawned it..
+	Overridden because I want to show the name of the
+	player that spawned it..
 -----------------------------------------------------------]]
 function ENT:GetOverlayText()
 
-	return self:GetPlayerName()	
-	
+	return self:GetPlayerName()
+
 end
 
 
@@ -102,7 +102,7 @@ if ( SERVER ) then
 	numpad.Register( "Emitter_On", 	function ( pl, ent )
 
 		if ( !IsValid( ent ) ) then return end
-	
+
 		if ( ent:GetToggle() ) then
 			ent:SetOn( !ent:GetOn() )
 		return end
@@ -115,7 +115,7 @@ if ( SERVER ) then
 
 		if ( !IsValid( ent ) ) then return end
 		if ( ent:GetToggle() ) then return end
-	
+
 		ent:SetOn( false )
 
 	end )

@@ -1,29 +1,29 @@
 --
 -- These are the physics bone numbers
 --
-local PLVS		= 0;
-local RTHY		= 1;
-local RCLF		= 2;
-local LTHY		= 3;
-local LCLF		= 4;
-local LFOT		= 5;
-local SPNE		= 6;
-local RSLD		= 7;
-local RARM		= 8;
-local LSLD		= 9;
-local LARM		= 10;
-local LHND		= 11;
-local NECK		= 12;
-local HEAD		= 13;
-local DGTG		= 14;
-local RHND		= 15;
-local RFOT		= 16;
+local PLVS		= 0
+local RTHY		= 1
+local RCLF		= 2
+local LTHY		= 3
+local LCLF		= 4
+local LFOT		= 5
+local SPNE		= 6
+local RSLD		= 7
+local RARM		= 8
+local LSLD		= 9
+local LARM		= 10
+local LHND		= 11
+local NECK		= 12
+local HEAD		= 13
+local DGTG		= 14
+local RHND		= 15
+local RFOT		= 16
 
-local Builder = 
+local Builder =
 {
 	PrePosition = function( self, sensor )
 
-		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] )  * 0.5
+		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] ) * 0.5
 
 		local acrossshoulders = (sensor[SENSORBONE.SHOULDER_RIGHT] - sensor[SENSORBONE.SHOULDER_LEFT]):GetNormal() * 0.08
 
@@ -59,7 +59,7 @@ local Builder =
 	--
 	-- Which on the sensor should we use for which ones on our model
 	--
-	PositionTable = 
+	PositionTable =
 	{
 		[PLVS]	= SENSORBONE.HIP,
 		--[TRSO]	= { type = "lerp", value = 0.2, from = SENSORBONE.SHOULDER, to = SENSORBONE.SPINE },
@@ -84,7 +84,7 @@ local Builder =
 	--
 	-- Which bones should we use to determine our bone angles
 	--
-	AnglesTable = 
+	AnglesTable =
 	{
 		[PLVS]	= { from = PLVS, to = SPNE, up = "hips_back" },
 		[SPNE]	= { from = PLVS, to = SPNE, up = "chest_bck" },
@@ -137,16 +137,16 @@ local Builder =
 
 	end,
 
-	IsApplicable = function( self, ent ) 
-		
-		local mdl = ent:GetModel();
+	IsApplicable = function( self, ent )
+
+		local mdl = ent:GetModel()
 
 		if ( mdl:EndsWith( "models/player/scout.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/hwm/scout.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/bots/scout/bot_scout.mdl" ) ) then return true end
 
 		return false
-	
+
 	end,
 }
 

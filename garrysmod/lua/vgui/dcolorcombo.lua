@@ -1,14 +1,12 @@
---[[
-	 _
+--[[ _
 	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DColorMixer
+	DColorCombo
 --]]
-
 
 local PANEL = {}
 
@@ -36,7 +34,7 @@ function PANEL:BuildControls()
 		--ctrl:SetNumRows( 35 )
 		--ctrl:Reset()
 		ctrl.ValueChanged = function( ctrl, color ) self.m_bEditing = true self:OnValueChanged( color ) self.m_bEditing = false end
-		self.Mixer = ctrl;
+		self.Mixer = ctrl
 	self:AddSheet( "", ctrl, "icon16/color_wheel.png" )
 
 	--
@@ -49,7 +47,7 @@ function PANEL:BuildControls()
 		ctrl:SetNumRows( 35 )
 		ctrl:Reset()
 		ctrl.OnValueChanged = function( ctrl, color ) self.m_bEditing = true self:OnValueChanged( color ) self.m_bEditing = false end
-		self.Palette = ctrl;
+		self.Palette = ctrl
 	self:AddSheet( "", ctrl, "icon16/palette.png" )
 
 end

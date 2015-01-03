@@ -22,12 +22,12 @@ function PANEL:Init()
 	self:SetRenderInScreenshots( false )
 
 	local Panel = vgui.Create( "DPanel", self )
-	
+
 	local lbl = Label( "#superdof_pp.settings", Panel )
 	lbl:SetContentAlignment( 8 )
 	lbl:Dock( TOP )
 	lbl:SetDark( true )
-	
+
 	self.BlurSize = vgui.Create( "DNumSlider", Panel )
 		self.BlurSize:SetMin( 0 )
 		self.BlurSize:SetMax( 10 )
@@ -38,7 +38,7 @@ function PANEL:Init()
 		self.BlurSize:Dock( TOP )
 		self.BlurSize:DockMargin( 0, 0, 0, 16 )
 		self.BlurSize:SetDark( true )
-	
+
 	self.Distance = vgui.Create( "DNumSlider", Panel )
 		self.Distance:SetMin( 0 )
 		self.Distance:SetMax( 4096 )
@@ -48,20 +48,20 @@ function PANEL:Init()
 		self.Distance:Dock( TOP )
 		self.Distance:SetDark( true )
 		self.Distance:SetToolTip( "#superdof_pp.distance.tooltip" )
-		
+
 	Panel:SetPos( 10, 30 )
 	Panel:SetSize( 300, 90 )
 	Panel:DockPadding( 8, 8, 8, 8 )
 	Panel:DockMargin( 0, 0, 4, 0 )
 	Panel:Dock( FILL )
-	
+
 	local Panel = vgui.Create( "DPanel", self )
-	
+
 	local lbl = Label( "#superdof_pp.adv", Panel )
 	lbl:SetContentAlignment( 8 )
 	lbl:Dock( TOP )
 	lbl:SetDark( true )
-	
+
 	local PassesCtrl = vgui.Create( "DNumSlider", Panel )
 		PassesCtrl:SetMin( 1 )
 		PassesCtrl:SetMax( 64 )
@@ -72,7 +72,7 @@ function PANEL:Init()
 		PassesCtrl:Dock( TOP )
 		PassesCtrl:DockMargin( 0, 0, 0, 4 )
 		PassesCtrl:SetDark( true )
-	
+
 	local RadialsCtrl = vgui.Create( "DNumSlider", Panel )
 		RadialsCtrl:SetMin( 1 )
 		RadialsCtrl:SetMax( 64 )
@@ -83,7 +83,7 @@ function PANEL:Init()
 		RadialsCtrl:Dock( TOP )
 		RadialsCtrl:DockMargin( 0, 0, 0, 4 )
 		RadialsCtrl:SetDark( true )
-	
+
 	local ShapeCtrl = vgui.Create( "DNumSlider", Panel )
 		ShapeCtrl:SetMin( 0 )
 		ShapeCtrl:SetMax( 1 )
@@ -94,30 +94,30 @@ function PANEL:Init()
 		ShapeCtrl:Dock( TOP )
 		ShapeCtrl:DockMargin( 0, 0, 0, 4 )
 		ShapeCtrl:SetDark( true )
-		
+
 	Panel:SetPos( 10, 30 )
 	Panel:SetSize( 150, 100 )
 	Panel:DockPadding( 8, 8, 8, 8 )
 	Panel:Dock( RIGHT )
 
 	local Panel = vgui.Create( "DPanel", self )
-	
+
 	self.Render = vgui.Create( "DButton", Panel )
 		self.Render:SetText( "#superdof_pp.render" )
 		function self.Render:DoClick() Status = "Render" end
 		self.Render:Dock( RIGHT ) self.Render:SetSize( 70, 20 )
-		
+
 	self.Screenshot = vgui.Create( "DButton", Panel )
 		self.Screenshot:SetText( "#superdof_pp.screenshot" )
 		function self.Screenshot:DoClick() RunConsoleCommand( "jpeg" ) end
 		self.Screenshot:Dock( RIGHT )
 		self.Screenshot:SetSize( 120, 20 )
 		self.Screenshot:DockMargin( 0, 0, 8, 0 )
-		
+
 	local Break = vgui.Create( "DButton", Panel )
 		Break:SetText( "5" )
 		local THIS = self
-		function Break:DoClick() 
+		function Break:DoClick()
 			THIS:SetVisible( false )
 			timer.Simple( 5, function() THIS:SetVisible( true ) end )
 		end
@@ -128,11 +128,11 @@ function PANEL:Init()
 	Panel:Dock( BOTTOM )
 	Panel:DockPadding( 4, 4, 4, 4 )
 	Panel:DockMargin( 0, 4, 0, 0 )
-	Panel:SetTall( 28 );
+	Panel:SetTall( 28 )
 	Panel:MoveToBack()
-	
+
 	self:SetSize( 600, 220 )
-	
+
 end
 
 function PANEL:ChangeDistanceTo( dist )
@@ -148,20 +148,20 @@ local matFB = Material( "pp/fb" )
 
 function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, bSpin, inView, ViewFOV )
 
-	local OldRT 	= render.GetRenderTarget();
+	local OldRT 	= render.GetRenderTarget()
 	local view 		= { x = 0, y = 0, w = ScrW(), h = ScrH() }
 	local fDistance = vOrigin:Distance( vFocus )
-	
+
 	fAngleSize = fAngleSize * math.Clamp( 256 / fDistance, 0.1, 1 ) * 0.5
-	
+
 	local view = inView
 
 	if ( !view ) then
 
-		view = { 
-			x = 0, 
-			y = 0, 
-			w = ScrW(), 
+		view = {
+			x = 0,
+			y = 0,
+			w = ScrW(),
 			h = ScrH(),
 			dopostprocess = true,
 			origin = vOrigin,
@@ -173,22 +173,22 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 
 	-- Straight render (to act as a canvas)
 	render.RenderView( view )
-	
+
 	render.UpdateScreenEffectTexture()
-	
+
 	render.SetRenderTarget( texFSB )
 			render.Clear( 0, 0, 0, 255, true, true )
-			matFB:SetFloat( "$alpha", 1  )
+			matFB:SetFloat( "$alpha", 1 )
 			render.SetMaterial( matFB )
 			render.DrawScreenQuad()
-	
-	
+
+
 	local Radials = ( math.pi * 2 ) / radial_steps
-	
+
 	for mul=( 1 / passes), 1, ( 1 / passes ) do
-	
+
 		for i=0,( math.pi * 2 ), Radials do
-		
+
 			local VA = vAngle * 1 -- hack - this makes it copy the angles instead of the reference
 			local VRot = vAngle * 1
 			-- Rotate around the focus point
@@ -197,58 +197,58 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 
 			view.origin = vFocus - VA:Forward() * fDistance
 			view.angles = VA
-			
+
 			-- Render to the front buffer
 			render.SetRenderTarget( OldRT )
 			render.Clear( 0, 0, 0, 255, true, true )
 			render.RenderView( view )
 			render.UpdateScreenEffectTexture()
-			
+
 			-- Copy it to our floating point buffer at a reduced alpha
 			render.SetRenderTarget( texFSB )
 			local alpha = ( Radials / ( math.pi * 2 ) )	-- Divide alpha by number of radials
 			alpha = alpha * ( 1 - mul )					-- Reduce alpha the further away from center we are
-			matFB:SetFloat( "$alpha", alpha  )
-			
+			matFB:SetFloat( "$alpha", alpha )
+
 				render.SetMaterial( matFB )
 				render.DrawScreenQuad()
 
 			-- We have to SPIN here to stop the Source engine running out of render queue space.
 			if ( bSpin ) then
-			
+
 				-- Restore RT
 				render.SetRenderTarget( OldRT )
-	
+
 				-- Render our result buffer to the screen
 				matFSB:SetFloat( "$alpha", 1 )
 				matFSB:SetTexture( "$basetexture", texFSB )
-		
+
 				render.SetMaterial( matFSB )
 				render.DrawScreenQuad()
-				
+
 				cam.Start2D()
 					local add = ( i / ( math.pi*2 ) ) * ( 1 / passes )
 					local percent = string.format( "%.1f", ( mul - ( 1 / passes ) + add ) * 100 )
 					draw.DrawText( percent .. "%", "GModWorldtip", view.w - 100, view.h - 100, Color( 0, 0, 0, 255 ), TEXT_ALIGN_CENTER )
 					draw.DrawText( percent .. "%", "GModWorldtip", view.w - 101, view.h - 101, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER )
 				cam.End2D()
-			
+
 				render.Spin()
-				
+
 			end
-		
+
 		end
-		
+
 	end
 
 	-- Restore RT
 	render.SetRenderTarget( OldRT )
 	render.Clear( 0, 255, 0, 255, true, true )
-	
+
 	-- Render our result buffer to the screen
 	matFSB:SetFloat( "$alpha", 1 )
 	matFSB:SetTexture( "$basetexture", texFSB )
-	
+
 	render.SetMaterial( matFSB )
 	render.DrawScreenQuad()
 
@@ -266,7 +266,7 @@ function RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
 		Status = "Preview"
 
 		-- debugoverlay.Cross( tr.HitPos, 10 )
-	
+
 		SuperDOFWindow:ChangeDistanceTo( Distance )
 
 		local effectdata = EffectData()
@@ -277,42 +277,42 @@ function RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
 		effectdata:SetRadius( 16 )
 
 		util.Effect( "Sparks", effectdata )
-	
+
 	end
 
 	local FocusPoint = ViewOrigin + ViewAngles:Forward() * Distance
-	
+
 	if ( Status == "Preview" ) then
-		
+
 		-- A low quality, pretty quickly drawn rough outline
 		RenderDoF( ViewOrigin, ViewAngles, FocusPoint, BlurSize, 2, 2, false, nil, ViewFOV )
-		
+
 	elseif ( Status == "Render" ) then
-		
+
 		-- A great quality render..
 		RenderDoF( ViewOrigin, ViewAngles, FocusPoint, BlurSize, Steps, Passes, true, nil, ViewFOV )
 		Status = "ViewShot"
-	
+
 	elseif ( Status == "ViewShot" ) then
-		
+
 		matFSB:SetFloat( "$alpha", 1 )
 		matFSB:SetTexture( "$basetexture", texFSB )
 		render.SetMaterial( matFSB )
 		render.DrawScreenQuad()
-		
+
 	end
-	
+
 end
 
 local function RenderSceneHook( ViewOrigin, ViewAngles, ViewFOV )
 
 	if ( !IsValid( SuperDOFWindow ) ) then return end
-	
+
 	-- Don't render it when the console is up
 	if ( FrameTime() == 0 ) then return end
-	
+
 	RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
-	return true;
+	return true
 
 end
 hook.Add( "RenderScene", "RenderSuperDoF", RenderSceneHook )
@@ -320,13 +320,13 @@ hook.Add( "RenderScene", "RenderSuperDoF", RenderSceneHook )
 local function OpenWindow()
 
 	Status = "Preview"
-	
+
 	if ( IsValid( SuperDOFWindow ) ) then
 		SuperDOFWindow:Remove()
 	end
-	
+
 	SuperDOFWindow = vgui.CreateFromTable( paneltypeSuperDOF )
-	
+
 	SuperDOFWindow:InvalidateLayout( true )
 	SuperDOFWindow:MakePopup()
 	SuperDOFWindow:AlignBottom( 50 )
@@ -337,8 +337,8 @@ end
 concommand.Add( "pp_superdof", OpenWindow )
 
 --[[---------------------------------------------------------
-   Mouse button down
------------------------------------------------------------]]   
+	Mouse button down
+-----------------------------------------------------------]]
 local function MouseDown( mouse )
 
 	if ( !IsValid( SuperDOFWindow ) ) then return end
@@ -350,15 +350,15 @@ end
 hook.Add( "GUIMousePressed", "SuperDOFMouseDown", MouseDown )
 
 --[[---------------------------------------------------------
-   Mouse button released
------------------------------------------------------------]]   
+	Mouse button released
+-----------------------------------------------------------]]
 local function MouseUp( mouse )
 
 	if ( !IsValid( SuperDOFWindow ) ) then return end
-	
+
 	vgui.GetWorldPanel():MouseCapture( false )
 	FocusGrabber = false
-	
+
 end
 hook.Add( "GUIMouseReleased", "SuperDOFMouseUp", MouseUp )
 
@@ -367,7 +367,7 @@ list.Set( "PostProcess", "#superdof_pp", {
 	icon		= "gui/postprocess/superdof.png",
 	category	= "#effects_pp",
 	onclick		= function() RunConsoleCommand( "pp_superdof" ) end
-	
+
 } )
 
 

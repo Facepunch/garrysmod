@@ -1,7 +1,7 @@
 --[[---------------------------------------------------------
-    PlayerColor Material Proxy
-      Sets the clothing colour of custom made models to
-      ent.GetPlayerColor, a normalized vector colour.
+	PlayerColor Material Proxy
+		Sets the clothing colour of custom made models to
+		ent.GetPlayerColor, a normalized vector colour.
 -----------------------------------------------------------]]
 
 matproxy.Add( {
@@ -32,5 +32,5 @@ matproxy.Add( {
 		else
 			mat:SetVector( self.ResultTo, Vector( 62.0/255.0, 88.0/255.0, 106.0/255.0 ) )
 		end
-	end 
+	end
 } )

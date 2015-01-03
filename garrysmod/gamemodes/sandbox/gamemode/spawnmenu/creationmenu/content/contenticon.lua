@@ -13,7 +13,7 @@ AccessorFunc( PANEL, "m_SpawnName", 		"SpawnName" )
 AccessorFunc( PANEL, "m_NPCWeapon", 		"NPCWeapon" )
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -21,7 +21,7 @@ function PANEL:Init()
 	self:SetSize( 128, 128 )
 	self:SetText( "" )
 	self:SetDoubleClickingEnabled( false )
-	
+
 	self.Image = self:Add( "DImage" )
 	self.Image:SetPos( 3, 3 )
 	self.Image:SetSize( 128 - 6, 128 - 6 )
@@ -35,7 +35,7 @@ function PANEL:Init()
 	self.Label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 
 	self.Border = 0
-	
+
 end
 
 function PANEL:SetName( name )
@@ -51,23 +51,23 @@ function PANEL:SetMaterial( name )
 	self.m_MaterialName = name
 
 	local mat = Material( name )
-	
+
 	-- Look for the old style material
 	if ( !mat || mat:IsError() ) then
-	
+
 		name = name:Replace( "entities/", "VGUI/entities/" )
 		name = name:Replace( ".png", "" )
 		mat = Material( name )
-		
+
 	end
 
 	-- Couldn't find any material.. just return
 	if ( !mat || mat:IsError() ) then
-		return 
+		return
 	end
-	
+
 	self.Image:SetMaterial( mat )
-	
+
 end
 
 function PANEL:SetAdminOnly( b )
@@ -106,17 +106,17 @@ function PANEL:Paint( w, h )
 			self:OnDepressionChanged( false )
 		end
 	end
-	
+
 	render.PushFilterMag( TEXFILTER.ANISOTROPIC )
 	render.PushFilterMin( TEXFILTER.ANISOTROPIC )
-	
+
 	self.Image:PaintAt( 3 + self.Border, 3 + self.Border, 128-8-self.Border*2, 128-8-self.Border*2 )
-	
+
 	render.PopFilterMag()
 	render.PopFilterMin()
 
 	surface.SetDrawColor( 255, 255, 255, 255 )
-	
+
 	if ( !dragndrop.IsDragging() && (self:IsHovered() || self:IsChildHovered( 2 )) ) then
 
 		surface.SetMaterial( matOverlay_Hovered )
@@ -128,7 +128,7 @@ function PANEL:Paint( w, h )
 		self.Label:Show()
 
 	end
-	
+
 	surface.DrawTexturedRect( self.Border, self.Border, w-self.Border*2, h-self.Border*2 )
 
 	if ( self.AdminOnly ) then
@@ -146,7 +146,7 @@ end
 function PANEL:ToTable( bigtable )
 
 	local tab = {}
-	
+
 	tab.type		= self:GetContentType()
 	tab.nicename	= self.m_NiceName
 	tab.material	= self.m_MaterialName
@@ -184,7 +184,7 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 	if ( !obj.material ) then return end
 	if ( !obj.nicename ) then return end
 	if ( !obj.spawnname ) then return end
-	
+
 	local icon = vgui.Create( "ContentIcon", container )
 		icon:SetContentType( "entity" )
 		icon:SetSpawnName( obj.spawnname )
@@ -196,7 +196,7 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 						RunConsoleCommand( "gm_spawnsent", obj.spawnname )
 						surface.PlaySound( "ui/buttonclickrelease.wav" )
 					end
-		icon.OpenMenu = function( icon ) 
+		icon.OpenMenu = function( icon )
 
 						local menu = DermaMenu()
 							menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
@@ -204,7 +204,7 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 							menu:AddSpacer()
 							menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
 						menu:Open()
-						
+
 					end
 
 	if ( IsValid( container ) ) then
@@ -220,7 +220,7 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 	if ( !obj.material ) then return end
 	if ( !obj.nicename ) then return end
 	if ( !obj.spawnname ) then return end
-	
+
 	local icon = vgui.Create( "ContentIcon", container )
 		icon:SetContentType( "vehicle" )
 		icon:SetSpawnName( obj.spawnname )
@@ -232,7 +232,7 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 						RunConsoleCommand( "gm_spawnvehicle", obj.spawnname )
 						surface.PlaySound( "ui/buttonclickrelease.wav" )
 					end
-		icon.OpenMenu = function( icon ) 
+		icon.OpenMenu = function( icon )
 
 						local menu = DermaMenu()
 							menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
@@ -240,9 +240,9 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 							menu:AddSpacer()
 							menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
 						menu:Open()
-						
+
 					end
-		
+
 	if ( IsValid( container ) ) then
 		container:Add( icon )
 	end
@@ -260,7 +260,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 	if ( !obj.spawnname ) then return end
 
 	if ( !obj.weapon ) then obj.weapon = { "" } end
-	
+
 	local icon = vgui.Create( "ContentIcon", container )
 		icon:SetContentType( "npc" )
 		icon:SetSpawnName( obj.spawnname )
@@ -270,16 +270,16 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 		icon:SetNPCWeapon( obj.weapon )
 		icon:SetColor( Color( 244, 164, 96, 255 ) )
 
-		icon.DoClick = function() 
-						
+		icon.DoClick = function()
+
 						local weapon = table.Random( obj.weapon )
 						if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
 
-						RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, weapon ) 
-						surface.PlaySound( "ui/buttonclickrelease.wav" ) 
+						RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, weapon )
+						surface.PlaySound( "ui/buttonclickrelease.wav" )
 					end
 
-		icon.OpenMenu = function( icon ) 
+		icon.OpenMenu = function( icon )
 
 						local menu = DermaMenu()
 
@@ -291,11 +291,11 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 							menu:AddSpacer()
 							menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
 						menu:Open()
-						
+
 					end
 
 
-		
+
 	if ( IsValid( container ) ) then
 		container:Add( icon )
 	end
@@ -309,7 +309,7 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 	if ( !obj.material ) then return end
 	if ( !obj.nicename ) then return end
 	if ( !obj.spawnname ) then return end
-	
+
 	local icon = vgui.Create( "ContentIcon", container )
 		icon:SetContentType( "weapon" )
 		icon:SetSpawnName( obj.spawnname )
@@ -317,22 +317,22 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 		icon:SetMaterial( obj.material )
 		icon:SetAdminOnly( obj.admin )
 		icon:SetColor( Color( 135, 206, 250, 255 ) )
-		icon.DoClick = function() 
-		
+		icon.DoClick = function()
+
 						RunConsoleCommand( "gm_giveswep", obj.spawnname )
 						surface.PlaySound( "ui/buttonclickrelease.wav" )
-						
+
 					end
 
-		icon.DoMiddleClick = function() 
-		
+		icon.DoMiddleClick = function()
+
 						RunConsoleCommand( "gm_spawnswep", obj.spawnname )
 						surface.PlaySound( "ui/buttonclickrelease.wav" )
-						
-					end
-					
 
-		icon.OpenMenu = function( icon ) 
+					end
+
+
+		icon.OpenMenu = function( icon )
 
 						local menu = DermaMenu()
 							menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
@@ -342,8 +342,8 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 						menu:Open()
 
 						end
-				
-		
+
+
 	if ( IsValid( container ) ) then
 		container:Add( icon )
 	end

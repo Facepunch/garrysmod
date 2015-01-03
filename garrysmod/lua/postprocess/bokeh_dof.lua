@@ -20,7 +20,7 @@ local function DrawBokehDOF()
 
 	render.SetMaterial( blur_mat )
 	render.DrawScreenQuad()
-	
+
 end
 
 local function OnChange( name, oldvalue, newvalue )

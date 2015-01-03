@@ -1,8 +1,8 @@
 --[[---------------------------------------------------------
 
-  Sandbox Gamemode
+	Sandbox Gamemode
 
-  This is GMod's default gamemode
+	This is GMod's default gamemode
 
 -----------------------------------------------------------]]
 
@@ -25,9 +25,9 @@ GM.Website 	= "www.garrysmod.com"
 
 --[[
  Note: This is so that in addons you can do stuff like
- 
+
  if ( !GAMEMODE.IsSandboxDerived ) then return end
- 
+
 --]]
 
 GM.IsSandboxDerived = true
@@ -45,8 +45,8 @@ cleanup.Register( "vehicles" )
 local physgun_limited = CreateConVar( "physgun_limited", "0", FCVAR_REPLICATED )
 
 --[[---------------------------------------------------------
-   Name: gamemode:CanTool( ply, trace, mode )
-   Return true if the player is allowed to use this tool
+	Name: gamemode:CanTool( ply, trace, mode )
+	Return true if the player is allowed to use this tool
 -----------------------------------------------------------]]
 function GM:CanTool( ply, trace, mode )
 
@@ -55,11 +55,11 @@ function GM:CanTool( ply, trace, mode )
 	if ( mode == "physprop" && trace.Entity:IsValid() && trace.Entity:GetClass() == "prop_vehicle_jeep" ) then
 		return false
 	end
-	
+
 	-- If we have a toolsallowed table, check to make sure the toolmode is in it
 	if ( trace.Entity.m_tblToolsAllowed ) then
-	
-		local vFound = false	
+
+		local vFound = false
 		for k, v in pairs( trace.Entity.m_tblToolsAllowed ) do
 			if ( mode == v ) then vFound = true end
 		end
@@ -67,20 +67,20 @@ function GM:CanTool( ply, trace, mode )
 		if ( !vFound ) then return false end
 
 	end
-	
+
 	-- Give the entity a chance to decide
 	if ( trace.Entity.CanTool ) then
 		return trace.Entity:CanTool( ply, trace, mode )
 	end
 
 	return true
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   Name: gamemode:GravGunPunt( )
-   Desc: We're about to punt an entity (primary fire).
+	Name: gamemode:GravGunPunt( )
+	Desc: We're about to punt an entity (primary fire).
 		 Return true if we're allowed to.
 -----------------------------------------------------------]]
 function GM:GravGunPunt( ply, ent )
@@ -90,12 +90,12 @@ function GM:GravGunPunt( ply, ent )
 	end
 
 	return BaseClass.GravGunPunt( self, ply, ent )
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:GravGunPickupAllowed( )
-   Desc: Return true if we're allowed to pickup entity
+	Name: gamemode:GravGunPickupAllowed( )
+	Desc: Return true if we're allowed to pickup entity
 -----------------------------------------------------------]]
 function GM:GravGunPickupAllowed( ply, ent )
 
@@ -104,13 +104,13 @@ function GM:GravGunPickupAllowed( ply, ent )
 	end
 
 	return BaseClass.GravGunPickupAllowed( self, ply, ent )
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   Name: gamemode:PhysgunPickup( )
-   Desc: Return true if player can pickup entity
+	Name: gamemode:PhysgunPickup( )
+	Desc: Return true if player can pickup entity
 -----------------------------------------------------------]]
 function GM:PhysgunPickup( ply, ent )
 
@@ -120,48 +120,48 @@ function GM:PhysgunPickup( ply, ent )
 	if ( ent:IsValid() && ent.PhysgunPickup ) then
 		return ent:PhysgunPickup( ply )
 	end
-	
+
 	-- Some entities specifically forbid physgun interaction
 	if ( ent.PhysgunDisabled ) then return false end
-	
+
 	local EntClass = ent:GetClass()
 
 	-- Never pick up players
 	if ( EntClass == "player" ) then return false end
-	
+
 	if ( physgun_limited:GetBool() ) then
-	
+
 		if ( string.find( EntClass, "prop_dynamic" ) ) then return false end
 		if ( string.find( EntClass, "prop_door" ) ) then return false end
-		
+
 		-- Don't move physboxes if the mapper logic says no
-		if ( EntClass == "func_physbox" && ent:HasSpawnFlags( SF_PHYSBOX_MOTIONDISABLED ) ) then return false  end
-		
+		if ( EntClass == "func_physbox" && ent:HasSpawnFlags( SF_PHYSBOX_MOTIONDISABLED ) ) then return false end
+
 		-- If the physics object is frozen by the mapper, don't allow us to move it.
 		if ( string.find( EntClass, "prop_" ) && ( ent:HasSpawnFlags( SF_PHYSPROP_MOTIONDISABLED ) || ent:HasSpawnFlags( SF_PHYSPROP_PREVENT_PICKUP ) ) ) then return false end
-		
+
 		-- Allow physboxes, but get rid of all other func_'s (ladder etc)
 		if ( EntClass != "func_physbox" && string.find( EntClass, "func_" ) ) then return false end
 
-	
+
 	end
-	
-	if ( SERVER ) then 
-	
+
+	if ( SERVER ) then
+
 		ply:SendHint( "PhysgunFreeze", 2 )
 		ply:SendHint( "PhysgunUse", 8 )
-		
+
 	end
-	
+
 	return true
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   Name: gamemode:EntityKeyValue( ent, key, value )
-   Desc: Called when an entity has a keyvalue set
-	      Returning a string it will override the value
+	Name: gamemode:EntityKeyValue( ent, key, value )
+	Desc: Called when an entity has a keyvalue set
+			Returning a string it will override the value
 -----------------------------------------------------------]]
 function GM:EntityKeyValue( ent, key, value )
 
@@ -174,32 +174,32 @@ function GM:EntityKeyValue( ent, key, value )
 	if ( key == "gmod_allowtools" ) then
 		ent.m_tblToolsAllowed = string.Explode( " ", value )
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerNoClip( player, bool )
-   Desc: Player pressed the noclip key, return true if
-		  the player is allowed to noclip, false to block
+	Name: gamemode:PlayerNoClip( player, bool )
+	Desc: Player pressed the noclip key, return true if
+			the player is allowed to noclip, false to block
 -----------------------------------------------------------]]
 function GM:PlayerNoClip( pl, on )
-	
+
 	-- Don't allow if player is in vehicle
 	if ( pl:InVehicle() ) then return false end
-	
+
 	-- Always allow in single player
 	if ( game.SinglePlayer() ) then return true end
 
 	return GetConVarNumber( "sbox_noclip" ) > 0
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:CanProperty( pl, property, ent )
-   Desc: Can the player do this property, to this entity?
+	Name: gamemode:CanProperty( pl, property, ent )
+	Desc: Can the player do this property, to this entity?
 -----------------------------------------------------------]]
 function GM:CanProperty( pl, property, ent )
-	
+
 	--
 	-- Always a chance some bastard got through
 	--
@@ -211,8 +211,8 @@ function GM:CanProperty( pl, property, ent )
 	-- This is used by things like map entities
 	--
 	if ( ent.m_tblToolsAllowed ) then
-	
-		local vFound = false	
+
+		local vFound = false
 		for k, v in pairs( ent.m_tblToolsAllowed ) do
 			if ( property == v ) then vFound = true end
 		end
@@ -230,7 +230,7 @@ function GM:CanProperty( pl, property, ent )
 
 		if ( ent:IsNPC() ) then return GetConVarNumber( "sbox_bonemanip_npc" ) != 0 end
 		if ( ent:IsPlayer() ) then return GetConVarNumber( "sbox_bonemanip_player" ) != 0 end
-		
+
 		return GetConVarNumber( "sbox_bonemanip_misc" ) != 0
 
 	end
@@ -241,16 +241,16 @@ function GM:CanProperty( pl, property, ent )
 	end
 
 	return true
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:CanDrive( pl, ent )
-   Desc: Return true to let the entity drive.
+	Name: gamemode:CanDrive( pl, ent )
+	Desc: Return true to let the entity drive.
 -----------------------------------------------------------]]
 function GM:CanDrive( pl, ent )
-	
-	local classname = ent:GetClass();
+
+	local classname = ent:GetClass()
 
 	--
 	-- Only let physics based NPCs be driven for now
@@ -262,7 +262,7 @@ function GM:CanDrive( pl, ent )
 		if ( classname == "npc_manhack" ) then return true end
 		if ( classname == "npc_turret_floor" ) then return true end
 		if ( classname == "npc_rollermine" ) then return true end
-		
+
 		return false
 
 	end
@@ -275,14 +275,14 @@ function GM:CanDrive( pl, ent )
 	--
 
 	return true
-	
+
 end
 
 
 --[[---------------------------------------------------------
 	To update the player's animation during a drive
 -----------------------------------------------------------]]
-function GM:PlayerDriveAnimate( ply ) 
+function GM:PlayerDriveAnimate( ply )
 
 	local driving = ply:GetDrivingEntity()
 	if ( !IsValid( driving ) ) then return end
@@ -291,7 +291,7 @@ function GM:PlayerDriveAnimate( ply )
 	ply:ResetSequence( ply:SelectWeightedSequence( ACT_HL2MP_IDLE_MAGIC ) )
 
 	--
-	-- Work out the direction from the player to the entity, and set parameters 
+	-- Work out the direction from the player to the entity, and set parameters
 	--
 	local DirToEnt = driving:GetPos() - ( ply:GetPos() + Vector( 0, 0, 50 ) )
 	local AimAng = DirToEnt:Angle()
@@ -307,8 +307,8 @@ function GM:PlayerDriveAnimate( ply )
 	ply:SetPoseParameter( "move_yaw",		0 )
 	ply:SetPoseParameter( "move_scale",		0 )
 
-	AimAng.p = 0;
-	AimAng.r = 0;
+	AimAng.p = 0
+	AimAng.r = 0
 
 	ply:SetRenderAngles( AimAng )
 	ply:SetEyeTarget( driving:GetPos() )

@@ -3,7 +3,7 @@
 -- |_ _|| __| / \ | \_/ |  / _| / \ | o \ o \\ V /       --
 --  | | | _| | o || \_/ | ( |_n| o ||   /   / \ /        --
 --  |_| |___||_n_||_| |_|  \__/|_n_||_|\\_|\\ |_|  2012  --
---										                 --
+--														 --
  --=====================================================--
 
 
@@ -11,8 +11,8 @@
 	Non-Module includes
 -----------------------------------------------------------]]
 
-include ( "util.lua" )	
-include ( "util/sql.lua" )		-- Include sql here so it's 
+include ( "util.lua" )
+include ( "util/sql.lua" )		-- Include sql here so it's
 								-- available at loadtime to modules.
 
 
@@ -32,9 +32,9 @@ require ( "baseclass" )
 
 --[[---------------------------------------------------------
 	Extensions
-	
+
 	Load extensions that we specifically need for the menu,
-	to reduce the chances of loading something that might 
+	to reduce the chances of loading something that might
 	cause errors.
 -----------------------------------------------------------]]
 

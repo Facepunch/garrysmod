@@ -43,11 +43,11 @@ function GetToolMenu( name, label, icon )
 	icon = icon or "icon16/wrench.png"
 
 	for k, v in ipairs( g_ToolMenu ) do
-	
+
 		if ( v.Name == name ) then return v.Items end
-	
+
 	end
-	
+
 	local NewMenu = { Name = name, Items = {}, Label = label, Icon = icon }
 	table.insert( g_ToolMenu, NewMenu )
 
@@ -55,22 +55,22 @@ function GetToolMenu( name, label, icon )
 	-- Order the tabs by NAME
 	--
 	table.SortByMember( g_ToolMenu, "Name", true )
-	
+
 	return NewMenu.Items
-	
+
 end
 
 
 --[[---------------------------------------------------------
-  
+
 -----------------------------------------------------------]]
 function ClearToolMenus()
-	g_ToolMenu = {}	
+	g_ToolMenu = {}
 end
 
 
 --[[---------------------------------------------------------
-  
+
 -----------------------------------------------------------]]
 function AddToolTab( strName, strLabel, Icon )
 
@@ -81,52 +81,52 @@ end
 
 
 --[[---------------------------------------------------------
-  
+
 -----------------------------------------------------------]]
 function AddToolCategory( tab, RealName, PrintName )
-	
+
 	local tab = GetToolMenu( tab )
-	
+
 	-- Does this category already exist?
 	for k, v in ipairs( tab ) do
-	
+
 		if ( v.Text == PrintName ) then return end
 		if ( v.ItemName == RealName ) then return end
-	
+
 	end
-	
+
 	table.insert( tab, { Text = PrintName, ItemName = RealName } )
 
 end
 
 --[[---------------------------------------------------------
-  
+
 -----------------------------------------------------------]]
 function AddToolMenuOption( tab, category, itemname, text, command, controls, cpanelfunction, TheTable )
 
 	local Menu = GetToolMenu( tab )
 	local CategoryTable = nil
-	
+
 	for k, v in ipairs( Menu ) do
 		if ( v.ItemName && v.ItemName == category ) then CategoryTable = v break end
 	end
-	
+
 	-- No table found.. lets create one
 	if ( !CategoryTable ) then
 		CategoryTable = { Text = "#"..category, ItemName = category }
 		table.insert( Menu, CategoryTable )
 	end
-	
+
 	TheTable = TheTable or {}
-	
+
 	TheTable.ItemName = itemname
 	TheTable.Text = text
 	TheTable.Command = command
 	TheTable.Controls = controls
 	TheTable.CPanelFunction = cpanelfunction
-	
+
 	table.insert( CategoryTable, TheTable )
-	
+
 	-- Keep the table sorted
 	table.SortByMember( CategoryTable, "Text", true )
 
@@ -140,7 +140,7 @@ function AddCreationTab( strName, pFunction, pMaterial, iOrder, strTooltip )
 	iOrder = iOrder or 1000
 
 	pMaterial = pMaterial or "icon16/exclamation.png"
-	
+
 	CreationMenus[ strName ] = { Function = pFunction, Icon = pMaterial, Order = iOrder, Tooltip = strTooltip }
 
 end
@@ -150,7 +150,7 @@ end
 -----------------------------------------------------------]]
 function GetCreationTabs()
 
-	return CreationMenus	
+	return CreationMenus
 
 end
 
@@ -160,7 +160,7 @@ end
 -----------------------------------------------------------]]
 function GetPropTable()
 
-	return PropTable	
+	return PropTable
 
 end
 
@@ -173,14 +173,14 @@ function AddPropCategory( strFilename, strName, tabContents, icon, id, parentid,
 	parentid	= parentid	or	0
 
 	PropTable[ strFilename ] = {
-	
+
 		name = strName,
 		icon = icon,
 		id = id,
 		parentid = parentid,
 		contents = tabContents,
 		needsapp = needsapp
-	
+
 	}
 
 end
@@ -232,10 +232,10 @@ end
 function GetContentType( name, func )
 
 	if ( !cp[ name ] ) then
-	
+
 		cp[ name ] = function() end
 		Msg( "spawnmenu.GetContentType( ", name, " ) - not found!\n" )
-	
+
 	end
 
 	return cp[ name ]
@@ -245,14 +245,14 @@ function CreateContentIcon( type, parent, tbl )
 
 	local cp = GetContentType( type )
 	if ( cp ) then return cp( parent, tbl ) end
-	
+
 end
 
 function SwitchToolTab( id )
 
 	local Tab = g_SpawnMenu:GetToolMenu():GetToolPanel( id )
-	if ( !IsValid( Tab ) ) then return end	
-	
+	if ( !IsValid( Tab ) ) then return end
+
 	--Tab:GetParent():GetParent().Tab:DoClick()
 
 end
@@ -260,14 +260,14 @@ end
 function ActivateToolPanel( id, cp )
 
 	local Tab = g_SpawnMenu:GetToolMenu():GetToolPanel( id )
-	if ( !IsValid( Tab ) ) then return end	
-	
+	if ( !IsValid( Tab ) ) then return end
+
 	spawnmenu.SetActiveControlPanel( cp )
-	
+
 	if ( cp ) then
 		Tab:SetActive( cp )
 	end
-	
+
 	SwitchToolTab( id )
 
 end
@@ -285,7 +285,7 @@ function ActivateTool( strName )
 					if ( item.Command ) then
 						RunConsoleCommand( unpack( string.Explode( " ", item.Command ) ) )
 					end
-					
+
 					local cp = controlpanel.Get( strName )
 					if ( !cp:GetInitialized() ) then
 						cp:FillViaTable( { Text = item.Text, ControlPanelBuildFunction = item.CPanelFunction, Controls = item.Controls } )
@@ -294,7 +294,7 @@ function ActivateTool( strName )
 					ActivateToolPanel( tab, cp )
 
 					break
-				
+
 				end
 
 			end

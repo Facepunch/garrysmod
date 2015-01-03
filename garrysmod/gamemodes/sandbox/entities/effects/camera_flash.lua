@@ -1,13 +1,13 @@
 
 --[[---------------------------------------------------------
-   Initializes the effect. The data is a table of data 
-   which was passed from the server.
+	Initializes the effect. The data is a table of data
+	 which was passed from the server.
 -----------------------------------------------------------]]
 function EFFECT:Init( data )
-	
+
 	local vOffset = data:GetOrigin()
 	local ent = data:GetEntity()
-	
+
 	local dlight = DynamicLight( ent:EntIndex() )
 
 	if ( dlight ) then
@@ -24,19 +24,19 @@ function EFFECT:Init( data )
 		dlight.Decay = 512 * 1
 
 	end
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   THINK
+	Think
 -----------------------------------------------------------]]
 function EFFECT:Think( )
 	return false
 end
 
 --[[---------------------------------------------------------
-   Draw the effect
+	Draw the effect
 -----------------------------------------------------------]]
 function EFFECT:Render()
 end

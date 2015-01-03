@@ -3,16 +3,16 @@ module( "properties", package.seeall )
 
 local meta = {
 	MsgStart = function( self )
-	
+
 		net.Start( "properties" )
 		net.WriteUInt( util.NetworkStringToID( self.InternalName ), 32 )
-	
+
 	end,
-	
+
 	MsgEnd = function( self )
-	
+
 		net.SendToServer()
-	
+
 	end
 }
 
@@ -28,11 +28,11 @@ List = {}
 function Add( name, tab )
 
 	name = name:lower()
-	tab.InternalName = name	
+	tab.InternalName = name
 	setmetatable( tab, meta )
-	
+
 	List[ name ] = tab
-	
+
 	if ( SERVER ) then
 		util.AddNetworkString( name )
 	end
@@ -57,7 +57,7 @@ local function AddOption( data, menu, ent, ply, tr )
 
 	if ( data.Type == "toggle" ) then return AddToggleOption( data, menu, ent, ply, tr ) end
 
-	if ( data.PrependSpacer ) then 
+	if ( data.PrependSpacer ) then
 		menu:AddSpacer()
 	end
 
@@ -78,18 +78,18 @@ end
 function OpenEntityMenu( ent, tr )
 
 	local menu = DermaMenu()
-	
+
 	for k, v in SortedPairsByMemberValue( List, "Order" ) do
-		
+
 		if ( !v.Filter ) then continue end
 		if ( !v:Filter( ent, LocalPlayer() ) ) then continue end
-		
+
 		local option = AddOption( v, menu, ent, LocalPlayer(), tr )
 
 		if ( v.OnCreate ) then v:OnCreate( menu, option ) end
 
 	end
-	
+
 	menu:Open()
 
 end
@@ -104,10 +104,10 @@ function GetHovered( eyepos, eyevec )
 		endpos = eyepos + eyevec * 1024,
 		filter = filter
 	} )
-	
+
 	if ( !trace.Hit ) then return end
 	if ( !IsValid( trace.Entity ) ) then return end
-	
+
 	return trace.Entity, trace
 
 end
@@ -116,7 +116,7 @@ function OnScreenClick( eyepos, eyevec )
 
 	local ent, tr = GetHovered( eyepos, eyevec )
 	if ( !IsValid( ent ) ) then return end
-	
+
 	OpenEntityMenu( ent, tr )
 
 end
@@ -128,19 +128,19 @@ if ( SERVER ) then
 	util.AddNetworkString( "properties" )
 
 	net.Receive( "properties", function( len, client )
-	
+
 		local i = net.ReadUInt( 32 )
 		local name = util.NetworkIDToString( i )
 
 		if ( !name ) then return end
 		if ( !IsValid( client ) ) then return end
-		
+
 		local prop = List[ name ]
 		if ( !prop ) then return end
 		if ( !prop.Receive ) then return end
-		
+
 		prop:Receive( len, client )
-		
+
 	end )
 
 end
@@ -153,16 +153,16 @@ if ( CLIENT ) then
 
 		local ent = GetHovered( EyePos(), LocalPlayer():GetAimVector() )
 		if ( !IsValid( ent ) ) then return end
-		
+
 		local c = Color( 255, 255, 255, 255 )
 		c.r = 200 + math.sin( RealTime() * 50 ) * 55
 		c.g = 200 + math.sin( RealTime() * 20 ) * 55
 		c.b = 200 + math.cos( RealTime() * 60 ) * 55
-		
+
 		local t = { ent }
 		if ( ent.GetActiveWeapon && IsValid( ent:GetActiveWeapon() ) ) then table.insert( t, ent:GetActiveWeapon() ) end
 		halo.Add( t, c, 2, 2, 2, true, false )
-	
+
 	end )
 
 	--
@@ -170,7 +170,7 @@ if ( CLIENT ) then
 	-- gui.
 	--
 	hook.Add( "GUIMousePressed", "PropertiesClick", function( code, vector )
-	
+
 		if ( !IsValid( vgui.GetHoveredPanel() ) || vgui.GetHoveredPanel() != g_ContextMenu ) then return end
 
 		if ( code == MOUSE_RIGHT && !input.IsButtonDown( MOUSE_LEFT ) ) then
@@ -184,7 +184,7 @@ if ( CLIENT ) then
 	-- gui.
 	--
 	hook.Add( "PreventScreenClicks", "PropertiesPreventClicks", function()
-	
+
 		if ( !IsValid( vgui.GetHoveredPanel() ) || vgui.GetHoveredPanel() != g_ContextMenu ) then return end
 
 		local ply = LocalPlayer()

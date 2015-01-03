@@ -4,7 +4,7 @@ local function AddRecursive( pnl, folder, path, wildcard )
 	local files, folders = file.Find( folder .. "*", path )
 
 	for k, v in pairs( files ) do
-		
+
 		if ( !string.EndsWith( v, ".mdl" ) ) then continue end
 
 		local cp = spawnmenu.GetContentType( "model" )
@@ -31,7 +31,7 @@ hook.Add( "PopulateContent", "AddonProps", function( pnlContent, tree, node )
 	local MyNode = node:AddNode( "#spawnmenu.category.addons", "icon16/folder_database.png" )
 
 	for _, addon in SortedPairsByMemberValue( engine.GetAddons(), "title" ) do
-	
+
 		if ( !addon.downloaded || !addon.mounted ) then continue end
 		if ( addon.models <= 0 ) then continue end
 
@@ -43,7 +43,7 @@ hook.Add( "PopulateContent", "AddonProps", function( pnlContent, tree, node )
 			pnlContent:SwitchPanel( ViewPanel )
 
 		end
-	
+
 	end
 
 end )

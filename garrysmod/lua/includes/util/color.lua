@@ -13,8 +13,8 @@ debug.getregistry().Color = COLOR
 function Color( r, g, b, a )
 
 	a = a or 255
-	return setmetatable( { r = math.min( tonumber(r), 255 ), g =  math.min( tonumber(g), 255 ), b =  math.min( tonumber(b), 255 ), a =  math.min( tonumber(a), 255 ) }, COLOR )
-	
+	return setmetatable( { r = math.min( tonumber(r), 255 ), g = math.min( tonumber(g), 255 ), b = math.min( tonumber(b), 255 ), a = math.min( tonumber(a), 255 ) }, COLOR )
+
 end
 
 --[[---------------------------------------------------------
@@ -23,7 +23,7 @@ end
 function ColorAlpha( c, a )
 
 	return Color( c.r, c.g, c.b, a )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -40,27 +40,27 @@ end
 	Returns color as a string
 -----------------------------------------------------------]]
 function COLOR:__tostring()
-	
+
 	return string.format( "%d %d %d %d", self.r, self.g, self.b, self.a )
-	
+
 end
 
 --[[---------------------------------------------------------
 	Compares two colors
 -----------------------------------------------------------]]
 function COLOR:__eq( c )
-	
+
 	return self.r == c.r and self.g == c.g and self.b == c.b and self.a == c.a
-	
+
 end
 
 --[[---------------------------------------------------------
 	Converts a color to HSV
 -----------------------------------------------------------]]
 function COLOR:ToHSV()
-	
+
 	return ColorToHSV( self )
-	
+
 end
 
 --[[---------------------------------------------------------

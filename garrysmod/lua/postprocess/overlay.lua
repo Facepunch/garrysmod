@@ -1,6 +1,6 @@
 
 --[[---------------------------------------------------------
-   Register the convars that will control this effect
+	Register the convars that will control this effect
 -----------------------------------------------------------]]
 local pp_mat_overlay 				= CreateClientConVar( "pp_mat_overlay", "", false, false )
 local pp_mat_overlay_refractamount	= CreateClientConVar( "pp_mat_overlay_refractamount", "0.3", true, false )
@@ -14,7 +14,7 @@ function DrawMaterialOverlay( texture, refractamount )
 		mat_Overlay = Material( texture )
 		lastTexture = texture
 	end
-	
+
 	if ( mat_Overlay == nil ) then return end
 
 	render.UpdateScreenEffectTexture()
@@ -27,7 +27,7 @@ function DrawMaterialOverlay( texture, refractamount )
 
 	render.SetMaterial( mat_Overlay )
 	render.DrawScreenQuad()
-	
+
 end
 
 local function DrawInternal()
@@ -74,11 +74,11 @@ end
 list.Set( "PostProcess", "#overlay_pp", {
 
 	category = "#overlay_pp",
-	
+
 	func = function( content )
-	
+
 		for k, overlay in pairs( list.Get( "OverlayMaterials" ) ) do
-		
+
 			spawnmenu.CreateContentIcon( "postprocess", content, {
 				name	= "#overlay_pp",
 				label	= k,
@@ -90,22 +90,22 @@ list.Set( "PostProcess", "#overlay_pp", {
 					}
 				}
 			} )
-			
+
 		end
-	
+
 	end,
 
 	cpanel = function( CPanel )
 
 		CPanel:AddControl( "Header", { Description = "#overlay_pp.desc" } )
-		
+
 		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "overlay" }
 		params.Options[ "#preset.default" ] = { pp_mat_overlay_refractamount = "0.3" }
 		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
 		CPanel:AddControl( "ComboBox", params )
-		
+
 		CPanel:AddControl( "Slider", { Label = "#overlay_pp.refract", Command = "pp_mat_overlay_refractamount", Type = "Float", Min = "-1", Max = "1" } )
-		
+
 	end
 
 } )

@@ -16,7 +16,7 @@ function DrawTexturize( scale, pMaterial )
 
 	render.SetMaterial( matMaterial )
 	render.DrawScreenQuad()
-	
+
 end
 
 local function DrawInternal()
@@ -42,11 +42,11 @@ list.Set( "TexturizeMaterials", "squaredo",		{ Material = "pp/texturize/squaredo
 list.Set( "PostProcess", "#texturize_pp", {
 
 	category = "#texturize_pp",
-	
+
 	func = function( content )
-	
+
 		for k, textr in pairs( list.Get( "TexturizeMaterials" ) ) do
-		
+
 			spawnmenu.CreateContentIcon( "postprocess", content, {
 				name	= "#texturize_pp",
 				icon	= textr.Icon,

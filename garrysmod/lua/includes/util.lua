@@ -2,7 +2,7 @@
 --
 -- Seed the rand!
 --
-math.randomseed( os.time() );
+math.randomseed( os.time() )
 
 --
 -- Alias string.Format to global Format
@@ -19,9 +19,9 @@ function IsTableOfEntitiesValid( tab )
 	for k, v in pairs( tab ) do
 		if ( !IsValid( v ) ) then return false end
 	end
-	
+
 	return true
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -51,7 +51,7 @@ function PrintTable( t, indent, done )
 		value = t[ key ]
 		Msg( string.rep( "\t", indent ) )
 
-		if  ( istable( value ) && !done[ value ] ) then
+		if ( istable( value ) && !done[ value ] ) then
 
 			done[ value ] = true
 			Msg( tostring( key ) .. ":" .. "\n" )
@@ -70,7 +70,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Returns a random vector
+	Returns a random vector
 -----------------------------------------------------------]]
 function VectorRand()
 
@@ -79,7 +79,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Returns a random angle
+	Returns a random angle
 -----------------------------------------------------------]]
 function AngleRand()
 
@@ -89,7 +89,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Convenience function to precache a sound
+	Convenience function to precache a sound
 -----------------------------------------------------------]]
 function Sound( name )
 	util.PrecacheSound( name )
@@ -98,7 +98,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Convenience function to precache a model
+	Convenience function to precache a model
 -----------------------------------------------------------]]
 function Model( name )
 	util.PrecacheModel( name )
@@ -118,16 +118,16 @@ color_transparent	= Color( 255, 255, 255, 0 )
 
 
 --[[---------------------------------------------------------
-   Includes the file - and adds it so the CS file list
+	Includes the file - and adds it so the CS file list
 -----------------------------------------------------------]]
 function IncludeCS( filename )
-	
+
 	include( filename )
 
 	if ( SERVER ) then
 		AddCSLuaFile( filename )
 	end
-	
+
 end
 
 -- Globals..
@@ -136,8 +136,8 @@ FORCE_NUMBER	= 2
 FORCE_BOOL		= 3
 
 --[[---------------------------------------------------------
-   AccessorFunc
-   Quickly make Get/Set accessor fuctions on the specified table
+	AccessorFunc
+	Quickly make Get/Set accessor fuctions on the specified table
 -----------------------------------------------------------]]
 function AccessorFunc( tab, varname, name, iForce )
 
@@ -148,15 +148,15 @@ function AccessorFunc( tab, varname, name, iForce )
 	if ( iForce == FORCE_STRING ) then
 		tab[ "Set"..name ] = function ( self, v ) self[ varname ] = tostring(v) end
 	return end
-	
+
 	if ( iForce == FORCE_NUMBER ) then
 		tab[ "Set"..name ] = function ( self, v ) self[ varname ] = tonumber(v) end
 	return end
-	
+
 	if ( iForce == FORCE_BOOL ) then
 		tab[ "Set"..name ] = function ( self, v ) self[ varname ] = tobool(v) end
 	return end
-	
+
 	tab[ "Set"..name ] = function ( self, v ) self[ varname ] = v end
 
 end
@@ -202,8 +202,8 @@ function Lerp( delta, from, to )
 
 	if ( delta > 1 ) then return to end
 	if ( delta < 0 ) then return from end
-	
-	return from + (to - from) * delta;
+
+	return from + (to - from) * delta
 
 end
 
@@ -218,7 +218,7 @@ end
 --[[---------------------------------------------------------
 	Universal function to filter out crappy models by name
 -----------------------------------------------------------]]
-function UTIL_IsUselessModel( modelname ) 
+function UTIL_IsUselessModel( modelname )
 
 	local modelname = modelname:lower()
 
@@ -237,7 +237,7 @@ function UTIL_IsUselessModel( modelname )
 	if ( modelname:find( "gestures_" ) ) then return true end
 	if ( modelname:find( "shared_ragdoll_" ) ) then return true end
 	if ( !modelname:find( ".mdl" ) ) then return true end
-	
+
 	return false
 
 end
@@ -257,12 +257,12 @@ local StoredCursorPos = {}
 function RememberCursorPosition()
 
 	local x, y = gui.MousePos()
-	
+
 	-- If the cursor isn't visible it will return 0,0 ignore it.
 	if ( x == 0 && y == 0 ) then return end
-	
+
 	StoredCursorPos.x, StoredCursorPos.y = x, y
-	
+
 end
 
 function RestoreCursorPosition()
@@ -292,22 +292,22 @@ end
 -----------------------------------------------------------]]
 function TimedSin( freq, min, max, offset )
 	return math.sin( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
-end 
+end
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
 function TimedCos( freq, min, max, offset )
 	return math.cos( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
-end 
+end
 
 --[[---------------------------------------------------------
 	IsEnemyEntityName
 -----------------------------------------------------------]]
 local EnemyNames = {
-	npc_antlion = true, npc_antlionguard = true, npc_breen = true, npc_combine_s = true, 
-	npc_cscanner = true, npc_fastzombie = true, npc_fastzombie_torso = true, npc_gman = true, 
-	npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true, npc_hunter = true, 
+	npc_antlion = true, npc_antlionguard = true, npc_breen = true, npc_combine_s = true,
+	npc_cscanner = true, npc_fastzombie = true, npc_fastzombie_torso = true, npc_gman = true,
+	npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true, npc_hunter = true,
 	npc_manhack = true, npc_poisonzombie = true, npc_zombie = true, npc_zombie_torso = true
 }
 
@@ -321,7 +321,7 @@ end
 	IsFriendEntityName
 -----------------------------------------------------------]]
 local FriendlyNames = {
-	 npc_alyx = true, npc_barney = true, npc_citizen = true, npc_eli = true, npc_kleiner = true, 
+	 npc_alyx = true, npc_barney = true, npc_citizen = true, npc_eli = true, npc_kleiner = true,
 	 npc_magnusson = true, npc_monk = true, npc_mossman = true, npc_vortigaunt = true
 }
 
@@ -348,7 +348,7 @@ function IsMounted( name )
 		if ( v.folder == name ) then return true end
 
 	end
-	
+
 	return false
 
 end
@@ -356,7 +356,7 @@ end
 --[[---------------------------------------------------------
 	Replacement for C++'s iff ? aa : bb
 -----------------------------------------------------------]]
-function Either( iff, aa, bb ) 
+function Either( iff, aa, bb )
 
 	if ( iff ) then return aa end
 	return bb

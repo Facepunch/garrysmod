@@ -1,11 +1,12 @@
---[[   _                                
-	( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[ _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 --]]
+
 
 local table 			= table
 local vgui				= vgui
@@ -32,7 +33,7 @@ local DefaultSkin = {}
 local SkinMetaTable = {}
 local iSkinChangeIndex = 1
 
-SkinMetaTable.__index = function ( self, key ) 
+SkinMetaTable.__index = function ( self, key )
 							return DefaultSkin[key]
 						end
 
@@ -83,7 +84,7 @@ local function ReloadClass( classname )
 
 			if ( !isfunction( func ) ) then continue end
 
-			v[ name ] = func;
+			v[ name ] = func
 
 		end
 
@@ -94,34 +95,34 @@ local function ReloadClass( classname )
 	end
 
 end
-						
+
 --[[---------------------------------------------------------
-   GetControlList
+	GetControlList
 -----------------------------------------------------------]]
 function GetControlList()
 
 	return Controls
-	
+
 end
 
 --[[---------------------------------------------------------
-   DefineControl
+	DefineControl
 -----------------------------------------------------------]]
 function DefineControl( strName, strDescription, strTable, strBase )
 
 	local bReloading = Controls[ strName ] != nil
 
 	-- Add Derma table to PANEL table.
-	strTable.Derma = {	ClassName 	= strName, 
-						Description = strDescription, 
+	strTable.Derma = {	ClassName 	= strName,
+						Description = strDescription,
 						BaseClass 	= strBase }
 
 	-- Register control with VGUI
 	vgui.Register( strName, strTable, strBase )
-	
+
 	-- Store control
 	Controls[ strName ] = strTable.Derma
-	
+
 	-- Store as a global so controls can 'baseclass' easier
 	-- TODO: STOP THIS
 	_G[ strName ] = strTable
@@ -130,22 +131,22 @@ function DefineControl( strName, strDescription, strTable, strBase )
 		Msg( "Reloaded Control: ", strName, "\n" )
 		ReloadClass( strName )
 	end
-	
+
 	return strTable
-	
+
 end
 
 
 
 --[[---------------------------------------------------------
-   DefineSkin
+	DefineSkin
 -----------------------------------------------------------]]
 function DefineSkin( strName, strDescription, strTable )
 
 	strTable.Name = strName
 	strTable.Description = strDescription
 	strTable.Base = strBase or "Default"
-	
+
 	if ( strName != "Default" ) then
 		setmetatable( strTable, SkinMetaTable )
 	else
@@ -153,11 +154,11 @@ function DefineSkin( strName, strDescription, strTable )
 	end
 
 	SkinList[ strName ] = strTable
-	
+
 end
 
 --[[---------------------------------------------------------
-   GetSkin - Returns current skin for panel
+	GetSkin - Returns current skin for panel
 -----------------------------------------------------------]]
 function GetSkinTable()
 
@@ -166,12 +167,12 @@ function GetSkinTable()
 end
 
 --[[---------------------------------------------------------
-   Returns 'Default' Skin
+	Returns 'Default' Skin
 -----------------------------------------------------------]]
 function GetDefaultSkin()
 
 	local skin = nil
-	
+
 	-- Check gamemode skin preference
 	if ( gamemode ) then
 		local skinname = gamemode.Call( "ForceDermaSkin" )
@@ -180,19 +181,19 @@ function GetDefaultSkin()
 
 	-- default
 	if (!skin) then skin = DefaultSkin end
-	
+
 	return skin
 end
 
 --[[---------------------------------------------------------
-   Returns 'Named' Skin
+	Returns 'Named' Skin
 -----------------------------------------------------------]]
 function GetNamedSkin( name )
 	return SkinList[ name ]
 end
 
 --[[---------------------------------------------------------
-   SkinHook( strType, strName, panel )
+	SkinHook( strType, strName, panel )
 -----------------------------------------------------------]]
 function SkinHook( strType, strName, panel, w, h )
 
@@ -201,31 +202,31 @@ function SkinHook( strType, strName, panel, w, h )
 	if ( !Skin ) then return end
 	local func = Skin[ strType .. strName ]
 	if ( !func ) then return end
-	
+
 	return func( Skin, panel, w, h )
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   SkinTexture( strName, panel, default )
+	SkinTexture( strName, panel, default )
 -----------------------------------------------------------]]
 function SkinTexture( strName, panel, default )
 
 	local Skin = panel:GetSkin()
 
 	if ( !Skin ) then return default end
-	
+
 	local Textures = Skin.tex
 
 	if ( !Textures ) then return default end
-	
+
 	return Textures[ strName ] or default
-	
+
 end
 
 --[[---------------------------------------------------------
-   Color( strName, panel, default )
+	Color( strName, panel, default )
 -----------------------------------------------------------]]
 function Color( strName, panel, default )
 
@@ -234,18 +235,18 @@ function Color( strName, panel, default )
 	if ( !Skin ) then return default end
 
 	return Skin[ strName ] or default
-	
+
 end
 
 --[[---------------------------------------------------------
-   SkinChangeIndex
+	SkinChangeIndex
 -----------------------------------------------------------]]
 function SkinChangeIndex()
 	return iSkinChangeIndex
 end
 
 --[[---------------------------------------------------------
-   RefreshSkins - clears all cache'd panels (so they will reassess which skin they should be using)
+	RefreshSkins - clears all cache'd panels (so they will reassess which skin they should be using)
 -----------------------------------------------------------]]
 function RefreshSkins()
 	iSkinChangeIndex = iSkinChangeIndex + 1

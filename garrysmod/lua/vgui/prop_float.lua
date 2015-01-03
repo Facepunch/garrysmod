@@ -1,6 +1,6 @@
 
 --
--- prop_generic is the base for all other properties. 
+-- prop_generic is the base for all other properties.
 -- All the business should be done in :Setup using inline functions.
 -- So when you derive from this class - you should ideally only override Setup.
 --
@@ -48,12 +48,12 @@ function PANEL:Setup( vars )
 
 	-- Set the value
 	self.SetValue = function( self, val )
-		ctrl:SetValue( val ) 
+		ctrl:SetValue( val )
 	end
 
 	-- Alert row that value changed
 	ctrl.OnValueChanged = function( ctrl, newval )
-			
+
 		self:ValueChanged( newval )
 
 	end

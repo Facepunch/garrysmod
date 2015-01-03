@@ -1,14 +1,11 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[ _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DListView
-	
-	Columned list view
-
+	DListView_Column
 --]]
 
 local PANEL = {}
@@ -18,7 +15,7 @@ Derma_Hook( PANEL, 	"ApplySchemeSettings", "Scheme", "ListViewHeaderLabel" )
 Derma_Hook( PANEL, 	"PerformLayout", "Layout", "ListViewHeaderLabel" )
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 end
@@ -32,7 +29,7 @@ derma.DefineControl( "DListViewHeaderLabel", "", PANEL, "DLabel" )
 local PANEL = {}
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -41,7 +38,7 @@ function PANEL:Init()
 end
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Paint()
 
@@ -50,14 +47,14 @@ function PANEL:Paint()
 end
 
 --[[---------------------------------------------------------
-   Name: OnCursorMoved
+	Name: OnCursorMoved
 -----------------------------------------------------------]]
 function PANEL:OnCursorMoved()
 
 	if ( self.Depressed ) then
-	
+
 		local x, y = self:GetParent():CursorPos()
-	
+
 		self:GetParent():ResizeColumn( x )
 	end
 
@@ -85,23 +82,23 @@ Derma_Hook( PANEL, 	"ApplySchemeSettings", "Scheme", "ListViewColumn" )
 Derma_Hook( PANEL, 	"PerformLayout", "Layout", "ListViewColumn" )
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
 	self.Header = vgui.Create( "DButton", self )
 	self.Header.DoClick = function() self:DoClick() end
 	self.Header.DoRightClick = function() self:DoRightClick() end
-	
+
 	self.DraggerBar = vgui.Create( "DListView_DraggerBar", self )
-	
+
 	self:SetMinWidth( 10 )
 	self:SetMaxWidth( 1920 * 10 )
 
 end
 
 --[[---------------------------------------------------------
-   Name: SetFixedWidth
+	Name: SetFixedWidth
 -----------------------------------------------------------]]
 function PANEL:SetFixedWidth( i )
 
@@ -111,7 +108,7 @@ function PANEL:SetFixedWidth( i )
 end
 
 --[[---------------------------------------------------------
-   Name: DoClick
+	Name: DoClick
 -----------------------------------------------------------]]
 function PANEL:DoClick()
 
@@ -121,14 +118,14 @@ function PANEL:DoClick()
 end
 
 --[[---------------------------------------------------------
-   Name: DoRightClick
+	Name: DoRightClick
 -----------------------------------------------------------]]
 function PANEL:DoRightClick()
 
 end
 
 --[[---------------------------------------------------------
-   Name: SetName
+	Name: SetName
 -----------------------------------------------------------]]
 function PANEL:SetName( strName )
 
@@ -137,24 +134,24 @@ function PANEL:SetName( strName )
 end
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Paint()
 	return true
 end
 
 --[[---------------------------------------------------------
-   Name: PerformLayout
+	Name: PerformLayout
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
-	if ( self.m_iTextAlign ) then 
-		self.Header:SetContentAlignment( self.m_iTextAlign ) 
+	if ( self.m_iTextAlign ) then
+		self.Header:SetContentAlignment( self.m_iTextAlign )
 	end
-		
+
 	self.Header:SetPos( 0, 0 )
 	self.Header:SetSize( self:GetWide(), self:GetParent():GetHeaderHeight() )
-	
+
 	self.DraggerBar:SetWide( 4 )
 	self.DraggerBar:StretchToParent( nil, 0, nil, 0 )
 	self.DraggerBar:AlignRight()
@@ -162,7 +159,7 @@ function PANEL:PerformLayout()
 end
 
 --[[---------------------------------------------------------
-   Name: ResizeColumn
+	Name: ResizeColumn
 -----------------------------------------------------------]]
 function PANEL:ResizeColumn( iSize )
 
@@ -171,12 +168,12 @@ function PANEL:ResizeColumn( iSize )
 end
 
 --[[---------------------------------------------------------
-   Name: SetWidth
+	Name: SetWidth
 -----------------------------------------------------------]]
 function PANEL:SetWidth( iSize )
 
 	iSize = math.Clamp( iSize, self.m_iMinWidth, self.m_iMaxWidth )
-	
+
 	-- If the column changes size we need to lay the data out too
 	if ( iSize != self:GetWide() ) then
 		self:GetParent():SetDirty( true )
@@ -192,14 +189,14 @@ end
 derma.DefineControl( "DListView_Column", "", table.Copy( PANEL ), "Panel" )
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
 	self.Header = vgui.Create( "DListViewHeaderLabel", self )
-	
+
 	self.DraggerBar = vgui.Create( "DListView_DraggerBar", self )
-	
+
 	self:SetMinWidth( 10 )
 	self:SetMaxWidth( 1920 * 10 )
 

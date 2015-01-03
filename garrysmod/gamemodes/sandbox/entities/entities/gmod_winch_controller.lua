@@ -11,8 +11,8 @@ local TYPE_NORMAL	= 0
 local TYPE_MUSCLE	= 1
 
 --[[---------------------------------------------------------
-   Name: Initialize
-   Desc: First function called. Use to set up your entity
+	Name: Initialize
+	Desc: First function called. Use to set up your entity
 -----------------------------------------------------------]]
 function ENT:Initialize()
 
@@ -27,8 +27,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: KeyValue
-   Desc: Called when a keyvalue is added to us
+	Name: KeyValue
+	Desc: Called when a keyvalue is added to us
 -----------------------------------------------------------]]
 function ENT:KeyValue( key, value )
 	if ( key == "minlength" ) then		self.min_length = tonumber( value )
@@ -38,8 +38,8 @@ function ENT:KeyValue( key, value )
 end
 
 --[[---------------------------------------------------------
-   Name: Think
-   Desc: Entity's think function. 
+	Name: Think
+	Desc: Entity's think function.
 -----------------------------------------------------------]]
 function ENT:Think()
 
@@ -50,8 +50,8 @@ function ENT:Think()
 	if ( !self.constraint ) then return true end
 	if ( !self.direction ) then return true end
 	if ( self.direction == DIR_NONE ) then return true end
-	
-	
+
+
 	local old_length = self.current_length
 	local current_length = self.current_length
 
@@ -71,7 +71,7 @@ function ENT:Think()
 		if ( dist == 0 ) then return true end
 
 		current_length = current_length + dist
-	
+
 		if ( self.min_length && current_length < self.min_length ) then
 
 			current_length = self.min_length
@@ -96,31 +96,31 @@ function ENT:Think()
 		end
 
 	elseif ( self.type == TYPE_MUSCLE ) then
-	
+
 		local amp = self.constraint.amplitude
 		local per = self.constraint.period
-		
+
 		if ( per == 0 ) then return true end
 
 		local spos = ( math.sin( (self.ctime * math.pi * per )) + 1 ) * ( amp / 2 )
 
 		if ( spos > amp ) then spos = amp end
 		if ( spos < 0 ) then spos = 0 end
-		
+
 		if ( self.direction != DIR_NONE ) then
 			current_length = self.min_length + spos
 		end
 		self.ctime = self.ctime + TimeDiff
-		
+
 	end
-		
+
 	self.current_length = current_length
-	
+
 	self.constraint:Fire( "SetSpringLength", current_length, 0 )
 	if ( self.rope ) then self.rope:Fire( "SetLength", current_length, 0 ) end
-	
+
 	return true
-	
+
 end
 
 
@@ -129,11 +129,11 @@ function ENT:GetPos( ent, phys, lpos )
 	if ( ent:EntIndex() == 0 ) then
 		return lpos
 	end
-	
-	if ( IsValid( phys ) ) then	
+
+	if ( IsValid( phys ) ) then
 		return phys:LocalToWorld( lpos )
-	else 
-		return ent:LocalToWorld( lpos ) 
+	else
+		return ent:LocalToWorld( lpos )
 	end
 
 end
@@ -148,13 +148,13 @@ function ENT:SetConstraint( c )
 	local p1 = self:GetPos( c.Ent1, c.Phys1, c.LPos1 )
 	local p2 = self:GetPos( c.Ent2, c.Phys2, c.LPos2 )
 	local dist = ( p1 - p2 )
-	
+
 	self.current_length = dist:Length()
-	
+
 	if ( self.max_length ) then
 		self.isexpanded = ( self.current_length >= self.max_length )
 	end
-	
+
 	if ( self.type == TYPE_MUSCLE ) then
 		local amp = self.constraint.amplitude
 		local per = self.constraint.period
@@ -166,7 +166,7 @@ function ENT:SetConstraint( c )
 		spos = spos / ( per * math.pi )
 		self.ctime = spos
 	end
-		
+
 end
 
 function ENT:SetRope( r )
@@ -189,9 +189,9 @@ end
 	HydraulicToggle - Toggle hydraulic on off
 ------------------------------------------------------------------------]]
 local function HydraulicToggle( pl, hyd )
-	
+
 	if ( !IsValid( hyd ) ) then return false end
-	
+
 	-- I hate this, shouldn't we just be calling hyd:Toggle()
 
 	if ( hyd:GetDirection() == 0 ) then
@@ -243,9 +243,9 @@ end
 numpad.Register( "WinchToggle", WinchToggle )
 
 local function MuscleToggle( pl, hyd )
-	
+
 	if ( !IsValid( hyd ) ) then return false end
-	
+
 	if ( hyd:GetDirection() == 0 ) then
 		hyd:SetDirection( 1 )
 	else

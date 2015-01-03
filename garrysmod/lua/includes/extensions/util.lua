@@ -2,24 +2,24 @@
 if ( !util ) then return end
 
 if ( CLIENT ) then
-	include( "util/worldpicker.lua" );
+	include( "util/worldpicker.lua" )
 end
 
 --[[---------------------------------------------------------
-   Name:	IsValidPhysicsObject
-   Params: 	<ent> <num>
-   Desc:	Returns true if physics object is valid, false if not
------------------------------------------------------------]]   
+	Name:	IsValidPhysicsObject
+	Params: 	<ent> <num>
+	Desc:	Returns true if physics object is valid, false if not
+-----------------------------------------------------------]]
 function util.IsValidPhysicsObject( ent, num )
 
 	-- Make sure the entity is valid
 	if ( !ent || (!ent:IsValid() && !ent:IsWorld()) ) then return false end
 
 	-- This is to stop attaching to walking NPCs.
-	-- Although this is possible and `works', it can severly reduce the 
+	-- Although this is possible and `works', it can severly reduce the
 	-- performance of the server.. Plus they don't pay attention to constraints
 	-- anyway - so we're not really losing anything.
-	
+
 	local MoveType = ent:GetMoveType()
 	if ( !ent:IsWorld() && MoveType != MOVETYPE_VPHYSICS ) then return false end
 
@@ -29,8 +29,8 @@ function util.IsValidPhysicsObject( ent, num )
 end
 
 --[[---------------------------------------------------------
-   Name: GetPlayerTrace( ply, dir )
-   Desc: Returns a generic trace table for the player
+	Name: GetPlayerTrace( ply, dir )
+	Desc: Returns a generic trace table for the player
 		 (dir is optional, defaults to the player's aim)
 -----------------------------------------------------------]]
 function util.GetPlayerTrace( ply, dir )
@@ -38,43 +38,43 @@ function util.GetPlayerTrace( ply, dir )
 	dir = dir or ply:GetAimVector()
 
 	local trace = {}
-	
+
 	trace.start = ply:EyePos()
 	trace.endpos = trace.start + (dir * (4096 * 8))
 	trace.filter = ply
-	
+
 	return trace
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   Name: QuickTrace( origin, offset, filter )
-   Desc: Quick trace
+	Name: QuickTrace( origin, offset, filter )
+	Desc: Quick trace
 -----------------------------------------------------------]]
 function util.QuickTrace( origin, dir, filter )
 
 	local trace = {}
-	
+
 	trace.start = origin
 	trace.endpos = origin + dir
 	trace.filter = filter
-	
+
 	return util.TraceLine( trace )
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   Name: tobool( in )
-   Desc: Turn variable into bool
+	Name: tobool( in )
+	Desc: Turn variable into bool
 -----------------------------------------------------------]]
 util.tobool = tobool
 
 
 --[[---------------------------------------------------------
-   Name: LocalToWorld( ent, lpos, bone )
-   Desc: Convert the local position on an entity to world pos
+	Name: LocalToWorld( ent, lpos, bone )
+	Desc: Convert the local position on an entity to world pos
 -----------------------------------------------------------]]
 function util.LocalToWorld( ent, lpos, bone )
 	bone = bone or 0
@@ -92,7 +92,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Returns year, month, day and hour, minute, second in a formatted string.
+	Returns year, month, day and hour, minute, second in a formatted string.
 -----------------------------------------------------------]]
 function util.DateStamp()
 
@@ -101,7 +101,7 @@ function util.DateStamp()
 end
 
 --[[---------------------------------------------------------
-   Convert a string to a certain type
+	Convert a string to a certain type
 -----------------------------------------------------------]]
 function util.StringToType( str, typename )
 
@@ -165,7 +165,7 @@ end
 -- Timer
 --
 --
-local T = 
+local T =
 {
 
 	--
@@ -226,7 +226,7 @@ end
 -- Stack
 --
 --
-local T = 
+local T =
 {
 
 	--
@@ -249,11 +249,11 @@ local T =
 	-- Ret1:
 	--
 	Pop = function( self, num )
-		
+
 		local num = num or 1
 
 		if ( num > #self.objs ) then
-			error( "Overpopped stack!" );
+			error( "Overpopped stack!" )
 		end
 
 		for i = num, 1, -1 do
@@ -313,37 +313,37 @@ local function GetUniqueID( sid )
 end
 
 --[[---------------------------------------------------------
-   Name: GetPData( steamid, name, default )
-   Desc: Gets the persistant data from a player by steamid
+	Name: GetPData( steamid, name, default )
+	Desc: Gets the persistant data from a player by steamid
 -----------------------------------------------------------]]
 function util.GetPData( steamid, name, default )
 
 	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
 	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr(name) .. " LIMIT 1" )
 	if ( val == nil ) then return default end
-	
+
 	return val
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: SetPData( steamid, name, value )
-   Desc: Sets the persistant data of a player by steamid
+	Name: SetPData( steamid, name, value )
+	Desc: Sets the persistant data of a player by steamid
 -----------------------------------------------------------]]
 function util.SetPData( steamid, name, value )
 
 	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
 	sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( "..SQLStr(name)..", "..SQLStr(value).." )" )
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: RemovePData( steamid, name )
-   Desc: Removes the persistant data from a player by steamid
+	Name: RemovePData( steamid, name )
+	Desc: Removes the persistant data from a player by steamid
 -----------------------------------------------------------]]
 function util.RemovePData( steamid, name )
 
 	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = "..SQLStr(name) )
-	
+
 end

@@ -17,10 +17,10 @@ ENT.AdminOnly			= false
 
 
 --[[---------------------------------------------------------
-   Name: Initialize
+	Name: Initialize
 -----------------------------------------------------------]]
 function ENT:Initialize()
-	
+
 	local Radius = 4
 
 	if ( SERVER ) then
@@ -35,25 +35,25 @@ function ENT:Initialize()
 		self.AttachedEntity:DrawShadow( false )
 
 		self:SetModel( "models/props_junk/watermelon01.mdl" )
-	
+
 		self:DeleteOnRemove( self.AttachedEntity )
 
 		local min = Vector( 1, 1, 1 ) * Radius * -0.5
 		local max = Vector( 1, 1, 1 ) * Radius * 0.5
-	
+
 		-- Don't use the model's physics - create a box instead
 		self:PhysicsInitBox( min, max )
-	
+
 		-- Set up our physics object here
 		local phys = self:GetPhysicsObject()
 		if ( IsValid( phys) ) then
-	
+
 			phys:Wake()
 			phys:EnableGravity( false )
 			phys:EnableDrag( false )
-		
+
 		end
-	
+
 		-- Set collision bounds exactly
 		self:SetCollisionBounds( min, max )
 		self:DrawShadow( false )
@@ -66,29 +66,29 @@ function ENT:Initialize()
 
 	end
 
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   Name: Draw
+	Name: Draw
 -----------------------------------------------------------]]
 function ENT:Draw()
 
 	if ( GetConVarNumber( "cl_draweffectrings" ) == 0 ) then return end
-	
+
 	-- Don't draw the grip if there's no chance of us picking it up
 	local ply = LocalPlayer()
 	local wep = ply:GetActiveWeapon()
 	if ( !IsValid( wep ) ) then return end
-	
-	local weapon_name = wep:GetClass()
-	
-	if ( weapon_name != "weapon_physgun" 
-		&& weapon_name != "weapon_physcannon" 
-		&& weapon_name != "gmod_tool" ) then 
 
-		return 
+	local weapon_name = wep:GetClass()
+
+	if ( weapon_name != "weapon_physgun"
+		&& weapon_name != "weapon_physcannon"
+		&& weapon_name != "gmod_tool" ) then
+
+		return
 
 	end
 
@@ -99,26 +99,26 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: PhysicsUpdate
+	Name: PhysicsUpdate
 -----------------------------------------------------------]]
 function ENT:PhysicsUpdate( physobj )
-	
+
 	if ( CLIENT ) then return end
 
 
 	-- Don't do anything if the player isn't holding us
 	if ( !self:IsPlayerHolding() && !self:IsConstrained() ) then
-		
+
 		physobj:SetVelocity( Vector(0,0,0) )
 		physobj:Sleep()
-		
+
 	end
 
 end
 
 
 --[[---------------------------------------------------------
-   Name: Called after entity 'copy'
+	Name: Called after entity 'copy'
 -----------------------------------------------------------]]
 function ENT:OnEntityCopyTableFinish( tab )
 

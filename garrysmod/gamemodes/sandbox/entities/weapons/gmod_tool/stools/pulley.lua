@@ -21,14 +21,14 @@ function TOOL:LeftClick( trace )
 	self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
 
 	if ( iNum > 2 ) then
-	
+
 		if ( CLIENT ) then return true end
-		
+
 		local width = self:GetClientNumber( "width" )
 		local forcelimit = self:GetClientNumber( "forcelimit" )
 		local rigid = self:GetClientNumber( "rigid" ) == 1
 		local material = self:GetClientInfo( "material" )
-		
+
 		-- Get information we're about to use
 		local Ent1 = self:GetEnt( 1 )
 		local Ent4 = self:GetEnt( 4 )
@@ -45,7 +45,7 @@ function TOOL:LeftClick( trace )
 			undo.AddEntity( constraint )
 			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
-		
+
 		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
 
 		self:ClearObjects()
@@ -53,9 +53,9 @@ function TOOL:LeftClick( trace )
 	else
 
 		self:SetStage( iNum + 1 )
-		
+
 	end
-	
+
 	return true
 
 end
@@ -66,7 +66,7 @@ function TOOL:Reload( trace )
 	if ( CLIENT ) then return true end
 
 	return constraint.RemoveConstraints( trace.Entity, "Pulley" )
-	
+
 end
 
 function TOOL:Holster()

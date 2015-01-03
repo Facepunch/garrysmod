@@ -15,7 +15,7 @@ function TOOL:LeftClick( trace )
 	if ( !trace.HitPos ) then return false end
 	if ( trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
-	
+
 	local ply = self:GetOwner()
 
 	-- Get client's CVars
@@ -30,7 +30,7 @@ function TOOL:LeftClick( trace )
 		trace.Entity:Setup( damage )
 		trace.Entity:SetShouldRemove( remove )
 		trace.Entity.delay = delay
-		
+
 		numpad.Remove( trace.Entity.NumDown )
 		trace.Entity.key = group
 		trace.Entity.NumDown = numpad.OnDown( ply, group, "DynamiteBlow", trace.Entity, delay )
@@ -40,7 +40,7 @@ function TOOL:LeftClick( trace )
 	if ( !self:GetSWEP():CheckLimit( "dynamite" ) ) then return false end
 
 	local dynamite = MakeDynamite( ply, trace.HitPos, Angle( 0, 0, 0 ), group, damage, model, remove, delay )
-	
+
 	local CurPos = dynamite:GetPos()
 	local NearestPoint = dynamite:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
 	local Offset = CurPos - NearestPoint
@@ -53,21 +53,21 @@ function TOOL:LeftClick( trace )
 	undo.Finish()
 
 	ply:AddCleanup( "dynamite", dynamite )
-	
+
 	return true
-	
+
 end
 
 function TOOL:RightClick( trace )
 
 	return self:LeftClick( trace )
-	
+
 end
 
 if ( SERVER ) then
 
 	function MakeDynamite( pl, Pos, Ang, key, Damage, Model, Remove, delay, Vel, aVel, frozen )
-	
+
 		if ( IsValid( pl ) && !pl:CheckLimit( "dynamite" ) ) then return nil end
 
 		local dynamite = ents.Create( "gmod_dynamite" )
@@ -77,13 +77,13 @@ if ( SERVER ) then
 		dynamite:SetShouldRemove( Remove )
 		dynamite:Spawn()
 		dynamite:Activate()
-		
+
 		dynamite:Setup( Damage )
 
 		if ( IsValid( pl ) ) then
 			dynamite:SetPlayer( pl )
 		end
-		
+
 		local ttable = {
 			key	= key,
 			pl	= pl,
@@ -94,32 +94,32 @@ if ( SERVER ) then
 			remove = Remove,
 			delay = delay
 		}
-		
+
 		table.Merge( dynamite:GetTable(), ttable )
 		dynamite.NumDown = numpad.OnDown( pl, key, "DynamiteBlow", dynamite, delay )
-		
+
 		if ( IsValid( pl ) ) then
 
 			pl:AddCount( "dynamite", dynamite )
 
 		end
-		
+
 		DoPropSpawnedEffect( dynamite )
-		
+
 		return dynamite
-		
+
 	end
 	duplicator.RegisterEntityClass( "gmod_dynamite", MakeDynamite, "Pos", "Ang", "key", "Damage", "model", "remove", "delay", "Vel", "aVel", "frozen" )
-	
+
 	local function BlowDynamite( pl, dynamite, delay )
 
 		if ( !IsValid( dynamite ) ) then return end
 
 		dynamite:Explode( delay, pl )
-	
+
 	end
 	numpad.Register( "DynamiteBlow", BlowDynamite )
-	
+
 end
 
 function TOOL:UpdateGhostDynamite( ent, pl )
@@ -128,7 +128,7 @@ function TOOL:UpdateGhostDynamite( ent, pl )
 
 	local tr = util.GetPlayerTrace( pl )
 	local trace = util.TraceLine( tr )
-	
+
 	if ( !trace.Hit || trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_dynamite" ) then
 		ent:SetNoDraw( true )
 		return
@@ -141,7 +141,7 @@ function TOOL:UpdateGhostDynamite( ent, pl )
 	local Offset = CurPos - NearestPoint
 
 	ent:SetPos( trace.HitPos + Offset )
-	
+
 	ent:SetNoDraw( false )
 
 end
@@ -152,9 +152,9 @@ function TOOL:Think()
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
 		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 	end
-	
+
 	self:UpdateGhostDynamite( self.GhostEntity, self:GetOwner() )
-	
+
 end
 
 local ConVarsDefault = TOOL:BuildConVarList()
@@ -162,7 +162,7 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Header", { Description	= "#tool.dynamite.help" } )
-	
+
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "dynamite", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.dynamite.explode", Command = "dynamite_group" } )

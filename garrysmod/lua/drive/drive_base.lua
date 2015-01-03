@@ -1,31 +1,31 @@
 
 AddCSLuaFile()
 
-drive.Register( "drive_base", 
+drive.Register( "drive_base",
 {
 	--
-	-- You should override these :) 
+	-- You should override these :)
 	-- see drive_noclip.lua for help
-	-- 
-	Init = function( self, cmd )						end,
-	SetupControls = function( self, cmd )				end,
-	StartMove =  function( self, mv, cmd )				end,
-	Move = function( self, mv )							end,
-	FinishMove =  function( self, mv )					end,
-	CalcView =  function( self, view )					end,
+	--
+	Init			= function( self, cmd )				end,
+	SetupControls	= function( self, cmd )				end,
+	StartMove		= function( self, mv, cmd )			end,
+	Move			= function( self, mv )				end,
+	FinishMove		= function( self, mv )				end,
+	CalcView		= function( self, view )			end,
 
 
 	--
 	-- Utility methods
 	--
 
-	
+
 	--
-	-- Call this in your drive method at 
+	-- Call this in your drive method at
 	-- any point to stop driving.
 	--
 	Stop = function( self )
-		self.StopDriving = true	
+		self.StopDriving = true
 	end,
 
 	--
@@ -60,7 +60,7 @@ drive.Register( "drive_base",
 			--
 			-- > If we hit something then stop there
 			--		[ stops the camera going through walls ]
-			--							
+			--
 			if ( tr.Hit ) then
 				neworigin = tr.HitPos
 			end
@@ -79,4 +79,4 @@ drive.Register( "drive_base",
 
 	end
 
-});
+})

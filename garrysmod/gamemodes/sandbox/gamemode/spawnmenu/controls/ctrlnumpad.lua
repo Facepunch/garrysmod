@@ -1,9 +1,9 @@
 --
 --  ___  ___   _   _   _    __   _   ___ ___ __ __
 -- |_ _|| __| / \ | \_/ |  / _| / \ | o \ o \\ V /
---  | | | _| | o || \_/ | ( |_n| o ||   /   / \ / 
+--  | | | _| | o || \_/ | ( |_n| o ||   /   / \ /
 --  |_| |___||_n_||_| |_|  \__/|_n_||_|\\_|\\ |_|  2009
---										 
+--
 --
 
 local PANEL = {}
@@ -12,18 +12,18 @@ AccessorFunc( PANEL, "m_ConVar1", 				"ConVar1" )
 AccessorFunc( PANEL, "m_ConVar2", 				"ConVar2" )
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
 	self.NumPad1 = vgui.Create( "DBinder", self )
 	self.Label1 = vgui.Create( "DLabel", self )
 	self.Label1:SetDark( true )
-	
+
 	self.NumPad2 = vgui.Create( "DBinder", self )
 	self.Label2 = vgui.Create( "DLabel", self )
 	self.Label2:SetDark( true )
-	
+
 	self:SetPaintBackground( false )
 
 	self:SetHeight( 200 )
@@ -31,7 +31,7 @@ function PANEL:Init()
 end
 
 --[[---------------------------------------------------------
-   Name: SetLabel1
+	Name: SetLabel1
 -----------------------------------------------------------]]
 function PANEL:SetLabel1( txt )
 	if ( !txt ) then return end
@@ -39,7 +39,7 @@ function PANEL:SetLabel1( txt )
 end
 
 --[[---------------------------------------------------------
-   Name: SetLabel2
+	Name: SetLabel2
 -----------------------------------------------------------]]
 function PANEL:SetLabel2( txt )
 	if ( !txt ) then return end
@@ -47,7 +47,7 @@ function PANEL:SetLabel2( txt )
 end
 
 --[[---------------------------------------------------------
-   Name: SetConVar1
+	Name: SetConVar1
 -----------------------------------------------------------]]
 function PANEL:SetConVar1( cvar )
 	self.NumPad1:SetConVar( cvar )
@@ -55,7 +55,7 @@ function PANEL:SetConVar1( cvar )
 end
 
 --[[---------------------------------------------------------
-   Name: SetConVar2
+	Name: SetConVar2
 -----------------------------------------------------------]]
 function PANEL:SetConVar2( cvar )
 	self.NumPad2:SetConVar( cvar )
@@ -63,7 +63,7 @@ function PANEL:SetConVar2( cvar )
 end
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
@@ -97,17 +97,15 @@ function PANEL:PerformLayout()
 		self.NumPad1:CenterHorizontal( 0.25 )
 		self.Label1:CenterHorizontal( 0.25 )
 		self.NumPad1:AlignTop( 20 )
-	
+
 		self.NumPad2:CenterHorizontal( 0.75 )
 		self.Label2:CenterHorizontal( 0.75 )
 		self.NumPad2:AlignTop( 20 )
 		self.Label2:AlignTop( 0 )
 
-	end	
+	end
 
 
 end
-
-
 
 vgui.Register( "CtrlNumPad", PANEL, "DPanel" )

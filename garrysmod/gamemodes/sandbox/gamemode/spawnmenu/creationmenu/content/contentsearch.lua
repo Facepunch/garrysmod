@@ -17,7 +17,7 @@ function PANEL:Init()
 	self.Search.OnEnter = function() self:RefreshResults() end
 	self.Search.OnFocusChanged = function( _, b ) if ( b ) then self:RefreshResults() end end
 	self.Search:SetTooltip( "Press enter to search" )
-	
+
 	local btn = self.Search:Add( "DImageButton" )
 
 	btn:SetImage( "icon16/magnifier.png" )
@@ -42,10 +42,10 @@ function PANEL:Init()
 		if ( g_SpawnMenu:IsVisible() ) then return hook.Run( "OnSpawnMenuClose" ) end
 
 		hook.Run( "OnSpawnMenuOpen" )
-		hook.Run( "OnTextEntryGetFocus", self.Search )		
+		hook.Run( "OnTextEntryGetFocus", self.Search )
 
 		self.Search:RequestFocus()
-		self.Search:SetText( "" );
+		self.Search:SetText( "" )
 
 		--
 		-- If we don't call this we'd have to press F1 twice to close it!
@@ -53,26 +53,26 @@ function PANEL:Init()
 		--
 		timer.Simple( 0.1, function() g_SpawnMenu:HangOpen( false ) end )
 
-		ContentPanel:SwitchPanel( self.PropPanel );
+		ContentPanel:SwitchPanel( self.PropPanel )
 
-	end);
+	end)
 
 	hook.Add( "SearchUpdate", "SearchUpdate", function()
 
 		if ( !g_SpawnMenu:IsVisible() ) then return end
 		self:RefreshResults()
 
-	end);
+	end)
 
 	self.PropPanel = vgui.Create( "ContentContainer", self )
 	self.PropPanel:SetVisible( false )
 	self.PropPanel:SetTriggerSpawnlistChange( false )
-	
+
 	g_SpawnMenu.SearchPropPanel = self.PropPanel
-	
+
 end
 
-function PANEL:RefreshResults() 
+function PANEL:RefreshResults()
 
 	if ( self.Search:GetText() == "" ) then return end
 
@@ -89,7 +89,7 @@ function PANEL:RefreshResults()
 	end
 
 	self.PropPanel:SetParent( ContentPanel )
-	ContentPanel:SwitchPanel( self.PropPanel );
+	ContentPanel:SwitchPanel( self.PropPanel )
 
 end
 
@@ -106,14 +106,14 @@ end
 hook.Add( "PopulateContent", "AddSearchContent", function( pnlContent, tree, node )
 
 	-- Add a node to the tree
-	--local node = tree:AddNode( "Search", "icon16/magnifier.png" );
-	
+	--local node = tree:AddNode( "Search", "icon16/magnifier.png" )
+
 	-- If we click on the node populate it and switch to it.
 	--node.DoClick = function( self )
-	
-	--	self:DoPopulate()		
-	--	pnlContent:SwitchPanel( self.PropPanel );
-	
+
+	--	self:DoPopulate()
+	--	pnlContent:SwitchPanel( self.PropPanel )
+
 	--end
 
 	ContentPanel = pnlContent

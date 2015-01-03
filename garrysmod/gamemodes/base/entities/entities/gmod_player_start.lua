@@ -2,7 +2,7 @@
 -- This is just a simple point entity.
 
 -- We only use it to represent the position and angle of a spawn point
--- So we don't have to do anything here because the baseclass will 
+-- So we don't have to do anything here because the baseclass will
 -- take care of the basics
 
 -- This file only exists so that the entity is created
@@ -34,7 +34,7 @@ function ENT:Initialize()
 		self.GreenTeam = true
 		self.YellowTeam = true
 		self.RedTeam = true
-		
+
 
 	end
 
@@ -52,7 +52,7 @@ function ENT:KeyValue( key, value )
 
 			-- Quick bit if bitwise math to figure out if the spawnflags
 			-- represent red/blue/green or yellow.
-			-- We have to use booleans since the TEAM_ identifiers 
+			-- We have to use booleans since the TEAM_ identifiers
 			-- aren't setup at this point.
 			-- (this would be easier if we had bitwise operators in Lua)
 

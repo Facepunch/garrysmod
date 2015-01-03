@@ -1,27 +1,27 @@
-	
-	
+
+
 --[[---------------------------------------------------------
-   Sets which stage a tool is at
+	Sets which stage a tool is at
 -----------------------------------------------------------]]
 function ToolObj:UpdateData()
-	
+
 	self:SetStage( self:NumObjects() )
-	
-end
-	
---[[---------------------------------------------------------
-   Sets which stage a tool is at
------------------------------------------------------------]]
-function ToolObj:SetStage( i )
-	
-	if ( SERVER ) then
-		self:GetWeapon():SetNWInt( "Stage", i, true )
-	end
-	
+
 end
 
 --[[---------------------------------------------------------
-   Gets which stage a tool is at
+	Sets which stage a tool is at
+-----------------------------------------------------------]]
+function ToolObj:SetStage( i )
+
+	if ( SERVER ) then
+		self:GetWeapon():SetNWInt( "Stage", i, true )
+	end
+
+end
+
+--[[---------------------------------------------------------
+	Gets which stage a tool is at
 -----------------------------------------------------------]]
 function ToolObj:GetStage()
 	return self:GetWeapon():GetNWInt( "Stage", 0 )
@@ -36,15 +36,15 @@ end
 --[[---------------------------------------------------------
 -----------------------------------------------------------]]
 function ToolObj:SetOperation( i )
-	
+
 	if ( SERVER ) then
 		self:GetWeapon():SetNWInt( "Op", i, true )
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
-   ClearObjects - clear the selected objects
+	ClearObjects - clear the selected objects
 -----------------------------------------------------------]]
 function ToolObj:ClearObjects()
 
@@ -52,7 +52,7 @@ function ToolObj:ClearObjects()
 	self.Objects = {}
 	self:SetStage( 0 )
 	self:SetOperation( 0 )
-	
+
 end
 
 
@@ -64,7 +64,7 @@ end
 function ToolObj:GetEnt( i )
 
 	if (!self.Objects[i]) then return NULL end
-	
+
 	return self.Objects[i].Ent
 end
 
@@ -85,7 +85,7 @@ function ToolObj:GetPos( i )
 			return self.Objects[i].Ent:LocalToWorld(self.Objects[i].Pos)
 		end
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -113,7 +113,7 @@ function ToolObj:GetNormal( i )
 		else
 			norm = self.Objects[i].Ent:LocalToWorld(self.Objects[i].Normal)
 		end
-		
+
 		return norm - self:GetPos(i)
 	end
 end
@@ -148,11 +148,11 @@ function ToolObj:SetObject( i, ent, pos, phys, bone, norm )
 
 		self.Objects[i].Phys = nil
 		self.Objects[i].Pos = pos
-		
+
 	else
-		
+
 		norm = norm + pos
-	
+
 		-- Convert the position to a local position - so it's still valid when the object moves
 		if ( IsValid( phys ) ) then
 			self.Objects[i].Normal = self.Objects[i].Phys:WorldToLocal(norm)
@@ -161,13 +161,13 @@ function ToolObj:SetObject( i, ent, pos, phys, bone, norm )
 			self.Objects[i].Normal = self.Objects[i].Ent:WorldToLocal(norm)
 			self.Objects[i].Pos = self.Objects[i].Ent:WorldToLocal(pos)
 		end
-		
+
 	end
-	
+
 	if (SERVER) then
 		-- Todo: Make sure the client got the same info
 	end
-	
+
 end
 
 
@@ -177,13 +177,13 @@ end
 function ToolObj:NumObjects()
 
 	if ( CLIENT ) then
-	
+
 		return self:GetStage()
-	
+
 	end
 
 	return #self.Objects
-	
+
 end
 
 
@@ -193,7 +193,7 @@ end
 function ToolObj:GetHelpText()
 
 	return "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. self:GetStage()
-	
+
 end
 
 

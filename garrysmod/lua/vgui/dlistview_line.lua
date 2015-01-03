@@ -1,16 +1,17 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[ _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
+	DListView_Line
 --]]
 
 local PANEL = {}
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -20,8 +21,8 @@ end
 
 function PANEL:UpdateColours( skin )
 
-	if ( self:GetParent():IsLineSelected() )	then return self:SetTextStyleColor( skin.Colours.Label.Bright ) end
-	
+	if ( self:GetParent():IsLineSelected() ) then return self:SetTextStyleColor( skin.Colours.Label.Bright ) end
+
 	return self:SetTextStyleColor( skin.Colours.Label.Dark )
 
 end
@@ -45,76 +46,76 @@ AccessorFunc( PANEL, "m_pListView", 		"ListView" )
 AccessorFunc( PANEL, "m_bAlt", 				"AltLine" )
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetSelectable( true )
 	self:SetMouseInputEnabled( true )
-	
+
 	self.Columns = {}
 	self.Data = {}
 
 end
 
 --[[---------------------------------------------------------
-   Name: OnSelect
+	Name: OnSelect
 -----------------------------------------------------------]]
 function PANEL:OnSelect()
 
 	-- For override
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: OnRightClick
+	Name: OnRightClick
 -----------------------------------------------------------]]
 function PANEL:OnRightClick()
 
 	-- For override
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: OnMousePressed
+	Name: OnMousePressed
 -----------------------------------------------------------]]
 function PANEL:OnMousePressed( mcode )
 
 	if ( mcode == MOUSE_RIGHT ) then
-	
+
 		-- This is probably the expected behaviour..
 		if ( !self:IsLineSelected() ) then
-		
+
 			self:GetListView():OnClickLine( self, true )
 			self:OnSelect()
 
 		end
-		
+
 		self:GetListView():OnRowRightClick( self:GetID(), self )
 		self:OnRightClick()
-		
+
 		return
-		
+
 	end
 
 	self:GetListView():OnClickLine( self, true )
 	self:OnSelect()
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: OnMousePressed
+	Name: OnMousePressed
 -----------------------------------------------------------]]
 function PANEL:OnCursorMoved()
 
 	if ( input.IsMouseDown( MOUSE_LEFT ) ) then
 		self:GetListView():OnClickLine( self )
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: IsLineSelected
+	Name: IsLineSelected
 -----------------------------------------------------------]]
 function PANEL:IsLineSelected()
 
@@ -123,28 +124,28 @@ function PANEL:IsLineSelected()
 end
 
 --[[---------------------------------------------------------
-   Name: SetColumnText
+	Name: SetColumnText
 -----------------------------------------------------------]]
 function PANEL:SetColumnText( i, strText )
 
 	if ( type( strText ) == "Panel" ) then
-	
+
 		if ( IsValid( self.Columns[ i ] ) ) then self.Columns[ i ]:Remove() end
-	
+
 		strText:SetParent( self )
 		self.Columns[ i ] = strText
 		self.Columns[ i ].Value = strText
 		return
-		
+
 	end
 
 	if ( !IsValid( self.Columns[ i ] ) ) then
-	
+
 		self.Columns[ i ] = vgui.Create( "DListViewLabel", self )
 		self.Columns[ i ]:SetMouseInputEnabled( false )
-		
+
 	end
-	
+
 	self.Columns[ i ]:SetText( tostring( strText ) )
 	self.Columns[ i ].Value = strText
 	return self.Columns[ i ]
@@ -155,12 +156,12 @@ PANEL.SetValue = PANEL.SetColumnText
 
 
 --[[---------------------------------------------------------
-   Name: SetColumnText
+	Name: SetColumnText
 -----------------------------------------------------------]]
 function PANEL:GetColumnText( i )
 
 	if ( !self.Columns[ i ] ) then return "" end
-	
+
 	return self.Columns[ i ].Value
 
 end
@@ -168,46 +169,46 @@ end
 PANEL.GetValue = PANEL.GetColumnText
 
 --[[---------------------------------------------------------
-   Name: SetSortValue
+	Name: SetSortValue
 	 Allows you to store data per column
-	 
+
 	 Used in the SortByColumn function for incase you want to
 	 sort with something else than the text
 -----------------------------------------------------------]]
 function PANEL:SetSortValue( i, data )
-	
+
 	self.Data[ i ] = data
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: GetSortValue
+	Name: GetSortValue
 -----------------------------------------------------------]]
 function PANEL:GetSortValue( i )
-	
+
 	return self.Data[ i ]
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   Name: SetColumnText
+	Name: SetColumnText
 -----------------------------------------------------------]]
 function PANEL:DataLayout( ListView )
 
 	self:ApplySchemeSettings()
 
 	local height = self:GetTall()
-	
+
 	local x = 0
 	for k, Column in pairs( self.Columns ) do
-	
+
 		local w = ListView:ColumnWidth( k )
 		Column:SetPos( x, 0 )
 		Column:SetSize( w, height )
 		x = x + w
-	
-	end	
+
+	end
 
 end
 

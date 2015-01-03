@@ -90,7 +90,7 @@ local PLAYER_LINE = {
 			self.PName = self.Player:Nick()
 			self.Name:SetText( self.PName )
 		end
-		
+
 		if ( self.NumKills == nil || self.NumKills != self.Player:Frags() ) then
 			self.NumKills = self.Player:Frags()
 			self.Kills:SetText( self.NumKills )

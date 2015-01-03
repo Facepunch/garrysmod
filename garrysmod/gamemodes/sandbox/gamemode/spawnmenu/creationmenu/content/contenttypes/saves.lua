@@ -56,7 +56,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 
 	end
 
-	function ws_save:Load( filename ) RunConsoleCommand( "gm_load", filename ); end
+	function ws_save:Load( filename ) RunConsoleCommand( "gm_load", filename ) end
 	function ws_save:Publish( filename, imagename ) RunConsoleCommand( "save_publish", filename, imagename ) end
 
 	return HTML
@@ -72,4 +72,3 @@ hook.Add( "PostGameSaved", "OnCreationsSaved", function()
 	HTML:Call( "OnGameSaved()" )
 
 end )
-

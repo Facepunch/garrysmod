@@ -1,4 +1,4 @@
---[[   _
+--[[ _
 	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
@@ -39,11 +39,11 @@ function PANEL:Init()
 
 	-- Nicer default height
 	self:SetTall( 20 )
-	
+
 	-- This turns off the engine drawing
 	self:SetPaintBackgroundEnabled( false )
 	self:SetPaintBorderEnabled( false )
-	
+
 	self:SetFont( "DermaDefault" )
 
 end
@@ -62,7 +62,7 @@ function PANEL:ApplySchemeSettings()
 
 	local col = self.m_colTextStyle
 	if ( self.m_colText ) then col = self.m_colText end
-	
+
 	self:SetFGColor( col.r, col.g, col.b, col.a )
 
 end
@@ -94,9 +94,9 @@ end
 	Exited
 -----------------------------------------------------------]]
 function PANEL:OnCursorEntered()
-	
+
 	self:InvalidateLayout( true )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -114,35 +114,35 @@ end
 function PANEL:OnMousePressed( mousecode )
 
 	if ( self:GetDisabled() ) then return end
-	
+
 	if ( mousecode == MOUSE_LEFT && !dragndrop.IsDragging() && self.m_bDoubleClicking ) then
-	
+
 		if ( self.LastClickTime && SysTime() - self.LastClickTime < 0.2 ) then
-		
+
 			self:DoDoubleClickInternal()
 			self:DoDoubleClick()
-			return 
-			
+			return
+
 		end
-		
+
 		self.LastClickTime = SysTime()
 	end
-	
+
 	-- If we're selectable and have shift held down then go up
 	-- the parent until we find a selection canvas and start box selection
 	if ( self:IsSelectable() && mousecode == MOUSE_LEFT ) then
-	
-		if ( input.IsShiftDown() ) then 
+
+		if ( input.IsShiftDown() ) then
 			return self:StartBoxSelection()
 		end
-		
+
 	end
-	
+
 	self:MouseCapture( true )
 	self.Depressed = true
 	self:OnDepressed()
 	self:InvalidateLayout()
-	
+
 	--
 	-- Tell DragNDrop that we're down, and might start getting dragged!
 	--
@@ -160,10 +160,10 @@ end
 function PANEL:OnMouseReleased( mousecode )
 
 	self:MouseCapture( false )
-	
+
 	if ( self:GetDisabled() ) then return end
 	if ( !self.Depressed ) then return end
-	
+
 	self.Depressed = nil
 	self:OnReleased()
 	self:InvalidateLayout()
@@ -173,20 +173,20 @@ function PANEL:OnMouseReleased( mousecode )
 	if ( self:DragMouseRelease( mousecode ) ) then
 		return
 	end
-	
+
 	if ( self:IsSelectable() && mousecode == MOUSE_LEFT ) then
-		
+
 		local canvas = self:GetSelectionCanvas()
 		if ( canvas ) then
 			canvas:UnselectAll()
 		end
-		
+
 	end
-	
+
 	if ( !self.Hovered ) then return end
 
 	--
-	-- For the purposes of these callbacks we want to 
+	-- For the purposes of these callbacks we want to
 	-- keep depressed true. This helps us out in controls
 	-- like the checkbox in the properties dialog. Because
 	-- the properties dialog will only manualloy change the value
@@ -198,8 +198,8 @@ function PANEL:OnMouseReleased( mousecode )
 	if ( mousecode == MOUSE_RIGHT ) then
 		self:DoRightClick()
 	end
-	
-	if ( mousecode == MOUSE_LEFT ) then	
+
+	if ( mousecode == MOUSE_LEFT ) then
 		self:DoClickInternal()
 		self:DoClick()
 	end
@@ -242,7 +242,7 @@ end
 function PANEL:Toggle()
 
 	if ( !self:GetIsToggle() ) then return end
-	
+
 	self.m_bToggle = !self.m_bToggle
 	self:OnToggled( self.m_bToggle )
 
@@ -310,7 +310,7 @@ function Label( strText, parent )
 
 	local lbl = vgui.Create( "DLabel", parent )
 	lbl:SetText( strText )
-	
+
 	return lbl
 
 end

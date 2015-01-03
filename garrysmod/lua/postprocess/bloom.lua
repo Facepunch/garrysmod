@@ -10,7 +10,7 @@ local tex_Bloom1		= render.GetBloomTex1()
 mat_Downsample:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 
 --[[---------------------------------------------------------
-   Register the convars that will control this effect
+	Register the convars that will control this effect
 -----------------------------------------------------------]]
 local pp_bloom 			= CreateClientConVar( "pp_bloom", 			"0", 	false, 	false ) -- On/Off
 local pp_bloom_darken 	= CreateClientConVar( "pp_bloom_darken", 	"0.65", true, 	false ) -- Decides the strength of the bloom
@@ -24,62 +24,62 @@ local pp_bloom_color_b	= CreateClientConVar( "pp_bloom_color_b", 	"255", 	true, 
 local pp_bloom_passes 	= CreateClientConVar( "pp_bloom_passes", 	"4", 	true, 	false )
 
 --[[---------------------------------------------------------
-   Can be called from engine or hooks using bloom.Draw
+	Can be called from engine or hooks using bloom.Draw
 -----------------------------------------------------------]]
 function DrawBloom( darken, multiply, sizex, sizey, passes, color, colr, colg, colb )
 
 	-- No bloom for crappy gpus
 	if ( !render.SupportsPixelShaders_2_0() ) then return end
-	
+
 	-- Todo: Does this stop it working properly when rendered to a rect?
 	local w = ScrW()
 	local h = ScrH()
-	
+
 	-- Copy the backbuffer to the screen effect texture
 	render.UpdateScreenEffectTexture()
-	
+
 	-- Store the render target so we can swap back at the end
 	local OldRT = render.GetRenderTarget()
-	
+
 	-- The downsample material adjusts the contrast
 	mat_Downsample:SetFloat( "$darken", darken )
 	mat_Downsample:SetFloat( "$multiply", multiply )
-	
-		
+
+
 	-- Downsample to BloomTexture0
 	render.SetRenderTarget( tex_Bloom0 )
-	
+
 	render.SetMaterial( mat_Downsample )
-	render.DrawScreenQuad()			 
-					 
+	render.DrawScreenQuad()
+
 	render.BlurRenderTarget( tex_Bloom0, sizex, sizey, passes )
-			 
+
 	render.SetRenderTarget( OldRT )
-	
+
 	mat_Bloom:SetFloat( "$levelr", colr )
 	mat_Bloom:SetFloat( "$levelg", colg )
 	mat_Bloom:SetFloat( "$levelb", colb )
 	mat_Bloom:SetFloat( "$colormul", color )
 	mat_Bloom:SetTexture( "$basetexture", tex_Bloom0 )
-	
+
 	render.SetMaterial( mat_Bloom )
 	render.DrawScreenQuad()
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   The function to draw the bloom (called from the hook)
+	The function to draw the bloom (called from the hook)
 -----------------------------------------------------------]]
 local function DrawInternal()
 
 	-- No bloom for crappy gpus
-	
-	if ( !render.SupportsPixelShaders_2_0() ) then return end	
+
+	if ( !render.SupportsPixelShaders_2_0() ) then return end
 	if ( !pp_bloom:GetBool() ) then return end
 	if ( !GAMEMODE:PostProcessPermitted( "bloom" ) ) then return end
-	
-	DrawBloom(	pp_bloom_darken:GetFloat(), 
+
+	DrawBloom(	pp_bloom_darken:GetFloat(),
 				pp_bloom_multiply:GetFloat(),
 				pp_bloom_sizex:GetFloat(),
 				pp_bloom_sizey:GetFloat(),
@@ -102,7 +102,7 @@ list.Set( "PostProcess", "#bloom_pp", {
 
 		CPanel:AddControl( "Header", { Description = "#bloom_pp.desc" } )
 		CPanel:AddControl( "CheckBox", { Label = "#bloom_pp.enable", Command = "pp_bloom" } )
-		
+
 		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "bloom" }
 		params.Options[ "#preset.default" ] = {
 			pp_bloom_passes		= "4",
@@ -117,7 +117,7 @@ list.Set( "PostProcess", "#bloom_pp", {
 		}
 		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
 		CPanel:AddControl( "ComboBox", params )
-		
+
 		CPanel:AddControl( "Slider", { Label = "#bloom_pp.passes", Command = "pp_bloom_passes", Type = "Integer", Min = "0", Max = "30" } )
 		CPanel:AddControl( "Slider", { Label = "#bloom_pp.darken", Command = "pp_bloom_darken", Type = "Float", Min = "0", Max = "1" } )
 		CPanel:AddControl( "Slider", { Label = "#bloom_pp.multiply", Command = "pp_bloom_multiply", Type = "Float", Min = "0", Max = "5" } )

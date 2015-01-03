@@ -1,9 +1,9 @@
 --
 --  ___  ___   _   _   _    __   _   ___ ___ __ __
 -- |_ _|| __| / \ | \_/ |  / _| / \ | o \ o \\ V /
---  | | | _| | o || \_/ | ( |_n| o ||   /   / \ / 
+--  | | | _| | o || \_/ | ( |_n| o ||   /   / \ /
 --  |_| |___||_n_||_| |_|  \__/|_n_||_|\\_|\\ |_|  2009
---										 
+--
 --
 
 list.Set( "RopeMaterials", "#ropematerial.rope",		"cable/rope" )
@@ -17,7 +17,7 @@ list.Set( "RopeMaterials", "#ropematerial.hydra",		"cable/hydra" )
 local PANEL = {}
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -27,9 +27,9 @@ function PANEL:Init()
 
 	local mats = list.Get( "RopeMaterials" )
 	for k, v in pairs( mats ) do
-	
+
 		self:AddMaterial( k, v )
-	
+
 	end
 
 end
@@ -39,6 +39,5 @@ function PANEL:Paint( w, h )
 	draw.RoundedBox( 4, 0, 0, w, h, Color( 128, 128, 128, 255 ) )
 
 end
-
 
 vgui.Register( "RopeMaterial", PANEL, "MatSelect" )

@@ -1,15 +1,15 @@
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnObject( ply )
-   Desc: Called to ask whether player is allowed to spawn any objects
+	Name: gamemode:PlayerSpawnObject( ply )
+	Desc: Called to ask whether player is allowed to spawn any objects
 -----------------------------------------------------------]]
 function GM:PlayerSpawnObject( ply )
 	return true
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:CanPlayerUnfreeze( )
-   Desc: Can the player unfreeze this entity & physobject
+	Name: gamemode:CanPlayerUnfreeze( )
+	Desc: Can the player unfreeze this entity & physobject
 -----------------------------------------------------------]]
 function GM:CanPlayerUnfreeze( ply, entity, physobject )
 
@@ -19,7 +19,7 @@ function GM:CanPlayerUnfreeze( ply, entity, physobject )
 end
 
 --[[---------------------------------------------------------
-   Name: LimitReachedProcess
+	Name: LimitReachedProcess
 -----------------------------------------------------------]]
 local function LimitReachedProcess( ply, str )
 
@@ -31,8 +31,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnRagdoll( ply, model )
-   Desc: Return true if it's allowed 
+	Name: gamemode:PlayerSpawnRagdoll( ply, model )
+	Desc: Return true if it's allowed
 -----------------------------------------------------------]]
 function GM:PlayerSpawnRagdoll( ply, model )
 
@@ -42,8 +42,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnProp( ply, model )
-   Desc: Return true if it's allowed 
+	Name: gamemode:PlayerSpawnProp( ply, model )
+	Desc: Return true if it's allowed
 -----------------------------------------------------------]]
 function GM:PlayerSpawnProp( ply, model )
 
@@ -52,8 +52,8 @@ function GM:PlayerSpawnProp( ply, model )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnEffect( ply, model )
-   Desc: Return true if it's allowed 
+	Name: gamemode:PlayerSpawnEffect( ply, model )
+	Desc: Return true if it's allowed
 -----------------------------------------------------------]]
 function GM:PlayerSpawnEffect( ply, model )
 
@@ -62,8 +62,8 @@ function GM:PlayerSpawnEffect( ply, model )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnVehicle( ply, model, vname, vtable )
-   Desc: Return true if it's allowed 
+	Name: gamemode:PlayerSpawnVehicle( ply, model, vname, vtable )
+	Desc: Return true if it's allowed
 -----------------------------------------------------------]]
 function GM:PlayerSpawnVehicle( ply, model, vname, vtable )
 
@@ -73,19 +73,19 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnSWEP( ply, wname, wtable )
-   Desc: Return true if it's allowed 
+	Name: gamemode:PlayerSpawnSWEP( ply, wname, wtable )
+	Desc: Return true if it's allowed
 -----------------------------------------------------------]]
 function GM:PlayerSpawnSWEP( ply, wname, wtable )
 
 	return LimitReachedProcess( ply, "sents" )
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerGiveSWEP( ply, wname, wtable )
-   Desc: Return true if it's allowed 
+	Name: gamemode:PlayerGiveSWEP( ply, wname, wtable )
+	Desc: Return true if it's allowed
 -----------------------------------------------------------]]
 function GM:PlayerGiveSWEP( ply, wname, wtable )
 
@@ -95,8 +95,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnSENT( ply, name )
-   Desc: Return true if player is allowed to spawn the SENT
+	Name: gamemode:PlayerSpawnSENT( ply, name )
+	Desc: Return true if player is allowed to spawn the SENT
 -----------------------------------------------------------]]
 function GM:PlayerSpawnSENT( ply, name )
 
@@ -105,8 +105,8 @@ function GM:PlayerSpawnSENT( ply, name )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnNPC( ply, npc_type )
-   Desc: Return true if player is allowed to spawn the NPC
+	Name: gamemode:PlayerSpawnNPC( ply, npc_type )
+	Desc: Return true if player is allowed to spawn the NPC
 -----------------------------------------------------------]]
 function GM:PlayerSpawnNPC( ply, npc_type, equipment )
 
@@ -115,8 +115,8 @@ function GM:PlayerSpawnNPC( ply, npc_type, equipment )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnedRagdoll( ply, model, ent )
-   Desc: Called after the player spawned a ragdoll
+	Name: gamemode:PlayerSpawnedRagdoll( ply, model, ent )
+	Desc: Called after the player spawned a ragdoll
 -----------------------------------------------------------]]
 function GM:PlayerSpawnedRagdoll( ply, model, ent )
 
@@ -125,8 +125,8 @@ function GM:PlayerSpawnedRagdoll( ply, model, ent )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnedProp( ply, model, ent )
-   Desc: Called after the player spawned a prop
+	Name: gamemode:PlayerSpawnedProp( ply, model, ent )
+	Desc: Called after the player spawned a prop
 -----------------------------------------------------------]]
 function GM:PlayerSpawnedProp( ply, model, ent )
 
@@ -135,8 +135,8 @@ function GM:PlayerSpawnedProp( ply, model, ent )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnedEffect( ply, model, ent )
-   Desc: Called after the player spawned an effect
+	Name: gamemode:PlayerSpawnedEffect( ply, model, ent )
+	Desc: Called after the player spawned an effect
 -----------------------------------------------------------]]
 function GM:PlayerSpawnedEffect( ply, model, ent )
 
@@ -145,8 +145,8 @@ function GM:PlayerSpawnedEffect( ply, model, ent )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnedVehicle( ply, ent )
-   Desc: Called after the player spawned a vehicle
+	Name: gamemode:PlayerSpawnedVehicle( ply, ent )
+	Desc: Called after the player spawned a vehicle
 -----------------------------------------------------------]]
 function GM:PlayerSpawnedVehicle( ply, ent )
 
@@ -155,8 +155,8 @@ function GM:PlayerSpawnedVehicle( ply, ent )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnedNPC( ply, ent )
-   Desc: Called after the player spawned an NPC
+	Name: gamemode:PlayerSpawnedNPC( ply, ent )
+	Desc: Called after the player spawned an NPC
 -----------------------------------------------------------]]
 function GM:PlayerSpawnedNPC( ply, ent )
 
@@ -166,8 +166,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnedSENT( ply, ent )
-   Desc: Called after the player has spawned a SENT
+	Name: gamemode:PlayerSpawnedSENT( ply, ent )
+	Desc: Called after the player has spawned a SENT
 -----------------------------------------------------------]]
 function GM:PlayerSpawnedSENT( ply, ent )
 
@@ -176,8 +176,8 @@ function GM:PlayerSpawnedSENT( ply, ent )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerSpawnedWeapon( ply, ent )
-   Desc: Called after the player has spawned a Weapon
+	Name: gamemode:PlayerSpawnedWeapon( ply, ent )
+	Desc: Called after the player has spawned a Weapon
 -----------------------------------------------------------]]
 function GM:PlayerSpawnedSWEP( ply, ent )
 
@@ -187,8 +187,8 @@ function GM:PlayerSpawnedSWEP( ply, ent )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerEnteredVehicle( player, vehicle, role )
-   Desc: Player entered the vehicle fine
+	Name: gamemode:PlayerEnteredVehicle( player, vehicle, role )
+	Desc: Player entered the vehicle fine
 -----------------------------------------------------------]]
 function GM:PlayerEnteredVehicle( player, vehicle, role )
 
@@ -200,7 +200,7 @@ end
 	These are buttons that the client is pressing. They're used
 	in Sandbox mode to control things like wheels, thrusters etc.
 -----------------------------------------------------------]]
-function GM:PlayerButtonDown( ply, btn ) 
+function GM:PlayerButtonDown( ply, btn )
 
 	numpad.Activate( ply, btn )
 
@@ -210,7 +210,7 @@ end
 	These are buttons that the client is pressing. They're used
 	in Sandbox mode to control things like wheels, thrusters etc.
 -----------------------------------------------------------]]
-function GM:PlayerButtonUp( ply, btn ) 
+function GM:PlayerButtonUp( ply, btn )
 
 	numpad.Deactivate( ply, btn )
 

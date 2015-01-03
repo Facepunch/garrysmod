@@ -1,7 +1,7 @@
 
-matproxy.Add( 
+matproxy.Add(
 {
-	name	=	"SkyPaint", 
+	name	=	"SkyPaint",
 
 	init	=	function( self, mat, values )
 
@@ -9,8 +9,8 @@ matproxy.Add(
 
 	bind	=	function( self, mat, ent )
 
-	
-		if ( !IsValid( g_SkyPaint ) ) then return end	
+
+		if ( !IsValid( g_SkyPaint ) ) then return end
 
 
 		mat:SetVector( "$TOPCOLOR",				g_SkyPaint:GetTopColor() )
@@ -37,8 +37,8 @@ matproxy.Add(
 			mat:SetInt( "$STARLAYERS",				0 )
 
 		end
-		
 
 
-	end 
+
+	end
 })

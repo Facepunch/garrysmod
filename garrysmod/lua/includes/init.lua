@@ -121,4 +121,3 @@ if ( CLIENT ) then
 	require ( "search" )
 
 end
-

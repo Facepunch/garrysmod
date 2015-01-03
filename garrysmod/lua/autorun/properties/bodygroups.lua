@@ -1,11 +1,12 @@
+
 AddCSLuaFile()
 
 properties.Add( "bodygroups", {
 	MenuLabel = "#bodygroups",
 	Order = 600,
 	MenuIcon = "icon16/link_edit.png",
-	
-	Filter = function( self, ent, ply ) 
+
+	Filter = function( self, ent, ply )
 
 		if ( !IsValid( ent ) ) then return false end
 		if ( ent:IsPlayer() ) then return false end
@@ -14,7 +15,7 @@ properties.Add( "bodygroups", {
 		--
 		-- Get a list of bodygroups
 		--
-		local options = ent:GetBodyGroups();
+		local options = ent:GetBodyGroups()
 		if ( !options ) then return false end
 
 		--
@@ -34,7 +35,7 @@ properties.Add( "bodygroups", {
 		--
 		-- Get a list of bodygroups
 		--
-		local options = ent:GetBodyGroups();
+		local options = ent:GetBodyGroups()
 
 		--
 		-- Add a submenu to our automatically created menu option
@@ -87,7 +88,7 @@ properties.Add( "bodygroups", {
 	Action = function( self, ent )
 
 		-- Nothing - we use SetBodyGroup below
-		
+
 	end,
 
 	SetBodyGroup = function( self, ent, body, id )
@@ -101,15 +102,15 @@ properties.Add( "bodygroups", {
 	end,
 
 	Receive = function( self, length, player )
-	
+
 		local ent = net.ReadEntity()
 		local body = net.ReadUInt( 8 )
 		local id = net.ReadUInt( 8 )
-		
+
 		if ( !self:Filter( ent, player ) ) then return end
 
 		ent:SetBodygroup( body, id )
-		
-	end	
+
+	end
 
 } )

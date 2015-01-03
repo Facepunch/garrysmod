@@ -7,65 +7,65 @@ include( 'variable_edit.lua' )
 GM.PlayerSpawnTime = {}
 
 --[[---------------------------------------------------------
-   Name: gamemode:Initialize()
-   Desc: Called immediately after starting the gamemode
+	Name: gamemode:Initialize()
+	Desc: Called immediately after starting the gamemode
 -----------------------------------------------------------]]
 function GM:Initialize()
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:InitPostEntity()
-   Desc: Called as soon as all map entities have been spawned
+	Name: gamemode:InitPostEntity()
+	Desc: Called as soon as all map entities have been spawned
 -----------------------------------------------------------]]
 function GM:InitPostEntity()
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:Think()
-   Desc: Called every frame
+	Name: gamemode:Think()
+	Desc: Called every frame
 -----------------------------------------------------------]]
 function GM:Think()
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:ShutDown()
-   Desc: Called when the Lua system is about to shut down
+	Name: gamemode:ShutDown()
+	Desc: Called when the Lua system is about to shut down
 -----------------------------------------------------------]]
 function GM:ShutDown()
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:DoPlayerDeath( )
-   Desc: Carries out actions when the player dies
+	Name: gamemode:DoPlayerDeath( )
+	Desc: Carries out actions when the player dies
 -----------------------------------------------------------]]
 function GM:DoPlayerDeath( ply, attacker, dmginfo )
 
 	ply:CreateRagdoll()
-	
+
 	ply:AddDeaths( 1 )
-	
+
 	if ( attacker:IsValid() && attacker:IsPlayer() ) then
-	
+
 		if ( attacker == ply ) then
 			attacker:AddFrags( -1 )
 		else
 			attacker:AddFrags( 1 )
 		end
-	
+
 	end
 
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:EntityTakeDamage( ent, info )
-   Desc: The entity has received damage
+	Name: gamemode:EntityTakeDamage( ent, info )
+	Desc: The entity has received damage
 -----------------------------------------------------------]]
 function GM:EntityTakeDamage( ent, info )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:CreateEntityRagdoll( entity, ragdoll )
-   Desc: A ragdoll of an entity has been created
+	Name: gamemode:CreateEntityRagdoll( entity, ragdoll )
+	Desc: A ragdoll of an entity has been created
 -----------------------------------------------------------]]
 function GM:CreateEntityRagdoll( entity, ragdoll )
 end
@@ -86,14 +86,14 @@ timer.Create( "HostnameThink", 30, 0, HostnameThink )
 function GM:ShowTeam( ply )
 
 	if ( !GAMEMODE.TeamBased ) then return end
-	
+
 	local TimeBetweenSwitches = GAMEMODE.SecondsBetweenTeamSwitches or 10
 	if ( ply.LastTeamSwitch && RealTime() - ply.LastTeamSwitch < TimeBetweenSwitches ) then
 		ply.LastTeamSwitch = ply.LastTeamSwitch + 1
 		ply:ChatPrint( Format( "Please wait %i more seconds before trying to change team again", ( TimeBetweenSwitches - ( RealTime() - ply.LastTeamSwitch ) ) + 1 ) )
 		return false
 	end
-	
+
 	-- For clientside see cl_pickteam.lua
 	ply:SendLua( "GAMEMODE:ShowTeam()" )
 
@@ -117,7 +117,7 @@ function GM:CheckPassword( steamid, networkid, server_password, password, name )
 		end
 
 	end
-	
+
 	--
 	-- Returning true means they're allowed to join the server
 	--

@@ -26,7 +26,7 @@ local function SetColour( Player, Entity, Data )
 	if ( SERVER ) then
 		duplicator.StoreEntityModifier( Entity, "colour", Data )
 	end
-	
+
 end
 duplicator.RegisterEntityModifier( "colour", SetColour )
 
@@ -38,7 +38,7 @@ function TOOL:LeftClick( trace )
 	if IsValid( ent ) then -- The entity is valid and isn't worldspawn
 
 		if ( CLIENT ) then return true end
-	
+
 		local r = self:GetClientNumber( "r", 0 )
 		local g = self:GetClientNumber( "g", 0 )
 		local b = self:GetClientNumber( "b", 0 )
@@ -49,7 +49,7 @@ function TOOL:LeftClick( trace )
 		SetColour( self:GetOwner(), ent, { Color = Color( r, g, b, a ), RenderMode = mode, RenderFX = fx } )
 
 		return true
-		
+
 	end
 
 end
@@ -62,12 +62,12 @@ function TOOL:RightClick( trace )
 	if IsValid( ent ) then -- The entity is valid and isn't worldspawn
 
 		if ( CLIENT ) then return true end
-	
+
 		SetColour( self:GetOwner(), ent, { Color = Color( 255, 255, 255, 255 ), RenderMode = 0, RenderFX = 0 } )
 		return true
-	
+
 	end
-	
+
 end
 
 local ConVarsDefault = TOOL:BuildConVarList()

@@ -5,12 +5,12 @@
 local Category = "Half-Life 2"
 
 local function HandleRollercoasterAnimation( vehicle, player )
-	return player:SelectWeightedSequence( ACT_GMOD_SIT_ROLLERCOASTER ) 
+	return player:SelectWeightedSequence( ACT_GMOD_SIT_ROLLERCOASTER )
 end
 
-local V = { 	
+local V = {
 	-- Required information
-	Name = "Jeep", 
+	Name = "Jeep",
 	Class = "prop_vehicle_jeep_old",
 	Category = Category,
 
@@ -25,9 +25,9 @@ local V = {
 }
 list.Set( "Vehicles", "Jeep", V )
 
-local V = { 	
+local V = {
 	-- Required information
-	Name = "Airboat", 
+	Name = "Airboat",
 	Class = "prop_vehicle_airboat",
 	Category = Category,
 
@@ -42,9 +42,9 @@ local V = {
 }
 list.Set( "Vehicles", "Airboat", V )
 
-local V = { 	
+local V = {
 	-- Required information
-	Name = "Pod", 
+	Name = "Pod",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
@@ -60,9 +60,9 @@ local V = {
 }
 list.Set( "Vehicles", "Pod", V )
 
-local V = { 	
+local V = {
 	-- Required information
-	Name = "Jalopy", 
+	Name = "Jalopy",
 	Class = "prop_vehicle_jeep",
 	Category = Category,
 
@@ -70,7 +70,7 @@ local V = {
 	Author = "VALVe",
 	Information = "The muscle car from Episode 2",
 	Model = "models/vehicle.mdl",
-									
+
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/jalopy.txt"
 	}
@@ -80,9 +80,9 @@ if ( IsMounted( "ep2" ) ) then list.Set ( "Vehicles", "Jalopy", V ) end
 
 local Category = "Chairs"
 
-local V = { 	
+local V = {
 	-- Required information
-	Name = "Wooden Chair", 
+	Name = "Wooden Chair",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
@@ -100,9 +100,9 @@ local V = {
 }
 list.Set( "Vehicles", "Chair_Wood", V )
 
-local V = { 	
+local V = {
 	-- Required information
-	Name = "Chair", 
+	Name = "Chair",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
@@ -120,9 +120,9 @@ local V = {
 }
 list.Set( "Vehicles", "Chair_Plastic", V )
 
-local V = { 	
+local V = {
 	-- Required information
-	Name = "Jeep Seat", 
+	Name = "Jeep Seat",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
@@ -140,9 +140,9 @@ local V = {
 }
 list.Set( "Vehicles", "Seat_Jeep", V )
 
-local V = { 	
+local V = {
 	-- Required information
-	Name = "Airboat Seat", 
+	Name = "Airboat Seat",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
@@ -160,9 +160,9 @@ local V = {
 }
 list.Set( "Vehicles", "Seat_Airboat", V )
 
-local V = { 	
+local V = {
 	-- Required information
-	Name = "Office Chair", 
+	Name = "Office Chair",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
@@ -180,9 +180,9 @@ local V = {
 }
 list.Set( "Vehicles", "Chair_Office1", V )
 
-local V = { 	
+local V = {
 	-- Required information
-	Name = "Big Office Chair", 
+	Name = "Big Office Chair",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
@@ -200,9 +200,9 @@ local V = {
 }
 list.Set( "Vehicles", "Chair_Office2", V )
 
-local V = { 	
+local V = {
 	-- Required information
-	Name = "Jalopy Seat", 
+	Name = "Jalopy Seat",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
@@ -223,15 +223,15 @@ if ( IsMounted( "ep2" ) ) then list.Set( "Vehicles", "Seat_Jalopy", V ) end
 -- PhoeniX-Storms Vehicles
 
 local function HandlePHXSeatAnimation( vehicle, player )
-	return player:SelectWeightedSequence( ACT_HL2MP_SIT ) 
+	return player:SelectWeightedSequence( ACT_HL2MP_SIT )
 end
 
 local function HandlePHXVehicleAnimation( vehicle, player )
-	return player:SelectWeightedSequence( ACT_DRIVE_JEEP ) 
+	return player:SelectWeightedSequence( ACT_DRIVE_JEEP )
 end
 
-local V = { 	
-	Name = "Car Seat", 
+local V = {
+	Name = "Car Seat",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
@@ -248,8 +248,8 @@ local V = {
 }
 list.Set( "Vehicles", "phx_seat", V )
 
-local V = { 	
-	Name = "Car Seat 2", 
+local V = {
+	Name = "Car Seat 2",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
@@ -266,8 +266,8 @@ local V = {
 }
 list.Set( "Vehicles", "phx_seat2", V )
 
-local V = { 	
-	Name = "FSD Overrun", 
+local V = {
+	Name = "FSD Overrun",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 

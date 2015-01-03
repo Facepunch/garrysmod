@@ -13,10 +13,10 @@ local MODEL			= Model( "models/MaxOfS2D/light_tubular.mdl" )
 --
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Bool", 0, "On" );
-	self:NetworkVar( "Bool", 1, "Toggle" );
-	self:NetworkVar( "Float", 1, "LightSize" );
-	self:NetworkVar( "Float", 2, "Brightness" );
+	self:NetworkVar( "Bool", 0, "On" )
+	self:NetworkVar( "Bool", 1, "Toggle" )
+	self:NetworkVar( "Float", 1, "LightSize" )
+	self:NetworkVar( "Float", 2, "Brightness" )
 
 end
 
@@ -36,19 +36,19 @@ function ENT:Initialize()
 		self:SetMoveType( MOVETYPE_VPHYSICS )
 		self:SetSolid( SOLID_VPHYSICS )
 		self:DrawShadow( false )
-	
+
 		local phys = self:GetPhysicsObject()
-	
+
 		if (phys:IsValid()) then
 			phys:Wake()
 		end
 
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: Draw
+	Name: Draw
 -----------------------------------------------------------]]
 function ENT:Draw()
 
@@ -57,7 +57,7 @@ function ENT:Draw()
 end
 
 --[[---------------------------------------------------------
-   Name: Think
+	Name: Think
 -----------------------------------------------------------]]
 function ENT:Think()
 
@@ -85,55 +85,55 @@ function ENT:Think()
 		end
 
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: DrawTranslucent
-   Desc: Draw translucent
+	Name: DrawTranslucent
+	Desc: Draw translucent
 -----------------------------------------------------------]]
 function ENT:DrawTranslucent()
-	
+
 	BaseClass.DrawTranslucent( self, true )
 
 	local up = self:GetAngles():Up()
-	
+
 	local LightPos = self:GetPos()
 	render.SetMaterial( matLight )
-	
+
 	local ViewNormal = self:GetPos() - EyePos()
 	local Distance = ViewNormal:Length()
 	ViewNormal:Normalize()
-		
-	local Visibile	= util.PixelVisible( LightPos, 4, self.PixVis )	
-	
+
+	local Visibile	= util.PixelVisible( LightPos, 4, self.PixVis )
+
 	if ( !Visibile || Visibile < 0.1 ) then return end
-	
+
 	if ( !self:GetOn() ) then return end
-	
+
 	local c = self:GetColor()
 	local Alpha = 255 * Visibile
-	
+
 	render.DrawSprite( LightPos - up * 2, 8, 8, Color(255, 255, 255, Alpha), Visibile )
 	render.DrawSprite( LightPos - up * 4, 8, 8, Color(255, 255, 255, Alpha), Visibile )
 	render.DrawSprite( LightPos - up * 6, 8, 8, Color(255, 255, 255, Alpha), Visibile )
 	render.DrawSprite( LightPos - up * 5, 64, 64, Color( c.r, c.g, c.b, 64 ), Visibile )
 
-	
+
 end
 
 --[[---------------------------------------------------------
-   Overridden because I want to show the name of the 
-   player that spawned it..
+	Overridden because I want to show the name of the
+	player that spawned it..
 -----------------------------------------------------------]]
 function ENT:GetOverlayText()
 
-	return self:GetPlayerName()	
-	
+	return self:GetPlayerName()
+
 end
 
 --[[---------------------------------------------------------
-   Name: OnTakeDamage
+	Name: OnTakeDamage
 -----------------------------------------------------------]]
 function ENT:OnTakeDamage( dmginfo )
 	self:TakePhysicsDamage( dmginfo )
@@ -141,10 +141,10 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: Toggle
+	Name: Toggle
 -----------------------------------------------------------]]
 function ENT:Toggle()
-	
+
 	self:SetOn( !self:GetOn() )
-	
+
 end

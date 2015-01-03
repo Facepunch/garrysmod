@@ -1,3 +1,12 @@
+--[[ _
+	( )
+   _| |   __   _ __   ___ ___     _ _
+ /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
+( (_| |(  ___/| |   | ( ) ( ) |( (_| |
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+
+	DCheckBox
+--]]
 
 local PANEL = {}
 
@@ -10,7 +19,7 @@ Derma_Hook( PANEL, "PerformLayout", "Layout", "CheckBox" )
 Derma_Install_Convar_Functions( PANEL )
 
 --[[---------------------------------------------------------
-	
+
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -24,7 +33,7 @@ function PANEL:IsEditing()
 end
 
 --[[---------------------------------------------------------
-   Name: SetValue
+	Name: SetValue
 -----------------------------------------------------------]]
 function PANEL:SetValue( val )
 
@@ -32,16 +41,16 @@ function PANEL:SetValue( val )
 
 	self:SetChecked( val )
 	self.m_bValue = val
-	
+
 	self:OnChange( val )
-	
-	if ( val ) then val = "1" else val = "0" end	
+
+	if ( val ) then val = "1" else val = "0" end
 	self:ConVarChanged( val )
 
 end
 
 --[[---------------------------------------------------------
-   Name: DoClick
+	Name: DoClick
 -----------------------------------------------------------]]
 function PANEL:DoClick()
 
@@ -50,7 +59,7 @@ function PANEL:DoClick()
 end
 
 --[[---------------------------------------------------------
-   Name: Toggle
+	Name: Toggle
 -----------------------------------------------------------]]
 function PANEL:Toggle()
 
@@ -63,7 +72,7 @@ function PANEL:Toggle()
 end
 
 --[[---------------------------------------------------------
-   Name: OnChange
+	Name: OnChange
 -----------------------------------------------------------]]
 function PANEL:OnChange( bVal )
 
@@ -91,7 +100,7 @@ local PANEL = {}
 AccessorFunc( PANEL, "m_iIndent", 		"Indent" )
 
 --[[---------------------------------------------------------
-	
+
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -114,35 +123,35 @@ function PANEL:SetBright( b )
 end
 
 --[[---------------------------------------------------------
-   Name: SetConVar
+	Name: SetConVar
 -----------------------------------------------------------]]
 function PANEL:SetConVar( cvar )
 	self.Button:SetConVar( cvar )
 end
 
 --[[---------------------------------------------------------
-   Name: SetValue
+	Name: SetValue
 -----------------------------------------------------------]]
 function PANEL:SetValue( val )
 	self.Button:SetValue( val )
 end
 
 --[[---------------------------------------------------------
-   Name: SetChecked
+	Name: SetChecked
 -----------------------------------------------------------]]
 function PANEL:SetChecked( val )
 	self.Button:SetChecked( val )
 end
 
 --[[---------------------------------------------------------
-   Name: GetChecked
+	Name: GetChecked
 -----------------------------------------------------------]]
 function PANEL:GetChecked( val )
 	return self.Button:GetChecked()
 end
 
 --[[---------------------------------------------------------
-   Name: Toggle
+	Name: Toggle
 -----------------------------------------------------------]]
 function PANEL:Toggle()
 	self.Button:Toggle()
@@ -150,7 +159,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: PerformLayout
+	Name: PerformLayout
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
@@ -158,7 +167,7 @@ function PANEL:PerformLayout()
 
 	self.Button:SetSize( 15, 15 )
 	self.Button:SetPos( x, 0 )
-	
+
 	if ( self.Label ) then
 		self.Label:SizeToContents()
 		self.Label:SetPos( x + 14 + 10, 0 )
@@ -167,7 +176,7 @@ function PANEL:PerformLayout()
 end
 
 --[[---------------------------------------------------------
-   Name: SetTextColor
+	Name: SetTextColor
 -----------------------------------------------------------]]
 function PANEL:SetTextColor( color )
 
@@ -184,11 +193,11 @@ function PANEL:SizeToContents()
 	self:PerformLayout( true )
 	self:SetWide( self.Label.x + self.Label:GetWide() )
 	self:SetTall( self.Button:GetTall() )
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: SetText
+	Name: SetText
 -----------------------------------------------------------]]
 function PANEL:SetText( text )
 
@@ -197,14 +206,14 @@ function PANEL:SetText( text )
 		self.Label:SetMouseInputEnabled( true )
 		self.Label.DoClick = function() self:Toggle() end
 	end
-	
+
 	self.Label:SetText( text )
 	self:InvalidateLayout()
 
 end
 
 --[[---------------------------------------------------------
-   Name: GetText
+	Name: GetText
 -----------------------------------------------------------]]
 function PANEL:GetText()
 
@@ -214,13 +223,13 @@ function PANEL:GetText()
 end
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Paint()
 end
 
 --[[---------------------------------------------------------
-   Name: OnChange
+	Name: OnChange
 -----------------------------------------------------------]]
 function PANEL:OnChange( bVal )
 
@@ -229,14 +238,14 @@ function PANEL:OnChange( bVal )
 end
 
 --[[---------------------------------------------------------
-   Name: GenerateExample
+	Name: GenerateExample
 -----------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
 		ctrl:SetText( "CheckBox" )
 		ctrl:SetWide( 200 )
-	
+
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end

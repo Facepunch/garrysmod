@@ -47,7 +47,7 @@ function Task:InitEngine( _taskname_, _taskdata_ )
 	self.TaskID		= nil
 	self.TaskData 	= _taskdata_
 	self.Type 		= TYPE_ENGINE
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -81,16 +81,16 @@ end
 	Start
 -----------------------------------------------------------]]
 function Task:Start( npc )
-	
+
 	if ( self:IsFNameType() ) then self:Start_FName( npc ) return end
-	
+
 	if ( self:IsEngineType() ) then
-	
+
 		if (!self.TaskID) then self.TaskID = ai.GetTaskID( self.TaskName ) end
-	
+
 		npc:StartEngineTask( self.TaskID, self.TaskData )
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -100,7 +100,7 @@ function Task:Start_FName( npc )
 
 	if (!self.StartFunctionName) then return end
 	--if (!npc[ self.StartFunctionName ]) then return end
-	
+
 	-- Run the start function. Safely.
 	npc[ self.StartFunctionName ]( npc, self.TaskData )
 
@@ -110,26 +110,26 @@ end
 	IsFNameType
 -----------------------------------------------------------]]
 function Task:Run( npc )
-	
+
 	if ( self:IsFNameType() ) then self:Run_FName( npc ) return end
-	
+
 	if ( self:IsEngineType() ) then
 		npc:RunEngineTask( self.TaskID, self.TaskData )
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
 	Run_FName
 -----------------------------------------------------------]]
 function Task:Run_FName( npc )
-	
+
 	if (!self.FunctionName) then return end
 	--if (!npc[ self.StartFunctionName ]) then return end
-	
+
 	-- Run the start function. Safely.
 	npc[ self.FunctionName ]( npc, self.TaskData )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -139,11 +139,11 @@ function New()
 
 	local pNewTask = {}
 	setmetatable( pNewTask, Task )
-	
+
 	pNewTask:Init()
-	
+
 	--table.insert( Task_Index, pNewTask )
-	
+
 	return pNewTask
 
 end

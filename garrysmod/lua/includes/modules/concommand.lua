@@ -18,9 +18,9 @@ local string = string
 
 
 --[[---------------------------------------------------------
-   Name: concommand
-   Desc: A module to take care of the registration and calling
-         of Lua console commands.
+	Name: concommand
+	Desc: A module to take care of the registration and calling
+		of Lua console commands.
 -----------------------------------------------------------]]
 module("concommand")
 
@@ -28,16 +28,16 @@ local CommandList 	= {}
 local CompleteList 	= {}
 
 --[[---------------------------------------------------------
-   Name: concommand.GetTable( )
-   Desc: Returns the table of console commands and auto complete
+	Name: concommand.GetTable( )
+	Desc: Returns the table of console commands and auto complete
 -----------------------------------------------------------]]
 function GetTable()
 	return CommandList, CompleteList
 end
 
 --[[---------------------------------------------------------
-   Name: concommand.Add( name, func, completefunc )
-   Desc: Register a new console command
+	Name: concommand.Add( name, func, completefunc )
+	Desc: Register a new console command
 -----------------------------------------------------------]]
 function Add( name, func, completefunc, help, flags )
 	local LowerName = string.lower( name )
@@ -47,8 +47,8 @@ function Add( name, func, completefunc, help, flags )
 end
 
 --[[---------------------------------------------------------
-   Name: concommand.Remove( name )
-   Desc: Removes a console command
+	Name: concommand.Remove( name )
+	Desc: Removes a console command
 -----------------------------------------------------------]]
 function Remove( name )
 	local LowerName = string.lower( name )
@@ -58,8 +58,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: concommand.Run( )
-   Desc: Called by the engine when an unknown console command is run
+	Name: concommand.Run( )
+	Desc: Called by the engine when an unknown console command is run
 -----------------------------------------------------------]]
 function Run( player, command, arguments, args )
 
@@ -73,13 +73,13 @@ function Run( player, command, arguments, args )
 	if ( player:IsValid() ) then
 		player:ChatPrint( "Unknown Command: '" .. command .. "'\n" )
 	end
-	
-	return false;
+
+	return false
 end
 
 --[[---------------------------------------------------------
-   Name: concommand.AutoComplete( )
-   Desc: Returns a table for the autocompletion
+	Name: concommand.AutoComplete( )
+	Desc: Returns a table for the autocompletion
 -----------------------------------------------------------]]
 function AutoComplete( command, arguments )
 
@@ -88,6 +88,5 @@ function AutoComplete( command, arguments )
 	if ( CompleteList[ LowerCommand ] != nil ) then
 		return CompleteList[ LowerCommand ]( command, arguments )
 	end
-	
-end
 
+end

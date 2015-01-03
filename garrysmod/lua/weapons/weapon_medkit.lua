@@ -1,9 +1,9 @@
 
 AddCSLuaFile()
 
-SWEP.PrintName			= "Medkit"
-SWEP.Author			= "robotboy655 & MaxOfS2D"
-SWEP.Purpose    	= "Heal people with your primary attack, or yourself with the secondary."
+SWEP.PrintName	= "Medkit"
+SWEP.Author		= "robotboy655 & MaxOfS2D"
+SWEP.Purpose	= "Heal people with your primary attack, or yourself with the secondary."
 
 SWEP.Spawnable			= true
 SWEP.UseHands			= true
@@ -25,8 +25,8 @@ SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo			= "none"
 
-SWEP.HealAmount = 20 -- Maximum heal amount per use
-SWEP.MaxAmmo = 100 -- Maxumum ammo
+SWEP.HealAmount	= 20 -- Maximum heal amount per use
+SWEP.MaxAmmo	= 100 -- Maxumum ammo
 
 local HealSound = Sound( "items/smallmedkit1.wav" )
 local DenySound = Sound( "items/medshotno1.wav" )
@@ -54,7 +54,7 @@ function SWEP:PrimaryAttack()
 	} )
 
 	local ent = tr.Entity
-	
+
 	local need = self.HealAmount
 	if ( IsValid( ent ) ) then need = math.min( ent:GetMaxHealth() - ent:Health(), self.HealAmount ) end
 
@@ -87,7 +87,7 @@ function SWEP:SecondaryAttack()
 	if ( CLIENT ) then return end
 
 	local ent = self.Owner
-	
+
 	local need = self.HealAmount
 	if ( IsValid( ent ) ) then need = math.min( ent:GetMaxHealth() - ent:Health(), self.HealAmount ) end
 
@@ -124,14 +124,14 @@ end
 function SWEP:Holster()
 
 	timer.Stop( "weapon_idle" .. self:EntIndex() )
-	
+
 	return true
 
 end
 
 function SWEP:CustomAmmoDisplay()
 
-	self.AmmoDisplay = self.AmmoDisplay or {} 
+	self.AmmoDisplay = self.AmmoDisplay or {}
 	self.AmmoDisplay.Draw = true
 	self.AmmoDisplay.PrimaryClip = self:Clip1()
 

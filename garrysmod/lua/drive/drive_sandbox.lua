@@ -7,10 +7,10 @@ AddCSLuaFile()
 --
 --
 
-DEFINE_BASECLASS( "drive_base" );
+DEFINE_BASECLASS( "drive_base" )
 
 
-drive.Register( "drive_sandbox", 
+drive.Register( "drive_sandbox",
 {
 	--
 	-- Called on creation
@@ -25,7 +25,7 @@ drive.Register( "drive_sandbox",
 	--
 	-- Calculates the view when driving the entity
 	--
-	CalcView =  function( self, view )
+	CalcView = function( self, view )
 
 		--
 		-- Use the utility method on drive_base.lua to give us a 3rd person view
@@ -37,9 +37,9 @@ drive.Register( "drive_sandbox",
 		view.angles.roll = 0
 
 	end,
-	
-	SetupControls = function( self, cmd )				
-	
+
+	SetupControls = function( self, cmd )
+
 		--
 		-- If we're holding the reload key down then freeze the view angles
 		--
@@ -66,10 +66,10 @@ drive.Register( "drive_sandbox",
 
 	end,
 	--
-	-- Called before each move. You should use your entity and cmd to 
+	-- Called before each move. You should use your entity and cmd to
 	-- fill mv with information you need for your move.
 	--
-	StartMove =  function( self, mv, cmd )
+	StartMove = function( self, mv, cmd )
 
 		--
 		-- Set the observer mode to chase so that the entity is drawn
@@ -121,7 +121,7 @@ drive.Register( "drive_sandbox",
 	end,
 
 	--
-	-- Runs the actual move. On the client when there's 
+	-- Runs the actual move. On the client when there's
 	-- prediction errors this can be run multiple times.
 	-- You should try to only change mv.
 	--
@@ -183,7 +183,7 @@ drive.Register( "drive_sandbox",
 	-- The move is finished. Use mv to set the new positions
 	-- on your entities/players.
 	--
-	FinishMove =  function( self, mv )
+	FinishMove = function( self, mv )
 
 		--
 		-- Update our entity!
@@ -198,7 +198,7 @@ drive.Register( "drive_sandbox",
 		if ( SERVER && IsValid( self.Entity:GetPhysicsObject() ) ) then
 
 			self.Entity:GetPhysicsObject():EnableMotion( true )
-			self.Entity:GetPhysicsObject():SetPos( mv:GetOrigin() );
+			self.Entity:GetPhysicsObject():SetPos( mv:GetOrigin() )
 			self.Entity:GetPhysicsObject():Wake()
 			self.Entity:GetPhysicsObject():EnableMotion( false )
 
@@ -207,4 +207,4 @@ drive.Register( "drive_sandbox",
 	end
 
 
-}, "drive_base" );
+}, "drive_base" )

@@ -1,18 +1,17 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[ _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DNumberWang
-
+	DNumSlider
 --]]
 
 local PANEL = {}
 
 --[[---------------------------------------------------------
-	
+
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -30,7 +29,7 @@ function PANEL:Init()
 		self.Slider:Dock( FILL )
 		self.Slider:SetHeight( 16 )
 		Derma_Hook( self.Slider, "Paint", "Paint", "NumSlider" )
-	
+
 	self.Label = vgui.Create ( "DLabel", self )
 		self.Label:Dock( LEFT )
 		self.Label:SetMouseInputEnabled( true )
@@ -39,7 +38,7 @@ function PANEL:Init()
 		self.Scratch:SetImageVisible( false )
 		self.Scratch:Dock( FILL )
 		self.Scratch.OnValueChanged = function() self:ValueChanged( self.Scratch:GetFloatValue() ) end
-	
+
 	self:SetTall( 32 )
 
 	self:SetMin( 0 )
@@ -50,7 +49,7 @@ function PANEL:Init()
 
 	--
 	-- You really shouldn't be messing with the internals of these controls from outside..
-	--                                .. but if you are this might stop your code from fucking us both.
+	--										.. but if you are this might stop your code from fucking us both.
 	--
 	self.Wang = self.Scratch
 
@@ -95,7 +94,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetMin( min )
 
-	if ( !min ) then min = 0  end
+	if ( !min ) then min = 0 end
 
 	self.Scratch:SetMin( tonumber( min ) )
 	self:UpdateNotches()
@@ -106,14 +105,14 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetMax( max )
 
-	if ( !max ) then max = 0  end
+	if ( !max ) then max = 0 end
 
 	self.Scratch:SetMax( tonumber( max ) )
 	self:UpdateNotches()
 end
 
 --[[---------------------------------------------------------
-   Name: SetValue
+	Name: SetValue
 -----------------------------------------------------------]]
 function PANEL:SetValue( val )
 
@@ -129,14 +128,14 @@ function PANEL:SetValue( val )
 end
 
 --[[---------------------------------------------------------
-   Name: GetValue
+	Name: GetValue
 -----------------------------------------------------------]]
 function PANEL:GetValue()
 	return self.Scratch:GetFloatValue()
 end
 
 --[[---------------------------------------------------------
-   Name: SetDecimals
+	Name: SetDecimals
 -----------------------------------------------------------]]
 function PANEL:SetDecimals( d )
 	self.Scratch:SetDecimals( d )
@@ -144,7 +143,7 @@ function PANEL:SetDecimals( d )
 end
 
 --[[---------------------------------------------------------
-   Name: GetDecimals
+	Name: GetDecimals
 -----------------------------------------------------------]]
 function PANEL:GetDecimals()
 	return self.Scratch:GetDecimals()
@@ -160,7 +159,7 @@ function PANEL:IsEditing()
 end
 
 --[[---------------------------------------------------------
-   Name: PerformLayout
+	Name: PerformLayout
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
@@ -169,7 +168,7 @@ function PANEL:PerformLayout()
 end
 
 --[[---------------------------------------------------------
-   Name: SetConVar
+	Name: SetConVar
 -----------------------------------------------------------]]
 function PANEL:SetConVar( cvar )
 	self.Scratch:SetConVar( cvar )
@@ -177,21 +176,21 @@ function PANEL:SetConVar( cvar )
 end
 
 --[[---------------------------------------------------------
-   Name: SetText
+	Name: SetText
 -----------------------------------------------------------]]
 function PANEL:SetText( text )
 	self.Label:SetText( text )
 end
 
 --[[---------------------------------------------------------
-   Name: ValueChanged
+	Name: ValueChanged
 -----------------------------------------------------------]]
 function PANEL:ValueChanged( val )
 
 	val = math.Clamp( tonumber( val ) or 0, self:GetMin(), self:GetMax() )
 
 	self.Slider:SetSlideX( self.Scratch:GetFraction( val ) )
-	
+
 	if ( self.TextArea != vgui.GetKeyboardFocus() ) then
 		self.TextArea:SetValue( self.Scratch:GetTextValue() )
 	end
@@ -201,11 +200,11 @@ function PANEL:ValueChanged( val )
 end
 
 --[[---------------------------------------------------------
-   Name: OnValueChanged
+	Name: OnValueChanged
 -----------------------------------------------------------]]
 function PANEL:OnValueChanged( val )
 
-	
+
 	-- For override
 
 end
@@ -215,14 +214,14 @@ end
 -----------------------------------------------------------]]
 function PANEL:TranslateSliderValues( x, y )
 
-	self:SetValue( self.Scratch:GetMin() + (x * self.Scratch:GetRange()) );
-	
+	self:SetValue( self.Scratch:GetMin() + (x * self.Scratch:GetRange()) )
+
 	return self.Scratch:GetFraction(), y
 
 end
 
 --[[---------------------------------------------------------
-   Name: GetTextArea
+	Name: GetTextArea
 -----------------------------------------------------------]]
 function PANEL:GetTextArea()
 
@@ -234,7 +233,7 @@ function PANEL:UpdateNotches()
 
 	local range = self:GetRange()
 	self.Slider:SetNotches( nil )
-	
+
 	if ( range < self:GetWide()/4 ) then
 		return self.Slider:SetNotches( range )
 	else
@@ -244,7 +243,7 @@ function PANEL:UpdateNotches()
 end
 
 --[[---------------------------------------------------------
-   Name: GenerateExample
+	Name: GenerateExample
 -----------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
@@ -254,7 +253,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 		ctrl:SetMax( 10 )
 		ctrl:SetText( "Example Slider!" )
 		ctrl:SetDecimals( 0 )
-	
+
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end
@@ -266,7 +265,7 @@ derma.DefineControl( "DNumSlider", "Menu Option Line", table.Copy(PANEL), "Panel
 PANEL.GenerateExample = nil
 
 --[[---------------------------------------------------------
-   Name: 
+	Name:
 -----------------------------------------------------------]]
 function PANEL:PostMessage( name, _, val )
 
@@ -285,7 +284,7 @@ function PANEL:PostMessage( name, _, val )
 	if ( name == "SetHigher" ) then
 		self:SetMax( tonumber(val) )
 	end
-	
+
 	if ( name == "SetValue" ) then
 		self:SetValue( tonumber( val ) )
 	end
@@ -293,27 +292,26 @@ function PANEL:PostMessage( name, _, val )
 end
 
 --[[---------------------------------------------------------
-   Name: 
+	Name:
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	self.Scratch:SetVisible( false )
 	self.Label:SetVisible( false )
-	
+
 	self.Slider:StretchToParent(0,0,0,0)
 	self.Slider:SetSlideX( self.Scratch:GetFraction() )
 
 end
 
 --[[---------------------------------------------------------
-   Name: 
+	Name:
 -----------------------------------------------------------]]
 function PANEL:SetActionFunction( func )
 
 	self.OnValueChanged = function( self, val ) func( self, "SliderMoved", val, 0 ) end
 
 end
-
 
 -- Compat
 derma.DefineControl( "Slider", "Backwards Compatibility", PANEL, "Panel" )

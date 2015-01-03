@@ -13,7 +13,7 @@ function ENT:Initialize()
 	if (SERVER) then
 		self:PhysicsInitBox( Vector( -4, -4, -4 ), Vector( 4, 4, 4 ) )
 	end
-	
+
 end
 
 
@@ -33,17 +33,17 @@ end
 -----------------------------------------------------------]]
 function ENT:Draw()
 
-	-- Don't draw it if we're a ragdoll and haven't  
+	-- Don't draw it if we're a ragdoll and haven't
 	-- received all of the bone positions yet.
 	local NumModelPhysBones = self:GetModelPhysBoneCount()
 	if (NumModelPhysBones > 1) then
-	
+
 		if ( !self:GetNetworkedVector( "Vector0", false ) ) then
 			return
 		end
-		
+
 	end
 
 	BaseClass.Draw( self )
-	
+
 end

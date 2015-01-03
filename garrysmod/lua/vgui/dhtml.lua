@@ -1,14 +1,12 @@
---[[   _                                
-	( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[ _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DHTML
-
 --]]
-
 
 local PANEL = {}
 
@@ -19,7 +17,7 @@ AccessorFunc( PANEL, "m_bAllowLua", 			"AllowLua", 		FORCE_BOOL )
 
 -----------------------------------------------------------]]
 function PANEL:Init()
-	
+
 	self:SetScrollbars( true )
 	self:SetAllowLua( false )
 
@@ -30,7 +28,7 @@ function PANEL:Init()
 	-- Implement a console.log - because awesomium doesn't provide it for us anymore.
 	--
 	self:AddFunction( "console", "log", function( param ) self:ConsoleMessage( param ) end )
-	
+
 end
 
 function PANEL:Think()
@@ -69,7 +67,7 @@ function PANEL:QueueJavascript( js )
 	self.JS = self.JS or {}
 
 	table.insert( self.JS, js )
-	self:Think();
+	self:Think()
 
 end
 
@@ -82,18 +80,18 @@ function PANEL:ConsoleMessage( msg )
 	if ( !isstring( msg ) ) then msg = "*js variable*" end
 
 	if ( self.m_bAllowLua && msg:StartWith( "RUNLUA:" ) ) then
-	
+
 		local strLua = msg:sub( 8 )
 
 		SELF = self
-		RunString( strLua );
+		RunString( strLua )
 		SELF = nil
-		return; 
+		return
 
 	end
 
-	MsgC( Color( 255, 160, 255 ), "[HTML] " );
-	MsgC( Color( 255, 255, 255 ), msg, "\n" )	
+	MsgC( Color( 255, 160, 255 ), "[HTML] " )
+	MsgC( Color( 255, 255, 255 ), msg, "\n" )
 
 end
 
@@ -134,9 +132,8 @@ function PANEL:AddFunction( obj, funcname, func )
 	--
 	-- Store the function so OnCallback can find it and call it
 	--
-	self.Callbacks[ obj .. "." .. funcname ] = func;
+	self.Callbacks[ obj .. "." .. funcname ] = func
 
 end
 
-
-derma.DefineControl( "DHTML", "A shape", PANEL, "Awesomium" )
+derma.DefineControl( "DHTML", "", PANEL, "Awesomium" )

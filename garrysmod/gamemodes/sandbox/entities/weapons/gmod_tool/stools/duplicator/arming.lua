@@ -13,12 +13,12 @@ if ( CLIENT ) then
 		--
 		local dupe = engine.OpenDupe( arg[1] )
 		if ( !dupe ) then
-			MsgN( "Error loading dupe.. (", arg[1], ")" );
-			return 
+			MsgN( "Error loading dupe.. (", arg[1], ")" )
+			return
 		end
 
 		local uncompressed = util.Decompress( dupe.data )
-		if ( !uncompressed ) then 
+		if ( !uncompressed ) then
 			MsgN( "Couldn't decompress dupe!" )
 		return end
 
@@ -26,7 +26,7 @@ if ( CLIENT ) then
 		-- And send it to the server
 		--
 		net.Start( "ArmDupe" )
-			net.WriteUInt( dupe.data:len(), 32 )		
+			net.WriteUInt( dupe.data:len(), 32 )
 			net.WriteData( dupe.data, dupe.data:len() )
 		net.SendToServer()
 
@@ -42,7 +42,7 @@ if ( SERVER ) then
 	util.AddNetworkString( "ArmDupe" )
 
 	net.Receive( "ArmDupe", function( len, client )
-					
+
 			local len		= net.ReadUInt( 32 )
 			local data		= net.ReadData( len )
 
@@ -51,7 +51,7 @@ if ( SERVER ) then
 			-- Hook.. can arn dupe..
 
 			local uncompressed = util.Decompress( data )
-			if ( !uncompressed ) then 
+			if ( !uncompressed ) then
 				MsgN( "Couldn't decompress dupe!" )
 			return end
 
@@ -60,17 +60,16 @@ if ( SERVER ) then
 			if ( !isvector( Dupe.Mins ) ) then return end
 			if ( !isvector( Dupe.Maxs ) ) then return end
 
-			client.CurrentDupe = Dupe;
+			client.CurrentDupe = Dupe
 
-			client:ConCommand( "gmod_tool duplicator" );
+			client:ConCommand( "gmod_tool duplicator" )
 
 			--
 			-- Disable the Spawn Button
 			--
 			net.Start( "CopiedDupe" )
-				net.WriteUInt( 0, 1 );
+				net.WriteUInt( 0, 1 )
 			net.Send( client )
 	end )
 
 end
-

@@ -8,7 +8,7 @@ TOOL.ClientConVar[ "override" ] = "debug/env_cubemap_model"
 -- Duplicator function
 --
 local function SetMaterial( Player, Entity, Data )
-	
+
 	if ( SERVER ) then
 
 		--
@@ -33,7 +33,7 @@ function TOOL:LeftClick( trace )
 	if ( !IsValid( trace.Entity ) ) then return end
 
 	if ( CLIENT ) then return true end
-	
+
 	local ent = trace.Entity
 	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
 
@@ -51,7 +51,7 @@ function TOOL:RightClick( trace )
 	if ( !IsValid( trace.Entity ) ) then return end
 
 	if ( CLIENT ) then return true end
-	
+
 	local ent = trace.Entity
 	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
 

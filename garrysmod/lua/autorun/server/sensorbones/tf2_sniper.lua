@@ -1,32 +1,32 @@
 --
 -- These are the physics bone numbers
 --
-local PLVS		= 0;
-local RTHY		= 1;
-local RCLF		= 2;
-local RFOT		= 3;
-local LTHY		= 4;
-local LCLF		= 5;
-local LFOT		= 6;
-local SPNE		= 7;
-local RSLD		= 8;
-local RARM		= 9;
-local LSLD		= 10;
-local LARM		= 11;
-local LHND		= 12;
-local NECK		= 13;
-local HEAD		= 14;
-local RHND		= 15;
+local PLVS		= 0
+local RTHY		= 1
+local RCLF		= 2
+local RFOT		= 3
+local LTHY		= 4
+local LCLF		= 5
+local LFOT		= 6
+local SPNE		= 7
+local RSLD		= 8
+local RARM		= 9
+local LSLD		= 10
+local LARM		= 11
+local LHND		= 12
+local NECK		= 13
+local HEAD		= 14
+local RHND		= 15
 
 -- pouch
 
 
 
-local Builder = 
+local Builder =
 {
 	PrePosition = function( self, sensor )
 
-		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] )  * 0.8
+		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] ) * 0.8
 
 		local acrossshoulders = (sensor[SENSORBONE.SHOULDER_RIGHT] - sensor[SENSORBONE.SHOULDER_LEFT]):GetNormal() * 0.08
 
@@ -62,7 +62,7 @@ local Builder =
 	--
 	-- Which on the sensor should we use for which ones on our model
 	--
-	PositionTable = 
+	PositionTable =
 	{
 		[PLVS]	= SENSORBONE.HIP,
 		[RSLD]	= SENSORBONE.SHOULDER_RIGHT,
@@ -85,12 +85,12 @@ local Builder =
 	--
 	-- Which bones should we use to determine our bone angles
 	--
-	AnglesTable = 
+	AnglesTable =
 	{
 		[PLVS]	= { from = PLVS, to = SPNE, up = "hips_back" },
 		[SPNE]	= { from = PLVS, to = SPNE, up = "chest_bck" },
 		[HEAD]	= { from = SPNE, to = HEAD, up = "head_back" },
-	
+
 		[RSLD]	= { from = RARM, to = RSLD, up_rgt = SPNE },
 		[RARM]	= { from = RHND, to = RARM, up_rgt = RSLD },
 		[RHND]	= { from_sensor = SENSORBONE.HAND_RIGHT, to_sensor = SENSORBONE.WRIST_RIGHT, up_fwd = RARM },
@@ -146,16 +146,16 @@ local Builder =
 
 	end,
 
-	IsApplicable = function( self, ent ) 
-		
-		local mdl = ent:GetModel();
+	IsApplicable = function( self, ent )
+
+		local mdl = ent:GetModel()
 
 		if ( mdl:EndsWith( "models/player/sniper.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/hwm/sniper.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/bots/sniper/bot_sniper.mdl" ) ) then return true end
 
 		return false
-	
+
 	end,
 }
 

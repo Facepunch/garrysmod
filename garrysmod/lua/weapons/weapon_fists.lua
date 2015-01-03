@@ -45,18 +45,18 @@ end
 SWEP.HitDistance = 48
 
 function SWEP:SetupDataTables()
-	
+
 	self:NetworkVar( "Float", 0, "NextMeleeAttack" )
 	self:NetworkVar( "Float", 1, "NextIdle" )
 	self:NetworkVar( "Int", 2, "Combo" )
-	
+
 end
 
 function SWEP:UpdateNextIdle()
 
 	local vm = self.Owner:GetViewModel()
 	self:SetNextIdle( CurTime() + vm:SequenceDuration() )
-	
+
 end
 
 function SWEP:PrimaryAttack( right )
@@ -76,7 +76,7 @@ function SWEP:PrimaryAttack( right )
 
 	self:UpdateNextIdle()
 	self:SetNextMeleeAttack( CurTime() + 0.2 )
-	
+
 	self:SetNextPrimaryFire( CurTime() + 0.9 )
 	self:SetNextSecondaryFire( CurTime() + 0.9 )
 
@@ -91,14 +91,14 @@ function SWEP:DealDamage()
 	local anim = self:GetSequenceName(self.Owner:GetViewModel():GetSequence())
 
 	self.Owner:LagCompensation( true )
-	
+
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
 		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
 		filter = self.Owner
 	} )
 
-	if ( !IsValid( tr.Entity ) ) then 
+	if ( !IsValid( tr.Entity ) ) then
 		tr = util.TraceHull( {
 			start = self.Owner:GetShootPos(),
 			endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
@@ -117,7 +117,7 @@ function SWEP:DealDamage()
 
 	if ( SERVER && IsValid( tr.Entity ) && ( tr.Entity:IsNPC() || tr.Entity:IsPlayer() || tr.Entity:Health() > 0 ) ) then
 		local dmginfo = DamageInfo()
-	
+
 		local attacker = self.Owner
 		if ( !IsValid( attacker ) ) then attacker = self end
 		dmginfo:SetAttacker( attacker )
@@ -159,12 +159,12 @@ function SWEP:DealDamage()
 end
 
 function SWEP:OnRemove()
-	
+
 	if ( IsValid( self.Owner ) && CLIENT && self.Owner:IsPlayer() ) then
 		local vm = self.Owner:GetViewModel()
 		if ( IsValid( vm ) ) then vm:SetMaterial( "" ) end
 	end
-	
+
 end
 
 function SWEP:Holster( wep )
@@ -179,45 +179,45 @@ function SWEP:Deploy()
 
 	local vm = self.Owner:GetViewModel()
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_draw" ) )
-	
+
 	self:UpdateNextIdle()
-	
+
 	if ( SERVER ) then
 		self:SetCombo( 0 )
 	end
-	
+
 	return true
 
 end
 
 function SWEP:Think()
-	
+
 	local vm = self.Owner:GetViewModel()
 	local curtime = CurTime()
 	local idletime = self:GetNextIdle()
-	
+
 	if ( idletime > 0 && CurTime() > idletime ) then
 
 		vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_idle_0" .. math.random( 1, 2 ) ) )
-		
+
 		self:UpdateNextIdle()
 
 	end
-	
+
 	local meleetime = self:GetNextMeleeAttack()
-	
+
 	if ( meleetime > 0 && CurTime() > meleetime ) then
 
 		self:DealDamage()
-		
+
 		self:SetNextMeleeAttack( 0 )
 
 	end
-	
+
 	if ( SERVER && CurTime() > self:GetNextPrimaryFire() + 0.1 ) then
-		
+
 		self:SetCombo( 0 )
-		
+
 	end
-	
+
 end

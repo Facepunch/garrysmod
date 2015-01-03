@@ -1,4 +1,3 @@
-
 if ( !engine.IsPlayingDemo() ) then return end
 
 local VideoSettings = engine.VideoSettings()
@@ -29,9 +28,9 @@ hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, Vie
 	if ( gui.IsGameUIVisible() ) then return false end
 
 	render.Clear( 0, 0, 0, 255, true, true, true )
-	
+
 	local FramesPerFrame = 1
-	
+
 	if ( frame_blend.IsActive() ) then
 
 		FramesPerFrame = frame_blend.RenderableFrames()
@@ -40,7 +39,7 @@ hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, Vie
 		if ( frame_blend.ShouldSkipFrame() ) then
 
 			frame_blend.DrawPreview()
-			return true 
+			return true
 
 		end
 
@@ -64,10 +63,10 @@ hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, Vie
 	else
 		SmoothedPos = ViewOrigin * 1
 	end
-		
-	
 
-	local view = 
+
+
+	local view =
 	{
 		x				= 0,
 		y				= 0,
@@ -89,7 +88,7 @@ hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, Vie
 			endpos	= view.origin + ( view.angles:Forward() * 8000 ),
 			mins	= Vector( -2, -2, -2 ),
 			maxs	= Vector( 2, 2, 2 ),
-			filter	= { GetViewEntity() } 
+			filter	= { GetViewEntity() }
 		})
 
 		local focuspeed = math.Clamp( (VideoSettings.doffocusspeed / FramesPerFrame) * 0.2, 0, 1 )
@@ -112,13 +111,13 @@ hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, Vie
 	if ( frame_blend.IsActive() ) then
 
 		frame_blend.BlendFrame()
-		frame_blend.DrawPreview();
+		frame_blend.DrawPreview()
 
 	end
 
 	if ( ShouldRecordThisFrme ) then
-		menu.RecordFrame();
-	end	
+		menu.RecordFrame()
+	end
 
 	return true
 

@@ -1,18 +1,18 @@
-local ents = ents
-local pairs = pairs
-local string = string
-local table = table
+local ents		= ents
+local pairs		= pairs
+local string	= string
+local table		= table
 
 --[[---------------------------------------------------------
-   Name: effects
-   Desc: Engine effects hooking
+	Name: effects
+	Desc: Engine effects hooking
 -----------------------------------------------------------]]
 module( "effects" )
 
 local EffectList = {}
 
 --[[---------------------------------------------------------
-   Name: Register( table, string )
+	Name: Register( table, string )
 -----------------------------------------------------------]]
 function Register( t, name )
 
@@ -45,7 +45,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: Create( string )
+	Name: Create( string )
 -----------------------------------------------------------]]
 function Create( name )
 

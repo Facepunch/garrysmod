@@ -13,23 +13,23 @@ function ENT:SetupDataTables()
 	--
 	-- Scale - how far the ragdoll will move in the game world in relation to how far it moved in the real world
 	--
-	self:NetworkVar( "Float", 0, "Scale", { KeyName = "scale", Edit = { type = "Float", min=1, max=512, order = 1 } }  );
+	self:NetworkVar( "Float", 0, "Scale", { KeyName = "scale", Edit = { type = "Float", min=1, max=512, order = 1 } } )
 
 	--
 	-- Normalize - if enabled the limbs aren't stretched
 	--
-	self:NetworkVar( "Bool", 0, "Normalize", { KeyName = "normalize", Edit = { type = "Boolean", order = 2 } }  );
+	self:NetworkVar( "Bool", 0, "Normalize", { KeyName = "normalize", Edit = { type = "Boolean", order = 2 } } )
 
 	--
 	-- Debug - Shows some debug info - only available on a listen server
 	--
-	self:NetworkVar( "Bool", 1, "Debug", { KeyName = "debug", Edit = { type = "Boolean", order = 100 } }  );	
+	self:NetworkVar( "Bool", 1, "Debug", { KeyName = "debug", Edit = { type = "Boolean", order = 100 } } )
 
 	--
 	-- Controller - the entity that is currently controlling the ragdoll
 	--
-	self:NetworkVar( "Entity", 0, "Controller" );
-	self:NetworkVar( "Entity", 1, "Target" );
+	self:NetworkVar( "Entity", 0, "Controller" )
+	self:NetworkVar( "Entity", 1, "Target" )
 
 	--
 	-- Defaults
@@ -45,7 +45,7 @@ function ENT:SetupDataTables()
 end
 
 function ENT:Initialize()
-	
+
 	if ( SERVER ) then
 
 		self:SetModel( "models/maxofs2d/motion_sensor.mdl" )
@@ -55,17 +55,17 @@ function ENT:Initialize()
 		self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 
 		self:DrawShadow( false )
-	
+
 		local phys = self:GetPhysicsObject()
 		if ( IsValid( phys ) ) then
-	
+
 			phys:Wake()
 			phys:EnableGravity( false )
 			phys:EnableDrag( false )
-		
+
 		end
 
-		local colors = 
+		local colors =
 		{
 			Color( 180, 255, 50 ),
 			Color( 0, 150, 255 ),
@@ -76,7 +76,7 @@ function ENT:Initialize()
 		self:SetColor( table.Random( colors ) )
 
 	end
-	
+
 end
 
 --
@@ -115,7 +115,7 @@ function ENT:Draw()
 	--
 	local ply = LocalPlayer()
 	local wep = ply:GetActiveWeapon()
-	if ( wep:IsValid() ) then 
+	if ( wep:IsValid() ) then
 		if ( wep:GetClass() == "gmod_camera" ) then return end
 	end
 
@@ -151,12 +151,12 @@ function ENT:DrawDebug( ragdoll, controller, pos, ang, rotation, scale, center, 
 
 		realbonepos[i]	= controller:MotionSensorPos( i ) * scale
 		realbonepos[i]:Rotate( rotation )
-		realbonepos[i] = realbonepos[i] + center;
+		realbonepos[i] = realbonepos[i] + center
 
 		fixedbonepos[i]	= changed_sensor[ i ] * scale
 		-- (already rotated)
-		fixedbonepos[i] = fixedbonepos[i] + center;
-		
+		fixedbonepos[i] = fixedbonepos[i] + center
+
 
 		debugoverlay.Box( realbonepos[i], min, max, StayTime, col_point, true )
 		debugoverlay.Box( fixedbonepos[i], min, max, StayTime, col_tran_bn, true )
@@ -252,17 +252,17 @@ function ENT:SetRagdoll( ragdoll )
 			if ( math.abs( v.x ) > 0.05 ) then continue end
 			if ( math.abs( v.y ) > 0.05 ) then continue end
 
-			pos[k] = nil -- don't use this point to control the ragdoll 
+			pos[k] = nil -- don't use this point to control the ragdoll
 			ang[k] = nil -- (use the ragdoll point)
 
 			iSkipped = iSkipped + 1
 
-			if ( iSkipped > iMaxSkip ) then 
+			if ( iSkipped > iMaxSkip ) then
 
 				ragdoll:RagdollStopControlling()
-				return 
+				return
 
-			end		
+			end
 
 		end
 
@@ -270,26 +270,26 @@ function ENT:SetRagdoll( ragdoll )
 		-- Loop each returned position
 		--
 		for k, v in pairs( pos ) do
-					
+
 			--
 			-- Set the bone angle
 			--
 			if ( ang[ k ] != nil ) then
-				ragdoll:SetRagdollAng( k, ang[ k ] );
+				ragdoll:SetRagdollAng( k, ang[ k ] )
 			end
-			
+
 			--
 			-- The root bone, we directly set the position of this one.
-			--				
+			--
 			if ( k == 0 || !normalize ) then
-					
+
 				local new_position = center + v * scale
-				ragdoll:SetRagdollPos( k, new_position );
+				ragdoll:SetRagdollPos( k, new_position )
 
 			end
 
 		end
-		
+
 		--
 		-- Normalize the ragdoll
 		--

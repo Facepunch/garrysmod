@@ -1,29 +1,29 @@
 --
 -- These are the physics bone numbers
 --
-local PLVS		= 0;
-local RTHY		= 1;
-local RCLF		= 2;
-local LTHY		= 3;
-local LCLF		= 4;
-local LFOT		= 5;
-local SPNE		= 6;
-local TRSO		= 7;
-local RSLD		= 8;
-local LSLD		= 9;
-local LARM		= 10;
-local LHND		= 11;
-local RARM		= 12;
-local NECK		= 13;
-local RHND		= 14;
-local HEAD		= 15;
-local RFOT		= 16;
+local PLVS		= 0
+local RTHY		= 1
+local RCLF		= 2
+local LTHY		= 3
+local LCLF		= 4
+local LFOT		= 5
+local SPNE		= 6
+local TRSO		= 7
+local RSLD		= 8
+local LSLD		= 9
+local LARM		= 10
+local LHND		= 11
+local RARM		= 12
+local NECK		= 13
+local RHND		= 14
+local HEAD		= 15
+local RFOT		= 16
 
-local Builder = 
+local Builder =
 {
 	PrePosition = function( self, sensor )
 
-		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] )  * 0.8
+		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] ) * 0.8
 
 		local acrossshoulders = (sensor[SENSORBONE.SHOULDER_RIGHT] - sensor[SENSORBONE.SHOULDER_LEFT]):GetNormal() * 0.08
 
@@ -54,7 +54,7 @@ local Builder =
 	--
 	-- Which on the sensor should we use for which ones on our model
 	--
-	PositionTable = 
+	PositionTable =
 	{
 		[PLVS]	= SENSORBONE.HIP,
 		[TRSO]	= { type = "lerp", value = 0.2, from = SENSORBONE.SHOULDER, to = SENSORBONE.SPINE },
@@ -78,7 +78,7 @@ local Builder =
 	--
 	-- Which bones should we use to determine our bone angles
 	--
-	AnglesTable = 
+	AnglesTable =
 	{
 		[PLVS]	= { from = PLVS, to = SPNE, up = "hips_back" },
 		[SPNE]	= { from = SPNE, to = TRSO, up = "chest_bck" },
@@ -135,20 +135,20 @@ local Builder =
 
 	end,
 
-	IsApplicable = function( self, ent ) 
-		
-		local mdl = ent:GetModel();
+	IsApplicable = function( self, ent )
+
+		local mdl = ent:GetModel()
 
 		if ( mdl:EndsWith( "models/player/hwm/soldier.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/soldier.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/spy.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/hwm/spy.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/bots/soldier/bot_soldier.mdl" ) ) then return true end
-		if ( mdl:EndsWith( "models/bots/spy/bot_spy.mdl" ) ) then return true end	
-		if ( mdl:EndsWith( "models/bots/soldier_boss/bot_soldier_boss.mdl" ) ) then return true end				
+		if ( mdl:EndsWith( "models/bots/spy/bot_spy.mdl" ) ) then return true end
+		if ( mdl:EndsWith( "models/bots/soldier_boss/bot_soldier_boss.mdl" ) ) then return true end
 
 		return false
-	
+
 	end,
 }
 

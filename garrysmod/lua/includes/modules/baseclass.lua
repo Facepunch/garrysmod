@@ -3,7 +3,7 @@
 --
 -- The baseclass module uses upvalues to give the impression of inheritence.
 --
--- At the top of your class file add 
+-- At the top of your class file add
 --
 -- DEFINE_BASECLASS( "base_class_name" )
 --
@@ -17,11 +17,11 @@
 --		> drive modes
 --		> entities
 --		> weapons
--- 
--- Classes don't have to be created in any particular order. The system is 
+--
+-- Classes don't have to be created in any particular order. The system is
 -- designed to work with whatever order the classes are defined.
 --
--- The only caveat is that classnames must be unique. 
+-- The only caveat is that classnames must be unique.
 -- eg Creating a panel and widget with the same name will cause problems.
 --
 
@@ -33,18 +33,18 @@ function Get( name )
 
 	if ( ENT )	then ENT.Base = name end
 	if ( SWEP ) then SWEP.Base = name end
-	
+
 	BaseClassTable[name] = BaseClassTable[name] or {}
-	
+
 	return BaseClassTable[name]
-	
+
 end
 
 function Set( name, tab )
 
 	if ( !BaseClassTable[name] ) then
 
-		BaseClassTable[name] =  tab
+		BaseClassTable[name] = tab
 
 	else
 

@@ -1,7 +1,6 @@
 
-
 --[[---------------------------------------------------------
-   Name: RunAI - Called from the engine every 0.1 seconds 
+	Name: RunAI - Called from the engine every 0.1 seconds
 -----------------------------------------------------------]]
 function ENT:RunAI( strExp )
 
@@ -10,7 +9,7 @@ function ENT:RunAI( strExp )
 	if ( self:IsRunningBehavior() ) then
 		return true
 	end
-	
+
 	-- If we're doing an engine schedule then return true
 	-- This makes it do the normal AI stuff.
 	if ( self:DoingEngineSchedule() ) then
@@ -21,13 +20,13 @@ function ENT:RunAI( strExp )
 	if ( self.CurrentSchedule ) then
 		self:DoSchedule( self.CurrentSchedule )
 	end
-	
+
 	-- If we have no schedule (schedule is finished etc)
 	-- Then get the derived NPC to select what we should be doing
 	if ( !self.CurrentSchedule ) then
 		self:SelectSchedule()
 	end
-	
+
 	-- Do animation system
 	self:MaintainActivity()
 
@@ -36,8 +35,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: SelectSchedule - Set the schedule we should be 
-							playing right now. 
+	Name: SelectSchedule - Set the schedule we should be
+							playing right now.
 -----------------------------------------------------------]]
 function ENT:SelectSchedule( iNPCState )
 
@@ -48,9 +47,9 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: StartSchedule - Start a Lua schedule. Not to be 
+	Name: StartSchedule - Start a Lua schedule. Not to be
 		confused with SetSchedule which starts an Engine based
-		schedule. 
+		schedule.
 -----------------------------------------------------------]]
 function ENT:StartSchedule( schedule )
 
@@ -100,7 +99,7 @@ function ENT:SetTask( task )
 	self.CurrentTask 	= task
 	self.bTaskComplete 	= false
 	self.TaskStartTime 	= CurTime()
-	
+
 	self:StartTask( self.CurrentTask )
 
 end
@@ -114,17 +113,17 @@ function ENT:NextTask( schedule )
 
 	-- Increment task id
 	self.CurrentTaskID = self.CurrentTaskID + 1
-	
+
 	-- If this was the last task then finish up.
 	if ( self.CurrentTaskID > schedule:NumTasks() ) then
-	
+
 		self:ScheduleFinished( schedule )
 		return
-	
+
 	end
-	
+
 	-- Switch to next task
-	self:SetTask( schedule:GetTask( self.CurrentTaskID ) )	
+	self:SetTask( schedule:GetTask( self.CurrentTaskID ) )
 
 end
 
@@ -151,8 +150,8 @@ end
 
 
 --[[---------------------------------------------------------
-	Name: TaskTime - Returns how many seconds we've been 
-					  doing this current task
+	Name: TaskTime - Returns how many seconds we've been
+						doing this current task
 -----------------------------------------------------------]]
 function ENT:TaskTime()
 	return CurTime() - self.TaskStartTime
@@ -161,7 +160,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: OnTaskComplete - Called from the engine when 
+	Name: OnTaskComplete - Called from the engine when
 			TaskComplete is called. This allows us to move
 			onto the next task - even when TaskComplete was
 			called from an engine side task.
@@ -169,14 +168,14 @@ end
 function ENT:OnTaskComplete()
 
 	self.bTaskComplete = true
-	
+
 end
 
 
 
 --[[---------------------------------------------------------
-   Name: TaskFinished - Returns true if the current 
-						  running Task is finished.
+	Name: TaskFinished - Returns true if the current
+							running Task is finished.
 -----------------------------------------------------------]]
 function ENT:TaskFinished()
 	return self.bTaskComplete
@@ -185,7 +184,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: StartTask
+	Name: StartTask
 		Start the task. You can use this to override engine
 		side tasks. Return true to not run default stuff.
 -----------------------------------------------------------]]
@@ -195,7 +194,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: RunTask
+	Name: RunTask
 		Run the task. You can use this to override engine
 		side tasks. Return true to not run default stuff.
 -----------------------------------------------------------]]
@@ -204,9 +203,9 @@ end
 
 
 --[[---------------------------------------------------------
-   These functions handle the engine schedules
-   When an engine schedule is set the engine calls StartEngineSchedule
-   Then when it's finished it calls EngineScheduleFinishHelp me decide
+	These functions handle the engine schedules
+	When an engine schedule is set the engine calls StartEngineSchedule
+	Then when it's finished it calls EngineScheduleFinishHelp me decide
 -----------------------------------------------------------]]
 function ENT:StartEngineSchedule( scheduleID )	self:ScheduleFinished()	self.bDoingEngineSchedule = true end
 function ENT:EngineScheduleFinish() self.bDoingEngineSchedule = nil 	end
@@ -214,7 +213,7 @@ function ENT:DoingEngineSchedule()	return self.bDoingEngineSchedule 	end
 
 
 --[[---------------------------------------------------------
-   Name: OnCondition
+	Name: OnCondition
 
 -----------------------------------------------------------]]
 function ENT:OnCondition( iCondition )

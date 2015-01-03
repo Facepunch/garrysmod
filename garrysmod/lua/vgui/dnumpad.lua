@@ -1,14 +1,12 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[ _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DNumPad
-	
-	A loverly multi-use numpad.
-
+	A lovely multi-use numpad.
 --]]
 
 local KP_ENTER = 11
@@ -29,12 +27,12 @@ AccessorFunc( PANEL, "m_bStickyKeys", 			"StickyKeys" )	-- Should keys stay sele
 Derma_Install_Convar_Functions( PANEL )
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
 	self.Buttons = {}
-	
+
 	for i=0, 15 do
 		self.Buttons[ i ] = vgui.Create( "DButton", self )
 		self.Buttons[ i ]:SetText( i )
@@ -47,67 +45,67 @@ function PANEL:Init()
 	self.Buttons[KP_MINUS]:SetText( "-" )
 	self.Buttons[KP_STAR]:SetText( "*" )
 	self.Buttons[KP_DIV]:SetText( "/" )
-		
+
 	self.Buttons[0]:SetContentAlignment( 4 )
 	self.Buttons[0]:SetTextInset( 6, 0 )
-	
+
 	self:SetStickyKeys( true )
 	self:SetButtonSize( 17 )
 	self:SetPadding( 4 )
-	
+
 	self:SetSelectedNumber( -1 )
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: ButtonPressed
+	Name: ButtonPressed
 -----------------------------------------------------------]]
-function PANEL:ButtonPressed( btn, iNum ) 
+function PANEL:ButtonPressed( btn, iNum )
 
 	-- Toggle off
-	if ( self.m_bStickyKeys && 
+	if ( self.m_bStickyKeys &&
 		 self.m_SelectedButton &&
 		 self.m_SelectedButton == btn ) then
-	
+
 		self.m_SelectedButton:SetSelected( false )
 		self:SetSelected( -1 )
-		
+
 	return end
-	
+
 	self:SetSelected( iNum )
 	self:OnButtonPressed( iNum, btn )
 
 end
 
 --[[---------------------------------------------------------
-   Name: SetSelected
+	Name: SetSelected
 -----------------------------------------------------------]]
 function PANEL:SetSelected( iNum )
 
 	local btn = self.Buttons[ iNum ]
 
 	self:SetSelectedNumber( iNum )
-	
+
 	self:ConVarChanged( iNum )
-	
-	if ( self.m_SelectedButton ) then 
+
+	if ( self.m_SelectedButton ) then
 		self.m_SelectedButton:SetSelected( false )
 	end
-	
+
 	self.m_SelectedButton = btn
-	
+
 	if ( btn && self.m_bStickyKeys ) then
-		
+
 		btn:SetSelected( true )
-		
+
 	end
 
 end
 
 --[[---------------------------------------------------------
-   Name: OnButtonPressed
+	Name: OnButtonPressed
 -----------------------------------------------------------]]
-function PANEL:OnButtonPressed( iButtonNumber, pButton ) 
+function PANEL:OnButtonPressed( iButtonNumber, pButton )
 
 	-- Override this.
 
@@ -115,7 +113,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: PerformLayout
+	Name: PerformLayout
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
@@ -130,40 +128,40 @@ function PANEL:PerformLayout()
 		self.Buttons[KP_PERIOD]:CopyBounds( self.Buttons[0] )
 		self.Buttons[KP_PERIOD]:SetSize( ButtonSize, ButtonSize )
 		self.Buttons[KP_PERIOD]:MoveRightOf( self.Buttons[0] )
-	
-	self.Buttons[1]:SetSize( ButtonSize, ButtonSize )	
+
+	self.Buttons[1]:SetSize( ButtonSize, ButtonSize )
 	self.Buttons[1]:AlignLeft( Padding )
 	self.Buttons[1]:MoveAbove( self.Buttons[ 0 ] )
 		self.Buttons[2]:CopyBounds( self.Buttons[1] )
 		self.Buttons[2]:MoveRightOf( self.Buttons[1] )
 			self.Buttons[3]:CopyBounds( self.Buttons[2] )
 			self.Buttons[3]:MoveRightOf( self.Buttons[2] )
-			
+
 	self.Buttons[KP_ENTER]:SetSize( ButtonSize, ButtonSize*2 )
 	self.Buttons[KP_ENTER]:AlignBottom( Padding )
 	self.Buttons[KP_ENTER]:AlignRight( Padding )
 
 	self.Buttons[KP_PLUS]:CopyBounds( self.Buttons[KP_ENTER] )
 	self.Buttons[KP_PLUS]:MoveAbove( self.Buttons[KP_ENTER] )
-	
+
 	self.Buttons[KP_MINUS]:CopyBounds( self.Buttons[KP_PLUS] )
 	self.Buttons[KP_MINUS]:SetSize( ButtonSize, ButtonSize )
 	self.Buttons[KP_MINUS]:MoveAbove( self.Buttons[KP_PLUS] )
-	
+
 	self.Buttons[KP_STAR]:CopyBounds( self.Buttons[KP_MINUS] )
 	self.Buttons[KP_STAR]:MoveLeftOf( self.Buttons[KP_MINUS] )
-	
+
 	self.Buttons[KP_DIV]:CopyBounds( self.Buttons[KP_STAR] )
 	self.Buttons[KP_DIV]:MoveLeftOf( self.Buttons[KP_STAR] )
-	
-	
+
+
 	self.Buttons[4]:CopyBounds( self.Buttons[1] )
 	self.Buttons[4]:MoveAbove( self.Buttons[1] )
 		self.Buttons[5]:CopyBounds( self.Buttons[4] )
 		self.Buttons[5]:MoveRightOf( self.Buttons[4] )
 			self.Buttons[6]:CopyBounds( self.Buttons[5] )
 			self.Buttons[6]:MoveRightOf( self.Buttons[5] )
-			
+
 	self.Buttons[7]:CopyBounds( self.Buttons[4] )
 	self.Buttons[7]:MoveAbove( self.Buttons[4] )
 		self.Buttons[8]:CopyBounds( self.Buttons[7] )
@@ -183,7 +181,7 @@ function PANEL:Think()
 end
 
 --[[---------------------------------------------------------
-   Name: SetValue (For ConVar)
+	Name: SetValue (For ConVar)
 -----------------------------------------------------------]]
 function PANEL:SetValue( iNumValue )
 
@@ -192,7 +190,7 @@ function PANEL:SetValue( iNumValue )
 end
 
 --[[---------------------------------------------------------
-   Name: GetValue
+	Name: GetValue
 -----------------------------------------------------------]]
 function PANEL:GetValue()
 

@@ -34,7 +34,7 @@ end
 function ENT:PhysicsUpdate( physobj )
 end
 
-if ( CLIENT ) then 
+if ( CLIENT ) then
 
 	function ENT:Draw()
 
@@ -48,12 +48,12 @@ if ( CLIENT ) then
 		-- You shouldn't really be drawing your model here unless it's translucent
 
 		self:Draw()
-		
+
 	end
 
 end
 
-if ( SERVER ) then 
+if ( SERVER ) then
 
 	function ENT:OnTakeDamage( dmginfo )
 
@@ -87,15 +87,15 @@ if ( SERVER ) then
 	end
 
 	--[[---------------------------------------------------------
-	   Name: Simulate
-	   Desc: Controls/simulates the physics on the entity. 
-		Officially the most complicated callback in the whole mod.
-		 Returns 3 variables..
-		 1. A SIM_ enum
-		 2. A vector representing the linear acceleration/force
-		 3. A vector represending the angular acceleration/force
-		If you're doing nothing you can return SIM_NOTHING
-		Note that you need to call ent:StartMotionController to tell the entity
+		Name: Simulate
+		Desc: Controls/simulates the physics on the entity.
+		 Officially the most complicated callback in the whole mod.
+		  Returns 3 variables..
+		  1. A SIM_ enum
+		  2. A vector representing the linear acceleration/force
+		  3. A vector represending the angular acceleration/force
+		 If you're doing nothing you can return SIM_NOTHING
+		 Note that you need to call ent:StartMotionController to tell the entity
 			to start calling this function..
 	-----------------------------------------------------------]]
 	function ENT:PhysicsSimulate( phys, deltatime )

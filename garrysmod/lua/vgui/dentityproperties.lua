@@ -1,3 +1,12 @@
+--[[ _
+	( )
+   _| |   __   _ __   ___ ___     _ _
+ /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
+( (_| |(  ___/| |   | ( ) ( ) |( (_| |
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+
+--]]
+
 local PANEL = {}
 
 function PANEL:Init()
@@ -7,7 +16,7 @@ function PANEL:Init()
 end
 
 --
--- Sets the entity to edit. 
+-- Sets the entity to edit.
 -- This can be called any time, even when another entity has been set.
 --
 function PANEL:SetEntity( entity )
@@ -123,6 +132,5 @@ function PANEL:PostAutoRefresh()
 	self:RebuildControls()
 
 end
-
 
 derma.DefineControl( "DEntityProperties", "", PANEL, "DProperties" )

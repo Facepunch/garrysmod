@@ -1,5 +1,5 @@
 
-local ClassInfo = {} 
+local ClassInfo = {}
 
 ClassInfo[ "scene_manager" ] 				= { ['save'] = false }
 ClassInfo[ "predicted_viewmodel" ] 			= { ['save'] = false }
@@ -47,17 +47,17 @@ ClassInfo[ "sky_camera" ]					= { ['save'] = false }
 ClassInfo[ "soundent" ]						= { ['save'] = false }
 
 
-		
+
 
 function gmsave.ShouldSaveEntity( ent, t )
 
 	local info = ClassInfo[ t.classname ]
-	
+
 	--
 	-- Filtered out - we don't want to save these entity types!
 	--
 	if ( info && info.save == false ) then return false end
-	
+
 	--
 	-- Should we save the parent entity?
 	-- If not, don't save this!
@@ -74,10 +74,10 @@ function gmsave.ShouldSaveEntity( ent, t )
 	if ( ent:IsWeapon() && IsValid( ent:GetOwner() ) ) then
 		return false
 	end
-	
+
 	--
 	-- Default action is to save..
 	--
-	return true;
-	
+	return true
+
 end
