@@ -1,4 +1,4 @@
---[[   _
+--[[ _
 	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
@@ -6,7 +6,6 @@
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DTab
-
 --]]
 
 local PANEL = {}
@@ -139,7 +138,7 @@ end
 
 derma.DefineControl( "DTab", "A Tab for use on the PropertySheet", PANEL, "DButton" )
 
---[[   _
+--[[ _
 	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
@@ -147,7 +146,6 @@ derma.DefineControl( "DTab", "A Tab for use on the PropertySheet", PANEL, "DButt
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DPropertySheet
-
 --]]
 
 local PANEL = {}
@@ -357,7 +355,7 @@ function PANEL:SizeToContentWidth()
 
 		if ( v.Panel ) then
 			v.Panel:InvalidateLayout( true )
-			wide = math.max( wide, v.Panel:GetWide()  + self.m_iPadding * 2 )
+			wide = math.max( wide, v.Panel:GetWide() + self.m_iPadding * 2 )
 		end
 
 	end

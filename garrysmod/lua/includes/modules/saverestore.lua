@@ -1,6 +1,6 @@
 
 local Msg			= Msg
-local tostring 		= tostring
+local tostring		= tostring
 local type			= type
 local pairs			= pairs
 local string		= string

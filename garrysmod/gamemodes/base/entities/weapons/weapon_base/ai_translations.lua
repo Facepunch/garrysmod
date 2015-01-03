@@ -1,7 +1,7 @@
 
 --[[---------------------------------------------------------
-   Name: SetupWeaponHoldTypeForAI
-   Desc: Mainly a Todo.. In a seperate file to clean up the init.lua
+	Name: SetupWeaponHoldTypeForAI
+	Desc: Mainly a Todo.. In a seperate file to clean up the init.lua
 -----------------------------------------------------------]]
 function SWEP:SetupWeaponHoldTypeForAI( t )
 
@@ -18,9 +18,9 @@ function SWEP:SetupWeaponHoldTypeForAI( t )
 	self.ActivityTranslateAI [ ACT_COVER_LOW ] 					= ACT_COVER_PISTOL_LOW
 	self.ActivityTranslateAI [ ACT_RANGE_AIM_LOW ] 				= ACT_RANGE_AIM_PISTOL_LOW
 	self.ActivityTranslateAI [ ACT_GESTURE_RELOAD ] 			= ACT_GESTURE_RELOAD_PISTOL
-	
+
 	if ( t == "ar2" ) then
-	
+
 		self.ActivityTranslateAI [ ACT_RANGE_ATTACK1 ] 				= ACT_RANGE_ATTACK_AR2
 		self.ActivityTranslateAI [ ACT_RELOAD ] 					= ACT_RELOAD_SMG1
 		self.ActivityTranslateAI [ ACT_IDLE ] 						= ACT_IDLE_SMG1
@@ -64,8 +64,8 @@ function SWEP:SetupWeaponHoldTypeForAI( t )
 		self.ActivityTranslateAI [ ACT_RANGE_ATTACK1_LOW ] 			= ACT_RANGE_ATTACK_SMG1_LOW
 		self.ActivityTranslateAI [ ACT_RELOAD_LOW ] 				= ACT_RELOAD_SMG1_LOW
 		self.ActivityTranslateAI [ ACT_GESTURE_RELOAD ] 			= ACT_GESTURE_RELOAD_SMG1
-	
+
 	return end
-	
+
 end
 

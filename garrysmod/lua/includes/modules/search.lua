@@ -7,7 +7,7 @@ local Providers = {}
 
 function AddProvider( func )
 
-	local prov = 
+	local prov =
 	{
 		func = func,
 	}

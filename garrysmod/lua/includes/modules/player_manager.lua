@@ -1,13 +1,13 @@
-local hook = hook
-local player = player
-local pairs = pairs
-local Msg = Msg
-local ErrorNoHalt = ErrorNoHalt
-local baseclass = baseclass
-local setmetatable = setmetatable
-local SERVER = SERVER
-local string = string
-local util = util
+local hook			= hook
+local player		= player
+local pairs			= pairs
+local Msg			= Msg
+local ErrorNoHalt	= ErrorNoHalt
+local baseclass		= baseclass
+local setmetatable	= setmetatable
+local SERVER		= SERVER
+local string		= string
+local util			= util
 
 module( "player_manager" )
 

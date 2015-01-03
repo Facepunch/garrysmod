@@ -349,19 +349,19 @@ end
 local function SetupFingers( self )
 
 	if ( self.FingerIndex ) then return end
-	
+
 	self.FingerIndex = {}
 
 	local i = 1
-	
+
 	for hand = 0, 1 do
 		for finger = 0, 4 do
 			for part = 0, 2 do
-				
+
 				self.FingerIndex[ i ] = GetFingerBone( self, finger, part, hand )
-				
+
 				i = i + 1
-			
+
 			end
 		end
 	end
@@ -381,10 +381,10 @@ function TOOL:ApplyValues( pEntity, iHand )
 	local bP2 = HasP2Hands( pEntity )
 
 	for i=0, VarsOnHand - 1 do
-	
+
 		local Var = self:GetClientInfo( i )
 		local VecComp = string.Explode( " ", Var )
-		
+
 		local sin = math.sin( CurTime() * 10 ) * 10
 
 		local Ang = nil
@@ -397,7 +397,7 @@ function TOOL:ApplyValues( pEntity, iHand )
 			end
 
 		elseif ( bTF2 ) then
-			
+
 			if ( i < 3 ) then
 				Ang = Angle( 0, tonumber( VecComp[2] ), tonumber( VecComp[1] ) )
 			else
@@ -416,7 +416,7 @@ function TOOL:ApplyValues( pEntity, iHand )
 		if ( bone ) then
 			pEntity:ManipulateBoneAngles( bone, Ang )
 		end
-		
+
 	end
 
 end
@@ -435,7 +435,7 @@ function TOOL:GetHandPositions( pEntity )
 	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "wrist_L" ) end -- Chell
 	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "L Hand" ) end -- Insurgency
 	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "wrist_A_L" ) end -- Portal 2 Egg bot
-	
+
 	local RightHand = pEntity:LookupBone( "ValveBiped.Bip01_R_Hand" )
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "bip_hand_R" ) end
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "Bip01_R_Hand" ) end
@@ -445,9 +445,9 @@ function TOOL:GetHandPositions( pEntity )
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "wrist_R" ) end
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "R Hand" ) end
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "wrist_A_R" ) end
-	
+
 	if ( !LeftHand || !RightHand ) then return false end
-	
+
 	local LeftHand = pEntity:GetBoneMatrix( LeftHand )
 	local RightHand = pEntity:GetBoneMatrix( RightHand )
 	if ( !LeftHand || !RightHand ) then return false end
@@ -464,23 +464,23 @@ function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
 	if ( trace.Entity:GetClass() != "prop_ragdoll" && !trace.Entity:IsNPC() ) then return false end
-	
+
 	local LeftHand, RightHand = self:GetHandPositions( trace.Entity )
 
 	if ( !LeftHand ) then return false end
 	if ( CLIENT ) then return true end
-	
+
 	local LeftHand = ( LeftHand:GetTranslation() - trace.HitPos ):Length()
 	local RightHand = ( RightHand:GetTranslation() - trace.HitPos ):Length()
-	
+
 	if ( LeftHand < RightHand ) then
-	
+
 		self:ApplyValues( trace.Entity, 0 )
-	
+
 	else
-	
+
 		self:ApplyValues( trace.Entity, 1 )
-	
+
 	end
 
 	return true
@@ -499,25 +499,25 @@ function TOOL:RightClick( trace )
 	if ( ent:GetClass() != "prop_ragdoll" && !ent:IsNPC() ) then return false end
 
 	if ( CLIENT ) then return false end
-	
+
 	local LeftHand, RightHand = self:GetHandPositions( ent )
 	if ( !LeftHand ) then return false end
-	
+
 	local LeftHand = ( LeftHand:GetTranslation() - trace.HitPos ):Length()
 	local RightHand = ( RightHand:GetTranslation() - trace.HitPos ):Length()
-	
+
 	local Hand = 0
 	if ( LeftHand < RightHand ) then
-	
+
 		self:SetHand( ent, 0 )
-	
+
 	else
-	
+
 		self:SetHand( ent, 1 )
 		Hand = 1
-	
+
 	end
-	
+
 	--
 	-- Make sure entity has fingers set up!
 	--
@@ -529,7 +529,7 @@ function TOOL:RightClick( trace )
 	-- Rwead the variables from the angles of the fingers, into our convars
 	--
 	for i=0, VarsOnHand-1 do
-	
+
 		local bone = ent.FingerIndex[ i + Hand * VarsOnHand + 1 ]
 		if ( bone ) then
 
@@ -551,16 +551,16 @@ function TOOL:RightClick( trace )
 			end
 
 		end
-		
+
 	end
 
 	-- We don't want to send the finger poses to the client straight away
 	-- because they will get the old poses that are currently in their convars
 	-- We need to wait until they convars get updated with the sucked pose
 	self.NextUpdate = CurTime() + 0.5
-	
+
 	return true
-	
+
 end
 
 local OldHand = nil
@@ -573,28 +573,28 @@ local OldEntity = nil
 			selected a new entity or hand
 --------------------------------------------------------------]]
 function TOOL:Think()
-	
+
 	local selected = self:HandEntity()
 	local hand = self:HandNum()
-	
+
 	if ( self.NextUpdate && self.NextUpdate > CurTime() ) then return end
-	
+
 	if ( CLIENT ) then
-	
+
 		if ( OldHand != hand || OldEntity != selected ) then
-		
+
 			OldHand = hand
 			OldEntity = selected
-			
+
 			self:RebuildControlPanel( hand )
-			
+
 		end
-	
+
 	end
 
 	if ( !IsValid( selected ) ) then return end
 	if ( selected:IsWorld() ) then return end
-	
+
 	self:ApplyValues( selected, hand )
 
 end
@@ -616,7 +616,7 @@ function TOOL:RebuildControlPanel( hand )
 	-- We've selected a new entity - rebuild the controls list
 	local CPanel = controlpanel.Get( "finger" )
 	if ( !CPanel ) then return end
-	
+
 	CPanel:ClearControls()
 	self.BuildCPanel( CPanel, self:HandEntity(), self:HandNum() )
 
@@ -655,28 +655,28 @@ function TOOL:DrawHUD()
 
 	local selected = self:HandEntity()
 	local hand = self:HandNum()
-	
+
 	if ( !IsValid( selected ) ) then return end
 	if ( selected:IsWorld() ) then return end
-	
+
 	local Bone = nil
-	
+
 	local lefthand, righthand = self:GetHandPositions( selected )
-	
+
 	local BoneMatrix = lefthand
 	if ( hand == 1 ) then BoneMatrix = righthand end
 	if ( !BoneMatrix ) then return end
-	
+
 	local vPos = BoneMatrix:GetTranslation()
-	
+
 	local scrpos = vPos:ToScreen()
 	if ( !scrpos.visible ) then return end
-	
+
 	-- Work out the side distance to give a rough headsize box..
 	local player_eyes = LocalPlayer():EyeAngles()
 	local side = ( vPos + player_eyes:Right() * 20 ):ToScreen()
 	local size = math.abs( side.x - scrpos.x )
-	
+
 	surface.SetDrawColor( 255, 255, 255, 255 )
 	surface.SetTexture( FacePoser )
 	surface.DrawTexturedRect( scrpos.x - size, scrpos.y - size, size * 2, size * 2 )

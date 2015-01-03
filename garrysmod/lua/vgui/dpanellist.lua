@@ -1,12 +1,13 @@
---[[   _
+--[[ _
 	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-
+	DPanelList
 --]]
+
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bSizeToContents", 		"AutoSize" )
@@ -276,7 +277,7 @@ function PANEL:Rebuild()
 				local w = panel:GetWide()
 				local h = panel:GetTall()
 
-				if ( x > self.Padding && (x + w  > self:GetWide() || OwnLine) ) then
+				if ( x > self.Padding && (x + w > self:GetWide() || OwnLine) ) then
 
 					x = self.Padding
 					y = y + h + self.Spacing

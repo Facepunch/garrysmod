@@ -31,7 +31,7 @@ function TOOL:LeftClick( trace )
 	DoPropSpawnedEffect( ent )
 
 	return true
-	
+
 end
 
 function TOOL:RightClick( trace )

@@ -1,14 +1,11 @@
---[[   _
-    ( )
+--[[ _
+	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DPanelList
-
-	A window.
-
+	DListBox
 --]]
 
 local PANEL = {}
@@ -207,19 +204,19 @@ end
 -----------------------------------------------------------]]
 function PANEL:GetSelectedValues()
 
-	 local items = self:GetSelectedItems()
+	local items = self:GetSelectedItems()
 
-	 if ( #items > 1 ) then
+	if ( #items > 1 ) then
 
-		  local ret = {}
-		  for _, v in pairs( items ) do table.insert( ret, v:GetValue() ) end
-		  return ret
+		local ret = {}
+		for _, v in pairs( items ) do table.insert( ret, v:GetValue() ) end
+		return ret
 
-	 elseif ( #items == 1 ) then
+	elseif ( #items == 1 ) then
 
-		  return items[1]:GetValue()
+		return items[1]:GetValue()
 
-	 end
+	end
 
 end
 

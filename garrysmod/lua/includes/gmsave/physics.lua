@@ -94,4 +94,3 @@ function gmsave.PhysicsLoadFromTable( tab, ents )
 	end
 
 end
-

@@ -1,3 +1,12 @@
+--[[ _
+	( )
+   _| |   __   _ __   ___ ___     _ _
+ /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
+( (_| |(  ___/| |   | ( ) ( ) |( (_| |
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
+
+	DNumberScratch
+--]]
 
 DEFINE_BASECLASS( "DImageButton" )
 
@@ -161,8 +170,8 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 
 	local alpha = 255
 
-	if ( size < 150 )  then alpha = alpha * ((size - 2) / 140) end
-	if ( size > (w*2) - 100 )  then alpha = alpha * (1 - ((size - (w - 50)) / 50)) end
+	if ( size < 150 ) then alpha = alpha * ((size - 2) / 140) end
+	if ( size > (w*2) - 100 ) then alpha = alpha * (1 - ((size - (w - 50)) / 50)) end
 
 	local halfw = w * 0.5
 	local span = math.ceil( w / size )
@@ -203,7 +212,7 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 	end
 
 	surface.SetDrawColor( 0, 0, 0, alpha )
-	surface.SetTextColor( 0, 0, 0, alpha  )
+	surface.SetTextColor( 0, 0, 0, alpha )
 
 	--
 	-- Draw the last one.

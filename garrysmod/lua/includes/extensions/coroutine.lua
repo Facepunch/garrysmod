@@ -10,7 +10,7 @@ if ( !coroutine ) then return end
 -- Name: coroutine.wait
 -- Desc: Yield's the coroutine for so many seconds before returning.\n\nThis should only be called in a coroutine. This function uses CurTime() - not RealTime().
 -- Arg1: number|seconds|The number of seconds to wait
--- Ret1: 
+-- Ret1:
 --
 function coroutine.wait( seconds )
 
@@ -22,5 +22,5 @@ function coroutine.wait( seconds )
 		coroutine.yield()
 
 	end
-	  
+
 end

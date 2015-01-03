@@ -76,7 +76,7 @@ function PANEL:Rebuild( item )
 			local w = panel:GetWide()
 			local h = panel:GetTall()
 
-			if ( x + w  > self:GetWide() ) then
+			if ( x + w > self:GetWide() ) then
 
 				x = 0
 				y = y + h + self.Spacing
@@ -146,7 +146,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:ScrollbarSize()
 
-	return  self:GetTall() / self.BarScale
+	return self:GetTall() / self.BarScale
 
 end
 

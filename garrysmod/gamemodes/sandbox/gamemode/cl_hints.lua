@@ -16,7 +16,7 @@ local function ThrowHint( name )
 	if ( engine.IsPlayingDemo() ) then return end
 
 	GAMEMODE:AddNotify( "#Hint_"..name, NOTIFY_HINT, 20 )
-	
+
 	surface.PlaySound( "ambient/water/drip"..math.random(1, 4)..".wav" )
 
 end
@@ -31,7 +31,7 @@ function GM:AddHint( name, delay )
 
 	timer.Create( "HintSystem_"..name, delay, 1, function() ThrowHint( name ) end )
 	ProcessedHints[ name ] = true
-	
+
 end
 
 --
@@ -40,7 +40,7 @@ end
 function GM:SuppressHint( name )
 
 	timer.Destroy( "HintSystem_"..name )
-	
+
 end
 
 -- Show opening menu hint if they haven't opened the menu within 30 seconds

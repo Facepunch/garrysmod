@@ -4,44 +4,44 @@ module( "weapons", package.seeall )
 local WeaponList = {}
 
 --[[---------------------------------------------------------
-   Name: TableInherit( t, base )
-   Desc: Copies any missing data from base to t
+	Name: TableInherit( t, base )
+	Desc: Copies any missing data from base to t
 -----------------------------------------------------------]]
 local function TableInherit( t, base )
 
-	for k, v in pairs( base ) do 
-		
-		if ( t[k] == nil ) then	
-			t[k] = v 
+	for k, v in pairs( base ) do
+
+		if ( t[k] == nil ) then
+			t[k] = v
 		elseif ( k != "BaseClass" && istable(t[k]) ) then
 			TableInherit( t[k], v )
 		end
-		
+
 	end
-	
+
 	t["BaseClass"] = base
-	
+
 	return t
 
 end
 
 
 --[[---------------------------------------------------------
-   Name: Register( table, string, bool )
-   Desc: Used to register your SWEP with the engine
+	Name: Register( table, string, bool )
+	Desc: Used to register your SWEP with the engine
 -----------------------------------------------------------]]
 function Register( t, name )
 
 	local old = WeaponList[ name ]
 
 	t.ClassName = name
-	WeaponList[ name ] = t	
-	
+	WeaponList[ name ] = t
+
 	--baseclass.Set( name, t )
 
-	list.Set( "Weapon", name,	{		
-									ClassName		= name, 
-									PrintName		= t.PrintName or t.ClassName, 
+	list.Set( "Weapon", name,	{
+									ClassName		= name,
+									PrintName		= t.PrintName or t.ClassName,
 									Category		= t.Category or "Other",
 									Spawnable		= t.Spawnable,
 									AdminOnly		= t.AdminOnly,
@@ -61,8 +61,8 @@ function Register( t, name )
 		--
 		-- Foreach entity using this class
 		--
-		table.ForEach( ents.FindByClass( name ), function( _, entity ) 
-		
+		table.ForEach( ents.FindByClass( name ), function( _, entity )
+
 			--
 			-- Replace the contents with this entity table
 			--
@@ -74,7 +74,7 @@ function Register( t, name )
 			if ( entity.OnReloaded ) then
 				entity:OnReloaded()
 			end
-		
+
 		end )
 
 	end
@@ -92,18 +92,18 @@ function OnLoaded()
 	-- - we have to wait until they're all setup because load order
 	-- could cause some entities to load before their bases!
 	--
-	table.ForEach( WeaponList, function( k, v ) 
+	table.ForEach( WeaponList, function( k, v )
 
 		baseclass.Set( k, Get( k ) )
 
 	end )
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   Name: Get( string )
-   Desc: Get a weapon by name.
+	Name: Get( string )
+	Desc: Get a weapon by name.
 -----------------------------------------------------------]]
 function Get( name )
 
@@ -112,42 +112,42 @@ function Get( name )
 
 	-- Create/copy a new table
 	local retval = table.Copy( Stored )
-	
-	-- If we're not derived from ourselves (a base weapon) 
+
+	-- If we're not derived from ourselves (a base weapon)
 	-- then derive from our 'Base' weapon.
 	if ( retval.Base != name ) then
-	
+
 		local BaseWeapon = Get( retval.Base )
-		
+
 		if ( !BaseWeapon ) then
 			Msg( "SWEP (", name, ") is derived from non existant SWEP (", retval.Base, ") - Expect errors!\n" )
 		else
 			retval = TableInherit( retval, Get( retval.Base ) )
 		end
-		
+
 	end
 
 	return retval
 end
 
 --[[---------------------------------------------------------
-   Name: GetStored( string )
-   Desc: Gets the REAL weapon table, not a copy
+	Name: GetStored( string )
+	Desc: Gets the REAL weapon table, not a copy
 -----------------------------------------------------------]]
 function GetStored( name )
 	return WeaponList[ name ]
 end
 
 --[[---------------------------------------------------------
-   Name: GetList( string )
-   Desc: Get a list of all the registered SWEPs
+	Name: GetList( string )
+	Desc: Get a list of all the registered SWEPs
 -----------------------------------------------------------]]
 function GetList()
 	local result = {}
-	
+
 	for k,v in pairs(WeaponList) do
 		table.insert(result, v)
 	end
-	
+
 	return result
 end

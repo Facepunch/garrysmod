@@ -1,4 +1,4 @@
---[[   _
+--[[ _
 	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
@@ -11,7 +11,6 @@
 
 	self:SetMultiline( bool )
 	self:IsMultiline()
-
 --]]
 
 local PANEL = {}

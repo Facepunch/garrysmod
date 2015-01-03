@@ -1,4 +1,4 @@
---[[   _
+--[[ _
 	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
@@ -6,7 +6,6 @@
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DCategoryCollapse
-
 --]]
 
 local PANEL =
@@ -115,7 +114,7 @@ function PANEL:Add( strName )
 
 	button:SetContentAlignment( 4 )
 	button:DockMargin( 1, 0, 1, 0 )
-	button.DoClickInternal =  function()
+	button.DoClickInternal = function()
 
 		if ( self:GetList() ) then
 			self:GetList():UnselectAll()

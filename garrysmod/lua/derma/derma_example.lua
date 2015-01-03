@@ -1,9 +1,9 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[ _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 --]]
 
@@ -14,23 +14,23 @@ function PANEL:Init()
 	self:SetTitle( "Derma Initiative Control Test" )
 	self.ContentPanel = vgui.Create( "DPropertySheet", self )
 	self.ContentPanel:Dock( FILL )
-	
+
 	self:InvalidateLayout( true )
 	local w, h = self:GetSize()
-	
+
 	local Controls = table.Copy( derma.GetControlList() )
-		
+
 	for key, ctrl in SortedPairs( Controls ) do
-	
+
 		local Ctrls = _G[ key ]
 		if ( Ctrls && Ctrls.GenerateExample ) then
-		
+
 			Ctrls:GenerateExample( key, self.ContentPanel, w, h )
-		
+
 		end
-	
+
 	end
-	
+
 	self:SetSize( 600, 450 )
 
 end
@@ -50,12 +50,12 @@ local vguiExampleWindow = vgui.RegisterTable( PANEL, "DFrame" )
 --
 local DermaExample = nil
 
-concommand.Add( "derma_controls", function( player, command, arguments, args ) 
+concommand.Add( "derma_controls", function( player, command, arguments, args )
 
-	if ( IsValid( DermaExample ) ) then 
+	if ( IsValid( DermaExample ) ) then
 		DermaExample:Remove()
 	return end
-	
+
 	DermaExample = vgui.CreateFromTable( vguiExampleWindow )
 	DermaExample:SwitchTo( args )
 	DermaExample:MakePopup()

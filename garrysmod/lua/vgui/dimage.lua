@@ -1,4 +1,4 @@
---[[   _
+--[[ _
 	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
@@ -6,7 +6,6 @@
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DImage
-
 --]]
 
 local PANEL = {}
@@ -72,7 +71,7 @@ function PANEL:DoLoadMaterial()
 	local mat = Material( self:GetMatName() )
 	self:SetMaterial( mat )
 
-	if ( self.m_Material:IsError() && self:GetFailsafeMatName()  ) then
+	if ( self.m_Material:IsError() && self:GetFailsafeMatName() ) then
 		self:SetMaterial( Material( self:GetFailsafeMatName() ) )
 	end
 

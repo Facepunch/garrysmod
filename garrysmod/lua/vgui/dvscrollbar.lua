@@ -1,4 +1,4 @@
---[[   _
+--[[ _
 	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
@@ -6,7 +6,6 @@
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 	DVScrollBar
-
 
 	Usage:
 
@@ -46,8 +45,6 @@
 		self.pnlCanvas:SetSize( Wide - self.Padding * 2, self.pnlCanvas:GetTall() )
 
 	end
-
-
 --]]
 
 local PANEL = {}

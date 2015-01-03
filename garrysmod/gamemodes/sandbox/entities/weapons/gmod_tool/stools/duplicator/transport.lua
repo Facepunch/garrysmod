@@ -29,13 +29,13 @@ concommand.Add( "dupe_save", function( ply, cmd, arg )
 	--
 	local compressed = util.Compress( json )
 
-	MsgN( "Compressed Dupe for sending: ", json:len(), " => ", compressed:len() );
+	MsgN( "Compressed Dupe for sending: ", json:len(), " => ", compressed:len() )
 
 	--
 	-- And send it(!)
 	--
 	net.Start( "ReceiveDupe" )
-		net.WriteUInt( compressed:len(), 32 )		
+		net.WriteUInt( compressed:len(), 32 )
 		net.WriteData( compressed, compressed:len() )
 	net.Send( ply )
 
@@ -46,13 +46,13 @@ end
 if ( CLIENT ) then
 
 	net.Receive( "ReceiveDupe", function( len, client )
-		
+
 			local len		= net.ReadUInt( 32 )
 			local data		= net.ReadData( len )
 
 			local uncompressed = util.Decompress( data )
-			if ( !uncompressed ) then 
-				Msg( "Received dupe - but couldn't decompress!?\n" );
+			if ( !uncompressed ) then
+				Msg( "Received dupe - but couldn't decompress!?\n" )
 				return
 			end
 

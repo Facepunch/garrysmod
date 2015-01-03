@@ -38,8 +38,7 @@ function meta:__index( key )
 	-- This needs to be retired, just like self.Entity was.
 	--
 	if ( key == "Owner" ) then return entity.GetOwner( self ) end
-	
-	return nil
-	
-end
 
+	return nil
+
+end

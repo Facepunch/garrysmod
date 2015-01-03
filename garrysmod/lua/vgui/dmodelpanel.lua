@@ -1,11 +1,13 @@
---[[   _
-    ( )
+--[[ _
+	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
+	DModelPanel
 --]]
+
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_fAnimSpeed", 	"AnimSpeed" )
@@ -184,7 +186,7 @@ function PANEL:LayoutEntity( Entity )
 		self:RunAnimation()
 	end
 
-	Entity:SetAngles( Angle( 0, RealTime()*10,  0) )
+	Entity:SetAngles( Angle( 0, RealTime()*10, 0) )
 
 end
 

@@ -56,7 +56,7 @@ function PANEL:Paint()
 end
 
 --[[---------------------------------------------------------
-   Name: ConVarR
+	Name: ConVarR
 -----------------------------------------------------------]]
 function PANEL:SetConVarR( cvar )
 
@@ -65,7 +65,7 @@ function PANEL:SetConVarR( cvar )
 end
 
 --[[---------------------------------------------------------
-   Name: ConVarG
+	Name: ConVarG
 -----------------------------------------------------------]]
 function PANEL:SetConVarG( cvar )
 
@@ -74,7 +74,7 @@ function PANEL:SetConVarG( cvar )
 end
 
 --[[---------------------------------------------------------
-   Name: ConVarB
+	Name: ConVarB
 -----------------------------------------------------------]]
 function PANEL:SetConVarB( cvar )
 
@@ -83,13 +83,12 @@ function PANEL:SetConVarB( cvar )
 end
 
 --[[---------------------------------------------------------
-   Name: ConVarA
+	Name: ConVarA
 -----------------------------------------------------------]]
 function PANEL:SetConVarA( cvar )
 
 	self.Mixer:SetConVarA( cvar )
 
 end
-
 
 vgui.Register( "CtrlColor", PANEL, "DPanel" )

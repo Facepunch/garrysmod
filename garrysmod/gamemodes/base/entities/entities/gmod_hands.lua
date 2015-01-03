@@ -6,13 +6,13 @@ ENT.RenderGroup		= RENDERGROUP_OTHER
 
 
 function ENT:Initialize()
-	
+
 	hook.Add( "OnViewModelChanged", self, self.ViewModelChanged )
 
 	self:SetNotSolid( true )
 	self:DrawShadow( false )
 	self:SetTransmitWithParent( true ) -- Transmit only when the viewmodel does!
-	
+
 end
 
 function ENT:DoSetup( ply, spec )
@@ -34,7 +34,7 @@ function ENT:DoSetup( ply, spec )
 end
 
 function ENT:GetPlayerColor()
-	
+
 	--
 	-- Make sure there's an owner and they have this function
 	-- before trying to call it!
@@ -42,7 +42,7 @@ function ENT:GetPlayerColor()
 	local owner = self:GetOwner()
 	if ( !IsValid( owner ) ) then return end
 	if ( !owner.GetPlayerColor ) then return end
-	
+
 	return owner:GetPlayerColor()
 
 end
@@ -57,7 +57,7 @@ function ENT:ViewModelChanged( vm, old, new )
 end
 
 function ENT:AttachToViewmodel( vm )
-	
+
 	self:AddEffects( EF_BONEMERGE )
 	self:SetParent( vm )
 	self:SetMoveType( MOVETYPE_NONE )

@@ -49,15 +49,15 @@ search.AddProvider( function( str )
 
 			if ( UTIL_IsUselessModel( v ) ) then continue end
 
-			local entry = 
+			local entry =
 			{
 				text = v:GetFileFromFilename(),
 				func = function() RunConsoleCommand( "gm_spawn", v ) end,
 				icon = spawnmenu.CreateContentIcon( "model", g_SpawnMenu.SearchPropPanel, { model = v } ),
 				words = { v }
 			}
-			
-			table.insert( list, entry )			
+
+			table.insert( list, entry )
 
 		end
 
@@ -67,7 +67,7 @@ search.AddProvider( function( str )
 
 	return list
 
-end );
+end )
 
 --
 -- Entity, vehicles
@@ -79,34 +79,34 @@ search.AddProvider( function( str )
 	local results = {}
 
 	local ents = {}
-	--table.Add( ents, scripted_ents.GetSpawnable() );
-	table.Add( ents, list.Get( "SpawnableEntities" ) );
+	--table.Add( ents, scripted_ents.GetSpawnable() )
+	table.Add( ents, list.Get( "SpawnableEntities" ) )
 
 	for k, v in pairs( list.Get( "Vehicles" ) ) do
-			
+
 		v.ClassName = k
 		v.PrintName = v.Name
 		v.ScriptedEntityType = 'vehicle'
 		table.insert( ents, v )
-			
+
 	end
-	
+
 	for k, v in pairs( list.Get( "NPC" ) ) do
-			
+
 		v.ClassName = k
 		v.PrintName = v.Name
 		v.ScriptedEntityType = 'npc'
 		table.insert( ents, v )
-			
+
 	end
 
 	for k, v in pairs( list.Get( "Weapon" ) ) do
-			
+
 		v.ClassName = k
 		v.PrintName = v.PrintName
 		v.ScriptedEntityType = 'weapon'
 		table.insert( ents, v )
-			
+
 	end
 
 	for k, v in pairs( ents ) do
@@ -116,11 +116,11 @@ search.AddProvider( function( str )
 
 		if ( name:lower():find( str ) ) then
 
-			local entry = 
+			local entry =
 			{
 				text = v.PrintName or v.ClassName,
-				icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, 
-					{ 
+				icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil,
+					{
 						nicename	= v.PrintName or v.ClassName,
 						spawnname	= v.ClassName,
 						material	= "entities/"..v.ClassName..".png",
@@ -128,8 +128,8 @@ search.AddProvider( function( str )
 					}),
 				words = { v }
 			}
-			
-			table.insert( results, entry )			
+
+			table.insert( results, entry )
 
 		end
 
@@ -139,4 +139,4 @@ search.AddProvider( function( str )
 
 	return results
 
-end );
+end )

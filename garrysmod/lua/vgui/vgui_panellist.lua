@@ -2,7 +2,7 @@
 local PANEL = {}
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -19,7 +19,7 @@ function PANEL:Init()
 end
 
 --[[---------------------------------------------------------
-   Name: EnableHorizontal
+	Name: EnableHorizontal
 -----------------------------------------------------------]]
 function PANEL:EnableHorizontal( bHoriz )
 
@@ -28,7 +28,7 @@ function PANEL:EnableHorizontal( bHoriz )
 end
 
 --[[---------------------------------------------------------
-   Name: EnableVerticalScrollbar
+	Name: EnableVerticalScrollbar
 -----------------------------------------------------------]]
 function PANEL:EnableVerticalScrollbar()
 
@@ -40,7 +40,7 @@ function PANEL:EnableVerticalScrollbar()
 end
 
 --[[---------------------------------------------------------
-   Name: GetCanvas
+	Name: GetCanvas
 -----------------------------------------------------------]]
 function PANEL:GetCanvas()
 
@@ -49,7 +49,7 @@ function PANEL:GetCanvas()
 end
 
 --[[---------------------------------------------------------
-   Name: GetCanvas
+	Name: GetCanvas
 -----------------------------------------------------------]]
 function PANEL:Clear()
 
@@ -64,7 +64,7 @@ function PANEL:Clear()
 end
 
 --[[---------------------------------------------------------
-   Name: AddItem
+	Name: AddItem
 -----------------------------------------------------------]]
 function PANEL:AddItem( item )
 
@@ -76,7 +76,7 @@ function PANEL:AddItem( item )
 end
 
 --[[---------------------------------------------------------
-   Name: Rebuild
+	Name: Rebuild
 -----------------------------------------------------------]]
 function PANEL:Rebuild()
 
@@ -90,7 +90,7 @@ function PANEL:Rebuild()
 			local w = panel:GetWide()
 			local h = panel:GetTall()
 
-			if ( x + w  > self:GetWide() ) then
+			if ( x + w > self:GetWide() ) then
 
 				x = 0
 				y = y + h + self.Spacing
@@ -121,7 +121,7 @@ function PANEL:Rebuild()
 end
 
 --[[---------------------------------------------------------
-   Name: OnMouseWheeled
+	Name: OnMouseWheeled
 -----------------------------------------------------------]]
 function PANEL:OnMouseWheeled( dlta )
 
@@ -132,7 +132,7 @@ function PANEL:OnMouseWheeled( dlta )
 end
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Paint()
 
@@ -142,7 +142,7 @@ function PANEL:Paint()
 end
 
 --[[---------------------------------------------------------
-   Name: SetSpacing
+	Name: SetSpacing
 -----------------------------------------------------------]]
 function PANEL:SetSpacing( _num_ )
 
@@ -151,7 +151,7 @@ function PANEL:SetSpacing( _num_ )
 end
 
 --[[---------------------------------------------------------
-   Name: SetPadding
+	Name: SetPadding
 -----------------------------------------------------------]]
 function PANEL:SetPadding( _num_ )
 
@@ -161,7 +161,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: Think
+	Name: Think
 -----------------------------------------------------------]]
 function PANEL:Think()
 
@@ -176,7 +176,7 @@ function PANEL:Think()
 end
 
 --[[---------------------------------------------------------
-   Name: PerformLayout
+	Name: PerformLayout
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 

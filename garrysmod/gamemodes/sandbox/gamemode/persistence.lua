@@ -25,7 +25,7 @@ hook.Add( "PersistenceSave", "PersistenceSave", function()
 
 	file.CreateDir( "persist" )
 	file.Write( "persist/" .. game.GetMap() .. "_" .. PersistPage .. ".txt", out )
-	
+
 end )
 
 hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
@@ -51,6 +51,6 @@ hook.Add( "InitPostEntity", "PersistenceInit", function()
 	local PersistPage = GetConVarString( "sbox_persist" )
 	if ( PersistPage == "0" ) then return end
 
-	hook.Run( "PersistenceLoad", PersistPage );
-	
+	hook.Run( "PersistenceLoad", PersistPage )
+
 end )

@@ -18,23 +18,23 @@ cleanup.Register( "trails" )
 local function SetTrails( Player, Entity, Data )
 
 	if ( IsValid( Entity.SToolTrail ) ) then
-	
+
 		Entity.SToolTrail:Remove()
 		Entity.SToolTrail = nil
-	
+
 	end
-	
+
 	if ( !Data ) then
-	
+
 		duplicator.ClearEntityModifier( Entity, "trail" )
 		return
-		
+
 	end
-	
+
 	if ( Data.StartSize == 0 ) then
-	
+
 		Data.StartSize = 0.0001
-		
+
 	end
 
 	--
@@ -44,7 +44,7 @@ local function SetTrails( Player, Entity, Data )
 	if ( !game.SinglePlayer() && !list.Contains( "trail_materials", Data.Material ) ) then return end
 
 	local trail_entity = util.SpriteTrail( Entity, 0, Data.Color, false, Data.StartSize, Data.EndSize, Data.Length, 1 / ( ( Data.StartSize + Data.EndSize ) * 0.5 ), Data.Material .. ".vmt" )
-	
+
 	Entity.SToolTrail = trail_entity
 
 	if ( IsValid( Player ) ) then
@@ -54,7 +54,7 @@ local function SetTrails( Player, Entity, Data )
 	duplicator.StoreEntityModifier( Entity, "trail", Data )
 
 	return trail_entity
-	
+
 end
 duplicator.RegisterEntityModifier( "trail", SetTrails )
 
@@ -64,24 +64,24 @@ function TOOL:LeftClick( trace )
 	if ( !trace.Entity:EntIndex() == 0 ) then return false end
 	if ( trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
-	
+
 	local r = math.Clamp( self:GetClientNumber( "r", 255 ), 0, 255 )
 	local g = math.Clamp( self:GetClientNumber( "g", 255 ), 0, 255 )
 	local b = math.Clamp( self:GetClientNumber( "b", 255 ), 0, 255 )
 	local a = math.Clamp( self:GetClientNumber( "a", 255 ), 0, 255 )
-	
+
 	local length = self:GetClientNumber( "length", 5 )
 	local endsize = self:GetClientNumber( "endsize", 0 )
 	local startsize	= self:GetClientNumber( "startsize", 32 )
 	local Mat = self:GetClientInfo( "material", "sprites/obsolete" )
-	
+
 	-- Clamp sizes in multiplayer
 	if ( !game.SinglePlayer() ) then
-	
+
 		length = math.Clamp( length, 0.1, 10 )
 		endsize = math.Clamp( endsize, 0, 128 )
 		startsize = math.Clamp( startsize, 0, 128 )
-	
+
 	end
 
 	local Trail = SetTrails( self:GetOwner(), trace.Entity, {
@@ -98,7 +98,7 @@ function TOOL:LeftClick( trace )
 	undo.Finish()
 
 	return true
-	
+
 end
 
 function TOOL:RightClick( trace )
@@ -145,7 +145,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Header", { Description	= "#tool.trails.desc" } )
 
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "trails", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
-	
+
 	CPanel:AddControl( "Color", { Label = "#tool.trails.color", Red = "trails_r", Green = "trails_g", Blue = "trails_b", Alpha = "trails_a" } )
 
 	CPanel:NumSlider( "#tool.trails.length", "trails_length", 0, 10, 2 )

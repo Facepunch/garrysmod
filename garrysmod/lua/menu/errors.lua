@@ -35,7 +35,7 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, addontitle, ad
 
 	end
 
-	if  ( addonid == nil ) then addonid = 0 end
+	if ( addonid == nil ) then addonid = 0 end
 
 	if ( Errors[ addonid ] ) then
 
@@ -62,7 +62,7 @@ end )
 local matAlert = Material( "icon16/error.png" )
 
 hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
-	
+
 	if ( table.Count( Errors ) == 0 ) then return end
 
 	local idealy = 32
@@ -76,7 +76,7 @@ hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 		if ( v.y == nil ) then v.y = idealy end
 		if ( v.w == nil ) then v.w = surface.GetTextSize( v.text ) + 48 end
 
-		
+
 		draw.RoundedBox( 2, v.x + 2, v.y + 2, v.w, height, Color( 40, 40, 40, 255 ) )
 		draw.RoundedBox( 2, v.x, v.y, v.w, height, Color( 240, 240, 240, 255 ) )
 

@@ -1,9 +1,9 @@
 
 -- Globals that we are going to use
-local pairs 	= pairs
-local unpack 	= unpack
-local Msg 		= Msg
-local umsg 		= umsg
+local pairs		= pairs
+local unpack	= unpack
+local Msg		= Msg
+local umsg		= umsg
 
 --[[
 	This is merely a convenience function. If you pass numbers
@@ -13,11 +13,11 @@ local umsg 		= umsg
 function SendUserMessage( name, ply, ... )
 
 	umsg.Start( name, ply )
-	
+
 	for k, v in pairs( {...} ) do
-	
+
 		local t = type( v )
-		
+
 		if ( t == "string" ) then
 			umsg.String( v )
 		elseif ( IsEntity( v ) ) then
@@ -34,14 +34,14 @@ function SendUserMessage( name, ply, ... )
 			ErrorNoHalt( "SendUserMessage: Couldn't send type "..t.."\n" )
 		end
 	end
-	
+
 	umsg.End()
 
 end
 
 --[[---------------------------------------------------------
-   Name: usermessage
-   Desc: Enables the server to send the client messages 
+	Name: usermessage
+	Desc: Enables the server to send the client messages
 		 (in a bandwidth friendly manner)
 -----------------------------------------------------------]]
 module("usermessage")
@@ -49,8 +49,8 @@ module("usermessage")
 local Hooks = {}
 
 --[[---------------------------------------------------------
-   Name: GetTable
-   Desc: Returns the table of hooked usermessages
+	Name: GetTable
+	Desc: Returns the table of hooked usermessages
 -----------------------------------------------------------]]
 function GetTable()
 
@@ -59,8 +59,8 @@ function GetTable()
 end
 
 --[[---------------------------------------------------------
-   Name: Hook
-   Desc: Adds a hook
+	Name: Hook
+	Desc: Adds a hook
 -----------------------------------------------------------]]
 function Hook( messagename, func, ... )
 
@@ -73,23 +73,22 @@ function Hook( messagename, func, ... )
 
 	Hooks[ messagename ].Function 	= func
 	Hooks[ messagename ].PreArgs	= {...}
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: Call( name, args )
-   Desc: Called by the engine to call a gamemode hook
+	Name: Call( name, args )
+	Desc: Called by the engine to call a gamemode hook
 -----------------------------------------------------------]]
 function IncomingMessage( MessageName, msg )
 
 	if ( Hooks[ MessageName ] ) then
-	
+
 		Hooks[ MessageName ].Function( msg, unpack(Hooks[ MessageName ].PreArgs) )
 		return
-	
+
 	end
-	
+
 	Msg("Warning: Unhandled usermessage '"..MessageName.."'\n")
 
 end
-

@@ -12,23 +12,23 @@ TOOL.ClientConVar[ "bwd_group" ] = "41"
 function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return end
-	
+
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
-	
+
 	local iNum = self:NumObjects()
-	
+
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
 	self:SetOperation( 1 )
-	
+
 	if ( iNum > 0 ) then
-	
+
 		if ( CLIENT ) then
 			self:ClearObjects()
 			return true
 		end
-		
+
 		-- Get client's CVars
 		local material = self:GetClientInfo( "rope_material", "cable/rope" )
 		local width = self:GetClientNumber( "rope_width", 3 )
@@ -55,16 +55,16 @@ function TOOL:LeftClick( trace )
 		if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
 		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
 		if ( IsValid( controller ) ) then self:GetOwner():AddCleanup( "ropeconstraints", controller ) end
-		
+
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()
-		
+
 	else
-	
+
 		self:SetStage( iNum + 1 )
-		
+
 	end
-	
+
 	return true
 
 end
@@ -75,12 +75,12 @@ function TOOL:RightClick( trace )
 
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
-	
+
 	local iNum = self:NumObjects()
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
-	
+
 	local tr = {}
 	tr.start = trace.HitPos
 	tr.endpos = tr.start + ( trace.HitNormal * 16384 )
@@ -89,19 +89,19 @@ function TOOL:RightClick( trace )
 	if ( IsValid( trace.Entity ) ) then
 		tr.filter[ 2 ] = trace.Entity
 	end
-	
+
 	local tr = util.TraceLine( tr )
 	if ( !tr.Hit ) then
 		self:ClearObjects()
 		return
 	end
-	
+
 	-- Don't try to constrain world to world
 	if ( trace.HitWorld && tr.HitWorld ) then
 		self:ClearObjects()
 		return
 	end
-	
+
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then
 		self:ClearObjects()
 		return
@@ -113,12 +113,12 @@ function TOOL:RightClick( trace )
 
 	local Phys2 = tr.Entity:GetPhysicsObjectNum( tr.PhysicsBone )
 	self:SetObject( 2, tr.Entity, tr.HitPos, Phys2, tr.PhysicsBone, trace.HitNormal )
-	
+
 	if ( CLIENT ) then
 		self:ClearObjects()
 		return true
 	end
-	
+
 	-- Get client's CVars
 	local material = self:GetClientInfo( "rope_material", "cable/rope" )
 	local width = self:GetClientNumber( "rope_width", 3 )
@@ -126,7 +126,7 @@ function TOOL:RightClick( trace )
 	local bwd_bind = self:GetClientNumber( "bwd_group", 41 )
 	local fwd_speed = self:GetClientNumber( "fwd_speed", 64 )
 	local bwd_speed = self:GetClientNumber( "bwd_speed", 64 )
-		
+
 	-- Get information we're about to use
 	local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 	local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
@@ -140,16 +140,16 @@ function TOOL:RightClick( trace )
 		if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
 		undo.SetPlayer( self:GetOwner() )
 	undo.Finish()
-	
+
 	if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
 	if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
 	if ( IsValid( controller ) ) then self:GetOwner():AddCleanup( "ropeconstraints", controller ) end
 
 	-- Clear the objects so we're ready to go again
 	self:ClearObjects()
-	
+
 	return true
-	
+
 end
 
 function TOOL:Reload( trace )
@@ -158,7 +158,7 @@ function TOOL:Reload( trace )
 	if ( CLIENT ) then return true end
 
 	return constraint.RemoveConstraints( trace.Entity, "Winch" )
-	
+
 end
 
 local ConVarsDefault = TOOL:BuildConVarList()

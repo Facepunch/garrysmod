@@ -1,5 +1,5 @@
---[[	_
-    ( )
+--[[ _
+	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
@@ -10,7 +10,7 @@
 local PANEL = {}
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -20,7 +20,7 @@ function PANEL:Init()
 end
 
 --[[---------------------------------------------------------
-   Name: OnMousePressed
+	Name: OnMousePressed
 -----------------------------------------------------------]]
 function PANEL:OnMousePressed( mcode )
 
@@ -53,7 +53,7 @@ AccessorFunc( PANEL, "m_iBottomHeightMin", 		"BottomMin" )
 AccessorFunc( PANEL, "m_iHoldPos", 				"HoldPos" )
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -81,7 +81,7 @@ function PANEL:LoadCookies()
 end
 
 --[[---------------------------------------------------------
-   Name: SetTop
+	Name: SetTop
 -----------------------------------------------------------]]
 function PANEL:SetTop( pnl )
 
@@ -91,7 +91,7 @@ function PANEL:SetTop( pnl )
 end
 
 --[[---------------------------------------------------------
-   Name: SetBottom
+	Name: SetBottom
 -----------------------------------------------------------]]
 function PANEL:SetBottom( pnl )
 
@@ -101,7 +101,7 @@ function PANEL:SetBottom( pnl )
 end
 
 --[[---------------------------------------------------------
-   Name: DoConstraints
+	Name: DoConstraints
 -----------------------------------------------------------]]
 function PANEL:DoConstraints()
 
@@ -113,7 +113,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: PerformLayout
+	Name: PerformLayout
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
@@ -210,7 +210,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: GenerateExample
+	Name: GenerateExample
 -----------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 

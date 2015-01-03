@@ -9,37 +9,37 @@ function GM:SpawnMenuEnabled()
 end
 
 --[[---------------------------------------------------------
-  Called when spawnmenu is trying to be opened.
-   Return false to dissallow it.
+	Called when spawnmenu is trying to be opened.
+	Return false to dissallow it.
 -----------------------------------------------------------]]
 function GM:SpawnMenuOpen()
 	return true
 end
 
 --[[---------------------------------------------------------
-  Called when context menu is trying to be opened.
-   Return false to dissallow it.
+	Called when context menu is trying to be opened.
+	Return false to dissallow it.
 -----------------------------------------------------------]]
 function GM:ContextMenuOpen()
 	return false
 end
 
 --[[---------------------------------------------------------
-  Called to populate the Scripted Tool menu. Overridden
-   by the sandbox gamemode.
+	Called to populate the Scripted Tool menu. Overridden
+	by the sandbox gamemode.
 -----------------------------------------------------------]]
 function GM:PopulateSTOOLMenu()
 end
 
 --[[---------------------------------------------------------
-  Called right before the Lua Loaded tool menus are reloaded
+	Called right before the Lua Loaded tool menus are reloaded
 -----------------------------------------------------------]]
 function GM:PreReloadToolsMenu()
 end
 
 --[[---------------------------------------------------------
-  Called right after the Lua Loaded tool menus are reloaded
-  This is a good place to set up any ControlPanels
+	Called right after the Lua Loaded tool menus are reloaded
+	This is a good place to set up any ControlPanels
 -----------------------------------------------------------]]
 function GM:PostReloadToolsMenu()
 end

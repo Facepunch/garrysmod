@@ -6,7 +6,7 @@ function menubar.Init()
 	menubar.Control = vgui.Create( "DMenuBar" )
 	menubar.Control:Dock( TOP )
 	menubar.Control:SetVisible( false )
-	
+
 	hook.Run( "PopulateMenuBar", menubar.Control )
 
 end

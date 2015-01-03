@@ -11,10 +11,10 @@ end
 function ToolObj:Create()
 
 	local o = {}
-	
+
 	setmetatable( o, self )
 	self.__index = self
-	
+
 	o.Mode				= nil
 	o.SWEP				= nil
 	o.Owner				= nil
@@ -25,9 +25,9 @@ function ToolObj:Create()
 	o.Message			= "start"
 	o.LastMessage		= 0
 	o.AllowedCVar		= 0
-	
+
 	return o
-	
+
 end
 
 function ToolObj:CreateConVars()
@@ -35,32 +35,32 @@ function ToolObj:CreateConVars()
 	local mode = self:GetMode()
 
 	if ( CLIENT ) then
-	
+
 		for cvar, default in pairs( self.ClientConVar ) do
-		
+
 			CreateClientConVar( mode.."_"..cvar, default, true, true )
-			
+
 		end
-		
+
 	return end
-	
+
 	-- Note: I changed this from replicated because replicated convars don't work
 	-- when they're created via Lua.
-	
+
 	if ( SERVER ) then
 
 		self.AllowedCVar = CreateConVar( "toolmode_allow_"..mode, 1, FCVAR_NOTIFY )
-	
+
 	end
-	
+
 end
 
 function ToolObj:GetServerInfo( property )
 
 	local mode = self:GetMode()
-	
+
 	return GetConVarString( mode.."_"..property )
-	
+
 end
 
 function ToolObj:BuildConVarList()
@@ -71,14 +71,14 @@ function ToolObj:BuildConVarList()
 	for k, v in pairs( self.ClientConVar ) do convars[ mode .. "_" .. k ] = v end
 
 	return convars
-	
+
 end
 
 function ToolObj:GetClientInfo( property )
 
 	local mode = self:GetMode()
 	return self:GetOwner():GetInfo( mode.."_"..property )
-	
+
 end
 
 function ToolObj:GetClientNumber( property, default )
@@ -86,14 +86,14 @@ function ToolObj:GetClientNumber( property, default )
 	default = default or 0
 	local mode = self:GetMode()
 	return self:GetOwner():GetInfoNum( mode.."_"..property, default )
-	
+
 end
 
 function ToolObj:Allowed()
 
 	if ( CLIENT ) then return true end
 	return self.AllowedCVar:GetBool()
-	
+
 end
 
 -- Now for all the ToolObj redirects
@@ -119,14 +119,14 @@ function ToolObj:Think()			self:ReleaseGhostEntity() end
 function ToolObj:CheckObjects()
 
 	for k, v in pairs( self.Objects ) do
-		
+
 		if ( !v.Ent:IsWorld() && !v.Ent:IsValid() ) then
 			self:ClearObjects()
-		end		
-	
+		end
+
 	end
-	
-		
+
+
 end
 
 local toolmodes = file.Find( SWEP.Folder.."/stools/*.lua", "LUA" )
@@ -137,16 +137,16 @@ for key, val in pairs( toolmodes ) do
 
 	TOOL = ToolObj:Create()
 	TOOL.Mode = toolmode
-	
+
 	AddCSLuaFile( "stools/"..val )
 	include( "stools/"..val )
-	
+
 	TOOL:CreateConVars()
 
 	SWEP.Tool[ toolmode ] = TOOL
-		
+
 	TOOL = nil
-	
+
 end
 
 ToolObj = nil
@@ -155,28 +155,28 @@ if ( CLIENT ) then
 
 	-- Keep the tool list handy
 	local TOOLS_LIST = SWEP.Tool
-	
+
 	-- Add the STOOLS to the tool menu
 	local function AddSToolsToMenu()
-	
+
 		for ToolName, TOOL in pairs( TOOLS_LIST ) do
-		
+
 			if ( TOOL.AddToMenu != false ) then
-			
+
 				spawnmenu.AddToolMenuOption( TOOL.Tab or "Main",
-												TOOL.Category or "New Category", 
-												ToolName, 
-												TOOL.Name or "#"..ToolName, 
-												TOOL.Command or "gmod_tool "..ToolName, 
+												TOOL.Category or "New Category",
+												ToolName,
+												TOOL.Name or "#"..ToolName,
+												TOOL.Command or "gmod_tool "..ToolName,
 												TOOL.ConfigName or ToolName,
 												TOOL.BuildCPanel )
-				
+
 			end
-		
+
 		end
-	
+
 	end
-	
+
 	hook.Add( "PopulateToolMenu", "AddSToolsToMenu", AddSToolsToMenu )
 
 
@@ -201,7 +201,7 @@ if ( CLIENT ) then
 				} ),
 				words = { k }
 			}
-			
+
 			table.insert( list, entry )
 
 			if ( #list >= 32 ) then break end
@@ -230,7 +230,7 @@ if ( CLIENT ) then
 			spawnmenu.ActivateTool( obj.spawnname )
 
 			surface.PlaySound( "ui/buttonclickrelease.wav" )
-	
+
 		end
 
 		icon.OpenMenu = function( icon )
@@ -238,9 +238,9 @@ if ( CLIENT ) then
 			local menu = DermaMenu()
 				menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
 			menu:Open()
-						
+
 		end
-		
+
 		if ( IsValid( container ) ) then
 			container:Add( icon )
 		end

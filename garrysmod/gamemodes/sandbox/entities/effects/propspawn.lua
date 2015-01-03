@@ -71,8 +71,8 @@ function EFFECT:RenderOverlay( entity )
 	local Fraction = (self.LifeTime - CurTime()) / self.Time
 	local ColFrac = (Fraction-0.5) * 2
 
-	Fraction = math.Clamp( Fraction, 0, 1 )
-	ColFrac  = math.Clamp( ColFrac, 0, 1 )
+	Fraction	= math.Clamp( Fraction, 0, 1 )
+	ColFrac		= math.Clamp( ColFrac, 0, 1 )
 
 	-- Change our model's alpha so the texture will fade out
 	--entity:SetColor( 255, 255, 255, 1 + 254 * (ColFrac) )

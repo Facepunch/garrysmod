@@ -1,10 +1,11 @@
---[[   _
-    ( )
+--[[ _
+	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
+	DListView_Line
 --]]
 
 local PANEL = {}
@@ -20,7 +21,7 @@ end
 
 function PANEL:UpdateColours( skin )
 
-	if ( self:GetParent():IsLineSelected() )	then return self:SetTextStyleColor( skin.Colours.Label.Bright ) end
+	if ( self:GetParent():IsLineSelected() ) then return self:SetTextStyleColor( skin.Colours.Label.Bright ) end
 
 	return self:SetTextStyleColor( skin.Colours.Label.Dark )
 

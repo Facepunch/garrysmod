@@ -110,7 +110,7 @@ frame_blend.ShouldSkipFrame = function()
 
 	local padding = math.floor( pp_fb_frames:GetInt() * pp_fb_shutter:GetFloat() * 0.5 )
 
-	if ( NumFramesTaken < padding || NumFramesTaken >= pp_fb_frames:GetInt() - padding ) then 
+	if ( NumFramesTaken < padding || NumFramesTaken >= pp_fb_frames:GetInt() - padding ) then
 		return true
 	end
 
@@ -209,7 +209,7 @@ list.Set( "PostProcess", "#frame_blend_pp", {
 		CPanel:AddControl( "Header", { Description = "#frame_blend_pp.desc2" } )
 
 		CPanel:AddControl( "CheckBox", { Label = "#frame_blend_pp.enable", Command = "pp_fb" } )
-		
+
 		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "frame_blend" }
 		params.Options[ "#preset.default" ] = { pp_fb_frames = "16", pp_fb_shutter = "0.5" }
 		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )

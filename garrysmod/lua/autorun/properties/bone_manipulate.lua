@@ -42,7 +42,7 @@ properties.Add( "bone_manipulate", {
 			-- If we have an old axis, remove it
 			if ( IsValid( w.axis ) ) then w.axis:Remove() end
 
-			--  We clicked on the same bone
+			-- We clicked on the same bone
 			if ( w.LastBonePress == boneid ) then
 				w.BonePressCount = w.BonePressCount + 1
 				if ( w.BonePressCount >= 3 ) then w.BonePressCount = 0 end

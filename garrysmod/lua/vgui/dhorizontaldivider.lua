@@ -1,11 +1,12 @@
---[[   _
-    ( )
+--[[ _
+	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-DHorizontalDivider: modified from DVerticalDivider by TAD2020
+	DHorizontalDivider
+	Modified from DVerticalDivider by TAD2020
 --]]
 
 local PANEL = {}

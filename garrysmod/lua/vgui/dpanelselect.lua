@@ -1,13 +1,14 @@
---[[   _
-    ( )
+--[[ _
+	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	A list of panels, of which only one can be selected
-
+	DPanelSelect
+	A list of panels, of which only one can be selected.
 --]]
+
 local PANEL = {}
 
 --[[---------------------------------------------------------

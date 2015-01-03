@@ -1,12 +1,12 @@
 
 --[[---------------------------------------------------------
 
-  This file should contain variables and functions that are
-   the same on both client and server.
+	This file should contain variables and functions that are
+	 the same on both client and server.
 
-  This file will get sent to the client - so don't add
-   anything to this file that you don't want them to be
-   able to see.
+	This file will get sent to the client - so don't add
+	 anything to this file that you don't want them to be
+	 able to see.
 
 -----------------------------------------------------------]]
 
@@ -24,43 +24,43 @@ GM.Website		= "www.garry.tv"
 GM.TeamBased	= false
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerHurt( )
-   Desc: Called when a player is hurt.
+	Name: gamemode:PlayerHurt( )
+	Desc: Called when a player is hurt.
 -----------------------------------------------------------]]
 function GM:PlayerHurt( player, attacker, healthleft, healthtaken )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:KeyPress( )
-   Desc: Player pressed a key (see IN enums)
+	Name: gamemode:KeyPress( )
+	Desc: Player pressed a key (see IN enums)
 -----------------------------------------------------------]]
 function GM:KeyPress( player, key )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:KeyRelease( )
-   Desc: Player released a key (see IN enums)
+	Name: gamemode:KeyRelease( )
+	Desc: Player released a key (see IN enums)
 -----------------------------------------------------------]]
 function GM:KeyRelease( player, key )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerConnect( )
-   Desc: Player has connects to the server (hasn't spawned)
+	Name: gamemode:PlayerConnect( )
+	Desc: Player has connects to the server (hasn't spawned)
 -----------------------------------------------------------]]
 function GM:PlayerConnect( name, address )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PropBreak( )
-   Desc: Prop has been broken
+	Name: gamemode:PropBreak( )
+	Desc: Prop has been broken
 -----------------------------------------------------------]]
 function GM:PropBreak( attacker, prop )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PhysgunPickup( )
-   Desc: Return true if player can pickup entity
+	Name: gamemode:PhysgunPickup( )
+	Desc: Return true if player can pickup entity
 -----------------------------------------------------------]]
 function GM:PhysgunPickup( ply, ent )
 
@@ -71,73 +71,73 @@ function GM:PhysgunPickup( ply, ent )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PhysgunDrop( )
-   Desc: Dropped an entity
+	Name: gamemode:PhysgunDrop( )
+	Desc: Dropped an entity
 -----------------------------------------------------------]]
 function GM:PhysgunDrop( ply, ent )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerShouldTakeDamage
-   Return true if this player should take damage from this attacker
+	Name: gamemode:PlayerShouldTakeDamage
+	Return true if this player should take damage from this attacker
 -----------------------------------------------------------]]
 function GM:PlayerShouldTakeDamage( ply, attacker )
 	return true
 end
 
 --[[---------------------------------------------------------
-   Name: Text to show in the server browser
+	Name: Text to show in the server browser
 -----------------------------------------------------------]]
 function GM:GetGameDescription()
 	return self.Name
 end
 
 --[[---------------------------------------------------------
-   Name: Saved
+	Name: Saved
 -----------------------------------------------------------]]
 function GM:Saved()
 end
 
 --[[---------------------------------------------------------
-   Name: Restored
+	Name: Restored
 -----------------------------------------------------------]]
 function GM:Restored()
 end
 
 --[[---------------------------------------------------------
-   Name: EntityRemoved
-   Desc: Called right before an entity is removed. Note that this
-   isn't going to be totally reliable on the client since the client
-   only knows about entities that it has had in its PVS.
+	Name: EntityRemoved
+	Desc: Called right before an entity is removed. Note that this
+	isn't going to be totally reliable on the client since the client
+	only knows about entities that it has had in its PVS.
 -----------------------------------------------------------]]
 function GM:EntityRemoved( ent )
 end
 
 --[[---------------------------------------------------------
-   Name: Tick
-   Desc: Like Think except called every tick on both client and server
+	Name: Tick
+	Desc: Like Think except called every tick on both client and server
 -----------------------------------------------------------]]
 function GM:Tick()
 end
 
 --[[---------------------------------------------------------
-   Name: OnEntityCreated
-   Desc: Called right after the Entity has been made visible to Lua
+	Name: OnEntityCreated
+	Desc: Called right after the Entity has been made visible to Lua
 -----------------------------------------------------------]]
 function GM:OnEntityCreated( Ent )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:EntityKeyValue( ent, key, value )
-   Desc: Called when an entity has a keyvalue set
+	Name: gamemode:EntityKeyValue( ent, key, value )
+	Desc: Called when an entity has a keyvalue set
 		 Returning a string it will override the value
 -----------------------------------------------------------]]
 function GM:EntityKeyValue( ent, key, value )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:CreateTeams()
-   Desc: Note - HAS to be shared.
+	Name: gamemode:CreateTeams()
+	Desc: Note - HAS to be shared.
 -----------------------------------------------------------]]
 function GM:CreateTeams()
 
@@ -164,9 +164,9 @@ function GM:CreateTeams()
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:ShouldCollide( Ent1, Ent2 )
-   Desc: This should always return true unless you have
-		  a good reason for it not to.
+	Name: gamemode:ShouldCollide( Ent1, Ent2 )
+	Desc: This should always return true unless you have
+			a good reason for it not to.
 -----------------------------------------------------------]]
 function GM:ShouldCollide( Ent1, Ent2 )
 
@@ -175,10 +175,10 @@ function GM:ShouldCollide( Ent1, Ent2 )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:Move
-   This basically overrides the NOCLIP, PLAYERMOVE movement stuff.
-   It's what actually performs the move.
-   Return true to not perform any default movement actions. (completely override)
+	Name: gamemode:Move
+	This basically overrides the NOCLIP, PLAYERMOVE movement stuff.
+	It's what actually performs the move.
+	Return true to not perform any default movement actions. (completely override)
 -----------------------------------------------------------]]
 function GM:Move( ply, mv )
 
@@ -189,7 +189,7 @@ end
 
 --[[---------------------------------------------------------
 -- Purpose: This is called pre player movement and copies all the data necessary
---          from the player for movement. Copy from the usercmd to move.
+--			 from the player for movement. Copy from the usercmd to move.
 -----------------------------------------------------------]]
 function GM:SetupMove( ply, mv, cmd )
 
@@ -199,7 +199,7 @@ function GM:SetupMove( ply, mv, cmd )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:FinishMove( player, movedata )
+	Name: gamemode:FinishMove( player, movedata )
 -----------------------------------------------------------]]
 function GM:FinishMove( ply, mv )
 
@@ -209,7 +209,7 @@ function GM:FinishMove( ply, mv )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:FinishMove( player, movedata )
+	Name: gamemode:FinishMove( player, movedata )
 -----------------------------------------------------------]]
 function GM:VehicleMove( ply, vehicle, mv )
 

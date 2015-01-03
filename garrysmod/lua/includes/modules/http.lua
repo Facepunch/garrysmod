@@ -14,21 +14,21 @@ module( "http" )
 --[[---------------------------------------------------------
 
 	Get the contents of a webpage.
-	
-	Callback should be 
-	
+
+	Callback should be
+
 	function callback( (args optional), contents, size )
-	
+
 -----------------------------------------------------------]]
 function Fetch( url, onsuccess, onfailure )
 
-	local request = 
+	local request =
 	{
 		url			= url,
 		method		= "get",
 
 		success		= function( code, body, headers )
-	
+
 			if ( !onsuccess ) then return end
 
 			onsuccess( body, body:len(), headers, code )
@@ -51,14 +51,14 @@ end
 
 function Post( url, params, onsuccess, onfailure )
 
-	local request = 
+	local request =
 	{
 		url			= url,
 		method		= "post",
 		parameters	= params,
 
 		success		= function( code, body, headers )
-	
+
 			if ( !onsuccess ) then return end
 
 			onsuccess( body, body:len(), headers, code )
@@ -82,20 +82,20 @@ end
 
 Or use HTTP( table )
 
-local request = 
+local request =
 {
 	url			= "http://pastebin.com/raw.php?i=3jsf50nL",
 
 	method		= "post",
 
-	parameters  = 
+	parameters =
 	{
 			id			=	"548",
 			country		=	"England"
 	}
 
 	success		= function( code, body, headers )
-	
+
 		Msg( "Request Successful\n" )
 		Msg( "Code: ", code, "\n" )
 		Msg( "Body Length:\n", body:len(), "\n" )

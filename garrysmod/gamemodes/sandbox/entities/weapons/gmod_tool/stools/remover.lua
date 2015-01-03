@@ -11,20 +11,20 @@ local function DoRemoveEntity( ent )
 
 	-- Remove all constraints (this stops ropes from hanging around)
 	constraint.RemoveAll( ent )
-	
+
 	-- Remove it properly in 1 second
 	timer.Simple( 1, function() if ( IsValid( ent ) ) then ent:Remove() end end )
-	
+
 	-- Make it non solid
 	ent:SetNotSolid( true )
 	ent:SetMoveType( MOVETYPE_NONE )
 	ent:SetNoDraw( true )
-	
+
 	-- Send Effect
 	local ed = EffectData()
 	ed:SetEntity( ent )
 	util.Effect( "entity_remove", ed, true, true )
-	
+
 	return true
 
 end
@@ -35,15 +35,15 @@ end
 function TOOL:LeftClick( trace )
 
 	if ( DoRemoveEntity( trace.Entity ) ) then
-	
+
 		if ( !CLIENT ) then
 			self:GetOwner():SendLua( "achievements.Remover()" )
 		end
-		
+
 		return true
-	
+
 	end
-	
+
 	return false
 
 end
@@ -56,22 +56,22 @@ function TOOL:RightClick( trace )
 	local Entity = trace.Entity
 
 	if ( !IsValid( Entity ) || Entity:IsPlayer() ) then return false end
-	
+
 	-- Client can bail out now.
 	if ( CLIENT ) then return true end
-	
+
 	local ConstrainedEntities = constraint.GetAllConstrainedEntities( trace.Entity )
 	local Count = 0
-	
+
 	-- Loop through all the entities in the system
 	for _, Entity in pairs( ConstrainedEntities ) do
-	
+
 		if ( DoRemoveEntity( Entity ) ) then
 			Count = Count + 1
 		end
 
 	end
-	
+
 	return true
 
 end

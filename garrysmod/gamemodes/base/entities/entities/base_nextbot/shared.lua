@@ -15,7 +15,7 @@ end
 if ( SERVER ) then
 
 	--
-	-- All of the AI logic is serverside - so we derive it from a 
+	-- All of the AI logic is serverside - so we derive it from a
 	-- specialized class on the server.
 	--
 	ENT.Type = "nextbot"

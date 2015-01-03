@@ -4,7 +4,7 @@ include( "CreationMenu/manifest.lua" )
 local PANEL = {}
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -15,12 +15,12 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Populate()
 
 	local tabs = spawnmenu.GetCreationTabs()
-	
+
 	for k, v in SortedPairsByMemberValue( tabs, "Order" ) do
 
 		--
@@ -45,7 +45,7 @@ function PANEL:Populate()
 
 		end
 
-		
+
 	end
 
 end

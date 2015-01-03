@@ -14,14 +14,14 @@ cleanup.Register( "emitters" )
 function TOOL:LeftClick( trace, worldweld )
 
 	if ( trace.Entity && trace.Entity:IsPlayer() ) then return false end
-	
+
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
-	
+
 	if ( CLIENT ) then return true end
-	
+
 	local ply = self:GetOwner()
-	
+
 	local key = self:GetClientNumber( "key" )
 	local effect = self:GetClientInfo( "effect" )
 	local toggle = self:GetClientNumber( "toggle" ) == 1
@@ -36,52 +36,52 @@ function TOOL:LeftClick( trace, worldweld )
 		trace.Entity:SetDelay( delay )
 		trace.Entity:SetToggle( toggle )
 		trace.Entity:SetScale( scale )
-		
+
 		numpad.Remove( trace.Entity.NumDown )
 		numpad.Remove( trace.Entity.NumUp )
-		
+
 		trace.Entity.NumDown = numpad.OnDown( ply, key, "Emitter_On", trace.Entity )
 		trace.Entity.NumUp = numpad.OnUp( ply, key, "Emitter_Off", trace.Entity )
 
 		trace.Entity.key = key
-	
+
 		return true
-		
+
 	end
-	
+
 	if ( !self:GetSWEP():CheckLimit( "emitters" ) ) then return false end
-	
+
 	local Pos = trace.HitPos
 	if ( trace.Entity != NULL && ( !trace.Entity:IsWorld() || worldweld ) ) then else
 
 		Pos = Pos + trace.HitNormal
-	
+
 	end
-	
+
 	local Ang = trace.HitNormal:Angle()
 	Ang:RotateAroundAxis( trace.HitNormal, 0 )
 
 	local emitter = MakeEmitter( ply, key, delay, toggle, effect, starton, nil, nil, nil, nil, { Pos = Pos, Angle = Ang }, scale )
 
 	local weld
-	
+
 	-- Don't weld to world
 	if ( trace.Entity != NULL && ( !trace.Entity:IsWorld() || worldweld ) ) then
-	
+
 		weld = constraint.Weld( emitter, trace.Entity, 0, trace.PhysicsBone, 0, true, true )
-		
+
 		-- >:(
 		emitter:GetPhysicsObject():EnableCollisions( false )
 		emitter.nocollide = true
-		
+
 	end
-	
+
 	undo.Create( "Emitter" )
 		undo.AddEntity( emitter )
 		undo.AddEntity( weld )
 		undo.SetPlayer( ply )
 	undo.Finish()
-	
+
 	return true
 
 end
@@ -95,9 +95,9 @@ end
 if ( SERVER ) then
 
 	function MakeEmitter( ply, key, delay, toggle, effect, starton, Vel, aVel, frozen, nocollide, Data, scale )
-	
+
 		if ( IsValid( ply ) && !ply:CheckLimit( "emitters" ) ) then return nil end
-	
+
 		local emitter = ents.Create( "gmod_emitter" )
 		if ( !IsValid( emitter ) ) then return false end
 
@@ -110,7 +110,7 @@ if ( SERVER ) then
 		emitter:SetScale( scale or 1 )
 
 		emitter:Spawn()
-		
+
 		DoPropSpawnedEffect( emitter )
 
 		emitter.NumDown = numpad.OnDown( ply, key, "Emitter_On", emitter )
@@ -130,16 +130,16 @@ if ( SERVER ) then
 		}
 
 		table.Merge( emitter:GetTable(), ttable )
-		
+
 		if ( IsValid( ply ) ) then
 			ply:AddCount( "emitters", emitter )
 			ply:AddCleanup( "emitters", emitter )
 		end
 
 		return emitter
-		
+
 	end
-	
+
 	duplicator.RegisterEntityClass( "gmod_emitter", MakeEmitter, "key", "delay", "toggle", "effect", "starton", "Vel", "aVel", "frozen", "nocollide", "Data", "scale" )
 
 end
@@ -147,23 +147,23 @@ end
 function TOOL:UpdateGhostEmitter( ent, player )
 
 	if ( !IsValid( ent ) ) then return end
-	
+
 	local tr = util.GetPlayerTrace( player )
 	local trace	= util.TraceLine( tr )
 	if ( !trace.Hit ) then return end
-	
+
 	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_emitter" ) then
-	
+
 		ent:SetNoDraw( true )
 		return
-		
+
 	end
-	
+
 	ent:SetPos( trace.HitPos )
 	ent:SetAngles( trace.HitNormal:Angle() )
-	
+
 	ent:SetNoDraw( false )
-	
+
 end
 
 function TOOL:Think()
@@ -171,9 +171,9 @@ function TOOL:Think()
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != "models/props_lab/tpplug.mdl" ) then
 		self:MakeGhostEntity( "models/props_lab/tpplug.mdl", Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 	end
-	
+
 	self:UpdateGhostEmitter( self.GhostEntity, self:GetOwner() )
-	
+
 end
 
 local ConVarsDefault = TOOL:BuildConVarList()

@@ -1,12 +1,11 @@
---[[   _
+--[[ _
 	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DTree
-
+	Dtree
 --]]
 
 local PANEL = {}
@@ -727,7 +726,7 @@ end
 
 function PANEL:GetChildNode( iNum )
 
-	if ( !IsValid( self.ChildNodes )  ) then return end
+	if ( !IsValid( self.ChildNodes ) ) then return end
 	return self.ChildNodes:GetChild( iNum )
 
 end

@@ -1,6 +1,6 @@
---[[__                                       _     
- / _| __ _  ___ ___ _ __  _   _ _ __   ___| |__  
-| |_ / _` |/ __/ _ \ '_ \| | | | '_ \ / __| '_ \ 
+--[[__                                       _
+ / _| __ _  ___ ___ _ __  _   _ _ __   ___| |__
+| |_ / _` |/ __/ _ \ '_ \| | | | '_ \ / __| '_ \
 |  _| (_| | (_|  __/ |_) | |_| | | | | (__| | | |
 |_|  \__,_|\___\___| .__/ \__,_|_| |_|\___|_| |_|
 				   |_| 2012 --]]
@@ -13,7 +13,7 @@ pnlMainMenu = nil
 local PANEL = {}
 
 function PANEL:Init()
-	
+
 	self:Dock( FILL )
 	self:SetKeyboardInputEnabled( true )
 	self:SetMouseInputEnabled( true )
@@ -36,7 +36,7 @@ function PANEL:Init()
 
 	self:MakePopup()
 	self:SetPopupStayAtBack( true )
-	--self:MoveToBack() --Breaks Awesomium input 
+	--self:MoveToBack() --Breaks Awesomium input
 
 end
 
@@ -49,7 +49,7 @@ function PANEL:ScreenshotScan( folder )
 
 		AddBackgroundImage( folder..v )
 		bReturn = true
-	
+
 	end
 
 	return bReturn
@@ -61,20 +61,20 @@ function PANEL:Paint()
 	DrawBackground()
 
 	if ( self.IsInGame != IsInGame() ) then
-	
+
 		self.IsInGame = IsInGame()
-		
+
 		if ( self.IsInGame ) then
-		
+
 			if ( IsValid( self.InnerPanel ) ) then self.InnerPanel:Remove() end
 			self.HTML:QueueJavascript( "SetInGame( true )" )
-		
-		else 
-		
+
+		else
+
 			self.HTML:QueueJavascript( "SetInGame( false )" )
-			
+
 		end
-		
+
 	end
 
 end
@@ -110,8 +110,8 @@ function PANEL:UpdateBackgroundImages()
 	--
 	-- If there's screenshots in gamemodes/<gamemode>/backgrounds/*.jpg use them
 	--
-	if ( !self:ScreenshotScan( "gamemodes/" ..engine.ActiveGamemode() .. "/backgrounds/" ) ) then 
-	
+	if ( !self:ScreenshotScan( "gamemodes/" ..engine.ActiveGamemode() .. "/backgrounds/" ) ) then
+
 		--
 		-- If there's no gamemode specific here we'll use the default backgrounds
 		--
@@ -170,14 +170,14 @@ end
 --
 function UpdateServerSettings()
 
-	local array = 
+	local array =
 	{
 		hostname	= GetConVarString( "hostname" ),
 		sv_lan		= GetConVarString( "sv_lan" )
 	}
 
 	local settings_file = file.Read( "gamemodes/"..engine.ActiveGamemode().."/"..engine.ActiveGamemode()..".txt", true )
-	
+
 	if ( settings_file ) then
 
 		local Settings = util.KeyValuesToTable( settings_file )
@@ -229,15 +229,15 @@ function GetServers( type, id )
 			address = string.JavascriptSafe( address )
 			gamemode = string.JavascriptSafe( gamemode )
 			workshopid = string.JavascriptSafe( workshopid )
-			
+
 			if ( pass ) then pass = "true" else pass = "false" end
 
 			pnlMainMenu:Call( "AddServer( '"..type.."', '"..id.."', "..ping..", \""..name.."\", \""..desc.."\", \""..map.."\", "..players..", "..maxplayers..", "..botplayers..", "..pass..", "..lastplayed..", \""..address.."\", \""..gamemode.."\", \""..workshopid.."\" )" )
 
 			return !ShouldStop[ type ]
-			
+
 		end,
-		
+
 		Finished = function()
 			pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
 		end,
@@ -247,7 +247,7 @@ function GetServers( type, id )
 		AppID = 4000,
 	}
 
-	
+
 	serverlist.Query( data )
 
 end

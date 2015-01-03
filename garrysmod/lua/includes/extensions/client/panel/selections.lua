@@ -1,4 +1,3 @@
-
 if ( SERVER ) then return end
 
 local StartX = 0

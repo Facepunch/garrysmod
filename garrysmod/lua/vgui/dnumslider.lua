@@ -1,12 +1,11 @@
---[[   _
-    ( )
+--[[ _
+	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DNumberWang
-
+	DNumSlider
 --]]
 
 local PANEL = {}
@@ -50,7 +49,7 @@ function PANEL:Init()
 
 	--
 	-- You really shouldn't be messing with the internals of these controls from outside..
-	--										  .. but if you are this might stop your code from fucking us both.
+	--										.. but if you are this might stop your code from fucking us both.
 	--
 	self.Wang = self.Scratch
 
@@ -95,7 +94,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetMin( min )
 
-	if ( !min ) then min = 0  end
+	if ( !min ) then min = 0 end
 
 	self.Scratch:SetMin( tonumber( min ) )
 	self:UpdateNotches()
@@ -106,7 +105,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetMax( max )
 
-	if ( !max ) then max = 0  end
+	if ( !max ) then max = 0 end
 
 	self.Scratch:SetMax( tonumber( max ) )
 	self:UpdateNotches()

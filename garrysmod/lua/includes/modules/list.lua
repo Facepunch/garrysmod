@@ -1,10 +1,10 @@
---=============================================================================--							 
+--=============================================================================--
 --
---  A really simple module to allow easy additions to lists of items
+--	A really simple module to allow easy additions to lists of items
 --
 --=============================================================================--
 
-local table 	= table
+local table		= table
 local pairs		= pairs
 
 module( "list" )
@@ -19,7 +19,7 @@ function Get( list )
 
 	g_Lists[ list ] = g_Lists[ list ] or {}
 	return table.Copy( g_Lists[ list ] )
-	
+
 end
 
 --
@@ -29,7 +29,7 @@ function GetForEdit( list )
 
 	g_Lists[ list ] = g_Lists[ list ] or {}
 	return g_Lists[ list ]
-	
+
 end
 
 --
@@ -44,7 +44,7 @@ end
 
 
 --
---   Add a value to a list
+--	Add a value to a list
 --
 function Add( list, value )
 
