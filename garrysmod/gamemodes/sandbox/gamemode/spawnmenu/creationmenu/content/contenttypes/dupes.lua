@@ -79,7 +79,7 @@ hook.Add( "DupeSaveAvailable", "UpdateDupeSpawnmenuAvailable", function()
 
 	DupeInClipboard = true
 
-	if ( !HTML ) then return end
+	if ( !IsValid( HTML ) ) then return end
 
 	HTML:Call( "SetDupeSaveState( true );" )
 
@@ -89,7 +89,7 @@ hook.Add( "DupeSaveUnavailable", "UpdateDupeSpawnmenuUnavailable", function()
 
 	DupeInClipboard = false
 
-	if ( !HTML ) then return end
+	if ( !IsValid( HTML ) ) then return end
 
 	HTML:Call( "SetDupeSaveState( false );" )
 
@@ -97,7 +97,7 @@ end )
 
 hook.Add( "DupeSaved", "DuplicationSavedSpawnMenu", function()
 
-	if ( !HTML ) then return end
+	if ( !IsValid( HTML ) ) then return end
 
 	HTML:Call( "ShowLocalDupes();" )
 
