@@ -1,21 +1,6 @@
 
--- Please don't edit this file!
-
--- Redirect call from the engine to the module (todo: change engine)
-function InjectConsoleCommand( player, command, arguments, args )
-	return concommand.Run( player, command, arguments, args )
-end
-
-
-function InjectCommandAutocomplete( command, arguments )
-	return concommand.AutoComplete( command, arguments )
-end
-
-
-
 local AddConsoleCommand = AddConsoleCommand
 local string = string
-
 
 --[[---------------------------------------------------------
    Name: concommand
