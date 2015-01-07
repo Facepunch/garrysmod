@@ -47,7 +47,6 @@ if ( SERVER ) then
 
 	require( "ai_task" )
 	require( "ai_schedule" )
-	include( "util/entity_creation_helpers.lua" )
 
 end
 
