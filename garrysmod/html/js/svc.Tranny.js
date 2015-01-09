@@ -10,23 +10,44 @@ angular.module( 'tranny', [] )
 		var update = function()
 		{
 			if ( IN_ENGINE == false ) return;
-			
-			$(element).html( language.Update( strName ) );
-			$(element).attr( "placeholder", language.Update( strName ) );
-		}
-		
-		scope.$watch( attrs.ngTranny, function ( value ) 
+
+			var langText = language.Update( strName );
+
+			var children = $( element ).contents().filter( function() { return this.nodeType == 3; } )
+			var replaced = false;
+			children.each( function()
+			{
+				if ( $( this ).text().trim().length !== 0 )
+				{
+					if ( replaced )
+					{
+						$( this ).remove();
+						return true; // Skip to next iteration
+					}
+					$( this ).replaceWith( langText );
+					replaced = true;
+				}
+			} );
+			if ( children.length === 0 )
+			{
+				$( element ).html( langText );
+			}
+
+			$( element ).attr( "placeholder", langText );
+		};
+
+		scope.$watch( attrs.ngTranny, function ( value )
 		{
 			strName = value;
 			update();
-		});
+		} );
 
 		scope.$on( 'languagechanged', function()
 		{
 			update();
-		})
+		} );
 
-	}
+	};
 } )
 
 .directive( 'ngSeconds', function ( $parse )
@@ -45,11 +66,10 @@ angular.module( 'tranny', [] )
 
 			if ( value < 60 * 60 * 24 )
 				return $( element ).html( Math.floor( value / 60 / 60 ) + " hr" );
-			
+
 			$( element ).html( "a long time" );
 
-		});
+		} );
 
-	}
+	};
 } );
-
