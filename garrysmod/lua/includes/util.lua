@@ -92,10 +92,10 @@ end
 function ColorRand( alpha )
 
 	if ( alpha ) then
-		return Color( math.Rand(0, 255), math.Rand(0, 255), math.Rand(0, 255), math.Rand(0, 255) )
+		return Color( math.random(0, 255), math.random(0, 255), math.random(0, 255), math.random(0, 255) )
 	end
 
-	return Color( math.Rand(0, 255), math.Rand(0, 255), math.Rand(0, 255), 255 )
+	return Color( math.random(0, 255), math.random(0, 255), math.random(0, 255) )
 end
 
 --[[---------------------------------------------------------
