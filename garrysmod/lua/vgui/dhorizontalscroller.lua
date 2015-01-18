@@ -11,24 +11,21 @@
 	
 --]]
 
-PANEL = {}
+local PANEL = {}
 
 AccessorFunc( PANEL, "m_iOverlap", 			"Overlap" )
 AccessorFunc( PANEL, "m_bShowDropTargets", 	"ShowDropTargets", FORCE_BOOL )
 
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.Panels = {}
 	self.OffsetX = 0
 	self.FrameTime = 0
 	
-	self.pnlCanvas 	= vgui.Create( "DDragBase", self )
+	self.pnlCanvas = vgui.Create( "DDragBase", self )
 	self.pnlCanvas:SetDropPos( "6" )
 	self.pnlCanvas:SetUseLiveDrag( false )
-	self.pnlCanvas.OnModified = self.OnDragModified
+	self.pnlCanvas.OnModified = function() self:OnDragModified() end
 	
 	self.pnlCanvas.UpdateDropTarget = function( Canvas, drop, pnl )
 		if not self:GetShowDropTargets() then return end
@@ -36,13 +33,13 @@ function PANEL:Init()
 	end
 	
 	self.pnlCanvas.OnChildAdded = function( Canvas, child )
-		
+
 		local dn = Canvas:GetDnD()
 		if ( dn ) then
 			
 			child:Droppable( dn )
 			child.OnDrop = function()
-				
+
 				local x, y = Canvas:LocalCursorPos()
 				local closest, id = self.pnlCanvas:GetClosestChild( x, Canvas:GetTall() / 2 ), 0
 				
@@ -56,7 +53,7 @@ function PANEL:Init()
 				self:InvalidateLayout()
 				
 				return child
-				
+
 			end
 		end
 		
@@ -71,7 +68,7 @@ function PANEL:Init()
 	self.btnRight = vgui.Create( "DButton", self )
 	self.btnRight:SetText( "" )
 	self.btnRight.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonRight", panel, w, h ) end
-
+	
 end
 
 function PANEL:OnDragModified()
@@ -86,9 +83,6 @@ function PANEL:MakeDroppable( name )
 	self.pnlCanvas:MakeDroppable( name )
 end
 
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:AddPanel( pnl )
 
 	table.insert( self.Panels, pnl )
@@ -98,9 +92,6 @@ function PANEL:AddPanel( pnl )
 
 end
 
---[[---------------------------------------------------------
-   Name: OnMouseWheeled
------------------------------------------------------------]]
 function PANEL:OnMouseWheeled( dlta )
 	
 	self.OffsetX = self.OffsetX + dlta * -30
@@ -110,9 +101,6 @@ function PANEL:OnMouseWheeled( dlta )
 	
 end
 
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:Think()
 
 	-- Hmm.. This needs to really just be done in one place
@@ -146,9 +134,6 @@ function PANEL:Think()
 	
 end 
 
---[[---------------------------------------------------------
-	PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	local w, h = self:GetSize()
