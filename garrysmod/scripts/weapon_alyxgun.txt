@@ -25,14 +25,14 @@ WeaponData
 	SoundData
 	{
 
-		"reload"		"Weapon_Pistol.Reload"
-		"reload_npc"	"Weapon_Pistol.NPC_Reload"
-		"empty"			"Weapon_Pistol.Empty"
-		"single_shot"	"Weapon_Pistol.Single"
-		"single_shot_npc"	"Weapon_Pistol.NPC_Single"
-		"special1"		"Weapon_Pistol.Special1"
-		"special2"		"Weapon_Pistol.Special2"
-		"burst"			"Weapon_Pistol.Burst"
+		"reload"		"Weapon_Alyx_Gun.Reload"
+		"reload_npc"	"Weapon_Alyx_Gun.NPC_Reload"
+		"empty"			"Weapon_Alyx_Gun.Empty"
+		"single_shot"	"Weapon_Alyx_Gun.Single"
+		"single_shot_npc"	"Weapon_Alyx_Gun.NPC_Single"
+		"special1"		"Weapon_Alyx_Gun.Special1"
+		"special2"		"Weapon_Alyx_Gun.Special2"
+		"burst"			"Weapon_Alyx_Gun.Burst"
 	}
 
 	// Weapon Sprite data is loaded by the Client DLL.

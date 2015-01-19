@@ -11,20 +11,19 @@ local function TableInherit( t, base )
 
 	for k, v in pairs( base ) do 
 		
-		if ( t[k] == nil ) then	
-			t[k] = v 
-		elseif ( k != "BaseClass" && istable(t[k]) ) then
-			TableInherit( t[k], v )
+		if ( t[ k ] == nil ) then
+			t[ k ] = v 
+		elseif ( k != "BaseClass" && istable( t[ k ] ) ) then
+			TableInherit( t[ k ], v )
 		end
 		
 	end
-	
-	t["BaseClass"] = base
-	
+
+	t[ "BaseClass" ] = base
+
 	return t
 
 end
-
 
 --[[---------------------------------------------------------
    Name: Register( table, string, bool )
@@ -35,17 +34,17 @@ function Register( t, name )
 	local old = WeaponList[ name ]
 
 	t.ClassName = name
-	WeaponList[ name ] = t	
-	
+	WeaponList[ name ] = t
+
 	--baseclass.Set( name, t )
 
-	list.Set( "Weapon", name,	{		
-									ClassName		= name, 
-									PrintName		= t.PrintName or t.ClassName, 
-									Category		= t.Category or "Other",
-									Spawnable		= t.Spawnable,
-									AdminOnly		= t.AdminOnly,
-								})
+	list.Set( "Weapon", name, {
+		ClassName = name, 
+		PrintName = t.PrintName or t.ClassName, 
+		Category = t.Category or "Other",
+		Spawnable = t.Spawnable,
+		AdminOnly = t.AdminOnly,
+	} )
 
 	-- Allow all SWEPS to be duplicated, unless specified
 	if ( !t.DisableDuplicator ) then
@@ -81,7 +80,6 @@ function Register( t, name )
 
 end
 
-
 --
 -- All scripts have been loaded...
 --
@@ -97,9 +95,8 @@ function OnLoaded()
 		baseclass.Set( k, Get( k ) )
 
 	end )
-	
-end
 
+end
 
 --[[---------------------------------------------------------
    Name: Get( string )
@@ -112,19 +109,20 @@ function Get( name )
 
 	-- Create/copy a new table
 	local retval = table.Copy( Stored )
-	
+	retval.Base = retval.Base or "weapon_base"
+
 	-- If we're not derived from ourselves (a base weapon) 
 	-- then derive from our 'Base' weapon.
 	if ( retval.Base != name ) then
-	
+
 		local BaseWeapon = Get( retval.Base )
-		
+	
 		if ( !BaseWeapon ) then
 			Msg( "SWEP (", name, ") is derived from non existant SWEP (", retval.Base, ") - Expect errors!\n" )
 		else
 			retval = TableInherit( retval, Get( retval.Base ) )
 		end
-		
+	
 	end
 
 	return retval
@@ -144,9 +142,9 @@ end
 -----------------------------------------------------------]]
 function GetList()
 	local result = {}
-	
-	for k,v in pairs(WeaponList) do
-		table.insert(result, v)
+
+	for k, v in pairs( WeaponList ) do
+		table.insert( result, v )
 	end
 	
 	return result

@@ -3,15 +3,11 @@ soundscapes_manifest
 	"file"		"scripts/soundscapes.txt"
 
 	// Gmod
-	
 	"file"		"scripts/soundscapes_garrysmod.txt"
 	
 	// HL2
-	
 	"file"		"scripts/soundscapes_lostcoast.txt"
-	"file"		"scripts/soundscapes_citadel_episodic.txt"
-	"file"		"scripts/soundscapes_city_episodic.txt"
-		
+	
 	"file"		"scripts/soundscapes_canals.txt"
 	"file"		"scripts/soundscapes_klab.txt"
 	"file"		"scripts/soundscapes_elab.txt"
@@ -23,7 +19,6 @@ soundscapes_manifest
 	"file"		"scripts/soundscapes_trainyard.txt"
 
 	// CS:S
-	
 	"file"		"scripts/soundscapes_dust.txt"
 	"file"		"scripts/soundscapes_italy.txt"
 	"file"		"scripts/soundscapes_aztec.txt"
@@ -45,13 +40,15 @@ soundscapes_manifest
 	"file"		"scripts/soundscapes_militia.txt"
 	
 	// EP2
-	
 	"file"		"scripts/soundscapes_silo.txt"
-	"file"		"scripts/soundscapes_outland.txt"	
+	"file"		"scripts/soundscapes_outland.txt"
 	"file"		"scripts/soundscapes_outland2.txt"
 	
-	// TF2
+	// EP1
+	"file"		"scripts/soundscapes_citadel_episodic.txt"
+	"file"		"scripts/soundscapes_city_episodic.txt"
 	
+	// TF2
 	"file"		"scripts/soundscapes_2fort.txt"
 	"file"		"scripts/soundscapes_dustbowl.txt"
 	"file"		"scripts/soundscapes_well.txt"
@@ -83,22 +80,20 @@ soundscapes_manifest
 	"file"		"scripts/soundscapes_deathpit.txt"
 	"file"		"scripts/soundscapes_mannworks.txt"
 	"file"		"scripts/soundscapes_cactusvalley.txt"
-	"file"		"scripts/soundscapes_soho.txt"	
+	"file"		"scripts/soundscapes_soho.txt"
 	
 	// DOD:S
-	
 	"file"		"scripts/soundscapes_colmar.txt"
 	"file"		"scripts/soundscapes_kalt.txt"
 	"file"		"scripts/soundscapes_flash.txt"
 	"file"		"scripts/soundscapes_anzio.txt"
 	"file"		"scripts/soundscapes_avalanche.txt"
-	"file"		"scripts/soundscapes_donner.txt"	
+	"file"		"scripts/soundscapes_donner.txt"
 	"file"		"scripts/soundscapes_argentan.txt"
 	"file"		"scripts/soundscapes_jagd.txt"
 	"file"		"scripts/soundscapes_dod_palermo.txt"
 
 	// Portal
-	"file"		"scripts/soundscapes_portal.txt"
 	"file"		"scripts/soundscapes_testchmb_portal.txt"
 	"file"		"scripts/soundscapes_escape_portal.txt"
 }
