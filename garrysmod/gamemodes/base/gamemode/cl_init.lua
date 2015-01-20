@@ -320,15 +320,16 @@ function GM:CalcVehicleView( Vehicle, ply, view )
 	local tr = util.TraceHull( {
 		start = view.origin,
 		endpos = TargetOrigin,
-		filter = function()
-			return false
+		filter = function( e )
+			local c = e:GetClass() -- Avoid contact with entities that can potentially be attached to the vehicle. Ideally, we should check if "e" is constrained to "Vehicle".
+			return !c:StartWith( "prop_physics" ) && !c:StartWith( "prop_ragdoll" ) && !e:IsVehicle() && !c:StartWith( "gmod_" )
 		end,
 		mins = Vector( -WallOffset, -WallOffset, -WallOffset ),
 		maxs = Vector( WallOffset, WallOffset, WallOffset ),
 	} )
 	
-	view.origin			= tr.HitPos
-	view.drawviewer		= true
+	view.origin = tr.HitPos
+	view.drawviewer = true
 
 	--
 	-- If the trace hit something, put the camera there.
