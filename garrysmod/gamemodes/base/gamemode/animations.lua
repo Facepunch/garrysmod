@@ -129,8 +129,18 @@ function GM:HandlePlayerDriving( ply )
 
 	if ply:InVehicle() then
 		local pVehicle = ply:GetVehicle()
+	
+		if ( !pVehicle.HandleAnimation ) then
+			local c = pVehicle:GetVehicleClass()
+			local t = list.Get( "Vehicles" )[ c ]
+			if ( t && t.Members && t.Members.HandleAnimation ) then
+				pVehicle.HandleAnimation = t.Members.HandleAnimation
+			else
+				pVehicle.HandleAnimation = true // Prevent this if block from trying to assign HandleAnimation again.
+			end
+		end
 		
-		if ( pVehicle.HandleAnimation != nil ) then
+		if ( isfunction( pVehicle.HandleAnimation ) ) then
 		
 			local seq = pVehicle:HandleAnimation( ply )
 			if ( seq != nil ) then
@@ -213,6 +223,7 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 			-- Pass the vehicles steer param down to the player
 			local steer = Vehicle:GetPoseParameter( "vehicle_steer" )
 			steer = steer * 2 - 1 -- convert from 0..1 to -1..1
+			if ( Vehicle:GetClass() == "prop_vehicle_prisoner_pod" ) then steer = 0 end
 			ply:SetPoseParameter( "vehicle_steer", steer )
 		end
 		

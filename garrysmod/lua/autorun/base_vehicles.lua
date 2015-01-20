@@ -4,20 +4,16 @@
 
 local Category = "Half-Life 2"
 
-local function HandleRollercoasterAnimation( vehicle, player )
-	return player:SelectWeightedSequence( ACT_GMOD_SIT_ROLLERCOASTER ) 
-end
-
-local V = { 	
+local V = {
 	-- Required information
-	Name = "Jeep", 
+	Name = "Jeep",
+	Model = "models/buggy.mdl",
 	Class = "prop_vehicle_jeep_old",
 	Category = Category,
 
 	-- Optional information
 	Author = "VALVe",
 	Information = "The regular old jeep",
-	Model = "models/buggy.mdl",
 
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/jeep_test.txt"
@@ -25,16 +21,14 @@ local V = {
 }
 list.Set( "Vehicles", "Jeep", V )
 
-local V = { 	
-	-- Required information
-	Name = "Airboat", 
+local V = {
+	Name = "Airboat",
+	Model = "models/airboat.mdl",
 	Class = "prop_vehicle_airboat",
 	Category = Category,
 
-	-- Optional information
 	Author = "VALVe",
 	Information = "Airboat from Half-Life 2",
-	Model = "models/airboat.mdl",
 
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/airboat.txt"
@@ -42,57 +36,55 @@ local V = {
 }
 list.Set( "Vehicles", "Airboat", V )
 
-local V = { 	
-	-- Required information
-	Name = "Pod", 
+local V = {
+	Name = "Pod",
+	Model = "models/vehicles/prisoner_pod_inner.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
-	-- Optional information
 	Author = "VALVe",
 	Information = "The Prisoner Pod",
-	Model = "models/vehicles/prisoner_pod_inner.mdl",
 
 	KeyValues = {
-		vehiclescript	= "scripts/vehicles/prisoner_pod.txt",
-		limitview		= "0"
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
 	}
 }
 list.Set( "Vehicles", "Pod", V )
 
-local V = { 	
-	-- Required information
-	Name = "Jalopy", 
+local V = {
+	Name = "Jalopy",
+	Model = "models/vehicle.mdl",
 	Class = "prop_vehicle_jeep",
 	Category = Category,
 
-	-- Optional information
 	Author = "VALVe",
 	Information = "The muscle car from Episode 2",
-	Model = "models/vehicle.mdl",
-									
+
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/jalopy.txt"
 	}
 }
-if ( IsMounted( "ep2" ) ) then list.Set ( "Vehicles", "Jalopy", V ) end
-
+if ( IsMounted( "ep2" ) ) then list.Set( "Vehicles", "Jalopy", V ) end
 
 local Category = "Chairs"
 
-local V = { 	
-	-- Required information
-	Name = "Wooden Chair", 
+local function HandleRollercoasterAnimation( vehicle, player )
+	return player:SelectWeightedSequence( ACT_GMOD_SIT_ROLLERCOASTER ) 
+end
+
+local V = {
+	Name = "Wooden Chair",
+	Model = "models/nova/chair_wood01.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
-	-- Optional information
 	Author = "VALVe",
 	Information = "A Wooden Chair",
-	Model = "models/nova/chair_wood01.mdl",
+
 	KeyValues = {
-		vehiclescript	= "scripts/vehicles/prisoner_pod.txt",
-		limitview		= "0"
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
 	},
 	Members = {
 		HandleAnimation = HandleRollercoasterAnimation,
@@ -100,19 +92,18 @@ local V = {
 }
 list.Set( "Vehicles", "Chair_Wood", V )
 
-local V = { 	
-	-- Required information
-	Name = "Chair", 
+local V = {
+	Name = "Chair",
+	Model = "models/nova/chair_plastic01.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
-	-- Optional information
 	Author = "VALVe",
 	Information = "A Plastic Chair",
-	Model = "models/nova/chair_plastic01.mdl",
+
 	KeyValues = {
-		vehiclescript	= "scripts/vehicles/prisoner_pod.txt",
-		limitview		= "0"
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
 	},
 	Members = {
 		HandleAnimation = HandleRollercoasterAnimation,
@@ -120,19 +111,18 @@ local V = {
 }
 list.Set( "Vehicles", "Chair_Plastic", V )
 
-local V = { 	
-	-- Required information
-	Name = "Jeep Seat", 
+local V = {
+	Name = "Jeep Seat",
+	Model = "models/nova/jeep_seat.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
-	-- Optional information
 	Author = "VALVe",
 	Information = "A Seat from VALVe's Jeep",
-	Model = "models/nova/jeep_seat.mdl",
+
 	KeyValues = {
-		vehiclescript	= "scripts/vehicles/prisoner_pod.txt",
-		limitview		= "0"
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
 	},
 	Members = {
 		HandleAnimation = HandleRollercoasterAnimation,
@@ -140,19 +130,18 @@ local V = {
 }
 list.Set( "Vehicles", "Seat_Jeep", V )
 
-local V = { 	
-	-- Required information
-	Name = "Airboat Seat", 
+local V = {
+	Name = "Airboat Seat",
+	Model = "models/nova/airboat_seat.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
-	-- Optional information
 	Author = "VALVe",
 	Information = "A Seat from VALVe's Airboat",
-	Model = "models/nova/airboat_seat.mdl",
+
 	KeyValues = {
-		vehiclescript	= "scripts/vehicles/prisoner_pod.txt",
-		limitview		= "0"
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
 	},
 	Members = {
 		HandleAnimation = HandleRollercoasterAnimation,
@@ -160,19 +149,18 @@ local V = {
 }
 list.Set( "Vehicles", "Seat_Airboat", V )
 
-local V = { 	
-	-- Required information
-	Name = "Office Chair", 
+local V = {
+	Name = "Office Chair",
+	Model = "models/nova/chair_office01.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
-	-- Optional information
 	Author = "VALVe",
 	Information = "A Small Office Chair",
-	Model = "models/nova/chair_office01.mdl",
+
 	KeyValues = {
-		vehiclescript	= "scripts/vehicles/prisoner_pod.txt",
-		limitview		= "0"
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
 	},
 	Members = {
 		HandleAnimation = HandleRollercoasterAnimation,
@@ -180,19 +168,18 @@ local V = {
 }
 list.Set( "Vehicles", "Chair_Office1", V )
 
-local V = { 	
-	-- Required information
-	Name = "Big Office Chair", 
+local V = {
+	Name = "Big Office Chair",
+	Model = "models/nova/chair_office02.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
-	-- Optional information
 	Author = "VALVe",
 	Information = "A Big Office Chair",
-	Model = "models/nova/chair_office02.mdl",
+
 	KeyValues = {
-		vehiclescript	= "scripts/vehicles/prisoner_pod.txt",
-		limitview		= "0"
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
 	},
 	Members = {
 		HandleAnimation = HandleRollercoasterAnimation,
@@ -200,19 +187,18 @@ local V = {
 }
 list.Set( "Vehicles", "Chair_Office2", V )
 
-local V = { 	
-	-- Required information
-	Name = "Jalopy Seat", 
+local V = {
+	Name = "Jalopy Seat",
+	Model = "models/nova/jalopy_seat.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
-	-- Optional information
 	Author = "VALVe",
 	Information = "A Seat from VALVe's Jalopy",
-	Model = "models/nova/jalopy_seat.mdl",
+
 	KeyValues = {
-		vehiclescript	= "scripts/vehicles/prisoner_pod.txt",
-		limitview		= "0"
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
 	},
 	Members = {
 		HandleAnimation = HandleRollercoasterAnimation,
@@ -226,21 +212,26 @@ local function HandlePHXSeatAnimation( vehicle, player )
 	return player:SelectWeightedSequence( ACT_HL2MP_SIT ) 
 end
 
-local function HandlePHXVehicleAnimation( vehicle, player )
-	return player:SelectWeightedSequence( ACT_DRIVE_JEEP ) 
+local function HandlePHXVehicleAnimation( vehicle, ply )
+	return ply:SelectWeightedSequence( ACT_DRIVE_JEEP ) 
+end
+local function HandlePHXAirboatAnimation( vehicle, ply )
+	return ply:SelectWeightedSequence( ACT_DRIVE_AIRBOAT ) 
 end
 
-local V = { 	
-	Name = "Car Seat", 
+local V = {
+	Name = "Car Seat",
+	Model = "models/props_phx/carseat2.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
 	Author = "PhoeniX-Storms",
-	Information = "PHX Airboat Seat Sitting Animation",
-	Model = "models/props_phx/carseat2.mdl",
+	Information = "PHX Airboat Seat with Sitting Animation",
+	Offset = 16,
+
 	KeyValues = {
-		vehiclescript	= "scripts/vehicles/prisoner_pod.txt",
-		limitview		= "0"
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
 	},
 	Members = {
 		HandleAnimation = HandlePHXSeatAnimation,
@@ -248,17 +239,19 @@ local V = {
 }
 list.Set( "Vehicles", "phx_seat", V )
 
-local V = { 	
-	Name = "Car Seat 2", 
+local V = {
+	Name = "Car Seat 2",
+	Model = "models/props_phx/carseat3.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
 	Author = "PhoeniX-Storms",
-	Information = "PHX Airboat Seat Driving Animation",
-	Model = "models/props_phx/carseat3.mdl",
+	Information = "PHX Airboat Seat with Jeep animations",
+	Offset = 16,
+
 	KeyValues = {
-		vehiclescript	= "scripts/vehicles/prisoner_pod.txt",
-		limitview		= "0"
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
 	},
 	Members = {
 		HandleAnimation = HandlePHXVehicleAnimation,
@@ -266,22 +259,42 @@ local V = {
 }
 list.Set( "Vehicles", "phx_seat2", V )
 
-local V = { 	
-	Name = "FSD Overrun", 
+local V = {
+	Name = "Car Seat 3",
+	Model = "models/props_phx/carseat2.mdl",
+	Class = "prop_vehicle_prisoner_pod",
+	Category = Category,
+
+	Author = "PhoeniX-Storms",
+	Information = "PHX Airboat Seat with Airboat animations",
+	Offset = 16,
+
+	KeyValues = {
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
+	},
+	Members = {
+		HandleAnimation = HandlePHXAirboatAnimation,
+	}
+}
+list.Set( "Vehicles", "phx_seat3", V )
+
+-- Not adding this, because exit animation leaves you stuck in the middle
+--[[local V = {
+	Name = "FSD Overrun",
+	Model = "models/props_phx/trains/fsd-overrun2.mdl",
 	Class = "prop_vehicle_prisoner_pod",
 	Category = Category,
 
 	Author = "PhoeniX-Storms",
 	Information = "FSD Overrun Monorail",
-	Model = "models/props_phx/trains/fsd-overrun2.mdl",
+
 	KeyValues = {
-		vehiclescript	=	"scripts/vehicles/prisoner_pod.txt",
-		limitview		=	"0"
+		vehiclescript = "scripts/vehicles/prisoner_pod.txt",
+		limitview = "0"
 	},
 	Members = {
 		HandleAnimation = HandlePHXVehicleAnimation,
 	}
 }
-
--- Not adding this, because exit animation leaves you stuck in the middle
--- list.Set( "Vehicles", "phx_train", V )
+list.Set( "Vehicles", "phx_train", V )]]

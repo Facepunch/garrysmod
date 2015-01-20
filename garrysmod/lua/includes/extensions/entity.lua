@@ -48,9 +48,6 @@ function meta:GetVar( name, default )
 	
 end
 
---
---
---
 if ( SERVER ) then
 
 	function meta:SetCreator( ply )
@@ -58,7 +55,7 @@ if ( SERVER ) then
 	end
 
 	function meta:GetCreator()
-		return self.m_PlayerCreator;
+		return self.m_PlayerCreator
 	end
 
 end
@@ -170,13 +167,10 @@ function meta:GetChildBones( bone )
 		table.insert( bones, k )
 	end
 
-	return bones;
+	return bones
 
 end
 
-
---[[---------------------------------------------------------
------------------------------------------------------------]]
 function meta:InstallDataTable()
 
 	self.dt = {}
@@ -188,20 +182,20 @@ function meta:InstallDataTable()
 	meta.__index = function ( ent, key )
 
 		local dt = datatable[ key ]
-		if ( dt == nil ) then return end	
+		if ( dt == nil ) then return end
 		
 		return dt.GetFunc( self, dt.index, key )
 		
 	end
 	
 	meta.__newindex = function( ent, key, value )
-				
+		
 		local dt = datatable[ key ]
 		if ( dt == nil ) then return end
 		
 		dt.SetFunc( self, dt.index, value )
 	
-	end	
+	end
 	
 	self.DTVar = function( ent, typename, index, name )
 	
@@ -214,16 +208,16 @@ function meta:InstallDataTable()
 		end
 
 		datatable[ name ] = { 
-							index = index,
-							SetFunc = SetFunc,
-							GetFunc = GetFunc,
-							typename = typename,
-							keyname = keyname,
-							Notify = {}
-							}
+			index = index,
+			SetFunc = SetFunc,
+			GetFunc = GetFunc,
+			typename = typename,
+			keyname = keyname,
+			Notify = {}
+		}
 
-		return datatable[ name ];
-							
+		return datatable[ name ]
+
 	end
 
 	--
@@ -280,22 +274,22 @@ function meta:InstallDataTable()
 	
 		local t = ent.DTVar( ent, typename, index, name )
 
-		ent[ 'Set' .. name ] =	function( self, value )		
-									CallProxies( ent, t.Notify, name, self.dt[name], value )
-									self.dt[name] = value			
-								end
+		ent[ 'Set' .. name ] = function( self, value )
+			CallProxies( ent, t.Notify, name, self.dt[name], value )
+			self.dt[name] = value
+		end
 
-		ent[ 'Get' .. name ] =	function( self )				
-									return self.dt[name]			
-								end
+		ent[ 'Get' .. name ] = function( self )
+			return self.dt[name]
+		end
 		
 		if ( !other_data ) then return end
 
 		if ( other_data.KeyName ) then
 			ent:SetupKeyValue( other_data.KeyName, typename, ent[ 'Set' .. name ], ent[ 'Get' .. name ], other_data )
 			ent:SetupEditing( name, other_data.KeyName, other_data.Edit )
-		end		
-							
+		end
+
 	end
 
 	--
@@ -304,7 +298,7 @@ function meta:InstallDataTable()
 	--
 	self.NetworkVarNotify = function( ent, name, func )
 
-		if ( !datatable[ name ] ) then error( "calling NetworkVarNotify on missing network var "..name ); end
+		if ( !datatable[ name ] ) then error( "calling NetworkVarNotify on missing network var "..name ) end
 
 		table.insert( datatable[ name ].Notify, func )
 
@@ -318,15 +312,15 @@ function meta:InstallDataTable()
 	
 		ent.DTVar( ent, typename, index, name, keyname )
 
-		ent[ 'Set' .. name ] =	function( self, value )	
-									local old = self.dt[name];
-									old[element] = value;
-									self.dt[name] = old			
-								end
+		ent[ 'Set' .. name ] = function( self, value )
+			local old = self.dt[name]
+			old[element] = value
+			self.dt[name] = old	
+		end
 
-		ent[ 'Get' .. name ] =	function( self )		
-									return self.dt[name][element]		
-								end
+		ent[ 'Get' .. name ] = function( self )
+			return self.dt[name][element]
+		end
 
 		if ( !other_data ) then return end
 
@@ -334,7 +328,7 @@ function meta:InstallDataTable()
 			ent:SetupKeyValue( other_data.KeyName, "float", ent[ 'Set' .. name ], ent[ 'Get' .. name ], other_data )
 			ent:SetupEditing( name, other_data.KeyName, other_data.Edit )
 		end
-							
+
 	end
 
 
@@ -346,10 +340,10 @@ function meta:InstallDataTable()
 		local k = keytable[ key ]
 		if ( !k ) then return end
 
-		local v = util.StringToType( value, k.Type );
+		local v = util.StringToType( value, k.Type )
 		if ( v == nil ) then return end
 
-		k.Set( self, v );
+		k.Set( self, v )
 		return true
 
 	end
@@ -362,7 +356,7 @@ function meta:InstallDataTable()
 		local k = keytable[ key ]
 		if ( !k ) then return end
 
-		return k.Get( self );
+		return k.Get( self )
 
 	end
 
@@ -378,7 +372,7 @@ function meta:InstallDataTable()
 			-- Don't try to save entities (yet?)
 			if ( v.typename == "Entity" ) then continue end
 
-			dt[ k ] = v.GetFunc( ent, v.index );
+			dt[ k ] = v.GetFunc( ent, v.index )
 
 		end
 
@@ -387,8 +381,8 @@ function meta:InstallDataTable()
 		--
 		if ( table.Count( dt ) == 0 ) then return nil end
 
-		return dt;
-							
+		return dt
+	
 	end
 
 	--
@@ -405,12 +399,10 @@ function meta:InstallDataTable()
 			if ( tab[ k ] == nil ) then continue end
 
 			-- Set it.
-			v.SetFunc( ent, v.index, tab[k] );
+			v.SetFunc( ent, v.index, tab[k] )
 
 		end
 
-		-- PrintTable( tab )
-							
 	end
 
 	setmetatable( self.dt, meta )
@@ -479,7 +471,7 @@ function meta:InstallDataTable()
 
 			local val = net.ReadString()
 			hook.Run( "VariableEdited", ent, client, key, val, editor )
-				
+			
 		end )
 
 	end
@@ -489,7 +481,6 @@ end
 if ( SERVER ) then
 
 	AccessorFunc( meta, "m_bUnFreezable", "UnFreezable" )
-	
 
 end
 
@@ -497,13 +488,13 @@ end
 -- Networked var proxies
 --
 function meta:SetNetworkedVarProxy( name, func )
-	
+
 	if not self.NWVarProxies then
 		self.NWVarProxies = {}
 	end
 	
 	self.NWVarProxies[ name ] = func
-	
+
 end
 
 function meta:GetNetworkedVarProxy( name )
@@ -523,7 +514,7 @@ meta.SetNWVarProxy = meta.SetNetworkedVarProxy
 meta.GetNWVarProxy = meta.GetNetworkedVarProxy
 
 hook.Add( "EntityNetworkedVarChanged", "NetworkedVars", function( ent, name, oldValue, newValue )
-	
+
 	if ent.NWVarProxies then
 		local func = ent.NWVarProxies[ name ]
 		
@@ -531,7 +522,7 @@ hook.Add( "EntityNetworkedVarChanged", "NetworkedVars", function( ent, name, old
 			func( ent, oldValue, newValue )
 		end
 	end
-	
+
 end )
 
 --
@@ -546,26 +537,38 @@ local vehicle = FindMetaTable( "Vehicle" )
 -- they might eventually be moved into the engine - so manually
 -- editing the DT values will stop working.
 --
+function vehicle:SetVehicleClass( s )
+
+	self:SetDTString( 3, s )
+
+end
+
+function vehicle:GetVehicleClass()
+
+	return self:GetDTString( 3 )
+
+end
+
 function vehicle:SetThirdPersonMode( b )
 
-	self:SetDTBool( 3, b );
-	
+	self:SetDTBool( 3, b )
+
 end
 
 function vehicle:GetThirdPersonMode()
 
-	return self:GetDTBool( 3 );
-	
+	return self:GetDTBool( 3 )
+
 end
 
 function vehicle:SetCameraDistance( dist )
 
-	self:SetDTFloat( 3, dist );
-	
+	self:SetDTFloat( 3, dist )
+
 end
 
 function vehicle:GetCameraDistance()
 
-	return self:GetDTFloat( 3 );
-	
+	return self:GetDTFloat( 3 )
+
 end

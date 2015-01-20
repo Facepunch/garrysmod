@@ -770,6 +770,7 @@ local function MakeVehicle( Player, Pos, Ang, Model, Class, VName, VTable, data 
 	Ent:Spawn()
 	Ent:Activate()
 
+	Ent:SetVehicleClass( VName )
 	Ent.VehicleName = VName
 	Ent.VehicleTable = VTable
 
@@ -812,8 +813,13 @@ function Spawn_Vehicle( Player, vname, tr )
 	Angles.pitch = 0
 	Angles.roll = 0
 	Angles.yaw = Angles.yaw + 180
+	
+	local pos = tr.HitPos
+	if ( vehicle.Offset ) then
+		pos = pos + tr.HitNormal * vehicle.Offset
+	end
 
-	local Ent = MakeVehicle( Player, tr.HitPos, Angles, vehicle.Model, vehicle.Class, vname, vehicle ) 
+	local Ent = MakeVehicle( Player, pos, Angles, vehicle.Model, vehicle.Class, vname, vehicle ) 
 	if ( !IsValid( Ent ) ) then return end
 
 	if ( vehicle.Members ) then
