@@ -10,7 +10,7 @@
 -- The default font used by everything Derma
 --
 
-if ( system.IsOSX() ) then
+--[[if ( system.IsOSX() ) then
 
 surface.CreateFont( "DermaDefault",
 {
@@ -29,7 +29,7 @@ surface.CreateFont( "DermaDefaultBold",
 })
 
 
-else
+else]]
 
 surface.CreateFont( "DermaDefault",
 {
@@ -47,7 +47,7 @@ surface.CreateFont( "DermaDefaultBold",
 	weight		= 800
 })
 
-end
+--end
 
 surface.CreateFont( "DermaLarge",
 {
