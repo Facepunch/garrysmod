@@ -82,6 +82,7 @@ local PLAYER_LINE = {
 	Think = function( self )
 
 		if ( !IsValid( self.Player ) ) then
+			self:SetZPos( 9999 ) -- Causes a rebuild
 			self:Remove()
 			return
 		end
@@ -126,7 +127,8 @@ local PLAYER_LINE = {
 		-- Connecting players go at the very bottom
 		--
 		if ( self.Player:Team() == TEAM_CONNECTING ) then
-			self:SetZPos( 2000 )
+			self:SetZPos( 2000 + self.Player:EntIndex() )
+			return
 		end
 
 		--
@@ -134,7 +136,7 @@ local PLAYER_LINE = {
 		-- so if we set the z order according to kills they'll be ordered that way!
 		-- Careful though, it's a signed short internally, so needs to range between -32,768k and +32,767
 		--
-		self:SetZPos( ( self.NumKills * -50 ) + self.NumDeaths )
+		self:SetZPos( ( self.NumKills * -50 ) + self.NumDeaths + self.Player:EntIndex() )
 
 	end,
 
