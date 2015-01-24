@@ -519,7 +519,7 @@ hook.Add( "EntityNetworkedVarChanged", "NetworkedVars", function( ent, name, old
 		local func = ent.NWVarProxies[ name ]
 		
 		if isfunction( func ) then
-			func( ent, oldValue, newValue )
+			func( ent, name, oldValue, newValue )
 		end
 	end
 
