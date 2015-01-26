@@ -1,6 +1,6 @@
 
 function GM:HandlePlayerJumping( ply, velocity )
-	
+
 	if ( ply:GetMoveType() == MOVETYPE_NOCLIP ) then
 		ply.m_bJumping = false
 		return
@@ -9,7 +9,7 @@ function GM:HandlePlayerJumping( ply, velocity )
 	-- airwalk more like hl2mp, we airwalk until we have 0 velocity, then it's the jump animation
 	-- underwater we're alright we airwalking
 	if ( !ply.m_bJumping && !ply:OnGround() && ply:WaterLevel() <= 0 ) then
-	
+
 		if ( !ply.m_fGroundTime ) then
 
 			ply.m_fGroundTime = CurTime()
@@ -22,7 +22,7 @@ function GM:HandlePlayerJumping( ply, velocity )
 
 		end
 	end
-	
+
 	if ply.m_bJumping then
 	
 		if ply.m_bFirstJumpFrame then
@@ -45,8 +45,9 @@ function GM:HandlePlayerJumping( ply, velocity )
 			return true
 		end
 	end
-	
+
 	return false
+
 end
 
 function GM:HandlePlayerDucking( ply, velocity )
@@ -58,7 +59,7 @@ function GM:HandlePlayerDucking( ply, velocity )
 	else
 		ply.CalcIdeal = ACT_MP_CROUCH_IDLE
 	end
-	
+
 	return true
 
 end
@@ -96,7 +97,7 @@ function GM:HandlePlayerVaulting( ply, velocity )
 	if ( ply:IsOnGround() ) then return end
 
 	ply.CalcIdeal = ACT_MP_SWIM
-	
+
 	return true
 
 end
@@ -107,12 +108,12 @@ function GM:HandlePlayerSwimming( ply, velocity )
 		ply.m_bInSwim = false
 		return false
 	end
-	
+
 	ply.CalcIdeal = ACT_MP_SWIM
-	
 	ply.m_bInSwim = true
+
 	return true
-	
+
 end
 
 function GM:HandlePlayerLanding( ply, velocity, WasOnGround )
@@ -127,57 +128,54 @@ end
 
 function GM:HandlePlayerDriving( ply )
 
-	if ply:InVehicle() then
-		local pVehicle = ply:GetVehicle()
-	
-		if ( !pVehicle.HandleAnimation ) then
-			local c = pVehicle:GetVehicleClass()
-			local t = list.Get( "Vehicles" )[ c ]
-			if ( t && t.Members && t.Members.HandleAnimation ) then
-				pVehicle.HandleAnimation = t.Members.HandleAnimation
-			else
-				pVehicle.HandleAnimation = true // Prevent this if block from trying to assign HandleAnimation again.
-			end
-		end
-		
-		if ( isfunction( pVehicle.HandleAnimation ) ) then
-		
-			local seq = pVehicle:HandleAnimation( ply )
-			if ( seq != nil ) then
-				ply.CalcSeqOverride = seq
-				return true
-			end
-			
-		else
-		
-			local class = pVehicle:GetClass()
-			
-			if ( class == "prop_vehicle_jeep" ) then
-				ply.CalcSeqOverride = ply:LookupSequence( "drive_jeep" )
-			elseif ( class == "prop_vehicle_airboat" ) then
-				ply.CalcSeqOverride = ply:LookupSequence( "drive_airboat" )
-			elseif ( class == "prop_vehicle_prisoner_pod" && pVehicle:GetModel() == "models/vehicles/prisoner_pod_inner.mdl" ) then
-				-- HACK!!
-				ply.CalcSeqOverride = ply:LookupSequence( "drive_pd" )
-			else
-				ply.CalcSeqOverride = ply:LookupSequence( "sit_rollercoaster" )
-				
-				if ( ply:GetAllowWeaponsInVehicle() && IsValid( ply:GetActiveWeapon() ) ) then
-					local holdtype = ply:GetActiveWeapon():GetHoldType()
-					if ( holdtype == "smg" ) then holdtype = "smg1" end
+	if ( !ply:InVehicle() ) then return false end
 
-					local seqid = ply:LookupSequence( "sit_" .. holdtype )
-					if ( seqid != -1 ) then
-						ply.CalcSeqOverride = seqid
-					end
-				end
-			end
-			
-			return true
+	local pVehicle = ply:GetVehicle()
+
+	if ( !pVehicle.HandleAnimation ) then
+		local c = pVehicle:GetVehicleClass()
+		local t = list.Get( "Vehicles" )[ c ]
+		if ( t && t.Members && t.Members.HandleAnimation ) then
+			pVehicle.HandleAnimation = t.Members.HandleAnimation
+		else
+			pVehicle.HandleAnimation = true -- Prevent this if block from trying to assign HandleAnimation again.
+		end
+	end
+
+	local class = pVehicle:GetClass()
+
+	if ( isfunction( pVehicle.HandleAnimation ) ) then
+		local seq = pVehicle:HandleAnimation( ply )
+		if ( seq != nil ) then
+			ply.CalcSeqOverride = seq
+		end
+	end
+
+	if ( ply.CalcSeqOverride == -1 ) then -- pVehicle.HandleAnimation did not give us an animation
+		if ( class == "prop_vehicle_jeep" ) then
+			ply.CalcSeqOverride = ply:LookupSequence( "drive_jeep" )
+		elseif ( class == "prop_vehicle_airboat" ) then
+			ply.CalcSeqOverride = ply:LookupSequence( "drive_airboat" )
+		elseif ( class == "prop_vehicle_prisoner_pod" && pVehicle:GetModel() == "models/vehicles/prisoner_pod_inner.mdl" ) then
+			-- HACK!!
+			ply.CalcSeqOverride = ply:LookupSequence( "drive_pd" )
+		else
+			ply.CalcSeqOverride = ply:LookupSequence( "sit_rollercoaster" )
 		end
 	end
 	
-	return false
+	local use_anims = ( ply.CalcSeqOverride == ply:LookupSequence( "sit_rollercoaster" ) || ply.CalcSeqOverride == ply:LookupSequence( "sit" ) )
+	if ( use_anims && ply:GetAllowWeaponsInVehicle() && IsValid( ply:GetActiveWeapon() ) ) then
+		local holdtype = ply:GetActiveWeapon():GetHoldType()
+		if ( holdtype == "smg" ) then holdtype = "smg1" end
+
+		local seqid = ply:LookupSequence( "sit_" .. holdtype )
+		if ( seqid != -1 ) then
+			ply.CalcSeqOverride = seqid
+		end
+	end
+
+	return true
 end
 
 --[[---------------------------------------------------------
@@ -188,11 +186,11 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 
 	local len = velocity:Length()
 	local movement = 1.0
-	
+
 	if ( len > 0.2 ) then
 		movement = ( len / maxseqgroundspeed )
 	end
-	
+
 	local rate = math.min( movement, 2 )
 
 	-- if we're under water we want to constantly be swimming..
@@ -201,9 +199,9 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 	elseif ( !ply:IsOnGround() && len >= 1000 ) then
 		rate = 0.1
 	end
-	
+
 	ply:SetPlaybackRate( rate )
-	
+
 	if ( ply:InVehicle() ) then
 
 		local Vehicle = ply:GetVehicle()
@@ -223,17 +221,18 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 			-- Pass the vehicles steer param down to the player
 			local steer = Vehicle:GetPoseParameter( "vehicle_steer" )
 			steer = steer * 2 - 1 -- convert from 0..1 to -1..1
-			if ( Vehicle:GetClass() == "prop_vehicle_prisoner_pod" ) then steer = 0 end
+			if ( Vehicle:GetClass() == "prop_vehicle_prisoner_pod" ) then steer = 0 ply:SetPoseParameter( "aim_yaw", math.NormalizeAngle( ply:GetAimVector():Angle().y - Vehicle:GetAngles().y - 90 ) ) end
 			ply:SetPoseParameter( "vehicle_steer", steer )
+
 		end
 		
 	end
-	
+
 	if ( CLIENT ) then
 		GAMEMODE:GrabEarAnimation( ply )
 		GAMEMODE:MouthMoveAnimation( ply )
 	end
-	
+
 end
 
 --
@@ -252,7 +251,7 @@ function GM:GrabEarAnimation( ply )
 	else
 		ply.ChatGestureWeight = math.Approach( ply.ChatGestureWeight, 0, FrameTime() * 5.0 )
 	end
-	
+
 	if ( ply.ChatGestureWeight > 0 ) then
 	
 		ply:AnimRestartGesture( GESTURE_SLOT_VCD, ACT_GMOD_IN_CHAT, true )
@@ -269,12 +268,12 @@ function GM:MouthMoveAnimation( ply )
 
 	local FlexNum = ply:GetFlexNum() - 1
 	if ( FlexNum <= 0 ) then return end
-	
-	for i = 0, FlexNum-1 do
+
+	for i = 0, FlexNum - 1 do
 	
 		local Name = ply:GetFlexName( i )
 
-		if ( Name == "jaw_drop" || Name == "right_part" || Name == "left_part" || Name == "right_mouth_drop" || Name == "left_mouth_drop"  ) then
+		if ( Name == "jaw_drop" || Name == "right_part" || Name == "left_part" || Name == "right_mouth_drop" || Name == "left_mouth_drop" ) then
 
 			if ( ply:IsSpeaking() ) then
 				ply:SetFlexWeight( i, math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) )
@@ -282,9 +281,9 @@ function GM:MouthMoveAnimation( ply )
 				ply:SetFlexWeight( i, 0 )
 			end
 		end
-		
+
 	end
-	
+
 end
 
 function GM:CalcMainActivity( ply, velocity )
@@ -345,7 +344,8 @@ function GM:TranslateActivity( ply, act )
 end
 
 function GM:DoAnimationEvent( ply, event, data )
-	if event == PLAYERANIMEVENT_ATTACK_PRIMARY then
+
+	if ( event == PLAYERANIMEVENT_ATTACK_PRIMARY ) then
 	
 		if ply:Crouching() then
 			ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, true )
@@ -355,12 +355,12 @@ function GM:DoAnimationEvent( ply, event, data )
 		
 		return ACT_VM_PRIMARYATTACK
 	
-	elseif event == PLAYERANIMEVENT_ATTACK_SECONDARY then
+	elseif ( event == PLAYERANIMEVENT_ATTACK_SECONDARY ) then
 	
 		-- there is no gesture, so just fire off the VM event
 		return ACT_VM_SECONDARYATTACK
 		
-	elseif event == PLAYERANIMEVENT_RELOAD then
+	elseif ( event == PLAYERANIMEVENT_RELOAD ) then
 	
 		if ply:Crouching() then
 			ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_CROUCH, true )
@@ -370,22 +370,21 @@ function GM:DoAnimationEvent( ply, event, data )
 		
 		return ACT_INVALID
 		
-	elseif event == PLAYERANIMEVENT_JUMP then
+	elseif ( event == PLAYERANIMEVENT_JUMP ) then
 	
 		ply.m_bJumping = true
 		ply.m_bFirstJumpFrame = true
 		ply.m_flJumpStartTime = CurTime()
-		
+	
 		ply:AnimRestartMainSequence()
-		
+	
 		return ACT_INVALID
-		
-	elseif event == PLAYERANIMEVENT_CANCEL_RELOAD then
+	
+	elseif ( event == PLAYERANIMEVENT_CANCEL_RELOAD ) then
 	
 		ply:AnimResetGestureSlot( GESTURE_SLOT_ATTACK_AND_RELOAD )
 		
 		return ACT_INVALID
 	end
 
-	return nil
 end
