@@ -298,6 +298,15 @@ function string.GetChar( s, k )
 
 end
 
+function string.CharSub( str, k, strReplace )
+	
+	local len = string.len( strReplace )
+	local start = str:sub( 0, k - 1 )
+	local send = str:sub( k + len )
+	
+	return start .. strReplace .. send	
+end
+
 local meta = getmetatable( "" )
 
 function meta:__index( key )
