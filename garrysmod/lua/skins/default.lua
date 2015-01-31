@@ -598,11 +598,23 @@ function SKIN:PaintWindowMaximizeButton( panel, w, h )
 	end
 	
 	if ( panel.Depressed || panel:IsSelected() ) then
-		return self.tex.Window.Maxi_Down( 0, 0, w, h )
+		if ( panel.bMaximized || panel.bMinimized ) then
+			return self.tex.Window.Restore_Down( 0, 0, w, h )
+		else
+			return self.tex.Window.Maxi_Down( 0, 0, w, h )
+		end
 	end
 	
 	if ( panel.Hovered ) then
-		return self.tex.Window.Maxi_Hover( 0, 0, w, h )
+		if ( panel.bMaximized || panel.bMinimized ) then
+			return self.tex.Window.Restore_Hover( 0, 0, w, h )
+		else
+			return self.tex.Window.Maxi_Hover( 0, 0, w, h )
+		end
+	end
+
+	if ( panel.bMaximized || panel.bMinimized ) then
+		return self.tex.Window.Restore( 0, 0, w, h )
 	end
 
 	self.tex.Window.Maxi( 0, 0, w, h )

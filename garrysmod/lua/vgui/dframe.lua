@@ -13,25 +13,27 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_bIsMenuComponent", 		"IsMenu", 			FORCE_BOOL )
-AccessorFunc( PANEL, "m_bDraggable", 			"Draggable", 		FORCE_BOOL )
-AccessorFunc( PANEL, "m_bSizable", 				"Sizable", 			FORCE_BOOL )
-AccessorFunc( PANEL, "m_bScreenLock", 			"ScreenLock", 		FORCE_BOOL )
-AccessorFunc( PANEL, "m_bDeleteOnClose", 		"DeleteOnClose", 	FORCE_BOOL )
-AccessorFunc( PANEL, "m_bPaintShadow", 			"PaintShadow", 		FORCE_BOOL )
+AccessorFunc( PANEL, "m_bIsMenuComponent", "IsMenu",         FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDraggable",       "Draggable",      FORCE_BOOL )
+AccessorFunc( PANEL, "m_bSizable",         "Sizable",        FORCE_BOOL )
+AccessorFunc( PANEL, "m_bMinMaxAnim",      "MinMaxAnim",     FORCE_BOOL )
+AccessorFunc( PANEL, "m_bScreenLock",      "ScreenLock",     FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDeleteOnClose",   "DeleteOnClose",  FORCE_BOOL )
+AccessorFunc( PANEL, "m_bPaintShadow",     "PaintShadow",    FORCE_BOOL )
+AccessorFunc( PANEL, "m_bBackgroundBlur",  "BackgroundBlur", FORCE_BOOL )
 
-AccessorFunc( PANEL, "m_iMinWidth", 			"MinWidth" )
-AccessorFunc( PANEL, "m_iMinHeight", 			"MinHeight" )
+AccessorFunc( PANEL, "m_iMinWidth",  "MinWidth" )
+AccessorFunc( PANEL, "m_iMinHeight", "MinHeight" )
+AccessorFunc( PANEL, "m_bMinimized", "Minimized" )
+AccessorFunc( PANEL, "m_bMaximized", "Maximized" )
 
-AccessorFunc( PANEL, "m_bBackgroundBlur", 		"BackgroundBlur", 	FORCE_BOOL )
 
 function PANEL:Init()
 
 	self:SetFocusTopLevel( true )
 
---	self:SetCursor( "sizeall" )
-
 	self:SetPaintShadow( true )
+	self:SetMinMaxAnim( true )
 
 	self.btnClose = vgui.Create( "DButton", self )
 	self.btnClose:SetText( "" )
@@ -40,15 +42,13 @@ function PANEL:Init()
 
 	self.btnMaxim = vgui.Create( "DButton", self )
 	self.btnMaxim:SetText( "" )
-	self.btnMaxim.DoClick = function ( button ) self:Close() end
+	self.btnMaxim.DoClick = function ( button ) self:SetMaximized( !self.m_bMaximized ) end
 	self.btnMaxim.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "WindowMaximizeButton", panel, w, h ) end
-	self.btnMaxim:SetDisabled( true )
 
 	self.btnMinim = vgui.Create( "DButton", self )
 	self.btnMinim:SetText( "" )
-	self.btnMinim.DoClick = function ( button ) self:Close() end
+	self.btnMinim.DoClick = function ( button ) self:SetMinimized( true ) end
 	self.btnMinim.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "WindowMinimizeButton", panel, w, h ) end
-	self.btnMinim:SetDisabled( true )
 
 	self.lblTitle = vgui.Create( "DLabel", self )
 	self.lblTitle.UpdateColours = function( label, skin )
@@ -81,6 +81,11 @@ end
 function PANEL:ShowCloseButton( bShow )
 
 	self.btnClose:SetVisible( bShow )
+
+end
+
+function PANEL:ShowMinMaxButtons( bShow )
+
 	self.btnMaxim:SetVisible( bShow )
 	self.btnMinim:SetVisible( bShow )
 
@@ -112,6 +117,131 @@ function PANEL:Center()
 
 	self:InvalidateLayout( true )
 	self:SetPos( ScrW()/2 - self:GetWide()/2, ScrH()/2 - self:GetTall()/2 )
+
+end
+
+function PANEL:SetMaximized( bMax )
+
+	if self.m_bMinimized then return self:SetMinimized( false ) end
+
+	bMax = tobool( bMax )
+	self.btnMaxim.bMaximized = bMax
+	if tobool( self.m_bMaximized ) == bMax then return end
+	self.m_bMaximized = bMax
+
+	if !bMax then
+
+		if !self.MinMaxData then return end
+		local x, y, w, h = unpack( self.MinMaxData.Bounds )
+
+		if self.m_bMinMaxAnim then
+			self:SizeTo( w, h, 0.2, 0, -1, function() self:OnRestored( false ) end )
+			self:MoveTo( x, y, 0.2, 0 )
+		else
+			self:SetSize( w, h )
+			self:SetPos( x, y )
+			self:OnRestored( false )
+		end
+
+		self:SetDraggable( self.MinMaxData.Draggable )
+		self:SetSizable( self.MinMaxData.Sizable )
+
+	else
+
+		self.MinMaxData = { Bounds = { self:GetBounds() }, Draggable = self:GetDraggable(), Sizable = self:GetSizable() }
+
+		self:SetSizable( false )
+		self:SetDraggable( false )
+
+		if self.m_bMinMaxAnim then
+			self:SizeTo( ScrW(), ScrH(), 0.2, 0, -1, function() self:OnMaximized() end )
+			self:MoveTo( 0, 0, 0.2, 0 )
+		else
+			self:SetSize( ScrW(), ScrH() )
+			self:SetPos( 0, 0 )
+			self:OnMaximized()
+		end
+
+	end
+
+end
+
+function PANEL:SetMinimized( bMin )
+
+	bMin = tobool( bMin )
+	self.btnMaxim.bMinimized = bMin
+	if self.m_bMinimized == bMin then return end
+
+	self.btnMinim:SetDisabled( bMin )
+
+	if !bMin then
+
+		if !self.MinMaxData then return end
+		self.m_bMinimized = false
+
+		self:SetSizable( self.MinMaxData.Sizable )
+		local x, y, w, h = unpack( self.MinMaxData.Bounds )
+
+		if self.m_bMinMaxAnim then
+			self:MoveTo( x, y, 0.2, 0 )
+			self:SizeTo( w, h, 0.2, 0, -1, function()
+				if self.MinMaxData.WasMax then self:SetMaximized( true ) end
+				self.MinMaxData.WasMax = false
+				self:OnRestored( true )
+			end )
+		else
+			self:SetSize( w, h )
+			self:SetPos( x, y )
+			if self.MinMaxData.WasMax then self:SetMaximized( true ) end
+			self.MinMaxData.WasMax = false
+			self:OnRestored( true )
+		end
+
+	else
+
+		if self.m_bMaximized then
+			self.MinMaxData.WasMax = true
+			self:SetMaximized( false )
+		else
+			self.MinMaxData = { Bounds = { self:GetBounds() }, Sizable = self:GetSizable() }
+		end
+
+		local wide = math.Min( self.MinMaxData.Bounds[3], 160 )
+		self:SetSizable( false )
+
+		if self.m_bMinMaxAnim then
+			self:SizeTo( wide, 24, 0.2, ( self.MinMaxData.WasMax && 0.2 || 0 ), -1, function() self:OnMinimized() end )
+			self:MoveTo( math.Max( self.x, 0 ), self.y, 0.2, 0 )
+		else
+			self:SetSize( wide, 24 )
+			self:SetPos( math.Max( self.x, 0 ), self.y )
+			self:OnMinimized()
+		end
+
+		self:KillFocus()
+		self.m_bMinimized = true
+
+	end
+
+end
+
+function PANEL:OnMaximized()
+
+	-- For override
+
+end
+
+function PANEL:OnMinimized()
+
+	-- For override
+
+end
+
+function PANEL:OnRestored( fromMinimized )
+
+	-- For override
+
+	-- fromMinimized is true when the frame is restored from minimised and false when from maximised
 
 end
 
@@ -267,4 +397,4 @@ function PANEL:PerformLayout()
 
 end
 
-derma.DefineControl( "DFrame", "A simpe window", PANEL, "EditablePanel" )
+derma.DefineControl( "DFrame", "A simple window", PANEL, "EditablePanel" )
