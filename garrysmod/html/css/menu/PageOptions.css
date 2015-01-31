@@ -67,12 +67,6 @@ DIV.page DIV.options.active, DIV.page DIV.options A.active
 	color: #ff5;
 }
 
-DIV.page DIV.options A.active:hover
-{
-	
-}
-
-
 @media screen and (max-width: 1280px)
 {
 	DIV.page DIV.options
@@ -94,5 +88,28 @@ DIV.page DIV.options A.active:hover
 	DIV.page DIV.options UL
 	{
 		margin-left: 5px;
+	}
+}
+
+@media screen and (max-height: 480px) {
+    DIV.page DIV.options
+	{
+		padding-top: 0px;
+	}
+	
+	DIV.page DIV.options UL
+	{
+		padding: 0px;
+	}
+	
+	DIV.page DIV.options UL LI
+	{
+		margin-bottom: 0px;
+	}
+	
+	DIV.page DIV.options, DIV.page DIV.options A
+	{
+		font-size: 20px;
+		line-height: 19px;
 	}
 }
