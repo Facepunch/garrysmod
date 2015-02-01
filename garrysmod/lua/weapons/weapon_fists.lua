@@ -167,7 +167,13 @@ function SWEP:OnRemove()
 	
 end
 
-function SWEP:Holster( wep )
+function SWEP:OnDrop()
+
+	self:Remove() -- You can't drop fists
+
+end
+
+function SWEP:Holster()
 
 	self:OnRemove()
 
