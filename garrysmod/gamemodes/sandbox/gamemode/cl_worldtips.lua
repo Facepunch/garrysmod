@@ -12,18 +12,19 @@ local WorldTip = nil
 
 local TipColor = Color( 250, 250, 200, 255 )
 
---
--- Adds a hint to the queue
---
-function AddWorldTip( unused1, text, unused2, pos, ent )
 
+function SetWorldTip( text, pos, ent )
 	WorldTip = {}
 	
 	WorldTip.dietime 	= SysTime() + 0.05
 	WorldTip.text 		= text
 	WorldTip.pos 		= pos
 	WorldTip.ent 		= ent
-	
+end
+
+--Backwards compatibility
+function AddWorldTip( unused1, text, unused2, pos, ent )
+	SetWorldTip( text, pos, ent )
 end
 
 
