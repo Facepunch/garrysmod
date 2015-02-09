@@ -28,7 +28,7 @@
 
 			platform			|all_source_engine_paths|platform/platform_misc.vpk
 
-			mod+mod_write+default_write_path		|gameinfo_path|.
+			game+mod+mod_write+default_write_path		|gameinfo_path|.
 
 			game+game_write		garrysmod
 
