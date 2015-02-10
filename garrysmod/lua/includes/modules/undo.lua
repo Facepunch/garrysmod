@@ -1,7 +1,3 @@
-
-require ( "timer" )
-require ( "net" )
-
 module( "undo", package.seeall )
 
 -- undo.Create("Wheel")
@@ -449,5 +445,3 @@ end
 concommand.Add("undo",					CC_UndoLast, nil, "", { FCVAR_DONTRECORD } )
 concommand.Add("gmod_undo",				CC_UndoLast, nil, "", { FCVAR_DONTRECORD } )
 concommand.Add("gmod_undonum",			CC_UndoNum, nil, "", { FCVAR_DONTRECORD } )
-
-	
