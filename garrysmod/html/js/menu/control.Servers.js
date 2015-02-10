@@ -30,13 +30,8 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		//
 		// Clear out all of the servers
 		//
-		var gm = ServerTypes[Scope.ServerType].gamemodes;
-		for ( k in gm )
-		{
-			gm[k].servers.length	= 0
-			gm[k].num_servers		= 0
-			gm[k].num_players		= 0
-		}
+		ServerTypes[Scope.ServerType].gamemodes = {};
+		ServerTypes[Scope.ServerType].list.length = 0;
 		
 		if ( !IN_ENGINE )
 			TestUpdateServers( Scope.ServerType, RequestNum[ Scope.ServerType ] );
@@ -138,7 +133,6 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 		if ( FirstTime )
 		{
-			//lua.Run( "DoStopServers()" );
 			$scope.Refresh();
 		}
 	}
