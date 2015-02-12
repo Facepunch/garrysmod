@@ -6,14 +6,13 @@
 --										                 --
  --=====================================================--
 
-
 --[[---------------------------------------------------------
 	Non-Module includes
 -----------------------------------------------------------]]
 
 include ( "util.lua" )	
 include ( "util/sql.lua" )		-- Include sql here so it's 
-								-- available at loadtime to modules.
+					-- available at loadtime to modules.
 
 
 --[[---------------------------------------------------------
@@ -28,6 +27,7 @@ require ( "http" )
 require ( "cvars" )
 require ( "cookie" )
 require ( "baseclass" )
+require ( "notification" )
 
 
 --[[---------------------------------------------------------
@@ -52,4 +52,8 @@ include( "util/workshop_files.lua" )
 include( "util/javascript_util.lua" )
 include( "util/tooltips.lua" )
 
-require ( "notification" )
+--[[---------------------------------------------------------
+	Menu file
+-----------------------------------------------------------]]
+
+include( "menu/menu.lua" )
