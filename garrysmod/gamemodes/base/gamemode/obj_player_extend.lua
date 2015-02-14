@@ -115,11 +115,24 @@ function meta:UnfreezePhysicsObjects()
 		-- Make sure the entity to which the physics object
 		-- is attached is still valid (still exists)
 		if ( isentity( v.ent ) && IsValid( v.ent ) ) then
-		
+
+			--Before unfreezing the entities, we need to make sure that the physics metadata is valid,
+			--otherwise the game/sever can crash due to non-existing physics
+			--This block is intended to check for entities with custom physics, such as entities
+			--using spherical collisions (see Entity:PhysicsInitSphere())
+			if ( !IsValid(v.phys) ) then
+				local Phys = v.ent:GetSolid()
+
+				--This may not be the most reliable way of doing it, but it gets the job done
+		                if (Phys == SOLID_BBOX) then
+        		        	v.ent:GetPhysicsObject():EnableMotion( true )
+                		end
+
 			-- We can't directly test to see if EnableMotion is false right now
 			-- but IsMovable seems to do the job just fine.
 			-- We only test so the count isn't wrong
-			if ( v.phys && !v.phys:IsMoveable() ) then
+			--At this point we know the entity's physics metadata is valid, so we can move on safely
+			elseif ( !v.phys:IsMoveable() ) then
 			
 				-- We need to freeze/unfreeze all physobj's in jeeps to stop it spazzing
 				if ( v.ent:GetClass() == "prop_vehicle_jeep" ) then
