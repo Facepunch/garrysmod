@@ -16,6 +16,7 @@ if CLIENT then
    };
 
    SWEP.Icon = "vgui/ttt/icon_c4"
+   SWEP.IconLetter = "I"
 end
 
 SWEP.Base = "weapon_tttbase"
@@ -61,7 +62,7 @@ end
 -- mostly replicating HL2DM slam throw here
 function SWEP:BombDrop()
    if SERVER then
-      
+
       local ply = self.Owner
       if not IsValid(ply) then return end
 
@@ -70,7 +71,7 @@ function SWEP:BombDrop()
       local vsrc = ply:GetShootPos()
       local vang = ply:GetAimVector()
       local vvel = ply:GetVelocity()
-      
+
       local vthrow = vvel + vang * 200
 
       local bomb = ents.Create("ttt_c4")
@@ -92,7 +93,7 @@ function SWEP:BombDrop()
          local phys = bomb:GetPhysicsObject()
          if IsValid(phys) then
             phys:SetVelocity(vthrow)
-         end   
+         end
          self:Remove()
 
          self.Planted = true
@@ -139,7 +140,7 @@ function SWEP:BombStick()
                bomb:Spawn()
 
                bomb.fingerprints = self.fingerprints
-               
+
                local phys = bomb:GetPhysicsObject()
                if IsValid(phys) then
                   phys:EnableMotion(false)
@@ -154,7 +155,7 @@ function SWEP:BombStick()
             end
          end
 
-         ply:SetAnimation( PLAYER_ATTACK1 )         
+         ply:SetAnimation( PLAYER_ATTACK1 )
       end
    end
 end
