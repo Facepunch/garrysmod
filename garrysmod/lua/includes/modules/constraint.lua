@@ -333,8 +333,10 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 	rope:SetPos( Pos )
 	rope:SetKeyValue( "Width", width )
 
-	local mat = Material(material)
-	if ( material && !string.find( mat:GetShader():lower(), "spritecard" ) ) then rope:SetKeyValue( "RopeMaterial", material ) end
+	if ( isstring( material ) ) then
+		local mat = Material( material )
+		if ( material && !string.find( mat:GetShader():lower(), "spritecard" ) ) then rope:SetKeyValue( "RopeMaterial", material ) end
+	end
 
 	-- Attachment point 1
 	rope:SetEntity( "StartEntity", Ent1 )
