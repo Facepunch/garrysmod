@@ -132,7 +132,7 @@ function GM:HandlePlayerDriving( ply )
 
 	local pVehicle = ply:GetVehicle()
 
-	if ( !pVehicle.HandleAnimation ) then
+	if ( !pVehicle.HandleAnimation && pVehicle.GetVehicleClass ) then
 		local c = pVehicle:GetVehicleClass()
 		local t = list.Get( "Vehicles" )[ c ]
 		if ( t && t.Members && t.Members.HandleAnimation ) then

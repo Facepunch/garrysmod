@@ -119,7 +119,7 @@ function meta:UnfreezePhysicsObjects()
 			-- We can't directly test to see if EnableMotion is false right now
 			-- but IsMovable seems to do the job just fine.
 			-- We only test so the count isn't wrong
-			if ( v.phys && !v.phys:IsMoveable() ) then
+			if ( IsValid( v.phys ) && !v.phys:IsMoveable() ) then
 			
 				-- We need to freeze/unfreeze all physobj's in jeeps to stop it spazzing
 				if ( v.ent:GetClass() == "prop_vehicle_jeep" ) then
