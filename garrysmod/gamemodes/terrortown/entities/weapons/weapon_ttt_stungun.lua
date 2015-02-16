@@ -7,14 +7,15 @@ if CLIENT then
    SWEP.PrintName = "UMP Prototype"
    SWEP.Slot      = 6
 
-   SWEP.Icon = "vgui/ttt/icon_ump"
-
    SWEP.ViewModelFOV = 72
 
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "ump_desc"
    };
+
+   SWEP.Icon = "vgui/ttt/icon_ump"
+   SWEP.IconLetter = "q"
 end
 
 

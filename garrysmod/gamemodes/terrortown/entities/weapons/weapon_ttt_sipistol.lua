@@ -13,6 +13,7 @@ if CLIENT then
    };
 
    SWEP.Icon = "vgui/ttt/icon_silenced"
+   SWEP.IconLetter = "a"
 end
 
 SWEP.Base = "weapon_tttbase"

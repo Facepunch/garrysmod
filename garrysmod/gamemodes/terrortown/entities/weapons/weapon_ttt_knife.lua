@@ -7,7 +7,7 @@ if CLIENT then
 
    SWEP.PrintName    = "knife_name"
    SWEP.Slot         = 6
-  
+
    SWEP.ViewModelFlip = false
 
    SWEP.EquipMenuData = {
@@ -16,6 +16,7 @@ if CLIENT then
    };
 
    SWEP.Icon = "vgui/ttt/icon_knife"
+   SWEP.IconLetter = "j"
 end
 
 SWEP.Base               = "weapon_tttbase"
@@ -195,7 +196,7 @@ function SWEP:StabKill(tr, spos, sdest)
    -- target appears to die right there, so we could theoretically get to
    -- the ragdoll in here...
 
-   self:Remove()      
+   self:Remove()
 end
 
 function SWEP:SecondaryAttack()
@@ -224,7 +225,7 @@ function SWEP:SecondaryAttack()
 
       local vfw = ang:Forward()
       local vrt = ang:Right()
-      
+
       local src = ply:GetPos() + (ply:Crouching() and ply:GetViewOffsetDucked() or ply:GetViewOffset())
 
       src = src + (vfw * 1) + (vrt * 3)
@@ -293,7 +294,7 @@ if CLIENT then
          surface.DrawLine(x + outer, y - outer, x + inner, y - inner)
 
          draw.SimpleText("INSTANT KILL", "TabLarge", x, y - 30, COLOR_RED, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
-      end         
+      end
 
       return self.BaseClass.DrawHUD(self)
    end
