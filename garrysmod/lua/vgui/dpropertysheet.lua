@@ -332,7 +332,8 @@ function PANEL:PerformLayout()
 	end
 	
 	if ( !ActivePanel.NoStretchY ) then 
-		ActivePanel:SetTall( (self:GetTall() - ActiveTab:GetTall() ) - Padding ) 
+		local _, y = ActivePanel:GetPos()
+		ActivePanel:SetTall( self:GetTall() - y - Padding )
 	else
 		ActivePanel:CenterVertical()
 	end
