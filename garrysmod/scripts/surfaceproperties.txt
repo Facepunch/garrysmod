@@ -1671,3 +1671,21 @@
 	"friction"	"0.25"
 	"density"	"917"
 }
+
+// Portal
+
+"energyball"
+{
+	"base"		"glass"
+	"elasticity"	"1000"
+	"friction"	"0"
+}
+
+"sphere"
+{
+	"base"		"metal"
+	"elasticity"	"3"
+	"dampening"	"0.2"
+	"friction"	"0.2"
+	"density"	"1000"
+}
