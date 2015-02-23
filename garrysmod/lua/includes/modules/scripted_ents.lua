@@ -149,14 +149,16 @@ function Get( name )
 	
 	-- Derive from base class
 	if ( name != SEntList[ name ].Base ) then
-	
-		if (!Get( SEntList[ name ].Base )) then
+		
+		local base = Get( SEntList[ name ].Base )
+		
+		if (!base) then
 		
 			Msg("ERROR: Trying to derive entity "..tostring(name).." from non existant entity "..tostring(SEntList[ name ].Base).."!\n" )
 		
 		else
 	
-			retval = TableInherit( retval, Get( SEntList[ name ].Base ) )
+			retval = TableInherit( retval, base )
 		
 		end
 		
