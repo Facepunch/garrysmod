@@ -122,7 +122,7 @@ if ( SERVER ) then
 			
 			-- Send tooltip command to client
 			if ( count > 0 ) then
-				pl:SendLua( "GAMEMODE:OnCleanup( 'all' )" )
+				pl:SendLua( 'hook.Run("OnCleanup","all")' )
 			end
 			
 			return
@@ -141,7 +141,7 @@ if ( SERVER ) then
 		table.Empty( cleanup_list[id][args[1]] )
 		
 		-- Send tooltip command to client
-		pl:SendLua( "GAMEMODE:OnCleanup( '"..args[1].."' )" )
+		pl:SendLua( 'hook.Run("OnCleanup","' .. args[1] .. '")' )
 		
 	end
 	
@@ -170,7 +170,7 @@ if ( SERVER ) then
 			game.CleanUpMap()
 			
 			-- Send tooltip command to client
-			if ( IsValid( pl ) ) then pl:SendLua( "GAMEMODE:OnCleanup( 'all' )" ) end
+			if ( IsValid( pl ) ) then pl:SendLua( 'hook.Run("OnCleanup","all")' ) end
 			
 			return
 			
@@ -195,7 +195,7 @@ if ( SERVER ) then
 		end
 		
 		-- Send tooltip command to client
-		if ( IsValid( pl ) ) then pl:SendLua( "GAMEMODE:OnCleanup( '"..args[1].."' )" ) end
+		if ( IsValid( pl ) ) then pl:SendLua( 'hook.Run("OnCleanup","' .. args[1] .. '")' ) end
 		
 	end
 	
