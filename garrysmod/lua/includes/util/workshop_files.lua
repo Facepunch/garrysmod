@@ -4,56 +4,6 @@ local InfoCache			= {}
 local VoteCache			= {}
 local ListCache			= {}
 
-local function ClearDescription( desc )
-	-- Uncomplete list: http://steamcommunity.com/comment/Announcement/formattinghelp
-	-- Lowercase:
-	desc = string.Replace( desc, "[h1]", "" )
-	desc = string.Replace( desc, "[/h1]", "" )
-	desc = string.Replace( desc, "[b]", "" )
-	desc = string.Replace( desc, "[/b]", "" )
-	desc = string.Replace( desc, "[u]", "" )
-	desc = string.Replace( desc, "[/u]", "" )
-	desc = string.Replace( desc, "[i]", "" )
-	desc = string.Replace( desc, "[/i]", "" )
-	desc = string.Replace( desc, "[strike]", "" )
-	desc = string.Replace( desc, "[/strike]", "" )
-	desc = string.Replace( desc, "[spoiler]", "" )
-	desc = string.Replace( desc, "[/spoiler]", "" )
-	desc = string.Replace( desc, "[noparse]", "" )
-	desc = string.Replace( desc, "[/noparse]", "" )
-	desc = string.Replace( desc, "[url]", "" )
-	desc = string.gsub( desc, "%[url=([^%]]*)%]", "" )
-	desc = string.Replace( desc, "[/url]", "" )
-	desc = string.Replace( desc, "[code]", "" )
-	desc = string.Replace( desc, "[/code]", "" )
-	desc = string.gsub( desc, "%[img%]([^%[]*)", "" )
-	desc = string.Replace( desc, "[/img]", "" )
-	-- Uppercase:
-	desc = string.Replace( desc, "[H1]", "" )
-	desc = string.Replace( desc, "[/H1]", "" )
-	desc = string.Replace( desc, "[B]", "" )
-	desc = string.Replace( desc, "[/B]", "" )
-	desc = string.Replace( desc, "[U]", "" )
-	desc = string.Replace( desc, "[/U]", "" )
-	desc = string.Replace( desc, "[I]", "" )
-	desc = string.Replace( desc, "[/I]", "" )
-	desc = string.Replace( desc, "[STRIKE]", "" )
-	desc = string.Replace( desc, "[/STRIKE]", "" )
-	desc = string.Replace( desc, "[SPOILER]", "" )
-	desc = string.Replace( desc, "[/SPOILER]", "" )
-	desc = string.Replace( desc, "[NOPARSE]", "" )
-	desc = string.Replace( desc, "[/NOPARSE]", "" )
-	desc = string.Replace( desc, "[URL]", "" )
-	desc = string.gsub( desc, "%[URL=([^%]]*)%]", "" )
-	desc = string.Replace( desc, "[/URL]", "" )
-	desc = string.Replace( desc, "[CODE]", "" )
-	desc = string.Replace( desc, "[/CODE]", "" )
-	desc = string.gsub( desc, "%[IMG%]([^%[]*)", "" )
-	desc = string.Replace( desc, "[/IMG]", "" )
-	-- End:
-	return desc
-end
-
 function WorkshopFileBase( namespace, requiredtags )
 
 	local ret = {}
@@ -160,9 +110,6 @@ function WorkshopFileBase( namespace, requiredtags )
 
 					if ( !result) then return end
 
-					if result.description then
-						result.description = ClearDescription(result.description)
-					end
 					local json = util.TableToJSON( result, false );
 					InfoCache[ v ] = json;
 					self.HTML:Call( namespace..".ReceiveFileInfo( \""..v.."\", "..json.." )" );
