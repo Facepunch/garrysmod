@@ -71,6 +71,8 @@ hook.Add("TTTBoughtItem", "RadarBoughtItem", RADAR.Bought)
 local function DrawTarget(tgt, size, offset, no_shrink)
    local scrpos = tgt.pos:ToScreen() -- sweet
    local sz = (IsOffScreen(scrpos) and (not no_shrink)) and size/2 or size
+   if IsOffScreen(scrpos) then return end
+ 
 
    scrpos.x = math.Clamp(scrpos.x, sz, ScrW() - sz)
    scrpos.y = math.Clamp(scrpos.y, sz, ScrH() - sz)
@@ -167,6 +169,9 @@ function RADAR:Draw(client)
       alpha = alpha_base
 
       scrpos = tgt.pos:ToScreen()
+      if not scrpos.visible then
+         continue
+      end
       md = mpos:Distance(Vector(scrpos.x, scrpos.y, 0))
       if md < near_cursor_dist then
          alpha = math.Clamp(alpha * (md / near_cursor_dist), 40, 230)
