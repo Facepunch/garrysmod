@@ -71,11 +71,11 @@ hook.Add("TTTBoughtItem", "RadarBoughtItem", RADAR.Bought)
 local function DrawTarget(tgt, size, offset, no_shrink)
    local scrpos = tgt.pos:ToScreen() -- sweet
    local sz = (IsOffScreen(scrpos) and (not no_shrink)) and size/2 or size
-   if IsOffScreen(scrpos) then return end
- 
 
    scrpos.x = math.Clamp(scrpos.x, sz, ScrW() - sz)
    scrpos.y = math.Clamp(scrpos.y, sz, ScrH() - sz)
+   
+   if IsOffScreen(scrpos) then return end
 
    surface.DrawTexturedRect(scrpos.x - sz, scrpos.y - sz, sz * 2, sz * 2)
 
