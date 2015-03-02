@@ -5,31 +5,21 @@ local PT = LANG.GetParamTranslation
 
 local is_dmg = util.BitSet
 
+local dtt = { search_dmg_crush = DMG_CRUSH, search_dmg_bullet = DMG_BULLET, search_dmg_fall = DMG_FALL, 
+search_dmg_boom = DMG_BLAST, search_dmg_club = DMG_CLUB, search_dmg_drown = DMG_DROWN, search_dmg_stab = DMG_SLASH, 
+search_dmg_burn = DMG_BURN, search_dmg_tele = DMG_SONIC, search_dmg_car = DMG_VEHICLE }
+
 -- "From his body you can tell XXX"
 local function DmgToText(d)
-   if is_dmg(d, DMG_CRUSH) then
-      return T("search_dmg_crush")
-   elseif is_dmg(d, DMG_BULLET) then
-      return T("search_dmg_bullet")
-   elseif is_dmg(d, DMG_FALL) then
-      return T("search_dmg_fall")
-   elseif is_dmg(d, DMG_BLAST) then
-      return T("search_dmg_boom")
-   elseif is_dmg(d, DMG_CLUB) then
-      return T("search_dmg_club")
-   elseif is_dmg(d, DMG_DROWN) then
-      return T("search_dmg_drown")
-   elseif is_dmg(d, DMG_SLASH) then
-      return T("search_dmg_stab")
-   elseif is_dmg(d, DMG_BURN) or is_dmg(d, DMG_DIRECT) then
-      return T("search_dmg_burn")
-   elseif is_dmg(d, DMG_SONIC) then
-      return T("search_dmg_tele")
-   elseif is_dmg(d, DMG_VEHICLE) then
-      return T("search_dmg_car")
-   else
-      return T("search_dmg_other")
+   for k, v in pairs(dtt) do
+      if is_dmg(d, v) then
+        return T(k)
+      end
    end
+   if is_dmg(d, DMG_DIRECT) then
+      return T("search_dmg_burn")
+   end
+   return T("search_dmg_other")
 end
 
 -- Info type to icon mapping
@@ -40,16 +30,15 @@ end
 -- Those that have a lot of possible data values are defined separately, either
 -- as a function or a table.
 
+local dtm = { bullet = DMG_BULLET, rock = DMG_CRUSH, splode = DMG_BLAST, fall = DMG_FALL, fire = DMG_BURN }
+
 local function DmgToMat(d)
-   if is_dmg(d, DMG_BULLET) then
-      return "bullet"
-   elseif is_dmg(d, DMG_CRUSH) then
-      return "rock"
-   elseif is_dmg(d, DMG_BLAST) then
-      return "splode"
-   elseif is_dmg(d, DMG_FALL) then
-      return "fall"
-   elseif is_dmg(d, DMG_BURN) or is_dmg(d, DMG_DIRECT) then
+   for k, v in pairs(dtm) do
+      if is_dmg(d, v) then
+         return k
+      end
+   end
+   if is_dmg(d, DMG_DIRECT) then
       return "fire"
    else
       return "skull"
@@ -76,7 +65,7 @@ local TypeToMat = {
    stime="wtester",
    lastid="lastid",
    kills="list"
-};
+}
 
 -- Accessor for better fail handling
 local function IconForInfoType(t, data)
