@@ -99,7 +99,7 @@ function clr(color) return color.r, color.g, color.b, color.a; end
 if CLIENT then
    -- Is screenpos on screen?
    function IsOffScreen(scrpos)
-      return scrpos.x < 0 or scrpos.y < 0 or scrpos.x > ScrW() or scrpos.y > ScrH()
+      return not scrpos.visible or scrpos.x < 0 or scrpos.y < 0 or scrpos.x > ScrW() or scrpos.y > ScrH()
    end
 end
 
