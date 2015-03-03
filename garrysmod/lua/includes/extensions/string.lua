@@ -307,7 +307,7 @@ function meta:__index( key )
 	elseif ( tonumber( key ) ) then
 		return self:sub( key, key )
 	else
-		error( "bad key to string index (number expected, got " .. type( key ) .. ")", 2 )
+		error( "attempt to index a string value with bad key ('" .. tostring( key ) .. "' is not part of the string library)", 2 )
 	end
 end
 
