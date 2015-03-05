@@ -6,7 +6,7 @@
 if LANG then return end
 LANG = {}
 
-util.IncludeClientFile("cl_lang.lua")
+if SERVER then AddCSLuaFile("cl_lang.lua") else include("cl_lang.lua") end
 
 -- Add all lua files in our /lang/ dir
 local dir = GM.FolderName or "terrortown"
