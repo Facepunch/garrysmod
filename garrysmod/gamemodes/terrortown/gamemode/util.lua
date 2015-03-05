@@ -1,11 +1,12 @@
--- Random stuff
-
 if not util then return end
 
+local util = util
 local math = math
 local string = string
 local table = table
 local pairs = pairs
+local table = table
+local band = bit.band
 
 -- attempts to get the weapon used from a DamageInfo instance needed because the
 -- GetAmmoType value is useless and inflictor isn't properly set (yet)
@@ -94,7 +95,7 @@ end
 util.Capitalize = string.Capitalize
 
 -- Color unpacking
-function clr(color) return color.r, color.g, color.b, color.a; end
+function clr(color) return color.r, color.g, color.b, color.a end
 
 if CLIENT then
    -- Is screenpos on screen?
@@ -173,21 +174,16 @@ function util.SafeRemoveHook(event, name)
    end
 end
 
-function util.UnbridledHateForULX()
-   util.SafeRemoveHook("PlayerSay", "ULXMeCheck")
-end
-
+-- Empty function
 function util.noop() end
-function util.passthrough(x) return x end
 
 -- Nice Fisher-Yates implementation, from Wikipedia
-local rand = math.random
 function table.Shuffle(t)
   local n = #t
 
   while n > 2 do
     -- n is now the last pertinent index
-    local k = rand(n) -- 1 <= k <= n
+    local k = math.random(n) -- 1 <= k <= n
     -- Quick swap
     t[n], t[k] = t[k], t[n]
     n = n - 1
@@ -198,7 +194,10 @@ end
 
 -- Override with nil check
 function table.HasValue(tbl, val)
-   if not tbl then return end
+   if not tbl then 
+   	ErrorNoHalt("attempt to pass nil into HasValue") 
+   	return
+   end
 
    for k, v in pairs(tbl) do
       if v == val then return true end
@@ -222,7 +221,10 @@ end
 -- Basic table.HasValue pointer checks are insufficient when checking a table of
 -- tables, so this uses table.EqualValues instead.
 function table.HasTable(tbl, needle)
-   if not tbl then return end
+   if not tbl then 
+   	ErrorNoHalt("attempt to pass nil into HasTable") 
+   	return
+   end
 
    for k, v in pairs(tbl) do
       if v == needle then
@@ -236,7 +238,10 @@ end
 
 -- Returns copy of table with only specific keys copied
 function table.CopyKeys(tbl, keys)
-   if not (tbl and keys) then return end
+   if not tbl or not keys then 
+   	ErrorNoHalt("attempt to pass nil into CopyKeys") 
+   	return
+   end
 
    local out = {}
    local val = nil
@@ -251,13 +256,12 @@ function table.CopyKeys(tbl, keys)
    return out
 end
 
-local gsub = string.gsub
 -- Simple string interpolation:
 -- string.Interp("{killer} killed {victim}", {killer = "Bob", victim = "Joe"})
 -- returns "Bob killed Joe"
 -- No spaces or special chars in parameter name, just alphanumerics.
 function string.Interp(str, tbl)
-   return gsub(str, '{(%w+)}', tbl)
+   return string.gsub(str, '{(%w+)}', tbl)
 end
 
 -- Short helper for input.LookupBinding, returns capitalised key or a default
@@ -268,12 +272,11 @@ function Key(binding, default)
    return string.upper(b)
 end
 
-local exp = math.exp
 -- Equivalent to ExponentialDecay from Source's mathlib.
 -- Convenient for falloff curves.
 function math.ExponentialDecay(halflife, dt)
    -- ln(0.5) = -0.69..
-   return exp((-0.69314718 / halflife) * dt)
+   return math.exp((-0.69314718 / halflife) * dt)
 end
 
 function Dev(level, ...)
@@ -298,7 +301,6 @@ function IsRagdoll(ent)
    return ent and ent:IsValid() and ent:GetClass() == "prop_ragdoll"
 end
 
-local band = bit.band
 function util.BitSet(val, bit)
    return band(val, bit) == bit
 end
@@ -310,7 +312,7 @@ if CLIENT then
       wounded = Color(230,215,10,255),
       badwound= Color(255,140,0,255),
       death   = Color(255,0,0,255)
-   };
+   }
 
    function util.HealthToString(health)
       if health > 90 then
@@ -332,7 +334,7 @@ if CLIENT then
       med  = Color(245,220,60,255),
       low  = Color(255,180,0,255),
       min  = Color(255,130,0,255),
-   };
+   }
 
    function util.KarmaToString(karma)
       if karma > 890 then
@@ -346,14 +348,6 @@ if CLIENT then
       else
          return "karma_min", karmacolors.min
       end
-   end
-
-   function util.IncludeClientFile(file)
-      include(file)
-   end
-else
-   function util.IncludeClientFile(file)
-      AddCSLuaFile(file)
    end
 end
 
