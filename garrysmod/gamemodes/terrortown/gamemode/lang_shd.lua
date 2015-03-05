@@ -15,7 +15,7 @@ for _, fname in pairs(files) do
    local path = "lang/" .. fname
    -- filter out directories and temp files (like .lua~)
    if string.Right(fname, 3) == "lua" then
-      util.IncludeClientFile(path)
+      if SERVER then AddCSLuaFile(path) else include(path) end
       MsgN("Included TTT language file: " .. fname)
    end
 end
