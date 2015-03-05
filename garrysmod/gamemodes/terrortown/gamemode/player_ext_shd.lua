@@ -35,13 +35,13 @@ local role_strings = {
    [ROLE_TRAITOR]   = "traitor",
    [ROLE_INNOCENT]  = "innocent",
    [ROLE_DETECTIVE] = "detective"
-};
+}
 
-local GetRTranslation = CLIENT and LANG.GetRawTranslation or util.passthrough
+local GetRTranslation = CLIENT and LANG.GetRawTranslation
 
 -- Returns printable role
 function plymeta:GetRoleString()
-   return GetRTranslation(role_strings[self:GetRole()]) or "???"
+   return GetRTranslation(role_strings[self:GetRole()]) or role_strings[self:GetRole()] or "???"
 end
 
 
@@ -179,7 +179,7 @@ if CLIENT then
             end
             return w
          end
-   };
+   }
 
    -- Insert all the "simple" gestures that do not need weight control
    for _, a in pairs{ACT_GMOD_GESTURE_AGREE, ACT_GMOD_GESTURE_DISAGREE,
