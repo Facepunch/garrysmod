@@ -78,8 +78,8 @@ function SWEP:PullPin()
 
    self:SendWeaponAnim(ACT_VM_PULLPIN)
 
-   if self.SetWeaponHoldType then
-      self:SetWeaponHoldType(self.HoldReady)
+   if self.SetHoldType then
+      self:SetHoldType(self.HoldReady)
    end
 
    self:SetPin(true)
@@ -228,8 +228,8 @@ end
 
 function SWEP:Deploy()
 
-   if self.SetWeaponHoldType then
-      self:SetWeaponHoldType(self.HoldNormal)
+   if self.SetHoldType then
+      self:SetHoldType(self.HoldNormal)
    end
 
    self:SetThrowTime(0)
@@ -252,8 +252,8 @@ function SWEP:Reload()
 end
 
 function SWEP:Initialize()
-   if self.SetWeaponHoldType then
-      self:SetWeaponHoldType(self.HoldNormal)
+   if self.SetHoldType then
+      self:SetHoldType(self.HoldNormal)
    end
 
    self:SetDeploySpeed(self.DeploySpeed)
