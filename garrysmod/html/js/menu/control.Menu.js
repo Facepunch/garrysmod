@@ -278,7 +278,7 @@ function UpdateMaps( inmaps )
 		for ( v in inmaps[k] )
 		{
 			maps.push( inmaps[k][v] );
-			MapIndex[v.toLowerCase()] = true;
+			MapIndex[ inmaps[k][v].toLowerCase() ] = true;
 		}
 
 		mapList.push( 
