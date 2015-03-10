@@ -60,17 +60,19 @@ function PANEL:ApplySchemeSettings()
 
 	self:UpdateColours( self:GetSkin() )
 
+end
+
+function PANEL:Think()
+
+	if ( self.m_bAutoStretchVertical ) then
+		self:SizeToContentsY()
+	end
+
 	local col = self.m_colTextStyle
 	if ( self.m_colText ) then col = self.m_colText end
 	
 	self:SetFGColor( col.r, col.g, col.b, col.a )
 
-end
-
-function PANEL:Think()
-	if ( self.m_bAutoStretchVertical ) then
-		self:SizeToContentsY()
-	end
 end
 
 function PANEL:PerformLayout()
