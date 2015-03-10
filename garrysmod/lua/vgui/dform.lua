@@ -129,6 +129,7 @@ function PANEL:ComboBox( strLabel, strConVar )
 	right:SetConVar( strConVar )
 	right:Dock( FILL )
 	function right:OnSelect( index, value, data )
+		if ( !self.m_strConVar ) then return end
 		RunConsoleCommand( self.m_strConVar, tostring( data or value ) )
 	end
 	
