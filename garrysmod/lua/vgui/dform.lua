@@ -128,9 +128,10 @@ function PANEL:ComboBox( strLabel, strConVar )
 	local right = vgui.Create( "DComboBox", self )
 	right:SetConVar( strConVar )
 	right:Dock( FILL )
-	function right:OnSelect( index, value, data )
-		RunConsoleCommand( self.m_strConVar, tostring( data or value ) )
-	end
+	
+	//function right:OnSelect( index, value, data )
+	//	RunConsoleCommand( self.m_strConVar, tostring( data or value ) )
+	//end
 	
 	self:AddItem( left, right )
 	
