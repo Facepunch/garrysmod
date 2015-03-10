@@ -98,48 +98,44 @@ local mumbles = {"mumble", "mm", "hmm", "hum", "mum", "mbm", "mble", "ham", "mam
 -- them. So we mumblify them. In detective mode, we shut them up entirely.
 function GM:PlayerSay(ply, text, team_only)
    if not IsValid(ply) then return end
+   
+   if ply:Team() == TEAM_SPEC and (not team_only) and GetRoundState() == ROUND_ACTIVE then
+      if not GetConVar("ttt_limit_spectator_chat"):GetBool() then
+	     return text
+      elseif not DetectiveMode() then
+	     local filtered = {}
+         for k, v in pairs(string.Explode(" ", text)) do
+            -- grab word characters and whitelisted interpunction
+            -- necessary or leetspeek will be used (by trolls especially)
+            local word, interp = string.match(v, "(%a*)([%.,;!%?]*)")
+            if word != "" then
+               table.insert(filtered, mumbles[math.random(1, #mumbles)] .. interp)
+            end
+         end
+
+         -- make sure we have something to say
+         if table.Count(filtered) < 1 then
+            table.insert(filtered, mumbles[math.random(1, #mumbles)])
+         end
+
+         table.insert( filtered, 1, "[MUMBLED]")
+         return table.concat(filtered, " ")
+	  else
+         ply:ConCommand("say_team " .. text )
+	     return ""
+	  end
+   end
 
    if team_only and ply:Team() != TEAM_SPEC and GetRoundState() == ROUND_ACTIVE then
       if ply:IsSpecial() then
          -- traitor chat handling
          RoleChatMsg(ply, ply:GetRole(), text)
       else
-         LANG.Msg(ply, "inno_globalchat_hint")
+         ply:ConCommand("say " .. text )
       end
 
       return ""
    end
-
-   if (not team_only) and GetRoundState() == ROUND_ACTIVE and ply:Team() == TEAM_SPEC then
-      if DetectiveMode() then
-         LANG.Msg(ply, "spec_teamchat_hint")
-         return ""
-      end
-
-      if not GetConVar("ttt_limit_spectator_chat"):GetBool() then
-         return text
-      end
-
-      local filtered = {}
-      for k, v in pairs(string.Explode(" ", text)) do
-         -- grab word characters and whitelisted interpunction
-         -- necessary or leetspeek will be used (by trolls especially)
-         local word, interp = string.match(v, "(%a*)([%.,;!%?]*)")
-         if word != "" then
-            table.insert(filtered, mumbles[math.random(1, #mumbles)] .. interp)
-         end
-      end
-
-      -- make sure we have something to say
-      if table.Count(filtered) < 1 then
-         table.insert(filtered, mumbles[math.random(1, #mumbles)])
-      end
-
-      table.insert( filtered, 1, "[MUMBLED]")
-      return table.concat(filtered, " ")
-   end
-
-   return text
 end
 
 
