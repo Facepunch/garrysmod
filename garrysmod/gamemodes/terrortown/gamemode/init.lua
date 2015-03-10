@@ -392,7 +392,7 @@ local function CleanUp()
    end
 
    -- a different kind of cleanup
-   util.UnbridledHateForULX()
+   util.SafeRemoveHook("PlayerSay", "ULXMeCheck")
 end
 
 local function SpawnEntities()
