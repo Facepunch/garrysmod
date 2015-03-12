@@ -55,7 +55,7 @@
 				<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'addons.none'">...</workshopmessage>
 				
 
-				<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px"  class="{{IfElse( IsSubscribed( file ) && !IsEnabled( file ), 'disabled', '' )}} {{IfElse( IsSubscribed( file ), 'installed', '' )}}">
+				<workshopicon ng-hide="Loading" ng-repeat="file in Files | orderBy:'(info.title)'" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px"  class="{{IfElse( IsSubscribed( file ) && !IsEnabled( file ), 'disabled', '' )}} {{IfElse( IsSubscribed( file ), 'installed', '' )}}">
 
 					<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
 						<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
