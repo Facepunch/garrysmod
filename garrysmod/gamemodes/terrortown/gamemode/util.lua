@@ -173,10 +173,6 @@ function util.SafeRemoveHook(event, name)
    end
 end
 
-function util.UnbridledHateForULX()
-   util.SafeRemoveHook("PlayerSay", "ULXMeCheck")
-end
-
 function util.noop() end
 function util.passthrough(x) return x end
 
