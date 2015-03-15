@@ -13,6 +13,7 @@ local ScrH = ScrH
 local Color = Color
 local tostring = tostring
 local color_white = color_white
+local pcall = pcall
 
 module( "draw" )
 
@@ -69,7 +70,12 @@ function SimpleText(text, font, x, y, colour, xalign, yalign)
 	xalign 	= xalign 	or TEXT_ALIGN_LEFT
 	yalign 	= yalign 	or TEXT_ALIGN_TOP
 	
-	surface.SetFont(font)
+	if pcall(surface.SetFont, font) then
+		-- Already set
+	else
+		surface.SetFont( "DermaDefault" )
+	end
+	
 	local w, h = surface.GetTextSize( text )
 
 	if (xalign == TEXT_ALIGN_CENTER) then
