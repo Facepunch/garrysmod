@@ -273,7 +273,7 @@ function ActivateToolPanel( id, cp )
 end
 
 -- While technically tool class names CAN be duplicate, it normally should never happen.
-function ActivateTool( strName )
+function ActivateTool( strName, noCommand )
 
 	-- I really don't like this triple loop
 	for tab, v in ipairs( g_ToolMenu ) do
@@ -282,7 +282,7 @@ function ActivateTool( strName )
 
 				if ( istable( item ) && item.ItemName && item.ItemName == strName ) then
 
-					if ( item.Command ) then
+					if ( !noCommand && item.Command ) then
 						RunConsoleCommand( unpack( string.Explode( " ", item.Command ) ) )
 					end
 					

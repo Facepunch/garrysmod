@@ -2,12 +2,9 @@
 local gmod_drawhelp = CreateClientConVar( "gmod_drawhelp", "1", true, false )
 local gmod_toolmode = CreateClientConVar( "gmod_toolmode", "rope", true, true )
 
-// HACK: We need a better way to do this
-local LastSwitchTime = 0
 cvars.AddChangeCallback( "gmod_toolmode", function( name, old, new )
-	if ( old == new || LastSwitchTime + .1 > CurTime() ) then return end
-	LastSwitchTime = CurTime()
-	spawnmenu.ActivateTool( new )
+	if ( old == new ) then return end
+	spawnmenu.ActivateTool( new, true )
 end, "gmod_toolmode_panel" )
 
 include( "shared.lua" )
