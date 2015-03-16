@@ -1,4 +1,4 @@
---[[   _
+--[[ _
 	( )
    _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
@@ -39,11 +39,11 @@ function PANEL:Init()
 
 	-- Nicer default height
 	self:SetTall( 20 )
-	
+
 	-- This turns off the engine drawing
 	self:SetPaintBackgroundEnabled( false )
 	self:SetPaintBorderEnabled( false )
-	
+
 	self:SetFont( "DermaDefault" )
 
 end
@@ -56,9 +56,28 @@ function PANEL:SetFont( strFont )
 
 end
 
+function PANEL:SetTextColor( clr )
+
+	self.m_colText = clr
+	self:UpdateFGColor()
+
+end
+PANEL.SetColor = PANEL.SetTextColor
+
+function PANEL:UpdateFGColor()
+
+	local col = self.m_colTextStyle
+	if ( self.m_colText ) then col = self.m_colText end
+
+	self:SetFGColor( col.r, col.g, col.b, col.a )
+
+end
+
 function PANEL:ApplySchemeSettings()
 
 	self:UpdateColours( self:GetSkin() )
+
+	self:UpdateFGColor()
 
 end
 
@@ -68,11 +87,6 @@ function PANEL:Think()
 		self:SizeToContentsY()
 	end
 
-	local col = self.m_colTextStyle
-	if ( self.m_colText ) then col = self.m_colText end
-	
-	self:SetFGColor( col.r, col.g, col.b, col.a )
-
 end
 
 function PANEL:PerformLayout()
@@ -80,8 +94,6 @@ function PANEL:PerformLayout()
 	self:ApplySchemeSettings()
 
 end
-
-PANEL.SetColor = PANEL.SetTextColor
 
 --[[---------------------------------------------------------
 	SetColor
@@ -96,9 +108,9 @@ end
 	Exited
 -----------------------------------------------------------]]
 function PANEL:OnCursorEntered()
-	
+
 	self:InvalidateLayout( true )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -143,7 +155,7 @@ function PANEL:OnMousePressed( mousecode )
 	self:MouseCapture( true )
 	self.Depressed = true
 	self:OnDepressed()
-	self:InvalidateLayout()
+	self:InvalidateLayout( true )
 	
 	--
 	-- Tell DragNDrop that we're down, and might start getting dragged!
@@ -168,7 +180,7 @@ function PANEL:OnMouseReleased( mousecode )
 	
 	self.Depressed = nil
 	self:OnReleased()
-	self:InvalidateLayout()
+	self:InvalidateLayout( true )
 	--
 	-- If we were being dragged then don't do the default behaviour!
 	--
@@ -244,36 +256,31 @@ end
 function PANEL:Toggle()
 
 	if ( !self:GetIsToggle() ) then return end
-	
+
 	self.m_bToggle = !self.m_bToggle
 	self:OnToggled( self.m_bToggle )
 
 end
 
 function PANEL:OnToggled( bool )
-
 end
-
 
 --[[---------------------------------------------------------
 	DoClickInternal
 -----------------------------------------------------------]]
 function PANEL:DoClickInternal()
-
 end
 
 --[[---------------------------------------------------------
 	DoDoubleClick
 -----------------------------------------------------------]]
 function PANEL:DoDoubleClick()
-
 end
 
 --[[---------------------------------------------------------
 	DoDoubleClickInternal
 -----------------------------------------------------------]]
 function PANEL:DoDoubleClickInternal()
-
 end
 
 --[[---------------------------------------------------------
@@ -304,7 +311,6 @@ end
 
 derma.DefineControl( "DLabel", "A Label", PANEL, "Label" )
 
-
 --[[---------------------------------------------------------
 	Name: Convenience Function
 -----------------------------------------------------------]]
@@ -312,7 +318,7 @@ function Label( strText, parent )
 
 	local lbl = vgui.Create( "DLabel", parent )
 	lbl:SetText( strText )
-	
+
 	return lbl
 
 end
