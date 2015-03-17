@@ -73,11 +73,13 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 		$rootScope.LastCategory = $scope.CurrentCategory
 	}
 
+	$scope.DoubleClick = ""
 	$scope.ClickMap = function( m )
 	{
+		console.log("clicked " + m + " " + $scope.DoubleClick )
 		$scope.SelectMap( m );
 
-		if ( m.DoubleClick )
+		if ( $scope.DoubleClick == m )
 		{
 			$scope.StartGame();
 			return;
@@ -86,11 +88,11 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 		//
 		// ng-dblclick doesn't work properly in engine, so we fake it!
 		//
-		m.DoubleClick = true;
+		$scope.DoubleClick = m;
 
 		setTimeout( function()
 		{
-			m.DoubleClick = false;
+			$scope.DoubleClick = "";
 		}, 500 )
 	}
 
