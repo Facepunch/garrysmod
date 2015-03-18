@@ -313,7 +313,7 @@ function RegisterClass( name, table, base )
 
 		if ( !Type[ name ] ) then ErrorNoHalt( "RegisterClass - deriving "..name.." from unknown class "..base.."!\n" ) end
 		setmetatable( Type[ name ], { __index = Type[ base ] } )
-
+      table.BaseClass = baseclass.Get(base);
 	end
 
 	if ( SERVER ) then
