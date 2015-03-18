@@ -168,7 +168,7 @@ function PLAYER:FinishMove( move )
 	-- If the player has jumped this frame
 	if JUMPING then
 		-- Get their orientation
-		local forward = self.Player:EyeAngles()
+		local forward = move:GetAngles()
 		forward.p = 0
 		forward = forward:Forward()
 		
