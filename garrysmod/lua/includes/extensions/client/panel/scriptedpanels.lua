@@ -139,7 +139,7 @@ function vgui.Create( classname, parent, name, ... )
 	
 		local metatable = PanelFactory[ classname ]
 		
-		local panel = vgui.Create( metatable.Base, parent, name )
+		local panel = vgui.Create( metatable.Base, parent, name or classname )
 		if ( !panel ) then
 			Error( "Tried to create panel with invalid base '"..metatable.Base.."'\n" );
 		end
@@ -159,7 +159,7 @@ function vgui.Create( classname, parent, name, ... )
 	
 	end
 	
-	return vgui.CreateX( classname, parent, name )
+	return vgui.CreateX( classname, parent, name or classname )
 
 end
 
