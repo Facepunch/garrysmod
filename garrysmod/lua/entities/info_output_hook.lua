@@ -1,7 +1,5 @@
 DEFINE_BASECLASS( "base_point" )
 
-ENT.Hooks = { }
-
 local this, meta, hooks, fmt
 
 hooks = { }
@@ -37,11 +35,10 @@ function meta:UnhookOutput( name, uid )
 end
 
 function ENT:Initialize( )
-	hook.Add( "EntityRemoved", self, self.EntityRemoved )
 end
 
 function ENT:AcceptInput( name, activator, caller, data )
-	local k, v, ok, err
+	local ok, err
 	
 	if hooks[ caller ] then
 		if hooks[ caller ][ name ] then
@@ -63,12 +60,8 @@ function ENT:AcceptInput( name, activator, caller, data )
 	return true
 end
 
-function ENT:EntityRemoved( e )
-	if not IsValid( self ) then
-		this = ents.Create( "info_output_hook" )
-			this:SetName( "__this" )
-		this:Spawn( )
-
-		hook.Add( "EntityRemoved", this, this.EntityRemoved )
-	end
+function ENT:OnRemove( )
+	this = ents.Create( "info_output_hook" )
+		this:SetName( "__this" )
+	this:Spawn( )
 end
