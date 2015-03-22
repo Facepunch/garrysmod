@@ -175,7 +175,9 @@ net.ReadVars =
 	[TYPE_COLOR]	= function ()	return net.ReadColor() end,
 }
 
-function net.ReadType( typeid )
+function net.ReadType()
+	 
+	local typeid = net.ReadUInt(8)
 
 	local rv = net.ReadVars[ typeid ]
 	if ( rv ) then return rv() end
