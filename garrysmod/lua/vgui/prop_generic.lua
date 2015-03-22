@@ -43,7 +43,7 @@ function PANEL:Setup( vars )
 	self:Clear()
 
 	local text = self:Add( "DTextEntry" )
-	if ( !vars.waitforenter ) then text:SetUpdateOnType( true ) end
+	if (vars && !vars.waitforenter ) then text:SetUpdateOnType( true ) end
 	text:SetDrawBackground( false )
 	text:Dock( FILL )
 
