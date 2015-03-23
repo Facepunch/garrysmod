@@ -120,10 +120,10 @@ function GM:PlayerSay(ply, text, team_only)
 
          table.insert( filtered, 1, "[MUMBLED]")
          return table.concat(filtered, " ")
-	  else
-         ply:ConCommand("say_team " .. text )
+      else
+         ply:Say(text, true)
 	     return ""
-	  end
+      end
    end
 
    if team_only and ply:Team() != TEAM_SPEC and GetRoundState() == ROUND_ACTIVE then
@@ -131,7 +131,7 @@ function GM:PlayerSay(ply, text, team_only)
          -- traitor chat handling
          RoleChatMsg(ply, ply:GetRole(), text)
       else
-         ply:ConCommand("say " .. text )
+         ply:Say(text)
       end
 
       return ""
