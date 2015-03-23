@@ -47,7 +47,9 @@ function CreateTransferMenu(parent)
                         end
                      end
 
+   dsubmit.OldThink = dsubmit.Think
    dsubmit.Think = function(s)
+                      s.OldThink(s)
                       if LocalPlayer():GetCredits() < 1 then
                          s:SetDisabled(true)
                       end
