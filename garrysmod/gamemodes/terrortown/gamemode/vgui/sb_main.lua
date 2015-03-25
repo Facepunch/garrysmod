@@ -52,6 +52,12 @@ GROUP_COUNT = 4
 function ScoreGroup(p)
    if not IsValid(p) then return -1 end -- will not match any group panel
 
+   local group = hook.Call( "TTTScoreGroup", nil, p )
+
+   if group then
+      return group
+   end
+
    if DetectiveMode() then
       if p:IsSpec() and (not p:Alive()) then
          if p:GetNWBool("body_found", false) then
@@ -117,6 +123,8 @@ function PANEL:Init()
       t:SetGroupInfo(GetTranslation("sb_confirmed"), Color(130, 170, 10, 100), GROUP_FOUND)
       self.ply_groups[GROUP_FOUND] = t
    end
+
+   hook.Call( "TTTScoreGroups", nil, self.ply_frame:GetCanvas(), self.ply_groups )
 
    -- the various score column headers
    self.cols = {}
