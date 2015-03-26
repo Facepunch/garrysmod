@@ -1,5 +1,7 @@
 
-if ( IsMounted( "ep2" ) ) then AddCSLuaFile() else return end
+if ( !IsMounted( "ep2" ) ) then return end
+
+AddCSLuaFile()
 
 SWEP.PrintName				= "Flechette Gun"
 SWEP.Author					= "garry"
@@ -40,7 +42,6 @@ function SWEP:Initialize()
 end
 
 function SWEP:Reload()
-	
 end
 
 function SWEP:PrimaryAttack()
@@ -50,7 +51,7 @@ function SWEP:PrimaryAttack()
 	self:EmitSound( ShootSound )
 	self:ShootEffects( self )
 	
-	if (!SERVER) then return end
+	if ( !SERVER ) then return end
 	
 	local Forward = self.Owner:EyeAngles():Forward()
 	
@@ -71,11 +72,11 @@ end
 function SWEP:SecondaryAttack()
 
 	-- TODO: Reimplement the old rollermine secondary attack?
-	
+
 end
 
 function SWEP:ShouldDropOnDie()
-	
+
 	return false
-	
+
 end

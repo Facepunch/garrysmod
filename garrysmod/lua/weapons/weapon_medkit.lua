@@ -3,7 +3,7 @@ AddCSLuaFile()
 
 SWEP.PrintName				= "Medkit"
 SWEP.Author					= "robotboy655 & MaxOfS2D"
-SWEP.Purpose    			= "Heal people with your primary attack, or yourself with the secondary."
+SWEP.Purpose			= "Heal people with your primary attack, or yourself with the secondary."
 
 SWEP.Slot					= 5
 SWEP.SlotPos				= 3
@@ -25,8 +25,8 @@ SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo			= "none"
 
-SWEP.HealAmount 			= 20 	-- Maximum heal amount per use
-SWEP.MaxAmmo 				= 100 	-- Maxumum ammo
+SWEP.HealAmount				= 20	-- Maximum heal amount per use
+SWEP.MaxAmmo				= 100	-- Maxumum ammo
 
 local HealSound = Sound( "HealthKit.Touch" )
 local DenySound = Sound( "WallHealth.Deny" )
