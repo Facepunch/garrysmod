@@ -60,7 +60,7 @@ end
     Desc: Simple "draw text at position function"
           color is a table with r/g/b/a elements
 -----------------------------------------------------------]]
-function SimpleText(text, font, x, y, colour, xalign, yalign)
+function SimpleText( text, font, x, y, colour, xalign, yalign )
 
 	text 	= tostring( text )
 	font 	= font
@@ -69,7 +69,7 @@ function SimpleText(text, font, x, y, colour, xalign, yalign)
 	xalign 	= xalign 	or TEXT_ALIGN_LEFT
 	yalign 	= yalign 	or TEXT_ALIGN_TOP
 	
-	if font and pcall(surface.SetFont, font) then
+	if font and pcall( function() surface.SetFont( font ) end ) then
 		-- Already set
 	else
 		ErrorNoHalt( "Invalid font sent into SimpleText!" )
@@ -78,23 +78,22 @@ function SimpleText(text, font, x, y, colour, xalign, yalign)
 	
 	local w, h = surface.GetTextSize( text )
 
-	if (xalign == TEXT_ALIGN_CENTER) then
+	if ( xalign == TEXT_ALIGN_CENTER ) then
 		x = x - w/2
-	elseif (xalign == TEXT_ALIGN_RIGHT) then
+	elseif ( xalign == TEXT_ALIGN_RIGHT ) then
 		x = x - w
 	end
 	
-	if (yalign == TEXT_ALIGN_CENTER) then
+	if ( yalign == TEXT_ALIGN_CENTER ) then
 		y = y - h/2
 	elseif ( yalign == TEXT_ALIGN_BOTTOM ) then
 		y = y - h
 	end
 	
-	surface.SetTextPos( math.ceil( x ), math.ceil( y ) );
+	surface.SetTextPos( math.ceil( x ), math.ceil( y ) )
 	
-	if (colour!=nil) then
-		local alpha = 255
-		if (colour.a) then alpha = colour.a end
+	if ( colour ) then
+		local alpha = colour.a and colour.a or 255
 		surface.SetTextColor( colour.r, colour.g, colour.b, alpha )
 	else
 		surface.SetTextColor(255, 255, 255, 255)
