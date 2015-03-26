@@ -235,6 +235,13 @@ function GM:CanProperty( pl, property, ent )
 
 	end
 
+	--
+	-- Weapons can only be property'd if nobody is holding them
+	--
+	if ( ent:IsWeapon() and IsValid( ent:GetOwner() ) ) then
+		return false
+	end
+
 	-- Give the entity a chance to decide
 	if ( ent.CanProperty ) then
 		return ent:CanProperty( pl, property )
