@@ -8,7 +8,7 @@ COLOR.__index = COLOR
 debug.getregistry().Color = COLOR
 
 --[[---------------------------------------------------------
-	To easily create a colour table
+	To easily create a color table
 -----------------------------------------------------------]]
 function Color( r, g, b, a )
 
@@ -66,8 +66,17 @@ end
 --[[---------------------------------------------------------
 	Converts Color To Vector - loss of precision / alpha lost
 -----------------------------------------------------------]]
-function COLOR:ToVector( )
+function COLOR:ToVector()
 
 	return Vector( self.r / 255, self.g / 255, self.b / 255 )
 
+end
+
+--[[---------------------------------------------------------
+	Unpacks color into four variables
+-----------------------------------------------------------]]
+function COLOR:Unpack()
+	
+	return self.r, self.g, self.b, self.a
+	
 end

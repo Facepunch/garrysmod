@@ -1,11 +1,11 @@
-local meta = FindMetaTable( "Angle" )
+local ANGLE = FindMetaTable( "Angle" )
 
 -- Nothing in here, still leaving this file here just in case
 
 --[[---------------------------------------------------------
 	Angle Snap to nearest interval of degrees
 -----------------------------------------------------------]]
-function meta:SnapTo( component, degrees )
+function ANGLE:SnapTo( component, degrees )
 
 	if ( degrees == 0 ) then ErrorNoHalt( "The snap degrees must be non-zero.\n" ); return self; end
 	if ( !self[ component ] ) then ErrorNoHalt( "You must choose a valid component of Angle( p || pitch, y || yaw, r || roll ) to snap such as Angle( 80, 40, 30 ):SnapTo( \"p\", 90 ):SnapTo( \"y\", 45 ):SnapTo( \"r\", 40 ); and yes, you can keep adding snaps.\n" ); return self; end
@@ -15,4 +15,13 @@ function meta:SnapTo( component, degrees )
 
 	return self
 
+end
+
+--[[---------------------------------------------------------
+	Unpacks angle into three variables
+-----------------------------------------------------------]]
+function ANGLE:Unpack()
+	
+	return self.p, self.y, self.r
+	
 end
