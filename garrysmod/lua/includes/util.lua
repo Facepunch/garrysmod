@@ -304,10 +304,11 @@ end
 	IsEnemyEntityName
 -----------------------------------------------------------]]
 local EnemyNames = {
-	npc_antlion = true, npc_antlionguard = true, npc_breen = true, npc_combine_s = true, 
-	npc_cscanner = true, npc_fastzombie = true, npc_fastzombie_torso = true, npc_gman = true, 
-	npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true, npc_hunter = true, 
-	npc_manhack = true, npc_poisonzombie = true, npc_zombie = true, npc_zombie_torso = true
+	npc_antlion = true, npc_antlionguard = true, npc_antlionguardian = true, npc_barnacle = true, 
+	npc_breen = true, npc_clawscanner = true, npc_combine_s = true, npc_cscanner = true, npc_fastzombie = true, 
+	npc_fastzombie_torso = true, npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true, 
+	npc_hunter = true, npc_metropolice = true, npc_manhack = true, npc_poisonzombie = true, 
+	npc_strider = true, npc_stalker = true, npc_zombie = true, npc_zombie_torso = true, npc_zombine = true
 }
 
 function IsEnemyEntityName( victimtype )
@@ -320,8 +321,9 @@ end
 	IsFriendEntityName
 -----------------------------------------------------------]]
 local FriendlyNames = {
-	 npc_alyx = true, npc_barney = true, npc_citizen = true, npc_eli = true, npc_kleiner = true, 
-	 npc_magnusson = true, npc_monk = true, npc_mossman = true, npc_vortigaunt = true
+	npc_alyx = true, npc_barney = true, npc_citizen = true, npc_dog = true, npc_eli = true, 
+	npc_fisherman = true, npc_gman = true, npc_kleiner = true, npc_magnusson = true, 
+	npc_monk = true, npc_mossman = true, npc_odessa = true, npc_vortigaunt = true
 }
 
 function IsFriendEntityName( victimtype )
