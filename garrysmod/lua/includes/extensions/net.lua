@@ -108,7 +108,7 @@ function net.WriteTable( tab )
 	end
 	
 	-- End of table
-	net.WriteUInt( 0, 8 )
+	net.WriteType( nil )
 
 end
 
@@ -118,15 +118,10 @@ function net.ReadTable()
 	
 	while true do
 	
-		local t = net.ReadUInt( 8 )
-		if ( t == 0 ) then return tab end
-		local k = net.ReadType( t )
-	
-		local t = net.ReadUInt( 8 )
-		if ( t == 0 ) then return tab end
-		local v = net.ReadType( t )
+		local k = net.ReadType()
+		if ( k == nil ) then return tab end
 		
-		tab[ k ] = v
+		tab[ k ] = net.ReadType()
 		
 	end
 
@@ -176,6 +171,8 @@ net.ReadVars =
 }
 
 function net.ReadType( typeid )
+
+	typeid = typeid or net.ReadUInt( 8 )
 
 	local rv = net.ReadVars[ typeid ]
 	if ( rv ) then return rv() end
