@@ -76,7 +76,6 @@ function ControllerNewGame( $scope, $element, $rootScope, $location )
 	$scope.DoubleClick = ""
 	$scope.ClickMap = function( m )
 	{
-		console.log("clicked " + m + " " + $scope.DoubleClick )
 		$scope.SelectMap( m );
 
 		if ( $scope.DoubleClick == m )
