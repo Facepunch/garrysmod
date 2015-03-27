@@ -5,6 +5,11 @@
 -- This should help `newbs` find out which addons are crashing.
 --
 
+local gm_showmenuerror = CreateClientConVar( "gm_showmenuerror", "1", true, false )
+
+-- Disables error display
+if ( not gm_showmenuerror:Bool() ) then return end
+
 local Errors = {}
 
 
@@ -105,3 +110,4 @@ hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 	end
 
 end )
+
