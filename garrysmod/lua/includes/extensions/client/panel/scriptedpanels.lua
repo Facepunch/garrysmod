@@ -192,6 +192,7 @@ function vgui.Register( name, mtable, base )
 
 	-- Default base is Panel
 	mtable.Base = base or "Panel"	
+	mtable.Init = mtable.Init or function() end
 	
 	PanelFactory[ name ] = mtable
 	baseclass.Set( name, mtable )
@@ -216,6 +217,7 @@ function vgui.RegisterTable( mtable, base )
 	PANEL = nil
 
 	mtable.Base = base or "Panel"
+	mtable.Init = mtable.Init or function() end
 	
 	return mtable
 	
@@ -234,6 +236,7 @@ function vgui.RegisterFile( filename )
 	PANEL = OldPanel
 
 	mtable.Base = mtable.Base or "Panel"
+	mtable.Init = mtable.Init or function() end
 	
 	return mtable
 	
