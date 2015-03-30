@@ -1,8 +1,8 @@
 
-local PreviewCache		= {}
-local InfoCache			= {}
-local VoteCache			= {}
-local ListCache			= {}
+local PreviewCache = {}
+local InfoCache = {}
+local VoteCache = {}
+local ListCache = {}
 
 function WorkshopFileBase( namespace, requiredtags )
 
@@ -12,33 +12,36 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	function ret:Fetch( type, offset, perpage, extratags )
 
-		if ( type == 'local' ) then
+		if ( type == "local" ) then
 			return self:FetchLocal( offset, perpage )
 		end
 
-		if ( type == 'subscribed' ) then
+		if ( type == "subscribed" ) then
 			return self:FetchSubscribed( offset, perpage )
 		end
 
-		local userid = "0";
+		local userid = "0"
 
-		if ( type == 'mine' ) then userid = "1" end
+		if ( type == "mine" ) then userid = "1" end
 
 		local tags = table.Copy( requiredtags )
 
 		for k, v in pairs( extratags ) do
 			if ( v == "" ) then continue end
-			table.insert( tags, v );	
+			table.insert( tags, v )
 		end
 
-		local cachename = type.."-"..string.Implode( "/", tags )..offset.."-"..perpage.."-"..userid;
+		local cachename = type.."-"..string.Implode( "/", tags ) .. offset .. "-" .. perpage .. "-" .. userid
 
 		if ( ListCache[ cachename ] ) then
-			self:FillFileInfo( ListCache[cachename] ) 
-			return;
+			self:FillFileInfo( ListCache[ cachename ] ) 
+			return
 		end
 
-		steamworks.GetList( type, tags, offset, perpage, 0, userid, function( data ) ListCache[cachename] = data; self:FillFileInfo( data ) end );
+		steamworks.GetList( type, tags, offset, perpage, 0, userid, function( data )
+			ListCache[ cachename ] = data
+			self:FillFileInfo( data )
+		end )
 
 	end
 
@@ -51,17 +54,16 @@ function WorkshopFileBase( namespace, requiredtags )
 		--
 		subscriptions = table.Reverse( subscriptions )
 		
-		local data = 
-		{
+		local data = {
 			totalresults = #subscriptions,
 			results = {}
 		}
 
-		local i = 0;
-		while ( i < perpage )  do
+		local i = 0
+		while ( i < perpage ) do
 
-			if ( subscriptions[offset+i+1] ) then
-				table.insert( data.results, subscriptions[offset+i+1].wsid )
+			if ( subscriptions[ offset + i + 1 ] ) then
+				table.insert( data.results, subscriptions[ offset + i + 1 ].wsid )
 			end
 
 			i = i + 1
@@ -82,8 +84,8 @@ function WorkshopFileBase( namespace, requiredtags )
 		--
 		-- Send the file index..
 		--
-		local json = util.TableToJSON( results, false );
-		self.HTML:Call( namespace..".ReceiveIndex( "..json.." )" );
+		local json = util.TableToJSON( results, false )
+		self.HTML:Call( namespace .. ".ReceiveIndex( " .. json .. " )" )
 
 		--
 		-- Request info on each file..
@@ -94,25 +96,31 @@ function WorkshopFileBase( namespace, requiredtags )
 			-- Got it cached? 
 			--
 			if ( PreviewCache[ v ] ) then
-				self.HTML:Call( namespace..".ReceiveImage( \""..v.."\", \""..PreviewCache[v].."\" )" );
+				self.HTML:Call( namespace .. ".ReceiveImage( \"" .. v .. "\", \"" .. PreviewCache[ v ] .. "\" )" )
 			end
 
 			--
 			-- Get the file information
 			--
-			if ( InfoCache[ v ]  ) then
+			if ( InfoCache[ v ] ) then
 
-				self.HTML:Call( namespace..".ReceiveFileInfo( \""..v.."\", "..InfoCache[v].." )" );
+				self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. InfoCache[ v ] .. " )" )
 
 			else
 
 				steamworks.FileInfo( v, function( result )
 
-					if ( !result) then return end
+					if ( !result ) then return end
 
-					local json = util.TableToJSON( result, false );
-					InfoCache[ v ] = json;
-					self.HTML:Call( namespace..".ReceiveFileInfo( \""..v.."\", "..json.." )" );
+					if ( result.description ) then
+						result.description = string.gsub( result.description, "%[img%]([^%]]*)%[/img%]", "" ) -- Gotta remove inner content of img tags
+						result.description = string.gsub( result.description, "%[([^%]]*)%]", "" )
+						result.description = string.Trim( result.description )
+					end
+
+					local json = util.TableToJSON( result, false )
+					InfoCache[ v ] = json
+					self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. json .. " )" )
 
 					--
 					-- Now we have the preview id - get the preview image!
@@ -124,8 +132,8 @@ function WorkshopFileBase( namespace, requiredtags )
 							-- Download failed
 							if ( !name ) then return end
 
-							self.HTML:Call( namespace..".ReceiveImage( \""..v.."\", \""..name.."\" )" );
-							PreviewCache[ v ] = name;
+							self.HTML:Call( namespace .. ".ReceiveImage( \"" .. v .. "\", \"" .. name .. "\" )" )
+							PreviewCache[ v ] = name
 
 						end )
 
@@ -137,26 +145,25 @@ function WorkshopFileBase( namespace, requiredtags )
 			--
 			-- Get the current voting stats
 			--
-			self:CountVotes( v );
+			self:CountVotes( v )
 
 		end
 
 	end
 
-
 	function ret:CountVotes( id )
 
 		if ( VoteCache[ id ] ) then
 
-			self.HTML:Call( namespace..".ReceiveVoteInfo( \""..id.."\", "..VoteCache[ id ].." )" );
+			self.HTML:Call( namespace .. ".ReceiveVoteInfo( \"" .. id .. "\", " .. VoteCache[ id ] .. " )" )
 
 		else
 
 			steamworks.VoteInfo( id, function( result )
 
-				local json = util.TableToJSON( result, false );
-				VoteCache[ id ] = json;
-				self.HTML:Call( namespace..".ReceiveVoteInfo( \""..id.."\", "..json.." )" );
+				local json = util.TableToJSON( result, false )
+				VoteCache[ id ] = json
+				self.HTML:Call( namespace .. ".ReceiveVoteInfo( \"" .. id .. "\", " .. json .. " )" )
 
 			end )
 		end
@@ -165,18 +172,18 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	function ret:Publish( filename, image )
 
-		//MsgN( "PUBLISHING ", filename );
-		//MsgN( "Image ", image );
+		//MsgN( "PUBLISHING ", filename )
+		//MsgN( "Image ", image )
 
 		--
 		-- Create the window
 		--
 		local Window = vgui.Create( "DFrame" )
-			Window:SetTitle( "Publish Creation" )
-			Window:SetSize( 400, 350 )
-			Window:LoadGWENFile( "resource/ui/SaveUpload.gwen" ) -- TODO?
-			Window:Center()
-			Window:MakePopup()
+		Window:SetTitle( "Publish Creation" )
+		Window:SetSize( 400, 350 )
+		Window:LoadGWENFile( "resource/ui/SaveUpload.gwen" ) -- TODO?
+		Window:Center()
+		Window:MakePopup()
 
 		--
 		-- Store the fields
@@ -195,14 +202,14 @@ function WorkshopFileBase( namespace, requiredtags )
 		Submit.DoClick = function()
 
 			if ( Title:GetText() == "" ) then
-				Error:SetText( "You must provide a title!" );
-				return;
+				Error:SetText( "You must provide a title!" )
+				return
 			end
 
-			local error = self:FinishPublish( filename, image, Title:GetText(), Description:GetText() );
+			local error = self:FinishPublish( filename, image, Title:GetText(), Description:GetText() )
 			if ( error ) then
-				Error:SetText( error );
-				return;
+				Error:SetText( error )
+				return
 			end
 
 			Window:Remove()
@@ -211,6 +218,6 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	end
 
-	return ret;
+	return ret
 
 end
