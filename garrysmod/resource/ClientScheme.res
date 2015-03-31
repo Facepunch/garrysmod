@@ -27,7 +27,7 @@ Scheme
 	BaseSettings
 	{
 		"FgColor"			"255 235 20 255"
-		"BgColor"			"0 0 0 0"
+		"BgColor"			"0 0 0 76"
 
 		"Panel.FgColor"			"255 220 0 255"
 		"Panel.BgColor"			"0 0 0 0"
