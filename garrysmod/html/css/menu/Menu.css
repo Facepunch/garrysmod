@@ -1,4 +1,3 @@
-
 BODY
 {
 	overflow: hidden;
@@ -8,6 +7,7 @@ BODY
 	margin: 0;
 	padding: 0;
 	font-size: 12px;
+	-webkit-font-smoothing: antialiased;
 }
 
 INPUT
@@ -92,7 +92,7 @@ UL.category LI.icon
 
 .btn-primary:hover
 {
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e)); 
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e));
 }
 
 .btn-back
@@ -111,7 +111,7 @@ UL.category LI.icon
 
 .btn-back:hover
 {
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e)); 
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e));
 }
 
 DIV.gridicon
@@ -123,7 +123,7 @@ DIV.gridicon
 	float: left;
 	margin: 3px;
 	//border-radius: 2px;
-	background-position:center; 
+	background-position:center;
 }
 
 DIV.gridicon name
@@ -172,11 +172,11 @@ DIV.disabled
 	text-shadow: none;
 }
 
-.topnav 
+.topnav
 {
-	 background-color: white; 
-	 padding: 5px; 
-	 border-radius: 3px; 
+	 background-color: white;
+	 padding: 5px;
+	 border-radius: 3px;
 	 font-size: 11px;
 }
 
@@ -208,7 +208,7 @@ right
 	float: right;
 }
 
-loading 
+loading
 {
 	font-size: 48px;
 	font-weight: bolder;
