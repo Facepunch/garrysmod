@@ -13,12 +13,13 @@ local ScrH = ScrH
 local Color = Color
 local tostring = tostring
 local color_white = color_white
+local pcall = pcall
 
 module( "draw" )
 
 --[[---------------------------------------------------------
-    Name: Constants used for text alignment.
-          These must be the same values as in the markup module.
+    Constants used for text alignment.
+    These must be the same values as in the markup module.
 -----------------------------------------------------------]]
 TEXT_ALIGN_LEFT		= 0
 TEXT_ALIGN_CENTER	= 1
@@ -55,40 +56,44 @@ function GetFontHeight( font )
 end
 
 --[[---------------------------------------------------------
-    Name: SimpleText(text, font, x, y, colour)
+    Name: SimpleText( text, font, x, y, colour, xalign, yalign )
     Desc: Simple "draw text at position function"
           color is a table with r/g/b/a elements
-   Usage: 
 -----------------------------------------------------------]]
-function SimpleText(text, font, x, y, colour, xalign, yalign)
+function SimpleText( text, font, x, y, colour, xalign, yalign )
 
 	text 	= tostring( text )
-	font 	= font 		or "DermaDefault"
+	font 	= font
 	x 		= x 		or 0
 	y 		= y 		or 0
 	xalign 	= xalign 	or TEXT_ALIGN_LEFT
 	yalign 	= yalign 	or TEXT_ALIGN_TOP
 	
-	surface.SetFont(font)
+	if font and pcall( function() surface.SetFont( font ) end ) then
+		-- Already set
+	else
+		ErrorNoHalt( "Invalid font sent into SimpleText!" )
+		surface.SetFont( "DermaDefault" )
+	end
+	
 	local w, h = surface.GetTextSize( text )
 
-	if (xalign == TEXT_ALIGN_CENTER) then
+	if ( xalign == TEXT_ALIGN_CENTER ) then
 		x = x - w/2
-	elseif (xalign == TEXT_ALIGN_RIGHT) then
+	elseif ( xalign == TEXT_ALIGN_RIGHT ) then
 		x = x - w
 	end
 	
-	if (yalign == TEXT_ALIGN_CENTER) then
+	if ( yalign == TEXT_ALIGN_CENTER ) then
 		y = y - h/2
 	elseif ( yalign == TEXT_ALIGN_BOTTOM ) then
 		y = y - h
 	end
 	
-	surface.SetTextPos( math.ceil( x ), math.ceil( y ) );
+	surface.SetTextPos( math.ceil( x ), math.ceil( y ) )
 	
-	if (colour!=nil) then
-		local alpha = 255
-		if (colour.a) then alpha = colour.a end
+	if ( colour ) then
+		local alpha = colour.a and colour.a or 255
 		surface.SetTextColor( colour.r, colour.g, colour.b, alpha )
 	else
 		surface.SetTextColor(255, 255, 255, 255)
