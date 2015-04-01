@@ -148,9 +148,8 @@ end
 local reading, writing
 
 
-local _type = type
-local function type(x)
-	local t = _type(x)
+local function send_type(x)
+	local t = type(x)
 	if(t == "table" and IsColor(x)) then
 		return "Color"
 	end
@@ -339,7 +338,7 @@ writing = {
 					net.WriteUInt(headers.reference, MAX_BIT)
 					net.WriteUInt(indices[v], REFERENCE_BIT)
 				else
-					local t = type(v)
+					local t = send_type(v)
 					net.WriteUInt(headers[t], MAX_BIT)
 					local _num = writing[t](v, rs, num)
 					if(t ~= "table") then
@@ -359,7 +358,7 @@ writing = {
 				net.WriteUInt(headers.reference, MAX_BIT)
 				net.WriteUInt(indices[k], REFERENCE_BIT)
 			else
-				local t = type(k)
+				local t = send_type(k)
 				net.WriteUInt(headers[t], MAX_BIT)
 				local _num = writing[t](k, rs, num)
 				if(t ~= "table") then
@@ -374,7 +373,7 @@ writing = {
 				net.WriteUInt(headers.reference, MAX_BIT)
 				net.WriteUInt(indices[v], REFERENCE_BIT)
 			else
-				local t = type(v)
+				local t = send_type(v)
 				net.WriteUInt(headers[t], MAX_BIT)
 				local _num = writing[t](v,rs, num)
 				if(t ~= "table") then
