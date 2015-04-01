@@ -161,33 +161,34 @@ local function send_type(x)
 	-- network load
 	if(x == 1 or x == 0) then return "bit" end
 	if(t == "number" and x % 1 == 0) then
-		if(x <= 127 and x >= 127) then
-			return "byte"
+		if(x <= 127 and x >= -127) then
+			return "int8"
 		end
 		if(x <= 0x7FFF and x >= -0x7FFF) then
-			return "word"
+			return "int16"
 		end
-		if(x <= 0x7FFFFFFF and x >= 0x7FFFFFFF) then
-			return "dword"
+		if(x <= 0x7FFFFFFF and x >= -0x7FFFFFFF) then
+			return "int32"
 		end
 	end
 	return t
 end
 
 local headers = {
-	string 	= 0
-	number 	= 1
-	table 	= 2
-	boolean	= 3
-	endtable= 4
-	Vector	= 5
-	Angle	= 6
-	Color	= 7
-	Entity	= 8
-	bit		= 9
-	word	= 10
-	dword	= 11
-	reference=12
+	string   = 0,
+	number   = 1,
+	table    = 2,
+	boolean  = 3,
+	endtable = 4,
+	Vector   = 5,
+	Angle    = 6,
+	Color    = 7,
+	Entity   = 8,
+	bit	     = 9,
+	int8     = 10,
+	int16    = 11,
+	int32    = 12,
+	reference= 13,
 }
 local rheader = {}
 for k,v in pairs(headers) do rheader[v] = k end
@@ -204,13 +205,13 @@ reading = {
 	reference = function(rs)
 		return rs[net.ReadUInt(REFERENCE_BIT)]
 	end,
-	byte = function()
+	int8 = function()
 		return net.ReadInt(8)
 	end,
-	word = function()
+	int16 = function()
 		return net.ReadInt(16)
 	end,
-	dword = function()
+	int32 = function()
 		return net.ReadInt(32)
 	end,
 	string = function()
@@ -281,13 +282,13 @@ writing = {
 	Color = net.WriteColor,
 	boolean = net.WriteBool,
 	number = net.WriteDouble,
-	byte = function(b)
+	int8 = function(b)
 		net.WriteInt(b, 8)
 	end,
-	word = function(w)
+	int16 = function(w)
 		net.WriteInt(w, 16)
 	end,
-	dword = function(d)
+	int32 = function(d)
 		net.WriteInt(d, 32)
 	end,
 	Entity = function(e)
@@ -310,7 +311,7 @@ writing = {
 	end,
 	string = function(x)
 		local compressed = util.Compress(x)
-		if(#compressed < #x) then
+		if(compressed and #compressed < #x) then
 			net.WriteBool(true)
 			local len = bit.band(#compressed, 0x7FFF)
 			net.WriteUInt(len, 16)
