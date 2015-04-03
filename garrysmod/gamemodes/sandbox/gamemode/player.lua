@@ -23,16 +23,9 @@ end
 -----------------------------------------------------------]]
 local function LimitReachedProcess( ply, str )
 
-	-- Always allow in single player
-	if ( game.SinglePlayer() ) then return true end
 	if ( !IsValid( ply ) ) then return true end
 
-	local c = cvars.Number( "sbox_max"..str, 0 )
-	
-	if ( ply:GetCount( str ) < c || c < 0 ) then return true end 
-	
-	ply:LimitHit( str ) 
-	return false
+	return ply:CheckLimit( str )
 
 end
 
@@ -44,7 +37,7 @@ end
 function GM:PlayerSpawnRagdoll( ply, model )
 
 	return LimitReachedProcess( ply, "ragdolls" )
-	
+
 end
 
 
@@ -75,7 +68,7 @@ end
 function GM:PlayerSpawnVehicle( ply, model, vname, vtable )
 
 	return LimitReachedProcess( ply, "vehicles" )
-	
+
 end
 
 
@@ -85,7 +78,7 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerSpawnSWEP( ply, wname, wtable )
 
-	return LimitReachedProcess( ply, "sents" )	
+	return LimitReachedProcess( ply, "sents" )
 	
 end
 
@@ -97,7 +90,7 @@ end
 function GM:PlayerGiveSWEP( ply, wname, wtable )
 
 	return true
-	
+
 end
 
 
@@ -106,9 +99,9 @@ end
    Desc: Return true if player is allowed to spawn the SENT
 -----------------------------------------------------------]]
 function GM:PlayerSpawnSENT( ply, name )
-		
-	return LimitReachedProcess( ply, "sents" )	
-	
+
+	return LimitReachedProcess( ply, "sents" )
+
 end
 
 --[[---------------------------------------------------------
@@ -117,8 +110,8 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerSpawnNPC( ply, npc_type, equipment )
 
-	return LimitReachedProcess( ply, "npcs" )	
-	
+	return LimitReachedProcess( ply, "npcs" )
+
 end
 
 --[[---------------------------------------------------------
@@ -138,7 +131,7 @@ end
 function GM:PlayerSpawnedProp( ply, model, ent )
 
 	ply:AddCount( "props", ent )
-	
+
 end
 
 --[[---------------------------------------------------------

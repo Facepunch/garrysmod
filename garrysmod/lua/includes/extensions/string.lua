@@ -1,3 +1,6 @@
+local string = string
+local math = math
+
 --[[---------------------------------------------------------
    Name: string.ToTable( string )
 -----------------------------------------------------------]]
@@ -11,17 +14,61 @@ function string.ToTable ( str )
 	return tbl
 end
 
+--[[---------------------------------------------------------
+   Name: string.JavascriptSafe( string )
+   Desc: Takes a string and escapes it for insertion in to a JavaScript string
+-----------------------------------------------------------]]
+local javascript_escape_replacements = {
+	["\\"] = "\\\\",
+	["\0"] = "\\0" ,
+	["\b"] = "\\b" ,
+	["\t"] = "\\t" ,
+	["\n"] = "\\n" ,
+	["\v"] = "\\v" ,
+	["\f"] = "\\f" ,
+	["\r"] = "\\r" ,
+	["\""] = "\\\"",
+	["\'"] = "\\\'"
+}
 
 function string.JavascriptSafe( str )
 
-	str = str:Replace( "\\", "\\\\" )
-	str = str:Replace( "\"", "\\\"" )
-	str = str:Replace( "\n", "\\n" )
-	str = str:Replace( "\r", "\\r" )
-	
+	str = str:gsub( ".", javascript_escape_replacements )
+
+	-- U+2028 and U+2029 are treated as line separators in JavaScript, handle separately as they aren't single-byte
+	str = str:gsub( "\226\128\168", "\\\226\128\168" )
+	str = str:gsub( "\226\128\169", "\\\226\128\169" )
+
 	return str
 
 end
+
+--[[---------------------------------------------------------
+   Name: string.PatternSafe( string )
+   Desc: Takes a string and escapes it for insertion in to a Lua pattern
+-----------------------------------------------------------]]
+local pattern_escape_replacements = {
+	["("] = "%(",
+	[")"] = "%)",
+	["."] = "%.",
+	["%"] = "%%",
+	["+"] = "%+",
+	["-"] = "%-",
+	["*"] = "%*",
+	["?"] = "%?",
+	["["] = "%[",
+	["]"] = "%]",
+	["^"] = "%^",
+	["$"] = "%$",
+	["\0"] = "%z"
+}
+
+function string.PatternSafe( str )
+
+	return ( str:gsub( ".", pattern_escape_replacements ) )
+
+end
+
 --[[---------------------------------------------------------
    Name: explode(seperator ,string)
    Desc: Takes a string and turns it into a table
@@ -38,7 +85,7 @@ function string.Explode(separator, str, withpattern)
 	local index,lastPosition = 1,1
 	 
 	-- Escape all magic characters in separator
-	if not withpattern then separator = string_gsub( separator, "[%-%^%$%(%)%%%.%[%]%*%+%-%?]", "%%%1" ) end
+	if not withpattern then separator = separator:PatternSafe() end
 	 
 	-- Find the parts
 	for startPosition,endPosition in string_gmatch( str, "()" .. separator.."()" ) do
@@ -185,7 +232,7 @@ end
 
 
 function string.Replace( str, tofind, toreplace )
-	tofind = tofind:gsub( "[%-%^%$%(%)%%%.%[%]%*%+%-%?]", "%%%1" )
+	tofind = tofind:PatternSafe()
 	toreplace = toreplace:gsub( "%%", "%%%1" )
 	return ( str:gsub( tofind, toreplace ) )
 end
@@ -196,8 +243,8 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.Trim( s, char )
-	if ( !char ) then char = "%s" end
-	return ( s:gsub( "^" .. char .. "*(.-)" .. char .. "*$", "%1" ) )
+	if char then char = char:PatternSafe() else char = "%s" end
+	return string.match( s, "^" .. char .. "*(.-)" .. char .. "*$" ) or s
 end
 
 --[[---------------------------------------------------------
@@ -206,14 +253,8 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimRight( s, char )
-	if ( !char ) then char = " " end
-	
-	if ( string.sub( s, -1 ) == char ) then
-		s = string.sub( s, 0, -2 )
-		s = string.TrimRight( s, char )
-	end
-	
-	return s
+	if char then char = char:PatternSafe() else char = "%s" end
+	return string.match( s, "^(.-)" .. char .. "*$" ) or s
 end
 
 --[[---------------------------------------------------------
@@ -222,14 +263,8 @@ end
 		 Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimLeft( s, char )
-	if ( !char ) then char = " " end
-	
-	if ( string.sub( s, 1 ) == char ) then
-		s = string.sub( s, 1 )
-		s = string.TrimLeft( s, char )
-	end
-	
-	return s
+	if char then char = char:PatternSafe() else char = "%s" end
+	return string.match( s, "^" .. char .. "*(.+)$" ) or s
 end
 
 function string.NiceSize( size )
@@ -266,12 +301,13 @@ end
 local meta = getmetatable( "" )
 
 function meta:__index( key )
-	if ( string[key] ) then
-		return string[key]
+	local val = string[ key ]
+	if ( val ) then
+		return val
 	elseif ( tonumber( key ) ) then
 		return self:sub( key, key )
 	else
-		error( "bad key to string index (number expected, got " .. type( key ) .. ")", 2 )
+		error( "attempt to index a string value with bad key ('" .. tostring( key ) .. "' is not part of the string library)", 2 )
 	end
 end
 

@@ -1,3 +1,4 @@
+
 if (!IN_ENGINE)
 {
 	window.util = {
@@ -101,7 +102,7 @@ function MenuController( $scope, $rootScope )
 	// 
 	$scope.BackToGame = function()
 	{
-	    lua.Run( "RawConsoleCommand( 'gameui_hide' );" );
+		lua.Run( "RawConsoleCommand( 'gameui_hide' );" );
 	}
 
 	$scope.Disconnect = function ()
@@ -128,10 +129,10 @@ function MenuController( $scope, $rootScope )
 
 	$scope.ShowNews = function()
 	{
+		if ( gScope.Branch != "unknown" ) return lua.Run( "gui.OpenURL( 'http://wiki.garrysmod.com/changelist/' )" );
 		console.log( "Opening News!" );
 		lua.Run( "gui.OpenURL( 'http://www.garrysmod.com/updates/' )" );
 	}
-	
 
 	// Background
 	ChangeBackground();
@@ -277,7 +278,7 @@ function UpdateMaps( inmaps )
 		for ( v in inmaps[k] )
 		{
 			maps.push( inmaps[k][v] );
-			MapIndex[v.toLowerCase()] = true;
+			MapIndex[ inmaps[k][v].toLowerCase() ] = true;
 		}
 
 		mapList.push( 

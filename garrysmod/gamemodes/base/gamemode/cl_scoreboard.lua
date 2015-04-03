@@ -1,16 +1,15 @@
 
 surface.CreateFont( "ScoreboardDefault", {
-	font		= "Helvetica",
-	size		= 22,
-	weight		= 800
-})
+	font	= "Helvetica",
+	size	= 22,
+	weight	= 800
+} )
 
 surface.CreateFont( "ScoreboardDefaultTitle", {
-	font		= "Helvetica",
-	size		= 32,
-	weight		= 800
-})
-
+	font	= "Helvetica",
+	size	= 32,
+	weight	= 800
+} )
 
 --
 -- This defines a new panel type for the player row. The player row is given a player
@@ -32,7 +31,7 @@ local PLAYER_LINE = {
 		self.Name = self:Add( "DLabel" )
 		self.Name:Dock( FILL )
 		self.Name:SetFont( "ScoreboardDefault" )
-		self.Name:SetDark( true )
+		self.Name:SetTextColor( Color( 93, 93, 93 ) )
 		self.Name:DockMargin( 8, 0, 0, 0 )
 
 		self.Mute = self:Add( "DImageButton" )
@@ -43,26 +42,26 @@ local PLAYER_LINE = {
 		self.Ping:Dock( RIGHT )
 		self.Ping:SetWidth( 50 )
 		self.Ping:SetFont( "ScoreboardDefault" )
-		self.Ping:SetDark( true )
+		self.Ping:SetTextColor( Color( 93, 93, 93 ) )
 		self.Ping:SetContentAlignment( 5 )
 
 		self.Deaths = self:Add( "DLabel" )
 		self.Deaths:Dock( RIGHT )
 		self.Deaths:SetWidth( 50 )
 		self.Deaths:SetFont( "ScoreboardDefault" )
-		self.Deaths:SetDark( true )
+		self.Deaths:SetTextColor( Color( 93, 93, 93 ) )
 		self.Deaths:SetContentAlignment( 5 )
 
 		self.Kills = self:Add( "DLabel" )
 		self.Kills:Dock( RIGHT )
 		self.Kills:SetWidth( 50 )
 		self.Kills:SetFont( "ScoreboardDefault" )
-		self.Kills:SetDark( true )
+		self.Kills:SetTextColor( Color( 93, 93, 93 ) )
 		self.Kills:SetContentAlignment( 5 )
 
 		self:Dock( TOP )
 		self:DockPadding( 3, 3, 3, 3 )
-		self:SetHeight( 32 + 3*2 )
+		self:SetHeight( 32 + 3 * 2 )
 		self:DockMargin( 2, 0, 2, 2 )
 
 	end,
@@ -83,6 +82,7 @@ local PLAYER_LINE = {
 	Think = function( self )
 
 		if ( !IsValid( self.Player ) ) then
+			self:SetZPos( 9999 ) -- Causes a rebuild
 			self:Remove()
 			return
 		end
@@ -127,7 +127,8 @@ local PLAYER_LINE = {
 		-- Connecting players go at the very bottom
 		--
 		if ( self.Player:Team() == TEAM_CONNECTING ) then
-			self:SetZPos( 2000 )
+			self:SetZPos( 2000 + self.Player:EntIndex() )
+			return
 		end
 
 		--
@@ -135,7 +136,7 @@ local PLAYER_LINE = {
 		-- so if we set the z order according to kills they'll be ordered that way!
 		-- Careful though, it's a signed short internally, so needs to range between -32,768k and +32,767
 		--
-		self:SetZPos( (self.NumKills * -50) + self.NumDeaths )
+		self:SetZPos( ( self.NumKills * -50 ) + self.NumDeaths + self.Player:EntIndex() )
 
 	end,
 
@@ -154,7 +155,7 @@ local PLAYER_LINE = {
 			return
 		end
 
-		if  ( !self.Player:Alive() ) then
+		if ( !self.Player:Alive() ) then
 			draw.RoundedBox( 4, 0, 0, w, h, Color( 230, 200, 200, 255 ) )
 			return
 		end
@@ -272,11 +273,9 @@ function GM:ScoreboardHide()
 
 end
 
-
 --[[---------------------------------------------------------
 	Name: gamemode:HUDDrawScoreBoard( )
 	Desc: If you prefer to draw your scoreboard the stupid way (without vgui)
 -----------------------------------------------------------]]
 function GM:HUDDrawScoreBoard()
-
 end

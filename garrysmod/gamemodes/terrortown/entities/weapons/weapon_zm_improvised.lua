@@ -142,8 +142,8 @@ function SWEP:PrimaryAttack()
          edata:SetStart(spos)
          edata:SetOrigin(tr_main.HitPos)
          edata:SetNormal(tr_main.Normal)
-
-         --edata:SetSurfaceProp(tr_main.MatType)
+         edata:SetSurfaceProp(tr_main.SurfaceProps)
+         edata:SetHitBox(tr_main.HitBox)
          --edata:SetDamageType(DMG_CLUB)
          edata:SetEntity(hitEnt)
 

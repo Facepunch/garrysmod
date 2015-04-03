@@ -2,7 +2,7 @@
 EFFECT.Mat = Material( "pp/dof" )
 
 --[[---------------------------------------------------------
-   Initializes the effect. The data is a table of data 
+   Initializes the effect. The data is a table of data
    which was passed from the server.
 -----------------------------------------------------------]]
 function EFFECT:Init( data )
@@ -24,8 +24,8 @@ function EFFECT:Think( )
 	-- If the spacing or offset has changed we need to reconfigure our positions
 	local ply = LocalPlayer()
 
-	self.spacing 	= DOF_SPACING * self.Scale
-	self.offset 	= DOF_OFFSET
+	self.spacing	= DOF_SPACING * self.Scale
+	self.offset		= DOF_OFFSET
 	
 	-- Just return if it hasn't
 	--if ( spacing == self.spacing && offset == self.offset ) then return true end
@@ -61,6 +61,6 @@ function EFFECT:Render()
 	local SpriteSize = ( self.spacing + self.offset ) * 8
 	
 	render.SetMaterial( self.Mat )
-	render.DrawSprite( self:GetPos(), SpriteSize, SpriteSize, Color(255, 255, 255, 255) )
+	render.DrawSprite( self:GetPos(), SpriteSize, SpriteSize, Color( 255, 255, 255 ) )
 
 end

@@ -149,9 +149,9 @@ if ( CLIENT ) then
 
 	hook.Add( "PreDrawHalos", "PropertiesHover", function()
 
-		if ( vgui.GetHoveredPanel() != vgui.GetWorldPanel() && vgui.GetHoveredPanel() != g_ContextMenu ) then return end
-	
-		local ent = properties.GetHovered( EyePos(), LocalPlayer():GetAimVector() )
+		if ( !IsValid( vgui.GetHoveredPanel() ) || vgui.GetHoveredPanel() != g_ContextMenu ) then return end
+
+		local ent = GetHovered( EyePos(), LocalPlayer():GetAimVector() )
 		if ( !IsValid( ent ) ) then return end
 		
 		local c = Color( 255, 255, 255, 255 )
@@ -159,7 +159,9 @@ if ( CLIENT ) then
 		c.g = 200 + math.sin( RealTime() * 20 ) * 55
 		c.b = 200 + math.cos( RealTime() * 60 ) * 55
 		
-		halo.Add( { ent }, c, 2, 2, 2, true, false )
+		local t = { ent }
+		if ( ent.GetActiveWeapon && IsValid( ent:GetActiveWeapon() ) ) then table.insert( t, ent:GetActiveWeapon() ) end
+		halo.Add( t, c, 2, 2, 2, true, false )
 	
 	end )
 
@@ -168,6 +170,8 @@ if ( CLIENT ) then
 	-- gui.
 	--
 	hook.Add( "GUIMousePressed", "PropertiesClick", function( code, vector )
+	
+		if ( !IsValid( vgui.GetHoveredPanel() ) || vgui.GetHoveredPanel() != g_ContextMenu ) then return end
 
 		if ( code == MOUSE_RIGHT && !input.IsButtonDown( MOUSE_LEFT ) ) then
 			OnScreenClick( EyePos(), vector )
@@ -179,7 +183,15 @@ if ( CLIENT ) then
 	-- Hook the GUIMousePressed call, which is called when the client clicks on the
 	-- gui.
 	--
+	
+	local wasPressed = false
 	hook.Add( "PreventScreenClicks", "PropertiesPreventClicks", function()
+	
+		if ( !input.IsButtonDown( MOUSE_RIGHT ) ) then wasPressed = false end
+	
+		if ( wasPressed && input.IsButtonDown( MOUSE_RIGHT ) && !input.IsButtonDown( MOUSE_LEFT ) ) then return true end
+	
+		if ( !IsValid( vgui.GetHoveredPanel() ) || vgui.GetHoveredPanel() != g_ContextMenu ) then return end
 
 		local ply = LocalPlayer()
 		if ( !IsValid( ply ) ) then return end
@@ -196,6 +208,7 @@ if ( CLIENT ) then
 			local hovered = GetHovered( EyePos(), ply:GetAimVector() )
 
 			if ( IsValid( hovered ) ) then
+				wasPressed = true
 				return true
 			end
 

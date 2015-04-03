@@ -14,7 +14,8 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		"weapon",
 		"tool",
 		"npc",
-		"vehicle"
+		"vehicle",
+		"model"
 	];
 
 	addon.Init( 'addon', $scope, $rootScope );

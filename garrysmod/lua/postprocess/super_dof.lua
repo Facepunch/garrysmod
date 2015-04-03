@@ -1,19 +1,19 @@
 
 PANEL = {}
 
-local Distance 			= 256
+local Distance			= 256
 local BlurSize			= 0.5
 local Passes			= 12
 local Steps				= 24
 local Shape				= 0.5
 
 local SuperDOFWindow	= nil
-local Status 			= "Preview"
+local Status			= "Preview"
 
-local sldDistance   	= nil
-local lblDistance 		= nil
-local lblSize 			= nil
-local FocusGrabber  	= false
+local sldDistance		= nil
+local lblDistance		= nil
+local lblSize			= nil
+local FocusGrabber		= false
 local ScreenshotTimer	= 0
 
 function PANEL:Init()
@@ -48,7 +48,7 @@ function PANEL:Init()
 		self.Distance:Dock( TOP )
 		self.Distance:SetDark( true )
 		self.Distance:SetToolTip( "#superdof_pp.distance.tooltip" )
-			
+		
 	Panel:SetPos( 10, 30 )
 	Panel:SetSize( 300, 90 )
 	Panel:DockPadding( 8, 8, 8, 8 )
@@ -101,7 +101,7 @@ function PANEL:Init()
 	Panel:Dock( RIGHT )
 
 	local Panel = vgui.Create( "DPanel", self )
-			
+	
 	self.Render = vgui.Create( "DButton", Panel )
 		self.Render:SetText( "#superdof_pp.render" )
 		function self.Render:DoClick() Status = "Render" end
@@ -130,9 +130,9 @@ function PANEL:Init()
 	Panel:DockMargin( 0, 4, 0, 0 )
 	Panel:SetTall( 28 );
 	Panel:MoveToBack()
-		
+	
 	self:SetSize( 600, 220 )
-		
+	
 end
 
 function PANEL:ChangeDistanceTo( dist )
@@ -144,7 +144,7 @@ end
 local paneltypeSuperDOF = vgui.RegisterTable( PANEL, "DFrame" )
 local texFSB = render.GetSuperFPTex()
 local matFSB = Material( "pp/motionblur" )
-local matFB	 = Material( "pp/fb" )
+local matFB = Material( "pp/fb" )
 
 function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, bSpin, inView, ViewFOV )
 
@@ -180,7 +180,7 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 			render.Clear( 0, 0, 0, 255, true, true )
 			matFB:SetFloat( "$alpha", 1  )
 			render.SetMaterial( matFB )
-			render.DrawScreenQuad()	
+			render.DrawScreenQuad()
 	
 	
 	local Radials = ( math.pi * 2 ) / radial_steps
@@ -192,8 +192,8 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 			local VA = vAngle * 1 -- hack - this makes it copy the angles instead of the reference
 			local VRot = vAngle * 1
 			-- Rotate around the focus point
-			VA:RotateAroundAxis( VRot:Right(), 	math.sin( i + ( mul ) ) * fAngleSize * mul * ( Shape ) * 2 )
-			VA:RotateAroundAxis( VRot:Up(), 	math.cos( i + ( mul ) ) * fAngleSize * mul * ( 1 - Shape ) * 2 )
+			VA:RotateAroundAxis( VRot:Right(),	math.sin( i + ( mul ) ) * fAngleSize * mul * ( Shape ) * 2 )
+			VA:RotateAroundAxis( VRot:Up(),		math.cos( i + ( mul ) ) * fAngleSize * mul * ( 1 - Shape ) * 2 )
 
 			view.origin = vFocus - VA:Forward() * fDistance
 			view.angles = VA
@@ -206,8 +206,8 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 			
 			-- Copy it to our floating point buffer at a reduced alpha
 			render.SetRenderTarget( texFSB )
-			local alpha = ( Radials / ( math.pi * 2 ) ) 	-- Divide alpha by number of radials
-			alpha = alpha * ( 1 - mul )						-- Reduce alpha the further away from center we are
+			local alpha = ( Radials / ( math.pi * 2 ) )	-- Divide alpha by number of radials
+			alpha = alpha * ( 1 - mul )					-- Reduce alpha the further away from center we are
 			matFB:SetFloat( "$alpha", alpha  )
 			
 				render.SetMaterial( matFB )
@@ -248,7 +248,7 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 	-- Render our result buffer to the screen
 	matFSB:SetFloat( "$alpha", 1 )
 	matFSB:SetTexture( "$basetexture", texFSB )
-		
+	
 	render.SetMaterial( matFSB )
 	render.DrawScreenQuad()
 
@@ -306,7 +306,7 @@ end
 
 local function RenderSceneHook( ViewOrigin, ViewAngles, ViewFOV )
 
-	if ( !ValidPanel( SuperDOFWindow ) ) then return end
+	if ( !IsValid( SuperDOFWindow ) ) then return end
 	
 	-- Don't render it when the console is up
 	if ( FrameTime() == 0 ) then return end
@@ -321,7 +321,7 @@ local function OpenWindow()
 
 	Status = "Preview"
 	
-	if ( ValidPanel( SuperDOFWindow ) ) then
+	if ( IsValid( SuperDOFWindow ) ) then
 		SuperDOFWindow:Remove()
 	end
 	
@@ -341,7 +341,7 @@ concommand.Add( "pp_superdof", OpenWindow )
 -----------------------------------------------------------]]   
 local function MouseDown( mouse )
 
-	if ( !ValidPanel( SuperDOFWindow ) ) then return end
+	if ( !IsValid( SuperDOFWindow ) ) then return end
 
 	vgui.GetWorldPanel():MouseCapture( true )
 	FocusGrabber = true
@@ -354,7 +354,7 @@ hook.Add( "GUIMousePressed", "SuperDOFMouseDown", MouseDown )
 -----------------------------------------------------------]]   
 local function MouseUp( mouse )
 
-	if ( !ValidPanel( SuperDOFWindow ) ) then return end
+	if ( !IsValid( SuperDOFWindow ) ) then return end
 	
 	vgui.GetWorldPanel():MouseCapture( false )
 	FocusGrabber = false
@@ -376,6 +376,6 @@ list.Set( "PostProcess", "#superdof_pp", {
 --
 hook.Add( "PreventScreenClicks", "SuperDOFPreventClicks", function()
 
-	if ( ValidPanel( SuperDOFWindow ) ) then return true end
+	if ( IsValid( SuperDOFWindow ) ) then return true end
 
 end )

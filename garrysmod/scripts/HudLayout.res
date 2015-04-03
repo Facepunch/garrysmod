@@ -69,7 +69,11 @@
 
 		"PaintBackgroundType"	"2"
 
-		"digit_xpos" "10"
+		//"digit_xpos" "10"
+		//"digit_ypos" "2"
+		"text_xpos" "8"
+		"text_ypos" "22"
+		"digit_xpos" "36"
 		"digit_ypos" "2"
 	}
 	

@@ -8,10 +8,15 @@ function menubar.Init()
 	menubar.Control:SetVisible( false )
 	
 	hook.Run( "PopulateMenuBar", menubar.Control )
-	
+
 end
 
 function menubar.ParentTo( pnl )
+
+	// I don't like this
+	if ( !IsValid( menubar.Control ) ) then
+		menubar.Init()
+	end
 
 	menubar.Control:SetParent( pnl )
 	menubar.Control:MoveToBack()
@@ -21,7 +26,9 @@ function menubar.ParentTo( pnl )
 end
 
 function menubar.IsParent( pnl )
+
 	return menubar.Control:GetParent() == pnl
+
 end
 
 

@@ -99,7 +99,7 @@ function clr(color) return color.r, color.g, color.b, color.a; end
 if CLIENT then
    -- Is screenpos on screen?
    function IsOffScreen(scrpos)
-      return scrpos.x < 0 or scrpos.y < 0 or scrpos.x > ScrW() or scrpos.y > ScrH()
+      return not scrpos.visible or scrpos.x < 0 or scrpos.y < 0 or scrpos.x > ScrW() or scrpos.y > ScrH()
    end
 end
 
@@ -171,10 +171,6 @@ function util.SafeRemoveHook(event, name)
    if h and h[event] and h[event][name] then
       hook.Remove(event, name)
    end
-end
-
-function util.UnbridledHateForULX()
-   util.SafeRemoveHook("PlayerSay", "ULXMeCheck")
 end
 
 function util.noop() end
@@ -275,8 +271,6 @@ function math.ExponentialDecay(halflife, dt)
    -- ln(0.5) = -0.69..
    return exp((-0.69314718 / halflife) * dt)
 end
-
-Warning = ErrorNoHalt
 
 function Dev(level, ...)
    if cvars and cvars.Number("developer", 0) >= level then

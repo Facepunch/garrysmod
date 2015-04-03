@@ -8,15 +8,28 @@
 				<li><h2 ng-tranny="'saves'"></h2></li>
 
 				<li>&nbsp;</li>
-
+	
 				<li><a class="{{IfElse( Category == 'local', 'active', '' )}}" ng-click="Switch( 'local', 0 )" ng-Tranny="'saves.local'"></a></li>
 
 				<li>&nbsp;</li>
 
-				<li><a class="{{IfElse( Category == 'popular', 'active', '' )}}" ng-click="Switch( 'popular', 0 )" ng-Tranny="'saves.popular'"></a></li>
-				<li><a class="{{IfElse( Category == 'latest', 'active', '' )}}" ng-click="Switch( 'latest', 0 )" ng-Tranny="'saves.latest'"></a></li>
-				<li><a class="{{IfElse( Category == 'friends', 'active', '' )}}" ng-click="Switch( 'friends', 0 )" ng-Tranny="'saves.friends'"></a></li>
+				<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+
+					<a ng-click="Switch( cat, 0 )" ng-Tranny="'saves.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+
+					<ul ng-show="Category == cat" style="margin-top: 4px; margin-bottom: 15px;">
+						<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
+							<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'saves.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						</li>
+					</ul>
+
+				</li>
+
+				<li>&nbsp;</li>
+
 				<li><a class="{{IfElse( Category == 'mine', 'active', '' )}}" ng-click="Switch( 'mine', 0 )" ng-Tranny="'saves.mine'"></a></li>
+				<li><a class="{{IfElse( Category == 'friends', 'active', '' )}}" ng-click="Switch( 'friends', 0 )" ng-Tranny="'saves.friends'"></a></li>
+
 				<li>&nbsp;</li>
 
 				<li><a ng-click="OpenFolder( 'saves' )" ng-Tranny="'saves.openfolder'"></a></li>

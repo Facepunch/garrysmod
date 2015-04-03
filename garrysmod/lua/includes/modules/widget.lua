@@ -35,19 +35,17 @@ local function UpdateHovered( pl, mv )
 		endpos	= pl:EyePos() + pl:GetAimVector() * 256,
 		filter	= function( ent )
 		
-					  return ent:IsValid() && ent:IsWidget()
+			return IsValid( ent ) && ent:IsWidget()
 		
-				  end
+		end
 	}
-		
+	
 --	debugoverlay.Line( trace.start, trace.endpos, 0.5 )
 
 	widgets.Tracing = true
 	local tr = util.TraceLine( trace )
 	widgets.Tracing = false
 
-
-	
 	if ( !IsValid( tr.Entity ) ) then return end
 	if ( tr.Entity:IsWorld() ) then return end
 	if ( !tr.Entity:IsWidget() ) then return end

@@ -157,13 +157,13 @@ local function TraitorMenuPopup()
    end
 
    -- Close any existing traitor menu
-   if eqframe and ValidPanel(eqframe) then eqframe:Close() end
+   if eqframe and IsValid(eqframe) then eqframe:Close() end
 
    local credits = ply:GetCredits()
    local can_order = credits > 0
 
    local dframe = vgui.Create("DFrame")
-   local w, h = 500, 350
+   local w, h = 570, 412
    dframe:SetSize(w, h)
    dframe:Center()
    dframe:SetTitle(GetTranslation("equip_title"))
@@ -209,7 +209,7 @@ local function TraitorMenuPopup()
    --- Construct icon listing
    local dlist = vgui.Create("EquipSelect", dequip)
    dlist:SetPos(0,0)
-   dlist:SetSize(154, h - 75)
+   dlist:SetSize(216, h - 75)
    dlist:EnableVerticalScrollbar(true)
    dlist:EnableHorizontal(true)
    dlist:SetPadding(4)
@@ -293,7 +293,7 @@ local function TraitorMenuPopup()
       dlist:AddPanel(ic)
    end
 
-   local dlistw = 154
+   local dlistw = 216
 
    local bw, bh = 100, 25
 
@@ -368,6 +368,8 @@ local function TraitorMenuPopup()
       dsheet:AddSheet(GetTranslation("xfer_name"), dtransfer, "icon16/group_gear.png", false,false, "Transfer credits")
    end
 
+   hook.Run("TTTEquipmentTabs", dsheet)
+
 
    -- couple panelselect with info
    dlist.OnActivePanelChanged = function(self, _, new)
@@ -426,7 +428,7 @@ end
 concommand.Add("ttt_cl_traitorpopup", TraitorMenuPopup)
 
 local function ForceCloseTraitorMenu(ply, cmd, args)
-   if ValidPanel(eqframe) then
+   if IsValid(eqframe) then
       eqframe:Close()
    end
 end

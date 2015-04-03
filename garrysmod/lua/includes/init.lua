@@ -3,9 +3,11 @@
 	Non-Module includes
 -----------------------------------------------------------]]
 
-include ( "util.lua" )			-- Misc Utilities	
-include ( "util/sql.lua" )		-- Include sql here so it's 
+include ( "util.lua" )			-- Misc Utilities
+include ( "util/sql.lua" )		-- Include sql here so it's
 								-- available at loadtime to modules.
+							
+include( "extensions/net.lua" )
 
 --[[---------------------------------------------------------
 	Shared Modules
@@ -14,9 +16,9 @@ include ( "util/sql.lua" )		-- Include sql here so it's
 require ( "baseclass" )
 require ( "concommand" )		-- Console Commands
 require ( "saverestore" )		-- Save/Restore
+require ( "hook" )				-- Gamemode hooks
 require ( "gamemode" )			-- Gamemode manager
 require ( "weapons" )			-- SWEP manager
-require ( "hook" )				-- Gamemode hooks
 require ( "scripted_ents" )		-- Scripted Entities
 require ( "player_manager" )	-- Player models/class manager
 require ( "numpad" )
@@ -25,14 +27,14 @@ require ( "undo" )
 require ( "cleanup" )
 require ( "duplicator" )
 require ( "constraint" )
-require ( "construct" )	
+require ( "construct" )
 require ( "usermessage" )
 require ( "list" )
 require ( "cvars" )
 require ( "http" )
-require ( "net" )
 require ( "properties" )
 require ( "widget" )
+require ( "cookie" )
 
 require ( "drive" )
 include ( "drive/drive_base.lua" )
@@ -46,7 +48,6 @@ if ( SERVER ) then
 
 	require( "ai_task" )
 	require( "ai_schedule" )
-	include( "util/entity_creation_helpers.lua" )
 
 end
 
@@ -65,13 +66,12 @@ if ( CLIENT ) then
 	require ( "spawnmenu" )
 	require ( "controlpanel" )
 	require ( "presets" )
-	require ( "cookie" )
 	require ( "menubar" )
 	require ( "matproxy" )
-	
+
 	include( "util/model_database.lua" )	-- Store information on models as they're loaded
 	include( "util/vgui_showlayout.lua" ) 	-- VGUI Performance Debug
-	include( "util/tooltips.lua" )	
+	include( "util/tooltips.lua" )
 	include( "util/client.lua" )
 	include( "util/javascript_util.lua" )
 	include( "util/workshop_files.lua" )
@@ -87,9 +87,9 @@ include( "gmsave.lua" )
 
 --[[---------------------------------------------------------
 	Extensions
-	
+
 	Load extensions that we specifically need for the menu,
-	to reduce the chances of loading something that might 
+	to reduce the chances of loading something that might
 	cause errors.
 -----------------------------------------------------------]]
 
@@ -98,7 +98,7 @@ include ( "extensions/angle.lua" )
 include ( "extensions/debug.lua" )
 include ( "extensions/entity.lua" )
 include ( "extensions/ents.lua" )
-include ( "extensions/math.lua" )	
+include ( "extensions/math.lua" )
 include ( "extensions/player.lua" )
 include ( "extensions/player_auth.lua" )
 include ( "extensions/string.lua" )

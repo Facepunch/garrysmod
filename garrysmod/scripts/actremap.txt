@@ -1,0 +1,605 @@
+//"ACT_IDLE" - This is the name of the original activity
+//{
+//	"remapactivity" "ACT_IDLE_RELAXED" - This is the name of the activy we're going to remap to.
+//	"readiness"	"AIRL_STIMULATED" - This is the value of the readiness level
+//	"aiming"	"TRS_FALSE" - Does this activity aim a weapon
+//}
+
+// "extra"
+// Use extra to add extra information that is specific to certain classes.
+// For example, citizens use readiness and aiming so they specify the values there.
+// Valid readiness level names:
+//	AIRL_PANIC
+//	AIRL_STEALTH
+//	AIRL_RELAXED
+//	AIRL_STIMULATED
+//	AIRL_AGITATED
+
+// Valid aiming values names:
+// 	TRS_FALSE - This animation doesn't aim
+//	TRS_TRUE - This animation needs to aim
+//	TRS_NONE - Don't care
+
+"npc_playercompanion"
+{
+	//ACT_IDLE
+	"ACT_IDLE"
+	{
+		"remapactivity" "ACT_IDLE_RELAXED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_RELAXED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_IDLE"
+	{
+		"remapactivity" "ACT_IDLE_STIMULATED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_FALSE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_IDLE"
+	{
+		"remapactivity" "ACT_IDLE_AIM_STIMULATED"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_TRUE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_IDLE"
+	{
+		"remapactivity" "ACT_IDLE_AGITATED"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_AGITATED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_IDLE"
+	{
+		"remapactivity" "ACT_IDLE_STEALTH"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_STEALTH"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_IDLE"
+	{
+		"remapactivity" "ACT_CROUCH_PANICKED"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_PANIC"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "FALSE"
+			"invehicle" "FALSE"
+		}
+	}
+
+
+	//ACT_IDLE_ANGRY
+	"ACT_IDLE_ANGRY"
+	{
+		"remapactivity" "ACT_IDLE_RELAXED"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_RELAXED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_IDLE_ANGRY"
+	{
+		"remapactivity" "ACT_IDLE_STIMULATED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_FALSE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_IDLE_ANGRY"
+	{
+		"remapactivity" "ACT_IDLE_AIM_STIMULATED"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_TRUE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_IDLE_ANGRY"
+	{
+		"remapactivity" "ACT_IDLE_AGITATED"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_AGITATED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_IDLE_ANGRY"
+	{
+		"remapactivity" "ACT_IDLE_STEALTH"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_STEALTH"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+
+	//ACT_CROUCHIDLE
+	"ACT_CROUCHIDLE"
+	{
+		"remapactivity" "ACT_CROUCHIDLE_STIMULATED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_RELAXED"
+			"aiming"	"TRS_FALSE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_CROUCHIDLE"
+	{
+		"remapactivity" "ACT_CROUCHIDLE_STIMULATED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_FALSE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_CROUCHIDLE"
+	{
+		"remapactivity" "ACT_CROUCHIDLE_AIM_STIMULATED"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_TRUE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_CROUCHIDLE"
+	{
+		"remapactivity" "ACT_CROUCHIDLE_AGITATED"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_AGITATED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+
+	//ACT_WALK
+	"ACT_WALK"
+	{
+		"remapactivity" "ACT_WALK_RELAXED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_RELAXED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_WALK"
+	{
+		"remapactivity" "ACT_WALK_STIMULATED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_FALSE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_WALK"
+	{
+		"remapactivity" "ACT_WALK_AIM_STIMULATED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_TRUE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_WALK"
+	{
+		"remapactivity" "ACT_WALK_AGITATED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_AGITATED"
+			"aiming"	"TRS_FALSE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_WALK"
+	{
+		"remapactivity" "ACT_WALK_STEALTH"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STEALTH"
+			"aiming"	"TRS_FALSE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_WALK"
+	{
+		"remapactivity" "ACT_WALK_AIM_STEALTH"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STEALTH"
+			"aiming"	"TRS_TRUE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_WALK"
+	{
+		"remapactivity" "ACT_WALK_PANICKED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_PANIC"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "FALSE"
+			"invehicle" "FALSE"
+		}
+	}
+
+
+	//ACT_RUN
+	"ACT_RUN"
+	{
+		"remapactivity" "ACT_RUN_RELAXED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_RELAXED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_RUN"
+	{
+		"remapactivity" "ACT_RUN_STIMULATED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_FALSE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_RUN"
+	{
+		"remapactivity" "ACT_RUN_AIM_STIMULATED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_TRUE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_RUN"
+	{
+		"remapactivity" "ACT_RUN_AGITATED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_AGITATED"
+			"aiming"	"TRS_FALSE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_RUN"
+	{
+		"remapactivity" "ACT_RUN_STEALTH"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STEALTH"
+			"aiming"	"TRS_FALSE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_RUN"
+	{
+		"remapactivity" "ACT_RUN_AIM_STEALTH"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STEALTH"
+			"aiming"	"TRS_TRUE"
+			"weaponrequired" "TRUE"
+			"invehicle" "FALSE"
+		}
+	}
+	"ACT_RUN"
+	{
+		"remapactivity" "ACT_RUN_PANICKED"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_PANIC"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "FALSE"
+			"invehicle" "FALSE"
+		}
+	}
+
+	// -------------------
+	//
+	// Vehicle remaps
+
+	"ACT_IDLE"
+	{
+		"remapactivity" "ACT_PASSENGER_IDLE"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_RELAXED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+
+	}
+	"ACT_IDLE"
+	{
+		"remapactivity" "ACT_PASSENGER_IDLE_READY"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+	"ACT_IDLE"
+	{
+		"remapactivity" "ACT_PASSENGER_IDLE_READY"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_AGITATED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+	"ACT_IDLE"
+	{
+		"remapactivity" "ACT_PASSENGER_IDLE_AIM"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_TRUE"
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+
+	"ACT_IDLE"
+	{
+		"remapactivity" "ACT_PASSENGER_IDLE"
+		
+		"extra"
+		{
+			"invehicle" "TRUE"
+		}
+
+	}
+
+	"ACT_RELOAD"
+	{
+		"remapactivity" "ACT_PASSENGER_RELOAD"
+	
+		"extra"
+		{
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+	
+	"ACT_RANGE_ATTACK1"
+	{
+		"remapactivity" "ACT_PASSENGER_RANGE_ATTACK1"
+	
+		"extra"
+		{
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+
+	// ANGRY
+
+	"ACT_IDLE_ANGRY"
+	{
+		"remapactivity" "ACT_PASSENGER_IDLE"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_RELAXED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+
+	}
+	"ACT_IDLE_ANGRY"
+	{
+		"remapactivity" "ACT_PASSENGER_IDLE_READY"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+	"ACT_IDLE_ANGRY"
+	{
+		"remapactivity" "ACT_PASSENGER_IDLE_AIM"
+		
+		"extra"
+		{
+			"readiness"	"AIRL_AGITATED"
+			"aiming"	"TRS_NONE"
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+	"ACT_IDLE_ANGRY"
+	{
+		"remapactivity" "ACT_PASSENGER_IDLE_AIM"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"aiming"	"TRS_TRUE"
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+
+	// Gesture transitions
+	"ACT_READINESS_PISTOL_AGITATED_TO_STIMULATED"
+	{
+		"remapactivity" "ACT_READINESS_PASSENGER_PISTOL_AGITATED_TO_STIMULATED"
+	
+		"extra"
+		{
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+
+	"ACT_READINESS_PISTOL_STIMULATED_TO_RELAXED"
+	{
+		"remapactivity" "ACT_READINESS_PASSENGER_PISTOL_STIMULATED_TO_RELAXED"
+	
+		"extra"
+		{
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+	
+	"ACT_READINESS_PISTOL_RELAXED_TO_STIMULATED"
+	{
+		"remapactivity" "ACT_READINESS_PASSENGER_PISTOL_RELAXED_TO_STIMULATED"
+	
+		"extra"
+		{
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+	
+	"ACT_PASSENGER_GESTURE_JOSTLE_SMALL"
+	{
+		"remapactivity" "ACT_PASSENGER_GESTURE_JOSTLE_SMALL_STIMULATED"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+	
+	"ACT_PASSENGER_GESTURE_JOSTLE_LARGE"
+	{
+		"remapactivity" "ACT_PASSENGER_GESTURE_JOSTLE_LARGE_STIMULATED"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_STIMULATED"
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+	
+	"ACT_PASSENGER_GESTURE_JOSTLE_SMALL"
+	{
+		"remapactivity" "ACT_PASSENGER_GESTURE_JOSTLE_SMALL_STIMULATED"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_AGITATED"
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+	
+	"ACT_PASSENGER_GESTURE_JOSTLE_LARGE"
+	{
+		"remapactivity" "ACT_PASSENGER_GESTURE_JOSTLE_LARGE_STIMULATED"
+	
+		"extra"
+		{
+			"readiness"	"AIRL_AGITATED"
+			"weaponrequired" "TRUE"
+			"invehicle" "TRUE"
+		}
+	}
+}

@@ -694,7 +694,7 @@ if CLIENT then
       end
 
       if should_open then
-         if ValidPanel(printspanel) then
+         if IsValid(printspanel) then
             printspanel:Remove()
          end
 
@@ -702,7 +702,7 @@ if CLIENT then
 
          printspanel = ShowPrintsPopup(item_prints, tester)
       else
-         if ValidPanel(printspanel) then
+         if IsValid(printspanel) then
             printspanel:UpdatePrints(item_prints)
          end
       end
@@ -733,7 +733,7 @@ if CLIENT then
    net.Receive("TTT_ScanResult", RecvScan)
 
    function SWEP:ClosePrintsPanel()
-      if ValidPanel(printspanel) then
+      if IsValid(printspanel) then
          printspanel:Close()
       end
    end

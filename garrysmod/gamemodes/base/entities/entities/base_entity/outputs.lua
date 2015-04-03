@@ -70,7 +70,7 @@ function ENT:TriggerOutput(name, activator)
 
 	for idx = #OutputList, 1, -1 do
 
-		if ( !FireSingleOutput( OutputList[idx], self.Entity, activator ) ) then
+		if ( OutputList[idx] and !FireSingleOutput( OutputList[idx], self.Entity, activator ) ) then
 
 			self.Outputs[name][idx] = nil
 

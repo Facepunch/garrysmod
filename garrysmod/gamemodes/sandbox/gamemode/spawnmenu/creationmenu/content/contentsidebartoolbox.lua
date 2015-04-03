@@ -25,11 +25,11 @@ function PANEL:Init()
 
 	Button.OnDrop =	function( self, target )
 
-						local label = vgui.Create( "ContentHeader", target )
-						return label
+		local label = vgui.Create( "ContentHeader", target )
+		return label
 		
-					end
-		
+	end
+	
 	local panel = vgui.Create( "DPanel", self )
 	panel:Dock( FILL )
 	panel:DockPadding( 5, 5, 5, 5 )
@@ -44,6 +44,8 @@ function PANEL:Init()
 	-- If we select a node from the sidebar, update the text/icon/actions in the toolbox (at the bottom)
 	--
 	hook.Add( "ContentSidebarSelection", "SidebarToolboxSelection", function( pnlContent, node )
+		
+		if ( !IsValid( node ) || !IsValid( label ) || !IsValid( icons ) ) then return end
 		
 		label:SetText( node:GetText() )
 		icons:SelectIcon( node:GetIcon() )
@@ -62,7 +64,5 @@ function PANEL:Init()
 	end )
 	
 end
-
-
 
 vgui.Register( "ContentSidebarToolbox", PANEL, "DDrawer" )

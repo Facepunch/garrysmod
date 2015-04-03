@@ -8,15 +8,20 @@
 				<li><h2 ng-tranny="'demos'"></h2></li>
 
 				<li>&nbsp;</li>
-
+	
 				<li><a class="{{IfElse( Category == 'local', 'active', '' )}}" ng-click="Switch( 'local', 0 )" ng-Tranny="'demos.local'"></a></li>
 
 				<li>&nbsp;</li>
 
+				<li><a class="{{IfElse( Category == 'trending', 'active', '' )}}" ng-click="Switch( 'trending', 0 )" ng-Tranny="'demos.trending'"></a></li>
 				<li><a class="{{IfElse( Category == 'popular', 'active', '' )}}" ng-click="Switch( 'popular', 0 )" ng-Tranny="'demos.popular'"></a></li>
 				<li><a class="{{IfElse( Category == 'latest', 'active', '' )}}" ng-click="Switch( 'latest', 0 )" ng-Tranny="'demos.latest'"></a></li>
-				<li><a class="{{IfElse( Category == 'friends', 'active', '' )}}" ng-click="Switch( 'friends', 0 )" ng-Tranny="'demos.friends'"></a></li>
+
+				<li>&nbsp;</li>
+
 				<li><a class="{{IfElse( Category == 'mine', 'active', '' )}}" ng-click="Switch( 'mine', 0 )" ng-Tranny="'demos.mine'"></a></li>
+				<li><a class="{{IfElse( Category == 'friends', 'active', '' )}}" ng-click="Switch( 'friends', 0 )" ng-Tranny="'demos.friends'"></a></li>
+
 				<li>&nbsp;</li>
 
 				<li><a ng-click="OpenFolder( 'demos' )" ng-Tranny="'demos.openfolder'"></a></li>

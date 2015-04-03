@@ -9,6 +9,7 @@ if CLIENT then
    SWEP.Slot = 2
 
    SWEP.Icon = "vgui/ttt/icon_mac"
+   SWEP.IconLetter = "l"
 end
 
 

@@ -102,6 +102,9 @@ end
    Name: PhysicsUpdate
 -----------------------------------------------------------]]
 function ENT:PhysicsUpdate( physobj )
+	
+	if ( CLIENT ) then return end
+
 
 	-- Don't do anything if the player isn't holding us
 	if ( !self:IsPlayerHolding() && !self:IsConstrained() ) then

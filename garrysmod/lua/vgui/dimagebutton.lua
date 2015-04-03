@@ -9,7 +9,7 @@
 
 --]]
 
-PANEL = {}
+local PANEL = {}
 AccessorFunc( PANEL, "m_bStretchToFit", 			"StretchToFit" )
 
 --[[---------------------------------------------------------
@@ -80,8 +80,12 @@ function PANEL:SetKeepAspect( bKeep )
 
 end
 
--- This makes it compatible with the older ImageButton
-PANEL.SetMaterial = PANEL.SetImage
+-- SetMaterial should replace SetImage for chached materials
+function PANEL:SetMaterial( Mat )
+	
+    self.m_Image:SetMaterial( Mat )
+    
+end
 
 
 --[[---------------------------------------------------------

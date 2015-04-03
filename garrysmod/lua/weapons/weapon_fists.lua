@@ -1,21 +1,19 @@
 
 AddCSLuaFile()
 
-SWEP.PrintName	= "Fists"
+SWEP.PrintName				= "Fists"
+SWEP.Author					= "Kilburn, robotboy655, MaxOfS2D & Tenrys"
+SWEP.Purpose				= "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
 
-SWEP.Author		= "Kilburn, robotboy655, MaxOfS2D & Tenrys"
-SWEP.Purpose	= "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
+SWEP.Slot					= 0
+SWEP.SlotPos				= 4
 
-SWEP.Spawnable	= true
-SWEP.UseHands	= true
-SWEP.DrawAmmo	= false
+SWEP.Spawnable				= true
 
-SWEP.ViewModel	= "models/weapons/c_arms_citizen.mdl"
-SWEP.WorldModel	= ""
-
-SWEP.ViewModelFOV	= 52
-SWEP.Slot			= 0
-SWEP.SlotPos		= 5
+SWEP.ViewModel				= Model( "models/weapons/c_arms_citizen.mdl" )
+SWEP.WorldModel				= ""
+SWEP.ViewModelFOV			= 54
+SWEP.UseHands				= true
 
 SWEP.Primary.ClipSize		= -1
 SWEP.Primary.DefaultClip	= -1
@@ -27,7 +25,11 @@ SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= true
 SWEP.Secondary.Ammo			= "none"
 
-local SwingSound = Sound( "weapons/slam/throw.wav" )
+SWEP.DrawAmmo				= false
+
+SWEP.HitDistance			= 48
+
+local SwingSound = Sound( "WeaponFrag.Throw" )
 local HitSound = Sound( "Flesh.ImpactHard" )
 
 function SWEP:Initialize()
@@ -42,21 +44,19 @@ function SWEP:PreDrawViewModel( vm, wep, ply )
 
 end
 
-SWEP.HitDistance = 48
-
 function SWEP:SetupDataTables()
-	
+
 	self:NetworkVar( "Float", 0, "NextMeleeAttack" )
 	self:NetworkVar( "Float", 1, "NextIdle" )
 	self:NetworkVar( "Int", 2, "Combo" )
-	
+
 end
 
 function SWEP:UpdateNextIdle()
 
 	local vm = self.Owner:GetViewModel()
 	self:SetNextIdle( CurTime() + vm:SequenceDuration() )
-	
+
 end
 
 function SWEP:PrimaryAttack( right )
@@ -83,7 +83,9 @@ function SWEP:PrimaryAttack( right )
 end
 
 function SWEP:SecondaryAttack()
+
 	self:PrimaryAttack( true )
+
 end
 
 function SWEP:DealDamage()
@@ -108,7 +110,7 @@ function SWEP:DealDamage()
 		} )
 	end
 
-	-- We need the second part for single player because SWEP:Think is ran shared in SP.
+	-- We need the second part for single player because SWEP:Think is ran shared in SP
 	if ( tr.Hit && !( game.SinglePlayer() && CLIENT ) ) then
 		self:EmitSound( HitSound )
 	end
@@ -159,15 +161,21 @@ function SWEP:DealDamage()
 end
 
 function SWEP:OnRemove()
-	
+
 	if ( IsValid( self.Owner ) && CLIENT && self.Owner:IsPlayer() ) then
 		local vm = self.Owner:GetViewModel()
 		if ( IsValid( vm ) ) then vm:SetMaterial( "" ) end
 	end
-	
+
 end
 
-function SWEP:Holster( wep )
+function SWEP:OnDrop()
+
+	self:Remove() -- You can't drop fists
+
+end
+
+function SWEP:Holster()
 
 	self:OnRemove()
 
@@ -185,17 +193,17 @@ function SWEP:Deploy()
 	if ( SERVER ) then
 		self:SetCombo( 0 )
 	end
-	
+
 	return true
 
 end
 
 function SWEP:Think()
-	
+
 	local vm = self.Owner:GetViewModel()
 	local curtime = CurTime()
 	local idletime = self:GetNextIdle()
-	
+
 	if ( idletime > 0 && CurTime() > idletime ) then
 
 		vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_idle_0" .. math.random( 1, 2 ) ) )
@@ -203,9 +211,9 @@ function SWEP:Think()
 		self:UpdateNextIdle()
 
 	end
-	
+
 	local meleetime = self:GetNextMeleeAttack()
-	
+
 	if ( meleetime > 0 && CurTime() > meleetime ) then
 
 		self:DealDamage()
@@ -213,11 +221,11 @@ function SWEP:Think()
 		self:SetNextMeleeAttack( 0 )
 
 	end
-	
+
 	if ( SERVER && CurTime() > self:GetNextPrimaryFire() + 0.1 ) then
 		
 		self:SetCombo( 0 )
 		
 	end
-	
+
 end

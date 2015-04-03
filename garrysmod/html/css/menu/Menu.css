@@ -7,6 +7,7 @@ BODY
 	margin: 0;
 	padding: 0;
 	font-size: 12px;
+	-webkit-font-smoothing: antialiased;
 }
 
 INPUT
@@ -21,7 +22,7 @@ INPUT.searchbox
 	border:0;
 	border-radius: 3px;
 	height: 24px;
-	margin-right: 360px;
+	margin-right: 320px;
 	margin-top: 6px;
 	padding: 4px;
 }
@@ -82,7 +83,7 @@ UL.category LI.icon
 	border: 1px solid #CCC;
 	border-color: #05C #05C #003580;
 	color: white;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
 	border-radius: 6px;
 	cursor: pointer;
 	vertical-align: middle;
@@ -91,7 +92,7 @@ UL.category LI.icon
 
 .btn-primary:hover
 {
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e)); 
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e));
 }
 
 .btn-back
@@ -100,7 +101,7 @@ UL.category LI.icon
 	border: 1px solid #CCC;
 	border-color: #05C #05C #003580;
 	color: white;
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
 	border-radius: 3px;
 	cursor: pointer;
 	vertical-align: middle;
@@ -110,7 +111,7 @@ UL.category LI.icon
 
 .btn-back:hover
 {
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e)); 
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2ae), to(#27e));
 }
 
 DIV.gridicon
@@ -122,7 +123,7 @@ DIV.gridicon
 	float: left;
 	margin: 3px;
 	//border-radius: 2px;
-	background-position:center; 
+	background-position:center;
 }
 
 DIV.gridicon name
@@ -171,11 +172,11 @@ DIV.disabled
 	text-shadow: none;
 }
 
-.topnav 
+.topnav
 {
-	 background-color: white; 
-	 padding: 5px; 
-	 border-radius: 3px; 
+	 background-color: white;
+	 padding: 5px;
+	 border-radius: 3px;
 	 font-size: 11px;
 }
 
@@ -207,7 +208,7 @@ right
 	float: right;
 }
 
-loading 
+loading
 {
 	font-size: 48px;
 	font-weight: bolder;

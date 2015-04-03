@@ -41,14 +41,14 @@ DIV.page DIV.options, DIV.page DIV.options A
 	text-decoration: none;
 	color: #fff;
 	font-weight: bolder;
-	text-shadow: 2px 2px 0px #000;
+	text-shadow: 2px 2px 1px #000;
 }
 
 DIV.page DIV.options .submenu A
 {
 	font-size: 17px;
 	letter-spacing: 0px;
-	text-shadow: 1px 1px 0px #000;
+	text-shadow: 1px 1px 1px #000;
 }
 
 DIV.page DIV.options UL.submenu LI
@@ -66,12 +66,6 @@ DIV.page DIV.options.active, DIV.page DIV.options A.active
 {
 	color: #ff5;
 }
-
-DIV.page DIV.options A.active:hover
-{
-	
-}
-
 
 @media screen and (max-width: 1280px)
 {
@@ -94,5 +88,28 @@ DIV.page DIV.options A.active:hover
 	DIV.page DIV.options UL
 	{
 		margin-left: 5px;
+	}
+}
+
+@media screen and (max-height: 480px) {
+    DIV.page DIV.options
+	{
+		padding-top: 0px;
+	}
+	
+	DIV.page DIV.options UL
+	{
+		padding: 0px;
+	}
+	
+	DIV.page DIV.options UL LI
+	{
+		margin-bottom: 0px;
+	}
+	
+	DIV.page DIV.options, DIV.page DIV.options A
+	{
+		font-size: 20px;
+		line-height: 19px;
 	}
 }

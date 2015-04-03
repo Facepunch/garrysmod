@@ -81,7 +81,7 @@ end
 
 function meta:LimitHit( str )
 
-	self:SendLua( "GAMEMODE:LimitHit( '".. str .."' )" )
+	self:SendLua( 'hook.Run("LimitHit","' .. str .. '")' )
 
 end
 
@@ -110,7 +110,7 @@ if (SERVER) then
 		self.Hints = self.Hints or {}
 		if (self.Hints[ str ]) then return end
 		
-		self:SendLua( "GAMEMODE:AddHint( '"..str.."', "..delay.." )" )
+		self:SendLua( 'hook.Run("AddHint","' .. str .. '","' .. delay .. '")' )
 		self.Hints[ str ] = true
 
 	end
@@ -120,7 +120,7 @@ if (SERVER) then
 		self.Hints = self.Hints or {}
 		if (self.Hints[ str ]) then return end
 		
-		self:SendLua( "GAMEMODE:SuppressHint( '"..str.."' )" )
+		self:SendLua( 'hook.Run("SuppressHint","' .. str .. '")' )
 		self.Hints[ str ] = true
 
 	end

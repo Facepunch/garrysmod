@@ -10,7 +10,7 @@
 --]]
 
 
-PANEL = {}
+local PANEL = {}
 
 AccessorFunc( PANEL, "m_bScrollbars", 			"Scrollbars", 		FORCE_BOOL )
 AccessorFunc( PANEL, "m_bAllowLua", 			"AllowLua", 		FORCE_BOOL )

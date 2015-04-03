@@ -30,8 +30,8 @@ local function Render( tbl )
 	surface.SetMaterial( tbl.mat )
 	surface.SetDrawColor( 255, 255, 255, tbl.Alpha )
 
-	local w =  ScrH() * tbl.Size * tbl.Ratio
-	local h =  ScrH() * tbl.Size
+	local w = ScrH() * tbl.Size * tbl.Ratio
+	local h = ScrH() * tbl.Size
 
 	local x = ScrW() * 0.5
 	local y = ScrH() * 0.5
@@ -45,14 +45,14 @@ function DrawBackground()
 	if ( !IsInGame() ) then 
 
 		if ( Active ) then
-			Think( Active );
-			Render( Active );
+			Think( Active )
+			Render( Active )
 		end
 
 		if ( Outgoing ) then
 
-			Think( Outgoing );
-			Render( Outgoing );
+			Think( Outgoing )
+			Render( Outgoing )
 
 			if ( Outgoing.Alpha <= 0 ) then
 				Outgoing = nil
@@ -65,8 +65,6 @@ function DrawBackground()
 	surface.SetMaterial( MenuGradient )
 	surface.SetDrawColor( 255, 255, 255, 255 )
 	surface.DrawTexturedRect( 0, 0, 1024, ScrH() )
-
-	
 
 end
 
@@ -90,8 +88,10 @@ function ChangeBackground( currentgm )
 	if ( currentgm ) then LastGamemode = currentgm end
 	
 	local img = table.Random( Images )
+	
+	if ( !img ) then return end
 
-	Outgoing = Active;
+	Outgoing = Active
 	if ( Outgoing ) then
 		Outgoing.AlphaVel = 255
 	end
@@ -99,8 +99,7 @@ function ChangeBackground( currentgm )
 	local mat = Material( img, "nocull smooth" )
 	if ( !mat || mat:IsError() ) then return end
 
-	Active = 
-	{
+	Active = {
 		Ratio = mat:GetInt( "$realwidth" ) / mat:GetInt( "$realheight" ),
 		Size = 1,
 		Angle = 0,
@@ -113,7 +112,7 @@ function ChangeBackground( currentgm )
 
 	if ( Active.Ratio < ScrW() / ScrH() ) then
 
-		Active.Size = Active.Size * ( ScrW() / ScrH()  );
+		Active.Size = Active.Size + ( ( ScrW() / ScrH() ) - Active.Ratio )
 
 	end
 

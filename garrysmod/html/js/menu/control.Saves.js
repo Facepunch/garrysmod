@@ -1,12 +1,29 @@
 
 save = new WorkshopFiles();
 
-function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams) {
+function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
+{
 
-	$rootScope.ShowBack = true;	
+	$rootScope.ShowBack = true;
 	Scope = $scope;
 
 	save.Init( 'ws_save', $scope, $rootScope );
+
+	Scope.Categories = 
+	[
+		"trending",
+		"popular",
+		"latest"
+	];
+
+	Scope.SubCategories =
+	[
+		"scenes",
+		"machines",
+		"buildings",
+		"courses",
+		"others"
+	];
 
 	$scope.LoadSave = function( entry )
 	{
@@ -31,17 +48,17 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams) 
 
 	if ( IS_SPAWN_MENU ) 
 	{
-		if ($routeParams.Category) 
+		if ( $routeParams.Category ) 
 		{
-			$timeout(function () { $scope.SwitchWithTag( $routeParams.Category, 0, $routeParams.Tag, $scope.MapName ); }, 100 );
+			$timeout( function () { $scope.SwitchWithTag( $routeParams.Category, 0, $routeParams.Tag, $scope.MapName ); }, 100 );
 			return;
 		}
 
-		$timeout(function () { $scope.SwitchWithTag('trending', 0, $scope.MapName ); }, 100 );
+		$timeout( function () { $scope.SwitchWithTag('trending', 0, $scope.MapName ); }, 100 );
 	}
 	else 
 	{
-		$scope.Switch('local', 0);
+		$scope.Switch( 'local', 0 );
 	}
 }
 

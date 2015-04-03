@@ -475,8 +475,8 @@ function SWEP:Initialize()
    self:SetDeploySpeed(self.DeploySpeed)
 
    -- compat for gmod update
-   if self.SetWeaponHoldType then
-      self:SetWeaponHoldType(self.HoldType or "pistol")
+   if self.SetHoldType then
+      self:SetHoldType(self.HoldType or "pistol")
    end
 end
 

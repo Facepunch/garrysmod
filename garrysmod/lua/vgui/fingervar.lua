@@ -1,6 +1,5 @@
 
-
-local ConVar_RestrictFingers 	= CreateClientConVar( "finger_restrict", "1", false, false )
+local ConVar_RestrictFingers = CreateClientConVar( "finger_restrict", "1", false, false )
 
 local PANEL = {}
 
@@ -77,7 +76,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:UpdateConVar()
 
-	if (!self.VarName) then return end
+	if ( !self.VarName ) then return end
 	if ( self.NextUpdate > CurTime() ) then return end
 	
 	local Val = Format( "%.2f %.2f", self.Value[1], self.Value[2] )
@@ -90,7 +89,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetValue( x, y )
 
-	x = math.Clamp( x, -0.5, 0.5 ) * MAX_ANGLE_X	
+	x = math.Clamp( x, -0.5, 0.5 ) * MAX_ANGLE_X
 	y = math.Clamp( y, -0.5, 0.5 ) * MAX_ANGLE_Y
 
 	if ( self:IsRestricted() ) then x = 0 end
@@ -136,14 +135,14 @@ end
 -----------------------------------------------------------]]
 function PANEL:OnCursorMoved( x, y )
 
-	if (!self.Dragging) then return end
+	if ( !self.Dragging ) then return end
 	
 	local w = self:GetWide()
 	local h = self:GetTall()
 	
 	self:SetValue( (x/w) - 0.5, (y/h) - 0.5 )
 	self:UpdateConVar()
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -165,31 +164,35 @@ end
 --[[---------------------------------------------------------
    Name: Paint
 -----------------------------------------------------------]]
-function PANEL:Paint()
+function PANEL:Paint( w, h )
+
+	// This part is dirty, the whole fingerposer needs redoing, it's messy
+	local wep = LocalPlayer():GetWeapon( "gmod_tool" )
+	if ( !IsValid( wep ) ) then return end
+
+	local ent = wep:GetNetworkedEntity( "HandEntity" )
+	if ( !IsValid( ent ) || !ent.FingerIndex ) then return end
+
+	local boneid = ent.FingerIndex[ tonumber( self.VarName:sub( 8 ) ) + 1 + 15 * wep:GetNWInt( "HandNum", 0 ) ]
+	if ( !boneid || ent:GetBoneName( boneid ) == "__INVALIDBONE__" ) then return end
 
 	local v = self:GetValue()
+
+	local x = ( v[1] * w ) + w / 2
+	local y = ( v[2] * h ) + h / 2
 	
-	local w = self:GetWide()
-	local h = self:GetTall()
-	
-	--surface.SetDrawColor( 0, 0, 0, 100 )
-	--surface.DrawRect( 0, 0, w, h )
-	
-	local x = (v[1] * w) + w/2
-	local y = (v[2] * h) + h/2
-	
-	x = math.Clamp( x, 3, w-3 )
-	y = math.Clamp( y, 3, h-3 )
+	x = math.Clamp( x, 3, w - 3 )
+	y = math.Clamp( y, 3, h - 3 )
 	
 	surface.SetDrawColor( 0, 0, 0, 250 )
 	if ( self.HoveredFingerVar ) then surface.SetDrawColor( 255, 255, 255, 255 ) end
-	surface.DrawLine( x, y, w/2, h/2 )
-	surface.DrawRect( w/2-1, h/2-1, 2, 2 )
-	surface.DrawRect( x-3, y-3, 6, 6 )
+	surface.DrawLine( x, y, w / 2, h / 2 )
+	surface.DrawRect( w / 2 - 1, h / 2 - 1, 2, 2 )
+	surface.DrawRect( x - 3, y - 3, 6, 6 )
 	
 	surface.SetDrawColor( 255, 255, 0, 255 )
 	if ( self:IsRestricted() ) then surface.SetDrawColor( 30, 180, 255, 255 ) end
-	surface.DrawRect( x-2, y-2, 4, 4 )
+	surface.DrawRect( x - 2, y - 2, 4, 4 )
 
 end
 

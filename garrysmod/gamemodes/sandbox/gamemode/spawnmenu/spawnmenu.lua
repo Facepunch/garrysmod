@@ -87,7 +87,7 @@ function PANEL:Open()
 	self.m_bHangOpen = false
 	
 	-- If the context menu is open, try to close it..
-	if ( g_ContextMenu:IsVisible() ) then 
+	if ( g_ContextMenu:IsVisible() ) then
 		g_ContextMenu:Close( true )
 	end
 	
@@ -110,7 +110,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:Close( bSkipAnim )
 
-	if ( self.m_bHangOpen ) then 
+	if ( self.m_bHangOpen ) then
 		self.m_bHangOpen = false
 		return
 	end
@@ -141,8 +141,8 @@ function PANEL:PerformLayout()
 	self.CreateMenu:DockMargin( MarginX, MarginY, 1, MarginY )
 	self.ToolMenu:DockMargin( 0, MarginY, MarginX, MarginY )
 	
-	self.ToolToggle:AlignRight( 2 )
-	self.ToolToggle:AlignTop( 2 )	
+	self.ToolToggle:AlignRight( 6 )
+	self.ToolToggle:AlignTop( 6 )
 
 end
 
@@ -154,9 +154,7 @@ function PANEL:StartKeyFocus( pPanel )
 	self.m_pKeyFocus = pPanel
 	self:SetKeyboardInputEnabled( true )
 	self:HangOpen( true )
-	
-	g_ContextMenu:StartKeyFocus( pPanel )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -166,8 +164,6 @@ function PANEL:EndKeyFocus( pPanel )
 
 	if ( self.m_pKeyFocus != pPanel ) then return end
 	self:SetKeyboardInputEnabled( false )
-	
-	g_ContextMenu:EndKeyFocus( pPanel )
 
 end
 
@@ -180,7 +176,7 @@ vgui.Register( "SpawnMenu", PANEL, "EditablePanel" )
 local function CreateSpawnMenu()
 
 	-- If we have an old spawn menu remove it.
-	if ( g_SpawnMenu ) then
+	if ( IsValid( g_SpawnMenu ) ) then
 	
 		g_SpawnMenu:Remove()
 		g_SpawnMenu = nil
@@ -218,15 +214,18 @@ local function CreateSpawnMenu()
 	hook.Run( "PostReloadToolsMenu" )
 
 end
+-- Hook to create the spawnmenu at the appropriate time (when all sents and sweps are loaded)
+hook.Add( "OnGamemodeLoaded", "CreateSpawnMenu", CreateSpawnMenu )
+concommand.Add( "spawnmenu_reload", CreateSpawnMenu )
 
 function GM:OnSpawnMenuOpen()
 
 	-- Let the gamemode decide whether we should open or not..
 	if ( !hook.Call( "SpawnMenuOpen", GAMEMODE ) ) then return end
 
-	if ( g_SpawnMenu ) then
+	if ( IsValid( g_SpawnMenu ) ) then
 	
-		g_SpawnMenu:Open() 
+		g_SpawnMenu:Open()
 		menubar.ParentTo( g_SpawnMenu )
 
 	end
@@ -235,7 +234,7 @@ end
 
 function GM:OnSpawnMenuClose()
 
-	if ( g_SpawnMenu ) then g_SpawnMenu:Close() end 
+	if ( IsValid( g_SpawnMenu ) ) then g_SpawnMenu:Close() end
 
 	-- We're dragging from the spawnmenu but the spawnmenu is closed
 	-- so keep the dragging going using the screen clicker
@@ -245,23 +244,20 @@ function GM:OnSpawnMenuClose()
 	
 end
 
--- Hook to create the spawnmenu at the appropriate time (when all sents and sweps are loaded)
-hook.Add( "OnGamemodeLoaded", "CreateSpawnMenu", CreateSpawnMenu )
-
-
 --[[---------------------------------------------------------
    Name: HOOK SpawnMenuKeyboardFocusOn
 		Called when text entry needs keyboard focus
 -----------------------------------------------------------]]
 local function SpawnMenuKeyboardFocusOn( pnl )
 
-	if ( !ValidPanel( g_SpawnMenu ) && !ValidPanel( g_ContextMenu ) ) then return end
-	if ( IsValid( pnl ) && !pnl:HasParent( g_SpawnMenu ) && !pnl:HasParent( g_ContextMenu ) ) then return end
-	
-	g_SpawnMenu:StartKeyFocus( pnl )
+	if ( IsValid( g_SpawnMenu ) && IsValid( pnl ) && pnl:HasParent( g_SpawnMenu ) ) then
+		g_SpawnMenu:StartKeyFocus( pnl )
+	end
+	if ( IsValid( g_ContextMenu ) && IsValid( pnl ) && pnl:HasParent( g_ContextMenu ) ) then
+		g_ContextMenu:StartKeyFocus( pnl )
+	end
 
 end
-
 hook.Add( "OnTextEntryGetFocus", "SpawnMenuKeyboardFocusOn", SpawnMenuKeyboardFocusOn )
 
 
@@ -271,13 +267,15 @@ hook.Add( "OnTextEntryGetFocus", "SpawnMenuKeyboardFocusOn", SpawnMenuKeyboardFo
 -----------------------------------------------------------]]
 local function SpawnMenuKeyboardFocusOff( pnl )
 
-	if ( !ValidPanel( g_SpawnMenu ) && !ValidPanel( g_ContextMenu ) ) then return end
-	if ( IsValid( pnl ) && !pnl:HasParent( g_SpawnMenu ) && !pnl:HasParent( g_ContextMenu ) ) then return end
-	
-	g_SpawnMenu:EndKeyFocus( pnl )
+	if ( IsValid( g_SpawnMenu ) && IsValid( pnl ) && pnl:HasParent( g_SpawnMenu ) ) then
+		g_SpawnMenu:EndKeyFocus( pnl )
+	end
+
+	if ( IsValid( g_ContextMenu ) && IsValid( pnl ) && pnl:HasParent( g_ContextMenu ) ) then
+		g_ContextMenu:EndKeyFocus( pnl )
+	end
 
 end
-
 hook.Add( "OnTextEntryLoseFocus", "SpawnMenuKeyboardFocusOff", SpawnMenuKeyboardFocusOff )
 
 --[[---------------------------------------------------------
@@ -286,13 +284,12 @@ hook.Add( "OnTextEntryLoseFocus", "SpawnMenuKeyboardFocusOff", SpawnMenuKeyboard
 -----------------------------------------------------------]]
 local function SpawnMenuOpenGUIMousePressed()
 
-	if ( !ValidPanel( g_SpawnMenu ) ) then return end
+	if ( !IsValid( g_SpawnMenu ) ) then return end
 	if ( !g_SpawnMenu:IsVisible() ) then return end
 	
 	return true
 
 end
-
 hook.Add( "GUIMousePressed", "SpawnMenuOpenGUIMousePressed", SpawnMenuOpenGUIMousePressed )
 
 --[[---------------------------------------------------------
@@ -301,7 +298,7 @@ hook.Add( "GUIMousePressed", "SpawnMenuOpenGUIMousePressed", SpawnMenuOpenGUIMou
 -----------------------------------------------------------]]
 local function SpawnMenuOpenGUIMouseReleased()
 
-	if ( !ValidPanel( g_SpawnMenu ) ) then return end
+	if ( !IsValid( g_SpawnMenu ) ) then return end
 	if ( !g_SpawnMenu:IsVisible() ) then return end
 	
 	g_SpawnMenu:Close()

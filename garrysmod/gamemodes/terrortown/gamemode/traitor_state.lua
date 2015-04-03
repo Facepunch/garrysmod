@@ -127,7 +127,7 @@ end
 concommand.Add("_ttt_request_rolelist", request_rolelist)
 
 local function force_terror(ply)
-   if cvars.Bool("sv_cheats", 0) then
+   if cvars.Bool("sv_cheats") then
       ply:SetRole(ROLE_INNOCENT)
       ply:UnSpectate()
       ply:SetTeam(TEAM_TERROR)
@@ -143,7 +143,7 @@ end
 concommand.Add("ttt_force_terror", force_terror)
 
 local function force_traitor(ply)
-   if cvars.Bool("sv_cheats", 0) then
+   if cvars.Bool("sv_cheats") then
       ply:SetRole(ROLE_TRAITOR)
 
       SendFullStateUpdate()
@@ -152,7 +152,7 @@ end
 concommand.Add("ttt_force_traitor", force_traitor)
 
 local function force_detective(ply)
-   if cvars.Bool("sv_cheats", 0) then
+   if cvars.Bool("sv_cheats") then
       ply:SetRole(ROLE_DETECTIVE)
 
       SendFullStateUpdate()

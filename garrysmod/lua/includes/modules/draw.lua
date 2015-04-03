@@ -163,7 +163,7 @@ function DrawText(text, font, x, y, colour, xalign )
 			else -- there's no tabs, this is easy
 				SimpleText( str, font, curX, curY, colour, xalign )
 			end
-			
+		else
 			curX = x
 			curY = curY + (lineHeight/2)
 		end
@@ -208,25 +208,25 @@ function RoundedBoxEx( bordersize, x, y, w, h, color, a, b, c, d )
 	surface.SetTexture( tex )
 	
 	if ( a ) then
-		surface.DrawTexturedRectRotated( x + bordersize/2 , y + bordersize/2, bordersize, bordersize, 0 ) 
+		surface.DrawTexturedRectUV( x, y, bordersize, bordersize, 0, 0, 1, 1 )
 	else
 		surface.DrawRect( x, y, bordersize, bordersize )
 	end
 	
 	if ( b ) then
-		surface.DrawTexturedRectRotated( x + w - bordersize/2 , y + bordersize/2, bordersize, bordersize, 270 ) 
+		surface.DrawTexturedRectUV( x +w -bordersize, y, bordersize, bordersize, 1, 0, 0, 1 )
 	else
 		surface.DrawRect( x + w - bordersize, y, bordersize, bordersize )
 	end
  
 	if ( c ) then
-		surface.DrawTexturedRectRotated( x + bordersize/2 , y + h -bordersize/2, bordersize, bordersize, 90 )
+		surface.DrawTexturedRectUV( x, y +h -bordersize, bordersize, bordersize, 0, 1, 1, 0 )
 	else
 		surface.DrawRect( x, y + h - bordersize, bordersize, bordersize )
 	end
  
 	if ( d ) then
-		surface.DrawTexturedRectRotated( x + w - bordersize/2 , y + h - bordersize/2, bordersize, bordersize, 180 )
+		surface.DrawTexturedRectUV( x +w -bordersize, y +h -bordersize, bordersize, bordersize, 1, 1, 0, 0 )
 	else
 		surface.DrawRect( x + w - bordersize, y + h - bordersize, bordersize, bordersize )
 	end

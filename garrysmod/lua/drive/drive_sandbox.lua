@@ -41,11 +41,17 @@ drive.Register( "drive_sandbox",
 	SetupControls = function( self, cmd )				
 	
 		--
-		-- If we're holding the reload key down then don't alter the view angles
+		-- If we're holding the reload key down then freeze the view angles
 		--
 		if ( cmd:KeyDown( IN_RELOAD ) ) then
 
-			cmd:SetViewAngles( EyeAngles() )
+			self.CameraForceViewAngles = self.CameraForceViewAngles or cmd:GetViewAngles()
+
+			cmd:SetViewAngles( self.CameraForceViewAngles )
+
+		else
+
+			self.CameraForceViewAngles = nil
 
 		end
 
@@ -82,9 +88,9 @@ drive.Register( "drive_sandbox",
 		--
 		mv:SetOrigin( self.Entity:GetNetworkOrigin() )
 		mv:SetVelocity( self.Entity:GetAbsVelocity() )
-		mv:SetMoveAngles( self.Player:EyeAngles() )		-- Always move relative to the player's eyes
+		mv:SetMoveAngles( mv:GetAngles() )		-- Always move relative to the player's eyes
 
-		local entity_angle		= self.Player:EyeAngles()
+		local entity_angle		= mv:GetAngles()
 		entity_angle.roll		= self.Entity:GetAngles().roll
 
 		--

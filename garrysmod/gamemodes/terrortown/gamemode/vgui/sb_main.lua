@@ -186,7 +186,7 @@ function PANEL:PerformLayout()
    -- can't just use pairs (undefined ordering) or ipairs (group 2 and 3 might not exist)
    for i=1, GROUP_COUNT do
       local group = self.ply_groups[i]
-      if ValidPanel(group) then
+      if IsValid(group) then
          if group:HasRows() then
             group:SetVisible(true)
             group:SetPos(0, gy)
@@ -282,7 +282,7 @@ function PANEL:UpdateScoreboard( force )
    end
 
    for k, group in pairs(self.ply_groups) do
-      if ValidPanel(group) then
+      if IsValid(group) then
          group:SetVisible( group:HasRows() )
          group:UpdatePlayerData()
       end

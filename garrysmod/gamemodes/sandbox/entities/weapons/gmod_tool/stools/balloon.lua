@@ -7,7 +7,7 @@ TOOL.ClientConVar[ "force" ] = "500"
 TOOL.ClientConVar[ "r" ] = "255"
 TOOL.ClientConVar[ "g" ] = "255"
 TOOL.ClientConVar[ "b" ] = "0"
-TOOL.ClientConVar[ "model" ] = "models/maxofs2d/balloon_classic.mdl"
+TOOL.ClientConVar[ "model" ] = "normal_skin1"
 
 cleanup.Register( "balloons" )
 

@@ -9,7 +9,7 @@ TOOL.ClientConVar[ "toggle" ] = "1"
 cleanup.Register( "cameras" )
 
 local function MakeCamera( ply, key, locked, toggle, Data )
-	
+
 	local ent = ents.Create( "gmod_cameraprop" )
 
 	if ( !IsValid( ent ) ) then return end
@@ -18,9 +18,9 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 
 	if ( key ) then
 		for id, camera in pairs( ents.FindByClass( "gmod_cameraprop" ) ) do
-			if ( camera.controlkey && camera.controlkey == key ) then
-				camera:Remove()
-			end
+			if ( !camera.controlkey || camera.controlkey != key ) then continue end
+			if ( IsValid( ply ) && IsValid( camera:GetPlayer() ) && ply != camera:GetPlayer() ) then continue end
+			camera:Remove()
 		end
 
 		ent:SetKey( key )
@@ -70,7 +70,6 @@ function TOOL:LeftClick( trace )
 	local ply = self:GetOwner()
 	local locked = self:GetClientNumber( "locked" )
 	local toggle = self:GetClientNumber( "toggle" )
-	local pid = ply:UniqueID()
 
 	local ent = MakeCamera( ply, key, locked, toggle, { Pos = trace.StartPos, Angle = ply:EyeAngles() } )
 	

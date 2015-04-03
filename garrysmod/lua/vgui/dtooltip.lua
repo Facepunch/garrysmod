@@ -12,7 +12,7 @@
 --
 local tooltip_delay = CreateClientConVar( "tooltip_delay", "0.5", true, false ) 
 
-PANEL = {}
+local PANEL = {}
 
 
 --[[---------------------------------------------------------
@@ -91,7 +91,7 @@ function PANEL:PositionTooltip()
 
 	if ( !IsValid( self.TargetPanel ) ) then
 		self:Remove()
-		return;
+		return
 	end
 
 	self:PerformLayout()
@@ -106,7 +106,7 @@ function PANEL:PositionTooltip()
 	y = math.min( y, ly - h * 1.5 )
 	if ( y < 2 ) then y = 2 end
 	
-	// Fixes being able to be drawn off screen - Acecool
+	// Fixes being able to be drawn off screen
 	self:SetPos( math.Clamp( x - w * 0.5, 0, ScrW( ) - self:GetWide( ) ), math.Clamp( y, 0, ScrH( ) - self:GetTall( ) ) )
 
 end
@@ -116,7 +116,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
-	self:PositionTooltip();
+	self:PositionTooltip()
 	derma.SkinHook( "Paint", "Tooltip", self, w, h )
 
 end
@@ -127,20 +127,20 @@ end
 function PANEL:OpenForPanel( panel )
 	
 	self.TargetPanel = panel
-	self:PositionTooltip();	
+	self:PositionTooltip()
 	
 	if ( tooltip_delay:GetFloat() > 0 ) then
 	
 		self:SetVisible( false )
 		timer.Simple( tooltip_delay:GetFloat(), function() 
 		
-													if ( !IsValid( self ) ) then return end
-													if ( !IsValid( panel ) ) then return end
+			if ( !IsValid( self ) ) then return end
+			if ( !IsValid( panel ) ) then return end
 
-													self:PositionTooltip();	
-													self:SetVisible( true )
+			self:PositionTooltip()
+			self:SetVisible( true )
 												
-												end )
+		end )
 	end
 
 end

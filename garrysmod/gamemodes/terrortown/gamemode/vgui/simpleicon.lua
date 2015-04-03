@@ -109,7 +109,7 @@ end
 
 -- Add a panel to this icon. Most recent addition will be the top layer.
 function PANEL:AddLayer(pnl)
-   if not ValidPanel(pnl) then return end
+   if not IsValid(pnl) then return end
 
    pnl:SetParent(self)
 

@@ -7,12 +7,12 @@
 				<ul>
 					<li class="noisy category {{IfElse( category.category == CurrentCategory, 'active', '' )}}" ng-repeat="category in MapList | orderBy:'order'" ng-hide="category.maps.length == 0" ng-click="SwitchCategory(category.category)">
 						<div class='name'>{{category.category}}</div>
-						<div class='count'>{{CountFiltered(category.maps)}}</div>	
+						<div class='count'>{{CountFiltered(category.maps)}}</div>
 					</li>
 				</ul>
 
 				<div class='search'>
-					<input type="text" class="search" ng-model="SearchText" placeholder="Search" autofocus />
+					<input type="text" class="search" ng-model="SearchText" ng-tranny="'searchbar_placeholer'" autofocus />
 				</div>
 			</div>
 
@@ -20,12 +20,12 @@
 
 				<ul class="category" ng-repeat="category in MapList | orderBy:'order'" ng-hide="category.maps.length == 0" ng-show="CurrentCategory == category.category">
 				
-					<li>{{category.category}} <small>{{category.maps.length}} maps</small></li>
+					<li>{{category.category}} <small>{{CountFiltered(category.maps)}} </small><small ng-tranny="category.maps.length == 1 && 'newgame_map' || 'newgame_maps'"></small></li>
 
-					<li class="icon mapicon {{MapClass( map )}}" ng-repeat="map in category.maps | orderBy:'Name' | filter:SearchText" >
+					<li class="icon mapicon {{MapClass( map )}}" ng-repeat="map in category.maps | orderBy:'toString()' | filter:SearchText" >
 						<img ng-click="FavMap( map )" class="{{FavMapClass( map )}} {{FavMapHover( map )}}" src="img/empty.png" />
-						<img ng-click="ClickMap( map )" ng-src="asset://mapimage/{{map.Name}}" class="thumbnail" /><br /> 
-						{{map.Name}}
+						<img ng-click="ClickMap( map )" ng-src="{{MapIcon( map, category.category )}}" class="thumbnail" /><br /> 
+						{{map}}
 					</li>
 
 				</ul>
@@ -37,12 +37,12 @@
 
 				<div class="dropdown" style="margin: 10px;">
 
-					<div class="label" onclick="$(this).siblings('.contents').toggle()">
+					<div class="label" onclick="$(this).siblings('.contents').toggle()" ng-tranny="MaxPlayersOption.label">
 						{{MaxPlayersOption.label}}
 						<i class='caret'></i>
 					</div>
 					<div class="contents" onclick="$(this).hide()">
-						<div ng-repeat="ply in Players" ng-click="UpdateMaxPlayers( ply )">
+						<div ng-repeat="ply in Players" ng-click="UpdateMaxPlayers( ply )" ng-tranny="ply.label">
 						{{ply.label}}
 						</div>
 					</div>
@@ -66,14 +66,15 @@
 					</div>
 
 					<div class='control control-numeric' ng-repeat="s in ServerSettings.Numeric">
-						<label ng-Tranny="s.text"></label><input type="text" ng-model="s.Value"/>
+						<label ng-Tranny="s.text"></label>
+						<input type="text" ng-model="s.Value"/>
 					</div>
 
 					<div class='control' ng-repeat="s in ServerSettings.CheckBox">
 						<input type="checkbox" ng-model="s.Value" />
 						<label ng-Tranny="s.text"></label>
-					</div>		
-							
+					</div>
+					
 				</div>
 
 

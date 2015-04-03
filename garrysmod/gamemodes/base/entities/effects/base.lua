@@ -1,15 +1,14 @@
 
-
 --[[---------------------------------------------------------
-   Returns the right shoot start position 
+   Returns the right shoot start position
     for a tracer - based on 'data'.
 -----------------------------------------------------------]]
 function EFFECT:GetTracerShootPos( Position, Ent, Attachment )
 
 	self.ViewModelTracer = false
 	
-	if (!Ent:IsValid()) then return Position end
-	if (!Ent:IsWeapon()) then return Position end
+	if ( !IsValid( Ent ) ) then return Position end
+	if ( !Ent:IsWeapon() ) then return Position end
 
 	-- Shoot from the viewmodel
 	if ( Ent:IsCarriedByLocalPlayer() && !LocalPlayer():ShouldDrawLocalPlayer() ) then

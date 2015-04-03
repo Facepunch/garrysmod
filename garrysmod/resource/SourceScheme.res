@@ -267,9 +267,9 @@ Scheme
 			{
 				"name"		 "Lucida Console" [$WINDOWS]
 				"name"		 "Lucida Console" [$X360]
-				"name"		 "Verdana" [$POSIX]
+				"name"		 "Lucida Console" [$OSX]
+				"name"		 "Verdana" [$LINUX]
 				"tall"		"14" [$LINUX]
-				"tall"		"11" [$OSX]
 				"tall"		 "10"
 				"tall_lodef" "15"
 				"tall_hidef" "20"
@@ -281,8 +281,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$POSIX]
-				"name"		"Verdana" [$POSIX]
+				"name"		"Tahoma" [!$LINUX]
+				"name"		"Verdana" [$LINUX]
 				"tall"		"16"
 				"weight"	"500"
 			}
@@ -291,8 +291,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$POSIX]
-				"name"		"Verdana Bold" [$POSIX]
+				"name"		"Tahoma" [!$LINUX]
+				"name"		"Verdana Bold" [$LINUX]
 				"tall"		"16"
 				"weight"	"1000"
 			}
@@ -301,8 +301,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$POSIX]
-				"name"		"Verdana" [$POSIX]
+				"name"		"Tahoma" [!$LINUX]
+				"name"		"Verdana" [$LINUX]
 				"tall"		"16"
 				"weight"	"500"
 				"underline" "1"
@@ -312,10 +312,10 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$POSIX]
-				"name"		"Verdana" [$POSIX]
-				"tall"		"12" [!$POSIX]
-				"tall"		"13" [$POSIX]
+				"name"		"Tahoma" [!$LINUX]
+				"name"		"Verdana" [$LINUX]
+				"tall"		"12" [!$LINUX]
+				"tall"		"16" [$LINUX]
 				"weight"	"0"
 			}
 		}
@@ -323,8 +323,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$POSIX]
-				"name"		"Verdana" [$POSIX]
+				"name"		"Tahoma" [!$LINUX]
+				"name"		"Verdana" [$LINUX]
 				"tall"		"13"
 				"weight"	"0"
 				"dropshadow" "1"
@@ -334,8 +334,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$POSIX]
-				"name"		"Verdana" [$POSIX]
+				"name"		"Tahoma" [!$LINUX]
+				"name"		"Verdana" [$LINUX]
 				"tall"		"12"
 				"weight"	"0"
 			}
@@ -345,8 +345,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$POSIX]
-				"name"		"Verdana" [$POSIX]
+				"name"		"Tahoma" [!$LINUX]
+				"name"		"Verdana" [$LINUX]
 				"tall"		"18"
 				"weight"	"0"
 			}
@@ -355,8 +355,8 @@ Scheme
 		{
 			"1"	[$WIN32]
 			{
-				"name"		"Tahoma" [!$POSIX]
-				"name"		"Verdana" [$POSIX]
+				"name"		"Tahoma" [!$LINUX]
+				"name"		"Verdana" [$LINUX]
 				"tall"		"12"
 				"weight"	"1000"
 			}
@@ -393,13 +393,13 @@ Scheme
 		}
 		"MenuLarge"
 		{
-			"1"	[$POSIX]
+			"1"	[$LINUX]
 			{
 				"name"		"Helvetica Bold"
 				"tall"		"20"
 				"antialias" "1"
 			}
-			"1"	[$WIN32]
+			"1"	[!$LINUX]
 			{
 				"name"		"Verdana" 
 				"tall"		"16" 
@@ -483,8 +483,8 @@ Scheme
 			{
 				"name"		 "Lucida Console" [$WINDOWS]
 				"name"		 "Lucida Console" [$X360]
-				"name"		 "Verdana" [$POSIX]
-				"tall"		"11" [$OSX]
+				"name"		 "Lucida Console" [$OSX]
+				"name"		 "Verdana" [$LINUX]
 				"tall"		"14" [$LINUX]
 				"tall"		"10"
 				"weight"	"500"
@@ -595,8 +595,8 @@ Scheme
 			{
 				"name"		 "Lucida Console" [$WINDOWS]
 				"name"		 "Lucida Console" [$X360]
-				"name"		 "Verdana" [$POSIX]
-				"tall"		"11" [$POSIX]
+				"name"		 "Verdana" [$LINUX]
+				"tall"		"11" [$LINUX]
 				"tall"		"10"
 				"weight"	"0"
 			}
@@ -614,10 +614,9 @@ Scheme
 			{
 				"name"		 "Lucida Console" [$WINDOWS]
 				"name"		 "Lucida Console" [$X360]
-				"name"		 "Verdana" [$OSX]
+				"name"		 "Lucida Console" [$OSX]
 				"name"		 "Courier" [$LINUX]
 				"tall"		"14" [$LINUX]
-				"tall"		"11" [$POSIX]
 				"tall"		"10"
 				"weight"	"0"
 				"dropshadow" "1"
@@ -644,8 +643,7 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$OSX]
-				"name"		"Verdana Italic" [$OSX]
+				"name"		"Tahoma"
 				"tall"		"16"
 				"weight"	"500"
 				"italic"	"1"
@@ -1067,8 +1065,7 @@ Scheme
 
 		ScrollBarButtonBorder
 		{
-			"inset" "0 0 0 0" [!$OSX]
-			"inset" "-3 2 0 0" [$OSX]
+			"inset" "0 0 0 0"
 			Left
 			{
 				"1"
@@ -1108,8 +1105,7 @@ Scheme
 		
 		ScrollBarButtonDepressedBorder
 		{
-			"inset" "0 0 0 0" [!$OSX]
-			"inset" "-3 2 0 0" [$OSX]
+			"inset" "0 0 0 0"
 			Left
 			{
 				"1"

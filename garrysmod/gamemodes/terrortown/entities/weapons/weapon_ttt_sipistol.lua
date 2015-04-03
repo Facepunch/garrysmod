@@ -13,6 +13,7 @@ if CLIENT then
    };
 
    SWEP.Icon = "vgui/ttt/icon_silenced"
+   SWEP.IconLetter = "a"
 end
 
 SWEP.Base = "weapon_tttbase"
@@ -38,7 +39,7 @@ SWEP.UseHands			= true
 SWEP.ViewModelFlip		= false
 SWEP.ViewModelFOV		= 54
 SWEP.ViewModel			= "models/weapons/cstrike/c_pist_usp.mdl"
-SWEP.WorldModel			= "models/weapons/w_pist_usp.mdl"
+SWEP.WorldModel			= "models/weapons/w_pist_usp_silencer.mdl"
 
 SWEP.Primary.Sound = Sound( "weapons/usp/usp1.wav" )
 SWEP.Primary.SoundLevel = 50

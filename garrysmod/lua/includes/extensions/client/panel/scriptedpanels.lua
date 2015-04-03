@@ -139,7 +139,7 @@ function vgui.Create( classname, parent, name, ... )
 	
 		local metatable = PanelFactory[ classname ]
 		
-		local panel = vgui.Create( metatable.Base, parent, name )
+		local panel = vgui.Create( metatable.Base, parent, name or classname )
 		if ( !panel ) then
 			Error( "Tried to create panel with invalid base '"..metatable.Base.."'\n" );
 		end
@@ -159,7 +159,7 @@ function vgui.Create( classname, parent, name, ... )
 	
 	end
 	
-	return vgui.CreateX( classname, parent, name )
+	return vgui.CreateX( classname, parent, name or classname )
 
 end
 
@@ -192,6 +192,7 @@ function vgui.Register( name, mtable, base )
 
 	-- Default base is Panel
 	mtable.Base = base or "Panel"	
+	mtable.Init = mtable.Init or function() end
 	
 	PanelFactory[ name ] = mtable
 	baseclass.Set( name, mtable )
@@ -216,6 +217,7 @@ function vgui.RegisterTable( mtable, base )
 	PANEL = nil
 
 	mtable.Base = base or "Panel"
+	mtable.Init = mtable.Init or function() end
 	
 	return mtable
 	
@@ -234,6 +236,7 @@ function vgui.RegisterFile( filename )
 	PANEL = OldPanel
 
 	mtable.Base = mtable.Base or "Panel"
+	mtable.Init = mtable.Init or function() end
 	
 	return mtable
 	

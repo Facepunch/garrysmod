@@ -27,7 +27,7 @@ Scheme
 	BaseSettings
 	{
 		"FgColor"			"255 235 20 255"
-		"BgColor"			"0 0 0 0"
+		"BgColor"			"0 0 0 76"
 
 		"Panel.FgColor"			"255 220 0 255"
 		"Panel.BgColor"			"0 0 0 0"
@@ -252,6 +252,51 @@ Scheme
 				"antialias" "1"
 				"additive"	"1"
 				"custom"	"1"
+			}
+		}
+		HudDefault
+		{
+
+			"1"
+			{
+				"name"		"Verdana"
+				"tall"		"9"
+				"weight"	"700"
+				"antialias" "1"
+				"yres"	"1 599"
+			}
+			"2"
+			{
+				"name"		"Verdana"
+				"tall"		"12"
+				"weight"	"700"
+				"antialias" "1"
+				"yres"	"600 767"
+			}
+			"3"
+			{
+				"name"		"Verdana"
+				"tall"		"14"
+				"weight"	"900"
+				"antialias" "1"
+				"yres"	"768 1023"
+			}
+			"4"
+			{
+				"name"		"Verdana"
+				"tall"		"20"
+				"weight"	"900"
+				"antialias" "1"
+				"yres"	"1024 1199"
+			}
+			"5"
+			{
+				"name"		"Verdana"
+				"tall"		"24"
+				"weight"	"900"
+				"antialias" "1"
+				"yres"	"1200 10000"
+				"additive"	"1"
 			}
 		}
 		HudNumbersSmall

@@ -6,6 +6,7 @@ if CLIENT then
    SWEP.PrintName          = "rifle_name"
    SWEP.Slot               = 2
    SWEP.Icon = "vgui/ttt/icon_scout"
+   SWEP.IconLetter = "r"
 end
 
 SWEP.Base               = "weapon_tttbase"
@@ -97,7 +98,7 @@ if CLIENT then
    function SWEP:DrawHUD()
       if self:GetIronsights() then
          surface.SetDrawColor( 0, 0, 0, 255 )
-         
+
          local x = ScrW() / 2.0
          local y = ScrH() / 2.0
          local scope_size = ScrH()

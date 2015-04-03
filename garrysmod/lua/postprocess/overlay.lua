@@ -2,7 +2,7 @@
 --[[---------------------------------------------------------
    Register the convars that will control this effect
 -----------------------------------------------------------]]
-local pp_mat_overlay 				= CreateClientConVar( "pp_mat_overlay", "", false, false )
+local pp_mat_overlay				= CreateClientConVar( "pp_mat_overlay", "", false, false )
 local pp_mat_overlay_refractamount	= CreateClientConVar( "pp_mat_overlay_refractamount", "0.3", true, false )
 
 local lastTexture = nil
@@ -14,8 +14,8 @@ function DrawMaterialOverlay( texture, refractamount )
 		mat_Overlay = Material( texture )
 		lastTexture = texture
 	end
-	
-	if ( mat_Overlay == nil ) then return end
+
+	if ( mat_Overlay == nil || mat_Overlay:IsError() ) then return end
 
 	render.UpdateScreenEffectTexture()
 
@@ -27,7 +27,7 @@ function DrawMaterialOverlay( texture, refractamount )
 
 	render.SetMaterial( mat_Overlay )
 	render.DrawScreenQuad()
-	
+
 end
 
 local function DrawInternal()

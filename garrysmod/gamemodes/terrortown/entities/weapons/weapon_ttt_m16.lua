@@ -7,6 +7,7 @@ if CLIENT then
    SWEP.Slot				= 2
 
    SWEP.Icon = "vgui/ttt/icon_m16"
+   SWEP.IconLetter = "w"
 end
 
 SWEP.Base				= "weapon_tttbase"

@@ -185,6 +185,8 @@ if ( CLIENT ) then
 	--
 	search.AddProvider( function( str )
 
+		str = str:PatternSafe()
+
 		local list = {}
 
 		for k, v in pairs( TOOLS_LIST ) do

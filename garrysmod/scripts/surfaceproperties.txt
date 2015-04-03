@@ -246,6 +246,8 @@
 	"base"		"dirt"
 	"stepleft"	"Grass.StepLeft"
 	"stepright"	"Grass.StepRight"
+
+	"gamematerial"	"U"
 }
 
 "tile"
@@ -292,7 +294,7 @@
 
 "Wood_lowdensity"
 {
-	"base"		"wood"
+	"base"		"Wood"
 	"density"	"300"
 }
 
@@ -444,6 +446,8 @@
 	"audioreflectivity" "0.33"
 	"audiohardnessfactor" "0.0"
 	"audioroughnessfactor" "1.0"
+
+	"gamematerial" "N"
 }
 
 // wade is a water material for walking in/on water at knee height
@@ -554,6 +558,12 @@
 
 }
 
+//For the materials that use it
+"stone"
+{
+	"base"		"rock"
+}
+
 // tubs, urinals, sinks
 
 "porcelain"
@@ -574,7 +584,7 @@
 "gravel"
 {
 	"base"		"rock"
-	"friction"	"0.4"
+	"friction"	"0.4"  //0.8 for cs
 	"stepleft"	"Gravel.StepLeft"
 	"stepright""Gravel.StepRight"
 }
@@ -696,12 +706,14 @@
 {
 	"base"		"dirt"
 	"density"	"800"
-	"friction"	"0.35"
+	"friction"	"0.35" //0.8 for cs
 	
 	"stepleft"		"Snow.StepLeft"
 	"stepright"		"Snow.StepRight"
 
 	"audiohardnessfactor" "0.25"
+
+	"gamematerial"	"J"
 }
 
 "ice"
@@ -871,6 +883,8 @@
 	"bulletimpact"	"Sand.BulletImpact"
 
 	"audioreflectivity" "0.03"
+
+	"gamematerial"	"N"
 }
 
 // solid rubber floor mat, solid rubber tire
@@ -1168,6 +1182,8 @@
 	"gamematerial"	"O"
 }
 
+
+// Episode 2
 "cavern_rock"
 {
 	"base"  "rock"
@@ -1186,28 +1202,28 @@
 
 "advisor_shield"
 {
- "base"  "rock"
- 
- "density" "700"
- "elasticity" "0.1"
- "friction" "0.8"
- "bulletimpact" "NPC_Advisor.shieldblock"
- "scraperough" "NPC_Advisor.shieldblock"
- "scrapesmooth" "NPC_Advisor.shieldblock"
- "impacthard" "NPC_Advisor.shieldblock"
- "impactsoft" "NPC_Advisor.shieldblock"
- 
- "gamematerial" "Z"  // <--- Whatever you make the character index in decals.h
+	"base"  "rock"
+	
+	"density" "700"
+	"elasticity" "0.1"
+	"friction" "0.8"
+	"bulletimpact" "NPC_Advisor.shieldblock"
+	"scraperough" "NPC_Advisor.shieldblock"
+	"scrapesmooth" "NPC_Advisor.shieldblock"
+	"impacthard" "NPC_Advisor.shieldblock"
+	"impactsoft" "NPC_Advisor.shieldblock"
+	
+	"gamematerial" "Z"  // <--- Whatever you make the character index in decals.h
 }
 
 "antlion_eggshell"
 {
- "base"  "flesh"
-"bulletimpact"	"Flesh.ImpactHard"
-"impacthard"	"Flesh.ImpactHard"
-"impactsoft"	"Flesh.ImpactHard"
+	"base"  "flesh"
+	"bulletimpact"	"Flesh.ImpactHard"
+	"impacthard"	"Flesh.ImpactHard"
+	"impactsoft"	"Flesh.ImpactHard"
 
- "gamematerial" "E"
+	"gamematerial" "E"
 }
 
 
@@ -1262,7 +1278,7 @@
 	"impactsoft"	"ATV_impact_medium"
 }
 
-
+//Garry's Mod
 "gmod_ice"
 {
 	"friction"	"0.01"
@@ -1311,10 +1327,8 @@
 	"scraperough"	"MetalVehicle.ScrapeRough"
 	"scrapesmooth"	"MetalVehicle.ScrapeSmooth"
 
-
 	"gamematerial"	"M"
 }
-	
 
 "crowbar"
 {
@@ -1326,8 +1340,6 @@
 "antlionsand"
 {
 	"base"		"sand"
-
-	"gamematerial"	"N"
 }
 
 "metal_seafloorcar"
@@ -1373,12 +1385,11 @@
 
 "zombieflesh"
 {
- 	"base"   	"flesh"
- 
- 	"impacthard"	"Flesh_Bloody.ImpactHard"
+	"base"			"flesh"
+	"impacthard"	"Flesh_Bloody.ImpactHard"
 }
 
- //=============================================
+//=============================================
 //----------------- PHX 2011 ------------------
 //=============================================
 
@@ -1471,8 +1482,8 @@
 	"strain"		"Wood.Strain"
 	"break"			"Wood.Break"
 
-	"audioreflectivity" "0.33"
-	"audiohardnessfactor" "0.25"
+	"audioreflectivity"		"0.33"
+	"audiohardnessfactor"	"0.25"
 
 }
 //Metallic wheels
@@ -1532,6 +1543,7 @@
 	"friction"		"5.0"
 }
 
+// Team Fortress 2?
 "grenade_napalm"
 {
 	"base"		"grenade"
@@ -1559,4 +1571,121 @@
 	"impacthard"	"Grenade.ImpactHard"
 	"impactsoft"	"Grenade.ImpactSoft"
 	"rolling"	"Grenade.Roll"
+}
+
+// Counter-Strike: Source
+
+"brass_bell_large"
+{
+	"bulletimpact"	"BrassBell.C"
+}
+
+"brass_bell_medium"
+{
+	"bulletimpact"	"BrassBell.D"
+}
+
+"brass_bell_small"
+{
+	"bulletimpact"	"BrassBell.E"
+}
+
+"brass_bell_smallest"
+{
+	"bulletimpact"	"BrassBell.F"
+}
+
+"hay"
+{
+	"base"		"wood"
+	"stepleft"	"Grass.StepLeft"
+	"stepright"	"Grass.StepRight"
+}
+
+// Half-Life: Source
+
+"metal_barrellight_hl"
+{
+	"base"		"metal_box"
+	"density"	"690"
+	"elasticity"	"0.5"
+	"impacthard"	"Metal_Barrel.ImpactHard"
+	"impactsoft"	"Metal_Barrel.ImpactSoft"
+	"bulletimpact"	"Metal_Barrel.BulletImpact"
+}
+
+"metal_barrel_hl"
+{
+	"base"		"metal_box"
+	"density"	"940"
+	"elasticity"	"0.5"
+	"impacthard"	"Metal_Barrel.ImpactHard"
+	"impactsoft"	"Metal_Barrel.ImpactSoft"
+	"bulletimpact"	"Metal_Barrel.BulletImpact"
+}
+
+"plastic_barrel_verybuoyant"
+{
+	"base"		"plastic_barrel"
+	"density"	"630"
+}
+
+
+// low friction tool materials
+"friction_00"
+{
+	"friction"	"0.0"
+	"density"	"917"
+}
+
+"friction_10"
+{
+	"friction"	"0.1"
+	"density"	"917"
+}
+
+"friction_25"
+{
+	"friction"	"0.25"
+	"density"	"917"
+}
+
+
+"frictionM_00"
+{
+	"base"		"metal"
+	"friction"	"0.0"
+	"density"	"917"
+}
+
+"frictionM_10"
+{
+	"base"		"metal"
+	"friction"	"0.1"
+	"density"	"917"
+}
+
+"frictionM_25"
+{
+	"base"		"metal"
+	"friction"	"0.25"
+	"density"	"917"
+}
+
+// Portal
+
+"energyball"
+{
+	"base"		"glass"
+	"elasticity"	"1000"
+	"friction"	"0"
+}
+
+"sphere"
+{
+	"base"		"metal"
+	"elasticity"	"3"
+	"dampening"	"0.2"
+	"friction"	"0.2"
+	"density"	"1000"
 }

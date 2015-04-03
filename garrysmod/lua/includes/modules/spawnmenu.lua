@@ -261,9 +261,9 @@ function ActivateToolPanel( id, cp )
 
 	local Tab = g_SpawnMenu:GetToolMenu():GetToolPanel( id )
 	if ( !IsValid( Tab ) ) then return end	
-		
+	
 	spawnmenu.SetActiveControlPanel( cp )
-			
+	
 	if ( cp ) then
 		Tab:SetActive( cp )
 	end
@@ -273,32 +273,32 @@ function ActivateToolPanel( id, cp )
 end
 
 -- While technically tool class names CAN be duplicate, it normally should never happen.
-function ActivateTool( strName )
+function ActivateTool( strName, noCommand )
 
-	-- Hacky code to get table of a tool and its tab
-	local tool = {}
-	local tab = 1
-	for Tab, v in ipairs( g_ToolMenu ) do
+	-- I really don't like this triple loop
+	for tab, v in ipairs( g_ToolMenu ) do
 		for _, items in pairs( v.Items ) do
 			for _, item in pairs( items ) do
+
 				if ( istable( item ) && item.ItemName && item.ItemName == strName ) then
-					tool = item
-					tab = Tab
+
+					if ( !noCommand && item.Command ) then
+						RunConsoleCommand( unpack( string.Explode( " ", item.Command ) ) )
+					end
+					
+					local cp = controlpanel.Get( strName )
+					if ( !cp:GetInitialized() ) then
+						cp:FillViaTable( { Text = item.Text, ControlPanelBuildFunction = item.CPanelFunction, Controls = item.Controls } )
+					end
+
+					ActivateToolPanel( tab, cp )
+
 					break
+				
 				end
+
 			end
 		end
-	
 	end
-
-	RunConsoleCommand( unpack( string.Explode( " ", tool.Command ) ) )
-	
-	local cp = controlpanel.Get( strName )
-	if ( !cp:GetInitialized() ) then
-		cp:FillViaTable( { Text = tool.Text, ControlPanelBuildFunction = tool.CPanelFunction, Controls = tool.Controls } )
-	end
-
-	ActivateToolPanel( tab, cp )
-	SwitchToolTab( tab )
 
 end

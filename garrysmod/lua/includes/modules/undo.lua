@@ -1,7 +1,3 @@
-
-require ( "timer" )
-require ( "net" )
-
 module( "undo", package.seeall )
 
 -- undo.Create("Wheel")
@@ -370,9 +366,9 @@ function Do_Undo( undo )
 	
 	if (count > 0) then
 		if ( undo.CustomUndoText ) then
-			undo.Owner:SendLua( "GAMEMODE:OnUndo( '"..undo.Name.."', '"..undo.CustomUndoText.."' )" )
+			undo.Owner:SendLua( 'hook.Run("OnUndo","' .. undo.Name .. '","' .. undo.CustomUndoText .. '")' )
 		else
-			undo.Owner:SendLua( "GAMEMODE:OnUndo( '"..undo.Name.."' )" )
+			undo.Owner:SendLua( 'hook.Run("OnUndo","' .. undo.Name .. '")' )
 		end
 	end
 	
@@ -449,5 +445,3 @@ end
 concommand.Add("undo",					CC_UndoLast, nil, "", { FCVAR_DONTRECORD } )
 concommand.Add("gmod_undo",				CC_UndoLast, nil, "", { FCVAR_DONTRECORD } )
 concommand.Add("gmod_undonum",			CC_UndoNum, nil, "", { FCVAR_DONTRECORD } )
-
-	
