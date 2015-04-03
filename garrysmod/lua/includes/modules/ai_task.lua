@@ -86,7 +86,7 @@ function Task:Start( npc )
 	
 	if ( self:IsEngineType() ) then
 	
-		if (!self.TaskID) then self.TaskID = ai.GetTaskID( self.TaskName ) end
+		-- if (!self.TaskID) then self.TaskID = ai.GetTaskID( self.TaskName ) end
 	
 		npc:StartEngineTask( self.TaskID, self.TaskData )
 	end

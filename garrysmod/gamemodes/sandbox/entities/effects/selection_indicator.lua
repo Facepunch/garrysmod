@@ -14,7 +14,7 @@ function EFFECT:Init( data )
 			effectdata:SetOrigin( data:GetOrigin() )
 			effectdata:SetNormal( data:GetNormal() )
 			effectdata:SetEntity( data:GetEntity() )
-			effectdata:SetAttachment( data:GetAttachment() )
+			effectdata:SetParent( data:GetAttachment() )
 		util.Effect( "selection_ring", effectdata )
 		
 	end

@@ -217,13 +217,13 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 		effectdata:SetOrigin( hitpos )
 		effectdata:SetNormal( hitnormal )
 		effectdata:SetEntity( entity )
-		effectdata:SetAttachment( physbone )
+		effectdata:SetParent( physbone )
 	util.Effect( "selection_indicator", effectdata )	
 	
 	local effectdata = EffectData()
 		effectdata:SetOrigin( hitpos )
 		effectdata:SetStart( self.Owner:GetShootPos() )
-		effectdata:SetAttachment( 1 )
+		effectdata:SetParent( 1 )
 		effectdata:SetEntity( self.Weapon )
 	util.Effect( "ToolTracer", effectdata )
 	

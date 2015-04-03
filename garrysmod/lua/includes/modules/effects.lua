@@ -1,7 +1,7 @@
-local ents = ents
-local pairs = pairs
-local string = string
-local table = table
+local ents 		= ents
+local pairs 	= pairs
+local lower 	= string.lower
+local table 	= table
 
 --[[---------------------------------------------------------
    Name: effects
@@ -18,7 +18,7 @@ function Register( t, name )
 
 	local old = EffectList[ name ]
 
-	name = string.lower(name)
+	name = lower(name)
 	EffectList[ name ] = t
 
 	--
@@ -30,14 +30,14 @@ function Register( t, name )
 		--
 		-- Foreach entity using this class
 		--
-		table.ForEach( ents.FindByClass( name ), function( _, entity )
+		for _, entity in pairs( ents.FindByClass( name ) ) do
 
 			--
 			-- Replace the contents with this entity table
 			--
 			table.Merge( entity, t )
 
-		end )
+		end
 
 	end
 
@@ -49,7 +49,7 @@ end
 -----------------------------------------------------------]]
 function Create( name )
 
-	name = string.lower(name)
+	name = lower(name)
 
 	--Msg( "Create.. ".. name .. "\n" )
 

@@ -1,4 +1,3 @@
-
 module( "weapons", package.seeall )
 
 local WeaponList = {}
@@ -60,7 +59,7 @@ function Register( t, name )
 		--
 		-- Foreach entity using this class
 		--
-		table.ForEach( ents.FindByClass( name ), function( _, entity ) 
+		for _, entity in pairs( ents.FindByClass( name ) ) do 
 		
 			--
 			-- Replace the contents with this entity table
@@ -74,7 +73,7 @@ function Register( t, name )
 				entity:OnReloaded()
 			end
 		
-		end )
+		end
 
 	end
 
@@ -90,11 +89,11 @@ function OnLoaded()
 	-- - we have to wait until they're all setup because load order
 	-- could cause some entities to load before their bases!
 	--
-	table.ForEach( WeaponList, function( k, v ) 
+	for k, v in pairs( WeaponList ) do
 
 		baseclass.Set( k, Get( k ) )
 
-	end )
+	end
 
 end
 

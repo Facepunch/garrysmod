@@ -20,10 +20,10 @@ end
 --[[---------------------------------------------------------
 	Name: SetBonePosition (serverside)
 -----------------------------------------------------------]]
-function ENT:SetNetworkedBonePosition( i, Pos, Angle )
+function ENT:SetNWBonePosition( i, Pos, Angle )
 
-	self:SetNetworkedVector( "Vector" .. i, Pos )
-	self:SetNetworkedAngle( "Angle" .. i, Angle )
+	self:SetNWVector( "Vector" .. i, Pos )
+	self:SetNWAngle( "Angle" .. i, Angle )
 
 end
 
@@ -38,7 +38,7 @@ function ENT:Draw()
 	local NumModelPhysBones = self:GetModelPhysBoneCount()
 	if (NumModelPhysBones > 1) then
 	
-		if ( !self:GetNetworkedVector( "Vector0", false ) ) then
+		if ( !self:GetNWVector( "Vector0", false ) ) then
 			return
 		end
 		

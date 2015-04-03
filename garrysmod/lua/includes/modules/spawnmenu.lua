@@ -1,9 +1,5 @@
 
-local spawnmenu_engine = spawnmenu
-
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
+local spawnmenu_engine = spawnmenu	-- Only used for deprecated functions; remove me
 
 module( "spawnmenu", package.seeall )
 

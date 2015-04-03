@@ -60,7 +60,7 @@ local function RunIgniteTimer(ent, timer_name)
       end
    end
 
-   timer.Destroy(timer_name) -- stop running timer
+   timer.Remove(timer_name) -- stop running timer
 end
 
 local SendScorches
@@ -201,7 +201,7 @@ function SWEP:PrimaryAttack()
    end
 
    if ( (game.SinglePlayer() && SERVER) || CLIENT ) then
-      self:SetNetworkedFloat( "LastShootTime", CurTime() )
+      self:SetNWFloat( "LastShootTime", CurTime() )
    end
 end
 

@@ -57,14 +57,14 @@ function math.Rand( low, high )
 end
 
 --[[---------------------------------------------------------
-    math.Max, alias for math.max
+    math.max, alias for math.max
 -----------------------------------------------------------]]
-math.Max = math.max
+math.max = math.max
 
 --[[---------------------------------------------------------
-   math.Min, alias for math.min
+   math.min, alias for math.min
 -----------------------------------------------------------]]
-math.Min = math.min
+math.min = math.min
 
 --[[---------------------------------------------------------
     Name: EaseInOut(fProgress, fEaseIn, fEaseOut)
@@ -77,25 +77,25 @@ function math.EaseInOut( fProgress, fEaseIn, fEaseOut )
 	if (fEaseIn == nil) then fEaseIn = 0 end
 	if (fEaseOut == nil) then fEaseOut = 1 end
 
-	local fSumEase = fEaseIn + fEaseOut; 
+	local fSumEase = fEaseIn + fEaseOut 
 
 	if( fProgress == 0.0 || fProgress == 1.0 ) then return fProgress end
 
 	if( fSumEase == 0.0 ) then return fProgress end
 	if( fSumEase > 1.0 ) then
-		fEaseIn = fEaseIn / fSumEase; 
-		fEaseOut = fEaseOut / fSumEase; 
+		fEaseIn = fEaseIn / fSumEase 
+		fEaseOut = fEaseOut / fSumEase 
 	end
 
-	local fProgressCalc = 1.0 / (2.0 - fEaseIn - fEaseOut); 
+	local fProgressCalc = 1.0 / (2.0 - fEaseIn - fEaseOut) 
 
 	if( fProgress < fEaseIn ) then
-		return ((fProgressCalc / fEaseIn) * fProgress * fProgress); 
+		return ((fProgressCalc / fEaseIn) * fProgress * fProgress) 
 	elseif( fProgress < 1.0 - fEaseOut ) then
-		return (fProgressCalc * (2.0 * fProgress - fEaseIn)); 
+		return (fProgressCalc * (2.0 * fProgress - fEaseIn)) 
 	else 
-		fProgress = 1.0 - fProgress; 
-		return (1.0 - (fProgressCalc / fEaseOut) * fProgress * fProgress); 
+		fProgress = 1.0 - fProgress 
+		return (1.0 - (fProgressCalc / fEaseOut) * fProgress * fProgress) 
 	end
 end
 
@@ -105,7 +105,7 @@ end
 --------------------------------------]]
 local function KNOT( i, tinc )
 
-	return ( i - 3 ) * tinc;
+	return ( i - 3 ) * tinc
 	
 end
 
@@ -119,36 +119,36 @@ function math.calcBSplineN( i, k, t, tinc )
 	
 		if ( ( KNOT( i, tinc ) <= t ) && ( t < KNOT( i + 1, tinc ) ) ) then
 		
-			return 1;
+			return 1
 			
 		else
 		
-			return 0;
+			return 0
 			
 		end
 		
 	else
-		local ft = ( t - KNOT( i, tinc ) ) * math.calcBSplineN( i, k - 1, t, tinc );
-		local fb = KNOT( i + k - 1, tinc ) - KNOT( i, tinc );
+		local ft = ( t - KNOT( i, tinc ) ) * math.calcBSplineN( i, k - 1, t, tinc )
+		local fb = KNOT( i + k - 1, tinc ) - KNOT( i, tinc )
 
-		local st = ( KNOT( i + k, tinc ) - t ) * math.calcBSplineN( i + 1, k - 1, t, tinc );
-		local sb = KNOT( i + k, tinc ) - KNOT( i + 1, tinc );
+		local st = ( KNOT( i + k, tinc ) - t ) * math.calcBSplineN( i + 1, k - 1, t, tinc )
+		local sb = KNOT( i + k, tinc ) - KNOT( i + 1, tinc )
 		
-		local first = 0;
-		local second = 0;
+		local first = 0
+		local second = 0
 
 		if ( fb > 0 ) then
 		
-			first = ft / fb;
+			first = ft / fb
 			
 		end
 		if ( sb > 0 ) then
 		
-			second = st / sb;
+			second = st / sb
 			
 		end
 
-		return first + second;
+		return first + second
 		
 	end
 	
@@ -160,19 +160,19 @@ end
 --------------------------------------]]
 function math.BSplinePoint( tDiff, tPoints, tMax )
 	
-	local Q = Vector( 0, 0, 0 );
-	local tinc = tMax / ( table.getn( tPoints ) - 3 );
+	local Q = Vector( 0, 0, 0 )
+	local tinc = tMax / ( #tPoints - 3 )
 	
-	tDiff = tDiff + tinc;
+	tDiff = tDiff + tinc
 	
 	for idx, pt in pairs( tPoints ) do
 	
-		local n = math.calcBSplineN( idx, 4, tDiff, tinc );
-		Q = Q + (n * pt);
+		local n = math.calcBSplineN( idx, 4, tDiff, tinc )
+		Q = Q + (n * pt)
 		
 	end
 	
-	return Q;
+	return Q
 	
 end
 

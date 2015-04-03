@@ -343,14 +343,6 @@ if CLIENT then
          return "karma_min", karmacolors.min
       end
    end
-
-   function util.IncludeClientFile(file)
-      include(file)
-   end
-else
-   function util.IncludeClientFile(file)
-      AddCSLuaFile(file)
-   end
 end
 
 -- Like string.FormatTime but simpler (and working), always a string, no hour

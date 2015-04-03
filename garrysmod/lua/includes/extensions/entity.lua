@@ -65,7 +65,7 @@ end
 -----------------------------------------------------------]]
 function meta:IsConstrained()
 
-	if (CLIENT) then return self:GetNetworkedBool( "IsConstrained" ) end
+	if (CLIENT) then return self:GetNWBool( "IsConstrained" ) end
 	
 	local c = self:GetTable().Constraints
 	local bIsConstrained = false
@@ -79,7 +79,7 @@ function meta:IsConstrained()
 		
 	end
 
-	self:SetNetworkedBool( "IsConstrained", bIsConstrained )
+	self:SetNWBool( "IsConstrained", bIsConstrained )
 	return bIsConstrained
 	
 end
@@ -487,7 +487,7 @@ end
 --
 -- Networked var proxies
 --
-function meta:SetNetworkedVarProxy( name, func )
+function meta:SetNWVarProxy( name, func )
 
 	if not self.NWVarProxies then
 		self.NWVarProxies = {}
@@ -497,7 +497,7 @@ function meta:SetNetworkedVarProxy( name, func )
 
 end
 
-function meta:GetNetworkedVarProxy( name )
+function meta:GetNWVarProxy( name )
 	
 	if self.NWVarProxies then
 		local func = self.NWVarProxies[ name ]
@@ -510,8 +510,8 @@ function meta:GetNetworkedVarProxy( name )
 	
 end
 
-meta.SetNWVarProxy = meta.SetNetworkedVarProxy
-meta.GetNWVarProxy = meta.GetNetworkedVarProxy
+meta.SetNWVarProxy = meta.SetNWVarProxy
+meta.GetNWVarProxy = meta.GetNWVarProxy
 
 hook.Add( "EntityNetworkedVarChanged", "NetworkedVars", function( ent, name, oldValue, newValue )
 

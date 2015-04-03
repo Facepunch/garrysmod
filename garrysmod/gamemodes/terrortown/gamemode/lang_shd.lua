@@ -6,7 +6,7 @@
 if LANG then return end
 LANG = {}
 
-util.IncludeClientFile("cl_lang.lua")
+if CLIENT then include("cl_lang.lua") else AddCSLuaFile("cl_lang.lua") end
 
 -- Add all lua files in our /lang/ dir
 local dir = GM.FolderName or "terrortown"
@@ -15,7 +15,7 @@ for _, fname in pairs(files) do
    local path = "lang/" .. fname
    -- filter out directories and temp files (like .lua~)
    if string.Right(fname, 3) == "lua" then
-      util.IncludeClientFile(path)
+      if CLIENT then include(path) else AddCSLuaFile(path) end
       MsgN("Included TTT language file: " .. fname)
    end
 end

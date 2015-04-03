@@ -1,12 +1,11 @@
 
 module( "halo", package.seeall )
 
-local matColor	= Material( "model_color" )
-local mat_Copy	= Material( "pp/copy" )
-local mat_Add	= Material( "pp/add" )
-local mat_Sub	= Material( "pp/sub" )
-local rt_Stencil	= render.GetBloomTex0()
+local mat_Copy		= Material( "pp/copy" )
+local mat_Add		= Material( "pp/add" )
+local mat_Sub		= Material( "pp/sub" )
 local rt_Store		= render.GetScreenEffectTexture( 0 )
+local rt_Blur		= render.GetScreenEffectTexture( 1 )
 
 local List = {}
 
@@ -33,12 +32,14 @@ end
 
 function Render( entry )
 
-	local OldRT = render.GetRenderTarget()
+	local rt_Scene = render.GetRenderTarget()
 
-	-- Copy what's currently on the screen to another texture
+
+	-- Store a copy of the original scene
 	render.CopyRenderTargetToTexture( rt_Store )
 
-	-- Clear the colour and the stencils, not the depth
+
+	-- Clear our scene so that additive/subtractive rendering with it will work later
 	if ( entry.Additive ) then
 		render.Clear( 0, 0, 0, 255, false, true )
 	else
@@ -46,87 +47,71 @@ function Render( entry )
 	end
 
 
-	-- Write to the stencil
-	render.SetStencilEnable( true )
+	-- Render colored props to the scene and set their pixels high
+	cam.Start3D()
+		render.SetStencilEnable( true )
+			cam.IgnoreZ( entry.IgnoreZ )
 
-		cam.IgnoreZ( entry.IgnoreZ )
+				render.SetStencilWriteMask( 1 )
+				render.SetStencilTestMask( 1 )
+				render.SetStencilReferenceValue( 1 )
 
-			render.SetStencilWriteMask( 1 )
-			render.SetStencilTestMask( 1 )
-			render.SetStencilReferenceValue( 1 )
+				render.SetStencilCompareFunction( STENCIL_ALWAYS )
+				render.SetStencilPassOperation( STENCIL_REPLACE )
+				render.SetStencilFailOperation( STENCIL_KEEP )
+				render.SetStencilZFailOperation( STENCIL_KEEP )
 
-			render.SetStencilCompareFunction( STENCIL_ALWAYS )
-			render.SetStencilPassOperation( STENCIL_REPLACE )
-			render.SetStencilFailOperation( STENCIL_KEEP )
-			render.SetStencilZFailOperation( STENCIL_KEEP )
+					for k, v in pairs( entry.Ents ) do
 
-				for k, v in pairs( entry.Ents ) do
+						if ( !IsValid( v ) ) then continue end
 
-					if ( !IsValid( v ) ) then continue end
+						v:DrawModel()
 
-					v:DrawModel()
+					end
 
-				end
+				render.SetStencilCompareFunction( STENCIL_EQUAL )
+				render.SetStencilPassOperation( STENCIL_KEEP )
+				-- render.SetStencilFailOperation( STENCIL_KEEP )
+				-- render.SetStencilZFailOperation( STENCIL_KEEP )
 
-			render.SetStencilCompareFunction( STENCIL_EQUAL )
-			render.SetStencilPassOperation( STENCIL_KEEP )
-			render.SetStencilFailOperation( STENCIL_KEEP )
-			render.SetStencilZFailOperation( STENCIL_KEEP )
+					cam.Start2D()
+						surface.SetDrawColor( entry.Color )
+						surface.DrawRect( 0, 0, ScrW(), ScrH() )
+					cam.End2D()
 
-				render.MaterialOverride( matColor )
-
-				local r, g, b, a =	entry.Color.r / 255,
-									entry.Color.g / 255,
-									entry.Color.b / 255,
-									entry.Color.a / 255
-
-				for k, v in pairs( entry.Ents ) do
-
-					if ( !IsValid( v ) ) then continue end
-
-					render.SetColorModulation( r, g, b )
-					render.SetBlend( a )
-
-					v:DrawModel()
-
-				end
-
-				render.SetColorModulation( 1, 1, 1 )
-
-				render.MaterialOverride( nil )
-
-		cam.IgnoreZ( false )
-
-	render.SetStencilEnable( false )
+			cam.IgnoreZ( false )
+		render.SetStencilEnable( false )
+	cam.End3D()
 
 
-	-- Copy stencil to rt and blur it
-	render.CopyRenderTargetToTexture( rt_Stencil )
-	render.BlurRenderTarget( rt_Stencil, entry.BlurX, entry.BlurY, 1 )
+	-- Store a blurred version of the colored props in an RT
+	render.CopyRenderTargetToTexture( rt_Blur )
+	render.BlurRenderTarget( rt_Blur, entry.BlurX, entry.BlurY, 1 )
 
-	-- Re-render stored scene
-	render.SetRenderTarget( OldRT )
+
+	-- Restore the original scene
+	render.SetRenderTarget( rt_Scene )
 	mat_Copy:SetTexture( "$basetexture", rt_Store )
 	render.SetMaterial( mat_Copy )
 	render.DrawScreenQuad()
 
 
-	-- Draw halos to the screen!
+	-- Draw back our blured colored props additively/subtractively, ignoring the high bits
 	render.SetStencilEnable( true )
 
 		render.SetStencilCompareFunction( STENCIL_NOTEQUAL )
-		render.SetStencilPassOperation( STENCIL_KEEP )
-		render.SetStencilFailOperation( STENCIL_KEEP )
-		render.SetStencilZFailOperation( STENCIL_KEEP )
+		-- render.SetStencilPassOperation( STENCIL_KEEP )
+		-- render.SetStencilFailOperation( STENCIL_KEEP )
+		-- render.SetStencilZFailOperation( STENCIL_KEEP )
 
 			if ( entry.Additive ) then
 
-				mat_Add:SetTexture( "$basetexture", rt_Stencil )
+				mat_Add:SetTexture( "$basetexture", rt_Blur )
 				render.SetMaterial( mat_Add )
 
 			else
 
-				mat_Sub:SetTexture( "$basetexture", rt_Stencil )
+				mat_Sub:SetTexture( "$basetexture", rt_Blur )
 				render.SetMaterial( mat_Sub )
 
 			end
@@ -140,9 +125,11 @@ function Render( entry )
 	render.SetStencilEnable( false )
 
 
+	-- Return original values
+	render.SetStencilTestMask( 0 )
 	render.SetStencilWriteMask( 0 )
 	render.SetStencilReferenceValue( 0 )
-	render.SetStencilTestMask( 0 )
+
 end
 
 hook.Add( "PostDrawEffects", "RenderHalos", function()
@@ -151,13 +138,11 @@ hook.Add( "PostDrawEffects", "RenderHalos", function()
 
 	if ( #List == 0 ) then return end
 
-	cam.Start3D()
+	for k, v in ipairs( List ) do
 
-		for k, v in pairs( List ) do
-			Render( v )
-		end
+		Render( v )
 
-	cam.End3D()
+	end
 
 	List = {}
 

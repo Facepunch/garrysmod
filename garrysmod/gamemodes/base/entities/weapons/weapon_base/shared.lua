@@ -1,6 +1,11 @@
 
-IncludeCS( "ai_translations.lua" )
-IncludeCS( "sh_anim.lua" )
+include( "ai_translations.lua" )
+include( "sh_anim.lua" )
+
+if ( SERVER ) then
+	AddCSLuaFile( "ai_translations.lua" )
+	AddCSLuaFile( "sh_anim.lua" )
+end
 
 -- Variables that are used on both client and server
 

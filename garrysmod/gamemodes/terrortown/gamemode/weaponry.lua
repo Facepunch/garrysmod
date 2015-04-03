@@ -133,7 +133,7 @@ end
 local function LateLoadout(id)
    local ply = player.GetByID(id)
    if not IsValid(ply) then
-      timer.Destroy("lateloadout" .. id)
+      timer.Remove("lateloadout" .. id)
       return
    end
 
@@ -141,7 +141,7 @@ local function LateLoadout(id)
       GiveLoadoutWeapons(ply)
 
       if HasLoadoutWeapons(ply) then
-         timer.Destroy("lateloadout" .. id)
+         timer.Remove("lateloadout" .. id)
       end
    end
 end
@@ -303,7 +303,7 @@ local function GiveEquipmentWeapon(uid, cls)
    local tmr = "give_equipment" .. tostring(uid)
 
    if (not IsValid(ply)) or (not ply:IsActiveSpecial()) then
-      timer.Destroy(tmr)
+      timer.Remove(tmr)
       return
    end
 
@@ -319,7 +319,7 @@ local function GiveEquipmentWeapon(uid, cls)
       -- we will be retrying
    else
       -- can stop retrying, if we were
-      timer.Destroy(tmr)
+      timer.Remove(tmr)
 
       if w.WasBought then
          -- some weapons give extra ammo after being bought, etc

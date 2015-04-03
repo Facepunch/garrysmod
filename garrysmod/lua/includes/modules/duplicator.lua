@@ -147,7 +147,7 @@ local EntitySaver =
 		data.Mins, data.Maxs	= ent:GetCollisionBounds()
 		data.ColGroup			= ent:GetCollisionGroup()
 		data.Name				= ent:GetName()
-		data.WorkshopID			= ent:GetWorkshopID()
+		-- data.WorkshopID			= ent:GetWorkshopID()
 
 		data.Pos, data.Angle	= WorldToLocal( data.Pos, data.Angle, LocalPos, LocalAng )
 
