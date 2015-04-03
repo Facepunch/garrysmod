@@ -53,6 +53,22 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 			SetPlayerList( server.address, { "1": { "time": 3037.74, "score": 5, "name": "Sethxi" }, "2": { "time": 2029.34, "score": 0, "name": "RedDragon124" }, "3": { "time": 1405.02, "score": 0, "name": "Joke (0_0)" }, "4": { "time": 462.15, "score": 0, "name": "TheAimBot" }, "5": { "time": 301.32, "score": 0, "name": "DesanPL"} } );
 
 		lua.Run( "GetPlayerList( '"+server.address+"' )" );
+		
+		if ( server.DoubleClick )
+		{
+			$scope.JoinServer( server );
+			return;
+		}
+
+		//
+		// ng-dblclick doesn't work properly in engine, so we fake it!
+		//
+		server.DoubleClick = true;
+
+		setTimeout( function()
+		{
+			server.DoubleClick = false;
+		}, 500 )
 	}
 
 	$scope.SelectGamemode = function( gm )
