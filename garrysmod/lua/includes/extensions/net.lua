@@ -47,15 +47,14 @@ end
 --
 -- Read/Write an entity to the stream
 -- CClientEntityList::GetMaxEntityIndex( ) returns 8096
--- valve developer wiki says 1/2 are static, non networkable
--- therefore we are going to use 12 bits to send the index
+-- therefore we are going to use 13 bits to send the index
 --
 function net.WriteEntity( e )
 
-	if( (IsValid( e ) or game.GetWorld( ) == e) and e:EntIndex( ) < 4096 ) then
+	if( IsValid( e ) or game.GetWorld( ) == e ) then
 
 		net.WriteBool( true )
-		net.WriteUInt( e:EntIndex( ), 12 )
+		net.WriteUInt( e:EntIndex( ), 13 )
 
 		return
 
@@ -68,7 +67,7 @@ end
 function net.ReadEntity()
 
 	if( net.ReadBool( ) ) then -- non null
-		return Entity( net.ReadUInt( 12 ) )
+		return Entity( net.ReadUInt( 13 ) )
 	end
 	
 	return NULL
