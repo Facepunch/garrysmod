@@ -41,14 +41,14 @@ derma.DefineControl( "DHorizontalDividerBar", "", PANEL, "DPanel" )
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_pLeft", 				"Left" )
-AccessorFunc( PANEL, "m_pRigth", 				"Rigth" )
+AccessorFunc( PANEL, "m_pRight", 				"Right" )
 AccessorFunc( PANEL, "m_pMiddle", 				"Middle" )
 AccessorFunc( PANEL, "m_iDividerWidth", 		"DividerWidth" )
 AccessorFunc( PANEL, "m_iLeftWidth", 			"LeftWidth" )
 AccessorFunc( PANEL, "m_bDragging", 			"Dragging", 		FORCE_BOOL )
 
 AccessorFunc( PANEL, "m_iLeftWidthMin", 		"LeftMin" )
-AccessorFunc( PANEL, "m_iRigthWidthMin", 		"RightMin" )
+AccessorFunc( PANEL, "m_iRightWidthMin", 		"RightMin" )
 
 AccessorFunc( PANEL, "m_iHoldPos", 				"HoldPos" )
 
