@@ -183,7 +183,13 @@ if ( CLIENT ) then
 	-- Hook the GUIMousePressed call, which is called when the client clicks on the
 	-- gui.
 	--
+	
+	local wasPressed = false
 	hook.Add( "PreventScreenClicks", "PropertiesPreventClicks", function()
+	
+		if ( !input.IsButtonDown( MOUSE_RIGHT ) ) then wasPressed = false end
+	
+		if ( wasPressed && input.IsButtonDown( MOUSE_RIGHT ) && !input.IsButtonDown( MOUSE_LEFT ) ) then return true end
 	
 		if ( !IsValid( vgui.GetHoveredPanel() ) || vgui.GetHoveredPanel() != g_ContextMenu ) then return end
 
@@ -202,6 +208,7 @@ if ( CLIENT ) then
 			local hovered = GetHovered( EyePos(), ply:GetAimVector() )
 
 			if ( IsValid( hovered ) ) then
+				wasPressed = true
 				return true
 			end
 
