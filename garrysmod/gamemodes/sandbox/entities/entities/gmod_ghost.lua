@@ -27,6 +27,8 @@ function ENT:SetNWBonePosition( i, Pos, Angle )
 
 end
 
+ENT.SetNetworkedBonePosition = meta.SetNWBonePosition
+
 
 --[[---------------------------------------------------------
 	Name: Draw (clientside)

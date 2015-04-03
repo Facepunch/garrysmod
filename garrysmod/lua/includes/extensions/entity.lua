@@ -510,8 +510,8 @@ function meta:GetNWVarProxy( name )
 	
 end
 
-meta.SetNWVarProxy = meta.SetNWVarProxy
-meta.GetNWVarProxy = meta.GetNWVarProxy
+meta.SetNetworkedVarProxy = meta.SetNWVarProxy
+meta.GetNetworkedVarProxy = meta.GetNWVarProxy
 
 hook.Add( "EntityNetworkedVarChanged", "NetworkedVars", function( ent, name, oldValue, newValue )
 
