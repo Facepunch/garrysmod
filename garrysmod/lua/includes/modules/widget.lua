@@ -5,6 +5,7 @@
 --
 
 widgets = {}
+widgets.entities = {}
 
 --
 -- Holds the currently hovered widget
@@ -17,34 +18,29 @@ widgets.HoveredPos = Vector( 0, 0, 0 )
 -- 
 widgets.Pressed = nil
 
-local function UpdateHovered( pl, mv )
+local tr = { };
+local trace = { output = tr }
 
+local dotraces = false;
+
+local function UpdateHovered( pl, mv )
 	if ( !IsValid( pl ) ) then return end
 
-	if ( !pl:Alive() ) then 
-		pl:SetHoveredWidget( NULL ) 
-		return 
-	end
+	pl:SetHoveredWidget( NULL ) 
+	if ( not dotraces ) then return end
+	if ( !pl:Alive() ) then return end
 
 	local OldHovered = pl:GetHoveredWidget()
-	pl:SetHoveredWidget( NULL )
 
-	local trace = 
-	{
-		start	= pl:EyePos(),
-		endpos	= pl:EyePos() + pl:GetAimVector() * 256,
-		filter	= function( ent )
-		
-			return IsValid( ent ) && ent:IsWidget()
-		
-		end
-	}
+	trace.start = pl:EyePos()
+	trace.endpos = pl:EyePos() + pl:GetAimVector() * 128
+	trace.filter = function( ent )
+		return IsValid(ent) && ent:IsWidget()
+	end
 	
 --	debugoverlay.Line( trace.start, trace.endpos, 0.5 )
 
-	widgets.Tracing = true
-	local tr = util.TraceLine( trace )
-	widgets.Tracing = false
+	util.TraceLine( trace )
 
 	if ( !IsValid( tr.Entity ) ) then return end
 	if ( tr.Entity:IsWorld() ) then return end
@@ -87,9 +83,11 @@ end
 function widgets.PlayerTick( pl, mv )
 
 	UpdateHovered( pl, mv )
+	if ( not dotraces ) then return end
 	
 	UpdateButton( pl, mv, IN_ATTACK, 1 )
 	UpdateButton( pl, mv, IN_ATTACK2, 2 )
+	
 	
 	local prs = pl:GetPressedWidget()
 	
@@ -111,7 +109,7 @@ function widgets.RenderMe( ent )
 	--
 	-- The pressed widget gets to decide what should draw
 	--
-	if ( LocalPlayer() && IsValid(LocalPlayer():GetPressedWidget()) ) then
+	if ( IsValid(LocalPlayer():GetPressedWidget()) ) then
 	
 		if ( !LocalPlayer():GetPressedWidget():PressedShouldDraw( ent ) ) then 
 			return 
@@ -145,6 +143,23 @@ hook.Add( "PostDrawEffects", "RenderWidgets", function()
 
 end )
 
+hook.Add( "OnEntityCreated", "CreateWidgets", function( ent )
+	if ( ent:IsWidget( ) ) then
+		table.insert(widgets.entities, ent )
+		dotraces = true
+	end
+end )
+
+hook.Add( "EntityRemoved", "RemoveWidgets", function( ent )
+	if ( ent:IsWidget( ) ) then
+		for k,v in pairs( widgets.entities ) do
+			table.remove( widgets.entities, k )
+			break
+		end
+		if ( #widgets.entities == 0 ) then dotraces = false end
+	end
+	
+end )
 
 hook.Add( "PlayerTick", "TickWidgets", function( pl, mv ) widgets.PlayerTick( pl, mv ) end )
 
