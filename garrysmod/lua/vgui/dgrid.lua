@@ -65,7 +65,7 @@ function PANEL:RemoveItem( item, bDontDelete )
 	
 		if ( panel == item ) then
 		
-			self.Items[ k ] = nil
+			table.remove(self.Items, k)
 			
 			if (!bDontDelete) then
 				panel:Remove()
