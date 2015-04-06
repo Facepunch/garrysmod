@@ -4,6 +4,39 @@ local InfoCache			= {}
 local VoteCache			= {}
 local ListCache			= {}
 
+local CleanDescription
+do
+	local tags = {
+		h1 = true,
+		b = true,
+		u = true,
+		i = true,
+		strike = true,
+		spoiler = true,
+		noparse = true,
+		url = true,
+		code = true,
+		img = true,
+	}
+	local imgfilter = function( bb_inner )
+		local tag = bb_inner:lower()
+		if tag == "img" then
+			return ""
+		end
+	end
+	local filter = function( bb_inner )
+		local tag = bb_inner:lower():match("[^=]*")
+		if tags[tag] then
+			return ""
+		end
+	end
+	CleanDescription = function( desc )
+		-- Uncompleted list: http://steamcommunity.com/comment/Announcement/formattinghelp
+		desc = string.gsub( desc, "%[([%a]+)%]([^%[]*)", imgfilter ) -- remove opening [img] and associated URL
+		return string.gsub( desc, "%[/?([^%[%]]-)%]", filter ) -- remove all other tags
+	end
+end
+
 function WorkshopFileBase( namespace, requiredtags )
 
 	local ret = {}
@@ -109,6 +142,10 @@ function WorkshopFileBase( namespace, requiredtags )
 				steamworks.FileInfo( v, function( result )
 
 					if ( !result) then return end
+
+					if result.description then
+						result.description = CleanDescription(result.description)
+					end
 
 					local json = util.TableToJSON( result, false );
 					InfoCache[ v ] = json;
