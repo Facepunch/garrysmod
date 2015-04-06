@@ -547,6 +547,20 @@ reading = {
     end
 }
 
+--
+-- We need this since #table is undefined if it doesn't have incrementing keys
+--
+local function array_len(x)
+	local i = 1
+	if( not x[ 1 ] ) then return 0 end
+	while( x[ i ] ) do
+		i = i + 1
+		if( i > 8096 ) then 
+			error( "Too many valid indices in table to write!" )
+		end
+	end
+	return i - 1
+end
 
 writing = {
     bit      = net.WriteBit,
@@ -687,7 +701,7 @@ writing = {
         indices[ tbl ] = num
 		
         num = num + 1
-        local t_len = #tbl
+        local t_len = array_len(tbl)
 		
         if( t_len ~= 0 ) then
 			-- we have indices that start from 1 to x
