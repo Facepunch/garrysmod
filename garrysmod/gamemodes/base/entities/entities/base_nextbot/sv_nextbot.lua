@@ -62,24 +62,24 @@ end
 --
 -- Name: NEXTBOT:OnLeaveGround
 -- Desc: Called when the bot's feet leave the ground - for whatever reason
--- Arg1:
+-- Arg1: Entity|ent|Entity that the NextBot "jumped" from
 -- Ret1:
 --
-function ENT:OnLeaveGround()
+function ENT:OnLeaveGround( ent )
 
-	--MsgN( "OnLeaveGround" )
+	--MsgN( "OnLeaveGround", ent )
 
 end
 
 --
 -- Name: NEXTBOT:OnLeaveGround
 -- Desc: Called when the bot's feet return to the ground
--- Arg1:
+-- Arg1: Entity|ent|Entity that the NextBot landed on
 -- Ret1:
 --
-function ENT:OnLandOnGround()
+function ENT:OnLandOnGround( ent )
 
-	--MsgN( "OnLandOnGround" )
+	--MsgN( "OnLandOnGround", ent )
 
 end
 
@@ -132,15 +132,33 @@ end
 --
 -- Name: NEXTBOT:OnOtherKilled
 -- Desc: Called when someone else or something else has been killed
--- Arg1:
+-- Arg1: Entity|victim|entity that was killed
+-- Arg2: CTakeDamageInfo|info|damage info
 -- Ret1:
 --
-function ENT:OnOtherKilled()
+function ENT:OnOtherKilled( victim, info )
 
-	--MsgN( "OnOtherKilled" )
+	--MsgN( "OnOtherKilled", victim, info )
 
 end
 
+function ENT:OnContact( ent )
+
+	--MsgN( "OnContact", ent )
+
+end
+
+function ENT:OnIgnite()
+
+	--MsgN( "OnIgnite" )
+
+end
+
+function ENT:OnNavAreaChanged( old, new )
+
+	--MsgN( "OnNavAreaChanged", old, new )
+
+end
 
 --
 -- Name: NextBot:FindSpots
