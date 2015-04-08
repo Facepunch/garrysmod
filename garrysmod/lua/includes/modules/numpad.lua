@@ -18,7 +18,6 @@ local concommand 	= concommand
 local PrintTable 	= PrintTable
 local ErrorNoHalt 	= ErrorNoHalt
 local saverestore	= saverestore
-local tostring		= tostring
 local math			= math
 local IsValid		= IsValid
 
