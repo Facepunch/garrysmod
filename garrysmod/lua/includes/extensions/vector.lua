@@ -17,6 +17,6 @@ end
 -----------------------------------------------------------]]
 function meta:ToString( )
 
-	return tostring( self.x ) .. " " .. ( self.y ) .. " " .. tostring( self.z )
+	return string.format( "%d %d %d", self.p, self.y, self.r )
 
 end
