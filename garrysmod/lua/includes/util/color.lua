@@ -36,13 +36,24 @@ function IsColor( obj )
 end
 
 
+
+--[[---------------------------------------------------------
+	Returns color as a string ( unlinks necessity of
+	using tostring for functionality )
+-----------------------------------------------------------]]
+function COLOR:ToString()
+	
+	return string.format( "%d %d %d %d", self.r, self.g, self.b, self.a )
+	
+end
+
 --[[---------------------------------------------------------
 	Returns color as a string
 -----------------------------------------------------------]]
 function COLOR:__tostring()
-	
-	return string.format( "%d %d %d %d", self.r, self.g, self.b, self.a )
-	
+
+	return self:ToString( )
+
 end
 
 --[[---------------------------------------------------------

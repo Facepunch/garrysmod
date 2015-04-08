@@ -176,7 +176,7 @@ function PANEL:UpdateConVar( strName, strKey, color )
 
 	if ( !strName ) then return end
 
-	RunConsoleCommand( strName, tostring( color[ strKey ] ) )
+	RunConsoleCommand( strName, color[ strKey ]:ToString() )
 
 end
 
