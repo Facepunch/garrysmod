@@ -16,3 +16,13 @@ function meta:SnapTo( component, degrees )
 	return self
 
 end
+
+--[[---------------------------------------------------------
+	Angle ToString returns "p y r" so that __tostring
+	can be altered without breaking game-modes!
+-----------------------------------------------------------]]
+function meta:ToString( )
+
+	return tostring( self.p ) .. " " .. ( self.y ) .. " " .. tostring( self.r )
+
+end
