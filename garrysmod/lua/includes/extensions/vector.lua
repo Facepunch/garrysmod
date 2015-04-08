@@ -10,3 +10,13 @@ function meta:ToColor( )
 	return Color( self.x * 255, self.y * 255, self.z * 255 )
 
 end
+
+--[[---------------------------------------------------------
+	Vector ToString returns "x y z" so that __tostring
+	can be altered without breaking game-modes!
+-----------------------------------------------------------]]
+function meta:ToString( )
+
+	return tostring( self.x ) .. " " .. ( self.y ) .. " " .. tostring( self.z )
+
+end
