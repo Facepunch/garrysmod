@@ -37,6 +37,19 @@ local function TableInherit( t, base )
 end
 
 --[[---------------------------------------------------------
+   Name: IsBasedOn( name, base )
+   Desc: Checks if name is based on base
+-----------------------------------------------------------]]
+function IsBasedOn( name, base )
+	local t = GetStored( name )
+	if not t then return false end
+	if t.Base == name then return false end
+
+	if t.Base == base then return true end
+	return IsBasedOn( t.Base, base )
+end
+
+--[[---------------------------------------------------------
 	Name: Register( table, string, bool )
 -----------------------------------------------------------]]
 function Register( t, name )
@@ -88,6 +101,24 @@ function Register( t, name )
 			end
 		
 		end )
+	
+		-- Update BaseClass of ents that are based on this entity
+		for nm, t in pairs( SEntList ) do
+			if IsBasedOn( nm, name ) then
+				baseclass.Set( nm, Get( nm ) )
+			end
+		end
+
+		-- Update entity table of entities that are based on this entity
+		for _, e in pairs( ents.GetAll() ) do
+			if IsBasedOn( e:GetClass(), name ) then
+				table.Merge( e, Get( e:GetClass() ) )
+
+				if e.OnReloaded then
+					e:OnReloaded()
+				end
+			end
+		end
 
 	end
 
