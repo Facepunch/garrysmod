@@ -101,13 +101,6 @@ function Register( t, name )
 			end
 		
 		end )
-	
-		-- Update BaseClass of ents that are based on this entity
-		for nm, t in pairs( SEntList ) do
-			if IsBasedOn( nm, name ) then
-				baseclass.Set( nm, Get( nm ) )
-			end
-		end
 
 		-- Update entity table of entities that are based on this entity
 		for _, e in pairs( ents.GetAll() ) do
