@@ -450,6 +450,7 @@ local NPC = {
 	Name = "Stalker", 
 	Class = "npc_stalker",
 	Category = Category,
+	KeyValues = { squadname = "npc_stalker_squad" },
 	Offset = 10
 }
 list.Set( "NPC", NPC.Class, NPC )
