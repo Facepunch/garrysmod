@@ -38,7 +38,11 @@ properties.Add( "keepupright", {
 		if ( !IsValid( Phys ) ) then return end
 		
 		local constraint = constraint.Keepupright( ent, Phys:GetAngles(), 0, 999999 )
-		
+
+		--I feel like this is not stable enough
+		--constraint:SetSaveValue( "m_localTestAxis", constraint:GetSaveTable().m_worldGoalAxis ) --ent:GetAngles():Up() )
+		--constraint:SetSaveValue( "m_worldGoalAxis", Vector( 0, 0, 1 ) )
+
 		if ( constraint ) then
 
 			player:AddCleanup( "constraints", constraint )
