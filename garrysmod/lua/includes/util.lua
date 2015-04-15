@@ -2,7 +2,7 @@
 --
 -- Seed the rand!
 --
-math.randomseed( os.time() );
+math.randomseed( os.time() )
 
 --
 -- Alias string.Format to global Format
@@ -86,7 +86,17 @@ function AngleRand()
 	return Angle( math.Rand(-90, 90), math.Rand(-180, 180), math.Rand(-180, 180) )
 end
 
+--[[---------------------------------------------------------
+   Returns a random color
+-----------------------------------------------------------]]
+function ColorRand( alpha )
 
+	if ( alpha ) then
+		return Color( math.random(0, 255), math.random(0, 255), math.random(0, 255), math.random(0, 255) )
+	end
+
+	return Color( math.random(0, 255), math.random(0, 255), math.random(0, 255) )
+end
 
 --[[---------------------------------------------------------
    Convenience function to precache a sound
