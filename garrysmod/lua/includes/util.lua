@@ -2,7 +2,7 @@
 --
 -- Seed the rand!
 --
-math.randomseed( os.time() );
+math.randomseed( os.time() )
 
 --
 -- Alias string.Format to global Format
@@ -19,9 +19,9 @@ function IsTableOfEntitiesValid( tab )
 	for k, v in pairs( tab ) do
 		if ( !IsValid( v ) ) then return false end
 	end
-	
+
 	return true
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -68,25 +68,19 @@ function PrintTable( t, indent, done )
 
 end
 
-
 --[[---------------------------------------------------------
    Returns a random vector
 -----------------------------------------------------------]]
 function VectorRand()
-
-	return Vector( math.Rand(-1.0, 1.0), math.Rand(-1.0, 1.0), math.Rand(-1.0, 1.0) )
+	return Vector( math.Rand( -1.0, 1.0 ), math.Rand( -1.0, 1.0 ), math.Rand( -1.0, 1.0 ) )
 end
-
 
 --[[---------------------------------------------------------
    Returns a random angle
 -----------------------------------------------------------]]
 function AngleRand()
-
-	return Angle( math.Rand(-90, 90), math.Rand(-180, 180), math.Rand(-180, 180) )
+	return Angle( math.Rand( -90, 90 ), math.Rand( -180, 180 ), math.Rand( -180, 180 ) )
 end
-
-
 
 --[[---------------------------------------------------------
    Convenience function to precache a sound
@@ -96,7 +90,6 @@ function Sound( name )
 	return name
 end
 
-
 --[[---------------------------------------------------------
    Convenience function to precache a model
 -----------------------------------------------------------]]
@@ -105,9 +98,7 @@ function Model( name )
 	return name
 end
 
-
 -- Some nice globals so we don't keep creating objects for no reason
-
 vector_origin		= Vector( 0, 0, 0 )
 vector_up			= Vector( 0, 0, 1 )
 angle_zero			= Angle( 0, 0, 0 )
@@ -116,21 +107,18 @@ color_white			= Color( 255, 255, 255, 255 )
 color_black			= Color( 0, 0, 0, 255 )
 color_transparent	= Color( 255, 255, 255, 0 )
 
-
 --[[---------------------------------------------------------
    Includes the file - and adds it so the CS file list
 -----------------------------------------------------------]]
 function IncludeCS( filename )
-	
 	include( filename )
 
 	if ( SERVER ) then
 		AddCSLuaFile( filename )
 	end
-	
 end
 
--- Globals..
+-- Globals
 FORCE_STRING	= 1
 FORCE_NUMBER	= 2
 FORCE_BOOL		= 3
@@ -143,21 +131,21 @@ function AccessorFunc( tab, varname, name, iForce )
 
 	if ( !tab ) then debug.Trace() end
 
-	tab[ "Get"..name ] = function ( self ) return self[ varname ] end
+	tab[ "Get" .. name ] = function( self ) return self[ varname ] end
 
 	if ( iForce == FORCE_STRING ) then
-		tab[ "Set"..name ] = function ( self, v ) self[ varname ] = tostring(v) end
+		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tostring( v ) end
 	return end
 	
 	if ( iForce == FORCE_NUMBER ) then
-		tab[ "Set"..name ] = function ( self, v ) self[ varname ] = tonumber(v) end
+		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tonumber( v ) end
 	return end
 	
 	if ( iForce == FORCE_BOOL ) then
-		tab[ "Set"..name ] = function ( self, v ) self[ varname ] = tobool(v) end
+		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tobool( v ) end
 	return end
 	
-	tab[ "Set"..name ] = function ( self, v ) self[ varname ] = v end
+	tab[ "Set" .. name ] = function( self, v ) self[ varname ] = v end
 
 end
 
@@ -202,8 +190,8 @@ function Lerp( delta, from, to )
 
 	if ( delta > 1 ) then return to end
 	if ( delta < 0 ) then return from end
-	
-	return from + (to - from) * delta;
+
+	return from + ( to - from ) * delta
 
 end
 
@@ -222,7 +210,7 @@ local UselessModels = {
 	"_gesture", "_anim", "_gst", "_pst", "_shd", "_ss", "_posture", "_anm", 
 	"ghostanim","_paths", "_shared", "anim_", "gestures_", "shared_ragdoll_"
 }
-	
+
 function IsUselessModel( modelname ) 
 
 	local modelname = modelname:lower()
@@ -241,41 +229,10 @@ end
 
 UTIL_IsUselessModel = IsUselessModel
 
-
---[[---------------------------------------------------------
-	Remember/Restore cursor position..
-	Clientside only
-	If you have a system where you hold a key to show the cursor
-	Call RememberCursorPosition when the key is released and call
-	RestoreCursorPosition to restore the cursor to where it was
-	when the key was released.
-	If you don't the cursor will appear in the middle of the screen
------------------------------------------------------------]]
-local StoredCursorPos = {}
-
-function RememberCursorPosition()
-
-	local x, y = gui.MousePos()
-	
-	-- If the cursor isn't visible it will return 0,0 ignore it.
-	if ( x == 0 && y == 0 ) then return end
-	
-	StoredCursorPos.x, StoredCursorPos.y = x, y
-	
-end
-
-function RestoreCursorPosition()
-
-	if ( !StoredCursorPos.x || !StoredCursorPos.y ) then return end
-	input.SetCursorPos( StoredCursorPos.x, StoredCursorPos.y )
-
-end
-
-
 --[[---------------------------------------------------------
 	Given a number, returns the right 'th
 -----------------------------------------------------------]]
-local STNDRD_TBL = {"st", "nd", "rd"}
+local STNDRD_TBL = { "st", "nd", "rd" }
 function STNDRD( num )
 	num = num % 100
 	if ( num > 10 and num < 20 ) then
@@ -284,7 +241,6 @@ function STNDRD( num )
 
 	return STNDRD_TBL[ num % 10 ] or "th"
 end
-
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
@@ -312,9 +268,7 @@ local EnemyNames = {
 }
 
 function IsEnemyEntityName( victimtype )
-
 	return EnemyNames[ victimtype ] or false
-
 end
 
 --[[---------------------------------------------------------
@@ -327,9 +281,7 @@ local FriendlyNames = {
 }
 
 function IsFriendEntityName( victimtype )
-
 	return FriendlyNames[ victimtype ] or false
-
 end
 
 --[[---------------------------------------------------------
@@ -349,7 +301,7 @@ function IsMounted( name )
 		if ( v.folder == name ) then return true end
 
 	end
-	
+
 	return false
 
 end
@@ -358,10 +310,8 @@ end
 	Replacement for C++'s iff ? aa : bb
 -----------------------------------------------------------]]
 function Either( iff, aa, bb ) 
-
 	if ( iff ) then return aa end
 	return bb
-
 end
 
 --
@@ -371,8 +321,39 @@ end
 -- ie Add_NPC_Class( "MY_CLASS" )
 
 function Add_NPC_Class( name )
-
 	_G[ name ] = NUM_AI_CLASSES
 	NUM_AI_CLASSES = NUM_AI_CLASSES + 1
+end
+
+if ( CLIENT ) then
+
+	--[[---------------------------------------------------------
+		Remember/Restore cursor position..
+		Clientside only
+		If you have a system where you hold a key to show the cursor
+		Call RememberCursorPosition when the key is released and call
+		RestoreCursorPosition to restore the cursor to where it was
+		when the key was released.
+		If you don't the cursor will appear in the middle of the screen
+	-----------------------------------------------------------]]
+	local StoredCursorPos = {}
+
+	function RememberCursorPosition()
+
+		local x, y = gui.MousePos()
+
+		-- If the cursor isn't visible it will return 0,0 ignore it.
+		if ( x == 0 && y == 0 ) then return end
+
+		StoredCursorPos.x, StoredCursorPos.y = x, y
+
+	end
+
+	function RestoreCursorPosition()
+
+		if ( !StoredCursorPos.x || !StoredCursorPos.y ) then return end
+		input.SetCursorPos( StoredCursorPos.x, StoredCursorPos.y )
+
+	end
 
 end
