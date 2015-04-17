@@ -288,7 +288,7 @@ function GM:RenderScene( origin, angle, fov )
 end
 
 --[[---------------------------------------------------------
-	Name: CalcVehicleThirdPersonView
+	Name: CalcVehicleView
 -----------------------------------------------------------]]
 function GM:CalcVehicleView( Vehicle, ply, view )
 
@@ -312,7 +312,7 @@ function GM:CalcVehicleView( Vehicle, ply, view )
 	-- Trace back from the original eye position, so we don't clip through walls/objects
 	local TargetOrigin = view.origin + ( view.angles:Forward() * -radius )
 	local WallOffset = 4
-	
+
 	local tr = util.TraceHull( {
 		start = view.origin,
 		endpos = TargetOrigin,
@@ -323,7 +323,7 @@ function GM:CalcVehicleView( Vehicle, ply, view )
 		mins = Vector( -WallOffset, -WallOffset, -WallOffset ),
 		maxs = Vector( WallOffset, WallOffset, WallOffset ),
 	} )
-	
+
 	view.origin = tr.HitPos
 	view.drawviewer = true
 
