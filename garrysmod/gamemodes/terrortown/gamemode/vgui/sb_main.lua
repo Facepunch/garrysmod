@@ -49,12 +49,18 @@ GROUP_SPEC = 4
 
 GROUP_COUNT = 4
 
+function AddScoreGroup(name) -- Utility function to register a score group
+   if _G["GROUP_"..name] then error("Group of name '"..name.."' already exists!") return end
+   GROUP_COUNT = GROUP_COUNT + 1
+   _G["GROUP_"..name] = GROUP_COUNT
+end
+
 function ScoreGroup(p)
    if not IsValid(p) then return -1 end -- will not match any group panel
 
    local group = hook.Call( "TTTScoreGroup", nil, p )
 
-   if group then
+   if group then -- If that hook gave us a group, use it
       return group
    end
 
