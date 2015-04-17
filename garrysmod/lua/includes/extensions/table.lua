@@ -73,14 +73,16 @@ end
    Name: xx
    Desc: xx
 -----------------------------------------------------------]]
-function table.Merge(dest, source)
+function table.Merge(dest, source, lookup_table)
+	lookup_table = lookup_table or {}
+	lookup_table[dest] = true
 
 	for k,v in pairs(source) do
 	
-		if ( type(v) == 'table' && type(dest[k]) == 'table' ) then
+		if ( type(v) == 'table' && type(dest[k]) == 'table' && !lookup_table[dest[k]] ) then
 			-- don't overwrite one table with another
 			-- instead merge them recurisvely
-			table.Merge(dest[k], v)
+			table.Merge(dest[k], v, lookup_table)
 		else
 			dest[k] = v
 		end
