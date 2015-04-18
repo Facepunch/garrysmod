@@ -443,19 +443,8 @@ function meta:InvalidateChildren( bRecurse )
 
 end
 
-function meta:IsOurChild( pPanel )
-
-	if ( pPanel == self ) then return true end
-
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
-	
-		if ( v:IsOurChild( pPanel ) ) then return true end
-
-	end
-	
-	return false
-
+function meta:IsOurChild( child )
+	return child:HasParent(self)
 end
 
 function meta:CopyBase( pnl )
