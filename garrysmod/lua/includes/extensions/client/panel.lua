@@ -238,6 +238,18 @@ function meta:SetCookie( cookiename, value )
 
 end
 
+--[[---------------------------------------------------------
+	Name: DeleteCookie
+-----------------------------------------------------------]]  
+function meta:DeleteCookie( cookiename )
+
+	local name = self:GetCookieName()
+	if !name then return end
+	
+	return cookie.Delete( name .. "." .. cookiename )
+
+end
+
 
 --[[---------------------------------------------------------
 	Name: InvalidateParent
@@ -298,7 +310,7 @@ function meta:SizeToContentsY( addval )
 	local w, h = self:GetContentSize()
 	if (!w || !h ) then return end
 	addval = addval or 0
-	self:SetTall( h )
+	self:SetTall( h + addval )
 end
 
 --[[---------------------------------------------------------
