@@ -1,10 +1,9 @@
 
-local meta		= FindMetaTable( "Player" )
-local entity	= FindMetaTable( "Entity" )
+local meta = FindMetaTable( "Player" )
+local entity = FindMetaTable( "Entity" )
 
 -- Return if there's nothing to add on to
 if ( !meta ) then return end
-
 
 --
 -- Entity index accessor. This used to be done in engine, but it's done in Lua now because it's faster
@@ -36,8 +35,6 @@ function meta:__index( key )
 
 end
 
-
-
 if ( !sql.TableExists( "playerpdata" ) ) then
 
 	sql.Query( "CREATE TABLE IF NOT EXISTS playerpdata ( infoid TEXT NOT NULL PRIMARY KEY, value TEXT );" )
@@ -49,7 +46,7 @@ function player.GetByUniqueID( ID )
 
 	for _, pl in pairs( player.GetAll() ) do
 
-		if ( pl:UniqueID() == ID )	then
+		if ( pl:UniqueID() == ID ) then
 			return pl
 		end
 
@@ -65,7 +62,7 @@ function player.GetBySteamID( ID )
 
 	for _, pl in pairs( player.GetAll() ) do
 
-		if ( pl:SteamID() == ID )	then
+		if ( pl:SteamID() == ID ) then
 			return pl
 		end
 
@@ -81,7 +78,7 @@ function player.GetBySteamID64( ID )
 
 	for _, pl in pairs( player.GetAll() ) do
 
-		if ( pl:SteamID64() == ID )	then
+		if ( pl:SteamID64() == ID ) then
 			return pl
 		end
 
@@ -91,12 +88,10 @@ function player.GetBySteamID64( ID )
 
 end
 
-
 --[[---------------------------------------------------------
-   Name:	DebugInfo
-   Params:
-   Desc:	Prints debug information for the player
-			( this is just an example )
+	Name: DebugInfo
+	Desc: Prints debug information for the player
+		( this is just an example )
 -----------------------------------------------------------]]
 function meta:DebugInfo()
 
@@ -106,15 +101,12 @@ function meta:DebugInfo()
 end
 
 -- Helpful aliases
-meta.GetName 	= meta.Nick
-meta.Name 		= meta.Nick
-
-
+meta.GetName	= meta.Nick
+meta.Name		= meta.Nick
 
 --[[---------------------------------------------------------
-   Name:	ConCommand
-   Params:
-   Desc:	Overrides the default ConCommand function
+	Name: ConCommand
+	Desc: Overrides the default ConCommand function
 -----------------------------------------------------------]]
 if ( CLIENT ) then
 
@@ -134,7 +126,7 @@ if ( CLIENT ) then
 
 	local function SendQueuedConsoleCommands()
 
-		if (!CommandList) then return end
+		if ( !CommandList ) then return end
 
 		local BytesSent = 0
 
@@ -166,12 +158,12 @@ end
 
 --[[---------------------------------------------------------
 	GetPData
-	- Saves persist data for this player
+	Saves persist data for this player
 -----------------------------------------------------------]]
 function meta:GetPData( name, default )
 
 	name = Format( "%s[%s]", self:UniqueID(), name )
-	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr(name) .. " LIMIT 1" )
+	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr( name ) .. " LIMIT 1" )
 	if ( val == nil ) then return default end
 
 	return val
@@ -180,26 +172,25 @@ end
 
 --[[---------------------------------------------------------
 	SetPData
-	- Set persistant data
+	Set persistant data
 -----------------------------------------------------------]]
 function meta:SetPData( name, value )
 
 	name = Format( "%s[%s]", self:UniqueID(), name )
-	sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( "..SQLStr(name)..", "..SQLStr(value).." )" )
+	sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" )
 
 end
 
 --[[---------------------------------------------------------
 	RemovePData
-	- Remove persistant data
+	Remove persistant data
 -----------------------------------------------------------]]
 function meta:RemovePData( name )
 
-		name = Format( "%s[%s]", self:UniqueID(), name )
-		sql.Query( "DELETE FROM playerpdata WHERE infoid = "..SQLStr(name) )
+	name = Format( "%s[%s]", self:UniqueID(), name )
+	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
 
 end
-
 
 --
 -- If they have their preferred default weapon then switch to it
@@ -208,7 +199,7 @@ function meta:SwitchToDefaultWeapon( name )
 
 	local weapon = self:GetInfo( "cl_defaultweapon" )
 
-	if ( self:HasWeapon( weapon )  ) then
+	if ( self:HasWeapon( weapon ) ) then
 		self:SelectWeapon( weapon )
 	end
 
@@ -241,12 +232,11 @@ end
 -- Those functions have been removed from the engine since AddFlag and RemoveFlag
 -- made them obsolete, but we'll keep a Lua version of them for backward compatibility
 --
-
 if SERVER then
 
 --[[---------------------------------------------------------
 	Freeze
-	- Freezes or unfreezes the player
+	Freezes or unfreezes the player
 -----------------------------------------------------------]]
 function meta:Freeze( b )
 
@@ -260,7 +250,7 @@ end
 
 --[[---------------------------------------------------------
 	GodEnable
-	- Enables godmode on the player
+	Enables godmode on the player
 -----------------------------------------------------------]]
 function meta:GodEnable()
 
@@ -270,7 +260,7 @@ end
 
 --[[---------------------------------------------------------
 	GodDisable
-	- Disables godmode on the player
+	Disables godmode on the player
 -----------------------------------------------------------]]
 function meta:GodDisable()
 
@@ -282,7 +272,7 @@ end
 
 --[[---------------------------------------------------------
 	IsFrozen
-	- Returns true if the player is frozen
+	Returns true if the player is frozen
 -----------------------------------------------------------]]
 function meta:IsFrozen()
 
@@ -292,7 +282,7 @@ end
 
 --[[---------------------------------------------------------
 	HasGodMode
-	- Returns true if the player is in godmode
+	Returns true if the player is in godmode
 -----------------------------------------------------------]]
 function meta:HasGodMode()
 
