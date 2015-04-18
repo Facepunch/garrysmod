@@ -51,15 +51,15 @@ function GM:HUDShouldDraw( name )
 	-- Allow the weapon to override this
 	local ply = LocalPlayer()
 	if ( IsValid( ply ) ) then
-	
+
 		local wep = ply:GetActiveWeapon()
-		
+
 		if ( IsValid( wep ) && wep.HUDShouldDraw != nil ) then
-		
+
 			return wep.HUDShouldDraw( wep, name )
-		
+
 		end
-	
+
 	end
 
 	return true
@@ -185,19 +185,19 @@ function GM:OnChatTab( str )
 	if ( LastWord == nil ) then return str end
 
 	for k, v in pairs( player.GetAll() ) do
-		
+
 		local nickname = v:Nick()
-		
+
 		if ( string.len( LastWord ) < string.len( nickname ) && string.find( string.lower( nickname ), string.lower( LastWord ) ) == 1 ) then
-			
+
 			str = string.sub( str, 1, ( string.len( LastWord ) * -1 ) - 1 )
 			str = str .. nickname
 			return str
-			
+
 		end
-		
+
 	end
-	
+
 	return str
 
 end
@@ -346,7 +346,7 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 
 	local Vehicle	= ply:GetVehicle()
 	local Weapon	= ply:GetActiveWeapon()
-	
+
 	local view = {}
 	view.origin		= origin
 	view.angles		= angles
@@ -364,7 +364,7 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 	-- Let drive possibly alter the view
 	--
 	if ( drive.CalcView( ply, view ) ) then return view end
-	
+
 	--
 	-- Give the player manager a turn at altering the view
 	--
@@ -372,12 +372,12 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 
 	-- Give the active weapon a go at changing the viewmodel position
 	if ( IsValid( Weapon ) ) then
-	
+
 		local func = Weapon.CalcView
 		if ( func ) then
 			view.origin, view.angles, view.fov = func( Weapon, ply, origin * 1, angles * 1, fov ) -- Note: *1 to copy the object so the child function can't edit it.
 		end
-	
+
 	end
 
 	return view
@@ -591,9 +591,17 @@ function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 
 		local hands = Player:GetHands()
 		if ( IsValid( hands ) ) then
-			if ( Weapon.ViewModelFlip ) then render.CullMode( MATERIAL_CULLMODE_CW ) end
-			hands:DrawModel()
-			render.CullMode( MATERIAL_CULLMODE_CCW )
+
+			if ( not hook.Call( "PreDrawPlayerHands", self, hands, ViewModel, Player, Weapon ) ) then
+
+				if ( Weapon.ViewModelFlip ) then render.CullMode( MATERIAL_CULLMODE_CW ) end
+				hands:DrawModel()
+				render.CullMode( MATERIAL_CULLMODE_CCW )
+
+			end
+
+			hook.Call( "PostDrawPlayerHands", self, hands, ViewModel, Player, Weapon )
+			
 		end
 
 	end
