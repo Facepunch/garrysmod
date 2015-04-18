@@ -1,9 +1,18 @@
 
 PANEL.Base = "DPanel"
 
+local wsFont
+if ( system.IsLinux() ) then
+	wsFont = "DejaVu Sans"
+elseif ( system.IsWindows() ) then
+	wsFont = "Tahoma"
+else
+	wsFont = "Helvetica"
+end
+
 surface.CreateFont( "WorkshopLarge",
 {
-	font		= "Helvetica",
+	font		= wsFont,
 	size		= 19,
 	antialias	= true,
 	weight		= 800
@@ -18,7 +27,7 @@ AccessorFunc( PANEL, "m_bDrawProgress", 			"DrawProgress", 			FORCE_BOOL )
 function PANEL:Init()
 
 	self.Label = self:Add( "DLabel" )
-	self.Label:SetText( "Updating Subscriptions.." )
+	self.Label:SetText( "Updating Subscriptions..." )
 	self.Label:SetFont( "WorkshopLarge" )
 	self.Label:SetTextColor( Color( 255, 255, 255, 200 ) )
 	self.Label:Dock( TOP )
@@ -32,7 +41,7 @@ function PANEL:Init()
 	self.ProgressLabel:SetTextColor( Color( 255, 255, 255, 50 ) )
 
 	self.TotalsLabel = self:Add( "DLabel" )
-	self.TotalsLabel:SetText( "File 1 or 30" )
+	self.TotalsLabel:SetText( "-" )
 	self.TotalsLabel:SetContentAlignment( 7 )
 	self.TotalsLabel:SetVisible( false )
 	self.TotalsLabel:SetTextColor( Color( 255, 255, 255, 50 ) )
