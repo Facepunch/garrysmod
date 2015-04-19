@@ -83,6 +83,19 @@ function AngleRand()
 end
 
 --[[---------------------------------------------------------
+   Returns a random color
+-----------------------------------------------------------]]
+function ColorRand( alpha )
+
+	if ( alpha ) then
+		return Color( math.random( 0, 255 ), math.random( 0, 255 ), math.random( 0, 255 ), math.random( 0, 255 ) )
+	end
+
+	return Color( math.random( 0, 255 ), math.random( 0, 255 ), math.random( 0, 255 ) )
+end
+
+
+--[[---------------------------------------------------------
    Convenience function to precache a sound
 -----------------------------------------------------------]]
 function Sound( name )
