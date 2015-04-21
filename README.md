@@ -16,4 +16,4 @@ Issues
 To report bugs please visit [Garry's Mod Issue Tracker repository](https://github.com/Facepunch/garrysmod-issues/).
 
 
-To request features please visit [Garry's Mod Feature Requests repository](https://github.com/Facepunch/garrysmod-issues/).
+To request features please visit [Garry's Mod Feature Requests repository](https://github.com/Facepunch/garrysmod-requests/).
