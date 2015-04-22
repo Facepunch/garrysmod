@@ -6,7 +6,8 @@
 include ( "util.lua" )			-- Misc Utilities
 include ( "util/sql.lua" )		-- Include sql here so it's
 								-- available at loadtime to modules.
-							
+include ( "util/errors.lua" )		-- Errors
+			
 include( "extensions/net.lua" )
 
 --[[---------------------------------------------------------
