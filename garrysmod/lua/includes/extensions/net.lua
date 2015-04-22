@@ -47,8 +47,6 @@ end
 --
 -- Read/Write an entity to the stream
 -- CClientEntityList::GetMaxEntityIndex( ) returns 8096
--- valve developer wiki says 1/2 are static, non networkable
--- therefore we are going to use 12 bits to send the index
 --
 function net.WriteEntity( e )
 
