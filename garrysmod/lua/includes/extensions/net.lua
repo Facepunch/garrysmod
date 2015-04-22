@@ -52,7 +52,7 @@ end
 --
 function net.WriteEntity( e )
 
-	if( (IsValid( e ) or game.GetWorld( ) == e) and e:EntIndex( ) < 4096 ) then
+	if( IsValid( e ) or game.GetWorld( ) == e) then
 
 		net.WriteBool( true )
 		net.WriteUInt( e:EntIndex( ), 13 )
