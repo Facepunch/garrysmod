@@ -241,6 +241,8 @@ end
 
 
 function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode )
+	
+	hook.Run( "GameDetails", servername, serverurl, mapname, maxplayers, steamid, gamemode )
 
 	if ( engine.IsPlayingDemo() ) then return end
 
