@@ -89,7 +89,7 @@ end
 	Name: DrawModel
 -----------------------------------------------------------]]
 function PANEL:DrawModel()
-	if hook.Run("PreDrawModelPanel", self, self.Entity) == false then 
+	if self:PreDrawModel( self.Entity ) == false then 
 		return 
 	end
 	
@@ -112,7 +112,21 @@ function PANEL:DrawModel()
 	self.Entity:DrawModel()
 	render.SetScissorRect( 0, 0, 0, 0, false )
 	
-	hook.Run("PostDrawModelPanel", self, self.Entity)
+	self:PostDrawModel( self.Entity )
+end
+
+--[[---------------------------------------------------------
+	Name: PreDrawModel
+-----------------------------------------------------------]]
+function PANEL:PreDrawModel( ent )
+	return true
+end
+
+--[[---------------------------------------------------------
+	Name: PostDrawModel
+-----------------------------------------------------------]]
+function PANEL:PostDrawModel( ent )
+	
 end
 
 --[[---------------------------------------------------------
