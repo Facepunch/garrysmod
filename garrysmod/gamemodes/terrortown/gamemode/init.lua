@@ -897,65 +897,12 @@ function SelectRoles()
    if choice_count == 0 then return end
 
    -- first select traitors
-   local ts = 0
-   while ts < traitor_count do
-      -- select random index in choices table
-      local pick = math.random(1, #choices)
-
-      -- the player we consider
-      local pply = choices[pick]
-
-      -- make this guy traitor if he was not a traitor last time, or if he makes
-      -- a roll
-      if IsValid(pply) and
-         ((not table.HasValue(prev_roles[ROLE_TRAITOR], pply)) or (math.random(1, 3) == 2)) then
-         pply:SetRole(ROLE_TRAITOR)
-
-         table.remove(choices, pick)
-         ts = ts + 1
-      end
-   end
+   hook.Call("TTTSelectTraitors", GAMEMODE, choices, prev_roles)
 
    -- now select detectives, explicitly choosing from players who did not get
    -- traitor, so becoming detective does not mean you lost a chance to be
    -- traitor
-   local ds = 0
-   local min_karma = GetConVarNumber("ttt_detective_karma_min") or 0
-   while (ds < det_count) and (#choices >= 1) do
-
-      -- sometimes we need all remaining choices to be detective to fill the
-      -- roles up, this happens more often with a lot of detective-deniers
-      if #choices <= (det_count - ds) then
-         for k, pply in pairs(choices) do
-            if IsValid(pply) then
-               pply:SetRole(ROLE_DETECTIVE)
-            end
-         end
-
-         break -- out of while
-      end
-
-
-      local pick = math.random(1, #choices)
-      local pply = choices[pick]
-
-      -- we are less likely to be a detective unless we were innocent last round
-      if (IsValid(pply) and
-          ((pply:GetBaseKarma() > min_karma and
-           table.HasValue(prev_roles[ROLE_INNOCENT], pply)) or
-           math.random(1,3) == 2)) then
-
-         -- if a player has specified he does not want to be detective, we skip
-         -- him here (he might still get it if we don't have enough
-         -- alternatives)
-         if not pply:GetAvoidDetective() then
-            pply:SetRole(ROLE_DETECTIVE)
-            ds = ds + 1
-         end
-
-         table.remove(choices, pick)
-      end
-   end
+   hook.Call("TTTSelectDetectives", GAMEMODE, choices, prev_roles)
 
    GAMEMODE.LastRole = {}
 
@@ -968,6 +915,65 @@ function SelectRoles()
    end
 end
 
+function GM:TTTSelectTraitors(choices, prev_roles)
+	for ts = 1, GetTraitorCount(#choices), 1 do
+      -- select random index in choices table
+      local pick = math.random(1, #choices)
+
+      -- the player we consider
+      local pply = choices[pick]
+
+      -- make this guy traitor if he was not a traitor last time, or if he makes
+      -- a roll
+      if IsValid(pply) and
+         ((not table.HasValue(prev_roles[ROLE_TRAITOR], pply)) or
+		 (math.random(1, 3) == 2)) then
+         pply:SetRole(ROLE_TRAITOR)
+
+         table.remove(choices, pick)
+      end
+	end
+end
+
+function GM:TTTSelectDetectives(choices)
+	local ds = 0
+	local min_karma = GetConVarNumber("ttt_detective_karma_min") or 0
+	while (ds < det_count) and (#choices >= 1) do
+
+	  -- sometimes we need all remaining choices to be detective to fill the
+	  -- roles up, this happens more often with a lot of detective-deniers
+	  if #choices <= (det_count - ds) then
+		 for k, pply in pairs(choices) do
+			if IsValid(pply) then
+			   pply:SetRole(ROLE_DETECTIVE)
+			end
+		 end
+
+		 break -- out of while
+	  end
+
+
+	  local pick = math.random(1, #choices)
+	  local pply = choices[pick]
+
+	  -- we are less likely to be a detective unless we were innocent last round
+	  if (IsValid(pply) and
+		  ((pply:GetBaseKarma() > min_karma and
+		   table.HasValue(prev_roles[ROLE_INNOCENT], pply)) or
+		   math.random(1,3) == 2)) then
+
+		 -- if a player has specified he does not want to be detective, we skip
+		 -- him here (he might still get it if we don't have enough
+		 -- alternatives)
+		 if not pply:GetAvoidDetective() then
+			pply:SetRole(ROLE_DETECTIVE)
+			ds = ds + 1
+		 end
+
+		 table.remove(choices, pick)
+	  end
+	end
+end
 
 local function ForceRoundRestart(ply, command, args)
    -- ply is nil on dedicated server console
