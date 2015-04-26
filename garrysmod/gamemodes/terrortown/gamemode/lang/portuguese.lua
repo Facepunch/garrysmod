@@ -1,6 +1,6 @@
 ---- Portuguese language strings
 
-local L = LANG.CreateLanguage("Portuguese")
+local L = LANG.CreateLanguage("Português")
 
 --- General text used in various places
 L.traitor    = "Traidor"
