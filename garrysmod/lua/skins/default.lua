@@ -104,10 +104,10 @@ SKIN.tex.Checkbox_Checked			= GWEN.CreateTextureNormal( 448, 32, 15, 15 )
 SKIN.tex.Checkbox					= GWEN.CreateTextureNormal( 464, 32, 15, 15 )
 SKIN.tex.CheckboxD_Checked			= GWEN.CreateTextureNormal( 448, 48, 15, 15 )
 SKIN.tex.CheckboxD					= GWEN.CreateTextureNormal( 464, 48, 15, 15 )
---SKIN.tex.RadioButton_Checked		= GWEN.CreateTextureNormal( 448, 64, 15, 15 )
---SKIN.tex.RadioButton				= GWEN.CreateTextureNormal( 464, 64, 15, 15 )
---SKIN.tex.RadioButtonD_Checked		= GWEN.CreateTextureNormal( 448, 80, 15, 15 )
---SKIN.tex.RadioButtonD				= GWEN.CreateTextureNormal( 464, 80, 15, 15 )
+SKIN.tex.RadioButton_Checked		= GWEN.CreateTextureNormal( 448, 64, 15, 15 )
+SKIN.tex.RadioButton				= GWEN.CreateTextureNormal( 464, 64, 15, 15 )
+SKIN.tex.RadioButtonD_Checked		= GWEN.CreateTextureNormal( 448, 80, 15, 15 )
+SKIN.tex.RadioButtonD				= GWEN.CreateTextureNormal( 464, 80, 15, 15 )
 SKIN.tex.TreePlus					= GWEN.CreateTextureNormal( 448, 96, 15, 15 )
 SKIN.tex.TreeMinus					= GWEN.CreateTextureNormal( 464, 96, 15, 15 )
 --SKIN.tex.Menu_Strip				= GWEN.CreateTextureBorder( 0, 128, 127, 21, 1, 1, 1, 1 )
@@ -493,12 +493,36 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintMenuOption( panel, w, h )
 
-	if ( panel.m_bBackground && (panel.Hovered || panel.Highlight) ) then
+	if ( panel.m_bBackground && (panel.Hovered || panel.Highlight) && !panel:GetDisabled() ) then
 		self.tex.MenuBG_Hover( 0, 0, w, h )
 	end
 	
 	if ( panel:GetChecked() ) then
-		self.tex.Menu_Check( 5, h/2-7, 15, 15 )
+		
+		if ( panel:GetRadioGroup() ) then
+			
+			if ( panel:GetDisabled() ) then
+				self.tex.RadioButtonD_Checked( 5, h/2-7, 15, 15 )
+			else
+				self.tex.RadioButton_Checked( 5, h/2-7, 15, 15 )
+			end
+			
+		else
+			self.tex.Menu_Check( 5, h/2-7, 15, 15 )
+		end
+		
+	else
+		
+		if ( panel:GetRadioGroup() ) then
+			
+			if ( panel:GetDisabled() ) then
+				self.tex.RadioButtonD( 5, h/2-7, 15, 15 )
+			else
+				self.tex.RadioButton( 5, h/2-7, 15, 15 )
+			end
+			
+		end
+		
 	end
 
 end
@@ -979,6 +1003,5 @@ function SKIN:PaintMenuBar( panel, w, h )
 	self.tex.Menu_Strip( 0, 0, w, h )
 
 end
-
 
 derma.DefineSkin( "Default", "Made to look like regular VGUI", SKIN )
