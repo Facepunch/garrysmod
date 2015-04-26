@@ -493,8 +493,7 @@ if ( SERVER ) then
 	DOOR_STATE_AJAR = 4
 	
 	function meta:GetDoorState()
-		-- m_eDoorState for prop doors and m_toggle_state for func_doors
-		return self:GetSaveTable().m_eDoorState or self:GetSaveTable().m_toggle_state
+		return self:GetSaveTable().m_eDoorState
 	end
 	
 	function meta:IsDoorBlocked()
