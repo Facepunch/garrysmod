@@ -15,16 +15,16 @@ L.spectators = "Espectadores"
 L.round_minplayers = "Não há jogadores suficientes para começar uma nova rodada..."
 L.round_voting     = "Voto em andamento, atrasando nova rodada em {num} segundos..."
 L.round_begintime  = "Uma nova rodada começa em {num} segundos. Preparem-se."
-L.round_selected   = "Os Traídores foram escolhidos."
+L.round_selected   = "Os Traidores foram escolhidos."
 L.round_started    = "Uma nova rodada começou!"
 L.round_restart    = "A rodada foi forçada a reiniciar por um admin."
 
 L.round_traitors_one  = "Traidor, você é um assassino solitário."
-L.round_traitors_more = "Traídor, estes são seus alliados: {names}"
+L.round_traitors_more = "Traidor, estes são seus alliados: {names}"
 
-L.win_time         = "O tempo acabou. Os Traídores perderam."
-L.win_traitor      = "Traídores venceram!"
-L.win_innocent     = "Traídores foram derrotados!"
+L.win_time         = "O tempo acabou. Os Traidores perderam."
+L.win_traitor      = "Traidores venceram!"
+L.win_innocent     = "Traidores foram derrotados!"
 L.win_showreport   = "Veremos os resultados da rodada por {num} segundos."
 
 L.limit_round      = "Limite de rodadas alcançado. {mapname} será carregado logo."
@@ -34,7 +34,7 @@ L.limit_left       = "{num} rodada(s) or {time} restantes até a mudança de map
 
 --- Credit awards
 L.credit_det_all   = "Detetives, vocês foram recompensados com {num} crédito(s) de equipamento por seus atos."
-L.credit_tr_all    = "Traídores, vocês foram recompensados com {num} crédito(s) de equipamento por sua performance."
+L.credit_tr_all    = "Traidores, vocês foram recompensados com {num} crédito(s) de equipamento por sua performance."
 
 L.credit_kill      = "Você ganhou {num} crédito(s) por matar um {role}."
 
@@ -46,7 +46,7 @@ L.karma_dmg_other  = "Seu Karma é {amount}. Portanto, todo dano que receber ser
 L.body_found       = "{finder} achou o corpo de {victim}. {role}"
 
 -- The {role} in body_found will be replaced by one of the following:
-L.body_found_t     = "Ele era um Traídor!"
+L.body_found_t     = "Ele era um Traidor!"
 L.body_found_d     = "Ele era um Detetive."
 L.body_found_i     = "Ele era inocente."
 
@@ -55,7 +55,7 @@ L.body_confirm     = "{finder} confirmou a morte de {victim}."
 L.body_call        = "{player} chamou o Detetive para investigar o corpo de {victim}!"
 L.body_call_error  = "Você deve confirmar a morte de um jogador antes de chamar um Detetive!"
 
-L.body_burning     = "Esse corpo tá pegando fogo bicho!"
+L.body_burning     = "Wow! Esse corpo está pegando fogo!"
 L.body_credits     = "Você achou {num} crédito(s) no corpo!"
 
 --- Menus and windows
@@ -162,7 +162,7 @@ L.quick_help    = "Socorro!"
 L.quick_imwith  = "Estou com {player}."
 L.quick_see     = "Eu vejo {player}."
 L.quick_suspect = "{player} está agindo de maneira suspeita."
-L.quick_traitor = "{player} é um Traídor!"
+L.quick_traitor = "{player} é um Traidor!"
 L.quick_inno    = "{player} é um Inocente."
 L.quick_check   = "Alguém vivo?"
 
@@ -183,7 +183,7 @@ L.search_call   = "Chamar detetive"
 -- Descriptions of pieces of information found
 L.search_nick   = "Este é o corpo de {player}."
 
-L.search_role_t = "Esta pessoa era um Traídor!"
+L.search_role_t = "Esta pessoa era um Traidor!"
 L.search_role_d = "Esta pessoa era um Detetive."
 L.search_role_i = "Esta pessoa era Inocente."
 
@@ -220,7 +220,6 @@ L.search_eyes   = "Usando suas técnicas de detetive, você identificou a últim
 L.sb_playing    = "Você está jogando no..."
 L.sb_mapchange  = "O mapa mudará em {num} rodadas ou em {time}"
 
-
 L.sb_mia        = "Desaparecidos"
 L.sb_confirmed  = "Mortes Confirmadas"
 
@@ -238,7 +237,6 @@ L.sb_tag_kill   = "MATAR"
 L.sb_tag_miss   = "DESAPARECIDO"
 
 --- Help and settings menu (F1)
-
 L.help_title = "Ajuda e Configurações"
 
 -- Tabs
@@ -261,13 +259,9 @@ L.set_cross_disable = "Desativar completamente a mira"
 L.set_minimal_id    = "ID Minimalista do Alvo abaixo da mira (sem karma, textos, dicas, etc)"
 L.set_healthlabel   = "Mostrar estado físico na barra de saúde"
 L.set_lowsights     = "Abaixar arma quando usar mira travada"
-
 L.set_lowsights_tip = "Habilitar para posicionar o modelo de arma abaixo na tela quando usando mira travada. Facilitará ao mirar, mas tornará menos realista."
 L.set_fastsw        = "Trocar arma rapidamente"
 L.set_fastsw_tip    = "Habilitar ciclo de armas quando rola o mouse sem precisar abrir o menu de troca de armas."
-
-
-
 L.set_wswitch       = "Desabilitar autofechamento do menu de troca de armas"
 L.set_wswitch_tip   = "Por padrão, o trocador de armas fechará automaticamente após alguns segundos de seu último uso. Habilite isso para facilitar as coisas."
 L.set_cues          = "Ouvir um sinal quando uma rodada começa ou termina"
@@ -276,9 +270,6 @@ L.set_cues          = "Ouvir um sinal quando uma rodada começa ou termina"
 L.set_title_play    = "Configurações de gameplay"
 
 L.set_specmode      = "Modo somente espectador"
-
-
-
 L.set_specmode_tip  = "No modo somente espectador você não renascerá quando começar uma nova rodada, ao invés, continuará como espectador."
 L.set_mute          = "Jogadores vivos silenciados"
 L.set_mute_tip      = "Silenciar jogadores vivos quando estiver morto ou for espectador."
@@ -294,9 +285,6 @@ L.set_lang          = "Selecionar idioma:"
 --- Weapons and equipment, HUD and messages
 
 -- Equipment actions, like buying and dropping
-
-
-
 L.buy_no_stock    = "Esta arma está fora de estoque, você já a comprou nessa rodada."
 L.buy_pending     = "Você já tem um pedido em andamento, espere sua encomenda chegar para pedir uma nova."
 L.buy_received    = "Você recebeu um equipamento especial."
@@ -314,52 +302,39 @@ L.item_weapon     = "Arma"
 
 L.item_armor      = "Armadura"
 L.item_armor_desc = [[
-
-
 Reduz o dano recebido por balas em 30%.
-
 
 Equipamento padrão de Detetives.]]
 
 L.item_radar      = "Radar"
 L.item_radar_desc = [[
-
 Permite escanear sinais vitais.
 
-
-Escaneia automaticamente assim que você o compra.
-Configure-o na aba Radar deste menu.]]
-
+Escaneia automaticamente assim que você
+o compra. Configure-o na aba Radar deste
+menu.]]
 
 L.item_disg       = "Disfarce"
 L.item_disg_desc  = [[
-
-
-Esconde sua identificação enquanto habilitado. Também esconde
- quando você foi a última pessoa vista por alguém.
-
+Esconde sua identificação enquanto
+habilitado. Também esconde quando você
+foi a última pessoa vista por alguém.
 
 Intercale o uso na aba Disfarce deste menu ou aperte Numpad+Enter.]]
 
 -- C4
 L.c4_hint         = "Aperte {usekey} para armar ou disarmar."
-
-
-
-
-L.c4_no_disarm    = "Você não pode desarmar a C4 de outro Traídor ao menos que ele esteja morto."
+L.c4_no_disarm    = "Você não pode desarmar a C4 de outro Traidor ao menos que ele esteja morto."
 L.c4_disarm_warn  = "Uma C4 que você plantou foi desarmado."
 L.c4_armed        = "Você armou sua bomba com sucesso."
 L.c4_disarmed     = "Você desarmou esta bomba com sucesso."
 L.c4_no_room      = "Você não pode carregar esta C4."
-
 
 L.c4_desc         = "Poderoso explosivo de contagem regressiva."
 
 L.c4_arm          = "Armar C4"
 L.c4_arm_timer    = "Temporizador"
 L.c4_arm_seconds  = "Segundos até detonação:"
-
 L.c4_arm_attempts = "Em tentativas de desarme, {num} de 6 fios causará explosão na hora que for cortado."
 
 L.c4_remove_title    = "Remoção"
@@ -370,10 +345,7 @@ L.c4_remove_destroy2 = "Confirmar: destruir"
 L.c4_disarm       = "Desarmar C4"
 L.c4_disarm_cut   = "Clique para cortar o fio {num}"
 
-
-
-
-L.c4_disarm_t     = "Corte um fio para desarmar a bomba. Como Traídor, todos os fios são seguros. Já para inocentes não é tão fácil!"
+L.c4_disarm_t     = "Corte um fio para desarmar a bomba. Como Traidor, todos os fios são seguros. Já para inocentes não é tão fácil!"
 L.c4_disarm_owned = "Corte um fio para desarmar a bomba. A bomba é sua, qualquer fio irá desarmá-la."
 L.c4_disarm_other = "Corte um fio seguro para desarmar a bomba. Explodirá se você escolher o fio errado!"
 
@@ -387,11 +359,7 @@ L.vis_hint        = "Aperte {usekey} para pegar (somente Detetives)."
 L.vis_help_pri    = "{primaryfire} solta o dispositivo ativo."
 
 L.vis_desc        = [[
-
 Dispositivo que analisa a cena do crime.
-
-
-
 
 Analisa o cadáver e mostra como a vítima foi morta, 
 mas só se morreu de tiro de Shotgun.]]
@@ -404,9 +372,6 @@ L.decoy_broken    = "Suca isca foi destruída!"
 L.decoy_help_pri  = "{primaryfire} plantar isca."
 
 L.decoy_desc      = [[
-
-
-
 Mostra um sinal falso de radar para detetives,
 e faz seu Escaneador de DNA mostrar
 o local da Isca se eles buscarem seu DNA.]]
@@ -416,10 +381,7 @@ L.defuser_name    = "Desarme"
 L.defuser_help    = "{primaryfire} desarma uma C4 na mira."
 
 L.defuser_desc    = [[
-
 Instantaneamente desarma um explosivo C4.
-
-
 
 Uso ilimitado. C4 serão mais fáceis
 de perceber se carregar isto.]]
@@ -427,11 +389,8 @@ de perceber se carregar isto.]]
 -- Flare gun
 L.flare_name      = "Arma de sinalizadores"
 L.flare_desc      = [[
-
-
 Pode ser usada para queimar corpos
 que não foram encontrados. Municão limitada.
-
 
 Queimar um corpo causará um som
 estranho.]]
@@ -443,11 +402,7 @@ L.hstation_broken = "Sua Estação de Cura foi destruída!"
 L.hstation_help   = "{primaryfire} coloca Estação de Cura."
 
 L.hstation_desc   = [[
-
 Permite curar pessoas quando colocada.
-
-
-
 
 Carrega lentamente. Todos podem usar, e
 pode ser danificada. Pode ser usada para checar
@@ -458,22 +413,15 @@ L.knife_name      = "Faca"
 L.knife_thrown    = "Faca jogada"
 
 L.knife_desc      = [[
-
-
 Mata alvos feridos instantaneamente e
 em silêncio, mas é de uso único.
-
 
 Pode ser jogada usando fogo alternativo.]]
 
 -- Poltergeist
 L.polter_desc     = [[
-
-
 Planta batedores em objetos para cavar
 à sua volta violentamente.
-
-
 
 A energia causa dano em pessoas
 próximas.]]
@@ -483,10 +431,7 @@ L.radio_broken    = "Seu Rádio foi destruído!"
 L.radio_help_pri  = "{primaryfire} coloca o Rádio."
 
 L.radio_desc      = [[
-
 Toca sons para distrair ou enganar.
-
-
 
 Coloque o Rádio em algum lugar, e então
 toque os sons abrindo a aba Rádio
@@ -496,11 +441,8 @@ nesse menu.]]
 L.sipistol_name   = "Pistola Silenciada"
 
 L.sipistol_desc   = [[
-
-
 Arma de mão que faz pouco barulho, usa munição
 de pistola normal.
-
 
 Vítimas não gritam quando mortas.]]
 
@@ -508,21 +450,15 @@ Vítimas não gritam quando mortas.]]
 L.newton_name     = "Lançador Newton"
 
 L.newton_desc     = [[
-
 Empurra pessoas a partir de uma ditância segura.
-
 
 Munição infinita, mas atira lentamente.]]
 
 -- Binoculars
 L.binoc_name      = "Binóculos"
 L.binoc_desc      = [[
-
-
 Dê zoom em cadáveres para identificá-los
 a partir de uma grande distância.
-
-
 
 Uso ilimitado, mas a identificação
 leva alguns segundos.]]
@@ -532,26 +468,17 @@ L.binoc_help_sec  = "{secondaryfire} muda a distância a ser vista."
 
 -- UMP
 L.ump_desc        = [[
-
-
 SMG experimental que desorienta
 alvos.
-
 
 Usa munição de SMG comum.]]
 
 -- DNA scanner
 L.dna_name        = "Scanner de DNA"
-
 L.dna_identify    = "O cadáver deve ser identificado para mostrar o DNA do assassino."
 L.dna_notfound    = "Nenhuma amostra de DNA no corpo."
-
 L.dna_limit       = "Tempo de armazenamento alcançado. Remova velhas amostras para colocar novas."
 L.dna_decayed     = "Amostra de DNA do assassino foi perdida."
-
-
-
-
 L.dna_killer      = "Coletou uma amostra de DNA do assassino deste cadáver!"
 L.dna_no_killer   = "O DNA não pôde ser revelado (assassino desconectou-se?)."
 L.dna_armed       = "Essa bomba tá viva! Disarme primeiro!"
@@ -559,12 +486,8 @@ L.dna_object      = "Coletada(s) {num} amostra(s) de DNA deste objeto."
 L.dna_gone        = "Não há DNA nessa área."
 
 L.dna_desc        = [[
-
-
 Coleta amostra de DNA de objetos
 e use-o para saber quem os usou.
-
-
 
 Use em cadáveres recentes para achar o DNA
 do assassino e rastreá-lo.]]
@@ -574,9 +497,6 @@ L.dna_menu_sample = "Amostra de DNA em {source}"
 L.dna_menu_remove = "Remover selecionados"
 L.dna_menu_help1  = "Estas são as amostras de DNA que você coletou."
 L.dna_menu_help2  = [[
-
-
-
 Quando carregado, você pode rastrear o dono
 da amostra de DNA selecionado.
 Achar pessoas distantes consome mais energia.]]
@@ -599,7 +519,7 @@ L.grenade_smoke   = "Granada de fumaça"
 L.grenade_fire    = "Granada incendiária"
 
 L.unarmed_name    = "Coldre"
-L.crowbar_name    = "Pé de cabra"
+L.crowbar_name    = "Crowbar"
 L.pistol_name     = "Pistola"
 L.rifle_name      = "Rifle"
 L.shotgun_name    = "Shotgun"
@@ -609,12 +529,9 @@ L.tele_name       = "Teletransporte"
 L.tele_failed     = "Teletransporte falhou."
 L.tele_marked     = "Local de teletransporte marcado."
 
-
 L.tele_no_ground  = "Não pode teletransportar-se a não ser que esteja em chão firme!"
 L.tele_no_crouch  = "Não pode teletransportar-se agachado!"
-
 L.tele_no_mark    = "Nenhum local marcado. Determine um local para teletransportar-se."
-
 
 L.tele_no_mark_ground = "Não pode marcar lugar, não é chão firme!"
 L.tele_no_mark_crouch = "Não pode marcar lugar enquanto agachado!"
@@ -623,10 +540,7 @@ L.tele_help_pri   = "{primaryfire} teletransporta para local marcado."
 L.tele_help_sec   = "{secondaryfire} marca local de teletransporte."
 
 L.tele_desc       = [[
-
 Teletransporta para local pré-marcado.
-
-
 
 Teletransportar faz barulho, e tem
 número de uso limitado.]]
@@ -698,13 +612,9 @@ L.mute_off     = "Ninguém mutado"
 
 -- Spectators and prop possession
 L.punch_title  = "SOCÔMETRO"
-
-
-
 L.punch_help   = "Movimentar-se ou pular: soca objeto. Agachar: solta objeto."
 L.punch_bonus  = "Sua pontuação ruim diminuiu seu limite do Socômetro em {num}"
 L.punch_malus  = "Sua boa pontuação aumentou seu limite do Socômetro em {num}!"
-
 
 L.spec_help    = "Clique para observar jogadores, ou aperte {usekey} em um objeto para possuí-lo."
 
@@ -712,28 +622,20 @@ L.spec_help    = "Clique para observar jogadores, ou aperte {usekey} em um objet
 
 -- These are spread over multiple lines, hence the square brackets instead of
 -- quotes. That's a Lua thing. Every line break (enter) will show up in-game.
-
-
-L.info_popup_innocent = [[Você é um Terrorista inocente! Mas há Traídores à solta...
+L.info_popup_innocent = [[Você é um Terrorista inocente! Mas há Traidores à solta...
 Em quem confiar, e quem está por aí para te encher de balas?
-
 
 Cuidado e trabalhe em conjunto com seus camaradas e saiam dessa vivos!]]
 
-
-
-
-L.info_popup_detective = [[Você é um Detetive! O QG de Terroristas te deu recursos especiais para achar os Traídores.
+L.info_popup_detective = [[Você é um Detetive! O QG de Terroristas te deu recursos especiais para achar os Traidores.
 Use-os para ajudar os inocentes a sobreviver, mas tenha cuidado:
-os Traídores tentarão te derrubar primeiro!
-
+os Traidores tentarão te derrubar primeiro!
 
 Aperte {menukey} para receber seu equipamento!]]
 
-L.info_popup_traitor_alone = [[Você é um TRAÍDOR! Você não tem comparsas nessa rodada.
+L.info_popup_traitor_alone = [[Você é um TRAIDOR! Você não tem comparsas nessa rodada.
 
 Mate todos para ganhar!
-
 
 Aperte {menukey} para receber equipamento especial!]]
 
@@ -743,25 +645,20 @@ Mas tome cuidado, sua traição pode ser descoberta...
 Esses são seus aliados:
 {traitorlist}
 
-
 Aperte {menukey} para receber equipamento especial!]]
 
 --- Various other text
 
 L.name_kick = "Um jogador foi automaticamente expulso por mudar seu nome durante uma rodada."
 
-
 L.idle_popup = [[Você esteve inativo por {num} segundos e foi movido para o modo Somente-Espectador. Nesse modo, não renascerá no começo de novas rodadas.
-
 
 Você pode sair desse modo apertando {helpkey} e desmarcando o modo Somente-Espectador na aba de Configurações. Você o pode fazer agora.]]
 
 L.idle_popup_close = "Fazer nada."
 L.idle_popup_off   = "Desabilitar modo Somente-Espectador agora."
 
-
 L.idle_warning = "Aviso: você parece estar ausente/AFK, e será feito de espectador se não agir!"
-
 
 L.spec_mode_warning = "Você está no modo Espectador e não renascerá no começo de novas rodadas. Para desabilitar, aperte F1, vá para Configurações e desmarque a opção 'modo Somente-Espectador'."
 
@@ -774,39 +671,27 @@ L.tips_panel_tip   = "Dica:"
 
 -- Tip texts
 
-
-L.tip1 = "Traídores podem examinar corpos sem chamar a atenção, ou confirmar a morte, por segurar {walkkey} e apertar {usekey} no cadáver."
-
+L.tip1 = "Traidores podem examinar corpos sem chamar a atenção, ou confirmar a morte, por segurar {walkkey} e apertar {usekey} no cadáver."
 
 L.tip2 = "Armando uma C4 com mais tempo faz com que hajam mais fios que causem explosão instantânea, e será mais silenciosa. Dificultando os incentes para achá-la."
 
-
 L.tip3 = "Detetives podem investigar cadáveres e ver quem estava 'refletido em seus olhos'. A última pessoa que viu. Pode não ser o assassino se foi morto pelas costas."
-
 
 L.tip4 = "Ninguém saberá que morreu até que ahem seu corpo e o investiguem, confirmando sua morte."
 
+L.tip5 = "Quando um Traidor mata um Detetive, todos recebem um recompensa em créditos."
 
-L.tip5 = "Quando um Traídor mata um Detetive, todos recebem um recompensa em créditos."
+L.tip6 = "Quando um Traidor morre, todos os Detetives recebem um prêmio em créditos."
 
+L.tip7 = "Quando os Traidores fizerem um progresso significativo matando inocentes, recebem créditos como recompensa."
 
-L.tip6 = "Quando um Traídor morre, todos os Detetives recebem um prêmio em créditos."
-
-
-L.tip7 = "Quando os Traídores fizerem um progresso significativo matando inocentes, recebem créditos como recompensa."
-
-
-L.tip8 = "Traídores e Detetives podem pegar créditos não gastos de cadáveres de Traídores e Detetives."
-
+L.tip8 = "Traidores e Detetives podem pegar créditos não gastos de cadáveres de Traidores e Detetives."
 
 L.tip9 = "O Poltergeist pode tornar um objeto comum em um projétil mortal. Cada empurrão é acompanhado de uma explosão de energia machucando todos perto."
 
+L.tip10 = "Como Traidor ou Detetive, fique de olho em mensagens vermelhas no topo da tela. São importantes para você."
 
-L.tip10 = "Como Traídor ou Detetive, fique de olho em mensagens vermelhas no topo da tela. São importantes para você."
-
-
-L.tip11 = "Como Traídor ou Detetive, tenha em mente que será recompensado com créditos se você e seus companheiros agirem corretamente. Lembre-se de gastá-los!"
-
+L.tip11 = "Como Traidor ou Detetive, tenha em mente que será recompensado com créditos se você e seus companheiros agirem corretamente. Lembre-se de gastá-los!"
 
 L.tip12 = "O Scanner de DNA do Detetive pode coletar amostras em armas e itens e então usadas para saber onde está o jogador que as usou por último. Útil quando pega amostra em cadáveres e C4 desarmadas!"
 
@@ -814,83 +699,57 @@ L.tip13 = "Quando perto de alguém que matou, um pouco do seu DNA é deixado no 
 
 L.tip14 = "Quanto mais longe você estiver de alguém que você mata, mais rápido a amostra de DNA no corpo da vítima vai decair."
 
+L.tip15 = "Você é Traidor e quer camperar? Considere usar o Disfarce. Se errar um tiro, ache um local seguro, desabilite o Disfarce, e ninguém saberá quem atirou."
 
-L.tip15 = "Você é Traídor e quer camperar? Considere usar o Disfarce. Se errar um tiro, ache um local seguro, desabilite o Disfarce, e ninguém saberá quem atirou."
-
-
-L.tip16 = "Como Traídor, o Teletransportador pode te ajudar quando estiver encurralado, e permite viajar rapidamente em mapas grandes. Lembre-se de sempre ter uma posição segura pré-marcada."
-
+L.tip16 = "Como Traidor, o Teletransportador pode te ajudar quando estiver encurralado, e permite viajar rapidamente em mapas grandes. Lembre-se de sempre ter uma posição segura pré-marcada."
 
 L.tip17 = "Os inocentes estão juntos e difíceis de matar? Considere usar o Rádio para simular o som de uma C4 ou um tiroteio para afastar alguns."
 
-
-L.tip18 = "Usando Rádio como Traídor você pode tocar sons pelo menu de Equipamento depois que o Rádio foi colocado. Liste vários sons ao clicar na sequência que desejar."
-
+L.tip18 = "Usando Rádio como Traidor você pode tocar sons pelo menu de Equipamento depois que o Rádio foi colocado. Liste vários sons ao clicar na sequência que desejar."
 
 L.tip19 = "Como Detetive, você tem sobras de créditos para dar a um Inocente um Desarme. Então você pode deixar o trabalho duro pra eles e investigar sem se preocupar tanto."
 
+L.tip20 = "O Binóculo dos Detetives tem um campo de visão amplo para procurar e identificar cadáveres. Má notícia para Traidores que tentavam usar o corpo como isca. É claro que, quando usando o Binóculo, você está distraído e desarmado..."
 
-L.tip20 = "O Binóculo dos Detetives tem um campo de visão amplo para procurar e identificar cadáveres. Má notícia para Traídores que tentavam usar o corpo como isca. É claro que, quando usando o Binóculo, você está distraído e desarmado..."
-
-
-L.tip21 =  "A Estação de Cura dos Detetives remove os ferimentos dos jogadores. É claro, que algum desses feridos pode ser um Traídor..."
-
+L.tip21 =  "A Estação de Cura dos Detetives remove os ferimentos dos jogadores. É claro, que algum desses feridos pode ser um Traidor..."
 
 L.tip22 = "A Estação de Cura guarda o DNA de todos que a usam. Detetives podem ver esse DNA para descobrir quem anda se curando."
 
-
-L.tip23 = "Ao contrário de armas e C4, o Rádio dos Traídores não dá amostra de DNA de quem o usou. Não se preocupe com Detetives achando sua distração."
-
+L.tip23 = "Ao contrário de armas e C4, o Rádio dos Traidores não dá amostra de DNA de quem o usou. Não se preocupe com Detetives achando sua distração."
 
 L.tip24 = "Aperte {helpkey} para ver um tutorial curto sobre coisas TTT-zísticas. Por exemplo, você pode desativar essas dicas permanentemente."
 
-
 L.tip25 = "Quando um Detetive investiga um corpo, os resultados podem ser vistos por todos no placar ao clicar no nome da pessoa morta."
-
 
 L.tip26 = "No placar, quando há uma lupa do lado do nome de alguém, significa que você investigou aquela pessoa. Se o ícone brilha, a informação vem de um Detetive, pode conter mais informações."
 
-
 L.tip27 = "Como Detetive, quando há uma lupa do lado do nome de uma pessoa morta significa que ela foi investigada por um Detetive e os resultados estão visíveis a todos no placar."
-
 
 L.tip28 = "Espectatores podem apertar {mutekey} para escolher em silenciar outros espectadores ou jogadores vivos."
 
-
 L.tip29 = "Se o servidor instalou linguagens adicionais, você pode mudar a qualquer momento no menu de Configurações."
-
 
 L.tip30 = "ChatRápido ou comandos do 'Rádio' podem ser usados apertando {zoomkey}."
 
-
 L.tip31 = "Como Espectador, aperte {duckkey} para destravar a visão do mouse e clicar neste painel. Aperte {duckkey} novamente para voltar ao normal."
-
 
 L.tip32 = "O ataque secundário do Pé de Cabra empurra os jogadores."
 
-
 L.tip33 = "Atirando pela mira travada de uma arma irá diminuir o recuo e aumentar um pouco a precisão. Agaichar-se não."
-
 
 L.tip34 = "Granadas de Fumaça são ótimas para usar em ambientes fechados, principalmente quando lotados."
 
-
-L.tip35 = "Como Traídor, lembre-se de esconder suas vítimas dos olhos curiosos dos Inocentes e Detetives."
-
+L.tip35 = "Como Traidor, lembre-se de esconder suas vítimas dos olhos curiosos dos Inocentes e Detetives."
 
 L.tip36 = "O tutorial está disponível ao apertar {helpkey} contém uma visão geral do que é mais importante no jogo."
 
-
 L.tip37 = "No placar, você pode marcar as pessoas como 'inocente' ou 'suspeito' (e outras), isso aparecerá quando você mirar neles."
-
 
 L.tip38 = "Muitos dos itens colocáveis (como C4 e Rádio) pode ser preso na parede ao usar o fogo secundário (Mouse2)."
 
-
 L.tip39 = "C4 que explode sob o erro de desarme tem uma explosão menor comparada a C4 que explodiria se chegasse a 0."
 
-
-L.tip40 = "Se diz 'PRESSA' sob o temporizador do jogo, a rodada será mais curta, mas a cada morte o tempo disponível é aumentado (como capturar pontos no TF2). Esse modo bota pressão nos Traídores, obrigando-os a agir logo."
+L.tip40 = "Se diz 'PRESSA' sob o temporizador do jogo, a rodada será mais curta, mas a cada morte o tempo disponível é aumentado (como capturar pontos no TF2). Esse modo bota pressão nos Traidores, obrigando-os a agir logo."
 
 
 --- Round report
@@ -912,11 +771,11 @@ L.report_save_error  = "Sem Diário de Eventos para salvar."
 L.report_save_result = "O Diário de Eventos foi salvo em:"
 
 -- Big title window
-L.hilite_win_traitors = "TRAÍDORES VENCEM!"
+L.hilite_win_traitors = "TRAIDORES VENCEM!"
 L.hilite_win_innocent = "INOCENTES VENCEM!"
 
-L.hilite_players1 = "{numplayers} participaram, {numtraitors} eram Traídores"
-L.hilite_players2 = "{numplayers} participaram, um deles era Traídor"
+L.hilite_players1 = "{numplayers} participaram, {numtraitors} eram Traidores"
+L.hilite_players2 = "{numplayers} participaram, um deles era Traidor"
 
 L.hilite_duration = "A rodada durou {time}"
 
@@ -926,7 +785,7 @@ L.col_event  = "Evento"
 L.col_player = "Jogador"
 L.col_role   = "Papel"
 L.col_kills1 = "Inocentes mortos"
-L.col_kills2 = "Traídores mortos"
+L.col_kills2 = "Traidores mortos"
 L.col_points = "Pontos"
 L.col_team   = "Bônus de Time"
 L.col_total  = "Total de pontos"
@@ -939,7 +798,6 @@ L.ev_blowup      = "{victim} se explodiu"
 L.ev_blowup_trap = "{victim} foi explodido por {trap}"
 
 L.ev_tele_self   = "{victim} se telefragou"
-
 L.ev_sui         = "{victim} não aguentou a pressão e cometeu suicídio"
 L.ev_sui_using   = "{victim} se mataram usando {tool}"
 
@@ -985,139 +843,110 @@ L.ev_c4_disarm2  = "{player} falhou ao desarmar a C4 de {owner}"
 L.ev_credit      = "{finder} achou {num} crédito(s) no cadáver de {player}"
 
 L.ev_start       = "A rodada começou"
-L.ev_win_traitor = "Os Traídores venceram!"
+L.ev_win_traitor = "Os Traidores venceram!"
 
 L.ev_win_inno    = "Os inocentes ganharam a rodada!"
-L.ev_win_time    = "Os Traídores ficaram sem tempo e perderam!"
+L.ev_win_time    = "Os Traidores ficaram sem tempo e perderam!"
 
 --- Awards/highlights
 
 L.aw_sui1_title = "Líder da seita Suicída"
-
-L.aw_sui1_text  = "mostrou aos outros suicídas como funciona sendo o primeiro a ir."
+L.aw_sui1_text  = "mostrou aos outros suicídas como funciona sendo o primeiro a se matar."
 
 L.aw_sui2_title = "Sozinho e Depressivo"
-
 L.aw_sui2_text  = "foi o único que se matou."
 
 L.aw_exp1_title = "Explorador de Explosivos"
-
 L.aw_exp1_text  = "foi reconhecido por sua pesquisa com explosivos. {num} cobaias o ajudaram."
 
 L.aw_exp2_title = "Pesquisa de Campo"
-
 L.aw_exp2_text  = "testou sua própria resistência a explosões. Não era alta o suficiente."
 
 L.aw_fst1_title = "First Blood"
-
-L.aw_fst1_text  = "entregou a morte do primeiro inocente nas mãos de um Traídor."
+L.aw_fst1_text  = "entregou a morte do primeiro inocente nas mãos de um Traidor."
 
 L.aw_fst2_title = "First Blood Estúpido"
-
-L.aw_fst2_text  = "marcou a primeira morte matando um Traídor aliado. Bom trabalho."
+L.aw_fst2_text  = "marcou a primeira morte matando um Traidor aliado. Bom trabalho."
 
 L.aw_fst3_title = "First Blooper"
-
 L.aw_fst3_text  = "primeiro a matar. Pena que era um terrorista companheiro."
 
 L.aw_fst4_title = "First Blow"
-
-L.aw_fst4_text  = "foi um inocente que marcou a primeira morte matando um Traídor."
+L.aw_fst4_text  = "foi um inocente que marcou a primeira morte matando um Traidor."
 
 L.aw_all1_title = "Mortal entre Iguais"
-
 L.aw_all1_text  = "foi responsável pela morte de todos os inocentes nessa rodada."
 
 L.aw_all2_title = "Lobo Solitário"
-
-L.aw_all2_text  = "foi responsável pela morte de todos os Traídores nessa rodada."
+L.aw_all2_text  = "foi responsável pela morte de todos os Traidores nessa rodada."
 
 L.aw_nkt1_title = "Peguei um Chefe!"
-
 L.aw_nkt1_text  = "conseguiu matar um inocente. Parabéns!"
 
 L.aw_nkt2_title = "Uma Bala pra Dois"
+L.aw_nkt2_text  = "mostrou que não foi um tiro de sorte por matar outro."
 
-L.aw_nkt2_text  = "mostrou que não foi um tiro de sorte, matando outro"
-
-L.aw_nkt3_title = "Traídor em Série"
-
+L.aw_nkt3_title = "Traidor em Série"
 L.aw_nkt3_text  = "acabou com três vidas inocentes do terrorismo hoje."
 
 L.aw_nkt4_title = "Lobo entre Lobos que parecem Ovelhas"
-
 L.aw_nkt4_text  = "comeu inocentes terroristas no jantar. Um jantar de {num} pratos."
 
 L.aw_nkt5_title = "Operação Contra-Terrorista"
-
-L.aw_nkt5_text  = "é pago por um assassinato. Agora pode comprar outro iate luxuoso."
+L.aw_nkt5_text  = "é pago por cada assassinato. Agora pode comprar outro iate luxuoso."
 
 L.aw_nki1_title = "Traia isto!"
-L.aw_nki1_text  = "achou um Traídor. Atirou num Traídor. Fácil."
+L.aw_nki1_text  = "achou um Traidor. Atirou num Traidor. Fácil."
 
 L.aw_nki2_title = "Aplicado no Esquadrão Justiça"
+L.aw_nki2_text  = "escoltou dois Traidores para o além."
 
-L.aw_nki2_text  = "escoltou dois Traídores pro além."
-
-
-L.aw_nki3_title = "Contanndo Ovelhinhas Traídoras?"
-L.aw_nki3_text  = "botou três Traídores para dormir."
+L.aw_nki3_title = "Contanndo Ovelhinhas Traidoras?"
+L.aw_nki3_text  = "botou três Traidores para dormir."
 
 L.aw_nki4_title = "Empregado Íntimo"
-
-L.aw_nki4_text  = "é pago a cada assassinato. Já pode pedir sua 50ª piscina olímpica."
+L.aw_nki4_text  = "é pago por cada assassinato. Já pode pedir sua 50ª piscina olímpica."
 
 L.aw_fal1_title = "Não Mr. Bond, Espero Que Caia"
-
 L.aw_fal1_text  = "jogou alguém de um lugar alto."
 
 L.aw_fal2_title = "Gravidade Grave"
-
-L.aw_fal2_text  = "deixe o corpo cair de uam grande altitude novamente."
+L.aw_fal2_text  = "deixe o corpo cair de uma grande altitude novamente."
 
 L.aw_fal3_title = "O Meteorito Humano"
-
-L.aw_fal3_text  = "esmagou alguém caindo em cima dele."
+L.aw_fal3_text  = "esmagou alguém caindo em cima dele de um lugar alto."
 
 L.aw_hed1_title = "Eficiência"
 L.aw_hed1_text  = "descobriu a felicidade que trazem os headshots e fez {num}."
 
 L.aw_hed2_title = "Neurologia"
-
 L.aw_hed2_text  = "removeu o cérebro de {num} cabeças para um exame preciso."
 
 L.aw_hed3_title = "Videogames Me Fizeram Fazer Isso"
-
-L.aw_hed3_text  = "aplicou sua simulação de assassinatos treinando e 'headshoteou' {num} inimigos."
+L.aw_hed3_text  = "aplicou sua simulação de assassinatos treinando e praticou headshot em {num} inimigos."
 
 L.aw_cbr1_title = "Thunk Thunk Thunk"
-
-L.aw_cbr1_text  = "é o barulho que o Pé de Cabra fez ao matar {num} pessoas encontradas."
+L.aw_cbr1_text  = "é o barulho que o crowbar fez ao matar, {num} pessoas encontradas."
 
 L.aw_cbr2_title = "Freeman"
-
-L.aw_cbr2_text  = "cobriu com o Pé de Cabra o cérebro de nada menos que {num} pessoas."
+L.aw_cbr2_text  = "cobriu com o crowbar o cérebro de nada menos que {num} pessoas."
 
 L.aw_pst1_title = "Demônio Teimoso"
-
-L.aw_pst1_text  = "marcou {num} mortes usando pistola. Logo quiseram se abraçar a alguém até a morte."
+L.aw_pst1_text  = "marcou {num} mortes usando pistola. Em seguida, eles passaram a se abraçar na morte."
 
 L.aw_pst2_title = "Chacina de Pequeno Calibre"
-
 L.aw_pst2_text  = "matou um pequeno exército de {num} com uma pistola. Provavelmente instalou uma pequena escopeta dentro do cano."
 
 L.aw_sgn1_title = "Modo fácil"
-L.aw_sgn1_text  = "aplica buckshot onde dói, matando {num} alvos."
+L.aw_sgn1_text  = "aplicando tiro onde dói, matando {num} alvos."
 
 L.aw_sgn2_title = "Milhares de Pequenas Pastilhas"
+L.aw_sgn2_text  = "não gostava de seus tiros, então os deu embora. {num} recipientes não viveram para aproveitá-los."
 
-L.aw_sgn2_text  = "não gostava de seus buckshots, então os deu embora. {num} recipientes não viveram para aproveitá-los."
+L.aw_rfl1_title = "Apontar e clicar"
+L.aw_rfl1_text  = "mostre que tudo que precisa para {num} mortes é um rifle e uma mão firme."
 
-L.aw_rfl1_title = "Point and Click"
-
-L.aw_rfl1_text  = "mostre que tudo que precisa para {num} mortes é um rifle e mão firme."
-
-L.aw_rfl2_title = "Só a Cabecinha"
+L.aw_rfl2_title = "Eu Posso Ver Sua Cabeça Daqui"
 L.aw_rfl2_text  = "conhece o rifle que tem. Agora {num} pessoas o conhecem também."
 
 L.aw_dgl1_title = "É como um Pequeno Rifle"
@@ -1127,93 +956,75 @@ L.aw_dgl2_title = "Mestre da Águia"
 L.aw_dgl2_text  = "explodiu {num} pessoas com sua Deagle."
 
 L.aw_mac1_title = "Rezar e Matar"
-
 L.aw_mac1_text  = "matou {num} com a MAC10, mas é impossível dizer quanta munição usou."
 
 L.aw_mac2_title = "Mac com Queijo"
-
 L.aw_mac2_text  = "imagina se tivesse em mãos duas MAC10. {num} x 2?"
 
-L.aw_sip1_title = "Shh"
+L.aw_sip1_title = "Seja quieto"
 L.aw_sip1_text  = "cale a boca de {num} pessoas com uma Pistola Silenciada."
 
 L.aw_sip2_title = "Assassino Silencioso"
-
 L.aw_sip2_text  = "matou {num} pessoas que não ouviram a morte chegando."
 
 L.aw_knf1_title = "Bom Esfaquear Você"
 L.aw_knf1_text  = "esfaqueou a cara de alguém pela internet."
 
 L.aw_knf2_title = "Onde pegou isso?"
-
-L.aw_knf2_text  = "não era Traídor, mas ainda matou alguém com a Faca."
+L.aw_knf2_text  = "não era Traidor, mas ainda matou alguém com a Faca."
 
 L.aw_knf3_title = "Um Homem de Faca"
-
 L.aw_knf3_text  = "achou {num} facas por aí e fez bom uso delas."
 
 L.aw_knf4_title = "Melhor Homem de Faca do Mundo"
 L.aw_knf4_text  = "matou {num} pessoas com uma Faca. Não me pergunte como."
 
-L.aw_flg1_title = "Dora Aventureira, ao Resgate"
+L.aw_flg1_title = "Ao Resgate"
 L.aw_flg1_text  = "usou seu sinalizador para mostrar {num} mortes."
 
 L.aw_flg2_title = "Sinalizador indica Fogo"
-
 L.aw_flg2_text  = "ensinou {num} homens o perigo de vestir roupas inflamáveis."
 
-L.aw_hug1_title = "Uma E.N.O.R.M.E Expansão"
-
-L.aw_hug1_text  = "estava em sintonia com sua H.U.G.E, de algum jeito conseguindo derrubar {num} pessoas."
+L.aw_hug1_title = "Uma H.U.G.E Expandida"
+L.aw_hug1_text  = "estava em sintonia com sua H.U.G.E, de algum jeito conseguiu derrubar {num} pessoas."
 
 L.aw_hug2_title = "A Patient Para"
-
-L.aw_hug2_text  = "só ficou atirando, e viu sua E.N.O.R.M.E paciência recompensada com {num} mortes."
+L.aw_hug2_text  = "só ficou atirando, e viu sua H.U.G.E ser recompensada com {num} mortes."
 
 L.aw_msx1_title = "Putt Putt Putt"
 L.aw_msx1_text  = "levou {num} pessoas com a M16."
 
 L.aw_msx2_title = "Loucura de Alcance Médio"
-
 L.aw_msx2_text  = "sabe derrubar um alvo com M16, marcando {num} mortes."
 
 L.aw_tkl1_title = "Ops"
-
 L.aw_tkl1_text  = "apertou no gatilho enquanto mirava em um companheiro."
 
-L.aw_tkl2_title = "Ops²"
-
-L.aw_tkl2_text  = "pensou que eram Traídores duas vezes, estava errado em ambas."
+L.aw_tkl2_title = "Duas vezes ops!"
+L.aw_tkl2_text  = "pensou que eram Traidores duas vezes, estava errado em ambas."
 
 L.aw_tkl3_title = "Karma Consciente"
-
-L.aw_tkl3_text  = "não conseguiu para no segundo aliado morto. Três é seu número da sorte."
+L.aw_tkl3_text  = "não conseguiu parar no segundo aliado morto. Três é seu número da sorte."
 
 L.aw_tkl4_title = "Teamkiller"
 L.aw_tkl4_text  = "matou seu time inteiro. OMGBANBANBAN."
 
 L.aw_tkl5_title = "Ator"
-
 L.aw_tkl5_text  = "estava atuando como um louco, honesto. É por isso que matou quase todo seu time."
 
 L.aw_tkl6_title = "Anta"
-
 L.aw_tkl6_text  = "não conseguiu assimilar em que time estava, matando mais da metade de seus companheiros."
 
 L.aw_tkl7_title = "Redneck"
-
 L.aw_tkl7_text  = "protegeu seu território matando mais de um quarto de seus aliados."
 
 L.aw_brn1_title = "Como a Vovó fazia"
-
 L.aw_brn1_text  = "fritou várias pessoas numa bela fogueira."
 
 L.aw_brn2_title = "Piromaníaco"
-
-L.aw_brn2_text  = "foi ouvido vangloriar-se após incendiar uma de suas vítimas."
+L.aw_brn2_text  = "foi ouvida altas risadas depois de queimar uma de suas muitas vítimas."
 
 L.aw_brn3_title = "Derrapagem Pirra"
-
 L.aw_brn3_text  = "queimou todos, mas agora está sem Granadas Incendiárias! E agora!?"
 
 L.aw_fnd1_title = "Médico Legista"
@@ -1223,19 +1034,15 @@ L.aw_fnd2_title = "Temos que pegar você!"
 L.aw_fnd2_text  = "achou {num} cadáveres para sua coleção."
 
 L.aw_fnd3_title = "Cheiro de Morte"
-
 L.aw_fnd3_text  = "continua tropeçando em cadáveres, {num} nessa rodada."
 
 L.aw_crd1_title = "Reciclador"
-
 L.aw_crd1_text  = "roubou {num} créditos de cadáveres."
 
 L.aw_tod1_title = "Vitória Pirra"
-
 L.aw_tod1_text  = "morreu segundos antes de seu time vencer a partida."
 
 L.aw_tod2_title = "Odeio esse jogo"
-
 L.aw_tod2_text  = "morreu no começo da partida."
 
 
@@ -1244,13 +1051,10 @@ L.aw_tod2_text  = "morreu no começo da partida."
 
 
 --- v23
-
-
 L.set_avoid_det     = "Evitar ser Detetive"
-L.set_avoid_det_tip = "Habilite isso para pedir ao servidor para não ser escolhido como Detetive. Não significa que será Traídor mais vezes."
+L.set_avoid_det_tip = "Habilite isso para pedir ao servidor para não ser escolhido como Detetive. Não significa que será Traidor mais vezes."
 
 --- v24
-
 L.drop_no_ammo = "Munição insuficiente para jogar no chão como uma caixa de munição."
 
 --- v31
