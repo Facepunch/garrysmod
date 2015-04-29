@@ -21,15 +21,14 @@ function DrawMaterialOverlay( texture, refractamount, nAlpha )
 	render.UpdateScreenEffectTexture()
 
 	// FIXME: Changing refract amount affects textures used in the map/models.
+	mat_Overlay:SetFloat( "$alpha", nAlpha )
 	mat_Overlay:SetFloat( "$envmap", 0 )
 	mat_Overlay:SetFloat( "$envmaptint", 0 )
 	mat_Overlay:SetFloat( "$refractamount", refractamount )
 	mat_Overlay:SetInt( "$ignorez", 1 )
 
-	render.SetBlend( nAlpha )
 	render.SetMaterial( mat_Overlay )
 	render.DrawScreenQuad()
-	render.SetBlend( 1 )
 
 end
 
