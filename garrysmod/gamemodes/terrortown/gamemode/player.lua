@@ -259,14 +259,13 @@ end
 
 function GM:TTTPlayerSetColor(ply)
    local clr = COLOR_WHITE
-   local should_color = hook.Call("TTTShouldColorModel", GAMEMODE, ply:GetModel())
-   if GAMEMODE.playercolor and should_color then
+   if GAMEMODE.playercolor then
       -- If this player has a colorable model, always use the same color as all
       -- other colorable players, so color will never be the factor that lets
       -- you tell players apart.
       clr = GAMEMODE.playercolor
    end
-   ply:SetColor(clr)
+   ply:SetPlayerColor( Vector( clr.r/255.0, clr.g/255.0, clr.b/255.0 ) )
 end
 
 
