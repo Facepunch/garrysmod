@@ -8,7 +8,7 @@ local pp_mat_overlay_refractamount	= CreateClientConVar( "pp_mat_overlay_refract
 local lastTexture = nil
 local mat_Overlay = nil
 
-function DrawMaterialOverlay( texture, refractamount )
+function DrawMaterialOverlay( texture, refractamount, nAlpha )
 
 	if ( texture ~= lastTexture or mat_Overlay == nil ) then
 		mat_Overlay = Material( texture )
@@ -16,6 +16,7 @@ function DrawMaterialOverlay( texture, refractamount )
 	end
 
 	if ( mat_Overlay == nil || mat_Overlay:IsError() ) then return end
+	if ( nAlpha == nil ) then nAlpha = 1 end
 
 	render.UpdateScreenEffectTexture()
 
@@ -25,8 +26,10 @@ function DrawMaterialOverlay( texture, refractamount )
 	mat_Overlay:SetFloat( "$refractamount", refractamount )
 	mat_Overlay:SetInt( "$ignorez", 1 )
 
+	render.SetBlend( nAlpha )
 	render.SetMaterial( mat_Overlay )
 	render.DrawScreenQuad()
+	render.SetBlend( 1 )
 
 end
 
