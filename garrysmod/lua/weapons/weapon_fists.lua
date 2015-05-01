@@ -10,7 +10,7 @@ SWEP.SlotPos				= 4
 
 SWEP.Spawnable				= true
 
-SWEP.ViewModel				= Model( "models/weapons/c_arms_citizen.mdl" )
+SWEP.ViewModel				= Model( "models/weapons/c_hands.mdl" )
 SWEP.WorldModel				= ""
 SWEP.ViewModelFOV			= 54
 SWEP.UseHands				= true
@@ -35,12 +35,6 @@ local HitSound = Sound( "Flesh.ImpactHard" )
 function SWEP:Initialize()
 
 	self:SetHoldType( "fist" )
-
-end
-
-function SWEP:PreDrawViewModel( vm, wep, ply )
-
-	vm:SetMaterial( "engine/occlusionproxy" ) -- Hide that view model with hacky material
 
 end
 
@@ -160,26 +154,9 @@ function SWEP:DealDamage()
 
 end
 
-function SWEP:OnRemove()
-
-	if ( IsValid( self.Owner ) && CLIENT && self.Owner:IsPlayer() ) then
-		local vm = self.Owner:GetViewModel()
-		if ( IsValid( vm ) ) then vm:SetMaterial( "" ) end
-	end
-
-end
-
 function SWEP:OnDrop()
 
 	self:Remove() -- You can't drop fists
-
-end
-
-function SWEP:Holster()
-
-	self:OnRemove()
-
-	return true
 
 end
 
@@ -207,7 +184,7 @@ function SWEP:Think()
 	if ( idletime > 0 && CurTime() > idletime ) then
 
 		vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_idle_0" .. math.random( 1, 2 ) ) )
-		
+
 		self:UpdateNextIdle()
 
 	end
@@ -217,15 +194,15 @@ function SWEP:Think()
 	if ( meleetime > 0 && CurTime() > meleetime ) then
 
 		self:DealDamage()
-		
+
 		self:SetNextMeleeAttack( 0 )
 
 	end
 
 	if ( SERVER && CurTime() > self:GetNextPrimaryFire() + 0.1 ) then
-		
+
 		self:SetCombo( 0 )
-		
+
 	end
 
 end
