@@ -179,3 +179,193 @@ function net.ReadType( typeid )
 
 	error( "net.ReadType: Couldn't read type " .. typeid )
 end
+
+--Here a chunk library by thegrb93 which allows sending large streams of data without overflowing the reliable channel
+net.Chunk = {}
+net.Chunk.Queues = {}            --This holds a queue for each player, or one if CLIENT
+net.Chunk.Data = {}            --This holds the data to send        
+net.Chunk.MaxSendSize = 20000            --This is the maximum size of each chunk to send
+net.Chunk.Timeout = 2            --How long the data should exist in the store without being used before being destroyed
+
+--Send the data sender a request for data
+function net.Chunk:Request( ply )
+
+	net.Start( "ChunkRequest" )
+	net.WriteBit( false )
+	net.WriteString( self.crc )
+	net.WriteUInt( #self.data, 32 )
+	
+	--print("Requesting",self.crc,#self.data)
+	
+	if CLIENT then net.SendToServer() else net.Send( ply ) end
+	
+	timer.Create( "ChunkDlTimeout" .. self.crc, 1, net.Chunk.Timeout, function() self:Remove() end )
+	
+end
+
+--Begin requesting data
+function net.Chunk:Start( ply )
+
+	if not self.active then
+	
+		timer.Remove( "ChunkKeepAlive" .. self.crc )
+		self.active = true
+		self:Request( ply )
+		
+	end
+	
+end
+
+--Received data so process it
+function net.Chunk:Read( len, ply )
+
+	local size = math.floor( len / 8 )
+	
+	if size == 0 then self:Remove() return end
+	--print("Got", size)
+	
+	self.data[ #self.data + 1 ] = net.ReadData( size )
+	if #self.data == self.numchunks then
+		self.returndata = util.Decompress( table.concat( self.data ) )
+		self:Remove()
+	else
+		self:Request( ply )
+	end
+
+end
+
+--Pop the queue and start the next task
+function net.Chunk:Remove()
+	
+	pcall( self.callback, self.returndata )
+	
+	timer.Remove( "ChunkDlTimeout" .. self.crc )
+	table.remove( self.queue, 1 )
+	if self.queue[ 1 ] then
+		self.queue[ 1 ]:Start()
+	else
+		net.Chunk.Queues[ self.crc ] = nil
+	end
+	
+end
+
+net.Chunk.__index = net.Chunk
+
+--Store the data and write the file info so receivers can request it.
+function net.WriteChunk( data )
+
+	if type( data ) ~= "string" then
+		error( "bad argument #1 to 'WriteChunk' (string expected, got " .. type( data ) .. ")", 2 )
+	end
+		
+	local compressed = util.Compress( data )
+	local crc = util.CRC( compressed )
+	
+	net.Chunk.Data[ crc ] = compressed
+	timer.Create( "ChunkUlTimeout" .. crc, 1, net.Chunk.Timeout, function() net.Chunk.Data[ crc ] = nil end )
+	
+	net.WriteUInt( math.ceil( #compressed / net.Chunk.MaxSendSize ), 32 )
+	net.WriteString( crc )
+	
+end
+
+--If the receiver is a player then add it to a queue.
+--If the receiver is the server then add it to a queue for each individual player
+function net.ReadChunk( ply, callback )
+
+	if CLIENT then 
+		ply = NULL
+	else
+		if type( ply ) ~= "Player" then
+			error( "bad argument #1 to 'ReadChunk' (Player expected, got " .. type( ply ) .. ")", 2 )
+		elseif not ply:IsValid() then
+			error( "bad argument #1 to 'ReadChunk' (Tried to use a NULL entity!)", 2 )
+		end
+	end
+	if type( callback ) ~= "function" then
+		error( "bad argument #2 to 'ReadChunk' (function expected, got " .. type( callback ) .. ")", 2 )
+	end
+	
+	local queue = net.Chunk.Queues[ ply ]
+	if not queue then queue = {} net.Chunk.Queues[ ply ] = queue end
+	
+	local numchunks = net.ReadUInt( 32 )
+	local crc = net.ReadString()
+	
+	--print("Got info", numchunks, crc)
+	
+	local chunk = {
+		numchunks = numchunks,
+		crc = crc,
+		data = {},
+		active = false,
+		callback = callback,
+		queue = queue
+	}
+		
+	queue[ #queue + 1 ] = setmetatable( chunk, net.Chunk )
+	if #queue > 1 then
+		timer.Create( "ChunkKeepAlive" .. crc, net.Chunk.Timeout / 2, 0, function() 
+			net.Start( "ChunkRequest" )
+			net.WriteBit( true )
+			net.WriteString( crc )
+		end )
+	end
+	queue[ 1 ]:Start( ply )
+	
+end
+
+if SERVER then
+
+	util.AddNetworkString( "ChunkRequest" )
+	util.AddNetworkString( "ChunkDownload" )
+	
+end
+
+--Chunk data is requested
+net.Receive( "ChunkRequest", function( len, ply )
+
+	local keepalive = net.ReadBit() == 1
+	local crc = net.ReadString()
+	local data = net.Chunk.Data[ crc ]
+	
+	if data then
+		timer.Adjust( "ChunkUlTimeout" .. crc, 1, net.Chunk.Timeout, function() net.Chunk.Data[ crc ] = nil end )
+	end
+	
+	if not keepalive then
+
+		local index = net.ReadUInt( 32 )
+		
+		net.Start( "ChunkDownload" )
+			
+		if data then
+		
+			local start = math.min( index * net.Chunk.MaxSendSize + 1, #data )
+			local endpos = math.min( start + net.Chunk.MaxSendSize - 1, #data )
+			local senddata = data:sub( start, endpos )
+			
+			--print("Responding",#senddata,start,endpos)
+			
+			net.WriteData( senddata, #senddata )
+			
+		end
+	
+		if CLIENT then net.SendToServer() else net.Send( ply ) end
+	end
+	
+end )
+
+--Downloaded the chunk data
+net.Receive( "ChunkDownload", function( len, ply )
+
+	ply = ply or NULL
+	local queue = net.Chunk.Queues[ ply ]
+	if queue and queue[ 1 ] then
+	
+		queue[ 1 ]:Read( len, ply )
+	
+	end
+	
+end )
+
