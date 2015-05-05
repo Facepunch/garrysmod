@@ -51,10 +51,10 @@ function SWEP:PrimaryAttack()
 
    local tr = util.TraceLine({start=spos, endpos=sdest, filter=self.Owner, mask=MASK_SHOT})
 
-   if IsValid(tr.Entity) and tr.Entity:GetClass() == "ttt_c4" then
+   if IsValid(tr.Entity) and tr.Entity.Defusable then
       local bomb = tr.Entity
-      if bomb:GetArmed() then
-         if SERVER then
+      if bomb.Defusable==true or bomb:Defusable() then
+         if SERVER and bomb.Disarm then
             bomb:Disarm(self.Owner)
             sound.Play(defuse, bomb:GetPos())
          end
