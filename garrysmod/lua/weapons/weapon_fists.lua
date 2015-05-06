@@ -91,7 +91,8 @@ function SWEP:DealDamage()
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
 		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
-		filter = self.Owner
+		filter = self.Owner,
+		mask = MASK_SHOT_HULL
 	} )
 
 	if ( !IsValid( tr.Entity ) ) then 
@@ -100,7 +101,8 @@ function SWEP:DealDamage()
 			endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
 			filter = self.Owner,
 			mins = Vector( -10, -10, -8 ),
-			maxs = Vector( 10, 10, 8 )
+			maxs = Vector( 10, 10, 8 ),
+			mask = MASK_SHOT_HULL
 		} )
 	end
 
