@@ -6,6 +6,8 @@ end
 
 function PANEL:Setup( vars )
 
+	vars = vars or {}
+
 	self:Clear()
 
 	local combo = vgui.Create( "DComboBox", self )
