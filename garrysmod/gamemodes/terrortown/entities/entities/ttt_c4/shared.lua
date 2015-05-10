@@ -358,6 +358,10 @@ function ENT:Think()
    end
 end
 
+function ENT:Defusable()
+	return self:GetArmed()
+end
+
 -- Timer configuration handlign
 
 if SERVER then
