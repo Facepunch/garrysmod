@@ -356,41 +356,56 @@ function table.ForceInsert( t, v )
 end
 
 --[[---------------------------------------------------------
-	Name: table.SortByMember( table )
-	Desc: Sorts table by named member
+   Name: table.SortByMember( table )
+   Desc: Sorts table by named member. All values being sorted must have the same datatype.
 -----------------------------------------------------------]]
 function table.SortByMember( Table, MemberName, bAsc )
 
-	local TableMemberSort = function( a, b, MemberName, bReverse ) 
-
+	local function TableMemberSort( a, b )
+	
 		--
-		-- All this error checking kind of sucks, but really is needed
+		-- Swap the tables if we are sorting in ascending order
 		--
-		if ( !istable( a ) ) then return !bReverse end
-		if ( !istable( b ) ) then return bReverse end
-		if ( !a[ MemberName ] ) then return !bReverse end
-		if ( !b[ MemberName ] ) then return bReverse end
+		if bAsc then
 
-		if ( type( a[ MemberName ] ) == "string" ) then
-
-			if ( bReverse ) then
-				return a[ MemberName ]:lower() < b[ MemberName ]:lower()
-			else
-				return a[ MemberName ]:lower() > b[ MemberName ]:lower()
-			end
+			a, b = b, a
 
 		end
 
-		if ( bReverse ) then
-			return a[ MemberName ] < b[ MemberName ]
-		else
-			return a[ MemberName ] > b[ MemberName ]
+		--
+		-- Enforce both values as indexable with the targetted member
+		--
+		if ( !util.IsIndexable( a ) or !a[MemberName] ) then return false end
+		if ( !util.IsIndexable( b ) or !b[MemberName] ) then return true end
+
+		local aVal, bVal = a[MemberName], b[MemberName]
+
+		--
+		-- If the member is a method, call them and sort using the method's result
+		--
+		if ( isfunction( aVal ) ) then
+
+			aVal, bVal = aVal( a ), bVal( b )
+
 		end
 
+		--
+		-- Force strings to be lowercase
+		--
+		if ( isstring( aVal ) ) then
+
+			aVal, bVal = aVal:lower(), bVal:lower()
+
+		end	
+
+		return aVal > bVal
+		
 	end
 
-	table.sort( Table, function( a, b ) return TableMemberSort( a, b, MemberName, bAsc or false ) end )
+	table.sort( Table, TableMemberSort )
 
+	return Table
+	
 end
 
 --[[---------------------------------------------------------
