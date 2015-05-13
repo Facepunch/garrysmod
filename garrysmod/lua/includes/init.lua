@@ -34,6 +34,7 @@ require ( "net" )
 require ( "properties" )
 require ( "widget" )
 require ( "cookie" )
+require ( "utf8" )
 
 require ( "drive" )
 include ( "drive/drive_base.lua" )
