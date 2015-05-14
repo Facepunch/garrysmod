@@ -103,10 +103,12 @@ function SWEP:Reset(keep_velocity)
    end
 
    if IsValid(self.EntHolding) then
-      if not IsValid(self.PrevOwner) then
-         self.EntHolding:SetOwner(nil)
-      else
-         self.EntHolding:SetOwner(self.PrevOwner)
+      if not self.EntHolding:IsWeapon() then
+         if not IsValid(self.PrevOwner) then
+            self.EntHolding:SetOwner(nil)
+         else
+            self.EntHolding:SetOwner(self.PrevOwner)
+         end
       end
 
       -- the below ought to be unified with self:Drop()
