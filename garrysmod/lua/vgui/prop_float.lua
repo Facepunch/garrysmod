@@ -61,7 +61,7 @@ function PANEL:Setup( vars )
 	self.Paint = function()
 
 		-- PERFORMANCE !!!
-		ctrl.Slider:SetVisible( self:IsEditing() || self:GetRow():IsChildHovered( 6 ) )
+		ctrl.Slider:SetVisible( self:IsEditing() || self:GetRow():IsChildHovered() )
 
 	end
 

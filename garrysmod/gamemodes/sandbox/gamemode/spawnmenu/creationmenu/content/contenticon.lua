@@ -117,7 +117,7 @@ function PANEL:Paint( w, h )
 
 	surface.SetDrawColor( 255, 255, 255, 255 )
 	
-	if ( !dragndrop.IsDragging() && (self:IsHovered() || self:IsChildHovered( 2 )) ) then
+	if ( !dragndrop.IsDragging() && (self:IsHovered() || self:IsChildHovered()) ) then
 
 		surface.SetMaterial( matOverlay_Hovered )
 		self.Label:Hide()
