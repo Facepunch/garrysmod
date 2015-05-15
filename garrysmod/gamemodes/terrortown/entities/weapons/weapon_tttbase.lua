@@ -140,8 +140,8 @@ if CLIENT then
 
       local sights = (not self.NoSights) and self:GetIronsights()
 
-      local x = ScrW() / 2.0
-      local y = ScrH() / 2.0
+      local x = math.floor(ScrW() / 2.0)
+      local y = math.floor(ScrH() / 2.0)
       local scale = math.max(0.2,  10 * self:GetPrimaryCone())
 
       local LastShootTime = self:LastShootTime()
@@ -164,8 +164,8 @@ if CLIENT then
                               255 * alpha)
       end
 
-      local gap = 20 * scale * (sights and 0.8 or 1)
-      local length = gap + (25 * crosshair_size:GetFloat()) * scale
+      local gap = math.floor(20 * scale * (sights and 0.8 or 1))
+      local length = math.floor(gap + (25 * crosshair_size:GetFloat()) * scale)
       surface.DrawLine( x - length, y, x - gap, y )
       surface.DrawLine( x + length, y, x + gap, y )
       surface.DrawLine( x, y - length, x, y - gap )
