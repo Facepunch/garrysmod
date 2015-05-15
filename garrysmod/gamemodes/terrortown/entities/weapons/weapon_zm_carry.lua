@@ -103,6 +103,8 @@ function SWEP:Reset(keep_velocity)
    end
 
    if IsValid(self.EntHolding) then
+      -- it is possible for weapons to be already equipped at this point
+      -- changing the owner in such a case would cause problems
       if not self.EntHolding:IsWeapon() then
          if not IsValid(self.PrevOwner) then
             self.EntHolding:SetOwner(nil)
@@ -372,9 +374,12 @@ function SWEP:Pickup()
 
          -- if we already are owner before pickup, we will not want to disown
          -- this entity when we drop it
-         self.PrevOwner = self.EntHolding:GetOwner()
+         -- weapons should not have their owner changed in this way
+         if not self.EntHolding:IsWeapon() then
+            self.PrevOwner = self.EntHolding:GetOwner()
 
-         self.EntHolding:SetOwner(ply)
+            self.EntHolding:SetOwner(ply)
+         end
 
          local phys = self.CarryHack:GetPhysicsObject()
          if IsValid(phys) then
