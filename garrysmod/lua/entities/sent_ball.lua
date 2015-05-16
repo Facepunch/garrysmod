@@ -9,6 +9,8 @@ ENT.PrintName		= "Bouncy Ball"
 ENT.Author			= "Garry Newman"
 ENT.Information		= "An edible bouncy ball"
 ENT.Category		= "Fun + Games"
+ENT.MinSize			= 4
+ENT.MaxSize		= 128
 
 ENT.Editable		= true
 ENT.Spawnable		= true
@@ -17,7 +19,7 @@ ENT.RenderGroup		= RENDERGROUP_TRANSLUCENT
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Float", 0, "BallSize", { KeyName = "ballsize", Edit = { type = "Float", min = 4, max = 128, order = 1 } } )
+	self:NetworkVar( "Float", 0, "BallSize", { KeyName = "ballsize", Edit = { type = "Float", min = self.MinSize, max = self.MaxSize, order = 1 } } )
 	self:NetworkVar( "Vector", 0, "BallColor", { KeyName = "ballcolor", Edit = { type = "VectorColor", order = 2 } } )
 
 end
@@ -52,7 +54,7 @@ function ENT:Initialize()
 
 	if ( SERVER ) then
 
-		local size = self:GetBallSize() / 2
+		local size = math.Clamp( self:GetBallSize(), self.MinSize, self.MaxSize ) / 2
 	
 		-- Use the helibomb model just for the shadow (because it's about the same size)
 		self:SetModel( "models/Combine_Helicopter/helicopter_bomb01.mdl" )
@@ -95,7 +97,7 @@ function ENT:OnBallSizeChanged( varname, oldvalue, newvalue )
 
 	local delta = oldvalue - newvalue
 
-	local size = self:GetBallSize() / 2.1
+	local size = math.Clamp( self:GetBallSize(), self.MinSize, self.MaxSize ) / 2.1
 	self:PhysicsInitSphere( size, "metal_bouncy" )
 	
 	size = self:GetBallSize() / 2.6
