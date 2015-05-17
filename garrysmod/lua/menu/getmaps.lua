@@ -161,7 +161,6 @@ local function UpdateMapPatterns()
 	MapPatterns[ "^gmt_" ] = "GMod Tower"
 	MapPatterns[ "^jb_" ] = "Jailbreak"
 	MapPatterns[ "^ba_jail_" ] = "Jailbreak"
-	MapPatterns[ "^ba_" ] = "Jailbreak"
 	MapPatterns[ "^jail_" ] = "Jailbreak"
 	MapPatterns[ "^mg_" ] = "Minigames"
 	MapPatterns[ "^phys_" ] = "Physics Maps"
