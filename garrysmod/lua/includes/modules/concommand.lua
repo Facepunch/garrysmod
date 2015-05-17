@@ -47,7 +47,11 @@ end
    Desc: Called by the engine when an unknown console command is run
 -----------------------------------------------------------]]
 function Run( player, command, arguments, args )
-
+	
+	if ( command == nil ) then
+		return false
+	end
+	
 	local LowerCommand = string.lower( command )
 
 	if ( CommandList[ LowerCommand ] != nil ) then
