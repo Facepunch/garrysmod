@@ -157,9 +157,12 @@ local function UpdateMapPatterns()
 	MapPatterns[ "^xc_" ] = "Climb"
 	MapPatterns[ "^deathrun_" ] = "Deathrun"
 	MapPatterns[ "^dr_" ] = "Deathrun"
+	MapPatterns[ "^fm_" ] = "Flood"
 	MapPatterns[ "^gmt_" ] = "GMod Tower"
 	MapPatterns[ "^jb_" ] = "Jailbreak"
 	MapPatterns[ "^ba_jail_" ] = "Jailbreak"
+	MapPatterns[ "^ba_" ] = "Jailbreak"
+	MapPatterns[ "^jail_" ] = "Jailbreak"
 	MapPatterns[ "^mg_" ] = "Minigames"
 	MapPatterns[ "^phys_" ] = "Physics Maps"
 	MapPatterns[ "^pw_" ] = "Pirate Ship Wars"
@@ -182,13 +185,13 @@ local function UpdateMapPatterns()
 		local Maps = string.Split( gm.maps, "|" )
 
 		if ( Maps && gm.maps != "" ) then
-	
+
 			for k, pattern in pairs( Maps ) do
 				MapPatterns[ pattern ] = Name
 			end
 
 		end
-	
+
 	end
 
 end
@@ -227,14 +230,14 @@ local function RefreshMaps()
 				Ignore = true
 			end
 		end
-		
+
 		-- Don't add useless maps
 		if ( Ignore ) then continue end
-		
+
 		local Category = "Other"
 		local name = string.gsub( v, "%.bsp$", "" )
 		local lowername = string.lower( v )
-		
+
 		for pattern, category in pairs( MapPatterns ) do
 			if ( ( string.StartWith( pattern, "^" ) || string.EndsWith( pattern, "_" ) || string.EndsWith( pattern, "-" ) ) && string.find( lowername, pattern ) ) then
 				Category = category
@@ -242,7 +245,7 @@ local function RefreshMaps()
 		end
 
 		if ( MapPatterns[ name ] ) then Category = MapPatterns[ name ] end
-		
+
 		if ( table.HasValue( favmaps, name ) ) then
 			-- Hackity hack
 			g_MapList[ v .. " " ] = { Name = name, Category = "Favourites" }
@@ -257,7 +260,7 @@ local function RefreshMaps()
 				end
 			end
 		end
-		
+
 		g_MapList[ v ] = { Name = name, Category = Category }
 
 	end
@@ -286,19 +289,19 @@ end )
 function ToggleFavourite( map )
 
 	LoadFavourites()
-	
+
 	if ( table.HasValue( favmaps, map ) ) then -- is favourite, remove it
 		table.remove( favmaps, table.KeysFromValue( favmaps, map )[1] )
 	else -- not favourite, add it
 		table.insert( favmaps, map )
 	end
-	
+
 	cookie.Set( "favmaps", table.concat( favmaps, ";" ) )
-	
+
 	RefreshMaps()
-	
+
 	UpdateMapList()
-	
+
 end
 
 function SaveLastMap( map, cat )
@@ -306,7 +309,7 @@ function SaveLastMap( map, cat )
 	local t = string.Explode( ";", cookie.GetString( "lastmap", "" ) )
 	if ( !map ) then map = t[ 1 ] or "" end
 	if ( !cat ) then cat = t[ 2 ] or "" end
-	
+
 	cookie.Set( "lastmap", map .. ";" .. cat )
 
 end
