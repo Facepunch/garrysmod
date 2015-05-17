@@ -17,7 +17,7 @@ WSWITCH.cv = {}
 WSWITCH.cv.stay = CreateConVar("ttt_weaponswitcher_stay", "0", FCVAR_ARCHIVE)
 WSWITCH.cv.fast = CreateConVar("ttt_weaponswitcher_fast", "0", FCVAR_ARCHIVE)
 
-local delay = 0.075
+local delay = 0.03
 local showtime = 3
 
 local margin = 10
