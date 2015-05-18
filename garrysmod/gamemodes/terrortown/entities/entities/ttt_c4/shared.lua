@@ -5,6 +5,25 @@ local math = math
 if SERVER then
    AddCSLuaFile("cl_init.lua")
    AddCSLuaFile("shared.lua")
+   
+   function ENT:SendBeepSound(pos, amp)
+      local in_range = {}
+      
+      for k,v in pairs(player.GetAll()) do
+         if v:GetShootPos():Distance(pos) < 1000 then
+            table.insert(in_range, v)
+         end
+      end
+      
+      if #in_range > 0 then
+         net.Start("TTT_C4Beep")
+            net.WriteVector(pos)
+            net.WriteFloat(amp)
+         net.Send(in_range)
+      end
+   end
+   
+   util.AddNetworkString("TTT_C4Beep")
 end
 
 if CLIENT then
@@ -20,6 +39,18 @@ if CLIENT then
       hint = "c4_hint",
       fmt  = function(ent, txt) return GetPTranslation(txt, hint_params) end
    };
+   
+   local beep = Sound("weapons/c4/c4_beep1.wav")
+   
+   local function ReceiveC4Beep(len)
+      local pos = net.ReadVector()
+      local amp = net.ReadFloat()
+      
+      if !pos or !amp then return end
+      
+      sound.Play(beep, pos, amp, 100)
+   end
+   net.Receive("TTT_C4Beep", ReceiveC4Beep)
 end
 
 C4_WIRE_COUNT   = 6
@@ -299,7 +330,7 @@ function ENT:IsDetectiveNear()
    return false
 end
 
-local beep = Sound("weapons/c4/c4_beep1.wav")
+//local beep = Sound("weapons/c4/c4_beep1.wav")
 local MAX_MOVE_RANGE = 1000000 -- sq of 1000
 function ENT:Think()
    if not self:GetArmed() then return end
@@ -350,16 +381,14 @@ function ENT:Think()
       end
 
       if SERVER then
-         sound.Play(beep, self:GetPos(), amp, 100)
+         -- send the sound manually to prevent culling
+         //sound.Play(beep, self:GetPos(), amp, 100)
+         self:SendBeepSound(self:GetPos(), amp)
       end
 
       local btime = (etime - CurTime()) / 30
       self.Beep = CurTime() + btime
    end
-end
-
-function ENT:Defusable()
-	return self:GetArmed()
 end
 
 -- Timer configuration handlign
