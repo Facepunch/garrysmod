@@ -369,6 +369,9 @@ function SWEP:Pickup()
          self.CarryHack:SetOwner(ply)
          self.CarryHack:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
          self.CarryHack:SetSolid(SOLID_NONE)
+         
+         -- set the desired angles before adding the constraint
+         self.CarryHack:SetAngles(self.Owner:GetAngles())
 
          self.CarryHack:Spawn()
 
