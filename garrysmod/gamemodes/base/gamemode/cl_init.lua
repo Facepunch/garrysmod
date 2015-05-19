@@ -177,8 +177,10 @@ end
 -----------------------------------------------------------]]
 function GM:OnChatTab( str )
 
+	str = string.TrimRight(str)
+	
 	local LastWord
-	for word in string.gmatch( str, "%a+" ) do
+	for word in string.gmatch( str, "[^ ]+" ) do
 		LastWord = word
 	end
 
