@@ -116,7 +116,7 @@
 			"name"		"ttt_credits_starting"
 			"text"		"Traitor Credits"
 			"type"		"Numeric"
-			"default"	"1"
+			"default"	"2"
 		}
 		
 		17
