@@ -246,6 +246,7 @@ function SWEP:PrimaryAttack(worldsnd)
    local owner = self.Owner
    if not IsValid(owner) or owner:IsNPC() or (not owner.ViewPunch) then return end
 
+   math.randomseed( self:Clip1() * self.Primary.Recoil * self.Primary.ClipSize )
    owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0 ) )
 end
 
