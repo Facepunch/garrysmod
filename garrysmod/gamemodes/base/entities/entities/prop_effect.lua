@@ -33,7 +33,7 @@ function ENT:Initialize()
 		self.AttachedEntity:Spawn()
 		self.AttachedEntity:SetParent( self.Entity )
 		self.AttachedEntity:DrawShadow( false )
-
+		
 		self:SetModel( "models/props_junk/watermelon01.mdl" )
 	
 		self:DeleteOnRemove( self.AttachedEntity )
@@ -60,6 +60,10 @@ function ENT:Initialize()
 		self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 
 	else
+
+		-- Get the attached entity so that clientside functions like properties can interact with it
+		local tab = ents.FindByClassAndParent( "prop_dynamic", self )
+		if ( tab ) and ( IsValid( tab[ 1 ] ) ) then self.AttachedEntity = tab[ 1 ] end
 
 		self.GripMaterial = Material( "sprites/grip" )
 		self:SetCollisionBounds( Vector( -Radius, -Radius, -Radius ), Vector( Radius, Radius, Radius ) )
@@ -125,5 +129,95 @@ function ENT:OnEntityCopyTableFinish( tab )
 	-- We need to store the model of the attached entity
 	-- Not the one we have here.
 	tab.Model = self.AttachedEntity:GetModel()
+
+
+	-- Store the attached entity's modifiers, bodygroups, and bone manipulations so we can reapply them after being pasted
+	if ( self.AttachedEntity.EntityMods ) then
+
+		tab.AttachedEntityMods = table.Copy( self.AttachedEntity.EntityMods )
+
+	end
+
+	local bg = self.AttachedEntity:GetBodyGroups()
+	if ( bg ) then
+
+		for k, v in pairs( bg ) do
+		
+			if ( self.AttachedEntity:GetBodygroup( v.id ) > 0 ) then
+	
+				tab.AttachedEntityBodygroups = tab.AttachedEntityBodygroups or {}
+				tab.AttachedEntityBodygroups[ v.id ] = self.AttachedEntity:GetBodygroup( v.id )
+	
+			end
+		
+		end
+
+	end
+
+	if ( self.AttachedEntity:HasBoneManipulations() ) then
+	
+		tab.AttachedEntityBoneManip = {}
+	
+		for i=0, self.AttachedEntity:GetBoneCount() do
+		
+			local t = {}
+			
+			local s = self.AttachedEntity:GetManipulateBoneScale( i )
+			local a = self.AttachedEntity:GetManipulateBoneAngles( i )
+			local p = self.AttachedEntity:GetManipulateBonePosition( i )
+			
+			if ( s != Vector( 1, 1, 1 ) ) then t[ 's' ] = s end -- scale
+			if ( a != Angle( 0, 0, 0 ) ) then t[ 'a' ] = a end -- angle
+			if ( p != Vector( 0, 0, 0 ) ) then t[ 'p' ] = p end -- position
+		
+			if ( table.Count( t ) > 0 ) then
+				tab.AttachedEntityBoneManip[ i ] = t
+			end
+		
+		end
+	
+	end
+
+
+	-- Do NOT store the attached entity itself in our table!
+	-- Otherwise, if we copy-paste the prop with the duplicator, its AttachedEntity value will point towards the original prop's attached entity instead, and that'll break stuff
+	tab.AttachedEntity = nil
+
+end
+
+
+--[[---------------------------------------------------------
+   Name: PostEntityPaste
+-----------------------------------------------------------]]
+function ENT:PostEntityPaste( ply )
+
+	-- If we have any stored entity modifiers, bodygroups, or bone manipulations for our attached entity, then reapply them
+	if IsValid( self.AttachedEntity ) then
+
+		if ( self.AttachedEntityMods ) then
+
+			self.AttachedEntity.EntityMods = table.Copy( self.AttachedEntityMods )
+			duplicator.ApplyEntityModifiers( ply, self.AttachedEntity )
+			self.AttachedEntityMods = nil
+	
+		end
+
+		if ( self.AttachedEntityBodygroups ) then
+
+			for k, v in pairs( self.AttachedEntityBodygroups ) do
+				self.AttachedEntity:SetBodygroup( k, v )
+			end
+			self.AttachedEntityBodygroups = nil
+
+		end
+
+		if ( self.AttachedEntityBoneManip ) then
+
+			duplicator.DoBoneManipulator( self.AttachedEntity, self.AttachedEntityBoneManip )
+			self.AttachedEntityBoneManip = nil
+
+		end
+
+	end
 
 end
