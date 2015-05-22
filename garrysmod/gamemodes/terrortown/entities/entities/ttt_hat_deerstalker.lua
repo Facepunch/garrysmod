@@ -5,6 +5,8 @@ ENT.Type = "anim"
 ENT.Base = "base_anim"
 
 ENT.Model = Model("models/ttt/deerstalker.mdl")
+ENT.CanHavePrints = false
+ENT.CanUseKey = true
 
 AccessorFuncDT(ENT, "worn", "BeingWorn")
 
@@ -33,6 +35,8 @@ function ENT:Initialize()
 end
 
 if SERVER then
+   local ttt_hats_reclaim = CreateConVar("ttt_detective_hats_reclaim", "1")
+
    function ENT:OnRemove()
       self:SetBeingWorn(false)
    end
@@ -44,6 +48,7 @@ if SERVER then
       self:SetParent(nil)
 
       self:SetBeingWorn(false)
+      self:SetUseType(SIMPLE_USE)
 
       -- only now physics this entity
       self:PhysicsInit(SOLID_VPHYSICS)
@@ -84,6 +89,32 @@ if SERVER then
 
          phys:Wake()
       end
+   end
+
+   function ENT:UseOverride( ply )
+      if !IsValid(ply) or ply:IsSpec() or self:GetBeingWorn() then return end
+
+      if GetRoundState() != ROUND_ACTIVE then
+         SafeRemoveEntity(self)
+         return
+      elseif ply:GetRole() != ROLE_DETECTIVE or IsValid(ply.hat) then
+         return
+      end
+
+      sound.Play("weapon.ImpactSoft", self:GetPos(), 75, 100, 1)
+
+      self:SetMoveType(MOVETYPE_NONE)
+      self:SetSolid(SOLID_NONE)
+      self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+
+      self:SetParent(ply)
+      self.Wearer = ply
+
+      ply.hat = self.Entity
+
+      self:SetBeingWorn(true)
+
+      //LANG.Msg(activator, "hat_retrieve")
    end
 
    local function TestHat(ply, cmd, args)
