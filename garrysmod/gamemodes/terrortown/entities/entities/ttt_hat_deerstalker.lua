@@ -115,7 +115,7 @@ if SERVER then
    
          self:SetBeingWorn(true)
    
-         //LANG.Msg(activator, "hat_retrieve")
+         LANG.Msg(activator, "hat_retrieve")
       end
    end
 
