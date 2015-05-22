@@ -92,29 +92,31 @@ if SERVER then
    end
 
    function ENT:UseOverride( ply )
-      if !IsValid(ply) or ply:IsSpec() or self:GetBeingWorn() then return end
-
-      if GetRoundState() != ROUND_ACTIVE then
-         SafeRemoveEntity(self)
-         return
-      elseif ply:GetRole() != ROLE_DETECTIVE or IsValid(ply.hat) then
-         return
+      if not ttt_hats_reclaim:GetBool() then return end
+      
+      if IsValid(ply) and not self:GetBeingWorn() then
+         if GetRoundState() != ROUND_ACTIVE then
+            SafeRemoveEntity(self)
+            return
+         elseif ply:GetRole() != ROLE_DETECTIVE or IsValid(ply.hat) then
+            return
+         end
+   
+         sound.Play("weapon.ImpactSoft", self:GetPos(), 75, 100, 1)
+   
+         self:SetMoveType(MOVETYPE_NONE)
+         self:SetSolid(SOLID_NONE)
+         self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+   
+         self:SetParent(ply)
+         self.Wearer = ply
+   
+         ply.hat = self.Entity
+   
+         self:SetBeingWorn(true)
+   
+         //LANG.Msg(activator, "hat_retrieve")
       end
-
-      sound.Play("weapon.ImpactSoft", self:GetPos(), 75, 100, 1)
-
-      self:SetMoveType(MOVETYPE_NONE)
-      self:SetSolid(SOLID_NONE)
-      self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-
-      self:SetParent(ply)
-      self.Wearer = ply
-
-      ply.hat = self.Entity
-
-      self:SetBeingWorn(true)
-
-      //LANG.Msg(activator, "hat_retrieve")
    end
 
    local function TestHat(ply, cmd, args)
