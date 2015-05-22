@@ -36,6 +36,7 @@ end
 
 if SERVER then
    local ttt_hats_reclaim = CreateConVar("ttt_detective_hats_reclaim", "1")
+   local ttt_hats_innocent = CreateConVar("ttt_detective_hats_reclaim_any", "0")
 
    function ENT:OnRemove()
       self:SetBeingWorn(false)
@@ -91,14 +92,19 @@ if SERVER then
       end
    end
 
-   function ENT:UseOverride( ply )
+   local function CanEquipHat(ply)
+      return not IsValid(ply.hat) and
+         (ttt_hats_innocent:GetBool() or ply:GetRole() == ROLE_DETECTIVE)
+   end
+
+   function ENT:UseOverride(ply)
       if not ttt_hats_reclaim:GetBool() then return end
       
       if IsValid(ply) and not self:GetBeingWorn() then
          if GetRoundState() != ROUND_ACTIVE then
             SafeRemoveEntity(self)
             return
-         elseif ply:GetRole() != ROLE_DETECTIVE or IsValid(ply.hat) then
+         elseif not CanEquipHat(ply) then
             return
          end
    
