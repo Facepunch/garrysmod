@@ -9,6 +9,7 @@ properties.Add( "bone_manipulate", {
 	Filter = function( self, ent, ply ) 
 	
 		if ( !gamemode.Call( "CanProperty", ply, "bonemanipulate", ent ) ) then return false end
+		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end  -- If our ent has an attached entity, we want to use and modify its bones instead
 
 		local bonecount = ent:GetBoneCount()
 		if ( !bonecount || bonecount <= 1 ) then return false end
@@ -17,6 +18,8 @@ properties.Add( "bone_manipulate", {
 	end,
 
 	Action = function( self, ent )
+
+		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
 	
 		self:MsgStart()
 			net.WriteEntity( ent )
@@ -72,11 +75,15 @@ properties.Add( "bone_manipulate_end", {
 
 	Filter = function( self, ent ) 
 
+		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end  -- If our ent has an attached entity, we want to use and modify its bones instead
+
 		return ents.FindByClassAndParent( "widget_bones", ent ) != nil
 
 	end,
 
 	Action = function( self, ent )
+
+		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
 
 		self:MsgStart()
 			net.WriteEntity( ent )
