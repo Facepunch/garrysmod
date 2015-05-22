@@ -33,7 +33,7 @@ function ENT:Initialize()
 		self.AttachedEntity:Spawn()
 		self.AttachedEntity:SetParent( self.Entity )
 		self.AttachedEntity:DrawShadow( false )
-		
+
 		self:SetModel( "models/props_junk/watermelon01.mdl" )
 	
 		self:DeleteOnRemove( self.AttachedEntity )
