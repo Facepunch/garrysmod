@@ -11,6 +11,7 @@ properties.Add( "skin", {
 		if ( !IsValid( ent ) ) then return false end
 		if ( ent:IsPlayer() ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "skin", ent ) ) then return false end
+		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end  -- If our ent has an attached entity, we want to modify its skin instead
 		if ( !ent:SkinCount() ) then return false end
 
 		return ent:SkinCount() > 1
@@ -28,7 +29,8 @@ properties.Add( "skin", {
 		--
 		-- Create a check item for each skin
 		--
-		local num = ent:SkinCount();
+		local num = ent:SkinCount()
+		if ( IsValid( ent.AttachedEntity ) ) then num = ent.AttachedEntity:SkinCount() end
 
 		for i=0, num-1 do
 
@@ -44,7 +46,7 @@ properties.Add( "skin", {
 
 	Action = function( self, ent )
 
-		-- Nothing - we use SetBodyGroup below
+		-- Nothing - we use SetSkin below
 		
 	end,
 
@@ -65,6 +67,7 @@ properties.Add( "skin", {
 		if ( !self:Filter( ent, player ) ) then return end
 
 		ent:SetSkin( skinid )
+		if ( IsValid( ent.AttachedEntity ) ) then ent.AttachedEntity:SetSkin( skinid ) end
 		
 	end	
 
