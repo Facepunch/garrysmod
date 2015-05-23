@@ -130,54 +130,8 @@ function ENT:OnEntityCopyTableFinish( tab )
 	-- Not the one we have here.
 	tab.Model = self.AttachedEntity:GetModel()
 
-
-	-- Store the attached entity's modifiers, bodygroups, and bone manipulations so we can reapply them after being pasted
-	if ( self.AttachedEntity.EntityMods ) then
-
-		tab.AttachedEntityMods = table.Copy( self.AttachedEntity.EntityMods )
-
-	end
-
-	local bg = self.AttachedEntity:GetBodyGroups()
-	if ( bg ) then
-
-		for k, v in pairs( bg ) do
-		
-			if ( self.AttachedEntity:GetBodygroup( v.id ) > 0 ) then
-	
-				tab.AttachedEntityBodygroups = tab.AttachedEntityBodygroups or {}
-				tab.AttachedEntityBodygroups[ v.id ] = self.AttachedEntity:GetBodygroup( v.id )
-	
-			end
-		
-		end
-
-	end
-
-	if ( self.AttachedEntity:HasBoneManipulations() ) then
-	
-		tab.AttachedEntityBoneManip = {}
-	
-		for i=0, self.AttachedEntity:GetBoneCount() do
-		
-			local t = {}
-			
-			local s = self.AttachedEntity:GetManipulateBoneScale( i )
-			local a = self.AttachedEntity:GetManipulateBoneAngles( i )
-			local p = self.AttachedEntity:GetManipulateBonePosition( i )
-			
-			if ( s != Vector( 1, 1, 1 ) ) then t[ 's' ] = s end -- scale
-			if ( a != Angle( 0, 0, 0 ) ) then t[ 'a' ] = a end -- angle
-			if ( p != Vector( 0, 0, 0 ) ) then t[ 'p' ] = p end -- position
-		
-			if ( table.Count( t ) > 0 ) then
-				tab.AttachedEntityBoneManip[ i ] = t
-			end
-		
-		end
-	
-	end
-
+	-- Store the attached entity's table so we can restore it after being pasted
+	tab.AttachedEntityInfo = table.Copy( duplicator.CopyEntTable(self.AttachedEntity) )
 
 	-- Do NOT store the attached entity itself in our table!
 	-- Otherwise, if we copy-paste the prop with the duplicator, its AttachedEntity value will point towards the original prop's attached entity instead, and that'll break stuff
@@ -191,32 +145,31 @@ end
 -----------------------------------------------------------]]
 function ENT:PostEntityPaste( ply )
 
-	-- If we have any stored entity modifiers, bodygroups, or bone manipulations for our attached entity, then reapply them
-	if IsValid( self.AttachedEntity ) then
+	-- Restore the attached entity using the information we've saved
+	if ( IsValid( self.AttachedEntity ) ) and ( self.AttachedEntityInfo ) then
 
-		if ( self.AttachedEntityMods ) then
+		if ( self.AttachedEntityInfo.EntityMods ) then
 
-			self.AttachedEntity.EntityMods = table.Copy( self.AttachedEntityMods )
+			self.AttachedEntity.EntityMods = table.Copy( self.AttachedEntityInfo.EntityMods )
 			duplicator.ApplyEntityModifiers( ply, self.AttachedEntity )
-			self.AttachedEntityMods = nil
 	
 		end
 
-		if ( self.AttachedEntityBodygroups ) then
+		if ( self.AttachedEntityInfo.BodyG ) then
 
-			for k, v in pairs( self.AttachedEntityBodygroups ) do
+			for k, v in pairs( self.AttachedEntityInfo.BodyG ) do
 				self.AttachedEntity:SetBodygroup( k, v )
 			end
-			self.AttachedEntityBodygroups = nil
 
 		end
 
-		if ( self.AttachedEntityBoneManip ) then
+		if ( self.AttachedEntityInfo.BoneManip ) then
 
-			duplicator.DoBoneManipulator( self.AttachedEntity, self.AttachedEntityBoneManip )
-			self.AttachedEntityBoneManip = nil
+			duplicator.DoBoneManipulator( self.AttachedEntity, self.AttachedEntityInfo.BoneManip )
 
 		end
+
+		self.AttachedEntityInfo = nil
 
 	end
 
