@@ -1060,3 +1060,6 @@ L.drop_no_ammo = "Munição insuficiente para jogar no chão como uma caixa de m
 --- v31
 L.set_cross_brightness = "Brilho da mira"
 L.set_cross_size = "Tamanho da mira"
+
+--- 5-25-15
+L.hat_retrieve = "Você pegou o chapéu de um detetive."
