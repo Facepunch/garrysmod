@@ -50,7 +50,7 @@ L.body_found_t     = "Er war ein Verräter!"
 L.body_found_d     = "Er war ein Detektiv."
 L.body_found_i     = "Er war unschuldig."
 
-L.body_confirm     = "{finder} bestätigt den Tod von {victim}."
+L.body_confirm     = "{finder} bestätigte den Tod von {victim}."
 
 L.body_call        = "{player} rief einen Detektiv zum Körper von {victim}!"
 L.body_call_error  = "Du musst erst den Tod dieses Spielers bestätigen, bevor du einen Detektiv rufen kannst!"
