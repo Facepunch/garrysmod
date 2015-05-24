@@ -1059,3 +1059,6 @@ L.drop_no_ammo = "Insufficient ammo in your weapon's clip to drop as an ammo box
 --- v31
 L.set_cross_brightness = "Crosshair brightness"
 L.set_cross_size = "Crosshair size"
+
+--- v?? (05-22-15:m-d-y)
+L.hat_retrieve = "You picked up a Detective's hat."
