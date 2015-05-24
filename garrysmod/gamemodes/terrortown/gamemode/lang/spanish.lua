@@ -1068,3 +1068,6 @@ L.drop_no_ammo = "No tienes munición suficiente como para soltar una caja de mu
 --- v31
 L.set_cross_brightness = "Luminosidad de la mira"
 L.set_cross_size = "Tamaño de la mira"
+
+-- 5-25-15
+L.hat_retrieve = "Recogiste el sombrero de un detective."
