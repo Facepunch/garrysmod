@@ -1,6 +1,6 @@
 ---- German language strings
 
-local L = LANG.CreateLanguage("German")
+local L = LANG.CreateLanguage("Deutsch")
 
 --- General text used in various places
 L.traitor    = "Verräter"
@@ -1045,3 +1045,6 @@ L.drop_no_ammo = "Du hast nicht genug Munition im Magazin, um eine Munitionskist
 --- v31
 L.set_cross_brightness = "Fadenkreuz Helligkeit"
 L.set_cross_size = "Fadenkreuz Größe"
+
+-- 5-25-15
+L.hat_retrieve = "Sie nahm den hut eines Detektiv."
