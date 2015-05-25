@@ -330,7 +330,6 @@ function ENT:IsDetectiveNear()
    return false
 end
 
-//local beep = Sound("weapons/c4/c4_beep1.wav")
 local MAX_MOVE_RANGE = 1000000 -- sq of 1000
 function ENT:Think()
    if not self:GetArmed() then return end
@@ -382,7 +381,6 @@ function ENT:Think()
 
       if SERVER then
          -- send the sound manually to prevent culling
-         //sound.Play(beep, self:GetPos(), amp, 100)
          self:SendBeepSound(self:GetPos(), amp)
       end
 
