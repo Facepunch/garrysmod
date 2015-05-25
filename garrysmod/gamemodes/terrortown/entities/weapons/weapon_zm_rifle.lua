@@ -78,11 +78,6 @@ function SWEP:SecondaryAttack()
    self:SetNextSecondaryFire( CurTime() + 0.3)
 end
 
-function SWEP:GetPrimaryCone()
-   -- we should be perfectly accurate while zooming
-   return self:GetIronsights() and 0 or self.Primary.Cone
-end
-
 function SWEP:PreDrop()
    self:SetZoom(false)
    self:SetIronsights(false)
