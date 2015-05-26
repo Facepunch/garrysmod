@@ -1077,3 +1077,6 @@ L.drop_no_ammo = "Otillräcklig ammunition i vapnets klipp att släppa som en am
 --- v31
 L.set_cross_brightness = "Hårkors ljushet"
 L.set_cross_size = "Hårkors storlek"
+
+-- 5-25-15
+L.hat_retrieve = "Du plockade upp hatten av en detektiv."
