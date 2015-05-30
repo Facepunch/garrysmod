@@ -30,8 +30,12 @@ function Add( name, tab )
 	name = name:lower()
 	tab.InternalName = name	
 	setmetatable( tab, meta )
-	
+
 	List[ name ] = tab
+
+	if ( SERVER ) then
+		util.AddNetworkString( name )
+	end
 
 end
 
