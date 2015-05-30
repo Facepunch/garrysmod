@@ -32,10 +32,6 @@ function Add( name, tab )
 	setmetatable( tab, meta )
 	
 	List[ name ] = tab
-	
-	if ( SERVER ) then
-		util.AddNetworkString( name )
-	end
 
 end
 
