@@ -1047,4 +1047,4 @@ L.set_cross_brightness = "Fadenkreuz Helligkeit"
 L.set_cross_size = "Fadenkreuz Größe"
 
 -- 5-25-15
-L.hat_retrieve = "Sie nahm den hut eines Detektiv."
+L.hat_retrieve = "Du hast den Hut eines Detektivs aufgehoben."
