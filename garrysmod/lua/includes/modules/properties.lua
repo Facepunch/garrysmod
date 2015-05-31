@@ -5,7 +5,7 @@ local meta = {
 	MsgStart = function( self )
 	
 		net.Start( "properties" )
-		net.WriteUInt( util.NetworkStringToID( self.InternalName ), 32 )
+		net.WriteString( self.InternalName )
 	
 	end,
 	
@@ -32,10 +32,6 @@ function Add( name, tab )
 	setmetatable( tab, meta )
 
 	List[ name ] = tab
-
-	if ( SERVER ) then
-		util.AddNetworkString( name )
-	end
 
 end
 
@@ -129,8 +125,7 @@ if ( SERVER ) then
 
 	net.Receive( "properties", function( len, client )
 	
-		local i = net.ReadUInt( 32 )
-		local name = util.NetworkIDToString( i )
+		local name = net.ReadString()
 
 		if ( !name ) then return end
 		if ( !IsValid( client ) ) then return end
