@@ -26,8 +26,10 @@ AccessorFunc( PANEL, "m_bDisableTabbing", 	"TabbingDisabled", 	FORCE_BOOL )
 AccessorFunc( PANEL, "m_FontName", 			"Font" )
 AccessorFunc( PANEL, "m_bBorder", 			"DrawBorder" )
 AccessorFunc( PANEL, "m_bBackground", 		"DrawBackground" )
+AccessorFunc( PANEL, "m_sHelpText", 		"HelpText" )
 
 AccessorFunc( PANEL, "m_colText", 			"TextColor" )
+AccessorFunc( PANEL, "m_colHelpText", 		"HelpTextColor" )
 AccessorFunc( PANEL, "m_colHighlight", 		"HighlightColor" )
 AccessorFunc( PANEL, "m_colCursor", 		"CursorColor" )
 
@@ -80,6 +82,8 @@ function PANEL:Init()
 	derma.SkinHook( "Scheme", "TextEntry", self )
 
 	self:SetFont( "DermaDefault" )
+	self:SetHelpText( "" )
+	self:SetHelpTextColor( Color( 100, 100, 100 ) )
 
 end
 
@@ -278,6 +282,20 @@ end
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "TextEntry", self, w, h )
+	
+	if ( self:GetText() == "" ) and not ( self:IsMultiline() or self:IsEditing() or ( self:GetHelpText() == "" ) ) then
+		
+		local text   = self:GetHelpText()
+		local tw, th = surface.GetTextSize( text )
+		local color  = self:GetHelpTextColor()
+		
+		surface.SetFont( self:GetFont() )
+		surface.SetTextColor( color.r, color.g, color.b, color.a )
+		surface.SetTextPos( 3, 1 + h / 2 - th / 2 )
+		surface.DrawText( text )
+		
+	end
+	
 	return false
 
 end
