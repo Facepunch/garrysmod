@@ -275,14 +275,7 @@ function PANEL:UpdateConvarValue()
 
 end
 
-
---[[---------------------------------------------------------
-	Paint
------------------------------------------------------------]]
-function PANEL:Paint( w, h )
-
-	derma.SkinHook( "Paint", "TextEntry", self, w, h )
-	
+function PANEL:PaintHelpText( w, h )
 	if ( self:GetText() == "" ) and not ( self:IsMultiline() or self:IsEditing() or ( self:GetHelpText() == "" ) ) then
 		
 		local text   = self:GetHelpText()
@@ -295,7 +288,15 @@ function PANEL:Paint( w, h )
 		surface.DrawText( text )
 		
 	end
-	
+end
+
+--[[---------------------------------------------------------
+	Paint
+-----------------------------------------------------------]]
+function PANEL:Paint( w, h )
+
+	derma.SkinHook( "Paint", "TextEntry", self, w, h )
+	self:PaintHelpText( w, h )
 	return false
 
 end
