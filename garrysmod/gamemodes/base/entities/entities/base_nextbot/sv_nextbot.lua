@@ -6,9 +6,8 @@
 --
 function ENT:BehaveStart()
 
-	local s = self
 	self.BehaveThread = coroutine.create( function() self:RunBehaviour() end )
-	
+
 end
 
 --
