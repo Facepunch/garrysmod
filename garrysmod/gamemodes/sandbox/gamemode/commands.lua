@@ -770,7 +770,7 @@ local function MakeVehicle( Player, Pos, Ang, Model, Class, VName, VTable, data 
 	Ent:Spawn()
 	Ent:Activate()
 
-	Ent:SetVehicleClass( VName )
+	if ( Ent.SetVehicleClass && VName ) then Ent:SetVehicleClass( VName ) end
 	Ent.VehicleName = VName
 	Ent.VehicleTable = VTable
 
