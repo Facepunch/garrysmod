@@ -132,24 +132,23 @@ function vgui.GetControlTable( name )
 	return PanelFactory[ name ]
 end
 
-function vgui.Create( classname, parent, name, ... )
+function vgui.Create( classname, parent, name, isderivedelement )
 
 	-- Is this a user-created panel?
 	if ( PanelFactory[ classname ] ) then
 	
 		local metatable = PanelFactory[ classname ]
 		
-		local panel = vgui.Create( metatable.Base, parent, name or classname )
+		local panel = vgui.Create( metatable.Base, parent, name or classname, true )
 		if ( !panel ) then
 			Error( "Tried to create panel with invalid base '"..metatable.Base.."'\n" );
 		end
 
 		table.Merge( panel:GetTable(), metatable )
-		panel.BaseClass = PanelFactory[ metatable.Base ]
 		panel.ClassName = classname
 		
-		-- Call the Init function if we have it
-		if ( panel.Init ) then
+		-- Call the Init function if we have it and we're not derived (childmost)
+		if ( panel.Init and !isderivedelement ) then
 			panel:Init()	
 		end
 			
@@ -168,10 +167,9 @@ function vgui.CreateFromTable( metatable, parent, name, ... )
 
 	if ( !istable( metatable ) ) then return nil end
 
-	local panel = vgui.Create( metatable.Base, parent, name )
+	local panel = vgui.Create( metatable.Base, parent, name, true )
 	
 	table.Merge( panel:GetTable(), metatable )
-	panel.BaseClass = PanelFactory[ metatable.Base ]
 	panel.ClassName = classname
 	
 	-- Call the Init function if we have it
@@ -191,8 +189,9 @@ function vgui.Register( name, mtable, base )
 	PANEL = nil
 
 	-- Default base is Panel
-	mtable.Base = base or "Panel"	
-	mtable.Init = mtable.Init or function() end
+	mtable.Base = base or "Panel"
+	mtable.BaseClass = PanelFactory[mtable.Base]
+	mtable.Init = mtable.Init or function(self) if (mtable.BaseClass) then mtable.BaseClass.Init(self) end end
 	
 	PanelFactory[ name ] = mtable
 	baseclass.Set( name, mtable )
@@ -217,7 +216,8 @@ function vgui.RegisterTable( mtable, base )
 	PANEL = nil
 
 	mtable.Base = base or "Panel"
-	mtable.Init = mtable.Init or function() end
+	mtable.BaseClass = PanelFactory[mtable.Base]
+	mtable.Init = mtable.Init or function(self) if (mtable.BaseClass) then mtable.BaseClass.Init(self) end end
 	
 	return mtable
 	
@@ -236,7 +236,8 @@ function vgui.RegisterFile( filename )
 	PANEL = OldPanel
 
 	mtable.Base = mtable.Base or "Panel"
-	mtable.Init = mtable.Init or function() end
+	mtable.BaseClass = PanelFactory[mtable.Base]
+	mtable.Init = mtable.Init or function(self) if (mtable.BaseClass) then mtable.BaseClass.Init(self) end end
 	
 	return mtable
 	
