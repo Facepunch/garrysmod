@@ -278,11 +278,12 @@ end
 function PANEL:PaintHelpText( w, h )
 	if ( self:GetText() == "" ) and not ( self:IsMultiline() or self:IsEditing() or ( self:GetHelpText() == "" ) ) then
 		
+		surface.SetFont( self:GetFont() )
+		
 		local text   = self:GetHelpText()
 		local tw, th = surface.GetTextSize( text )
 		local color  = self:GetHelpTextColor()
 		
-		surface.SetFont( self:GetFont() )
 		surface.SetTextColor( color.r, color.g, color.b, color.a )
 		surface.SetTextPos( 3, 1 + h / 2 - th / 2 )
 		surface.DrawText( text )
