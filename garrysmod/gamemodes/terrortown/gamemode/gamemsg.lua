@@ -94,23 +94,23 @@ CreateConVar("ttt_limit_spectator_voice", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 
 function GM:PlayerCanSeePlayersChat(text, team_only, listener, speaker)
 	if (not IsValid(listener)) or (not IsValid(speaker)) then return false end
-	
+
 	local sTeam = speaker:Team() == TEAM_SPEC
 	local lTeam = listener:Team() == TEAM_SPEC
-	
+
 	if (GetRoundState() != ROUND_ACTIVE) or   -- Round isn't active
 	(not GetConVar("ttt_limit_spectator_chat"):GetBool()) or   -- Spectators can chat freely
 	(not DetectiveMode()) or   -- Mumbling
 	(not sTeam and ((team_only and not speaker:IsSpecial()) or (not team_only))) or   -- If someone alive talks (and not a special role in teamchat's case)
 	(not sTeam and team_only and speaker:GetRole() == listener:GetRole()) or
 	(sTeam and lTeam) then   -- If the speaker and listener are spectators
-	   return true 
+	   return true
 	end
-	
+
 	return false
 end
 
-local mumbles = {"mumble", "mm", "hmm", "hum", "mum", "mbm", "mble", "ham", "mammaries", "political situation", "mrmm", "hrm", 
+local mumbles = {"mumble", "mm", "hmm", "hum", "mum", "mbm", "mble", "ham", "mammaries", "political situation", "mrmm", "hrm",
 "uzbekistan", "mumu", "cheese export", "hmhm", "mmh", "mumble", "mphrrt", "mrh", "hmm", "mumble", "mbmm", "hmml", "mfrrm"}
 
 -- While a round is active, spectators can only talk among themselves. When they
@@ -118,7 +118,7 @@ local mumbles = {"mumble", "mm", "hmm", "hum", "mum", "mbm", "mble", "ham", "mam
 -- them. So we mumblify them. In detective mode, we shut them up entirely.
 function GM:PlayerSay(ply, text, team_only)
    if not IsValid(ply) then return "" end
-	
+
    if GetRoundState() == ROUND_ACTIVE then
       local team = ply:Team() == TEAM_SPEC
       if team and not DetectiveMode() then
@@ -144,7 +144,7 @@ function GM:PlayerSay(ply, text, team_only)
 		 return ""
       end
    end
-   
+
    return text
 end
 
