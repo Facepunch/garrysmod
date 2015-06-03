@@ -144,10 +144,6 @@ L.radio_button_steps   = "Schritte"
 -- Intro screen shown after joining
 L.intro_help     = "Wenn du zum ersten Mal spielst, dann drücke F1 für Instruktionen!"
 
--- Chat-related
-L.spec_teamchat_hint = "TIPP: Als Zuschauer den Teamchat benutzen um in einer aktiven Runde zu chatten!"
-L.inno_globalchat_hint = "Wenn unschuldig, nutze den globalen Chat um zu kommunizieren."
-
 -- "Continue playing" vote
 L.contvote_continue = "Weiterspielen"
 L.contvote_change   = "Abstimmung starten"

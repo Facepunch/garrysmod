@@ -145,10 +145,6 @@ L.radio_button_steps   = "Passos"
 -- Intro screen shown after joining
 L.intro_help     = "Se você é novato, aperte F1 para instruções!"
 
--- Chat-related
-L.spec_teamchat_hint = "DICA: Como espectador, use o chat de time para conversar durante uma rodada que não acabou!"
-L.inno_globalchat_hint = "Quando inocente, use o chat global para comunicar-se."
-
 -- "Continue playing" vote
 L.contvote_continue = "Continuar jogando isso"
 L.contvote_change   = "Começar votação"

@@ -144,10 +144,6 @@ L.radio_button_steps   = "Шаги"
 -- Intro screen shown after joining
 L.intro_help     = "Если вы новичок, нажмите F1 для помощи!"
 
--- Chat-related
-L.spec_teamchat_hint = "ПОДСКАЗКА: За наблюдателя вы можете говорить только в TEAM чат!"
-L.inno_globalchat_hint = "Если вы невиновны, используйте глобальный чат для разговора."
-
 -- "Continue playing" vote
 L.contvote_continue = "Продолжить игру на этой"
 L.contvote_change   = "Начать голосование"
