@@ -615,16 +615,15 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
    -- Score only when there is a round active.
    if GetRoundState() == ROUND_ACTIVE then
       SCORE:HandleKill(ply, attacker, dmginfo)
+      if IsValid(attacker) then
+         if attacker:IsPlayer() then
+            attacker:RecordKill(ply)
 
-      if IsValid(attacker) and attacker:IsPlayer() then
-         attacker:RecordKill(ply)
-
-         DamageLog(Format("KILL:\t %s [%s] killed %s [%s]", attacker:Nick(), attacker:GetRoleString(), ply:Nick(), ply:GetRoleString()))
-      else
-         DamageLog(Format("KILL:\t <something/world> killed %s [%s]", ply:Nick(), ply:GetRoleString()))
+            DamageLog(Format("KILL:\t %s [%s] killed %s [%s]", attacker:Nick(), attacker:GetRoleString(), ply:Nick(), ply:GetRoleString()))
+         else
+            DamageLog(Format("KILL:\t <something/world> killed %s [%s]", ply:Nick(), ply:GetRoleString()))
+         end
       end
-
-
       KARMA.Killed(attacker, ply, dmginfo)
    end
 
@@ -649,19 +648,21 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
    CheckCreditAward(ply, attacker)
 
    -- Check for T killing D or vice versa
-   if IsValid(attacker) and attacker:IsPlayer() then
-      local reward = 0
-      if attacker:IsActiveTraitor() and ply:GetDetective() then
-         reward = math.ceil(GetConVarNumber("ttt_credits_detectivekill"))
-      elseif attacker:IsActiveDetective() and ply:GetTraitor() then
-         reward = math.ceil(GetConVarNumber("ttt_det_credits_traitorkill"))
-      end
-
-      if reward > 0 then
-         attacker:AddCredits(reward)
-
-         LANG.Msg(attacker, "credit_kill", {num = reward,
-                                            role = LANG.NameParam(ply:GetRoleString())})
+   if IsValid(attacker) then
+      if attacker:IsPlayer() then
+         local reward = 0
+         if attacker:IsActiveTraitor() and ply:GetDetective() then
+            reward = math.ceil(GetConVarNumber("ttt_credits_detectivekill"))
+         elseif attacker:IsActiveDetective() and ply:GetTraitor() then
+            reward = math.ceil(GetConVarNumber("ttt_det_credits_traitorkill"))
+         end
+   
+         if reward > 0 then
+            attacker:AddCredits(reward)
+   
+            LANG.Msg(attacker, "credit_kill", {num = reward,
+                                               role = LANG.NameParam(ply:GetRoleString())})
+         end
       end
    end
 end
