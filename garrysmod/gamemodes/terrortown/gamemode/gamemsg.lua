@@ -99,12 +99,11 @@ function GM:PlayerCanSeePlayersChat(text, team_only, listener, speaker)
 	local sTeam = speaker:Team() == TEAM_SPEC
 	local lTeam = listener:Team() == TEAM_SPEC
 	
-	if team_only and not sTeam and not speaker:IsSpecial() then team_only = false end
-	
 	if (GetRoundState() != ROUND_ACTIVE) or   -- Round isn't active
 	(not GetConVar("ttt_limit_spectator_chat"):GetBool()) or   -- Spectators can chat freely
 	(not DetectiveMode()) or   -- Mumbling
 	(not sTeam and ((team_only and not speaker:IsSpecial()) or (not team_only))) or   -- If someone alive talks (and not a special role in teamchat's case)
+	(not sTeam and team_only and speaker:GetRole() == listener:GetRole()) or
 	(sTeam and lTeam) then   -- If the speaker and listener are spectators
 	   return true 
 	end
