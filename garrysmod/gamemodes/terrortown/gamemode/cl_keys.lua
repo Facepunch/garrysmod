@@ -82,11 +82,6 @@ function GM:PlayerBindPress(ply, bind, pressed)
             GAMEMODE.ForcedMouse = true
          end
       end
-   elseif bind == "messagemode" and pressed and ply:IsSpec() then
-      if GAMEMODE.round_state == ROUND_ACTIVE and DetectiveMode() then
-         LANG.Msg("spec_teamchat_hint")
-         return true
-      end
    elseif bind == "noclip" and pressed then
       if not GetConVar("sv_cheats"):GetBool() then
          RunConsoleCommand("ttt_equipswitch")

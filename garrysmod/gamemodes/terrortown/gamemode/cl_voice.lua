@@ -78,11 +78,22 @@ local function AddDetectiveText(ply, text)
                 ": " .. text)
 end
 
-function GM:OnPlayerChat( ply, text, teamchat, dead )
+function GM:OnPlayerChat(ply, text, teamchat, dead)
    if IsValid(ply) and ply:IsActiveDetective() then
       AddDetectiveText(ply, text)
       return true
    end
+   
+   local team = ply:Team() == TEAM_SPEC
+   
+   if team and not dead then
+      dead = true
+   end
+   
+   if teamchat and ((not team and not ply:IsSpecial()) or team) then
+      teamchat = false
+   end
+
    return self.BaseClass:OnPlayerChat(ply, text, teamchat, dead)
 end
 

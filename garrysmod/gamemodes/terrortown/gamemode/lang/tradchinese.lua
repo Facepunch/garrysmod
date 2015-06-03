@@ -144,10 +144,6 @@ L.radio_button_steps   = "腳步聲 "
 -- Intro screen shown after joining
 L.intro_help     = "若你是遊戲初學者，可按下F1查看遊戲教學！ "
 
--- Chat-related
-L.spec_teamchat_hint = "提示：身為旁觀者，遊戲進行中只能使用團隊對話。 "
-L.inno_globalchat_hint = "身為無辜者，可使用全體對話（y）來交流。 "
-
 -- "Continue playing" vote
 L.contvote_continue = "繼續進行遊戲 "
 L.contvote_change   = "發起投票 "
