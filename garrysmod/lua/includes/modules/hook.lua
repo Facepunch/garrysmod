@@ -1,8 +1,8 @@
 local gmod			= gmod
-local pair			= pairs
+local pairs			= pairs
 local isfunction		= isfunction
-local isstrin			= isstring
-local IsVali			= IsValid
+local isstrind			= isstring
+local IsValid			= IsValid
 
 module( "hook" )
 
