@@ -324,7 +324,7 @@ function force( str )
 
 		end
 
-	until curPos >= endPos
+	until curPos > endPos
 
 	return table.concat( buf, "" )
 
