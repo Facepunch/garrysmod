@@ -3,6 +3,7 @@ local pairs			= pairs
 local isfunction		= isfunction
 local isstring			= isstring
 local IsValid			= IsValid
+local unpack			= unpack
 
 module( "hook" )
 
