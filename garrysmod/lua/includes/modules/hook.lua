@@ -93,7 +93,7 @@ function Call( name, gm, ... )
 					--
 					-- If the object is valid - pass it as the first argument (self)
 					--
-					a = { v( ... ) }
+					a = { v( k, ... ) }
 				else
 					--
 					-- If the object has become invalid - remove it
