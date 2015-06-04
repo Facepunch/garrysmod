@@ -1,4 +1,4 @@
-local gmo			= gmod
+local gmod			= gmod
 local pair			= pairs
 local isfunction		= isfunction
 local isstrin			= isstring
