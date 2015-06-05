@@ -124,6 +124,8 @@ end
 --
 function ENT:OnKilled( damageinfo )
 
+	hook.Run( "OnNPCKilled", self, dmginfo:GetAttacker(), dmginfo:GetInflictor() )
+
 	self:BecomeRagdoll( damageinfo )
 
 end
