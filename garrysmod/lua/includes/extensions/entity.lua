@@ -392,6 +392,11 @@ function meta:InstallDataTable()
 	
 		if ( !tab ) then return end
 
+		-- If the entity has a function to override duplicated dtvars then override them
+		if ent.RestoredNetworkVars then
+			ent:RestoredNetworkVars( tab )
+		end
+				
 		-- Loop this entities data table
 		for k, v in pairs( datatable ) do
 

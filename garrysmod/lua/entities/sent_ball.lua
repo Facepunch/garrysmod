@@ -54,7 +54,7 @@ function ENT:Initialize()
 
 	if ( SERVER ) then
 
-		local size = math.Clamp( self:GetBallSize(), self.MinSize, self.MaxSize ) / 2
+		local size = self:GetBallSize() / 2
 	
 		-- Use the helibomb model just for the shadow (because it's about the same size)
 		self:SetModel( "models/Combine_Helicopter/helicopter_bomb01.mdl" )
@@ -97,7 +97,7 @@ function ENT:OnBallSizeChanged( varname, oldvalue, newvalue )
 
 	local delta = oldvalue - newvalue
 
-	local size = math.Clamp( self:GetBallSize(), self.MinSize, self.MaxSize ) / 2.1
+	local size = self:GetBallSize() / 2.1
 	self:PhysicsInitSphere( size, "metal_bouncy" )
 	
 	size = self:GetBallSize() / 2.6
@@ -131,6 +131,12 @@ end
 
 end
 
+--[[---------------------------------------------------------
+   Name: RestoredNetworkVars
+-----------------------------------------------------------]]
+function ENT:RestoredNetworkVars( tbl )
+	tbl.BallSize = math.Clamp( tbl.BallSize, self.MinSize, self.MaxSize )
+end
 
 --[[---------------------------------------------------------
    Name: PhysicsCollide
