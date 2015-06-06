@@ -192,14 +192,14 @@ function net.Chunk:Request( ply )
 
 	net.Start( "ChunkRequest" )
 	net.WriteBit( false )
-	net.WriteString( self.crc )
+	net.WriteUInt( self.identifier, 32 )
 	net.WriteUInt( #self.data, 32 )
 	
-	--print("Requesting",self.crc,#self.data)
+	--print("Requesting",self.identifier,#self.data)
 	
 	if CLIENT then net.SendToServer() else net.Send( ply ) end
 	
-	timer.Create( "ChunkDlTimeout" .. self.crc, 1, net.Chunk.Timeout, function() self:Remove() end )
+	timer.Create( "ChunkDlTimeout" .. self.identifier, 1, net.Chunk.Timeout, function() self:Remove() end )
 	
 end
 
@@ -208,7 +208,7 @@ function net.Chunk:Start( ply )
 
 	if not self.active then
 	
-		timer.Remove( "ChunkKeepAlive" .. self.crc )
+		timer.Remove( "ChunkKeepAlive" .. self.identifier )
 		self.active = true
 		self:Request( ply )
 		
@@ -239,12 +239,12 @@ function net.Chunk:Remove()
 	
 	pcall( self.callback, self.returndata )
 	
-	timer.Remove( "ChunkDlTimeout" .. self.crc )
+	timer.Remove( "ChunkDlTimeout" .. self.identifier )
 	table.remove( self.queue, 1 )
 	if self.queue[ 1 ] then
 		self.queue[ 1 ]:Start()
 	else
-		net.Chunk.Queues[ self.crc ] = nil
+		net.Chunk.Queues[ self.identifier ] = nil
 	end
 	
 end
@@ -259,13 +259,17 @@ function net.WriteChunk( data )
 	end
 		
 	local compressed = util.Compress( data )
-	local crc = util.CRC( compressed )
+	local identifier = 1
 	
-	net.Chunk.Data[ crc ] = compressed
-	timer.Create( "ChunkUlTimeout" .. crc, 1, net.Chunk.Timeout, function() net.Chunk.Data[ crc ] = nil end )
+	while net.Chunk.Data[ identifier ] do
+		identifier = identifier + 1
+	end
+	
+	net.Chunk.Data[ identifier ] = compressed
+	timer.Create( "ChunkUlTimeout" .. identifier, 1, net.Chunk.Timeout, function() net.Chunk.Data[ identifier ] = nil end )
 	
 	net.WriteUInt( math.ceil( #compressed / net.Chunk.MaxSendSize ), 32 )
-	net.WriteString( crc )
+	net.WriteUInt( identifier, 32 )
 	
 end
 
@@ -290,13 +294,13 @@ function net.ReadChunk( ply, callback )
 	if not queue then queue = {} net.Chunk.Queues[ ply ] = queue end
 	
 	local numchunks = net.ReadUInt( 32 )
-	local crc = net.ReadString()
+	local identifier = net.ReadUInt( 32 )
 	
-	--print("Got info", numchunks, crc)
-	
+	--print("Got info", numchunks, identifier)
+		
 	local chunk = {
 		numchunks = numchunks,
-		crc = crc,
+		identifier = identifier,
 		data = {},
 		active = false,
 		callback = callback,
@@ -305,10 +309,10 @@ function net.ReadChunk( ply, callback )
 		
 	queue[ #queue + 1 ] = setmetatable( chunk, net.Chunk )
 	if #queue > 1 then
-		timer.Create( "ChunkKeepAlive" .. crc, net.Chunk.Timeout / 2, 0, function() 
+		timer.Create( "ChunkKeepAlive" .. identifier, net.Chunk.Timeout / 2, 0, function() 
 			net.Start( "ChunkRequest" )
 			net.WriteBit( true )
-			net.WriteString( crc )
+			net.WriteUInt( identifier, 32 )
 		end )
 	end
 	queue[ 1 ]:Start( ply )
@@ -326,11 +330,11 @@ end
 net.Receive( "ChunkRequest", function( len, ply )
 
 	local keepalive = net.ReadBit() == 1
-	local crc = net.ReadString()
-	local data = net.Chunk.Data[ crc ]
+	local identifier = net.ReadUInt( 32 )
+	local data = net.Chunk.Data[ identifier ]
 	
 	if data then
-		timer.Adjust( "ChunkUlTimeout" .. crc, 1, net.Chunk.Timeout, function() net.Chunk.Data[ crc ] = nil end )
+		timer.Adjust( "ChunkUlTimeout" .. identifier, 1, net.Chunk.Timeout )
 	end
 	
 	if not keepalive then
