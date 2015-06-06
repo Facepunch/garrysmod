@@ -122,11 +122,11 @@ end
 -- Arg1: CTakeDamageInfo|info|damage info
 -- Ret1:
 --
-function ENT:OnKilled( damageinfo )
+function ENT:OnKilled( dmginfo )
 
 	hook.Run( "OnNPCKilled", self, dmginfo:GetAttacker(), dmginfo:GetInflictor() )
 
-	self:BecomeRagdoll( damageinfo )
+	self:BecomeRagdoll( dmginfo )
 
 end
 
