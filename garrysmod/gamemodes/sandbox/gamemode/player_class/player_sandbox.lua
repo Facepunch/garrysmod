@@ -189,7 +189,7 @@ function PLAYER:FinishMove( move )
 		end
 		
 		-- Reverse it if the player is running backwards
-		if move:GetForwardSpeed() < 0 then
+		if move:GetVelocity():Dot(forward) < 0 then
 			speedAddition = -speedAddition
 		end
 		
