@@ -18,7 +18,7 @@ function GM:HUDWeaponPickedUp( wep )
    local client = LocalPlayer()
    if (not IsValid(client)) or (not client:Alive()) then return end
 
-   local name = LANG.TryTranslation(wep.GetPrintName and wep:GetPrintName() or "MASSIVE PHASER ARRAY")
+   local name = LANG.TryTranslation(wep.GetPrintName and wep:GetPrintName() or "Unknown Weapon Name")
 
    local pickup = {}
    pickup.time      = CurTime()
