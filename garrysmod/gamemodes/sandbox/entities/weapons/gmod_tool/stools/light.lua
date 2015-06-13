@@ -44,7 +44,7 @@ function TOOL:LeftClick( trace, attach )
 	
 	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_light" && trace.Entity:GetPlayer() == ply ) then
 
-		trace.Entity:SetColor( Color( r, g, b, 255 ) )
+		trace.Entity:SetLightColor( Vector( r, g, b )/255 )
 		trace.Entity.r = r
 		trace.Entity.g = g
 		trace.Entity.b = b
@@ -128,7 +128,7 @@ if ( SERVER ) then
 		
 		duplicator.DoGeneric( lamp, Data )
 
-		lamp:SetColor( Color( r, g, b, 255 ) )
+		lamp:SetLightColor( Vector( r, g, b )/255 )
 		lamp:SetBrightness( brght )
 		lamp:SetLightSize( size )
 		lamp:SetToggle( !toggle )
