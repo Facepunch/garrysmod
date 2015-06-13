@@ -16,7 +16,7 @@ function ENT:SetupDataTables()
 
 	self:NetworkVar( "Bool",	0, "On", 		{ KeyName = "on", 			Edit = { type = "Boolean", 		order = 1 } }  );
 	self:NetworkVar( "Bool", 	1, "Toggle" );
-	self:NetworkVar( "Float",	0, "LightSize", 	{ KeyName = "lightsize", 		Edit = { type = "Float", 		order = 2, min = 0, max = 1024 } }  );
+	self:NetworkVar( "Float",	0, "Radius", 		{ KeyName = "lightsize", 		Edit = { type = "Float", 		order = 2, min = 0, max = 1024 } }  );
 	self:NetworkVar( "Float",	1, "Brightness", 	{ KeyName = "brightness", 		Edit = { type = "Float", 		order = 3, min = 0, max = 10 } }  );
 	self:NetworkVar( "Vector",	0, "LightColor", 	{ KeyName = "lightcol", 		Edit = { type = "VectorColor", 	order = 4 } }  );
 	
@@ -85,8 +85,8 @@ function ENT:Think()
 			dlight.g = c.g
 			dlight.b = c.b
 			dlight.Brightness = self:GetBrightness()
-			dlight.Decay = self:GetLightSize() * 5
-			dlight.Size = self:GetLightSize()
+			dlight.Decay = self:GetRadius() * 5
+			dlight.Size = self:GetRadius()
 			dlight.DieTime = CurTime() + 1
 
 		end
