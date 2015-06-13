@@ -39,9 +39,9 @@ function TOOL:LeftClick( trace )
 
 	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_lamp" && trace.Entity:GetPlayer() == ply ) then
 	
-		trace.Entity:SetColor( Color( r, g, b, 255 ) )
+		trace.Entity:SetLightColor( Vector( r, g, b )/255 )
 		trace.Entity:SetFlashlightTexture( texture )
-		trace.Entity:SetLightFOV( fov )
+		trace.Entity:SetFOV( fov )
 		trace.Entity:SetDistance( distance )
 		trace.Entity:SetBrightness( bright )
 		trace.Entity:SetToggle( !toggle )
@@ -126,12 +126,16 @@ if ( SERVER ) then
 
 		lamp:SetModel( Model )
 		lamp:SetFlashlightTexture( Texture )
-		lamp:SetLightFOV( fov )
-		lamp:SetColor( Color( r, g, b, 255 ) )
+		lamp:SetFOV( fov )
+		lamp:SetLightColor( Vector( r, g, b )/255 )
 		lamp:SetDistance( distance )
 		lamp:SetBrightness( brightness )
-		lamp:Switch( on )
 		lamp:SetToggle( !toggle )
+		if !toggle then
+			lamp:Switch( on )
+		else
+			lamp:Switch( off )
+		end
 
 		duplicator.DoGeneric( lamp, Data )
 	
