@@ -23,6 +23,11 @@
 	background-image: -webkit-linear-gradient(bottom, rgb(230,230,230) 1%, rgb(240,240,240) 99%);
 }
 
+.gamemode.allgamemodes
+{
+	background-image: -webkit-linear-gradient(bottom, rgb(183, 221, 253) 1%, rgb(241, 246, 255) 99%);
+}
+
 .gamemode:hover
 {
 	background-image: -webkit-linear-gradient(bottom, rgb(250,230,150) 1%, rgb(250,250,150) 99%);
@@ -81,7 +86,7 @@ H1 small
 
 
 
-.serverlist ping, .serverlist maxplayers, .serverlist players, .serverlist map, .serverlist rank
+.serverlist ping, .serverlist maxplayers, .serverlist players, .serverlist map, .serverlist gamemode, .serverlist rank
 {
 	width: 50px;
 	font-size: 11px;
@@ -97,8 +102,15 @@ H1 small
 	overflow: hidden;
 	white-space: nowrap;
 	left: 4px;
-	right: 240px;
+	right: 330px;
 	font-size: 13px;
+}
+
+.serverlist gamemode
+{
+	right: 240px;
+	width: 88px;
+	text-align: left;
 }
 
 .serverlist map
@@ -197,7 +209,7 @@ H1 small
 	font-size: 11px;
 }
 
-.serverlist .header ping, .serverlist .header maxplayers, .serverlist .header players, .serverlist .header map, .serverlist .header name, .serverlist .header rank
+.serverlist .header ping, .serverlist .header maxplayers, .serverlist .header players, .serverlist .header map, .serverlist .header name, .serverlist .header rank, .serverlist .header gamemode
 {
 	font-size: 11px;
 	font-weight: normal;
@@ -208,7 +220,7 @@ H1 small
 
 @media screen and (min-width: 1280px)
 {
-	.serverlist .servers ping, .serverlist .servers maxplayers, .serverlist .servers players, .serverlist .servers map, .serverlist .servers rank
+	.serverlist .servers ping, .serverlist .servers maxplayers, .serverlist .servers players, .serverlist .servers map, .serverlist .servers rank, .serverlist .servers gamemode
 	{
 		font-size: 13px;
 		margin-top: 4px;
@@ -218,7 +230,13 @@ H1 small
 	{
 		font-size: 13px;
 		font-weight: bold;
+		right: 380px;
+	}
+	
+	.serverlist gamemode
+	{
 		right: 280px;
+		width: 100px;
 	}
 
 	.serverlist map
@@ -253,11 +271,15 @@ A.bglink
 	color: white;
 	font-weight: bold;
 	background-color: #5AF;
-	padding: 8px 10px;
+	padding: 4px 10px;
+	margin-top: 6px;
+	margin-right: 12px;
 	border-radius: 2px;
 	display: inline-block;
 	font-size: 14px;
+	float: right;
 }
+
 
 .serverinfo
 {

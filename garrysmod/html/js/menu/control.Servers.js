@@ -11,7 +11,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	Scope.ShowTab = 'internet';
 
 	if ( !Scope.CurrentGamemode )
-		Scope.CurrentGamemode = null;
+		Scope.CurrentGamemode = GetGamemode( "all", Scope.ServerType );
 	
 	if ( !Scope.Refreshing )
 		Scope.Refreshing = {}
@@ -32,6 +32,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		//
 		ServerTypes[Scope.ServerType].gamemodes = {};
 		ServerTypes[Scope.ServerType].list.length = 0;
+		Scope.CurrentGamemode = GetGamemode( "all", Scope.ServerType );
 		
 		if ( !IN_ENGINE )
 			TestUpdateServers( Scope.ServerType, RequestNum[ Scope.ServerType ] );
@@ -112,6 +113,9 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	{
 		if ( !gm ) return "Unknown Gamemode";
 
+		if ( gm.name == "all" )
+			return "All Gamemodes";
+		
 		if ( gm.info && gm.info.title )
 			return gm.info.title;
 
@@ -145,7 +149,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		Scope.ServerType		= type;
 		Scope.Gamemodes			= ServerTypes[type].gamemodes;
 		Scope.GamemodeList		= ServerTypes[type].list
-		Scope.CurrentGamemode	= null
+		Scope.CurrentGamemode	= GetGamemode( "all", Scope.ServerType );
 
 		if ( FirstTime )
 		{
@@ -165,6 +169,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( !gm.info.workshopid ) return false;
 		if ( gm.info.workshopid == "" ) return false;
 		if ( subscriptions.Contains( String(gm.info.workshopid) ) ) return false;
+		if ( gm.name == "all" ) return false;
 
 		return true;
 	}
@@ -189,7 +194,7 @@ function GetGamemode( name, type )
 	if ( !ServerTypes[type] ) return;
 
 	if ( ServerTypes[type].gamemodes[name] ) return ServerTypes[type].gamemodes[name]
-
+	
 	ServerTypes[type].gamemodes[name] = 
 	{
 		name:			name,
@@ -241,7 +246,17 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	data.listen = data.desc.indexOf('[L]') >= 0;
 	if ( data.listen ) data.desc = data.desc.substr( 4 );
 
-	var gm = GetGamemode( data.gamemode, type );
+	AddServerToGamemode( "all", data, type );
+	AddServerToGamemode( data.gamemode == "all" ? "all_" : data.gamemode, data, type );
+	
+
+	UpdateDigest( Scope, 50 );
+	
+}
+
+function AddServerToGamemode( gmode, data, type )
+{
+	var gm = GetGamemode( gmode, type );
 	gm.servers.push( data );
 
 	UpdateGamemodeInfo( data )
@@ -252,11 +267,9 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	gm.element_class = "";
 	if ( gm.num_players == 0 ) gm.element_class = "noplayers";
 	if ( gm.num_players > 50 ) gm.element_class = "lotsofplayers";
+	if ( gmode == "all" ) gm.element_class = "allgamemodes";
 
 	gm.order = gm.num_players + Math.random();
-
-	UpdateDigest( Scope, 50 );
-	
 }
 
 function MissingGamemodeIcon( element )

@@ -12,9 +12,9 @@
 				<li><a class="{{IfElse( ServerType == 'history', 'active', '' )}}" ng-tranny="'servers_history'" ng-click="SwitchType( 'history' )"></a></li>
 				<li><a class="{{IfElse( ServerType == 'lan', 'active', '' )}}" ng-tranny="'servers_local'" ng-click="SwitchType( 'lan' )"></a></li>
 				<li>&nbsp;</li>
-				<li ng-hide="CurrentGamemode != null">&nbsp;</li>
-				<li ng-hide="CurrentGamemode != null"><a ng-hide="Refreshing[ ServerType ] == 'true'" ng-tranny="'servers_refresh'" ng-click="Refresh()">refresh</a></li>
-				<li ng-hide="CurrentGamemode != null"><a ng-hide="Refreshing[ ServerType ] == 'false'" ng-tranny="'servers_stoprefresh'" ng-click="DoStopRefresh()">Stop refresh</a></li>
+				<li>&nbsp;</li>
+				<li><a ng-hide="Refreshing[ ServerType ] == 'true'" ng-tranny="'servers_refresh'" ng-click="Refresh()">refresh</a></li>
+				<li><a ng-hide="Refreshing[ ServerType ] == 'false'" ng-tranny="'servers_stoprefresh'" ng-click="DoStopRefresh()">Stop refresh</a></li>
 				<li>&nbsp;</li>
 				<li><a ng-click="MenuOption( this, 'OpenServerBrowser')" ng-Tranny="'legacy_browser'"></a></li>
 
@@ -72,7 +72,7 @@
 
 			<div class='controls' style='position: absolute; left: 0; right: 0; margin-top: 5px;'>
 				<input ng-model="CurrentGamemode.Search.$" class="searchbox" ng-Tranny="'searchbar_placeholer'" />
-				<a class='bglink' ng-click="SelectGamemode(null)"><img src='img/bg_arrow_left.png' /> <span ng-tranny="'return_to_gamemodes'"></span></a>
+				<a class='bglink' ng-click="SelectGamemode(null)"><span ng-tranny="'filter_by_gamemode'"></span></a>
 			</div>
 
 			<div class='serverlist'>
@@ -82,16 +82,18 @@
 					<ping ng-click="ChangeOrder( CurrentGamemode, 'ping' )" ng-tranny="'server_ping'"></ping>
 					<players ng-click="ChangeOrder( CurrentGamemode, '-players' )" ng-tranny="'server_players'"></players>
 					<map ng-click="ChangeOrder( CurrentGamemode, 'map' )" ng-tranny="'server_mapname'"></map>
+					<gamemode ng-click="ChangeOrder( CurrentGamemode, 'gamemode' )" ng-tranny="'server_gamemode'"></gamemode>
 					<rank ng-click="ChangeOrder( CurrentGamemode, 'recommended' )" ng-tranny="'server_ranking'"></rank>
 				</div>
 
 				<div class='body scrollable' style="top: 32px; left: 8px; right: 8px; bottom: 8px;">
 					
-					<div ng-repeat="server in CurrentGamemode.servers|filter:CurrentGamemode.Search|orderBy:CurrentGamemode.OrderBy:CurrentGamemode.OrderReverse|limitTo:128" class="server {{ServerClass(server)}} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-click="SelectServer( server )">
+					<div ng-repeat="server in CurrentGamemode.servers|filter:CurrentGamemode.Search|orderBy:CurrentGamemode.OrderBy:CurrentGamemode.OrderReverse|limitTo:256" class="server {{ServerClass(server)}} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-click="SelectServer( server )">
 						<name><img src='img/server-passworded.png' style="margin-right: 8px;" ng-show="server.pass"/>{{server.name}}</name>
 						<ping>{{server.ping}}</ping>
 						<players>{{server.players}} / {{server.maxplayers}}</players>
 						<map>{{server.map}}</map>
+						<gamemode>{{server.gamemode}}</gamemode>
 						<rank class='{{ServerRank(server)}}'>&nbsp;
 						</rank>
 					</div>
