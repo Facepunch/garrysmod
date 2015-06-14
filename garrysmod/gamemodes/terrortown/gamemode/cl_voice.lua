@@ -1,5 +1,7 @@
 ---- Voicechat popup, radio commands, text chat stuff
 
+DEFINE_BASECLASS("gamemode_base")
+
 local GetTranslation = LANG.GetTranslation
 local GetPTranslation = LANG.GetParamTranslation
 local string = string
@@ -66,7 +68,7 @@ function GM:ChatText(idx, name, text, type)
       end
    end
 
-   return self.BaseClass:ChatText(idx, name, text, type)
+   return BaseClass:ChatText(idx, name, text, type)
 end
 
 
@@ -79,7 +81,7 @@ local function AddDetectiveText(ply, text)
 end
 
 function GM:OnPlayerChat(ply, text, teamchat, dead)
-   if not IsValid(ply) then return self.BaseClass:OnPlayerChat(ply, text, teamchat, dead) end 
+   if not IsValid(ply) then return BaseClass:OnPlayerChat(ply, text, teamchat, dead) end 
    
    if ply:IsActiveDetective() then
       AddDetectiveText(ply, text)
@@ -96,7 +98,7 @@ function GM:OnPlayerChat(ply, text, teamchat, dead)
       teamchat = false
    end
 
-   return self.BaseClass:OnPlayerChat(ply, text, teamchat, dead)
+   return BaseClass:OnPlayerChat(ply, text, teamchat, dead)
 end
 
 local last_chat = ""
