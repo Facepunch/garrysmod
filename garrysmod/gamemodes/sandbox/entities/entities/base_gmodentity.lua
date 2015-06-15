@@ -17,7 +17,7 @@ if ( CLIENT ) then
 	function ENT:BeingLookedAtByLocalPlayer()
 	
 		if ( LocalPlayer():GetEyeTrace().Entity != self ) then return false end
-		if ( EyePos():Distance( self:GetPos() ) > 256 ) then return false end
+		if ( LocalPlayer():EyePos():Distance( self:GetPos() ) > 256 ) then return false end
 		
 		return true
 	
@@ -27,11 +27,12 @@ end
 
 function ENT:Think()
 
-	if ( CLIENT && self:BeingLookedAtByLocalPlayer() && self:GetOverlayText() != ""  ) then
+	if ( CLIENT && self:GetOverlayText() != "" && self:BeingLookedAtByLocalPlayer() ) then
 	
-		AddWorldTip( self:EntIndex(), self:GetOverlayText(), 0.5, self:GetPos(), self.Entity  )
+		if ( !self.OverlayName ) then self.OverlayName = "Overlay_" .. self:EntIndex() end
+		worldtip.AddFrame( self.OverlayName, self, self:GetOverlayText() )
 
-		halo.Add( { self }, Color( 255, 255, 255, 255 ), 1, 1, 1, true, true )
+		halo.Add( { self }, color_white, 1, 1, 1, true, true )
 		
 	end
 

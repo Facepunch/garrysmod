@@ -11,7 +11,6 @@ include( 'shared.lua' )
 include( 'cl_spawnmenu.lua' )
 include( 'cl_notice.lua' )
 include( 'cl_hints.lua' )
-include( 'cl_worldtips.lua' )
 include( 'cl_search_models.lua' )
 include( 'gui/IconEditor.lua' )
 
@@ -68,8 +67,6 @@ function GM:UnfrozeObjects( num )
 end
 
 function GM:HUDPaint()
-
-	self:PaintWorldTips()
 
 	-- Draw all of the default stuff
 	BaseClass.HUDPaint( self )

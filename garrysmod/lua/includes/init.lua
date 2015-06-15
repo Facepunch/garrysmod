@@ -68,6 +68,7 @@ if ( CLIENT ) then
 	require ( "presets" )
 	require ( "menubar" )
 	require ( "matproxy" )
+	require ( "worldtip" )
 
 	include( "util/model_database.lua" )	-- Store information on models as they're loaded
 	include( "util/vgui_showlayout.lua" ) 	-- VGUI Performance Debug

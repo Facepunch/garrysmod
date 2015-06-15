@@ -89,16 +89,9 @@ function ENT:Think()
 
 	self.BaseClass.Think( self )
 
-	--
-	-- Add a world tip if the player is looking at it
-	--
 	if ( CLIENT ) then
 	
 		self:UpdateLever()
-
-		if ( self:GetOverlayText() != "" && self:BeingLookedAtByLocalPlayer() ) then
-			AddWorldTip( self:EntIndex(), self:GetOverlayText(), 0.5, self:GetPos(), self.Entity  )
-		end
 
 	end
 

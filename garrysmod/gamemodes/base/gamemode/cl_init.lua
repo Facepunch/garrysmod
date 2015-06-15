@@ -7,6 +7,7 @@ include( "cl_spawnmenu.lua" )
 include( "cl_deathnotice.lua" )
 include( "cl_pickteam.lua" )
 include( "cl_voice.lua" )
+include( "cl_worldtips.lua" )
 
 --[[---------------------------------------------------------
 	Name: gamemode:Initialize()
@@ -14,7 +15,7 @@ include( "cl_voice.lua" )
 -----------------------------------------------------------]]
 function GM:Initialize()
 
-	GAMEMODE.ShowScoreboard = false
+	self.ShowScoreboard = false
 
 end
 
@@ -83,6 +84,9 @@ end
 	Desc: Same as HUDPaint except drawn before
 -----------------------------------------------------------]]
 function GM:HUDPaintBackground()
+
+	hook.Run( "DrawWorldTips", worldtip.GetTable() )
+
 end
 
 --[[---------------------------------------------------------
@@ -92,7 +96,7 @@ end
 function GM:GUIMouseDoublePressed( mousecode, AimVector )
 	-- We don't capture double clicks by default,
 	-- We just treat them as regular presses
-	GAMEMODE:GUIMousePressed( mousecode, AimVector )
+	self:GUIMousePressed( mousecode, AimVector )
 end
 
 --[[---------------------------------------------------------
@@ -118,7 +122,7 @@ function GM:GetTeamColor( ent )
 
 	local team = TEAM_UNASSIGNED
 	if ( ent.Team ) then team = ent:Team() end
-	return GAMEMODE:GetTeamNumColor( team )
+	return self:GetTeamNumColor( team )
 
 end
 
