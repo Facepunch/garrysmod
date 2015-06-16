@@ -93,7 +93,14 @@ CreateConVar("ttt_limit_spectator_chat", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 CreateConVar("ttt_limit_spectator_voice", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 
 function GM:PlayerCanSeePlayersChat(text, team_only, listener, speaker)
-	if (not IsValid(listener)) or (not IsValid(speaker)) then return false end
+	if (not IsValid(listener)) then return false end
+	if (not IsValid(speaker)) then
+		if isentity(s) then
+			return true
+		else
+			return false
+		end
+	end
 
 	local sTeam = speaker:Team() == TEAM_SPEC
 	local lTeam = listener:Team() == TEAM_SPEC
@@ -117,7 +124,7 @@ local mumbles = {"mumble", "mm", "hmm", "hum", "mum", "mbm", "mble", "ham", "mam
 -- try to speak to all players they could divulge information about who killed
 -- them. So we mumblify them. In detective mode, we shut them up entirely.
 function GM:PlayerSay(ply, text, team_only)
-   if not IsValid(ply) then return "" end
+   if not IsValid(ply) then return text or "" end
 
    if GetRoundState() == ROUND_ACTIVE then
       local team = ply:Team() == TEAM_SPEC
@@ -145,7 +152,7 @@ function GM:PlayerSay(ply, text, team_only)
       end
    end
 
-   return text
+   return text or ""
 end
 
 
