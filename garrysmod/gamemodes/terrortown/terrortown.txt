@@ -132,7 +132,7 @@
 			"name"		"ttt_detective_pct"
 			"text"		"Detective Ratio"
 			"type"		"Numeric"
-			"default"	"0.13"
+			"default"	"0.125"
 		}
 		
 		19
@@ -148,7 +148,7 @@
 			"name"		"ttt_detective_min_players"
 			"text"		"Min Detective Playercount"
 			"type"		"Numeric"
-			"default"	"10"
+			"default"	"8"
 		}
 		
 		21
