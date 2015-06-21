@@ -120,7 +120,7 @@ function KARMA.Hurt(attacker, victim, dmginfo)
 
       local penalty = KARMA.GetHurtPenalty(victim:GetLiveKarma(), hurt_amount)
 
-      KARMA.GivePenalty(attacker, penalty)
+      KARMA.GivePenalty(attacker, penalty, victim)
 
       attacker:SetCleanRound(false)
 
@@ -150,7 +150,7 @@ function KARMA.Killed(attacker, victim, dmginfo)
 
       local penalty = KARMA.GetKillPenalty(victim:GetLiveKarma())
 
-      KARMA.GivePenalty(attacker, penalty)
+      KARMA.GivePenalty(attacker, penalty, victim)
 
       attacker:SetCleanRound(false)
 
