@@ -62,8 +62,10 @@ function KARMA.GetKillReward()
    return KARMA.GetHurtReward(config.tbonus:GetFloat())
 end
 
-function KARMA.GivePenalty(ply, penalty)
-   ply:SetLiveKarma(math.max(ply:GetLiveKarma() - penalty, 0))
+function KARMA.GivePenalty(ply, penalty, victim)
+        if not hook.Call( "TTTKarmaGivePenalty", nil, ply, penalty, victim ) then
+                ply:SetLiveKarma(math.max(ply:GetLiveKarma() - penalty, 0))
+        end
 end
 
 function KARMA.GiveReward(ply, reward)
