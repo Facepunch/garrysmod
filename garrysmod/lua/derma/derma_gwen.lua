@@ -1,9 +1,9 @@
---[[   _                                
-	( )                               
-   _| |   __   _ __   ___ ___     _ _ 
+--[[   _
+	( )
+   _| |   __   _ __   ___ ___     _ _
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
+`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
 --]]
 local meta = FindMetaTable( "Panel" )
@@ -12,68 +12,73 @@ GWEN = {}
 
 function GWEN.CreateTextureBorder( _x, _y, _w, _h, l, t, r, b )
 
-	local mat = SKIN.GwenTexture;
+	local mat = SKIN.GwenTexture
 	local tex = mat:GetTexture( "$basetexture" )
-	
+
 	_x = _x / tex:Width()
 	_y = _y / tex:Height()
 	_w = _w / tex:Width()
 	_h = _h / tex:Height()
-	
-	local _l = l / tex:Width()
-	local _t = t / tex:Height()
-	local _r = r / tex:Width()
-	local _b = b / tex:Height()
-	
+
 	return function( x, y, w, h, col )
-		
+
 		surface.SetMaterial( mat )
-		if ( col ) then 
+		if ( col ) then
 			surface.SetDrawColor( col )
 		else
 			surface.SetDrawColor( 255, 255, 255, 255 )
 		end
-		
-		-- top 
-		surface.DrawTexturedRectUV( x, y, l, t, _x, _y, _x+_l, _y+_t )
-		surface.DrawTexturedRectUV( x+l, y, w-l-r, t, _x+_l, _y, _x+_w-_r, _y+_t )
-		surface.DrawTexturedRectUV( x+w-r, y, r, t, _x+_w-_r, _y, _x+_w, _y+_t )
-	
-		-- bottom 
-		surface.DrawTexturedRectUV( x, y+h-b, l, b, _x, _y+_h-_b, _x+_l, _y+_h )
-		surface.DrawTexturedRectUV( x+l, y+h-b, w-l-r, b, _x+_l, _y+_h-_b, _x+_w-_r, _y+_h )
-		surface.DrawTexturedRectUV( x+w-r, y+h-b, r, b, _x+_w-_r, _y+_h-_b, _x+_w, _y+_h )
-		
-		-- middle. 
-		surface.DrawTexturedRectUV( x+l, y+t, w-l-r, h-t-b, _x+_l, _y+_t, _x+_w-_r, _y+_h-_b )
-		surface.DrawTexturedRectUV( x, y+t, l, h-t-b, _x, _y+_t, _x+_l, _y+_h-_b )
-		surface.DrawTexturedRectUV( x+w-r, y+t, r, h-t-b, _x+_w-_r, _y+_t, _x+_w, _y+_h-_b )
-	
+
+		local left = math.min( l, math.ceil( w / 2 ) )
+		local right = math.min( r, math.floor( w / 2 ) )
+		local top = math.min( t, math.ceil( h / 2 ) )
+		local bottom = math.min( b, math.floor( h / 2 ) )
+
+		local _l = left / tex:Width()
+		local _t = top / tex:Height()
+		local _r = right / tex:Width()
+		local _b = bottom / tex:Height()
+
+		-- top
+		surface.DrawTexturedRectUV( x, y, left, top, _x, _y, _x + _l, _y + _t )
+		surface.DrawTexturedRectUV( x + left, y, w - left - right, top, _x + _l, _y, _x + _w - _r, _y + _t )
+		surface.DrawTexturedRectUV( x + w - right, y, right, top, _x + _w - _r, _y, _x + _w, _y + _t )
+
+		-- middle
+		surface.DrawTexturedRectUV( x, y + top, left, h - top - bottom, _x, _y + _t, _x + _l, _y + _h - _b )
+		surface.DrawTexturedRectUV( x + left, y + top, w - left - right, h - top - bottom, _x + _l, _y + _t, _x + _w - _r, _y + _h - _b )
+		surface.DrawTexturedRectUV( x + w - right, y + top, right, h - top - bottom, _x + _w - _r, _y + _t, _x + _w, _y + _h - _b )
+
+		-- bottom
+		surface.DrawTexturedRectUV( x, y + h - bottom, left, bottom, _x, _y + _h - _b, _x + _l, _y + _h )
+		surface.DrawTexturedRectUV( x + left, y + h - bottom, w - left - right, bottom, _x + _l, _y + _h - _b, _x + _w - _r, _y + _h )
+		surface.DrawTexturedRectUV( x + w - right, y + h - bottom, right, bottom, _x + _w - _r, _y + _h - _b, _x + _w, _y + _h )
+
 	end
 
 end
 
 function GWEN.CreateTextureNormal( _x, _y, _w, _h )
 
-	local mat = SKIN.GwenTexture;
+	local mat = SKIN.GwenTexture
 	local tex = mat:GetTexture( "$basetexture" )
-	
+
 	_x = _x / tex:Width()
 	_y = _y / tex:Height()
 	_w = _w / tex:Width()
 	_h = _h / tex:Height()
-		
+
 	return function( x, y, w, h, col )
-		
+
 		surface.SetMaterial( mat )
-		
-		if ( col ) then 
+
+		if ( col ) then
 			surface.SetDrawColor( col )
 		else
 			surface.SetDrawColor( 255, 255, 255, 255 )
 		end
-		
-		surface.DrawTexturedRectUV( x, y, w, h, _x, _y, _x+_w, _y+_h )
+
+		surface.DrawTexturedRectUV( x, y, w, h, _x, _y, _x + _w, _y + _h )
 
 	end
 
@@ -81,33 +86,33 @@ end
 
 function GWEN.CreateTextureCentered( _x, _y, _w, _h )
 
-	local mat = SKIN.GwenTexture;
+	local mat = SKIN.GwenTexture
 	local tex = mat:GetTexture( "$basetexture" )
-	
-	local width = _w;
-	local height = _h;
-	
+
+	local width = _w
+	local height = _h
+
 	_x = _x / tex:Width()
 	_y = _y / tex:Height()
 	_w = _w / tex:Width()
 	_h = _h / tex:Height()
-		
+
 	return function( x, y, w, h, col )
-		
-		x = x + (w-width)*0.5;
-		y = y + (h-height)*0.5;
-		w = width;
-		h = height;
-		
+
+		x = x + ( w - width ) * 0.5
+		y = y + ( h - height ) * 0.5
+		w = width
+		h = height
+
 		surface.SetMaterial( mat )
-		
-		if ( col ) then 
+
+		if ( col ) then
 			surface.SetDrawColor( col )
 		else
 			surface.SetDrawColor( 255, 255, 255, 255 )
 		end
-		
-		surface.DrawTexturedRectUV( x, y, w, h, _x, _y, _x+_w, _y+_h )
+
+		surface.DrawTexturedRectUV( x, y, w, h, _x, _y, _x + _w, _y + _h )
 
 	end
 
@@ -115,7 +120,7 @@ end
 
 function GWEN.TextureColor( x, y )
 
-	local mat = SKIN.GwenTexture;
+	local mat = SKIN.GwenTexture
 	return mat:GetColor( x, y )
 
 end
@@ -149,8 +154,7 @@ end
 --
 -- Convert GWEN types into Derma Types
 --
-local GwenTypes = 
-{
+local GwenTypes = {
 	Base				= "Panel",
 	Button				= "DButton",
 	Label				= "DLabel",
@@ -171,7 +175,7 @@ function meta:ApplyGWEN( tbl )
 
 	for k, v in pairs( tbl.Properties ) do
 
-		if ( self[ "GWEN_Set" .. k ] ) then	
+		if ( self[ "GWEN_Set" .. k ] ) then
 			self[ "GWEN_Set" .. k ]( self, v )
 		end
 
@@ -183,7 +187,7 @@ function meta:ApplyGWEN( tbl )
 
 		local type = GwenTypes[ v.Type ]
 		if ( type ) then
-			
+
 			local pnl = self:Add( type )
 			pnl:ApplyGWEN( v )
 		else
@@ -205,8 +209,8 @@ function meta:GWEN_SetSize( tbl ) self:SetSize( tbl.w, tbl.h ) end
 function meta:GWEN_SetText( tbl ) self:SetText( tbl ) end
 function meta:GWEN_SetControlName( tbl ) self:SetName( tbl ) end
 function meta:GWEN_SetMargin( tbl ) self:DockMargin( tbl.left, tbl.top, tbl.right, tbl.bottom ) end
-function meta:GWEN_SetMin( min ) self:SetMin( tonumber(min) ) end
-function meta:GWEN_SetMax( min ) self:SetMax( tonumber(max) ) end
+function meta:GWEN_SetMin( min ) self:SetMin( tonumber( min ) ) end
+function meta:GWEN_SetMax( min ) self:SetMax( tonumber( max ) ) end
 function meta:GWEN_SetHorizontalAlign( txt )
 	if ( txt == "Right" ) then self:SetContentAlignment( 6 ) end
 	if ( txt == "Center" ) then self:SetContentAlignment( 5 ) end
