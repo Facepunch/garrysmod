@@ -86,6 +86,6 @@ function IntToColor( int )
         return Color( 
         	bit.band( bit.rshift( int,16 ), 0xFF ), 
         	bit.band( bit.rshift( int,8 ), 0xFF ), 
-        	bit.band( bit.rshift( hex,0 ), 0xFF ) 
+        	bit.band( bit.rshift( int,0 ), 0xFF ) 
         )
 end
