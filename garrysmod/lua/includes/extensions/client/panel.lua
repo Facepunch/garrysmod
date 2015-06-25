@@ -256,6 +256,22 @@ function meta:PositionLabel( labelWidth, x, y, lbl, ctrl )
 end
 
 --[[---------------------------------------------------------
+	Name: GetTooltip
+-----------------------------------------------------------]]
+function meta:GetTooltip()
+	return self.strTooltipText
+end
+meta.GetToolTip = meta.GetTooltip
+
+--[[---------------------------------------------------------
+	Name: GetTooltipPanel
+-----------------------------------------------------------]]
+function meta:GetTooltipPanel()
+	return self.pnlTooltipPanel
+end
+meta.GetToolTipPanel = meta.GetTooltipPanel
+
+--[[---------------------------------------------------------
 	Name: SetTooltip
 -----------------------------------------------------------]]
 function meta:SetTooltip( tooltip )
