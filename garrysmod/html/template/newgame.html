@@ -5,7 +5,7 @@
 			<div class="controls">
 				
 				<ul>
-					<li class="noisy category {{IfElse( category.category == CurrentCategory, 'active', '' )}}" ng-repeat="category in MapList | orderBy:'order'" ng-hide="category.maps.length == 0" ng-click="SwitchCategory(category.category)">
+					<li class="noisy category {{IfElse( category.category == CurrentCategory, 'active', '' )}}" ng-repeat="category in MapList | orderBy:'order'" ng-hide="CountFiltered(category.maps) == 0" ng-click="SwitchCategory(category.category)">
 						<div class='name'>{{category.category}}</div>
 						<div class='count'>{{CountFiltered(category.maps)}}</div>
 					</li>
