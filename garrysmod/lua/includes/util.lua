@@ -111,6 +111,16 @@ function Model( name )
 	return name
 end
 
+--[[---------------------------------------------------------
+   Convenience function to precache a particle
+-----------------------------------------------------------]]
+function Particle( name )
+	if ( CLIENT ) then
+		game.AddParticles( name )
+	end
+	return name
+end
+
 -- Some nice globals so we don't keep creating objects for no reason
 vector_origin		= Vector( 0, 0, 0 )
 vector_up			= Vector( 0, 0, 1 )
