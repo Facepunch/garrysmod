@@ -2,32 +2,30 @@
 IncludeCS( "ai_translations.lua" )
 IncludeCS( "sh_anim.lua" )
 
--- Variables that are used on both client and server
-
-SWEP.Author			= ""
-SWEP.Contact		= ""
-SWEP.Purpose		= ""
-SWEP.Instructions	= ""
-
 SWEP.ViewModelFOV	= 62
 SWEP.ViewModelFlip	= false
-SWEP.ViewModel		= "models/weapons/v_pistol.mdl"
-SWEP.WorldModel		= "models/weapons/w_357.mdl"
+SWEP.ViewModel		= Model( "models/weapons/v_pistol.mdl" )
+SWEP.WorldModel		= Model( "models/weapons/w_357.mdl" )
+SWEP.HoldType		= "pistol"
 
-SWEP.Spawnable			= false
-SWEP.AdminOnly			= false
+SWEP.Spawnable		= false
+SWEP.AdminOnly		= false
 
-SWEP.Primary.ClipSize		= 8					-- Size of a clip
-SWEP.Primary.DefaultClip	= 32				-- Default number of bullets in a clip
-SWEP.Primary.Automatic		= false				-- Automatic/Semi Auto
-SWEP.Primary.Ammo			= "Pistol"
+SWEP.Primary = 
+{
+	ClipSize		= 8,					-- Size of a clip
+	DefaultClip		= 32,					-- Default number of bullets in a clip
+	Automatic		= false,				-- Automatic/Semi Auto
+	Ammo			= "Pistol"
+}
 
-SWEP.Secondary.ClipSize		= 8					-- Size of a clip
-SWEP.Secondary.DefaultClip	= 32				-- Default number of bullets in a clip
-SWEP.Secondary.Automatic	= false				-- Automatic/Semi Auto
-SWEP.Secondary.Ammo			= "Pistol"
-
-
+SWEP.Secondary = 
+{
+	ClipSize		= 8,					-- Size of a clip
+	DefaultClip		= 32,					-- Default number of bullets in a clip
+	Automatic		= false,				-- Automatic/Semi Auto
+	Ammo			= "Pistol"
+}
 
 --[[---------------------------------------------------------
    Name: SWEP:Initialize( )
@@ -35,7 +33,7 @@ SWEP.Secondary.Ammo			= "Pistol"
 -----------------------------------------------------------]]
 function SWEP:Initialize()
 
-	self:SetHoldType( "pistol" )
+	self:SetHoldType( self.HoldType )
 
 end
 
@@ -101,7 +99,9 @@ end
    Desc: Reload is being pressed
 -----------------------------------------------------------]]
 function SWEP:Reload()
-	self.Weapon:DefaultReload( ACT_VM_RELOAD );
+
+	self.Weapon:DefaultReload( ACT_VM_RELOAD )
+
 end
 
 
@@ -119,7 +119,9 @@ end
    RetV: Return true to allow the weapon to holster
 -----------------------------------------------------------]]
 function SWEP:Holster( wep )
+
 	return true
+
 end
 
 --[[---------------------------------------------------------
@@ -127,7 +129,9 @@ end
    Desc: Whip it out
 -----------------------------------------------------------]]
 function SWEP:Deploy()
+
 	return true
+
 end
 
 
@@ -149,7 +153,7 @@ end
    Desc: A convenience function to shoot bullets
 -----------------------------------------------------------]]
 function SWEP:ShootBullet( damage, num_bullets, aimcone )
-	
+
 	local bullet = {}
 	bullet.Num 		= num_bullets
 	bullet.Src 		= self.Owner:GetShootPos()			-- Source
@@ -159,11 +163,11 @@ function SWEP:ShootBullet( damage, num_bullets, aimcone )
 	bullet.Force	= 1									-- Amount of force to give to phys objects
 	bullet.Damage	= damage
 	bullet.AmmoType = "Pistol"
-	
+
 	self.Owner:FireBullets( bullet )
-	
+
 	self:ShootEffects()
-	
+
 end
 
 
@@ -172,7 +176,7 @@ end
    Desc: A convenience function to remove ammo
 -----------------------------------------------------------]]
 function SWEP:TakePrimaryAmmo( num )
-	
+
 	-- Doesn't use clips
 	if ( self.Weapon:Clip1() <= 0 ) then 
 	
@@ -183,7 +187,7 @@ function SWEP:TakePrimaryAmmo( num )
 	return end
 	
 	self.Weapon:SetClip1( self.Weapon:Clip1() - num )	
-	
+
 end
 
 
@@ -192,7 +196,7 @@ end
    Desc: A convenience function to remove ammo
 -----------------------------------------------------------]]
 function SWEP:TakeSecondaryAmmo( num )
-	
+
 	-- Doesn't use clips
 	if ( self.Weapon:Clip2() <= 0 ) then 
 	
@@ -203,7 +207,7 @@ function SWEP:TakeSecondaryAmmo( num )
 	return end
 	
 	self.Weapon:SetClip2( self.Weapon:Clip2() - num )	
-	
+
 end
 
 
@@ -267,7 +271,9 @@ end
    Desc: Returns how much of ammo1 the player has
 -----------------------------------------------------------]]
 function SWEP:Ammo1()
+
 	return self.Owner:GetAmmoCount( self.Weapon:GetPrimaryAmmoType() )
+
 end
 
 
@@ -276,7 +282,9 @@ end
    Desc: Returns how much of ammo2 the player has
 -----------------------------------------------------------]]
 function SWEP:Ammo2()
+
 	return self.Owner:GetAmmoCount( self.Weapon:GetSecondaryAmmoType() )
+
 end
 
 --[[---------------------------------------------------------
@@ -285,7 +293,9 @@ end
 		 This value needs to match on client and server.
 -----------------------------------------------------------]]
 function SWEP:SetDeploySpeed( speed )
+
 	self.m_WeaponDeploySpeed = tonumber( speed )
+
 end
 
 --[[---------------------------------------------------------
@@ -294,7 +304,7 @@ end
 		 return true to not do the default thing - which is to call UTIL_ImpactTrace in c++
 -----------------------------------------------------------]]
 function SWEP:DoImpactEffect( tr, nDamageType )
-		
-	return false;
+
+	return false
 	
 end

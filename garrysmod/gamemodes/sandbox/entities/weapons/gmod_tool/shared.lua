@@ -1,44 +1,33 @@
--- Variables that are used on both client and server
 
-SWEP.Author			= ""
-SWEP.Contact			= ""
-SWEP.Purpose			= ""
-SWEP.Instructions		= ""
+AddCSLuaFile()
 
-SWEP.ViewModel			= "models/weapons/c_toolgun.mdl"
-SWEP.WorldModel			= "models/weapons/w_toolgun.mdl"
-SWEP.AnimPrefix			= "python"
+SWEP.ViewModel		= Model( "models/weapons/c_toolgun.mdl" )
+SWEP.WorldModel		= Model( "models/weapons/w_toolgun.mdl" )
 
-SWEP.UseHands			= true
-SWEP.Spawnable			= true
-
--- Be nice, precache the models
-util.PrecacheModel( SWEP.ViewModel )
-util.PrecacheModel( SWEP.WorldModel )
-
--- Todo, make/find a better sound.
-SWEP.ShootSound			= Sound( "Airboat.FireGunRevDown" )
-
-SWEP.Tool				= {}
+SWEP.UseHands		= true
+SWEP.Spawnable		= true
 
 SWEP.Primary = 
 {
 	ClipSize 	= -1,
 	DefaultClip = -1,
-	Automatic = false,
-	Ammo = "none"
+	Automatic 	= false,
+	Ammo 		= "none"
 }
 
 SWEP.Secondary = 
 {
 	ClipSize 	= -1,
 	DefaultClip = -1,
-	Automatic = false,
-	Ammo = "none"
+	Automatic 	= false,
+	Ammo 		= "none"
 }
 
-SWEP.CanHolster			= true
-SWEP.CanDeploy			= true
+-- Todo, make/find a better sound.
+SWEP.ShootSound		= Sound( "Airboat.FireGunRevDown" )
+SWEP.Tool			= {}
+SWEP.CanHolster		= true
+SWEP.CanDeploy		= true
 
 function SWEP:InitializeTools()
 
@@ -72,7 +61,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:Initialize()
 
-	self:SetHoldType( "pistol" )
+	self:SetHoldType( self.HoldType )
 
 	self:InitializeTools()
 	
@@ -108,15 +97,6 @@ end
 function SWEP:OnRestore()
 
 	self:InitializeTools()
-	
-end
-
---[[---------------------------------------------------------
-   Precache Stuff
------------------------------------------------------------]]
-function SWEP:Precache()
-
-	util.PrecacheSound( self.ShootSound )
 	
 end
 

@@ -1,42 +1,44 @@
 
 AddCSLuaFile()
 
-SWEP.PrintName				= "Fists"
-SWEP.Author					= "Kilburn, robotboy655, MaxOfS2D & Tenrys"
-SWEP.Purpose				= "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
+if ( CLIENT ) then
 
-SWEP.Slot					= 0
-SWEP.SlotPos				= 4
+	SWEP.PrintName	= "Fists"
+	SWEP.Author		= "Kilburn, robotboy655, MaxOfS2D & Tenrys"
+	SWEP.Purpose	= "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
+	SWEP.SlotPos	= 4
+	SWEP.DrawAmmo	= false
 
-SWEP.Spawnable				= true
+end
 
-SWEP.ViewModel				= Model( "models/weapons/c_arms.mdl" )
-SWEP.WorldModel				= ""
-SWEP.ViewModelFOV			= 54
-SWEP.UseHands				= true
+SWEP.ViewModel		= Model( "models/weapons/c_arms.mdl" )
+SWEP.WorldModel		= ""
+SWEP.ViewModelFOV	= 54
+SWEP.UseHands		= true
+SWEP.HoldType		= "fist"
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo			= "none"
+SWEP.Spawnable		= true
 
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= true
-SWEP.Secondary.Ammo			= "none"
+SWEP.Primary = 
+{
+	ClipSize		= -1,
+	DefaultClip		= -1,
+	Automatic		= true,
+	Ammo			= "none"
+}
 
-SWEP.DrawAmmo				= false
+SWEP.Secondary = 
+{
+	ClipSize		= -1,
+	DefaultClip		= -1,
+	Automatic		= true,
+	Ammo			= "none"
+}
 
-SWEP.HitDistance			= 48
+SWEP.HitDistance	= 48
 
 local SwingSound = Sound( "WeaponFrag.Throw" )
 local HitSound = Sound( "Flesh.ImpactHard" )
-
-function SWEP:Initialize()
-
-	self:SetHoldType( "fist" )
-
-end
 
 function SWEP:SetupDataTables()
 
