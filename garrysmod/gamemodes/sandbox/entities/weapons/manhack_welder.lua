@@ -1,54 +1,57 @@
 
--- Variables that are used on both client and server
+AddCSLuaFile()
 
-SWEP.Instructions	= "Shoot a prop to attach a Manhack.\nRight click to attach a rollermine."
+if ( CLIENT ) then
 
-SWEP.Spawnable			= true
-SWEP.AdminOnly			= true
-SWEP.UseHands			= true
+	SWEP.PrintName			= "Manhack Gun"
+	SWEP.Instructions		= "Shoot a prop to attach a Manhack.\nRight click to attach a rollermine."
+	SWEP.Slot				= 3
+	SWEP.SlotPos			= 1
+	SWEP.DrawAmmo			= false
+	SWEP.DrawCrosshair		= true
 
-SWEP.ViewModel			= "models/weapons/c_pistol.mdl"
-SWEP.WorldModel			= "models/weapons/w_pistol.mdl"
+else
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo			= "none"
+	SWEP.AutoSwitchTo		= false
+	SWEP.AutoSwitchFrom		= false
 
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo			= "none"
+end
 
-SWEP.Weight				= 5
-SWEP.AutoSwitchTo		= false
-SWEP.AutoSwitchFrom		= false
+SWEP.Spawnable	= true
+SWEP.AdminOnly	= true
 
-SWEP.PrintName			= "Manhack Gun"			
-SWEP.Slot				= 3
-SWEP.SlotPos			= 1
-SWEP.DrawAmmo			= false
-SWEP.DrawCrosshair		= true
-SWEP.UseHands			= true
+SWEP.ViewModel	= Model( "models/weapons/c_pistol.mdl" )
+SWEP.WorldModel	= Model( "models/weapons/w_pistol.mdl" )
+SWEP.UseHands	= true
+
+SWEP.Primary = 
+{
+	ClipSize	= -1,
+	DefaultClip	= -1,
+	Automatic	= false,
+	Ammo		= "none"
+}
+
+SWEP.Secondary = 
+{
+	ClipSize	= -1,
+	DefaultClip	= -1,
+	Automatic	= false,
+	Ammo		= "none"
+}
 
 local ShootSound = Sound( "Metal.SawbladeStick" )
 
 --[[---------------------------------------------------------
 	Reload does nothing
 -----------------------------------------------------------]]
-function SWEP:Reload()
-end
-
---[[---------------------------------------------------------
-   Think does nothing
------------------------------------------------------------]]
-function SWEP:Think()	
+function SWEP:Reload() 
 end
 
 --[[---------------------------------------------------------
 	PrimaryAttack
 -----------------------------------------------------------]]
-function SWEP:PrimaryAttack()
+function SWEP:PrimaryAttack( rollermine )
 
 	local tr = self.Owner:GetEyeTrace()
 	--if ( tr.HitWorld ) then return end
@@ -70,15 +73,15 @@ function SWEP:PrimaryAttack()
 	-- The rest is only done on the server
 	if ( CLIENT ) then return end
 	
-	-- Make a manhack
-	local ent = ents.Create( "npc_manhack" )
+	-- Make a manhack/rollermine
+	local ent = ents.Create( rollermine && "npc_rollermine" || "npc_manhack" )
 	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
 	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
 
 	local weld = nil
 
-	if ( tr.HitWorld ) then
+	if ( rollermine && tr.HitWorld ) then
 
 		-- freeze it in place
 		ent:GetPhysicsObject():EnableMotion( false )
@@ -90,7 +93,7 @@ function SWEP:PrimaryAttack()
 
 	end
 	
-	undo.Create("Manhack")
+	undo.Create( rollermine && "Rollermine" || "Manhack" )
 		undo.AddEntity( weld )
 		undo.AddEntity( nocl )
 		undo.AddEntity( ent )
@@ -104,59 +107,16 @@ end
 -----------------------------------------------------------]]
 function SWEP:SecondaryAttack()
 
-	local tr = self.Owner:GetEyeTrace()
-	--if ( tr.HitWorld ) then return end
-	
-	self:EmitSound( ShootSound )
-	self:ShootEffects( self )
-	
-	if ( IsFirstTimePredicted() ) then
-		local effectdata = EffectData()
-		effectdata:SetOrigin( tr.HitPos )
-		effectdata:SetNormal( tr.HitNormal )
-		effectdata:SetMagnitude( 8 )
-		effectdata:SetScale( 1 )
-		effectdata:SetRadius( 16 )
-		util.Effect( "Sparks", effectdata )
-	end
-	
-	
-	-- The rest is only done on the server
-	if ( CLIENT ) then return end
-	
-	-- Make a manhack
-	local ent = ents.Create( "npc_rollermine" )
-	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
-	ent:SetAngles( tr.HitNormal:Angle() )
-	ent:Spawn()
-
-	local weld = nil;
-
-	if ( tr.HitWorld ) then
-
-		-- Don't do anything 
-
-	else
-
-		-- Weld it to the object that we hit
-		local weld = constraint.Weld( tr.Entity, ent, tr.PhysicsBone, 0, 0 )
-
-	end
-	
-	undo.Create("Rollermine")
-		undo.AddEntity( weld )
-		undo.AddEntity( nocl )
-		undo.AddEntity( ent )
-		undo.SetPlayer( self.Owner )
-	undo.Finish()
+	self:PrimaryAttack( true )
 	
 end
-
 
 --[[---------------------------------------------------------
    Name: ShouldDropOnDie
    Desc: Should this weapon be dropped when its owner dies?
 -----------------------------------------------------------]]
 function SWEP:ShouldDropOnDie()
+
 	return false
+
 end
