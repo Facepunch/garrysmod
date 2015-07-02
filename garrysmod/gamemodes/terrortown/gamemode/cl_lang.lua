@@ -321,8 +321,6 @@ local styledmessages = {
    },
 
    chat_plain = {
-      "spec_teamchat_hint",
-      "inno_globalchat_hint",
       "body_call",
       "disg_turned_on",
       "disg_turned_off"
