@@ -266,8 +266,8 @@ function math.Remap( value, inMin, inMax, outMin, outMax )
 end
 
 --[[---------------------------------------------------------
-    Name: IsBetween( value, low, high )
-    Desc: Check whether a number is between two other numbers
+    Name: InRange( value, low, high )
+    Desc: Check whether a number is in the range of two other numbers
 -----------------------------------------------------------]]
 
 function math.InRange( value, low, high )
