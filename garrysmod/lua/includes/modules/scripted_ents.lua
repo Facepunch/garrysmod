@@ -13,6 +13,7 @@ local BaseClasses = {}
 BaseClasses[ "anim" ] = "base_anim"
 BaseClasses[ "point" ] = "base_point"
 BaseClasses[ "brush" ] = "base_brush"
+BaseClasses[ "filter" ] = "base_filter"
 
 --[[---------------------------------------------------------
 	Name: TableInherit( t, base )

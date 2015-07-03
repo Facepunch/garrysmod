@@ -1,6 +1,5 @@
 game_sounds_manifest
 {
-
 	"precache_file"		"scripts/sounds/lua.txt"
 	"precache_file"		"scripts/sounds/cs_game_sounds_radio.txt"
 	"precache_file"		"scripts/sounds/cs_game_sounds_weapons.txt"
@@ -137,10 +136,17 @@ game_sounds_manifest
 	"precache_file"		"scripts/sounds/level_voices_lostcoast.txt"
 
 	// Team Fortress 2
-	"precache_file"		"scripts/game_sounds_mvm.txt"
-	"precache_file"		"scripts/game_sounds_vo.txt"
-	"precache_file"		"scripts/game_sounds_vo_mvm.txt"
-	"precache_file"		"scripts/game_sounds_vo_mvm_handmade.txt"
-	"precache_file"		"scripts/game_sounds_vo_mvm_mighty.txt"
+	"precache_file"		"scripts/game_sounds_vo.txt" // These two must not be from TF2
+	"precache_file"  	"scripts/game_sounds_player.txt"
 	"precache_file"		"scripts/sounds/tf2_game_sounds_weapons.txt"
+
+	"precache_file"  	"scripts/game_sounds_mvm.txt"
+//	"preload_file"  	"scripts/game_sounds_vo_mvm.txt"
+//	"preload_file"  	"scripts/game_sounds_vo_mvm_mighty.txt"
+	"precache_file"  	"scripts/game_sounds_vo_mvm_handmade.txt"
+//	"precache_file" 	"scripts/mvm_level_sounds.txt"
+	"precache_file"  	"scripts/game_sounds_vo_rd_robots.txt"
+	"precache_file"  	"scripts/game_sounds_vo_taunts.txt"
+	"precache_file"		"scripts/game_sounds_taunt_workshop.txt"
+	"precache_file"  	"scripts/game_sounds_vo_pauling.txt"
 }
