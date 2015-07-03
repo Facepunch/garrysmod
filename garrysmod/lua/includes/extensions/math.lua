@@ -271,5 +271,5 @@ end
 -----------------------------------------------------------]]
 
 function math.IsBetween( value, low, high )
-	return value >= low && value <= high == true
+	return value >= low && value <= high
 end
