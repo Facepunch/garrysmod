@@ -70,7 +70,7 @@ math.Min = math.min
     Name: EaseInOut(fProgress, fEaseIn, fEaseOut)
     Desc: Provided by garry from the facewound source and converted
           to Lua by me :p
-   Usage: math.EaseInOut(0.1, 0.5, 0.5) - all parameters shoule be between 0 and 1
+   Usage: math.EaseInOut(0.1, 0.5, 0.5) - all parameters should be between 0 and 1
 -----------------------------------------------------------]]
 function math.EaseInOut( fProgress, fEaseIn, fEaseOut ) 
 
@@ -263,4 +263,13 @@ end
 -----------------------------------------------------------]]
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
+end
+
+--[[---------------------------------------------------------
+    Name: IsBetween( value, low, high )
+    Desc: Check whether a number is between two other numbers
+-----------------------------------------------------------]]
+
+function math.IsBetween( value, low, high )
+	return value >= low && value <= high == true
 end
