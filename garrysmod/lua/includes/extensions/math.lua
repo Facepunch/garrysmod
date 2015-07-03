@@ -269,9 +269,11 @@ end
     Name: InRange( value, low, high, inclusive )
     Desc: Check whether a number is in the range of two other numbers
     The 'inclusive' parameter is optional.
+    Usage: math.InRange( 2, 2, 4 ) > true (including 2)
+           math.InRange( 2, 2, 4, false ) > false (not including 2)
 -----------------------------------------------------------]]
 function math.InRange( value, low, high, inclusive )
-	if inclusive || inclusive == nil then
+	if inclusive or inclusive == nil then
 		return value >= low && value <= high
 	else
 		return value > low && value < high
