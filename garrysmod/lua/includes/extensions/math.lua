@@ -266,10 +266,14 @@ function math.Remap( value, inMin, inMax, outMin, outMax )
 end
 
 --[[---------------------------------------------------------
-    Name: InRange( value, low, high )
+    Name: InRange( value, low, high, inclusive )
     Desc: Check whether a number is in the range of two other numbers
+    The 'inclusive' parameter is optional.
 -----------------------------------------------------------]]
-
-function math.InRange( value, low, high )
-	return value >= low && value <= high
+function math.InRange( value, low, high, inclusive )
+	if inclusive || inclusive == nil then
+		return value >= low && value <= high
+	else
+		return value > low && value < high
+	end
 end
