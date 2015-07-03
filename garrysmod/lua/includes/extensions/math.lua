@@ -270,6 +270,6 @@ end
     Desc: Check whether a number is between two other numbers
 -----------------------------------------------------------]]
 
-function math.IsBetween( value, low, high )
+function math.InRange( value, low, high )
 	return value >= low && value <= high
 end
