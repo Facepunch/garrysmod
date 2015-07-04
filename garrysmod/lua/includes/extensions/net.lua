@@ -182,10 +182,12 @@ end
 
 --Here a chunk library by thegrb93 which allows sending large streams of data without overflowing the reliable channel
 net.Chunk = {}
-net.Chunk.Queues = {}            --This holds a queue for each player, or one if CLIENT
+net.Chunk.Queues = {}            --This holds a queue for each player, or one queue for the server if running on the CLIENT
 net.Chunk.Data = {}            --This holds the data to send        
 net.Chunk.MaxSendSize = 20000            --This is the maximum size of each chunk to send
 net.Chunk.Timeout = 2            --How long the data should exist in the store without being used before being destroyed
+net.Chunk.MaxServerQueues = 8  --The maximum number of keep-alives to have queued. This should prevent naughty players from flooding the network with keep-alive messages.
+net.Chunk.MaxServerChunks = 3200 --Maximum number of chunks the player can send to the server. 64 MB
 
 --Send the data sender a request for data
 function net.Chunk:Request( ply )
@@ -199,7 +201,7 @@ function net.Chunk:Request( ply )
 	
 	if CLIENT then net.SendToServer() else net.Send( ply ) end
 	
-	timer.Create( "ChunkDlTimeout" .. self.identifier, 1, net.Chunk.Timeout, function() self:Remove() end )
+	timer.Create( "ChunkDlTimeout" .. self.identifier, net.Chunk.Timeout, 1, function() self:Remove() end )
 	
 end
 
@@ -241,10 +243,11 @@ function net.Chunk:Remove()
 	
 	timer.Remove( "ChunkDlTimeout" .. self.identifier )
 	table.remove( self.queue, 1 )
+	
 	if self.queue[ 1 ] then
 		self.queue[ 1 ]:Start()
 	else
-		net.Chunk.Queues[ self.identifier ] = nil
+		net.Chunk.Queues[ self.player ] = nil
 	end
 	
 end
@@ -266,7 +269,7 @@ function net.WriteChunk( data )
 	end
 	
 	net.Chunk.Data[ identifier ] = compressed
-	timer.Create( "ChunkUlTimeout" .. identifier, 1, net.Chunk.Timeout, function() net.Chunk.Data[ identifier ] = nil end )
+	timer.Create( "ChunkUlTimeout" .. identifier, net.Chunk.Timeout, 1, function() net.Chunk.Data[ identifier ] = nil end )
 	
 	net.WriteUInt( math.ceil( #compressed / net.Chunk.MaxSendSize ), 32 )
 	net.WriteUInt( identifier, 32 )
@@ -291,12 +294,22 @@ function net.ReadChunk( ply, callback )
 	end
 	
 	local queue = net.Chunk.Queues[ ply ]
-	if not queue then queue = {} net.Chunk.Queues[ ply ] = queue end
 	
 	local numchunks = net.ReadUInt( 32 )
 	local identifier = net.ReadUInt( 32 )
-	
 	--print("Got info", numchunks, identifier)
+	
+	if SERVER and queue and #queue == net.Chunk.MaxServerQueues then
+		ErrorNoHalt( "Receiving too many ReadChunk requests from ", ply )
+		return
+	end
+		
+	if SERVER and numchunks > net.Chunk.MaxServerChunks then
+		ErrorNoHalt( "ReadChunk requests from ", ply, " is too large! ", numchunks * net.Chunk.MaxSendSize, "MB" )
+		return
+	end
+		
+	if not queue then queue = {} net.Chunk.Queues[ ply ] = queue end
 		
 	local chunk = {
 		numchunks = numchunks,
@@ -304,7 +317,8 @@ function net.ReadChunk( ply, callback )
 		data = {},
 		active = false,
 		callback = callback,
-		queue = queue
+		queue = queue,
+		player = ply
 	}
 		
 	queue[ #queue + 1 ] = setmetatable( chunk, net.Chunk )
@@ -334,7 +348,7 @@ net.Receive( "ChunkRequest", function( len, ply )
 	local data = net.Chunk.Data[ identifier ]
 	
 	if data then
-		timer.Adjust( "ChunkUlTimeout" .. identifier, 1, net.Chunk.Timeout )
+		timer.Adjust( "ChunkUlTimeout" .. identifier, net.Chunk.Timeout, 1 )
 	end
 	
 	if not keepalive then
@@ -360,7 +374,7 @@ net.Receive( "ChunkRequest", function( len, ply )
 	
 end )
 
---Downloaded the chunk data
+--Download the chunk data
 net.Receive( "ChunkDownload", function( len, ply )
 
 	ply = ply or NULL
