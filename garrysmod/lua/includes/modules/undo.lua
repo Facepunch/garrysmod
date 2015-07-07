@@ -36,15 +36,10 @@ if ( CLIENT ) then
 		local ComboBox = Panel:ListBox()
 		ComboBox:SetTall( 500 )
 		
-		local NUM = 32
-		local Count = 0
 		for k, v in ipairs( ClientUndos ) do
 		
 			local Item = ComboBox:AddItem( tostring( v.Name ) )
 			Item.DoClick = function() RunConsoleCommand( "gmod_undonum", tostring( v.Key ) ) end
-			
-			Count = Count + 1
-			--if ( Count > NUM ) then break end
 
 		end
 
