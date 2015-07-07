@@ -44,7 +44,7 @@ if ( CLIENT ) then
 			Item.DoClick = function() RunConsoleCommand( "gmod_undonum", tostring( v.Key ) ) end
 			
 			Count = Count + 1
-			if ( Count > NUM ) then break end
+			--if ( Count > NUM ) then break end
 
 		end
 
