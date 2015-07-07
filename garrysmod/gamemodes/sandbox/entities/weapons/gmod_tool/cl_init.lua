@@ -10,11 +10,11 @@ end, "gmod_toolmode_panel" )
 include( "shared.lua" )
 include( "cl_viewscreen.lua" )
 
-SWEP.PrintName		= "Tool Gun"
-SWEP.Slot			= 5
-SWEP.SlotPos		= 6
-SWEP.DrawAmmo		= false
-SWEP.DrawCrosshair	= true
+SWEP.PrintName = "Tool Gun"
+SWEP.Slot = 5
+SWEP.SlotPos = 6
+SWEP.DrawAmmo = false
+SWEP.DrawCrosshair = true
 
 SWEP.WepSelectIcon = surface.GetTextureID( "vgui/gmod_tool" )
 SWEP.Gradient = surface.GetTextureID( "gui/gradient" )

@@ -4,10 +4,9 @@ AddCSLuaFile( "shared.lua" )
 
 include( "shared.lua" )
 
-SWEP.Weight				= 5			-- Decides whether we should switch from/to this
-SWEP.AutoSwitchTo		= true		-- Auto switch to if we pick it up
-SWEP.AutoSwitchFrom		= true		-- Auto switch from if you pick up a better weapon
-
+SWEP.Weight = 5			-- Decides whether we should switch from/to this
+SWEP.AutoSwitchTo = true		-- Auto switch to if we pick it up
+SWEP.AutoSwitchFrom = true		-- Auto switch from if you pick up a better weapon
 
 --[[---------------------------------------------------------
    Name: OnRestore
@@ -23,7 +22,9 @@ end
    Desc: Accepts input, return true to override/accept input
 -----------------------------------------------------------]]
 function SWEP:AcceptInput( name, activator, caller, data )
+
 	return false
+
 end
 
 
@@ -47,7 +48,6 @@ end
    Desc: A player or NPC has picked the weapon up
 -----------------------------------------------------------]]
 function SWEP:Equip( NewOwner )
-
 end
 
 --[[---------------------------------------------------------
@@ -56,7 +56,6 @@ end
 		The weapon will be removed immidiately after this call.
 -----------------------------------------------------------]]
 function SWEP:EquipAmmo( NewOwner )
-
 end
 
 
@@ -73,7 +72,9 @@ end
    Desc: Should this weapon be dropped when its owner dies?
 -----------------------------------------------------------]]
 function SWEP:ShouldDropOnDie()
+
 	return true
+
 end
 
 --[[---------------------------------------------------------
@@ -107,10 +108,8 @@ function SWEP:NPCShoot_Primary( ShootPos, ShootDir )
 end
 
 -- These tell the NPC how to use the weapon
-AccessorFunc( SWEP, "fNPCMinBurst", 		"NPCMinBurst" )
-AccessorFunc( SWEP, "fNPCMaxBurst", 		"NPCMaxBurst" )
-AccessorFunc( SWEP, "fNPCFireRate", 		"NPCFireRate" )
+AccessorFunc( SWEP, "fNPCMinBurst", 	"NPCMinBurst" )
+AccessorFunc( SWEP, "fNPCMaxBurst", 	"NPCMaxBurst" )
+AccessorFunc( SWEP, "fNPCFireRate", 	"NPCFireRate" )
 AccessorFunc( SWEP, "fNPCMinRestTime", 	"NPCMinRest" )
 AccessorFunc( SWEP, "fNPCMaxRestTime", 	"NPCMaxRest" )
-
-

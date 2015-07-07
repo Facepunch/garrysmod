@@ -1,36 +1,37 @@
 
 AddCSLuaFile()
 
+SWEP.PrintName = "#GMOD_Camera"
+SWEP.Slot = 5
+SWEP.SlotPos = 1
+SWEP.DrawAmmo = false
+SWEP.DrawCrosshair = false
+
+SWEP.AutoSwitchTo = false
+SWEP.AutoSwitchFrom	= false
+
 SWEP.ViewModel = Model( "models/weapons/c_arms_animations.mdl" )
 SWEP.WorldModel = Model( "models/MaxOfS2D/camera.mdl" )
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo			= "none"
+SWEP.Spawnable = true
 
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= true
-SWEP.Secondary.Ammo			= "none"
+SWEP.Primary = 
+{
+	ClipSize = -1,
+	DefaultClip = -1,
+	Automatic = false,
+	Ammo = "none"
+}
 
-
-SWEP.PrintName	= "#GMOD_Camera"
-
-SWEP.Slot		= 5
-SWEP.SlotPos	= 1
-
-SWEP.DrawAmmo		= false
-SWEP.DrawCrosshair	= false
-SWEP.Spawnable		= true
-
-SWEP.ShootSound = Sound( "NPC_CScanner.TakePhoto" )
+SWEP.Secondary = 
+{
+	ClipSize = -1,
+	DefaultClip	= -1,
+	Automatic = true,
+	Ammo = "none"
+}
 
 if ( SERVER ) then
-
-	SWEP.AutoSwitchTo		= false
-	SWEP.AutoSwitchFrom		= false
-
 	--
 	-- A concommand to quickly switch to the camera
 	--
@@ -39,8 +40,9 @@ if ( SERVER ) then
 		player:SelectWeapon( "gmod_camera" )
 
 	end )
-
 end
+
+local ShootSound = Sound( "NPC_CScanner.TakePhoto" )
 
 --
 -- Network/Data Tables
@@ -149,7 +151,7 @@ function SWEP:ShouldDropOnDie() return false end
 --
 function SWEP:DoShootEffect()
 
-	self:EmitSound( self.ShootSound )
+	self:EmitSound( ShootSound )
 	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 	self.Owner:SetAnimation( PLAYER_ATTACK1 )
 

@@ -6,11 +6,10 @@ AddCSLuaFile( "stool.lua" )
 AddCSLuaFile( "cl_viewscreen.lua" )
 AddCSLuaFile( "stool_cl.lua" )
 
-include('shared.lua')
+include( "shared.lua")
 
-SWEP.Weight			= 5
-SWEP.AutoSwitchTo		= false
-SWEP.AutoSwitchFrom		= false
+SWEP.AutoSwitchTo = false
+SWEP.AutoSwitchFrom = false
 
 --[[---------------------------------------------------------
    Desc: Convenience function to check object limits
@@ -27,7 +26,9 @@ end
    Desc: Should this weapon be dropped when its owner dies?
 -----------------------------------------------------------]]
 function SWEP:ShouldDropOnDie()
+
 	return false
+
 end
 
 --[[---------------------------------------------------------
