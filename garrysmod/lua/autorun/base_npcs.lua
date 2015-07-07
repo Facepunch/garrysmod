@@ -261,7 +261,9 @@ if ( IsMounted( "ep2" ) ) then
 	}
 	list.Set( "NPC", NPC.Class, NPC )
 	game.AddParticles( "particles/antlion_worker.pcf" )
+end
 
+if ( IsMounted( "episodic" ) ) then
 	local NPC = {
 		Name = "Zombine", 
 		Class = "npc_zombine",
@@ -309,7 +311,9 @@ local NPC = {
 	Name = "Metro Police", 
 	Class = "npc_metropolice",
 	Category = Category,
-	Weapons = { "weapon_stunstick", "weapon_pistol", "weapon_smg1" }
+	Weapons = { "weapon_stunstick", "weapon_pistol", "weapon_smg1" },
+	SpawnFlags = 8,
+	KeyValues = { SquadName = "overwatch" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -317,7 +321,8 @@ local NPC = {
 	Name = "Rollermine", 
 	Class = "npc_rollermine",
 	Category = Category,
-	Offset = 16
+	Offset = 16,
+	KeyValues = { SquadName = "overwatch" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -328,7 +333,8 @@ local NPC = {
 	OnFloor = true,
 	TotalSpawnFlags = 0,
 	Rotate = Angle( 0, 180, 0 ),
-	Offset = 2
+	Offset = 2,
+	KeyValues = { SquadName = "overwatch" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -337,7 +343,8 @@ local NPC = {
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier.mdl",
-	Weapons = { "weapon_smg1", "weapon_ar2" }
+	Weapons = { "weapon_smg1", "weapon_ar2" },
+	KeyValues = { SquadName = "overwatch", Numgrenades = 5 }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -347,7 +354,8 @@ local NPC = {
     Category = Category,
 	Model = "models/combine_soldier.mdl",
     Skin = 1,
-	Weapons = { "weapon_shotgun" }
+	Weapons = { "weapon_shotgun" },
+	KeyValues = { SquadName = "overwatch", Numgrenades = 5 }
 }
 list.Set( "NPC", "ShotgunSoldier", NPC )
 
@@ -356,7 +364,8 @@ local NPC = {
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier_prisonguard.mdl",
-	Weapons = { "weapon_smg1", "weapon_ar2" }
+	Weapons = { "weapon_smg1", "weapon_ar2" },
+	KeyValues = { SquadName = "novaprospekt", Numgrenades = 5 }
 }
 list.Set( "NPC", "CombinePrison", NPC )
 
@@ -366,7 +375,8 @@ local NPC = {
     Category = Category,
     Model = "models/combine_soldier_prisonguard.mdl",
     Skin = 1,
-	Weapons = { "weapon_shotgun" }
+	Weapons = { "weapon_shotgun" },
+	KeyValues = { SquadName = "novaprospekt", Numgrenades = 5 }
 }	
 list.Set( "NPC", "PrisonShotgunner", NPC )
 
@@ -375,7 +385,9 @@ local NPC = {
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_super_soldier.mdl",
-	Weapons = { "weapon_ar2" }
+	Weapons = { "weapon_ar2" },
+	KeyValues = { Numgrenades = 10, SquadName = "overwatch" },
+	SpawnFlags = 16384
 }
 list.Set( "NPC", "CombineElite", NPC )
 
@@ -383,7 +395,8 @@ local NPC = {
 	Name = "City Scanner", 
 	Class = "npc_cscanner",
 	Category = Category,
-	Offset = 20
+	Offset = 20,
+	KeyValues = { SquadName = "overwatch" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -391,7 +404,8 @@ local NPC = {
 	Name = "Shield Scanner", 
 	Class = "npc_clawscanner",
 	Category = Category,
-	Offset = 20
+	Offset = 20,
+	KeyValues = { SquadName = "overwatch" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -399,7 +413,8 @@ local NPC = {
 	Name = "Combine Gunship", 
 	Class = "npc_combinegunship",
 	Category = Category,
-	Offset = 300
+	Offset = 300,
+	KeyValues = { SquadName = "overwatch" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -407,7 +422,8 @@ local NPC = {
 	Name = "Combine Dropship", 
 	Class = "npc_combinedropship",
 	Category = Category,
-	Offset = 300
+	Offset = 300,
+	KeyValues = { SquadName = "overwatch" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -415,7 +431,8 @@ local NPC = {
 	Name = "Hunter-Chopper", 
 	Class = "npc_helicopter",
 	Category = Category,
-	Offset = 300
+	Offset = 300,
+	KeyValues = { SquadName = "overwatch" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -424,7 +441,8 @@ local NPC = {
 	Class = "npc_combine_camera",
 	Category = Category,
 	OnCeiling = true,
-	Offset = 2
+	Offset = 2,
+	KeyValues = { SquadName = "overwatch" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -434,7 +452,8 @@ local NPC = {
 	Category = Category,
 	SpawnFlags = 32, -- SF_NPC_TURRET_AUTOACTIVATE
 	OnCeiling = true,
-	Offset = 0
+	Offset = 0,
+	KeyValues = { SquadName = "overwatch" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -442,7 +461,8 @@ local NPC = {
 	Name = "Strider", 
 	Class = "npc_strider",
 	Category = Category,
-	Offset = 100
+	Offset = 100,
+	KeyValues = { SquadName = "overwatch" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -451,14 +471,15 @@ local NPC = {
 	Class = "npc_stalker",
 	Category = Category,
 	KeyValues = { squadname = "npc_stalker_squad" },
-	Offset = 10
+	Offset = 10,
 }
 list.Set( "NPC", NPC.Class, NPC )
 
 local NPC = {
 	Name = "Manhack", 
 	Class = "npc_manhack",
-	Category = Category
+	Category = Category,
+	KeyValues = { SquadName = "overwatch" }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
@@ -466,7 +487,8 @@ if ( IsMounted( "ep2" ) ) then
 	local NPC = {
 		Name = "Hunter", 
 		Class = "npc_hunter",
-		Category = Category
+		Category = Category,
+		KeyValues = { SquadName = "overwatch" }
 	}
 	list.Set( "NPC", NPC.Class, NPC )
 end
