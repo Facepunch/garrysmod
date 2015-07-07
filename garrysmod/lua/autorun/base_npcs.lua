@@ -313,7 +313,7 @@ local NPC = {
 	Category = Category,
 	Weapons = { "weapon_stunstick", "weapon_pistol", "weapon_smg1" },
 	SpawnFlags = 8,
-	KeyValues = { SquadName = "overwatch" }
+	KeyValues = { SquadName = "overwatch", Manhacks = 1 }
 }
 list.Set( "NPC", NPC.Class, NPC )
 
