@@ -264,3 +264,82 @@ end
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
 end
+
+--[[---------------------------------------------------------
+    Name: GetNumbersFromTbl( table, subtablecount )
+    Desc: Loops through a table to retrieve any values that have the type of a number
+    Usage: GetNumbersFromTbl({ 1, 2, 3, { 4 } }, 0 )) > 1, 2, 3 
+    (Loop through 0 subtables)
+    GetNumbersFromTbl({ 1, 2, 3, { 4 } }, 1 )) > 1, 2, 3, 4 
+    (Loop through 1 subtable)
+-----------------------------------------------------------]]
+function math.GetNumbersFromTbl( tbl, sub )
+    local numbers, subsdone = {}, 0
+    local function TblLoop( tbl, subcount )
+        for _, val in pairs( tbl ) do
+            if type( val ) == 'number' then
+                numbers[ #numbers + 1 ] = val
+            elseif type( val ) == 'table' and subsdone < ( sub or 0 ) then
+                TblLoop( val, sub )
+                subsdone = subsdone + 1
+            end
+        end
+    end
+    TblLoop( tbl, sub )
+    return numbers
+end
+
+--[[---------------------------------------------------------
+    Name Mean(...)
+    Desc: Finds the mean of any number of args.
+    Usage: math.Mean( 1, 2, 3 ) > 2
+       math.Mean( { 1, 2, 3 } ) > 2 (tables work as well)
+-----------------------------------------------------------]]
+function math.Mean(...)
+    local total, count = 0, 0
+    for _, v in ipairs(math.GetNumbersFromTbl({...}, 1)) do
+        total = total + v
+        count = count + 1
+    end
+    return total / count
+end
+
+--[[---------------------------------------------------------
+    Name Median(...)
+    Desc: Finds the median of any number of args.
+    Usage: math.Median( 1, 2, 3, 4 ) > 2.5
+       math.Median( { 1, 2, 3, 4 } ) > 2.5 (tables work as well)
+-----------------------------------------------------------]]
+function math.Median(...)
+    local sorttbl = {}
+    for _, v in ipairs(math.GetNumbersFromTbl({...}, 1)) do
+        table.insert( sorttbl, v )
+        sorttbl[ #sorttbl + 1 ] = v
+    end
+    table.sort( sorttbl )
+    if math.fmod(#sorttbl,2) == 0 then
+        return ( sorttbl[#sorttbl/2] + sorttbl[(#sorttbl/2)+1] ) / 2
+    else
+        return sorttbl[math.ceil(#sorttbl/2)]
+    end
+end
+
+--[[---------------------------------------------------------
+    Name Mode(...)
+    Desc: Finds the mode of any number of args, which do not have to be numbers.
+    Usage: math.Mode( 1, 2, 3, 2 ) > 2
+         math.Mode( 1, 2, 3 ) > 1, 2, 3
+         math.Mode( { 1, 2, 3 } ) > 1, 2, 3 (tables work as well)
+-----------------------------------------------------------]]
+function math.Mode(...)
+    local counts, biggestcount = {}, 0
+    for _, v in ipairs(math.GetNumbersFromTbl({...}, 1)) do
+        if counts[v] == nil then
+            counts[v] = 1
+        else
+            counts[v] = counts[v] + 1
+        end
+        if counts[v] > biggestcount then biggestcount = counts[v] end
+    end
+    return table.KeysFromValue( counts, biggestcount )
+end
