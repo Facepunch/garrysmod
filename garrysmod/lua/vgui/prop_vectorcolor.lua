@@ -64,7 +64,7 @@ function PANEL:Setup( vars )
 			-- convert color to vector
 			local vec = Vector( newcol.r / 255, newcol.g / 255, newcol.b / 255 )
 
-			self:ValueChanged( tostring( vec ), true )
+			self:ValueChanged( vec:Serialize(), true )
 
 		end
 

@@ -307,7 +307,7 @@ function PANEL:UpdateConVar( strName, strKey, color )
 	if ( !strName ) then return end
 	local col = color[strKey]
 
-	RunConsoleCommand( strName, tostring( col ) )
+	RunConsoleCommand( strName, col:Serialize() )
 
 	self[ 'ConVarOld'..strName ] = col
 end

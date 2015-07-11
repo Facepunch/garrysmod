@@ -36,13 +36,33 @@ function IsColor( obj )
 end
 
 
+
+--[[---------------------------------------------------------
+	Returns color as a string ( unlinks necessity of
+	using tostring for functionality )
+
+	delimiter = " ": allows you to set your own delimiter
+	between the individual values.
+
+	postfix = "": allows you to set your own postfix
+	at the end of the output to make Exploding the
+	data easy.
+-----------------------------------------------------------]]
+function COLOR:Serialize( delimiter, postfix )
+
+	local delimiter = ( isstring( delimiter ) ) && delimiter || " "
+	local postfix = ( isstring( postfix ) ) && postfix || ""
+	return string.format( "%d%s%d%s%d%s%d%s", self.r, delimiter, self.g, delimiter, self.b, delimiter, self.a, postfix )
+
+end
+
 --[[---------------------------------------------------------
 	Returns color as a string
 -----------------------------------------------------------]]
 function COLOR:__tostring()
-	
-	return string.format( "%d %d %d %d", self.r, self.g, self.b, self.a )
-	
+
+	return self:Serialize( )
+
 end
 
 --[[---------------------------------------------------------
