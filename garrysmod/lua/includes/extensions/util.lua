@@ -81,7 +81,10 @@ function util.Tracer( vecStart, vecEnd, pEntity, iAttachment, flVelocity, bWhiz,
 	data:SetOrigin( vecEnd )
 	data:SetEntity( pEntity )
 	data:SetScale( flVelocity )
-	data:SetHitBox( iParticleID )
+	
+	if ( iParticleID ~= nil ) then
+		data:SetHitBox( iParticleID )
+	end
 
 	local fFlags = data:GetFlags()
 
