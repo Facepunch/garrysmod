@@ -30,7 +30,7 @@ function GM:PlayerBindPress(ply, bind, pressed)
       end
       return true
    elseif bind == "+attack" then
-      if WSWITCH.Show then
+      if WSWITCH:PreventAttack() then
          if not pressed then
             WSWITCH:ConfirmSelection()
          end
