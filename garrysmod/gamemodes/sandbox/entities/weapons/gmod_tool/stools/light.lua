@@ -36,12 +36,6 @@ function TOOL:LeftClick( trace, attach )
 	
 	local key = self:GetClientNumber( "key" )
 	
-	-- Clamp for multiplayer
-	if ( !game.SinglePlayer() ) then
-		size = math.Clamp( size, 0, 512 )
-		brght = math.Clamp( brght, 0, 1 )
-	end
-	
 	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_light" && trace.Entity:GetPlayer() == ply ) then
 
 		trace.Entity:SetColor( Color( r, g, b, 255 ) )
