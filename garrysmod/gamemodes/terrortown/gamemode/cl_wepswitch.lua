@@ -225,7 +225,7 @@ function WSWITCH:DoSelect(idx)
 
    if self.cv.fast:GetBool() then
       -- immediately confirm if fastswitch is on
-      self:ConfirmSelection()
+      self:ConfirmSelection(true)
    end   
 end
 
@@ -283,15 +283,20 @@ function WSWITCH:Disable()
 end
 
 -- Switch to the currently selected weapon
-function WSWITCH:ConfirmSelection()
-   self:Disable()
+function WSWITCH:ConfirmSelection(noHide)
+   if not noHide then self:Disable() end
 
    for k, w in pairs(self.WeaponCache) do
       if k == self.Selected and IsValid(w) then
          RunConsoleCommand("wepswitch", w:GetClass())
          return
       end
-   end   
+   end
+end
+
+-- Allow for suppression of the attack command
+function WSWITCH:PreventAttack()
+   return self.Show and !self.cv.fast:GetBool()
 end
 
 function WSWITCH:Think()
