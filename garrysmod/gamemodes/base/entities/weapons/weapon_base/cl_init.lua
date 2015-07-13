@@ -163,7 +163,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:DrawWorldModel()
 	
-	self.Weapon:DrawModel()
+	self:DrawModel()
 
 end
 
@@ -174,7 +174,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:DrawWorldModelTranslucent()
 	
-	self.Weapon:DrawModel()
+	self:DrawModel()
 
 end
 

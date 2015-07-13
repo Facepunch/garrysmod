@@ -16,7 +16,7 @@ SWEP.AutoSwitchFrom = false
 -----------------------------------------------------------]]
 function SWEP:CheckLimit( str ) 
 
-	local ply = self.Weapon:GetOwner()
+	local ply = self:GetOwner()
 	return ply:CheckLimit( str )
 
 end

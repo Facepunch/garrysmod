@@ -184,8 +184,8 @@ end
 -----------------------------------------------------------]]
 function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePredicted )
 
-	self.Weapon:EmitSound( self.ShootSound	)
-	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) 	-- View model animation
+	self:EmitSound( self.ShootSound	)
+	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) 	-- View model animation
 	
 	-- There's a bug with the model that's causing a muzzle to 
 	-- appear on everyone's screen when we fire this animation. 
@@ -204,7 +204,7 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 		effectdata:SetOrigin( hitpos )
 		effectdata:SetStart( self.Owner:GetShootPos() )
 		effectdata:SetAttachment( 1 )
-		effectdata:SetEntity( self.Weapon )
+		effectdata:SetEntity( self )
 	util.Effect( "ToolTracer", effectdata )
 	
 end

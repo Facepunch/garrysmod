@@ -56,7 +56,7 @@ function SWEP:PrimaryAttack()
 	if ( !self:CanPrimaryAttack() ) then return end
 
 	-- Play shoot sound
-	self.Weapon:EmitSound("Weapon_AR2.Single")
+	self:EmitSound("Weapon_AR2.Single")
 	
 	-- Shoot 9 bullets, 150 damage, 0.75 aimcone
 	self:ShootBullet( 150, 1, 0.01 )
@@ -80,7 +80,7 @@ function SWEP:SecondaryAttack()
 	if ( !self:CanSecondaryAttack() ) then return end
 
 	-- Play shoot sound
-	self.Weapon:EmitSound("Weapon_Shotgun.Single")
+	self:EmitSound("Weapon_Shotgun.Single")
 	
 	-- Shoot 9 bullets, 150 damage, 0.75 aimcone
 	self:ShootBullet( 150, 9, 0.2 )
@@ -100,7 +100,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:Reload()
 
-	self.Weapon:DefaultReload( ACT_VM_RELOAD )
+	self:DefaultReload( ACT_VM_RELOAD )
 
 end
 
@@ -141,7 +141,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:ShootEffects()
 
-	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) 		-- View model animation
+	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) 		-- View model animation
 	self.Owner:MuzzleFlash()								-- Crappy muzzle light
 	self.Owner:SetAnimation( PLAYER_ATTACK1 )				-- 3rd Person Animation
 
@@ -178,15 +178,15 @@ end
 function SWEP:TakePrimaryAmmo( num )
 
 	-- Doesn't use clips
-	if ( self.Weapon:Clip1() <= 0 ) then 
+	if ( self:Clip1() <= 0 ) then 
 	
 		if ( self:Ammo1() <= 0 ) then return end
 		
-		self.Owner:RemoveAmmo( num, self.Weapon:GetPrimaryAmmoType() )
+		self.Owner:RemoveAmmo( num, self:GetPrimaryAmmoType() )
 	
 	return end
 	
-	self.Weapon:SetClip1( self.Weapon:Clip1() - num )	
+	self:SetClip1( self:Clip1() - num )	
 
 end
 
@@ -198,15 +198,15 @@ end
 function SWEP:TakeSecondaryAmmo( num )
 
 	-- Doesn't use clips
-	if ( self.Weapon:Clip2() <= 0 ) then 
+	if ( self:Clip2() <= 0 ) then 
 	
 		if ( self:Ammo2() <= 0 ) then return end
 		
-		self.Owner:RemoveAmmo( num, self.Weapon:GetSecondaryAmmoType() )
+		self.Owner:RemoveAmmo( num, self:GetSecondaryAmmoType() )
 	
 	return end
 	
-	self.Weapon:SetClip2( self.Weapon:Clip2() - num )	
+	self:SetClip2( self:Clip2() - num )	
 
 end
 
@@ -217,7 +217,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:CanPrimaryAttack()
 
-	if ( self.Weapon:Clip1() <= 0 ) then
+	if ( self:Clip1() <= 0 ) then
 	
 		self:EmitSound( "Weapon_Pistol.Empty" )
 		self:SetNextPrimaryFire( CurTime() + 0.2 )
@@ -237,10 +237,10 @@ end
 -----------------------------------------------------------]]
 function SWEP:CanSecondaryAttack()
 
-	if ( self.Weapon:Clip2() <= 0 ) then
+	if ( self:Clip2() <= 0 ) then
 	
-		self.Weapon:EmitSound( "Weapon_Pistol.Empty" )
-		self.Weapon:SetNextSecondaryFire( CurTime() + 0.2 )
+		self:EmitSound( "Weapon_Pistol.Empty" )
+		self:SetNextSecondaryFire( CurTime() + 0.2 )
 		return false
 		
 	end
@@ -272,7 +272,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:Ammo1()
 
-	return self.Owner:GetAmmoCount( self.Weapon:GetPrimaryAmmoType() )
+	return self.Owner:GetAmmoCount( self:GetPrimaryAmmoType() )
 
 end
 
@@ -283,7 +283,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:Ammo2()
 
-	return self.Owner:GetAmmoCount( self.Weapon:GetSecondaryAmmoType() )
+	return self.Owner:GetAmmoCount( self:GetSecondaryAmmoType() )
 
 end
 
