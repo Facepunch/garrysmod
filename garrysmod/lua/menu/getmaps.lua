@@ -1,192 +1,179 @@
 
-if ( g_MapList ) then return end
-
 local MapPatterns = {}
+local MapNames = {}
 
-local function UpdateMapPatterns()
+local function UpdateMaps()
 
 	MapPatterns = {}
+	MapNames = {}
 
-	MapPatterns[ "^aoc_" ] = "Age of Chivalry"
+	MapNames[ "aoc_" ] = "Age of Chivalry"
+
 	MapPatterns[ "^asi-" ] = "Alien Swarm"
+	MapNames[ "lobby" ] = "Alien Swarm"
 
-	MapPatterns[ "lobby" ] = "Alien Swarm"
+	MapNames[ "cp_docks" ] = "Blade Symphony"
+	MapNames[ "cp_parkour" ] = "Blade Symphony"
+	MapNames[ "cp_sequence" ] = "Blade Symphony"
+	MapNames[ "cp_terrace" ] = "Blade Symphony"
+	MapNames[ "cp_test" ] = "Blade Symphony"
+	MapNames[ "duel_" ] = "Blade Symphony"
+	MapNames[ "ffa_community" ] = "Blade Symphony"
+	MapNames[ "free_" ] = "Blade Symphony"
+	MapNames[ "practice_box" ] = "Blade Symphony"
+	MapNames[ "tut_training" ] = "Blade Symphony"
 
-	MapPatterns[ "^ar_" ] = "Counter-Strike"
-	MapPatterns[ "^cs_" ] = "Counter-Strike"
-	MapPatterns[ "^de_" ] = "Counter-Strike"
-	MapPatterns[ "^es_" ] = "Counter-Strike"
-	MapPatterns[ "^fy_" ] = "Counter-Strike"
-	MapPatterns[ "training1" ] = "Counter-Strike"
+	MapNames[ "ar_" ] = "Counter-Strike"
+	MapNames[ "cs_" ] = "Counter-Strike"
+	MapNames[ "de_" ] = "Counter-Strike"
+	MapNames[ "es_" ] = "Counter-Strike"
+	MapNames[ "fy_" ] = "Counter-Strike"
+	MapNames[ "gd_" ] = "Counter-Strike"
+	MapNames[ "training1" ] = "Counter-Strike"
 
-	MapPatterns[ "^dod_" ] = "Day Of Defeat"
+	MapNames[ "dod_" ] = "Day Of Defeat"
 
-	MapPatterns[ "cp_pacentro" ] = "Dino D-Day"
-	MapPatterns[ "cp_snowypark" ] = "Dino D-Day"
-	MapPatterns[ "cp_troina" ] = "Dino D-Day"
-	MapPatterns[ "dm_canyon" ] = "Dino D-Day"
-	MapPatterns[ "dm_depot" ] = "Dino D-Day"
-	MapPatterns[ "dm_fortress_trex" ] = "Dino D-Day"
-	MapPatterns[ "dm_gela_trex" ] = "Dino D-Day"
-	MapPatterns[ "dm_hilltop" ] = "Dino D-Day"
-	MapPatterns[ "dm_market" ] = "Dino D-Day"
-	MapPatterns[ "dm_pacentro" ] = "Dino D-Day"
-	MapPatterns[ "dm_snowypark" ] = "Dino D-Day"
-	MapPatterns[ "dm_troina" ] = "Dino D-Day"
-	MapPatterns[ "koth_hilltop" ] = "Dino D-Day"
-	MapPatterns[ "koth_market" ] = "Dino D-Day"
-	MapPatterns[ "koth_pacentro" ] = "Dino D-Day"
-	MapPatterns[ "koth_snowypark" ] = "Dino D-Day"
-	MapPatterns[ "obj_canyon" ] = "Dino D-Day"
-	MapPatterns[ "obj_depot" ] = "Dino D-Day"
-	MapPatterns[ "obj_fortress" ] = "Dino D-Day"
+	MapNames[ "ddd_" ] = "Dino D-Day"
 
-	MapPatterns[ "de_dam" ] = "DIPRIP"
-	MapPatterns[ "dm_city" ] = "DIPRIP"
-	MapPatterns[ "dm_refinery" ] = "DIPRIP"
-	MapPatterns[ "dm_supermarket" ] = "DIPRIP"
-	MapPatterns[ "dm_village" ] = "DIPRIP"
-	MapPatterns[ "^ur_" ] = "DIPRIP"
+	MapNames[ "de_dam" ] = "DIPRIP"
+	MapNames[ "dm_city" ] = "DIPRIP"
+	MapNames[ "dm_refinery" ] = "DIPRIP"
+	MapNames[ "dm_supermarket" ] = "DIPRIP"
+	MapNames[ "dm_village" ] = "DIPRIP"
+	MapNames[ "ur_city" ] = "DIPRIP"
+	MapNames[ "ur_refinery" ] = "DIPRIP"
+	MapNames[ "ur_supermarket" ] = "DIPRIP"
+	MapNames[ "ur_village" ] = "DIPRIP"
 
-	MapPatterns[ "^dys_" ] = "Dystopia"
-	MapPatterns[ "^pb_" ] = "Dystopia"
+	MapNames[ "dys_" ] = "Dystopia"
+	MapNames[ "pb_dojo" ] = "Dystopia"
+	MapNames[ "pb_rooftop" ] = "Dystopia"
+	MapNames[ "pb_round" ] = "Dystopia"
+	MapNames[ "pb_urbandome" ] = "Dystopia"
+	MapNames[ "sav_dojo6" ] = "Dystopia"
+	MapNames[ "varena" ] = "Dystopia"
 
-	MapPatterns[ "credits" ] = "Half-Life 2"
-	MapPatterns[ "^d1_" ] = "Half-Life 2"
-	MapPatterns[ "^d2_" ] = "Half-Life 2"
-	MapPatterns[ "^d3_" ] = "Half-Life 2"
-	MapPatterns[ "intro" ] = "Half-Life 2"
+	MapNames[ "d1_" ] = "Half-Life 2"
+	MapNames[ "d2_" ] = "Half-Life 2"
+	MapNames[ "d3_" ] = "Half-Life 2"
 
-	MapPatterns[ "^dm_" ] = "Half-Life 2: Deathmatch"
-	MapPatterns[ "halls3" ] = "Half-Life 2: Deathmatch"
+	MapNames[ "dm_" ] = "Half-Life 2: Deathmatch"
+	MapNames[ "halls3" ] = "Half-Life 2: Deathmatch"
 
-	MapPatterns[ "^ep1_" ] = "Half-Life 2: Episode 1"
-	MapPatterns[ "^ep2_" ] = "Half-Life 2: Episode 2"
-	MapPatterns[ "^ep3_" ] = "Half-Life 2: Episode 3"
+	MapNames[ "ep1_" ] = "Half-Life 2: Episode 1"
+	MapNames[ "ep2_" ] = "Half-Life 2: Episode 2"
+	MapNames[ "ep3_" ] = "Half-Life 2: Episode 3"
 
-	MapPatterns[ "d2_lostcoast" ] = "Half-Life 2: Lost Coast"
-	//MapPatterns[ "vst_lostcoast" ] = "Half-Life 2: Lost Coast"
+	MapNames[ "d2_lostcoast" ] = "Half-Life 2: Lost Coast"
 
-	MapPatterns[ "^c0a" ] = "Half-Life: Source"
-	MapPatterns[ "^c1a" ] = "Half-Life: Source"
-	MapPatterns[ "^c2a" ] = "Half-Life: Source"
-	MapPatterns[ "^c3a" ] = "Half-Life: Source"
-	MapPatterns[ "^c4a" ] = "Half-Life: Source"
-	MapPatterns[ "^c5a" ] = "Half-Life: Source"
-	MapPatterns[ "^t0a" ] = "Half-Life: Source"
+	MapPatterns[ "^c[%d]a" ] = "Half-Life"
+	MapPatterns[ "^t0a" ] = "Half-Life"
 
-	MapPatterns[ "boot_camp" ] = "Half-Life Deathmatch: Source"
-	MapPatterns[ "bounce" ] = "Half-Life Deathmatch: Source"
-	MapPatterns[ "crossfire" ] = "Half-Life Deathmatch: Source"
-	MapPatterns[ "datacore" ] = "Half-Life Deathmatch: Source"
-	MapPatterns[ "frenzy" ] = "Half-Life Deathmatch: Source"
-	MapPatterns[ "lambda_bunker" ] = "Half-Life Deathmatch: Source"
-	MapPatterns[ "rapidcore" ] = "Half-Life Deathmatch: Source"
-	MapPatterns[ "snarkpit" ] = "Half-Life Deathmatch: Source"
-	MapPatterns[ "stalkyard" ] = "Half-Life Deathmatch: Source"
-	MapPatterns[ "subtransit" ] = "Half-Life Deathmatch: Source"
-	MapPatterns[ "undertow" ] = "Half-Life Deathmatch: Source"
+	MapNames[ "boot_camp" ] = "Half-Life Deathmatch"
+	MapNames[ "bounce" ] = "Half-Life Deathmatch"
+	MapNames[ "crossfire" ] = "Half-Life Deathmatch"
+	MapNames[ "datacore" ] = "Half-Life Deathmatch"
+	MapNames[ "frenzy" ] = "Half-Life Deathmatch"
+	MapNames[ "lambda_bunker" ] = "Half-Life Deathmatch"
+	MapNames[ "rapidcore" ] = "Half-Life Deathmatch"
+	MapNames[ "snarkpit" ] = "Half-Life Deathmatch"
+	MapNames[ "stalkyard" ] = "Half-Life Deathmatch"
+	MapNames[ "subtransit" ] = "Half-Life Deathmatch"
+	MapNames[ "undertow" ] = "Half-Life Deathmatch"
 
-	MapPatterns[ "^ins_" ] = "Insurgency"
+	MapNames[ "ins_" ] = "Insurgency"
 
-	MapPatterns[ "^l4d" ] = "Left 4 Dead"
+	MapNames[ "l4d_" ] = "Left 4 Dead"
 
-	MapPatterns[ "^c1m" ] = "Left 4 Dead 2"
-	MapPatterns[ "^c2m" ] = "Left 4 Dead 2"
-	MapPatterns[ "^c3m" ] = "Left 4 Dead 2"
-	MapPatterns[ "^c4m" ] = "Left 4 Dead 2"
-	MapPatterns[ "^c5m" ] = "Left 4 Dead 2"
-	MapPatterns[ "^c6m" ] = "Left 4 Dead 2" -- DLCs
-	MapPatterns[ "^c7m" ] = "Left 4 Dead 2"
-	MapPatterns[ "^c8m" ] = "Left 4 Dead 2"
-	MapPatterns[ "^c9m" ] = "Left 4 Dead 2"
-	MapPatterns[ "^c10m" ] = "Left 4 Dead 2"
-	MapPatterns[ "^c11m" ] = "Left 4 Dead 2"
-	MapPatterns[ "^c12m" ] = "Left 4 Dead 2"
-	MapPatterns[ "^c13m" ] = "Left 4 Dead 2"
-	MapPatterns[ "curling_stadium" ] = "Left 4 Dead 2"
-	MapPatterns[ "tutorial_standards" ] = "Left 4 Dead 2"
-	MapPatterns[ "tutorial_standards_vs" ] = "Left 4 Dead 2"
+	MapPatterns[ "^c[%d]m" ] = "Left 4 Dead 2"
+	MapNames[ "curling_stadium" ] = "Left 4 Dead 2"
+	MapNames[ "tutorial_standards" ] = "Left 4 Dead 2"
+	MapNames[ "tutorial_standards_vs" ] = "Left 4 Dead 2"
 
-	MapPatterns[ "clocktower" ] = "Nuclear Dawn"
-	MapPatterns[ "coast" ] = "Nuclear Dawn"
-	MapPatterns[ "downtown" ] = "Nuclear Dawn"
-	MapPatterns[ "gate" ] = "Nuclear Dawn"
-	MapPatterns[ "hydro" ] = "Nuclear Dawn"
-	MapPatterns[ "metro" ] = "Nuclear Dawn"
-	MapPatterns[ "metro_training" ] = "Nuclear Dawn"
-	MapPatterns[ "oasis" ] = "Nuclear Dawn"
-	MapPatterns[ "oilfield" ] = "Nuclear Dawn"
-	MapPatterns[ "silo" ] = "Nuclear Dawn"
-	MapPatterns[ "sk_metro" ] = "Nuclear Dawn"
-	MapPatterns[ "training" ] = "Nuclear Dawn"
+	MapNames[ "clocktower" ] = "Nuclear Dawn"
+	MapNames[ "coast" ] = "Nuclear Dawn"
+	MapNames[ "downtown" ] = "Nuclear Dawn"
+	MapNames[ "gate" ] = "Nuclear Dawn"
+	MapNames[ "hydro" ] = "Nuclear Dawn"
+	MapNames[ "metro" ] = "Nuclear Dawn"
+	MapNames[ "metro_training" ] = "Nuclear Dawn"
+	MapNames[ "oasis" ] = "Nuclear Dawn"
+	MapNames[ "oilfield" ] = "Nuclear Dawn"
+	MapNames[ "silo" ] = "Nuclear Dawn"
+	MapNames[ "sk_metro" ] = "Nuclear Dawn"
+	MapNames[ "training" ] = "Nuclear Dawn"
 
-	MapPatterns[ "^bt_" ] = "Pirates, Vikings, & Knights II"
-	MapPatterns[ "^lts_" ] = "Pirates, Vikings, & Knights II"
-	MapPatterns[ "^te_" ] = "Pirates, Vikings, & Knights II"
-	MapPatterns[ "^tw_" ] = "Pirates, Vikings, & Knights II"
+	MapNames[ "bt_" ] = "Pirates, Vikings, & Knights II"
+	MapNames[ "lts_" ] = "Pirates, Vikings, & Knights II"
+	MapNames[ "te_" ] = "Pirates, Vikings, & Knights II"
+	MapNames[ "tw_" ] = "Pirates, Vikings, & Knights II"
 
-	MapPatterns[ "^escape_" ] = "Portal"
-	MapPatterns[ "^testchmb_" ] = "Portal"
+	MapNames[ "escape_" ] = "Portal"
+	MapNames[ "testchmb_" ] = "Portal"
 
-	MapPatterns[ "e1912" ] = "Portal 2"
+	MapNames[ "e1912" ] = "Portal 2"
 	MapPatterns[ "^mp_coop_" ] = "Portal 2"
 	MapPatterns[ "^sp_a" ] = "Portal 2"
 
-	MapPatterns[ "^arena_" ] = "Team Fortress 2"
-	MapPatterns[ "^cp_" ] = "Team Fortress 2"
-	MapPatterns[ "^ctf_" ] = "Team Fortress 2"
-	MapPatterns[ "itemtest" ] = "Team Fortress 2"
-	MapPatterns[ "^koth_" ] = "Team Fortress 2"
-	MapPatterns[ "^mvm_" ] = "Team Fortress 2"
-	MapPatterns[ "^pl_" ] = "Team Fortress 2"
-	MapPatterns[ "^plr_" ] = "Team Fortress 2"
-	MapPatterns[ "^sd_" ] = "Team Fortress 2"
-	MapPatterns[ "^tc_" ] = "Team Fortress 2"
-	MapPatterns[ "^tr_" ] = "Team Fortress 2"
-	MapPatterns[ "^rd_" ] = "Team Fortress 2"
+	MapNames[ "achievement_" ] = "Team Fortress 2"
+	MapNames[ "arena_" ] = "Team Fortress 2"
+	MapNames[ "cp_" ] = "Team Fortress 2"
+	MapNames[ "ctf_" ] = "Team Fortress 2"
+	MapNames[ "itemtest" ] = "Team Fortress 2"
+	MapNames[ "koth_" ] = "Team Fortress 2"
+	MapNames[ "mvm_" ] = "Team Fortress 2"
+	MapNames[ "pl_" ] = "Team Fortress 2"
+	MapNames[ "plr_" ] = "Team Fortress 2"
+	MapNames[ "rd_" ] = "Team Fortress 2"
+	MapNames[ "sd_" ] = "Team Fortress 2"
+	MapNames[ "tc_" ] = "Team Fortress 2"
+	MapNames[ "tr_" ] = "Team Fortress 2"
+	MapNames[ "trade_" ] = "Team Fortress 2"
 
-	MapPatterns[ "^zpa_" ] = "Zombie Panic! Source"
-	MapPatterns[ "^zpl_" ] = "Zombie Panic! Source"
-	MapPatterns[ "^zpo_" ] = "Zombie Panic! Source"
-	MapPatterns[ "^zps_" ] = "Zombie Panic! Source"
+	MapNames[ "zpa_" ] = "Zombie Panic! Source"
+	MapNames[ "zpl_" ] = "Zombie Panic! Source"
+	MapNames[ "zpo_" ] = "Zombie Panic! Source"
+	MapNames[ "zps_" ] = "Zombie Panic! Source"
 
-	MapPatterns[ "^achievement_" ] = "Achievement"
-	MapPatterns[ "^cinema_" ] = "Cinema"
-	MapPatterns[ "^theater_" ] = "Cinema"
-	MapPatterns[ "^xc_" ] = "Climb"
-	MapPatterns[ "^deathrun_" ] = "Deathrun"
-	MapPatterns[ "^dr_" ] = "Deathrun"
-	MapPatterns[ "^fm_" ] = "Flood"
-	MapPatterns[ "^gmt_" ] = "GMod Tower"
-	MapPatterns[ "^jb_" ] = "Jailbreak"
-	MapPatterns[ "^ba_jail_" ] = "Jailbreak"
-	MapPatterns[ "^jail_" ] = "Jailbreak"
-	MapPatterns[ "^mg_" ] = "Minigames"
-	MapPatterns[ "^phys_" ] = "Physics Maps"
-	MapPatterns[ "^pw_" ] = "Pirate Ship Wars"
-	MapPatterns[ "^ph_" ] = "Prop Hunt"
-	MapPatterns[ "^rp_" ] = "Roleplay"
-	MapPatterns[ "^sb_" ] = "Spacebuild"
-	MapPatterns[ "^slender_" ] = "Stop it Slender"
-	MapPatterns[ "^gms_" ] = "Stranded"
-	MapPatterns[ "^surf_" ] = "Surf"
-	MapPatterns[ "^ts_" ] = "The Stalker"
-	MapPatterns[ "^zm_" ] = "Zombie Survival"
-	MapPatterns[ "^zombiesurvival_" ] = "Zombie Survival"
-	MapPatterns[ "^zs_" ] = "Zombie Survival"
+	MapNames[ "bhop_" ] = "Bunny Hop"
+	MapNames[ "cinema_" ] = "Cinema"
+	MapNames[ "theater_" ] = "Cinema"
+	MapNames[ "xc_" ] = "Climb"
+	MapNames[ "deathrun_" ] = "Deathrun"
+	MapNames[ "dr_" ] = "Deathrun"
+	MapNames[ "fm_" ] = "Flood"
+	MapNames[ "gmt_" ] = "GMod Tower"
+	MapNames[ "gg_" ] = "Gun Game"
+	MapNames[ "scoutzknivez" ] = "Gun Game"
+	MapNames[ "ba_" ] = "Jailbreak"
+	MapNames[ "jail_" ] = "Jailbreak"
+	MapNames[ "jb_" ] = "Jailbreak"
+	MapNames[ "mg_" ] = "Minigames"
+	MapNames[ "pw_" ] = "Pirate Ship Wars"
+	MapNames[ "ph_" ] = "Prop Hunt"
+	MapNames[ "rp_" ] = "Roleplay"
+	MapNames[ "slb_" ] = "Sled Build"
+	MapNames[ "sb_" ] = "Spacebuild"
+	MapNames[ "slender_" ] = "Stop it Slender"
+	MapNames[ "gms_" ] = "Stranded"
+	MapNames[ "surf_" ] = "Surf"
+	MapNames[ "ts_" ] = "The Stalker"
+	MapNames[ "zm_" ] = "Zombie Survival"
+	MapNames[ "zombiesurvival_" ] = "Zombie Survival"
+	MapNames[ "zs_" ] = "Zombie Survival"
 
 	local GamemodeList = engine.GetGamemodes()
 
-	for k, gm in pairs( GamemodeList ) do
+	for k, gm in ipairs( GamemodeList ) do
 
 		local Name = gm.title or "Unnammed Gamemode"
 		local Maps = string.Split( gm.maps, "|" )
 
 		if ( Maps && gm.maps != "" ) then
 
-			for k, pattern in pairs( Maps ) do
-				MapPatterns[ pattern ] = Name
+			for k, pattern in ipairs( Maps ) do
+				-- When in doubt, just try to match it with string.find
+				MapPatterns[ string.lower( pattern ) ] = Name
 			end
 
 		end
@@ -199,91 +186,131 @@ local favmaps
 
 local function LoadFavourites()
 
-	favmaps = favmaps or string.Explode( ";", cookie.GetString( "favmaps", "" ) )
+	favmaps = favmaps or string.Explode( ";", cookie.GetString( "favmaps", {} ) )
 
 end
 
-local IgnoreMaps = {
-	"^background", "^ep1_background","^ep2_background", "^test_", "^styleguide", "^devtest", "^vst_",
-
-	// Useless or duplicate maps
-	"d3_c17_02_camera.bsp", "ep1_citadel_00_demo.bsp", "credits.bsp", "intro.bsp", "sdk_shader_samples.bsp",
-	"d2_coast_02.bsp", "c4a1y.bsp" // These do not load
+local IgnorePatterns = {
+	"^background",
+	"^devtest",
+	"^ep1_background",
+	"^ep2_background",
+	"^styleguide",
 }
 
-local function RefreshMaps()
+local IgnoreMaps = {
+	-- Prefixes
+	[ "sdk_" ] = true,
+	[ "test_" ] = true,
+	[ "vst_" ] = true,
+	
+	-- Maps
+	[ "c4a1y" ] = true,
+	[ "credits" ] = true,
+	[ "d2_coast_02" ] = true,
+	[ "d3_c17_02_camera" ] = true,
+	[ "ep1_citadel_00_demo" ] = true,
+	[ "intro" ] = true,
+	[ "test" ] = true
+}
 
-	UpdateMapPatterns()
+local MapList = {}
 
-	g_MapList = {}
-	g_MapListCategorised = {}
+local function RefreshMaps( skip )
+
+	if ( !skip ) then UpdateMaps() end
+
+	MapList = {}
 
 	local maps = file.Find( "maps/*.bsp", "GAME" )
 	LoadFavourites()
 
-	for k, v in pairs( maps ) do
+	for k, v in ipairs( maps ) do
+		local name = string.lower( string.gsub( v, "%.bsp$", "" ) )
+		local prefix = string.Explode( "_", name )[ 1 ] .. "_"
 
-		local Ignore = false
-		for _, ignore in pairs( IgnoreMaps ) do
-			if ( string.find( v, ignore ) ) then
+		local Ignore = IgnoreMaps[ name ] or IgnoreMaps[ prefix ]
+
+		-- Don't loop if it's already ignored
+		if ( Ignore ) then continue end
+
+		for _, ignore in ipairs( IgnorePatterns ) do
+			if ( string.find( name, ignore ) ) then
 				Ignore = true
+				break
 			end
 		end
 
 		-- Don't add useless maps
 		if ( Ignore ) then continue end
 
-		local Category = "Other"
-		local name = string.gsub( v, "%.bsp$", "" )
-		local lowername = string.lower( v )
+		-- Check if the map has a simple name or prefix
+		local Category = MapNames[ name ] or MapNames[ prefix ]
 
-		for pattern, category in pairs( MapPatterns ) do
-			if ( ( string.StartWith( pattern, "^" ) || string.EndsWith( pattern, "_" ) || string.EndsWith( pattern, "-" ) ) && string.find( lowername, pattern ) ) then
-				Category = category
+		-- Check if the map has an embedded prefix, or is TTT/Sandbox
+		if ( !Category ) then
+			for pattern, category in pairs( MapPatterns ) do
+				if ( string.find( name, pattern ) ) then
+					Category = category
+				end
 			end
 		end
 
-		if ( MapPatterns[ name ] ) then Category = MapPatterns[ name ] end
+		-- Throw all uncategorised maps into Other
+		Category = Category or "Other"
+
+		local fav
 
 		if ( table.HasValue( favmaps, name ) ) then
-			-- Hackity hack
-			g_MapList[ v .. " " ] = { Name = name, Category = "Favourites" }
+			fav = true
 		end
+
+		local csgo
 
 		if ( Category == "Counter-Strike" ) then
 			if ( file.Exists( "maps/" .. name .. ".bsp", "csgo" ) ) then
 				if ( file.Exists( "maps/" .. name .. ".bsp", "cstrike" ) ) then -- Map also exists in CS:GO
-					g_MapList[ " " .. v ] = { Name = name, Category = "CS: Global Offensive" }
+					csgo = true
 				else
 					Category = "CS: Global Offensive"
 				end
 			end
 		end
 
-		g_MapList[ v ] = { Name = name, Category = Category }
+		if ( !MapList[ Category ] ) then 
+			MapList[ Category ] = {} 
+		end
 
-	end
+		table.insert( MapList[ Category ], name )
 
-	for k, v in pairs( g_MapList ) do
+		if ( fav ) then 
+			if ( !MapList[ "Favourites" ] ) then
+				MapList[ "Favourites" ] = {}
+			end
 
-		g_MapListCategorised[ v.Category ] = g_MapListCategorised[ v.Category ] or {}
-		g_MapListCategorised[ v.Category ][ #g_MapListCategorised[ v.Category ] + 1 ] = v.Name
+			table.insert( MapList[ "Favourites" ], name ) 
+		end
+
+		if ( csgo ) then 
+			if ( !MapList[ "CS: Global Offensive" ] ) then
+				MapList[ "CS: Global Offensive" ] = {}
+			end
+			-- We have to make the CS:GO name different from the CS:S name to prevent Favourites conflicts
+			table.insert( MapList[ "CS: Global Offensive" ], name .. " " )
+		end
 
 	end
 
 end
 
-hook.Add( "MenuStart", "FindMaps", function()
+hook.Add( "MenuStart", "FindMaps", RefreshMaps )
 
-	RefreshMaps()
+hook.Add( "GameContentChanged", "RefreshMaps", RefreshMaps )
 
-end )
-
-hook.Add( "GameContentChanged", "RefreshMaps", function()
-
-	RefreshMaps()
-
-end )
+function GetMapList()
+	-- Nice maplist accessor instead of a global table
+	return MapList
+end
 
 function ToggleFavourite( map )
 
@@ -297,7 +324,7 @@ function ToggleFavourite( map )
 
 	cookie.Set( "favmaps", table.concat( favmaps, ";" ) )
 
-	RefreshMaps()
+	RefreshMaps( true )
 
 	UpdateMapList()
 
@@ -306,8 +333,8 @@ end
 function SaveLastMap( map, cat )
 
 	local t = string.Explode( ";", cookie.GetString( "lastmap", "" ) )
-	if ( !map ) then map = t[ 1 ] or "" end
-	if ( !cat ) then cat = t[ 2 ] or "" end
+	if ( !map ) then map = t[ 1 ] or "gm_flatgrass" end
+	if ( !cat ) then cat = t[ 2 ] or "Sandbox" end
 
 	cookie.Set( "lastmap", map .. ";" .. cat )
 
@@ -317,13 +344,8 @@ function LoadLastMap()
 
 	local t = string.Explode( ";", cookie.GetString( "lastmap", "" ) )
 
-	local map = t[ 1 ] or ""
-	local cat = t[ 2 ] or ""
-
-	local mapinfo = g_MapList[ map .. ".bsp" ]
-
-	if ( !mapinfo ) then map = "gm_flatgrass" end
-	if ( !g_MapListCategorised[ cat ] ) then cat = mapinfo and mapinfo.Category or "Sandbox" end
+	local map = t[ 1 ] or "gm_flatgrass"
+	local cat = t[ 2 ] or "Sandbox"
 
 	cat = string.gsub( cat, "'", "\\'" )
 

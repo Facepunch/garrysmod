@@ -147,10 +147,11 @@ end
 --
 function UpdateMapList()
 
-	if ( !istable( g_MapListCategorised ) ) then return end
+	local MapList = GetMapList()
+	if ( !MapList ) then return end
 
-	json = util.TableToJSON( g_MapListCategorised )
-	if ( !isstring( json ) ) then return end
+	local json = util.TableToJSON( MapList )
+	if ( !json ) then return end
 
 	pnlMainMenu:Call( "UpdateMaps(" .. json .. ")" )
 
