@@ -227,7 +227,7 @@ local function RefreshMaps( skip )
 
 	for k, v in ipairs( maps ) do
 		local name = string.lower( string.gsub( v, "%.bsp$", "" ) )
-		local prefix = string.Explode( "_", name )[ 1 ] .. "_"
+		local prefix = string.match( name, "^(.-_)" )
 
 		local Ignore = IgnoreMaps[ name ] or IgnoreMaps[ prefix ]
 
