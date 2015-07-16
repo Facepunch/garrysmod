@@ -344,12 +344,13 @@ function string.ToColor( str )
 
 end
 
-function string.Comma( number )
+function string.Comma( number, period )
 
-	local number, k = tostring( number ), nil
+	local number, k = tostring( number )
+	local symbol = period and "." or ","
 
 	while true do  
-		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", '%1,%2')
+		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", '%1' .. symbol .. '%2')
 		if ( k == 0 ) then break end
 	end
 
