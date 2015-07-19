@@ -28,4 +28,4 @@ Issues and Requests
 ---
 To report bugs please visit the [Garry's Mod Issue tracker](https://github.com/Facepunch/garrysmod-issues/).
 
-To request features please visit the [Garry's Mod Request tracer](https://github.com/Facepunch/garrysmod-requests/).
+To request features please visit the [Garry's Mod Request tracker](https://github.com/Facepunch/garrysmod-requests/).
