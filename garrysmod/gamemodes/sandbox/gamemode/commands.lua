@@ -12,7 +12,7 @@ function CCSpawn( player, command, arguments )
 	if ( !gamemode.Call( "PlayerSpawnObject", player, arguments[ 1 ], arguments[ 2 ] ) ) then return end
 	if ( !util.IsValidModel( arguments[ 1 ] ) ) then return end
 
-	local iSkin = arguments[ 2 ] or 0
+	local iSkin = tonumber( arguments[ 2 ] ) or 0
 	local strBody = arguments[ 3 ] or nil
 
 	if ( util.IsValidProp( arguments[ 1 ] ) ) then 
