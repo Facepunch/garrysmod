@@ -51,7 +51,7 @@ function Run( player, command, arguments, args )
 	local LowerCommand = string.lower( command )
 
 	if ( CommandList[ LowerCommand ] != nil ) then
-		hook.Run( "PlayerRunCommand", player, command, arguments, args )
+		hook.Run( "OnCommandRun", player, command, arguments, args )
 		CommandList[ LowerCommand ]( player, command, arguments, args )
 		return true
 	end
