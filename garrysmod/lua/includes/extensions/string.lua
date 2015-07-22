@@ -344,15 +344,9 @@ function string.ToColor( str )
 
 end
 
-function string.Comma( number )
-
-	local number, k = tostring( number ), nil
-
-	while true do  
-		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", '%1,%2')
-		if ( k == 0 ) then break end
-	end
-
-	return number
-
+function string.Comma( number, period )
+	number = tostring( number )
+	local symbol = period and "." or ","
+	-- We reverse so that we can start in patterns of three and not have to deal with 1-2 num precedes( 25,000,000 )
+	return number:reverse():gsub( "(...)", "%1" .. symbol ):gsub( "%" .. symbol .. "$", "" ):reverse()
 end
