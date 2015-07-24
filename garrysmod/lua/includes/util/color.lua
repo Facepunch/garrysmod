@@ -66,8 +66,17 @@ end
 --[[---------------------------------------------------------
 	Converts Color To Vector - loss of precision / alpha lost
 -----------------------------------------------------------]]
-function COLOR:ToVector( )
+function COLOR:ToVector()
 
 	return Vector( self.r / 255, self.g / 255, self.b / 255 )
+
+end
+
+--[[---------------------------------------------------------
+	Linear interpolates between two colors
+-----------------------------------------------------------]]
+function LerpColor( fraction, from, to )
+
+	return Color( Lerp( fraction, from.r, to.r ), Lerp( fraction, from.g, to.g ), Lerp( fraction, from.b, to.b ), Lerp( fraction, from.a, to.a ) )
 
 end
