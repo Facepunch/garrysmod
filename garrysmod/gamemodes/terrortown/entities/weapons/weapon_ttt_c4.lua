@@ -6,17 +6,17 @@ AddCSLuaFile()
 SWEP.HoldType			= "slam"
 
 if CLIENT then
-   SWEP.PrintName			= "C4"
-   SWEP.Slot				= 6
+	SWEP.PrintName			= "C4"
+	SWEP.Slot				= 6
 
-   SWEP.EquipMenuData = {
-      type  = "item_weapon",
-      name  = "C4",
-      desc  = "c4_desc"
-   };
+	SWEP.EquipMenuData = {
+		type  = "item_weapon",
+		name  = "C4",
+		desc  = "c4_desc"
+	};
 
-   SWEP.Icon = "vgui/ttt/icon_c4"
-   SWEP.IconLetter = "I"
+	SWEP.Icon = "vgui/ttt/icon_c4"
+	SWEP.IconLetter = "I"
 end
 
 SWEP.Base = "weapon_tttbase"
@@ -50,123 +50,123 @@ SWEP.NoSights = true
 local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
 
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self:BombDrop()
+	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:BombDrop()
 end
 
 function SWEP:SecondaryAttack()
-   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
-   self:BombStick()
+	self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+	self:BombStick()
 end
 
 -- mostly replicating HL2DM slam throw here
 function SWEP:BombDrop()
-   if SERVER then
+	if SERVER then
 
-      local ply = self.Owner
-      if not IsValid(ply) then return end
+		local ply = self.Owner
+		if not IsValid(ply) then return end
 
-      if self.Planted then return end
+		if self.Planted then return end
 
-      local vsrc = ply:GetShootPos()
-      local vang = ply:GetAimVector()
-      local vvel = ply:GetVelocity()
+		local vsrc = ply:GetShootPos()
+		local vang = ply:GetAimVector()
+		local vvel = ply:GetVelocity()
 
-      local vthrow = vvel + vang * 200
+		local vthrow = vvel + vang * 200
 
-      local bomb = ents.Create("ttt_c4")
-      if IsValid(bomb) then
-         bomb:SetPos(vsrc + vang * 10)
-         bomb:SetOwner(ply)
-         bomb:SetThrower(ply)
-         bomb:Spawn()
+		local bomb = ents.Create("ttt_c4")
+		if IsValid(bomb) then
+			bomb:SetPos(vsrc + vang * 10)
+			bomb:SetOwner(ply)
+			bomb:SetThrower(ply)
+			bomb:Spawn()
 
-         bomb:PointAtEntity(ply)
+			bomb:PointAtEntity(ply)
 
-         local ang = bomb:GetAngles()
-         ang:RotateAroundAxis(ang:Up(), 180)
-         bomb:SetAngles(ang)
+			local ang = bomb:GetAngles()
+			ang:RotateAroundAxis(ang:Up(), 180)
+			bomb:SetAngles(ang)
 
-         bomb.fingerprints = self.fingerprints
+			bomb.fingerprints = self.fingerprints
 
-         bomb:PhysWake()
-         local phys = bomb:GetPhysicsObject()
-         if IsValid(phys) then
-            phys:SetVelocity(vthrow)
-         end
-         self:Remove()
+			bomb:PhysWake()
+			local phys = bomb:GetPhysicsObject()
+			if IsValid(phys) then
+				phys:SetVelocity(vthrow)
+			end
+			self:Remove()
 
-         self.Planted = true
+			self.Planted = true
 
-      end
+		end
 
-      ply:SetAnimation( PLAYER_ATTACK1 )
-   end
+		ply:SetAnimation( PLAYER_ATTACK1 )
+	end
 
-   self:EmitSound(throwsound)
-   self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
+	self:EmitSound(throwsound)
+	self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
 end
 
 -- again replicating slam, now its attach fn
 function SWEP:BombStick()
-   if SERVER then
-      local ply = self.Owner
-      if not IsValid(ply) then return end
+	if SERVER then
+		local ply = self.Owner
+		if not IsValid(ply) then return end
 
-      if self.Planted then return end
+		if self.Planted then return end
 
-      local ignore = {ply, self}
-      local spos = ply:GetShootPos()
-      local epos = spos + ply:GetAimVector() * 80
-      local tr = util.TraceLine({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID})
+		local ignore = {ply, self}
+		local spos = ply:GetShootPos()
+		local epos = spos + ply:GetAimVector() * 80
+		local tr = util.TraceLine({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID})
 
-      if tr.HitWorld then
-         local bomb = ents.Create("ttt_c4")
-         if IsValid(bomb) then
-            bomb:PointAtEntity(ply)
+		if tr.HitWorld then
+			local bomb = ents.Create("ttt_c4")
+			if IsValid(bomb) then
+				bomb:PointAtEntity(ply)
 
-            local tr_ent = util.TraceEntity({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID}, bomb)
+				local tr_ent = util.TraceEntity({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID}, bomb)
 
-            if tr_ent.HitWorld then
+				if tr_ent.HitWorld then
 
-               local ang = tr_ent.HitNormal:Angle()
-               ang:RotateAroundAxis(ang:Right(), -90)
-               ang:RotateAroundAxis(ang:Up(), 180)
+					local ang = tr_ent.HitNormal:Angle()
+					ang:RotateAroundAxis(ang:Right(), -90)
+					ang:RotateAroundAxis(ang:Up(), 180)
 
-               bomb:SetPos(tr_ent.HitPos)
-               bomb:SetAngles(ang)
-               bomb:SetOwner(ply)
-               bomb:SetThrower(ply)
-               bomb:Spawn()
+					bomb:SetPos(tr_ent.HitPos)
+					bomb:SetAngles(ang)
+					bomb:SetOwner(ply)
+					bomb:SetThrower(ply)
+					bomb:Spawn()
 
-               bomb.fingerprints = self.fingerprints
+					bomb.fingerprints = self.fingerprints
 
-               local phys = bomb:GetPhysicsObject()
-               if IsValid(phys) then
-                  phys:EnableMotion(false)
-               end
+					local phys = bomb:GetPhysicsObject()
+					if IsValid(phys) then
+						phys:EnableMotion(false)
+					end
 
-               bomb.IsOnWall = true
+					bomb.IsOnWall = true
 
-               self:Remove()
+					self:Remove()
 
-               self.Planted = true
+					self.Planted = true
 
-            end
-         end
+				end
+			end
 
-         ply:SetAnimation( PLAYER_ATTACK1 )
-      end
-   end
+			ply:SetAnimation( PLAYER_ATTACK1 )
+		end
+	end
 end
 
 
 function SWEP:Reload()
-   return false
+	return false
 end
 
 function SWEP:OnRemove()
-   if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
-      RunConsoleCommand("lastinv")
-   end
+	if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
+		RunConsoleCommand("lastinv")
+	end
 end

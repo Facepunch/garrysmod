@@ -5,13 +5,13 @@ SWEP.HoldType			= "crossbow"
 
 
 if CLIENT then
-   SWEP.PrintName			= "H.U.G.E-249"
-   SWEP.Slot				= 2
+	SWEP.PrintName			= "H.U.G.E-249"
+	SWEP.Slot				= 2
 
-   SWEP.ViewModelFlip		= false
+	SWEP.ViewModelFlip		= false
 
-   SWEP.Icon = "vgui/ttt/icon_m249"
-   SWEP.IconLetter = "z"
+	SWEP.Icon = "vgui/ttt/icon_m249"
+	SWEP.IconLetter = "z"
 end
 
 

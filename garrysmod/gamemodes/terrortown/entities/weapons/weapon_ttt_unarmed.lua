@@ -4,10 +4,10 @@ AddCSLuaFile()
 SWEP.HoldType = "normal"
 
 if CLIENT then
-   SWEP.PrintName = "unarmed_name"
-   SWEP.Slot      = 5
+	SWEP.PrintName = "unarmed_name"
+	SWEP.Slot      = 5
 
-   SWEP.ViewModelFOV = 10
+	SWEP.ViewModelFOV = 10
 end
 
 SWEP.Base = "weapon_tttbase"
@@ -33,15 +33,15 @@ SWEP.AllowDrop = false
 SWEP.NoSights = true
 
 function SWEP:GetClass()
-   return "weapon_ttt_unarmed"
+	return "weapon_ttt_unarmed"
 end
 
 function SWEP:OnDrop()
-   self:Remove()
+	self:Remove()
 end
 
 function SWEP:ShouldDropOnDie()
-   return false
+	return false
 end
 
 function SWEP:PrimaryAttack()
@@ -54,14 +54,14 @@ function SWEP:Reload()
 end
 
 function SWEP:Deploy()
-   if SERVER and IsValid(self.Owner) then
-      self.Owner:DrawViewModel(false)
-   end
-   return true
+	if SERVER and IsValid(self.Owner) then
+		self.Owner:DrawViewModel(false)
+	end
+	return true
 end
 
 function SWEP:Holster()
-   return true
+	return true
 end
 
 function SWEP:DrawWorldModel()

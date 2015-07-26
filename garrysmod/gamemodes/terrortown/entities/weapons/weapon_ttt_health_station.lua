@@ -5,17 +5,17 @@ SWEP.HoldType = "normal"
 
 
 if CLIENT then
-   SWEP.PrintName = "hstation_name"
-   SWEP.Slot = 6
+	SWEP.PrintName = "hstation_name"
+	SWEP.Slot = 6
 
-   SWEP.ViewModelFOV = 10
+	SWEP.ViewModelFOV = 10
 
-   SWEP.EquipMenuData = {
-      type = "item_weapon",
-      desc = "hstation_desc"
-   };
+	SWEP.EquipMenuData = {
+		type = "item_weapon",
+		desc = "hstation_desc"
+	};
 
-   SWEP.Icon = "vgui/ttt/icon_health"
+	SWEP.Icon = "vgui/ttt/icon_health"
 end
 
 SWEP.Base = "weapon_tttbase"
@@ -49,79 +49,79 @@ SWEP.AllowDrop = false
 SWEP.NoSights = true
 
 function SWEP:OnDrop()
-   self:Remove()
+	self:Remove()
 end
 
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self:HealthDrop()
+	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:HealthDrop()
 end
 function SWEP:SecondaryAttack()
-   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
-   self:HealthDrop()
+	self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+	self:HealthDrop()
 end
 
 local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
 
 -- ye olde droppe code
 function SWEP:HealthDrop()
-   if SERVER then
-      local ply = self.Owner
-      if not IsValid(ply) then return end
+	if SERVER then
+		local ply = self.Owner
+		if not IsValid(ply) then return end
 
-      if self.Planted then return end
+		if self.Planted then return end
 
-      local vsrc = ply:GetShootPos()
-      local vang = ply:GetAimVector()
-      local vvel = ply:GetVelocity()
-      
-      local vthrow = vvel + vang * 200
+		local vsrc = ply:GetShootPos()
+		local vang = ply:GetAimVector()
+		local vvel = ply:GetVelocity()
+		
+		local vthrow = vvel + vang * 200
 
-      local health = ents.Create("ttt_health_station")
-      if IsValid(health) then
-         health:SetPos(vsrc + vang * 10)
-         health:Spawn()
+		local health = ents.Create("ttt_health_station")
+		if IsValid(health) then
+			health:SetPos(vsrc + vang * 10)
+			health:Spawn()
 
-         health:SetPlacer(ply)
+			health:SetPlacer(ply)
 
-         health:PhysWake()
-         local phys = health:GetPhysicsObject()
-         if IsValid(phys) then
-            phys:SetVelocity(vthrow)
-         end   
-         self:Remove()
+			health:PhysWake()
+			local phys = health:GetPhysicsObject()
+			if IsValid(phys) then
+				phys:SetVelocity(vthrow)
+			end   
+			self:Remove()
 
-         self.Planted = true
-      end
-   end
+			self.Planted = true
+		end
+	end
 
-   self:EmitSound(throwsound)
+	self:EmitSound(throwsound)
 end
 
 
 function SWEP:Reload()
-   return false
+	return false
 end
 
 function SWEP:OnRemove()
-   if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
-      RunConsoleCommand("lastinv")
-   end
+	if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
+		RunConsoleCommand("lastinv")
+	end
 end
 
 if CLIENT then
-   function SWEP:Initialize()
-      self:AddHUDHelp("hstation_help", nil, true)
+	function SWEP:Initialize()
+		self:AddHUDHelp("hstation_help", nil, true)
 
-      return self.BaseClass.Initialize(self)
-   end
+		return self.BaseClass.Initialize(self)
+	end
 end
 
 function SWEP:Deploy()
-   if SERVER and IsValid(self.Owner) then
-      self.Owner:DrawViewModel(false)
-   end
-   return true
+	if SERVER and IsValid(self.Owner) then
+		self.Owner:DrawViewModel(false)
+	end
+	return true
 end
 
 function SWEP:DrawWorldModel()
