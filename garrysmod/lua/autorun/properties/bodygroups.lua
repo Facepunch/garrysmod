@@ -10,6 +10,7 @@ properties.Add( "bodygroups", {
 		if ( !IsValid( ent ) ) then return false end
 		if ( ent:IsPlayer() ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "bodygroups", ent ) ) then return false end
+		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end  -- If our ent has an attached entity, we want to use and modify its bodygroups instead
 
 		--
 		-- Get a list of bodygroups
@@ -31,10 +32,12 @@ properties.Add( "bodygroups", {
 
 	MenuOpen = function( self, option, ent, tr )
 
+		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
+
 		--
 		-- Get a list of bodygroups
 		--
-		local options = ent:GetBodyGroups();
+		local options = ent:GetBodyGroups()
 
 		--
 		-- Add a submenu to our automatically created menu option

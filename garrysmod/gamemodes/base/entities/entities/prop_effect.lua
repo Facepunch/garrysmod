@@ -61,6 +61,10 @@ function ENT:Initialize()
 
 	else
 
+		-- Get the attached entity so that clientside functions like properties can interact with it
+		local tab = ents.FindByClassAndParent( "prop_dynamic", self )
+		if ( tab ) and ( IsValid( tab[ 1 ] ) ) then self.AttachedEntity = tab[ 1 ] end
+
 		self.GripMaterial = Material( "sprites/grip" )
 		self:SetCollisionBounds( Vector( -Radius, -Radius, -Radius ), Vector( Radius, Radius, Radius ) )
 
@@ -125,5 +129,48 @@ function ENT:OnEntityCopyTableFinish( tab )
 	-- We need to store the model of the attached entity
 	-- Not the one we have here.
 	tab.Model = self.AttachedEntity:GetModel()
+
+	-- Store the attached entity's table so we can restore it after being pasted
+	tab.AttachedEntityInfo = table.Copy( duplicator.CopyEntTable(self.AttachedEntity) )
+
+	-- Do NOT store the attached entity itself in our table!
+	-- Otherwise, if we copy-paste the prop with the duplicator, its AttachedEntity value will point towards the original prop's attached entity instead, and that'll break stuff
+	tab.AttachedEntity = nil
+
+end
+
+
+--[[---------------------------------------------------------
+   Name: PostEntityPaste
+-----------------------------------------------------------]]
+function ENT:PostEntityPaste( ply )
+
+	-- Restore the attached entity using the information we've saved
+	if ( IsValid( self.AttachedEntity ) ) and ( self.AttachedEntityInfo ) then
+
+		if ( self.AttachedEntityInfo.EntityMods ) then
+
+			self.AttachedEntity.EntityMods = table.Copy( self.AttachedEntityInfo.EntityMods )
+			duplicator.ApplyEntityModifiers( ply, self.AttachedEntity )
+	
+		end
+
+		if ( self.AttachedEntityInfo.BodyG ) then
+
+			for k, v in pairs( self.AttachedEntityInfo.BodyG ) do
+				self.AttachedEntity:SetBodygroup( k, v )
+			end
+
+		end
+
+		if ( self.AttachedEntityInfo.BoneManip ) then
+
+			duplicator.DoBoneManipulator( self.AttachedEntity, self.AttachedEntityInfo.BoneManip )
+
+		end
+
+		self.AttachedEntityInfo = nil
+
+	end
 
 end
