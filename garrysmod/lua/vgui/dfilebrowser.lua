@@ -47,14 +47,15 @@ end
 
 function PANEL:SetName( strName )
 
-	strName = tostring( strName || self.m_strBaseFolder )
-	self.m_strName = strName
+	if strName then
+		self.m_strName = tostring( strName )
+	else
+		self.m_strName = nil
+	end
 
 	if !self.bSetup then return end
 
-	if IsValid( self.FolderNode ) then
-		self.FolderNode:SetText( strName )
-	end
+	self:SetupTree()
 
 end
 
@@ -136,6 +137,7 @@ function PANEL:SetOpen( bOpen, bAnim )
 	if !self.bSetup then return end
 
 	self.FolderNode:SetExpanded( bOpen, !bAnim )
+	self.m_bOpen = bOpen
 	self:SetCookie( "Open", ( bOpen && "1" || "0" ) )
 
 end
@@ -161,7 +163,11 @@ function PANEL:SetupTree()
 	end
 
 	self.FolderNode = self.Tree.RootNode:AddFolder( name, self.m_strBaseFolder, self.m_strPath, false, self.m_strSearch )
-	self.FolderNode.Expander.DoClick = function() self:SetOpen( !self.m_bOpen, true ) end
+	self.Tree.RootNode.ChildExpanded = function( node, bExpand )
+		DTree_Node.ChildExpanded( node, bExpand )
+		self.m_bOpen = tobool( self.FolderNode.m_bExpanded )
+		self:SetCookie( "Open", ( self.m_bOpen && "1" || "0" ) )
+	end
 
 	self.FolderNode:SetExpanded( self.m_bOpen, true )
 	self:SetCookie( "Open", ( self.m_bOpen && "1" || "0" ) )
