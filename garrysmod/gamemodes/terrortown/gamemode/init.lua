@@ -483,6 +483,7 @@ function PrepareRound()
    -- Schedule round start
    local ptime = GetConVar("ttt_preptime_seconds"):GetInt()
    if GAMEMODE.FirstRound then
+      WEPS.ForcePrecache()
       ptime = GetConVar("ttt_firstpreptime"):GetInt()
       GAMEMODE.FirstRound = false
    end
@@ -652,8 +653,6 @@ function BeginRound()
 
    -- Remove their ragdolls
    ents.TTT.RemoveRagdolls(true)
-
-   WEPS.ForcePrecache()
 
    if CheckForAbort() then return end
 
