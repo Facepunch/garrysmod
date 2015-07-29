@@ -272,7 +272,7 @@ end
     http://facepunch.com/showthread.php?t=1478507
 -----------------------------------------------------------]]
 
-function math.IsFinite( value )
+function math.IsFinite( num )
     return not ( num ~= num or num == math.huge or num == -math.huge )
 end
 
