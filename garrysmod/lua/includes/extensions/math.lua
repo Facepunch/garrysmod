@@ -273,6 +273,6 @@ end
 -----------------------------------------------------------]]
 
 function math.IsFinite( value )
-    return not ( num ~= num or num == math.huge )
+    return not ( num ~= num or num == math.huge or num == -math.huge )
 end
 
