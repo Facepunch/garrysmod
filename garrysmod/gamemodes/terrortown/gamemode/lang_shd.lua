@@ -49,8 +49,8 @@ if SERVER then
       net.Start("TTT_LangMsg")
          net.WriteString(name)
 
+         net.WriteUInt(c, 8)
          if c > 0 then
-            net.WriteUInt(c, 8)
 
             for k, v in pairs(params) do
                -- assume keys are strings, but vals may be numbers
