@@ -182,7 +182,7 @@ function PANEL:LayoutEntity( Entity )
 		self:RunAnimation()
 	end
 
-	Entity:SetAngles( Angle( 0, RealTime() * 10, 0 ) )
+	Entity:SetAngles( Angle( 0, RealTime() * 10 % 360, 0 ) )
 
 end
 
