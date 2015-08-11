@@ -3,41 +3,41 @@ ENT.Base = "base_entity"
 ENT.Type = "filter"
 
 --[[---------------------------------------------------------
-   Name: Initialize
+	Name: Initialize
 -----------------------------------------------------------]]
 function ENT:Initialize()
 end
 
 --[[---------------------------------------------------------
-   Name: KeyValue
-   Desc: Called when a keyvalue is added to us
+	Name: KeyValue
+	Desc: Called when a keyvalue is added to us
 -----------------------------------------------------------]]
 function ENT:KeyValue( key, value )
 end
 
 --[[---------------------------------------------------------
-   Name: Think
-   Desc: Entity's think function. 
+	Name: Think
+	Desc: Entity's think function. 
 -----------------------------------------------------------]]
 function ENT:Think()
 end
 
 --[[---------------------------------------------------------
-   Name: OnRemove
-   Desc: Called just before entity is deleted
+	Name: OnRemove
+	Desc: Called just before entity is deleted
 -----------------------------------------------------------]]
 function ENT:OnRemove()
 end
 
 --[[---------------------------------------------------------
-   Name: PassesFilter
+	Name: PassesFilter
 -----------------------------------------------------------]]
-function ENT:PassesDamageFilter( trigger, ent )
+function ENT:PassesFilter( trigger, ent )
 	return true
 end
 
 --[[---------------------------------------------------------
-   Name: PassesFilter
+	Name: PassesDamageFilter
 -----------------------------------------------------------]]
 function ENT:PassesDamageFilter( dmg )
 	return true
