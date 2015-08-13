@@ -199,7 +199,7 @@ function ENT:TrackEntity( ent, lpos )
 	local WPos = ent:LocalToWorld( lpos )
 	
 	if ( ent:IsPlayer() ) then
-		WPos = WPos + Vector( 0, 0, 54 )
+		WPos = WPos + ent:GetViewOffset() * 0.85
 	end
 	
 	local CamPos = self:GetPos()
