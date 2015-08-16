@@ -327,7 +327,7 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 	if ( width <= 0 ) then return nil end
 	
 	-- Clamp the rope to a sensible width
-	width = math.Clamp( width, 1, 100 )
+	width = math.Clamp( width, 0, 100 )
 
 	local rope = ents.Create( "keyframe_rope" )
 	rope:SetPos( Pos )
