@@ -19,14 +19,22 @@ Category = "Half-Life 2"
 
 -- Ammo
 ADD_ITEM( "AR2 Ammo",			"item_ammo_ar2" )
+ADD_ITEM( "Large AR2 Ammo",		"item_ammo_ar2_large" )
 ADD_ITEM( "Pistol Ammo",		"item_ammo_pistol" )
+ADD_ITEM( "Large Pistol Ammo",		"item_ammo_pistol_large" )
 ADD_ITEM( "Shotgun Ammo",		"item_box_buckshot" )
 ADD_ITEM( "357 Ammo",			"item_ammo_357" )
+ADD_ITEM( "Large 357 Ammo",		"item_ammo_357_large" )
 ADD_ITEM( "SMG Ammo",			"item_ammo_smg1" )
-ADD_ITEM( "Combine Balls",		"item_ammo_ar2_altfire" )
+ADD_ITEM( "Large SMG Ammo",		"item_ammo_smg1_large" )
+ADD_ITEM( "AR2 Orb",			"item_ammo_ar2_altfire" )
 ADD_ITEM( "Crossbow Bolts",		"item_ammo_crossbow" )
 ADD_ITEM( "SMG Grenade",		"item_ammo_smg1_grenade" )
-ADD_ITEM( "RPG",				"item_rpg_round" )
+ADD_ITEM( "RPG Rocket",			"item_rpg_round" )
+ADD_ITEM( "Ammo Crate",			"item_ammo_crate" )
+
+-- Dynamic materials; gives player what he needs most (health, shotgun ammo, suit energy, etc)
+ADD_ITEM( "Dynamic Supplies",		"item_dynamic_resupply" )
 
 -- Items
 ADD_ITEM( "Suit Battery",		"item_battery" )
@@ -34,12 +42,12 @@ ADD_ITEM( "Health Vial",		"item_healthvial" )
 ADD_ITEM( "Health Kit",			"item_healthkit" )
 ADD_ITEM( "Suit Charger",		"item_suitcharger" )
 ADD_ITEM( "Health Charger",		"item_healthcharger" )
-ADD_ITEM( "Suit",				"item_suit" )
+ADD_ITEM( "Suit",			"item_suit" )
 
 ADD_ITEM( "Thumper",			"prop_thumper" )
 ADD_ITEM( "Combine Mine",		"combine_mine" )
-ADD_ITEM( "Helicopter Grenade",	"grenade_helicopter" )
-ADD_ITEM( "Zombine Grenade",	"npc_grenade_frag" )
+ADD_ITEM( "Helicopter Grenade",		"grenade_helicopter" )
+ADD_ITEM( "Zombine Grenade",		"npc_grenade_frag" )
 
 if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/striderbuster.pcf" )
