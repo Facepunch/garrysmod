@@ -31,10 +31,10 @@ ADD_ITEM( "AR2 Orb",			"item_ammo_ar2_altfire" )
 ADD_ITEM( "Crossbow Bolts",		"item_ammo_crossbow" )
 ADD_ITEM( "SMG Grenade",		"item_ammo_smg1_grenade" )
 ADD_ITEM( "RPG Rocket",			"item_rpg_round" )
-ADD_ITEM( "Ammo Crate",			"item_ammo_crate" )
+-- ADD_ITEM( "Ammo Crate",			"item_ammo_crate" )
 
 -- Dynamic materials; gives player what he needs most (health, shotgun ammo, suit energy, etc)
-ADD_ITEM( "Dynamic Supplies",		"item_dynamic_resupply" )
+-- ADD_ITEM( "Dynamic Supplies",	"item_dynamic_resupply" )
 
 -- Items
 ADD_ITEM( "Suit Battery",		"item_battery" )
