@@ -8,48 +8,48 @@ local function UpdateMapPatterns()
 	MapPatterns = {}
 
 	MapPatterns[ "^aoc_" ] = "Age of Chivalry"
+	
 	MapPatterns[ "^asi-" ] = "Alien Swarm"
-
 	MapPatterns[ "lobby" ] = "Alien Swarm"
+	
+	MapPatterns[ "^duel_" ] = "Blade Symphony"
+	MapPatterns[ "^ffa_" ] = "Blade Symphony"
+	MapPatterns[ "^free_" ] = "Blade Symphony"
+	MapPatterns[ "practice_box" ] = "Blade Symphony"
+	MapPatterns[ "tut_training" ] = "Blade Symphony"
+	MapPatterns[ "cp_docks" ] = "Blade Symphony"
+	MapPatterns[ "cp_parkour" ] = "Blade Symphony"
+	MapPatterns[ "cp_sequence" ] = "Blade Symphony"
+	MapPatterns[ "cp_terrace" ] = "Blade Symphony"
+	MapPatterns[ "cp_test" ] = "Blade Symphony"
 
-	MapPatterns[ "^ar_" ] = "Counter-Strike"
-	MapPatterns[ "^cs_" ] = "Counter-Strike"
-	MapPatterns[ "^de_" ] = "Counter-Strike"
-	MapPatterns[ "^es_" ] = "Counter-Strike"
-	MapPatterns[ "^fy_" ] = "Counter-Strike"
-	MapPatterns[ "training1" ] = "Counter-Strike"
+	MapPatterns[ "^ar_" ] = "Counter-Strike Source"
+	MapPatterns[ "^cs_" ] = "Counter-Strike Source"
+	MapPatterns[ "^de_" ] = "Counter-Strike Source"
+	MapPatterns[ "^es_" ] = "Counter-Strike Source"
+	MapPatterns[ "^fy_" ] = "Counter-Strike Source"
+	MapPatterns[ "training1" ] = "Counter-Strike Source"
+	
+	MapPatterns[ "^gd_" ] = "CS: Global Offensive"
+	
+	MapPatterns[ "de_dam" ] = "D.I.P.R.I.P."
+	MapPatterns[ "dm_city" ] = "D.I.P.R.I.P."
+	MapPatterns[ "dm_dam" ] = "D.I.P.R.I.P."
+	MapPatterns[ "dm_refinery" ] = "D.I.P.R.I.P."
+	MapPatterns[ "dm_supermarket" ] = "D.I.P.R.I.P."
+	MapPatterns[ "dm_village" ] = "D.I.P.R.I.P."
+	MapPatterns[ "^ur_" ] = "D.I.P.R.I.P."
 
-	MapPatterns[ "^dod_" ] = "Day Of Defeat"
+	MapPatterns[ "^dod_" ] = "Day Of Defeat Source"
 
-	MapPatterns[ "cp_pacentro" ] = "Dino D-Day"
-	MapPatterns[ "cp_snowypark" ] = "Dino D-Day"
-	MapPatterns[ "cp_troina" ] = "Dino D-Day"
-	MapPatterns[ "dm_canyon" ] = "Dino D-Day"
-	MapPatterns[ "dm_depot" ] = "Dino D-Day"
-	MapPatterns[ "dm_fortress_trex" ] = "Dino D-Day"
-	MapPatterns[ "dm_gela_trex" ] = "Dino D-Day"
-	MapPatterns[ "dm_hilltop" ] = "Dino D-Day"
-	MapPatterns[ "dm_market" ] = "Dino D-Day"
-	MapPatterns[ "dm_pacentro" ] = "Dino D-Day"
-	MapPatterns[ "dm_snowypark" ] = "Dino D-Day"
-	MapPatterns[ "dm_troina" ] = "Dino D-Day"
-	MapPatterns[ "koth_hilltop" ] = "Dino D-Day"
-	MapPatterns[ "koth_market" ] = "Dino D-Day"
-	MapPatterns[ "koth_pacentro" ] = "Dino D-Day"
-	MapPatterns[ "koth_snowypark" ] = "Dino D-Day"
-	MapPatterns[ "obj_canyon" ] = "Dino D-Day"
-	MapPatterns[ "obj_depot" ] = "Dino D-Day"
-	MapPatterns[ "obj_fortress" ] = "Dino D-Day"
-
-	MapPatterns[ "de_dam" ] = "DIPRIP"
-	MapPatterns[ "dm_city" ] = "DIPRIP"
-	MapPatterns[ "dm_refinery" ] = "DIPRIP"
-	MapPatterns[ "dm_supermarket" ] = "DIPRIP"
-	MapPatterns[ "dm_village" ] = "DIPRIP"
-	MapPatterns[ "^ur_" ] = "DIPRIP"
+	MapPatterns[ "^ddd_" ] = "Dino D-Day"
+	MapPatterns[ "test" ] = "Dino D-Day"
+	MapPatterns[ "sdk_teams_hdr" ] = "Dino D-Day"
 
 	MapPatterns[ "^dys_" ] = "Dystopia"
 	MapPatterns[ "^pb_" ] = "Dystopia"
+	MapPatterns[ "sav_dojo6" ] = "Dystopia"
+	MapPatterns[ "varena" ] = "Dystopia"
 
 	MapPatterns[ "credits" ] = "Half-Life 2"
 	MapPatterns[ "^d1_" ] = "Half-Life 2"
@@ -87,7 +87,7 @@ local function UpdateMapPatterns()
 	MapPatterns[ "subtransit" ] = "Half-Life Deathmatch: Source"
 	MapPatterns[ "undertow" ] = "Half-Life Deathmatch: Source"
 
-	MapPatterns[ "^ins_" ] = "Insurgency"
+	MapPatterns[ "^ins_" ] = "Insurgency ( Source Mod )"
 
 	MapPatterns[ "^l4d" ] = "Left 4 Dead"
 
@@ -250,12 +250,22 @@ local function RefreshMaps()
 			g_MapList[ v .. " " ] = { Name = name, Category = "Favourites" }
 		end
 
-		if ( Category == "Counter-Strike" ) then
+		if ( Category == "Counter-Strike Source" ) then
 			if ( file.Exists( "maps/" .. name .. ".bsp", "csgo" ) ) then
 				if ( file.Exists( "maps/" .. name .. ".bsp", "cstrike" ) ) then -- Map also exists in CS:GO
 					g_MapList[ " " .. v ] = { Name = name, Category = "CS: Global Offensive" }
 				else
 					Category = "CS: Global Offensive"
+				end
+			end
+		end
+
+		if ( Category == "Left 4 Dead 2" ) then
+			if ( file.Exists( "maps/" .. name .. ".bsp", "left4dead" ) ) then
+				if ( file.Exists( "maps/" .. name .. ".bsp", "left4dead2" ) ) then -- Map also exists in L4D2
+					g_MapList[ " " .. v ] = { Name = name, Category = "Left 4 Dead" }
+				else
+					Category = "Left 4 Dead"
 				end
 			end
 		end
