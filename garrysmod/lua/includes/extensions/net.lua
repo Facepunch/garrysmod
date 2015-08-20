@@ -712,6 +712,7 @@ writing = {
             
         else
             
+            net.WriteBool( false )
             net.WriteString( x:len() )
             
         end
