@@ -1,0 +1,132 @@
+"Donner.MainAmbient"
+{
+	// old dsp 24
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"		".4"
+		"pitch"		"100"
+		"wave"		"ambient/windlowandrustle.wav"
+	}
+		
+	
+	"playlooping"
+	{
+		"volume"		".5"
+		"pitch"		"100"
+		"wave"		"ambient/windcracksandsnaps.wav"
+	}
+
+	"playrandom"
+	{
+		"time"		"40, 50"
+		"volume"	".75"
+		"pitch"		"100"
+
+		"rndwave"
+		{
+			"wave"		"ambient/thunder2.wav"
+			"wave"		"ambient/thunder3.wav"
+			"wave"		"ambient/thunder4.wav"
+		}
+	}
+	
+	"playrandom"
+	{
+		"time"		"15, 40"
+		"volume"		".2"
+		"pitch"		"100"
+		"rndwave"
+		{
+			"wave"	"ambient/shutter4.wav"
+			"wave"	"ambient/shutter5.wav"
+			"wave"	"ambient/shutter6.wav"
+		}
+	}
+}
+
+// Half-Life 2 soundscapes
+
+"prison.util_control_room"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"		"ambient/atmosphere/city_rumble_loop1.wav"
+		"pitch"		"100"
+	}
+}
+
+"combine.computer"
+{
+	
+	"playlooping"
+	{
+		"volume"	"0.4"
+		"wave"		"ambient/machines/combine_terminal_loop1.wav"
+		"pitch"		"100"
+		"soundlevel" "SNDLVL_65db"
+	}
+
+	"playrandom"
+	{
+		"time"		"5,15"
+		"volume"	"0.3,0.5"
+		"pitch"		"95,105"
+		"soundlevel" "SNDLVL_80db"
+		"rndwave"
+		{
+			"wave"	"buttons/combine_button2.wav"
+			"wave"	"buttons/combine_button5.wav"
+			"wave"	"buttons/combine_button3.wav"
+			"wave"	"buttons/combine_button7.wav"
+			//"wave"	"buttons/combine_terminal_loop1.wav"
+			//"wave"	"buttons/combine_terminal_loop2.wav"
+			"wave"	"ambient/machines/combine_terminal_idle1.wav"
+			"wave"	"ambient/machines/combine_terminal_idle2.wav"
+			"wave"	"ambient/machines/combine_terminal_idle3.wav"
+			"wave"	"ambient/machines/combine_terminal_idle4.wav"
+		}
+	}
+}
+
+"color_correction.lobby"
+{
+	"dsp"	"1"
+	
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"wave"		"ambient/atmosphere/drone4LP.wav"
+		"pitch"		"100"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.06"
+		"wave"		"ambient/atmosphere/tone_quiet.wav"
+		"pitch"		"100"
+	}
+
+// position 0 is main control area
+
+	"playsoundscape"
+	{
+		"name"	"prison.util_control_room"
+		"positionoverride" "0"
+		"volume"	"1.0"
+	}
+
+// position 1 is secondary computer console
+
+	"playsoundscape"
+	{
+		"name"	"combine.computer"
+		"volume"	"0.4"
+		"positionoverride"	"1"
+	}
+}
+

@@ -1,0 +1,1254 @@
+
+// Soundscapes for Episode 01 - 
+// escape from c17
+//---------------------------
+
+// water areas
+
+"ep1.util_fardrips"
+{
+
+	
+	"playrandom"
+	{
+		"volume"	"0.1,0.2"
+		"pitch"		"90,120"
+		"time"		"0.5, 5.0"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140dB"
+		"rndwave"
+		{
+			"wave"	"ambient/water/distant_drip1.wav"
+			"wave"	"ambient/water/distant_drip2.wav"
+			"wave"	"ambient/water/distant_drip3.wav"
+			"wave"	"ambient/water/distant_drip4.wav"
+		}
+	}
+}
+
+//----------------------------
+
+"ep1_c17_00.util_fardrips"
+{
+	"playrandom"
+	{
+		"volume"	"0.2,0.5"
+		"pitch"		"90,120"
+		"time"		"0.5, 5.0"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/water/distant_drip1.wav"
+			"wave"	"ambient/water/distant_drip2.wav"
+			"wave"	"ambient/water/distant_drip3.wav"
+			"wave"	"ambient/water/distant_drip4.wav"
+		}
+	}
+}
+
+"ep1_c17_00.general_watery_tunnel"
+{
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"		"ambient/levels/canals/waterleak_loop1.wav"
+		"pitch"		"100"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep1_c17_00.util_fardrips"
+		"position"	"0"
+		"volume"	"1.0"
+	}
+}
+"ep1_c17_00_tunnel_wet"
+{
+	"dsp"	"1"
+
+	// This is the sound of the tunnel
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/ambience5.wav"
+	}
+	
+	"playsoundscape"
+	{
+		"name"		"ep1_c17_00.general_watery_tunnel"
+		"volume"	"1.0"
+	}
+}
+
+// zombie tunnels
+
+"ep1.zombiedark"
+{
+
+	"soundmixer"	"Zombie_Dark_Tunnel"
+
+	// "dsp"	"134"	
+	
+	"dsp"	"1"	
+
+	"playlooping"
+	{
+		"volume"	"0.18"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/cargo_hold2.wav"
+	}
+
+	"playrandom"
+	{
+		"time"		"15,40"
+		"volume"	"0.35,0.55"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/creatures/rats1.wav"
+			"wave"	"ambient/creatures/rats2.wav"
+			"wave"	"ambient/creatures/rats3.wav"
+			"wave"	"ambient/creatures/rats4.wav"
+		}
+		
+	}
+	
+	"playrandom"
+	{
+		"time"		"20,40"
+		"volume"	"0.1,0.2"
+		"pitch"		"80,100"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"npc/zombie/zombie_alert2.wav"
+			"wave"	"npc/zombie/zombie_alert3.wav"
+			"wave"	"npc/zombie/zombie_pain3.wav"
+			"wave"	"npc/zombie/zombie_pain6.wav"
+		}
+		
+	}
+	
+	"playrandom"
+	{
+		"time"		"8, 14"
+		"volume"	"0.2, 0.35"
+		"pitch"		"100,120"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/materials/rock1.wav"
+			"wave"	"ambient/materials/rock2.wav"
+			"wave"	"ambient/materials/rock3.wav"
+			"wave"	"ambient/materials/rock4.wav"
+			"wave"	"ambient/materials/rock5.wav"
+		}
+
+	}
+
+
+	"playsoundscape"
+	{
+		"name"		"ep1.util_fardrips"
+		"volume"	"0.55"
+	}
+
+	"playrandom"
+	{
+		"time"		"30, 180"
+		"volume"	"0.3,0.5"
+		"pitch"		"80,120"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/creatures/town_scared_sob1.wav"
+			"wave"	"ambient/creatures/town_scared_breathing1.wav"
+			"wave"	"ambient/creatures/town_scared_breathing2.wav"
+		}	
+	}
+}
+
+// stalker train exterior
+
+"ep1.outsidestalkertrain"
+{
+
+	"soundmixer"	"Zombie_Dark_Tunnel"
+
+	// "dsp"	"134"	
+	
+	"dsp"	"1"	
+
+	"playlooping"
+	{
+		"volume"	"0.12"
+		"pitch"		"100"
+		"soundlevel"	"SNDLVL_50dB"
+		"wave"		"ambient/atmosphere/underground_hall_loop1.wav"
+	}
+	
+	"playrandom"
+	{
+		"time"		"4, 10"
+		"volume"	"0.2, 0.35"
+		"pitch"		"100,120"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/materials/rock1.wav"
+			"wave"	"ambient/materials/rock2.wav"
+			"wave"	"ambient/materials/rock3.wav"
+			"wave"	"ambient/materials/rock4.wav"
+			"wave"	"ambient/materials/rock5.wav"
+		}
+
+	}
+	
+
+	//position 0 is the stalker screams
+	"playrandom"
+	{
+		"time"		"0.4, 2"
+		"volume"	"0.1, 0.2"
+		"pitch"		"90,110"
+		"position"	"0"
+		"soundlevel"	"SNDLVL_80db"
+		"rndwave"
+		{
+			"wave"			"npc/stalker/stalker_alert1b.wav"
+			"wave"			"npc/stalker/stalker_alert2b.wav"
+			"wave"			"npc/stalker/stalker_alert3b.wav"
+			"wave"			"npc/stalker/stalker_pain1.wav"
+			"wave"			"npc/stalker/stalker_pain2.wav"
+			"wave"			"npc/stalker/stalker_pain3.wav"
+		}
+
+	}
+
+	"playrandom"
+	{
+		"time"		"4, 10"
+		"volume"	"0.5,0.9"
+		"pitch"		"75,95"
+		"soundlevel"	"SNDLVL_120dB"
+		"position"	"random"
+		"rndwave"
+		{
+			"wave"	"ambient/materials/metal4.wav"
+			"wave"	"ambient/materials/metal_stress1.wav"
+			"wave"	"ambient/materials/metal_stress2.wav"
+			"wave"	"ambient/materials/metal_stress5.wav"
+			"wave"	"ambient/materials/shipgroan2.wav"
+			"wave"	"ambient/materials/shipgroan3.wav"
+			"wave"	"ambient/materials/shipgroan4.wav"
+		}
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep1.util_fardrips"
+		"volume"	"0.65"
+	}
+}
+
+//----------------------------
+// evacuated city soundscapes
+//----------------------------
+
+//////////////////////////////// Utility soundscapes ////////////////////////
+
+
+"ep1.util_sirens"
+{
+	"playrandom"
+	{
+		"time"		"8,18"
+		"volume"	"0.1,0.4"
+		"pitch"		"70"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/levels/citadel/citadel_5sirens3.wav"
+			"wave"	"ambient/levels/citadel/citadel_5sirens.wav"
+		}
+	}
+}
+
+"ep1.util_light_sirens"
+{
+	"playrandom"
+	{
+		"time"		"20,60"
+		"volume"	"0.1,0.4"
+		"pitch"		"100"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/levels/citadel/fcitadel_alert.wav"
+			"wave"	"ambient/levels/citadel/fcitadel_alert.wav"
+			"wave"	"ambient/levels/citadel/fcitadel_deploydiagnose.wav"
+			"wave"	"ambient/levels/citadel/fcitadel_restrictorsdisengaged.wav"
+		}
+	}
+}
+
+"ep1.util_light_combat_atmosphere"
+{
+	"playrandom"
+	{
+		"time"		"10,40"
+		"volume"	"0.15,0.35"
+		"pitch"		"90,115"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140dB"		
+		"rndwave"
+		{
+			"wave"	"ambient/levels/streetwar/apc_distant1.wav"
+			"wave"	"ambient/levels/streetwar/apc_distant2.wav"
+			"wave"	"ambient/levels/streetwar/apc_distant3.wav"
+			"wave"	"ambient/levels/streetwar/gunship_distant1.wav"
+			"wave"	"ambient/levels/streetwar/gunship_distant2.wav"
+			"wave"	"ambient/levels/streetwar/heli_distant1.wav"
+			"wave"	"ambient/levels/streetwar/marching_distant1.wav"
+			"wave"	"ambient/levels/streetwar/marching_distant2.wav"
+			"wave"	"ambient/levels/streetwar/strider_distant1.wav"
+			"wave"	"ambient/levels/streetwar/strider_distant2.wav"
+			"wave"	"ambient/levels/streetwar/strider_distant3.wav"
+			"wave"	"ambient/levels/streetwar/strider_distant_walk1.wav"
+		}
+		
+	}
+
+
+	"playsoundscape"
+	{
+		"name"		"ep1.util_light_sirens"
+		"volume"	"0.9"
+	}
+}
+
+"ep1.util_medium_combat_atmosphere"
+{
+	"playrandom"
+	{
+		"time"		"3,15"
+		"volume"	"0.25,0.55"
+		"pitch"		"90,115"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140dB"		
+		"rndwave"
+		{
+			"wave"	"ambient/levels/streetwar/apc_distant1.wav"
+			"wave"	"ambient/levels/streetwar/apc_distant2.wav"
+			"wave"	"ambient/levels/streetwar/apc_distant3.wav"
+			"wave"	"ambient/levels/streetwar/gunship_distant1.wav"
+			"wave"	"ambient/levels/streetwar/gunship_distant2.wav"
+			"wave"	"ambient/levels/streetwar/heli_distant1.wav"
+			"wave"	"ambient/levels/streetwar/marching_distant1.wav"
+			"wave"	"ambient/levels/streetwar/marching_distant2.wav"
+			"wave"	"ambient/levels/streetwar/strider_distant1.wav"
+			"wave"	"ambient/levels/streetwar/strider_distant2.wav"
+			"wave"	"ambient/levels/streetwar/strider_distant3.wav"
+			"wave"	"ambient/levels/streetwar/strider_distant_walk1.wav"
+		}
+		
+	}
+
+
+	"playsoundscape"
+	{
+		"name"		"ep1.util_sirens"
+		"volume"	"1.0"
+	}
+}
+
+// distant explosions, wind
+
+"ep1.util_heavy_wind_and_destruction"
+{
+
+	"playrandom"
+	{
+		"time"		"0.5, 5.0"
+		"volume"	"0.16,0.29"
+		"pitch"		"70,90"
+		"position"	"random"	
+		"soundlevel"	"SNDLVL_140dB"	
+		"rndwave"
+		{
+
+			"wave"	"ambient/levels/streetwar/city_battle7.wav"
+			"wave"	"ambient/levels/streetwar/city_battle19.wav"
+			"wave"	"ambient/atmosphere/city_skybeam1.wav"
+			"wave"	"ambient/atmosphere/thunder1.wav"
+			"wave"	"ambient/atmosphere/thunder2.wav"
+			"wave"	"ambient/atmosphere/thunder3.wav"
+			"wave"	"ambient/atmosphere/thunder4.wav"
+			"wave"	"ambient/levels/intro/Rhumble_1_42_07.wav"
+		}
+	}
+
+	"playrandom"
+	{
+		"volume"	"0.14,0.25"
+		"pitch"		"100"
+		"time"		"1.0, 5.0"
+		"pitch"		"80,100"
+		"soundlevel"	"SNDLVL_140dB"
+		"position"	"random"
+		"rndwave"
+		{
+			"wave" "ambient/wind/wind_med2.wav"
+			"wave" "ambient/wind/wind_hit1.wav"
+			"wave" "ambient/wind/wind_hit2.wav"
+			"wave" "ambient/wind/wind_snippet1.wav"
+			"wave" "ambient/wind/wind_snippet2.wav"
+			"wave" "ambient/wind/wind_snippet5.wav"
+		}
+	}
+}
+
+"ep1.util_light_wind_and_destruction"
+{
+
+	"playrandom"
+	{
+		"time"		"5.0, 20.0"
+		"volume"	"0.12,0.25"
+		"pitch"		"70,90"
+		"position"	"random"	
+		"soundlevel"	"SNDLVL_140dB"	
+		"rndwave"
+		{
+
+			"wave"	"ambient/levels/streetwar/city_battle7.wav"
+			"wave"	"ambient/levels/streetwar/city_battle19.wav"
+			"wave"	"ambient/atmosphere/city_skybeam1.wav"
+			"wave"	"ambient/atmosphere/thunder1.wav"
+			"wave"	"ambient/atmosphere/thunder2.wav"
+			"wave"	"ambient/atmosphere/thunder3.wav"
+			"wave"	"ambient/atmosphere/thunder4.wav"
+
+		}
+	}
+
+	"playrandom"
+	{
+		"volume"	"0.1,0.2"
+		"pitch"		"100"
+		"time"		"3.0, 15.0"
+		"pitch"		"80,100"
+		"soundlevel"	"SNDLVL_140dB"
+		"position"	"random"
+		"rndwave"
+		{
+			"wave" "ambient/wind/wind_med1.wav"
+			"wave" "ambient/wind/wind_hit1.wav"
+			"wave" "ambient/wind/wind_hit2.wav"
+			"wave" "ambient/wind/wind_snippet3.wav"
+			"wave" "ambient/wind/wind_snippet4.wav"
+			"wave" "ambient/wind/wind_snippet5.wav"
+		}
+	}
+}
+
+"ep1.util_light_combat"
+{
+
+	"playrandom"
+	{
+		"time"		"10,35"
+		"volume"	"0.2,0.35"
+		"pitch"		"90,105"
+		"position"	"random"	
+		"soundlevel"	"SNDLVL_140dB"	
+		"rndwave"
+		{
+			"wave"	"ambient/levels/streetwar/city_battle1.wav"
+			"wave"	"ambient/levels/streetwar/city_battle2.wav"
+			"wave"	"ambient/levels/streetwar/city_battle3.wav"
+			"wave"	"ambient/levels/streetwar/city_battle4.wav"
+			"wave"	"ambient/levels/streetwar/city_battle5.wav"
+			"wave"	"ambient/levels/streetwar/city_battle6.wav"
+			"wave"	"ambient/levels/streetwar/city_battle7.wav"
+			"wave"	"ambient/levels/streetwar/city_battle8.wav"
+			"wave"	"ambient/levels/streetwar/city_battle9.wav"
+			"wave"	"ambient/levels/streetwar/city_battle10.wav"
+
+			"wave"	"ambient/levels/prison/inside_battle1.wav"
+			"wave"	"ambient/levels/prison/inside_battle2.wav"
+			"wave"	"ambient/levels/prison/inside_battle3.wav"
+			"wave"	"ambient/levels/prison/inside_battle4.wav"
+
+		}
+		
+	}
+
+	"playrandom"
+	{
+		"time"		"5,30"
+		"volume"	"0.2,0.45"
+		"pitch"		"90,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140dB"		
+		"rndwave"
+		{
+			"wave"	"ambient/levels/streetwar/city_battle11.wav"
+			"wave"	"ambient/levels/streetwar/city_battle12.wav"
+			//"wave"	"ambient/levels/streetwar/city_battle13.wav"
+			"wave"	"ambient/levels/streetwar/city_battle14.wav"
+			"wave"	"ambient/levels/streetwar/city_battle15.wav"
+			"wave"	"ambient/levels/streetwar/city_battle16.wav"
+			"wave"	"ambient/levels/streetwar/city_battle17.wav"
+			"wave"	"ambient/levels/streetwar/city_battle18.wav"
+			"wave"	"ambient/levels/streetwar/city_battle19.wav"
+
+		}
+		
+	}
+}
+
+"ep1.util_medium_combat"
+{
+	"playrandom"
+	{
+		"time"		"1,15"
+		"volume"	"0.25,0.5"
+		"pitch"		"90,105"	
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140dB"		
+		"rndwave"
+		{
+			"wave"	"ambient/levels/streetwar/city_battle1.wav"
+			"wave"	"ambient/levels/streetwar/city_battle2.wav"
+			"wave"	"ambient/levels/streetwar/city_battle3.wav"
+			"wave"	"ambient/levels/streetwar/city_battle4.wav"
+			"wave"	"ambient/levels/streetwar/city_battle5.wav"
+			"wave"	"ambient/levels/streetwar/city_battle6.wav"
+			"wave"	"ambient/levels/streetwar/city_battle7.wav"
+			"wave"	"ambient/levels/streetwar/city_battle8.wav"
+			"wave"	"ambient/levels/streetwar/city_battle9.wav"
+			"wave"	"ambient/levels/streetwar/city_battle10.wav"
+
+			
+			"wave"	"ambient/levels/prison/inside_battle1.wav"
+			"wave"	"ambient/levels/prison/inside_battle2.wav"
+			"wave"	"ambient/levels/prison/inside_battle3.wav"
+			"wave"	"ambient/levels/prison/inside_battle4.wav"
+			"wave"	"ambient/levels/prison/inside_battle5.wav"
+			"wave"	"ambient/levels/prison/inside_battle6.wav"
+			"wave"	"ambient/levels/prison/inside_battle7.wav"
+			"wave"	"ambient/levels/prison/inside_battle8.wav"
+			"wave"	"ambient/levels/prison/inside_battle9.wav"
+		}
+		
+	}
+
+	"playrandom"
+	{
+		"time"		"3,15"
+		"volume"	"0.25,0.5"
+		"pitch"		"90,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140dB"		
+		"rndwave"
+		{
+			"wave"	"ambient/levels/streetwar/city_battle11.wav"
+			"wave"	"ambient/levels/streetwar/city_battle12.wav"
+			//"wave"	"ambient/levels/streetwar/city_battle13.wav"
+			"wave"	"ambient/levels/streetwar/city_battle14.wav"
+			"wave"	"ambient/levels/streetwar/city_battle15.wav"
+			"wave"	"ambient/levels/streetwar/city_battle16.wav"
+			"wave"	"ambient/levels/streetwar/city_battle17.wav"
+			"wave"	"ambient/levels/streetwar/city_battle18.wav"
+			"wave"	"ambient/levels/streetwar/city_battle19.wav"
+		}
+		
+	}
+}
+
+
+
+// unstable citadel, sky flashes and bursts at Position 0
+
+"ep1.util_slow_sky_flashes"
+{
+	
+	"playrandom"
+	{
+		"volume"	"0.5,0.8"
+		"pitch"		"85,120"
+		"time"		"8.0, 30.0"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140dB"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/city/citadel_cloudhit1.wav"
+			"wave"	"ambient/levels/city/citadel_cloudhit2.wav"
+			"wave"	"ambient/levels/city/citadel_cloudhit3.wav"
+			"wave"	"ambient/levels/city/citadel_cloudhit4.wav"
+			"wave"	"ambient/levels/city/citadel_cloudhit5.wav"
+		}
+	}
+}
+
+"ep1.util_rapid_sky_flashes"
+{
+	
+	"playrandom"
+	{
+		"volume"	"0.5,1.0"
+		"pitch"		"90,130"
+		"time"		"0.5,5.0"
+		"position"	"0"
+		"soundlevel"	"SNDLVL_140dB"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/city/citadel_cloudhit1.wav"
+			"wave"	"ambient/levels/city/citadel_cloudhit2.wav"
+			"wave"	"ambient/levels/city/citadel_cloudhit3.wav"
+			"wave"	"ambient/levels/city/citadel_cloudhit4.wav"
+			"wave"	"ambient/levels/city/citadel_cloudhit5.wav"
+		}
+	}
+}
+
+//----------------------------
+// evacuated city soundscapes
+//----------------------------
+
+// unstable citadel, heard from outside on street
+// position 0 is top of the citadel
+
+"ep1.citadel_unstable_outside"
+{
+
+	"dsp"	"1"	
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"pitch"		"100"
+		"position"	"0"
+		"soundlevel"	"SNDLVL_140dB"
+		"wave"		"ambient/levels/city/citadel_critical_loop1.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"pitch"		"100"
+		"position"	"0"
+		"soundlevel"	"SNDLVL_140dB"
+		"wave"		"ambient/levels/city/citadel_winds_loop1.wav"
+	}
+
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"		"ep1.util_slow_sky_flashes"
+		"volume"	"0.4"
+	}
+}
+
+// unstable citadel, heard from inside a building
+// position 0 is top of the citadel
+
+"ep1.citadel_unstable_inside"
+{
+
+	"dsp"	"1"	
+
+	"playlooping"
+	{
+		"volume"	"0.15"
+		"pitch"		"100"
+		"position"	"0"
+		"soundlevel"	"SNDLVL_140dB"
+		"wave"		"ambient/levels/city/citadel_critical_loop1.wav"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep1.util_slow_sky_flashes"
+		"volume"	"0.2"
+	}
+}
+
+
+// very unstable citadel
+// citadel in last level, position 0 is top of the citadel
+
+"ep1.citadel_critical_outside"
+{
+
+	"dsp"	"1"	
+
+	"playlooping"
+	{
+		"volume"	"0.26"
+		"pitch"		"100"
+		"position"	"0"
+		"soundlevel"	"SNDLVL_140dB"
+		"wave"		"ambient/levels/city/citadel_critical_loop1.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.29"
+		"pitch"		"100"
+		"position"	"0"
+		"soundlevel"	"SNDLVL_140dB"
+		"wave"		"ambient/levels/city/citadel_winds_loop1.wav"
+	}
+
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"		"ep1.util_rapid_sky_flashes"
+		"volume"	"0.9"
+	}
+}
+
+
+// inside a building, citadel is critical outside - 
+// play inside train station at end of game
+
+"ep1.citadel_critical_inside"
+{
+
+	"dsp"	"1"	
+
+	"playlooping"
+	{
+		"volume"	"0.18"
+		"pitch"		"100"
+		"soundlevel"	"SNDLVL_140dB"
+		"wave"		"ambient/levels/city/citadel_critical_loop1.wav"
+	}
+
+
+	"playsoundscape"
+	{
+		"name"		"ep1.util_rapid_sky_flashes"
+		"volume"	"0.35"
+	}
+
+}
+
+// citadel just before it blows. this is a loud soundscape
+
+"ep1.citadel_predetonation_outside"
+{
+
+	"dsp"	"1"	
+
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"position"	"0"
+		"soundlevel"	"SNDLVL_140dB"
+		"wave"		"ambient/levels/city/citadel_critical_loop1.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.6"
+		"pitch"		"100"
+		"position"	"0"
+		"soundlevel"	"SNDLVL_140dB"
+		"wave"		"ambient/levels/city/citadel_nearwinds_loop1.wav"
+	}
+
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"		"ep1.util_rapid_sky_flashes"
+		"volume"	"1.0"
+	}
+}
+
+// small control room - position 0,1 is combine terminal
+
+"ep1.control_room"
+{
+
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_medium_combat"
+		"volume"	"0.3"
+	}
+
+// position 0,1 is combine computer terminal
+
+	"playsoundscape"
+	{
+		"name"	"combine.computer"
+		"volume"	"0.4"
+		"positionoverride"	"0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"combine.computer"
+		"volume"	"0.4"
+		"positionoverride"	"1"
+	}
+}
+
+// underground, away from combat, small tunnel
+
+"ep1.general_small_tunnel"
+{
+	"playlooping"
+	{
+		"volume"	"0.15"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/pipe1.wav"
+	}
+}
+
+// large underground tunnels
+
+"ep1.general_large_tunnel"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.20"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/cargo_hold2.wav"
+	}
+
+}
+
+"ep1.util_rubble"
+{
+	"playrandom"
+	{
+		"time"		"8,20"
+		"volume"	"0.2,0.5"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"		"ambient/levels/streetwar/building_rubble1.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble2.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble3.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble4.wav"
+			"wave"		"ambient/levels/streetwar/building_rubble5.wav"	
+			"wave"		"ambient/materials/metal_stress4.wav"
+			"wave"		"ambient/materials/metal_stress5.wav"
+			"wave"		"ambient/materials/rustypipes1.wav"
+			"wave"		"ambient/materials/rustypipes2.wav"
+			"wave"		"ambient/materials/rustypipes3.wav"
+		}
+	}
+
+	"playrandom"
+	{
+		"time"		"60,360"
+		"volume"	"0.5,0.8"
+		"pitch"		"80,100"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"		"ambient/atmosphere/terrain_rumble1.wav"
+			"wave"		"ambient/atmosphere/thunder1.wav"
+			"wave"		"ambient/atmosphere/thunder2.wav"
+			"wave"		"ambient/atmosphere/thunder3.wav"
+		}
+	}
+					
+}
+
+// -------------------------------------------
+// general soundscapes for ep1, evacuated city
+// -------------------------------------------
+
+
+// start of ep1, combat & sirens heard from streets, 
+// citadel is not yet critical
+// citadel at position 0
+
+"ep1.general_start_of_evac_outside"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_unstable_outside"
+		"volume"	"0.7"
+		"positionoverride"	"0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_medium_combat"
+		"volume"	"0.8"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_medium_combat_atmosphere"
+		"volume"	"0.8"
+	}
+
+}
+
+"ep1.general_start_of_evac_inside"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_unstable_inside"
+		"volume"	"0.7"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_medium_combat"
+		"volume"	"0.4"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_medium_combat_atmosphere"
+		"volume"	"0.3"
+	}
+
+}
+
+// middle of evacuation, less combat and sirens, citadel is louder
+// citadel at position 0
+
+"ep1.general_middle_of_evac_outside"
+{
+	"dsp"	"1"
+	
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_unstable_outside"
+		"volume"	"1.0"
+		"positionoverride"	"0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_light_combat"
+		"volume"	"0.8"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_light_wind_and_destruction"
+		"volume"	"0.8"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_light_combat_atmosphere"
+		"volume"	"0.8"
+	}
+}
+
+"ep1.general_middle_of_evac_inside"
+{
+	"dsp"	"1"
+	
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_unstable_inside"
+		"volume"	"0.8"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_light_combat"
+		"volume"	"0.4"
+	}
+
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_light_combat_atmosphere"
+		"volume"	"0.4"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_rubble"
+		"volume"	"0.7"
+	}
+}
+
+// end of evacuation, no combat or sirens, citadel is loudest
+// citadel at position 0
+
+"ep1.general_end_of_evac_outside"
+{
+	"dsp"	"1"
+	
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_critical_outside"
+		"volume"	"1.0"
+		"positionoverride"	"0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_heavy_wind_and_destruction"
+		"volume"	"1.0"
+	}
+
+}
+
+"ep1.general_end_of_evac_inside"
+{
+	"dsp"	"1"
+	
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_critical_inside"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_heavy_wind_and_destruction"
+		"volume"	"0.25"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.util_rubble"
+		"volume"	"1.0"
+	}
+}
+
+// pre-detonation of citadel, citadel is violent
+// citadel at position 0
+
+"ep1.general_citadel_predetonation"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_predetonation_outside"
+		"volume"	"1.0"
+		"positionoverride"	"0"
+	}
+	
+	"playsoundscape"
+	{
+		"name"	"ep1.util_heavy_wind_and_destruction"
+		"volume"	"1.0"
+	}
+
+}
+
+// soundscape for hospital (ep1_c17_02a) after gunship battle
+
+"ep1.hospital"
+{
+	"dsp"	"1"
+	"dsp_volume" "1.0"
+
+	"playlooping"
+	{
+		"volume"	"0.28"
+		"wave"		"ambient/atmosphere/corridor2.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+
+	"playrandom"
+	{
+		"time"		"9, 18"
+		"volume"	"0.3,0.6"
+		"pitch"		"95,110"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_snippet1.wav"
+			"wave"	"ambient/wind/wind_snippet2.wav"
+			"wave"	"ambient/atmosphere/hole_hit1.wav"
+			"wave"	"ambient/atmosphere/hole_hit5.wav"
+			"wave"	"ambient/creatures/town_moan1.wav"
+			"wave"	"ambient/atmosphere/cave_hit2.wav"
+			"wave"	"ambient/atmosphere/cave_hit4.wav"
+			"wave"	"ambient/atmosphere/cave_hit5.wav"
+		}
+		
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.general_middle_of_evac_inside"
+		"volume"	"1.0"
+	}
+
+}
+
+// play in water room under hospital
+
+"ep1.hospital_water_room"
+{
+	"dsp"	"1"
+	"dsp_volume" "1.0"
+
+	"playlooping"
+	{
+		"volume"	"0.20"
+		"wave"		"ambient/atmosphere/underground.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1_c17_00.general_watery_tunnel"
+		"volume"	"1.0"
+	}
+}
+
+// play in car tunnels, ep1_c17_00
+
+// positions 0,1,2 are antlion holes
+
+"ep1.antlion_parking_garage"
+{
+	"dsp"	"1"
+	"dsp_volume" "1.0"
+
+	"playlooping"
+	{
+		"volume"	"0.20"
+		"wave"		"ambient/atmosphere/undercity_loop1.wav"
+		"pitch"		"100"
+		"attenuation"	"0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.general_large_tunnel"
+		"volume"	"1.0"
+	}
+
+	"playrandom"
+	{
+		"time"		"5,18"
+		"volume"	"0.2,0.5"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"		"ambient/atmosphere/cave_hit2.wav"
+			"wave"		"ambient/atmosphere/hole_hit1.wav"
+			"wave"		"ambient/atmosphere/hole_hit2.wav"
+			"wave"		"ambient/atmosphere/hole_hit5.wav"
+			"wave"		"ambient/materials/metal_stress4.wav"
+			"wave"		"ambient/materials/metal_stress5.wav"
+			"wave"		"ambient/materials/rustypipes1.wav"
+			"wave"		"ambient/materials/rustypipes2.wav"
+			"wave"		"ambient/materials/rustypipes3.wav"
+		}
+	}
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"	"coast.util_antlion_den"
+		"volume" "0.3"
+	}	
+	
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"	"coast.util_antlion_den"
+		"volume" "0.3"
+	}
+	
+	
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"	"coast.util_antlion_den"
+		"volume" "0.3"
+	}
+}
+
+
+// music placement: 
+
+// unused - rock precombat into combat (ep1_c17_02a) after alyx gets shotty & enters hall (saved: music1)
+//"ep_song10"				
+
+// unused - ambient, long, machines - ep1_c17_00a after elevator fails and player begins searching
+//"ep_song11" (needs to be quieter)
+
+// unused - rapid combat/movement - ep1_c17_00a play during zombie elevator combat, when fast zombies show
+//"ep_song9"	
+
+// unused - rapid combat, techno - ep1_c17_02a when antlion guard dies - and soldiers attack
+//"ep_song16"
+
+
+
+
+// unused - creepy march
+//"ep_song0"				
+
+// unused - rock combat 
+//"ep_song4"				
+
+// unused - slow march, elevator/train ride or reveal
+//"ep_song6"				
+
+// unused - ambient, mystery, exploration, resolution
+//"ep_song12"				
+			
+	
+
+
+
+// unused - house, upbeat (maybe for travel/motion)
+//"ep_song13"				
+
+// unused - ambient + bongo groove, wasteland caves
+//"ep_song14"				
+
+// unused - ambient, nature, wasteland, positive
+//"ep_song15"	

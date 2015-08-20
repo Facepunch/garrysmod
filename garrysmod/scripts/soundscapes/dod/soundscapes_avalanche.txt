@@ -1,0 +1,135 @@
+// DSP Effects
+// 0 : "Normal (off)"
+// 1 : "Generic"		no echo
+// 2 : "Metal Small"  	no echo
+// 3 : "Metal Medium" 	slight metallic echo
+// 4 : "Metal Large" 	noticable metallic echo like garage, use for tunnels and sewers
+// 5 : "Tunnel Small"	no echo
+// 6 : "Tunnel Medium"	no echo, not noticable
+// 7 : "Tunnel Large"	noticable, but smaller than metal large 
+// 8 : "Chamber Small"	no echo
+// 9 : "Chamber Medium"	no echo
+// 10: "Chamber Large"	no echo
+// 11: "Bright Small"	barely noticable
+// 12: "Bright Medium"	barely noticable
+// 13: "Bright Large"	still barely noticable
+// 14: "Water 1"		no echo	
+// 15: "Water 2"		no echo	
+// 16: "Water 3"		faint echo, long
+// 17: "Concrete Small"	no echo
+// 18: "Concrete Medium"	no echo
+// 19: "Concrete Large"	no echo
+// 20: "Big 1"		strong close succession, city 
+// 21: "Big 2"		strong farther succession, bigger distance, open fields
+// 22: "Big 3"		strong even farther succession, canyon sounding, mountains
+// 23: "Cavern Small"	no echo
+// 24: "Cavern Medium"	slight echo
+// 25: "Cavern Large"	medium echo, does not trail off quickly
+// 26: "Weirdo 1"		like Big 2, use big 2
+// 27: "Weirdo 2"		like Big 2, use big 2
+// 28: "Weirdo 3"		like Big 2, use big 2
+
+//	ATTN_NONE		0.0f	
+//	ATTN_NORM		0.8f	75dB
+//	ATTN_IDLE		2.0f	60dB
+//	ATTN_STATIC		1.25f	66dB
+//	ATTN_RICOCHET	1.5f	65dB
+//	ATTN_GUNFIRE	0.27f	140dB
+
+//	SNDLVL_50dB		= 50,	// 3.9
+//	SNDLVL_55dB		= 55,	// 3.0
+//	SNDLVL_IDLE		= 60,	// 2.0
+//	SNDLVL_TALKING	= 60,	// 2.0
+//	SNDLVL_60dB		= 60,	// 2.0
+//	SNDLVL_65dB		= 65,	// 1.5
+//	SNDLVL_STATIC	= 66,	// 1.25
+//	SNDLVL_70dB		= 70,	// 1.0
+//	SNDLVL_NORM		= 75,
+//	SNDLVL_75dB		= 75,	// 0.8
+//	SNDLVL_80dB		= 80,	// 0.7
+//	SNDLVL_85dB		= 85,	// 0.6
+//	SNDLVL_90dB		= 90,	// 0.5
+//	SNDLVL_95dB		= 95,
+//	SNDLVL_100dB	= 100,	// 0.4
+//	SNDLVL_105dB	= 105,
+//	SNDLVL_120dB	= 120,
+//	SNDLVL_130dB	= 130,
+//	SNDLVL_GUNFIRE	= 140,	// 0.27
+//	SNDLVL_140dB	= 140,	// 0.2
+//	SNDLVL_150dB	= 150,	// 0.2
+
+
+"Avalanche.Outdoors"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"		".5"
+		"pitch"		"100"
+		"wave"		"ambient/distantbattle.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"		".25"
+		"pitch"		"100"
+		"wave"		"ambient/lightwindtinks.wav"
+	}
+
+
+	"playlooping"
+	{
+		"volume"		".9"
+		"pitch"		"100"
+		"wave"		"ambient/city.wav"
+	}
+
+	"playrandom"
+	{
+		"time"		"15, 40"
+		"volume"		".1"
+		"pitch"		"100"
+		"rndwave"
+		{
+			"wave"	"ambient/shutter4.wav"
+			"wave"	"ambient/shutter5.wav"
+			"wave"	"ambient/shutter6.wav"
+		}
+	}
+
+	"playrandom"
+	{
+		"time"		"50, 70"
+		"volume"		".15"
+		"pitch"		"100"
+		"rndwave"
+		{
+			"wave"	"ambient/nebwerfdist.wav"
+			"wave"	"ambient/antiaircraft.wav"
+		}
+	}
+	
+		"playrandom"
+	{
+		"time"		"40, 70"
+		"volume"	"1"
+		"pitch"		"100"
+		"rndwave"
+		{
+			"wave"	"ambient/airplane.wav"
+			"wave"	"ambient/airplane2.wav"
+			"wave"	"ambient/airplane3.wav"
+		}
+	}
+}
+
+"Avalanche.Indoors"
+{
+	"playlooping"
+	{
+		"volume"	".5"
+		"pitch"		"100"
+		"wave"		"ambient/indoors.wav"
+	}
+}
