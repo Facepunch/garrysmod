@@ -19,21 +19,21 @@ end
 
 SWEP.Base = "weapon_tttbase"
 
-SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel         = "models/props/cs_office/paper_towels.mdl"
+SWEP.ViewModel = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel = "models/props/cs_office/paper_towels.mdl"
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = false
-SWEP.Primary.Ammo       = "none"
+SWEP.DrawCrosshair = false
+SWEP.ViewModelFlip = false
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = false
+SWEP.Primary.Ammo = "none"
 SWEP.Primary.Delay = 1.0
 
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = true
+SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Delay = 0.2
 
 SWEP.Kind = WEAPON_EQUIP2
@@ -107,15 +107,15 @@ function SWEP:CycleZoom()
 end
 
 function SWEP:PreDrop()
-	 self:SetZoom(1)
-	 self.dt.processing = false
-	 return self.BaseClass.PreDrop(self)
+	self:SetZoom(1)
+	self.dt.processing = false
+	return self.BaseClass.PreDrop(self)
 end
 
 function SWEP:Holster()
-	 self:SetZoom(1)
-	 self.dt.processing = false
-	 return true
+	self:SetZoom(1)
+	self.dt.processing = false
+	return true
 end
 
 function SWEP:Deploy()
@@ -135,7 +135,7 @@ function SWEP:IsTargetingCorpse()
 	local ent = tr.Entity
 
 	return (IsValid(ent) and ent:GetClass() == "prop_ragdoll" and
-			  CORPSE.GetPlayerNick(ent, false) != false)
+			CORPSE.GetPlayerNick(ent, false) != false)
 end
 
 local confirm = Sound("npc/turret_floor/click1.wav")
@@ -241,4 +241,3 @@ if CLIENT then
 		return -1
 	end
 end
-

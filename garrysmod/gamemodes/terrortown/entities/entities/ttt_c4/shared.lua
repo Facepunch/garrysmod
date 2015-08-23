@@ -577,12 +577,13 @@ if SERVER then
 end
 
 if CLIENT then
-	surface.CreateFont("C4ModelTimer", {
-								 font = "Default",
-								 size = 13,
-								 weight = 0,
-								 antialias = false
-							 })
+	surface.CreateFont("C4ModelTimer",
+	{
+		font = "Default",
+		size = 13,
+		weight = 0,
+		antialias = false
+	 })
 
 
 	function ENT:GetTimerPos()
@@ -593,7 +594,7 @@ if CLIENT then
 			local ang = self:GetAngles()
 			ang:RotateAroundAxis(self:GetUp(), -90)
 			local pos = (self:GetPos() + self:GetForward() * 4.5 +
-							 self:GetUp() * 9.0 + self:GetRight() * 7.8)
+						 self:GetUp() * 9.0 + self:GetRight() * 7.8)
 			return { Pos = pos, Ang = ang }
 		end
 	end

@@ -76,4 +76,3 @@ function ENT:OnRemove()
 		self:GetOwner().decoy = nil
 	end
 end
-

@@ -5,7 +5,7 @@ SWEP.HoldType = "ar2"
 
 if CLIENT then
 	SWEP.PrintName = "UMP Prototype"
-	SWEP.Slot      = 6
+	SWEP.Slot = 6
 
 	SWEP.ViewModelFOV = 72
 
@@ -31,19 +31,19 @@ SWEP.Primary.Delay = 0.1
 SWEP.Primary.Cone = 0.02
 SWEP.Primary.ClipSize = 30
 SWEP.Primary.ClipMax = 60
-SWEP.Primary.DefaultClip	= 30
-SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo			= "smg1"
-SWEP.AutoSpawnable      = false
+SWEP.Primary.DefaultClip = 30
+SWEP.Primary.Automatic = true
+SWEP.Primary.Ammo = "smg1"
+SWEP.AutoSpawnable = false
 SWEP.AmmoEnt = "item_ammo_smg1_ttt"
-SWEP.Primary.Recoil		= 1.2
-SWEP.Primary.Sound		= Sound( "Weapon_UMP45.Single" )
+SWEP.Primary.Recoil = 1.2
+SWEP.Primary.Sound = Sound( "Weapon_UMP45.Single" )
 
-SWEP.UseHands			= true
-SWEP.ViewModelFlip		= false
-SWEP.ViewModelFOV		= 54
-SWEP.ViewModel			= "models/weapons/cstrike/c_smg_ump45.mdl"
-SWEP.WorldModel			= "models/weapons/w_smg_ump45.mdl"
+SWEP.UseHands = true
+SWEP.ViewModelFlip = false
+SWEP.ViewModelFOV = 54
+SWEP.ViewModel = "models/weapons/cstrike/c_smg_ump45.mdl"
+SWEP.WorldModel = "models/weapons/w_smg_ump45.mdl"
 
 SWEP.HeadshotMultiplier = 4.5 -- brain fizz
 
@@ -71,28 +71,28 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 	bullet.Damage = dmg
 
 	bullet.Callback = function(att, tr, dmginfo)
-								if SERVER or (CLIENT and IsFirstTimePredicted()) then
-									local ent = tr.Entity
-									if (not tr.HitWorld) and IsValid(ent) then
-										local edata = EffectData()
+		if SERVER or (CLIENT and IsFirstTimePredicted()) then
+			local ent = tr.Entity
+			if (not tr.HitWorld) and IsValid(ent) then
+				local edata = EffectData()
 
-										edata:SetEntity(ent)
-										edata:SetMagnitude(3)
-										edata:SetScale(2)
+				edata:SetEntity(ent)
+				edata:SetMagnitude(3)
+				edata:SetScale(2)
 
-										util.Effect("TeslaHitBoxes", edata)
+				util.Effect("TeslaHitBoxes", edata)
 
-										if SERVER and ent:IsPlayer() then
-											local eyeang = ent:EyeAngles()
+				if SERVER and ent:IsPlayer() then
+					local eyeang = ent:EyeAngles()
 
-											local j = 10
-											eyeang.pitch = math.Clamp(eyeang.pitch + math.Rand(-j, j), -90, 90)
-											eyeang.yaw = math.Clamp(eyeang.yaw + math.Rand(-j, j), -90, 90)
-											ent:SetEyeAngles(eyeang)
-										end
-									end
-								end
-							end
+					local j = 10
+					eyeang.pitch = math.Clamp(eyeang.pitch + math.Rand(-j, j), -90, 90)
+					eyeang.yaw = math.Clamp(eyeang.yaw + math.Rand(-j, j), -90, 90)
+					ent:SetEyeAngles(eyeang)
+				end
+			end
+		end
+	end
 
 
 	self.Owner:FireBullets( bullet )

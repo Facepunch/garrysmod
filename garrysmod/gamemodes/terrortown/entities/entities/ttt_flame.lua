@@ -201,24 +201,24 @@ function ENT:Think()
 end
 
 if CLIENT then
-local fakefire = Material("cable/smoke")
-local side = Angle(-90, 0, 0)
-function ENT:BackupDraw()
-	if not self:GetBurning() then return end
+	local fakefire = Material("cable/smoke")
+	local side = Angle(-90, 0, 0)
+	function ENT:BackupDraw()
+		if not self:GetBurning() then return end
 
-	local vstart = self:GetPos()
-	local vend = vstart + Vector(0, 0, 90)
+		local vstart = self:GetPos()
+		local vend = vstart + Vector(0, 0, 90)
 
-	side.r = side.r + 0.1
+		side.r = side.r + 0.1
 
-	cam.Start3D2D(vstart, side, 1)
-	draw.DrawText("FIRE! IT BURNS!", "Default", 0, 0, COLOR_RED, ALIGN_CENTER)
-	cam.End3D2D()
+		cam.Start3D2D(vstart, side, 1)
+		draw.DrawText("FIRE! IT BURNS!", "Default", 0, 0, COLOR_RED, ALIGN_CENTER)
+		cam.End3D2D()
 
-	render.SetMaterial(fakefire)
-	render.DrawBeam(vstart, vend, 80, 0, 0, COLOR_RED)
-end
+		render.SetMaterial(fakefire)
+		render.DrawBeam(vstart, vend, 80, 0, 0, COLOR_RED)
+	end
 
-function ENT:Draw()
-end
+	function ENT:Draw()
+	end
 end

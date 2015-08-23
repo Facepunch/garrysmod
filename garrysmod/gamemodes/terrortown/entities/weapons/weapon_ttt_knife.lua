@@ -5,8 +5,8 @@ SWEP.HoldType = "knife"
 
 if CLIENT then
 
-	SWEP.PrintName    = "knife_name"
-	SWEP.Slot         = 6
+	SWEP.PrintName = "knife_name"
+	SWEP.Slot = 6
 
 	SWEP.ViewModelFlip = false
 
@@ -19,25 +19,26 @@ if CLIENT then
 	SWEP.IconLetter = "j"
 end
 
-SWEP.Base               = "weapon_tttbase"
+SWEP.Base = "weapon_tttbase"
 
-SWEP.UseHands			= true
-SWEP.ViewModelFlip		= false
-SWEP.ViewModelFOV		= 54
-SWEP.ViewModel          = "models/weapons/cstrike/c_knife_t.mdl"
-SWEP.WorldModel         = "models/weapons/w_knife_t.mdl"
+SWEP.UseHands = true
+SWEP.ViewModelFlip = false
+SWEP.ViewModelFOV = 54
+SWEP.ViewModel = "models/weapons/cstrike/c_knife_t.mdl"
+SWEP.WorldModel = "models/weapons/w_knife_t.mdl"
 
-SWEP.DrawCrosshair      = false
-SWEP.Primary.Damage         = 50
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = true
+SWEP.DrawCrosshair = false
+SWEP.Primary.Damage = 50
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = true
 SWEP.Primary.Delay = 1.1
-SWEP.Primary.Ammo       = "none"
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
+SWEP.Primary.Ammo = "none"
+
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = true
+SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Delay = 1.4
 
 SWEP.Kind = WEAPON_EQUIP
@@ -51,8 +52,8 @@ SWEP.IsSilent = true
 SWEP.DeploySpeed = 2
 
 function SWEP:PrimaryAttack()
-	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-	self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+	self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	self.Weapon:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 
 	if not IsValid(self.Owner) then return end
 
@@ -75,7 +76,7 @@ function SWEP:PrimaryAttack()
 
 	-- effects
 	if IsValid(hitEnt) then
-		self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
+		self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
 
 		local edata = EffectData()
 		edata:SetStart(spos)
@@ -87,11 +88,11 @@ function SWEP:PrimaryAttack()
 			util.Effect("BloodImpact", edata)
 		end
 	else
-		self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
+		self.Weapon:SendWeaponAnim(ACT_VM_MISSCENTER)
 	end
 
 	if SERVER then
-		self.Owner:SetAnimation( PLAYER_ATTACK1 )
+		self.Owner:SetAnimation(PLAYER_ATTACK1)
 	end
 
 
@@ -157,37 +158,36 @@ function SWEP:StabKill(tr, spos, sdest)
 	local ignore = self.Owner
 
 	target.effect_fn = function(rag)
-								 -- we might find a better location
-								 local rtr = util.TraceLine({start=pos, endpos=pos + norm * 40, filter=ignore, mask=MASK_SHOT_HULL})
+		-- we might find a better location
+		local rtr = util.TraceLine({start=pos, endpos=pos + norm * 40, filter=ignore, mask=MASK_SHOT_HULL})
 
-								 if IsValid(rtr.Entity) and rtr.Entity == rag then
-									 bone = rtr.PhysicsBone
-									 pos = rtr.HitPos
-									 ang = Angle(-28,0,0) + rtr.Normal:Angle()
-									 ang:RotateAroundAxis(ang:Right(), -90)
-									 pos = pos - (ang:Forward() * 10)
+		if IsValid(rtr.Entity) and rtr.Entity == rag then
+			bone = rtr.PhysicsBone
+			pos = rtr.HitPos
+			ang = Angle(-28,0,0) + rtr.Normal:Angle()
+			ang:RotateAroundAxis(ang:Right(), -90)
+			pos = pos - (ang:Forward() * 10)
+		end
 
-								 end
+		local knife = ents.Create("prop_physics")
+		knife:SetModel("models/weapons/w_knife_t.mdl")
+		knife:SetPos(pos)
+		knife:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+		knife:SetAngles(ang)
+		knife.CanPickup = false
 
-								 local knife = ents.Create("prop_physics")
-								 knife:SetModel("models/weapons/w_knife_t.mdl")
-								 knife:SetPos(pos)
-								 knife:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-								 knife:SetAngles(ang)
-								 knife.CanPickup = false
+		knife:Spawn()
 
-								 knife:Spawn()
+		local phys = knife:GetPhysicsObject()
+		if IsValid(phys) then
+			phys:EnableCollisions(false)
+		end
 
-								 local phys = knife:GetPhysicsObject()
-								 if IsValid(phys) then
-									 phys:EnableCollisions(false)
-								 end
+		constraint.Weld(rag, knife, bone, 0, 0, true)
 
-								 constraint.Weld(rag, knife, bone, 0, 0, true)
-
-								 -- need to close over knife in order to keep a valid ref to it
-								 rag:CallOnRemove("ttt_knife_cleanup", function() SafeRemoveEntity(knife) end)
-							 end
+		-- need to close over knife in order to keep a valid ref to it
+		rag:CallOnRemove("ttt_knife_cleanup", function() SafeRemoveEntity(knife) end)
+	end
 
 
 	-- seems the spos and sdest are purely for effects/forces?
@@ -200,17 +200,17 @@ function SWEP:StabKill(tr, spos, sdest)
 end
 
 function SWEP:SecondaryAttack()
-	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-	self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+	self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	self.Weapon:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 
 
-	self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
+	self.Weapon:SendWeaponAnim(ACT_VM_MISSCENTER)
 
 	if SERVER then
 		local ply = self.Owner
 		if not IsValid(ply) then return end
 
-		ply:SetAnimation( PLAYER_ATTACK1 )
+		ply:SetAnimation(PLAYER_ATTACK1)
 
 		local ang = ply:EyeAngles()
 
@@ -258,8 +258,8 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Equip()
-	self.Weapon:SetNextPrimaryFire( CurTime() + (self.Primary.Delay * 1.5) )
-	self.Weapon:SetNextSecondaryFire( CurTime() + (self.Secondary.Delay * 1.5) )
+	self.Weapon:SetNextPrimaryFire(CurTime() + (self.Primary.Delay * 1.5))
+	self.Weapon:SetNextSecondaryFire(CurTime() + (self.Secondary.Delay * 1.5))
 end
 
 function SWEP:PreDrop()
@@ -299,5 +299,3 @@ if CLIENT then
 		return self.BaseClass.DrawHUD(self)
 	end
 end
-
-

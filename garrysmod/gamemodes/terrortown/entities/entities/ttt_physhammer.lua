@@ -170,4 +170,3 @@ if SERVER then
 		return true
 	end
 end
-

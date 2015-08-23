@@ -4,8 +4,8 @@ AddCSLuaFile()
 SWEP.HoldType = "normal"
 
 if CLIENT then
-	SWEP.PrintName			= "decoy_name"
-	SWEP.Slot				= 7
+	SWEP.PrintName = "decoy_name"
+	SWEP.Slot = 7
 
 	SWEP.ViewModelFOV = 10
 
@@ -19,22 +19,22 @@ end
 
 SWEP.Base = "weapon_tttbase"
 
-SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel         = "models/props_lab/reciever01b.mdl"
+SWEP.ViewModel = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel = "models/props_lab/reciever01b.mdl"
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
+SWEP.DrawCrosshair = false
+SWEP.ViewModelFlip = false
 
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = true
-SWEP.Primary.Ammo       = "none"
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = true
+SWEP.Primary.Ammo = "none"
 SWEP.Primary.Delay = 1.0
 
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = true
+SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Delay = 1.0
 
 SWEP.Kind = WEAPON_EQUIP2
@@ -52,17 +52,17 @@ function SWEP:OnDrop()
 end
 
 function SWEP:PrimaryAttack()
-	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
 	self:DecoyStick()
 end
 function SWEP:SecondaryAttack()
-	self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+	self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 
 	self:DecoyStick()
 end
 
-local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
+local throwsound = Sound("Weapon_SLAM.SatchelThrow")
 
 -- Drop is disabled to prevent traitors from placing the decoy in unreachable
 -- places.

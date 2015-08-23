@@ -1,7 +1,7 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType			= "shotgun"
+SWEP.HoldType = "shotgun"
 
 if CLIENT then
 	SWEP.PrintName = "shotgun_name"
@@ -12,7 +12,7 @@ if CLIENT then
 end
 
 
-SWEP.Base				= "weapon_tttbase"
+SWEP.Base = "weapon_tttbase"
 SWEP.Spawnable = true
 
 SWEP.Kind = WEAPON_HEAVY
@@ -27,16 +27,16 @@ SWEP.Primary.ClipMax = 24
 SWEP.Primary.DefaultClip = 8
 SWEP.Primary.Automatic = true
 SWEP.Primary.NumShots = 8
-SWEP.AutoSpawnable      = true
+SWEP.AutoSpawnable = true
 SWEP.AmmoEnt = "item_box_buckshot_ttt"
 
-SWEP.UseHands			= true
-SWEP.ViewModelFlip		= false
-SWEP.ViewModelFOV		= 54
-SWEP.ViewModel			= "models/weapons/cstrike/c_shot_xm1014.mdl"
-SWEP.WorldModel			= "models/weapons/w_shot_xm1014.mdl"
-SWEP.Primary.Sound			= Sound( "Weapon_XM1014.Single" )
-SWEP.Primary.Recoil			= 7
+SWEP.UseHands = true
+SWEP.ViewModelFlip = false
+SWEP.ViewModelFOV = 54
+SWEP.ViewModel = "models/weapons/cstrike/c_shot_xm1014.mdl"
+SWEP.WorldModel = "models/weapons/w_shot_xm1014.mdl"
+SWEP.Primary.Sound = Sound( "Weapon_XM1014.Single" )
+SWEP.Primary.Recoil = 7
 
 SWEP.IronSightsPos = Vector(-6.881, -9.214, 2.66)
 SWEP.IronSightsAng = Vector(-0.101, -0.7, -0.201)

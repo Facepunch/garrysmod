@@ -19,21 +19,21 @@ end
 
 SWEP.Base = "weapon_tttbase"
 
-SWEP.ViewModel  = Model("models/weapons/v_crowbar.mdl")
+SWEP.ViewModel = Model("models/weapons/v_crowbar.mdl")
 SWEP.WorldModel = Model("models/Items/battery.mdl")
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = false
-SWEP.Primary.Ammo       = "none"
+SWEP.DrawCrosshair = false
+SWEP.ViewModelFlip = false
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = false
+SWEP.Primary.Ammo = "none"
 SWEP.Primary.Delay = 1.0
 
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = true
+SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Delay = 0.2
 
 SWEP.Kind = WEAPON_EQUIP
@@ -130,5 +130,3 @@ if CLIENT then
 		return self.BaseClass.Initialize(self)
 	end
 end
-
-

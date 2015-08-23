@@ -76,41 +76,41 @@ SWEP.IsSilent = false
 ---- YE OLDE SWEP STUFF
 
 if CLIENT then
-	SWEP.DrawCrosshair   = false
-	SWEP.ViewModelFOV    = 82
-	SWEP.ViewModelFlip   = true
+	SWEP.DrawCrosshair = false
+	SWEP.ViewModelFOV = 82
+	SWEP.ViewModelFlip = true
 	SWEP.CSMuzzleFlashes = true
 end
 
 SWEP.Base = "weapon_base"
 
-SWEP.Category           = "TTT"
-SWEP.Spawnable          = false
+SWEP.Category = "TTT"
+SWEP.Spawnable = false
 
 SWEP.IsGrenade = false
 
-SWEP.Weight             = 5
-SWEP.AutoSwitchTo       = false
-SWEP.AutoSwitchFrom     = false
+SWEP.Weight = 5
+SWEP.AutoSwitchTo = false
+SWEP.AutoSwitchFrom = false
 
-SWEP.Primary.Sound          = Sound( "Weapon_Pistol.Empty" )
-SWEP.Primary.Recoil         = 1.5
-SWEP.Primary.Damage         = 1
-SWEP.Primary.NumShots       = 1
-SWEP.Primary.Cone           = 0.02
-SWEP.Primary.Delay          = 0.15
+SWEP.Primary.Sound = Sound("Weapon_Pistol.Empty")
+SWEP.Primary.Recoil = 1.5
+SWEP.Primary.Damage = 1
+SWEP.Primary.NumShots = 1
+SWEP.Primary.Cone = 0.02
+SWEP.Primary.Delay = 0.15
 
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = false
-SWEP.Primary.Ammo           = "none"
-SWEP.Primary.ClipMax        = -1
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = false
+SWEP.Primary.Ammo = "none"
+SWEP.Primary.ClipMax = -1
 
-SWEP.Secondary.ClipSize     = 1
-SWEP.Secondary.DefaultClip  = 1
-SWEP.Secondary.Automatic    = false
-SWEP.Secondary.Ammo         = "none"
-SWEP.Secondary.ClipMax      = -1
+SWEP.Secondary.ClipSize = 1
+SWEP.Secondary.DefaultClip = 1
+SWEP.Secondary.Automatic = false
+SWEP.Secondary.Ammo = "none"
+SWEP.Secondary.ClipMax = -1
 
 SWEP.HeadshotMultiplier = 2.7
 
@@ -145,7 +145,7 @@ if CLIENT then
 		local scale = math.max(0.2,  10 * self:GetPrimaryCone())
 
 		local LastShootTime = self:LastShootTime()
-		scale = scale * (2 - math.Clamp( (CurTime() - LastShootTime) * 5, 0.0, 1.0 ))
+		scale = scale * (2 - math.Clamp((CurTime() - LastShootTime) * 5, 0.0, 1.0))
 
 		local alpha = sights and sights_opacity:GetFloat() or 1
 		local bright = crosshair_brightness:GetFloat() or 1
@@ -154,22 +154,22 @@ if CLIENT then
 		-- additions have loaded
 		if client.IsTraitor and client:IsTraitor() then
 			surface.SetDrawColor(255 * bright,
-										50 * bright,
-										50 * bright,
-										255 * alpha)
+								 50  * bright,
+								 50  * bright,
+								 255 * alpha)
 		else
 			surface.SetDrawColor(0,
-										255 * bright,
-										0,
-										255 * alpha)
+								 255 * bright,
+								 0,
+								 255 * alpha)
 		end
 
 		local gap = math.floor(20 * scale * (sights and 0.8 or 1))
 		local length = math.floor(gap + (25 * crosshair_size:GetFloat()) * scale)
-		surface.DrawLine( x - length, y, x - gap, y )
-		surface.DrawLine( x + length, y, x + gap, y )
-		surface.DrawLine( x, y - length, x, y - gap )
-		surface.DrawLine( x, y + length, x, y + gap )
+		surface.DrawLine(x - length, y, x - gap, y)
+		surface.DrawLine(x + length, y, x + gap, y)
+		surface.DrawLine(x, y - length, x, y - gap)
+		surface.DrawLine(x, y + length, x, y + gap)
 
 		if self.HUDHelp then
 			self:DrawHelp()
@@ -228,30 +228,30 @@ end
 -- Shooting functions largely copied from weapon_cs_base
 function SWEP:PrimaryAttack(worldsnd)
 
-	self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
-	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
 	if not self:CanPrimaryAttack() then return end
 
 	if not worldsnd then
-		self:EmitSound( self.Primary.Sound, self.Primary.SoundLevel )
+		self:EmitSound(self.Primary.Sound, self.Primary.SoundLevel)
 	elseif SERVER then
 		sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
 	end
 
-	self:ShootBullet( self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots, self:GetPrimaryCone() )
+	self:ShootBullet(self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots, self:GetPrimaryCone())
 
-	self:TakePrimaryAmmo( 1 )
+	self:TakePrimaryAmmo(1)
 
 	local owner = self.Owner
 	if not IsValid(owner) or owner:IsNPC() or (not owner.ViewPunch) then return end
 
-	owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0 ) )
+	owner:ViewPunch(Angle(math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0))
 end
 
 function SWEP:DryFire(setnext)
 	if CLIENT and LocalPlayer() == self.Owner then
-		self:EmitSound( "Weapon_Pistol.Empty" )
+		self:EmitSound("Weapon_Pistol.Empty")
 	end
 
 	setnext(self, CurTime() + 0.2)
@@ -288,12 +288,12 @@ local function Sparklies(attacker, tr, dmginfo)
 	end
 end
 
-function SWEP:ShootBullet( dmg, recoil, numbul, cone )
+function SWEP:ShootBullet(dmg, recoil, numbul, cone)
 
 	self:SendWeaponAnim(self.PrimaryAnim)
 
 	self.Owner:MuzzleFlash()
-	self.Owner:SetAnimation( PLAYER_ATTACK1 )
+	self.Owner:SetAnimation(PLAYER_ATTACK1)
 
 	if not IsFirstTimePredicted() then return end
 
@@ -306,7 +306,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 	bullet.Num    = numbul
 	bullet.Src    = self.Owner:GetShootPos()
 	bullet.Dir    = self.Owner:GetAimVector()
-	bullet.Spread = Vector( cone, cone, 0 )
+	bullet.Spread = Vector(cone, cone, 0)
 	bullet.Tracer = 4
 	bullet.TracerName = self.Tracer or "Tracer"
 	bullet.Force  = 10
@@ -315,7 +315,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 		bullet.Callback = Sparklies
 	end
 
-	self.Owner:FireBullets( bullet )
+	self.Owner:FireBullets(bullet)
 
 	-- Owner can die after firebullets
 	if (not IsValid(self.Owner)) or (not self.Owner:Alive()) or self.Owner:IsNPC() then return end
@@ -328,7 +328,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 
 		local eyeang = self.Owner:EyeAngles()
 		eyeang.pitch = eyeang.pitch - recoil
-		self.Owner:SetEyeAngles( eyeang )
+		self.Owner:SetEyeAngles(eyeang)
 	end
 
 end
@@ -364,15 +364,15 @@ function SWEP:Deploy()
 end
 
 function SWEP:Reload()
-	if ( self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
+	if (self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount(self.Primary.Ammo) <= 0) then return end
 	self:DefaultReload(self.ReloadAnim)
-	self:SetIronsights( false )
+	self:SetIronsights(false)
 end
 
 
 function SWEP:OnRestore()
 	self.NextSecondaryAttack = 0
-	self:SetIronsights( false )
+	self:SetIronsights(false)
 end
 
 function SWEP:Ammo1()
@@ -440,7 +440,7 @@ function SWEP:Equip(newowner)
 		local ammo = newowner:GetAmmoCount(self.Primary.Ammo)
 		local given = math.min(self.StoredAmmo, self.Primary.ClipMax - ammo)
 
-		newowner:GiveAmmo( given, self.Primary.Ammo)
+		newowner:GiveAmmo(given, self.Primary.Ammo)
 		self.StoredAmmo = 0
 	end
 end
@@ -500,7 +500,7 @@ function SWEP:DyingShot()
 			local eyeang = self.Owner:EyeAngles()
 			eyeang.pitch = eyeang.pitch - math.Rand(-punch, punch)
 			eyeang.yaw = eyeang.yaw - math.Rand(-punch, punch)
-			self.Owner:SetEyeAngles( eyeang )
+			self.Owner:SetEyeAngles(eyeang)
 
 			MsgN(self.Owner:Nick() .. " fired his DYING SHOT")
 
@@ -520,7 +520,7 @@ local ttt_lowered = CreateConVar("ttt_ironsights_lowered", "1", FCVAR_ARCHIVE)
 local LOWER_POS = Vector(0, 0, -2)
 
 local IRONSIGHT_TIME = 0.25
-function SWEP:GetViewModelPosition( pos, ang )
+function SWEP:GetViewModelPosition(pos, ang)
 	if not self.IronSightsPos then return pos, ang end
 
 	local bIron = self:GetIronsights()
@@ -548,7 +548,7 @@ function SWEP:GetViewModelPosition( pos, ang )
 
 	if fIronTime > CurTime() - IRONSIGHT_TIME then
 
-		mul = math.Clamp( (CurTime() - fIronTime) / IRONSIGHT_TIME, 0, 1 )
+		mul = math.Clamp((CurTime() - fIronTime) / IRONSIGHT_TIME, 0, 1)
 
 		if not bIron then mul = 1 - mul end
 	end
@@ -557,9 +557,9 @@ function SWEP:GetViewModelPosition( pos, ang )
 
 	if self.IronSightsAng then
 		ang = ang * 1
-		ang:RotateAroundAxis( ang:Right(),    self.IronSightsAng.x * mul )
-		ang:RotateAroundAxis( ang:Up(),       self.IronSightsAng.y * mul )
-		ang:RotateAroundAxis( ang:Forward(),  self.IronSightsAng.z * mul )
+		ang:RotateAroundAxis(ang:Right(),    self.IronSightsAng.x * mul)
+		ang:RotateAroundAxis(ang:Up(),       self.IronSightsAng.y * mul)
+		ang:RotateAroundAxis(ang:Forward(),  self.IronSightsAng.z * mul)
 	end
 
 	pos = pos + offset.x * ang:Right() * mul

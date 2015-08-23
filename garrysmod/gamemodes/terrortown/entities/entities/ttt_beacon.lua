@@ -109,4 +109,3 @@ if SERVER then
 
 	function ENT:UpdateTransmitState() return TRANSMIT_ALWAYS end
 end
-

@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 
-SWEP.HoldType			= "slam"
+SWEP.HoldType = "slam"
 
 if CLIENT then
 	SWEP.PrintName = "defuser_name"
@@ -23,16 +23,18 @@ SWEP.Base = "weapon_tttbase"
 SWEP.ViewModel = "models/weapons/v_crowbar.mdl"
 SWEP.WorldModel = "models/weapons/w_defuser.mdl"
 
-SWEP.DrawCrosshair		= false
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= true
+SWEP.DrawCrosshair = false
+
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = true
+SWEP.Primary.Ammo = "none"
 SWEP.Primary.Delay = 1
-SWEP.Primary.Ammo		= "none"
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= true
-SWEP.Secondary.Ammo		= "none"
+
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = true
+SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Delay = 2
 
 SWEP.Kind = WEAPON_EQUIP2
@@ -44,7 +46,7 @@ SWEP.WeaponID = AMMO_DEFUSER
 
 local defuse = Sound("c4.disarmfinish")
 function SWEP:PrimaryAttack()
-	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
 	local spos = self.Owner:GetShootPos()
 	local sdest = spos + (self.Owner:GetAimVector() * 80)
@@ -59,14 +61,14 @@ function SWEP:PrimaryAttack()
 				sound.Play(defuse, bomb:GetPos())
 			end
 
-			self:SetNextPrimaryFire( CurTime() + (self.Primary.Delay * 2) )
+			self:SetNextPrimaryFire(CurTime() + (self.Primary.Delay * 2))
 		end
 	end
 end
 
 function SWEP:SecondaryAttack()
-	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-	self:SetNextSecondaryFire( CurTime() + 0.1 )
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	self:SetNextSecondaryFire(CurTime() + 0.1)
 end
 
 

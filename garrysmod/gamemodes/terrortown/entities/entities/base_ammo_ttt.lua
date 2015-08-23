@@ -8,7 +8,7 @@ ENT.Type = "anim"
 ENT.AmmoType = "Pistol"
 ENT.AmmoAmount = 1
 ENT.AmmoMax = 10
-ENT.Model = Model( "models/items/boxsrounds.mdl" )
+ENT.Model = Model("models/items/boxsrounds.mdl")
 
 
 function ENT:RealInit() end -- bw compat
@@ -17,13 +17,13 @@ function ENT:RealInit() end -- bw compat
 -- Using self.BaseClass gave weird problems, so stuff has been moved into a fn
 -- Subclasses can easily call this whenever they want to
 function ENT:Initialize()
-	self:SetModel( self.Model )
+	self:SetModel(self.Model)
 
-	self:PhysicsInit( SOLID_VPHYSICS )
-	self:SetMoveType( MOVETYPE_VPHYSICS )
-	self:SetSolid( SOLID_BBOX )
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_BBOX)
 
-	self:SetCollisionGroup( COLLISION_GROUP_WEAPON)
+	self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 	local b = 26
 	self:SetCollisionBounds(Vector(-b, -b, -b), Vector(b,b,b))
 
@@ -94,7 +94,7 @@ function ENT:Touch(ent)
 			if self.AmmoMax >= (ammo + math.ceil(self.AmmoAmount * 0.25)) then
 				local given = self.AmmoAmount
 				given = math.min(given, self.AmmoMax - ammo)
-				ent:GiveAmmo( given, self.AmmoType)
+				ent:GiveAmmo(given, self.AmmoType)
 
 				self:Remove()
 
@@ -118,4 +118,3 @@ if SERVER then
 		end
 	end
 end
-

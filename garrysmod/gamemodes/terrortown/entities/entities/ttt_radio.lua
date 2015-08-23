@@ -209,12 +209,11 @@ function ENT:PlaySound(snd)
 		local times = math.random(gunsound.times[1], gunsound.times[2])
 		local t = 0
 		for i=1, times do
-			timer.Simple(t,
-							 function()
-								 if IsValid(this) then
-									 this:PlayDelayedSound(gunsound.sound, gunsound.ampl or 90, (i == times))
-								 end
-							 end)
+			timer.Simple(t, function()
+				if IsValid(this) then
+					this:PlayDelayedSound(gunsound.sound, gunsound.ampl or 90, (i == times))
+				end
+			end)
 			if gunsound.burst then
 				t = t + gunsound.delay
 			else
@@ -229,12 +228,11 @@ function ENT:PlaySound(snd)
 		local idx = 1
 		for i=1, times do
 			local sound = serialsound.sound[idx]
-			timer.Simple(t,
-							 function()
-								 if IsValid(this) then
-									 this:PlayDelayedSound(sound, serialsound.ampl or 75, (i == times))
-								 end
-							 end)
+			timer.Simple(t, function()
+				if IsValid(this) then
+					this:PlayDelayedSound(sound, serialsound.ampl or 75, (i == times))
+				end
+			end)
 
 			t = t + serialsound.delay
 			idx = idx + 1
@@ -287,5 +285,3 @@ if SERVER then
 	end
 	concommand.Add("ttt_radio_play", RadioCmd)
 end
-
-

@@ -18,25 +18,25 @@ SWEP.Base = "weapon_tttbase"
 SWEP.Kind = WEAPON_HEAVY
 SWEP.WeaponID = AMMO_MAC10
 
-SWEP.Primary.Damage      = 12
-SWEP.Primary.Delay       = 0.065
-SWEP.Primary.Cone        = 0.03
-SWEP.Primary.ClipSize    = 30
-SWEP.Primary.ClipMax     = 60
+SWEP.Primary.Damage = 12
+SWEP.Primary.Delay = 0.065
+SWEP.Primary.Cone = 0.03
+SWEP.Primary.ClipSize = 30
+SWEP.Primary.ClipMax = 60
 SWEP.Primary.DefaultClip = 30
-SWEP.Primary.Automatic   = true
-SWEP.Primary.Ammo        = "smg1"
-SWEP.Primary.Recoil      = 1.15
-SWEP.Primary.Sound       = Sound( "Weapon_mac10.Single" )
+SWEP.Primary.Automatic = true
+SWEP.Primary.Ammo = "smg1"
+SWEP.Primary.Recoil = 1.15
+SWEP.Primary.Sound = Sound( "Weapon_mac10.Single" )
 
 SWEP.AutoSpawnable = true
 
 SWEP.AmmoEnt = "item_ammo_smg1_ttt"
 
-SWEP.UseHands			= true
-SWEP.ViewModelFlip		= false
-SWEP.ViewModelFOV		= 54
-SWEP.ViewModel  = "models/weapons/cstrike/c_smg_mac10.mdl"
+SWEP.UseHands = true
+SWEP.ViewModelFlip = false
+SWEP.ViewModelFOV = 54
+SWEP.ViewModel = "models/weapons/cstrike/c_smg_mac10.mdl"
 SWEP.WorldModel = "models/weapons/w_smg_mac10.mdl"
 
 SWEP.IronSightsPos = Vector(-8.921, -9.528, 2.9)

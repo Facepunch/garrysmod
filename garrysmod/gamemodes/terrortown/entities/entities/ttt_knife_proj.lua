@@ -94,30 +94,29 @@ function ENT:KillPlayer(other, tr)
 	local prints = self.fingerprints
 
 	other.effect_fn = function(rag)
+		if not IsValid(knife) or not IsValid(rag) then return end
 
-								if not IsValid(knife) or not IsValid(rag) then return end
+		knife:SetPos(pos)
+		knife:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+		knife:SetAngles(ang)
 
-								knife:SetPos(pos)
-								knife:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-								knife:SetAngles(ang)
+		knife:SetMoveCollide(MOVECOLLIDE_DEFAULT)
+		knife:SetMoveType(MOVETYPE_VPHYSICS)
 
-								knife:SetMoveCollide(MOVECOLLIDE_DEFAULT)
-								knife:SetMoveType(MOVETYPE_VPHYSICS)
+		knife.fingerprints = prints
+		knife:SetNWBool("HasPrints", true)
 
-								knife.fingerprints = prints
-								knife:SetNWBool("HasPrints", true)
+		--knife:SetSolid(SOLID_NONE)
+		-- knife needs to be trace-able to get prints
+		local phys = knife:GetPhysicsObject()
+		if IsValid(phys) then
+			phys:EnableCollisions(false)
+		end
 
-								--knife:SetSolid(SOLID_NONE)
-								-- knife needs to be trace-able to get prints
-								local phys = knife:GetPhysicsObject()
-								if IsValid(phys) then
-									phys:EnableCollisions(false)
-								end
+		constraint.Weld(rag, knife, bone, 0, 0, true)
 
-								constraint.Weld(rag, knife, bone, 0, 0, true)
-
-								rag:CallOnRemove("ttt_knife_cleanup", function() SafeRemoveEntity(knife) end)
-							end
+		rag:CallOnRemove("ttt_knife_cleanup", function() SafeRemoveEntity(knife) end)
+	end
 
 
 	other:DispatchTraceAttack(dmg, self:GetPos() + ang:Forward() * 3, other:GetPos())
@@ -126,24 +125,24 @@ function ENT:KillPlayer(other, tr)
 end
 
 if SERVER then
-  function ENT:Think()
-	  if self.Stuck then return end
+	function ENT:Think()
+		if self.Stuck then return end
 
-	  local vel = self:GetVelocity()
-	  if vel == vector_origin then return end
+		local vel = self:GetVelocity()
+		if vel == vector_origin then return end
 
-	  local tr = util.TraceLine({start=self:GetPos(), endpos=self:GetPos() + vel:GetNormal() * 20, filter={self, self:GetOwner()}, mask=MASK_SHOT_HULL})
+		local tr = util.TraceLine({start=self:GetPos(), endpos=self:GetPos() + vel:GetNormal() * 20, filter={self, self:GetOwner()}, mask=MASK_SHOT_HULL})
 
-	  if tr.Hit and tr.HitNonWorld and IsValid(tr.Entity) then
-		  local other = tr.Entity
-		  if other:IsPlayer() then
-			  self:HitPlayer(other, tr)
-		  end
-	  end
+		if tr.Hit and tr.HitNonWorld and IsValid(tr.Entity) then
+			local other = tr.Entity
+			if other:IsPlayer() then
+				self:HitPlayer(other, tr)
+			end
+		end
 
-	  self:NextThink(CurTime())
-	  return true
-  end
+		self:NextThink(CurTime())
+		return true
+	end
 end
 
 -- When this entity touches anything that is not a player, it should turn into a
@@ -172,12 +171,11 @@ if SERVER then
 		-- delay the weapon-replacement a tick because Source gets very angry
 		-- if you do fancy stuff in a physics callback
 		local knife = self
-		timer.Simple(0,
-						 function()
-							 if IsValid(knife) and not knife.Weaponised then
-								 knife:BecomeWeapon()
-							 end
-						 end)
+		timer.Simple(0, function()
+			if IsValid(knife) and not knife.Weaponised then
+				knife:BecomeWeapon()
+			end
+		end)
 	end
 
 	function ENT:PhysicsCollide(data, phys)

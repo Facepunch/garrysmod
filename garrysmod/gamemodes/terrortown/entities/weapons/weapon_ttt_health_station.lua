@@ -20,20 +20,20 @@ end
 
 SWEP.Base = "weapon_tttbase"
 
-SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel         = "models/props/cs_office/microwave.mdl"
+SWEP.ViewModel = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel = "models/props/cs_office/microwave.mdl"
 
-SWEP.DrawCrosshair      = false
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = true
-SWEP.Primary.Ammo       = "none"
+SWEP.DrawCrosshair = false
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = true
+SWEP.Primary.Ammo = "none"
 SWEP.Primary.Delay = 1.0
 
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = true
+SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Delay = 1.0
 
 -- This is special equipment
@@ -129,4 +129,3 @@ end
 
 function SWEP:DrawWorldModelTranslucent()
 end
-

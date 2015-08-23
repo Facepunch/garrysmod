@@ -6,8 +6,8 @@ AddCSLuaFile()
 SWEP.HoldType = "normal"
 
 if CLIENT then
-	SWEP.PrintName			= "radio_name"
-	SWEP.Slot				= 7
+	SWEP.PrintName = "radio_name"
+	SWEP.Slot = 7
 
 	SWEP.ViewModelFOV = 10
 
@@ -21,20 +21,20 @@ end
 
 SWEP.Base = "weapon_tttbase"
 
-SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel         = "models/props/cs_office/radio.mdl"
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = true
-SWEP.Primary.Ammo       = "none"
+SWEP.ViewModel = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel = "models/props/cs_office/radio.mdl"
+SWEP.DrawCrosshair = false
+SWEP.ViewModelFlip = false
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = true
+SWEP.Primary.Ammo = "none"
 SWEP.Primary.Delay = 1.0
 
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = true
+SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Delay = 1.0
 
 SWEP.Kind = WEAPON_EQUIP2
@@ -54,15 +54,15 @@ function SWEP:OnDrop()
 end
 
 function SWEP:PrimaryAttack()
-	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	self:RadioDrop()
 end
 function SWEP:SecondaryAttack()
-	self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+	self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 	self:RadioStick()
 end
 
-local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
+local throwsound = Sound("Weapon_SLAM.SatchelThrow")
 
 -- c4 plant but different
 function SWEP:RadioDrop()

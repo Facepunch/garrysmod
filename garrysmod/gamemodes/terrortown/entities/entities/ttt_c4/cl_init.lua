@@ -58,11 +58,11 @@ function ShowC4Config(bomb)
 	local dwires
 
 	dtime.OnValueChanged = function(self, val)
-									  if not (IsValid(dclock) and IsValid(dwires)) then return end
-									  dclock:SetText(util.SimpleTime(val, "%02i:%02i"))
+		if not (IsValid(dclock) and IsValid(dwires)) then return end
+		dclock:SetText(util.SimpleTime(val, "%02i:%02i"))
 
-									  dwires:Update(val)
-								  end
+		dwires:Update(val)
+	end
 
 	dformtime:AddItem(dtime)
 
@@ -73,10 +73,10 @@ function ShowC4Config(bomb)
 
 	local SafeWires = bomb.SafeWiresForTime
 	dwires.Update = function(s, t)
-							 s:SetText(PT("c4_arm_attempts", {num = C4_WIRE_COUNT - SafeWires(t)}))
+		s:SetText(PT("c4_arm_attempts", {num = C4_WIRE_COUNT - SafeWires(t)}))
 
-							 s:InvalidateLayout()
-						 end
+		s:InvalidateLayout()
+	end
 
 	dwires:Update(starttime)
 
@@ -100,11 +100,11 @@ function ShowC4Config(bomb)
 	dgrab:SetText(T("c4_remove_pickup"))
 	dgrab:SetDisabled(false)
 	dgrab.DoClick = function()
-							 if not LocalPlayer() or not LocalPlayer():Alive() then return end
+		if not LocalPlayer() or not LocalPlayer():Alive() then return end
 
-							 RunConsoleCommand("ttt_c4_pickup", bomb:EntIndex())
-							 dframe:Close()
-						 end
+		RunConsoleCommand("ttt_c4_pickup", bomb:EntIndex())
+		dframe:Close()
+	end
 
 	--dformmisc:AddItem(dgrab)
 
@@ -115,16 +115,16 @@ function ShowC4Config(bomb)
 	ddestroy:SetDisabled(false)
 	ddestroy.Confirmed = false
 	ddestroy.DoClick = function(s)
-								 if not LocalPlayer() or not LocalPlayer():Alive() then return end
+		if not LocalPlayer() or not LocalPlayer():Alive() then return end
 
-								 if not s.Confirmed then
-									 s:SetText(T("c4_remove_destroy2"))
-									 s.Confirmed = true
-								 else
-									 RunConsoleCommand("ttt_c4_destroy", bomb:EntIndex())
-									 dframe:Close()
-								 end
-						 end
+		if not s.Confirmed then
+			s:SetText(T("c4_remove_destroy2"))
+			s.Confirmed = true
+		else
+			RunConsoleCommand("ttt_c4_destroy", bomb:EntIndex())
+			dframe:Close()
+		end
+	end
 
 
 	local dconf = vgui.Create("DButton", bg)
@@ -132,14 +132,14 @@ function ShowC4Config(bomb)
 	dconf:SetSize(bw, bh)
 	dconf:SetText(T("c4_arm"))
 	dconf.DoClick = function()
-							 if not LocalPlayer() or not LocalPlayer():Alive() then return end
-							 local t = dtime:GetValue()
-							 if t and tonumber(t) then
+		if not LocalPlayer() or not LocalPlayer():Alive() then return end
+		local t = dtime:GetValue()
 
-								 RunConsoleCommand("ttt_c4_config", bomb:EntIndex(), t)
-								 dframe:Close()
-							 end
-						 end
+		if t and tonumber(t) then
+			RunConsoleCommand("ttt_c4_config", bomb:EntIndex(), t)
+			dframe:Close()
+		end
+	end
 
 	local dcancel = vgui.Create("DButton", bg)
 	dcancel:SetPos( w - m*4 - bw, m + by)
@@ -281,11 +281,12 @@ end
 vgui.Register( "DisarmPanel", PANEL, "DPanel" )
 
 
-surface.CreateFont("C4Timer", {
-							 font = "TabLarge",
-							 size = 30,
-							 weight = 750
-						 })
+surface.CreateFont("C4Timer",
+{
+	 font = "TabLarge",
+	 size = 30,
+	 weight = 750
+ })
 
 local disarm_success, disarm_fail
 
@@ -330,17 +331,17 @@ function ShowC4Disarm(bomb)
 	dtimer.Stop = false
 
 	dtimer.Think = function(s)
-							if not IsValid(bomb) then return end
-							if s.Stop then return end
+		if not IsValid(bomb) then return end
+		if s.Stop then return end
 
-							local t = bomb:GetExplodeTime()
-							if t then
-								local r = t - CurTime()
-								if r > 0 then
-									s:SetText(util.SimpleTime(r, "%02i:%02i:%02i"))
-								end
-							end
-						end
+		local t = bomb:GetExplodeTime()
+		if t then
+			local r = t - CurTime()
+			if r > 0 then
+				s:SetText(util.SimpleTime(r, "%02i:%02i:%02i"))
+			end
+		end
+	end
 
 	local dstatus = vgui.Create("DLabel", dright)
 	dstatus:SetText(T("c4_status_armed"))
@@ -359,10 +360,10 @@ function ShowC4Disarm(bomb)
 	dgrab:SetText(T("c4_remove_pickup"))
 	dgrab:SetDisabled(true)
 	dgrab.DoClick = function()
-							 if (not LocalPlayer():Alive()) then return end
-							 RunConsoleCommand("ttt_c4_pickup", bomb:EntIndex())
-							 dframe:Close()
-						 end
+		if (not LocalPlayer():Alive()) then return end
+		RunConsoleCommand("ttt_c4_pickup", bomb:EntIndex())
+		dframe:Close()
+	end
 
 	local ddestroy = vgui.Create("DButton", dright)
 	ddestroy:SetPos(m, right_h - m - bh)
@@ -372,16 +373,16 @@ function ShowC4Disarm(bomb)
 	ddestroy:SetDisabled(true)
 	ddestroy.Confirmed = false
 	ddestroy.DoClick = function(s)
-								 if not LocalPlayer():Alive() then return end
+		if not LocalPlayer():Alive() then return end
 
-								 if not s.Confirmed then
-									 s:SetText(T("c4_remove_destroy2"))
-									 s.Confirmed = true
-								 else
-									 RunConsoleCommand("ttt_c4_destroy", bomb:EntIndex())
-									 dframe:Close()
-								 end
-						 end
+		if not s.Confirmed then
+			s:SetText(T("c4_remove_destroy2"))
+			s.Confirmed = true
+		else
+			RunConsoleCommand("ttt_c4_destroy", bomb:EntIndex())
+			dframe:Close()
+		end
+	end
 
 
 	local desc_h = 45
@@ -415,42 +416,42 @@ function ShowC4Disarm(bomb)
 	dcancel:CenterHorizontal()
 	dcancel:SetText(T("close"))
 	dcancel.DoClick = function()
-								dframe:Close()
-							end
+		dframe:Close()
+	end
 
 	dframe:MakePopup()
 
 	disarm_success = function()
-							  surface.PlaySound(disarm_beep)
-							  dtimer.Stop = true
+		surface.PlaySound(disarm_beep)
+		dtimer.Stop = true
 
-							  dtimer:SetTextColor(COLOR_GREEN)
+		dtimer:SetTextColor(COLOR_GREEN)
 
-							  dstatus:SetTextColor(COLOR_GREEN)
-							  dstatus:SetText(T("c4_status_disarmed"))
-							  dstatus:SizeToContents()
-							  dstatus:CenterHorizontal()
+		dstatus:SetTextColor(COLOR_GREEN)
+		dstatus:SetText(T("c4_status_disarmed"))
+		dstatus:SizeToContents()
+		dstatus:CenterHorizontal()
 
-							  ddestroy:SetDisabled(false)
-							  dgrab:SetDisabled(false)
-						  end
+		ddestroy:SetDisabled(false)
+		dgrab:SetDisabled(false)
+	end
 
 	disarm_fail = function()
-						  dframe:Close()
-					  end
+		dframe:Close()
+	end
 
 	on_wire_cut = function(idx)
-						  if IsValid(dbomb) then
-							  dbomb:SetDisabled(true)
-							  -- disabled lowers alpha, looks weird here so work around
-							  -- that
-							  dbomb:SetAlpha(255)
-						  end
+		if IsValid(dbomb) then
+			dbomb:SetDisabled(true)
+			-- disabled lowers alpha, looks weird here so work around
+			-- that
+			dbomb:SetAlpha(255)
+		end
 
-						  if IsValid(bomb) then
-							  RunConsoleCommand("ttt_c4_disarm", tostring(bomb:EntIndex()), tostring(idx))
-						  end
-					  end
+		if IsValid(bomb) then
+			RunConsoleCommand("ttt_c4_disarm", tostring(bomb:EntIndex()), tostring(idx))
+		end
+	end
 end
 
 

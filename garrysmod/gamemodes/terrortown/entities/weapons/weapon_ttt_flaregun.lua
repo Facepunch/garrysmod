@@ -8,7 +8,7 @@ if CLIENT then
 	SWEP.PrintName = "flare_name"
 	SWEP.Slot = 6
 
-	SWEP.ViewModelFOV  = 54
+	SWEP.ViewModelFOV = 54
 	SWEP.ViewModelFlip = false
 
 	SWEP.EquipMenuData = {
@@ -21,7 +21,7 @@ if CLIENT then
 end
 
 SWEP.Base = "weapon_tttbase"
-SWEP.Primary.Recoil	= 4
+SWEP.Primary.Recoil = 4
 SWEP.Primary.Damage = 7
 SWEP.Primary.Delay = 1.0
 SWEP.Primary.Cone = 0.01
@@ -39,11 +39,11 @@ SWEP.WeaponID = AMMO_FLARE
 -- handling strategy, because you never need to pick up ammo for it
 SWEP.Primary.Ammo = "AR2AltFire"
 
-SWEP.UseHands			= true
-SWEP.ViewModel	= Model("models/weapons/c_357.mdl")
-SWEP.WorldModel	= Model("models/weapons/w_357.mdl")
+SWEP.UseHands = true
+SWEP.ViewModel = Model("models/weapons/c_357.mdl")
+SWEP.WorldModel = Model("models/weapons/w_357.mdl")
 
-SWEP.Primary.Sound = Sound( "Weapon_USP.SilencedShot" )
+SWEP.Primary.Sound = Sound("Weapon_USP.SilencedShot")
 
 SWEP.Tracer = "AR2Tracer"
 
@@ -142,10 +142,10 @@ function IgniteTarget(att, path, dmginfo)
 
 		if ent:IsPlayer() then
 			timer.Simple(dur + 0.1, function()
-											   if IsValid(ent) then
-											      ent.ignite_info = nil
-											   end
-											end)
+				if IsValid(ent) then
+					ent.ignite_info = nil
+				end
+			end)
 
 		elseif ent:GetClass() == "prop_ragdoll" then
 			ScorchUnderRagdoll(ent)
@@ -155,12 +155,11 @@ function IgniteTarget(att, path, dmginfo)
 
 			ent.burn_destroy = CurTime() + burn_time
 
-			timer.Create(tname,
-							 0.1,
-							 math.ceil(1 + burn_time / 0.1), -- upper limit, failsafe
-							 function()
-								 RunIgniteTimer(ent, tname)
-							 end)
+			timer.Create(tname, 0.1,
+				math.ceil(1 + burn_time / 0.1), -- upper limit, failsafe
+				function()
+					RunIgniteTimer(ent, tname)
+				end)
 		end
 	end
 end
@@ -171,37 +170,37 @@ function SWEP:ShootFlare()
 	bullet.Num       = 1
 	bullet.Src       = self.Owner:GetShootPos()
 	bullet.Dir       = self.Owner:GetAimVector()
-	bullet.Spread    = Vector( cone, cone, 0 )
+	bullet.Spread    = Vector(cone, cone, 0)
 	bullet.Tracer    = 1
 	bullet.Force     = 2
 	bullet.Damage    = self.Primary.Damage
 	bullet.TracerName = self.Tracer
 	bullet.Callback = IgniteTarget
 
-	self.Owner:FireBullets( bullet )
+	self.Owner:FireBullets(bullet)
 end
 
 function SWEP:PrimaryAttack()
-	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
 	if not self:CanPrimaryAttack() then return end
 
-	self:EmitSound( self.Primary.Sound )
+	self:EmitSound(self.Primary.Sound)
 
-	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
+	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 
 	self:ShootFlare()
 
-	self:TakePrimaryAmmo( 1 )
+	self:TakePrimaryAmmo(1)
 
 	if IsValid(self.Owner) then
-		self.Owner:SetAnimation( PLAYER_ATTACK1 )
+		self.Owner:SetAnimation(PLAYER_ATTACK1)
 
-		self.Owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0 ) )
+		self.Owner:ViewPunch(Angle(math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0))
 	end
 
-	if ( (game.SinglePlayer() && SERVER) || CLIENT ) then
-		self:SetNetworkedFloat( "LastShootTime", CurTime() )
+	if ((game.SinglePlayer() && SERVER) || CLIENT) then
+		self:SetNetworkedFloat("LastShootTime", CurTime())
 	end
 end
 

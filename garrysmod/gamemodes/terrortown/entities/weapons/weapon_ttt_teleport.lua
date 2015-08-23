@@ -21,14 +21,14 @@ end
 
 SWEP.Base = "weapon_tttbase"
 
-SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel         = "models/weapons/w_slam.mdl"
+SWEP.ViewModel = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel = "models/weapons/w_slam.mdl"
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
-SWEP.Primary.ClipSize    = 16
+SWEP.DrawCrosshair = false
+SWEP.ViewModelFlip = false
+SWEP.Primary.ClipSize = 16
 SWEP.Primary.DefaultClip = 16
-SWEP.Primary.ClipMax     = 16
+SWEP.Primary.ClipMax = 16
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = "GaussEnergy"
 SWEP.Primary.Delay = 0.5
@@ -107,9 +107,9 @@ end
 local function ShouldCollide(ent)
 	local g = ent:GetCollisionGroup()
 	return (g != COLLISION_GROUP_WEAPON and
-			  g != COLLISION_GROUP_DEBRIS and
-			  g != COLLISION_GROUP_DEBRIS_TRIGGER and
-			  g != COLLISION_GROUP_INTERACTIVE_DEBRIS)
+			g != COLLISION_GROUP_DEBRIS and
+			g != COLLISION_GROUP_DEBRIS_TRIGGER and
+			g != COLLISION_GROUP_INTERACTIVE_DEBRIS)
 end
 
 -- Teleport a player to a {pos, ang}
@@ -126,10 +126,10 @@ local function TeleportPlayer(ply, teleport)
 	ply:SetEyeAngles(ang) -- ineffective due to freeze...
 
 	timer.Simple(delay_beamdown, function ()
-											  if IsValid(ply) then
-											     ply:Freeze(false)
-											  end
-										  end)
+		if IsValid(ply) then
+			ply:Freeze(false)
+		end
+	end)
 
 	sound.Play(zap, oldpos, 65, 100)
 	sound.Play(unzap, pos, 55, 100)
@@ -176,7 +176,7 @@ local function CanTeleportToPos(ply, pos)
 
 		-- find all players in the place where we will be and telefrag them
 		local blockers = ents.FindInBox(pos + Vector(-16, -16, 0),
-											     pos + Vector(16, 16, 64))
+										pos + Vector(16, 16, 64))
 
 		local blocking_plys = {}
 
@@ -233,7 +233,8 @@ end
 
 local function StartTeleport(ply, teleport, weapon)
 	if (not IsValid(ply)) or (not ply:IsTerror()) or (not teleport) then
-		return end
+		return
+	end
 
 	teleport.ang = ply:EyeAngles()
 

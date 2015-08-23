@@ -7,37 +7,37 @@ SWEP.HoldNormal = "slam"
 
 if CLIENT then
 
-	SWEP.PrintName			= "Incendiary grenade"
-	SWEP.Instructions		= "Burn."
-	SWEP.Slot				= 3
-	SWEP.SlotPos			= 0
+	SWEP.PrintName = "Incendiary grenade"
+	SWEP.Instructions = "Burn."
+	SWEP.Slot = 3
+	SWEP.SlotPos = 0
 
 
 	SWEP.Icon = "vgui/ttt/icon_nades"
 end
 
-SWEP.Base				= "weapon_tttbase"
+SWEP.Base = "weapon_tttbase"
 
 SWEP.Kind = WEAPON_NADE
 
-SWEP.ViewModel			= "models/weapons/v_eq_flashbang.mdl"
-SWEP.WorldModel			= "models/weapons/w_eq_flashbang.mdl"
-SWEP.Weight			= 5
+SWEP.ViewModel = "models/weapons/v_eq_flashbang.mdl"
+SWEP.WorldModel = "models/weapons/w_eq_flashbang.mdl"
+SWEP.Weight = 5
 
 SWEP.ViewModelFlip = true
-SWEP.AutoSwitchFrom		= true
+SWEP.AutoSwitchFrom = true
 
-SWEP.DrawCrosshair		= false
+SWEP.DrawCrosshair = false
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= false
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = false
 SWEP.Primary.Delay = 1.0
-SWEP.Primary.Ammo		= "none"
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo		= "none"
+SWEP.Primary.Ammo = "none"
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = false
+SWEP.Secondary.Ammo = "none"
 
 SWEP.IsGrenade = true
 SWEP.NoSights = true

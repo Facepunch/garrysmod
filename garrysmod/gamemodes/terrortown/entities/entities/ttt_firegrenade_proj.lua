@@ -62,4 +62,3 @@ function ENT:Explode(tr)
 		self:SetDetonateExact(0)
 	end
 end
-

@@ -13,10 +13,12 @@ if CLIENT then
 		name = "hstation_name",
 		hint = "hstation_hint",
 		fmt  = function(ent, txt)
-					 return GetPTranslation(txt,
-											      { usekey = Key("+use", "USE"),
-											        num    = ent:GetStoredHealth() or 0 } )
-				 end
+			return GetPTranslation(txt,
+			{
+				usekey = Key("+use", "USE"),
+				num    = ent:GetStoredHealth() or 0
+			})
+		end
 	};
 
 end
@@ -146,8 +148,7 @@ function ENT:OnTakeDamage(dmginfo)
 
 	local att = dmginfo:GetAttacker()
 	if IsPlayer(att) then
-		DamageLog(Format("%s damaged health station for %d dmg",
-							  att:Nick(), dmginfo:GetDamage()))
+		DamageLog(Format("%s damaged health station for %d dmg", att:Nick(), dmginfo:GetDamage()))
 	end
 
 	if self:Health() < 0 then
@@ -172,4 +173,3 @@ if SERVER then
 		end
 	end
 end
-

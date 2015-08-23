@@ -3,32 +3,32 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType           = "pistol"
+SWEP.HoldType = "pistol"
 
 if CLIENT then
-	SWEP.PrintName       = "magnet_name"
-	SWEP.Slot            = 4
+	SWEP.PrintName = "magnet_name"
+	SWEP.Slot = 4
 end
 
 SWEP.Base = "weapon_tttbase"
 
-SWEP.AutoSpawnable      = false
+SWEP.AutoSpawnable = false
 
-SWEP.ViewModel          = Model("models/weapons/v_stunbaton.mdl")
-SWEP.WorldModel         = Model("models/weapons/w_stunbaton.mdl")
+SWEP.ViewModel = Model("models/weapons/v_stunbaton.mdl")
+SWEP.WorldModel = Model("models/weapons/w_stunbaton.mdl")
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = true
-SWEP.Primary.Ammo       = "none"
+SWEP.DrawCrosshair = false
+SWEP.ViewModelFlip = false
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = true
+SWEP.Primary.Ammo = "none"
 SWEP.Primary.Delay = 0.1
 
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = true
+SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Delay = 0.1
 
 SWEP.Kind = WEAPON_CARRY
@@ -249,12 +249,12 @@ function SWEP:AllowPickup(target)
 	local ply = self:GetOwner()
 
 	return (IsValid(phys) and IsValid(ply) and
-			  (not phys:HasGameFlag(FVPHYSICS_NO_PLAYER_PICKUP)) and
-			  phys:GetMass() < CARRY_WEIGHT_LIMIT and
-			  (not PlayerStandsOn(target)) and
-			  (target.CanPickup != false) and
-			  (target:GetClass() != "prop_ragdoll" or allow_rag:GetBool()) and
-			  ((not target:IsWeapon()) or allow_wep:GetBool()))
+			(not phys:HasGameFlag(FVPHYSICS_NO_PLAYER_PICKUP)) and
+			phys:GetMass() < CARRY_WEIGHT_LIMIT and
+			(not PlayerStandsOn(target)) and
+			(target.CanPickup != false) and
+			(target:GetClass() != "prop_ragdoll" or allow_rag:GetBool()) and
+			((not target:IsWeapon()) or allow_wep:GetBool()))
 end
 
 function SWEP:DoAttack(pickup)
@@ -484,10 +484,13 @@ function SWEP:PinRagdoll()
 	local rag = self.EntHolding
 	local ply = self.Owner
 
-	local tr = util.TraceLine({start  = ply:EyePos(),
-										endpos = ply:EyePos() + (ply:GetAimVector() * PIN_RAG_RANGE),
-										filter = {ply, self, rag, self.CarryHack},
-										mask   = MASK_SOLID})
+	local tr = util.TraceLine
+	{
+		start  = ply:EyePos(),
+		endpos = ply:EyePos() + (ply:GetAimVector() * PIN_RAG_RANGE),
+		filter = {ply, self, rag, self.CarryHack},
+		mask   = MASK_SOLID
+	}
 
 	if tr.HitWorld and (not tr.HitSky) then
 
@@ -513,8 +516,8 @@ function SWEP:PinRagdoll()
 		bonepos = bonephys:WorldToLocal(bonepos)
 
 		constraint.Rope(rag, tr.Entity, bone, 0, bonepos, attachpos,
-							 length, length * 0.1, 6000,
-							 1, "cable/rope", false)
+						length, length * 0.1, 6000,
+						1, "cable/rope", false)
 
 		rag.is_pinned = true
 		rag.OnPinnedDamage = RagdollPinnedTakeDamage
@@ -581,10 +584,13 @@ if CLIENT then
 		if self.dt.can_rag_pin and IsValid(self.dt.carried_rag) and LocalPlayer():IsTraitor() then
 			local client = LocalPlayer()
 
-			local tr = util.TraceLine({start  = client:EyePos(),
-											   endpos = client:EyePos() + (client:GetAimVector() * PIN_RAG_RANGE),
-											   filter = {client, self, self.dt.carried_rag},
-											   mask   = MASK_SOLID})
+			local tr = util.TraceLine
+			{
+				start  = client:EyePos(),
+				endpos = client:EyePos() + (client:GetAimVector() * PIN_RAG_RANGE),
+				filter = {client, self, self.dt.carried_rag},
+				mask   = MASK_SOLID
+			}
 
 			if tr.HitWorld and (not tr.HitSky) then
 				draw.SimpleText(PT("magnet_help", key_params), "TabLarge", ScrW() / 2, ScrH() / 2 - 50, COLOR_RED, TEXT_ALIGN_CENTER)

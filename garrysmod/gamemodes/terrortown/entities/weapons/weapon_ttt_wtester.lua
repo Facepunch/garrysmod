@@ -20,21 +20,21 @@ end
 
 SWEP.Base = "weapon_tttbase"
 
-SWEP.ViewModel  = "models/weapons/v_crowbar.mdl"
+SWEP.ViewModel = "models/weapons/v_crowbar.mdl"
 SWEP.WorldModel = "models/props_lab/huladoll.mdl"
 
-SWEP.DrawCrosshair       = false
-SWEP.Primary.ClipSize    = -1
+SWEP.DrawCrosshair = false
+SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = -1
-SWEP.Primary.Automatic   = false
-SWEP.Primary.Delay       = 1
-SWEP.Primary.Ammo        = "none"
+SWEP.Primary.Automatic = false
+SWEP.Primary.Delay = 1
+SWEP.Primary.Ammo = "none"
 
-SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
-SWEP.Secondary.Automatic   = false
-SWEP.Secondary.Ammo        = "none"
-SWEP.Secondary.Delay       = 2
+SWEP.Secondary.Automatic = false
+SWEP.Secondary.Ammo = "none"
+SWEP.Secondary.Delay = 2
 
 SWEP.Kind = WEAPON_ROLE
 SWEP.CanBuy = nil -- no longer a buyable thing
@@ -98,7 +98,7 @@ end
 
 local beep_miss = Sound("player/suit_denydevice.wav")
 function SWEP:PrimaryAttack()
-	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
 	-- will be tracing against players
 	self.Owner:LagCompensation(true)
@@ -190,7 +190,10 @@ function SWEP:AddPlayerSample(corpse, killer)
 		if not table.HasTable(self.ItemSamples, prnt) then
 			table.insert(self.ItemSamples, prnt)
 
-			DamageLog("SAMPLE:\t " .. self.Owner:Nick() .. " retrieved DNA of " .. (IsValid(killer) and killer:Nick() or "<disconnected>") .. " from corpse of " .. (IsValid(corpse) and CORPSE.GetPlayerNick(corpse) or "<invalid>"))
+			DamageLog("SAMPLE:\t " .. self.Owner:Nick() .. " retrieved DNA of " ..
+					  (IsValid(killer) and killer:Nick() or "<disconnected>") ..
+					  " from corpse of " ..
+					  (IsValid(corpse) and CORPSE.GetPlayerNick(corpse) or "<invalid>"))
 
 			hook.Call("TTTFoundDNA", GAMEMODE, self.Owner, killer, corpse)
 		end
@@ -216,7 +219,9 @@ function SWEP:AddItemSample(ent)
 			else
 				table.insert(self.ItemSamples, prnt)
 
-				DamageLog("SAMPLE:\t " .. self.Owner:Nick() .. " retrieved DNA of " .. (IsValid(p) and p:Nick() or "<disconnected>") .. " from " .. ent:GetClass())
+				DamageLog("SAMPLE:\t " .. self.Owner:Nick() .. " retrieved DNA of " ..
+						  (IsValid(p) and p:Nick() or "<disconnected>") ..
+						  " from " .. ent:GetClass())
 
 				new = new + 1
 				hook.Call("TTTFoundDNA", GAMEMODE, self.Owner, p, ent)
@@ -248,7 +253,7 @@ function SWEP:RemoveItemSample(idx)
 end
 
 function SWEP:SecondaryAttack()
-	self:SetNextSecondaryFire( CurTime() + 0.05 )
+	self:SetNextSecondaryFire(CurTime() + 0.05)
 
 	if CLIENT then return end
 
@@ -274,10 +279,10 @@ if SERVER then
 	function SWEP:SendScan(pos)
 		local clear = (pos == nil) or (not IsValid(self.Owner))
 		net.Start("TTT_ScanResult", self.Owner)
-		  net.WriteBit(clear)
-		  if not clear then
-			 net.WriteVector(pos)
-		  end
+			net.WriteBit(clear)
+			if not clear then
+				net.WriteVector(pos)
+			end
 		net.Send(self.Owner)
 	end
 
@@ -388,8 +393,8 @@ if CLIENT then
 				 -- knife in corpse, or a ragdoll
 				 ent:GetNWBool("HasPrints", false) or
 				 (ent:GetClass() == "prop_ragdoll" and
-				  CORPSE.GetPlayerNick(ent, false) and
-				  CORPSE.GetFound(ent, false))) then
+				 CORPSE.GetPlayerNick(ent, false) and
+				 CORPSE.GetFound(ent, false))) then
 
 				surface.SetDrawColor(0, 255, 0, 255)
 				gap = 0
@@ -406,17 +411,17 @@ if CLIENT then
 		local x = ScrW() / 2.0
 		local y = ScrH() / 2.0
 
-		surface.DrawLine( x - length, y, x - gap, y )
-		surface.DrawLine( x + length, y, x + gap, y )
-		surface.DrawLine( x, y - length, x, y - gap )
-		surface.DrawLine( x, y + length, x, y + gap )
+		surface.DrawLine(x - length, y, x - gap, y)
+		surface.DrawLine(x + length, y, x + gap, y)
+		surface.DrawLine(x, y - length, x, y - gap)
+		surface.DrawLine(x, y + length, x, y + gap)
 
 		if ent and can_sample then
 			surface.SetFont("DefaultFixedDropShadow")
 			surface.SetTextColor(0, 255, 0, 255)
-			surface.SetTextPos( x + length*2, y - length*2 )
+			surface.SetTextPos(x + length*2, y - length*2)
 			surface.DrawText("TYPE: " .. (ent:GetClass() == "prop_ragdoll" and "BODY" or "ITEM"))
-			surface.SetTextPos( x + length*2, y - length*2 + 15)
+			surface.SetTextPos(x + length*2, y - length*2 + 15)
 			surface.DrawText("ID:   #" .. ent:EntIndex())
 		end
 	end
@@ -470,16 +475,16 @@ if CLIENT then
 		ilist:SetPadding(1)
 
 		ilist.OnActivePanelChanged = function(s, old, new)
-											     last_panel_selected = new and new.key or 1
-											  end
+			last_panel_selected = new and new.key or 1
+		end
 
 		ilist.OnScan = function(s, scanned_pnl)
-								for k, pnl in pairs(s:GetItems()) do
-									pnl:SetIconColor(COLOR_LGRAY)
-								end
+			for k, pnl in pairs(s:GetItems()) do
+				pnl:SetIconColor(COLOR_LGRAY)
+			end
 
-								scanned_pnl:SetIconColor(COLOR_WHITE)
-							end
+			scanned_pnl:SetIconColor(COLOR_WHITE)
+		end
 
 		if ilist.VBar then
 			ilist.VBar:Remove()
@@ -492,54 +497,54 @@ if CLIENT then
 		iscroll:SetOverlap(1)
 
 		iscroll.LoadFrom = function(s, tbl, layout)
-									 ilist:Clear(true)
-									 ilist.SelectedPanel = nil
+			ilist:Clear(true)
+			ilist.SelectedPanel = nil
 
-									 -- Scroller has no Clear()
-									 for k, pnl in pairs(s.Panels) do
-										 if IsValid(pnl) then
-											 pnl:Remove()
-										 end
-									 end
+			-- Scroller has no Clear()
+			for k, pnl in pairs(s.Panels) do
+				if IsValid(pnl) then
+					pnl:Remove()
+				end
+			end
 
-									 s.Panels = {}
+			s.Panels = {}
 
-									 local last_scan = tester and tester:GetLastScanned() or -1
+			local last_scan = tester and tester:GetLastScanned() or -1
 
-									 for k, v in ipairs(tbl) do
-										 local ic = vgui.Create("SimpleIcon", ilist)
+			for k, v in ipairs(tbl) do
+				local ic = vgui.Create("SimpleIcon", ilist)
 
-										 ic:SetIconSize(64)
+				ic:SetIconSize(64)
 
-										 local img, name = GetDisplayData(v)
+				local img, name = GetDisplayData(v)
 
-										 ic:SetIcon(img)
+				ic:SetIcon(img)
 
-										 local tip = PT("dna_menu_sample", {source = name or "???"})
+				local tip = PT("dna_menu_sample", {source = name or "???"})
 
-										 ic:SetTooltip(tip)
+				ic:SetTooltip(tip)
 
-										 ic.key = k
-										 ic.val = v
+				ic.key = k
+				ic.val = v
 
-										 if layout then
-											 ic:PerformLayout()
-										 end
+				if layout then
+					ic:PerformLayout()
+				end
 
-										 ilist:AddPanel(ic)
-										 s:AddPanel(ic)
+				ilist:AddPanel(ic)
+				s:AddPanel(ic)
 
-										 if k == last_panel_selected then
-											 ilist:SelectPanel(ic)
-										 end
+				if k == last_panel_selected then
+					ilist:SelectPanel(ic)
+				end
 
-										 if last_scan > 0 then
-											 ic:SetIconColor(last_scan == k and COLOR_WHITE or COLOR_LGRAY)
-										 end
-									 end
+				if last_scan > 0 then
+					ic:SetIconColor(last_scan == k and COLOR_WHITE or COLOR_LGRAY)
+				end
+			end
 
-									 iscroll:InvalidateLayout()
-								 end
+			iscroll:InvalidateLayout()
+		end
 
 		iscroll:LoadFrom(item_prints)
 
@@ -553,19 +558,19 @@ if CLIENT then
 		delitem:SetSize(bw, bh)
 		delitem:SetText(T("dna_menu_remove"))
 		delitem.DoClick = function()
-									if IsValid(ilist) and IsValid(ilist.SelectedPanel) then
-										local idx = ilist.SelectedPanel.key
-										RunConsoleCommand("ttt_wtester_remove", idx)
-									end
-								end
+			if IsValid(ilist) and IsValid(ilist.SelectedPanel) then
+				local idx = ilist.SelectedPanel.key
+				RunConsoleCommand("ttt_wtester_remove", idx)
+			end
+		end
 
 		delitem.Think = function(s)
-								 if IsValid(ilist) and IsValid(ilist.SelectedPanel) then
-									 s:SetEnabled(true)
-								 else
-									 s:SetEnabled(false)
-								 end
-							 end
+			if IsValid(ilist) and IsValid(ilist.SelectedPanel) then
+				s:SetEnabled(true)
+			else
+				s:SetEnabled(false)
+			end
+		end
 
 		local delhlp = vgui.Create("DLabel", delwrap)
 		delhlp:SetPos(bw + m, 0)
@@ -609,15 +614,15 @@ if CLIENT then
 		scan:SetEnabled(false)
 
 		scan.DoClick = function(s)
-								 if IsValid(ilist) then
-									 local i = ilist.SelectedPanel
-									 if IsValid(i) then
-										 RunConsoleCommand("ttt_wtester_scan", i.key)
+			if IsValid(ilist) then
+				local i = ilist.SelectedPanel
+				if IsValid(i) then
+					RunConsoleCommand("ttt_wtester_scan", i.key)
 
-										 ilist:OnScan(i)
-									 end
-								 end
-							 end
+					ilist:OnScan(i)
+				end
+			end
+		end
 
 		local dcheck = vgui.Create("DCheckBoxLabel", mwrap)
 		dcheck:SetPos(0, 70)
@@ -646,38 +651,38 @@ if CLIENT then
 
 		-- Expose updating fns
 		dpanel.UpdatePrints = function(s, its)
-										 if IsValid(iscroll) then
-											 iscroll:LoadFrom(its)
-										 end
-									 end
+			if IsValid(iscroll) then
+				iscroll:LoadFrom(its)
+			end
+		end
 
 		dpanel.Think = function(s)
-								if IsValid(bar) and IsValid(scan) and tester then
-									local charge = tester:GetCharge()
-									bar:SetValue(math.min(MAX_CHARGE, charge))
-									if charge < MAX_CHARGE then
-										bar:SetColor(COLOR_RED)
+			if IsValid(bar) and IsValid(scan) and tester then
+				local charge = tester:GetCharge()
+				bar:SetValue(math.min(MAX_CHARGE, charge))
+				if charge < MAX_CHARGE then
+					bar:SetColor(COLOR_RED)
 
-										state:SetText(T("dna_menu_charge"))
-										state:SizeToContents()
+					state:SetText(T("dna_menu_charge"))
+					state:SizeToContents()
 
-										scan:SetEnabled(false)
-									else
-										bar:SetColor(COLOR_GREEN)
+					scan:SetEnabled(false)
+				else
+					bar:SetColor(COLOR_GREEN)
 
-										if IsValid(ilist) and IsValid(ilist.SelectedPanel) then
-											scan:SetEnabled(true)
+					if IsValid(ilist) and IsValid(ilist.SelectedPanel) then
+						scan:SetEnabled(true)
 
-											state:SetText(T("dna_menu_ready"))
-											state:SizeToContents()
-										else
-											state:SetText(T("dna_menu_select"))
-											state:SizeToContents()
-											scan:SetEnabled(false)
-										end
-									end
-								end
-							end
+						state:SetText(T("dna_menu_ready"))
+						state:SizeToContents()
+					else
+						state:SetText(T("dna_menu_select"))
+						state:SizeToContents()
+						scan:SetEnabled(false)
+					end
+				end
+			end
+		end
 
 		return dpanel
 	end

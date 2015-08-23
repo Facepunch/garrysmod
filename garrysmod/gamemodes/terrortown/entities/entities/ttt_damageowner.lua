@@ -41,4 +41,3 @@ function ENT:AcceptInput(name, activator, caller, data)
 		return true
 	end
 end
-

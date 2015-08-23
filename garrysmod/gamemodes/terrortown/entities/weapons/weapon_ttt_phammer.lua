@@ -1,7 +1,7 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType			= "ar2"
+SWEP.HoldType = "ar2"
 
 if CLIENT then
 	SWEP.PrintName = "Poltergeist"
@@ -19,7 +19,7 @@ if CLIENT then
 end
 
 SWEP.Base = "weapon_tttbase"
-SWEP.Primary.Recoil	= 0.1
+SWEP.Primary.Recoil = 0.1
 SWEP.Primary.Delay = 12.0
 SWEP.Primary.Cone = 0.02
 SWEP.Primary.ClipSize = 6
@@ -35,9 +35,9 @@ SWEP.Kind = WEAPON_EQUIP2
 SWEP.CanBuy = {ROLE_TRAITOR} -- only traitors can buy
 SWEP.WeaponID = AMMO_POLTER
 
-SWEP.UseHands			= true
-SWEP.ViewModel	= "models/weapons/c_irifle.mdl"
-SWEP.WorldModel	= "models/weapons/w_IRifle.mdl"
+SWEP.UseHands = true
+SWEP.ViewModel = "models/weapons/c_irifle.mdl"
+SWEP.WorldModel = "models/weapons/w_IRifle.mdl"
 
 SWEP.Primary.Sound = Sound( "weapons/airboat/airboat_gun_energy1.wav" )
 

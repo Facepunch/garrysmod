@@ -10,9 +10,9 @@ function ENT:KeyValue(key, value)
 end
 
 local function VectorInside(vec, mins, maxs)
-	return (vec.x > mins.x and vec.x < maxs.x
-			  and vec.y > mins.y and vec.y < maxs.y
-			  and vec.z > mins.z and vec.z < maxs.z)
+	return (vec.x > mins.x and vec.x < maxs.x and
+			vec.y > mins.y and vec.y < maxs.y and
+			vec.z > mins.z and vec.z < maxs.z)
 end
 
 function ENT:CountTraitors()

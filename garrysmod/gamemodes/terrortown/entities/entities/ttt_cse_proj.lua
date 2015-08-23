@@ -22,7 +22,7 @@ ENT.RenderGroup = RENDERGROUP_BOTH
 ENT.Range = 128
 ENT.MaxScenesPerPulse = 3
 ENT.SceneDuration = 10
-ENT.PulseDelay    = 10
+ENT.PulseDelay = 10
 
 ENT.CanUseKey = true
 
@@ -203,5 +203,3 @@ function ENT:Explode(tr)
 
 	end
 end
-
-
