@@ -114,7 +114,7 @@ function PANEL:PeepThink(peep, ent)
 
 		local vNewPos = Vector((bar.x + bar:GetWide()) - 15 * bar.numvotes - 4, bar.y + (bar:GetTall() * 0.5 - 8), 0)
 
-		if (!peep.CurPos || peep.CurPos != vNewPos) then
+		if (!peep.CurPos or peep.CurPos != vNewPos) then
 			peep:MoveTo(vNewPos.x, vNewPos.y, 0.2)
 			peep.CurPos = vNewPos
 		end

@@ -435,7 +435,7 @@ g_VoicePanelList = nil
 local function VoiceNotifyThink(pnl)
 	if not (IsValid(pnl) and LocalPlayer() and IsValid(pnl.ply)) then return end
 	if not (GetGlobalBool("ttt_locational_voice", false) and (not pnl.ply:IsSpec()) and (pnl.ply != LocalPlayer())) then return end
-	if LocalPlayer():IsActiveTraitor() && pnl.ply:IsActiveTraitor() then return end
+	if LocalPlayer():IsActiveTraitor() and pnl.ply:IsActiveTraitor() then return end
 
 	local d = LocalPlayer():GetPos():Distance(pnl.ply:GetPos())
 
