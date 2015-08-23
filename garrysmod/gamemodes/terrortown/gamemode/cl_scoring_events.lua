@@ -43,85 +43,97 @@ local is_dmg = util.BitSet
 
 -- Round end event
 Event(EVENT_FINISH,
-		{ text = function(e)
-						if e.win == WIN_TRAITOR then
-							return T("ev_win_traitor")
-						elseif e.win == WIN_INNOCENT then
-							return T("ev_win_inno")
-						elseif e.win == WIN_TIMELIMIT then
-							return T("ev_win_time")
-						end
-					end,
-		  icon = function(e)
-						if e.win == WIN_TRAITOR then
-							return star_icon, "Traitors won"
-						elseif e.win == WIN_INNOCENT then
-							return star_icon, "Innocents won"
-						else
-							return star_icon, "Timelimit"
-						end
-					end
-	  })
+{
+	text = function(e)
+		if e.win == WIN_TRAITOR then
+			return T("ev_win_traitor")
+		elseif e.win == WIN_INNOCENT then
+			return T("ev_win_inno")
+		elseif e.win == WIN_TIMELIMIT then
+			return T("ev_win_time")
+		end
+	end,
+
+	icon = function(e)
+		if e.win == WIN_TRAITOR then
+			return star_icon, "Traitors won"
+		elseif e.win == WIN_INNOCENT then
+			return star_icon, "Innocents won"
+		else
+			return star_icon, "Timelimit"
+		end
+	end
+})
 
 -- Round start event
 Event(EVENT_GAME,
-		{ text = function(e)
-						if e.state == ROUND_ACTIVE then return T("ev_start") end
-					end,
-		  icon = function(e)
-						return app_icon, "Game"
-					end
-	  })
+{
+	text = function(e)
+		if e.state == ROUND_ACTIVE then return T("ev_start") end
+	end,
+
+	icon = function(e)
+		return app_icon, "Game"
+	end
+})
 
 -- Credits event
 Event(EVENT_CREDITFOUND,
-		{ text = function(e)
-						return PT("ev_credit", {finder = e.ni,
-											         num = e.cr,
-											         player = e.b})
-					end,
-		  icon = function(e)
-						return credit_icon, "Credit found"
-					end
-	  })
+{
+	text = function(e)
+		return PT("ev_credit", {finder = e.ni, num = e.cr, player = e.b})
+	end,
+
+	icon = function(e)
+		return credit_icon, "Credit found"
+	end
+})
 
 Event(EVENT_BODYFOUND,
-		{ text = function(e)
-						return PT("ev_body", {finder = e.ni, victim = e.b})
-					end,
-		  icon = function(e)
-						return magnifier_icon, "Body discovered"
-					end
-	  })
+{
+	text = function(e)
+		return PT("ev_body", {finder = e.ni, victim = e.b})
+	end,
+
+	icon = function(e)
+		return magnifier_icon, "Body discovered"
+	end
+})
 
 -- C4 fun
 Event(EVENT_C4DISARM,
-		{ text = function(e)
-						return PT(e.s and "ev_c4_disarm1" or "ev_c4_disarm2",
-									 {player = e.ni, owner = e.own or "aliens"})
-					end,
-		  icon = function(e)
-						return wrench_icon, "C4 disarm"
-					end
-	  })
+{
+	text = function(e)
+		return PT(e.s and "ev_c4_disarm1" or "ev_c4_disarm2",
+				 {player = e.ni, owner = e.own or "aliens"})
+	end,
+
+	icon = function(e)
+		return wrench_icon, "C4 disarm"
+	end
+})
 
 Event(EVENT_C4EXPLODE,
-		{ text = function(e)
-						return PT("ev_c4_boom", {player = e.ni})
-					end,
-		  icon = function(e)
-						return bomb_icon, "C4 exploded"
-					end
-	  })
+{
+	text = function(e)
+		return PT("ev_c4_boom", {player = e.ni})
+	end,
+
+	icon = function(e)
+		return bomb_icon, "C4 exploded"
+	end
+})
 
 Event(EVENT_C4PLANT,
-		{ text = function(e)
-						return PT("ev_c4_plant", {player = e.ni})
-					end,
-		  icon = function(e)
-						return bomb_icon, "C4 planted"
-					end
-	  })
+{
+	text = function(e)
+		return PT("ev_c4_plant", {player = e.ni})
+	end,
+
+	icon = function(e)
+		return bomb_icon, "C4 planted"
+	end
+})
 
 -- Helper fn for kill events
 local function GetWeaponName(gun)
@@ -233,20 +245,19 @@ local function KillText(e)
 end
 
 Event(EVENT_KILL,
-		{ text = KillText,
-		  icon = function(e)
-						if e.att.uid == e.vic.uid or e.att.uid == -1 then
-							return smile_icon, "Suicide"
-						end
+{
+	text = KillText,
+	icon = function(e)
+		if e.att.uid == e.vic.uid or e.att.uid == -1 then
+			return smile_icon, "Suicide"
+		end
 
-						if e.att.tr == e.vic.tr then
-							return wrong_icon, "Teamkill"
-						elseif e.att.tr then
-							return right_icon, "Traitor killed innocent"
-						else
-							return shield_icon, "Innocent killed traitor"
-						end
-					end
-	  })
-
-
+		if e.att.tr == e.vic.tr then
+			return wrong_icon, "Teamkill"
+		elseif e.att.tr then
+			return right_icon, "Traitor killed innocent"
+		else
+			return shield_icon, "Innocent killed traitor"
+		end
+	end
+})

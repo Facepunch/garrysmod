@@ -21,8 +21,8 @@ function DISGUISE.CreateMenu(parent)
 	dcheck:SetIndent(5)
 	dcheck:SetValue(LocalPlayer():GetNWBool("disguised", false))
 	dcheck.OnChange = function(s, val)
-								RunConsoleCommand("ttt_set_disguise", val and "1" or "0")
-							end
+		RunConsoleCommand("ttt_set_disguise", val and "1" or "0")
+	end
 	dform:AddItem(dcheck)
 
 	dform:Help(trans("disg_help1"))

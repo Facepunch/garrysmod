@@ -12,15 +12,27 @@ local GetPTranslation = LANG.GetParamTranslation
 
 include("sb_team.lua")
 
-surface.CreateFont("cool_small", {font = "coolvetica",
-											 size = 20,
-											 weight = 400})
-surface.CreateFont("cool_large", {font = "coolvetica",
-											 size = 24,
-											 weight = 400})
-surface.CreateFont("treb_small", {font = "Trebuchet18",
-											 size = 14,
-											 weight = 700})
+surface.CreateFont("cool_small",
+{
+	font = "coolvetica",
+	size = 20,
+	weight = 400
+})
+
+surface.CreateFont("cool_large",
+{
+	font = "coolvetica",
+	size = 24,
+	weight = 400
+})
+
+surface.CreateFont("treb_small",
+{
+	font = "Trebuchet18",
+	size = 14,
+	weight = 700
+})
+
 
 local logo = surface.GetTextureID("vgui/ttt/score_logo")
 
@@ -100,12 +112,11 @@ function PANEL:Init()
 	self.mapchange:SetContentAlignment(9)
 
 	self.mapchange.Think = function (sf)
-									  local r, t = UntilMapChange()
+		local r, t = UntilMapChange()
 
-									  sf:SetText(GetPTranslation("sb_mapchange",
-											                       {num = r, time = t}))
-									  sf:SizeToContents()
-								  end
+		sf:SetText(GetPTranslation("sb_mapchange", {num = r, time = t}))
+		sf:SizeToContents()
+	end
 
 
 	self.ply_frame = vgui.Create( "TTTPlayerFrame", self )
@@ -163,13 +174,12 @@ end
 
 function PANEL:StartUpdateTimer()
 	if not timer.Exists("TTTScoreboardUpdater") then
-		timer.Create( "TTTScoreboardUpdater", 0.3, 0,
-						  function()
-							  local pnl = GAMEMODE:GetScoreboardPanel()
-							  if IsValid(pnl) then
-								  pnl:UpdateScoreboard()
-							  end
-						  end)
+		timer.Create( "TTTScoreboardUpdater", 0.3, 0, function()
+			local pnl = GAMEMODE:GetScoreboardPanel()
+			if IsValid(pnl) then
+				pnl:UpdateScoreboard()
+			end
+		end)
 	end
 end
 

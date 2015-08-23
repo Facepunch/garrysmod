@@ -156,14 +156,14 @@ if CLIENT then
 
 	local function MakeSimpleRunner(act)
 		return function (ply, w)
-					 -- just let this gesture play itself and get out of its way
-					 if w == 0 then
-						 ply:AnimApplyGesture(act, 1)
-						 return 1
-					 else
-						 return 0
-					 end
-				 end
+		-- just let this gesture play itself and get out of its way
+			if w == 0 then
+				ply:AnimApplyGesture(act, 1)
+				return 1
+			else
+				return 0
+			end
+		end
 	end
 
 	-- act -> gesture runner fn
@@ -183,11 +183,11 @@ if CLIENT then
 
 	-- Insert all the "simple" gestures that do not need weight control
 	for _, a in pairs{ACT_GMOD_GESTURE_AGREE, ACT_GMOD_GESTURE_DISAGREE,
-							ACT_GMOD_GESTURE_WAVE, ACT_GMOD_GESTURE_BECON,
-							ACT_GMOD_GESTURE_BOW, ACT_GMOD_GESTURE_SALUTE,
-							ACT_GMOD_CHEER, ACT_SIGNAL_FORWARD, ACT_SIGNAL_HALT,
-							ACT_SIGNAL_GROUP, ACT_ITEM_PLACE, ACT_ITEM_DROP,
-							ACT_ITEM_GIVE} do
+					  ACT_GMOD_GESTURE_WAVE, ACT_GMOD_GESTURE_BECON,
+					  ACT_GMOD_GESTURE_BOW, ACT_GMOD_GESTURE_SALUTE,
+					  ACT_GMOD_CHEER, ACT_SIGNAL_FORWARD, ACT_SIGNAL_HALT,
+					  ACT_SIGNAL_GROUP, ACT_ITEM_PLACE, ACT_ITEM_DROP,
+					  ACT_ITEM_GIVE} do
 		act_runner[a] = MakeSimpleRunner(a)
 	end
 

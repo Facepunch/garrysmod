@@ -32,11 +32,11 @@ function LANG.CreateLanguage(lang_name)
 		-- when a string is not found in the active or the default language, an
 		-- error message is shown
 		setmetatable(LANG.Strings[lang_name],
-						 {
-							 __index = function(tbl, name)
-											  return Format("[ERROR: Translation of %s not found]", name), false
-										  end
-						 })
+					{
+						__index = function(tbl, name)
+										return Format("[ERROR: Translation of %s not found]", name), false
+									end
+					})
 	end
 
 	return LANG.Strings[lang_name]
@@ -117,9 +117,9 @@ local function SetFallback(tbl)
 	-- allows fallback to occur even when consumer code directly accesses the
 	-- lang table for speed (eg. in a rendering hook).
 	setmetatable(tbl,
-					 {
-						 __index = cached_default
-					 })
+				{
+					__index = cached_default
+				})
 
 end
 
@@ -210,20 +210,19 @@ local bgcolor = {
 -- colour, etc.
 LANG.Styles = {
 	default = function(text)
-					 MSTACK:AddMessage(text)
-					 print("TTT:   " .. text)
-				 end,
+		MSTACK:AddMessage(text)
+		print("TTT:   " .. text)
+	end,
 
 	rolecolour = function(text)
-						 MSTACK:AddColoredBgMessage(text,
-											             bgcolor[ LocalPlayer():GetRole() ])
-						 print("TTT:   " .. text)
-					 end,
+		MSTACK:AddColoredBgMessage(text,
+							bgcolor[ LocalPlayer():GetRole() ])
+		print("TTT:   " .. text)
+	end,
 
 	chat_warn  = function(text)
-						 chat.AddText(COLOR_RED, text)
-					 end,
-
+		chat.AddText(COLOR_RED, text)
+	end,
 
 	chat_plain = chat.AddText
 };

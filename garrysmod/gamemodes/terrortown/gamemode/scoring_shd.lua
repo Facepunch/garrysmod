@@ -100,11 +100,10 @@ end
 -- we can convert them using this fn
 function KillsToPoints(score, was_traitor)
 	return ((score.suicides * -1)
-			  + score.bonus
-			  + (score.traitors * (was_traitor and -16 or 5))
-			  + (score.innos * (was_traitor and 1 or -8))
-			  + (score.deaths == 0 and 1 or 0)) --effectively 2 due to team bonus
-											            --for your own survival
+		   + score.bonus
+		   + (score.traitors * (was_traitor and -16 or 5))
+		   + (score.innos * (was_traitor and 1 or -8))
+		   + (score.deaths == 0 and 1 or 0)) --effectively 2 due to team bonus for your own survival
 end
 
 

@@ -32,8 +32,7 @@ local function GetTextForRole(role)
 				end
 			end
 
-			text = GetPTranslation("info_popup_traitor",
-										  {menukey = menukey, traitorlist = traitorlist})
+			text = GetPTranslation("info_popup_traitor", {menukey = menukey, traitorlist = traitorlist})
 		else
 			text = GetPTranslation("info_popup_traitor_alone", {menukey = menukey})
 		end
@@ -58,8 +57,8 @@ local function RoundStartPopup()
 
 	local color = Color(0,0,0, 200)
 	dframe.Paint = function(s)
-							draw.RoundedBox(8, 0, 0, s:GetWide(), s:GetTall(), color)
-						end
+		draw.RoundedBox(8, 0, 0, s:GetWide(), s:GetTall(), color)
+	end
 
 
 	local text = GetTextForRole(LocalPlayer():GetRole())
@@ -120,14 +119,11 @@ local function IdlePopup()
 	disable:SetSize(175, bh)
 	disable:SetText(GetTranslation("idle_popup_off"))
 	disable.DoClick = function()
-								RunConsoleCommand("ttt_spectator_mode", "0")
-								dframe:Close()
-							end
+		RunConsoleCommand("ttt_spectator_mode", "0")
+		dframe:Close()
+	end
 
 	dframe:MakePopup()
 
 end
 concommand.Add("ttt_cl_idlepopup", IdlePopup)
-
-
-

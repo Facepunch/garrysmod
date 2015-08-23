@@ -222,8 +222,8 @@ function PANEL:SetLabelText(text, color, font, pos)
 		local drawfn = shadow and draw.TextShadow or draw.Text
 
 		self.FakeLabel.Paint = function()
-										  drawfn(spec, offset, opacity)
-									  end
+			drawfn(spec, offset, opacity)
+		end
 	end
 end
 

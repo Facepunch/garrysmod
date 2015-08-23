@@ -64,8 +64,8 @@ function PROPSPEC.End(ply)
 	ply:ResetViewRoll()
 
 	timer.Simple(0.1, function()
-								if IsValid(ply) then ply:ResetViewRoll() end
-							end)
+		if IsValid(ply) then ply:ResetViewRoll() end
+	end)
 end
 
 local propspec_force = CreateConVar("ttt_spec_prop_force", "110")
@@ -143,4 +143,3 @@ function PROPSPEC.Recharge(ply)
 		pr.retime = CurTime() + propspec_retime:GetFloat()
 	end
 end
-

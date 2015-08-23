@@ -12,15 +12,27 @@ local GetLang = LANG.GetUnsafeLanguageTable
 local interp = string.Interp
 
 -- Fonts
-surface.CreateFont("TraitorState", {font = "Trebuchet24",
-											   size = 28,
-											   weight = 1000})
-surface.CreateFont("TimeLeft",     {font = "Trebuchet24",
-											   size = 24,
-											   weight = 800})
-surface.CreateFont("HealthAmmo",   {font = "Trebuchet24",
-											   size = 24,
-											   weight = 750})
+surface.CreateFont("TraitorState",
+{
+	font = "Trebuchet24",
+	size = 28,
+	weight = 1000
+})
+
+surface.CreateFont("TimeLeft",
+{
+	font = "Trebuchet24",
+	size = 24,
+	weight = 800
+})
+
+surface.CreateFont("HealthAmmo",
+{
+	font = "Trebuchet24",
+	size = 24,
+	weight = 750
+})
+
 -- Color presets
 local bg_colors = {
 	background_main = Color(0, 0, 10, 200),
@@ -319,48 +331,48 @@ function GM:HUDPaint()
 	local client = LocalPlayer()
 
 	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTargetID" ) then
-		 hook.Call( "HUDDrawTargetID", GAMEMODE )
+		hook.Call( "HUDDrawTargetID", GAMEMODE )
 	end
 
 	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTMStack" ) then
-		 MSTACK:Draw(client)
+		MSTACK:Draw(client)
 	end
 
 	if (not client:Alive()) or client:Team() == TEAM_SPEC then
 		if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTSpecHUD" ) then
-			 SpecHUDPaint(client)
+			SpecHUDPaint(client)
 		end
 
 		return
 	end
 
 	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTRadar" ) then
-		 RADAR:Draw(client)
+		RADAR:Draw(client)
 	end
 
 	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTButton" ) then
-		 TBHUD:Draw(client)
+		TBHUD:Draw(client)
 	end
 
 	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTWSwitch" ) then
-		 WSWITCH:Draw(client)
+		WSWITCH:Draw(client)
 	end
 
 	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTVoice" ) then
-		 VOICE.Draw(client)
+		VOICE.Draw(client)
 	end
 
 	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTDisguise" ) then
-		 DISGUISE.Draw(client)
+		DISGUISE.Draw(client)
 	end
 
 	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTPickupHistory" ) then
-		 hook.Call( "HUDDrawPickupHistory", GAMEMODE )
+		hook.Call( "HUDDrawPickupHistory", GAMEMODE )
 	end
 
 	-- Draw bottom left info panel
 	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTInfoPanel" ) then
-		 InfoPaint(client)
+		InfoPaint(client)
 	end
 end
 
@@ -373,4 +385,3 @@ function GM:HUDShouldDraw(name)
 
 	return true
 end
-

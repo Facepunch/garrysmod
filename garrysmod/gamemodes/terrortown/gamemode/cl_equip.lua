@@ -76,9 +76,9 @@ local function PreqLabels(parent, x, y)
 	tbl.credits:SetToolTip(GetTranslation("equip_help_cost"))
 	tbl.credits:SetPos(x, y)
 	tbl.credits.Check = function(s, sel)
-								  local credits = LocalPlayer():GetCredits()
-								  return credits > 0, GetPTranslation("equip_cost", {num = credits})
-							  end
+								local credits = LocalPlayer():GetCredits()
+								return credits > 0, GetPTranslation("equip_cost", {num = credits})
+							end
 
 	tbl.owned = vgui.Create("DLabel", parent)
 	tbl.owned:SetToolTip(GetTranslation("equip_help_carry"))
@@ -99,29 +99,29 @@ local function PreqLabels(parent, x, y)
 	tbl.bought:CopyPos(tbl.owned)
 	tbl.bought:MoveBelow(tbl.owned, y)
 	tbl.bought.Check = function(s, sel)
-								 if sel.limited and LocalPlayer():HasBought(tostring(sel.id)) then
-									 return false, GetTranslation("equip_stock_deny")
-								 else
-									 return true, GetTranslation("equip_stock_ok")
-								 end
-							 end
+								if sel.limited and LocalPlayer():HasBought(tostring(sel.id)) then
+									return false, GetTranslation("equip_stock_deny")
+								else
+									return true, GetTranslation("equip_stock_ok")
+								end
+							end
 
 	for k, pnl in pairs(tbl) do
 		pnl:SetFont("TabLarge")
 	end
 
 	return function(selected)
-				 local allow = true
-				 for k, pnl in pairs(tbl) do
-					 local result, text = pnl:Check(selected)
-					 pnl:SetTextColor(result and color_good or color_bad)
-					 pnl:SetText(text)
-					 pnl:SizeToContents()
+				local allow = true
+				for k, pnl in pairs(tbl) do
+					local result, text = pnl:Check(selected)
+					pnl:SetTextColor(result and color_good or color_bad)
+					pnl:SetText(text)
+					pnl:SizeToContents()
 
-					 allow = allow and result
-				 end
-				 return allow
-			 end
+					allow = allow and result
+				end
+				return allow
+			end
 end
 
 -- quick, very basic override of DPanelSelect
@@ -230,10 +230,10 @@ local function TraitorMenuPopup()
 				local marker = vgui.Create("DImage")
 				marker:SetImage("vgui/ttt/custom_marker")
 				marker.PerformLayout = function(s)
-											     s:AlignBottom(2)
-											     s:AlignRight(2)
-											     s:SetSize(16, 16)
-											  end
+											s:AlignBottom(2)
+											s:AlignRight(2)
+											s:SetSize(16, 16)
+											end
 				marker:SetTooltip(GetTranslation("equip_custom"))
 
 				ic:AddLayer(marker)
@@ -255,9 +255,9 @@ local function TraitorMenuPopup()
 				slot:SetIconText(item.slot)
 
 				slot:SetIconProperties(COLOR_WHITE,
-											  "DefaultBold",
-											  {opacity=220, offset=1},
-											  {10, 8})
+											"DefaultBold",
+											{opacity=220, offset=1},
+											{10, 8})
 
 				ic:AddLayer(slot)
 				ic:EnableMousePassthrough(slot)
@@ -279,13 +279,13 @@ local function TraitorMenuPopup()
 
 		-- If we cannot order this item, darken it
 		if ((not can_order) or
-			 -- already owned
-			 table.HasValue(owned_ids, item.id) or
-			 (tonumber(item.id) and ply:HasEquipmentItem(tonumber(item.id))) or
-			 -- already carrying a weapon for this slot
-			 (ItemIsWeapon(item) and (not CanCarryWeapon(item))) or
-			 -- already bought the item before
-			 (item.limited and ply:HasBought(tostring(item.id)))) then
+			-- already owned
+			table.HasValue(owned_ids, item.id) or
+			(tonumber(item.id) and ply:HasEquipmentItem(tonumber(item.id))) or
+			-- already carrying a weapon for this slot
+			(ItemIsWeapon(item) and (not CanCarryWeapon(item))) or
+			-- already bought the item before
+			(item.limited and ply:HasBought(tostring(item.id)))) then
 
 			ic:SetIconColor(color_darkened)
 		end
@@ -373,45 +373,45 @@ local function TraitorMenuPopup()
 
 	-- couple panelselect with info
 	dlist.OnActivePanelChanged = function(self, _, new)
-											  for k,v in pairs(new.item) do
-											     if dfields[k] then
-											        dfields[k]:SetText(SafeTranslate(v))
-											        dfields[k]:SizeToContents()
-											     end
-											  end
+		for k,v in pairs(new.item) do
+		if dfields[k] then
+		dfields[k]:SetText(SafeTranslate(v))
+		dfields[k]:SizeToContents()
+		end
+		end
 
-											  -- Trying to force everything to update to
-											  -- the right size is a giant pain, so just
-											  -- force a good size.
-											  dfields.desc:SetTall(70)
+		-- Trying to force everything to update to
+		-- the right size is a giant pain, so just
+		-- force a good size.
+		dfields.desc:SetTall(70)
 
-											  can_order = update_preqs(new.item)
+		can_order = update_preqs(new.item)
 
-											  dconfirm:SetDisabled(not can_order)
-										  end
+		dconfirm:SetDisabled(not can_order)
+	end
 
 	-- select first
 	dlist:SelectPanel(to_select or dlist:GetItems()[1])
 
 	-- prep confirm action
 	dconfirm.DoClick = function()
-								 local pnl = dlist.SelectedPanel
-								 if not pnl or not pnl.item then return end
-								 local choice = pnl.item
-								 RunConsoleCommand("ttt_order_equipment", choice.id)
-								 dframe:Close()
-							 end
+		local pnl = dlist.SelectedPanel
+		if not pnl or not pnl.item then return end
+		local choice = pnl.item
+		RunConsoleCommand("ttt_order_equipment", choice.id)
+		dframe:Close()
+	end
 
 	-- update some basic info, may have changed in another tab
 	-- specifically the number of credits in the preq list
 	dsheet.OnTabChanged = function(s, old, new)
-									 if not IsValid(new) then return end
+		if not IsValid(new) then return end
 
-									 if new:GetPanel() == dequip then
-										 can_order = update_preqs(dlist.SelectedPanel.item)
-										 dconfirm:SetDisabled(not can_order)
-									 end
-								 end
+		if new:GetPanel() == dequip then
+			can_order = update_preqs(dlist.SelectedPanel.item)
+			dconfirm:SetDisabled(not can_order)
+		end
+	end
 
 	local dcancel = vgui.Create("DButton", dframe)
 	dcancel:SetPos(w - 13 - bw, h - bh - 16)

@@ -132,8 +132,8 @@ function HELPSCRN:Show()
 	end
 	-- Why is DComboBox not updating the cvar by default?
 	dlang.OnSelect = function(idx, val, data)
-							  RunConsoleCommand("ttt_language", data)
-						  end
+							RunConsoleCommand("ttt_language", data)
+						end
 	dlang.Think = dlang.ConVarStringThink
 
 	dlanguage:Help(GetTranslation("set_lang"))
@@ -209,8 +209,8 @@ function HELPSCRN:CreateTutorial(parent)
 
 	-- fixing your panels...
 	bar.UpdateText = function(s)
-							  s.Label:SetText(Format("%i / %i", s.m_iValue, s.m_iMax))
-						  end
+							s.Label:SetText(Format("%i / %i", s.m_iValue, s.m_iMax))
+						end
 
 	bar:UpdateText()
 
@@ -230,18 +230,18 @@ function HELPSCRN:CreateTutorial(parent)
 	bprev:AlignLeft()
 
 	bnext.DoClick = function()
-							 if tut.current < tutorial_pages then
-								 tut.current = tut.current + 1
-								 tut:SetImage(Format(imgpath, tut.current))
-								 bar:SetValue(tut.current)
-							 end
-						 end
+							if tut.current < tutorial_pages then
+								tut.current = tut.current + 1
+								tut:SetImage(Format(imgpath, tut.current))
+								bar:SetValue(tut.current)
+							end
+						end
 
 	bprev.DoClick = function()
-							 if tut.current > 1 then
-								 tut.current = tut.current - 1
-								 tut:SetImage(Format(imgpath, tut.current))
-								 bar:SetValue(tut.current)
-							 end
-						 end
+							if tut.current > 1 then
+								tut.current = tut.current - 1
+								tut:SetImage(Format(imgpath, tut.current))
+								bar:SetValue(tut.current)
+							end
+						end
 end

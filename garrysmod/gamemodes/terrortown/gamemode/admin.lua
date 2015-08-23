@@ -3,12 +3,12 @@
 local function GetPrintFn(ply)
 	if IsValid(ply) then
 		return function(...)
-					 local t = ""
-					 for _, a in ipairs({...}) do
-						 t = t .. "\t" .. a
-					 end
-					 ply:PrintMessage(HUD_PRINTCONSOLE, t)
-				 end
+			local t = ""
+			for _, a in ipairs({...}) do
+				t = t .. "\t" .. a
+			end
+			ply:PrintMessage(HUD_PRINTCONSOLE, t)
+		end
 	else
 		return print
 	end

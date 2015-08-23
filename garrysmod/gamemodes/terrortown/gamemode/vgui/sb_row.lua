@@ -145,10 +145,10 @@ function PANEL:SetPlayer(ply)
 	end
 
 	self.voice.DoClick = function()
-									if IsValid(ply) and ply != LocalPlayer() then
-										ply:SetMuted(not ply:IsMuted())
-									end
-								end
+		if IsValid(ply) and ply != LocalPlayer() then
+			ply:SetMuted(not ply:IsMuted())
+		end
+	end
 
 	self:UpdatePlayerData()
 end
@@ -160,8 +160,8 @@ function PANEL:UpdatePlayerData()
 
 	local ply = self.Player
 	for i=1,#self.cols do
-		 -- Set text from function, passing the label along so stuff like text
-		 -- color can be changed
+		-- Set text from function, passing the label along so stuff like text
+		-- color can be changed
 		self.cols[i]:SetText( self.cols[i].GetPlayerText(ply, self.cols[i]) )
 	end
 

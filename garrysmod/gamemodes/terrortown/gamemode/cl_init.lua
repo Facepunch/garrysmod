@@ -2,15 +2,15 @@ include("shared.lua")
 
 -- Define GM12 fonts for compatibility
 surface.CreateFont("DefaultBold", {font = "Tahoma",
-											  size = 13,
-											  weight = 1000})
+											size = 13,
+											weight = 1000})
 surface.CreateFont("TabLarge",    {font = "Tahoma",
-											  size = 13,
-											  weight = 700,
-											  shadow = true, antialias = false})
+											size = 13,
+											weight = 700,
+											shadow = true, antialias = false})
 surface.CreateFont("Trebuchet22", {font = "Trebuchet MS",
-											  size = 22,
-											  weight = 900})
+											size = 22,
+											weight = 900})
 
 include("scoring_shd.lua")
 include("corpse_shd.lua")

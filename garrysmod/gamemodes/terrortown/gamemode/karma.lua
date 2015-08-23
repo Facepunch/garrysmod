@@ -14,18 +14,18 @@ KARMA.cv.max         = CreateConVar("ttt_karma_max", "1000")
 KARMA.cv.ratio       = CreateConVar("ttt_karma_ratio", "0.001")
 KARMA.cv.killpenalty = CreateConVar("ttt_karma_kill_penalty", "15")
 KARMA.cv.roundheal   = CreateConVar("ttt_karma_round_increment", "5")
-KARMA.cv.clean  = CreateConVar("ttt_karma_clean_bonus", "30")
-KARMA.cv.tbonus = CreateConVar("ttt_karma_traitorkill_bonus", "40")
-KARMA.cv.tratio = CreateConVar("ttt_karma_traitordmg_ratio", "0.0003")
-KARMA.cv.debug  = CreateConVar("ttt_karma_debugspam", "0")
+KARMA.cv.clean       = CreateConVar("ttt_karma_clean_bonus", "30")
+KARMA.cv.tbonus      = CreateConVar("ttt_karma_traitorkill_bonus", "40")
+KARMA.cv.tratio      = CreateConVar("ttt_karma_traitordmg_ratio", "0.0003")
+KARMA.cv.debug       = CreateConVar("ttt_karma_debugspam", "0")
 
-KARMA.cv.persist = CreateConVar("ttt_karma_persist", "0")
-KARMA.cv.falloff = CreateConVar("ttt_karma_clean_half", "0.25")
+KARMA.cv.persist     = CreateConVar("ttt_karma_persist", "0")
+KARMA.cv.falloff     = CreateConVar("ttt_karma_clean_half", "0.25")
 
-KARMA.cv.autokick  = CreateConVar("ttt_karma_low_autokick", "1")
-KARMA.cv.kicklevel = CreateConVar("ttt_karma_low_amount", "450")
-KARMA.cv.autoban   = CreateConVar("ttt_karma_low_ban", "1")
-KARMA.cv.bantime   = CreateConVar("ttt_karma_low_ban_minutes", "60")
+KARMA.cv.autokick    = CreateConVar("ttt_karma_low_autokick", "1")
+KARMA.cv.kicklevel   = CreateConVar("ttt_karma_low_amount", "450")
+KARMA.cv.autoban     = CreateConVar("ttt_karma_low_ban", "1")
+KARMA.cv.bantime     = CreateConVar("ttt_karma_low_ban_minutes", "60")
 
 local config = KARMA.cv
 
@@ -357,8 +357,8 @@ end
 function KARMA.PrintAll(printfn)
 	for _, ply in pairs(player.GetAll()) do
 		printfn(Format("%s : Live = %f -- Base = %f -- Dmg = %f\n",
-							ply:Nick(),
-							ply:GetLiveKarma(), ply:GetBaseKarma(),
-							ply:GetDamageFactor() * 100))
+						ply:Nick(),
+						ply:GetLiveKarma(), ply:GetBaseKarma(),
+						ply:GetDamageFactor() * 100))
 	end
 end

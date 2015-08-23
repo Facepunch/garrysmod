@@ -144,8 +144,7 @@ function util.StartBleeding(ent, dmg, t)
 		delay = delay / 2
 	end
 
-	timer.Create("bleed" .. ent:EntIndex(), delay, times,
-					 function() DoBleed(ent) end)
+	timer.Create("bleed" .. ent:EntIndex(), delay, times, function() DoBleed(ent) end)
 end
 
 local zapsound = Sound("npc/assassin/ball_zap1.wav")

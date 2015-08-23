@@ -127,9 +127,12 @@ end
 
 ---- Crosshair affairs
 
-surface.CreateFont("TargetIDSmall2", {font = "TargetID",
-											     size = 16,
-											     weight = 1000})
+surface.CreateFont("TargetIDSmall2",
+{
+	font = "TargetID",
+	size = 16,
+	weight = 1000
+})
 
 local minimalist = CreateConVar("ttt_minimal_targetid", "0", FCVAR_ARCHIVE)
 

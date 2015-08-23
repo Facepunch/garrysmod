@@ -231,21 +231,21 @@ end
 -- newly selected panel
 local function SearchInfoController(search, dactive, dtext)
 	return function(s, pold, pnew)
-				 local t = pnew.info_type
-				 local data = search[t]
-				 if not data then
-					 ErrorNoHalt("Search: data not found", t, data,"\n")
-					 return
-				 end
+		local t = pnew.info_type
+		local data = search[t]
+		if not data then
+			ErrorNoHalt("Search: data not found", t, data,"\n")
+			return
+		end
 
-				 -- If wrapping is on, the Label's SizeToContentsY misbehaves for
-				 -- text that does not need wrapping. I long ago stopped wondering
-				 -- "why" when it comes to VGUI. Apply hack, move on.
-				 dtext:GetLabel():SetWrap(#data.text > 50)
+		-- If wrapping is on, the Label's SizeToContentsY misbehaves for
+		-- text that does not need wrapping. I long ago stopped wondering
+		-- "why" when it comes to VGUI. Apply hack, move on.
+		dtext:GetLabel():SetWrap(#data.text > 50)
 
-				 dtext:SetText(data.text)
-				 dactive:SetImage(data.img)
-			 end
+		dtext:SetText(data.text)
+		dactive:SetImage(data.img)
+	end
 end
 
 local function ShowSearchScreen(search_raw)
@@ -341,12 +341,12 @@ local function ShowSearchScreen(search_raw)
 	dcall:SetSize(bw, bh)
 	dcall:SetText(T("search_call"))
 	dcall.DoClick = function(s)
-							 client.called_corpses = client.called_corpses or {}
-							 table.insert(client.called_corpses, search_raw.eidx)
-							 s:SetDisabled(true)
+		client.called_corpses = client.called_corpses or {}
+		table.insert(client.called_corpses, search_raw.eidx)
+		s:SetDisabled(true)
 
-							 RunConsoleCommand("ttt_call_detective", search_raw.eidx)
-						 end
+		RunConsoleCommand("ttt_call_detective", search_raw.eidx)
+	end
 
 	dcall:SetDisabled(client:IsSpec() or table.HasValue(client.called_corpses or {}, search_raw.eidx))
 

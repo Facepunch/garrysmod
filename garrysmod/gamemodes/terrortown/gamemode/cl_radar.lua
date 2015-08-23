@@ -250,8 +250,7 @@ local function ReceiveRadarScan()
 	RADAR.enable = true
 	RADAR.endtime = CurTime() + RADAR.duration
 
-	timer.Create("radartimeout", RADAR.duration + 1, 1,
-					 function() RADAR:Timeout() end)
+	timer.Create("radartimeout", RADAR.duration + 1, 1, function() RADAR:Timeout() end)
 end
 net.Receive("TTT_Radar", ReceiveRadarScan)
 
@@ -276,10 +275,10 @@ function RADAR.CreateMenu(parent, frame)
 	dscan:SetSize(bw, bh)
 	dscan:SetText(GetTranslation("radar_scan"))
 	dscan.DoClick = function(s)
-							 s:SetDisabled(true)
-							 RunConsoleCommand("ttt_radar_scan")
-							 frame:Close()
-						 end
+		s:SetDisabled(true)
+		RunConsoleCommand("ttt_radar_scan")
+		frame:Close()
+	end
 	dform:AddItem(dscan)
 
 	local dlabel = vgui.Create("DLabel", dform)
@@ -298,15 +297,14 @@ function RADAR.CreateMenu(parent, frame)
 	dform:AddItem(dcheck)
 
 	dform.Think = function(s)
-						  if RADAR.enable or not owned then
-							  dscan:SetDisabled(true)
-						  else
-							  dscan:SetDisabled(false)
-						  end
-					  end
+		if RADAR.enable or not owned then
+			dscan:SetDisabled(true)
+		else
+			dscan:SetDisabled(false)
+		end
+	end
 
 	dform:SetVisible(true)
 
 	return dform
 end
-

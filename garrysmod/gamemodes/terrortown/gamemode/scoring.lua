@@ -203,9 +203,9 @@ end
 local function SortEvents(events)
 	-- sort events on time
 	table.sort(events, function(a,b)
-								 if not b or not a then return false end
-								 return a.t and b.t and a.t < b.t
-							 end)
+		 if not b or not a then return false end
+		 return a.t and b.t and a.t < b.t
+	 end)
 	return events
 end
 

@@ -14,11 +14,11 @@ local function LastWordsRecv()
 	local nick = IsValid(sender) and sender:Nick() or "<Unknown>"
 
 	chat.AddText(Color( 150, 150, 150 ),
-					 Format("(%s) ", string.upper(GetTranslation("last_words"))),
-					 was_detective and Color(50, 200, 255) or Color(0, 200, 0),
-					 nick,
-					 COLOR_WHITE,
-					 ": " .. words)
+				 Format("(%s) ", string.upper(GetTranslation("last_words"))),
+				 was_detective and Color(50, 200, 255) or Color(0, 200, 0),
+				 nick,
+				 COLOR_WHITE,
+				 ": " .. words)
 end
 net.Receive("TTT_LastWordsMsg", LastWordsRecv)
 
@@ -32,19 +32,19 @@ local function RoleChatRecv()
 
 	if role == ROLE_TRAITOR then
 		chat.AddText(Color( 255, 30, 40 ),
-						 Format("(%s) ", string.upper(GetTranslation("traitor"))),
-						 Color( 255, 200, 20),
-						 sender:Nick(),
-						 Color( 255, 255, 200),
-						 ": " .. text)
+					 Format("(%s) ", string.upper(GetTranslation("traitor"))),
+					 Color( 255, 200, 20),
+					 sender:Nick(),
+					 Color( 255, 255, 200),
+					 ": " .. text)
 
 	elseif role == ROLE_DETECTIVE then
 		chat.AddText(Color( 20, 100, 255 ),
-						 Format("(%s) ", string.upper(GetTranslation("detective"))),
-						 Color( 25, 200, 255),
-						 sender:Nick(),
-						 Color( 200, 255, 255),
-						 ": " .. text)
+					 Format("(%s) ", string.upper(GetTranslation("detective"))),
+					 Color( 25, 200, 255),
+					 sender:Nick(),
+					 Color( 200, 255, 255),
+					 ": " .. text)
 	end
 end
 net.Receive("TTT_RoleChat", RoleChatRecv)
@@ -75,9 +75,9 @@ end
 -- Detectives have a blue name, in both chat and radio messages
 local function AddDetectiveText(ply, text)
 	chat.AddText(Color(50, 200, 255),
-					 ply:Nick(),
-					 Color(255,255,255),
-					 ": " .. text)
+				 ply:Nick(),
+				 Color(255,255,255),
+				 ": " .. text)
 end
 
 function GM:OnPlayerChat(ply, text, teamchat, dead)
@@ -175,15 +175,15 @@ function RADIO:ShowRadioCommands(state)
 
 			-- ASS
 			radioframe.ForceResize = function(s)
-											    local w, label = 0, nil
-											    for k,v in pairs(s.Items) do
-											       label = v:GetChild(0)
-											       if label:GetWide() > w then
-											          w = label:GetWide()
-											       end
-											    end
-											    s:SetWide(w + 20)
-											 end
+				local w, label = 0, nil
+				for k,v in pairs(s.Items) do
+					label = v:GetChild(0)
+					if label:GetWide() > w then
+						w = label:GetWide()
+					end
+				end
+				s:SetWide(w + 20)
+			end
 
 			for key, command in pairs(self.Commands) do
 				local dlabel = vgui.Create("DLabel", radioframe)
@@ -205,20 +205,20 @@ function RADIO:ShowRadioCommands(state)
 					dlabel.id = id
 					dlabel.txt = GetTranslation(command.text)
 					dlabel.Think = function(s)
-											local tgt, v = RADIO:GetTarget()
-											if s.target != tgt then
-											   s.target = tgt
+						local tgt, v = RADIO:GetTarget()
+						if s.target != tgt then
+							s.target = tgt
 
-											   tgt = string.Interp(s.txt, {player = RADIO.ToPrintable(tgt)})
-											   if v then
-											      tgt = util.Capitalize(tgt)
-											   end
+							tgt = string.Interp(s.txt, {player = RADIO.ToPrintable(tgt)})
+							if v then
+								tgt = util.Capitalize(tgt)
+							end
 
-											   s:SetText(s.id .. tgt)
-											   s:SizeToContents()
-											   radioframe:ForceResize()
-											end
-										end
+							s:SetText(s.id .. tgt)
+							s:SizeToContents()
+							radioframe:ForceResize()
+						end
+					end
 				end
 
 				radioframe:AddItem(dlabel)
@@ -236,8 +236,7 @@ function RADIO:ShowRadioCommands(state)
 		-- capture slot keys while we're open
 		self.Show = true
 
-		timer.Create("radiocmdshow", 3, 1,
-						 function() RADIO:ShowRadioCommands(false) end)
+		timer.Create("radiocmdshow", 3, 1, function() RADIO:ShowRadioCommands(false) end)
 	end
 end
 
@@ -399,8 +398,8 @@ local function RadioMsgRecv()
 		AddDetectiveText(sender, text)
 	else
 		chat.AddText(sender,
-						 COLOR_WHITE,
-						 ": " .. text)
+					 COLOR_WHITE,
+					 ": " .. text)
 	end
 end
 net.Receive("TTT_RadioMsg", RadioMsgRecv)
@@ -475,16 +474,16 @@ function GM:PlayerStartVoice( ply )
 
 	local oldThink = pnl.Think
 	pnl.Think = function( self )
-						oldThink( self )
-						VoiceNotifyThink( self )
-					end
+		oldThink( self )
+		VoiceNotifyThink( self )
+	end
 
 	local shade = Color(0, 0, 0, 150)
 	pnl.Paint = function(s, w, h)
-						if not IsValid(s.ply) then return end
-						draw.RoundedBox(4, 0, 0, w, h, s.Color)
-						draw.RoundedBox(4, 1, 1, w-2, h-2, shade)
-					end
+		if not IsValid(s.ply) then return end
+		draw.RoundedBox(4, 0, 0, w, h, s.Color)
+		draw.RoundedBox(4, 1, 1, w-2, h-2, shade)
+	end
 
 	if client:IsActiveTraitor() then
 		if ply == client then
@@ -555,20 +554,20 @@ function GM:PlayerEndVoice(ply, no_reset)
 end
 
 local function CreateVoiceVGUI()
-	 g_VoicePanelList = vgui.Create( "DPanel" )
+	g_VoicePanelList = vgui.Create( "DPanel" )
 
-	 g_VoicePanelList:ParentToHUD()
-	 g_VoicePanelList:SetPos(25, 25)
-	 g_VoicePanelList:SetSize(200, ScrH() - 200)
-	 g_VoicePanelList:SetDrawBackground(false)
+	g_VoicePanelList:ParentToHUD()
+	g_VoicePanelList:SetPos(25, 25)
+	g_VoicePanelList:SetSize(200, ScrH() - 200)
+	g_VoicePanelList:SetDrawBackground(false)
 
-	 MutedState = vgui.Create("DLabel")
-	 MutedState:SetPos(ScrW() - 200, ScrH() - 50)
-	 MutedState:SetSize(200, 50)
-	 MutedState:SetFont("Trebuchet18")
-	 MutedState:SetText("")
-	 MutedState:SetTextColor(Color(240, 240, 240, 250))
-	 MutedState:SetVisible(false)
+	MutedState = vgui.Create("DLabel")
+	MutedState:SetPos(ScrW() - 200, ScrH() - 50)
+	MutedState:SetSize(200, 50)
+	MutedState:SetFont("Trebuchet18")
+	MutedState:SetText("")
+	MutedState:SetTextColor(Color(240, 240, 240, 250))
+	MutedState:SetVisible(false)
 end
 hook.Add( "InitPostEntity", "CreateVoiceVGUI", CreateVoiceVGUI )
 

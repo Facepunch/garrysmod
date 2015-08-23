@@ -580,39 +580,39 @@ function SpawnWillingPlayers(dead_only)
 		end
 
 		local sfn = function()
-							local c = 0
-							-- fill the available spawnpoints with players that need
-							-- spawning
-							while c < num_spawns and #to_spawn > 0 do
-								for k, ply in pairs(to_spawn) do
-									if IsValid(ply) then
-										if ply:SpawnForRound() then
-											-- a spawn ent is now occupied
-											c = c + 1
-										end
-									end
-									-- Few possible cases:
-									-- 1) player has now been spawned
-									-- 2) player should remain spectator after all
-									-- 3) player has disconnected
-									-- In all cases we don't need to spawn them again.
-									table.remove(to_spawn, k)
-
-									-- all spawn ents are occupied, so the rest will have
-									-- to wait for next wave
-									if c >= num_spawns then
-										break
-									end
-								end
-							end
-
-							MsgN("Spawned " .. c .. " players in spawn wave.")
-
-							if #to_spawn == 0 then
-								timer.Destroy("spawnwave")
-								MsgN("Spawn waves ending, all players spawned.")
-							end
+			local c = 0
+			-- fill the available spawnpoints with players that need
+			-- spawning
+			while c < num_spawns and #to_spawn > 0 do
+				for k, ply in pairs(to_spawn) do
+					if IsValid(ply) then
+						if ply:SpawnForRound() then
+							-- a spawn ent is now occupied
+							c = c + 1
 						end
+					end
+					-- Few possible cases:
+					-- 1) player has now been spawned
+					-- 2) player should remain spectator after all
+					-- 3) player has disconnected
+					-- In all cases we don't need to spawn them again.
+					table.remove(to_spawn, k)
+
+					-- all spawn ents are occupied, so the rest will have
+					-- to wait for next wave
+					if c >= num_spawns then
+						break
+					end
+				end
+			end
+
+			MsgN("Spawned " .. c .. " players in spawn wave.")
+
+			if #to_spawn == 0 then
+				timer.Destroy("spawnwave")
+				MsgN("Spawn waves ending, all players spawned.")
+			end
+		end
 
 		MsgN("Spawn waves starting.")
 		timer.Create("spawnwave", wave_delay, 0, sfn)
@@ -748,9 +748,12 @@ function CheckForMapSwitch()
 		timer.Stop("end2prep")
 		timer.Simple(15, game.LoadNextMap)
 	elseif ShouldMapSwitch() then
-		LANG.Msg("limit_left", {num = rounds_left,
-										time = math.ceil(time_left / 60),
-										mapname = nextmap})
+		LANG.Msg("limit_left",
+		{
+			num = rounds_left,
+			time = math.ceil(time_left / 60),
+			mapname = nextmap
+		})
 	end
 end
 
@@ -941,9 +944,8 @@ function SelectRoles()
 
 		-- we are less likely to be a detective unless we were innocent last round
 		if (IsValid(pply) and
-			 ((pply:GetBaseKarma() > min_karma and
-			  table.HasValue(prev_roles[ROLE_INNOCENT], pply)) or
-			  math.random(1,3) == 2)) then
+			((pply:GetBaseKarma() > min_karma and table.HasValue(prev_roles[ROLE_INNOCENT], pply)) or
+			math.random(1,3) == 2)) then
 
 			-- if a player has specified he does not want to be detective, we skip
 			-- him here (he might still get it if we don't have enough

@@ -22,11 +22,11 @@ function CreateTransferMenu(parent)
 
 	local dpick = vgui.Create("DComboBox", dform)
 	dpick.OnSelect = function(s, idx, val, data)
-							  if data then
-								  selected_uid = data
-								  dsubmit:SetDisabled(false)
-							  end
-						  end
+		  if data then
+			  selected_uid = data
+			  dsubmit:SetDisabled(false)
+		  end
+	  end
 
 	dpick:SetWide(250)
 
@@ -42,16 +42,16 @@ function CreateTransferMenu(parent)
 	if dpick:GetOptionText(1) then dpick:ChooseOptionID(1) end
 
 	dsubmit.DoClick = function(s)
-								if selected_uid then
-									RunConsoleCommand("ttt_transfer_credits", tostring(selected_uid) or "-1", "1")
-								end
-							end
+		if selected_uid then
+			RunConsoleCommand("ttt_transfer_credits", tostring(selected_uid) or "-1", "1")
+		end
+	end
 
 	dsubmit.Think = function(s)
-							 if LocalPlayer():GetCredits() < 1 then
-								 s:SetDisabled(true)
-							 end
-						 end
+		 if LocalPlayer():GetCredits() < 1 then
+			 s:SetDisabled(true)
+		 end
+	 end
 
 	dform:AddItem(dpick)
 	dform:AddItem(dsubmit)

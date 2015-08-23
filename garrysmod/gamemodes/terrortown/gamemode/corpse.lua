@@ -61,9 +61,12 @@ local function IdentifyBody(ply, rag)
 			roletext = "body_found_i"
 		end
 
-		LANG.Msg("body_found", {finder = finder,
-										victim = nick,
-										role = LANG.Param(roletext)})
+		LANG.Msg("body_found",
+		{
+			finder = finder,
+			victim = nick,
+			role = LANG.Param(roletext)
+		})
 	end
 
 	-- Register find
@@ -150,8 +153,11 @@ local function CallDetective(ply, cmd, args)
 				net.WriteVector(rag:GetPos())
 			net.Send(GetDetectiveFilter(true))
 
-			LANG.Msg("body_call", {player = ply:Nick(),
-										  victim = CORPSE.GetPlayerNick(rag, "someone")})
+			LANG.Msg("body_call",
+			{
+				player = ply:Nick(),
+				victim = CORPSE.GetPlayerNick(rag, "someone")
+			})
 
 		else
 			LANG.Msg(ply, "body_call_error")

@@ -20,10 +20,13 @@ CLSCORE.EventDisplay = {}
 
 local skull_icon = Material("HUD/killicons/default")
 
-surface.CreateFont("WinHuge", {font = "Trebuchet24",
-										 size = 72,
-										 weight = 1000,
-										 shadow = true})
+surface.CreateFont("WinHuge",
+{
+	font = "Trebuchet24",
+	size = 72,
+	weight = 1000,
+	shadow = true
+})
 
 -- so much text here I'm using shorter names than usual
 local T = LANG.GetTranslation
@@ -292,14 +295,14 @@ function CLSCORE:BuildHilitePanel(dpanel)
 	winlbl:SetPos(xwin, ywin)
 
 	bg.PaintOver = function()
-							draw.RoundedBox(8, xwin - 15, ywin - 5, winlbl:GetWide() + 30, winlbl:GetTall() + 10, title.c)
-						end
+		draw.RoundedBox(8, xwin - 15, ywin - 5, winlbl:GetWide() + 30, winlbl:GetTall() + 10, title.c)
+	end
 
 	local ysubwin = ywin + winlbl:GetTall()
 	local partlbl = vgui.Create("DLabel", dpanel)
 
 	local plytxt = PT(numtr == 1 and "hilite_players2" or "hilite_players1",
-							{numplayers = numply, numtraitors = numtr})
+					  {numplayers = numply, numtraitors = numtr})
 
 	partlbl:SetText(plytxt)
 	partlbl:SizeToContents()

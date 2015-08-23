@@ -284,10 +284,10 @@ local function DropActiveAmmo(ply)
 	box.AmmoAmount = amt
 
 	timer.Simple(2, function()
-							 if IsValid(box) then
-								 box:SetOwner(nil)
-							 end
-						 end)
+		if IsValid(box) then
+			box:SetOwner(nil)
+		end
+	end)
 end
 concommand.Add("ttt_dropammo", DropActiveAmmo)
 
@@ -405,18 +405,17 @@ local function OrderEquipment(ply, cmd, args)
 
 		ply:AddBought(id)
 
-		timer.Simple(0.5,
-						 function()
-							 if not IsValid(ply) then return end
-							 net.Start("TTT_BoughtItem")
-							 net.WriteBit(is_item)
-							 if is_item then
-								 net.WriteUInt(id, 16)
-							 else
-								 net.WriteString(id)
-							 end
-							 net.Send(ply)
-						 end)
+		timer.Simple(0.5, function()
+			if not IsValid(ply) then return end
+			net.Start("TTT_BoughtItem")
+			net.WriteBit(is_item)
+			if is_item then
+				net.WriteUInt(id, 16)
+			else
+				net.WriteString(id)
+			end
+			net.Send(ply)
+		end)
 
 		hook.Call("TTTOrderedEquipment", GAMEMODE, ply, id, is_item)
 	end
