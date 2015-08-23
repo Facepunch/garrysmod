@@ -5,11 +5,11 @@ SWEP.HoldType = "ar2"
 
 if CLIENT then
 
-   SWEP.PrintName = "MAC10"
-   SWEP.Slot = 2
+	SWEP.PrintName = "MAC10"
+	SWEP.Slot = 2
 
-   SWEP.Icon = "vgui/ttt/icon_mac"
-   SWEP.IconLetter = "l"
+	SWEP.Icon = "vgui/ttt/icon_mac"
+	SWEP.IconLetter = "l"
 end
 
 
@@ -45,12 +45,12 @@ SWEP.IronSightsAng = Vector(0.699, -5.301, -7)
 SWEP.DeploySpeed = 3
 
 function SWEP:GetHeadshotMultiplier(victim, dmginfo)
-   local att = dmginfo:GetAttacker()
-   if not IsValid(att) then return 2 end
+	local att = dmginfo:GetAttacker()
+	if not IsValid(att) then return 2 end
 
-   local dist = victim:GetPos():Distance(att:GetPos())
-   local d = math.max(0, dist - 150)
+	local dist = victim:GetPos():Distance(att:GetPos())
+	local d = math.max(0, dist - 150)
 
-   -- decay from 3.2 to 1.7
-   return 1.7 + math.max(0, (1.5 - 0.002 * (d ^ 1.25)))
+	-- decay from 3.2 to 1.7
+	return 1.7 + math.max(0, (1.5 - 0.002 * (d ^ 1.25)))
 end

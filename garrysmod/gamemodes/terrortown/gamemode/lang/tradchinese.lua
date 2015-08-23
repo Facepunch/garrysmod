@@ -636,7 +636,7 @@ L.info_popup_traitor = [[
 你是位叛徒！和其他叛徒合作殺害其他所有人，以獲得勝利。
 但請小心，你的身份可能會暴露...
 你的同伴有:
-{traitorlist} 
+{traitorlist}
 
 按下{menukey}取得裝備！]]
 

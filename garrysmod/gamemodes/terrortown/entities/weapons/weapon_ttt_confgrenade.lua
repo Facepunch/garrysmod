@@ -5,12 +5,12 @@ SWEP.HoldType = "grenade"
 
 
 if CLIENT then
-   SWEP.PrintName = "Discombobulator"
-   SWEP.Slot = 3
-   SWEP.SlotPos	= 0
+	SWEP.PrintName = "Discombobulator"
+	SWEP.Slot = 3
+	SWEP.SlotPos	= 0
 
-   SWEP.Icon = "vgui/ttt/icon_nades"
-   SWEP.IconLetter = "h"
+	SWEP.Icon = "vgui/ttt/icon_nades"
+	SWEP.IconLetter = "h"
 end
 
 SWEP.Base				= "weapon_tttbasegrenade"
@@ -34,5 +34,5 @@ SWEP.Weight			= 5
 -- ent.
 
 function SWEP:GetGrenadeName()
-   return "ttt_confgrenade_proj"
+	return "ttt_confgrenade_proj"
 end
