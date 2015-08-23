@@ -11,8 +11,8 @@ ENT.Model = Model("models/items/357ammo.mdl")
 ENT.AutoSpawnable = true
 
 function ENT:Initialize()
-   -- Differentiate from rifle ammo
-   self:SetColor(Color(255, 100, 100, 255))
+	-- Differentiate from rifle ammo
+	self:SetColor(Color(255, 100, 100, 255))
 
-   return self.BaseClass.Initialize(self)
+	return self.BaseClass.Initialize(self)
 end

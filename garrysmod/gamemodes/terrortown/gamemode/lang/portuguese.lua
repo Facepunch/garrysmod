@@ -357,7 +357,7 @@ L.vis_help_pri    = "{primaryfire} solta o dispositivo ativo."
 L.vis_desc        = [[
 Dispositivo que analisa a cena do crime.
 
-Analisa o cadáver e mostra como a vítima foi morta, 
+Analisa o cadáver e mostra como a vítima foi morta,
 mas só se morreu de tiro de Shotgun.]]
 
 -- Decoy

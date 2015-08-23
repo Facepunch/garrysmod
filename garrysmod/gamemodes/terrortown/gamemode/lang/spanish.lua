@@ -387,9 +387,9 @@ fáciles de localizar con esto.]]
 -- Flare gun
 L.flare_name      = "Pistola de bengalas"
 L.flare_desc      = [[
-Puede usarse para quemar cadáveres y que 
-no puedan ser analizados. 
-Munición limitada. 
+Puede usarse para quemar cadáveres y que
+no puedan ser analizados.
+Munición limitada.
 
 Quemar un cuerpo produce un sonido
 que puede ser reconocible.]]
@@ -501,7 +501,7 @@ L.dna_menu_sample = "Muestra de ADN en {source}"
 L.dna_menu_remove = "Eliminar selección"
 L.dna_menu_help1  = "Has tomado estas muestras de ADN."
 L.dna_menu_help2  = [[
-Cuando está cargado, puedes escanear la 
+Cuando está cargado, puedes escanear la
 ubicación del jugador al que pertenece la
 muestra de ADN que hayas elegido. Cuanto
 mayor sea la distancia más energía gastará.]]

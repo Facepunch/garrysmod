@@ -4,36 +4,36 @@ AddCSLuaFile()
 SWEP.HoldType = "normal"
 
 if CLIENT then
-   SWEP.PrintName = "vis_name"
-   SWEP.Slot = 6
+	SWEP.PrintName = "vis_name"
+	SWEP.Slot = 6
 
-   SWEP.ViewModelFOV = 10
+	SWEP.ViewModelFOV = 10
 
-   SWEP.EquipMenuData = {
-      type = "item_weapon",
-      desc = "vis_desc"
-   };
+	SWEP.EquipMenuData = {
+		type = "item_weapon",
+		desc = "vis_desc"
+	};
 
-   SWEP.Icon = "vgui/ttt/icon_cse"
+	SWEP.Icon = "vgui/ttt/icon_cse"
 end
 
 SWEP.Base = "weapon_tttbase"
 
-SWEP.ViewModel  = Model("models/weapons/v_crowbar.mdl")
+SWEP.ViewModel = Model("models/weapons/v_crowbar.mdl")
 SWEP.WorldModel = Model("models/Items/battery.mdl")
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
-SWEP.Primary.ClipSize       = -1
-SWEP.Primary.DefaultClip    = -1
-SWEP.Primary.Automatic      = false
-SWEP.Primary.Ammo       = "none"
+SWEP.DrawCrosshair = false
+SWEP.ViewModelFlip = false
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = false
+SWEP.Primary.Ammo = "none"
 SWEP.Primary.Delay = 1.0
 
-SWEP.Secondary.ClipSize     = -1
-SWEP.Secondary.DefaultClip  = -1
-SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = true
+SWEP.Secondary.Ammo = "none"
 SWEP.Secondary.Delay = 0.2
 
 SWEP.Kind = WEAPON_EQUIP
@@ -47,88 +47,86 @@ SWEP.AllowDrop = false
 SWEP.DeathScanDelay = 15
 
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self:DropDevice()
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	self:DropDevice()
 end
 
 function SWEP:SecondaryAttack()
-   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
-   self:DropDevice()
+	self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
+	self:DropDevice()
 end
 
 function SWEP:DrawWorldModel()
 end
 
 function SWEP:OnDrop()
-   self:Remove()
+	self:Remove()
 end
 
 function SWEP:PreDrop(isdeath)
-   if isdeath then
-      local cse = self:DropDevice()
-      if IsValid(cse) then
-         cse:SetDetonateTimer(self.DeathScanDelay or 10)
-      end
-   end
+	if isdeath then
+		local cse = self:DropDevice()
+		if IsValid(cse) then
+			cse:SetDetonateTimer(self.DeathScanDelay or 10)
+		end
+	end
 end
 
 function SWEP:Reload()
-   return false
+	return false
 end
 
 function SWEP:OnRemove()
-   if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
-      RunConsoleCommand("lastinv")
-   end
+	if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
+		RunConsoleCommand("lastinv")
+	end
 end
 
-local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
+local throwsound = Sound("Weapon_SLAM.SatchelThrow")
 
 function SWEP:DropDevice()
-   local cse = nil
+	local cse = nil
 
-   if SERVER then
-      local ply = self.Owner
-      if not IsValid(ply) then return end
+	if SERVER then
+		local ply = self.Owner
+		if not IsValid(ply) then return end
 
-      if self.Planted then return end
+		if self.Planted then return end
 
-      local vsrc = ply:GetShootPos()
-      local vang = ply:GetAimVector()
-      local vvel = ply:GetVelocity()
-      
-      local vthrow = vvel + vang * 200
+		local vsrc = ply:GetShootPos()
+		local vang = ply:GetAimVector()
+		local vvel = ply:GetVelocity()
 
-      cse = ents.Create("ttt_cse_proj")
-      if IsValid(cse) then
-         cse:SetPos(vsrc + vang * 10)
-         cse:SetOwner(ply)
-         cse:SetThrower(ply)
-         cse:Spawn()
+		local vthrow = vvel + vang * 200
 
-         cse:PhysWake()
-         local phys = cse:GetPhysicsObject()
-         if IsValid(phys) then
-            phys:SetVelocity(vthrow)
-         end
+		cse = ents.Create("ttt_cse_proj")
+		if IsValid(cse) then
+			cse:SetPos(vsrc + vang * 10)
+			cse:SetOwner(ply)
+			cse:SetThrower(ply)
+			cse:Spawn()
 
-         self:Remove()
+			cse:PhysWake()
+			local phys = cse:GetPhysicsObject()
+			if IsValid(phys) then
+				phys:SetVelocity(vthrow)
+			end
 
-         self.Planted = true
-      end
-   end
+			self:Remove()
 
-   self:EmitSound(throwsound)
+			self.Planted = true
+		end
+	end
 
-   return cse
+	self:EmitSound(throwsound)
+
+	return cse
 end
 
 if CLIENT then
-   function SWEP:Initialize()
-      self:AddHUDHelp("vis_help_pri", nil, true)
+	function SWEP:Initialize()
+		self:AddHUDHelp("vis_help_pri", nil, true)
 
-      return self.BaseClass.Initialize(self)
-   end
+		return self.BaseClass.Initialize(self)
+	end
 end
-
-

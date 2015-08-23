@@ -351,8 +351,8 @@ L.vis_help_pri    = "{primaryfire} lässt das aktivierte Gerät fallen."
 L.vis_desc        = [[
 Tatort-Visualisierungs-Gerät.
 
-Analysiere eine Leiche um zu sehen, 
-wie die Leiche umgebracht wurde, aber nur, 
+Analysiere eine Leiche um zu sehen,
+wie die Leiche umgebracht wurde, aber nur,
 wenn sie erschossen wurde.]]
 
 -- Decoy
@@ -381,7 +381,7 @@ wenn du das bei dir trägst.]]
 -- Flare gun
 L.flare_name      = "Leuchtkanone"
 L.flare_desc      = [[
-Kann benutzt werden, um Leichen zu verbrennen, 
+Kann benutzt werden, um Leichen zu verbrennen,
 damit sie nie gefunden werden können. Begrenzte Munition.
 
 Das Verbrennen einer Leiche macht ein ganz bestimmtes
@@ -396,7 +396,7 @@ L.hstation_help   = "{primaryfire} platziert die Gesundheits Station."
 L.hstation_desc   = [[
 Ermöglicht bei Platzierung, dass sich Spieler heilen können.
 
-Langsame Wiederaufladung. Jeder kann sie nutzen und sie kann beschädigt werden. 
+Langsame Wiederaufladung. Jeder kann sie nutzen und sie kann beschädigt werden.
 Kann nach DNA Spuren ihrer Benutzer untersucht werden.]]
 
 -- Knife
