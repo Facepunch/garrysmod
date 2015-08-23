@@ -33,13 +33,13 @@ ENT.CanHavePrints = true
 ENT.CanUseKey = true
 ENT.Avoidable = true
 
-AccessorFunc( ENT, "thrower", "Thrower")
+AccessorFunc(ENT, "thrower", "Thrower")
 
-AccessorFunc( ENT, "radius", "Radius", FORCE_NUMBER )
-AccessorFunc( ENT, "dmg", "Dmg", FORCE_NUMBER )
+AccessorFunc(ENT, "radius", "Radius", FORCE_NUMBER)
+AccessorFunc(ENT, "dmg", "Dmg", FORCE_NUMBER)
 
-AccessorFunc( ENT, "arm_time", "ArmTime", FORCE_NUMBER)
-AccessorFunc( ENT, "timer_length", "TimerLength", FORCE_NUMBER)
+AccessorFunc(ENT, "arm_time", "ArmTime", FORCE_NUMBER)
+AccessorFunc(ENT, "timer_length", "TimerLength", FORCE_NUMBER)
 
 -- Generate accessors for DT vars. This way all consumer code can keep accessing
 -- the vars as they always did, the only difference is that behind the scenes
@@ -86,7 +86,7 @@ end
 
 function ENT:SetDetonateTimer(length)
 	self:SetTimerLength(length)
-	self:SetExplodeTime( CurTime() + length )
+	self:SetExplodeTime(CurTime() + length)
 end
 
 

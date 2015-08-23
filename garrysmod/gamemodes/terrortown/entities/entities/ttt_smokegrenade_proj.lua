@@ -6,7 +6,7 @@ ENT.Base = "ttt_basegrenade_proj"
 ENT.Model = Model("models/weapons/w_eq_smokegrenade_thrown.mdl")
 
 
-AccessorFunc( ENT, "radius", "Radius", FORCE_NUMBER )
+AccessorFunc(ENT, "radius", "Radius", FORCE_NUMBER)
 
 function ENT:Initialize()
 	if not self:GetRadius() then self:SetRadius(20) end

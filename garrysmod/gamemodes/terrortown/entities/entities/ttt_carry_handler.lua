@@ -18,9 +18,9 @@ function ENT:Initialize()
 --      self:SetSkin(self.Carried:GetSkin())
 --      self:SetColor(se.Carried:GetColor())
 	end
-	self:PhysicsInit( SOLID_VPHYSICS )
-	self:SetMoveType( MOVETYPE_VPHYSICS )
-	self:SetSolid( SOLID_VPHYSICS )
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
 	self:SetCollisionGroup(COLLISION_GROUP_NONE)
 --   self:SetSolid(SOLID_NONE)
 	self:SetNoDraw(true)
@@ -54,8 +54,8 @@ function ENT:Initialize()
 --         if not carphys:IsPenetrating() then
 --            phys:SetPos(carphys:GetPos())
 --            phys:SetAngle(carphys:GetAngle())
---            carphys:SetPos( phys:GetPos() )
---            carphys:SetAngle( phys:GetAngle() )
+--            carphys:SetPos(phys:GetPos())
+--            carphys:SetAngle(phys:GetAngle())
 --         end
 
 		end

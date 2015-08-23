@@ -238,16 +238,16 @@ function GM:HUDDrawTargetID()
 
 	y = y + 30
 	local font = "TargetID"
-	surface.SetFont( font )
+	surface.SetFont(font)
 
 	-- Draw main title, ie. nickname
 	if text then
-		w, h = surface.GetTextSize( text )
+		w, h = surface.GetTextSize(text)
 
 		x = x - w / 2
 
-		draw.SimpleText( text, font, x+1, y+1, COLOR_BLACK )
-		draw.SimpleText( text, font, x, y, color )
+		draw.SimpleText(text, font, x+1, y+1, COLOR_BLACK)
+		draw.SimpleText(text, font, x, y, color)
 
 		-- for ragdolls searched by detectives, add icon
 		if ent.search_result and client:IsDetective() then
@@ -279,15 +279,15 @@ function GM:HUDDrawTargetID()
 	end
 	font = "TargetIDSmall2"
 
-	surface.SetFont( font )
-	w, h = surface.GetTextSize( text )
+	surface.SetFont(font)
+	w, h = surface.GetTextSize(text)
 	x = x_orig - w / 2
 
-	draw.SimpleText( text, font, x+1, y+1, COLOR_BLACK )
-	draw.SimpleText( text, font, x, y, clr )
+	draw.SimpleText(text, font, x+1, y+1, COLOR_BLACK)
+	draw.SimpleText(text, font, x, y, clr)
 
 	font = "TargetIDSmall"
-	surface.SetFont( font )
+	surface.SetFont(font)
 
 	-- Draw second subtitle: karma
 	if ent:IsPlayer() and KARMA.IsEnabled() then
@@ -295,12 +295,12 @@ function GM:HUDDrawTargetID()
 
 		text = L[text]
 
-		w, h = surface.GetTextSize( text )
+		w, h = surface.GetTextSize(text)
 		y = y + h + 5
 		x = x_orig - w / 2
 
-		draw.SimpleText( text, font, x+1, y+1, COLOR_BLACK )
-		draw.SimpleText( text, font, x, y, clr )
+		draw.SimpleText(text, font, x+1, y+1, COLOR_BLACK)
+		draw.SimpleText(text, font, x, y, clr)
 	end
 
 	-- Draw key hint
@@ -314,8 +314,8 @@ function GM:HUDDrawTargetID()
 		w, h = surface.GetTextSize(text)
 		x = x_orig - w / 2
 		y = y + h + 5
-		draw.SimpleText( text, font, x+1, y+1, COLOR_BLACK )
-		draw.SimpleText( text, font, x, y, COLOR_LGRAY )
+		draw.SimpleText(text, font, x+1, y+1, COLOR_BLACK)
+		draw.SimpleText(text, font, x, y, COLOR_LGRAY)
 	end
 
 	text = nil
@@ -327,7 +327,7 @@ function GM:HUDDrawTargetID()
 		text = L.target_detective
 		clr = COLOR_BLUE
 	elseif ent.sb_tag and ent.sb_tag.txt != nil then
-		text = L[ ent.sb_tag.txt ]
+		text = L[ent.sb_tag.txt]
 		clr = ent.sb_tag.color
 	elseif target_corpse and client:IsActiveTraitor() and CORPSE.GetCredits(ent, 0) > 0 then
 		text = L.target_credits
@@ -335,11 +335,11 @@ function GM:HUDDrawTargetID()
 	end
 
 	if text then
-		w, h = surface.GetTextSize( text )
+		w, h = surface.GetTextSize(text)
 		x = x_orig - w / 2
 		y = y + h + 5
 
-		draw.SimpleText( text, font, x+1, y+1, COLOR_BLACK )
-		draw.SimpleText( text, font, x, y, clr )
+		draw.SimpleText(text, font, x+1, y+1, COLOR_BLACK)
+		draw.SimpleText(text, font, x, y, clr)
 	end
 end

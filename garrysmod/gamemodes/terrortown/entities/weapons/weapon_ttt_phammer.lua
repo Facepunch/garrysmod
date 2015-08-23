@@ -39,7 +39,7 @@ SWEP.UseHands = true
 SWEP.ViewModel = "models/weapons/c_irifle.mdl"
 SWEP.WorldModel = "models/weapons/w_IRifle.mdl"
 
-SWEP.Primary.Sound = Sound( "weapons/airboat/airboat_gun_energy1.wav" )
+SWEP.Primary.Sound = Sound("weapons/airboat/airboat_gun_energy1.wav")
 
 SWEP.NoSights = true
 
@@ -135,7 +135,7 @@ end
 function SWEP:SecondaryAttack()
 	if self.IsCharging then return end
 
-	self:SetNextSecondaryFire( CurTime() + 0.1 )
+	self:SetNextSecondaryFire(CurTime() + 0.1)
 
 	if not (self:CanPrimaryAttack() and (self:GetNextPrimaryFire() - CurTime()) <= 0) then return end
 
@@ -243,8 +243,8 @@ if SERVER then
 	end
 end
 
-local function around( val )
-	return math.Round( val * (10 ^ 3) ) / (10 ^ 3);
+local function around(val)
+	return math.Round(val * (10 ^ 3)) / (10 ^ 3);
 end
 
 if CLIENT then
@@ -369,7 +369,7 @@ if CLIENT then
 
 			surface.SetFont("TabLarge")
 			surface.SetTextColor(255, 255, 255, 180)
-			surface.SetTextPos( (x - w / 2) + 3, y - h - 15)
+			surface.SetTextPos((x - w / 2) + 3, y - h - 15)
 			surface.DrawText("CHARGE")
 		end
 	end

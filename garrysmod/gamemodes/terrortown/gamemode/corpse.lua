@@ -82,7 +82,7 @@ local function IdentifyBody(ply, rag)
 			end
 			SCORE:HandleBodyFound(ply, deadply)
 		end
-		hook.Call( "TTTBodyFound", GAMEMODE, ply, deadply, rag )
+		hook.Call("TTTBodyFound", GAMEMODE, ply, deadply, rag)
 		CORPSE.SetFound(rag, true)
 	else
 		-- re-set because nwvars are unreliable
@@ -249,14 +249,14 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
 	-- Send a message with basic info
 	net.Start("TTT_RagdollSearch")
 		net.WriteUInt(rag:EntIndex(), 16) -- 16 bits
-		net.WriteUInt(owner, 8) -- 128 max players. ( 8 bits )
+		net.WriteUInt(owner, 8) -- 128 max players. (8 bits)
 		net.WriteString(nick)
-		net.WriteUInt(eq, 16) -- Equipment ( 16 = max. )
-		net.WriteUInt(role, 2) -- ( 2 bits )
-		net.WriteInt(c4, bitsRequired(C4_WIRE_COUNT) + 1) -- -1 -> 2^bits ( default c4: 4 bits )
-		net.WriteUInt(dmg, 30) -- DMG_BUCKSHOT is the highest. ( 30 bits )
+		net.WriteUInt(eq, 16) -- Equipment (16 = max.)
+		net.WriteUInt(role, 2) -- (2 bits)
+		net.WriteInt(c4, bitsRequired(C4_WIRE_COUNT) + 1) -- -1 -> 2^bits (default c4: 4 bits)
+		net.WriteUInt(dmg, 30) -- DMG_BUCKSHOT is the highest. (30 bits)
 		net.WriteString(wep)
-		net.WriteBit(hshot) -- ( 1 bit )
+		net.WriteBit(hshot) -- (1 bit)
 		net.WriteInt(dtime, 16)
 		net.WriteInt(stime, 16)
 

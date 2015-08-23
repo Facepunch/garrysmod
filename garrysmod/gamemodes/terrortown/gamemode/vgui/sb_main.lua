@@ -70,7 +70,7 @@ end
 function ScoreGroup(p)
 	if not IsValid(p) then return -1 end -- will not match any group panel
 
-	local group = hook.Call( "TTTScoreGroup", nil, p )
+	local group = hook.Call("TTTScoreGroup", nil, p)
 
 	if group then -- If that hook gave us a group, use it
 		return group
@@ -103,8 +103,8 @@ function PANEL:Init()
 	self.hostdesc:SetText(GetTranslation("sb_playing"))
 	self.hostdesc:SetContentAlignment(9)
 
-	self.hostname = vgui.Create( "DLabel", self )
-	self.hostname:SetText( GetHostName() )
+	self.hostname = vgui.Create("DLabel", self)
+	self.hostname:SetText(GetHostName())
 	self.hostname:SetContentAlignment(6)
 
 	self.mapchange = vgui.Create("DLabel", self)
@@ -119,7 +119,7 @@ function PANEL:Init()
 	end
 
 
-	self.ply_frame = vgui.Create( "TTTPlayerFrame", self )
+	self.ply_frame = vgui.Create("TTTPlayerFrame", self)
 
 	self.ply_groups = {}
 
@@ -141,20 +141,20 @@ function PANEL:Init()
 		self.ply_groups[GROUP_FOUND] = t
 	end
 
-	hook.Call( "TTTScoreGroups", nil, self.ply_frame:GetCanvas(), self.ply_groups )
+	hook.Call("TTTScoreGroups", nil, self.ply_frame:GetCanvas(), self.ply_groups)
 
 	-- the various score column headers
 	self.cols = {}
-	self:AddColumn( GetTranslation("sb_ping") )
-	self:AddColumn( GetTranslation("sb_deaths") )
-	self:AddColumn( GetTranslation("sb_score") )
+	self:AddColumn(GetTranslation("sb_ping"))
+	self:AddColumn(GetTranslation("sb_deaths"))
+	self:AddColumn(GetTranslation("sb_score"))
 
 	if KARMA.IsEnabled() then
-		self:AddColumn( GetTranslation("sb_karma") )
+		self:AddColumn(GetTranslation("sb_karma"))
 	end
 
 	-- Let hooks add their column headers (via AddColumn())
-	hook.Call( "TTTScoreboardColumns", nil, self )
+	hook.Call("TTTScoreboardColumns", nil, self)
 
 	self:UpdateScoreboard()
 	self:StartUpdateTimer()
@@ -162,19 +162,19 @@ end
 
 -- For headings only the label parameter is relevant, func is included for
 -- parity with sb_row
-function PANEL:AddColumn( label, func, width )
-	local lbl = vgui.Create( "DLabel", self )
-	lbl:SetText( label )
+function PANEL:AddColumn(label, func, width)
+	local lbl = vgui.Create("DLabel", self)
+	lbl:SetText(label)
 	lbl.IsHeading = true
 	lbl.Width = width or 50 -- Retain compatibility with existing code
 
-	table.insert( self.cols, lbl )
+	table.insert(self.cols, lbl)
 	return lbl
 end
 
 function PANEL:StartUpdateTimer()
 	if not timer.Exists("TTTScoreboardUpdater") then
-		timer.Create( "TTTScoreboardUpdater", 0.3, 0, function()
+		timer.Create("TTTScoreboardUpdater", 0.3, 0, function()
 			local pnl = GAMEMODE:GetScoreboardPanel()
 			if IsValid(pnl) then
 				pnl:UpdateScoreboard()
@@ -192,15 +192,15 @@ local y_logo_off = 72
 
 function PANEL:Paint()
 	-- Logo sticks out, so always offset bg
-	draw.RoundedBox( 8, 0, y_logo_off, self:GetWide(), self:GetTall() - y_logo_off, colors.bg)
+	draw.RoundedBox(8, 0, y_logo_off, self:GetWide(), self:GetTall() - y_logo_off, colors.bg)
 
 	-- Server name is outlined by orange/gold area
-	draw.RoundedBox( 8, 0, y_logo_off + 25, self:GetWide(), 32, colors.bar)
+	draw.RoundedBox(8, 0, y_logo_off + 25, self:GetWide(), 32, colors.bar)
 
 	-- TTT Logo
-	surface.SetTexture( logo )
-	surface.SetDrawColor( 255, 255, 255, 255 )
-	surface.DrawTexturedRect( 5, 0, 256, 256 )
+	surface.SetTexture(logo)
+	surface.SetDrawColor(255, 255, 255, 255)
+	surface.DrawTexturedRect(5, 0, 256, 256)
 
 end
 
@@ -237,7 +237,7 @@ function PANEL:PerformLayout()
 	local w = math.max(ScrW() * 0.6, 640)
 
 	self:SetSize(w, h)
-	self:SetPos( (ScrW() - w) / 2, math.min(72, (ScrH() - h) / 4))
+	self:SetPos((ScrW() - w) / 2, math.min(72, (ScrH() - h) / 4))
 
 	self.ply_frame:SetPos(8, y_logo_off + 109)
 	self.ply_frame:SetSize(self:GetWide() - 16, self:GetTall() - 109 - y_logo_off - 5)
@@ -288,7 +288,7 @@ function PANEL:ApplySchemeSettings()
 	end
 end
 
-function PANEL:UpdateScoreboard( force )
+function PANEL:UpdateScoreboard(force)
 	if not force and not self:IsVisible() then return end
 
 	local layout = false
@@ -307,7 +307,7 @@ function PANEL:UpdateScoreboard( force )
 
 	for k, group in pairs(self.ply_groups) do
 		if IsValid(group) then
-			group:SetVisible( group:HasRows() )
+			group:SetVisible(group:HasRows())
 			group:UpdatePlayerData()
 		end
 	end
@@ -319,14 +319,14 @@ function PANEL:UpdateScoreboard( force )
 	end
 end
 
-vgui.Register( "TTTScoreboard", PANEL, "Panel" )
+vgui.Register("TTTScoreboard", PANEL, "Panel")
 
 ---- PlayerFrame is defined in sandbox and is basically a little scrolling
 ---- hack. Just putting it here (slightly modified) because it's tiny.
 
 local PANEL = {}
 function PANEL:Init()
-	self.pnlCanvas  = vgui.Create( "Panel", self )
+	self.pnlCanvas  = vgui.Create("Panel", self)
 	self.YOffset = 0
 
 	self.scroll = vgui.Create("DVScrollBar", self)
@@ -334,7 +334,7 @@ end
 
 function PANEL:GetCanvas() return self.pnlCanvas end
 
-function PANEL:OnMouseWheeled( dlta )
+function PANEL:OnMouseWheeled(dlta)
 	self.scroll:AddScroll(dlta * -2)
 
 	self:InvalidateLayout()
@@ -357,7 +357,7 @@ function PANEL:PerformLayout()
 
 	self.YOffset = self.scroll:GetOffset()
 
-	self.pnlCanvas:SetPos( 0, self.YOffset )
-	self.pnlCanvas:SetSize( self:GetWide() - (self.scroll.Enabled and 16 or 0), self.pnlCanvas:GetTall() )
+	self.pnlCanvas:SetPos(0, self.YOffset)
+	self.pnlCanvas:SetSize(self:GetWide() - (self.scroll.Enabled and 16 or 0), self.pnlCanvas:GetTall())
 end
-vgui.Register( "TTTPlayerFrame", PANEL, "Panel" )
+vgui.Register("TTTPlayerFrame", PANEL, "Panel")

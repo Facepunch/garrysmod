@@ -133,42 +133,42 @@ local serialsounds = {
 
 local gunsounds = {
 	shotgun = {
-		sound = Sound( "Weapon_XM1014.Single" ),
+		sound = Sound("Weapon_XM1014.Single"),
 		delay = 0.8,
 		times = {1, 3},
 		burst = false
 	},
 
 	pistol = {
-		sound = Sound( "Weapon_FiveSeven.Single" ),
+		sound = Sound("Weapon_FiveSeven.Single"),
 		delay = 0.4,
 		times = {2, 4},
 		burst = false
 	},
 
 	mac10 = {
-		sound = Sound( "Weapon_mac10.Single" ),
+		sound = Sound("Weapon_mac10.Single"),
 		delay = 0.065,
 		times = {5, 10},
 		burst = true
 	},
 
 	deagle = {
-		sound = Sound( "Weapon_Deagle.Single" ),
+		sound = Sound("Weapon_Deagle.Single"),
 		delay = 0.6,
 		times = {1, 3},
 		burst = false
 	},
 
 	m16 = {
-		sound = Sound( "Weapon_M4A1.Single" ),
+		sound = Sound("Weapon_M4A1.Single"),
 		delay = 0.2,
 		times = {1, 5},
 		burst = true
 	},
 
 	rifle = {
-		sound = Sound( "weapons/scout/scout_fire-1.wav" ),
+		sound = Sound("weapons/scout/scout_fire-1.wav"),
 		delay = 1.5,
 		times = {1, 1},
 		burst = false,
@@ -176,7 +176,7 @@ local gunsounds = {
 	},
 
 	huge = {
-		sound = Sound( "Weapon_m249.Single" ),
+		sound = Sound("Weapon_m249.Single"),
 		delay = 0.055,
 		times = {6, 12},
 		burst = true

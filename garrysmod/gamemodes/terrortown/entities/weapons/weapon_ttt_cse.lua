@@ -47,12 +47,12 @@ SWEP.AllowDrop = false
 SWEP.DeathScanDelay = 15
 
 function SWEP:PrimaryAttack()
-	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	self:DropDevice()
 end
 
 function SWEP:SecondaryAttack()
-	self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+	self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 	self:DropDevice()
 end
 
@@ -82,7 +82,7 @@ function SWEP:OnRemove()
 	end
 end
 
-local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
+local throwsound = Sound("Weapon_SLAM.SatchelThrow")
 
 function SWEP:DropDevice()
 	local cse = nil

@@ -55,7 +55,7 @@ local function CopyDmg(dmg)
 	return d
 end
 
-function SCORE:HandleKill( victim, attacker, dmginfo )
+function SCORE:HandleKill(victim, attacker, dmginfo)
 	if not (IsValid(victim) and victim:IsPlayer()) then return end
 
 	local e = {
@@ -86,7 +86,7 @@ function SCORE:HandleKill( victim, attacker, dmginfo )
 	self:AddEvent(e)
 end
 
-function SCORE:HandleSpawn( ply )
+function SCORE:HandleSpawn(ply)
 	if ply:Team() == TEAM_TERROR then
 		self:AddEvent({id=EVENT_SPAWN, ni=ply:Nick(), uid=ply:UniqueID()})
 	end
@@ -215,7 +215,7 @@ local function EncodeForStream(events)
 	-- may want to filter out data later
 	-- just serialize for now
 
-	local result = util.TableToJSON( events )
+	local result = util.TableToJSON(events)
 	if not result then
 		ErrorNoHalt("Round report event encoding failed!\n")
 		return false

@@ -64,21 +64,21 @@ function SWEP:OnDrop()
 end
 
 function SWEP:PrimaryAttack()
-	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
 	if self:CanPrimaryAttack() then
 		self:BeaconDrop()
 	end
 end
 function SWEP:SecondaryAttack()
-	self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+	self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 
 	if self:CanPrimaryAttack() then
 		self:BeaconStick()
 	end
 end
 
-local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
+local throwsound = Sound("Weapon_SLAM.SatchelThrow")
 
 -- might be able to move this drop/stick stuff into something more general now
 -- that a number of weapons use it

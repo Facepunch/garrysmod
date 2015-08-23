@@ -50,7 +50,7 @@ end
 local mat_orb = Material("models/effects/splodearc_sheet")
 function EFFECT:Render()
 	render.MaterialOverride(mat_orb)
-	render.SuppressEngineLighting( true )
+	render.SuppressEngineLighting(true)
 	render.SetColorModulation(0, 0, 1)
 	render.SetBlend(0.8 * self.Alpha)
 

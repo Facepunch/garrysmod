@@ -165,9 +165,9 @@ function MSTACK:Draw(client)
 			-- These somewhat arcane delta and alpha equations are from gmod's
 			-- HUDPickup stuff
 			if delta > 1 - fadein then
-				alpha = math.Clamp( (1.0 - delta) * (255 / fadein), 0, 255)
+				alpha = math.Clamp((1.0 - delta) * (255 / fadein), 0, 255)
 			elseif delta < fadeout then
-				alpha = math.Clamp( delta * (255 / fadeout), 0, 255)
+				alpha = math.Clamp(delta * (255 / fadeout), 0, 255)
 			end
 
 			local height = item.height

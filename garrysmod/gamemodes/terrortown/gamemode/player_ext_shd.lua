@@ -1,6 +1,6 @@
 -- shared extensions to player table
 
-local plymeta = FindMetaTable( "Player" )
+local plymeta = FindMetaTable("Player")
 if not plymeta then return end
 
 local math = math

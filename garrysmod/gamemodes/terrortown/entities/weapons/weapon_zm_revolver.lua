@@ -33,7 +33,7 @@ SWEP.HeadshotMultiplier = 4
 
 SWEP.AutoSpawnable = true
 SWEP.AmmoEnt = "item_ammo_revolver_ttt"
-SWEP.Primary.Sound = Sound( "Weapon_Deagle.Single" )
+SWEP.Primary.Sound = Sound("Weapon_Deagle.Single")
 
 SWEP.UseHands = true
 SWEP.ViewModelFlip = false

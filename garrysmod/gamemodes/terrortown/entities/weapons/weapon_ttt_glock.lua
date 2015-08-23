@@ -35,7 +35,7 @@ SWEP.ViewModelFOV = 54
 SWEP.ViewModel = "models/weapons/cstrike/c_pist_glock18.mdl"
 SWEP.WorldModel = "models/weapons/w_pist_glock18.mdl"
 
-SWEP.Primary.Sound = Sound( "Weapon_Glock.Single" )
-SWEP.IronSightsPos = Vector( -5.79, -3.9982, 2.8289 )
+SWEP.Primary.Sound = Sound("Weapon_Glock.Single")
+SWEP.IronSightsPos = Vector(-5.79, -3.9982, 2.8289)
 
 SWEP.HeadshotMultiplier = 1.75

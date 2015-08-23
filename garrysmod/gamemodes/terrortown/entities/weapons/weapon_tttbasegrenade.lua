@@ -102,7 +102,7 @@ function SWEP:Think()
 			self:SendWeaponAnim(ACT_VM_THROW)
 
 			if SERVER then
-				self.Owner:SetAnimation( PLAYER_ATTACK1 )
+				self.Owner:SetAnimation(PLAYER_ATTACK1)
 			end
 		else
 			-- still cooking it, see if our time is up

@@ -64,7 +64,7 @@ function EFFECT:Think()
 end
 
 function EFFECT:Render()
-	render.SuppressEngineLighting( true )
+	render.SuppressEngineLighting(true)
 	render.SetColorModulation(0.4, 0.4, 1)
 	render.SetBlend(0.8 * self.Alpha)
 

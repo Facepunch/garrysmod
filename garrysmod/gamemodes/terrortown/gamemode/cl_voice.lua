@@ -13,7 +13,7 @@ local function LastWordsRecv()
 	local was_detective = IsValid(sender) and sender:IsDetective()
 	local nick = IsValid(sender) and sender:Nick() or "<Unknown>"
 
-	chat.AddText(Color( 150, 150, 150 ),
+	chat.AddText(Color(150, 150, 150),
 				 Format("(%s) ", string.upper(GetTranslation("last_words"))),
 				 was_detective and Color(50, 200, 255) or Color(0, 200, 0),
 				 nick,
@@ -31,19 +31,19 @@ local function RoleChatRecv()
 	local text = net.ReadString()
 
 	if role == ROLE_TRAITOR then
-		chat.AddText(Color( 255, 30, 40 ),
+		chat.AddText(Color(255, 30, 40),
 					 Format("(%s) ", string.upper(GetTranslation("traitor"))),
-					 Color( 255, 200, 20),
+					 Color(255, 200, 20),
 					 sender:Nick(),
-					 Color( 255, 255, 200),
+					 Color(255, 255, 200),
 					 ": " .. text)
 
 	elseif role == ROLE_DETECTIVE then
-		chat.AddText(Color( 20, 100, 255 ),
+		chat.AddText(Color(20, 100, 255),
 					 Format("(%s) ", string.upper(GetTranslation("detective"))),
-					 Color( 25, 200, 255),
+					 Color(25, 200, 255),
 					 sender:Nick(),
-					 Color( 200, 255, 255),
+					 Color(200, 255, 255),
 					 ": " .. text)
 	end
 end
@@ -444,7 +444,7 @@ end
 
 local PlayerVoicePanels = {}
 
-function GM:PlayerStartVoice( ply )
+function GM:PlayerStartVoice(ply)
 	local client = LocalPlayer()
 	if not IsValid(g_VoicePanelList) or not IsValid(client) then return end
 
@@ -473,9 +473,9 @@ function GM:PlayerStartVoice( ply )
 	pnl:Dock(TOP)
 
 	local oldThink = pnl.Think
-	pnl.Think = function( self )
-		oldThink( self )
-		VoiceNotifyThink( self )
+	pnl.Think = function(self)
+		oldThink(self)
+		VoiceNotifyThink(self)
 	end
 
 	local shade = Color(0, 0, 0, 150)
@@ -529,17 +529,17 @@ end
 net.Receive("TTT_TraitorVoiceState", ReceiveVoiceState)
 
 local function VoiceClean()
-	for ply, pnl in pairs( PlayerVoicePanels ) do
+	for ply, pnl in pairs(PlayerVoicePanels) do
 		if (not IsValid(pnl)) or (not IsValid(ply)) then
 			GAMEMODE:PlayerEndVoice(ply)
 		end
 	end
 end
-timer.Create( "VoiceClean", 10, 0, VoiceClean )
+timer.Create("VoiceClean", 10, 0, VoiceClean)
 
 
 function GM:PlayerEndVoice(ply, no_reset)
-	if IsValid( PlayerVoicePanels[ply] ) then
+	if IsValid(PlayerVoicePanels[ply]) then
 		PlayerVoicePanels[ply]:Remove()
 		PlayerVoicePanels[ply] = nil
 	end
@@ -554,7 +554,7 @@ function GM:PlayerEndVoice(ply, no_reset)
 end
 
 local function CreateVoiceVGUI()
-	g_VoicePanelList = vgui.Create( "DPanel" )
+	g_VoicePanelList = vgui.Create("DPanel")
 
 	g_VoicePanelList:ParentToHUD()
 	g_VoicePanelList:SetPos(25, 25)
@@ -569,7 +569,7 @@ local function CreateVoiceVGUI()
 	MutedState:SetTextColor(Color(240, 240, 240, 250))
 	MutedState:SetVisible(false)
 end
-hook.Add( "InitPostEntity", "CreateVoiceVGUI", CreateVoiceVGUI )
+hook.Add("InitPostEntity", "CreateVoiceVGUI", CreateVoiceVGUI)
 
 MUTE_NONE = 0
 MUTE_TERROR = TEAM_TERROR

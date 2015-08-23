@@ -287,7 +287,7 @@ function CLSCORE:BuildHilitePanel(dpanel)
 
 	local winlbl = vgui.Create("DLabel", dpanel)
 	winlbl:SetFont("WinHuge")
-	winlbl:SetText( T(title.txt) )
+	winlbl:SetText(T(title.txt))
 	winlbl:SetTextColor(COLOR_WHITE)
 	winlbl:SizeToContents()
 	local xwin = (w - winlbl:GetWide())/2
@@ -430,7 +430,7 @@ function CLSCORE:ClearPanel()
 		-- we need this hack as opposed to just calling Remove because gmod does
 		-- not offer a means of killing the tooltip, and doesn't clean it up
 		-- properly on Remove
-		gui.SetMousePos( ScrW()/2, ScrH()/2 )
+		gui.SetMousePos(ScrW()/2, ScrH()/2)
 		local pnl = self.Panel
 		timer.Simple(0, function() pnl:Remove() end)
 	end

@@ -281,7 +281,7 @@ net.Receive("TTT_PlayerDied", PlayerDeath)
 function GM:ShouldDrawLocalPlayer(ply) return false end
 
 local view = {origin = vector_origin, angles = angle_zero, fov=0}
-function GM:CalcView( ply, origin, angles, fov )
+function GM:CalcView(ply, origin, angles, fov)
 	view.origin = origin
 	view.angles = angles
 	view.fov    = fov
@@ -305,7 +305,7 @@ function GM:CalcView( ply, origin, angles, fov )
 	if IsValid(wep) then
 		local func = wep.CalcView
 		if func then
-			view.origin, view.angles, view.fov = func( wep, ply, origin*1, angles*1, fov )
+			view.origin, view.angles, view.fov = func(wep, ply, origin*1, angles*1, fov)
 		end
 	end
 

@@ -57,23 +57,23 @@ local ammo_colors = {
 
 
 -- Modified RoundedBox
-local Tex_Corner8 = surface.GetTextureID( "gui/corner8" )
-local function RoundedMeter( bs, x, y, w, h, color)
+local Tex_Corner8 = surface.GetTextureID("gui/corner8")
+local function RoundedMeter(bs, x, y, w, h, color)
 	surface.SetDrawColor(clr(color))
 
-	surface.DrawRect( x+bs, y, w-bs*2, h )
-	surface.DrawRect( x, y+bs, bs, h-bs*2 )
+	surface.DrawRect(x+bs, y, w-bs*2, h)
+	surface.DrawRect(x, y+bs, bs, h-bs*2)
 
-	surface.SetTexture( Tex_Corner8 )
-	surface.DrawTexturedRectRotated( x + bs/2 , y + bs/2, bs, bs, 0 )
-	surface.DrawTexturedRectRotated( x + bs/2 , y + h -bs/2, bs, bs, 90 )
+	surface.SetTexture(Tex_Corner8)
+	surface.DrawTexturedRectRotated(x + bs/2 , y + bs/2, bs, bs, 0)
+	surface.DrawTexturedRectRotated(x + bs/2 , y + h -bs/2, bs, bs, 90)
 
 	if w > 14 then
-		surface.DrawRect( x+w-bs, y+bs, bs, h-bs*2 )
-		surface.DrawTexturedRectRotated( x + w - bs/2 , y + bs/2, bs, bs, 270 )
-		surface.DrawTexturedRectRotated( x + w - bs/2 , y + h - bs/2, bs, bs, 180 )
+		surface.DrawRect(x+w-bs, y+bs, bs, h-bs*2)
+		surface.DrawTexturedRectRotated(x + w - bs/2 , y + bs/2, bs, bs, 270)
+		surface.DrawTexturedRectRotated(x + w - bs/2 , y + h - bs/2, bs, bs, 180)
 	else
-		surface.DrawRect( x + math.max(w-bs, bs), y, bs/2, h )
+		surface.DrawRect(x + math.max(w-bs, bs), y, bs/2, h)
 	end
 
 end
@@ -202,7 +202,7 @@ local function SpecHUDPaint(client)
 	draw.RoundedBox(8, x, round_y, width, height, bg_colors.background_main)
 	draw.RoundedBox(8, x, round_y, time_x - x, height, bg_colors.noround)
 
-	local text = L[ roundstate_string[GAMEMODE.round_state] ]
+	local text = L[roundstate_string[GAMEMODE.round_state]]
 	ShadowedText(text, "TraitorState", x + margin, round_y, COLOR_WHITE)
 
 	-- Draw round/prep/post time remaining
@@ -267,9 +267,9 @@ local function InfoPaint(client)
 	local traitor_y = y - 30
 	local text = nil
 	if round_state == ROUND_ACTIVE then
-		text = L[ client:GetRoleStringRaw() ]
+		text = L[client:GetRoleStringRaw()]
 	else
-		text = L[ roundstate_string[round_state] ]
+		text = L[roundstate_string[round_state]]
 	end
 
 	ShadowedText(text, "TraitorState", x + margin + 73, traitor_y, COLOR_WHITE, TEXT_ALIGN_CENTER)
@@ -330,48 +330,48 @@ end
 function GM:HUDPaint()
 	local client = LocalPlayer()
 
-	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTargetID" ) then
-		hook.Call( "HUDDrawTargetID", GAMEMODE )
+	if hook.Call("HUDShouldDraw", GAMEMODE, "TTTTargetID") then
+		hook.Call("HUDDrawTargetID", GAMEMODE)
 	end
 
-	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTMStack" ) then
+	if hook.Call("HUDShouldDraw", GAMEMODE, "TTTMStack") then
 		MSTACK:Draw(client)
 	end
 
 	if (not client:Alive()) or client:Team() == TEAM_SPEC then
-		if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTSpecHUD" ) then
+		if hook.Call("HUDShouldDraw", GAMEMODE, "TTTSpecHUD") then
 			SpecHUDPaint(client)
 		end
 
 		return
 	end
 
-	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTRadar" ) then
+	if hook.Call("HUDShouldDraw", GAMEMODE, "TTTRadar") then
 		RADAR:Draw(client)
 	end
 
-	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTButton" ) then
+	if hook.Call("HUDShouldDraw", GAMEMODE, "TTTTButton") then
 		TBHUD:Draw(client)
 	end
 
-	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTWSwitch" ) then
+	if hook.Call("HUDShouldDraw", GAMEMODE, "TTTWSwitch") then
 		WSWITCH:Draw(client)
 	end
 
-	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTVoice" ) then
+	if hook.Call("HUDShouldDraw", GAMEMODE, "TTTVoice") then
 		VOICE.Draw(client)
 	end
 
-	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTDisguise" ) then
+	if hook.Call("HUDShouldDraw", GAMEMODE, "TTTDisguise") then
 		DISGUISE.Draw(client)
 	end
 
-	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTPickupHistory" ) then
-		hook.Call( "HUDDrawPickupHistory", GAMEMODE )
+	if hook.Call("HUDShouldDraw", GAMEMODE, "TTTPickupHistory") then
+		hook.Call("HUDDrawPickupHistory", GAMEMODE)
 	end
 
 	-- Draw bottom left info panel
-	if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTInfoPanel" ) then
+	if hook.Call("HUDShouldDraw", GAMEMODE, "TTTInfoPanel") then
 		InfoPaint(client)
 	end
 end

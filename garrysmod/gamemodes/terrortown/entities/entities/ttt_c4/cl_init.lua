@@ -142,7 +142,7 @@ function ShowC4Config(bomb)
 	end
 
 	local dcancel = vgui.Create("DButton", bg)
-	dcancel:SetPos( w - m*4 - bw, m + by)
+	dcancel:SetPos(w - m*4 - bw, m + by)
 	dcancel:SetSize(bw, bh)
 	dcancel:SetText(T("cancel"))
 	dcancel.DoClick = function() dframe:Close() end
@@ -171,9 +171,9 @@ local PANEL = {}
 local wire_colors = {
 	Color(200,   0,   0, 255), -- red
 	Color(255, 255,   0, 255), -- yellow
-	Color( 90,  90, 250, 255), -- blue
+	Color(90,  90, 250, 255), -- blue
 	Color(255, 255, 255, 255), -- white/grey
-	Color( 20, 200,  20, 255), -- green
+	Color(20, 200,  20, 255), -- green
 	Color(255, 160,  50, 255)  -- brown
 };
 
@@ -278,7 +278,7 @@ function PANEL:Init()
 	self:SetPaintBackground(false)
 end
 
-vgui.Register( "DisarmPanel", PANEL, "DPanel" )
+vgui.Register("DisarmPanel", PANEL, "DPanel")
 
 
 surface.CreateFont("C4Timer",
@@ -411,7 +411,7 @@ function ShowC4Disarm(bomb)
 
 
 	local dcancel = vgui.Create("DButton", dframe)
-	dcancel:SetPos( w - bw - m, h - bh - m)
+	dcancel:SetPos(w - bw - m, h - bh - m)
 	dcancel:SetSize(bw, bh)
 	dcancel:CenterHorizontal()
 	dcancel:SetText(T("close"))

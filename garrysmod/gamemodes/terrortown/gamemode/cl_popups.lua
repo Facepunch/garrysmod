@@ -50,8 +50,8 @@ local function RoundStartPopup()
 
 	if not LocalPlayer() then return end
 
-	local dframe = vgui.Create( "Panel" )
-	dframe:SetDrawOnTop( true )
+	local dframe = vgui.Create("Panel")
+	dframe:SetDrawOnTop(true)
 	dframe:SetMouseInputEnabled(false)
 	dframe:SetKeyboardInputEnabled(false)
 
@@ -63,22 +63,22 @@ local function RoundStartPopup()
 
 	local text = GetTextForRole(LocalPlayer():GetRole())
 
-	local dtext = vgui.Create( "DLabel", dframe )
+	local dtext = vgui.Create("DLabel", dframe)
 	dtext:SetFont("TabLarge")
 	dtext:SetText(text)
 	dtext:SizeToContents()
-	dtext:SetContentAlignment( 5 )
-	dtext:SetTextColor( color_white )
+	dtext:SetContentAlignment(5)
+	dtext:SetTextColor(color_white)
 
 	local w, h = dtext:GetSize()
 	local m = 10
 
 	dtext:SetPos(m,m)
 
-	dframe:SetSize( w + m*2, h + m*2 )
+	dframe:SetSize(w + m*2, h + m*2)
 	dframe:Center()
 
-	dframe:AlignBottom( 10 )
+	dframe:AlignBottom(10)
 
 	timer.Simple(startshowtime:GetInt(), function() dframe:Remove() end)
 end

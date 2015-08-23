@@ -25,7 +25,7 @@ local margin = 10
 local width = 300
 local height = 20
 
-local barcorner = surface.GetTextureID( "gui/corner8" )
+local barcorner = surface.GetTextureID("gui/corner8")
 
 local col_active = {
 	tip = {
@@ -76,10 +76,10 @@ function WSWITCH:DrawBarBg(x, y, w, h, col)
 	surface.SetTexture(barcorner)
 
 	surface.SetDrawColor(c.r, c.g, c.b, c.a)
-	surface.DrawTexturedRectRotated( rx + bh , ry + bh, b, b, 0 )
-	surface.DrawTexturedRectRotated( rx + bh , ry + rh -bh, b, b, 90 )
-	surface.DrawRect( rx, ry+b, b, rh-b*2 )
-	surface.DrawRect( rx+b, ry, h - 4, rh )
+	surface.DrawTexturedRectRotated(rx + bh , ry + bh, b, b, 0)
+	surface.DrawTexturedRectRotated(rx + bh , ry + rh -bh, b, b, 90)
+	surface.DrawRect(rx, ry+b, b, rh-b*2)
+	surface.DrawRect(rx+b, ry, h - 4, rh)
 
 	-- Draw the remainder
 	-- Could just draw a full roundedrect bg and overdraw it with the tip, but
@@ -87,10 +87,10 @@ function WSWITCH:DrawBarBg(x, y, w, h, col)
 	c = col.bg
 	surface.SetDrawColor(c.r, c.g, c.b, c.a)
 
-	surface.DrawRect( rx+b+h-4, ry,  rw - (h - 4) - b*2,  rh )
-	surface.DrawTexturedRectRotated( rx + rw - bh , ry + rh - bh, b, b, 180 )
-	surface.DrawTexturedRectRotated( rx + rw - bh , ry + bh, b, b, 270 )
-	surface.DrawRect( rx+rw-b,  ry+b,  b,  rh-b*2 )
+	surface.DrawRect(rx+b+h-4, ry,  rw - (h - 4) - b*2,  rh)
+	surface.DrawTexturedRectRotated(rx + rw - bh , ry + rh - bh, b, b, 180)
+	surface.DrawTexturedRectRotated(rx + rw - bh , ry + bh, b, b, 270)
+	surface.DrawRect(rx+rw-b,  ry+b,  b,  rh-b*2)
 
 end
 

@@ -216,7 +216,7 @@ LANG.Styles = {
 
 	rolecolour = function(text)
 		MSTACK:AddColoredBgMessage(text,
-							bgcolor[ LocalPlayer():GetRole() ])
+							bgcolor[LocalPlayer():GetRole()])
 		print("TTT:   " .. text)
 	end,
 

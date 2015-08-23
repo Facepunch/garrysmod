@@ -2,24 +2,24 @@
 -- This panel does not deal with models and such
 
 
-local matHover = Material( "vgui/spawnmenu/hover" )
+local matHover = Material("vgui/spawnmenu/hover")
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_iIconSize",         "IconSize" )
+AccessorFunc(PANEL, "m_iIconSize",         "IconSize")
 
 function PANEL:Init()
-	self.Icon = vgui.Create( "DImage", self )
-	self.Icon:SetMouseInputEnabled( false )
-	self.Icon:SetKeyboardInputEnabled( false )
+	self.Icon = vgui.Create("DImage", self)
+	self.Icon:SetMouseInputEnabled(false)
+	self.Icon:SetKeyboardInputEnabled(false)
 
-	self.animPress = Derma_Anim( "Press", self, self.PressedAnim )
+	self.animPress = Derma_Anim("Press", self, self.PressedAnim)
 
 	self:SetIconSize(64)
 
 end
 
-function PANEL:OnMousePressed( mcode )
+function PANEL:OnMousePressed(mcode)
 	if mcode == MOUSE_LEFT then
 		self:DoClick()
 		self.animPress:Start(0.1)
@@ -53,19 +53,19 @@ function PANEL:PaintOverHovered()
 
 	if self.animPress:Active() then return end
 
-	surface.SetDrawColor( 255, 255, 255, 80 )
-	surface.SetMaterial( matHover )
+	surface.SetDrawColor(255, 255, 255, 80)
+	surface.SetMaterial(matHover)
 	self:DrawTexturedRect()
 
 end
 
 function PANEL:PerformLayout()
 	if self.animPress:Active() then return end
-	self:SetSize( self.m_iIconSize, self.m_iIconSize )
-	self.Icon:StretchToParent( 0, 0, 0, 0 )
+	self:SetSize(self.m_iIconSize, self.m_iIconSize)
+	self.Icon:StretchToParent(0, 0, 0, 0)
 end
 
-function PANEL:SetIcon( icon )
+function PANEL:SetIcon(icon)
 	self.Icon:SetImage(icon)
 end
 
@@ -81,23 +81,23 @@ function PANEL:Think()
 	self.animPress:Run()
 end
 
-function PANEL:PressedAnim( anim, delta, data )
+function PANEL:PressedAnim(anim, delta, data)
 
 	if anim.Started then
 		return
 	end
 
 	if anim.Finished then
-		self.Icon:StretchToParent( 0, 0, 0, 0 )
+		self.Icon:StretchToParent(0, 0, 0, 0)
 		return
 	end
 
-	local border = math.sin( delta * math.pi ) * (self.m_iIconSize * 0.05 )
-	self.Icon:StretchToParent( border, border, border, border )
+	local border = math.sin(delta * math.pi) * (self.m_iIconSize * 0.05)
+	self.Icon:StretchToParent(border, border, border, border)
 
 end
 
-vgui.Register( "SimpleIcon", PANEL, "Panel" )
+vgui.Register("SimpleIcon", PANEL, "Panel")
 
 ---
 
@@ -121,8 +121,8 @@ end
 
 function PANEL:PerformLayout()
 	if self.animPress:Active() then return end
-	self:SetSize( self.m_iIconSize, self.m_iIconSize )
-	self.Icon:StretchToParent( 0, 0, 0, 0 )
+	self:SetSize(self.m_iIconSize, self.m_iIconSize)
+	self.Icon:StretchToParent(0, 0, 0, 0)
 
 	for _, p in ipairs(self.Layers) do
 		p:SetPos(0, 0)
@@ -148,9 +148,9 @@ vgui.Register("LayeredIcon", PANEL, "SimpleIcon")
 local PANEL = {}
 
 function PANEL:Init()
-	self.imgAvatar = vgui.Create( "AvatarImage", self )
-	self.imgAvatar:SetMouseInputEnabled( false )
-	self.imgAvatar:SetKeyboardInputEnabled( false )
+	self.imgAvatar = vgui.Create("AvatarImage", self)
+	self.imgAvatar:SetMouseInputEnabled(false)
+	self.imgAvatar:SetKeyboardInputEnabled(false)
 	self.imgAvatar.PerformLayout = function(s) s:Center() end
 
 	self:SetAvatarSize(32)
@@ -168,7 +168,7 @@ function PANEL:SetPlayer(ply)
 	self.imgAvatar:SetPlayer(ply)
 end
 
-vgui.Register( "SimpleIconAvatar", PANEL, "LayeredIcon" )
+vgui.Register("SimpleIconAvatar", PANEL, "LayeredIcon")
 
 
 --- Labelled icon
@@ -205,10 +205,10 @@ function PANEL:PerformLayout()
 end
 
 function PANEL:SetIconProperties(color, font, shadow, pos)
-	self:SetIconTextColor( color  or self:GetIconTextColor())
-	self:SetIconFont(      font   or self:GetIconFont())
+	self:SetIconTextColor(color  or self:GetIconTextColor())
+	self:SetIconFont(font   or self:GetIconFont())
 	self:SetIconTextShadow(shadow or self:GetIconShadow())
-	self:SetIconTextPos(   pos or self:GetIconTextPos())
+	self:SetIconTextPos(pos or self:GetIconTextPos())
 end
 
 function PANEL:SetLabelText(text, color, font, pos)

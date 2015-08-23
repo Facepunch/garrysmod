@@ -118,7 +118,7 @@ function SWEP:OpenEnt(hitEnt)
 end
 
 function SWEP:PrimaryAttack()
-	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
 	if not IsValid(self.Owner) then return end
 
@@ -135,7 +135,7 @@ function SWEP:PrimaryAttack()
 	self.Weapon:EmitSound(sound_single)
 
 	if IsValid(hitEnt) or tr_main.HitWorld then
-		self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
+		self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
 
 		if not (CLIENT and (not IsFirstTimePredicted())) then
 			local edata = EffectData()
@@ -162,7 +162,7 @@ function SWEP:PrimaryAttack()
 			end
 		end
 	else
-		self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
+		self.Weapon:SendWeaponAnim(ACT_VM_MISSCENTER)
 	end
 
 
@@ -174,7 +174,7 @@ function SWEP:PrimaryAttack()
 		local tr_all = nil
 		tr_all = util.TraceLine({start=spos, endpos=sdest, filter=self.Owner})
 
-		self.Owner:SetAnimation( PLAYER_ATTACK1 )
+		self.Owner:SetAnimation(PLAYER_ATTACK1)
 
 		if hitEnt and hitEnt:IsValid() then
 			if self:OpenEnt(hitEnt) == OPEN_NO and tr_all.Entity and tr_all.Entity:IsValid() then
@@ -192,16 +192,16 @@ function SWEP:PrimaryAttack()
 
 			hitEnt:DispatchTraceAttack(dmg, spos + (self.Owner:GetAimVector() * 3), sdest)
 
---         self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
+--         self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
 
 --         self.Owner:TraceHullAttack(spos, sdest, Vector(-16,-16,-16), Vector(16,16,16), 30, DMG_CLUB, 11, true)
 --         self.Owner:FireBullets({Num=1, Src=spos, Dir=self.Owner:GetAimVector(), Spread=Vector(0,0,0), Tracer=0, Force=1, Damage=20})
 
 		else
 --         if tr_main.HitWorld then
---            self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
+--            self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
 --         else
---            self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
+--            self.Weapon:SendWeaponAnim(ACT_VM_MISSCENTER)
 --         end
 
 			-- See if our nodraw trace got the goods
@@ -217,8 +217,8 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-	self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-	self.Weapon:SetNextSecondaryFire( CurTime() + 0.1 )
+	self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	self.Weapon:SetNextSecondaryFire(CurTime() + 0.1)
 
 	if self.Owner.LagCompensation then
 		self.Owner:LagCompensation(true)
@@ -236,15 +236,15 @@ function SWEP:SecondaryAttack()
 			pushvel.z = math.Clamp(pushvel.z, 50, 100)
 
 			ply:SetVelocity(ply:GetVelocity() + pushvel)
-			self.Owner:SetAnimation( PLAYER_ATTACK1 )
+			self.Owner:SetAnimation(PLAYER_ATTACK1)
 
 			ply.was_pushed = {att=self.Owner, t=CurTime()} --, infl=self}
 		end
 
 		self.Weapon:EmitSound(sound_single)
-		self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
+		self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
 
-		self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+		self.Weapon:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 	end
 
 	if self.Owner.LagCompensation then

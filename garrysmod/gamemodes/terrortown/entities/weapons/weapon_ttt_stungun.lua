@@ -37,7 +37,7 @@ SWEP.Primary.Ammo = "smg1"
 SWEP.AutoSpawnable = false
 SWEP.AmmoEnt = "item_ammo_smg1_ttt"
 SWEP.Primary.Recoil = 1.2
-SWEP.Primary.Sound = Sound( "Weapon_UMP45.Single" )
+SWEP.Primary.Sound = Sound("Weapon_UMP45.Single")
 
 SWEP.UseHands = true
 SWEP.ViewModelFlip = false
@@ -52,7 +52,7 @@ SWEP.IronSightsAng = Vector(-1.201, -0.201, -2)
 
 --SWEP.DeploySpeed = 3
 
-function SWEP:ShootBullet( dmg, recoil, numbul, cone )
+function SWEP:ShootBullet(dmg, recoil, numbul, cone)
 	local sights = self:GetIronsights()
 
 	numbul = numbul or 1
@@ -65,7 +65,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 	bullet.Num    = numbul
 	bullet.Src    = self.Owner:GetShootPos()
 	bullet.Dir    = self.Owner:GetAimVector()
-	bullet.Spread = Vector( cone, cone, 0 )
+	bullet.Spread = Vector(cone, cone, 0)
 	bullet.Tracer = 4
 	bullet.Force  = 5
 	bullet.Damage = dmg
@@ -95,26 +95,26 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 	end
 
 
-	self.Owner:FireBullets( bullet )
+	self.Owner:FireBullets(bullet)
 	self:SendWeaponAnim(self.PrimaryAnim)
 
 	-- Owner can die after firebullets, giving an error at muzzleflash
 	if not IsValid(self.Owner) or not self.Owner:Alive() then return end
 
 	self.Owner:MuzzleFlash()
-	self.Owner:SetAnimation( PLAYER_ATTACK1 )
+	self.Owner:SetAnimation(PLAYER_ATTACK1)
 
 	if self.Owner:IsNPC() then return end
 
 	if ((game.SinglePlayer() and SERVER) or
-		 ((not game.SinglePlayer()) and CLIENT and IsFirstTimePredicted() )) then
+		 ((not game.SinglePlayer()) and CLIENT and IsFirstTimePredicted())) then
 
 		-- reduce recoil if ironsighting
 		recoil = sights and (recoil * 0.75) or recoil
 
 		local eyeang = self.Owner:EyeAngles()
 		eyeang.pitch = eyeang.pitch - recoil
-		self.Owner:SetEyeAngles( eyeang )
+		self.Owner:SetEyeAngles(eyeang)
 
 	end
 end

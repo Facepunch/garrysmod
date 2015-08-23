@@ -14,7 +14,7 @@ CreateConVar("ttt_killer_dna_range", "550")
 CreateConVar("ttt_killer_dna_basetime", "100")
 
 -- First spawn on the server
-function GM:PlayerInitialSpawn( ply )
+function GM:PlayerInitialSpawn(ply)
 	if not GAMEMODE.cvar_init then
 		GAMEMODE:InitCvars()
 	end
@@ -43,7 +43,7 @@ function GM:PlayerInitialSpawn( ply )
 	end
 end
 
-function GM:NetworkIDValidated( name, steamid )
+function GM:NetworkIDValidated(name, steamid)
 	-- edge case where player authed after initspawn
 	for _, p in pairs(player.GetAll()) do
 		if IsValid(p) and p:SteamID() == steamid and p.delay_karma_recall then
@@ -91,7 +91,7 @@ function GM:PlayerSpawn(ply)
 	SCORE:HandleSpawn(ply)
 end
 
-function GM:PlayerSetHandsModel( pl, ent )
+function GM:PlayerSetHandsModel(pl, ent)
 	local simplemodel = player_manager.TranslateToPlayerModelName(pl:GetModel())
 	local info = player_manager.TranslatePlayerHands(simplemodel)
 	if info then
@@ -111,7 +111,7 @@ function GM:IsSpawnpointSuitable(ply, spwn, force, rigged)
 
 	if not util.IsInWorld(pos) then return false end
 
-	local blocking = ents.FindInBox(pos + Vector( -16, -16, 0 ), pos + Vector( 16, 16, 64 ))
+	local blocking = ents.FindInBox(pos + Vector(-16, -16, 0), pos + Vector(16, 16, 64))
 
 	for k, p in pairs(blocking) do
 		if IsValid(p) and p:IsPlayer() and p:IsTerror() and p:Alive() then
@@ -170,15 +170,15 @@ local function PointsAroundSpawn(spwn)
 	-- all rigged positions
 	-- could be done without typing them out, but would take about as much time
 	return {
-		pos + Vector( w,  0,  0),
-		pos + Vector( 0,  w,  0),
-		pos + Vector( w,  w,  0),
+		pos + Vector(w,  0,  0),
+		pos + Vector(0,  w,  0),
+		pos + Vector(w,  w,  0),
 		pos + Vector(-w,  0,  0),
-		pos + Vector( 0, -w,  0),
+		pos + Vector(0, -w,  0),
 		pos + Vector(-w, -w,  0),
 		pos + Vector(-w,  w,  0),
-		pos + Vector( w, -w,  0)
-		--pos + Vector( 0,  0,  h) -- just in case we're outside
+		pos + Vector(w, -w,  0)
+		--pos + Vector(0,  0,  h) -- just in case we're outside
 	};
 end
 
@@ -265,7 +265,7 @@ function GM:TTTPlayerSetColor(ply)
 		-- you tell players apart.
 		clr = GAMEMODE.playercolor
 	end
-	ply:SetPlayerColor( Vector( clr.r/255.0, clr.g/255.0, clr.b/255.0 ) )
+	ply:SetPlayerColor(Vector(clr.r/255.0, clr.g/255.0, clr.b/255.0))
 end
 
 
@@ -666,7 +666,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	end
 end
 
-function GM:PlayerDeath( victim, infl, attacker)
+function GM:PlayerDeath(victim, infl, attacker)
 	-- tell no one
 	self:PlayerSilentDeath(victim)
 
@@ -782,7 +782,7 @@ function GM:ScalePlayerDamage(ply, hitgroup, dmginfo)
 			  hitgroup == HITGROUP_RIGHTARM or
 			  hitgroup == HITGROUP_LEFTLEG or
 			  hitgroup == HITGROUP_RIGHTLEG or
-			  hitgroup == HITGROUP_GEAR ) then
+			  hitgroup == HITGROUP_GEAR) then
 
 		dmginfo:ScaleDamage(0.55)
 	end

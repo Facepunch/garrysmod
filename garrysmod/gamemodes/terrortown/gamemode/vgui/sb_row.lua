@@ -18,12 +18,12 @@ function PANEL:Init()
 	self.open = false
 
 	self.cols = {}
-	self:AddColumn( GetTranslation("sb_ping"), function(ply) return ply:Ping() end )
-	self:AddColumn( GetTranslation("sb_deaths"), function(ply) return ply:Deaths() end )
-	self:AddColumn( GetTranslation("sb_score"), function(ply) return ply:Frags() end )
+	self:AddColumn(GetTranslation("sb_ping"), function(ply) return ply:Ping() end)
+	self:AddColumn(GetTranslation("sb_deaths"), function(ply) return ply:Deaths() end)
+	self:AddColumn(GetTranslation("sb_score"), function(ply) return ply:Frags() end)
 
 	if KARMA.IsEnabled() then
-		self:AddColumn( GetTranslation("sb_karma"), function(ply) return math.Round(ply:GetBaseKarma()) end )
+		self:AddColumn(GetTranslation("sb_karma"), function(ply) return math.Round(ply:GetBaseKarma()) end)
 	end
 
 	-- Let hooks add their custom columns
@@ -41,7 +41,7 @@ function PANEL:Init()
 	self.sresult:SetSize(16,16)
 	self.sresult:SetMouseInputEnabled(false)
 
-	self.avatar = vgui.Create( "AvatarImage", self )
+	self.avatar = vgui.Create("AvatarImage", self)
 	self.avatar:SetSize(SB_ROW_HEIGHT, SB_ROW_HEIGHT)
 	self.avatar:SetMouseInputEnabled(false)
 
@@ -51,16 +51,16 @@ function PANEL:Init()
 	self.voice = vgui.Create("DImageButton", self)
 	self.voice:SetSize(16,16)
 
-	self:SetCursor( "hand" )
+	self:SetCursor("hand")
 end
 
-function PANEL:AddColumn( label, func, width )
-	local lbl = vgui.Create( "DLabel", self )
+function PANEL:AddColumn(label, func, width)
+	local lbl = vgui.Create("DLabel", self)
 	lbl.GetPlayerText = func
 	lbl.IsHeading = false
 	lbl.Width = width or 50 -- Retain compatibility with existing code
 
-	table.insert( self.cols, lbl )
+	table.insert(self.cols, lbl)
 	return lbl
 end
 
@@ -99,8 +99,8 @@ end
 function PANEL:Paint()
 	if not IsValid(self.Player) then return end
 
---   if ( self.Player:GetFriendStatus() == "friend" ) then
---      color = Color( 236, 181, 113, 255 )
+--   if (self.Player:GetFriendStatus() == "friend") then
+--      color = Color(236, 181, 113, 255)
 --   end
 
 	local ply = self.Player
@@ -115,8 +115,8 @@ function PANEL:Paint()
 
 
 	if ply == LocalPlayer() then
-		surface.SetDrawColor( 200, 200, 200, math.Clamp(math.sin(RealTime() * 2) * 50, 0, 100))
-		surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT )
+		surface.SetDrawColor(200, 200, 200, math.Clamp(math.sin(RealTime() * 2) * 50, 0, 100))
+		surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT)
 	end
 
 	return true
@@ -162,7 +162,7 @@ function PANEL:UpdatePlayerData()
 	for i=1,#self.cols do
 		-- Set text from function, passing the label along so stuff like text
 		-- color can be changed
-		self.cols[i]:SetText( self.cols[i].GetPlayerText(ply, self.cols[i]) )
+		self.cols[i]:SetText(self.cols[i].GetPlayerText(ply, self.cols[i]))
 	end
 
 	self.nick:SetText(ply:Nick())
@@ -236,7 +236,7 @@ function PANEL:PerformLayout()
 	self.avatar:SetSize(SB_ROW_HEIGHT,SB_ROW_HEIGHT)
 
 	local fw = sboard_panel.ply_frame:GetWide()
-	self:SetWide( sboard_panel.ply_frame.scroll.Enabled and fw-16 or fw )
+	self:SetWide(sboard_panel.ply_frame.scroll.Enabled and fw-16 or fw)
 
 	if not self.open then
 		self:SetSize(self:GetWide(), SB_ROW_HEIGHT)
@@ -287,10 +287,10 @@ function PANEL:DoRightClick()
 	local menu = DermaMenu()
 	menu.Player = self:GetPlayer()
 
-	local close = hook.Call( "TTTScoreboardMenu", nil, menu )
+	local close = hook.Call("TTTScoreboardMenu", nil, menu)
 	if close then menu:Remove() return end
 
 	menu:Open()
 end
 
-vgui.Register( "TTTScorePlayerRow", PANEL, "Button" )
+vgui.Register("TTTScorePlayerRow", PANEL, "Button")

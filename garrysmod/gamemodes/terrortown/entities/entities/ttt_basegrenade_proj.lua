@@ -6,7 +6,7 @@ ENT.Type = "anim"
 ENT.Model = Model("models/weapons/w_eq_flashbang_thrown.mdl")
 
 
-AccessorFunc( ENT, "thrower", "Thrower")
+AccessorFunc(ENT, "thrower", "Thrower")
 
 function ENT:SetupDataTables()
 	self:NetworkVar("Float", 0, "ExplodeTime")
@@ -27,7 +27,7 @@ end
 
 
 function ENT:SetDetonateTimer(length)
-	self:SetDetonateExact( CurTime() + length )
+	self:SetDetonateExact(CurTime() + length)
 end
 
 function ENT:SetDetonateExact(t)

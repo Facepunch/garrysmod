@@ -27,7 +27,7 @@ SWEP.Primary.DefaultClip = 30
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "smg1"
 SWEP.Primary.Recoil = 1.15
-SWEP.Primary.Sound = Sound( "Weapon_mac10.Single" )
+SWEP.Primary.Sound = Sound("Weapon_mac10.Single")
 
 SWEP.AutoSpawnable = true
 
