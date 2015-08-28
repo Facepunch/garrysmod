@@ -95,7 +95,7 @@ CreateConVar("ttt_limit_spectator_voice", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 function GM:PlayerCanSeePlayersChat(text, team_only, listener, speaker)
 	if (not IsValid(listener)) then return false end
 	if (not IsValid(speaker)) then
-		if isentity(s) then
+		if isentity(speaker) then
 			return true
 		else
 			return false
