@@ -4,6 +4,7 @@ DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.Spawnable			= false
 ENT.RenderGroup 		= RENDERGROUP_BOTH
+ENT.Editable			= true
 
 local matLight 		= Material( "sprites/light_ignorez" )
 local MODEL			= Model( "models/MaxOfS2D/light_tubular.mdl" )
@@ -13,13 +14,19 @@ local MODEL			= Model( "models/MaxOfS2D/light_tubular.mdl" )
 --
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Bool", 0, "On" );
-	self:NetworkVar( "Bool", 1, "Toggle" );
-	self:NetworkVar( "Float", 1, "LightSize" );
-	self:NetworkVar( "Float", 2, "Brightness" );
-
+	self:NetworkVar( "Bool",	0, "On", 		{ KeyName = "on", 			Edit = { type = "Boolean", 		order = 1 } }  );
+	self:NetworkVar( "Bool", 	1, "Toggle" );
+	self:NetworkVar( "Float",	0, "Radius", 		{ KeyName = "lightsize", 		Edit = { type = "Float", 		order = 2, min = 0, max = 1024 } }  );
+	self:NetworkVar( "Float",	1, "Brightness", 	{ KeyName = "brightness", 		Edit = { type = "Float", 		order = 3, min = 0, max = 10 } }  );
+	self:NetworkVar( "Vector",	0, "LightColor", 	{ KeyName = "lightcol", 		Edit = { type = "VectorColor", 	order = 4 } }  );
+	
+	self:NetworkVarNotify( "LightColor",	self.OnColorChanged );
+	
 end
 
+function ENT:OnColorChanged(var,old,new)
+	self:SetColor(new:ToColor())
+end
 
 function ENT:Initialize()
 
@@ -78,8 +85,8 @@ function ENT:Think()
 			dlight.g = c.g
 			dlight.b = c.b
 			dlight.Brightness = self:GetBrightness()
-			dlight.Decay = self:GetLightSize() * 5
-			dlight.Size = self:GetLightSize()
+			dlight.Decay = self:GetRadius() * 5
+			dlight.Size = self:GetRadius()
 			dlight.DieTime = CurTime() + 1
 
 		end

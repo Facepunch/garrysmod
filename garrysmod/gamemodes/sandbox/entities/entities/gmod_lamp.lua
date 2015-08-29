@@ -4,6 +4,7 @@ DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.Spawnable			= false
 ENT.RenderGroup 		= RENDERGROUP_BOTH
+ENT.Editable			= true
 
 local matLight 			= Material( "sprites/light_ignorez" )
 local matBeam			= Material( "effects/lamp_beam" )
@@ -15,12 +16,59 @@ AccessorFunc( ENT, "Texture", "FlashlightTexture" )
 --
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Bool", 0, "On" );
-	self:NetworkVar( "Bool", 1, "Toggle" );
-	self:NetworkVar( "Float", 0, "LightFOV" );
-	self:NetworkVar( "Float", 1, "Distance" );
-	self:NetworkVar( "Float", 2, "Brightness" );
+	self:NetworkVar( "Bool",	0, "On", 			{ KeyName = "on", 			Edit = { type = "Boolean", 		order = 1 } }  );
+	self:NetworkVar( "Bool", 	1, "Toggle" );
+	self:NetworkVar( "Float",	0, "FOV", 			{ KeyName = "lightfov", 		Edit = { type = "Float", 		order = 2, min = 10, max = 170 } }  );
+	self:NetworkVar( "Float",	1, "Brightness", 	{ KeyName = "brightness", 		Edit = { type = "Float", 		order = 3, min = 0, max = 8 } }  );
+	self:NetworkVar( "Float",	2, "Distance", 		{ KeyName = "distance", 		Edit = { type = "Float", 		order = 4, min = 64, max = 2048 } }  );
+	self:NetworkVar( "Vector",	0, "LightColor", 	{ KeyName = "lightcol", 		Edit = { type = "VectorColor", 	order = 5 } }  );
+	
+	self:NetworkVarNotify( "On",	self.OnToggle );
+	self:NetworkVarNotify( "FOV",	self.UpdateLight );
+	self:NetworkVarNotify( "Brightness",	self.UpdateLight );
+	self:NetworkVarNotify( "Distance",	self.UpdateLight );
+	self:NetworkVarNotify( "LightColor",	self.OnColorChanged );
+end
 
+function ENT:OnToggle(var,old,new)
+
+	if ( !new ) then
+
+		SafeRemoveEntity( self.flashlight )
+		self.flashlight = nil
+		return
+
+	end
+
+	local angForward = self:GetAngles()
+	
+	self.flashlight = ents.Create( "env_projectedtexture" )
+	
+		self.flashlight:SetParent( self.Entity )
+		
+		-- The local positions are the offsets from parent..
+		self.flashlight:SetLocalPos( Vector( 0, 0, 0 ) )
+		self.flashlight:SetLocalAngles( Angle(0,0,0) )
+		
+		-- Looks like only one flashlight can have shadows enabled!
+		self.flashlight:SetKeyValue( "enableshadows", 1 )
+		self.flashlight:SetKeyValue( "farz", self:GetDistance() )
+		self.flashlight:SetKeyValue( "nearz", 12 )
+		self.flashlight:SetKeyValue( "lightfov", self:GetFOV() )
+		
+		local c = self:GetColor()
+		local b = self:GetBrightness()
+		self.flashlight:SetKeyValue( "lightcolor", Format( "%i %i %i 255", c.r * b, c.g * b, c.b * b ) )
+		
+	self.flashlight:Spawn()
+	
+	self.flashlight:Input( "SpotlightTexture", NULL, NULL, self:GetFlashlightTexture() )
+	
+end
+
+function ENT:OnColorChanged(var,old,new)
+	self:SetColor(new:ToColor())
+	self:UpdateLight()
 end
 
 --
@@ -78,46 +126,14 @@ function ENT:Use( activator, caller )
 
 end
 
+-- OnToggle() now handles all the work via NetworkVarNotify
 function ENT:Switch( bOn )
 
-	if ( bOn == self:GetOn() ) then return end
-
-	self.on = bOn;
-
-	if ( !bOn ) then
-
-		SafeRemoveEntity( self.flashlight )
-		self.flashlight = nil
-		self:SetOn( false )
-		return
-
+	if ( bOn == self:GetOn() ) then 
+		bOn = !bOn
 	end
-
-	self:SetOn( true )
 	
-	local angForward = self:GetAngles()
-	
-	self.flashlight = ents.Create( "env_projectedtexture" )
-	
-		self.flashlight:SetParent( self.Entity )
-		
-		-- The local positions are the offsets from parent..
-		self.flashlight:SetLocalPos( Vector( 0, 0, 0 ) )
-		self.flashlight:SetLocalAngles( Angle(0,0,0) )
-		
-		-- Looks like only one flashlight can have shadows enabled!
-		self.flashlight:SetKeyValue( "enableshadows", 1 )
-		self.flashlight:SetKeyValue( "farz", self:GetDistance() )
-		self.flashlight:SetKeyValue( "nearz", 12 )
-		self.flashlight:SetKeyValue( "lightfov", self:GetLightFOV() )
-		
-		local c = self:GetColor()
-		local b = self:GetBrightness()
-		self.flashlight:SetKeyValue( "lightcolor", Format( "%i %i %i 255", c.r * b, c.g * b, c.b * b ) )
-		
-	self.flashlight:Spawn()
-	
-	self.flashlight:Input( "SpotlightTexture", NULL, NULL, self:GetFlashlightTexture() )
+	self:SetOn( bOn )
 
 end
 
@@ -135,7 +151,7 @@ function ENT:UpdateLight()
 	if ( !IsValid( self.flashlight ) ) then return end
 
 	self.flashlight:Input( "SpotlightTexture", NULL, NULL, self:GetFlashlightTexture() )
-	self.flashlight:Input( "FOV", NULL, NULL, tostring( self:GetLightFOV() ) )
+	self.flashlight:Input( "FOV", NULL, NULL, tostring( self:GetFOV() ) )
 	self.flashlight:SetKeyValue( "farz", self:GetDistance() )
 
 	local c = self:GetColor()
