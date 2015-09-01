@@ -3,7 +3,7 @@ TOOL.Category = "Construction"
 TOOL.Name = "#tool.thruster.name"
 
 TOOL.ClientConVar[ "force" ] = "1500"
-TOOL.ClientConVar[ "model" ] = "models/props_phx2/garbage_metalcan001a.mdl "
+TOOL.ClientConVar[ "model" ] = "models/props_phx2/garbage_metalcan001a.mdl"
 TOOL.ClientConVar[ "keygroup" ] = "45"
 TOOL.ClientConVar[ "keygroup_back" ] = "42"
 TOOL.ClientConVar[ "toggle" ] = "0"
@@ -17,14 +17,14 @@ cleanup.Register( "thrusters" )
 function TOOL:LeftClick( trace )
 
 	if ( trace.Entity && trace.Entity:IsPlayer() ) then return false end
-	
+
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
-	
+
 	if ( CLIENT ) then return true end
-	
+
 	local ply = self:GetOwner()
-	
+
 	local force = math.Clamp( self:GetClientNumber( "force" ), 0, 1E35 )
 	local model = self:GetClientInfo( "model" )
 	local key = self:GetClientNumber( "keygroup" )
@@ -34,7 +34,7 @@ function TOOL:LeftClick( trace )
 	local effect = self:GetClientInfo( "effect" )
 	local damageable = self:GetClientNumber( "damageable" )
 	local soundname = self:GetClientInfo( "soundname" )
-		
+
 	-- If we shot a thruster change its force
 	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_thruster" && trace.Entity.pl == ply ) then
 
@@ -43,15 +43,15 @@ function TOOL:LeftClick( trace )
 		trace.Entity:SetToggle( toggle == 1 )
 		trace.Entity.ActivateOnDamage = damageable == 1
 		trace.Entity:SetSound( soundname )
-		
+
 		numpad.Remove( trace.Entity.NumDown )
 		numpad.Remove( trace.Entity.NumUp )
 		numpad.Remove( trace.Entity.NumBackDown )
 		numpad.Remove( trace.Entity.NumBackUp )
-		
+
 		trace.Entity.NumDown = numpad.OnDown( ply, key, "Thruster_On", trace.Entity, 1 )
 		trace.Entity.NumUp = numpad.OnUp( ply, key, "Thruster_Off", trace.Entity, 1 )
-		
+
 		trace.Entity.NumBackDown = numpad.OnDown( ply, key_bk, "Thruster_On", trace.Entity, -1 )
 		trace.Entity.NumBackUp = numpad.OnUp( ply, key_bk, "Thruster_Off", trace.Entity, -1 )
 
@@ -64,7 +64,7 @@ function TOOL:LeftClick( trace )
 
 		return true
 	end
-	
+
 	if ( !self:GetSWEP():CheckLimit( "thrusters" ) ) then return false end
 
 	if ( !util.IsValidModel( model ) ) then return false end
@@ -74,27 +74,27 @@ function TOOL:LeftClick( trace )
 	Ang.pitch = Ang.pitch + 90
 
 	local thruster = MakeThruster( ply, model, Ang, trace.HitPos, key, key_bk, force, toggle, effect, damageable, soundname )
-	
+
 	local min = thruster:OBBMins()
 	thruster:SetPos( trace.HitPos - trace.HitNormal * min.z )
-	
+
 	local const
-	
+
 	-- Don't weld to world
 	if ( IsValid( trace.Entity ) ) then
-	
+
 		const = constraint.Weld( thruster, trace.Entity, 0, trace.PhysicsBone, 0, collision == 0, true )
-		
+
 		-- Don't disable collision if it's not attached to anything
 		if ( collision == 0 ) then
-		
+
 			thruster:GetPhysicsObject():EnableCollisions( false )
 			thruster.nocollide = true
-			
+
 		end
-		
+
 	end
-	
+
 	undo.Create( "Thruster" )
 		undo.AddEntity( thruster )
 		undo.AddEntity( const )
@@ -103,7 +103,7 @@ function TOOL:LeftClick( trace )
 
 	ply:AddCleanup( "thrusters", thruster )
 	ply:AddCleanup( "thrusters", const )
-	
+
 	return true
 
 end
@@ -111,11 +111,11 @@ end
 if ( SERVER ) then
 
 	function MakeThruster( pl, Model, Ang, Pos, key, key_bck, force, toggle, effect, damageable, soundname, nocollide, Vel, aVel, frozen )
-	
+
 		if ( IsValid( pl ) ) then
 			if ( !pl:CheckLimit( "thrusters" ) ) then return false end
 		end
-	
+
 		local thruster = ents.Create( "gmod_thruster" )
 		if ( !IsValid( thruster ) ) then return false end
 		thruster:SetModel( Model )
@@ -123,7 +123,7 @@ if ( SERVER ) then
 		thruster:SetAngles( Ang )
 		thruster:SetPos( Pos )
 		thruster:Spawn()
-		
+
 		force = math.Clamp( force, 0, 1E35 )
 
 		thruster:SetEffect( effect )
@@ -135,7 +135,7 @@ if ( SERVER ) then
 
 		thruster.NumDown = numpad.OnDown( pl, key, "Thruster_On", thruster, 1 )
 		thruster.NumUp = numpad.OnUp( pl, key, "Thruster_Off", thruster, 1 )
-		
+
 		thruster.NumBackDown = numpad.OnDown( pl, key_bck, "Thruster_On", thruster, -1 )
 		thruster.NumBackUp = numpad.OnUp( pl, key_bck, "Thruster_Off", thruster, -1 )
 
@@ -154,17 +154,17 @@ if ( SERVER ) then
 		}
 
 		table.Merge( thruster:GetTable(), ttable )
-		
+
 		if ( IsValid( pl ) ) then
 			pl:AddCount( "thrusters", thruster )
 		end
-		
+
 		DoPropSpawnedEffect( thruster )
 
 		return thruster
-		
+
 	end
-	
+
 	duplicator.RegisterEntityClass( "gmod_thruster", MakeThruster, "Model", "Ang", "Pos", "key", "key_bck", "force", "toggle", "effect", "damageable", "soundname", "nocollide", "Vel", "aVel", "frozen" )
 
 end
@@ -175,21 +175,21 @@ function TOOL:UpdateGhostThruster( ent, pl )
 
 	local trace = util.TraceLine( util.GetPlayerTrace( pl ) )
 	if ( !trace.Hit ) then return end
-	
+
 	if ( trace.Entity && trace.Entity:GetClass() == "gmod_thruster" || trace.Entity:IsPlayer() ) then
-	
+
 		ent:SetNoDraw( true )
 		return
-		
+
 	end
-	
+
 	local Ang = trace.HitNormal:Angle()
 	Ang.pitch = Ang.pitch + 90
-	
+
 	local min = ent:OBBMins()
 	ent:SetPos( trace.HitPos - trace.HitNormal * min.z )
 	ent:SetAngles( Ang )
-	
+
 	ent:SetNoDraw( false )
 
 end
@@ -199,7 +199,7 @@ function TOOL:Think()
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
 		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 	end
-	
+
 	self:UpdateGhostThruster( self.GhostEntity, self:GetOwner() )
 
 end
@@ -209,7 +209,7 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Header", { Description = "#tool.thruster.desc" } )
-	
+
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "thruster", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.thruster.forward", Command = "thruster_keygroup", Label2 = "#tool.thruster.back", Command2 = "thruster_keygroup_back" } )
