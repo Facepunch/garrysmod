@@ -358,6 +358,8 @@ local function GetSceneData(victim, attacker, dmginfo)
 end
 
 local rag_collide = CreateConVar("ttt_ragdoll_collide", "0")
+-- 0 = Don't collide with players and props
+-- 1 = Don't collide with players
 
 -- Creates client or server ragdoll depending on settings
 function CORPSE.Create(ply, attacker, dmginfo)
@@ -375,7 +377,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
    rag:Activate()
 
    -- nonsolid to players, but can be picked up and shot
-   rag:SetCollisionGroup(rag_collide:GetBool() and COLLISION_GROUP_WEAPON or COLLISION_GROUP_DEBRIS_TRIGGER)
+   rag:SetCollisionGroup(rag_collide:GetBool() and COLLISION_GROUP_WEAPON or COLLISION_GROUP_WORLD)
 
    -- flag this ragdoll as being a player's
    rag.player_ragdoll = true
