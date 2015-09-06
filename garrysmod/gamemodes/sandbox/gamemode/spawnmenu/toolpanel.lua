@@ -13,17 +13,17 @@ function PANEL:Init()
 	self.List = vgui.Create( "DCategoryList", self )
 	self.List:Dock( LEFT )
 	self.List:SetWidth( 130 )
-	
+
 	self.Content = vgui.Create( "DCategoryList", self )
 	self.Content:Dock( FILL )
 	self.Content:DockMargin( 6, 0, 0, 0 )
-	
+
 	self:SetWide( 390 )
 
 	if ( ScrW() > 1280 ) then
 		self:SetWide( 460 )
 	end
-	
+
 end
 
 
@@ -33,24 +33,24 @@ end
 function PANEL:LoadToolsFromTable( inTable )
 
 	local inTable = table.Copy( inTable )
-	
+
 	for k, v in pairs( inTable ) do
-	
+
 		if ( istable( v ) ) then
-		
+
 			-- Remove these from the table so we can
 			-- send the rest of the table to the other
 			-- function
-			
+
 			local Name = v.ItemName
 			local Label = v.Text
 			v.ItemName = nil
 			v.Text = nil
-			
+
 			self:AddCategory( Name, Label, v )
-			
+
 		end
-	
+
 	end
 
 end
@@ -63,34 +63,36 @@ function PANEL:AddCategory( Name, Label, tItems )
 	local Category = self.List:Add( Label )
 
 	Category:SetCookieName( "ToolMenu." .. tostring( Name ) )
-	
+
 	local bAlt = true
-	
+
 	local tools = {}
 	for k, v in pairs( tItems ) do
-		tools[ language.GetPhrase( v.Text:sub( 2 ) ) ] = v
+		local str = v.Text
+		if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
+		tools[ language.GetPhrase( str ) ] = v
 	end
 
 	for k, v in SortedPairs( tools ) do
 
 		local item = Category:Add( v.Text )
-		
+
 		item.DoClick = function( button )
 
 			spawnmenu.ActivateTool( button.Name )
 
 		end
-		
+
 		item.ControlPanelBuildFunction	= v.CPanelFunction
 		item.Command					= v.Command
 		item.Name						= v.ItemName
 		item.Controls					= v.Controls
 		item.Text						= v.Text
-	
+
 	end
-	
+
 	self:InvalidateLayout()
-	
+
 end
 
 function PANEL:SetActive( cp )
