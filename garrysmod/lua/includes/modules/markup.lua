@@ -7,6 +7,7 @@ local pairs = pairs
 local Msg = Msg
 local setmetatable = setmetatable
 local math = math
+local utf8 = utf8
 
 module("markup")
 
@@ -240,6 +241,8 @@ end
    Usage: markup.Parse("<font=Default>changed font</font>\n<colour=255,0,255,255>changed colour</colour>")
 -----------------------------------------------------------]]
 function Parse(ml, maxwidth)
+
+	ml = utf8.force( ml ) -- Ensure we have valid UTF-8 data
 	
 	colour_stack = { {r=255,g=255,b=255,a=255} }
 	font_stack = { "DermaDefault" }
@@ -269,8 +272,7 @@ function Parse(ml, maxwidth)
 		blocks[i].text = string.gsub(blocks[i].text, "&gt;", ">")
 		blocks[i].text = string.gsub(blocks[i].text, "&lt;", "<")
 		blocks[i].text = string.gsub(blocks[i].text, "&amp;", "&")
-		for j=1,string.len(blocks[i].text) do
-			local ch = string.sub(blocks[i].text,j,j)
+		for j, ch in utf8.codes( blocks[ i ].text ) do
 			
 			if (ch == "\n") then
 			
@@ -356,9 +358,10 @@ function Parse(ml, maxwidth)
 						end
 						
 						if (lastSpacePos == string.len(curString)) then
-							ch = string.sub(curString,lastSpacePos,lastSpacePos) .. ch
-							j = lastSpacePos
-							curString = string.sub(curString, 1, lastSpacePos-1)
+							local sequenceStartPos = utf8.offset(curString,0,lastSpacePos)
+							ch = string.match(curString, utf8.charpattern, sequenceStartPos) .. ch
+							j = utf8.offset(curString,1,sequenceStartPos)
+							curString = string.sub(curString, 1, sequenceStartPos - 1)
 						else
 							ch = string.sub(curString,lastSpacePos+1) .. ch
 							j = lastSpacePos+1
