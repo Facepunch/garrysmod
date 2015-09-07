@@ -19,6 +19,10 @@ SWEP.WepSelectIcon		= surface.GetTextureID( "weapons/swep" )
 -- This is the corner of the speech bubble
 SWEP.SpeechBubbleLid	= surface.GetTextureID( "gui/speech_lid" )
 
+-- The color that the crosshair will be drawn as
+SWEP.CrosshairColor		= Color( 255, 208, 64, 255 )
+SWEP.CrosshairZoomedColor	= color_white
+
 --[[---------------------------------------------------------
 	You can draw to the HUD here - it will only draw when
 	the client has the weapon deployed..
@@ -223,4 +227,22 @@ function SWEP:FireAnimationEvent( pos, ang, event, options )
 		return true
 	end
 
+end
+
+--[[---------------------------------------------------------
+	Name: DoDrawCrosshair
+	Desc: Allows you to override how the default crosshair is drawn
+-----------------------------------------------------------]]
+function SWEP:DoDrawCrosshair( x, y )
+	
+	local col = self.CrosshairColor
+	
+	if ( self.Owner:GetFOV() < 90 ) then
+		col = self.CrosshairZoomedColor
+	end
+	
+	draw.SimpleText( "Q", "Crosshairs", x, y, col, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+	
+	return true
+	
 end
