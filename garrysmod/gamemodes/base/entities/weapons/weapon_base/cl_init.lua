@@ -237,7 +237,7 @@ function SWEP:DoDrawCrosshair( x, y )
 	
 	local col = self.CrosshairColor
 	
-	if ( self.Owner:IsPlayer() and self.Owner:GetFOV() >= 90 ) then
+	if ( self.Owner:IsPlayer() and self.Owner:GetFOV() < 90 ) then
 		col = self.CrosshairZoomedColor
 	end
 	
