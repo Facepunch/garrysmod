@@ -332,18 +332,20 @@ local function NameChangeKick()
 
    if GetRoundState() == ROUND_ACTIVE then
       for _, ply in pairs(player.GetHumans()) do
-         if ply.spawn_nick then
-            if ply.has_spawned and ply.spawn_nick != ply:Nick() then
-               local t = GetConVar("ttt_namechange_bantime"):GetInt()
-               local msg = "Changed name during a round"
-               if t > 0 then
-                  ply:KickBan(t, msg)
-               else
-                  ply:Kick(msg)
+         if not ply:IsAdmin() and not ply:IsUserGroup("operator") then
+            if ply.spawn_nick then
+               if ply.has_spawned and ply.spawn_nick != ply:Nick() then
+                  local t = GetConVar("ttt_namechange_bantime"):GetInt()
+                  local msg = "Changed name during a round"
+                  if t > 0 then
+                     ply:KickBan(t, msg)
+                  else
+                     ply:Kick(msg)
+                  end
                end
+            else
+               ply.spawn_nick = ply:Nick()
             end
-         else
-            ply.spawn_nick = ply:Nick()
          end
       end
    end
