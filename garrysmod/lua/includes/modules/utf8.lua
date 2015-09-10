@@ -36,7 +36,7 @@ local function strRelToAbs( str, ... )
 end
 
 -- Decodes a single UTF-8 byte-sequence from a string, ensuring it is valid
--- Returns the index of the first and last character of the sequence
+-- Returns the index of the first/last chars of a sequence and its codepoint
 --
 local function decode( str, startPos )
 
@@ -46,7 +46,7 @@ local function decode( str, startPos )
 
 	-- Single-byte sequence
 	if b1 < 0x80 then
-		return startPos, startPos
+		return startPos, startPos, b1
 	end
 
 	-- Validate first byte of multi-byte sequence
@@ -59,18 +59,25 @@ local function decode( str, startPos )
 							b1 >= 0xE0 and 2 or
 							b1 >= 0xC0 and 1
 
-	local endPos = startPos + contByteCount
+	local endPos    = startPos + contByteCount
+	local codePoint = 0
 
 	-- Validate our continuation bytes
 	for _, bX in ipairs { str:byte( startPos + 1, endPos ) } do
 		
+		-- Invalid continuation byte hit
 		if bit.band( bX, 0xC0 ) ~= 0x80 then
 			return nil
 		end
 
+		codePoint = bit.bor( bit.lshift( codePoint, 6 ), bit.band( bX, 0x3F ) )
+		b1 = bit.lshift( b1, 1 )
+
 	end
 
-	return startPos, endPos 
+	codePoint = bit.bor( codePoint, bit.lshift( bit.band( b1, 0x7F ), contByteCount * 5 ) )
+
+	return startPos, endPos, codePoint
 
 end
 
@@ -140,7 +147,7 @@ function codes( str )
 			return nil
 		end
 
-		local startPos, endPos = decode( str, i )
+		local startPos, endPos, codePoint = decode( str, i )
 
 		if not startPos then
 			error( "invalid UTF-8 code", 2 )
@@ -148,7 +155,7 @@ function codes( str )
 
 		i = endPos + 1
 
-		return startPos, str:sub( startPos, endPos )
+		return startPos, codePoint
 
 	end
 
@@ -165,7 +172,7 @@ function codepoint( str, startPos, endPos )
 	local ret = {}
 
 	repeat
-		local seqStartPos, seqEndPos = decode( str, startPos )
+		local seqStartPos, seqEndPos, codePoint = decode( str, startPos )
 
 		if not seqStartPos then
 			error( "invalid UTF-8 code", 2 )
@@ -174,32 +181,7 @@ function codepoint( str, startPos, endPos )
 		-- Increment current string index
 		startPos = seqEndPos + 1
 
-		-- Amount of bytes making up our sequence
-		local len = seqEndPos - seqStartPos + 1
-
-		if len == 1 then -- Single-byte codepoint
-
-			table.insert( ret, str:byte( seqStartPos ) )
-
-		else -- Multi-byte codepoint
-
-			local b1 = str:byte( seqStartPos )
-			local cp = 0
-
-			for i = seqStartPos + 1, seqEndPos do
-
-				local bX = str:byte( i )
-
-				cp = bit.bor( bit.lshift( cp, 6 ), bit.band( bX, 0x3F ) )
-				b1 = bit.lshift( b1, 1 )
-
-			end
-
-			cp = bit.bor( cp, bit.lshift( bit.band( b1, 0x7F ), ( len - 1 ) * 5 ) )
-
-			table.insert( ret, cp )
-
-		end
+		table.insert( ret, codePoint )
 	until seqEndPos >= endPos
 
 	return unpack( ret )

@@ -272,7 +272,9 @@ function Parse(ml, maxwidth)
 		blocks[i].text = string.gsub(blocks[i].text, "&gt;", ">")
 		blocks[i].text = string.gsub(blocks[i].text, "&lt;", "<")
 		blocks[i].text = string.gsub(blocks[i].text, "&amp;", "&")
-		for j, ch in utf8.codes( blocks[ i ].text ) do
+		for j, c in utf8.codes( blocks[ i ].text ) do
+
+			local ch = utf8.char( c )
 			
 			if (ch == "\n") then
 			
