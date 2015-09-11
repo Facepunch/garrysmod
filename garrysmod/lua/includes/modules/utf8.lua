@@ -290,6 +290,11 @@ function force( str )
 
 	local curPos, endPos = 1, #str
 
+	-- Empty string?
+	if endPos == 0 then
+		return str
+	end
+
 	repeat
 		
 		local seqStartPos, seqEndPos = decode( str, curPos )
