@@ -88,15 +88,15 @@ end
 
 function net.ReadColor()
 
-	return Color( 
-		net.ReadUInt( 8 ), net.ReadUInt( 8 ), 
-		net.ReadUInt( 8 ), net.ReadUInt( 8 ) 
+	return Color(
+		net.ReadUInt( 8 ), net.ReadUInt( 8 ),
+		net.ReadUInt( 8 ), net.ReadUInt( 8 )
 	)
 
 end
 
 
-net.WriteVars = 
+net.WriteVars =
 {
 
 	[TYPE_NIL]       = function ( t, v ) net.WriteUInt( t, 8 )                                end,
@@ -104,7 +104,7 @@ net.WriteVars =
 	[TYPE_NUMBER]    = function ( t, v ) net.WriteUInt( t, 8 )    net.WriteDouble( v )        end,
 	[TYPE_TABLE]     = function ( t, v ) net.WriteUInt( t, 8 )    net.WriteTable( v )         end,
 	[TYPE_BOOL]      = function ( t, v ) net.WriteUInt( t, 8 )    net.WriteBool( v )          end,
-	[TYPE_ENTITY]    = function ( t, v ) net.WriteUInt( t, 8 )    net.WriteEntity( v )        end, 
+	[TYPE_ENTITY]    = function ( t, v ) net.WriteUInt( t, 8 )    net.WriteEntity( v )        end,
 	[TYPE_VECTOR]    = function ( t, v ) net.WriteUInt( t, 8 )    net.WriteVector( v )        end,
 	[TYPE_ANGLE]     = function ( t, v ) net.WriteUInt( t, 8 )    net.WriteAngle( v )         end,
 	[TYPE_COLOR]     = function ( t, v ) net.WriteUInt( t, 8 )    net.WriteColor( v )         end,
@@ -127,7 +127,7 @@ function net.WriteType( v )
 
 end
 
-net.ReadVars = 
+net.ReadVars =
 {
 	[TYPE_NIL]       = function ()    return                   end,
 	[TYPE_STRING]    = function ()    return net.ReadString()  end,
@@ -293,11 +293,11 @@ local function SendType( x )
 
 	end
 
-	if ( t == "string" and IsHexaString( x ) ) then 
+	if ( t == "string" and IsHexaString( x ) ) then
 		return "hexastring"
 	end
 
-	if ( t == "string" and Is7BitString( x ) ) then 
+	if ( t == "string" and Is7BitString( x ) ) then
 		return "string7"
 	end
 
@@ -344,7 +344,7 @@ do
 	--
 	-- backwards lookup
 	--
-	for k,v in pairs( StringToTypeLookup ) do 
+	for k,v in pairs( StringToTypeLookup ) do
 		TypeToStringLookup[ v ] = k
 	end
 
@@ -362,7 +362,7 @@ local ReferenceType = StringToType( "reference" )
 local TableType     = StringToType( "table" )
 
 reading = {
-	-- 
+	--
 	-- Normal gmod types we can't really improve
 	--
 	Color       = net.ReadColor,
@@ -377,9 +377,9 @@ reading = {
 	int16 = function() return net.ReadInt( 16 ) end,
 	int32 = function() return net.ReadInt( 32 ) end,
 
-	-- 
+	--
 	-- A reference index in our already-sent-table
-	-- 
+	--
 	reference = function( references ) return references[ reading.uintv() ] end,
 
 	--
@@ -442,7 +442,7 @@ reading = {
 
 			local ret = ""
 
-			while true do 
+			while true do
 				local chr = net.ReadUInt( 6 )
 				if ( chr == 0 ) then return ret end -- terminator
 				ret = ret..Hexa2CharLookup[ chr ]
@@ -473,7 +473,7 @@ reading = {
 	end,
 
 	--
-	-- Vector, we are using our own wrapper since 
+	-- Vector, we are using our own wrapper since
 	-- default net.WriteVector loses lots of precision
 	--
 	Vector = function()
@@ -482,7 +482,7 @@ reading = {
 	end,
 
 	--
-	-- Angle, we are using our own wrapper since 
+	-- Angle, we are using our own wrapper since
 	-- default net.WriteAngle loses lots of precision
 	--
 	Angle = function()
@@ -517,7 +517,7 @@ reading = {
 
 		end
 
-		if ( net.ReadBool() ) then 
+		if ( net.ReadBool() ) then
 			-- we have at least one index starting from 1
 
 			local max = reading.uintv()
@@ -545,7 +545,7 @@ reading = {
 			-- Check if it's a real value
 			--
 			if ( TypeToString( type ) == "endtable" ) then break end
-			local k = reading[ TypeToString( type ) ]( references ) 
+			local k = reading[ TypeToString( type ) ]( references )
 
 			referencecheck( type, k )
 
@@ -566,21 +566,26 @@ reading = {
 --
 -- We need this since #table returns undefined values
 -- by the lua spec if it doesn't have incremental keys
--- we use rawget since we don't want to get hurt by metatables
+-- we use pairs since it's backwards compatible
 --
 local function array_len(x)
 
-	local i = 1
-	if ( not rawget( x, 1 ) ) then return 0 end
+	local indices = {};
+    for k,v in pairs(x) do
 
-	while( rawget( x, i ) ) do
-		i = i + 1
-		if ( i > 8096 ) then 
-			return i
-		end
-	end
+        indices[k] = true;
 
-	return i - 1
+    end
+
+    for i = 1, 8096 do
+
+        if(nil == indices[i]) then
+            return i - 1
+        end
+
+    end
+
+    return 8096
 
 end
 
@@ -720,7 +725,7 @@ writing = {
 	end,
 
 	--
-	-- Vector, we are using our own wrapper since 
+	-- Vector, we are using our own wrapper since
 	-- default net.WriteVector loses lots of precision
 	--
 	Vector = function( v )
@@ -732,7 +737,7 @@ writing = {
 	end,
 
 	--
-	-- Angle, we are using our own wrapper since 
+	-- Angle, we are using our own wrapper since
 	-- default net.WriteAngle loses lots of precision
 	--
 	Angle = function( a )
@@ -817,10 +822,10 @@ writing = {
 
 		end
 
-		for k,v in next, tbl, nil do
+		for k,v in pairs(tbl) do
 
 			--
-			-- make sure we didn't already write 
+			-- make sure we didn't already write
 			-- the index via array indices
 			--
 			if ( done[ k ] ) then continue end
