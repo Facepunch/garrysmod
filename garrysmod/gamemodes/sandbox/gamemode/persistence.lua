@@ -46,11 +46,14 @@ hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
 
 end )
 
-hook.Add( "InitPostEntity", "PersistenceInit", function()
-
+local function LoadPersistentEnts()
+	
 	local PersistPage = GetConVarString( "sbox_persist" )
 	if ( PersistPage == "0" ) then return end
 
 	hook.Run( "PersistenceLoad", PersistPage );
 	
-end )
+end
+
+hook.Add( "InitPostEntity", "PersistenceInit", LoadPersistentEnts )
+hook.Run( "PostCleanupMap", "PersistenceReload", LoadPersistentEnts )
