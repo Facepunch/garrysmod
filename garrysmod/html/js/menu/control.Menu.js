@@ -102,7 +102,7 @@ function MenuController( $scope, $rootScope )
 	// 
 	$scope.BackToGame = function()
 	{
-		lua.Run( "RawConsoleCommand( 'gameui_hide' );" );
+		lua.Run( "gui.HideGameUI()" );
 	}
 
 	$scope.Disconnect = function ()
