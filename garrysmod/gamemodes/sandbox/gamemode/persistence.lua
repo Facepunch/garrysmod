@@ -56,4 +56,8 @@ local function LoadPersistentEnts()
 end
 
 hook.Add( "InitPostEntity", "PersistenceInit", LoadPersistentEnts )
-hook.Run( "PostCleanupMap", "PersistenceReload", LoadPersistentEnts )
+
+hook.Add( "PreCleanupMap", "PersistencePreCleanupSave", function()
+	hook.Run( "PersistenceSave" )
+end)
+hook.Add( "PostCleanupMap", "PersistenceReload", LoadPersistentEnts )
