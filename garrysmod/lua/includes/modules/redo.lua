@@ -2,9 +2,9 @@ module( "redo", package.seeall )
 
 if CLIENT then
 
-	redo_maxstored = CreateClientConVar("redo_maxstored", "30", true, true)
+	local redo_maxhistory = CreateClientConVar("cl_maxredohistory", "50", true, true)
 	
-	cvars.AddChangeCallback("redo_maxstored", function(name, old, new)
+	cvars.AddChangeCallback("cl_maxredohistory", function(name, old, new)
 		net.Start("redoLimit")
 		net.WriteInt(tonumber(new), 16)
 		net.SendToServer()
@@ -29,9 +29,11 @@ end
 if SERVER then
 
 	redo = {}
+	
+	local redohistory = CreateConVar( "sv_maxredohistory", "50", FCVAR_SERVER_CAN_EXECUTE, "Sets the maximum number of redos a client can elect to store." ) )
 
 	local function updatelimit( len, ply )
-		local max = math.Clamp(net.ReadInt(16), 0, 50)
+		local max = math.Clamp(net.ReadInt(16), 0, math.min(redohistory:GetInt(), ply:GetInfoNum("cl_maxredohistory", 50))
 	
 		for i = 1, #redo[ply] - max do
 			if redo[ply][i] then
