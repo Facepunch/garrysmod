@@ -10,8 +10,8 @@ if CLIENT then
 		net.SendToServer()
 	end)
 	
-	local function redo_message( len, text )
-		notification.AddLegacy("Redone " .. ( text or "Item" ), 2, 3)
+	local function redo_message( len )
+		notification.AddLegacy("Redone Item" ), 2, 3)
 		surface.PlaySound( "buttons/button15.wav" )
 	end
 	
