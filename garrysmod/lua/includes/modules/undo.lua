@@ -336,6 +336,9 @@ end
 --[[---------------------------------------------------------
    Undos an undo
 -----------------------------------------------------------]]
+
+local maxhistory = GetConVar( "sv_maxredohistory" )
+
 function Do_Undo( undo )
 
 	if ( !undo ) then return false end
@@ -357,7 +360,7 @@ function Do_Undo( undo )
 		local buffer = duplicator.CopyEnts(undo.Entities)
 		table.insert(redo[undo.Owner], buffer)
 	
-		if #redo[undo.Owner] > math.Clamp(undo.Owner:GetInfoNum("redo_maxstored", 30), 0, 50) then
+		if #redo[undo.Owner] > math.Clamp(undo.Owner:GetInfoNum("redo_maxstored", 30), 0, math.min(maxhistory:GetInt(), undo.Owner:GetInfoNum("cl_maxredohistory", 50)) then
 			table.remove(redo[undo.Owner], 1)
 		end
 	end
