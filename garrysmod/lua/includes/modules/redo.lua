@@ -1,7 +1,5 @@
 module( "redo", package.seeall )
 
-redo = {}
-
 if CLIENT then
 
 	redo_maxstored = CreateClientConVar("redo_maxstored", "30", true, true)
@@ -29,7 +27,9 @@ if CLIENT then
 end
 
 if SERVER then
-	
+
+	redo = {}
+
 	local function updatelimit( len, ply )
 		local max = math.Clamp(net.ReadInt(16), 0, 50)
 	
@@ -92,4 +92,3 @@ if SERVER then
 	end)
 	
 end
-
