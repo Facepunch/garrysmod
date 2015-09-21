@@ -11,15 +11,15 @@ if CLIENT then
 	end)
 	
 	local function redo_message( len )
-		notification.AddLegacy("Redone Item" ), 2, 3)
+		notification.AddLegacy( "Redone Item", 2, 3 )
 		surface.PlaySound( "buttons/button15.wav" )
 	end
 	
 	net.Receive( "redone", redo_message )
 	
 	local function redo_clear()
-		notification.AddLegacy("Redo History Cleared", 4, 3)
-		surface.PlaySound("buttons/button14.wav")
+		notification.AddLegacy( "Redo History Cleared", 4, 3 )
+		surface.PlaySound( "buttons/button14.wav" )
 	end
 	
 	net.Receive( "redoClear", redo_clear )
