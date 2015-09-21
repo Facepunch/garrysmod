@@ -51,6 +51,7 @@ if SERVER then
 	end
 	
 	function Do_Redo( ply )
+		if hook.Run("OnRedo", ply ) then return end
 		local buffer = redo[ply][#redo[ply]]
 	
 		if buffer and #redo[ply] > 0 then
