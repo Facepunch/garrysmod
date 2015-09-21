@@ -1,11 +1,5 @@
 module( "undo", package.seeall )
 
--- undo.Create("Wheel")
--- undo.AddEntity( axis )
--- undo.AddEntity( constraint )
--- undo.SetPlayer( self.Owner )
--- undo.Finish()
-
 if ( CLIENT ) then
 
 	local ClientUndos = {}
