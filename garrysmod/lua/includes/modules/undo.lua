@@ -340,6 +340,28 @@ function Do_Undo( undo )
 
 	if ( !undo ) then return false end
 	
+	local hasentity = false
+	for k,v in pairs(undo.Entities) do
+		if IsValid(v) and v:GetClass() != "phys_constraint" then
+			hasentity = true
+		end
+	end
+
+	if hasentity then
+		redo[undo.Owner] = redo[undo.Owner] or {}
+		for k,v in pairs(undo.Entities) do
+			if IsValid(v:GetPhysicsObject()) then
+				v.Velocity = v:GetPhysicsObject():GetVelocity()
+			end
+		end
+		local buffer = duplicator.CopyEnts(undo.Entities)
+		table.insert(redo[undo.Owner], buffer)
+	
+		if #redo[undo.Owner] > math.Clamp(undo.Owner:GetInfoNum("redo_maxstored", 30), 0, 50) then
+			table.remove(redo[undo.Owner], 1)
+		end
+	end
+	
 	local count = 0
 	
 	-- Call each function
