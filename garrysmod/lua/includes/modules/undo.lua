@@ -352,6 +352,13 @@ function Do_Undo( undo )
 			end
 		end
 		local buffer = duplicator.CopyEnts(undo.Entities)
+		
+		for k,v in pairs(buffer) do
+			if v.Type == "nextbot" then
+				table.remove(buffer, k)
+			end
+		end
+	
 		table.insert(redo[undo.Owner], buffer)
 	
 		if #redo[undo.Owner] > math.Clamp(undo.Owner:GetInfoNum("redo_maxstored", 30), 0, math.min(maxhistory:GetInt(), undo.Owner:GetInfoNum("cl_maxredohistory", 50)) then
