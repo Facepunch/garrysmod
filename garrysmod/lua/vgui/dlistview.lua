@@ -454,13 +454,15 @@ function PANEL:OnClickLine( Line, bClear )
 			local First = math.min( Selected, LineID )
 			local Last = math.max( Selected, LineID )
 			
+			local line
 			for id = First, Last do
 			
-				local line = self.Sorted[ id ]
+				line = self.Sorted[ id ]
 				line:SetSelected( true )
 			
 			end
 		
+			self:OnRowSelected( line:GetID(), line )
 			return
 		
 		end
