@@ -9,6 +9,8 @@ ENT.PrintName		= "Bouncy Ball"
 ENT.Author			= "Garry Newman"
 ENT.Information		= "An edible bouncy ball"
 ENT.Category		= "Fun + Games"
+ENT.MinSize			= 4
+ENT.MaxSize		= 128
 
 ENT.Editable		= true
 ENT.Spawnable		= true
@@ -17,7 +19,7 @@ ENT.RenderGroup		= RENDERGROUP_TRANSLUCENT
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Float", 0, "BallSize", { KeyName = "ballsize", Edit = { type = "Float", min = 4, max = 128, order = 1 } } )
+	self:NetworkVar( "Float", 0, "BallSize", { KeyName = "ballsize", Edit = { type = "Float", min = self.MinSize, max = self.MaxSize, order = 1 } } )
 	self:NetworkVar( "Vector", 0, "BallColor", { KeyName = "ballcolor", Edit = { type = "VectorColor", order = 2 } } )
 
 end
@@ -129,6 +131,12 @@ end
 
 end
 
+--[[---------------------------------------------------------
+   Name: RestoredNetworkVars
+-----------------------------------------------------------]]
+function ENT:RestoredNetworkVars( tbl )
+	tbl.BallSize = math.Clamp( tbl.BallSize, self.MinSize, self.MaxSize )
+end
 
 --[[---------------------------------------------------------
    Name: PhysicsCollide
