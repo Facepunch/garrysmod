@@ -206,8 +206,8 @@ end
 
 function TOOL:Think()
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != "models/MaxOfS2D/light_tubular.mdl" ) then
-		self:MakeGhostEntity( "models/MaxOfS2D/light_tubular.mdl", Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != "models/maxofs2d/light_tubular.mdl" ) then
+		self:MakeGhostEntity( "models/maxofs2d/light_tubular.mdl", Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 	end
 	
 	self:UpdateGhostLight( self.GhostEntity, self:GetOwner() )
