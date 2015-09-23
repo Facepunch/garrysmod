@@ -105,8 +105,11 @@ function PLAYER:Spawn()
 	local col = self.Player:GetInfo( "cl_playercolor" )
 	self.Player:SetPlayerColor( Vector( col ) )
 
-	local col = self.Player:GetInfo( "cl_weaponcolor" )
-	self.Player:SetWeaponColor( Vector( col ) )
+	local col = Vector( self.Player:GetInfo( "cl_weaponcolor" ) )
+	if col:Length() == 0 then
+		col = Vector( 0.001, 0.001, 0.001 )
+	end
+	self.Player:SetWeaponColor( col )
 
 end
 
