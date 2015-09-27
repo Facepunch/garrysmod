@@ -40,23 +40,11 @@ end
 
 --[[---------------------------------------------------------
    Name: Clamp( in, low, high )
-   Desc: Clamp value between 2 optional values
+   Desc: Clamp value between 2 values
 ------------------------------------------------------------]]
 function math.Clamp( _in, low, high )
-	if ( low ~= nil and high ~= nil ) then
-		if (_in < low) then return low end
-		if (_in > high) then return high end
-	end
-	if ( low ~= nil and high == nil ) then
-		if ( _in < low ) then
-			return low
-		end
-	end
-	if ( low == nil and high ~= nil ) then
-		if ( _in > high ) then
-			return high
-		end
-	end
+	if (_in < low ) then return low end
+	if (_in > high ) then return high end
 	return _in
 end
 
