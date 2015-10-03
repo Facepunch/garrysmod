@@ -46,9 +46,9 @@ L.karma_dmg_other  = "Your Karma is {amount}. As a result all damage you deal is
 L.body_found       = "{finder} found the body of {victim}. {role}"
 
 -- The {role} in body_found will be replaced by one of the following:
-L.body_found_t     = "He was a Traitor!"
-L.body_found_d     = "He was a Detective."
-L.body_found_i     = "He was innocent."
+L.body_found_t     = "They were a Traitor!"
+L.body_found_d     = "They were a Detective."
+L.body_found_i     = "They were an Innocent."
 
 L.body_confirm     = "{finder} confirmed the death of {victim}."
 

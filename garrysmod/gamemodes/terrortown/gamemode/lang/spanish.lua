@@ -46,9 +46,9 @@ L.karma_dmg_other  = "Tienes {amount} de karma. Como resultado, el daño que cau
 L.body_found       = "{finder} ha encontrado el cadáver de {victim}. {role}"
 
 -- The {role} in body_found will be replaced by one of the following:
-L.body_found_t     = "¡Era un traidor!"
-L.body_found_d     = "¡Era un detective!"
-L.body_found_i     = "¡Era inocente!"
+L.body_found_t     = "¡Estaban un traidor!"
+L.body_found_d     = "¡Estaban un detective!"
+L.body_found_i     = "¡Estaban un inocente!"
 
 L.body_confirm     = "{finder} ha confirmado la muerte de {victim}."
 
@@ -387,9 +387,9 @@ fáciles de localizar con esto.]]
 -- Flare gun
 L.flare_name      = "Pistola de bengalas"
 L.flare_desc      = [[
-Puede usarse para quemar cadáveres y que 
-no puedan ser analizados. 
-Munición limitada. 
+Puede usarse para quemar cadáveres y que
+no puedan ser analizados.
+Munición limitada.
 
 Quemar un cuerpo produce un sonido
 que puede ser reconocible.]]
@@ -501,7 +501,7 @@ L.dna_menu_sample = "Muestra de ADN en {source}"
 L.dna_menu_remove = "Eliminar selección"
 L.dna_menu_help1  = "Has tomado estas muestras de ADN."
 L.dna_menu_help2  = [[
-Cuando está cargado, puedes escanear la 
+Cuando está cargado, puedes escanear la
 ubicación del jugador al que pertenece la
 muestra de ADN que hayas elegido. Cuanto
 mayor sea la distancia más energía gastará.]]
