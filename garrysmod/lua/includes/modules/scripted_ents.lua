@@ -25,7 +25,7 @@ local function TableInherit( t, base )
 		
 		if ( t[k] == nil ) then
 			t[k] = v
-		elseif ( istable( t[k] ) ) then
+		elseif ( istable( t[k] ) and ( k == "BaseClass" ) ) then
 			TableInherit( t[k], v )
 		end
 		
