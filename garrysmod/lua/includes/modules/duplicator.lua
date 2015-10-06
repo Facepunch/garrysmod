@@ -725,6 +725,8 @@ function Paste( Player, EntityList, ConstraintList )
 	-- Create the Entities
 	--
 	for k, v in pairs( EntityList ) do
+		
+		if not IsAllowed(v.Class, Player) then continue end
 	
 		local e = nil
 		local b = ProtectedCall( function() e = CreateEntityFromTable( Player, v ) end )
