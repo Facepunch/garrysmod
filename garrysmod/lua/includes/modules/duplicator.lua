@@ -303,8 +303,18 @@ end
 --
 -- Returns true if we can copy/paste this entity
 --
-function IsAllowed( classname )
+function IsAllowed( classname, Player )
 
+	if not Player then
+		return DuplicateAllowed[ classname ]
+	end
+
+	local candupe = hook.Call( "PlayerDupelicateEntity", GAMEMODE, classname, Player )
+	
+	if (candupe != nil) then
+		return candupe	
+	end
+	
 	return DuplicateAllowed[ classname ]
 
 end
@@ -405,7 +415,7 @@ end
 -----------------------------------------------------------]]
 function GenericDuplicatorFunction( Player, data )
 
-	if ( !IsAllowed( data.Class ) ) then
+	if ( !IsAllowed( data.Class, Player ) ) then
 		-- MsgN( "duplicator: ", data.Class, " isn't allowed to be duplicated!" )
 		return
 	end
@@ -546,12 +556,12 @@ end
    Copy this entity, and all of its constraints and entities
    and put them in a table.
 -----------------------------------------------------------]]
-function Copy( Ent, AddToTable )
+function Copy( Ent, AddToTable, Player )
 
 	local Ents = {}
 	local Constraints = {}
 
-	GetAllConstrainedEntitiesAndConstraints( Ent, Ents, Constraints )
+	GetAllConstrainedEntitiesAndConstraints( Ent, Ents, Constraints, Player )
 
 	local EntTables = {}
 	if ( AddToTable != nil ) then EntTables = AddToTable.Entities or {} end
@@ -846,7 +856,7 @@ end
   from outside of this code. It will probably get moved to
   constraint.lua soon.
 -----------------------------------------------------------]]
-function GetAllConstrainedEntitiesAndConstraints( ent, EntTable, ConstraintTable )
+function GetAllConstrainedEntitiesAndConstraints( ent, EntTable, ConstraintTable, Player )
 
 	if ( !IsValid( ent ) ) then return end
 
@@ -855,7 +865,7 @@ function GetAllConstrainedEntitiesAndConstraints( ent, EntTable, ConstraintTable
 	if ( ent.ClassOverride ) then classname = ent.ClassOverride end
 	
 	-- Is the entity in the dupe whitelist?
-	if ( !IsAllowed( classname ) ) then
+	if ( !IsAllowed( classname, Player ) ) then
 		-- MsgN( "duplicator: ", classname, " isn't allowed to be duplicated!" )
 		return
 	end
