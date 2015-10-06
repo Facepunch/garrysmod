@@ -309,7 +309,7 @@ function IsAllowed( classname, Player )
 		return DuplicateAllowed[ classname ]
 	end
 
-	local candupe = hook.Call( "PlayerDupelicateEntity", GAMEMODE, classname, Player )
+	local candupe = hook.Call( "PlayerDupelicateEntity", GAMEMODE, Player, classname )
 	
 	if (candupe != nil) then
 		return candupe	
