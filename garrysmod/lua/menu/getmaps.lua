@@ -125,10 +125,12 @@ local function UpdateMaps()
 	MapNames[ "pl_" ] = "Team Fortress 2"
 	MapNames[ "plr_" ] = "Team Fortress 2"
 	MapNames[ "rd_" ] = "Team Fortress 2"
+	MapNames[ "pd_" ] = "Team Fortress 2"
 	MapNames[ "sd_" ] = "Team Fortress 2"
 	MapNames[ "tc_" ] = "Team Fortress 2"
 	MapNames[ "tr_" ] = "Team Fortress 2"
 	MapNames[ "trade_" ] = "Team Fortress 2"
+	MapNames[ "pass_" ] = "Team Fortress 2"
 
 	MapNames[ "zpa_" ] = "Zombie Panic! Source"
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
@@ -203,7 +205,7 @@ local IgnoreMaps = {
 	[ "sdk_" ] = true,
 	[ "test_" ] = true,
 	[ "vst_" ] = true,
-	
+
 	-- Maps
 	[ "c4a1y" ] = true,
 	[ "credits" ] = true,
@@ -277,21 +279,21 @@ local function RefreshMaps( skip )
 			end
 		end
 
-		if ( !MapList[ Category ] ) then 
-			MapList[ Category ] = {} 
+		if ( !MapList[ Category ] ) then
+			MapList[ Category ] = {}
 		end
 
 		table.insert( MapList[ Category ], name )
 
-		if ( fav ) then 
+		if ( fav ) then
 			if ( !MapList[ "Favourites" ] ) then
 				MapList[ "Favourites" ] = {}
 			end
 
-			table.insert( MapList[ "Favourites" ], name ) 
+			table.insert( MapList[ "Favourites" ], name )
 		end
 
-		if ( csgo ) then 
+		if ( csgo ) then
 			if ( !MapList[ "CS: Global Offensive" ] ) then
 				MapList[ "CS: Global Offensive" ] = {}
 			end
