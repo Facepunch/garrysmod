@@ -2,7 +2,7 @@
 {
 	"base"		"base"
 	"title"		"Sandbox"
-	"maps"		"^gm_|^gmod_"
+	"maps"		"^gm_|^gmod_|^phys_"
 	"menusystem"	"1"
 	
 	"settings"
