@@ -8,6 +8,7 @@ local rt_Store		= render.GetScreenEffectTexture( 0 )
 local rt_Blur		= render.GetScreenEffectTexture( 1 )
 
 local List = {}
+local RenderEnt = NULL
 
 function Add( ents, color, blurx, blury, passes, add, ignorez )
 
@@ -28,6 +29,10 @@ function Add( ents, color, blurx, blury, passes, add, ignorez )
 
 	table.insert( List, t )
 
+end
+
+function RenderedEntity()
+	return RenderEnt
 end
 
 function Render( entry )
@@ -65,9 +70,13 @@ function Render( entry )
 
 						if ( !IsValid( v ) ) then continue end
 
+						RenderEnt = v
+
 						v:DrawModel()
 
 					end
+
+					RenderEnt = NULL
 
 				render.SetStencilCompareFunction( STENCIL_EQUAL )
 				render.SetStencilPassOperation( STENCIL_KEEP )
@@ -129,7 +138,6 @@ function Render( entry )
 	render.SetStencilTestMask( 0 )
 	render.SetStencilWriteMask( 0 )
 	render.SetStencilReferenceValue( 0 )
-
 end
 
 hook.Add( "PostDrawEffects", "RenderHalos", function()
@@ -139,9 +147,7 @@ hook.Add( "PostDrawEffects", "RenderHalos", function()
 	if ( #List == 0 ) then return end
 
 	for k, v in ipairs( List ) do
-
 		Render( v )
-
 	end
 
 	List = {}
