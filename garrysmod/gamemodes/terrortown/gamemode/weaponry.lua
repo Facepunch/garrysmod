@@ -450,7 +450,7 @@ local function TransferCredits(ply, cmd, args)
    local credits = tonumber(args[2])
    if uid and credits then
       local target = player.GetByUniqueID(uid)
-      if (not IsValid(target)) or (not target:IsActiveSpecial()) or (target == ply) then
+      if (not IsValid(target)) or (not target:IsActiveSpecial()) or (target:GetRole() ~= ply:GetRole()) or (target == ply) then
          LANG.Msg(ply, "xfer_no_recip")
          return
       end
