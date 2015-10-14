@@ -93,8 +93,7 @@ function PANEL:AddSpacer( strText, funcFunction )
 
 	local pnl = vgui.Create( "DPanel", self )
 	pnl.Paint = function( p, w, h )
-		surface.SetDrawColor( Color( 0, 0, 0, 100 ) )
-		surface.DrawRect( 0, 0, w, h )
+		derma.SkinHook( "Paint", "MenuSpacer", p, w, h )
 	end
 	
 	pnl:SetTall( 1 )	
