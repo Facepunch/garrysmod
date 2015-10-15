@@ -149,4 +149,5 @@ game_sounds_manifest
 	"precache_file"  	"scripts/game_sounds_vo_taunts.txt"
 	"precache_file"		"scripts/game_sounds_taunt_workshop.txt"
 	"precache_file"  	"scripts/game_sounds_vo_pauling.txt"
+	"precache_file"  	"scripts/game_sounds_passtime.txt"
 }
