@@ -507,7 +507,7 @@ if SERVER then
       if not idx or not wire then return end
 
       local bomb = ents.GetByIndex(idx)
-      if IsValid(bomb) and bomb:GetArmed() then
+      if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and not bomb.DisarmCausedExplosion and bomb:GetArmed() then
          if bomb:GetPos():Distance(ply:GetPos()) > 256 then
             return
          elseif bomb.SafeWires[wire] or ply:IsTraitor() or ply == bomb:GetOwner() then
