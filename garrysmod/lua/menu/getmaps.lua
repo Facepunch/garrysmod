@@ -343,7 +343,7 @@ function SaveLastMap( map, cat )
 
 end
 
-function LoadLastMap()
+function GetLastMap()
 
 	local t = string.Explode( ";", cookie.GetString( "lastmap", "" ) )
 
@@ -352,6 +352,13 @@ function LoadLastMap()
 
 	cat = string.gsub( cat, "'", "\\'" )
 
+	return map, cat
+
+end
+
+function LoadLastMap()
+
+	local map, cat = GetLastMap()
 	pnlMainMenu:Call( "SetLastMap('" .. map .. "','" .. cat .. "')" )
 
 end
