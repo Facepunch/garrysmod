@@ -78,8 +78,7 @@ end
 -----------------------------------------------------------]]
 function ColorAlpha( c, a )
 
-	c.a = a
-	return c
+	return Color( c.r, c.g, c.b, a )
 
 end
 
