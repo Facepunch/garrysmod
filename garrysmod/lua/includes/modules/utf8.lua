@@ -4,6 +4,7 @@ local ipairs	= ipairs
 local string	= string
 local table		= table
 local unpack	= unpack
+local math		= math
 
 module( "utf8" )
 
@@ -22,9 +23,9 @@ local function strRelToAbs( str, ... )
 	local args = { ... }
 
 	for k, v in ipairs( args ) do
-		v = v > 0 and v or #str + v + 1
+		v = v > 0 and v or math.max( #str + v + 1, 1 )
 
-		if v < 1 or v > #str then
+		if v < 1 or v > #str + 1 then
 			error( "bad index to string (out of range)", 3 )
 		end
 
@@ -43,6 +44,11 @@ local function decode( str, startPos )
 	startPos = strRelToAbs( str, startPos or 1 )
 
 	local b1 = str:byte( startPos, startPos )
+
+	-- End of string
+	if not b1 then
+		return nil
+	end
 
 	-- Single-byte sequence
 	if b1 < 0x80 then
@@ -198,7 +204,7 @@ function len( str, startPos, endPos )
 
 	local len = 0
 
-	repeat
+	while endPos >= startPos and endPos > 1 do
 		local seqStartPos, seqEndPos = decode( str, startPos )
 
 		-- Hit an invalid sequence?
@@ -211,7 +217,7 @@ function len( str, startPos, endPos )
 
 		-- Increment length
 		len = len + 1
-	until seqEndPos >= endPos
+	end
 
 	return len
 
