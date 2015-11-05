@@ -356,3 +356,9 @@ function string.Comma( number )
 	return number
 
 end
+
+function string.Contains( str, val )
+	
+	return str:find( val ) ~= nil
+	
+end
