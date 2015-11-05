@@ -360,7 +360,7 @@ Crime scene visualization device.
 
 Analyzes a corpse to show how
 the victim was killed, but only if
-he died of gunshot wounds.]]
+they died of gunshot wounds.]]
 
 -- Decoy
 L.decoy_name      = "Decoy"
@@ -792,7 +792,7 @@ L.col_total  = "Total points"
 L.something      = "something"
 
 -- Kill events
-L.ev_blowup      = "{victim} blew himself up"
+L.ev_blowup      = "{victim} blew themself up"
 L.ev_blowup_trap = "{victim} was blown up by {trap}"
 
 L.ev_tele_self   = "{victim} telefragged themselves"
@@ -800,8 +800,8 @@ L.ev_sui         = "{victim} couldn't take it and killed themselves"
 L.ev_sui_using   = "{victim} killed themselves using {tool}"
 
 L.ev_fall        = "{victim} fell to their death"
-L.ev_fall_pushed = "{victim} fell to their death after {attacker} pushed him"
-L.ev_fall_pushed_using = "{victim} fell to their death after {attacker} used {trap} to push him"
+L.ev_fall_pushed = "{victim} fell to their death after {attacker} pushed them"
+L.ev_fall_pushed_using = "{victim} fell to their death after {attacker} used {trap} to push them"
 
 L.ev_shot        = "{victim} was shot by {attacker}"
 L.ev_shot_using  = "{victim} was shot by {attacker} using a {weapon}"
@@ -851,7 +851,7 @@ L.aw_sui1_title = "Suicide Cult Leader"
 L.aw_sui1_text  = "showed the other suiciders how to do it by being the first to go."
 
 L.aw_sui2_title = "Lonely and Depressed"
-L.aw_sui2_text  = "was the only one who killed himself."
+L.aw_sui2_text  = "was the only one who killed themself."
 
 L.aw_exp1_title = "Explosives Research Grant"
 L.aw_exp1_text  = "was recognized for their research on explosions. {num} test subjects helped out."
