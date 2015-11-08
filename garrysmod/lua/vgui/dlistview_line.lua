@@ -157,7 +157,7 @@ end
 PANEL.SetValue = PANEL.SetColumnText
 
 --[[---------------------------------------------------------
-	Name: SetColumnText
+	Name: GetColumnText
 -----------------------------------------------------------]]
 function PANEL:GetColumnText( i )
 
