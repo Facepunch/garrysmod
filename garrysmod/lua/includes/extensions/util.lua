@@ -353,10 +353,9 @@ end
    Desc: Encodes a URL
 -----------------------------------------------------------]]
 function util.URLEncode( str )
-	str = string.gsub( str, "([^%w %-%_%.%~])", function( hex )
+	str = string.gsub( str, "([^%w%-%_%.%~])", function( hex )
 		return string.format( "%%%02X", string.byte( hex ) )
 	end )
-	str = string.gsub( str, " ", "+" )
 	return str
 end
 
