@@ -347,3 +347,27 @@ function util.RemovePData( steamid, name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = "..SQLStr(name) )
 	
 end
+
+--[[---------------------------------------------------------
+   Name: URLEncode( str )
+   Desc: Encodes a URL
+-----------------------------------------------------------]]
+function util.URLEncode( str )
+	str = string.gsub( str, "\n", "\r\n" )
+	str = string.gsub( str, "([^%w %-%_%.%~])", function( hex )
+		return string.format( "%%%02X", string.byte( hex ) )
+	end )
+	str = string.gsub( str, " ", "+" )
+	return str
+end
+
+--[[---------------------------------------------------------
+   Name: URLDecode( url )
+   Desc: Decodes a URL
+-----------------------------------------------------------]]
+function util.URLDecode( url )
+	local r = string.gsub( string.gsub( url, "+", " " ), "%%(%x%x)", function( hex )
+		return string.char( tonumber( hex, 16 ) )
+	end )
+	return r
+end
