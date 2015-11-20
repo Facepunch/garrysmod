@@ -792,7 +792,7 @@ L.col_total  = "Total points"
 L.something      = "something"
 
 -- Kill events
-L.ev_blowup      = "{victim} blew themself up"
+L.ev_blowup      = "{victim} blew themselves up"
 L.ev_blowup_trap = "{victim} was blown up by {trap}"
 
 L.ev_tele_self   = "{victim} telefragged themselves"
@@ -851,7 +851,7 @@ L.aw_sui1_title = "Suicide Cult Leader"
 L.aw_sui1_text  = "showed the other suiciders how to do it by being the first to go."
 
 L.aw_sui2_title = "Lonely and Depressed"
-L.aw_sui2_text  = "was the only one who killed themself."
+L.aw_sui2_text  = "was the only one who killed themselves."
 
 L.aw_exp1_title = "Explosives Research Grant"
 L.aw_exp1_text  = "was recognized for their research on explosions. {num} test subjects helped out."
