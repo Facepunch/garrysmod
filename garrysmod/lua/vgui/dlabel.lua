@@ -16,6 +16,7 @@ AccessorFunc( PANEL, "m_FontName",				"Font" )
 AccessorFunc( PANEL, "m_bDoubleClicking",		"DoubleClickingEnabled",	FORCE_BOOL )
 AccessorFunc( PANEL, "m_bAutoStretchVertical",	"AutoStretchVertical",		FORCE_BOOL )
 AccessorFunc( PANEL, "m_bBackground",			"PaintBackground",			FORCE_BOOL )
+AccessorFunc( PANEL, "m_bBackground",			"DrawBackground",			FORCE_BOOL ) -- deprecated
 AccessorFunc( PANEL, "m_bHighlight",			"Highlight",				FORCE_BOOL )
 AccessorFunc( PANEL, "m_bIsToggle",				"IsToggle",					FORCE_BOOL )
 AccessorFunc( PANEL, "m_bDisabled",				"Disabled",					FORCE_BOOL )
