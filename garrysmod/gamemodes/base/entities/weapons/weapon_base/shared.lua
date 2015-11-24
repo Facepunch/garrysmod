@@ -1,7 +1,4 @@
 
-IncludeCS( "ai_translations.lua" )
-IncludeCS( "sh_anim.lua" )
-
 -- Variables that are used on both client and server
 
 SWEP.Author			= ""

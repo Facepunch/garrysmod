@@ -17,7 +17,7 @@ AccessorFunc( PANEL, "m_bStretchToFit", 			"StretchToFit" )
 -----------------------------------------------------------]]
 function PANEL:Init()
 
-	self:SetDrawBackground( false )
+	self:SetPaintBackground( false )
 	self:SetDrawBorder( false )
 	self:SetStretchToFit( true )
 

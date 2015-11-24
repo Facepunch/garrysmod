@@ -104,7 +104,7 @@ function GM:PopulatePropMenu()
 	-- This function makes the engine load the spawn menu text files.
 	-- We call it here so that any gamemodes not using the default 
 	-- spawn menu can totally not call it.
-	spawnmenu.PopulateFromEngineTextFiles()
+	spawnmenu.PopulateFromTextFiles()
 
 end	
 

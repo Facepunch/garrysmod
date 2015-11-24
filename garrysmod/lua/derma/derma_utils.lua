@@ -66,7 +66,7 @@ function Derma_Message( strText, strTitle, strButtonText )
 		
 	local ButtonPanel = vgui.Create( "DPanel", Window )
 		ButtonPanel:SetTall( 30 )
-		ButtonPanel:SetDrawBackground( false )
+		ButtonPanel:SetPaintBackground( false )
 		
 	local Button = vgui.Create( "DButton", ButtonPanel )
 		Button:SetText( strButtonText or "OK" )
@@ -115,7 +115,7 @@ function Derma_Query( strText, strTitle, ... )
 		Window:SetDrawOnTop( true )
 		
 	local InnerPanel = vgui.Create( "DPanel", Window )
-		InnerPanel:SetDrawBackground( false )
+		InnerPanel:SetPaintBackground( false )
 	
 	local Text = vgui.Create( "DLabel", InnerPanel )
 		Text:SetText( strText or "Message Text (Second Parameter)" )
@@ -125,7 +125,7 @@ function Derma_Query( strText, strTitle, ... )
 
 	local ButtonPanel = vgui.Create( "DPanel", Window )
 		ButtonPanel:SetTall( 30 )
-		ButtonPanel:SetDrawBackground( false )
+		ButtonPanel:SetPaintBackground( false )
 
 	-- Loop through all the options and create buttons for them.
 	local NumOptions = 0
@@ -206,7 +206,7 @@ function Derma_StringRequest( strTitle, strText, strDefaultText, fnEnter, fnCanc
 		Window:SetDrawOnTop( true )
 		
 	local InnerPanel = vgui.Create( "DPanel", Window )
-		InnerPanel:SetDrawBackground( false )
+		InnerPanel:SetPaintBackground( false )
 	
 	local Text = vgui.Create( "DLabel", InnerPanel )
 		Text:SetText( strText or "Message Text (Second Parameter)" )
@@ -220,7 +220,7 @@ function Derma_StringRequest( strTitle, strText, strDefaultText, fnEnter, fnCanc
 		
 	local ButtonPanel = vgui.Create( "DPanel", Window )
 		ButtonPanel:SetTall( 30 )
-		ButtonPanel:SetDrawBackground( false )
+		ButtonPanel:SetPaintBackground( false )
 		
 	local Button = vgui.Create( "DButton", ButtonPanel )
 		Button:SetText( strButtonText or "OK" )

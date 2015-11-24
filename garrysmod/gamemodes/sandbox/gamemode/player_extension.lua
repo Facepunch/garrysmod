@@ -23,7 +23,7 @@ end
 function meta:GetCount( str, minus )
 
 	if ( CLIENT ) then
-		return self:GetNetworkedInt( "Count."..str, 0 )
+		return self:GetNWInt( "Count."..str, 0 )
 	end
 	
 	minus = minus or 0
@@ -35,7 +35,7 @@ function meta:GetCount( str, minus )
 	
 	if ( !tab || !tab[ str ] ) then 
 	
-		self:SetNetworkedInt( "Count."..str, 0 )
+		self:SetNWInt( "Count."..str, 0 )
 		return 0 
 		
 	end
@@ -52,7 +52,7 @@ function meta:GetCount( str, minus )
 	
 	end
 	
-	self:SetNetworkedInt( "Count."..str, c - minus )
+	self:SetNWInt( "Count."..str, c - minus )
 
 	return c
 

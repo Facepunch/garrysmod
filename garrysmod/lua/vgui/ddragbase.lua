@@ -11,7 +11,7 @@ function PANEL:Init()
 	self:SetPaintBackgroundEnabled( false )
 	self:SetPaintBorderEnabled( false )
 	self:SetMouseInputEnabled( true )
-	self:SetDrawBackground( false )
+	self:SetPaintBackground( false )
 	
 	self:SetDropPos( "5" )
 	

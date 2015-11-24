@@ -243,22 +243,22 @@ TranslateTable_VORT[ "ValveBiped.Bip01_R_Finger42" ] = "ValveBiped.pinky3_R"
 	Name: HandEntity
 -----------------------------------------------------------]]
 function TOOL:HandEntity()
-	return self:GetWeapon():GetNetworkedEntity( "HandEntity" )
+	return self:GetWeapon():GetNWEntity( "HandEntity" )
 end
 
 --[[---------------------------------------------------------
 	Name: HandNum
 -----------------------------------------------------------]]
 function TOOL:HandNum()
-	return self:GetWeapon():GetNetworkedInt( "HandNum" )
+	return self:GetWeapon():GetNWInt( "HandNum" )
 end
 
 --[[---------------------------------------------------------
 	Name: SetHand
 -----------------------------------------------------------]]
 function TOOL:SetHand( ent, iHand )
-	self:GetWeapon():SetNetworkedEntity( "HandEntity", ent )
-	self:GetWeapon():SetNetworkedInt( "HandNum", iHand )
+	self:GetWeapon():SetNWEntity( "HandEntity", ent )
+	self:GetWeapon():SetNWInt( "HandNum", iHand )
 end
 
 --[[------------------------------------------------------------
