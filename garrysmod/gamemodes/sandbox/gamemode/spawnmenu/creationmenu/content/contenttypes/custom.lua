@@ -197,6 +197,6 @@ hook.Add( "OnSaveSpawnlist", "DoSaveSpawnlist", function()
 
 	local Spawnlist = ConstructSpawnlist( CustomizableSpawnlistNode )
 	
-	spawnmenu.SaveToTextFiles( Spawnlist )
+	spawnmenu.DoSaveToTextFiles( Spawnlist )
 
 end )
