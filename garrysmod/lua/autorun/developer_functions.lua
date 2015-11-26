@@ -27,7 +27,7 @@ local function FindInTable( tab, find, parents, depth )
 				k != "_LOADED" &&
 				k != "__index" ) then
 				
-				local NewParents = parents .. k .. ".";
+				local NewParents = parents .. k .. "."
 				FindInTable( v, find, NewParents, depth )
 			
 			end
@@ -56,7 +56,7 @@ local function Find( ply, command, arguments )
 	Msg("\n\n")
 	
 	if ( SERVER && IsValid(ply) && ply:IsPlayer() && ply:IsListenServerHost() ) then
-		RunConsoleCommand( "lua_find_cl", tostring(arguments[1]) );
+		RunConsoleCommand( "lua_find_cl", tostring(arguments[1]) )
 	end
 	
 end
@@ -66,3 +66,11 @@ if ( SERVER ) then
 else
 	concommand.Add( "lua_find_cl", Find, nil, "", { FCVAR_DONTRECORD } )
 end
+
+concommand.Add( "relevel", function( ply, cmd, args )
+
+	if ( IsValid(ply) && ply:IsPlayer() && !ply:IsAdmin() ) then return end
+
+	RunConsoleCommand( "changelevel", game.GetMap() )
+
+end )
