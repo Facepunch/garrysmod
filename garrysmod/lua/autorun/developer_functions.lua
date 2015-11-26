@@ -69,7 +69,7 @@ end
 
 concommand.Add( "relevel", function( ply, cmd, args )
 
-	if ( IsValid(ply) && ply:IsPlayer() && !ply:IsAdmin() ) then return end
+	if ( IsValid(ply) && ply:IsPlayer() ) then return end -- server console only
 
 	RunConsoleCommand( "changelevel", game.GetMap() )
 
