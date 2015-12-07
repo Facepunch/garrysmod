@@ -62,7 +62,7 @@ function CC_GMOD_Tool( player, command, arguments )
 			wep:Holster()
 		end
 		
-		wep.Mode = arguments[1]
+		wep:SetMode( arguments[1] )
 		
 		-- Deplot the new
 		if ( wep.Deploy ) then
