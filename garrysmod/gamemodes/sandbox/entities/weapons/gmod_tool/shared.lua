@@ -64,7 +64,8 @@ function SWEP:SetupDataTables()
 	self:NetworkVar( "Entity", 1, "TargetEntity2" );
 	self:NetworkVar( "Entity", 2, "TargetEntity3" );
 	self:NetworkVar( "Entity", 3, "TargetEntity4" );
-
+	
+	self:NetworkVar( "String", 0 , "Mode" )
 end
 
 --[[---------------------------------------------------------
@@ -151,20 +152,11 @@ function SWEP:Reload()
 end
 
 --[[---------------------------------------------------------
-	Returns the mode we're in
------------------------------------------------------------]]
-function SWEP:GetMode()
-	
-	return self.Mode
-	
-end
-
---[[---------------------------------------------------------
 	Think does stuff every frame
 -----------------------------------------------------------]]
 function SWEP:Think()
 
-	self.Mode = self.Owner:GetInfo( "gmod_toolmode" )
+	self:SetMode( self.Owner:GetInfo( "gmod_toolmode" ) )
 	local mode = self:GetMode()
 	local tool = self:GetToolObject()
 	

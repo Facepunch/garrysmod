@@ -192,7 +192,7 @@ end
 -----------------------------------------------------------]]
 function ToolObj:GetHelpText()
 
-	return "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. self:GetStage()
+	return "#tool." .. self:GetWeapon():GetMode() .. "." .. self:GetStage()
 	
 end
 
