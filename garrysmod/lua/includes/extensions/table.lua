@@ -716,3 +716,8 @@ function table.GetKeys( tab )
 	return keys
 
 end
+
+function table.IsEmpty( tbl )
+	return next( tbl ) == nil
+end
+
