@@ -370,3 +370,33 @@ if ( CLIENT ) then
 	end
 
 end
+
+--[[---------------------------------------------------------
+   Convar access functions
+-----------------------------------------------------------]]
+
+local ConVarCache = {}
+
+local function GetConVarCached( name )
+	local c = ConVarCache[ name ]
+	if not c then
+		c = GetConVar( name )
+		if not c then
+			return
+		end
+		
+		ConVarCache[ name ] = c
+	end
+	
+	return c
+end
+
+function GetConVarNumber( name )
+	local c = GetConVarCached( name )
+	return ( c and c:GetFloat() ) or 0
+end
+
+function GetConVarString( name )
+	local c = GetConVarCached( name )
+	return ( c and c:GetString() ) or ""
+end
