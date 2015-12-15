@@ -15,6 +15,7 @@ function PANEL:Init()
 
 	JS_Language( self.HTML )
 	JS_Utility( self.HTML )
+	JS_Workshop( self.HTML )
 
 	self.HTML:Dock( FILL )
 	self.HTML:OpenURL( "asset://garrysmod/html/menu.html" )

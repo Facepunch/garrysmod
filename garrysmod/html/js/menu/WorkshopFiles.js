@@ -7,7 +7,7 @@ function WorkshopFiles()
 //
 // Initialize
 //
-WorkshopFiles.prototype.Init = function( namespace, scope, RootScope ) 
+WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 {
 	var self = this;
 
@@ -39,13 +39,13 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		scope.SwitchWithTag( scope.Category, Offset, scope.Tagged, scope.MapName )
 	}
 
-	
+
 	this.Scope.Switch = function( type, offset )
 	{
 		this.SwitchWithTag( type, offset, "", scope.MapName );
 		scope.Category = type; // Do we need this here?
 	}
-	
+
 	this.Scope.SwitchWithTag = function( type, offset, searchtag, mapname )
 	{
 		// Fills in perpage
@@ -69,13 +69,14 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		self.UpdatePageNav();
 
 		// fumble
-		if ( scope.MapName && scope.Tagged ) 
-			lua.Run( self.NameSpace + ":Fetch( %s, %i, %i, { %s, %s } );", scope.Category, scope.Offset, scope.PerPage, scope.Tagged, scope.MapName );
-		else if ( scope.MapName ) 
-			lua.Run( self.NameSpace + ":Fetch( %s, %i, %i, { %s } );", scope.Category, scope.Offset, scope.PerPage, scope.MapName );
-		else
-			lua.Run( self.NameSpace + ":Fetch( %s, %i, %i, { %s } );", scope.Category, scope.Offset, scope.PerPage, scope.Tagged );
-
+		if ( scope.MapName && scope.Tagged ) {
+			gmod.FetchItems( self.NameSpace + " " + scope.Category + " " + scope.Offset + " " + scope.PerPage + " " + scope.Tagged + " " + scope.MapName );
+		} else if ( scope.MapName ) {
+			gmod.FetchItems( self.NameSpace + " " + scope.Category + " " + scope.Offset + " " + scope.PerPage + " " + scope.MapName );
+		} else {
+			gmod.FetchItems( self.NameSpace + " " + scope.Category + " " + scope.Offset + " " + scope.PerPage + " " + scope.Tagged );
+		}
+	
 		if ( !IN_ENGINE )
 		{
 			setTimeout( function() { WorkshopTestData( scope.Category, self ); }, 0 );
@@ -90,7 +91,7 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		entry.rated = true;
 
 		// Cast our vote
-		lua.Run( "steamworks.Vote( %s, "+(b?"true":"false")+" );", String( entry.id ) );
+		gmod.Vote( entry.id + " " + ( b ? "1" : "0" ) )
 
 		// Update the scores locally (the votes don't update on the server straight away)
 		if ( entry.vote )
@@ -101,35 +102,35 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		// And play a sound
 		if ( b )	lua.PlaySound( "npc/roller/mine/rmine_chirp_answer1.wav" );
 		else 		lua.PlaySound( "buttons/button10.wav" );
-		
+
 	}
 
 	this.Scope.PublishLocal = function( entry )
 	{
-		lua.Run( self.NameSpace + ":Publish( %s, %s );", entry.info.file, entry.background );
+		gmod.Publish( self.NameSpace + " " + entry.info.file + " " + entry.background )
 	}
 }
 
 //
 // Received a local list of files (think saves on disk)
 //
-WorkshopFiles.prototype.ReceiveLocal = function( data ) 
+WorkshopFiles.prototype.ReceiveLocal = function( data )
 {
-	this.Scope.Loading			= false;
-	this.Scope.TotalResults		= data.totalresults;
-	this.Scope.NumResults		= data.results.length;
+	this.Scope.Loading		= false;
+	this.Scope.TotalResults	= data.totalresults;
+	this.Scope.NumResults	= data.results.length;
 
 	this.Scope.Files = []
 
 	for ( k in data.results )
 	{
-		var entry = 
+		var entry =
 		{
-			order			: k,
-			local			: true,
-			background		: data.results[k].preview,
-			filled			: true,
-			info			: 
+			order		: k,
+			local		: true,
+			background	: data.results[k].preview,
+			filled		: true,
+			info		:
 			{
 				title	:	data.results[k].name,
 				file	:	data.results[k].file,
@@ -144,21 +145,21 @@ WorkshopFiles.prototype.ReceiveLocal = function( data )
 };
 
 //
-// The index contains the number of saves, 
+// The index contains the number of saves,
 // and the save id's - but no details.
 // (they come later)
 //
 WorkshopFiles.prototype.ReceiveIndex = function( data )
 {
-	this.Scope.Loading			= false;
-	this.Scope.TotalResults		= data.totalresults;
-	this.Scope.NumResults		= data.numresults;
+	this.Scope.Loading		= false;
+	this.Scope.TotalResults	= data.totalresults;
+	this.Scope.NumResults	= data.numresults;
 
 	this.Scope.Files = []
 
 	for ( k in data.results )
 	{
-		var entry = 
+		var entry =
 		{
 			order	: k,
 			id		: data.results[k],
@@ -220,7 +221,7 @@ WorkshopFiles.prototype.ReceiveVoteInfo = function( id, data )
 WorkshopFiles.prototype.Changed = function()
 {
 	this.Scope.$digest();
-	
+
 	// An update is queued - so chill
 	if ( this.DigestUpdate ) return;
 
@@ -231,7 +232,6 @@ WorkshopFiles.prototype.Changed = function()
 	{
 		self.DigestUpdate = 0;
 		self.Scope.$digest();
-
 	}, 10 )
 
 }
@@ -249,9 +249,9 @@ WorkshopFiles.prototype.RefreshDimensions = function()
 
 	self.Scope.PerPage = iconswide * iconstall;
 
-	self.Scope.IconWidth		= Math.floor( w / iconswide ) - 26;
-	self.Scope.IconHeight		= Math.floor( h / iconstall ) - 26;
-	self.Scope.IconMax			= Math.max( self.Scope.IconWidth, self.Scope.IconHeight ) + 1;
+	self.Scope.IconWidth	= Math.floor( w / iconswide ) - 26;
+	self.Scope.IconHeight	= Math.floor( h / iconstall ) - 26;
+	self.Scope.IconMax		= Math.max( self.Scope.IconWidth, self.Scope.IconHeight ) + 1;
 }
 
 WorkshopFiles.prototype.UpdatePageNav = function()
@@ -259,12 +259,12 @@ WorkshopFiles.prototype.UpdatePageNav = function()
 	self.Scope.Page			= Math.floor(self.Scope.Offset / self.Scope.PerPage) + 1;
 	self.Scope.NumPages		= Math.ceil(self.Scope.TotalResults / self.Scope.PerPage);
 
-
 	if ( self.Scope.NumPages > 32 ) self.Scope.NumPages = 32;
 
 	self.Scope.Pages = [];
 
-	for ( var i=1; i<self.Scope.NumPages+1; i++ )
-      self.Scope.Pages.push( i );
+	for ( var i=1; i<self.Scope.NumPages+1; i++ ) {
+		self.Scope.Pages.push( i );
+	}
 
 }

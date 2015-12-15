@@ -9,7 +9,7 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 
 	save.Init( 'ws_save', $scope, $rootScope );
 
-	Scope.Categories = 
+	Scope.Categories =
 	[
 		"trending",
 		"popular",
@@ -27,36 +27,37 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 
 	$scope.LoadSave = function( entry )
 	{
-		if ( entry.local )
-			return lua.Run( "ws_save:Load( %s );", entry.info.file );
+		if ( entry.local ) {
+			gmod.LoadSave( entry.info.file )
+			return;
+		}
 
 		//
 		// TODO: Some kind of `please wait` while we download 200kb
 		//
 
-		lua.Run( "ws_save:DownloadAndLoad( %s );", entry.info.fileid );
-
+		gmod.DownloadSave( entry.info.fileid )
 	}
 
 	$scope.DeleteLocal = function( entry )
 	{
-		lua.Run( "file.Delete( %s, \"MOD\" );", entry.info.file );
-		lua.Run( "file.Delete( %s, \"MOD\" );", entry.background );
-		
+		gmod.DeleteLocal( entry.info.file )
+		gmod.DeleteLocal( entry.info.background )
+
 		$scope.Switch( $scope.Category, $scope.Offset );
 	}
 
-	if ( IS_SPAWN_MENU ) 
+	if ( IS_SPAWN_MENU )
 	{
-		if ( $routeParams.Category ) 
+		if ( $routeParams.Category )
 		{
-			$timeout( function () { $scope.SwitchWithTag( $routeParams.Category, 0, $routeParams.Tag, $scope.MapName ); }, 100 );
+			$timeout( function() { $scope.SwitchWithTag( $routeParams.Category, 0, $routeParams.Tag, $scope.MapName ); }, 100 );
 			return;
 		}
 
-		$timeout( function () { $scope.SwitchWithTag('trending', 0, $scope.MapName ); }, 100 );
+		$timeout( function() { $scope.SwitchWithTag( 'trending', 0, $scope.MapName ); }, 100 );
 	}
-	else 
+	else
 	{
 		$scope.Switch( 'local', 0 );
 	}

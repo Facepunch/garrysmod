@@ -1,10 +1,10 @@
 
 App = angular.module( 'CDupesApp', [ 'tranny' ] );
 
-App.config(function ( $routeProvider, $locationProvider )
+App.config( function ( $routeProvider, $locationProvider )
 {
-	$routeProvider.when('/', { templateUrl: 'template/creations/dupes.html' });
-	$routeProvider.when('/list/:Category/:Tag/', { templateUrl: 'template/creations/dupes.html' });
+	$routeProvider.when( '/', { templateUrl: 'template/creations/dupes.html' } );
+	$routeProvider.when( '/list/:Category/:Tag/', { templateUrl: 'template/creations/dupes.html' } );
 } );
 
 var CreationScope		= null;
@@ -17,7 +17,7 @@ function CDupes( $scope, $timeout, $location )
 
 	CreationScope.DupeDisabled = "disabled";
 
-	CreationScope.Categories = 
+	CreationScope.Categories =
 	[
 		"trending",
 		"popular",
@@ -47,28 +47,28 @@ function CDupes( $scope, $timeout, $location )
 		return c;
 	}
 
-	$scope.OpenWorkshopFile = function (id) 
+	$scope.OpenWorkshopFile = function( id )
 	{
 		if ( !id ) return;
-		lua.Run("steamworks.ViewFile( %s )", String(id));
+		gmod.OpenWorkshopFile( id );
 	}
 
-	$scope.SaveDupe = function() 
+	$scope.SaveDupe = function()
 	{
 		$scope.DupeDisabled = "disabled";
-		lua.Run("RunConsoleCommand( \"dupe_save\", \"spawnmenu\" );");
+		gmod.SaveDupe();
+		lua.Run( "RunConsoleCommand( \"dupe_save\", \"spawnmenu\" );" );
 	}
 }
 
 //
 // Enable the dupe save button
 //
-function SetDupeSaveState( b ) 
+function SetDupeSaveState( b )
 {
 	CreationScope.DupeDisabled = b ? "" : "disabled";
 	UpdateDigest( CreationScope, 10 );
 }
-
 
 //
 // Show the local dupes (we've just saved)

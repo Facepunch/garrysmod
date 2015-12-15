@@ -4,11 +4,11 @@ var IS_SPAWN_MENU = true
 
 var App = angular.module( 'CreationsApp', [ 'tranny' ] );
 
-App.config(function ( $routeProvider, $locationProvider )
+App.config( function ( $routeProvider, $locationProvider )
 {
-	$routeProvider.when('/', { templateUrl: 'template/creations/saves.html', controller: 'ControllerSaves' });
-	$routeProvider.when('/saves/:Category/:MapName/', { templateUrl: 'template/creations/saves.html', controller: ControllerSaves });
-	$routeProvider.when('/dupes/:Category/:MapName/', { templateUrl: 'template/creations/dupes.html', controller: ControllerDupes });
+	$routeProvider.when( '/', { templateUrl: 'template/creations/saves.html', controller: 'ControllerSaves' } );
+	$routeProvider.when( '/saves/:Category/:MapName/', { templateUrl: 'template/creations/saves.html', controller: ControllerSaves } );
+	$routeProvider.when( '/dupes/:Category/:MapName/', { templateUrl: 'template/creations/dupes.html', controller: ControllerDupes } );
 } );
 
 
@@ -21,7 +21,6 @@ function UpdateDigest( scope, timeout )
 	{
 		scope.DigestUpdate = 0;
 		scope.$digest();
-
 	}, timeout )
 }
 
@@ -29,13 +28,12 @@ function UpdateDigest( scope, timeout )
 //let's make a startFrom filter
 App.filter( 'startFrom', function ()
 {
-	return function ( input, start )
+	return function( input, start )
 	{
 		start = +start; //parse to int
 		return input.slice( start );
 	}
 } );
-
 
 var CreationScope = null;
 var CreationLocation = null;
@@ -47,7 +45,7 @@ function CCreations( $scope, $timeout, $location )
 
 	CreationScope.DupeDisabled = "disabled";
 
-	CreationScope.Categories = 
+	CreationScope.Categories =
 	[
 		"trending",
 		"popular",
@@ -58,35 +56,34 @@ function CCreations( $scope, $timeout, $location )
 		"mine",
 	];
 
-	$scope.IfElse = function ( b, a, c )
+	$scope.IfElse = function( b, a, c )
 	{
 		if ( b ) return a;
 		return c;
 	}
 
-	$scope.OpenWorkshopFile = function (id) 
+	$scope.OpenWorkshopFile = function( id )
 	{
 		if ( !id ) return;
-		lua.Run("steamworks.ViewFile( %s )", String(id));
+		gmod.OpenWorkshopFile( id );
 	}
 
-	$scope.SaveSave=function() 
+	$scope.SaveSave = function()
 	{
-		lua.Run("RunConsoleCommand( \"gm_save\", \"spawnmenu\" );");
+		gmod.SaveSave();
 
 		$scope.SaveDisabled = "disabled";
 
-		$timeout(function() 
+		$timeout( function()
 		{
 			$scope.SaveDisabled = "";
-
-		},5000);
+		}, 5000 );
 	}
 
-	$scope.SaveDupe = function() 
+	$scope.SaveDupe = function()
 	{
 		$scope.DupeDisabled = "disabled";
-		lua.Run("RunConsoleCommand( \"dupe_save\", \"spawnmenu\" );");
+		gmod.SaveDupe();
 	}
 
 	SetMap( 'gm_construct' );
@@ -103,7 +100,7 @@ function SetMap( mapname )
 //
 // Enable the dupe save button
 //
-function SetDupeSaveState( b ) 
+function SetDupeSaveState( b )
 {
 	CreationScope.DupeDisabled = b ? "" : "disabled";
 	UpdateDigest( CreationScope, 10 );
@@ -115,6 +112,6 @@ function SetDupeSaveState( b )
 //
 function ShowLocalDupes()
 {
-	CreationLocation.path( "/dupes/local/"+Math.random()+"/" ); // Lolz, hackz
+	CreationLocation.path( "/dupes/local/" + Math.random() + "/" ); // Lolz, hackz
 	CreationScope.$apply();
 }

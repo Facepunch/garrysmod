@@ -5,7 +5,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 
 	HTML = vgui.Create( "DHTML" )
 	JS_Language( HTML )
-	HTML:SetAllowLua( true )
+	JS_Workshop( HTML )
 	HTML:OpenURL( "asset://garrysmod/html/saves.html" )
 	HTML:Call( "SetMap( '" .. game.GetMap() .. "' );" )
 

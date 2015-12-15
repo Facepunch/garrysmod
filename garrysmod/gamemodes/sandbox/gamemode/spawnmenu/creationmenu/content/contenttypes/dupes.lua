@@ -6,7 +6,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 
 	HTML = vgui.Create( "DHTML" )
 	JS_Language( HTML )
-	HTML:SetAllowLua( true )
+	JS_Workshop( HTML )
 	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
 	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ).. " );" )
 
