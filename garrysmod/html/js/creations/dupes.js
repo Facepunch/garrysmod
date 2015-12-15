@@ -57,7 +57,6 @@ function CDupes( $scope, $timeout, $location )
 	{
 		$scope.DupeDisabled = "disabled";
 		gmod.SaveDupe();
-		lua.Run( "RunConsoleCommand( \"dupe_save\", \"spawnmenu\" );" );
 	}
 }
 
