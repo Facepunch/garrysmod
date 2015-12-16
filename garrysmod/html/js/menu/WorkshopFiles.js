@@ -70,11 +70,11 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 
 		// fumble
 		if ( scope.MapName && scope.Tagged ) {
-			gmod.FetchItems( self.NameSpace + " " + scope.Category + " " + scope.Offset + " " + scope.PerPage + " " + scope.Tagged + " " + scope.MapName );
+			gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged, scope.MapName );
 		} else if ( scope.MapName ) {
-			gmod.FetchItems( self.NameSpace + " " + scope.Category + " " + scope.Offset + " " + scope.PerPage + " " + scope.MapName );
+			gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.MapName );
 		} else {
-			gmod.FetchItems( self.NameSpace + " " + scope.Category + " " + scope.Offset + " " + scope.PerPage + " " + scope.Tagged );
+			gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged );
 		}
 	
 		if ( !IN_ENGINE )
@@ -91,7 +91,7 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		entry.rated = true;
 
 		// Cast our vote
-		gmod.Vote( entry.id + " " + ( b ? "1" : "0" ) )
+		gmod.Vote( entry.id, ( b ? "1" : "0" ) )
 
 		// Update the scores locally (the votes don't update on the server straight away)
 		if ( entry.vote )
@@ -107,7 +107,7 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 
 	this.Scope.PublishLocal = function( entry )
 	{
-		gmod.Publish( self.NameSpace + " " + entry.info.file + " " + entry.background )
+		gmod.Publish( self.NameSpace, entry.info.file, entry.background )
 	}
 }
 
