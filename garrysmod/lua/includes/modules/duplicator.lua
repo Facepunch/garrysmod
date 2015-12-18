@@ -717,7 +717,7 @@ function Paste( Player, EntityList, ConstraintList )
 	for k, v in pairs( EntityList ) do
 	
 		local e = nil
-		local b = pcall( function() e = CreateEntityFromTable( Player, v ) end )
+		local b = ProtectedCall( function() e = CreateEntityFromTable( Player, v ) end )
 		if ( !b ) then continue end
 
 		if ( IsValid( e ) ) then
