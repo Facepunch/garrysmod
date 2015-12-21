@@ -279,3 +279,34 @@ function math.InRange( value, low, high, inclusive )
 		return value > low && value < high
 	end
 end
+
+--[[---------------------------------------------------------
+    Name: IsPositive( num )
+    Desc: Verifies if a number is positive
+-----------------------------------------------------------]]
+function math.IsPositive( num )
+	return num >= 0
+end
+
+--[[---------------------------------------------------------
+    Name: IsEven( num )
+    Desc: Checks whether a number is even
+-----------------------------------------------------------]]
+function math.IsEven( num )
+	return ( num % 2 ) == 0
+end
+
+--[[---------------------------------------------------------
+    Name: Difference( a, b )
+    Desc: Calculates the difference (or range) of two numbers
+    Usage: math.Difference( -5, 5 ) > 10
+-----------------------------------------------------------]]
+function math.Difference( a, b )
+	if a < b then
+		return b - a
+	elseif b < a then
+		return a - b
+	else
+		return 0
+	end
+end
