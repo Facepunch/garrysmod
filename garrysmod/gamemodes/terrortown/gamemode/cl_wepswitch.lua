@@ -16,7 +16,7 @@ WSWITCH.WeaponCache = {}
 WSWITCH.cv = {}
 WSWITCH.cv.stay = CreateConVar("ttt_weaponswitcher_stay", "0", FCVAR_ARCHIVE)
 WSWITCH.cv.fast = CreateConVar("ttt_weaponswitcher_fast", "0", FCVAR_ARCHIVE)
-WSWITCH.cv.display = CreateConVar("ttt_weaponswitcher_displayfast", "0", FVCAR_ARCHIVE)
+WSWITCH.cv.display = CreateConVar("ttt_weaponswitcher_displayfast", "0", FCVAR_ARCHIVE)
 
 local delay = 0.03
 local showtime = 3
