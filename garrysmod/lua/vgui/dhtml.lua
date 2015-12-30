@@ -29,7 +29,7 @@ function PANEL:Init()
 	--
 	-- Implement a console.log - because awesomium doesn't provide it for us anymore.
 	--
-	self:AddFunction( "console", "log", function( param ) self:ConsoleMessage( param ) end )
+	self:AddFunction( "console", "log", function( ... ) self:ConsoleMessage( ... ) end )
 	
 end
 
@@ -77,11 +77,11 @@ function PANEL:Call( js )
 	self:QueueJavascript( js )
 end
 
-function PANEL:ConsoleMessage( msg )
+function PANEL:ConsoleMessage( ... )
 
-	if ( !isstring( msg ) ) then msg = "*js variable*" end
+	local msg = select( 1, ... )
 
-	if ( self.m_bAllowLua && msg:StartWith( "RUNLUA:" ) ) then
+	if ( isstring( msg ) && self.m_bAllowLua && msg:StartWith( "RUNLUA:" ) ) then
 	
 		local strLua = msg:sub( 8 )
 
@@ -92,8 +92,13 @@ function PANEL:ConsoleMessage( msg )
 
 	end
 
+	local values = { ... }
+
+	-- If the first parameter is an object/array/function/undefined, just print this useless message
+	values[ 1 ] = values[ 1 ] or "*js variable*"
+
 	MsgC( Color( 255, 160, 255 ), "[HTML] " );
-	MsgC( Color( 255, 255, 255 ), msg, "\n" )	
+	MsgC( Color( 255, 255, 255 ), table.concat( values, "\t" ), "\n" )	
 
 end
 
