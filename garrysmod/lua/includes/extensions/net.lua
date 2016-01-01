@@ -66,6 +66,31 @@ function net.ReadEntity()
 	
 end
 
+
+--
+-- Read/Write a player to the stream
+--
+function net.WritePlayer( ply )
+
+	if ( !IsValid( ply ) || !ply:IsPlayer() ) then 
+		net.WriteUInt( 0, 8 )
+	else
+		net.WriteUInt( ply:EntIndex(), 8 )
+	end
+
+end
+
+function net.ReadPlayer()
+
+	local i = net.ReadUInt( 8 )
+	if ( !i ) then return end
+	
+	local ply = Entity( i )
+	return ply
+	
+end
+
+
 --
 -- Read/Write a color to/from the stream
 --
