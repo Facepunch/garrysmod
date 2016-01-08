@@ -132,8 +132,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: SWEP:ShootBullet( )
-   Desc: A convenience function to shoot bullets
+   Name: SWEP:ShootEffects( )
+   Desc: A convenience function to create shoot effects
 -----------------------------------------------------------]]
 function SWEP:ShootEffects()
 
