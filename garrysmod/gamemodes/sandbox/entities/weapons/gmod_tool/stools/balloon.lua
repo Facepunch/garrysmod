@@ -34,7 +34,7 @@ function TOOL:LeftClick( trace, attach )
 	local g = self:GetClientNumber( "g", 0 )
 	local b = self:GetClientNumber( "b", 0 )
 	local model = self:GetClientInfo( "model" )
-	local force = self:GetClientNumber( "force", 500 )
+	local force = math.Clamp( self:GetClientNumber( "force", 500 ), -1E34, 1E34 )
 	local length = self:GetClientNumber( "ropelength", 64 )
 
 	local modeltable = list.Get( "BalloonModels" )[ model ]
@@ -59,7 +59,6 @@ function TOOL:LeftClick( trace, attach )
 	--
 	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_balloon" && trace.Entity.Player == ply ) then
 
-		local force = self:GetClientNumber( "force", 500 )
 		trace.Entity:GetPhysicsObject():Wake()
 		trace.Entity:SetColor( Color( r, g, b, 255 ) )
 		trace.Entity:SetForce( force )
@@ -140,7 +139,9 @@ if ( SERVER ) then
 		balloon:Spawn()
 
 		duplicator.DoGenericPhysics( balloon, pl, Data )
-
+		
+		force = math.Clamp( force, -1E34, 1E34 )
+		
 		balloon:SetRenderMode( RENDERMODE_TRANSALPHA )
 		balloon:SetColor( Color( r, g, b, 255 ) )
 		balloon:SetForce( force )
