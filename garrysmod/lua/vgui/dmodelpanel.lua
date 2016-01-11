@@ -64,6 +64,7 @@ function PANEL:SetModel( strModelName )
 	if ( !IsValid( self.Entity ) ) then return end
 
 	self.Entity:SetNoDraw( true )
+	self.Entity:SetIK( false )
 
 	-- Try to find a nice sequence to play
 	local iSeq = self.Entity:LookupSequence( "walk_all" )
