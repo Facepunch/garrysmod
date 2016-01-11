@@ -77,10 +77,24 @@ function PANEL:Call( js )
 	self:QueueJavascript( js )
 end
 
-function PANEL:ConsoleMessage( msg )
+function PANEL:ConsoleMessage( msg, file, line )
 
 	if ( !isstring( msg ) ) then msg = "*js variable*" end
 
+	--
+	-- Handle error messages
+	--
+	if ( isstring( file ) && isnumber( line ) ) then
+
+		MsgC( Color( 255, 160, 255 ), "[HTML] " )
+		MsgC( Color( 255, 255, 255 ), file, ":", line, ": ", msg, "\n" )
+		return
+
+	end
+
+	--
+	-- Handle Lua execution
+	--
 	if ( self.m_bAllowLua && msg:StartWith( "RUNLUA:" ) ) then
 	
 		local strLua = msg:sub( 8 )
@@ -92,6 +106,9 @@ function PANEL:ConsoleMessage( msg )
 
 	end
 
+	--
+	-- Plain ol' console.log
+	--
 	MsgC( Color( 255, 160, 255 ), "[HTML] " );
 	MsgC( Color( 255, 255, 255 ), msg, "\n" )	
 

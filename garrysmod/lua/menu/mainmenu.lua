@@ -30,7 +30,11 @@ function PANEL:Init()
 
 	self:MakePopup()
 	self:SetPopupStayAtBack( true )
-	--self:MoveToBack() --Breaks Awesomium input 
+
+	-- If the console is already open, we've got in its way.
+	if ( gui.IsConsoleVisible() ) then
+		gui.ShowConsole()
+	end
 
 end
 
