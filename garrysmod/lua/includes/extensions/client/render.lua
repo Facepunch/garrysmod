@@ -6,26 +6,12 @@ function Material( name, words )
 
 	if ( !words ) then return C_Material( name ) end
 	
-	local str = "";
-	
-	if ( words:find( "vertexlitgeneric" ) ) then str = str .. "1" 
-	elseif ( words:find( "unlitgeneric" ) ) then str = str .. "0" 
-	else str = str .. "0" end
-	
-	if ( words:find( "nocull" ) ) then str = str .. "1" 
-	else str = str .. "0" end
-	
-	if ( words:find( "alphatest" ) ) then str = str .. "1" 
-	else str = str .. "0" end
-	
-	if ( words:find( "mips" ) ) then str = str .. "1" 
-	else str = str .. "0" end
-	
-	if ( words:find( "noclamp" ) ) then str = str .. "1" 
-	else str = str .. "0" end
-	
-	if ( words:find( "smooth" ) ) then str = str .. "1" 
-	else str = str .. "0" end
+	local str = (words:find("vertexlitgeneric") and "1" or "0")
+	str = str .. (words:find("nocull") and "1" or "0")
+	str = str .. (words:find("alphatest") and "1" or "0")
+	str = str .. (words:find("mips") and "1" or "0")
+	str = str .. (words:find("noclamp") and "1" or "0")
+	str = str .. (words:find("smooth") and "1" or "0")
 	
 	return C_Material( name, str )
 
