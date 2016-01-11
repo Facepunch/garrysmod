@@ -89,6 +89,7 @@ end
 	Name: DrawModel
 -----------------------------------------------------------]]
 function PANEL:DrawModel()
+	
 	local curparent = self
 	local rightx = self:GetWide()
 	local leftx = 0
@@ -105,8 +106,31 @@ function PANEL:DrawModel()
 		previous = curparent
 	end
 	render.SetScissorRect( leftx, topy, rightx, bottomy, true )
+
+	if self:PreDrawModel( self.Entity ) == false then 
+		return 
+	end
+
 	self.Entity:DrawModel()
+
+	self:PostDrawModel( self.Entity )
+
 	render.SetScissorRect( 0, 0, 0, 0, false )
+
+end
+
+--[[---------------------------------------------------------
+	Name: PreDrawModel
+-----------------------------------------------------------]]
+function PANEL:PreDrawModel( ent )
+	return true
+end
+
+--[[---------------------------------------------------------
+	Name: PostDrawModel
+-----------------------------------------------------------]]
+function PANEL:PostDrawModel( ent )
+	
 end
 
 --[[---------------------------------------------------------
