@@ -101,6 +101,7 @@ soundscapes_manifest
 	"file"		"scripts/soundscapes/tf/soundscapes_viaduct.txt"
 	"file"		"scripts/soundscapes/tf/soundscapes_warehouse.txt"
 	"file"		"scripts/soundscapes/tf/soundscapes_well.txt"
+	"file"		"scripts/soundscapes/tf/soundscapes_hellfire.txt"
 
 	// Portal
 	"file"		"scripts/soundscapes/portal/soundscapes_testchmb_portal.txt"

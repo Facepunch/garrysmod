@@ -39,4 +39,12 @@
 		"acceptsinput"  0
 		"resfile"	"scripts/screens/slideshow_display_screen.res"
 	}
+
+	"jalopy_radar_panel"
+	{
+		"type"			"jalopy_radar_panel"
+		"pixelswide"		"128"
+		"pixelshigh"		"128"
+		"resfile"		"scripts/screens/jalopy_radar_panel.res"
+	}
 }
