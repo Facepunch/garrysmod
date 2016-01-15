@@ -10,7 +10,7 @@ local rt_Store		= render.GetScreenEffectTexture( 0 )
 
 local List = {}
 
-function Add( ents, color, blurx, blury, passes, add, ignorez )
+function Add( ents, color, blurx, blury, passes, add, ignorez, suppresslighting )
 
 	if ( add == nil ) then add = true end
 	if ( ignorez == nil ) then ignorez = false end
@@ -24,7 +24,8 @@ function Add( ents, color, blurx, blury, passes, add, ignorez )
 		BlurY = blury or 2,
 		DrawPasses = passes or 1,
 		Additive = add,
-		IgnoreZ = ignorez
+		IgnoreZ = ignorez,
+		SuppressLighting = suppresslighting or true
 	}
 
 	table.insert( List, t )
@@ -59,15 +60,25 @@ function Render( entry )
 			render.SetStencilPassOperation( STENCIL_REPLACE )
 			render.SetStencilFailOperation( STENCIL_KEEP )
 			render.SetStencilZFailOperation( STENCIL_KEEP )
-
+			
+			if v.SuppressLighting then
+				render.SuppressEngineLighting(true)
+			end
 				for k, v in pairs( entry.Ents ) do
-
+			
 					if ( !IsValid( v ) ) then continue end
-
+			
+					RenderEnt = v
+			
 					v:DrawModel()
-
+			
 				end
-
+				
+					RenderEnt = NULL
+			if v.SuppressLighting then
+				render.SuppressEngineLighting(false)
+			end
+			
 			render.SetStencilCompareFunction( STENCIL_EQUAL )
 			render.SetStencilPassOperation( STENCIL_KEEP )
 			render.SetStencilFailOperation( STENCIL_KEEP )
