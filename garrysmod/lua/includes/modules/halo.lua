@@ -61,7 +61,7 @@ function Render( entry )
 			render.SetStencilFailOperation( STENCIL_KEEP )
 			render.SetStencilZFailOperation( STENCIL_KEEP )
 			
-			if v.SuppressLighting then
+			if entry.SuppressLighting then
 				render.SuppressEngineLighting(true)
 			end
 				for k, v in pairs( entry.Ents ) do
@@ -75,7 +75,7 @@ function Render( entry )
 				end
 				
 					RenderEnt = NULL
-			if v.SuppressLighting then
+			if entry.SuppressLighting then
 				render.SuppressEngineLighting(false)
 			end
 			
