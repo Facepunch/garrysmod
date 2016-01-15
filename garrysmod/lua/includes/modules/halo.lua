@@ -66,6 +66,8 @@ function Render( entry )
 				render.SetStencilFailOperation( STENCIL_KEEP )
 				render.SetStencilZFailOperation( STENCIL_KEEP )
 
+				render.SuppressEngineLighting(true)
+				
 					for k, v in pairs( entry.Ents ) do
 
 						if ( !IsValid( v ) ) then continue end
@@ -76,6 +78,7 @@ function Render( entry )
 
 					end
 
+				render.SuppressEngineLighting(false)
 					RenderEnt = NULL
 
 				render.SetStencilCompareFunction( STENCIL_EQUAL )
