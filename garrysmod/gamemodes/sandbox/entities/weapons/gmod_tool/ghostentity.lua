@@ -48,9 +48,6 @@ end
    The most important part of this is making sure it gets deleted properly
 -----------------------------------------------------------]]
 function ToolObj:StartGhostEntity( ent )
-
-	-- We can't ghost ragdolls because it looks like ass
-	local class = ent:GetClass()
 	
 	-- We do ghosting serverside in single player
 	-- It's done clientside in multiplayer
