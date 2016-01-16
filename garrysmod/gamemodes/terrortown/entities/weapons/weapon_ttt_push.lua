@@ -119,7 +119,7 @@ function SWEP:FirePulse(force_fwd, force_up)
                            ply:SetGroundEntity(nil)
                            ply:SetLocalVelocity(ply:GetVelocity() + pushvel)
 
-                           ply.was_pushed = {att=owner, t=CurTime()}
+                           ply.was_pushed = {att=owner, t=CurTime(), wep=self:GetClass()}
 
                         end
                      end
