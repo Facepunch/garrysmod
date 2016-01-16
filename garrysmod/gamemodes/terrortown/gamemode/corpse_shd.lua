@@ -33,4 +33,11 @@ function CORPSE.GetCredits(rag, default)
    return rag:GetDTInt(dti.INT_CREDITS)
 end
 
-
+if CLIENT then
+   net.Receive("TTTCorpseCreated", function(len)
+      local rag = net.ReadEntity()
+      local clr = net.ReadColor()
+      clr = Vector(clr.r/255.0, clr.g/255.0, clr.b/255.0)
+      rag.GetPlayerColor = function() return clr end
+	end)
+end

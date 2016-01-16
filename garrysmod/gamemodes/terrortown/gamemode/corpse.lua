@@ -5,6 +5,8 @@ CORPSE = {}
 
 include("corpse_shd.lua")
 
+util.AddNetworkString("TTTCorpseCreated")
+
 --- networked data abstraction layer
 local dti = CORPSE.dti
 
@@ -437,6 +439,13 @@ function CORPSE.Create(ply, attacker, dmginfo)
       local efn = ply.effect_fn
       timer.Simple(0, function() efn(rag) end)
    end
+   
+   timer.Simple(0.1, function() 
+      net.Start("TTTCorpseCreated")
+         net.WriteEntity(rag)
+         net.WriteColor(GAMEMODE.playercolor)
+      net.Broadcast()
+   end, rag)
 
    return rag -- we'll be speccing this
 end
