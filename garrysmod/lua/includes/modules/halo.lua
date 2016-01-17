@@ -55,6 +55,7 @@ function Render( entry )
 	-- Render colored props to the scene and set their pixels high
 	cam.Start3D()
 		render.SetStencilEnable( true )
+			render.SuppressEngineLighting(true)
 			cam.IgnoreZ( entry.IgnoreZ )
 
 				render.SetStencilWriteMask( 1 )
@@ -66,7 +67,6 @@ function Render( entry )
 				render.SetStencilFailOperation( STENCIL_KEEP )
 				render.SetStencilZFailOperation( STENCIL_KEEP )
 
-				render.SuppressEngineLighting(true)
 				
 					for k, v in pairs( entry.Ents ) do
 
@@ -78,7 +78,6 @@ function Render( entry )
 
 					end
 
-				render.SuppressEngineLighting(false)
 					RenderEnt = NULL
 
 				render.SetStencilCompareFunction( STENCIL_EQUAL )
@@ -91,6 +90,7 @@ function Render( entry )
 						surface.DrawRect( 0, 0, ScrW(), ScrH() )
 					cam.End2D()
 
+			render.SuppressEngineLighting(false)
 			cam.IgnoreZ( false )
 		render.SetStencilEnable( false )
 	cam.End3D()
