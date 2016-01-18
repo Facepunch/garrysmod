@@ -9,10 +9,17 @@
 
 				<li>&nbsp;</li>
 
-				<li><a class="{{IfElse( Category == 'subscribed', 'active', '' )}}" ng-click="Switch( 'subscribed', 0 )" ng-Tranny="'addons.subscribed'"></a>
+				<li>
+					<a class="{{IfElse( Category == 'subscribed', 'active', '' )}}" ng-click="Switch( 'subscribed', 0 )" ng-Tranny="'addons.subscribed'"></a>
 					<ul ng-show="Category == 'subscribed'" class="submenu">
 						<li><a ng-click="DisableAllSubscribed()" ng-Tranny="'addons.disableall'"></a></li>
 						<li><a ng-click="EnableAllSubscribed()" ng-Tranny="'addons.enableall'"></a></li>
+						<li>
+							<a ng-click="Uninstalling = !Uninstalling" ng-Tranny="'addons.uninstallall'"></a>
+							<ul ng-show="Uninstalling == true" class="submenu">
+								<a ng-click="Uninstalling = false; UnsubscribeAllSubscribed()" ng-Tranny="'addons.confirm'"></a>
+							</ul>
+						</li>
 					</ul>
 				</li>
 
@@ -43,7 +50,7 @@
 		</div>
 
 		<div style="position: absolute; left: 320px; top: 16px; bottom: 16px; right: 16px; padding: 16px; padding-top: 0;">
-			
+
 			<h1 class="menuheader">
 				<span ng-Tranny="Tagged == '' && 'addons.'+Category || 'addons.'+Tagged">...</span>
 				<small ng-Tranny="Tagged == '' && 'addons.'+Category + '.subtitle' || 'addons.'+Tagged + '.subtitle'">...</small>
@@ -53,7 +60,7 @@
 
 				<workshopmessage ng-show="Loading" ng-Tranny="'addons.loading'">...</workshopmessage>
 				<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'addons.none'">...</workshopmessage>
-				
+
 
 				<workshopicon ng-hide="Loading" ng-repeat="file in Files | orderBy:'(info.title)'" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px"  class="{{IfElse( IsSubscribed( file ) && !IsEnabled( file ), 'disabled', '' )}} {{IfElse( IsSubscribed( file ), 'installed', '' )}}">
 
@@ -70,7 +77,7 @@
 					<controls>
 
 						<left>
-							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>	
+							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
 							<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
 							<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'demos.publish'">..</control>
 							<control ng-show="file.local" ng-click="DeleteLocal( file )" ng-Tranny="'demos.delete'">..</control>
@@ -102,7 +109,7 @@
 
 					</pagnation>
 				</center>
-			
+
 		</div>
 
 	</div>
