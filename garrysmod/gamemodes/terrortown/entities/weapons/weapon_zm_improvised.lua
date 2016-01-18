@@ -238,7 +238,7 @@ function SWEP:SecondaryAttack()
          ply:SetVelocity(ply:GetVelocity() + pushvel)
          self.Owner:SetAnimation( PLAYER_ATTACK1 )
 
-         ply.was_pushed = {att=self.Owner, t=CurTime()} --, infl=self}
+         ply.was_pushed = {att=self.Owner, t=CurTime(), wep=self:GetClass()} --, infl=self}
       end
 
       self.Weapon:EmitSound(sound_single)      

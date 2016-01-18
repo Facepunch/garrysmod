@@ -39,7 +39,7 @@ local function PushPullRadius(pos, pusher)
 
             target:SetVelocity(vel)
 
-            target.was_pushed = {att=pusher, t=CurTime()}
+            target.was_pushed = {att=pusher, t=CurTime(), wep="weapon_ttt_confgrenade"}
 
          elseif IsValid(phys) then
             phys:ApplyForceCenter(dir * -1 * phys_force)
