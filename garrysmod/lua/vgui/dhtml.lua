@@ -155,5 +155,47 @@ function PANEL:AddFunction( obj, funcname, func )
 
 end
 
+--
+-- Called when this panel begins loading a page
+--
+function PANEL:OnBeginLoadingDocument( url )
+
+end
+
+--
+-- Called when this panel successfully loads a page
+--
+function PANEL:OnFinishLoadingDocument( url )
+
+end
+
+--
+-- Called when this panel's DOM has been set up. You can run JavaScript in here
+--
+function PANEL:OnDocumentReady( url )
+
+end
+
+--
+-- Called when a this panel tries to open a child (such as a popup or new tab)
+--
+function PANEL:OnChildViewCreated( sourceURL, targetURL, isPopup )
+
+end
+
+--
+-- Called when the title of the loaded document has changed
+--
+function PANEL:OnChangeTitle( title )
+
+end
+
+--
+-- Called when the target URL of the frame has changed, this happens when you hover over a link
+--
+function PANEL:OnChangeTargetURL( url )
+
+end
 
 derma.DefineControl( "DHTML", "A shape", PANEL, "Awesomium" )
+
