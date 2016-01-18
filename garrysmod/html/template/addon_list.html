@@ -18,21 +18,27 @@
 
 				<li>&nbsp;</li>
 
-				<li ng-repeat="typename in AddonTypes">
+				<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+					<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Tranny="'addons.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
 
-					<a class="{{IfElse( Tagged == typename, 'active', '' )}}" ng-click="SwitchWithTag( 'trending', 0, typename )" ng-Tranny="'addons.'+typename"></a>
-
-					<ul ng-show="Tagged == typename" class="submenu">
-						<li><a class="{{IfElse( Category == 'trending', 'active', '' )}}" ng-click="SwitchWithTag( 'trending', 0, Tagged )" ng-Tranny="'addons.trending'"></a></li>
-						<li><a class="{{IfElse( Category == 'popular', 'active', '' )}}" ng-click="SwitchWithTag( 'popular', 0, Tagged )" ng-Tranny="'addons.toprated'"></a></li>
-						<li><a class="{{IfElse( Category == 'latest', 'active', '' )}}" ng-click="SwitchWithTag( 'latest', 0, Tagged )" ng-Tranny="'addons.newest'"></a></li>
+					<ul ng-show="Category == cat">
+						<li ng-repeat="tag in AddonTypes" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
+							<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						</li>
 					</ul>
 				</li>
 
 				<li>&nbsp;</li>
 
-				<li><a class="{{IfElse( Category == 'friends', 'active', '' )}}" ng-click="Switch( 'friends', 0 )" ng-Tranny="'addons.friends'"></a></li>
-				<li><a class="{{IfElse( Category == 'mine', 'active', '' )}}" ng-click="Switch( 'mine', 0 )" ng-Tranny="'addons.mine'"></a></li>
+				<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+					<a ng-click="SwitchWithTag( cat, 0, 'Addon' )" ng-Tranny="'addons.' + cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+
+					<ul ng-show="Category == cat">
+						<li ng-repeat="tag in AddonTypes" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
+							<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						</li>
+					</ul>
+				</li>
 
 				<li>&nbsp;</li>
 
@@ -43,17 +49,16 @@
 		</div>
 
 		<div style="position: absolute; left: 320px; top: 16px; bottom: 16px; right: 16px; padding: 16px; padding-top: 0;">
-			
+
 			<h1 class="menuheader">
-				<span ng-Tranny="Tagged == '' && 'addons.'+Category || 'addons.'+Tagged">...</span>
-				<small ng-Tranny="Tagged == '' && 'addons.'+Category + '.subtitle' || 'addons.'+Tagged + '.subtitle'">...</small>
+				<span ng-Tranny="(Tagged == '' || Tagged == 'Addon') && 'addons.'+Category || 'addons.'+Tagged">...</span>
+				<small ng-Tranny="(Tagged == '' || Tagged == 'Addon') && 'addons.'+Category + '.subtitle' || 'addons.'+Tagged+'.subtitle'">...</small>
 			</h1>
 
 			<workshopcontainer>
 
 				<workshopmessage ng-show="Loading" ng-Tranny="'addons.loading'">...</workshopmessage>
 				<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'addons.none'">...</workshopmessage>
-				
 
 				<workshopicon ng-hide="Loading" ng-repeat="file in Files | orderBy:'(info.title)'" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px"  class="{{IfElse( IsSubscribed( file ) && !IsEnabled( file ), 'disabled', '' )}} {{IfElse( IsSubscribed( file ), 'installed', '' )}}">
 
@@ -70,7 +75,7 @@
 					<controls>
 
 						<left>
-							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>	
+							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
 							<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
 							<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'demos.publish'">..</control>
 							<control ng-show="file.local" ng-click="DeleteLocal( file )" ng-Tranny="'demos.delete'">..</control>
@@ -102,7 +107,7 @@
 
 					</pagnation>
 				</center>
-			
+
 		</div>
 
 	</div>
