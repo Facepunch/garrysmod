@@ -90,8 +90,8 @@ function Render( entry )
 						surface.DrawRect( 0, 0, ScrW(), ScrH() )
 					cam.End2D()
 
-			render.SuppressEngineLighting(false)
 			cam.IgnoreZ( false )
+			render.SuppressEngineLighting(false)
 		render.SetStencilEnable( false )
 	cam.End3D()
 
