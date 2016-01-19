@@ -4,9 +4,6 @@ game_sounds_manifest
 	"precache_file"		"scripts/sounds/lua.txt"
 	"precache_file"		"scripts/sounds/phx.txt"
 
-	// Half-Life 1
-	"precache_file"		"scripts/sounds/hl1_game_sounds.txt"
-
 	// Half-Life 2
 	"precache_file"		"scripts/sounds/hl2_game_sounds.txt"
 	"precache_file"		"scripts/sounds/hl2_game_sounds_ambient_generic.txt"
@@ -163,6 +160,9 @@ game_sounds_manifest
 
 	"precache_file"		"scripts/game_sounds_vo_pauling.txt"
 	"precache_file"		"scripts/game_sounds_passtime.txt"
+
+	// Half-Life 1
+	"precache_file"		"scripts/sounds/hl1_game_sounds.txt"
 
 	// Left 4 Dead
 	"precache_file"		"scripts/sounds/l4d_game_sounds_weapons.txt"
