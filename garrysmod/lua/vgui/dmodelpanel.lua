@@ -109,7 +109,7 @@ function PANEL:DrawModel()
 	render.SetScissorRect( leftx, topy, rightx, bottomy, true )
 
 	local ret = self:PreDrawModel( self.Entity )
-	if ( ret && ret != false ) then 
+	if ( ret != false ) then 
 		self.Entity:DrawModel()
 		self:PostDrawModel( self.Entity )
 	end
