@@ -56,6 +56,7 @@ function PrintTable( t, indent, done )
 			done[ value ] = true
 			Msg( tostring( key ) .. ":" .. "\n" )
 			PrintTable ( value, indent + 2, done )
+			done[ value ] = nil
 
 		else
 

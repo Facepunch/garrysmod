@@ -137,8 +137,9 @@ net.WriteVars =
 	[TYPE_ENTITY]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteEntity( v )		end,
 	[TYPE_VECTOR]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteVector( v )		end,
 	[TYPE_ANGLE]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteAngle( v )			end,
+	[TYPE_MATRIX]		= function ( t, v ) net.WriteUInt( t, 8 )	net.WriteMatrix( v )		end,
 	[TYPE_COLOR]		= function ( t, v ) net.WriteUInt( t, 8 )	net.WriteColor( v )			end,
-		
+	
 }
 
 function net.WriteType( v )
@@ -159,7 +160,7 @@ end
 
 net.ReadVars = 
 {
-	[TYPE_NIL]		= function ()	return end,
+	[TYPE_NIL]		= function ()	return nil end,
 	[TYPE_STRING]	= function ()	return net.ReadString() end,
 	[TYPE_NUMBER]	= function ()	return net.ReadDouble() end,
 	[TYPE_TABLE]	= function ()	return net.ReadTable() end,
@@ -167,6 +168,7 @@ net.ReadVars =
 	[TYPE_ENTITY]	= function ()	return net.ReadEntity() end,
 	[TYPE_VECTOR]	= function ()	return net.ReadVector() end,
 	[TYPE_ANGLE]	= function ()	return net.ReadAngle() end,
+	[TYPE_MATRIX]	= function ()	return net.ReadMatrix() end,
 	[TYPE_COLOR]	= function ()	return net.ReadColor() end,
 }
 
