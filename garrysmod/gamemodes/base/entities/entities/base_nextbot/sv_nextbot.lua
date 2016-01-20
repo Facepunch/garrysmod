@@ -20,11 +20,26 @@ function ENT:BehaveUpdate( fInterval )
 
 	if ( !self.BehaveThread ) then return end
 
+	--
+	-- Give a silent warning to developers if RunBehaviour has returned
+	--
+	if ( coroutine.status( self.BehaveThread ) == "dead" ) then
+
+		self.BehaveThread = nil
+		Msg( self, " Warning: ENT:RunBehaviour() has finished executing\n" )
+
+		return
+
+	end
+
+	--
+	-- Continue RunBehaviour's execution
+	--
 	local ok, message = coroutine.resume( self.BehaveThread )
 	if ( ok == false ) then
 
 		self.BehaveThread = nil
-		Msg( self, "error: ", message, "\n" );
+		ErrorNoHalt( self, " Error: ", message, "\n" );
 
 	end
 
