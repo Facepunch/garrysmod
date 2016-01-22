@@ -216,7 +216,7 @@ function GM:VehicleMove( ply, vehicle, mv )
 	--
 	-- On duck toggle third person view
 	--
-	if ( mv:KeyPressed( IN_DUCK ) ) then
+	if ( mv:KeyPressed( IN_DUCK ) && vehicle.SetThirdPersonMode ) then
 		vehicle:SetThirdPersonMode( !vehicle:GetThirdPersonMode() )
 	end
 
@@ -224,7 +224,7 @@ function GM:VehicleMove( ply, vehicle, mv )
 	-- Adjust the camera distance with the mouse wheel
 	--
 	local iWheel = ply:GetCurrentCommand():GetMouseWheel()
-	if ( iWheel != 0 ) then
+	if ( iWheel != 0 && vehicle.SetCameraDistance ) then
 		-- The distance is a multiplier
 		-- Actual camera distance = ( renderradius + renderradius * dist )
 		-- so -1 will be zero.. clamp it there.
