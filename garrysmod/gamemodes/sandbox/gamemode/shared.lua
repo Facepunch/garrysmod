@@ -185,7 +185,7 @@ end
 function GM:PlayerNoClip( pl, on )
 	
 	-- Don't allow if player is in vehicle
-	if ( pl:InVehicle() ) then return false end
+	if ( not pl:Alive() or pl:InVehicle() ) then return false end
 	
 	-- Always allow in single player
 	if ( game.SinglePlayer() ) then return true end
