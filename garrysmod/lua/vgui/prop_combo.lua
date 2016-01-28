@@ -37,7 +37,7 @@ function PANEL:Setup( vars )
 	
 	combo.Paint = function( combo, w, h )
 		
-		if self:IsEditing() or self:GetRow():IsHovered() or self:GetRow():IsChildHovered( 6 ) then
+		if self:IsEditing() or self:GetRow():IsHovered() or self:GetRow():IsChildHovered() then
 			DComboBox.Paint( combo, w, h )
 		end
 		
