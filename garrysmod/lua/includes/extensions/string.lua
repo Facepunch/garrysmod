@@ -107,9 +107,9 @@ function string.HTMLDecode( str )
 
 	else
 
-		for i,v in pairs(html_entities_reverse) do
+		for i,v in pairs( html_entities_reverse ) do
 			
-			str = ( str:gsub( string.PatternSafe(i), v ) )
+			str = ( str:gsub( string.PatternSafe( i ), v ) )
 
 		end
 
