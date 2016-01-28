@@ -15,22 +15,44 @@ function string.ToTable ( str )
 end
 
 --[[---------------------------------------------------------
-   Name: string.HTMLEntities( string )
+   Name: string.HTMLEncode( string )
    Desc: Converts a string to its HTML entities
    Desc: The html_entities table is taken straight from PHP's
 -----------------------------------------------------------]]
 
 local html_entities = {['"']="&quot;",["&"]="&amp;",["'"]="&#039;",["<"]="&lt;",[">"]="&gt;",[" "]="&nbsp;",["¡"]="&iexcl;",["¢"]="&cent;",["£"]="&pound;",["¤"]="&curren;",["¥"]="&yen;",["¦"]="&brvbar;",["§"]="&sect;",["¨"]="&uml;",["©"]="&copy;",["ª"]="&ordf;",["«"]="&laquo;",["¬"]="&not;",["­"]="&shy;",["®"]="&reg;",["¯"]="&macr;",["°"]="&deg;",["±"]="&plusmn;",["²"]="&sup2;",["³"]="&sup3;",["´"]="&acute;",["µ"]="&micro;",["¶"]="&para;",["·"]="&middot;",["¸"]="&cedil;",["¹"]="&sup1;",["º"]="&ordm;",["»"]="&raquo;",["¼"]="&frac14;",["½"]="&frac12;",["¾"]="&frac34;",["¿"]="&iquest;",["À"]="&Agrave;",["Á"]="&Aacute;",["Â"]="&Acirc;",["Ã"]="&Atilde;",["Ä"]="&Auml;",["Å"]="&Aring;",["Æ"]="&AElig;",["Ç"]="&Ccedil;",["È"]="&Egrave;",["É"]="&Eacute;",["Ê"]="&Ecirc;",["Ë"]="&Euml;",["Ì"]="&Igrave;",["Í"]="&Iacute;",["Î"]="&Icirc;",["Ï"]="&Iuml;",["Ð"]="&ETH;",["Ñ"]="&Ntilde;",["Ò"]="&Ograve;",["Ó"]="&Oacute;",["Ô"]="&Ocirc;",["Õ"]="&Otilde;",["Ö"]="&Ouml;",["×"]="&times;",["Ø"]="&Oslash;",["Ù"]="&Ugrave;",["Ú"]="&Uacute;",["Û"]="&Ucirc;",["Ü"]="&Uuml;",["Ý"]="&Yacute;",["Þ"]="&THORN;",["ß"]="&szlig;",["à"]="&agrave;",["á"]="&aacute;",["â"]="&acirc;",["ã"]="&atilde;",["ä"]="&auml;",["å"]="&aring;",["æ"]="&aelig;",["ç"]="&ccedil;",["è"]="&egrave;",["é"]="&eacute;",["ê"]="&ecirc;",["ë"]="&euml;",["ì"]="&igrave;",["í"]="&iacute;",["î"]="&icirc;",["ï"]="&iuml;",["ð"]="&eth;",["ñ"]="&ntilde;",["ò"]="&ograve;",["ó"]="&oacute;",["ô"]="&ocirc;",["õ"]="&otilde;",["ö"]="&ouml;",["÷"]="&divide;",["ø"]="&oslash;",["ù"]="&ugrave;",["ú"]="&uacute;",["û"]="&ucirc;",["ü"]="&uuml;",["ý"]="&yacute;",["þ"]="&thorn;",["ÿ"]="&yuml;",["Œ"]="&OElig;",["œ"]="&oelig;",["Š"]="&Scaron;",["š"]="&scaron;",["Ÿ"]="&Yuml;",["ƒ"]="&fnof;",["ˆ"]="&circ;",["˜"]="&tilde;",["Α"]="&Alpha;",["Β"]="&Beta;",["Γ"]="&Gamma;",["Δ"]="&Delta;",["Ε"]="&Epsilon;",["Ζ"]="&Zeta;",["Η"]="&Eta;",["Θ"]="&Theta;",["Ι"]="&Iota;",["Κ"]="&Kappa;",["Λ"]="&Lambda;",["Μ"]="&Mu;",["Ν"]="&Nu;",["Ξ"]="&Xi;",["Ο"]="&Omicron;",["Π"]="&Pi;",["Ρ"]="&Rho;",["Σ"]="&Sigma;",["Τ"]="&Tau;",["Υ"]="&Upsilon;",["Φ"]="&Phi;",["Χ"]="&Chi;",["Ψ"]="&Psi;",["Ω"]="&Omega;",["α"]="&alpha;",["β"]="&beta;",["γ"]="&gamma;",["δ"]="&delta;",["ε"]="&epsilon;",["ζ"]="&zeta;",["η"]="&eta;",["θ"]="&theta;",["ι"]="&iota;",["κ"]="&kappa;",["λ"]="&lambda;",["μ"]="&mu;",["ν"]="&nu;",["ξ"]="&xi;",["ο"]="&omicron;",["π"]="&pi;",["ρ"]="&rho;",["ς"]="&sigmaf;",["σ"]="&sigma;",["τ"]="&tau;",["υ"]="&upsilon;",["φ"]="&phi;",["χ"]="&chi;",["ψ"]="&psi;",["ω"]="&omega;",["ϑ"]="&thetasym;",["ϒ"]="&upsih;",["ϖ"]="&piv;",[" "]="&ensp;",[" "]="&emsp;",[" "]="&thinsp;",["‌"]="&zwnj;",["‍"]="&zwj;",["‎"]="&lrm;",["‏"]="&rlm;",["–"]="&ndash;",["—"]="&mdash;",["‘"]="&lsquo;",["’"]="&rsquo;",["‚"]="&sbquo;",["“"]="&ldquo;",["”"]="&rdquo;",["„"]="&bdquo;",["†"]="&dagger;",["‡"]="&Dagger;",["•"]="&bull;",["…"]="&hellip;",["‰"]="&permil;",["′"]="&prime;",["″"]="&Prime;",["‹"]="&lsaquo;",["›"]="&rsaquo;",["‾"]="&oline;",["⁄"]="&frasl;",["€"]="&euro;",["ℑ"]="&image;",["℘"]="&weierp;",["ℜ"]="&real;",["™"]="&trade;",["ℵ"]="&alefsym;",["←"]="&larr;",["↑"]="&uarr;",["→"]="&rarr;",["↓"]="&darr;",["↔"]="&harr;",["↵"]="&crarr;",["⇐"]="&lArr;",["⇑"]="&uArr;",["⇒"]="&rArr;",["⇓"]="&dArr;",["⇔"]="&hArr;",["∀"]="&forall;",["∂"]="&part;",["∃"]="&exist;",["∅"]="&empty;",["∇"]="&nabla;",["∈"]="&isin;",["∉"]="&notin;",["∋"]="&ni;",["∏"]="&prod;",["∑"]="&sum;",["−"]="&minus;",["∗"]="&lowast;",["√"]="&radic;",["∝"]="&prop;",["∞"]="&infin;",["∠"]="&ang;",["∧"]="&and;",["∨"]="&or;",["∩"]="&cap;",["∪"]="&cup;",["∫"]="&int;",["∴"]="&there4;",["∼"]="&sim;",["≅"]="&cong;",["≈"]="&asymp;",["≠"]="&ne;",["≡"]="&equiv;",["≤"]="&le;",["≥"]="&ge;",["⊂"]="&sub;",["⊃"]="&sup;",["⊄"]="&nsub;",["⊆"]="&sube;",["⊇"]="&supe;",["⊕"]="&oplus;",["⊗"]="&otimes;",["⊥"]="&perp;",["⋅"]="&sdot;",["⌈"]="&lceil;",["⌉"]="&rceil;",["⌊"]="&lfloor;",["⌋"]="&rfloor;",["⟨"]="&lang;",["⟩"]="&rang;",["◊"]="&loz;",["♠"]="&spades;",["♣"]="&clubs;",["♥"]="&hearts;",["♦"]="&diams;"}
 
-function string.HTMLEntities( str )
+function string.HTMLEncode( str )
 
-	if (#str == 1) then
+	if (html_entities[str] ~= nil) then
 
-		return html_entities[str] or str
+		return html_entities[str]
 
 	else
 
-		return str:gsub( "(.*)", html_entities )
+		return ( str:gsub( ".", html_entities ) )
+
+	end
+
+end
+
+--[[---------------------------------------------------------
+   Name: string.HTMLDecode( string )
+   Desc: Converts HTML entities back to a normal string
+   Desc: The html_entities_reverse table is taken straight from PHP's
+-----------------------------------------------------------]]
+
+local html_entities_reverse = {["&quot;"]='"',["&amp;"]="&",["&#039;"]="'",["&lt;"]="<",["&gt;"]=">",["&nbsp;"]=" ",["&iexcl;"]="¡",["&cent;"]="¢",["&pound;"]="£",["&curren;"]="¤",["&yen;"]="¥",["&brvbar;"]="¦",["&sect;"]="§",["&uml;"]="¨",["&copy;"]="©",["&ordf;"]="ª",["&laquo;"]="«",["&not;"]="¬",["&shy;"]="­",["&reg;"]="®",["&macr;"]="¯",["&deg;"]="°",["&plusmn;"]="±",["&sup2;"]="²",["&sup3;"]="³",["&acute;"]="´",["&micro;"]="µ",["&para;"]="¶",["&middot;"]="·",["&cedil;"]="¸",["&sup1;"]="¹",["&ordm;"]="º",["&raquo;"]="»",["&frac14;"]="¼",["&frac12;"]="½",["&frac34;"]="¾",["&iquest;"]="¿",["&Agrave;"]="À",["&Aacute;"]="Á",["&Acirc;"]="Â",["&Atilde;"]="Ã",["&Auml;"]="Ä",["&Aring;"]="Å",["&AElig;"]="Æ",["&Ccedil;"]="Ç",["&Egrave;"]="È",["&Eacute;"]="É",["&Ecirc;"]="Ê",["&Euml;"]="Ë",["&Igrave;"]="Ì",["&Iacute;"]="Í",["&Icirc;"]="Î",["&Iuml;"]="Ï",["&ETH;"]="Ð",["&Ntilde;"]="Ñ",["&Ograve;"]="Ò",["&Oacute;"]="Ó",["&Ocirc;"]="Ô",["&Otilde;"]="Õ",["&Ouml;"]="Ö",["&times;"]="×",["&Oslash;"]="Ø",["&Ugrave;"]="Ù",["&Uacute;"]="Ú",["&Ucirc;"]="Û",["&Uuml;"]="Ü",["&Yacute;"]="Ý",["&THORN;"]="Þ",["&szlig;"]="ß",["&agrave;"]="à",["&aacute;"]="á",["&acirc;"]="â",["&atilde;"]="ã",["&auml;"]="ä",["&aring;"]="å",["&aelig;"]="æ",["&ccedil;"]="ç",["&egrave;"]="è",["&eacute;"]="é",["&ecirc;"]="ê",["&euml;"]="ë",["&igrave;"]="ì",["&iacute;"]="í",["&icirc;"]="î",["&iuml;"]="ï",["&eth;"]="ð",["&ntilde;"]="ñ",["&ograve;"]="ò",["&oacute;"]="ó",["&ocirc;"]="ô",["&otilde;"]="õ",["&ouml;"]="ö",["&divide;"]="÷",["&oslash;"]="ø",["&ugrave;"]="ù",["&uacute;"]="ú",["&ucirc;"]="û",["&uuml;"]="ü",["&yacute;"]="ý",["&thorn;"]="þ",["&yuml;"]="ÿ",["&OElig;"]="Œ",["&oelig;"]="œ",["&Scaron;"]="Š",["&scaron;"]="š",["&Yuml;"]="Ÿ",["&fnof;"]="ƒ",["&circ;"]="ˆ",["&tilde;"]="˜",["&Alpha;"]="Α",["&Beta;"]="Β",["&Gamma;"]="Γ",["&Delta;"]="Δ",["&Epsilon;"]="Ε",["&Zeta;"]="Ζ",["&Eta;"]="Η",["&Theta;"]="Θ",["&Iota;"]="Ι",["&Kappa;"]="Κ",["&Lambda;"]="Λ",["&Mu;"]="Μ",["&Nu;"]="Ν",["&Xi;"]="Ξ",["&Omicron;"]="Ο",["&Pi;"]="Π",["&Rho;"]="Ρ",["&Sigma;"]="Σ",["&Tau;"]="Τ",["&Upsilon;"]="Υ",["&Phi;"]="Φ",["&Chi;"]="Χ",["&Psi;"]="Ψ",["&Omega;"]="Ω",["&alpha;"]="α",["&beta;"]="β",["&gamma;"]="γ",["&delta;"]="δ",["&epsilon;"]="ε",["&zeta;"]="ζ",["&eta;"]="η",["&theta;"]="θ",["&iota;"]="ι",["&kappa;"]="κ",["&lambda;"]="λ",["&mu;"]="μ",["&nu;"]="ν",["&xi;"]="ξ",["&omicron;"]="ο",["&pi;"]="π",["&rho;"]="ρ",["&sigmaf;"]="ς",["&sigma;"]="σ",["&tau;"]="τ",["&upsilon;"]="υ",["&phi;"]="φ",["&chi;"]="χ",["&psi;"]="ψ",["&omega;"]="ω",["&thetasym;"]="ϑ",["&upsih;"]="ϒ",["&piv;"]="ϖ",["&ensp;"]=" ",["&emsp;"]=" ",["&thinsp;"]=" ",["&zwnj;"]="‌",["&zwj;"]="‍",["&lrm;"]="‎",["&rlm;"]="‏",["&ndash;"]="–",["&mdash;"]="—",["&lsquo;"]="‘",["&rsquo;"]="’",["&sbquo;"]="‚",["&ldquo;"]="“",["&rdquo;"]="”",["&bdquo;"]="„",["&dagger;"]="†",["&Dagger;"]="‡",["&bull;"]="•",["&hellip;"]="…",["&permil;"]="‰",["&prime;"]="′",["&Prime;"]="″",["&lsaquo;"]="‹",["&rsaquo;"]="›",["&oline;"]="‾",["&frasl;"]="⁄",["&euro;"]="€",["&image;"]="ℑ",["&weierp;"]="℘",["&real;"]="ℜ",["&trade;"]="™",["&alefsym;"]="ℵ",["&larr;"]="←",["&uarr;"]="↑",["&rarr;"]="→",["&darr;"]="↓",["&harr;"]="↔",["&crarr;"]="↵",["&lArr;"]="⇐",["&uArr;"]="⇑",["&rArr;"]="⇒",["&dArr;"]="⇓",["&hArr;"]="⇔",["&forall;"]="∀",["&part;"]="∂",["&exist;"]="∃",["&empty;"]="∅",["&nabla;"]="∇",["&isin;"]="∈",["&notin;"]="∉",["&ni;"]="∋",["&prod;"]="∏",["&sum;"]="∑",["&minus;"]="−",["&lowast;"]="∗",["&radic;"]="√",["&prop;"]="∝",["&infin;"]="∞",["&ang;"]="∠",["&and;"]="∧",["&or;"]="∨",["&cap;"]="∩",["&cup;"]="∪",["&int;"]="∫",["&there4;"]="∴",["&sim;"]="∼",["&cong;"]="≅",["&asymp;"]="≈",["&ne;"]="≠",["&equiv;"]="≡",["&le;"]="≤",["&ge;"]="≥",["&sub;"]="⊂",["&sup;"]="⊃",["&nsub;"]="⊄",["&sube;"]="⊆",["&supe;"]="⊇",["&oplus;"]="⊕",["&otimes;"]="⊗",["&perp;"]="⊥",["&sdot;"]="⋅",["&lceil;"]="⌈",["&rceil;"]="⌉",["&lfloor;"]="⌊",["&rfloor;"]="⌋",["&lang;"]="⟨",["&rang;"]="⟩",["&loz;"]="◊",["&spades;"]="♠",["&clubs;"]="♣",["&hearts;"]="♥",["♦"]="&diams;"}
+
+function string.HTMLDecode( str )
+
+	if (html_entities_reverse[str] ~= nil) then
+
+		return html_entities_reverse[str]
+
+	else
+
+		return ( str:gsub( ".", html_entities_reverse ) )
 
 	end
 
@@ -46,7 +68,7 @@ function string.URLEncode( str )
 	str = string.gsub( str, "([^%w%-%_%.%~])", function( hex )
 		return string.format( "%%%02X", string.byte( hex ) )
 	end )
-	return str
+	return ( str )
 
 end
 
@@ -60,7 +82,7 @@ function string.URLDecode( str )
 	str = string.gsub( string.gsub( str, "+", " " ), "%%(%x%x)", function( hex )
 		return string.char( tonumber( hex, 16 ) )
 	end )
-	return str
+	return ( str )
 
 end
 
@@ -95,7 +117,7 @@ end
 
 --[[---------------------------------------------------------
    Name: string.PatternSafe( string )
-   Desc: Takes a string and escapes it for insertion in to a Lua pattern
+   Desc: Takes a string and escapes it for insertion into a Lua pattern
 -----------------------------------------------------------]]
 local pattern_escape_replacements = {
 	["("] = "%(",
