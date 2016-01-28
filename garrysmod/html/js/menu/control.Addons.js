@@ -30,6 +30,8 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		"model"
 	];
 
+	$scope.BulkSelectedIds = {};
+
 	addon.Init( 'addon', $scope, $rootScope );
 
 	$scope.Switch( 'subscribed', 0 );
@@ -80,5 +82,43 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	{
 		lua.Run( "steamworks.SetShouldMountAddon( %s, true );", String( file.id ) )
 		lua.Run( "steamworks.ApplyAddons();" )
+	};
+
+	$scope.UnselectAll = function()
+	{
+		$scope.BulkSelectedIds = {};
+	}
+
+	$scope.DisableSelected = function()
+	{
+		Object.keys( $scope.BulkSelectedIds ).forEach(function( id ) {
+			if ( $scope.BulkSelectedIds[ id ] )
+			{
+				lua.Run( "steamworks.SetShouldMountAddon( %s, false )", id );
+			}
+		});
+		lua.Run( "steamworks.ApplyAddons()" );
+	}
+
+	$scope.EnableSelected = function()
+	{
+		Object.keys( $scope.BulkSelectedIds ).forEach(function( id ) {
+			if ( $scope.BulkSelectedIds[ id ] )
+			{
+				lua.Run( "steamworks.SetShouldMountAddon( %s, true )", id );
+			}
+		});
+		lua.Run( "steamworks.ApplyAddons()" );
+	}
+
+	$scope.UnsubscribeSelected = function()
+	{
+		Object.keys( $scope.BulkSelectedIds ).forEach(function( id ) {
+			if ( $scope.BulkSelectedIds[ id ] )
+			{
+				lua.Run( "steamworks.Unsubscribe( %s )", id );
+				delete $scope.BulkSelectedIds[ id ]; // Unselect
+			}
+		});
 	};
 }
