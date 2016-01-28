@@ -26,14 +26,13 @@ AccessorFunc( PANEL, "m_bDisableTabbing", 	"TabbingDisabled", 	FORCE_BOOL )
 AccessorFunc( PANEL, "m_FontName", 			"Font" )
 AccessorFunc( PANEL, "m_bBorder", 			"DrawBorder" )
 AccessorFunc( PANEL, "m_bBackground", 		"DrawBackground" )
-AccessorFunc( PANEL, "m_sHelpText", 		"HelpText" )
 
 AccessorFunc( PANEL, "m_colText", 			"TextColor" )
-AccessorFunc( PANEL, "m_colHelpText", 		"HelpTextColor" )
 AccessorFunc( PANEL, "m_colHighlight", 		"HighlightColor" )
 AccessorFunc( PANEL, "m_colCursor", 		"CursorColor" )
 
 AccessorFunc( PANEL, "m_bDisabled", 		"Disabled" )
+AccessorFunc( PANEL, "m_sPlaceholderText", 	"PlaceholderText", FORCE_STRING )
 
 
 
@@ -48,6 +47,23 @@ function PANEL:Init()
 	self:SetHistoryEnabled( false )
 	self.History = {}
 	self.HistoryPos = 0
+	
+	self.PlaceholderText = vgui.Create( "DLabel", self )
+	self.PlaceholderText:Dock( FILL )
+	self.PlaceholderText:DockMargin( 3, 1, 3, 0 )
+	self.PlaceholderText:SetMouseInputEnabled( false )
+	self.PlaceholderText:SetText( "" )
+	self.PlaceholderText:SetWrap( true )
+	self.PlaceholderText:SetTextColor( Color( 169, 169, 169 ) )
+	self.PlaceholderText:SetContentAlignment( 4 )
+	self.PlaceholderText.PerformLayout = function( self )
+		
+		self:SetContentAlignment( self:GetParent():IsMultiline() and 7 or 4 )
+		self.m_colText.a = self:GetParent():GetText() == "" and 255 or 0
+		
+		DLabel.PerformLayout( self )
+		
+	end
 	
 	--
 	-- We're going to draw these ourselves in 
@@ -82,8 +98,7 @@ function PANEL:Init()
 	derma.SkinHook( "Scheme", "TextEntry", self )
 
 	self:SetFont( "DermaDefault" )
-	self:SetHelpText( "" )
-	self:SetHelpTextColor( Color( 100, 100, 100 ) )
+	self:SetPlaceholderText( "" )
 
 end
 
@@ -275,21 +290,6 @@ function PANEL:UpdateConvarValue()
 
 end
 
-function PANEL:PaintHelpText( w, h )
-	if ( self:GetText() == "" ) and not ( self:IsMultiline() or self:IsEditing() or ( self:GetHelpText() == "" ) ) then
-		
-		surface.SetFont( self:GetFont() )
-		
-		local text   = self:GetHelpText()
-		local tw, th = surface.GetTextSize( text )
-		local color  = self:GetHelpTextColor()
-		
-		surface.SetTextColor( color.r, color.g, color.b, color.a )
-		surface.SetTextPos( 3, 1 + h / 2 - th / 2 )
-		surface.DrawText( text )
-		
-	end
-end
 
 --[[---------------------------------------------------------
 	Paint
@@ -297,7 +297,6 @@ end
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "TextEntry", self, w, h )
-	self:PaintHelpText( w, h )
 	return false
 
 end
@@ -330,6 +329,12 @@ function PANEL:SetValue( strValue )
 
 end
 
+function PANEL:SetPlaceholderText( strValue )
+	
+	self.m_sPlaceholderText = tostring( strValue )
+	self.PlaceholderText:SetText( self.m_sPlaceholderText )
+	
+end
 
 --[[---------------------------------------------------------
    Name: For Override
