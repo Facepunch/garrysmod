@@ -9,10 +9,9 @@ angular.module( 'tranny', [] )
 
 		var update = function()
 		{
-			if ( IN_ENGINE == false ) return;
-			
-			$(element).html( language.Update( strName ) );
-			$(element).attr( "placeholder", language.Update( strName ) );
+			var outStr = IN_ENGINE ? language.Update( strName ) : strName;
+			$(element).html( outStr );
+			$(element).attr( "placeholder", outStr );
 		}
 		
 		scope.$watch( attrs.ngTranny, function ( value ) 

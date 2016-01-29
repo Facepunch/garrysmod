@@ -64,13 +64,13 @@ function CCreations( $scope, $timeout, $location )
 
 	$scope.OpenWorkshopFile = function( id )
 	{
-		if ( !id ) return;
+		if ( !id || !IN_ENGINE ) return;
 		gmod.OpenWorkshopFile( id );
 	}
 
 	$scope.SaveSave = function()
 	{
-		gmod.SaveSave();
+		if ( IN_ENGINE ) gmod.SaveSave();
 
 		$scope.SaveDisabled = "disabled";
 
@@ -83,7 +83,7 @@ function CCreations( $scope, $timeout, $location )
 	$scope.SaveDupe = function()
 	{
 		$scope.DupeDisabled = "disabled";
-		gmod.SaveDupe();
+		if ( IN_ENGINE ) gmod.SaveDupe();
 	}
 
 	SetMap( 'gm_construct' );

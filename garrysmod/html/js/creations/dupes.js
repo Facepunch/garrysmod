@@ -49,14 +49,14 @@ function CDupes( $scope, $timeout, $location )
 
 	$scope.OpenWorkshopFile = function( id )
 	{
-		if ( !id ) return;
+		if ( !id || !IN_ENGINE ) return;
 		gmod.OpenWorkshopFile( id );
 	}
 
 	$scope.SaveDupe = function()
 	{
 		$scope.DupeDisabled = "disabled";
-		gmod.SaveDupe();
+		if ( IN_ENGINE ) gmod.SaveDupe();
 	}
 }
 
