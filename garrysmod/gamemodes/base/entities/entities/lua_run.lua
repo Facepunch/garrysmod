@@ -13,12 +13,17 @@ end
 
 --[[---------------------------------------------------------
    Name: KeyValue
-   Desc:
+   Desc: Sets the default code and runs it if appropriate spawnflags are set
 -----------------------------------------------------------]]
 function ENT:KeyValue( key, value )
 
 	if ( key == "Code" ) then
 		self:SetDefaultCode( value )
+		
+		if self:HasSpawnFlags(1) then
+			self:RunCode( NULL, NULL, self:GetDefaultCode() ) 
+		end
+		
 	end
 
 end
