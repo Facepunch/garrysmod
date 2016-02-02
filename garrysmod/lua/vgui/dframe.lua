@@ -111,7 +111,8 @@ end
 function PANEL:Center()
 
 	self:InvalidateLayout( true )
-	self:SetPos( ScrW()/2 - self:GetWide()/2, ScrH()/2 - self:GetTall()/2 )
+	self:CenterVertical()
+	self:CenterHorizontal()
 
 end
 

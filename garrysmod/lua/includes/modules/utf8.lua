@@ -230,59 +230,68 @@ end
 --
 function offset( str, n, startPos )
 
-	startPos = strRelToAbs( str, startPos or ( n >= 0 and 1 ) or #str )
+	if startPos and ( startPos > #str or -startPos > #str or startPos == 0 ) then
+		error( "bad index to string (out of range)", 2 )
+	end
 
-	-- Find the beginning of the sequence over startPos
+	local pos = ( n >= 0 ) and 1 or #str
+	      pos = strRelToAbs( str, startPos or pos )
+
+	-- Back up to the start of this byte sequence
 	if n == 0 then
 
-		for i = startPos, 1, -1 do
-			local seqStartPos, seqEndPos = decode( str, i )
+		while pos > 0 and not decode( str, pos ) do
+			pos = pos - 1
+		end
 
-			if seqStartPos then
-				return seqStartPos
+		return pos
+
+	end
+
+	--
+	-- Make sure we're on a valid sequence
+	--
+	if not decode( str, pos ) then
+		error( "initial position is a continuation byte", 2 )
+	end
+
+	-- Back up to (-n) byte sequences
+	if n < 0 then
+
+		for i = 1, -n do
+			pos = pos - 1
+
+			while pos > 0 and not decode( str, pos ) do
+				pos = pos - 1
 			end
 		end
 
-		return nil
-
-	end
-
-	if not decode( str, startPos ) then
-		error( "initial position is not beginning of a valid sequence", 2 )
-	end
-
-	local itStart, itEnd, itStep = nil, nil, nil
-
-	if n > 0 then -- Find the beginning of the n'th sequence forwards
-
-		itStart = startPos
-		itEnd = #str
-		itStep = 1
-
-	else -- Find the beginning of the n'th sequence backwards
-
-		n = -n
-		itStart = startPos
-		itEnd = 1
-		itStep = -1
-
-	end
-
-	for i = itStart, itEnd, itStep do
-		local seqStartPos, seqEndPos = decode( str, i )
-
-		if seqStartPos then
-
-			n = n - 1
-
-			if n == 0 then
-				return seqStartPos
-			end
-
+		if pos < 1 then
+			return nil
 		end
+
+		return pos
+
 	end
 
-	return nil
+	-- Jump forward (n) byte sequences
+	if n > 0 then
+
+		for i = 1, n do
+			pos = pos + 1
+
+			while pos <= #str and not decode( str, pos ) do
+				pos = pos + 1
+			end
+		end
+
+		if pos > #str then
+			return nil
+		end
+
+		return pos
+
+	end
 
 end
 
