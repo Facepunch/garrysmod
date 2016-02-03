@@ -113,7 +113,7 @@ function GM:CheckPassword( steamid, networkid, server_password, password, name )
 
 		-- The joining clients password doesn't match sv_password
 		if ( server_password != password ) then
-			return false, "#GameUI_ServerRejectBadPassword"
+			return false
 		end
 
 	end
