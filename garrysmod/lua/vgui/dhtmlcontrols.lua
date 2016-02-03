@@ -40,12 +40,11 @@ function PANEL:Init()
 		self.HTML:GoForward()
 	end
 
-	self.RefreshButton = vgui.Create( "DImageButton", self )
-	self.RefreshButton:SetSize( ButtonSize, ButtonSize )
-	self.RefreshButton:SetMaterial( "gui/HTML/refresh" )
-	self.RefreshButton:Dock( LEFT )
-	self.RefreshButton:DockMargin( Spacing, Margins, Spacing, Margins )
-	self.RefreshButton.DoClick = function() self.HTML:Refresh() end
+	self.RefreshStopButton = vgui.Create( "DImageButton", self )
+	self.RefreshStopButton:SetSize( ButtonSize, ButtonSize )
+	self.RefreshStopButton:SetMaterial( "gui/HTML/refresh" )
+	self.RefreshStopButton:Dock( LEFT )
+	self.RefreshStopButton:DockMargin( Spacing, Margins, Spacing, Margins )
 
 	self.HomeButton = vgui.Create( "DImageButton", self )
 	self.HomeButton:SetSize( ButtonSize, ButtonSize )
@@ -58,16 +57,9 @@ function PANEL:Init()
 		self.HTML:OpenURL( self.HomeURL )
 	end
 
-	self.StopButton = vgui.Create( "DImageButton", self )
-	self.StopButton:SetSize( ButtonSize, ButtonSize )
-	self.StopButton:SetMaterial( "gui/HTML/stop" )
-	self.StopButton:Dock( RIGHT )
-	self.StopButton:DockMargin( Spacing*3, Margins, Spacing*3, Margins )
-	self.StopButton.DoClick = function() self.HTML:Stop() end
-
 	self.AddressBar = vgui.Create( "DTextEntry", self )
 	self.AddressBar:Dock( FILL )
-	self.AddressBar:DockMargin( Spacing, Margins * 3, Spacing, Margins * 3 )
+	self.AddressBar:DockMargin( Spacing, Margins * 3, Margins * 3, Margins * 3 )
 	self.AddressBar.OnEnter = function()
 		self.HTML:Stop()
 		self.HTML:OpenURL( self.AddressBar:GetValue() )
@@ -96,6 +88,7 @@ function PANEL:SetHTML( html )
 
 	self.AddressBar:SetText( self.HomeURL )
 	self:UpdateHistory( self.HomeURL )
+	self:FinishedLoading() -- in case dev adds controls AFTER load
 
 	local OldFunc = self.HTML.OnBeginLoadingDocument
 	self.HTML.OnBeginLoadingDocument = function( panel, url )
@@ -157,15 +150,19 @@ end
 
 function PANEL:FinishedLoading()
 
-	self.StopButton:SetDisabled( true )
-	self.RefreshButton:SetDisabled( false )
+	self.RefreshStopButton:SetDisabled( false )
+	self.RefreshStopButton:SetMaterial( "gui/HTML/refresh" )
+	self.RefreshStopButton.DoClick = function() self.HTML:Refresh() end
 
 end
 
 function PANEL:StartedLoading()
 
-	self.StopButton:SetDisabled( false )
-	self.RefreshButton:SetDisabled( true )
+	self.RefreshStopButton:SetMaterial( "gui/HTML/stop" )
+	self.RefreshStopButton.DoClick = function()
+		self.RefreshStopButton:SetDisabled( true ) -- Awesomium can be slow, let's give some user feedback
+		self.HTML:Stop()
+	end
 
 end
 
@@ -180,9 +177,8 @@ function PANEL:SetButtonColor( col )
 
 	self.BackButton:SetColor( col )
 	self.ForwardButton:SetColor( col )
-	self.RefreshButton:SetColor( col )
+	self.RefreshStopButton:SetColor( col )
 	self.HomeButton:SetColor( col )
-	self.StopButton:SetColor( col )
 
 end
 
