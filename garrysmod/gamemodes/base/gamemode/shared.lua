@@ -214,6 +214,11 @@ end
 function GM:VehicleMove( ply, vehicle, mv )
 
 	--
+	-- Prevent calling several times on client
+	--
+	if ( !IsFirstTimePredicted() ) then return end
+	
+	--
 	-- On duck toggle third person view
 	--
 	if ( mv:KeyPressed( IN_DUCK ) && vehicle.SetThirdPersonMode ) then
