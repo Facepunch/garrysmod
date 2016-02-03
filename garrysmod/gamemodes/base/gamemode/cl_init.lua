@@ -702,3 +702,6 @@ end
 
 function GM:CreateClientsideRagdoll( entity, ragdoll )
 end
+
+function GM:VehicleMove( ply, vehicle, mv )
+end
