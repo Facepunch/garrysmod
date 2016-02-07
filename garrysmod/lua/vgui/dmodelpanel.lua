@@ -154,7 +154,7 @@ function PANEL:Paint( w, h )
 	render.SetLightingOrigin( self.Entity:GetPos() )
 	render.ResetModelLighting( self.colAmbientLight.r/255, self.colAmbientLight.g/255, self.colAmbientLight.b/255 )
 	render.SetColorModulation( self.colColor.r/255, self.colColor.g/255, self.colColor.b/255 )
-	render.SetBlend( self.colColor.a/255 )
+	render.SetBlend( (self:GetAlpha()/255) * (self.colColor.a/255) )
 
 	for i=0, 6 do
 		local col = self.DirectionalLight[ i ]
