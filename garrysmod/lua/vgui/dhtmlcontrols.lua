@@ -53,7 +53,7 @@ function PANEL:Init()
 	self.HomeButton:DockMargin( Spacing, Margins, Spacing*3, Margins )
 	self.HomeButton.DoClick = function()
 		if ( self.HTML.URL == self.HomeURL ) then return end
-		self.HTML:Stop()
+		self.HTML:StopLoading()
 		self.HTML:OpenURL( self.HomeURL )
 	end
 
@@ -61,7 +61,7 @@ function PANEL:Init()
 	self.AddressBar:Dock( FILL )
 	self.AddressBar:DockMargin( Spacing, Margins * 3, Margins * 3, Margins * 3 )
 	self.AddressBar.OnEnter = function()
-		self.HTML:Stop()
+		self.HTML:StopLoading()
 		self.HTML:OpenURL( self.AddressBar:GetValue() )
 	end
 
@@ -161,7 +161,7 @@ function PANEL:StartedLoading()
 	self.RefreshStopButton:SetMaterial( "gui/HTML/stop" )
 	self.RefreshStopButton.DoClick = function()
 		self.RefreshStopButton:SetDisabled( true ) -- Awesomium can be slow, let's give some user feedback
-		self.HTML:Stop()
+		self.HTML:StopLoading()
 	end
 
 end
