@@ -322,7 +322,7 @@ do
 
 
 		-- Garry's Mod specific
-        VMatrix      = 12,
+		VMatrix      = 12,
 		Color        = 14,
 		Entity       = 15,
 	}
@@ -356,9 +356,9 @@ reading = {
 	number      = net.ReadDouble,
 	bit         = net.ReadBit,
 	Entity      = net.ReadEntity,
-    VMatrix     = net.ReadMatrix,
-    Angle       = net.ReadAngle,
-    Vector      = net.ReadVector,
+	VMatrix     = net.ReadMatrix,
+	Angle       = net.ReadAngle,
+	Vector      = net.ReadVector,
 
 	--
 	-- Simple integers
@@ -445,7 +445,7 @@ reading = {
 	table = function( references )
 		local ret = {}
 
-		references = references or {};
+		references = references or {}
 
 		local reference = function( type, value )
 			if ( not type or ( type ~= TableType and type ~= ReferenceType ) ) then
@@ -475,7 +475,7 @@ reading = {
 
 			reference(valuetype, valuevalue)
 
-			ret[ keyvalue ] = valuevalue;
+			ret[ keyvalue ] = valuevalue
 
 		end
 
@@ -489,18 +489,18 @@ reading = {
 -- we use pairs since it's backwards compatible
 --
 local function array_len(x)
-	local indices = {};
-    for k,v in pairs(x) do
-        indices[k] = true;
-    end
+	local indices = {}
+	for k,v in pairs(x) do
+		indices[k] = true
+	end
 
-    for i = 1, 8096 do
-        if(nil == indices[i]) then
-            return i - 1
-        end
-    end
+	for i = 1, 8096 do
+		if(nil == indices[i]) then
+			return i - 1
+		end
+	end
 
-    return 8096
+	return 8096
 end
 
 writing = {
@@ -510,7 +510,7 @@ writing = {
 	boolean  = net.WriteBool,
 	number   = net.WriteDouble,
 	Entity   = net.WriteEntity,
-    VMatrix  = net.WriteMatrix,
+	VMatrix  = net.WriteMatrix,
 	Vector   = net.WriteVector,
 	Angle    = net.WriteAngle,
 
@@ -522,12 +522,12 @@ writing = {
 	--
 	uintv = function( n )
 		while( n > 0 ) do
-			net.WriteBool(true);
+			net.WriteBool(true)
 			net.WriteUInt( n, UINTV_SIZE )
 			n = bit.rshift( n, UINTV_SIZE )
 		end
 
-		net.WriteBool(false);
+		net.WriteBool(false)
 	end,
 
 
@@ -668,9 +668,9 @@ writing = {
 			SendValue( v )
 		end
 
-		return num;
+		return num
 	end
 }
 
-net.WriteTable = function(t) writing.table(t); end
-net.ReadTable = function() return reading.table(); end
+net.WriteTable = function(t) writing.table(t) end
+net.ReadTable = function() return reading.table() end
