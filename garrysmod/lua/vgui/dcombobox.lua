@@ -11,6 +11,8 @@
 
 local PANEL = {}
 
+AccessorFunc( PANEL, "m_bSortItems", "SortItems", FORCE_BOOL )
+
 Derma_Hook( PANEL, "Paint", "Paint", "ComboBox" )
 
 Derma_Install_Convar_Functions( PANEL )
@@ -31,6 +33,8 @@ function PANEL:Init()
 	self:SetContentAlignment( 4 )
 	self:SetTextInset( 8, 0 )
 	self:SetIsMenu( true )
+	
+	self:SetSortItems( true )
 
 end
 
@@ -188,10 +192,16 @@ function PANEL:OpenMenu( pControlOpener )
 
 	self.Menu = DermaMenu()
 	
-	local sorted = {}
-	for k, v in pairs( self.Choices ) do table.insert( sorted, { id = k, data = v } ) end
-	for k, v in SortedPairsByMemberValue( sorted, "data" ) do
-		self.Menu:AddOption( v.data, function() self:ChooseOption( v.data, v.id ) end )
+	if( self:GetSortItems() ) then
+		local sorted = {}
+		for k, v in pairs( self.Choices ) do table.insert( sorted, { id = k, data = v } ) end
+		for k, v in SortedPairsByMemberValue( sorted, "data" ) do
+			self.Menu:AddOption( v.data, function() self:ChooseOption( v.data, v.id ) end )
+		end
+	else
+		for k, v in pairs( self.Choices ) do
+			self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
+		end
 	end
 	
 	local x, y = self:LocalToScreen( 0, self:GetTall() )
