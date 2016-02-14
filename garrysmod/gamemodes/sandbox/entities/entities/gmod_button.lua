@@ -2,10 +2,10 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.PrintName		= ""
-ENT.Author			= ""
-ENT.Contact			= ""
-ENT.Purpose			= ""
+ENT.PrintName		= "Button"
+ENT.Author		= "Garry Newman"
+ENT.Contact		= ""
+ENT.Purpose		= ""
 ENT.Instructions	= ""
 
 function ENT:SetupDataTables()

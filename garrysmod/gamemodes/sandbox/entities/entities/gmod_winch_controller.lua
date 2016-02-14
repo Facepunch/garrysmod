@@ -1,7 +1,8 @@
 
 if ( CLIENT ) then return end
 
-ENT.Type = "point"
+ENT.PrintName 	= "Winch Controller"
+ENT.Type 	= "point"
 
 local DIR_BACKWARD 	= -1
 local DIR_NONE 		= 0
