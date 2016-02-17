@@ -90,7 +90,7 @@ function PANEL:SetHTML( html )
 		self:StartedLoading()
 		
 		if ( OldFunc ) then
-			OldFunc( url )
+			OldFunc( pnl, url )
 		end
 	
 		self:UpdateHistory( url )
