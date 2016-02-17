@@ -21,14 +21,14 @@ function PANEL:Init()
 	self.BackButton:SetMaterial( "gui/HTML/back" )
 	self.BackButton:Dock( LEFT )
 	self.BackButton:DockMargin( Spacing*3, Margins, Spacing, Margins )
-	self.BackButton.DoClick = function() self.BackButton:SetDisabled( true ) self.HTML:HTMLBack(); self.Cur = self.Cur - 1; self.Navigating = true end
+	self.BackButton.DoClick = function() self.BackButton:SetDisabled( true ) self.HTML:GoBack(); self.Cur = self.Cur - 1; self.Navigating = true end
 	
 	self.ForwardButton = vgui.Create( "DImageButton", self )
 	self.ForwardButton:SetSize( ButtonSize, ButtonSize )
 	self.ForwardButton:SetMaterial( "gui/HTML/forward" )
 	self.ForwardButton:Dock( LEFT )
 	self.ForwardButton:DockMargin( Spacing, Margins, Spacing, Margins )
-	self.ForwardButton.DoClick = function() self.ForwardButton:SetDisabled( true ) self.HTML:HTMLForward(); self.Cur = self.Cur + 1; self.Navigating = true end
+	self.ForwardButton.DoClick = function() self.ForwardButton:SetDisabled( true ) self.HTML:GoForward(); self.Cur = self.Cur + 1; self.Navigating = true end
 	
 	self.RefreshButton = vgui.Create( "DImageButton", self )
 	self.RefreshButton:SetSize( ButtonSize, ButtonSize )
@@ -83,28 +83,27 @@ function PANEL:SetHTML( html )
 	self.AddressBar:SetText( self.HomeURL )
 	self:UpdateHistory( self.HomeURL )
 	
-	local OldFunc = self.HTML.OpeningURL
-	self.HTML.OpeningURL = function( panel, url, target, postdata, bredirect )
-		
+	local OldFunc = self.HTML.OnBeginLoadingDocument
+	self.HTML.OnBeginLoadingDocument = function( pnl, url )
 		self.NavStack = self.NavStack + 1
 		self.AddressBar:SetText( url )
 		self:StartedLoading()
 		
 		if ( OldFunc ) then
-			OldFunc( panel, url, target, postdata, bredirect )
+			OldFunc( url )
 		end
 	
 		self:UpdateHistory( url )
 	
 	end
 	
-	local OldFunc = self.HTML.FinishedURL
-	self.HTML.FinishedURL = function( panel, url )
+	local OldFunc = self.HTML.OnFinishLoadingDocument
+	self.HTML.OnFinishLoadingDocument = function( pnl, url )
 		
 		self:FinishedLoading()
 		
 		if ( OldFunc ) then
-			OldFunc( panel, url )
+			OldFunc( pnl, url )
 		end
 	
 	end
