@@ -79,8 +79,14 @@ function PANEL:OnMousePressed( mousecode )
 	self:MouseCapture( true )
 
 	self:LockCursor()
-	self:SetCursor( "none" )
-
+	
+	-- Temporary fix for Linux
+	-- Something keeps snapping the cursor to the center of the screen when it is invisible
+	-- and we definitely don't want that, let's keep the cursor visible for now
+	if not system.IsLinux() then
+		self:SetCursor( "none" )
+	end
+	
 	self:SetShouldDrawScreen( mousecode == MOUSE_LEFT )
 
 	g_Active = self

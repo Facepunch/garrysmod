@@ -204,7 +204,7 @@ function len( str, startPos, endPos )
 
 	local len = 0
 
-	while endPos >= startPos and endPos > 1 do
+	while endPos >= startPos and startPos <= #str do
 		local seqStartPos, seqEndPos = decode( str, startPos )
 
 		-- Hit an invalid sequence?

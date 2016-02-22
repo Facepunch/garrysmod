@@ -372,6 +372,25 @@ if ( CLIENT ) then
 
 end
 
+--
+-- This is supposed to be clientside, but was exposed to both states for years due to a bug.
+--
+function CreateClientConVar( name, default, shouldsave, userdata )
+
+	local iFlags = 0
+
+	if ( shouldsave || shouldsave == nil ) then
+		iFlags = bit.bor( iFlags, FCVAR_ARCHIVE )
+	end
+
+	if ( userdata ) then
+		iFlags = bit.bor( iFlags, FCVAR_USERINFO )
+	end
+
+	return CreateConVar( name, default, iFlags )
+
+end
+
 --[[---------------------------------------------------------
    Convar access functions
 -----------------------------------------------------------]]
