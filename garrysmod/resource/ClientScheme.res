@@ -66,11 +66,12 @@ Scheme
 		"Main.Menu.X"		"76"
 		"Main.Menu.Y"		"240"
 
-		Menu.TextColor					"235 235 235 255"
-		Menu.BgColor					"0 0 0 230"
-		Menu.ArmedTextColor				"0 0 0 255"
-		Menu.ArmedBgColor				"255 255 255 255"
-		Menu.TextInset					"6"
+		Menu.TextColor					"3 3 3 255"
+		Menu.BgColor					"248 248 248 255"
+		Menu.BorderColor				"96 96 96 255"
+		Menu.ArmedTextColor				"3 3 3 255"
+		Menu.ArmedBgColor				"202 221 248 255"
+		Menu.TextInset					"8"
 		
 		RichText.TextColor				"178 178 178 255"
 		RichText.BgColor				"0 0 0 0"
@@ -731,6 +732,51 @@ Scheme
 		"1"		"resource/HALFLIFE2.ttf"
 		"1"		"resource/HL2MP.ttf"
 		"2"		"resource/HL2crosshairs.ttf"
+	}
+
+	Borders
+	{
+		// Make Menu elements look like DMenu elements!
+		MenuBorder
+		{
+			"inset" "0 0 0 0"
+
+			Left
+			{
+				"1"
+				{
+					"color"		"Menu.BorderColor"
+					"offset"	"0 0"
+				}
+			}
+
+			Right
+			{
+				"1"
+				{
+					"color"		"Menu.BorderColor"
+					"offset"	"0 0"
+				}
+			}
+
+			Top
+			{
+				"1"
+				{
+					"color"		"Menu.BorderColor"
+					"offset"	"0 0"
+				}
+			}
+
+			Bottom
+			{
+				"1"
+				{
+					"color"		"Menu.BorderColor"
+					"offset"	"0 0"
+				}
+			}
+		}
 	}
 
 }
