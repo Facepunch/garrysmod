@@ -181,9 +181,9 @@ function PANEL:SetButtonColor( col )
 
 end
 
-function PANEL:Paint()
+function PANEL:Paint(w, h)
 
-	draw.RoundedBoxEx( self.BorderSize, 0, 0, self:GetWide(), self:GetTall(), self.BackgroundColor, true, true, false, false )
+	draw.RoundedBoxEx( self.BorderSize, 0, 0, w, h, self.BackgroundColor, true, true, false, false )
 
 end
 

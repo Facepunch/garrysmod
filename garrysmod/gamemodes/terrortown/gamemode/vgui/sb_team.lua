@@ -40,24 +40,24 @@ function PANEL:SetGroupInfo(name, color, group)
 end
 
 local bgcolor = Color(20,20,20, 150)
-function PANEL:Paint()
+function PANEL:Paint(w, h)
    -- Darkened background
-   draw.RoundedBox(8, 0, 0, self:GetWide(), self:GetTall(), bgcolor)
+   draw.RoundedBox(8, 0, 0, w, h, bgcolor)
 
    surface.SetFont("treb_small")
 
    -- Header bg
    local txt = self.name .. " (" .. self.rowcount .. ")"
-   local w, h = surface.GetTextSize(txt)
-   draw.RoundedBox(8, 0, 0, w + 24, 20, self.color)
+   local tw, th = surface.GetTextSize(txt)
+   draw.RoundedBox(8, 0, 0, tw + 24, 20, self.color)
 
    -- Shadow
-   surface.SetTextPos(11, 11 - h/2)
+   surface.SetTextPos(11, 11 - th/2)
    surface.SetTextColor(0,0,0, 200)
    surface.DrawText(txt)
 
    -- Text
-   surface.SetTextPos(10, 10 - h/2)
+   surface.SetTextPos(10, 10 - th/2)
    surface.SetTextColor(255,255,255,255)
    surface.DrawText(txt)
 
@@ -66,7 +66,7 @@ function PANEL:Paint()
    for i, row in ipairs(self.rows_sorted) do
       if (i % 2) != 0 then
          surface.SetDrawColor(75,75,75, 100)
-         surface.DrawRect(0, y, self:GetWide(), row:GetTall())
+         surface.DrawRect(0, y, w, h)
       end
 
       y = y + row:GetTall() + 1
@@ -76,18 +76,18 @@ function PANEL:Paint()
    local scr = sboard_panel.ply_frame.scroll.Enabled and 16 or 0
    surface.SetDrawColor(0,0,0, 80)
    if sboard_panel.cols then
-      local cx = self:GetWide() - scr
+      local cx = w - scr
       for k,v in ipairs(sboard_panel.cols) do
          cx = cx - v.Width
          if k % 2 == 1 then -- Draw for odd numbered columns
-            surface.DrawRect(cx-v.Width/2, 0, v.Width, self:GetTall())
+            surface.DrawRect(cx-v.Width/2, 0, v.Width, h)
          end
       end
    else
       -- If columns are not setup yet, fall back to darkening the areas for the
       -- default columns
-      surface.DrawRect(self:GetWide() - 175 - 25 - scr, 0, 50, self:GetTall())
-      surface.DrawRect(self:GetWide() - 75 - 25 - scr, 0, 50, self:GetTall())
+      surface.DrawRect(w - 175 - 25 - scr, 0, 50, h)
+      surface.DrawRect(w - 75 - 25 - scr, 0, 50, h)
    end
 end
 

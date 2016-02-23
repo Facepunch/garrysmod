@@ -96,7 +96,7 @@ local function ColorForPlayer(ply)
    return namecolor.default
 end
 
-function PANEL:Paint()
+function PANEL:Paint(w, h)
    if not IsValid(self.Player) then return end
 
 --   if ( self.Player:GetFriendStatus() == "friend" ) then
@@ -107,16 +107,16 @@ function PANEL:Paint()
 
    if ply:IsTraitor() then
       surface.SetDrawColor(255, 0, 0, 30)
-      surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT)
+      surface.DrawRect(0, 0, w, SB_ROW_HEIGHT)
    elseif ply:IsDetective() then
       surface.SetDrawColor(0, 0, 255, 30)
-      surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT)
+      surface.DrawRect(0, 0, w, SB_ROW_HEIGHT)
    end
 
 
    if ply == LocalPlayer() then
       surface.SetDrawColor( 200, 200, 200, math.Clamp(math.sin(RealTime() * 2) * 50, 0, 100))
-      surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT )
+      surface.DrawRect(0, 0, w, SB_ROW_HEIGHT )
    end
 
    return true

@@ -68,7 +68,7 @@ function PANEL:PerformLayout()
    self.Label:CenterVertical()
 end
 
-function PANEL:Paint()
+function PANEL:Paint(w, h)
 
    local fDelta = 0;
    
@@ -76,15 +76,13 @@ function PANEL:Paint()
       fDelta = ( self.m_iValue - self.m_iMin ) / (self.m_iMax-self.m_iMin)
    end
    
-   local Width = self:GetWide()
-
    surface.SetDrawColor( 0, 0, 0, 170 )
-   surface.DrawRect( 0, 0, Width, self:GetTall() )
+   surface.DrawRect( 0, 0, w, h )
    
    surface.SetDrawColor( self.m_Color.r, self.m_Color.g, self.m_Color.b, self.m_Color.a * 0.5 )
-   surface.DrawRect( 2, 2, Width - 4, self:GetTall() - 4 )
+   surface.DrawRect( 2, 2, w - 4, h - 4 )
    surface.SetDrawColor( self.m_Color.r, self.m_Color.g, self.m_Color.b, self.m_Color.a )
-   surface.DrawRect( 2, 2, Width * fDelta - 4, self:GetTall() - 4 )
+   surface.DrawRect( 2, 2, w * fDelta - 4, h - 4 )
 
 end
 

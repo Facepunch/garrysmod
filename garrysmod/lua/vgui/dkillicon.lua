@@ -39,9 +39,9 @@ end
 --[[---------------------------------------------------------
 
 -----------------------------------------------------------]]
-function PANEL:Paint()
+function PANEL:Paint(w, h)
 
-	killicon.Draw( self:GetWide() * 0.5, self.m_fOffset, self.m_Name, 255 )	
+	killicon.Draw( w * 0.5, self.m_fOffset, self.m_Name, 255 )	
 	
 end
 

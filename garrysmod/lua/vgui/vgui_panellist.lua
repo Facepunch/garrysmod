@@ -134,9 +134,9 @@ end
 --[[---------------------------------------------------------
    Name: Paint
 -----------------------------------------------------------]]
-function PANEL:Paint()
+function PANEL:Paint(w, h)
 	
-	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), self.BackgroundColor )
+	draw.RoundedBox( 4, 0, 0, w, h, self.BackgroundColor )
 	return true
 	
 end

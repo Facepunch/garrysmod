@@ -194,14 +194,14 @@ end
 --[[---------------------------------------------------------
    Name: Paint
 -----------------------------------------------------------]]
-function PANEL:Paint()
+function PANEL:Paint(w, h)
 	
 	if ( !self.Enabled || self.BarScale <= 0 ) then	return true	end
 	
-	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color(200, 200, 200, 100) )
+	draw.RoundedBox( 4, 0, 0, w, h, Color(200, 200, 200, 100) )
 	
-	local Pos = ( self:GetTall() - self:ScrollbarSize() ) * self.Pos
-	draw.RoundedBox( 4, 2, Pos+2, self:GetWide()-4, self:ScrollbarSize()-4, Color(0, 0, 0, 200) )
+	local Pos = ( h - self:ScrollbarSize() ) * self.Pos
+	draw.RoundedBox( 4, 2, Pos+2, w-4, self:ScrollbarSize()-4, Color(0, 0, 0, 200) )
 	
 	return true
 	
