@@ -1,6 +1,6 @@
 ---- German language strings
 
-local L = LANG.CreateLanguage("German")
+local L = LANG.CreateLanguage("Deutsch")
 
 --- General text used in various places
 L.traitor    = "Verräter"
@@ -50,7 +50,7 @@ L.body_found_t     = "Er war ein Verräter!"
 L.body_found_d     = "Er war ein Detektiv."
 L.body_found_i     = "Er war unschuldig."
 
-L.body_confirm     = "{finder} bestätigt den Tod von {victim}."
+L.body_confirm     = "{finder} bestätigte den Tod von {victim}."
 
 L.body_call        = "{player} rief einen Detektiv zum Körper von {victim}!"
 L.body_call_error  = "Du musst erst den Tod dieses Spielers bestätigen, bevor du einen Detektiv rufen kannst!"
@@ -143,10 +143,6 @@ L.radio_button_steps   = "Schritte"
 
 -- Intro screen shown after joining
 L.intro_help     = "Wenn du zum ersten Mal spielst, dann drücke F1 für Instruktionen!"
-
--- Chat-related
-L.spec_teamchat_hint = "TIPP: Als Zuschauer den Teamchat benutzen um in einer aktiven Runde zu chatten!"
-L.inno_globalchat_hint = "Wenn unschuldig, nutze den globalen Chat um zu kommunizieren."
 
 -- "Continue playing" vote
 L.contvote_continue = "Weiterspielen"
@@ -1045,3 +1041,6 @@ L.drop_no_ammo = "Du hast nicht genug Munition im Magazin, um eine Munitionskist
 --- v31
 L.set_cross_brightness = "Fadenkreuz Helligkeit"
 L.set_cross_size = "Fadenkreuz Größe"
+
+-- 5-25-15
+L.hat_retrieve = "Du hast den Hut eines Detektivs aufgehoben."

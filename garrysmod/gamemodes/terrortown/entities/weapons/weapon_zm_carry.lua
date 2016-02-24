@@ -54,7 +54,7 @@ local pin_rag_inno = CreateConVar("ttt_ragdoll_pinning_innocents", "0")
 -- Allowing weapon pickups can allow players to cause a crash in the physics
 -- system (ie. not fixable). Tuning the range seems to make this more
 -- difficult. Not sure why. It's that kind of crash.
-local allow_wep = CreateConVar("ttt_weapon_carrying", "1")
+local allow_wep = CreateConVar("ttt_weapon_carrying", "0")
 local wep_range = CreateConVar("ttt_weapon_carrying_range", "50")
 
 -- not customizable via convars as some objects rely on not being carryable for
@@ -103,10 +103,14 @@ function SWEP:Reset(keep_velocity)
    end
 
    if IsValid(self.EntHolding) then
-      if not IsValid(self.PrevOwner) then
-         self.EntHolding:SetOwner(nil)
-      else
-         self.EntHolding:SetOwner(self.PrevOwner)
+      -- it is possible for weapons to be already equipped at this point
+      -- changing the owner in such a case would cause problems
+      if not self.EntHolding:IsWeapon() then
+         if not IsValid(self.PrevOwner) then
+            self.EntHolding:SetOwner(nil)
+         else
+            self.EntHolding:SetOwner(self.PrevOwner)
+         end
       end
 
       -- the below ought to be unified with self:Drop()
@@ -365,14 +369,20 @@ function SWEP:Pickup()
          self.CarryHack:SetOwner(ply)
          self.CarryHack:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
          self.CarryHack:SetSolid(SOLID_NONE)
+         
+         -- set the desired angles before adding the constraint
+         self.CarryHack:SetAngles(self.Owner:GetAngles())
 
          self.CarryHack:Spawn()
 
          -- if we already are owner before pickup, we will not want to disown
          -- this entity when we drop it
-         self.PrevOwner = self.EntHolding:GetOwner()
+         -- weapons should not have their owner changed in this way
+         if not self.EntHolding:IsWeapon() then
+            self.PrevOwner = self.EntHolding:GetOwner()
 
-         self.EntHolding:SetOwner(ply)
+            self.EntHolding:SetOwner(ply)
+         end
 
          local phys = self.CarryHack:GetPhysicsObject()
          if IsValid(phys) then

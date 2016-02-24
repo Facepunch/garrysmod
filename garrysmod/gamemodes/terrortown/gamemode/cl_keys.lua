@@ -30,7 +30,7 @@ function GM:PlayerBindPress(ply, bind, pressed)
       end
       return true
    elseif bind == "+attack" then
-      if WSWITCH.Show then
+      if WSWITCH:PreventAttack() then
          if not pressed then
             WSWITCH:ConfirmSelection()
          end
@@ -81,11 +81,6 @@ function GM:PlayerBindPress(ply, bind, pressed)
             gui.EnableScreenClicker(true)
             GAMEMODE.ForcedMouse = true
          end
-      end
-   elseif bind == "messagemode" and pressed and ply:IsSpec() then
-      if GAMEMODE.round_state == ROUND_ACTIVE and DetectiveMode() then
-         LANG.Msg("spec_teamchat_hint")
-         return true
       end
    elseif bind == "noclip" and pressed then
       if not GetConVar("sv_cheats"):GetBool() then

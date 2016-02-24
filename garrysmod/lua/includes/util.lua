@@ -47,8 +47,8 @@ function PrintTable( t, indent, done )
 	end )
 
 	for i = 1, #keys do
-		key = keys[ i ]
-		value = t[ key ]
+		local key = keys[ i ]
+		local value = t[ key ]
 		Msg( string.rep( "\t", indent ) )
 
 		if  ( istable( value ) && !done[ value ] ) then

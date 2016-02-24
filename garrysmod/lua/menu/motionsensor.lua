@@ -1,8 +1,8 @@
 
-local sensor_color_show		= CreateConVar( "sensor_color_show",	"0", { } )
-local sensor_color_scale	= CreateConVar( "sensor_color_scale",	"0.5", { FCVAR_ARCHIVE } )
-local sensor_color_x		= CreateConVar( "sensor_color_x",		"32", { FCVAR_ARCHIVE } )
-local sensor_color_y		= CreateConVar( "sensor_color_y",		"-32", { FCVAR_ARCHIVE } )
+local sensor_color_show = CreateConVar( "sensor_color_show", "0" )
+local sensor_color_scale = CreateConVar( "sensor_color_scale", "0.5", FCVAR_ARCHIVE )
+local sensor_color_x = CreateConVar( "sensor_color_x", "32", FCVAR_ARCHIVE )
+local sensor_color_y = CreateConVar( "sensor_color_y", "-32", FCVAR_ARCHIVE )
 
 local function DrawColorBox()
 
@@ -11,13 +11,21 @@ local function DrawColorBox()
 	local mat = motionsensor.GetColourMaterial()
 	if ( !mat ) then return end
 
-	local size = sensor_color_scale:GetFloat();
+	local size = sensor_color_scale:GetFloat()
 	local w = 640 * size
 	local h = 480 * size
+
 	local x = sensor_color_x:GetInt()
-	if ( x < 0 ) then x = x * -1; x = ScrW() - x - w end
+	if ( x < 0 ) then 
+		x = x * -1 
+		x = ScrW() - x - w 
+	end
+
 	local y = sensor_color_y:GetInt()
-	if ( y < 0 ) then y = y * -1; y = ScrH() - y - h end
+	if ( y < 0 ) then
+		y = y * -1
+		y = ScrH() - y - h
+	end
 
 	local alpha = 255
 
@@ -31,24 +39,20 @@ local function DrawColorBox()
 	end
 
 	surface.SetDrawColor( 0, 0, 0, alpha )
-	surface.DrawRect( x-3, y-3, 3, h+6 )
-	surface.DrawRect( w + x, y-3, 3, h+6 )
-	surface.DrawRect( x, y-3, w, 3 )
-	surface.DrawRect( x, y+h, w, 3 )
+	surface.DrawRect( x - 3, y - 3, 3, h + 6 )
+	surface.DrawRect( w + x, y - 3, 3, h + 6 )
+	surface.DrawRect( x, y - 3, w, 3 )
+	surface.DrawRect( x, y + h, w, 3 )
 
 	surface.SetDrawColor( 255, 255, 255, alpha )
-	surface.DrawRect( x-1, y-1, 1, h+2 )
-	surface.DrawRect( w + x, y-1, 1, h+2 )
-	surface.DrawRect( x, y-1, w, 1 )
-	surface.DrawRect( x, y+h, w, 1 )
+	surface.DrawRect( x - 1, y - 1, 1, h + 2 )
+	surface.DrawRect( w + x, y - 1, 1, h + 2 )
+	surface.DrawRect( x, y - 1, w, 1 )
+	surface.DrawRect( x, y + h, w, 1 )
 
 	surface.SetMaterial( mat )
 	surface.DrawTexturedRectUV( x, y, w, h, 640 / 1024, 0, 0, 480 / 512 )
 
 end
 
-hook.Add( "DrawOverlay", "DrawMotionSensor", function()
-
-	DrawColorBox();
-
-end )
+hook.Add( "DrawOverlay", "DrawMotionSensor", DrawColorBox )

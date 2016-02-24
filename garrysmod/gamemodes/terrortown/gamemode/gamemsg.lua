@@ -4,6 +4,7 @@ local net = net
 local string = string
 local table = table
 local pairs = pairs
+local IsValid = IsValid
 
 -- NOTE: most uses of the Msg functions here have been moved to the LANG
 -- functions. These functions are essentially deprecated, though they won't be
@@ -91,55 +92,67 @@ end
 CreateConVar("ttt_limit_spectator_chat", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 CreateConVar("ttt_limit_spectator_voice", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 
-local mumbles = {"mumble", "mm", "hmm", "hum", "mum", "mbm", "mble", "ham", "mammaries", "political situation", "mrmm", "hrm", "uzbekistan", "mumu", "cheese export", "hmhm", "mmh", "mumble", "mphrrt", "mrh", "hmm", "mumble", "mbmm", "hmml", "mfrrm"}
+function GM:PlayerCanSeePlayersChat(text, team_only, listener, speaker)
+	if (not IsValid(listener)) then return false end
+	if (not IsValid(speaker)) then
+		if isentity(s) then
+			return true
+		else
+			return false
+		end
+	end
+
+	local sTeam = speaker:Team() == TEAM_SPEC
+	local lTeam = listener:Team() == TEAM_SPEC
+
+	if (GetRoundState() != ROUND_ACTIVE) or   -- Round isn't active
+	(not GetConVar("ttt_limit_spectator_chat"):GetBool()) or   -- Spectators can chat freely
+	(not DetectiveMode()) or   -- Mumbling
+	(not sTeam and ((team_only and not speaker:IsSpecial()) or (not team_only))) or   -- If someone alive talks (and not a special role in teamchat's case)
+	(not sTeam and team_only and speaker:GetRole() == listener:GetRole()) or
+	(sTeam and lTeam) then   -- If the speaker and listener are spectators
+	   return true
+	end
+
+	return false
+end
+
+local mumbles = {"mumble", "mm", "hmm", "hum", "mum", "mbm", "mble", "ham", "mammaries", "political situation", "mrmm", "hrm",
+"uzbekistan", "mumu", "cheese export", "hmhm", "mmh", "mumble", "mphrrt", "mrh", "hmm", "mumble", "mbmm", "hmml", "mfrrm"}
 
 -- While a round is active, spectators can only talk among themselves. When they
 -- try to speak to all players they could divulge information about who killed
 -- them. So we mumblify them. In detective mode, we shut them up entirely.
 function GM:PlayerSay(ply, text, team_only)
-   if not IsValid(ply) then return end
+   if not IsValid(ply) then return text or "" end
 
-   if team_only and ply:Team() != TEAM_SPEC and GetRoundState() == ROUND_ACTIVE then
-      if ply:IsSpecial() then
-         -- traitor chat handling
-         RoleChatMsg(ply, ply:GetRole(), text)
-      else
-         LANG.Msg(ply, "inno_globalchat_hint")
-      end
-
-      return ""
-   end
-
-   if (not team_only) and GetRoundState() == ROUND_ACTIVE and ply:Team() == TEAM_SPEC then
-      if DetectiveMode() then
-         LANG.Msg(ply, "spec_teamchat_hint")
-         return ""
-      end
-
-      if not GetConVar("ttt_limit_spectator_chat"):GetBool() then
-         return text
-      end
-
-      local filtered = {}
-      for k, v in pairs(string.Explode(" ", text)) do
-         -- grab word characters and whitelisted interpunction
-         -- necessary or leetspeek will be used (by trolls especially)
-         local word, interp = string.match(v, "(%a*)([%.,;!%?]*)")
-         if word != "" then
-            table.insert(filtered, mumbles[math.random(1, #mumbles)] .. interp)
+   if GetRoundState() == ROUND_ACTIVE then
+      local team = ply:Team() == TEAM_SPEC
+      if team and not DetectiveMode() then
+         local filtered = {}
+         for k, v in pairs(string.Explode(" ", text)) do
+            -- grab word characters and whitelisted interpunction
+            -- necessary or leetspeek will be used (by trolls especially)
+            local word, interp = string.match(v, "(%a*)([%.,;!%?]*)")
+            if word != "" then
+               table.insert(filtered, mumbles[math.random(1, #mumbles)] .. interp)
+            end
          end
-      end
 
-      -- make sure we have something to say
-      if table.Count(filtered) < 1 then
-         table.insert(filtered, mumbles[math.random(1, #mumbles)])
-      end
+         -- make sure we have something to say
+         if table.Count(filtered) < 1 then
+            table.insert(filtered, mumbles[math.random(1, #mumbles)])
+         end
 
-      table.insert( filtered, 1, "[MUMBLED]")
-      return table.concat(filtered, " ")
+         table.insert(filtered, 1, "[MUMBLED]")
+         return table.concat(filtered, " ")
+      elseif team_only and not team and ply:IsSpecial() then
+	     RoleChatMsg(ply, ply:GetRole(), text)
+		 return ""
+      end
    end
 
-   return text
+   return text or ""
 end
 
 
@@ -154,7 +167,7 @@ end
 local loc_voice = CreateConVar("ttt_locational_voice", "0")
 
 -- Of course voice has to be limited as well
-function GM:PlayerCanHearPlayersVoice( listener, speaker )
+function GM:PlayerCanHearPlayersVoice(listener, speaker)
    -- Enforced silence
    if mute_all then
       return false, false

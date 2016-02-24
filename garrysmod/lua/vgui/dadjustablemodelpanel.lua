@@ -7,7 +7,7 @@ function PANEL:Init()
 
 	self.mx = 0
 	self.my = 0
-	--self.aLookAngle = Angle( 0, 0, 0 ) -- "Fix" model not being visible if no cam pos/angles are set
+	self.aLookAngle = Angle( 0, 0, 0 )
 
 end
 

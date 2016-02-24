@@ -62,8 +62,10 @@ function KARMA.GetKillReward()
    return KARMA.GetHurtReward(config.tbonus:GetFloat())
 end
 
-function KARMA.GivePenalty(ply, penalty)
-   ply:SetLiveKarma(math.max(ply:GetLiveKarma() - penalty, 0))
+function KARMA.GivePenalty(ply, penalty, victim)
+        if not hook.Call( "TTTKarmaGivePenalty", nil, ply, penalty, victim ) then
+                ply:SetLiveKarma(math.max(ply:GetLiveKarma() - penalty, 0))
+        end
 end
 
 function KARMA.GiveReward(ply, reward)
@@ -120,7 +122,7 @@ function KARMA.Hurt(attacker, victim, dmginfo)
 
       local penalty = KARMA.GetHurtPenalty(victim:GetLiveKarma(), hurt_amount)
 
-      KARMA.GivePenalty(attacker, penalty)
+      KARMA.GivePenalty(attacker, penalty, victim)
 
       attacker:SetCleanRound(false)
 
@@ -150,7 +152,7 @@ function KARMA.Killed(attacker, victim, dmginfo)
 
       local penalty = KARMA.GetKillPenalty(victim:GetLiveKarma())
 
-      KARMA.GivePenalty(attacker, penalty)
+      KARMA.GivePenalty(attacker, penalty, victim)
 
       attacker:SetCleanRound(false)
 

@@ -682,7 +682,7 @@ function GM:PlayerDeath( victim, infl, attacker)
 
    victim:Extinguish()
 
-   net.Start("TTT_PlayerDied") net.Send(ply)
+   net.Start("TTT_PlayerDied") net.Send(victim)
 
    if HasteMode() and GetRoundState() == ROUND_ACTIVE then
       IncRoundEnd(GetConVar("ttt_haste_minutes_per_death"):GetFloat() * 60)

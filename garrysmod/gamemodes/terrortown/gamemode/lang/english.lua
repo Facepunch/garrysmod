@@ -144,10 +144,6 @@ L.radio_button_steps   = "Footsteps"
 -- Intro screen shown after joining
 L.intro_help     = "If you're new to the game, press F1 for instructions!"
 
--- Chat-related
-L.spec_teamchat_hint = "HINT: As spectator, use team chat to talk during an active round!"
-L.inno_globalchat_hint = "When innocent, use global chat to communicate."
-
 -- "Continue playing" vote
 L.contvote_continue = "Continue playing this"
 L.contvote_change   = "Start a vote"
@@ -1059,3 +1055,6 @@ L.drop_no_ammo = "Insufficient ammo in your weapon's clip to drop as an ammo box
 --- v31
 L.set_cross_brightness = "Crosshair brightness"
 L.set_cross_size = "Crosshair size"
+
+--- 5-25-15
+L.hat_retrieve = "You picked up a Detective's hat."

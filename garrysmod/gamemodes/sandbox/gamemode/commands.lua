@@ -8,10 +8,11 @@ include( "prop_tools.lua" )
 function CCSpawn( player, command, arguments )
 
 	if ( arguments[ 1 ] == nil ) then return end
+	if ( arguments[ 1 ]:find( "%.[/\\]" ) ) then return end
 	if ( !gamemode.Call( "PlayerSpawnObject", player, arguments[ 1 ], arguments[ 2 ] ) ) then return end
 	if ( !util.IsValidModel( arguments[ 1 ] ) ) then return end
 
-	local iSkin = arguments[ 2 ] or 0
+	local iSkin = tonumber( arguments[ 2 ] ) or 0
 	local strBody = arguments[ 3 ] or nil
 
 	if ( util.IsValidProp( arguments[ 1 ] ) ) then 
@@ -770,7 +771,7 @@ local function MakeVehicle( Player, Pos, Ang, Model, Class, VName, VTable, data 
 	Ent:Spawn()
 	Ent:Activate()
 
-	Ent:SetVehicleClass( VName )
+	if ( Ent.SetVehicleClass && VName ) then Ent:SetVehicleClass( VName ) end
 	Ent.VehicleName = VName
 	Ent.VehicleTable = VTable
 

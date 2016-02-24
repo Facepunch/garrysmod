@@ -145,10 +145,6 @@ L.radio_button_steps   = "Fotsteg"
 -- Intro screen shown after joining
 L.intro_help     = "Om du är ny till detta spel, tryck F1 för att få instruktioner!"
 
--- Chat-related
-L.spec_teamchat_hint = "TIPS: Som åskådare, använd team-chatten för att prata under en pågående runda!"
-L.inno_globalchat_hint = "Om du är oskyldig, använd den globala chatten för att kommunicera."
-
 -- "Continue playing" vote
 L.contvote_continue = "Fortsätt att spela denna"
 L.contvote_change   = "Påbörja en omröstning"
@@ -1077,3 +1073,6 @@ L.drop_no_ammo = "Otillräcklig ammunition i vapnets klipp att släppa som en am
 --- v31
 L.set_cross_brightness = "Hårkors ljushet"
 L.set_cross_size = "Hårkors storlek"
+
+-- 5-25-15
+L.hat_retrieve = "Du plockade upp hatten av en detektiv."

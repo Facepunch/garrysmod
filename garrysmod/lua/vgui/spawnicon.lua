@@ -214,7 +214,7 @@ spawnmenu.AddContentType( "model", function( container, obj )
 	icon.OpenMenu = function( icon )
 
 		local menu = DermaMenu()
-		menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.model ) end )
+		menu:AddOption( "Copy to Clipboard", function() SetClipboardText( string.gsub(obj.model, "\\", "/") ) end )
 		menu:AddOption( "Spawn using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "4" ) RunConsoleCommand( "creator_name", obj.model ) end )
 
 		local submenu = menu:AddSubMenu( "Re-Render", function() icon:RebuildSpawnIcon() end )

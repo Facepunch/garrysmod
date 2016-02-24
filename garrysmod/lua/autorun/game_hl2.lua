@@ -42,9 +42,8 @@ ADD_ITEM( "Helicopter Grenade",	"grenade_helicopter" )
 ADD_ITEM( "Zombine Grenade",	"npc_grenade_frag" )
 
 if ( IsMounted( "ep2" ) ) then
-    game.AddParticles( "particles/striderbuster.pcf" )
-    ADD_ITEM( "Magnusson",   	"weapon_striderbuster" )
-    --Find out how to add the other helicopter grenade skin
+	game.AddParticles( "particles/striderbuster.pcf" )
+	ADD_ITEM( "Magnusson", "weapon_striderbuster" )
 end
 
 -- Weapons
@@ -68,7 +67,6 @@ Category = "Other"
 ADD_WEAPON( "Physics Gun",		"weapon_physgun" )
 
 -- NPC Weapons
-list.Add( "NPCUsableWeapons", { class = "none",				title = "None" } )
 list.Add( "NPCUsableWeapons", { class = "weapon_stunstick",	title = "Stunstick" } )
 list.Add( "NPCUsableWeapons", { class = "weapon_crowbar",	title = "Crowbar" } )
 list.Add( "NPCUsableWeapons", { class = "weapon_pistol",	title = "Pistol" } )

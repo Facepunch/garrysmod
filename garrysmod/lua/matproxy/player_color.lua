@@ -13,13 +13,13 @@ matproxy.Add( {
 	end,
 
 	bind = function( self, mat, ent )
-		if not IsValid( ent ) then return end
+		if ( !IsValid( ent ) ) then return end
 
 		-- If entity is a ragdoll try to convert it into the player
 		-- ( this applies to their corpses )
 		if ( ent:IsRagdoll() ) then
 			local owner = ent:GetRagdollOwner()
-			ent = IsValid(owner) and owner or ent
+			if ( IsValid( owner ) ) then ent = owner end
 		end
 
 		-- If the target ent has a function called GetPlayerColor then use that
@@ -30,7 +30,7 @@ matproxy.Add( {
 				mat:SetVector( self.ResultTo, col )
 			end
 		else
-			mat:SetVector( self.ResultTo, Vector( 62.0/255.0, 88.0/255.0, 106.0/255.0 ) )
+			mat:SetVector( self.ResultTo, Vector( 62 / 255, 88 / 255, 106 / 255 ) )
 		end
 	end 
 } )
