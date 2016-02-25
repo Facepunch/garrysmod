@@ -1,7 +1,11 @@
 
 AddCSLuaFile( "cl_init.lua" )
+AddCSLuaFile( "ai_translations.lua" )
+AddCSLuaFile( "sh_anim.lua" )
 AddCSLuaFile( "shared.lua" )
 
+include( "ai_translations.lua" )
+include( "sh_anim.lua" )
 include( "shared.lua" )
 
 SWEP.Weight				= 5			-- Decides whether we should switch from/to this
@@ -12,7 +16,7 @@ SWEP.AutoSwitchFrom		= true		-- Auto switch from if you pick up a better weapon
 --[[---------------------------------------------------------
    Name: OnRestore
    Desc: The game has just been reloaded. This is usually the right place
-		to call the GetNetworked* functions to restore the script's values.
+		to call the GetNW* functions to restore the script's values.
 -----------------------------------------------------------]]
 function SWEP:OnRestore()
 end

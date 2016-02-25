@@ -18,7 +18,7 @@ function PANEL:Init()
 
 	self.TextArea = self:Add( "DTextEntry" )
 	self.TextArea:Dock( RIGHT )
-	self.TextArea:SetDrawBackground( false )
+	self.TextArea:SetPaintBackground( false )
 	self.TextArea:SetWide( 45 )
 	self.TextArea:SetNumeric( true )
 	self.TextArea.OnChange = function( textarea, val ) self:SetValue( self.TextArea:GetText() ) end

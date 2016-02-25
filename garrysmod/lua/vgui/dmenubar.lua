@@ -11,7 +11,7 @@
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bBackground", 			"PaintBackground",	FORCE_BOOL )
-AccessorFunc( PANEL, "m_bBackground", 			"DrawBackground", 	FORCE_BOOL )
+AccessorFunc( PANEL, "m_bBackground", 			"DrawBackground",	FORCE_BOOL ) -- deprecated
 AccessorFunc( PANEL, "m_bIsMenuComponent", 		"IsMenu", 			FORCE_BOOL )
 
 AccessorFunc( PANEL, "m_bDisabled", 	"Disabled" )
@@ -61,7 +61,7 @@ function PANEL:AddMenu( label )
 	b:Dock( LEFT )
 	b:DockMargin( 5, 0, 0, 0 )
 	b:SetIsMenu( true )
-	b:SetDrawBackground( false )
+	b:SetPaintBackground( false )
 	b:SizeToContentsX( 16 )
 	b.DoClick = function() 
 	

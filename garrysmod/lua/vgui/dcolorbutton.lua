@@ -52,7 +52,7 @@ function PANEL:SetColor( color )
 
 	local colorStr = "R: "..color.r.."\nG: "..color.g.."\nB: "..color.b.."\nA: "..color.a
 
-	self:SetToolTip( colorStr )
+	self:SetTooltip( colorStr )
 	self.m_Color = color
 
 end

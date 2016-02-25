@@ -560,7 +560,7 @@ local function CreateVoiceVGUI()
     g_VoicePanelList:ParentToHUD()
     g_VoicePanelList:SetPos(25, 25)
     g_VoicePanelList:SetSize(200, ScrH() - 200)
-    g_VoicePanelList:SetDrawBackground(false)
+    g_VoicePanelList:SetPaintBackground(false)
 
     MutedState = vgui.Create("DLabel")
     MutedState:SetPos(ScrW() - 200, ScrH() - 50)

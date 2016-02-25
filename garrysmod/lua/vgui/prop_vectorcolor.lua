@@ -70,7 +70,7 @@ function PANEL:Setup( vars )
 
 		local menu = DermaMenu()
 			menu:AddPanel( color )
-			menu:SetDrawBackground( false )
+			menu:SetPaintBackground( false )
 		menu:Open( gui.MouseX() + 8, gui.MouseY() + 10 )
 
 	end

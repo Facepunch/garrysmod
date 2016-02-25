@@ -25,7 +25,8 @@ AccessorFunc( PANEL, "m_bHistory", 			"HistoryEnabled", FORCE_BOOL )
 AccessorFunc( PANEL, "m_bDisableTabbing", 	"TabbingDisabled", 	FORCE_BOOL )
 AccessorFunc( PANEL, "m_FontName", 			"Font" )
 AccessorFunc( PANEL, "m_bBorder", 			"DrawBorder" )
-AccessorFunc( PANEL, "m_bBackground", 		"DrawBackground" )
+AccessorFunc( PANEL, "m_bBackground", 		"PaintBackground" )
+AccessorFunc( PANEL, "m_bBackground", 		"DrawBackground" ) -- deprecated
 
 AccessorFunc( PANEL, "m_colText", 			"TextColor" )
 AccessorFunc( PANEL, "m_colHighlight", 		"HighlightColor" )
@@ -60,7 +61,7 @@ function PANEL:Init()
 	-- Defined above using AccessorFunc
 	--
 	self:SetDrawBorder( true )
-	self:SetDrawBackground( true )
+	self:SetPaintBackground( true )
 	self:SetEnterAllowed( true )
 	self:SetUpdateOnType( false )
 	self:SetNumeric( false )
