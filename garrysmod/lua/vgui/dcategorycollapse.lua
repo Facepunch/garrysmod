@@ -298,9 +298,6 @@ function PANEL:AnimSlide( anim, delta, data )
 	if ( anim.Started ) then
 		data.To = self:GetTall()	
 	end
-	
-	if ( anim.Finished ) then
-		return end
 
 	if ( self.Contents ) then self.Contents:SetVisible( true ) end
 	
