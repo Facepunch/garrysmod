@@ -30,7 +30,7 @@ function PANEL:Init()
 
 	self:MakePopup()
 	self:SetPopupStayAtBack( true )
-
+	
 	-- If the console is already open, we've got in its way.
 	if ( gui.IsConsoleVisible() ) then
 		gui.ShowConsole()
@@ -47,7 +47,7 @@ function PANEL:ScreenshotScan( folder )
 
 		AddBackgroundImage( folder .. v )
 		bReturn = true
-	
+
 	end
 
 	return bReturn
@@ -59,20 +59,20 @@ function PANEL:Paint()
 	DrawBackground()
 
 	if ( self.IsInGame != IsInGame() ) then
-	
+
 		self.IsInGame = IsInGame()
-		
+
 		if ( self.IsInGame ) then
-		
+
 			if ( IsValid( self.InnerPanel ) ) then self.InnerPanel:Remove() end
 			self.HTML:QueueJavascript( "SetInGame( true )" )
-		
-		else 
-		
+
+		else
+
 			self.HTML:QueueJavascript( "SetInGame( false )" )
-		
+
 		end
-		
+
 	end
 
 end
@@ -107,8 +107,8 @@ function PANEL:UpdateBackgroundImages()
 	--
 	-- If there's screenshots in gamemodes/<gamemode>/backgrounds/*.jpg use them
 	--
-	if ( !self:ScreenshotScan( "gamemodes/" .. engine.ActiveGamemode() .. "/backgrounds/" ) ) then 
-	
+	if ( !self:ScreenshotScan( "gamemodes/" .. engine.ActiveGamemode() .. "/backgrounds/" ) ) then
+
 		--
 		-- If there's no gamemode specific here we'll use the default backgrounds
 		--
@@ -173,7 +173,7 @@ function UpdateServerSettings()
 	}
 
 	local settings_file = file.Read( "gamemodes/" .. engine.ActiveGamemode() .. "/" .. engine.ActiveGamemode() .. ".txt", true )
-	
+
 	if ( settings_file ) then
 
 		local Settings = util.KeyValuesToTable( settings_file )
@@ -231,9 +231,9 @@ function GetServers( type, id )
 			pnlMainMenu:Call( "AddServer( '"..type.."', '"..id.."', "..ping..", \""..name.."\", \""..desc.."\", \""..map.."\", "..players..", "..maxplayers..", "..botplayers..", "..pass..", "..lastplayed..", \""..address.."\", \""..gamemode.."\", \""..workshopid.."\" )" )
 
 			return !ShouldStop[ type ]
-			
+
 		end,
-		
+
 		Finished = function()
 			pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
 		end,
