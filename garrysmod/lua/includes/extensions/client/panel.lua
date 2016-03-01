@@ -261,7 +261,6 @@ end
 function meta:GetTooltip()
 	return self.strTooltipText
 end
-meta.GetToolTip = meta.GetTooltip
 
 --[[---------------------------------------------------------
 	Name: GetTooltipPanel
@@ -269,7 +268,6 @@ meta.GetToolTip = meta.GetTooltip
 function meta:GetTooltipPanel()
 	return self.pnlTooltipPanel
 end
-meta.GetToolTipPanel = meta.GetTooltipPanel
 
 --[[---------------------------------------------------------
 	Name: SetTooltip
