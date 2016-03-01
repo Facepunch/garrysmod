@@ -1,13 +1,3 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
-
-	DComboBox
-
---]]
 
 local PANEL = {}
 
@@ -16,7 +6,7 @@ Derma_Hook( PANEL, "Paint", "Paint", "ComboBox" )
 Derma_Install_Convar_Functions( PANEL )
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -35,7 +25,7 @@ function PANEL:Init()
 end
 
 --[[---------------------------------------------------------
-   Name: Clear
+	Name: Clear
 -----------------------------------------------------------]]
 function PANEL:Clear()
 
@@ -47,11 +37,11 @@ function PANEL:Clear()
 		self.Menu:Remove()
 		self.Menu = nil
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: GetOptionText
+	Name: GetOptionText
 -----------------------------------------------------------]]
 function PANEL:GetOptionText( id )
 
@@ -60,7 +50,7 @@ function PANEL:GetOptionText( id )
 end
 
 --[[---------------------------------------------------------
-   Name: GetOptionData
+	Name: GetOptionData
 -----------------------------------------------------------]]
 function PANEL:GetOptionData( id )
 
@@ -68,8 +58,28 @@ function PANEL:GetOptionData( id )
 
 end
 
+function PANEL:GetOptionTextByData( data )
+
+	for id, dat in pairs( self.Data ) do
+		if ( dat == data ) then
+			return self:GetOptionText( id )
+		end
+	end
+
+	-- Try interpreting it as a number
+	for id, dat in pairs( self.Data ) do
+		if ( dat == tonumber( data ) ) then
+			return self:GetOptionText( id )
+		end
+	end
+
+	-- In case we fail
+	return data
+
+end
+
 --[[---------------------------------------------------------
-   Name: PerformLayout
+	Name: PerformLayout
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
@@ -80,7 +90,7 @@ function PANEL:PerformLayout()
 end
 
 --[[---------------------------------------------------------
-   Name: ChooseOption
+	Name: ChooseOption
 -----------------------------------------------------------]]
 function PANEL:ChooseOption( value, index )
 
@@ -90,14 +100,17 @@ function PANEL:ChooseOption( value, index )
 	end
 
 	self:SetText( value )
-	
+
+	-- This should really be the here, but it is too late now and convar changes are handled differently by different child elements
+	--self:ConVarChanged( self.Data[ index ] )
+
 	self.selected = index
-	self:OnSelect( index, value, self.Data[index] )
-	
+	self:OnSelect( index, value, self.Data[ index ] )
+
 end
 
 --[[---------------------------------------------------------
-   Name: ChooseOptionID
+	Name: ChooseOptionID
 -----------------------------------------------------------]]
 function PANEL:ChooseOptionID( index )
 
@@ -107,7 +120,7 @@ function PANEL:ChooseOptionID( index )
 end
 
 --[[---------------------------------------------------------
-   Name: GetSelected
+	Name: GetSelected
 -----------------------------------------------------------]]
 function PANEL:GetSelectedID()
 
@@ -115,22 +128,19 @@ function PANEL:GetSelectedID()
 
 end
 
-
-
 --[[---------------------------------------------------------
-   Name: GetSelected
+	Name: GetSelected
 -----------------------------------------------------------]]
 function PANEL:GetSelected()
-	
+
 	if ( !self.selected ) then return end
-	
-	return self:GetOptionText(self.selected), self:GetOptionData(self.selected)
-	
+
+	return self:GetOptionText( self.selected ), self:GetOptionData( self.selected )
+
 end
 
-
 --[[---------------------------------------------------------
-   Name: OnSelect
+	Name: OnSelect
 -----------------------------------------------------------]]
 function PANEL:OnSelect( index, value, data )
 
@@ -139,7 +149,7 @@ function PANEL:OnSelect( index, value, data )
 end
 
 --[[---------------------------------------------------------
-   Name: AddChoice
+	Name: AddChoice
 -----------------------------------------------------------]]
 function PANEL:AddChoice( value, data, select )
 
@@ -154,7 +164,7 @@ function PANEL:AddChoice( value, data, select )
 		self:ChooseOption( value, i )
 
 	end
-	
+
 	return i
 
 end
@@ -166,7 +176,7 @@ function PANEL:IsMenuOpen()
 end
 
 --[[---------------------------------------------------------
-   Name: OpenMenu
+	Name: OpenMenu
 -----------------------------------------------------------]]
 function PANEL:OpenMenu( pControlOpener )
 
@@ -178,7 +188,7 @@ function PANEL:OpenMenu( pControlOpener )
 
 	-- Don't do anything if there aren't any options..
 	if ( #self.Choices == 0 ) then return end
-	
+
 	-- If the menu still exists and hasn't been deleted
 	-- then just close it and don't open a new one.
 	if ( IsValid( self.Menu ) ) then
@@ -187,15 +197,15 @@ function PANEL:OpenMenu( pControlOpener )
 	end
 
 	self.Menu = DermaMenu()
-	
+
 	local sorted = {}
 	for k, v in pairs( self.Choices ) do table.insert( sorted, { id = k, data = v } ) end
 	for k, v in SortedPairsByMemberValue( sorted, "data" ) do
 		self.Menu:AddOption( v.data, function() self:ChooseOption( v.data, v.id ) end )
 	end
-	
+
 	local x, y = self:LocalToScreen( 0, self:GetTall() )
-	
+
 	self.Menu:SetMinimumWidth( self:GetWide() )
 	self.Menu:Open( x, y, false, self )
 
@@ -206,12 +216,26 @@ function PANEL:CloseMenu()
 	if ( IsValid( self.Menu ) ) then
 		self.Menu:Remove()
 	end
-	
+
+end
+
+-- This really should use a convar change hook
+function PANEL:CheckConVarChanges()
+
+	if ( !self.m_strConVar ) then return end
+
+	local strValue = GetConVarString( self.m_strConVar )
+	if ( self.m_strConVarValue == strValue ) then return end
+
+	self.m_strConVarValue = strValue
+
+	self:SetValue( self:GetOptionTextByData( self.m_strConVarValue ) )
+
 end
 
 function PANEL:Think()
 
-	self:ConVarNumberThink()
+	self:CheckConVarChanges()
 
 end
 
@@ -226,13 +250,13 @@ function PANEL:DoClick()
 	if ( self:IsMenuOpen() ) then
 		return self:CloseMenu()
 	end
-	
+
 	self:OpenMenu()
 
 end
 
 --[[---------------------------------------------------------
-   Name: GenerateExample
+	Name: GenerateExample
 -----------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
