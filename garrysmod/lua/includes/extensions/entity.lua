@@ -393,7 +393,11 @@ function meta:InstallDataTable()
 			if ( tab[ k ] == nil ) then continue end
 
 			-- Set it.
-			ent[ "Set" .. k ]( ent, tab[ k ] )
+			if ( ent[ "Set" .. k ] ) then
+				ent[ "Set" .. k ]( ent, tab[ k ] )
+			else
+				v.SetFunc( ent, v.index, tab[k] )
+			end
 
 		end
 
