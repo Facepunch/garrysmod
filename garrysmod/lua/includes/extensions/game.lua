@@ -27,7 +27,7 @@ game.AddAmmoType = function ( tbl )
 	
 	for id, ammo in ipairs( AmmoTypes ) do
 		if ( tbl.name == ammo.name ) then
-			ammo = tbl
+			AmmoTypes[id] = tbl
 			return
 		end
 	end
