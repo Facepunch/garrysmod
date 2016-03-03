@@ -789,7 +789,7 @@ end
 function SKIN:PaintNumberUp( panel, w, h )
 
 	if ( panel:GetDisabled() ) then
-		return self.Input.UpDown.Up.Disabled( 0, 0, w, h )
+		return self.tex.Input.UpDown.Up.Disabled( 0, 0, w, h )
 	end
 	
 	if ( panel.Depressed ) then
