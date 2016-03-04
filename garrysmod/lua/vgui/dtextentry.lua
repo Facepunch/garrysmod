@@ -57,9 +57,6 @@ function PANEL:Init()
 
 	self:SetFont( "DermaDefault" )
 
-	-- Apply scheme settings now, allow the user to override them later.
-	derma.SkinHook( "Scheme", "TextEntry", self )
-
 end
 
 function PANEL:IsEditing()
@@ -102,7 +99,11 @@ function PANEL:OnKeyCode( code )
 end
 
 function PANEL:ApplySchemeSettings()
+
 	self:SetFontInternal( self.m_FontName )
+
+	derma.SkinHook( "Scheme", "TextEntry", self )
+
 end
 
 function PANEL:UpdateFromHistory()

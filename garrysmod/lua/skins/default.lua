@@ -453,16 +453,9 @@ function SKIN:PaintTextEntry( panel, w, h )
 		end
 	
 	end
-	
-	panel:DrawTextEntryText( panel.m_colText, panel.m_colHighlight, panel.m_colCursor )
 
-end
 
-function SKIN:SchemeTextEntry( panel ) ---------------------- TODO
-
-	panel:SetTextColor( self.colTextEntryText )
-	panel:SetHighlightColor( self.colTextEntryTextHighlight )
-	panel:SetCursorColor( self.colTextEntryTextCursor )
+	panel:DrawTextEntryText( panel.m_colText || self.colTextEntryText, panel.m_colHighlight || self.colTextEntryTextHighlight, panel.m_colCursor || self.colTextEntryTextCursor )
 
 end
 
