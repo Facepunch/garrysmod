@@ -55,10 +55,10 @@ function PANEL:Init()
 	-- Beam Me Up Scotty
 	self:SetCursor( "beam" )
 
+	self:SetFont( "DermaDefault" )
+
 	-- Apply scheme settings now, allow the user to override them later.
 	derma.SkinHook( "Scheme", "TextEntry", self )
-
-	self:SetFont( "DermaDefault" )
 
 end
 
