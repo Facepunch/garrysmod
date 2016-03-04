@@ -22,7 +22,8 @@ local function DoRemoveEntity( ent )
 	
 	-- Send Effect
 	local ed = EffectData()
-	ed:SetEntity( ent )
+		ed:SetOrigin( ent:GetPos() )
+		ed:SetEntity( ent )
 	util.Effect( "entity_remove", ed, true, true )
 	
 	return true
