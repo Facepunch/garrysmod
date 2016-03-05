@@ -14,19 +14,13 @@ AccessorFunc( PANEL, "m_bBackground", 		"DrawBackground" )
 
 AccessorFunc( PANEL, "m_colText", 			"TextColor" )
 AccessorFunc( PANEL, "m_colHighlight", 		"HighlightColor" )
-AccessorFunc( PANEL, "m_colCursor", 		"CursorColor" )
+AccessorFunc( PANEL, "m_colCursor", 			"CursorColor" )
 
 AccessorFunc( PANEL, "m_bDisabled", 		"Disabled" )
 AccessorFunc( PANEL, "m_sPlaceholderText", 	"PlaceholderText", FORCE_STRING )
 
-
-
-
 Derma_Install_Convar_Functions( PANEL )
 
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetHistoryEnabled( false )
@@ -91,9 +85,6 @@ function PANEL:IsEditing()
 	return self == vgui.GetKeyboardFocus()
 end
 
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:OnKeyCodeTyped( code )
 
 	self:OnKeyCode( code )
@@ -218,9 +209,6 @@ end
 	OnChange
 -----------------------------------------------------------]]
 function PANEL:OnChange()
-
-	
-		
 end
 
 function PANEL:OpenAutoComplete( tab )
@@ -325,7 +313,7 @@ end
    Name: For Override
 -----------------------------------------------------------]]
 function PANEL:OnValueChange( strValue )
-
+	-- For Override
 end
 
 --[[---------------------------------------------------------
