@@ -1,18 +1,3 @@
---[[   _                                
-	( )                               
-   _| |   __   _ __   ___ ___     _ _ 
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
-
-	DTextEntry
-	
-	In Engine Commands:
-	
-	self:SetMultiline( bool )
-	self:IsMultiline()
-
---]]
 
 local PANEL = {}
 
@@ -93,12 +78,12 @@ function PANEL:Init()
 	
 	-- Beam Me Up Scotty
 	self:SetCursor( "beam" )
+	self:SetFont( "DermaDefault" )
+	self:SetPlaceholderText( "" )
 	
 	-- Apply scheme settings now, allow the user to override them later.
 	derma.SkinHook( "Scheme", "TextEntry", self )
 
-	self:SetFont( "DermaDefault" )
-	self:SetPlaceholderText( "" )
 
 end
 
