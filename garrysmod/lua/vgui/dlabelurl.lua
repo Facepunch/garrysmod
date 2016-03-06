@@ -4,7 +4,6 @@
  /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
 ( (_| |(  ___/| |   | ( ) ( ) |( (_| |
 `\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
-
 	DLabelURL
 --]]
 
@@ -12,6 +11,7 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "m_colText", 				"TextColor" )
 AccessorFunc( PANEL, "m_colTextStyle", 			"TextStyleColor" )
+AccessorFunc( PANEL, "m_strLinkURL", 			"URL" )
 
 AccessorFunc( PANEL, "m_bAutoStretchVertical", 	"AutoStretchVertical" )
 
@@ -19,15 +19,24 @@ AccessorFunc( PANEL, "m_bAutoStretchVertical", 	"AutoStretchVertical" )
 	Init
 -----------------------------------------------------------]]
 function PANEL:Init()
-
-	self:SetTextColor( Color( 0, 0, 255 ) )
 	
-	-- Nicer default height
-	self:SetTall( 20 )
+	self:SetText("LabelURL")
+	self:SetTextColor( Color( 0, 0, 255 ) )
 	
 	-- This turns off the engine drawing
 	self:SetPaintBackgroundEnabled( false )
 	self:SetPaintBorderEnabled( false )
+	
+end
+
+--[[---------------------------------------------------------
+	Paint
+-----------------------------------------------------------]]
+function PANEL:Paint()
+
+	-- Some trickery to hide the DButton
+	surface.SetDrawColor(0,0,0,0)
+	surface.DrawRect( 0, 0, self:GetWide(), self:GetTall() )
 	
 end
 
@@ -56,14 +65,34 @@ function PANEL:GetColor()
 
 end
 
+--[[---------------------------------------------------------
+	SetFont
+-----------------------------------------------------------]]
+function PANEL:SetFont( strFont )
+
+	self.m_FontName = strFont
+	self:SetFontInternal( self.m_FontName )	
+	self:ApplySchemeSettings()
+	
+end
+
+--[[---------------------------------------------------------
+	DoClick
+-----------------------------------------------------------]]
+function PANEL:DoClick()
+	
+	-- Open the URL in the Steam overlay and set the color to 'visited'
+	gui.OpenURL( self:GetURL() ) 
+	self.m_colText = Color( 11, 0, 128 )
+
+end
 
 --[[---------------------------------------------------------
 	Exited
 -----------------------------------------------------------]]
 function PANEL:OnCursorEntered()
-	
+
 	self:InvalidateLayout()
-	self:SetTextColor( Color( 0, 50, 255 ) )
 	
 end
 
@@ -73,7 +102,6 @@ end
 function PANEL:OnCursorExited()
 
 	self:InvalidateLayout()
-	self:SetTextColor( Color( 0, 50, 255 ) )
 	
 end
 
@@ -85,4 +113,4 @@ function PANEL:UpdateColours( skin )
 end
 
 
-derma.DefineControl( "DLabelURL", "A Label", PANEL, "URLLabel" )
+derma.DefineControl( "DLabelURL", "A URL Label", PANEL, "DButton" )
