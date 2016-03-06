@@ -288,6 +288,9 @@ local function Sparklies(attacker, tr, dmginfo)
    end
 end
 
+function SWEP:BulletHit(victim, tr, dmginfo)
+end
+
 function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 
    self:SendWeaponAnim(self.PrimaryAnim)
