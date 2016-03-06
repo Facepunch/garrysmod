@@ -25,21 +25,16 @@ local function GetAllFiles( tab, folder, extension, path )
 end
 
 
-local model_list = nil
+local model_list = {}
+
+GetAllFiles( model_list, "models/", ".mdl", "GAME" )	-- start finding files as soon as possible
+
 --
 -- Model Search
 --
 search.AddProvider( function( str )
 
 	str = str:PatternSafe()
-
-	if ( model_list == nil ) then
-
-		model_list = {}
-		GetAllFiles( model_list, "models/", ".mdl", "GAME" )
-		timer.Simple( 1, function() hook.Run( "SearchUpdate" ) end )
-
-	end
 
 	local list = {}
 
