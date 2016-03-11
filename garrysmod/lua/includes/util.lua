@@ -385,7 +385,7 @@ end
 --
 -- This is supposed to be clientside, but was exposed to both states for years due to a bug.
 --
-function CreateClientConVar( name, default, shouldsave, userdata )
+function CreateClientConVar( name, default, shouldsave, userdata, helptext )
 
 	local iFlags = 0
 
@@ -397,7 +397,7 @@ function CreateClientConVar( name, default, shouldsave, userdata )
 		iFlags = bit.bor( iFlags, FCVAR_USERINFO )
 	end
 
-	return CreateConVar( name, default, iFlags )
+	return CreateConVar( name, default, iFlags, helptext )
 
 end
 
