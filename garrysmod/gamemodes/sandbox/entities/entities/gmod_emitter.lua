@@ -2,6 +2,7 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
+ENT.PrintName			= "Emitter"
 ENT.Spawnable			= false
 ENT.RenderGroup 		= RENDERGROUP_OPAQUE
 

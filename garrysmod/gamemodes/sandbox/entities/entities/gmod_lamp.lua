@@ -2,8 +2,9 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.Spawnable			= false
-ENT.RenderGroup 		= RENDERGROUP_BOTH
+ENT.PrintName	= "Lamp"
+ENT.Spawnable	= false
+ENT.RenderGroup = RENDERGROUP_BOTH
 
 local matLight 			= Material( "sprites/light_ignorez" )
 local matBeam			= Material( "effects/lamp_beam" )

@@ -5,9 +5,10 @@ if ( CLIENT ) then
 	CreateConVar( "cl_drawcameras", "1", 0, "Should the cameras be visible?" )
 end
 
-ENT.Type = "anim"
-ENT.Spawnable			= false
-ENT.RenderGroup 		= RENDERGROUP_BOTH
+ENT.PrintName = 	"Camera"
+ENT.Type = 		"anim"
+ENT.Spawnable		= false
+ENT.RenderGroup 	= RENDERGROUP_BOTH
 
 local CAMERA_MODEL = Model( "models/dav0r/camera.mdl" )
 

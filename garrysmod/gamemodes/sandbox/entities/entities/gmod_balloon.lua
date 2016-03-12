@@ -2,7 +2,8 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.Spawnable			= false
+ENT.PrintName = "Balloon"
+ENT.Spawnable = false
 
 --[[---------------------------------------------------------
    Name: Initialize

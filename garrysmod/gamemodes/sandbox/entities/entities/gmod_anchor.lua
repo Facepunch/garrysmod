@@ -1,7 +1,8 @@
 
 AddCSLuaFile()
 
-ENT.Type = "anim"
+ENT.PrintName = "Anchor"
+ENT.Type      = "anim"
 
 if ( CLIENT ) then return end
 

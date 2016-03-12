@@ -2,6 +2,7 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
+ENT.PrintName			= "Thruster"
 ENT.Spawnable			= false
 ENT.RenderGroup 		= RENDERGROUP_BOTH
 
