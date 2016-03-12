@@ -376,3 +376,25 @@ function CheckIdle()
       end
    end
 end
+
+function GM:OnEntityCreated(ent)
+   -- Make ragdolls look like the player that has died
+   if ent:IsRagdoll() then
+      local ply = CORPSE.GetPlayer(ent)
+
+      if IsValid(ply) then
+         -- Only copy any decals if this ragdoll was recently created
+         if ent:GetCreationTime() > CurTime() - 1 then
+            ent:SnatchModelInstance(ply)
+         end
+
+         -- Copy the color for the PlayerColor matproxy
+         local playerColor = ply:GetPlayerColor()
+         ent.GetPlayerColor = function()
+            return playerColor
+         end
+      end
+   end
+
+   return self.BaseClass.OnEntityCreated(self, ent)
+end

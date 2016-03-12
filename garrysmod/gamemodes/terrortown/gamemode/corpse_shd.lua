@@ -33,4 +33,7 @@ function CORPSE.GetCredits(rag, default)
    return rag:GetDTInt(dti.INT_CREDITS)
 end
 
-
+function CORPSE.GetPlayer(rag)
+   if not IsValid(rag) then return NULL end
+   return rag:GetDTEntity(dti.ENT_PLAYER)
+end
