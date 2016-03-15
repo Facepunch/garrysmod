@@ -259,11 +259,11 @@ function RADIO:GetTargetType()
    local ent = trace.Entity
 
    if ent:IsPlayer()and  ent:IsTerror() then
-         if ent:GetNWBool("disguised", false) then
-            return "quick_disg", true
-         else
-            return ent, false
-         end
+      if ent:GetNWBool("disguised", false) then
+         return "quick_disg", true
+      else
+         return ent, false
+      end
    elseif ent:GetClass() == "prop_ragdoll" and CORPSE.GetPlayerNick(ent, "") != "" then
 
       if DetectiveMode() and not CORPSE.GetFound(ent, false) then
