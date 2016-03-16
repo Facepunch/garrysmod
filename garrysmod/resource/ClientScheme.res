@@ -19,7 +19,7 @@ Scheme
 		"Gray"				"178 178 178 255"
 		"Blank"				"0 0 0 0"
 	}
-	
+
 	///////////////////// BASE SETTINGS ////////////////////////
 	//
 	// default settings for all panels
@@ -30,8 +30,8 @@ Scheme
 		"BgColor"			"0 0 0 76"
 
 		"Panel.FgColor"			"255 220 0 255"
-		"Panel.BgColor"			"0 0 0 0"
-		
+		"Panel.BgColor"			"Blank"
+
 		"BrightFg"		"255 220 0 255"
 
 		"DamagedBg"			"180 0 0 200"
@@ -44,7 +44,7 @@ Scheme
 		"SelectionEmptyBoxBg" 	"0 0 0 80"
 		"SelectionBoxBg" 		"0 0 0 80"
 		"SelectionSelectedBoxBg" "0 0 0 80"
-		
+
 		"ZoomReticleColor"	"255 220 0 255"
 
 		// HL1-style HUD colors
@@ -72,13 +72,12 @@ Scheme
 		Menu.ArmedTextColor				"3 3 3 255"
 		Menu.ArmedBgColor				"202 221 248 255"
 		Menu.TextInset					"8"
-		
+
 		RichText.TextColor				"178 178 178 255"
-		RichText.BgColor				"0 0 0 0"
+		RichText.BgColor				"Blank"
 		RichText.SelectedTextColor		"178 178 178 255"
 		RichText.SelectedBgColor		"192 28 0 140"
-		
-		
+
 		// Blank space to leave beneath the menu on the main screen
 		"Main.BottomBorder"	"32"
 
@@ -92,14 +91,13 @@ Scheme
 		ScrollBarSlider.FgColor				"Gray"		// nob color
 		ScrollBarSlider.BgColor				"Blank"		// slider background color
 
-
 		Slider.NobColor				"108 108 108 255"
 		Slider.TextColor			"127 140 127 255"
 		Slider.TrackColor			"31 31 31 255"
 		Slider.DisabledTextColor1	"117 117 117 255"
 		Slider.DisabledTextColor2	"30 30 30 255"
 	}
-	
+
 	//////////////////////// FONTS /////////////////////////////
 	//
 	// describes all the fonts
@@ -570,7 +568,7 @@ Scheme
 				"custom" "1" [$OSX]
 		   }
 		}
-		
+
 		"ChatFont"
 		{
 			"1"
@@ -614,7 +612,7 @@ Scheme
 				"dropshadow"	"1"
 			}
 		}
-		
+
 		"TargetID"
 		{
 			"1"
@@ -658,7 +656,7 @@ Scheme
 				"dropshadow"	"1"
 			}
 		}
-		
+
 		"TargetIDSmall"
 		{
 			"1"
@@ -723,7 +721,7 @@ Scheme
 		}
 	}
 
-	
+
 	//////////////////////// CUSTOM FONT FILES /////////////////////////////
 	//
 	// specifies all the custom (non-system) font files that need to be loaded to service the above described fonts
