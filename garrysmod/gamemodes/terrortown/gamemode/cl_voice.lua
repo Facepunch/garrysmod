@@ -258,7 +258,7 @@ function RADIO:GetTargetType()
 
    local ent = trace.Entity
 
-   if ent:IsPlayer()and  ent:IsTerror() then
+   if ent:IsPlayer() and  ent:IsTerror() then
       if ent:GetNWBool("disguised", false) then
          return "quick_disg", true
       else
