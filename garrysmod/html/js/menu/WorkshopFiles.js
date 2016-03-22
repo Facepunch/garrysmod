@@ -68,18 +68,20 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 
 		self.UpdatePageNav();
 
-		// fumble
-		if ( scope.MapName && scope.Tagged ) {
-			gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged, scope.MapName );
-		} else if ( scope.MapName ) {
-			gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.MapName );
-		} else {
-			gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged );
-		}
-	
 		if ( !IN_ENGINE )
 		{
 			setTimeout( function() { WorkshopTestData( scope.Category, self ); }, 0 );
+		}
+		else
+		{
+			// fumble
+			if ( scope.MapName && scope.Tagged ) {
+				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged, scope.MapName );
+			} else if ( scope.MapName ) {
+				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.MapName );
+			} else {
+				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged );
+			}
 		}
 	}
 

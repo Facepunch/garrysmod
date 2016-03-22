@@ -10,8 +10,10 @@ function ControllerDupes($scope, $rootScope, $location, $timeout, $routeParams)
 
 	$scope.ArmDupe = function( entry )
 	{
+		if ( !IN_ENGINE ) return;
+
 		if ( entry.local ) {
-			gmod.ArmDupe( entry.info.file )
+			gmod.ArmDupe( entry.info.file );
 			return;
 		}
 
@@ -19,13 +21,16 @@ function ControllerDupes($scope, $rootScope, $location, $timeout, $routeParams)
 		// TODO: Some kind of `please wait` while we download 200kb
 		//
 
-		gmod.DownloadDupe( entry.info.fileid )
+		gmod.DownloadDupe( entry.info.fileid );
 	}
 
 	$scope.DeleteLocal = function( entry )
 	{
-		gmod.DeleteLocal( entry.info.file )
-		gmod.DeleteLocal( entry.info.background )
+		if ( IN_ENGINE )
+		{
+			gmod.DeleteLocal( entry.info.file );
+			gmod.DeleteLocal( entry.info.background );
+		}
 
 		$scope.Switch( $scope.Category, $scope.Offset );
 	}
