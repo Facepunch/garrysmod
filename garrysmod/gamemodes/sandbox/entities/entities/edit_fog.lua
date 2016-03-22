@@ -2,18 +2,18 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_edit" )
 
-ENT.Spawnable			= true
-ENT.AdminOnly			= true
+ENT.Spawnable = true
+ENT.AdminOnly = true
 
-ENT.PrintName			= "Fog Editor"
-ENT.Category			= "Editors"
+ENT.PrintName = "Fog Editor"
+ENT.Category = "Editors"
 
 function ENT:Initialize()
 
 	BaseClass.Initialize( self )
 
 	self:SetMaterial( "gmod/edit_fog" )
-	
+
 	if ( CLIENT ) then
 
 		hook.Add( "SetupWorldFog", self, self.SetupWorldFog )
@@ -25,9 +25,9 @@ end
 
 function ENT:SetupWorldFog()
 
-	render.FogMode( 1 ) 
+	render.FogMode( 1 )
 	render.FogStart( self:GetFogStart() )
-	render.FogEnd( self:GetFogEnd()  )
+	render.FogEnd( self:GetFogEnd() )
 	render.FogMaxDensity( self:GetDensity() )
 
 	local col = self:GetFogColor()
@@ -39,7 +39,7 @@ end
 
 function ENT:SetupSkyFog( skyboxscale )
 
-	render.FogMode( 1 ) 
+	render.FogMode( 1 )
 	render.FogStart( self:GetFogStart() * skyboxscale )
 	render.FogEnd( self:GetFogEnd() * skyboxscale )
 	render.FogMaxDensity( self:GetDensity() )
@@ -53,11 +53,11 @@ end
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Float",	0, "FogStart", { KeyName = "fogstart", Edit = { type = "Float", min = 0, max = 1000000, order = 1 } }  );
-	self:NetworkVar( "Float",	1, "FogEnd", { KeyName = "fogend", Edit = { type = "Float", min = 0, max = 1000000, order = 2 } }  );
-	self:NetworkVar( "Float",	2, "Density", { KeyName = "density", Edit = { type = "Float", min = 0, max = 1, order = 3 } }  );
+	self:NetworkVar( "Float", 0, "FogStart", { KeyName = "fogstart", Edit = { type = "Float", min = 0, max = 1000000, order = 1 } } )
+	self:NetworkVar( "Float", 1, "FogEnd", { KeyName = "fogend", Edit = { type = "Float", min = 0, max = 1000000, order = 2 } } )
+	self:NetworkVar( "Float", 2, "Density", { KeyName = "density", Edit = { type = "Float", min = 0, max = 1, order = 3 } } )
 
-	self:NetworkVar( "Vector",	0, "FogColor", { KeyName = "fogcolor", Edit = { type = "VectorColor", order = 3 } }  );
+	self:NetworkVar( "Vector", 0, "FogColor", { KeyName = "fogcolor", Edit = { type = "VectorColor", order = 3 } } )
 
 	--
 	-- TODO: Should skybox fog be edited seperately?
@@ -81,4 +81,5 @@ end
 function ENT:UpdateTransmitState()
 
 	return TRANSMIT_ALWAYS
+
 end

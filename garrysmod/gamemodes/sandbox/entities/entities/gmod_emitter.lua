@@ -2,19 +2,19 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.Spawnable			= false
-ENT.RenderGroup 		= RENDERGROUP_OPAQUE
+ENT.Spawnable = false
+ENT.RenderGroup = RENDERGROUP_OPAQUE
 
-local matLight 			= Material( "sprites/light_ignorez" )
-local matBeam			= Material( "effects/lamp_beam" )
+local matLight = Material( "sprites/light_ignorez" )
+local matBeam = Material( "effects/lamp_beam" )
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Float",	0,	"Delay" )
-	self:NetworkVar( "Float",	1,	"Scale" )
-	self:NetworkVar( "Bool",	0,	"Toggle" )
-	self:NetworkVar( "Bool",	1,	"On" )
-	self:NetworkVar( "String",	0,	"Effect" )
+	self:NetworkVar( "Float", 0, "Delay" )
+	self:NetworkVar( "Float", 1, "Scale" )
+	self:NetworkVar( "Bool", 0, "Toggle" )
+	self:NetworkVar( "Bool", 1, "On" )
+	self:NetworkVar( "String", 0, "Effect" )
 
 end
 
@@ -22,54 +22,48 @@ function ENT:Initialize()
 
 	if ( SERVER ) then
 
-		self:SetModel( "models/props_lab/tpplug.mdl" )	-- TODO: Find something better than this shitty shit.
+		self:SetModel( "models/props_lab/tpplug.mdl" ) -- TODO: Find something better than this shitty shit.
 		self:PhysicsInit( SOLID_VPHYSICS )
 		self:SetMoveType( MOVETYPE_VPHYSICS )
 		self:SetSolid( SOLID_VPHYSICS )
-	
+
 		self:DrawShadow( false )
 		self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
-	
+
 		local phys = self:GetPhysicsObject()
 		if ( IsValid( phys ) ) then phys:Wake() end
 
 	end
-	
+
 end
 
---[[---------------------------------------------------------
-   Name: Draw
------------------------------------------------------------]]
 function ENT:Draw()
 
 	-- Don't draw if we
 	local ply = LocalPlayer()
 	local wep = ply:GetActiveWeapon()
 
-	if ( wep:IsValid() ) then 
+	if ( IsValid( wep ) ) then
 
 		local weapon_name = wep:GetClass()
 		if ( weapon_name == "gmod_camera" ) then return end
 
 	end
-	
+
 	BaseClass.Draw( self )
-	
+
 end
 
---[[---------------------------------------------------------
-   Name: Think
------------------------------------------------------------]]
 function ENT:Think()
 
 	if ( SERVER ) then return end
 
 	BaseClass.Think( self )
-	
+
 	if ( !self:GetOn() ) then return end
-		
+
 	self.Delay = self.Delay or 0
-	
+
 	if ( self.Delay > CurTime() ) then return end
 	self.Delay = CurTime() + self:GetDelay()
 
@@ -77,32 +71,30 @@ function ENT:Think()
 	-- Find our effect table
 	--
 	local Effect = self:GetEffect()
-	local list = list.Get( "EffectType" )
-	local EffectTable = list[ Effect ]
+
+	local EffectTable = list.Get( "EffectType" )[ Effect ]
 	if ( !EffectTable ) then return end
-	
+
 	local Angle = self:GetAngles()
 	EffectTable.func( self, self:GetPos() + Angle:Forward() * 12, Angle, self:GetScale() )
-	
+
 end
 
 --[[---------------------------------------------------------
-   Overridden because I want to show the name of the 
-   player that spawned it..
+	Overridden because I want to show the name of the player that spawned it..
 -----------------------------------------------------------]]
 function ENT:GetOverlayText()
 
-	return self:GetPlayerName()	
-	
-end
+	return self:GetPlayerName()
 
+end
 
 if ( SERVER ) then
 
 	numpad.Register( "Emitter_On", 	function ( pl, ent )
 
 		if ( !IsValid( ent ) ) then return end
-	
+
 		if ( ent:GetToggle() ) then
 			ent:SetOn( !ent:GetOn() )
 		return end
@@ -115,7 +107,7 @@ if ( SERVER ) then
 
 		if ( !IsValid( ent ) ) then return end
 		if ( ent:GetToggle() ) then return end
-	
+
 		ent:SetOn( false )
 
 	end )
@@ -126,19 +118,19 @@ game.AddParticles( "particles/gmod_effects.pcf" )
 PrecacheParticleSystem( "generic_smoke" )
 
 list.Set( "EffectType", "smoke", {
-	print		=	"#effecttype.smoke",
-	material	=	"gui/effects/smoke.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.smoke",
+	material	= "gui/effects/smoke.png",
+	func		= function( ent, pos, angle, scale )
 
 		ParticleEffect( "generic_smoke", pos, angle, ent )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "sparks", {
-	print		=	"#effecttype.sparks",
-	material	=	"gui/effects/sparks.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.sparks",
+	material	= "gui/effects/sparks.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -148,12 +140,12 @@ list.Set( "EffectType", "sparks", {
 		util.Effect( "Sparks", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "stunstickimpact", {
-	print		=	"#effecttype.stunstick",
-	material	=	"gui/effects/stunstickimpact.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.stunstick",
+	material	= "gui/effects/stunstickimpact.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -161,12 +153,12 @@ list.Set( "EffectType", "stunstickimpact", {
 		util.Effect( "stunstickimpact", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "manhacksparks", {
-	print		=	"#effecttype.manhack",
-	material	=	"gui/effects/manhacksparks.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.manhack",
+	material	= "gui/effects/manhacksparks.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -174,12 +166,12 @@ list.Set( "EffectType", "manhacksparks", {
 		util.Effect( "manhacksparks", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "bloodspray", {
-	print		=	"#effecttype.blood",
-	material	=	"gui/effects/bloodspray.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.blood",
+	material	= "gui/effects/bloodspray.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -191,12 +183,12 @@ list.Set( "EffectType", "bloodspray", {
 		util.Effect( "bloodspray", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "striderblood", {
-	print		=	"#effecttype.strider",
-	material	=	"gui/effects/striderblood.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.strider",
+	material	= "gui/effects/striderblood.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -205,12 +197,12 @@ list.Set( "EffectType", "striderblood", {
 		util.Effect( "StriderBlood", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "shells", {
-	print		=	"#effecttype.pistol",
-	material	=	"gui/effects/shells.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.pistol",
+	material	= "gui/effects/shells.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -218,12 +210,12 @@ list.Set( "EffectType", "shells", {
 		util.Effect( "ShellEject", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "rifleshells", {
-	print		=	"#effecttype.rifle",
-	material	=	"gui/effects/rifleshells.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.rifle",
+	material	= "gui/effects/rifleshells.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -231,12 +223,12 @@ list.Set( "EffectType", "rifleshells", {
 		util.Effect( "RifleShellEject", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "shotgunshells", {
-	print		=	"#effecttype.shotgun",
-	material	=	"gui/effects/shotgunshells.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.shotgun",
+	material	= "gui/effects/shotgunshells.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -244,24 +236,24 @@ list.Set( "EffectType", "shotgunshells", {
 		util.Effect( "ShotgunShellEject", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "cball_explode", {
-	print		=	"#effecttype.cball_explode",
-	material	=	"gui/effects/cball_explode.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.cball_explode",
+	material	= "gui/effects/cball_explode.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
 		util.Effect( "cball_explode", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "cball_bounce", {
-	print		=	"#effecttype.cball_bounce",
-	material	=	"gui/effects/cball_bounce.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.cball_bounce",
+	material	= "gui/effects/cball_bounce.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -270,12 +262,12 @@ list.Set( "EffectType", "cball_bounce", {
 		util.Effect( "cball_bounce", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "thumperdust", {
-	print		=	"#effecttype.thumperdust",
-	material	=	"gui/effects/thumperdust.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.thumperdust",
+	material	= "gui/effects/thumperdust.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -283,12 +275,12 @@ list.Set( "EffectType", "thumperdust", {
 		util.Effect( "ThumperDust", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "ar2impact", {
-	print		=	"#effecttype.ar2impact",
-	material	=	"gui/effects/ar2impact.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.ar2impact",
+	material	= "gui/effects/ar2impact.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -296,12 +288,12 @@ list.Set( "EffectType", "ar2impact", {
 		util.Effect( "AR2Impact", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "ar2explosion", {
-	print		=	"#effecttype.ar2explosion",
-	material	=	"gui/effects/ar2explosion.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.ar2explosion",
+	material	= "gui/effects/ar2explosion.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -310,48 +302,48 @@ list.Set( "EffectType", "ar2explosion", {
 		util.Effect( "AR2Explosion", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "explosion", {
-	print		=	"#effecttype.explosion",
-	material	=	"gui/effects/explosion.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.explosion",
+	material	= "gui/effects/explosion.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
 		util.Effect( "explosion", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "helicoptermegabomb", {
-	print		=	"#effecttype.helicoptermegabomb",
-	material	=	"gui/effects/helicoptermegabomb.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.helicoptermegabomb",
+	material	= "gui/effects/helicoptermegabomb.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
 		util.Effect( "helicoptermegabomb", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "underwaterexplosion", {
-	print		=	"#effecttype.waterexplosion",
-	material	=	"gui/effects/waterexplosion.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.waterexplosion",
+	material	= "gui/effects/waterexplosion.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
 		util.Effect( "WaterSurfaceExplosion", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "watersplash", {
-	print		=	"#effecttype.watersplash",
-	material	=	"gui/effects/watersplash.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.watersplash",
+	material	= "gui/effects/watersplash.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -360,12 +352,12 @@ list.Set( "EffectType", "watersplash", {
 		util.Effect( "WaterSplash", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "dirtywatersplash", {
-	print		=	"#effecttype.dirtywatersplash",
-	material	=	"gui/effects/dirtywatersplash.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.dirtywatersplash",
+	material	= "gui/effects/dirtywatersplash.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
@@ -374,36 +366,36 @@ list.Set( "EffectType", "dirtywatersplash", {
 		util.Effect( "WaterSplash", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "glassimpact", {
-	print		=	"#effecttype.glassimpact",
-	material	=	"gui/effects/glassimpact.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.glassimpact",
+	material	= "gui/effects/glassimpact.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
 		util.Effect( "GlassImpact", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "bloodimpact", {
-	print		=	"#effecttype.bloodimpact",
-	material	=	"gui/effects/bloodimpact.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.bloodimpact",
+	material	= "gui/effects/bloodimpact.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
 		util.Effect( "BloodImpact", effectdata, true, true )
 
 	end
-})
+} )
 
 list.Set( "EffectType", "muzzleeffect", {
-	print		=	"#effecttype.muzzleeffect",
-	material	=	"gui/effects/muzzleeffect.png",
-	func		=	function( ent, pos, angle, scale )
+	print		= "#effecttype.muzzleeffect",
+	material	= "gui/effects/muzzleeffect.png",
+	func		= function( ent, pos, angle, scale )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos + angle:Forward() * 4 )
@@ -412,4 +404,4 @@ list.Set( "EffectType", "muzzleeffect", {
 		util.Effect( "MuzzleEffect", effectdata, true, true )
 
 	end
-})
+} )

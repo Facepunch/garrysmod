@@ -2,11 +2,11 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_edit" )
 
-ENT.Spawnable			= true
-ENT.AdminOnly			= true
+ENT.Spawnable = true
+ENT.AdminOnly = true
 
-ENT.PrintName			= "Sky Editor"
-ENT.Category			= "Editors"
+ENT.PrintName = "Sky Editor"
+ENT.Category = "Editors"
 
 function ENT:Initialize()
 
@@ -34,24 +34,24 @@ function ENT:Think()
 	-- Find an env_sun - if we don't already have one.
 	--
 	if ( SERVER && self.EnvSun == nil ) then
-		
+
 		-- so this closure only gets called once - even if it fails
-		self.EnvSun = false;
+		self.EnvSun = false
 
 		local list = ents.FindByClass( "env_sun" )
 		if ( #list > 0 ) then
-			self.EnvSun = list[1]
+			self.EnvSun = list[ 1 ]
 		end
 
 	end
-	
+
 	--
 	-- If we have a sun - force our sun normal to its value
 	--
 	if ( SERVER && IsValid( self.EnvSun ) ) then
 
-		local vec = self.EnvSun:GetInternalVariable( "m_vDirection" );
-		
+		local vec = self.EnvSun:GetInternalVariable( "m_vDirection" )
+
 		if ( isvector( vec ) ) then
 			self:SetSunNormal( vec )
 		end
@@ -70,11 +70,11 @@ function ENT:SetupDataTables()
 
 end
 
-
 --
 -- This edits something global - so always network - even wjen not in PVS
 --
 function ENT:UpdateTransmitState()
 
 	return TRANSMIT_ALWAYS
+
 end

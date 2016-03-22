@@ -6,24 +6,21 @@ if ( CLIENT ) then
 end
 
 ENT.Type = "anim"
-ENT.Spawnable			= false
-ENT.RenderGroup 		= RENDERGROUP_BOTH
+ENT.Spawnable = false
+ENT.RenderGroup = RENDERGROUP_BOTH
 
 local CAMERA_MODEL = Model( "models/dav0r/camera.mdl" )
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Int", 0, "Key" );
-	self:NetworkVar( "Bool", 0, "On" );
-	self:NetworkVar( "Vector", 0, "vecTrack" );
-	self:NetworkVar( "Entity", 0, "entTrack" );
-	self:NetworkVar( "Entity", 1, "Player" );
+	self:NetworkVar( "Int", 0, "Key" )
+	self:NetworkVar( "Bool", 0, "On" )
+	self:NetworkVar( "Vector", 0, "vecTrack" )
+	self:NetworkVar( "Entity", 0, "entTrack" )
+	self:NetworkVar( "Entity", 1, "Player" )
 
 end
 
---[[---------------------------------------------------------
-   Name: Initialize
------------------------------------------------------------]]
 function ENT:Initialize()
 
 	if ( SERVER ) then
@@ -39,7 +36,7 @@ function ENT:Initialize()
 
 		local phys = self:GetPhysicsObject()
 
-		if ( phys:IsValid() ) then
+		if ( IsValid( phys ) ) then
 			phys:Sleep()
 		end
 
@@ -49,7 +46,7 @@ end
 
 function ENT:SetTracking( Ent, LPos )
 
-	if ( Ent:IsValid() ) then
+	if ( IsValid( Ent ) ) then
 
 		self:SetMoveType( MOVETYPE_NONE )
 		self:SetSolid( SOLID_BBOX )
@@ -63,8 +60,8 @@ function ENT:SetTracking( Ent, LPos )
 
 	self:NextThink( CurTime() )
 
-	self:SetvecTrack( LPos );
-	self:SetentTrack( Ent );
+	self:SetvecTrack( LPos )
+	self:SetentTrack( Ent )
 
 end
 
@@ -89,14 +86,10 @@ function ENT:SetLocked( locked )
 
 end
 
---[[---------------------------------------------------------
-   Name: OnTakeDamage
------------------------------------------------------------]]
 function ENT:OnTakeDamage( dmginfo )
 	if ( self.locked ) then return end
 	self:TakePhysicsDamage( dmginfo )
 end
-
 
 function ENT:OnRemove()
 
@@ -162,7 +155,6 @@ if ( SERVER ) then
 
 end
 
-
 function ENT:Think()
 
 	if ( CLIENT ) then
@@ -175,7 +167,7 @@ end
 
 function ENT:TrackEntity( ent, lpos )
 
-	if ( !ent || !ent:IsValid() ) then return end
+	if ( !IsValid( ent ) ) then return end
 
 	local WPos = ent:LocalToWorld( lpos )
 
@@ -187,7 +179,7 @@ function ENT:TrackEntity( ent, lpos )
 	local Ang = WPos - CamPos
 
 	Ang = Ang:Angle()
-	self:SetAngles(Ang)
+	self:SetAngles( Ang )
 
 end
 
@@ -206,7 +198,7 @@ function ENT:Draw()
 	-- Don't draw the camera if we're taking pics
 	local ply = LocalPlayer()
 	local wep = ply:GetActiveWeapon()
-	if ( wep:IsValid() ) then
+	if ( IsValid( wep ) ) then
 		if ( wep:GetClass() == "gmod_camera" ) then return end
 	end
 
