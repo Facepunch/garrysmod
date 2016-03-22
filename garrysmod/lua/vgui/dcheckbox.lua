@@ -1,7 +1,7 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_bChecked", 		"Checked", 		FORCE_BOOL )
+AccessorFunc( PANEL, "m_bChecked", "Checked", FORCE_BOOL )
 
 Derma_Hook( PANEL, "Paint", "Paint", "CheckBox" )
 Derma_Hook( PANEL, "ApplySchemeSettings", "Scheme", "CheckBox" )
@@ -9,9 +9,6 @@ Derma_Hook( PANEL, "PerformLayout", "Layout", "CheckBox" )
 
 Derma_Install_Convar_Functions( PANEL )
 
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetSize( 15, 15 )
@@ -23,9 +20,6 @@ function PANEL:IsEditing()
 	return self.Depressed
 end
 
---[[---------------------------------------------------------
-   Name: SetValue
------------------------------------------------------------]]
 function PANEL:SetValue( val )
 
 	val = tobool( val )
@@ -40,18 +34,12 @@ function PANEL:SetValue( val )
 
 end
 
---[[---------------------------------------------------------
-   Name: DoClick
------------------------------------------------------------]]
 function PANEL:DoClick()
 
 	self:Toggle()
 
 end
 
---[[---------------------------------------------------------
-   Name: Toggle
------------------------------------------------------------]]
 function PANEL:Toggle()
 
 	if ( self:GetChecked() == nil || !self:GetChecked() ) then
@@ -62,18 +50,12 @@ function PANEL:Toggle()
 
 end
 
---[[---------------------------------------------------------
-   Name: OnChange
------------------------------------------------------------]]
 function PANEL:OnChange( bVal )
 
 	-- For override
 
 end
 
---[[---------------------------------------------------------
-	Think
------------------------------------------------------------]]
 function PANEL:Think()
 
 	self:ConVarStringThink()
@@ -86,13 +68,14 @@ end
 
 derma.DefineControl( "DCheckBox", "Simple Checkbox", PANEL, "DButton" )
 
+--[[---------------------------------------------------------
+	DCheckBoxLabel
+-----------------------------------------------------------]]
 
 local PANEL = {}
-AccessorFunc( PANEL, "m_iIndent", 		"Indent" )
 
---[[---------------------------------------------------------
+AccessorFunc( PANEL, "m_iIndent", "Indent" )
 
------------------------------------------------------------]]
 function PANEL:Init()
 	self:SetTall( 16 )
 
@@ -104,143 +87,95 @@ function PANEL:Init()
 	self.Label.DoClick = function() self:Toggle() end
 end
 
---[[---------------------------------------------------------
-   Name: SetDark
------------------------------------------------------------]]
 function PANEL:SetDark( b )
 	self.Label:SetDark( b )
 end
 
---[[---------------------------------------------------------
-   Name: SetBright
------------------------------------------------------------]]
 function PANEL:SetBright( b )
 	self.Label:SetBright( b )
 end
 
---[[---------------------------------------------------------
-   Name: SetConVar
------------------------------------------------------------]]
 function PANEL:SetConVar( cvar )
 	self.Button:SetConVar( cvar )
 end
 
---[[---------------------------------------------------------
-   Name: SetValue
------------------------------------------------------------]]
 function PANEL:SetValue( val )
 	self.Button:SetValue( val )
 end
 
---[[---------------------------------------------------------
-   Name: SetChecked
------------------------------------------------------------]]
 function PANEL:SetChecked( val )
 	self.Button:SetChecked( val )
 end
 
---[[---------------------------------------------------------
-   Name: GetChecked
------------------------------------------------------------]]
 function PANEL:GetChecked( val )
 	return self.Button:GetChecked()
 end
 
---[[---------------------------------------------------------
-   Name: Toggle
------------------------------------------------------------]]
 function PANEL:Toggle()
 	self.Button:Toggle()
 end
 
---[[---------------------------------------------------------
-   Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout( w, h )
 
 	local x = self.m_iIndent or 0
 
 	self.Button:SetSize( 15, 15 )
-	self.Button:SetPos( x, h / 2 - 7.5 )
+	self.Button:SetPos( x, math.floor( ( h - self.Button:GetTall() ) / 2 ) )
 
 	self.Label:SizeToContents()
-	self.Label:SetPos( x + 14 + 10, 0 )
+	self.Label:SetPos( x + self.Button:GetWide() + 9, 0 )
 
 end
 
---[[---------------------------------------------------------
-   Name: SetTextColor
------------------------------------------------------------]]
 function PANEL:SetTextColor( color )
 
 	self.Label:SetTextColor( color )
 
 end
 
-
---[[---------------------------------------------------------
-	SizeToContents
------------------------------------------------------------]]
 function PANEL:SizeToContents()
 
-	self:PerformLayout( true )
+	self:InvalidateLayout( true ) -- Update the size of the DLabel and the X offset
 	self:SetWide( self.Label.x + self.Label:GetWide() )
-	self:SetTall( self.Button:GetTall() )
+	self:SetTall( math.max( self.Button:GetTall(), self.Label:GetTall() ) )
+	self:InvalidateLayout() -- Update the positions of all children
 
 end
 
---[[---------------------------------------------------------
-   Name: SetText
------------------------------------------------------------]]
 function PANEL:SetText( text )
 
 	self.Label:SetText( text )
-	self:InvalidateLayout()
+	self:SizeToContents()
 
 end
 
---[[---------------------------------------------------------
-   Name: SetFont
------------------------------------------------------------]]
 function PANEL:SetFont( font )
 
 	self.Label:SetFont( font )
-	self:InvalidateLayout()
+	self:SizeToContents()
 
 end
 
---[[---------------------------------------------------------
-   Name: GetText
------------------------------------------------------------]]
 function PANEL:GetText()
 
 	return self.Label:GetText()
 
 end
 
---[[---------------------------------------------------------
-   Name: Paint
------------------------------------------------------------]]
 function PANEL:Paint()
 end
 
---[[---------------------------------------------------------
-   Name: OnChange
------------------------------------------------------------]]
 function PANEL:OnChange( bVal )
 
 	-- For override
 
 end
 
---[[---------------------------------------------------------
-   Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-		ctrl:SetText( "CheckBox" )
-		ctrl:SetWide( 200 )
+	ctrl:SetText( "CheckBox" )
+	ctrl:SetWide( 200 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
