@@ -47,7 +47,7 @@ function TOOL:Think()
 	local ent = self:FacePoserEntity()
 	if ( !IsValid( ent ) ) then return end
 	
-	local FlexNum = ent:GetFlexNum() - 1
+	local FlexNum = ent:GetFlexNum()
 	if ( FlexNum <= 0 ) then return end
 	
 	for i=0, FlexNum - 1 do
