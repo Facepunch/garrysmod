@@ -17,24 +17,24 @@ end
 if ( SERVER ) then
 
 	--
-	-- All of the AI logic is serverside - so we derive it from a 
+	-- All of the AI logic is serverside - so we derive it from a
 	-- specialized class on the server.
 	--
 	include( "sv_nextbot.lua" )
 
 else
-	
+
 	--[[---------------------------------------------------------
-	   Name: Draw
-	   Desc: Draw it!
+		Name: Draw
+		Desc: Draw it!
 	-----------------------------------------------------------]]
 	function ENT:Draw()
 		self:DrawModel()
 	end
 
 	--[[---------------------------------------------------------
-	   Name: DrawTranslucent
-	   Desc: Draw translucent
+		Name: DrawTranslucent
+		Desc: Draw translucent
 	-----------------------------------------------------------]]
 	function ENT:DrawTranslucent()
 
@@ -42,7 +42,7 @@ else
 		-- You shouldn't really be drawing your model here unless it's translucent
 
 		self:Draw()
-		
+
 	end
-	
+
 end
