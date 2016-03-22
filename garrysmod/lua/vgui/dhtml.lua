@@ -86,6 +86,10 @@ function PANEL:ConsoleMessage( msg, file, line )
 	--
 	if ( isstring( file ) && isnumber( line ) ) then
 
+		if ( #file > 64 ) then
+			file = string.sub( file, 1, 64 ) .. "..."
+		end
+
 		MsgC( Color( 255, 160, 255 ), "[HTML] " )
 		MsgC( Color( 255, 255, 255 ), file, ":", line, ": ", msg, "\n" )
 		return
