@@ -759,7 +759,18 @@ local function MakeVehicle( Player, Pos, Ang, Model, Class, VName, VTable, data 
 	-- Fill in the keyvalues if we have them
 	if ( VTable && VTable.KeyValues ) then
 		for k, v in pairs( VTable.KeyValues ) do
-			Ent:SetKeyValue( k, v )
+
+			local kLower = string.lower( k )
+
+			if ( kLower == "vehiclescript" || 
+			     kLower == "limitview"     ||
+			     kLower == "vehiclelocked" || 
+			     kLower == "cargovisible"  ||
+			     kLower == "enablegun" )
+			then
+				Ent:SetKeyValue( k, v )
+			end
+
 		end
 	end
 

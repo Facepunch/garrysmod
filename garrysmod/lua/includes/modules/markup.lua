@@ -359,7 +359,7 @@ function Parse(ml, maxwidth)
 							end
 						end
 						
-						if (lastSpacePos == string.len(curString)) then
+						if (lastSpacePos == string.len(curString) && lastSpacePos > 0) then
 							local sequenceStartPos = utf8.offset(curString,0,lastSpacePos)
 							ch = string.match(curString, utf8.charpattern, sequenceStartPos) .. ch
 							j = utf8.offset(curString,1,sequenceStartPos)

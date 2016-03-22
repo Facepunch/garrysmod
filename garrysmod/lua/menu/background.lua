@@ -1,5 +1,5 @@
 
-local MenuGradient = Material( "../html/img/gradient.png", "nocull smooth" )
+local MenuGradient = Material( "html/img/gradient.png", "nocull smooth" )
 
 local Images = {}
 

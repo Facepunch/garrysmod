@@ -297,8 +297,8 @@ function GM:CalcMainActivity( ply, velocity )
 		self:HandlePlayerDriving( ply ) ||
 		self:HandlePlayerVaulting( ply, velocity ) ||
 		self:HandlePlayerJumping( ply, velocity ) ||
-		self:HandlePlayerDucking( ply, velocity ) ||
-		self:HandlePlayerSwimming( ply, velocity ) ) then
+		self:HandlePlayerSwimming( ply, velocity ) ||
+		self:HandlePlayerDucking( ply, velocity ) ) then
 
 	else
 
