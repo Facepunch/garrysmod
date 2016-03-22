@@ -124,6 +124,12 @@ function TOOL:RightClick( trace )
 		return
 	end
 
+	-- Check to see if the player can create a hydraulic constraint with the entity in the trace
+	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "hydraulic" ) ) then
+		self:ClearObjects()
+		return
+	end
+		
 	local Phys2 = tr.Entity:GetPhysicsObjectNum( tr.PhysicsBone )
 	self:SetObject( 2, tr.Entity, tr.HitPos, Phys2, tr.PhysicsBone, tr.HitNormal )
 	

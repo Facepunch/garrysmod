@@ -118,7 +118,7 @@ function TOOL:RightClick( trace )
 		self:ClearObjects()
 		return
 	end
-	
+
 	-- Don't try to constrain world to world
 	if ( trace.HitWorld && tr.HitWorld ) then
 		self:ClearObjects()
@@ -134,6 +134,12 @@ function TOOL:RightClick( trace )
 		return
 	end
 
+	-- Check to see if the player can create a muscle constraint with the entity in the trace
+	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "muscle" ) ) then
+		self:ClearObjects()
+		return
+	end
+	
 	local Phys2 = tr.Entity:GetPhysicsObjectNum( tr.PhysicsBone )
 	self:SetObject( 2, tr.Entity, tr.HitPos, Phys2, tr.PhysicsBone, tr.HitNormal )
 	

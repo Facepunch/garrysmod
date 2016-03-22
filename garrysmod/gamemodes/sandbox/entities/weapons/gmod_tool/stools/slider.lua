@@ -81,7 +81,7 @@ function TOOL:RightClick( trace )
 		self:ClearObjects()
 		return
 	end
-	
+
 	-- Don't try to constrain world to world
 	if ( trace.HitWorld && tr.HitWorld ) then
 		self:ClearObjects()
@@ -93,6 +93,12 @@ function TOOL:RightClick( trace )
 		return
 	end
 	if ( IsValid( tr.Entity ) && tr.Entity:IsPlayer() ) then
+		self:ClearObjects()
+		return
+	end
+	
+	-- Check to see if the player can create a slider constraint with the entity in the trace
+	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "slider" ) ) then
 		self:ClearObjects()
 		return
 	end
