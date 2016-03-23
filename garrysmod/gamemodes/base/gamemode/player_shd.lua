@@ -106,7 +106,7 @@ end
 		 the player is allowed to noclip, false to block
 -----------------------------------------------------------]]
 function GM:PlayerNoClip( pl, on )
-	if ( !on ) return true end
+	if ( !on ) then return true end
 	-- Allow noclip if we're in single player and living
 	return game.SinglePlayer() && IsValid( pl ) && pl:Alive()
 	
