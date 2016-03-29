@@ -21,6 +21,10 @@ soundscapes_manifest
 	"file"		"scripts/soundscapes/hl2/soundscapes_town.txt"
 	"file"		"scripts/soundscapes/hl2/soundscapes_trainyard.txt"
 
+	// Half-Life 2: Deathmatch
+	"file"		"scripts/soundscapes_labs.txt"
+	"file"		"scripts/soundscapes_strike.txt"
+
 	// Half-Life 2: Episode 1
 	"file"		"scripts/soundscapes/episodic/soundscapes_citadel_episodic.txt"
 	"file"		"scripts/soundscapes/episodic/soundscapes_city_episodic.txt"
