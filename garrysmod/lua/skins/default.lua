@@ -455,7 +455,7 @@ function SKIN:PaintTextEntry( panel, w, h )
 	end
 
 
-	panel:DrawTextEntryText( panel.m_colText || self.colTextEntryText, panel.m_colHighlight || self.colTextEntryTextHighlight, panel.m_colCursor || self.colTextEntryTextCursor )
+	panel:DrawTextEntryText( panel:GetTextColor(), panel:GetHighlightColor(), panel:GetCursorColor() )
 
 end
 

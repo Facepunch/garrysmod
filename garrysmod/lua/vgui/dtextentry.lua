@@ -106,6 +106,24 @@ function PANEL:ApplySchemeSettings()
 
 end
 
+function PANEL:GetTextColor()
+
+	return self.m_colText || self:GetSkin().colTextEntryText
+
+end
+
+function PANEL:GetHighlightColor()
+
+	return self.m_colHighlight || self:GetSkin().colTextEntryTextHighlight
+
+end
+
+function PANEL:GetCursorColor()
+
+	return self.m_colCursor || self:GetSkin().colTextEntryTextCursor
+
+end
+
 function PANEL:UpdateFromHistory()
 
 	if ( IsValid( self.Menu ) ) then
