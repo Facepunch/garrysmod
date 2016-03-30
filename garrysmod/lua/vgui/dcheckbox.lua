@@ -115,12 +115,12 @@ function PANEL:Toggle()
 	self.Button:Toggle()
 end
 
-function PANEL:PerformLayout( w, h )
+function PANEL:PerformLayout()
 
 	local x = self.m_iIndent or 0
 
 	self.Button:SetSize( 15, 15 )
-	self.Button:SetPos( x, math.floor( ( h - self.Button:GetTall() ) / 2 ) )
+	self.Button:SetPos( x, math.floor( ( self:GetTall() - self.Button:GetTall() ) / 2 ) )
 
 	self.Label:SizeToContents()
 	self.Label:SetPos( x + self.Button:GetWide() + 9, 0 )
