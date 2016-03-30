@@ -196,9 +196,9 @@ end
 --[[---------------------------------------------------------
 
 -----------------------------------------------------------]]
-function PANEL:Paint()
+function PANEL:Paint(w, h)
 
-	self:PaintAt( 0, 0, self:GetWide(), self:GetTall() )
+	self:PaintAt( 0, 0, w, h )
 
 end
 

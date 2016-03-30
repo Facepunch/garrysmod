@@ -41,15 +41,14 @@ end
 --[[---------------------------------------------------------
 
 -----------------------------------------------------------]]
-function PANEL:Paint()
+function PANEL:Paint(w, h)
 
 	local Mat = self.m_Material
 	if (!Mat) then return true end
 
 	surface.SetMaterial( Mat )
 	surface.SetDrawColor( self.m_Color.r, self.m_Color.g, self.m_Color.b, self.m_Color.a )
-	
-	local w, h = self:GetSize()
+
 	local x, y = 0, 0
 	surface.DrawTexturedRectRotated( x, y, w, h, self.m_Rotation )
 	return true

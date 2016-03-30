@@ -19,13 +19,13 @@ end
 --[[---------------------------------------------------------
    Name: Paint
 -----------------------------------------------------------]]
-function PANEL:Paint()
+function PANEL:Paint(w, h)
 	
 	if (!self.Material) then return true end
 	
 	surface.SetMaterial( self.Material )
 	surface.SetDrawColor( 255, 255, 255, self.Alpha )
-	surface.DrawTexturedRect( 0, 0, self:GetSize() ) 
+	surface.DrawTexturedRect( 0, 0, w, h ) 
 	
 	return true
 	

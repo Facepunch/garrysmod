@@ -180,12 +180,12 @@ local colors = {
 
 local y_logo_off = 72
 
-function PANEL:Paint()
+function PANEL:Paint(w, h)
    -- Logo sticks out, so always offset bg
-   draw.RoundedBox( 8, 0, y_logo_off, self:GetWide(), self:GetTall() - y_logo_off, colors.bg)
+   draw.RoundedBox( 8, 0, y_logo_off, w, h - y_logo_off, colors.bg)
 
    -- Server name is outlined by orange/gold area
-   draw.RoundedBox( 8, 0, y_logo_off + 25, self:GetWide(), 32, colors.bar)
+   draw.RoundedBox( 8, 0, y_logo_off + 25, w, 32, colors.bar)
 
    -- TTT Logo
    surface.SetTexture( logo )

@@ -204,8 +204,8 @@ function PANEL:ApplySchemeSettings()
    self.tiptext:SetWrap(true)
 end
 
-function PANEL:Paint()
-   draw.RoundedBox(8, 0, 0, self:GetWide(), self:GetTall(), self.BgColor)
+function PANEL:Paint(w, h)
+   draw.RoundedBox(8, 0, 0, w, h, self.BgColor)
 end
 
 function PANEL:Think()

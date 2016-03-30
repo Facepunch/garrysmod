@@ -28,7 +28,7 @@ function PANEL:Think()
 
 end
 
-function PANEL:Paint()
+function PANEL:Paint(w, h)
 
 	if ( !self.Material ) then return end
 
@@ -38,12 +38,12 @@ function PANEL:Paint()
 
 		surface.SetDrawColor( 255, 255, 255, 255 )
 		surface.SetMaterial( matWorkshopRocket )
-		surface.DrawTexturedRectRotated( self:GetWide()*0.5, self:GetTall()*0.5, self.Size*2, self.Size*2, angle )
+		surface.DrawTexturedRectRotated( w*0.5, h*0.5, self.Size*2, self.Size*2, angle )
 
 		if ( self.Material ) then
 
 			surface.SetMaterial( self.Material )
-			surface.DrawTexturedRectRotated( self:GetWide()*0.5, self:GetTall()*0.5, self.Size, self.Size, angle )
+			surface.DrawTexturedRectRotated( w*0.5, h*0.5, self.Size, self.Size, angle )
 
 		end
 
