@@ -317,7 +317,7 @@ local function PlaceWeaponsAtEnts(spots_classes)
 
    local spawnables = ents.TTT.GetSpawnableSWEPs()
 
-   local max = math.max(cvars.Number("maxplayers", 16), #player.GetAll())
+   local max = game.MaxPlayers()
    max = max + math.max(3, 0.33 * max)
 
    local num = 0
