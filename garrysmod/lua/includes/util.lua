@@ -70,24 +70,23 @@ function PrintTable( t, indent, done )
 end
 
 --[[---------------------------------------------------------
-   Returns a random vector
+	Returns a random vector
 -----------------------------------------------------------]]
 function VectorRand()
 	return Vector( math.Rand( -1.0, 1.0 ), math.Rand( -1.0, 1.0 ), math.Rand( -1.0, 1.0 ) )
 end
 
 --[[---------------------------------------------------------
-   Returns a random angle
+	Returns a random angle
 -----------------------------------------------------------]]
 function AngleRand()
 	return Angle( math.Rand( -90, 90 ), math.Rand( -180, 180 ), math.Rand( -180, 180 ) )
 end
 
 --[[---------------------------------------------------------
-   Returns a random color
+	Returns a random color
 -----------------------------------------------------------]]
 function ColorRand( alpha )
-
 	if ( alpha ) then
 		return Color( math.random( 0, 255 ), math.random( 0, 255 ), math.random( 0, 255 ), math.random( 0, 255 ) )
 	end
@@ -97,7 +96,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Convenience function to precache a sound
+	Convenience function to precache a sound
 -----------------------------------------------------------]]
 function Sound( name )
 	util.PrecacheSound( name )
@@ -105,7 +104,7 @@ function Sound( name )
 end
 
 --[[---------------------------------------------------------
-   Convenience function to precache a model
+	Convenience function to precache a model
 -----------------------------------------------------------]]
 function Model( name )
 	util.PrecacheModel( name )
@@ -113,7 +112,7 @@ function Model( name )
 end
 
 --[[---------------------------------------------------------
-   Convenience function to precache a particle
+	Convenience function to precache a particle
 -----------------------------------------------------------]]
 function Particle( name )
 	if ( CLIENT ) then
@@ -132,7 +131,7 @@ color_black			= Color( 0, 0, 0, 255 )
 color_transparent	= Color( 255, 255, 255, 0 )
 
 --[[---------------------------------------------------------
-   Includes the file - and adds it so the CS file list
+	Includes the file - and adds it so the CS file list
 -----------------------------------------------------------]]
 function IncludeCS( filename )
 	include( filename )
@@ -148,8 +147,8 @@ FORCE_NUMBER	= 2
 FORCE_BOOL		= 3
 
 --[[---------------------------------------------------------
-   AccessorFunc
-   Quickly make Get/Set accessor fuctions on the specified table
+	AccessorFunc
+	Quickly make Get/Set accessor fuctions on the specified table
 -----------------------------------------------------------]]
 function AccessorFunc( tab, varname, name, iForce )
 
@@ -402,7 +401,7 @@ function CreateClientConVar( name, default, shouldsave, userdata, helptext )
 end
 
 --[[---------------------------------------------------------
-   Convar access functions
+	Convar access functions
 -----------------------------------------------------------]]
 
 local ConVarCache = {}
@@ -422,11 +421,13 @@ local function GetConVarCached( name )
 end
 
 function GetConVarNumber( name )
+	if ( name == "maxplayers" ) then return game.MaxPlayers() end -- Backwards compatibility
 	local c = GetConVarCached( name )
 	return ( c and c:GetFloat() ) or 0
 end
 
 function GetConVarString( name )
+	if ( name == "maxplayers" ) then return tostring( game.MaxPlayers() ) end -- ew
 	local c = GetConVarCached( name )
 	return ( c and c:GetString() ) or ""
 end
