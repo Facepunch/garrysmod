@@ -95,6 +95,7 @@ CreateConVar("ttt_det_credits_traitordead", "1")
 CreateConVar("ttt_announce_deaths", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 
 CreateConVar("ttt_use_weapon_spawn_scripts", "1")
+CreateConVar("ttt_weapon_spawn_count", "0")
 
 CreateConVar("ttt_always_use_mapcycle", "0")
 
