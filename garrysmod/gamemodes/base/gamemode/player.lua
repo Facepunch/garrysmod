@@ -562,14 +562,14 @@ end
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerLeaveVehicle()
 -----------------------------------------------------------]]
-function GM:PlayerLeaveVehicle( ply, veichle )
+function GM:PlayerLeaveVehicle( ply, vehicle )
 end
 
 --[[---------------------------------------------------------
 	Name: gamemode:CanExitVehicle()
 	Desc: If the player is allowed to leave the vehicle, return true
 -----------------------------------------------------------]]
-function GM:CanExitVehicle( veichle, passenger )
+function GM:CanExitVehicle( vehicle, passenger )
 	return true
 end
 
