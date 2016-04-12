@@ -109,7 +109,9 @@ function net.WriteTable( tab )
 	
 	-- End of table
 	net.WriteType( nil )
-
+	
+	assert( !net.HasOverflowed(), "WriteTable overflowed" )
+	
 end
 
 function net.ReadTable()
@@ -152,7 +154,9 @@ function net.WriteType( v )
 	end
 
 	local wv = net.WriteVars[ typeid ]
-	if ( wv ) then return wv( typeid, v ) end
+	if ( wv ) then 
+		return wv( typeid, v ) 
+	end
 	
 	error( "net.WriteType: Couldn't write " .. type( v ) .. " (type " .. typeid .. ")" )
 
@@ -180,4 +184,8 @@ function net.ReadType( typeid )
 	if ( rv ) then return rv() end
 
 	error( "net.ReadType: Couldn't read type " .. typeid )
+end
+
+function net.HasOverflowed()
+	return (net.BytesWritten() or 0) >= 65536
 end
