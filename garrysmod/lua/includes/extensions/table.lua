@@ -172,7 +172,7 @@ end
 function table.IsSequential( t )
 	local i = 1
 	for key, value in pairs( t ) do
-		if ( !tonumber( i ) || key != i ) then return false end
+		if ( t[ i ] == nil ) then return false end
 		i = i + 1
 	end
 	return true
