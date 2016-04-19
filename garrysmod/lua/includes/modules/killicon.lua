@@ -5,7 +5,7 @@
 local surface	= surface
 local Msg		= Msg
 local Color		= Color
-
+local math		= math
 
 --[[---------------------------------------------------------
    Name: killicon
@@ -16,6 +16,7 @@ module("killicon")
 local Icons = {}
 local TYPE_FONT 	= 0
 local TYPE_TEXTURE 	= 1
+local TYPE_MATERIAL	= 2
 
 function AddFont( name, font, character, color )
 
@@ -34,6 +35,19 @@ function Add( name, material, color )
 	Icons[name].texture		= surface.GetTextureID( material )
 	Icons[name].color 		= color
 
+end
+
+function AddUV( name, material, color, x, y, w, h )
+	
+	Icons[name] = {}
+	Icons[name].type		= TYPE_MATERIAL
+	Icons[name].material	= material
+	Icons[name].color		= color
+	Icons[name].x			= x
+	Icons[name].y			= y
+	Icons[name].w			= w
+	Icons[name].h			= h
+	
 end
 
 function AddAlias( name, alias )
@@ -86,6 +100,18 @@ function GetSize( name )
 		
 	end
 	
+	if ( t.type == TYPE_MATERIAL ) then
+		
+		local tw, th = surface.GetTextureSize( surface.GetTextureID( t.material:GetName() ) )
+		
+		local uw = math.max( t.x, t.w ) - math.min( t.x, t.w )
+		local uh = math.max( t.y, t.h ) - math.min( t.y, t.h )
+		
+		w = tw * uw
+		h = th * uh
+		
+	end
+	
 	t.size = {}
 	t.size.w = w or 32
 	t.size.h = h or 32
@@ -130,6 +156,14 @@ function Draw( x, y, name, alpha )
 		surface.SetDrawColor( t.color.r, t.color.g, t.color.b, alpha )
 		surface.DrawTexturedRect( x, y, w, h )
 
+	end
+	
+	if ( t.type == TYPE_MATERIAL ) then
+		
+		surface.SetMaterial( t.material )
+		surface.SetDrawColor( t.color.r, t.color.g, t.color.b, alpha )
+		surface.DrawTexturedRectUV( x, y, w, h, t.x, t.y, t.w, t.h )
+		
 	end
 	
 end
