@@ -3,7 +3,6 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.Spawnable = false
-ENT.RenderGroup = RENDERGROUP_BOTH
 
 local matHeatWave = Material( "sprites/heatwave" )
 local matFire = Material( "effects/fire_cloud1" )
@@ -88,15 +87,9 @@ function ENT:Draw()
 
 	if ( self.ShouldDraw == 0 ) then return end
 
-	BaseClass.Draw( self )
+	self:DrawModel()
 
-end
-
-function ENT:DrawTranslucent()
-
-	if ( self.ShouldDraw == 0 ) then return end
-
-	BaseClass.DrawTranslucent( self )
+	if ( halo.RenderedEntity() == self ) then return end
 
 	if ( !self:IsOn() ) then
 		self.OnStart = nil
@@ -108,7 +101,6 @@ function ENT:DrawTranslucent()
 
 	local EffectThink = self[ "EffectDraw_" .. self:GetEffect() ]
 	if ( EffectThink ) then EffectThink( self ) end
-
 end
 
 function ENT:Think()

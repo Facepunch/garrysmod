@@ -52,7 +52,6 @@ function ENT:GetOverlayText()
 
 end
 
-
 function ENT:SetPlayer( ply )
 
 	if ( IsValid(ply) ) then
