@@ -72,7 +72,7 @@ function gmsave.SaveMap( ply )
 
 	for k, v in pairs( Ents ) do
 
-		if ( !gmsave.ShouldSaveEntity( v, v:GetSaveTable() ) || v:IsConstraint()  ) then
+		if ( !gmsave.ShouldSaveEntity( v, v:GetSaveTable() ) || v:IsConstraint() ) then
 			Ents[ k ] = nil
 		end
 
