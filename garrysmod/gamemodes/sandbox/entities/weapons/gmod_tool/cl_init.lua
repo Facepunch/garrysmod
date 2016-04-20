@@ -10,7 +10,6 @@ end, "gmod_toolmode_panel" )
 include( "shared.lua" )
 include( "cl_viewscreen.lua" )
 
-SWEP.PrintName		= "Tool Gun"
 SWEP.Slot			= 5
 SWEP.SlotPos		= 6
 SWEP.DrawAmmo		= false
@@ -92,7 +91,7 @@ function SWEP:DrawHUD()
 
 	QuadTable.y = y
 	QuadTable.h = self.InfoBoxHeight
-	local alpha =  math.Clamp( 255 + ( self:GetToolObject().LastMessage - CurTime() ) * 800, 10, 255 )
+	local alpha = math.Clamp( 255 + ( self:GetToolObject().LastMessage - CurTime() ) * 800, 10, 255 )
 	QuadTable.color = Color( alpha, alpha, alpha, 230 )
 	draw.TexturedQuad( QuadTable )
 
@@ -101,7 +100,7 @@ function SWEP:DrawHUD()
 	TextTable.font = "GModToolHelp"
 	
 	if ( !self:GetToolObject().Information ) then
-		TextTable.pos = { x + self.InfoBoxHeight, y  }
+		TextTable.pos = { x + self.InfoBoxHeight, y }
 		TextTable.text = self:GetToolObject():GetHelpText()
 		w, h = draw.TextShadow( TextTable, 1 )
 		

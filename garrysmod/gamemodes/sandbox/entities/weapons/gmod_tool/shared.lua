@@ -1,29 +1,30 @@
 -- Variables that are used on both client and server
 
+SWEP.PrintName		= "Tool Gun"
 SWEP.Author			= ""
-SWEP.Contact			= ""
-SWEP.Purpose			= ""
-SWEP.Instructions		= ""
+SWEP.Contact		= ""
+SWEP.Purpose		= ""
+SWEP.Instructions	= ""
 
-SWEP.ViewModel			= "models/weapons/c_toolgun.mdl"
-SWEP.WorldModel			= "models/weapons/w_toolgun.mdl"
-SWEP.AnimPrefix			= "python"
+SWEP.ViewModel		= "models/weapons/c_toolgun.mdl"
+SWEP.WorldModel		= "models/weapons/w_toolgun.mdl"
+SWEP.AnimPrefix		= "python"
 
-SWEP.UseHands			= true
-SWEP.Spawnable			= true
+SWEP.UseHands		= true
+SWEP.Spawnable		= true
 
 -- Be nice, precache the models
 util.PrecacheModel( SWEP.ViewModel )
 util.PrecacheModel( SWEP.WorldModel )
 
 -- Todo, make/find a better sound.
-SWEP.ShootSound			= Sound( "Airboat.FireGunRevDown" )
+SWEP.ShootSound = Sound( "Airboat.FireGunRevDown" )
 
-SWEP.Tool				= {}
+SWEP.Tool = {}
 
 SWEP.Primary = 
 {
-	ClipSize 	= -1,
+	ClipSize	= -1,
 	DefaultClip = -1,
 	Automatic = false,
 	Ammo = "none"
@@ -31,14 +32,14 @@ SWEP.Primary =
 
 SWEP.Secondary = 
 {
-	ClipSize 	= -1,
+	ClipSize	= -1,
 	DefaultClip = -1,
 	Automatic = false,
 	Ammo = "none"
 }
 
-SWEP.CanHolster			= true
-SWEP.CanDeploy			= true
+SWEP.CanHolster = true
+SWEP.CanDeploy = true
 
 function SWEP:InitializeTools()
 
