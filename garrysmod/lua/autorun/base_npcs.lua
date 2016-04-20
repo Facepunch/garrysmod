@@ -272,7 +272,6 @@ if ( IsMounted( "episodic" ) ) then
 	list.Set( "NPC", NPC.Class, NPC )
 end
 
-
 Category = "Animals"
 
 local NPC = {
@@ -502,7 +501,7 @@ if ( IsMounted( "hl1" ) ) then
 	local NPC = { Name = "Tentacle", Class = "monster_tentacle", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	local NPC = { Name = "Alien Slave", Class = "monster_alien_slave", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	local NPC = { Name = "Gonarch", Class = "monster_bigmomma", Category = Category } list.Set( "NPC", NPC.Class, NPC )
-	local NPC = { Name = "Bullsquid", Class = "monster_bullchicken", Category = Category	} list.Set( "NPC", NPC.Class, NPC )
+	local NPC = { Name = "Bullsquid", Class = "monster_bullchicken", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	local NPC = { Name = "Gargantua", Class = "monster_gargantua", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	local NPC = { Name = "Assassin", Class = "monster_human_assassin", Category = Category } list.Set( "NPC", NPC.Class, NPC )
 	local NPC = { Name = "Baby Crab", Class = "monster_babycrab", Category = Category } list.Set( "NPC", NPC.Class, NPC )
