@@ -1,23 +1,28 @@
 
-include('shared.lua')
+include( "shared.lua" )
 
-SWEP.PrintName			= "Scripted Weapon"		-- 'Nice' Weapon name (Shown on HUD)	
-SWEP.Slot				= 0						-- Slot in the weapon selection menu
-SWEP.SlotPos			= 10					-- Position in the slot
-SWEP.DrawAmmo			= true					-- Should draw the default HL2 ammo counter
-SWEP.DrawCrosshair		= true 					-- Should draw the default crosshair
-SWEP.DrawWeaponInfoBox	= true					-- Should draw the weapon info box
-SWEP.BounceWeaponIcon   = true					-- Should the weapon icon bounce?
-SWEP.SwayScale			= 1.0					-- The scale of the viewmodel sway
-SWEP.BobScale			= 1.0					-- The scale of the viewmodel bob
+SWEP.PrintName = "Scripted Weapon"		-- 'Nice' Weapon name (Shown on HUD)
+SWEP.Author = ""
+SWEP.Contact = ""
+SWEP.Purpose = ""
+SWEP.Instructions = ""
 
-SWEP.RenderGroup 		= RENDERGROUP_OPAQUE
+SWEP.Slot = 0						-- Slot in the weapon selection menu
+SWEP.SlotPos = 10					-- Position in the slot
+SWEP.DrawAmmo = true					-- Should draw the default HL2 ammo counter
+SWEP.DrawCrosshair = true 					-- Should draw the default crosshair
+SWEP.DrawWeaponInfoBox = true					-- Should draw the weapon info box
+SWEP.BounceWeaponIcon = true					-- Should the weapon icon bounce?
+SWEP.SwayScale = 1.0					-- The scale of the viewmodel sway
+SWEP.BobScale = 1.0					-- The scale of the viewmodel bob
+
+SWEP.RenderGroup = RENDERGROUP_OPAQUE
 
 -- Override this in your SWEP to set the icon in the weapon selection
-SWEP.WepSelectIcon		= surface.GetTextureID( "weapons/swep" )
+SWEP.WepSelectIcon = surface.GetTextureID( "weapons/swep" )
 
 -- This is the corner of the speech bubble
-SWEP.SpeechBubbleLid	= surface.GetTextureID( "gui/speech_lid" )
+SWEP.SpeechBubbleLid = surface.GetTextureID( "gui/speech_lid" )
 
 --[[---------------------------------------------------------
 	You can draw to the HUD here - it will only draw when
@@ -65,15 +70,15 @@ function SWEP:PrintWeaponInfo( x, y, alpha )
 
 	if ( self.DrawWeaponInfoBox == false ) then return end
 
-	if (self.InfoMarkup == nil ) then
+	if ( self.InfoMarkup == nil ) then
 		local str
 		local title_color = "<color=230,230,230,255>"
 		local text_color = "<color=150,150,150,255>"
 		
 		str = "<font=HudSelectionText>"
 		if ( self.Author != "" ) then str = str .. title_color .. "Author:</color>\t"..text_color..self.Author.."</color>\n" end
-		if ( self.Contact != "" ) then str = str .. title_color .. "Contact:</color>\t"..text_color..self.Contact.."</color>\n\n" end
-		if ( self.Purpose != "" ) then str = str .. title_color .. "Purpose:</color>\n"..text_color..self.Purpose.."</color>\n\n" end
+		if ( self.Contact != "" ) then str = str .. title_color .. "Contact:</color>\t"..text_color..self.Contact.."</color>\n" end
+		if ( self.Purpose != "" ) then str = str .. title_color .. "Purpose:</color>\n"..text_color..self.Purpose.."</color>\n" end
 		if ( self.Instructions != "" ) then str = str .. title_color .. "Instructions:</color>\n"..text_color..self.Instructions.."</color>\n" end
 		str = str .. "</font>"
 		
@@ -96,7 +101,9 @@ end
 	Desc: Return true to freeze moving the view
 -----------------------------------------------------------]]
 function SWEP:FreezeMovement()
+
 	return false
+
 end
 
 
@@ -156,7 +163,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:DrawWorldModel()
 	
-	self.Weapon:DrawModel()
+	self:DrawModel()
 
 end
 
@@ -167,7 +174,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:DrawWorldModelTranslucent()
 	
-	self.Weapon:DrawModel()
+	self:DrawModel()
 
 end
 

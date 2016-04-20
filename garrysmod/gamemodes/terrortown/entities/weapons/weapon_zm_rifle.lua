@@ -56,7 +56,7 @@ function SWEP:SetZoom(state)
 end
 
 function SWEP:PrimaryAttack( worldsnd )
-   self.BaseClass.PrimaryAttack( self.Weapon, worldsnd )
+   self.BaseClass.PrimaryAttack( self, worldsnd )
    self:SetNextSecondaryFire( CurTime() + 0.1 )
 end
 
