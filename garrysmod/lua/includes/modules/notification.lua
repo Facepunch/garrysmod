@@ -108,7 +108,7 @@ local function UpdateNotice( i, Panel, Count )
 		ideal_x = ideal_x + w * 2
 	end
 
-	local spd = FrameTime() * 15
+	local spd = RealFrameTime() * 15
 
 	y = y + Panel.VelY * spd
 	x = x + Panel.VelX * spd
@@ -121,8 +121,8 @@ local function UpdateNotice( i, Panel, Count )
 	if ( math.abs( dist ) < 2 && math.abs( Panel.VelX ) < 0.1 ) then Panel.VelX = 0 end
 
 	-- Friction.. kind of FPS independant.
-	Panel.VelX = Panel.VelX * ( 0.95 - FrameTime() * 8 )
-	Panel.VelY = Panel.VelY * ( 0.95 - FrameTime() * 8 )
+	Panel.VelX = Panel.VelX * ( 0.95 - RealFrameTime() * 8 )
+	Panel.VelY = Panel.VelY * ( 0.95 - RealFrameTime() * 8 )
 
 	Panel.fx = x
 	Panel.fy = y
