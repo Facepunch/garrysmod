@@ -1,7 +1,7 @@
 
 --[[---------------------------------------------------------
-  Name: scripted_ents
-  Desc: Scripted Entity factory
+	Name: scripted_ents
+	Desc: Scripted Entity factory
 -----------------------------------------------------------]]
 
 module( "scripted_ents", package.seeall )
@@ -21,25 +21,25 @@ BaseClasses[ "filter" ] = "base_filter"
 -----------------------------------------------------------]]
 local function TableInherit( t, base )
 
-	for k, v in pairs( base ) do 
-		
+	for k, v in pairs( base ) do
+
 		if ( t[k] == nil ) then
 			t[k] = v
 		elseif ( istable( t[k] ) ) then
 			TableInherit( t[k], v )
 		end
-		
+
 	end
-	
+
 	t[ "BaseClass" ] = base
-	
+
 	return t
 
 end
 
 --[[---------------------------------------------------------
-   Name: IsBasedOn( name, base )
-   Desc: Checks if name is based on base
+	Name: IsBasedOn( name, base )
+	Desc: Checks if name is based on base
 -----------------------------------------------------------]]
 function IsBasedOn( name, base )
 	local t = GetStored( name )
@@ -50,23 +50,20 @@ function IsBasedOn( name, base )
 	return IsBasedOn( t.Base, base )
 end
 
---[[---------------------------------------------------------
-	Name: Register( table, string, bool )
------------------------------------------------------------]]
 function Register( t, name )
 
 	local Base = t.Base
 	if ( !Base ) then Base = BaseClasses[ t.Type ] end
-	
+
 	local old = SEntList[ name ]
 	local tab = {}
-	
+
 	tab.type		= t.Type
 	tab.t			= t
 	tab.isBaseType	= true
 	tab.Base		= Base
 	tab.t.ClassName	= name
-	
+
 	if ( !Base ) then
 		Msg( "WARNING: Scripted entity "..name.." has an invalid base entity!\n" )
 	end
@@ -77,7 +74,7 @@ function Register( t, name )
 	if ( !t.DisableDuplicator ) then
 		duplicator.Allow( name )
 	end
-	
+
 	--
 	-- If we're reloading this entity class
 	-- then refresh all the existing entities.
@@ -87,8 +84,8 @@ function Register( t, name )
 		--
 		-- Foreach entity using this class
 		--
-		table.ForEach( ents.FindByClass( name ), function( _, entity ) 
-		
+		table.ForEach( ents.FindByClass( name ), function( _, entity )
+
 			--
 			-- Replace the contents with this entity table
 			--
@@ -100,15 +97,15 @@ function Register( t, name )
 			if ( entity.OnReloaded ) then
 				entity:OnReloaded()
 			end
-		
+
 		end )
 
 		-- Update entity table of entities that are based on this entity
 		for _, e in pairs( ents.GetAll() ) do
-			if IsBasedOn( e:GetClass(), name ) then
+			if ( IsBasedOn( e:GetClass(), name ) ) then
 				table.Merge( e, Get( e:GetClass() ) )
 
-				if e.OnReloaded then
+				if ( e.OnReloaded ) then
 					e:OnReloaded()
 				end
 			end
@@ -120,7 +117,7 @@ function Register( t, name )
 
 	list.Set( "SpawnableEntities", name, {
 		-- Required information
-		PrintName		= t.PrintName, 
+		PrintName		= t.PrintName,
 		ClassName		= name,
 		Category		= t.Category,
 
@@ -144,7 +141,7 @@ function OnLoaded()
 	-- - we have to wait until they're all setup because load order
 	-- could cause some entities to load before their bases!
 	--
-	table.ForEach( SEntList, function( k, v ) 
+	table.ForEach( SEntList, function( k, v )
 
 		baseclass.Set( k, Get( k ) )
 
@@ -152,12 +149,8 @@ function OnLoaded()
 
 end
 
-
---[[---------------------------------------------------------
-	Name: Get( string )
------------------------------------------------------------]]
 function Get( name )
-	
+
 	-- Do we have an alias?
 	if ( Aliases[ name ] ) then
 		name = Aliases[ name ]
@@ -170,48 +163,45 @@ function Get( name )
 	for k, v in pairs( SEntList[ name ].t ) do
 		retval[k] = v
 	end
-	
+
 	-- Derive from base class
 	if ( name != SEntList[ name ].Base ) then
-		
+
 		local base = Get( SEntList[ name ].Base )
-		
+
 		if ( !base ) then
-		
+
 			Msg("ERROR: Trying to derive entity " .. tostring( name ) .. " from non existant entity " .. tostring( SEntList[ name ].Base ) .. "!\n" )
-		
+
 		else
-	
+
 			retval = TableInherit( retval, base )
-		
+
 		end
-		
+
 	end
-	
+
 	return retval
 
 end
 
---[[---------------------------------------------------------
-	Name: GetType( string )
------------------------------------------------------------]]
 function GetType( name )
 
-	for k, v in pairs( BaseClasses ) do 
+	for k, v in pairs( BaseClasses ) do
 		if ( name == v ) then return k end
 	end
-	
+
 	local ent = SEntList[ name ]
 	if ( ent == nil ) then return nil end
-	
+
 	if ( ent.type ) then
 		return ent.type
 	end
-	
+
 	if ( ent.Base ) then
 		return GetType( ent.Base )
 	end
-	
+
 	return nil
 
 end
@@ -225,52 +215,43 @@ function GetStored( name )
 end
 
 --[[---------------------------------------------------------
-  Name: GetList( string )
-  Desc: Get a list of all the registered SENTs
+	Name: GetList( string )
+	Desc: Get a list of all the registered SENTs
 -----------------------------------------------------------]]
 function GetList()
 	local result = {}
-	
+
 	for k,v in pairs( SEntList ) do
 		result[ k ] = v
 	end
-	
+
 	return result
 end
 
---[[---------------------------------------------------------
-	Name: GetSpawnable
------------------------------------------------------------]]
 function GetSpawnable()
 
 	local result = {}
-	
+
 	for k, v in pairs( SEntList ) do
-		
+
 		local tab = v.t
-		
+
 		if ( tab.Spawnable ) then
 			table.insert( result, tab )
 		end
-		
+
 	end
-	
+
 	return result
 
 end
 
---[[---------------------------------------------------------
-	Name: Alias
------------------------------------------------------------]]
 function Alias( From, To )
 
 	Aliases[ From ] = To
 
 end
 
---[[---------------------------------------------------------
-	Name: GetMember
------------------------------------------------------------]]
 function GetMember( entity_name, membername )
 
 	if ( !entity_name ) then return end
