@@ -2,6 +2,17 @@
 TOOL.Category = "Poser"
 TOOL.Name = "#tool.eyeposer.name"
 
+local function SetEyeTarget( Player, Entity, Data )
+
+	if ( Data.EyeTarget ) then Entity:SetEyeTarget( Data.EyeTarget ) end
+
+	if ( SERVER ) then
+		duplicator.StoreEntityModifier( Entity, "eyetarget", Data )
+	end
+
+end
+duplicator.RegisterEntityModifier( "eyetarget", SetEyeTarget )
+
 local function ConvertRelativeToEyesAttachment( Entity, Pos )
 
 	if ( Entity:IsNPC() ) then
@@ -47,7 +58,7 @@ function TOOL:LeftClick( trace )
 	local LocalPos = ConvertRelativeToEyesAttachment( selectedent, trace.HitPos )
 	if ( !LocalPos ) then return false end
 	
-	selectedent:SetEyeTarget( LocalPos )
+	SetEyeTarget( self:GetOwner(), selectedent, { EyeTarget = LocalPos } )
 	
 	return true
 
@@ -69,7 +80,7 @@ function TOOL:RightClick( trace )
 	local LocalPos = ConvertRelativeToEyesAttachment( trace.Entity, pos )
 	if ( !LocalPos ) then return false end
 	
-	trace.Entity:SetEyeTarget( LocalPos )
+	SetEyeTarget( self:GetOwner(), trace.Entity, { EyeTarget = LocalPos } )
 	
 	return true
 	
