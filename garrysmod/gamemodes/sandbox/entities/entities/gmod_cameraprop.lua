@@ -6,7 +6,7 @@ if ( CLIENT ) then
 end
 
 ENT.Type = "anim"
-ENT.Spawnable = false
+ENT.PrintName = "Camera"
 ENT.RenderGroup = RENDERGROUP_BOTH
 
 local CAMERA_MODEL = Model( "models/dav0r/camera.mdl" )

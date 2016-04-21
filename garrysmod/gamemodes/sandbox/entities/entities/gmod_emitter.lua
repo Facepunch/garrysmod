@@ -2,7 +2,7 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.Spawnable = false
+ENT.PrintName = "Emitter"
 ENT.RenderGroup = RENDERGROUP_OPAQUE
 
 local matLight = Material( "sprites/light_ignorez" )

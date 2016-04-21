@@ -2,7 +2,7 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.Spawnable = false
+ENT.PrintName = "Thruster"
 
 local matHeatWave = Material( "sprites/heatwave" )
 local matFire = Material( "effects/fire_cloud1" )

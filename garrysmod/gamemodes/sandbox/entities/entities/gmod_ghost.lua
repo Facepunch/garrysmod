@@ -3,8 +3,7 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.Type = "anim"
-
-ENT.Spawnable = false
+ENT.PrintName = "Tool Ghost"
 
 function ENT:Initialize()
 

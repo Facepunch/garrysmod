@@ -2,7 +2,7 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.Spawnable = false
+ENT.PrintName = "Dynamite"
 ENT.RenderGroup = RENDERGROUP_OPAQUE
 
 AccessorFunc( ENT, "m_ShouldRemove", "ShouldRemove" )

@@ -2,6 +2,8 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
+ENT.PrintName = "Button"
+
 function ENT:SetupDataTables()
 
 	self:NetworkVar( "Int", 0, "Key" )
