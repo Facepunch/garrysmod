@@ -6,7 +6,7 @@
 include ( "util.lua" )			-- Misc Utilities
 include ( "util/sql.lua" )		-- Include sql here so it's
 								-- available at loadtime to modules.
-							
+
 include( "extensions/net.lua" )
 
 --[[---------------------------------------------------------
@@ -123,3 +123,9 @@ if ( CLIENT ) then
 
 end
 
+local osdate = os.date
+function os.date(fstr)
+	return osdate((fstr:gsub('%.', function(s)
+		if not s:find('%[aAbBcdHIjmMpSUwWxXyYZ%]') then return '%'..s end
+	end)), ...)
+end
