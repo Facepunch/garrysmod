@@ -23,11 +23,11 @@ local function IsUselessFaceFlex( strName )
 end
 
 function TOOL:FacePoserEntity()
-	return self:GetWeapon():GetNetworkedEntity( 1 )
+	return self:GetWeapon():GetNWEntity( 1 )
 end
 
 function TOOL:SetFacePoserEntity( ent )
-	return self:GetWeapon():SetNetworkedEntity( 1, ent )
+	return self:GetWeapon():SetNWEntity( 1, ent )
 end
 
 function TOOL:Think()

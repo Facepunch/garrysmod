@@ -45,13 +45,13 @@ function TOOL:LeftClick( trace )
 		local eyeattachment = self.SelectedEntity:LookupAttachment( "eyes" )
 		if ( eyeattachment == 0 ) then return end
 		
-		self:GetWeapon():SetNetworkedEntity( 0, self.SelectedEntity )
+		self:GetWeapon():SetNWEntity( 0, self.SelectedEntity )
 
 	return true end
 
 	local selectedent = self.SelectedEntity
 	self.SelectedEntity = nil
-	self:GetWeapon():SetNetworkedEntity( 0, NULL )
+	self:GetWeapon():SetNWEntity( 0, NULL )
 	
 	if ( !IsValid( selectedent ) ) then return end
 	
@@ -69,7 +69,7 @@ end
 -----------------------------------------------------------]]
 function TOOL:RightClick( trace )
 
-	self:GetWeapon():SetNetworkedEntity( 0, NULL )
+	self:GetWeapon():SetNWEntity( 0, NULL )
 	self.SelectedEntity = nil
 	
 	if ( !IsValid( trace.Entity ) ) then return end
@@ -93,7 +93,7 @@ if ( CLIENT ) then
 	-----------------------------------------------------------]]
 	function TOOL:DrawHUD()
 	
-		local selected = self:GetWeapon():GetNetworkedEntity( 0 )
+		local selected = self:GetWeapon():GetNWEntity( 0 )
 		
 		if ( !IsValid( selected ) ) then return end
 		

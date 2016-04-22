@@ -22,7 +22,7 @@ end
 --[[---------------------------------------------------------
 	Name: OnRestore
 	Desc: The game has just been reloaded. This is usually the right place
-		to call the GetNetworked* functions to restore the script's values.
+		to call the GetNW* functions to restore the script's values.
 -----------------------------------------------------------]]
 function ENT:OnRestore()
 end
