@@ -105,9 +105,9 @@ function PANEL:SetModel( mdl, iSkin, BodyGorups )
 	self.Icon:SetModel( mdl, iSkin, BodyGorups )
 	
 	if ( iSkin && iSkin > 0 ) then
-		self:SetToolTip( Format( "%s (Skin %i)", mdl, iSkin+1 ) )
+		self:SetTooltip( Format( "%s (Skin %i)", mdl, iSkin+1 ) )
 	else
-		self:SetToolTip( Format( "%s", mdl ) )
+		self:SetTooltip( Format( "%s", mdl ) )
 	end
 
 end

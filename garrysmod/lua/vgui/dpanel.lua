@@ -11,7 +11,7 @@
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bBackground", 			"PaintBackground",	FORCE_BOOL )
-AccessorFunc( PANEL, "m_bBackground", 			"DrawBackground", 	FORCE_BOOL )
+AccessorFunc( PANEL, "m_bBackground", 			"DrawBackground", 	FORCE_BOOL ) -- deprecated
 AccessorFunc( PANEL, "m_bIsMenuComponent", 		"IsMenu", 			FORCE_BOOL )
 AccessorFunc( PANEL, "m_bDisableTabbing", 		"TabbingDisabled", 	FORCE_BOOL )
 

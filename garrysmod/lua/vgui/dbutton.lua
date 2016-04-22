@@ -22,7 +22,7 @@ function PANEL:Init()
 	-- Defined above using AccessorFunc
 	--
 	self:SetDrawBorder( true )
-	self:SetDrawBackground( true )
+	self:SetPaintBackground( true )
 
 	self:SetTall( 22 )
 	self:SetMouseInputEnabled( true )

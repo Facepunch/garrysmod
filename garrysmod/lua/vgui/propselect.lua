@@ -43,7 +43,7 @@ function PANEL:AddModel( model, ConVars )
 	-- Creeate a spawnicon and set the model
 	local Icon = vgui.Create( "SpawnIcon", self )
 	Icon:SetModel( model )
-	Icon:SetToolTip( model )
+	Icon:SetTooltip( model )
 	Icon.Model = model
 	Icon.ConVars = ConVars or {}
 
@@ -75,7 +75,7 @@ function PANEL:AddModelEx( name, model, skin )
 	-- Creeate a spawnicon and set the model
 	local Icon = vgui.Create( "SpawnIcon", self )
 	Icon:SetModel( model, skin )
-	Icon:SetToolTip( model )
+	Icon:SetTooltip( model )
 	Icon.Model = model
 	Icon.Value = name
 	Icon.ConVars = ConVars or {}
