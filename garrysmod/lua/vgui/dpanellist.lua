@@ -44,7 +44,7 @@ function PANEL:Init()
 	self:SetPadding( 0 )
 	self:EnableHorizontal( false )
 	self:SetAutoSize( false )
-	self:SetDrawBackground( true )
+	self:SetPaintBackground( true )
 	self:SetNoSizing( false )
 	
 	self:SetMouseInputEnabled( true )

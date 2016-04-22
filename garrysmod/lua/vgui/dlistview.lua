@@ -43,7 +43,7 @@ function PANEL:Init()
 	self:SetMultiSelect( true )
 	self:SetHideHeaders( false )
 
-	self:SetDrawBackground( true )
+	self:SetPaintBackground( true )
 	self:SetHeaderHeight( 16 )
 	self:SetDataHeight( 17 )
 

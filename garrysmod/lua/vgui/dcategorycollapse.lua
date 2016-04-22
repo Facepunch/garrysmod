@@ -61,7 +61,8 @@ local PANEL = {}
 AccessorFunc( PANEL, "m_bSizeExpanded", 		"Expanded", 		FORCE_BOOL )
 AccessorFunc( PANEL, "m_iContentHeight",	 	"StartHeight" )
 AccessorFunc( PANEL, "m_fAnimTime", 			"AnimTime" )
-AccessorFunc( PANEL, "m_bDrawBackground", 		"DrawBackground", 	FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDrawBackground", 		"PaintBackground", 	FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDrawBackground", 		"DrawBackground", 	FORCE_BOOL ) -- deprecated
 AccessorFunc( PANEL, "m_iPadding", 				"Padding" )
 AccessorFunc( PANEL, "m_pList", 				"List" )
 
@@ -81,7 +82,7 @@ function PANEL:Init()
 	self:SetAnimTime( 0.2 )
 	self.animSlide = Derma_Anim( "Anim", self, self.AnimSlide )
 	
-	self:SetDrawBackground( true )
+	self:SetPaintBackground( true )
 	self:DockMargin( 0, 0, 0, 2 )
 	self:DockPadding( 0, 0, 0, 5 )
 

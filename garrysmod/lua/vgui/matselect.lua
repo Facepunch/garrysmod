@@ -64,7 +64,7 @@ function PANEL:AddMaterial( label, value )
 	Mat.AutoSize = false
 	Mat.Value = value
 	Mat:SetSize( self.ItemWidth, self.ItemHeight )
-	Mat:SetToolTip( label )
+	Mat:SetTooltip( label )
 	
 	-- Run a console command when the Icon is clicked
 	Mat.DoClick = function( button ) 
@@ -106,7 +106,7 @@ function PANEL:AddMaterialEx( label, material, value, convars )
 	Mat.Value = value
 	Mat.ConVars = convars
 	self:SetItemSize( Mat )
-	Mat:SetToolTip( label )
+	Mat:SetTooltip( label )
 	
 	-- Run a console command when the Icon is clicked
 	Mat.DoClick = 	function ( button ) 

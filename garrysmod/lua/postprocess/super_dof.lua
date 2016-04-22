@@ -47,7 +47,7 @@ function PANEL:Init()
 		function self.Distance:OnValueChanged( val ) Distance = val end
 		self.Distance:Dock( TOP )
 		self.Distance:SetDark( true )
-		self.Distance:SetToolTip( "#superdof_pp.distance.tooltip" )
+		self.Distance:SetTooltip( "#superdof_pp.distance.tooltip" )
 		
 	Panel:SetPos( 10, 30 )
 	Panel:SetSize( 300, 90 )

@@ -173,7 +173,7 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 	local halfw = w * 0.5
 	local span = math.ceil( w / size )
 	local realmid = x + w * 0.5 - (value * self:GetZoom());
-	local mid = x + w * 0.5 - math.mod( value * self:GetZoom(), size );
+	local mid = x + w * 0.5 - math.fmod( value * self:GetZoom(), size );
 	local top = h * 0.4;
 	local nh = h - (top);
 

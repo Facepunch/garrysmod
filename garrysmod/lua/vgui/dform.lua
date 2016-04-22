@@ -26,7 +26,7 @@ function PANEL:Init()
 	self:SetSpacing( 4 )
 	self:SetPadding( 10 )
 	
-	self:SetDrawBackground( true )
+	self:SetPaintBackground( true )
 	
 	self:SetMouseInputEnabled( true )
 	self:SetKeyboardInputEnabled( true )

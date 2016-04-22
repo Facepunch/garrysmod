@@ -27,7 +27,7 @@ function PANEL:Setup( vars )
 
 	-- Set the value
 	self.SetValue = function( self, val )
-		ctrl:SetChecked( util.tobool( val ) ) 
+		ctrl:SetChecked( tobool( val ) ) 
 	end
 
 	-- Alert row that value changed

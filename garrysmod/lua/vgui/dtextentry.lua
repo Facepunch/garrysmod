@@ -39,7 +39,7 @@ function PANEL:Init()
 	-- Defined above using AccessorFunc
 	--
 	self:SetDrawBorder( true )
-	self:SetDrawBackground( true )
+	self:SetPaintBackground( true )
 	self:SetEnterAllowed( true )
 	self:SetUpdateOnType( false )
 	self:SetNumeric( false )

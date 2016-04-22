@@ -27,7 +27,7 @@ function PANEL:Init()
 
 	self:SetIsMenu( true )
 	self:SetDrawBorder( true )
-	self:SetDrawBackground( true )
+	self:SetPaintBackground( true )
 	self:SetMinimumWidth( 100 )
 	self:SetDrawOnTop( true )
 	self:SetMaxHeight( ScrH() * 0.9 )
@@ -178,7 +178,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
-	if ( !self:GetDrawBackground() ) then return end
+	if ( !self:GetPaintBackground() ) then return end
 
 	derma.SkinHook( "Paint", "Menu", self, w, h )
 	return true
