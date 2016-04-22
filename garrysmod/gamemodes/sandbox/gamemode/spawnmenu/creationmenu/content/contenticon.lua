@@ -17,7 +17,7 @@ AccessorFunc( PANEL, "m_NPCWeapon", 		"NPCWeapon" )
 -----------------------------------------------------------]]
 function PANEL:Init()
 
-	self:SetDrawBackground( false )
+	self:SetPaintBackground( false )
 	self:SetSize( 128, 128 )
 	self:SetText( "" )
 	self:SetDoubleClickingEnabled( false )

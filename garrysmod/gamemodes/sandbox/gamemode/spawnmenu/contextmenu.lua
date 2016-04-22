@@ -18,7 +18,7 @@ function PANEL:Init()
 	--self.Canvas:EnableVerticalScrollbar( true )
 	--self.Canvas:SetSpacing( 0 )
 	--self.Canvas:SetPadding( 5 )
-	--self.Canvas:SetDrawBackground( false )
+	--self.Canvas:SetPaintBackground( false )
 	
 end
 
