@@ -170,6 +170,7 @@ function PANEL:Init()
 	self.tabScroller 	= vgui.Create( "DHorizontalScroller", self )
 	self.tabScroller:SetOverlap( 5 )
 	self.tabScroller:Dock( TOP )
+	self.tabScroller:DockMargin( 3, 0, 3, 0 )
 
 	self:SetFadeTime( 0.1 )
 	self:SetPadding( 8 )
