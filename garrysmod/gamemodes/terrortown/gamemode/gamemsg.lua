@@ -302,7 +302,7 @@ local function LastWords(ply, cmd, args)
          if string.len(words) < 2 then return end
 
          -- ignore admin commands
-         local firstchar = string.GetChar(words, 1)
+         local firstchar = string.sub(words, 1, 1)
          if firstchar == "!" or firstchar == "@" or firstchar == "/" then return end
 
 

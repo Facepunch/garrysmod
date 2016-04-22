@@ -327,7 +327,7 @@ end
 
 local function NameChangeKick()
    if not GetConVar("ttt_namechange_kick"):GetBool() then
-      timer.Destroy("namecheck")
+      timer.Remove("namecheck")
       return
    end
 
@@ -610,7 +610,7 @@ function SpawnWillingPlayers(dead_only)
                      MsgN("Spawned " .. c .. " players in spawn wave.")
 
                      if #to_spawn == 0 then
-                        timer.Destroy("spawnwave")
+                        timer.Remove("spawnwave")
                         MsgN("Spawn waves ending, all players spawned.")
                      end
                   end
