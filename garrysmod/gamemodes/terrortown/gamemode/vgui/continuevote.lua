@@ -25,7 +25,7 @@ function PANEL:Init()
    self.ControlCanvas:SetMouseInputEnabled( false )
 
    self.ctrlList = vgui.Create( "DPanelList", self.ControlCanvas )
-   self.ctrlList:SetDrawBackground( false )
+   self.ctrlList:SetPaintBackground( false )
    self.ctrlList:SetSpacing( 2 )
    self.ctrlList:SetPadding( 2 )
    self.ctrlList:EnableHorizontal( true )

@@ -137,7 +137,6 @@ function CLSCORE:BuildScorePanel(dpanel)
    dlist:SetSortable(true)
    dlist:SetMultiSelect(false)
    dlist:SetPaintBackground(false)
-   dlist:SetDrawBackground(false)
 
    local colnames = {"", "col_player", "col_role", "col_kills1", "col_kills2", "col_points", "col_team", "col_total"}
    for k, name in pairs(colnames) do

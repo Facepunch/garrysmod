@@ -51,7 +51,7 @@ end
 
 function SWEP:Reload()
 
-   --if self:GetNetworkedBool( "reloading", false ) then return end
+   --if self:GetNWBool( "reloading", false ) then return end
    if self.dt.reloading then return end
 
    if not IsFirstTimePredicted() then return end

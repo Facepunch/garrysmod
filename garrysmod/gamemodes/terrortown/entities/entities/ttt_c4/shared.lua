@@ -164,7 +164,7 @@ function ENT:SphereDamage(dmgowner, center, radius)
    -- efficient to cycle through all those players and do a Lua-side distance
    -- check.
 
-   local r = radius ^ 2 -- square so we can compare with dotproduct directly
+   local r = radius ^ 2 -- square so we can compare with dot product directly
 
 
    -- pre-declare to avoid realloc
@@ -176,7 +176,7 @@ function ENT:SphereDamage(dmgowner, center, radius)
 
          -- dot of the difference with itself is distance squared
          diff = center - ent:GetPos()
-         d = diff:DotProduct(diff)
+         d = diff:Dot(diff)
 
          if d < r then
             -- deadly up to a certain range, then a quick falloff within 100 units
@@ -286,7 +286,7 @@ function ENT:IsDetectiveNear()
       if IsValid(ent) and ent:IsActiveDetective() then
          -- dot of the difference with itself is distance squared
          diff = center - ent:GetPos()
-         d = diff:DotProduct(diff)
+         d = diff:Dot(diff)
 
          if d < r then
             if ent:HasWeapon("weapon_ttt_defuser") then
