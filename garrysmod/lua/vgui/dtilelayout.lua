@@ -157,7 +157,7 @@ function PANEL:LayoutTiles()
 		
 		local x, y = self:FindFreeTile( 1, StartLine, w, h )
 		
-		v:SetPos( (x-1) * tilesize, (y-1) * tilesize )
+		v:SetPos( self:GetBorder() + (x-1) * (tilesize + self:GetSpaceX()), self:GetBorder() + (y-1) * (tilesize + self:GetSpaceY()) )
 		
 		self:ConsumeTiles( x, y, w, h )
 		
