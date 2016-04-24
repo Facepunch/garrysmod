@@ -76,53 +76,58 @@ H1 small
 	background-color: white;
 	padding: 10px;
 	border-radius: 4px;
+	overflow: hidden;
 }
 
 
 
 
-.serverlist ping, .serverlist maxplayers, .serverlist players, .serverlist map, .serverlist rank
+.serverlist ping, .serverlist name, .serverlist players, .serverlist map, .serverlist rank
 {
-	width: 50px;
 	font-size: 11px;
 	overflow: hidden;
 	height: 16px;
 	position: absolute;
 	text-align: center;
+	white-space: nowrap;
+	box-sizing: border-box;
+}
+
+.serverlist map, .serverlist players, .serverlist ping, .serverlist rank
+{
+	float: right;
 }
 
 .serverlist name
 {
-	position: absolute;
-	overflow: hidden;
-	white-space: nowrap;
-	left: 4px;
-	right: 240px;
+	text-align: left;
+	float: left;
+	width: 100%;
+	padding-left: 248px;
+	margin-left: -248px;
 	font-size: 13px;
+	text-overflow: ellipsis;
 }
 
 .serverlist map
 {
-	right: 148px;
 	width: 90px;
 	text-align: left;
+	text-overflow: ellipsis;
 }
 
 .serverlist players
 {
-	right: 100px;
 	width: 48px;
 }
 
 .serverlist ping
 {
-	right: 68px;
 	width: 32px;
 }
 
 .serverlist rank
 {
-	right: 4px;
 	width: 64px;
 }
 
@@ -160,6 +165,7 @@ H1 small
 	padding: 3px;
 	color: #444;
 	cursor: pointer;
+	clear: both;
 }
 
 .serverlist .server:nth-child(odd)
@@ -218,17 +224,13 @@ H1 small
 	{
 		font-size: 13px;
 		font-weight: bold;
-		right: 280px;
+		padding-left: 278px;
+		margin-left: -278px;
 	}
 
 	.serverlist map
 	{
 		width: 130px;
-	}
-	
-	.serverlist .header name
-	{
-		padding: 0;
 	}
 }
 
