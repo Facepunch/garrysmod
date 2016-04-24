@@ -76,28 +76,26 @@ end
 -----------------------------------------------------------]]
 local totable = string.ToTable
 local string_sub = string.sub
-local string_gsub = string.gsub
-local string_gmatch = string.gmatch
+local string_find = string.find
 function string.Explode(separator, str, withpattern)
 	if (separator == "") then return totable( str ) end
-	 
-	local ret = {}
-	local index,lastPosition = 1,1
-	 
-	-- Escape all magic characters in separator
-	if not withpattern then separator = separator:PatternSafe() end
-	 
-	-- Find the parts
-	for startPosition,endPosition in string_gmatch( str, "()" .. separator.."()" ) do
-		ret[index] = string_sub( str, lastPosition, startPosition-1)
-		index = index + 1
-		 
-		-- Keep track of the position
-		lastPosition = endPosition
+
+	if withpattern == nil then
+		withpattern = false
 	end
-	 
-	-- Add last part by using the position we stored
-	ret[index] = string_sub( str, lastPosition)
+
+	local ret = {}
+	local last_pos = 1
+
+	for i = 1, math.huge do
+		local start_pos, end_pos = string_find(str, separator, last_pos, not withpattern)
+		if not start_pos then break end
+		ret[i] = string_sub(str, last_pos, start_pos - 1)
+		last_pos = start_pos + (end_pos - start_pos) + 1
+	end
+
+	ret[#ret + 1] = string_sub(str, last_pos)
+
 	return ret
 end
 
