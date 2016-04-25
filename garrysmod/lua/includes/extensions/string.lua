@@ -231,9 +231,13 @@ end
 
 
 function string.Replace( str, tofind, toreplace )
-	tofind = tofind:PatternSafe()
-	toreplace = toreplace:gsub( "%%", "%%%1" )
-	return ( str:gsub( tofind, toreplace ) )
+	local tbl = string.Explode(tofind, str)
+
+	if tbl[1] then
+		return table.concat(tbl, toreplace)
+	end
+
+	return self
 end
 
 --[[---------------------------------------------------------
