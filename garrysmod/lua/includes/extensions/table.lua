@@ -466,29 +466,20 @@ function table.ClearKeys( Table, bSaveKey )
 
 end
 
-local function fnPairsSorted( pTable, Index )
+local function keyValuePairs(state)
+	state.Index = state.Index + 1
+	local keyValue = state.KeyValues[state.Index]
+	if(!keyValue) then return end
+	return keyValue.key, keyValue.val
+end
 
-	if ( Index == nil ) then
-		Index = 1
-	else
-		for k, v in pairs( pTable.__SortedIndex ) do
-			if ( v == Index ) then
-				Index = k + 1
-				break
-			end
-		end
+
+local function toKeyValues(tbl)
+	local result = {}
+	for k,v in pairs(tbl) do
+		table.insert(result, {key = k, val = v})
 	end
-
-	local Key = pTable.__SortedIndex[ Index ]
-	if ( !Key ) then
-		pTable.__SortedIndex = nil
-		return
-	end
-
-	Index = Index + 1
-
-	return Key, pTable[ Key ]
-
+	return result
 end
 
 --[[---------------------------------------------------------
@@ -496,53 +487,20 @@ end
 		Sorted by TABLE KEY
 -----------------------------------------------------------]]
 function SortedPairs( pTable, Desc )
-
-	pTable = table.Copy( pTable )
-
-	local SortedIndex = {}
-	for k, v in pairs( pTable ) do
-		table.insert( SortedIndex, k )
-	end
-
-	if ( Desc ) then
-		table.sort( SortedIndex, function( a, b ) return a > b end )
-	else
-		table.sort( SortedIndex )
-	end
-
-	pTable.__SortedIndex = SortedIndex
-
-	return fnPairsSorted, pTable, nil
-
+	local sortedTbl = toKeyValues(pTable)
+	table.SortByMember(sortedTbl, "key", !Desc)
+	return keyValuePairs, {Index = 0, KeyValues = sortedTbl}
 end
+
 
 --[[---------------------------------------------------------
 	A Pairs function
 		Sorted by VALUE
 -----------------------------------------------------------]]
 function SortedPairsByValue( pTable, Desc )
-
-	pTable = table.Copy( pTable )
-
-	local SortedIndex = {}
-	for k, v in pairs( pTable ) do
-		table.insert( SortedIndex, { key = k, val = v } )
-	end
-
-	if ( Desc ) then
-		table.sort( SortedIndex, function( a, b ) return a.val > b.val end )
-	else
-		table.sort( SortedIndex, function( a, b ) return a.val < b.val end )
-	end
-
-	for k, v in pairs( SortedIndex ) do
-		SortedIndex[ k ] = v.key
-	end
-
-	pTable.__SortedIndex = SortedIndex
-
-	return fnPairsSorted, pTable, nil
-
+	local sortedTbl = toKeyValues(pTable)
+	table.SortByMember(sortedTbl, "val", !Desc)
+	return keyValuePairs, {Index = 0, KeyValues = sortedTbl}
 end
 
 --[[---------------------------------------------------------
@@ -550,51 +508,24 @@ end
 		Sorted by Member Value (All table entries must be a table!)
 -----------------------------------------------------------]]
 function SortedPairsByMemberValue( pTable, pValueName, Desc )
-
-	pTable = table.Copy( pTable )
-	Desc = Desc or false
-
-	local pSortedTable = table.ClearKeys( pTable, true )
-
-	table.SortByMember( pSortedTable, pValueName, !Desc )
-
-	local SortedIndex = {}
-	for k, v in ipairs( pSortedTable ) do
-		table.insert( SortedIndex, v.__key )
+	local sortedTbl = toKeyValues(pTable, pValueName)
+	for k,v in pairs(sortedTbl) do
+		v.member = v.val[pValueName]
 	end
-
-	pTable.__SortedIndex = SortedIndex
-
-	return fnPairsSorted, pTable, nil
-
+	table.SortByMember(sortedTbl, "member", !Desc)
+	return keyValuePairs, {Index = 0, KeyValues = sortedTbl}
 end
 
 --[[---------------------------------------------------------
 	A Pairs function
 -----------------------------------------------------------]]
 function RandomPairs( pTable, Desc )
-
-	pTable = table.Copy( pTable )
-
-	local SortedIndex = {}
-	for k, v in pairs( pTable ) do
-		table.insert( SortedIndex, { key = k, val = math.random( 1, 1000 ) } )
+	local sortedTbl = toKeyValues(pTable, pValueName)
+	for k,v in pairs(sortedTbl) do
+		v.rand = math.random(1,1000000)
 	end
-
-	if ( Desc ) then
-		table.sort( SortedIndex, function(a,b) return a.val>b.val end )
-	else
-		table.sort( SortedIndex, function(a,b) return a.val<b.val end )
-	end
-
-	for k, v in pairs( SortedIndex ) do
-		SortedIndex[ k ] = v.key
-	end
-
-	pTable.__SortedIndex = SortedIndex
-
-	return fnPairsSorted, pTable, nil
-
+	table.SortByMember(sortedTbl, "rand", !Desc)
+	return keyValuePairs, {Index = 0, KeyValues = sortedTbl}
 end
 
 --[[---------------------------------------------------------
