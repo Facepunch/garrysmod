@@ -237,7 +237,7 @@ function string.Replace( str, tofind, toreplace )
 		return table.concat(tbl, toreplace)
 	end
 
-	return self
+	return str
 end
 
 --[[---------------------------------------------------------
