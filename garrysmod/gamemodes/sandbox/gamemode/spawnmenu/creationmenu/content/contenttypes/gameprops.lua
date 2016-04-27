@@ -19,21 +19,21 @@ local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlC
 		-- Clear the viewpanel in preperation for displaying it
 		ViewPanel:Clear( true )
 		ViewPanel.CurrentNode = node
-		
+
 		--
 		-- Fill the viewpanel with models that are in this node's folder
 		--
-		local Path			= node:GetFolder()
-		local SearchString	= Path .. "/*.mdl"
+		local Path = node:GetFolder()
+		local SearchString = Path .. "/*.mdl"
 
 		local Models = file.Find( SearchString, node:GetPathID() )
 		for k, v in pairs( Models ) do
-			
+
 			local cp = spawnmenu.GetContentType( "model" )
 			if ( cp ) then
 				cp( ViewPanel, { model = Path .. "/" .. v } )
 			end
-		
+
 		end
 
 		--
@@ -71,16 +71,16 @@ hook.Add( "PopulateContent", "GameProps", function( pnlContent, tree, node )
 		folder = "garrysmod",
 		mounted = true
 	} )
-	
+
 	--
 	-- Create a list of mounted games, allowing us to browse them
 	--
 	for _, game in SortedPairsByMemberValue( games, "title" ) do
-		
+
 		if ( !game.mounted ) then continue end
 
 		AddBrowseContent( ViewPanel, MyNode, game.title, "games/16/" .. ( game.icon or game.folder ) .. ".png", "", game.folder, pnlContent )
-		
+
 	end
 
 end )

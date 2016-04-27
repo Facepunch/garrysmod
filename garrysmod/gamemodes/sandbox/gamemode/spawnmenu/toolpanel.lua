@@ -1,5 +1,5 @@
 
-include( 'controlpanel.lua' )
+include( "controlpanel.lua" )
 
 local PANEL = {}
 
@@ -25,7 +25,6 @@ function PANEL:Init()
 	end
 
 end
-
 
 --[[---------------------------------------------------------
 	Name: LoadToolsFromTable

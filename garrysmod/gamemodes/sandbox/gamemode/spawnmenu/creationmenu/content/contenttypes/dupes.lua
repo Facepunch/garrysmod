@@ -24,8 +24,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 			if ( k <= offset ) then continue end
 			if ( k > offset + perpage ) then break end
 
-			local entry =
-			{
+			local entry = {
 				file	= "dupes/" .. v,
 				name	= v:StripExtension(),
 				preview	= "dupes/" .. v:StripExtension() .. ".jpg"
@@ -35,8 +34,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 
 		end
 
-		local results =
-		{
+		local results = {
 			totalresults	= #f,
 			results			= saves
 		}
@@ -73,7 +71,6 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 	return HTML
 
 end, "icon16/control_repeat_blue.png", 200 )
-
 
 hook.Add( "DupeSaveAvailable", "UpdateDupeSpawnmenuAvailable", function()
 

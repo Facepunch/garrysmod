@@ -1,10 +1,9 @@
 
-surface.CreateFont( "ContentHeader",
-{
+surface.CreateFont( "ContentHeader", {
 	font	= "Helvetica",
 	size	= 50,
 	weight	= 1000
-})
+} )
 
 local PANEL = {}
 
@@ -73,7 +72,7 @@ vgui.Register( "ContentHeader", PANEL, "DLabelEditable" )
 
 spawnmenu.AddContentType( "header", function( container, obj )
 
-	if ( !obj.text || type(obj.text) != "string" ) then return end
+	if ( !obj.text || type( obj.text ) != "string" ) then return end
 
 	local label = vgui.Create( "ContentHeader", container )
 	label:SetText( obj.text )
