@@ -230,6 +230,10 @@ function GM:InitCvars()
    self.cvar_init = true
 end
 
+function GM:InitPostEntity()
+   WEPS.ForcePrecache()
+end
+
 function GM:GetGameDescription() return self.Name end
 
 -- Convar replication is broken in gmod, so we do this.
@@ -586,11 +590,9 @@ function SpawnWillingPlayers(dead_only)
                      -- spawning
                      while c < num_spawns and #to_spawn > 0 do
                         for k, ply in pairs(to_spawn) do
-                           if IsValid(ply) then
-                              if ply:SpawnForRound() then
-                                 -- a spawn ent is now occupied
-                                 c = c + 1
-                              end
+                           if IsValid(ply) and ply:SpawnForRound() then
+                              -- a spawn ent is now occupied
+                              c = c + 1
                            end
                            -- Few possible cases:
                            -- 1) player has now been spawned
@@ -653,8 +655,6 @@ function BeginRound()
 
    -- Remove their ragdolls
    ents.TTT.RemoveRagdolls(true)
-
-   WEPS.ForcePrecache()
 
    if CheckForAbort() then return end
 

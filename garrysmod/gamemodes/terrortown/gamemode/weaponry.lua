@@ -486,12 +486,14 @@ end
 -- non-cheat developer commands can reveal precaching the first time equipment
 -- is bought, so trigger it at the start of a round instead
 function WEPS.ForcePrecache()
-   for k, w in pairs(weapons.GetList()) do
-      if w and w.WorldModel then
-         util.PrecacheModel(w.WorldModel)
-      end
-      if w and w.ViewModel then
-         util.PrecacheModel(w.ViewModel)
+   for k, w in ipairs(weapons.GetList()) do
+      if w then
+         if w.WorldModel then
+            util.PrecacheModel(w.WorldModel)
+         end
+         if w.ViewModel then
+            util.PrecacheModel(w.ViewModel)
+         end
       end
    end
 end
