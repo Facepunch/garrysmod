@@ -487,13 +487,11 @@ end
 -- is bought, so trigger it at the start of a round instead
 function WEPS.ForcePrecache()
    for k, w in ipairs(weapons.GetList()) do
-      if w then
-         if w.WorldModel then
-            util.PrecacheModel(w.WorldModel)
-         end
-         if w.ViewModel then
-            util.PrecacheModel(w.ViewModel)
-         end
+      if w.WorldModel then
+         util.PrecacheModel(w.WorldModel)
+      end
+      if w.ViewModel then
+         util.PrecacheModel(w.ViewModel)
       end
    end
 end
