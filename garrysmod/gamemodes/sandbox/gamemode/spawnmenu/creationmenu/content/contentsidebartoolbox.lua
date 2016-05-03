@@ -47,16 +47,22 @@ function PANEL:Init()
 
 		if ( !IsValid( node ) || !IsValid( label ) || !IsValid( icons ) ) then return end
 
-		label:SetText( node:GetText() )
-		icons:SelectIcon( node:GetIcon() )
-		icons:ScrollToSelected()
+		if ( node.CustomSpawnlist ) then
+			label:SetText( node:GetText() )
+			icons:SelectIcon( node:GetIcon() )
+			icons:ScrollToSelected()
+		else
+			label:SetText( "" )
+		end
 
 		label.OnChange = function()
+			if ( !node.CustomSpawnlist ) then return end
 			node:SetText( label:GetText() )
 			hook.Run( "SpawnlistContentChanged" )
 		end
 
 		icons.OnChange = function()
+			if ( !node.CustomSpawnlist ) then return end
 			node:SetIcon( icons:GetSelectedIcon() )
 			hook.Run( "SpawnlistContentChanged" )
 		end

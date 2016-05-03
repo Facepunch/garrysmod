@@ -129,9 +129,9 @@ function AddPropsOfParent( pnlContent, node, parentid )
 
 		if ( parentid != Info.parentid ) then continue end
 
-
 		local pnlnode = AddCustomizableNode( pnlContent, Info.name, Info.icon, node, Info.needsapp )
 		pnlnode:SetExpanded( true )
+		pnlnode.CustomSpawnlist = true -- Used to determine which nodes ContentSidebarToolBox can edit
 		pnlnode.DoPopulate = function( self )
 
 			if ( self.PropPanel ) then return end
