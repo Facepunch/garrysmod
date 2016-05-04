@@ -16,8 +16,10 @@ local function GetAllFiles( tab, folder, extension, path )
 			GetAllFiles( tab, folder .. v .. "/", extension, path )
 		end )
 	end
-
-	hook.Run( "SearchUpdate" )
+	
+	if ( !timer.Exists( "search_models_update" ) ) then
+		timer.Create( "search_models_update", 1, 1, function() hook.Run( "SearchUpdate" ) end )
+	end
 
 end
 
