@@ -233,7 +233,6 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	data.hasmap = DoWeHaveMap( data.map );
 
 	data.recommended = data.ping;
-	if ( !data.hasmap ) data.recommended += 20; // We don't have that map
 	if ( data.players == 0 ) data.recommended += 100; // Server is empty
 	if ( data.players == data.maxplayers ) data.recommended += 75; // Server is full
 	if ( data.pass ) data.recommended += 300; // If we can't join it, don't put it to the top
