@@ -135,13 +135,12 @@ function PANEL:PerformLayout()
 
 	local y = self.BaseClass.PerformLayout( self )
 
-	local Height = 64 * self.Height + 6
+	local Height = ( 64 + self.List:GetSpacing() ) * self.Height + self.List:GetPadding() * 2 - self.List:GetSpacing()
 
 	self.List:SetPos( 0, y )
 	self.List:SetSize( self:GetWide(), Height )
 
 	y = y + Height
-	y = y + 5
 
 	self:SetTall( y )
 
