@@ -1,3 +1,4 @@
+
 AddCSLuaFile()
 
 local default_animations = { "idle_all_01", "menu_walk" }
@@ -132,7 +133,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		local function RebuildBodygroupTab()
 			bdcontrolspanel:Clear()
-			
+
 			bgtab.Tab:SetVisible( false )
 
 			local nskins = mdl.Entity:SkinCount() - 1
@@ -147,11 +148,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				skins:SetValue( GetConVarNumber( "cl_playerskin" ) )
 				skins.type = "skin"
 				skins.OnValueChanged = UpdateBodyGroups
-				
+
 				bdcontrolspanel:AddItem( skins )
 
 				mdl.Entity:SetSkin( GetConVarNumber( "cl_playerskin" ) )
-				
+
 				bgtab.Tab:SetVisible( true )
 			end
 
@@ -170,11 +171,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				bgroup:SetMax( mdl.Entity:GetBodygroupCount( k ) - 1 )
 				bgroup:SetValue( groups[ k + 1 ] or 0 )
 				bgroup.OnValueChanged = UpdateBodyGroups
-				
+
 				bdcontrolspanel:AddItem( bgroup )
-	
+
 				mdl.Entity:SetBodygroup( k, groups[ k + 1 ] or 0 )
-				
+
 				bgtab.Tab:SetVisible( true )
 			end
 		end
@@ -234,7 +235,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			if ( self.Pressed ) then
 				local mx, my = gui.MousePos()
 				self.Angles = self.Angles - Angle( 0, ( self.PressX or mx ) - mx, 0 )
-				
+
 				self.PressX, self.PressY = gui.MousePos()
 			end
 
