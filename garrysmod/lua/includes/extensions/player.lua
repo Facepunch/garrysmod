@@ -107,7 +107,8 @@ end
 
 function meta:SteamID32()
 
-	local y,z = string.match( self:SteamID(), "STEAM_0:(%d):(%d+)" )
+	local y, z = 0, 0
+	y,z = string.match( self:SteamID(), "STEAM_0:(%d):(%d+)" )
 
 	return z * 2 + y
 

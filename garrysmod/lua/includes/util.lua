@@ -439,7 +439,8 @@ end
 function util.SteamIDTo32( steamid )
 
 	steamid = tostring( steamid )
-	local y, z = string.match( steamid, "STEAM_0:(%d):(%d+)" )
+	local y, z = 0, 0
+	y, z = string.match( steamid, "STEAM_0:(%d):(%d+)" )
 
 	return z * 2 + y
 	
