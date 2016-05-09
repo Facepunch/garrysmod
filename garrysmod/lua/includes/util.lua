@@ -449,7 +449,7 @@ end
    Name: SteamIDFrom32( steamid32 )
    Desc: Given a 32bit Steam ID will return a STEAM_0 style Steam ID
 -----------------------------------------------------------]]
-function util.SteamIDTo32( steamid32 )
+function util.SteamIDFrom32( steamid32 )
 	
 	steamid32 = tonumber( steamid32 )
 	local y = steamid32 % 2
