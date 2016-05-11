@@ -360,7 +360,8 @@ end
 local function RadioComplete(cmd, arg)
    local c = {}
    for k, cmd in pairs(RADIO.Commands) do
-      table.insert(c, cmd.cmd)
+      local rcmd = "ttt_radio " .. cmd.cmd
+      table.insert(c, rcmd)
    end
    return c
 end
