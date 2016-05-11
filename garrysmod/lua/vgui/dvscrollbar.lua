@@ -118,7 +118,7 @@ function PANEL:BarScale()
 
 	if ( self.BarSize == 0 ) then return 1 end
 
-	return self.BarSize / (self.CanvasSize+self.BarSize)
+	return self.BarSize / ( self.CanvasSize + self.BarSize )
 
 end
 

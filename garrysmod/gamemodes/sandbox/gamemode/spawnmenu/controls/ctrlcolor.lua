@@ -6,8 +6,6 @@ AccessorFunc( PANEL, "m_ConVarG", "ConVarG" )
 AccessorFunc( PANEL, "m_ConVarB", "ConVarB" )
 AccessorFunc( PANEL, "m_ConVarA", "ConVarA" )
 
-local ColorRows = 16
-
 --[[---------------------------------------------------------
 	Name: Init
 -----------------------------------------------------------]]
@@ -24,9 +22,19 @@ end
 -----------------------------------------------------------]]
 function PANEL:PerformLayout( x, y )
 
+	-- Number of panels in one row
+	local ColorRows = math.ceil( #self.Mixer.Palette:GetChildren() / 3 )
+
 	-- We try to avoid the ugly gap on the right.
 	-- This seems a bit heavy handed to be calling in PerformLayout.
 	self.Mixer.Palette:SetButtonSize( self:GetWide() / ColorRows )
+
+	-- Get rid of the gap by centering the palette using an ugly hack
+	local s = ( self:GetWide() - ColorRows * self.Mixer.Palette:GetButtonSize() ) / 2
+	self.Mixer.Palette:DockMargin( s, 8, s, 0 )
+
+	-- Better height scaling for extra wide panels
+	self:SetTall( math.max( 230, self:GetWide() / 1.5 ) )
 
 end
 

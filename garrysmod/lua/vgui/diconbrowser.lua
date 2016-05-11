@@ -22,7 +22,7 @@ end
 
 function PANEL:ScrollToSelected()
 
-	if ( !IsValid(self.m_pSelectedIcon) ) then return end
+	if ( !IsValid( self.m_pSelectedIcon ) ) then return end
 
 	self:ScrollToChild( self.m_pSelectedIcon )
 

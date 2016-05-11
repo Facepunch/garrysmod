@@ -3,7 +3,7 @@ local PANEL = {}
 
 --[[---------------------------------------------------------
 	Name: This function is used as the paint function for 
-			selected buttons.
+		selected buttons.
 -----------------------------------------------------------]]
 local function HighlightedButtonPaint( self )
 

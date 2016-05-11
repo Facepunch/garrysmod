@@ -1,17 +1,5 @@
---[[
-	 _
-	( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
-
-	DColorMixer
---]]
-
 
 local PANEL = {}
-
 
 AccessorFunc( PANEL, "m_ConVarR", "ConVarR" )
 AccessorFunc( PANEL, "m_ConVarG", "ConVarG" )
@@ -42,7 +30,7 @@ local function CreateWangFunction( self, colindex )
 		end
 
 		self:UpdateColor( self.m_Color )
-	end 
+	end
 
 	return OnValueChanged
 end
@@ -69,9 +57,8 @@ function PANEL:Init()
 		self:SetColor( Color( color.r, color.g, color.b, self.m_bAlpha and color.a or 255 ) )
 	end
 	self.Palette.OnRightClickButton = function( ctrl, btn )
-		ctrl:SaveColor( btn, self:GetColor() );
+		ctrl:SaveColor( btn, self:GetColor() )
 	end
-	
 
 	-- The label
 	self.label = vgui.Create( "DLabel", self )
@@ -88,36 +75,36 @@ function PANEL:Init()
 	self.WangsPanel:SetVisible( self.m_bWangsPanel )
 
 	self.txtR = self.WangsPanel:Add( "DNumberWang" )
-		self.txtR:SetDecimals( 0 )
-		self.txtR:SetMinMax( 0, 255 )
-		self.txtR:SetTall( 20 )
-		self.txtR:Dock( TOP )
-		self.txtR:DockMargin( 0, 0, 0, 0 )
-		self.txtR:SetTextColor( Color( 150, 0, 0, 255 ) )
+	self.txtR:SetDecimals( 0 )
+	self.txtR:SetMinMax( 0, 255 )
+	self.txtR:SetTall( 20 )
+	self.txtR:Dock( TOP )
+	self.txtR:DockMargin( 0, 0, 0, 0 )
+	self.txtR:SetTextColor( Color( 150, 0, 0, 255 ) )
 
 	self.txtG = self.WangsPanel:Add( "DNumberWang" )
-		self.txtG:SetDecimals( 0 )
-		self.txtG:SetMinMax( 0, 255 )
-		self.txtG:SetTall( 20 )
-		self.txtG:Dock( TOP )
-		self.txtG:DockMargin( 0, 4, 0, 0 )
-		self.txtG:SetTextColor( Color( 0, 150, 0, 255 ) )
+	self.txtG:SetDecimals( 0 )
+	self.txtG:SetMinMax( 0, 255 )
+	self.txtG:SetTall( 20 )
+	self.txtG:Dock( TOP )
+	self.txtG:DockMargin( 0, 4, 0, 0 )
+	self.txtG:SetTextColor( Color( 0, 150, 0, 255 ) )
 
 	self.txtB = self.WangsPanel:Add( "DNumberWang" )
-		self.txtB:SetDecimals( 0 )
-		self.txtB:SetMinMax( 0, 255 )
-		self.txtB:SetTall( 20 )
-		self.txtB:Dock( TOP )
-		self.txtB:DockMargin( 0, 4, 0, 0 )
-		self.txtB:SetTextColor( Color( 0, 0, 150, 255 ) )
+	self.txtB:SetDecimals( 0 )
+	self.txtB:SetMinMax( 0, 255 )
+	self.txtB:SetTall( 20 )
+	self.txtB:Dock( TOP )
+	self.txtB:DockMargin( 0, 4, 0, 0 )
+	self.txtB:SetTextColor( Color( 0, 0, 150, 255 ) )
 
 	self.txtA = self.WangsPanel:Add( "DNumberWang" )
-		self.txtA:SetDecimals( 0 )
-		self.txtA:SetMinMax( 0, 255 )
-		self.txtA:SetTall( 20 )
-		self.txtA:Dock( TOP )
-		self.txtA:DockMargin( 0, 4, 0, 0 )
-		self.txtA:SetTextColor( Color( 80, 80, 80, 255 ) )
+	self.txtA:SetDecimals( 0 )
+	self.txtA:SetMinMax( 0, 255 )
+	self.txtA:SetTall( 20 )
+	self.txtA:Dock( TOP )
+	self.txtA:DockMargin( 0, 4, 0, 0 )
+	self.txtA:SetTextColor( Color( 80, 80, 80, 255 ) )
 
 	self.txtR.OnValueChanged = CreateWangFunction( self, "r" )
 	self.txtG.OnValueChanged = CreateWangFunction( self, "g" )
@@ -140,7 +127,6 @@ function PANEL:Init()
 		self:SetBaseColor( color )
 	end
 
-
 	self.Alpha = vgui.Create( "DAlphaBar", self )
 	self.Alpha:DockMargin( 4, 0, 0, 0 )
 	self.Alpha:Dock( RIGHT )
@@ -150,9 +136,6 @@ function PANEL:Init()
 		self.m_Color.a = math.floor( fAlpha * 255 )
 		self:UpdateColor( self.m_Color )
 	end
-
-
-
 
 	-- Layout
 	self:UpdateColor( self.m_Color )
@@ -166,9 +149,9 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetLabel( text )
 
-	if ( !text or ( text == "" ) ) then
+	if ( !text or text == "" ) then
 		self.label:SetVisible( false )
-	
+
 		return
 	end
 
@@ -177,7 +160,6 @@ function PANEL:SetLabel( text )
 
 	self:InvalidateLayout()
 end
-
 
 --[[---------------------------------------------------------
 	Name: SetPalette
@@ -268,7 +250,6 @@ end
 	Name: TranslateValues ( Todo? )
 -----------------------------------------------------------]]
 function PANEL:TranslateValues( x, y )
-	
 end
 
 --[[---------------------------------------------------------
@@ -305,11 +286,11 @@ end
 function PANEL:UpdateConVar( strName, strKey, color )
 
 	if ( !strName ) then return end
-	local col = color[strKey]
+	local col = color[ strKey ]
 
 	RunConsoleCommand( strName, tostring( col ) )
 
-	self[ 'ConVarOld'..strName ] = col
+	self[ "ConVarOld" .. strName ] = col
 end
 
 --[[---------------------------------------------------------
@@ -388,7 +369,7 @@ end
 
 function PANEL:GetVector()
 
-	local col = self:GetColor();
+	local col = self:GetColor()
 	return Vector( col.r / 255, col.g / 255, col.b / 255 )
 
 end
@@ -416,8 +397,8 @@ function PANEL:ConVarThink()
 	local b, changed_b = self:DoConVarThink( self.m_ConVarB )
 	local a, changed_a = 255, false
 
-	if ( self.m_ConVarA ) then 
-		a, changed_a = self:DoConVarThink( self.m_ConVarA, 'a' )
+	if ( self.m_ConVarA ) then
+		a, changed_a = self:DoConVarThink( self.m_ConVarA, "a" )
 	end
 
 	if ( changed_r or changed_g or changed_b or changed_a ) then
@@ -433,10 +414,10 @@ function PANEL:DoConVarThink( convar )
 	if ( !convar ) then return end
 
 	local fValue = GetConVarNumber( convar )
-	local fOldValue = self[ 'ConVarOld'..convar ]
+	local fOldValue = self[ "ConVarOld" .. convar ]
 	if ( fOldValue && fValue == fOldValue ) then return fOldValue, false end
 
-	self[ 'ConVarOld'..convar ] = fValue
+	self[ "ConVarOld" .. convar ] = fValue
 
 	return fValue, true
 
@@ -448,7 +429,7 @@ end
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-		ctrl:SetSize( 256, 256 )
+	ctrl:SetSize( 256, 256 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
