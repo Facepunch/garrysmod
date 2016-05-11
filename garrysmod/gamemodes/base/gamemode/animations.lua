@@ -14,7 +14,7 @@ function GM:HandlePlayerJumping( ply, velocity )
 
 			ply.m_fGroundTime = CurTime()
 			
-		elseif ( CurTime() - ply.m_fGroundTime ) > 0 && velocity:Length2D() < 0.5 then
+		elseif ( CurTime() - ply.m_fGroundTime ) > 0 && velocity:Length2DSqr() < 0.25 then
 
 			ply.m_bJumping = true
 			ply.m_bFirstJumpFrame = false
@@ -54,7 +54,7 @@ function GM:HandlePlayerDucking( ply, velocity )
 
 	if ( !ply:Crouching() ) then return false end
 
-	if ( velocity:Length2D() > 0.5 ) then
+	if ( velocity:Length2DSqr() > 0.25 ) then
 		ply.CalcIdeal = ACT_MP_CROUCHWALK
 	else
 		ply.CalcIdeal = ACT_MP_CROUCH_IDLE
@@ -93,7 +93,7 @@ end
 
 function GM:HandlePlayerVaulting( ply, velocity )
 
-	if ( velocity:Length() < 1000 ) then return end
+	if ( velocity:LengthSqr() < 1000000 ) then return end
 	if ( ply:IsOnGround() ) then return end
 
 	ply.CalcIdeal = ACT_MP_SWIM
@@ -184,11 +184,11 @@ end
 -----------------------------------------------------------]]
 function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 
-	local len = velocity:Length()
+	local lensqr = velocity:LengthSqr()
 	local movement = 1.0
 
-	if ( len > 0.2 ) then
-		movement = ( len / maxseqgroundspeed )
+	if ( lensqr > 0.04 ) then
+		movement = ( math.sqrt(lensqr) / maxseqgroundspeed )
 	end
 
 	local rate = math.min( movement, 2 )
@@ -196,7 +196,7 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 	-- if we're under water we want to constantly be swimming..
 	if ( ply:WaterLevel() >= 2 ) then
 		rate = math.max( rate, 0.5 )
-	elseif ( !ply:IsOnGround() && len >= 1000 ) then
+	elseif ( !ply:IsOnGround() && lensqr >= 1000000 ) then
 		rate = 0.1
 	end
 
@@ -302,8 +302,8 @@ function GM:CalcMainActivity( ply, velocity )
 
 	else
 
-		local len2d = velocity:Length2D()
-		if ( len2d > 150 ) then ply.CalcIdeal = ACT_MP_RUN elseif ( len2d > 0.5 ) then ply.CalcIdeal = ACT_MP_WALK end
+		local len2dsqr = velocity:Length2DSqr()
+		if ( len2dsqr > 22500 ) then ply.CalcIdeal = ACT_MP_RUN elseif ( len2dsqr > 0.25 ) then ply.CalcIdeal = ACT_MP_WALK end
 
 	end
 
