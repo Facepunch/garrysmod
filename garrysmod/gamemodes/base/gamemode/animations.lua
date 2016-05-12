@@ -7,7 +7,7 @@
 
 -- github.com/jackson-c
 
-local player = FindMetaTable( "Player" )
+local playertable = FindMetaTable( "Player" )
 local entity = FindMetaTable( "Entity" )
 
 local A_GetMoveType = entity.GetMoveType
@@ -15,13 +15,13 @@ local A_GetTable = entity.GetTable
 local A_LookupSequence = entity.LookupSequence
 local A_OnGround = entity.OnGround
 local A_WaterLevel = entity.WaterLevel
-local A_AnimResetGestureSlot = player.AnimResetGestureSlot
-local A_AnimRestartGesture = player.AnimRestartGesture
-local A_AnimRestartMainSequence = player.AnimRestartMainSequence
-local A_Crouching = player.Crouching
-local A_GetAllowWeaponsInVehicle = player.GetAllowWeaponsInVehicle
-local A_GetVehicle = player.GetVehicle
-local A_InVehicle = player.InVehicle
+local A_AnimResetGestureSlot = playertable.AnimResetGestureSlot
+local A_AnimRestartGesture = playertable.AnimRestartGesture
+local A_AnimRestartMainSequence = playertable.AnimRestartMainSequence
+local A_Crouching = playertable.Crouching
+local A_GetAllowWeaponsInVehicle = playertable.GetAllowWeaponsInVehicle
+local A_GetVehicle = playertable.GetVehicle
+local A_InVehicle = playertable.InVehicle
 
 function GM:HandlePlayerJumping( ply, velocity )
 	local pt = A_GetTable(ply)
