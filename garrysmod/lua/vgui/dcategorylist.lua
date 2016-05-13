@@ -1,19 +1,8 @@
---[[   _
-	( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DPanelList
-
-	A window.
-
---]]
 local PANEL = {}
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -22,7 +11,7 @@ function PANEL:Init()
 end
 
 --[[---------------------------------------------------------
-   Name: AddItem
+	Name: AddItem
 -----------------------------------------------------------]]
 function PANEL:AddItem( item )
 
@@ -33,7 +22,7 @@ function PANEL:AddItem( item )
 end
 
 --[[---------------------------------------------------------
-   Name: Add
+	Name: Add
 -----------------------------------------------------------]]
 function PANEL:Add( name )
 
@@ -72,20 +61,20 @@ end
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-		ctrl:SetSize( 300, 300 )
+	ctrl:SetSize( 300, 300 )
 
-		local Cat = ctrl:Add( "Test category with text contents" )
-		Cat:Add( "Item 1" )
-		Cat:Add( "Item 2" )
+	local Cat = ctrl:Add( "Test category with text contents" )
+	Cat:Add( "Item 1" )
+	Cat:Add( "Item 2" )
 
-		-- The contents can be any panel, even a DPanelList
-		local Cat2 = ctrl:Add( "Test category with panel contents" )
-		Cat2:SetTall( 100 )
-		local Contents = vgui.Create( "DButton" )
-		Contents:SetText( "This is the content of the category" )
-		Cat2:SetContents( Contents )
+	-- The contents can be any panel, even a DPanelList
+	local Cat2 = ctrl:Add( "Test category with panel contents" )
+	Cat2:SetTall( 100 )
+	local Contents = vgui.Create( "DButton" )
+	Contents:SetText( "This is the content of the category" )
+	Cat2:SetContents( Contents )
 
-		ctrl:InvalidateLayout( true )
+	ctrl:InvalidateLayout( true )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 

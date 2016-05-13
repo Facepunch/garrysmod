@@ -1,16 +1,5 @@
---[[   _
-	( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
-	DCollapsibleCategory
-
---]]
-
-local PANEL =
-{
+local PANEL = {
 
 	Init = function( self )
 
@@ -54,17 +43,15 @@ local PANEL =
 
 derma.DefineControl( "DCategoryHeader", "Category Header", PANEL, "DButton" )
 
-
-
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_bSizeExpanded", 		"Expanded", 		FORCE_BOOL )
-AccessorFunc( PANEL, "m_iContentHeight",	 	"StartHeight" )
-AccessorFunc( PANEL, "m_fAnimTime", 			"AnimTime" )
-AccessorFunc( PANEL, "m_bDrawBackground", 		"PaintBackground", 	FORCE_BOOL )
-AccessorFunc( PANEL, "m_bDrawBackground", 		"DrawBackground", 	FORCE_BOOL ) -- deprecated
-AccessorFunc( PANEL, "m_iPadding", 				"Padding" )
-AccessorFunc( PANEL, "m_pList", 				"List" )
+AccessorFunc( PANEL, "m_bSizeExpanded",		"Expanded", FORCE_BOOL )
+AccessorFunc( PANEL, "m_iContentHeight",	"StartHeight" )
+AccessorFunc( PANEL, "m_fAnimTime",			"AnimTime" )
+AccessorFunc( PANEL, "m_bDrawBackground",	"PaintBackground", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDrawBackground",	"DrawBackground", FORCE_BOOL ) -- deprecated
+AccessorFunc( PANEL, "m_iPadding",			"Padding" )
+AccessorFunc( PANEL, "m_pList",				"List" )
 
 --[[---------------------------------------------------------
 	Init
@@ -75,7 +62,7 @@ function PANEL:Init()
 	self.Header:Dock( TOP )
 	self.Header:SetSize( 20, 20 )
 
-	self:SetSize( 16, 16 );
+	self:SetSize( 16, 16 )
 	self:SetExpanded( true )
 	self:SetMouseInputEnabled( true )
 
@@ -84,12 +71,12 @@ function PANEL:Init()
 
 	self:SetPaintBackground( true )
 	self:DockMargin( 0, 0, 0, 2 )
-	self:DockPadding( 0, 0, 0, 5 )
+	self:DockPadding( 0, 0, 0, 0 )
 
 end
 
 --[[---------------------------------------------------------
-   Name: button
+	Name: button
 -----------------------------------------------------------]]
 function PANEL:Add( strName )
 
@@ -97,26 +84,26 @@ function PANEL:Add( strName )
 	button.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "CategoryButton", panel, w, h ) end
 	button.UpdateColours = function( button, skin )
 
-			if ( button.AltLine ) then
+		if ( button.AltLine ) then
 
-				if ( button.Depressed || button.m_bSelected )		then return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Selected ) end
-				if ( hovered )										then return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Hover ) end
-				return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text )
-
-			end
-
-			if ( button.Depressed || button.m_bSelected )		then return button:SetTextStyleColor( skin.Colours.Category.Line.Text_Selected ) end
-			if ( hovered )										then return button:SetTextStyleColor( skin.Colours.Category.Line.Text_Hover ) end
-			return button:SetTextStyleColor( skin.Colours.Category.Line.Text )
+			if ( button.Depressed || button.m_bSelected ) then	return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Selected ) end
+			if ( hovered ) then									return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Hover ) end
+			return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text )
 
 		end
+
+		if ( button.Depressed || button.m_bSelected ) then	return button:SetTextStyleColor( skin.Colours.Category.Line.Text_Selected ) end
+		if ( hovered ) then									return button:SetTextStyleColor( skin.Colours.Category.Line.Text_Hover ) end
+		return button:SetTextStyleColor( skin.Colours.Category.Line.Text )
+
+	end
 
 	button:SetHeight( 17 )
 	button:SetTextInset( 4, 0 )
 
 	button:SetContentAlignment( 4 )
 	button:DockMargin( 1, 0, 1, 0 )
-	button.DoClickInternal =  function()
+	button.DoClickInternal = function()
 
 		if ( self:GetList() ) then
 			self:GetList():UnselectAll()
@@ -160,9 +147,8 @@ function PANEL:UpdateAltLines()
 
 end
 
-
 --[[---------------------------------------------------------
-   Name: Think
+	Name: Think
 -----------------------------------------------------------]]
 function PANEL:Think()
 
@@ -185,12 +171,13 @@ end
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "CollapsibleCategory", self, w, h )
+
 	return false
 
 end
 
 --[[---------------------------------------------------------
-   Name: SetContents
+	Name: SetContents
 -----------------------------------------------------------]]
 function PANEL:SetContents( pContents )
 
@@ -208,22 +195,21 @@ function PANEL:SetContents( pContents )
 end
 
 --[[---------------------------------------------------------
-   Name: SetContents
+	Name: SetContents
 -----------------------------------------------------------]]
 function PANEL:SetExpanded( expanded )
 
 	self.m_bSizeExpanded = tobool( expanded )
 
 	if ( !self.m_bSizeExpanded ) then
-
+		if ( !self.animSlide.Finished && self.OldHeight ) then return end
 		self.OldHeight = self:GetTall()
-
 	end
 
 end
 
 --[[---------------------------------------------------------
-   Name: Toggle
+	Name: Toggle
 -----------------------------------------------------------]]
 function PANEL:Toggle()
 
@@ -235,16 +221,16 @@ function PANEL:Toggle()
 	self:GetParent():InvalidateLayout()
 	self:GetParent():GetParent():InvalidateLayout()
 
-	local cookie = '1'
-	if ( !self:GetExpanded() ) then cookie = '0' end
-	self:SetCookie( "Open", cookie )
+	local open = "1"
+	if ( !self:GetExpanded() ) then open = "0" end
+	self:SetCookie( "Open", open )
 
 	self:OnToggle( self:GetExpanded( ) )
 
 end
 
 --[[---------------------------------------------------------
-   Name: OnToggle
+	Name: OnToggle
 -----------------------------------------------------------]]
 function PANEL:OnToggle( expanded )
 
@@ -253,23 +239,23 @@ function PANEL:OnToggle( expanded )
 end
 
 --[[---------------------------------------------------------
-   Name: DoExpansion
+	Name: DoExpansion
 -----------------------------------------------------------]]
 function PANEL:DoExpansion( b )
 
 	if ( self.m_bSizeExpanded == b ) then return end
-	self:Toggle();
+	self:Toggle()
 
 end
 
 --[[---------------------------------------------------------
-   Name: PerformLayout
+	Name: PerformLayout
 -----------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	local Padding = self:GetPadding() or 0
 
-	if ( self.Contents ) then
+	if ( IsValid( self.Contents ) ) then
 
 		if ( self:GetExpanded() ) then
 			self.Contents:InvalidateLayout( true )
@@ -294,7 +280,7 @@ function PANEL:PerformLayout()
 	self.Header:ApplySchemeSettings()
 
 	self.animSlide:Run()
-	self:UpdateAltLines();
+	self:UpdateAltLines()
 
 end
 
@@ -303,14 +289,14 @@ end
 -----------------------------------------------------------]]
 function PANEL:OnMousePressed( mcode )
 
-	if ( !self:GetParent().OnMousePressed ) then return end;
+	if ( !self:GetParent().OnMousePressed ) then return end
 
 	return self:GetParent():OnMousePressed( mcode )
 
 end
 
 --[[---------------------------------------------------------
-   Name: AnimSlide
+	Name: AnimSlide
 -----------------------------------------------------------]]
 function PANEL:AnimSlide( anim, delta, data )
 
@@ -318,20 +304,23 @@ function PANEL:AnimSlide( anim, delta, data )
 	self:InvalidateParent()
 
 	if ( anim.Started ) then
-
-		if ( self:GetExpanded() ) then
-
-			data.To = self.OldHeight
-
-		else
-
-			data.To = self:GetTall()
-
+		if ( !IsValid( self.Contents ) && ( self.OldHeight or 0 ) < self.Header:GetTall() ) then
+			-- We are not using self.Contents and our designated height is less
+			-- than the header size, something is clearly wrong, try to rectify
+			self.OldHeight = 0
+			for id, pnl in pairs( self:GetChildren() ) do
+				self.OldHeight = self.OldHeight + pnl:GetTall()
+			end
 		end
 
+		if ( self:GetExpanded() ) then
+			data.To = self.OldHeight
+		else
+ 			data.To = self:GetTall()
+		end
 	end
 
-	if ( self.Contents ) then self.Contents:SetVisible( true ) end
+	if ( IsValid( self.Contents ) ) then self.Contents:SetVisible( true ) end
 
 	self:SetTall( Lerp( delta, data.From, data.To ) )
 
@@ -351,23 +340,22 @@ function PANEL:LoadCookies()
 
 end
 
-
 --[[---------------------------------------------------------
-   Name: GenerateExample
+	Name: GenerateExample
 -----------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-		ctrl:SetLabel( "Category List Test Category" )
-		ctrl:SetSize( 300, 300 )
-		ctrl:SetPadding( 10 )
-	
-		-- The contents can be any panel, even a DPanelList
-		local Contents = vgui.Create( "DButton" )
-		Contents:SetText( "This is the content of the control" )
-		ctrl:SetContents( Contents )
+	ctrl:SetLabel( "Category List Test Category" )
+	ctrl:SetSize( 300, 300 )
+	ctrl:SetPadding( 10 )
 
-		ctrl:InvalidateLayout( true )
+	-- The contents can be any panel, even a DPanelList
+	local Contents = vgui.Create( "DButton" )
+	Contents:SetText( "This is the content of the control" )
+	ctrl:SetContents( Contents )
+
+	ctrl:InvalidateLayout( true )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
