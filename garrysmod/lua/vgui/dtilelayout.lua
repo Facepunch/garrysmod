@@ -56,7 +56,7 @@ function PANEL:FindFreeTile( x, y, w, h )
 	x = x or 1
 	y = y or 1
 
-	local span = math.floor( self:GetWide() / self.m_iBaseSize )
+	local span = math.floor( ( self:GetWide() - self:GetBorder() * 2 + self:GetSpaceX() ) / ( self:GetBaseSize() + self:GetSpaceX() ) )
 	if ( span < 1 ) then span = 1 end
 
 	for i = 1, span do
@@ -127,9 +127,9 @@ end
 function PANEL:LayoutTiles()
 
 	local StartLine = 1
-	local LastX		= 1
-	local tilesize	= self.m_iBaseSize
-	local MaxWidth	= math.ceil( self:GetWide() / tilesize )
+	local LastX = 1
+	local tilesize = self:GetBaseSize()
+	local MaxWidth = math.floor( ( self:GetWide() - self:GetBorder() * 2 + self:GetSpaceX() ) / ( tilesize + self:GetSpaceX() ) )
 
 	self:ClearTiles()
 
@@ -138,8 +138,8 @@ function PANEL:LayoutTiles()
 
 		if ( !v:IsVisible() ) then continue end
 
-		local w = math.ceil( v:GetWide() / tilesize )
-		local h = math.ceil( v:GetTall() / tilesize )
+		local w = math.ceil( v:GetWide() / ( tilesize + self:GetSpaceX() ) )
+		local h = math.ceil( v:GetTall() / ( tilesize + self:GetSpaceY() ) )
 
 		if ( v.OwnLine ) then
 			w = MaxWidth
@@ -147,7 +147,7 @@ function PANEL:LayoutTiles()
 
 		local x, y = self:FindFreeTile( 1, StartLine, w, h )
 
-		v:SetPos( ( x - 1 ) * tilesize, ( y - 1 ) * tilesize )
+		v:SetPos( self:GetBorder() + ( x - 1 ) * ( tilesize + self:GetSpaceX() ), self:GetBorder() + ( y - 1 ) * ( tilesize + self:GetSpaceY() ) )
 
 		self:ConsumeTiles( x, y, w, h )
 
@@ -176,7 +176,7 @@ function PANEL:PerformLayout()
 	end
 
 	local w, h = self:ChildrenSize()
-	h = math.max( h, self:GetMinHeight() )
+	h = math.max( h + self:GetBorder(), self:GetMinHeight() )
 
 	self:SetHeight( h )
 
@@ -216,7 +216,6 @@ function PANEL:Copy()
 	copy:SetSortable( self:GetSortable() )
 	copy:SetDnD( self:GetDnD() )
 	copy:SetSpaceX( self:GetSpaceX() )
-	copy:SetSpaceX( self:GetSpaceX() )
 	copy:SetSpaceY( self:GetSpaceY() )
 	copy:SetBorder( self:GetBorder() )
 	copy:SetSelectionCanvas( self:GetSelectionCanvas() )
@@ -239,24 +238,38 @@ function PANEL:CopyContents( from )
 end
 
 --[[---------------------------------------------------------
-   Name: GenerateExample
+	Name: GenerateExample
 -----------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local pnl = vgui.Create( ClassName )
 	pnl:MakeDroppable( "ExampleDraggable", false )
-	pnl:SetWide( 200 )
+	pnl:SetWide( 196 )
 	pnl:SetUseLiveDrag( true )
 	pnl:SetSelectionCanvas( true )
 	pnl:SetSpaceX( 4 )
-	pnl:SetSpaceY( 4 )
-	pnl:SetBaseSize( 36 )
+	pnl:SetSpaceY( 8 )
+	pnl:SetBorder( 10 )
+	pnl:SetBaseSize( 32 )
 
-	for i=1, 32 do
+	for i=1, 10 do
 
 		local btn = pnl:Add( "DButton" )
 		btn:SetSize( 32, 32 )
 		btn:SetText( i )
+
+	end
+
+	local btn = pnl:Add( "DButton" )
+	btn:SetSize( 32, 32 )
+	btn:SetText( "<br>" )
+	btn.OwnLine = true
+
+	for i=1, 10 do
+
+		local btn = pnl:Add( "DButton" )
+		btn:SetSize( 32, 32 )
+		btn:SetText( 10 + i )
 
 	end
 
@@ -265,4 +278,3 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 end
 
 derma.DefineControl( "DTileLayout", "", PANEL, "DDragBase" )
-
