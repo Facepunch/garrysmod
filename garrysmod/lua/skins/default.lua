@@ -242,9 +242,9 @@ SKIN.tex.ProgressBar.Front	= GWEN.CreateTextureBorder( 384+32, 0, 31, 31, 8, 8, 
 
 
 SKIN.tex.CategoryList = {}
-SKIN.tex.CategoryList.Outer		= GWEN.CreateTextureBorder( 256,		384, 63, 63, 8, 8, 8, 8 )
-SKIN.tex.CategoryList.Inner		= GWEN.CreateTextureBorder( 256 + 64,	384, 63, 63, 8, 21, 8, 8 )
-SKIN.tex.CategoryList.Header	= GWEN.CreateTextureBorder( 320,		352, 63, 31, 8, 8, 8, 8 )
+SKIN.tex.CategoryList.Outer		= GWEN.CreateTextureBorder( 256, 384, 63, 63, 8, 8, 8, 8 )
+SKIN.tex.CategoryList.Inner		= GWEN.CreateTextureBorder( 320, 384, 63, 63, 8, 21, 8, 8 )
+SKIN.tex.CategoryList.Header	= GWEN.CreateTextureBorder( 320, 352, 63, 31, 8, 8, 8, 8 )
 
 SKIN.tex.Tooltip = GWEN.CreateTextureBorder( 384, 64, 31, 31, 8, 8, 8, 8 )
 
@@ -453,7 +453,6 @@ function SKIN:PaintTextEntry( panel, w, h )
 		end
 
 	end
-
 
 	panel:DrawTextEntryText( panel:GetTextColor(), panel:GetHighlightColor(), panel:GetCursorColor() )
 
@@ -903,7 +902,7 @@ end
 
 function SKIN:PaintCollapsibleCategory( panel, w, h )
 
-	if ( !panel:GetExpanded() && h < 40 ) then
+	if ( h < 21 ) then
 		return self.tex.CategoryList.Header( 0, 0, w, h )
 	end
 
