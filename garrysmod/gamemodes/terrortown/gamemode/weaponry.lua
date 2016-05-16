@@ -8,6 +8,7 @@ local IsEquipment = WEPS.IsEquipment
 -- Prevent players from picking up multiple weapons of the same type etc
 function GM:PlayerCanPickupWeapon(ply, wep)
    if not IsValid(wep) and not IsValid(ply) then return end
+   if ply:IsSpec() then return false end
 
    -- Disallow picking up for ammo
    if ply:HasWeapon(wep:GetClass()) then
