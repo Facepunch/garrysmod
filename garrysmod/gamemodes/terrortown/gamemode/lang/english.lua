@@ -607,6 +607,7 @@ L.radar_hud    = "Radar ready for next scan in: {time}"
 -- Spectator muting of living/dead
 L.mute_living  = "Living players muted"
 L.mute_specs   = "Spectators muted"
+L.mute_all     = "All muted"
 L.mute_off     = "None muted"
 
 -- Spectators and prop possession

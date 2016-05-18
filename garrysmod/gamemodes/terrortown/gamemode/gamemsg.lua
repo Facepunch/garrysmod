@@ -186,7 +186,7 @@ function GM:PlayerCanHearPlayersVoice(listener, speaker)
    end
 
    -- Specific mute
-   if listener:IsSpec() and listener.mute_team == speaker:Team() then
+   if listener:IsSpec() and listener.mute_team == speaker:Team() or listener.mute_team == MUTE_ALL then
       return false, false
    end
 
@@ -246,8 +246,13 @@ local function MuteTeam(ply, cmd, args)
    local t = tonumber(args[1])
    ply.mute_team = t
 
-   local name = (t != 0) and team.GetName(t) or "None"
-   ply:ChatPrint(name .. " muted.")
+   if t == MUTE_ALL then
+      ply:ChatPrint("All muted.")
+   elseif t == MUTE_NONE or t == TEAM_UNASSIGNED or not team.Valid(t) then
+      ply:ChatPrint("None muted.")
+   else
+      ply:ChatPrint(team.GetName(t) .. " muted.")
+   end
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 
