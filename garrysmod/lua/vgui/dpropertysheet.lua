@@ -71,9 +71,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:UpdateColours( skin )
 
-	local Active = self:GetPropertySheet():GetActiveTab() == self
-
-	if ( Active ) then
+	if ( self:IsActive() ) then
 
 		if ( self:GetDisabled() )	then return self:SetTextStyleColor( skin.Colours.Tab.Active.Disabled ) end
 		if ( self:IsDown() )		then return self:SetTextStyleColor( skin.Colours.Tab.Active.Down ) end
@@ -91,6 +89,16 @@ function PANEL:UpdateColours( skin )
 
 end
 
+function PANEL:GetTabHeight()
+
+	if ( self:IsActive() ) then
+		return 28
+	else
+		return 20
+	end
+
+end
+
 function PANEL:ApplySchemeSettings()
 
 	local ExtraInset = 10
@@ -99,12 +107,9 @@ function PANEL:ApplySchemeSettings()
 		ExtraInset = ExtraInset + self.Image:GetWide()
 	end
 
-	local Active = self:GetPropertySheet():GetActiveTab() == self
-
 	self:SetTextInset( ExtraInset, 4 )
 	local w, h = self:GetContentSize()
-	h = 20
-	if ( Active ) then h = 28 end
+	h = self:GetTabHeight()
 
 	self:SetSize( w + 10, h )
 
