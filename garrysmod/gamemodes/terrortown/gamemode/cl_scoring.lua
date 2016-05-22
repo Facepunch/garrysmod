@@ -497,8 +497,8 @@ function CLSCORE:Init(events)
    local nicks = {}
    for k, e in pairs(events) do
       if e.id == EVENT_SPAWN then
-         scores[e.uid] = ScoreInit()
-         nicks[e.uid] = e.ni
+         scores[e.sid] = ScoreInit()
+         nicks[e.sid] = e.ni
       end
    end
 
