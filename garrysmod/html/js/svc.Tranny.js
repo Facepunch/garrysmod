@@ -13,8 +13,8 @@ angular.module( 'tranny', [] )
 			$(element).html( outStr );
 			$(element).attr( "placeholder", outStr );
 		}
-		
-		scope.$watch( attrs.ngTranny, function ( value ) 
+
+		scope.$watch( attrs.ngTranny, function ( value )
 		{
 			strName = value;
 			update();
@@ -44,11 +44,10 @@ angular.module( 'tranny', [] )
 
 			if ( value < 60 * 60 * 24 )
 				return $( element ).html( Math.floor( value / 60 / 60 ) + " hr" );
-			
+
 			$( element ).html( "a long time" );
 
 		});
 
 	}
 } );
-

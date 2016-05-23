@@ -3,7 +3,6 @@ save = new WorkshopFiles();
 
 function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 {
-
 	$rootScope.ShowBack = true;
 	Scope = $scope;
 
