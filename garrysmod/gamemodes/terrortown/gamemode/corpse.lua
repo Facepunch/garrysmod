@@ -382,6 +382,8 @@ function CORPSE.Create(ply, attacker, dmginfo)
    rag.player_ragdoll = true
    rag.sid = ply:SteamID()
 
+   rag.uqid = ply:UniqueID() -- backwards compatibility; use rag.sid instead
+
    -- network data
    CORPSE.SetPlayerNick(rag, ply)
    CORPSE.SetFound(rag, false)
