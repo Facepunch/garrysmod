@@ -56,8 +56,13 @@
 					</div>
 
 					<div class='control'>
-						<input type="checkbox" ng-model="ServerSettings.sv_lan" />
+						<input type="checkbox" ng-model="ServerSettings.sv_lan" ng-bind="CheckboxCheck()" />
 						<label ng-Tranny="'lan_server'"></label>
+					</div>
+
+					<div class='control'>
+						<input type="checkbox" ng-model="ServerSettings.p2p_enabled" ng-bind="CheckboxCheck()" />
+						<label ng-Tranny="'p2p_server'"></label>
 					</div>
 
 					<div class='control control-text' ng-repeat="s in ServerSettings.Text">
