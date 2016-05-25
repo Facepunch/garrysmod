@@ -607,6 +607,7 @@ L.radar_hud    = "Radar pronto novamente em: {time}"
 -- Spectator muting of living/dead
 L.mute_living  = "Jogadores vivos mutados"
 L.mute_specs   = "Espectadores mutados"
+L.mute_all     = "Todos mutados"
 L.mute_off     = "Ninguém mutado"
 
 -- Spectators and prop possession

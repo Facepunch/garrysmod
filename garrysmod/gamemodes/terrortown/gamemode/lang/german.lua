@@ -596,6 +596,7 @@ L.radar_hud    = "Radar bereit für nächsten Scan in: {time}"
 -- Spectator muting of living/dead
 L.mute_living  = "Lebende Stumm gestellt"
 L.mute_specs   = "Zuschauer Stumm gestellt"
+L.mute_all     = "Jeden Stumm gestellt"
 L.mute_off     = "Niemanden Stumm gestellt"
 
 -- Spectators and prop possession
