@@ -296,12 +296,12 @@ concommand.Add("ttt_dropammo", DropActiveAmmo)
 -- Give a weapon to a player. If the initial attempt fails due to heisenbugs in
 -- the map, keep trying until the player has moved to a better spot where it
 -- does work.
-local function GiveEquipmentWeapon(uid, cls)
-   -- Referring to players by UID because a player may disconnect while his
+local function GiveEquipmentWeapon(sid, cls)
+   -- Referring to players by SteamID because a player may disconnect while his
    -- unique timer still runs, in which case we want to be able to stop it. For
-   -- that we need its name, and hence his uid.
-   local ply = player.GetByUniqueID(uid)
-   local tmr = "give_equipment" .. tostring(uid)
+   -- that we need its name, and hence his SteamID.
+   local ply = player.GetBySteamID(sid)
+   local tmr = "give_equipment" .. sid
 
    if (not IsValid(ply)) or (not ply:IsActiveSpecial()) then
       timer.Remove(tmr)
@@ -314,7 +314,7 @@ local function GiveEquipmentWeapon(uid, cls)
 
    if (not IsValid(w)) or (not ply:HasWeapon(cls)) then
       if not timer.Exists(tmr) then
-         timer.Create(tmr, 1, 0, function() GiveEquipmentWeapon(uid, cls) end)
+         timer.Create(tmr, 1, 0, function() GiveEquipmentWeapon(sid, cls) end)
       end
 
       -- we will be retrying
@@ -330,7 +330,7 @@ local function GiveEquipmentWeapon(uid, cls)
 end
 
 local function HasPendingOrder(ply)
-   return timer.Exists("give_equipment" .. tostring(ply:UniqueID()))
+   return timer.Exists("give_equipment" .. tostring(ply:SteamID()))
 end
 
 -- Equipment buying
@@ -394,7 +394,7 @@ local function OrderEquipment(ply, cmd, args)
       -- no longer restricted to only WEAPON_EQUIP weapons, just anything that
       -- is whitelisted and carryable
       if ply:CanCarryWeapon(swep_table) then
-         GiveEquipmentWeapon(ply:UniqueID(), id)
+         GiveEquipmentWeapon(ply:SteamID(), id)
 
          received = true
       end
@@ -447,10 +447,10 @@ local function TransferCredits(ply, cmd, args)
    if (not IsValid(ply)) or (not ply:IsActiveSpecial()) then return end
    if #args != 2 then return end
 
-   local uid = tostring(args[1])
+   local sid = tostring(args[1])
    local credits = tonumber(args[2])
-   if uid and credits then
-      local target = player.GetByUniqueID(uid)
+   if sid and credits then
+      local target = player.GetBySteamID(sid)
       if (not IsValid(target)) or (not target:IsActiveSpecial()) or (target:GetRole() ~= ply:GetRole()) or (target == ply) then
          LANG.Msg(ply, "xfer_no_recip")
          return
