@@ -331,3 +331,25 @@ function force( str )
 	return table.concat( buf, "" )
 
 end
+
+--
+-- Returns a substring consisting given range (as measured in utf8-characters)
+--
+function sub( str, startPos, endPos )
+
+	local startOffset = utf8.offset( str, startPos - 1 )
+
+	local endOffset
+	if endPos then
+		-- convert negative endPos to a absolute positive position
+		endPos = ( endPos > 0 ) and endPos or ( utf8.len( str ) + 1 + endPos )
+
+		-- utf8.offset returns the start byte for given position, so due to
+		-- endPos being exclusive we can subtract one to get end-byte of last 
+		-- utf8 character
+		endOffset = utf8.offset( str, endPos ) - 1
+	end
+
+	return string.sub( str, startOffset, endOffset )
+
+end
