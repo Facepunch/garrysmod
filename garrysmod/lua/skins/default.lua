@@ -956,6 +956,7 @@ end
 
 function SKIN:PaintListView( panel, w, h )
 
+	if ( !panel.m_bBackground ) then return end
 	self.tex.Input.ListBox.Background( 0, 0, w, h )
 
 end
