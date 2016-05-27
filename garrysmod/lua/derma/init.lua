@@ -1,10 +1,3 @@
---=============================================================================--
---  ___  ___   _   _   _    __   _   ___ ___ __ __
--- |_ _|| __| / \ | \_/ |  / _| / \ | o \ o \\ V /
---  | | | _| | o || \_/ | ( |_n| o ||   /   / \ /
---  |_| |___||_n_||_| |_|  \__/|_n_||_|\\_|\\ |_|  2012
---
---=============================================================================--
 
 --
 -- The default font used by everything Derma
@@ -12,44 +5,39 @@
 
 if ( system.IsLinux() ) then
 
-	surface.CreateFont( "DermaDefault",
-	{
+	surface.CreateFont( "DermaDefault", {
 		font		= "DejaVu Sans",
 		size		= 14,
 		weight		= 500
-	})
+	} )
 
-	surface.CreateFont( "DermaDefaultBold",
-	{
+	surface.CreateFont( "DermaDefaultBold", {
 		font		= "DejaVu Sans",
 		size		= 14,
 		weight		= 800
-	})
+	} )
 
 else
 
-	surface.CreateFont( "DermaDefault",
-	{
+	surface.CreateFont( "DermaDefault", {
 		font		= "Tahoma",
 		size		= 13,
 		weight		= 500
-	})
+	} )
 
-	surface.CreateFont( "DermaDefaultBold",
-	{
+	surface.CreateFont( "DermaDefaultBold", {
 		font		= "Tahoma",
 		size		= 13,
 		weight		= 800
-	})
+	} )
 
 end
 
-surface.CreateFont( "DermaLarge",
-{
+surface.CreateFont( "DermaLarge", {
 	font		= "Roboto",
 	size		= 32,
 	weight		= 500
-})
+} )
 
 include( "derma.lua" )
 include( "derma_example.lua" )
