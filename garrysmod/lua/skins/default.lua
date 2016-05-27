@@ -476,7 +476,8 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintMenuSpacer( panel, w, h )
 
-	self.tex.MenuBG( 0, 0, w, h )
+	surface.SetDrawColor( Color( 0, 0, 0, 100 ) )
+	surface.DrawRect( 0, 0, w, h )
 
 end
 
