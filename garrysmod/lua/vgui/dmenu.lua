@@ -1,14 +1,3 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
-
-	DMenu
-
---]]
-
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bBorder", 			"DrawBorder" )
@@ -20,9 +9,6 @@ AccessorFunc( PANEL, "m_iMaxHeight", 		"MaxHeight" )
 AccessorFunc( PANEL, "m_pOpenSubMenu", 		"OpenSubMenu" )
 
 
---[[---------------------------------------------------------
-	Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetIsMenu( true )
@@ -32,17 +18,15 @@ function PANEL:Init()
 	self:SetDrawOnTop( true )
 	self:SetMaxHeight( ScrH() * 0.9 )
 	self:SetDeleteSelf( true )
-		
+	
 	self:SetPadding( 0 )
+	self.RadioGroup = {}
 	
 	-- Automatically remove this panel when menus are to be closed
 	RegisterDermaMenuForClose( self )
 
 end
 
---[[---------------------------------------------------------
-	AddPanel
------------------------------------------------------------]]
 function PANEL:AddPanel( pnl )
 
 	self:AddItem( pnl )
@@ -50,9 +34,6 @@ function PANEL:AddPanel( pnl )
 	
 end
 
---[[---------------------------------------------------------
-	AddOption
------------------------------------------------------------]]
 function PANEL:AddOption( strText, funcFunction )
 
 	local pnl = vgui.Create( "DMenuOption", self )
@@ -66,9 +47,18 @@ function PANEL:AddOption( strText, funcFunction )
 
 end
 
---[[---------------------------------------------------------
-	AddCVar
------------------------------------------------------------]]
+function PANEL:AddRadioButton( anyGroupId, strText, funcFunction )
+
+	local pnl = self:AddOption( strText, funcFunction )
+	pnl:SetRadioGroup( anyGroupId )
+	
+	self.RadioGroup[ anyGroupId ] = self.RadioGroup[ anyGroupId ] or {}
+	table.insert( self.RadioGroup[ anyGroupId ], pnl )
+	
+	return pnl
+
+end
+
 function PANEL:AddCVar( strText, convar, on, off, funcFunction )
 
 	local pnl = vgui.Create( "DMenuOptionCVar", self )
@@ -86,9 +76,6 @@ function PANEL:AddCVar( strText, convar, on, off, funcFunction )
 
 end
 
---[[---------------------------------------------------------
-	AddSpacer
------------------------------------------------------------]]
 function PANEL:AddSpacer( strText, funcFunction )
 
 	local pnl = vgui.Create( "DPanel", self )
@@ -103,9 +90,6 @@ function PANEL:AddSpacer( strText, funcFunction )
 
 end
 
---[[---------------------------------------------------------
-	AddSubMenu
------------------------------------------------------------]]
 function PANEL:AddSubMenu( strText, funcFunction )
 
 	local pnl = vgui.Create( "DMenuOption", self )
@@ -120,9 +104,6 @@ function PANEL:AddSubMenu( strText, funcFunction )
 
 end
 
---[[---------------------------------------------------------
-	Hide
------------------------------------------------------------]]
 function PANEL:Hide()
 
 	local openmenu = self:GetOpenSubMenu()
@@ -135,9 +116,6 @@ function PANEL:Hide()
 	
 end
 
---[[---------------------------------------------------------
-	OpenSubMenu
------------------------------------------------------------]]
 function PANEL:OpenSubMenu( item, menu )
 
 	-- Do we already have a menu open?
@@ -161,10 +139,6 @@ function PANEL:OpenSubMenu( item, menu )
 
 end
 
-
---[[---------------------------------------------------------
-	CloseSubMenu
------------------------------------------------------------]]
 function PANEL:CloseSubMenu( menu )
 
 	menu:Hide()
@@ -172,9 +146,6 @@ function PANEL:CloseSubMenu( menu )
 
 end
 
---[[---------------------------------------------------------
-	Paint
------------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	if ( !self:GetPaintBackground() ) then return end
@@ -192,9 +163,6 @@ function PANEL:GetChild( num )
 	return self:GetCanvas():GetChildren()[ num ]
 end
 
---[[---------------------------------------------------------
-	PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	local w = self:GetMinimumWidth()
@@ -260,22 +228,29 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 	
 	self:SetSize( w, h )
 	
-	
 	if ( y + h > ScrH() ) then y = ((maunal and ScrH()) or (y + OwnerHeight)) - h end
 	if ( x + w > ScrW() ) then x = ((maunal and ScrW()) or x) - w end
 	if ( y < 1 ) then y = 1 end
 	if ( x < 1 ) then x = 1 end
 	
 	self:SetPos( x, y )
-	
-	-- Popup!
 	self:MakePopup()
-	
-	-- Make sure it's visible!
 	self:SetVisible( true )
-	
-	-- Keep the mouse active while the menu is visible.
 	self:SetKeyboardInputEnabled( false )
+	
+end
+
+function PANEL:SetRadioGroupSelected( groupIndex, pnl )
+	
+	if self.RadioGroup[ groupIndex ] then
+		
+		for k, v in pairs( self.RadioGroup[ groupIndex ] ) do
+			
+			v:SetChecked( v == pnl )
+			
+		end
+		
+	end
 	
 end
 
@@ -283,6 +258,12 @@ end
 -- Called by DMenuOption
 --
 function PANEL:OptionSelectedInternal( option )
+	
+	if ( option:GetRadioGroup() ) then
+		
+		self:SetRadioGroupSelected( option:GetRadioGroup(), option )
+		
+	end
 
 	self:OptionSelected( option, option:GetText() )
 
@@ -312,9 +293,6 @@ function PANEL:HighlightItem( item )
 
 end
 
---[[---------------------------------------------------------
-   Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local MenuItemSelected = function()

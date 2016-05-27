@@ -1,23 +1,10 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
-
-	DMenuOption
-
---]]
-
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_pMenu", 		"Menu" )
 AccessorFunc( PANEL, "m_bChecked", 		"Checked" )
 AccessorFunc( PANEL, "m_bCheckable", 	"IsCheckable" )
+AccessorFunc( PANEL, "m_RadioGroup", 	"RadioGroup" )
 
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetContentAlignment( 4 )
@@ -27,10 +14,6 @@ function PANEL:Init()
 
 end
 
-
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:SetSubMenu( menu )
 
 	self.SubMenu = menu	
@@ -44,9 +27,6 @@ function PANEL:SetSubMenu( menu )
 	
 end
 
---
--- AddSubMenu
---
 function PANEL:AddSubMenu()
 
 	local SubMenu = DermaMenu( self )
@@ -59,11 +39,9 @@ function PANEL:AddSubMenu()
 
 end
 
-
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:OnCursorEntered()
+	
+	if ( self:GetDisabled() ) then return end
 
 	if ( IsValid( self.ParentMenu ) ) then
 		self.ParentMenu:OpenSubMenu( self, self.SubMenu )	
@@ -74,87 +52,81 @@ function PANEL:OnCursorEntered()
 	
 end
 
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:OnCursorExited()
 
 end
 
-
-
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "MenuOption", self, w, h )
-	
-	--
+
 	-- Draw the button text
-	--
 	return false
 
 end
 
---[[---------------------------------------------------------
-	OnMousePressed
------------------------------------------------------------]]
 function PANEL:OnMousePressed( mousecode )
-
+	
+	if ( self:GetDisabled() ) then return end
+	
 	self.m_MenuClicking = true
-
+	
 	DButton.OnMousePressed( self, mousecode )
-
+	
 end
 
---[[---------------------------------------------------------
-	OnMouseReleased
------------------------------------------------------------]]
 function PANEL:OnMouseReleased( mousecode )
-
+	
+	if ( self:GetDisabled() ) then return end
+	
 	DButton.OnMouseReleased( self, mousecode )
-
+	
 	if ( self.m_MenuClicking && mousecode == MOUSE_LEFT ) then
 		
 		self.m_MenuClicking = false
 		CloseDermaMenus()
 		
 	end
-
+	
+	if ( self.m_MenuClicking && mousecode == MOUSE_RIGHT ) then
+		
+		self.m_MenuClicking = false
+		self:DoClick()
+		
+	end
+	
 end
 
---[[---------------------------------------------------------
-	DoRightClick
------------------------------------------------------------]]
 function PANEL:DoRightClick()
-
+	
+	if ( self:GetDisabled() ) then return end
+	
 	if ( self:GetIsCheckable() ) then
 		self:ToggleCheck()
+	end
+	
+	if ( self:GetRadioGroup() ) then
+		self:DoClickInternal()
 	end
 
 end
 
---[[---------------------------------------------------------
-	DoClickInternal
------------------------------------------------------------]]
 function PANEL:DoClickInternal()
-
+	
+	if ( self:GetDisabled() ) then return end
+	
 	if ( self:GetIsCheckable() ) then
 		self:ToggleCheck()
 	end
-
+	
 	if ( self.m_pMenu ) then
 	
 		self.m_pMenu:OptionSelectedInternal( self )
 	
 	end
-
+	
 end
 
---[[---------------------------------------------------------
-	ToggleCheck
------------------------------------------------------------]]
 function PANEL:ToggleCheck()
 
 	self:SetChecked( !self:GetChecked() )
@@ -162,16 +134,10 @@ function PANEL:ToggleCheck()
 
 end
 
---[[---------------------------------------------------------
-	OnChecked
------------------------------------------------------------]]
 function PANEL:OnChecked( b )
 
 end
 
---[[---------------------------------------------------------
-   Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	self:SizeToContents()
@@ -191,6 +157,14 @@ function PANEL:PerformLayout()
 
 	DButton.PerformLayout( self )
 		
+end
+
+function PANEL:UpdateColours( skin )
+
+	if ( self:GetDisabled() ) then return self:SetTextColor( skin.Colours.Button.Disabled ) end
+
+	return self:SetTextColor( skin.Colours.Button.Normal )
+
 end
 
 function PANEL:GenerateExample()
