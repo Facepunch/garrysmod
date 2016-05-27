@@ -36,6 +36,11 @@ function TOOL:LeftClick( trace )
 		local width = self:GetClientNumber( "width" )
 		local rigid = self:GetClientNumber( "rigid" ) == 1
 		
+		--Should help prevent creating crazy physics
+		if rigid then
+			addlength = math.min( addlength, 100 )
+		end
+		
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
@@ -93,6 +98,11 @@ function TOOL:RightClick( trace )
 		local material = self:GetClientInfo( "material" )
 		local width = self:GetClientNumber( "width" )
 		local rigid = self:GetClientNumber( "rigid" ) == 1
+		
+		--Should help prevent creating crazy physics
+		if rigid then
+			addlength = math.min( addlength, 100 )
+		end
 		
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
