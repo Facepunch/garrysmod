@@ -1,10 +1,3 @@
---
---  ___  ___   _   _   _    __   _   ___ ___ __ __
--- |_ _|| __| / \ | \_/ |  / _| / \ | o \ o \\ V /
---  | | | _| | o || \_/ | ( |_n| o ||   /   / \ /
---  |_| |___||_n_||_| |_|  \__/|_n_||_|\\_|\\ |_|  2012
---
---
 
 local surface = surface
 local draw = draw
@@ -12,28 +5,27 @@ local Color = Color
 
 SKIN = {}
 
-SKIN.PrintName 		= "Default Derma Skin"
-SKIN.Author 		= "Garry Newman"
+SKIN.PrintName		= "Default Derma Skin"
+SKIN.Author		= "Garry Newman"
 SKIN.DermaVersion	= 1
 SKIN.GwenTexture	= Material( "gwenskin/GModDefault.png" )
 
-SKIN.bg_color 					= Color( 101, 100, 105, 255 )
-SKIN.bg_color_sleep 			= Color( 70, 70, 70, 255 )
+SKIN.bg_color					= Color( 101, 100, 105, 255 )
+SKIN.bg_color_sleep				= Color( 70, 70, 70, 255 )
 SKIN.bg_color_dark				= Color( 55, 57, 61, 255 )
 SKIN.bg_color_bright			= Color( 220, 220, 220, 255 )
 SKIN.frame_border				= Color( 50, 50, 50, 255 )
 
-
 SKIN.fontFrame					= "DermaDefault"
 
-SKIN.control_color 				= Color( 120, 120, 120, 255 )
+SKIN.control_color				= Color( 120, 120, 120, 255 )
 SKIN.control_color_highlight	= Color( 150, 150, 150, 255 )
-SKIN.control_color_active 		= Color( 110, 150, 250, 255 )
-SKIN.control_color_bright 		= Color( 255, 200, 100, 255 )
-SKIN.control_color_dark 		= Color( 100, 100, 100, 255 )
+SKIN.control_color_active		= Color( 110, 150, 250, 255 )
+SKIN.control_color_bright		= Color( 255, 200, 100, 255 )
+SKIN.control_color_dark			= Color( 100, 100, 100, 255 )
 
-SKIN.bg_alt1 					= Color( 50, 50, 50, 255 )
-SKIN.bg_alt2 					= Color( 55, 55, 55, 255 )
+SKIN.bg_alt1					= Color( 50, 50, 50, 255 )
+SKIN.bg_alt2					= Color( 55, 55, 55, 255 )
 
 SKIN.listview_hover				= Color( 70, 70, 70, 255 )
 SKIN.listview_selected			= Color( 100, 170, 220, 255 )
@@ -51,11 +43,11 @@ SKIN.combobox_selected			= SKIN.listview_selected
 SKIN.panel_transback			= Color( 255, 255, 255, 50 )
 SKIN.tooltip					= Color( 255, 245, 175, 255 )
 
-SKIN.colPropertySheet 			= Color( 170, 170, 170, 255 )
-SKIN.colTab			 			= SKIN.colPropertySheet
+SKIN.colPropertySheet			= Color( 170, 170, 170, 255 )
+SKIN.colTab						= SKIN.colPropertySheet
 SKIN.colTabInactive				= Color( 140, 140, 140, 255 )
 SKIN.colTabShadow				= Color( 0, 0, 0, 170 )
-SKIN.colTabText		 			= Color( 255, 255, 255, 255 )
+SKIN.colTabText					= Color( 255, 255, 255, 255 )
 SKIN.colTabTextInactive			= Color( 0, 0, 0, 200 )
 SKIN.fontTab					= "DermaDefault"
 
@@ -81,11 +73,9 @@ SKIN.colButtonBorder			= Color( 20, 20, 20, 255 )
 SKIN.colButtonBorderHighlight	= Color( 255, 255, 255, 50 )
 SKIN.colButtonBorderShadow		= Color( 0, 0, 0, 100 )
 
-
-
 SKIN.tex = {}
 
-SKIN.tex.Selection		 			= GWEN.CreateTextureBorder( 384, 32, 31, 31, 4, 4, 4, 4 )
+SKIN.tex.Selection					= GWEN.CreateTextureBorder( 384, 32, 31, 31, 4, 4, 4, 4 )
 
 SKIN.tex.Panels = {}
 SKIN.tex.Panels.Normal				= GWEN.CreateTextureBorder( 256,	0, 63, 63, 16, 16, 16, 16 )
@@ -240,7 +230,6 @@ SKIN.tex.ProgressBar = {}
 SKIN.tex.ProgressBar.Back	= GWEN.CreateTextureBorder( 384,	0, 31, 31, 8, 8, 8, 8 )
 SKIN.tex.ProgressBar.Front	= GWEN.CreateTextureBorder( 384+32, 0, 31, 31, 8, 8, 8, 8 )
 
-
 SKIN.tex.CategoryList = {}
 SKIN.tex.CategoryList.Outer		= GWEN.CreateTextureBorder( 256, 384, 63, 63, 8, 8, 8, 8 )
 SKIN.tex.CategoryList.Inner		= GWEN.CreateTextureBorder( 320, 384, 63, 63, 8, 21, 8, 8 )
@@ -318,7 +307,6 @@ SKIN.Colours.Category.LineAlt.Button_Selected	= GWEN.TextureColor( 4 + 8 * 25, 5
 
 SKIN.Colours.TooltipText = GWEN.TextureColor( 4 + 8 * 26, 500 )
 
-
 --[[---------------------------------------------------------
 	Panel
 -----------------------------------------------------------]]
@@ -386,7 +374,6 @@ function SKIN:PaintButton( panel, w, h )
 
 end
 
-
 --[[---------------------------------------------------------
 	Tree
 -----------------------------------------------------------]]
@@ -397,7 +384,6 @@ function SKIN:PaintTree( panel, w, h )
 	self.tex.Tree( 0, 0, w, h, panel.m_bgColor )
 
 end
-
 
 --[[---------------------------------------------------------
 	CheckBox
@@ -724,7 +710,6 @@ function SKIN:PaintButtonRight( panel, w, h )
 
 end
 
-
 --[[---------------------------------------------------------
 	ComboDownArrow
 -----------------------------------------------------------]]
@@ -836,7 +821,6 @@ function SKIN:PaintTreeNode( panel, w, h )
 
 end
 
-
 function SKIN:PaintTreeNodeButton( panel, w, h )
 
 	if ( !panel.m_bSelected ) then return end
@@ -879,7 +863,7 @@ local function PaintNotches( x, y, w, h, num )
 
 	for i=0, num do
 
-		surface.DrawRect( x + i * space, y + 4, 1,  5 )
+		surface.DrawRect( x + i * space, y + 4, 1, 5 )
 
 	end
 
@@ -958,6 +942,7 @@ end
 function SKIN:PaintListView( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
+
 	self.tex.Input.ListBox.Background( 0, 0, w, h )
 
 end
@@ -973,6 +958,5 @@ function SKIN:PaintMenuBar( panel, w, h )
 	self.tex.Menu_Strip( 0, 0, w, h )
 
 end
-
 
 derma.DefineSkin( "Default", "Made to look like regular VGUI", SKIN )
