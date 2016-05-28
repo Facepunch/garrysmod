@@ -212,12 +212,20 @@ else
 		Panel:ClearControls()
 		Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.cleanup.help" } )
 		Panel:Button( "#CleanupAll", "gmod_cleanup" )
-
-		table.sort( cleanup_types )
 		
+		local cleanup_names, cleanup_names_lookup, cleanup_types_lookup = {}, {}, {}
 		for key, val in pairs( cleanup_types ) do
+			local name = language.GetPhrase( "Cleanup_" .. val )
+			local namelowered = string.lower( name )
+			cleanup_names[key] = namelowered
+			cleanup_names_lookup[namelowered] = name
+			cleanup_types_lookup[namelowered] = cleanup_types[key]
+		end
+		table.sort( cleanup_names )
 		
-			Panel:Button( "#Cleanup_"..val, "gmod_cleanup", val )
+		for key, val in pairs( cleanup_names ) do
+		
+			Panel:Button( cleanup_names_lookup[val], "gmod_cleanup", cleanup_types_lookup[val] )
 			
 		end
 		
@@ -228,11 +236,10 @@ else
 		Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.cleanup.help" } )
 		Panel:Button( "#CleanupAll", "gmod_admin_cleanup" )
 		
-		table.sort( cleanup_types )
 		
-		for key, val in pairs( cleanup_types ) do
+		for key, val in pairs( cleanup_names ) do
 		
-			Panel:Button( "#Cleanup_"..val, "gmod_admin_cleanup", val )
+			Panel:Button( cleanup_names_lookup[val], "gmod_admin_cleanup", cleanup_types_lookup[val] )
 			
 		end
 		
