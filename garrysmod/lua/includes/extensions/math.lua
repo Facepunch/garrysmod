@@ -211,11 +211,11 @@ function math.Approach( cur, target, inc )
 
 	if (cur < target) then
 		
-		return math.Clamp( cur + inc, cur, target )
+		return math.min( cur + inc, target )
 
 	elseif (cur > target) then
 
-		return math.Clamp( cur - inc, target, cur )
+		return math.max( cur - inc, target )
 
 	end
 
