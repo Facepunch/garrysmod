@@ -15,7 +15,7 @@ local pickupclr = {
 }
 
 function GM:HUDWeaponPickedUp( wep )
-   if (not IsValid(wep)) or (not LocalPlayer():Alive()) then return end
+   if not (IsValid(wep) and IsValid(LocalPlayer())) or (not LocalPlayer():Alive()) then return end
 
    local name = LANG.TryTranslation(wep.GetPrintName and wep:GetPrintName() or wep:GetClass() or "Unknown Weapon Name")
 
@@ -48,7 +48,7 @@ end
 
 function GM:HUDItemPickedUp( itemname )
 
-   if (not LocalPlayer():Alive()) then return end
+   if not (IsValid(LocalPlayer()) and LocalPlayer():Alive()) then return end
 
    local pickup = {}
    pickup.time      = CurTime()
@@ -78,7 +78,7 @@ function GM:HUDItemPickedUp( itemname )
 end
 
 function GM:HUDAmmoPickedUp( itemname, amount )
-   if (not LocalPlayer():Alive()) then return end
+   if not (IsValid(LocalPlayer()) and LocalPlayer():Alive()) then return end
 
    local itemname_trans = LANG.TryTranslation(string.lower("ammo_" .. itemname))
 
