@@ -8,7 +8,14 @@ include( "prop_tools.lua" )
 function CCSpawn( player, command, arguments )
 
 	if ( arguments[ 1 ] == nil ) then return end
-	if ( arguments[ 1 ]:find( "[./\\][/\\]" ) ) then return end
+	if ( arguments[ 1 ]:find( "%.[/\\]" ) ) then return end
+
+	-- Clean up the path from attempted blacklist bypasses
+	arguments[ 1 ] = arguments[ 1 ]:gsub( "\\\\+", "/" )
+	arguments[ 1 ] = arguments[ 1 ]:gsub( "//+", "/" )
+	arguments[ 1 ] = arguments[ 1 ]:gsub( "\\/+", "/" )
+	arguments[ 1 ] = arguments[ 1 ]:gsub( "/\\+", "/" )
+
 	if ( !gamemode.Call( "PlayerSpawnObject", player, arguments[ 1 ], arguments[ 2 ] ) ) then return end
 	if ( !util.IsValidModel( arguments[ 1 ] ) ) then return end
 
