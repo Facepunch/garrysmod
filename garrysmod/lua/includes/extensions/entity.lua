@@ -22,7 +22,7 @@ function meta:__index( key )
 	--
 	local tab = self:GetTable()
 	if ( tab ) then
-		local val = tab[ key ]
+		local val = rawget( tab, key )
 		if ( val != nil ) then return val end
 	end
 
