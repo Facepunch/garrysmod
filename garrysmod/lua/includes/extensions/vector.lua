@@ -1,6 +1,15 @@
 local meta = FindMetaTable( "Vector" )
 
--- Nothing in here, still leaving this file here just in case
+--
+-- Normalizes this vector in-place and returns it.
+--
+function meta:AsNormalized( )
+
+	self:Normalize( )
+	
+	return self
+	
+end
 
 --[[---------------------------------------------------------
 	Converts Vector To Color - alpha precision lost, must reset
