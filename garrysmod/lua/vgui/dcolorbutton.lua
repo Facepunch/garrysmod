@@ -1,17 +1,7 @@
---[[
-	 _
-	( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
-
-	DColorButton
---]]
-
-local matGrid = Material( "gui/bg-lines.png", "nocull" )
 
 local PANEL = {}
+
+local matGrid = Material( "gui/alpha_grid.png", "nocull" )
 
 AccessorFunc( PANEL, "m_bBorder", "DrawBorder", FORCE_BOOL )
 AccessorFunc( PANEL, "m_bDisabled", "Disabled", FORCE_BOOL )
@@ -50,7 +40,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetColor( color )
 
-	local colorStr = "R: "..color.r.."\nG: "..color.g.."\nB: "..color.b.."\nA: "..color.a
+	local colorStr = "R: " .. color.r .. "\nG: " .. color.g .. "\nB: " .. color.b .. "\nA: " .. color.a
 
 	self:SetTooltip( colorStr )
 	self.m_Color = color
@@ -68,7 +58,7 @@ function PANEL:Paint( w, h )
 		surface.SetMaterial( matGrid )
 
 		local size = math.max( 128, math.max( w, h ) )
-		local x, y = w / 2 - size / 2, h / 2 - size / 2 
+		local x, y = w / 2 - size / 2, h / 2 - size / 2
 		surface.DrawTexturedRect( x, y , size, size )
 
 	end
@@ -88,7 +78,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetDisabled( bDisabled )
 
-	self.m_bDisabled = bDisabled	
+	self.m_bDisabled = bDisabled
 	self:InvalidateLayout()
 
 end
@@ -99,7 +89,8 @@ end
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-		ctrl:SetSize( 64, 64 )
+	ctrl:SetSize( 64, 64 )
+	ctrl:SetColor( Color( 255, 0, 0, 128 ) )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 

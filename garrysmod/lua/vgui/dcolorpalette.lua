@@ -217,7 +217,7 @@ end
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-	ctrl:SetSize( 256, 256 )
+	ctrl:SetSize( 160, 256 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
