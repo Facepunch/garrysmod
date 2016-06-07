@@ -9,6 +9,7 @@ function ENT:Initialize()
 	if ( CLIENT ) then return end
 
 	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetRenderMode( RENDERMODE_TRANSALPHA )
 
 	-- Set up our physics object here
 	local phys = self:GetPhysicsObject()
@@ -54,7 +55,7 @@ function ENT:OnTakeDamage( dmginfo )
 	end
 
 	local attacker = dmginfo:GetAttacker()
-	if ( IsValid(attacker) && attacker:IsPlayer() ) then
+	if ( IsValid( attacker ) && attacker:IsPlayer() ) then
 		attacker:SendLua( "achievements.BalloonPopped()" )
 	end
 

@@ -122,7 +122,6 @@ end
 --
 function ENT:Toggle( bEnable, ply )
 
-
 	if ( bEnable ) then
 
 		numpad.Activate( self:GetPlayer(), self:GetKey(), true )
