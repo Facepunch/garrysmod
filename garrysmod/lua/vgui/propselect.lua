@@ -142,7 +142,7 @@ function PANEL:PerformLayout()
 
 	y = y + Height
 
-	self:SetTall( y )
+	self:SetTall( y + 5 )
 
 end
 

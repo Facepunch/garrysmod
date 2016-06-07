@@ -84,11 +84,21 @@ end
 -----------------------------------------------------------]]
 function PANEL:SetItemSize( pnl )
 
+	local maxW = self:GetWide()
+	if ( self.List.VBar && self.List.VBar.Enabled ) then maxW = maxW - self.List.VBar:GetWide() end
+
 	local w = self.ItemWidth
-	if ( w < 1 ) then w = ( self:GetWide() - self.List:GetPadding() * 2 ) * w end
+	if ( w < 1 ) then
+		local numIcons = math.floor( 1 / w )
+		w = math.floor( ( maxW - self.List:GetPadding() * 2 - self.List:GetSpacing() * ( numIcons - 1 ) ) / numIcons )
+	end
+	
 
 	local h = self.ItemHeight
-	if ( h < 1 ) then h = ( self:GetWide() - self.List:GetPadding() * 2 ) * h end
+	if ( h < 1 ) then
+		local numIcons = math.floor( 1 / h )
+		h = math.floor( ( maxW - self.List:GetPadding() * 2 - self.List:GetSpacing() * ( numIcons - 1 ) ) / numIcons )
+	end
 
 	pnl:SetSize( w, h )
 
@@ -111,7 +121,7 @@ function PANEL:AddMaterialEx( label, material, value, convars )
 	-- Run a console command when the Icon is clicked
 	Mat.DoClick = function ( button )
 
-		for k, v in pairs( convars ) do	RunConsoleCommand( k, v ) end
+		for k, v in pairs( convars ) do RunConsoleCommand( k, v ) end
 
 	end
 
@@ -171,8 +181,16 @@ function PANEL:PerformLayout()
 
 	return end
 
+	self.List:InvalidateLayout( true ) -- Rebuild
+
+	local maxW = self:GetWide()
+	if ( self.List.VBar && self.List.VBar.Enabled ) then maxW = maxW - self.List.VBar:GetWide() end
+
 	local h = self.ItemHeight
-	if ( h < 1 ) then h = ( self:GetWide() - self.List:GetPadding() * 2 ) * h end
+	if ( h < 1 ) then
+		local numIcons = math.floor( 1 / h )
+		h = math.floor( ( maxW - self.List:GetPadding() * 2 - self.List:GetSpacing() * ( numIcons - 1 ) ) / numIcons )
+	end
 
 	local Height = ( h * self.Height ) + ( self.List:GetPadding() * 2 ) + self.List:GetSpacing() * ( self.Height - 1 )
 
@@ -213,10 +231,9 @@ end
 function PANEL:TestForChanges()
 
 	local cvar = self:ConVar()
-	if (!cvar) then return end
+	if ( !cvar ) then return end
 
 	local Value = GetConVarString( cvar )
-
 	if ( Value == self.CurrentValue ) then return end
 
 	self:FindAndSelectMaterial( Value )

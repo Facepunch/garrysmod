@@ -117,7 +117,6 @@ function PANEL:Clear( bDelete )
 
 end
 
-
 --[[---------------------------------------------------------
 	Name: AddItem
 -----------------------------------------------------------]]
@@ -263,12 +262,12 @@ function PANEL:Rebuild()
 
 			if ( panel:IsVisible() ) then
 
-				local OwnLine = (panel.m_strLineState && panel.m_strLineState == "ownline")
+				local OwnLine = ( panel.m_strLineState && panel.m_strLineState == "ownline" )
 
 				local w = panel:GetWide()
 				local h = panel:GetTall()
 
-				if ( x > self.Padding && (x + w> self:GetWide() || OwnLine) ) then
+				if ( x > self.Padding && ( x + w > self:GetWide() || OwnLine ) ) then
 
 					x = self.Padding
 					y = y + h + self.Spacing
@@ -304,9 +303,9 @@ function PANEL:Rebuild()
 				if ( self.m_bNoSizing ) then
 					panel:SizeToContents()
 					if ( self.m_fAnimTime > 0 && self.m_iBuilds > 1 ) then
-						panel:MoveTo( (self:GetCanvas():GetWide() - panel:GetWide()) * 0.5, self.Padding + Offset, self.m_fAnimTime, 0, self.m_fAnimEase )
+						panel:MoveTo( ( self:GetCanvas():GetWide() - panel:GetWide() ) * 0.5, self.Padding + Offset, self.m_fAnimTime, 0, self.m_fAnimEase )
 					else
-						panel:SetPos( (self:GetCanvas():GetWide() - panel:GetWide()) * 0.5, self.Padding + Offset )
+						panel:SetPos( ( self:GetCanvas():GetWide() - panel:GetWide() ) * 0.5, self.Padding + Offset )
 					end
 				else
 					panel:SetSize( self:GetCanvas():GetWide() - self.Padding * 2, panel:GetTall() )
@@ -439,7 +438,6 @@ function PANEL:ScrollToChild( panel )
 	self.VBar:AnimateTo( y, 0.5, 0, 0.5 )
 
 end
-
 
 --[[---------------------------------------------------------
 	Name: SortByMember
