@@ -14,7 +14,7 @@ end
 
 SWEP.UseHands			= true
 SWEP.Base				= "weapon_tttbase"
-SWEP.ViewModel			= "models/weapons/c_crowbar.mdl"
+SWEP.ViewModel			= "models/weapons/v_crowbar.mdl"
 SWEP.WorldModel			= "models/weapons/w_crowbar.mdl"
 SWEP.Weight			= 5
 SWEP.DrawCrosshair		= false
