@@ -3,6 +3,8 @@ local AddCustomizableNode = nil
 
 local function SetupCustomNode( node, pnlContent, needsapp )
 
+	node.CustomSpawnlist = true -- Used to determine which nodes ContentSidebarToolBox can edit
+
 	--
 	-- This spawnlist needs a certain app mounted before it will show up.
 	--
@@ -36,7 +38,6 @@ local function SetupCustomNode( node, pnlContent, needsapp )
 		menu:AddOption( "Edit", function() self:InternalDoClick() hook.Run( "OpenToolbox" )  end )
 		menu:AddOption( "New Category", function() AddCustomizableNode( pnlContent, "New Category", "", self ) self:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end )
 		menu:AddOption( "Delete", function() node:Remove() hook.Run( "SpawnlistContentChanged" ) end )
-
 
 		menu:Open()
 
