@@ -154,14 +154,14 @@ function ENT:Draw()
 
 	render.SetMaterial( matBall )
 
-	local lcolor = render.ComputeLighting( self:GetPos(), Vector( 0, 0, 1 ) )
+	local pos = self:GetPos()
+	local lcolor = render.ComputeLighting( pos, Vector( 0, 0, 1 ) )
 	local c = self:GetBallColor()
 
 	lcolor.x = c.r * ( math.Clamp( lcolor.x, 0, 1 ) + 0.5 ) * 255
 	lcolor.y = c.g * ( math.Clamp( lcolor.y, 0, 1 ) + 0.5 ) * 255
 	lcolor.z = c.b * ( math.Clamp( lcolor.z, 0, 1 ) + 0.5 ) * 255
 
-	local pos = self:GetPos()
 	local size = math.Clamp( self:GetBallSize(), self.MinSize, self.MaxSize )
 	render.DrawSprite( pos, size, size, Color( lcolor.x, lcolor.y, lcolor.z, 255 ) )
 

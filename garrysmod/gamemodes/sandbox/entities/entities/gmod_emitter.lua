@@ -91,7 +91,7 @@ end
 
 if ( SERVER ) then
 
-	numpad.Register( "Emitter_On", 	function ( pl, ent )
+	numpad.Register( "Emitter_On", function ( pl, ent )
 
 		if ( !IsValid( ent ) ) then return end
 
