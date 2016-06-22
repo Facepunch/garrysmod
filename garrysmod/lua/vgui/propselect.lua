@@ -1,10 +1,7 @@
 
 local PANEL = {}
 
---[[---------------------------------------------------------
-	Name: This function is used as the paint function for 
-		selected buttons.
------------------------------------------------------------]]
+-- This function is used as the paint function for selected buttons.
 local function HighlightedButtonPaint( self )
 
 	surface.SetDrawColor( 255, 200, 0, 255 )
@@ -15,9 +12,6 @@ local function HighlightedButtonPaint( self )
 
 end
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	-- A panellist is a panel that you shove other panels
@@ -35,9 +29,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: ControlValues
------------------------------------------------------------]]
 function PANEL:AddModel( model, ConVars )
 
 	-- Creeate a spawnicon and set the model
@@ -50,14 +41,14 @@ function PANEL:AddModel( model, ConVars )
 	local ConVarName = self:ConVar()
 
 	-- Run a console command when the Icon is clicked
-	Icon.DoClick = function ( self ) 
+	Icon.DoClick = function ( self )
 
-		for k, v in pairs( self.ConVars ) do 
-			LocalPlayer():ConCommand( Format( "%s \"%s\"\n", k, v ) ) 
-		end 
+		for k, v in pairs( self.ConVars ) do
+			LocalPlayer():ConCommand( Format( "%s \"%s\"\n", k, v ) )
+		end
 
 		-- Note: We run this command after all the optional stuff
-		LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, model ) ) 
+		LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, model ) )
 
 	end
 
@@ -67,9 +58,6 @@ function PANEL:AddModel( model, ConVars )
 
 end
 
---[[---------------------------------------------------------
-	Name: ControlValues
------------------------------------------------------------]]
 function PANEL:AddModelEx( name, model, skin )
 
 	-- Creeate a spawnicon and set the model
@@ -91,9 +79,6 @@ function PANEL:AddModelEx( name, model, skin )
 
 end
 
---[[---------------------------------------------------------
-	Name: ControlValues
------------------------------------------------------------]]
 function PANEL:ControlValues( kv )
 
 	self.BaseClass.ControlValues( self, kv )
@@ -128,9 +113,6 @@ function PANEL:ControlValues( kv )
 
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	local y = self.BaseClass.PerformLayout( self )
@@ -146,9 +128,6 @@ function PANEL:PerformLayout()
 
 end
 
---[[---------------------------------------------------------
-	Name: SelectButton
------------------------------------------------------------]]
 function PANEL:FindAndSelectButton( Value )
 
 	self.CurrentValue = Value
@@ -159,11 +138,12 @@ function PANEL:FindAndSelectButton( Value )
 
 			-- Remove the old overlay
 			if ( self.SelectedIcon ) then
-				self.SelectedIcon.PaintOver = nil
+				self.SelectedIcon.PaintOver = self.OldSelectedPaintOver
 			end
 
 			-- Add the overlay to this button
-			Icon.PaintOver = HighlightedButtonPaint;
+			self.OldSelectedPaintOver = Icon.PaintOver
+			Icon.PaintOver = HighlightedButtonPaint
 			self.SelectedIcon = Icon
 
 		end
@@ -172,9 +152,6 @@ function PANEL:FindAndSelectButton( Value )
 
 end
 
---[[---------------------------------------------------------
-	Name: TestForChanges
------------------------------------------------------------]]
 function PANEL:TestForChanges()
 
 	local Value = GetConVarString( self:ConVar() )
