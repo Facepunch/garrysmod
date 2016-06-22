@@ -110,7 +110,7 @@ end
 
 if ( SERVER ) then
 
-	function MakeThruster( pl, Model, Ang, Pos, key, key_bck, force, toggle, effect, damageable, soundname, nocollide, Vel, aVel, frozen )
+	function MakeThruster( pl, model, ang, pos, key, key_bck, force, toggle, effect, damageable, soundname, nocollide )
 
 		if ( IsValid( pl ) ) then
 			if ( !pl:CheckLimit( "thrusters" ) ) then return false end
@@ -118,10 +118,10 @@ if ( SERVER ) then
 
 		local thruster = ents.Create( "gmod_thruster" )
 		if ( !IsValid( thruster ) ) then return false end
-		thruster:SetModel( Model )
 
-		thruster:SetAngles( Ang )
-		thruster:SetPos( Pos )
+		thruster:SetModel( model )
+		thruster:SetAngles( ang )
+		thruster:SetPos( pos )
 		thruster:Spawn()
 
 		force = math.Clamp( force, 0, 1E35 )
@@ -141,8 +141,8 @@ if ( SERVER ) then
 
 		if ( nocollide == true && IsValid( thruster:GetPhysicsObject() ) ) then thruster:GetPhysicsObject():EnableCollisions( false ) end
 
-		local ttable = {
-			key	= key,
+		table.Merge( thruster:GetTable(), {
+			key = key,
 			key_bck = key_bck,
 			force = force,
 			toggle = toggle,
@@ -151,9 +151,7 @@ if ( SERVER ) then
 			nocollide = nocollide,
 			damageable = damageable,
 			soundname = soundname
-		}
-
-		table.Merge( thruster:GetTable(), ttable )
+		} )
 
 		if ( IsValid( pl ) ) then
 			pl:AddCount( "thrusters", thruster )
@@ -165,30 +163,28 @@ if ( SERVER ) then
 
 	end
 
-	duplicator.RegisterEntityClass( "gmod_thruster", MakeThruster, "Model", "Ang", "Pos", "key", "key_bck", "force", "toggle", "effect", "damageable", "soundname", "nocollide", "Vel", "aVel", "frozen" )
+	duplicator.RegisterEntityClass( "gmod_thruster", MakeThruster, "Model", "Ang", "Pos", "key", "key_bck", "force", "toggle", "effect", "damageable", "soundname", "nocollide" )
 
 end
 
-function TOOL:UpdateGhostThruster( ent, pl )
+function TOOL:UpdateGhostThruster( ent, ply )
 
 	if ( !IsValid( ent ) ) then return end
 
-	local trace = util.TraceLine( util.GetPlayerTrace( pl ) )
-	if ( !trace.Hit ) then return end
-
-	if ( trace.Entity && trace.Entity:GetClass() == "gmod_thruster" || trace.Entity:IsPlayer() ) then
+	local trace = ply:GetEyeTrace()
+	if ( !trace.Hit || trace.Entity && ( trace.Entity:GetClass() == "gmod_thruster" || trace.Entity:IsPlayer() ) ) then
 
 		ent:SetNoDraw( true )
 		return
 
 	end
 
-	local Ang = trace.HitNormal:Angle()
-	Ang.pitch = Ang.pitch + 90
+	local ang = trace.HitNormal:Angle()
+	ang.pitch = ang.pitch + 90
 
 	local min = ent:OBBMins()
 	ent:SetPos( trace.HitPos - trace.HitNormal * min.z )
-	ent:SetAngles( Ang )
+	ent:SetAngles( ang )
 
 	ent:SetNoDraw( false )
 

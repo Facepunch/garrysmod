@@ -6,16 +6,6 @@ TOOL.LeftClickAutomatic = true
 TOOL.RightClickAutomatic = true
 TOOL.RequiresTraceHit = true
 
-if ( CLIENT ) then
-
-	function TOOL.BuildCPanel( CPanel )
-
-		CPanel:AddControl( "Header", { Description = "#tool.inflator.desc" } )
-
-	end
-
-end
-
 local ScaleYZ = {
 	"ValveBiped.Bip01_L_UpperArm",
 	"ValveBiped.Bip01_L_Forearm",
@@ -81,11 +71,8 @@ local function GetNiceBoneScale( name, scale )
 
 end
 
---[[------------------------------------------------------------
-	Scale the specified bone by Scale
---------------------------------------------------------------]]
+--Scale the specified bone by Scale
 local function ScaleBone( ent, bone, scale, type )
-
 	if ( !bone ) then return false end
 
 	local physBone = ent:TranslateBoneToPhysBone( bone )
@@ -106,9 +93,7 @@ local function ScaleBone( ent, bone, scale, type )
 
 end
 
---[[------------------------------------------------------------
-	Scale UP
---------------------------------------------------------------]]
+--Scale UP
 function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
@@ -126,9 +111,7 @@ function TOOL:LeftClick( trace )
 
 end
 
---[[------------------------------------------------------------
-	Scale DOWN
---------------------------------------------------------------]]
+-- Scale DOWN
 function TOOL:RightClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
@@ -146,9 +129,7 @@ function TOOL:RightClick( trace )
 
 end
 
---[[------------------------------------------------------------
-	Remove Scaling
---------------------------------------------------------------]]
+-- Reset scaling
 function TOOL:Reload( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
@@ -160,5 +141,11 @@ function TOOL:Reload( trace )
 	end
 
 	return true
+
+end
+
+function TOOL.BuildCPanel( CPanel )
+
+	CPanel:AddControl( "Header", { Description = "#tool.inflator.desc" } )
 
 end

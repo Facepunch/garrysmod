@@ -96,12 +96,6 @@ function TOOL:LeftClick( trace )
 
 end
 
-function TOOL:RightClick( trace )
-
-	return self:LeftClick( trace )
-
-end
-
 if ( SERVER ) then
 
 	function MakeHoverBall( ply, Pos, key_d, key_u, speed, resistance, strength, model, Vel, aVel, frozen, nocollide )
@@ -158,15 +152,12 @@ if ( SERVER ) then
 
 end
 
-function TOOL:UpdateGhostHoverball( ent, pl )
+function TOOL:UpdateGhostHoverball( ent, ply )
 
 	if ( !IsValid( ent ) ) then return end
 
-	local tr = util.GetPlayerTrace( pl )
-	local trace	= util.TraceLine( tr )
-	if ( !trace.Hit ) then return end
-
-	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_hoverball" ) then
+	local trace = ply:GetEyeTrace()
+	if ( !trace.Hit || trace.Entity && ( trace.Entity:GetClass() == "gmod_hoverball" || trace.Entity:IsPlayer() ) ) then
 
 		ent:SetNoDraw( true )
 		return

@@ -72,7 +72,7 @@ function TOOL:LeftClick( trace )
 	local toggle = self:GetClientNumber( "toggle" )
 
 	local ent = MakeCamera( ply, key, locked, toggle, { Pos = trace.StartPos, Angle = ply:EyeAngles() } )
-	
+
 	return true, ent
 
 end
@@ -80,22 +80,22 @@ end
 function TOOL:RightClick( trace )
 
 	local _, camera = self:LeftClick( trace, true )
-	
+
 	if ( CLIENT ) then return true end
 
 	if ( !IsValid( camera ) ) then return end
-	
+
 	if ( trace.Entity:IsWorld() ) then
-	
+
 		trace.Entity = self:GetOwner()
 		trace.HitPos = self:GetOwner():GetPos()
-	
+
 	end
 
 	camera:SetTracking( trace.Entity, trace.Entity:WorldToLocal( trace.HitPos ) )
-	
+
 	return true
-	
+
 end
 
 function TOOL.BuildCPanel( CPanel )
