@@ -85,18 +85,18 @@ function AddLegacy( text, type, length )
 end
 
 -- This is ugly because it's ripped straight from the old notice system
-local function UpdateNotice( i, Panel, Count )
+local function UpdateNotice( pnl, total_h )
 
-	local x = Panel.fx
-	local y = Panel.fy
+	local x = pnl.fx
+	local y = pnl.fy
 
-	local w = Panel:GetWide() + 16
-	local h = Panel:GetTall() + 16
+	local w = pnl:GetWide() + 16
+	local h = pnl:GetTall() + 4
 
-	local ideal_y = ScrH() - ( Count - i ) * ( h - 12 ) - 150
+	local ideal_y = ScrH() - 150 - h - total_h
 	local ideal_x = ScrW() - w - 20
 
-	local timeleft = Panel.StartTime - ( SysTime() - Panel.Length )
+	local timeleft = pnl.StartTime - ( SysTime() - pnl.Length )
 
 	-- Cartoon style about to go thing
 	if ( timeleft < 0.7 ) then
@@ -110,23 +110,25 @@ local function UpdateNotice( i, Panel, Count )
 
 	local spd = RealFrameTime() * 15
 
-	y = y + Panel.VelY * spd
-	x = x + Panel.VelX * spd
+	y = y + pnl.VelY * spd
+	x = x + pnl.VelX * spd
 
 	local dist = ideal_y - y
-	Panel.VelY = Panel.VelY + dist * spd * 1
-	if ( math.abs( dist ) < 2 && math.abs( Panel.VelY ) < 0.1 ) then Panel.VelY = 0 end
+	pnl.VelY = pnl.VelY + dist * spd * 1
+	if ( math.abs( dist ) < 2 && math.abs( pnl.VelY ) < 0.1 ) then pnl.VelY = 0 end
 	dist = ideal_x - x
-	Panel.VelX = Panel.VelX + dist * spd * 1
-	if ( math.abs( dist ) < 2 && math.abs( Panel.VelX ) < 0.1 ) then Panel.VelX = 0 end
+	pnl.VelX = pnl.VelX + dist * spd * 1
+	if ( math.abs( dist ) < 2 && math.abs( pnl.VelX ) < 0.1 ) then pnl.VelX = 0 end
 
 	-- Friction.. kind of FPS independant.
-	Panel.VelX = Panel.VelX * ( 0.95 - RealFrameTime() * 8 )
-	Panel.VelY = Panel.VelY * ( 0.95 - RealFrameTime() * 8 )
+	pnl.VelX = pnl.VelX * ( 0.95 - RealFrameTime() * 8 )
+	pnl.VelY = pnl.VelY * ( 0.95 - RealFrameTime() * 8 )
 
-	Panel.fx = x
-	Panel.fy = y
-	Panel:SetPos( Panel.fx, Panel.fy )
+	pnl.fx = x
+	pnl.fy = y
+	pnl:SetPos( pnl.fx, pnl.fy )
+
+	return total_h + h
 
 end
 
@@ -134,12 +136,10 @@ local function Update()
 
 	if ( !Notices ) then return end
 
-	local i = 0
-	local Count = table.Count( Notices )
-	for key, Panel in pairs( Notices ) do
+	local h = 0
+	for key, pnl in pairs( Notices ) do
 
-		i = i + 1
-		UpdateNotice( i, Panel, Count )
+		h = UpdateNotice( pnl, h )
 
 	end
 
@@ -155,9 +155,6 @@ hook.Add( "Think", "NotificationThink", Update )
 
 local PANEL = {}
 
---[[---------------------------------------------------------
-   Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:DockPadding( 3, 3, 3, 3 )
@@ -184,16 +181,24 @@ function PANEL:SizeToContents()
 
 	self.Label:SizeToContents()
 
-	local width = self.Label:GetWide()
+	local width, tall = self.Label:GetSize()
+
+	tall = math.max( tall, 32 ) + 6
+	width = width + 20
 
 	if ( IsValid( self.Image ) ) then
 		width = width + 32 + 8
+
+		local x = ( tall - 36 ) / 2
+		self.Image:DockMargin( 0, x, 0, x )
 	end
 
-	width = width + 20
-	self:SetWidth( width )
+	if ( self.Progress ) then
+		tall = tall + 10
+		self.Label:DockMargin( 0, 0, 0, 10 )
+	end
 
-	self:SetHeight( 32 + 6 )
+	self:SetSize( width, tall )
 
 	self:InvalidateLayout()
 
@@ -214,29 +219,34 @@ function PANEL:SetLegacyType( t )
 
 end
 
+function PANEL:Paint( w, h )
+
+	self.BaseClass.Paint( self, w, h )
+
+	if ( !self.Progress ) then return end
+
+	surface.SetDrawColor( 0, 100, 0, 150 )
+	surface.DrawRect( 4, self:GetTall() - 10, self:GetWide() - 8, 5 )
+
+	surface.SetDrawColor( 0, 50, 0, 255 )
+	surface.DrawRect( 5, self:GetTall() - 9, self:GetWide() - 10, 3 )
+
+	local w = self:GetWide() * 0.25
+	local x = math.fmod( SysTime() * 200, self:GetWide() + w ) - w
+
+	if ( x + w > self:GetWide() - 11 ) then w = ( self:GetWide() - 11 ) - x end
+	if ( x < 0 ) then w = w + x; x = 0 end
+
+	surface.SetDrawColor( 0, 255, 0, 255 )
+	surface.DrawRect( 5 + x, self:GetTall() - 9, w, 3 )
+
+end
+
 function PANEL:SetProgress()
 
-	-- Quick and dirty, just how I like it.
-	self.Paint = function( s, w, h )
+	self.Progress = true
 
-		self.BaseClass.Paint( self, w, h )
-
-		surface.SetDrawColor( 0, 100, 0, 150 )
-		surface.DrawRect( 4, self:GetTall() - 10, self:GetWide() - 8, 5 )
-
-		surface.SetDrawColor( 0, 50, 0, 255 )
-		surface.DrawRect( 5, self:GetTall() - 9, self:GetWide() - 10, 3 )
-
-		local w = self:GetWide() * 0.25
-		local x = math.fmod( SysTime() * 200, self:GetWide() + w ) - w
-
-		if ( x + w > self:GetWide() - 11 ) then w = ( self:GetWide() - 11 ) - x end
-		if ( x < 0 ) then w = w + x; x = 0 end
-
-		surface.SetDrawColor( 0, 255, 0, 255 )
-		surface.DrawRect( 5 + x, self:GetTall() - 9, w, 3 )
-
-	end
+	self:SizeToContents()
 
 end
 
@@ -250,6 +260,7 @@ function PANEL:KillSelf()
 	end
 
 	return false
+
 end
 
 vgui.Register( "NoticePanel", PANEL, "DPanel" )
