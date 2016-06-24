@@ -1,14 +1,15 @@
 
 local PANEL = {}
 
+local border = 0
+local border_w = 8
+local matHover = Material( "gui/ps_hover.png", "nocull" )
+local boxHover = GWEN.CreateTextureBorder( border, border, 64 - border * 2, 64 - border * 2, border_w, border_w, border_w, border_w, matHover )
+
 -- This function is used as the paint function for selected buttons.
-local function HighlightedButtonPaint( self )
+local function HighlightedButtonPaint( self, w, h )
 
-	surface.SetDrawColor( 255, 200, 0, 255 )
-
-	for i = 2, 3 do
-		surface.DrawOutlinedRect( i, i, self:GetWide() - i * 2, self:GetTall() - i * 2 )
-	end
+	boxHover( 0, 0, w, h, color_white )
 
 end
 

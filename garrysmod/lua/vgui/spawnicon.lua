@@ -1,6 +1,4 @@
 
-local matHover = Material( "vgui/spawnmenu/hover" )
-
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_strModelName",	"ModelName" )
@@ -8,10 +6,6 @@ AccessorFunc( PANEL, "m_iSkin",			"SkinID" )
 AccessorFunc( PANEL, "m_strBodyGroups",	"BodyGroup" )
 AccessorFunc( PANEL, "m_strIconName",	"IconName" )
 
-
---[[---------------------------------------------------------
-   Name: Paint
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetDoubleClickingEnabled( false )
@@ -45,21 +39,26 @@ end
 
 function PANEL:Paint( w, h )
 
-	if ( !self.Hovered ) then return end
-	
-	//derma.SkinHook( "Paint", "Shadow", self, w, h )
+	self.OverlayFade = math.Clamp( ( self.OverlayFade or 0 ) - RealFrameTime() * 640 * 2, 0, 255 )
+
+	if ( dragndrop.IsDragging() || !self:IsHovered() ) then return end
+
+	self.OverlayFade = math.Clamp( self.OverlayFade + RealFrameTime() * 640 * 8, 0, 255 )
 
 end
 
-function PANEL:PaintOver( w, h)
+local border = 4
+local border_w = 5
+local matHover = Material( "gui/sm_hover.png", "nocull" )
+local boxHover = GWEN.CreateTextureBorder( border, border, 64 - border * 2, 64 - border * 2, border_w, border_w, border_w, border_w, matHover )
+
+function PANEL:PaintOver( w, h )
+
+	if ( self.OverlayFade > 0 ) then
+		boxHover( 0, 0, w, h, Color( 255, 255, 255, self.OverlayFade ) )
+	end
 
 	self:DrawSelections()
-
-	if ( !self.Hovered ) then return end
-
-	surface.SetDrawColor( 255, 255, 255, 255 )
-	surface.SetMaterial( matHover )
-	self:DrawTexturedRect()
 
 end
 
@@ -85,18 +84,18 @@ function PANEL:SetBodyGroup( k, v )
 	if ( v < 0 ) then return end
 	if ( v > 9 ) then return end
 
-	self.m_strBodyGroups = self.m_strBodyGroups:SetChar( k+1, v )
+	self.m_strBodyGroups = self.m_strBodyGroups:SetChar( k + 1, v )
 
 end
 
 function PANEL:SetModel( mdl, iSkin, BodyGorups )
 
-	if (!mdl) then debug.Trace() return end
+	if ( !mdl ) then debug.Trace() return end
 
 	self:SetModelName( mdl )
 	self:SetSkinID( iSkin )
 
-	if ( tostring(BodyGorups):len() != 9 ) then
+	if ( tostring( BodyGorups ):len() != 9 ) then
 		BodyGorups = "000000000"
 	end
 
@@ -105,7 +104,7 @@ function PANEL:SetModel( mdl, iSkin, BodyGorups )
 	self.Icon:SetModel( mdl, iSkin, BodyGorups )
 
 	if ( iSkin && iSkin > 0 ) then
-		self:SetTooltip( Format( "%s (Skin %i)", mdl, iSkin+1 ) )
+		self:SetTooltip( Format( "%s (Skin %i)", mdl, iSkin + 1 ) )
 	else
 		self:SetTooltip( Format( "%s", mdl ) )
 	end
@@ -218,8 +217,8 @@ spawnmenu.AddContentType( "model", function( container, obj )
 		menu:AddOption( "Spawn using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "4" ) RunConsoleCommand( "creator_name", obj.model ) end )
 
 		local submenu = menu:AddSubMenu( "Re-Render", function() icon:RebuildSpawnIcon() end )
-			submenu:AddOption( "This Icon", function() icon:RebuildSpawnIcon() end )
-			submenu:AddOption( "All Icons", function() container:RebuildAll() end )
+		submenu:AddOption( "This Icon", function() icon:RebuildSpawnIcon() end )
+		submenu:AddOption( "All Icons", function() container:RebuildAll() end )
 
 		menu:AddOption( "Edit Icon", function()
 
@@ -242,25 +241,25 @@ spawnmenu.AddContentType( "model", function( container, obj )
 		end
 
 		local submenu = menu:AddSubMenu( "Resize", function() end )
-			submenu:AddOption( "64 x 64 (default)", function() ChangeIconSize( 64, 64 ) end )
-			submenu:AddOption( "64 x 128", function() ChangeIconSize( 64, 128 ) end )
-			submenu:AddOption( "64 x 256", function() ChangeIconSize( 64, 256 ) end )
-			submenu:AddOption( "64 x 512", function() ChangeIconSize( 64, 512 ) end )
-			submenu:AddSpacer()
-			submenu:AddOption( "128 x 64", function() ChangeIconSize( 128, 64 ) end )
-			submenu:AddOption( "128 x 128", function() ChangeIconSize( 128, 128 ) end )
-			submenu:AddOption( "128 x 256", function() ChangeIconSize( 128, 256 ) end )
-			submenu:AddOption( "128 x 512", function() ChangeIconSize( 128, 512 ) end )
-			submenu:AddSpacer()
-			submenu:AddOption( "256 x 64", function() ChangeIconSize( 256, 64 ) end )
-			submenu:AddOption( "256 x 128", function() ChangeIconSize( 256, 128 ) end )
-			submenu:AddOption( "256 x 256", function() ChangeIconSize( 256, 256 ) end )
-			submenu:AddOption( "256 x 512", function() ChangeIconSize( 256, 512 ) end )
-			submenu:AddSpacer()
-			submenu:AddOption( "512 x 64", function() ChangeIconSize( 512, 64 ) end )
-			submenu:AddOption( "512 x 128", function() ChangeIconSize( 512, 128 ) end )
-			submenu:AddOption( "512 x 256", function() ChangeIconSize( 512, 256 ) end )
-			submenu:AddOption( "512 x 512", function() ChangeIconSize( 512, 512 ) end )
+		submenu:AddOption( "64 x 64 (default)", function() ChangeIconSize( 64, 64 ) end )
+		submenu:AddOption( "64 x 128", function() ChangeIconSize( 64, 128 ) end )
+		submenu:AddOption( "64 x 256", function() ChangeIconSize( 64, 256 ) end )
+		submenu:AddOption( "64 x 512", function() ChangeIconSize( 64, 512 ) end )
+		submenu:AddSpacer()
+		submenu:AddOption( "128 x 64", function() ChangeIconSize( 128, 64 ) end )
+		submenu:AddOption( "128 x 128", function() ChangeIconSize( 128, 128 ) end )
+		submenu:AddOption( "128 x 256", function() ChangeIconSize( 128, 256 ) end )
+		submenu:AddOption( "128 x 512", function() ChangeIconSize( 128, 512 ) end )
+		submenu:AddSpacer()
+		submenu:AddOption( "256 x 64", function() ChangeIconSize( 256, 64 ) end )
+		submenu:AddOption( "256 x 128", function() ChangeIconSize( 256, 128 ) end )
+		submenu:AddOption( "256 x 256", function() ChangeIconSize( 256, 256 ) end )
+		submenu:AddOption( "256 x 512", function() ChangeIconSize( 256, 512 ) end )
+		submenu:AddSpacer()
+		submenu:AddOption( "512 x 64", function() ChangeIconSize( 512, 64 ) end )
+		submenu:AddOption( "512 x 128", function() ChangeIconSize( 512, 128 ) end )
+		submenu:AddOption( "512 x 256", function() ChangeIconSize( 512, 256 ) end )
+		submenu:AddOption( "512 x 512", function() ChangeIconSize( 512, 512 ) end )
 
 		menu:AddSpacer()
 		menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged" ) end )

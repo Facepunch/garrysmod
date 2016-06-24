@@ -6,23 +6,18 @@ AccessorFunc( PANEL, "ItemHeight",			"ItemHeight",	FORCE_NUMBER )
 AccessorFunc( PANEL, "Height",				"NumRows",		FORCE_NUMBER )
 AccessorFunc( PANEL, "m_bSizeToContent",	"AutoHeight",	FORCE_BOOL )
 
---[[---------------------------------------------------------
-	Name: This function is used as the paint function for
-		selected buttons.
------------------------------------------------------------]]
-local function HighlightedButtonPaint( self )
+local border = 0
+local border_w = 8
+local matHover = Material( "gui/ps_hover.png", "nocull" )
+local boxHover = GWEN.CreateTextureBorder( border, border, 64 - border * 2, 64 - border * 2, border_w, border_w, border_w, border_w, matHover )
 
-	surface.SetDrawColor( 255, 200, 0, 255 )
+-- This function is used as the paint function for selected buttons.
+local function HighlightedButtonPaint( self, w, h )
 
-	for i=2, 3 do
-		surface.DrawOutlinedRect( i, i, self:GetWide() - i * 2, self:GetTall() - i * 2 )
-	end
+	boxHover( 0, 0, w, h, color_white )
 
 end
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	-- A panellist is a panel that you shove other panels
@@ -41,9 +36,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: SetAutoHeight
------------------------------------------------------------]]
 function PANEL:SetAutoHeight( bAutoHeight )
 
 	self.m_bSizeToContent = bAutoHeight
@@ -53,9 +45,6 @@ function PANEL:SetAutoHeight( bAutoHeight )
 
 end
 
---[[---------------------------------------------------------
-	Name: AddMaterial
------------------------------------------------------------]]
 function PANEL:AddMaterial( label, value )
 
 	-- Creeate a spawnicon and set the model
@@ -79,9 +68,6 @@ function PANEL:AddMaterial( label, value )
 
 end
 
---[[---------------------------------------------------------
-	Name: SetItemSize
------------------------------------------------------------]]
 function PANEL:SetItemSize( pnl )
 
 	local maxW = self:GetWide()
@@ -104,9 +90,6 @@ function PANEL:SetItemSize( pnl )
 
 end
 
---[[---------------------------------------------------------
-	Name: AddMaterialEx
------------------------------------------------------------]]
 function PANEL:AddMaterialEx( label, material, value, convars )
 
 	-- Creeate a spawnicon and set the model
@@ -133,9 +116,6 @@ function PANEL:AddMaterialEx( label, material, value, convars )
 
 end
 
---[[---------------------------------------------------------
-	Name: ControlValues
------------------------------------------------------------]]
 function PANEL:ControlValues( kv )
 
 	self.BaseClass.ControlValues( self, kv )
@@ -162,9 +142,6 @@ function PANEL:ControlValues( kv )
 
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	self.List:SetPos( 0, 0 )
@@ -199,9 +176,6 @@ function PANEL:PerformLayout()
 
 end
 
---[[---------------------------------------------------------
-	Name: FindAndSelectMaterial
------------------------------------------------------------]]
 function PANEL:FindAndSelectMaterial( Value )
 
 	self.CurrentValue = Value
@@ -212,10 +186,11 @@ function PANEL:FindAndSelectMaterial( Value )
 
 			-- Remove the old overlay
 			if ( self.SelectedMaterial ) then
-				self.SelectedMaterial.PaintOver = nil
+				self.SelectedMaterial.PaintOver = self.OldSelectedPaintOver
 			end
 
 			-- Add the overlay to this button
+			self.OldSelectedPaintOver = Mat.PaintOver
 			Mat.PaintOver = HighlightedButtonPaint
 			self.SelectedMaterial = Mat
 
@@ -225,9 +200,6 @@ function PANEL:FindAndSelectMaterial( Value )
 
 end
 
---[[---------------------------------------------------------
-	Name: TestForChanges
------------------------------------------------------------]]
 function PANEL:TestForChanges()
 
 	local cvar = self:ConVar()
