@@ -21,27 +21,21 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "m_pSelectedPanel", "SelectedPanel" )
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetPaintBackground( false )
 
 	self.CategoryTable = {}
 
-	self.ContentNavBar = vgui.Create( "ContentSidebar", self )
-	self.ContentNavBar:Dock( LEFT )
-	self.ContentNavBar:SetSize( 190, 10 )
-	self.ContentNavBar:DockMargin( 0, 0, 4, 0 )
-
 	self.HorizontalDivider = vgui.Create( "DHorizontalDivider", self )
 	self.HorizontalDivider:Dock( FILL )
 	self.HorizontalDivider:SetLeftWidth( 192 )
 	self.HorizontalDivider:SetLeftMin( 192 )
-	self.HorizontalDivider:SetRightMin( 530 )
+	self.HorizontalDivider:SetRightMin( 400 )
 	self.HorizontalDivider:SetDividerWidth( 6 )
+	--self.HorizontalDivider:SetCookieName( "SpawnMenuCreationMenuDiv" )
 
+	self.ContentNavBar = vgui.Create( "ContentSidebar", self.HorizontalDivider )
 	self.HorizontalDivider:SetLeft( self.ContentNavBar )
 
 end
@@ -65,11 +59,11 @@ function PANEL:SwitchPanel( panel )
 
 	self.SelectedPanel = panel
 
-	self.SelectedPanel:Dock( RIGHT )
+	self.HorizontalDivider:SetRight( self.SelectedPanel )
+	self.HorizontalDivider:InvalidateLayout( true )
+
 	self.SelectedPanel:SetVisible( true )
 	self:InvalidateParent()
-
-	self.HorizontalDivider:SetRight( self.SelectedPanel )
 
 end
 

@@ -58,18 +58,6 @@ function PANEL:Paint( w, h )
 end
 
 --[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
-function PANEL:PerformLayout()
-
-	DPropertySheet.PerformLayout( self )
-
-	-- We want to size to the contents in the base panel
-	self:SizeToContentWidth()
-
-end
-
---[[---------------------------------------------------------
 	Name: GetToolPanel
 -----------------------------------------------------------]]
 function PANEL:GetToolPanel( id )

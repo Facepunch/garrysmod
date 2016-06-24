@@ -14,11 +14,6 @@ function PANEL:Init()
 	self.Canvas = vgui.Create( "DCategoryList", self )
 	self.m_bHangOpen = false
 
-	--self.Canvas:EnableVerticalScrollbar( true )
-	--self.Canvas:SetSpacing( 0 )
-	--self.Canvas:SetPadding( 5 )
-	--self.Canvas:SetPaintBackground( false )
-
 	self:Dock( FILL )
 
 end
@@ -90,23 +85,18 @@ end
 
 function PANEL:PerformLayout()
 
-	self.Canvas:SetWide( 311 )
-	self.Canvas:SetPos( ScrW() - self.Canvas:GetWide() - 50, self.y )
-
 	if ( IsValid( spawnmenu.ActiveControlPanel() ) ) then
 
 		spawnmenu.ActiveControlPanel():InvalidateLayout( true )
 
-		local Tall = spawnmenu.ActiveControlPanel():GetTall() + 10
-		local MaxTall = ScrH() * 0.8
-		if ( Tall > MaxTall ) then Tall = MaxTall end
+		local Tall = math.min( spawnmenu.ActiveControlPanel():GetTall() + 10, ScrH() * 0.8 )
+		if ( self.Canvas:GetTall() != Tall ) then self.Canvas:SetTall( Tall ) end
+		if ( self.Canvas:GetWide() != 320 ) then self.Canvas:SetWide( 320 ) end
 
-		self.Canvas:SetTall( Tall )
-		self.Canvas.y = ScrH() - 50 - Tall
+		self.Canvas:SetPos( ScrW() - self.Canvas:GetWide() - 50, ScrH() - 50 - Tall )
+		self.Canvas:InvalidateLayout( true )
 
 	end
-
-	self.Canvas:InvalidateLayout( true )
 
 end
 
@@ -167,20 +157,27 @@ function CreateContextMenu()
 	hook.Run( "ContextMenuCreated", g_ContextMenu )
 
 	local IconLayout = g_ContextMenu:Add( "DIconLayout" )
-	IconLayout:Dock( LEFT )
-	IconLayout:SetWorldClicker( true )
 	IconLayout:SetBorder( 8 )
 	IconLayout:SetSpaceX( 8 )
 	IconLayout:SetSpaceY( 8 )
-	IconLayout:SetWide( 200 )
 	IconLayout:SetLayoutDir( LEFT )
+	IconLayout:SetWorldClicker( true )
+	IconLayout:SetStretchHeight( false )
+	IconLayout:SetWide( 240 + 32 )
+	IconLayout:Dock( LEFT )
 
 	for k, v in pairs( list.Get( "DesktopWindows" ) ) do
 
 		local icon = IconLayout:Add( "DButton" )
 		icon:SetText( "" )
 		icon:SetSize( 80, 82 )
-		icon.Paint = function()end
+		icon.Paint = function() end
+
+		local image = icon:Add( "DImage" )
+		image:SetImage( v.icon )
+		image:SetSize( 64, 64 )
+		image:Dock( TOP )
+		image:DockMargin( 8, 0, 8, 0 )
 
 		local label = icon:Add( "DLabel" )
 		label:Dock( BOTTOM )
@@ -188,12 +185,6 @@ function CreateContextMenu()
 		label:SetContentAlignment( 5 )
 		label:SetTextColor( Color( 255, 255, 255, 255 ) )
 		label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
-
-		local image = icon:Add( "DImage" )
-		image:SetImage( v.icon )
-		image:SetSize( 64, 64 )
-		image:Dock( TOP )
-		image:DockMargin( 8, 0, 8, 0 )
 
 		icon.DoClick = function()
 

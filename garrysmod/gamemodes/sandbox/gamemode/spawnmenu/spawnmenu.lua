@@ -1,24 +1,31 @@
 
 local spawnmenu_border = CreateConVar( "spawnmenu_border", "0.1", { FCVAR_ARCHIVE } )
 
-include( 'toolmenu.lua' )
-include( 'contextmenu.lua' )
-include( 'CreationMenu.lua' )
+include( "toolmenu.lua" )
+include( "contextmenu.lua" )
+include( "creationmenu.lua" )
 
 local PANEL = {}
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Init()
 
-	self.ToolMenu = vgui.Create( "ToolMenu", self )
-	self.ToolMenu:Dock( RIGHT )
-	self.ToolMenu:DockMargin( 0, 20, 3, 10 )
+	self:Dock( FILL )
 
-	self.CreateMenu = vgui.Create( "CreationMenu", self )
-	self.CreateMenu:Dock( FILL )
-	self.CreateMenu:DockMargin( 3, 20, 3, 10 )
+	self.HorizontalDivider = vgui.Create( "DHorizontalDivider", self )
+	self.HorizontalDivider:Dock( FILL )
+	self.HorizontalDivider:SetLeftWidth( ScrW() ) -- It will be automatically resized by DHorizontalDivider to account for GetRightMin/GetLeftMin
+	self.HorizontalDivider:SetDividerWidth( 6 )
+	--self.HorizontalDivider:SetCookieName( "SpawnMenuDiv" )
+
+	self.ToolMenu = vgui.Create( "ToolMenu", self.HorizontalDivider )
+	self.HorizontalDivider:SetRight( self.ToolMenu )
+	self.HorizontalDivider:SetRightMin( 390 )
+	if ( ScrW() > 1280 ) then
+		self.HorizontalDivider:SetRightMin( 460 )
+	end
+
+	self.CreateMenu = vgui.Create( "CreationMenu", self.HorizontalDivider )
+	self.HorizontalDivider:SetLeft( self.CreateMenu )
 
 	self.m_bHangOpen = false
 
@@ -34,8 +41,15 @@ function PANEL:Init()
 
 		if ( self.ToolMenu:IsVisible() ) then
 			self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle" )
+			self.CreateMenu:Dock( NODOCK ) -- What an ugly hack
+			self.HorizontalDivider:SetRight( self.ToolMenu )
+			self.HorizontalDivider:SetLeft( self.CreateMenu )
 		else
 			self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle_back" )
+			self.HorizontalDivider:SetRight( nil ) -- What an ugly hack
+			self.HorizontalDivider:SetLeft( nil )
+			self.CreateMenu:SetParent( self.HorizontalDivider )
+			self.CreateMenu:Dock( FILL )
 		end
 
 	end
@@ -61,9 +75,8 @@ function PANEL:OnMousePressed()
 
 end
 
-
 --[[---------------------------------------------------------
-   Name: HangOpen
+	Name: HangOpen
 -----------------------------------------------------------]]
 function PANEL:HangOpen( bHang )
 	self.m_bHangOpen = bHang
@@ -124,30 +137,20 @@ function PANEL:Close( bSkipAnim )
 
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
-	self:SetSize( ScrW(), ScrH() )
-	self:SetPos( 0, 0 )
-
-	local MarginX = math.Clamp( (ScrW() - 1024) * spawnmenu_border:GetFloat(), 25, 256 )
-	local MarginY = math.Clamp( (ScrH() - 768) * spawnmenu_border:GetFloat(), 25, 256 )
+	local MarginX = math.Clamp( ( ScrW() - 1024 ) * spawnmenu_border:GetFloat(), 25, 256 )
+	local MarginY = math.Clamp( ( ScrH() - 768 ) * spawnmenu_border:GetFloat(), 25, 256 )
 
 	self:DockPadding( 0, 0, 0, 0 )
-
-	self.CreateMenu:DockMargin( MarginX, MarginY, 1, MarginY )
-	self.ToolMenu:DockMargin( 0, MarginY, MarginX, MarginY )
+	self.HorizontalDivider:DockMargin( MarginX, MarginY, MarginX, MarginY )
+	self.HorizontalDivider:SetLeftMin( self.HorizontalDivider:GetWide() / 3 )
 
 	self.ToolToggle:AlignRight( 6 )
 	self.ToolToggle:AlignTop( 6 )
 
 end
 
---[[---------------------------------------------------------
-	Name: StartKeyFocus
------------------------------------------------------------]]
 function PANEL:StartKeyFocus( pPanel )
 
 	self.m_pKeyFocus = pPanel
@@ -156,9 +159,6 @@ function PANEL:StartKeyFocus( pPanel )
 
 end
 
---[[---------------------------------------------------------
-	Name: EndKeyFocus
------------------------------------------------------------]]
 function PANEL:EndKeyFocus( pPanel )
 
 	if ( self.m_pKeyFocus != pPanel ) then return end
@@ -167,7 +167,6 @@ function PANEL:EndKeyFocus( pPanel )
 end
 
 vgui.Register( "SpawnMenu", PANEL, "EditablePanel" )
-
 
 --[[---------------------------------------------------------
 	Called to create the spawn menu..
