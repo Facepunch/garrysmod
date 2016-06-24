@@ -1,9 +1,6 @@
 
 local PANEL = {}
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetCursor( "sizewe" )
@@ -11,9 +8,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnMousePressed
------------------------------------------------------------]]
 function PANEL:OnMousePressed( mcode )
 
 	if ( mcode == MOUSE_LEFT ) then
@@ -38,9 +32,6 @@ AccessorFunc( PANEL, "m_iRightWidthMin",	"RightMin" )
 
 AccessorFunc( PANEL, "m_iHoldPos",			"HoldPos" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetDividerWidth( 8 )
@@ -55,18 +46,12 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: LoadCookies
------------------------------------------------------------]]
 function PANEL:LoadCookies()
 
 	self:SetLeftWidth( self:GetCookieNumber( "LeftWidth", self:GetLeftWidth() ) )
 
 end
 
---[[---------------------------------------------------------
-	Name: SetLeft
------------------------------------------------------------]]
 function PANEL:SetLeft( pnl )
 
 	self.m_pLeft = pnl
@@ -77,55 +62,6 @@ function PANEL:SetLeft( pnl )
 
 end
 
---[[---------------------------------------------------------
-	Name: SetRight
------------------------------------------------------------]]
-function PANEL:SetRight( pnl )
-
-	self.m_pRight = pnl
-
-	if ( IsValid( self.m_pRight ) ) then
-		self.m_pRight:SetParent( self )
-	end
-
-end
-
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
-function PANEL:PerformLayout()
-
-	if ( self.m_pLeft ) then
-
-		self.m_pLeft:StretchToParent( 0, 0, nil, 0 )
-		self.m_pLeft:SetWide( self.m_iLeftWidth )
-		self.m_pLeft:InvalidateLayout()
-
-	end
-
-	if ( self.m_pRight ) then
-
-		self.m_pRight:StretchToParent( self.m_iLeftWidth + self.m_iDividerWidth, 0, 0, 0 )
-		self.m_pRight:InvalidateLayout()
-
-	end
-
-	self.m_DragBar:StretchToParent( self.m_iLeftWidth, 0, 0, 0 )
-	self.m_DragBar:SetWide( self.m_iDividerWidth )
-	self.m_DragBar:SetZPos( -1 )
-
-	if ( self.m_pMiddle ) then
-
-		self.m_pMiddle:StretchToParent( 0, 0, 0, 0 )
-		self.m_pMiddle:InvalidateLayout()
-
-	end
-
-end
-
---[[---------------------------------------------------------
-	Name: SetMiddle
------------------------------------------------------------]]
 function PANEL:SetMiddle( Middle )
 
 	self.m_pMiddle = Middle
@@ -136,23 +72,61 @@ function PANEL:SetMiddle( Middle )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnCursorMoved
------------------------------------------------------------]]
+function PANEL:SetRight( pnl )
+
+	self.m_pRight = pnl
+
+	if ( IsValid( self.m_pRight ) ) then
+		self.m_pRight:SetParent( self )
+	end
+
+end
+
+function PANEL:PerformLayout()
+
+	self:SetLeftWidth( math.Clamp( self:GetLeftWidth(), self:GetLeftMin(), math.max( self:GetWide() - self:GetRightMin() - self:GetDividerWidth(), self:GetLeftMin() ) ) )
+
+	if ( IsValid( self.m_pLeft ) ) then
+
+		self.m_pLeft:StretchToParent( 0, 0, nil, 0 )
+		self.m_pLeft:SetWide( self:GetLeftWidth() )
+		self.m_pLeft:InvalidateLayout()
+
+	end
+
+	self.m_DragBar:SetPos( self:GetLeftWidth(), 0 )
+	self.m_DragBar:SetSize( self:GetDividerWidth(), self:GetTall() )
+	self.m_DragBar:SetZPos( -1 )
+
+	if ( IsValid( self.m_pRight ) ) then
+
+		self.m_pRight:StretchToParent( self:GetLeftWidth() + self.m_DragBar:GetWide(), 0, 0, 0 )
+		self.m_pRight:InvalidateLayout()
+
+	end
+
+	if ( IsValid( self.m_pMiddle ) ) then
+
+		self.m_pMiddle:StretchToParent( 0, 0, 0, 0 )
+		self.m_pMiddle:InvalidateLayout()
+
+	end
+
+end
+
 function PANEL:OnCursorMoved( x, y )
 
 	if ( !self:GetDragging() ) then return end
 
+	local oldLeftWidth = self:GetLeftWidth()
+
 	x = math.Clamp( x - self:GetHoldPos(), self:GetLeftMin(), self:GetWide() - self:GetRightMin() - self:GetDividerWidth() )
 
 	self:SetLeftWidth( x )
-	self:InvalidateLayout()
+	if ( oldLeftWidth != x ) then self:InvalidateLayout() end
 
 end
 
---[[---------------------------------------------------------
-	Name: StartGrab
------------------------------------------------------------]]
 function PANEL:StartGrab()
 
 	self:SetCursor( "sizewe" )
@@ -165,9 +139,6 @@ function PANEL:StartGrab()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnMouseReleased
------------------------------------------------------------]]
 function PANEL:OnMouseReleased( mcode )
 
 	if ( mcode == MOUSE_LEFT ) then
@@ -179,9 +150,6 @@ function PANEL:OnMouseReleased( mcode )
 
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )

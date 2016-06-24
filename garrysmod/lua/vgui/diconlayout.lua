@@ -6,9 +6,9 @@ AccessorFunc( PANEL, "m_iSpaceY",		"SpaceY" )
 AccessorFunc( PANEL, "m_iBorder",		"Border" )
 AccessorFunc( PANEL, "m_iLayoutDir",	"LayoutDir" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
+AccessorFunc( PANEL, "m_bStretchW",		"StretchWidth", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bStretchH",		"StretchHeight", FORCE_BOOL )
+
 function PANEL:Init()
 
 	self:SetDropPos( "46" )
@@ -17,7 +17,10 @@ function PANEL:Init()
 	self:SetSpaceY( 0 )
 	self:SetBorder( 0 )
 	self:SetLayoutDir( TOP )
-	
+
+	self:SetStretchWidth( false )
+	self:SetStretchHeight( true )
+
 	self.LastW = 0
 	self.LastH = 0
 
@@ -118,7 +121,7 @@ function PANEL:PerformLayout()
 
 	end
 
-	self:SizeToChildren( false, true )
+	self:SizeToChildren( self:GetStretchWidth(), self:GetStretchHeight() )
 
 end
 
@@ -178,9 +181,6 @@ function PANEL:CopyContents( from )
 
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local pnl = vgui.Create( ClassName )
