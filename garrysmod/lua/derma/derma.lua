@@ -1,18 +1,18 @@
 
-local table				= table
-local vgui				= vgui
-local concommand		= concommand
-local Msg				= Msg
-local setmetatable		= setmetatable
-local _G				= _G
-local hook				= hook
-local gamemode			= gamemode
-local debug				= debug
-local pairs				= pairs
-local ispanel			= ispanel
-local isfunction		= isfunction
-local istable			= istable
-local PrintTable		= PrintTable
+local table			= table
+local vgui			= vgui
+local concommand	= concommand
+local Msg			= Msg
+local setmetatable	= setmetatable
+local _G			= _G
+local hook			= hook
+local gamemode		= gamemode
+local debug			= debug
+local pairs			= pairs
+local ispanel		= ispanel
+local isfunction	= isfunction
+local istable		= istable
+local PrintTable	= PrintTable
 
 module( "derma" )
 

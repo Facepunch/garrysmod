@@ -1,31 +1,31 @@
 
 local tblOpenMenus = {}
 
-function RegisterDermaMenuForClose( menu )
+function RegisterDermaMenuForClose( dmenu )
 
-	table.insert( tblOpenMenus, menu )
+	table.insert( tblOpenMenus, dmenu )
 
 end
 
 function DermaMenu( parentmenu )
 
-	if (!parentmenu) then CloseDermaMenus() end
+	if ( !parentmenu ) then CloseDermaMenus() end
 
-	local menu = vgui.Create( "DMenu" )
+	local dmenu = vgui.Create( "DMenu" )
 
-	return menu
+	return dmenu
 
 end
 
 function CloseDermaMenus()
 
-	for k, menu in pairs( tblOpenMenus ) do
+	for k, dmenu in pairs( tblOpenMenus ) do
 
-		if ( IsValid( menu ) ) then
+		if ( IsValid( dmenu ) ) then
 
-			menu:SetVisible( false )
-			if ( menu:GetDeleteSelf() ) then
-				menu:Remove()
+			dmenu:SetVisible( false )
+			if ( dmenu:GetDeleteSelf() ) then
+				dmenu:Remove()
 			end
 
 		end
