@@ -84,7 +84,6 @@ function ENT:Switch( bOn )
 
 	self:SetOn( true )
 
-
 	self.flashlight = ents.Create( "env_projectedtexture" )
 
 	self.flashlight:SetParent( self.Entity )
