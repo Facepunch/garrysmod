@@ -47,7 +47,7 @@ function PANEL:Init()
 
 		end
 
-		local materials = self.Scenes.RootNode:AddFolder( "Scenes", "scenes/",	true );
+		local materials = self.Scenes.RootNode:AddFolder( "Scenes", "scenes/", true );
 		materials:SetIcon( "icon16/photos.png" )
 */
 
@@ -142,11 +142,7 @@ function PANEL:Init()
 
 				self:SetVisible( true )
 
-				print( tr.Entity )
-
 				if ( !IsValid( tr.Entity ) ) then return end
-
-
 
 				self:SetFromEntity( tr.Entity )
 
@@ -184,12 +180,12 @@ function PANEL:SetDefaultLighting()
 
 	self.ModelPanel:SetAmbientLight( Color( 255 * 0.3, 255 * 0.3, 255 * 0.3 ) )
 
-	self.ModelPanel:SetDirectionalLight( 0, Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 ) )
-	self.ModelPanel:SetDirectionalLight( 1, Color( 255 * 1.3, 255 * 1.3, 255 * 1.3 ) )
-	self.ModelPanel:SetDirectionalLight( 2, Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 ) )
-	self.ModelPanel:SetDirectionalLight( 3, Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 ) )
-	self.ModelPanel:SetDirectionalLight( 4, Color( 255 * 2.3, 255 * 2.3, 255 * 2.3 ) )
-	self.ModelPanel:SetDirectionalLight( 5, Color( 255 * 0.1, 255 * 0.1, 255 * 0.1 ) )
+	self.ModelPanel:SetDirectionalLight( BOX_FRONT, Color( 255 * 1.3, 255 * 1.3, 255 * 1.3 ) )
+	self.ModelPanel:SetDirectionalLight( BOX_BACK, Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 ) )
+	self.ModelPanel:SetDirectionalLight( BOX_RIGHT, Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 ) )
+	self.ModelPanel:SetDirectionalLight( BOX_LEFT, Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 ) )
+	self.ModelPanel:SetDirectionalLight( BOX_TOP, Color( 255 * 2.3, 255 * 2.3, 255 * 2.3 ) )
+	self.ModelPanel:SetDirectionalLight( BOX_BOTTOM, Color( 255 * 0.1, 255 * 0.1, 255 * 0.1 ) )
 
 end
 
@@ -240,7 +236,7 @@ function PANEL:RightLayout()
 
 	self.ModelPanel:SetCamPos( campos )
 	self.ModelPanel:SetFOV( 45 )
-	self.ModelPanel:SetLookAng( (campos * -1):Angle() )
+	self.ModelPanel:SetLookAng( ( campos * -1 ):Angle() )
 
 end
 
@@ -279,11 +275,8 @@ end
 
 function PANEL:RenderIcon()
 
-	local ent = self.ModelPanel:GetEntity()
-
 	local tab = {}
-	tab.ent		= ent
-
+	tab.ent = self.ModelPanel:GetEntity()
 	tab.cam_pos = self.ModelPanel:GetCamPos()
 	tab.cam_ang = self.ModelPanel:GetLookAng()
 	tab.cam_fov = self.ModelPanel:GetFOV()
