@@ -14,7 +14,10 @@ local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlC
 	models.OnNodeSelected = function( slf, node )
 
 		-- Already viewing this panel
-		if ( ViewPanel && ViewPanel.CurrentNode && ViewPanel.CurrentNode == node ) then return end
+		if ( ViewPanel && ViewPanel.CurrentNode && ViewPanel.CurrentNode == node ) then
+			if ( pnlContent.SelectedPanel != ViewPanel ) then pnlContent:SwitchPanel( ViewPanel ) end
+			return
+		end
 
 		-- Clear the viewpanel in preperation for displaying it
 		ViewPanel:Clear( true )
