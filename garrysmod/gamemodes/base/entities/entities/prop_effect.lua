@@ -29,6 +29,7 @@ function ENT:Initialize()
 		self:SetModel( "models/props_junk/watermelon01.mdl" )
 
 		self:DeleteOnRemove( self.AttachedEntity )
+		self.AttachedEntity:DeleteOnRemove( self )
 
 		-- Don't use the model's physics - create a box instead
 		self:PhysicsInitBox( min, max )
