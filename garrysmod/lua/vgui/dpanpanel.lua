@@ -1,21 +1,7 @@
---[[   
- ( )
-_| |   __   _ __   ___ ___     _ _
-/'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
-  
-  DPanPanel
-  Dynamically sized pannable panel
-
---]]
 local PANEL = {}
 
 AccessorFunc( PANEL, "pnlCanvas", 	"Canvas" )
 
---[[---------------------------------------------------------
-Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 	
 	self.pnlCanvas = vgui.Create( "Panel", self )
@@ -71,9 +57,6 @@ function PANEL:Init()
 	
 end
 
---[[---------------------------------------------------------
-Name: AddItem
------------------------------------------------------------]]
 function PANEL:AddItem( pnl )
 	
 	pnl:SetParent( self:GetCanvas() )
@@ -86,36 +69,24 @@ function PANEL:OnChildAdded( child )
 	
 end
 
---[[---------------------------------------------------------
-Name: SizeToContents
------------------------------------------------------------]]
 function PANEL:SizeToContents()
 	
 	self:SetSize( self:GetCanvas():GetSize() )
 	
 end
 
---[[---------------------------------------------------------
-Name: GetCanvas
------------------------------------------------------------]]
 function PANEL:GetCanvas()
 	
 	return self.pnlCanvas
 	
 end
 
---[[---------------------------------------------------------
-Name: OnScroll
------------------------------------------------------------]]
 function PANEL:OnScroll( x, y )
 	
 	self:GetCanvas():SetPos( x, y )
 	
 end
 
---[[---------------------------------------------------------
-Name: ScrollToChild
------------------------------------------------------------]]
 function PANEL:ScrollToChild( panel )
 	
 	self:PerformLayout()
@@ -131,10 +102,6 @@ function PANEL:ScrollToChild( panel )
 	self:OnScroll(x, y)
 end
 
-
---[[---------------------------------------------------------
-Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 	if self:GetCanvas().Dragging then return end
 	local can = self:GetCanvas()
