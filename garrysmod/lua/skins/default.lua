@@ -112,9 +112,9 @@ SKIN.tex.Menu_Strip					= GWEN.CreateTextureBorder( 0, 128, 127, 21, 8, 8, 8, 8)
 SKIN.tex.Menu_Check					= GWEN.CreateTextureNormal( 448, 112, 15, 15 )
 SKIN.tex.Tab_Control				= GWEN.CreateTextureBorder( 0, 256, 127, 127, 8, 8, 8, 8 )
 SKIN.tex.TabB_Active				= GWEN.CreateTextureBorder( 0,		416, 63, 31, 8, 8, 8, 8 )
-SKIN.tex.TabB_Inactive				= GWEN.CreateTextureBorder( 0+128,	416, 63, 31, 8, 8, 8, 8 )
+SKIN.tex.TabB_Inactive				= GWEN.CreateTextureBorder( 128,	416, 63, 31, 8, 8, 8, 8 )
 SKIN.tex.TabT_Active				= GWEN.CreateTextureBorder( 0,		384, 63, 31, 8, 8, 8, 8 )
-SKIN.tex.TabT_Inactive				= GWEN.CreateTextureBorder( 0+128,	384, 63, 31, 8, 8, 8, 8 )
+SKIN.tex.TabT_Inactive				= GWEN.CreateTextureBorder( 128,	384, 63, 31, 8, 8, 8, 8 )
 SKIN.tex.TabL_Active				= GWEN.CreateTextureBorder( 64,		384, 31, 63, 8, 8, 8, 8 )
 SKIN.tex.TabL_Inactive				= GWEN.CreateTextureBorder( 64+128,	384, 31, 63, 8, 8, 8, 8 )
 SKIN.tex.TabR_Active				= GWEN.CreateTextureBorder( 96,		384, 31, 63, 8, 8, 8, 8 )
@@ -130,13 +130,13 @@ SKIN.tex.Window.Close			= GWEN.CreateTextureNormal( 32, 448, 31, 31 )
 SKIN.tex.Window.Close_Hover		= GWEN.CreateTextureNormal( 64, 448, 31, 31 )
 SKIN.tex.Window.Close_Down		= GWEN.CreateTextureNormal( 96, 448, 31, 31 )
 
-SKIN.tex.Window.Maxi			= GWEN.CreateTextureNormal( 32 + 96*2, 448, 31, 31 )
-SKIN.tex.Window.Maxi_Hover		= GWEN.CreateTextureNormal( 64 + 96*2, 448, 31, 31 )
-SKIN.tex.Window.Maxi_Down		= GWEN.CreateTextureNormal( 96 + 96*2, 448, 31, 31 )
+SKIN.tex.Window.Maxi			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448, 31, 31 )
+SKIN.tex.Window.Maxi_Hover		= GWEN.CreateTextureNormal( 64 + 96 * 2, 448, 31, 31 )
+SKIN.tex.Window.Maxi_Down		= GWEN.CreateTextureNormal( 96 + 96 * 2, 448, 31, 31 )
 
-SKIN.tex.Window.Restore			= GWEN.CreateTextureNormal( 32 + 96*2, 448+32, 31, 31 )
-SKIN.tex.Window.Restore_Hover	= GWEN.CreateTextureNormal( 64 + 96*2, 448+32, 31, 31 )
-SKIN.tex.Window.Restore_Down	= GWEN.CreateTextureNormal( 96 + 96*2, 448+32, 31, 31 )
+SKIN.tex.Window.Restore			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448+32, 31, 31 )
+SKIN.tex.Window.Restore_Hover	= GWEN.CreateTextureNormal( 64 + 96 * 2, 448+32, 31, 31 )
+SKIN.tex.Window.Restore_Down	= GWEN.CreateTextureNormal( 96 + 96 * 2, 448+32, 31, 31 )
 
 SKIN.tex.Window.Mini			= GWEN.CreateTextureNormal( 32 + 96, 448, 31, 31 )
 SKIN.tex.Window.Mini_Hover		= GWEN.CreateTextureNormal( 64 + 96, 448, 31, 31 )
@@ -500,7 +500,7 @@ function SKIN:PaintPropertySheet( panel, w, h )
 
 	local ActiveTab = panel:GetActiveTab()
 	local Offset = 0
-	if ( ActiveTab ) then Offset = ActiveTab:GetTall()-8 end
+	if ( ActiveTab ) then Offset = ActiveTab:GetTall() - 8 end
 
 	self.tex.Tab_Control( 0, Offset, w, h-Offset )
 

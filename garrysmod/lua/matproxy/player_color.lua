@@ -33,5 +33,5 @@ matproxy.Add( {
 		else
 			mat:SetVector( self.ResultTo, Vector( 62 / 255, 88 / 255, 106 / 255 ) )
 		end
-	end 
+	end
 } )

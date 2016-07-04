@@ -54,11 +54,11 @@ function SWEP:PrimaryAttack()
 	} )
 
 	local ent = tr.Entity
-	
+
 	local need = self.HealAmount
 	if ( IsValid( ent ) ) then need = math.min( ent:GetMaxHealth() - ent:Health(), self.HealAmount ) end
 
-	if ( IsValid( ent ) && self:Clip1() >= need && ( ent:IsPlayer() || ent:IsNPC() ) && ent:Health() < 100 ) then
+	if ( IsValid( ent ) && self:Clip1() >= need && ( ent:IsPlayer() or ent:IsNPC() ) && ent:Health() < 100 ) then
 
 		self:TakePrimaryAmmo( need )
 
@@ -87,7 +87,7 @@ function SWEP:SecondaryAttack()
 	if ( CLIENT ) then return end
 
 	local ent = self.Owner
-	
+
 	local need = self.HealAmount
 	if ( IsValid( ent ) ) then need = math.min( ent:GetMaxHealth() - ent:Health(), self.HealAmount ) end
 
@@ -124,14 +124,14 @@ end
 function SWEP:Holster()
 
 	timer.Stop( "weapon_idle" .. self:EntIndex() )
-	
+
 	return true
 
 end
 
 function SWEP:CustomAmmoDisplay()
 
-	self.AmmoDisplay = self.AmmoDisplay or {} 
+	self.AmmoDisplay = self.AmmoDisplay or {}
 	self.AmmoDisplay.Draw = true
 	self.AmmoDisplay.PrimaryClip = self:Clip1()
 

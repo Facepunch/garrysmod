@@ -10,7 +10,7 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "drive_base" );
 
 
-drive.Register( "drive_sandbox", 
+drive.Register( "drive_sandbox",
 {
 	--
 	-- Called on creation
@@ -37,9 +37,9 @@ drive.Register( "drive_sandbox",
 		view.angles.roll = 0
 
 	end,
-	
-	SetupControls = function( self, cmd )				
-	
+
+	SetupControls = function( self, cmd )
+
 		--
 		-- If we're holding the reload key down then freeze the view angles
 		--
@@ -66,7 +66,7 @@ drive.Register( "drive_sandbox",
 
 	end,
 	--
-	-- Called before each move. You should use your entity and cmd to 
+	-- Called before each move. You should use your entity and cmd to
 	-- fill mv with information you need for your move.
 	--
 	StartMove =  function( self, mv, cmd )
@@ -96,7 +96,7 @@ drive.Register( "drive_sandbox",
 		--
 		-- Right mouse button is down, don't change the angle of the object
 		--
-		if ( mv:KeyDown( IN_ATTACK2 ) || mv:KeyReleased( IN_ATTACK2 ) ) then
+		if ( mv:KeyDown( IN_ATTACK2 ) or mv:KeyReleased( IN_ATTACK2 ) ) then
 			entity_angle = self.Entity:GetAngles()
 		end
 
@@ -121,7 +121,7 @@ drive.Register( "drive_sandbox",
 	end,
 
 	--
-	-- Runs the actual move. On the client when there's 
+	-- Runs the actual move. On the client when there's
 	-- prediction errors this can be run multiple times.
 	-- You should try to only change mv.
 	--
