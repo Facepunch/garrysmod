@@ -5,9 +5,6 @@ Derma_Hook( PANEL, "Paint", "Paint", "ComboBox" )
 
 Derma_Install_Convar_Functions( PANEL )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.DropButton = vgui.Create( "DPanel", self )
@@ -24,9 +21,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: Clear
------------------------------------------------------------]]
 function PANEL:Clear()
 
 	self:SetText( "" )
@@ -40,18 +34,12 @@ function PANEL:Clear()
 
 end
 
---[[---------------------------------------------------------
-	Name: GetOptionText
------------------------------------------------------------]]
 function PANEL:GetOptionText( id )
 
 	return self.Choices[ id ]
 
 end
 
---[[---------------------------------------------------------
-	Name: GetOptionData
------------------------------------------------------------]]
 function PANEL:GetOptionData( id )
 
 	return self.Data[ id ]
@@ -78,9 +66,6 @@ function PANEL:GetOptionTextByData( data )
 
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	self.DropButton:SetSize( 15, 15 )
@@ -89,9 +74,6 @@ function PANEL:PerformLayout()
 
 end
 
---[[---------------------------------------------------------
-	Name: ChooseOption
------------------------------------------------------------]]
 function PANEL:ChooseOption( value, index )
 
 	if ( self.Menu ) then
@@ -109,9 +91,6 @@ function PANEL:ChooseOption( value, index )
 
 end
 
---[[---------------------------------------------------------
-	Name: ChooseOptionID
------------------------------------------------------------]]
 function PANEL:ChooseOptionID( index )
 
 	local value = self:GetOptionText( index )
@@ -119,18 +98,12 @@ function PANEL:ChooseOptionID( index )
 
 end
 
---[[---------------------------------------------------------
-	Name: GetSelected
------------------------------------------------------------]]
 function PANEL:GetSelectedID()
 
 	return self.selected
 
 end
 
---[[---------------------------------------------------------
-	Name: GetSelected
------------------------------------------------------------]]
 function PANEL:GetSelected()
 
 	if ( !self.selected ) then return end
@@ -139,18 +112,12 @@ function PANEL:GetSelected()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnSelect
------------------------------------------------------------]]
 function PANEL:OnSelect( index, value, data )
 
 	-- For override
 
 end
 
---[[---------------------------------------------------------
-	Name: AddChoice
------------------------------------------------------------]]
 function PANEL:AddChoice( value, data, select )
 
 	local i = table.insert( self.Choices, value )
@@ -175,15 +142,10 @@ function PANEL:IsMenuOpen()
 
 end
 
---[[---------------------------------------------------------
-	Name: OpenMenu
------------------------------------------------------------]]
 function PANEL:OpenMenu( pControlOpener )
 
-	if ( pControlOpener ) then
-		if ( pControlOpener == self.TextEntry ) then
-			return
-		end
+	if ( pControlOpener && pControlOpener == self.TextEntry ) then
+		return
 	end
 
 	-- Don't do anything if there aren't any options..
@@ -196,7 +158,7 @@ function PANEL:OpenMenu( pControlOpener )
 		self.Menu = nil
 	end
 
-	self.Menu = DermaMenu()
+	self.Menu = DermaMenu( false, self )
 
 	local sorted = {}
 	for k, v in pairs( self.Choices ) do table.insert( sorted, { id = k, data = v } ) end
@@ -255,9 +217,6 @@ function PANEL:DoClick()
 
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )

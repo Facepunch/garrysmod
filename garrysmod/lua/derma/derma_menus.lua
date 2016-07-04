@@ -7,11 +7,11 @@ function RegisterDermaMenuForClose( dmenu )
 
 end
 
-function DermaMenu( parentmenu )
+function DermaMenu( parentmenu, parent )
 
 	if ( !parentmenu ) then CloseDermaMenus() end
 
-	local dmenu = vgui.Create( "DMenu" )
+	local dmenu = vgui.Create( "DMenu", parent )
 
 	return dmenu
 
