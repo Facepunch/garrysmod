@@ -1,9 +1,6 @@
 
 local PANEL = {}
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.Label = vgui.Create( "DLabel", self )
@@ -12,23 +9,14 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: SetConVar
------------------------------------------------------------]]
 function PANEL:SetConVar( cvar )
 	self.ConVarValue = cvar
 end
 
---[[---------------------------------------------------------
-	Name: ConVar
------------------------------------------------------------]]
 function PANEL:ConVar()
 	return self.ConVarValue
 end
 
---[[---------------------------------------------------------
-	Name: ControlValues
------------------------------------------------------------]]
 function PANEL:ControlValues( kv )
 
 	self:SetConVar( kv.convar or "" )
@@ -36,9 +24,6 @@ function PANEL:ControlValues( kv )
 
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	local y = 5
@@ -52,9 +37,6 @@ function PANEL:PerformLayout()
 
 end
 
---[[---------------------------------------------------------
-	Name: TestForChanges
------------------------------------------------------------]]
 function PANEL:TestForChanges()
 
 	-- You should override this function and use it to
@@ -62,9 +44,6 @@ function PANEL:TestForChanges()
 
 end
 
---[[---------------------------------------------------------
-	Name: Think
------------------------------------------------------------]]
 function PANEL:Think()
 
 	if ( self.NextPoll && self.NextPoll > CurTime() ) then return end

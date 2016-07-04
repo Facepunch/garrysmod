@@ -1,6 +1,6 @@
 
 --
--- prop_generic is the base for all other properties. 
+-- prop_generic is the base for all other properties.
 -- All the business should be done in :Setup using inline functions.
 -- So when you derive from this class - you should ideally only override Setup.
 --
@@ -8,15 +8,11 @@
 local PANEL = {}
 
 function PANEL:Init()
-
-
 end
 
 function PANEL:GetDecimals()
 	return 2
 end
-
-
 
 function PANEL:Setup( vars )
 
@@ -27,8 +23,8 @@ function PANEL:Setup( vars )
 	ctrl:SetDecimals( self:GetDecimals() )
 
 	-- Apply vars
-	ctrl:SetMin( vars.min or 0 )
-	ctrl:SetMax( vars.max or 1 )
+	ctrl:SetMin( vars.min || 0 )
+	ctrl:SetMax( vars.max || 1 )
 
 	-- The label needs mouse input so we can scratch
 	self:GetRow().Label:SetMouseInputEnabled( true )
@@ -48,12 +44,12 @@ function PANEL:Setup( vars )
 
 	-- Set the value
 	self.SetValue = function( self, val )
-		ctrl:SetValue( val ) 
+		ctrl:SetValue( val )
 	end
 
 	-- Alert row that value changed
 	ctrl.OnValueChanged = function( ctrl, newval )
-			
+
 		self:ValueChanged( newval )
 
 	end

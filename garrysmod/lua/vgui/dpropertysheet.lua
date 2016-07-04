@@ -6,9 +6,6 @@ AccessorFunc( PANEL, "m_pPanel",			"Panel" )
 
 Derma_Hook( PANEL, "Paint", "Paint", "Tab" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetMouseInputEnabled( true )
@@ -17,9 +14,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Setup( label, pPropertySheet, pPanel, strMaterial )
 
 	self:SetText( label )
@@ -41,9 +35,6 @@ function PANEL:IsActive()
 	return self:GetPropertySheet():GetActiveTab() == self
 end
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:DoClick()
 
 	self:GetPropertySheet():SetActiveTab( self )
@@ -66,9 +57,6 @@ function PANEL:PerformLayout()
 
 end
 
---[[---------------------------------------------------------
-	UpdateColours
------------------------------------------------------------]]
 function PANEL:UpdateColours( skin )
 
 	if ( self:IsActive() ) then
@@ -128,11 +116,15 @@ end
 
 function PANEL:GenerateExample()
 
-	// Do nothing!
+	-- Do nothing!
 
 end
 
 derma.DefineControl( "DTab", "A Tab for use on the PropertySheet", PANEL, "DButton" )
+
+--[[---------------------------------------------------------
+	DPropertySheet
+-----------------------------------------------------------]]
 
 local PANEL = {}
 
@@ -144,9 +136,6 @@ AccessorFunc( PANEL, "m_fFadeTime",		"FadeTime" )
 
 AccessorFunc( PANEL, "m_bShowIcons",	"ShowIcons" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetShowIcons( true )
@@ -165,9 +154,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: AddSheet
------------------------------------------------------------]]
 function PANEL:AddSheet( label, panel, material, NoStretchX, NoStretchY, Tooltip )
 
 	if ( !IsValid( panel ) ) then return end
@@ -201,9 +187,6 @@ function PANEL:AddSheet( label, panel, material, NoStretchX, NoStretchY, Tooltip
 
 end
 
---[[---------------------------------------------------------
-	Name: SetActiveTab
------------------------------------------------------------]]
 function PANEL:SetActiveTab( active )
 
 	if ( self.m_pActiveTab == active ) then return end
@@ -226,33 +209,26 @@ function PANEL:SetActiveTab( active )
 
 end
 
---[[---------------------------------------------------------
-	Name: Think
------------------------------------------------------------]]
 function PANEL:Think()
 
 	self.animFade:Run()
 
 end
 
-
---[[---------------------------------------------------------
-	Name: CrossFade
------------------------------------------------------------]]
 function PANEL:CrossFade( anim, delta, data )
 
 	local old = data.OldTab:GetPanel()
 	local new = data.NewTab:GetPanel()
 
 	if ( anim.Finished ) then
-
 		old:SetVisible( false )
 		new:SetAlpha( 255 )
 
 		old:SetZPos( 0 )
 		new:SetZPos( 0 )
 
-	return end
+		return
+	end
 
 	if ( anim.Started ) then
 
@@ -271,9 +247,6 @@ function PANEL:CrossFade( anim, delta, data )
 
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	local ActiveTab = self:GetActiveTab()
@@ -327,9 +300,6 @@ function PANEL:PerformLayout()
 
 end
 
---[[---------------------------------------------------------
-	Name: SizeToContentWidth
------------------------------------------------------------]]
 function PANEL:SizeToContentWidth()
 
 	local wide = 0
@@ -347,9 +317,6 @@ function PANEL:SizeToContentWidth()
 
 end
 
---[[---------------------------------------------------------
-	Name: SwitchToName
------------------------------------------------------------]]
 function PANEL:SwitchToName( name )
 
 	for k, v in pairs( self.Items ) do

@@ -28,10 +28,7 @@ function PANEL:OpenForPos( x, y, w, h )
 
 end
 
-
 function PANEL:PerformLayout()
-
-
 end
 
 function PANEL:Paint( w, h )
@@ -46,8 +43,7 @@ function PANEL:Paint( w, h )
 	surface.SetDrawColor( self.m_bgColor )
 	surface.SetMaterial( self.matPoint );
 	surface.DrawTexturedRect( self.Center - 32, top, 64, 32 )
-	
-end
 
+end
 
 derma.DefineControl( "DBubbleContainer", "", PANEL, "DPanel" )

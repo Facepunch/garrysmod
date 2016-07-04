@@ -7,9 +7,6 @@ local matGrid		= Material( "gui/alpha_grid.png", "nocull" )
 AccessorFunc( PANEL, "m_Value", "Value" )
 AccessorFunc( PANEL, "m_BarColor", "BarColor" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetBarColor( Color( 255, 255, 255, 255 ) )
@@ -18,9 +15,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnCursorMoved
------------------------------------------------------------]]
 function PANEL:OnCursorMoved( x, y )
 
 	if ( !input.IsMouseDown( MOUSE_LEFT ) ) then return end
@@ -34,9 +28,6 @@ function PANEL:OnCursorMoved( x, y )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnMousePressed
------------------------------------------------------------]]
 function PANEL:OnMousePressed( mcode )
 
 	self:MouseCapture( true )
@@ -44,9 +35,6 @@ function PANEL:OnMousePressed( mcode )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnMouseReleased
------------------------------------------------------------]]
 function PANEL:OnMouseReleased( mcode )
 
 	self:MouseCapture( false )
@@ -54,15 +42,9 @@ function PANEL:OnMouseReleased( mcode )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnChange
------------------------------------------------------------]]
 function PANEL:OnChange( fAlpha )
 end
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	surface.SetDrawColor( 255, 255, 255, 255 )

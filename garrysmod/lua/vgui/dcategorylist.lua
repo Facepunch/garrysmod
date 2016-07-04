@@ -1,18 +1,12 @@
 
 local PANEL = {}
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.pnlCanvas:DockPadding( 2, 2, 2, 2 )
 
 end
 
---[[---------------------------------------------------------
-	Name: AddItem
------------------------------------------------------------]]
 function PANEL:AddItem( item )
 
 	item:Dock( TOP )
@@ -21,9 +15,6 @@ function PANEL:AddItem( item )
 
 end
 
---[[---------------------------------------------------------
-	Name: Add
------------------------------------------------------------]]
 function PANEL:Add( name )
 
 	local Category = vgui.Create( "DCollapsibleCategory", self )
@@ -36,9 +27,6 @@ function PANEL:Add( name )
 
 end
 
---[[---------------------------------------------------------
-	Paint
------------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "CategoryList", self, w, h )

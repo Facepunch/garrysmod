@@ -1,12 +1,12 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_bBackground",			"PaintBackground",	FORCE_BOOL )
-AccessorFunc( PANEL, "m_bBackground",			"DrawBackground",	FORCE_BOOL ) -- deprecated
-AccessorFunc( PANEL, "m_bIsMenuComponent",		"IsMenu",			FORCE_BOOL )
+AccessorFunc( PANEL, "m_bBackground",		"PaintBackground",	FORCE_BOOL )
+AccessorFunc( PANEL, "m_bBackground",		"DrawBackground",	FORCE_BOOL ) -- deprecated
+AccessorFunc( PANEL, "m_bIsMenuComponent",	"IsMenu",			FORCE_BOOL )
 
-AccessorFunc( PANEL, "m_bDisabled",		"Disabled" )
-AccessorFunc( PANEL, "m_bgColor",		"BackgroundColor" )
+AccessorFunc( PANEL, "m_bDisabled",	"Disabled" )
+AccessorFunc( PANEL, "m_bgColor",	"BackgroundColor" )
 
 Derma_Hook( PANEL, "Paint", "Paint", "MenuBar" )
 
@@ -82,9 +82,6 @@ function PANEL:OnRemove()
 
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local pnl = vgui.Create( "Panel" )
@@ -96,6 +93,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	m:AddOption( "New", function() Msg( "Chose New\n" ) end )
 	m:AddOption( "File", function() Msg( "Chose File\n" ) end )
 	m:AddOption( "Exit", function() Msg( "Chose Exit\n" ) end )
+
 	local m = ctrl:AddMenu( "Edit" )
 	m:AddOption( "Copy", function() Msg( "Chose Copy\n" ) end )
 	m:AddOption( "Paste", function() Msg( "Chose Paste\n" ) end )

@@ -1,14 +1,11 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_colText",				"TextColor" )
-AccessorFunc( PANEL, "m_colTextStyle",			"TextStyleColor" )
+AccessorFunc( PANEL, "m_colText", "TextColor" )
+AccessorFunc( PANEL, "m_colTextStyle", "TextStyleColor" )
 
-AccessorFunc( PANEL, "m_bAutoStretchVertical",	"AutoStretchVertical" )
+AccessorFunc( PANEL, "m_bAutoStretchVertical", "AutoStretchVertical" )
 
---[[---------------------------------------------------------
-	Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetTextColor( Color( 0, 0, 255 ) )
@@ -22,10 +19,7 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	SetTextColor
------------------------------------------------------------]]
-function PANEL:ApplySchemeSettings( col )
+function PANEL:ApplySchemeSettings()
 
 	self:UpdateColours( self:GetSkin() )
 
@@ -38,18 +32,12 @@ end
 
 PANEL.SetColor = PANEL.SetTextColor
 
---[[---------------------------------------------------------
-	SetColor
------------------------------------------------------------]]
 function PANEL:GetColor()
 
 	return self.m_colText
 
 end
 
---[[---------------------------------------------------------
-	Exited
------------------------------------------------------------]]
 function PANEL:OnCursorEntered()
 
 	self:InvalidateLayout()
@@ -57,9 +45,6 @@ function PANEL:OnCursorEntered()
 
 end
 
---[[---------------------------------------------------------
-	Entered
------------------------------------------------------------]]
 function PANEL:OnCursorExited()
 
 	self:InvalidateLayout()
@@ -67,9 +52,6 @@ function PANEL:OnCursorExited()
 
 end
 
---[[---------------------------------------------------------
-	UpdateColours
------------------------------------------------------------]]
 function PANEL:UpdateColours( skin )
 end
 

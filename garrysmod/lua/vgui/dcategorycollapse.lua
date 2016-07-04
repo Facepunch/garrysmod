@@ -29,13 +29,13 @@ local PANEL = {
 
 	Paint = function( self )
 
-		// Do nothing!
+		-- Do nothing!
 
 	end,
 
 	GenerateExample = function()
 
-		// Do nothing!
+		-- Do nothing!
 
 	end
 
@@ -53,9 +53,6 @@ AccessorFunc( PANEL, "m_bDrawBackground",	"DrawBackground", FORCE_BOOL ) -- depr
 AccessorFunc( PANEL, "m_iPadding",			"Padding" )
 AccessorFunc( PANEL, "m_pList",				"List" )
 
---[[---------------------------------------------------------
-	Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.Header = vgui.Create( "DCategoryHeader", self )
@@ -75,9 +72,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: button
------------------------------------------------------------]]
 function PANEL:Add( strName )
 
 	local button = vgui.Create( "DButton", self )
@@ -147,27 +141,18 @@ function PANEL:UpdateAltLines()
 
 end
 
---[[---------------------------------------------------------
-	Name: Think
------------------------------------------------------------]]
 function PANEL:Think()
 
 	self.animSlide:Run()
 
 end
 
---[[---------------------------------------------------------
-	SetLabel
------------------------------------------------------------]]
 function PANEL:SetLabel( strLabel )
 
 	self.Header:SetText( strLabel )
 
 end
 
---[[---------------------------------------------------------
-	Paint
------------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "CollapsibleCategory", self, w, h )
@@ -176,9 +161,6 @@ function PANEL:Paint( w, h )
 
 end
 
---[[---------------------------------------------------------
-	Name: SetContents
------------------------------------------------------------]]
 function PANEL:SetContents( pContents )
 
 	self.Contents = pContents
@@ -194,9 +176,6 @@ function PANEL:SetContents( pContents )
 
 end
 
---[[---------------------------------------------------------
-	Name: SetContents
------------------------------------------------------------]]
 function PANEL:SetExpanded( expanded )
 
 	self.m_bSizeExpanded = tobool( expanded )
@@ -208,9 +187,6 @@ function PANEL:SetExpanded( expanded )
 
 end
 
---[[---------------------------------------------------------
-	Name: Toggle
------------------------------------------------------------]]
 function PANEL:Toggle()
 
 	self:SetExpanded( !self:GetExpanded() )
@@ -229,18 +205,12 @@ function PANEL:Toggle()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnToggle
------------------------------------------------------------]]
 function PANEL:OnToggle( expanded )
 
 	-- Do nothing / For developers to overwrite
 
 end
 
---[[---------------------------------------------------------
-	Name: DoExpansion
------------------------------------------------------------]]
 function PANEL:DoExpansion( b )
 
 	if ( self.m_bSizeExpanded == b ) then return end
@@ -248,12 +218,7 @@ function PANEL:DoExpansion( b )
 
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
-
-	local Padding = self:GetPadding() or 0
 
 	if ( IsValid( self.Contents ) ) then
 
@@ -284,9 +249,6 @@ function PANEL:PerformLayout()
 
 end
 
---[[---------------------------------------------------------
-	OnMousePressed
------------------------------------------------------------]]
 function PANEL:OnMousePressed( mcode )
 
 	if ( !self:GetParent().OnMousePressed ) then return end
@@ -295,16 +257,13 @@ function PANEL:OnMousePressed( mcode )
 
 end
 
---[[---------------------------------------------------------
-	Name: AnimSlide
------------------------------------------------------------]]
 function PANEL:AnimSlide( anim, delta, data )
 
 	self:InvalidateLayout()
 	self:InvalidateParent()
 
 	if ( anim.Started ) then
-		if ( !IsValid( self.Contents ) && ( self.OldHeight or 0 ) < self.Header:GetTall() ) then
+		if ( !IsValid( self.Contents ) && ( self.OldHeight || 0 ) < self.Header:GetTall() ) then
 			-- We are not using self.Contents and our designated height is less
 			-- than the header size, something is clearly wrong, try to rectify
 			self.OldHeight = 0
@@ -316,7 +275,7 @@ function PANEL:AnimSlide( anim, delta, data )
 		if ( self:GetExpanded() ) then
 			data.To = self.OldHeight
 		else
- 			data.To = self:GetTall()
+			data.To = self:GetTall()
 		end
 	end
 
@@ -326,9 +285,6 @@ function PANEL:AnimSlide( anim, delta, data )
 
 end
 
---[[---------------------------------------------------------
-	LoadCookies
------------------------------------------------------------]]
 function PANEL:LoadCookies()
 
 	local Open = self:GetCookieNumber( "Open", 1 ) == 1
@@ -340,9 +296,6 @@ function PANEL:LoadCookies()
 
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )

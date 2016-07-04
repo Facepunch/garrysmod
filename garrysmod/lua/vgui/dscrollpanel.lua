@@ -4,9 +4,6 @@ local PANEL = {}
 AccessorFunc( PANEL, "Padding", "Padding" )
 AccessorFunc( PANEL, "pnlCanvas", "Canvas" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.pnlCanvas = vgui.Create( "Panel", self )
@@ -33,9 +30,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: AddItem
------------------------------------------------------------]]
 function PANEL:AddItem( pnl )
 
 	pnl:SetParent( self:GetCanvas() )
@@ -48,27 +42,18 @@ function PANEL:OnChildAdded( child )
 
 end
 
---[[---------------------------------------------------------
-	Name: SizeToContents
------------------------------------------------------------]]
 function PANEL:SizeToContents()
 
 	self:SetSize( self.pnlCanvas:GetSize() )
 
 end
 
---[[---------------------------------------------------------
-	Name: GetVBar
------------------------------------------------------------]]
 function PANEL:GetVBar()
 
 	return self.VBar
 
 end
 
---[[---------------------------------------------------------
-	Name: GetCanvas
------------------------------------------------------------]]
 function PANEL:GetCanvas()
 
 	return self.pnlCanvas
@@ -81,9 +66,6 @@ function PANEL:InnerWidth()
 
 end
 
---[[---------------------------------------------------------
-	Name: Rebuild
------------------------------------------------------------]]
 function PANEL:Rebuild()
 
 	self:GetCanvas():SizeToChildren( false, true )
@@ -91,33 +73,24 @@ function PANEL:Rebuild()
 	-- Although this behaviour isn't exactly implied, center vertically too
 	if ( self.m_bNoSizing && self:GetCanvas():GetTall() < self:GetTall() ) then
 
-		self:GetCanvas():SetPos( 0, (self:GetTall()-self:GetCanvas():GetTall()) * 0.5 )
+		self:GetCanvas():SetPos( 0, ( self:GetTall() - self:GetCanvas():GetTall() ) * 0.5 )
 
 	end
 
 end
 
---[[---------------------------------------------------------
-	Name: OnMouseWheeled
------------------------------------------------------------]]
 function PANEL:OnMouseWheeled( dlta )
 
 	return self.VBar:OnMouseWheeled( dlta )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnVScroll
------------------------------------------------------------]]
 function PANEL:OnVScroll( iOffset )
 
 	self.pnlCanvas:SetPos( 0, iOffset )
 
 end
 
---[[---------------------------------------------------------
-	Name: ScrollToChild
------------------------------------------------------------]]
 function PANEL:ScrollToChild( panel )
 
 	self:PerformLayout()
@@ -132,9 +105,6 @@ function PANEL:ScrollToChild( panel )
 
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	local Tall = self.pnlCanvas:GetTall()

@@ -10,9 +10,6 @@ AccessorFunc( PANEL, "m_bSelected", "Selected", FORCE_BOOL )
 AccessorFunc( PANEL, "m_Color", "Color" )
 AccessorFunc( PANEL, "m_PanelID", "ID" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetSize( 10, 10 )
@@ -26,18 +23,12 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: IsDown
------------------------------------------------------------]]
 function PANEL:IsDown()
 
 	return self.Depressed
 
 end
 
---[[---------------------------------------------------------
-	Name: SetColor
------------------------------------------------------------]]
 function PANEL:SetColor( color )
 
 	local colorStr = "R: " .. color.r .. "\nG: " .. color.g .. "\nB: " .. color.b .. "\nA: " .. color.a
@@ -47,9 +38,6 @@ function PANEL:SetColor( color )
 
 end
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	if ( self.m_Color.a < 255 ) then -- Grid for Alpha
@@ -73,9 +61,6 @@ function PANEL:Paint( w, h )
 	return false
 end
 
---[[---------------------------------------------------------
-	Name: SetDisabled
------------------------------------------------------------]]
 function PANEL:SetDisabled( bDisabled )
 
 	self.m_bDisabled = bDisabled
@@ -83,9 +68,6 @@ function PANEL:SetDisabled( bDisabled )
 
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )

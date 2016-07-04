@@ -3,9 +3,6 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "m_pMother", "Mother" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetMouseInputEnabled( true )
@@ -15,9 +12,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnCursorMoved
------------------------------------------------------------]]
 function PANEL:OnMousePressed( mcode )
 
 	if ( mcode == MOUSE_LEFT ) then
@@ -35,9 +29,6 @@ function PANEL:Paint( w, h )
 	end
 end
 
---[[---------------------------------------------------------
-	Name: OnCursorMoved
------------------------------------------------------------]]
 function PANEL:OnCursorMoved( x, y )
 
 	if ( input.IsMouseDown( MOUSE_LEFT ) ) then
@@ -46,9 +37,6 @@ function PANEL:OnCursorMoved( x, y )
 
 end
 
---[[---------------------------------------------------------
-	Name: Select
------------------------------------------------------------]]
 function PANEL:Select( bOnlyMe )
 
 	self.m_pMother:SelectItem( self, bOnlyMe )
@@ -57,9 +45,6 @@ function PANEL:Select( bOnlyMe )
 
 end
 
---[[---------------------------------------------------------
-	Name: DoClick
------------------------------------------------------------]]
 function PANEL:DoClick()
 
 	-- For override
@@ -71,6 +56,10 @@ end
 
 derma.DefineControl( "DListBoxItem", "", PANEL, "DLabel" )
 
+--[[---------------------------------------------------------
+	DListBox
+-----------------------------------------------------------]]
+
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bSelectMultiple", "Multiple", FORCE_BOOL )
@@ -78,9 +67,6 @@ AccessorFunc( PANEL, "SelectedItems", "SelectedItems" )	-- All selected in a tab
 
 Derma_Hook( PANEL, "Paint", "Paint", "ListBox" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetMultiple( true )
@@ -93,9 +79,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: Clear
------------------------------------------------------------]]
 function PANEL:Clear()
 
 	self.SelectedItems = {}
@@ -103,9 +86,6 @@ function PANEL:Clear()
 
 end
 
---[[---------------------------------------------------------
-	Name: AddItem
------------------------------------------------------------]]
 function PANEL:AddItem( strLabel )
 
 	local item = vgui.Create( "DListBoxItem", self )
@@ -118,9 +98,6 @@ function PANEL:AddItem( strLabel )
 
 end
 
---[[---------------------------------------------------------
-	Name: Rebuild
------------------------------------------------------------]]
 function PANEL:Rebuild()
 
 	local Offset = 0
@@ -146,9 +123,6 @@ function PANEL:Rebuild()
 
 end
 
---[[---------------------------------------------------------
-	Name: SelectItem
------------------------------------------------------------]]
 function PANEL:SelectItem( item, onlyme )
 
 	if ( !onlyme && item:IsSelected() ) then return end
@@ -173,9 +147,6 @@ function PANEL:SelectItem( item, onlyme )
 
 end
 
---[[---------------------------------------------------------
-	Name: SelectByName
------------------------------------------------------------]]
 function PANEL:SelectByName( strName )
 
 	for k, panel in pairs( self.Items ) do
@@ -188,9 +159,6 @@ function PANEL:SelectByName( strName )
 
 end
 
---[[---------------------------------------------------------
-	Name: GetSelectedValues
------------------------------------------------------------]]
 function PANEL:GetSelectedValues()
 
 	local items = self:GetSelectedItems()
@@ -209,9 +177,6 @@ function PANEL:GetSelectedValues()
 
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )

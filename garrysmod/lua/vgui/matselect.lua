@@ -1,10 +1,10 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "ItemWidth",			"ItemWidth",	FORCE_NUMBER )
-AccessorFunc( PANEL, "ItemHeight",			"ItemHeight",	FORCE_NUMBER )
-AccessorFunc( PANEL, "Height",				"NumRows",		FORCE_NUMBER )
-AccessorFunc( PANEL, "m_bSizeToContent",	"AutoHeight",	FORCE_BOOL )
+AccessorFunc( PANEL, "ItemWidth", "ItemWidth", FORCE_NUMBER )
+AccessorFunc( PANEL, "ItemHeight", "ItemHeight", FORCE_NUMBER )
+AccessorFunc( PANEL, "Height", "NumRows", FORCE_NUMBER )
+AccessorFunc( PANEL, "m_bSizeToContent", "AutoHeight", FORCE_BOOL )
 
 local border = 0
 local border_w = 8
@@ -78,7 +78,7 @@ function PANEL:SetItemSize( pnl )
 		local numIcons = math.floor( 1 / w )
 		w = math.floor( ( maxW - self.List:GetPadding() * 2 - self.List:GetSpacing() * ( numIcons - 1 ) ) / numIcons )
 	end
-	
+
 
 	local h = self.ItemHeight
 	if ( h < 1 ) then
@@ -151,12 +151,12 @@ function PANEL:PerformLayout()
 	end
 
 	if ( self.m_bSizeToContent ) then
-
 		self.List:SetWide( self:GetWide() )
 		self.List:InvalidateLayout( true )
 		self:SetTall( self.List:GetTall() )
 
-	return end
+		return
+	end
 
 	self.List:InvalidateLayout( true ) -- Rebuild
 

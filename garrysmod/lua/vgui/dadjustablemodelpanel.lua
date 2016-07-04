@@ -81,10 +81,10 @@ function PANEL:FirstPersonControls()
 	if ( input.IsKeyDown( KEY_SPACE ) || input.IsKeyDown( KEY_SPACE ) ) then Movement = Movement + self.aLookAngle:Up() end
 	if ( input.IsKeyDown( KEY_LCONTROL ) || input.IsKeyDown( KEY_LCONTROL ) ) then Movement = Movement - self.aLookAngle:Up() end
 
-	local scale = 0.5
-	if ( input.IsShiftDown() ) then scale = 4.0 end
+	local speed = 0.5
+	if ( input.IsShiftDown() ) then speed = 4.0 end
 
-	self.vCamPos = self.vCamPos + Movement * scale
+	self.vCamPos = self.vCamPos + Movement * speed
 
 end
 

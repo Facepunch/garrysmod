@@ -46,14 +46,14 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	pnl:MakeDroppable( "ExampleDraggable", false )
 	pnl:SetSize( 200, 200 )
 
-	for i=1, 5 do
+	for i = 1, 5 do
 
 		local btn = pnl:Add( "DButton" )
 		btn:SetText( "Button " .. i )
 
 	end
 
-	for i=1, 5 do
+	for i = 1, 5 do
 
 		local btn = pnl:Add( "DLabel" )
 		btn:SetText( "Label " .. i )

@@ -7,9 +7,6 @@ AccessorFunc( PANEL, "m_iBorder",		"Border" )
 AccessorFunc( PANEL, "m_iBaseSize",		"BaseSize" )
 AccessorFunc( PANEL, "m_iMinHeight",	"MinHeight" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetDropPos( "46" )
@@ -67,12 +64,8 @@ function PANEL:FindFreeTile( x, y, w, h )
 			-- If we're on the first part
 			-- and the line is empty
 			-- add it. It might be too long to fit on anyway
-			if ( i == 1 ) then
-
-				if ( self:FitsInTile( i, y, w, h ) ) then
-					return i, y
-				end
-
+			if ( i == 1 && self:FitsInTile( i, y, w, h ) ) then
+				return i, y
 			end
 
 			break
@@ -237,9 +230,6 @@ function PANEL:CopyContents( from )
 
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local pnl = vgui.Create( ClassName )
@@ -252,7 +242,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	pnl:SetBorder( 10 )
 	pnl:SetBaseSize( 32 )
 
-	for i=1, 10 do
+	for i = 1, 10 do
 
 		local btn = pnl:Add( "DButton" )
 		btn:SetSize( 32, 32 )
@@ -260,12 +250,12 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	end
 
-	local btn = pnl:Add( "DButton" )
-	btn:SetSize( 32, 32 )
-	btn:SetText( "<br>" )
-	btn.OwnLine = true
+	local btn_br = pnl:Add( "DButton" )
+	btn_br:SetSize( 32, 32 )
+	btn_br:SetText( "<br>" )
+	btn_br.OwnLine = true
 
-	for i=1, 10 do
+	for i = 1, 10 do
 
 		local btn = pnl:Add( "DButton" )
 		btn:SetSize( 32, 32 )

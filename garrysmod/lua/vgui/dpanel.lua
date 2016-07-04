@@ -37,9 +37,6 @@ function PANEL:SetDisabled( bDisabled )
 
 end
 
---[[---------------------------------------------------------
-	OnMousePressed
------------------------------------------------------------]]
 function PANEL:OnMousePressed( mousecode )
 
 	if ( self.m_bSelectionCanvas && !dragndrop.IsDragging() ) then
@@ -56,9 +53,6 @@ function PANEL:OnMousePressed( mousecode )
 
 end
 
---[[---------------------------------------------------------
-	OnMouseReleased
------------------------------------------------------------]]
 function PANEL:OnMouseReleased( mousecode )
 
 	if ( self:EndBoxSelection() ) then return end
@@ -71,9 +65,6 @@ function PANEL:OnMouseReleased( mousecode )
 
 end
 
---[[---------------------------------------------------------
-	UpdateColours
------------------------------------------------------------]]
 function PANEL:UpdateColours()
 end
 

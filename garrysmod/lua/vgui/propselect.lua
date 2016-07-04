@@ -37,7 +37,7 @@ function PANEL:AddModel( model, ConVars )
 	Icon:SetModel( model )
 	Icon:SetTooltip( model )
 	Icon.Model = model
-	Icon.ConVars = ConVars or {}
+	Icon.ConVars = ConVars || {}
 
 	local ConVarName = self:ConVar()
 
@@ -67,7 +67,7 @@ function PANEL:AddModelEx( name, model, skin )
 	Icon:SetTooltip( model )
 	Icon.Model = model
 	Icon.Value = name
-	Icon.ConVars = ConVars or {}
+	Icon.ConVars = ConVars || {}
 
 	local ConVarName = self:ConVar()
 
@@ -84,7 +84,7 @@ function PANEL:ControlValues( kv )
 
 	self.BaseClass.ControlValues( self, kv )
 
-	self.Height = kv.height or 2
+	self.Height = kv.height || 2
 
 	-- Load the list of models from our keyvalues file
 	-- This is the old way
@@ -99,14 +99,14 @@ function PANEL:ControlValues( kv )
 	-- Passing in modelstable is the new way
 	--
 	if ( kv.modelstable ) then
-		local tmp = {} // HACK: Order by skin too.
+		local tmp = {} -- HACK: Order by skin too.
 		for k, v in SortedPairsByMemberValue( kv.modelstable, "model" ) do
-			tmp[ k ] = v.model .. ( v.skin or 0 )
+			tmp[ k ] = v.model .. ( v.skin || 0 )
 		end
 
 		for k, v in SortedPairsByValue( tmp ) do
 			v = kv.modelstable[ k ]
-			self:AddModelEx( k, v.model, v.skin or 0 )
+			self:AddModelEx( k, v.model, v.skin || 0 )
 		end
 	end
 

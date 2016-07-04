@@ -191,7 +191,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	pnl:SetSpaceX( 4 )
 	pnl:SetSpaceY( 4 )
 
-	for i=1, 32 do
+	for i = 1, 32 do
 
 		local btn = pnl:Add( "DButton" )
 		btn:SetSize( 32, 32 )

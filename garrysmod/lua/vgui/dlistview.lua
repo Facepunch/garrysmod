@@ -1,20 +1,17 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_bDirty",		"Dirty", FORCE_BOOL )
-AccessorFunc( PANEL, "m_bSortable",		"Sortable", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDirty", "Dirty", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bSortable", "Sortable", FORCE_BOOL )
 
-AccessorFunc( PANEL, "m_iHeaderHeight",	"HeaderHeight" )
-AccessorFunc( PANEL, "m_iDataHeight",	"DataHeight" )
+AccessorFunc( PANEL, "m_iHeaderHeight", "HeaderHeight" )
+AccessorFunc( PANEL, "m_iDataHeight", "DataHeight" )
 
-AccessorFunc( PANEL, "m_bMultiSelect",	"MultiSelect" )
-AccessorFunc( PANEL, "m_bHideHeaders",	"HideHeaders" )
+AccessorFunc( PANEL, "m_bMultiSelect", "MultiSelect" )
+AccessorFunc( PANEL, "m_bHideHeaders", "HideHeaders" )
 
 Derma_Hook( PANEL, "Paint", "Paint", "ListView" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetSortable( true )
@@ -40,9 +37,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: DisableScrollbar
------------------------------------------------------------]]
 function PANEL:DisableScrollbar()
 
 	if ( IsValid( self.VBar ) ) then
@@ -53,30 +47,18 @@ function PANEL:DisableScrollbar()
 
 end
 
---[[---------------------------------------------------------
-	Name: GetLines
------------------------------------------------------------]]
 function PANEL:GetLines()
 	return self.Lines
 end
 
---[[---------------------------------------------------------
-	Name: GetInnerTall
------------------------------------------------------------]]
 function PANEL:GetInnerTall()
 	return self:GetCanvas():GetTall()
 end
 
---[[---------------------------------------------------------
-	Name: GetCanvas
------------------------------------------------------------]]
 function PANEL:GetCanvas()
 	return self.pnlCanvas
 end
 
---[[---------------------------------------------------------
-	Name: AddColumn
------------------------------------------------------------]]
 function PANEL:AddColumn( strName, iPosition )
 
 	local pColumn = nil
@@ -94,7 +76,7 @@ function PANEL:AddColumn( strName, iPosition )
 
 		table.insert( self.Columns, iPosition, pColumn )
 
-		for i = 1,#self.Columns do
+		for i = 1, #self.Columns do
 			self.Columns[ i ]:SetColumnID( i )
 		end
 
@@ -111,9 +93,6 @@ function PANEL:AddColumn( strName, iPosition )
 
 end
 
---[[---------------------------------------------------------
-	Name: RemoveLine
------------------------------------------------------------]]
 function PANEL:RemoveLine( LineID )
 
 	local Line = self:GetLine( LineID )
@@ -129,9 +108,6 @@ function PANEL:RemoveLine( LineID )
 
 end
 
---[[---------------------------------------------------------
-	Name: ColumnWidth
------------------------------------------------------------]]
 function PANEL:ColumnWidth( i )
 
 	local ctrl = self.Columns[ i ]
@@ -141,9 +117,6 @@ function PANEL:ColumnWidth( i )
 
 end
 
---[[---------------------------------------------------------
-	Name: FixColumnsLayout
------------------------------------------------------------]]
 function PANEL:FixColumnsLayout()
 
 	local NumColumns = #self.Columns
@@ -199,9 +172,6 @@ function PANEL:FixColumnsLayout()
 
 end
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	-- Do Scrollbar
@@ -245,9 +215,6 @@ function PANEL:PerformLayout()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnScrollbarAppear
------------------------------------------------------------]]
 function PANEL:OnScrollbarAppear()
 
 	self:SetDirty( true )
@@ -255,9 +222,6 @@ function PANEL:OnScrollbarAppear()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnRequestResize
------------------------------------------------------------]]
 function PANEL:OnRequestResize( SizingColumn, iSize )
 
 	-- Find the column to the right of this one
@@ -290,9 +254,6 @@ function PANEL:OnRequestResize( SizingColumn, iSize )
 
 end
 
---[[---------------------------------------------------------
-	Name: DataLayout
------------------------------------------------------------]]
 function PANEL:DataLayout()
 
 	local y = 0
@@ -301,7 +262,7 @@ function PANEL:DataLayout()
 	for k, Line in ipairs( self.Sorted ) do
 
 		Line:SetPos( 1, y )
-		Line:SetSize( self:GetWide()-2, h )
+		Line:SetSize( self:GetWide() - 2, h )
 		Line:DataLayout( self )
 
 		Line:SetAltLine( k % 2 == 1 )
@@ -314,9 +275,6 @@ function PANEL:DataLayout()
 
 end
 
---[[---------------------------------------------------------
-	Name: AddLine - returns the line number.
------------------------------------------------------------]]
 function PANEL:AddLine( ... )
 
 	self:SetDirty( true )
@@ -348,9 +306,6 @@ function PANEL:AddLine( ... )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnMouseWheeled
------------------------------------------------------------]]
 function PANEL:OnMouseWheeled( dlta )
 
 	if ( !IsValid( self.VBar ) ) then return end
@@ -359,9 +314,6 @@ function PANEL:OnMouseWheeled( dlta )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnMouseWheeled
------------------------------------------------------------]]
 function PANEL:ClearSelection( dlta )
 
 	for k, Line in pairs( self.Lines ) do
@@ -370,9 +322,6 @@ function PANEL:ClearSelection( dlta )
 
 end
 
---[[---------------------------------------------------------
-	Name: GetSelectedLine
------------------------------------------------------------]]
 function PANEL:GetSelectedLine()
 
 	for k, Line in pairs( self.Lines ) do
@@ -381,18 +330,12 @@ function PANEL:GetSelectedLine()
 
 end
 
---[[---------------------------------------------------------
-	Name: GetLine
------------------------------------------------------------]]
 function PANEL:GetLine( id )
 
 	return self.Lines[ id ]
 
 end
 
---[[---------------------------------------------------------
-	Name: GetSortedID
------------------------------------------------------------]]
 function PANEL:GetSortedID( line )
 
 	for k, v in pairs( self.Sorted ) do
@@ -403,9 +346,6 @@ function PANEL:GetSortedID( line )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnClickLine
------------------------------------------------------------]]
 function PANEL:OnClickLine( Line, bClear )
 
 	local bMultiSelect = self:GetMultiSelect()
@@ -520,9 +460,6 @@ function PANEL:SortByColumns( c1, d1, c2, d2, c3, d3, c4, d4 )
 
 end
 
---[[---------------------------------------------------------
-	Name: SortByColumn
------------------------------------------------------------]]
 function PANEL:SortByColumn( ColumnID, Desc )
 
 	table.Copy( self.Sorted, self.Lines )
@@ -533,8 +470,8 @@ function PANEL:SortByColumn( ColumnID, Desc )
 			a, b = b, a
 		end
 
-		local aval = a:GetSortValue( ColumnID ) and a:GetSortValue( ColumnID ) or a:GetColumnText( ColumnID )
-		local bval = b:GetSortValue( ColumnID ) and b:GetSortValue( ColumnID ) or b:GetColumnText( ColumnID )
+		local aval = a:GetSortValue( ColumnID ) && a:GetSortValue( ColumnID ) || a:GetColumnText( ColumnID )
+		local bval = b:GetSortValue( ColumnID ) && b:GetSortValue( ColumnID ) || b:GetColumnText( ColumnID )
 
 		return aval < bval
 
@@ -545,10 +482,6 @@ function PANEL:SortByColumn( ColumnID, Desc )
 
 end
 
---[[---------------------------------------------------------
-	Name: SelectItem
-	Selects the item
------------------------------------------------------------]]
 function PANEL:SelectItem( Item )
 
 	if ( !Item ) then return end
@@ -558,10 +491,6 @@ function PANEL:SelectItem( Item )
 
 end
 
---[[---------------------------------------------------------
-	Name: SelectFirstItem
-	Selects the first item based on sort..
------------------------------------------------------------]]
 function PANEL:SelectFirstItem()
 
 	self:ClearSelection()
@@ -569,36 +498,24 @@ function PANEL:SelectFirstItem()
 
 end
 
---[[---------------------------------------------------------
-	Name: DoDoubleClick
------------------------------------------------------------]]
 function PANEL:DoDoubleClick( LineID, Line )
 
 	-- For Override
 
 end
 
---[[---------------------------------------------------------
-	Name: OnRowSelected
------------------------------------------------------------]]
 function PANEL:OnRowSelected( LineID, Line )
 
 	-- For Override
 
 end
 
---[[---------------------------------------------------------
-	Name: OnRowRightClick
------------------------------------------------------------]]
 function PANEL:OnRowRightClick( LineID, Line )
 
 	-- For Override
 
 end
 
---[[---------------------------------------------------------
-	Name: Clear
------------------------------------------------------------]]
 function PANEL:Clear()
 
 	for k, v in pairs( self.Lines ) do
@@ -612,9 +529,6 @@ function PANEL:Clear()
 
 end
 
---[[---------------------------------------------------------
-	Name: GetSelected
------------------------------------------------------------]]
 function PANEL:GetSelected()
 
 	local ret = {}
@@ -629,18 +543,12 @@ function PANEL:GetSelected()
 
 end
 
---[[---------------------------------------------------------
-	Name: SizeToContents
------------------------------------------------------------]]
 function PANEL:SizeToContents()
 
 	self:SetHeight( self.pnlCanvas:GetTall() + self:GetHeaderHeight() )
 
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
@@ -651,7 +559,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	Col2:SetMinWidth( 30 )
 	Col2:SetMaxWidth( 30 )
 
-	for i=1, 128 do
+	for i = 1, 128 do
 		ctrl:AddLine( "192.168.0." .. i, "80" )
 	end
 

@@ -28,9 +28,6 @@ function PANEL:ScrollToSelected()
 
 end
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.m_strSelectedIcon = ""
@@ -136,9 +133,6 @@ end
 function PANEL:OnChange()
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )

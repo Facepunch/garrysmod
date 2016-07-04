@@ -9,9 +9,6 @@ AccessorFunc( PANEL, "m_iMaxHeight",		"MaxHeight" )
 
 AccessorFunc( PANEL, "m_pOpenSubMenu",		"OpenSubMenu" )
 
---[[---------------------------------------------------------
-	Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetIsMenu( true )
@@ -29,9 +26,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	AddPanel
------------------------------------------------------------]]
 function PANEL:AddPanel( pnl )
 
 	self:AddItem( pnl )
@@ -39,9 +33,6 @@ function PANEL:AddPanel( pnl )
 
 end
 
---[[---------------------------------------------------------
-	AddOption
------------------------------------------------------------]]
 function PANEL:AddOption( strText, funcFunction )
 
 	local pnl = vgui.Create( "DMenuOption", self )
@@ -55,9 +46,6 @@ function PANEL:AddOption( strText, funcFunction )
 
 end
 
---[[---------------------------------------------------------
-	AddCVar
------------------------------------------------------------]]
 function PANEL:AddCVar( strText, convar, on, off, funcFunction )
 
 	local pnl = vgui.Create( "DMenuOptionCVar", self )
@@ -75,9 +63,6 @@ function PANEL:AddCVar( strText, convar, on, off, funcFunction )
 
 end
 
---[[---------------------------------------------------------
-	AddSpacer
------------------------------------------------------------]]
 function PANEL:AddSpacer( strText, funcFunction )
 
 	local pnl = vgui.Create( "DPanel", self )
@@ -92,9 +77,6 @@ function PANEL:AddSpacer( strText, funcFunction )
 
 end
 
---[[---------------------------------------------------------
-	AddSubMenu
------------------------------------------------------------]]
 function PANEL:AddSubMenu( strText, funcFunction )
 
 	local pnl = vgui.Create( "DMenuOption", self )
@@ -109,9 +91,6 @@ function PANEL:AddSubMenu( strText, funcFunction )
 
 end
 
---[[---------------------------------------------------------
-	Hide
------------------------------------------------------------]]
 function PANEL:Hide()
 
 	local openmenu = self:GetOpenSubMenu()
@@ -124,9 +103,6 @@ function PANEL:Hide()
 
 end
 
---[[---------------------------------------------------------
-	OpenSubMenu
------------------------------------------------------------]]
 function PANEL:OpenSubMenu( item, menu )
 
 	-- Do we already have a menu open?
@@ -144,15 +120,12 @@ function PANEL:OpenSubMenu( item, menu )
 	if ( !IsValid( menu ) ) then return end
 
 	local x, y = item:LocalToScreen( self:GetWide(), 0 )
-	menu:Open( x-3, y, false, item )
+	menu:Open( x - 3, y, false, item )
 
 	self:SetOpenSubMenu( menu )
 
 end
 
---[[---------------------------------------------------------
-	CloseSubMenu
------------------------------------------------------------]]
 function PANEL:CloseSubMenu( menu )
 
 	menu:Hide()
@@ -160,9 +133,6 @@ function PANEL:CloseSubMenu( menu )
 
 end
 
---[[---------------------------------------------------------
-	Paint
------------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	if ( !self:GetPaintBackground() ) then return end
@@ -180,9 +150,6 @@ function PANEL:GetChild( num )
 	return self:GetCanvas():GetChildren()[ num ]
 end
 
---[[---------------------------------------------------------
-	PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	local w = self:GetMinimumWidth()
@@ -228,7 +195,7 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 
 	RegisterDermaMenuForClose( self )
 
-	local maunal = x and y
+	local maunal = x && y
 
 	x = x or gui.MouseX()
 	y = y or gui.MouseY()
@@ -247,8 +214,8 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 
 	self:SetSize( w, h )
 
-	if ( y + h > ScrH() ) then y = ((maunal and ScrH()) or (y + OwnerHeight)) - h end
-	if ( x + w > ScrW() ) then x = ((maunal and ScrW()) or x) - w end
+	if ( y + h > ScrH() ) then y = ( ( maunal && ScrH() ) or ( y + OwnerHeight ) ) - h end
+	if ( x + w > ScrW() ) then x = ( ( maunal && ScrW() ) or x ) - w end
 	if ( y < 1 ) then y = 1 end
 	if ( x < 1 ) then x = 1 end
 
@@ -298,9 +265,6 @@ function PANEL:HighlightItem( item )
 
 end
 
---[[---------------------------------------------------------
-   Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local MenuItemSelected = function()

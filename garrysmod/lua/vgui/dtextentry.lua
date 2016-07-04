@@ -46,7 +46,6 @@ function PANEL:Init()
 	self:SetNumeric( false )
 	self:SetAllowNonAsciiCharacters( true )
 
-
 	-- Nicer default height
 	self:SetTall( 20 )
 
@@ -178,9 +177,6 @@ function PANEL:UpdateFromMenu()
 
 end
 
---[[---------------------------------------------------------
-	OnTextChanged
------------------------------------------------------------]]
 function PANEL:OnTextChanged( noMenuRemoval )
 
 	self.HistoryPos = 0
@@ -190,7 +186,7 @@ function PANEL:OnTextChanged( noMenuRemoval )
 		self:OnValueChange( self:GetText() )
 	end
 
-	if ( IsValid( self.Menu ) and not noMenuRemoval ) then
+	if ( IsValid( self.Menu ) && !noMenuRemoval ) then
 		self.Menu:Remove()
 	end
 
@@ -203,9 +199,6 @@ function PANEL:OnTextChanged( noMenuRemoval )
 
 end
 
---[[---------------------------------------------------------
-	OnChange
------------------------------------------------------------]]
 function PANEL:OnChange()
 end
 
@@ -230,18 +223,12 @@ function PANEL:OpenAutoComplete( tab )
 
 end
 
---[[---------------------------------------------------------
-	Think
------------------------------------------------------------]]
 function PANEL:Think()
 
 	self:ConVarStringThink()
 
 end
 
---[[---------------------------------------------------------
-	OnEnter
------------------------------------------------------------]]
 function PANEL:OnEnter()
 
 	-- For override
@@ -250,9 +237,6 @@ function PANEL:OnEnter()
 
 end
 
---[[---------------------------------------------------------
-	UpdateConvarValue
------------------------------------------------------------]]
 function PANEL:UpdateConvarValue()
 
 	-- This only kicks into action if this variable has
@@ -261,10 +245,6 @@ function PANEL:UpdateConvarValue()
 
 end
 
-
---[[---------------------------------------------------------
-	Paint
------------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "TextEntry", self, w, h )
@@ -272,19 +252,12 @@ function PANEL:Paint( w, h )
 
 end
 
---[[---------------------------------------------------------
-   Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	derma.SkinHook( "Layout", "TextEntry", self )
 
 end
 
-
---[[---------------------------------------------------------
-	Name: SetValue ( A simple redirect for the ConVar stuff )
------------------------------------------------------------]]
 function PANEL:SetValue( strValue )
 
 	-- Don't update if we're typing into it!
@@ -300,17 +273,10 @@ function PANEL:SetValue( strValue )
 
 end
 
-
---[[---------------------------------------------------------
-	Name: OnValueChange
------------------------------------------------------------]]
 function PANEL:OnValueChange( strValue )
 	-- For Override
 end
 
---[[---------------------------------------------------------
-	Name: CheckNumeric
------------------------------------------------------------]]
 function PANEL:CheckNumeric( strValue )
 
 	-- Not purely numeric, don't run the check
@@ -328,9 +294,6 @@ function PANEL:CheckNumeric( strValue )
 
 end
 
---[[---------------------------------------------------------
-	Name: AllowInput
------------------------------------------------------------]]
 function PANEL:AllowInput( strValue )
 
 	-- This is layed out like this so you can easily override and
@@ -339,9 +302,6 @@ function PANEL:AllowInput( strValue )
 
 end
 
---[[---------------------------------------------------------
-	Name: SetEditable
------------------------------------------------------------]]
 function PANEL:SetEditable( b )
 
 	self:SetKeyboardInputEnabled( b )
@@ -349,9 +309,6 @@ function PANEL:SetEditable( b )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnGetFocus
------------------------------------------------------------]]
 function PANEL:OnGetFocus()
 
 	--
@@ -366,9 +323,6 @@ function PANEL:OnGetFocus()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnLoseFocus
------------------------------------------------------------]]
 function PANEL:OnLoseFocus()
 
 	self:UpdateConvarValue()
@@ -377,18 +331,12 @@ function PANEL:OnLoseFocus()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnMousePressed
------------------------------------------------------------]]
 function PANEL:OnMousePressed( mcode )
 
 	self:OnGetFocus()
 
 end
 
---[[---------------------------------------------------------
-	Name: AddHistory
------------------------------------------------------------]]
 function PANEL:AddHistory( txt )
 
 	if ( !txt || txt == "" ) then return end
@@ -398,35 +346,22 @@ function PANEL:AddHistory( txt )
 
 end
 
-
---[[---------------------------------------------------------
-	Name: OnMousePressed
------------------------------------------------------------]]
 function PANEL:GetAutoComplete( txt )
 	-- for override. Return a table of strings.
 end
 
---[[---------------------------------------------------------
-	Name: GetInt
------------------------------------------------------------]]
 function PANEL:GetInt()
 
 	return math.floor( tonumber( self:GetText() ) + 0.5 )
 
 end
 
---[[---------------------------------------------------------
-	Name: GetFloat
------------------------------------------------------------]]
 function PANEL:GetFloat()
 
 	return tonumber( self:GetText() )
 
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )

@@ -5,9 +5,6 @@ AccessorFunc( PANEL, "m_Hue", "Hue" )
 AccessorFunc( PANEL, "m_BaseRGB", "BaseRGB" )
 AccessorFunc( PANEL, "m_OutRGB", "RGB" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetImage( "vgui/minixhair" )
@@ -29,9 +26,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	DSlider.PerformLayout( self )
@@ -44,9 +38,6 @@ function PANEL:PerformLayout()
 
 end
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Paint()
 
 	surface.SetDrawColor( self.m_BaseRGB.r, self.m_BaseRGB.g, self.m_BaseRGB.b, 255 )
@@ -54,9 +45,6 @@ function PANEL:Paint()
 
 end
 
---[[---------------------------------------------------------
-	Name: PaintOver
------------------------------------------------------------]]
 function PANEL:PaintOver()
 
 	surface.SetDrawColor( 0, 0, 0, 250 )
@@ -64,9 +52,6 @@ function PANEL:PaintOver()
 
 end
 
---[[---------------------------------------------------------
-	Name: TranslateValues
------------------------------------------------------------]]
 function PANEL:TranslateValues( x, y )
 
 	self:UpdateColor( x, y )
@@ -76,9 +61,6 @@ function PANEL:TranslateValues( x, y )
 
 end
 
---[[---------------------------------------------------------
-	Name: UpdateColor
------------------------------------------------------------]]
 function PANEL:UpdateColor( x, y )
 
 	x = x or self:GetSlideX()
@@ -94,18 +76,12 @@ function PANEL:UpdateColor( x, y )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnUserChanged
------------------------------------------------------------]]
 function PANEL:OnUserChanged()
 
 	-- Override me
 
 end
 
---[[---------------------------------------------------------
-	Name: SetColor
------------------------------------------------------------]]
 function PANEL:SetColor( color )
 
 	local h, s, v = ColorToHSV( color )
@@ -118,9 +94,6 @@ function PANEL:SetColor( color )
 
 end
 
---[[---------------------------------------------------------
-	Name: SetBaseRGB
------------------------------------------------------------]]
 function PANEL:SetBaseRGB( color )
 
 	self.m_BaseRGB = color

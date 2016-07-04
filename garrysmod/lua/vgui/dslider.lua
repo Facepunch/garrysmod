@@ -1,17 +1,17 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "NumSlider",			"NumSlider" )
+AccessorFunc( PANEL, "NumSlider", "NumSlider" )
 
-AccessorFunc( PANEL, "m_fSlideX",			"SlideX" )
-AccessorFunc( PANEL, "m_fSlideY",			"SlideY" )
+AccessorFunc( PANEL, "m_fSlideX", "SlideX" )
+AccessorFunc( PANEL, "m_fSlideY", "SlideY" )
 
-AccessorFunc( PANEL, "m_iLockX",			"LockX" )
-AccessorFunc( PANEL, "m_iLockY",			"LockY" )
+AccessorFunc( PANEL, "m_iLockX", "LockX" )
+AccessorFunc( PANEL, "m_iLockY", "LockY" )
 
-AccessorFunc( PANEL, "Dragging",			"Dragging" )
-AccessorFunc( PANEL, "m_bTrappedInside",	"TrapInside" )
-AccessorFunc( PANEL, "m_iNotches",			"Notches" )
+AccessorFunc( PANEL, "Dragging", "Dragging" )
+AccessorFunc( PANEL, "m_bTrappedInside", "TrapInside" )
+AccessorFunc( PANEL, "m_iNotches", "Notches" )
 
 Derma_Hook( PANEL, "Paint", "Paint", "Slider" )
 
@@ -58,15 +58,11 @@ function PANEL:SetBackground( img )
 end
 
 function PANEL:SetImage( strImage )
-
 	-- RETIRED
-
 end
 
 function PANEL:SetImageColor( color )
-
 	-- RETIRED
-
 end
 
 function PANEL:OnCursorMoved( x, y )
@@ -134,11 +130,11 @@ function PANEL:PerformLayout()
 
 		w = w - iw
 		h = h - ih
-		self.Knob:SetPos( ( self.m_fSlideX or 0 ) * w, ( self.m_fSlideY or 0 ) * h )
+		self.Knob:SetPos( ( self.m_fSlideX || 0 ) * w, ( self.m_fSlideY || 0 ) * h )
 
 	else
 
-		self.Knob:SetPos( ( self.m_fSlideX or 0 ) * w - iw * 0.5, ( self.m_fSlideY or 0 ) * h - ih * 0.5 )
+		self.Knob:SetPos( ( self.m_fSlideX || 0 ) * w - iw * 0.5, ( self.m_fSlideY || 0 ) * h - ih * 0.5 )
 
 	end
 

@@ -44,9 +44,6 @@
 
 local PANEL = {}
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.Offset = 0
@@ -56,12 +53,12 @@ function PANEL:Init()
 
 	self.btnUp = vgui.Create( "DButton", self )
 	self.btnUp:SetText( "" )
-	self.btnUp.DoClick = function ( self ) self:GetParent():AddScroll( -1 ) end
+	self.btnUp.DoClick = function( self ) self:GetParent():AddScroll( -1 ) end
 	self.btnUp.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonUp", panel, w, h ) end
 
 	self.btnDown = vgui.Create( "DButton", self )
 	self.btnDown:SetText( "" )
-	self.btnDown.DoClick = function ( self ) self:GetParent():AddScroll( 1 ) end
+	self.btnDown.DoClick = function( self ) self:GetParent():AddScroll( 1 ) end
 	self.btnDown.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonDown", panel, w, h ) end
 
 	self.btnGrip = vgui.Create( "DScrollBarGrip", self )
@@ -70,9 +67,6 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: SetEnabled
------------------------------------------------------------]]
 function PANEL:SetEnabled( b )
 
 	if ( !b ) then
@@ -102,18 +96,12 @@ function PANEL:SetEnabled( b )
 
 end
 
---[[---------------------------------------------------------
-	Name: Value
------------------------------------------------------------]]
 function PANEL:Value()
 
 	return self.Pos
 
 end
 
---[[---------------------------------------------------------
-	Name: Value
------------------------------------------------------------]]
 function PANEL:BarScale()
 
 	if ( self.BarSize == 0 ) then return 1 end
@@ -122,9 +110,6 @@ function PANEL:BarScale()
 
 end
 
---[[---------------------------------------------------------
-	Name: SetPos
------------------------------------------------------------]]
 function PANEL:SetUp( _barsize_, _canvassize_ )
 
 	self.BarSize = _barsize_
@@ -136,9 +121,6 @@ function PANEL:SetUp( _barsize_, _canvassize_ )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnMouseWheeled
------------------------------------------------------------]]
 function PANEL:OnMouseWheeled( dlta )
 
 	if ( !self:IsVisible() ) then return false end
@@ -150,9 +132,6 @@ function PANEL:OnMouseWheeled( dlta )
 
 end
 
---[[---------------------------------------------------------
-	Name: AddScroll (Returns true if changed)
------------------------------------------------------------]]
 function PANEL:AddScroll( dlta )
 
 	local OldScroll = self:GetScroll()
@@ -164,9 +143,6 @@ function PANEL:AddScroll( dlta )
 
 end
 
---[[---------------------------------------------------------
-	Name: SetScroll
------------------------------------------------------------]]
 function PANEL:SetScroll( scrll )
 
 	if ( !self.Enabled ) then self.Scroll = 0 return end
@@ -191,9 +167,6 @@ function PANEL:SetScroll( scrll )
 
 end
 
---[[---------------------------------------------------------
-	Name: AnimateTo
------------------------------------------------------------]]
 function PANEL:AnimateTo( scrll, length, delay, ease )
 
 	local anim = self:NewAnimation( length, delay, ease )
@@ -207,9 +180,6 @@ function PANEL:AnimateTo( scrll, length, delay, ease )
 
 end
 
---[[---------------------------------------------------------
-	Name: GetScroll
------------------------------------------------------------]]
 function PANEL:GetScroll()
 
 	if ( !self.Enabled ) then self.Scroll = 0 end
@@ -217,9 +187,6 @@ function PANEL:GetScroll()
 
 end
 
---[[---------------------------------------------------------
-	Name: GetOffset
------------------------------------------------------------]]
 function PANEL:GetOffset()
 
 	if ( !self.Enabled ) then return 0 end
@@ -227,15 +194,9 @@ function PANEL:GetOffset()
 
 end
 
---[[---------------------------------------------------------
-	Name: Think
------------------------------------------------------------]]
 function PANEL:Think()
 end
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "VScrollBar", self, w, h )
@@ -243,9 +204,6 @@ function PANEL:Paint( w, h )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnMouseReleased
------------------------------------------------------------]]
 function PANEL:OnMousePressed()
 
 	local x, y = self:CursorPos()
@@ -260,9 +218,6 @@ function PANEL:OnMousePressed()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnMouseReleased
------------------------------------------------------------]]
 function PANEL:OnMouseReleased()
 
 	self.Dragging = false
@@ -273,17 +228,12 @@ function PANEL:OnMouseReleased()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnCursorMoved
------------------------------------------------------------]]
 function PANEL:OnCursorMoved( x, y )
 
 	if ( !self.Enabled ) then return end
 	if ( !self.Dragging ) then return end
 
-	local x = 0
-	local y = gui.MouseY()
-	local x, y = self:ScreenToLocal( x, y )
+	local x, y = self:ScreenToLocal( 0, gui.MouseY() )
 
 	-- Uck.
 	y = y - self.btnUp:GetTall()
@@ -297,9 +247,6 @@ function PANEL:OnCursorMoved( x, y )
 
 end
 
---[[---------------------------------------------------------
-	Name: Grip
------------------------------------------------------------]]
 function PANEL:Grip()
 
 	if ( !self.Enabled ) then return end
@@ -308,17 +255,13 @@ function PANEL:Grip()
 	self:MouseCapture( true )
 	self.Dragging = true
 
-	local x, y = 0, gui.MouseY()
-	local x, y = self.btnGrip:ScreenToLocal( x, y )
+	local x, y = self.btnGrip:ScreenToLocal( 0, gui.MouseY() )
 	self.HoldPos = y
 
 	self.btnGrip.Depressed = true
 
 end
 
---[[---------------------------------------------------------
-	PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	local Wide = self:GetWide()

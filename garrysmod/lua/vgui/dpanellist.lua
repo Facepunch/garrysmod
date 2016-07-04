@@ -9,12 +9,9 @@ AccessorFunc( PANEL, "m_fAnimTime",				"AnimTime" )
 AccessorFunc( PANEL, "m_fAnimEase",				"AnimEase" )
 AccessorFunc( PANEL, "m_strDraggableName",		"DraggableName" )
 
-AccessorFunc( PANEL, "Spacing",		"Spacing" )
-AccessorFunc( PANEL, "Padding",		"Padding" )
+AccessorFunc( PANEL, "Spacing", "Spacing" )
+AccessorFunc( PANEL, "Padding", "Padding" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetDraggableName( "GlobalDPanel" )
@@ -67,18 +64,12 @@ function PANEL:GetItems()
 
 end
 
---[[---------------------------------------------------------
-	Name: EnableHorizontal
------------------------------------------------------------]]
 function PANEL:EnableHorizontal( bHoriz )
 
 	self.Horizontal = bHoriz
 
 end
 
---[[---------------------------------------------------------
-	Name: EnableVerticalScrollbar
------------------------------------------------------------]]
 function PANEL:EnableVerticalScrollbar()
 
 	if ( self.VBar ) then return end
@@ -87,18 +78,12 @@ function PANEL:EnableVerticalScrollbar()
 
 end
 
---[[---------------------------------------------------------
-	Name: GetCanvas
------------------------------------------------------------]]
 function PANEL:GetCanvas()
 
 	return self.pnlCanvas
 
 end
 
---[[---------------------------------------------------------
-	Name: Clear
------------------------------------------------------------]]
 function PANEL:Clear( bDelete )
 
 	for k, panel in pairs( self.Items ) do
@@ -117,24 +102,21 @@ function PANEL:Clear( bDelete )
 
 end
 
---[[---------------------------------------------------------
-	Name: AddItem
------------------------------------------------------------]]
 function PANEL:AddItem( item, strLineState )
 
 	if ( !IsValid( item ) ) then return end
 
 	item:SetVisible( true )
 	item:SetParent( self:GetCanvas() )
-	item.m_strLineState = strLineState or item.m_strLineState
+	item.m_strLineState = strLineState || item.m_strLineState
 	table.insert( self.Items, item )
 
-	if ( self.m_bSortable ) then
+	--[[if ( self.m_bSortable ) then
 
-		//local DragSlot = item:MakeDraggable( self:GetDraggableName(), self )
-		//DragSlot.OnDrop = self.DropAction
+		local DragSlot = item:MakeDraggable( self:GetDraggableName(), self )
+		DragSlot.OnDrop = self.DropAction
 
-	end
+	end]]
 
 	item:SetSelectable( self.m_bSelectionCanvas )
 
@@ -166,7 +148,7 @@ function PANEL:InsertAfter( before, insert, strLineState )
 
 	if ( key ) then
 		table.RemoveByValue( self.Items, insert )
-		table.insert( self.Items, key+1, insert )
+		table.insert( self.Items, key + 1, insert )
 	end
 
 end
@@ -210,9 +192,6 @@ function PANEL.DropAction( Slot, RcvSlot )
 
 end
 
---[[---------------------------------------------------------
-	Name: RemoveItem
------------------------------------------------------------]]
 function PANEL:RemoveItem( item, bDontDelete )
 
 	for k, panel in pairs( self.Items ) do
@@ -245,9 +224,6 @@ function PANEL:CleanList()
 
 end
 
---[[---------------------------------------------------------
-	Name: Rebuild
------------------------------------------------------------]]
 function PANEL:Rebuild()
 
 	local Offset = 0
@@ -337,15 +313,12 @@ function PANEL:Rebuild()
 	-- Although this behaviour isn't exactly implied, center vertically too
 	if ( self.m_bNoSizing && self:GetCanvas():GetTall() < self:GetTall() ) then
 
-		self:GetCanvas():SetPos( 0, ( self:GetTall()-self:GetCanvas():GetTall() ) * 0.5 )
+		self:GetCanvas():SetPos( 0, ( self:GetTall() - self:GetCanvas():GetTall() ) * 0.5 )
 
 	end
 
 end
 
---[[---------------------------------------------------------
-	Name: OnMouseWheeled
------------------------------------------------------------]]
 function PANEL:OnMouseWheeled( dlta )
 
 	if ( self.VBar ) then
@@ -354,9 +327,6 @@ function PANEL:OnMouseWheeled( dlta )
 
 end
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "PanelList", self, w, h )
@@ -364,18 +334,12 @@ function PANEL:Paint( w, h )
 
 end
 
---[[---------------------------------------------------------
-	Name: OnVScroll
------------------------------------------------------------]]
 function PANEL:OnVScroll( iOffset )
 
 	self.pnlCanvas:SetPos( 0, iOffset )
 
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	local Wide = self:GetWide()
@@ -424,9 +388,6 @@ function PANEL:OnChildRemoved()
 
 end
 
---[[---------------------------------------------------------
-	Name: ScrollToChild
------------------------------------------------------------]]
 function PANEL:ScrollToChild( panel )
 
 	local x, y = self.pnlCanvas:GetChildPosition( panel )
@@ -439,12 +400,9 @@ function PANEL:ScrollToChild( panel )
 
 end
 
---[[---------------------------------------------------------
-	Name: SortByMember
------------------------------------------------------------]]
 function PANEL:SortByMember( key, desc )
 
-	desc = desc or true
+	desc = desc || true
 
 	table.sort( self.Items, function( a, b )
 
