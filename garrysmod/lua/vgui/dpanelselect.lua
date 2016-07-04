@@ -43,7 +43,7 @@ function PANEL:SelectPanel( pnl )
 	self:OnActivePanelChanged( self.SelectedPanel, pnl )
 
 	if ( self.SelectedPanel ) then
-		self.SelectedPanel.PaintOver = nil
+		self.SelectedPanel.PaintOver = self.OldSelectedPaintOver
 		self.SelectedPanel = nil
 	end
 
@@ -55,6 +55,7 @@ function PANEL:SelectPanel( pnl )
 	self.SelectedPanel = pnl
 
 	if ( self.SelectedPanel ) then
+		self.OldSelectedPaintOver = self.SelectedPanel.PaintOver
 		self.SelectedPanel.PaintOver = DrawSelected
 	end
 

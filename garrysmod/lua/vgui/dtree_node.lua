@@ -411,7 +411,7 @@ function PANEL:MakeFolder( strFolder, strPath, bShowFiles, strWildCard, bDontFor
 
 end
 
-function PANEL:FilePopulateCallback( files, folders, foldername, path, bAndChildren )
+function PANEL:FilePopulateCallback( files, folders, foldername, path, bAndChildren, wildcard )
 
 	local showfiles = self:GetShowFiles()
 
@@ -479,7 +479,7 @@ function PANEL:FilePopulate( bAndChildren, bExpand )
 	self:SetNeedsPopulating( false )
 	self:SetNeedsChildSearch( false )
 
-	self:FilePopulateCallback( files, folders, folder, path, bAndChildren )
+	self:FilePopulateCallback( files, folders, folder, path, bAndChildren, wildcard )
 
 	if ( bExpand ) then
 		self:SetExpanded( true )
