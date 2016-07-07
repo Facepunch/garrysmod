@@ -352,6 +352,8 @@ function LoadLastMap()
 
 	cat = string.gsub( cat, "'", "\\'" )
 
+	if ( !file.Exists( "maps/" .. map .. ".bsp", "GAME" ) ) then return end
+
 	pnlMainMenu:Call( "SetLastMap('" .. map .. "','" .. cat .. "')" )
 
 end
