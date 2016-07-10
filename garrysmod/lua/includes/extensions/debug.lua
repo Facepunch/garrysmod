@@ -34,7 +34,7 @@ function debug.Trace()
 		
 		if (info.what) == "C" then
 		
-			Msg(level, "\tC function\n")
+			Msg( string.format( "\t%i: C function\n", level ) )
 		  
 		else
 		
@@ -46,6 +46,6 @@ function debug.Trace()
 		
 	end
 	  
-	Msg( "\n\n" )
+	Msg( "\n" )
 	  
 end
