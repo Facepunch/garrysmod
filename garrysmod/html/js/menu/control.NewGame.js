@@ -107,6 +107,8 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 			return "img/incompatible.png"
 		}
 
+		if ( !IN_ENGINE ) return "img/downloading.png"
+
 		return "asset://mapimage/" + m
 	}
 
