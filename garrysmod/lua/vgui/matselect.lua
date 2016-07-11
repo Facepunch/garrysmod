@@ -79,7 +79,6 @@ function PANEL:SetItemSize( pnl )
 		w = math.floor( ( maxW - self.List:GetPadding() * 2 - self.List:GetSpacing() * ( numIcons - 1 ) ) / numIcons )
 	end
 
-
 	local h = self.ItemHeight
 	if ( h < 1 ) then
 		local numIcons = math.floor( 1 / h )

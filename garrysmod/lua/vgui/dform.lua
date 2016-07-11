@@ -47,7 +47,7 @@ function PANEL:AddItem( left, right )
 	--Panel.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "CategoryButton", panel, w, h ) end
 	Panel:SetSizeX( false )
 	Panel:Dock( TOP )
-	Panel:DockPadding( 10, 10, 10, 0 );
+	Panel:DockPadding( 10, 10, 10, 0 )
 	Panel:InvalidateLayout()
 
 	if ( IsValid( right ) ) then

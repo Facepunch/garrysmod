@@ -42,7 +42,7 @@ function PANEL:AddItem( item, LifeLength )
 
 end
 
-function PANEL:Think( )
+function PANEL:Think()
 
 	local bChange = false
 	for k, panel in pairs( self.Items ) do

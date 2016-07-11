@@ -23,7 +23,7 @@ function PANEL:Set( OnOff )
 
 end
 
-function PANEL:DoClick( )
+function PANEL:DoClick()
 
 	self:Set( !self.State )
 

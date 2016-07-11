@@ -180,7 +180,6 @@ function PANEL:BodyGroupChanged( k, v )
 
 end
 
-
 vgui.Register( "SpawnIcon", PANEL, "DButton" )
 
 --

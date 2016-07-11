@@ -154,7 +154,6 @@ local tblCategory = vgui.RegisterTable( {
 
 	end
 
-
 }, "Panel" )
 
 --[[---------------------------------------------------------

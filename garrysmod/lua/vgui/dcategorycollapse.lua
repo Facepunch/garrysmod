@@ -201,7 +201,7 @@ function PANEL:Toggle()
 	if ( !self:GetExpanded() ) then open = "0" end
 	self:SetCookie( "Open", open )
 
-	self:OnToggle( self:GetExpanded( ) )
+	self:OnToggle( self:GetExpanded() )
 
 end
 

@@ -60,7 +60,7 @@ function PANEL:SetMaterial( Mat )
 
 end
 
-function PANEL:SizeToContents( )
+function PANEL:SizeToContents()
 
 	self.m_Image:SizeToContents()
 	self:SetSize( self.m_Image:GetWide(), self.m_Image:GetTall() )

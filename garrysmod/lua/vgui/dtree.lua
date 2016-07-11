@@ -17,7 +17,7 @@ function PANEL:Init()
 	self:SetLineHeight( 17 )
 	--self:SetPadding( 2 )
 
-	self.RootNode = self:GetCanvas():Add( "DTree_Node" );
+	self.RootNode = self:GetCanvas():Add( "DTree_Node" )
 	self.RootNode:SetRoot( self )
 	self.RootNode:SetParentNode( self )
 	self.RootNode:Dock( TOP )
@@ -33,7 +33,7 @@ end
 -- Get the root node
 --
 function PANEL:Root()
-	return self.RootNode;
+	return self.RootNode
 end
 
 function PANEL:AddNode( strName, strIcon )

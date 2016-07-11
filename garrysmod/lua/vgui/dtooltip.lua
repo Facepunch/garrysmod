@@ -83,7 +83,7 @@ function PANEL:PositionTooltip()
 	if ( y < 2 ) then y = 2 end
 
 	-- Fixes being able to be drawn off screen
-	self:SetPos( math.Clamp( x - w * 0.5, 0, ScrW( ) - self:GetWide( ) ), math.Clamp( y, 0, ScrH( ) - self:GetTall( ) ) )
+	self:SetPos( math.Clamp( x - w * 0.5, 0, ScrW() - self:GetWide() ), math.Clamp( y, 0, ScrH() - self:GetTall() ) )
 
 end
 

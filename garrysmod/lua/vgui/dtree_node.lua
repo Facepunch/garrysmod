@@ -542,7 +542,6 @@ function PANEL:DragHoverClick( HoverTime )
 
 end
 
-
 function PANEL:MoveToTop()
 
 	local parent = self:GetParentNode()
