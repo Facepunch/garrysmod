@@ -60,12 +60,8 @@ end
 local clamp = math.Clamp
 local abs = math.abs
 local min,max = math.min,math.max
-function ColorToHSL(R,G,B)
-	if type(R)=="table" then
-		R,G,B = clamp(R.r,0,255)/255,clamp(R.g,0,255)/255,clamp(R.b,0,255)/255
-	else
-		R,G,B = R/255,G/255,B/255
-	end
+function ColorToHSL(_color)
+	local R,G,B = _color.r/255,_color.g/255,_color.b/255
 	local max,min = max(R,G,B),min(R,G,B)
 	local del = max-min
 	-- Hue
