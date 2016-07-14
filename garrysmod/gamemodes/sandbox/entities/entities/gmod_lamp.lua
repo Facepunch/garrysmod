@@ -84,8 +84,6 @@ function ENT:Switch( bOn )
 
 	self:SetOn( true )
 
-	local angForward = self:GetAngles()
-
 	self.flashlight = ents.Create( "env_projectedtexture" )
 
 	self.flashlight:SetParent( self.Entity )
