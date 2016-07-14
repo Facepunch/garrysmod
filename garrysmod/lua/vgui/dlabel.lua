@@ -177,7 +177,7 @@ function PANEL:OnMouseReleased( mousecode )
 	-- For the purposes of these callbacks we want to
 	-- keep depressed true. This helps us out in controls
 	-- like the checkbox in the properties dialog. Because
-	-- the properties dialog will only manualloy change the value
+	-- the properties dialog will only manually change the value
 	-- if IsEditing() is true - and the only way to work out if
 	-- a label/button based control is editing is when it's depressed.
 	--
