@@ -135,7 +135,7 @@ function PANEL:SetWidth( iSize )
 	iSize = math.Clamp( iSize, self.m_iMinWidth, self.m_iMaxWidth )
 
 	-- If the column changes size we need to lay the data out too
-	if ( iSize != self:GetWide() ) then
+	if ( math.floor( iSize ) != self:GetWide() ) then
 		self:GetParent():SetDirty( true )
 	end
 

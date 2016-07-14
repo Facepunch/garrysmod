@@ -129,7 +129,7 @@ function PANEL:FixColumnsLayout()
 
 	local ChangeRequired = self.pnlCanvas:GetWide() - AllWidth
 	local ChangePerColumn = math.floor( ChangeRequired / NumColumns )
-	local Remainder = ChangeRequired - (ChangePerColumn * NumColumns)
+	local Remainder = ChangeRequired - ( ChangePerColumn * NumColumns )
 
 	for k, Column in pairs( self.Columns ) do
 
@@ -148,7 +148,7 @@ function PANEL:FixColumnsLayout()
 			Remainder = math.Approach( Remainder, 0, PerPanel )
 
 			local TargetWidth = Column:GetWide() + PerPanel
-			Remainder = Remainder + (TargetWidth - Column:SetWidth( TargetWidth ))
+			Remainder = Remainder + ( TargetWidth - Column:SetWidth( TargetWidth ) )
 
 			if ( Remainder == 0 ) then break end
 
