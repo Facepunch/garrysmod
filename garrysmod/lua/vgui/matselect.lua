@@ -204,7 +204,7 @@ function PANEL:TestForChanges()
 	local cvar = self:ConVar()
 	if ( !cvar ) then return end
 
-	local Value = GetConVarString( cvar )
+	local Value = GetConVar( cvar ):GetString()
 	if ( Value == self.CurrentValue ) then return end
 
 	self:FindAndSelectMaterial( Value )
