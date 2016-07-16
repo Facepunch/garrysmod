@@ -61,13 +61,13 @@ end
 local UID2_cache = {}
 local string_sub = string.sub
 
-function meta:UniqueID2( ply )
-    local cached = UID2_cache[ply]
+function meta:UniqueID2()
+    local cached = UID2_cache[self]
     if cached then return cached end
 
-    local sid = ply:SteamID()
+    local sid = self:SteamID()
     local uid2 = string_sub( sid, 7, 7 )..string_sub( sid, 9, 9 )..string_sub( sid, 11 )
-    UID2_cache[ply] = uid2
+    UID2_cache[self] = uid2
 
     return uid2 -- convert string to number by yourself, if you need to.
 end
