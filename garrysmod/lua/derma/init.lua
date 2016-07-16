@@ -90,7 +90,7 @@ function Derma_Install_Convar_Functions( PANEL )
 
 		if ( !self.m_strConVar ) then return end
 
-		local strValue = GetConVarString( self.m_strConVar )
+		local strValue = GetConVar( self.m_strConVar ):GetString()
 		if ( self.m_strConVarValue == strValue ) then return end
 
 		self.m_strConVarValue = strValue
@@ -102,7 +102,7 @@ function Derma_Install_Convar_Functions( PANEL )
 
 		if ( !self.m_strConVar ) then return end
 
-		local strValue = GetConVarNumber( self.m_strConVar )
+		local strValue = GetConVar( self.m_strConVar ):GetInt()
 		if ( self.m_strConVarValue == strValue ) then return end
 
 		self.m_strConVarValue = strValue

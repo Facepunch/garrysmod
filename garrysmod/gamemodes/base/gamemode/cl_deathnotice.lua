@@ -177,7 +177,7 @@ end
 
 function GM:DrawDeathNotice( x, y )
 
-	if ( GetConVarNumber( "cl_drawhud" ) == 0 ) then return end
+	if ( GetConVar( "cl_drawhud" ):GetInt() == 0 ) then return end
 
 	local hud_deathnotice_time = hud_deathnotice_time:GetFloat()
 

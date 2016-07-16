@@ -4,8 +4,6 @@ local pairs             = pairs
 local type              = type
 local assert            = assert
 local format            = string.format
-local GetConVarString   = GetConVarString
-local GetConVarNumber   = GetConVarNumber
 local ConVarExists      = ConVarExists
 
 --[[---------------------------------------------------------
@@ -111,7 +109,7 @@ function String( name, default )
 
 	if ( !ConVarExists( name ) ) then return default end
 
-	return GetConVarString( name )
+	return GetConVar( name ):GetString()
 
 end
 
@@ -122,7 +120,7 @@ function Number( name, default )
 
 	if ( !ConVarExists( name ) ) then return default end
 
-	return GetConVarNumber( name )
+	return GetConVar( name ):GetInt()
 
 end
 

@@ -10,7 +10,7 @@ end, "gmod_toolmode_panel" )
 include( "shared.lua" )
 include( "cl_viewscreen.lua" )
 
-SWEP.Slot			= 5
+SWEP.Slot		= 5
 SWEP.SlotPos		= 6
 SWEP.DrawAmmo		= false
 SWEP.DrawCrosshair	= true
@@ -119,7 +119,7 @@ function SWEP:DrawHUD()
 		if ( v.stage && v.stage != self:GetStage() ) then continue end
 		if ( v.op && v.op != self:GetToolObject():GetOperation() ) then continue end
 
-		local txt = "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. v.name
+		local txt = "#tool." .. GetConVar( "gmod_toolmode" ):GetString() .. "." .. v.name
 		if ( v.name == "info" ) then
 			txt = self:GetToolObject():GetHelpText()
 		end

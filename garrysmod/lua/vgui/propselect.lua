@@ -155,7 +155,7 @@ end
 
 function PANEL:TestForChanges()
 
-	local Value = GetConVarString( self:ConVar() )
+	local Value = GetConVar( self:ConVar() ):GetString()
 
 	if ( Value == self.CurrentValue ) then return end
 

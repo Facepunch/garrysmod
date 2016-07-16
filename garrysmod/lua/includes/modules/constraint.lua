@@ -61,7 +61,7 @@ local function CreateConstraintSystem()
 	-- This is probably the best place to be calling this
 	GarbageCollectConstraintSystems()
 
-	local iterations = GetConVarNumber( "gmod_physiterations" )
+	local iterations = GetConVar( "gmod_physiterations" ):GetInt()
 
 	local System = ents.Create("phys_constraintsystem")
 	System:SetKeyValue( "additionaliterations", iterations )

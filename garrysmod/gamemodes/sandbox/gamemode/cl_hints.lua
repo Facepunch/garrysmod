@@ -10,7 +10,7 @@ local ProcessedHints = {}
 --
 local function ThrowHint( name )
 
-	local show = GetConVarNumber( "cl_showhints" )
+	local show = GetConVar( "cl_showhints" ):GetInt()
 	if ( show == 0 ) then return end
 
 	if ( engine.IsPlayingDemo() ) then return end

@@ -114,7 +114,7 @@ function ENT:Think()
 
 	if ( CLIENT ) then
 
-		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" )
+		self.ShouldDraw = GetConVar( "cl_drawthrusterseffects" ):GetInt()
 
 		local bDraw = true
 

@@ -162,6 +162,6 @@ end
 -- Returns the number of objects in the list
 function ToolObj:GetHelpText()
 
-	return "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. self:GetStage()
+	return "#tool." .. GetConVar( "gmod_toolmode" ):GetString() .. "." .. self:GetStage()
 
 end

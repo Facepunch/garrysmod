@@ -59,7 +59,7 @@ function ToolObj:GetServerInfo( property )
 
 	local mode = self:GetMode()
 
-	return GetConVarString( mode .. "_" .. property )
+	return GetConVar( mode .. "_" .. property ):GetString()
 
 end
 

@@ -344,7 +344,7 @@ function PANEL:DoConVarThink( convar )
 
 	if ( !convar ) then return end
 
-	local fValue = GetConVarNumber( convar )
+	local fValue = GetConVar( convar ):GetInt()
 	local fOldValue = self[ "ConVarOld" .. convar ]
 	if ( fOldValue && fValue == fOldValue ) then return fOldValue, false end
 

@@ -30,7 +30,7 @@ end
 function CC_GMOD_Tool( ply, command, arguments )
 
 	if ( arguments[1] == nil ) then return end
-	if ( GetConVarNumber( "toolmode_allow_" .. arguments[1] ) != 1 ) then return end
+	if ( GetConVar( "toolmode_allow_" .. arguments[1] ):GetInt() != 1 ) then return end
 
 	ply:ConCommand( "gmod_toolmode " .. arguments[1] )
 
