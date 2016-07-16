@@ -168,9 +168,9 @@ end
 function UpdateServerSettings()
 
 	local array = {
-		hostname = GetConVarString( "hostname" ),
-		sv_lan = GetConVarString( "sv_lan" ),
-		p2p_enabled = GetConVarString( "p2p_enabled" )
+		hostname = GetConVar( "hostname" ):GetString(),
+		sv_lan = GetConVar( "sv_lan" ):GetString(),
+		p2p_enabled = GetConVar( "p2p_enabled" ):GetString()
 	}
 
 	local settings_file = file.Read( "gamemodes/" .. engine.ActiveGamemode() .. "/" .. engine.ActiveGamemode() .. ".txt", true )
@@ -184,7 +184,7 @@ function UpdateServerSettings()
 			array.settings = Settings.settings
 
 			for k, v in pairs( array.settings ) do
-				v.Value = GetConVarString( v.name )
+				v.Value = GetConVar( v.name ):GetString()
 			end
 
 		end
@@ -318,7 +318,7 @@ timer.Simple( 0, function()
 	pnlMainMenu = vgui.Create( "MainMenuPanel" )
 	pnlMainMenu:Call( "UpdateVersion( '" .. VERSIONSTR .. "', '" .. BRANCH .. "' )" )
 
-	local language = GetConVarString( "gmod_language" )
+	local language = GetConVar( "gmod_language" ):GetString()
 	LanguageChanged( language )
 
 	hook.Run( "GameContentChanged" )
