@@ -54,6 +54,28 @@ function meta:SetUserGroup(name)
     self:SetNWString("UserGroup", name)
 end
 
+--[[---------------------------------------------------------
+    Name: UniqueID2
+    Desc: Real unique ID.
+-----------------------------------------------------------]]
+local UID2_cache = {}
+local string_sub = string.sub
+
+function meta:UniqueID2( ply )
+    local cached = UID2_cache[ply]
+    if cached then return cached end
+
+    local sid = ply:SteamID()
+    local uid2 = string_sub( sid, 7, 7 )..string_sub( sid, 9, 9 )..string_sub( sid, 11 )
+    UID2_cache[ply] = uid2
+
+    return uid2 -- convert string to number by yourself, if you need to.
+end
+
+hook.Add( "PlayerDisconnected", "UniqueID2_CleanCache", function( ply )
+    UID2_cache[ply] = nil
+end)
+
 
 -- SteamIds table..
 -- STEAM_0:1:7099:
