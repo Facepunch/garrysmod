@@ -177,6 +177,7 @@ end
 
 ---- Weapon switching
 local function ForceWeaponSwitch(ply, cmd, args)
+   if not ply:IsPlayer() or not args[1] then return end
    -- Turns out even SelectWeapon refuses to switch to empty guns, gah.
    -- Worked around it by giving every weapon a single Clip2 round.
    -- Works because no weapon uses those.
