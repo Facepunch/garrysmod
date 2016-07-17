@@ -3,11 +3,15 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType			= "slam"
+SWEP.HoldType               = "slam"
 
 if CLIENT then
-   SWEP.PrintName			= "C4"
-   SWEP.Slot				= 6
+   SWEP.PrintName           = "C4"
+   SWEP.Slot                = 6
+   
+   SWEP.ViewModelFlip      = false
+   SWEP.ViewModelFOV       = 54
+   SWEP.DrawCrosshair      = false
 
    SWEP.EquipMenuData = {
       type  = "item_weapon",
@@ -15,37 +19,33 @@ if CLIENT then
       desc  = "c4_desc"
    };
 
-   SWEP.Icon = "vgui/ttt/icon_c4"
-   SWEP.IconLetter = "I"
+   SWEP.Icon                = "vgui/ttt/icon_c4"
+   SWEP.IconLetter          = "I"
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                   = "weapon_tttbase"
 
-SWEP.Kind = WEAPON_EQUIP
-SWEP.CanBuy = {ROLE_TRAITOR} -- only traitors can buy
-SWEP.WeaponID = AMMO_C4
+SWEP.Kind                   = WEAPON_EQUIP
+SWEP.CanBuy                 = {ROLE_TRAITOR} -- only traitors can buy
+SWEP.WeaponID               = AMMO_C4
 
-SWEP.UseHands			= true
-SWEP.ViewModelFlip		= false
-SWEP.ViewModelFOV		= 54
-SWEP.ViewModel  = Model("models/weapons/cstrike/c_c4.mdl")
-SWEP.WorldModel = Model("models/weapons/w_c4.mdl")
+SWEP.UseHands               = true
+SWEP.ViewModel              = Model("models/weapons/cstrike/c_c4.mdl")
+SWEP.WorldModel             = Model("models/weapons/w_c4.mdl")
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
 SWEP.Primary.ClipSize       = -1
 SWEP.Primary.DefaultClip    = -1
 SWEP.Primary.Automatic      = true
-SWEP.Primary.Ammo       = "none"
-SWEP.Primary.Delay = 5.0
+SWEP.Primary.Ammo           = "none"
+SWEP.Primary.Delay          = 5.0
 
 SWEP.Secondary.ClipSize     = -1
 SWEP.Secondary.DefaultClip  = -1
 SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
-SWEP.Secondary.Delay = 1.0
+SWEP.Secondary.Ammo         = "none"
+SWEP.Secondary.Delay        = 1.0
 
-SWEP.NoSights = true
+SWEP.NoSights               = true
 
 local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
 

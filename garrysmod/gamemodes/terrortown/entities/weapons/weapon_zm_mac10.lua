@@ -1,22 +1,22 @@
-
 AddCSLuaFile()
 
-SWEP.HoldType = "ar2"
+SWEP.HoldType            = "ar2"
 
 if CLIENT then
+   SWEP.PrintName        = "MAC10"
+   SWEP.Slot             = 2
 
-   SWEP.PrintName = "MAC10"
-   SWEP.Slot = 2
+   SWEP.ViewModelFlip    = false
+   SWEP.ViewModelFOV     = 54
 
-   SWEP.Icon = "vgui/ttt/icon_mac"
-   SWEP.IconLetter = "l"
+   SWEP.Icon             = "vgui/ttt/icon_mac"
+   SWEP.IconLetter       = "l"
 end
 
+SWEP.Base                = "weapon_tttbase"
 
-SWEP.Base = "weapon_tttbase"
-
-SWEP.Kind = WEAPON_HEAVY
-SWEP.WeaponID = AMMO_MAC10
+SWEP.Kind                = WEAPON_HEAVY
+SWEP.WeaponID            = AMMO_MAC10
 
 SWEP.Primary.Damage      = 12
 SWEP.Primary.Delay       = 0.065
@@ -29,20 +29,17 @@ SWEP.Primary.Ammo        = "smg1"
 SWEP.Primary.Recoil      = 1.15
 SWEP.Primary.Sound       = Sound( "Weapon_mac10.Single" )
 
-SWEP.AutoSpawnable = true
+SWEP.AutoSpawnable       = true
+SWEP.AmmoEnt             = "item_ammo_smg1_ttt"
 
-SWEP.AmmoEnt = "item_ammo_smg1_ttt"
+SWEP.UseHands            = true
+SWEP.ViewModel           = "models/weapons/cstrike/c_smg_mac10.mdl"
+SWEP.WorldModel          = "models/weapons/w_smg_mac10.mdl"
 
-SWEP.UseHands			= true
-SWEP.ViewModelFlip		= false
-SWEP.ViewModelFOV		= 54
-SWEP.ViewModel  = "models/weapons/cstrike/c_smg_mac10.mdl"
-SWEP.WorldModel = "models/weapons/w_smg_mac10.mdl"
+SWEP.IronSightsPos       = Vector(-8.921, -9.528, 2.9)
+SWEP.IronSightsAng       = Vector(0.699, -5.301, -7)
 
-SWEP.IronSightsPos = Vector(-8.921, -9.528, 2.9)
-SWEP.IronSightsAng = Vector(0.699, -5.301, -7)
-
-SWEP.DeploySpeed = 3
+SWEP.DeploySpeed         = 3
 
 function SWEP:GetHeadshotMultiplier(victim, dmginfo)
    local att = dmginfo:GetAttacker()

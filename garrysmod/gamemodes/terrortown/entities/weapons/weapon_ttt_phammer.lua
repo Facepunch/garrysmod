@@ -1,50 +1,48 @@
-
 AddCSLuaFile()
 
-SWEP.HoldType			= "ar2"
+SWEP.HoldType              = "ar2"
 
 if CLIENT then
-   SWEP.PrintName = "Poltergeist"
-   SWEP.Slot = 7
+   SWEP.PrintName          = "Poltergeist"
+   SWEP.Slot               = 7
 
-   SWEP.ViewModelFlip = false
-   SWEP.ViewModelFOV = 54
+   SWEP.ViewModelFlip      = false
+   SWEP.ViewModelFOV       = 54
 
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "polter_desc"
    };
 
-   SWEP.Icon = "vgui/ttt/icon_polter"
+   SWEP.Icon               = "vgui/ttt/icon_polter"
 end
 
-SWEP.Base = "weapon_tttbase"
-SWEP.Primary.Recoil	= 0.1
-SWEP.Primary.Delay = 12.0
-SWEP.Primary.Cone = 0.02
-SWEP.Primary.ClipSize = 6
-SWEP.Primary.DefaultClip = 6
-SWEP.Primary.ClipMax = 6
-SWEP.Primary.Ammo = "Gravity"
-SWEP.Primary.Automatic = false
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.Secondary.Automatic = false
+SWEP.Primary.Recoil        = 0.1
+SWEP.Primary.Delay         = 12.0
+SWEP.Primary.Cone          = 0.02
+SWEP.Primary.ClipSize      = 6
+SWEP.Primary.DefaultClip   = 6
+SWEP.Primary.ClipMax       = 6
+SWEP.Primary.Ammo          = "Gravity"
+SWEP.Primary.Automatic     = false
+SWEP.Primary.Sound         = Sound( "weapons/airboat/airboat_gun_energy1.wav" )
 
+SWEP.Secondary.Automatic   = false
 
-SWEP.Kind = WEAPON_EQUIP2
-SWEP.CanBuy = {ROLE_TRAITOR} -- only traitors can buy
-SWEP.WeaponID = AMMO_POLTER
+SWEP.Kind                  = WEAPON_EQUIP2
+SWEP.CanBuy                = {ROLE_TRAITOR} -- only traitors can buy
+SWEP.WeaponID              = AMMO_POLTER
 
-SWEP.UseHands			= true
-SWEP.ViewModel	= "models/weapons/c_irifle.mdl"
-SWEP.WorldModel	= "models/weapons/w_IRifle.mdl"
+SWEP.UseHands              = true
+SWEP.ViewModel             = "models/weapons/c_irifle.mdl"
+SWEP.WorldModel            = "models/weapons/w_IRifle.mdl"
 
-SWEP.Primary.Sound = Sound( "weapons/airboat/airboat_gun_energy1.wav" )
+SWEP.NoSights              = true
 
-SWEP.NoSights = true
-
-SWEP.IsCharging = false
-SWEP.NextCharge = 0
+SWEP.IsCharging            = false
+SWEP.NextCharge            = 0
 
 AccessorFuncDT(SWEP, "charge", "Charge")
 

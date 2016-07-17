@@ -1,48 +1,49 @@
-
 AddCSLuaFile()
 
-SWEP.HoldType			= "melee"
+SWEP.HoldType                = "melee"
 
 if CLIENT then
-   SWEP.PrintName			= "crowbar_name"
+   SWEP.PrintName            = "crowbar_name"
+   SWEP.Slot                 = 0
 
-   SWEP.Slot				= 0
+   SWEP.DrawCrosshair        = false
+   SWEP.ViewModelFlip        = false
+   SWEP.ViewModelFOV         = 54
 
-   SWEP.Icon = "vgui/ttt/icon_cbar"   
-   SWEP.ViewModelFOV = 54
+   SWEP.Icon                 = "vgui/ttt/icon_cbar"
 end
 
-SWEP.UseHands			= true
-SWEP.Base				= "weapon_tttbase"
-SWEP.ViewModel			= "models/weapons/c_crowbar.mdl"
-SWEP.WorldModel			= "models/weapons/w_crowbar.mdl"
-SWEP.Weight			= 5
-SWEP.DrawCrosshair		= false
-SWEP.ViewModelFlip		= false
-SWEP.Primary.Damage = 20
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= true
-SWEP.Primary.Delay = 0.5
-SWEP.Primary.Ammo		= "none"
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= true
-SWEP.Secondary.Ammo		= "none"
-SWEP.Secondary.Delay = 5
+SWEP.Base                    = "weapon_tttbase"
 
-SWEP.Kind = WEAPON_MELEE
-SWEP.WeaponID = AMMO_CROWBAR
+SWEP.UseHands                = true
+SWEP.ViewModel               = "models/weapons/c_crowbar.mdl"
+SWEP.WorldModel              = "models/weapons/w_crowbar.mdl"
 
-SWEP.InLoadoutFor = {ROLE_INNOCENT, ROLE_TRAITOR, ROLE_DETECTIVE}
+SWEP.Primary.Damage          = 20
+SWEP.Primary.ClipSize        = -1
+SWEP.Primary.DefaultClip     = -1
+SWEP.Primary.Automatic       = true
+SWEP.Primary.Delay           = 0.5
+SWEP.Primary.Ammo            = "none"
 
-SWEP.NoSights = true
-SWEP.IsSilent = true
+SWEP.Secondary.ClipSize      = -1
+SWEP.Secondary.DefaultClip   = -1
+SWEP.Secondary.Automatic     = true
+SWEP.Secondary.Ammo          = "none"
+SWEP.Secondary.Delay         = 5
 
-SWEP.AutoSpawnable = false
+SWEP.Kind                    = WEAPON_MELEE
+SWEP.WeaponID                = AMMO_CROWBAR
+SWEP.InLoadoutFor            = {ROLE_INNOCENT, ROLE_TRAITOR, ROLE_DETECTIVE}
 
-SWEP.AllowDelete = false -- never removed for weapon reduction
-SWEP.AllowDrop = false
+SWEP.NoSights                = true
+SWEP.IsSilent                = true
+
+SWEP.Weight                  = 5
+SWEP.AutoSpawnable           = false
+
+SWEP.AllowDelete             = false -- never removed for weapon reduction
+SWEP.AllowDrop               = false
 
 local sound_single = Sound("Weapon_Crowbar.Single")
 local sound_open = Sound("DoorHandles.Unlocked3")

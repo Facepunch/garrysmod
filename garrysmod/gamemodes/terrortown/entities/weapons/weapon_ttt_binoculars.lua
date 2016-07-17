@@ -1,47 +1,45 @@
-
 AddCSLuaFile()
 
-SWEP.HoldType = "normal"
+SWEP.HoldType               = "normal"
 
 if CLIENT then
-   SWEP.PrintName = "binoc_name"
-   SWEP.Slot = 7
+   SWEP.PrintName           = "binoc_name"
+   SWEP.Slot                = 7
 
-   SWEP.ViewModelFOV = 10
+   SWEP.ViewModelFOV        = 10
+   SWEP.ViewModelFlip       = false
+   SWEP.DrawCrosshair       = false
 
    SWEP.EquipMenuData = {
       type  = "item_weapon",
       desc  = "binoc_desc"
    };
 
-   SWEP.Icon = "vgui/ttt/icon_binoc"
+   SWEP.Icon                = "vgui/ttt/icon_binoc"
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                   = "weapon_tttbase"
 
-SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel         = "models/props/cs_office/paper_towels.mdl"
+SWEP.ViewModel              = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel             = "models/props/cs_office/paper_towels.mdl"
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
 SWEP.Primary.ClipSize       = -1
 SWEP.Primary.DefaultClip    = -1
 SWEP.Primary.Automatic      = false
-SWEP.Primary.Ammo       = "none"
-SWEP.Primary.Delay = 1.0
+SWEP.Primary.Ammo           = "none"
+SWEP.Primary.Delay          = 1.0
 
 SWEP.Secondary.ClipSize     = -1
 SWEP.Secondary.DefaultClip  = -1
 SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
-SWEP.Secondary.Delay = 0.2
+SWEP.Secondary.Ammo         = "none"
+SWEP.Secondary.Delay        = 0.2
 
-SWEP.Kind = WEAPON_EQUIP2
-SWEP.CanBuy = {ROLE_DETECTIVE} -- only detectives can buy
-SWEP.WeaponID = AMMO_BINOCULARS
+SWEP.Kind                   = WEAPON_EQUIP2
+SWEP.CanBuy                 = {ROLE_DETECTIVE} -- only detectives can buy
+SWEP.WeaponID               = AMMO_BINOCULARS
 
-
-SWEP.AllowDrop = true
+SWEP.AllowDrop              = true
 
 SWEP.ZoomLevels = {
    0,
@@ -50,7 +48,7 @@ SWEP.ZoomLevels = {
    10
 };
 
-SWEP.ProcessingDelay = 5
+SWEP.ProcessingDelay       = 5
 
 function SWEP:SetupDataTables()
    self:DTVar("Bool",  0, "processing")
