@@ -56,7 +56,7 @@ end
 
 --[[---------------------------------------------------------
     Name: UniqueID2
-    Desc: Real unique ID.
+    Desc: Real UNIQUE (!) ID.
 -----------------------------------------------------------]]
 local UID2_cache = {}
 local string_sub = string.sub
