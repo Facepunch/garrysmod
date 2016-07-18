@@ -1,47 +1,47 @@
-
 AddCSLuaFile()
 
-SWEP.HoldType			= "shotgun"
+SWEP.HoldType              = "shotgun"
 
 if CLIENT then
-   SWEP.PrintName = "shotgun_name"
+   SWEP.PrintName          = "shotgun_name"
+   SWEP.Slot               = 2
 
-   SWEP.Slot = 2
-   SWEP.Icon = "vgui/ttt/icon_shotgun"
-   SWEP.IconLetter = "B"
+   SWEP.ViewModelFlip      = false
+   SWEP.ViewModelFOV       = 54
+
+   SWEP.Icon               = "vgui/ttt/icon_shotgun"
+   SWEP.IconLetter         = "B"
 end
 
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.Base				= "weapon_tttbase"
-SWEP.Spawnable = true
+SWEP.Kind                  = WEAPON_HEAVY
+SWEP.WeaponID              = AMMO_SHOTGUN
 
-SWEP.Kind = WEAPON_HEAVY
-SWEP.WeaponID = AMMO_SHOTGUN
+SWEP.Primary.Ammo          = "Buckshot"
+SWEP.Primary.Damage        = 11
+SWEP.Primary.Cone          = 0.085
+SWEP.Primary.Delay         = 0.8
+SWEP.Primary.ClipSize      = 8
+SWEP.Primary.ClipMax       = 24
+SWEP.Primary.DefaultClip   = 8
+SWEP.Primary.Automatic     = true
+SWEP.Primary.NumShots      = 8
+SWEP.Primary.Sound         = Sound( "Weapon_XM1014.Single" )
+SWEP.Primary.Recoil        = 7
 
-SWEP.Primary.Ammo = "Buckshot"
-SWEP.Primary.Damage = 11
-SWEP.Primary.Cone = 0.085
-SWEP.Primary.Delay = 0.8
-SWEP.Primary.ClipSize = 8
-SWEP.Primary.ClipMax = 24
-SWEP.Primary.DefaultClip = 8
-SWEP.Primary.Automatic = true
-SWEP.Primary.NumShots = 8
-SWEP.AutoSpawnable      = true
-SWEP.AmmoEnt = "item_box_buckshot_ttt"
+SWEP.AutoSpawnable         = true
+SWEP.Spawnable             = true
+SWEP.AmmoEnt               = "item_box_buckshot_ttt"
 
-SWEP.UseHands			= true
-SWEP.ViewModelFlip		= false
-SWEP.ViewModelFOV		= 54
-SWEP.ViewModel			= "models/weapons/cstrike/c_shot_xm1014.mdl"
-SWEP.WorldModel			= "models/weapons/w_shot_xm1014.mdl"
-SWEP.Primary.Sound			= Sound( "Weapon_XM1014.Single" )
-SWEP.Primary.Recoil			= 7
+SWEP.UseHands              = true
+SWEP.ViewModel             = "models/weapons/cstrike/c_shot_xm1014.mdl"
+SWEP.WorldModel            = "models/weapons/w_shot_xm1014.mdl"
 
-SWEP.IronSightsPos = Vector(-6.881, -9.214, 2.66)
-SWEP.IronSightsAng = Vector(-0.101, -0.7, -0.201)
+SWEP.IronSightsPos         = Vector(-6.881, -9.214, 2.66)
+SWEP.IronSightsAng         = Vector(-0.101, -0.7, -0.201)
 
-SWEP.reloadtimer = 0
+SWEP.reloadtimer           = 0
 
 function SWEP:SetupDataTables()
    self:DTVar("Bool", 0, "reloading")

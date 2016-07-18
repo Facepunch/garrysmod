@@ -1,44 +1,42 @@
-
 AddCSLuaFile()
 
-
-SWEP.HoldType			= "slam"
+SWEP.HoldType                = "slam"
 
 if CLIENT then
-   SWEP.PrintName = "defuser_name"
-   SWEP.Slot = 7
+   SWEP.PrintName            = "defuser_name"
+   SWEP.Slot                 = 7
 
-   SWEP.ViewModelFOV = 10
+   SWEP.DrawCrosshair        = false
+   SWEP.ViewModelFOV         = 10
 
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "defuser_desc"
    };
 
-   SWEP.Icon = "vgui/ttt/icon_defuser"
+   SWEP.Icon                 = "vgui/ttt/icon_defuser"
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                    = "weapon_tttbase"
 
-SWEP.ViewModel = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel = "models/weapons/w_defuser.mdl"
+SWEP.ViewModel               = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel              = "models/weapons/w_defuser.mdl"
 
-SWEP.DrawCrosshair		= false
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= true
-SWEP.Primary.Delay = 1
-SWEP.Primary.Ammo		= "none"
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= true
-SWEP.Secondary.Ammo		= "none"
-SWEP.Secondary.Delay = 2
+SWEP.Primary.ClipSize        = -1
+SWEP.Primary.DefaultClip     = -1
+SWEP.Primary.Automatic       = true
+SWEP.Primary.Delay           = 1
+SWEP.Primary.Ammo            = "none"
 
-SWEP.Kind = WEAPON_EQUIP2
-SWEP.CanBuy = {ROLE_DETECTIVE} -- only detectives can buy
-SWEP.WeaponID = AMMO_DEFUSER
+SWEP.Secondary.ClipSize       = -1
+SWEP.Secondary.DefaultClip    = -1
+SWEP.Secondary.Automatic      = true
+SWEP.Secondary.Ammo           = "none"
+SWEP.Secondary.Delay          = 2
 
+SWEP.Kind                     = WEAPON_EQUIP2
+SWEP.CanBuy                   = {ROLE_DETECTIVE} -- only detectives can buy
+SWEP.WeaponID                 = AMMO_DEFUSER
 
 --SWEP.AllowDrop = false
 

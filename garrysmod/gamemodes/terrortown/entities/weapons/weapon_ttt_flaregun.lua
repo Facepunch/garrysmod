@@ -1,51 +1,48 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType = "pistol"
+SWEP.HoldType              = "pistol"
 
 if CLIENT then
+   SWEP.PrintName          = "flare_name"
+   SWEP.Slot               = 6
 
-   SWEP.PrintName = "flare_name"
-   SWEP.Slot = 6
-
-   SWEP.ViewModelFOV  = 54
-   SWEP.ViewModelFlip = false
+   SWEP.ViewModelFOV       = 54
+   SWEP.ViewModelFlip      = false
 
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "flare_desc"
    };
 
-
-   SWEP.Icon = "vgui/ttt/icon_flare"
+   SWEP.Icon               = "vgui/ttt/icon_flare"
 end
 
-SWEP.Base = "weapon_tttbase"
-SWEP.Primary.Recoil	= 4
-SWEP.Primary.Damage = 7
-SWEP.Primary.Delay = 1.0
-SWEP.Primary.Cone = 0.01
-SWEP.Primary.ClipSize = 4
-SWEP.Primary.Automatic = false
-SWEP.Primary.DefaultClip = 4
-SWEP.Primary.ClipMax = 4
-
-SWEP.Kind = WEAPON_EQUIP
-SWEP.CanBuy = {ROLE_TRAITOR} -- only traitors can buy
-SWEP.LimitedStock = true -- only buyable once
-SWEP.WeaponID = AMMO_FLARE
+SWEP.Base                  = "weapon_tttbase"
 
 -- if I run out of ammo types, this weapon is one I could move to a custom ammo
 -- handling strategy, because you never need to pick up ammo for it
-SWEP.Primary.Ammo = "AR2AltFire"
+SWEP.Primary.Ammo          = "AR2AltFire"
+SWEP.Primary.Recoil        = 4
+SWEP.Primary.Damage        = 7
+SWEP.Primary.Delay         = 1.0
+SWEP.Primary.Cone          = 0.01
+SWEP.Primary.ClipSize      = 4
+SWEP.Primary.Automatic     = false
+SWEP.Primary.DefaultClip   = 4
+SWEP.Primary.ClipMax       = 4
+SWEP.Primary.Sound         = Sound( "Weapon_USP.SilencedShot" )
 
-SWEP.UseHands			= true
-SWEP.ViewModel	= Model("models/weapons/c_357.mdl")
-SWEP.WorldModel	= Model("models/weapons/w_357.mdl")
+SWEP.Kind                  = WEAPON_EQUIP
+SWEP.CanBuy                = {ROLE_TRAITOR} -- only traitors can buy
+SWEP.LimitedStock          = true -- only buyable once
+SWEP.WeaponID              = AMMO_FLARE
 
-SWEP.Primary.Sound = Sound( "Weapon_USP.SilencedShot" )
+SWEP.Tracer                = "AR2Tracer"
 
-SWEP.Tracer = "AR2Tracer"
+SWEP.UseHands              = true
+SWEP.ViewModel             = Model("models/weapons/c_357.mdl")
+SWEP.WorldModel            = Model("models/weapons/w_357.mdl")
 
 local function RunIgniteTimer(ent, timer_name)
    if IsValid(ent) and ent:IsOnFire() then

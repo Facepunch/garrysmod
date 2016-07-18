@@ -1,51 +1,48 @@
-
 -- traitor equipment: teleporter
 
 AddCSLuaFile()
 
-SWEP.HoldType = "normal"
+SWEP.HoldType              = "normal"
 
 if CLIENT then
-   SWEP.PrintName = "tele_name"
-   SWEP.Slot = 7
+   SWEP.PrintName          = "tele_name"
+   SWEP.Slot               = 7
 
-   SWEP.ViewModelFOV = 10
+   SWEP.ViewModelFlip      = false
+   SWEP.ViewModelFOV       = 10
+   SWEP.DrawCrosshair      = false
+   SWEP.CSMuzzleFlashes    = false
 
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "tele_desc"
    };
 
-   SWEP.Icon = "vgui/ttt/icon_tport"
+   SWEP.Icon               = "vgui/ttt/icon_tport"
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel         = "models/weapons/w_slam.mdl"
+SWEP.ViewModel             = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel            = "models/weapons/w_slam.mdl"
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
-SWEP.Primary.ClipSize    = 16
-SWEP.Primary.DefaultClip = 16
-SWEP.Primary.ClipMax     = 16
-SWEP.Primary.Automatic = false
-SWEP.Primary.Ammo = "GaussEnergy"
-SWEP.Primary.Delay = 0.5
+SWEP.Primary.ClipSize      = 16
+SWEP.Primary.DefaultClip   = 16
+SWEP.Primary.ClipMax       = 16
+SWEP.Primary.Automatic     = false
+SWEP.Primary.Ammo          = "GaussEnergy"
+SWEP.Primary.Delay         = 0.5
 
-SWEP.Secondary.Automatic = false
-SWEP.Secondary.Ammo = "none"
-SWEP.Secondary.Delay = 1.0
+SWEP.Secondary.Automatic   = false
+SWEP.Secondary.Ammo        = "none"
+SWEP.Secondary.Delay       = 1.0
 
-SWEP.Kind = WEAPON_EQUIP2
-SWEP.CanBuy = {ROLE_TRAITOR, ROLE_DETECTIVE}
-SWEP.WeaponID = AMMO_TELEPORT
+SWEP.Kind                  = WEAPON_EQUIP2
+SWEP.CanBuy                = {ROLE_TRAITOR, ROLE_DETECTIVE}
+SWEP.WeaponID              = AMMO_TELEPORT
 
-
-SWEP.AllowDrop = true
-SWEP.NoSights = true
-
-SWEP.CSMuzzleFlashes = false
+SWEP.AllowDrop             = true
+SWEP.NoSights              = true
 
 local delay_beamup = 1
 local delay_beamdown = 1
