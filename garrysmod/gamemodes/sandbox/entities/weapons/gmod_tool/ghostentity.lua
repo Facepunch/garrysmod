@@ -6,11 +6,15 @@
 function ToolObj:MakeGhostEntity( model, pos, angle )
 
 	util.PrecacheModel( model )
-
 	-- We do ghosting serverside in single player
 	-- It's done clientside in multiplayer
 	if ( SERVER && !game.SinglePlayer() ) then return end
 	if ( CLIENT && game.SinglePlayer() ) then return end
+
+	-- The reason we need this is because in multiplayer, when you holster a tool serverside,
+	-- either by using the spawnnmenu's Weapons tab or by simply entering a vehicle,
+	-- the Think hook is called once after Holster is called on the client, recreating the ghost entity right after it was removed.
+	if ( self.GhostEntityLastDelete && self.GhostEntityLastDelete + 0.1 > CurTime() ) then return end
 
 	-- Release the old ghost entity
 	self:ReleaseGhostEntity()
@@ -67,22 +71,26 @@ function ToolObj:ReleaseGhostEntity()
 		if ( !IsValid( self.GhostEntity ) ) then self.GhostEntity = nil return end
 		self.GhostEntity:Remove()
 		self.GhostEntity = nil
+		self.GhostEntityLastDelete = CurTime()
 	end
 
+	-- This is unused!
 	if ( self.GhostEntities ) then
 
 		for k,v in pairs( self.GhostEntities ) do
 			if ( IsValid( v ) ) then v:Remove() end
-			self.GhostEntities[k] = nil
+			self.GhostEntities[ k ] = nil
 		end
 
 		self.GhostEntities = nil
+		self.GhostEntityLastDelete = CurTime()
 	end
 
+	-- This is unused!
 	if ( self.GhostOffset ) then
 
 		for k,v in pairs( self.GhostOffset ) do
-			self.GhostOffset[k] = nil
+			self.GhostOffset[ k ] = nil
 		end
 
 	end
