@@ -22,3 +22,9 @@ Issues and Requests
 To report bugs please visit the [Garry's Mod Issue tracker](https://github.com/Facepunch/garrysmod-issues/).
 
 To request features please visit the [Garry's Mod Request tracker](https://github.com/Facepunch/garrysmod-requests/).
+
+
+Translations
+---
+You can contribute to the game's translation on the following website:
+http://translate.garrysmod.com/project/garrysmod
