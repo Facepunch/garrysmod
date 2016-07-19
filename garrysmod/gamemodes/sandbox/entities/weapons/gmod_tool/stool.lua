@@ -42,7 +42,8 @@ function ToolObj:CreateConVars()
 
 		end
 
-	return end
+		return
+	end
 
 	-- Note: I changed this from replicated because replicated convars don't work
 	-- when they're created via Lua.

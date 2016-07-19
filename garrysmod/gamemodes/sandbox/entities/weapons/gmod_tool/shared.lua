@@ -139,15 +139,14 @@ end
 function SWEP:Think()
 
 	self.Mode = self.Owner:GetInfo( "gmod_toolmode" )
-	local mode = self:GetMode()
-	local tool = self:GetToolObject()
 
+	local tool = self:GetToolObject()
 	if ( !tool ) then return end
 
 	tool:CheckObjects()
 
 	self.last_mode = self.current_mode
-	self.current_mode = mode
+	self.current_mode = self.Mode
 
 	-- Release ghost entities if we're not allowed to use this new mode?
 	if ( !tool:Allowed() ) then
