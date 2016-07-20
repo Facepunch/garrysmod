@@ -176,7 +176,6 @@ if CLIENT then
       end
    end
 
-   local GetTranslation  = LANG.GetTranslation
    local GetPTranslation = LANG.GetParamTranslation
 
    -- Many non-gun weapons benefit from some help
@@ -246,7 +245,7 @@ function SWEP:PrimaryAttack(worldsnd)
    local owner = self.Owner
    if not IsValid(owner) or owner:IsNPC() or (not owner.ViewPunch) then return end
 
-   owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0 ) )
+   owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) * self.Primary.Recoil, 0 ) )
 end
 
 function SWEP:DryFire(setnext)
@@ -364,7 +363,7 @@ function SWEP:Deploy()
 end
 
 function SWEP:Reload()
-	if ( self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
+   if ( self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
    self:DefaultReload(self.ReloadAnim)
    self:SetIronsights( false )
 end
