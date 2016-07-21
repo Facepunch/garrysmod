@@ -1,21 +1,21 @@
 
-
 module( "search", package.seeall )
 
 local Providers = {}
 
+function AddProvider( func, id )
 
-function AddProvider( func )
-
-	local prov = 
-	{
+	local prov = {
 		func = func,
 	}
 
-	table.insert( Providers, prov )
+	if ( id ) then
+		Providers[ id ] = prov
+	else
+		table.insert( Providers, prov )
+	end
 
 end
-
 
 function GetResults( str )
 
@@ -40,4 +40,3 @@ function GetResults( str )
 	return results
 
 end
-
