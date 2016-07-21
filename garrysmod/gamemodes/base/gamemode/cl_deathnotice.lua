@@ -121,18 +121,16 @@ end
 net.Receive( "NPCKilledNPC", RecvNPCKilledNPC )
 
 --[[---------------------------------------------------------
-   Name: gamemode:AddDeathNotice( Victim, Attacker, Weapon )
+   Name: gamemode:AddDeathNotice( Attacker, team1, Inflictor, Victim, team2 )
    Desc: Adds an death notice entry
 -----------------------------------------------------------]]
-function GM:AddDeathNotice( Victim, team1, Inflictor, Attacker, team2 )
+function GM:AddDeathNotice( Attacker, team1, Inflictor, Victim, team2 )
 
 	local Death = {}
-	Death.victim	= Victim
-	Death.attacker	= Attacker
 	Death.time		= CurTime()
 
-	Death.left		= Victim
-	Death.right		= Attacker
+	Death.left		= Attacker
+	Death.right		= Victim
 	Death.icon		= Inflictor
 
 	if ( team1 == -1 ) then Death.color1 = table.Copy( NPC_Color )

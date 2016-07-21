@@ -91,8 +91,8 @@ DIV.page DIV.options.active, DIV.page DIV.options A.active
 	}
 }
 
-@media screen and (max-height: 480px) {
-    DIV.page DIV.options
+@media screen and (max-height: 580px) {
+	DIV.page DIV.options
 	{
 		padding-top: 0px;
 	}
@@ -111,5 +111,18 @@ DIV.page DIV.options.active, DIV.page DIV.options A.active
 	{
 		font-size: 20px;
 		line-height: 19px;
+	}
+}
+
+@media screen and (max-height: 420px) {
+
+	DIV.page DIV.options UL
+	{
+		margin: 0px;
+	}
+
+	DIV.page DIV.options UL li img
+	{
+		display: none;
 	}
 }

@@ -1,19 +1,10 @@
---
---  ___  ___   _   _   _    __   _   ___ ___ __ __
--- |_ _|| __| / \ | \_/ |  / _| / \ | o \ o \\ V /
---  | | | _| | o || \_/ | ( |_n| o ||   /   / \ /
---  |_| |___||_n_||_| |_|  \__/|_n_||_|\\_|\\ |_|  2009
---
---
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_ConVarR", 				"ConVarR" )
-AccessorFunc( PANEL, "m_ConVarG", 				"ConVarG" )
-AccessorFunc( PANEL, "m_ConVarB", 				"ConVarB" )
-AccessorFunc( PANEL, "m_ConVarA", 				"ConVarA" )
-
-local ColorRows = 16
+AccessorFunc( PANEL, "m_ConVarR", "ConVarR" )
+AccessorFunc( PANEL, "m_ConVarG", "ConVarG" )
+AccessorFunc( PANEL, "m_ConVarB", "ConVarB" )
+AccessorFunc( PANEL, "m_ConVarA", "ConVarA" )
 
 --[[---------------------------------------------------------
 	Name: Init
@@ -31,9 +22,19 @@ end
 -----------------------------------------------------------]]
 function PANEL:PerformLayout( x, y )
 
+	-- Number of panels in one row
+	local ColorRows = math.ceil( #self.Mixer.Palette:GetChildren() / 3 )
+
 	-- We try to avoid the ugly gap on the right.
 	-- This seems a bit heavy handed to be calling in PerformLayout.
 	self.Mixer.Palette:SetButtonSize( self:GetWide() / ColorRows )
+
+	-- Get rid of the gap by centering the palette using an ugly hack
+	local s = ( self:GetWide() - ColorRows * self.Mixer.Palette:GetButtonSize() ) / 2
+	self.Mixer.Palette:DockMargin( s, 8, s, 0 )
+
+	-- Better height scaling for extra wide panels
+	self:SetTall( math.max( 230, self:GetWide() / 1.5 ) )
 
 end
 
@@ -56,7 +57,7 @@ function PANEL:Paint()
 end
 
 --[[---------------------------------------------------------
-   Name: ConVarR
+	Name: ConVarR
 -----------------------------------------------------------]]
 function PANEL:SetConVarR( cvar )
 
@@ -65,7 +66,7 @@ function PANEL:SetConVarR( cvar )
 end
 
 --[[---------------------------------------------------------
-   Name: ConVarG
+	Name: ConVarG
 -----------------------------------------------------------]]
 function PANEL:SetConVarG( cvar )
 
@@ -74,7 +75,7 @@ function PANEL:SetConVarG( cvar )
 end
 
 --[[---------------------------------------------------------
-   Name: ConVarB
+	Name: ConVarB
 -----------------------------------------------------------]]
 function PANEL:SetConVarB( cvar )
 
@@ -83,13 +84,12 @@ function PANEL:SetConVarB( cvar )
 end
 
 --[[---------------------------------------------------------
-   Name: ConVarA
+	Name: ConVarA
 -----------------------------------------------------------]]
 function PANEL:SetConVarA( cvar )
 
 	self.Mixer:SetConVarA( cvar )
 
 end
-
 
 vgui.Register( "CtrlColor", PANEL, "DPanel" )

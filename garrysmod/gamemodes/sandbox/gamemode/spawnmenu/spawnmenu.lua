@@ -1,47 +1,60 @@
 
 local spawnmenu_border = CreateConVar( "spawnmenu_border", "0.1", { FCVAR_ARCHIVE } )
 
-include( 'toolmenu.lua' )
-include( 'contextmenu.lua' )
-include( 'CreationMenu.lua' )
+include( "toolmenu.lua" )
+include( "contextmenu.lua" )
+include( "creationmenu.lua" )
 
 local PANEL = {}
 
---[[---------------------------------------------------------
-   Name: Paint
------------------------------------------------------------]]
 function PANEL:Init()
 
-	self.ToolMenu = vgui.Create( "ToolMenu", self )
-	self.ToolMenu:Dock( RIGHT );
-	self.ToolMenu:DockMargin( 0, 20, 3, 10 )
-	
-	self.CreateMenu = vgui.Create( "CreationMenu", self )
-	self.CreateMenu:Dock( FILL );
-	self.CreateMenu:DockMargin( 3, 20, 3, 10 )
-	
+	self:Dock( FILL )
+
+	self.HorizontalDivider = vgui.Create( "DHorizontalDivider", self )
+	self.HorizontalDivider:Dock( FILL )
+	self.HorizontalDivider:SetLeftWidth( ScrW() ) -- It will be automatically resized by DHorizontalDivider to account for GetRightMin/GetLeftMin
+	self.HorizontalDivider:SetDividerWidth( 6 )
+	--self.HorizontalDivider:SetCookieName( "SpawnMenuDiv" )
+
+	self.ToolMenu = vgui.Create( "ToolMenu", self.HorizontalDivider )
+	self.HorizontalDivider:SetRight( self.ToolMenu )
+	self.HorizontalDivider:SetRightMin( 390 )
+	if ( ScrW() > 1280 ) then
+		self.HorizontalDivider:SetRightMin( 460 )
+	end
+
+	self.CreateMenu = vgui.Create( "CreationMenu", self.HorizontalDivider )
+	self.HorizontalDivider:SetLeft( self.CreateMenu )
+
 	self.m_bHangOpen = false
-	
+
 	self:SetMouseInputEnabled( true )
-	
+
 	self.ToolToggle = vgui.Create( "DImageButton", self )
 	self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle" )
-	self.ToolToggle:SetSize( 16, 16 );
+	self.ToolToggle:SetSize( 16, 16 )
 	self.ToolToggle.DoClick = function()
-	
-		self.ToolMenu:SetVisible( !self.ToolMenu:IsVisible() );
+
+		self.ToolMenu:SetVisible( !self.ToolMenu:IsVisible() )
 		self:InvalidateLayout()
-		
+
 		if ( self.ToolMenu:IsVisible() ) then
 			self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle" )
+			self.CreateMenu:Dock( NODOCK ) -- What an ugly hack
+			self.HorizontalDivider:SetRight( self.ToolMenu )
+			self.HorizontalDivider:SetLeft( self.CreateMenu )
 		else
 			self.ToolToggle:SetMaterial( "gui/spawnmenu_toggle_back" )
+			self.HorizontalDivider:SetRight( nil ) -- What an ugly hack
+			self.HorizontalDivider:SetLeft( nil )
+			self.CreateMenu:SetParent( self.HorizontalDivider )
+			self.CreateMenu:Dock( FILL )
 		end
-	
+
 	end
 
 end
-
 
 function PANEL:OpenCreationMenuTab( name )
 
@@ -50,51 +63,50 @@ function PANEL:OpenCreationMenuTab( name )
 end
 
 function PANEL:GetToolMenu()
-	return self.ToolMenu;
+	return self.ToolMenu
 end
 
 --[[---------------------------------------------------------
-   Name: OnClick
+	Name: OnClick
 -----------------------------------------------------------]]
 function PANEL:OnMousePressed()
-	
+
 	self:Close()
-	
+
 end
 
-
 --[[---------------------------------------------------------
-   Name: HangOpen
+	Name: HangOpen
 -----------------------------------------------------------]]
 function PANEL:HangOpen( bHang )
 	self.m_bHangOpen = bHang
 end
 
 --[[---------------------------------------------------------
-   Name: HangingOpen
+	Name: HangingOpen
 -----------------------------------------------------------]]
 function PANEL:HangingOpen()
 	return self.m_bHangOpen
 end
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Open()
 
 	RestoreCursorPosition()
 
 	self.m_bHangOpen = false
-	
+
 	-- If the context menu is open, try to close it..
 	if ( g_ContextMenu:IsVisible() ) then
 		g_ContextMenu:Close( true )
 	end
-	
+
 	if ( self:IsVisible() ) then return end
-	
+
 	CloseDermaMenus()
-	
+
 	self:MakePopup()
 	self:SetVisible( true )
 	self:SetKeyboardInputEnabled( false )
@@ -106,7 +118,7 @@ function PANEL:Open()
 end
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Close( bSkipAnim )
 
@@ -114,9 +126,9 @@ function PANEL:Close( bSkipAnim )
 		self.m_bHangOpen = false
 		return
 	end
-	
+
 	RememberCursorPosition()
-	
+
 	CloseDermaMenus()
 
 	self:SetKeyboardInputEnabled( false )
@@ -125,30 +137,20 @@ function PANEL:Close( bSkipAnim )
 
 end
 
---[[---------------------------------------------------------
-   Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
-	self:SetSize( ScrW(), ScrH() )
-	self:SetPos( 0, 0 )
-
-	local MarginX = math.Clamp( (ScrW() - 1024) * spawnmenu_border:GetFloat(), 25, 256 )
-	local MarginY = math.Clamp( (ScrH() - 768) * spawnmenu_border:GetFloat(), 25, 256 )
+	local MarginX = math.Clamp( ( ScrW() - 1024 ) * spawnmenu_border:GetFloat(), 25, 256 )
+	local MarginY = math.Clamp( ( ScrH() - 768 ) * spawnmenu_border:GetFloat(), 25, 256 )
 
 	self:DockPadding( 0, 0, 0, 0 )
+	self.HorizontalDivider:DockMargin( MarginX, MarginY, MarginX, MarginY )
+	self.HorizontalDivider:SetLeftMin( self.HorizontalDivider:GetWide() / 3 )
 
-	self.CreateMenu:DockMargin( MarginX, MarginY, 1, MarginY )
-	self.ToolMenu:DockMargin( 0, MarginY, MarginX, MarginY )
-	
 	self.ToolToggle:AlignRight( 6 )
 	self.ToolToggle:AlignTop( 6 )
 
 end
 
---[[---------------------------------------------------------
-   Name: StartKeyFocus
------------------------------------------------------------]]
 function PANEL:StartKeyFocus( pPanel )
 
 	self.m_pKeyFocus = pPanel
@@ -157,9 +159,6 @@ function PANEL:StartKeyFocus( pPanel )
 
 end
 
---[[---------------------------------------------------------
-   Name: EndKeyFocus
------------------------------------------------------------]]
 function PANEL:EndKeyFocus( pPanel )
 
 	if ( self.m_pKeyFocus != pPanel ) then return end
@@ -169,46 +168,45 @@ end
 
 vgui.Register( "SpawnMenu", PANEL, "EditablePanel" )
 
-
 --[[---------------------------------------------------------
-   Called to create the spawn menu..
+	Called to create the spawn menu..
 -----------------------------------------------------------]]
 local function CreateSpawnMenu()
 
 	-- If we have an old spawn menu remove it.
 	if ( IsValid( g_SpawnMenu ) ) then
-	
+
 		g_SpawnMenu:Remove()
 		g_SpawnMenu = nil
-	
+
 	end
-	
+
 	-- Start Fresh
 	spawnmenu.ClearToolMenus()
-	
+
 	-- Add defaults for the gamemode. In sandbox these defaults
 	-- are the Main/Postprocessing/Options tabs.
 	-- They're added first in sandbox so they're always first
 	hook.Run( "AddGamemodeToolMenuTabs" )
-	
+
 	-- Use this hook to add your custom tools
 	-- This ensures that the default tabs are always
 	-- first.
 	hook.Run( "AddToolMenuTabs" )
-	
+
 	-- Use this hook to add your custom tools
 	-- We add the gamemode tool menu categories first
 	-- to ensure they're always at the top.
 	hook.Run( "AddGamemodeToolMenuCategories" )
 	hook.Run( "AddToolMenuCategories" )
-	
+
 	-- Add the tabs to the tool menu before trying
 	-- to populate them with tools.
 	hook.Run( "PopulateToolMenu" )
 
 	g_SpawnMenu = vgui.Create( "SpawnMenu" )
 	g_SpawnMenu:SetVisible( false )
-	
+
 	CreateContextMenu()
 
 	hook.Run( "PostReloadToolsMenu" )
@@ -221,31 +219,25 @@ concommand.Add( "spawnmenu_reload", CreateSpawnMenu )
 function GM:OnSpawnMenuOpen()
 
 	-- Let the gamemode decide whether we should open or not..
-	if ( !hook.Call( "SpawnMenuOpen", GAMEMODE ) ) then return end
+	if ( !hook.Run( "SpawnMenuOpen" ) ) then return end
 
 	if ( IsValid( g_SpawnMenu ) ) then
-	
+
 		g_SpawnMenu:Open()
 		menubar.ParentTo( g_SpawnMenu )
 
 	end
-	
+
 end
 
 function GM:OnSpawnMenuClose()
 
 	if ( IsValid( g_SpawnMenu ) ) then g_SpawnMenu:Close() end
 
-	-- We're dragging from the spawnmenu but the spawnmenu is closed
-	-- so keep the dragging going using the screen clicker
-	if ( dragndrop.IsDragging() ) then
-		gui.EnableScreenClicker( true )
-	end
-	
 end
 
 --[[---------------------------------------------------------
-   Name: HOOK SpawnMenuKeyboardFocusOn
+	Name: HOOK SpawnMenuKeyboardFocusOn
 		Called when text entry needs keyboard focus
 -----------------------------------------------------------]]
 local function SpawnMenuKeyboardFocusOn( pnl )
@@ -260,9 +252,8 @@ local function SpawnMenuKeyboardFocusOn( pnl )
 end
 hook.Add( "OnTextEntryGetFocus", "SpawnMenuKeyboardFocusOn", SpawnMenuKeyboardFocusOn )
 
-
 --[[---------------------------------------------------------
-   Name: HOOK SpawnMenuKeyboardFocusOff
+	Name: HOOK SpawnMenuKeyboardFocusOff
 		Called when text entry stops needing keyboard focus
 -----------------------------------------------------------]]
 local function SpawnMenuKeyboardFocusOff( pnl )
@@ -279,30 +270,30 @@ end
 hook.Add( "OnTextEntryLoseFocus", "SpawnMenuKeyboardFocusOff", SpawnMenuKeyboardFocusOff )
 
 --[[---------------------------------------------------------
-   Name: HOOK SpawnMenuOpenGUIMousePressed
+	Name: HOOK SpawnMenuOpenGUIMousePressed
 		Don't do context screen clicking if spawnmenu is open
 -----------------------------------------------------------]]
 local function SpawnMenuOpenGUIMousePressed()
 
 	if ( !IsValid( g_SpawnMenu ) ) then return end
 	if ( !g_SpawnMenu:IsVisible() ) then return end
-	
+
 	return true
 
 end
 hook.Add( "GUIMousePressed", "SpawnMenuOpenGUIMousePressed", SpawnMenuOpenGUIMousePressed )
 
 --[[---------------------------------------------------------
-   Name: HOOK SpawnMenuOpenGUIMousePressed
+	Name: HOOK SpawnMenuOpenGUIMousePressed
 		Close spawnmenu if it's open
 -----------------------------------------------------------]]
 local function SpawnMenuOpenGUIMouseReleased()
 
 	if ( !IsValid( g_SpawnMenu ) ) then return end
 	if ( !g_SpawnMenu:IsVisible() ) then return end
-	
+
 	g_SpawnMenu:Close()
-	
+
 	return true
 
 end

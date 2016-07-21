@@ -161,7 +161,7 @@ end
 function math.BSplinePoint( tDiff, tPoints, tMax )
 	
 	local Q = Vector( 0, 0, 0 );
-	local tinc = tMax / ( table.getn( tPoints ) - 3 );
+	local tinc = tMax / ( #tPoints - 3 );
 	
 	tDiff = tDiff + tinc;
 	

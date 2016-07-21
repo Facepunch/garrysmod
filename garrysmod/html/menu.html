@@ -32,12 +32,13 @@
 
 	<script type="text/javascript" src="js/menu/TestData.js"></script>
 	<script type="text/javascript" src="js/menu/TestServers.js"></script>
-	
+	<script type="text/javascript" src="js/menu/TestWorkshop.js"></script>
+
 </head>
 
 <body ng-app="MenuApp" ng-controller="MenuController">
 
-<div id="version" ng-click="ShowNews()" ng-show="Branch"><span ng-show="Branch != 'unknown'">You are on {{Branch}} branch. Click here to find out more. ( </span>{{Version}}<span ng-show="Branch != 'unknown'"> )</span></div>
+<div id="version" ng-click="ShowNews()" ng-show="Branch"><span ng-show="Branch != 'unknown'">You are on the {{Branch}} branch. Click here to find out more. ( </span>{{Version}}<span ng-show="Branch != 'unknown'"> )</span></div>
 
 <div ng-view>
 

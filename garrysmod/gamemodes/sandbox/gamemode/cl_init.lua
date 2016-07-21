@@ -142,6 +142,7 @@ function GM:NetworkEntityCreated( ent )
 	if ( ent:GetSpawnEffect() && ent:GetCreationTime() > (CurTime() - 1.0) ) then
 	
 		local ed = EffectData()
+			ed:SetOrigin( ent:GetPos() )
 			ed:SetEntity( ent )
 		util.Effect( "propspawn", ed, true, true )
 

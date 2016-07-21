@@ -11,9 +11,6 @@ AccessorFunc( PANEL, "colAmbientLight",	"AmbientLight" )
 AccessorFunc( PANEL, "colColor",		"Color" )
 AccessorFunc( PANEL, "bAnimated",		"Animated" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.Entity = nil
@@ -38,19 +35,13 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: SetDirectionalLight
------------------------------------------------------------]]
 function PANEL:SetDirectionalLight( iDirection, color )
 	self.DirectionalLight[ iDirection ] = color
 end
 
---[[---------------------------------------------------------
-	Name: SetModel
------------------------------------------------------------]]
 function PANEL:SetModel( strModelName )
 
-	-- Note - there's no real need to delete the old 
+	-- Note - there's no real need to delete the old
 	-- entity, it will get garbage collected, but this is nicer.
 	if ( IsValid( self.Entity ) ) then
 		self.Entity:Remove()
@@ -64,6 +55,7 @@ function PANEL:SetModel( strModelName )
 	if ( !IsValid( self.Entity ) ) then return end
 
 	self.Entity:SetNoDraw( true )
+	self.Entity:SetIK( false )
 
 	-- Try to find a nice sequence to play
 	local iSeq = self.Entity:LookupSequence( "walk_all" )
@@ -74,9 +66,6 @@ function PANEL:SetModel( strModelName )
 
 end
 
---[[---------------------------------------------------------
-	Name: GetModel
------------------------------------------------------------]]
 function PANEL:GetModel()
 
 	if ( !IsValid( self.Entity ) ) then return end
@@ -85,10 +74,8 @@ function PANEL:GetModel()
 
 end
 
---[[---------------------------------------------------------
-	Name: DrawModel
------------------------------------------------------------]]
 function PANEL:DrawModel()
+
 	local curparent = self
 	local rightx = self:GetWide()
 	local leftx = 0
@@ -105,13 +92,25 @@ function PANEL:DrawModel()
 		previous = curparent
 	end
 	render.SetScissorRect( leftx, topy, rightx, bottomy, true )
-	self.Entity:DrawModel()
+
+	local ret = self:PreDrawModel( self.Entity )
+	if ( ret != false ) then
+		self.Entity:DrawModel()
+		self:PostDrawModel( self.Entity )
+	end
+
 	render.SetScissorRect( 0, 0, 0, 0, false )
+
 end
 
---[[---------------------------------------------------------
-	Name: OnMousePressed
------------------------------------------------------------]]
+function PANEL:PreDrawModel( ent )
+	return true
+end
+
+function PANEL:PostDrawModel( ent )
+
+end
+
 function PANEL:Paint( w, h )
 
 	if ( !IsValid( self.Entity ) ) then return end
@@ -122,21 +121,21 @@ function PANEL:Paint( w, h )
 
 	local ang = self.aLookAngle
 	if ( !ang ) then
-		ang = (self.vLookatPos-self.vCamPos):Angle()
+		ang = ( self.vLookatPos - self.vCamPos ):Angle()
 	end
 
 	cam.Start3D( self.vCamPos, ang, self.fFOV, x, y, w, h, 5, self.FarZ )
 
 	render.SuppressEngineLighting( true )
 	render.SetLightingOrigin( self.Entity:GetPos() )
-	render.ResetModelLighting( self.colAmbientLight.r/255, self.colAmbientLight.g/255, self.colAmbientLight.b/255 )
-	render.SetColorModulation( self.colColor.r/255, self.colColor.g/255, self.colColor.b/255 )
-	render.SetBlend( self.colColor.a/255 )
+	render.ResetModelLighting( self.colAmbientLight.r / 255, self.colAmbientLight.g / 255, self.colAmbientLight.b / 255 )
+	render.SetColorModulation( self.colColor.r / 255, self.colColor.g / 255, self.colColor.b / 255 )
+	render.SetBlend( ( self:GetAlpha() / 255 ) * ( self.colColor.a / 255 ) )
 
-	for i=0, 6 do
+	for i = 0, 6 do
 		local col = self.DirectionalLight[ i ]
 		if ( col ) then
-			render.SetModelLighting( i, col.r/255, col.g/255, col.b/255 )
+			render.SetModelLighting( i, col.r / 255, col.g / 255, col.b / 255 )
 		end
 	end
 
@@ -149,16 +148,10 @@ function PANEL:Paint( w, h )
 
 end
 
---[[---------------------------------------------------------
-	Name: RunAnimation
------------------------------------------------------------]]
 function PANEL:RunAnimation()
 	self.Entity:FrameAdvance( ( RealTime() - self.LastPaint ) * self.m_fAnimSpeed )
 end
 
---[[---------------------------------------------------------
-	Name: RunAnimation
------------------------------------------------------------]]
 function PANEL:StartScene( name )
 
 	if ( IsValid( self.Scene ) ) then
@@ -169,9 +162,6 @@ function PANEL:StartScene( name )
 
 end
 
---[[---------------------------------------------------------
-	Name: LayoutEntity
------------------------------------------------------------]]
 function PANEL:LayoutEntity( Entity )
 
 	--
@@ -192,14 +182,12 @@ function PANEL:OnRemove()
 	end
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
 	ctrl:SetSize( 300, 300 )
-	ctrl:SetModel( "models/error.mdl" )
+	ctrl:SetModel( "models/props_junk/PlasticCrate01a.mdl" )
+	ctrl:GetEntity():SetSkin( 2 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 

@@ -257,6 +257,8 @@ L.set_lowsights     = "Bajar el arma al usar la mira"
 L.set_lowsights_tip = "Actívalo para posicionar el arma más abajo cuando apuntes con ella. Esto hará más fácil dar en el blanco, pero será menos realista."
 L.set_fastsw        = "Cambio rápido de arma"
 L.set_fastsw_tip    = "Actívalo para pasar de un arma a otra rápidamente sin abrir el menú de cambio de arma."
+L.set_fastsw_menu   = "Activar arma rápida conmutación"
+L.set_fastswmenu_tip  = "Si se activa la arma rápida conmutación, el intercambiador de menú aparecerá"
 L.set_wswitch       = "Desactivar autocierre del menú de cambio de arma"
 L.set_wswitch_tip   = "Por defecto, el menú de cambio de arma se cierra automáticamente al pasar unos segundos. Activa esto para que no se cierre."
 L.set_cues          = "Reproducir una señal cuando la ronda empieza o acaba"
@@ -614,6 +616,7 @@ L.radar_hud    = "El radar estará listo en: {time}"
 -- Spectator muting of living/dead
 L.mute_living  = "Jugadores vivos enmudecidos"
 L.mute_specs   = "Espectadores enmudecidos"
+L.mute_all     = "Cada enmudecido"
 L.mute_off     = "Nadie enmudecido"
 
 -- Spectators and prop possession

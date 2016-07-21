@@ -69,7 +69,7 @@ local function IdentifyBody(ply, rag)
    -- Register find
    if not CORPSE.GetFound(rag, false) then
       -- will return either false or a valid ply
-      local deadply = player.GetByUniqueID(rag.uqid)
+      local deadply = player.GetBySteamID(rag.sid)
       if deadply then
          deadply:SetNWBool("body_found", true)
 
@@ -88,9 +88,9 @@ local function IdentifyBody(ply, rag)
    end
 
    -- Handle kill list
-   for k, vicid in pairs(rag.kills) do
+   for k, vicsid in pairs(rag.kills) do
       -- filter out disconnected
-      local vic = player.GetByUniqueID(vicid)
+      local vic = player.GetBySteamID(vicsid)
 
       -- is this an unconfirmed dead?
       if IsValid(vic) and (not vic:GetNWBool("body_found", false)) then
@@ -190,7 +190,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    local hshot = rag.was_headshot or false
    local dtime = rag.time or 0
 
-   local owner = player.GetByUniqueID(rag.uqid)
+   local owner = player.GetBySteamID(rag.sid)
    owner = IsValid(owner) and owner:EntIndex() or -1
 
    -- basic sanity check
@@ -227,9 +227,9 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
 
    -- build list of people this traitor killed
    local kill_entids = {}
-   for k, vicid in pairs(rag.kills) do
+   for k, vicsid in pairs(rag.kills) do
       -- also send disconnected players as a marker
-      local vic = player.GetByUniqueID(vicid)
+      local vic = player.GetBySteamID(vicsid)
       table.insert(kill_entids, IsValid(vic) and vic:EntIndex() or -1)
    end
 
@@ -300,7 +300,7 @@ local function GetKillerSample(victim, attacker, dmg)
 
    local sample = {}
    sample.killer = attacker
-   sample.killer_uid = attacker:UniqueID()
+   sample.killer_sid = attacker:SteamID()
    sample.victim = victim
    sample.t      = CurTime() + (-1 * (0.019 * dist)^2 + GetConVarNumber("ttt_killer_dna_basetime"))
 
@@ -376,10 +376,13 @@ function CORPSE.Create(ply, attacker, dmginfo)
 
    -- nonsolid to players, but can be picked up and shot
    rag:SetCollisionGroup(rag_collide:GetBool() and COLLISION_GROUP_WEAPON or COLLISION_GROUP_DEBRIS_TRIGGER)
+   timer.Simple( 1, function() if IsValid( rag ) then rag:CollisionRulesChanged() end end )
 
    -- flag this ragdoll as being a player's
    rag.player_ragdoll = true
-   rag.uqid = ply:UniqueID()
+   rag.sid = ply:SteamID()
+
+   rag.uqid = ply:UniqueID() -- backwards compatibility; use rag.sid instead
 
    -- network data
    CORPSE.SetPlayerNick(rag, ply)

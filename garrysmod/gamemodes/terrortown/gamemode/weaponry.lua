@@ -7,7 +7,8 @@ local IsEquipment = WEPS.IsEquipment
 
 -- Prevent players from picking up multiple weapons of the same type etc
 function GM:PlayerCanPickupWeapon(ply, wep)
-   if not IsValid(wep) and not IsValid(ply) then return end
+   if not IsValid(wep) or not IsValid(ply) then return end
+   if ply:IsSpec() then return false end
 
    -- Disallow picking up for ammo
    if ply:HasWeapon(wep:GetClass()) then
@@ -133,7 +134,7 @@ end
 local function LateLoadout(id)
    local ply = player.GetByID(id)
    if not IsValid(ply) then
-      timer.Destroy("lateloadout" .. id)
+      timer.Remove("lateloadout" .. id)
       return
    end
 
@@ -141,7 +142,7 @@ local function LateLoadout(id)
       GiveLoadoutWeapons(ply)
 
       if HasLoadoutWeapons(ply) then
-         timer.Destroy("lateloadout" .. id)
+         timer.Remove("lateloadout" .. id)
       end
    end
 end
@@ -176,6 +177,7 @@ end
 
 ---- Weapon switching
 local function ForceWeaponSwitch(ply, cmd, args)
+   if not ply:IsPlayer() or not args[1] then return end
    -- Turns out even SelectWeapon refuses to switch to empty guns, gah.
    -- Worked around it by giving every weapon a single Clip2 round.
    -- Works because no weapon uses those.
@@ -295,15 +297,15 @@ concommand.Add("ttt_dropammo", DropActiveAmmo)
 -- Give a weapon to a player. If the initial attempt fails due to heisenbugs in
 -- the map, keep trying until the player has moved to a better spot where it
 -- does work.
-local function GiveEquipmentWeapon(uid, cls)
-   -- Referring to players by UID because a player may disconnect while his
+local function GiveEquipmentWeapon(sid, cls)
+   -- Referring to players by SteamID because a player may disconnect while his
    -- unique timer still runs, in which case we want to be able to stop it. For
-   -- that we need its name, and hence his uid.
-   local ply = player.GetByUniqueID(uid)
-   local tmr = "give_equipment" .. tostring(uid)
+   -- that we need its name, and hence his SteamID.
+   local ply = player.GetBySteamID(sid)
+   local tmr = "give_equipment" .. sid
 
    if (not IsValid(ply)) or (not ply:IsActiveSpecial()) then
-      timer.Destroy(tmr)
+      timer.Remove(tmr)
       return
    end
 
@@ -313,13 +315,13 @@ local function GiveEquipmentWeapon(uid, cls)
 
    if (not IsValid(w)) or (not ply:HasWeapon(cls)) then
       if not timer.Exists(tmr) then
-         timer.Create(tmr, 1, 0, function() GiveEquipmentWeapon(uid, cls) end)
+         timer.Create(tmr, 1, 0, function() GiveEquipmentWeapon(sid, cls) end)
       end
 
       -- we will be retrying
    else
       -- can stop retrying, if we were
-      timer.Destroy(tmr)
+      timer.Remove(tmr)
 
       if w.WasBought then
          -- some weapons give extra ammo after being bought, etc
@@ -329,7 +331,7 @@ local function GiveEquipmentWeapon(uid, cls)
 end
 
 local function HasPendingOrder(ply)
-   return timer.Exists("give_equipment" .. tostring(ply:UniqueID()))
+   return timer.Exists("give_equipment" .. tostring(ply:SteamID()))
 end
 
 -- Equipment buying
@@ -393,7 +395,7 @@ local function OrderEquipment(ply, cmd, args)
       -- no longer restricted to only WEAPON_EQUIP weapons, just anything that
       -- is whitelisted and carryable
       if ply:CanCarryWeapon(swep_table) then
-         GiveEquipmentWeapon(ply:UniqueID(), id)
+         GiveEquipmentWeapon(ply:SteamID(), id)
 
          received = true
       end
@@ -446,11 +448,11 @@ local function TransferCredits(ply, cmd, args)
    if (not IsValid(ply)) or (not ply:IsActiveSpecial()) then return end
    if #args != 2 then return end
 
-   local uid = tostring(args[1])
+   local sid = tostring(args[1])
    local credits = tonumber(args[2])
-   if uid and credits then
-      local target = player.GetByUniqueID(uid)
-      if (not IsValid(target)) or (not target:IsActiveSpecial()) or (target == ply) then
+   if sid and credits then
+      local target = player.GetBySteamID(sid)
+      if (not IsValid(target)) or (not target:IsActiveSpecial()) or (target:GetRole() ~= ply:GetRole()) or (target == ply) then
          LANG.Msg(ply, "xfer_no_recip")
          return
       end
@@ -486,11 +488,11 @@ end
 -- non-cheat developer commands can reveal precaching the first time equipment
 -- is bought, so trigger it at the start of a round instead
 function WEPS.ForcePrecache()
-   for k, w in pairs(weapons.GetList()) do
-      if w and w.WorldModel then
+   for k, w in ipairs(weapons.GetList()) do
+      if w.WorldModel then
          util.PrecacheModel(w.WorldModel)
       end
-      if w and w.ViewModel then
+      if w.ViewModel then
          util.PrecacheModel(w.ViewModel)
       end
    end

@@ -1,10 +1,3 @@
---
---  ___  ___   _   _   _    __   _   ___ ___ __ __
--- |_ _|| __| / \ | \_/ |  / _| / \ | o \ o \\ V /
---  | | | _| | o || \_/ | ( |_n| o ||   /   / \ / 
---  |_| |___||_n_||_| |_|  \__/|_n_||_|\\_|\\ |_|  2012
---
---
 
 local surface = surface
 local draw = draw
@@ -12,28 +5,27 @@ local Color = Color
 
 SKIN = {}
 
-SKIN.PrintName 		= "Default Derma Skin"
-SKIN.Author 		= "Garry Newman"
+SKIN.PrintName		= "Default Derma Skin"
+SKIN.Author		= "Garry Newman"
 SKIN.DermaVersion	= 1
 SKIN.GwenTexture	= Material( "gwenskin/GModDefault.png" )
 
-SKIN.bg_color 					= Color( 101, 100, 105, 255 )
-SKIN.bg_color_sleep 			= Color( 70, 70, 70, 255 )
+SKIN.bg_color					= Color( 101, 100, 105, 255 )
+SKIN.bg_color_sleep				= Color( 70, 70, 70, 255 )
 SKIN.bg_color_dark				= Color( 55, 57, 61, 255 )
 SKIN.bg_color_bright			= Color( 220, 220, 220, 255 )
 SKIN.frame_border				= Color( 50, 50, 50, 255 )
 
-
 SKIN.fontFrame					= "DermaDefault"
 
-SKIN.control_color 				= Color( 120, 120, 120, 255 )
+SKIN.control_color				= Color( 120, 120, 120, 255 )
 SKIN.control_color_highlight	= Color( 150, 150, 150, 255 )
-SKIN.control_color_active 		= Color( 110, 150, 250, 255 )
-SKIN.control_color_bright 		= Color( 255, 200, 100, 255 )
-SKIN.control_color_dark 		= Color( 100, 100, 100, 255 )
+SKIN.control_color_active		= Color( 110, 150, 250, 255 )
+SKIN.control_color_bright		= Color( 255, 200, 100, 255 )
+SKIN.control_color_dark			= Color( 100, 100, 100, 255 )
 
-SKIN.bg_alt1 					= Color( 50, 50, 50, 255 )
-SKIN.bg_alt2 					= Color( 55, 55, 55, 255 )
+SKIN.bg_alt1					= Color( 50, 50, 50, 255 )
+SKIN.bg_alt2					= Color( 55, 55, 55, 255 )
 
 SKIN.listview_hover				= Color( 70, 70, 70, 255 )
 SKIN.listview_selected			= Color( 100, 170, 220, 255 )
@@ -51,11 +43,11 @@ SKIN.combobox_selected			= SKIN.listview_selected
 SKIN.panel_transback			= Color( 255, 255, 255, 50 )
 SKIN.tooltip					= Color( 255, 245, 175, 255 )
 
-SKIN.colPropertySheet 			= Color( 170, 170, 170, 255 )
-SKIN.colTab			 			= SKIN.colPropertySheet
+SKIN.colPropertySheet			= Color( 170, 170, 170, 255 )
+SKIN.colTab						= SKIN.colPropertySheet
 SKIN.colTabInactive				= Color( 140, 140, 140, 255 )
 SKIN.colTabShadow				= Color( 0, 0, 0, 170 )
-SKIN.colTabText		 			= Color( 255, 255, 255, 255 )
+SKIN.colTabText					= Color( 255, 255, 255, 255 )
 SKIN.colTabTextInactive			= Color( 0, 0, 0, 200 )
 SKIN.fontTab					= "DermaDefault"
 
@@ -81,11 +73,9 @@ SKIN.colButtonBorder			= Color( 20, 20, 20, 255 )
 SKIN.colButtonBorderHighlight	= Color( 255, 255, 255, 50 )
 SKIN.colButtonBorderShadow		= Color( 0, 0, 0, 100 )
 
-
-
 SKIN.tex = {}
 
-SKIN.tex.Selection		 			= GWEN.CreateTextureBorder( 384, 32, 31, 31, 4, 4, 4, 4 )
+SKIN.tex.Selection					= GWEN.CreateTextureBorder( 384, 32, 31, 31, 4, 4, 4, 4 )
 
 SKIN.tex.Panels = {}
 SKIN.tex.Panels.Normal				= GWEN.CreateTextureBorder( 256,	0, 63, 63, 16, 16, 16, 16 )
@@ -122,9 +112,9 @@ SKIN.tex.Menu_Strip					= GWEN.CreateTextureBorder( 0, 128, 127, 21, 8, 8, 8, 8)
 SKIN.tex.Menu_Check					= GWEN.CreateTextureNormal( 448, 112, 15, 15 )
 SKIN.tex.Tab_Control				= GWEN.CreateTextureBorder( 0, 256, 127, 127, 8, 8, 8, 8 )
 SKIN.tex.TabB_Active				= GWEN.CreateTextureBorder( 0,		416, 63, 31, 8, 8, 8, 8 )
-SKIN.tex.TabB_Inactive				= GWEN.CreateTextureBorder( 0+128,	416, 63, 31, 8, 8, 8, 8 )
+SKIN.tex.TabB_Inactive				= GWEN.CreateTextureBorder( 128,	416, 63, 31, 8, 8, 8, 8 )
 SKIN.tex.TabT_Active				= GWEN.CreateTextureBorder( 0,		384, 63, 31, 8, 8, 8, 8 )
-SKIN.tex.TabT_Inactive				= GWEN.CreateTextureBorder( 0+128,	384, 63, 31, 8, 8, 8, 8 )
+SKIN.tex.TabT_Inactive				= GWEN.CreateTextureBorder( 128,	384, 63, 31, 8, 8, 8, 8 )
 SKIN.tex.TabL_Active				= GWEN.CreateTextureBorder( 64,		384, 31, 63, 8, 8, 8, 8 )
 SKIN.tex.TabL_Inactive				= GWEN.CreateTextureBorder( 64+128,	384, 31, 63, 8, 8, 8, 8 )
 SKIN.tex.TabR_Active				= GWEN.CreateTextureBorder( 96,		384, 31, 63, 8, 8, 8, 8 )
@@ -140,13 +130,13 @@ SKIN.tex.Window.Close			= GWEN.CreateTextureNormal( 32, 448, 31, 31 )
 SKIN.tex.Window.Close_Hover		= GWEN.CreateTextureNormal( 64, 448, 31, 31 )
 SKIN.tex.Window.Close_Down		= GWEN.CreateTextureNormal( 96, 448, 31, 31 )
 
-SKIN.tex.Window.Maxi			= GWEN.CreateTextureNormal( 32 + 96*2, 448, 31, 31 )
-SKIN.tex.Window.Maxi_Hover		= GWEN.CreateTextureNormal( 64 + 96*2, 448, 31, 31 )
-SKIN.tex.Window.Maxi_Down		= GWEN.CreateTextureNormal( 96 + 96*2, 448, 31, 31 )
+SKIN.tex.Window.Maxi			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448, 31, 31 )
+SKIN.tex.Window.Maxi_Hover		= GWEN.CreateTextureNormal( 64 + 96 * 2, 448, 31, 31 )
+SKIN.tex.Window.Maxi_Down		= GWEN.CreateTextureNormal( 96 + 96 * 2, 448, 31, 31 )
 
-SKIN.tex.Window.Restore			= GWEN.CreateTextureNormal( 32 + 96*2, 448+32, 31, 31 )
-SKIN.tex.Window.Restore_Hover	= GWEN.CreateTextureNormal( 64 + 96*2, 448+32, 31, 31 )
-SKIN.tex.Window.Restore_Down	= GWEN.CreateTextureNormal( 96 + 96*2, 448+32, 31, 31 )
+SKIN.tex.Window.Restore			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448+32, 31, 31 )
+SKIN.tex.Window.Restore_Hover	= GWEN.CreateTextureNormal( 64 + 96 * 2, 448+32, 31, 31 )
+SKIN.tex.Window.Restore_Down	= GWEN.CreateTextureNormal( 96 + 96 * 2, 448+32, 31, 31 )
 
 SKIN.tex.Window.Mini			= GWEN.CreateTextureNormal( 32 + 96, 448, 31, 31 )
 SKIN.tex.Window.Mini_Hover		= GWEN.CreateTextureNormal( 64 + 96, 448, 31, 31 )
@@ -240,11 +230,10 @@ SKIN.tex.ProgressBar = {}
 SKIN.tex.ProgressBar.Back	= GWEN.CreateTextureBorder( 384,	0, 31, 31, 8, 8, 8, 8 )
 SKIN.tex.ProgressBar.Front	= GWEN.CreateTextureBorder( 384+32, 0, 31, 31, 8, 8, 8, 8 )
 
-
 SKIN.tex.CategoryList = {}
-SKIN.tex.CategoryList.Outer		= GWEN.CreateTextureBorder( 256,		384, 63, 63, 8, 8, 8, 8 )
-SKIN.tex.CategoryList.Inner		= GWEN.CreateTextureBorder( 256 + 64,	384, 63, 63, 8, 21, 8, 8 )
-SKIN.tex.CategoryList.Header	= GWEN.CreateTextureBorder( 320,		352, 63, 31, 8, 8, 8, 8 )
+SKIN.tex.CategoryList.Outer		= GWEN.CreateTextureBorder( 256, 384, 63, 63, 8, 8, 8, 8 )
+SKIN.tex.CategoryList.Inner		= GWEN.CreateTextureBorder( 320, 384, 63, 63, 8, 21, 8, 8 )
+SKIN.tex.CategoryList.Header	= GWEN.CreateTextureBorder( 320, 352, 63, 31, 8, 8, 8, 8 )
 
 SKIN.tex.Tooltip = GWEN.CreateTextureBorder( 384, 64, 31, 31, 8, 8, 8, 8 )
 
@@ -318,7 +307,6 @@ SKIN.Colours.Category.LineAlt.Button_Selected	= GWEN.TextureColor( 4 + 8 * 25, 5
 
 SKIN.Colours.TooltipText = GWEN.TextureColor( 4 + 8 * 26, 500 )
 
-
 --[[---------------------------------------------------------
 	Panel
 -----------------------------------------------------------]]
@@ -344,21 +332,21 @@ end
 function SKIN:PaintFrame( panel, w, h )
 
 	if ( panel.m_bPaintShadow ) then
-	
+
 		DisableClipping( true )
 		SKIN.tex.Shadow( -4, -4, w+10, h+10 )
 		DisableClipping( false )
-	
+
 	end
-	
+
 	if ( panel:HasHierarchicalFocus() ) then
-	
+
 		self.tex.Window.Normal( 0, 0, w, h )
-	
+
 	else
-	
+
 		self.tex.Window.Inactive( 0, 0, w, h )
-	
+
 	end
 
 end
@@ -369,23 +357,22 @@ end
 function SKIN:PaintButton( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
-	
+
 	if ( panel.Depressed || panel:IsSelected() || panel:GetToggle() ) then
 		return self.tex.Button_Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel:GetDisabled() ) then
 		return self.tex.Button_Dead( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Hovered ) then
 		return self.tex.Button_Hovered( 0, 0, w, h )
 	end
-	
+
 	self.tex.Button( 0, 0, w, h )
 
 end
-
 
 --[[---------------------------------------------------------
 	Tree
@@ -393,11 +380,10 @@ end
 function SKIN:PaintTree( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
-	
+
 	self.tex.Tree( 0, 0, w, h, panel.m_bgColor )
 
 end
-
 
 --[[---------------------------------------------------------
 	CheckBox
@@ -405,21 +391,21 @@ end
 function SKIN:PaintCheckBox( panel, w, h )
 
 	if ( panel:GetChecked() ) then
-	
+
 		if ( panel:GetDisabled() ) then
 			self.tex.CheckboxD_Checked( 0, 0, w, h )
 		else
 			self.tex.Checkbox_Checked( 0, 0, w, h )
 		end
-		
+
 	else
-	
+
 		if ( panel:GetDisabled() ) then
 			self.tex.CheckboxD( 0, 0, w, h )
 		else
 			self.tex.Checkbox( 0, 0, w, h )
 		end
-	
+
 	end
 
 end
@@ -429,9 +415,9 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintExpandButton( panel, w, h )
 
-	if ( !panel:GetExpanded() ) then 
+	if ( !panel:GetExpanded() ) then
 		self.tex.TreePlus( 0, 0, w, h )
-	else 
+	else
 		self.tex.TreeMinus( 0, 0, w, h )
 	end
 
@@ -443,7 +429,7 @@ end
 function SKIN:PaintTextEntry( panel, w, h )
 
 	if ( panel.m_bBackground ) then
-	
+
 		if ( panel:GetDisabled() ) then
 			self.tex.TextBox_Disabled( 0, 0, w, h )
 		elseif ( panel:HasFocus() ) then
@@ -451,18 +437,10 @@ function SKIN:PaintTextEntry( panel, w, h )
 		else
 			self.tex.TextBox( 0, 0, w, h )
 		end
-	
+
 	end
-	
-	panel:DrawTextEntryText( panel.m_colText, panel.m_colHighlight, panel.m_colCursor )
 
-end
-
-function SKIN:SchemeTextEntry( panel ) ---------------------- TODO
-
-	panel:SetTextColor( self.colTextEntryText )
-	panel:SetHighlightColor( self.colTextEntryTextHighlight )
-	panel:SetCursorColor( self.colTextEntryTextCursor )
+	panel:DrawTextEntryText( panel:GetTextColor(), panel:GetHighlightColor(), panel:GetCursorColor() )
 
 end
 
@@ -484,7 +462,8 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintMenuSpacer( panel, w, h )
 
-	self.tex.MenuBG( 0, 0, w, h )
+	surface.SetDrawColor( Color( 0, 0, 0, 100 ) )
+	surface.DrawRect( 0, 0, w, h )
 
 end
 
@@ -496,7 +475,7 @@ function SKIN:PaintMenuOption( panel, w, h )
 	if ( panel.m_bBackground && (panel.Hovered || panel.Highlight) ) then
 		self.tex.MenuBG_Hover( 0, 0, w, h )
 	end
-	
+
 	if ( panel:GetChecked() ) then
 		self.tex.Menu_Check( 5, h/2-7, 15, 15 )
 	end
@@ -521,8 +500,8 @@ function SKIN:PaintPropertySheet( panel, w, h )
 
 	local ActiveTab = panel:GetActiveTab()
 	local Offset = 0
-	if ( ActiveTab ) then Offset = ActiveTab:GetTall()-8 end
-	
+	if ( ActiveTab ) then Offset = ActiveTab:GetTall() - 8 end
+
 	self.tex.Tab_Control( 0, Offset, w, h-Offset )
 
 end
@@ -535,7 +514,7 @@ function SKIN:PaintTab( panel, w, h )
 	if ( panel:GetPropertySheet():GetActiveTab() == panel ) then
 		return self:PaintActiveTab( panel, w, h )
 	end
-	
+
 	self.tex.TabT_Inactive( 0, 0, w, h )
 
 end
@@ -552,19 +531,19 @@ end
 function SKIN:PaintWindowCloseButton( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
-	
+
 	if ( panel:GetDisabled() ) then
 		return self.tex.Window.Close( 0, 0, w, h, Color( 255, 255, 255, 50 ) )
 	end
-	
+
 	if ( panel.Depressed || panel:IsSelected() ) then
 		return self.tex.Window.Close_Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Hovered ) then
 		return self.tex.Window.Close_Hover( 0, 0, w, h )
 	end
-	
+
 	self.tex.Window.Close( 0, 0, w, h )
 
 end
@@ -572,15 +551,15 @@ end
 function SKIN:PaintWindowMinimizeButton( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
-	
+
 	if ( panel:GetDisabled() ) then
 		return self.tex.Window.Mini( 0, 0, w, h, Color( 255, 255, 255, 50 ) )
 	end
-	
+
 	if ( panel.Depressed || panel:IsSelected() ) then
 		return self.tex.Window.Mini_Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Hovered ) then
 		return self.tex.Window.Mini_Hover( 0, 0, w, h )
 	end
@@ -592,15 +571,15 @@ end
 function SKIN:PaintWindowMaximizeButton( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
-	
+
 	if ( panel:GetDisabled() ) then
 		return self.tex.Window.Maxi( 0, 0, w, h, Color( 255, 255, 255, 50 ) )
 	end
-	
+
 	if ( panel.Depressed || panel:IsSelected() ) then
 		return self.tex.Window.Maxi_Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Hovered ) then
 		return self.tex.Window.Maxi_Hover( 0, 0, w, h )
 	end
@@ -626,15 +605,15 @@ function SKIN:PaintScrollBarGrip( panel, w, h )
 	if ( panel:GetDisabled() ) then
 		return self.tex.Scroller.ButtonV_Disabled( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Depressed ) then
 		return self.tex.Scroller.ButtonV_Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Hovered ) then
 		return self.tex.Scroller.ButtonV_Hover( 0, 0, w, h )
 	end
-	
+
 	return self.tex.Scroller.ButtonV_Normal( 0, 0, w, h )
 
 end
@@ -645,19 +624,19 @@ end
 function SKIN:PaintButtonDown( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
-	
+
 	if ( panel.Depressed || panel:IsSelected() ) then
 		return self.tex.Scroller.DownButton_Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel:GetDisabled() ) then
 		return self.tex.Scroller.DownButton_Dead( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Hovered ) then
 		return self.tex.Scroller.DownButton_Hover( 0, 0, w, h )
 	end
-	
+
 	self.tex.Scroller.DownButton_Normal( 0, 0, w, h )
 
 end
@@ -668,19 +647,19 @@ end
 function SKIN:PaintButtonUp( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
-	
+
 	if ( panel.Depressed || panel:IsSelected() ) then
 		return self.tex.Scroller.UpButton_Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel:GetDisabled() ) then
 		return self.tex.Scroller.UpButton_Dead( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Hovered ) then
 		return self.tex.Scroller.UpButton_Hover( 0, 0, w, h )
 	end
-	
+
 	self.tex.Scroller.UpButton_Normal( 0, 0, w, h )
 
 end
@@ -714,23 +693,22 @@ end
 function SKIN:PaintButtonRight( panel, w, h )
 
 	if ( !panel.m_bBackground ) then return end
-	
+
 	if ( panel.Depressed || panel:IsSelected() ) then
 		return self.tex.Scroller.RightButton_Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel:GetDisabled() ) then
 		return self.tex.Scroller.RightButton_Dead( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Hovered ) then
 		return self.tex.Scroller.RightButton_Hover( 0, 0, w, h )
 	end
-	
+
 	self.tex.Scroller.RightButton_Normal( 0, 0, w, h )
 
 end
-
 
 --[[---------------------------------------------------------
 	ComboDownArrow
@@ -740,15 +718,15 @@ function SKIN:PaintComboDownArrow( panel, w, h )
 	if ( panel.ComboBox:GetDisabled() ) then
 		return self.tex.Input.ComboBox.Button.Disabled( 0, 0, w, h )
 	end
-	
+
 	if ( panel.ComboBox.Depressed || panel.ComboBox:IsMenuOpen() ) then
 		return self.tex.Input.ComboBox.Button.Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel.ComboBox.Hovered ) then
 		return self.tex.Input.ComboBox.Button.Hover( 0, 0, w, h )
 	end
-	
+
 	self.tex.Input.ComboBox.Button.Normal( 0, 0, w, h )
 
 end
@@ -757,19 +735,19 @@ end
 	ComboBox
 -----------------------------------------------------------]]
 function SKIN:PaintComboBox( panel, w, h )
-	
+
 	if ( panel:GetDisabled() ) then
 		return self.tex.Input.ComboBox.Disabled( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Depressed || panel:IsMenuOpen() ) then
 		return self.tex.Input.ComboBox.Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Hovered ) then
 		return self.tex.Input.ComboBox.Hover( 0, 0, w, h )
 	end
-	
+
 	self.tex.Input.ComboBox.Normal( 0, 0, w, h )
 
 end
@@ -789,17 +767,17 @@ end
 function SKIN:PaintNumberUp( panel, w, h )
 
 	if ( panel:GetDisabled() ) then
-		return self.Input.UpDown.Up.Disabled( 0, 0, w, h )
+		return self.tex.Input.UpDown.Up.Disabled( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Depressed ) then
 		return self.tex.Input.UpDown.Up.Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Hovered ) then
 		return self.tex.Input.UpDown.Up.Hover( 0, 0, w, h )
 	end
-	
+
 	self.tex.Input.UpDown.Up.Normal( 0, 0, w, h )
 
 end
@@ -812,15 +790,15 @@ function SKIN:PaintNumberDown( panel, w, h )
 	if ( panel:GetDisabled() ) then
 		return self.tex.Input.UpDown.Down.Disabled( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Depressed ) then
 		return self.tex.Input.UpDown.Down.Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Hovered ) then
 		return self.tex.Input.UpDown.Down.Hover( 0, 0, w, h )
 	end
-	
+
 	self.tex.Input.UpDown.Down.Normal( 0, 0, w, h )
 
 end
@@ -828,14 +806,14 @@ end
 function SKIN:PaintTreeNode( panel, w, h )
 
 	if ( !panel.m_bDrawLines ) then return end
-	
+
 	surface.SetDrawColor( self.Colours.Tree.Lines )
-	
+
 	if ( panel.m_bLastChild ) then
-	
+
 		surface.DrawRect( 9, 0, 1, 7 )
 		surface.DrawRect( 9, 7, 9, 1 )
-	
+
 	else
 		surface.DrawRect( 9, 0, 1, h )
 		surface.DrawRect( 9, 7, 9, 1 )
@@ -843,15 +821,14 @@ function SKIN:PaintTreeNode( panel, w, h )
 
 end
 
-
 function SKIN:PaintTreeNodeButton( panel, w, h )
 
 	if ( !panel.m_bSelected ) then return end
-	
+
 	-- Don't worry this isn't working out the size every render
 	-- it just gets the cached value from inside the Label
-	local w, _ = panel:GetTextSize() 
-	
+	local w, _ = panel:GetTextSize()
+
 	self.tex.Selection( 38, 0, w + 6, h )
 
 end
@@ -865,15 +842,15 @@ end
 function SKIN:PaintSliderKnob( panel, w, h )
 
 	if ( panel:GetDisabled() ) then	return self.tex.Input.Slider.H.Disabled( 0, 0, w, h ) end
-	
+
 	if ( panel.Depressed ) then
 		return self.tex.Input.Slider.H.Down( 0, 0, w, h )
 	end
-	
+
 	if ( panel.Hovered ) then
 		return self.tex.Input.Slider.H.Hover( 0, 0, w, h )
 	end
-	
+
 	self.tex.Input.Slider.H.Normal( 0, 0, w, h )
 
 end
@@ -883,11 +860,11 @@ local function PaintNotches( x, y, w, h, num )
 	if ( !num ) then return end
 
 	local space = w / num
-	
+
 	for i=0, num do
-	
-		surface.DrawRect( x + i * space, y + 4, 1,  5 )
-	
+
+		surface.DrawRect( x + i * space, y + 4, 1, 5 )
+
 	end
 
 end
@@ -896,7 +873,7 @@ function SKIN:PaintNumSlider( panel, w, h )
 
 	surface.SetDrawColor( Color( 0, 0, 0, 100 ) )
 	surface.DrawRect( 8, h / 2 - 1, w - 15, 1 )
-	
+
 	PaintNotches( 8, h / 2 - 1, w - 16, 1, panel.m_iNotches )
 
 end
@@ -910,11 +887,11 @@ end
 
 function SKIN:PaintCollapsibleCategory( panel, w, h )
 
-	if ( !panel:GetExpanded() && h < 40 ) then
+	if ( h < 21 ) then
 		return self.tex.CategoryList.Header( 0, 0, w, h )
 	end
-	
-	self.tex.CategoryList.Inner( 0, 0, w, h )
+
+	self.tex.CategoryList.Inner( 0, 0, w, 63 )
 
 end
 
@@ -931,13 +908,13 @@ function SKIN:PaintCategoryButton( panel, w, h )
 		if ( panel.Depressed || panel.m_bSelected ) then surface.SetDrawColor( self.Colours.Category.LineAlt.Button_Selected )
 		elseif ( panel.Hovered ) then surface.SetDrawColor( self.Colours.Category.LineAlt.Button_Hover )
 		else surface.SetDrawColor( self.Colours.Category.LineAlt.Button ) end
-	
+
 	else
-	
+
 		if ( panel.Depressed || panel.m_bSelected ) then surface.SetDrawColor( self.Colours.Category.Line.Button_Selected )
 		elseif ( panel.Hovered ) then surface.SetDrawColor( self.Colours.Category.Line.Button_Hover )
 		else surface.SetDrawColor( self.Colours.Category.Line.Button ) end
-		
+
 	end
 
 	surface.DrawRect( 0, 0, w, h )
@@ -949,20 +926,22 @@ function SKIN:PaintListViewLine( panel, w, h )
 	if ( panel:IsSelected() ) then
 
 		self.tex.Input.ListBox.EvenLineSelected( 0, 0, w, h )
-	 
+
 	elseif ( panel.Hovered ) then
 
 		self.tex.Input.ListBox.Hovered( 0, 0, w, h )
-	 
+
 	elseif ( panel.m_bAlt ) then
 
 		self.tex.Input.ListBox.EvenLine( 0, 0, w, h )
-	         
+
 	end
 
 end
 
 function SKIN:PaintListView( panel, w, h )
+
+	if ( !panel.m_bBackground ) then return end
 
 	self.tex.Input.ListBox.Background( 0, 0, w, h )
 
@@ -979,6 +958,5 @@ function SKIN:PaintMenuBar( panel, w, h )
 	self.tex.Menu_Strip( 0, 0, w, h )
 
 end
-
 
 derma.DefineSkin( "Default", "Made to look like regular VGUI", SKIN )

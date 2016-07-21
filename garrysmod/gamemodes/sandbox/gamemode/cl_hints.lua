@@ -39,7 +39,7 @@ end
 --
 function GM:SuppressHint( name )
 
-	timer.Destroy( "HintSystem_"..name )
+	timer.Remove( "HintSystem_"..name )
 	
 end
 

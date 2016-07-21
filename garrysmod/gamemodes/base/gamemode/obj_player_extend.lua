@@ -174,7 +174,9 @@ end
 -----------------------------------------------------------]]
 function meta:GetEyeTrace()
 
-	if ( self.LastPlayerTrace == CurTime() ) then
+	-- Cache the trace results for the current frame, unless we're serverside
+	-- in which case it wouldn't play well with lag compensation at all
+	if ( CLIENT and self.LastPlayerTrace == CurTime() ) then
 		return self.PlayerTrace
 	end
 

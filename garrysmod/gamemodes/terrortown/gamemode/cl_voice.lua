@@ -258,7 +258,7 @@ function RADIO:GetTargetType()
 
    local ent = trace.Entity
 
-   if ent:IsPlayer() then
+   if ent:IsPlayer() and  ent:IsTerror() then
       if ent:GetNWBool("disguised", false) then
          return "quick_disg", true
       else
@@ -360,7 +360,8 @@ end
 local function RadioComplete(cmd, arg)
    local c = {}
    for k, cmd in pairs(RADIO.Commands) do
-      table.insert(c, cmd.cmd)
+      local rcmd = "ttt_radio " .. cmd.cmd
+      table.insert(c, rcmd)
    end
    return c
 end
@@ -560,7 +561,7 @@ local function CreateVoiceVGUI()
     g_VoicePanelList:ParentToHUD()
     g_VoicePanelList:SetPos(25, 25)
     g_VoicePanelList:SetSize(200, ScrH() - 200)
-    g_VoicePanelList:SetDrawBackground(false)
+    g_VoicePanelList:SetPaintBackground(false)
 
     MutedState = vgui.Create("DLabel")
     MutedState:SetPos(ScrW() - 200, ScrH() - 50)
@@ -572,15 +573,12 @@ local function CreateVoiceVGUI()
 end
 hook.Add( "InitPostEntity", "CreateVoiceVGUI", CreateVoiceVGUI )
 
-MUTE_NONE = 0
-MUTE_TERROR = TEAM_TERROR
-MUTE_SPEC = TEAM_SPEC
-
-local MuteStates = {MUTE_NONE, MUTE_TERROR, MUTE_SPEC}
+local MuteStates = {MUTE_NONE, MUTE_TERROR, MUTE_ALL, MUTE_SPEC}
 
 local MuteText = {
    [MUTE_NONE]   = "",
    [MUTE_TERROR] = "mute_living",
+   [MUTE_ALL]    = "mute_all",
    [MUTE_SPEC]   = "mute_specs"
 };
 

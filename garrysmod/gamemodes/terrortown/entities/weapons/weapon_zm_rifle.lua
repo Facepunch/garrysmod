@@ -1,47 +1,48 @@
 AddCSLuaFile()
 
-SWEP.HoldType           = "ar2"
+SWEP.HoldType              = "ar2"
 
 if CLIENT then
    SWEP.PrintName          = "rifle_name"
    SWEP.Slot               = 2
-   SWEP.Icon = "vgui/ttt/icon_scout"
-   SWEP.IconLetter = "n"
+
+   SWEP.ViewModelFlip      = false
+   SWEP.ViewModelFOV       = 54
+
+   SWEP.Icon               = "vgui/ttt/icon_scout"
+   SWEP.IconLetter         = "n"
 end
 
-SWEP.Base               = "weapon_tttbase"
-SWEP.Spawnable = true
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.Kind = WEAPON_HEAVY
-SWEP.WeaponID = AMMO_RIFLE
+SWEP.Kind                  = WEAPON_HEAVY
+SWEP.WeaponID              = AMMO_RIFLE
 
-SWEP.Primary.Delay          = 1.5
-SWEP.Primary.Recoil         = 7
-SWEP.Primary.Automatic = true
-SWEP.Primary.Ammo = "357"
-SWEP.Primary.Damage = 50
-SWEP.Primary.Cone = 0.005
-SWEP.Primary.ClipSize = 10
-SWEP.Primary.ClipMax = 20 -- keep mirrored to ammo
-SWEP.Primary.DefaultClip = 10
+SWEP.Primary.Delay         = 1.5
+SWEP.Primary.Recoil        = 7
+SWEP.Primary.Automatic     = true
+SWEP.Primary.Ammo          = "357"
+SWEP.Primary.Damage        = 50
+SWEP.Primary.Cone          = 0.005
+SWEP.Primary.ClipSize      = 10
+SWEP.Primary.ClipMax       = 20 -- keep mirrored to ammo
+SWEP.Primary.DefaultClip   = 10
+SWEP.Primary.Sound         = Sound("Weapon_Scout.Single")
 
-SWEP.HeadshotMultiplier = 4
+SWEP.Secondary.Sound       = Sound("Default.Zoom")
 
-SWEP.AutoSpawnable      = true
-SWEP.AmmoEnt = "item_ammo_357_ttt"
+SWEP.HeadshotMultiplier    = 4
 
-SWEP.UseHands			= true
-SWEP.ViewModelFlip		= false
-SWEP.ViewModelFOV		= 54
-SWEP.ViewModel          = Model("models/weapons/cstrike/c_snip_scout.mdl")
-SWEP.WorldModel         = Model("models/weapons/w_snip_scout.mdl")
+SWEP.AutoSpawnable         = true
+SWEP.Spawnable             = true
+SWEP.AmmoEnt               = "item_ammo_357_ttt"
 
-SWEP.Primary.Sound = Sound(")weapons/scout/scout_fire-1.wav")
+SWEP.UseHands              = true
+SWEP.ViewModel             = Model("models/weapons/cstrike/c_snip_scout.mdl")
+SWEP.WorldModel            = Model("models/weapons/w_snip_scout.mdl")
 
-SWEP.Secondary.Sound = Sound("Default.Zoom")
-
-SWEP.IronSightsPos      = Vector( 5, -15, -2 )
-SWEP.IronSightsAng      = Vector( 2.6, 1.37, 3.5 )
+SWEP.IronSightsPos         = Vector( 5, -15, -2 )
+SWEP.IronSightsAng         = Vector( 2.6, 1.37, 3.5 )
 
 function SWEP:SetZoom(state)
    if CLIENT then

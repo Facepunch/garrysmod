@@ -34,7 +34,7 @@ function MenuController( $scope, $rootScope )
 		$( '.popup:not(.language_list)' ).hide();
 		$( '.language_list' ).toggle();
 	}
-	
+
 	$scope.ToggleGames = function ()
 	{
 		$( '.popup:not(.games_list)' ).hide();
@@ -64,7 +64,6 @@ function MenuController( $scope, $rootScope )
 		$( '.language_list' ).hide();
 	}
 
-
 	$scope.MenuOption = function ( btn, v )
 	{
 		lua.Run( "RunGameUICommand( '" + v + "' )" )
@@ -83,7 +82,7 @@ function MenuController( $scope, $rootScope )
 	lua.Run( "UpdateMapList()" );
 
 	//
-	// Languages 
+	// Languages
 	//
 	$rootScope.Languages = []
 	$rootScope.Language = 'en';
@@ -99,10 +98,10 @@ function MenuController( $scope, $rootScope )
 
 	//
 	// Controls
-	// 
+	//
 	$scope.BackToGame = function()
 	{
-		lua.Run( "RawConsoleCommand( 'gameui_hide' );" );
+		lua.Run( "gui.HideGameUI()" );
 	}
 
 	$scope.Disconnect = function ()
@@ -129,8 +128,9 @@ function MenuController( $scope, $rootScope )
 
 	$scope.ShowNews = function()
 	{
-		if ( gScope.Branch != "unknown" ) return lua.Run( "gui.OpenURL( 'http://wiki.garrysmod.com/changelist/' )" );
-		console.log( "Opening News!" );
+		if ( gScope.Branch == "dev" )			return lua.Run( "gui.OpenURL( 'http://wiki.garrysmod.com/changelist/' )" );
+		if ( gScope.Branch == "prerelease" )	return lua.Run( "gui.OpenURL( 'http://wiki.garrysmod.com/changelist/prerelease/' )" );
+
 		lua.Run( "gui.OpenURL( 'http://www.garrysmod.com/updates/' )" );
 	}
 
@@ -141,7 +141,7 @@ function MenuController( $scope, $rootScope )
 	$scope.InGame = false;
 
 	// Kinect options
-	$scope.kinect = 
+	$scope.kinect =
 	{
 		available: util.MotionSensorAvailable(),
 		show_color: false,
@@ -213,7 +213,6 @@ function UpdateCurrentGamemode( gm )
 	UpdateDigest( gScope, 50 );
 }
 
-
 function GetGamemodeInfo( name )
 {
 	name = name.toLowerCase();
@@ -227,7 +226,7 @@ function GetHighestKey( obj )
 	var h = 0;
 	var v = "";
 
-	for ( k in obj ) 
+	for ( k in obj )
 	{
 		if ( obj[k] > h )
 		{
@@ -281,7 +280,7 @@ function UpdateMaps( inmaps )
 			MapIndex[ inmaps[k][v].toLowerCase() ] = true;
 		}
 
-		mapList.push( 
+		mapList.push(
 		{
 			order: order,
 			category: k,
@@ -312,7 +311,7 @@ function UpdateLanguage( lang )
 {
 	gScope.Language = lang;
 	gScope.$broadcast( "languagechanged" );
-	UpdateDigest( gScope, 50 );	
+	UpdateDigest( gScope, 50 );
 }
 
 function UpdateGames( games )
@@ -335,7 +334,7 @@ function UpdateVersion( version, branch )
 {
 	gScope.Version 	= 	version;
 	gScope.Branch 	= 	branch;
-	
+
 	UpdateDigest( gScope, 100 );
 }
 

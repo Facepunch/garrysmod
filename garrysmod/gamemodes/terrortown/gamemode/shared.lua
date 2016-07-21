@@ -3,7 +3,7 @@ GM.Author = "Bad King Urgrain"
 GM.Email = "thegreenbunny@gmail.com"
 GM.Website = "ttt.badking.net"
 -- Date of latest changes (YYYY-MM-DD)
-GM.Version = "2015-05-25"
+GM.Version = "2016-04-20"
 
 
 GM.Customized = false
@@ -64,6 +64,11 @@ OPEN_ROT  = 2
 OPEN_BUT  = 3
 OPEN_NOTOGGLE = 4 --movelinear
 
+-- Mute types
+MUTE_NONE = 0
+MUTE_TERROR = 1
+MUTE_ALL = 2
+MUTE_SPEC = 1002
 
 COLOR_WHITE  = Color(255, 255, 255, 255)
 COLOR_BLACK  = Color(0, 0, 0, 255)

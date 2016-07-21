@@ -1,6 +1,6 @@
 
-var Scope		= null
-var RequestNum	= {};
+var Scope = null
+var RequestNum = {};
 var DigestUpdate = 0;
 var ServerTypes = {};
 var FirstTime = true;
@@ -12,7 +12,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 	if ( !Scope.CurrentGamemode )
 		Scope.CurrentGamemode = null;
-	
+
 	if ( !Scope.Refreshing )
 		Scope.Refreshing = {}
 
@@ -32,7 +32,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		//
 		ServerTypes[Scope.ServerType].gamemodes = {};
 		ServerTypes[Scope.ServerType].list.length = 0;
-		
+
 		if ( !IN_ENGINE )
 			TestUpdateServers( Scope.ServerType, RequestNum[ Scope.ServerType ] );
 
@@ -53,7 +53,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 			SetPlayerList( server.address, { "1": { "time": 3037.74, "score": 5, "name": "Sethxi" }, "2": { "time": 2029.34, "score": 0, "name": "RedDragon124" }, "3": { "time": 1405.02, "score": 0, "name": "Joke (0_0)" }, "4": { "time": 462.15, "score": 0, "name": "TheAimBot" }, "5": { "time": 301.32, "score": 0, "name": "DesanPL"} } );
 
 		lua.Run( "GetPlayerList( '"+server.address+"' )" );
-		
+
 		if ( server.DoubleClick )
 		{
 			$scope.JoinServer( server );
@@ -121,9 +121,9 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	$scope.JoinServer = function ( gm )
 	{
 		if ( gm.password )
-			lua.Run( "RunConsoleCommand( \"password\", \""+gm.password+"\" )" )
+			lua.Run( "RunConsoleCommand( \"password\", \"" + gm.password + "\" )" )
 
-		lua.Run( "JoinServer( \""+gm.address+"\" )" )
+		lua.Run( "JoinServer( \"" + gm.address + "\" )" )
 	}
 
 	$scope.SwitchType = function( type )
@@ -133,7 +133,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		var FirstTime = false;
 		if ( !ServerTypes[type] )
 		{
-			ServerTypes[type] = 
+			ServerTypes[type] =
 			{
 				gamemodes: {},
 				list: []
@@ -164,7 +164,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( !gm.info ) return false;
 		if ( !gm.info.workshopid ) return false;
 		if ( gm.info.workshopid == "" ) return false;
-		if ( subscriptions.Contains( String(gm.info.workshopid) ) ) return false;
+		if ( subscriptions.Contains( String( gm.info.workshopid ) ) ) return false;
 
 		return true;
 	}
@@ -190,7 +190,7 @@ function GetGamemode( name, type )
 
 	if ( ServerTypes[type].gamemodes[name] ) return ServerTypes[type].gamemodes[name]
 
-	ServerTypes[type].gamemodes[name] = 
+	ServerTypes[type].gamemodes[name] =
 	{
 		name:			name,
 		servers:		[],
@@ -256,7 +256,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	gm.order = gm.num_players + Math.random();
 
 	UpdateDigest( Scope, 50 );
-	
+
 }
 
 function MissingGamemodeIcon( element )

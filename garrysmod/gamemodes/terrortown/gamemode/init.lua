@@ -95,6 +95,7 @@ CreateConVar("ttt_det_credits_traitordead", "1")
 CreateConVar("ttt_announce_deaths", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 
 CreateConVar("ttt_use_weapon_spawn_scripts", "1")
+CreateConVar("ttt_weapon_spawn_count", "0")
 
 CreateConVar("ttt_always_use_mapcycle", "0")
 
@@ -229,6 +230,10 @@ function GM:InitCvars()
    self.cvar_init = true
 end
 
+function GM:InitPostEntity()
+   WEPS.ForcePrecache()
+end
+
 function GM:GetGameDescription() return self.Name end
 
 -- Convar replication is broken in gmod, so we do this.
@@ -326,7 +331,7 @@ end
 
 local function NameChangeKick()
    if not GetConVar("ttt_namechange_kick"):GetBool() then
-      timer.Destroy("namecheck")
+      timer.Remove("namecheck")
       return
    end
 
@@ -585,11 +590,9 @@ function SpawnWillingPlayers(dead_only)
                      -- spawning
                      while c < num_spawns and #to_spawn > 0 do
                         for k, ply in pairs(to_spawn) do
-                           if IsValid(ply) then
-                              if ply:SpawnForRound() then
-                                 -- a spawn ent is now occupied
-                                 c = c + 1
-                              end
+                           if IsValid(ply) and ply:SpawnForRound() then
+                              -- a spawn ent is now occupied
+                              c = c + 1
                            end
                            -- Few possible cases:
                            -- 1) player has now been spawned
@@ -609,7 +612,7 @@ function SpawnWillingPlayers(dead_only)
                      MsgN("Spawned " .. c .. " players in spawn wave.")
 
                      if #to_spawn == 0 then
-                        timer.Destroy("spawnwave")
+                        timer.Remove("spawnwave")
                         MsgN("Spawn waves ending, all players spawned.")
                      end
                   end
@@ -652,8 +655,6 @@ function BeginRound()
 
    -- Remove their ragdolls
    ents.TTT.RemoveRagdolls(true)
-
-   WEPS.ForcePrecache()
 
    if CheckForAbort() then return end
 
@@ -879,7 +880,7 @@ function SelectRoles()
       if IsValid(v) and (not v:IsSpec()) then
          -- save previous role and sign up as possible traitor/detective
 
-         local r = GAMEMODE.LastRole[v:UniqueID()] or v:GetRole() or ROLE_INNOCENT
+         local r = GAMEMODE.LastRole[v:SteamID()] or v:GetRole() or ROLE_INNOCENT
 
          table.insert(prev_roles[r], v)
 
@@ -963,8 +964,8 @@ function SelectRoles()
       -- initialize credit count for everyone based on their role
       ply:SetDefaultCredits()
 
-      -- store a uid -> role map
-      GAMEMODE.LastRole[ply:UniqueID()] = ply:GetRole()
+      -- store a steamid -> role map
+      GAMEMODE.LastRole[ply:SteamID()] = ply:GetRole()
    end
 end
 

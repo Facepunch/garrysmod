@@ -551,6 +551,7 @@ end
 -----------------------------------------------------------]]
 function SortedPairsByMemberValue( pTable, pValueName, Desc )
 
+	pTable = table.Copy( pTable )
 	Desc = Desc or false
 
 	local pSortedTable = table.ClearKeys( pTable, true )

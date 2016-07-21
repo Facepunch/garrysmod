@@ -2,7 +2,7 @@
 
 KARMA = {}
 
--- ply uid -> karma table for disconnected players who might reconnect
+-- ply steamid -> karma table for disconnected players who might reconnect
 KARMA.RememberedPlayers = {}
 
 -- Convars, more convenient access than GetConVar bla bla
@@ -198,11 +198,13 @@ function KARMA.RoundIncrement()
    local cleanbonus = config.clean:GetFloat()
 
    for _, ply in pairs(player.GetAll()) do
-      local bonus = healbonus + (ply:GetCleanRound() and cleanbonus or 0)
-      KARMA.GiveReward(ply, bonus)
+      if ply:IsDeadTerror() and ply.death_type ~= KILL_SUICIDE or not ply:IsSpec() then
+         local bonus = healbonus + (ply:GetCleanRound() and cleanbonus or 0)
+         KARMA.GiveReward(ply, bonus)
 
-      if IsDebug() then
-         print(ply, "gets roundincr", incr)
+         if IsDebug() then
+            print(ply, "gets roundincr", incr)
+         end
       end
    end
 
@@ -294,7 +296,7 @@ function KARMA.Remember(ply)
    end
 
    -- if persist is on, this is purely a backup method
-   KARMA.RememberedPlayers[ply:UniqueID()] = ply:GetLiveKarma()
+   KARMA.RememberedPlayers[ply:SteamID()] = ply:GetLiveKarma()
 end
 
 function KARMA.Recall(ply)
@@ -309,11 +311,11 @@ function KARMA.Recall(ply)
       end
    end
 
-   return KARMA.RememberedPlayers[ply:UniqueID()]
+   return KARMA.RememberedPlayers[ply:SteamID()]
 end
 
 function KARMA.LateRecallAndSet(ply)
-   local k = tonumber(ply:GetPData("karma_stored", KARMA.RememberedPlayers[ply:UniqueID()]))
+   local k = tonumber(ply:GetPData("karma_stored", KARMA.RememberedPlayers[ply:SteamID()]))
    if k and k < ply:GetLiveKarma() then
       ply:SetBaseKarma(k)
       ply:SetLiveKarma(k)
@@ -341,7 +343,7 @@ function KARMA.CheckAutoKick(ply)
       if config.persist:GetBool() then
          local k = math.Clamp(config.starting:GetFloat() * 0.8, config.kicklevel:GetFloat() * 1.1, config.max:GetFloat())
          ply:SetPData("karma_stored", k)
-         KARMA.RememberedPlayers[ply:UniqueID()] = k
+         KARMA.RememberedPlayers[ply:SteamID()] = k
       end
 
       if config.autoban:GetBool() then

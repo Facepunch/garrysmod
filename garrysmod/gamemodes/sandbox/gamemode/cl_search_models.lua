@@ -1,5 +1,4 @@
 
-
 local function GetAllFiles( tab, folder, extension, path )
 
 	local files, folders = file.Find( folder .. "/*", path )
@@ -7,7 +6,7 @@ local function GetAllFiles( tab, folder, extension, path )
 	for k, v in pairs( files ) do
 
 		if ( v:EndsWith( extension ) ) then
-			table.insert( tab, (folder .. v):lower() )
+			table.insert( tab, ( folder .. v ):lower() )
 		end
 
 	end
@@ -17,13 +16,12 @@ local function GetAllFiles( tab, folder, extension, path )
 			GetAllFiles( tab, folder .. v .. "/", extension, path )
 		end )
 	end
-
-	if ( folder == "models/" ) then
-		hook.Run( "SearchUpdate" )
+	
+	if ( !timer.Exists( "search_models_update" ) ) then
+		timer.Create( "search_models_update", 1, 1, function() hook.Run( "SearchUpdate" ) end )
 	end
 
 end
-
 
 local model_list = nil
 --
@@ -37,7 +35,6 @@ search.AddProvider( function( str )
 
 		model_list = {}
 		GetAllFiles( model_list, "models/", ".mdl", "GAME" )
-		timer.Simple( 1, function() hook.Run( "SearchUpdate" ) end )
 
 	end
 
@@ -49,15 +46,14 @@ search.AddProvider( function( str )
 
 			if ( IsUselessModel( v ) ) then continue end
 
-			local entry = 
-			{
+			local entry = {
 				text = v:GetFileFromFilename(),
 				func = function() RunConsoleCommand( "gm_spawn", v ) end,
 				icon = spawnmenu.CreateContentIcon( "model", g_SpawnMenu.SearchPropPanel, { model = v } ),
 				words = { v }
 			}
-			
-			table.insert( list, entry )			
+
+			table.insert( list, entry )
 
 		end
 
@@ -67,7 +63,7 @@ search.AddProvider( function( str )
 
 	return list
 
-end );
+end )
 
 --
 -- Entity, vehicles
@@ -78,58 +74,56 @@ search.AddProvider( function( str )
 
 	local results = {}
 
-	local ents = {}
-	--table.Add( ents, scripted_ents.GetSpawnable() );
-	table.Add( ents, list.Get( "SpawnableEntities" ) );
+	local entities = {}
+	--table.Add( entities, scripted_ents.GetSpawnable() )
+	table.Add( entities, list.Get( "SpawnableEntities" ) )
 
 	for k, v in pairs( list.Get( "Vehicles" ) ) do
-			
+
 		v.ClassName = k
 		v.PrintName = v.Name
 		v.ScriptedEntityType = 'vehicle'
-		table.insert( ents, v )
-			
+		table.insert( entities, v )
+
 	end
-	
+
 	for k, v in pairs( list.Get( "NPC" ) ) do
-			
+
 		v.ClassName = k
 		v.PrintName = v.Name
 		v.ScriptedEntityType = 'npc'
-		table.insert( ents, v )
-			
+		table.insert( entities, v )
+
 	end
 
 	for k, v in pairs( list.Get( "Weapon" ) ) do
-			
+
 		v.ClassName = k
 		v.PrintName = v.PrintName
 		v.ScriptedEntityType = 'weapon'
-		table.insert( ents, v )
-			
+		table.insert( entities, v )
+
 	end
 
-	for k, v in pairs( ents ) do
+	for k, v in pairs( entities ) do
 
 		local name = v.ClassName or v.PrintName
 		if ( !name ) then continue end
 
 		if ( name:lower():find( str ) ) then
 
-			local entry = 
-			{
+			local entry = {
 				text = v.PrintName or v.ClassName,
-				icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, 
-					{ 
-						nicename	= v.PrintName or v.ClassName,
-						spawnname	= v.ClassName,
-						material	= "entities/"..v.ClassName..".png",
-						admin		= v.AdminOnly
-					}),
+				icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, {
+					nicename	= v.PrintName or v.ClassName,
+					spawnname	= v.ClassName,
+					material	= "entities/"..v.ClassName..".png",
+					admin		= v.AdminOnly
+				} ),
 				words = { v }
 			}
-			
-			table.insert( results, entry )			
+
+			table.insert( results, entry )
 
 		end
 
@@ -139,4 +133,4 @@ search.AddProvider( function( str )
 
 	return results
 
-end );
+end )

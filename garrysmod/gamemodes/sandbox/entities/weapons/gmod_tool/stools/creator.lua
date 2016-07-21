@@ -25,13 +25,13 @@ function TOOL:LeftClick( trace, attach )
 		Spawn_NPC( self:GetOwner(), name, arg, trace )
 
 	elseif ( type == 3 ) then
-	
+
 		Spawn_Weapon( self:GetOwner(), name, trace )
-		
+
 	elseif ( type == 4 ) then
-	
+
 		CCSpawn( self:GetOwner(), nil, { name } ) -- Props
-		
+
 	end
 
 	return true

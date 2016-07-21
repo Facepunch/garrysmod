@@ -185,10 +185,10 @@ end
 function GM:PlayerNoClip( pl, on )
 	
 	-- Don't allow if player is in vehicle
-	if ( pl:InVehicle() ) then return false end
+	if ( !IsValid( pl ) || pl:InVehicle() || !pl:Alive() ) then return false end
 	
-	-- Always allow in single player
-	if ( game.SinglePlayer() ) then return true end
+	-- Always allow to turn off noclip, and in single player
+	if ( !on || game.SinglePlayer() ) then return true end
 
 	return GetConVarNumber( "sbox_noclip" ) > 0
 	

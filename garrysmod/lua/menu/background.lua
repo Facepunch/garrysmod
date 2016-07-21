@@ -1,5 +1,5 @@
 
-local MenuGradient = Material( "../html/img/gradient.png", "nocull smooth" )
+local MenuGradient = Material( "html/img/gradient.png", "nocull smooth" )
 
 local Images = {}
 
@@ -42,7 +42,7 @@ end
 
 function DrawBackground()
 
-	if ( !IsInGame() ) then 
+	if ( !IsInGame() ) then
 
 		if ( Active ) then
 			Think( Active )
@@ -86,9 +86,9 @@ function ChangeBackground( currentgm )
 
 	if ( currentgm && currentgm == LastGamemode ) then return end
 	if ( currentgm ) then LastGamemode = currentgm end
-	
+
 	local img = table.Random( Images )
-	
+
 	if ( !img ) then return end
 
 	Outgoing = Active

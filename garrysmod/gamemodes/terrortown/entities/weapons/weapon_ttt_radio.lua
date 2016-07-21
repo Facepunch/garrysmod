@@ -1,53 +1,49 @@
-
 -- traitor equipment: radio
 
 AddCSLuaFile()
 
-SWEP.HoldType = "normal"
+SWEP.HoldType               = "normal"
 
 if CLIENT then
-   SWEP.PrintName			= "radio_name"
-   SWEP.Slot				= 7
+   SWEP.PrintName           = "radio_name"
+   SWEP.Slot                = 7
 
-   SWEP.ViewModelFOV = 10
+   SWEP.ViewModelFlip       = false
+   SWEP.ViewModelFOV        = 10
+   SWEP.DrawCrosshair       = false
 
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "radio_desc"
    };
 
-   SWEP.Icon = "vgui/ttt/icon_radio"
+   SWEP.Icon                = "vgui/ttt/icon_radio"
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                   = "weapon_tttbase"
 
-SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel         = "models/props/cs_office/radio.mdl"
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
+SWEP.ViewModel              = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel             = "models/props/cs_office/radio.mdl"
+
 SWEP.Primary.ClipSize       = -1
 SWEP.Primary.DefaultClip    = -1
 SWEP.Primary.Automatic      = true
-SWEP.Primary.Ammo       = "none"
-SWEP.Primary.Delay = 1.0
+SWEP.Primary.Ammo           = "none"
+SWEP.Primary.Delay          = 1.0
 
 SWEP.Secondary.ClipSize     = -1
 SWEP.Secondary.DefaultClip  = -1
 SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
-SWEP.Secondary.Delay = 1.0
+SWEP.Secondary.Ammo         = "none"
+SWEP.Secondary.Delay        = 1.0
 
-SWEP.Kind = WEAPON_EQUIP2
-SWEP.CanBuy = {ROLE_TRAITOR} -- only traitors can buy
-SWEP.LimitedStock = true -- only buyable once
-SWEP.WeaponID = AMMO_RADIO
+SWEP.Kind                   = WEAPON_EQUIP2
+SWEP.CanBuy                 = {ROLE_TRAITOR} -- only traitors can buy
+SWEP.LimitedStock           = true -- only buyable once
+SWEP.WeaponID               = AMMO_RADIO
 
--- This is traitor equipment
-
-
-SWEP.AllowDrop = false
-
-SWEP.NoSights = true
+SWEP.AllowDrop              = false
+SWEP.NoSights               = true
 
 function SWEP:OnDrop()
    self:Remove()

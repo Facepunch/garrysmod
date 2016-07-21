@@ -31,11 +31,7 @@ function TOOL:LeftClick( trace )
 	DoPropSpawnedEffect( ent )
 
 	return true
-	
-end
 
-function TOOL:RightClick( trace )
-	return false
 end
 
 local ConVarsDefault = TOOL:BuildConVarList()

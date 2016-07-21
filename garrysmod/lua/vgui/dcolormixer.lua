@@ -1,17 +1,5 @@
---[[
-	 _
-	( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
-
-	DColorMixer
---]]
-
 
 local PANEL = {}
-
 
 AccessorFunc( PANEL, "m_ConVarR", "ConVarR" )
 AccessorFunc( PANEL, "m_ConVarG", "ConVarG" )
@@ -42,14 +30,11 @@ local function CreateWangFunction( self, colindex )
 		end
 
 		self:UpdateColor( self.m_Color )
-	end 
+	end
 
 	return OnValueChanged
 end
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	-- The defaults
@@ -66,12 +51,11 @@ function PANEL:Init()
 	self.Palette:DockMargin( 0, 8, 0, 0 )
 	self.Palette:Reset()
 	self.Palette.DoClick = function( ctrl, color, btn )
-		self:SetColor( Color( color.r, color.g, color.b, self.m_bAlpha and color.a or 255 ) )
+		self:SetColor( Color( color.r, color.g, color.b, self.m_bAlpha && color.a or 255 ) )
 	end
 	self.Palette.OnRightClickButton = function( ctrl, btn )
-		ctrl:SaveColor( btn, self:GetColor() );
+		ctrl:SaveColor( btn, self:GetColor() )
 	end
-	
 
 	-- The label
 	self.label = vgui.Create( "DLabel", self )
@@ -88,36 +72,36 @@ function PANEL:Init()
 	self.WangsPanel:SetVisible( self.m_bWangsPanel )
 
 	self.txtR = self.WangsPanel:Add( "DNumberWang" )
-		self.txtR:SetDecimals( 0 )
-		self.txtR:SetMinMax( 0, 255 )
-		self.txtR:SetTall( 20 )
-		self.txtR:Dock( TOP )
-		self.txtR:DockMargin( 0, 0, 0, 0 )
-		self.txtR:SetTextColor( Color( 150, 0, 0, 255 ) )
+	self.txtR:SetDecimals( 0 )
+	self.txtR:SetMinMax( 0, 255 )
+	self.txtR:SetTall( 20 )
+	self.txtR:Dock( TOP )
+	self.txtR:DockMargin( 0, 0, 0, 0 )
+	self.txtR:SetTextColor( Color( 150, 0, 0, 255 ) )
 
 	self.txtG = self.WangsPanel:Add( "DNumberWang" )
-		self.txtG:SetDecimals( 0 )
-		self.txtG:SetMinMax( 0, 255 )
-		self.txtG:SetTall( 20 )
-		self.txtG:Dock( TOP )
-		self.txtG:DockMargin( 0, 4, 0, 0 )
-		self.txtG:SetTextColor( Color( 0, 150, 0, 255 ) )
+	self.txtG:SetDecimals( 0 )
+	self.txtG:SetMinMax( 0, 255 )
+	self.txtG:SetTall( 20 )
+	self.txtG:Dock( TOP )
+	self.txtG:DockMargin( 0, 4, 0, 0 )
+	self.txtG:SetTextColor( Color( 0, 150, 0, 255 ) )
 
 	self.txtB = self.WangsPanel:Add( "DNumberWang" )
-		self.txtB:SetDecimals( 0 )
-		self.txtB:SetMinMax( 0, 255 )
-		self.txtB:SetTall( 20 )
-		self.txtB:Dock( TOP )
-		self.txtB:DockMargin( 0, 4, 0, 0 )
-		self.txtB:SetTextColor( Color( 0, 0, 150, 255 ) )
+	self.txtB:SetDecimals( 0 )
+	self.txtB:SetMinMax( 0, 255 )
+	self.txtB:SetTall( 20 )
+	self.txtB:Dock( TOP )
+	self.txtB:DockMargin( 0, 4, 0, 0 )
+	self.txtB:SetTextColor( Color( 0, 0, 150, 255 ) )
 
 	self.txtA = self.WangsPanel:Add( "DNumberWang" )
-		self.txtA:SetDecimals( 0 )
-		self.txtA:SetMinMax( 0, 255 )
-		self.txtA:SetTall( 20 )
-		self.txtA:Dock( TOP )
-		self.txtA:DockMargin( 0, 4, 0, 0 )
-		self.txtA:SetTextColor( Color( 80, 80, 80, 255 ) )
+	self.txtA:SetDecimals( 0 )
+	self.txtA:SetMinMax( 0, 255 )
+	self.txtA:SetTall( 20 )
+	self.txtA:Dock( TOP )
+	self.txtA:DockMargin( 0, 4, 0, 0 )
+	self.txtA:SetTextColor( Color( 80, 80, 80, 255 ) )
 
 	self.txtR.OnValueChanged = CreateWangFunction( self, "r" )
 	self.txtG.OnValueChanged = CreateWangFunction( self, "g" )
@@ -140,7 +124,6 @@ function PANEL:Init()
 		self:SetBaseColor( color )
 	end
 
-
 	self.Alpha = vgui.Create( "DAlphaBar", self )
 	self.Alpha:DockMargin( 4, 0, 0, 0 )
 	self.Alpha:Dock( RIGHT )
@@ -151,9 +134,6 @@ function PANEL:Init()
 		self:UpdateColor( self.m_Color )
 	end
 
-
-
-
 	-- Layout
 	self:UpdateColor( self.m_Color )
 	self:SetSize( 256, 230 )
@@ -161,14 +141,11 @@ function PANEL:Init()
 
 end
 
---[[---------------------------------------------------------
-	Name: SetLabel
------------------------------------------------------------]]
 function PANEL:SetLabel( text )
 
-	if ( !text or ( text == "" ) ) then
+	if ( !text or text == "" ) then
 		self.label:SetVisible( false )
-	
+
 		return
 	end
 
@@ -178,10 +155,6 @@ function PANEL:SetLabel( text )
 	self:InvalidateLayout()
 end
 
-
---[[---------------------------------------------------------
-	Name: SetPalette
------------------------------------------------------------]]
 function PANEL:SetPalette( bEnabled )
 	self.m_bPalette = bEnabled
 
@@ -191,9 +164,6 @@ function PANEL:SetPalette( bEnabled )
 	self:InvalidateLayout()
 end
 
---[[---------------------------------------------------------
-	Name: SetAlphaBar
------------------------------------------------------------]]
 function PANEL:SetAlphaBar( bEnabled )
 	self.m_bAlpha = bEnabled
 
@@ -206,9 +176,6 @@ function PANEL:SetAlphaBar( bEnabled )
 	self:InvalidateLayout()
 end
 
---[[---------------------------------------------------------
-	Name: SetWangs
------------------------------------------------------------]]
 function PANEL:SetWangs( bEnabled )
 	self.m_bWangsPanel = bEnabled
 
@@ -218,38 +185,23 @@ function PANEL:SetWangs( bEnabled )
 	self:InvalidateLayout()
 end
 
---[[---------------------------------------------------------
-	Name: ConVarR
------------------------------------------------------------]]
 function PANEL:SetConVarR( cvar )
 	self.m_ConVarR = cvar
 end
 
---[[---------------------------------------------------------
-	Name: ConVarG
------------------------------------------------------------]]
 function PANEL:SetConVarG( cvar )
 	self.m_ConVarG = cvar
 end
 
---[[---------------------------------------------------------
-	Name: ConVarB
------------------------------------------------------------]]
 function PANEL:SetConVarB( cvar )
 	self.m_ConVarB = cvar
 end
 
---[[---------------------------------------------------------
-	Name: SetConVarA
------------------------------------------------------------]]
 function PANEL:SetConVarA( cvar )
 	self.m_ConVarA = cvar
 	self:SetAlphaBar( cvar != nil )
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout( x, y )
 
 	local h, s, v = ColorToHSV( self.HSV:GetBaseRGB() )
@@ -257,23 +209,13 @@ function PANEL:PerformLayout( x, y )
 
 end
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Paint()
 	-- Invisible background!
 end
 
---[[---------------------------------------------------------
-	Name: TranslateValues ( Todo? )
------------------------------------------------------------]]
 function PANEL:TranslateValues( x, y )
-	
 end
 
---[[---------------------------------------------------------
-	Name: SetColor
------------------------------------------------------------]]
 function PANEL:SetColor( color )
 	local h, s, v = ColorToHSV( color )
 	self.RGB.LastY = ( 1 - h / 360 ) * self.RGB:GetTall()
@@ -283,38 +225,26 @@ function PANEL:SetColor( color )
 	self:UpdateColor( color )
 end
 
-
 function PANEL:SetVector( vec )
 
 	self:SetColor( Color( vec.x * 255, vec.y * 255, vec.z * 255, 255 ) )
 
 end
 
---[[---------------------------------------------------------
-	Name: SetBaseColor
------------------------------------------------------------]]
 function PANEL:SetBaseColor( color )
 	self.HSV:SetBaseRGB( color )
 	self.HSV:TranslateValues()
 end
 
-
---[[---------------------------------------------------------
-	Name: UpdateConVar
------------------------------------------------------------]]
 function PANEL:UpdateConVar( strName, strKey, color )
-
 	if ( !strName ) then return end
-	local col = color[strKey]
+	local col = color[ strKey ]
 
 	RunConsoleCommand( strName, tostring( col ) )
 
-	self[ 'ConVarOld'..strName ] = col
+	self[ "ConVarOld" .. strName ] = col
 end
 
---[[---------------------------------------------------------
-	Name: UpdateConVars
------------------------------------------------------------]]
 function PANEL:UpdateConVars( color )
 
 	self.NextConVarCheck = SysTime() + 0.2
@@ -326,9 +256,6 @@ function PANEL:UpdateConVars( color )
 
 end
 
---[[---------------------------------------------------------
-	Name: UpdateColor
------------------------------------------------------------]]
 function PANEL:UpdateColor( color )
 	self.Alpha:SetBarColor( ColorAlpha( color, 255 ) )
 	self.Alpha:SetValue( color.a / 255 )
@@ -336,25 +263,25 @@ function PANEL:UpdateColor( color )
 	local r, g, b, a = color.r, color.g, color.b, color.a
 	local r_old, g_old, b_old, a_old = self.txtR:GetValue(), self.txtG:GetValue(), self.txtB:GetValue(), self.txtA:GetValue()
 
-	if ( r ~= r_old ) then
+	if ( r != r_old ) then
 		self.txtR.notuserchange = true
 		self.txtR:SetValue( r )
 		self.txtR.notuserchange = nil
 	end
 
-	if ( g ~= g_old ) then
+	if ( g != g_old ) then
 		self.txtG.notuserchange = true
 		self.txtG:SetValue( g )
 		self.txtG.notuserchange = nil
 	end
 
-	if ( b ~= b_old ) then
+	if ( b != b_old ) then
 		self.txtB.notuserchange = true
 		self.txtB:SetValue( b )
 		self.txtB.notuserchange = nil
 	end
 
-	if ( a ~= a_old ) then
+	if ( a != a_old ) then
 		self.txtA.notuserchange = true
 		self.txtA:SetValue( a )
 		self.txtA.notuserchange = nil
@@ -366,16 +293,10 @@ function PANEL:UpdateColor( color )
 	self.m_Color = color
 end
 
---[[---------------------------------------------------------
-	Name: ValueChanged
------------------------------------------------------------]]
 function PANEL:ValueChanged( color )
 	-- Override
 end
 
---[[---------------------------------------------------------
-	Name: GetColor
------------------------------------------------------------]]
 function PANEL:GetColor()
 
 	self.m_Color.a = 255
@@ -388,23 +309,17 @@ end
 
 function PANEL:GetVector()
 
-	local col = self:GetColor();
+	local col = self:GetColor()
 	return Vector( col.r / 255, col.g / 255, col.b / 255 )
 
 end
 
---[[---------------------------------------------------------
-	Name: Think
------------------------------------------------------------]]
 function PANEL:Think()
 
 	self:ConVarThink()
 
 end
 
---[[---------------------------------------------------------
-	Name: ConVarThink
------------------------------------------------------------]]
 function PANEL:ConVarThink()
 
 	-- Don't update the convars while we're changing them!
@@ -416,8 +331,8 @@ function PANEL:ConVarThink()
 	local b, changed_b = self:DoConVarThink( self.m_ConVarB )
 	local a, changed_a = 255, false
 
-	if ( self.m_ConVarA ) then 
-		a, changed_a = self:DoConVarThink( self.m_ConVarA, 'a' )
+	if ( self.m_ConVarA ) then
+		a, changed_a = self:DoConVarThink( self.m_ConVarA, "a" )
 	end
 
 	if ( changed_r or changed_g or changed_b or changed_a ) then
@@ -425,30 +340,24 @@ function PANEL:ConVarThink()
 	end
 end
 
---[[---------------------------------------------------------
-	Name: DoConVarThink
------------------------------------------------------------]]
 function PANEL:DoConVarThink( convar )
 
 	if ( !convar ) then return end
 
 	local fValue = GetConVarNumber( convar )
-	local fOldValue = self[ 'ConVarOld'..convar ]
+	local fOldValue = self[ "ConVarOld" .. convar ]
 	if ( fOldValue && fValue == fOldValue ) then return fOldValue, false end
 
-	self[ 'ConVarOld'..convar ] = fValue
+	self[ "ConVarOld" .. convar ] = fValue
 
 	return fValue, true
 
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-		ctrl:SetSize( 256, 256 )
+	ctrl:SetSize( 256, 256 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 

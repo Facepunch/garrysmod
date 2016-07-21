@@ -182,6 +182,16 @@
 		"breakable_count"	"10"
 	}
 
+	// Unbreakable Huge wooden objects.
+	//	i.e Big Wardrobes, bookcases
+	"Wooden_Unbreakable.Huge"
+	{
+		"base"			"Wooden.Base"
+		"health"		"0"
+
+		"breakable_count"	"10"
+	}
+
 
 
 
@@ -332,8 +342,16 @@
 		"base"		"Plastic.Base"
 	}
 
+	// Breakable medium plastic objects
+	"Plastic.break"
+	{
+		"base"		"Plastic.Base"
+		//"physicsmode"	"1"
+		"health"	"1"
+		"damage_table"		"glass"
+	}
 
-		
+
 //=================================================================================
 //		ITEMS
 //=================================================================================
@@ -415,6 +433,14 @@
 		"health"	"100"
 	}
 
+	// Breakable small pottery
+	"Pottery.break"
+	{
+		"base"		"Pottery.Base"
+		"physicsmode"	"3"
+		"health"	"20"
+	}
+
 
 //=================================================================================
 //		FLESH
@@ -445,6 +471,35 @@
 	}
 
 
+//=================================================================================
+//		HL1 breakable types
+//=================================================================================
+
+	
+	"HL1.CeilingTile"
+	{		
+		"breakable_model"	"CeilingTile"
+		"breakable_count"	"4"
+	}
+
+	"HL1.ComputerGibs"
+	{		
+		"breakable_model"	"ComputerGibs"
+		"breakable_count"	"4"
+	}
+
+	"HL1.CinderGibs"
+	{		
+		"breakable_model"	"CinderGibs"
+		"breakable_count"	"4"
+	}
+
+	"HL1.FleshGibs"
+	{		
+		"breakable_model"	"FleshGibs"
+		"breakable_count"	"4"
+	}
+
 
 //=================================================================================
 //		BREAKABLE DATA. NOT PROPDATA TYPES.
@@ -455,37 +510,61 @@
 
 		"WoodChunks"
 		{
-			"models\Gibs\wood_gib01e.mdl"	"1"
-			"models\Gibs\wood_gib01d.mdl"	"1"
-			"models\Gibs\wood_gib01c.mdl"	"1"
-			"models\Gibs\wood_gib01b.mdl"	"1"
-			"models\Gibs\wood_gib01a.mdl"	"1"
+			"models\Gibs\wood_gib01e.mdl" "1"
+			"models\Gibs\wood_gib01d.mdl" "1"
+			"models\Gibs\wood_gib01c.mdl" "1"
+			"models\Gibs\wood_gib01b.mdl" "1"
+			"models\Gibs\wood_gib01a.mdl" "1"
 		}
 		"GlassChunks"
 		{
-			"models\Gibs\Glass_shard01.mdl"	"1"
-			"models\Gibs\Glass_shard02.mdl"	"1"
-			"models\Gibs\Glass_shard03.mdl"	"1"
-			"models\Gibs\Glass_shard04.mdl"	"1"
-			"models\Gibs\Glass_shard05.mdl"	"1"
-			"models\Gibs\Glass_shard06.mdl"	"1"
+			"models\Gibs\Glass_shard01.mdl" "1"
+			"models\Gibs\Glass_shard02.mdl" "1"
+			"models\Gibs\Glass_shard03.mdl" "1"
+			"models\Gibs\Glass_shard04.mdl" "1"
+			"models\Gibs\Glass_shard05.mdl" "1"
+			"models\Gibs\Glass_shard06.mdl" "1"
 		}
 		"ConcreteChunks"
 		{
-			"models\props_debris\concrete_chunk08a.mdl"	"1"
-			"models\props_debris\concrete_chunk09a.mdl"	"1"
-			"models\props_debris\concrete_chunk03a.mdl"	"1"
-			"models\props_debris\concrete_chunk07a.mdl"	"1"
-			"models\props_debris\concrete_chunk09a.mdl"	"1"
-			"models\props_debris\concrete_chunk02a.mdl"	"1"
+			"models\props_debris\concrete_chunk08a.mdl" "1"
+			"models\props_debris\concrete_chunk09a.mdl" "1"
+			"models\props_debris\concrete_chunk03a.mdl" "1"
+			"models\props_debris\concrete_chunk07a.mdl" "1"
+			"models\props_debris\concrete_chunk09a.mdl" "1"
+			"models\props_debris\concrete_chunk02a.mdl" "1"
 		}
 		"MetalChunks"
 		{
-			"models\Gibs\metal_gib1.mdl"			"1"
-			"models\Gibs\metal_gib2.mdl"			"1"
-			"models\Gibs\metal_gib3.mdl"			"1"
-			"models\Gibs\metal_gib4.mdl"			"1"
-			"models\Gibs\metal_gib5.mdl"			"1"
+			"models\Gibs\metal_gib1.mdl" "1"
+			"models\Gibs\metal_gib2.mdl" "1"
+			"models\Gibs\metal_gib3.mdl" "1"
+			"models\Gibs\metal_gib4.mdl" "1"
+			"models\Gibs\metal_gib5.mdl" "1"
+		}
+		"ComputerGibs" // HL1 stuff
+		{
+			"models\computergibs.mdl" "1"
+		}
+		"FleshGibs"
+		{
+			"models\fleshgibs.mdl"	"1"
+		}
+		"CeilingTile"
+		{
+			"models\ceilinggibs.mdl" "1"
+		}
+		//"CeilingTile"
+		//{
+		//	"models\cindergibs.mdl" "1"
+		//}
+		"WebGibs"
+		{
+			"models\webgibs.mdl" "1"
+		}
+		"CinderBlocks"
+		{
+			"models\cindergibs.mdl" "1"
 		}
 	}
 }

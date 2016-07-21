@@ -1,14 +1,13 @@
 
-
 function Subscriptions()
 {
-	
+
 }
 
 //
 // Initialize
 //
-Subscriptions.prototype.Init = function( scope ) 
+Subscriptions.prototype.Init = function( scope )
 {
 	this.Scope = scope;
 	this.Files = {}
@@ -33,16 +32,15 @@ Subscriptions.prototype.Enabled = function ( id )
 //
 // IsEnabled
 //
-Subscriptions.prototype.SetAllEnabled = function( bBool ) 
+Subscriptions.prototype.SetAllEnabled = function( bBool )
 {
 	bBool = bBool ? "true" : "false"
 
-	for ( k in this.Files ) 
+	for ( k in this.Files )
 	{
 		lua.Run( "steamworks.SetShouldMountAddon( %s, "+bBool+" );", String( k ) )
 	}
 }
-
 
 //
 // Update - called from engine
@@ -56,4 +54,3 @@ Subscriptions.prototype.Update = function ( json )
 		this.Files[ String( json[k].wsid ) ] = json[k]
 	}
 }
-

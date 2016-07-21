@@ -34,7 +34,7 @@ end
 function ENT:PhysicsUpdate( physobj )
 end
 
-if ( CLIENT ) then 
+if ( CLIENT ) then
 
 	function ENT:Draw()
 
@@ -48,12 +48,12 @@ if ( CLIENT ) then
 		-- You shouldn't really be drawing your model here unless it's translucent
 
 		self:Draw()
-		
+
 	end
 
 end
 
-if ( SERVER ) then 
+if ( SERVER ) then
 
 	function ENT:OnTakeDamage( dmginfo )
 
@@ -88,7 +88,7 @@ if ( SERVER ) then
 
 	--[[---------------------------------------------------------
 	   Name: Simulate
-	   Desc: Controls/simulates the physics on the entity. 
+	   Desc: Controls/simulates the physics on the entity.
 		Officially the most complicated callback in the whole mod.
 		 Returns 3 variables..
 		 1. A SIM_ enum

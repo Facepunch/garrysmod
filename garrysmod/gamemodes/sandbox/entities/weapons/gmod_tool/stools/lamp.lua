@@ -37,8 +37,8 @@ function TOOL:LeftClick( trace )
 	local mat = Material( texture )
 	local texture = mat:GetString( "$basetexture" )
 
-	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_lamp" && trace.Entity:GetPlayer() == ply ) then
-	
+	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_lamp" && trace.Entity:GetPlayer() == ply ) then
+
 		trace.Entity:SetColor( Color( r, g, b, 255 ) )
 		trace.Entity:SetFlashlightTexture( texture )
 		trace.Entity:SetLightFOV( fov )
@@ -52,7 +52,7 @@ function TOOL:LeftClick( trace )
 
 		trace.Entity.NumDown = numpad.OnDown( ply, key, "LampToggle", trace.Entity, 1 )
 		trace.Entity.NumUp = numpad.OnUp( ply, key, "LampToggle", trace.Entity, 0 )
-		
+
 		-- For duplicator
 		trace.Entity.Texture = texture
 		trace.Entity.fov = fov
@@ -64,19 +64,20 @@ function TOOL:LeftClick( trace )
 		trace.Entity.KeyDown = key
 
 		return true
-		
+
 	end
-	
+
+	if ( !util.IsValidModel( mdl ) || !util.IsValidProp( mdl ) ) then return false end
 	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
 
 	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = Angle( 0, 0, 0 ) } )
-	
+
 	local CurPos = lamp:GetPos()
 	local NearestPoint = lamp:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
 	local LampOffset = CurPos - NearestPoint
-	
+
 	lamp:SetPos( trace.HitPos + LampOffset )
-	
+
 	undo.Create( "Lamp" )
 		undo.AddEntity( lamp )
 		undo.SetPlayer( self:GetOwner() )
@@ -90,7 +91,7 @@ function TOOL:RightClick( trace )
 
 	if ( !IsValid( trace.Entity ) || trace.Entity:GetClass() != "gmod_lamp" ) then return false end
 	if ( CLIENT ) then return true end
-	
+
 	local ent = trace.Entity
 	local pl = self:GetOwner()
 
@@ -98,13 +99,13 @@ function TOOL:RightClick( trace )
 	pl:ConCommand( "lamp_distance " .. ent:GetDistance() )
 	pl:ConCommand( "lamp_brightness " .. ent:GetBrightness() )
 	pl:ConCommand( "lamp_texture " .. ent:GetFlashlightTexture() )
-	
+
 	if ( ent:GetToggle() ) then
 		pl:ConCommand( "lamp_toggle 1" )
 	else
 		pl:ConCommand( "lamp_toggle 0" )
 	end
-	
+
 	local clr = ent:GetColor()
 	pl:ConCommand( "lamp_r " .. clr.r )
 	pl:ConCommand( "lamp_g " .. clr.g )
@@ -116,16 +117,15 @@ end
 
 if ( SERVER ) then
 
-	function MakeLamp( pl, r, g, b, KeyDown, toggle, Texture, Model, fov, distance, brightness, on, Data )
-	
+	function MakeLamp( pl, r, g, b, KeyDown, toggle, texture, model, fov, distance, brightness, on, Data )
+
 		if ( IsValid( pl ) && !pl:CheckLimit( "lamps" ) ) then return false end
-	
+
 		local lamp = ents.Create( "gmod_lamp" )
-		
 		if ( !IsValid( lamp ) ) then return end
 
-		lamp:SetModel( Model )
-		lamp:SetFlashlightTexture( Texture )
+		lamp:SetModel( model )
+		lamp:SetFlashlightTexture( texture )
 		lamp:SetLightFOV( fov )
 		lamp:SetColor( Color( r, g, b, 255 ) )
 		lamp:SetDistance( distance )
@@ -134,19 +134,19 @@ if ( SERVER ) then
 		lamp:SetToggle( !toggle )
 
 		duplicator.DoGeneric( lamp, Data )
-	
+
 		lamp:Spawn()
 
 		duplicator.DoGenericPhysics( lamp, pl, Data )
-		
+
 		lamp:SetPlayer( pl )
-	
+
 		if ( IsValid( pl ) ) then
 			pl:AddCount( "lamps", lamp )
 			pl:AddCleanup( "lamps", lamp )
 		end
-		
-		lamp.Texture = Texture
+
+		lamp.Texture = texture
 		lamp.KeyDown = KeyDown
 		lamp.fov = fov
 		lamp.distance = distance
@@ -157,14 +157,14 @@ if ( SERVER ) then
 
 		lamp.NumDown = numpad.OnDown( pl, KeyDown, "LampToggle", lamp, 1 )
 		lamp.NumUp = numpad.OnUp( pl, KeyDown, "LampToggle", lamp, 0 )
-		
+
 		return lamp
 
 	end
 	duplicator.RegisterEntityClass( "gmod_lamp", MakeLamp, "r", "g", "b", "KeyDown", "Toggle", "Texture", "Model", "fov", "distance", "brightness", "on", "Data" )
 
 	local function Toggle( pl, ent, onoff )
-	
+
 		if ( !IsValid( ent ) ) then return false end
 		if ( !ent:GetToggle() ) then ent:Switch( onoff == 1 ) return end
 
@@ -176,47 +176,46 @@ if ( SERVER ) then
 		end
 
 		if ( onoff == 0 ) then return end
-		
+
 		return ent:Toggle()
-		
+
 	end
 	numpad.Register( "LampToggle", Toggle )
-	
+
 end
 
-function TOOL:UpdateGhostLamp( ent, player )
+function TOOL:UpdateGhostLamp( ent, ply )
 
 	if ( !IsValid( ent ) ) then return end
-	
-	local tr = util.GetPlayerTrace( player )
-	local trace	= util.TraceLine( tr )
-	if ( !trace.Hit ) then return end
-	
-	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_lamp" ) then
-	
+
+	local trace = ply:GetEyeTrace()
+	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_lamp" ) ) then
+
 		ent:SetNoDraw( true )
 		return
-		
+
 	end
 
 	local CurPos = ent:GetPos()
 	local NearestPoint = ent:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
 	local LampOffset = CurPos - NearestPoint
-	
+
 	ent:SetPos( trace.HitPos + LampOffset )
-	
+
 	ent:SetNoDraw( false )
-	
+
 end
 
 function TOOL:Think()
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
-		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+	local mdl = self:GetClientInfo( "model" )
+
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
+		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 	end
-	
+
 	self:UpdateGhostLamp( self.GhostEntity, self:GetOwner() )
-	
+
 end
 
 local ConVarsDefault = TOOL:BuildConVarList()
@@ -235,15 +234,16 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Checkbox", { Label = "#tool.lamp.toggle", Command = "lamp_toggle" } )
 
-	local MatSelect = CPanel:MatSelect( "lamp_texture", nil, true, 0.33, 0.33 )
-	
+	local MatSelect = CPanel:MatSelect( "lamp_texture", nil, false, 0.33, 0.33 )
+	MatSelect.Height = 4
+
 	for k, v in pairs( list.Get( "LampTextures" ) ) do
 		MatSelect:AddMaterial( v.Name or k, k )
 	end
 
 	CPanel:AddControl( "Color", { Label = "#tool.lamp.color", Red = "lamp_r", Green = "lamp_g", Blue = "lamp_b" } )
-	
-	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model", ConVar = "lamp_model", Height = 3, Models = list.Get( "LampModels" ) } )
+
+	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model", ConVar = "lamp_model", Height = 2, Models = list.Get( "LampModels" ) } )
 end
 
 list.Set( "LampTextures", "effects/flashlight001", { Name = "#lamptexture.default" } )

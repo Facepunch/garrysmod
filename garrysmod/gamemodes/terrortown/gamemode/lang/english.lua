@@ -249,19 +249,19 @@ L.set_tips      = "Show gameplay tips at the bottom of the screen while spectati
 L.set_startpopup = "Start of round info popup duration"
 L.set_startpopup_tip = "When the round starts, a small popup appears at the bottom of your screen for a few seconds. Change the time it displays for here."
 
-L.set_cross_opacity = "Ironsight crosshair opacity"
-L.set_cross_disable = "Disable crosshair completely"
-L.set_minimal_id    = "Minimalist Target ID under crosshair (no karma text, hints, etc)"
-L.set_healthlabel   = "Show health status label on health bar"
-L.set_lowsights     = "Lower weapon when using ironsights"
-L.set_lowsights_tip = "Enable to position the weapon model lower on the screen while using ironsights. This will make it easier to see your target, but it will look less realistic."
-L.set_fastsw        = "Fast weapon switch"
-L.set_fastsw_tip    = "Enable to cycle through weapons without having to click again to use weapon. Enable show menu to show switcher menu."
-L.set_fastsw_menu   = "Enable menu with fast weapon switch"
-L.set_fastsw_tip    = "When fast weapons switch is enabled, the menu switcher menu will popup."
-L.set_wswitch       = "Disable weapon switch menu auto-closing"
-L.set_wswitch_tip   = "By default the weapon switcher automatically closes a few seconds after you last scroll. Enable this to make it stay up."
-L.set_cues          = "Play sound cue when a round begins or ends"
+L.set_cross_opacity   = "Ironsight crosshair opacity"
+L.set_cross_disable   = "Disable crosshair completely"
+L.set_minimal_id      = "Minimalist Target ID under crosshair (no karma text, hints, etc)"
+L.set_healthlabel     = "Show health status label on health bar"
+L.set_lowsights       = "Lower weapon when using ironsights"
+L.set_lowsights_tip   = "Enable to position the weapon model lower on the screen while using ironsights. This will make it easier to see your target, but it will look less realistic."
+L.set_fastsw          = "Fast weapon switch"
+L.set_fastsw_tip      = "Enable to cycle through weapons without having to click again to use weapon. Enable show menu to show switcher menu."
+L.set_fastsw_menu     = "Enable menu with fast weapon switch"
+L.set_fastswmenu_tip  = "When fast weapons switch is enabled, the menu switcher menu will popup."
+L.set_wswitch         = "Disable weapon switch menu auto-closing"
+L.set_wswitch_tip     = "By default the weapon switcher automatically closes a few seconds after you last scroll. Enable this to make it stay up."
+L.set_cues            = "Play sound cue when a round begins or ends"
 
 
 L.set_title_play    = "Gameplay settings"
@@ -607,6 +607,7 @@ L.radar_hud    = "Radar ready for next scan in: {time}"
 -- Spectator muting of living/dead
 L.mute_living  = "Living players muted"
 L.mute_specs   = "Spectators muted"
+L.mute_all     = "All muted"
 L.mute_off     = "None muted"
 
 -- Spectators and prop possession
@@ -792,7 +793,7 @@ L.col_total  = "Total points"
 L.something      = "something"
 
 -- Kill events
-L.ev_blowup      = "{victim} blew themself up"
+L.ev_blowup      = "{victim} blew themselves up"
 L.ev_blowup_trap = "{victim} was blown up by {trap}"
 
 L.ev_tele_self   = "{victim} telefragged themselves"
@@ -851,7 +852,7 @@ L.aw_sui1_title = "Suicide Cult Leader"
 L.aw_sui1_text  = "showed the other suiciders how to do it by being the first to go."
 
 L.aw_sui2_title = "Lonely and Depressed"
-L.aw_sui2_text  = "was the only one who killed themself."
+L.aw_sui2_text  = "was the only one who killed themselves."
 
 L.aw_exp1_title = "Explosives Research Grant"
 L.aw_exp1_text  = "was recognized for their research on explosions. {num} test subjects helped out."
