@@ -56,10 +56,9 @@ function ENT:Explode(tr)
       self:Remove()
    else
       local spos = self:GetPos()
-      local trs = util.TraceLine({start=spos + Vector(0,0,64), endpos=spos + Vector(0,0,-128), filter=self})
-      util.Decal("Scorch", trs.HitPos + trs.HitNormal, trs.HitPos - trs.HitNormal)      
+      local trs = util.TraceLine({start = spos + Vector(0,0,64), endpos = spos + Vector(0,0,-128), filter = self})
+      util.Decal("Scorch", trs.HitPos + trs.HitNormal, trs.HitPos - trs.HitNormal)
 
       self:SetDetonateExact(0)
    end
 end
-

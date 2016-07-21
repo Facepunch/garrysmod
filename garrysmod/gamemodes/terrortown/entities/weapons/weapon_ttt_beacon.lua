@@ -20,9 +20,9 @@ if CLIENT then
    SWEP.ViewModelFOV        = 10
 
    SWEP.EquipMenuData = {
-      type="Weapon",
-      model="models/props_lab/reciever01b.mdl",
-      desc="Broadcasts a location to everyone.\n\nUse to warn or group innocents."
+      type = "Weapon",
+      model = "models/props_lab/reciever01b.mdl",
+      desc = "Broadcasts a location to everyone.\n\nUse to warn or group innocents."
    };
 
    SWEP.Icon                = "vgui/ttt/icon_beacon"
@@ -91,7 +91,7 @@ function SWEP:BeaconDrop()
       local vsrc = ply:GetShootPos()
       local vang = ply:GetAimVector()
       local vvel = ply:GetVelocity()
-      
+
       local vthrow = vvel + vang * 200
 
       local beacon = ents.Create("ttt_beacon")
@@ -103,7 +103,7 @@ function SWEP:BeaconDrop()
          beacon.fingerprints = self.fingerprints
 
          beacon:PointAtEntity(ply)
-         
+
          local ang = beacon:GetAngles()
          ang:RotateAroundAxis(ang:Right(), 90)
          beacon:SetAngles(ang)
@@ -112,7 +112,7 @@ function SWEP:BeaconDrop()
          local phys = beacon:GetPhysicsObject()
          if IsValid(phys) then
             phys:SetVelocity(vthrow)
-         end   
+         end
 
          self:PlacedBeacon()
       end
@@ -131,14 +131,14 @@ function SWEP:BeaconStick()
       local ignore = {ply, self}
       local spos = ply:GetShootPos()
       local epos = spos + ply:GetAimVector() * 80
-      local tr = util.TraceLine({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID})
+      local tr = util.TraceLine({start = spos, endpos = epos, filter = ignore, mask = MASK_SOLID})
 
       if tr.HitWorld then
          local beacon = ents.Create("ttt_beacon")
          if IsValid(beacon) then
             beacon:PointAtEntity(ply)
 
-            local tr_ent = util.TraceEntity({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID}, beacon)
+            local tr_ent = util.TraceEntity({start = spos, endpos = epos, filter = ignore, mask = MASK_SOLID}, beacon)
 
             if tr_ent.HitWorld then
 
@@ -151,7 +151,7 @@ function SWEP:BeaconStick()
                beacon:SetAngles(ang)
                beacon:SetOwner(ply)
                beacon:Spawn()
-               
+
                local phys = beacon:GetPhysicsObject()
                if IsValid(phys) then
                   phys:EnableMotion(false)
@@ -201,7 +201,7 @@ function SWEP:OnRemove()
 end
 
 if CLIENT then
-   local hudtxt = {text="Click to place the beacon", font="TabLarge", xalign=TEXT_ALIGN_RIGHT}
+   local hudtxt = {text = "Click to place the beacon", font = "TabLarge", xalign = TEXT_ALIGN_RIGHT}
    function SWEP:DrawHUD()
       hudtxt.pos = {ScrW() - 80, ScrH() - 80}
       draw.Text(hudtxt)

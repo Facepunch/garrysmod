@@ -10,9 +10,9 @@ function ENT:KeyValue(key, value)
 end
 
 local function VectorInside(vec, mins, maxs)
-   return (vec.x > mins.x and vec.x < maxs.x
+   return vec.x > mins.x and vec.x < maxs.x
            and vec.y > mins.y and vec.y < maxs.y
-           and vec.z > mins.z and vec.z < maxs.z)
+           and vec.z > mins.z and vec.z < maxs.z
 end
 
 -- We use stuff from weaponry.lua here, like weapon types
@@ -47,8 +47,8 @@ local function HasAny(ply)
 end
 
 local function HasNamed(name)
-   return function(ply) 
-             return ply:HasWeapon(name) 
+   return function(ply)
+             return ply:HasWeapon(name)
           end
 end
 
@@ -73,7 +73,7 @@ function ENT:TestWeapons(weptype)
    local maxs = self:LocalToWorld(self:OBBMaxs())
 
    local check = self:GetWeaponChecker(weptype)
-   
+
    if check == nil then
       ErrorNoHalt("ttt_weapon_check: invalid parameter\n")
       return 0
@@ -83,10 +83,8 @@ function ENT:TestWeapons(weptype)
       if IsValid(ply) and ply:IsTerror() then
          local pos = ply:GetPos()
          local center = ply:LocalToWorld(ply:OBBCenter())
-         if VectorInside(pos, mins, maxs) or VectorInside(center, mins, maxs) then
-            if check(ply) then
-               return 1
-            end
+         if VectorInside(pos, mins, maxs) or VectorInside(center, mins, maxs) and check(ply) then
+            return 1
          end
       end
    end
@@ -117,5 +115,3 @@ function ENT:AcceptInput(name, activator, caller, data)
       return true
    end
 end
-
-

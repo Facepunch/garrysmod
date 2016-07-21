@@ -95,7 +95,7 @@ function SWEP:DropDevice()
       local vsrc = ply:GetShootPos()
       local vang = ply:GetAimVector()
       local vvel = ply:GetVelocity()
-      
+
       local vthrow = vvel + vang * 200
 
       cse = ents.Create("ttt_cse_proj")
@@ -129,5 +129,3 @@ if CLIENT then
       return self.BaseClass.Initialize(self)
    end
 end
-
-

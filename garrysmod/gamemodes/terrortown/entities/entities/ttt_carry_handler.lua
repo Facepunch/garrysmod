@@ -12,7 +12,7 @@ ENT.Owner = nil
 
 function ENT:Initialize()
    if SERVER and IsValid(self.Carried) then
-      
+
 --      self:SetModel("models/weapons/w_bugbait.mdl")
       self:SetModel(self.Carried:GetModel())
 --      self:SetSkin(self.Carried:GetSkin())
@@ -74,7 +74,7 @@ function ENT:OnRemove()
 --      self.Carried:SetNoDraw(false)
 --      self.Carried:SetSolid(SOLID_VPHYSICS)
       self.Carried:SetMoveType(MOVETYPE_VPHYSICS)
-      
+
       local carphys = self.Carried:GetPhysicsObject()
       if IsValid(carphys) then
          carphys:SetDamping(0,0)

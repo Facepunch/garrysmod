@@ -25,7 +25,7 @@ if CLIENT then
       local em = ParticleEmitter(center)
 
       local r = self:GetRadius()
-      for i=1, 20 do
+      for i = 1, 20 do
          local prpos = VectorRand() * r
          prpos.z = prpos.z + 32
          local p = em:Add(table.Random(smokeparticles), center + prpos)
@@ -36,7 +36,7 @@ if CLIENT then
             p:SetEndAlpha(200)
             p:SetVelocity(VectorRand() * math.Rand(900, 1300))
             p:SetLifeTime(0)
-            
+
             p:SetDieTime(math.Rand(50, 70))
 
             p:SetStartSize(math.random(140, 150))
@@ -66,13 +66,11 @@ function ENT:Explode(tr)
          self:SetPos(tr.HitPos + tr.HitNormal * 0.6)
       end
 
-      local pos = self:GetPos()
-
       self:Remove()
    else
       local spos = self:GetPos()
-      local trs = util.TraceLine({start=spos + Vector(0,0,64), endpos=spos + Vector(0,0,-128), filter=self})
-      util.Decal("SmallScorch", trs.HitPos + trs.HitNormal, trs.HitPos - trs.HitNormal)      
+      local trs = util.TraceLine({start = spos + Vector(0,0,64), endpos = spos + Vector(0,0,-128), filter = self})
+      util.Decal("SmallScorch", trs.HitPos + trs.HitNormal, trs.HitPos - trs.HitNormal)
 
       self:SetDetonateExact(0)
 

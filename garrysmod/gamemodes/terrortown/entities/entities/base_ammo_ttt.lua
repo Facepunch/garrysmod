@@ -57,7 +57,7 @@ function ENT:PlayerCanPickup(ply)
    local spos = phys:IsValid() and phys:GetPos() or ent:OBBCenter()
    local epos = ply:GetShootPos() -- equiv to EyePos in SDK
 
-   local tr = util.TraceLine({start=spos, endpos=epos, filter={ply, ent}, mask=MASK_SOLID})
+   local tr = util.TraceLine({start = spos, endpos = epos, filter = {ply, ent}, mask = MASK_SOLID})
 
    -- can pickup if trace was not stopped
    return tr.Fraction == 1.0
@@ -86,21 +86,19 @@ function ENT:CheckForWeapon(ply)
 end
 
 function ENT:Touch(ent)
-   if SERVER and self.taken != true then
-      if (ent:IsValid() and ent:IsPlayer() and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent)) then
+   if SERVER and self.taken != true and (ent:IsValid() and ent:IsPlayer() and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent)) then
 
-         local ammo = ent:GetAmmoCount(self.AmmoType)
-         -- need clipmax info and room for at least 1/4th
-         if self.AmmoMax >= (ammo + math.ceil(self.AmmoAmount * 0.25)) then
-            local given = self.AmmoAmount
-            given = math.min(given, self.AmmoMax - ammo)
-            ent:GiveAmmo( given, self.AmmoType)
+    local ammo = ent:GetAmmoCount(self.AmmoType)
+    -- need clipmax info and room for at least 1/4th
+    if self.AmmoMax >= (ammo + math.ceil(self.AmmoAmount * 0.25)) then
+      local given = self.AmmoAmount
+      given = math.min(given, self.AmmoMax - ammo)
+      ent:GiveAmmo( given, self.AmmoType)
 
-            self:Remove()
+      self:Remove()
 
-            -- just in case remove does not happen soon enough
-            self.taken = true
-         end
+      -- just in case remove does not happen soon enough
+      self.taken = true
       end
    end
 end
@@ -118,4 +116,3 @@ if SERVER then
       end
    end
 end
-

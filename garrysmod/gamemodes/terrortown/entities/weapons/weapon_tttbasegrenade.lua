@@ -147,7 +147,7 @@ function SWEP:Throw()
       self.was_thrown = true
 
       local ang = ply:EyeAngles()
-      local src = ply:GetPos() + (ply:Crouching() and ply:GetViewOffsetDucked() or ply:GetViewOffset())+ (ang:Forward() * 8) + (ang:Right() * 10)
+      local src = ply:GetPos() + (ply:Crouching() and ply:GetViewOffsetDucked() or ply:GetViewOffset()) + (ang:Forward() * 8) + (ang:Right() * 10)
       local target = ply:GetEyeTraceNoCursor().HitPos
       local tang = (target-src):Angle() -- A target angle to actually throw the grenade to the crosshair instead of fowards
       -- Makes the grenade go upgwards
@@ -157,7 +157,7 @@ function SWEP:Throw()
          tang.p = 360 - tang.p
          tang.p = -10 + tang.p * -((90 + 10) / 90)
       end
-      tang.p=math.Clamp(tang.p,-90,90) -- Makes the grenade not go backwards :/
+      tang.p = math.Clamp(tang.p,-90,90) -- Makes the grenade not go backwards :/
       local vel = math.min(800, (90 - tang.p) * 6)
       local thr = tang:Forward() * vel + ply:GetVelocity()
       self:CreateGrenade(src, Angle(0,0,0), thr, Vector(600, math.random(-1200, 1200), 0), ply)

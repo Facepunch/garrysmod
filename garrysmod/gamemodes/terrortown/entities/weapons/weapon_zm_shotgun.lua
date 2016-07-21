@@ -56,11 +56,8 @@ function SWEP:Reload()
 
    if not IsFirstTimePredicted() then return end
 
-   if self:Clip1() < self.Primary.ClipSize and self.Owner:GetAmmoCount( self.Primary.Ammo ) > 0 then
-
-      if self:StartReload() then
-         return
-      end
+   if self:Clip1() < self.Primary.ClipSize and self.Owner:GetAmmoCount( self.Primary.Ammo ) > 0 and self:StartReload() then
+      return
    end
 
 end
@@ -172,7 +169,7 @@ function SWEP:GetHeadshotMultiplier(victim, dmginfo)
    local d = math.max(0, dist - 140)
 
    -- decay from 3.1 to 1 slowly as distance increases
-   return 1 + math.max(0, (2.1 - 0.002 * (d ^ 1.25)))
+   return 1 + math.max(0, 2.1 - 0.002 * (d ^ 1.25))
 end
 
 function SWEP:SecondaryAttack()
