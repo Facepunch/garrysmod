@@ -303,16 +303,8 @@ Verringere den Schaden durch Kugeln um 30%.
 Standardausrüstung für Detektive.]]
 
 L.item_radar      = "Radar"
-L.item_radar_desc = [[
-Dies erlaubt dir Lebenszeichen zu scannen.
-
-Es startet automatisch beim Kauf. Stelle es im Radar Reiter dieses Menüs ein.]]
 
 L.item_disg       = "Tarnung"
-L.item_disg_desc  = [[
-Versteckt deine ID. Vermeidet außerdem, dass Du die Person bist, die als letztes vom Opfer gesehen wurde.
-
-Schalte es ein oder aus indem du den Tarnungsreiter dieses Menüs anklickst oder drücke Enter auf dem Numpad.]]
 
 -- C4
 L.c4_hint         = "Drücke {usekey} zum scharf stellen oder entschärfen."
@@ -364,42 +356,18 @@ L.decoy_broken    = "Deine Attrappe wurde zerstört!"
 
 L.decoy_help_pri  = "{primaryfire} platziert die Attrappe."
 
-L.decoy_desc      = [[
-Zeigt Detektiven ein gefälschtes Radar-Signal
-und verursacht, dass der DNA Scanner den
-Ort der Attrappe zeigt, wenn sie nach deiner
-DNA suchen.]]
-
 -- Defuser
 L.defuser_name    = "Entschärfer"
 L.defuser_help    = "{primaryfire} entschärft anvisiertes C4."
 
-L.defuser_desc    = [[
-Entschärft sofort eine C4 Bombe.
-
-Unbegrenzt nutzbar. C4 wird leichter zu entdecken sein,
-wenn du das bei dir trägst.]]
-
 -- Flare gun
 L.flare_name      = "Leuchtkanone"
-L.flare_desc      = [[
-Kann benutzt werden, um Leichen zu verbrennen, 
-damit sie nie gefunden werden können. Begrenzte Munition.
-
-Das Verbrennen einer Leiche macht ein ganz bestimmtes
-Geräusch.]]
 
 -- Health station
 L.hstation_name   = "Gesundheits Station"
 L.hstation_hint   = "Drücke {usekey} um Leben zu erhalten. Ladung: {num}."
 L.hstation_broken = "Deine Gesundheits Station wurde zerstört!"
 L.hstation_help   = "{primaryfire} platziert die Gesundheits Station."
-
-L.hstation_desc   = [[
-Ermöglicht bei Platzierung, dass sich Spieler heilen können.
-
-Langsame Wiederaufladung. Jeder kann sie nutzen und sie kann beschädigt werden. 
-Kann nach DNA Spuren ihrer Benutzer untersucht werden.]]
 
 -- Knife
 L.knife_name      = "Messer"
@@ -431,11 +399,6 @@ Geräusche im Radio Reiter dieses Menüs ab.]]
 -- Silenced pistol
 L.sipistol_name   = "Schallgedämpfte Pistole"
 
-L.sipistol_desc   = [[
-Handfeuerwaffe mit geringer Lautstärke, nutzt normale Pistolenmunition.
-
-Opfer schreien nicht, wenn sie damit getötet werden.]]
-
 -- Newton launcher
 L.newton_name     = "Newton Werfer"
 
@@ -446,12 +409,6 @@ Unbegrenzt Munition, aber langsame Schussfolge.]]
 
 -- Binoculars
 L.binoc_name      = "Ferngläser"
-L.binoc_desc      = [[
-Zoom an eine Leiche ran um sie zu identifizieren
-aus einer großen Entfernung.
-
-Unbegrenzt nutzbar, aber das Identifizieren dauert
-einige Sekunden.]]
 
 L.binoc_help_pri  = "{primaryfire} identifiziert einen Körpery."
 L.binoc_help_sec  = "{secondaryfire} ändert Zoom-Level."
@@ -527,11 +484,6 @@ L.tele_no_mark_crouch = "Kann keine Teleportstelle markieren während man kniet!
 
 L.tele_help_pri   = "{primaryfire} teleportiert dich zur markierten Stelle."
 L.tele_help_sec   = "{secondaryfire} markiert momentane Position."
-
-L.tele_desc       = [[
-Teleportiert dich zu einer zuvor markierten Stelle.
-
-Teleportieren macht Geräusche und die Anzahl der Benutzungen ist begrenzt.]]
 
 -- Ammo names, shown when picked up
 L.ammo_pistol     = "9mm Munition"
@@ -1047,3 +999,60 @@ L.set_cross_size = "Fadenkreuz Größe"
 
 -- 5-25-15
 L.hat_retrieve = "Du hast den Hut eines Detektivs aufgehoben."
+
+-- ?-??-16
+L.item_radar_desc = [[
+ Dies erlaubt dir Lebenszeichen zu scannen.
+ Es startet automatisch beim Kauf.
+ Stelle es im Radar Reiter dieses Menüs ein.]]
+ 
+L.item_disg_desc  = [[
+ Versteckt deine ID. Vermeidet außerdem, dass Du die
+ Person bist, die als letztes vom Opfer gesehen wurde.
+ 
+ Schalte es im Tarnungs Reiter ein oder aus
+ oder drücke Enter auf dem Numpad.]]
+
+L.decoy_desc      = [[
+ Zeigt Detektiven ein gefälschtes Radar-Signal
+ und bewirkt, dass der DNA Scanner den
+ Ort der Attrappe zeigt, wenn sie nach deiner
+ DNA suchen.]]
+ 
+L.defuser_desc    = [[
+ Entschärft sofort eine C4 Bombe.
+ 
+ Unbegrenzt nutzbar. C4 wird leichter zu entdecken
+ sein, wenn du das bei dir trägst.]]
+ 
+L.flare_desc      = [[
+ Kann benutzt werden, um Leichen zu verbrennen,
+ damit sie nie gefunden werden können.
+ Begrenzte Munition.
+ Das Verbrennen einer Leiche macht ein ganz
+ bestimmtes Geräusch.]]
+ 
+L.hstation_desc   = [[
+ Ermöglicht bei Platzierung, dass sich jeder Spieler
+ an ihr heilen kann. Langsame Wiederaufladung,
+ kann beschädigt werden.
+ Am Gerät sind DNA Spuren ihrer Benutzer zu finden.]]
+
+L.sipistol_desc   = [[
+ Handfeuerwaffe mit geringer Lautstärke,
+ nutzt normale Pistolenmunition.
+ 
+ Opfer schreien nicht, wenn sie damit getötet werden.]]
+ 
+L.binoc_desc      = [[
+ Zoom an eine Leiche ran um sie aus einer
+ großen Entfernung zu identifizieren.
+ 
+ Unbegrenzt nutzbar, aber das Identifizieren dauert
+ inige Sekunden.]]
+
+L.tele_desc       = [[
+ Teleportiert dich zu einer zuvor markierten Stelle.
+
+ Teleportieren macht Geräusche und die Anzahl der
+ Benutzungen ist begrenzt.]]
