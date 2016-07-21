@@ -453,7 +453,6 @@ end
 
 local function C4ConfigHook()
    local idx = net.ReadUInt(16)
-
    local bomb = ents.GetByIndex(idx)
    if IsValid(bomb) then
       if not bomb:GetArmed() then
@@ -467,8 +466,6 @@ net.Receive("TTT_C4Config", C4ConfigHook)
 
 local function C4DisarmResultHook()
    local idx = net.ReadUInt(16)
-   local result = {}
-
    local correct = net.ReadBit() == 1
 
    local bomb = ents.GetByIndex(idx)
