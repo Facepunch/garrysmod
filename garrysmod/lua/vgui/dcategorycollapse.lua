@@ -166,13 +166,20 @@ function PANEL:SetContents( pContents )
 	self.Contents = pContents
 	self.Contents:SetParent( self )
 	self.Contents:Dock( FILL )
-	self:InvalidateLayout( true )
 
 	if ( !self:GetExpanded() ) then
 
 		self.OldHeight = self:GetTall()
 
+	elseif ( self:GetExpanded() && IsValid( self.Contents ) && self.Contents:GetTall() < 1 ) then
+
+		self.Contents:SizeToChildren( false, true )
+		self.OldHeight = self.Contents:GetTall()
+		self:SetTall( self.OldHeight )
+
 	end
+
+	self:InvalidateLayout( true )
 
 end
 
@@ -180,7 +187,7 @@ function PANEL:SetExpanded( expanded )
 
 	self.m_bSizeExpanded = tobool( expanded )
 
-	if ( !self.m_bSizeExpanded ) then
+	if ( !self:GetExpanded() ) then
 		if ( !self.animSlide.Finished && self.OldHeight ) then return end
 		self.OldHeight = self:GetTall()
 	end
@@ -213,7 +220,7 @@ end
 
 function PANEL:DoExpansion( b )
 
-	if ( self.m_bSizeExpanded == b ) then return end
+	if ( self:GetExpanded() == b ) then return end
 	self:Toggle()
 
 end
@@ -233,10 +240,12 @@ function PANEL:PerformLayout()
 
 	if ( self:GetExpanded() ) then
 
+        if ( IsValid( self.Contents ) && #self.Contents:GetChildren() > 0 ) then self.Contents:SizeToChildren( false, true ) end
 		self:SizeToChildren( false, true )
 
 	else
 
+		if ( IsValid( self.Contents ) && !self.OldHeight ) then self.OldHeight = self.Contents:GetTall() end
 		self:SetTall( self.Header:GetTall() )
 
 	end
@@ -273,7 +282,7 @@ function PANEL:AnimSlide( anim, delta, data )
 		end
 
 		if ( self:GetExpanded() ) then
-			data.To = self.OldHeight
+			data.To = math.max( self.OldHeight, self:GetTall() )
 		else
 			data.To = self:GetTall()
 		end
