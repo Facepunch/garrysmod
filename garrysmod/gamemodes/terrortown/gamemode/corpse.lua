@@ -47,7 +47,7 @@ local function IdentifyBody(ply, rag)
 
    local finder = ply:Nick()
    local nick = CORPSE.GetPlayerNick(rag, "")
-   local traitor = (rag.was_role == ROLE_TRAITOR)
+   local traitor = rag.was_role == ROLE_TRAITOR
 
    -- Announce body
    if bodyfound:GetBool() and not CORPSE.GetFound(rag, false) then
@@ -81,10 +81,6 @@ local function IdentifyBody(ply, rag)
       end
       hook.Call( "TTTBodyFound", GAMEMODE, ply, deadply, rag )
       CORPSE.SetFound(rag, true)
-   else
-      -- re-set because nwvars are unreliable
-      --CORPSE.SetFound(rag, true)
-      --CORPSE.SetPlayerNick(rag, nick)
    end
 
    -- Handle kill list
@@ -125,10 +121,8 @@ local function IdentifyCommand(ply, cmd, args)
    ply.search_id = nil
 
    local rag = Entity(eidx)
-   if IsValid(rag) and rag:GetPos():Distance(ply:GetPos()) < 128 then
-      if not CORPSE.GetFound(rag, false) then
-         IdentifyBody(ply, rag)
-      end
+   if IsValid(rag) and rag:GetPos():Distance(ply:GetPos()) < 128 and not CORPSE.GetFound(rag, false) then
+      IdentifyBody(ply, rag)
    end
 end
 concommand.Add("ttt_confirm_death", IdentifyCommand)
@@ -180,7 +174,6 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
 
    -- init a heap of data we'll be sending
    local nick  = CORPSE.GetPlayerNick(rag)
-   local traitor = (rag.was_role == ROLE_TRAITOR)
    local role  = rag.was_role
    local eq    = rag.equipment or EQUIP_NONE
    local c4    = rag.bomb_wire or -1
@@ -296,13 +289,13 @@ local function GetKillerSample(victim, attacker, dmg)
    if IsValid(infl) and infl:IsNPC() then return end
 
    local dist = victim:GetPos():Distance(attacker:GetPos())
-   if dist > GetConVarNumber("ttt_killer_dna_range") then return nil end
+   if dist > GetConVar:GetFloat("ttt_killer_dna_range") then return nil end
 
    local sample = {}
    sample.killer = attacker
    sample.killer_sid = attacker:SteamID()
    sample.victim = victim
-   sample.t      = CurTime() + (-1 * (0.019 * dist)^2 + GetConVarNumber("ttt_killer_dna_basetime"))
+   sample.t      = CurTime() + (-1 * (0.019 * dist) ^ 2 + GetConVar:GetFloat("ttt_killer_dna_basetime"))
 
    return sample
 end
@@ -399,7 +392,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
    local wep = util.WeaponFromDamage(dmginfo)
    rag.dmgwep = IsValid(wep) and wep:GetClass() or ""
 
-   rag.was_headshot = (ply.was_headshot and dmginfo:IsBulletDamage())
+   rag.was_headshot = ply.was_headshot and dmginfo:IsBulletDamage()
    rag.time = CurTime()
    rag.kills = table.Copy(ply.kills)
 
@@ -410,7 +403,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
 
 
    -- position the bones
-   local num = rag:GetPhysicsObjectCount()-1
+   local num = rag:GetPhysicsObjectCount() - 1
    local v = ply:GetVelocity()
 
    -- bullets have a lot of force, which feels better when shooting props,
@@ -419,7 +412,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
       v = v / 5
    end
 
-   for i=0, num do
+   for i = 0, num do
       local bone = rag:GetPhysicsObjectNum(i)
       if IsValid(bone) then
          local bp, ba = ply:GetBonePosition(rag:TranslatePhysBoneToBone(i))

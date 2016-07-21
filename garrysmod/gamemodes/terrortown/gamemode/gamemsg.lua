@@ -93,28 +93,28 @@ CreateConVar("ttt_limit_spectator_chat", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 CreateConVar("ttt_limit_spectator_voice", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 
 function GM:PlayerCanSeePlayersChat(text, team_only, listener, speaker)
-	if (not IsValid(listener)) then return false end
-	if (not IsValid(speaker)) then
-		if isentity(speaker) then
-			return true
-		else
-			return false
-		end
-	end
+   if (not IsValid(listener)) then return false end
+   if (not IsValid(speaker)) then
+   	if isentity(speaker) then
+   		return true
+   	else
+   		return false
+   	end
+   end
 
-	local sTeam = speaker:Team() == TEAM_SPEC
-	local lTeam = listener:Team() == TEAM_SPEC
+   local sTeam = speaker:Team() == TEAM_SPEC
+   local lTeam = listener:Team() == TEAM_SPEC
 
-	if (GetRoundState() != ROUND_ACTIVE) or   -- Round isn't active
-	(not GetConVar("ttt_limit_spectator_chat"):GetBool()) or   -- Spectators can chat freely
-	(not DetectiveMode()) or   -- Mumbling
-	(not sTeam and ((team_only and not speaker:IsSpecial()) or (not team_only))) or   -- If someone alive talks (and not a special role in teamchat's case)
-	(not sTeam and team_only and speaker:GetRole() == listener:GetRole()) or
-	(sTeam and lTeam) then   -- If the speaker and listener are spectators
-	   return true
-	end
+   if (GetRoundState() != ROUND_ACTIVE) or   -- Round isn't active
+   (not GetConVar("ttt_limit_spectator_chat"):GetBool()) or   -- Spectators can chat freely
+   (not DetectiveMode()) or   -- Mumbling
+   (not sTeam and ((team_only and not speaker:IsSpecial()) or (not team_only))) or   -- If someone alive talks (and not a special role in teamchat's case)
+   (not sTeam and team_only and speaker:GetRole() == listener:GetRole()) or
+   (sTeam and lTeam) then   -- If the speaker and listener are spectators
+      return true
+   end
 
-	return false
+   return false
 end
 
 local mumbles = {"mumble", "mm", "hmm", "hum", "mum", "mbm", "mble", "ham", "mammaries", "political situation", "mrmm", "hrm",
@@ -147,8 +147,8 @@ function GM:PlayerSay(ply, text, team_only)
          table.insert(filtered, 1, "[MUMBLED]")
          return table.concat(filtered, " ")
       elseif team_only and not team and ply:IsSpecial() then
-	     RoleChatMsg(ply, ply:GetRole(), text)
-		 return ""
+         RoleChatMsg(ply, ply:GetRole(), text)
+      return ""
       end
    end
 
@@ -207,7 +207,7 @@ function GM:PlayerCanHearPlayersVoice(listener, speaker)
       end
    end
 
-   return true, (loc_voice:GetBool() and GetRoundState() != ROUND_POST)
+   return true, loc_voice:GetBool() and GetRoundState() != ROUND_POST
 end
 
 local function SendTraitorVoiceState(speaker, state)
@@ -229,7 +229,7 @@ local function TraitorGlobalVoice(ply, cmd, args)
    if not #args == 1 then return end
    local state = tonumber(args[1])
 
-   ply.traitor_gvoice = (state == 1)
+   ply.traitor_gvoice = state == 1
 
    SendTraitorVoiceState(ply, ply.traitor_gvoice)
 end
@@ -296,7 +296,7 @@ local function LastWords(ply, cmd, args)
          if last_seen then
             local ent = Entity(last_seen)
             if IsValid(ent) and ent:IsPlayer() and rag and (not rag.lastid) then
-               rag.lastid = {ent=ent, t=CurTime()}
+               rag.lastid = {ent = ent, t = CurTime()}
             end
          end
 

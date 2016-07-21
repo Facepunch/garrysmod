@@ -165,7 +165,7 @@ local function DetectServerPlugin()
       return "ulx"
    elseif evolve and evolve.Ban then
       return "evolve"
-   elseif exsto and exsto.GetPlugin('administration') then
+   elseif exsto and exsto.GetPlugin("administration") then
       return "exsto"
    else
       return "gmod"
@@ -189,7 +189,7 @@ local ban_functions = {
             end,
 
    exsto  = function(p, l, r)
-               local adm = exsto.GetPlugin('administration')
+               local adm = exsto.GetPlugin("administration")
                if adm and adm.Ban then
                   adm:Ban(nil, p, l, r)
                end

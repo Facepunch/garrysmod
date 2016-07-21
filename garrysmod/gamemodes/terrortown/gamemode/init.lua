@@ -172,7 +172,7 @@ function GM:Initialize()
       [OPEN_DOOR] = true,
       [OPEN_ROT] = true,
       [OPEN_BUT] = true,
-      [OPEN_NOTOGGLE]= true
+      [OPEN_NOTOGGLE] = true
    };
 
    -- More map config ent defaults
@@ -210,7 +210,7 @@ function GM:Initialize()
 
    local cstrike = false
    for _, g in pairs(engine.GetGames()) do
-      if g.folder == 'cstrike' then cstrike = true end
+      if g.folder == "cstrike" then cstrike = true end
    end
    if not cstrike then
       ErrorNoHalt("TTT WARNING: CS:S does not appear to be mounted by GMod. Things may break in strange ways. Server admin? Check the TTT readme for help.\n")
@@ -285,12 +285,10 @@ end
 
 -- Used to be in Think/Tick, now in a timer
 function WaitingForPlayersChecker()
-   if GetRoundState() == ROUND_WAIT then
-      if EnoughPlayers() then
-         timer.Create("wait2prep", 1, 1, PrepareRound)
+   if GetRoundState() == ROUND_WAIT and EnoughPlayers() then
+      timer.Create("wait2prep", 1, 1, PrepareRound)
 
-         timer.Stop("waitingforply")
-      end
+      timer.Stop("waitingforply")
    end
 end
 
@@ -337,15 +335,13 @@ local function NameChangeKick()
 
    if GetRoundState() == ROUND_ACTIVE then
       for _, ply in pairs(player.GetHumans()) do
-         if ply.spawn_nick then
-            if ply.has_spawned and ply.spawn_nick != ply:Nick() then
-               local t = GetConVar("ttt_namechange_bantime"):GetInt()
-               local msg = "Changed name during a round"
-               if t > 0 then
-                  ply:KickBan(t, msg)
-               else
-                  ply:Kick(msg)
-               end
+         if ply.spawn_nick and ply.has_spawned and ply.spawn_nick != ply:Nick() then
+            local t = GetConVar("ttt_namechange_bantime"):GetInt()
+            local msg = "Changed name during a round"
+            if t > 0 then
+              ply:KickBan(t, msg)
+            else
+              ply:Kick(msg)
             end
          else
             ply.spawn_nick = ply:Nick()
@@ -921,7 +917,7 @@ function SelectRoles()
    -- traitor, so becoming detective does not mean you lost a chance to be
    -- traitor
    local ds = 0
-   local min_karma = GetConVarNumber("ttt_detective_karma_min") or 0
+   local min_karma = GetConVar:GetFloat("ttt_detective_karma_min") or 0
    while (ds < det_count) and (#choices >= 1) do
 
       -- sometimes we need all remaining choices to be detective to fill the

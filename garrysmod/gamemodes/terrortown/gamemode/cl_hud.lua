@@ -6,8 +6,6 @@ local draw = draw
 local math = math
 local string = string
 
-local GetTranslation = LANG.GetTranslation
-local GetPTranslation = LANG.GetParamTranslation
 local GetLang = LANG.GetUnsafeLanguageTable
 local interp = string.Interp
 
@@ -49,19 +47,19 @@ local Tex_Corner8 = surface.GetTextureID( "gui/corner8" )
 local function RoundedMeter( bs, x, y, w, h, color)
    surface.SetDrawColor(clr(color))
 
-   surface.DrawRect( x+bs, y, w-bs*2, h )
-   surface.DrawRect( x, y+bs, bs, h-bs*2 )
+   surface.DrawRect( x + bs, y, w - bs * 2, h )
+   surface.DrawRect( x, y + bs, bs, h - bs * 2 )
 
    surface.SetTexture( Tex_Corner8 )
-   surface.DrawTexturedRectRotated( x + bs/2 , y + bs/2, bs, bs, 0 )
-   surface.DrawTexturedRectRotated( x + bs/2 , y + h -bs/2, bs, bs, 90 )
+   surface.DrawTexturedRectRotated( x + bs / 2 , y + bs / 2, bs, bs, 0 )
+   surface.DrawTexturedRectRotated( x + bs / 2 , y + h -bs / 2, bs, bs, 90 )
 
    if w > 14 then
-      surface.DrawRect( x+w-bs, y+bs, bs, h-bs*2 )
-      surface.DrawTexturedRectRotated( x + w - bs/2 , y + bs/2, bs, bs, 270 )
-      surface.DrawTexturedRectRotated( x + w - bs/2 , y + h - bs/2, bs, bs, 180 )
+      surface.DrawRect( x + w-bs, y + bs, bs, h - bs * 2 )
+      surface.DrawTexturedRectRotated( x + w - bs / 2 , y + bs / 2, bs, bs, 270 )
+      surface.DrawTexturedRectRotated( x + w - bs / 2 , y + h - bs / 2, bs, bs, 180 )
    else
-      surface.DrawRect( x + math.max(w-bs, bs), y, bs/2, h )
+      surface.DrawRect( x + math.max(w-bs, bs), y, bs / 2, h )
    end
 
 end
@@ -73,7 +71,7 @@ end
 local function PaintBar(x, y, w, h, colors, value)
    -- Background
    -- slightly enlarged to make a subtle border
-   draw.RoundedBox(8, x-1, y-1, w+2, h+2, colors.background)
+   draw.RoundedBox(8, x-1, y-1, w + 2, h + 2, colors.background)
 
    -- Fill
    local width = w * math.Clamp(value, 0, 1)
@@ -128,12 +126,11 @@ local function DrawBg(x, y, width, height, client)
    draw.RoundedBox(8, x, y, tw, th, col)
 end
 
-local sf = surface
 local dr = draw
 
 local function ShadowedText(text, font, x, y, color, xalign, yalign)
 
-   dr.SimpleText(text, font, x+2, y+2, COLOR_BLACK, xalign, yalign)
+   dr.SimpleText(text, font, x + 2, y + 2, COLOR_BLACK, xalign, yalign)
 
    dr.SimpleText(text, font, x, y, color, xalign, yalign)
 end
@@ -146,8 +143,8 @@ local function PunchPaint(client)
    local punch = client:GetNWFloat("specpunches", 0)
 
    local width, height = 200, 25
-   local x = ScrW() / 2 - width/2
-   local y = margin/2 + height
+   local x = ScrW() / 2 - width / 2
+   local y = margin / 2 + height
 
    PaintBar(x, y, width, height, ammo_colors, punch)
 
@@ -222,19 +219,19 @@ local function InfoPaint(client)
    DrawBg(x, y, width, height, client)
 
    local bar_height = 25
-   local bar_width = width - (margin*2)
+   local bar_width = width - (margin * 2)
 
    -- Draw health
    local health = math.max(0, client:Health())
    local health_y = y + margin
 
-   PaintBar(x + margin, health_y, bar_width, bar_height, health_colors, health/100)
+   PaintBar(x + margin, health_y, bar_width, bar_height, health_colors, health / 100)
 
    ShadowedText(tostring(health), "HealthAmmo", bar_width, health_y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT)
 
    if ttt_health_label:GetBool() then
       local health_status = util.HealthToString(health)
-      draw.SimpleText(L[health_status], "TabLarge", x + margin*2, health_y + bar_height/2, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+      draw.SimpleText(L[health_status], "TabLarge", x + margin * 2, health_y + bar_height / 2, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
    end
 
    -- Draw ammo
@@ -242,7 +239,7 @@ local function InfoPaint(client)
       local ammo_clip, ammo_max, ammo_inv = GetAmmo(client)
       if ammo_clip != -1 then
          local ammo_y = health_y + bar_height + margin
-         PaintBar(x+margin, ammo_y, bar_width, bar_height, ammo_colors, ammo_clip/ammo_max)
+         PaintBar(x + margin, ammo_y, bar_width, bar_height, ammo_colors, ammo_clip / ammo_max)
          local text = string.format("%i + %02i", ammo_clip, ammo_inv)
 
          ShadowedText(text, "HealthAmmo", bar_width, ammo_y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT)
@@ -321,7 +318,7 @@ function GM:HUDPaint()
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTargetID" ) then
        hook.Call( "HUDDrawTargetID", GAMEMODE )
    end
-   
+
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTMStack" ) then
        MSTACK:Draw(client)
    end
@@ -337,11 +334,11 @@ function GM:HUDPaint()
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTRadar" ) then
        RADAR:Draw(client)
    end
-   
+
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTButton" ) then
        TBHUD:Draw(client)
    end
-   
+
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTWSwitch" ) then
        WSWITCH:Draw(client)
    end
@@ -349,7 +346,7 @@ function GM:HUDPaint()
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTVoice" ) then
        VOICE.Draw(client)
    end
-   
+
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTDisguise" ) then
        DISGUISE.Draw(client)
    end
@@ -373,4 +370,3 @@ function GM:HUDShouldDraw(name)
 
    return true
 end
-

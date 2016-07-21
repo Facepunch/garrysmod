@@ -1,7 +1,6 @@
 ---- Help screen
 
 local GetTranslation = LANG.GetTranslation
-local GetPTranslation = LANG.GetParamTranslation
 
 CreateConVar("ttt_spectator_mode", "0", FCVAR_ARCHIVE)
 CreateConVar("ttt_mute_team_check", "0")
@@ -23,14 +22,14 @@ function HELPSCRN:Show()
    local dbut = vgui.Create("DButton", dframe)
    local bw, bh = 50, 25
    dbut:SetSize(bw, bh)
-   dbut:SetPos(w - bw - margin, h - bh - margin/2)
+   dbut:SetPos(w - bw - margin, h - bh - margin / 2)
    dbut:SetText(GetTranslation("close"))
    dbut.DoClick = function() dframe:Close() end
 
 
    local dtabs = vgui.Create("DPropertySheet", dframe)
    dtabs:SetPos(margin, margin * 2)
-   dtabs:SetSize(w - margin*2, h - margin*3 - bh)
+   dtabs:SetSize(w - margin * 2, h - margin * 3 - bh)
 
    local padding = dtabs:GetPadding()
 
@@ -92,7 +91,7 @@ function HELPSCRN:Show()
 
    cb = dgui:CheckBox(GetTranslation("set_fastsw"), "ttt_weaponswitcher_fast")
    cb:SetTooltip(GetTranslation("set_fastsw_tip"))
-      
+
    cb = dgui:CheckBox(GetTranslation("set_fastsw_menu"), "ttt_weaponswitcher_displayfast")
    cb:SetTooltip(GetTranslation("set_fastswmenu_tip"))
 
@@ -180,9 +179,6 @@ cvars.AddChangeCallback("ttt_mute_team_check", MuteTeamCallback)
 local imgpath = "vgui/ttt/help/tut0%d"
 local tutorial_pages = 6
 function HELPSCRN:CreateTutorial(parent)
-   local w, h = parent:GetSize()
-   local m = 5
-
    local bg = vgui.Create("ColoredBox", parent)
    bg:StretchToParent(0,0,0,0)
    bg:SetTall(330)

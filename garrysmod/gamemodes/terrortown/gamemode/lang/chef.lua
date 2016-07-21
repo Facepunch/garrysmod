@@ -34,8 +34,7 @@ setmetatable(L,
              {
                 __index = function(t, k)
                              local w = GetFrom(k, "english") or "bork"
-                             
+
                              return gsub(w, "[{}%w]+", "BORK")
                           end
              })
-

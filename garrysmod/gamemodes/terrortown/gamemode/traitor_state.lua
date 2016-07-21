@@ -28,7 +28,7 @@ local function SendRoleListMessage(role, role_ids, ply_or_rf)
       -- list contents
       local num_ids = #role_ids
       net.WriteUInt(num_ids, 8)
-      for i=1, num_ids do
+      for i = 1, num_ids do
          net.WriteUInt(role_ids[i] - 1, 7)
       end
 
@@ -39,10 +39,8 @@ end
 local function SendRoleList(role, ply_or_rf, pred)
    local role_ids = {}
    for k, v in pairs(player.GetAll()) do
-      if v:IsRole(role) then
-         if not pred or (pred and pred(v)) then
-            table.insert(role_ids, v:EntIndex())
-         end
+      if v:IsRole(role) and not pred or (pred and pred(v)) then
+        table.insert(role_ids, v:EntIndex())
       end
    end
 
@@ -180,5 +178,3 @@ local function force_spectate(ply, cmd, arg)
    end
 end
 concommand.Add("ttt_spectate", force_spectate)
-
-

@@ -3,12 +3,12 @@
 
 function ScoreInit()
    return {
-      deaths=0,
-      suicides=0,
-      innos=0,
-      traitors=0,
-      was_traitor=false,
-      bonus=0 -- non-kill points to add
+      deaths      = 0,
+      suicides    = 0,
+      innos       = 0,
+      traitors    = 0,
+      was_traitor = false,
+      bonus       = 0 -- non-kill points to add
    };
 end
 
@@ -62,7 +62,6 @@ function ScoreEventLog(events, scores, traitors, detectives)
       scores[k].was_detective = table.HasValue(detectives, k)
    end
 
-   local tmp = nil
    for k, e in pairs(events) do
       ScoreEvent(e, scores)
    end
@@ -99,11 +98,11 @@ end
 -- Scores were initially calculated as points immediately, but not anymore, so
 -- we can convert them using this fn
 function KillsToPoints(score, was_traitor)
-   return ((score.suicides * -1)
+   return (score.suicides * -1)
            + score.bonus
            + (score.traitors * (was_traitor and -16 or 5))
            + (score.innos * (was_traitor and 1 or -8))
-           + (score.deaths == 0 and 1 or 0)) --effectively 2 due to team bonus
+           + (score.deaths == 0 and 1 or 0) --effectively 2 due to team bonus
                                              --for your own survival
 end
 

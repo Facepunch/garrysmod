@@ -256,7 +256,7 @@ local function TraitorMenuPopup()
 
             slot:SetIconProperties(COLOR_WHITE,
                                    "DefaultBold",
-                                   {opacity=220, offset=1},
+                                   {opacity = 220, offset = 1},
                                    {10, 8})
 
             ic:AddLayer(slot)
@@ -297,8 +297,8 @@ local function TraitorMenuPopup()
 
    local bw, bh = 100, 25
 
-   local dih = h - bh - m*5
-   local diw = w - dlistw - m*6 - 2
+   local dih = h - bh - m * 5
+   local diw = w - dlistw - m * 6 - 2
    local dinfobg = vgui.Create("DPanel", dequip)
    dinfobg:SetPaintBackground(false)
    dinfobg:SetSize(diw, dih)
@@ -313,7 +313,7 @@ local function TraitorMenuPopup()
    for _, k in pairs({"name", "type", "desc"}) do
       dfields[k] = vgui.Create("DLabel", dinfo)
       dfields[k]:SetTooltip(GetTranslation("equip_spec_" .. k))
-      dfields[k]:SetPos(m*3, m*2)
+      dfields[k]:SetPos(m * 3, m * 2)
    end
 
    dfields.name:SetFont("TabLarge")
@@ -325,19 +325,17 @@ local function TraitorMenuPopup()
    dfields.desc:SetContentAlignment(7)
    dfields.desc:MoveBelow(dfields.type, 1)
 
-   local iw, ih = dinfo:GetSize()
-
    local dhelp = vgui.Create("ColoredBox", dinfobg)
    dhelp:SetColor(Color(90, 90, 95))
    dhelp:SetSize(diw, dih - 205)
    dhelp:MoveBelow(dinfo, m)
 
-   local update_preqs = PreqLabels(dhelp, m*3, m*2)
+   local update_preqs = PreqLabels(dhelp, m * 3, m * 2)
 
    dhelp:SizeToContents()
 
    local dconfirm = vgui.Create("DButton", dinfobg)
-   dconfirm:SetPos(0, dih - bh*2)
+   dconfirm:SetPos(0, dih - bh * 2)
    dconfirm:SetSize(bw, bh)
    dconfirm:SetDisabled(true)
    dconfirm:SetText(GetTranslation("equip_confirm"))
@@ -469,7 +467,7 @@ local function ReceiveBought()
 
    ply.bought = {}
    local num = net.ReadUInt(8)
-   for i=1,num do
+   for i = 1,num do
       local s = net.ReadString()
       if s != "" then
          table.insert(ply.bought, s)
