@@ -84,7 +84,7 @@ end
 
 function ToolObj:GetClientNumber( property, default )
 
-	default = default or 0
+	default = tonumber(default) or 0
 	local mode = self:GetMode()
 	return self:GetOwner():GetInfoNum( mode .. "_" .. property, default )
 
