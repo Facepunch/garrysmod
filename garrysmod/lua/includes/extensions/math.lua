@@ -1,15 +1,15 @@
 
 --[[---------------------------------------------------------
-   Name: Dist( low, high )
+   Name: Distance( low, high )
    Desc: Distance between two 2d points
 ------------------------------------------------------------]]
-function math.Dist( x1, y1, x2, y2 )
+function math.Distance( x1, y1, x2, y2 )
 	local xd = x2-x1
 	local yd = y2-y1
 	return math.sqrt( xd*xd + yd*yd )
 end
 
-math.Distance = math.Dist -- alias
+math.Dist = math.Distance -- Backwards compatibility
 
 
 --[[---------------------------------------------------------
