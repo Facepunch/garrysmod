@@ -467,7 +467,7 @@ local function ReceiveBought()
 
    ply.bought = {}
    local num = net.ReadUInt(8)
-   for i = 1,num do
+   for i = 1, num do
       local s = net.ReadString()
       if s != "" then
          table.insert(ply.bought, s)
