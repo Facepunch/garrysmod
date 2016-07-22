@@ -44,7 +44,7 @@ function SWEP:InitializeTools()
 		temp[k] = table.Copy( v )
 		temp[k].SWEP = self
 		temp[k].Owner = self.Owner
-		temp[k].Weapon = self.Weapon
+		temp[k].Weapon = self
 		temp[k]:Init()
 
 	end
@@ -154,7 +154,7 @@ function SWEP:Think()
 		return
 	end
 
-	if ( self.last_mode != self.current_mode ) then
+	if ( self.last_mode ~= self.current_mode ) then
 
 		if ( !self:GetToolObject( self.last_mode ) ) then return end
 

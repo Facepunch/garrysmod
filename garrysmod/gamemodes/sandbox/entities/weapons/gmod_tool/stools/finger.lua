@@ -5,8 +5,6 @@ TOOL.Name = "#tool.finger.name"
 TOOL.RequiresTraceHit = true
 
 local VarsOnHand = 15
-local FingerVars = VarsOnHand * 2
-
 -- Returns true if it has TF2 hands
 local function HasTF2Hands( pEntity )
 	return pEntity:LookupBone( "bip_hand_L" ) != nil
@@ -199,7 +197,7 @@ TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger32" ] = "ring_2_R"
 local TranslateTable_DOG = {}
 TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger0" ] = "Dog_Model.Thumb1_L"
 TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger01" ] = "Dog_Model.Thumb2_L"
-//TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger02" ] = "Dog_Model.Thumb3_L"
+-- TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger02" ] = "Dog_Model.Thumb3_L"
 TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger1" ] = "Dog_Model.Index1_L"
 TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger11" ] = "Dog_Model.Index2_L"
 TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger12" ] = "Dog_Model.Index3_L"
@@ -543,17 +541,11 @@ function TOOL:Think()
 
 	if ( self.NextUpdate && self.NextUpdate > CurTime() ) then return end
 
-	if ( CLIENT ) then
-
-		if ( OldHand != hand || OldEntity != selected ) then
-
+	if CLIENT && OldHand != hand || OldEntity != selected then
 			OldHand = hand
 			OldEntity = selected
 
 			self:RebuildControlPanel( hand )
-
-		end
-
 	end
 
 	if ( !IsValid( selected ) ) then return end
@@ -567,7 +559,7 @@ if ( SERVER ) then return end
 -- Notice the return above.
 -- The rest of this file CLIENT ONLY.
 
-for i=0, VarsOnHand do
+for i = 0, VarsOnHand do
 	TOOL.ClientConVar[ "" .. i ] = "0 0"
 end
 
@@ -616,8 +608,6 @@ function TOOL:DrawHUD()
 
 	if ( !IsValid( selected ) ) then return end
 	if ( selected:IsWorld() ) then return end
-
-	local Bone = nil
 
 	local lefthand, righthand = self:GetHandPositions( selected )
 

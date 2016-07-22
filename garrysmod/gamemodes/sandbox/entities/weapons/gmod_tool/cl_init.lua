@@ -57,7 +57,7 @@ function SWEP:DrawHUD()
 	-- This could probably all suck less than it already does
 
 	local x, y = 50, 40
-	local w, h = 0, 0
+	local h = 0, 0
 
 	local TextTable = {}
 	local QuadTable = {}
@@ -119,7 +119,7 @@ function SWEP:DrawHUD()
 		if ( v.stage && v.stage != self:GetStage() ) then continue end
 		if ( v.op && v.op != self:GetToolObject():GetOperation() ) then continue end
 
-		local txt = "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. v.name
+		local txt = "#tool." .. GetConVar:GetString( "gmod_toolmode" ) .. "." .. v.name
 		if ( v.name == "info" ) then
 			txt = self:GetToolObject():GetHelpText()
 		end
@@ -196,8 +196,6 @@ function SWEP:PrintWeaponInfo( x, y, alpha )
 end
 
 function SWEP:FreezeMovement()
-
-	local mode = self:GetMode()
 
 	if ( !self:GetToolObject() ) then return false end
 

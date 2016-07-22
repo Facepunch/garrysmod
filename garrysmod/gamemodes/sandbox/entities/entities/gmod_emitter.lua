@@ -5,9 +5,6 @@ DEFINE_BASECLASS( "base_gmodentity" )
 ENT.PrintName = "Emitter"
 ENT.RenderGroup = RENDERGROUP_OPAQUE
 
-local matLight = Material( "sprites/light_ignorez" )
-local matBeam = Material( "effects/lamp_beam" )
-
 function ENT:SetupDataTables()
 
 	self:NetworkVar( "Float", 0, "Delay" )

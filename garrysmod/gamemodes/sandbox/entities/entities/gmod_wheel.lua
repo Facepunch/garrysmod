@@ -91,7 +91,7 @@ function ENT:GetMotor()
 	--
 	if ( !IsValid( self.Motor ) ) then
 
-		self.Motor = constraint.FindConstraintEntity( self.Entity, "Motor" )
+		self.Motor = constraint.FindConstraintEntity( self, "Motor" )
 
 	end
 
@@ -185,7 +185,7 @@ function ENT:SetTorque( torque )
 	self.TorqueScale = torque / self.BaseTorque
 
 	local Motor = self:GetMotor()
-	if (!Motor || !Motor:IsValid()) then return end
+	if (!Motor or !Motor:IsValid()) then return end
 	Motor:Fire( "Scale", Motor.direction * Motor.forcescale * self.TorqueScale , 0 )
 
 	self:SetOverlayText( "Torque: " .. math.floor( torque ) )
@@ -204,7 +204,7 @@ function ENT:DoDirectionEffect()
 	local effectdata = EffectData()
 
 		effectdata:SetOrigin( self.Axis )
-		effectdata:SetEntity( self.Entity )
+		effectdata:SetEntity( self )
 		effectdata:SetScale( Motor.direction )
 
 	util.Effect( "wheel_indicator", effectdata, true, true )
@@ -219,7 +219,7 @@ function ENT:Use( activator, caller, type, value )
 	local Motor = self:GetMotor()
 	local Owner = self:GetPlayer()
 
-	if ( IsValid( Motor ) and (Owner == nil or Owner == activator) ) then
+	if ( IsValid( Motor ) && (Owner == nil or Owner == activator) ) then
 
 		if ( Motor.direction == 1 ) then
 			Motor.direction = -1

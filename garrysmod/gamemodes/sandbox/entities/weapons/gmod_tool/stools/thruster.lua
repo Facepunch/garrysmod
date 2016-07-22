@@ -112,8 +112,8 @@ if ( SERVER ) then
 
 	function MakeThruster( pl, model, ang, pos, key, key_bck, force, toggle, effect, damageable, soundname, nocollide )
 
-		if ( IsValid( pl ) ) then
-			if ( !pl:CheckLimit( "thrusters" ) ) then return false end
+		if IsValid( pl ) && !pl:CheckLimit( "thrusters" ) then
+			return false
 		end
 
 		local thruster = ents.Create( "gmod_thruster" )
@@ -129,7 +129,7 @@ if ( SERVER ) then
 		thruster:SetEffect( effect )
 		thruster:SetForce( force )
 		thruster:SetToggle( toggle == 1 )
-		thruster.ActivateOnDamage = ( damageable == 1 )
+		thruster.ActivateOnDamage = damageable == 1
 		thruster:SetPlayer( pl )
 		thruster:SetSound( soundname )
 

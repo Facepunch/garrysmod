@@ -7,7 +7,7 @@ AddCSLuaFile( "stool.lua" )
 AddCSLuaFile( "cl_viewscreen.lua" )
 AddCSLuaFile( "stool_cl.lua" )
 
-include('shared.lua')
+include("shared.lua")
 
 SWEP.Weight				= 5
 SWEP.AutoSwitchTo		= false
@@ -16,7 +16,7 @@ SWEP.AutoSwitchFrom		= false
 -- Convenience function to check object limits
 function SWEP:CheckLimit( str )
 
-	local ply = self.Weapon:GetOwner()
+	local ply = self:GetOwner()
 	return ply:CheckLimit( str )
 
 end
@@ -30,12 +30,12 @@ end
 function CC_GMOD_Tool( ply, command, arguments )
 
 	if ( arguments[1] == nil ) then return end
-	if ( GetConVarNumber( "toolmode_allow_" .. arguments[1] ) != 1 ) then return end
+	if ( GetConVar:GetFloat( "toolmode_allow_" .. arguments[1] ) != 1 ) then return end
 
 	ply:ConCommand( "gmod_toolmode " .. arguments[1] )
 
 	local activeWep = ply:GetActiveWeapon()
-	local isTool = ( IsValid( activeWep ) && activeWep:GetClass() == "gmod_tool" )
+	local isTool = IsValid( activeWep ) && activeWep:GetClass() == "gmod_tool"
 
 	-- Switch weapons
 	ply:SelectWeapon( "gmod_tool" )

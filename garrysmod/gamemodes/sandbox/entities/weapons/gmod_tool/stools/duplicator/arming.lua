@@ -14,11 +14,11 @@ if ( CLIENT ) then
 		local dupe = engine.OpenDupe( arg[1] )
 		if ( !dupe ) then
 			MsgN( "Error loading dupe.. (", arg[1], ")" );
-			return 
+			return
 		end
 
 		local uncompressed = util.Decompress( dupe.data )
-		if ( !uncompressed ) then 
+		if ( !uncompressed ) then
 			MsgN( "Couldn't decompress dupe!" )
 		return end
 
@@ -44,9 +44,9 @@ if ( SERVER ) then
 	local LastDupeArm = 0
 	net.Receive( "ArmDupe", function( len, client )
 			if ( LastDupeArm > CurTime() ) then return end
-			
+
 			LastDupeArm = CurTime() + 1
-			
+
 			local len		= net.ReadUInt( 32 )
 			local data		= net.ReadData( len )
 
@@ -55,7 +55,7 @@ if ( SERVER ) then
 			-- Hook.. can arm dupe..
 
 			local uncompressed = util.Decompress( data )
-			if ( !uncompressed ) then 
+			if ( !uncompressed ) then
 				MsgN( "Couldn't decompress dupe!" )
 			return end
 

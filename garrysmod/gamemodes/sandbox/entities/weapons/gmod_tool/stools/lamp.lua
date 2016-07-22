@@ -238,7 +238,7 @@ function TOOL.BuildCPanel( CPanel )
 	MatSelect.Height = 4
 
 	for k, v in pairs( list.Get( "LampTextures" ) ) do
-		MatSelect:AddMaterial( v.Name or k, k )
+		MatSelect:AddMaterial( v.Name || k, k )
 	end
 
 	CPanel:AddControl( "Color", { Label = "#tool.lamp.color", Red = "lamp_r", Green = "lamp_g", Blue = "lamp_b" } )

@@ -16,7 +16,7 @@ local function GetAllFiles( tab, folder, extension, path )
 			GetAllFiles( tab, folder .. v .. "/", extension, path )
 		end )
 	end
-	
+
 	if ( !timer.Exists( "search_models_update" ) ) then
 		timer.Create( "search_models_update", 1, 1, function() hook.Run( "SearchUpdate" ) end )
 	end
@@ -82,7 +82,7 @@ search.AddProvider( function( str )
 
 		v.ClassName = k
 		v.PrintName = v.Name
-		v.ScriptedEntityType = 'vehicle'
+		v.ScriptedEntityType = "vehicle"
 		table.insert( entities, v )
 
 	end
@@ -91,7 +91,7 @@ search.AddProvider( function( str )
 
 		v.ClassName = k
 		v.PrintName = v.Name
-		v.ScriptedEntityType = 'npc'
+		v.ScriptedEntityType = "npc"
 		table.insert( entities, v )
 
 	end
@@ -100,7 +100,7 @@ search.AddProvider( function( str )
 
 		v.ClassName = k
 		v.PrintName = v.PrintName
-		v.ScriptedEntityType = 'weapon'
+		v.ScriptedEntityType = "weapon"
 		table.insert( entities, v )
 
 	end
@@ -117,7 +117,7 @@ search.AddProvider( function( str )
 				icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, {
 					nicename	= v.PrintName or v.ClassName,
 					spawnname	= v.ClassName,
-					material	= "entities/"..v.ClassName..".png",
+					material	= "entities/" .. v.ClassName .. ".png",
 					admin		= v.AdminOnly
 				} ),
 				words = { v }

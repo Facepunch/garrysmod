@@ -55,8 +55,6 @@ function PANEL:AddCategory( Name, Label, tItems )
 
 	Category:SetCookieName( "ToolMenu." .. tostring( self:GetTabID() ) .. "." .. tostring( Name ) )
 
-	local bAlt = true
-
 	local tools = {}
 	for k, v in pairs( tItems ) do
 		local str = v.Text

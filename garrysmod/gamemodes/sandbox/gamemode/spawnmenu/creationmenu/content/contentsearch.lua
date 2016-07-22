@@ -103,7 +103,7 @@ function PANEL:RefreshResults( str )
 	if ( OldResults == #results ) then -- No updates, don't rebuild
 		for id, result in pairs( results ) do result.icon:Remove() end -- Kill all icons
 		return
-	end 
+	end
 	OldResults = #results
 
 	self.PropPanel:Clear()

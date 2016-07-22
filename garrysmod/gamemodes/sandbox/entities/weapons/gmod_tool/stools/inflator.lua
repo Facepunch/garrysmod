@@ -37,7 +37,7 @@ local ScaleYZ = {
 	"ValveBiped.leg_bone2_R",
 	"ValveBiped.leg_bone3_L",
 	"ValveBiped.leg_bone3_R",
-	
+
 	-- Team Fortress 2
 	"bip_knee_L",
 	"bip_knee_R",
@@ -136,7 +136,7 @@ function TOOL:Reload( trace )
 	if ( !trace.Entity:IsNPC() && trace.Entity:GetClass() != "prop_ragdoll" ) then return false end
 	if ( CLIENT ) then return false end
 
-	for i=0, trace.Entity:GetBoneCount() do
+	for i = 0, trace.Entity:GetBoneCount() do
 		trace.Entity:ManipulateBoneScale( i, Vector( 1, 1, 1 ) )
 	end
 

@@ -6,8 +6,6 @@ ENT.PrintName = "Lamp"
 ENT.RenderGroup = RENDERGROUP_BOTH
 
 local matLight = Material( "sprites/light_ignorez" )
-local matBeam = Material( "effects/lamp_beam" )
-
 AccessorFunc( ENT, "Texture", "FlashlightTexture" )
 
 --
@@ -86,7 +84,7 @@ function ENT:Switch( bOn )
 
 	self.flashlight = ents.Create( "env_projectedtexture" )
 
-	self.flashlight:SetParent( self.Entity )
+	self.flashlight:SetParent( self )
 
 	-- The local positions are the offsets from parent..
 	self.flashlight:SetLocalPos( Vector( 0, 0, 0 ) )

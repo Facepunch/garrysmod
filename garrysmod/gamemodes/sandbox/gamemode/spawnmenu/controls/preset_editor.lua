@@ -186,7 +186,7 @@ function PANEL:Add()
 	local tabValues = {}
 
 	for k, v in pairs( self.m_ConVars ) do
-		tabValues[ v ] = GetConVarString( v )
+		tabValues[ v ] = GetConVar:GetString( v )
 	end
 
 	presets.Add( self.m_strType, ToName, tabValues )

@@ -20,10 +20,10 @@ AddCSLuaFile( "save_load.lua" )
 AddCSLuaFile( "shared.lua" )
 AddCSLuaFile( "gui/IconEditor.lua" )
 
-include( 'shared.lua' )
-include( 'commands.lua' )
-include( 'player.lua' )
-include( 'spawnmenu/init.lua' )
+include( "shared.lua" )
+include( "commands.lua" )
+include( "player.lua" )
+include( "spawnmenu/init.lua" )
 
 --
 -- Make BaseClass available
@@ -39,7 +39,7 @@ function GM:PlayerSpawn( pl )
 	player_manager.SetPlayerClass( pl, "player_sandbox" )
 
 	BaseClass.PlayerSpawn( self, pl )
-	
+
 end
 
 
@@ -48,7 +48,7 @@ end
    Desc: The physgun wants to freeze a prop
 -----------------------------------------------------------]]
 function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
-	
+
 	-- Don't freeze persistent props (should already be froze)
 	if ( ent:GetPersistent() ) then return false end
 
@@ -56,7 +56,7 @@ function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
 
 	ply:SendHint( "PhysgunUnfreeze", 0.3 )
 	ply:SuppressHint( "PhysgunFreeze" )
-	
+
 end
 
 
@@ -67,9 +67,9 @@ end
 function GM:OnPhysgunReload( weapon, ply )
 
 	local num = ply:PhysgunUnfreeze()
-	
+
 	if ( num > 0 ) then
-		ply:SendLua( "GAMEMODE:UnfrozeObjects("..num..")" )
+		ply:SendLua( "GAMEMODE:UnfrozeObjects(" .. num .. ")" )
 	end
 
 	ply:SuppressHint( "PhysgunReload" )
@@ -80,8 +80,8 @@ end
 --[[---------------------------------------------------------
    Name: gamemode:PlayerShouldTakeDamage
    Return true if this player should take damage from this attacker
-   Note: This is a shared function - the client will think they can 
-	 damage the players even though they can't. This just means the 
+   Note: This is a shared function - the client will think they can
+	 damage the players even though they can't. This just means the
 	 prediction will show blood.
 -----------------------------------------------------------]]
 function GM:PlayerShouldTakeDamage( ply, attacker )
@@ -96,7 +96,7 @@ function GM:PlayerShouldTakeDamage( ply, attacker )
 	if ( attacker:IsValid() && attacker:IsPlayer() ) then
 		return cvars.Bool( "sbox_playershurtplayers", true )
 	end
-	
+
 	-- Default, let the player be hurt
 	return true
 
@@ -109,7 +109,7 @@ end
 function GM:ShowHelp( ply )
 
 	ply:SendLua( "hook.Run( 'StartSearch' )" );
-	
+
 end
 
 
@@ -119,7 +119,7 @@ end
 function GM:PlayerInitialSpawn( ply )
 
 	BaseClass.PlayerInitialSpawn( self, ply )
-	
+
 end
 
 
@@ -131,7 +131,7 @@ function GM:CreateEntityRagdoll( entity, ragdoll )
 	-- Replace the entity with the ragdoll in cleanups etc
 	undo.ReplaceEntity( entity, ragdoll )
 	cleanup.ReplaceEntity( entity, ragdoll )
-	
+
 end
 
 
@@ -143,8 +143,8 @@ function GM:PlayerUnfrozeObject( ply, entity, physobject )
 	local effectdata = EffectData()
 		effectdata:SetOrigin( physobject:GetPos() )
 		effectdata:SetEntity( entity )
-	util.Effect( "phys_unfreeze", effectdata, true, true )	
-	
+	util.Effect( "phys_unfreeze", effectdata, true, true )
+
 end
 
 
@@ -154,12 +154,12 @@ end
 function GM:PlayerFrozeObject( ply, entity, physobject )
 
 	if ( DisablePropCreateEffect ) then return end
-	
+
 	local effectdata = EffectData()
 		effectdata:SetOrigin( physobject:GetPos() )
 		effectdata:SetEntity( entity )
-	util.Effect( "phys_freeze", effectdata, true, true )	
-	
+	util.Effect( "phys_freeze", effectdata, true, true )
+
 end
 
 

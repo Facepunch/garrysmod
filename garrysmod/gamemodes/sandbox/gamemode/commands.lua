@@ -132,14 +132,14 @@ function FixInvalidPhysicsObject( Prop )
 	if ( !IsValid( PhysObj ) ) then return end
 
 	local min, max = PhysObj:GetAABB()
-	if ( !min || !max ) then return end
+	if ( !min or !max ) then return end
 
 	local PhysSize = (min - max):Length()
 	if ( PhysSize > 5 ) then return end
 
 	local min = Prop:OBBMins()
 	local max = Prop:OBBMaxs()
-	if ( !min || !max ) then return end
+	if ( !min or !max ) then return end
 
 	local ModelSize = ( min - max ):Length()
 	local Difference = math.abs( ModelSize - PhysSize )
@@ -229,7 +229,7 @@ function DoPlayerEntitySpawn( player, entity_name, model, iSkin, strBody )
 	local tr = util.TraceLine( trace )
 
 	-- Prevent spawning too close
-	--[[if ( !tr.Hit || tr.Fraction < 0.05 ) then
+	--[[if ( !tr.Hit or tr.Fraction < 0.05 ) then
 		return
 	end]]
 
@@ -321,7 +321,7 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 		bDropToFloor = true
 	end
 
-	if ( NPCData.NoDrop || NoDropToFloor ) then bDropToFloor = false end
+	if ( NPCData.NoDrop or NoDropToFloor ) then bDropToFloor = false end
 
 	-- Create NPC
 	local NPC = ents.Create( NPCData.Class )
@@ -728,7 +728,7 @@ function CCGiveSWEP( player, command, arguments )
 	if ( swep == nil ) then return end
 
 	-- You're not allowed to spawn this!
-	if ( ( !swep.Spawnable && !player:IsAdmin() ) || ( swep.AdminOnly && !player:IsAdmin() ) ) then
+	if ( ( !swep.Spawnable && !player:IsAdmin() ) or ( swep.AdminOnly && !player:IsAdmin() ) ) then
 		return
 	end
 
@@ -756,7 +756,7 @@ function Spawn_Weapon( Player, wepname, tr )
 	if ( swep == nil ) then return end
 
 	-- You're not allowed to spawn this!
-	if ( ( !swep.Spawnable && !Player:IsAdmin() ) || ( swep.AdminOnly && !Player:IsAdmin() ) ) then
+	if ( ( !swep.Spawnable && !Player:IsAdmin() ) or ( swep.AdminOnly && !Player:IsAdmin() ) ) then
 		return
 	end
 
@@ -793,7 +793,7 @@ local function MakeVehicle( Player, Pos, Ang, Model, Class, VName, VTable, data 
 
 	Ent:SetModel( Model )
 
-	// Fallback vehiclescripts for HL2 maps ( dupe support )
+	-- Fallback vehiclescripts for HL2 maps ( dupe support )
 	if ( Model == "models/buggy.mdl" ) then Ent:SetKeyValue( "vehiclescript", "scripts/vehicles/jeep_test.txt" ) end
 	if ( Model == "models/vehicle.mdl" ) then Ent:SetKeyValue( "vehiclescript", "scripts/vehicles/jalopy.txt" ) end
 
@@ -803,10 +803,10 @@ local function MakeVehicle( Player, Pos, Ang, Model, Class, VName, VTable, data 
 
 			local kLower = string.lower( k )
 
-			if ( kLower == "vehiclescript" ||
-			     kLower == "limitview"     ||
-			     kLower == "vehiclelocked" ||
-			     kLower == "cargovisible"  ||
+			if ( kLower == "vehiclescript" or
+			     kLower == "limitview"     or
+			     kLower == "vehiclelocked" or
+			     kLower == "cargovisible"  or
 			     kLower == "enablegun" )
 			then
 				Ent:SetKeyValue( k, v )

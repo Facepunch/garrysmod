@@ -12,7 +12,7 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, no
 			Categorised[ v.Category ] = Categorised[ v.Category ] or {}
 			v.ClassName = k
 			v.PrintName = v.Name
-			v.ScriptedEntityType = 'vehicle'
+			v.ScriptedEntityType = "vehicle"
 			table.insert( Categorised[ v.Category ], v )
 
 		end
@@ -42,7 +42,7 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, no
 				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", self.PropPanel, {
 					nicename	= ent.PrintName or ent.ClassName,
 					spawnname	= ent.ClassName,
-					material	= "entities/"..ent.ClassName..".png",
+					material	= "entities/" .. ent.ClassName .. ".png",
 					admin		= ent.AdminOnly
 				} )
 

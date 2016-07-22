@@ -191,10 +191,9 @@ function CreateContextMenu()
 			--
 			-- v might have changed using autorefresh so grab it again
 			--
-			local newv = list.Get( "DesktopWindows" )[ k ]
 
-			if ( v.onewindow ) then
-				if ( IsValid( icon.Window ) ) then icon.Window:Center() return end
+			if v.onewindow && IsValid( icon.Window ) then
+				icon.Window:Center() return end
 			end
 
 			-- Make the window
@@ -204,11 +203,7 @@ function CreateContextMenu()
 			icon.Window:Center()
 
 			newv.init( icon, icon.Window )
-
-		end
-
 	end
-
 end
 
 function GM:OnContextMenuOpen()

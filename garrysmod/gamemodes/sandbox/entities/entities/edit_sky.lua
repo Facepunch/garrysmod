@@ -18,10 +18,6 @@ function ENT:Initialize()
 	--
 	if ( CLIENT ) then
 
-		if ( IsValid( g_SkyPaint ) ) then
-			-- TODO: Copy settings from `current` sky to here.
-		end
-
 		g_SkyPaint = self
 
 	end

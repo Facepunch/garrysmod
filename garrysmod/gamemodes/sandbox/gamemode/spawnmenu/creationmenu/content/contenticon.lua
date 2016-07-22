@@ -97,22 +97,18 @@ end
 
 function PANEL:Paint( w, h )
 
-	if ( self.Depressed && !self.Dragging ) then
-		if ( self.Border != 8 ) then
-			self.Border = 8
-			self:OnDepressionChanged( true )
-		end
-	else
-		if ( self.Border != 0 ) then
-			self.Border = 0
-			self:OnDepressionChanged( false )
-		end
+	if self.Depressed && !self.Dragging && self.Border != 8 then
+		self.Border = 8
+		self:OnDepressionChanged( true )
+	elseif self.Border != 0 then
+		self.Border = 0
+		self:OnDepressionChanged( false )
 	end
 
 	render.PushFilterMag( TEXFILTER.ANISOTROPIC )
 	render.PushFilterMin( TEXFILTER.ANISOTROPIC )
 
-	self.Image:PaintAt( 3 + self.Border, 3 + self.Border, 128-8-self.Border*2, 128-8-self.Border*2 )
+	self.Image:PaintAt( 3 + self.Border, 3 + self.Border, 128 - 8 - self.Border * 2, 128 - 8 - self.Border * 2 )
 
 	render.PopFilterMag()
 	render.PopFilterMin()
@@ -131,7 +127,7 @@ function PANEL:Paint( w, h )
 
 	end
 
-	surface.DrawTexturedRect( self.Border, self.Border, w-self.Border*2, h-self.Border*2 )
+	surface.DrawTexturedRect( self.Border, self.Border, w-self.Border * 2, h - self.Border * 2 )
 
 	if ( self.AdminOnly ) then
 		surface.SetMaterial( matOverlay_AdminOnly )

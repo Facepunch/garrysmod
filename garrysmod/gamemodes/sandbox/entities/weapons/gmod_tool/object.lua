@@ -137,11 +137,6 @@ function ToolObj:SetObject( i, ent, pos, phys, bone, norm )
 		end
 
 	end
-
-	if ( SERVER ) then
-		-- Todo: Make sure the client got the same info
-	end
-
 end
 
 
@@ -162,6 +157,6 @@ end
 -- Returns the number of objects in the list
 function ToolObj:GetHelpText()
 
-	return "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. self:GetStage()
+	return "#tool." .. GetConVar:GetString( "gmod_toolmode" ) .. "." .. self:GetStage()
 
 end

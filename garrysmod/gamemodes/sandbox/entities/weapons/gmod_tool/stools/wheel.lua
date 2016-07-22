@@ -144,8 +144,8 @@ if ( SERVER ) then
 	-- For duplicator, creates the wheel.
 	function MakeWheel( pl, Pos, Ang, Model, key_f, key_r, axis, direction, toggle, BaseTorque, Data )
 
-		if ( IsValid( pl ) ) then
-			if ( !pl:CheckLimit( "wheels" ) ) then return false end
+		if IsValid( pl ) && !pl:CheckLimit( "wheels" ) then
+			return false
 		end
 
 		local wheel = ents.Create( "gmod_wheel" )
@@ -202,7 +202,7 @@ function TOOL:UpdateGhostWheel( ent, ply )
 	if ( !IsValid( ent ) ) then return end
 
 	local trace = ply:GetEyeTrace()
-	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:IsPlayer() /*|| trace.Entity:GetClass() == "gmod_wheel"*/ ) ) then
+	if ( !trace.Hit or IsValid( trace.Entity ) && trace.Entity:IsPlayer() /*|| trace.Entity:GetClass() == "gmod_wheel"*/ ) then
 
 		ent:SetNoDraw( true )
 		return
@@ -214,7 +214,6 @@ function TOOL:UpdateGhostWheel( ent, ply )
 	local NearestPoint = ent:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
 	local WheelOffset = CurPos - NearestPoint
 
-	local min = ent:OBBMins()
 	ent:SetPos( trace.HitPos + WheelOffset )
 	ent:SetAngles( Ang )
 
@@ -225,7 +224,7 @@ end
 -- Maintains the ghost wheel
 function TOOL:Think()
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
+	if ( !IsValid( self.GhostEntity ) or self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
 		self.wheelAngle = Angle( math.NormalizeAngle( self:GetClientNumber( "rx" ) ), math.NormalizeAngle( self:GetClientNumber( "ry" ) ), math.NormalizeAngle( self:GetClientNumber( "rz" ) ) )
 		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 	end
@@ -255,7 +254,7 @@ function TOOL.BuildCPanel( CPanel )
 
 end
 
-// Don't copy paste all of those ridiculous angles, just use one variable for all of them
+-- Don't copy paste all of those ridiculous angles, just use one variable for all of them
 local zero = { wheel_rx = 0, wheel_ry = 0, wheel_rz = 0 }
 local one = { wheel_rx = 90, wheel_ry = 0, wheel_rz = 0 }
 local two = { wheel_rx = 90, wheel_ry = 0, wheel_rz = 90 }

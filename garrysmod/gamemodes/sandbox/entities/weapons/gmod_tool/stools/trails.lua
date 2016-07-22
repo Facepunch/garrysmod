@@ -61,7 +61,7 @@ duplicator.RegisterEntityModifier( "trail", SetTrails )
 function TOOL:LeftClick( trace )
 
 	if ( !IsValid( trace.Entity ) ) then return false end
-	if ( !trace.Entity:EntIndex() == 0 ) then return false end
+	if ( trace.Entity:EntIndex() ~= 0 ) then return false end
 	if ( trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 
@@ -104,7 +104,7 @@ end
 function TOOL:RightClick( trace )
 
 	if ( !IsValid( trace.Entity ) ) then return false end
-	if ( !trace.Entity:EntIndex() == 0 ) then return false end
+	if ( trace.Entity:EntIndex() ~= 0 ) then return false end
 	if ( trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 

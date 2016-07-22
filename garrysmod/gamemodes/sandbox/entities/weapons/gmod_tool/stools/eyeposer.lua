@@ -23,7 +23,7 @@ local function ConvertRelativeToEyesAttachment( ent, pos )
 	local attachment = ent:GetAttachment( eyeattachment )
 	if ( !attachment ) then return end
 
-	local LocalPos, LocalAng = WorldToLocal( pos, Angle( 0, 0, 0 ), attachment.Pos, attachment.Ang )
+	local LocalPos = WorldToLocal( pos, Angle( 0, 0, 0 ), attachment.Pos, attachment.Ang )
 
 	return LocalPos
 
@@ -73,7 +73,7 @@ function TOOL:RightClick( trace )
 
 	local LocalPos = ConvertRelativeToEyesAttachment( trace.Entity, pos )
 	if ( !LocalPos ) then return false end
-	
+
 	SetEyeTarget( self:GetOwner(), trace.Entity, { EyeTarget = LocalPos } )
 
 	return true
@@ -90,8 +90,6 @@ function TOOL:DrawHUD()
 
 	if ( !IsValid( selected ) ) then return end
 
-	local vEyePos = selected:EyePos()
-
 	local eyeattachment = selected:LookupAttachment( "eyes" )
 	if ( eyeattachment == 0 ) then return end
 
@@ -104,10 +102,6 @@ function TOOL:DrawHUD()
 	local Reye = ( attachment.Pos - attachment.Ang:Right() * 1.5 ):ToScreen()
 
 	-- Work out the side distance to give a rough headsize box..
-	local player_eyes = LocalPlayer():EyeAngles()
-	local side = ( attachment.Pos + player_eyes:Right() * 10 ):ToScreen()
-	local size = 4
-
 	local Owner = self:GetOwner()
 
 	-- Get Target

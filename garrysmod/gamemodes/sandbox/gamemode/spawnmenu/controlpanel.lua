@@ -147,7 +147,7 @@ function PANEL:AddControl( control, data )
 
 	end
 
-	if ( control == "checkbox" || control == "toggle" ) then
+	if ( control == "checkbox" or control == "toggle" ) then
 
 		local ctrl = self:CheckBox( data.label or "Untitled", data.command )
 
@@ -295,7 +295,7 @@ function PANEL:AddControl( control, data )
 					-- This is kind of broken because it only checks one convar
 					-- instead of all of them. But this is legacy. It will do for now.
 					for k, v in pairs( line.data ) do
-						if ( GetConVarString( k ) == v ) then
+						if ( GetConVar:GetString( k ) == v ) then
 							line:SetSelected( true )
 						end
 					end

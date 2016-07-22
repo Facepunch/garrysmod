@@ -11,8 +11,8 @@ function meta:CheckLimit( str )
 	-- No limits in single player
 	if (game.SinglePlayer()) then return true end
 
-	local c = cvars.Number( "sbox_max"..str, 0 )
-	
+	local c = cvars.Number( "sbox_max" .. str, 0 )
+
 	if ( c < 0 ) then return true end
 	if ( self:GetCount( str ) > c-1 ) then self:LimitHit( str ) return false end
 
@@ -23,36 +23,36 @@ end
 function meta:GetCount( str, minus )
 
 	if ( CLIENT ) then
-		return self:GetNWInt( "Count."..str, 0 )
+		return self:GetNWInt( "Count." .. str, 0 )
 	end
-	
+
 	minus = minus or 0
-	
+
 	if ( !self:IsValid() ) then return end
 
 	local key = self:UniqueID()
 	local tab = g_SBoxObjects[ key ]
-	
-	if ( !tab || !tab[ str ] ) then 
-	
-		self:SetNWInt( "Count."..str, 0 )
-		return 0 
-		
+
+	if ( !tab or !tab[ str ] ) then
+
+		self:SetNWInt( "Count." .. str, 0 )
+		return 0
+
 	end
-	
+
 	local c = 0
-	
+
 	for k, v in pairs ( tab[ str ] ) do
-	
-		if ( v:IsValid() ) then 
+
+		if ( v:IsValid() ) then
 			c = c + 1
 		else
 			tab[ str ][ k ] = nil
 		end
-	
+
 	end
-	
-	self:SetNWInt( "Count."..str, c - minus )
+
+	self:SetNWInt( "Count." .. str, c - minus )
 
 	return c
 
@@ -65,16 +65,16 @@ function meta:AddCount( str, ent )
 		local key = self:UniqueID()
 		g_SBoxObjects[ key ] = g_SBoxObjects[ key ] or {}
 		g_SBoxObjects[ key ][ str ] = g_SBoxObjects[ key ][ str ] or {}
-		
+
 		local tab = g_SBoxObjects[ key ][ str ]
-		
+
 		table.insert( tab, ent )
-		
+
 		-- Update count (for client)
 		self:GetCount( str )
-		
+
 		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, str ) ply:GetCount(str, 1) end, self, str )
-	
+
 	end
 
 end
@@ -88,7 +88,7 @@ end
 function meta:AddCleanup( type, ent )
 
 	cleanup.Add( self, type, ent )
-	
+
 end
 
 if (SERVER) then
@@ -96,11 +96,11 @@ if (SERVER) then
 	function meta:GetTool( mode )
 
 		local wep = self:GetWeapon( "gmod_tool" )
-		if (!wep || !wep:IsValid()) then return nil end
-		
+		if (!wep or !wep:IsValid()) then return nil end
+
 		local tool = wep:GetToolObject( mode )
 		if (!tool) then return nil end
-		
+
 		return tool
 
 	end
@@ -109,22 +109,22 @@ if (SERVER) then
 
 		self.Hints = self.Hints or {}
 		if (self.Hints[ str ]) then return end
-		
+
 		self:SendLua( 'hook.Run("AddHint","' .. str .. '","' .. delay .. '")' )
 		self.Hints[ str ] = true
 
 	end
-	
+
 	function meta:SuppressHint( str )
 
 		self.Hints = self.Hints or {}
 		if (self.Hints[ str ]) then return end
-		
+
 		self:SendLua( 'hook.Run("SuppressHint","' .. str .. '")' )
 		self.Hints[ str ] = true
 
 	end
-	
+
 else
 
 	function meta:GetTool( mode )
@@ -133,11 +133,11 @@ else
 		for _, ent in pairs( ents.FindByClass( "gmod_tool" ) ) do
 			if ( ent:GetOwner() == self ) then wep = ent break end
 		end
-		if (!wep || !wep:IsValid()) then return nil end
-		
+		if (!wep or !wep:IsValid()) then return nil end
+
 		local tool = wep:GetToolObject( mode )
 		if (!tool) then return nil end
-		
+
 		return tool
 
 	end

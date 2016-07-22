@@ -52,10 +52,8 @@ function TOOL:LeftClick( trace, worldweld )
 	if ( !self:GetSWEP():CheckLimit( "emitters" ) ) then return false end
 
 	local Pos = trace.HitPos
-	if ( trace.Entity != NULL && ( !trace.Entity:IsWorld() || worldweld ) ) then else
-
+	if !( trace.Entity != NULL && ( !trace.Entity:IsWorld() || worldweld ) ) then
 		Pos = Pos + trace.HitNormal
-
 	end
 
 	local Ang = trace.HitNormal:Angle()
@@ -107,7 +105,7 @@ if ( SERVER ) then
 		emitter:SetDelay( delay )
 		emitter:SetToggle( toggle )
 		emitter:SetOn( starton )
-		emitter:SetScale( scale or 1 )
+		emitter:SetScale( scale || 1 )
 
 		emitter:Spawn()
 

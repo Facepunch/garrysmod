@@ -10,14 +10,14 @@ local ProcessedHints = {}
 --
 local function ThrowHint( name )
 
-	local show = GetConVarNumber( "cl_showhints" )
+	local show = GetConVar:GetFloat( "cl_showhints" )
 	if ( show == 0 ) then return end
 
 	if ( engine.IsPlayingDemo() ) then return end
 
-	GAMEMODE:AddNotify( "#Hint_"..name, NOTIFY_HINT, 20 )
-	
-	surface.PlaySound( "ambient/water/drip"..math.random(1, 4)..".wav" )
+	GAMEMODE:AddNotify( "#Hint_" .. name, NOTIFY_HINT, 20 )
+
+	surface.PlaySound( "ambient/water/drip" .. math.random(1, 4) .. ".wav" )
 
 end
 
@@ -29,9 +29,9 @@ function GM:AddHint( name, delay )
 
 	if (ProcessedHints[ name ]) then return end
 
-	timer.Create( "HintSystem_"..name, delay, 1, function() ThrowHint( name ) end )
+	timer.Create( "HintSystem_" .. name, delay, 1, function() ThrowHint( name ) end )
 	ProcessedHints[ name ] = true
-	
+
 end
 
 --
@@ -39,8 +39,8 @@ end
 --
 function GM:SuppressHint( name )
 
-	timer.Remove( "HintSystem_"..name )
-	
+	timer.Remove( "HintSystem_" .. name )
+
 end
 
 -- Show opening menu hint if they haven't opened the menu within 30 seconds

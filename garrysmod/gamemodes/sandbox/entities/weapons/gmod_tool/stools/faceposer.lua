@@ -102,7 +102,7 @@ function TOOL:RightClick( trace )
 
 	end
 
-	for i=0, FlexNum - 1 do
+	for i = 0, FlexNum - 1 do
 
 		local Weight = "0.0"
 
@@ -143,7 +143,7 @@ if ( SERVER ) then
 
 	function CC_Face_Randomize( pl, command, arguments )
 
-		for i=0, 64 do
+		for i = 0, 64 do
 			local num = math.Rand( 0, 1 )
 			pl:ConCommand( "faceposer_flex" .. i .. " " .. string.format( "%.3f", num ) )
 		end
@@ -157,7 +157,7 @@ end
 -- The rest of the code is clientside only, it is not used on server
 if ( SERVER ) then return end
 
-for i=0, 64 do
+for i = 0, 64 do
 	TOOL.ClientConVar[ "flex" .. i ] = "0"
 end
 
@@ -182,7 +182,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 	CPanel:AddControl( "Header", { Description = "#tool.faceposer.desc" } )
 
 	FaceEntity = FaceEntity or gLastFacePoseEntity
-	if ( !IsValid( FaceEntity ) || FaceEntity:GetFlexNum() == 0 ) then return end
+	if ( !IsValid( FaceEntity ) or FaceEntity:GetFlexNum() == 0 ) then return end
 
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "face", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
@@ -198,7 +198,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 	-- Todo: These really need to be the name of the flex.
 
 	local Clear = {}
-	for i=0, 64 do
+	for i = 0, 64 do
 		Clear[ "faceposer_flex" .. i ] = 0
 	end
 
@@ -345,7 +345,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 	CPanel:AddControl( "Button", { Text = "#tool.faceposer.randomize", Command = "faceposer_randomize" } )
 
 	local lastItem
-	for i=0, FaceEntity:GetFlexNum() do
+	for i = 0, FaceEntity:GetFlexNum() do
 
 		local Name = FaceEntity:GetFlexName( i )
 
@@ -371,7 +371,7 @@ function TOOL:DrawHUD()
 
 	local selected = self:FacePoserEntity()
 
-	if ( !IsValid( selected ) || selected:IsWorld() || selected:GetFlexNum() == 0 ) then return end
+	if ( !IsValid( selected ) or selected:IsWorld() or selected:GetFlexNum() == 0 ) then return end
 
 	local pos = selected:GetPos()
 	local eyeattachment = selected:LookupAttachment( "eyes" )

@@ -38,12 +38,10 @@ function ENT:Think()
 	if ( !self.direction ) then return true end
 	if ( self.direction == DIR_NONE ) then return true end
 
-	local old_length = self.current_length
 	local current_length = self.current_length
 
 	if ( self.type == TYPE_NORMAL ) then
 
-		local speed = 0
 		local dist = 0
 
 		if ( self.direction == DIR_FORWARD ) then
@@ -88,7 +86,7 @@ function ENT:Think()
 
 		if ( per == 0 ) then return true end
 
-		local spos = ( math.sin( ( self.ctime * math.pi * per ) ) + 1 ) * ( amp / 2 )
+		local spos = math.sin( self.ctime * math.pi * per ) + 1 * amp / 2
 
 		if ( spos > amp ) then spos = amp end
 		if ( spos < 0 ) then spos = 0 end
@@ -131,12 +129,12 @@ function ENT:SetConstraint( c )
 
 	local p1 = self:GetPos( c.Ent1, c.Phys1, c.LPos1 )
 	local p2 = self:GetPos( c.Ent2, c.Phys2, c.LPos2 )
-	local dist = ( p1 - p2 )
+	local dist = p1 - p2
 
 	self.current_length = dist:Length()
 
 	if ( self.max_length ) then
-		self.isexpanded = ( self.current_length >= self.max_length )
+		self.isexpanded = self.current_length >= self.max_length
 	end
 
 	if ( self.type == TYPE_MUSCLE ) then

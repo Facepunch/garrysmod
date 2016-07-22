@@ -62,7 +62,7 @@ function PANEL:Init()
 		bg.Paint = function( self, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
 
 		self.SpawnIcon = bg:Add( "SpawnIcon" )
-		//self.SpawnIcon.DoClick = function() self:RenderIcon() end
+		--self.SpawnIcon.DoClick = function() self:RenderIcon() end
 
 		self.ModelPanel = bg:Add( "DAdjustableModelPanel" )
 		self.ModelPanel:Dock( FILL )
@@ -316,9 +316,6 @@ function PANEL:Refresh()
 	self.ModelPanel.LayoutEntity = function() self:UpdateEntity( self.ModelPanel:GetEntity() )  end
 
 	local ent = self.ModelPanel:GetEntity()
-	local pos = ent:GetPos()
-
-	local tab = PositionSpawnIcon( ent, pos )
 
 	ent:SetSkin( self.SpawnIcon:GetSkinID() )
 	ent:SetBodyGroups( self.SpawnIcon:GetBodyGroup() )
@@ -352,7 +349,7 @@ function PANEL:FillAnimations( ent )
 
 		local combo = self.BodyList:Add( "DComboBox" )
 
-		for l=0, ent:SkinCount()-1 do
+		for l = 0, ent:SkinCount() - 1 do
 			combo:AddChoice( "Skin " .. l, function()
 
 				ent:SetSkin( l )
@@ -375,13 +372,13 @@ function PANEL:FillAnimations( ent )
 
 	end
 
-	for k=0, ent:GetNumBodyGroups()-1 do
+	for k = 0, ent:GetNumBodyGroups() - 1 do
 
 		if ( ent:GetBodygroupCount( k ) <= 1 ) then continue end
 
 		local combo = self.BodyList:Add( "DComboBox" )
 
-		for l=0, ent:GetBodygroupCount( k )-1 do
+		for l = 0, ent:GetBodygroupCount( k ) - 1 do
 
 			combo:AddChoice( ent:GetBodygroupName( k ) .. " " .. l, function()
 
@@ -415,7 +412,7 @@ function PANEL:SetFromEntity( ent )
 
 	if ( !IsValid( ent ) ) then return end
 
-	self.SpawnIcon:SetModel( ent:GetModel(), ent:GetSkin() )//, ent:GetBodyGroup() )
+	self.SpawnIcon:SetModel( ent:GetModel(), ent:GetSkin() ) --, ent:GetBodyGroup() )
 	self:SetModel( ent:GetModel() )
 	self:Refresh()
 

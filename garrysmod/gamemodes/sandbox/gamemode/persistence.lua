@@ -5,7 +5,7 @@ hook.Add( "ShutDown", "SavePersistenceOnShutdown", function() hook.Run( "Persist
 
 hook.Add( "PersistenceSave", "PersistenceSave", function()
 
-	local PersistPage = GetConVarString( "sbox_persist" )
+	local PersistPage = GetConVar:GetString( "sbox_persist" )
 	if ( PersistPage == "0" ) then return end
 
 	local Ents = ents.GetAll()
@@ -25,7 +25,7 @@ hook.Add( "PersistenceSave", "PersistenceSave", function()
 
 	file.CreateDir( "persist" )
 	file.Write( "persist/" .. game.GetMap() .. "_" .. PersistPage .. ".txt", out )
-	
+
 end )
 
 hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
@@ -38,7 +38,7 @@ hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
 	if ( !tab.Entities ) then return end
 	if ( !tab.Constraints ) then return end
 
-	local Ents, Constraints = duplicator.Paste( nil, tab.Entities, tab.Constraints )
+	local Ents = duplicator.Paste( nil, tab.Entities, tab.Constraints )
 
 	for k, v in pairs( Ents ) do
 		v:SetPersistent( true )
@@ -48,9 +48,9 @@ end )
 
 hook.Add( "InitPostEntity", "PersistenceInit", function()
 
-	local PersistPage = GetConVarString( "sbox_persist" )
+	local PersistPage = GetConVar:GetString( "sbox_persist" )
 	if ( PersistPage == "0" ) then return end
 
 	hook.Run( "PersistenceLoad", PersistPage );
-	
+
 end )

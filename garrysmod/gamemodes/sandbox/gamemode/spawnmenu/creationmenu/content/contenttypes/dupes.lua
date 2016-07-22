@@ -8,7 +8,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 	JS_Language( HTML )
 	JS_Workshop( HTML )
 	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
-	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ).. " );" )
+	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ) .. " );" )
 
 	ws_dupe = WorkshopFileBase( "dupe", { "dupe" } )
 	ws_dupe.HTML = HTML
@@ -40,7 +40,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 		}
 
 		local json = util.TableToJSON( results, false )
-		HTML:Call( "dupe.ReceiveLocal( "..json.." )" )
+		HTML:Call( "dupe.ReceiveLocal( " .. json .. " )" )
 
 	end
 

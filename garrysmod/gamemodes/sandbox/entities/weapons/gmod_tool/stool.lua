@@ -60,7 +60,7 @@ function ToolObj:GetServerInfo( property )
 
 	local mode = self:GetMode()
 
-	return GetConVarString( mode .. "_" .. property )
+	return GetConVar:GetString( mode .. "_" .. property )
 
 end
 
@@ -133,7 +133,7 @@ local toolmodes = file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" )
 
 for key, val in pairs( toolmodes ) do
 
-	local char1, char2, toolmode = string.find( val, "([%w_]*).lua" )
+	local toolmode = string.find( val, "([%w_]*).lua" )
 
 	TOOL = ToolObj:Create()
 	TOOL.Mode = toolmode
@@ -166,8 +166,8 @@ if ( CLIENT ) then
 				spawnmenu.AddToolMenuOption( TOOL.Tab or "Main",
 											TOOL.Category or "New Category",
 											ToolName,
-											TOOL.Name or "#"..ToolName,
-											TOOL.Command or "gmod_tool "..ToolName,
+											TOOL.Name or "#" .. ToolName,
+											TOOL.Command or "gmod_tool " .. ToolName,
 											TOOL.ConfigName or ToolName,
 											TOOL.BuildCPanel )
 

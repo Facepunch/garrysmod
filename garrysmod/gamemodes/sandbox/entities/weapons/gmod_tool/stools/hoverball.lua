@@ -100,8 +100,8 @@ if ( SERVER ) then
 
 	function MakeHoverBall( ply, Pos, key_d, key_u, speed, resistance, strength, model, Vel, aVel, frozen, nocollide )
 
-		if ( IsValid( ply ) ) then
-			if ( !ply:CheckLimit( "hoverballs" ) ) then return end
+		if IsValid( ply ) && !ply:CheckLimit( "hoverballs" ) then
+			return
 		end
 
 		local ball = ents.Create( "gmod_hoverball" )

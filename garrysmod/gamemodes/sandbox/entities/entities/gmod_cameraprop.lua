@@ -193,13 +193,13 @@ end
 
 function ENT:Draw()
 
-	if ( GetConVarNumber( "cl_drawcameras" ) == 0 ) then return end
+	if ( GetConVar:GetFloat( "cl_drawcameras" ) == 0 ) then return end
 
 	-- Don't draw the camera if we're taking pics
 	local ply = LocalPlayer()
 	local wep = ply:GetActiveWeapon()
-	if ( IsValid( wep ) ) then
-		if ( wep:GetClass() == "gmod_camera" ) then return end
+	if IsValid( wep ) && ( wep:GetClass() == "gmod_camera" ) then
+		return
 	end
 
 	self:DrawModel()

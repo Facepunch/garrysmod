@@ -114,7 +114,7 @@ function ENT:Think()
 
 	if ( CLIENT ) then
 
-		self.ShouldDraw = GetConVarNumber( "cl_drawthrusterseffects" )
+		self.ShouldDraw = GetConVar:GetFloat( "cl_drawthrusterseffects" )
 
 		local bDraw = true
 
@@ -296,10 +296,8 @@ end
 -----------------------------------------------------------]]
 function ENT:GetEmitter( Pos, b3D )
 
-	if ( self.Emitter ) then
-		if ( self.EmitterIs3D == b3D && self.EmitterTime > CurTime() ) then
-			return self.Emitter
-		end
+	if self.Emitter && self.EmitterIs3D == b3D && self.EmitterTime > CurTime() then
+		return self.Emitter
 	end
 
 	self.Emitter = ParticleEmitter( Pos, b3D )
@@ -439,7 +437,7 @@ end
 -----------------------------------------------------------]]
 function ENT:StartThrustSound()
 
-	if ( !self.SoundName || self.SoundName == "" ) then return end
+	if ( !self.SoundName or self.SoundName == "" ) then return end
 
 	local valid = false
 	for _, v in pairs( list.Get( "ThrusterSounds" ) ) do
@@ -449,7 +447,7 @@ function ENT:StartThrustSound()
 	if ( !valid ) then return end
 
 	if ( !self.Sound ) then
-		self.Sound = CreateSound( self.Entity, self.SoundName )
+		self.Sound = CreateSound( self, self.SoundName )
 	end
 
 	self.Sound:PlayEx( 0.5, 100 )

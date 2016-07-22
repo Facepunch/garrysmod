@@ -23,7 +23,7 @@ function TOOL:LeftClick( trace )
 		local maxdistance = 512							-- The max distance the gun should reach
 
 		-- Lessen the force from a distance
-		local ratio = math.Clamp( ( 1 - ( distance / maxdistance ) ), 0, 1 )
+		local ratio = math.Clamp( 1 - ( distance / maxdistance ), 0, 1 )
 
 		-- Set up the 'real' force and the offset of the force
 		local vForce = -direction * ( force * ratio )
