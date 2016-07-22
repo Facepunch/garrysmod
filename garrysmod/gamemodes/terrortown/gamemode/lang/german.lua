@@ -453,7 +453,7 @@ Zoom an eine Leiche ran um sie aus einer
 großen Entfernung zu identifizieren.
 
 Unbegrenzt nutzbar, aber das Identifizieren dauert
-inige Sekunden.]]
+einige Sekunden.]]
 
 L.binoc_help_pri  = "{primaryfire} identifiziert einen Körpery."
 L.binoc_help_sec  = "{secondaryfire} ändert Zoom-Level."
