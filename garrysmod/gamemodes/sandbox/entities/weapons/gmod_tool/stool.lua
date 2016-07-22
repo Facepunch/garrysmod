@@ -77,16 +77,13 @@ end
 
 function ToolObj:GetClientInfo( property )
 
-	local mode = self:GetMode()
-	return self:GetOwner():GetInfo( mode .. "_" .. property )
+	return self:GetOwner():GetInfo( self:GetMode() .. "_" .. property )
 
 end
 
 function ToolObj:GetClientNumber( property, default )
 
-	default = tonumber(default) or 0
-	local mode = self:GetMode()
-	return self:GetOwner():GetInfoNum( mode .. "_" .. property, default )
+	return self:GetOwner():GetInfoNum( self:GetMode() .. "_" .. property, tonumber( default ) or 0 )
 
 end
 
@@ -166,8 +163,8 @@ if ( CLIENT ) then
 				spawnmenu.AddToolMenuOption( TOOL.Tab or "Main",
 											TOOL.Category or "New Category",
 											ToolName,
-											TOOL.Name or "#"..ToolName,
-											TOOL.Command or "gmod_tool "..ToolName,
+											TOOL.Name or "#" .. ToolName,
+											TOOL.Command or "gmod_tool " .. ToolName,
 											TOOL.ConfigName or ToolName,
 											TOOL.BuildCPanel )
 
