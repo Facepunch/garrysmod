@@ -103,15 +103,8 @@ function TBHUD:Draw(client)
                   if d > focus_d then
                      local x = abs(scrpos.x - midscreen_x)
                      local y = abs(scrpos.y - midscreen_y)
-                     if (x < focus_range and y < focus_range and
-                         x < focus_scrpos_x and y < focus_scrpos_y) then
-
-                        -- avoid constantly switching focus every frame causing
-                        -- 2+ buttons to appear in focus, instead "stick" to one
-                        -- ent for a very short time to ensure consistency
-                        if self.focus_stick < CurTime() or but == self.focus_ent then
-                           focus_ent = but
-                        end
+                     if (x < focus_range and y < focus_range and x < focus_scrpos_x and y < focus_scrpos_y) and self.focus_stick < CurTime() or but == self.focus_ent then
+                        focus_ent = but
                      end
                   end
                end

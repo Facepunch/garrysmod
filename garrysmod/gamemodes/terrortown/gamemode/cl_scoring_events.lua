@@ -192,7 +192,7 @@ local function KillText(e)
    end
 
    -- typically the "_using" strings are only for traps
-   local using = (not weapon)
+   local using = not weapon
 
    if is_dmg(dmg.t, DMG_FALL) then
       if ply_attacker then
@@ -248,5 +248,3 @@ Event(EVENT_KILL,
                   end
                end
      })
-
-

@@ -300,7 +300,7 @@ function KARMA.Remember(ply)
 end
 
 function KARMA.Recall(ply)
-   if config.persist:GetBool()then
+   if config.persist:GetBool() then
       ply.delay_karma_recall = not ply:IsFullyAuthenticated()
 
       if ply:IsFullyAuthenticated() then

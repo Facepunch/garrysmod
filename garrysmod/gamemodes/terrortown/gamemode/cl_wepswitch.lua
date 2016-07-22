@@ -61,7 +61,7 @@ local col_dark = {
 local round = math.Round
 function WSWITCH:DrawBarBg(x, y, w, h, col)
    local rx = round(x - 4)
-   local ry = round(y - (h / 2)-4)
+   local ry = round(y - (h / 2) - 4)
    local rw = round(w + 9)
    local rh = round(h + 8)
 
@@ -76,21 +76,21 @@ function WSWITCH:DrawBarBg(x, y, w, h, col)
    surface.SetTexture(barcorner)
 
    surface.SetDrawColor(c.r, c.g, c.b, c.a)
-   surface.DrawTexturedRectRotated( rx + bh , ry + bh, b, b, 0 ) 
-   surface.DrawTexturedRectRotated( rx + bh , ry + rh -bh, b, b, 90 ) 
-   surface.DrawRect( rx, ry+b, b, rh-b*2 )
-   surface.DrawRect( rx+b, ry, h - 4, rh )
-   
+   surface.DrawTexturedRectRotated( rx + bh , ry + bh, b, b, 0 )
+   surface.DrawTexturedRectRotated( rx + bh , ry + rh -bh, b, b, 90 )
+   surface.DrawRect( rx, ry + b, b, rh - b * 2 )
+   surface.DrawRect( rx + b, ry, h - 4, rh )
+
    -- Draw the remainder
    -- Could just draw a full roundedrect bg and overdraw it with the tip, but
    -- I don't have to do the hard work here anymore anyway
    c = col.bg
    surface.SetDrawColor(c.r, c.g, c.b, c.a)
 
-   surface.DrawRect( rx+b+h-4, ry,  rw - (h - 4) - b*2,  rh )
-   surface.DrawTexturedRectRotated( rx + rw - bh , ry + rh - bh, b, b, 180 ) 
-   surface.DrawTexturedRectRotated( rx + rw - bh , ry + bh, b, b, 270 ) 
-   surface.DrawRect( rx+rw-b,  ry+b,  b,  rh-b*2 )
+   surface.DrawRect( rx + b + h - 4, ry,  rw - (h - 4) - b * 2,  rh )
+   surface.DrawTexturedRectRotated( rx + rw - bh , ry + rh - bh, b, b, 180 )
+   surface.DrawTexturedRectRotated( rx + rw - bh , ry + bh, b, b, 270 )
+   surface.DrawRect( rx + rw-b,  ry + b,  b,  rh - b * 2 )
 
 end
 
@@ -109,7 +109,7 @@ function WSWITCH:DrawWeapon(x, y, c, wep)
    end
 
    -- Slot
-   local spec = {text=wep.Slot+1, font="Trebuchet22", pos={x+4, y}, yalign=TEXT_ALIGN_CENTER, color=c.text}
+   local spec = {text = wep.Slot + 1, font = "Trebuchet22",  pos = {x + 4, y}, yalign = TEXT_ALIGN_CENTER, color = c.text}
    draw.TextShadow(spec, 1, c.shadow)
 
    -- Name
@@ -127,7 +127,7 @@ function WSWITCH:DrawWeapon(x, y, c, wep)
 
       -- Ammo
       spec.text   = ammo
-      spec.pos[1] = ScrW() - margin*3
+      spec.pos[1] = ScrW() - margin * 3
       spec.xalign = TEXT_ALIGN_RIGHT
       spec.color  = col
       draw.Text(spec)
@@ -141,7 +141,7 @@ function WSWITCH:Draw(client)
 
    local weps = self.WeaponCache
 
-   local x = ScrW() - width - margin*2
+   local x = ScrW() - width - margin * 2
    local y = ScrH() - (#weps * (height + margin))
 
    local col = col_dark
@@ -154,7 +154,7 @@ function WSWITCH:Draw(client)
 
       self:DrawBarBg(x, y, width, height, col)
       if not self:DrawWeapon(x, y, col, wep) then
-         
+
          self:UpdateWeaponCache()
          return
       end
@@ -173,7 +173,7 @@ local function CopyVals(src, dest)
       if IsValid(v) then
          table.insert(dest, v)
       end
-   end   
+   end
 end
 
 function WSWITCH:UpdateWeaponCache()
@@ -227,7 +227,7 @@ function WSWITCH:DoSelect(idx)
    if self.cv.fast:GetBool() then
       -- immediately confirm if fastswitch is on
       self:ConfirmSelection(self.cv.display:GetBool())
-   end   
+   end
 end
 
 -- Numeric key access to direct slots
@@ -297,7 +297,7 @@ end
 
 -- Allow for suppression of the attack command
 function WSWITCH:PreventAttack()
-   return self.Show and !self.cv.fast:GetBool()
+   return self.Show and not self.cv.fast:GetBool()
 end
 
 function WSWITCH:Think()
@@ -329,7 +329,7 @@ local function QuickSlot(ply, cmd, args)
       else
          WSWITCH:SelectAndConfirm(slot)
       end
-   end   
+   end
 end
 concommand.Add("ttt_quickslot", QuickSlot)
 

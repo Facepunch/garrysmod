@@ -312,14 +312,14 @@ L.item_radar_desc = [[
 Tillåter dig att skanna efter livstecken.
 
 Startar automatiskt så fort du
-köper den. Konfigurera den i 
+köper den. Konfigurera den i
 Radar-fliken i den här menyn.]]
 
 L.item_disg       = "Förklädare"
 L.item_disg_desc  = [[
-Döljer din identitet när den är 
-påslagen. Hindrar även att man 
-blir den sista sedda personen 
+Döljer din identitet när den är
+påslagen. Hindrar även att man
+blir den sista sedda personen
 av ett offer.
 
 Slå av/på i Förklädnads-fliken
@@ -391,8 +391,8 @@ L.defuser_help    = "{primaryfire} desarmerar C4 i siktet."
 L.defuser_desc    = [[
 Desarmerar C4 omedelbart.
 
-Kan användas oändligt många 
-gånger. C4 märks tydligare 
+Kan användas oändligt många
+gånger. C4 märks tydligare
 om du bär detta verktyg.]]
 
 -- Flare gun
@@ -465,10 +465,10 @@ Offer skriker inte när de blir dödade.]]
 L.newton_name     = "Avståndsknuffare"
 
 L.newton_desc     = [[
-Knuffa spelare från ett 
+Knuffa spelare från ett
 bekvämt avstånd.
 
-Oändligt med ammunition, men 
+Oändligt med ammunition, men
 laddar om långsamt.]]
 
 -- Binoculars
@@ -485,7 +485,7 @@ L.binoc_help_sec  = "{secondaryfire} ändrar inzoomnings-nivån."
 
 -- UMP
 L.ump_desc        = [[
-Experimentell k-pist som 
+Experimentell k-pist som
 desorienterar målen.
 
 Använder vanlig k-pist-ammunition.]]
@@ -558,7 +558,7 @@ L.tele_help_pri   = "{primaryfire} teleporterar till markerad plats."
 L.tele_help_sec   = "{secondaryfire} markerar nuvarande plats."
 
 L.tele_desc       = [[
-Teleportera till en 
+Teleportera till en
 tidigare markerad plats.
 
 Teleportering orsakar oljud,
@@ -1052,10 +1052,10 @@ L.aw_fnd2_title = "Gotta Catch Em All"
 L.aw_fnd2_text  = "found {num} corpses for his collection."
 
 L.aw_fnd3_title = "Death Scent"
-L.aw_fnd3_text  = "keeps stumbling on random corpses, {num} times this round." 
+L.aw_fnd3_text  = "keeps stumbling on random corpses, {num} times this round."
 
 L.aw_crd1_title = "Recycler"
-L.aw_crd1_text  = "scrounged up {num} leftover credits from corpses." 
+L.aw_crd1_text  = "scrounged up {num} leftover credits from corpses."
 
 L.aw_tod1_title = "Pyrrhusseger"
 L.aw_tod1_text  = "dog bara några sekunder innan hans lag vann rundan."
@@ -1066,10 +1066,10 @@ L.aw_tod2_text  = "dog precis efter att rundan påbörjats."
 --- v23
 L.set_avoid_det     = "Undvik att bli vald som Detective"
 L.set_avoid_det_tip = "Aktivera det här för att be servern att inte välja dig som Detective om möjligt. Betyder inte att du är Traitor oftare."
- 
+
 --- v24
 L.drop_no_ammo = "Otillräcklig ammunition i vapnets klipp att släppa som en ammo låda."
- 
+
 --- v31
 L.set_cross_brightness = "Hårkors ljushet"
 L.set_cross_size = "Hårkors storlek"

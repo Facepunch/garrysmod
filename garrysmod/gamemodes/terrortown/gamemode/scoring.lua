@@ -59,10 +59,10 @@ function SCORE:HandleKill( victim, attacker, dmginfo )
    if not (IsValid(victim) and victim:IsPlayer()) then return end
 
    local e = {
-      id=EVENT_KILL,
-      att={ni="", sid=-1, tr=false},
-      vic={ni=victim:Nick(), sid=victim:SteamID(), tr=false},
-      dmg=CopyDmg(dmginfo)};
+      id = EVENT_KILL,
+      att = {ni = "", sid = -1, tr = false},
+      vic = {ni = victim:Nick(), sid = victim:SteamID(), tr = false},
+      dmg = CopyDmg(dmginfo)};
 
    e.dmg.h = victim.was_headshot
 
@@ -88,7 +88,7 @@ end
 
 function SCORE:HandleSpawn( ply )
    if ply:Team() == TEAM_TERROR then
-      self:AddEvent({id=EVENT_SPAWN, ni=ply:Nick(), sid=ply:SteamID()})
+      self:AddEvent({id = EVENT_SPAWN, ni = ply:Nick(), sid = ply:SteamID()})
    end
 end
 
@@ -103,11 +103,11 @@ function SCORE:HandleSelection()
       end
    end
 
-   self:AddEvent({id=EVENT_SELECTED, traitor_ids=traitors, detective_ids=detectives})
+   self:AddEvent({id = EVENT_SELECTED, traitor_ids = traitors, detective_ids = detectives})
 end
 
 function SCORE:HandleBodyFound(finder, found)
-   self:AddEvent({id=EVENT_BODYFOUND, ni=finder:Nick(), sid=finder:SteamID(), b=found:Nick()})
+   self:AddEvent({id = EVENT_BODYFOUND, ni = finder:Nick(), sid = finder:SteamID(), b = found:Nick()})
 end
 
 function SCORE:HandleC4Explosion(planter, arm_time, exp_time)
@@ -116,8 +116,8 @@ function SCORE:HandleC4Explosion(planter, arm_time, exp_time)
       nick = planter:Nick()
    end
 
-   self:AddEvent({id=EVENT_C4PLANT, ni=nick}, arm_time)
-   self:AddEvent({id=EVENT_C4EXPLODE, ni=nick}, exp_time)
+   self:AddEvent({id = EVENT_C4PLANT, ni = nick}, arm_time)
+   self:AddEvent({id = EVENT_C4EXPLODE, ni = nick}, exp_time)
 end
 
 function SCORE:HandleC4Disarm(disarmer, owner, success)
@@ -138,7 +138,7 @@ function SCORE:HandleC4Disarm(disarmer, owner, success)
 end
 
 function SCORE:HandleCreditFound(finder, found_nick, credits)
-   self:AddEvent({id=EVENT_CREDITFOUND, ni=finder:Nick(), sid=finder:SteamID(), b=found_nick, cr=credits})
+   self:AddEvent({id = EVENT_CREDITFOUND, ni = finder:Nick(), sid = finder:SteamID(), b = found_nick, cr = credits})
 end
 
 function SCORE:ApplyEventLogScores(wintype)
@@ -156,8 +156,6 @@ function SCORE:ApplyEventLogScores(wintype)
    end
 
    -- individual scores, and count those left alive
-   local alive = {traitors = 0, innos = 0}
-   local dead = {traitors = 0, innos = 0}
    local scored_log = ScoreEventLog(self.Events, scores, traitors, detectives)
    local ply = nil
    for sid, s in pairs(scored_log) do
@@ -189,11 +187,11 @@ function SCORE:ApplyEventLogScores(wintype)
 end
 
 function SCORE:RoundStateChange(newstate)
-   self:AddEvent({id=EVENT_GAME, state=newstate})
+   self:AddEvent({id = EVENT_GAME, state = newstate})
 end
 
 function SCORE:RoundComplete(wintype)
-   self:AddEvent({id=EVENT_FINISH, win=wintype})
+   self:AddEvent({id = EVENT_FINISH, win = wintype})
 end
 
 function SCORE:Reset()
@@ -245,7 +243,7 @@ function SCORE:StreamToClients()
    local parts = #cut
    for k, bit in pairs(cut) do
       net.Start("TTT_ReportStream")
-      net.WriteBit((k != parts)) -- continuation bit, 1 if there's more coming
+      net.WriteBit(k != parts) -- continuation bit, 1 if there's more coming
       net.WriteString(bit)
       net.Broadcast()
    end

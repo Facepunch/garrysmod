@@ -52,20 +52,15 @@ net.Receive("TTT_RoleChat", RoleChatRecv)
 -- special processing for certain special chat types
 function GM:ChatText(idx, name, text, type)
 
-   if type == "joinleave" then
-      if string.find(text, "Changed name during a round") then
-         -- prevent nick from showing up
-         chat.AddText(LANG.GetTranslation("name_kick"))
-         return true
-      end
+   if type == "joinleave" and string.find(text, "Changed name during a round") then
+      chat.AddText(LANG.GetTranslation("name_kick"))
+      return true
    end
 
-   if idx == 0 and type == "none" then
-      if string.sub(text, 1, 6) == "(VOTE)" then
-         chat.AddText(Color(255, 180, 0), string.sub(text, 8))
+   if idx == 0 and type == "none" and string.sub(text, 1, 6) == "(VOTE)" then
+      chat.AddText(Color(255, 180, 0), string.sub(text, 8))
 
-         return true
-      end
+      return true
    end
 
    return BaseClass.ChatText(self, idx, name, text, type)
@@ -81,19 +76,19 @@ local function AddDetectiveText(ply, text)
 end
 
 function GM:OnPlayerChat(ply, text, teamchat, dead)
-   if not IsValid(ply) then return BaseClass.OnPlayerChat(self, ply, text, teamchat, dead) end 
-   
+   if not IsValid(ply) then return BaseClass.OnPlayerChat(self, ply, text, teamchat, dead) end
+
    if ply:IsActiveDetective() then
       AddDetectiveText(ply, text)
       return true
    end
-   
+
    local team = ply:Team() == TEAM_SPEC
-   
+
    if team and not dead then
       dead = true
    end
-   
+
    if teamchat and ((not team and not ply:IsSpecial()) or team) then
       teamchat = false
    end
@@ -113,10 +108,8 @@ function ChatInterrupt()
    local last_seen = IsValid(client.last_id) and client.last_id:EntIndex() or 0
 
    local last_words = "."
-   if last_chat == "" then
-      if RADIO.LastRadio.t > CurTime() - 2 then
-         last_words = RADIO.LastRadio.msg
-      end
+   if last_chat == "" and RADIO.LastRadio.t > CurTime() - 2 then
+      last_words = RADIO.LastRadio.msg
    else
       last_words = last_chat
    end
@@ -130,33 +123,31 @@ net.Receive("TTT_InterruptChat", ChatInterrupt)
 RADIO = {}
 RADIO.Show = false
 
-RADIO.StoredTarget = {nick="", t=0}
-RADIO.LastRadio = {msg="", t=0}
+RADIO.StoredTarget = {nick = "", t = 0}
+RADIO.LastRadio    = {msg = "", t = 0}
 
 -- [key] -> command
 RADIO.Commands = {
-   {cmd="yes",      text="quick_yes", format=false},
-   {cmd="no",       text="quick_no", format=false},
-   {cmd="help",     text="quick_help", format=false},
-   {cmd="imwith",   text="quick_imwith", format=true},
-   {cmd="see",      text="quick_see", format=true},
-   {cmd="suspect",  text="quick_suspect", format=true},
-   {cmd="traitor",  text="quick_traitor", format=true},
-   {cmd="innocent", text="quick_inno", format=true},
-   {cmd="check",    text="quick_check", format=false}
+   {cmd = "yes",      text = "quick_yes", format = false},
+   {cmd = "no",       text = "quick_no", format = false},
+   {cmd = "help",     text = "quick_help", format = false},
+   {cmd = "imwith",   text = "quick_imwith", format = true},
+   {cmd = "see",      text = "quick_see", format = true},
+   {cmd = "suspect",  text = "quick_suspect", format = true},
+   {cmd = "traitor",  text = "quick_traitor", format = true},
+   {cmd = "innocent", text = "quick_inno", format = true},
+   {cmd = "check",    text = "quick_check", format = false}
 };
 
 local radioframe = nil
 
 function RADIO:ShowRadioCommands(state)
-   if not state then
-      if radioframe and radioframe:IsValid() then
-         radioframe:Remove()
-         radioframe = nil
+   if not state and radioframe and radioframe:IsValid() then
+      radioframe:Remove()
+      radioframe = nil
 
-         -- don't capture keys
-         self.Show = false
-      end
+      -- don't capture keys
+      self.Show = false
    else
       local client = LocalPlayer()
       if not IsValid(client) then return end
@@ -437,8 +428,8 @@ g_VoicePanelList = nil
 local function VoiceNotifyThink(pnl)
    if not (IsValid(pnl) and LocalPlayer() and IsValid(pnl.ply)) then return end
    if not (GetGlobalBool("ttt_locational_voice", false) and (not pnl.ply:IsSpec()) and (pnl.ply != LocalPlayer())) then return end
-   if LocalPlayer():IsActiveTraitor() && pnl.ply:IsActiveTraitor() then return end
-   
+   if LocalPlayer():IsActiveTraitor() and pnl.ply:IsActiveTraitor() then return end
+
    local d = LocalPlayer():GetPos():Distance(pnl.ply:GetPos())
 
    pnl:SetAlpha(math.max(-0.1 * d + 255, 15))
@@ -473,7 +464,7 @@ function GM:PlayerStartVoice( ply )
    local pnl = g_VoicePanelList:Add("VoiceNotify")
    pnl:Setup(ply)
    pnl:Dock(TOP)
-   
+
    local oldThink = pnl.Think
    pnl.Think = function( self )
                   oldThink( self )
@@ -488,10 +479,8 @@ function GM:PlayerStartVoice( ply )
                end
 
    if client:IsActiveTraitor() then
-      if ply == client then
-         if not client.traitor_gvoice then
-            pnl.Color = Color(200, 20, 20, 255)
-         end
+      if ply == client and not client.traitor_gvoice then
+        pnl.Color = Color(200, 20, 20, 255)
       elseif ply:IsActiveTraitor() then
          if not ply.traitor_gvoice then
             pnl.Color = Color(200, 20, 20, 255)
@@ -572,8 +561,6 @@ local function CreateVoiceVGUI()
     MutedState:SetVisible(false)
 end
 hook.Add( "InitPostEntity", "CreateVoiceVGUI", CreateVoiceVGUI )
-
-local MuteStates = {MUTE_NONE, MUTE_TERROR, MUTE_ALL, MUTE_SPEC}
 
 local MuteText = {
    [MUTE_NONE]   = "",

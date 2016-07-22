@@ -69,7 +69,7 @@ local CurTime = CurTime
 local function SetSubPhysMotionEnabled(ent, enable)
    if not IsValid(ent) then return end
 
-   for i=0, ent:GetPhysicsObjectCount()-1 do
+   for i = 0, ent:GetPhysicsObjectCount() - 1 do
       local subphys = ent:GetPhysicsObjectNum(i)
       if IsValid(subphys) then
          subphys:EnableMotion(enable)
@@ -246,8 +246,8 @@ function SWEP:AllowPickup(target)
    local phys = target:GetPhysicsObject()
    local ply = self:GetOwner()
 
-   return (IsValid(phys) and IsValid(ply) and
-           (not phys:HasGameFlag(FVPHYSICS_NO_PLAYER_PICKUP)) and
+   return IsValid(phys) and IsValid(ply) and
+           (not phys:HasGameFlag(FVPHYSICS_NO_PLAYER_PICKUP) and
            phys:GetMass() < CARRY_WEIGHT_LIMIT and
            (not PlayerStandsOn(target)) and
            (target.CanPickup != false) and
@@ -256,23 +256,20 @@ function SWEP:AllowPickup(target)
 end
 
 function SWEP:DoAttack(pickup)
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
 
    if IsValid(self.EntHolding) then
-      self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
+      self:SendWeaponAnim( ACT_VM_MISSCENTER )
 
-      if (not pickup) and self.EntHolding:GetClass() == "prop_ragdoll" then
-         -- see if we can pin this ragdoll to a wall in front of us
-         if not self:PinRagdoll() then
-            -- else just drop it as usual
-            self:Drop()
-         end
+      if (not pickup) and self.EntHolding:GetClass() == "prop_ragdoll" and not self:PinRagdoll() then  -- see if we can pin this ragdoll to a wall in front of us
+        -- else just drop it as usual
+        self:Drop()
       else
          self:Drop()
       end
 
-      self.Weapon:SetNextSecondaryFire(CurTime() + 0.3)
+      self:SetNextSecondaryFire(CurTime() + 0.3)
       return
    end
 
@@ -290,50 +287,46 @@ function SWEP:DoAttack(pickup)
       -- if we let the client mess with physics, desync ensues
       if CLIENT then return end
 
-      if pickup then
-         if (ply:EyePos() - trace.HitPos):Length() < self:GetRange(ent) then
+      if pickup and (ply:EyePos() - trace.HitPos):Length() < self:GetRange(ent) then
 
             if self:AllowPickup(ent) then
-               self:Pickup()
-               self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
+            self:Pickup()
+            self:SendWeaponAnim( ACT_VM_HITCENTER )
 
-               -- make the refire slower to avoid immediately dropping
-               local delay = (ent:GetClass() == "prop_ragdoll") and 0.8 or 0.5
+            -- make the refire slower to avoid immediately dropping
+            local delay = (ent:GetClass() == "prop_ragdoll") and 0.8 or 0.5
 
-               self.Weapon:SetNextSecondaryFire(CurTime() + delay)
-               return
-            else
-               local is_ragdoll = trace.Entity:GetClass() == "prop_ragdoll"
+            self:SetNextSecondaryFire(CurTime() + delay)
+            return
+         else
+            local is_ragdoll = trace.Entity:GetClass() == "prop_ragdoll"
 
-               -- pull heavy stuff
-               local ent = trace.Entity
-               local phys = ent:GetPhysicsObject()
-               local pdir = trace.Normal * -1
+            -- pull heavy stuff
+            local ent = trace.Entity
+            local phys = ent:GetPhysicsObject()
+            local pdir = trace.Normal * -1
 
-               if is_ragdoll then
+            if is_ragdoll then
 
-                  phys = ent:GetPhysicsObjectNum(trace.PhysicsBone)
+              phys = ent:GetPhysicsObjectNum(trace.PhysicsBone)
 
-                  -- increase refire to make rags easier to drag
-                  --self.Weapon:SetNextSecondaryFire(CurTime() + 0.04)
-               end
+              -- increase refire to make rags easier to drag
+              --self.Weapon:SetNextSecondaryFire(CurTime() + 0.04)
+            end
 
-               if IsValid(phys) then
-                  self:MoveObject(phys, pdir, 6000, is_ragdoll)
-                  return
-               end
+            if IsValid(phys) then
+              self:MoveObject(phys, pdir, 6000, is_ragdoll)
+              return
             end
          end
       else
          if (ply:EyePos() - trace.HitPos):Length() < 100 then
             local phys = trace.Entity:GetPhysicsObject()
             if IsValid(phys) then
-               if IsValid(phys) then
-                  local pdir = trace.Normal
-                  self:MoveObject(phys, pdir, 6000, (trace.Entity:GetClass() == "prop_ragdoll"))
+              local pdir = trace.Normal
+              self:MoveObject(phys, pdir, 6000, trace.Entity:GetClass() == "prop_ragdoll")
 
-                  self.Weapon:SetNextPrimaryFire(CurTime() + 0.03)
-               end
+              self:SetNextPrimaryFire(CurTime() + 0.03)
             end
          end
       end
@@ -367,7 +360,7 @@ function SWEP:Pickup()
          self.CarryHack:SetOwner(ply)
          self.CarryHack:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
          self.CarryHack:SetSolid(SOLID_NONE)
-         
+
          -- set the desired angles before adding the constraint
          self.CarryHack:SetAngles(self.Owner:GetAngles())
 

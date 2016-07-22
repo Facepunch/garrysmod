@@ -24,7 +24,7 @@ function ENT:Initialize()
          ent:PhysWake()
 
          if ent.AmmoEnt and self.AutoAmmo > 0 then
-            for i=1, self.AutoAmmo do
+            for i = 1, self.AutoAmmo do
                local ammo = ents.Create(ent.AmmoEnt)
                if IsValid(ammo) then
                   pos.z = pos.z + 3 -- shift every box up a bit

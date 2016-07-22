@@ -4,8 +4,6 @@ include("shared.lua")
 
 local starttime = C4_MINIMUM_TIME
 
-local beep = Sound("weapons/c4/c4_click.wav")
-
 local T = LANG.GetTranslation
 local PT = LANG.GetParamTranslation
 
@@ -27,26 +25,24 @@ function ShowC4Config(bomb)
    local bg = vgui.Create("DPanel", dframe)
    bg:SetPaintBackground(false)
    bg:SetPos(0,0)
-   bg:StretchToParent(m,m*5,m,m)
+   bg:StretchToParent(m, m * 5, m, m)
 
    -- Time
    local dformtime = vgui.Create("DForm", bg)
    dformtime:SetPos(m, m)
-   dformtime:SetSize(w - m*4, h / 2)
+   dformtime:SetSize(w - m * 4, h / 2)
    dformtime:SetName(T("c4_arm_timer"))
 
    local dclock = vgui.Create("DLabel", dformtime)
    dclock:SetFont("TimeLeft")
    dclock:SetText(util.SimpleTime(starttime, "%02i:%02i"))
    dclock:SizeToContents()
-   dclock:SetPos(m*2, m*2)
+   dclock:SetPos(m * 2, m * 2)
 
    dformtime:AddItem(dclock)
 
-   local ch, cw = dclock:GetSize()
-
    local dtime = vgui.Create("DNumSlider", dformtime)
-   dtime:SetWide(w - m*4)
+   dtime:SetWide(w - m * 4)
    dtime:SetText(T("c4_arm_seconds"))
    dtime:SetDark(false)
    dtime:SetMin(C4_MINIMUM_TIME)
@@ -85,7 +81,7 @@ function ShowC4Config(bomb)
    local dformmisc = vgui.Create("DForm", bg)
    dformmisc:SetAutoSize(false)
    dformmisc:SetPos(m, m + 140)
-   dformmisc:SetSize(w - m*4, h / 2)
+   dformmisc:SetSize(w - m * 4, h / 2)
    dformmisc:SetPadding(20)
    dformmisc:SetName(T("c4_remove_title"))
 
@@ -95,7 +91,7 @@ function ShowC4Config(bomb)
    local bw, bh = 110, 25
 
    local dgrab = vgui.Create("DButton", dformmisc)
-   dgrab:SetPos(m*6, m*5)
+   dgrab:SetPos(m * 6, m * 5)
    dgrab:SetSize(bw, bh)
    dgrab:SetText(T("c4_remove_pickup"))
    dgrab:SetDisabled(false)
@@ -109,7 +105,7 @@ function ShowC4Config(bomb)
    --dformmisc:AddItem(dgrab)
 
    local ddestroy = vgui.Create("DButton", dformmisc)
-   ddestroy:SetPos(w - m*4 - bw - m*6, m*5)
+   ddestroy:SetPos(w - m * 4 - bw - m * 6, m * 5)
    ddestroy:SetSize(bw, bh)
    ddestroy:SetText(T("c4_remove_destroy1"))
    ddestroy:SetDisabled(false)
@@ -128,7 +124,7 @@ function ShowC4Config(bomb)
 
 
    local dconf = vgui.Create("DButton", bg)
-   dconf:SetPos(m*2, m + by)
+   dconf:SetPos(m * 2, m + by)
    dconf:SetSize(bw, bh)
    dconf:SetText(T("c4_arm"))
    dconf.DoClick = function()
@@ -142,7 +138,7 @@ function ShowC4Config(bomb)
                    end
 
    local dcancel = vgui.Create("DButton", bg)
-   dcancel:SetPos( w - m*4 - bw, m + by)
+   dcancel:SetPos( w - m * 4 - bw, m + by)
    dcancel:SetSize(bw, bh)
    dcancel:SetText(T("cancel"))
    dcancel.DoClick = function() dframe:Close() end
@@ -261,8 +257,7 @@ function PANEL:Init()
    self.Wires = {}
 
    local wx, wy = -84, 70
-   local wc = 1
-   for i=1, self:GetWireCount() do
+   for i = 1, self:GetWireCount() do
       local w = vgui.Create("DisarmWire", self)
       w:SetPos(wx, wy)
       w:SetImage(c4_wire_mat:GetName())
@@ -348,12 +343,12 @@ function ShowC4Disarm(bomb)
    dstatus:SetTextColor(Color(200, 0, 0, 255))
    dstatus:SetExpensiveShadow(1, COLOR_BLACK)
    dstatus:SizeToContents()
-   dstatus:SetPos(m, m*2 + 30)
+   dstatus:SetPos(m, m * 2 + 30)
    dstatus:CenterHorizontal()
 
 
    local dgrab = vgui.Create("DButton", dright)
-   dgrab:SetPos(m, right_h - m*2 - bh*2)
+   dgrab:SetPos(m, right_h - m * 2 - bh * 2)
    dgrab:SetSize(bw, bh)
    dgrab:CenterHorizontal()
    dgrab:SetText(T("c4_remove_pickup"))
@@ -458,7 +453,6 @@ end
 
 local function C4ConfigHook()
    local idx = net.ReadUInt(16)
-
    local bomb = ents.GetByIndex(idx)
    if IsValid(bomb) then
       if not bomb:GetArmed() then
@@ -472,8 +466,6 @@ net.Receive("TTT_C4Config", C4ConfigHook)
 
 local function C4DisarmResultHook()
    local idx = net.ReadUInt(16)
-   local result = {}
-
    local correct = net.ReadBit() == 1
 
    local bomb = ents.GetByIndex(idx)

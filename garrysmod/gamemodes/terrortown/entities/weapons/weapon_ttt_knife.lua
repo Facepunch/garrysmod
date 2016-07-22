@@ -49,8 +49,8 @@ SWEP.IsSilent               = true
 SWEP.DeploySpeed            = 2
 
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
 
    if not IsValid(self.Owner) then return end
 
@@ -62,18 +62,18 @@ function SWEP:PrimaryAttack()
    local kmins = Vector(1,1,1) * -10
    local kmaxs = Vector(1,1,1) * 10
 
-   local tr = util.TraceHull({start=spos, endpos=sdest, filter=self.Owner, mask=MASK_SHOT_HULL, mins=kmins, maxs=kmaxs})
+   local tr = util.TraceHull({start = spos, endpos = sdest, filter = self.Owner, mask = MASK_SHOT_HULL, mins = kmins, maxs = kmaxs})
 
    -- Hull might hit environment stuff that line does not hit
    if not IsValid(tr.Entity) then
-      tr = util.TraceLine({start=spos, endpos=sdest, filter=self.Owner, mask=MASK_SHOT_HULL})
+      tr = util.TraceLine({start = spos, endpos = sdest, filter = self.Owner, mask = MASK_SHOT_HULL})
    end
 
    local hitEnt = tr.Entity
 
    -- effects
    if IsValid(hitEnt) then
-      self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
+      self:SendWeaponAnim( ACT_VM_HITCENTER )
 
       local edata = EffectData()
       edata:SetStart(spos)
@@ -85,7 +85,7 @@ function SWEP:PrimaryAttack()
          util.Effect("BloodImpact", edata)
       end
    else
-      self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
+      self:SendWeaponAnim( ACT_VM_MISSCENTER )
    end
 
    if SERVER then
@@ -93,25 +93,23 @@ function SWEP:PrimaryAttack()
    end
 
 
-   if SERVER and tr.Hit and tr.HitNonWorld and IsValid(hitEnt) then
-      if hitEnt:IsPlayer() then
-         -- knife damage is never karma'd, so don't need to take that into
-         -- account we do want to avoid rounding error strangeness caused by
-         -- other damage scaling, causing a death when we don't expect one, so
-         -- when the target's health is close to kill-point we just kill
-         if hitEnt:Health() < (self.Primary.Damage + 10) then
-            self:StabKill(tr, spos, sdest)
-         else
-            local dmg = DamageInfo()
-            dmg:SetDamage(self.Primary.Damage)
-            dmg:SetAttacker(self.Owner)
-            dmg:SetInflictor(self.Weapon or self)
-            dmg:SetDamageForce(self.Owner:GetAimVector() * 5)
-            dmg:SetDamagePosition(self.Owner:GetPos())
-            dmg:SetDamageType(DMG_SLASH)
+   if SERVER and tr.Hit and tr.HitNonWorld and IsValid(hitEnt) and hitEnt:IsPlayer() then
+     -- knife damage is never karma'd, so don't need to take that into
+     -- account we do want to avoid rounding error strangeness caused by
+     -- other damage scaling, causing a death when we don't expect one, so
+     -- when the target's health is close to kill-point we just kill
+     if hitEnt:Health() < (self.Primary.Damage + 10) then
+        self:StabKill(tr, spos, sdest)
+     else
+        local dmg = DamageInfo()
+        dmg:SetDamage(self.Primary.Damage)
+        dmg:SetAttacker(self.Owner)
+        dmg:SetInflictor(self)
+        dmg:SetDamageForce(self.Owner:GetAimVector() * 5)
+        dmg:SetDamagePosition(self.Owner:GetPos())
+        dmg:SetDamageType(DMG_SLASH)
 
-            hitEnt:DispatchTraceAttack(dmg, spos + (self.Owner:GetAimVector() * 3), sdest)
-         end
+        hitEnt:DispatchTraceAttack(dmg, spos + (self.Owner:GetAimVector() * 3), sdest)
       end
    end
 
@@ -124,7 +122,7 @@ function SWEP:StabKill(tr, spos, sdest)
    local dmg = DamageInfo()
    dmg:SetDamage(2000)
    dmg:SetAttacker(self.Owner)
-   dmg:SetInflictor(self.Weapon or self)
+   dmg:SetInflictor(self)
    dmg:SetDamageForce(self.Owner:GetAimVector())
    dmg:SetDamagePosition(self.Owner:GetPos())
    dmg:SetDamageType(DMG_SLASH)
@@ -134,12 +132,12 @@ function SWEP:StabKill(tr, spos, sdest)
    -- hope our effect_fn trace has more luck
 
    -- first a straight up line trace to see if we aimed nicely
-   local retr = util.TraceLine({start=spos, endpos=sdest, filter=self.Owner, mask=MASK_SHOT_HULL})
+   local retr = util.TraceLine({start = spos, endpos = sdest, filter = self.Owner, mask = MASK_SHOT_HULL})
 
    -- if that fails, just trace to worldcenter so we have SOMETHING
    if retr.Entity != target then
       local center = target:LocalToWorld(target:OBBCenter())
-      retr = util.TraceLine({start=spos, endpos=center, filter=self.Owner, mask=MASK_SHOT_HULL})
+      retr = util.TraceLine({start = spos, endpos = center, filter = self.Owner, mask = MASK_SHOT_HULL})
    end
 
 
@@ -151,12 +149,11 @@ function SWEP:StabKill(tr, spos, sdest)
    ang:RotateAroundAxis(ang:Right(), -90)
    pos = pos - (ang:Forward() * 7)
 
-   local prints = self.fingerprints
    local ignore = self.Owner
 
    target.effect_fn = function(rag)
                          -- we might find a better location
-                         local rtr = util.TraceLine({start=pos, endpos=pos + norm * 40, filter=ignore, mask=MASK_SHOT_HULL})
+                         local rtr = util.TraceLine({start = pos, endpos = pos + norm * 40, filter = ignore, mask = MASK_SHOT_HULL})
 
                          if IsValid(rtr.Entity) and rtr.Entity == rag then
                             bone = rtr.PhysicsBone
@@ -198,11 +195,11 @@ function SWEP:StabKill(tr, spos, sdest)
 end
 
 function SWEP:SecondaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
 
 
-   self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
+   self:SendWeaponAnim( ACT_VM_MISSCENTER )
 
    if SERVER then
       local ply = self.Owner
@@ -256,8 +253,8 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Equip()
-   self.Weapon:SetNextPrimaryFire( CurTime() + (self.Primary.Delay * 1.5) )
-   self.Weapon:SetNextSecondaryFire( CurTime() + (self.Secondary.Delay * 1.5) )
+   self:SetNextPrimaryFire( CurTime() + (self.Primary.Delay * 1.5) )
+   self:SetNextSecondaryFire( CurTime() + (self.Secondary.Delay * 1.5) )
 end
 
 function SWEP:PreDrop()
@@ -297,5 +294,3 @@ if CLIENT then
       return self.BaseClass.DrawHUD(self)
    end
 end
-
-

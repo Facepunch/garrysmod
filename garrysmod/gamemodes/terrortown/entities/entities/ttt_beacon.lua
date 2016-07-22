@@ -87,9 +87,7 @@ end
 if SERVER then
    --local beep = Sound("weapons/c4/c4_beep1.wav")
    function ENT:Think()
-      if SERVER then
-         --sound.Play(beep, self:GetPos(), 100, 80)
-      else
+      if CLIENT then
          local dlight = DynamicLight(self:EntIndex())
          if dlight then
             dlight.Pos = self:GetPos()
@@ -109,4 +107,3 @@ if SERVER then
 
    function ENT:UpdateTransmitState() return TRANSMIT_ALWAYS end
 end
-

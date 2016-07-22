@@ -38,18 +38,15 @@ local function RadarScan(ply, cmd, args)
 
             local role = p:IsPlayer() and p:GetRole() or -1
 
-            if not p:IsPlayer() then
-               -- Decoys appear as innocents for non-traitors
-               if not ply:IsTraitor() then
-                  role = ROLE_INNOCENT
-               end
+            if not p:IsPlayer() and not ply:IsTraitor() then -- Decoys appear as innocents for non-traitors
+              role = ROLE_INNOCENT
             elseif role != ROLE_INNOCENT and role != ply:GetRole() then
                -- Detectives/Traitors can see who has their role, but not who
                -- has the opposite role.
                role = ROLE_INNOCENT
             end
 
-            table.insert(targets, {role=role, pos=pos})
+            table.insert(targets, {role = role, pos = pos})
          end
 
          net.Start("TTT_Radar")
@@ -69,4 +66,3 @@ local function RadarScan(ply, cmd, args)
    end
 end
 concommand.Add("ttt_radar_scan", RadarScan)
-

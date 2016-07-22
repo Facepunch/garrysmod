@@ -240,7 +240,7 @@ local dummify = {
 };
 
 for k, cls in pairs(dummify) do
-   scripted_ents.Register({Type="point", IsWeaponDummy=true}, cls, false)
+   scripted_ents.Register({Type = "point", IsWeaponDummy = true}, cls, false)
 end
 
 -- Cache this, every ttt_random_weapon uses it in its Init
@@ -289,7 +289,7 @@ local function PlaceWeapon(swep, pos, ang)
 
    -- Create some associated ammo (if any)
    if ent.AmmoEnt then
-      for i=1, math.random(0,3) do
+      for i = 1, math.random(0,3) do
          local ammo = ents.Create(ent.AmmoEnt)
 
          if IsValid(ammo) then
@@ -305,7 +305,7 @@ local function PlaceWeapon(swep, pos, ang)
    return ent
 end
 
--- Spawns a bunch of guns (scaling with maxplayers count or 
+-- Spawns a bunch of guns (scaling with maxplayers count or
 -- by ttt_weapon_spawn_max cvar) at randomly selected
 -- entities of the classes given the table
 local function PlaceWeaponsAtEnts(spots_classes)
@@ -317,13 +317,13 @@ local function PlaceWeaponsAtEnts(spots_classes)
    end
 
    local spawnables = ents.TTT.GetSpawnableSWEPs()
-   
+
    local max = GetConVar( "ttt_weapon_spawn_count" ):GetInt()
-   if max == 0 then 
+   if max == 0 then
       max = game.MaxPlayers()
       max = max + math.max(3, 0.33 * max)
    end
-   
+
    local num = 0
    local w = nil
    for k, v in RandomPairs(spots) do

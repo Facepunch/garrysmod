@@ -39,7 +39,7 @@ local function PushPullRadius(pos, pusher)
 
             target:SetVelocity(vel)
 
-            target.was_pushed = {att=pusher, t=CurTime(), wep="weapon_ttt_confgrenade"}
+            target.was_pushed = {att = pusher, t = CurTime(), wep = "weapon_ttt_confgrenade"}
 
          elseif IsValid(phys) then
             phys:ApplyForceCenter(dir * -1 * phys_force)
@@ -84,15 +84,15 @@ function ENT:Explode(tr)
       if tr.Fraction != 1.0 then
          effect:SetNormal(tr.HitNormal)
       end
-      
+
       util.Effect("Explosion", effect, true, true)
       util.Effect("cball_explode", effect, true, true)
 
       sound.Play(zapsound, pos, 100, 100)
    else
       local spos = self:GetPos()
-      local trs = util.TraceLine({start=spos + Vector(0,0,64), endpos=spos + Vector(0,0,-128), filter=self})
-      util.Decal("SmallScorch", trs.HitPos + trs.HitNormal, trs.HitPos - trs.HitNormal)      
+      local trs = util.TraceLine({start = spos + Vector(0,0,64), endpos = spos + Vector(0,0,-128), filter = self})
+      util.Decal("SmallScorch", trs.HitPos + trs.HitNormal, trs.HitPos - trs.HitNormal)
 
       self:SetDetonateExact(0)
    end

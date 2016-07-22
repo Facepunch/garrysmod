@@ -49,10 +49,10 @@ function ENT:GetNearbyCorpses()
 
    local n = #near
    local ent = nil
-   for i=1, n do
+   for i = 1, n do
       ent = near[i]
       if IsValid(ent) and ent.player_ragdoll and ent.scene then
-         table.insert(near_corpses, {ent=ent, dist=pos:LengthSqr()})
+         table.insert(near_corpses, {ent = ent, dist = pos:LengthSqr()})
       end
    end
 
@@ -185,7 +185,7 @@ function ENT:Explode(tr)
       util.Effect("pulse_sphere", e)
 
       -- show scenes for nearest corpses
-      for i=1, self.MaxScenesPerPulse do
+      for i = 1, self.MaxScenesPerPulse do
          local corpse = corpses[i]
          if corpse and IsValid(corpse.ent) then
             self:ShowSceneForCorpse(corpse.ent)
@@ -203,5 +203,3 @@ function ENT:Explode(tr)
 
    end
 end
-
-

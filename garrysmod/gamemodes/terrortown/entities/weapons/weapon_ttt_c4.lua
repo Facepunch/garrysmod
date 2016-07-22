@@ -8,7 +8,7 @@ SWEP.HoldType               = "slam"
 if CLIENT then
    SWEP.PrintName           = "C4"
    SWEP.Slot                = 6
-   
+
    SWEP.ViewModelFlip      = false
    SWEP.ViewModelFOV       = 54
    SWEP.DrawCrosshair      = false
@@ -118,14 +118,14 @@ function SWEP:BombStick()
       local ignore = {ply, self}
       local spos = ply:GetShootPos()
       local epos = spos + ply:GetAimVector() * 80
-      local tr = util.TraceLine({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID})
+      local tr = util.TraceLine({start = spos, endpos = epos, filter = ignore, mask = MASK_SOLID})
 
       if tr.HitWorld then
          local bomb = ents.Create("ttt_c4")
          if IsValid(bomb) then
             bomb:PointAtEntity(ply)
 
-            local tr_ent = util.TraceEntity({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID}, bomb)
+            local tr_ent = util.TraceEntity({start = spos, endpos = epos, filter = ignore, mask = MASK_SOLID}, bomb)
 
             if tr_ent.HitWorld then
 

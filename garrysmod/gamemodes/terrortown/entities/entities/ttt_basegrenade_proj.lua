@@ -51,7 +51,7 @@ function ENT:Think()
 
       -- find the ground if it's near and pass it to the explosion
       local spos = self:GetPos()
-      local tr = util.TraceLine({start=spos, endpos=spos + Vector(0,0,-32), mask=MASK_SHOT_HULL, filter=self.thrower})
+      local tr = util.TraceLine({start = spos, endpos = spos + Vector(0,0,-32), mask = MASK_SHOT_HULL, filter = self.thrower})
 
       local success, err = pcall(self.Explode, self, tr)
       if not success then

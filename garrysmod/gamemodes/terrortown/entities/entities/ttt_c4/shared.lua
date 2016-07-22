@@ -123,7 +123,7 @@ function ENT:WeldToGround(state)
       local ignore = player.GetAll()
       table.insert(ignore, self)
 
-      local tr = util.TraceEntity({start=self:GetPos(), endpos=self:GetPos() - Vector(0,0,16), filter=ignore, mask=MASK_SOLID}, self)
+      local tr = util.TraceEntity({start = self:GetPos(), endpos = self:GetPos() - Vector(0,0,16), filter = ignore, mask = MASK_SOLID}, self)
 
       -- Start by increasing weight/making uncarryable
       local phys = self:GetPhysicsObject()
@@ -270,7 +270,7 @@ function ENT:Explode(tr)
       self:Remove()
    else
       local spos = self:GetPos()
-      local trs = util.TraceLine({start=spos + Vector(0,0,64), endpos=spos + Vector(0,0,-128), filter=self})
+      local trs = util.TraceLine({start = spos + Vector(0,0,64), endpos = spos + Vector(0,0,-128), filter = self})
       util.Decal("Scorch", trs.HitPos + trs.HitNormal, trs.HitPos - trs.HitNormal)
 
       self:SetExplodeTime(0)
@@ -288,10 +288,8 @@ function ENT:IsDetectiveNear()
          diff = center - ent:GetPos()
          d = diff:Dot(diff)
 
-         if d < r then
-            if ent:HasWeapon("weapon_ttt_defuser") then
-               return true
-            end
+         if d < r and ent:HasWeapon("weapon_ttt_defuser") then
+            return true
          end
       end
    end
@@ -317,7 +315,7 @@ function ENT:Think()
    if self:GetArmed() and etime != 0 and etime < CurTime() then
       -- find the ground if it's near and pass it to the explosion
       local spos = self:GetPos()
-      local tr = util.TraceLine({start=spos, endpos=spos + Vector(0,0,-32), mask=MASK_SHOT_HULL, filter=self:GetThrower()})
+      local tr = util.TraceLine({start = spos, endpos = spos + Vector(0,0,-32), mask = MASK_SHOT_HULL, filter = self:GetThrower()})
 
       local success, err = pcall(self.Explode, self, tr)
       if not success then
@@ -359,7 +357,7 @@ function ENT:Think()
 end
 
 function ENT:Defusable()
-	return self:GetArmed()
+   return self:GetArmed()
 end
 
 -- Timer configuration handlign
@@ -431,13 +429,12 @@ if SERVER then
 
       -- list of possible wires to make safe
       local choices = {}
-      for i=1, C4_WIRE_COUNT do
+      for i = 1, C4_WIRE_COUNT do
          table.insert(choices, i)
       end
 
       -- random selection process, lot like traitor selection
       local safe_count = self.SafeWiresForTime(time)
-      local safes = {}
       local picked = 0
       while picked < safe_count do
          local pick = math.random(1, #choices)
@@ -592,8 +589,8 @@ if CLIENT then
       else
          local ang = self:GetAngles()
          ang:RotateAroundAxis(self:GetUp(), -90)
-         local pos = (self:GetPos() + self:GetForward() * 4.5 +
-                      self:GetUp() * 9.0 + self:GetRight() * 7.8)
+         local pos = self:GetPos() + self:GetForward() * 4.5 +
+                      self:GetUp() * 9.0 + self:GetRight() * 7.8
          return { Pos = pos, Ang = ang }
       end
    end
