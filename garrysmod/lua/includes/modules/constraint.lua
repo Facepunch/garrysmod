@@ -177,7 +177,7 @@ function RemoveConstraints( Ent, Type )
 
 	for k, v in pairs( c ) do
 
-		if ( !v:IsValid() ) then
+		if ( !IsValid( v ) ) then
 
 			c[ k ] = nil
 
@@ -490,7 +490,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
 	local WPos1 = Phys1:LocalToWorld( LPos1 )
 	local WPos2 = Phys2:LocalToWorld( LPos2 )
-	local addlength = addlength or 0
+	local addlength = math.Clamp( addlength or 0, -56756, 56756 )
 	local Constraint = nil
 
 	-- Make Constraint
@@ -499,9 +499,9 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 		onStartConstraint( Ent1, Ent2 )
 
 			-- Create the constraint
-			Constraint = ents.Create("phys_lengthconstraint")
+			Constraint = ents.Create( "phys_lengthconstraint" )
 				Constraint:SetPos( WPos1 )
-				Constraint:SetKeyValue( "attachpoint", tostring(WPos2) )
+				Constraint:SetKeyValue( "attachpoint", tostring( WPos2 ) )
 				Constraint:SetKeyValue( "minlength", "0.0" )
 				Constraint:SetKeyValue( "length", length + addlength )
 				if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
