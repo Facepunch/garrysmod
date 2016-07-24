@@ -28,6 +28,7 @@ require ( "http" )
 require ( "cvars" )
 require ( "cookie" )
 require ( "baseclass" )
+require ( "utf8" )
 
 
 --[[---------------------------------------------------------
@@ -45,6 +46,7 @@ include ( "extensions/client/panel.lua" )
 include ( "extensions/util.lua" )
 include ( "extensions/file.lua" )
 include ( "extensions/debug.lua" )
+include ( "extensions/coroutine.lua" )
 include ( "extensions/client/render.lua" )
 
 include( "util/vgui_showlayout.lua" )
