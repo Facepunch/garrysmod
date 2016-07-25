@@ -57,14 +57,17 @@ local MAX_ITEM = 30
 SWEP.MaxItemSamples        = MAX_ITEM
 
 local CHARGE_DELAY = 0.1
-local CHARGE_RATE = 3
-local MAX_CHARGE = 1250
+local CHARGE_RATE  = 3
+local MAX_CHARGE   = 1250
 
-local SAMPLE_PLAYER = 1
-local SAMPLE_ITEM   = 2
+local SAMPLE_RAGDOLL = 1
+local SAMPLE_ITEM    = 2
+local SAMPLE_PLAYER  = 3
 
 AccessorFuncDT(SWEP, "charge", "Charge")
 AccessorFuncDT(SWEP, "last_scanned", "LastScanned")
+
+local scanplayer = CreateConVar("ttt_dna_scan_player", 0)
 
 if CLIENT then
    CreateClientConVar("ttt_dna_scan_repeat", 1, true, true)
@@ -107,10 +110,10 @@ function SWEP:PrimaryAttack()
 
    local tr = util.TraceLine({start=spos, endpos=sdest, filter=self.Owner, mask=MASK_SHOT})
    local ent = tr.Entity
-   if IsValid(ent) and (not ent:IsPlayer()) then
+   if IsValid(ent) then
       if SERVER then
-         if ent:IsPlayer() then
-            --self:GatherPlayerSample(ent)
+         if ent:IsPlayer() and scanplayer:GetBool() then
+            self:GatherPlayerSample(ent)
          elseif ent:GetClass() == "prop_ragdoll" and ent.killer_sample then
             if CORPSE.GetFound(ent, false) then
                self:GatherRagdollSample(ent)
@@ -146,7 +149,7 @@ function SWEP:GatherRagdollSample(ent)
          return
       end
 
-      local added = self:AddPlayerSample(ent, ply)
+      local added = self:AddRagdollSample(ent, ply)
 
       if not added then
          self:Report("dna_limit")
@@ -179,13 +182,23 @@ function SWEP:GatherObjectSample(ent)
    end
 end
 
+function SWEP:GatherPlayerSample(player)
+   local added = self:AddPlayerSample(player)
+
+   if not added then
+      self:Report("dna_limit")
+   else
+      self:Report("dna_player", {nick = player:Nick()})
+   end
+end
+
 function SWEP:Report(msg, params)
    LANG.Msg(self.Owner, msg, params)
 end
 
-function SWEP:AddPlayerSample(corpse, killer)
+function SWEP:AddRagdollSample(corpse, killer)
    if #self.ItemSamples < self.MaxItemSamples then
-      local prnt = {source=corpse, ply=killer, type=SAMPLE_PLAYER, cls=killer:GetClass()}
+      local prnt = {source=corpse, ply=killer, type=SAMPLE_RAGDOLL, cls=corpse:GetClass()}
       if not table.HasTable(self.ItemSamples, prnt) then
          table.insert(self.ItemSamples, prnt)
 
@@ -226,12 +239,19 @@ function SWEP:AddItemSample(ent)
    return -1
 end
 
-function SWEP:RemovePlayerSample(idx)
-   if self.PlayerSamples[idx] then
-      table.remove(self.PlayerSamples, idx)
-      
-      self:SendPrints(false)
+function SWEP:AddPlayerSample(player)
+   if #self.ItemSamples < self.MaxItemSamples then
+      local prnt = {source=player, ply=player, type=SAMPLE_PLAYER, cls=player:GetClass()}
+      if not table.HasTable(self.ItemSamples, prnt) then
+         table.insert(self.ItemSamples, prnt)
+
+         DamageLog("SAMPLE:\t " .. self.Owner:Nick() .. " retrieved DNA of " .. (IsValid(player) and player:Nick() or "<disconnected>") .. ".")
+
+         hook.Call("TTTFoundDNA", GAMEMODE, self.Owner, player, player)
+      end
+      return true
    end
+   return false
 end
 
 function SWEP:RemoveItemSample(idx)
@@ -388,7 +408,7 @@ if CLIENT then
              ent:GetNWBool("HasPrints", false) or
              (ent:GetClass() == "prop_ragdoll" and
               CORPSE.GetPlayerNick(ent, false) and
-              CORPSE.GetFound(ent, false))) then
+              CORPSE.GetFound(ent, false)) or (ent:IsPlayer() and scanplayer:GetBool())) then
 
             surface.SetDrawColor(0, 255, 0, 255)
             gap = 0
@@ -414,7 +434,7 @@ if CLIENT then
          surface.SetFont("DefaultFixedDropShadow")
          surface.SetTextColor(0, 255, 0, 255)
          surface.SetTextPos( x + length*2, y - length*2 )
-         surface.DrawText("TYPE: " .. (ent:GetClass() == "prop_ragdoll" and "BODY" or "ITEM"))
+         surface.DrawText("TYPE: " .. (ent:IsPlayer() and "PLAYER" or (ent:GetClass() == "prop_ragdoll" and "BODY" or "ITEM")))
          surface.SetTextPos( x + length*2, y - length*2 + 15)
          surface.DrawText("ID:   #" .. ent:EntIndex())
       end
@@ -427,12 +447,15 @@ if CLIENT then
       local img = basedir .. "nades"
       local name = "something"
 
-      if cls == "player" then
+      if cls == "prop_ragdoll" then
          img  = basedir .. "corpse"
          name = "corpse"
       elseif wep then
          img  = wep.Icon      or img
          name = wep.PrintName or name
+      elseif cls == "player" then
+         img  = basedir .. "id"
+         name = "col_player" -- Use of col_player so that no new translation must be inserted.
       end
 
       return img, name
@@ -441,6 +464,7 @@ if CLIENT then
    local last_panel_selected = 1
    local T = LANG.GetTranslation
    local PT = LANG.GetParamTranslation
+   local TT = LANG.TryTranslation
    local function ShowPrintsPopup(item_prints, tester)
       local m = 10
       local bw, bh = 100, 25
@@ -514,7 +538,7 @@ if CLIENT then
 
                                ic:SetIcon(img)
 
-                               local tip = PT("dna_menu_sample", {source = name or "???"})
+                               local tip = PT("dna_menu_sample", {source = TT(name) or "???"})
 
                                ic:SetTooltip(tip)
 
