@@ -223,13 +223,6 @@ function TOOL.BuildCPanel( CPanel )
 
 end
 
-list.Set( "ThrusterEffects", "#thrustereffect.none", { thruster_effect = "none" } )
-list.Set( "ThrusterEffects", "#thrustereffect.flames", { thruster_effect = "fire" } )
-list.Set( "ThrusterEffects", "#thrustereffect.plasma", { thruster_effect = "plasma" } )
-list.Set( "ThrusterEffects", "#thrustereffect.magic", { thruster_effect = "magic" } )
-list.Set( "ThrusterEffects", "#thrustereffect.rings", { thruster_effect = "rings" } )
-list.Set( "ThrusterEffects", "#thrustereffect.smoke", { thruster_effect = "smoke" } )
-
 list.Set( "ThrusterSounds", "#thrustersounds.none", { thruster_soundname = "" } )
 list.Set( "ThrusterSounds", "#thrustersounds.steam", { thruster_soundname = "PhysicsCannister.ThrusterLoop" } )
 list.Set( "ThrusterSounds", "#thrustersounds.zap", { thruster_soundname = "WeaponDissolve.Charge" } )
