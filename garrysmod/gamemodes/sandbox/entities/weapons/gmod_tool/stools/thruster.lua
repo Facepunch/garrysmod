@@ -212,7 +212,11 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "PropSelect", { Label = "#tool.thruster.model", ConVar = "thruster_model", Height = 4, Models = list.Get( "ThrusterModels" ) } )
 
-	CPanel:AddControl( "ComboBox", { Label = "#tool.thruster.effect", Options = list.Get( "ThrusterEffects" ) } )
+	local combo = CPanel:AddControl( "ListBox", { Label = "#tool.thruster.effect" } )
+	for k, v in pairs( list.Get( "ThrusterEffects" ) ) do
+		combo:AddOption( k, { thruster_effect = v.thruster_effect } )
+	end
+
 	CPanel:AddControl( "ComboBox", { Label = "#tool.thruster.sound", Options = list.Get( "ThrusterSounds" ) } )
 
 	CPanel:AddControl( "Slider", { Label = "#tool.thruster.force", Command = "thruster_force", Type = "Float", Min = 1, Max = 10000 } )
