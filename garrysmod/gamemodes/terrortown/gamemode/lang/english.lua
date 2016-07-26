@@ -483,6 +483,7 @@ L.dna_no_killer   = "The DNA could not be retrieved (killer disconnected?)."
 L.dna_armed       = "This bomb is live! Disarm it first!"
 L.dna_object      = "Collected {num} new DNA sample(s) from the object."
 L.dna_gone        = "DNA not detected in area."
+L.dna_player      = "Collected DNA sample from {nick}."
 
 L.dna_desc        = [[
 Collect DNA samples from things

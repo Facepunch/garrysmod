@@ -475,6 +475,7 @@ L.dna_no_killer   = "Die DNA konnte nicht erlangt werden (Mörder vom Server geg
 L.dna_armed       = "Die Bombe ist scharf! Entschärfe sie zuerst!"
 L.dna_object      = "{num} neue DNA-Spuren von diesem Objekt aufgesammelt."
 L.dna_gone        = "DNA nicht in diesem Bereich gefunden."
+L.dna_player      = "DNA von {nick} wurde aufgenommen."
 
 L.dna_desc        = [[
 Sammelt DNA-Spuren von Objekten auf
