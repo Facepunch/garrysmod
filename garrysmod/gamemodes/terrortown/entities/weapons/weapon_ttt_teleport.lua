@@ -259,7 +259,7 @@ local function StartTeleport(ply, teleport, weapon)
    util.Effect("teleport_beamdown", edata_dn)
 end
 
-function SWEP:TeleportRecall(ply)
+function SWEP:TeleportRecall()
    local ply = self.Owner
    if IsValid(ply) and ply:IsTerror() then
       local mark = self:GetTeleportMark()

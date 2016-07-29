@@ -24,8 +24,6 @@ SWEP.Kind                  = WEAPON_EQUIP
 SWEP.WeaponID              = AMMO_STUN
 SWEP.CanBuy                = {ROLE_DETECTIVE}
 SWEP.LimitedStock          = false
-
-SWEP.AutoSpawnable         = false
 SWEP.AmmoEnt               = "item_ammo_smg1_ttt"
 
 SWEP.Primary.Damage        = 9
