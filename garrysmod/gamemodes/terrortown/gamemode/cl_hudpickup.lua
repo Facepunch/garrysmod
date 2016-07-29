@@ -1,6 +1,4 @@
-
-local GetTranslation = LANG.GetTranslation
-local GetPTranslation = LANG.GetParamTranslation
+local TryTranslation = LANG.TryTranslation
 
 GM.PickupHistory = {}
 GM.PickupHistoryLast = 0
@@ -17,7 +15,7 @@ local pickupclr = {
 function GM:HUDWeaponPickedUp( wep )
    if not (IsValid(wep) and IsValid(LocalPlayer())) or (not LocalPlayer():Alive()) then return end
 
-   local name = LANG.TryTranslation(wep.GetPrintName and wep:GetPrintName() or wep:GetClass() or "Unknown Weapon Name")
+   local name = TryTranslation(wep.GetPrintName and wep:GetPrintName() or wep:GetClass() or "Unknown Weapon Name")
 
    local pickup = {}
    pickup.time      = CurTime()
@@ -80,7 +78,7 @@ end
 function GM:HUDAmmoPickedUp( itemname, amount )
    if not (IsValid(LocalPlayer()) and LocalPlayer():Alive()) then return end
 
-   local itemname_trans = LANG.TryTranslation(string.lower("ammo_" .. itemname))
+   local itemname_trans = TryTranslation(string.lower("ammo_" .. itemname))
 
    if self.PickupHistory then
 

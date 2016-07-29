@@ -39,7 +39,6 @@ SWEP.Secondary.Delay       = 2
 SWEP.Kind                  = WEAPON_ROLE
 SWEP.CanBuy                = nil -- no longer a buyable thing
 SWEP.WeaponID              = AMMO_WTESTER
---SWEP.LimitedStock = true
 
 SWEP.InLoadoutFor          = {ROLE_DETECTIVE}
 
@@ -109,9 +108,7 @@ function SWEP:PrimaryAttack()
    local ent = tr.Entity
    if IsValid(ent) and (not ent:IsPlayer()) then
       if SERVER then
-         if ent:IsPlayer() then
-            --self:GatherPlayerSample(ent)
-         elseif ent:GetClass() == "prop_ragdoll" and ent.killer_sample then
+         if ent:GetClass() == "prop_ragdoll" and ent.killer_sample then
             if CORPSE.GetFound(ent, false) then
                self:GatherRagdollSample(ent)
             else
@@ -224,14 +221,6 @@ function SWEP:AddItemSample(ent)
       return new, old, own
    end
    return -1
-end
-
-function SWEP:RemovePlayerSample(idx)
-   if self.PlayerSamples[idx] then
-      table.remove(self.PlayerSamples, idx)
-      
-      self:SendPrints(false)
-   end
 end
 
 function SWEP:RemoveItemSample(idx)
@@ -441,6 +430,7 @@ if CLIENT then
    local last_panel_selected = 1
    local T = LANG.GetTranslation
    local PT = LANG.GetParamTranslation
+   local TT = LANG.TryTranslation
    local function ShowPrintsPopup(item_prints, tester)
       local m = 10
       local bw, bh = 100, 25
@@ -514,7 +504,7 @@ if CLIENT then
 
                                ic:SetIcon(img)
 
-                               local tip = PT("dna_menu_sample", {source = name or "???"})
+                               local tip = PT("dna_menu_sample", {source = TT(name) or "???"})
 
                                ic:SetTooltip(tip)
 
@@ -709,7 +699,6 @@ if CLIENT then
    net.Receive("TTT_ShowPrints", RecvPrints)
 
    local beep_success = Sound("buttons/blip2.wav")
-   --local beep_fail = Sound("buttons/button11.wav")
    local function RecvScan()
       local clear = net.ReadBit() == 1
       if clear then
