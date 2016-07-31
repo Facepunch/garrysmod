@@ -24,7 +24,6 @@ SWEP.Primary.ClipSize      = -1
 SWEP.Primary.DefaultClip   = -1
 SWEP.Primary.Automatic     = true
 SWEP.Primary.Delay         = 3
-SWEP.Primary.Ammo          = "none"
 SWEP.Primary.Cone          = 0.005
 SWEP.Primary.Sound         = Sound( "weapons/ar2/fire1.wav" )
 SWEP.Primary.SoundLevel    = 54
@@ -35,7 +34,6 @@ SWEP.Secondary.Automatic   = false
 SWEP.Secondary.Ammo        = "none"
 SWEP.Secondary.Delay       = 0.5
 
-SWEP.AutoSpawnable         = false
 SWEP.NoSights              = true
 
 SWEP.Kind                  = WEAPON_EQUIP2

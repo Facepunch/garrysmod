@@ -73,19 +73,19 @@ local function GetPlayerFilter(pred)
 end
 
 function GetTraitorFilter(alive_only)
-   return GetPlayerFilter(function(p) return p:GetTraitor() and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return p:GetTraitor() and (not alive_only or p:IsTerror()) end)
 end
 
 function GetDetectiveFilter(alive_only)
-   return GetPlayerFilter(function(p) return p:IsDetective() and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return p:IsDetective() and (not alive_only or p:IsTerror()) end)
 end
 
 function GetInnocentFilter(alive_only)
-   return GetPlayerFilter(function(p) return (not p:IsTraitor()) and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return (not p:IsTraitor()) and (not alive_only or p:IsTerror()) end)
 end
 
 function GetRoleFilter(role, alive_only)
-   return GetPlayerFilter(function(p) return p:IsRole(role) and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return p:IsRole(role) and (not alive_only or p:IsTerror()) end)
 end
 
 ---- Communication control

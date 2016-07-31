@@ -27,9 +27,9 @@ SWEP.Primary.Cone          = 0.02
 SWEP.Primary.ClipSize      = 20
 SWEP.Primary.Automatic     = true
 SWEP.Primary.DefaultClip   = 20
-SWEP.Primary.ClipMax       = 80
+SWEP.Primary.ClipMax       = 60
 SWEP.Primary.Ammo          = "Pistol"
-SWEP.Primary.Sound         = Sound( "weapons/usp/usp1.wav" )
+SWEP.Primary.Sound         = Sound( "Weapon_USP.SilencedShot" )
 SWEP.Primary.SoundLevel    = 50
 
 SWEP.Kind                  = WEAPON_EQUIP
