@@ -54,6 +54,16 @@ function PANEL:Init()
 	self:SetPaintBackground(false)
 end
 
+function PANEL:Think()
+	if (self.Hovered) then
+		self:SetCursor("sizeall")
+
+		return
+	end
+
+	self:SetCursor("arrow")
+end
+
 function PANEL:OnMousePressed(...)
 	self.pnlCanvas:OnMousePressed(...)
 end
@@ -94,10 +104,9 @@ function PANEL:ScrollToChild(panel)
 end
 
 function PANEL:PerformLayout()
-	--if self:GetCanvas().Dragging then return end
 	local can = self:GetCanvas()
 
-	do
+	do --get it all top-left (so the children are snug)
 		local mx, my
 
 		for _, p in pairs(can:GetChildren()) do
@@ -125,10 +134,10 @@ function PANEL:PerformLayout()
 		can:SetPos(x + mx or 0, y + my or 0)
 	end
 
-	--get it all top-left (so the children are snug)
+
 	can:SizeToChildren(true, true)
 
-	do
+	do --restrict movement
 		local x, y, w, h = can:GetBounds()
 
 		if w > self:GetWide() then
@@ -189,8 +198,43 @@ function PANEL:PerformLayout()
 	end
 end
 
+--fill edges
 function PANEL:Clear()
 	return self:GetCanvas():Clear()
 end
 
+function PANEL:GenerateExample(class, propsheet, width, height)
+	local dpan = vgui.Create("Panel")
+		dpan:Dock(FILL)
+		propsheet:AddSheet(class, dpan)
+		local dpl = vgui.Create("DPanel", dpan)
+			dpl:SetSize(200, 200)
+			dpl:SetPos(100, 100)
+			local panl = vgui.Create("DPanPanel", dpl)
+				panl:Dock(FILL)
+				local bl1 = panl:Add("DButton")
+				bl1:SetText("Small")
+				local bl2 = panl:Add("DButton")
+				bl2:SetPos(100, 100)
+				bl2:SetText("Contents")
+			---panl
+		---dpl
+		local dpr = vgui.Create("DPanel", dpan)
+			dpr:SetWide(width/2)
+			dpr:SetSize(200, 200)
+			dpr:SetPos(310, 100)
+			local panr = vgui.Create("DPanPanel", dpr)
+				panr:Dock(FILL)
+				local br1 = panr:Add("DButton")
+				br1:SetText("Big")
+				local br2 = panr:Add("DButton")
+				br2:SetPos(300, 300)
+				br2:SetText("Contents")
+			---panr
+		---dpr
+	---dpan
+
+end
+
+--DFrame stuff
 derma.DefineControl("DPanPanel", "", PANEL, "DPanel")
