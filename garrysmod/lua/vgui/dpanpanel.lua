@@ -189,10 +189,8 @@ function PANEL:PerformLayout()
 	end
 end
 
---fill edges
 function PANEL:Clear()
 	return self:GetCanvas():Clear()
 end
 
---DFrame stuff
 derma.DefineControl("DPanPanel", "", PANEL, "DPanel")
