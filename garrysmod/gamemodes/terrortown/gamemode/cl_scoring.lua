@@ -426,7 +426,7 @@ function CLSCORE:ClearPanel()
       -- we need this hack as opposed to just calling Remove because gmod does
       -- not offer a means of killing the tooltip, and doesn't clean it up
       -- properly on Remove
-      gui.SetMousePos( ScrW()/2, ScrH()/2 )
+      input.SetCursorPos( ScrW()/2, ScrH()/2 )
       local pnl = self.Panel
       timer.Simple(0, function() pnl:Remove() end)
    end
