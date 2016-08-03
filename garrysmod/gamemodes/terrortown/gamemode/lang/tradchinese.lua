@@ -13,7 +13,6 @@ L.spectators = "旁觀者 "
 
 --- Round status messages
 L.round_minplayers = "沒有足夠的玩家來開始新的回合… "
-L.round_voting     = "投票進行中，新的回合將延遲到 {num} 秒後開始… "
 L.round_begintime  = "新回合將在 {num} 秒後開始。請做好準備。 "
 L.round_selected   = "叛徒玩家已選出 "
 L.round_started    = "回合開始！ "
@@ -29,7 +28,6 @@ L.win_showreport   = "一起觀看觀看 {num} 秒的回合總結吧！ "
 
 L.limit_round      = "已達遊戲回合上限，接著將載入地圖 {mapname}  "
 L.limit_time       = "已達遊戲時間上限，接著將載入地圖 {mapname}  "
-L.limit_vote       = "遊戲回合或時間已達上限。投票時間來囉！ "
 L.limit_left       = "在載入地圖 {mapname} 前，還有 {num} 回合或者 {time} 分鐘的剩餘時間。 "
 
 --- Credit awards
@@ -143,10 +141,6 @@ L.radio_button_steps   = "腳步聲 "
 
 -- Intro screen shown after joining
 L.intro_help     = "若您是遊戲初學者，可按下F1查看遊戲教學！ "
-
--- "Continue playing" vote
-L.contvote_continue = "繼續進行遊戲 "
-L.contvote_change   = "發起投票 "
 
 -- Radiocommands/quickchat
 L.quick_title   = "快速聊天按鍵 "

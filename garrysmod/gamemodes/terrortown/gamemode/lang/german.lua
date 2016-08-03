@@ -13,7 +13,6 @@ L.spectators = "Zuschauer"
 
 --- Round status messages
 L.round_minplayers = "Nicht genug Spieler um eine neue Runde zu beginnen..."
-L.round_voting     = "Es läuft eine Umfrage, verzögere neue Runde um {num} Sekunden..."
 L.round_begintime  = "Eine neue Runde beginnt in {num} Sekunden. Bereite dich vor."
 L.round_selected   = "Die Verräter wurden ausgewählt."
 L.round_started    = "Die Runde hat begonnen!"
@@ -29,7 +28,6 @@ L.win_showreport   = "Schauen wir uns den Runden Report für {num} Sekunden an."
 
 L.limit_round      = "Rundenlimit erreicht. {mapname} wird bald geladen."
 L.limit_time       = "Zeitlimit erreicht. {mapname} wird bald geladen."
-L.limit_vote       = "Runden- oder Zeitlimit erreicht. Umfrage-Zeit!"
 L.limit_left       = "{num} Runde(n) oder {time} Minuten verbleibend bis die Map zu {mapname} gewechselt wird."
 
 --- Credit awards
@@ -143,10 +141,6 @@ L.radio_button_steps   = "Schritte"
 
 -- Intro screen shown after joining
 L.intro_help     = "Wenn du zum ersten Mal spielst, dann drücke F1 für Instruktionen!"
-
--- "Continue playing" vote
-L.contvote_continue = "Weiterspielen"
-L.contvote_change   = "Abstimmung starten"
 
 -- Radiocommands/quickchat
 L.quick_title   = "Quickchat Befehle"

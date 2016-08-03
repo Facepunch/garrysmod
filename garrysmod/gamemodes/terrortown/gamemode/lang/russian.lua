@@ -13,7 +13,6 @@ L.spectators = "Наблюдатели"
 
 --- Round status messages
 L.round_minplayers = "Недостаточно игроков для начала раунда..."
-L.round_voting     = "Голосование в процессе, старт раунда через {num} секунд..."
 L.round_begintime  = "Новый раунд начинается через {num} секунд. Приготовьтесь."
 L.round_selected   = "Предатели выбраны."
 L.round_started    = "Раунд начался!"
@@ -29,7 +28,6 @@ L.win_showreport   = "Посмотрим на отчеты раунда на {nu
 
 L.limit_round      = "Лимит раундов достигнут. {mapname} скоро загрузится."
 L.limit_time       = "Время вышло. {mapname} сейчас загрузится."
-L.limit_vote       = "Время голосовать за новую карту!"
 L.limit_left       = "{num} раундов или {time} минут осталось до смены карты на {mapname}."
 
 --- Credit awards
@@ -143,10 +141,6 @@ L.radio_button_steps   = "Шаги"
 
 -- Intro screen shown after joining
 L.intro_help     = "Если вы новичок, нажмите F1 для помощи!"
-
--- "Continue playing" vote
-L.contvote_continue = "Продолжить игру на этой"
-L.contvote_change   = "Начать голосование"
 
 -- Radiocommands/quickchat
 L.quick_title   = "Быстрые Сообщения"
