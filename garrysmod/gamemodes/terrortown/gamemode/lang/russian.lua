@@ -13,6 +13,7 @@ L.spectators = "Наблюдатели"
 
 --- Round status messages
 L.round_minplayers = "Недостаточно игроков для начала раунда..."
+L.round_voting     = "Голосование в процессе, старт раунда через {num} секунд..."
 L.round_begintime  = "Новый раунд начинается через {num} секунд. Приготовьтесь."
 L.round_selected   = "Предатели выбраны."
 L.round_started    = "Раунд начался!"

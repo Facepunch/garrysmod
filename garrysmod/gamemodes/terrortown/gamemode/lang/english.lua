@@ -13,6 +13,7 @@ L.spectators = "Spectators"
 
 --- Round status messages
 L.round_minplayers = "Not enough players to start a new round..."
+L.round_voting     = "Vote in progress, delaying new round by {num} seconds..."
 L.round_begintime  = "A new round begins in {num} seconds. Prepare yourself."
 L.round_selected   = "The Traitors have been selected."
 L.round_started    = "The round has begun!"

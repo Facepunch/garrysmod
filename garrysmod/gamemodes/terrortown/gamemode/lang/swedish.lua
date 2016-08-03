@@ -13,6 +13,7 @@ L.spectators = "Åskådare"
 
 --- Round status messages
 L.round_minplayers = "För få spelare för att påbörja ny runda..."
+L.round_voting     = "Omröstning pågår, fördröjer ny runda med {num} sekunder..."
 L.round_begintime  = "En ny runda påbörjas om {num} sekunder. Bered dig."
 L.round_selected   = "Förrädarna har blivit utvalda."
 L.round_started    = "Rundan har påbörjats!"

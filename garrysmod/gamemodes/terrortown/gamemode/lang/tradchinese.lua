@@ -13,6 +13,7 @@ L.spectators = "旁觀者 "
 
 --- Round status messages
 L.round_minplayers = "沒有足夠的玩家來開始新的回合… "
+L.round_voting     = "投票進行中，新的回合將延遲到 {num} 秒後開始… "
 L.round_begintime  = "新回合將在 {num} 秒後開始。請做好準備。 "
 L.round_selected   = "叛徒玩家已選出 "
 L.round_started    = "回合開始！ "

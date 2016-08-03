@@ -442,9 +442,26 @@ local function CheckForAbort()
    return false
 end
 
+function GM:TTTDelayRoundStartForVote()
+   -- Can be used for custom voting systems
+   --return true, 30
+   return false
+end
+
 function PrepareRound()
    -- Check playercount
    if CheckForAbort() then return end
+
+   local delay_round, delay_length = hook.Call("TTTDelayRoundStartForVote", GAMEMODE)
+
+   if delay_round then
+      delay_length = delay_length or 30
+
+      LANG.Msg("round_voting", {num = delay_length})
+
+      timer.Create("delayedprep", delay_length, 1, PrepareRound)
+      return
+   end
 
    -- Cleanup
    CleanUp()
