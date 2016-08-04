@@ -443,18 +443,14 @@ local function CheckForAbort()
 end
 
 function GM:TTTDelayRoundStartForVote()
-   -- No voting system available in GM13 (yet)
-   --return self:InGamemodeVote()
+   -- Can be used for custom voting systems
+   --return true, 30
    return false
 end
 
 function PrepareRound()
    -- Check playercount
    if CheckForAbort() then return end
-
-   if GetGlobalBool("InContinueVote", false) then
-      GAMEMODE:FinishContinueVote() -- may start a gamemode vote
-   end
 
    local delay_round, delay_length = hook.Call("TTTDelayRoundStartForVote", GAMEMODE)
 
@@ -712,11 +708,6 @@ function PrintResultMessage(type)
    end
 end
 
-local function ShouldMapSwitch()
-   return true -- no voting until fretta replacement arrives
---   return GetConVar("ttt_always_use_mapcycle"):GetBool()
-end
-
 function CheckForMapSwitch()
    -- Check for mapswitch
    local rounds_left = math.max(0, GetGlobalInt("ttt_rounds_left", 6) - 1)
@@ -726,29 +717,18 @@ function CheckForMapSwitch()
    local switchmap = false
    local nextmap = string.upper(game.GetMapNext())
 
-   if ShouldMapSwitch() then
-      if rounds_left <= 0 then
-         LANG.Msg("limit_round", {mapname = nextmap})
-         switchmap = true
-      elseif time_left <= 0 then
-         LANG.Msg("limit_time", {mapname = nextmap})
-         switchmap = true
-      end
-   else
-      -- we only get here if fretta_voting is on and always_use_mapcycle off
-      if rounds_left <= 0 or time_left <= 0 then
-         LANG.Msg("limit_vote")
-
-         -- pending fretta replacement...
-         switchmap = true
-         --GAMEMODE:StartFrettaVote()
-      end
+   if rounds_left <= 0 then
+      LANG.Msg("limit_round", {mapname = nextmap})
+      switchmap = true
+   elseif time_left <= 0 then
+      LANG.Msg("limit_time", {mapname = nextmap})
+      switchmap = true
    end
 
    if switchmap then
       timer.Stop("end2prep")
       timer.Simple(15, game.LoadNextMap)
-   elseif ShouldMapSwitch() then
+   else
       LANG.Msg("limit_left", {num = rounds_left,
                               time = math.ceil(time_left / 60),
                               mapname = nextmap})
@@ -775,12 +755,6 @@ function EndRound(type)
 
    -- We may need to start a timer for a mapswitch, or start a vote
    CheckForMapSwitch()
-
-   -- Show unobtrusive vote window (only if fretta voting enabled and only if
-   -- not already in a round/time limit induced vote)
-   --if not GAMEMODE:InGamemodeVote() then
-   --   GAMEMODE:StartContinueVote()
-   --end
 
    KARMA.RoundEnd()
 

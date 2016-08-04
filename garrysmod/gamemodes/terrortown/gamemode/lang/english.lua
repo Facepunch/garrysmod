@@ -29,7 +29,6 @@ L.win_showreport   = "Let's look at the round report for {num} seconds."
 
 L.limit_round      = "Round limit reached. {mapname} will load soon."
 L.limit_time       = "Time limit reached. {mapname} will load soon."
-L.limit_vote       = "Round or time limit reached. Voting time!"
 L.limit_left       = "{num} round(s) or {time} minutes remaining before the map changes to {mapname}."
 
 --- Credit awards
@@ -143,10 +142,6 @@ L.radio_button_steps   = "Footsteps"
 
 -- Intro screen shown after joining
 L.intro_help     = "If you're new to the game, press F1 for instructions!"
-
--- "Continue playing" vote
-L.contvote_continue = "Continue playing this"
-L.contvote_change   = "Start a vote"
 
 -- Radiocommands/quickchat
 L.quick_title   = "Quickchat keys"

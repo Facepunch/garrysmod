@@ -29,7 +29,6 @@ L.win_showreport   = "Veremos os resultados da rodada por {num} segundos."
 
 L.limit_round      = "Limite de rodadas alcançado. {mapname} será carregado logo."
 L.limit_time       = "Tempo limite alcançado. {mapname} será carregado logo."
-L.limit_vote       = "Rodadas ou tempo limite alcançados. Hora de votar!"
 L.limit_left       = "{num} rodada(s) or {time} restantes até a mudança de mapa para {mapname}."
 
 --- Credit awards
@@ -143,10 +142,6 @@ L.radio_button_steps   = "Passos"
 
 -- Intro screen shown after joining
 L.intro_help     = "Se você é novato, aperte F1 para instruções!"
-
--- "Continue playing" vote
-L.contvote_continue = "Continuar jogando isso"
-L.contvote_change   = "Começar votação"
 
 -- Radiocommands/quickchat
 L.quick_title   = "Atalhos do chat"
