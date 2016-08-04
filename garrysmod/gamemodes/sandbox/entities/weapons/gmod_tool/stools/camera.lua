@@ -6,6 +6,11 @@ TOOL.ClientConVar[ "locked" ] = "0"
 TOOL.ClientConVar[ "key" ] = "37"
 TOOL.ClientConVar[ "toggle" ] = "1"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 cleanup.Register( "cameras" )
 
 local function MakeCamera( ply, key, locked, toggle, Data )

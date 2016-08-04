@@ -7,6 +7,14 @@ TOOL.ClientConVar[ "forcelimit" ] = "0"
 TOOL.ClientConVar[ "rigid" ] = "0"
 TOOL.ClientConVar[ "material" ] = "cable/cable"
 
+TOOL.Information = {
+	{ name = "left", stage = 0 },
+	{ name = "left_1", stage = 1 },
+	{ name = "left_2", stage = 2 },
+	{ name = "left_3", stage = 3 },
+	{ name = "reload" }
+}
+
 function TOOL:LeftClick( trace )
 
 	-- If there's no physics object then we can't constraint it!

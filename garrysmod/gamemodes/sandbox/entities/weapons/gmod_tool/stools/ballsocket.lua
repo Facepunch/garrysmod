@@ -6,6 +6,12 @@ TOOL.ClientConVar[ "forcelimit" ] = "0"
 TOOL.ClientConVar[ "torquelimit" ] = "0"
 TOOL.ClientConVar[ "nocollide" ] = "0"
 
+TOOL.Information = {
+	{ name = "left", stage = 0 },
+	{ name = "left_1", stage = 1 },
+	{ name = "reload" }
+}
+
 function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return end

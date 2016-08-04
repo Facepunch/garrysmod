@@ -8,7 +8,16 @@ TOOL.ClientConVar[ "delay" ] = 0
 TOOL.ClientConVar[ "model" ] = "models/dav0r/tnt/tnt.mdl"
 TOOL.ClientConVar[ "remove" ] = 0
 
+TOOL.Information = { { name = "left" } }
+
 cleanup.Register( "dynamite" )
+
+local function IsValidDynamiteModel( model )
+	for mdl, _ in pairs( list.Get( "DynamiteModels" ) ) do
+		if ( mdl:lower() == model:lower() ) then return true end
+	end
+	return false
+end
 
 function TOOL:LeftClick( trace )
 
@@ -38,7 +47,7 @@ function TOOL:LeftClick( trace )
 		return true
 	end
 
-	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) ) then return false end
+	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidDynamiteModel( model ) ) then return false end
 	if ( !self:GetSWEP():CheckLimit( "dynamite" ) ) then return false end
 
 	local dynamite = MakeDynamite( ply, trace.HitPos, Angle( 0, 0, 0 ), group, damage, model, remove, delay )
@@ -65,6 +74,7 @@ if ( SERVER ) then
 	function MakeDynamite( pl, pos, ang, key, damage, model, remove, delay )
 
 		if ( IsValid( pl ) && !pl:CheckLimit( "dynamite" ) ) then return nil end
+		if ( !IsValidDynamiteModel( model ) ) then return nil end
 
 		local dynamite = ents.Create( "gmod_dynamite" )
 		dynamite:SetPos( pos )
@@ -143,6 +153,7 @@ end
 function TOOL:Think()
 
 	local mdl = self:GetClientInfo( "model" )
+	if ( !IsValidDynamiteModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
 		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )

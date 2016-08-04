@@ -12,6 +12,11 @@ TOOL.ClientConVar[ "size" ] = "256"
 TOOL.ClientConVar[ "key" ] = "-1"
 TOOL.ClientConVar[ "toggle" ] = "1"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 cleanup.Register( "lights" )
 
 function TOOL:LeftClick( trace, attach )

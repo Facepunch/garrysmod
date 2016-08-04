@@ -12,7 +12,16 @@ TOOL.ClientConVar[ "effect" ] = "fire"
 TOOL.ClientConVar[ "damageable" ] = "0"
 TOOL.ClientConVar[ "soundname" ] = "PhysicsCannister.ThrusterLoop"
 
+TOOL.Information = { { name = "left" } }
+
 cleanup.Register( "thrusters" )
+
+local function IsValidThrusterModel( model )
+	for mdl, _ in pairs( list.Get( "ThrusterModels" ) ) do
+		if ( mdl:lower() == model:lower() ) then return true end
+	end
+	return false
+end
 
 function TOOL:LeftClick( trace )
 
@@ -30,7 +39,7 @@ function TOOL:LeftClick( trace )
 	local key = self:GetClientNumber( "keygroup" )
 	local key_bk = self:GetClientNumber( "keygroup_back" )
 	local toggle = self:GetClientNumber( "toggle" )
-	local collision = self:GetClientNumber( "collision" )
+	local collision = self:GetClientNumber( "collision" ) == 0
 	local effect = self:GetClientInfo( "effect" )
 	local damageable = self:GetClientNumber( "damageable" )
 	local soundname = self:GetClientInfo( "soundname" )
@@ -65,10 +74,8 @@ function TOOL:LeftClick( trace )
 		return true
 	end
 
+	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidThrusterModel( model ) ) then return false end
 	if ( !self:GetSWEP():CheckLimit( "thrusters" ) ) then return false end
-
-	if ( !util.IsValidModel( model ) ) then return false end
-	if ( !util.IsValidProp( model ) ) then return false end
 
 	local Ang = trace.HitNormal:Angle()
 	Ang.pitch = Ang.pitch + 90
@@ -83,10 +90,10 @@ function TOOL:LeftClick( trace )
 	-- Don't weld to world
 	if ( IsValid( trace.Entity ) ) then
 
-		const = constraint.Weld( thruster, trace.Entity, 0, trace.PhysicsBone, 0, collision == 0, true )
+		const = constraint.Weld( thruster, trace.Entity, 0, trace.PhysicsBone, 0, collision, true )
 
 		-- Don't disable collision if it's not attached to anything
-		if ( collision == 0 ) then
+		if ( collision ) then
 
 			thruster:GetPhysicsObject():EnableCollisions( false )
 			thruster.nocollide = true
@@ -112,9 +119,8 @@ if ( SERVER ) then
 
 	function MakeThruster( pl, model, ang, pos, key, key_bck, force, toggle, effect, damageable, soundname, nocollide )
 
-		if ( IsValid( pl ) ) then
-			if ( !pl:CheckLimit( "thrusters" ) ) then return false end
-		end
+		if ( IsValid( pl ) && !pl:CheckLimit( "thrusters" ) ) then return false end
+		if ( !IsValidThrusterModel( model ) ) then return false end
 
 		local thruster = ents.Create( "gmod_thruster" )
 		if ( !IsValid( thruster ) ) then return false end
@@ -192,8 +198,11 @@ end
 
 function TOOL:Think()
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
-		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+	local mdl = self:GetClientInfo( "model" )
+	if ( !IsValidThrusterModel( mdl ) ) then self:ReleaseGhostEntity() return end
+
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
+		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 	end
 
 	self:UpdateGhostThruster( self.GhostEntity, self:GetOwner() )

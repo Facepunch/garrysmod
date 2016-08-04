@@ -2,6 +2,11 @@
 TOOL.Category = "Poser"
 TOOL.Name = "#tool.eyeposer.name"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 local function SetEyeTarget( Player, Entity, Data )
 
 	if ( Data.EyeTarget ) then Entity:SetEyeTarget( Data.EyeTarget ) end
@@ -33,7 +38,6 @@ end
 function TOOL:LeftClick( trace )
 
 	if ( !self.SelectedEntity ) then
-
 		if ( !IsValid( trace.Entity ) ) then return end
 
 		self.SelectedEntity = trace.Entity
@@ -43,7 +47,8 @@ function TOOL:LeftClick( trace )
 
 		self:GetWeapon():SetNWEntity( 0, self.SelectedEntity )
 
-	return true end
+		return true
+	end
 
 	local selectedent = self.SelectedEntity
 	self.SelectedEntity = nil
@@ -73,7 +78,7 @@ function TOOL:RightClick( trace )
 
 	local LocalPos = ConvertRelativeToEyesAttachment( trace.Entity, pos )
 	if ( !LocalPos ) then return false end
-	
+
 	SetEyeTarget( self:GetOwner(), trace.Entity, { EyeTarget = LocalPos } )
 
 	return true

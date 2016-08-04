@@ -13,7 +13,19 @@ TOOL.ClientConVar[ "texture" ] = "effects/flashlight001"
 TOOL.ClientConVar[ "model" ] = "models/lamps/torch.mdl"
 TOOL.ClientConVar[ "toggle" ] = "1"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" },
+}
+
 cleanup.Register( "lamps" )
+
+local function IsValidLampModel( model )
+	for mdl, _ in pairs( list.Get( "LampModels" ) ) do
+		if ( mdl:lower() == model:lower() ) then return true end
+	end
+	return false
+end
 
 function TOOL:LeftClick( trace )
 
@@ -67,7 +79,7 @@ function TOOL:LeftClick( trace )
 
 	end
 
-	if ( !util.IsValidModel( mdl ) || !util.IsValidProp( mdl ) ) then return false end
+	if ( !util.IsValidModel( mdl ) || !util.IsValidProp( mdl ) || !IsValidLampModel( mdl ) ) then return false end
 	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
 
 	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = Angle( 0, 0, 0 ) } )
@@ -120,6 +132,7 @@ if ( SERVER ) then
 	function MakeLamp( pl, r, g, b, KeyDown, toggle, texture, model, fov, distance, brightness, on, Data )
 
 		if ( IsValid( pl ) && !pl:CheckLimit( "lamps" ) ) then return false end
+		if ( !IsValidLampModel( model ) ) then return false end
 
 		local lamp = ents.Create( "gmod_lamp" )
 		if ( !IsValid( lamp ) ) then return end
@@ -209,6 +222,7 @@ end
 function TOOL:Think()
 
 	local mdl = self:GetClientInfo( "model" )
+	if ( !IsValidLampModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
 		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )

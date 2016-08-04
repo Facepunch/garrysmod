@@ -21,6 +21,11 @@ TOOL.Category = "Construction"
 TOOL.Name = "#tool.duplicator.name"
 TOOL.Stored = true
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 cleanup.Register( "duplicates" )
 
 --

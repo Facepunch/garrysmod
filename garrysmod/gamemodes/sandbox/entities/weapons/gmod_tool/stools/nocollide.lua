@@ -2,6 +2,13 @@
 TOOL.Category = "Construction"
 TOOL.Name = "#tool.nocollide.name"
 
+TOOL.Information = {
+	{ name = "left", stage = 0 },
+	{ name = "left_1", stage = 1 },
+	{ name = "right" },
+	{ name = "reload" }
+}
+
 cleanup.Register( "nocollide" )
 
 function TOOL:LeftClick( trace )
@@ -43,7 +50,7 @@ function TOOL:LeftClick( trace )
 		self:ClearObjects()
 
 	else
-
+ 
 		self:SetStage( iNum + 1 )
 
 	end
@@ -51,13 +58,6 @@ function TOOL:LeftClick( trace )
 	return true
 
 end
-
--- This is unreliable
-hook.Add( "EntityRemoved", "nocollide_fix", function( ent )
-	if ( ent:GetClass() == "logic_collision_pair" ) then
-		ent:Fire( "EnableCollisions" )
-	end
-end )
 
 function TOOL:RightClick( trace )
 
@@ -88,6 +88,19 @@ function TOOL:Reload( trace )
 	return constraint.RemoveConstraints( trace.Entity, "NoCollide" )
 
 end
+
+function TOOL:Holster()
+
+	self:ClearObjects()
+
+end
+
+-- This is unreliable
+hook.Add( "EntityRemoved", "nocollide_fix", function( ent )
+	if ( ent:GetClass() == "logic_collision_pair" ) then
+		ent:Fire( "EnableCollisions" )
+	end
+end )
 
 function TOOL.BuildCPanel( CPanel )
 

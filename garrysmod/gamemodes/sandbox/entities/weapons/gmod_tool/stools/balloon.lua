@@ -9,6 +9,11 @@ TOOL.ClientConVar[ "g" ] = "255"
 TOOL.ClientConVar[ "b" ] = "0"
 TOOL.ClientConVar[ "model" ] = "normal_skin1"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 cleanup.Register( "balloons" )
 
 function TOOL:LeftClick( trace, attach )

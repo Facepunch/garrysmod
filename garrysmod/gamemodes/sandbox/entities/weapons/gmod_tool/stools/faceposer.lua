@@ -5,6 +5,11 @@ TOOL.Name = "#tool.faceposer.name"
 local gLastFacePoseEntity = NULL
 TOOL.FaceTimer = 0
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 local function IsUselessFaceFlex( strName )
 
 	if ( strName == "gesture_rightleft" ) then return true end

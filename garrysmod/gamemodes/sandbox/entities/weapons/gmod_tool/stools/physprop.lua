@@ -5,6 +5,8 @@ TOOL.Name = "#tool.physprop.name"
 TOOL.ClientConVar[ "gravity_toggle" ] = "1"
 TOOL.ClientConVar[ "material" ] = "metal_bouncy"
 
+TOOL.Information = { { name = "left" } }
+
 function TOOL:LeftClick( trace )
 
 	if ( !IsValid( trace.Entity ) ) then return false end

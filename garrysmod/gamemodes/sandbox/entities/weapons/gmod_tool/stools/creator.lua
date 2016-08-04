@@ -4,6 +4,8 @@ TOOL.ClientConVar[ "type" ] = "0"
 TOOL.ClientConVar[ "name" ] = "0"
 TOOL.ClientConVar[ "arg" ] = "0"
 
+TOOL.Information = { { name = "left" } }
+
 function TOOL:LeftClick( trace, attach )
 
 	local type = self:GetClientNumber( "type", 0 )

@@ -4,6 +4,11 @@ TOOL.Name = "#tool.finger.name"
 
 TOOL.RequiresTraceHit = true
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 local VarsOnHand = 15
 local FingerVars = VarsOnHand * 2
 

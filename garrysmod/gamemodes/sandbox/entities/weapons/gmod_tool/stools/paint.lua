@@ -8,23 +8,26 @@ TOOL.RequiresTraceHit = true
 
 TOOL.ClientConVar[ "decal" ] = "Blood"
 
-local function PlaceDecal( Player, Entity, Data )
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" },
+	{ name = "reload" }
+}
 
-	if ( Entity == nil ) then return end
-	if ( !Entity:IsWorld() && !IsValid( Entity ) ) then return end
+local function PlaceDecal( ply, ent, data )
 
-	local Bone = Entity:GetPhysicsObjectNum( Data.bone or 0 )
-	if ( !IsValid( Bone ) ) then
-		Bone = Entity
-	end
+	if ( !IsValid( ent ) && !ent:IsWorld() ) then return end
 
-	util.Decal( Data.decal, Bone:LocalToWorld( Data.Pos1 ), Bone:LocalToWorld( Data.Pos2 ) )
+	local bone = ent:GetPhysicsObjectNum( data.bone or 0 )
+	if ( !IsValid( bone ) ) then bone = ent end
 
 	if ( SERVER ) then
-		local i = Entity.DecalCount or 0
+		util.Decal( data.decal, bone:LocalToWorld( data.Pos1 ), bone:LocalToWorld( data.Pos2 ) )
+
+		local i = ent.DecalCount or 0
 		i = i + 1
-		duplicator.StoreEntityModifier( Entity, "decal" .. i, Data )
-		Entity.DecalCount = i
+		duplicator.StoreEntityModifier( ent, "decal" .. i, data )
+		ent.DecalCount = i
 	end
 
 end
@@ -34,12 +37,18 @@ end
 --
 for i = 1, 32 do
 
-	function PlaceDecal_delayed( Player, Entity, Data )
-		timer.Simple( i * 0.05, function() PlaceDecal( Player, Entity, Data ) end )
-	end
+	duplicator.RegisterEntityModifier( "decal" .. i, function( ply, ent, data )
+		timer.Simple( i * 0.05, function() PlaceDecal( ply, ent, data ) end )
+	end )
 
-	duplicator.RegisterEntityModifier( "decal" .. i, PlaceDecal_delayed )
+end
 
+function TOOL:Reload( trace )
+	if ( !IsValid( trace.Entity ) ) then return false end
+
+	trace.Entity:RemoveAllDecals()
+
+	return true
 end
 
 function TOOL:LeftClick( trace )
@@ -50,8 +59,8 @@ end
 
 function TOOL:RightClick( trace, bNoDelay )
 
-	self:GetOwner():EmitSound( "SprayCan.Paint" )
-	local decal	= self:GetClientInfo( "decal" )
+	self:GetSWEP():EmitSound( "SprayCan.Paint" )
+	local decal = self:GetClientInfo( "decal" )
 
 	local Pos1 = trace.HitPos + trace.HitNormal
 	local Pos2 = trace.HitPos - trace.HitNormal

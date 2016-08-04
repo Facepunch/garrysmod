@@ -11,6 +11,12 @@ TOOL.ClientConVar[ "bwd" ] = "42"
 TOOL.ClientConVar[ "toggle" ] = "0"
 TOOL.ClientConVar[ "forcelimit" ] = "0"
 
+TOOL.Information = {
+	{ name = "left", stage = 0 },
+	{ name = "left_1", stage = 1 },
+	{ name = "reload"}
+}
+
 function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return end

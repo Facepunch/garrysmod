@@ -4,6 +4,12 @@ TOOL.Name = "#tool.material.name"
 
 TOOL.ClientConVar[ "override" ] = "debug/env_cubemap_model"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" },
+	{ name = "reload" }
+}
+
 --
 -- Duplicator function
 --
@@ -25,17 +31,13 @@ local function SetMaterial( Player, Entity, Data )
 end
 duplicator.RegisterEntityModifier( "material", SetMaterial )
 
---
 -- Left click applies the current material
---
 function TOOL:LeftClick( trace )
-
-	if ( !IsValid( trace.Entity ) ) then return end
-
-	if ( CLIENT ) then return true end
 
 	local ent = trace.Entity
 	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
+	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( CLIENT ) then return true end
 
 	local mat = self:GetClientInfo( "override" )
 	SetMaterial( self:GetOwner(), ent, { MaterialOverride = mat } )
@@ -43,17 +45,27 @@ function TOOL:LeftClick( trace )
 
 end
 
---
--- Right click reverts the material
---
+-- Right click copies the material
 function TOOL:RightClick( trace )
-
-	if ( !IsValid( trace.Entity ) ) then return end
-
-	if ( CLIENT ) then return true end
 
 	local ent = trace.Entity
 	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
+	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( CLIENT ) then return true end
+
+	self:GetOwner():ConCommand( "material_override " .. ent:GetMaterial() )
+
+	return true
+
+end
+
+-- Reload reverts the material
+function TOOL:RightClick( trace )
+
+	local ent = trace.Entity
+	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
+	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( CLIENT ) then return true end
 
 	SetMaterial( self:GetOwner(), ent, { MaterialOverride = "" } )
 	return true

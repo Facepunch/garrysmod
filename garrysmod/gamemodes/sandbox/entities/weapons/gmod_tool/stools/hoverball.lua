@@ -9,7 +9,16 @@ TOOL.ClientConVar[ "resistance" ] = "0"
 TOOL.ClientConVar[ "strength" ] = "1"
 TOOL.ClientConVar[ "model" ] = "models/dav0r/hoverball.mdl"
 
+TOOL.Information = { { name = "left" } }
+
 cleanup.Register( "hoverballs" )
+
+local function IsValidHoverballModel( model )
+	for mdl, _ in pairs( list.Get( "HoverballModels" ) ) do
+		if ( mdl:lower() == model:lower() ) then return true end
+	end
+	return false
+end
 
 function TOOL:LeftClick( trace )
 
@@ -29,11 +38,8 @@ function TOOL:LeftClick( trace )
 	local strength = math.Clamp( self:GetClientNumber( "strength" ), 0.1, 20 )
 	local resistance = math.Clamp( self:GetClientNumber( "resistance" ), 0, 20 )
 
-	if ( !util.IsValidModel( model ) ) then return false end
-	if ( !util.IsValidProp( model ) ) then return false end
-
 	-- We shot an existing hoverball - just change its values
-	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_hoverball" && trace.Entity.pl == ply ) then
+	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_hoverball" && trace.Entity:GetPlayer() == ply ) then
 
 		trace.Entity:SetSpeed( speed )
 		trace.Entity:SetAirResistance( resistance )
@@ -60,6 +66,7 @@ function TOOL:LeftClick( trace )
 
 	end
 
+	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidHoverballModel( model ) ) then return false end
 	if ( !self:GetSWEP():CheckLimit( "hoverballs" ) ) then return false end
 
 	local ball = MakeHoverBall( ply, trace.HitPos, key_d, key_u, speed, resistance, strength, model )
@@ -100,9 +107,8 @@ if ( SERVER ) then
 
 	function MakeHoverBall( ply, Pos, key_d, key_u, speed, resistance, strength, model, Vel, aVel, frozen, nocollide )
 
-		if ( IsValid( ply ) ) then
-			if ( !ply:CheckLimit( "hoverballs" ) ) then return end
-		end
+		if ( IsValid( ply ) && !ply:CheckLimit( "hoverballs" ) ) then return false end
+		if ( !IsValidHoverballModel( model ) ) then return false end
 
 		local ball = ents.Create( "gmod_hoverball" )
 		if ( !IsValid( ball ) ) then return false end
@@ -176,8 +182,11 @@ end
 
 function TOOL:Think()
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
-		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+	local mdl = self:GetClientInfo( "model" )
+	if ( !IsValidHoverballModel( mdl ) ) then self:ReleaseGhostEntity() return end
+
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
+		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 	end
 
 	self:UpdateGhostHoverball( self.GhostEntity, self:GetOwner() )
@@ -200,10 +209,9 @@ function TOOL.BuildCPanel( CPanel )
 
 end
 
--- This list is getting populated from right to left for some reason!
-
-list.Set( "HoverballModels", "models/MaxOfS2D/hover_propeller.mdl", {} )
 list.Set( "HoverballModels", "models/dav0r/hoverball.mdl", {} )
-list.Set( "HoverballModels", "models/MaxOfS2D/hover_rings.mdl", {} )
-list.Set( "HoverballModels", "models/MaxOfS2D/hover_classic.mdl", {} )
-list.Set( "HoverballModels", "models/MaxOfS2D/hover_basic.mdl", {} )
+list.Set( "HoverballModels", "models/maxofs2d/hover_basic.mdl", {} )
+list.Set( "HoverballModels", "models/maxofs2d/hover_classic.mdl", {} )
+list.Set( "HoverballModels", "models/maxofs2d/hover_plate.mdl", {} )
+list.Set( "HoverballModels", "models/maxofs2d/hover_propeller.mdl", {} )
+list.Set( "HoverballModels", "models/maxofs2d/hover_rings.mdl", {} )

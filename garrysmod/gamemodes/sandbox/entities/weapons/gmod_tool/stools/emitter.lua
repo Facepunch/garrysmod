@@ -9,6 +9,11 @@ TOOL.ClientConVar[ "starton" ] = "0"
 TOOL.ClientConVar[ "effect" ] = "sparks"
 TOOL.ClientConVar[ "scale" ] = "1"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 cleanup.Register( "emitters" )
 
 function TOOL:LeftClick( trace, worldweld )
@@ -192,16 +197,8 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Checkbox", { Label = "#tool.emitter.toggle", Command = "emitter_toggle" } )
 	CPanel:AddControl( "Checkbox", { Label = "#tool.emitter.starton", Command = "emitter_starton" } )
 
-	local matselect = vgui.Create( "MatSelect", CPanel )
-	matselect:SetItemWidth( 64 )
-	matselect:SetItemHeight( 64 )
-	matselect:SetAutoHeight( true )
-	matselect:SetConVar( "emitter_effect" )
-
-	Derma_Hook( matselect.List, "Paint", "Paint", "Panel" )
-
-	local list = list.Get( "EffectType" )
-	for k, v in pairs( list ) do
+	local matselect = CPanel:MatSelect( "emitter_effect", nil, true, 0.25, 0.25 )
+	for k, v in pairs( list.Get( "EffectType" ) ) do
 		matselect:AddMaterialEx( v.print, v.material, k, { emitter_effect = k } )
 	end
 

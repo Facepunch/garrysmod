@@ -13,6 +13,11 @@ TOOL.ClientConVar[ "endsize" ] = 0
 
 TOOL.ClientConVar[ "material" ] = "trails/lol"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 cleanup.Register( "trails" )
 
 local function SetTrails( ply, ent, data )
