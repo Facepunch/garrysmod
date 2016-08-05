@@ -22,13 +22,14 @@ function EFFECT:Init( data )
 	self.Size = 4
 	self.Alpha = 255
 
+	local effectdata = EffectData()
+	effectdata:SetOrigin( pos )
+	effectdata:SetNormal( nrml )
+	effectdata:SetEntity( ent )
+	effectdata:SetAttachment( att )
+
 	for i = 0, 5 do
 
-		local effectdata = EffectData()
-		effectdata:SetOrigin( pos )
-		effectdata:SetNormal( nrml )
-		effectdata:SetEntity( ent )
-		effectdata:SetAttachment( att )
 		util.Effect( "selection_ring", effectdata )
 
 	end
