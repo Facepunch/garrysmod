@@ -92,12 +92,8 @@ CreateConVar("ttt_det_credits_traitorkill", "0")
 CreateConVar("ttt_det_credits_traitordead", "1")
 
 
-CreateConVar("ttt_announce_deaths", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
-
 CreateConVar("ttt_use_weapon_spawn_scripts", "1")
 CreateConVar("ttt_weapon_spawn_count", "0")
-
-CreateConVar("ttt_always_use_mapcycle", "0")
 
 CreateConVar("ttt_round_limit", "6", FCVAR_ARCHIVE + FCVAR_NOTIFY + FCVAR_REPLICATED)
 CreateConVar("ttt_time_limit_minutes", "75", FCVAR_NOTIFY + FCVAR_REPLICATED)
@@ -442,26 +438,9 @@ local function CheckForAbort()
    return false
 end
 
-function GM:TTTDelayRoundStartForVote()
-   -- Can be used for custom voting systems
-   --return true, 30
-   return false
-end
-
 function PrepareRound()
    -- Check playercount
    if CheckForAbort() then return end
-
-   local delay_round, delay_length = hook.Call("TTTDelayRoundStartForVote", GAMEMODE)
-
-   if delay_round then
-      delay_length = delay_length or 30
-
-      LANG.Msg("round_voting", {num = delay_length})
-
-      timer.Create("delayedprep", delay_length, 1, PrepareRound)
-      return
-   end
 
    -- Cleanup
    CleanUp()
