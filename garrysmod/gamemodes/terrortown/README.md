@@ -31,12 +31,6 @@ Dedicated server (srcds) preparation
 The gamemode _requires_ CS:S content to be installed. The Garry's Mod wiki
 has some information on this here:
 * http://wiki.garrysmod.com/page/Mounting_Content_on_a_DS
-  
-If you want TTT to automatically switch maps every few rounds, place a
-mapcycle.txt in the "\garrysmod\" directory. It should contain a list of map
-names, exactly like the mapcycle.txt in Source games like CS:S or HL2DM. If you
-don't know what maps to use, just put in a list of the CS:S maps, all of them
-work. See ttt_round_limit and such in the convar section below for more configuration.
 
 A common problem is strange issues with floating grenades, floating weapons, and
 instant reloading. These are all caused by the server not having CS:S content

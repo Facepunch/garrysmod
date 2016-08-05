@@ -13,7 +13,6 @@ L.spectators = "Espectadores"
 
 --- Round status messages
 L.round_minplayers = "Não há jogadores suficientes para começar uma nova rodada..."
-L.round_voting     = "Voto em andamento, atrasando nova rodada em {num} segundos..."
 L.round_begintime  = "Uma nova rodada começa em {num} segundos. Preparem-se."
 L.round_selected   = "Os Traidores foram escolhidos."
 L.round_started    = "Uma nova rodada começou!"
