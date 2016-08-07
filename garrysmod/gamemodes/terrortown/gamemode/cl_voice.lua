@@ -60,14 +60,6 @@ function GM:ChatText(idx, name, text, type)
       end
    end
 
-   if idx == 0 and type == "none" then
-      if string.sub(text, 1, 6) == "(VOTE)" then
-         chat.AddText(Color(255, 180, 0), string.sub(text, 8))
-
-         return true
-      end
-   end
-
    return BaseClass.ChatText(self, idx, name, text, type)
 end
 
