@@ -48,7 +48,7 @@ function ENT:AcceptInput(name, activator)
       elseif r == RECEIVE_INNOCENT then
          recv = GetInnocentFilter()
       elseif r == RECEIVE_ACTIVATOR then
-         if not (IsValid(activator) and activator:IsPlayer()) then
+         if not IsPlayer(activator) then
             ErrorNoHalt("ttt_game_text tried to show message to invalid !activator\n")
             return true
          end

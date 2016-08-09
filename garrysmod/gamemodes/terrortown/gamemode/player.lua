@@ -114,7 +114,7 @@ function GM:IsSpawnpointSuitable(ply, spwn, force, rigged)
    local blocking = ents.FindInBox(pos + Vector( -16, -16, 0 ), pos + Vector( 16, 16, 64 ))
 
    for k, p in pairs(blocking) do
-      if IsValid(p) and p:IsPlayer() and p:IsTerror() and p:Alive() then
+      if IsPlayer(p) and p:IsTerror() then
          if force then
             p:Kill()
          else
@@ -341,7 +341,7 @@ function GM:KeyPress(ply, key)
          local ang = ply:EyeAngles()
 
          local target = ply:GetObserverTarget()
-         if IsValid(target) and target:IsPlayer() then
+         if IsPlayer(target) then
             pos = target:EyePos()
             ang = target:EyeAngles()
          end
@@ -360,7 +360,7 @@ function GM:KeyPress(ply, key)
          end
       elseif key == IN_RELOAD then
          local tgt = ply:GetObserverTarget()
-         if not IsValid(tgt) or not tgt:IsPlayer() then return end
+         if not IsPlayer(tgt) then return end
 
          if not ply.spec_mode or ply.spec_mode == OBS_MODE_CHASE then
             ply.spec_mode = OBS_MODE_IN_EYE
@@ -514,7 +514,7 @@ local function CheckCreditAward(victim, attacker)
    if not IsValid(victim) then return end
 
    -- DETECTIVE AWARD
-   if IsValid(attacker) and attacker:IsPlayer() and attacker:IsActiveDetective() and victim:IsTraitor() then
+   if IsPlayer(attacker) and attacker:IsActiveDetective() and victim:IsTraitor() then
       local amt = GetConVarNumber("ttt_det_credits_traitordead") or 1
       for _, ply in pairs(player.GetAll()) do
          if ply:IsActiveDetective() then
@@ -616,7 +616,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
    if GetRoundState() == ROUND_ACTIVE then
       SCORE:HandleKill(ply, attacker, dmginfo)
 
-      if IsValid(attacker) and attacker:IsPlayer() then
+      if IsPlayer(attacker) then
          attacker:RecordKill(ply)
 
          DamageLog(Format("KILL:\t %s [%s] killed %s [%s]", attacker:Nick(), attacker:GetRoleString(), ply:Nick(), ply:GetRoleString()))
@@ -649,7 +649,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
    CheckCreditAward(ply, attacker)
 
    -- Check for T killing D or vice versa
-   if IsValid(attacker) and attacker:IsPlayer() then
+   if IsPlayer(attacker) then
       local reward = 0
       if attacker:IsActiveTraitor() and ply:GetDetective() then
          reward = math.ceil(GetConVarNumber("ttt_credits_detectivekill"))
@@ -733,7 +733,7 @@ function GM:SpectatorThink(ply)
    -- when speccing a player
    if ply:GetObserverMode() != OBS_MODE_ROAMING and (not ply.propspec) and (not ply:GetRagdollSpec()) then
       local tgt = ply:GetObserverTarget()
-      if IsValid(tgt) and tgt:IsPlayer() then
+      if IsPlayer(tgt) then
          if (not tgt:IsTerror()) or (not tgt:Alive()) then
             -- stop speccing as soon as target dies
             ply:Spectate(OBS_MODE_ROAMING)
@@ -821,7 +821,7 @@ function GM:OnPlayerHitGround(ply, in_water, on_floater, speed)
 
    -- if we fell on a dude, that hurts (him)
    local ground = ply:GetGroundEntity()
-   if IsValid(ground) and ground:IsPlayer() then
+   if IsPlayer(ground) then
       if math.floor(damage) > 0 then
          local att = ply
 
@@ -887,7 +887,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
 
    if not GAMEMODE:AllowPVP() then
       -- if player vs player damage, or if damage versus a prop, then zero
-      if (ent:IsExplosive() or (ent:IsPlayer() and IsValid(att) and att:IsPlayer())) then
+      if (ent:IsExplosive() or (ent:IsPlayer() and IsPlayer(att))) then
          dmginfo:ScaleDamage(0)
          dmginfo:SetDamage(0)
       end
@@ -899,7 +899,7 @@ function GM:EntityTakeDamage(ent, dmginfo)
       -- When a barrel hits a player, that player damages the barrel because
       -- Source physics. This gives stupid results like a player who gets hit
       -- with a barrel being blamed for killing himself or even his attacker.
-      if IsValid(att) and att:IsPlayer() and
+      if IsPlayer(att) and
          dmginfo:IsDamageType(DMG_CRUSH) and
          IsValid(ent:GetPhysicsAttacker()) then
 
@@ -940,7 +940,7 @@ function GM:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
 
       -- if we were hurt by a trap OR by a non-ply ent, and we were pushed
       -- recently, then our pusher is the attacker
-      if owner_time or (not IsValid(att)) or (not att:IsPlayer()) then
+      if owner_time or (not IsPlayer(att)) then
          local push = ent.was_pushed
 
          if push and IsValid(push.att) and push.t then
@@ -1007,7 +1007,7 @@ function GM:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
          dmginfo:ScaleDamage(0.25)
 
          -- if the prop is held, no damage
-         if IsValid(infl) and IsValid(infl:GetOwner()) and infl:GetOwner():IsPlayer() then
+         if IsValid(infl) and IsPlayer(infl:GetOwner()) then
             dmginfo:ScaleDamage(0)
             dmginfo:SetDamage(0)
          end
@@ -1017,7 +1017,7 @@ function GM:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
    -- handle fire attacker
    if ent.ignite_info and dmginfo:IsDamageType(DMG_DIRECT) then
       local datt = dmginfo:GetAttacker()
-      if (not IsValid(datt)) or (not datt:IsPlayer()) then
+      if not IsPlayer(datt) then
          local ignite = ent.ignite_info
          if IsValid(ignite.att) and IsValid(ignite.infl)then
             dmginfo:SetAttacker(ignite.att)
@@ -1040,7 +1040,7 @@ function GM:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
    util.StartBleeding(ent, dmginfo:GetDamage(), 5)
 
    -- general actions for pvp damage
-   if ent != att and IsValid(att) and att:IsPlayer() and GetRoundState() == ROUND_ACTIVE and math.floor(dmginfo:GetDamage()) > 0 then
+   if ent != att and IsPlayer(att) and GetRoundState() == ROUND_ACTIVE and math.floor(dmginfo:GetDamage()) > 0 then
 
       -- scale everything to karma damage factor except the knife, because it
       -- assumes a kill

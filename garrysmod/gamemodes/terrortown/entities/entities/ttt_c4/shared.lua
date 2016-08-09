@@ -91,7 +91,7 @@ end
 
 
 function ENT:UseOverride(activator)
-   if IsValid(activator) and activator:IsPlayer() then
+   if IsPlayer(activator) then
       -- Traitors not allowed to disarm other traitor's C4 until he is dead
       local owner = self:GetOwner()
       if self:GetArmed() and owner != activator and activator:GetTraitor() and (IsValid(owner) and owner:Alive() and owner:GetTraitor()) then

@@ -287,7 +287,7 @@ local function GetKillerSample(victim, attacker, dmg)
       return nil
    end
 
-   if not (IsValid(victim) and IsValid(attacker) and attacker:IsPlayer()) then return end
+   if not (IsValid(victim) and IsPlayer(attacker)) then return end
 
    -- NPCs for which a player is damage owner (meaning despite the NPC dealing
    -- the damage, the attacker is a player) should not cause the player's DNA to
@@ -342,7 +342,7 @@ local function GetSceneData(victim, attacker, dmginfo)
 
    scene.victim = GetSceneDataFromPlayer(victim)
 
-   if IsValid(attacker) and attacker:IsPlayer() then
+   if IsPlayer(attacker) then
       scene.killer = GetSceneDataFromPlayer(attacker)
 
       local att = attacker:LookupAttachment("anim_attachment_RH")

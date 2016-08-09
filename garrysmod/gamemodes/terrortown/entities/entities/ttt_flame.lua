@@ -57,7 +57,7 @@ function StartFires(pos, tr, num, lifetime, explode, dmgowner)
 
       local flame = ents.Create("ttt_flame")
       flame:SetPos(pos)
-      if IsValid(dmgowner) and dmgowner:IsPlayer() then
+      if IsPlayer(dmgowner) then
          flame:SetDamageParent(dmgowner)
          flame:SetOwner(dmgowner)
       end

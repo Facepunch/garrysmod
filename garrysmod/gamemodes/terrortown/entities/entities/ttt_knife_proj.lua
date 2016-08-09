@@ -127,23 +127,21 @@ end
 
 if SERVER then
   function ENT:Think()
-     if self.Stuck then return end
+      if self.Stuck then return end
 
-     local vel = self:GetVelocity()
-     if vel == vector_origin then return end
+      local vel = self:GetVelocity()
+      if vel == vector_origin then return end
 
-     local tr = util.TraceLine({start=self:GetPos(), endpos=self:GetPos() + vel:GetNormal() * 20, filter={self, self:GetOwner()}, mask=MASK_SHOT_HULL})
+      local tr = util.TraceLine({start=self:GetPos(), endpos=self:GetPos() + vel:GetNormal() * 20, filter={self, self:GetOwner()}, mask=MASK_SHOT_HULL})
+      local other = tr.Entity
 
-     if tr.Hit and tr.HitNonWorld and IsValid(tr.Entity) then
-        local other = tr.Entity
-        if other:IsPlayer() then
-           self:HitPlayer(other, tr)
-        end
-     end
+      if tr.Hit and tr.HitNonWorld and IsPlayer(other) then
+         self:HitPlayer(other, tr)
+      end
 
-     self:NextThink(CurTime())
-     return true
-  end
+      self:NextThink(CurTime())
+      return true
+   end
 end
 
 -- When this entity touches anything that is not a player, it should turn into a
@@ -173,11 +171,11 @@ if SERVER then
       -- if you do fancy stuff in a physics callback
       local knife = self
       timer.Simple(0,
-                   function()
-                      if IsValid(knife) and not knife.Weaponised then
-                         knife:BecomeWeapon()
-                      end
-                   end)
+                     function()
+                        if IsValid(knife) and not knife.Weaponised then
+                           knife:BecomeWeapon()
+                        end
+                     end)
    end
 
    function ENT:PhysicsCollide(data, phys)

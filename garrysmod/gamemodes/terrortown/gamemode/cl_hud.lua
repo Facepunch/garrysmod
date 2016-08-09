@@ -198,7 +198,7 @@ local function SpecHUDPaint(client)
    ShadowedText(text, "TimeLeft", time_x + margin, time_y, COLOR_WHITE)
 
    local tgt = client:GetObserverTarget()
-   if IsValid(tgt) and tgt:IsPlayer() then
+   if IsPlayer(tgt) then
       ShadowedText(tgt:Nick(), "TimeLeft", ScrW() / 2, margin, COLOR_WHITE, TEXT_ALIGN_CENTER)
 
    elseif IsValid(tgt) and tgt:GetNWEntity("spec_owner", nil) == client then

@@ -93,25 +93,23 @@ function SWEP:PrimaryAttack()
    end
 
 
-   if SERVER and tr.Hit and tr.HitNonWorld and IsValid(hitEnt) then
-      if hitEnt:IsPlayer() then
-         -- knife damage is never karma'd, so don't need to take that into
-         -- account we do want to avoid rounding error strangeness caused by
-         -- other damage scaling, causing a death when we don't expect one, so
-         -- when the target's health is close to kill-point we just kill
-         if hitEnt:Health() < (self.Primary.Damage + 10) then
-            self:StabKill(tr, spos, sdest)
-         else
-            local dmg = DamageInfo()
-            dmg:SetDamage(self.Primary.Damage)
-            dmg:SetAttacker(self.Owner)
-            dmg:SetInflictor(self.Weapon or self)
-            dmg:SetDamageForce(self.Owner:GetAimVector() * 5)
-            dmg:SetDamagePosition(self.Owner:GetPos())
-            dmg:SetDamageType(DMG_SLASH)
+   if SERVER and tr.Hit and tr.HitNonWorld and IsPlayer(hitEnt) then
+      -- knife damage is never karma'd, so don't need to take that into
+      -- account we do want to avoid rounding error strangeness caused by
+      -- other damage scaling, causing a death when we don't expect one, so
+      -- when the target's health is close to kill-point we just kill
+      if hitEnt:Health() < (self.Primary.Damage + 10) then
+         self:StabKill(tr, spos, sdest)
+      else
+         local dmg = DamageInfo()
+         dmg:SetDamage(self.Primary.Damage)
+         dmg:SetAttacker(self.Owner)
+         dmg:SetInflictor(self.Weapon or self)
+         dmg:SetDamageForce(self.Owner:GetAimVector() * 5)
+         dmg:SetDamagePosition(self.Owner:GetPos())
+         dmg:SetDamageType(DMG_SLASH)
 
-            hitEnt:DispatchTraceAttack(dmg, spos + (self.Owner:GetAimVector() * 3), sdest)
-         end
+         hitEnt:DispatchTraceAttack(dmg, spos + (self.Owner:GetAimVector() * 3), sdest)
       end
    end
 
@@ -275,7 +273,7 @@ if CLIENT then
    function SWEP:DrawHUD()
       local tr = self.Owner:GetEyeTrace(MASK_SHOT)
 
-      if tr.HitNonWorld and IsValid(tr.Entity) and tr.Entity:IsPlayer()
+      if tr.HitNonWorld and IsPlayer(tr.Entity)
          and tr.Entity:Health() < (self.Primary.Damage + 10) then
 
          local x = ScrW() / 2.0
