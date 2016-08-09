@@ -342,7 +342,7 @@ local oldSpectateEntity = plymeta.SpectateEntity
 function plymeta:SpectateEntity(ent)
    oldSpectateEntity(self, ent)
 
-   if IsValid(ent) and ent:IsPlayer() then
+   if IsPlayer(ent) then
       self:SetupHands(ent)
    end
 end

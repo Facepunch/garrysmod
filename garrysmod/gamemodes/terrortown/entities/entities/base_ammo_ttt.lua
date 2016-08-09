@@ -87,7 +87,7 @@ end
 
 function ENT:Touch(ent)
    if SERVER and self.taken != true then
-      if (ent:IsValid() and ent:IsPlayer() and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent)) then
+      if (IsPlayer(ent) and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent)) then
 
          local ammo = ent:GetAmmoCount(self.AmmoType)
          -- need clipmax info and room for at least 1/4th

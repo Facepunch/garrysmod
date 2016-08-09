@@ -250,7 +250,7 @@ function RADIO:GetTargetType()
 
    local ent = trace.Entity
 
-   if ent:IsPlayer() and  ent:IsTerror() then
+   if ent:IsPlayer() and ent:IsTerror() then
       if ent:GetNWBool("disguised", false) then
          return "quick_disg", true
       else
@@ -365,7 +365,7 @@ local function RadioMsgRecv()
    local msg    = net.ReadString()
    local param  = net.ReadString()
 
-   if not (IsValid(sender) and sender:IsPlayer()) then return end
+   if not IsPlayer(sender) then return end
 
    GAMEMODE:PlayerSentRadioCommand(sender, msg, param)
 

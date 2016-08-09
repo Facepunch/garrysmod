@@ -108,7 +108,7 @@ function SWEP:FirePulse(force_fwd, force_up)
    local up = force_up / num
    bullet.Callback = function(att, tr, dmginfo)
                         local ply = tr.Entity
-                        if SERVER and IsValid(ply) and ply:IsPlayer() and (not ply:IsFrozen()) then
+                        if SERVER and IsPlayer(ply) and (not ply:IsFrozen()) then
                            local pushvel = tr.Normal * fwd
 
                            pushvel.z = math.max(pushvel.z, up)

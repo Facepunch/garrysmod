@@ -20,7 +20,7 @@ end
 function ENT:AcceptInput(name, activator)
    if name == "TakeCredits" then
 
-      if IsValid(activator) and activator:IsPlayer() then
+      if IsPlayer(activator) then
 
          if activator:GetCredits() >= self.Credits then
             activator:SubtractCredits(self.Credits)

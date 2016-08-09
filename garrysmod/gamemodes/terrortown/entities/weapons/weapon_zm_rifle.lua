@@ -47,7 +47,7 @@ SWEP.IronSightsAng         = Vector( 2.6, 1.37, 3.5 )
 function SWEP:SetZoom(state)
    if CLIENT then
       return
-   elseif IsValid(self.Owner) and self.Owner:IsPlayer() then
+   elseif IsPlayer(self.Owner) then
       if state then
          self.Owner:SetFOV(20, 0.3)
       else

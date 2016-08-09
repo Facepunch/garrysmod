@@ -17,7 +17,7 @@ function ENT:AcceptInput(name, activator, caller, data)
    if name == "SetActivatorAsDamageOwner" then
       if not self.Damager then return end
 
-      if IsValid(activator) and activator:IsPlayer() then
+      if IsPlayer(activator) then
          for _, ent in pairs(ents.FindByName(self.Damager) or {}) do
             if IsValid(ent) and ent.SetDamageOwner then
                Dev(2, "Setting damageowner on", ent, ent:GetName())

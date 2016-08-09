@@ -174,7 +174,7 @@ function PreprocSearch(raw)
          if num == 1 then
             local vic = Entity(d[1])
             local dc = d[1] == -1 -- disconnected
-            if dc or (IsValid(vic) and vic:IsPlayer()) then
+            if dc or IsPlayer(vic) then
                search[t].text = PT("search_kills1", {player = (dc and "<Disconnected>" or vic:Nick())})
             end
          elseif num > 1 then
@@ -184,7 +184,7 @@ function PreprocSearch(raw)
             for k, idx in pairs(d) do
                local vic = Entity(idx)
                local dc = idx == -1
-               if dc or (IsValid(vic) and vic:IsPlayer()) then
+               if dc or IsPlayer(vic) then
                   table.insert(nicks, (dc and "<Disconnected>" or vic:Nick()))
                end
             end
@@ -198,7 +198,7 @@ function PreprocSearch(raw)
       elseif t == "lastid" then
          if d and d.idx != -1 then
             local ent = Entity(d.idx)
-            if IsValid(ent) and ent:IsPlayer() then
+            if IsPlayer(ent) then
                search[t].text = PT("search_eyes", {player = ent:Nick()})
 
                search[t].ply = ent
@@ -439,7 +439,7 @@ local function ReceiveRagdollSearch()
    search.eidx = net.ReadUInt(16)
 
    search.owner = Entity(net.ReadUInt(8))
-   if not (IsValid(search.owner) and search.owner:IsPlayer() and (not search.owner:Alive())) then
+   if not (IsPlayer(search.owner) and (not search.owner:Alive())) then
       search.owner = nil
    end
 
