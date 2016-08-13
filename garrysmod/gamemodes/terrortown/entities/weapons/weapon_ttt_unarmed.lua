@@ -56,6 +56,9 @@ function SWEP:Deploy()
    if SERVER and IsValid(self.Owner) then
       self.Owner:DrawViewModel(false)
    end
+
+   self:DrawShadow(false)
+
    return true
 end
 
