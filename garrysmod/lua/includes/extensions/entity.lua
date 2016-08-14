@@ -207,7 +207,6 @@ function meta:InstallDataTable()
 			SetFunc = SetFunc,
 			GetFunc = GetFunc,
 			typename = typename,
-			keyname = keyname,
 			Notify = {}
 		}
 
@@ -243,9 +242,7 @@ function meta:InstallDataTable()
 			KeyName		= keyname,
 			Set			= setfunc,
 			Get			= getfunc,
-			Type		= type,
-			EditType	= EditType,
-			EditData	= EditData
+			Type		= type
 		}
 
 		if ( other_data ) then
@@ -279,6 +276,8 @@ function meta:InstallDataTable()
 
 		if ( !other_data ) then return end
 
+		-- This KeyName stuff is absolutely unnecessary, there's absolutely no reason for it to exist
+		-- But we cannot remove it now because dupes will break. It should've used the "name" variable
 		if ( other_data.KeyName ) then
 			ent:SetupKeyValue( other_data.KeyName, typename, ent[ "Set" .. name ], ent[ "Get" .. name ], other_data )
 			ent:SetupEditing( name, other_data.KeyName, other_data.Edit )
@@ -318,6 +317,8 @@ function meta:InstallDataTable()
 
 		if ( !other_data ) then return end
 
+		-- This KeyName stuff is absolutely unnecessary, there's absolutely no reason for it to exist
+		-- But we cannot remove it now because dupes will break. It should've used the "name" variable
 		if ( other_data.KeyName ) then
 			ent:SetupKeyValue( other_data.KeyName, "float", ent[ "Set" .. name ], ent[ "Get" .. name ], other_data )
 			ent:SetupEditing( name, other_data.KeyName, other_data.Edit )

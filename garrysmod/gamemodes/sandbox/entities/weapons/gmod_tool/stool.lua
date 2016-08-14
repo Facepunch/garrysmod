@@ -154,7 +154,7 @@ if ( CLIENT ) then
 	local TOOLS_LIST = SWEP.Tool
 
 	-- Add the STOOLS to the tool menu
-	local function AddSToolsToMenu()
+	hook.Add( "PopulateToolMenu", "AddSToolsToMenu", function()
 
 		for ToolName, TOOL in pairs( TOOLS_LIST ) do
 
@@ -172,9 +172,7 @@ if ( CLIENT ) then
 
 		end
 
-	end
-
-	hook.Add( "PopulateToolMenu", "AddSToolsToMenu", AddSToolsToMenu )
+	end )
 
 	--
 	-- Search
