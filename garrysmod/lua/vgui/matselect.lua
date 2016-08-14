@@ -152,7 +152,7 @@ function PANEL:PerformLayout()
 	if ( self.m_bSizeToContent ) then
 		self.List:SetWide( self:GetWide() )
 		self.List:InvalidateLayout( true )
-		self:SetTall( self.List:GetTall() )
+		self:SetTall( self.List:GetTall() + 5 )
 
 		return
 	end

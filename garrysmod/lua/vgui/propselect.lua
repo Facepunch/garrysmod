@@ -118,14 +118,20 @@ function PANEL:PerformLayout()
 
 	local y = self.BaseClass.PerformLayout( self )
 
-	local Height = ( 64 + self.List:GetSpacing() ) * self.Height + self.List:GetPadding() * 2 - self.List:GetSpacing()
+	if ( self.Height >= 1 ) then
+		local Height = ( 64 + self.List:GetSpacing() ) * math.max( self.Height, 1 ) + self.List:GetPadding() * 2 - self.List:GetSpacing()
 
-	self.List:SetPos( 0, y )
-	self.List:SetSize( self:GetWide(), Height )
+		self.List:SetPos( 0, y )
+		self.List:SetSize( self:GetWide(), Height )
 
-	y = y + Height
+		y = y + Height
 
-	self:SetTall( y + 5 )
+		self:SetTall( y + 5 )
+	else -- Height is set to 0 or less, auto stretch
+		self.List:SetWide( self:GetWide() )
+		self.List:SizeToChildren( false, true )
+		self:SetTall( self.List:GetTall() + 5 )
+	end
 
 end
 

@@ -19,7 +19,6 @@ function PANEL:Init()
 	self:SetZPos( 0 )
 
 	self:SetColor( Color( 255, 0, 255 ) )
-	self.PosX, self.PosY, self.SizeX, self.SizeY = self:GetBounds()
 
 end
 

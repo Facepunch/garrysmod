@@ -225,10 +225,11 @@ function PANEL:AddControl( control, data )
 	if ( control == "numpad" ) then
 
 		local ctrl = vgui.Create( "CtrlNumPad", self )
-			ctrl:SetConVar1( data.command )
-			ctrl:SetConVar2( data.command2 )
-			ctrl:SetLabel1( data.label )
-			ctrl:SetLabel2( data.label2 )
+		ctrl:SetConVar1( data.command )
+		ctrl:SetConVar2( data.command2 )
+		ctrl:SetLabel1( data.label )
+		ctrl:SetLabel2( data.label2 )
+
 		self:AddPanel( ctrl )
 		return ctrl
 
@@ -237,12 +238,11 @@ function PANEL:AddControl( control, data )
 	if ( control == "color" ) then
 
 		local ctrl = vgui.Create( "CtrlColor", self )
-
-			ctrl:SetLabel( data.label )
-			ctrl:SetConVarR( data.red )
-			ctrl:SetConVarG( data.green )
-			ctrl:SetConVarB( data.blue )
-			ctrl:SetConVarA( data.alpha )
+		ctrl:SetLabel( data.label )
+		ctrl:SetConVarR( data.red )
+		ctrl:SetConVarG( data.green )
+		ctrl:SetConVarB( data.blue )
+		ctrl:SetConVarA( data.alpha )
 
 		self:AddPanel( ctrl )
 		return ctrl
