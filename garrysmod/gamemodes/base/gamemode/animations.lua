@@ -272,17 +272,23 @@ local MOVING_MOUTH_PARTS = {
 	"left_mouth_drop"
 }
 
-function GM:MouthMoveAnimation(ply)
-	if ply:IsSpeaking() == false then
-		--return
+function GM:MouthMoveAnimation2(ply)
+
+	local isSpeaking = ply:IsSpeaking()
+	local moveMouth = ply:IsSpeaking() or ply.m_bSpeaking
+	ply.m_bSpeaking = isSpeaking
+
+	if moveMouth ~= true then 
+		return
 	end
+
 	local vol = math.Clamp(ply:VoiceVolume() * 2, 0, 2)
-	for _,v in ipairs(MOVING_MOUTH_PARTS) do
-		local index = ply:GetFlexIndexByName(v)
-		if index ~= nil then
-			ply:SetFlexWeight(index, vol)
-		end
+	for i = 0, FlexNum - 1 do
+		local Name = ply:GetFlexName(i)
+		if MOVING_MOUTH_PARTS[Name] ~= true then continue end
+		ply:SetFlexWeight(i, vol)
 	end
+
 end
 
 function GM:CalcMainActivity( ply, velocity )
