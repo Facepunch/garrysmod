@@ -264,26 +264,25 @@ end
 --
 -- Moves the mouth when talking on voicecom
 --
-function GM:MouthMoveAnimation( ply )
+local MOVING_MOUTH_PARTS = {
+	"jaw_drop",
+	"right_part",
+	"left_part",
+	"right_mouth_drop",
+	"left_mouth_drop"
+}
 
-	local FlexNum = ply:GetFlexNum() - 1
-	if ( FlexNum <= 0 ) then return end
-
-	for i = 0, FlexNum - 1 do
-	
-		local Name = ply:GetFlexName( i )
-
-		if ( Name == "jaw_drop" || Name == "right_part" || Name == "left_part" || Name == "right_mouth_drop" || Name == "left_mouth_drop" ) then
-
-			if ( ply:IsSpeaking() ) then
-				ply:SetFlexWeight( i, math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) )
-			else
-				ply:SetFlexWeight( i, 0 )
-			end
-		end
-
+function GM:MouthMoveAnimation(ply)
+	if ply:IsSpeaking() == false then
+		--return
 	end
-
+	local vol = math.Clamp(ply:VoiceVolume() * 2, 0, 2)
+	for _,v in ipairs(MOVING_MOUTH_PARTS) do
+		local index = ply:GetFlexIndexByName(v)
+		if index ~= nil then
+			ply:SetFlexWeight(index, vol)
+		end
+	end
 end
 
 function GM:CalcMainActivity( ply, velocity )
