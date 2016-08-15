@@ -50,18 +50,20 @@ function GM:HandlePlayerJumping( ply, velocity )
 
 end
 
-function GM:HandlePlayerDucking( ply, velocity )
+function GM:HandlePlayerDucking(ply, velocity)
 
-	if ( !ply:Crouching() ) then return false end
+	if ply:InVehicle() == true or ply:KeyDown(IN_DUCK) == false then
+		return false
+	end
 
-	if ( velocity:Length2D() > 0.5 ) then
+	if (velocity:Length2D() > 0.5) then
 		ply.CalcIdeal = ACT_MP_CROUCHWALK
 	else
 		ply.CalcIdeal = ACT_MP_CROUCH_IDLE
 	end
 
 	return true
-
+	
 end
 
 function GM:HandlePlayerNoClipping( ply, velocity )
