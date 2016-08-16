@@ -3,7 +3,6 @@
 	Desc: Takes the sign of a number, 0 when not relevant
 ------------------------------------------------------------]]
 function math.Sign(num)
-  local num = tonumber(num) or 0
   return (num ~= 0) and (num / math.abs(num)) or 0
 end
 
