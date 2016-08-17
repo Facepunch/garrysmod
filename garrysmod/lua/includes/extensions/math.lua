@@ -3,7 +3,7 @@
 	Desc: Takes the sign of a number, 0 when not relevant
 ------------------------------------------------------------]]
 function math.Sign(num)
-  return (num ~= 0) and (num / math.abs(num)) or 0
+  return (num > 0 and 1) or (num < 0 and -1) or 0
 end
 
 --[[---------------------------------------------------------
