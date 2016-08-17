@@ -106,9 +106,9 @@ function ENT:AcceptInput(name, activator, caller, data)
 
       local weapons = self:TestWeapons(weptype or wepname)
 
-      if not self.Outputs["WeaponsFound"] then return end
+      if not self.m_tOutputs["WeaponsFound"] then return end
 
-      for idx, op in pairs(self.Outputs["WeaponsFound"]) do
+      for idx, op in pairs(self.m_tOutputs["WeaponsFound"]) do
          op.param = weapons
       end
 

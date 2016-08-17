@@ -8,7 +8,7 @@ function ENT:Initialize()
    -- settings entity exists (a reliable way of identifying a TTT map)
    GAMEMODE.propspec_allow_named = false
 
-   self.Outputs = self.Outputs or {}
+   self.m_tOutputs = self.m_tOutputs or {}
 
    self:TriggerOutput("MapSettingsSpawned", self)
 end
@@ -69,11 +69,11 @@ function ENT:RoundStateTrigger(r, data)
    elseif r == ROUND_ACTIVE then
       self:TriggerOutput("RoundStart", self)
    elseif r == ROUND_POST then
-      self.Outputs = self.Outputs or {}
-      if not self.Outputs["RoundEnd"] then return end
+      self.m_tOutputs = self.m_tOutputs or {}
+      if not self.m_tOutputs["RoundEnd"] then return end
 
       -- RoundEnd has the type of win condition as param
-      for _, op in pairs(self.Outputs["RoundEnd"]) do
+      for _, op in pairs(self.m_tOutputs["RoundEnd"]) do
          op.param = tostring(data)
       end
 

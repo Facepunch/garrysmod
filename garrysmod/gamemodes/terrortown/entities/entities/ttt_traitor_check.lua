@@ -37,7 +37,7 @@ function ENT:AcceptInput(name, activator, caller)
       local traitors = self:CountTraitors()
 
       -- hack in our parameter
-      for idx, op in pairs(self.Outputs["TraitorsFound"]) do
+      for idx, op in pairs(self.m_tOutputs["TraitorsFound"]) do
          op.param = traitors
       end
 
