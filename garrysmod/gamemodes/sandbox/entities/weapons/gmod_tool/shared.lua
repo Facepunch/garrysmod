@@ -62,6 +62,11 @@ function SWEP:SetupDataTables()
 
 end
 
+-- Convenience function to check object limits
+function SWEP:CheckLimit( str )
+	return self:GetOwner():CheckLimit( str )
+end
+
 function SWEP:Initialize()
 
 	self:SetHoldType( "pistol" )

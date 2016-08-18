@@ -149,12 +149,11 @@ if ( SERVER ) then
 
 end
 
-function TOOL:UpdateGhostEmitter( ent, player )
+function TOOL:UpdateGhostEmitter( ent, pl )
 
 	if ( !IsValid( ent ) ) then return end
 
-	local tr = util.GetPlayerTrace( player )
-	local trace	= util.TraceLine( tr )
+	local trace = pl:GetEyeTrace()
 	if ( !trace.Hit ) then return end
 
 	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_emitter" ) then
@@ -191,8 +190,8 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.emitter.key", Command = "emitter_key" } )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.emitter.delay", Command = "emitter_delay", Type = "Float", Min = 0.01, Max = 1 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.emitter.scale", Command = "emitter_scale", Type = "Float", Min = 0.1, Max = 6, Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.emitter.delay", Command = "emitter_delay", Type = "Float", Min = 0.01, Max = 2 } )
+	CPanel:AddControl( "Slider", { Label = "#tool.emitter.scale", Command = "emitter_scale", Type = "Float", Min = 0, Max = 6, Help = true } )
 
 	CPanel:AddControl( "Checkbox", { Label = "#tool.emitter.toggle", Command = "emitter_toggle" } )
 	CPanel:AddControl( "Checkbox", { Label = "#tool.emitter.starton", Command = "emitter_starton" } )

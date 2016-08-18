@@ -4,16 +4,17 @@ DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Emitter"
 ENT.RenderGroup = RENDERGROUP_OPAQUE
+ENT.Editable = true
 
 local matLight = Material( "sprites/light_ignorez" )
 local matBeam = Material( "effects/lamp_beam" )
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Float", 0, "Delay" )
-	self:NetworkVar( "Float", 1, "Scale" )
-	self:NetworkVar( "Bool", 0, "Toggle" )
-	self:NetworkVar( "Bool", 1, "On" )
+	self:NetworkVar( "Bool", 1, "On", { KeyName = "on", Edit = { type = "Boolean", order = 1 } } )
+	self:NetworkVar( "Bool", 0, "Toggle", { KeyName = "tg", Edit = { type = "Boolean", order = 1 } } )
+	self:NetworkVar( "Float", 0, "Delay", { KeyName = "dl", Edit = { type = "Float", order = 1, min = 0.01, max = 2 } } )
+	self:NetworkVar( "Float", 1, "Scale", { KeyName = "sc", Edit = { type = "Float", order = 1, min = 0, max = 6 } } )
 	self:NetworkVar( "String", 0, "Effect" )
 
 end

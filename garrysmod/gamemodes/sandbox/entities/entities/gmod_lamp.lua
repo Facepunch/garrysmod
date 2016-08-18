@@ -4,6 +4,7 @@ DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Lamp"
 ENT.RenderGroup = RENDERGROUP_BOTH
+ENT.Editable = true
 
 local matLight = Material( "sprites/light_ignorez" )
 local matBeam = Material( "effects/lamp_beam" )
@@ -15,11 +16,16 @@ AccessorFunc( ENT, "Texture", "FlashlightTexture" )
 --
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Bool", 0, "On" )
-	self:NetworkVar( "Bool", 1, "Toggle" )
-	self:NetworkVar( "Float", 0, "LightFOV" )
-	self:NetworkVar( "Float", 1, "Distance" )
-	self:NetworkVar( "Float", 2, "Brightness" )
+	self:NetworkVar( "Bool", 0, "On", { KeyName = "on", Edit = { type = "Boolean", order = 1 } } )
+	self:NetworkVar( "Bool", 1, "Toggle", { KeyName = "toggle", Edit = { type = "Boolean", order = 2 } } )
+	self:NetworkVar( "Float", 0, "LightFOV", { KeyName = "fov", Edit = { type = "Float", order = 3, min = 10, max = 170 } } )
+	self:NetworkVar( "Float", 1, "Distance", { KeyName = "dist", Edit = { type = "Float", order = 4, min = 64, max = 2048 } } )
+	self:NetworkVar( "Float", 2, "Brightness", { KeyName = "bright", Edit = { type = "Float", order = 5, min = 0, max = 8 } } )
+
+	self:NetworkVarNotify( "On", self.OnUpdateLight )
+	self:NetworkVarNotify( "LightFOV", self.OnUpdateLight )
+	self:NetworkVarNotify( "Brightness", self.OnUpdateLight )
+	self:NetworkVarNotify( "Distance", self.OnUpdateLight )
 
 end
 
@@ -42,16 +48,30 @@ function ENT:Initialize()
 		self:DrawShadow( false )
 
 		local phys = self:GetPhysicsObject()
-
-		if ( IsValid( phys ) ) then
-			phys:Wake()
-		end
+		if ( IsValid( phys ) ) then phys:Wake() end
 
 	end
 
 	if ( CLIENT ) then
 
 		self.PixVis = util.GetPixelVisibleHandle()
+
+	end
+
+end
+
+if ( SERVER ) then
+
+	function ENT:Think()
+
+		self.BaseClass.Think( self )
+
+		if ( !IsValid( self.flashlight ) ) then return end
+
+		if ( string.FromColor( self.flashlight:GetColor() ) != string.FromColor( self:GetColor() ) ) then
+			self.flashlight:SetColor( self:GetColor() )
+			self:UpdateLight()
+		end
 
 	end
 
@@ -64,28 +84,25 @@ function ENT:OnTakeDamage( dmginfo )
 end
 
 function ENT:Use( activator, caller )
-
 end
 
 function ENT:Switch( bOn )
+	self:SetOn( bOn )
+end
+
+function ENT:OnSwitch( bOn )
 
 	if ( bOn == self:GetOn() ) then return end
-
-	self.on = bOn
 
 	if ( !bOn ) then
 
 		SafeRemoveEntity( self.flashlight )
 		self.flashlight = nil
-		self:SetOn( false )
 		return
 
 	end
 
-	self:SetOn( true )
-
 	self.flashlight = ents.Create( "env_projectedtexture" )
-
 	self.flashlight:SetParent( self.Entity )
 
 	-- The local positions are the offsets from parent..
@@ -109,7 +126,27 @@ end
 
 function ENT:Toggle()
 
-	self:Switch( !self:GetOn() )
+	self:SetOn( !self:GetOn() )
+
+end
+
+function ENT:OnUpdateLight( name, old, new )
+
+	if ( name == "On" ) then
+		self:OnSwitch( new )
+	end
+
+	if ( !IsValid( self.flashlight ) ) then return end
+
+	if ( name == "LightFOV" ) then
+		self.flashlight:Input( "FOV", NULL, NULL, tostring( new ) )
+	elseif ( name == "Distance" ) then
+		self.flashlight:SetKeyValue( "farz", self:GetDistance() )
+	elseif ( name == "Brightness" ) then
+		local c = self:GetColor()
+		local b = self:GetBrightness()
+		self.flashlight:SetKeyValue( "lightcolor", Format( "%i %i %i 255", c.r * b, c.g * b, c.b * b ) )
+	end
 
 end
 

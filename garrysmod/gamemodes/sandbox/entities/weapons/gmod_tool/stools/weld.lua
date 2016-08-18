@@ -275,7 +275,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description	= "#tool.weld.help" } )
+	CPanel:AddControl( "Header", { Description = "#tool.weld.help" } )
 	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "weld_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
 
 end

@@ -131,11 +131,8 @@ function TOOL.BuildCPanel( CPanel )
 	table.sort( Options )
 
 	local RealOptions = {}
-
 	for k, decal in pairs( Options ) do
-
 		RealOptions[ decal ] = { paint_decal = decal }
-
 	end
 
 	CPanel:AddControl( "ListBox", { Label = "#tool.paint.texture", Height = "300", Options = RealOptions } )

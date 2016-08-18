@@ -61,8 +61,6 @@ function TOOL:RightClick( trace )
 		undo.SetPlayer( ply )
 	undo.Finish()
 
-	ply:AddCleanup( "buttons", button )
-
 	return true, button
 
 end
@@ -116,6 +114,7 @@ if ( SERVER ) then
 
 		if ( IsValid( pl ) ) then
 			pl:AddCount( "buttons", button )
+			pl:AddCleanup( "buttons", button )
 		end
 
 		DoPropSpawnedEffect( button )
@@ -176,7 +175,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "CheckBox", { Label = "#tool.button.toggle", Command = "button_toggle", Help = true } )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.button.model", ConVar = "button_model", Height = 4, Models = list.Get( "ButtonModels" ) } )
+	CPanel:AddControl( "PropSelect", { Label = "#tool.button.model", ConVar = "button_model", Height = 0, Models = list.Get( "ButtonModels" ) } )
 
 end
 

@@ -3,6 +3,15 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Balloon"
+ENT.Editable = true
+
+function ENT:SetupDataTables()
+
+	self:NetworkVar( "Float", 0, "Force", { KeyName = "force", Edit = { type = "Float", order = 1, min = -2000, max = 2000 } } )
+
+	self:NetworkVarNotify( "Force", function() self:PhysWake() end )
+
+end
 
 function ENT:Initialize()
 
@@ -26,10 +35,14 @@ function ENT:Initialize()
 
 end
 
-function ENT:SetForce( force )
+function ENT:GetOverlayText()
 
-	self.Force = force * 5000
-	self:SetOverlayText( "Force: " .. math.floor( force ) )
+	local txt = "Force: " .. math.floor( self:GetForce() )
+
+	if ( txt == "" ) then return "" end
+	if ( game.SinglePlayer() ) then return txt end
+
+	return txt .. "\n(" .. self:GetPlayerName() .. ")"
 
 end
 
@@ -65,7 +78,7 @@ end
 
 function ENT:PhysicsSimulate( phys, deltatime )
 
-	local vLinear = Vector( 0, 0, self.Force ) * deltatime
+	local vLinear = Vector( 0, 0, self:GetForce() * 5000 ) * deltatime
 	local vAngular = Vector( 0, 0, 0 )
 
 	return vAngular, vLinear, SIM_GLOBAL_FORCE

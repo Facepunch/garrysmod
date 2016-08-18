@@ -57,15 +57,13 @@ function TOOL:LeftClick( trace )
 
 	local ply = self:GetOwner()
 
-	-- Create the wheel
-	local wheelEnt = MakeWheel( ply, trace.HitPos, Angle( 0, 0, 0 ), model, fwd, bck, nil, nil, toggle, torque )
-
 	-- Make sure we have our wheel angle
 	self.wheelAngle = Angle( math.NormalizeAngle( self:GetClientNumber( "rx" ) ), math.NormalizeAngle( self:GetClientNumber( "ry" ) ), math.NormalizeAngle( self:GetClientNumber( "rz" ) ) )
 
-	local TargetAngle = trace.HitNormal:Angle() + self.wheelAngle
-	wheelEnt:SetAngles( TargetAngle )
+	-- Create the wheel
+	local wheelEnt = MakeWheel( ply, trace.HitPos, trace.HitNormal:Angle() + self.wheelAngle, model, fwd, bck, nil, nil, toggle, torque )
 
+	-- Position
 	local CurPos = wheelEnt:GetPos()
 	local NearestPoint = wheelEnt:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
 	local wheelOffset = CurPos - NearestPoint
@@ -73,16 +71,14 @@ function TOOL:LeftClick( trace )
 	wheelEnt:SetPos( trace.HitPos + wheelOffset )
 
 	-- Wake up the physics object so that the entity updates
-	wheelEnt:GetPhysicsObject():Wake()
-
-	local TargetPos = wheelEnt:GetPos()
+	if ( IsValid( wheelEnt:GetPhysicsObject() ) ) then wheelEnt:GetPhysicsObject():Wake() end
 
 	-- Set the hinge Axis perpendicular to the trace hit surface
 	local targetPhys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
-	local LPos1 = wheelEnt:GetPhysicsObject():WorldToLocal( TargetPos + trace.HitNormal )
+	local LPos1 = wheelEnt:GetPhysicsObject():WorldToLocal( wheelEnt:GetPos() + trace.HitNormal )
 	local LPos2 = targetPhys:WorldToLocal( trace.HitPos )
 
-	local constraint, axis = constraint.Motor( wheelEnt, trace.Entity, 0, trace.PhysicsBone, LPos1,	LPos2, friction, torque, 0, nocollide, toggle, ply, limit )
+	local constraint, axis = constraint.Motor( wheelEnt, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, friction, torque, 0, nocollide, toggle, ply, limit )
 
 	undo.Create( "Wheel" )
 		undo.AddEntity( axis )
@@ -93,14 +89,11 @@ function TOOL:LeftClick( trace )
 
 	ply:AddCleanup( "wheels", axis )
 	ply:AddCleanup( "wheels", constraint )
-	ply:AddCleanup( "wheels", wheelEnt )
 
 	wheelEnt:SetMotor( constraint )
 	wheelEnt:SetDirection( constraint.direction )
 	wheelEnt:SetAxis( trace.HitNormal )
-	wheelEnt:SetToggle( toggle )
 	wheelEnt:DoDirectionEffect()
-	wheelEnt:SetBaseTorque( torque )
 
 	return true
 
@@ -178,11 +171,8 @@ if ( SERVER ) then
 			wheel.Axis = axis
 		end
 
-		direction = direction or 1
-		wheel:SetDirection( direction )
-
-		toggle = toggle or false
-		wheel:SetToggle( toggle )
+		wheel:SetDirection( direction or 1 )
+		wheel:SetToggle( toggle or false )
 
 		wheel:SetBaseTorque( BaseTorque )
 		wheel:UpdateOverlayText()
@@ -196,9 +186,8 @@ if ( SERVER ) then
 		wheel.KeyBinds[ 4 ] = numpad.OnUp( pl, key_r, "WheelReverse", wheel, false )
 
 		if ( IsValid( pl ) ) then
-
 			pl:AddCount( "wheels", wheel )
-
+			pl:AddCleanup( "wheels", wheel )
 		end
 
 		return wheel
@@ -258,14 +247,14 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.wheel.forward", Command = "wheel_fwd", Label2 = "#tool.wheel.reverse", Command2 = "wheel_bck" } )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.wheel.model", ConVar = "wheel_model", Height = 4, Models = list.Get( "WheelModels" ) } )
-
 	CPanel:AddControl( "Slider", { Label = "#tool.wheel.torque", Command = "wheel_torque", Type = "Float", Min = 10, Max = 10000 } )
 	CPanel:AddControl( "Slider", { Label = "#tool.wheel.forcelimit", Command = "wheel_forcelimit", Type = "Float", Min = 0, Max = 50000 } )
 	CPanel:AddControl( "Slider", { Label = "#tool.wheel.friction", Command = "wheel_friction", Type = "Float", Min = 0, Max = 100 } )
 
 	CPanel:AddControl( "CheckBox", { Label = "#tool.wheel.nocollide", Command = "wheel_nocollide" } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.wheel.toggle", Command = "wheel_toggle" } )
+
+	CPanel:AddControl( "PropSelect", { Label = "#tool.wheel.model", ConVar = "wheel_model", Height = 0, Models = list.Get( "WheelModels" ) } )
 
 end
 

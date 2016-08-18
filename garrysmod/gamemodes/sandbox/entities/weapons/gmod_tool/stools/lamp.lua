@@ -72,7 +72,7 @@ function TOOL:LeftClick( trace )
 		trace.Entity.r = r
 		trace.Entity.g = g
 		trace.Entity.b = b
-		trace.Entity.brightness	= bright
+		trace.Entity.brightness = bright
 		trace.Entity.KeyDown = key
 
 		return true
@@ -166,7 +166,7 @@ if ( SERVER ) then
 		lamp.r = r
 		lamp.g = g
 		lamp.b = b
-		lamp.brightness	= brightness
+		lamp.brightness = brightness
 
 		lamp.NumDown = numpad.OnDown( pl, KeyDown, "LampToggle", lamp, 1 )
 		lamp.NumUp = numpad.OnUp( pl, KeyDown, "LampToggle", lamp, 0 )
@@ -176,7 +176,7 @@ if ( SERVER ) then
 	end
 	duplicator.RegisterEntityClass( "gmod_lamp", MakeLamp, "r", "g", "b", "KeyDown", "Toggle", "Texture", "Model", "fov", "distance", "brightness", "on", "Data" )
 
-	local function Toggle( pl, ent, onoff )
+	numpad.Register( "LampToggle", function( pl, ent, onoff )
 
 		if ( !IsValid( ent ) ) then return false end
 		if ( !ent:GetToggle() ) then ent:Switch( onoff == 1 ) return end
@@ -192,8 +192,7 @@ if ( SERVER ) then
 
 		return ent:Toggle()
 
-	end
-	numpad.Register( "LampToggle", Toggle )
+	end )
 
 end
 
@@ -248,6 +247,8 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Checkbox", { Label = "#tool.lamp.toggle", Command = "lamp_toggle" } )
 
+	CPanel:AddControl( "Color", { Label = "#tool.lamp.color", Red = "lamp_r", Green = "lamp_g", Blue = "lamp_b" } )
+
 	local MatSelect = CPanel:MatSelect( "lamp_texture", nil, false, 0.33, 0.33 )
 	MatSelect.Height = 4
 
@@ -255,9 +256,8 @@ function TOOL.BuildCPanel( CPanel )
 		MatSelect:AddMaterial( v.Name or k, k )
 	end
 
-	CPanel:AddControl( "Color", { Label = "#tool.lamp.color", Red = "lamp_r", Green = "lamp_g", Blue = "lamp_b" } )
+	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model", ConVar = "lamp_model", Height = 0, Models = list.Get( "LampModels" ) } )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model", ConVar = "lamp_model", Height = 2, Models = list.Get( "LampModels" ) } )
 end
 
 list.Set( "LampTextures", "effects/flashlight001", { Name = "#lamptexture.default" } )

@@ -41,13 +41,7 @@ function TOOL:LeftClick( trace, attach )
 
 	local key = self:GetClientNumber( "key" )
 
-	-- Clamp for multiplayer
-	if ( !game.SinglePlayer() ) then
-		size = math.Clamp( size, 0, 512 )
-		brght = math.Clamp( brght, 0, 1 )
-	end
-
-	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_light" && trace.Entity:GetPlayer() == ply ) then
+	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_light" && trace.Entity:GetPlayer() == ply ) then
 
 		trace.Entity:SetColor( Color( r, g, b, 255 ) )
 		trace.Entity.r = r
@@ -76,38 +70,35 @@ function TOOL:LeftClick( trace, attach )
 
 	local lamp = MakeLight( ply, r, g, b, brght, size, toggle, !toggle, key, { Pos = pos, Angle = ang } )
 
-	if ( !attach ) then
-
-		undo.Create( "Light" )
-			undo.AddEntity( lamp )
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-
-		return true
-
-	end
-
-	local length = math.Clamp( self:GetClientNumber( "ropelength" ), 4, 1024 )
-	local material = self:GetClientInfo( "ropematerial" )
-
-	local LPos1 = Vector( 0, 0, 5 )
-	local LPos2 = trace.Entity:WorldToLocal( trace.HitPos )
-
-	if ( IsValid( trace.Entity ) ) then
-
-		local phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
-		if ( IsValid( phys ) ) then
-			LPos2 = phys:WorldToLocal( trace.HitPos )
-		end
-
-	end
-
-	local constraint, rope = constraint.Rope( lamp, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 1, material )
-
 	undo.Create( "Light" )
 		undo.AddEntity( lamp )
-		undo.AddEntity( rope )
-		undo.AddEntity( constraint )
+
+		if ( attach ) then
+
+			local length = math.Clamp( self:GetClientNumber( "ropelength" ), 4, 1024 )
+			local material = self:GetClientInfo( "ropematerial" )
+
+			local LPos1 = Vector( 0, 0, 5 )
+			local LPos2 = trace.Entity:WorldToLocal( trace.HitPos )
+
+			if ( IsValid( trace.Entity ) ) then
+
+				local phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
+				if ( IsValid( phys ) ) then
+					LPos2 = phys:WorldToLocal( trace.HitPos )
+				end
+
+			end
+
+			local constraint, rope = constraint.Rope( lamp, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 1, material )
+
+			undo.AddEntity( rope )
+			undo.AddEntity( constraint )
+			ply:AddCleanup( "lights", rope )
+			ply:AddCleanup( "lights", constraint )
+
+		end
+
 		undo.SetPlayer( ply )
 	undo.Finish()
 
@@ -128,7 +119,6 @@ if ( SERVER ) then
 		if ( IsValid( pl ) && !pl:CheckLimit( "lights" ) ) then return false end
 
 		local lamp = ents.Create( "gmod_light" )
-
 		if ( !IsValid( lamp ) ) then return end
 
 		duplicator.DoGeneric( lamp, Data )
@@ -145,11 +135,6 @@ if ( SERVER ) then
 
 		lamp:SetPlayer( pl )
 
-		if ( IsValid( pl ) ) then
-			pl:AddCount( "lights", lamp )
-			pl:AddCleanup( "lights", lamp )
-		end
-
 		lamp.lightr = r
 		lamp.lightg = g
 		lamp.lightb = b
@@ -160,6 +145,11 @@ if ( SERVER ) then
 
 		lamp.NumDown = numpad.OnDown( pl, KeyDown, "LightToggle", lamp, 1 )
 		lamp.NumUp = numpad.OnUp( pl, KeyDown, "LightToggle", lamp, 0 )
+
+		if ( IsValid( pl ) ) then
+			pl:AddCount( "lights", lamp )
+			pl:AddCleanup( "lights", lamp )
+		end
 
 		return lamp
 
@@ -187,12 +177,11 @@ if ( SERVER ) then
 
 end
 
-function TOOL:UpdateGhostLight( ent, player )
+function TOOL:UpdateGhostLight( ent, pl )
 
 	if ( !IsValid( ent ) ) then return end
 
-	local tr = util.GetPlayerTrace( player )
-	local trace = util.TraceLine( tr )
+	local trace = pl:GetEyeTrace()
 	if ( !trace.Hit ) then return end
 
 	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_light" ) then
@@ -230,7 +219,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Numpad", { Label = "#tool.light.key", Command = "light_key", ButtonSize = 22 } )
 
 	CPanel:AddControl( "Slider", { Label = "#tool.light.ropelength", Command = "light_ropelength", Type = "Float", Min = 0, Max = 256 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.light.brightness", Command = "light_brightness", Type = "Float", Min = 0, Max = 10 } )
+	CPanel:AddControl( "Slider", { Label = "#tool.light.brightness", Command = "light_brightness", Type = "Int", Min = 0, Max = 6 } )
 	CPanel:AddControl( "Slider", { Label = "#tool.light.size", Command = "light_size", Type = "Float", Min = 0, Max = 1024 } )
 
 	CPanel:AddControl( "Checkbox", { Label = "#tool.light.toggle", Command = "light_toggle" } )

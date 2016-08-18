@@ -60,7 +60,7 @@ function TOOL:LeftClick( trace )
 		trace.Entity.key_d = key_d
 		trace.Entity.speed = speed
 		trace.Entity.strength = strength
-		trace.Entity.resistance	= resistance
+		trace.Entity.resistance = resistance
 
 		return true
 
@@ -77,7 +77,7 @@ function TOOL:LeftClick( trace )
 
 	ball:SetPos( trace.HitPos + Offset )
 
-	local const, nocollide
+	local const
 
 	-- Don't weld to world
 	if ( trace.Entity != NULL && !trace.Entity:IsWorld() ) then
@@ -87,6 +87,8 @@ function TOOL:LeftClick( trace )
 		if ( IsValid( ball:GetPhysicsObject() ) ) then ball:GetPhysicsObject():EnableCollisions( false ) end
 		ball.nocollide = true
 
+		ply:AddCleanup( "hoverballs", const )
+
 	end
 
 	undo.Create( "HoverBall" )
@@ -94,10 +96,6 @@ function TOOL:LeftClick( trace )
 		undo.AddEntity( const )
 		undo.SetPlayer( ply )
 	undo.Finish()
-
-	ply:AddCleanup( "hoverballs", ball )
-	ply:AddCleanup( "hoverballs", const )
-	ply:AddCleanup( "hoverballs", nocollide )
 
 	return true
 
@@ -147,6 +145,7 @@ if ( SERVER ) then
 
 		if ( IsValid( ply ) ) then
 			ply:AddCount( "hoverballs", ball )
+			ply:AddCleanup( "hoverballs", ball )
 		end
 
 		DoPropSpawnedEffect( ball )
@@ -205,7 +204,8 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Slider", { Label = "#tool.hoverball.speed", Command = "hoverball_speed", Type = "Float", Min = 0, Max = 20, Help = true } )
 	CPanel:AddControl( "Slider", { Label = "#tool.hoverball.resistance", Command = "hoverball_resistance", Type = "Float", Min = 0, Max = 10, Help = true } )
 	CPanel:AddControl( "Slider", { Label = "#tool.hoverball.strength", Command = "hoverball_strength", Type = "Float", Min = 0.1, Max = 10, Help = true } )
-	CPanel:AddControl( "PropSelect", { Label = "#tool.hoverball.model", ConVar = "hoverball_model", Models = list.Get( "HoverballModels" ), Height = 4 } )
+
+	CPanel:AddControl( "PropSelect", { Label = "#tool.hoverball.model", ConVar = "hoverball_model", Models = list.Get( "HoverballModels" ), Height = 0 } )
 
 end
 

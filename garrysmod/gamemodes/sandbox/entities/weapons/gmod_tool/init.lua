@@ -7,19 +7,11 @@ AddCSLuaFile( "stool.lua" )
 AddCSLuaFile( "cl_viewscreen.lua" )
 AddCSLuaFile( "stool_cl.lua" )
 
-include('shared.lua')
+include( "shared.lua" )
 
 SWEP.Weight				= 5
 SWEP.AutoSwitchTo		= false
 SWEP.AutoSwitchFrom		= false
-
--- Convenience function to check object limits
-function SWEP:CheckLimit( str )
-
-	local ply = self.Weapon:GetOwner()
-	return ply:CheckLimit( str )
-
-end
 
 -- Should this weapon be dropped when its owner dies?
 function SWEP:ShouldDropOnDie()
@@ -65,5 +57,4 @@ function CC_GMOD_Tool( ply, command, arguments )
 	end
 
 end
-
 concommand.Add( "gmod_tool", CC_GMOD_Tool, nil, nil, { FCVAR_SERVER_CAN_EXECUTE } )

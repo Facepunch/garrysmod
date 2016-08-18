@@ -116,8 +116,7 @@ function TOOL:DrawHUD()
 	local Owner = self:GetOwner()
 
 	-- Get Target
-	local tr = util.GetPlayerTrace( Owner )
-	local trace = util.TraceLine( tr )
+	local trace = Owner:GetEyeTrace()
 	local scrhit = trace.HitPos:ToScreen()
 	local x = scrhit.x
 	local y = scrhit.y
