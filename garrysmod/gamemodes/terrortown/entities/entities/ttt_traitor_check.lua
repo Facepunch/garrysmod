@@ -36,12 +36,7 @@ function ENT:AcceptInput(name, activator, caller)
    if name == "CheckForTraitor" then
       local traitors = self:CountTraitors()
 
-      -- hack in our parameter
-      for idx, op in pairs(self.m_tOutputs["TraitorsFound"]) do
-         op.param = traitors
-      end
-
-      self:TriggerOutput("TraitorsFound", activator)
+      self:TriggerOutput("TraitorsFound", activator, traitors)
 
       return true
    end
