@@ -59,6 +59,13 @@ function PANEL:PaintOver( w, h )
 
 end
 
+function PANEL:OnLabelTextChanged( txt )
+
+	hook.Run( "SpawnlistContentChanged" )
+	return txt
+
+end
+
 function PANEL:DoRightClick()
 	local pCanvas = self:GetSelectionCanvas()
 	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 ) then
