@@ -3,21 +3,20 @@ local PANEL = {}
 
 local strAllowedNumericCharacters = "1234567890.-"
 
-AccessorFunc( PANEL, "m_bAllowEnter",		"EnterAllowed", FORCE_BOOL )
-AccessorFunc( PANEL, "m_bUpdateOnType",		"UpdateOnType", FORCE_BOOL ) -- Update the convar as we type
-AccessorFunc( PANEL, "m_bNumeric",			"Numeric", FORCE_BOOL )
-AccessorFunc( PANEL, "m_bHistory",			"HistoryEnabled", FORCE_BOOL )
-AccessorFunc( PANEL, "m_bDisableTabbing",	"TabbingDisabled", FORCE_BOOL )
-AccessorFunc( PANEL, "m_FontName",			"Font" )
-AccessorFunc( PANEL, "m_bBorder",			"DrawBorder" )
-AccessorFunc( PANEL, "m_bBackground",		"PaintBackground" )
-AccessorFunc( PANEL, "m_bBackground",		"DrawBackground" ) -- Deprecated
+AccessorFunc( PANEL, "m_bAllowEnter", "EnterAllowed", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bUpdateOnType", "UpdateOnType", FORCE_BOOL ) -- Update the convar as we type
+AccessorFunc( PANEL, "m_bNumeric", "Numeric", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bHistory", "HistoryEnabled", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDisableTabbing", "TabbingDisabled", FORCE_BOOL )
 
-AccessorFunc( PANEL, "m_colText",			"TextColor" )
-AccessorFunc( PANEL, "m_colHighlight",		"HighlightColor" )
-AccessorFunc( PANEL, "m_colCursor",			"CursorColor" )
+AccessorFunc( PANEL, "m_FontName", "Font" )
+AccessorFunc( PANEL, "m_bBorder", "DrawBorder" )
+AccessorFunc( PANEL, "m_bBackground", "PaintBackground" )
+AccessorFunc( PANEL, "m_bBackground", "DrawBackground" ) -- Deprecated
 
-AccessorFunc( PANEL, "m_bDisabled",			"Disabled" )
+AccessorFunc( PANEL, "m_colText", "TextColor" )
+AccessorFunc( PANEL, "m_colHighlight", "HighlightColor" )
+AccessorFunc( PANEL, "m_colCursor", "CursorColor" )
 
 Derma_Install_Convar_Functions( PANEL )
 
@@ -294,6 +293,14 @@ function PANEL:CheckNumeric( strValue )
 
 end
 
+function PANEL:SetDisabled( bDisabled )
+	self:SetEnabled( !bDisabled )
+end
+
+function PANEL:GetDisabled( bDisabled )
+	return !self:IsEnabled()
+end
+
 function PANEL:AllowInput( strValue )
 
 	-- This is layed out like this so you can easily override and
@@ -388,5 +395,4 @@ function TextEntryLoseFocus( panel, mcode )
 	pnl:FocusNext()
 
 end
-
 hook.Add( "VGUIMousePressed", "TextEntryLoseFocus", TextEntryLoseFocus )
