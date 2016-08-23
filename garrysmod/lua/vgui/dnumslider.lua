@@ -84,8 +84,7 @@ end
 function PANEL:SetValue( val )
 
 	val = math.Clamp( tonumber( val ) || 0, self:GetMin(), self:GetMax() )
-
-	if ( val == nil ) then return end
+	
 	if ( self:GetValue() == val ) then return end
 
 	self.Scratch:SetValue( val )
