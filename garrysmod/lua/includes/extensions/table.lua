@@ -716,3 +716,8 @@ function table.GetKeys( tab )
 	return keys
 
 end
+
+function table.ForceClear( tbl )
+	tbl = {}
+	return tbl
+end
