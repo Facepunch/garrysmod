@@ -723,7 +723,7 @@ function table.ForEach( tab, funcname )
 
 end
 
-function table.GetKeys( tab )
+function table.ClearValues( tab )
 
 	local keys = {}
 	local id = 1
