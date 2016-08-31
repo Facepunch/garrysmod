@@ -152,6 +152,26 @@ function table.Count( t )
 end
 
 --[[---------------------------------------------------------
+	Name: table.ForceCount( table )
+	Desc: Returns the number of keys in a table, forcibly...
+-----------------------------------------------------------]]
+function table.ForceCount( t )
+
+	if ( t == nil ) then t = {} end
+
+	local i = 0
+
+	for k, v in pairs( t ) do
+
+		i = i + 1
+
+	end
+
+	return t
+
+end
+
+--[[---------------------------------------------------------
 	Name: table.Random( table )
 	Desc: Return a random key
 -----------------------------------------------------------]]
