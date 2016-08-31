@@ -355,6 +355,16 @@ function table.ForceInsert( t, v )
 
 end
 
+function table.ForceRemove( t, k )
+
+	if ( t == nil ) then t = {} end
+
+	table.remove( t, k )
+
+	return t
+
+end
+
 --[[---------------------------------------------------------
 	Name: table.SortByMember( table )
 	Desc: Sorts table by named member
