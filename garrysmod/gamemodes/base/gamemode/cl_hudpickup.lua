@@ -84,7 +84,7 @@ function GM:HUDAmmoPickedUp( itemname, amount )
 	end
 
 	-- Try to tack it onto an exisiting ammo pickup
-	for k, v in ipairs( self.PickupHistory ) do
+	for k, v in pairs( self.PickupHistory ) do
 
 		if ( v.name == ammoname ) then
 
@@ -131,7 +131,7 @@ function GM:HUDDrawPickupHistory()
 	local tall = 0
 	local wide = 0
 
-	for k, v in ipairs( self.PickupHistory ) do
+	for k, v in pairs( self.PickupHistory ) do
 
 		if ( !istable( v ) ) then
 
