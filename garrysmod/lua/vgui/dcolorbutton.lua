@@ -4,7 +4,6 @@ local PANEL = {}
 local matGrid = Material( "gui/alpha_grid.png", "nocull" )
 
 AccessorFunc( PANEL, "m_bBorder", "DrawBorder", FORCE_BOOL )
-AccessorFunc( PANEL, "m_bDisabled", "Disabled", FORCE_BOOL )
 AccessorFunc( PANEL, "m_bSelected", "Selected", FORCE_BOOL )
 
 AccessorFunc( PANEL, "m_Color", "Color" )
@@ -39,7 +38,7 @@ end
 
 function PANEL:Paint( w, h )
 
-	if ( self.m_Color.a < 255 ) then -- Grid for Alpha
+	if ( self:GetColor().a < 255 ) then -- Grid for Alpha
 
 		surface.SetDrawColor( 255, 255, 255, 255 )
 		surface.SetMaterial( matGrid )
@@ -50,7 +49,7 @@ function PANEL:Paint( w, h )
 
 	end
 
-	surface.SetDrawColor( self.m_Color )
+	surface.SetDrawColor( self:GetColor() )
 	self:DrawFilledRect()
 
 	surface.SetDrawColor( 0, 0, 0, 200 )
@@ -58,13 +57,6 @@ function PANEL:Paint( w, h )
 	surface.DrawRect( 0, 0, 1, h )
 
 	return false
-end
-
-function PANEL:SetDisabled( bDisabled )
-
-	self.m_bDisabled = bDisabled
-	self:InvalidateLayout()
-
 end
 
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )

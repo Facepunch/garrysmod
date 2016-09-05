@@ -49,7 +49,6 @@ function PANEL:SetImage( img )
 	self:InvalidateLayout()
 
 end
-
 PANEL.SetIcon = PANEL.SetImage
 
 function PANEL:Paint( w, h )
@@ -65,8 +64,8 @@ end
 
 function PANEL:UpdateColours( skin )
 
-	if ( self:GetDisabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
-	if ( self.Depressed || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
+	if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
+	if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
 	if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
 
 	return self:SetTextStyleColor( skin.Colours.Button.Normal )
@@ -92,27 +91,17 @@ function PANEL:PerformLayout()
 
 end
 
-function PANEL:SetDisabled( bDisabled )
-
-	self.m_bDisabled = bDisabled
-	self:InvalidateLayout()
-
-end
-
--- Override the default engine method, so it actually does something for DButton
-function PANEL:SetEnabled( bEnabled )
-
-	self.m_bDisabled = !bEnabled
-	self:InvalidateLayout()
-
-end
-
 function PANEL:SetConsoleCommand( strName, strArgs )
 
 	self.DoClick = function( self, val )
 		RunConsoleCommand( strName, strArgs )
 	end
 
+end
+
+function PANEL:SizeToContents()
+	local w, h = self:GetContentSize()
+	self:SetSize( w + 8, h + 4 )
 end
 
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
@@ -122,18 +111,6 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	ctrl:SetWide( 200 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
-
-end
-
-function PANEL:OnMousePressed( mousecode )
-
-	return DLabel.OnMousePressed( self, mousecode )
-
-end
-
-function PANEL:OnMouseReleased( mousecode )
-
-	return DLabel.OnMouseReleased( self, mousecode )
 
 end
 
