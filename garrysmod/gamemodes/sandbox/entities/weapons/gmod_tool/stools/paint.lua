@@ -130,11 +130,12 @@ function TOOL.BuildCPanel( CPanel )
 	local Options = list.Get( "PaintMaterials" )
 	table.sort( Options )
 
-	local RealOptions = {}
+	local listbox = CPanel:AddControl( "ListBox", { Label = "#tool.paint.texture", Height = 17 + table.Count( Options ) * 17 } )
 	for k, decal in pairs( Options ) do
-		RealOptions[ decal ] = { paint_decal = decal }
-	end
+		local line = listbox:AddLine( decal )
+		line.data = { paint_decal = decal }
 
-	CPanel:AddControl( "ListBox", { Label = "#tool.paint.texture", Height = "300", Options = RealOptions } )
+		if ( GetConVarString( "paint_decal" ) == tostring( decal ) ) then line:SetSelected( true ) end
+	end
 
 end
