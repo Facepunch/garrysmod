@@ -74,7 +74,6 @@ end
 function ENT:TraitorUse(ply)
    if not (IsValid(ply) and ply:IsActiveTraitor()) then return false end
    if not self:IsUsable() then return false end
-   local desc = self
 
    if self:GetPos():Distance(ply:GetPos()) > self:GetUsableRange() then return false end
 
@@ -91,7 +90,7 @@ function ENT:TraitorUse(ply)
       self:SetNextUseTime(CurTime() + self:GetDelay())
    end
 
-   hook.Call("TTTTrapActivated", GAMEMODE, ply, desc)
+   hook.Call("TTTTrapActivated", GAMEMODE, ply, self)
    return true
 end
 
