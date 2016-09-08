@@ -90,7 +90,7 @@ function ENT:TraitorUse(ply)
       self:SetNextUseTime(CurTime() + self:GetDelay())
    end
 
-   hook.Call("TTTTrapActivated", GAMEMODE, ply, self)
+   hook.Call("TTTTraitorButtonActivated", GAMEMODE, self, ply)
    return true
 end
 
