@@ -159,7 +159,7 @@ function PANEL:Paint()
 end
 
 function PANEL:PaintAt( x, y, dw, dh )
-
+	dw, dh = dw or self:GetWide(), dh or self:GetTall()
 	self:LoadMaterial()
 
 	if ( !self.m_Material ) then return true end
