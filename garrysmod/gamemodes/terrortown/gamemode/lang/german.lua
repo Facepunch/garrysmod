@@ -35,7 +35,7 @@ L.limit_left       = "{num} Runde(n) oder {time} Minute(n) verbleibend bis die M
 L.credit_det_all   = "Detektive, euch wurde(n) {num} Ausrüstungs-Credit(s) für eure Performance gegeben."
 L.credit_tr_all    = "Verräter, euch wurde(n) {num} Ausrüstungs-Credit(s) für eure Performance gegeben."
 
-L.credit_kill      = "Dir wurde(n) {num} Credit(s), da du einen {role} getötet hast."
+L.credit_kill      = "Dir wurde(n) {num} Credit(s) gegeben, da du einen {role} getötet hast."
 
 --- Karma
 L.karma_dmg_full   = "Dein Karma ist {amount}, also verteilst du diese Runde vollen Schaden!"
