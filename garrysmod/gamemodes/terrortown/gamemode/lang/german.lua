@@ -312,7 +312,7 @@ oder drücke Enter auf dem Numpad.]]
 
 -- C4
 L.c4_hint         = "Drücke {usekey} zum scharf stellen oder entschärfen."
-L.c4_no_disarm    = "Du kannst das C4 eines anderen Verräters nicht entfernen, bevor dieser nicht tod ist."
+L.c4_no_disarm    = "Du kannst das C4 eines anderen Verräters nicht entfernen, bevor dieser nicht tot ist."
 L.c4_disarm_warn  = "Eine Ladung C4, die du platziert hast, ist entschärft worden."
 L.c4_armed        = "Du hast die Bombe erfolgreich scharf gestellt."
 L.c4_disarmed     = "Du hast die Bombe erfolgreich entschärft."
