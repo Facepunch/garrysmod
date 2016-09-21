@@ -178,7 +178,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 			lua.Run( 'RunConsoleCommand( "p2p_enabled", "' + ( $rootScope.ServerSettings.p2p_enabled ? 1 : 0 ) + '" )' )
 			lua.Run( 'RunConsoleCommand( "sv_lan", "' + ( $rootScope.ServerSettings.sv_lan ? 1 : 0 ) + '" )' )
 			lua.Run( 'RunConsoleCommand( "maxplayers", "' + $rootScope.MaxPlayers + '" )' )
-			lua.Run( 'RunConsoleCommand( "map", "' + $rootScope.Map + '" )' )
+			lua.Run( 'RunConsoleCommand( "map", "' + $rootScope.Map.trim() + '" )' )
 			lua.Run( 'RunConsoleCommand( "hostname", "' + $rootScope.ServerSettings.hostname + '" )' )
 		}, 200 );
 
