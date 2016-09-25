@@ -66,6 +66,8 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:PrimaryAttack()
+   if self.IsCharging then return end
+
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
    self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
 
