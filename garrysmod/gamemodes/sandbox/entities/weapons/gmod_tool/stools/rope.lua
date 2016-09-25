@@ -21,9 +21,9 @@ function TOOL:LeftClick( trace )
 
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
-	
+
 	local toolowner = self:GetOwner()
-	
+
 	local iNum = self:NumObjects()
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
@@ -68,7 +68,7 @@ function TOOL:LeftClick( trace )
 		-- Set the rope's owner
  		if ( IsValid( rope ) ) then rope:SetOwner(toolowner)  end
  		if ( IsValid( constraint ) ) then constraint:SetOwner(toolowner) end
-		
+
 		toolowner:AddCleanup( "ropeconstraints", constraint )
 		toolowner:AddCleanup( "ropeconstraints", rope )
 
@@ -83,11 +83,11 @@ function TOOL:LeftClick( trace )
 end
 
 function TOOL:RightClick( trace )
-	
+
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return end
-	
+
 	local toolowner = self:GetOwner()
-	
+
 	local iNum = self:NumObjects()
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
@@ -135,7 +135,7 @@ function TOOL:RightClick( trace )
 		-- Set the rope's owner
  		if ( IsValid( rope ) ) then rope:SetOwner(toolowner)  end
  		if ( IsValid( constraint ) ) then constraint:SetOwner(toolowner) end
-		
+
 		toolowner:AddCleanup( "ropeconstraints", constraint )
 		toolowner:AddCleanup( "ropeconstraints", rope )
 
