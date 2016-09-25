@@ -21,7 +21,9 @@ function TOOL:LeftClick( trace )
 
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
-
+	
+	local toolowner = self:GetOwner()
+	
 	local iNum = self:NumObjects()
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
@@ -60,15 +62,15 @@ function TOOL:LeftClick( trace )
 		undo.Create( "Rope" )
 			undo.AddEntity( constraint )
 			undo.AddEntity( rope )
-			undo.SetPlayer( self:GetOwner() )
+			undo.SetPlayer( toolowner )
 		undo.Finish()
 
 		-- Set the rope's owner
- 		if ( IsValid( rope ) ) then rope:SetOwner(self:GetOwner())  end
- 		if ( IsValid( constraint ) ) then constraint:SetOwner(self:GetOwner()) end
+ 		if ( IsValid( rope ) ) then rope:SetOwner(toolowner)  end
+ 		if ( IsValid( constraint ) ) then constraint:SetOwner(toolowner) end
 		
-		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
-		self:GetOwner():AddCleanup( "ropeconstraints", rope )
+		toolowner:AddCleanup( "ropeconstraints", constraint )
+		toolowner:AddCleanup( "ropeconstraints", rope )
 
 	else
 
@@ -81,9 +83,11 @@ function TOOL:LeftClick( trace )
 end
 
 function TOOL:RightClick( trace )
-
+	
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return end
-
+	
+	local toolowner = self:GetOwner()
+	
 	local iNum = self:NumObjects()
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
@@ -125,15 +129,15 @@ function TOOL:RightClick( trace )
 		undo.Create( "Rope" )
 			undo.AddEntity( constraint )
 			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-			undo.SetPlayer( self:GetOwner() )
+			undo.SetPlayer( toolowner )
 		undo.Finish()
 
 		-- Set the rope's owner
- 		if ( IsValid( rope ) ) then rope:SetOwner(self:GetOwner())  end
- 		if ( IsValid( constraint ) ) then constraint:SetOwner(self:GetOwner()) end
+ 		if ( IsValid( rope ) ) then rope:SetOwner(toolowner)  end
+ 		if ( IsValid( constraint ) ) then constraint:SetOwner(toolowner) end
 		
-		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
-		self:GetOwner():AddCleanup( "ropeconstraints", rope )
+		toolowner:AddCleanup( "ropeconstraints", constraint )
+		toolowner:AddCleanup( "ropeconstraints", rope )
 
 	else
 
