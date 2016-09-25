@@ -3,19 +3,18 @@ AddCSLuaFile()
 
 DEFINE_BASECLASS( "base_anim" )
 
-ENT.Spawnable		= false
-ENT.AdminOnly		= false
-ENT.RenderGroup		= RENDERGROUP_TRANSLUCENT
-ENT.Widget			= true
+ENT.Spawnable = false
+ENT.AdminOnly = false
+ENT.RenderGroup = RENDERGROUP_TRANSLUCENT
+ENT.Widget = true
 
-ENT.Materials		= {
-	Button = Material( "widgets/btn.png" )
-}
+-- This appears to be unused in the base game, but leaving it in case someones does
+ENT.Materials = {}
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Float", 0, "SizeVar" )		-- Size (bounds)
-	self:NetworkVar( "Float", 1, "Priority" )		-- Priority above other widgets (clicks, visually)
+	self:NetworkVar( "Float", 0, "SizeVar" ) -- Size (bounds)
+	self:NetworkVar( "Float", 1, "Priority" ) -- Priority above other widgets (clicks, visually)
 
 end
 
@@ -215,8 +214,8 @@ function ENT:TestCollision( startpos, delta, isbox, extents )
 	-- TODO. Actually trace against our cube!
 
 	return {
-		HitPos		= self:GetPos(),
-		Fraction	= 0.5 * self:GetPriority()
+		HitPos = self:GetPos(),
+		Fraction = 0.5 * self:GetPriority()
 	}
 
 end
