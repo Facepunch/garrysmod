@@ -60,7 +60,7 @@ function TOOL:RightClick( trace )
 end
 
 -- Reload reverts the material
-function TOOL:RightClick( trace )
+function TOOL:Reload( trace )
 
 	local ent = trace.Entity
 	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
