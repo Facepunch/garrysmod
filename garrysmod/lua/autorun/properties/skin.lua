@@ -28,13 +28,14 @@ properties.Add( "skin", {
 		--
 		-- Create a check item for each skin
 		--
-		local num = ent:SkinCount()
-		if ( IsValid( ent.AttachedEntity ) ) then num = ent.AttachedEntity:SkinCount() end
+		local target = IsValid( ent.AttachedEntity ) and ent.AttachedEntity or ent
 
-		for i=0, num-1 do
+		local num = target:SkinCount()
+
+		for i = 0, num - 1 do
 
 			local option = submenu:AddOption( "Skin " .. i, function() self:SetSkin( ent, i ) end )
-			if ( ent:GetSkin() == i ) then
+			if ( target:GetSkin() == i ) then
 				option:SetChecked( true )
 			end
 
@@ -64,8 +65,8 @@ properties.Add( "skin", {
 
 		if ( !self:Filter( ent, player ) ) then return end
 
+		ent = IsValid( ent.AttachedEntity ) and ent.AttachedEntity or ent
 		ent:SetSkin( skinid )
-		if ( IsValid( ent.AttachedEntity ) ) then ent.AttachedEntity:SetSkin( skinid ) end
 
 	end
 

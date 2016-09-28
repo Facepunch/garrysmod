@@ -9,7 +9,8 @@ function PANEL:Init()
 	self.TextArea:SetWide( 45 )
 	self.TextArea:SetNumeric( true )
 	self.TextArea.OnChange = function( textarea, val ) self:SetValue( self.TextArea:GetText() ) end
-	self.TextArea.OnEnter = function( textarea, val ) textarea:SetText( self.Scratch:GetTextValue() ) end -- Update the text
+	-- Causes automatic clamp to min/max, disabled for now. TODO: Enforce this with a setter/getter?
+	--self.TextArea.OnEnter = function( textarea, val ) textarea:SetText( self.Scratch:GetTextValue() ) end -- Update the text
 
 	self.Slider = self:Add( "DSlider", self )
 	self.Slider:SetLockY( 0.5 )
@@ -92,7 +93,7 @@ function PANEL:SetValue( val )
 
 	self.Scratch:SetValue( val ) -- This will also call ValueChanged
 
-	--self:ValueChanged( self:GetValue() ) -- In most cases this will cause double execution of OnValueChanged
+	self:ValueChanged( self:GetValue() ) -- In most cases this will cause double execution of OnValueChanged
 
 end
 
@@ -143,8 +144,6 @@ function PANEL:ValueChanged( val )
 	end
 
 	self.Slider:SetSlideX( self.Scratch:GetFraction( val ) )
-
-	//if ( self:GetValue() == val ) then return end
 
 	self:OnValueChanged( val )
 
@@ -212,11 +211,11 @@ function PANEL:PostMessage( name, _, val )
 	end
 
 	if ( name == "SetLower" ) then
-		self:SetMin( tonumber(val) )
+		self:SetMin( tonumber( val ) )
 	end
 
 	if ( name == "SetHigher" ) then
-		self:SetMax( tonumber(val) )
+		self:SetMax( tonumber( val ) )
 	end
 
 	if ( name == "SetValue" ) then
