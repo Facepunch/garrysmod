@@ -176,6 +176,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 			lua.Run( 'RunConsoleCommand( "hostname", "' + $rootScope.ServerSettings.hostname + '" )' )
 			lua.Run( 'RunConsoleCommand( "p2p_enabled", "' + ( $rootScope.ServerSettings.p2p_enabled ? 1 : 0 ) + '" )' )
+			lua.Run( 'RunConsoleCommand( "p2p_friendsonly", "' + ( $rootScope.ServerSettings.p2p_friendsonly ? 1 : 0 ) + '" )' )
 			lua.Run( 'RunConsoleCommand( "sv_lan", "' + ( $rootScope.ServerSettings.sv_lan ? 1 : 0 ) + '" )' )
 			lua.Run( 'RunConsoleCommand( "maxplayers", "' + $rootScope.MaxPlayers + '" )' )
 			lua.Run( 'RunConsoleCommand( "map", "' + $rootScope.Map.trim() + '" )' )
@@ -218,6 +219,14 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 		oldp2p = $scope.ServerSettings.p2p_enabled;
 		oldSvLan = $scope.ServerSettings.sv_lan;
+		
+		if ( !$scope.ServerSettings.p2p_enabled ) {
+			document.getElementById("p2p_friendsonly").disabled = true;
+			$scope.ServerSettings.p2p_friendsonly = false;
+			UpdateDigest( $scope, 50 );
+		} else {
+			document.getElementById("p2p_friendsonly").disabled = false;
+		}
 	}
 }
 
@@ -241,6 +250,7 @@ function UpdateServerSettings( sttngs )
 	sttngs.Numeric = [];
 	sttngs.Text = [];
 
+	sttngs.p2p_friendsonly	= Number( sttngs.p2p_friendsonly ) == 1;
 	sttngs.p2p_enabled	= Number( sttngs.p2p_enabled ) == 1;
 	sttngs.sv_lan		= Number( sttngs.sv_lan ) == 1;
 	sttngs.maxplayers	= parseInt( sttngs.maxplayers );
