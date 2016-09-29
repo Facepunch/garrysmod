@@ -82,6 +82,16 @@ function GM:TTTScoreboardColorForPlayer(ply)
    return namecolor.default
 end
 
+function GM:TTTScoreboardRowColorForPlayer(ply)
+   if ply:IsTraitor() then
+      return Color(255, 0, 0, 30)
+   elseif ply:IsDetective() then
+      return Color(0, 0, 255, 30)
+   end
+
+   return Color(0, 0, 0, 0)
+end
+
 local function ColorForPlayer(ply)
    if IsValid(ply) then
       local c = hook.Call("TTTScoreboardColorForPlayer", GAMEMODE, ply)
@@ -96,6 +106,21 @@ local function ColorForPlayer(ply)
    return namecolor.default
 end
 
+local function RowColorForPlayer(ply)
+   if IsValid(ply) then
+      local c = hook.Call("TTTScoreboardRowColorForPlayer", GAMEMODE, ply)
+
+      -- verify that we got a proper color
+      if c and type(c) == "table" and c.r and c.b and c.g and c.a then
+         return c
+      else
+         ErrorNoHalt("TTTScoreboardRowColorForPlayer hook returned something that isn't a color!\n")
+      end
+   end
+
+   return Color(0, 0, 0, 0)
+end
+
 function PANEL:Paint()
    if not IsValid(self.Player) then return end
 
@@ -105,13 +130,10 @@ function PANEL:Paint()
 
    local ply = self.Player
 
-   if ply:IsTraitor() then
-      surface.SetDrawColor(255, 0, 0, 30)
-      surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT)
-   elseif ply:IsDetective() then
-      surface.SetDrawColor(0, 0, 255, 30)
-      surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT)
-   end
+   local c = RowColorForPlayer(ply)
+
+   surface.SetDrawColor(c.r, c.g, c.b, c.a)
+   surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT)
 
 
    if ply == LocalPlayer() then
