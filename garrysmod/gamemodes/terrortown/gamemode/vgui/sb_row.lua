@@ -106,15 +106,7 @@ local function ColorForPlayer(ply)
    return namecolor.default
 end
 
-local function RowColorForPlayer(ply)
-   if IsValid(ply) then
-      return hook.Call("TTTScoreboardRowColorForPlayer", GAMEMODE, ply)
-   end
-
-   return Color(0, 0, 0, 0)
-end
-
-function PANEL:Paint()
+function PANEL:Paint(width, height)
    if not IsValid(self.Player) then return end
 
 --   if ( self.Player:GetFriendStatus() == "friend" ) then
@@ -123,15 +115,15 @@ function PANEL:Paint()
 
    local ply = self.Player
 
-   local c = RowColorForPlayer(ply)
+   local c = hook.Call("TTTScoreboardRowColorForPlayer", GAMEMODE, ply)
 
-   surface.SetDrawColor(c.r, c.g, c.b, c.a)
-   surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT)
+   surface.SetDrawColor(c)
+   surface.DrawRect(0, 0, width, SB_ROW_HEIGHT)
 
 
    if ply == LocalPlayer() then
       surface.SetDrawColor( 200, 200, 200, math.Clamp(math.sin(RealTime() * 2) * 50, 0, 100))
-      surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT )
+      surface.DrawRect(0, 0, width, SB_ROW_HEIGHT )
    end
 
    return true
