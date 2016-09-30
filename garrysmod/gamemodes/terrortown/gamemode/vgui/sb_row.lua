@@ -108,14 +108,7 @@ end
 
 local function RowColorForPlayer(ply)
    if IsValid(ply) then
-      local c = hook.Call("TTTScoreboardRowColorForPlayer", GAMEMODE, ply)
-
-      -- verify that we got a proper color
-      if c and type(c) == "table" and c.r and c.b and c.g and c.a then
-         return c
-      else
-         ErrorNoHalt("TTTScoreboardRowColorForPlayer hook returned something that isn't a color!\n")
-      end
+      return hook.Call("TTTScoreboardRowColorForPlayer", GAMEMODE, ply)
    end
 
    return Color(0, 0, 0, 0)
