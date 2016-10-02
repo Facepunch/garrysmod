@@ -15,7 +15,6 @@ if CLIENT then
    SWEP.PrintName           = "Beacon"
    SWEP.Slot                = 6
 
-   SWEP.DrawCrosshair       = true
    SWEP.ViewModelFlip       = false
    SWEP.ViewModelFOV        = 10
 
@@ -32,9 +31,6 @@ SWEP.Base                   = "weapon_tttbase"
 
 SWEP.ViewModel              = "models/weapons/v_crowbar.mdl"
 SWEP.WorldModel             = "models/props_lab/reciever01b.mdl"
-
-SWEP.AutoSwitchTo           = false
-SWEP.AutoSwitchFrom         = false
 
 SWEP.Primary.ClipSize       = 3
 SWEP.Primary.DefaultClip    = 1
@@ -151,7 +147,9 @@ function SWEP:BeaconStick()
                beacon:SetAngles(ang)
                beacon:SetOwner(ply)
                beacon:Spawn()
-               
+
+               beacon.fingerprints = self.fingerprints
+
                local phys = beacon:GetPhysicsObject()
                if IsValid(phys) then
                   phys:EnableMotion(false)
@@ -195,38 +193,29 @@ function SWEP:Reload()
 end
 
 function SWEP:OnRemove()
-   if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
+   if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:IsTerror() then
       RunConsoleCommand("lastinv")
    end
 end
 
 if CLIENT then
-   local hudtxt = {text="Click to place the beacon", font="TabLarge", xalign=TEXT_ALIGN_RIGHT}
-   function SWEP:DrawHUD()
-      hudtxt.pos = {ScrW() - 80, ScrH() - 80}
-      draw.Text(hudtxt)
-      draw.TextShadow(hudtxt, 2)
+   function SWEP:Initialize()
+      self:AddHUDHelp("Click to place the beacon")
+
+      return self.BaseClass.Initialize(self)
    end
 end
--- Invisible, same hacks as holstered weapon
 
-local hidden = false
 function SWEP:Deploy()
-   hidden = false
+   self.Owner:DrawViewModel(false)
    return true
 end
 
 function SWEP:DrawWorldModel()
+   if not IsValid(self.Owner) then
+      self:DrawModel()
+   end
 end
 
 function SWEP:DrawWorldModelTranslucent()
-end
-
--- not able to do DrawModel stuff in Deploy, so here's a hack
-function SWEP:Think()
-   if SERVER and not hidden and IsValid(self.Owner) and self.Owner:GetActiveWeapon() == self then
-      self.Owner:DrawViewModel(false)
-      self.Owner:DrawWorldModel(false)
-      hidden = true
-   end
 end

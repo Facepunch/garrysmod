@@ -32,9 +32,6 @@ function ENT:Initialize()
 
    if SERVER then
       self:SetUseType(SIMPLE_USE)
-   end
-
-   if SERVER then
       self:NextThink(CurTime() + 1)
    end
 end
@@ -49,7 +46,6 @@ function ENT:UseOverride(activator)
             return
          end
          -- else pickup successful, continue with print transfer and removal
-
       else
          wep = activator:Give("weapon_ttt_beacon")
       end
@@ -63,7 +59,6 @@ function ENT:UseOverride(activator)
       end
    end
 end
-
 
 local zapsound = Sound("npc/assassin/ball_zap1.wav")
 function ENT:OnTakeDamage(dmginfo)
@@ -84,29 +79,31 @@ function ENT:OnTakeDamage(dmginfo)
    end
 end
 
-if SERVER then
-   --local beep = Sound("weapons/c4/c4_beep1.wav")
-   function ENT:Think()
-      if SERVER then
-         --sound.Play(beep, self:GetPos(), 100, 80)
-      else
-         local dlight = DynamicLight(self:EntIndex())
-         if dlight then
-            dlight.Pos = self:GetPos()
-            dlight.r = 0
-            dlight.g = 0
-            dlight.b = 255
-            dlight.Brightness = 1
-            dlight.Size = 128
-            dlight.Decay = 500
-            dlight.DieTime = CurTime() + 0.1
-         end
+--local beep = Sound("weapons/c4/c4_beep1.wav")
+function ENT:Think()
+   if SERVER then
+      --sound.Play(beep, self:GetPos(), 100, 80)
+   else
+      local dlight = DynamicLight(self:EntIndex())
+      if dlight then
+         dlight.Pos = self:GetPos()
+         dlight.r = 0
+         dlight.g = 0
+         dlight.b = 255
+         dlight.Brightness = 1
+         dlight.Size = 128
+         dlight.Decay = 500
+         dlight.DieTime = CurTime() + 0.1
       end
-
-      self:NextThink(CurTime() + 5)
-      return true
    end
 
-   function ENT:UpdateTransmitState() return TRANSMIT_ALWAYS end
+   self:NextThink(CurTime() + 5)
+   return true
+end
+
+if SERVER then
+   function ENT:UpdateTransmitState()
+      return TRANSMIT_ALWAYS
+   end
 end
 
