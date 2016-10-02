@@ -69,7 +69,13 @@ local namecolor = {
    default = COLOR_WHITE,
    admin = Color(220, 180, 0, 255),
    dev = Color(100, 240, 105, 255)
-};
+}
+
+local rolecolor = {
+   default = Color(0, 0, 0, 0),
+   traitor = Color(255, 0, 0, 30),
+   detective = Color(0, 0, 255, 30)
+}
 
 function GM:TTTScoreboardColorForPlayer(ply)
    if not IsValid(ply) then return namecolor.default end
@@ -83,13 +89,15 @@ function GM:TTTScoreboardColorForPlayer(ply)
 end
 
 function GM:TTTScoreboardRowColorForPlayer(ply)
+   if not IsValid(ply) then return rolecolor.default end
+
    if ply:IsTraitor() then
-      return Color(255, 0, 0, 30)
+      return rolecolor.traitor
    elseif ply:IsDetective() then
-      return Color(0, 0, 255, 30)
+      return rolecolor.detective
    end
 
-   return Color(0, 0, 0, 0)
+   return rolecolor.default
 end
 
 local function ColorForPlayer(ply)
