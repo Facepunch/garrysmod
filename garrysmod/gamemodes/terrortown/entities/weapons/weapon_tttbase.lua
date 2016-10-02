@@ -133,8 +133,11 @@ if CLIENT then
    local crosshair_size = CreateConVar("ttt_crosshair_size", "1.0", FCVAR_ARCHIVE)
    local disable_crosshair = CreateConVar("ttt_disable_crosshair", "0", FCVAR_ARCHIVE)
 
-
    function SWEP:DrawHUD()
+      if self.HUDHelp then
+         self:DrawHelp()
+      end
+
       local client = LocalPlayer()
       if disable_crosshair:GetBool() or (not IsValid(client)) then return end
 
@@ -170,10 +173,6 @@ if CLIENT then
       surface.DrawLine( x + length, y, x + gap, y )
       surface.DrawLine( x, y - length, x, y - gap )
       surface.DrawLine( x, y + length, x, y + gap )
-
-      if self.HUDHelp then
-         self:DrawHelp()
-      end
    end
 
    local GetPTranslation = LANG.GetParamTranslation
