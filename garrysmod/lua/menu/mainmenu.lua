@@ -30,7 +30,7 @@ function PANEL:Init()
 
 	self:MakePopup()
 	self:SetPopupStayAtBack( true )
-	
+
 	-- If the console is already open, we've got in its way.
 	if ( gui.IsConsoleVisible() ) then
 		gui.ShowConsole()
@@ -185,6 +185,7 @@ function UpdateServerSettings()
 
 			for k, v in pairs( array.settings ) do
 				v.Value = GetConVarString( v.name )
+				v.Singleplayer = v.singleplayer && true || false
 			end
 
 		end
@@ -226,7 +227,7 @@ function GetServers( type, id )
 			address = string.JavascriptSafe( address )
 			gamemode = string.JavascriptSafe( gamemode )
 			workshopid = string.JavascriptSafe( workshopid )
-			
+
 			if ( pass ) then pass = "true" else pass = "false" end
 
 			pnlMainMenu:Call( "AddServer( '"..type.."', '"..id.."', "..ping..", \""..name.."\", \""..desc.."\", \""..map.."\", "..players..", "..maxplayers..", "..botplayers..", "..pass..", "..lastplayed..", \""..address.."\", \""..gamemode.."\", \""..workshopid.."\" )" )

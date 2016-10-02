@@ -16,7 +16,6 @@
 			"default"	"0"
 		}
 
-
 		2
 		{
 			"name"		"sbox_noclip"
@@ -194,6 +193,7 @@
 			"text"		"enable_weapons"
 			"type"		"CheckBox"
 			"default"	"1"
+			"singleplayer" "1"
 		}
 
 		22
@@ -227,9 +227,10 @@
 		{
 			"name"		"sbox_persist"
 			"text"		"persistent_mode"
-			"help"		"Set to anything but 0 to enable persistence mode"
+			"help"		"Set to anything but empty string to enable persistence mode"
 			"type"		"Text"
 			"default"	""
+			"singleplayer" "1"
 		}
 	}
 }
