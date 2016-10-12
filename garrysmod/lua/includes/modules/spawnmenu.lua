@@ -170,7 +170,7 @@ function PopulateFromEngineTextFiles()
 
 	-- Reset the already loaded prop list before loading them again.
 	-- This caused the spawnlists to duplicate into crazy trees when spawnmenu_reload'ing after saving edited spawnlists
-	PropTable = {}
+	-- PropTable = {} -- Disabled for now, it breaks addons doing shitty things
 
 	spawnmenu_engine.PopulateFromTextFiles( AddPropCategory )
 
