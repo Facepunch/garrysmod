@@ -97,7 +97,7 @@ AddNPC( {
 	Name = "Medic",
 	Class = "npc_citizen",
 	Category = Category,
-	SpawnFlags = bit.bor( 8, 131072 ),
+	SpawnFlags = bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ),
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
 }, "Medic" )
