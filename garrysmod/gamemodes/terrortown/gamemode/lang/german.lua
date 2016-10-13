@@ -474,7 +474,7 @@ L.dna_desc        = [[
 Sammelt DNA-Spuren von Objekten auf
 und wird genutzt, um den Besitzer dieser ausfindig zu machen.
 
-Kann an frischen Leichen verwendent werden, um die DNA
+Kann an frischen Leichen verwendet werden, um die DNA
 des Mörders zu erhalten und um ihn aufzuspüren.]]
 
 L.dna_menu_title  = "DNA Scaneinstellungen"
