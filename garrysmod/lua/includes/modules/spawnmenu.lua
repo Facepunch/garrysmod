@@ -6,6 +6,7 @@ module( "spawnmenu", package.seeall )
 local g_ToolMenu = {}
 local CreationMenus = {}
 local PropTable = {}
+local idcount = 1000
 
 local ActiveToolPanel = nil
 
@@ -147,7 +148,13 @@ end
 -----------------------------------------------------------]]
 function AddPropCategory( strFilename, strName, tabContents, icon, id, parentid, needsapp )
 
-	id			= id		or math.random( 1000, 9999 )
+	if ( !id ) then
+
+		id = idcount
+		idcount = idcount + 1
+
+	end
+
 	parentid	= parentid	or 0
 
 	PropTable[ strFilename ] = {
