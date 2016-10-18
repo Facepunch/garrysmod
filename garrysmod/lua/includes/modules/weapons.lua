@@ -13,15 +13,13 @@ local function TableInherit( t, base )
 
 		if ( t[ k ] == nil ) then
 			t[ k ] = v
-		elseif ( k != "BaseClass" && istable( t[ k ] ) ) then
+		elseif ( k != "BaseClass" && istable( t[ k ] ) && istable( v ) ) then
 			TableInherit( t[ k ], v )
 		end
 
 	end
 
 	t[ "BaseClass" ] = base
-
-	return t
 
 end
 
@@ -142,10 +140,10 @@ function Get( name )
 
 		local BaseWeapon = Get( retval.Base )
 
-		if ( !BaseWeapon ) then
-			Msg( "SWEP (", name, ") is derived from non existant SWEP (", retval.Base, ") - Expect errors!\n" )
+		if ( BaseWeapon ) then
+			TableInherit( retval, BaseWeapon )
 		else
-			retval = TableInherit( retval, Get( retval.Base ) )
+			MsgN( "SWEP (", name, ") is derived from non existant SWEP (", retval.Base, ") - Expect errors!" )
 		end
 
 	end
