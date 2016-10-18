@@ -25,15 +25,13 @@ local function TableInherit( t, base )
 
 		if ( t[k] == nil ) then
 			t[k] = v
-		elseif ( istable( t[k] ) ) then
+		elseif ( k != "BaseClass" && istable( t[k] ) && istable( v ) ) then
 			TableInherit( t[k], v )
 		end
 
 	end
 
 	t[ "BaseClass" ] = base
-
-	return t
 
 end
 
@@ -171,11 +169,11 @@ function Get( name )
 
 		if ( !base ) then
 
-			Msg("ERROR: Trying to derive entity " .. tostring( name ) .. " from non existant entity " .. tostring( SEntList[ name ].Base ) .. "!\n" )
+			MsgN("ERROR: Trying to derive entity " .. tostring( name ) .. " from non existant entity " .. tostring( SEntList[ name ].Base ) .. "!" )
 
 		else
 
-			retval = TableInherit( retval, base )
+			TableInherit( retval, base )
 
 		end
 
