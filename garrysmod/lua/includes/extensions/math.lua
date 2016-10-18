@@ -20,20 +20,16 @@ end
 
 --[[---------------------------------------------------------
 	Name: IntToBin( int )
-	Desc: Convert an integer number to a binary string
+	Desc: Convert an integer number to a binary string (the string len will be a multiple of three)
 ------------------------------------------------------------]]
+local intbin = {
+	["0"] = "000", ["1"] = "001", ["2"] = "010", ["3"] = "011",
+	["4"] = "100", ["5"] = "101", ["6"] = "110", ["7"] = "111"
+}
+
 function math.IntToBin( int )
-
-	local str = string.format( "%o", int )
-
-	local a = {
-		["0"] = "000", ["1"] = "001", ["2"] = "010", ["3"] = "011",
-		["4"] = "100", ["5"] = "101", ["6"] = "110", ["7"] = "111"
-	}
-
-	local bin = string.gsub( str, "(.)", function ( d ) return a[ d ] end )
-	return bin
-
+	local str = string.gsub( string.format( "%o", int ), "(.)", function ( d ) return intbin[ d ] end )
+	return str
 end
 
 --[[---------------------------------------------------------
@@ -68,9 +64,9 @@ function math.EaseInOut( fProgress, fEaseIn, fEaseOut )
 	if ( fEaseIn == nil ) then fEaseIn = 0 end
 	if ( fEaseOut == nil ) then fEaseOut = 1 end
 
-	local fSumEase = fEaseIn + fEaseOut
-
 	if ( fProgress == 0 || fProgress == 1 ) then return fProgress end
+
+	local fSumEase = fEaseIn + fEaseOut
 
 	if ( fSumEase == 0 ) then return fProgress end
 	if ( fSumEase > 1 ) then
