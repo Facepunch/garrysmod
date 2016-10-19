@@ -21,7 +21,7 @@ cleanup.Register( "lights" )
 
 function TOOL:LeftClick( trace, attach )
 
-	if trace.Entity && trace.Entity:IsPlayer() then return false end
+	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
 	if ( attach == nil ) then attach = true end
 
@@ -182,9 +182,7 @@ function TOOL:UpdateGhostLight( ent, pl )
 	if ( !IsValid( ent ) ) then return end
 
 	local trace = pl:GetEyeTrace()
-	if ( !trace.Hit ) then return end
-
-	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_light" ) then
+	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_light" ) ) then
 
 		ent:SetNoDraw( true )
 		return
