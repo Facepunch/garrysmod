@@ -101,8 +101,8 @@ function meta:DebugInfo()
 end
 
 -- Helpful aliases
-meta.GetName	= meta.Nick
-meta.Name		= meta.Nick
+meta.GetName = meta.Nick
+meta.Name = meta.Nick
 
 --[[---------------------------------------------------------
 	Name: ConCommand
@@ -195,7 +195,7 @@ end
 --
 -- If they have their preferred default weapon then switch to it
 --
-function meta:SwitchToDefaultWeapon( name )
+function meta:SwitchToDefaultWeapon()
 
 	local weapon = self:GetInfo( "cl_defaultweapon" )
 
@@ -232,7 +232,7 @@ end
 -- Those functions have been removed from the engine since AddFlag and RemoveFlag
 -- made them obsolete, but we'll keep a Lua version of them for backward compatibility
 --
-if SERVER then
+if ( SERVER ) then
 
 --[[---------------------------------------------------------
 	Freeze
