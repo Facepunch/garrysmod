@@ -371,6 +371,15 @@ function GM:HUDShouldDraw(name)
       if name == v then return false end
    end
 
+   if IsValid(LocalPlayer()) then
+      local wep = LocalPlayer():GetActiveWeapon()
+
+      if IsValid(wep) and wep.HUDShouldDraw != nil then
+         local val = wep:HUDShouldDraw(name)
+         if val != nil then return val end
+      end
+   end
+
    return true
 end
 
