@@ -56,7 +56,8 @@ function GM:HUDShouldDraw( name )
 
 		if ( IsValid( wep ) && wep.HUDShouldDraw != nil ) then
 
-			return wep.HUDShouldDraw( wep, name )
+			local draw = wep.HUDShouldDraw( wep, name )
+			if draw != nil then return draw end
 
 		end
 
