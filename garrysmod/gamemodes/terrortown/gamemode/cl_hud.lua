@@ -371,6 +371,6 @@ function GM:HUDShouldDraw(name)
       if name == v then return false end
    end
 
-   return true
+   return self.BaseClass.HUDShouldDraw(self, name)
 end
 
