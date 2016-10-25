@@ -34,13 +34,13 @@ function PANEL:Init()
 	self.Label:SetContentAlignment( 5 )
 
 	self.ProgressLabel = self:Add( "DLabel" )
-	self.ProgressLabel:SetText( "-" )
+	self.ProgressLabel:SetText( "" )
 	self.ProgressLabel:SetContentAlignment( 7 )
 	self.ProgressLabel:SetVisible( false )
 	self.ProgressLabel:SetTextColor( Color( 255, 255, 255, 50 ) )
 
 	self.TotalsLabel = self:Add( "DLabel" )
-	self.TotalsLabel:SetText( "-" )
+	self.TotalsLabel:SetText( "" )
 	self.TotalsLabel:SetContentAlignment( 7 )
 	self.TotalsLabel:SetVisible( false )
 	self.TotalsLabel:SetTextColor( Color( 255, 255, 255, 50 ) )
@@ -179,7 +179,19 @@ end
 
 function PANEL:UpdateTotalProgress( completed, iTotal )
 
-	self.TotalsLabel:SetText( "Addon "..completed.." of "..iTotal )
+	self.TotalsLabel:SetText( "Addon " .. completed .. " of " .. iTotal )
 	self.TotalProgress = completed / iTotal
+
+end
+
+function PANEL:SubscriptionsProgress( iCurrent, iTotal )
+
+	self.Label:SetText( "Fetching Subscriptions..." )
+	self:SetDrawProgress( true )
+
+	self.Progress = iCurrent / iTotal
+
+	self.ProgressLabel:Show()
+	self.ProgressLabel:SetText( iCurrent .. " of " .. iTotal )
 
 end
