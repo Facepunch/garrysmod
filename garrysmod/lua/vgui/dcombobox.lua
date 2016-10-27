@@ -29,6 +29,7 @@ function PANEL:Clear()
 	self:SetText( "" )
 	self.Choices = {}
 	self.Data = {}
+	self.selected = nil
 
 	if ( self.Menu ) then
 		self.Menu:Remove()
