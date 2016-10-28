@@ -94,6 +94,11 @@ function ENT:TraitorUse(ply)
    return true
 end
 
+-- Fix for traitor buttons having awkward init/render behavior, in the event that a map has been optimized with area portals.
+function ENT:UpdateTransmitState()
+   return TRANSMIT_ALWAYS
+end
+
 local function TraitorUseCmd(ply, cmd, args)
    if #args != 1 then return end
 
