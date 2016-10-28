@@ -36,6 +36,12 @@ end
 -- If detective mode, announce when someone's body is found
 local bodyfound = CreateConVar("ttt_announce_body_found", "1")
 
+-- opportunity for addons to introduce ways for traitors(ideally) to interrupt corpse searching.
+function GM:TTTInterruptCorpseIdentify(identifier,corpse,corpse_is_traitor)
+   -- return true to interrupt corpse identification
+   return false
+end
+
 local function IdentifyBody(ply, rag)
    if not ply:IsTerror() then return end
 
@@ -48,6 +54,11 @@ local function IdentifyBody(ply, rag)
    local finder = ply:Nick()
    local nick = CORPSE.GetPlayerNick(rag, "")
    local traitor = (rag.was_role == ROLE_TRAITOR)
+   
+   -- opportunity for addons to introduce ways for traitors(ideally) to interrupt corpse identification.
+   if hook.Run("TTTInterruptCorpseIdentify", ply, rag, traitor) then
+      return
+   end
 
    -- Announce body
    if bodyfound:GetBool() and not CORPSE.GetFound(rag, false) then
@@ -169,6 +180,12 @@ local function bitsRequired(num)
    return bits
 end
 
+-- opportunity for addons to introduce ways for traitors(ideally) to interrupt corpse searching.
+function GM:TTTInterruptCorpseSearch(identifier,corpse,corpse_is_traitor)
+   -- return true to interrupt corpse search
+   return false
+end
+
 -- Send a usermessage to client containing search results
 function CORPSE.ShowSearch(ply, rag, covert, long_range)
    if not IsValid(ply) or not IsValid(rag) then return end
@@ -189,6 +206,11 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    local words = rag.last_words or ""
    local hshot = rag.was_headshot or false
    local dtime = rag.time or 0
+   
+   -- opportunity for addons to introduce ways for traitors(ideally) to interrupt corpse searching.
+   if hook.Run("TTTInterruptCorpseSearch", ply, rag, traitor) then
+      return
+   end
 
    local owner = player.GetBySteamID(rag.sid)
    owner = IsValid(owner) and owner:EntIndex() or -1
