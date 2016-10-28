@@ -108,7 +108,8 @@ function table.Add( dest, source )
 	if ( type( dest ) != "table" ) then dest = {} end
 
 	for k, v in pairs( source ) do
-		table.insert( dest, v )
+		--table.insert( dest, v )
+		dest[k] = v -- this is safe, i've tested to make sure that pairs() returns the apropriate value type for k, in the case of both number and string indexes, even tables as indicies...
 	end
 
 	return dest
