@@ -50,13 +50,7 @@ function ENT:UseOverride(activator)
          wep = activator:Give("weapon_ttt_beacon")
       end
 
-      local prints = self.fingerprints or {}
       self:Remove()
-
-      if IsValid(wep) then
-         wep.fingerprints = wep.fingerprints or {}
-         table.Add(wep.fingerprints, prints)
-      end
    end
 end
 
