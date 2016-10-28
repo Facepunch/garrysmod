@@ -55,7 +55,8 @@ function ENT:UseOverride(activator)
 
       if IsValid(wep) then
          wep.fingerprints = wep.fingerprints or {}
-         table.Add(wep.fingerprints, prints)
+         -- Fix c-side error which hangs server on beacon pickup, giving only an ambiguous blue "[ERROR]" message in console.
+         table.Add(wep.fingerprints, #wep.fingerprints + 1, prints)
       end
    end
 end
