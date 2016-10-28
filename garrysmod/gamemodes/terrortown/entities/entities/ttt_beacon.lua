@@ -55,6 +55,7 @@ function ENT:UseOverride(activator)
 
       if IsValid(wep) then
          wep.fingerprints = wep.fingerprints or {}
+         -- Fix error which hangs server on beacon pickup
          table.Add(wep.fingerprints, #wep.fingerprints + 1, prints)
       end
    end
