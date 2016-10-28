@@ -1,4 +1,6 @@
 
+local cl_enable_loadingurl = CreateConVar( "cl_enable_loadingurl", "1", FCVAR_ARCHIVE, "Enable/disable viewing custom loading screens provided by joined servers." )
+
 g_ServerName	= ""
 g_MapName		= ""
 g_ServerURL		= ""
@@ -234,7 +236,7 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 	serverurl = serverurl:Replace( "%s", steamid )
 	serverurl = serverurl:Replace( "%m", mapname )
 
-	if ( maxplayers > 1 ) then
+	if ( maxplayers > 1 && cl_enable_loadingurl:GetBool() ) then
 		pnlLoading:ShowURL( serverurl, true )
 	end
 
