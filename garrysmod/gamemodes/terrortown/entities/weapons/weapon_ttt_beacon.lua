@@ -96,8 +96,6 @@ function SWEP:BeaconDrop()
          beacon:SetOwner(ply)
          beacon:Spawn()
 
-         beacon.fingerprints = self.fingerprints
-
          beacon:PointAtEntity(ply)
          
          local ang = beacon:GetAngles()
@@ -147,8 +145,6 @@ function SWEP:BeaconStick()
                beacon:SetAngles(ang)
                beacon:SetOwner(ply)
                beacon:Spawn()
-
-               beacon.fingerprints = self.fingerprints
 
                local phys = beacon:GetPhysicsObject()
                if IsValid(phys) then
