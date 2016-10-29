@@ -457,6 +457,8 @@ function CORPSE.Create(ply, attacker, dmginfo)
       local efn = ply.effect_fn
       timer.Simple(0, function() efn(rag) end)
    end
+   
+   hook.Run("TTTOnCorpseCreated", rag)
 
    return rag -- we'll be speccing this
 end
