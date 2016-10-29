@@ -36,7 +36,6 @@ end
 -- If detective mode, announce when someone's body is found
 local bodyfound = CreateConVar("ttt_announce_body_found", "1")
 
--- opportunity for addons to introduce ways for traitors(ideally) to interrupt corpse searching.
 function GM:TTTCanIdentifyCorpse(identifier, corpse)
    -- return true to allow corpse identification, false to disallow
    return true
@@ -51,7 +50,6 @@ local function IdentifyBody(ply, rag)
       return
    end
    
-   -- opportunity for addons to introduce ways for traitors(ideally) to interrupt corpse identification.
    if not hook.Run("TTTCanIdentifyCorpse", ply, rag, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
@@ -180,7 +178,6 @@ local function bitsRequired(num)
    return bits
 end
 
--- opportunity for addons to introduce ways for traitors(ideally) to interrupt corpse searching.
 function GM:TTTCanSearchCorpse(searcher, corpse, corpse_is_traitor)
    -- return true to allow corpse search, false to disallow.
    return true
@@ -195,7 +192,6 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
       return
    end
    
-   -- opportunity for addons to introduce ways for traitors(ideally) to interrupt corpse searching.
    if not hook.Run("TTTCanSearchCorpse", ply, rag, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
