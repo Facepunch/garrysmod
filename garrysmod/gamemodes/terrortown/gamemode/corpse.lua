@@ -36,7 +36,7 @@ end
 -- If detective mode, announce when someone's body is found
 local bodyfound = CreateConVar("ttt_announce_body_found", "1")
 
-function GM:TTTCanIdentifyCorpse(identifier, corpse)
+function GM:TTTCanIdentifyCorpse(identifier, corpse, corpse_is_traitor)
    -- return true to allow corpse identification, false to disallow
    return true
 end
