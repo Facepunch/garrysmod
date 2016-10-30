@@ -458,7 +458,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
       timer.Simple(0, function() efn(rag) end)
    end
    
-   hook.Run("TTTOnCorpseCreated", rag)
+   hook.Run("TTTOnCorpseCreated", rag, ply)
 
    return rag -- we'll be speccing this
 end
