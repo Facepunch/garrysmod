@@ -178,7 +178,7 @@ local function bitsRequired(num)
    return bits
 end
 
-function GM:TTTCanSearchCorpse(searcher, corpse, corpse_is_traitor)
+function GM:TTTCanSearchCorpse(searcher, corpse, covert, long_range, corpse_is_traitor)
    -- return true to allow corpse search, false to disallow.
    return true
 end
