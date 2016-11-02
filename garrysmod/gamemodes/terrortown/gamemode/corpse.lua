@@ -36,7 +36,7 @@ end
 -- If detective mode, announce when someone's body is found
 local bodyfound = CreateConVar("ttt_announce_body_found", "1")
 
-function GM:TTTCanIdentifyCorpse(identifier, corpse)
+function GM:TTTCanIdentifyCorpse(ply, corpse, was_traitor)
    -- return true to allow corpse identification, false to disallow
    return true
 end
@@ -178,7 +178,7 @@ local function bitsRequired(num)
    return bits
 end
 
-function GM:TTTCanSearchCorpse(searcher, corpse, corpse_is_traitor)
+function GM:TTTCanSearchCorpse(ply, corpse, is_covert, is_long_range, was_traitor)
    -- return true to allow corpse search, false to disallow.
    return true
 end
@@ -192,7 +192,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
       return
    end
    
-   if not hook.Run("TTTCanSearchCorpse", ply, rag, (rag.was_role == ROLE_TRAITOR)) then
+   if not hook.Run("TTTCanSearchCorpse", ply, rag, covert, long_range, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
 
@@ -458,7 +458,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
       timer.Simple(0, function() efn(rag) end)
    end
    
-   hook.Run("TTTOnCorpseCreated", rag)
+   hook.Run("TTTOnCorpseCreated", rag, ply)
 
    return rag -- we'll be speccing this
 end
