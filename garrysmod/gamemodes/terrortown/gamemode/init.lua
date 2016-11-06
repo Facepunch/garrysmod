@@ -767,7 +767,7 @@ function EndRound(type)
 
    -- server plugins might want to start a map vote here or something
    -- these hooks are not used by TTT internally
-   hook.Call("TTTEndRound", GAMEMODE, type)
+   hook.Call("TTTEndRound", GAMEMODE, type, GAMEMODE.MapWin and true or false)
 
    ents.TTT.TriggerRoundStateOutputs(ROUND_POST, type)
 end
@@ -781,9 +781,7 @@ function GM:TTTCheckForWin()
    if ttt_dbgwin:GetBool() then return WIN_NONE end
 
    if GAMEMODE.MapWin == WIN_TRAITOR or GAMEMODE.MapWin == WIN_INNOCENT then
-      local mw = GAMEMODE.MapWin
-      GAMEMODE.MapWin = WIN_NONE
-      return mw
+      return GAMEMODE.MapWin
    end
 
    local traitor_alive = false
