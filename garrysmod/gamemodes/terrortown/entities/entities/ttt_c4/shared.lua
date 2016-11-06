@@ -494,7 +494,7 @@ if SERVER then
 
    local function SendDisarmResult(ply, idx, result)
       net.Start("TTT_C4DisarmResult")
-         net.WriteUInt(idx, 15) -- it'll fit, trust me
+         net.WriteUInt(idx, 16) -- it'll fit, trust me
          net.WriteBit(result) -- this way we can squeeze this bit into 16
       net.Send(ply)
    end
