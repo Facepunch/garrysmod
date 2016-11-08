@@ -11,7 +11,7 @@
 		{
 			"name"		"physgun_limited"
 			"text"		"limit_physgun"
-			"help"		"When enabled the physgun can only pick up props and ragdolls"
+			"help"		"If enabled, the physgun can only pick up props and ragdolls"
 			"type"		"CheckBox"
 			"default"	"0"
 		}
@@ -20,7 +20,7 @@
 		{
 			"name"		"sbox_noclip"
 			"text"		"noclip"
-			"help"		"When enabled players will be able to noclip"
+			"help"		"If enabled, players will be able to use noclip"
 			"type"		"CheckBox"
 			"default"	"1"
 		}
@@ -29,7 +29,7 @@
 		{
 			"name"		"sbox_godmode"
 			"text"		"god_mode"
-			"help"		"When enabled all players will be invincible"
+			"help"		"If enabled, all players will be invincible"
 			"type"		"CheckBox"
 			"default"	"1"
 		}
@@ -38,7 +38,7 @@
 		{
 			"name"		"sbox_playershurtplayers"
 			"text"		"players_damage_players"
-			"help"		"If enabled player's will be able to hurt each other"
+			"help"		"If enabled, players will be able to hurt each other"
 			"type"		"CheckBox"
 			"default"	"1"
 		}
@@ -191,6 +191,7 @@
 		{
 			"name"		"sbox_weapons"
 			"text"		"enable_weapons"
+			"help"		"If enabled, each player will receive default Half-Life 2 weapons on each spawn"
 			"type"		"CheckBox"
 			"default"	"1"
 			"singleplayer" "1"
@@ -227,7 +228,7 @@
 		{
 			"name"		"sbox_persist"
 			"text"		"persistent_mode"
-			"help"		"Set to anything but empty string to enable persistence mode"
+			"help"		"Enables 'Make Persistent' option when you to right click on props while holding C, allowing you to save them across sessions. Leave empty to disable"
 			"type"		"Text"
 			"default"	""
 			"singleplayer" "1"

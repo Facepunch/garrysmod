@@ -6,9 +6,6 @@ ENT.PrintName = "Emitter"
 ENT.RenderGroup = RENDERGROUP_OPAQUE
 ENT.Editable = true
 
-local matLight = Material( "sprites/light_ignorez" )
-local matBeam = Material( "effects/lamp_beam" )
-
 function ENT:SetupDataTables()
 
 	self:NetworkVar( "Bool", 1, "On", { KeyName = "on", Edit = { type = "Boolean", order = 1 } } )
