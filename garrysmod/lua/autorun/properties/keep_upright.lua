@@ -39,9 +39,12 @@ properties.Add( "keepupright", {
 
 		local constraint = constraint.Keepupright( ent, Phys:GetAngles(), 0, 999999 )
 
-		--I feel like this is not stable enough
+		-- I feel like this is not stable enough
+		-- This cannot be implemented without a custom constraint.Keepupright function or modification for proper duplicator support.
+		--print( constraint:GetSaveTable().m_worldGoalAxis )
 		--constraint:SetSaveValue( "m_localTestAxis", constraint:GetSaveTable().m_worldGoalAxis ) --ent:GetAngles():Up() )
 		--constraint:SetSaveValue( "m_worldGoalAxis", Vector( 0, 0, 1 ) )
+		--constraint:SetSaveValue( "m_bDampAllRotation", true )
 
 		if ( constraint ) then
 
