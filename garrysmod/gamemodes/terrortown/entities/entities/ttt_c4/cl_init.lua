@@ -457,7 +457,7 @@ end
 ---- Communication
 
 local function C4ConfigHook()
-   local bomb = net.ReadEntity(16)
+   local bomb = net.ReadEntity()
 
    if IsValid(bomb) then
       if not bomb:GetArmed() then
