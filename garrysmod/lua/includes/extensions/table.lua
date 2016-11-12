@@ -43,6 +43,23 @@ function table.Copy( t, lookup_table )
 end
 
 --[[---------------------------------------------------------
+	Name: ShallowCopy( source_table )
+	Desc: Copies a table without recursively copying
+		tables that are members.
+-----------------------------------------------------------]]
+function table.ShallowCopy( source_table )
+	if ( source_table == nil ) then return end
+
+	local copy = {}
+
+	for k, v in pairs( source_table ) do
+		copy[ k ] = v
+	end
+
+	return copy
+end
+
+--[[---------------------------------------------------------
 	Name: Empty( tab )
 	Desc: Empty a table
 -----------------------------------------------------------]]
