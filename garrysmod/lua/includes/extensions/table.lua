@@ -514,7 +514,7 @@ end
 -----------------------------------------------------------]]
 function SortedPairs( pTable, Desc )
 
-	pTable = table.Copy( pTable )
+	pTable = table.ShallowCopy( pTable )
 
 	local SortedIndex = {}
 	for k, v in pairs( pTable ) do
@@ -539,7 +539,7 @@ end
 -----------------------------------------------------------]]
 function SortedPairsByValue( pTable, Desc )
 
-	pTable = table.Copy( pTable )
+	pTable = table.ShallowCopy( pTable )
 
 	local SortedIndex = {}
 	for k, v in pairs( pTable ) do
@@ -568,7 +568,7 @@ end
 -----------------------------------------------------------]]
 function SortedPairsByMemberValue( pTable, pValueName, Desc )
 
-	pTable = table.Copy( pTable )
+	pTable = table.ShallowCopy( pTable )
 	Desc = Desc or false
 
 	local pSortedTable = table.ClearKeys( pTable, true )
@@ -591,7 +591,7 @@ end
 -----------------------------------------------------------]]
 function RandomPairs( pTable, Desc )
 
-	pTable = table.Copy( pTable )
+	pTable = table.ShallowCopy( pTable )
 
 	local SortedIndex = {}
 	for k, v in pairs( pTable ) do
