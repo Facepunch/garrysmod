@@ -139,7 +139,8 @@ local function DoDieFunction( ent )
 
 end
 
-hook.Add( "EntityRemoved", "DoDieFunction", DoDieFunction )
+hook.Add( "EntityRemoved", "DoDieFunction", function(ent) if ent:IsPlayer() then return end return DoDieFunction(ent) end )
+hook.Add( "PlayerDisconnected", "DoDieFunction", DoDieFunction )
 
 function meta:PhysWake()
 
