@@ -467,19 +467,28 @@ function table.ClearKeys( Table, bSaveKey )
 end
 
 local function keyValuePairs(state)
+
 	state.Index = state.Index + 1
-	local keyValue = state.KeyValues[state.Index]
-	if(!keyValue) then return end
+
+	local keyValue = state.KeyValues[ state.Index ]
+
+	if( !keyValue ) then return end
+
 	return keyValue.key, keyValue.val
+
 end
 
 
 local function toKeyValues(tbl)
+
 	local result = {}
-	for k,v in pairs(tbl) do
-		table.insert(result, {key = k, val = v})
+
+	for k,v in pairs( tbl ) do
+		table.insert( result, { key = k, val = v } )
 	end
+
 	return result
+
 end
 
 --[[---------------------------------------------------------
@@ -487,9 +496,13 @@ end
 		Sorted by TABLE KEY
 -----------------------------------------------------------]]
 function SortedPairs( pTable, Desc )
-	local sortedTbl = toKeyValues(pTable)
-	table.SortByMember(sortedTbl, "key", !Desc)
-	return keyValuePairs, {Index = 0, KeyValues = sortedTbl}
+
+	local sortedTbl = toKeyValues( pTable )
+
+	table.SortByMember( sortedTbl, "key", !Desc )
+
+	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
+
 end
 
 
@@ -498,9 +511,13 @@ end
 		Sorted by VALUE
 -----------------------------------------------------------]]
 function SortedPairsByValue( pTable, Desc )
-	local sortedTbl = toKeyValues(pTable)
-	table.SortByMember(sortedTbl, "val", !Desc)
-	return keyValuePairs, {Index = 0, KeyValues = sortedTbl}
+
+	local sortedTbl = toKeyValues( pTable )
+
+	table.SortByMember( sortedTbl, "val", !Desc )
+
+	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
+
 end
 
 --[[---------------------------------------------------------
@@ -508,24 +525,34 @@ end
 		Sorted by Member Value (All table entries must be a table!)
 -----------------------------------------------------------]]
 function SortedPairsByMemberValue( pTable, pValueName, Desc )
-	local sortedTbl = toKeyValues(pTable, pValueName)
-	for k,v in pairs(sortedTbl) do
-		v.member = v.val[pValueName]
+
+	local sortedTbl = toKeyValues( pTable )
+
+	for k,v in pairs( sortedTbl ) do
+		v.member = v.val[ pValueName ]
 	end
-	table.SortByMember(sortedTbl, "member", !Desc)
-	return keyValuePairs, {Index = 0, KeyValues = sortedTbl}
+
+	table.SortByMember( sortedTbl, "member", !Desc )
+
+	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
+
 end
 
 --[[---------------------------------------------------------
 	A Pairs function
 -----------------------------------------------------------]]
 function RandomPairs( pTable, Desc )
-	local sortedTbl = toKeyValues(pTable, pValueName)
-	for k,v in pairs(sortedTbl) do
-		v.rand = math.random(1,1000000)
+
+	local sortedTbl = toKeyValues( pTable )
+
+	for k,v in pairs( sortedTbl ) do
+		v.rand = math.random( 1, 1000000 )
 	end
-	table.SortByMember(sortedTbl, "rand", !Desc)
-	return keyValuePairs, {Index = 0, KeyValues = sortedTbl}
+
+	table.SortByMember( sortedTbl, "rand", !Desc )
+
+	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
+
 end
 
 --[[---------------------------------------------------------
