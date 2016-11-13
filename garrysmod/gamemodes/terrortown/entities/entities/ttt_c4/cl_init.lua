@@ -457,9 +457,8 @@ end
 ---- Communication
 
 local function C4ConfigHook()
-   local idx = net.ReadUInt(16)
+   local bomb = net.ReadEntity()
 
-   local bomb = ents.GetByIndex(idx)
    if IsValid(bomb) then
       if not bomb:GetArmed() then
          ShowC4Config(bomb)
@@ -471,12 +470,9 @@ end
 net.Receive("TTT_C4Config", C4ConfigHook)
 
 local function C4DisarmResultHook()
-   local idx = net.ReadUInt(16)
-   local result = {}
-
+   local bomb = net.ReadEntity()
    local correct = net.ReadBit() == 1
 
-   local bomb = ents.GetByIndex(idx)
    if IsValid(bomb) then
       if correct and disarm_success then
          disarm_success()

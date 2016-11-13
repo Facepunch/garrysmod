@@ -461,7 +461,7 @@ if SERVER then
    function ENT:ShowC4Config(ply)
       -- show menu to player to configure or disarm us
       net.Start("TTT_C4Config")
-         net.WriteUInt(self:EntIndex(), 16)
+         net.WriteEntity(self)
       net.Send(ply)
    end
 
@@ -492,9 +492,9 @@ if SERVER then
    end
    concommand.Add("ttt_c4_config", ReceiveC4Config)
 
-   local function SendDisarmResult(ply, idx, result)
+   local function SendDisarmResult(ply, bomb, result)
       net.Start("TTT_C4DisarmResult")
-         net.WriteUInt(idx, 15) -- it'll fit, trust me
+         net.WriteEntity(bomb)
          net.WriteBit(result) -- this way we can squeeze this bit into 16
       net.Send(ply)
    end
@@ -515,10 +515,10 @@ if SERVER then
 
             bomb:Disarm(ply)
 
-            -- only case with success umsg
-            SendDisarmResult(ply, idx, true)
+            -- only case with success net message
+            SendDisarmResult(ply, bomb, true)
          else
-            SendDisarmResult(ply, idx, false)
+            SendDisarmResult(ply, bomb, false)
 
             -- wrong wire = bomb goes boom
             bomb:FailedDisarm(ply)
@@ -536,7 +536,8 @@ if SERVER then
 
       local bomb = ents.GetByIndex(idx)
       if IsValid(bomb) and bomb.GetArmed and (not bomb:GetArmed()) then
-         if bomb:GetPos():Distance(ply:GetPos()) > 256 then return
+         if bomb:GetPos():Distance(ply:GetPos()) > 256 then
+            return
          elseif not ply:CanCarryType(WEAPON_EQUIP1) then
             LANG.Msg(ply, "c4_no_room")
          else
@@ -564,7 +565,8 @@ if SERVER then
 
       local bomb = ents.GetByIndex(idx)
       if IsValid(bomb) and (not bomb:GetArmed()) then
-         if bomb:GetPos():Distance(ply:GetPos()) > 256 then return
+         if bomb:GetPos():Distance(ply:GetPos()) > 256 then
+            return
          else
             -- spark to show onlookers we destroyed this bomb
             util.EquipmentDestroyed(bomb:GetPos())
