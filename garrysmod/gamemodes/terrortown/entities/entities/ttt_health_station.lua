@@ -147,11 +147,11 @@ if SERVER then
       end
    end
 
-   local ttt_detective_dmg_selfhs = CreateConVar("ttt_detective_dmg_selfhs", "0") -- 0 as detective cannot damage their own health station
+   local ttt_damage_own_healthstation = CreateConVar("ttt_damage_own_healthstation", "0") -- 0 as detective cannot damage their own health station
 	
    -- traditional equipment destruction effects
    function ENT:OnTakeDamage(dmginfo)
-      if dmginfo:GetAttacker() == self:GetPlacer() and not ttt_detective_dmg_selfhs:GetBool() then return end
+      if dmginfo:GetAttacker() == self:GetPlacer() and not ttt_damage_own_healthstation:GetBool() then return end
    
       self:TakePhysicsDamage(dmginfo)
 
@@ -160,7 +160,7 @@ if SERVER then
       local att = dmginfo:GetAttacker()
       local placer = self:GetPlacer()
       if IsPlayer(att) then
-         DamageLog(Format("DMG: \t %s [%s] damaged health station [%s] for %d dmg", att:Nick(), att:GetRoleString(), placer:Nick(), dmginfo:GetDamage()))
+         DamageLog(Format("DMG: \t %s [%s] damaged health station [%s] for %d dmg", att:Nick(), att:GetRoleString(),  (IsPlayer(placer) and placer:Nick() or "<disconnected>"), dmginfo:GetDamage()))
       end
 
       if self:Health() < 0 then
