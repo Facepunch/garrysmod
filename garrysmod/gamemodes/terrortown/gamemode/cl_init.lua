@@ -367,7 +367,7 @@ function CheckIdle()
          RunConsoleCommand("say", "(AUTOMATED MESSAGE) I have been moved to the Spectator team because I was idle/AFK.")
 
          timer.Simple(0.3, function()
-                              RunConsoleCommand("ttt_spectator_mode", 1)
+                              RunConsoleCommand("toggle","ttt_spectator_mode", 1)
                               RunConsoleCommand("ttt_cl_idlepopup")
                            end)
       elseif CurTime() > (idle.t + (idle_limit / 2)) then
