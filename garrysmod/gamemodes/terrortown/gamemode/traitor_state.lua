@@ -161,9 +161,9 @@ end
 concommand.Add("ttt_force_detective", force_detective)
 
 
-local function force_spectate(ply, cmd, arg)
+local function force_spectate(ply, arg)
    if IsValid(ply) then
-      if #arg == 1 and tonumber(arg[1]) == 0 then
+      if !arg then
          ply:SetForceSpec(false)
       else
          if not ply:IsSpec() then
@@ -179,6 +179,7 @@ local function force_spectate(ply, cmd, arg)
       end
    end
 end
-concommand.Add("ttt_spectate", force_spectate)
-
+net.Receive("ttt_spectate", function(l,pl)
+   force_spectate(pl,net.readBool())
+end)
 
