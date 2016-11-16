@@ -180,6 +180,6 @@ local function force_spectate(ply, arg)
    end
 end
 net.Receive("ttt_spectate", function(l,pl)
-   force_spectate(pl,net.readBool())
+   force_spectate(pl,net.ReadBool())
 end)
 
