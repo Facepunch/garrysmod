@@ -1,4 +1,4 @@
-
+util.AddNetworkString("ttt_spectate")
 function GetTraitors()
    local trs = {}
    for k,v in ipairs(player.GetAll()) do
@@ -180,7 +180,7 @@ local function force_spectate(ply, arg)
    end
 end
 concommand.Add("ttt_spectate", force_spectate)
-net.Receive("ttt_spectate", function(l,pl)
-   force_spectate(pl,net.ReadBool())
+net.Receive("ttt_spectate", function(l, pl)
+   force_spectate(pl, net.ReadBool())
 end)
 
