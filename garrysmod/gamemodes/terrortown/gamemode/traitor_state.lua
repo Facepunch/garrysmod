@@ -179,6 +179,7 @@ local function force_spectate(ply, arg)
       end
    end
 end
+concommand.Add("ttt_spectate", force_spectate)
 net.Receive("ttt_spectate", function(l,pl)
    force_spectate(pl,net.ReadBool())
 end)
