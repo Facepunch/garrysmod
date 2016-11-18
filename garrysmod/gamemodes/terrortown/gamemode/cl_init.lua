@@ -53,7 +53,7 @@ function GM:Initialize()
    self.BaseClass:Initialize()
 
    net.Start("ttt_spectate")
-     net.WriteBool(GetConVar("ttt_spectator_mode"):GetBool())
+     net.WriteInt(math.Clamp(GetConVar("ttt_spectator_mode"):GetInt(),0,1),2)
    net.SendToServer()
 end
 
