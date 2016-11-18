@@ -181,6 +181,6 @@ local function force_spectate(ply, cmd, arg)
 end
 concommand.Add("ttt_spectate", force_spectate)
 net.Receive("ttt_spectate", function(l, pl)
-   force_spectate(pl, null, net.ReadInt(1))
+   force_spectate(pl, null, net.ReadInt(2))
 end)
 
