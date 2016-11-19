@@ -52,7 +52,7 @@ function GM:Initialize()
 
    self.BaseClass:Initialize()
 
-   net.Start("ttt_spectate")
+   net.Start("TTT_Spectate")
      net.WriteInt(math.Clamp(GetConVar("ttt_spectator_mode"):GetInt(),0,1),2)
    net.SendToServer()
 end
@@ -370,7 +370,7 @@ function CheckIdle()
 
          timer.Simple(0.3, function()
                               RunConsoleCommand("ttt_spectator_mode", 1) -- If they want to bypass it now they still can but this way they still get fspecced
-                               net.Start("ttt_spectate")
+                               net.Start("TTT_Spectate")
                                  net.WriteInt(1,2)
                                net.SendToServer()
                               RunConsoleCommand("ttt_cl_idlepopup")
