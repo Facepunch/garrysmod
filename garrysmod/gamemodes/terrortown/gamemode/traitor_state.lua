@@ -1,4 +1,3 @@
-util.AddNetworkString("ttt_spectate")
 function GetTraitors()
    local trs = {}
    for k,v in ipairs(player.GetAll()) do
@@ -163,7 +162,7 @@ concommand.Add("ttt_force_detective", force_detective)
 
 local function force_spectate(ply, cmd, arg)
    if IsValid(ply) then
-      if arg == 0 then
+      if #arg == 1 and tonumber(arg[1]) == 0 then
          ply:SetForceSpec(false)
       else
          if not ply:IsSpec() then
@@ -180,7 +179,7 @@ local function force_spectate(ply, cmd, arg)
    end
 end
 concommand.Add("ttt_spectate", force_spectate)
-net.Receive("ttt_spectate", function(l, pl)
-   force_spectate(pl, null, net.ReadInt(2))
+net.Receive("TTT_Spectate", function(l, pl)
+   force_spectate(pl, nil, {net.ReadInt(2)})
 end)
 
