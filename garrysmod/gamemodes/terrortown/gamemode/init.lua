@@ -154,7 +154,7 @@ util.AddNetworkString("TTT_ShowPrints")
 util.AddNetworkString("TTT_ScanResult")
 util.AddNetworkString("TTT_FlareScorch")
 util.AddNetworkString("TTT_Radar")
-
+util.AddNetworkString("TTT_Spectate")
 ---- Round mechanics
 function GM:Initialize()
    MsgN("Trouble In Terrorist Town gamemode initializing...")
