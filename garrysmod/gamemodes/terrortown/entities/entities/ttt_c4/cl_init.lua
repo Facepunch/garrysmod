@@ -154,7 +154,7 @@ end
 ---- DISARM
 
 local disarm_beep    = Sound("buttons/blip2.wav")
-local wire_cut       = Sound("ttt/wirecut.mp3")
+local wire_cut       = Sound("ttt/wirecut.wav")
 
 local c4_bomb_mat    = Material("vgui/ttt/c4_bomb")
 local c4_cut_mat     = Material("vgui/ttt/c4_cut")
