@@ -106,7 +106,7 @@ end
 CreateConVar("ttt_detective_hats", "0")
 -- Just hats right now
 local function GiveLoadoutSpecial(ply)
-   if ply:IsDetective() and GetConVar("ttt_detective_hats"):GetBool() and CanWearHat(ply) then
+   if ply:IsActiveDetective() and GetConVar("ttt_detective_hats"):GetBool() and CanWearHat(ply) then
 
       if not IsValid(ply.hat) then
          local hat = ents.Create("ttt_hat_deerstalker")
