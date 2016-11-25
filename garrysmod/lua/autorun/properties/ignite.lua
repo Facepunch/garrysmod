@@ -3,7 +3,9 @@ AddCSLuaFile()
 
 local function CanEntityBeSetOnFire( ent )
 
-	if ( ent:GetClass() == "prop_physics" ) then return true end
+	-- func_pushable, func_breakable & func_physbox cannot be ignited
+	if ( ent:GetClass() == "item_item_crate" ) then return true end
+	if ( ent:GetClass():match( "prop_physics*") ) then return true end
 	if ( ent:IsNPC() ) then return true end
 
 	return false
