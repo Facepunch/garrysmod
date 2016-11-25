@@ -412,6 +412,10 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 		NPC:DropToFloor()
 	end
 
+	if ( NPCData.Health ) then
+		NPC:SetHealth( NPCData.Health )
+	end
+
 	return NPC
 
 end

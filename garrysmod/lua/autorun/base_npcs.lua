@@ -389,6 +389,7 @@ AddNPC( {
 	Class = "npc_helicopter",
 	Category = Category,
 	Offset = 300,
+	Health = 600,
 	KeyValues = { SquadName = "overwatch" }
 } )
 
