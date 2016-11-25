@@ -221,6 +221,9 @@ function GetServers( type, id )
 	local data = {
 		Callback = function( ping , name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid )
 
+			if Servers[ address ] then return end
+			Servers[ address ] = true
+
 			name = string.JavascriptSafe( name )
 			desc = string.JavascriptSafe( desc )
 			map = string.JavascriptSafe( map )
@@ -238,6 +241,7 @@ function GetServers( type, id )
 
 		Finished = function()
 			pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
+			Servers = {}
 		end,
 
 		Type = type,
@@ -252,6 +256,7 @@ end
 function DoStopServers( type )
 	pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
 	ShouldStop[ type ] = true
+	Servers = {}
 end
 
 --
