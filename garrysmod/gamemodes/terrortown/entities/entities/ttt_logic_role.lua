@@ -22,9 +22,8 @@ end
 
 
 function ENT:AcceptInput(name, activator)
-   if name == "TestActivator" then
-
-      if IsValid(activator) and activator:IsPlayer() and (self.Role == ROLE_ANY or activator:IsRole(self.Role)) then
+   if name == "TestActivator" and IsValid(activator) and activator:IsPlayer() then
+      if self.Role == ROLE_ANY or activator:IsRole(self.Role) then
          Dev(2, activator, "passed logic_role test of", self:GetName())
          self:TriggerOutput("OnPass", activator)
       else
