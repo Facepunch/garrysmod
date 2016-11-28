@@ -193,11 +193,11 @@ function GM:HUDDrawTargetID()
          _, color = util.HealthToString(ent:Health())
       end
 
-      if client:IsTraitor() and GAMEMODE.round_state == ROUND_ACTIVE then
+      if client:IsTraitor() and GetRoundState() == ROUND_ACTIVE then
          target_traitor = ent:IsTraitor()
       end
 
-      target_detective = ent:IsDetective()
+      target_detective = GetRoundState() > ROUND_PREP and ent:IsDetective() or false
 
    elseif cls == "prop_ragdoll" then
       -- only show this if the ragdoll has a nick, else it could be a mattress
