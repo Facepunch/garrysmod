@@ -199,10 +199,10 @@ function ENT:OverlayRender()
 	local vSize = Vector( self:GetSize(), self:GetSize(), self:GetSize() )
 
 	render.SetColorMaterialIgnoreZ()
-	render.DrawCube( self:GetPos(), vSize, ColorAlpha( col, 0.8 ), false )
+	render.DrawBox( self:GetPos(), self:GetAngles(), -vSize, vSize, ColorAlpha( col, 0.8 ), false )
 
 	render.SetColorMaterial()
-	render.DrawCube( self:GetPos(), vSize, col, false )
+	render.DrawBox( self:GetPos(), self:GetAngles(), -vSize, vSize, col, false )
 
 end
 
