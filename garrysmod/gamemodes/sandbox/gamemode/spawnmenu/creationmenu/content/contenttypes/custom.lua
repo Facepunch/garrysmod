@@ -3,23 +3,18 @@ local AddCustomizableNode = nil
 
 local function SetupCustomNode( node, pnlContent, needsapp )
 
-	node.CustomSpawnlist = true -- Used to determine which nodes ContentSidebarToolBox can edit
+	node.CustomSpawnlist = !node.AddonSpawnlist -- Used to determine which nodes ContentSidebarToolBox can edit
 
-	--
 	-- This spawnlist needs a certain app mounted before it will show up.
-	--
 	if ( needsapp && needsapp != "" ) then
 		node:SetVisible( IsMounted( needsapp ) )
 		node.NeedsApp = needsapp
 	end
 
-	node.OnModified = function()
-		hook.Run( "SpawnlistContentChanged" )
-	end
 
 	node.SetupCopy = function( self, copy )
 
-		SetupCustomNode( copy, pnlContent )
+		SetupCustomNode( copy, pnlContent, needsapp )
 
 		self:DoPopulate()
 
@@ -32,26 +27,30 @@ local function SetupCustomNode( node, pnlContent, needsapp )
 
 	end
 
-	node.DoRightClick = function( self )
+	if ( !node.AddonSpawnlist ) then
+		node.OnModified = function()
+			hook.Run( "SpawnlistContentChanged" )
+		end
 
-		local menu = DermaMenu()
-		menu:AddOption( "Edit", function() self:InternalDoClick() hook.Run( "OpenToolbox" )  end )
-		menu:AddOption( "New Category", function() AddCustomizableNode( pnlContent, "New Category", "", self ) self:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end )
-		menu:AddOption( "Delete", function() node:Remove() hook.Run( "SpawnlistContentChanged" ) end )
+		node.DoRightClick = function( self )
 
-		menu:Open()
+			local menu = DermaMenu()
+			menu:AddOption( "Edit", function() self:InternalDoClick() hook.Run( "OpenToolbox" )  end )
+			menu:AddOption( "New Category", function() AddCustomizableNode( pnlContent, "New Category", "", self ) self:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end )
+			menu:AddOption( "Delete", function() node:Remove() hook.Run( "SpawnlistContentChanged" ) end )
 
+			menu:Open()
+
+		end
 	end
 
 	node.DoPopulate = function( self )
 
-		if ( !self.PropPanel ) then
+		if ( IsValid( self.PropPanel ) ) then return end
 
-			self.PropPanel = vgui.Create( "ContentContainer", pnlContent )
-			self.PropPanel:SetVisible( false )
-			self.PropPanel:SetTriggerSpawnlistChange( true )
-
-		end
+		self.PropPanel = vgui.Create( "ContentContainer", pnlContent )
+		self.PropPanel:SetVisible( false )
+		self.PropPanel:SetTriggerSpawnlistChange( true )
 
 	end
 
@@ -67,6 +66,7 @@ end
 AddCustomizableNode = function( pnlContent, name, icon, parent, needsapp )
 
 	local node = parent:AddNode( name, icon )
+	node.AddonSpawnlist = parent.AddonSpawnlist
 
 	SetupCustomNode( node, pnlContent, needsapp )
 
@@ -123,22 +123,22 @@ local function ConstructSpawnlist( node )
 
 end
 
-function AddPropsOfParent( pnlContent, node, parentid )
+function AddPropsOfParent( pnlContent, node, parentid, customProps )
 
-	local Props = spawnmenu.GetPropTable()
+	local Props = customProps or spawnmenu.GetPropTable()
 	for FileName, Info in SortedPairs( Props ) do
 
 		if ( parentid != Info.parentid ) then continue end
 
 		local pnlnode = AddCustomizableNode( pnlContent, Info.name, Info.icon, node, Info.needsapp )
 		pnlnode:SetExpanded( true )
-		pnlnode.CustomSpawnlist = true -- Used to determine which nodes ContentSidebarToolBox can edit
 		pnlnode.DoPopulate = function( self )
 
 			if ( self.PropPanel ) then return end
 
 			self.PropPanel = vgui.Create( "ContentContainer", pnlContent )
 			self.PropPanel:SetVisible( false )
+			self.PropPanel:SetTriggerSpawnlistChange( true )
 
 			for i, object in SortedPairs( Info.contents ) do
 
@@ -146,8 +146,6 @@ function AddPropsOfParent( pnlContent, node, parentid )
 				if ( cp ) then cp( self.PropPanel, object ) end
 
 			end
-
-			self.PropPanel:SetTriggerSpawnlistChange( true )
 
 		end
 
@@ -161,6 +159,8 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 
 	local node = AddCustomizableNode( pnlContent, "#spawnmenu.category.your_spawnlists", "", tree )
 	node:SetDraggableName( "CustomContent" )
+	node:SetExpanded( true )
+	node.CustomSpawnlist = nil
 
 	node.DoRightClick = function( self )
 
@@ -170,16 +170,13 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 
 	end
 
-	--
 	-- Save the spawnlist when children drag and dropped
-	--
 	node.OnModified = function()
 		hook.Run( "SpawnlistContentChanged" )
 	end
 
 	AddPropsOfParent( pnlContent, node, 0 )
 
-	node:SetExpanded( true )
 	node:MoveToBack()
 
 	CustomizableSpawnlistNode = node
@@ -188,6 +185,20 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 	local FirstNode = node:GetChildNode( 0 )
 	if ( IsValid( FirstNode ) ) then
 		FirstNode:InternalDoClick()
+	end
+
+	-- Custom stuff from addons
+	local CustomProps = spawnmenu.GetCustomPropTable()
+	if ( table.Count( CustomProps ) > 0 ) then
+		local node = AddCustomizableNode( pnlContent, "#spawnmenu.category.addon_spawnlists", "", tree )
+		node:SetExpanded( true )
+		--node:SetDraggableName( "CustomContent" )
+		node.DoRightClick = function() end
+		node.OnModified = function() end
+		node.AddonSpawnlist = true
+		node.CustomSpawnlist = nil
+
+		AddPropsOfParent( pnlContent, node, 0, CustomProps )
 	end
 
 end )

@@ -6,8 +6,10 @@ module( "spawnmenu", package.seeall )
 local g_ToolMenu = {}
 local CreationMenus = {}
 local PropTable = {}
+local PropTableCustom = {}
 
 local ActiveToolPanel = nil
+local ActiveSpawnlistID = 1000
 
 function SetActiveControlPanel( pnl )
 	ActiveToolPanel = pnl
@@ -143,23 +145,29 @@ function GetPropTable()
 end
 
 --[[---------------------------------------------------------
-	GetPropTable
+	GetCustomPropTable
+-----------------------------------------------------------]]
+function GetCustomPropTable()
+
+	return PropTableCustom
+
+end
+
+--[[---------------------------------------------------------
+	AddPropCategory
 -----------------------------------------------------------]]
 function AddPropCategory( strFilename, strName, tabContents, icon, id, parentid, needsapp )
 
-	id			= id		or math.random( 1000, 9999 )
-	parentid	= parentid	or 0
-
-	PropTable[ strFilename ] = {
-
+	PropTableCustom[ strFilename ] = {
 		name = strName,
-		icon = icon,
-		id = id,
-		parentid = parentid,
 		contents = tabContents,
+		icon = icon,
+		id = id or ActiveSpawnlistID,
+		parentid = parentid or 0,
 		needsapp = needsapp
-
 	}
+
+	if ( !id ) then ActiveSpawnlistID = ActiveSpawnlistID + 1 end
 
 end
 
@@ -170,9 +178,18 @@ function PopulateFromEngineTextFiles()
 
 	-- Reset the already loaded prop list before loading them again.
 	-- This caused the spawnlists to duplicate into crazy trees when spawnmenu_reload'ing after saving edited spawnlists
-	-- PropTable = {} -- Disabled for now, it breaks addons doing shitty things
+	PropTable = {} 
 
-	spawnmenu_engine.PopulateFromTextFiles( AddPropCategory )
+	spawnmenu_engine.PopulateFromTextFiles( function( strFilename, strName, tabContents, icon, id, parentid, needsapp )
+		PropTable[ strFilename ] = {
+			name = strName,
+			contents = tabContents,
+			icon = icon,
+			id = id,
+			parentid = parentid or 0,
+			needsapp = needsapp
+		}
+	end )
 
 end
 
