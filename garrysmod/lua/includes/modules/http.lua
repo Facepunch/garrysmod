@@ -20,12 +20,13 @@ module( "http" )
 	function callback( (args optional), contents, size )
 	
 -----------------------------------------------------------]]
-function Fetch( url, onsuccess, onfailure )
+function Fetch( url, onsuccess, onfailure, header )
 
 	local request = 
 	{
 		url			= url,
 		method		= "get",
+		headers = header or {},
 
 		success		= function( code, body, headers )
 	
@@ -49,13 +50,14 @@ function Fetch( url, onsuccess, onfailure )
 end
 
 
-function Post( url, params, onsuccess, onfailure )
+function Post( url, params, onsuccess, onfailure, header )
 
 	local request = 
 	{
 		url			= url,
 		method		= "post",
 		parameters	= params,
+		headers = header or {},
 
 		success		= function( code, body, headers )
 	
