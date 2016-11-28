@@ -120,6 +120,12 @@ function PANEL:IsEditing()
 
 end
 
+function PANEL:IsHovered()
+
+	return self.Scratch:IsHovered() || self.TextArea:IsHovered() || self.Slider:IsHovered() || vgui.GetHoveredPanel() == self
+
+end
+
 function PANEL:PerformLayout()
 
 	self.Label:SetWide( self:GetWide() / 2.4 )
