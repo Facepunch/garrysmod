@@ -12,7 +12,7 @@ AddNPC( {
 	Name = "Alyx Vance",
 	Class = "npc_alyx",
 	Category = Category,
-	Weapons = { "weapon_alyxgun", "weapon_smg1", "weapon_shotgun" }
+	Weapons = { "weapon_alyxgun", "weapon_smg1", "weapon_shotgun" },
 	KeyValues = { SquadName = "resistance" }
 } )
 
@@ -20,7 +20,7 @@ AddNPC( {
 	Name = "Barney Calhoun",
 	Class = "npc_barney",
 	Category = Category,
-	Weapons = { "weapon_smg1", "weapon_shotgun", "weapon_ar2" }
+	Weapons = { "weapon_smg1", "weapon_shotgun", "weapon_ar2" },
 	KeyValues = { SquadName = "resistance" }
 } )
 
@@ -65,7 +65,7 @@ AddNPC( {
 AddNPC( {
 	Name = "Vortigaunt",
 	Class = "npc_vortigaunt",
-	Category = Category
+	Category = Category,
 	KeyValues = { SquadName = "resistance" }
 } )
 
@@ -97,7 +97,7 @@ AddNPC( {
 	Name = "Medic",
 	Class = "npc_citizen",
 	Category = Category,
-	SpawnFlags = bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ),
+	SpawnFlags = 8 + 131072, --bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ),
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
 }, "Medic" )
@@ -123,7 +123,7 @@ if ( IsMounted( "ep2" ) ) then
 		Name = "Uriah",
 		Class = "npc_vortigaunt",
 		Category = Category,
-		Model = "models/vortigaunt_doctor.mdl"
+		Model = "models/vortigaunt_doctor.mdl",
 		KeyValues = { SquadName = "resistance" }
 	}, "VortigauntUriah" )
 
@@ -149,35 +149,35 @@ Category = "Zombies + Enemy Aliens"
 AddNPC( {
 	Name = "Zombie",
 	Class = "npc_zombie",
-	Category = Category
+	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Name = "Zombie Torso",
 	Class = "npc_zombie_torso",
-	Category = Category
+	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Name = "Poison Zombie",
 	Class = "npc_poisonzombie",
-	Category = Category
+	Category = Category,
 	KeyValues = { SquadName = "poison" }
 } )
 
 AddNPC( {
 	Name = "Antlion",
 	Class = "npc_antlion",
-	Category = Category
+	Category = Category,
 	KeyValues = { SquadName = "antlions" }
 } )
 
 AddNPC( {
 	Name = "Antlion Guard",
 	Class = "npc_antlionguard",
-	Category = Category
+	Category = Category,
 	KeyValues = { SquadName = "antlions" }
 } )
 
@@ -192,35 +192,35 @@ AddNPC( {
 AddNPC( {
 	Name = "Fast Zombie",
 	Class = "npc_fastzombie",
-	Category = Category
+	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Name = "Headcrab",
 	Class = "npc_headcrab",
-	Category = Category
+	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Name = "Poison Headcrab",
 	Class = "npc_headcrab_black",
-	Category = Category
+	Category = Category,
 	KeyValues = { SquadName = "poison" }
 } )
 
 AddNPC( {
 	Name = "Fast Headcrab",
 	Class = "npc_headcrab_fast",
-	Category = Category
+	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Name = "Fast Zombie Torso",
 	Class = "npc_fastzombie_torso",
-	Category = Category
+	Category = Category,
 	KeyValues = { SquadName = "zombies" }
 } )
 
@@ -248,7 +248,7 @@ if ( IsMounted( "ep2" ) ) then
 	AddNPC( {
 		Name = "Antlion Worker",
 		Class = "npc_antlion_worker",
-		Category = Category
+		Category = Category,
 		KeyValues = { SquadName = "antlions" }
 	} )
 end
@@ -257,7 +257,7 @@ if ( IsMounted( "episodic" ) ) then
 	AddNPC( {
 		Name = "Zombine",
 		Class = "npc_zombine",
-		Category = Category
+		Category = Category,
 		KeyValues = { SquadName = "zombies" }
 	} )
 end
