@@ -13,6 +13,7 @@ AddNPC( {
 	Class = "npc_alyx",
 	Category = Category,
 	Weapons = { "weapon_alyxgun", "weapon_smg1", "weapon_shotgun" }
+	KeyValues = { SquadName = "resistance" }
 } )
 
 AddNPC( {
@@ -20,6 +21,7 @@ AddNPC( {
 	Class = "npc_barney",
 	Category = Category,
 	Weapons = { "weapon_smg1", "weapon_shotgun", "weapon_ar2" }
+	KeyValues = { SquadName = "resistance" }
 } )
 
 AddNPC( {
@@ -64,6 +66,7 @@ AddNPC( {
 	Name = "Vortigaunt",
 	Class = "npc_vortigaunt",
 	Category = Category
+	KeyValues = { SquadName = "resistance" }
 } )
 
 AddNPC( {
@@ -78,7 +81,7 @@ AddNPC( {
 	Class = "npc_citizen",
 	Category = Category,
 	SpawnFlags = SF_CITIZEN_RANDOM_HEAD,
-	KeyValues = { citizentype = CT_REBEL },
+	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_ar2", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
 }, "Rebel" )
 
@@ -87,15 +90,15 @@ AddNPC( {
 	Class = "npc_citizen",
 	Category = Category,
 	Model = "models/odessa.mdl",
-	KeyValues = { citizentype = CT_UNIQUE }
+	KeyValues = { citizentype = CT_UNIQUE, SquadName = "resistance" }
 }, "npc_odessa" )
 
 AddNPC( {
 	Name = "Medic",
 	Class = "npc_citizen",
 	Category = Category,
-	SpawnFlags = SF_CITIZEN_MEDIC,
-	KeyValues = { citizentype = CT_REBEL },
+	SpawnFlags = bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ),
+	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
 }, "Medic" )
 
@@ -103,7 +106,7 @@ AddNPC( {
 	Name = "Refugee",
 	Class = "npc_citizen",
 	Category = Category,
-	KeyValues = { citizentype = CT_REFUGEE },
+	KeyValues = { citizentype = CT_REFUGEE, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_smg1" }
 }, "Refugee" )
 
@@ -111,7 +114,7 @@ AddNPC( {
 	Name = "Citizen",
 	Class = "npc_citizen",
 	Category = Category,
-	KeyValues = { citizentype = CT_DOWNTRODDEN }
+	KeyValues = { citizentype = CT_DOWNTRODDEN, SquadName = "resistance" }
 } )
 
 if ( IsMounted( "ep2" ) ) then
@@ -121,6 +124,7 @@ if ( IsMounted( "ep2" ) ) then
 		Class = "npc_vortigaunt",
 		Category = Category,
 		Model = "models/vortigaunt_doctor.mdl"
+		KeyValues = { SquadName = "resistance" }
 	}, "VortigauntUriah" )
 
 	AddNPC( {
@@ -146,30 +150,35 @@ AddNPC( {
 	Name = "Zombie",
 	Class = "npc_zombie",
 	Category = Category
+	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Name = "Zombie Torso",
 	Class = "npc_zombie_torso",
 	Category = Category
+	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Name = "Poison Zombie",
 	Class = "npc_poisonzombie",
 	Category = Category
+	KeyValues = { SquadName = "poison" }
 } )
 
 AddNPC( {
 	Name = "Antlion",
 	Class = "npc_antlion",
 	Category = Category
+	KeyValues = { SquadName = "antlions" }
 } )
 
 AddNPC( {
 	Name = "Antlion Guard",
 	Class = "npc_antlionguard",
 	Category = Category
+	KeyValues = { SquadName = "antlions" }
 } )
 
 AddNPC( {
@@ -184,30 +193,35 @@ AddNPC( {
 	Name = "Fast Zombie",
 	Class = "npc_fastzombie",
 	Category = Category
+	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Name = "Headcrab",
 	Class = "npc_headcrab",
 	Category = Category
+	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Name = "Poison Headcrab",
 	Class = "npc_headcrab_black",
 	Category = Category
+	KeyValues = { SquadName = "poison" }
 } )
 
 AddNPC( {
 	Name = "Fast Headcrab",
 	Class = "npc_headcrab_fast",
 	Category = Category
+	KeyValues = { SquadName = "zombies" }
 } )
 
 AddNPC( {
 	Name = "Fast Zombie Torso",
 	Class = "npc_fastzombie_torso",
 	Category = Category
+	KeyValues = { SquadName = "zombies" }
 } )
 
 if ( IsMounted( "ep2" ) ) then
@@ -219,7 +233,7 @@ if ( IsMounted( "ep2" ) ) then
 			Name = "Antlion Guardian",
 			Class = "npc_antlionguard",
 			Category = Category,
-			KeyValues = { cavernbreed = 1, incavern = 1 },
+			KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
 			Material = "Models/antlion_guard/antlionGuard2"
 	}, "npc_antlionguardian" )
 
@@ -235,6 +249,7 @@ if ( IsMounted( "ep2" ) ) then
 		Name = "Antlion Worker",
 		Class = "npc_antlion_worker",
 		Category = Category
+		KeyValues = { SquadName = "antlions" }
 	} )
 end
 
@@ -243,6 +258,7 @@ if ( IsMounted( "episodic" ) ) then
 		Name = "Zombine",
 		Class = "npc_zombine",
 		Category = Category
+		KeyValues = { SquadName = "zombies" }
 	} )
 end
 
