@@ -1,6 +1,7 @@
 
 -- Variables that are used on both client and server
 
+SWEP.PrintName		= "Scripted Weapon"		-- 'Nice' Weapon name (Shown on HUD)
 SWEP.Author			= ""
 SWEP.Contact		= ""
 SWEP.Purpose		= ""
