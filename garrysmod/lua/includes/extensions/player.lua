@@ -289,3 +289,29 @@ function meta:HasGodMode()
 	return self:IsFlagSet( FL_GODMODE )
 
 end
+
+--[[---------------------------------------------------------
+	GetFlexIndexByName
+	Returns the flex index or nil if not found
+-----------------------------------------------------------]]
+function meta:GetFlexIndexByName(name)
+
+	self.LastModelName = self.LastModelName or ""
+	self.FlexIndexCache = self.FlexIndexCache or {}
+	local mdl = self:GetModel()
+
+	if mdl ~= self.LastModelName then
+		self.LastModelName = mdl
+		self.FlexIndexCache = {}
+		local count = self:GetFlexNum() - 1
+		if count <= 0 then return end
+
+		for i = 0, count do
+			local flexName = self:GetFlexName(i)
+			self.FlexIndexCache[flexName] = i
+		end
+	end
+
+	return self.FlexIndexCache[name]
+	
+end
