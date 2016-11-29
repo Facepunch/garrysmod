@@ -71,11 +71,24 @@ function ENT:AcceptInput(name, activator)
    end
 end
 
+function GAMEMODE:TTTCanUseTraitorButton(ent, ply)
+   -- Can be used to prevent players from using this button.
+   -- Return a boolean and a message that can shows up if you can't use the button.
+   -- Example: return false, "Not allowed".
+   return true
+end
+
 function ENT:TraitorUse(ply)
    if not (IsValid(ply) and ply:IsActiveTraitor()) then return false end
    if not self:IsUsable() then return false end
 
    if self:GetPos():Distance(ply:GetPos()) > self:GetUsableRange() then return false end
+
+   local use, message = hook.Run("TTTCanUseTraitorButton", self, ply)
+   if not use then
+      if message then TraitorMsg(ply, message) end
+      return false
+   end
 
    net.Start("TTT_ConfirmUseTButton") net.Send(ply)
 
@@ -90,7 +103,7 @@ function ENT:TraitorUse(ply)
       self:SetNextUseTime(CurTime() + self:GetDelay())
    end
 
-   hook.Call("TTTTraitorButtonActivated", GAMEMODE, self, ply)
+   hook.Run("TTTTraitorButtonActivated", self, ply)
    return true
 end
 

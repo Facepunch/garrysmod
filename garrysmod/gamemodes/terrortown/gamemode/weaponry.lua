@@ -425,11 +425,17 @@ local function OrderEquipment(ply, cmd, args)
 end
 concommand.Add("ttt_order_equipment", OrderEquipment)
 
+function GM:TTTToggleDisguiser(ply, state)
+   -- Can be used to prevent players from using this button.
+   -- return false to prevent it.
+end
+
 local function SetDisguise(ply, cmd, args)
    if not IsValid(ply) or not ply:IsActiveTraitor() then return end
 
    if ply:HasEquipmentItem(EQUIP_DISGUISE) then
       local state = #args == 1 and tobool(args[1])
+      if not hook.Run("TTTToggleDisguiser", ply, state) == false then return end
 
       ply:SetNWBool("disguised", state)
       LANG.Msg(ply, state and "disg_turned_on" or "disg_turned_off")
@@ -438,11 +444,11 @@ end
 concommand.Add("ttt_set_disguise", SetDisguise)
 
 local function CheatCredits(ply)
-   if cvars.Bool("sv_cheats", false) and IsValid(ply) then
+   if IsValid(ply) then
       ply:AddCredits(10)
    end
 end
-concommand.Add("ttt_cheat_credits", CheatCredits)
+concommand.Add("ttt_cheat_credits", CheatCredits, nil, nil, FCVAR_CHEAT)
 
 local function TransferCredits(ply, cmd, args)
    if (not IsValid(ply)) or (not ply:IsActiveSpecial()) then return end

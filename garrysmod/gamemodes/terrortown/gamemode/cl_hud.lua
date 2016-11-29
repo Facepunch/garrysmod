@@ -233,7 +233,7 @@ local function InfoPaint(client)
    ShadowedText(tostring(health), "HealthAmmo", bar_width, health_y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT)
 
    if ttt_health_label:GetBool() then
-      local health_status = util.HealthToString(health)
+      local health_status = util.HealthToString(health, client:GetMaxHealth())
       draw.SimpleText(L[health_status], "TabLarge", x + margin*2, health_y + bar_height/2, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
    end
 

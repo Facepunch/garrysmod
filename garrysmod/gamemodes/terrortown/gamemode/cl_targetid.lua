@@ -105,7 +105,7 @@ local function DrawPropSpecLabels(client)
             scrpos = nil
          end
       else
-         local _, healthcolor = util.HealthToString(ply:Health())
+         local _, healthcolor = util.HealthToString(ply:Health(), ply:GetMaxHealth())
          surface.SetTextColor(clr(healthcolor))
 
          scrpos = ply:EyePos()
@@ -190,7 +190,7 @@ function GM:HUDDrawTargetID()
       local _ -- Stop global clutter
       -- in minimalist targetID, colour nick with health level
       if minimal then
-         _, color = util.HealthToString(ent:Health())
+         _, color = util.HealthToString(ent:Health(), ent:GetMaxHealth())
       end
 
       if client:IsTraitor() and GetRoundState() == ROUND_ACTIVE then
@@ -265,7 +265,7 @@ function GM:HUDDrawTargetID()
    -- Draw subtitle: health or type
    local clr = rag_color
    if ent:IsPlayer() then
-      text, clr = util.HealthToString(ent:Health())
+      text, clr = util.HealthToString(ent:Health(), ent:GetMaxHealth())
 
       -- HealthToString returns a string id, need to look it up
       text = L[text]

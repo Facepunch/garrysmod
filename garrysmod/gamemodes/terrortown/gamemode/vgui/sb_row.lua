@@ -308,4 +308,4 @@ function PANEL:DoRightClick()
    menu:Open()
 end
 
-vgui.Register( "TTTScorePlayerRow", PANEL, "Button" )
+vgui.Register( "TTTScorePlayerRow", PANEL, "DButton" )
