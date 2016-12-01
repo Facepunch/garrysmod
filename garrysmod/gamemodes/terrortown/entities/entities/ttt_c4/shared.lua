@@ -466,7 +466,7 @@ if SERVER then
    end
 
    local function ReceiveC4Config(ply, cmd, args)
-      if (not IsValid(ply)) or (not ply:IsTerror()) or (not ply:Alive()) or #args != 2 then return end
+      if not (IsValid(ply) and ply:IsTerror() and #args == 2) then return end
       local idx = tonumber(args[1])
       local time = tonumber(args[2])
 
@@ -486,6 +486,7 @@ if SERVER then
             LANG.Msg(ply, "c4_armed")
 
             bomb:Arm(ply, time)
+            hook.Call("TTTC4Arm", nil, bomb, ply)
          end
       end
 
@@ -493,6 +494,8 @@ if SERVER then
    concommand.Add("ttt_c4_config", ReceiveC4Config)
 
    local function SendDisarmResult(ply, bomb, result)
+      hook.Call("TTTC4Disarm", nil, bomb, result, ply)
+
       net.Start("TTT_C4DisarmResult")
          net.WriteEntity(bomb)
          net.WriteBit(result) -- this way we can squeeze this bit into 16
@@ -500,7 +503,7 @@ if SERVER then
    end
 
    local function ReceiveC4Disarm(ply, cmd, args)
-      if (not IsValid(ply)) or (not ply:IsTerror()) or (not ply:Alive()) or #args != 2 then return end
+      if not (IsValid(ply) and ply:IsTerror() and #args == 2) then return end
       local idx = tonumber(args[1])
       local wire = tonumber(args[2])
 
@@ -529,7 +532,7 @@ if SERVER then
 
 
    local function ReceiveC4Pickup(ply, cmd, args)
-      if (not IsValid(ply)) or (not ply:IsTerror()) or (not ply:Alive()) or #args != 1 then return end
+      if not (IsValid(ply) and ply:IsTerror() and #args == 1) then return end
       local idx = tonumber(args[1])
 
       if not idx then return end
@@ -542,6 +545,8 @@ if SERVER then
             LANG.Msg(ply, "c4_no_room")
          else
             local prints = bomb.fingerprints or {}
+
+            hook.Call("TTTC4Pickup", nil, bomb, ply)
 
             local wep = ply:Give("weapon_ttt_c4")
             if IsValid(wep) then
@@ -558,7 +563,7 @@ if SERVER then
 
 
    local function ReceiveC4Destroy(ply, cmd, args)
-      if (not IsValid(ply)) or (not ply:IsTerror()) or (not ply:Alive()) or #args != 1 then return end
+      if not (IsValid(ply) and ply:IsTerror() and #args == 1) then return end
       local idx = tonumber(args[1])
 
       if not idx then return end
@@ -570,6 +575,7 @@ if SERVER then
          else
             -- spark to show onlookers we destroyed this bomb
             util.EquipmentDestroyed(bomb:GetPos())
+            hook.Call("TTTC4Destroyed", nil, bomb, ply)
 
             bomb:Remove()
          end
