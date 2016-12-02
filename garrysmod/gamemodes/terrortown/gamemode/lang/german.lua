@@ -194,7 +194,7 @@ L.search_dmg_tele   = "Es scheint, als sei ihre DNA durch Tachyonen verunstaltet
 L.search_dmg_car    = "Als diese Person die Straße überquerte, wurde sie von einem rücksichtslosen Fahrer überrollt."
 L.search_dmg_other  = "Du kannst keinen spezifischen Grund für den Tod dieser Person finden."
 
-L.search_weapon = "Es scheint, als wurde {weapon} benutzt um sie zu töten."
+L.search_weapon = "Es scheint, als wurde ein(e) {weapon} benutzt um sie zu töten."
 L.search_head   = "Die tödliche Wunde war ein Kopfschuss. Keine Zeit um zu schreien."
 L.search_time   = "Sie wurde etwa {time} getötet, bevor du die Untersuchung begonnen hast."
 L.search_dna    = "Erlange eine Probe der DNA des Mörders mit dem DNA-Scanner. Die DNA-Probe wird in etwa {time} verfallen."
