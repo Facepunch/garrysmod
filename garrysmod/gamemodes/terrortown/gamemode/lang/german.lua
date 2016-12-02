@@ -25,7 +25,7 @@ L.round_traitors_more = "Verräter, dies sind die Namen deiner Verbündeten: {na
 L.win_time         = "Die Zeit ist abgelaufen. Die Verräter haben verloren."
 L.win_traitor      = "Die Verräter haben gewonnen!"
 L.win_innocent     = "Die Verräter wurden besiegt!"
-L.win_showreport   = "Schauen wir uns den Rundenbericht die nächsten {num} Sekunde(n) an."
+L.win_showreport   = "Schauen wir uns den Rundenbericht die nächste(n) {num} Sekunde(n) an."
 
 L.limit_round      = "Rundenlimit erreicht. {mapname} wird bald geladen."
 L.limit_time       = "Zeitlimit erreicht. {mapname} wird bald geladen."
@@ -350,7 +350,7 @@ L.vis_desc        = [[
 Tatort-Visualisierungs-Gerät.
 
 Analysiere eine Leiche um zu sehen,
-wie der Spieler umgebracht wurde, funktioniert
+wie die Person umgebracht wurde, funktioniert
 nur bei Tod durch Beschuss.]]
 
 -- Decoy
@@ -450,7 +450,7 @@ Unbegrenzt nutzbar, aber das Identifizieren dauert
 einige Sekunden.]]
 
 L.binoc_help_pri  = "{primaryfire} identifiziert einen Körper."
-L.binoc_help_sec  = "{secondaryfire} ändert Ziel-Level."
+L.binoc_help_sec  = "{secondaryfire} ändert Zoom-Level."
 
 -- UMP
 L.ump_desc        = [[
