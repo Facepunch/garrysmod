@@ -75,7 +75,7 @@ L.equip_help_cost = "Jedes Ausrüstungsteil, das du kaufst, kostet 1 Credit."
 L.equip_help_carry = "Du kannst nur das kaufen, für das du auch Platz hast."
 L.equip_carry      = "Du kannst diese Ausrüstung tragen."
 L.equip_carry_own  = "Du trägst dieses Teil bereits."
-L.equip_carry_slot = "Du trägst bereits eine Waffe in Position {slot}."
+L.equip_carry_slot = "Du trägst bereits eine Waffe in Slot {slot}."
 
 L.equip_help_stock = "Einige Teile kannst du nur einmal pro Runde kaufen."
 L.equip_stock_deny = "Dieses Teil ist nicht länger vorrätig."
@@ -177,7 +177,7 @@ L.search_role_d = "Diese Person war ein Detektiv."
 L.search_role_i = "Diese Person war ein unschuldiger Terrorist!"
 
 L.search_words  = "Etwas sagt dir, dass die letzten Worte dieser Person \"{lastwords}\" waren."
-L.search_armor  = "Sie trug eine erkaufte Körperrüstung."
+L.search_armor  = "Sie trug eine nicht-standardmäßige Körperrüstung."
 L.search_disg   = "Sie trug ein Gerät, dass ihre Identität verstecken konnte."
 L.search_radar  = "Sie trug eine Form eines Radars. Er funktioniert nicht länger."
 L.search_c4     = "In der Tasche war eine Notiz. Sie besagt, dass das Durchschneiden des Drahtes {num} die Bombe sicher entschärfen wird."
@@ -298,7 +298,7 @@ Standardausrüstung für Detektive.]]
 
 L.item_radar      = "Radar"
 L.item_radar_desc = [[
-Dies erlaubt nach Lebenszeichen zu scannen.
+Dies erlaubt dir nach Lebenszeichen zu scannen.
 Es startet automatisch beim Kauf.
 Stelle es im Reiter "Radar" dieses Menüs ein.]]
 
@@ -443,7 +443,7 @@ Unbegrenzt Munition, aber langsame Schussfolge.]]
 L.binoc_name      = "Fernglas"
 
 L.binoc_desc      = [[
-Ziele an eine Leiche heran um sie aus einer
+Zoome an eine Leiche heran um sie aus einer
 großen Entfernung zu identifizieren.
 
 Unbegrenzt nutzbar, aber das Identifizieren dauert
