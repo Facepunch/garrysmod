@@ -53,8 +53,8 @@ hook.Add( "WorkshopExtractProgress", "WorkshopExtractProgress", function( id, iI
 
 	if ( !IsValid( vgui_workshop ) ) then
 		vgui_workshop = GetOverlayPanel():Add( pnlWorkshop )
-		vgui_workshop:PrepareDownloading( id, title, expected )
-		vgui_workshop:StartDownloading( id, iImageID, title, expected )
+		vgui_workshop:PrepareDownloading( id, title, percent )
+		vgui_workshop:StartDownloading( id, iImageID, title, percent )
 	end
 
 	vgui_workshop:ExtractProgress( title, percent )
