@@ -53,7 +53,7 @@ function GM:Initialize()
    self.BaseClass:Initialize()
 
    net.Start("TTT_Spectate")
-     net.WriteInt(math.Clamp(GetConVar("ttt_spectator_mode"):GetInt(),0,1),2)
+     net.WriteBool(GetConVar("ttt_spectator_mode"):GetBool()
    net.SendToServer()
 end
 
@@ -369,9 +369,9 @@ function CheckIdle()
          RunConsoleCommand("say", "(AUTOMATED MESSAGE) I have been moved to the Spectator team because I was idle/AFK.")
 
          timer.Simple(0.3, function()
-                              RunConsoleCommand("ttt_spectator_mode", 1) -- If they want to bypass it now they still can but this way they still get fspecced
+                              RunConsoleCommand("ttt_spectator_mode", 1)
                                net.Start("TTT_Spectate")
-                                 net.WriteInt(1,2)
+                                 net.WriteBool(true)
                                net.SendToServer()
                               RunConsoleCommand("ttt_cl_idlepopup")
                            end)
