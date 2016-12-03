@@ -230,8 +230,6 @@ function GM:InitPostEntity()
    WEPS.ForcePrecache()
 end
 
-function GM:GetGameDescription() return self.Name end
-
 -- Convar replication is broken in gmod, so we do this.
 -- I don't like it any more than you do, dear reader.
 function GM:SyncGlobals()
