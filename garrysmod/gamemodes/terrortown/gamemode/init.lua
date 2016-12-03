@@ -371,17 +371,16 @@ function StopWinChecks()
    timer.Stop("winchecker")
 end
 
+function GM:PreCleanupMap()
+   ents.TTT.FixParentedPreCleanup()
+end
+
+function GM:PostCleanupMap()
+   ents.TTT.FixParentedPostCleanup()
+end
+
 local function CleanUp()
-   local et = ents.TTT
-   -- if we are going to import entities, it's no use replacing HL2DM ones as
-   -- soon as they spawn, because they'll be removed anyway
-   et.SetReplaceChecking(not et.CanImportEntities(game.GetMap()))
-
-   et.FixParentedPreCleanup()
-
    game.CleanUpMap()
-
-   et.FixParentedPostCleanup()
 
    -- Strip players now, so that their weapons are not seen by ReplaceEntities
    for k,v in pairs(player.GetAll()) do
@@ -458,6 +457,11 @@ function PrepareRound()
    end
 
    -- Cleanup
+   if GAMEMODE.FirstRound then
+      -- if we are going to import entities, it's no use replacing HL2DM ones as
+      -- soon as they spawn, because they'll be removed anyway
+      ents.TTT.SetReplaceChecking(not ents.TTT.CanImportEntities(game.GetMap()))
+   end
    CleanUp()
 
    GAMEMODE.MapWin = WIN_NONE
