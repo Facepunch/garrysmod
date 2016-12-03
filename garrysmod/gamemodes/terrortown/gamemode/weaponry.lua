@@ -427,7 +427,7 @@ concommand.Add("ttt_order_equipment", OrderEquipment)
 
 function GM:TTTToggleDisguiser(ply, state)
    -- Can be used to prevent players from using this button.
-   -- return false to prevent it.
+   -- return true to prevent it.
 end
 
 local function SetDisguise(ply, cmd, args)
@@ -435,7 +435,7 @@ local function SetDisguise(ply, cmd, args)
 
    if ply:HasEquipmentItem(EQUIP_DISGUISE) then
       local state = #args == 1 and tobool(args[1])
-      if not hook.Run("TTTToggleDisguiser", ply, state) == false then return end
+      if hook.Run("TTTToggleDisguiser", ply, state) then return end
 
       ply:SetNWBool("disguised", state)
       LANG.Msg(ply, state and "disg_turned_on" or "disg_turned_off")
