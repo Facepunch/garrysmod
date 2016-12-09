@@ -301,15 +301,7 @@ AddValidHands( "dod_american", "models/weapons/c_arms_dod.mdl",		1,		"10000000" 
 
 local Type = {}
 
-function GetTable()
-	local tbl = {}
-	
-	for k, v in pairs( Type ) do
-		tbl[ k ] = v
-	end
-	
-	return tbl
-end
+function GetTable() return Type end
 
 function RegisterClass( name, table, base )
 
