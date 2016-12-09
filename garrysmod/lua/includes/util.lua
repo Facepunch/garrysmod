@@ -219,6 +219,22 @@ function Lerp( delta, from, to )
 end
 
 --[[---------------------------------------------------------
+	Compound lerp
+-----------------------------------------------------------]]
+function CompoundLerp( percent, delta, from, to )
+	
+	if ( percent >= 1 ) then return to end
+	if ( percent <= 0 ) then return from end
+	
+	if ( delta <= 0 ) then return from end
+	
+	local t = 1 - ( 1 - percent ) ^ delta
+	
+	return from + t * ( from - to )
+	
+end
+
+--[[---------------------------------------------------------
 	Convert Var to Bool
 -----------------------------------------------------------]]
 function tobool( val )
