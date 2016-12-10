@@ -223,6 +223,132 @@ end
 
 
 --
+-- Spring
+--
+--
+local T = 
+{
+	
+	--
+	-- Allows you to add velocity to the spring
+	--
+	AddVelocity = function( self, addVel )
+	
+		local CT = CurTime()
+		
+		local t		= CT - self.Time
+		local d		= self.DecayRate
+		local c		= self.Cycle
+		local b		= self.Pos
+		local vel	= self.Vel
+		
+		local a = 1 / c * ( b * d + vel )
+		
+		local decay = math.exp( -d * t )
+		local sin = math.sin( t * c )
+		local cos = math.cos( t * c )
+		
+		self.Time = CT
+		self.Pos = decay * ( a * sin + b * cos )
+		self.Vel = addVel - decay * ( ( a * d + b * c ) * sin + ( b * d - a * c ) * cos ) -- this is very annoying to read expanded :/
+		
+	end,
+	
+	--
+	-- Helper function that allows you to add velocity to the spring at a specific time in the past
+	--
+	AddVelocityAtTime = function( self, addVel, time )
+	
+		-- if the time difference is greater than 0 it will cause unwanted effects
+		if ( time > 0 ) then return end
+
+		self:SetTime( self:GetTime() + time )
+		self:AddVelocity( addVel )
+		self:SetTime( CurTime() + time )
+		
+	end,
+	
+	--
+	-- Same as above, but with respect to CurTime
+	--
+	AddVelocityAtCurTime = function( self, addVel, time )
+	
+		local CT = CurTime()
+		
+		-- if the time is greater than the current time it will cause unwanted effects
+		if ( time > CT ) then return end
+
+		self:SetTime( self:GetTime() + time - CT )
+		self:AddVelocity( addVel )
+		self:SetTime( time )
+		
+	end,
+
+	--
+	-- Returns the current position of the spring
+	--
+	Compute = function( self )
+	
+		local t		= CurTime() - self.Time
+		local d		= self.DecayRate
+		local c		= self.Cycle
+		local b		= self.Pos
+		local vel	= self.Vel
+		
+		local a = 1 / c * ( b * d + vel ) -- fun fact: can't divide angles, multiply by 1/c
+		
+		local decay = math.exp( -d * t )
+		local sin = math.sin( t * c )
+		local cos = math.cos( t * c )
+
+		return decay * ( a * sin + b * cos )
+		
+	end
+
+}
+
+AccessorFunc( T, "Time",	"Time" )
+AccessorFunc( T, "DecayRate",	"DecayRate" )
+AccessorFunc( T, "Cycle",	"Cycle" )
+AccessorFunc( T, "Pos",		"Position" )
+AccessorFunc( T, "Vel",		"Velocity" )
+
+T.__index = T
+
+--
+-- Create a new spring object
+--
+function util.Spring( typename, decay, cycle )
+	
+	typename = typename:lower()
+	
+	local type = nil
+	
+	if ( typename == "vector" ) then
+		type = Vector( 0, 0, 0 )
+	elseif ( typename == "angle" ) then
+		type = Angle( 0, 0, 0 )
+	elseif ( typename == "float" or typename == "int" ) then
+		type = 0
+	else
+		error( "util.Spring: unknown type \"" .. typename .. "\"!" )
+	end
+
+	local t = {}
+	setmetatable( t, T )
+	
+	t.Time		= CurTime()
+	t.DecayRate	= decay	or 1.2
+	t.Cycle		= cycle	or 3 * math.pi
+	t.Pos		= 1 * type -- prevents unwanted behavior with angles and vectors
+	t.Vel		= 1 * type
+	
+	return t
+
+end
+
+
+--
 -- Stack
 --
 --
