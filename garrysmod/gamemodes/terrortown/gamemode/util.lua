@@ -301,23 +301,21 @@ end
 
 if CLIENT then
    local healthcolors = {
-      healthy = Color(0, 255, 0, 255),
-      hurt    = Color(170, 230, 10, 255),
-      wounded = Color(230, 215, 10, 255),
-      badwound= Color(255, 140, 0, 255),
-      death   = Color(255, 0, 0, 255)
+      healthy = Color(0,255,0,255),
+      hurt    = Color(170,230,10,255),
+      wounded = Color(230,215,10,255),
+      badwound= Color(255,140,0,255),
+      death   = Color(255,0,0,255)
    };
 
-   function util.HealthToString(health, maxhealth)
-      maxhealth = maxhealth or 100
-
-      if health > maxhealth * 0.9 then
+   function util.HealthToString(health)
+      if health > 90 then
          return "hp_healthy", healthcolors.healthy
-      elseif health > maxhealth * 0.7 then
+      elseif health > 70 then
          return "hp_hurt", healthcolors.hurt
-      elseif health > maxhealth * 0.45 then
+      elseif health > 45 then
          return "hp_wounded", healthcolors.wounded
-      elseif health > maxhealth * 0.2 then
+      elseif health > 20 then
          return "hp_badwnd", healthcolors.badwound
       else
          return "hp_death", healthcolors.death
@@ -325,23 +323,21 @@ if CLIENT then
    end
 
    local karmacolors = {
-      max  = Color(255, 255, 255, 255),
-      high = Color(255, 240, 135, 255),
-      med  = Color(245, 220, 60, 255),
-      low  = Color(255, 180, 0, 255),
-      min  = Color(255, 130, 0, 255),
+      max  = Color(255,255,255,255),
+      high = Color(255,240,135,255),
+      med  = Color(245,220,60,255),
+      low  = Color(255,180,0,255),
+      min  = Color(255,130,0,255),
    };
 
    function util.KarmaToString(karma)
-      local maxkarma = GetGlobalInt("ttt_karma_max", 1000)
-
-      if karma > maxkarma * 0.89 then
+      if karma > 890 then
          return "karma_max", karmacolors.max
-      elseif karma > maxkarma * 0.8 then
+      elseif karma > 800 then
          return "karma_high", karmacolors.high
-      elseif karma > maxkarma * 0.65 then
+      elseif karma > 650 then
          return "karma_med", karmacolors.med
-      elseif karma > maxkarma * 0.5 then
+      elseif karma > 500 then
          return "karma_low", karmacolors.low
       else
          return "karma_min", karmacolors.min
@@ -360,13 +356,27 @@ end
 -- Like string.FormatTime but simpler (and working), always a string, no hour
 -- support
 function util.SimpleTime(seconds, fmt)
-	if not seconds then seconds = 0 end
+   if not seconds then seconds = 0 end
 
-    local ms = (seconds - math.floor(seconds)) * 100
-    seconds = math.floor(seconds)
-    local s = seconds % 60
-    seconds = (seconds - s) / 60
-    local m = seconds % 60
+   local ms = (seconds - math.floor(seconds)) * 100
+   seconds = math.floor(seconds)
+   local s = seconds % 60
+   seconds = (seconds - s) / 60
+   local m = seconds % 60
 
-    return string.format(fmt, m, s, ms)
+   return string.format(fmt, m, s, ms)
+end
+
+function util.RandomPairs(tab)
+   local keys  = table.GetKeys(tab)
+   local count = #keys
+
+   return function()
+      if count == 0 then return end
+
+      local index = table.remove(keys, math.random(1, count))
+      count = count - 1
+
+      return index, tab[index]
+   end
 end
