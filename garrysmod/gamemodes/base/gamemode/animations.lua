@@ -54,7 +54,7 @@ function GM:HandlePlayerDucking( ply, velocity )
 
 	if ( !ply:Crouching() ) then return false end
 
-	if ( velocity:Length2DSqr() > 0.5*0.5 ) then
+	if ( velocity:Length2DSqr() > 0.25 ) then
 		ply.CalcIdeal = ACT_MP_CROUCHWALK
 	else
 		ply.CalcIdeal = ACT_MP_CROUCH_IDLE
@@ -93,7 +93,7 @@ end
 
 function GM:HandlePlayerVaulting( ply, velocity )
 
-	if ( velocity:LengthSqr() < 1000*1000 ) then return end
+	if ( velocity:LengthSqr() < 1000000 ) then return end
 	if ( ply:IsOnGround() ) then return end
 
 	ply.CalcIdeal = ACT_MP_SWIM
