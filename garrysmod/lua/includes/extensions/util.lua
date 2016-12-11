@@ -287,9 +287,11 @@ local T =
 	--
 	-- Returns the current position of the spring
 	--
-	Compute = function( self )
+	Compute = function( self, time )
 	
-		local t		= CurTime() - self.Time
+		time = time or CurTime()
+		
+		local t		= time - self.Time
 		local d		= self.DecayRate
 		local c		= self.Cycle
 		local b		= self.Pos
