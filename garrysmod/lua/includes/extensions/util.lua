@@ -228,16 +228,15 @@ end
 --
 local T = 
 {
-	
 	--
-	-- Allows you to add velocity to the spring
+	-- Sets the time to CurTime while maintaining the correct position and velocity
 	--
-	AddVelocity = function( self, addVel )
+	Update = function( self )
 	
-		local CT = CurTime()
+		time = CurTime()
 		
-		local t		= CT - self.Time
-		local d		= self.DecayRate
+		local t		= time - self.Time
+		local d		= self.Decay
 		local c		= self.Cycle
 		local b		= self.Pos
 		local vel	= self.Vel
@@ -248,51 +247,21 @@ local T =
 		local sin = math.sin( t * c )
 		local cos = math.cos( t * c )
 		
-		self.Time = CT
+		self.Time = time
 		self.Pos = decay * ( a * sin + b * cos )
-		self.Vel = addVel - decay * ( ( a * d + b * c ) * sin + ( b * d - a * c ) * cos ) -- this is very annoying to read expanded :/
+		self.Vel = -decay * ( ( a * d + b * c ) * sin + ( b * d - a * c ) * cos ) -- this is very annoying to read expanded :/
 		
 	end,
 	
-	--
-	-- Helper function that allows you to add velocity to the spring at a specific time in the past
-	--
-	AddVelocityAtTime = function( self, addVel, time )
-	
-		-- if the time difference is greater than 0 it will cause unwanted effects
-		if ( time > 0 ) then return end
-
-		self:SetTime( self:GetTime() + time )
-		self:AddVelocity( addVel )
-		self:SetTime( CurTime() + time )
-		
-	end,
-	
-	--
-	-- Same as above, but with respect to CurTime
-	--
-	AddVelocityAtCurTime = function( self, addVel, time )
-	
-		local CT = CurTime()
-		
-		-- if the time is greater than the current time it will cause unwanted effects
-		if ( time > CT ) then return end
-
-		self:SetTime( self:GetTime() + time - CT )
-		self:AddVelocity( addVel )
-		self:SetTime( time )
-		
-	end,
-
 	--
 	-- Returns the current position of the spring
 	--
-	Compute = function( self, time )
+	GetPosition = function( self, time )
 	
 		time = time or CurTime()
 		
 		local t		= time - self.Time
-		local d		= self.DecayRate
+		local d		= self.Decay
 		local c		= self.Cycle
 		local b		= self.Pos
 		local vel	= self.Vel
@@ -305,15 +274,189 @@ local T =
 
 		return decay * ( a * sin + b * cos )
 		
-	end
+	end,
+	
+	--
+	-- Returns the current velocity of the spring
+	--
+	GetVelocity = function( self, time )
+	
+		time = time or CurTime()
+		
+		local t		= time - self.Time
+		local d		= self.Decay
+		local c		= self.Cycle
+		local b		= self.Pos
+		local vel	= self.Vel
+		
+		local a = 1 / c * ( b * d + vel ) -- fun fact: can't divide angles, multiply by 1/c
+		
+		local decay = math.exp( -d * t )
+		local sin = math.sin( t * c )
+		local cos = math.cos( t * c )
 
+		return -decay * ( ( a * d + b * c ) * sin + ( b * d - a * c ) * cos ) -- this is very annoying to read expanded :/
+		
+	end,
+
+	--
+	-- Set functions
+	--
+	SetPosition = function( self, pos, time )
+	
+		if time then
+			local CT = CurTime()
+			if ( time > CT ) then return end -- if the time is greater than the current time it will cause unwanted effects
+
+			self:SetTime( self:GetTime() + time - CT )
+			self:Update()
+			self.Pos = 1 * pos
+			self:SetTime( time )
+			
+			return
+		end
+	
+		self:Update()
+		self.Pos = 1 * pos
+	
+	end,
+	
+	SetVelocity = function( self, vel, time )
+	
+		if time then
+			local CT = CurTime()
+			if ( time > CT ) then return end
+
+			self:SetTime( self:GetTime() + time - CT )
+			self:Update()
+			self.Vel = 1 * vel
+			self:SetTime( time )
+			return
+		end
+	
+		self:Update()
+		self.Vel = 1 * vel
+	
+	end,
+	
+	SetDecay = function( self, decay, time )
+	
+		if time then
+			local CT = CurTime()
+			if ( time > CT ) then return end
+
+			self:SetTime( self:GetTime() + time - CT )
+			self:Update()
+			self.Decay = decay
+			self:SetTime( time )
+			
+			return
+		end
+	
+		self:Update()
+		self.Decay = decay
+	
+	end,
+	
+	SetCycle = function( self, cycle, time )
+	
+		if time then
+			local CT = CurTime()
+			if ( time > CT ) then return end
+
+			self:SetTime( self:GetTime() + time - CT )
+			self:Update()
+			self.Cycle = cycle
+			self:SetTime( time )
+			
+			return
+		end
+	
+		self:Update()
+		self.Cycle = cycle
+	
+	end,
+	
+	--
+	-- Additive functions
+	--
+	AddPosition = function( self, pos, time )
+	
+		if time then
+			local CT = CurTime()
+			if ( time > CT ) then return end
+
+			self:SetTime( self:GetTime() + time - CT )
+			self:Update()
+			self.Pos = self.Pos + pos
+			self:SetTime( time )
+			
+			return
+		end
+		
+		self:Update()
+		self.Pos = self.Pos + pos
+		
+	end,
+	
+	AddVelocity = function( self, vel, time )
+		
+		if time then
+			local CT = CurTime()
+			if ( time > CT ) then return end
+
+			self:SetTime( self:GetTime() + time - CT )
+			self:Update()
+			self.Vel = self.Vel + vel
+			self:SetTime( time )
+		end
+	
+		self:Update()
+		self.Vel = self.Vel + vel
+		
+	end,
+	
+	AddDecay = function( self, decay, time )
+	
+		if time then
+			local CT = CurTime()
+			if ( time > CT ) then return end
+
+			self:SetTime( self:GetTime() + time - CT )
+			self:Update()
+			self.Decay = self.Decay + decay
+			self:SetTime( time )
+			
+			return
+		end
+	
+		self:Update()
+		self.Decay = self.Decay + decay
+	
+	end,
+	
+	AddCycle = function( self, cycle, time )
+	
+		if time then
+			local CT = CurTime()
+			if ( time > CT ) then return end
+
+			self:SetTime( self:GetTime() + time - CT )
+			self:Update()
+			self.Cycle = self.Cycle + cycle
+			self:SetTime( time )
+			
+			return
+		end
+	
+		self:Update()
+		self.Cycle = self.Cycle + cycle
+	
+	end
+	
 }
 
-AccessorFunc( T, "Time",	"Time" )
-AccessorFunc( T, "DecayRate",	"DecayRate" )
-AccessorFunc( T, "Cycle",	"Cycle" )
-AccessorFunc( T, "Pos",		"Position" )
-AccessorFunc( T, "Vel",		"Velocity" )
+AccessorFunc( T, "Time", "Time" )
 
 T.__index = T
 
@@ -339,11 +482,11 @@ function util.Spring( typename, decay, cycle )
 	local t = {}
 	setmetatable( t, T )
 	
-	t.Time		= CurTime()
-	t.DecayRate	= decay	or 1.2
-	t.Cycle		= cycle	or 3 * math.pi
-	t.Pos		= 1 * type -- prevents unwanted behavior with angles and vectors
-	t.Vel		= 1 * type
+	t.Time	= CurTime()
+	t.Decay	= decay	or 1.2
+	t.Cycle	= cycle	or 3 * math.pi
+	t.Pos	= 1 * type -- prevents unwanted behavior with angles and vectors
+	t.Vel	= 1 * type
 	
 	return t
 
