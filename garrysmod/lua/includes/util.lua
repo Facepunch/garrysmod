@@ -221,7 +221,7 @@ end
 --[[---------------------------------------------------------
 	Cubic hermite spline
 -----------------------------------------------------------]]
-function CHSpline( t, p0, t0, p1, t1 )
+function CHSpline( t, p0, m0, p1, m1 )
 	
 	if ( t >= 1 ) then return p1 end
 	if ( t <= 0 ) then return p0 end
@@ -230,9 +230,9 @@ function CHSpline( t, p0, t0, p1, t1 )
 	local t3 = t * t2
 
 	return p0 * ( 2 * t3 - 3 * t2 + 1 ) +
-		t0 * ( t3 - 2 * t2 + t ) +
+		m0 * ( t3 - 2 * t2 + t ) +
 		p1 * ( -2 * t3 + 3 * t2 ) +
-		t1 * ( t3 - t2 )
+		m1 * ( t3 - t2 )
 	
 end
 
