@@ -187,10 +187,10 @@ function util.CoherentNoise( n )
 	local p0 = util.Noise( n1 ) * ( 2 * t3 - 3 * t2 + 1 )
 	local p1 = util.Noise( n2 ) * ( -2 * t3 + 3 * t2 )
 	
-	local t0 = util.Noise( n1 + 1337 ) * ( t3 - 2 * t2 + t )
-	local t1 = util.Noise( n2 + 1337 ) * ( t3 - t2 )
+	local m0 = util.Noise( n1 + 1337 ) * ( t3 - 2 * t2 + t )
+	local m1 = util.Noise( n2 + 1337 ) * ( t3 - t2 )
 	
-	return p0 + t0 + p1 + t1
+	return p0 + m0 + p1 + m1
 	
 end
 
