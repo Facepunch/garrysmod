@@ -233,7 +233,7 @@ local T =
 	--
 	Update = function( self )
 	
-		time = CurTime()
+		local time = CurTime()
 		
 		local t		= time - self.Time
 		local d		= self.Decay
@@ -304,7 +304,7 @@ local T =
 	--
 	SetPosition = function( self, pos, time )
 	
-		if time then
+		if ( time ) then
 			local CT = CurTime()
 			if ( time > CT ) then return end -- if the time is greater than the current time it will cause unwanted effects
 
@@ -323,7 +323,7 @@ local T =
 	
 	SetVelocity = function( self, vel, time )
 	
-		if time then
+		if ( time ) then
 			local CT = CurTime()
 			if ( time > CT ) then return end
 
@@ -341,7 +341,7 @@ local T =
 	
 	SetDecay = function( self, decay, time )
 	
-		if time then
+		if ( time ) then
 			local CT = CurTime()
 			if ( time > CT ) then return end
 
@@ -360,7 +360,7 @@ local T =
 	
 	SetCycle = function( self, cycle, time )
 	
-		if time then
+		if ( time ) then
 			local CT = CurTime()
 			if ( time > CT ) then return end
 
@@ -382,7 +382,7 @@ local T =
 	--
 	AddPosition = function( self, pos, time )
 	
-		if time then
+		if ( time ) then
 			local CT = CurTime()
 			if ( time > CT ) then return end
 
@@ -401,7 +401,7 @@ local T =
 	
 	AddVelocity = function( self, vel, time )
 		
-		if time then
+		if ( time ) then
 			local CT = CurTime()
 			if ( time > CT ) then return end
 
@@ -418,7 +418,7 @@ local T =
 	
 	AddDecay = function( self, decay, time )
 	
-		if time then
+		if ( time ) then
 			local CT = CurTime()
 			if ( time > CT ) then return end
 
@@ -437,7 +437,7 @@ local T =
 	
 	AddCycle = function( self, cycle, time )
 	
-		if time then
+		if ( time ) then
 			local CT = CurTime()
 			if ( time > CT ) then return end
 
