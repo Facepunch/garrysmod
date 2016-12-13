@@ -141,6 +141,57 @@ end
 
 hook.Add( "EntityRemoved", "DoDieFunction", DoDieFunction )
 
+if ( CLIENT ) then
+
+	--[[---------------------------------------------------------
+		Name: CallOnTransmitStateChanged
+		Desc: Call this function when this entity's transmit state changes.
+		Calls the function like Function( <entity>, <should transmit>, <optional args> )
+	-----------------------------------------------------------]]
+	function meta:CallOnTransmitStateChanged( name, func, ... )
+
+		local mytable = self:GetTable()
+		mytable.OnTransmitFunctions = mytable.OnTransmitFunctions or {}
+
+		mytable.OnTransmitFunctions[ name ] = { Name = name, Function = func, Args = { ... } }
+
+	end
+
+	--[[---------------------------------------------------------
+		Name: RemoveCallOnTransmitStateChanged
+		Desc: Removes the named hook
+	-----------------------------------------------------------]]
+	function meta:RemoveCallOnTransmitStateChanged( name )
+
+		local mytable = self:GetTable()
+		mytable.OnTransmitFunctions = mytable.OnTransmitFunctions or {}
+		mytable.OnTransmitFunctions[ name ] = nil
+
+	end
+
+	--[[---------------------------------------------------------
+		Simple mechanism for calling the transmit state changed functions.
+	-----------------------------------------------------------]]
+	local function DoTransmitFunction( ent, shouldTransmit )
+
+		if ( !ent || !ent.OnTransmitFunctions ) then return end
+
+		for k, v in pairs( ent.OnTransmitFunctions ) do
+
+			if ( v && v.Function ) then
+
+				v.Function( ent, shouldTransmit, unpack( v.Args ) )
+
+			end
+
+		end
+
+	end
+
+	hook.Add( "NotifyShouldTransmit", "DoTransmitFunction", DoTransmitFunction )
+
+end
+
 function meta:PhysWake()
 
 	local phys = self:GetPhysicsObject()
