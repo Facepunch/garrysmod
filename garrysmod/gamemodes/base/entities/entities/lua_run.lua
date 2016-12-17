@@ -5,6 +5,9 @@ ENT.DisableDuplicator = true
 AccessorFunc( ENT, "m_bDefaultCode", "DefaultCode" )
 
 function ENT:Initialize()
+
+	self.RunStringID = game.GetMap() .. ":" .. self:MapCreationID()
+
 end
 
 function ENT:KeyValue( key, value )
@@ -38,7 +41,7 @@ function ENT:RunCode( activator, caller, code )
 
 	self:SetupGlobals( activator, caller )
 
-		RunString( code )
+		RunString( code, self.RunStringID )
 
 	self:KillGlobals()
 
