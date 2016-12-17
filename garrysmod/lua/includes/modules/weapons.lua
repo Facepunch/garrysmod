@@ -45,15 +45,15 @@ end
 -----------------------------------------------------------]]
 function Register( t, name )
 
-	local old = WeaponList[ name ]
+	t.ClassName = t.ClassName or name
 
-	t.ClassName = name
-	WeaponList[ name ] = t
+	local old = WeaponList[ t.ClassName ]
+	WeaponList[ t.ClassName ] = t
 
 	--baseclass.Set( name, t )
 
-	list.Set( "Weapon", name, {
-		ClassName = name,
+	list.Set( "Weapon", t.ClassName, {
+		ClassName = t.ClassName,
 		PrintName = t.PrintName or t.ClassName,
 		Category = t.Category or "Other",
 		Spawnable = t.Spawnable,
@@ -62,7 +62,7 @@ function Register( t, name )
 
 	-- Allow all SWEPS to be duplicated, unless specified
 	if ( !t.DisableDuplicator ) then
-		duplicator.Allow( name )
+		duplicator.Allow( t.ClassName )
 	end
 
 	--
@@ -74,7 +74,7 @@ function Register( t, name )
 		--
 		-- For each entity using this class
 		--
-		for _, entity in pairs( ents.FindByClass( name ) ) do
+		for _, entity in pairs( ents.FindByClass( t.ClassName ) ) do
 
 			--
 			-- Replace the contents with this entity table
@@ -92,7 +92,7 @@ function Register( t, name )
 
 		-- Update SWEP table of entities that are based on this SWEP
 		for _, e in pairs( ents.GetAll() ) do
-			if ( IsBasedOn( e:GetClass(), name ) ) then
+			if ( IsBasedOn( e:GetClass(), t.ClassName ) ) then
 				table.Merge( e, Get( e:GetClass() ) )
 
 				if ( e.OnReloaded ) then
