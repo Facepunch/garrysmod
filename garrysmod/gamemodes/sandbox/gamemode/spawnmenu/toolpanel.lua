@@ -66,7 +66,7 @@ function PANEL:AddCategory( Name, Label, tItems )
 
 	for k, v in SortedPairs( tools ) do
 
-		if ( hook.Run( "ShouldHideTool", v.ItemName ) ) then continue end
+		if ( hook.Run( "ShouldHideTool", v ) ) then continue end
 		
 		local item = Category:Add( v.Text )
 
