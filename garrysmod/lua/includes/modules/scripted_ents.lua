@@ -22,18 +22,35 @@ BaseClasses[ "filter" ] = "base_filter"
 local function TableInherit( t, base )
 
 	for k, v in pairs( base ) do
-
-		if ( t[k] == nil ) then
-			t[k] = v
-		elseif ( istable( t[k] ) ) then
-			TableInherit( t[k], v )
+		if ( t[ k ] == nil ) then
+			t[ k ] = v
+		elseif ( istable( t[ k ] ) && istable( v ) ) then
+			TableInherit( t[ k ], v )
 		end
-
 	end
 
-	t[ "BaseClass" ] = base
+end
 
-	return t
+local function DeepCopy( t )
+
+	local new = {}
+	setmetatable( new, debug.getmetatable( t ) )
+
+	for k, v in pairs( t ) do
+		if ( istable( v ) ) then
+			new[ k ] = DeepCopy( v )
+		elseif ( isvector( v ) ) then
+			new[ k ] = Vector( v )
+		elseif ( isangle( v ) ) then
+			new[ k ] = Angle( v )
+		--[[elseif ( ismatrix( v ) ) then
+			new[ k ] = Matrix( v )]]
+		else
+			new[ k ] = v
+		end
+	end
+
+	return new
 
 end
 
@@ -151,34 +168,49 @@ end
 
 function Get( name )
 
+	local Stored
+
 	-- Do we have an alias?
 	if ( Aliases[ name ] ) then
-		name = Aliases[ name ]
+		local newname = Aliases[ name ]
+		Stored = GetStored( newname )
+
+		if ( Stored ) then
+			-- Update the name
+			name = newname
+		else
+			-- Try the original name
+			Stored = GetStored( name )
+		end
+	else
+		Stored = GetStored( name )
 	end
 
-	if ( SEntList[ name ] == nil ) then return nil end
+	if ( !Stored ) then
+		return nil
+	end
 
 	-- Create/copy a new table
-	local retval = {}
-	for k, v in pairs( SEntList[ name ].t ) do
-		retval[k] = v
-	end
+	local retval = DeepCopy( Stored.t )
+	retval.Base = Stored.Base
 
 	-- Derive from base class
-	if ( name != SEntList[ name ].Base ) then
+	if ( retval.Base != name ) then
+		local BaseEntity = Get( retval.Base )
 
-		local base = Get( SEntList[ name ].Base )
+		if ( BaseEntity ) then
+			for k, v in pairs( BaseEntity ) do
+				if ( retval[ k ] == nil ) then
+					retval[ k ] = v
+				elseif ( k != "BaseClass" && istable( retval[ k ] ) && istable( v ) ) then
+					TableInherit( retval[ k ], v )
+				end
+			end
 
-		if ( !base ) then
-
-			Msg("ERROR: Trying to derive entity " .. tostring( name ) .. " from non existant entity " .. tostring( SEntList[ name ].Base ) .. "!\n" )
-
+			retval[ "BaseClass" ] = BaseEntity
 		else
-
-			retval = TableInherit( retval, base )
-
+			MsgN( "SENT (", name, ") is derived from non-existant SENT (", retval.Base, ") - expect errors!" )
 		end
-
 	end
 
 	return retval
