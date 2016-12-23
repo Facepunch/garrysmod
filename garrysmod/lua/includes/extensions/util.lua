@@ -347,3 +347,64 @@ function util.RemovePData( steamid, name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = "..SQLStr(name) )
 	
 end
+
+--[[---------------------------------------------------------
+   Name: ClipTraceToPlayers
+   Desc: Traces across players and returns a modified trace
+-----------------------------------------------------------]]
+local function DistanceToTrace( pos, traceStart, traceEnd, along, pointOnTrace )
+	local to = pos - traceStart
+	local dir = traceEnd - traceStart
+	//Dunno if NormalizeInPlace translates to GetNormalized or Normalize
+	local length = dir:GetNormalized()
+
+	local rangeAlong = dir:Dot(to)
+	if along then
+		along = rangeAlong
+	end
+
+	local range
+	if rangeAlong < 0.0 then
+		range = -(pos - traceStart):Length()
+
+		if pointOnRay then
+			pointOnRay = traceStart
+		end
+	elseif rangeAlong > length then
+		range = -(pos - traceEnd):Length()
+
+		if pointOnRay then
+			pointOnRay = traceEnd
+		end
+	else
+		local onRay = traceStart + rangeAlong * dir
+		range = (pos - onTrace):Length()
+
+		if pointOnRay then
+			pointOnTrace = onTrace
+		end
+	end
+
+	return range
+end
+function util.ClipTraceToPlayers( vecAbsStart, vecAbsEnd, mask, filter, tr )
+	local smallestFraction = tr.Fraction
+	local maxRange = 60.0
+	
+	local trace = { start = vecAbsStart, endpos = vecAbsEnd, filter = filter, mask = bit.bor(mask, CONTENTS_HITBOX) }
+	
+	for _, ply in pairs(player.GetAll()) do
+		if !IsValid(ply) or !ply:Alive() then continue end
+		if ply:IsDormant() then continue end
+
+		local range = DistanceToTrace( ply:WorldSpaceCenter(), vecAbsStart, vecAbsEnd )
+		if (range < 0.0 || range > maxRange) then continue end
+
+		//I couldn't find the code for ClipRayToEntity to hopefully util.TraceEntity works the same - FMX
+		local playerTrace = util.TraceEntity( trace, ply )
+		if ( playerTrace.Fraction < smallestFraction )
+			smallestFraction = playerTrace.Fraction
+			return playerTrace
+		end
+	end
+end
