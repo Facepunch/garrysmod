@@ -14,6 +14,7 @@ BaseClasses[ "anim" ] = "base_anim"
 BaseClasses[ "point" ] = "base_point"
 BaseClasses[ "brush" ] = "base_brush"
 BaseClasses[ "filter" ] = "base_filter"
+BaseClasses[ "trigger" ] = "base_trigger"
 
 --[[---------------------------------------------------------
 	Name: TableInherit( t, base )
