@@ -356,11 +356,11 @@ end
 function util.IsPointInBounds( ent, vecWorldPt )
 
 	local vecLocalSpace = ent:WorldToLocal(vecWorldPt)
-	local m_vecMins = ent:OBBMins()
-	local m_vecMaxs = ent:OBBMaxs()
+	local vecMins = ent:OBBMins()
+	local vecMaxs = ent:OBBMaxs()
 	
-	return (vecLocalSpace.x >= m_vecMins.x && vecLocalSpace.x <= m_vecMaxs.x) &&
-			(vecLocalSpace.y >= m_vecMins.y && vecLocalSpace.y <= m_vecMaxs.y) &&
-			(vecLocalSpace.z >= m_vecMins.z && vecLocalSpace.z <= m_vecMaxs.z)
+	return (vecLocalSpace.x >= vecMins.x && vecLocalSpace.x <= vecMaxs.x) &&
+			(vecLocalSpace.y >= vecMins.y && vecLocalSpace.y <= vecMaxs.y) &&
+			(vecLocalSpace.z >= vecMins.z && vecLocalSpace.z <= vecMaxs.z)
 			
 end
