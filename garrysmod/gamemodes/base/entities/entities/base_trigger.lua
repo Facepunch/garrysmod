@@ -14,7 +14,7 @@ end
 	Name: IsTouchedBy
 -----------------------------------------------------------]]
 function ENT:IsTouchedBy(ent)
-	return table.HasValue(self.Entities, ent)
+	return self.Entities[ent:EntIndex()]
 end
 
 --[[---------------------------------------------------------
@@ -23,7 +23,7 @@ end
 -----------------------------------------------------------]]
 function ENT:StartTouch(ent)
 	if ( !self:PassesTriggerFilters(ent) ) then return end
-	table.insert(self.Entities, ent)
+	self.Entities[ent:EntIndex()] = ent
 	
 	self:Input("OnStartTouch", self, ent)
 end
@@ -34,7 +34,7 @@ end
 -----------------------------------------------------------]]
 function ENT:EndTouch(ent)
 	if ( !self:IsTouchedBy(ent) ) then return end
-	table.RemoveByValue(self.Entities, ent)
+	self.Entities[ent:EntIndex()] = nil
 	
 	self:Input("OnEndTouch", self, ent)
 
@@ -43,7 +43,7 @@ function ENT:EndTouch(ent)
 	for i=iSize, 0, -1 do 
 		local hOther = self.Entities[i]
 		if ( !IsValid(hOther) ) then
-			table.RemoveByValue(self.Entities, hOther)
+			self.Entities[hOther] = nil
 		else
 			bFoundOtherTouchee = true
 		end
@@ -60,7 +60,7 @@ end
 -----------------------------------------------------------]]
 function ENT:Touch(ent)
 	if ( !self:PassesTriggerFilters(ent) ) then return end
-	if ( !table.HasValue(self.Entities, ent) ) then table.insert(self.Entities, ent) end
+	if ( !self.Entities[ent:EntIndex()] ) then self.Entities[ent:EntIndex()] = ent end
 	
 	self:Input("OnTouch", self, ent)
 end
