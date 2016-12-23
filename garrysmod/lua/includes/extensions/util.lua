@@ -394,7 +394,7 @@ function util.ClipTraceToPlayers( vecAbsStart, vecAbsEnd, mask, filter, tr )
 	local trace = { start = vecAbsStart, endpos = vecAbsEnd, filter = filter, mask = bit.bor(mask, CONTENTS_HITBOX) }
 	
 	for _, ply in pairs(player.GetAll()) do
-		if !IsValid(ply) or !ply:Alive() then continue end
+		if !IsValid(ply) || !ply:Alive() then continue end
 		if ply:IsDormant() then continue end
 
 		local range = DistanceToTrace( ply:WorldSpaceCenter(), vecAbsStart, vecAbsEnd )
