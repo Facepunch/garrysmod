@@ -14,7 +14,7 @@ end
 	Name: IsTouchedBy
 -----------------------------------------------------------]]
 function ENT:IsTouchedBy(ent)
-	return self.Entities[ent]
+	return self.Entities[ent] != nil
 end
 
 --[[---------------------------------------------------------
@@ -39,9 +39,7 @@ function ENT:EndTouch(ent)
 	self:Input("OnEndTouch", self, ent)
 
 	local bFoundOtherTouchee = false
-	local iSize = #self.Entities
-	for i=iSize, 0, -1 do 
-		local hOther = self.Entities[i]
+	for hOther in pairs(self.Entities) do
 		if ( !IsValid(hOther) ) then
 			self.Entities[hOther] = nil
 		else
