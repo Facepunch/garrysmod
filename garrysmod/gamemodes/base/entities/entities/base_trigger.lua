@@ -14,7 +14,7 @@ end
 	Name: IsTouchedBy
 -----------------------------------------------------------]]
 function ENT:IsTouchedBy(ent)
-	return self.Entities[ent:EntIndex()]
+	return self.Entities[ent]
 end
 
 --[[---------------------------------------------------------
@@ -23,7 +23,7 @@ end
 -----------------------------------------------------------]]
 function ENT:StartTouch(ent)
 	if ( !self:PassesTriggerFilters(ent) ) then return end
-	self.Entities[ent:EntIndex()] = ent
+	self.Entities[ent] = ent
 	
 	self:Input("OnStartTouch", self, ent)
 end
@@ -34,7 +34,7 @@ end
 -----------------------------------------------------------]]
 function ENT:EndTouch(ent)
 	if ( !self:IsTouchedBy(ent) ) then return end
-	self.Entities[ent:EntIndex()] = nil
+	self.Entities[ent] = nil
 	
 	self:Input("OnEndTouch", self, ent)
 
@@ -60,7 +60,7 @@ end
 -----------------------------------------------------------]]
 function ENT:Touch(ent)
 	if ( !self:PassesTriggerFilters(ent) ) then return end
-	if ( !self.Entities[ent:EntIndex()] ) then self.Entities[ent:EntIndex()] = ent end
+	if ( !self.Entities[ent] ) then self.Entities[ent] = ent end
 	
 	self:Input("OnTouch", self, ent)
 end
