@@ -367,20 +367,20 @@ local function DistanceToTrace( pos, traceStart, traceEnd, along, pointOnTrace )
 	if rangeAlong < 0.0 then
 		range = -(pos - traceStart):Length()
 
-		if pointOnRay then
-			pointOnRay = traceStart
+		if pointOnTrace then
+			pointOnTrace = traceStart
 		end
 	elseif rangeAlong > length then
 		range = -(pos - traceEnd):Length()
 
-		if pointOnRay then
-			pointOnRay = traceEnd
+		if pointOnTrace then
+			pointOnTrace = traceEnd
 		end
 	else
-		local onRay = traceStart + rangeAlong * dir
+		local onTrace = traceStart + rangeAlong * dir
 		range = (pos - onTrace):Length()
 
-		if pointOnRay then
+		if pointOnTrace then
 			pointOnTrace = onTrace
 		end
 	end
