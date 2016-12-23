@@ -355,7 +355,9 @@ end
 local function DistanceToTrace( pos, traceStart, traceEnd, along, pointOnTrace )
 	local to = pos - traceStart
 	local dir = traceEnd - traceStart
-	local length = dir:Normalize()
+	
+	dir:Normalize()
+	local length = dir
 
 	local rangeAlong = dir:Dot(to)
 	if along then
