@@ -362,7 +362,7 @@ local function DistanceToTrace( pos, traceStart, traceEnd, along, pointOnTrace )
 		along = rangeAlong
 	end
 
-	local range
+	local range = 0
 	if rangeAlong < 0.0 then
 		range = -(pos - traceStart):Length()
 
