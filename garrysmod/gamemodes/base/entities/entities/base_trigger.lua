@@ -22,7 +22,7 @@ end
 	Desc: Called when a entity starts touching us
 -----------------------------------------------------------]]
 function ENT:StartTouch(ent)
-	if not self:PassesTriggerFilters(ent) then return end
+	if ( !self:PassesTriggerFilters(ent) ) then return end
 	table.insert(self.Entities, ent)
 	
 	self:Input("OnStartTouch", self, ent)
@@ -33,7 +33,7 @@ end
 	Desc: Called when a entity stops touching us
 -----------------------------------------------------------]]
 function ENT:EndTouch(ent)
-	if not self:IsTouchedBy(ent) then return end
+	if ( !self:IsTouchedBy(ent) ) then return end
 	table.RemoveByValue(self.Entities, ent)
 	
 	self:Input("OnEndTouch", self, ent)
@@ -42,14 +42,14 @@ function ENT:EndTouch(ent)
 	local iSize = #self.Entities
 	for i=iSize, 0, -1 do 
 		local hOther = self.Entities[i]
-		if not IsValid(hOther) then
+		if ( !IsValid(hOther) ) then
 			table.RemoveByValue(self.Entities, hOther)
 		else
 			bFoundOtherTouchee = true
 		end
 	end
 
-	if not bFoundOtherTouchee then
+	if ( !bFoundOtherTouchee ) then
 		self:Input("OnEndTouchAll", self, ent)
 	end
 end
@@ -59,8 +59,8 @@ end
 	Desc: Called when a entity touches us
 -----------------------------------------------------------]]
 function ENT:Touch(ent)
-	if not self:PassesTriggerFilters(ent) then return end
-	if not table.HasValue(self.Entities, ent) then table.insert(self.Entities, ent) end
+	if ( !self:PassesTriggerFilters(ent) ) then return end
+	if ( !table.HasValue(self.Entities, ent) ) then table.insert(self.Entities, ent) end
 	
 	self:Input("OnTouch", self, ent)
 end
