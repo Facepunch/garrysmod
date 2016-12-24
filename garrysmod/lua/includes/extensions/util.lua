@@ -160,6 +160,93 @@ function util.NiceFloat( f )
 end
 
 
+--
+-- util.GetTableUpvalues( table )
+-- returns all upvalues from a table of functions
+--
+function util.GetTableUpvalues( tbl )
+
+	local upvalues = {}
+
+	for k, v in pairs( tbl ) do
+	
+		if ( isfunction( v ) ) then
+		
+			local i = 1
+			while ( true ) do
+			
+				local key, value = debug.getupvalue( v, i )
+				
+				if ( key == nil ) then break end
+				upvalues[ key ] = value
+				i = i + 1
+				
+			end
+		
+		end
+		
+	end
+	
+	return upvalues
+	
+end
+
+--
+-- util.GetTableUpvalue( table, variable_name )
+-- returns a specific upvalue from a table of functions
+--
+function util.GetTableUpvalue( tbl, name )
+
+	for k, v in pairs( tbl ) do
+	
+		if ( isfunction( v ) ) then
+		
+			local i = 1
+			while ( true ) do
+			
+				local key, value = debug.getupvalue( v, i )
+				
+				if ( key == nil ) then break end
+				if ( key == name ) then return value end
+				i = i + 1
+				
+			end
+			
+		end
+		
+	end
+	
+end
+
+--
+-- util.SetTableUpvalue( table, variable_name, value )
+-- sets a specific upvalue from a table of functions, returns true if it worked
+--
+function util.SetTableUpvalue( tbl, name, value )
+	
+	for k, v in pairs( tbl ) do
+	
+		if ( isfunction( v ) ) then
+		
+			local i = 1
+			while ( true ) do
+			
+				local key = debug.getupvalue( v, i )
+				
+				if ( key == nil ) then break end
+				if ( key == name ) then debug.setupvalue( v, i, value ) return true end
+				i = i + 1
+				
+			end
+			
+		end
+		
+	end
+	
+	return false
+	
+end
+
 
 --
 -- Timer
