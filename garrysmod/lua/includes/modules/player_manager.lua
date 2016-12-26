@@ -301,7 +301,17 @@ AddValidHands( "dod_american", "models/weapons/c_arms_dod.mdl",		1,		"10000000" 
 
 local Type = {}
 
-function GetTable() return Type end
+function GetTable()
+
+	local tbl = {}
+	
+	for k, v in pairs( Type ) do
+		tbl[ k ] = v
+	end
+	
+	return tbl
+
+end
 
 function RegisterClass( name, table, base )
 
@@ -365,7 +375,7 @@ local function LookupPlayerClass( ply )
 	--
 	local method = ply.m_CurrentPlayerClass
 	if ( method && method.Player == ply ) then
-		if ( method.ClassID == id ) then return method end -- current class is still good, behave normally
+		if ( method.ClassID == id && method.Func ) then return method end -- current class is still good, behave normally
 		if ( method.Destroy ) then method:Destroy() end -- the class id changed, destroy the old class
 	end
 
@@ -384,6 +394,7 @@ local function LookupPlayerClass( ply )
 	local method = {}
 		method.Player	= ply
 		method.ClassID	= id
+		method.Func	= function() end
 
 	setmetatable( method, { __index = t } )
 
