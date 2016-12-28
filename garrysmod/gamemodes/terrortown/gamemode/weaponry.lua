@@ -269,7 +269,7 @@ local function DropActiveAmmo(ply)
    ply:AnimPerformGesture(ACT_ITEM_GIVE)
 
    local box = ents.Create(wep.AmmoEnt)
-   if not IsValid(box) then box:Remove() end
+   if not IsValid(box) then return end
 
    box:SetPos(pos + dir)
    box:SetOwner(ply)
