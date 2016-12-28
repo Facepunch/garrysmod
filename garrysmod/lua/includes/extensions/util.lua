@@ -352,41 +352,6 @@ end
    Name: ClipTraceToPlayers
    Desc: Traces across players and returns a modified trace
 -----------------------------------------------------------]]
-local function DistanceToTrace( pos, traceStart, traceEnd, along, pointOnTrace )
-	local to = pos - traceStart
-	local dir = traceEnd - traceStart
-	local length = dir:Length()
-	dir:Normalize()
-
-	local rangeAlong = dir:Dot(to)
-	if along then
-		along = rangeAlong
-	end
-
-	local range = 0
-	if rangeAlong < 0.0 then
-		range = -(pos - traceStart):Length()
-
-		if pointOnTrace then
-			pointOnTrace = traceStart
-		end
-	elseif rangeAlong > length then
-		range = -(pos - traceEnd):Length()
-
-		if pointOnTrace then
-			pointOnTrace = traceEnd
-		end
-	else
-		local onTrace = traceStart + rangeAlong * dir
-		range = (pos - onTrace):Length()
-
-		if pointOnTrace then
-			pointOnTrace = onTrace
-		end
-	end
-
-	return range
-end
 function util.ClipTraceToPlayers( vecAbsStart, vecAbsEnd, mask, filter, tr )
 	local smallestFraction = tr.Fraction
 	local maxRange = 60.0
@@ -397,10 +362,10 @@ function util.ClipTraceToPlayers( vecAbsStart, vecAbsEnd, mask, filter, tr )
 		if !IsValid(ply) || !ply:Alive() then continue end
 		if ply:IsDormant() then continue end
 
-		local range = DistanceToTrace( ply:WorldSpaceCenter(), vecAbsStart, vecAbsEnd )
+		//I think util.DistanceToLine is the same as DistanceToRay
+		local range = util.DistanceToLine(vecAbsStart, vecAbsEnd, ply:WorldSpaceCenter())
 		if (range < 0.0 || range > maxRange) then continue end
 
-		//I couldn't find the code for ClipRayToEntity to hopefully util.TraceEntity works the same - FMX
 		local playerTrace = util.TraceEntity( trace, ply )
 		if ( playerTrace.Fraction < smallestFraction )
 			smallestFraction = playerTrace.Fraction
