@@ -52,7 +52,9 @@ function GM:Initialize()
 
    self.BaseClass:Initialize()
 
-   RunConsoleCommand("ttt_spectate", GetConVar("ttt_spectator_mode"):GetInt())
+   net.Start("TTT_Spectate")
+     net.WriteBool(GetConVar("ttt_spectator_mode"):GetBool())
+   net.SendToServer()
 end
 
 function GM:InitPostEntity()
@@ -368,6 +370,9 @@ function CheckIdle()
 
          timer.Simple(0.3, function()
                               RunConsoleCommand("ttt_spectator_mode", 1)
+                               net.Start("TTT_Spectate")
+                                 net.WriteBool(true)
+                               net.SendToServer()
                               RunConsoleCommand("ttt_cl_idlepopup")
                            end)
       elseif CurTime() > (idle.t + (idle_limit / 2)) then
