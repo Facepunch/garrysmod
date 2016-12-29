@@ -418,7 +418,7 @@ local function StopRoundTimers()
    -- remove all timers
    timer.Stop("wait2prep")
    timer.Stop("prep2begin")
-   timer.Stop("end2begin")
+   timer.Stop("end2prep")
    timer.Stop("winchecker")
 end
 
