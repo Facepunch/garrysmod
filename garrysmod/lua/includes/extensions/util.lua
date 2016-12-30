@@ -347,3 +347,55 @@ function util.RemovePData( steamid, name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = "..SQLStr(name) )
 	
 end
+
+--[[---------------------------------------------------------
+   Name: ColorToInt( color )
+   Desc: Converts a Color into an unsigned 32-bit integer
+-----------------------------------------------------------]]
+function util.ColorToInt( color )
+
+	if ( !IsColor(color) ) then
+		error("bad argument #1 to 'util.ColorToInt' (Color expected, got "..type(color)..")")
+	else
+		return(
+			math.Round( color.r ) * 16777216 +
+			math.Round( color.g ) * 65536 +
+			math.Round( color.b ) * 256 +
+			math.Round( color.a )
+		)
+		
+	end
+	
+end
+
+--[[---------------------------------------------------------
+   Name: ColorToSignedInt( color )
+   Desc: Converts a Color into a signed 32-bit integer
+-----------------------------------------------------------]]
+function util.ColorToSignedInt( color )
+
+	-- This returns a bitwise copy of the unsigned integer into a signed integer.
+	return bit.band( util.ColorToInt( color ), 0xFFFFFFFF )
+	
+end
+
+--[[---------------------------------------------------------
+   Name: IntToColor( color )
+   Desc: Converts a 32-bit integer into a Color
+-----------------------------------------------------------]]
+function util.IntToColor( int_32 )
+
+	if ( !isnumber(int_32) ) then
+		error("bad argument #1 to 'util.IntToColor' (number expected, got "..type(int_32)..")")
+	else
+		-- Functions in bit library use a signed 32-bit integer internally. This must be handled correctly.
+		return Color(
+			bit.rshift( bit.band( int_32, 0xFF000000 ), 24 ),
+			bit.rshift( bit.band( int_32, 0x00FF0000 ), 16 ),
+			bit.rshift( bit.band( int_32, 0x0000FF00 ), 8 ),
+			bit.band( int_32, 0x000000FF )
+		)
+		
+	end
+	
+end
