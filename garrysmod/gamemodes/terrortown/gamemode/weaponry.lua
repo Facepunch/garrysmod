@@ -59,7 +59,7 @@ local function GiveLoadoutWeapons(ply)
    if not weps then return end
 
    for _, cls in pairs(weps) do
-      if not ply:HasWeapon(cls) then
+      if not ply:HasWeapon(cls) and ply:CanCarryWeapon(WEPS.TypeForWeapon(cls)) then
          ply:Give(cls)
       end
    end
@@ -74,7 +74,7 @@ local function HasLoadoutWeapons(ply)
 
 
    for _, cls in pairs(weps) do
-      if not ply:HasWeapon(cls) then
+      if not ply:HasWeapon(cls) and ply:CanCarryWeapon(WEPS.TypeForWeapon(cls)) then
          return false
       end
    end
