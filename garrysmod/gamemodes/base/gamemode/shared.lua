@@ -24,13 +24,6 @@ GM.Website		= "www.garry.tv"
 GM.TeamBased	= false
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerHurt( )
-   Desc: Called when a player is hurt.
------------------------------------------------------------]]
-function GM:PlayerHurt( player, attacker, healthleft, healthtaken )
-end
-
---[[---------------------------------------------------------
    Name: gamemode:KeyPress( )
    Desc: Player pressed a key (see IN enums)
 -----------------------------------------------------------]]
