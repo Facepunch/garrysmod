@@ -66,7 +66,7 @@ function ENT:HitPlayer(other, tr)
          self:BecomeWeaponDelayed()
       end
    end
-
+   
    -- As a thrown knife, after we hit a target we can never hit one again.
    -- If we are picked up and re-thrown, a new knife_proj entity is created.
    -- To make sure we can never deal damage twice, make HitPlayer do nothing.
@@ -132,7 +132,7 @@ if SERVER then
      local vel = self:GetVelocity()
      if vel == vector_origin then return end
 
-     local tr = util.TraceLine({start = self:GetPos(), endpos = self:GetPos() + vel:GetNormal() * 20, filter = {self, self:GetOwner()}, mask = MASK_SHOT_HULL})
+     local tr = util.TraceLine({start=self:GetPos(), endpos=self:GetPos() + vel:GetNormal() * 20, filter={self, self:GetOwner()}, mask=MASK_SHOT_HULL})
 
      if tr.Hit and tr.HitNonWorld and IsValid(tr.Entity) then
         local other = tr.Entity
@@ -187,7 +187,7 @@ if SERVER then
       if not IsValid(other) and not other:IsWorld() then return end
 
       if other:IsPlayer() then
-         local tr = util.TraceLine({start = self:GetPos(), endpos = other:LocalToWorld(other:OBBCenter()), filter = {self, self:GetOwner()}, mask = MASK_SHOT_HULL})
+         local tr = util.TraceLine({start=self:GetPos(), endpos=other:LocalToWorld(other:OBBCenter()), filter={self, self:GetOwner()}, mask=MASK_SHOT_HULL})
          if tr.Hit and tr.Entity == other then
             self:HitPlayer(other, tr)
          end

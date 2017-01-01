@@ -5,9 +5,6 @@ AccessorFunc( PANEL, "m_bBackground",		"PaintBackground",	FORCE_BOOL )
 AccessorFunc( PANEL, "m_bBackground",		"DrawBackground",	FORCE_BOOL ) -- deprecated
 AccessorFunc( PANEL, "m_bIsMenuComponent",	"IsMenu",			FORCE_BOOL )
 
-AccessorFunc( PANEL, "m_bDisabled",	"Disabled" )
-AccessorFunc( PANEL, "m_bgColor",	"BackgroundColor" )
-
 Derma_Hook( PANEL, "Paint", "Paint", "MenuBar" )
 
 function PANEL:Init()

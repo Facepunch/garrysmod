@@ -52,7 +52,9 @@ function GM:Initialize()
 
    self.BaseClass:Initialize()
 
-   RunConsoleCommand("ttt_spectate", GetConVar("ttt_spectator_mode"):GetInt())
+   net.Start("TTT_Spectate")
+     net.WriteBool(GetConVar("ttt_spectator_mode"):GetBool())
+   net.SendToServer()
 end
 
 function GM:InitPostEntity()
@@ -96,7 +98,7 @@ local function RoundStateChange(o, n)
       GAMEMODE:CleanUpMap()
 
       -- show warning to spec mode players
-      if GetConVar("ttt_spectator_mode"):GetBool() and IsValid(LocalPlayer()) then
+      if GetConVar("ttt_spectator_mode"):GetBool() and IsValid(LocalPlayer())then
          LANG.Msg("spec_mode_warning")
       end
 
@@ -180,7 +182,7 @@ local function ReceiveRoleList()
    local role = net.ReadUInt(2)
    local num_ids = net.ReadUInt(8)
 
-   for i = 1, num_ids do
+   for i=1, num_ids do
       local eidx = net.ReadUInt(7) + 1 -- we - 1 worldspawn=0
 
       local ply = player.GetByID(eidx)
@@ -280,7 +282,7 @@ net.Receive("TTT_PlayerDied", PlayerDeath)
 
 function GM:ShouldDrawLocalPlayer(ply) return false end
 
-local view = {origin = vector_origin, angles = angle_zero, fov = 0}
+local view = {origin = vector_origin, angles = angle_zero, fov=0}
 function GM:CalcView( ply, origin, angles, fov )
    view.origin = origin
    view.angles = angles
@@ -305,7 +307,7 @@ function GM:CalcView( ply, origin, angles, fov )
    if IsValid(wep) then
       local func = wep.CalcView
       if func then
-         view.origin, view.angles, view.fov = func( wep, ply, origin * 1, angles * 1, fov )
+         view.origin, view.angles, view.fov = func( wep, ply, origin*1, angles*1, fov )
       end
    end
 
@@ -368,6 +370,9 @@ function CheckIdle()
 
          timer.Simple(0.3, function()
                               RunConsoleCommand("ttt_spectator_mode", 1)
+                               net.Start("TTT_Spectate")
+                                 net.WriteBool(true)
+                               net.SendToServer()
                               RunConsoleCommand("ttt_cl_idlepopup")
                            end)
       elseif CurTime() > (idle.t + (idle_limit / 2)) then

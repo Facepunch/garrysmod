@@ -69,7 +69,7 @@ function SWEP:HealthDrop()
       local vsrc = ply:GetShootPos()
       local vang = ply:GetAimVector()
       local vvel = ply:GetVelocity()
-
+      
       local vthrow = vvel + vang * 200
 
       local health = ents.Create("ttt_health_station")
@@ -83,7 +83,7 @@ function SWEP:HealthDrop()
          local phys = health:GetPhysicsObject()
          if IsValid(phys) then
             phys:SetVelocity(vthrow)
-         end
+         end   
          self:Remove()
 
          self.Planted = true
@@ -124,3 +124,4 @@ end
 
 function SWEP:DrawWorldModelTranslucent()
 end
+

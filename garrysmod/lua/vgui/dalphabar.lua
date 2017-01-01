@@ -1,8 +1,8 @@
 
 local PANEL = {}
 
-local matGradient	= Material( "vgui/gradient-u" )
-local matGrid		= Material( "gui/alpha_grid.png", "nocull" )
+local matGradient = Material( "vgui/gradient-u" )
+local matGrid = Material( "gui/alpha_grid.png", "nocull" )
 
 AccessorFunc( PANEL, "m_Value", "Value" )
 AccessorFunc( PANEL, "m_BarColor", "BarColor" )
@@ -50,10 +50,9 @@ function PANEL:Paint( w, h )
 	surface.SetDrawColor( 255, 255, 255, 255 )
 	surface.SetMaterial( matGrid )
 	local size = 128
-	local x, y = w / 2 - size / 2, h / 2 - size / 2
-	surface.DrawTexturedRect( x, y , size, size )
-	surface.DrawTexturedRect( x, y - size, size, size )
-	surface.DrawTexturedRect( x, y + size, size, size )
+	for i = 0, math.ceil( h / size ) do
+		surface.DrawTexturedRect( w / 2 - size / 2, i * size, size, size )
+	end
 
 	surface.SetDrawColor( self.m_BarColor )
 	surface.SetMaterial( matGradient )
@@ -62,10 +61,10 @@ function PANEL:Paint( w, h )
 
 	surface.SetDrawColor( 0, 0, 0, 250 )
 	self:DrawOutlinedRect()
-	surface.DrawRect( 0, ( 1-self.m_Value ) * h - 2, w, 3 )
+	surface.DrawRect( 0, ( 1 - self.m_Value ) * h - 2, w, 3 )
 
 	surface.SetDrawColor( 255, 255, 255, 250 )
-	surface.DrawRect( 0, ( 1-self.m_Value ) * h - 1, w, 1 )
+	surface.DrawRect( 0, ( 1 - self.m_Value ) * h - 1, w, 1 )
 
 end
 

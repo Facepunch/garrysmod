@@ -3,11 +3,9 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Wheel"
-ENT.RenderGroup = RENDERGROUP_OPAQUE
+ENT.RenderGroup = RENDERGROUP_BOTH
 
---
 -- Set up our data table
---
 function ENT:SetupDataTables()
 
 	self:NetworkVar( "Bool", 0, "Toggle" )
@@ -34,9 +32,7 @@ function ENT:Initialize()
 
 end
 
---
---   Sets the base torque
---
+-- Sets the base torque
 function ENT:SetBaseTorque( base )
 
 	self.BaseTorque = base
@@ -45,18 +41,14 @@ function ENT:SetBaseTorque( base )
 
 end
 
---
---  Refresh the entity overlay text
---
+-- Refresh the entity overlay text
 function ENT:UpdateOverlayText()
 
 	self:SetOverlayText( "Torque: " .. math.floor( self.BaseTorque ) )
 
 end
 
---
---   Sets the axis (world space)
---
+-- Sets the axis (world space)
 function ENT:SetAxis( vec )
 
 	self.Axis = self:GetPos() + vec * 512
@@ -71,24 +63,17 @@ function ENT:OnTakeDamage( dmginfo )
 
 end
 
-
---
 -- Set the motor constraint
---
 function ENT:SetMotor( Motor )
 
 	self.Motor = Motor
 
 end
 
---
 -- Get the motor constraint :)
---
 function ENT:GetMotor()
 
-	--
 	-- Fuck knows why it's doing this here.
-	--
 	if ( !IsValid( self.Motor ) ) then
 
 		self.Motor = constraint.FindConstraintEntity( self.Entity, "Motor" )
@@ -99,9 +84,7 @@ function ENT:GetMotor()
 
 end
 
---
---   Forward key is pressed/released
---
+-- Forward key is pressed/released
 function ENT:Forward( onoff, mul )
 
 	--
@@ -144,17 +127,12 @@ function ENT:Forward( onoff, mul )
 
 end
 
---
 -- Reverse key is pressed/released
---
 function ENT:Reverse( onoff )
 	return self:Forward( onoff, -1 )
 end
 
-
---
 -- Register numpad functions
---
 if ( SERVER ) then
 
 	numpad.Register( "WheelForward", function( pl, ent, onoff )
@@ -175,9 +153,7 @@ if ( SERVER ) then
 
 end
 
---
---   Todo? Scale Motor.direction?
---
+-- Todo? Scale Motor.direction?
 function ENT:SetTorque( torque )
 
 	if ( self.BaseTorque == 0 ) then self.BaseTorque = 1 end
@@ -192,9 +168,7 @@ function ENT:SetTorque( torque )
 
 end
 
---
---   Creates the direction arrows on the wheel
---
+-- Creates the direction arrows on the wheel
 function ENT:DoDirectionEffect()
 
 	local Motor = self:GetMotor()
@@ -211,9 +185,7 @@ function ENT:DoDirectionEffect()
 
 end
 
---
---   Reverse the wheel direction when a player uses the wheel
---
+-- Reverse the wheel direction when a player uses the wheel
 function ENT:Use( activator, caller, type, value )
 
 	local Motor = self:GetMotor()

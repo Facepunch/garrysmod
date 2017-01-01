@@ -24,7 +24,7 @@ SWEP.AutoSpawnable      = true
 
 SWEP.UseHands           = true
 SWEP.ViewModel          = "models/weapons/cstrike/c_eq_fraggrenade.mdl"
-SWEP.WorldModel         = "/weapons/w_eq_fraggrenade.mdl"
+SWEP.WorldModel         = "models/weapons/w_eq_fraggrenade.mdl"
 
 SWEP.Weight             = 5
 

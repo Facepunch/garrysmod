@@ -9,6 +9,12 @@ TOOL.ClientConVar[ "material" ] = "cable/cable"
 TOOL.ClientConVar[ "width" ] = "2"
 TOOL.ClientConVar[ "stretch_only" ] = "1"
 
+TOOL.Information = {
+	{ name = "left", stage = 0 },
+	{ name = "left_1", stage = 1 },
+	{ name = "reload" }
+}
+
 function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return end

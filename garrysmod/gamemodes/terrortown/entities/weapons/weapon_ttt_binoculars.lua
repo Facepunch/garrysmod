@@ -132,7 +132,8 @@ function SWEP:IsTargetingCorpse()
    local tr = self.Owner:GetEyeTrace(MASK_SHOT)
    local ent = tr.Entity
 
-   return IsValid(ent) and ent:GetClass() == "prop_ragdoll" and CORPSE.GetPlayerNick(ent, false) != false
+   return (IsValid(ent) and ent:GetClass() == "prop_ragdoll" and
+           CORPSE.GetPlayerNick(ent, false) != false)
 end
 
 local confirm = Sound("npc/turret_floor/click1.wav")
@@ -147,14 +148,16 @@ end
 
 function SWEP:Think()
    if self.dt.processing then
-      if self:IsTargetingCorpse() and CurTime() > (self.dt.start_time + self.ProcessingDelay) then
-        self:IdentifyCorpse()
+      if self:IsTargetingCorpse() then
+         if CurTime() > (self.dt.start_time + self.ProcessingDelay) then
+            self:IdentifyCorpse()
 
-        self.dt.processing = false
-        self.dt.start_time = 0
+            self.dt.processing = false
+            self.dt.start_time = 0
+         end
       else
-        self.dt.processing = false
-        self.dt.start_time = 0
+         self.dt.processing = false
+         self.dt.start_time = 0
       end
    end
 end
@@ -214,11 +217,11 @@ if CLIENT then
          local w, h = 200, 20
 
          surface.SetDrawColor(0, 255, 0, 255)
-         surface.DrawOutlinedRect(x - w / 2, y - h, w, h)
+         surface.DrawOutlinedRect(x - w/2, y - h, w, h)
 
          surface.SetDrawColor(0, 255, 0, 180)
          local pct = math.Clamp((CurTime() - self.dt.start_time) / self.ProcessingDelay, 0, 1)
-         surface.DrawRect(x - w / 2, y - h, w * pct, h)
+         surface.DrawRect(x - w/2, y - h, w * pct, h)
       end
    end
 
@@ -236,3 +239,4 @@ if CLIENT then
       return -1
    end
 end
+

@@ -5,8 +5,8 @@ local PT = LANG.GetParamTranslation
 
 local is_dmg = util.BitSet
 
-local dtt = { search_dmg_crush = DMG_CRUSH, search_dmg_bullet = DMG_BULLET, search_dmg_fall = DMG_FALL,
-search_dmg_boom = DMG_BLAST, search_dmg_club = DMG_CLUB, search_dmg_drown = DMG_DROWN, search_dmg_stab = DMG_SLASH,
+local dtt = { search_dmg_crush = DMG_CRUSH, search_dmg_bullet = DMG_BULLET, search_dmg_fall = DMG_FALL, 
+search_dmg_boom = DMG_BLAST, search_dmg_club = DMG_CLUB, search_dmg_drown = DMG_DROWN, search_dmg_stab = DMG_SLASH, 
 search_dmg_burn = DMG_BURN, search_dmg_tele = DMG_SONIC, search_dmg_car = DMG_VEHICLE }
 
 -- "From his body you can tell XXX"
@@ -51,20 +51,20 @@ local function WeaponToIcon(d)
 end
 
 local TypeToMat = {
-   nick     = "id",
-   words    = "halp",
-   eq_armor = "armor",
-   eq_radar = "radar",
-   eq_disg  = "disguise",
-   role     = {[ROLE_TRAITOR] = "traitor", [ROLE_DETECTIVE] = "det", [ROLE_INNOCENT] = "inno"},
-   c4       = "code",
-   dmg      = DmgToMat,
-   wep      = WeaponToIcon,
-   head     = "head",
-   dtime    = "time",
-   stime    = "wtester",
-   lastid   = "lastid",
-   kills    = "list"
+   nick="id",
+   words="halp",
+   eq_armor="armor",
+   eq_radar="radar",
+   eq_disg="disguise",
+   role={[ROLE_TRAITOR]="traitor", [ROLE_DETECTIVE]="det", [ROLE_INNOCENT]="inno"},
+   c4="code",
+   dmg=DmgToMat,
+   wep=WeaponToIcon,
+   head="head",
+   dtime="time",
+   stime="wtester",
+   lastid="lastid",
+   kills="list"
 }
 
 -- Accessor for better fail handling
@@ -84,7 +84,7 @@ local function IconForInfoType(t, data)
 
    -- ugly special casing for weapons, because they are more likely to be
    -- customized and hence need more freedom in their icon filename
-   if t ~= "wep" then
+   if t != "wep" then
       return base .. mat
    else
       return mat
@@ -95,7 +95,7 @@ end
 function PreprocSearch(raw)
    local search = {}
    for t, d in pairs(raw) do
-      search[t] = {img = nil, text = "", p = 10}
+      search[t] = {img=nil, text="", p=10}
 
       if t == "nick" then
          search[t].text = PT("search_nick", {player = d})
@@ -112,9 +112,9 @@ function PreprocSearch(raw)
 
          search[t].p = 2
       elseif t == "words" then
-         if d ~= "" then
+         if d != "" then
             -- only append "--" if there's no ending interpunction
-            local final = string.match(d, "[\\.\\!\\?]$") ~= nil
+            local final = string.match(d, "[\\.\\!\\?]$") != nil
 
             search[t].text = PT("search_words", {lastwords = d .. (final and "" or "--.")})
          end
@@ -136,7 +136,7 @@ function PreprocSearch(raw)
          end
       elseif t == "c4" then
          if d > 0 then
-            search[t].text =  PT("search_c4", {num = d})
+            search[t].text= PT("search_c4", {num = d})
          end
       elseif t == "dmg" then
          search[t].text = DmgToText(d)
@@ -154,7 +154,7 @@ function PreprocSearch(raw)
          end
          search[t].p = 15
       elseif t == "dtime" then
-         if d ~= 0 then
+         if d != 0 then
             local ftime = util.SimpleTime(d, "%02i:%02i")
             search[t].text = PT("search_time", {time = ftime})
 
@@ -175,7 +175,7 @@ function PreprocSearch(raw)
             local vic = Entity(d[1])
             local dc = d[1] == -1 -- disconnected
             if dc or (IsValid(vic) and vic:IsPlayer()) then
-               search[t].text = PT("search_kills1", {player = dc and "<Disconnected>" or vic:Nick()})
+               search[t].text = PT("search_kills1", {player = (dc and "<Disconnected>" or vic:Nick())})
             end
          elseif num > 1 then
             local txt = T("search_kills2") .. "\n"
@@ -185,7 +185,7 @@ function PreprocSearch(raw)
                local vic = Entity(idx)
                local dc = idx == -1
                if dc or (IsValid(vic) and vic:IsPlayer()) then
-                  table.insert(nicks, dc and "<Disconnected>" or vic:Nick())
+                  table.insert(nicks, (dc and "<Disconnected>" or vic:Nick()))
                end
             end
 
@@ -196,7 +196,7 @@ function PreprocSearch(raw)
 
          search[t].p = 30
       elseif t == "lastid" then
-         if d and d.idx ~= -1 then
+         if d and d.idx != -1 then
             local ent = Entity(d.idx)
             if IsValid(ent) and ent:IsPlayer() then
                search[t].text = PT("search_eyes", {player = ent:Nick()})
@@ -256,20 +256,22 @@ local function ShowSearchScreen(search_raw)
    local bw, bh = 100, 25
    local w, h = 410, 260
 
-   local rw, rh = w - m * 2, h - 25 - m * 2
+   local rw, rh = (w - m*2), (h - 25 - m*2)
    local rx, ry = 0, 0
 
    local rows = 1
-   local listw, listh = rw, 64 * rows + 6
+   local listw, listh = rw, (64 * rows + 6)
    local listx, listy = rx, ry
 
-   ry = ry + listh + m * 2
+   ry = ry + listh + m*2
    rx = m
 
-   local descw, desch = rw - m * 2, 80
+   local descw, desch = rw - m*2, 80
    local descx, descy = rx, ry
 
    ry = ry + desch + m
+
+   local butx, buty = rx, ry
 
    local dframe = vgui.Create("DFrame")
    dframe:SetSize(w, h)
@@ -318,13 +320,13 @@ local function ShowSearchScreen(search_raw)
    dactive:SetSize(64, 64)
 
    local dtext = vgui.Create("ScrollLabel", ddesc)
-   dtext:SetSize(descw - 120, desch - m * 2)
-   dtext:MoveRightOf(dactive, m * 2)
+   dtext:SetSize(descw - 120, desch - m*2)
+   dtext:MoveRightOf(dactive, m*2)
    dtext:AlignTop(m)
    dtext:SetText("...")
 
    -- buttons
-   local by = rh - bh - (m / 2)
+   local by = rh - bh - (m/2)
 
    local dident = vgui.Create("DButton", dcont)
    dident:SetPos(m, by)
@@ -335,7 +337,7 @@ local function ShowSearchScreen(search_raw)
    dident:SetDisabled(client:IsSpec() or (not client:KeyDownLast(IN_WALK)))
 
    local dcall = vgui.Create("DButton", dcont)
-   dcall:SetPos(m * 2 + bw, by)
+   dcall:SetPos(m*2 + bw, by)
    dcall:SetSize(bw, bh)
    dcall:SetText(T("search_call"))
    dcall.DoClick = function(s)
@@ -436,7 +438,7 @@ local function ReceiveRagdollSearch()
    search.eidx = net.ReadUInt(16)
 
    search.owner = Entity(net.ReadUInt(8))
-   if not (IsValid(search.owner) and search.owner:IsPlayer() and (not search.owner:Alive())) then
+   if not (IsValid(search.owner) and search.owner:IsPlayer() and (not search.owner:IsTerror())) then
       search.owner = nil
    end
 
@@ -465,26 +467,26 @@ local function ReceiveRagdollSearch()
    local num_kills = net.ReadUInt(8)
    if num_kills > 0 then
       search.kills = {}
-      for i = 1,num_kills do
+      for i=1,num_kills do
          table.insert(search.kills, net.ReadUInt(8))
       end
    else
       search.kills = nil
    end
 
-   search.lastid = {idx = net.ReadUInt(8)}
+   search.lastid = {idx=net.ReadUInt(8)}
 
    -- should we show a menu for this result?
    search.finder = net.ReadUInt(8)
 
-   search.show = LocalPlayer():EntIndex() == search.finder
+   search.show = (LocalPlayer():EntIndex() == search.finder)
 
    --
    -- last words
    --
    local words = net.ReadString()
    search.words = (words ~= "") and words or nil
-
+   
    hook.Call("TTTBodySearchEquipment", nil, search, eq)
 
    if search.show then

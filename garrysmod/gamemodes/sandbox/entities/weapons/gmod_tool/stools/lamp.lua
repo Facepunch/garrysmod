@@ -13,7 +13,19 @@ TOOL.ClientConVar[ "texture" ] = "effects/flashlight001"
 TOOL.ClientConVar[ "model" ] = "models/lamps/torch.mdl"
 TOOL.ClientConVar[ "toggle" ] = "1"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" },
+}
+
 cleanup.Register( "lamps" )
+
+local function IsValidLampModel( model )
+	for mdl, _ in pairs( list.Get( "LampModels" ) ) do
+		if ( mdl:lower() == model:lower() ) then return true end
+	end
+	return false
+end
 
 function TOOL:LeftClick( trace )
 
@@ -60,14 +72,14 @@ function TOOL:LeftClick( trace )
 		trace.Entity.r = r
 		trace.Entity.g = g
 		trace.Entity.b = b
-		trace.Entity.brightness	= bright
+		trace.Entity.brightness = bright
 		trace.Entity.KeyDown = key
 
 		return true
 
 	end
 
-	if ( !util.IsValidModel( mdl ) || !util.IsValidProp( mdl ) ) then return false end
+	if ( !util.IsValidModel( mdl ) || !util.IsValidProp( mdl ) || !IsValidLampModel( mdl ) ) then return false end
 	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
 
 	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = Angle( 0, 0, 0 ) } )
@@ -120,6 +132,7 @@ if ( SERVER ) then
 	function MakeLamp( pl, r, g, b, KeyDown, toggle, texture, model, fov, distance, brightness, on, Data )
 
 		if ( IsValid( pl ) && !pl:CheckLimit( "lamps" ) ) then return false end
+		if ( !IsValidLampModel( model ) ) then return false end
 
 		local lamp = ents.Create( "gmod_lamp" )
 		if ( !IsValid( lamp ) ) then return end
@@ -153,7 +166,7 @@ if ( SERVER ) then
 		lamp.r = r
 		lamp.g = g
 		lamp.b = b
-		lamp.brightness	= brightness
+		lamp.brightness = brightness
 
 		lamp.NumDown = numpad.OnDown( pl, KeyDown, "LampToggle", lamp, 1 )
 		lamp.NumUp = numpad.OnUp( pl, KeyDown, "LampToggle", lamp, 0 )
@@ -163,7 +176,7 @@ if ( SERVER ) then
 	end
 	duplicator.RegisterEntityClass( "gmod_lamp", MakeLamp, "r", "g", "b", "KeyDown", "Toggle", "Texture", "Model", "fov", "distance", "brightness", "on", "Data" )
 
-	local function Toggle( pl, ent, onoff )
+	numpad.Register( "LampToggle", function( pl, ent, onoff )
 
 		if ( !IsValid( ent ) ) then return false end
 		if ( !ent:GetToggle() ) then ent:Switch( onoff == 1 ) return end
@@ -179,8 +192,7 @@ if ( SERVER ) then
 
 		return ent:Toggle()
 
-	end
-	numpad.Register( "LampToggle", Toggle )
+	end )
 
 end
 
@@ -209,6 +221,7 @@ end
 function TOOL:Think()
 
 	local mdl = self:GetClientInfo( "model" )
+	if ( !IsValidLampModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
 		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
@@ -234,6 +247,8 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Checkbox", { Label = "#tool.lamp.toggle", Command = "lamp_toggle" } )
 
+	CPanel:AddControl( "Color", { Label = "#tool.lamp.color", Red = "lamp_r", Green = "lamp_g", Blue = "lamp_b" } )
+
 	local MatSelect = CPanel:MatSelect( "lamp_texture", nil, false, 0.33, 0.33 )
 	MatSelect.Height = 4
 
@@ -241,9 +256,8 @@ function TOOL.BuildCPanel( CPanel )
 		MatSelect:AddMaterial( v.Name or k, k )
 	end
 
-	CPanel:AddControl( "Color", { Label = "#tool.lamp.color", Red = "lamp_r", Green = "lamp_g", Blue = "lamp_b" } )
+	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model", ConVar = "lamp_model", Height = 0, Models = list.Get( "LampModels" ) } )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.lamp.model", ConVar = "lamp_model", Height = 2, Models = list.Get( "LampModels" ) } )
 end
 
 list.Set( "LampTextures", "effects/flashlight001", { Name = "#lamptexture.default" } )

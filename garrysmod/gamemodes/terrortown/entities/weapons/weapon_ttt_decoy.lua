@@ -73,7 +73,7 @@ function SWEP:DecoyDrop()
       local vsrc = ply:GetShootPos()
       local vang = ply:GetAimVector()
       local vvel = ply:GetVelocity()
-
+      
       local vthrow = vvel + vang * 200
 
       local decoy = ents.Create("ttt_decoy")
@@ -83,7 +83,7 @@ function SWEP:DecoyDrop()
          decoy:Spawn()
 
          decoy:PointAtEntity(ply)
-
+         
          local ang = decoy:GetAngles()
          ang:RotateAroundAxis(ang:Right(), 90)
          decoy:SetAngles(ang)
@@ -92,7 +92,7 @@ function SWEP:DecoyDrop()
          local phys = decoy:GetPhysicsObject()
          if IsValid(phys) then
             phys:SetVelocity(vthrow)
-         end
+         end   
 
          self:PlacedDecoy(decoy)
       end
@@ -111,14 +111,14 @@ function SWEP:DecoyStick()
       local ignore = {ply, self}
       local spos = ply:GetShootPos()
       local epos = spos + ply:GetAimVector() * 80
-      local tr = util.TraceLine({start = spos, endpos = epos, filter = ignore, mask = MASK_SOLID})
+      local tr = util.TraceLine({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID})
 
       if tr.HitWorld then
          local decoy = ents.Create("ttt_decoy")
          if IsValid(decoy) then
             decoy:PointAtEntity(ply)
 
-            local tr_ent = util.TraceEntity({start = spos, endpos = epos, filter = ignore, mask = MASK_SOLID}, decoy)
+            local tr_ent = util.TraceEntity({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID}, decoy)
 
             if tr_ent.HitWorld then
 
@@ -128,7 +128,7 @@ function SWEP:DecoyStick()
                decoy:SetAngles(ang)
                decoy:SetOwner(ply)
                decoy:Spawn()
-
+               
                local phys = decoy:GetPhysicsObject()
                if IsValid(phys) then
                   phys:EnableMotion(false)

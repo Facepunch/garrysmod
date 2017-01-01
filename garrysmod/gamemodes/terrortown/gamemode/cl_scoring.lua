@@ -107,7 +107,7 @@ function CLSCORE:BuildEventLogPanel(dpanel)
 
    local dlist = vgui.Create("DListView", dpanel)
    dlist:SetPos(0, 0)
-   dlist:SetSize(w, h - margin * 2)
+   dlist:SetSize(w, h - margin*2)
    dlist:SetSortable(true)
    dlist:SetMultiSelect(false)
 
@@ -128,6 +128,7 @@ function CLSCORE:BuildEventLogPanel(dpanel)
 end
 
 function CLSCORE:BuildScorePanel(dpanel)
+   local margin = 10
    local w, h = dpanel:GetSize()
 
    local dlist = vgui.Create("DListView", dpanel)
@@ -135,7 +136,6 @@ function CLSCORE:BuildScorePanel(dpanel)
    dlist:SetSize(w, h)
    dlist:SetSortable(true)
    dlist:SetMultiSelect(false)
-   dlist:SetPaintBackground(false)
 
    local colnames = {"", "col_player", "col_role", "col_kills1", "col_kills2", "col_points", "col_team", "col_total"}
    for k, name in pairs(colnames) do
@@ -150,7 +150,7 @@ function CLSCORE:BuildScorePanel(dpanel)
 
    -- the type of win condition triggered is relevant for team bonus
    local wintype = WIN_NONE
-   for i = #self.Events, 1, -1 do
+   for i=#self.Events, 1, -1 do
       local e = self.Events[i]
       if e.id == EVENT_FINISH then
          wintype = e.win
@@ -182,7 +182,7 @@ function CLSCORE:BuildScorePanel(dpanel)
          end
 
          local points_own   = KillsToPoints(s, was_traitor)
-         local points_team  = was_traitor and bonus.traitors or bonus.innos
+         local points_team  = (was_traitor and bonus.traitors or bonus.innos)
          local points_total = points_own + points_team
 
          local l = dlist:AddLine(surv, nicks[id], role, s.innos, s.traitors, points_own, points_team, points_total)
@@ -225,13 +225,13 @@ function CLSCORE:AddAward(y, pw, award, dpanel)
    txtlbl:SetText(text)
    txtlbl:SetFont("DermaDefault")
    txtlbl:SizeToContents()
-   local tw = txtlbl:GetSize()
+   local tw, th = txtlbl:GetSize()
 
    titlelbl:SetPos((pw - tiw) / 2, y)
    y = y + tih + 2
 
    local fw = nw + tw + 5
-   local fx = (pw - fw) / 2
+   local fx = ((pw - fw) / 2)
    nicklbl:SetPos(fx, y)
    txtlbl:SetPos(fx + nw + 5, y)
 
@@ -255,7 +255,7 @@ function CLSCORE:BuildHilitePanel(dpanel)
 
    local title = wintitle[WIN_INNOCENT]
    local endtime = self.StartTime
-   for i = #self.Events, 1, -1 do
+   for i=#self.Events, 1, -1 do
       local e = self.Events[i]
       if e.id == EVENT_FINISH then
          endtime = e.t
@@ -285,7 +285,7 @@ function CLSCORE:BuildHilitePanel(dpanel)
    winlbl:SetText( T(title.txt) )
    winlbl:SetTextColor(COLOR_WHITE)
    winlbl:SizeToContents()
-   local xwin = (w - winlbl:GetWide()) / 2
+   local xwin = (w - winlbl:GetWide())/2
    local ywin = 30
    winlbl:SetPos(xwin, ywin)
 
@@ -304,7 +304,7 @@ function CLSCORE:BuildHilitePanel(dpanel)
    partlbl:SetPos(xwin, ysubwin + 8)
 
    local timelbl = vgui.Create("DLabel", dpanel)
-   timelbl:SetText(PT("hilite_duration", {time = util.SimpleTime(roundtime, "%02i:%02i")}))
+   timelbl:SetText(PT("hilite_duration", {time= util.SimpleTime(roundtime, "%02i:%02i")}))
    timelbl:SizeToContents()
    timelbl:SetPos(xwin + winlbl:GetWide() - timelbl:GetWide(), ysubwin + 8)
 
@@ -334,13 +334,14 @@ function CLSCORE:BuildHilitePanel(dpanel)
       end
    end
 
+   local num_choices = table.Count(award_choices)
    local max_awards = 5
 
    -- sort descending by priority
    table.SortByMember(award_choices, "priority")
 
    -- put the N most interesting awards in the menu
-   for i = 1,max_awards do
+   for i=1,max_awards do
       local a = award_choices[i]
       if a then
          self:AddAward((i - 1) * 42, wa, a, awardp)
@@ -369,20 +370,20 @@ function CLSCORE:ShowPanel()
    local dbut = vgui.Create("DButton", dpanel)
    local bw, bh = 100, 25
    dbut:SetSize(bw, bh)
-   dbut:SetPos(w - bw - margin, h - bh - margin / 2)
+   dbut:SetPos(w - bw - margin, h - bh - margin/2)
    dbut:SetText(T("close"))
    dbut.DoClick = function() dpanel:Close() end
 
    local dsave = vgui.Create("DButton", dpanel)
    dsave:SetSize(bw,bh)
-   dsave:SetPos(margin, h - bh - margin / 2)
+   dsave:SetPos(margin, h - bh - margin/2)
    dsave:SetText(T("report_save"))
    dsave:SetTooltip(T("report_save_tip"))
    dsave:SetConsoleCommand("ttt_save_events")
 
    local dtabsheet = vgui.Create("DPropertySheet", dpanel)
    dtabsheet:SetPos(margin, margin + 15)
-   dtabsheet:SetSize(w - margin * 2, h - margin * 3 - bh)
+   dtabsheet:SetSize(w - margin*2, h - margin*3 - bh)
    local padding = dtabsheet:GetPadding()
 
 
@@ -424,7 +425,7 @@ function CLSCORE:ClearPanel()
       -- we need this hack as opposed to just calling Remove because gmod does
       -- not offer a means of killing the tooltip, and doesn't clean it up
       -- properly on Remove
-      input.SetCursorPos( ScrW() / 2, ScrH() / 2 )
+      input.SetCursorPos( ScrW()/2, ScrH()/2 )
       local pnl = self.Panel
       timer.Simple(0, function() pnl:Remove() end)
    end
@@ -442,9 +443,9 @@ function CLSCORE:SaveLog()
    end
 
    local logname = logdir .. "/ttt_events_" .. os.time() .. ".txt"
-   local log = "Trouble in Terrorist Town - Round Events Log\n" .. string.rep("-", 50) .. "\n"
+   local log = "Trouble in Terrorist Town - Round Events Log\n".. string.rep("-", 50) .."\n"
 
-   log = log .. string.format("%s | %-25s | %s\n", " TIME", "TYPE", "WHAT HAPPENED") .. string.rep("-", 50) .. "\n"
+   log = log .. string.format("%s | %-25s | %s\n", " TIME", "TYPE", "WHAT HAPPENED") .. string.rep("-", 50) .."\n"
 
    for _, e in pairs(self.Events) do
       local etxt = self:TextForEvent(e)

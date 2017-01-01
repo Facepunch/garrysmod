@@ -5,6 +5,11 @@ TOOL.Name = "#tool.faceposer.name"
 local gLastFacePoseEntity = NULL
 TOOL.FaceTimer = 0
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 local function IsUselessFaceFlex( strName )
 
 	if ( strName == "gesture_rightleft" ) then return true end
@@ -368,6 +373,8 @@ local FacePoser = surface.GetTextureID( "gui/faceposer_indicator" )
 
 -- Draw a box indicating the face we have selected
 function TOOL:DrawHUD()
+
+	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
 
 	local selected = self:FacePoserEntity()
 

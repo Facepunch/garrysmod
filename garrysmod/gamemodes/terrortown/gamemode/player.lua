@@ -30,7 +30,7 @@ function GM:PlayerInitialSpawn( ply )
    end
 
    -- Game has started, tell this guy where the round is at
-   if rstate ~= ROUND_WAIT then
+   if rstate != ROUND_WAIT then
       SendRoundState(rstate, ply)
       SendConfirmedTraitors(ply)
       SendDetectiveList(ply)
@@ -165,7 +165,7 @@ local function PointsAroundSpawn(spwn)
    if not IsValid(spwn) then return {} end
    local pos = spwn:GetPos()
 
-   local w = 36, 72 -- bit roomier than player hull
+   local w, h = 36, 72 -- bit roomier than player hull
 
    -- all rigged positions
    -- could be done without typing them out, but would take about as much time
@@ -227,7 +227,7 @@ function GM:PlayerSelectSpawn(ply)
                rig_spwn:SetPos(rig)
                rig_spwn:Spawn()
 
-               ErrorNoHalt("TTT WARNING: Map has too few spawn points, using a rigged spawn for " .. tostring(ply) .. "\n")
+               ErrorNoHalt("TTT WARNING: Map has too few spawn points, using a rigged spawn for ".. tostring(ply) .. "\n")
 
                self.HaveRiggedSpawn = true
                return rig_spwn
@@ -265,7 +265,7 @@ function GM:TTTPlayerSetColor(ply)
       -- you tell players apart.
       clr = GAMEMODE.playercolor
    end
-   ply:SetPlayerColor( Vector( clr.r / 255.0, clr.g / 255.0, clr.b / 255.0 ) )
+   ply:SetPlayerColor( Vector( clr.r/255.0, clr.g/255.0, clr.b/255.0 ) )
 end
 
 
@@ -355,7 +355,7 @@ function GM:KeyPress(ply, key)
          return true
       elseif key == IN_JUMP then
          -- unfuck if you're on a ladder etc
-         if (ply:GetMoveType() ~= MOVETYPE_NOCLIP) then
+         if not (ply:GetMoveType() == MOVETYPE_NOCLIP) then
             ply:SetMoveType(MOVETYPE_NOCLIP)
          end
       elseif key == IN_RELOAD then
@@ -397,20 +397,12 @@ function GM:KeyRelease(ply, key)
                return true
             end
          elseif tr.Entity.player_ragdoll then
-            CORPSE.ShowSearch(ply, tr.Entity, ply:KeyDown(IN_WALK) or ply:KeyDownLast(IN_WALK))
+            CORPSE.ShowSearch(ply, tr.Entity, (ply:KeyDown(IN_WALK) or ply:KeyDownLast(IN_WALK)))
             return true
          end
       end
    end
 
-end
-
-function GM:PlayerButtonUp(ply, btn)
-   -- Would be nice to clean up this whole "all key handling in massive
-   -- functions" thing. oh well
-   if btn == KEY_PAD_ENTER then
-      WEPS.DisguiseToggle(ply)
-   end
 end
 
 -- Normally all dead players are blocked from IN_USE on the server, meaning we
@@ -445,7 +437,7 @@ function GM:PlayerDisconnected(ply)
       ply:SetRole(ROLE_NONE)
    end
 
-   if GetRoundState() ~= ROUND_PREP then
+   if GetRoundState() != ROUND_PREP then
       -- Keep traitor entindices in sync on traitor clients
       SendTraitorList(GetTraitorFilter(false), nil)
 
@@ -510,12 +502,12 @@ end
 
 -- See if we should award credits now
 local function CheckCreditAward(victim, attacker)
-   if GetRoundState() ~= ROUND_ACTIVE then return end
+   if GetRoundState() != ROUND_ACTIVE then return end
    if not IsValid(victim) then return end
 
    -- DETECTIVE AWARD
    if IsValid(attacker) and attacker:IsPlayer() and attacker:IsActiveDetective() and victim:IsTraitor() then
-      local amt = GetConVar:GetFloat("ttt_det_credits_traitordead") or 1
+      local amt = GetConVarNumber("ttt_det_credits_traitordead") or 1
       for _, ply in pairs(player.GetAll()) do
          if ply:IsActiveDetective() then
             ply:AddCredits(amt)
@@ -531,7 +523,7 @@ local function CheckCreditAward(victim, attacker)
       local inno_alive = 0
       local inno_dead = 0
       local inno_total = 0
-
+      
       for _, ply in pairs(player.GetAll()) do
          if not ply:GetTraitor() then
             if ply:IsTerror() then
@@ -554,9 +546,9 @@ local function CheckCreditAward(victim, attacker)
       end
 
       local pct = inno_dead / inno_total
-      if pct >= GetConVar:GetFloat("ttt_credits_award_pct") then
+      if pct >= GetConVarNumber("ttt_credits_award_pct") then
          -- Traitors have killed sufficient people to get an award
-         local amt = GetConVar:GetFloat("ttt_credits_award_size")
+         local amt = GetConVarNumber("ttt_credits_award_size")
 
          -- If size is 0, awards are off
          if amt > 0 then
@@ -652,9 +644,9 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
    if IsValid(attacker) and attacker:IsPlayer() then
       local reward = 0
       if attacker:IsActiveTraitor() and ply:GetDetective() then
-         reward = math.ceil(GetConVar:GetFloat("ttt_credits_detectivekill"))
+         reward = math.ceil(GetConVarNumber("ttt_credits_detectivekill"))
       elseif attacker:IsActiveDetective() and ply:GetTraitor() then
-         reward = math.ceil(GetConVar:GetFloat("ttt_det_credits_traitorkill"))
+         reward = math.ceil(GetConVarNumber("ttt_det_credits_traitorkill"))
       end
 
       if reward > 0 then
@@ -731,7 +723,7 @@ function GM:SpectatorThink(ply)
    end
 
    -- when speccing a player
-   if ply:GetObserverMode() ~= OBS_MODE_ROAMING and (not ply.propspec) and (not ply:GetRagdollSpec()) then
+   if ply:GetObserverMode() != OBS_MODE_ROAMING and (not ply.propspec) and (not ply:GetRagdollSpec()) then
       local tgt = ply:GetObserverTarget()
       if IsValid(tgt) and tgt:IsPlayer() then
          if (not tgt:IsTerror()) or (not tgt:Alive()) then
@@ -827,8 +819,11 @@ function GM:OnPlayerHitGround(ply, in_water, on_floater, speed)
 
          -- if the faller was pushed, that person should get attrib
          local push = ply.was_pushed
-         if push and math.max(push.t or 0, push.hurt or 0) > CurTime() - 4 then
-            att = push.att
+         if push then
+            -- TODO: move push time checking stuff into fn?
+            if math.max(push.t or 0, push.hurt or 0) > CurTime() - 4 then
+               att = push.att
+            end
          end
 
          local dmg = DamageInfo()
@@ -882,9 +877,12 @@ function GM:EntityTakeDamage(ent, dmginfo)
    if not IsValid(ent) then return end
    local att = dmginfo:GetAttacker()
 
-   if not GAMEMODE:AllowPVP() and (ent:IsExplosive() or (ent:IsPlayer() and IsValid(att) and att:IsPlayer())) then
-      dmginfo:ScaleDamage(0)
-      dmginfo:SetDamage(0)
+   if not GAMEMODE:AllowPVP() then
+      -- if player vs player damage, or if damage versus a prop, then zero
+      if (ent:IsExplosive() or (ent:IsPlayer() and IsValid(att) and att:IsPlayer())) then
+         dmginfo:ScaleDamage(0)
+         dmginfo:SetDamage(0)
+      end
    elseif ent:IsPlayer() then
 
       GAMEMODE:PlayerTakeDamage(ent, dmginfo:GetInflictor(), att, dmginfo:GetDamage(), dmginfo)
@@ -968,7 +966,7 @@ function GM:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
          -- if we already blamed this on a pusher, no need to do more
          -- else we override whatever was in was_pushed with info pointing
          -- at our damage owner
-         if push.att ~= owner then
+         if push.att != owner then
             owner_time = owner_time or CurTime()
 
             push.att = owner
@@ -992,14 +990,19 @@ function GM:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
    end
 
    -- scale phys damage caused by props
-   if dmginfo:IsDamageType(DMG_CRUSH) and IsValid(att) and not dmginfo:IsDamageType(DMG_PHYSGUN) then -- player falling on player, or player hurt by prop?
-      -- this is prop-based physics damage
-      dmginfo:ScaleDamage(0.25)
+   if dmginfo:IsDamageType(DMG_CRUSH) and IsValid(att) then
 
-      -- if the prop is held, no damage
-      if IsValid(infl) and IsValid(infl:GetOwner()) and infl:GetOwner():IsPlayer() then
-        dmginfo:ScaleDamage(0)
-        dmginfo:SetDamage(0)
+      -- player falling on player, or player hurt by prop?
+      if not dmginfo:IsDamageType(DMG_PHYSGUN) then
+
+         -- this is prop-based physics damage
+         dmginfo:ScaleDamage(0.25)
+
+         -- if the prop is held, no damage
+         if IsValid(infl) and IsValid(infl:GetOwner()) and infl:GetOwner():IsPlayer() then
+            dmginfo:ScaleDamage(0)
+            dmginfo:SetDamage(0)
+         end
       end
    end
 
@@ -1008,7 +1011,7 @@ function GM:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
       local datt = dmginfo:GetAttacker()
       if (not IsValid(datt)) or (not datt:IsPlayer()) then
          local ignite = ent.ignite_info
-         if IsValid(ignite.att) and IsValid(ignite.infl) then
+         if IsValid(ignite.att) and IsValid(ignite.infl)then
             dmginfo:SetAttacker(ignite.att)
             dmginfo:SetInflictor(ignite.infl)
          end
@@ -1029,7 +1032,7 @@ function GM:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
    util.StartBleeding(ent, dmginfo:GetDamage(), 5)
 
    -- general actions for pvp damage
-   if ent ~= att and IsValid(att) and att:IsPlayer() and GetRoundState() == ROUND_ACTIVE and math.floor(dmginfo:GetDamage()) > 0 then
+   if ent != att and IsValid(att) and att:IsPlayer() and GetRoundState() == ROUND_ACTIVE and math.floor(dmginfo:GetDamage()) > 0 then
 
       -- scale everything to karma damage factor except the knife, because it
       -- assumes a kill
@@ -1055,7 +1058,7 @@ local plys = nil
 function GM:Tick()
    -- three cheers for micro-optimizations
    plys = player.GetAll()
-   for i = 1, #plys do
+   for i= 1, #plys do
       ply = plys[i]
       tm = ply:Team()
       if tm == TEAM_TERROR and ply:Alive() then
@@ -1065,18 +1068,20 @@ function GM:Tick()
                ply:Extinguish()
             end
 
-            if ply.drowning and ply.drowning < CurTime() then
-              local dmginfo = DamageInfo()
-              dmginfo:SetDamage(15)
-              dmginfo:SetDamageType(DMG_DROWN)
-              dmginfo:SetAttacker(game.GetWorld())
-              dmginfo:SetInflictor(game.GetWorld())
-              dmginfo:SetDamageForce(Vector(0,0,1))
+            if ply.drowning then
+               if ply.drowning < CurTime() then
+                  local dmginfo = DamageInfo()
+                  dmginfo:SetDamage(15)
+                  dmginfo:SetDamageType(DMG_DROWN)
+                  dmginfo:SetAttacker(game.GetWorld())
+                  dmginfo:SetInflictor(game.GetWorld())
+                  dmginfo:SetDamageForce(Vector(0,0,1))
 
-              ply:TakeDamageInfo(dmginfo)
+                  ply:TakeDamageInfo(dmginfo)
 
-              -- have started drowning properly
-              ply.drowning = CurTime() + 1
+                  -- have started drowning properly
+                  ply.drowning = CurTime() + 1
+               end
             else
                -- will start drowning soon
                ply.drowning = CurTime() + 8
@@ -1094,7 +1099,7 @@ function GM:Tick()
          end
 
          -- Run DNA Scanner think also when it is not deployed
-         if IsValid(ply.scanner_weapon) and wep ~= ply.scanner_weapon then
+         if IsValid(ply.scanner_weapon) and wep != ply.scanner_weapon then
             ply.scanner_weapon:Think()
          end
       elseif tm == TEAM_SPEC then

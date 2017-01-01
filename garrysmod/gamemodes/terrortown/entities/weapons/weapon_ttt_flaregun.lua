@@ -45,7 +45,7 @@ SWEP.ViewModel             = Model("models/weapons/c_357.mdl")
 SWEP.WorldModel            = Model("models/weapons/w_357.mdl")
 
 local function RunIgniteTimer(ent, timer_name)
-   if IsValid(ent) && ent:IsOnFire() then
+   if IsValid(ent) and ent:IsOnFire() then
       if ent:WaterLevel() > 0 then
          ent:Extinguish()
       elseif CurTime() > ent.burn_destroy then
@@ -66,7 +66,7 @@ if CLIENT then
    local function ReceiveScorches()
       local ent = net.ReadEntity()
       local num = net.ReadUInt(8)
-      for i = 1, num do
+      for i=1, num do
          util.PaintDown(net.ReadVector(), "FadingScorch", ent)
       end
 
@@ -95,7 +95,7 @@ local function ScorchUnderRagdoll(ent)
    if SERVER then
       local postbl = {}
       -- small scorches under limbs
-      for i = 0, ent:GetPhysicsObjectCount() - 1 do
+      for i=0, ent:GetPhysicsObjectCount()-1 do
          local subphys = ent:GetPhysicsObjectNum(i)
          if IsValid(subphys) then
             local pos = subphys:GetPos()
@@ -119,7 +119,7 @@ function IgniteTarget(att, path, dmginfo)
    local ent = path.Entity
    if not IsValid(ent) then return end
 
-   if CLIENT && IsFirstTimePredicted() then
+   if CLIENT and IsFirstTimePredicted() then
       if ent:GetClass() == "prop_ragdoll" then
          ScorchUnderRagdoll(ent)
       end
@@ -128,14 +128,14 @@ function IgniteTarget(att, path, dmginfo)
 
    if SERVER then
 
-      local dur = ent:IsPlayer() && 5 || 10
+      local dur = ent:IsPlayer() and 5 or 10
 
       -- disallow if prep or post round
-      if ent:IsPlayer() && (not GAMEMODE:AllowPVP()) then return end
+      if ent:IsPlayer() and (not GAMEMODE:AllowPVP()) then return end
 
       ent:Ignite(dur, 100)
 
-      ent.ignite_info = {att = dmginfo:GetAttacker(), infl = dmginfo:GetInflictor()}
+      ent.ignite_info = {att=dmginfo:GetAttacker(), infl=dmginfo:GetInflictor()}
 
       if ent:IsPlayer() then
          timer.Simple(dur + 0.1, function()
@@ -194,7 +194,7 @@ function SWEP:PrimaryAttack()
    if IsValid(self.Owner) then
       self.Owner:SetAnimation( PLAYER_ATTACK1 )
 
-      self.Owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) * self.Primary.Recoil, 0 ) )
+      self.Owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0 ) )
    end
 
    if ( (game.SinglePlayer() && SERVER) || CLIENT ) then

@@ -94,13 +94,12 @@ SKIN.tex.Checkbox_Checked			= GWEN.CreateTextureNormal( 448, 32, 15, 15 )
 SKIN.tex.Checkbox					= GWEN.CreateTextureNormal( 464, 32, 15, 15 )
 SKIN.tex.CheckboxD_Checked			= GWEN.CreateTextureNormal( 448, 48, 15, 15 )
 SKIN.tex.CheckboxD					= GWEN.CreateTextureNormal( 464, 48, 15, 15 )
---SKIN.tex.RadioButton_Checked		= GWEN.CreateTextureNormal( 448, 64, 15, 15 )
---SKIN.tex.RadioButton				= GWEN.CreateTextureNormal( 464, 64, 15, 15 )
---SKIN.tex.RadioButtonD_Checked		= GWEN.CreateTextureNormal( 448, 80, 15, 15 )
---SKIN.tex.RadioButtonD				= GWEN.CreateTextureNormal( 464, 80, 15, 15 )
+SKIN.tex.RadioButton_Checked		= GWEN.CreateTextureNormal( 448, 64, 15, 15 )
+SKIN.tex.RadioButton				= GWEN.CreateTextureNormal( 464, 64, 15, 15 )
+SKIN.tex.RadioButtonD_Checked		= GWEN.CreateTextureNormal( 448, 80, 15, 15 )
+SKIN.tex.RadioButtonD				= GWEN.CreateTextureNormal( 464, 80, 15, 15 )
 SKIN.tex.TreePlus					= GWEN.CreateTextureNormal( 448, 96, 15, 15 )
 SKIN.tex.TreeMinus					= GWEN.CreateTextureNormal( 464, 96, 15, 15 )
---SKIN.tex.Menu_Strip				= GWEN.CreateTextureBorder( 0, 128, 127, 21, 1, 1, 1, 1 )
 SKIN.tex.TextBox					= GWEN.CreateTextureBorder( 0, 150, 127, 21, 4, 4, 4, 4 )
 SKIN.tex.TextBox_Focus				= GWEN.CreateTextureBorder( 0, 172, 127, 21, 4, 4, 4, 4 )
 SKIN.tex.TextBox_Disabled			= GWEN.CreateTextureBorder( 0, 194, 127, 21, 4, 4, 4, 4 )
@@ -108,7 +107,7 @@ SKIN.tex.MenuBG_Column				= GWEN.CreateTextureBorder( 128, 128, 127, 63, 24, 8, 
 SKIN.tex.MenuBG						= GWEN.CreateTextureBorder( 128, 192, 127, 63, 8, 8, 8, 8 )
 SKIN.tex.MenuBG_Hover				= GWEN.CreateTextureBorder( 128, 256, 127, 31, 8, 8, 8, 8 )
 SKIN.tex.MenuBG_Spacer				= GWEN.CreateTextureNormal( 128, 288, 127, 3 )
-SKIN.tex.Menu_Strip					= GWEN.CreateTextureBorder( 0, 128, 127, 21, 8, 8, 8, 8)
+SKIN.tex.Menu_Strip					= GWEN.CreateTextureBorder( 0, 128, 127, 21, 8, 8, 8, 8 )
 SKIN.tex.Menu_Check					= GWEN.CreateTextureNormal( 448, 112, 15, 15 )
 SKIN.tex.Tab_Control				= GWEN.CreateTextureBorder( 0, 256, 127, 127, 8, 8, 8, 8 )
 SKIN.tex.TabB_Active				= GWEN.CreateTextureBorder( 0,		416, 63, 31, 8, 8, 8, 8 )
@@ -116,9 +115,9 @@ SKIN.tex.TabB_Inactive				= GWEN.CreateTextureBorder( 128,	416, 63, 31, 8, 8, 8,
 SKIN.tex.TabT_Active				= GWEN.CreateTextureBorder( 0,		384, 63, 31, 8, 8, 8, 8 )
 SKIN.tex.TabT_Inactive				= GWEN.CreateTextureBorder( 128,	384, 63, 31, 8, 8, 8, 8 )
 SKIN.tex.TabL_Active				= GWEN.CreateTextureBorder( 64,		384, 31, 63, 8, 8, 8, 8 )
-SKIN.tex.TabL_Inactive				= GWEN.CreateTextureBorder( 64+128,	384, 31, 63, 8, 8, 8, 8 )
+SKIN.tex.TabL_Inactive				= GWEN.CreateTextureBorder( 64+128, 384, 31, 63, 8, 8, 8, 8 )
 SKIN.tex.TabR_Active				= GWEN.CreateTextureBorder( 96,		384, 31, 63, 8, 8, 8, 8 )
-SKIN.tex.TabR_Inactive				= GWEN.CreateTextureBorder( 96+128,	384, 31, 63, 8, 8, 8, 8 )
+SKIN.tex.TabR_Inactive				= GWEN.CreateTextureBorder( 96+128, 384, 31, 63, 8, 8, 8, 8 )
 SKIN.tex.Tab_Bar					= GWEN.CreateTextureBorder( 128, 352, 127, 31, 4, 4, 4, 4 )
 
 SKIN.tex.Window = {}
@@ -134,9 +133,9 @@ SKIN.tex.Window.Maxi			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448, 31, 31 )
 SKIN.tex.Window.Maxi_Hover		= GWEN.CreateTextureNormal( 64 + 96 * 2, 448, 31, 31 )
 SKIN.tex.Window.Maxi_Down		= GWEN.CreateTextureNormal( 96 + 96 * 2, 448, 31, 31 )
 
-SKIN.tex.Window.Restore			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448+32, 31, 31 )
-SKIN.tex.Window.Restore_Hover	= GWEN.CreateTextureNormal( 64 + 96 * 2, 448+32, 31, 31 )
-SKIN.tex.Window.Restore_Down	= GWEN.CreateTextureNormal( 96 + 96 * 2, 448+32, 31, 31 )
+SKIN.tex.Window.Restore			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448 + 32, 31, 31 )
+SKIN.tex.Window.Restore_Hover	= GWEN.CreateTextureNormal( 64 + 96 * 2, 448 + 32, 31, 31 )
+SKIN.tex.Window.Restore_Down	= GWEN.CreateTextureNormal( 96 + 96 * 2, 448 + 32, 31, 31 )
 
 SKIN.tex.Window.Mini			= GWEN.CreateTextureNormal( 32 + 96, 448, 31, 31 )
 SKIN.tex.Window.Mini_Hover		= GWEN.CreateTextureNormal( 64 + 96, 448, 31, 31 )
@@ -213,17 +212,17 @@ SKIN.tex.Input.Slider.H.Down		= GWEN.CreateTextureNormal( 416, 32+32, 15, 15 )
 SKIN.tex.Input.Slider.H.Disabled	= GWEN.CreateTextureNormal( 416, 32+48, 15, 15 )
 
 SKIN.tex.Input.Slider.V = {}
-SKIN.tex.Input.Slider.V.Normal		= GWEN.CreateTextureNormal( 416+16,	32,	15, 15 )
-SKIN.tex.Input.Slider.V.Hover		= GWEN.CreateTextureNormal( 416+16,	32+16, 15, 15 )
-SKIN.tex.Input.Slider.V.Down		= GWEN.CreateTextureNormal( 416+16,	32+32, 15, 15 )
-SKIN.tex.Input.Slider.V.Disabled	= GWEN.CreateTextureNormal( 416+16,	32+48, 15, 15 )
+SKIN.tex.Input.Slider.V.Normal		= GWEN.CreateTextureNormal( 416+16, 32, 15, 15 )
+SKIN.tex.Input.Slider.V.Hover		= GWEN.CreateTextureNormal( 416+16, 32+16, 15, 15 )
+SKIN.tex.Input.Slider.V.Down		= GWEN.CreateTextureNormal( 416+16, 32+32, 15, 15 )
+SKIN.tex.Input.Slider.V.Disabled	= GWEN.CreateTextureNormal( 416+16, 32+48, 15, 15 )
 
 SKIN.tex.Input.ListBox = {}
 SKIN.tex.Input.ListBox.Background		= GWEN.CreateTextureBorder( 256, 256, 63, 127, 8, 8, 8, 8 )
 SKIN.tex.Input.ListBox.Hovered			= GWEN.CreateTextureBorder( 320, 320, 31, 31, 8, 8, 8, 8 )
 SKIN.tex.Input.ListBox.EvenLine			= GWEN.CreateTextureBorder( 352, 256, 31, 31, 8, 8, 8, 8 )
 SKIN.tex.Input.ListBox.OddLine			= GWEN.CreateTextureBorder( 352, 288, 31, 31, 8, 8, 8, 8 )
-SKIN.tex.Input.ListBox.EvenLineSelected	= GWEN.CreateTextureBorder( 320, 270, 31, 31, 8, 8, 8, 8 )
+SKIN.tex.Input.ListBox.EvenLineSelected	= GWEN.CreateTextureBorder( 320, 256, 31, 31, 8, 8, 8, 8 )
 SKIN.tex.Input.ListBox.OddLineSelected	= GWEN.CreateTextureBorder( 320, 288, 31, 31, 8, 8, 8, 8 )
 
 SKIN.tex.ProgressBar = {}
@@ -240,39 +239,39 @@ SKIN.tex.Tooltip = GWEN.CreateTextureBorder( 384, 64, 31, 31, 8, 8, 8, 8 )
 SKIN.Colours = {}
 
 SKIN.Colours.Window = {}
-SKIN.Colours.Window.TitleActive			= GWEN.TextureColor( 4 + 8 * 0, 508 )
-SKIN.Colours.Window.TitleInactive		= GWEN.TextureColor( 4 + 8 * 1, 508 )
+SKIN.Colours.Window.TitleActive		= GWEN.TextureColor( 4 + 8 * 0, 508 )
+SKIN.Colours.Window.TitleInactive	= GWEN.TextureColor( 4 + 8 * 1, 508 )
 
 SKIN.Colours.Button = {}
-SKIN.Colours.Button.Normal				= GWEN.TextureColor( 4 + 8 * 2, 508 )
-SKIN.Colours.Button.Hover				= GWEN.TextureColor( 4 + 8 * 3, 508 )
-SKIN.Colours.Button.Down				= GWEN.TextureColor( 4 + 8 * 2, 500 )
-SKIN.Colours.Button.Disabled			= GWEN.TextureColor( 4 + 8 * 3, 500 )
+SKIN.Colours.Button.Normal			= GWEN.TextureColor( 4 + 8 * 2, 508 )
+SKIN.Colours.Button.Hover			= GWEN.TextureColor( 4 + 8 * 3, 508 )
+SKIN.Colours.Button.Down			= GWEN.TextureColor( 4 + 8 * 2, 500 )
+SKIN.Colours.Button.Disabled		= GWEN.TextureColor( 4 + 8 * 3, 500 )
 
 SKIN.Colours.Tab = {}
 SKIN.Colours.Tab.Active = {}
-SKIN.Colours.Tab.Active.Normal			= GWEN.TextureColor( 4 + 8 * 4, 508 )
-SKIN.Colours.Tab.Active.Hover			= GWEN.TextureColor( 4 + 8 * 5, 508 )
-SKIN.Colours.Tab.Active.Down			= GWEN.TextureColor( 4 + 8 * 4, 500 )
-SKIN.Colours.Tab.Active.Disabled		= GWEN.TextureColor( 4 + 8 * 5, 500 )
+SKIN.Colours.Tab.Active.Normal		= GWEN.TextureColor( 4 + 8 * 4, 508 )
+SKIN.Colours.Tab.Active.Hover		= GWEN.TextureColor( 4 + 8 * 5, 508 )
+SKIN.Colours.Tab.Active.Down		= GWEN.TextureColor( 4 + 8 * 4, 500 )
+SKIN.Colours.Tab.Active.Disabled	= GWEN.TextureColor( 4 + 8 * 5, 500 )
 
 SKIN.Colours.Tab.Inactive = {}
-SKIN.Colours.Tab.Inactive.Normal		= GWEN.TextureColor( 4 + 8 * 6, 508 )
-SKIN.Colours.Tab.Inactive.Hover			= GWEN.TextureColor( 4 + 8 * 7, 508 )
-SKIN.Colours.Tab.Inactive.Down			= GWEN.TextureColor( 4 + 8 * 6, 500 )
-SKIN.Colours.Tab.Inactive.Disabled		= GWEN.TextureColor( 4 + 8 * 7, 500 )
+SKIN.Colours.Tab.Inactive.Normal	= GWEN.TextureColor( 4 + 8 * 6, 508 )
+SKIN.Colours.Tab.Inactive.Hover		= GWEN.TextureColor( 4 + 8 * 7, 508 )
+SKIN.Colours.Tab.Inactive.Down		= GWEN.TextureColor( 4 + 8 * 6, 500 )
+SKIN.Colours.Tab.Inactive.Disabled	= GWEN.TextureColor( 4 + 8 * 7, 500 )
 
 SKIN.Colours.Label = {}
-SKIN.Colours.Label.Default				= GWEN.TextureColor( 4 + 8 * 8, 508 )
-SKIN.Colours.Label.Bright				= GWEN.TextureColor( 4 + 8 * 9, 508 )
-SKIN.Colours.Label.Dark					= GWEN.TextureColor( 4 + 8 * 8, 500 )
-SKIN.Colours.Label.Highlight			= GWEN.TextureColor( 4 + 8 * 9, 500 )
+SKIN.Colours.Label.Default			= GWEN.TextureColor( 4 + 8 * 8, 508 )
+SKIN.Colours.Label.Bright			= GWEN.TextureColor( 4 + 8 * 9, 508 )
+SKIN.Colours.Label.Dark				= GWEN.TextureColor( 4 + 8 * 8, 500 )
+SKIN.Colours.Label.Highlight		= GWEN.TextureColor( 4 + 8 * 9, 500 )
 
 SKIN.Colours.Tree = {}
-SKIN.Colours.Tree.Lines					= GWEN.TextureColor( 4 + 8 * 10, 508 ) ---- !!!
-SKIN.Colours.Tree.Normal				= GWEN.TextureColor( 4 + 8 * 11, 508 )
-SKIN.Colours.Tree.Hover					= GWEN.TextureColor( 4 + 8 * 10, 500 )
-SKIN.Colours.Tree.Selected				= GWEN.TextureColor( 4 + 8 * 11, 500 )
+SKIN.Colours.Tree.Lines				= GWEN.TextureColor( 4 + 8 * 10, 508 ) ---- !!!
+SKIN.Colours.Tree.Normal			= GWEN.TextureColor( 4 + 8 * 11, 508 )
+SKIN.Colours.Tree.Hover				= GWEN.TextureColor( 4 + 8 * 10, 500 )
+SKIN.Colours.Tree.Selected			= GWEN.TextureColor( 4 + 8 * 11, 500 )
 
 SKIN.Colours.Properties = {}
 SKIN.Colours.Properties.Line_Normal			= GWEN.TextureColor( 4 + 8 * 12, 508 )

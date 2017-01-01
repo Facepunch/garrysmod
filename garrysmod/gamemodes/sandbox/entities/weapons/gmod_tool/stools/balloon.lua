@@ -9,6 +9,11 @@ TOOL.ClientConVar[ "g" ] = "255"
 TOOL.ClientConVar[ "b" ] = "0"
 TOOL.ClientConVar[ "model" ] = "normal_skin1"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 cleanup.Register( "balloons" )
 
 function TOOL:LeftClick( trace, attach )
@@ -112,8 +117,6 @@ function TOOL:LeftClick( trace, attach )
 		undo.SetPlayer( ply )
 	undo.Finish()
 
-	ply:AddCleanup( "balloons", balloon )
-
 	return true
 
 end
@@ -155,6 +158,7 @@ if ( SERVER ) then
 
 		if ( IsValid( pl ) ) then
 			pl:AddCount( "balloons", balloon )
+			pl:AddCleanup( "balloons", balloon )
 		end
 
 		return balloon
@@ -219,7 +223,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Slider", { Label = "#tool.balloon.force", Type = "Float", Command = "balloon_force", Min = -1000, Max = 2000, Help = true } )
 	CPanel:AddControl( "Color", { Label = "#tool.balloon.color", Red = "balloon_r", Green = "balloon_g", Blue = "balloon_b" } )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.balloon.model", ConVar = "balloon_model", Height = 4, ModelsTable = list.Get( "BalloonModels" ) } )
+	CPanel:AddControl( "PropSelect", { Label = "#tool.balloon.model", ConVar = "balloon_model", Height = 0, ModelsTable = list.Get( "BalloonModels" ) } )
 
 end
 

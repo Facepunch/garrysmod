@@ -17,15 +17,15 @@ function PROPSPEC.Start(ply, ent)
 
    local bonus = math.Clamp(math.ceil(ply:Frags() / 2), propspec_min:GetInt(), propspec_max:GetInt())
 
-   ply.propspec = {ent = ent, t = 0, retime = 0, punches = 0, max = propspec_base:GetInt() + bonus}
+   ply.propspec = {ent=ent, t=0, retime=0, punches=0, max=propspec_base:GetInt() + bonus}
 
    ent:SetNWEntity("spec_owner", ply)
    ply:SetNWInt("bonuspunches", bonus)
 end
 
 local function IsWhitelistedClass(cls)
-   return string.match(cls, "prop_physics*") or
-           string.match(cls, "func_physbox*")
+   return (string.match(cls, "prop_physics*") or
+           string.match(cls, "func_physbox*"))
 end
 
 function PROPSPEC.Target(ply, ent)
@@ -73,7 +73,7 @@ local propspec_force = CreateConVar("ttt_spec_prop_force", "110")
 function PROPSPEC.Key(ply, key)
    local ent = ply.propspec.ent
    local phys = IsValid(ent) and ent:GetPhysicsObject()
-   if (not IsValid(ent)) or (not IsValid(phys)) then
+   if (not IsValid(ent)) or (not IsValid(phys)) then 
       PROPSPEC.End(ply)
       return false
    end
@@ -143,3 +143,4 @@ function PROPSPEC.Recharge(ply)
       pr.retime = CurTime() + propspec_retime:GetFloat()
    end
 end
+

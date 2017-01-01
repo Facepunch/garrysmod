@@ -81,6 +81,44 @@ local function RenderSpawnIcon_Ragdoll_Head( model, pos, middle, size )
 
 end
 
+local function RenderSpawnIcon_Ragdoll_Facemask( model, pos, middle, size )
+
+	local at = model:GetAttachment( model:LookupAttachment( "facemask" ) )
+
+	local ViewAngle = at.Ang
+	ViewAngle:RotateAroundAxis( ViewAngle:Right(), -10 )
+	ViewAngle:RotateAroundAxis( ViewAngle:Up(), 160 )
+	local ViewPos = at.Pos + ViewAngle:Forward() * -67 + ViewAngle:Up() * -2 + ViewAngle:Right() * -1
+	local view = {}
+
+	view.fov		= 10
+	view.origin		= ViewPos
+	view.znear		= 0.1
+	view.zfar		= 100
+	view.angles		= ViewAngle
+
+	return view
+
+end
+
+local function RenderSpawnIcon_Ragdoll_Forward( model, pos, middle, size )
+
+	local at = model:GetAttachment( model:LookupAttachment( "forward" ) )
+
+	local ViewAngle = at.Ang + Angle( 10, -20, 0 )
+	local ViewPos = at.Pos + ViewAngle:Forward() * -67 + ViewAngle:Up() * -1 + ViewAngle:Right() * 2.5
+	local view = {}
+
+	view.fov		= 10
+	view.origin		= ViewPos
+	view.znear		= 0.1
+	view.zfar		= 100
+	view.angles		= ViewAngle
+
+	return view
+
+end
+
 local function RenderSpawnIcon_DOD( model, pos, middle, size )
 
 	local ViewAngle = Angle( 0, 160, 0 )
@@ -131,7 +169,7 @@ end
 
 SpawniconGenFunctions = {}
 
-function PositionSpawnIcon( model, pos )
+function PositionSpawnIcon( model, pos, noAngles )
 
 	local mn, mx = model:GetRenderBounds()
 	local middle = ( mn + mx ) * 0.5
@@ -141,7 +179,7 @@ function PositionSpawnIcon( model, pos )
 	size = math.max( size, math.abs( mn.z ) + math.abs( mx.z ) )
 
 	model:SetPos( pos )
-	model:SetAngles( Angle( 0, 0, 0 ) )
+	if ( !noAngles ) then model:SetAngles( Angle( 0, 0, 0 ) ) end
 
 	local ModelName = model:GetModel()
 	ModelName = string.Replace( ModelName, "--", "/" )
@@ -158,6 +196,16 @@ function PositionSpawnIcon( model, pos )
 
 	if ( model:LookupAttachment( "head" ) > 0 ) then
 		return RenderSpawnIcon_Ragdoll_Head( model, pos, middle, size )
+	end
+
+	-- CS:GO Player Models
+	if ( model:LookupAttachment( "facemask" ) > 0 ) then
+		return RenderSpawnIcon_Ragdoll_Facemask( model, pos, middle, size )
+	end
+
+	-- CS:GO Hostages
+	if ( model:LookupAttachment( "forward" ) > 0 ) then
+		return RenderSpawnIcon_Ragdoll_Forward( model, pos, middle, size )
 	end
 
 	return RenderSpawnIcon_Prop( model, pos, middle, size )

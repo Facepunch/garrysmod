@@ -41,7 +41,7 @@ local GetPTranslation = LANG.GetParamTranslation
 local tips_bg = Color(0, 0, 0, 200)
 
 local tip_ids = {}
-for i = 1, 40 do
+for i=1, 40 do
    table.insert(tip_ids, i)
 end
 
@@ -177,10 +177,10 @@ function PANEL:PerformLayout()
    -- position content
    self.tiptext:SetPos(m, m)
    self.tiptext:SetTall(self.IdealHeight)
-   self.tiptext:SetWide(width - m * 2 - self.bwrap:GetWide())
+   self.tiptext:SetWide(width - m*2 - self.bwrap:GetWide())
    self.tiptext:SizeToContentsY()
 
-   local height = math.max(self.IdealHeight, self.tiptext:GetTall() + m * 2)
+   local height = math.max(self.IdealHeight, self.tiptext:GetTall() + m*2)
 
    local x = off_left + ((room - width) / 2)
    local y = ScrH() - off_bottom - height
@@ -270,8 +270,10 @@ function TIPS.Prev()
 end
 
 local function TipsCallback(cv, prev, new)
-   if tobool(new) and LocalPlayer():IsSpec() then
-      TIPS.Show()
+   if tobool(new) then
+      if LocalPlayer():IsSpec() then
+         TIPS.Show()
+      end
    else
       TIPS.Hide()
    end

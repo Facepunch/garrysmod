@@ -9,6 +9,13 @@ TOOL.ClientConVar[ "fixed" ] = "1"
 TOOL.ClientConVar[ "speed" ] = "64"
 TOOL.ClientConVar[ "material" ] = "cable/rope"
 
+TOOL.Information = {
+	{ name = "left", stage = 0 },
+	{ name = "left_1", stage = 1, op = 1 },
+	{ name = "right", stage = 0 },
+	{ name = "reload" }
+}
+
 function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end

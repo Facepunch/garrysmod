@@ -44,6 +44,8 @@
 
 local PANEL = {}
 
+AccessorFunc( PANEL, "m_HideButtons", "HideButtons" )
+
 function PANEL:Init()
 
 	self.Offset = 0
@@ -64,6 +66,7 @@ function PANEL:Init()
 	self.btnGrip = vgui.Create( "DScrollBarGrip", self )
 
 	self:SetSize( 15, 15 )
+	self:SetHideButtons( false )
 
 end
 
@@ -239,7 +242,10 @@ function PANEL:OnCursorMoved( x, y )
 	y = y - self.btnUp:GetTall()
 	y = y - self.HoldPos
 
-	local TrackSize = self:GetTall() - self:GetWide() * 2 - self.btnGrip:GetTall()
+	local BtnHeight = self:GetWide()
+	if ( self:GetHideButtons() ) then BtnHeight = 0 end
+
+	local TrackSize = self:GetTall() - BtnHeight * 2 - self.btnGrip:GetTall()
 
 	y = y / TrackSize
 
@@ -265,21 +271,33 @@ end
 function PANEL:PerformLayout()
 
 	local Wide = self:GetWide()
+	local BtnHeight = Wide
+	if ( self:GetHideButtons() ) then BtnHeight = 0 end
 	local Scroll = self:GetScroll() / self.CanvasSize
-	local BarSize = math.max( self:BarScale() * ( self:GetTall() - ( Wide * 2 ) ), 10 )
-	local Track = self:GetTall() - ( Wide * 2 ) - BarSize
+	local BarSize = math.max( self:BarScale() * ( self:GetTall() - ( BtnHeight * 2 ) ), 10 )
+	local Track = self:GetTall() - ( BtnHeight * 2 ) - BarSize
 	Track = Track + 1
 
 	Scroll = Scroll * Track
 
-	self.btnGrip:SetPos( 0, Wide + Scroll )
+	self.btnGrip:SetPos( 0, BtnHeight + Scroll )
 	self.btnGrip:SetSize( Wide, BarSize )
 
-	self.btnUp:SetPos( 0, 0, Wide, Wide )
-	self.btnUp:SetSize( Wide, Wide )
+	if ( BtnHeight > 0 ) then
+		self.btnUp:SetPos( 0, 0, Wide, Wide )
+		self.btnUp:SetSize( Wide, BtnHeight )
 
-	self.btnDown:SetPos( 0, self:GetTall() - Wide, Wide, Wide )
-	self.btnDown:SetSize( Wide, Wide )
+		self.btnDown:SetPos( 0, self:GetTall() - BtnHeight )
+		self.btnDown:SetSize( Wide, BtnHeight )
+		
+		self.btnUp:SetVisible( true )
+		self.btnDown:SetVisible( true )
+	else
+		self.btnUp:SetVisible( false )
+		self.btnDown:SetVisible( false )
+		self.btnDown:SetSize( Wide, BtnHeight )
+		self.btnUp:SetSize( Wide, BtnHeight )
+	end
 
 end
 

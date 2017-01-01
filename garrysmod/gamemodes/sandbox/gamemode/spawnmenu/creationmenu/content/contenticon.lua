@@ -7,14 +7,11 @@ local matOverlay_Normal = Material( "gui/ContentIcon-normal.png" )
 local matOverlay_Hovered = Material( "gui/ContentIcon-hovered.png" )
 local matOverlay_AdminOnly = Material( "icon16/shield.png" )
 
-AccessorFunc( PANEL, "m_Color",			"Color" )
-AccessorFunc( PANEL, "m_Type",			"ContentType" )
-AccessorFunc( PANEL, "m_SpawnName",		"SpawnName" )
-AccessorFunc( PANEL, "m_NPCWeapon",		"NPCWeapon" )
+AccessorFunc( PANEL, "m_Color", "Color" )
+AccessorFunc( PANEL, "m_Type", "ContentType" )
+AccessorFunc( PANEL, "m_SpawnName", "SpawnName" )
+AccessorFunc( PANEL, "m_NPCWeapon", "NPCWeapon" )
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:SetPaintBackground( false )
@@ -112,10 +109,10 @@ function PANEL:Paint( w, h )
 	render.PushFilterMag( TEXFILTER.ANISOTROPIC )
 	render.PushFilterMin( TEXFILTER.ANISOTROPIC )
 
-	self.Image:PaintAt( 3 + self.Border, 3 + self.Border, 128-8-self.Border*2, 128-8-self.Border*2 )
+	self.Image:PaintAt( 3 + self.Border, 3 + self.Border, 128 - 8 - self.Border * 2, 128 - 8 - self.Border * 2 )
 
-	render.PopFilterMag()
 	render.PopFilterMin()
+	render.PopFilterMag()
 
 	surface.SetDrawColor( 255, 255, 255, 255 )
 
@@ -137,6 +134,7 @@ function PANEL:Paint( w, h )
 		surface.SetMaterial( matOverlay_AdminOnly )
 		surface.DrawTexturedRect( self.Border + 8, self.Border + 8, 16, 16 )
 	end
+
 end
 
 function PANEL:PaintOver( w, h )
@@ -186,7 +184,7 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 	if ( !obj.nicename ) then return end
 	if ( !obj.spawnname ) then return end
 
-local icon = vgui.Create( "ContentIcon", container )
+	local icon = vgui.Create( "ContentIcon", container )
 	icon:SetContentType( "entity" )
 	icon:SetSpawnName( obj.spawnname )
 	icon:SetName( obj.nicename )

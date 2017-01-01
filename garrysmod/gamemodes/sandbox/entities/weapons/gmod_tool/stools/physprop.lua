@@ -5,6 +5,8 @@ TOOL.Name = "#tool.physprop.name"
 TOOL.ClientConVar[ "gravity_toggle" ] = "1"
 TOOL.ClientConVar[ "material" ] = "metal_bouncy"
 
+TOOL.Information = { { name = "left" } }
+
 function TOOL:LeftClick( trace )
 
 	if ( !IsValid( trace.Entity ) ) then return false end
@@ -40,9 +42,9 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "physprop", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
-	CPanel:AddControl( "CheckBox", { Label = "#tool.physprop.gravity", Command = "physprop_gravity_toggle" } )
+	CPanel:AddControl( "ListBox", { Label = "#tool.physprop.material", Options = list.Get( "PhysicsMaterials" ) } )
 
-	CPanel:AddControl( "ComboBox", { Label = "#tool.physprop.material", Options = list.Get( "PhysicsMaterials" ) } )
+	CPanel:AddControl( "CheckBox", { Label = "#tool.physprop.gravity", Command = "physprop_gravity_toggle" } )
 
 end
 

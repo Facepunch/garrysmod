@@ -29,7 +29,6 @@ L.win_showreport   = "一起觀看觀看 {num} 秒的回合總結吧！ "
 
 L.limit_round      = "已達遊戲回合上限，接著將載入地圖 {mapname}  "
 L.limit_time       = "已達遊戲時間上限，接著將載入地圖 {mapname}  "
-L.limit_vote       = "遊戲回合或時間已達上限。投票時間來囉！ "
 L.limit_left       = "在載入地圖 {mapname} 前，還有 {num} 回合或者 {time} 分鐘的剩餘時間。 "
 
 --- Credit awards
@@ -143,10 +142,6 @@ L.radio_button_steps   = "腳步聲 "
 
 -- Intro screen shown after joining
 L.intro_help     = "若您是遊戲初學者，可按下F1查看遊戲教學！ "
-
--- "Continue playing" vote
-L.contvote_continue = "繼續進行遊戲 "
-L.contvote_change   = "發起投票 "
 
 -- Radiocommands/quickchat
 L.quick_title   = "快速聊天按鍵 "

@@ -24,7 +24,6 @@ SWEP.Primary.ClipSize      = -1
 SWEP.Primary.DefaultClip   = -1
 SWEP.Primary.Automatic     = true
 SWEP.Primary.Delay         = 3
-SWEP.Primary.Ammo          = "none"
 SWEP.Primary.Cone          = 0.005
 SWEP.Primary.Sound         = Sound( "weapons/ar2/fire1.wav" )
 SWEP.Primary.SoundLevel    = 54
@@ -35,7 +34,6 @@ SWEP.Secondary.Automatic   = false
 SWEP.Secondary.Ammo        = "none"
 SWEP.Secondary.Delay       = 0.5
 
-SWEP.AutoSpawnable         = false
 SWEP.NoSights              = true
 
 SWEP.Kind                  = WEAPON_EQUIP2
@@ -68,6 +66,8 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:PrimaryAttack()
+   if self.IsCharging then return end
+
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
    self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
 
@@ -118,7 +118,7 @@ function SWEP:FirePulse(force_fwd, force_up)
                            ply:SetGroundEntity(nil)
                            ply:SetLocalVelocity(ply:GetVelocity() + pushvel)
 
-                           ply.was_pushed = {att = owner, t = CurTime(), wep = self:GetClass()}
+                           ply.was_pushed = {att=owner, t=CurTime(), wep=self:GetClass()}
 
                         end
                      end
@@ -133,7 +133,7 @@ local CHARGE_FORCE_UP_MIN = 100
 local CHARGE_FORCE_UP_MAX = 350
 function SWEP:ChargedAttack()
    local charge = math.Clamp(self:GetCharge(), 0, 1)
-
+   
    self.IsCharging = false
    self:SetCharge(0)
 
@@ -188,7 +188,7 @@ function SWEP:Think()
          return true
       end
 
-
+      
       if SERVER and self:GetCharge() < 1 and self.NextCharge < CurTime() then
          self:SetCharge(math.min(1, self:GetCharge() + CHARGE_AMOUNT))
 
@@ -231,7 +231,7 @@ if CLIENT then
          surface.DrawLine(bx, y - w, bx, y + w)
 
          bx = x - 30
-         surface.DrawLine(bx, y - w, bx, y + w)
+         surface.DrawLine(bx, y - w, bx, y + w) 
       end
 
       if charge > 0 then
@@ -239,7 +239,7 @@ if CLIENT then
 
          local w, h = 100, 20
 
-         surface.DrawOutlinedRect(x - w / 2, y - h, w, h)
+         surface.DrawOutlinedRect(x - w/2, y - h, w, h)
 
          if LocalPlayer():IsTraitor() then
             surface.SetDrawColor(255, 0, 0, 155)
@@ -247,7 +247,7 @@ if CLIENT then
             surface.SetDrawColor(0, 255, 0, 155)
          end
 
-         surface.DrawRect(x - w / 2, y - h, w * charge, h)
+         surface.DrawRect(x - w/2, y - h, w * charge, h)
 
          surface.SetFont("TabLarge")
          surface.SetTextColor(255, 255, 255, 180)

@@ -4,6 +4,7 @@ DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Light"
 ENT.RenderGroup = RENDERGROUP_BOTH
+ENT.Editable = true
 
 local matLight = Material( "sprites/light_ignorez" )
 local MODEL = Model( "models/maxofs2d/light_tubular.mdl" )
@@ -13,10 +14,10 @@ local MODEL = Model( "models/maxofs2d/light_tubular.mdl" )
 --
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Bool", 0, "On" )
-	self:NetworkVar( "Bool", 1, "Toggle" )
-	self:NetworkVar( "Float", 1, "LightSize" )
-	self:NetworkVar( "Float", 2, "Brightness" )
+	self:NetworkVar( "Bool", 0, "On", { KeyName = "on", Edit = { type = "Boolean", order = 1 } } )
+	self:NetworkVar( "Bool", 1, "Toggle", { KeyName = "tg", Edit = { type = "Boolean", order = 2 } } )
+	self:NetworkVar( "Float", 1, "LightSize", { KeyName = "sz", Edit = { type = "Float", order = 3, min = 0, max = 1024 } } )
+	self:NetworkVar( "Float", 2, "Brightness" , { KeyName = "br", Edit = { type = "Int", order = 4, min = 0, max = 6 } } )
 
 end
 
@@ -66,13 +67,21 @@ function ENT:Think()
 
 			local c = self:GetColor()
 
+			local size = self:GetLightSize()
+			local brght = self:GetBrightness()
+			-- Clamp for multiplayer
+			if ( !game.SinglePlayer() ) then
+				size = math.Clamp( size, 0, 1024 )
+				brght = math.Clamp( brght, 0, 6 )
+			end
+
 			dlight.Pos = self:GetPos()
 			dlight.r = c.r
 			dlight.g = c.g
 			dlight.b = c.b
-			dlight.Brightness = self:GetBrightness()
-			dlight.Decay = self:GetLightSize() * 5
-			dlight.Size = self:GetLightSize()
+			dlight.Brightness = brght
+			dlight.Decay = size * 5
+			dlight.Size = size
 			dlight.DieTime = CurTime() + 1
 
 		end
@@ -94,7 +103,7 @@ function ENT:DrawTranslucent()
 	local Distance = ViewNormal:Length()
 	ViewNormal:Normalize()
 
-	local Visibile	= util.PixelVisible( LightPos, 4, self.PixVis )
+	local Visibile = util.PixelVisible( LightPos, 4, self.PixVis )
 
 	if ( !Visibile || Visibile < 0.1 ) then return end
 
@@ -103,17 +112,15 @@ function ENT:DrawTranslucent()
 	local c = self:GetColor()
 	local Alpha = 255 * Visibile
 
-	render.DrawSprite( LightPos - up * 2, 8, 8, Color(255, 255, 255, Alpha), Visibile )
-	render.DrawSprite( LightPos - up * 4, 8, 8, Color(255, 255, 255, Alpha), Visibile )
-	render.DrawSprite( LightPos - up * 6, 8, 8, Color(255, 255, 255, Alpha), Visibile )
+	render.DrawSprite( LightPos - up * 2, 8, 8, Color( 255, 255, 255, Alpha ), Visibile )
+	render.DrawSprite( LightPos - up * 4, 8, 8, Color( 255, 255, 255, Alpha ), Visibile )
+	render.DrawSprite( LightPos - up * 6, 8, 8, Color( 255, 255, 255, Alpha ), Visibile )
 	render.DrawSprite( LightPos - up * 5, 64, 64, Color( c.r, c.g, c.b, 64 ), Visibile )
 
 end
 
 function ENT:GetOverlayText()
-
 	return self:GetPlayerName()
-
 end
 
 function ENT:OnTakeDamage( dmginfo )
@@ -121,7 +128,5 @@ function ENT:OnTakeDamage( dmginfo )
 end
 
 function ENT:Toggle()
-
 	self:SetOn( !self:GetOn() )
-
 end

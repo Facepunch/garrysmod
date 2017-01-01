@@ -29,7 +29,6 @@ L.win_showreport   = "¡Echa un vistazo al informe de la ronda durante {num} seg
 
 L.limit_round      = "Se ha alcanzado el límite de rondas. El próximo mapa será {mapname}."
 L.limit_time       = "Se ha alcanzado el límite de tiempo. El próximo mapa será {mapname}."
-L.limit_vote       = "Ha finalizado la partida. ¡Es hora de votar!"
 L.limit_left       = "Quedan {num} ronda{s} o {time} minutos para cambiar de mapa a {mapname}."
 
 --- Credit awards
@@ -143,10 +142,6 @@ L.radio_button_steps   = "Pasos"
 
 -- Intro screen shown after joining
 L.intro_help     = "¡Si eres nuevo en el juego pulsa F1 para ver las instrucciones!"
-
--- "Continue playing" vote
-L.contvote_continue = "Seguir jugando este"
-L.contvote_change   = "Iniciar una votación"
 
 -- Radiocommands/quickchat
 L.quick_title   = "Teclas de acceso rápido a chat"

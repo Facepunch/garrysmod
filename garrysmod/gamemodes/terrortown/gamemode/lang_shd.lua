@@ -10,7 +10,7 @@ util.IncludeClientFile("cl_lang.lua")
 
 -- Add all lua files in our /lang/ dir
 local dir = GM.FolderName or "terrortown"
-local files = file.Find(dir .. "/gamemode/lang/*.lua", "LUA" )
+local files, dirs = file.Find(dir .. "/gamemode/lang/*.lua", "LUA" )
 for _, fname in pairs(files) do
    local path = "lang/" .. fname
    -- filter out directories and temp files (like .lua~)
@@ -76,7 +76,7 @@ if SERVER then
       if not IsValid(ply) then return end
 
       net.Start("TTT_ServerLang")
-         net.WriteString(GetConVar:GetString("ttt_lang_serverdefault"))
+         net.WriteString(GetConVarString("ttt_lang_serverdefault"))
       net.Send(ply)
    end
    concommand.Add("_ttt_request_serverlang", ServerLangRequest)
@@ -90,7 +90,7 @@ else -- CLIENT
       local params = nil
       if c > 0 then
          params = {}
-         for i = 1, c do
+         for i=1, c do
             params[net.ReadString()] = net.ReadString()
          end
       end
@@ -105,7 +105,7 @@ else -- CLIENT
       local lang_name = net.ReadString()
       lang_name = lang_name and string.lower(lang_name)
       if LANG.Strings[lang_name] then
-         if LANG.IsServerDefault(GetConVar:GetString("ttt_language")) then
+         if LANG.IsServerDefault(GetConVarString("ttt_language")) then
             LANG.SetActiveLanguage(lang_name)
          end
 

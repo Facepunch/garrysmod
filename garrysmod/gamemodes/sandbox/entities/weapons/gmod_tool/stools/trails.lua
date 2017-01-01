@@ -13,6 +13,11 @@ TOOL.ClientConVar[ "endsize" ] = 0
 
 TOOL.ClientConVar[ "material" ] = "trails/lol"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 cleanup.Register( "trails" )
 
 local function SetTrails( ply, ent, data )
@@ -142,7 +147,7 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description	= "#tool.trails.desc" } )
+	CPanel:AddControl( "Header", { Description = "#tool.trails.desc" } )
 
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "trails", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 

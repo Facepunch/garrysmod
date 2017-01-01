@@ -115,7 +115,7 @@ function SWEP:PrimaryAttack()
       local ply = self.Owner
       if not IsValid(ply) then return end
 
-      local tr = util.TraceLine({start = ply:GetShootPos(), endpos = ply:GetShootPos() + ply:GetAimVector() * maxrange, filter = {ply, self.Entity}, mask = MASK_SOLID})
+      local tr = util.TraceLine({start=ply:GetShootPos(), endpos=ply:GetShootPos() + ply:GetAimVector() * maxrange, filter={ply, self.Entity}, mask=MASK_SOLID})
 
       if tr.HitNonWorld and ValidTarget(tr.Entity) and tr.Entity:GetPhysicsObject():IsMoveable() then
 
@@ -143,7 +143,7 @@ function SWEP:SecondaryAttack()
 
       local range = 30000
 
-      local tr = util.TraceLine({start = ply:GetShootPos(), endpos = ply:GetShootPos() + ply:GetAimVector() * range, filter = {ply, self.Entity}, mask = MASK_SOLID})
+      local tr = util.TraceLine({start=ply:GetShootPos(), endpos=ply:GetShootPos() + ply:GetAimVector() * range, filter={ply, self.Entity}, mask=MASK_SOLID})
 
       if tr.HitNonWorld and ValidTarget(tr.Entity) and tr.Entity:GetPhysicsObject():IsMoveable() then
 
@@ -249,16 +249,18 @@ if CLIENT then
    local surface = surface
 
    function SWEP:UpdateGhost(pos, c, a)
-      if IsValid(self.Ghost) and self.Ghost:GetPos() != pos then
-        self.Ghost:SetPos(pos)
-        local ang = LocalPlayer():GetAimVector():Angle()
-        ang:RotateAroundAxis(ang:Right(), 90)
+      if IsValid(self.Ghost) then
+         if self.Ghost:GetPos() != pos then
+            self.Ghost:SetPos(pos)
+            local ang = LocalPlayer():GetAimVector():Angle()
+            ang:RotateAroundAxis(ang:Right(), 90)
 
-        self.Ghost:SetAngles(ang)
+            self.Ghost:SetAngles(ang)
 
-        self.Ghost:SetColor(Color(c.r, c.g, c.b, a))
+            self.Ghost:SetColor(Color(c.r, c.g, c.b, a))
 
-        self.Ghost:SetNoDraw(false)
+            self.Ghost:SetNoDraw(false)
+         end
       end
    end
 
@@ -277,18 +279,20 @@ if CLIENT then
       local epos = client:GetShootPos() + client:GetAimVector() * maxrange
 
       -- Painting beam
-      local tr = util.TraceLine({start = spos, endpos = epos, filter = client, mask = MASK_ALL})
+      local tr = util.TraceLine({start=spos, endpos=epos, filter=client, mask=MASK_ALL})
 
       local c = COLOR_RED
       local a = 150
       local d = (plytr.StartPos - plytr.HitPos):Length()
-      if plytr.HitNonWorld and ValidTarget(plytr.Entity) then
-        if d < maxrange then
-           c = COLOR_GREEN
-           a = 255
-        else
-           c = COLOR_YELLOW
-        end
+      if plytr.HitNonWorld then
+         if ValidTarget(plytr.Entity) then
+            if d < maxrange then
+               c = COLOR_GREEN
+               a = 255
+            else
+               c = COLOR_YELLOW
+            end
+         end
       end
 
       self:UpdateGhost(plytr.HitPos, c, a)
@@ -351,7 +355,7 @@ if CLIENT then
 
          local w, h = 100, 20
 
-         surface.DrawOutlinedRect(x - w / 2, y - h, w, h)
+         surface.DrawOutlinedRect(x - w/2, y - h, w, h)
 
          if LocalPlayer():IsTraitor() then
             surface.SetDrawColor(255, 0, 0, 155)
@@ -359,7 +363,7 @@ if CLIENT then
             surface.SetDrawColor(0, 255, 0, 155)
          end
 
-         surface.DrawRect(x - w / 2, y - h, w * charge, h)
+         surface.DrawRect(x - w/2, y - h, w * charge, h)
 
          surface.SetFont("TabLarge")
          surface.SetTextColor(255, 255, 255, 180)

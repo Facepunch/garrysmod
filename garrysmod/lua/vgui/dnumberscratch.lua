@@ -127,7 +127,7 @@ function PANEL:OnCursorMoved( x, y )
 		maxzoom = 10000
 	end
 
-	zoom = math.Clamp( zoom + ( ( y * -0.6 ) / ControlScale), 0.01, maxzoom )
+	zoom = math.Clamp( zoom + ( ( y * -0.6 ) / ControlScale ), 0.01, maxzoom )
 	self:SetZoom( zoom )
 
 	local value = self:GetFloatValue()
@@ -176,17 +176,20 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 	local top = h * 0.4
 	local nh = h - top
 
-	local frame_min = realmid + min * self:GetZoom()
-	local frame_width = range * self:GetZoom()
+	local frame_min = math.floor( realmid + min * self:GetZoom() )
+	local frame_width = math.ceil( range * self:GetZoom() )
+	local targetW = math.min( w - math.max( 0, frame_min - x ), frame_width - math.max( 0, x - frame_min ) )
 
 	surface.SetDrawColor( 0, 0, 0, alpha )
-	surface.DrawRect( frame_min, y + top, frame_width, 2 )
+	surface.DrawRect( math.max( x, frame_min ), y + top, targetW, 2 )
 
 	surface.SetFont( "DermaDefault" )
 
 	for n = -span, span, 1 do
 
 		local nx = mid + n * size
+
+		if ( nx > x + w || nx < x ) then continue end
 
 		local dist = 1 - ( math.abs( halfw - nx + x ) / w )
 
@@ -214,25 +217,29 @@ function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 	-- Draw the last one.
 	--
 	local nx = realmid + max * self:GetZoom()
-	surface.DrawRect( nx, y + top, 2, nh )
+	if ( nx < x + w ) then
+		surface.DrawRect( nx, y + top, 2, nh )
 
-	local val = max
-	local tw, th = surface.GetTextSize( val )
+		local val = max
+		local tw, th = surface.GetTextSize( val )
 
-	surface.SetTextPos( nx - ( tw * 0.5 ), y + top - th )
-	surface.DrawText( val )
+		surface.SetTextPos( nx - ( tw * 0.5 ), y + top - th )
+		surface.DrawText( val )
+	end
 
 	--
 	-- Draw the first
 	--
 	local nx = realmid + min * self:GetZoom()
-	surface.DrawRect( nx, y + top, 2, nh )
+	if ( nx > x ) then
+		surface.DrawRect( nx, y + top, 2, nh )
 
-	local val = min
-	local tw, th = surface.GetTextSize( val )
+		local val = min
+		local tw, th = surface.GetTextSize( val )
 
-	surface.SetTextPos( nx - ( tw * 0.5 ), y + top - th )
-	surface.DrawText( val )
+		surface.SetTextPos( nx - ( tw * 0.5 ), y + top - th )
+		surface.DrawText( val )
+	end
 
 end
 
@@ -270,19 +277,20 @@ function PANEL:DrawScreen( x, y, w, h )
 	-- Background colour block
 	--
 	surface.SetDrawColor( 255, 250, 180, 100 )
-	surface.DrawRect( x + w * 0.5 - ( ( value - min ) * self:GetZoom() ), y + h * 0.4, range * self:GetZoom(), h )
+	local targetX = x + w * 0.5 - ( ( value - min ) * self:GetZoom() )
+	local targetW = range * self:GetZoom()
+	targetW = targetW - math.max( 0, x - targetX )
+	targetW = math.min( targetW, w - math.max( 0, targetX - x ) )
+	surface.DrawRect( math.max( targetX, x ), y + h * 0.4, targetW, h * 0.6 )
 
-	-- how 2 loop
-	self:DrawNotches( 10000, x, y, w, h, range, value, min, max )
-	self:DrawNotches( 1000, x, y, w, h, range, value, min, max )
-	self:DrawNotches( 100, x, y, w, h, range, value, min, max )
-	self:DrawNotches( 10, x, y, w, h, range, value, min, max )
+	for i = 1, 4 do
+		self:DrawNotches( 10 ^ i, x, y, w, h, range, value, min, max )
+	end
 
 	if ( self:GetDecimals() ) then
-		self:DrawNotches( 1, x, y, w, h, range, value, min, max )
-		self:DrawNotches( 0.1, x, y, w, h, range, value, min, max )
-		self:DrawNotches( 0.01, x, y, w, h, range, value, min, max )
-		self:DrawNotches( 0.001, x, y, w, h, range, value, min, max )
+		for i = 0, 3 do
+			self:DrawNotches( 1 / 10 ^ i, x, y, w, h, range, value, min, max )
+		end
 	end
 
 	--
@@ -322,16 +330,16 @@ function PANEL:PaintScratchWindow()
 	local x, y = self:LocalToScreen( 0, 0 )
 
 	x = x + self:GetWide() * 0.5 - w * 0.5
-	y = y + -8 - h
+	y = y - 8 - h
 
 	if ( x + w + 32 > ScrW() ) then x = ScrW() - w - 32 end
 	if ( y + h + 32 > ScrH() ) then y = ScrH() - h - 32 end
 	if ( x < 32 ) then x = 32 end
 	if ( y < 32 ) then y = 32 end
 
-	render.SetScissorRect( x, y, x + w, y + h, true )
+	if ( render ) then render.SetScissorRect( x, y, x + w, y + h, true ) end
 		self:DrawScreen( x, y, w, h )
-	render.SetScissorRect( x, y, w, h, false )
+	if ( render ) then render.SetScissorRect( x, y, w, h, false ) end
 
 end
 

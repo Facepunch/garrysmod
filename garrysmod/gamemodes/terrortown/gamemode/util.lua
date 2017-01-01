@@ -109,9 +109,9 @@ function AccessorFuncDT(tbl, varname, name)
 end
 
 function util.PaintDown(start, effname, ignore)
-   local btr = util.TraceLine({start = start, endpos = start + Vector(0,0,-256), filter = ignore, mask = MASK_SOLID})
+   local btr = util.TraceLine({start=start, endpos=(start + Vector(0,0,-256)), filter=ignore, mask=MASK_SOLID})
 
-   util.Decal(effname, btr.HitPos + btr.HitNormal, btr.HitPos-btr.HitNormal)
+   util.Decal(effname, btr.HitPos+btr.HitNormal, btr.HitPos-btr.HitNormal)
 end
 
 local function DoBleed(ent)
@@ -253,7 +253,7 @@ local gsub = string.gsub
 -- returns "Bob killed Joe"
 -- No spaces or special chars in parameter name, just alphanumerics.
 function string.Interp(str, tbl)
-   return gsub(str, "{(%w+)}", tbl)
+   return gsub(str, '{(%w+)}', tbl)
 end
 
 -- Short helper for input.LookupBinding, returns capitalised key or a default
@@ -278,7 +278,7 @@ function Dev(level, ...)
       -- table.concat does not tostring, derp
 
       local params = {...}
-      for i = 1,#params do
+      for i=1,#params do
          Msg(" " .. tostring(params[i]))
       end
 
@@ -301,21 +301,23 @@ end
 
 if CLIENT then
    local healthcolors = {
-      healthy  = Color(0,255,0,255),
-      hurt     = Color(170,230,10,255),
-      wounded  = Color(230,215,10,255),
-      badwound = Color(255,140,0,255),
-      death    = Color(255,0,0,255)
+      healthy = Color(0, 255, 0, 255),
+      hurt    = Color(170, 230, 10, 255),
+      wounded = Color(230, 215, 10, 255),
+      badwound= Color(255, 140, 0, 255),
+      death   = Color(255, 0, 0, 255)
    };
 
-   function util.HealthToString(health)
-      if health > 90 then
+   function util.HealthToString(health, maxhealth)
+      maxhealth = maxhealth or 100
+
+      if health > maxhealth * 0.9 then
          return "hp_healthy", healthcolors.healthy
-      elseif health > 70 then
+      elseif health > maxhealth * 0.7 then
          return "hp_hurt", healthcolors.hurt
-      elseif health > 45 then
+      elseif health > maxhealth * 0.45 then
          return "hp_wounded", healthcolors.wounded
-      elseif health > 20 then
+      elseif health > maxhealth * 0.2 then
          return "hp_badwnd", healthcolors.badwound
       else
          return "hp_death", healthcolors.death
@@ -323,21 +325,23 @@ if CLIENT then
    end
 
    local karmacolors = {
-      max  = Color(255,255,255,255),
-      high = Color(255,240,135,255),
-      med  = Color(245,220,60,255),
-      low  = Color(255,180,0,255),
-      min  = Color(255,130,0,255),
+      max  = Color(255, 255, 255, 255),
+      high = Color(255, 240, 135, 255),
+      med  = Color(245, 220, 60, 255),
+      low  = Color(255, 180, 0, 255),
+      min  = Color(255, 130, 0, 255),
    };
 
    function util.KarmaToString(karma)
-      if karma > 890 then
+      local maxkarma = GetGlobalInt("ttt_karma_max", 1000)
+
+      if karma > maxkarma * 0.89 then
          return "karma_max", karmacolors.max
-      elseif karma > 800 then
+      elseif karma > maxkarma * 0.8 then
          return "karma_high", karmacolors.high
-      elseif karma > 650 then
+      elseif karma > maxkarma * 0.65 then
          return "karma_med", karmacolors.med
-      elseif karma > 500 then
+      elseif karma > maxkarma * 0.5 then
          return "karma_low", karmacolors.low
       else
          return "karma_min", karmacolors.min
@@ -356,7 +360,7 @@ end
 -- Like string.FormatTime but simpler (and working), always a string, no hour
 -- support
 function util.SimpleTime(seconds, fmt)
-   if not seconds then seconds = 0 end
+	if not seconds then seconds = 0 end
 
     local ms = (seconds - math.floor(seconds)) * 100
     seconds = math.floor(seconds)

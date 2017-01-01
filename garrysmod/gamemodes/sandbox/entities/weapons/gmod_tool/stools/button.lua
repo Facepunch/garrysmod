@@ -7,7 +7,19 @@ TOOL.ClientConVar[ "keygroup" ] = "37"
 TOOL.ClientConVar[ "description" ] = ""
 TOOL.ClientConVar[ "toggle" ] = "1"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 cleanup.Register( "buttons" )
+
+local function IsValidButtonModel( model )
+	for mdl, _ in pairs( list.Get( "ButtonModels" ) ) do
+		if ( mdl:lower() == model:lower() ) then return true end
+	end
+	return false
+end
 
 function TOOL:RightClick( trace )
 
@@ -33,7 +45,7 @@ function TOOL:RightClick( trace )
 	end
 
 	-- Check the model's validity
-	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) ) then return false end
+	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidButtonModel( model ) ) then return false end
 	if ( !self:GetSWEP():CheckLimit( "buttons" ) ) then return false end
 
 	local Ang = trace.HitNormal:Angle()
@@ -48,8 +60,6 @@ function TOOL:RightClick( trace )
 		undo.AddEntity( button )
 		undo.SetPlayer( ply )
 	undo.Finish()
-
-	ply:AddCleanup( "buttons", button )
 
 	return true, button
 
@@ -80,6 +90,7 @@ if ( SERVER ) then
 	function MakeButton( pl, model, ang, pos, key, description, toggle )
 
 		if ( IsValid( pl ) && !pl:CheckLimit( "buttons" ) ) then return false end
+		if ( !IsValidButtonModel( model ) ) then return false end
 
 		local button = ents.Create( "gmod_button" )
 		if ( !IsValid( button ) ) then return false end
@@ -103,6 +114,7 @@ if ( SERVER ) then
 
 		if ( IsValid( pl ) ) then
 			pl:AddCount( "buttons", button )
+			pl:AddCleanup( "buttons", button )
 		end
 
 		DoPropSpawnedEffect( button )
@@ -139,6 +151,7 @@ end
 function TOOL:Think()
 
 	local mdl = self:GetClientInfo( "model" )
+	if ( !IsValidButtonModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
 		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
@@ -162,7 +175,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "CheckBox", { Label = "#tool.button.toggle", Command = "button_toggle", Help = true } )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.button.model", ConVar = "button_model", Height = 4, Models = list.Get( "ButtonModels" ) } )
+	CPanel:AddControl( "PropSelect", { Label = "#tool.button.model", ConVar = "button_model", Height = 0, Models = list.Get( "ButtonModels" ) } )
 
 end
 

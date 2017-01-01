@@ -266,21 +266,19 @@ end
 --
 function GM:MouthMoveAnimation( ply )
 
-	local FlexNum = ply:GetFlexNum() - 1
-	if ( FlexNum <= 0 ) then return end
+	local flexes = {
+		ply:GetFlexIDByName( "jaw_drop" ),
+		ply:GetFlexIDByName( "left_part" ),
+		ply:GetFlexIDByName( "right_part" ),
+		ply:GetFlexIDByName( "left_mouth_drop" ),
+		ply:GetFlexIDByName( "right_mouth_drop" )
+	}
 
-	for i = 0, FlexNum - 1 do
-	
-		local Name = ply:GetFlexName( i )
+	local weight = ply:IsSpeaking() and math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) or 0
 
-		if ( Name == "jaw_drop" || Name == "right_part" || Name == "left_part" || Name == "right_mouth_drop" || Name == "left_mouth_drop" ) then
+	for k, v in pairs( flexes ) do
 
-			if ( ply:IsSpeaking() ) then
-				ply:SetFlexWeight( i, math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) )
-			else
-				ply:SetFlexWeight( i, 0 )
-			end
-		end
+		ply:SetFlexWeight( v, weight )
 
 	end
 

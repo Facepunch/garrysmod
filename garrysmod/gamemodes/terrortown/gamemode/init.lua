@@ -92,12 +92,8 @@ CreateConVar("ttt_det_credits_traitorkill", "0")
 CreateConVar("ttt_det_credits_traitordead", "1")
 
 
-CreateConVar("ttt_announce_deaths", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
-
 CreateConVar("ttt_use_weapon_spawn_scripts", "1")
 CreateConVar("ttt_weapon_spawn_count", "0")
-
-CreateConVar("ttt_always_use_mapcycle", "0")
 
 CreateConVar("ttt_round_limit", "6", FCVAR_ARCHIVE + FCVAR_NOTIFY + FCVAR_REPLICATED)
 CreateConVar("ttt_time_limit_minutes", "75", FCVAR_NOTIFY + FCVAR_REPLICATED)
@@ -158,7 +154,7 @@ util.AddNetworkString("TTT_ShowPrints")
 util.AddNetworkString("TTT_ScanResult")
 util.AddNetworkString("TTT_FlareScorch")
 util.AddNetworkString("TTT_Radar")
-
+util.AddNetworkString("TTT_Spectate")
 ---- Round mechanics
 function GM:Initialize()
    MsgN("Trouble In Terrorist Town gamemode initializing...")
@@ -172,7 +168,7 @@ function GM:Initialize()
       [OPEN_DOOR] = true,
       [OPEN_ROT] = true,
       [OPEN_BUT] = true,
-      [OPEN_NOTOGGLE] = true
+      [OPEN_NOTOGGLE]= true
    };
 
    -- More map config ent defaults
@@ -210,7 +206,7 @@ function GM:Initialize()
 
    local cstrike = false
    for _, g in pairs(engine.GetGames()) do
-      if g.folder == "cstrike" then cstrike = true end
+      if g.folder == 'cstrike' then cstrike = true end
    end
    if not cstrike then
       ErrorNoHalt("TTT WARNING: CS:S does not appear to be mounted by GMod. Things may break in strange ways. Server admin? Check the TTT readme for help.\n")
@@ -233,8 +229,6 @@ end
 function GM:InitPostEntity()
    WEPS.ForcePrecache()
 end
-
-function GM:GetGameDescription() return self.Name end
 
 -- Convar replication is broken in gmod, so we do this.
 -- I don't like it any more than you do, dear reader.
@@ -285,10 +279,12 @@ end
 
 -- Used to be in Think/Tick, now in a timer
 function WaitingForPlayersChecker()
-   if GetRoundState() == ROUND_WAIT and EnoughPlayers() then
-      timer.Create("wait2prep", 1, 1, PrepareRound)
+   if GetRoundState() == ROUND_WAIT then
+      if EnoughPlayers() then
+         timer.Create("wait2prep", 1, 1, PrepareRound)
 
-      timer.Stop("waitingforply")
+         timer.Stop("waitingforply")
+      end
    end
 end
 
@@ -335,13 +331,15 @@ local function NameChangeKick()
 
    if GetRoundState() == ROUND_ACTIVE then
       for _, ply in pairs(player.GetHumans()) do
-         if ply.spawn_nick and ply.has_spawned and ply.spawn_nick != ply:Nick() then
-            local t = GetConVar("ttt_namechange_bantime"):GetInt()
-            local msg = "Changed name during a round"
-            if t > 0 then
-              ply:KickBan(t, msg)
-            else
-              ply:Kick(msg)
+         if ply.spawn_nick then
+            if ply.has_spawned and ply.spawn_nick != ply:Nick() then
+               local t = GetConVar("ttt_namechange_bantime"):GetInt()
+               local msg = "Changed name during a round"
+               if t > 0 then
+                  ply:KickBan(t, msg)
+               else
+                  ply:Kick(msg)
+               end
             end
          else
             ply.spawn_nick = ply:Nick()
@@ -420,7 +418,7 @@ local function StopRoundTimers()
    -- remove all timers
    timer.Stop("wait2prep")
    timer.Stop("prep2begin")
-   timer.Stop("end2begin")
+   timer.Stop("end2prep")
    timer.Stop("winchecker")
 end
 
@@ -439,18 +437,14 @@ local function CheckForAbort()
 end
 
 function GM:TTTDelayRoundStartForVote()
-   -- No voting system available in GM13 (yet)
-   --return self:InGamemodeVote()
+   -- Can be used for custom voting systems
+   --return true, 30
    return false
 end
 
 function PrepareRound()
    -- Check playercount
    if CheckForAbort() then return end
-
-   if GetGlobalBool("InContinueVote", false) then
-      GAMEMODE:FinishContinueVote() -- may start a gamemode vote
-   end
 
    local delay_round, delay_length = hook.Call("TTTDelayRoundStartForVote", GAMEMODE)
 
@@ -708,11 +702,6 @@ function PrintResultMessage(type)
    end
 end
 
-local function ShouldMapSwitch()
-   return true -- no voting until fretta replacement arrives
---   return GetConVar("ttt_always_use_mapcycle"):GetBool()
-end
-
 function CheckForMapSwitch()
    -- Check for mapswitch
    local rounds_left = math.max(0, GetGlobalInt("ttt_rounds_left", 6) - 1)
@@ -722,29 +711,18 @@ function CheckForMapSwitch()
    local switchmap = false
    local nextmap = string.upper(game.GetMapNext())
 
-   if ShouldMapSwitch() then
-      if rounds_left <= 0 then
-         LANG.Msg("limit_round", {mapname = nextmap})
-         switchmap = true
-      elseif time_left <= 0 then
-         LANG.Msg("limit_time", {mapname = nextmap})
-         switchmap = true
-      end
-   else
-      -- we only get here if fretta_voting is on and always_use_mapcycle off
-      if rounds_left <= 0 or time_left <= 0 then
-         LANG.Msg("limit_vote")
-
-         -- pending fretta replacement...
-         switchmap = true
-         --GAMEMODE:StartFrettaVote()
-      end
+   if rounds_left <= 0 then
+      LANG.Msg("limit_round", {mapname = nextmap})
+      switchmap = true
+   elseif time_left <= 0 then
+      LANG.Msg("limit_time", {mapname = nextmap})
+      switchmap = true
    end
 
    if switchmap then
       timer.Stop("end2prep")
       timer.Simple(15, game.LoadNextMap)
-   elseif ShouldMapSwitch() then
+   else
       LANG.Msg("limit_left", {num = rounds_left,
                               time = math.ceil(time_left / 60),
                               mapname = nextmap})
@@ -771,12 +749,6 @@ function EndRound(type)
 
    -- We may need to start a timer for a mapswitch, or start a vote
    CheckForMapSwitch()
-
-   -- Show unobtrusive vote window (only if fretta voting enabled and only if
-   -- not already in a round/time limit induced vote)
-   --if not GAMEMODE:InGamemodeVote() then
-   --   GAMEMODE:StartContinueVote()
-   --end
 
    KARMA.RoundEnd()
 
@@ -917,7 +889,7 @@ function SelectRoles()
    -- traitor, so becoming detective does not mean you lost a chance to be
    -- traitor
    local ds = 0
-   local min_karma = GetConVar:GetFloat("ttt_detective_karma_min") or 0
+   local min_karma = GetConVarNumber("ttt_detective_karma_min") or 0
    while (ds < det_count) and (#choices >= 1) do
 
       -- sometimes we need all remaining choices to be detective to fill the

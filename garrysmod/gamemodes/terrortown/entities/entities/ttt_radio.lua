@@ -33,8 +33,10 @@ function ENT:Initialize()
    end
 
    -- Register with owner
-   if CLIENT and LocalPlayer() == self:GetOwner() then
-      LocalPlayer().radio = self
+   if CLIENT then
+      if LocalPlayer() == self:GetOwner() then
+         LocalPlayer().radio = self
+      end
    end
 
    self.SoundQueue = {}
@@ -75,8 +77,10 @@ function ENT:OnTakeDamage(dmginfo)
 end
 
 function ENT:OnRemove()
-   if CLIENT and LocalPlayer() == self:GetOwner() then
-      LocalPlayer().radio = nil
+   if CLIENT then
+      if LocalPlayer() == self:GetOwner() then
+         LocalPlayer().radio = nil
+      end
    end
 end
 
@@ -204,11 +208,11 @@ function ENT:PlaySound(snd)
       local gunsound = gunsounds[snd]
       local times = math.random(gunsound.times[1], gunsound.times[2])
       local t = 0
-      for i = 1, times do
+      for i=1, times do
          timer.Simple(t,
                       function()
                          if IsValid(this) then
-                            this:PlayDelayedSound(gunsound.sound, gunsound.ampl or 90, i == times)
+                            this:PlayDelayedSound(gunsound.sound, gunsound.ampl or 90, (i == times))
                          end
                       end)
          if gunsound.burst then
@@ -223,12 +227,12 @@ function ENT:PlaySound(snd)
       local times = math.random(serialsound.times[1], serialsound.times[2])
       local t = 0
       local idx = 1
-      for i = 1, times do
+      for i=1, times do
          local sound = serialsound.sound[idx]
          timer.Simple(t,
                       function()
                          if IsValid(this) then
-                            this:PlayDelayedSound(sound, serialsound.ampl or 75, i == times)
+                            this:PlayDelayedSound(sound, serialsound.ampl or 75, (i == times))
                          end
                       end)
 
@@ -272,7 +276,7 @@ if SERVER then
 
       local radio = Entity(eidx)
       if not IsValid(radio) then return end
-      if radio:GetOwner() ~= ply then return end
+      if not radio:GetOwner() == ply then return end
 
       if not table.HasValue(soundtypes, snd) then
          print("Received radio sound not in table from", ply)
@@ -283,3 +287,5 @@ if SERVER then
    end
    concommand.Add("ttt_radio_play", RadioCmd)
 end
+
+

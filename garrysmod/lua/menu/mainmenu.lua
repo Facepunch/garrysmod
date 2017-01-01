@@ -30,7 +30,7 @@ function PANEL:Init()
 
 	self:MakePopup()
 	self:SetPopupStayAtBack( true )
-	
+
 	-- If the console is already open, we've got in its way.
 	if ( gui.IsConsoleVisible() ) then
 		gui.ShowConsole()
@@ -185,6 +185,7 @@ function UpdateServerSettings()
 
 			for k, v in pairs( array.settings ) do
 				v.Value = GetConVarString( v.name )
+				v.Singleplayer = v.singleplayer && true || false
 			end
 
 		end
@@ -220,13 +221,16 @@ function GetServers( type, id )
 	local data = {
 		Callback = function( ping , name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid )
 
+			if Servers[ address ] then return end
+			Servers[ address ] = true
+
 			name = string.JavascriptSafe( name )
 			desc = string.JavascriptSafe( desc )
 			map = string.JavascriptSafe( map )
 			address = string.JavascriptSafe( address )
 			gamemode = string.JavascriptSafe( gamemode )
 			workshopid = string.JavascriptSafe( workshopid )
-			
+
 			if ( pass ) then pass = "true" else pass = "false" end
 
 			pnlMainMenu:Call( "AddServer( '"..type.."', '"..id.."', "..ping..", \""..name.."\", \""..desc.."\", \""..map.."\", "..players..", "..maxplayers..", "..botplayers..", "..pass..", "..lastplayed..", \""..address.."\", \""..gamemode.."\", \""..workshopid.."\" )" )
@@ -237,6 +241,7 @@ function GetServers( type, id )
 
 		Finished = function()
 			pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
+			Servers = {}
 		end,
 
 		Type = type,
@@ -251,6 +256,7 @@ end
 function DoStopServers( type )
 	pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
 	ShouldStop[ type ] = true
+	Servers = {}
 end
 
 --

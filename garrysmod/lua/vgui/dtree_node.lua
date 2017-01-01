@@ -5,23 +5,23 @@ AccessorFunc( PANEL, "m_pRoot", "Root" )
 
 AccessorFunc( PANEL, "m_pParentNode", "ParentNode" )
 
-AccessorFunc( PANEL, "m_strFolder",			"Folder" )
-AccessorFunc( PANEL, "m_strFileName",		"FileName" )
-AccessorFunc( PANEL, "m_strPathID",			"PathID" )
-AccessorFunc( PANEL, "m_strWildCard",		"WildCard" )
-AccessorFunc( PANEL, "m_bNeedsPopulating",	"NeedsPopulating" )
-AccessorFunc( PANEL, "m_bShowFiles",		"ShowFiles", FORCE_BOOL )
+AccessorFunc( PANEL, "m_strFolder", "Folder" )
+AccessorFunc( PANEL, "m_strFileName", "FileName" )
+AccessorFunc( PANEL, "m_strPathID", "PathID" )
+AccessorFunc( PANEL, "m_strWildCard", "WildCard" )
+AccessorFunc( PANEL, "m_bNeedsPopulating", "NeedsPopulating" )
+AccessorFunc( PANEL, "m_bShowFiles", "ShowFiles", FORCE_BOOL )
 
-AccessorFunc( PANEL, "m_bDirty",			"Dirty",			FORCE_BOOL )
-AccessorFunc( PANEL, "m_bNeedsChildSearch",	"NeedsChildSearch",	FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDirty", "Dirty", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bHideExpander", "HideExpander", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bNeedsChildSearch", "NeedsChildSearch", FORCE_BOOL )
 
-AccessorFunc( PANEL, "m_bForceShowExpander",	"ForceShowExpander",	FORCE_BOOL )
-AccessorFunc( PANEL, "m_bHideExpander",			"HideExpander",			FORCE_BOOL )
-AccessorFunc( PANEL, "m_bDoubleClickToOpen",	"DoubleClickToOpen",	FORCE_BOOL )
+AccessorFunc( PANEL, "m_bForceShowExpander", "ForceShowExpander", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDoubleClickToOpen", "DoubleClickToOpen", FORCE_BOOL )
 
-AccessorFunc( PANEL, "m_bLastChild",		"LastChild", FORCE_BOOL )
-AccessorFunc( PANEL, "m_bDrawLines",		"DrawLines", FORCE_BOOL )
-AccessorFunc( PANEL, "m_strDraggableName",	"DraggableName" )
+AccessorFunc( PANEL, "m_bLastChild", "LastChild", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDrawLines", "DrawLines", FORCE_BOOL )
+AccessorFunc( PANEL, "m_strDraggableName", "DraggableName" )
 
 function PANEL:Init()
 
@@ -282,7 +282,8 @@ function PANEL:PerformLayout()
 
 	if ( !self.ChildNodes || !self.ChildNodes:IsVisible() ) then
 		self:SetTall( LineHeight )
-	return end
+		return
+	end
 
 	self.ChildNodes:SizeToContents()
 	self:SetTall( LineHeight + self.ChildNodes:GetTall() )
@@ -336,6 +337,7 @@ function PANEL:AddNode( strName, strIcon )
 	local pNode = vgui.Create( "DTree_Node", self )
 	pNode:SetText( strName )
 	pNode:SetParentNode( self )
+	pNode:SetTall( self:GetLineHeight() )
 	pNode:SetRoot( self:GetRoot() )
 	pNode:SetIcon( strIcon )
 	pNode:SetDrawLines( !self:IsRootNode() )

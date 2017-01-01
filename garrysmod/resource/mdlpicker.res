@@ -274,6 +274,8 @@
 							"visible"		"1"
 							"enabled"		"1"
 							"tabPosition"	"0"
+							
+							"bgcolor_override"		"60 60 60 128"
 						}
 					}
 

@@ -10,9 +10,10 @@ local key_params = {usekey = Key("+use", "USE"), walkkey = Key("+walk", "WALK")}
 
 local ClassHint = {
    prop_ragdoll = {
-      name = "corpse",
-      hint = "corpse_hint",
-      fmt  = function(ent, txt) return GetPTranslation(txt, key_params) end
+      name= "corpse",
+      hint= "corpse_hint",
+
+      fmt = function(ent, txt) return GetPTranslation(txt, key_params) end
    }
 };
 
@@ -45,7 +46,7 @@ function GM:PostDrawTranslucentRenderables()
 
       render.SetMaterial(indicator_mat)
 
-      for i = 1, #plys do
+      for i=1, #plys do
          ply = plys[i]
          if ply:IsActiveTraitor() and ply != client then
             pos = ply:GetPos()
@@ -59,7 +60,7 @@ function GM:PostDrawTranslucentRenderables()
    if client:Team() == TEAM_SPEC then
       cam.Start3D(EyePos(), EyeAngles())
 
-      for i = 1, #plys do
+      for i=1, #plys do
          ply = plys[i]
          tgt = ply:GetObserverTarget()
          if IsValid(tgt) and tgt:GetNWEntity("spec_owner", nil) == ply then
@@ -104,7 +105,7 @@ local function DrawPropSpecLabels(client)
             scrpos = nil
          end
       else
-         local _, healthcolor = util.HealthToString(ply:Health())
+         local _, healthcolor = util.HealthToString(ply:Health(), ply:GetMaxHealth())
          surface.SetTextColor(clr(healthcolor))
 
          scrpos = ply:EyePos()
@@ -189,14 +190,14 @@ function GM:HUDDrawTargetID()
       local _ -- Stop global clutter
       -- in minimalist targetID, colour nick with health level
       if minimal then
-         _, color = util.HealthToString(ent:Health())
+         _, color = util.HealthToString(ent:Health(), ent:GetMaxHealth())
       end
 
-      if client:IsTraitor() and GAMEMODE.round_state == ROUND_ACTIVE then
+      if client:IsTraitor() and GetRoundState() == ROUND_ACTIVE then
          target_traitor = ent:IsTraitor()
       end
 
-      target_detective = ent:IsDetective()
+      target_detective = GetRoundState() > ROUND_PREP and ent:IsDetective() or false
 
    elseif cls == "prop_ragdoll" then
       -- only show this if the ragdoll has a nick, else it could be a mattress
@@ -242,7 +243,7 @@ function GM:HUDDrawTargetID()
 
       x = x - w / 2
 
-      draw.SimpleText( text, font, x + 1, y + 1, COLOR_BLACK )
+      draw.SimpleText( text, font, x+1, y+1, COLOR_BLACK )
       draw.SimpleText( text, font, x, y, color )
 
       -- for ragdolls searched by detectives, add icon
@@ -264,7 +265,7 @@ function GM:HUDDrawTargetID()
    -- Draw subtitle: health or type
    local clr = rag_color
    if ent:IsPlayer() then
-      text, clr = util.HealthToString(ent:Health())
+      text, clr = util.HealthToString(ent:Health(), ent:GetMaxHealth())
 
       -- HealthToString returns a string id, need to look it up
       text = L[text]
@@ -279,7 +280,7 @@ function GM:HUDDrawTargetID()
    w, h = surface.GetTextSize( text )
    x = x_orig - w / 2
 
-   draw.SimpleText( text, font, x + 1, y + 1, COLOR_BLACK )
+   draw.SimpleText( text, font, x+1, y+1, COLOR_BLACK )
    draw.SimpleText( text, font, x, y, clr )
 
    font = "TargetIDSmall"
@@ -295,7 +296,7 @@ function GM:HUDDrawTargetID()
       y = y + h + 5
       x = x_orig - w / 2
 
-      draw.SimpleText( text, font, x + 1, y + 1, COLOR_BLACK )
+      draw.SimpleText( text, font, x+1, y+1, COLOR_BLACK )
       draw.SimpleText( text, font, x, y, clr )
    end
 
@@ -310,7 +311,7 @@ function GM:HUDDrawTargetID()
       w, h = surface.GetTextSize(text)
       x = x_orig - w / 2
       y = y + h + 5
-      draw.SimpleText( text, font, x + 1, y + 1, COLOR_BLACK )
+      draw.SimpleText( text, font, x+1, y+1, COLOR_BLACK )
       draw.SimpleText( text, font, x, y, COLOR_LGRAY )
    end
 
@@ -335,7 +336,7 @@ function GM:HUDDrawTargetID()
       x = x_orig - w / 2
       y = y + h + 5
 
-      draw.SimpleText( text, font, x + 1, y + 1, COLOR_BLACK )
+      draw.SimpleText( text, font, x+1, y+1, COLOR_BLACK )
       draw.SimpleText( text, font, x, y, clr )
    end
 end

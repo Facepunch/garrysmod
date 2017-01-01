@@ -3,18 +3,18 @@
 TRADIO = {}
 
 local sound_names = {
-   scream    = "radio_button_scream",
-   explosion = "radio_button_expl",
-   pistol    = "radio_button_pistol",
-   m16       = "radio_button_m16",
-   deagle    = "radio_button_deagle",
-   mac10     = "radio_button_mac10",
-   shotgun   = "radio_button_shotgun",
-   rifle     = "radio_button_rifle",
-   huge      = "radio_button_huge",
-   beeps     = "radio_button_c4",
-   burning   = "radio_button_burn",
-   footsteps = "radio_button_steps"
+   scream   ="radio_button_scream",
+   explosion="radio_button_expl",
+   pistol   ="radio_button_pistol",
+   m16      ="radio_button_m16",
+   deagle   ="radio_button_deagle",
+   mac10    ="radio_button_mac10",
+   shotgun  ="radio_button_shotgun",
+   rifle    ="radio_button_rifle",
+   huge     ="radio_button_huge",
+   beeps    ="radio_button_c4",
+   burning  ="radio_button_burn",
+   footsteps="radio_button_steps"
 };
 
 local smatrix = {
@@ -80,7 +80,11 @@ function TRADIO.CreateMenu(parent)
    dhelp:SetText(LANG.GetTranslation("radio_help"))
    dhelp:SetTextColor(COLOR_WHITE)
 
-   if client:HasWeapon("weapon_ttt_radio") then
+   if IsValid(client.radio) then
+
+      local board = CreateSoundBoard(wrap)
+
+   elseif client:HasWeapon("weapon_ttt_radio") then
       dhelp:SetText(LANG.GetTranslation("radio_notplaced"))
    end
 
@@ -90,3 +94,4 @@ function TRADIO.CreateMenu(parent)
 
    return wrap
 end
+

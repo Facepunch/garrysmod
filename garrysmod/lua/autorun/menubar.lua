@@ -3,8 +3,9 @@ AddCSLuaFile()
 
 if ( SERVER ) then return end
 
--- Display options
+CreateConVar( "gmod_drawtooleffects", "1", 0, "Should tools draw certain UI elements or effects? ( Will not work for all tools )" )
 
+-- Display options
 hook.Add( "PopulateMenuBar", "DisplayOptions_MenuBar", function( menubar )
 
 	local m = menubar:AddOrGetMenu( "Drawing" )
@@ -20,13 +21,14 @@ hook.Add( "PopulateMenuBar", "DisplayOptions_MenuBar", function( menubar )
 	m:AddCVar( "Draw Unfreeze", "effects_unfreeze", "1", "0" )
 	m:AddCVar( "Draw Thrusters", "cl_drawthrusterseffects", "1", "0" )
 	m:AddCVar( "Draw Toolgun Help", "gmod_drawhelp", "1", "0" )
+	m:AddCVar( "Draw Tool Effects or UI", "gmod_drawtooleffects", "1", "0" )
 	m:AddCVar( "Draw Effect Rings", "cl_draweffectrings", "1", "0" )
 	m:AddCVar( "Draw Spawn Effect", "cl_drawspawneffect", "1", "0" )
 	m:AddCVar( "Draw World Tooltips", "cl_drawworldtooltips", "1", "0" )
 
 	m:AddSpacer()
 
-	m:AddCVar( "Draw Shadows", "r_shadows", "1", "0" )	
+	m:AddCVar( "Draw Shadows", "r_shadows", "1", "0" )
 	m:AddCVar( "Detail Props", "r_drawdetailprops", "1", "0" )
 
 	m:AddSpacer()
@@ -42,27 +44,24 @@ hook.Add( "PopulateMenuBar", "DisplayOptions_MenuBar", function( menubar )
 end )
 
 -- AI Options
-
 hook.Add( "PopulateMenuBar", "NPCOptions_MenuBar", function( menubar )
 
 	local m = menubar:AddOrGetMenu( "NPCs" )
-	
+
 	m:AddCVar( "Disable Thinking", "ai_disabled", "1", "0" )
 	m:AddCVar( "Ignore Players", "ai_ignoreplayers", "1", "0" )
 	m:AddCVar( "Keep Corpses", "ai_serverragdolls", "1", "0" )
 	m:AddCVar( "Join Player's Squad", "npc_citizen_auto_player_squad", "1", "0" )
 
-	local weapons = m:AddSubMenu( "Weapon Override" )
+	local wpns = m:AddSubMenu( "Weapon Override" )
 
-	weapons:SetDeleteSelf( false )
-	weapons:AddCVar( "Default Weapon", "gmod_npcweapon", "" )
-	weapons:AddCVar( "#None", "gmod_npcweapon", "none" )
-	weapons:AddSpacer()
+	wpns:SetDeleteSelf( false )
+	wpns:AddCVar( "Default Weapon", "gmod_npcweapon", "" )
+	wpns:AddCVar( "#None", "gmod_npcweapon", "none" )
+	wpns:AddSpacer()
 
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
-
-		weapons:AddCVar( v.title, "gmod_npcweapon", v.class )
-
+		wpns:AddCVar( v.title, "gmod_npcweapon", v.class )
 	end
 
 end )

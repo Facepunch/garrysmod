@@ -8,23 +8,21 @@ function ENT:Initialize()
    -- settings entity exists (a reliable way of identifying a TTT map)
    GAMEMODE.propspec_allow_named = false
 
-   self.Outputs = self.Outputs or {}
-
    self:TriggerOutput("MapSettingsSpawned", self)
 end
 
 function ENT:KeyValue(k, v)
    if k == "cbar_doors" then
       Dev(2, "ttt_map_settings: crowbar door unlocking = " .. v)
-      local opens = v == "1"
+      local opens = (v == "1")
       GAMEMODE.crowbar_unlocks[OPEN_DOOR] = opens
       GAMEMODE.crowbar_unlocks[OPEN_ROT] = opens
    elseif k == "cbar_buttons" then
       Dev(2, "ttt_map_settings: crowbar button unlocking = " .. v)
-      GAMEMODE.crowbar_unlocks[OPEN_BUT] = v == "1"
-   elseif k == "cbar_other" then
+      GAMEMODE.crowbar_unlocks[OPEN_BUT] = (v == "1")
+   elseif k == "cbar_other" then 
       Dev(2, "ttt_map_settings: crowbar movelinear unlocking = " .. v)
-      GAMEMODE.crowbar_unlocks[OPEN_NOTOGGLE] = v == "1"
+      GAMEMODE.crowbar_unlocks[OPEN_NOTOGGLE] = (v == "1")
    elseif k == "plymodel" and v != "" then -- can ignore if empty
       if util.IsValidModel(v) then
          util.PrecacheModel(v)
@@ -36,7 +34,7 @@ function ENT:KeyValue(k, v)
       end
    elseif k == "propspec_named" then
       Dev(2, "ttt_map_settings: propspec possessing named props = " .. v)
-      GAMEMODE.propspec_allow_named = v == "1"
+      GAMEMODE.propspec_allow_named = (v == "1")
    elseif k == "MapSettingsSpawned" or k == "RoundEnd" or k == "RoundPreparation" or k == "RoundStart" then
       self:StoreOutput(k, v)
    end
@@ -69,14 +67,7 @@ function ENT:RoundStateTrigger(r, data)
    elseif r == ROUND_ACTIVE then
       self:TriggerOutput("RoundStart", self)
    elseif r == ROUND_POST then
-      self.Outputs = self.Outputs or {}
-      if not self.Outputs["RoundEnd"] then return end
-
       -- RoundEnd has the type of win condition as param
-      for _, op in pairs(self.Outputs["RoundEnd"]) do
-         op.param = tostring(data)
-      end
-
-      self:TriggerOutput("RoundEnd", self)
+      self:TriggerOutput("RoundEnd", self, tostring(data))
    end
 end

@@ -43,6 +43,7 @@ function PANEL:SetSelected( iNum )
 	self:SetSelectedNumber( iNum )
 	self:ConVarChanged( iNum )
 	self:UpdateText()
+	self:OnChange( iNum )
 
 end
 
@@ -83,6 +84,9 @@ function PANEL:GetValue()
 
 	return self:GetSelectedNumber()
 
+end
+
+function PANEL:OnChange()
 end
 
 derma.DefineControl( "DBinder", "", PANEL, "DButton" )

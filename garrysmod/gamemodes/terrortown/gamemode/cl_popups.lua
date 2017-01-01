@@ -76,7 +76,7 @@ local function RoundStartPopup()
 
    dtext:SetPos(m,m)
 
-   dframe:SetSize( w + m * 2, h + m * 2 )
+   dframe:SetSize( w + m*2, h + m*2 )
    dframe:Center()
 
    dframe:AlignBottom( 10 )
@@ -128,3 +128,6 @@ local function IdlePopup()
 
 end
 concommand.Add("ttt_cl_idlepopup", IdlePopup)
+
+
+

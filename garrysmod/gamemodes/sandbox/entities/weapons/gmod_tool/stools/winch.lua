@@ -9,6 +9,13 @@ TOOL.ClientConVar[ "bwd_speed" ] = "64"
 TOOL.ClientConVar[ "fwd_group" ] = "44"
 TOOL.ClientConVar[ "bwd_group" ] = "41"
 
+TOOL.Information = {
+	{ name = "left", stage = 0 },
+	{ name = "left_1", stage = 1, op = 1 },
+	{ name = "right", stage = 0 },
+	{ name = "reload" }
+}
+
 function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return end

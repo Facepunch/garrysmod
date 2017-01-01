@@ -69,7 +69,13 @@ local namecolor = {
    default = COLOR_WHITE,
    admin = Color(220, 180, 0, 255),
    dev = Color(100, 240, 105, 255)
-};
+}
+
+local rolecolor = {
+   default = Color(0, 0, 0, 0),
+   traitor = Color(255, 0, 0, 30),
+   detective = Color(0, 0, 255, 30)
+}
 
 function GM:TTTScoreboardColorForPlayer(ply)
    if not IsValid(ply) then return namecolor.default end
@@ -80,6 +86,18 @@ function GM:TTTScoreboardColorForPlayer(ply)
       return namecolor.admin
    end
    return namecolor.default
+end
+
+function GM:TTTScoreboardRowColorForPlayer(ply)
+   if not IsValid(ply) then return rolecolor.default end
+
+   if ply:IsTraitor() then
+      return rolecolor.traitor
+   elseif ply:IsDetective() then
+      return rolecolor.detective
+   end
+
+   return rolecolor.default
 end
 
 local function ColorForPlayer(ply)
@@ -96,7 +114,7 @@ local function ColorForPlayer(ply)
    return namecolor.default
 end
 
-function PANEL:Paint()
+function PANEL:Paint(width, height)
    if not IsValid(self.Player) then return end
 
 --   if ( self.Player:GetFriendStatus() == "friend" ) then
@@ -105,18 +123,15 @@ function PANEL:Paint()
 
    local ply = self.Player
 
-   if ply:IsTraitor() then
-      surface.SetDrawColor(255, 0, 0, 30)
-      surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT)
-   elseif ply:IsDetective() then
-      surface.SetDrawColor(0, 0, 255, 30)
-      surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT)
-   end
+   local c = hook.Call("TTTScoreboardRowColorForPlayer", GAMEMODE, ply)
+
+   surface.SetDrawColor(c)
+   surface.DrawRect(0, 0, width, SB_ROW_HEIGHT)
 
 
    if ply == LocalPlayer() then
       surface.SetDrawColor( 200, 200, 200, math.Clamp(math.sin(RealTime() * 2) * 50, 0, 100))
-      surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT )
+      surface.DrawRect(0, 0, width, SB_ROW_HEIGHT )
    end
 
    return true
@@ -293,4 +308,4 @@ function PANEL:DoRightClick()
    menu:Open()
 end
 
-vgui.Register( "TTTScorePlayerRow", PANEL, "Button" )
+vgui.Register( "TTTScorePlayerRow", PANEL, "DButton" )

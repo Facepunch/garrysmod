@@ -9,6 +9,11 @@ TOOL.ClientConVar[ "starton" ] = "0"
 TOOL.ClientConVar[ "effect" ] = "sparks"
 TOOL.ClientConVar[ "scale" ] = "1"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 cleanup.Register( "emitters" )
 
 function TOOL:LeftClick( trace, worldweld )
@@ -144,12 +149,11 @@ if ( SERVER ) then
 
 end
 
-function TOOL:UpdateGhostEmitter( ent, player )
+function TOOL:UpdateGhostEmitter( ent, pl )
 
 	if ( !IsValid( ent ) ) then return end
 
-	local tr = util.GetPlayerTrace( player )
-	local trace	= util.TraceLine( tr )
+	local trace = pl:GetEyeTrace()
 	if ( !trace.Hit ) then return end
 
 	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_emitter" ) then
@@ -186,22 +190,14 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.emitter.key", Command = "emitter_key" } )
 
-	CPanel:AddControl( "Slider", { Label = "#tool.emitter.delay", Command = "emitter_delay", Type = "Float", Min = 0.01, Max = 1 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.emitter.scale", Command = "emitter_scale", Type = "Float", Min = 0.1, Max = 6, Help = true } )
+	CPanel:AddControl( "Slider", { Label = "#tool.emitter.delay", Command = "emitter_delay", Type = "Float", Min = 0.01, Max = 2 } )
+	CPanel:AddControl( "Slider", { Label = "#tool.emitter.scale", Command = "emitter_scale", Type = "Float", Min = 0, Max = 6, Help = true } )
 
 	CPanel:AddControl( "Checkbox", { Label = "#tool.emitter.toggle", Command = "emitter_toggle" } )
 	CPanel:AddControl( "Checkbox", { Label = "#tool.emitter.starton", Command = "emitter_starton" } )
 
-	local matselect = vgui.Create( "MatSelect", CPanel )
-	matselect:SetItemWidth( 64 )
-	matselect:SetItemHeight( 64 )
-	matselect:SetAutoHeight( true )
-	matselect:SetConVar( "emitter_effect" )
-
-	Derma_Hook( matselect.List, "Paint", "Paint", "Panel" )
-
-	local list = list.Get( "EffectType" )
-	for k, v in pairs( list ) do
+	local matselect = CPanel:MatSelect( "emitter_effect", nil, true, 0.25, 0.25 )
+	for k, v in pairs( list.Get( "EffectType" ) ) do
 		matselect:AddMaterialEx( v.print, v.material, k, { emitter_effect = k } )
 	end
 

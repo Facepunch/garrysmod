@@ -7,6 +7,14 @@ TOOL.ClientConVar[ "torquelimit" ] = 0
 TOOL.ClientConVar[ "hingefriction" ] = 0
 TOOL.ClientConVar[ "nocollide" ] = 0
 
+TOOL.Information = {
+	{ name = "left", stage = 0 },
+	{ name = "left_1", stage = 1, op = 1 },
+	{ name = "right", stage = 0 },
+	{ name = "right_1", stage = 1, op = 2 },
+	{ name = "reload" }
+}
+
 function TOOL:LeftClick( trace )
 
 	if ( self:GetOperation() == 2 ) then return false end

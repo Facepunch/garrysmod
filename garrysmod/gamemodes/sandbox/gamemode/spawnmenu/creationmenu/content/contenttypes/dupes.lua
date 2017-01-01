@@ -7,11 +7,12 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 	HTML = vgui.Create( "DHTML" )
 	JS_Language( HTML )
 	JS_Workshop( HTML )
-	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
-	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ).. " );" )
 
 	ws_dupe = WorkshopFileBase( "dupe", { "dupe" } )
 	ws_dupe.HTML = HTML
+
+	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
+	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ).. " );" )
 
 	function ws_dupe:FetchLocal( offset, perpage )
 
@@ -99,7 +100,6 @@ hook.Add( "DupeSaved", "DuplicationSavedSpawnMenu", function()
 	HTML:Call( "ShowLocalDupes();" )
 
 end )
-
 
 concommand.Add( "dupe_show", function()
 

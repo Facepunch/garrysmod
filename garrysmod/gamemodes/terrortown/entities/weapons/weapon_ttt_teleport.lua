@@ -103,10 +103,10 @@ end
 
 local function ShouldCollide(ent)
    local g = ent:GetCollisionGroup()
-   return g != COLLISION_GROUP_WEAPON and
+   return (g != COLLISION_GROUP_WEAPON and
            g != COLLISION_GROUP_DEBRIS and
            g != COLLISION_GROUP_DEBRIS_TRIGGER and
-           g != COLLISION_GROUP_INTERACTIVE_DEBRIS
+           g != COLLISION_GROUP_INTERACTIVE_DEBRIS)
 end
 
 -- Teleport a player to a {pos, ang}
@@ -144,7 +144,7 @@ local function CanTeleportToPos(ply, pos)
    -- brush will make us stuck and therefore kills/blocks us instead, so the
    -- trace checks for anything solid to players that isn't a player
    local tr = nil
-   local tres = {start = pos, endpos = pos, mask = MASK_PLAYERSOLID, filter = player.GetAll()}
+   local tres = {start=pos, endpos=pos, mask=MASK_PLAYERSOLID, filter=player.GetAll()}
    local collide = false
 
    -- This thing is unnecessary if we can supply a collision group to trace
@@ -172,8 +172,22 @@ local function CanTeleportToPos(ply, pos)
    else
 
       -- find all players in the place where we will be and telefrag them
+      local blockers = ents.FindInBox(pos + Vector(-16, -16, 0),
+                                      pos + Vector(16, 16, 64))
 
       local blocking_plys = {}
+
+      for _, block in pairs(blockers) do
+         if IsValid(block) then
+            if block:IsPlayer() and block != ply then
+               if block:IsTerror() and block:Alive() then
+                  table.insert(blocking_plys, block)
+                  -- telefrag blocker
+                  --Telefrag(block, ply)
+               end
+            end
+         end
+      end
 
       return false, blocking_plys
    end
@@ -245,7 +259,7 @@ local function StartTeleport(ply, teleport, weapon)
    util.Effect("teleport_beamdown", edata_dn)
 end
 
-function SWEP:TeleportRecall(ply)
+function SWEP:TeleportRecall()
    local ply = self.Owner
    if IsValid(ply) and ply:IsTerror() then
       local mark = self:GetTeleportMark()

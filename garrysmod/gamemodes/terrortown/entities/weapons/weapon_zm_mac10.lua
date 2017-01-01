@@ -49,5 +49,5 @@ function SWEP:GetHeadshotMultiplier(victim, dmginfo)
    local d = math.max(0, dist - 150)
 
    -- decay from 3.2 to 1.7
-   return 1.7 + math.max(0, 1.5 - 0.002 * (d ^ 1.25))
+   return 1.7 + math.max(0, (1.5 - 0.002 * (d ^ 1.25)))
 end

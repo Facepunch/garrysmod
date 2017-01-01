@@ -15,14 +15,13 @@ if CLIENT then
    SWEP.PrintName           = "Beacon"
    SWEP.Slot                = 6
 
-   SWEP.DrawCrosshair       = true
    SWEP.ViewModelFlip       = false
    SWEP.ViewModelFOV        = 10
 
    SWEP.EquipMenuData = {
-      type = "Weapon",
-      model = "models/props_lab/reciever01b.mdl",
-      desc = "Broadcasts a location to everyone.\n\nUse to warn or group innocents."
+      type="Weapon",
+      model="models/props_lab/reciever01b.mdl",
+      desc="Broadcasts a location to everyone.\n\nUse to warn or group innocents."
    };
 
    SWEP.Icon                = "vgui/ttt/icon_beacon"
@@ -32,9 +31,6 @@ SWEP.Base                   = "weapon_tttbase"
 
 SWEP.ViewModel              = "models/weapons/v_crowbar.mdl"
 SWEP.WorldModel             = "models/props_lab/reciever01b.mdl"
-
-SWEP.AutoSwitchTo           = false
-SWEP.AutoSwitchFrom         = false
 
 SWEP.Primary.ClipSize       = 3
 SWEP.Primary.DefaultClip    = 1
@@ -91,7 +87,7 @@ function SWEP:BeaconDrop()
       local vsrc = ply:GetShootPos()
       local vang = ply:GetAimVector()
       local vvel = ply:GetVelocity()
-
+      
       local vthrow = vvel + vang * 200
 
       local beacon = ents.Create("ttt_beacon")
@@ -100,10 +96,8 @@ function SWEP:BeaconDrop()
          beacon:SetOwner(ply)
          beacon:Spawn()
 
-         beacon.fingerprints = self.fingerprints
-
          beacon:PointAtEntity(ply)
-
+         
          local ang = beacon:GetAngles()
          ang:RotateAroundAxis(ang:Right(), 90)
          beacon:SetAngles(ang)
@@ -112,7 +106,7 @@ function SWEP:BeaconDrop()
          local phys = beacon:GetPhysicsObject()
          if IsValid(phys) then
             phys:SetVelocity(vthrow)
-         end
+         end   
 
          self:PlacedBeacon()
       end
@@ -131,14 +125,14 @@ function SWEP:BeaconStick()
       local ignore = {ply, self}
       local spos = ply:GetShootPos()
       local epos = spos + ply:GetAimVector() * 80
-      local tr = util.TraceLine({start = spos, endpos = epos, filter = ignore, mask = MASK_SOLID})
+      local tr = util.TraceLine({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID})
 
       if tr.HitWorld then
          local beacon = ents.Create("ttt_beacon")
          if IsValid(beacon) then
             beacon:PointAtEntity(ply)
 
-            local tr_ent = util.TraceEntity({start = spos, endpos = epos, filter = ignore, mask = MASK_SOLID}, beacon)
+            local tr_ent = util.TraceEntity({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID}, beacon)
 
             if tr_ent.HitWorld then
 
@@ -195,38 +189,29 @@ function SWEP:Reload()
 end
 
 function SWEP:OnRemove()
-   if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
+   if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:IsTerror() then
       RunConsoleCommand("lastinv")
    end
 end
 
 if CLIENT then
-   local hudtxt = {text = "Click to place the beacon", font = "TabLarge", xalign = TEXT_ALIGN_RIGHT}
-   function SWEP:DrawHUD()
-      hudtxt.pos = {ScrW() - 80, ScrH() - 80}
-      draw.Text(hudtxt)
-      draw.TextShadow(hudtxt, 2)
+   function SWEP:Initialize()
+      self:AddHUDHelp("Click to place the beacon")
+
+      return self.BaseClass.Initialize(self)
    end
 end
--- Invisible, same hacks as holstered weapon
 
-local hidden = false
 function SWEP:Deploy()
-   hidden = false
+   self.Owner:DrawViewModel(false)
    return true
 end
 
 function SWEP:DrawWorldModel()
+   if not IsValid(self.Owner) then
+      self:DrawModel()
+   end
 end
 
 function SWEP:DrawWorldModelTranslucent()
-end
-
--- not able to do DrawModel stuff in Deploy, so here's a hack
-function SWEP:Think()
-   if SERVER and not hidden and IsValid(self.Owner) and self.Owner:GetActiveWeapon() == self then
-      self.Owner:DrawViewModel(false)
-      self.Owner:DrawWorldModel(false)
-      hidden = true
-   end
 end

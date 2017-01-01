@@ -1,7 +1,7 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_bExpanded",	"Expanded", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bExpanded", "Expanded", FORCE_BOOL )
 Derma_Hook( PANEL, "Paint", "Paint", "ExpandButton" )
 
 function PANEL:Init()

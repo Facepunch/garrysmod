@@ -19,7 +19,7 @@ function GM:PlayerCanPickupWeapon(ply, wep)
       return false
    end
 
-   local tr = util.TraceEntity({start = wep:GetPos(), endpos = ply:GetShootPos(), mask = MASK_SOLID}, wep)
+   local tr = util.TraceEntity({start=wep:GetPos(), endpos=ply:GetShootPos(), mask=MASK_SOLID}, wep)
    if tr.Fraction == 1.0 or tr.Entity == ply then
       wep:SetPos(ply:GetShootPos())
    end
@@ -32,9 +32,9 @@ local loadout_weapons = nil
 local function GetLoadoutWeapons(r)
    if not loadout_weapons then
       local tbl = {
-         [ROLE_INNOCENT]  = {},
-         [ROLE_TRAITOR]   = {},
-         [ROLE_DETECTIVE] = {}
+         [ROLE_INNOCENT] = {},
+         [ROLE_TRAITOR]  = {},
+         [ROLE_DETECTIVE]= {}
       };
 
       for k, w in pairs(weapons.GetList()) do
@@ -106,22 +106,26 @@ end
 CreateConVar("ttt_detective_hats", "0")
 -- Just hats right now
 local function GiveLoadoutSpecial(ply)
-   if ply:IsDetective() and GetConVar("ttt_detective_hats"):GetBool() and CanWearHat(ply) and not IsValid(ply.hat) then
-      local hat = ents.Create("ttt_hat_deerstalker")
-      if not IsValid(hat) then return end
+   if ply:IsActiveDetective() and GetConVar("ttt_detective_hats"):GetBool() and CanWearHat(ply) then
 
-      hat:SetPos(ply:GetPos() + Vector(0,0,70))
-      hat:SetAngles(ply:GetAngles())
+      if not IsValid(ply.hat) then
+         local hat = ents.Create("ttt_hat_deerstalker")
+         if not IsValid(hat) then return end
 
-      hat:SetParent(ply)
+         hat:SetPos(ply:GetPos() + Vector(0,0,70))
+         hat:SetAngles(ply:GetAngles())
 
-      ply.hat = hat
+         hat:SetParent(ply)
 
-      hat:Spawn()
-else
-   SafeRemoveEntity(ply.hat)
-    ply.hat = nil
-  end
+         ply.hat = hat
+
+         hat:Spawn()
+      end
+   else
+      SafeRemoveEntity(ply.hat)
+
+      ply.hat = nil
+   end
 end
 
 -- Sometimes, in cramped map locations, giving players weapons fails. A timer
@@ -265,7 +269,7 @@ local function DropActiveAmmo(ply)
    ply:AnimPerformGesture(ACT_ITEM_GIVE)
 
    local box = ents.Create(wep.AmmoEnt)
-   if not IsValid(box) then box:Remove() end
+   if not IsValid(box) then return end
 
    box:SetPos(pos + dir)
    box:SetOwner(ply)
@@ -309,8 +313,11 @@ local function GiveEquipmentWeapon(sid, cls)
    -- other glitchy cases
    local w = ply:Give(cls)
 
-   if (not IsValid(w)) or (not ply:HasWeapon(cls)) and not timer.Exists(tmr) then
-      timer.Create(tmr, 1, 0, function() GiveEquipmentWeapon(sid, cls) end)
+   if (not IsValid(w)) or (not ply:HasWeapon(cls)) then
+      if not timer.Exists(tmr) then
+         timer.Create(tmr, 1, 0, function() GiveEquipmentWeapon(sid, cls) end)
+      end
+
       -- we will be retrying
    else
       -- can stop retrying, if we were
@@ -329,7 +336,7 @@ end
 
 -- Equipment buying
 local function OrderEquipment(ply, cmd, args)
-   if not IsValid(ply) or #args ~= 1 then return end
+   if not IsValid(ply) or #args != 1 then return end
 
    if not (ply:IsActiveTraitor() or ply:IsActiveDetective()) then return end
 
@@ -365,9 +372,11 @@ local function OrderEquipment(ply, cmd, args)
       end
 
       -- ownership check and finalise
-      if id and EQUIP_NONE < id  and not ply:HasEquipmentItem(id) then
-        ply:GiveEquipmentItem(id)
-        received = true
+      if id and EQUIP_NONE < id then
+         if not ply:HasEquipmentItem(id) then
+            ply:GiveEquipmentItem(id)
+            received = true
+         end
       end
    elseif swep_table then
       -- weapon whitelist check
@@ -416,11 +425,17 @@ local function OrderEquipment(ply, cmd, args)
 end
 concommand.Add("ttt_order_equipment", OrderEquipment)
 
+function GM:TTTToggleDisguiser(ply, state)
+   -- Can be used to prevent players from using this button.
+   -- return true to prevent it.
+end
+
 local function SetDisguise(ply, cmd, args)
    if not IsValid(ply) or not ply:IsActiveTraitor() then return end
 
    if ply:HasEquipmentItem(EQUIP_DISGUISE) then
       local state = #args == 1 and tobool(args[1])
+      if hook.Run("TTTToggleDisguiser", ply, state) then return end
 
       ply:SetNWBool("disguised", state)
       LANG.Msg(ply, state and "disg_turned_on" or "disg_turned_off")
@@ -429,15 +444,15 @@ end
 concommand.Add("ttt_set_disguise", SetDisguise)
 
 local function CheatCredits(ply)
-   if cvars.Bool("sv_cheats", false) and IsValid(ply) then
+   if IsValid(ply) then
       ply:AddCredits(10)
    end
 end
-concommand.Add("ttt_cheat_credits", CheatCredits)
+concommand.Add("ttt_cheat_credits", CheatCredits, nil, nil, FCVAR_CHEAT)
 
 local function TransferCredits(ply, cmd, args)
    if (not IsValid(ply)) or (not ply:IsActiveSpecial()) then return end
-   if #args ~= 2 then return end
+   if #args != 2 then return end
 
    local sid = tostring(args[1])
    local credits = tonumber(args[2])
@@ -459,7 +474,7 @@ local function TransferCredits(ply, cmd, args)
       ply:SubtractCredits(credits)
       target:AddCredits(credits)
 
-      LANG.Msg(ply, "xfer_success", {player = target:Nick()})
+      LANG.Msg(ply, "xfer_success", {player=target:Nick()})
       LANG.Msg(target, "xfer_received", {player = ply:Nick(), num = credits})
    end
 end
@@ -467,10 +482,12 @@ concommand.Add("ttt_transfer_credits", TransferCredits)
 
 -- Protect against non-TTT weapons that may break the HUD
 function GM:WeaponEquip(wep)
-   if IsValid(wep) and not wep.Kind then
+   if IsValid(wep) then
       -- only remove if they lack critical stuff
-      wep:Remove()
-      ErrorNoHalt("Equipped weapon " .. wep:GetClass() .. " is not compatible with TTT\n")
+      if not wep.Kind then
+         wep:Remove()
+         ErrorNoHalt("Equipped weapon " .. wep:GetClass() .. " is not compatible with TTT\n")
+      end
    end
 end
 

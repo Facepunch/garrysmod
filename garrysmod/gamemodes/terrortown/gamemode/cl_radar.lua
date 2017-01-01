@@ -36,7 +36,7 @@ end
 function RADAR:Timeout()
    self:EndScan()
 
-   if self.repeating and LocalPlayer() and (LocalPlayer():IsActiveTraitor() or LocalPlayer():IsActiveDetective()) then
+   if self.repeating and LocalPlayer() and LocalPlayer():IsActiveSpecial() and LocalPlayer():HasEquipmentItem(EQUIP_RADAR) then
       RunConsoleCommand("ttt_radar_scan")
    end
 end
@@ -70,11 +70,11 @@ hook.Add("TTTBoughtItem", "RadarBoughtItem", RADAR.Bought)
 
 local function DrawTarget(tgt, size, offset, no_shrink)
    local scrpos = tgt.pos:ToScreen() -- sweet
-   local sz = (IsOffScreen(scrpos) and (not no_shrink)) and size / 2 or size
+   local sz = (IsOffScreen(scrpos) and (not no_shrink)) and size/2 or size
 
    scrpos.x = math.Clamp(scrpos.x, sz, ScrW() - sz)
    scrpos.y = math.Clamp(scrpos.y, sz, ScrH() - sz)
-
+   
    if IsOffScreen(scrpos) then return end
 
    surface.DrawTexturedRect(scrpos.x - sz, scrpos.y - sz, sz * 2, sz * 2)
@@ -85,7 +85,7 @@ local function DrawTarget(tgt, size, offset, no_shrink)
       local w, h = surface.GetTextSize(text)
 
       -- Show range to target
-      surface.SetTextPos(scrpos.x - w / 2, scrpos.y + (offset * sz) - h / 2)
+      surface.SetTextPos(scrpos.x - w/2, scrpos.y + (offset * sz) - h/2)
       surface.DrawText(text)
 
       if tgt.t then
@@ -203,7 +203,7 @@ function RADAR:Draw(client)
    surface.SetTextColor(255, 0, 0, 230)
 
    local text = GetPTranslation("radar_hud", {time = FormatTime(remaining, "%02i:%02i")})
-   local h = surface.GetTextSize(text)
+   local w, h = surface.GetTextSize(text)
 
    surface.SetTextPos(36, ScrH() - 140 - h)
    surface.DrawText(text)
@@ -217,7 +217,7 @@ local function ReceiveC4Warn()
       local pos = net.ReadVector()
       local etime = net.ReadFloat()
 
-      RADAR.bombs[idx] = {pos = pos, t = etime}
+      RADAR.bombs[idx] = {pos=pos, t=etime}
    else
       RADAR.bombs[idx] = nil
    end
@@ -236,7 +236,7 @@ local function ReceiveRadarScan()
    local num_targets = net.ReadUInt(8)
 
    RADAR.targets = {}
-   for i = 1, num_targets do
+   for i=1, num_targets do
       local r = net.ReadUInt(2)
 
       local pos = Vector()
@@ -244,7 +244,7 @@ local function ReceiveRadarScan()
       pos.y = net.ReadInt(32)
       pos.z = net.ReadInt(32)
 
-      table.insert(RADAR.targets, {role = r, pos = pos})
+      table.insert(RADAR.targets, {role=r, pos=pos})
    end
 
    RADAR.enable = true
@@ -257,6 +257,8 @@ net.Receive("TTT_Radar", ReceiveRadarScan)
 
 local GetTranslation = LANG.GetTranslation
 function RADAR.CreateMenu(parent, frame)
+   local w, h = parent:GetSize()
+
    local dform = vgui.Create("DForm", parent)
    dform:SetName(GetTranslation("radar_menutitle"))
    dform:StretchToParent(0,0,0,0)
@@ -307,3 +309,4 @@ function RADAR.CreateMenu(parent, frame)
 
    return dform
 end
+

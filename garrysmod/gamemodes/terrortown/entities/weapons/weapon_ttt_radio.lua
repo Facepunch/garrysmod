@@ -71,7 +71,7 @@ function SWEP:RadioDrop()
       local vsrc = ply:GetShootPos()
       local vang = ply:GetAimVector()
       local vvel = ply:GetVelocity()
-
+      
       local vthrow = vvel + vang * 200
 
       local radio = ents.Create("ttt_radio")
@@ -84,7 +84,7 @@ function SWEP:RadioDrop()
          local phys = radio:GetPhysicsObject()
          if IsValid(phys) then
             phys:SetVelocity(vthrow)
-         end
+         end   
          self:Remove()
 
          self.Planted = true
@@ -105,14 +105,14 @@ function SWEP:RadioStick()
       local ignore = {ply, self}
       local spos = ply:GetShootPos()
       local epos = spos + ply:GetAimVector() * 80
-      local tr = util.TraceLine({start = spos, endpos = epos, filter = ignore, mask = MASK_SOLID})
+      local tr = util.TraceLine({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID})
 
       if tr.HitWorld then
          local radio = ents.Create("ttt_radio")
          if IsValid(radio) then
             radio:PointAtEntity(ply)
 
-            local tr_ent = util.TraceEntity({start = spos, endpos = epos, filter = ignore, mask = MASK_SOLID}, radio)
+            local tr_ent = util.TraceEntity({start=spos, endpos=epos, filter=ignore, mask=MASK_SOLID}, radio)
 
             if tr_ent.HitWorld then
 

@@ -2,6 +2,12 @@
 TOOL.Category = "Construction"
 TOOL.Name = "#tool.remover.name"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" },
+	{ name = "reload" }
+}
+
 local function DoRemoveEntity( ent )
 
 	if ( !IsValid( ent ) || ent:IsPlayer() ) then return false end

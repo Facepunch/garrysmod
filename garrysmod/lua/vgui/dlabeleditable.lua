@@ -21,6 +21,7 @@ function PANEL:DoDoubleClick()
 	TextEdit.OnEnter = function()
 
 		local text = self:OnLabelTextChanged( TextEdit:GetText() )
+		if ( text:byte() == 35 ) then text = "#" .. text end -- Hack!
 		self:SetText( text )
 		hook.Run( "OnTextEntryLoseFocus", TextEdit )
 		TextEdit:Remove()

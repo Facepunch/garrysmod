@@ -33,8 +33,13 @@ local function IsDebug() return config.debug:GetBool() end
 
 local math = math
 
+cvars.AddChangeCallback("ttt_karma_max", function(cvar, old, new)
+   SetGlobalInt("ttt_karma_max", new)
+end)
+
 function KARMA.InitState()
    SetGlobalBool("ttt_karma", config.enabled:GetBool())
+   SetGlobalInt("ttt_karma_max", config.max:GetFloat())
 end
 
 function KARMA.IsEnabled()
@@ -300,7 +305,7 @@ function KARMA.Remember(ply)
 end
 
 function KARMA.Recall(ply)
-   if config.persist:GetBool() then
+   if config.persist:GetBool()then
       ply.delay_karma_recall = not ply:IsFullyAuthenticated()
 
       if ply:IsFullyAuthenticated() then

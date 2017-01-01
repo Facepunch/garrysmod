@@ -4,6 +4,15 @@ TOOL.Name = "#tool.weld.name"
 
 TOOL.ClientConVar[ "forcelimit" ] = "0"
 
+TOOL.Information = {
+	{ name = "left", stage = 0 },
+	{ name = "left_1", stage = 1, op = 2 },
+	{ name = "right", stage = 0 },
+	{ name = "right_1", stage = 1, op = 1 },
+	{ name = "right_2", stage = 2, op = 1 },
+	{ name = "reload" }
+}
+
 function TOOL:LeftClick( trace )
 
 	if ( self:GetOperation() == 1 ) then return false end
@@ -266,7 +275,7 @@ end
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description	= "#tool.weld.help" } )
+	CPanel:AddControl( "Header", { Description = "#tool.weld.help" } )
 	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "weld_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
 
 end

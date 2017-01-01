@@ -12,7 +12,16 @@ TOOL.ClientConVar[ "effect" ] = "fire"
 TOOL.ClientConVar[ "damageable" ] = "0"
 TOOL.ClientConVar[ "soundname" ] = "PhysicsCannister.ThrusterLoop"
 
+TOOL.Information = { { name = "left" } }
+
 cleanup.Register( "thrusters" )
+
+local function IsValidThrusterModel( model )
+	for mdl, _ in pairs( list.Get( "ThrusterModels" ) ) do
+		if ( mdl:lower() == model:lower() ) then return true end
+	end
+	return false
+end
 
 function TOOL:LeftClick( trace )
 
@@ -30,7 +39,7 @@ function TOOL:LeftClick( trace )
 	local key = self:GetClientNumber( "keygroup" )
 	local key_bk = self:GetClientNumber( "keygroup_back" )
 	local toggle = self:GetClientNumber( "toggle" )
-	local collision = self:GetClientNumber( "collision" )
+	local collision = self:GetClientNumber( "collision" ) == 0
 	local effect = self:GetClientInfo( "effect" )
 	local damageable = self:GetClientNumber( "damageable" )
 	local soundname = self:GetClientInfo( "soundname" )
@@ -65,10 +74,8 @@ function TOOL:LeftClick( trace )
 		return true
 	end
 
+	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidThrusterModel( model ) ) then return false end
 	if ( !self:GetSWEP():CheckLimit( "thrusters" ) ) then return false end
-
-	if ( !util.IsValidModel( model ) ) then return false end
-	if ( !util.IsValidProp( model ) ) then return false end
 
 	local Ang = trace.HitNormal:Angle()
 	Ang.pitch = Ang.pitch + 90
@@ -78,31 +85,29 @@ function TOOL:LeftClick( trace )
 	local min = thruster:OBBMins()
 	thruster:SetPos( trace.HitPos - trace.HitNormal * min.z )
 
-	local const
+	undo.Create( "Thruster" )
+		undo.AddEntity( thruster )
 
-	-- Don't weld to world
-	if ( IsValid( trace.Entity ) ) then
+		-- Don't weld to world
+		if ( IsValid( trace.Entity ) ) then
 
-		const = constraint.Weld( thruster, trace.Entity, 0, trace.PhysicsBone, 0, collision == 0, true )
+			local const = constraint.Weld( thruster, trace.Entity, 0, trace.PhysicsBone, 0, collision, true )
 
-		-- Don't disable collision if it's not attached to anything
-		if ( collision == 0 ) then
+			-- Don't disable collision if it's not attached to anything
+			if ( collision ) then
 
-			thruster:GetPhysicsObject():EnableCollisions( false )
-			thruster.nocollide = true
+				if ( IsValid( thruster:GetPhysicsObject() ) ) then thruster:GetPhysicsObject():EnableCollisions( false ) end
+				thruster.nocollide = true
+
+			end
+
+			undo.AddEntity( const )
+			ply:AddCleanup( "thrusters", const )
 
 		end
 
-	end
-
-	undo.Create( "Thruster" )
-		undo.AddEntity( thruster )
-		undo.AddEntity( const )
 		undo.SetPlayer( ply )
 	undo.Finish()
-
-	ply:AddCleanup( "thrusters", thruster )
-	ply:AddCleanup( "thrusters", const )
 
 	return true
 
@@ -112,9 +117,8 @@ if ( SERVER ) then
 
 	function MakeThruster( pl, model, ang, pos, key, key_bck, force, toggle, effect, damageable, soundname, nocollide )
 
-		if ( IsValid( pl ) ) then
-			if ( !pl:CheckLimit( "thrusters" ) ) then return false end
-		end
+		if ( IsValid( pl ) && !pl:CheckLimit( "thrusters" ) ) then return false end
+		if ( !IsValidThrusterModel( model ) ) then return false end
 
 		local thruster = ents.Create( "gmod_thruster" )
 		if ( !IsValid( thruster ) ) then return false end
@@ -155,6 +159,7 @@ if ( SERVER ) then
 
 		if ( IsValid( pl ) ) then
 			pl:AddCount( "thrusters", thruster )
+			pl:AddCleanup( "thrusters", thruster )
 		end
 
 		DoPropSpawnedEffect( thruster )
@@ -192,8 +197,11 @@ end
 
 function TOOL:Think()
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
-		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+	local mdl = self:GetClientInfo( "model" )
+	if ( !IsValidThrusterModel( mdl ) ) then self:ReleaseGhostEntity() return end
+
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
+		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 	end
 
 	self:UpdateGhostThruster( self.GhostEntity, self:GetOwner() )
@@ -210,25 +218,22 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.thruster.forward", Command = "thruster_keygroup", Label2 = "#tool.thruster.back", Command2 = "thruster_keygroup_back" } )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.thruster.model", ConVar = "thruster_model", Height = 4, Models = list.Get( "ThrusterModels" ) } )
-
-	CPanel:AddControl( "ComboBox", { Label = "#tool.thruster.effect", Options = list.Get( "ThrusterEffects" ) } )
-	CPanel:AddControl( "ComboBox", { Label = "#tool.thruster.sound", Options = list.Get( "ThrusterSounds" ) } )
-
 	CPanel:AddControl( "Slider", { Label = "#tool.thruster.force", Command = "thruster_force", Type = "Float", Min = 1, Max = 10000 } )
+
+	local combo = CPanel:AddControl( "ListBox", { Label = "#tool.thruster.effect" } )
+	for k, v in pairs( list.Get( "ThrusterEffects" ) ) do
+		combo:AddOption( k, { thruster_effect = v.thruster_effect } )
+	end
+
+	CPanel:AddControl( "ListBox", { Label = "#tool.thruster.sound", Options = list.Get( "ThrusterSounds" ) } )
 
 	CPanel:AddControl( "CheckBox", { Label = "#tool.thruster.toggle", Command = "thruster_toggle" } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.thruster.collision", Command = "thruster_collision" } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.thruster.damagable", Command = "thruster_damageable" } )
 
-end
+	CPanel:AddControl( "PropSelect", { Label = "#tool.thruster.model", ConVar = "thruster_model", Height = 0, Models = list.Get( "ThrusterModels" ) } )
 
-list.Set( "ThrusterEffects", "#thrustereffect.none", { thruster_effect = "none" } )
-list.Set( "ThrusterEffects", "#thrustereffect.flames", { thruster_effect = "fire" } )
-list.Set( "ThrusterEffects", "#thrustereffect.plasma", { thruster_effect = "plasma" } )
-list.Set( "ThrusterEffects", "#thrustereffect.magic", { thruster_effect = "magic" } )
-list.Set( "ThrusterEffects", "#thrustereffect.rings", { thruster_effect = "rings" } )
-list.Set( "ThrusterEffects", "#thrustereffect.smoke", { thruster_effect = "smoke" } )
+end
 
 list.Set( "ThrusterSounds", "#thrustersounds.none", { thruster_soundname = "" } )
 list.Set( "ThrusterSounds", "#thrustersounds.steam", { thruster_soundname = "PhysicsCannister.ThrusterLoop" } )

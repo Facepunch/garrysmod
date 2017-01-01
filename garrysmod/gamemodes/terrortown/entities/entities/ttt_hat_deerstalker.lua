@@ -99,7 +99,7 @@ if SERVER then
 
    function ENT:UseOverride(ply)
       if not ttt_hats_reclaim:GetBool() then return end
-
+      
       if IsValid(ply) and not self:GetBeingWorn() then
          if GetRoundState() != ROUND_ACTIVE then
             SafeRemoveEntity(self)
@@ -107,37 +107,35 @@ if SERVER then
          elseif not CanEquipHat(ply) then
             return
          end
-
+   
          sound.Play("weapon.ImpactSoft", self:GetPos(), 75, 100, 1)
-
+   
          self:SetMoveType(MOVETYPE_NONE)
          self:SetSolid(SOLID_NONE)
          self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-
+   
          self:SetParent(ply)
          self.Wearer = ply
-
-         ply.hat = self
-
+   
+         ply.hat = self.Entity
+   
          self:SetBeingWorn(true)
-
+   
          LANG.Msg(ply, "hat_retrieve")
       end
    end
 
    local function TestHat(ply, cmd, args)
-      if cvars.Bool("sv_cheats", 0) then
-         local hat = ents.Create("ttt_hat_deerstalker")
+      local hat = ents.Create("ttt_hat_deerstalker")
 
-         hat:SetPos(ply:GetPos() + Vector(0,0,70))
-         hat:SetAngles(ply:GetAngles())
+      hat:SetPos(ply:GetPos() + Vector(0,0,70))
+      hat:SetAngles(ply:GetAngles())
 
-         hat:SetParent(ply)
+      hat:SetParent(ply)
 
-         ply.hat = hat
+      ply.hat = hat
 
-         hat:Spawn()
-      end
+      hat:Spawn()
    end
-   concommand.Add("ttt_debug_testhat", TestHat)
+   concommand.Add("ttt_debug_testhat", TestHat, nil, nil, FCVAR_CHEAT)
 end
