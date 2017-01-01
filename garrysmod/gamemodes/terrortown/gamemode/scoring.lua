@@ -56,7 +56,7 @@ local function CopyDmg(dmg)
 end
 
 function SCORE:HandleKill( victim, attacker, dmginfo )
-   if not (IsValid(victim) and victim:IsPlayer()) then return end
+   if not IsValid(victim) and victim:IsPlayer() then return end
 
    local e = {
       id=EVENT_KILL,
@@ -156,8 +156,6 @@ function SCORE:ApplyEventLogScores(wintype)
    end
 
    -- individual scores, and count those left alive
-   local alive = {traitors = 0, innos = 0}
-   local dead = {traitors = 0, innos = 0}
    local scored_log = ScoreEventLog(self.Events, scores, traitors, detectives)
    local ply = nil
    for sid, s in pairs(scored_log) do

@@ -57,11 +57,11 @@ function TBHUD.ReceiveUseConfirm()
 end
 net.Receive("TTT_ConfirmUseTButton", TBHUD.ReceiveUseConfirm)
 
-local function ComputeRangeFactor(plypos, tgtpos)
+/* local function ComputeRangeFactor(plypos, tgtpos)
    local d = tgtpos - plypos
    d = d:Dot(d)
    return d / range
-end
+end */
 
 local tbut_normal = surface.GetTextureID("vgui/ttt/tbut_hand_line")
 local tbut_focus = surface.GetTextureID("vgui/ttt/tbut_hand_filled")

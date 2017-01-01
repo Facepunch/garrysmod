@@ -4,7 +4,6 @@ include("sb_info.lua")
 
 
 local GetTranslation = LANG.GetTranslation
-local GetPTranslation = LANG.GetParamTranslation
 
 
 SB_ROW_HEIGHT = 24 --16

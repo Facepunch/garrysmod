@@ -32,7 +32,7 @@ end
 
 local function ButtonClickPlay(s) PlayRadioSound(s.snd) end
 
-local function CreateSoundBoard(parent)
+/*local function CreateSoundBoard(parent)
    local b = vgui.Create("DPanel", parent)
 
    --b:SetPaintBackground(false)
@@ -64,7 +64,7 @@ local function CreateSoundBoard(parent)
    b:CenterHorizontal()
 
    return b
-end
+end */
 
 function TRADIO.CreateMenu(parent)
    local w, h = parent:GetSize()
@@ -80,11 +80,7 @@ function TRADIO.CreateMenu(parent)
    dhelp:SetText(LANG.GetTranslation("radio_help"))
    dhelp:SetTextColor(COLOR_WHITE)
 
-   if IsValid(client.radio) then
-
-      local board = CreateSoundBoard(wrap)
-
-   elseif client:HasWeapon("weapon_ttt_radio") then
+   if client:HasWeapon("weapon_ttt_radio") then
       dhelp:SetText(LANG.GetTranslation("radio_notplaced"))
    end
 
@@ -94,4 +90,3 @@ function TRADIO.CreateMenu(parent)
 
    return wrap
 end
-

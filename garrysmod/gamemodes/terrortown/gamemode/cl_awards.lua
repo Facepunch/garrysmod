@@ -747,7 +747,7 @@ local function TimeOfDeath(events, scores, players, traitors)
 
       if e.id == EVENT_FINISH then
          time_near_end = e.t - near
-         traitor_win = (e.win == WIN_TRAITOR)
+         traitor_win = e.win == WIN_TRAITOR
 
       elseif e.id == EVENT_KILL and e.vic then
 

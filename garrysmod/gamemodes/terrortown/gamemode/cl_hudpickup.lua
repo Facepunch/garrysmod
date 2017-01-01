@@ -46,7 +46,7 @@ end
 
 function GM:HUDItemPickedUp( itemname )
 
-   if not (IsValid(LocalPlayer()) and LocalPlayer():Alive()) then return end
+   if not IsValid(LocalPlayer()) and LocalPlayer():Alive() then return end
 
    local pickup = {}
    pickup.time      = CurTime()
@@ -76,7 +76,7 @@ function GM:HUDItemPickedUp( itemname )
 end
 
 function GM:HUDAmmoPickedUp( itemname, amount )
-   if not (IsValid(LocalPlayer()) and LocalPlayer():Alive()) then return end
+   if not IsValid(LocalPlayer()) and LocalPlayer():Alive() then return end
 
    local itemname_trans = TryTranslation(string.lower("ammo_" .. itemname))
 
@@ -108,7 +108,7 @@ function GM:HUDAmmoPickedUp( itemname, amount )
    pickup.height = h
    pickup.width  = w
 
-   local w, h = surface.GetTextSize( pickup.amount )
+   local w = surface.GetTextSize( pickup.amount )
    pickup.xwidth = w
    pickup.width = pickup.width + w + 16
 

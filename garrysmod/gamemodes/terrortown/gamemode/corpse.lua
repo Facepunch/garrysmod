@@ -49,15 +49,15 @@ local function IdentifyBody(ply, rag)
       CORPSE.SetFound(rag, true)
       return
    end
-   
+
    if not hook.Run("TTTCanIdentifyCorpse", ply, rag, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
 
    local finder = ply:Nick()
    local nick = CORPSE.GetPlayerNick(rag, "")
-   local traitor = (rag.was_role == ROLE_TRAITOR)
-   
+   local traitor = rag.was_role == ROLE_TRAITOR
+
    -- Announce body
    if bodyfound:GetBool() and not CORPSE.GetFound(rag, false) then
       local roletext = nil
@@ -191,14 +191,13 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
       LANG.Msg(ply, "body_burning")
       return
    end
-   
+
    if not hook.Run("TTTCanSearchCorpse", ply, rag, covert, long_range, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
 
    -- init a heap of data we'll be sending
    local nick  = CORPSE.GetPlayerNick(rag)
-   local traitor = (rag.was_role == ROLE_TRAITOR)
    local role  = rag.was_role
    local eq    = rag.equipment or EQUIP_NONE
    local c4    = rag.bomb_wire or -1
@@ -207,7 +206,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    local words = rag.last_words or ""
    local hshot = rag.was_headshot or false
    local dtime = rag.time or 0
-   
+
    local owner = player.GetBySteamID(rag.sid)
    owner = IsValid(owner) and owner:EntIndex() or -1
 
@@ -301,11 +300,11 @@ end
 -- else returns nil
 local function GetKillerSample(victim, attacker, dmg)
    -- only guns and melee damage, not explosions
-   if not (dmg:IsBulletDamage() or dmg:IsDamageType(DMG_SLASH) or dmg:IsDamageType(DMG_CLUB)) then
+   if not dmg:IsBulletDamage() or dmg:IsDamageType(DMG_SLASH) or dmg:IsDamageType(DMG_CLUB) then
       return nil
    end
 
-   if not (IsValid(victim) and IsValid(attacker) and attacker:IsPlayer()) then return end
+   if not IsValid(victim) and IsValid(attacker) and attacker:IsPlayer() then return end
 
    -- NPCs for which a player is damage owner (meaning despite the NPC dealing
    -- the damage, the attacker is a player) should not cause the player's DNA to
@@ -314,13 +313,13 @@ local function GetKillerSample(victim, attacker, dmg)
    if IsValid(infl) and infl:IsNPC() then return end
 
    local dist = victim:GetPos():Distance(attacker:GetPos())
-   if dist > GetConVarNumber("ttt_killer_dna_range") then return nil end
+   if dist > GetConVar("ttt_killer_dna_range"):GetInt() then return nil end
 
    local sample = {}
    sample.killer = attacker
    sample.killer_sid = attacker:SteamID()
    sample.victim = victim
-   sample.t      = CurTime() + (-1 * (0.019 * dist)^2 + GetConVarNumber("ttt_killer_dna_basetime"))
+   sample.t      = CurTime() + (-1 * (0.019 * dist)^2 + GetConVar("ttt_killer_dna_basetime"):GetInt())
 
    return sample
 end
@@ -417,7 +416,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
    local wep = util.WeaponFromDamage(dmginfo)
    rag.dmgwep = IsValid(wep) and wep:GetClass() or ""
 
-   rag.was_headshot = (ply.was_headshot and dmginfo:IsBulletDamage())
+   rag.was_headshot = ply.was_headshot and dmginfo:IsBulletDamage()
    rag.time = CurTime()
    rag.kills = table.Copy(ply.kills)
 
@@ -457,7 +456,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
       local efn = ply.effect_fn
       timer.Simple(0, function() efn(rag) end)
    end
-   
+
    hook.Run("TTTOnCorpseCreated", rag, ply)
 
    return rag -- we'll be speccing this

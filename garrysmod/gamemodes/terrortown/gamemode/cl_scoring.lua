@@ -128,7 +128,6 @@ function CLSCORE:BuildEventLogPanel(dpanel)
 end
 
 function CLSCORE:BuildScorePanel(dpanel)
-   local margin = 10
    local w, h = dpanel:GetSize()
 
    local dlist = vgui.Create("DListView", dpanel)
@@ -182,7 +181,7 @@ function CLSCORE:BuildScorePanel(dpanel)
          end
 
          local points_own   = KillsToPoints(s, was_traitor)
-         local points_team  = (was_traitor and bonus.traitors or bonus.innos)
+         local points_team  = was_traitor and bonus.traitors or bonus.innos
          local points_total = points_own + points_team
 
          local l = dlist:AddLine(surv, nicks[id], role, s.innos, s.traitors, points_own, points_team, points_total)
@@ -225,13 +224,13 @@ function CLSCORE:AddAward(y, pw, award, dpanel)
    txtlbl:SetText(text)
    txtlbl:SetFont("DermaDefault")
    txtlbl:SizeToContents()
-   local tw, th = txtlbl:GetSize()
+   local tw = txtlbl:GetSize()
 
    titlelbl:SetPos((pw - tiw) / 2, y)
    y = y + tih + 2
 
    local fw = nw + tw + 5
-   local fx = ((pw - fw) / 2)
+   local fx = (pw - fw) / 2
    nicklbl:SetPos(fx, y)
    txtlbl:SetPos(fx + nw + 5, y)
 
@@ -334,7 +333,6 @@ function CLSCORE:BuildHilitePanel(dpanel)
       end
    end
 
-   local num_choices = table.Count(award_choices)
    local max_awards = 5
 
    -- sort descending by priority

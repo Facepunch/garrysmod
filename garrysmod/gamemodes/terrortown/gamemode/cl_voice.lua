@@ -73,19 +73,19 @@ local function AddDetectiveText(ply, text)
 end
 
 function GM:OnPlayerChat(ply, text, teamchat, dead)
-   if not IsValid(ply) then return BaseClass.OnPlayerChat(self, ply, text, teamchat, dead) end 
-   
+   if not IsValid(ply) then return BaseClass.OnPlayerChat(self, ply, text, teamchat, dead) end
+
    if ply:IsActiveDetective() then
       AddDetectiveText(ply, text)
       return true
    end
-   
+
    local team = ply:Team() == TEAM_SPEC
-   
+
    if team and not dead then
       dead = true
    end
-   
+
    if teamchat and ((not team and not ply:IsSpecial()) or team) then
       teamchat = false
    end
@@ -365,7 +365,7 @@ local function RadioMsgRecv()
    local msg    = net.ReadString()
    local param  = net.ReadString()
 
-   if not (IsValid(sender) and sender:IsPlayer()) then return end
+   if not IsValid(sender) and sender:IsPlayer() then return end
 
    GAMEMODE:PlayerSentRadioCommand(sender, msg, param)
 
@@ -427,10 +427,10 @@ g_VoicePanelList = nil
 -- 255 at 100
 -- 5 at 5000
 local function VoiceNotifyThink(pnl)
-   if not (IsValid(pnl) and LocalPlayer() and IsValid(pnl.ply)) then return end
-   if not (GetGlobalBool("ttt_locational_voice", false) and (not pnl.ply:IsSpec()) and (pnl.ply != LocalPlayer())) then return end
+   if not IsValid(pnl) and LocalPlayer() and IsValid(pnl.ply) then return end
+   if not GetGlobalBool("ttt_locational_voice", false) and (not pnl.ply:IsSpec()) and (pnl.ply != LocalPlayer()) then return end
    if LocalPlayer():IsActiveTraitor() && pnl.ply:IsActiveTraitor() then return end
-   
+
    local d = LocalPlayer():GetPos():Distance(pnl.ply:GetPos())
 
    pnl:SetAlpha(math.max(-0.1 * d + 255, 15))
@@ -465,7 +465,7 @@ function GM:PlayerStartVoice( ply )
    local pnl = g_VoicePanelList:Add("VoiceNotify")
    pnl:Setup(ply)
    pnl:Dock(TOP)
-   
+
    local oldThink = pnl.Think
    pnl.Think = function( self )
                   oldThink( self )
@@ -498,7 +498,7 @@ function GM:PlayerStartVoice( ply )
    PlayerVoicePanels[ply] = pnl
 
    -- run ear gesture
-   if not (ply:IsActiveTraitor() and (not ply.traitor_gvoice)) then
+   if not ply:IsActiveTraitor() and (not ply.traitor_gvoice) then
       ply:AnimPerformGesture(ACT_GMOD_IN_CHAT)
    end
 end

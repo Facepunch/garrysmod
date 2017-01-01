@@ -5,9 +5,6 @@ local surface = surface
 local draw = draw
 local math = math
 local string = string
-
-local GetTranslation = LANG.GetTranslation
-local GetPTranslation = LANG.GetParamTranslation
 local GetLang = LANG.GetUnsafeLanguageTable
 local interp = string.Interp
 
@@ -128,7 +125,6 @@ local function DrawBg(x, y, width, height, client)
    draw.RoundedBox(8, x, y, tw, th, col)
 end
 
-local sf = surface
 local dr = draw
 
 local function ShadowedText(text, font, x, y, color, xalign, yalign)
@@ -321,7 +317,7 @@ function GM:HUDPaint()
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTargetID" ) then
        hook.Call( "HUDDrawTargetID", GAMEMODE )
    end
-   
+
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTMStack" ) then
        MSTACK:Draw(client)
    end
@@ -337,11 +333,11 @@ function GM:HUDPaint()
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTRadar" ) then
        RADAR:Draw(client)
    end
-   
+
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTButton" ) then
        TBHUD:Draw(client)
    end
-   
+
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTWSwitch" ) then
        WSWITCH:Draw(client)
    end
@@ -349,7 +345,7 @@ function GM:HUDPaint()
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTVoice" ) then
        VOICE.Draw(client)
    end
-   
+
    if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTDisguise" ) then
        DISGUISE.Draw(client)
    end
@@ -373,4 +369,3 @@ function GM:HUDShouldDraw(name)
 
    return self.BaseClass.HUDShouldDraw(self, name)
 end
-
