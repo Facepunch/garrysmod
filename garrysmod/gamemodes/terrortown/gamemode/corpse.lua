@@ -49,7 +49,7 @@ local function IdentifyBody(ply, rag)
       CORPSE.SetFound(rag, true)
       return
    end
-   
+
    if not hook.Run("TTTCanIdentifyCorpse", ply, rag, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
@@ -57,7 +57,7 @@ local function IdentifyBody(ply, rag)
    local finder = ply:Nick()
    local nick = CORPSE.GetPlayerNick(rag, "")
    local traitor = (rag.was_role == ROLE_TRAITOR)
-   
+
    -- Announce body
    if bodyfound:GetBool() and not CORPSE.GetFound(rag, false) then
       local roletext = nil
@@ -191,7 +191,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
       LANG.Msg(ply, "body_burning")
       return
    end
-   
+
    if not hook.Run("TTTCanSearchCorpse", ply, rag, covert, long_range, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
@@ -207,7 +207,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    local words = rag.last_words or ""
    local hshot = rag.was_headshot or false
    local dtime = rag.time or 0
-   
+
    local owner = player.GetBySteamID(rag.sid)
    owner = IsValid(owner) and owner:EntIndex() or -1
 
@@ -314,13 +314,13 @@ local function GetKillerSample(victim, attacker, dmg)
    if IsValid(infl) and infl:IsNPC() then return end
 
    local dist = victim:GetPos():Distance(attacker:GetPos())
-   if dist > GetConVarNumber("ttt_killer_dna_range") then return nil end
+   if dist > GetConVar("ttt_killer_dna_range"):GetInt() then return nil end
 
    local sample = {}
    sample.killer = attacker
    sample.killer_sid = attacker:SteamID()
    sample.victim = victim
-   sample.t      = CurTime() + (-1 * (0.019 * dist)^2 + GetConVarNumber("ttt_killer_dna_basetime"))
+   sample.t      = CurTime() + (-1 * (0.019 * dist)^2 + GetConVar("ttt_killer_dna_basetime"):GetInt())
 
    return sample
 end
@@ -457,7 +457,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
       local efn = ply.effect_fn
       timer.Simple(0, function() efn(rag) end)
    end
-   
+
    hook.Run("TTTOnCorpseCreated", rag, ply)
 
    return rag -- we'll be speccing this
