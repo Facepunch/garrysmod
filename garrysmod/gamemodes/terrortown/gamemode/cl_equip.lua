@@ -325,8 +325,6 @@ local function TraitorMenuPopup()
    dfields.desc:SetContentAlignment(7)
    dfields.desc:MoveBelow(dfields.type, 1)
 
-   local iw, ih = dinfo:GetSize()
-
    local dhelp = vgui.Create("ColoredBox", dinfobg)
    dhelp:SetColor(Color(90, 90, 95))
    dhelp:SetSize(diw, dih - 205)
