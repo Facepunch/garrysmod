@@ -275,7 +275,7 @@ if CLIENT then
    function SWEP:DrawHUD()
       local tr = self.Owner:GetEyeTrace(MASK_SHOT)
 
-      if tr.HitNonWorld and IsValid(tr.Entity) and tr.Entity:IsPlayer()
+      if tr.HitNonWorld and IsValid(tr.Entity) and tr.Entity:IsPlayer() and tr.Entity:IsTerror()
          and tr.Entity:Health() < (self.Primary.Damage + 10) then
 
          local x = ScrW() / 2.0
