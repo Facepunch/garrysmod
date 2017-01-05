@@ -365,11 +365,9 @@ function GM:HUDPaint()
 end
 
 -- Hide the standard HUD stuff
-local hud = {"CHudHealth", "CHudBattery", "CHudAmmo", "CHudSecondaryAmmo"}
+local hud = {["CHudHealth"] = true, ["CHudBattery"] = true, ["CHudAmmo"] = true, ["CHudSecondaryAmmo"] = true}
 function GM:HUDShouldDraw(name)
-   for k, v in pairs(hud) do
-      if name == v then return false end
-   end
+   if hud[name] then return false end
 
    return self.BaseClass.HUDShouldDraw(self, name)
 end
