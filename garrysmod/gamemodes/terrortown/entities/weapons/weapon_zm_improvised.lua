@@ -227,7 +227,7 @@ function SWEP:SecondaryAttack()
 
    local tr = self.Owner:GetEyeTrace(MASK_SHOT)
 
-   if tr.Hit and IsValid(tr.Entity) and tr.Entity:IsPlayer() and (self.Owner:EyePos() - tr.HitPos):Length() < 100 then
+   if tr.Hit and IsValid(tr.Entity) and tr.Entity:IsPlayer() and tr.Entity:IsTerror() and (self.Owner:EyePos() - tr.HitPos):Length() < 100 then
       local ply = tr.Entity
 
       if SERVER and (not ply:IsFrozen()) then
