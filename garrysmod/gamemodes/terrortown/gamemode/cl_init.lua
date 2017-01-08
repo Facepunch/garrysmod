@@ -51,14 +51,14 @@ function GM:Initialize()
    LANG.Init()
 
    self.BaseClass:Initialize()
-
-   net.Start("TTT_Spectate")
-     net.WriteBool(GetConVar("ttt_spectator_mode"):GetBool())
-   net.SendToServer()
 end
 
 function GM:InitPostEntity()
    MsgN("TTT Client post-init...")
+
+   net.Start("TTT_Spectate")
+     net.WriteBool(GetConVar("ttt_spectator_mode"):GetBool())
+   net.SendToServer()
 
    if not game.SinglePlayer() then
       timer.Create("idlecheck", 5, 0, CheckIdle)
