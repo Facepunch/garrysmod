@@ -470,8 +470,8 @@ function PANEL:SortByColumn( ColumnID, Desc )
 			a, b = b, a
 		end
 
-		local aval = a:GetSortValue( ColumnID ) && a:GetSortValue( ColumnID ) || a:GetColumnText( ColumnID )
-		local bval = b:GetSortValue( ColumnID ) && b:GetSortValue( ColumnID ) || b:GetColumnText( ColumnID )
+		local aval = a:GetSortValue( ColumnID ) || a:GetColumnText( ColumnID )
+		local bval = b:GetSortValue( ColumnID ) || b:GetColumnText( ColumnID )
 
 		return aval < bval
 
