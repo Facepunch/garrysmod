@@ -113,8 +113,7 @@ end
 function GetNextFreeID()
 	local freeID, i = 1, 1
 	while (freeID == 1) do
-		if (!istable(GetEquipmentItem(ROLE_DETECTIVE, i))
-			and !istable(GetEquipmentItem(ROLE_TRAITOR, i))) then
+		if (!istable(GetEquipmentItem(ROLE_DETECTIVE, i)) and !istable(GetEquipmentItem(ROLE_TRAITOR, i))) then
 			freeID = i
 		end
 		i = i * 2
