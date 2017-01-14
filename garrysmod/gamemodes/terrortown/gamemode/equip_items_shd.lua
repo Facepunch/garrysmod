@@ -109,3 +109,17 @@ function GetEquipmentItem(role, id)
    end
 end
 
+-- Search the next free ID to avoid conflicts
+function GetNextFreeID()
+	local freeID, i = 1, 1
+	while (freeID == 1) do
+		if (!istable(GetEquipmentItem(ROLE_DETECTIVE, i))
+			and !istable(GetEquipmentItem(ROLE_TRAITOR, i))) then
+			freeID = i
+		end
+		i = i * 2
+	end
+
+	return freeID
+end
+
