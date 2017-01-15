@@ -24,6 +24,7 @@ EQUIP_ARMOR    = 1
 EQUIP_RADAR    = 2
 EQUIP_DISGUISE = 4
 
+EQUIP_COUNT = 4
 
 -- Icon doesn't have to be in this dir, but all default ones are in here
 local mat_dir = "vgui/ttt/"
@@ -109,16 +110,8 @@ function GetEquipmentItem(role, id)
    end
 end
 
--- Search the next free ID to avoid conflicts
-function GetNextFreeID()
-   local freeID, i = 1, 1
-   while (freeID == 1) do
-      if (!istable(GetEquipmentItem(ROLE_DETECTIVE, i)) and !istable(GetEquipmentItem(ROLE_TRAITOR, i))) then
-         freeID = i
-      end
-      i = i * 2
-   end
-   
-   return freeID
+function AddEquipmentID(name)  -- Utility function to register a new ID
+  if _G["EQUIP_"..name] then error("ID of name '"..name.."' already exists!") return end
+  EQUIP_COUNT = EQUIP_COUNT * 2
+  _G["EQUIP_"..name] = EQUIP_COUNT
 end
-
