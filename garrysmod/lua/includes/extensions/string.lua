@@ -209,12 +209,12 @@ function string.NiceTime( seconds )
 		return t .. pluralizeString( " day", t )
 	end
 
-	if ( seconds < 60 * 60 * 24 * 7 * 52 ) then
+	if ( seconds < 60 * 60 * 24 * 365 ) then
 		local t = math.floor( seconds / ( 60 * 60 * 24 * 7 ) )
 		return t .. pluralizeString( " week", t )
 	end
 
-	local t = math.floor( seconds / ( 60 * 60 * 24 * 7 * 52 ) )
+	local t = math.floor( seconds / ( 60 * 60 * 24 * 365 ) )
 	return t .. pluralizeString( " year", t )
 
 end
