@@ -217,3 +217,30 @@ end
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
 end
+
+--[[---------------------------------------------------------
+    Name: ColToInt( color )
+-----------------------------------------------------------]]
+function math.ColToInt( color )
+	local int = 0
+	color = { color.r, color.g, color.b, color.a or 255 }
+	
+	for i = 1, 4, 1 do
+		int = int + bit.lshift( col[i], ( i - 1 ) * 8 )
+	end
+	
+	return int
+end
+
+--[[---------------------------------------------------------
+    Name: IntToCol( integer )
+-----------------------------------------------------------]]
+function math.IntToCol( integer )
+	local col = { 0, 0, 0, 0 }
+	
+	for i = 1, 4, 1 do
+		col[i] = bit.band( bit.rshift( integer, ( i - 1 ) * 8 ), 255 )
+	end
+	
+	return Color( col[1], col[2], col[3], col[4] )
+end
