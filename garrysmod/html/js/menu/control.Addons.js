@@ -51,13 +51,11 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.DisableAllSubscribed = function()
 	{
 		subscriptions.SetAllEnabled( false );
-		lua.Run( "steamworks.ApplyAddons();" )
 	}
 
 	$scope.EnableAllSubscribed=function()
 	{
 		subscriptions.SetAllEnabled( true );
-		lua.Run( "steamworks.ApplyAddons();" )
 	}
 
 	$scope.IsSubscribed = function ( file )
@@ -70,15 +68,15 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		return subscriptions.Enabled( String( file.id ) );
 	};
 
-	$scope.Disable = function ( file )
+	$scope.Toggle = function ( file )
 	{
-		lua.Run( "steamworks.SetShouldMountAddon( %s, false );", String( file.id ) )
-		lua.Run( "steamworks.ApplyAddons();" )
+		var id = String( file.id );
+		subscriptions.ToggleMountTrick( id )
+		lua.Run( "steamworks.SetShouldMountAddon( %s, %s );", id, String( subscriptions.Enabled( id ) ) )
 	};
 
-	$scope.Enable = function ( file )
+	$scope.ApplyAddons = function ()
 	{
-		lua.Run( "steamworks.SetShouldMountAddon( %s, true );", String( file.id ) )
 		lua.Run( "steamworks.ApplyAddons();" )
 	};
 }

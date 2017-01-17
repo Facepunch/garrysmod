@@ -30,15 +30,25 @@ Subscriptions.prototype.Enabled = function ( id )
 }
 
 //
+// ToggleMountTrick
+//
+
+Subscriptions.prototype.ToggleMountTrick = function( id )
+{
+	this.Files[id].mounted = !this.Files[id].mounted;
+}
+
+//
 // IsEnabled
 //
 Subscriptions.prototype.SetAllEnabled = function( bBool )
 {
-	bBool = bBool ? "true" : "false"
+	bBoolStr = bBool ? "true" : "false"
 
 	for ( k in this.Files )
 	{
-		lua.Run( "steamworks.SetShouldMountAddon( %s, "+bBool+" );", String( k ) )
+		lua.Run( "steamworks.SetShouldMountAddon( %s, "+bBoolStr+" );", String( k ) )
+		this.Files[k].mounted = bBool
 	}
 }
 

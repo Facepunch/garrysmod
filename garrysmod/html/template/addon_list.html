@@ -13,6 +13,7 @@
 					<ul ng-show="Category == 'subscribed'" class="submenu">
 						<li><a ng-click="DisableAllSubscribed()" ng-Tranny="'addons.disableall'"></a></li>
 						<li><a ng-click="EnableAllSubscribed()" ng-Tranny="'addons.enableall'"></a></li>
+						<li><a ng-click="ApplyAddons()" ng-Tranny="'addons.applyaddons'"></a></li>
 					</ul>
 				</li>
 
@@ -82,8 +83,7 @@
 						</left>
 
 						<right>
-							<control ng-show="IsSubscribed( file ) && IsEnabled( file )" ng-click="Disable( file )" ng-Tranny="'addon.disable'">..</control>
-							<control ng-show="IsSubscribed( file ) && !IsEnabled( file )" ng-click="Enable( file )" ng-Tranny="'addon.enable'">..</control>
+							<control ng-show="IsSubscribed( file )" ng-click="Toggle( file )" ng-Tranny="'addon.toggle'">..</control>
 
 							<control ng-hide="IsSubscribed( file )" ng-click="Subscribe( file )" ng-Tranny="'addon.subscribe'">..</control>
 							<control ng-show="IsSubscribed( file )" ng-click="Unsubscribe( file )" ng-Tranny="'addon.unsubscribe'">..</control>
