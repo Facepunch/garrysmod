@@ -13,7 +13,7 @@ NOTIFY_CLEANUP	= 4
 
 module( "notification", package.seeall )
 
-local NoticeMaterial = {}
+notification.NoticeMaterial = {}
 
 NoticeMaterial[ NOTIFY_GENERIC ]	= Material( "vgui/notices/generic" )
 NoticeMaterial[ NOTIFY_ERROR ]		= Material( "vgui/notices/error" )
@@ -21,7 +21,7 @@ NoticeMaterial[ NOTIFY_UNDO ]		= Material( "vgui/notices/undo" )
 NoticeMaterial[ NOTIFY_HINT ]		= Material( "vgui/notices/hint" )
 NoticeMaterial[ NOTIFY_CLEANUP ]	= Material( "vgui/notices/cleanup" )
 
-local Notices = {}
+notification.Notices = {}
 
 function AddProgress( uid, text )
 
