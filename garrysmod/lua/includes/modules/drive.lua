@@ -1,4 +1,3 @@
-
 local MsgN			= MsgN
 local IsValid		= IsValid
 local setmetatable	= setmetatable
