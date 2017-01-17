@@ -1,5 +1,4 @@
 
-
 module( "matproxy", package.seeall )
 
 ProxyList = {}
@@ -48,11 +47,12 @@ end
 -- Called by the engine from OnBind
 --
 function Call( name, mat, ent )
-
+	if ( !IsValid( ent ) ) then return end 
+	
 	local proxy = ActiveList[ name ]
 	if ( !proxy ) then return end
 	if ( !proxy.bind ) then return end
-
+	
 	proxy:bind( mat, ent )
 
 end
