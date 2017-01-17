@@ -1,4 +1,3 @@
-
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
@@ -154,7 +153,10 @@ end
 function ENT:SetZVelocity( z )
 
 	if ( z != 0 ) then
-		self:GetPhysicsObject():Wake()
+		local phys = self:GetPhysicsObject()
+		if ( phys:IsValid() ) then
+			phys:Wake()
+		end
 	end
 
 	self.ZVelocity = z * FrameTime() * 5000
