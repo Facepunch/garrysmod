@@ -289,3 +289,13 @@ function meta:HasGodMode()
 	return self:IsFlagSet( FL_GODMODE )
 
 end
+
+--[[---------------------------------------------------------
+    Remove
+    - Kicks the player instead of removing their entity
+-----------------------------------------------------------]]  
+function meta:Remove()
+    if SERVER then
+	self:Kick( "Player has been removed from the server." )
+    end
+end
