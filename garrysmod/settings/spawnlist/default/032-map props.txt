@@ -1445,6 +1445,11 @@
 			"type"		"model"
 			"model"		"models/props_vehicles/pickup_truck_78.mdl"
 		}
+		"289"
+		{
+			"type"		"model"
+			"model"		"models/de_dust/props_vehicles/technical01.mdl"
+		}
 	}
 	"name"		"Map Props"
 	"version"		"3"
