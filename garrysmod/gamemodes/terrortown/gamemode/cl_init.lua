@@ -126,13 +126,12 @@ local function RoundStateChange(o, n)
    -- stricter checks when we're talking about hooks, because this function may
    -- be called with for example o = WAIT and n = POST, for newly connecting
    -- players, which hooking code may not expect
+   -- end round is sent in a net message - people might need the winners
    if n == ROUND_PREP then
       -- can enter PREP from any phase due to ttt_roundrestart
       hook.Call("TTTPrepareRound", GAMEMODE)
    elseif (o == ROUND_PREP) and (n == ROUND_ACTIVE) then
       hook.Call("TTTBeginRound", GAMEMODE)
-   elseif (o == ROUND_ACTIVE) and (n == ROUND_POST) then
-      hook.Call("TTTEndRound", GAMEMODE)
    end
 
    -- whatever round state we get, clear out the voice flags
@@ -209,6 +208,12 @@ local function ReceiveRoundState()
    MsgN("Round state: " .. GAMEMODE.round_state)
 end
 net.Receive("TTT_RoundState", ReceiveRoundState)
+
+local function ReceiveRoundEnd()
+	local winner = net.ReadUInt(4)
+	hook.Call("TTTEndRound", GAMEMODE, winner)
+end
+net.Receive("TTT_RoundEnd", ReceiveRoundEnd)
 
 -- Cleanup at start of new round
 function GM:ClearClientState()
