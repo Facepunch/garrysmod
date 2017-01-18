@@ -334,6 +334,11 @@ local function HasPendingOrder(ply)
    return timer.Exists("give_equipment" .. tostring(ply:SteamID()))
 end
 
+function GM:TTTCanOrderEquipment(ply, id, is_item)
+   --- return true to allow buying of an equipment item, false to disallow
+   return true
+end
+
 -- Equipment buying
 local function OrderEquipment(ply, cmd, args)
    if not IsValid(ply) or #args != 1 then return end
@@ -347,8 +352,7 @@ local function OrderEquipment(ply, cmd, args)
    local id = args[1]
    local is_item = tonumber(id)
    
-   -- hook that gets called pre-buying, return true to prevent
-   if hook.Call("TTTPreOrderedEquipment", GAMEMODE, ply, id, is_item) then return end
+   if not hook.Run("TTTCanOrderEquipment", ply, id, is_item) then return end
 
    -- we use weapons.GetStored to save time on an unnecessary copy, we will not
    -- be modifying it
