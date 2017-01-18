@@ -16,9 +16,15 @@
 
 
 -- Special equipment bitflags. Every unique piece of equipment needs its own
--- id. The number should increase by a factor of two for every item (ie. ids
--- should be powers of two). So if you were to add five more pieces of
--- equipment, they should have the following ids: 8, 16, 32, 64, 128...
+-- id. 
+--
+-- Use the GenerateNewEquipmentID function (see below) to get a unique ID for
+-- your equipment. This is guaranteed not to clash with other addons (as long
+-- as they use the same safe method).
+--
+-- Details you shouldn't need:
+-- The number should increase by a factor of two for every item (ie. ids
+-- should be powers of two).
 EQUIP_NONE     = 0
 EQUIP_ARMOR    = 1
 EQUIP_RADAR    = 2
