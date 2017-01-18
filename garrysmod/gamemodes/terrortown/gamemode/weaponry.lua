@@ -346,6 +346,9 @@ local function OrderEquipment(ply, cmd, args)
    -- it's an item if the arg is an id instead of an ent name
    local id = args[1]
    local is_item = tonumber(id)
+   
+   -- hook that gets called pre-buying, return true to prevent
+   if hook.Call("TTTPreOrderedEquipment", GAMEMODE, ply, id, is_item) then return end
 
    -- we use weapons.GetStored to save time on an unnecessary copy, we will not
    -- be modifying it
