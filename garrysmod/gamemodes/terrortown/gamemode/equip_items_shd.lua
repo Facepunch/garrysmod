@@ -24,6 +24,7 @@ EQUIP_ARMOR    = 1
 EQUIP_RADAR    = 2
 EQUIP_DISGUISE = 4
 
+EQUIP_MAX      = 4
 
 -- Icon doesn't have to be in this dir, but all default ones are in here
 local mat_dir = "vgui/ttt/"
@@ -109,3 +110,8 @@ function GetEquipmentItem(role, id)
    end
 end
 
+ -- Utility function to register a new Equipment ID
+function GenerateNewEquipmentID()
+   EQUIP_MAX = EQUIP_MAX * 2
+   return EQUIP_MAX
+end
