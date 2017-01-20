@@ -6,12 +6,13 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 
 	HTML = vgui.Create( "DHTML" )
 	JS_Language( HTML )
-	HTML:SetAllowLua( true )
-	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
-	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ).. " );" )
+	JS_Workshop( HTML )
 
 	ws_dupe = WorkshopFileBase( "dupe", { "dupe" } )
 	ws_dupe.HTML = HTML
+
+	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
+	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ).. " );" )
 
 	function ws_dupe:FetchLocal( offset, perpage )
 
@@ -24,8 +25,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 			if ( k <= offset ) then continue end
 			if ( k > offset + perpage ) then break end
 
-			local entry =
-			{
+			local entry = {
 				file	= "dupes/" .. v,
 				name	= v:StripExtension(),
 				preview	= "dupes/" .. v:StripExtension() .. ".jpg"
@@ -35,8 +35,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 
 		end
 
-		local results =
-		{
+		local results = {
 			totalresults	= #f,
 			results			= saves
 		}
@@ -74,7 +73,6 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 
 end, "icon16/control_repeat_blue.png", 200 )
 
-
 hook.Add( "DupeSaveAvailable", "UpdateDupeSpawnmenuAvailable", function()
 
 	DupeInClipboard = true
@@ -102,7 +100,6 @@ hook.Add( "DupeSaved", "DuplicationSavedSpawnMenu", function()
 	HTML:Call( "ShowLocalDupes();" )
 
 end )
-
 
 concommand.Add( "dupe_show", function()
 

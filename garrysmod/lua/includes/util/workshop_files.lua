@@ -34,7 +34,7 @@ function WorkshopFileBase( namespace, requiredtags )
 		local cachename = type.."-"..string.Implode( "/", tags ) .. offset .. "-" .. perpage .. "-" .. userid
 
 		if ( ListCache[ cachename ] ) then
-			self:FillFileInfo( ListCache[ cachename ] ) 
+			self:FillFileInfo( ListCache[ cachename ] )
 			return
 		end
 
@@ -48,12 +48,12 @@ function WorkshopFileBase( namespace, requiredtags )
 	function ret:FetchSubscribed( offset, perpage )
 
 		local subscriptions = engine.GetAddons()
-		
+
 		--
 		-- Reverse the table - so newest files are on top (todo - properly)
 		--
 		subscriptions = table.Reverse( subscriptions )
-		
+
 		local data = {
 			totalresults = #subscriptions,
 			results = {}
@@ -75,7 +75,7 @@ function WorkshopFileBase( namespace, requiredtags )
 	end
 
 	function ret:FillFileInfo( results )
-	
+
 		--
 		-- File info failed..
 		--
@@ -93,7 +93,7 @@ function WorkshopFileBase( namespace, requiredtags )
 		for k, v in pairs( results.results ) do
 
 			--
-			-- Got it cached? 
+			-- Got it cached?
 			--
 			if ( PreviewCache[ v ] ) then
 				self.HTML:Call( namespace .. ".ReceiveImage( \"" .. v .. "\", \"" .. PreviewCache[ v ] .. "\" )" )

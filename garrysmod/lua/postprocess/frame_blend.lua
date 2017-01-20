@@ -15,8 +15,6 @@ local pp_fb_frames = CreateClientConVar( "pp_fb_frames", "16", true, false )
 --
 local pp_fb_shutter = CreateClientConVar( "pp_fb_shutter", "0.5", true, false )
 
-
-
 local FrameCurves = {}
 
 local function FixupCurve( num )
@@ -61,12 +59,11 @@ local function FrameCurve( f, num )
 
 end
 
-local texFSB			= render.GetSuperFPTex()
-local matFSB			= Material( "pp/motionblur" )
-local matFB				= Material( "pp/fb" )
-local texMB0			= render.GetMoBlurTex0()
-local texMB1			= render.GetMoBlurTex1()
-local NumFramesTaken	= 0
+local matFSB = Material( "pp/motionblur" )
+local matFB = Material( "pp/fb" )
+local texMB0 = render.GetMoBlurTex0()
+local texMB1 = render.GetMoBlurTex1()
+local NumFramesTaken = 0
 
 frame_blend = {}
 
@@ -110,7 +107,7 @@ frame_blend.ShouldSkipFrame = function()
 
 	local padding = math.floor( pp_fb_frames:GetInt() * pp_fb_shutter:GetFloat() * 0.5 )
 
-	if ( NumFramesTaken < padding || NumFramesTaken >= pp_fb_frames:GetInt() - padding ) then 
+	if ( NumFramesTaken < padding || NumFramesTaken >= pp_fb_frames:GetInt() - padding ) then
 		return true
 	end
 
@@ -148,13 +145,13 @@ end
 
 frame_blend.BlendFrame = function()
 
-	local padding	= math.floor( pp_fb_frames:GetInt() * pp_fb_shutter:GetFloat() * 0.5 )
-	local frames	= pp_fb_frames:GetInt()
+	local padding = math.floor( pp_fb_frames:GetInt() * pp_fb_shutter:GetFloat() * 0.5 )
+	local frames = pp_fb_frames:GetInt()
 
 	render.UpdateScreenEffectTexture()
 
 	local delta = ( NumFramesTaken - padding ) / ( frames - padding * 2 )
-	local curve = FrameCurve( ( NumFramesTaken - padding ), ( frames-padding * 2 ) )
+	local curve = FrameCurve( NumFramesTaken - padding, frames-padding * 2 )
 	if ( !curve ) then return end
 
 	curve = ( 1 / ( NumFramesTaken - padding ) ) * curve
@@ -199,17 +196,17 @@ end )
 
 list.Set( "PostProcess", "#frame_blend_pp", {
 
-	icon		= "gui/postprocess/frame_blend.png",
-	convar		= "pp_fb",
-	category	= "#effects_pp",
+	icon = "gui/postprocess/frame_blend.png",
+	convar = "pp_fb",
+	category = "#effects_pp",
 
-	cpanel		= function( CPanel )
+	cpanel = function( CPanel )
 
 		CPanel:AddControl( "Header", { Description = "#frame_blend_pp.desc" } )
 		CPanel:AddControl( "Header", { Description = "#frame_blend_pp.desc2" } )
 
 		CPanel:AddControl( "CheckBox", { Label = "#frame_blend_pp.enable", Command = "pp_fb" } )
-		
+
 		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "frame_blend" }
 		params.Options[ "#preset.default" ] = { pp_fb_frames = "16", pp_fb_shutter = "0.5" }
 		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )

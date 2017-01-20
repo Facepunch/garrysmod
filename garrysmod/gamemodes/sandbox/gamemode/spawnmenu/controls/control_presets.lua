@@ -1,17 +1,10 @@
---
---  ___  ___   _   _   _    __   _   ___ ___ __ __
--- |_ _|| __| / \ | \_/ |  / _| / \ | o \ o \\ V /
---  | | | _| | o || \_/ | ( |_n| o ||   /   / \ / 
---  |_| |___||_n_||_| |_|  \__/|_n_||_|\\_|\\ |_|  2009
---										 
---
 
-include( 'preset_editor.lua' )
+include( "preset_editor.lua" )
 
 local PANEL = {}
 
 --[[---------------------------------------------------------
-   Name: Init
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -19,7 +12,7 @@ function PANEL:Init()
 	self.DropDown.OnSelect = function( dropdown, index, value, data ) self:OnSelect( index, value, data ) end
 	self.DropDown:SetText( "Presets" )
 	self.DropDown:Dock( FILL )
-	
+
 	-- TODO: ICON!
 	self.Button = vgui.Create( "DImageButton", self )
 	self.Button.DoClick = function() self:OpenPresetEditor() end
@@ -28,17 +21,16 @@ function PANEL:Init()
 	self.Button:SetStretchToFit( false )
 	self.Button:SetSize( 20, 20 )
 	self.Button:DockMargin( 5, 0, 0, 0 )
-	
+
 	self:SetTall( 20 )
-	
+
 	self.Options = {}
 	self.ConVars = {}
-	
+
 end
 
-
 --[[---------------------------------------------------------
-   Name: SetLabel
+	Name: SetLabel
 -----------------------------------------------------------]]
 function PANEL:SetLabel( strName )
 
@@ -46,21 +38,20 @@ function PANEL:SetLabel( strName )
 
 end
 
-
 --[[---------------------------------------------------------
-   Name: AddOption
+	Name: AddOption
 -----------------------------------------------------------]]
 function PANEL:AddOption( strName, data )
-	
+
 	self.DropDown:AddChoice( strName, data )
-	
-	self.Options[ strName ] = data 
+
+	self.Options[ strName ] = data
 
 end
 
 --[[---------------------------------------------------------
-   Name: SetOptions
-    these are options given to by the CPanel (usually just defaults)
+	Name: SetOptions
+	Desc: These are options given to by the CPanel (usually just defaults)
 -----------------------------------------------------------]]
 function PANEL:SetOptions( Options )
 	if Options then
@@ -69,21 +60,20 @@ function PANEL:SetOptions( Options )
 end
 
 --[[---------------------------------------------------------
-   Name: OnSelect
+	Name: OnSelect
 -----------------------------------------------------------]]
 function PANEL:OnSelect( index, value, data )
 
 	if ( !data ) then return end
-	
+
 	for k, v in pairs( data ) do
 		RunConsoleCommand( k, v )
 	end
 
 end
 
-
 --[[---------------------------------------------------------
-   Name: OpenPresetEditor
+	Name: OpenPresetEditor
 -----------------------------------------------------------]]
 function PANEL:OpenPresetEditor()
 
@@ -99,7 +89,7 @@ function PANEL:OpenPresetEditor()
 end
 
 --[[---------------------------------------------------------
-   Add A ConVar to store
+	Add A ConVar to store
 -----------------------------------------------------------]]
 function PANEL:AddConVar( convar )
 
@@ -109,7 +99,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: GetConVars
+	Name: GetConVars
 -----------------------------------------------------------]]
 function PANEL:GetConVars( convar )
 
@@ -119,7 +109,7 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: SetPreset
+	Name: SetPreset
 -----------------------------------------------------------]]
 function PANEL:SetPreset( strName )
 
@@ -130,15 +120,15 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: ReloadPresets
+	Name: ReloadPresets
 -----------------------------------------------------------]]
 function PANEL:ReloadPresets()
 	self:Clear()
-	
+
 	for name, data in pairs( self.Options ) do
 		self:AddOption( name, data )
 	end
-	
+
 	local Presets = presets.GetTable( self.m_strPreset )
 	local sortedPresets, i = {}, 1
 	for name in pairs( Presets ) do
@@ -146,7 +136,7 @@ function PANEL:ReloadPresets()
 		i = i + 1
 	end
 	table.sort( sortedPresets )
-	
+
 	for _, name in ipairs( sortedPresets ) do
 		self.DropDown:AddChoice( name, Presets[ name ] )
 	end
@@ -154,7 +144,7 @@ function PANEL:ReloadPresets()
 end
 
 --[[---------------------------------------------------------
-   Name: Update
+	Name: Update
 -----------------------------------------------------------]]
 function PANEL:Update()
 
@@ -163,14 +153,12 @@ function PANEL:Update()
 end
 
 --[[---------------------------------------------------------
-   Name: Clear
+	Name: Clear
 -----------------------------------------------------------]]
 function PANEL:Clear()
-	
+
 	self.DropDown:Clear()
-	
+
 end
-
-
 
 vgui.Register( "ControlPresets", PANEL, "Panel" )

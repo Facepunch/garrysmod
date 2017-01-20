@@ -177,8 +177,10 @@ end
 -----------------------------------------------------------]]
 function GM:OnChatTab( str )
 
+	str = string.TrimRight(str)
+	
 	local LastWord
-	for word in string.gmatch( str, "%a+" ) do
+	for word in string.gmatch( str, "[^ ]+" ) do
 		LastWord = word
 	end
 
@@ -188,7 +190,7 @@ function GM:OnChatTab( str )
 
 		local nickname = v:Nick()
 
-		if ( string.len( LastWord ) < string.len( nickname ) && string.find( string.lower( nickname ), string.lower( LastWord ) ) == 1 ) then
+		if ( string.len( LastWord ) < string.len( nickname ) && string.find( string.lower( nickname ), string.lower( LastWord ), 0, true ) == 1 ) then
 
 			str = string.sub( str, 1, ( string.len( LastWord ) * -1 ) - 1 )
 			str = str .. nickname
@@ -699,4 +701,7 @@ function GM:CloseDermaMenus()
 end
 
 function GM:CreateClientsideRagdoll( entity, ragdoll )
+end
+
+function GM:VehicleMove( ply, vehicle, mv )
 end

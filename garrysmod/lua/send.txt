@@ -116,6 +116,7 @@ lua\includes\modules\widget.lua
 lua\includes\modules\menubar.lua
 lua\includes\modules\team.lua
 lua\includes\modules\undo.lua
+lua\includes\modules\utf8.lua
 lua\includes\modules\search.lua
 lua\includes\modules\usermessage.lua
 lua\includes\modules\cleanup.lua

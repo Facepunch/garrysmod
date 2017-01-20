@@ -9,13 +9,12 @@ angular.module( 'tranny', [] )
 
 		var update = function()
 		{
-			if ( IN_ENGINE == false ) return;
-			
-			$(element).html( language.Update( strName ) );
-			$(element).attr( "placeholder", language.Update( strName ) );
+			var outStr = IN_ENGINE ? language.Update( strName ) : strName;
+			$(element).html( outStr );
+			$(element).attr( "placeholder", outStr );
 		}
-		
-		scope.$watch( attrs.ngTranny, function ( value ) 
+
+		scope.$watch( attrs.ngTranny, function ( value )
 		{
 			strName = value;
 			update();
@@ -45,11 +44,10 @@ angular.module( 'tranny', [] )
 
 			if ( value < 60 * 60 * 24 )
 				return $( element ).html( Math.floor( value / 60 / 60 ) + " hr" );
-			
+
 			$( element ).html( "a long time" );
 
 		});
 
 	}
 } );
-

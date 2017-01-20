@@ -24,13 +24,6 @@ GM.Website		= "www.garry.tv"
 GM.TeamBased	= false
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerHurt( )
-   Desc: Called when a player is hurt.
------------------------------------------------------------]]
-function GM:PlayerHurt( player, attacker, healthleft, healthtaken )
-end
-
---[[---------------------------------------------------------
    Name: gamemode:KeyPress( )
    Desc: Player pressed a key (see IN enums)
 -----------------------------------------------------------]]
@@ -205,32 +198,6 @@ function GM:FinishMove( ply, mv )
 
 	if ( drive.FinishMove( ply, mv ) ) then return true end
 	if ( player_manager.RunClass( ply, "FinishMove", mv ) ) then return true end
-
-end
-
---[[---------------------------------------------------------
-   Name: gamemode:FinishMove( player, movedata )
------------------------------------------------------------]]
-function GM:VehicleMove( ply, vehicle, mv )
-
-	--
-	-- On duck toggle third person view
-	--
-	if ( mv:KeyPressed( IN_DUCK ) ) then
-		vehicle:SetThirdPersonMode( !vehicle:GetThirdPersonMode() )
-	end
-
-	--
-	-- Adjust the camera distance with the mouse wheel
-	--
-	local iWheel = ply:GetCurrentCommand():GetMouseWheel()
-	if ( iWheel != 0 ) then
-		-- The distance is a multiplier
-		-- Actual camera distance = ( renderradius + renderradius * dist )
-		-- so -1 will be zero.. clamp it there.
-		local newdist = math.Clamp( vehicle:GetCameraDistance() - iWheel * 0.03 * ( 1.1 + vehicle:GetCameraDistance() ), -1, 10 )
-		vehicle:SetCameraDistance( newdist )
-	end
 
 end
 

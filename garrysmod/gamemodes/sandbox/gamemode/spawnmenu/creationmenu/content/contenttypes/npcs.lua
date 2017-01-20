@@ -3,30 +3,29 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
 
 	-- Get a list of available NPCs
 	local NPCList = list.Get( "NPC" )
-		
+
 	-- Categorize them
 	local Categories = {}
 	for k, v in pairs( NPCList ) do
-		
+
 		local Category = v.Category or "Other"
 		local Tab = Categories[ Category ] or {}
-			
+
 		Tab[ k ] = v
-			
+
 		Categories[ Category ] = Tab
-		
+
 	end
 
 	-- Create an icon for each one and put them on the panel
 	for CategoryName, v in SortedPairs( Categories ) do
-		
+
 		-- Add a node to the tree
 		local node = tree:AddNode( CategoryName, "icon16/monkey.png" )
-		
 
 		-- When we click on the node - populate it using this function
 		node.DoPopulate = function( self )
-	
+
 			-- If we've already populated it - forget it.
 			if ( self.PropPanel ) then return end
 
@@ -37,27 +36,26 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
 
 			for name, ent in SortedPairsByMemberValue( v, "Name" ) do
 
-				spawnmenu.CreateContentIcon( "npc", self.PropPanel, 
-				{ 
+				spawnmenu.CreateContentIcon( "npc", self.PropPanel, {
 					nicename	= ent.Name or name,
 					spawnname	= name,
-					material	= "entities/"..name..".png",
+					material	= "entities/" .. name .. ".png",
 					weapon		= ent.Weapons,
 					admin		= ent.AdminOnly
-				})
-				
+				} )
+
 			end
 
 		end
 
 		-- If we click on the node populate it and switch to it.
 		node.DoClick = function( self )
-	
-			self:DoPopulate()		
+
+			self:DoPopulate()
 			pnlContent:SwitchPanel( self.PropPanel )
-	
+
 		end
-			
+
 	end
 
 	-- Select the first node
@@ -67,7 +65,6 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
 	end
 
 end )
-
 
 spawnmenu.AddCreationTab( "#spawnmenu.category.npcs", function()
 

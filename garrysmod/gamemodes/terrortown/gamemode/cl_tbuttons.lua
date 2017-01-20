@@ -59,7 +59,7 @@ net.Receive("TTT_ConfirmUseTButton", TBHUD.ReceiveUseConfirm)
 
 local function ComputeRangeFactor(plypos, tgtpos)
    local d = tgtpos - plypos
-   d = d:DotProduct(d)
+   d = d:Dot(d)
    return d / range
 end
 
@@ -94,7 +94,7 @@ function TBHUD:Draw(client)
 
             if (not IsOffScreen(scrpos)) and but:IsUsable() then
                d = pos - plypos
-               d = d:DotProduct(d) / (but:GetUsableRange() ^ 2)
+               d = d:Dot(d) / (but:GetUsableRange() ^ 2)
                -- draw if this button is within range, with alpha based on distance
                if d < 1 then
                   surface.SetDrawColor(255, 255, 255, 200 * (1 - d))

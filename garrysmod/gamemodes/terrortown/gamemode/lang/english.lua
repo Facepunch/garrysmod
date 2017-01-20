@@ -29,7 +29,6 @@ L.win_showreport   = "Let's look at the round report for {num} seconds."
 
 L.limit_round      = "Round limit reached. {mapname} will load soon."
 L.limit_time       = "Time limit reached. {mapname} will load soon."
-L.limit_vote       = "Round or time limit reached. Voting time!"
 L.limit_left       = "{num} round(s) or {time} minutes remaining before the map changes to {mapname}."
 
 --- Credit awards
@@ -46,9 +45,9 @@ L.karma_dmg_other  = "Your Karma is {amount}. As a result all damage you deal is
 L.body_found       = "{finder} found the body of {victim}. {role}"
 
 -- The {role} in body_found will be replaced by one of the following:
-L.body_found_t     = "He was a Traitor!"
-L.body_found_d     = "He was a Detective."
-L.body_found_i     = "He was innocent."
+L.body_found_t     = "They were a Traitor!"
+L.body_found_d     = "They were a Detective."
+L.body_found_i     = "They were Innocent."
 
 L.body_confirm     = "{finder} confirmed the death of {victim}."
 
@@ -143,10 +142,6 @@ L.radio_button_steps   = "Footsteps"
 
 -- Intro screen shown after joining
 L.intro_help     = "If you're new to the game, press F1 for instructions!"
-
--- "Continue playing" vote
-L.contvote_continue = "Continue playing this"
-L.contvote_change   = "Start a vote"
 
 -- Radiocommands/quickchat
 L.quick_title   = "Quickchat keys"
@@ -249,17 +244,19 @@ L.set_tips      = "Show gameplay tips at the bottom of the screen while spectati
 L.set_startpopup = "Start of round info popup duration"
 L.set_startpopup_tip = "When the round starts, a small popup appears at the bottom of your screen for a few seconds. Change the time it displays for here."
 
-L.set_cross_opacity = "Ironsight crosshair opacity"
-L.set_cross_disable = "Disable crosshair completely"
-L.set_minimal_id    = "Minimalist Target ID under crosshair (no karma text, hints, etc)"
-L.set_healthlabel   = "Show health status label on health bar"
-L.set_lowsights     = "Lower weapon when using ironsights"
-L.set_lowsights_tip = "Enable to position the weapon model lower on the screen while using ironsights. This will make it easier to see your target, but it will look less realistic."
-L.set_fastsw        = "Fast weapon switch"
-L.set_fastsw_tip    = "Enable to cycle through weapons when you scroll without opening the weapon switcher menu."
-L.set_wswitch       = "Disable weapon switch menu auto-closing"
-L.set_wswitch_tip   = "By default the weapon switcher automatically closes a few seconds after you last scroll. Enable this to make it stay up."
-L.set_cues          = "Play sound cue when a round begins or ends"
+L.set_cross_opacity   = "Ironsight crosshair opacity"
+L.set_cross_disable   = "Disable crosshair completely"
+L.set_minimal_id      = "Minimalist Target ID under crosshair (no karma text, hints, etc)"
+L.set_healthlabel     = "Show health status label on health bar"
+L.set_lowsights       = "Lower weapon when using ironsights"
+L.set_lowsights_tip   = "Enable to position the weapon model lower on the screen while using ironsights. This will make it easier to see your target, but it will look less realistic."
+L.set_fastsw          = "Fast weapon switch"
+L.set_fastsw_tip      = "Enable to cycle through weapons without having to click again to use weapon. Enable show menu to show switcher menu."
+L.set_fastsw_menu     = "Enable menu with fast weapon switch"
+L.set_fastswmenu_tip  = "When fast weapons switch is enabled, the menu switcher menu will popup."
+L.set_wswitch         = "Disable weapon switch menu auto-closing"
+L.set_wswitch_tip     = "By default the weapon switcher automatically closes a few seconds after you last scroll. Enable this to make it stay up."
+L.set_cues            = "Play sound cue when a round begins or ends"
 
 
 L.set_title_play    = "Gameplay settings"
@@ -358,7 +355,7 @@ Crime scene visualization device.
 
 Analyzes a corpse to show how
 the victim was killed, but only if
-he died of gunshot wounds.]]
+they died of gunshot wounds.]]
 
 -- Decoy
 L.decoy_name      = "Decoy"
@@ -605,6 +602,7 @@ L.radar_hud    = "Radar ready for next scan in: {time}"
 -- Spectator muting of living/dead
 L.mute_living  = "Living players muted"
 L.mute_specs   = "Spectators muted"
+L.mute_all     = "All muted"
 L.mute_off     = "None muted"
 
 -- Spectators and prop possession
@@ -790,7 +788,7 @@ L.col_total  = "Total points"
 L.something      = "something"
 
 -- Kill events
-L.ev_blowup      = "{victim} blew himself up"
+L.ev_blowup      = "{victim} blew themselves up"
 L.ev_blowup_trap = "{victim} was blown up by {trap}"
 
 L.ev_tele_self   = "{victim} telefragged themselves"
@@ -798,8 +796,8 @@ L.ev_sui         = "{victim} couldn't take it and killed themselves"
 L.ev_sui_using   = "{victim} killed themselves using {tool}"
 
 L.ev_fall        = "{victim} fell to their death"
-L.ev_fall_pushed = "{victim} fell to their death after {attacker} pushed him"
-L.ev_fall_pushed_using = "{victim} fell to their death after {attacker} used {trap} to push him"
+L.ev_fall_pushed = "{victim} fell to their death after {attacker} pushed them"
+L.ev_fall_pushed_using = "{victim} fell to their death after {attacker} used {trap} to push them"
 
 L.ev_shot        = "{victim} was shot by {attacker}"
 L.ev_shot_using  = "{victim} was shot by {attacker} using a {weapon}"
@@ -849,7 +847,7 @@ L.aw_sui1_title = "Suicide Cult Leader"
 L.aw_sui1_text  = "showed the other suiciders how to do it by being the first to go."
 
 L.aw_sui2_title = "Lonely and Depressed"
-L.aw_sui2_text  = "was the only one who killed himself."
+L.aw_sui2_text  = "was the only one who killed themselves."
 
 L.aw_exp1_title = "Explosives Research Grant"
 L.aw_exp1_text  = "was recognized for their research on explosions. {num} test subjects helped out."

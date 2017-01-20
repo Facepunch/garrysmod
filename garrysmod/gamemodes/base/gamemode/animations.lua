@@ -54,7 +54,7 @@ function GM:HandlePlayerDucking( ply, velocity )
 
 	if ( !ply:Crouching() ) then return false end
 
-	if ( velocity:Length2D() > 0.5 ) then
+	if ( velocity:Length2DSqr() > 0.25 ) then
 		ply.CalcIdeal = ACT_MP_CROUCHWALK
 	else
 		ply.CalcIdeal = ACT_MP_CROUCH_IDLE
@@ -93,7 +93,7 @@ end
 
 function GM:HandlePlayerVaulting( ply, velocity )
 
-	if ( velocity:Length() < 1000 ) then return end
+	if ( velocity:LengthSqr() < 1000000 ) then return end
 	if ( ply:IsOnGround() ) then return end
 
 	ply.CalcIdeal = ACT_MP_SWIM
@@ -266,21 +266,19 @@ end
 --
 function GM:MouthMoveAnimation( ply )
 
-	local FlexNum = ply:GetFlexNum() - 1
-	if ( FlexNum <= 0 ) then return end
+	local flexes = {
+		ply:GetFlexIDByName( "jaw_drop" ),
+		ply:GetFlexIDByName( "left_part" ),
+		ply:GetFlexIDByName( "right_part" ),
+		ply:GetFlexIDByName( "left_mouth_drop" ),
+		ply:GetFlexIDByName( "right_mouth_drop" )
+	}
 
-	for i = 0, FlexNum - 1 do
-	
-		local Name = ply:GetFlexName( i )
+	local weight = ply:IsSpeaking() and math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) or 0
 
-		if ( Name == "jaw_drop" || Name == "right_part" || Name == "left_part" || Name == "right_mouth_drop" || Name == "left_mouth_drop" ) then
+	for k, v in pairs( flexes ) do
 
-			if ( ply:IsSpeaking() ) then
-				ply:SetFlexWeight( i, math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) )
-			else
-				ply:SetFlexWeight( i, 0 )
-			end
-		end
+		ply:SetFlexWeight( v, weight )
 
 	end
 
@@ -297,8 +295,8 @@ function GM:CalcMainActivity( ply, velocity )
 		self:HandlePlayerDriving( ply ) ||
 		self:HandlePlayerVaulting( ply, velocity ) ||
 		self:HandlePlayerJumping( ply, velocity ) ||
-		self:HandlePlayerDucking( ply, velocity ) ||
-		self:HandlePlayerSwimming( ply, velocity ) ) then
+		self:HandlePlayerSwimming( ply, velocity ) ||
+		self:HandlePlayerDucking( ply, velocity ) ) then
 
 	else
 

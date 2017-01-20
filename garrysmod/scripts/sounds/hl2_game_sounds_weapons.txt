@@ -1518,4 +1518,50 @@
 	"wave"		")weapons/grenade/tick1.wav"
 }
 
+///*********
+// SLAMZ
+///*********
+
+"Weapon_SLAM.SatchelThrow"
+{
+	"channel"	"CHAN_VOICE"
+	"volume"	"0.7"
+	"soundlevel"  	"SNDLVL_75dB"
+
+	"wave"	"weapons/slam/throw.wav"
+}
+
+
+"Weapon_SLAM.TripMineMode"
+{
+	"channel"	"CHAN_VOICE"
+	"volume"	"0.7"
+	"soundlevel"  	"SNDLVL_75dB"
+
+	"wave"	"weapons/slam/mine_mode.wav"
+}
+"Weapon_SLAM.SatchelDetonate"
+{
+	"channel"	"CHAN_VOICE"
+	"volume"	"0.7"
+	"soundlevel"  	"SNDLVL_75dB"
+
+	"wave"	"weapons/slam/buttonclick.wav"
+}
+
+"TripmineGrenade.Place"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.95"
+	"soundlevel"  	"SNDLVL_70dB"
+	"wave"	"weapons/tripwire/hook.wav"
+}
+
+"TripmineGrenade.Activate"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.95"
+	"soundlevel"  	"SNDLVL_70dB"
+	"wave"	"weapons/tripwire/mine_activate.wav"
+}
 

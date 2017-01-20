@@ -17,7 +17,7 @@ if ( SERVER ) then
 
 			ServerLog( "Player is saving too quickly! " .. tostring( ply ) .. "\n" )
 
-		return end 
+		return end
 
 		ply.m_NextSave = CurTime() + 10
 
@@ -45,7 +45,7 @@ if ( SERVER ) then
 			net.Start( "GModSave" )
 				net.WriteBool( i == parts )
 				net.WriteBool( ShowSave )
-			
+
 				net.WriteUInt( size, 16 )
 				net.WriteData( compressed_save:sub( start + 1, endbyte + 1 ), size )
 			net.Send( ply )
@@ -59,12 +59,12 @@ if ( SERVER ) then
 
 		savedata = util.Decompress( savedata )
 
-		if ( !isstring( savedata ) ) then 
+		if ( !isstring( savedata ) ) then
 			MsgN( "gm_load: Couldn't load save!" )
 			return
 		end
 
-		gmsave.LoadMap( savedata, nil )
+		gmsave.LoadMap( savedata, game.SinglePlayer() && Entity( 1 ) || nil )
 
 	end )
 
@@ -74,7 +74,7 @@ else
 	net.Receive( "GModSave", function( len, client )
 		local done = net.ReadBool()
 		local showsave = net.ReadBool()
-	
+
 		local len = net.ReadUInt( 16 )
 		local data = net.ReadData( len )
 
@@ -86,7 +86,7 @@ else
 
 		local uncompressed = util.Decompress( buffer )
 
-		if ( !uncompressed ) then 
+		if ( !uncompressed ) then
 			MsgN( "Received save - but couldn't decompress!?" )
 			buffer = ""
 			return

@@ -58,13 +58,13 @@ function PANEL:FirstPersonControls()
 	y = y * 0.5 * scale
 
 	if ( self.MouseKey == MOUSE_LEFT ) then
-	
+
 		if ( input.IsShiftDown() ) then y = 0 end
-		
+
 		self.aLookAngle = self.aLookAngle + Angle( y * 4, x * 4, 0 )
-		
+
 		self.vCamPos = self.Entity:OBBCenter() - self.aLookAngle:Forward() * self.vCamPos:Length()
-		
+
 		return
 	end
 
@@ -81,10 +81,10 @@ function PANEL:FirstPersonControls()
 	if ( input.IsKeyDown( KEY_SPACE ) || input.IsKeyDown( KEY_SPACE ) ) then Movement = Movement + self.aLookAngle:Up() end
 	if ( input.IsKeyDown( KEY_LCONTROL ) || input.IsKeyDown( KEY_LCONTROL ) ) then Movement = Movement - self.aLookAngle:Up() end
 
-	local scale = 0.5
-	if ( input.IsShiftDown() ) then scale = 4.0 end
+	local speed = 0.5
+	if ( input.IsShiftDown() ) then speed = 4.0 end
 
-	self.vCamPos = self.vCamPos + Movement * scale
+	self.vCamPos = self.vCamPos + Movement * speed
 
 end
 
@@ -99,6 +99,19 @@ function PANEL:OnMouseReleased( mousecode )
 
 	self:MouseCapture( false )
 	self.Capturing = false
+
+end
+
+function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
+
+	local ctrl = vgui.Create( ClassName )
+	ctrl:SetSize( 300, 300 )
+	ctrl:SetModel( "models/props_junk/PlasticCrate01a.mdl" )
+	ctrl:GetEntity():SetSkin( 2 )
+	ctrl:SetLookAng( Angle( 45, 0, 0 ) )
+	ctrl:SetCamPos( Vector( -20, 0, 20 ) )
+
+	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end
 

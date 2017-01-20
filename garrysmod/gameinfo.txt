@@ -21,10 +21,10 @@
 
 			game+mod			garrysmod/garrysmod.vpk
 
-			game				|all_source_engine_paths|hl2/hl2_textures.vpk
-			game				|all_source_engine_paths|hl2/hl2_sound_vo_english.vpk
-			game				|all_source_engine_paths|hl2/hl2_sound_misc.vpk
-			game				|all_source_engine_paths|hl2/hl2_misc.vpk
+			game				|all_source_engine_paths|sourceengine/hl2_textures.vpk
+			game				|all_source_engine_paths|sourceengine/hl2_sound_vo_english.vpk
+			game				|all_source_engine_paths|sourceengine/hl2_sound_misc.vpk
+			game				|all_source_engine_paths|sourceengine/hl2_misc.vpk
 
 			platform			|all_source_engine_paths|platform/platform_misc.vpk
 
@@ -34,7 +34,7 @@
 
 			gamebin				garrysmod/bin
 
-			game				|all_source_engine_paths|hl2
+			game				|all_source_engine_paths|sourceengine
 			platform			|all_source_engine_paths|platform
 
 			game+download		garrysmod/download

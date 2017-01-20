@@ -92,11 +92,8 @@ CreateConVar("ttt_det_credits_traitorkill", "0")
 CreateConVar("ttt_det_credits_traitordead", "1")
 
 
-CreateConVar("ttt_announce_deaths", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
-
 CreateConVar("ttt_use_weapon_spawn_scripts", "1")
-
-CreateConVar("ttt_always_use_mapcycle", "0")
+CreateConVar("ttt_weapon_spawn_count", "0")
 
 CreateConVar("ttt_round_limit", "6", FCVAR_ARCHIVE + FCVAR_NOTIFY + FCVAR_REPLICATED)
 CreateConVar("ttt_time_limit_minutes", "75", FCVAR_NOTIFY + FCVAR_REPLICATED)
@@ -157,7 +154,7 @@ util.AddNetworkString("TTT_ShowPrints")
 util.AddNetworkString("TTT_ScanResult")
 util.AddNetworkString("TTT_FlareScorch")
 util.AddNetworkString("TTT_Radar")
-
+util.AddNetworkString("TTT_Spectate")
 ---- Round mechanics
 function GM:Initialize()
    MsgN("Trouble In Terrorist Town gamemode initializing...")
@@ -229,7 +226,9 @@ function GM:InitCvars()
    self.cvar_init = true
 end
 
-function GM:GetGameDescription() return self.Name end
+function GM:InitPostEntity()
+   WEPS.ForcePrecache()
+end
 
 -- Convar replication is broken in gmod, so we do this.
 -- I don't like it any more than you do, dear reader.
@@ -326,7 +325,7 @@ end
 
 local function NameChangeKick()
    if not GetConVar("ttt_namechange_kick"):GetBool() then
-      timer.Destroy("namecheck")
+      timer.Remove("namecheck")
       return
    end
 
@@ -419,7 +418,7 @@ local function StopRoundTimers()
    -- remove all timers
    timer.Stop("wait2prep")
    timer.Stop("prep2begin")
-   timer.Stop("end2begin")
+   timer.Stop("end2prep")
    timer.Stop("winchecker")
 end
 
@@ -438,18 +437,14 @@ local function CheckForAbort()
 end
 
 function GM:TTTDelayRoundStartForVote()
-   -- No voting system available in GM13 (yet)
-   --return self:InGamemodeVote()
+   -- Can be used for custom voting systems
+   --return true, 30
    return false
 end
 
 function PrepareRound()
    -- Check playercount
    if CheckForAbort() then return end
-
-   if GetGlobalBool("InContinueVote", false) then
-      GAMEMODE:FinishContinueVote() -- may start a gamemode vote
-   end
 
    local delay_round, delay_length = hook.Call("TTTDelayRoundStartForVote", GAMEMODE)
 
@@ -585,11 +580,9 @@ function SpawnWillingPlayers(dead_only)
                      -- spawning
                      while c < num_spawns and #to_spawn > 0 do
                         for k, ply in pairs(to_spawn) do
-                           if IsValid(ply) then
-                              if ply:SpawnForRound() then
-                                 -- a spawn ent is now occupied
-                                 c = c + 1
-                              end
+                           if IsValid(ply) and ply:SpawnForRound() then
+                              -- a spawn ent is now occupied
+                              c = c + 1
                            end
                            -- Few possible cases:
                            -- 1) player has now been spawned
@@ -609,7 +602,7 @@ function SpawnWillingPlayers(dead_only)
                      MsgN("Spawned " .. c .. " players in spawn wave.")
 
                      if #to_spawn == 0 then
-                        timer.Destroy("spawnwave")
+                        timer.Remove("spawnwave")
                         MsgN("Spawn waves ending, all players spawned.")
                      end
                   end
@@ -652,8 +645,6 @@ function BeginRound()
 
    -- Remove their ragdolls
    ents.TTT.RemoveRagdolls(true)
-
-   WEPS.ForcePrecache()
 
    if CheckForAbort() then return end
 
@@ -711,11 +702,6 @@ function PrintResultMessage(type)
    end
 end
 
-local function ShouldMapSwitch()
-   return true -- no voting until fretta replacement arrives
---   return GetConVar("ttt_always_use_mapcycle"):GetBool()
-end
-
 function CheckForMapSwitch()
    -- Check for mapswitch
    local rounds_left = math.max(0, GetGlobalInt("ttt_rounds_left", 6) - 1)
@@ -725,29 +711,18 @@ function CheckForMapSwitch()
    local switchmap = false
    local nextmap = string.upper(game.GetMapNext())
 
-   if ShouldMapSwitch() then
-      if rounds_left <= 0 then
-         LANG.Msg("limit_round", {mapname = nextmap})
-         switchmap = true
-      elseif time_left <= 0 then
-         LANG.Msg("limit_time", {mapname = nextmap})
-         switchmap = true
-      end
-   else
-      -- we only get here if fretta_voting is on and always_use_mapcycle off
-      if rounds_left <= 0 or time_left <= 0 then
-         LANG.Msg("limit_vote")
-
-         -- pending fretta replacement...
-         switchmap = true
-         --GAMEMODE:StartFrettaVote()
-      end
+   if rounds_left <= 0 then
+      LANG.Msg("limit_round", {mapname = nextmap})
+      switchmap = true
+   elseif time_left <= 0 then
+      LANG.Msg("limit_time", {mapname = nextmap})
+      switchmap = true
    end
 
    if switchmap then
       timer.Stop("end2prep")
       timer.Simple(15, game.LoadNextMap)
-   elseif ShouldMapSwitch() then
+   else
       LANG.Msg("limit_left", {num = rounds_left,
                               time = math.ceil(time_left / 60),
                               mapname = nextmap})
@@ -774,12 +749,6 @@ function EndRound(type)
 
    -- We may need to start a timer for a mapswitch, or start a vote
    CheckForMapSwitch()
-
-   -- Show unobtrusive vote window (only if fretta voting enabled and only if
-   -- not already in a round/time limit induced vote)
-   --if not GAMEMODE:InGamemodeVote() then
-   --   GAMEMODE:StartContinueVote()
-   --end
 
    KARMA.RoundEnd()
 
@@ -879,7 +848,7 @@ function SelectRoles()
       if IsValid(v) and (not v:IsSpec()) then
          -- save previous role and sign up as possible traitor/detective
 
-         local r = GAMEMODE.LastRole[v:UniqueID()] or v:GetRole() or ROLE_INNOCENT
+         local r = GAMEMODE.LastRole[v:SteamID()] or v:GetRole() or ROLE_INNOCENT
 
          table.insert(prev_roles[r], v)
 
@@ -963,8 +932,8 @@ function SelectRoles()
       -- initialize credit count for everyone based on their role
       ply:SetDefaultCredits()
 
-      -- store a uid -> role map
-      GAMEMODE.LastRole[ply:UniqueID()] = ply:GetRole()
+      -- store a steamid -> role map
+      GAMEMODE.LastRole[ply:SteamID()] = ply:GetRole()
    end
 end
 

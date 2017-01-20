@@ -8,6 +8,7 @@ local rt_Store		= render.GetScreenEffectTexture( 0 )
 local rt_Blur		= render.GetScreenEffectTexture( 1 )
 
 local List = {}
+local RenderEnt = NULL
 
 function Add( ents, color, blurx, blury, passes, add, ignorez )
 
@@ -30,6 +31,10 @@ function Add( ents, color, blurx, blury, passes, add, ignorez )
 
 end
 
+function RenderedEntity()
+	return RenderEnt
+end
+
 function Render( entry )
 
 	local rt_Scene = render.GetRenderTarget()
@@ -50,6 +55,7 @@ function Render( entry )
 	-- Render colored props to the scene and set their pixels high
 	cam.Start3D()
 		render.SetStencilEnable( true )
+			render.SuppressEngineLighting(true)
 			cam.IgnoreZ( entry.IgnoreZ )
 
 				render.SetStencilWriteMask( 1 )
@@ -61,13 +67,18 @@ function Render( entry )
 				render.SetStencilFailOperation( STENCIL_KEEP )
 				render.SetStencilZFailOperation( STENCIL_KEEP )
 
+				
 					for k, v in pairs( entry.Ents ) do
 
 						if ( !IsValid( v ) ) then continue end
 
+						RenderEnt = v
+
 						v:DrawModel()
 
 					end
+
+					RenderEnt = NULL
 
 				render.SetStencilCompareFunction( STENCIL_EQUAL )
 				render.SetStencilPassOperation( STENCIL_KEEP )
@@ -80,6 +91,7 @@ function Render( entry )
 					cam.End2D()
 
 			cam.IgnoreZ( false )
+			render.SuppressEngineLighting(false)
 		render.SetStencilEnable( false )
 	cam.End3D()
 
@@ -129,7 +141,6 @@ function Render( entry )
 	render.SetStencilTestMask( 0 )
 	render.SetStencilWriteMask( 0 )
 	render.SetStencilReferenceValue( 0 )
-
 end
 
 hook.Add( "PostDrawEffects", "RenderHalos", function()
@@ -139,9 +150,7 @@ hook.Add( "PostDrawEffects", "RenderHalos", function()
 	if ( #List == 0 ) then return end
 
 	for k, v in ipairs( List ) do
-
 		Render( v )
-
 	end
 
 	List = {}

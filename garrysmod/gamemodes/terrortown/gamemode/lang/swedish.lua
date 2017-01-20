@@ -29,7 +29,6 @@ L.win_showreport   = "Låt oss ta en titt på rund-rapporten i {num} sekunder."
 
 L.limit_round      = "Gränsen för antalet rundor har nåtts. {mapname} kommer laddas snart."
 L.limit_time       = "Tidsgränsen har tagit slut. {mapname} kommer laddas snart."
-L.limit_vote       = "Gränsen för tid eller antalet rundor har nåtts. Röstningsdags!"
 L.limit_left       = "{num} rundor eller {time} minuter återstår innan kartan ändras till {mapname}."
 
 --- Credit awards
@@ -145,10 +144,6 @@ L.radio_button_steps   = "Fotsteg"
 -- Intro screen shown after joining
 L.intro_help     = "Om du är ny till detta spel, tryck F1 för att få instruktioner!"
 
--- "Continue playing" vote
-L.contvote_continue = "Fortsätt att spela denna"
-L.contvote_change   = "Påbörja en omröstning"
-
 -- Radiocommands/quickchat
 L.quick_title   = "Snabb-knappar"
 
@@ -239,14 +234,8 @@ L.help_title = "Hjälp och Inställningar"
 L.help_tut     = "Handledning"
 L.help_tut_tip = "Hur man spelar TTT, i 6 steg"
 
-L.help_fretta_tip = "Rösta för att byta karta eller spelläge"
-
 L.help_settings = "Inställningar"
 L.help_settings_tip = "Klient-inställningar"
-
--- Fretta
-L.help_vote     = "Rösta för byte"
-L.help_vote_tip = "När tillräckligt många har röstat för byte kommer servern antingen starta en kart- eller spellägesomröstning, beroende på dess konfigurationer."
 
 -- Settings
 L.set_title_gui = "Gränssnittsinställningar"

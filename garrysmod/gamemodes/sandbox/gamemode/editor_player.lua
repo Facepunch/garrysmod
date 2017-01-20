@@ -1,3 +1,4 @@
+
 AddCSLuaFile()
 
 local default_animations = { "idle_all_01", "menu_walk" }
@@ -10,6 +11,9 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 	height		= 700,
 	onewindow	= true,
 	init		= function( icon, window )
+	
+		window:SetSize( math.min( ScrW() - 16, window:GetWide() ), math.min( ScrH() - 16, window:GetTall() ) )
+		window:Center()
 
 		local mdl = window:Add( "DModelPanel" )
 		mdl:Dock( FILL )
@@ -54,7 +58,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		plycol:SetAlphaBar( false )
 		plycol:SetPalette( false )
 		plycol:Dock( TOP )
-		plycol:SetSize( 200, 260 )
+		plycol:SetSize( 200, math.min( window:GetTall() / 3, 260 ) )
 
 		local lbl = controls:Add( "DLabel" )
 		lbl:SetText( "Physgun color" )
@@ -66,7 +70,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		wepcol:SetAlphaBar( false )
 		wepcol:SetPalette( false )
 		wepcol:Dock( TOP )
-		wepcol:SetSize( 200, 260 )
+		wepcol:SetSize( 200, math.min( window:GetTall() / 3, 260 ) )
 		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
 
 		sheet:AddSheet( "Colors", controls, "icon16/color_wheel.png" )
@@ -111,7 +115,6 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		end
 
 		-- Updating
-
 		local function UpdateBodyGroups( pnl, val )
 			if ( pnl.type == "bgroup" ) then
 
@@ -132,7 +135,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		local function RebuildBodygroupTab()
 			bdcontrolspanel:Clear()
-			
+
 			bgtab.Tab:SetVisible( false )
 
 			local nskins = mdl.Entity:SkinCount() - 1
@@ -147,11 +150,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				skins:SetValue( GetConVarNumber( "cl_playerskin" ) )
 				skins.type = "skin"
 				skins.OnValueChanged = UpdateBodyGroups
-				
+
 				bdcontrolspanel:AddItem( skins )
 
 				mdl.Entity:SetSkin( GetConVarNumber( "cl_playerskin" ) )
-				
+
 				bgtab.Tab:SetVisible( true )
 			end
 
@@ -170,11 +173,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				bgroup:SetMax( mdl.Entity:GetBodygroupCount( k ) - 1 )
 				bgroup:SetValue( groups[ k + 1 ] or 0 )
 				bgroup.OnValueChanged = UpdateBodyGroups
-				
+
 				bdcontrolspanel:AddItem( bgroup )
-	
+
 				mdl.Entity:SetBodygroup( k, groups[ k + 1 ] or 0 )
-				
+
 				bgtab.Tab:SetVisible( true )
 			end
 		end
@@ -228,17 +231,17 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		function mdl:DragMouseRelease() self.Pressed = false end
 
-		function mdl:LayoutEntity( Entity )
+		function mdl:LayoutEntity( ent )
 			if ( self.bAnimated ) then self:RunAnimation() end
 
 			if ( self.Pressed ) then
 				local mx, my = gui.MousePos()
 				self.Angles = self.Angles - Angle( 0, ( self.PressX or mx ) - mx, 0 )
-				
+
 				self.PressX, self.PressY = gui.MousePos()
 			end
 
-			Entity:SetAngles( self.Angles )
+			ent:SetAngles( self.Angles )
 		end
 
 	end

@@ -1,9 +1,7 @@
 
-IncludeCS( "ai_translations.lua" )
-IncludeCS( "sh_anim.lua" )
-
 -- Variables that are used on both client and server
 
+SWEP.PrintName		= "Scripted Weapon"		-- 'Nice' Weapon name (Shown on HUD)
 SWEP.Author			= ""
 SWEP.Contact		= ""
 SWEP.Purpose		= ""
@@ -37,14 +35,6 @@ function SWEP:Initialize()
 
 	self:SetHoldType( "pistol" )
 
-end
-
-
---[[---------------------------------------------------------
-   Name: SWEP:Precache( )
-   Desc: Use this function to precache stuff
------------------------------------------------------------]]
-function SWEP:Precache()
 end
 
 
@@ -132,8 +122,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: SWEP:ShootBullet( )
-   Desc: A convenience function to shoot bullets
+   Name: SWEP:ShootEffects( )
+   Desc: A convenience function to create shoot effects
 -----------------------------------------------------------]]
 function SWEP:ShootEffects()
 

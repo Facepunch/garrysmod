@@ -255,9 +255,9 @@ function GM:PlayerSpawn( pl )
 	-- If the player doesn't have a team in a TeamBased game
 	-- then spawn him as a spectator
 	--
-	if ( GAMEMODE.TeamBased && ( pl:Team() == TEAM_SPECTATOR || pl:Team() == TEAM_UNASSIGNED ) ) then
+	if ( self.TeamBased && ( pl:Team() == TEAM_SPECTATOR || pl:Team() == TEAM_UNASSIGNED ) ) then
 
-		GAMEMODE:PlayerSpawnAsSpectator( pl )
+		self:PlayerSpawnAsSpectator( pl )
 		return
 	
 	end
@@ -384,9 +384,9 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerSelectSpawn( pl )
 
-	if ( GAMEMODE.TeamBased ) then
+	if ( self.TeamBased ) then
 	
-		local ent = GAMEMODE:PlayerSelectTeamSpawn( pl:Team(), pl )
+		local ent = self:PlayerSelectTeamSpawn( pl:Team(), pl )
 		if ( IsValid( ent ) ) then return ent end
 	
 	end
@@ -445,7 +445,6 @@ function GM:PlayerSelectSpawn( pl )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombie" ) )
 
 		-- ZM Maps
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_deathmatch" ) )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombiemaster" ) )
 
 	end
@@ -562,14 +561,14 @@ end
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerLeaveVehicle()
 -----------------------------------------------------------]]
-function GM:PlayerLeaveVehicle( ply, veichle )
+function GM:PlayerLeaveVehicle( ply, vehicle )
 end
 
 --[[---------------------------------------------------------
 	Name: gamemode:CanExitVehicle()
 	Desc: If the player is allowed to leave the vehicle, return true
 -----------------------------------------------------------]]
-function GM:CanExitVehicle( veichle, passenger )
+function GM:CanExitVehicle( vehicle, passenger )
 	return true
 end
 

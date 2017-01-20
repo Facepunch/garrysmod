@@ -1,0 +1,462 @@
+"italy.indoor"
+{
+	"dsp"	"0"
+
+	"playlooping"
+	{
+		"volume"		".3"
+		"pitch"		"100"
+		"wave"		"ambient/tones/roomtone1.wav"
+	}
+
+	"playlooping"
+
+
+	{
+		"volume"		".2"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind1.wav"
+	}
+
+	"playrandom"
+	{
+
+		"time"		"6,10"
+		"volume"		".07,.3"
+		"pitch"		"70,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/wood1.wav"
+			"wave"	"ambient/misc/wood2.wav"
+			"wave"	"ambient/misc/wood3.wav"
+			"wave"	"ambient/misc/wood4.wav"
+			"wave"	"ambient/misc/wood5.wav"
+			"wave"	"ambient/misc/wood6.wav"
+
+		}
+
+	}
+
+
+	
+
+	
+}
+
+
+
+
+
+
+
+"italy.indoor_b"
+{
+	"dsp"	"5"
+	
+
+	"playlooping"
+	{
+		"volume"	".2"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_tunnel1.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"		".2"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind1.wav"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"wood_scape"
+	}
+
+
+	
+}
+
+
+
+"italy.indoor_t"
+{
+	"dsp"	"6"
+	"playlooping"
+
+
+	{
+		"volume"	".2"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_tunnel1.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"		".4"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind1.wav"
+	}
+
+	"playrandom"
+	{
+
+		"time"		"18,35"
+		"volume"		".05,.2"
+		"pitch"		"50,80"
+
+		"rndwave"
+		{
+			"wave"	"ambient/overhead/plane1.wav"
+			"wave"	"ambient/overhead/plane2.wav"
+			"wave"	"ambient/overhead/plane3.wav"
+
+		}
+
+	}
+
+	"playsoundscape"
+	{
+		"name"		"wood_scape"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"15,50"
+		"volume"		".04,.1"
+		"pitch"		"70,80"
+
+		"rndwave"
+		{
+		"wave"		"ambient/animal/dog1.wav"
+		"wave"		"ambient/animal/dog2.wav"
+		"wave"		"ambient/animal/dog3.wav"
+		"wave"		"ambient/animal/dog4.wav"
+		"wave"		"ambient/animal/dog5.wav"
+		"wave"		"ambient/animal/dog6.wav"
+		"wave"		"ambient/animal/dog7.wav"
+		}
+
+	}
+
+	
+
+
+	
+}
+
+
+
+"italy.outdoors"
+{
+	"dsp"	"0"
+	"playlooping"
+
+
+	{
+		"volume"		".6"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind1.wav"
+	}
+
+
+
+	
+	"playrandom"
+	{
+
+		"time"		"10,35"
+		"volume"		".2,.4"
+		"pitch"		"50,80"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/smallgust2.wav"
+			"wave"	"ambient/wind/smallgust.wav"
+
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"18,35"
+		"volume"		".06,.1"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/hammer1.wav"
+			"wave"	"ambient/misc/hammer2.wav"
+			"wave"	"ambient/misc/hammer3.wav"
+
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"21,44"
+		"volume"		".3,.4"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/clank1.wav"
+			"wave"	"ambient/misc/clank2.wav"
+			"wave"	"ambient/misc/clank3.wav"
+			"wave"	"ambient/misc/clank4.wav"
+
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.2"
+		"pitch"		"60,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/overhead/plane1.wav"
+			"wave"	"ambient/overhead/plane2.wav"
+			"wave"	"ambient/overhead/plane3.wav"
+
+		}
+
+	}
+
+
+	"playsoundscape"
+	{
+		"name"		"wood_scape"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"16,50"
+		"volume"		".05,.3"
+		"pitch"		"70,110"
+
+		"rndwave"
+		{
+		"wave"		"ambient/animal/dog1.wav"
+		"wave"		"ambient/animal/dog2.wav"
+		"wave"		"ambient/animal/dog3.wav"
+		"wave"		"ambient/animal/dog4.wav"
+		"wave"		"ambient/animal/dog5.wav"
+		"wave"		"ambient/animal/dog6.wav"
+		"wave"		"ambient/animal/dog7.wav"
+		}
+
+	}
+
+
+
+
+
+
+
+
+	"playlooping"
+	{
+		
+		
+
+		"volume"	".3"
+		"pitch"		"100"
+		"wave"		"ambient/music/piano2.wav"
+		"soundlevel"  "SNDLVL_NORM"
+		"position"	"0"
+	}
+
+
+	"playlooping"
+	{
+		
+		
+
+		"volume"	".3"
+		"pitch"		"100"
+		"wave"		"ambient/music/piano1.wav"
+		"soundlevel"  "SNDLVL_NORM"
+		"position"	"2"
+	}
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/italian_radio1.wav"
+			"wave"	"ambient/chatter/italian_radio2.wav"
+			"wave"	"ambient/chatter/italian_radio3.wav"
+			"wave"	"ambient/chatter/italian_radio4.wav"
+			"wave"	"ambient/chatter/italian_radio5.wav"
+
+
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"2"
+		
+
+		
+		
+	}
+
+
+
+
+
+
+	"playrandom"
+	{
+
+		"time"		"9,21"
+		"volume"		".07,.3"
+		"pitch"		"70,110"
+
+		"rndwave"
+		{
+		"wave"	"ambient/misc/shutter1.wav"
+		"wave"	"ambient/misc/shutter2.wav"
+		"wave"	"ambient/misc/shutter3.wav"
+		"wave"	"ambient/misc/shutter4.wav"
+		"wave"	"ambient/misc/shutter5.wav"
+		"wave"	"ambient/misc/shutter6.wav"
+		"wave"	"ambient/misc/shutter7.wav"
+		"wave"	"ambient/misc/shutter8.wav"
+		}
+
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/italian_radio1.wav"
+			"wave"	"ambient/chatter/italian_radio2.wav"
+			"wave"	"ambient/chatter/italian_radio3.wav"
+			"wave"	"ambient/chatter/italian_radio4.wav"
+			"wave"	"ambient/chatter/italian_radio5.wav"
+
+
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"1"
+		
+
+		
+		
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"15,35"
+		"volume"		".08,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/italian_radio1.wav"
+			"wave"	"ambient/chatter/italian_radio2.wav"
+			"wave"	"ambient/chatter/italian_radio3.wav"
+			"wave"	"ambient/chatter/italian_radio4.wav"
+			"wave"	"ambient/chatter/italian_radio5.wav"
+
+
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"3"
+		
+
+		
+		
+	}
+
+
+
+
+
+
+
+	
+
+	
+
+
+	
+}
+
+
+"wood_scape"
+
+{
+
+	"playrandom"
+	{
+
+		"time"		"7,20"
+		"volume"		".07,.3"
+		"pitch"		"70,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/wood1.wav"
+			"wave"	"ambient/misc/wood2.wav"
+			"wave"	"ambient/misc/wood3.wav"
+			"wave"	"ambient/misc/wood4.wav"
+			"wave"	"ambient/misc/wood5.wav"
+			"wave"	"ambient/misc/wood6.wav"
+
+		}
+
+	}
+
+
+}
+
+
+
+
+
+
+

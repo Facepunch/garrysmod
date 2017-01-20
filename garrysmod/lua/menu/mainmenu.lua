@@ -15,6 +15,7 @@ function PANEL:Init()
 
 	JS_Language( self.HTML )
 	JS_Utility( self.HTML )
+	JS_Workshop( self.HTML )
 
 	self.HTML:Dock( FILL )
 	self.HTML:OpenURL( "asset://garrysmod/html/menu.html" )
@@ -29,7 +30,11 @@ function PANEL:Init()
 
 	self:MakePopup()
 	self:SetPopupStayAtBack( true )
-	--self:MoveToBack() --Breaks Awesomium input 
+
+	-- If the console is already open, we've got in its way.
+	if ( gui.IsConsoleVisible() ) then
+		gui.ShowConsole()
+	end
 
 end
 
@@ -42,7 +47,7 @@ function PANEL:ScreenshotScan( folder )
 
 		AddBackgroundImage( folder .. v )
 		bReturn = true
-	
+
 	end
 
 	return bReturn
@@ -54,20 +59,20 @@ function PANEL:Paint()
 	DrawBackground()
 
 	if ( self.IsInGame != IsInGame() ) then
-	
+
 		self.IsInGame = IsInGame()
-		
+
 		if ( self.IsInGame ) then
-		
+
 			if ( IsValid( self.InnerPanel ) ) then self.InnerPanel:Remove() end
 			self.HTML:QueueJavascript( "SetInGame( true )" )
-		
-		else 
-		
+
+		else
+
 			self.HTML:QueueJavascript( "SetInGame( false )" )
-		
+
 		end
-		
+
 	end
 
 end
@@ -102,8 +107,8 @@ function PANEL:UpdateBackgroundImages()
 	--
 	-- If there's screenshots in gamemodes/<gamemode>/backgrounds/*.jpg use them
 	--
-	if ( !self:ScreenshotScan( "gamemodes/" .. engine.ActiveGamemode() .. "/backgrounds/" ) ) then 
-	
+	if ( !self:ScreenshotScan( "gamemodes/" .. engine.ActiveGamemode() .. "/backgrounds/" ) ) then
+
 		--
 		-- If there's no gamemode specific here we'll use the default backgrounds
 		--
@@ -147,10 +152,11 @@ end
 --
 function UpdateMapList()
 
-	if ( !istable( g_MapListCategorised ) ) then return end
+	local MapList = GetMapList()
+	if ( !MapList ) then return end
 
-	json = util.TableToJSON( g_MapListCategorised )
-	if ( !isstring( json ) ) then return end
+	local json = util.TableToJSON( MapList )
+	if ( !json ) then return end
 
 	pnlMainMenu:Call( "UpdateMaps(" .. json .. ")" )
 
@@ -163,11 +169,12 @@ function UpdateServerSettings()
 
 	local array = {
 		hostname = GetConVarString( "hostname" ),
-		sv_lan = GetConVarString( "sv_lan" )
+		sv_lan = GetConVarString( "sv_lan" ),
+		p2p_enabled = GetConVarString( "p2p_enabled" )
 	}
 
 	local settings_file = file.Read( "gamemodes/" .. engine.ActiveGamemode() .. "/" .. engine.ActiveGamemode() .. ".txt", true )
-	
+
 	if ( settings_file ) then
 
 		local Settings = util.KeyValuesToTable( settings_file )
@@ -178,6 +185,7 @@ function UpdateServerSettings()
 
 			for k, v in pairs( array.settings ) do
 				v.Value = GetConVarString( v.name )
+				v.Singleplayer = v.singleplayer && true || false
 			end
 
 		end
@@ -209,9 +217,13 @@ local ShouldStop = {}
 function GetServers( type, id )
 
 	ShouldStop[ type ] = false
+	Servers[ type ] = {}
 
 	local data = {
 		Callback = function( ping , name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid )
+
+			if Servers[ type ] && Servers[ type ][ address ] then return end
+			Servers[ type ][ address ] = true
 
 			name = string.JavascriptSafe( name )
 			desc = string.JavascriptSafe( desc )
@@ -219,17 +231,18 @@ function GetServers( type, id )
 			address = string.JavascriptSafe( address )
 			gamemode = string.JavascriptSafe( gamemode )
 			workshopid = string.JavascriptSafe( workshopid )
-			
+
 			if ( pass ) then pass = "true" else pass = "false" end
 
 			pnlMainMenu:Call( "AddServer( '"..type.."', '"..id.."', "..ping..", \""..name.."\", \""..desc.."\", \""..map.."\", "..players..", "..maxplayers..", "..botplayers..", "..pass..", "..lastplayed..", \""..address.."\", \""..gamemode.."\", \""..workshopid.."\" )" )
 
 			return !ShouldStop[ type ]
-			
+
 		end,
-		
+
 		Finished = function()
 			pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
+			Servers[ type ] = {}
 		end,
 
 		Type = type,
@@ -244,6 +257,7 @@ end
 function DoStopServers( type )
 	pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
 	ShouldStop[ type ] = true
+	Servers[ type ] = {}
 end
 
 --

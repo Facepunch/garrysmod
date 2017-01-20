@@ -1,18 +1,15 @@
 
 local spawnmenu_engine = spawnmenu
 
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
-
 module( "spawnmenu", package.seeall )
-
 
 local g_ToolMenu = {}
 local CreationMenus = {}
 local PropTable = {}
+local PropTableCustom = {}
 
 local ActiveToolPanel = nil
+local ActiveSpawnlistID = 1000
 
 function SetActiveControlPanel( pnl )
 	ActiveToolPanel = pnl
@@ -43,11 +40,11 @@ function GetToolMenu( name, label, icon )
 	icon = icon or "icon16/wrench.png"
 
 	for k, v in ipairs( g_ToolMenu ) do
-	
+
 		if ( v.Name == name ) then return v.Items end
-	
+
 	end
-	
+
 	local NewMenu = { Name = name, Items = {}, Label = label, Icon = icon }
 	table.insert( g_ToolMenu, NewMenu )
 
@@ -55,78 +52,62 @@ function GetToolMenu( name, label, icon )
 	-- Order the tabs by NAME
 	--
 	table.SortByMember( g_ToolMenu, "Name", true )
-	
+
 	return NewMenu.Items
-	
+
 end
 
-
---[[---------------------------------------------------------
-  
------------------------------------------------------------]]
 function ClearToolMenus()
-	g_ToolMenu = {}	
+	g_ToolMenu = {}
 end
 
-
---[[---------------------------------------------------------
-  
------------------------------------------------------------]]
 function AddToolTab( strName, strLabel, Icon )
 
 	GetToolMenu( strName, strLabel, Icon )
 
 end
 
-
-
---[[---------------------------------------------------------
-  
------------------------------------------------------------]]
 function AddToolCategory( tab, RealName, PrintName )
-	
+
 	local tab = GetToolMenu( tab )
-	
+
 	-- Does this category already exist?
 	for k, v in ipairs( tab ) do
-	
+
 		if ( v.Text == PrintName ) then return end
 		if ( v.ItemName == RealName ) then return end
-	
+
 	end
-	
+
 	table.insert( tab, { Text = PrintName, ItemName = RealName } )
 
 end
 
---[[---------------------------------------------------------
-  
------------------------------------------------------------]]
 function AddToolMenuOption( tab, category, itemname, text, command, controls, cpanelfunction, TheTable )
 
 	local Menu = GetToolMenu( tab )
 	local CategoryTable = nil
-	
+
 	for k, v in ipairs( Menu ) do
 		if ( v.ItemName && v.ItemName == category ) then CategoryTable = v break end
 	end
-	
+
 	-- No table found.. lets create one
 	if ( !CategoryTable ) then
 		CategoryTable = { Text = "#"..category, ItemName = category }
 		table.insert( Menu, CategoryTable )
 	end
-	
+
 	TheTable = TheTable or {}
-	
+
 	TheTable.ItemName = itemname
 	TheTable.Text = text
 	TheTable.Command = command
 	TheTable.Controls = controls
 	TheTable.CPanelFunction = cpanelfunction
-	
+
 	table.insert( CategoryTable, TheTable )
-	
+
 	-- Keep the table sorted
 	table.SortByMember( CategoryTable, "Text", true )
 
@@ -140,7 +121,7 @@ function AddCreationTab( strName, pFunction, pMaterial, iOrder, strTooltip )
 	iOrder = iOrder or 1000
 
 	pMaterial = pMaterial or "icon16/exclamation.png"
-	
+
 	CreationMenus[ strName ] = { Function = pFunction, Icon = pMaterial, Order = iOrder, Tooltip = strTooltip }
 
 end
@@ -150,38 +131,43 @@ end
 -----------------------------------------------------------]]
 function GetCreationTabs()
 
-	return CreationMenus	
+	return CreationMenus
 
 end
-
 
 --[[---------------------------------------------------------
 	GetPropTable
 -----------------------------------------------------------]]
 function GetPropTable()
 
-	return PropTable	
+	return PropTable
 
 end
 
 --[[---------------------------------------------------------
-	GetPropTable
+	GetCustomPropTable
+-----------------------------------------------------------]]
+function GetCustomPropTable()
+
+	return PropTableCustom
+
+end
+
+--[[---------------------------------------------------------
+	AddPropCategory
 -----------------------------------------------------------]]
 function AddPropCategory( strFilename, strName, tabContents, icon, id, parentid, needsapp )
 
-	id			= id		or	math.random( 1000, 9999 )
-	parentid	= parentid	or	0
-
-	PropTable[ strFilename ] = {
-	
+	PropTableCustom[ strFilename ] = {
 		name = strName,
-		icon = icon,
-		id = id,
-		parentid = parentid,
 		contents = tabContents,
+		icon = icon,
+		id = id or ActiveSpawnlistID,
+		parentid = parentid or 0,
 		needsapp = needsapp
-	
 	}
+
+	if ( !id ) then ActiveSpawnlistID = ActiveSpawnlistID + 1 end
 
 end
 
@@ -190,7 +176,20 @@ end
 -----------------------------------------------------------]]
 function PopulateFromEngineTextFiles()
 
-	spawnmenu_engine.PopulateFromTextFiles( AddPropCategory )
+	-- Reset the already loaded prop list before loading them again.
+	-- This caused the spawnlists to duplicate into crazy trees when spawnmenu_reload'ing after saving edited spawnlists
+	PropTable = {} 
+
+	spawnmenu_engine.PopulateFromTextFiles( function( strFilename, strName, tabContents, icon, id, parentid, needsapp )
+		PropTable[ strFilename ] = {
+			name = strName,
+			contents = tabContents,
+			icon = icon,
+			id = id,
+			parentid = parentid or 0,
+			needsapp = needsapp
+		}
+	end )
 
 end
 
@@ -202,7 +201,6 @@ function DoSaveToTextFiles( props )
 	spawnmenu_engine.SaveToTextFiles( props )
 
 end
-
 
 --[[
 
@@ -221,8 +219,6 @@ spawnmenu.AddContentType( "model", MyFunction )
 
 --]]
 
-
-
 local cp = {}
 
 function AddContentType( name, func )
@@ -232,10 +228,10 @@ end
 function GetContentType( name, func )
 
 	if ( !cp[ name ] ) then
-	
+
 		cp[ name ] = function() end
 		Msg( "spawnmenu.GetContentType( ", name, " ) - not found!\n" )
-	
+
 	end
 
 	return cp[ name ]
@@ -245,14 +241,14 @@ function CreateContentIcon( type, parent, tbl )
 
 	local cp = GetContentType( type )
 	if ( cp ) then return cp( parent, tbl ) end
-	
+
 end
 
 function SwitchToolTab( id )
 
 	local Tab = g_SpawnMenu:GetToolMenu():GetToolPanel( id )
-	if ( !IsValid( Tab ) ) then return end	
-	
+	if ( !IsValid( Tab ) ) then return end
+
 	--Tab:GetParent():GetParent().Tab:DoClick()
 
 end
@@ -260,14 +256,14 @@ end
 function ActivateToolPanel( id, cp )
 
 	local Tab = g_SpawnMenu:GetToolMenu():GetToolPanel( id )
-	if ( !IsValid( Tab ) ) then return end	
-	
+	if ( !IsValid( Tab ) ) then return end
+
 	spawnmenu.SetActiveControlPanel( cp )
-	
+
 	if ( cp ) then
 		Tab:SetActive( cp )
 	end
-	
+
 	SwitchToolTab( id )
 
 end
@@ -285,7 +281,7 @@ function ActivateTool( strName, noCommand )
 					if ( !noCommand && item.Command ) then
 						RunConsoleCommand( unpack( string.Explode( " ", item.Command ) ) )
 					end
-					
+
 					local cp = controlpanel.Get( strName )
 					if ( !cp:GetInitialized() ) then
 						cp:FillViaTable( { Text = item.Text, ControlPanelBuildFunction = item.CPanelFunction, Controls = item.Controls } )
@@ -294,7 +290,7 @@ function ActivateTool( strName, noCommand )
 					ActivateToolPanel( tab, cp )
 
 					break
-				
+
 				end
 
 			end

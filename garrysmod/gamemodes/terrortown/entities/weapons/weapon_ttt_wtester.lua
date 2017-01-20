@@ -2,33 +2,33 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType = "normal"
+SWEP.HoldType              = "normal"
 
 if CLIENT then
-   SWEP.PrintName = "dna_name"
-   SWEP.Slot = 8
+   SWEP.PrintName          = "dna_name"
+   SWEP.Slot               = 8
 
-   SWEP.ViewModelFOV = 10
+   SWEP.ViewModelFOV       = 10
+   SWEP.DrawCrosshair      = false
 
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "dna_desc"
    };
 
-   SWEP.Icon = "vgui/ttt/icon_wtester"
+   SWEP.Icon               = "vgui/ttt/icon_wtester"
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.ViewModel  = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel = "models/props_lab/huladoll.mdl"
+SWEP.ViewModel             = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel            = "models/props_lab/huladoll.mdl"
 
-SWEP.DrawCrosshair       = false
-SWEP.Primary.ClipSize    = -1
-SWEP.Primary.DefaultClip = -1
-SWEP.Primary.Automatic   = false
-SWEP.Primary.Delay       = 1
-SWEP.Primary.Ammo        = "none"
+SWEP.Primary.ClipSize      = -1
+SWEP.Primary.DefaultClip   = -1
+SWEP.Primary.Automatic     = false
+SWEP.Primary.Delay         = 1
+SWEP.Primary.Ammo          = "none"
 
 SWEP.Secondary.ClipSize    = -1
 SWEP.Secondary.DefaultClip = -1
@@ -36,26 +36,24 @@ SWEP.Secondary.Automatic   = false
 SWEP.Secondary.Ammo        = "none"
 SWEP.Secondary.Delay       = 2
 
-SWEP.Kind = WEAPON_ROLE
-SWEP.CanBuy = nil -- no longer a buyable thing
-SWEP.WeaponID = AMMO_WTESTER
---SWEP.LimitedStock = true
+SWEP.Kind                  = WEAPON_ROLE
+SWEP.CanBuy                = nil -- no longer a buyable thing
+SWEP.WeaponID              = AMMO_WTESTER
 
-SWEP.InLoadoutFor = {ROLE_DETECTIVE}
+SWEP.InLoadoutFor          = {ROLE_DETECTIVE}
 
 --SWEP.AllowDrop = false
-SWEP.AutoSpawnable = false
+SWEP.AutoSpawnable         = false
+SWEP.NoSights              = true
 
-SWEP.NoSights = true
+SWEP.Range                 = 175
 
-SWEP.Range = 175
+SWEP.ItemSamples           = {}
 
-SWEP.ItemSamples = {}
-
-SWEP.NowRepeating = nil
+SWEP.NowRepeating          = nil
 
 local MAX_ITEM = 30
-SWEP.MaxItemSamples = MAX_ITEM
+SWEP.MaxItemSamples        = MAX_ITEM
 
 local CHARGE_DELAY = 0.1
 local CHARGE_RATE = 3
@@ -110,9 +108,7 @@ function SWEP:PrimaryAttack()
    local ent = tr.Entity
    if IsValid(ent) and (not ent:IsPlayer()) then
       if SERVER then
-         if ent:IsPlayer() then
-            --self:GatherPlayerSample(ent)
-         elseif ent:GetClass() == "prop_ragdoll" and ent.killer_sample then
+         if ent:GetClass() == "prop_ragdoll" and ent.killer_sample then
             if CORPSE.GetFound(ent, false) then
                self:GatherRagdollSample(ent)
             else
@@ -136,8 +132,8 @@ end
 function SWEP:GatherRagdollSample(ent)
    local sample = ent.killer_sample or {t=0, killer=nil}
    local ply = sample.killer
-   if (not IsValid(ply)) and sample.killer_uid then
-      ply = player.GetByUniqueID(sample.killer_uid)
+   if (not IsValid(ply)) and sample.killer_sid then
+      ply = player.GetBySteamID(sample.killer_sid)
    end
 
 
@@ -225,14 +221,6 @@ function SWEP:AddItemSample(ent)
       return new, old, own
    end
    return -1
-end
-
-function SWEP:RemovePlayerSample(idx)
-   if self.PlayerSamples[idx] then
-      table.remove(self.PlayerSamples, idx)
-      
-      self:SendPrints(false)
-   end
 end
 
 function SWEP:RemoveItemSample(idx)
@@ -442,6 +430,7 @@ if CLIENT then
    local last_panel_selected = 1
    local T = LANG.GetTranslation
    local PT = LANG.GetParamTranslation
+   local TT = LANG.TryTranslation
    local function ShowPrintsPopup(item_prints, tester)
       local m = 10
       local bw, bh = 100, 25
@@ -515,7 +504,7 @@ if CLIENT then
 
                                ic:SetIcon(img)
 
-                               local tip = PT("dna_menu_sample", {source = name or "???"})
+                               local tip = PT("dna_menu_sample", {source = TT(name) or "???"})
 
                                ic:SetTooltip(tip)
 
@@ -710,7 +699,6 @@ if CLIENT then
    net.Receive("TTT_ShowPrints", RecvPrints)
 
    local beep_success = Sound("buttons/blip2.wav")
-   --local beep_fail = Sound("buttons/button11.wav")
    local function RecvScan()
       local clear = net.ReadBit() == 1
       if clear then

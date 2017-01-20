@@ -13,3 +13,4 @@ include( "menu_dupe.lua" )
 include( "errors.lua" )
 
 include( "motionsensor.lua" )
+include( "util.lua" )

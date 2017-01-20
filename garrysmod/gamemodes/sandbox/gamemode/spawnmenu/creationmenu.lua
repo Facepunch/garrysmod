@@ -1,10 +1,10 @@
 
-include( "CreationMenu/manifest.lua" )
+include( "creationmenu/manifest.lua" )
 
 local PANEL = {}
 
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Init
 -----------------------------------------------------------]]
 function PANEL:Init()
 
@@ -13,14 +13,13 @@ function PANEL:Init()
 
 end
 
-
 --[[---------------------------------------------------------
-   Name: Paint
+	Name: Paint
 -----------------------------------------------------------]]
 function PANEL:Populate()
 
 	local tabs = spawnmenu.GetCreationTabs()
-	
+
 	for k, v in SortedPairsByMemberValue( tabs, "Order" ) do
 
 		--
@@ -32,20 +31,15 @@ function PANEL:Populate()
 
 		self:AddSheet( k, pnl, v.Icon, nil, nil, v.Tooltip )
 
-		--
-		-- On paint, remove the paint function and populate the panel
-		--
-		pnl.Paint = function()
-
-			pnl.Paint = nil
-
+		-- Populate the panel
+		-- We have to add the timer to make sure g_Spawnmenu is available
+		-- in case some addon needs it ready when populating the creation tab.
+		timer.Simple( 0, function()
 			local childpnl = v.Function()
 			childpnl:SetParent( pnl )
 			childpnl:Dock( FILL )
+		end )
 
-		end
-
-		
 	end
 
 end

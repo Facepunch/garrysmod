@@ -47,8 +47,8 @@ if ( SERVER ) then
 			
 			LastDupeArm = CurTime() + 1
 			
-			local len		= net.ReadUInt( 32 )
-			local data		= net.ReadData( len )
+			local len = net.ReadUInt( 32 )
+			local data = net.ReadData( len )
 
 			if ( !IsValid( client ) ) then return end
 

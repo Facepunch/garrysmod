@@ -73,19 +73,19 @@ local function GetPlayerFilter(pred)
 end
 
 function GetTraitorFilter(alive_only)
-   return GetPlayerFilter(function(p) return p:GetTraitor() and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return p:GetTraitor() and (not alive_only or p:IsTerror()) end)
 end
 
 function GetDetectiveFilter(alive_only)
-   return GetPlayerFilter(function(p) return p:IsDetective() and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return p:IsDetective() and (not alive_only or p:IsTerror()) end)
 end
 
 function GetInnocentFilter(alive_only)
-   return GetPlayerFilter(function(p) return (not p:IsTraitor()) and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return (not p:IsTraitor()) and (not alive_only or p:IsTerror()) end)
 end
 
 function GetRoleFilter(role, alive_only)
-   return GetPlayerFilter(function(p) return p:IsRole(role) and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return p:IsRole(role) and (not alive_only or p:IsTerror()) end)
 end
 
 ---- Communication control
@@ -95,7 +95,7 @@ CreateConVar("ttt_limit_spectator_voice", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
 function GM:PlayerCanSeePlayersChat(text, team_only, listener, speaker)
 	if (not IsValid(listener)) then return false end
 	if (not IsValid(speaker)) then
-		if isentity(s) then
+		if isentity(speaker) then
 			return true
 		else
 			return false
@@ -186,7 +186,7 @@ function GM:PlayerCanHearPlayersVoice(listener, speaker)
    end
 
    -- Specific mute
-   if listener:IsSpec() and listener.mute_team == speaker:Team() then
+   if listener:IsSpec() and listener.mute_team == speaker:Team() or listener.mute_team == MUTE_ALL then
       return false, false
    end
 
@@ -246,8 +246,13 @@ local function MuteTeam(ply, cmd, args)
    local t = tonumber(args[1])
    ply.mute_team = t
 
-   local name = (t != 0) and team.GetName(t) or "None"
-   ply:ChatPrint(name .. " muted.")
+   if t == MUTE_ALL then
+      ply:ChatPrint("All muted.")
+   elseif t == MUTE_NONE or t == TEAM_UNASSIGNED or not team.Valid(t) then
+      ply:ChatPrint("None muted.")
+   else
+      ply:ChatPrint(team.GetName(t) .. " muted.")
+   end
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 
@@ -302,7 +307,7 @@ local function LastWords(ply, cmd, args)
          if string.len(words) < 2 then return end
 
          -- ignore admin commands
-         local firstchar = string.GetChar(words, 1)
+         local firstchar = string.sub(words, 1, 1)
          if firstchar == "!" or firstchar == "@" or firstchar == "/" then return end
 
 

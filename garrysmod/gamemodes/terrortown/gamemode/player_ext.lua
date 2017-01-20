@@ -200,7 +200,7 @@ function plymeta:RecordKill(victim)
       self.kills = {}
    end
 
-   table.insert(self.kills, victim:UniqueID())
+   table.insert(self.kills, victim:SteamID())
 end
 
 

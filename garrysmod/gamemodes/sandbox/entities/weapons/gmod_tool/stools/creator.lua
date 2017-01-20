@@ -4,6 +4,8 @@ TOOL.ClientConVar[ "type" ] = "0"
 TOOL.ClientConVar[ "name" ] = "0"
 TOOL.ClientConVar[ "arg" ] = "0"
 
+TOOL.Information = { { name = "left" } }
+
 function TOOL:LeftClick( trace, attach )
 
 	local type = self:GetClientNumber( "type", 0 )
@@ -25,13 +27,13 @@ function TOOL:LeftClick( trace, attach )
 		Spawn_NPC( self:GetOwner(), name, arg, trace )
 
 	elseif ( type == 3 ) then
-	
+
 		Spawn_Weapon( self:GetOwner(), name, trace )
-		
+
 	elseif ( type == 4 ) then
-	
+
 		CCSpawn( self:GetOwner(), nil, { name } ) -- Props
-		
+
 	end
 
 	return true

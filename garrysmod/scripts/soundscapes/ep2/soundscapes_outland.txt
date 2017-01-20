@@ -1,0 +1,673 @@
+
+// Soundscapes for ep2 outland
+
+
+//-------------------------------- FOREST ----------------------------------------
+
+//-------------------- utility soundscapes -------------------------
+
+"ep2_forest.util_windgusts"
+{
+	"playrandom"
+	{
+		"volume"	"0.2,0.6"
+		"time"		"10.0, 30.0"
+		"pitch"		"90,130"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave" "ambient/levels/forest/treewind1.wav"
+			"wave" "ambient/levels/forest/treewind2.wav"
+			"wave" "ambient/levels/forest/treewind3.wav"
+			"wave" "ambient/levels/forest/treewind4.wav"
+		}
+	}
+}
+
+
+"ep2_forest.util_shoreline"
+{
+	"playrandom"
+	{
+		"volume"	"0.15,0.35"
+		"pitch"		"120"
+		"time"		"3.0, 4.0"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/canals/shore1.wav"
+			"wave"	"ambient/levels/canals/shore2.wav"
+			"wave"	"ambient/levels/canals/shore3.wav"
+			"wave"	"ambient/levels/canals/shore4.wav"
+		}
+	}
+}
+
+
+"ep2_forest.util_small_river"
+{
+	"dsp"	"1"
+	
+	
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"pitch"		"120"
+		"soundlevel" "SNDLVL_90dB"
+		"position"	"0"
+		"wave"		"ambient/water/water_run1.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"pitch"		"130"
+		"soundlevel" "SNDLVL_90dB"
+		"position"	"1"
+		"wave"		"ambient/water/water_run1.wav"
+	}
+}
+
+
+"ep2_forest.util_birds"
+{
+	"playrandom"
+	{
+		"time"		"7,25"
+		"volume"	"0.25,0.45"
+		"pitch"		"90,115"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/forest/dist_birds1.wav"
+			"wave"	"ambient/levels/forest/dist_birds2.wav"
+			"wave"	"ambient/levels/forest/dist_birds3.wav"
+			"wave"	"ambient/levels/forest/dist_birds4.wav"
+			"wave"	"ambient/levels/forest/dist_birds5.wav"
+			"wave"	"ambient/levels/forest/dist_birds6.wav"
+		}
+	}
+}
+
+"ep2_forest.util_critters"
+{
+	"playrandom"
+	{
+		"time"		"7, 16"
+		"volume"	"0.2,0.4"
+		"pitch"		"95,110"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/forest/peckr1.wav"
+			"wave"	"ambient/levels/forest/peckr2.wav"
+			"wave"	"ambient/levels/forest/buzz1.wav"
+			"wave"	"ambient/levels/forest/buzz2.wav"
+			"wave"	"ambient/levels/forest/buzz3.wav"
+			"wave"	"ambient/levels/forest/buzz4.wav"
+			"wave"	"ambient/levels/forest/chicka1.wav"
+			"wave"	"ambient/levels/forest/chicka2.wav"
+			"wave"	"ambient/levels/forest/chicka3.wav"
+			"wave"	"ambient/levels/forest/chirp1.wav"
+			"wave"	"ambient/levels/forest/chirp2.wav"
+			"wave"	"ambient/levels/forest/chirp3.wav"
+			"wave"	"ambient/levels/forest/crik1.wav"
+			"wave"	"ambient/levels/forest/crik2.wav"
+			"wave"	"ambient/levels/forest/crik3.wav"
+			"wave"	"ambient/levels/forest/flit1.wav"
+			"wave"	"ambient/levels/forest/squeek1.wav"
+			"wave"	"ambient/levels/forest/squeek2.wav"
+			"wave"	"ambient/levels/forest/squeek3.wav"
+		}
+	}
+}
+
+
+//-------------------------------------------------------------------
+
+
+"ep2_forest.frogpond"
+{
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"		"ambient/levels/forest/frogs_loop1.wav"
+		"pitch"		"100"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_birds"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_critters"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_shoreline"
+		"volume"	"0.5"
+	}
+}
+
+"ep2_forest.small_river"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_birds"
+		"volume"	"1.4"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_critters"
+		"volume"	"1.4"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_small_river"
+		"volume"	"0.7"
+	}
+}
+
+"ep2_forest.light_forest"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_birds"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_windgusts"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_critters"
+		"volume"	"0.8"
+	}
+}
+
+//-------------------------------- TRAINCRASH ----------------------------------------
+
+// play at start, in wrecked train area, position 0 is water, position 1 is bridge
+
+"ep2_traincrash.intro"
+{
+	// wind, rocks, water, creaking
+
+	"playsoundscape"
+	{
+		"name"		"ep2_forest.util_windgusts"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"coast.util_crumblycliff"
+		"volume"	"1.0"
+	}
+	
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"		"ep2_forest.util_small_river"
+		"volume"	"0.4"
+	}
+
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"		"ep2_forest.util_shoreline"
+		"volume"	"0.3"
+	}
+
+	
+	"playrandom"
+	{
+		"time"		"5,15"
+		"volume"	"0.35,0.55"
+		"pitch"		"70,90"
+
+		"soundlevel"	"SNDLVL_140dB"
+		"position"	"random"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/metal_stress2.wav"
+			"wave"	"ambient/materials/metal_stress4.wav"
+			"wave"	"ambient/materials/metal4.wav"
+			"wave"	"ambient/materials/rustypipes1.wav"
+			"wave"	"ambient/materials/shipgroan1.wav"
+			"wave"	"ambient/materials/shipgroan2.wav"
+			"wave"	"ambient/materials/shipgroan3.wav"
+			"wave"	"ambient/materials/shipgroan4.wav"
+		}
+	}	
+}
+
+
+// play at vista of citadel, position 0 is citadel, position 1 is bridge
+
+"ep2_traincrash.vista_pre_bridgecrash"
+{
+	// wind, creaking, citadel critical
+
+	"playsoundscape"
+	{
+		"name"		"coast.util_windgusts"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_critical_outside"
+		"volume"	"1.0"
+		"positionoverride"	"0"
+	}
+
+	"playrandom"
+	{
+		"time"		"3,8"
+		"volume"	"0.35,0.45"
+		"pitch"		"70,90"
+
+		"soundlevel"	"SNDLVL_120dB"
+		"position"	"1"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/metal_stress2.wav"
+			"wave"	"ambient/materials/metal_stress4.wav"
+			"wave"	"ambient/materials/metal4.wav"
+			"wave"	"ambient/materials/rustypipes1.wav"
+			"wave"	"ambient/materials/shipgroan1.wav"
+			"wave"	"ambient/materials/shipgroan2.wav"
+			"wave"	"ambient/materials/shipgroan3.wav"
+			"wave"	"ambient/materials/shipgroan4.wav"
+		}
+	}
+}
+
+// play at vista, after bridge falls, position 0 is citadel
+
+"ep2_traincrash.vista_post_bridgecrash"
+{
+	// wind, creaking, citadel critical
+
+	"playsoundscape"
+	{
+		"name"		"coast.util_windgusts"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"	"ep1.citadel_critical_outside"
+		"volume"	"1.0"
+		"positionoverride"	"0"
+	}
+
+}
+
+//---------------------------------- CAVES ----------------------------------------
+
+//---------------------------------- utility --------------------------------------
+
+"ep2_caves.util_flies"
+{
+	"playrandom"
+	{
+		"time"		"0.5,4"
+		"volume"	"0.4,0.7"
+		"pitch"		"80,120"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"		"ambient/creatures/flies1.wav"
+			"wave"		"ambient/creatures/flies2.wav"
+			"wave"		"ambient/creatures/flies3.wav"
+			"wave"		"ambient/creatures/flies4.wav"
+			"wave"		"ambient/creatures/flies5.wav"
+		}
+		
+	}
+}
+
+"ep2_caves.util_dist_grubs"
+{
+	"playrandom"
+	{
+		"time"		"5,25"
+		"volume"	"0.3,0.5"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"		"ambient/levels/caves/dist_grub1.wav"
+			"wave"		"ambient/levels/caves/dist_grub2.wav"
+			"wave"		"ambient/levels/caves/dist_grub3.wav"
+			"wave"		"ambient/levels/caves/dist_grub4.wav"
+			"wave"		"ambient/levels/caves/dist_grub5.wav"
+		}
+		
+	}
+}
+
+
+"ep2_caves.util_dist_growls"
+{
+	"playrandom"
+	{
+		"time"		"15,60"
+		"volume"	"0.3,0.5"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"		"ambient/levels/caves/dist_growl1.wav"
+			"wave"		"ambient/levels/caves/dist_growl2.wav"
+			"wave"		"ambient/levels/caves/dist_growl3.wav"
+			"wave"		"ambient/levels/caves/dist_growl4.wav"
+		}
+		
+	}
+}
+
+"ep2_caves.util_dist_rumbles"
+{
+	"playrandom"
+	{
+		"time"		"15,60"
+		"volume"	"0.3,0.5"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"		"ambient/levels/caves/rumble1.wav"
+			"wave"		"ambient/levels/caves/rumble2.wav"
+			"wave"		"ambient/levels/caves/rumble3.wav"
+			"wave"	"ambient/materials/rock1.wav"
+			"wave"	"ambient/materials/rock2.wav"
+			"wave"	"ambient/materials/rock3.wav"
+			"wave"	"ambient/materials/rock4.wav"
+			"wave"	"ambient/materials/rock5.wav"
+
+		}
+		
+	}
+}
+
+"ep2_caves.util_tunnel"
+{
+	"dsp"	"1"
+
+	
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_dist_growls"
+		"volume"	"0.3"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_dist_grubs"
+		"volume"	"0.5"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_dist_rumbles"
+		"volume"	"0.8"
+	}
+
+}
+
+"ep2_caves.util_drips"
+{
+	"playrandom"
+	{
+		"volume"	"0.25,0.55"
+		"pitch"		"100"
+		"time"		"0.5, 4.5"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/levels/canals/drip1.wav"
+			"wave"	"ambient/levels/canals/drip2.wav"
+			"wave"	"ambient/levels/canals/drip3.wav"
+			"wave"	"ambient/levels/canals/drip4.wav"
+			"wave"	"ambient/water/rain_drip1.wav"
+			"wave"	"ambient/water/rain_drip2.wav"
+			"wave"	"ambient/water/rain_drip3.wav"
+			"wave"	"ambient/water/rain_drip4.wav"
+		}
+	}
+
+	"playrandom"
+	{
+		"volume"	"0.25,0.55"
+		"pitch"		"90,120"
+		"time"		"0.5, 4.0"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+			"wave"	"ambient/water/distant_drip1.wav"
+			"wave"	"ambient/water/distant_drip2.wav"
+			"wave"	"ambient/water/distant_drip3.wav"
+			"wave"	"ambient/water/distant_drip4.wav"
+		}
+	}
+}
+
+//------------------------------------------------------------------------
+
+"ep2_caves.main_cavern"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"pitch"		"100"
+		"wave"		"ambient/levels/caves/cave_howl_loop1.wav"
+	}
+
+
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_tunnel"
+		"volume"	"0.8"
+	}
+
+	// support Metal Creak
+
+	"playrandom"
+	{
+		"time"		"8, 15"
+		"volume"	"0.35, 0.65"
+		"pitch"		"80,95"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+		"rndwave"
+		{
+
+			"wave"	"ambient/materials/metal_stress1.wav"
+			"wave"	"ambient/materials/metal_stress2.wav"
+			"wave"	"ambient/materials/metal_stress3.wav"
+			"wave"	"ambient/materials/metal_stress4.wav"
+			"wave"	"ambient/materials/metal_stress5.wav"
+
+
+		}
+
+	}
+}
+
+"ep2_caves.dropoff"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"pitch"		"100"
+		"wave"		"ambient/levels/caves/cave_howl_loop1.wav"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_tunnel"
+		"volume"	"0.25"
+	}
+}
+
+
+"ep2_caves.quiet_tunnel"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"pitch"		"100"
+		"wave"		"ambient/levels/caves/cave_scree_loop1.wav"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_tunnel"
+		"volume"	"0.25"
+	}
+}
+
+
+"ep2_caves.cricket_tunnel"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"pitch"		"100"
+		"wave"		"ambient/levels/caves/cave_crickets_loop1.wav"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_tunnel"
+		"volume"	"0.25"
+	}
+}
+
+"ep2_caves.nests_tunnel"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"pitch"		"100"
+		"wave"		"ambient/levels/caves/cave_heen_loop1.wav"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_tunnel"
+		"volume"	"1.0"
+	}
+}
+
+"ep2_caves.large_tunnel"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"pitch"		"100"
+		"wave"		"ambient/levels/caves/cave_scree_loop2.wav"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_tunnel"
+		"volume"	"1.0"
+	}
+}
+
+"ep2_caves.large_grub_cavern"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"pitch"		"100"
+		"wave"		"ambient/levels/caves/cave_scree_loop1.wav"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_tunnel"
+		"volume"	"1.0"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_flies"
+		"volume"	"1.0"
+	}
+}
+
+"ep2_caves.watery_cavern"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"pitch"		"100"
+		"wave"		"ambient/levels/caves/cave_howl_loop1.wav"
+	}
+
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_drips"
+		"volume"	"1.0"
+	}
+
+
+	"playsoundscape"
+	{
+		"name"		"ep2_caves.util_tunnel"
+		"volume"	"1.0"
+	}
+
+}
+

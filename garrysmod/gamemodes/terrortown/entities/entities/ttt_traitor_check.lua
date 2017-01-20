@@ -21,7 +21,7 @@ function ENT:CountTraitors()
 
    local trs = 0
    for _,ply in pairs(player.GetAll()) do
-      if IsValid(ply) and ply:IsActiveTraitor() then
+      if IsValid(ply) and ply:IsActiveTraitor() and ply:Alive() then
          local pos = ply:GetPos()
          if VectorInside(pos, mins, maxs) then
             trs = trs + 1
@@ -36,12 +36,7 @@ function ENT:AcceptInput(name, activator, caller)
    if name == "CheckForTraitor" then
       local traitors = self:CountTraitors()
 
-      -- hack in our parameter
-      for idx, op in pairs(self.Outputs["TraitorsFound"]) do
-         op.param = traitors
-      end
-
-      self:TriggerOutput("TraitorsFound", activator)
+      self:TriggerOutput("TraitorsFound", activator, traitors)
 
       return true
    end

@@ -1,51 +1,48 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType = "normal"
+SWEP.HoldType              = "normal"
 
 if CLIENT then
-   SWEP.PrintName			= "decoy_name"
-   SWEP.Slot				= 7
+   SWEP.PrintName          = "decoy_name"
+   SWEP.Slot               = 7
 
-   SWEP.ViewModelFOV = 10
+   SWEP.ViewModelFOV       = 10
+   SWEP.ViewModelFlip      = false
+   SWEP.DrawCrosshair      = false
 
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "decoy_desc"
    };
 
-   SWEP.Icon = "vgui/ttt/icon_beacon"
+   SWEP.Icon                = "vgui/ttt/icon_beacon"
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                   = "weapon_tttbase"
 
-SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel         = "models/props_lab/reciever01b.mdl"
-
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
+SWEP.ViewModel              = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel             = "models/props_lab/reciever01b.mdl"
 
 SWEP.Primary.ClipSize       = -1
 SWEP.Primary.DefaultClip    = -1
 SWEP.Primary.Automatic      = true
-SWEP.Primary.Ammo       = "none"
-SWEP.Primary.Delay = 1.0
+SWEP.Primary.Ammo           = "none"
+SWEP.Primary.Delay          = 1.0
 
 SWEP.Secondary.ClipSize     = -1
 SWEP.Secondary.DefaultClip  = -1
 SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
-SWEP.Secondary.Delay = 1.0
+SWEP.Secondary.Ammo         = "none"
+SWEP.Secondary.Delay        = 1.0
 
-SWEP.Kind = WEAPON_EQUIP2
-SWEP.CanBuy = {ROLE_TRAITOR}
-SWEP.LimitedStock = true -- only buyable once
-SWEP.WeaponID = AMMO_DECOY
+SWEP.Kind                  = WEAPON_EQUIP2
+SWEP.CanBuy                = {ROLE_TRAITOR}
+SWEP.LimitedStock          = true -- only buyable once
+SWEP.WeaponID              = AMMO_DECOY
 
-
-SWEP.AllowDrop = false
-
-SWEP.NoSights = true
+SWEP.AllowDrop             = false
+SWEP.NoSights              = true
 
 function SWEP:OnDrop()
    self:Remove()

@@ -545,19 +545,15 @@ function meta:Hide()
 	self:SetVisible( false )
 end
 
-function meta:IsChildHovered( iDepth )
+function meta:IsChildHovered( bImmediate )
 
 	local Hovered = vgui.GetHoveredPanel()
 	if ( !IsValid( Hovered ) ) then return false end
+	if ( Hovered == self ) then return false end
 
-	for i = 1, iDepth do
+	-- Check immediate child only (with support for old depth parameter)
+	if ( bImmediate == true or bImmediate == 1 ) then return Hovered:GetParent() == self end
 
-		Hovered = Hovered:GetParent()
-		if ( !IsValid( Hovered ) ) then return false end
-		if ( Hovered == self ) then return true end
-
-	end
-
-	return false
+	return Hovered:HasParent( self )
 
 end

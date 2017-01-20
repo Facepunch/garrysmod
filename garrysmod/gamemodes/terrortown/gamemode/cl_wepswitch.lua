@@ -16,6 +16,7 @@ WSWITCH.WeaponCache = {}
 WSWITCH.cv = {}
 WSWITCH.cv.stay = CreateConVar("ttt_weaponswitcher_stay", "0", FCVAR_ARCHIVE)
 WSWITCH.cv.fast = CreateConVar("ttt_weaponswitcher_fast", "0", FCVAR_ARCHIVE)
+WSWITCH.cv.display = CreateConVar("ttt_weaponswitcher_displayfast", "0", FCVAR_ARCHIVE)
 
 local delay = 0.03
 local showtime = 3
@@ -225,7 +226,7 @@ function WSWITCH:DoSelect(idx)
 
    if self.cv.fast:GetBool() then
       -- immediately confirm if fastswitch is on
-      self:ConfirmSelection(true)
+      self:ConfirmSelection(self.cv.display:GetBool())
    end   
 end
 

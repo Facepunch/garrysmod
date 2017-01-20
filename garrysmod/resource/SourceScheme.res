@@ -24,8 +24,8 @@ Scheme
 		"Black"				"0 0 0 255"
 
 		"Blank"				"0 0 0 0"
-		
-		"SteamLightGreen"	"157 194 80 255"
+
+		"SteamLightGreen"			"157 194 80 255"
 		"AchievementsLightGrey"		"79 79 79 255"
 		"AchievementsDarkGrey"		"55 55 55 255"
 		"AchievementsInactiveFG"	"130 130 130 255"
@@ -40,7 +40,7 @@ Scheme
 		// vgui_controls color specifications
 		Border.Bright					"200 200 200 255"	// the lit side of a control
 		Border.Dark						"40 40 40 198"		// the dark/unlit side of a control
-		Border.Selection				"0 0 0 255"			// the additional border color for displaying the default/selected button
+		Border.Selection				"Black"			// the additional border color for displaying the default/selected button
 		Border.DarkSolid				"40 40 40 255"
 		Border.Subtle					"80 80 80 255"
 
@@ -63,7 +63,7 @@ Scheme
 		CheckButton.ArmedBgColor		"Blank"
 		CheckButton.DepressedBgColor	"Blank"
 		CheckButton.DisabledBgColor	   	"153 153 153 255"
-				
+
 		ComboBoxButton.ArrowColor		"81 81 81 255"
 		ComboBoxButton.ArmedArrowColor	"110 110 110 255"
 		ComboBoxButton.BgColor			"Blank"
@@ -100,7 +100,7 @@ Scheme
 		GraphPanel.FgColor				"White"
 		GraphPanel.BgColor				"TransparentBlack"
 
-		Label.TextDullColor				"DullWhite"
+        Label.TextDullColor             "OffWhite"
 		Label.TextColor					"DullWhite"
 		Label.TextBrightColor			"White"
 		Label.SelectedTextColor			"White"
@@ -114,7 +114,7 @@ Scheme
 		ListPanel.SelectedTextColor			"White"
 		ListPanel.SelectedBgColor			"0 168 255 204"
 		ListPanel.OutOfFocusSelectedTextColor	"Black"
-		ListPanel.SelectedOutOfFocusBgColor	"132 183 241 100"
+		ListPanel.SelectedOutOfFocusBgColor		"132 183 241 100"
 		ListPanel.EmptyListInfoTextColor	"Black"
 
 		Menu.TextColor					"80 80 80 255"
@@ -129,11 +129,11 @@ Scheme
 		ProgressBar.FgColor				"White"
 		ProgressBar.BgColor				"TransparentBlack"
 
-		PropertySheet.TextColor			"10 10 10 200"
-		PropertySheet.SelectedTextColor	"10 10 10 255"
-		PropertySheet.SelectedBgColor	"10 10 10 255"
+		PropertySheet.TextColor				"10 10 10 200"
+		PropertySheet.SelectedTextColor		"10 10 10 255"
+		PropertySheet.SelectedBgColor		"10 10 10 255"
 		PropertySheet.TransitionEffectTime	"0.25"	// time to change from one tab to another
-		PropertySheet.BgColor "0 0 0 255"
+		PropertySheet.BgColor				"Black"
 
 		RadioButton.TextColor			"OffWhite"
 		RadioButton.SelectedTextColor	"White"
@@ -173,9 +173,9 @@ Scheme
 		Slider.DisabledTextColor2	"50 50 50 255"
 
 		TextEntry.TextColor			"10 10 10 255"
-		TextEntry.BgColor			"255 255 255 255"
+		TextEntry.BgColor			"White"
 		TextEntry.CursorColor		"10 10 10 255"
-		TextEntry.DisabledTextColor	"DullWhite"
+		TextEntry.DisabledTextColor	"128 128 128 255"
 		TextEntry.DisabledBgColor	"192 192 192 255"
 		TextEntry.SelectedTextColor	"10 10 10 255"
 		TextEntry.SelectedBgColor	"0 168 255 204"
@@ -207,19 +207,19 @@ Scheme
 		Console.DevTextColor		"White"
 
 		NewGame.TextColor			"White"
-		NewGame.FillColor			"0 0 0 255"
-		NewGame.SelectionColor		"Orange"			[$WIN32]
-		NewGame.SelectionColor		"0 0 0 255"			[$X360]
+		NewGame.FillColor			"Black"
+		NewGame.SelectionColor		"Orange"	[$WIN32]
+		NewGame.SelectionColor		"Black"		[$X360]
 		NewGame.DisabledColor		"128 128 128 196"
 
 		MessageDialog.MatchmakingBG			"46 43 42 255"	[$X360]
 		MessageDialog.MatchmakingBGBlack			"22 22 22 255"	[$X360]
-		
+
 		MatchmakingMenuItemTitleColor			"200 184 151 255"	[$X360]
 		MatchmakingMenuItemDescriptionColor		"200 184 151 255"	[$X360]
 
 		"QuickListBGDeselected"		"AchievementsDarkGrey"
-	 	"QuickListBGSelected"           "AchievementsLightGrey"
+		"QuickListBGSelected"		"AchievementsLightGrey"
 	}
 
 	//////////////////////// BITMAP FONT FILES /////////////////////////////
@@ -265,10 +265,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		 "Lucida Console" [$WINDOWS]
-				"name"		 "Lucida Console" [$X360]
-				"name"		 "Lucida Console" [$OSX]
-				"name"		 "Verdana" [$LINUX]
+				"name"		"Lucida Console" [$WINDOWS]
+				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"14" [$LINUX]
 				"tall"		 "10"
 				"tall_lodef" "15"
@@ -281,8 +279,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$LINUX]
-				"name"		"Verdana" [$LINUX]
+				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"16"
 				"weight"	"500"
 			}
@@ -291,8 +289,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$LINUX]
-				"name"		"Verdana Bold" [$LINUX]
+				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"16"
 				"weight"	"1000"
 			}
@@ -301,8 +299,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$LINUX]
-				"name"		"Verdana" [$LINUX]
+				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"16"
 				"weight"	"500"
 				"underline" "1"
@@ -312,9 +310,10 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$LINUX]
-				"name"		"Verdana" [$LINUX]
-				"tall"		"12" [!$LINUX]
+				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Verdana" [!$WINDOWS]
+				"tall"		"12" [$WINDOWS]
+				"tall"		"14" [$OSX]
 				"tall"		"16" [$LINUX]
 				"weight"	"0"
 			}
@@ -323,8 +322,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$LINUX]
-				"name"		"Verdana" [$LINUX]
+				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"13"
 				"weight"	"0"
 				"dropshadow" "1"
@@ -334,8 +333,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$LINUX]
-				"name"		"Verdana" [$LINUX]
+				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"12"
 				"weight"	"0"
 			}
@@ -345,8 +344,8 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$LINUX]
-				"name"		"Verdana" [$LINUX]
+				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"18"
 				"weight"	"0"
 			}
@@ -355,8 +354,8 @@ Scheme
 		{
 			"1"	[$WIN32]
 			{
-				"name"		"Tahoma" [!$LINUX]
-				"name"		"Verdana" [$LINUX]
+				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"12"
 				"weight"	"1000"
 			}
@@ -401,8 +400,8 @@ Scheme
 			}
 			"1"	[!$LINUX]
 			{
-				"name"		"Verdana" 
-				"tall"		"16" 
+				"name"		"Verdana"
+				"tall"		"16"
 				"weight"	"600"
 				"antialias" "1"
 			}
@@ -427,7 +426,7 @@ Scheme
 				"outline" "1"
 			}
 		}
-		
+
 		"AchievementTitleFontSmaller"
 		{
 			"1"
@@ -439,8 +438,8 @@ Scheme
 				//"outline" "1"
 			}
 		}
-		
-		
+
+
 		"AchievementDescriptionFont"
 		{
 			"1"
@@ -462,7 +461,7 @@ Scheme
 				"yres"	 "481 10000"
 			}
 		}
-		
+
 		GameUIButtons
 		{
 			"1"	[$X360]
@@ -481,12 +480,10 @@ Scheme
 		{
 			"1"
 			{
-				"name"		 "Lucida Console" [$WINDOWS]
-				"name"		 "Lucida Console" [$X360]
-				"name"		 "Lucida Console" [$OSX]
-				"name"		 "Verdana" [$LINUX]
-				"tall"		"14" [$LINUX]
-				"tall"		"10"
+				"name"		"Lucida Console" [$WINDOWS]
+				"name"		"Verdana" [!$WINDOWS]
+				"tall"		"10" [$WINDOWS]
+				"tall"		"14" [!$WINDOWS]
 				"weight"	"500"
 			}
 		}
@@ -720,7 +717,7 @@ Scheme
 				"antialias"		"1"
 			}
 		}
-		
+
 		StatsTitle	[$WIN32]
 		{
 			"1"
@@ -732,7 +729,7 @@ Scheme
 				"antialias"		"1"
 			}
 		}
-		
+
 		StatsText	[$WIN32]
 		{
 			"1"
@@ -744,7 +741,7 @@ Scheme
 				"antialias"		"1"
 			}
 		}
-		
+
 		AchievementItemTitle	[$WIN32]
 		{
 			"1"
@@ -770,7 +767,7 @@ Scheme
 			}
 		}
 
-		
+
 		StatsPageText
 		{
 			"1"
@@ -783,7 +780,7 @@ Scheme
 				"antialias"		"1"
 			}
 		}
-		
+
 		AchievementItemTitleLarge	[$WIN32]
 		{
 			"1"
@@ -796,7 +793,7 @@ Scheme
 				"antialias"		"1"
 			}
 		}
-		
+
 		AchievementItemDescription	[$WIN32]
 		{
 			"1"
@@ -810,7 +807,7 @@ Scheme
 			}
 		}
 
-		
+
 		"ServerBrowserTitle"
 		{
 			"1"
@@ -871,7 +868,7 @@ Scheme
 				"antialias"	"1"
 			}
 		}
-	
+
 	}
 
 	//
@@ -1047,7 +1044,7 @@ Scheme
 				}
 			}
 		}
-		
+
 		TitleButtonBorder
 		{
 			"backgroundtype" "0"
@@ -1102,7 +1099,7 @@ Scheme
 				}
 			}
 		}
-		
+
 		ScrollBarButtonDepressedBorder
 		{
 			"inset" "0 0 0 0"
@@ -1147,12 +1144,12 @@ Scheme
 		{
 			"inset" "1 1 1 1"
 
-			render 
+			render
 			{
 				"0" "fill( x0, y0, x1, y1, Black )"
 			}
 
-			render_bg 
+			render_bg
 			{
 				"0" "fill( x0, y0, x1, y1, Orange )"
 			}
@@ -1317,7 +1314,7 @@ Scheme
 	CustomFontFiles
 	{
 		"1"		"resource/HALFLIFE2.ttf"
-		"2"		"resource/HL2EP2.ttf"	
+		"2"		"resource/HL2EP2.ttf"
 		"3"		"resource/marlett.ttf"
 	}
 }

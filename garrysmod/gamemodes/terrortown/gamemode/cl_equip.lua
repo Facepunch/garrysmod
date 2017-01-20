@@ -73,7 +73,7 @@ local function PreqLabels(parent, x, y)
    local tbl = {}
 
    tbl.credits = vgui.Create("DLabel", parent)
-   tbl.credits:SetToolTip(GetTranslation("equip_help_cost"))
+   tbl.credits:SetTooltip(GetTranslation("equip_help_cost"))
    tbl.credits:SetPos(x, y)
    tbl.credits.Check = function(s, sel)
                           local credits = LocalPlayer():GetCredits()
@@ -81,7 +81,7 @@ local function PreqLabels(parent, x, y)
                        end
 
    tbl.owned = vgui.Create("DLabel", parent)
-   tbl.owned:SetToolTip(GetTranslation("equip_help_carry"))
+   tbl.owned:SetTooltip(GetTranslation("equip_help_carry"))
    tbl.owned:CopyPos(tbl.credits)
    tbl.owned:MoveBelow(tbl.credits, y)
    tbl.owned.Check = function(s, sel)
@@ -95,7 +95,7 @@ local function PreqLabels(parent, x, y)
                      end
 
    tbl.bought = vgui.Create("DLabel", parent)
-   tbl.bought:SetToolTip(GetTranslation("equip_help_stock"))
+   tbl.bought:SetTooltip(GetTranslation("equip_help_stock"))
    tbl.bought:CopyPos(tbl.owned)
    tbl.bought:MoveBelow(tbl.owned, y)
    tbl.bought.Check = function(s, sel)

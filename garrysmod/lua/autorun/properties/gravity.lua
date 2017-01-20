@@ -5,8 +5,8 @@ properties.Add( "gravity", {
 	MenuLabel = "#gravity",
 	Type = "toggle",
 	Order = 1001,
-	
-	Filter = function( self, ent, ply ) 
+
+	Filter = function( self, ent, ply )
 
 		if ( !IsValid( ent ) ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "gravity", ent ) ) then return false end
@@ -25,11 +25,11 @@ properties.Add( "gravity", {
 	end,
 
 	Action = function( self, ent )
-		
+
 		self:MsgStart()
 			net.WriteEntity( ent )
 		self:MsgEnd()
-		
+
 	end,
 
 	Receive = function( self, length, player )
@@ -51,6 +51,6 @@ properties.Add( "gravity", {
 
 		ent:SetNWBool( "gravity_disabled", b == false )
 
-	end	
+	end
 
 } )

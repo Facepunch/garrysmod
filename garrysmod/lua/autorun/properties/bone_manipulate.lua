@@ -5,26 +5,26 @@ properties.Add( "bone_manipulate", {
 	MenuLabel = "#edit_bones",
 	Order = 500,
 	MenuIcon = "icon16/vector.png",
-	
-	Filter = function( self, ent, ply ) 
-	
+
+	Filter = function( self, ent, ply )
+
 		if ( !gamemode.Call( "CanProperty", ply, "bonemanipulate", ent ) ) then return false end
 		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end  -- If our ent has an attached entity, we want to use and modify its bones instead
 
 		local bonecount = ent:GetBoneCount()
 		if ( !bonecount || bonecount <= 1 ) then return false end
 		return ents.FindByClassAndParent( "widget_bones", ent ) == nil
-		
+
 	end,
 
 	Action = function( self, ent )
 
 		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
-	
+
 		self:MsgStart()
 			net.WriteEntity( ent )
 		self:MsgEnd()
-		
+
 	end,
 
 	Receive = function( self, length, player )
@@ -32,7 +32,7 @@ properties.Add( "bone_manipulate", {
 		local ent = net.ReadEntity()
 		if ( !IsValid( ent ) ) then return end
 		if ( !self:Filter( ent, player ) ) then return end
-		
+
 		ent.widget = ents.Create( "widget_bones" )
 		ent.widget:Setup( ent )
 		ent.widget:Spawn()
@@ -40,11 +40,11 @@ properties.Add( "bone_manipulate", {
 		ent.widget.BonePressCount = 0
 
 		-- What happens when we click on a bone?
-		ent.widget.OnBoneClick =	function( w, boneid, ply )
+		ent.widget.OnBoneClick = function( w, boneid, ply )
 
-			-- If we have an old axis, remove it		
+			-- If we have an old axis, remove it
 			if ( IsValid( w.axis ) ) then w.axis:Remove() end
-			
+
 			--  We clicked on the same bone
 			if ( w.LastBonePress == boneid ) then
 				w.BonePressCount = w.BonePressCount + 1
@@ -54,7 +54,7 @@ properties.Add( "bone_manipulate", {
 				w.BonePressCount = 0
 				w.LastBonePress = boneid
 			end
-			
+
 			local EntityCycle = { "widget_bonemanip_move", "widget_bonemanip_rotate", "widget_bonemanip_scale" }
 
 			w.axis = ents.Create( EntityCycle[ w.BonePressCount + 1 ] )
@@ -64,7 +64,7 @@ properties.Add( "bone_manipulate", {
 			w:DeleteOnRemove( w.axis )
 
 		end
-	end				
+	end
 
 } )
 
@@ -73,7 +73,7 @@ properties.Add( "bone_manipulate_end", {
 	Order = 500,
 	MenuIcon = "icon16/vector_delete.png",
 
-	Filter = function( self, ent ) 
+	Filter = function( self, ent )
 
 		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end  -- If our ent has an attached entity, we want to use and modify its bones instead
 
@@ -88,7 +88,7 @@ properties.Add( "bone_manipulate_end", {
 		self:MsgStart()
 			net.WriteEntity( ent )
 		self:MsgEnd()
-		
+
 	end,
 
 	Receive = function( self, length, player )
@@ -96,18 +96,17 @@ properties.Add( "bone_manipulate_end", {
 		local ent = net.ReadEntity()
 		if ( !IsValid( ent ) ) then return end
 		if ( !IsValid( ent.widget ) ) then return end
-		
+
 		ent.widget:Remove()
-		
+
 	end
 } )
 
-
 local widget_bonemanip_move = {
 	Base = "widget_axis",
-	
+
 	OnArrowDragged = function( self, num, dist, pl, mv )
-	
+
 		-- Prediction doesn't work properly yet.. because of the confusion with the bone moving, and the parenting, Agh.
 		if ( CLIENT ) then return end
 
@@ -115,23 +114,23 @@ local widget_bonemanip_move = {
 		if ( !IsValid( ent ) ) then return end
 		local bone = self:GetParentAttachment()
 		if ( bone <= 0 ) then return end
-		
+
 		local v = Vector( 0, 0, 0 )
-		
+
 		if ( num == 1 ) then v.x = dist end
 		if ( num == 2 ) then v.y = dist end
 		if ( num == 3 ) then v.z = dist end
-		
+
 		ent:ManipulateBonePosition( bone, ent:GetManipulateBonePosition( bone ) + v )
-	
+
 	end,
-	
+
 	--
-	-- Although we use the position from our bone, we want to use the angles from the 
+	-- Although we use the position from our bone, we want to use the angles from the
 	-- parent bone - because that's the direction our bone goes
 	--
 	CalcAbsolutePosition = function( self, v, a )
-	
+
 		local ent = self:GetParent()
 		if ( !IsValid( ent ) ) then return end
 		local bone = ent:GetBoneParent( self:GetParentAttachment() )
@@ -139,7 +138,7 @@ local widget_bonemanip_move = {
 		local pos, ang = ent:GetBonePosition( bone )
 
 		return v, ang
-	
+
 	end
 }
 
@@ -147,9 +146,9 @@ scripted_ents.Register( widget_bonemanip_move, "widget_bonemanip_move" )
 
 local widget_bonemanip_rotate = {
 	Base = "widget_axis",
-	
+
 	OnArrowDragged = function( self, num, dist, pl, mv )
-	
+
 		-- Prediction doesn't work properly yet.. because of the confusion with the bone moving, and the parenting, Agh.
 		if ( CLIENT ) then return end
 
@@ -157,24 +156,24 @@ local widget_bonemanip_rotate = {
 		if ( !IsValid( ent ) ) then return end
 		local bone = self:GetParentAttachment()
 		if ( bone <= 0 ) then return end
-		
+
 		local v = Angle( 0, 0, 0 )
-		
+
 		if ( num == 2 ) then v.x = dist end
 		if ( num == 3 ) then v.y = dist end
 		if ( num == 1 ) then v.z = dist end
-		
+
 		ent:ManipulateBoneAngles( bone, ent:GetManipulateBoneAngles( bone ) + v )
-		
+
 	end
 }
 scripted_ents.Register( widget_bonemanip_rotate, "widget_bonemanip_rotate" )
 
 local widget_bonemanip_scale = {
 	Base = "widget_axis",
-	
+
 	OnArrowDragged = function( self, num, dist, pl, mv )
-	
+
 		-- Prediction doesn't work properly yet.. because of the confusion with the bone moving, and the parenting, Agh.
 		if ( CLIENT ) then return end
 
@@ -182,24 +181,24 @@ local widget_bonemanip_scale = {
 		if ( !IsValid( ent ) ) then return end
 		local bone = self:GetParentAttachment()
 		if ( bone <= 0 ) then return end
-		
+
 		local v = Vector( 0, 0, 0 )
-		
+
 		if ( num == 1 ) then v.x = dist end
 		if ( num == 2 ) then v.y = dist end
 		if ( num == 3 ) then v.z = dist end
-		
+
 		ent:ManipulateBoneScale( bone, ent:GetManipulateBoneScale( bone ) + v * 0.1 )
 		ent:ManipulateBoneScale( ent:GetBoneParent(bone), ent:GetManipulateBoneScale( ent:GetBoneParent(bone) ) + v )
-	
+
 	end,
-	
+
 	--
-	-- Although we use the position from our bone, we want to use the angles from the 
+	-- Although we use the position from our bone, we want to use the angles from the
 	-- parent bone - because that's the direction our bone goes
 	--
 	CalcAbsolutePosition = function( self, v, a )
-	
+
 		local ent = self:GetParent()
 		if ( !IsValid( ent ) ) then return end
 		local bone = self:GetParentAttachment()
@@ -207,11 +206,11 @@ local widget_bonemanip_scale = {
 		local pbone = ent:GetBoneParent(bone)
 		if ( !pbone || pbone <= 0 ) then return end
 		local pos, ang = ent:GetBonePosition( pbone )
-		
+
 		v = v + (pos-v)*0.5;
 
 		return v, ang
-	
+
 	end
 }
 scripted_ents.Register( widget_bonemanip_scale, "widget_bonemanip_scale" )

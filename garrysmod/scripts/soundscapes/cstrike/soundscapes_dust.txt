@@ -1,0 +1,402 @@
+"dust.Indoors"
+{
+	"dsp"	"6"
+
+	"playlooping"
+	{
+		"volume"		".18"
+		"pitch"		"100"
+		"wave"		"ambient/wind/lightwind.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"		".49"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_bass.wav"
+	}
+
+	"playrandom"
+	{
+
+		"time"		"15,45"
+		"volume"		".04,.11"
+		"pitch"		"80,90"
+
+		"rndwave"
+		{
+		"wave"		"ambient/overhead/hel1.wav"
+		"wave"		"ambient/overhead/hel2.wav"
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"8,20"
+		"volume"		".15,.35"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/rock1.wav"
+			"wave"	"ambient/misc/rock2.wav"
+			"wave"	"ambient/misc/rock3.wav"
+
+
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"10,25"
+		"volume"		".06,.18"
+		"pitch"		"70,90"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/wood1.wav"
+			"wave"	"ambient/misc/wood2.wav"
+			"wave"	"ambient/misc/wood3.wav"
+			"wave"	"ambient/misc/wood4.wav"
+			"wave"	"ambient/misc/wood5.wav"
+			"wave"	"ambient/misc/wood6.wav"
+
+		}
+
+	}
+
+
+	
+}
+
+
+
+
+
+
+
+"dust.Outdoors1"
+{
+	"dsp"	"0"
+	"playlooping"
+
+
+	{
+		"volume"		".23"
+		"pitch"		"100"
+		"wave"		"ambient/wind/lightwind.wav"
+	}
+
+	"playrandom"
+	{
+
+		"time"		"10,22"
+		"volume"		".15,.35"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/rock1.wav"
+			"wave"	"ambient/misc/rock2.wav"
+			"wave"	"ambient/misc/rock3.wav"
+
+
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"10,25"
+		"volume"		".06,.18"
+		"pitch"		"70,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/wood1.wav"
+			"wave"	"ambient/misc/wood2.wav"
+			"wave"	"ambient/misc/wood3.wav"
+			"wave"	"ambient/misc/wood4.wav"
+			"wave"	"ambient/misc/wood5.wav"
+			"wave"	"ambient/misc/wood6.wav"
+
+		}
+
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"25,55"
+		"volume"		"0.03,0.16"
+		"pitch"		"85,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/overhead/hel1.wav"
+			"wave"	"ambient/overhead/hel2.wav"
+		}
+	}
+
+
+	
+
+
+	"playlooping"
+	{
+		
+		
+
+		"volume"		".1"
+		"pitch"		"100"
+		"wave"		"ambient/music/dustmusic2.wav"
+		"soundlevel"  	"SNDLVL_80dB"
+		"position"	"1"
+	}
+
+
+	"playlooping"
+	{
+		
+		
+
+		"volume"		".11"
+		"pitch"		"100"
+		"wave"		"ambient/music/dustmusic1.wav"
+		"soundlevel"  	"SNDLVL_80dB"
+		"position"	"0"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"18,25"
+		"volume"		".06, .1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/arabic_radio1.wav"
+			"wave"	"ambient/chatter/arabic_radio2.wav"
+			"wave"	"ambient/chatter/arabic_radio3.wav"
+			"wave"	"ambient/chatter/arabic_radio4.wav"
+			"wave"	"ambient/chatter/arabic_radio5.wav"
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"0"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"18,25"
+		"volume"		".06, .1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/arabic_radio1.wav"
+			"wave"	"ambient/chatter/arabic_radio2.wav"
+			"wave"	"ambient/chatter/arabic_radio3.wav"
+			"wave"	"ambient/chatter/arabic_radio4.wav"
+			"wave"	"ambient/chatter/arabic_radio5.wav"
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"2"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"18,25"
+		"volume"		".06,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/arabic_radio1.wav"
+			"wave"	"ambient/chatter/arabic_radio2.wav"
+			"wave"	"ambient/chatter/arabic_radio3.wav"
+			"wave"	"ambient/chatter/arabic_radio4.wav"
+			"wave"	"ambient/chatter/arabic_radio5.wav"
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"3"
+	}
+
+
+
+
+
+	
+}
+
+
+
+"dust.Outdoors2"
+{
+	"dsp"	"0"
+
+
+	"playlooping"
+	{
+
+		"volume"		".23"
+		"pitch"		"100"
+		"wave"		"ambient/wind/lightwind.wav"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"10,22"
+		"volume"		".15,.35"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/rock1.wav"
+			"wave"	"ambient/misc/rock2.wav"
+			"wave"	"ambient/misc/rock3.wav"
+
+
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"10,25"
+		"volume"		".06,.15"
+		"pitch"		"70,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/wood1.wav"
+			"wave"	"ambient/misc/wood2.wav"
+			"wave"	"ambient/misc/wood3.wav"
+			"wave"	"ambient/misc/wood4.wav"
+			"wave"	"ambient/misc/wood5.wav"
+			"wave"	"ambient/misc/wood6.wav"
+
+		}
+
+	}
+
+
+
+	"playrandom"
+	{
+
+		"time"		"25,55"
+		"volume"		"0.03,0.16"
+		"pitch"		"85,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/overhead/hel1.wav"
+			"wave"	"ambient/overhead/hel2.wav"
+		}
+	}
+
+
+
+	"playlooping"
+	{
+		
+		
+
+		"volume"		".25"
+		"pitch"		"100"
+
+		"wave"		"ambient/music/bongo.wav"
+		"soundlevel"  	"SNDLVL_90dB"
+		"position"	"0"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"18,25"
+		"volume"		".07,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/arabic_radio1.wav"
+			"wave"	"ambient/chatter/arabic_radio2.wav"
+			"wave"	"ambient/chatter/arabic_radio3.wav"
+			"wave"	"ambient/chatter/arabic_radio4.wav"
+			"wave"	"ambient/chatter/arabic_radio5.wav"
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"1"
+	}
+
+
+
+	"playrandom"
+	{
+
+		"time"		"15,25"
+		"volume"		".08,.1"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/arabic_radio1.wav"
+			"wave"	"ambient/chatter/arabic_radio2.wav"
+			"wave"	"ambient/chatter/arabic_radio3.wav"
+			"wave"	"ambient/chatter/arabic_radio4.wav"
+			"wave"	"ambient/chatter/arabic_radio5.wav"
+
+		}
+
+		"soundlevel"  	"SNDLVL_95dB"
+		"position"	"2"
+	}
+
+
+
+
+	"playlooping"
+	{
+		
+		
+
+		"volume"		".05"
+		"pitch"		"100"
+		"wave"		"ambient/music/dustmusic3.wav"
+		"soundlevel" 	 "SNDLVL_100dB"
+		"position"	"3"
+	}
+
+	
+
+
+	
+}
+

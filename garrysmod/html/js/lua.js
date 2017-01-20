@@ -44,7 +44,7 @@ var lua =
 		}
 
 		console.log( "RUNLUA:" + str );
-		
+
 	},
 
 	PlaySound: function( name )

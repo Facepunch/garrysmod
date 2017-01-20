@@ -1,51 +1,43 @@
-include( "ContentIcon.lua" )
-include( "PostProcessIcon.lua" )
 
---include( "NPCSpawnIcon.lua" )
---include( "WeaponSpawnIcon.lua" )
+include( "contenticon.lua" )
+include( "postprocessicon.lua" )
 
-include( "ContentContainer.lua" )
-include( "ContentSidebar.lua" )
+include( "contentcontainer.lua" )
+include( "contentsidebar.lua" )
 
-include( "ContentTypes/Custom.lua" )
-include( 'ContentTypes/NPCs.lua' )
-include( 'ContentTypes/Weapons.lua' )
-include( 'ContentTypes/Entities.lua' )
-include( 'ContentTypes/PostProcess.lua' )
-include( 'ContentTypes/Vehicles.lua' )
-include( 'ContentTypes/saves.lua' )
-include( 'ContentTypes/dupes.lua' )
+include( "contenttypes/custom.lua" )
+include( "contenttypes/npcs.lua" )
+include( "contenttypes/weapons.lua" )
+include( "contenttypes/entities.lua" )
+include( "contenttypes/postprocess.lua" )
+include( "contenttypes/vehicles.lua" )
+include( "contenttypes/saves.lua" )
+include( "contenttypes/dupes.lua" )
 
-include( "ContentTypes/GameProps.lua" )
-include( "ContentTypes/AddonProps.lua" )
+include( "contenttypes/gameprops.lua" )
+include( "contenttypes/addonprops.lua" )
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_pSelectedPanel", 		"SelectedPanel" )
+AccessorFunc( PANEL, "m_pSelectedPanel", "SelectedPanel" )
 
---[[---------------------------------------------------------
-   Name: Paint
------------------------------------------------------------]]
 function PANEL:Init()
-		
+
 	self:SetPaintBackground( false )
-	
-	self.CategoryTable = {}	
-	
-	self.ContentNavBar = vgui.Create( "ContentSidebar", self );
-	self.ContentNavBar:Dock( LEFT );
-	self.ContentNavBar:SetSize( 190, 10 );
-	self.ContentNavBar:DockMargin( 0, 0, 4, 0 )
-	
-	
-	self.HorizontalDivider = vgui.Create( "DHorizontalDivider", self );	
-	self.HorizontalDivider:Dock( FILL );
-	self.HorizontalDivider:SetLeftWidth( 175 )
-	self.HorizontalDivider:SetLeftMin( 175 )
-	self.HorizontalDivider:SetRightMin( 450 )
-	
-	self.HorizontalDivider:SetLeft( self.ContentNavBar );
-	
+
+	self.CategoryTable = {}
+
+	self.HorizontalDivider = vgui.Create( "DHorizontalDivider", self )
+	self.HorizontalDivider:Dock( FILL )
+	self.HorizontalDivider:SetLeftWidth( 192 )
+	self.HorizontalDivider:SetLeftMin( 192 )
+	self.HorizontalDivider:SetRightMin( 400 )
+	self.HorizontalDivider:SetDividerWidth( 6 )
+	--self.HorizontalDivider:SetCookieName( "SpawnMenuCreationMenuDiv" )
+
+	self.ContentNavBar = vgui.Create( "ContentSidebar", self.HorizontalDivider )
+	self.HorizontalDivider:SetLeft( self.ContentNavBar )
+
 end
 
 function PANEL:EnableModify()
@@ -61,36 +53,32 @@ end
 function PANEL:SwitchPanel( panel )
 
 	if ( IsValid( self.SelectedPanel ) ) then
-		self.SelectedPanel:SetVisible( false );
-		self.SelectedPanel = nil;
+		self.SelectedPanel:SetVisible( false )
+		self.SelectedPanel = nil
 	end
-	
+
 	self.SelectedPanel = panel
 
-	self.SelectedPanel:Dock( FILL )
+	self.HorizontalDivider:SetRight( self.SelectedPanel )
+	self.HorizontalDivider:InvalidateLayout( true )
+
 	self.SelectedPanel:SetVisible( true )
 	self:InvalidateParent()
-	
-	self.HorizontalDivider:SetRight( self.SelectedPanel );
-	
+
 end
 
-
 vgui.Register( "SpawnmenuContentPanel", PANEL, "DPanel" )
-
-
 
 local function CreateContentPanel()
 
 	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
 
 	ctrl.OldSpawnlists = ctrl.ContentNavBar.Tree:AddNode( "#spawnmenu.category.browse", "icon16/cog.png" )
-	
+
 	ctrl:EnableModify()
 	hook.Call( "PopulatePropMenu", GAMEMODE )
-	ctrl:CallPopulateHook( "PopulateContent" );
+	ctrl:CallPopulateHook( "PopulateContent" )
 
-		
 	ctrl.OldSpawnlists:MoveToFront()
 	ctrl.OldSpawnlists:SetExpanded( true )
 

@@ -33,8 +33,8 @@ function TauntCamera()
 	-- Implements the third person, rotation view (with lerping in/out)
 	--
 	CAM.CalcView = function( self, view, ply, on )
-		
-		if ( !ply:Alive() ) then on = false end
+
+		if ( !ply:Alive() || !IsValid( ply:GetViewEntity() ) || ply:GetViewEntity() != ply ) then on = false end
 
 		if ( WasOn != on ) then
 
@@ -92,7 +92,7 @@ function TauntCamera()
 	-- rotate the custom third person camera
 	--
 	CAM.CreateMove = function( self, cmd, ply, on )
-		
+
 		if ( !ply:Alive() ) then on = false end
 		if ( !on ) then return end
 
@@ -112,7 +112,7 @@ function TauntCamera()
 		cmd:SetViewAngles( PlayerLockAngles )
 		cmd:ClearButtons()
 		cmd:ClearMovement()
-		
+
 		return true
 
 	end

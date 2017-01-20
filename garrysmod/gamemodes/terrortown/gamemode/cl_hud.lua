@@ -233,7 +233,7 @@ local function InfoPaint(client)
    ShadowedText(tostring(health), "HealthAmmo", bar_width, health_y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT)
 
    if ttt_health_label:GetBool() then
-      local health_status = util.HealthToString(health)
+      local health_status = util.HealthToString(health, client:GetMaxHealth())
       draw.SimpleText(L[health_status], "TabLarge", x + margin*2, health_y + bar_height/2, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
    end
 
@@ -365,12 +365,10 @@ function GM:HUDPaint()
 end
 
 -- Hide the standard HUD stuff
-local hud = {"CHudHealth", "CHudBattery", "CHudAmmo", "CHudSecondaryAmmo"}
+local hud = {["CHudHealth"] = true, ["CHudBattery"] = true, ["CHudAmmo"] = true, ["CHudSecondaryAmmo"] = true}
 function GM:HUDShouldDraw(name)
-   for k, v in pairs(hud) do
-      if name == v then return false end
-   end
+   if hud[name] then return false end
 
-   return true
+   return self.BaseClass.HUDShouldDraw(self, name)
 end
 

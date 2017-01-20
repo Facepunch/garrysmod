@@ -1,13 +1,25 @@
 
 addon = new WorkshopFiles();
 
-
 function ControllerAddons( $scope, $element, $rootScope, $location )
 {
 	$rootScope.ShowBack = true;
 	Scope = $scope;
 
-	$scope.AddonTypes = 
+	$scope.Categories =
+	[
+		"trending",
+		"popular",
+		"latest",
+	];
+
+	$scope.CategoriesSecondary =
+	[
+		"friends",
+		"mine",
+	];
+
+	$scope.AddonTypes =
 	[
 		"gamemode",
 		"map",
@@ -32,7 +44,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.Unsubscribe = function ( file )
 	{
 		lua.Run( "steamworks.Unsubscribe( %s );", String( file.id ) )
-		
+
 		// Update files if viewing subscribed list?
 	};
 
@@ -69,5 +81,4 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		lua.Run( "steamworks.SetShouldMountAddon( %s, true );", String( file.id ) )
 		lua.Run( "steamworks.ApplyAddons();" )
 	};
-
 }

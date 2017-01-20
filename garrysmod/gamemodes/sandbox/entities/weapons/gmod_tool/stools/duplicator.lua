@@ -21,6 +21,11 @@ TOOL.Category = "Construction"
 TOOL.Name = "#tool.duplicator.name"
 TOOL.Stored = true
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 cleanup.Register( "duplicates" )
 
 --
@@ -69,21 +74,21 @@ function TOOL:LeftClick( trace )
 	-- Create one undo for the whole creation
 	--
 	undo.Create( "Duplicator" )
-	
+
 		for k, ent in pairs( Ents ) do
 			undo.AddEntity( ent )
 		end
-		
+
 		for k, ent in pairs( Ents )	do
 			self:GetOwner():AddCleanup( "duplicates", ent )
 		end
-		
+
 		undo.SetPlayer( self:GetOwner() )
-		
+
 	undo.Finish()
 
 	return true
-	
+
 end
 
 --
@@ -120,14 +125,14 @@ function TOOL:RightClick( trace )
 	self:GetOwner().CurrentDupe = Dupe
 
 	return true
-	
+
 end
 
 --[[---------------------------------------------------------
 	Builds the context menu
 -----------------------------------------------------------]]
 function TOOL.BuildCPanel( CPanel )
-	
+
 	CPanel:AddControl( "Header", { Description = "#tool.duplicator.desc" } )
 
 	CPanel:AddControl( "Button", { Text = "#tool.duplicator.showsaves", Command = "dupe_show" } )
@@ -141,7 +146,7 @@ if ( CLIENT ) then
 	-- This allows us to enable the save button in the spawn menu
 	--
 	net.Receive( "CopiedDupe", function( len, client )
-		
+
 			if ( net.ReadUInt( 1 ) == 1 ) then
 				hook.Run( "DupeSaveAvailable" )
 			else

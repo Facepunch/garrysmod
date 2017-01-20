@@ -1,0 +1,211 @@
+"dust2.indoors"
+{
+	"dsp"	"6"
+
+	"playlooping"
+	{
+		"volume"		".15"
+		"pitch"		"100"
+		"wave"		"ambient/wind/lightwind.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"		".45"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_bass.wav"
+	}
+
+	"playrandom"
+	{
+
+		"time"		"15,40``"
+		"volume"	".05,.1"
+		"pitch"		"85,90"
+
+		"rndwave"
+		{
+		"wave"		"ambient/overhead/hel1.wav"
+		"wave"		"ambient/overhead/hel2.wav"
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"10,22"
+		"volume"		".2,.3"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/rock1.wav"
+			"wave"	"ambient/misc/rock2.wav"
+			"wave"	"ambient/misc/rock3.wav"
+
+
+		}
+
+	}
+
+
+	
+}
+
+
+
+
+
+
+
+"dust2.outdoors"
+{
+	"dsp"	"0"
+	"playlooping"
+
+
+	{
+		"volume"	"0.2"
+		"pitch"		"100"
+		"wave"		"ambient/wind/lightwind.wav"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"10,20"
+		"volume"		".2,.3"
+		"pitch"		"80,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/misc/rock1.wav"
+			"wave"	"ambient/misc/rock2.wav"
+			"wave"	"ambient/misc/rock3.wav"
+
+
+		}
+
+	}
+
+	"playrandom"
+	{
+
+		"time"		"40,70"
+		"volume"	"0.1,0.2"
+		"pitch"		"85,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/overhead/hel1.wav"
+			"wave"	"ambient/overhead/hel2.wav"
+		}
+	}
+
+
+	
+
+
+	"playlooping"
+	{
+		
+		
+
+		"volume"		".08"
+		"pitch"		"100"
+		"wave"		"ambient/music/dustmusic1.wav"
+		"soundlevel"  	"SNDLVL_80dB"
+		"position"	"2"
+	}
+
+
+	"playlooping"
+	{
+		
+		
+
+		"volume"		".1"
+		"pitch"		"100"
+		"wave"		"ambient/music/dustmusic2.wav"
+		"soundlevel"  	"SNDLVL_80dB"
+		"position"	"1"
+	}
+
+	"playlooping"
+	{
+		
+		
+
+		"volume"		".05"
+		"pitch"		"100"
+		"wave"		"ambient/music/dustmusic3.wav"
+		"soundlevel"  	"SNDLVL_80dB"
+		"position"	"3"
+	}
+
+	"playlooping"
+	{
+		
+		
+
+		"volume"		".14"
+		"pitch"		"100"
+		"wave"		"ambient/music/bongo.wav"
+		"soundlevel"  	"SNDLVL_100dB"
+		"position"	"4"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"18,30"
+		"volume"		".08"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/arabic_radio1.wav"
+			"wave"	"ambient/chatter/arabic_radio2.wav"
+			"wave"	"ambient/chatter/arabic_radio3.wav"
+			"wave"	"ambient/chatter/arabic_radio4.wav"
+			"wave"	"ambient/chatter/arabic_radio5.wav"
+
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"6"
+	}
+
+
+	"playrandom"
+	{
+
+		"time"		"18,30"
+		"volume"		".08"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/chatter/arabic_radio1.wav"
+			"wave"	"ambient/chatter/arabic_radio2.wav"
+			"wave"	"ambient/chatter/arabic_radio3.wav"
+			"wave"	"ambient/chatter/arabic_radio4.wav"
+			"wave"	"ambient/chatter/arabic_radio5.wav"
+
+		}
+
+		"soundlevel"  	"SNDLVL_75dB"
+		"position"	"0"
+	}
+
+
+
+
+
+	
+}
+

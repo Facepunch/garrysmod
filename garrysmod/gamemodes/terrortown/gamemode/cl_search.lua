@@ -220,6 +220,8 @@ function PreprocSearch(raw)
       end
    end
 
+   hook.Call("TTTBodySearchPopulate", nil, search, raw)
+
    return search
 end
 
@@ -370,7 +372,6 @@ local function ShowSearchScreen(search_raw)
 
       -- Certain items need a special icon conveying additional information
       if t == "nick" then
-         local name = info.nick
          local avply = IsValid(search_raw.owner) and search_raw.owner or nil
 
          ic = vgui.Create("SimpleIconAvatar", dlist)
@@ -437,7 +438,7 @@ local function ReceiveRagdollSearch()
    search.eidx = net.ReadUInt(16)
 
    search.owner = Entity(net.ReadUInt(8))
-   if not (IsValid(search.owner) and search.owner:IsPlayer() and (not search.owner:Alive())) then
+   if not (IsValid(search.owner) and search.owner:IsPlayer() and (not search.owner:IsTerror())) then
       search.owner = nil
    end
 
@@ -485,6 +486,8 @@ local function ReceiveRagdollSearch()
    --
    local words = net.ReadString()
    search.words = (words ~= "") and words or nil
+   
+   hook.Call("TTTBodySearchEquipment", nil, search, eq)
 
    if search.show then
       ShowSearchScreen(search)

@@ -44,7 +44,10 @@ end
 		Return true to not play normal sound
 -----------------------------------------------------------]]
 function GM:PlayerFootstep( ply, vPos, iFoot, strSoundName, fVolume, pFilter )
-
+	if ( IsValid( ply ) and !ply:Alive() ) then
+		return true
+	end
+	
 	--[[
 	-- Draw effect on footdown
 	local effectdata = EffectData()
@@ -103,12 +106,9 @@ end
 		 the player is allowed to noclip, false to block
 -----------------------------------------------------------]]
 function GM:PlayerNoClip( pl, on )
-	
-	-- Allow noclip if we're in single player
-	if ( game.SinglePlayer() ) then return true end
-	
-	-- Don't if it's not.
-	return false
+	if ( !on ) then return true end
+	-- Allow noclip if we're in single player and living
+	return game.SinglePlayer() && IsValid( pl ) && pl:Alive()
 	
 end
 

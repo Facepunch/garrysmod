@@ -288,10 +288,10 @@ AddValidHands( "css_swat",			"models/weapons/c_arms_cstrike.mdl",		0,		"10000000
 AddValidModel( "css_urban",		    "models/player/urban.mdl" )
 AddValidHands( "css_urban",			"models/weapons/c_arms_cstrike.mdl",		7,		"10000000" )
 
-AddValidModel( "dod_american", "models/player/dod_american.mdl" )
-AddValidHands( "dod_american", "models/weapons/c_arms_dod.mdl",		0,		"10000000" )
 AddValidModel( "dod_german", "models/player/dod_german.mdl" )
-AddValidHands( "dod_german", "models/weapons/c_arms_dod.mdl",		1,		"10000000" )
+AddValidHands( "dod_german", "models/weapons/c_arms_dod.mdl",		0,		"10000000" )
+AddValidModel( "dod_american", "models/player/dod_american.mdl" )
+AddValidHands( "dod_american", "models/weapons/c_arms_dod.mdl",		1,		"10000000" )
 
 
 
