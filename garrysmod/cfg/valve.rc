@@ -5,6 +5,7 @@ exec joystick.cfg
 
 // run a user script file if present
 exec autoexec.cfg
+exec server.cfg
 
 // Run network settings
 exec network.cfg
