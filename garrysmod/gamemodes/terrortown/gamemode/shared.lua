@@ -141,7 +141,7 @@ local ttt_playercolors = {
    }
 };
 
-CreateConVar("ttt_playercolor_mode", "1")
+CreateConVar("ttt_playercolor_mode", "0")
 function GM:TTTPlayerColor(model)
    local mode = GetConVarNumber("ttt_playercolor_mode") or 0
    if mode == 1 then
