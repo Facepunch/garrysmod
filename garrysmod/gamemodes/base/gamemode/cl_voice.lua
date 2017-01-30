@@ -43,10 +43,6 @@ function PANEL:Paint( w, h )
 end
 
 function PANEL:Think()
-	
-	if ( IsValid( self.ply ) ) then
-		self.LabelName:SetText( self.ply:Nick() )
-	end
 
 	if ( self.fadeAnim ) then
 		self.fadeAnim:Run()
