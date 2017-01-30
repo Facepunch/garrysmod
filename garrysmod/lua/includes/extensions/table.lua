@@ -716,3 +716,24 @@ function table.GetKeys( tab )
 	return keys
 
 end
+
+function table.IsEmpty( tab )
+	return (next(tab) == nil)
+end
+
+function table.Flatten( tab )
+
+	local result = {}
+
+	local function Flatten( tab )
+		for _, val in ipairs(tab) do
+			if type(val) == 'table' then Flatten(val)
+			else
+			table.insert(result,val)
+			end
+		end
+	end
+
+	Flatten(tab)
+	return result
+end
