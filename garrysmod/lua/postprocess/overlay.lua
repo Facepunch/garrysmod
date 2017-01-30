@@ -8,7 +8,7 @@ local pp_mat_overlay_refractamount = CreateClientConVar( "pp_mat_overlay_refract
 local lastTexture = nil
 local mat_Overlay = nil
 
-function DrawMaterialOverlay( texture, refractamount )
+function DrawMaterialOverlay( texture, refractamount, nAlpha )
 
 	if ( texture ~= lastTexture or mat_Overlay == nil ) then
 		mat_Overlay = Material( texture )
@@ -16,10 +16,12 @@ function DrawMaterialOverlay( texture, refractamount )
 	end
 
 	if ( mat_Overlay == nil || mat_Overlay:IsError() ) then return end
+	if ( nAlpha == nil ) then nAlpha = 1 end
 
 	render.UpdateScreenEffectTexture()
 
 	// FIXME: Changing refract amount affects textures used in the map/models.
+	mat_Overlay:SetFloat( "$alpha", nAlpha )
 	mat_Overlay:SetFloat( "$envmap", 0 )
 	mat_Overlay:SetFloat( "$envmaptint", 0 )
 	mat_Overlay:SetFloat( "$refractamount", refractamount )
