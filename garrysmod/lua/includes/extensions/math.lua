@@ -217,3 +217,10 @@ end
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
 end
+--[[---------------------------------------------------------
+    Name: Pie()
+-----------------------------------------------------------]]
+function math.Pie()
+	print("Mhhhhm pie ...")
+end
+math.pie=math.Pie
