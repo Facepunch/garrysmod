@@ -347,3 +347,17 @@ function string.Comma( number )
 	return number
 
 end
+
+--[[---------------------------------------------------------
+    Name: Random( length, declower, decupper )
+    Desc: Generates a random string of a specified length, with declower and decupper being two optional ASCII character decimal codes to choose characters between.
+    Usage: string.Random(3) > 5sG (any 3 characters)
+       string.Random(3, 80, 80) > PPP (any 3 characters between the character decimals 80 and 80, which produces 3 'P' characters)
+-----------------------------------------------------------]]
+function string.Random(len, declower, decupper)
+    local str = ''
+    for i = 1, len, 1 do
+        str = str .. string.char(math.random(declower or 33, decupper or 126))
+    end
+    return str
+end
