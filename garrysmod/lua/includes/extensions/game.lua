@@ -1,6 +1,7 @@
 
--- Half-Life damage type
+-- Half-Life 2 damage types
 DMG_SNIPER = bit.lshift( DMG_BUCKSHOT, 1 )
+DMG_MISSILEDEFENSE = bit.lshift( DMG_BUCKSHOT, 2 ) // The only kind of damage missiles take. (special missile defense)
 
 -- Ammo flags
 AMMO_FORCE_DROP_IF_CARRIED = 0x1
@@ -15,6 +16,7 @@ AMMO_INTERPRET_PLRDAMAGE_AS_DAMAGE_TO_PLAYER = 0x2
 
 		game.AddAmmoType({
 			name		=	"customammo",
+			displayname	=	"Custom Ammo",
 			dmgtype		=	DMG_BULLET,
 			tracer		=	TRACER_LINE_AND_WHIZ,
 			plydmg		=	20,
@@ -40,25 +42,32 @@ function game.AddAmmoType( ammo )
 		local name = ammo.name:lower()
 		
 		if ( isstring( ammo.plydmg ) ) then
+			ammo.plydmg_convar = ammo.plydmg
 			ammo.plydmg = GetConVarNumber( ammo.plydmg )
 		end
 		
 		if ( isstring( ammo.npcdmg ) ) then
+			ammo.npcdmg_convar = ammo.npcdmg
 			ammo.npcdmg = GetConVarNumber( ammo.npcdmg )
 		end
 		
 		if ( isstring( ammo.maxcarry ) ) then
+			ammo.maxcarry_convar = ammo.maxcarry
 			ammo.maxcarry = GetConVarNumber( ammo.maxcarry )
+		end
+		
+		if ( CLIENT and ammo.displayname ) then
+			language.Add( ammo.name .. "_ammo", ammo.displayname )
 		end
 		
 		if ( AmmoNames[ name ] ) then
 			MsgN( "Ammo \"" .. name .. "\" registered twice; giving priority to later registration" )
-			ammo.num = AmmoNames[ name ].num or #AmmoTypes + 1
-			AmmoTypes[ ammo.num ] = ammo
+			ammo._id = AmmoNames[ name ]._id or #AmmoTypes + 1
+			AmmoTypes[ ammo._id ] = ammo
 			AmmoNames[ name ] = ammo
 		else
 			local i = #AmmoTypes + 1
-			ammo.num = i
+			ammo._id = i
 			AmmoTypes[ i ] = ammo
 			AmmoNames[ name ] = ammo
 		end
@@ -99,15 +108,7 @@ function game.GetAmmoMaxCarry( ammo )
 	local ammotype = AmmoNames[ ammo:lower() ]
 	
 	if ( ammotype ) then
-		if ( ammotype.maxcarry ) then
-			if ( isstring( ammotype.maxcarry ) ) then
-				return GetConVarNumber( ammotype.maxcarry )
-			end
-			
-			return ammotype.maxcarry
-		end
-		
-		return 9999
+		return ammotype.maxcarry_convar and GetConVarNumber( ammotype.maxcarry_convar ) or ammotype.maxcarry or 9999
 	end
 	
 	return 0
@@ -127,15 +128,7 @@ function game.GetAmmoNPCDamage( ammo )
 	local ammotype = AmmoNames[ ammo:lower() ]
 	
 	if ( ammotype ) then
-		if ( ammotype.npcdmg ) then
-			if ( isstring( ammotype.npcdmg ) ) then
-				return GetConVarNumber( ammotype.npcdmg )
-			end
-			
-			return ammotype.npcdmg
-		end
-		
-		return 10
+		return ammotype.npcdmg_convar and GetConVarNumber( ammotype.npcdmg_convar ) or ammotype.npcdmg or 10
 	end
 	
 	return 0
@@ -145,15 +138,7 @@ function game.GetAmmoPlayerDamage( ammo )
 	local ammotype = AmmoNames[ ammo:lower() ]
 	
 	if ( ammotype ) then
-		if ( ammotype.plydmg ) then
-			if ( isstring( ammotype.plydmg ) ) then
-				return GetConVarNumber( ammotype.plydmg )
-			end
-			
-			return ammotype.plydmg
-		end
-		
-		return 10
+		return ammotype.plydmg_convar and GetConVarNumber( ammotype.plydmg_convar ) or ammotype.plydmg or 10
 	end
 	
 	return 0
@@ -165,18 +150,23 @@ function game.GetAmmoTracerType( ammo )
 end
 
 -- For custom ammo keys!
-function game.GetAmmoKey( ammo, sKey, Default --[[= 0]] )
+function game.GetAmmoKey( ammo, key, default )
 	ammo = ammo:lower()
-	return AmmoNames[ ammo ] and AmmoNames[ ammo ][ sKey ] or Default or 0
+	
+	if ( AmmoNames[ ammo ] and AmmoNames[ ammo ][ key ] ~= nil ) then
+		return AmmoNames[ ammo ][ key ]
+	end
+	
+	return default
 end
 
-local function AddDefaulammotypeType( ammo, damagetype, tracer, plydamage, npcdamage, maxcarry, force, flags, minsplash, maxsplash )
-	AmmoNames[ ammo:lower() ] = {
+local function AddDefaulammotypeType( name, damagetype, tracer, plydamage, npcdamage, maxcarry, force, flags, minsplash, maxsplash )
+	AmmoNames[ name:lower() ] = {
 		dmgtype = damagetype,
 		tracer = tracer,
 		plydmg = plydamage,
 		npcdmg = npcdamage,
-		maxcarry = maxcarry, -- Max carry is overwritten in Garry's Mod to always be 9999
+		maxcarry = maxcarry,
 		force = force,
 		flags = flags,
 		minsplash = minsplash or 4,
