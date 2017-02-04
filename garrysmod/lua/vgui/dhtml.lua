@@ -13,9 +13,10 @@ function PANEL:Init()
 	self.Callbacks = {}
 
 	--
-	-- Implement a console.log - because awesomium doesn't provide it for us anymore.
+	-- Implement a console.log/warn - because awesomium doesn't provide it for us anymore.
 	--
 	self:AddFunction( "console", "log", function( param ) self:ConsoleMessage( param ) end )
+	self:AddFunction( "console", "warn", function( param ) self:ConsoleMessage( param ) end )
 
 end
 
