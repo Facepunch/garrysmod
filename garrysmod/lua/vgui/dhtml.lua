@@ -16,7 +16,7 @@ function PANEL:Init()
 	-- Implement a console.log/warn - because awesomium doesn't provide it for us anymore.
 	--
 	self:AddFunction( "console", "log", function( param ) self:ConsoleMessage( param ) end )
-	self:AddFunction( "console", "warn", function( param ) self:ConsoleMessage( param ) end )
+	self:AddFunction( "console", "warn", function( param ) self:ConsoleMessage( "[WARN] " .. param ) end )
 
 end
 
