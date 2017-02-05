@@ -51,7 +51,7 @@ SWEP.ReloadAnim            = ACT_VM_RELOAD_SILENCED
 
 function SWEP:Deploy()
    self:SendWeaponAnim(ACT_VM_DRAW_SILENCED)
-   return true
+   return self.BaseClass.Deploy(self)
 end
 
 -- We were bought as special equipment, and we have an extra to give
