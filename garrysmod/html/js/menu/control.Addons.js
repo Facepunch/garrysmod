@@ -48,6 +48,13 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		// Update files if viewing subscribed list?
 	};
 
+	$scope.UnsubscribeAll = function ( file )
+	{
+		subscriptions.SetAllEnabled( false );
+		lua.Run( "for k, v in pairs (engine.GetAddons()) do steamworks.Unsubscribe(v.wsid) end steamworks.ApplyAddons()" )
+		// Something like a fus ro dah on the addons.
+	};
+	
 	$scope.DisableAllSubscribed = function()
 	{
 		subscriptions.SetAllEnabled( false );
