@@ -84,12 +84,16 @@ local LastGamemode = "none"
 
 function ChangeBackground( currentgm )
 
+	if ( IsInGame() ) then return end -- Don't try to load new images while in-game
+
 	if ( currentgm && currentgm == LastGamemode ) then return end
 	if ( currentgm ) then LastGamemode = currentgm end
 
 	local img = table.Random( Images )
 
 	if ( !img ) then return end
+
+	-- Todo: Unload Outgoing.mat from memory
 
 	Outgoing = Active
 	if ( Outgoing ) then
