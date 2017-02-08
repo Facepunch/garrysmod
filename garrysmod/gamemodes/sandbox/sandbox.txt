@@ -31,7 +31,7 @@
 			"text"		"god_mode"
 			"help"		"If enabled, all players will be invincible"
 			"type"		"CheckBox"
-			"default"	"1"
+			"default"	"0"
 		}
 
 		4
