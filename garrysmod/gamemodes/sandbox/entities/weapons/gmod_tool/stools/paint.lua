@@ -22,7 +22,7 @@ local function PlaceDecal( ply, ent, data )
 	if ( !IsValid( bone ) ) then bone = ent end
 
 	if ( SERVER ) then
-		util.Decal( data.decal, bone:LocalToWorld( data.Pos1 ), bone:LocalToWorld( data.Pos2 ) )
+		util.Decal( data.decal, bone:LocalToWorld( data.Pos1 ), bone:LocalToWorld( data.Pos2 ), ply )
 
 		local i = ent.DecalCount or 0
 		i = i + 1
