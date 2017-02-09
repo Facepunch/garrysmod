@@ -65,9 +65,7 @@ local pattern_escape_replacements = {
 }
 
 function string.PatternSafe( str )
-
 	return ( str:gsub( ".", pattern_escape_replacements ) )
-
 end
 
 --[[---------------------------------------------------------
@@ -124,11 +122,9 @@ end
 	Name: StripExtension( path )
 -----------------------------------------------------------]]
 function string.StripExtension( path )
-
 	local i = path:match( ".+()%.%w+$" )
 	if ( i ) then return path:sub( 1, i - 1 ) end
 	return path
-
 end
 
 --[[---------------------------------------------------------
@@ -146,6 +142,7 @@ end
 	Usage: string.GetFileFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetFileFromFilename( path )
+	if ( !path:find( "\\" ) && !path:find( "/" ) ) then return path end 
 	return path:match( "[\\/]([^/\\]+)$" ) or ""
 end
 
@@ -160,7 +157,6 @@ end
 			 string.FormattedTime( 123.456, "%2i:%02i")			==> " 2:03"
 			 string.FormattedTime( 123.456 )					==> { h = 0, m = 2, s = 3, ms = 45 }
 -------------------------------------------------------------------]]
-
 function string.FormattedTime( seconds, format )
 	if ( not seconds ) then seconds = 0 end
 	local hours = math.floor( seconds / 3600 )
