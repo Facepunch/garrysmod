@@ -54,10 +54,6 @@ function DrawBackground()
 			Think( Outgoing )
 			Render( Outgoing )
 
-			if ( Outgoing.Alpha <= 0 ) then
-				Outgoing = nil
-			end
-
 		end
 
 	end
@@ -93,7 +89,21 @@ function ChangeBackground( currentgm )
 
 	if ( !img ) then return end
 
-	-- Todo: Unload Outgoing.mat from memory
+	-- Remove the texture from memory
+	-- There's a bit of internal magic going on here
+	local DoUnload = Outgoing != nil
+
+	if ( Outgoing && Outgoing.Name == img ) then
+		DoUnload = false
+	end
+
+	if ( Outgoing && Active && Outgoing.Name == Active.Name ) then
+		DoUnload = false
+	end
+
+	if ( DoUnload ) then
+		Outgoing.mat:SetUndefined( "$basetexture" )
+	end
 
 	Outgoing = Active
 	if ( Outgoing ) then
@@ -111,7 +121,8 @@ function ChangeBackground( currentgm )
 		SizeVel = ( 0.3 / 30 ),
 		Alpha = 255,
 		DieTime = 30,
-		mat = mat
+		mat = mat,
+		Name = img
 	}
 
 	if ( Active.Ratio < ScrW() / ScrH() ) then
