@@ -1,8 +1,8 @@
 
 AddCSLuaFile()
 
-local matBone = Material( "widgets/bone.png", "unlitsmooth" )
-local matBoneSmall = Material( "widgets/bone_small.png", "unlitsmooth" )
+local matBone = Material( "widgets/bone.png", "smooth" )
+local matBoneSmall = Material( "widgets/bone_small.png", "smooth" )
 
 local widget_bone = {
 	Base = "widget_base",

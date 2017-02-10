@@ -1,7 +1,7 @@
 
 PANEL.Base = "DPanel"
 
-local matWorkshopRocket = Material( "gui/workshop_rocket.png", "nocull smooth mips" )
+local matWorkshopRocket = Material( "gui/workshop_rocket.png", "nocull smooth" )
 
 function PANEL:Init()
 
