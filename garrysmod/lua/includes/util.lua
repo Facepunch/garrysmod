@@ -9,6 +9,26 @@ math.randomseed( os.time() )
 --
 Format = string.format
 
+--
+-- Send C the flags for any materials we want to create
+--
+local C_Material = Material
+
+function Material( name, words )
+
+	if ( !words ) then return C_Material( name ) end
+	
+	local str = (words:find("vertexlitgeneric") and "1" or "0")
+	str = str .. (words:find("nocull") and "1" or "0")
+	str = str .. (words:find("alphatest") and "1" or "0")
+	str = str .. (words:find("mips") and "1" or "0")
+	str = str .. (words:find("noclamp") and "1" or "0")
+	str = str .. (words:find("smooth") and "1" or "0")
+	
+	return C_Material( name, str )
+
+end
+
 --[[---------------------------------------------------------
 	IsTableOfEntitiesValid
 -----------------------------------------------------------]]
