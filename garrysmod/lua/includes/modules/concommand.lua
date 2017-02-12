@@ -18,18 +18,22 @@ local CompleteList = {}
    Desc: Returns the table of console commands and auto complete
 -----------------------------------------------------------]]
 function GetTable()
+
 	return CommandList, CompleteList
+
 end
 
 --[[---------------------------------------------------------
-   Name: concommand.Add( name, func, completefunc )
+   Name: concommand.Add( name, func, completefunc, help, flags )
    Desc: Register a new console command
 -----------------------------------------------------------]]
 function Add( name, func, completefunc, help, flags )
+
 	local LowerName = string.lower( name )
 	CommandList[ LowerName ] = func
 	CompleteList[ LowerName ] = completefunc
 	AddConsoleCommand( name, help, flags )
+
 end
 
 --[[---------------------------------------------------------
@@ -37,13 +41,15 @@ end
    Desc: Removes a console command
 -----------------------------------------------------------]]
 function Remove( name )
+
 	local LowerName = string.lower( name )
 	CommandList[ LowerName ] = nil
 	CompleteList[ LowerName ] = nil
+
 end
 
 --[[---------------------------------------------------------
-   Name: concommand.Run( )
+   Name: concommand.Run( player, command, arguments, args )
    Desc: Called by the engine when an unknown console command is run
 -----------------------------------------------------------]]
 function Run( player, command, arguments, args )
@@ -58,10 +64,11 @@ function Run( player, command, arguments, args )
 	Msg( "Unknown command: " .. command .. "\n" )
 
 	return false
+
 end
 
 --[[---------------------------------------------------------
-   Name: concommand.AutoComplete( )
+   Name: concommand.AutoComplete( command, arguments )
    Desc: Returns a table for the autocompletion
 -----------------------------------------------------------]]
 function AutoComplete( command, arguments )
@@ -71,5 +78,16 @@ function AutoComplete( command, arguments )
 	if ( CompleteList[ LowerCommand ] != nil ) then
 		return CompleteList[ LowerCommand ]( command, arguments )
 	end
+
+end
+
+--[[---------------------------------------------------------
+   Name: concommand.Exists( name )
+   Desc: Returns if a concommand with the specified name exists
+-----------------------------------------------------------]]
+function Exists( name )
+
+	local LowerName = string.lower( name )
+	return (CommandList[ LowerName ] ~= nil)
 
 end
