@@ -18,6 +18,83 @@ local function CompareScore(pa, pb)
    return a:Frags() > b:Frags()
 end
 
+local function CompareAlpha(pa, pb)
+   if not IsValid(pa) then return false end
+   if not IsValid(pb) then return true end
+
+   local a = pa:GetPlayer()
+   local b = pb:GetPlayer()
+
+   if not IsValid(a) then return false end
+   if not IsValid(b) then return true end
+
+   local t = {}
+   t[1] = a:Nick()
+   t[2] = b:Nick()
+
+   table.sort(t)
+
+   local at = 0
+   local bt = 0
+   for k,v in pairs(t) do
+      if v == a:Nick() then
+         at = k
+      else
+         bt = k
+      end
+   end
+   return bt > at
+end
+
+local function CompareRole(pa, pb)
+   if not IsValid(pa) then return false end
+   if not IsValid(pb) then return true end
+
+   local a = pa:GetPlayer()
+   local b = pb:GetPlayer()
+
+   if not IsValid(a) then return false end
+   if not IsValid(b) then return true end
+
+   if a:GetRole() == b:GetRole() then return CompareAlpha(pa,pb) end
+
+
+   return a:GetRole() > b:GetRole()
+end
+
+
+local function ComparePing(pa, pb)
+   if not IsValid(pa) then return false end
+   if not IsValid(pb) then return true end
+
+   local a = pa:GetPlayer()
+   local b = pb:GetPlayer()
+
+   if not IsValid(a) then return false end
+   if not IsValid(b) then return true end
+
+
+
+
+   return a:Ping() > b:Ping()
+end
+
+local function CompareDeath(pa, pb)
+   if not IsValid(pa) then return false end
+   if not IsValid(pb) then return true end
+
+   local a = pa:GetPlayer()
+   local b = pb:GetPlayer()
+
+   if not IsValid(a) then return false end
+   if not IsValid(b) then return true end
+
+
+
+
+   return a:Deaths() > b:Deaths()
+end
+
 local PANEL = {}
 
 function PANEL:Init()
@@ -119,8 +196,17 @@ function PANEL:UpdateSortCache()
    for k,v in pairs(self.rows) do
       table.insert(self.rows_sorted, v)
    end
-
-   table.sort(self.rows_sorted, CompareScore)
+   if LocalPlayer().sorting and LocalPlayer().sorting == 1 then
+      table.sort(self.rows_sorted, CompareAlpha)
+   elseif LocalPlayer().sorting and LocalPlayer().sorting == 2 then
+      table.sort(self.rows_sorted, CompareRole)
+   elseif LocalPlayer().sorting and LocalPlayer().sorting == 3 then
+      table.sort(self.rows_sorted, ComparePing)
+   elseif LocalPlayer().sorting and LocalPlayer().sorting == 4 then
+      table.sort(self.rows_sorted, CompareDeath)
+   else
+      table.sort(self.rows_sorted, CompareScore)
+   end
 end
 
 function PANEL:UpdatePlayerData()
