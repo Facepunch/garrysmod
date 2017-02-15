@@ -124,6 +124,10 @@ function PANEL:UpdateSortCache()
          if plya:Frags() == plyb:Frags() then return plya:Deaths() < plyb:Deaths() end
 
          return plya:Frags() > plyb:Frags()
+      elseif self.sort_mode == "role" then
+         if plya:GetRole() == plyb:GetRole() then return plya:GetName() < plyb:GetName() end
+
+         return plya:GetRole() > plyb:GetRole()
       elseif self.sort_mode == "karma" then
          return plya:GetBaseKarma() < plyb:GetBaseKarma()
       else
