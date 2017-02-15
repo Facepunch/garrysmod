@@ -22,7 +22,7 @@ local function CompareAlpha(pa, pb)
    if not IsValid(plya) then return false end
    if not IsValid(plyb) then return true end
 
-   return plya:Nick() > plyb:Nick()
+   return plya:Nick() < plyb:Nick()
 end
 
 local function CompareRole(pa, pb)
