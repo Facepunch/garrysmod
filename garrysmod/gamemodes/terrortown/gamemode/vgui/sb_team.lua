@@ -4,34 +4,34 @@
 include("sb_row.lua")
 
 local function CompareScore(pa, pb)
-   local a = pa:GetPlayer()
-   local b = pb:GetPlayer()
+   local plya = pa:GetPlayer()
+   local plyb = pb:GetPlayer()
 
-   if not IsValid(a) then return false end
-   if not IsValid(b) then return true end
+   if not IsValid(plya) then return false end
+   if not IsValid(plyb) then return true end
 
-   if a:Frags() == b:Frags() then return a:Deaths() < b:Deaths() end
+   if plya:Frags() == plyb:Frags() then return plya:Deaths() < plyb:Deaths() end
 
-   return a:Frags() > b:Frags()
+   return plya:Frags() > plyb:Frags()
 end
 
 local function CompareAlpha(pa, pb)
-   local a = pa:GetPlayer()
-   local b = pb:GetPlayer()
+   local plya = pa:GetPlayer()
+   local plyb = pb:GetPlayer()
 
-   if not IsValid(a) then return false end
-   if not IsValid(b) then return true end
+   if not IsValid(plya) then return false end
+   if not IsValid(plyb) then return true end
 
    local t = {}
-   t[1] = a:Nick()
-   t[2] = b:Nick()
+   t[1] = plya:Nick()
+   t[2] = plyb:Nick()
 
    table.sort(t)
 
    local at = 0
    local bt = 0
    for k,v in pairs(t) do
-      if v == a:Nick() then
+      if v == plya:Nick() then
          at = k
       else
          bt = k
@@ -41,36 +41,36 @@ local function CompareAlpha(pa, pb)
 end
 
 local function CompareRole(pa, pb)
-   local a = pa:GetPlayer()
-   local b = pb:GetPlayer()
+   local plya = pa:GetPlayer()
+   local plyb = pb:GetPlayer()
 
-   if not IsValid(a) then return false end
-   if not IsValid(b) then return true end
+   if not IsValid(plya) then return false end
+   if not IsValid(plyb) then return true end
 
-   if a:GetRole() == b:GetRole() then return CompareAlpha(pa,pb) end
+   if plya:GetRole() == plyb:GetRole() then return CompareAlpha(pa,pb) end
 
-   return a:GetRole() > b:GetRole()
+   return plya:GetRole() > plyb:GetRole()
 end
 
 
 local function ComparePing(pa, pb)
-   local a = pa:GetPlayer()
-   local b = pb:GetPlayer()
+   local plya = pa:GetPlayer()
+   local plyb = pb:GetPlayer()
 
-   if not IsValid(a) then return false end
-   if not IsValid(b) then return true end
+   if not IsValid(plya) then return false end
+   if not IsValid(plyb) then return true end
 
-   return a:Ping() > b:Ping()
+   return plya:Ping() > plyb:Ping()
 end
 
 local function CompareDeath(pa, pb)
-   local a = pa:GetPlayer()
-   local b = pb:GetPlayer()
+   local plya = pa:GetPlayer()
+   local plyb = pb:GetPlayer()
 
-   if not IsValid(a) then return false end
-   if not IsValid(b) then return true end
+   if not IsValid(plya) then return false end
+   if not IsValid(plyb) then return true end
 
-   return a:Deaths() > b:Deaths()
+   return plya:Deaths() > plyb:Deaths()
 end
 
 local PANEL = {}
