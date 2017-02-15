@@ -151,13 +151,18 @@ function PANEL:Init()
 
    -- the various score column headers
    self.cols = {}
-   self:AddColumn( GetTranslation("sb_ping"), nil, nil, "ping" )
-   self:AddColumn( GetTranslation("sb_deaths"), nil, nil, "deaths" )
-   self:AddColumn( GetTranslation("sb_score"), nil, nil, "score" )
+   self:AddColumn( GetTranslation("sb_ping"), nil, nil,         "ping" )
+   self:AddColumn( GetTranslation("sb_deaths"), nil, nil,       "deaths" )
+   self:AddColumn( GetTranslation("sb_score"), nil, nil,        "score" )
 
    if KARMA.IsEnabled() then
-      self:AddColumn( GetTranslation("sb_karma"), nil, nil, "karma" )
+      self:AddColumn( GetTranslation("sb_karma"), nil, nil,     "karma" )
    end
+
+   -- Reusing a few existing translations
+   self:AddColumn( GetTranslation("col_role"), nil, nil,        "role" )
+   self:AddColumn( GetTranslation("equip_spec_name"), nil, nil, "name" ) 
+
 
    self.SortMode = "score"
    self.SortDirection = false -- descending
@@ -315,7 +320,11 @@ function PANEL:ApplySchemeSettings()
 
    for k,v in pairs(self.cols) do
       v:SetFont("treb_small")
-      v:SetTextColor(COLOR_WHITE)
+      if self.SortMode == v.HeadingIdentifier then
+         v:SetTextColor(COLOR_GREEN)
+      else
+         v:SetTextColor(COLOR_WHITE)
+      end
    end
 end
 
