@@ -95,7 +95,7 @@ CreateConVar("ttt_det_credits_traitorkill", "0")
 CreateConVar("ttt_det_credits_traitordead", "1")
 
 -- Other
-CreateConVar("ttt_scoreboard_sorting", "0", FCVAR_NOTIFY + FCVAR_REPLICATED)
+CreateConVar("ttt_scoreboard_sorting", "1", FCVAR_NOTIFY + FCVAR_REPLICATED)
 
 CreateConVar("ttt_use_weapon_spawn_scripts", "1")
 CreateConVar("ttt_weapon_spawn_count", "0")
