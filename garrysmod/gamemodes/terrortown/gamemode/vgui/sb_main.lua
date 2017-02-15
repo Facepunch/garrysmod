@@ -201,6 +201,8 @@ function PANEL:AddColumn( label, func, width, identifier )
          scoregroup:UpdateSortCache()
          scoregroup:InvalidateLayout()
       end
+
+      self:ApplySchemeSettings()
    end
 
    table.insert( self.cols, lbl )
