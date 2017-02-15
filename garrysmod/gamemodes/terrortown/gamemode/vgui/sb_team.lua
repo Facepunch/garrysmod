@@ -22,22 +22,7 @@ local function CompareAlpha(pa, pb)
    if not IsValid(plya) then return false end
    if not IsValid(plyb) then return true end
 
-   local t = {}
-   t[1] = plya:Nick()
-   t[2] = plyb:Nick()
-
-   table.sort(t)
-
-   local at = 0
-   local bt = 0
-   for k,v in pairs(t) do
-      if v == plya:Nick() then
-         at = k
-      else
-         bt = k
-      end
-   end
-   return bt > at
+   return plya:Nick() > plyb:Nick()
 end
 
 local function CompareRole(pa, pb)
