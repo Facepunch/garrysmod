@@ -4,9 +4,6 @@
 include("sb_row.lua")
 
 local function CompareScore(pa, pb)
-   if not IsValid(pa) then return false end
-   if not IsValid(pb) then return true end
-
    local a = pa:GetPlayer()
    local b = pb:GetPlayer()
 
@@ -19,9 +16,6 @@ local function CompareScore(pa, pb)
 end
 
 local function CompareAlpha(pa, pb)
-   if not IsValid(pa) then return false end
-   if not IsValid(pb) then return true end
-
    local a = pa:GetPlayer()
    local b = pb:GetPlayer()
 
@@ -47,9 +41,6 @@ local function CompareAlpha(pa, pb)
 end
 
 local function CompareRole(pa, pb)
-   if not IsValid(pa) then return false end
-   if not IsValid(pb) then return true end
-
    local a = pa:GetPlayer()
    local b = pb:GetPlayer()
 
@@ -58,39 +49,26 @@ local function CompareRole(pa, pb)
 
    if a:GetRole() == b:GetRole() then return CompareAlpha(pa,pb) end
 
-
    return a:GetRole() > b:GetRole()
 end
 
 
 local function ComparePing(pa, pb)
-   if not IsValid(pa) then return false end
-   if not IsValid(pb) then return true end
-
    local a = pa:GetPlayer()
    local b = pb:GetPlayer()
 
    if not IsValid(a) then return false end
    if not IsValid(b) then return true end
-
-
-
 
    return a:Ping() > b:Ping()
 end
 
 local function CompareDeath(pa, pb)
-   if not IsValid(pa) then return false end
-   if not IsValid(pb) then return true end
-
    local a = pa:GetPlayer()
    local b = pb:GetPlayer()
 
    if not IsValid(a) then return false end
    if not IsValid(b) then return true end
-
-
-
 
    return a:Deaths() > b:Deaths()
 end
