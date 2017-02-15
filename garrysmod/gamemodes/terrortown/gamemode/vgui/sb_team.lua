@@ -3,61 +3,6 @@
 
 include("sb_row.lua")
 
-local function CompareScore(pa, pb)
-   local plya = pa:GetPlayer()
-   local plyb = pb:GetPlayer()
-
-   if not IsValid(plya) then return false end
-   if not IsValid(plyb) then return true end
-
-   if plya:Frags() == plyb:Frags() then return plya:Deaths() < plyb:Deaths() end
-
-   return plya:Frags() > plyb:Frags()
-end
-
-local function CompareAlpha(pa, pb)
-   local plya = pa:GetPlayer()
-   local plyb = pb:GetPlayer()
-
-   if not IsValid(plya) then return false end
-   if not IsValid(plyb) then return true end
-
-   return plya:Nick() < plyb:Nick()
-end
-
-local function CompareRole(pa, pb)
-   local plya = pa:GetPlayer()
-   local plyb = pb:GetPlayer()
-
-   if not IsValid(plya) then return false end
-   if not IsValid(plyb) then return true end
-
-   if plya:GetRole() == plyb:GetRole() then return CompareAlpha(pa,pb) end
-
-   return plya:GetRole() > plyb:GetRole()
-end
-
-
-local function ComparePing(pa, pb)
-   local plya = pa:GetPlayer()
-   local plyb = pb:GetPlayer()
-
-   if not IsValid(plya) then return false end
-   if not IsValid(plyb) then return true end
-
-   return plya:Ping() > plyb:Ping()
-end
-
-local function CompareDeath(pa, pb)
-   local plya = pa:GetPlayer()
-   local plyb = pb:GetPlayer()
-
-   if not IsValid(plya) then return false end
-   if not IsValid(plyb) then return true end
-
-   return plya:Deaths() > plyb:Deaths()
-end
-
 local PANEL = {}
 
 function PANEL:Init()
@@ -71,6 +16,9 @@ function PANEL:Init()
    self.rows_sorted = {}
 
    self.group = "spec"
+
+   self.sort_mode = "name"
+   self.sort_direction = false -- descending
 end
 
 function PANEL:SetGroupInfo(name, color, group)
@@ -156,22 +104,35 @@ end
 
 function PANEL:UpdateSortCache()
    self.rows_sorted = {}
-   for k,v in pairs(self.rows) do
-      table.insert(self.rows_sorted, v)
+
+   for _, row in pairs(self.rows) do
+      table.insert(self.rows_sorted, row)
    end
 
-   local sorting = GetConVar("ttt_scoreboard_sorting"):GetInt()
+   table.sort(self.rows_sorted, function(rowa, rowb)
+      local plya = rowa:GetPlayer()
+      local plyb = rowb:GetPlayer()
 
-   if sorting == 1 then
-      table.sort(self.rows_sorted, CompareAlpha)
-   elseif sorting == 2 then
-      table.sort(self.rows_sorted, CompareRole)
-   elseif sorting == 3 then
-      table.sort(self.rows_sorted, ComparePing)
-   elseif sorting == 4 then
-      table.sort(self.rows_sorted, CompareDeath)
-   else
-      table.sort(self.rows_sorted, CompareScore)
+      if not IsValid(plya) then return false end
+      if not IsValid(plyb) then return true end
+
+      if self.sort_mode == "ping" then
+         return plya:Ping() > plyb:Ping()
+      elseif self.sort_mode == "deaths" then
+         return plya:Deaths() > plyb:Deaths()
+      elseif self.sort_mode == "score" then
+         if plya:Frags() == plyb:Frags() then return plya:Deaths() < plyb:Deaths() end
+
+         return plya:Frags() > plyb:Frags()
+      elseif self.sort_mode == "karma" then
+         return plya:GetBaseKarma() < plyb:GetBaseKarma()
+      else
+         return plya:GetName() < plyb:GetName()
+      end
+   end)
+
+   if self.sort_direction then
+      self.rows_sorted = table.Reverse(self.rows_sorted)
    end
 end
 

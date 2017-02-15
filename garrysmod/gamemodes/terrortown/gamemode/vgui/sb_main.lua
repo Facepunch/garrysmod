@@ -134,13 +134,16 @@ function PANEL:Init()
 
    -- the various score column headers
    self.cols = {}
-   self:AddColumn( GetTranslation("sb_ping") )
-   self:AddColumn( GetTranslation("sb_deaths") )
-   self:AddColumn( GetTranslation("sb_score") )
+   self:AddColumn( GetTranslation("sb_ping"), nil, nil, "ping" )
+   self:AddColumn( GetTranslation("sb_deaths"), nil, nil, "deaths" )
+   self:AddColumn( GetTranslation("sb_score"), nil, nil, "score" )
 
    if KARMA.IsEnabled() then
-      self:AddColumn( GetTranslation("sb_karma") )
+      self:AddColumn( GetTranslation("sb_karma"), nil, nil, "karma" )
    end
+
+   self.SortMode = "score"
+   self.SortDirection = false -- descending
 
    -- Let hooks add their column headers (via AddColumn())
    hook.Call( "TTTScoreboardColumns", nil, self )
@@ -151,11 +154,32 @@ end
 
 -- For headings only the label parameter is relevant, func is included for
 -- parity with sb_row
-function PANEL:AddColumn( label, func, width )
+function PANEL:AddColumn( label, func, width, identifier )
    local lbl = vgui.Create( "DLabel", self )
    lbl:SetText( label )
+   lbl:SetMouseInputEnabled(true)
+   lbl:SetCursor("hand")
    lbl.IsHeading = true
    lbl.Width = width or 50 -- Retain compatibility with existing code
+   lbl.HeadingIdentifier = identifier
+
+   lbl.DoClick = function()
+      surface.PlaySound("ui/buttonclick.wav")
+
+      if lbl.HeadingIdentifier == self.SortMode then
+         self.SortDirection = not self.SortDirection
+      else
+         self.SortMode = lbl.HeadingIdentifier
+         self.SortDirection = false -- descending
+      end
+
+      for _, scoregroup in pairs(self.ply_groups) do
+         scoregroup.sort_mode = self.SortMode
+         scoregroup.sort_direction = self.SortDirection
+         scoregroup:UpdateSortCache()
+         scoregroup:InvalidateLayout()
+      end
+   end
 
    table.insert( self.cols, lbl )
    return lbl
