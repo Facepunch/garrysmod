@@ -145,46 +145,6 @@ function PANEL:Init()
    -- Let hooks add their column headers (via AddColumn())
    hook.Call( "TTTScoreboardColumns", nil, self )
 
-   self.sorter = vgui.Create("DButton", self)
-   self.sorter:SetText( "Change Sort" )
-   self.sorter:SetTextColor(COLOR_WHITE)
-   self.sorter.Think = function(sf)
-
-      local w = math.max(ScrW() * 0.6, 640)
-      sf:SetPos(w - sf:GetWide() - 160, 72+2)
-   end
-   self.sorter.Paint = function(s, w, h)
-      surface.SetDrawColor(0, 0, 0, 240)
-      surface.DrawOutlinedRect(0, 0, w, h)
-      surface.SetDrawColor(255,255,255, 150)
-      surface.DrawRect(0, 0, w, h)
-   end
-
-   self.sorter:SetTextColor(color_black)
-   self.sorter.DoClick = function(s)
-      local menu = DermaMenu()
-     
-     
-      local header = menu:AddOption("Change Sort Function")
-      header:SetTextInset(10, 0)
-      header.OnCursorEntered = function() end
-      header.PaintOver = function() surface.SetDrawColor(0, 0, 0, 50) surface.DrawRect(0, 0, header:GetWide(), header:GetTall()) end
-      menu:AddSpacer()
-      menu:AddSpacer()
-     
-      local options = {"Alphabetically","Roles","Ping","Deaths","Score"}
-      --Iterate in order by index
-      for k,v in pairs(options) do
-         local m,r = menu:AddOption(v)
-         m.DoClick = function()
-            LocalPlayer().sorting = k
-            surface.PlaySound("ui/buttonclick.wav")
-         end
-         menu:AddSpacer()
-      end
-      menu:Open()
-   end
-
    self:UpdateScoreboard()
    self:StartUpdateTimer()
 end
