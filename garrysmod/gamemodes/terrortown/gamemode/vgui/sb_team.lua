@@ -196,13 +196,16 @@ function PANEL:UpdateSortCache()
    for k,v in pairs(self.rows) do
       table.insert(self.rows_sorted, v)
    end
-   if LocalPlayer().sorting and LocalPlayer().sorting == 1 then
+
+   local sorting = GetConVar("ttt_scoreboard_sorting"):GetInt()
+
+   if sorting == 1 then
       table.sort(self.rows_sorted, CompareAlpha)
-   elseif LocalPlayer().sorting and LocalPlayer().sorting == 2 then
+   elseif sorting == 2 then
       table.sort(self.rows_sorted, CompareRole)
-   elseif LocalPlayer().sorting and LocalPlayer().sorting == 3 then
+   elseif sorting == 3 then
       table.sort(self.rows_sorted, ComparePing)
-   elseif LocalPlayer().sorting and LocalPlayer().sorting == 4 then
+   elseif sorting == 4 then
       table.sort(self.rows_sorted, CompareDeath)
    else
       table.sort(self.rows_sorted, CompareScore)
