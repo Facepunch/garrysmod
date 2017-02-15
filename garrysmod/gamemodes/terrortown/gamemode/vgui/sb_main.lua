@@ -112,23 +112,6 @@ function PANEL:Init()
 
    self.ply_groups = {}
 
-   concommand.Add( "ttt_scoreboard_setsort", function( _, _, args )
-      local sorting = table.remove( args, 1 )
-	  local order = table.remove( args, 1 )
-      local order_bool = order != "false"
-
-      if sorting == nil then 
-         return 
-      end
-
-      for _, scoregroup in pairs(self.ply_groups) do
-         scoregroup.sort_mode = sorting
-         scoregroup.sort_direction = order_bool
-         scoregroup:UpdateSortCache()
-         scoregroup:InvalidateLayout()
-      end
-   end, nil, "(name|ping|deaths|score|role|karma) [true|false]")
-
    local t = vgui.Create("TTTScoreGroup", self.ply_frame:GetCanvas())
    t:SetGroupInfo(GetTranslation("terrorists"), Color(0,200,0,100), GROUP_TERROR)
    self.ply_groups[GROUP_TERROR] = t
