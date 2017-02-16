@@ -177,7 +177,7 @@ function PANEL:AddColumn( label, func, width, identifier )
          ascending:SetBool(not ascending:GetBool())
       else
          sorting:SetString( lbl.HeadingIdentifier )
-         ascending:SetBool(false)
+         ascending:SetBool(true)
       end
 
       for _, scoregroup in pairs(self.ply_groups) do
