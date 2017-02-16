@@ -22,6 +22,9 @@ surface.CreateFont("treb_small", {font = "Trebuchet18",
                                   size = 14,
                                   weight = 700})
 
+CreateClientConVar("ttt_scoreboard_sorting", "name", true, false, "name | role | karma | score | deaths | ping")
+CreateClientConVar("ttt_scoreboard_ascending", "false", true, false, "true | false")
+
 local logo = surface.GetTextureID("vgui/ttt/score_logo")
 
 local PANEL = {}
@@ -146,10 +149,6 @@ function PANEL:Init()
    self:AddColumn( GetTranslation("col_role"), nil, nil,        "role" )
    self:AddColumn( GetTranslation("equip_spec_name"), nil, nil, "name" ) 
 
-
-   self.SortMode = "score"
-   self.SortDirection = false -- descending
-
    -- Let hooks add their column headers (via AddColumn())
    hook.Call( "TTTScoreboardColumns", nil, self )
 
@@ -171,16 +170,17 @@ function PANEL:AddColumn( label, func, width, identifier )
    lbl.DoClick = function()
       surface.PlaySound("ui/buttonclick.wav")
 
-      if lbl.HeadingIdentifier == self.SortMode then
-         self.SortDirection = not self.SortDirection
+      local sorting = GetConVar("ttt_scoreboard_sorting")
+      local ascending = GetConVar("ttt_scoreboard_ascending")
+
+      if lbl.HeadingIdentifier == sorting:GetString() then
+         ascending:SetBool(not ascending:GetBool())
       else
-         self.SortMode = lbl.HeadingIdentifier
-         self.SortDirection = false -- descending
+         sorting:SetString( lbl.HeadingIdentifier )
+         ascending:SetBool(false)
       end
 
       for _, scoregroup in pairs(self.ply_groups) do
-         scoregroup.sort_mode = self.SortMode
-         scoregroup.sort_direction = self.SortDirection
          scoregroup:UpdateSortCache()
          scoregroup:InvalidateLayout()
       end
@@ -305,7 +305,7 @@ function PANEL:ApplySchemeSettings()
 
    for k,v in pairs(self.cols) do
       v:SetFont("treb_small")
-      if self.SortMode == v.HeadingIdentifier then
+      if GetConVar("ttt_scoreboard_sorting"):GetString() == v.HeadingIdentifier then
          v:SetTextColor(COLOR_GREEN)
       else
          v:SetTextColor(COLOR_WHITE)

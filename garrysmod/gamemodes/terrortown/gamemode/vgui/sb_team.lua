@@ -16,9 +16,6 @@ function PANEL:Init()
    self.rows_sorted = {}
 
    self.group = "spec"
-
-   self.sort_mode = "name"
-   self.sort_direction = false -- descending
 end
 
 function PANEL:SetGroupInfo(name, color, group)
@@ -116,26 +113,28 @@ function PANEL:UpdateSortCache()
       if not IsValid(plya) then return false end
       if not IsValid(plyb) then return true end
 
-      if self.sort_mode == "ping" then
+      local sort_mode = GetConVar("ttt_scoreboard_sorting"):GetString()
+
+      if sort_mode == "ping" then
          return plya:Ping() > plyb:Ping()
-      elseif self.sort_mode == "deaths" then
+      elseif sort_mode == "deaths" then
          return plya:Deaths() > plyb:Deaths()
-      elseif self.sort_mode == "score" then
+      elseif sort_mode == "score" then
          if plya:Frags() == plyb:Frags() then return plya:Deaths() < plyb:Deaths() end
 
          return plya:Frags() > plyb:Frags()
-      elseif self.sort_mode == "role" then
+      elseif sort_mode == "role" then
          if plya:GetRole() == plyb:GetRole() then return plya:GetName() < plyb:GetName() end
 
          return plya:GetRole() > plyb:GetRole()
-      elseif self.sort_mode == "karma" then
+      elseif sort_mode == "karma" then
          return plya:GetBaseKarma() < plyb:GetBaseKarma()
       else
          return plya:GetName() < plyb:GetName()
       end
    end)
 
-   if self.sort_direction then
+   if GetConVar("ttt_scoreboard_ascending"):GetBool() then
       self.rows_sorted = table.Reverse(self.rows_sorted)
    end
 end
