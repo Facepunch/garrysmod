@@ -239,7 +239,7 @@ L.help_settings_tip = "Client-side settings"
 -- Settings
 L.set_title_sb = "Scoreboard settings"
 
-L.set_sb_sort = "Scoreboard: Sort by"
+L.set_sb_sort = "Scoreboard: Sort by:"
 L.set_sb_ascending = "Ascending order (Uncheck for descending order)"
 
 L.set_title_gui = "Interface settings"
