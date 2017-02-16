@@ -146,8 +146,8 @@ function PANEL:Init()
    end
 
    -- Reusing a few existing translations
-   self:AddColumn( GetTranslation("col_role"), nil, nil,        "role" )
-   self:AddColumn( GetTranslation("equip_spec_name"), nil, nil, "name" ) 
+   -- self:AddColumn( GetTranslation("col_role"), nil, nil,        "role" )
+   -- self:AddColumn( GetTranslation("equip_spec_name"), nil, nil, "name" ) 
 
    -- Let hooks add their column headers (via AddColumn())
    hook.Call( "TTTScoreboardColumns", nil, self )
