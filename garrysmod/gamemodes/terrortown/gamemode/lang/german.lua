@@ -236,6 +236,11 @@ L.help_settings     = "Einstellungen"
 L.help_settings_tip = "Spielerseitige Einstellungen"
 
 -- Settings
+L.set_title_sb = "Anzeigereinstellungen"
+
+L.set_sb_sort = "Anzeigetafel: Sortieren nach:"
+L.set_sb_ascending = "Aufsteigende Sortierung (in absteigender Reihenfolge aufheben)"
+
 L.set_title_gui = "Anzeigeeinstellungen"
 
 L.set_tips      = "Zeige Tipps zum Spiel während des Zuschauens am unteren Bildschirmrand"
