@@ -56,6 +56,26 @@ function HELPSCRN:Show()
    dgui:SetName(GetTranslation("set_title_gui"))
 
    local cb = nil
+   
+   local dsort = vgui.Create("DComboBox", dgui)
+   dsort:SetConVar("ttt_scoreboard_sorting")
+
+   -- TODO: Enable more choices to be added via hooks for addons
+   dsort:AddChoice(GetTranslation("equip_spec_name"), "name")
+   dsort:AddChoice(GetTranslation("col_role"), "role")
+   dsort:AddChoice(GetTranslation("sb_karma"), "karma")
+   dsort:AddChoice(GetTranslation("sb_score"), "score")
+   dsort:AddChoice(GetTranslation("sb_deaths"), "deaths")
+   dsort:AddChoice(GetTranslation("sb_ping"), "ping")
+   
+   -- Copy pasta; Dont know why this is needed or if it even is
+   dsort.OnSelect = function(idx, val, data)
+                       RunConsoleCommand("ttt_scoreboard_sorting", data)
+                    end
+   dsort.Think = dsort.ConVarStringThink
+   
+   dgui:Help(GetTranslation("set_sort"))
+   dgui:AddItem(dsort)
 
    dgui:CheckBox(GetTranslation("set_tips"), "ttt_tips_enable")
 
