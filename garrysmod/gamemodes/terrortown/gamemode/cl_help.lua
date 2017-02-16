@@ -50,14 +50,12 @@ function HELPSCRN:Show()
    dsettings:SetPadding(10)
    dsettings:SetSpacing(10)
 
-   --- Interface area
-
-   local dgui = vgui.Create("DForm", dsettings)
-   dgui:SetName(GetTranslation("set_title_gui"))
-
-   local cb = nil
+   --- Scoreboard area
    
-   local dsort = vgui.Create("DComboBox", dgui)
+   local dsb = vgui.Create("DForm", dsettings)
+   dsb:SetName(GetTranslation("set_title_sb"))
+   
+   local dsort = vgui.Create("DComboBox", dsb)
    dsort:SetConVar("ttt_scoreboard_sorting")
 
    -- TODO: Enable more choices to be added via hooks for addons
@@ -74,8 +72,17 @@ function HELPSCRN:Show()
                     end
    dsort.Think = dsort.ConVarStringThink
    
-   dgui:Help(GetTranslation("set_sort"))
-   dgui:AddItem(dsort)
+   dsb:Help(GetTranslation("set_sb_sort"))
+   dsb:AddItem(dsort)
+   
+   dsb:CheckBox(GetTranslation("set_sb_ascending"), "ttt_scoreboard_ascending")
+   
+   --- Interface area
+
+   local dgui = vgui.Create("DForm", dsettings)
+   dgui:SetName(GetTranslation("set_title_gui"))
+
+   local cb = nil
 
    dgui:CheckBox(GetTranslation("set_tips"), "ttt_tips_enable")
 
