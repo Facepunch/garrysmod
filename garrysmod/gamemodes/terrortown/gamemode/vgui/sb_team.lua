@@ -115,23 +115,24 @@ function PANEL:UpdateSortCache()
 
       local sort_mode = GetConVar("ttt_scoreboard_sorting"):GetString()
 
+      local comp = 0 -- Lua doesnt have an Ordering enumeration, I think?
+
       if sort_mode == "ping" then
-         return plya:Ping() > plyb:Ping()
+         comp = plya:Ping() - plyb:Ping()
       elseif sort_mode == "deaths" then
-         return plya:Deaths() > plyb:Deaths()
+         comp = plya:Deaths() - plyb:Deaths()
       elseif sort_mode == "score" then
-         if plya:Frags() == plyb:Frags() then return plya:Deaths() < plyb:Deaths() end
-
-         return plya:Frags() > plyb:Frags()
+         comp = plya:Frags() - plyb:Frags()
       elseif sort_mode == "role" then
-         if plya:GetRole() == plyb:GetRole() then return plya:GetName() < plyb:GetName() end
-
-         return plya:GetRole() > plyb:GetRole()
+         comp = plya:GetRole() - plyb:GetRole()
       elseif sort_mode == "karma" then
-         return plya:GetBaseKarma() < plyb:GetBaseKarma()
-      else
-         return plya:GetName() < plyb:GetName()
+         comp = plya:GetBaseKarma() - plyb:GetBaseKarma()
       end
+      
+      if comp != 0 then
+         return comp > 0
+      end
+      return plya:GetName() > plyb:GetName()
    end)
 
    if GetConVar("ttt_scoreboard_ascending"):GetBool() then
