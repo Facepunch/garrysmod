@@ -346,7 +346,7 @@ function PANEL:ApplySchemeSettings()
    for k,v in pairs(self.cols) do
       v:SetFont("treb_small")
       if sorting == v.HeadingIdentifier then
-         v:SetTextColor(COLOR_GREEN)
+         v:SetTextColor(COLOR_LGRAY)
       else
          v:SetTextColor(COLOR_WHITE)
       end
