@@ -213,6 +213,8 @@ L.sb_mapchange  = "Kartan ändras om {num} rundor eller om {time}"
 L.sb_mia        = "Saknad I Strid"
 L.sb_confirmed  = "Bekräftad Död"
 
+L.sb_sortby     = "Sortera efter:"
+
 L.sb_ping       = "Ping"
 L.sb_deaths     = "Döda"
 L.sb_score      = "Poäng"
