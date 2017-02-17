@@ -77,6 +77,8 @@ function HELPSCRN:Show()
    
    dsb:CheckBox(GetTranslation("set_sb_ascending"), "ttt_scoreboard_ascending")
    
+   dsettings:AddItem(dsb)
+
    --- Interface area
 
    local dgui = vgui.Create("DForm", dsettings)
