@@ -131,7 +131,7 @@ function PANEL:UpdateSortCache()
          --    otherwise the default ascending order puts boring innocents first
          comp = 0 - comp
       elseif sort_mode == "karma" then
-         comp = plya:GetBaseKarma() - plyb:GetBaseKarma()
+         comp = (plya:GetBaseKarma() or 0) - (plyb:GetBaseKarma() or 0)
       end
       
       if comp != 0 then
