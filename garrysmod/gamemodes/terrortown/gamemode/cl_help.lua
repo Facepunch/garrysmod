@@ -50,35 +50,6 @@ function HELPSCRN:Show()
    dsettings:SetPadding(10)
    dsettings:SetSpacing(10)
 
-   --- Scoreboard area
-   
-   local dsb = vgui.Create("DForm", dsettings)
-   dsb:SetName(GetTranslation("set_title_sb"))
-   
-   local dsort = vgui.Create("DComboBox", dsb)
-   dsort:SetConVar("ttt_scoreboard_sorting")
-
-   -- TODO: Enable more choices to be added via hooks for addons
-   dsort:AddChoice(GetTranslation("equip_spec_name"), "name")
-   dsort:AddChoice(GetTranslation("col_role"), "role")
-   dsort:AddChoice(GetTranslation("sb_karma"), "karma")
-   dsort:AddChoice(GetTranslation("sb_score"), "score")
-   dsort:AddChoice(GetTranslation("sb_deaths"), "deaths")
-   dsort:AddChoice(GetTranslation("sb_ping"), "ping")
-   
-   -- Copy pasta; Dont know why this is needed or if it even is
-   dsort.OnSelect = function(idx, val, data)
-                       RunConsoleCommand("ttt_scoreboard_sorting", data)
-                    end
-   dsort.Think = dsort.ConVarStringThink
-   
-   dsb:Help(GetTranslation("set_sb_sort"))
-   dsb:AddItem(dsort)
-   
-   dsb:CheckBox(GetTranslation("set_sb_ascending"), "ttt_scoreboard_ascending")
-   
-   dsettings:AddItem(dsb)
-
    --- Interface area
 
    local dgui = vgui.Create("DForm", dsettings)
@@ -172,6 +143,35 @@ function HELPSCRN:Show()
    dlanguage:AddItem(dlang)
 
    dsettings:AddItem(dlanguage)
+
+   --- Scoreboard area
+   
+   local dsb = vgui.Create("DForm", dsettings)
+   dsb:SetName(GetTranslation("set_title_sb"))
+   
+   local dsort = vgui.Create("DComboBox", dsb)
+   dsort:SetConVar("ttt_scoreboard_sorting")
+
+   -- TODO: Enable more choices to be added via hooks for addons
+   dsort:AddChoice(GetTranslation("equip_spec_name"), "name")
+   dsort:AddChoice(GetTranslation("col_role"), "role")
+   dsort:AddChoice(GetTranslation("sb_karma"), "karma")
+   dsort:AddChoice(GetTranslation("sb_score"), "score")
+   dsort:AddChoice(GetTranslation("sb_deaths"), "deaths")
+   dsort:AddChoice(GetTranslation("sb_ping"), "ping")
+   
+   -- Copy pasta; Dont know why this is needed or if it even is
+   dsort.OnSelect = function(idx, val, data)
+                       RunConsoleCommand("ttt_scoreboard_sorting", data)
+                    end
+   dsort.Think = dsort.ConVarStringThink
+   
+   dsb:Help(GetTranslation("set_sb_sort"))
+   dsb:AddItem(dsort)
+   
+   dsb:CheckBox(GetTranslation("set_sb_ascending"), "ttt_scoreboard_ascending")
+   
+   dsettings:AddItem(dsb)
 
    dtabs:AddSheet(GetTranslation("help_settings"), dsettings, "icon16/wrench.png", false, false, GetTranslation("help_settings_tip"))
 
