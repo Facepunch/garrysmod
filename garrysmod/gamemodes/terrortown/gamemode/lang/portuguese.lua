@@ -212,6 +212,8 @@ L.sb_mapchange  = "O mapa mudará em {num} rodadas ou em {time}"
 L.sb_mia        = "Desaparecidos"
 L.sb_confirmed  = "Mortes Confirmadas"
 
+L.sb_sortby     = "Ordenar por:"
+
 L.sb_ping       = "Ping"
 L.sb_deaths     = "Mortes"
 L.sb_score      = "Score"
