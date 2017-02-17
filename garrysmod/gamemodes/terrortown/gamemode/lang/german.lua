@@ -211,6 +211,8 @@ L.sb_mapchange  = "Die Karte wechselt in {num} Runden oder in {time}"
 L.sb_mia        = "Vermisst"
 L.sb_confirmed  = "Definitiv Tot"
 
+L.sb_sortby     = "Sortiere nach:"
+
 L.sb_ping       = "Ping"
 L.sb_deaths     = "Tode"
 L.sb_score      = "Punkte"
