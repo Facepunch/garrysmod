@@ -212,7 +212,7 @@ L.sb_mapchange  = "地圖將於 {num} 個回合或是 {time} 後更換 "
 L.sb_mia        = "下落不明 "
 L.sb_confirmed  = "確認死亡 "
 
-L.sb_sortby     = "排序方式："
+L.sb_sortby     = "排序方式： "
 
 L.sb_ping       = "Ping "
 L.sb_deaths     = "死亡數 "
@@ -239,10 +239,10 @@ L.help_settings = "設定 "
 L.help_settings_tip = "客戶端設定 "
 
 -- Settings
-L.set_title_sb = "記分板設置"
+L.set_title_sb = "記分板設置 "
 
-L.set_sb_sort = "排序："
-L.set_sb_ascending = "升序（取消選擇降序）"
+L.set_sb_sort = "排序： "
+L.set_sb_ascending = "升序（取消選擇降序） "
 
 L.set_title_gui = "介面設置 "
 
