@@ -239,7 +239,7 @@ L.help_settings_tip = "Ajustes del cliente"
 -- Settings
 L.set_title_sb = "Ajustes del marcador"
 
-L.set_sb_sort = "Marcador: Ordenar por:"
+L.set_sb_sort = "Ordenar por:"
 L.set_sb_ascending = "Orden ascendente (desmarque la orden descendente)"
 
 L.set_title_gui = "Ajustes de la interfaz"

@@ -239,7 +239,7 @@ L.help_settings_tip = "客戶端設定 "
 -- Settings
 L.set_title_sb = "記分板設置"
 
-L.set_sb_sort = "記分牌：排序："
+L.set_sb_sort = "排序："
 L.set_sb_ascending = "升序（取消選擇降序）"
 
 L.set_title_gui = "介面設置 "

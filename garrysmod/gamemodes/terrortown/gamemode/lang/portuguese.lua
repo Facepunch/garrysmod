@@ -239,7 +239,7 @@ L.help_settings_tip = "Configurações pessoais"
 -- Settings
 L.set_title_sb = "Configurações do placar"
 
-L.set_sb_sort = "Marcador: Ordenar por:"
+L.set_sb_sort = "Ordenar por:"
 L.set_sb_ascending = "Ordem crescente (desmarque a ordem decrescente)"
 
 L.set_title_gui = "Configurar interface"

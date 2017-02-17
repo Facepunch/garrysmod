@@ -240,7 +240,7 @@ L.help_settings_tip = "Klient-inställningar"
 -- Settings
 L.set_title_sb = "resultattavlan inställningar"
 
-L.set_sb_sort = "Resultattavlan : Sortera efter:"
+L.set_sb_sort = "Sortera efter:"
 L.set_sb_ascending = "Stigande ordning (avmarkera för fallande ordning)"
 
 L.set_title_gui = "Gränssnittsinställningar"
