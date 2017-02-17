@@ -338,10 +338,21 @@ function PANEL:ApplySchemeSettings()
    self.hostdesc:SetTextColor(COLOR_WHITE)
    self.hostname:SetTextColor(COLOR_BLACK)
    self.mapchange:SetTextColor(COLOR_WHITE)
-
+   
+   local sorting = GetConVar("ttt_scoreboard_sorting"):GetString()
+  
    for k,v in pairs(self.cols) do
       v:SetFont("treb_small")
-      if GetConVar("ttt_scoreboard_sorting"):GetString() == v.HeadingIdentifier then
+      if sorting == v.HeadingIdentifier then
+         v:SetTextColor(COLOR_GREEN)
+      else
+         v:SetTextColor(COLOR_WHITE)
+      end
+   end
+  
+   for k,v in pairs(self.sort_headers) do
+      v:SetFont("treb_small")
+      if sorting == v.HeadingIdentifier then
          v:SetTextColor(COLOR_GREEN)
       else
          v:SetTextColor(COLOR_WHITE)
