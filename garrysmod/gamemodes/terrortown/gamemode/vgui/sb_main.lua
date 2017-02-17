@@ -184,12 +184,13 @@ local function sort_header_handler(self_, lbl)
       self_:ApplySchemeSettings()
    end
 end
+
 -- For headings only the label parameter is relevant, func is included for
 -- parity with sb_row
 function PANEL:AddColumn( label, func, width, sort_identifier )
    local lbl = vgui.Create( "DLabel", self )
    lbl:SetText( label )
-   lbl:SetMouseInputEnabled(identifier != nil)
+   lbl:SetMouseInputEnabled(sort_identifier != nil)
    lbl:SetCursor("hand")
    lbl.IsHeading = true
    lbl.Width = width or 50 -- Retain compatibility with existing code
@@ -203,14 +204,14 @@ end
 
 -- Adds just column headers without player-specific data
 -- Identical to PANEL:AddColumn except it adds to the sort_headers table instead
-function PANEL:AddFakeColumn( label, func, width, identifier )
+function PANEL:AddFakeColumn( label, func, width, sort_identifier )
    local lbl = vgui.Create( "DLabel", self )
    lbl:SetText( label )
-   lbl:SetMouseInputEnabled(identifier != nil)
+   lbl:SetMouseInputEnabled(sort_identifier != nil)
    lbl:SetCursor("hand")
    lbl.IsHeading = true
    lbl.Width = width or 50 -- Retain compatibility with existing code
-   lbl.HeadingIdentifier = identifier
+   lbl.HeadingIdentifier = sort_identifier
 
    lbl.DoClick = sort_header_handler(self, lbl)
 
@@ -326,7 +327,7 @@ function PANEL:PerformLayout()
    for k,v in ipairs(self.sort_headers) do
       v:SizeToContents()
       cx = cx + v.Width
-      v:SetPos(cx + v:GetWide()/2, cy)
+      v:SetPos(cx - v:GetWide()/2, cy)
    end
 end
 

@@ -117,6 +117,8 @@ function PANEL:UpdateSortCache()
 
       local comp = 0 -- Lua doesnt have an Ordering enumeration, I think?
 
+      -- This really should be a lookup table, 
+      --    it will make adding hooks for custom sort functions way easier
       if sort_mode == "ping" then
          comp = plya:Ping() - plyb:Ping()
       elseif sort_mode == "deaths" then
@@ -124,7 +126,10 @@ function PANEL:UpdateSortCache()
       elseif sort_mode == "score" then
          comp = plya:Frags() - plyb:Frags()
       elseif sort_mode == "role" then
-         comp = plya:GetRole() - plyb:GetRole()
+         comp = (plya:GetRole() or 0) - (plyb:GetRole() or 0)
+         -- Reverse on purpose; 
+         --    otherwise the default ascending order puts boring innocents first
+         comp = 0 - comp
       elseif sort_mode == "karma" then
          comp = plya:GetBaseKarma() - plyb:GetBaseKarma()
       end
