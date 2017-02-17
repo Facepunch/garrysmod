@@ -212,6 +212,8 @@ L.sb_mapchange  = "地圖將於 {num} 個回合或是 {time} 後更換 "
 L.sb_mia        = "下落不明 "
 L.sb_confirmed  = "確認死亡 "
 
+L.sb_sortby     = "排序方式："
+
 L.sb_ping       = "Ping "
 L.sb_deaths     = "死亡數 "
 L.sb_score      = "分數 "
