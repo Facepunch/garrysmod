@@ -212,6 +212,8 @@ L.sb_mapchange  = "Map changes in {num} rounds or in {time}"
 L.sb_mia        = "Missing In Action"
 L.sb_confirmed  = "Confirmed Dead"
 
+L.sb_sortby     = "Sort by:"
+
 L.sb_ping       = "Ping"
 L.sb_deaths     = "Deaths"
 L.sb_score      = "Score"
