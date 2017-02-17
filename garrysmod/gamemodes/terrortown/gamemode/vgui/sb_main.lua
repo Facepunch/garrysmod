@@ -145,29 +145,25 @@ function PANEL:Init()
       self:AddColumn( GetTranslation("sb_karma"), nil, nil,     "karma" )
    end
 
-   -- Reusing a few existing translations
-   -- self:AddColumn( GetTranslation("col_role"), nil, nil,        "role" )
-   -- self:AddColumn( GetTranslation("equip_spec_name"), nil, nil, "name" ) 
-
+   self:sort_headers = {}
+   -- Reuse some translations
+   self:AddFakeColumn( GetTranslation("col_role"), nil, nil,        "role" )
+   self:AddFakeColumn( GetTranslation("equip_spec_name"), nil, nil, "name" )
+  
    -- Let hooks add their column headers (via AddColumn())
    hook.Call( "TTTScoreboardColumns", nil, self )
+  
+   -- Possiblly add hooks for fake column headers for sorting; Like:
+   -- hook.Call( "TTTScoreboardFakeColumns", nil, self )
+   -- Plus registering the hook wherever hooks get registered
+   -- and we would need to add hooks for custom sorting functions...
 
    self:UpdateScoreboard()
    self:StartUpdateTimer()
 end
 
--- For headings only the label parameter is relevant, func is included for
--- parity with sb_row
-function PANEL:AddColumn( label, func, width, identifier )
-   local lbl = vgui.Create( "DLabel", self )
-   lbl:SetText( label )
-   lbl:SetMouseInputEnabled(true)
-   lbl:SetCursor("hand")
-   lbl.IsHeading = true
-   lbl.Width = width or 50 -- Retain compatibility with existing code
-   lbl.HeadingIdentifier = identifier
-
-   lbl.DoClick = function()
+local function sort_header_handler(self_, lbl)
+   return function()
       surface.PlaySound("ui/buttonclick.wav")
 
       local sorting = GetConVar("ttt_scoreboard_sorting")
@@ -180,15 +176,45 @@ function PANEL:AddColumn( label, func, width, identifier )
          ascending:SetBool(true)
       end
 
-      for _, scoregroup in pairs(self.ply_groups) do
+      for _, scoregroup in pairs(self_.ply_groups) do
          scoregroup:UpdateSortCache()
          scoregroup:InvalidateLayout()
       end
 
-      self:ApplySchemeSettings()
+      self_:ApplySchemeSettings()
    end
+end
+-- For headings only the label parameter is relevant, func is included for
+-- parity with sb_row
+function PANEL:AddColumn( label, func, width, sort_identifier )
+   local lbl = vgui.Create( "DLabel", self )
+   lbl:SetText( label )
+   lbl:SetMouseInputEnabled(identifier != nil)
+   lbl:SetCursor("hand")
+   lbl.IsHeading = true
+   lbl.Width = width or 50 -- Retain compatibility with existing code
+   lbl.HeadingIdentifier = sort_identifier
+
+   lbl.DoClick = sort_header_handler(self, lbl)
 
    table.insert( self.cols, lbl )
+   return lbl
+end
+
+-- Adds just column headers without player-specific data
+-- Identical to PANEL:AddColumn except it adds to the sort_headers table instead
+function PANEL:AddFakeColumn( label, func, width, identifier )
+   local lbl = vgui.Create( "DLabel", self )
+   lbl:SetText( label )
+   lbl:SetMouseInputEnabled(identifier != nil)
+   lbl:SetCursor("hand")
+   lbl.IsHeading = true
+   lbl.Width = width or 50 -- Retain compatibility with existing code
+   lbl.HeadingIdentifier = identifier
+
+   lbl.DoClick = sort_header_handler(self, lbl)
+
+   table.insert( self.sort_headers, lbl )
    return lbl
 end
 
@@ -291,6 +317,16 @@ function PANEL:PerformLayout()
       v:SizeToContents()
       cx = cx - v.Width
       v:SetPos(cx - v:GetWide()/2, cy)
+   end
+  
+   -- sort headers
+   -- reuse cy
+   -- cx = logo width + buffer space
+   local cx = 256 + 8
+   for k,v in ipairs(self.sort_headers) do
+      v:SizeToContents()
+      cx = cx + v.Width
+      v:SetPos(cx + v:GetWide()/2, cy)
    end
 end
 
