@@ -145,7 +145,7 @@ function PANEL:Init()
       self:AddColumn( GetTranslation("sb_karma"), nil, nil,     "karma" )
    end
 
-   self:sort_headers = {}
+   self.sort_headers = {}
    -- Reuse some translations
    self:AddFakeColumn( GetTranslation("col_role"), nil, nil,        "role" )
    self:AddFakeColumn( GetTranslation("equip_spec_name"), nil, nil, "name" )
