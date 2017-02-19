@@ -143,6 +143,7 @@ lua\includes\util\javascript_util.lua
 lua\includes\util\workshop_files.lua
 lua\includes\util\tooltips.lua
 lua\includes\util\client.lua
+lua\includes\util\chat_print.lua
 lua\includes\gui\icon_progress.lua
 lua\includes\extensions\util\worldpicker.lua
 lua\includes\extensions\debug.lua
