@@ -343,7 +343,7 @@ function PANEL:ApplySchemeSettings()
    
    local sorting = GetConVar("ttt_scoreboard_sorting"):GetString()
   
-   local highlight_color = Color(127, 127, 127, 255)
+   local highlight_color = Color(175, 175, 175, 255)
    local default_color = COLOR_WHITE
 
    for k,v in pairs(self.cols) do
@@ -358,7 +358,7 @@ function PANEL:ApplySchemeSettings()
    for k,v in pairs(self.sort_headers) do
       v:SetFont("treb_small")
       if sorting == v.HeadingIdentifier then
-         v:SetTextColor(hightlight_color)
+         v:SetTextColor(highlight_color)
       else
          v:SetTextColor(default_color)
       end
