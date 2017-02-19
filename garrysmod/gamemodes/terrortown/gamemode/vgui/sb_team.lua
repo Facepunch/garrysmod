@@ -161,6 +161,33 @@ local function Hue_For_Player(ply)
    return hue_cache[ply]
 end
 
+-- TODO Hook for adding custom sort functions
+local sort_table = {}
+
+sort_table["ping"] = function ( plya, plyb )
+   return plya:Ping() - plyb:Ping()
+end
+sort_table["deaths"] = function  ( plya, plyb )
+   return plya:Deaths() - plyb:Deaths()
+end
+sort_table["score"] = function  ( plya, plyb )
+   return plya:Frags() - plyb:Frags()
+end
+sort_table["role"] = function  ( plya, plyb )
+   local comp = (plya:GetRole() or 0) - (plyb:GetRole() or 0)
+   -- Reverse on purpose; 
+   --    otherwise the default ascending order puts boring innocents first
+   comp = 0 - comp
+   return comp
+end
+sort_table["karma"] = function  ( plya, plyb )
+   return (plya:GetBaseKarma() or 0) - (plyb:GetBaseKarma() or 0)
+end
+sort_table["color"] = function  ( plya, plyb )
+   -- Sort by HSL Hue value; to make a rainbow-ish sort
+   return Hue_For_Player(plya) - Hue_For_Player(plyb)
+end
+
 function PANEL:UpdateSortCache()
    hue_cache = {} -- Reset hue cache alongside sort cache
 
@@ -177,33 +204,19 @@ function PANEL:UpdateSortCache()
       if not IsValid(plya) then return false end
       if not IsValid(plyb) then return true end
 
-      local sort_mode = GetConVar("ttt_scoreboard_sorting"):GetString()
-
       local comp = 0 -- Lua doesnt have an Ordering enumeration, I think?
-
-      -- This really should be a lookup table, 
-      --    it will make adding hooks for custom sort functions way easier
-      if sort_mode == "ping" then
-         comp = plya:Ping() - plyb:Ping()
-      elseif sort_mode == "deaths" then
-         comp = plya:Deaths() - plyb:Deaths()
-      elseif sort_mode == "score" then
-         comp = plya:Frags() - plyb:Frags()
-      elseif sort_mode == "role" then
-         comp = (plya:GetRole() or 0) - (plyb:GetRole() or 0)
-         -- Reverse on purpose; 
-         --    otherwise the default ascending order puts boring innocents first
-         comp = 0 - comp
-      elseif sort_mode == "karma" then
-         comp = (plya:GetBaseKarma() or 0) - (plyb:GetBaseKarma() or 0)
-      elseif sort_mode == "color" then -- Fun secret
-         -- Sort by HSL Hue value; to make a rainbow-ish sort
-         comp = Hue_For_Player(plya) - Hue_For_Player(plyb)
-      end
       
+      local sort_mode = GetConVar("ttt_scoreboard_sorting"):GetString()
+      local sort_func = sort_table[sort_mode]
+
+      if sort_func != nil then
+         comp = sort_func(plya, plyb)
+      end
+
       if comp != 0 then
          return comp > 0
       end
+
       return plya:GetName() > plyb:GetName()
    end)
 
