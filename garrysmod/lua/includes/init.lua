@@ -123,3 +123,4 @@ if ( CLIENT ) then
 
 end
 
+include ( "util/chat_print.lua" )
