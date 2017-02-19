@@ -10,7 +10,7 @@ if CLIENT then
 			parts[#parts + 1] = net.ReadType()
 		end
 
-		chat.AddText(parts)
+		chat.AddText(unpack(parts))
 	end)
 end
 
