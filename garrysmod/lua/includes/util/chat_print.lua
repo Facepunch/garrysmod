@@ -27,6 +27,7 @@ end
 if CLIENT then
 	ChatPrint = chat.AddText
 else
+	-- Prints a colored message to the chat box from the client or server.
 	function ChatPrint(...)
 		net.Start("_ChatPrint")
 			WriteChatParts(...)
@@ -35,6 +36,9 @@ else
 end
 
 local PLAYER = FindMetaTable("Player")
+
+-- Prints a colored message to the chat box of the given player
+-- from the client or server.
 function PLAYER:ChatPrint(...)
 	if CLIENT then
 		if self == LocalPlayer() then
