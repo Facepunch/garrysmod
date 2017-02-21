@@ -88,6 +88,68 @@ function ScoreGroup(p)
    return p:IsTerror() and GROUP_TERROR or GROUP_SPEC
 end
 
+-- Colorful stuff
+-- Copied from sb_row.lua
+local function ColorForPlayer(ply)
+   if IsValid(ply) then
+      local c = hook.Call("TTTScoreboardColorForPlayer", GAMEMODE, ply)
+
+      -- verify that we got a proper color
+      if c and type(c) == "table" and c.r and c.b and c.g and c.a then
+         return c
+      else
+         ErrorNoHalt("TTTScoreboardColorForPlayer hook returned something that isn't a color!\n")
+      end
+   end
+   return COLOR_WHITE
+end
+
+-- HSL Hue value of the color the player's name is on the scoreboard
+local function Hue_For_Player(ply)
+   local ret = 0.0
+
+   local rgb = ColorForPlayer(ply) -- ColorForPlayer guarentees to return not nil
+   -- CALCULATIONS
+   -- http://www.rapidtables.com/convert/color/rgb-to-hsl.htm
+   local r = rgb.r / 255.0
+   local g = rgb.g / 255.0
+   local b = rgb.b / 255.0
+   local cMax = math.max(r, g, b)
+   local cMin = math.min(r, g, b)
+   local diff = cMax - cMin
+
+   if diff == 0.0 then
+      ret = 0.0
+   elseif cMax == r then
+      -- 60 *
+      ret = ((g - b) / diff) % 6.0
+   elseif cMax == g then
+      -- 60 *
+      ret = ((b - r) / diff) + 2.0
+   elseif cMax == b then
+      -- 60 *
+      ret = ((r - g) / diff) + 4.0
+   end
+
+   -- E.x. White and medium gray will return the same hue, 
+   --    making its order within its white friends based on name instead
+   --    of color difference.
+   -- Add a minuscule decimal amount equivalent to the colors HSL-Lightness,
+   --    making color hue "ties" still group colorwise (by brightness)
+   -- Since the RGB values are only 0-255 and no decimal (I think?),
+   --    this should in theory never cause any color mis-order,
+   --    unless maybe there are two colors that differ by one unit in hue
+   --    and are polar opposites in brightness, which would be extremely rare in reality.
+   local lightness = (cMax + cMin) / 2
+
+   -- Subtract so brighter hue ties come first (less = higher on board)
+   ret = ret - lightness * 0.00001
+
+   return ret
+end
+
+----- PANEL START
+
 function PANEL:Init()
 
    self.hostdesc = vgui.Create("DLabel", self)
@@ -135,6 +197,37 @@ function PANEL:Init()
 
    hook.Call( "TTTScoreGroups", nil, self.ply_frame:GetCanvas(), self.ply_groups )
 
+   -- Comparison functions used to sort scoreboard
+   self.sort_table = {}
+
+   self.sort_table["name"] = function ( plya, plyb )
+      -- Automatically sorts by name if this returns 0
+      return 0
+   end
+   self.sort_table["ping"] = function ( plya, plyb )
+      return plya:Ping() - plyb:Ping()
+   end
+   self.sort_table["deaths"] = function  ( plya, plyb )
+      return plya:Deaths() - plyb:Deaths()
+   end
+   self.sort_table["score"] = function  ( plya, plyb )
+      return plya:Frags() - plyb:Frags()
+   end
+   self.sort_table["role"] = function  ( plya, plyb )
+      local comp = (plya:GetRole() or 0) - (plyb:GetRole() or 0)
+      -- Reverse on purpose; 
+      --    otherwise the default ascending order puts boring innocents first
+      comp = 0 - comp
+      return comp
+   end
+   self.sort_table["karma"] = function  ( plya, plyb )
+      return (plya:GetBaseKarma() or 0) - (plyb:GetBaseKarma() or 0)
+   end
+   self.sort_table["color"] = function  ( plya, plyb )
+      -- Sort by HSL Hue value; to make a rainbow-ish sort
+      return Hue_For_Player(plya) - Hue_For_Player(plyb)
+   end
+
    -- the various score column headers
    self.cols = {}
    self:AddColumn( GetTranslation("sb_ping"), nil, nil,         "ping" )
@@ -151,14 +244,9 @@ function PANEL:Init()
    self:AddFakeColumn( GetTranslation("equip_spec_name"), nil, nil, "name" )
    self:AddFakeColumn( GetTranslation("col_role"), nil, nil,        "role" )
   
-   -- Let hooks add their column headers (via AddColumn())
+   -- Let hooks add their column headers (via AddColumn() or AddFakeColumn())
    hook.Call( "TTTScoreboardColumns", nil, self )
   
-   -- Possiblly add hooks for fake column headers for sorting; Like:
-   -- hook.Call( "TTTScoreboardFakeColumns", nil, self )
-   -- Plus registering the hook wherever hooks get registered
-   -- and we would need to add hooks for custom sorting functions...
-
    self:UpdateScoreboard()
    self:StartUpdateTimer()
 end
@@ -186,38 +274,50 @@ local function sort_header_handler(self_, lbl)
    end
 end
 
--- For headings only the label parameter is relevant, func is included for
+-- For headings only the label parameter is relevant, second param is included for
 -- parity with sb_row
-function PANEL:AddColumn( label, func, width, sort_identifier )
-   local lbl = vgui.Create( "DLabel", self )
+local function column_label_work(self_, table_to_add, label, _, width, sort_identifier, sort_func )
+   local lbl = vgui.Create( "DLabel", self_ )
    lbl:SetText( label )
-   lbl:SetMouseInputEnabled(sort_identifier != nil)
-   lbl:SetCursor("hand")
+   local can_sort = false
    lbl.IsHeading = true
    lbl.Width = width or 50 -- Retain compatibility with existing code
-   lbl.HeadingIdentifier = sort_identifier
 
-   lbl.DoClick = sort_header_handler(self, lbl)
+   if sort_identifier != nil then
+      can_sort = true
+      -- If we have an identifier and an existing sort function then it was a built-in
+      -- Otherwise...
+      if self_.sort_table[sort_identifier] == nil then
+         if sort_func == nil then
+            ErrorNoHalt( "Sort ID provided without a sorting function, Label = ", label, " ; ID = ", sort_identifier )
+            can_sort = false
+         else
+            self_.sort_table[sort_identifier] = sort_func
+         end
+      end
+   end
 
-   table.insert( self.cols, lbl )
+   if can_sort then
+      lbl:SetMouseInputEnabled(true)
+      lbl:SetCursor("hand")
+      lbl.HeadingIdentifier = sort_identifier
+      lbl.DoClick = sort_header_handler(self_, lbl)
+   end
+
+   table.insert( table_to_add, lbl )
    return lbl
+end
+
+-- Apparently the following doesnt work
+-- PANEL.AddColumn = column_label_work(self.cols)
+function PANEL:AddColumn( label, func, width, sort_id, sort_func ) 
+   column_label_work( self, self.cols, label, func, width, sort_id, sort_func )
 end
 
 -- Adds just column headers without player-specific data
 -- Identical to PANEL:AddColumn except it adds to the sort_headers table instead
-function PANEL:AddFakeColumn( label, func, width, sort_identifier )
-   local lbl = vgui.Create( "DLabel", self )
-   lbl:SetText( label )
-   lbl:SetMouseInputEnabled(sort_identifier != nil)
-   lbl:SetCursor("hand")
-   lbl.IsHeading = true
-   lbl.Width = width or 50 -- Retain compatibility with existing code
-   lbl.HeadingIdentifier = sort_identifier
-
-   lbl.DoClick = sort_header_handler(self, lbl)
-
-   table.insert( self.sort_headers, lbl )
-   return lbl
+function PANEL:AddFakeColumn( label, func, width, sort_id, sort_func ) 
+   column_label_work( self, self.sort_headers, label, func, width, sort_id, sort_func )
 end
 
 function PANEL:StartUpdateTimer()

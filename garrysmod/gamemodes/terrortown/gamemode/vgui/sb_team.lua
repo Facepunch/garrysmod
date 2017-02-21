@@ -99,98 +99,7 @@ function PANEL:HasRows()
    return self.rowcount > 0
 end
 
--- Copied from sb_row.lua
-local function ColorForPlayer(ply)
-   if IsValid(ply) then
-      local c = hook.Call("TTTScoreboardColorForPlayer", GAMEMODE, ply)
-
-      -- verify that we got a proper color
-      if c and type(c) == "table" and c.r and c.b and c.g and c.a then
-         return c
-      else
-         ErrorNoHalt("TTTScoreboardColorForPlayer hook returned something that isn't a color!\n")
-      end
-   end
-   return COLOR_WHITE
-end
-
-local hue_cache = {}
-
--- HSL Hue value of the color the player's name is on the scoreboard
-local function Hue_For_Player(ply)
-   if hue_cache[ply] == nil then
-      local rgb = ColorForPlayer(ply) -- ColorForPlayer guarentees to return not nil
-      -- CALCULATIONS
-      -- http://www.rapidtables.com/convert/color/rgb-to-hsl.htm
-      local r = rgb.r / 255.0
-      local g = rgb.g / 255.0
-      local b = rgb.b / 255.0
-      local cMax = math.max(r, g, b)
-      local cMin = math.min(r, g, b)
-      local diff = cMax - cMin
-
-      if diff == 0.0 then
-         hue_cache[ply] = 0.0
-      elseif cMax == r then
-         -- 60 *
-         hue_cache[ply] = ((g - b) / diff) % 6.0
-      elseif cMax == g then
-         -- 60 *
-         hue_cache[ply] = ((b - r) / diff) + 2.0
-      elseif cMax == b then
-         -- 60 *
-         hue_cache[ply] = ((r - g) / diff) + 4.0
-      end
-
-      -- E.x. White and medium gray will return the same hue, 
-      --    making its order within its white friends based on name instead
-      --    of color difference.
-      -- Add a minuscule decimal amount equivalent to the colors HSL-Lightness,
-      --    making color hue "ties" still group colorwise (by brightness)
-      -- Since the RGB values are only 0-255 and no decimal (I think?),
-      --    this should in theory never cause any color mis-order,
-      --    unless maybe there are two colors that differ by one unit in hue
-      --    and are polar opposites in brightness, which would be extremely rare in reality.
-      local lightness = (cMax + cMin) / 2
-   
-      -- Subtract so brighter hue ties come first (less = higher on board)
-      hue_cache[ply] = hue_cache[ply] - lightness * 0.00001
-      
-   end
-
-   return hue_cache[ply]
-end
-
--- TODO Hook for adding custom sort functions
-local sort_table = {}
-
-sort_table["ping"] = function ( plya, plyb )
-   return plya:Ping() - plyb:Ping()
-end
-sort_table["deaths"] = function  ( plya, plyb )
-   return plya:Deaths() - plyb:Deaths()
-end
-sort_table["score"] = function  ( plya, plyb )
-   return plya:Frags() - plyb:Frags()
-end
-sort_table["role"] = function  ( plya, plyb )
-   local comp = (plya:GetRole() or 0) - (plyb:GetRole() or 0)
-   -- Reverse on purpose; 
-   --    otherwise the default ascending order puts boring innocents first
-   comp = 0 - comp
-   return comp
-end
-sort_table["karma"] = function  ( plya, plyb )
-   return (plya:GetBaseKarma() or 0) - (plyb:GetBaseKarma() or 0)
-end
-sort_table["color"] = function  ( plya, plyb )
-   -- Sort by HSL Hue value; to make a rainbow-ish sort
-   return Hue_For_Player(plya) - Hue_For_Player(plyb)
-end
-
 function PANEL:UpdateSortCache()
-   hue_cache = {} -- Reset hue cache alongside sort cache
-
    self.rows_sorted = {}
 
    for _, row in pairs(self.rows) do
@@ -207,7 +116,7 @@ function PANEL:UpdateSortCache()
       local comp = 0 -- Lua doesnt have an Ordering enumeration, I think?
       
       local sort_mode = GetConVar("ttt_scoreboard_sorting"):GetString()
-      local sort_func = sort_table[sort_mode]
+      local sort_func = sboard_panel.sort_table[sort_mode]
 
       if sort_func != nil then
          comp = sort_func(plya, plyb)
