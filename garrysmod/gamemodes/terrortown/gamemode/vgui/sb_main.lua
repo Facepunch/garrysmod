@@ -308,16 +308,14 @@ local function column_label_work(self_, table_to_add, label, _, width, sort_iden
    return lbl
 end
 
--- Apparently the following doesnt work
--- PANEL.AddColumn = column_label_work(self.cols)
 function PANEL:AddColumn( label, func, width, sort_id, sort_func ) 
-   column_label_work( self, self.cols, label, func, width, sort_id, sort_func )
+   return column_label_work( self, self.cols, label, func, width, sort_id, sort_func )
 end
 
 -- Adds just column headers without player-specific data
 -- Identical to PANEL:AddColumn except it adds to the sort_headers table instead
 function PANEL:AddFakeColumn( label, func, width, sort_id, sort_func ) 
-   column_label_work( self, self.sort_headers, label, func, width, sort_id, sort_func )
+   return column_label_work( self, self.sort_headers, label, func, width, sort_id, sort_func )
 end
 
 function PANEL:StartUpdateTimer()
