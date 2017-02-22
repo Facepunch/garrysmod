@@ -238,7 +238,7 @@ L.help_settings     = "Einstellungen"
 L.help_settings_tip = "Spielerseitige Einstellungen"
 
 -- Settings
-L.set_title_sb = "Anzeigereinstellungen"
+L.set_title_sb = "Scoreboard-Einstellungen"
 
 L.set_sb_sort = "Sortieren nach:"
 L.set_sb_ascending = "Aufsteigende Sortierung (in absteigender Reihenfolge aufheben)"
