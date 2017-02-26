@@ -2,13 +2,7 @@
 -- Variables that are used on both client and server
 
 SWEP.PrintName		= "Scripted Weapon"		-- 'Nice' Weapon name (Shown on HUD)
-SWEP.Author			= ""
-SWEP.Contact		= ""
-SWEP.Purpose		= ""
-SWEP.Instructions	= ""
 
-SWEP.ViewModelFOV	= 62
-SWEP.ViewModelFlip	= false
 SWEP.ViewModel		= "models/weapons/v_pistol.mdl"
 SWEP.WorldModel		= "models/weapons/w_357.mdl"
 
@@ -285,6 +279,6 @@ end
 -----------------------------------------------------------]]
 function SWEP:DoImpactEffect( tr, nDamageType )
 		
-	return false;
+	return false
 	
 end

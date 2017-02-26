@@ -38,14 +38,6 @@ end
 function SWEP:KeyValue( key, value )
 end
 
-
---[[---------------------------------------------------------
-   Name: OnRemove
-   Desc: Called just before entity is deleted
------------------------------------------------------------]]
-function SWEP:OnRemove()
-end
-
 --[[---------------------------------------------------------
    Name: Equip
    Desc: A player or NPC has picked the weapon up
