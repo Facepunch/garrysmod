@@ -245,6 +245,10 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( data.players >= 16 ) data.recommended -= 40;
 	if ( data.players >= 32 ) data.recommended -= 20;
 	if ( data.players >= 64 ) data.recommended -= 10;
+	
+	// Increase the impact of the server's ping on high slot servers, so they don't dominate the list
+	if ( data.maxplayers >= 50 ) data.recommended += 10
+	if ( data.maxplayers >= 100 ) data.recommended += 15
 
 	data.listen = data.desc.indexOf('[L]') >= 0;
 	if ( data.listen ) data.desc = data.desc.substr( 4 );
