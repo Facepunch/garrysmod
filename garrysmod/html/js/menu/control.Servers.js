@@ -240,7 +240,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( data.players == 0 ) data.recommended += 100; // Server is empty
 	
 	if ( data.players == data.maxplayers ) data.recommended += 37; // Server is full
-	if ( data.players == data.maxplayers * 0.95 ) data.recommended += 37; // Server is almost full
+	if ( data.players >= data.maxplayers * 0.95 ) data.recommended += 37; // Server is almost full
 	
 	if ( data.pass ) data.recommended += 300; // If we can't join it, don't put it to the top
 
