@@ -212,8 +212,6 @@ L.sb_mapchange  = "Map changes in {num} rounds or in {time}"
 L.sb_mia        = "Missing In Action"
 L.sb_confirmed  = "Confirmed Dead"
 
-L.sb_sortby     = "Sort by:"
-
 L.sb_ping       = "Ping"
 L.sb_deaths     = "Deaths"
 L.sb_score      = "Score"
@@ -239,11 +237,6 @@ L.help_settings = "Settings"
 L.help_settings_tip = "Client-side settings"
 
 -- Settings
-L.set_title_sb = "Scoreboard settings"
-
-L.set_sb_sort = "Sort by:"
-L.set_sb_ascending = "Ascending order (Uncheck for descending order)"
-
 L.set_title_gui = "Interface settings"
 
 L.set_tips      = "Show gameplay tips at the bottom of the screen while spectating"

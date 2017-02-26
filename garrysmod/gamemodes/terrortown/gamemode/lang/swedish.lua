@@ -213,8 +213,6 @@ L.sb_mapchange  = "Kartan ändras om {num} rundor eller om {time}"
 L.sb_mia        = "Saknad I Strid"
 L.sb_confirmed  = "Bekräftad Död"
 
-L.sb_sortby     = "Sortera efter:"
-
 L.sb_ping       = "Ping"
 L.sb_deaths     = "Döda"
 L.sb_score      = "Poäng"
@@ -240,11 +238,6 @@ L.help_settings = "Inställningar"
 L.help_settings_tip = "Klient-inställningar"
 
 -- Settings
-L.set_title_sb = "resultattavlan inställningar"
-
-L.set_sb_sort = "Sortera efter:"
-L.set_sb_ascending = "Stigande ordning (avmarkera för fallande ordning)"
-
 L.set_title_gui = "Gränssnittsinställningar"
 
 L.set_tips      = "Visa spel-tips i nedkanten av skärmen vid åskådning"

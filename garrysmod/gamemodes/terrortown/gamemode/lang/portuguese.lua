@@ -212,8 +212,6 @@ L.sb_mapchange  = "O mapa mudará em {num} rodadas ou em {time}"
 L.sb_mia        = "Desaparecidos"
 L.sb_confirmed  = "Mortes Confirmadas"
 
-L.sb_sortby     = "Ordenar por:"
-
 L.sb_ping       = "Ping"
 L.sb_deaths     = "Mortes"
 L.sb_score      = "Score"
@@ -239,11 +237,6 @@ L.help_settings = "Configurações"
 L.help_settings_tip = "Configurações pessoais"
 
 -- Settings
-L.set_title_sb = "Configurações do placar"
-
-L.set_sb_sort = "Ordenar por:"
-L.set_sb_ascending = "Ordem crescente (desmarque a ordem decrescente)"
-
 L.set_title_gui = "Configurar interface"
 
 L.set_tips      = "Mostrar dicas de jogo enquanto for espectador"

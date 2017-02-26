@@ -211,8 +211,6 @@ L.sb_mapchange  = "Die Karte wechselt in {num} Runden oder in {time}"
 L.sb_mia        = "Vermisst"
 L.sb_confirmed  = "Definitiv Tot"
 
-L.sb_sortby     = "Sortiere nach:"
-
 L.sb_ping       = "Ping"
 L.sb_deaths     = "Tode"
 L.sb_score      = "Punkte"
@@ -238,11 +236,6 @@ L.help_settings     = "Einstellungen"
 L.help_settings_tip = "Spielerseitige Einstellungen"
 
 -- Settings
-L.set_title_sb = "Scoreboard-Einstellungen"
-
-L.set_sb_sort = "Sortieren nach:"
-L.set_sb_ascending = "Aufsteigende Sortierung (in absteigender Reihenfolge aufheben)"
-
 L.set_title_gui = "Anzeigeeinstellungen"
 
 L.set_tips      = "Zeige Tipps zum Spiel während des Zuschauens am unteren Bildschirmrand"
