@@ -235,7 +235,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	data.recommended = data.ping;
 	
 	if ( data.recommended <= 30 ) data.recommended = 30 // Weight all servers bellow 30ms the same	
-	if ( data.players < 5) data.recommended += ( 5 - data.players ) * 5 // Decrease the number of empty-like servers
+	if ( data.players < 7) data.recommended += ( 7 - data.players ) * 5 // Decrease the number of empty-like servers
 	
 	if ( data.players == 0 ) data.recommended += 100; // Server is empty
 	
