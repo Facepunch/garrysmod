@@ -76,7 +76,7 @@ end
 
 function PANEL:GetTitle()
 
-	self.lblTitle:GetText()
+	return self.lblTitle:GetText()
 
 end
 
