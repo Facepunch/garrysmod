@@ -74,6 +74,12 @@ function PANEL:ShowCloseButton( bShow )
 
 end
 
+function PANEL:GetTitle()
+
+	self.lblTitle:GetText()
+
+end
+
 function PANEL:SetTitle( strTitle )
 
 	self.lblTitle:SetText( strTitle )
