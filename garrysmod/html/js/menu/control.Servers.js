@@ -210,7 +210,6 @@ function GetGamemode( name, type )
 var LanguageAbbreviations = {
 	"es-ES": "es",
 	"en-PT": "en",
-	"uk":    "en",
 	"pt-PT": "pt",
 	"pt-BR": "br"
 }
