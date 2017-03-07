@@ -163,7 +163,6 @@ local function force_spectate(ply, cmd, arg)
             ply:Kill()
          end
 
-         GAMEMODE:PlayerSpawnAsSpectator(ply)
          ply:SetTeam(TEAM_SPEC)
          ply:SetForceSpec(true)
          ply:Spawn()
@@ -176,4 +175,3 @@ concommand.Add("ttt_spectate", force_spectate)
 net.Receive("TTT_Spectate", function(l, pl)
    force_spectate(pl, nil, { net.ReadBool() and 1 or 0 })
 end)
-
