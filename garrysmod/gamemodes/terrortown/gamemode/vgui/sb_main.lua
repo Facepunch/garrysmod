@@ -23,7 +23,7 @@ surface.CreateFont("treb_small", {font = "Trebuchet18",
                                   weight = 700})
 
 CreateClientConVar("ttt_scoreboard_sorting", "name", true, false, "name | role | karma | score | deaths | ping")
-CreateClientConVar("ttt_scoreboard_ascending", "false", true, false, "true | false")
+CreateClientConVar("ttt_scoreboard_ascending", "1", true, false, "Should scoreboard ordering be in ascending order")
 
 local logo = surface.GetTextureID("vgui/ttt/score_logo")
 
