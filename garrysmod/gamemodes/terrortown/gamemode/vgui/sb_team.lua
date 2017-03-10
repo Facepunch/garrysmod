@@ -130,7 +130,7 @@ function PANEL:UpdateSortCache()
          end
       end
 
-      return plya:GetName() > plyb:GetName()
+      return string.lower(plya:GetName()) > string.lower(plyb:GetName())
    end)
 
    if GetConVar("ttt_scoreboard_ascending"):GetBool() then
