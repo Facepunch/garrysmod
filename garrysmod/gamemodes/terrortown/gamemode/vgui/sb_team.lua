@@ -122,20 +122,20 @@ function PANEL:UpdateSortCache()
          comp = sort_func(plya, plyb)
       end
 
+      local ret = true
+
       if comp != 0 then
-         if GetConVar("ttt_scoreboard_ascending"):GetBool() then
-            return comp > 0
-         else
-            return comp < 0
-         end
+         ret = comp > 0
+      else
+         ret = string.lower(plya:GetName()) > string.lower(plyb:GetName())
       end
 
-      return string.lower(plya:GetName()) > string.lower(plyb:GetName())
-   end)
+      if GetConVar("ttt_scoreboard_ascending"):GetBool() then
+         ret = not ret
+      end
 
-   if GetConVar("ttt_scoreboard_ascending"):GetBool() then
-      self.rows_sorted = table.Reverse(self.rows_sorted)
-   end
+      return ret
+   end)
 end
 
 function PANEL:UpdatePlayerData()
