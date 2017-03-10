@@ -1065,6 +1065,3 @@ L.set_cross_size = "Tamaño de la mira"
 
 -- 5-25-15
 L.hat_retrieve = "Recogiste el sombrero de un detective."
-
---- 3-9-2017
-L.sb_sortby = "Sort By:"

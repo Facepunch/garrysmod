@@ -1042,6 +1042,3 @@ L.set_cross_size = "準心尺寸 "
 
 --- 5-25-15
 L.hat_retrieve = "您撿起了一頂探長的帽子。 "
-
---- 3-9-2017
-L.sb_sortby = "Sort By:"
