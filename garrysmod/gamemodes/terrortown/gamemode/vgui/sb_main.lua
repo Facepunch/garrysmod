@@ -212,7 +212,7 @@ end
 
 -- For headings only the label parameter is relevant, second param is included for
 -- parity with sb_row
-local function column_label_work(self_, table_to_add, label, _, width, sort_identifier, sort_func )
+local function column_label_work(self_, table_to_add, label, width, sort_identifier, sort_func )
    local lbl = vgui.Create( "DLabel", self_ )
    lbl:SetText( label )
    local can_sort = false
@@ -244,14 +244,14 @@ local function column_label_work(self_, table_to_add, label, _, width, sort_iden
    return lbl
 end
 
-function PANEL:AddColumn( label, func, width, sort_id, sort_func ) 
-   return column_label_work( self, self.cols, label, func, width, sort_id, sort_func )
+function PANEL:AddColumn( label, _, width, sort_id, sort_func ) 
+   return column_label_work( self, self.cols, label, width, sort_id, sort_func )
 end
 
 -- Adds just column headers without player-specific data
 -- Identical to PANEL:AddColumn except it adds to the sort_headers table instead
-function PANEL:AddFakeColumn( label, func, width, sort_id, sort_func ) 
-   return column_label_work( self, self.sort_headers, label, func, width, sort_id, sort_func )
+function PANEL:AddFakeColumn( label, _, width, sort_id, sort_func ) 
+   return column_label_work( self, self.sort_headers, label, width, sort_id, sort_func )
 end
 
 function PANEL:StartUpdateTimer()
