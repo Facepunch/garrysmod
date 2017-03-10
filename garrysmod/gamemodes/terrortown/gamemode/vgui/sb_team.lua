@@ -123,7 +123,11 @@ function PANEL:UpdateSortCache()
       end
 
       if comp != 0 then
-         return comp > 0
+         if GetConVar("ttt_scoreboard_ascending"):GetBool() then
+            return comp > 0
+         else
+            return comp < 0
+         end
       end
 
       return plya:GetName() > plyb:GetName()
