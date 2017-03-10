@@ -1048,4 +1048,4 @@ L.set_cross_brightness = "Яркость прицела"
 L.set_cross_size = "Размер прицела"
 
 --- 3-9-2017
-L.sb_sortby = ""
+L.sb_sortby = "Sort By:"

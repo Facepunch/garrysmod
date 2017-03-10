@@ -1067,4 +1067,4 @@ L.set_cross_size = "Hårkors storlek"
 L.hat_retrieve = "Du plockade upp hatten av en detektiv."
 
 --- 3-9-2017
-L.sb_sortby = ""
+L.sb_sortby = "Sort By:"

@@ -1058,4 +1058,4 @@ L.set_cross_size = "Tamanho da mira"
 L.hat_retrieve = "Você pegou o chapéu de um detetive."
 
 --- 3-9-2017
-L.sb_sortby = ""
+L.sb_sortby = "Sort By:"
