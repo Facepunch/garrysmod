@@ -1044,3 +1044,6 @@ L.set_cross_size       = "Fadenkreuz Größe"
 
 -- 5-25-15
 L.hat_retrieve = "Du hast den Hut eines Detektivs aufgehoben."
+
+--- 3-9-2017
+L.sb_sortby = "Sortiere nach:"
