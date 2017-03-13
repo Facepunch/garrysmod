@@ -86,7 +86,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:GetCapabilities()
 
-	return bit.bor( CAP_WEAPON_RANGE_ATTACK1, CAP_INNATE_RANGE_ATTACK1 )
+	return CAP_WEAPON_RANGE_ATTACK1
 
 end
 
