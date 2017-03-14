@@ -865,7 +865,10 @@ function SelectRoles()
 
    if choice_count == 0 then return end
    
-   hook.Call("TTTSelectRoles", GAMEMODE, choices, prev_roles)
+   local choices_copy = table.Copy(choices)
+   local prev_roles_copy = table.Copy(prev_roles)
+   
+   hook.Call("TTTSelectRoles", GAMEMODE, choices_copy, prev_roles_copy)
 
    -- first select traitors
    local ts = 0
