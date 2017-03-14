@@ -16,3 +16,23 @@ function meta:SnapTo( component, degrees )
 	return self
 
 end
+
+function meta:__mul(a, b)
+	if type(a) == "number" then
+		a = Angle(a, a, a)
+	end
+	if type(b) == "number" then
+		b = Angle(b, b, b)
+	end
+	return Angle(a[1] * b[1], a[2] * b[2], a[3] * b[3])
+end
+
+function meta:__div(a, b)
+	if type(a) == "number" then
+		a = Angle(a, a, a)
+	end
+	if type(b) == "number" then
+		b = Angle(b, b, b)
+	end
+	return Angle(a[1] / b[1], a[2] / b[2], a[3] / b[3])
+end
