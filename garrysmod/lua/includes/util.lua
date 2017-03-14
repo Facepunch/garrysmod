@@ -66,6 +66,8 @@ function PrintTable( t, indent, done )
 		return tostring( a ) < tostring( b )
 	end )
 
+	done[ t ] = true
+
 	for i = 1, #keys do
 		local key = keys[ i ]
 		local value = t[ key ]
