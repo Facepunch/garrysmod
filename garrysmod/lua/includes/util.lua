@@ -78,7 +78,7 @@ function PrintTable( t, indent, done )
 			PrintTable ( value, indent + 2, done )
 			done[ value ] = nil
 
-		else
+		elseif ( tostring( key ) && tostring( value ) ) then
 
 			Msg( tostring( key ) .. "\t=\t" )
 			Msg( tostring( value ) .. "\n" )
