@@ -864,6 +864,8 @@ function SelectRoles()
    local det_count = GetDetectiveCount(choice_count)
 
    if choice_count == 0 then return end
+   
+   hook.Call("TTTSelectRoles", GAMEMODE, choices, prev_roles)
 
    -- first select traitors
    local ts = 0
