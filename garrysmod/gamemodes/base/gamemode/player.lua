@@ -97,7 +97,7 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerSay( player, text, teamonly )
 
-	return text
+	return text or ""
 
 end
 
