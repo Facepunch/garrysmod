@@ -239,8 +239,13 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	
 	// These servers use naughty tricks to be at the top of the list, let's shove them to the bottom.
 	var lowername = data.name.toLowerCase();
+	//SuperiorServers.co
 	var sup = lowername.search("superior");
 	if ( sup >= 0 && sup < lowername.search("servers") ) data.recommended += 999;
+	
+	//DivinityRoleplay.net
+	var divi = lowername.search("divinity");
+	if ( divi >= 0 && divi < lowername.search("roleplay") ) data.recommended += 999;
 	
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
 	if ( data.players >= 16 ) data.recommended -= 40;
