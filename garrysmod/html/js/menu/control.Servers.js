@@ -238,7 +238,8 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( data.pass ) data.recommended += 300; // If we can't join it, don't put it to the top
 	
 	// These servers use naughty tricks to be at the top of the list, let's shove them to the bottom.
-	if ( data.name.toLowerCase().search("superiorservers.co") >= 0 ) data.recommended += 999;
+	var lowername = data.name.toLowerCase();
+	if ( lowername.search("superiorservers") >= 0 || lowername.search("superior servers") >= 0 ) data.recommended += 999;
 	
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
 	if ( data.players >= 16 ) data.recommended -= 40;
