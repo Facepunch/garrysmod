@@ -247,6 +247,10 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	var divi = lowername.search("divinity");
 	if ( divi >= 0 && divi < lowername.search("roleplay") ) data.recommended += 999;
 	
+	//UrbanGamers.net
+	var urban = lowername.search("urban");
+	if ( urban >= 0 && urban < lowername.search("Gamers") ) data.recommended += 999;
+	
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
 	if ( data.players >= 16 ) data.recommended -= 40;
 	if ( data.players >= 32 ) data.recommended -= 20;
