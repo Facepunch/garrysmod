@@ -249,7 +249,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	
 	//UrbanGamers.net
 	var urban = lowername.search("urban");
-	if ( urban >= 0 && urban < lowername.search("Gamers") ) data.recommended += 999;
+	if ( urban >= 0 && urban < lowername.search("gamers") ) data.recommended += 999;
 	
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
 	if ( data.players >= 16 ) data.recommended -= 40;
