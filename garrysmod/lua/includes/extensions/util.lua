@@ -347,3 +347,19 @@ function util.RemovePData( steamid, name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = "..SQLStr(name) )
 	
 end
+
+--[[---------------------------------------------------------
+   Name: IsIndexable( val )
+   Desc: Returns true if the given value can be indexed
+-----------------------------------------------------------]]
+function util.IsIndexable( val )
+
+	local meta = debug.getmetatable( val )
+
+	if istable( val ) or ( istable( meta ) and ( istable( meta.__index ) or isfunction( meta.__index ) ) ) then
+		return true
+	end
+
+	return false
+
+end
