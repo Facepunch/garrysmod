@@ -44,7 +44,7 @@ end
 -----------------------------------------------------------]]
 function Remove( event_name, name )
 
-	if ( !isstring( event_name ) ) then error( "bad argument #1 to 'Add' (string expected, got " .. type( event_name ) .. ")" ) end
+	if ( !isstring( event_name ) ) then error( "bad argument #1 to 'Remove' (string expected, got " .. type( event_name ) .. ")" ) end
 	if ( !Hooks[ event_name ] ) then return end
 
 	Hooks[ event_name ][ name ] = nil
