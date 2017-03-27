@@ -1,8 +1,10 @@
-local gmod                        = gmod
-local pairs                        = pairs
-local isfunction        = isfunction
-local isstring                = isstring
-local IsValid                = IsValid
+local gmod = gmod
+local pairs = pairs
+local isfunction = isfunction
+local isstring = isstring
+local IsValid = IsValid
+local type = type
+local error = error
 
 module( "hook" )
 
@@ -12,8 +14,9 @@ local Hooks = {}
     Name: GetTable
     Desc: Returns a table of all hooks.
 -----------------------------------------------------------]]
-function GetTable() return Hooks end
-
+function GetTable()
+	return Hooks
+end
 
 --[[---------------------------------------------------------
     Name: Add
@@ -22,11 +25,11 @@ function GetTable() return Hooks end
 -----------------------------------------------------------]]
 function Add( event_name, name, func )
 
-	if ( !isfunction( func ) ) then return end
-	if ( !isstring( event_name ) ) then return end
+	if ( !isstring( event_name ) ) then error( "bad argument #1 to 'Add' (string expected, got " .. type( event_name ) .. ")" ) end
+	if ( !isfunction( func ) ) then error( "bad argument #3 to 'Add' (function expected, got " .. type( func ) .. ")" ) end
 
-	if (Hooks[ event_name ] == nil) then
-			Hooks[ event_name ] = {}
+	if ( Hooks[ event_name ] == nil ) then
+		Hooks[ event_name ] = {}
 	end
 
 	Hooks[ event_name ][ name ] = func
@@ -41,7 +44,7 @@ end
 -----------------------------------------------------------]]
 function Remove( event_name, name )
 
-	if ( !isstring( event_name ) ) then return end
+	if ( !isstring( event_name ) ) then error( "bad argument #1 to 'Add' (string expected, got " .. type( event_name ) .. ")" ) end
 	if ( !Hooks[ event_name ] ) then return end
 
 	Hooks[ event_name ][ name ] = nil
