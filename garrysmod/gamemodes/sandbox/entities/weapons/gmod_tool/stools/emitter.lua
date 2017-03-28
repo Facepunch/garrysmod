@@ -198,7 +198,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	local matselect = CPanel:MatSelect( "emitter_effect", nil, true, 0.25, 0.25 )
 	for k, v in pairs( list.Get( "EffectType" ) ) do
-		matselect:AddMaterialEx( v.print, v.material, k, { emitter_effect = k } )
+		matselect:AddMaterialEx( v.print, v.material or "gui/effects/default.png", k, { emitter_effect = k } )
 	end
 
 	CPanel:AddItem( matselect )
