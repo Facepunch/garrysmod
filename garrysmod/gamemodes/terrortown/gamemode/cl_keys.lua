@@ -90,6 +90,8 @@ function GM:PlayerBindPress(ply, bind, pressed)
    elseif (bind == "gmod_undo" or bind == "undo") and pressed then
       RunConsoleCommand("ttt_dropammo")
       return true
+   elseif bind == "phys_swap" and pressed then
+      RunConsoleCommand("ttt_quickslot", "5")
    end
 end
 
