@@ -154,9 +154,7 @@ function TOOL:UpdateGhostEmitter( ent, pl )
 	if ( !IsValid( ent ) ) then return end
 
 	local trace = pl:GetEyeTrace()
-	if ( !trace.Hit ) then return end
-
-	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_emitter" ) then
+	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:GetClass() == "gmod_emitter" || trace.Entity:IsPlayer() ) ) then
 
 		ent:SetNoDraw( true )
 		return

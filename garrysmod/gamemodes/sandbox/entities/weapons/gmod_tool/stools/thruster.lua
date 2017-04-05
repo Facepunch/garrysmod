@@ -177,7 +177,7 @@ function TOOL:UpdateGhostThruster( ent, ply )
 	if ( !IsValid( ent ) ) then return end
 
 	local trace = ply:GetEyeTrace()
-	if ( !trace.Hit || trace.Entity && ( trace.Entity:GetClass() == "gmod_thruster" || trace.Entity:IsPlayer() ) ) then
+	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:GetClass() == "gmod_thruster" || trace.Entity:IsPlayer() ) ) then
 
 		ent:SetNoDraw( true )
 		return
