@@ -22,10 +22,12 @@ function ENT:SetupDataTables()
 	self:NetworkVar( "Float", 1, "Distance", { KeyName = "dist", Edit = { type = "Float", order = 4, min = 64, max = 2048 } } )
 	self:NetworkVar( "Float", 2, "Brightness", { KeyName = "bright", Edit = { type = "Float", order = 5, min = 0, max = 8 } } )
 
-	self:NetworkVarNotify( "On", self.OnUpdateLight )
-	self:NetworkVarNotify( "LightFOV", self.OnUpdateLight )
-	self:NetworkVarNotify( "Brightness", self.OnUpdateLight )
-	self:NetworkVarNotify( "Distance", self.OnUpdateLight )
+	if ( SERVER ) then
+		self:NetworkVarNotify( "On", self.OnUpdateLight )
+		self:NetworkVarNotify( "LightFOV", self.OnUpdateLight )
+		self:NetworkVarNotify( "Brightness", self.OnUpdateLight )
+		self:NetworkVarNotify( "Distance", self.OnUpdateLight )
+	end
 
 end
 

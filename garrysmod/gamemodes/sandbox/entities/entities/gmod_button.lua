@@ -12,8 +12,10 @@ function ENT:SetupDataTables()
 	self:NetworkVar( "Bool", 1, "IsToggle", { KeyName = "tg", Edit = { type = "Boolean", order = 1 } } )
 	self:NetworkVar( "String", 0, "Label", { KeyName = "lbl", Edit = { type = "Generic", order = 2 } } )
 
-	self:SetOn( false )
-	self:SetIsToggle( false )
+	if ( SERVER ) then
+		self:SetOn( false )
+		self:SetIsToggle( false )
+	end
 
 end
 

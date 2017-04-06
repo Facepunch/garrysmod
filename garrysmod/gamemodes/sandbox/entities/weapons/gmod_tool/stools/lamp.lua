@@ -183,7 +183,7 @@ if ( SERVER ) then
 
 		if ( numpad.FromButton() ) then
 
-			ent:Toggle()
+			ent:Switch( onoff == 1 )
 			return
 
 		end
