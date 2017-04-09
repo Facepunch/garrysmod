@@ -388,7 +388,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
    rag:SetModel(ply:GetModel())
    rag:SetSkin(ply:GetSkin())
    for key,value in pairs(ply:GetBodyGroups()) do
-      rag:SetBodygroup(value["id"],ply:GetBodygroup(value["id"]))	
+      rag:SetBodygroup(value.id, ply:GetBodygroup(value.id))	
    end
    rag:SetAngles(ply:GetAngles())
    rag:SetColor(ply:GetColor())
