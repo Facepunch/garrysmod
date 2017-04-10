@@ -228,8 +228,18 @@ do
 							insert( textLines, line )
 						else
 							local spaceExploded = {}
+							local wasEmpty = true
 							for word in gmatch( line, "[^%s]*" ) do
-								insert( spaceExploded, word )
+								if len( word )==0 then
+									if wasEmpty then
+										insert( spaceExploded, word )
+									else
+										wasEmpty = true -- avoid output of an extra space after every word
+									end
+								else
+									wasEmpty = false
+									insert( spaceExploded, word )
+								end
 							end
 							local startConcat = 1
 							while startConcat<=#spaceExploded do -- while there are words to process
