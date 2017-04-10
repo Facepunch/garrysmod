@@ -1,6 +1,7 @@
 
 local CurTime = CurTime
 local pairs = pairs
+local ipairs = ipairs
 local table = table
 local string = string
 local type = type
@@ -163,6 +164,110 @@ function DrawText( text, font, x, y, colour, xalign )
 		else
 			curX = x
 			curY = curY + ( lineHeight / 2 )
+		end
+	end
+end
+
+--[[---------------------------------------------------------
+	Name: DrawTextWordWrap( text, font, x, y, w, color, xAlign )
+	Desc: Simple draw text at position, but this will expand newlines and do word wrap.
+		  color is a table with r/g/b/a elements
+-----------------------------------------------------------]]
+do
+	local gmatch = string.gmatch
+	local insert = table.insert
+	local SetFont = surface.SetFont
+	local GetTextSize = surface.GetTextSize
+	local concat = table.concat
+	local SetTextColor = surface.SetTextColor
+	local SetTextPos = surface.SetTextPos
+	local DrawText = surface.DrawText
+	local len = string.len
+	
+	local cache = {}
+	setmetatable( cache, {__mode = "k"} ) -- allow old texts to be removed from memory
+	function DrawTextWordWrap( text, font, x, y, w, color, xAlign )
+		-- Default arguments:
+		font = font or "DermaDefault"
+		x = x or 0
+		y = y or 0
+		w = w or ScrW()-x
+		color = color or color_white
+		xAlign = xAlign or TEXT_ALIGN_LEFT -- TODO: check
+		
+		-- Load cached textLines:
+		SetFont( font )
+		local singleLineW = GetTextSize( text )
+		local textLines
+		if cache[text] and cache[text][font] and cache[text][font][w] then
+			local cacheData = cache[text][font][w]
+			if cacheData.singleLineW==singleLineW then
+				textLines = cacheData.textLines
+			else -- font has been replaced
+				cache[text][font][w] = nil
+			end
+		end
+		
+		-- Split text:
+		if not textLines then
+			textLines = {}
+			if singleLineW<=w then
+				textLines[1] = text
+			else
+				local wasEmpty = true
+				for line in gmatch( text, "[^\n]*" ) do
+					if len( line )==0 then
+						if wasEmpty then
+							insert( textLines, line )
+						else
+							wasEmpty = true -- avoid output of an empty line for each line return following non-empty line
+						end
+					else
+						wasEmpty = false
+						if GetTextSize( line )<=w then -- text is a single line
+							insert( textLines, line )
+						else
+							local spaceExploded = {}
+							for word in gmatch( line, "[^%s]*" ) do
+								insert( spaceExploded, word )
+							end
+							local startConcat = 1
+							while startConcat<=#spaceExploded do -- while there are words to process
+								for i=#spaceExploded,startConcat,-1 do -- as many words as needed are taken away
+									local part = concat( spaceExploded, " ", startConcat, i ) -- part of line
+									if GetTextSize( part )<=w or i==startConcat then -- if acceptable width or only 1 remaining word
+										insert( textLines, part )
+										startConcat = i+1
+										break
+									end
+								end
+							end
+						end
+					end
+				end
+			end
+			
+			-- Save cached textLines:
+			local cacheData = {
+				singleLineW = singleLineW,
+				textLines = textLines,
+			}
+			cache[text] = cache[text] or {}
+			cache[text][font] = cache[text][font] or {}
+			cache[text][font][w] = cacheData
+		end
+		
+		-- Display text:
+		local lineW,lineH
+		local lineX,lineY
+		lineY = y
+		SetTextColor( color.r,color.g,color.b,color.a )
+		for _,line in ipairs( textLines ) do
+			lineW,lineH = GetTextSize( line )
+			lineX = ( xAlign==TEXT_ALIGN_RIGHT ) and x+w-lineW or ( xAlign==TEXT_ALIGN_CENTER ) and x+( ( w-lineW )/2 ) or x
+			SetTextPos( lineX,lineY )
+			DrawText( line )
+			lineY = lineY+lineH
 		end
 	end
 end
