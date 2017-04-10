@@ -261,6 +261,7 @@ do
 		local lineW,lineH
 		local lineX,lineY
 		lineY = y
+		local fullHeight = 0
 		SetTextColor( color.r,color.g,color.b,color.a )
 		for _,line in ipairs( textLines ) do
 			lineW,lineH = GetTextSize( line )
@@ -268,7 +269,9 @@ do
 			SetTextPos( lineX,lineY )
 			DrawText( line )
 			lineY = lineY+lineH
+			fullHeight = fullHeight+lineH
 		end
+		return fullHeight
 	end
 end
 
