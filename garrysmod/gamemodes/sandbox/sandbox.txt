@@ -11,7 +11,7 @@
 		{
 			"name"		"physgun_limited"
 			"text"		"limit_physgun"
-			"help"		"If enabled, the physgun can only pick up props and ragdolls"
+			"help"		"If enabled, the Physics Gun will not be able to pick up certain map entities"
 			"type"		"CheckBox"
 			"default"	"0"
 		}
@@ -228,7 +228,7 @@
 		{
 			"name"		"sbox_persist"
 			"text"		"persistent_mode"
-			"help"		"Enables 'Make Persistent' option when you to right click on props while holding C, allowing you to save them across sessions. Leave empty to disable"
+			"help"		"Enables 'Make Persistent' option when you right click on props while holding C, allowing you to save them across sessions. Leave empty to disable"
 			"type"		"Text"
 			"default"	""
 			"singleplayer" "1"
