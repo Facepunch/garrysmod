@@ -112,7 +112,7 @@ local ttt_playermodels = {
 };
 
 function GetRandomPlayerModel()
-   return table.Random(ttt_playermodels)
+   return ttt_playermodels[math.random(1, #ttt_playermodels)]
 end
 
 local ttt_playercolors = {
@@ -141,13 +141,15 @@ local ttt_playercolors = {
    }
 };
 
-CreateConVar("ttt_playercolor_mode", "1")
+local colormode = CreateConVar("ttt_playercolor_mode", "1")
 function GM:TTTPlayerColor(model)
-   local mode = GetConVarNumber("ttt_playercolor_mode") or 0
+   local mode = colormode:GetInt() or 0
    if mode == 1 then
-      return table.Random(ttt_playercolors.serious)
+      local serious = ttt_playercolors.serious
+      return serious[math.random(1, #serious)]
    elseif mode == 2 then
-      return table.Random(ttt_playercolors.all)
+      local all = ttt_playercolors.all
+      return all[math.random(1, #all)]
    elseif mode == 3 then
       -- Full randomness
       return Color(math.random(0, 255), math.random(0, 255), math.random(0, 255))
