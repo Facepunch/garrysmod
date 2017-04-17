@@ -170,6 +170,10 @@ function MenuController( $scope, $rootScope )
 			lua.Run( "RunConsoleCommand( \"sensor_color_show\", %s )", $scope.kinect.show_color ? "1" : "0" );
 		}
 	}
+
+	util.MotionSensorAvailable( function( available ) {
+		$scope.kinect.available = available;
+	} );
 }
 
 function SetInGame( bool )

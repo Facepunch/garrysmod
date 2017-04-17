@@ -240,8 +240,8 @@ WorkshopFiles.prototype.Changed = function()
 
 WorkshopFiles.prototype.RefreshDimensions = function()
 {
-	var w = $( "workshopcontainer" ).width();
-	var h = $( "workshopcontainer" ).height() - 48;
+	var w = Math.max( 480, $( "workshopcontainer" ).width() );
+	var h = Math.max( 320, $( "workshopcontainer" ).height() - 48 );
 
 	var iconswide = Math.floor( w / 180 );
 	var iconstall = Math.floor( h / 180 );
