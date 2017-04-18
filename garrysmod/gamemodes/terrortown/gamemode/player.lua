@@ -792,7 +792,7 @@ end
 -- rather high drop already. Hence we do our own fall damage handling in
 -- OnPlayerHitGround.
 function GM:GetFallDamage(ply, speed)
-   return 1
+   return 0
 end
 
 local fallsounds = {
