@@ -138,29 +138,29 @@ function PANEL:Init()
    hook.Call( "TTTScoreGroups", nil, self.ply_frame:GetCanvas(), self.ply_groups )
 
    -- Comparison functions used to sort scoreboard
-   self.sort_table = {}
+   _G.sboard_sort = {}
 
-   self.sort_table["name"] = function ( plya, plyb )
+   _G.sboard_sort["name"] = function ( plya, plyb )
       -- Automatically sorts by name if this returns 0
       return 0
    end
-   self.sort_table["ping"] = function ( plya, plyb )
+   _G.sboard_sort["ping"] = function ( plya, plyb )
       return plya:Ping() - plyb:Ping()
    end
-   self.sort_table["deaths"] = function  ( plya, plyb )
+   _G.sboard_sort["deaths"] = function  ( plya, plyb )
       return plya:Deaths() - plyb:Deaths()
    end
-   self.sort_table["score"] = function  ( plya, plyb )
+   _G.sboard_sort["score"] = function  ( plya, plyb )
       return plya:Frags() - plyb:Frags()
    end
-   self.sort_table["role"] = function  ( plya, plyb )
+   _G.sboard_sort["role"] = function  ( plya, plyb )
       local comp = (plya:GetRole() or 0) - (plyb:GetRole() or 0)
       -- Reverse on purpose; 
       --    otherwise the default ascending order puts boring innocents first
       comp = 0 - comp
       return comp
    end
-   self.sort_table["karma"] = function  ( plya, plyb )
+   _G.sboard_sort["karma"] = function  ( plya, plyb )
       return (plya:GetBaseKarma() or 0) - (plyb:GetBaseKarma() or 0)
    end
 
@@ -223,12 +223,12 @@ local function column_label_work(self_, table_to_add, label, width, sort_identif
       can_sort = true
       -- If we have an identifier and an existing sort function then it was a built-in
       -- Otherwise...
-      if self_.sort_table[sort_identifier] == nil then
+      if _G.sboard_sort[sort_identifier] == nil then
          if sort_func == nil then
             ErrorNoHalt( "Sort ID provided without a sorting function, Label = ", label, " ; ID = ", sort_identifier )
             can_sort = false
          else
-            self_.sort_table[sort_identifier] = sort_func
+            _G.sboard_sort[sort_identifier] = sort_func
          end
       end
    end
