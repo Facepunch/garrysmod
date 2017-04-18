@@ -116,7 +116,7 @@ function PANEL:UpdateSortCache()
       local comp = 0 -- Lua doesnt have an Ordering enumeration, I think?
       
       local sort_mode = GetConVar("ttt_scoreboard_sorting"):GetString()
-      local sort_func = sboard_panel.sort_table[sort_mode]
+      local sort_func = self:GetParent():GetParent():GetParent().sort_table[sort_mode]
 
       if sort_func != nil then
          comp = sort_func(plya, plyb)
