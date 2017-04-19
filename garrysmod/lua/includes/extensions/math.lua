@@ -217,3 +217,15 @@ end
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
 end
+
+
+--[[---------------------------------------------------------
+    Name: IsFinite( value )
+    !IMPORTANT
+    http://facepunch.com/showthread.php?t=1478507
+-----------------------------------------------------------]]
+
+function math.IsFinite( num )
+    return not ( num ~= num or num == math.huge or num == -math.huge )
+end
+
