@@ -88,6 +88,34 @@ function ScoreGroup(p)
    return p:IsTerror() and GROUP_TERROR or GROUP_SPEC
 end
 
+
+-- Comparison functions used to sort scoreboard
+sboard_sort = {
+   name = function (plya, plyb)
+      -- Automatically sorts by name if this returns 0
+      return 0
+   end,
+   ping = function (plya, plyb)
+      return plya:Ping() - plyb:Ping()
+   end,
+   deaths = function (plya, plyb)
+      return plya:Deaths() - plyb:Deaths()
+   end,
+   score = function (plya, plyb)
+      return plya:Frags() - plyb:Frags()
+   end,
+   role = function (plya, plyb)
+      local comp = (plya:GetRole() or 0) - (plyb:GetRole() or 0)
+      -- Reverse on purpose;
+      --    otherwise the default ascending order puts boring innocents first
+      comp = 0 - comp
+      return comp
+   end,
+   karma = function (plya, plyb)
+      return (plya:GetBaseKarma() or 0) - (plyb:GetBaseKarma() or 0)
+   end
+}
+
 ----- PANEL START
 
 function PANEL:Init()
@@ -137,33 +165,6 @@ function PANEL:Init()
 
    hook.Call( "TTTScoreGroups", nil, self.ply_frame:GetCanvas(), self.ply_groups )
 
-   -- Comparison functions used to sort scoreboard
-   _G.sboard_sort = {}
-
-   _G.sboard_sort["name"] = function ( plya, plyb )
-      -- Automatically sorts by name if this returns 0
-      return 0
-   end
-   _G.sboard_sort["ping"] = function ( plya, plyb )
-      return plya:Ping() - plyb:Ping()
-   end
-   _G.sboard_sort["deaths"] = function  ( plya, plyb )
-      return plya:Deaths() - plyb:Deaths()
-   end
-   _G.sboard_sort["score"] = function  ( plya, plyb )
-      return plya:Frags() - plyb:Frags()
-   end
-   _G.sboard_sort["role"] = function  ( plya, plyb )
-      local comp = (plya:GetRole() or 0) - (plyb:GetRole() or 0)
-      -- Reverse on purpose; 
-      --    otherwise the default ascending order puts boring innocents first
-      comp = 0 - comp
-      return comp
-   end
-   _G.sboard_sort["karma"] = function  ( plya, plyb )
-      return (plya:GetBaseKarma() or 0) - (plyb:GetBaseKarma() or 0)
-   end
-
    -- the various score column headers
    self.cols = {}
    self:AddColumn( GetTranslation("sb_ping"), nil, nil,         "ping" )
@@ -179,10 +180,10 @@ function PANEL:Init()
    self:AddFakeColumn( GetTranslation("sb_sortby"), nil, nil,       nil ) -- "Sort by:"
    self:AddFakeColumn( GetTranslation("equip_spec_name"), nil, nil, "name" )
    self:AddFakeColumn( GetTranslation("col_role"), nil, nil,        "role" )
-  
+
    -- Let hooks add their column headers (via AddColumn() or AddFakeColumn())
    hook.Call( "TTTScoreboardColumns", nil, self )
-  
+
    self:UpdateScoreboard()
    self:StartUpdateTimer()
 end
@@ -244,13 +245,13 @@ local function column_label_work(self_, table_to_add, label, width, sort_identif
    return lbl
 end
 
-function PANEL:AddColumn( label, _, width, sort_id, sort_func ) 
+function PANEL:AddColumn( label, _, width, sort_id, sort_func )
    return column_label_work( self, self.cols, label, width, sort_id, sort_func )
 end
 
 -- Adds just column headers without player-specific data
 -- Identical to PANEL:AddColumn except it adds to the sort_headers table instead
-function PANEL:AddFakeColumn( label, _, width, sort_id, sort_func ) 
+function PANEL:AddFakeColumn( label, _, width, sort_id, sort_func )
    return column_label_work( self, self.sort_headers, label, width, sort_id, sort_func )
 end
 
@@ -354,7 +355,7 @@ function PANEL:PerformLayout()
       cx = cx - v.Width
       v:SetPos(cx - v:GetWide()/2, cy)
    end
-  
+
    -- sort headers
    -- reuse cy
    -- cx = logo width + buffer space
@@ -374,9 +375,9 @@ function PANEL:ApplySchemeSettings()
    self.hostdesc:SetTextColor(COLOR_WHITE)
    self.hostname:SetTextColor(COLOR_BLACK)
    self.mapchange:SetTextColor(COLOR_WHITE)
-   
+
    local sorting = GetConVar("ttt_scoreboard_sorting"):GetString()
-  
+
    local highlight_color = Color(175, 175, 175, 255)
    local default_color = COLOR_WHITE
 
@@ -388,7 +389,7 @@ function PANEL:ApplySchemeSettings()
          v:SetTextColor(default_color)
       end
    end
-  
+
    for k,v in pairs(self.sort_headers) do
       v:SetFont("treb_small")
       if sorting == v.HeadingIdentifier then

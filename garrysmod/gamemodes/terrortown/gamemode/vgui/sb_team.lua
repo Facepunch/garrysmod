@@ -83,11 +83,8 @@ function PANEL:AddPlayerRow(ply)
       self.rows[ply] = row
       self.rowcount = table.Count(self.rows)
 
---      row:InvalidateLayout()
-
       -- must force layout immediately or it takes its sweet time to do so
       self:PerformLayout()
-      --self:InvalidateLayout()
    end
 end
 
@@ -99,6 +96,7 @@ function PANEL:HasRows()
    return self.rowcount > 0
 end
 
+local strlower = string.lower
 function PANEL:UpdateSortCache()
    self.rows_sorted = {}
 
@@ -113,11 +111,10 @@ function PANEL:UpdateSortCache()
       if not IsValid(plya) then return false end
       if not IsValid(plyb) then return true end
 
-      local comp = 0 -- Lua doesnt have an Ordering enumeration, I think?
-      
       local sort_mode = GetConVar("ttt_scoreboard_sorting"):GetString()
-      local sort_func = _G.sboard_sort[sort_mode]
+      local sort_func = sboard_sort[sort_mode]
 
+      local comp = 0
       if sort_func != nil then
          comp = sort_func(plya, plyb)
       end
@@ -127,7 +124,7 @@ function PANEL:UpdateSortCache()
       if comp != 0 then
          ret = comp > 0
       else
-         ret = string.lower(plya:GetName()) > string.lower(plyb:GetName())
+         ret = strlower(plya:GetName()) > strlower(plyb:GetName())
       end
 
       if GetConVar("ttt_scoreboard_ascending"):GetBool() then
@@ -157,8 +154,6 @@ function PANEL:UpdatePlayerData()
       if IsValid(pnl) then
          pnl:Remove()
       end
-
---      print(CurTime(), "Removed player", ply)
 
       self.rows[ply] = nil
    end
