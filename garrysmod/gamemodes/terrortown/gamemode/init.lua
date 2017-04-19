@@ -57,15 +57,18 @@ include("player_ext_shd.lua")
 include("player_ext.lua")
 include("player.lua")
 
+-- Round times
 CreateConVar("ttt_roundtime_minutes", "10", FCVAR_NOTIFY)
 CreateConVar("ttt_preptime_seconds", "30", FCVAR_NOTIFY)
 CreateConVar("ttt_posttime_seconds", "30", FCVAR_NOTIFY)
 CreateConVar("ttt_firstpreptime", "60")
 
+-- Haste mode
 local ttt_haste = CreateConVar("ttt_haste", "1", FCVAR_NOTIFY)
 CreateConVar("ttt_haste_starting_minutes", "5", FCVAR_NOTIFY)
 CreateConVar("ttt_haste_minutes_per_death", "0.5", FCVAR_NOTIFY)
 
+-- Player Spawning
 CreateConVar("ttt_spawn_wave_interval", "0")
 
 CreateConVar("ttt_traitor_pct", "0.25")
@@ -91,7 +94,7 @@ CreateConVar("ttt_det_credits_starting", "1")
 CreateConVar("ttt_det_credits_traitorkill", "0")
 CreateConVar("ttt_det_credits_traitordead", "1")
 
-
+-- Other
 CreateConVar("ttt_use_weapon_spawn_scripts", "1")
 CreateConVar("ttt_weapon_spawn_count", "0")
 
