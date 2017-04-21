@@ -6,7 +6,14 @@ local queuedSearch = {}
 
 local function GetAllFiles( tab, folder, extension, path )
 
-	local files, folders = file.Find( folder .. "/*", path )
+	totalCalls = totalCalls + 1
+
+	local files, folders = file.Find( folder .. "*", path )
+
+	if ( !files ) then
+		MsgN( "Warning! Ignoring '" .. folder .. "' because we cannot search in it!"  )
+		return
+	end
 
 	for k, v in pairs( files ) do
 
@@ -15,8 +22,6 @@ local function GetAllFiles( tab, folder, extension, path )
 		end
 
 	end
-
-	totalCalls = totalCalls + 1
 
 	for k, v in pairs( folders ) do
 		expectedCalls = expectedCalls + 1
