@@ -27,7 +27,7 @@ TEXT_ALIGN_TOP		= 3
 TEXT_ALIGN_BOTTOM	= 4
 
 --[[---------------------------------------------------------
-	Textures we use to get shit done
+	Textures we use
 -----------------------------------------------------------]]
 local tex_corner8	= surface.GetTextureID( "gui/corner8" )
 local tex_corner16	= surface.GetTextureID( "gui/corner16" )
