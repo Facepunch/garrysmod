@@ -72,7 +72,7 @@
 
 			<div class='controls' style='position: absolute; left: 0; right: 0; margin-top: 5px;'>
 				<input ng-model="CurrentGamemode.Search.$" class="searchbox" ng-Tranny="'searchbar_placeholer'" />
-				<a class='bglink' ng-click="SelectGamemode(null)"><img src='img/bg_arrow_left.png' /> <span ng-tranny="'return_to_gamemodes'"></span></a>
+				<a class='bglink' ng-click="SelectGamemode(null)"><img src='../img/bg_arrow_left.png' /> <span ng-tranny="'return_to_gamemodes'"></span></a>
 			</div>
 
 			<div class='serverlist'>
@@ -88,7 +88,7 @@
 				<div class='body scrollable' style="top: 32px; left: 8px; right: 8px; bottom: 8px;">
 					
 					<div ng-repeat="server in CurrentGamemode.servers|filter:CurrentGamemode.Search|orderBy:CurrentGamemode.OrderBy:CurrentGamemode.OrderReverse|limitTo:128" class="server {{ServerClass(server)}} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-click="SelectServer( server )">
-						<name><img src='img/server-passworded.png' style="margin-right: 8px;" ng-show="server.pass"/>{{server.name}}</name>
+						<name><img src='../img/server-passworded.png' style="margin-right: 8px;" ng-show="server.pass"/>{{server.name}}</name>
 						<ping>{{server.ping}}</ping>
 						<players>{{server.players}} / {{server.maxplayers}}</players>
 						<map>{{server.map}}</map>
