@@ -176,3 +176,7 @@ end
 list.Set( "DynamiteModels", "models/dav0r/tnt/tnt.mdl", {} )
 list.Set( "DynamiteModels", "models/dav0r/tnt/tnttimed.mdl", {} )
 list.Set( "DynamiteModels", "models/dynamite/dynamite.mdl", {} )
+
+if ( IsMounted( "tf" ) ) then
+	list.Set( "DynamiteModels", "models/props_halloween/pumpkin_explode_teamcolor.mdl", {} )
+end
