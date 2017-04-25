@@ -114,6 +114,12 @@ function ColorRand( alpha )
 	return Color( math.random( 0, 255 ), math.random( 0, 255 ), math.random( 0, 255 ) )
 end
 
+--[[---------------------------------------------------------
+    Lerp between two colors
+-----------------------------------------------------------]]
+function LerpColor( ratio, from, to )
+	return Color( Lerp( ratio, from.r, to.r ), Lerp( ratio, from.g, to.g ), Lerp( ratio, from.b, to.b ) )
+end
 
 --[[---------------------------------------------------------
 	Convenience function to precache a sound
