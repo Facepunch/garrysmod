@@ -17,15 +17,6 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 		"latest"
 	];
 
-	Scope.SubCategories =
-	[
-		"scenes",
-		"machines",
-		"buildings",
-		"courses",
-		"others"
-	];
-
 	$scope.PlayDemo = function ( entry )
 	{
 		if ( entry.local )

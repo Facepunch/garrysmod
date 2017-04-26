@@ -17,12 +17,6 @@
 
 					<a ng-click="Switch( cat, 0 )" ng-Tranny="'demos.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
 
-					<ul ng-show="Category == cat" style="margin-top: 4px; margin-bottom: 15px;">
-						<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
-							<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'demos.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
-						</li>
-					</ul>
-
 				</li>
 
 				<li>&nbsp;</li>
