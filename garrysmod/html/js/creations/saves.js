@@ -17,6 +17,8 @@ function CSaves( $scope, $timeout, $location )
 
 	CreationScope.Categories =
 	[
+		"subscribed_saves",
+
 		"trending",
 		"popular",
 		"latest",

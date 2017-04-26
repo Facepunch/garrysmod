@@ -8,14 +8,22 @@
 				<li><h2 ng-tranny="'demos'"></h2></li>
 
 				<li>&nbsp;</li>
-	
+
 				<li><a class="{{IfElse( Category == 'local', 'active', '' )}}" ng-click="Switch( 'local', 0 )" ng-Tranny="'demos.local'"></a></li>
 
 				<li>&nbsp;</li>
 
-				<li><a class="{{IfElse( Category == 'trending', 'active', '' )}}" ng-click="Switch( 'trending', 0 )" ng-Tranny="'demos.trending'"></a></li>
-				<li><a class="{{IfElse( Category == 'popular', 'active', '' )}}" ng-click="Switch( 'popular', 0 )" ng-Tranny="'demos.popular'"></a></li>
-				<li><a class="{{IfElse( Category == 'latest', 'active', '' )}}" ng-click="Switch( 'latest', 0 )" ng-Tranny="'demos.latest'"></a></li>
+				<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+
+					<a ng-click="Switch( cat, 0 )" ng-Tranny="'demos.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+
+					<ul ng-show="Category == cat" style="margin-top: 4px; margin-bottom: 15px;">
+						<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
+							<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'demos.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+						</li>
+					</ul>
+
+				</li>
 
 				<li>&nbsp;</li>
 
@@ -31,14 +39,13 @@
 		</div>
 
 		<div style="position: absolute; left: 320px; top: 16px; bottom: 16px; right: 16px; padding: 16px; padding-top: 0;">
-			
+
 			<h1 class="menuheader"><span ng-Tranny="'demos.'+Category">...</span><small ng-Tranny="'demos.'+Category + '.subtitle'">...</small></h1>
 
 			<workshopcontainer>
 
 				<workshopmessage ng-show="Loading" ng-Tranny="'demos.loading'">...</workshopmessage>
 				<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'demos.none'">...</workshopmessage>
-				
 
 				<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px">
 
@@ -55,7 +62,7 @@
 					<controls>
 
 						<left>
-							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>	
+							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
 							<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
 							<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'demos.publish'">..</control>
 							<control ng-show="file.local" ng-click="DeleteLocal( file )" ng-Tranny="'demos.delete'">..</control>
@@ -84,7 +91,7 @@
 				</center>
 
 			</workshopcontainer>
-			
+
 		</div>
 
 	</div>

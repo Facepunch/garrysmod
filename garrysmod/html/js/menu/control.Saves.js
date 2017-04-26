@@ -10,6 +10,8 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 
 	Scope.Categories =
 	[
+		"subscribed_saves",
+
 		"trending",
 		"popular",
 		"latest"

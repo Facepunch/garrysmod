@@ -19,6 +19,8 @@ function CDupes( $scope, $timeout, $location )
 
 	CreationScope.Categories =
 	[
+		"subscribed_dupes",
+
 		"trending",
 		"popular",
 		"latest",

@@ -8,7 +8,7 @@
 				<li><h2 ng-tranny="'saves'"></h2></li>
 
 				<li>&nbsp;</li>
-	
+
 				<li><a class="{{IfElse( Category == 'local', 'active', '' )}}" ng-click="Switch( 'local', 0 )" ng-Tranny="'saves.local'"></a></li>
 
 				<li>&nbsp;</li>
@@ -39,14 +39,13 @@
 		</div>
 
 		<div style="position: absolute; left: 320px; top: 16px; bottom: 16px; right: 16px; padding: 16px; padding-top: 0;">
-			
+
 			<h1 class="menuheader"><span ng-Tranny="'saves.'+Category">...</span><small ng-Tranny="'saves.'+Category + '.subtitle'">...</small></h1>
 
 			<workshopcontainer>
 
 				<workshopmessage ng-show="Loading" ng-Tranny="'saves.loading'">...</workshopmessage>
 				<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'saves.none'">...</workshopmessage>
-				
 
 				<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px">
 
@@ -63,7 +62,7 @@
 					<controls>
 
 						<left>
-							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>	
+							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
 							<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
 							<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'saves.publish'">..</control>
 							<control ng-show="file.local" ng-click="DeleteLocal( file )" ng-Tranny="'saves.delete'">..</control>
@@ -91,7 +90,7 @@
 				</center>
 
 			</workshopcontainer>
-			
+
 		</div>
 
 	</div>

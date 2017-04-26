@@ -15,23 +15,30 @@ function WorkshopFileBase( namespace, requiredtags )
 		if ( type == "local" ) then
 			return self:FetchLocal( offset, perpage )
 		end
-
 		if ( type == "subscribed" ) then
 			return self:FetchSubscribed( offset, perpage )
 		end
 
-		local userid = "0"
-
-		if ( type == "mine" ) then userid = "1" end
+		if ( type == "subscribed_saves" ) then
+			return self:FetchSubscribedUGC( offset, perpage, extratags, "save" )
+		end
+		if ( type == "subscribed_dupes" ) then
+			return self:FetchSubscribedUGC( offset, perpage, extratags, "dupe" )
+		end
+		if ( type == "subscribed_demos" ) then
+			return self:FetchSubscribedUGC( offset, perpage, extratags, "demo" )
+		end
 
 		local tags = table.Copy( requiredtags )
-
 		for k, v in pairs( extratags ) do
 			if ( v == "" ) then continue end
 			table.insert( tags, v )
 		end
 
-		local cachename = type.."-"..string.Implode( "/", tags ) .. offset .. "-" .. perpage .. "-" .. userid
+		local userid = "0"
+		if ( type == "mine" ) then userid = "1" end
+
+		local cachename = type .. "-" .. string.Implode( "/", tags ) .. offset .. "-" .. perpage .. "-" .. userid
 
 		if ( ListCache[ cachename ] ) then
 			self:FillFileInfo( ListCache[ cachename ] )
@@ -45,14 +52,64 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	end
 
+	function ret:FetchSubscribedUGC( offset, perpage, tags, type )
+
+		local subscriptions = engine.GetUserContent( type )
+
+		-- Newest files are on top
+		table.sort( subscriptions, function( a, b )
+			if ( a.timeadded == 0 ) then a.timeadded = os.time() end -- For newly added addons (within game session)
+			if ( b.timeadded == 0 ) then a.timeadded = os.time() end
+			return a.timeadded > b.timeadded
+		end )
+
+		-- First build a list of items that fit our search terms ( tags only for now )
+		local searchedItems = {}
+		for id, sub in pairs( subscriptions ) do
+			local found = true
+			for id, tag in pairs( tags ) do
+				if ( !sub.tags:lower():find( tag ) ) then
+					found = false
+				end
+			end
+			
+			if ( !found ) then continue end
+			searchedItems[ #searchedItems + 1 ] = sub
+		end
+
+		-- Build the page!
+		local data = {
+			totalresults = 0,
+			results = {}
+		}
+
+		local i = 0
+		while ( i < perpage ) do
+
+			if ( searchedItems[ offset + i + 1 ] ) then
+				table.insert( data.results, searchedItems[ offset + i + 1 ].wsid )
+			end
+
+			i = i + 1
+
+		end
+
+		data.totalresults = i
+
+		self:FillFileInfo( data )
+
+	end
+
 	function ret:FetchSubscribed( offset, perpage )
 
 		local subscriptions = engine.GetAddons()
 
-		--
-		-- Reverse the table - so newest files are on top (todo - properly)
-		--
-		subscriptions = table.Reverse( subscriptions )
+		-- Newest files are on top
+		table.sort( subscriptions, function( a, b )
+			if ( a.timeadded == 0 ) then a.timeadded = os.time() end -- For newly added addons (within game session)
+			if ( b.timeadded == 0 ) then a.timeadded = os.time() end
+			return a.timeadded > b.timeadded
+		end )
 
 		local data = {
 			totalresults = #subscriptions,
@@ -172,8 +229,8 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	function ret:Publish( filename, image )
 
-		//MsgN( "PUBLISHING ", filename )
-		//MsgN( "Image ", image )
+		--MsgN( "PUBLISHING ", filename )
+		--MsgN( "Image ", image )
 
 		--
 		-- Create the window

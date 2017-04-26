@@ -8,6 +8,24 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 
 	demo.Init( 'demo', $scope, $rootScope );
 
+	Scope.Categories =
+	[
+		"subscribed_demos",
+
+		"trending",
+		"popular",
+		"latest"
+	];
+
+	Scope.SubCategories =
+	[
+		"scenes",
+		"machines",
+		"buildings",
+		"courses",
+		"others"
+	];
+
 	$scope.PlayDemo = function ( entry )
 	{
 		if ( entry.local )
