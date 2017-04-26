@@ -79,7 +79,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 		-- Build the page!
 		local data = {
-			totalresults = 0,
+			totalresults = #searchedItems,
 			results = {}
 		}
 
@@ -93,8 +93,6 @@ function WorkshopFileBase( namespace, requiredtags )
 			i = i + 1
 
 		end
-
-		data.totalresults = i
 
 		self:FillFileInfo( data )
 
