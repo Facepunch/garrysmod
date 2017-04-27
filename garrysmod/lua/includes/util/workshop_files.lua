@@ -12,27 +12,20 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	function ret:Fetch( type, offset, perpage, extratags )
 
+		local tags = table.Copy( requiredtags )
+		for k, v in pairs( extratags ) do
+			if ( v == "" ) then continue end
+			table.insert( tags, v )
+		end
+
 		if ( type == "local" ) then
 			return self:FetchLocal( offset, perpage )
 		end
 		if ( type == "subscribed" ) then
 			return self:FetchSubscribed( offset, perpage )
 		end
-
-		if ( type == "subscribed_saves" ) then
-			return self:FetchSubscribedUGC( offset, perpage, extratags, "save" )
-		end
-		if ( type == "subscribed_dupes" ) then
-			return self:FetchSubscribedUGC( offset, perpage, extratags, "dupe" )
-		end
-		if ( type == "subscribed_demos" ) then
-			return self:FetchSubscribedUGC( offset, perpage, extratags, "demo" )
-		end
-
-		local tags = table.Copy( requiredtags )
-		for k, v in pairs( extratags ) do
-			if ( v == "" ) then continue end
-			table.insert( tags, v )
+		if ( type == "subscribed_ugc" ) then
+			return self:FetchSubscribedUGC( offset, perpage, tags )
 		end
 
 		local userid = "0"
@@ -54,7 +47,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	function ret:FetchSubscribedUGC( offset, perpage, tags, type )
 
-		local subscriptions = engine.GetUserContent( type )
+		local subscriptions = engine.GetUserContent( "" )
 
 		-- Newest files are on top
 		table.sort( subscriptions, function( a, b )

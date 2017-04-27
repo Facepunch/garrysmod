@@ -9,20 +9,21 @@
 
 				<li>&nbsp;</li>
 
-				<li><a class="{{IfElse( Category == 'local', 'active', '' )}}" ng-click="Switch( 'local', 0 )" ng-Tranny="'demos.local'"></a></li>
-
-				<li>&nbsp;</li>
-
-				<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
-
+				<li ng-repeat="cat in MyCategories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
 					<a ng-click="Switch( cat, 0 )" ng-Tranny="'demos.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
-
 				</li>
 
 				<li>&nbsp;</li>
 
-				<li><a class="{{IfElse( Category == 'mine', 'active', '' )}}" ng-click="Switch( 'mine', 0 )" ng-Tranny="'demos.mine'"></a></li>
-				<li><a class="{{IfElse( Category == 'friends', 'active', '' )}}" ng-click="Switch( 'friends', 0 )" ng-Tranny="'demos.friends'"></a></li>
+				<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+					<a ng-click="Switch( cat, 0 )" ng-Tranny="'demos.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				</li>
+
+				<li>&nbsp;</li>
+
+				<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+					<a ng-click="Switch( cat, 0 )" ng-Tranny="'demos.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+				</li>
 
 				<li>&nbsp;</li>
 

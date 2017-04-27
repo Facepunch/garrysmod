@@ -10,13 +10,13 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	[
 		"trending",
 		"popular",
-		"latest",
+		"latest"
 	];
 
 	$scope.CategoriesSecondary =
 	[
 		"friends",
-		"mine",
+		"mine"
 	];
 
 	$scope.AddonTypes =

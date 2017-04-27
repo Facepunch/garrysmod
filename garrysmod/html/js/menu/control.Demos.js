@@ -8,13 +8,24 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 
 	demo.Init( 'demo', $scope, $rootScope );
 
-	Scope.Categories =
+	$scope.MyCategories =
 	[
-		"subscribed_demos",
+		"local",
+		"subscribed_ugc",
+		//"favorites_ugc"
+	];
 
+	$scope.Categories =
+	[
 		"trending",
 		"popular",
 		"latest"
+	];
+
+	$scope.CategoriesSecondary =
+	[
+		"friends",
+		"mine",
 	];
 
 	$scope.PlayDemo = function ( entry )
