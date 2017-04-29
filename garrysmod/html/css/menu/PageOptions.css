@@ -44,6 +44,11 @@ DIV.page DIV.options, DIV.page DIV.options A
 	text-shadow: 2px 2px 1px #000;
 }
 
+DIV.page DIV.options .submenu
+{
+	font-size: initial;
+}
+
 DIV.page DIV.options .submenu A
 {
 	font-size: 17px;
@@ -53,7 +58,7 @@ DIV.page DIV.options .submenu A
 
 DIV.page DIV.options UL.submenu LI
 {
-	padding: 0;
+	padding: 3px 0;
 	margin: 0;
 }
 
@@ -89,6 +94,11 @@ DIV.page DIV.options.active, DIV.page DIV.options A.active
 	{
 		margin-left: 5px;
 	}
+
+	DIV.page DIV.options UL.submenu LI
+	{
+		padding: 0;
+	}
 }
 
 @media screen and (max-height: 580px) {
@@ -111,6 +121,11 @@ DIV.page DIV.options.active, DIV.page DIV.options A.active
 	{
 		font-size: 20px;
 		line-height: 19px;
+	}
+
+	DIV.page DIV.options UL.submenu LI
+	{
+		padding: 0;
 	}
 }
 

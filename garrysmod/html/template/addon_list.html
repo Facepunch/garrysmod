@@ -13,6 +13,16 @@
 					<ul ng-show="Category == 'subscribed'" class="submenu">
 						<li><a ng-click="DisableAllSubscribed()" ng-Tranny="'addons.disableall'"></a></li>
 						<li><a ng-click="EnableAllSubscribed()" ng-Tranny="'addons.enableall'"></a></li>
+						<li>&nbsp;</li>
+						<li><a ng-click="UnselectAll()" ng-Tranny="'addons.unselectall'"></a></li>
+						<li><a ng-click="DisableSelected()" ng-Tranny="'addons.disableselected'"></a></li>
+						<li><a ng-click="EnableSelected()" ng-Tranny="'addons.enableselected'"></a></li>
+						<li>
+							<a ng-click="Unsubscribing = !Unsubscribing" ng-Tranny="'addons.unsubscribeselected'"></a>
+							<ul ng-show="Unsubscribing == true" class="submenu" style="">
+								<li><a ng-click="Unsubscribing = false; UnsubscribeSelected()" ng-Tranny="'addons.confirm'"></a></li>
+							</ul>
+						</li>
 					</ul>
 				</li>
 
@@ -66,7 +76,7 @@
 						<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
 					</preview>
 
-					<name ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}</name>
+					<name ng-click="OpenWorkshopFile( file.id )"><input type="checkbox" ng-model="BulkSelectedIds[ file.id ]" ng-click="$event.stopPropagation()"> {{file.info.title}}</name>
 					<author ng-hide="file.local">{{file.info.ownername}}</author>
 					<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
 					<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
