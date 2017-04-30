@@ -1,24 +1,26 @@
-TOOL.Category		= "Render"
-TOOL.Name			= "#tool.material.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
 
+TOOL.Category = "Render"
+TOOL.Name = "#tool.material.name"
 
 TOOL.ClientConVar[ "override" ] = "debug/env_cubemap_model"
+
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" },
+	{ name = "reload" }
+}
 
 --
 -- Duplicator function
 --
 local function SetMaterial( Player, Entity, Data )
-	
+
 	if ( SERVER ) then
 
 		--
 		-- Make sure this is in the 'allowed' list in multiplayer - to stop people using exploits
 		--
-		if ( !game.SinglePlayer() && !list.Contains( "OverrideMaterials", Data.MaterialOverride ) && Data.MaterialOverride != "" ) then
-			return 
-		end
+		if ( !game.SinglePlayer() && !list.Contains( "OverrideMaterials", Data.MaterialOverride ) && Data.MaterialOverride != "" ) then return end
 
 		Entity:SetMaterial( Data.MaterialOverride )
 		duplicator.StoreEntityModifier( Entity, "material", Data )
@@ -29,29 +31,50 @@ local function SetMaterial( Player, Entity, Data )
 end
 duplicator.RegisterEntityModifier( "material", SetMaterial )
 
---
 -- Left click applies the current material
---
 function TOOL:LeftClick( trace )
 
-	if ( !IsValid( trace.Entity ) ) then return end
+	local ent = trace.Entity
+	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
+	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( CLIENT ) then return true end
 
 	local mat = self:GetClientInfo( "override" )
-	SetMaterial( self:GetOwner(), trace.Entity, { MaterialOverride = mat } )
+	SetMaterial( self:GetOwner(), ent, { MaterialOverride = mat } )
 	return true
 
 end
 
---
--- Right click reverts the material
---
+-- Right click copies the material
 function TOOL:RightClick( trace )
 
-	if ( !IsValid( trace.Entity ) ) then return end
+	local ent = trace.Entity
+	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
+	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( CLIENT ) then return true end
 
-	SetMaterial( self:GetOwner(), trace.Entity, { MaterialOverride = "" } )
+	self:GetOwner():ConCommand( "material_override " .. ent:GetMaterial() )
+
 	return true
 
+end
+
+-- Reload reverts the material
+function TOOL:Reload( trace )
+
+	local ent = trace.Entity
+	if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
+	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
+	if ( CLIENT ) then return true end
+
+	SetMaterial( self:GetOwner(), ent, { MaterialOverride = "" } )
+	return true
+
+end
+
+if ( IsMounted( "tf" ) ) then
+	list.Add( "OverrideMaterials", "models/player/shared/gold_player" )
+	list.Add( "OverrideMaterials", "models/player/shared/ice_player" )
 end
 
 list.Add( "OverrideMaterials", "models/wireframe" )
@@ -100,14 +123,10 @@ list.Add( "OverrideMaterials", "phoenix_storms/wire/pcb_blue" )
 list.Add( "OverrideMaterials", "hunter/myplastic" )
 list.Add( "OverrideMaterials", "models/XQM/LightLinesRed_tool" )
 
-
 function TOOL.BuildCPanel( CPanel )
 
-	-- HEADER
-	CPanel:SetTooltip( "#tool.material.desc" )
-	
-	CPanel:MatSelect( "material_override", list.Get( "OverrideMaterials" ), true, 0.33, 0.33 )
-									
+	CPanel:AddControl( "Header", { Description = "#tool.material.help" } )
+
+	CPanel:MatSelect( "material_override", list.Get( "OverrideMaterials" ), true, 0.25, 0.25 )
+
 end
-
-

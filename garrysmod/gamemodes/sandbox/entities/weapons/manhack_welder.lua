@@ -1,9 +1,6 @@
 
 -- Variables that are used on both client and server
 
-SWEP.Author			= ""
-SWEP.Contact		= ""
-SWEP.Purpose		= ""
 SWEP.Instructions	= "Shoot a prop to attach a Manhack.\nRight click to attach a rollermine."
 
 SWEP.Spawnable			= true
@@ -27,15 +24,12 @@ SWEP.Weight				= 5
 SWEP.AutoSwitchTo		= false
 SWEP.AutoSwitchFrom		= false
 
-SWEP.PrintName			= "Manhack Gun"			
+SWEP.PrintName			= "Manhack Gun"
 SWEP.Slot				= 3
 SWEP.SlotPos			= 1
 SWEP.DrawAmmo			= false
 SWEP.DrawCrosshair		= true
 SWEP.UseHands			= true
-
-
-
 
 local ShootSound = Sound( "Metal.SawbladeStick" )
 
@@ -48,9 +42,8 @@ end
 --[[---------------------------------------------------------
    Think does nothing
 -----------------------------------------------------------]]
-function SWEP:Think()	
+function SWEP:Think()
 end
-
 
 --[[---------------------------------------------------------
 	PrimaryAttack
@@ -59,29 +52,31 @@ function SWEP:PrimaryAttack()
 
 	local tr = self.Owner:GetEyeTrace()
 	--if ( tr.HitWorld ) then return end
-	
-	local effectdata = EffectData()
+
+	if ( IsFirstTimePredicted() ) then
+		local effectdata = EffectData()
 		effectdata:SetOrigin( tr.HitPos )
 		effectdata:SetNormal( tr.HitNormal )
 		effectdata:SetMagnitude( 8 )
 		effectdata:SetScale( 1 )
 		effectdata:SetRadius( 16 )
-	util.Effect( "Sparks", effectdata )
-	
+		util.Effect( "Sparks", effectdata )
+	end
+
 	self:EmitSound( ShootSound )
 
 	self:ShootEffects( self )
-	
+
 	-- The rest is only done on the server
-	if ( !SERVER ) then return end
-	
+	if ( CLIENT ) then return end
+
 	-- Make a manhack
 	local ent = ents.Create( "npc_manhack" )
-		ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
-		ent:SetAngles( tr.HitNormal:Angle() )
+	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
+	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
 
-	local weld = nil;
+	local weld = nil
 
 	if ( tr.HitWorld ) then
 
@@ -91,17 +86,17 @@ function SWEP:PrimaryAttack()
 	else
 
 		-- Weld it to the object that we hit
-		local weld = constraint.Weld( tr.Entity, ent, tr.PhysicsBone, 0, 0 )
+		weld = constraint.Weld( tr.Entity, ent, tr.PhysicsBone, 0, 0 )
 
 	end
-	
+
 	undo.Create("Manhack")
 		undo.AddEntity( weld )
 		undo.AddEntity( nocl )
 		undo.AddEntity( ent )
 		undo.SetPlayer( self.Owner )
 	undo.Finish()
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -111,48 +106,46 @@ function SWEP:SecondaryAttack()
 
 	local tr = self.Owner:GetEyeTrace()
 	--if ( tr.HitWorld ) then return end
-	
+
 	self:EmitSound( ShootSound )
 	self:ShootEffects( self )
-	
-	local effectdata = EffectData()
+
+	if ( IsFirstTimePredicted() ) then
+		local effectdata = EffectData()
 		effectdata:SetOrigin( tr.HitPos )
 		effectdata:SetNormal( tr.HitNormal )
 		effectdata:SetMagnitude( 8 )
 		effectdata:SetScale( 1 )
 		effectdata:SetRadius( 16 )
-	util.Effect( "Sparks", effectdata )
-	
-	
+		util.Effect( "Sparks", effectdata )
+	end
+
+
 	-- The rest is only done on the server
-	if (!SERVER) then return end
-	
+	if ( CLIENT ) then return end
+
 	-- Make a manhack
 	local ent = ents.Create( "npc_rollermine" )
-		ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
-		ent:SetAngles( tr.HitNormal:Angle() )
+	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
+	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
 
-	local weld = nil;
+	local weld = nil
 
-	if ( tr.HitWorld ) then
-
-		-- Don't do anything 
-
-	else
+	if ( !tr.HitWorld ) then
 
 		-- Weld it to the object that we hit
-		local weld = constraint.Weld( tr.Entity, ent, tr.PhysicsBone, 0, 0 )
+		weld = constraint.Weld( tr.Entity, ent, tr.PhysicsBone, 0, 0 )
 
 	end
-	
+
 	undo.Create("Rollermine")
 		undo.AddEntity( weld )
 		undo.AddEntity( nocl )
 		undo.AddEntity( ent )
 		undo.SetPlayer( self.Owner )
 	undo.Finish()
-	
+
 end
 
 

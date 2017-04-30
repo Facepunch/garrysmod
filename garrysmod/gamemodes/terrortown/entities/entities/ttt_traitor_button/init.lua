@@ -1,11 +1,10 @@
-
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 -- serverside only
 ENT.RemoveOnPress = false
 
-ENT.Model = Model("models/weapons/w_bugbait.mdl")                  
+ENT.Model = Model("models/weapons/w_bugbait.mdl")
 
 function ENT:Initialize()
    self:SetModel(self.Model)
@@ -22,16 +21,20 @@ function ENT:Initialize()
       -- mimic that here
       self.RemoveOnPress = true
    end
-   
+
    if self.RemoveOnPress then
       self:SetDelay(-1) -- tells client we're single use
+   end
+
+   if self:GetUsableRange() < 1 then
+      self:SetUsableRange(1024)
    end
 
    self:SetNextUseTime(0)
    self:SetLocked(self:HasSpawnFlags(2048))
 
    self:SetDescription(self.RawDescription or "?")
-   
+
    self.RawDelay = nil
    self.RawDescription = nil
 end
@@ -49,7 +52,9 @@ function ENT:KeyValue(key, value)
       end
    elseif key == "RemoveOnPress" then
       self[key] = tobool(value)
-   end 
+   else
+      self:SetNetworkKeyValue(key, value)
+   end
 end
 
 
@@ -66,20 +71,29 @@ function ENT:AcceptInput(name, activator)
    end
 end
 
-local range = 1024 -- mirror to client
+function GAMEMODE:TTTCanUseTraitorButton(ent, ply)
+   -- Can be used to prevent players from using this button.
+   -- Return a boolean and a message that can shows up if you can't use the button.
+   -- Example: return false, "Not allowed".
+   return true
+end
+
 function ENT:TraitorUse(ply)
    if not (IsValid(ply) and ply:IsActiveTraitor()) then return false end
    if not self:IsUsable() then return false end
 
-   if self:GetPos():Distance(ply:GetPos()) > range then return false end
+   if self:GetPos():Distance(ply:GetPos()) > self:GetUsableRange() then return false end
 
-   -- confirm with an empty packet
-   SendUserMessage("ttt_confirm_use_tbutton", ply)
+   local use, message = hook.Run("TTTCanUseTraitorButton", self, ply)
+   if not use then
+      if message then TraitorMsg(ply, message) end
+      return false
+   end
+
+   net.Start("TTT_ConfirmUseTButton") net.Send(ply)
 
    -- send output to all entities linked to us
    self:TriggerOutput("OnPressed", ply)
-
-   --self:SetLocked(true)
 
    if self.RemoveOnPress then
       self:SetLocked(true)
@@ -89,7 +103,13 @@ function ENT:TraitorUse(ply)
       self:SetNextUseTime(CurTime() + self:GetDelay())
    end
 
+   hook.Run("TTTTraitorButtonActivated", self, ply)
    return true
+end
+
+-- Fix for traitor buttons having awkward init/render behavior, in the event that a map has been optimized with area portals.
+function ENT:UpdateTransmitState()
+   return TRANSMIT_ALWAYS
 end
 
 local function TraitorUseCmd(ply, cmd, args)

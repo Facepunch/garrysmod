@@ -1,64 +1,66 @@
 
-TOOL.Category		= "Construction"
-TOOL.Name			= "#tool.button.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
+TOOL.Category = "Construction"
+TOOL.Name = "#tool.button.name"
 
-TOOL.ClientConVar[ "model" ]			= "models/dav0r/buttons/button.mdl"
-TOOL.ClientConVar[ "keygroup" ]			= "1"
-TOOL.ClientConVar[ "description" ]		= ""
-TOOL.ClientConVar[ "toggle" ]			= "1"
+TOOL.ClientConVar[ "model" ] = "models/maxofs2d/button_05.mdl"
+TOOL.ClientConVar[ "keygroup" ] = "37"
+TOOL.ClientConVar[ "description" ] = ""
+TOOL.ClientConVar[ "toggle" ] = "1"
+
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
 
 cleanup.Register( "buttons" )
+
+local function IsValidButtonModel( model )
+	for mdl, _ in pairs( list.Get( "ButtonModels" ) ) do
+		if ( mdl:lower() == model:lower() ) then return true end
+	end
+	return false
+end
 
 function TOOL:RightClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
+	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 	if ( CLIENT ) then return true end
-	if ( !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
-	
-	local ply = self:GetOwner()
-	
-	local model				= self:GetClientInfo( "model" )
-	local key 				= self:GetClientNumber( "keygroup" )
-	local description		= self:GetClientInfo( "description" )
-	local toggle			= self:GetClientNumber( "toggle" )
 
-	-- If we shot a button change its keygroup
-	if ( trace.Entity:IsValid() && 
-		 trace.Entity:GetClass() == "gmod_button" && 
-		 trace.Entity:GetPlayer() == ply ) then
+	local model = self:GetClientInfo( "model" )
+	local key = self:GetClientNumber( "keygroup" )
+	local description = self:GetClientInfo( "description" )
+	local toggle = self:GetClientNumber( "toggle" ) == 1
+	local ply = self:GetOwner()
+
+	-- If we shot a button change its settings
+	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_button" && trace.Entity:GetPlayer() == ply ) then
 
 		trace.Entity:SetKey( key )
 		trace.Entity:SetLabel( description )
-		trace.Entity:SetIsToggle( toggle );
-		
-		return true, NULL, true
-		
-	end
-	
-	if ( !self:GetSWEP():CheckLimit( "buttons" ) ) then return false end
+		trace.Entity:SetIsToggle( toggle )
 
-	if (not util.IsValidModel(model)) then return false end
-	if (not util.IsValidProp(model)) then return false end		-- Allow ragdolls to be used?
+		return true, NULL, true
+
+	end
+
+	-- Check the model's validity
+	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidButtonModel( model ) ) then return false end
+	if ( !self:GetSWEP():CheckLimit( "buttons" ) ) then return false end
 
 	local Ang = trace.HitNormal:Angle()
 	Ang.pitch = Ang.pitch + 90
 
-	button = MakeButton( ply, model, Ang, trace.HitPos, key, description, toggle )
-	
+	local button = MakeButton( ply, model, Ang, trace.HitPos, key, description, toggle )
+
 	local min = button:OBBMins()
 	button:SetPos( trace.HitPos - trace.HitNormal * min.z )
-	
-	local const
-	
-	undo.Create("Button")
+
+	undo.Create( "Button" )
 		undo.AddEntity( button )
 		undo.SetPlayer( ply )
 	undo.Finish()
 
-	ply:AddCleanup( "buttons", button )
-	
 	return true, button
 
 end
@@ -69,8 +71,8 @@ function TOOL:LeftClick( trace )
 	if ( CLIENT ) then return bool end
 
 	if ( set_key ) then return true end
-	if ( !button || !button:IsValid() ) then return false end
-	if ( !trace.Entity:IsValid() && !trace.Entity:IsWorld() ) then return false end
+	if ( !IsValid( button ) ) then return false end
+	if ( !IsValid( trace.Entity ) && !trace.Entity:IsWorld() ) then return false end
 
 	local weld = constraint.Weld( button, trace.Entity, 0, trace.PhysicsBone, 0, 0, true )
 	trace.Entity:DeleteOnRemove( weld )
@@ -78,136 +80,112 @@ function TOOL:LeftClick( trace )
 
 	button:GetPhysicsObject():EnableCollisions( false )
 	button.nocollide = true
-	
+
 	return true
 
 end
 
-if (SERVER) then
+if ( SERVER ) then
 
-	function MakeButton( pl, Model, Ang, Pos, key, description, toggle, Vel, aVel, frozen )
-	
+	function MakeButton( pl, model, ang, pos, key, description, toggle )
+
 		if ( IsValid( pl ) && !pl:CheckLimit( "buttons" ) ) then return false end
-	
+		if ( !IsValidButtonModel( model ) ) then return false end
+
 		local button = ents.Create( "gmod_button" )
 		if ( !IsValid( button ) ) then return false end
-		button:SetModel( Model )
+		button:SetModel( model )
 
-		button:SetAngles( Ang )
-		button:SetPos( Pos )
+		button:SetAngles( ang )
+		button:SetPos( pos )
 		button:Spawn()
-		
+
 		button:SetPlayer( pl )
 		button:SetKey( key )
 		button:SetLabel( description )
-		button:SetIsToggle( toggle == 1 )
+		button:SetIsToggle( toggle )
 
-		local ttable = 
-			{
-				key	= key,
-				pl	= pl,
-				toggle = toggle,
-				description = description
-			}
+		table.Merge( button:GetTable(), {
+			key = key,
+			pl = pl,
+			toggle = toggle,
+			description = description
+		} )
 
-		table.Merge( button:GetTable(), ttable )
-		
 		if ( IsValid( pl ) ) then
 			pl:AddCount( "buttons", button )
+			pl:AddCleanup( "buttons", button )
 		end
-		
+
 		DoPropSpawnedEffect( button )
 
 		return button
-		
+
 	end
-	
-	duplicator.RegisterEntityClass( "gmod_button", MakeButton, "Model", "Ang", "Pos", "key", "description", "toggle", "Vel", "aVel", "frozen" )
+
+	duplicator.RegisterEntityClass( "gmod_button", MakeButton, "Model", "Ang", "Pos", "key", "description", "toggle" )
 
 end
 
-function TOOL:UpdateGhostButton( ent, player )
+function TOOL:UpdateGhostButton( ent, ply )
 
-	if ( !ent ) then return end
-	if ( !ent:IsValid() ) then return end
+	if ( !IsValid( ent ) ) then return end
 
-	local tr 	= util.GetPlayerTrace( player )
-	local trace 	= util.TraceLine( tr )
-	if (!trace.Hit) then return end
-	
-	if (trace.Entity && trace.Entity:GetClass() == "gmod_button" || trace.Entity:IsPlayer()) then
-	
+	local trace = ply:GetEyeTrace()
+	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:GetClass() == "gmod_button" || trace.Entity:IsPlayer() ) ) then
 		ent:SetNoDraw( true )
 		return
-		
 	end
-	
-	local Ang = trace.HitNormal:Angle()
-	Ang.pitch = Ang.pitch + 90
-	
-	local min = ent:OBBMins()
-	 ent:SetPos( trace.HitPos - trace.HitNormal * min.z )
-	ent:SetAngles( Ang )
-	
-	ent:SetNoDraw( false )
-	
-end
 
+	local ang = trace.HitNormal:Angle()
+	ang.pitch = ang.pitch + 90
+
+	local min = ent:OBBMins()
+	ent:SetPos( trace.HitPos - trace.HitNormal * min.z )
+	ent:SetAngles( ang )
+
+	ent:SetNoDraw( false )
+
+end
 
 function TOOL:Think()
 
-	if (!self.GhostEntity || !self.GhostEntity:IsValid() || self.GhostEntity:GetModel() != self:GetClientInfo( "model" )) then
-		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector(0,0,0), Angle(0,0,0) )
+	local mdl = self:GetClientInfo( "model" )
+	if ( !IsValidButtonModel( mdl ) ) then self:ReleaseGhostEntity() return end
+
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
+		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 	end
-	
+
 	self:UpdateGhostButton( self.GhostEntity, self:GetOwner() )
-	
+
 end
 
-
+local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	-- HEADER
-	CPanel:AddControl( "Header", { Text = "#tool.button.name", Description	= "#tool.button.desc" }  )
-	
-	local Options = { Default = { button_model = "models/dav0r/buttons/button.mdl" } }
-									
-	local CVars = { "button_model", "button_keygroup", "button_description" }
-	
-	CPanel:AddControl( "ComboBox", { Label = "#tool.presets",
-									 MenuButton = 1,
-									 Folder = "button",
-									 Options = Options,
-									 CVars = CVars } )
-									 							 								 
-	CPanel:AddControl( "Numpad", { 	Label = "#tool.button.key",
-									 Command = "button_keygroup",
-									 ButtonSize = "22" } )
-									 
-	CPanel:AddControl( "TextBox", { Label = "#tool.button.text",
-									 MaxLenth = "20",
-									 Command = "button_description" } )
+	CPanel:AddControl( "Header", { Description = "#tool.button.desc" } )
 
-	CPanel:AddControl( "CheckBox",	{ Label = "#tool.button.toggle", Command = "button_toggle", Help=true }  )
+	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "button", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
-	CPanel:AddControl( "PropSelect", { Label = "#tool.button.model",
-									 ConVar = "button_model",
-									 Category = "Buttons",
-									 Height = 4,
-									 Models = list.Get( "ButtonModels" ) } )
-									
+	CPanel:AddControl( "Numpad", { Label = "#tool.button.key", Command = "button_keygroup" } )
+
+	CPanel:AddControl( "TextBox", { Label = "#tool.button.text", Command = "button_description", MaxLenth = "20" } )
+
+	CPanel:AddControl( "CheckBox", { Label = "#tool.button.toggle", Command = "button_toggle", Help = true } )
+
+	CPanel:AddControl( "PropSelect", { Label = "#tool.button.model", ConVar = "button_model", Height = 0, Models = list.Get( "ButtonModels" ) } )
+
 end
 
-
-list.Set( "ButtonModels", "models/MaxOfS2D/button_01.mdl", {} )
-list.Set( "ButtonModels", "models/MaxOfS2D/button_02.mdl", {} )
-list.Set( "ButtonModels", "models/MaxOfS2D/button_03.mdl", {} )
-list.Set( "ButtonModels", "models/MaxOfS2D/button_04.mdl", {} )
-list.Set( "ButtonModels", "models/MaxOfS2D/button_05.mdl", {} )
-list.Set( "ButtonModels", "models/MaxOfS2D/button_06.mdl", {} )
-list.Set( "ButtonModels", "models/MaxOfS2D/button_slider.mdl", {} )
-
+list.Set( "ButtonModels", "models/maxofs2d/button_01.mdl", {} )
+list.Set( "ButtonModels", "models/maxofs2d/button_02.mdl", {} )
+list.Set( "ButtonModels", "models/maxofs2d/button_03.mdl", {} )
+list.Set( "ButtonModels", "models/maxofs2d/button_04.mdl", {} )
+list.Set( "ButtonModels", "models/maxofs2d/button_05.mdl", {} )
+list.Set( "ButtonModels", "models/maxofs2d/button_06.mdl", {} )
+list.Set( "ButtonModels", "models/maxofs2d/button_slider.mdl", {} )
 
 --list.Set( "ButtonModels", "models/dav0r/buttons/button.mdl", {} )
 --list.Set( "ButtonModels", "models/dav0r/buttons/switch.mdl", {} )

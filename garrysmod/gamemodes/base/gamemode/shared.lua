@@ -1,15 +1,14 @@
 
 --[[---------------------------------------------------------
 
-  This file should contain variables and functions that are 
+  This file should contain variables and functions that are
    the same on both client and server.
 
-  This file will get sent to the client - so don't add 
+  This file will get sent to the client - so don't add
    anything to this file that you don't want them to be
    able to see.
 
 -----------------------------------------------------------]]
-
 
 include( 'obj_player_extend.lua' )
 
@@ -18,20 +17,11 @@ include( 'player_shd.lua' )
 include( 'animations.lua' )
 include( 'player_class/player_default.lua' )
 
-GM.Name 		= "Base Gamemode"
-GM.Author 		= "Garry Newman"
-GM.Email 		= "garrynewman@gmail.com"
-GM.Website 		= "www.garry.tv"
-GM.TeamBased 	= false
-
-
---[[---------------------------------------------------------
-   Name: gamemode:PlayerHurt( )
-   Desc: Called when a player is hurt.
------------------------------------------------------------]]
-function GM:PlayerHurt( player, attacker, healthleft, healthtaken )
-end
-
+GM.Name			= "Base Gamemode"
+GM.Author		= "Garry Newman"
+GM.Email		= "garrynewman@gmail.com"
+GM.Website		= "www.garry.tv"
+GM.TeamBased	= false
 
 --[[---------------------------------------------------------
    Name: gamemode:KeyPress( )
@@ -40,7 +30,6 @@ end
 function GM:KeyPress( player, key )
 end
 
-
 --[[---------------------------------------------------------
    Name: gamemode:KeyRelease( )
    Desc: Player released a key (see IN enums)
@@ -48,23 +37,12 @@ end
 function GM:KeyRelease( player, key )
 end
 
-
 --[[---------------------------------------------------------
    Name: gamemode:PlayerConnect( )
    Desc: Player has connects to the server (hasn't spawned)
 -----------------------------------------------------------]]
 function GM:PlayerConnect( name, address )
-
 end
-
---[[---------------------------------------------------------
-   Name: gamemode:PlayerAuthed( )
-   Desc: Player's STEAMID has been authed
------------------------------------------------------------]]
-function GM:PlayerAuthed( ply, SteamID, UniqueID )
-end
-
-
 
 --[[---------------------------------------------------------
    Name: gamemode:PropBreak( )
@@ -72,7 +50,6 @@ end
 -----------------------------------------------------------]]
 function GM:PropBreak( attacker, prop )
 end
-
 
 --[[---------------------------------------------------------
    Name: gamemode:PhysgunPickup( )
@@ -85,7 +62,6 @@ function GM:PhysgunPickup( ply, ent )
 
 	return true
 end
-
 
 --[[---------------------------------------------------------
    Name: gamemode:PhysgunDrop( )
@@ -109,20 +85,17 @@ function GM:GetGameDescription()
 	return self.Name
 end
 
-
 --[[---------------------------------------------------------
    Name: Saved
 -----------------------------------------------------------]]
 function GM:Saved()
 end
 
-
 --[[---------------------------------------------------------
    Name: Restored
 -----------------------------------------------------------]]
 function GM:Restored()
 end
-
 
 --[[---------------------------------------------------------
    Name: EntityRemoved
@@ -132,7 +105,6 @@ end
 -----------------------------------------------------------]]
 function GM:EntityRemoved( ent )
 end
-
 
 --[[---------------------------------------------------------
    Name: Tick
@@ -151,7 +123,7 @@ end
 --[[---------------------------------------------------------
    Name: gamemode:EntityKeyValue( ent, key, value )
    Desc: Called when an entity has a keyvalue set
-	      Returning a string it will override the value
+		 Returning a string it will override the value
 -----------------------------------------------------------]]
 function GM:EntityKeyValue( ent, key, value )
 end
@@ -165,39 +137,40 @@ function GM:CreateTeams()
 	-- Don't do this if not teambased. But if it is teambased we
 	-- create a few teams here as an example. If you're making a teambased
 	-- gamemode you should override this function in your gamemode
+
 	if ( !GAMEMODE.TeamBased ) then return end
-	
+
 	TEAM_BLUE = 1
 	team.SetUp( TEAM_BLUE, "Blue Team", Color( 0, 0, 255 ) )
 	team.SetSpawnPoint( TEAM_BLUE, "ai_hint" ) -- <-- This would be info_terrorist or some entity that is in your map
-	
+
 	TEAM_ORANGE = 2
 	team.SetUp( TEAM_ORANGE, "Orange Team", Color( 255, 150, 0 ) )
 	team.SetSpawnPoint( TEAM_ORANGE, "sky_camera" ) -- <-- This would be info_terrorist or some entity that is in your map
-	
+
 	TEAM_SEXY = 3
 	team.SetUp( TEAM_SEXY, "Sexy Team", Color( 255, 150, 150 ) )
 	team.SetSpawnPoint( TEAM_SEXY, "info_player_start" ) -- <-- This would be info_terrorist or some entity that is in your map
-	
-	team.SetSpawnPoint( TEAM_SPECTATOR, "worldspawn" ) 
+
+	team.SetSpawnPoint( TEAM_SPECTATOR, "worldspawn" )
 
 end
-
 
 --[[---------------------------------------------------------
    Name: gamemode:ShouldCollide( Ent1, Ent2 )
-   Desc: This should always return true unless you have 
+   Desc: This should always return true unless you have
 		  a good reason for it not to.
 -----------------------------------------------------------]]
 function GM:ShouldCollide( Ent1, Ent2 )
-	return true
-end
 
+	return true
+
+end
 
 --[[---------------------------------------------------------
    Name: gamemode:Move
    This basically overrides the NOCLIP, PLAYERMOVE movement stuff.
-   It's what actually performs the move. 
+   It's what actually performs the move.
    Return true to not perform any default movement actions. (completely override)
 -----------------------------------------------------------]]
 function GM:Move( ply, mv )
@@ -206,7 +179,6 @@ function GM:Move( ply, mv )
 	if ( player_manager.RunClass( ply, "Move", mv ) ) then return true end
 
 end
-
 
 --[[---------------------------------------------------------
 -- Purpose: This is called pre player movement and copies all the data necessary
@@ -230,42 +202,16 @@ function GM:FinishMove( ply, mv )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:FinishMove( player, movedata )
------------------------------------------------------------]]
-function GM:VehicleMove( ply, vehicle, mv )
-
-	--
-	-- On duck toggle third person view
-	--
-	if ( mv:KeyPressed( IN_DUCK ) ) then
-		vehicle:SetThirdPersonMode( !vehicle:GetThirdPersonMode() );
-	end
-
-	--
-	-- Adjust the camera distance with the mouse wheel
-	--
-	local iWheel = ply:GetCurrentCommand():GetMouseWheel()
-	if ( iWheel != 0 ) then
-		-- The distance is a multiplier
-		-- Actual camera distance = ( renderradius + renderradius * dist )
-		-- so -1 will be zero.. clamp it there.
-		local newdist = math.Clamp( vehicle:GetCameraDistance() - iWheel * 0.03 * (1.1 + vehicle:GetCameraDistance()), -1, 10 )
-		vehicle:SetCameraDistance( newdist );
-	end
-
-end
-
---[[---------------------------------------------------------
 	Called after the player's think.
 -----------------------------------------------------------]]
-function GM:PlayerPostThink( ply ) 
+function GM:PlayerPostThink( ply )
 
 end
 
 --[[---------------------------------------------------------
 	A player has started driving an entity
 -----------------------------------------------------------]]
-function GM:StartEntityDriving( ent, ply ) 
+function GM:StartEntityDriving( ent, ply )
 
 	drive.Start( ply, ent )
 
@@ -274,7 +220,7 @@ end
 --[[---------------------------------------------------------
 	A player has stopped driving an entity
 -----------------------------------------------------------]]
-function GM:EndEntityDriving( ent, ply ) 
+function GM:EndEntityDriving( ent, ply )
 
 	drive.End( ply, ent )
 
@@ -283,27 +229,23 @@ end
 --[[---------------------------------------------------------
 	To update the player's animation during a drive
 -----------------------------------------------------------]]
-function GM:PlayerDriveAnimate( ply ) 
+function GM:PlayerDriveAnimate( ply )
 
 end
-
 
 --[[---------------------------------------------------------
 	The gamemode has been reloaded
 -----------------------------------------------------------]]
-function GM:OnReloaded() 
-
+function GM:OnReloaded()
 end
 
 function GM:PreGamemodeLoaded()
-	
 end
 
 function GM:OnGamemodeLoaded()
-	
 end
+
 function GM:PostGamemodeLoaded()
-	
 end
 
 --
@@ -314,11 +256,18 @@ end
 -- Arg3: string|new|The new model
 -- Ret1:
 --
-function GM:OnViewModelChanged( vm, old, new ) 
+function GM:OnViewModelChanged( vm, old, new )
 
 	local ply = vm:GetOwner()
 	if ( IsValid( ply ) ) then
-		player_manager.RunClass( ply, "ViewModelChanged", vm, old, new );
+		player_manager.RunClass( ply, "ViewModelChanged", vm, old, new )
 	end
 
+end
+
+--[[---------------------------------------------------------
+	Disable properties serverside for all non-sandbox derived gamemodes.
+-----------------------------------------------------------]]
+function GM:CanProperty( pl, property, ent )
+	return false
 end

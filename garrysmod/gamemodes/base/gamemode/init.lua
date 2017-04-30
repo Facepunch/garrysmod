@@ -7,39 +7,36 @@ include( 'variable_edit.lua' )
 GM.PlayerSpawnTime = {}
 
 --[[---------------------------------------------------------
-   Name: gamemode:Initialize( )
-   Desc: Called immediately after starting the gamemode 
+   Name: gamemode:Initialize()
+   Desc: Called immediately after starting the gamemode
 -----------------------------------------------------------]]
-function GM:Initialize( )
+function GM:Initialize()
 end
 
-
 --[[---------------------------------------------------------
-   Name: gamemode:InitPostEntity( )
+   Name: gamemode:InitPostEntity()
    Desc: Called as soon as all map entities have been spawned
 -----------------------------------------------------------]]
-function GM:InitPostEntity( )	
+function GM:InitPostEntity()
 end
 
-
 --[[---------------------------------------------------------
-   Name: gamemode:Think( )
+   Name: gamemode:Think()
    Desc: Called every frame
 -----------------------------------------------------------]]
-function GM:Think( )
+function GM:Think()
 end
 
-
 --[[---------------------------------------------------------
-   Name: gamemode:ShutDown( )
+   Name: gamemode:ShutDown()
    Desc: Called when the Lua system is about to shut down
 -----------------------------------------------------------]]
-function GM:ShutDown( )
+function GM:ShutDown()
 end
 
 --[[---------------------------------------------------------
    Name: gamemode:DoPlayerDeath( )
-   Desc: Carries out actions when the player dies 		 
+   Desc: Carries out actions when the player dies
 -----------------------------------------------------------]]
 function GM:DoPlayerDeath( ply, attacker, dmginfo )
 
@@ -54,19 +51,24 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 		else
 			attacker:AddFrags( 1 )
 		end
-		
-	end
 	
-end
+	end
 
+end
 
 --[[---------------------------------------------------------
    Name: gamemode:EntityTakeDamage( ent, info )
-   Desc: The entity has received damage	 
+   Desc: The entity has received damage
 -----------------------------------------------------------]]
 function GM:EntityTakeDamage( ent, info )
 end
 
+--[[---------------------------------------------------------
+   Name: gamemode:PlayerHurt( )
+   Desc: Called when a player is hurt.
+-----------------------------------------------------------]]
+function GM:PlayerHurt( player, attacker, healthleft, healthtaken )
+end
 
 --[[---------------------------------------------------------
    Name: gamemode:CreateEntityRagdoll( entity, ragdoll )
@@ -74,7 +76,6 @@ end
 -----------------------------------------------------------]]
 function GM:CreateEntityRagdoll( entity, ragdoll )
 end
-
 
 -- Set the ServerName every 30 seconds in case it changes..
 -- This is for backwards compatibility only - client can now use GetHostName()
@@ -91,12 +92,12 @@ timer.Create( "HostnameThink", 30, 0, HostnameThink )
 -----------------------------------------------------------]]
 function GM:ShowTeam( ply )
 
-	if (!GAMEMODE.TeamBased) then return end
+	if ( !GAMEMODE.TeamBased ) then return end
 	
 	local TimeBetweenSwitches = GAMEMODE.SecondsBetweenTeamSwitches or 10
-	if ( ply.LastTeamSwitch && RealTime()-ply.LastTeamSwitch < TimeBetweenSwitches ) then
-		ply.LastTeamSwitch = ply.LastTeamSwitch + 1;
-		ply:ChatPrint( Format( "Please wait %i more seconds before trying to change team again", (TimeBetweenSwitches - (RealTime()-ply.LastTeamSwitch)) + 1 ) )
+	if ( ply.LastTeamSwitch && RealTime() - ply.LastTeamSwitch < TimeBetweenSwitches ) then
+		ply.LastTeamSwitch = ply.LastTeamSwitch + 1
+		ply:ChatPrint( Format( "Please wait %i more seconds before trying to change team again", ( TimeBetweenSwitches - ( RealTime() - ply.LastTeamSwitch ) ) + 1 ) )
 		return false
 	end
 	
@@ -110,7 +111,7 @@ end
 --
 -- Called every time a non-localhost player joins the server. steamid is their 64bit
 -- steamid. Return false and a reason to reject their join. Return true to allow
--- them to join. 
+-- them to join.
 --
 function GM:CheckPassword( steamid, networkid, server_password, password, name )
 
@@ -119,7 +120,7 @@ function GM:CheckPassword( steamid, networkid, server_password, password, name )
 
 		-- The joining clients password doesn't match sv_password
 		if ( server_password != password ) then
-			return false, "#GameUI_ServerRejectBadPassword"
+			return false
 		end
 
 	end
@@ -131,4 +132,28 @@ function GM:CheckPassword( steamid, networkid, server_password, password, name )
 
 end
 
+--[[---------------------------------------------------------
+   Name: gamemode:FinishMove( player, movedata )
+-----------------------------------------------------------]]
+function GM:VehicleMove( ply, vehicle, mv )
 
+	--
+	-- On duck toggle third person view
+	--
+	if ( mv:KeyPressed( IN_DUCK ) && vehicle.SetThirdPersonMode ) then
+		vehicle:SetThirdPersonMode( !vehicle:GetThirdPersonMode() )
+	end
+
+	--
+	-- Adjust the camera distance with the mouse wheel
+	--
+	local iWheel = ply:GetCurrentCommand():GetMouseWheel()
+	if ( iWheel != 0 && vehicle.SetCameraDistance ) then
+		-- The distance is a multiplier
+		-- Actual camera distance = ( renderradius + renderradius * dist )
+		-- so -1 will be zero.. clamp it there.
+		local newdist = math.Clamp( vehicle:GetCameraDistance() - iWheel * 0.03 * ( 1.1 + vehicle:GetCameraDistance() ), -1, 10 )
+		vehicle:SetCameraDistance( newdist )
+	end
+
+end

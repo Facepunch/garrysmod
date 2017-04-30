@@ -1,17 +1,7 @@
---[[
-	 _
-	( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
-
-	DColorPalette
---]]
-
-local color_Error = Color( 255, 0, 255 )
 
 local PANEL = {}
+
+local color_Error = Color( 255, 0, 255 )
 
 AccessorFunc( PANEL, "m_ConVarR", "ConVarR" )
 AccessorFunc( PANEL, "m_ConVarG", "ConVarG" )
@@ -22,42 +12,40 @@ AccessorFunc( PANEL, "m_buttonsize", "ButtonSize", FORCE_NUMBER )
 
 AccessorFunc( PANEL, "m_NumRows", "NumRows", FORCE_NUMBER )
 
---[[---------------------------------------------------------
-	Default palette
------------------------------------------------------------]]
 local function CreateColorTable( rows )
 
 	local rows = rows or 8
 	local index = 0
 	local ColorTable = {}
-	for i=0, rows * 2 - 1 do -- HSV 
+
+	for i = 0, rows * 2 - 1 do -- HSV
 		local col = math.Round( math.min( i * ( 360 / ( rows * 2 ) ), 359 ) )
 		index = index + 1
-		ColorTable[index] = HSVToColor( 360 - col, 1, 1 )
+		ColorTable[ index ] = HSVToColor( 360 - col, 1, 1 )
 	end
 
-	for i=0, rows - 1 do -- HSV dark
+	for i = 0, rows - 1 do -- HSV dark
 		local col = math.Round( math.min( i * ( 360 / rows ), 359 ) )
 		index = index + 1
-		ColorTable[index] = HSVToColor( 360 - col, 1, 0.5 )
+		ColorTable[ index ] = HSVToColor( 360 - col, 1, 0.5 )
 	end
 
-	for i=0, rows - 1 do -- HSV grey
+	for i = 0, rows - 1 do -- HSV grey
 		local col = math.Round( math.min( i * ( 360 / rows ), 359 ) )
 		index = index + 1
-		ColorTable[index] = HSVToColor( 360 - col, 0.5, 0.5 )
+		ColorTable[ index ] = HSVToColor( 360 - col, 0.5, 0.5 )
 	end
 
-	for i=0, rows - 1 do -- HSV bright
+	for i = 0, rows - 1 do -- HSV bright
 		local col = math.min( i * ( 360 / rows ), 359 )
 		index = index + 1
-		ColorTable[index] = HSVToColor( 360 - col, 0.5, 1 )
+		ColorTable[ index ] = HSVToColor( 360 - col, 0.5, 1 )
 	end
 
-	for i=0, rows - 1 do -- Greyscale
+	for i = 0, rows - 1 do -- Greyscale
 		local white = 255 - math.Round( math.min( i * ( 256 / ( rows - 1 ) ), 255 ) )
 		index = index + 1
-		ColorTable[index] = Color( white, white, white )
+		ColorTable[ index ] = Color( white, white, white )
 	end
 
 	return ColorTable
@@ -73,7 +61,7 @@ local function AddButton( panel, color, size, id )
 	--
 	-- If the cookie value exists, then use it
 	--
-	local col_saved = panel:GetCookie( "col."..id, nil );
+	local col_saved = panel:GetCookie( "col." .. id, nil )
 	if ( col_saved != nil ) then
 		color = col_saved:ToColor()
 	end
@@ -95,58 +83,94 @@ local function AddButton( panel, color, size, id )
 
 end
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
+-- This stuff could be better
+g_ColorPalettePanels = g_ColorPalettePanels or {}
+
 function PANEL:Init()
 
 	self:SetSize( 80, 120 )
 	self:SetNumRows( 8 )
 	self:Reset()
-	self:SetCookieName( "palette" )
-	
+	self:SetCookieName( "palette" ) 
+
 	self:SetButtonSize( 10 )
+
+	table.insert( g_ColorPalettePanels, self )
 
 end
 
---[[---------------------------------------------------------
-	Name: DoClick
------------------------------------------------------------]]
+-- This stuff could be better
+function PANEL:NetworkColorChange()
+
+	for id, pnl in pairs( g_ColorPalettePanels ) do
+		if ( !IsValid( pnl ) ) then table.remove( g_ColorPalettePanels, id ) end
+	end
+
+	for id, pnl in pairs( g_ColorPalettePanels ) do
+		if ( !IsValid( pnl ) || pnl == self ) then continue end
+		if ( pnl:GetNumRows() != self:GetNumRows() || pnl:GetCookieName() != self:GetCookieName() ) then continue end
+		local tab = {}
+		for id, p in pairs( self:GetChildren() ) do
+			tab[ p:GetID() ] = p:GetColor()
+		end
+		pnl:SetColorButtons( tab )
+	end
+
+end
+
 function PANEL:DoClick( color, button )
 
 	-- Override
 
 end
 
---[[---------------------------------------------------------
-	Name: Reset
------------------------------------------------------------]]
 function PANEL:Reset()
 
 	self:SetColorButtons( CreateColorTable( self:GetNumRows() ) )
 
 end
 
-function PANEL:PaintOver( w, h )
+function PANEL:ResetSavedColors()
 
-	surface.SetDrawColor( 0, 0, 0, 200 )
-	surface.DrawOutlinedRect( 0, 0, w, h )
+	local tab = CreateColorTable( self:GetNumRows() )
+
+	for i, color in pairs( tab ) do
+		local id = tonumber( i )
+		if ( !id ) then break end
+
+		self:SetCookie( "col." .. id, nil )
+	end
+
+	self:SetColorButtons( tab )
+
+	self:NetworkColorChange()
 
 end
 
---[[---------------------------------------------------------
-	Name: SetColorButtons
------------------------------------------------------------]]
+function PANEL:PaintOver( w, h )
+
+	surface.SetDrawColor( 0, 0, 0, 200 )
+
+	local childW = 0
+	for id, child in pairs( self:GetChildren() ) do
+		if ( childW + child:GetWide() > w ) then break end
+		childW = childW + child:GetWide()
+	end
+
+	surface.DrawOutlinedRect( 0, 0, childW, h )
+
+end
+
 function PANEL:SetColorButtons( tab )
 
 	self:Clear()
 
 	for i, color in pairs( tab or {} ) do
 
-		local index = tonumber( i )
-		if ( !index ) then break end
+		local id = tonumber( i )
+		if ( !id ) then break end
 
-		AddButton( self, color, self.m_buttonsize, i )
+		AddButton( self, color, self:GetButtonSize(), i )
 
 	end
 
@@ -154,24 +178,18 @@ function PANEL:SetColorButtons( tab )
 
 end
 
---[[---------------------------------------------------------
-	Name: SetButtonSize
------------------------------------------------------------]]
 function PANEL:SetButtonSize( val )
 
 	self.m_buttonsize = math.floor( val )
 
 	for k, v in pairs( self:GetChildren() ) do
-		v:SetSize( self.m_buttonsize, self.m_buttonsize )	
+		v:SetSize( self:GetButtonSize(), self:GetButtonSize() )
 	end
 
 	self:InvalidateLayout()
 
 end
 
---[[---------------------------------------------------------
-	Name: UpdateConVar
------------------------------------------------------------]]
 function PANEL:UpdateConVar( strName, strKey, color )
 
 	if ( !strName ) then return end
@@ -180,57 +198,45 @@ function PANEL:UpdateConVar( strName, strKey, color )
 
 end
 
---[[---------------------------------------------------------
-	Name: UpdateConVars
------------------------------------------------------------]]
 function PANEL:UpdateConVars( color )
 
-	self:UpdateConVar( self.m_ConVarR, 'r', color )
-	self:UpdateConVar( self.m_ConVarG, 'g', color )
-	self:UpdateConVar( self.m_ConVarB, 'b', color )
-	self:UpdateConVar( self.m_ConVarA, 'a', color )
+	self:UpdateConVar( self:GetConVarR(), "r", color )
+	self:UpdateConVar( self:GetConVarG(), "g", color )
+	self:UpdateConVar( self:GetConVarB(), "b", color )
+	self:UpdateConVar( self:GetConVarA(), "a", color )
 
 end
 
---[[---------------------------------------------------------
-	Name: SaveColor
------------------------------------------------------------]]
 function PANEL:SaveColor( btn, color )
 
+	-- TODO: If something uses different palette size, consider that a separate palette?
+	-- ( i.e. for each m_NumRows value, save to a different cookie prefix/suffix? )
+
 	-- Avoid unintended color changing.
-	color = table.Copy( color or color_Error ) 
+	color = table.Copy( color or color_Error )
 
 	btn:SetColor( color )
-	self:SetCookie( "col."..btn:GetID(), string.FromColor( color ) );
+	self:SetCookie( "col." .. btn:GetID(), string.FromColor( color ) )
+	self:NetworkColorChange()
 
 end
 
---
--- TODO: This should mark this colour as selected..
---
 function PANEL:SetColor( newcol )
-
+	-- TODO: This should mark this colour as selected..
 end
-
---
--- For override
---
 
 function PANEL:OnValueChanged( newcol )
-
+	-- For override
 end
 
 function PANEL:OnRightClickButton( btn )
-
+	-- For override
 end
 
---[[---------------------------------------------------------
-   Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-		ctrl:SetSize( 256, 256 )
+	ctrl:SetSize( 160, 256 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 

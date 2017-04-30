@@ -1,29 +1,32 @@
-
-local gmod			= gmod
-local pairs			= pairs
-local isfunction	= isfunction
-local isstring		= isstring
-local IsValid		= IsValid
+local gmod                        = gmod
+local pairs                        = pairs
+local isfunction        = isfunction
+local isstring                = isstring
+local IsValid                = IsValid
 
 module( "hook" )
 
-Hooks = {}
+local Hooks = {}
 
---
--- For access to the Hooks table.. for some reason.
---
+--[[---------------------------------------------------------
+    Name: GetTable
+    Desc: Returns a table of all hooks.
+-----------------------------------------------------------]]
 function GetTable() return Hooks end
 
---
--- Add a hook
---
+
+--[[---------------------------------------------------------
+    Name: Add
+    Args: string hookName, any identifier, function func
+    Desc: Add a hook to listen to the specified event.
+-----------------------------------------------------------]]
 function Add( event_name, name, func )
 
 	if ( !isfunction( func ) ) then return end
 	if ( !isstring( event_name ) ) then return end
 
 	if (Hooks[ event_name ] == nil) then
-		Hooks[ event_name ] = {}
+			Hooks[ event_name ] = {}
 	end
 
 	Hooks[ event_name ][ name ] = func
@@ -31,9 +34,11 @@ function Add( event_name, name, func )
 end
 
 
---
--- Remove a hook
---
+--[[---------------------------------------------------------
+    Name: Remove
+    Args: string hookName, identifier
+    Desc: Removes the hook with the given indentifier.
+-----------------------------------------------------------]]
 function Remove( event_name, name )
 
 	if ( !isstring( event_name ) ) then return end
@@ -43,26 +48,23 @@ function Remove( event_name, name )
 
 end
 
---
--- Run a hook (this replaces Call)
---
+
+--[[---------------------------------------------------------
+    Name: Run
+    Args: string hookName, vararg args
+    Desc: Calls hooks associated with the hook name.
+-----------------------------------------------------------]]
 function Run( name, ... )
-	return Call( name, nil, ... )
+	return Call( name, gmod and gmod.GetGamemode() or nil, ... )
 end
 
---
--- Called by the engine
---
+
+--[[---------------------------------------------------------
+    Name: Run
+    Args: string hookName, table gamemodeTable, vararg args
+    Desc: Calls hooks associated with the hook name.
+-----------------------------------------------------------]]
 function Call( name, gm, ... )
-
-	local ret
-
-	--
-	-- If called from hook.Run then gm will be nil.
-	--
-	if ( gm == nil && gmod != nil ) then
-		gm = gmod.GetGamemode()
-	end
 
 	--
 	-- Run hooks
@@ -106,7 +108,7 @@ function Call( name, gm, ... )
 			if ( a != nil ) then
 				return a, b, c, d, e, f
 			end
-			
+				
 		end
 	end
 	
@@ -117,7 +119,7 @@ function Call( name, gm, ... )
 	
 	local GamemodeFunction = gm[ name ]
 	if ( GamemodeFunction == nil ) then return end
-		
-	return GamemodeFunction( gm, ... )	
+			
+	return GamemodeFunction( gm, ... )        
 	
 end

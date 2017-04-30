@@ -52,16 +52,16 @@ local function RadarScan(ply, cmd, args)
             table.insert(targets, {role=role, pos=pos})
          end
 
-         umsg.Start("radar", ply)
-         umsg.Char(#targets)
-         for k, tgt in pairs(targets) do
-            umsg.Char(tgt.role)
+         net.Start("TTT_Radar")
+            net.WriteUInt(#targets, 8)
+            for k, tgt in pairs(targets) do
+               net.WriteUInt(tgt.role, 2)
 
-            umsg.Short(tgt.pos.x)
-            umsg.Short(tgt.pos.y)
-            umsg.Short(tgt.pos.z)
-         end
-         umsg.End()
+               net.WriteInt(tgt.pos.x, 32)
+               net.WriteInt(tgt.pos.y, 32)
+               net.WriteInt(tgt.pos.z, 32)
+            end
+         net.Send(ply)
 
       else
          LANG.Msg(ply, "radar_not_owned")

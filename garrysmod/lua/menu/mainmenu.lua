@@ -1,59 +1,57 @@
---[[__                                       _     
- / _| __ _  ___ ___ _ __  _   _ _ __   ___| |__  
-| |_ / _` |/ __/ _ \ '_ \| | | | '_ \ / __| '_ \ 
-|  _| (_| | (_|  __/ |_) | |_| | | | | (__| | | |
-|_|  \__,_|\___\___| .__/ \__,_|_| |_|\___|_| |_|
-				   |_| 2012 --]]
-
 
 include( 'background.lua' )
+include( 'cef_credits.lua' )
 
 pnlMainMenu = nil
 
 local PANEL = {}
 
 function PANEL:Init()
-		
+
 	self:Dock( FILL )
-	self:SetKeyboardInputEnabled( true );
-	self:SetMouseInputEnabled( true );
+	self:SetKeyboardInputEnabled( true )
+	self:SetMouseInputEnabled( true )
 
 	self.HTML = vgui.Create( "DHTML", self )
 
 	JS_Language( self.HTML )
 	JS_Utility( self.HTML )
+	JS_Workshop( self.HTML )
 
 	self.HTML:Dock( FILL )
-	self.HTML:OpenURL( "asset://garrysmod/html/menu.html" );
+	self.HTML:OpenURL( "asset://garrysmod/html/menu.html" )
 	self.HTML:SetKeyboardInputEnabled( true )
-	self.HTML:SetMouseInputEnabled( true );
+	self.HTML:SetMouseInputEnabled( true )
 	self.HTML:SetAllowLua( true )
+	self.HTML:RequestFocus()
 
-
-	ws_save.HTML	= self.HTML
-	addon.HTML		= self.HTML
-	demo.HTML		= self.HTML
-
+	ws_save.HTML = self.HTML
+	addon.HTML = self.HTML
+	demo.HTML = self.HTML
 
 	self:MakePopup()
 	self:SetPopupStayAtBack( true )
-	--self:MoveToBack()
-	
+
+	-- If the console is already open, we've got in its way.
+	if ( gui.IsConsoleVisible() ) then
+		gui.ShowConsole()
+	end
+
 end
 
 function PANEL:ScreenshotScan( folder )
 
-	local bReturn = false;
+	local bReturn = false
 
-	local Screenshots = file.Find( folder .. "*.jpg", "GAME" )		
+	local Screenshots = file.Find( folder .. "*.*", "GAME" )
 	for k, v in RandomPairs( Screenshots ) do
 
-		AddBackgroundImage( folder..v )
+		AddBackgroundImage( folder .. v )
 		bReturn = true
-	
+
 	end
 
-	return bReturn;
+	return bReturn
 
 end
 
@@ -62,20 +60,20 @@ function PANEL:Paint()
 	DrawBackground()
 
 	if ( self.IsInGame != IsInGame() ) then
-	
-		self.IsInGame = IsInGame();
-		
+
+		self.IsInGame = IsInGame()
+
 		if ( self.IsInGame ) then
-		
+
 			if ( IsValid( self.InnerPanel ) ) then self.InnerPanel:Remove() end
-			self.HTML:QueueJavascript( "SetInGame( true )" );
-		
-		else 
-		
-			self.HTML:QueueJavascript( "SetInGame( false )" );
-			
+			self.HTML:QueueJavascript( "SetInGame( true )" )
+
+		else
+
+			self.HTML:QueueJavascript( "SetInGame( false )" )
+
 		end
-		
+
 	end
 
 end
@@ -89,11 +87,11 @@ end
 
 function PANEL:RefreshGamemodes()
 
-	local json = util.TableToJSON( engine.GetGamemodes() );
+	local json = util.TableToJSON( engine.GetGamemodes() )
 
-	self.HTML:QueueJavascript( "UpdateGamemodes( "..json.." )" );
+	self.HTML:QueueJavascript( "UpdateGamemodes( " .. json .. " )" )
 	self:UpdateBackgroundImages()
-	self.HTML:QueueJavascript( "UpdateCurrentGamemode( '"..engine.ActiveGamemode().."' )" );
+	self.HTML:QueueJavascript( "UpdateCurrentGamemode( '" .. engine.ActiveGamemode() .. "' )" )
 
 end
 
@@ -103,7 +101,6 @@ function PANEL:RefreshAddons()
 
 end
 
-
 function PANEL:UpdateBackgroundImages()
 
 	ClearBackgroundImages()
@@ -111,8 +108,8 @@ function PANEL:UpdateBackgroundImages()
 	--
 	-- If there's screenshots in gamemodes/<gamemode>/backgrounds/*.jpg use them
 	--
-	if ( !self:ScreenshotScan( "gamemodes/" ..engine.ActiveGamemode() .. "/backgrounds/" ) ) then 
-	
+	if ( !self:ScreenshotScan( "gamemodes/" .. engine.ActiveGamemode() .. "/backgrounds/" ) ) then
+
 		--
 		-- If there's no gamemode specific here we'll use the default backgrounds
 		--
@@ -120,14 +117,13 @@ function PANEL:UpdateBackgroundImages()
 
 	end
 
-
 	ChangeBackground( engine.ActiveGamemode() )
 
 end
 
 function PANEL:Call( js )
 
-	self.HTML:QueueJavascript( js );
+	self.HTML:QueueJavascript( js )
 
 end
 
@@ -142,8 +138,8 @@ function UpdateSteamName( id, time )
 	local name = steamworks.GetPlayerName( id )
 	if ( name != "" && name != "[unknown]" ) then
 
-		pnlMainMenu:Call( "SteamName( \""..id.."\", \""..name.."\" )" );
-		return;
+		pnlMainMenu:Call( "SteamName( \"" .. id .. "\", \"" .. name .. "\" )" )
+		return
 
 	end
 
@@ -157,12 +153,13 @@ end
 --
 function UpdateMapList()
 
-	if ( !istable( g_MapListCategorised ) ) then return end
+	local MapList = GetMapList()
+	if ( !MapList ) then return end
 
-	json = util.TableToJSON( g_MapListCategorised );
-	if ( !isstring( json ) ) then return end
+	local json = util.TableToJSON( MapList )
+	if ( !json ) then return end
 
-	pnlMainMenu:Call( "UpdateMaps("..json..")" );
+	pnlMainMenu:Call( "UpdateMaps(" .. json .. ")" )
 
 end
 
@@ -171,32 +168,33 @@ end
 --
 function UpdateServerSettings()
 
-	local array = 
-	{
-		hostname	= GetConVarString( "hostname" ),
-		sv_lan		= GetConVarString( "sv_lan" )
+	local array = {
+		hostname = GetConVarString( "hostname" ),
+		sv_lan = GetConVarString( "sv_lan" ),
+		p2p_enabled = GetConVarString( "p2p_enabled" )
 	}
 
-	local settings_file = file.Read( "gamemodes/"..engine.ActiveGamemode().."/"..engine.ActiveGamemode()..".txt", true )
-		
+	local settings_file = file.Read( "gamemodes/" .. engine.ActiveGamemode() .. "/" .. engine.ActiveGamemode() .. ".txt", true )
+
 	if ( settings_file ) then
 
 		local Settings = util.KeyValuesToTable( settings_file )
 
 		if ( Settings.settings ) then
 
-			array.settings = Settings.settings;
+			array.settings = Settings.settings
 
 			for k, v in pairs( array.settings ) do
-				v.Value = GetConVarString( v.name );
+				v.Value = GetConVarString( v.name )
+				v.Singleplayer = v.singleplayer && true || false
 			end
 
 		end
 
 	end
 
-	local json = util.TableToJSON( array );
-	pnlMainMenu:Call( "UpdateServerSettings("..json..")" );
+	local json = util.TableToJSON( array )
+	pnlMainMenu:Call( "UpdateServerSettings(" .. json .. ")" )
 
 end
 
@@ -207,37 +205,45 @@ function GetPlayerList( serverip )
 
 	serverlist.PlayerList( serverip, function( tbl )
 
-		local json = util.TableToJSON( tbl );
-		pnlMainMenu:Call( "SetPlayerList( '"..serverip.."', "..json..")" );
+		local json = util.TableToJSON( tbl )
+		pnlMainMenu:Call( "SetPlayerList( '" .. serverip .. "', " .. json .. ")" )
 
 	end )
 
 end
 
 local Servers = {}
+local ShouldStop = {}
 
 function GetServers( type, id )
 
+	ShouldStop[ type ] = false
+	Servers[ type ] = {}
 
-	local data =
-	{
-		Finished = function()
-			
-		end,
-
+	local data = {
 		Callback = function( ping , name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid )
 
-			name	= string.JavascriptSafe( name );
-			desc	= string.JavascriptSafe( desc );
-			map		= string.JavascriptSafe( map );
-			address = string.JavascriptSafe( address );
-			gamemode = string.JavascriptSafe( gamemode );
-			workshopid = string.JavascriptSafe( workshopid );
-			
+			if Servers[ type ] && Servers[ type ][ address ] then return end
+			Servers[ type ][ address ] = true
+
+			name = string.JavascriptSafe( name )
+			desc = string.JavascriptSafe( desc )
+			map = string.JavascriptSafe( map )
+			address = string.JavascriptSafe( address )
+			gamemode = string.JavascriptSafe( gamemode )
+			workshopid = string.JavascriptSafe( workshopid )
+
 			if ( pass ) then pass = "true" else pass = "false" end
 
-			pnlMainMenu:Call( "AddServer( '"..type.."', '"..id.."', "..ping..", \""..name.."\", \""..desc.."\", \""..map.."\", "..players..", "..maxplayers..", "..botplayers..", "..pass..", "..lastplayed..", \""..address.."\", \""..gamemode.."\", \""..workshopid.."\" )" );
+			pnlMainMenu:Call( "AddServer( '"..type.."', '"..id.."', "..ping..", \""..name.."\", \""..desc.."\", \""..map.."\", "..players..", "..maxplayers..", "..botplayers..", "..pass..", "..lastplayed..", \""..address.."\", \""..gamemode.."\", \""..workshopid.."\" )" )
 
+			return !ShouldStop[ type ]
+
+		end,
+
+		Finished = function()
+			pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
+			Servers[ type ] = {}
 		end,
 
 		Type = type,
@@ -245,8 +251,14 @@ function GetServers( type, id )
 		AppID = 4000,
 	}
 
-	serverlist.Query( data )	
+	serverlist.Query( data )
 
+end
+
+function DoStopServers( type )
+	pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
+	ShouldStop[ type ] = true
+	Servers[ type ] = {}
 end
 
 --
@@ -255,8 +267,8 @@ end
 function UpdateLanguages()
 
 	local f = file.Find( "resource/localization/*.png", "MOD" )
-	local json = util.TableToJSON( f );
-	pnlMainMenu:Call( "UpdateLanguages("..json..")" );
+	local json = util.TableToJSON( f )
+	pnlMainMenu:Call( "UpdateLanguages(" .. json .. ")" )
 
 end
 
@@ -267,29 +279,26 @@ function LanguageChanged( lang )
 
 	if ( !IsValid( pnlMainMenu ) ) then return end
 
-	UpdateLanguages();
-	pnlMainMenu:Call( "UpdateLanguage( '"..lang.."' )" );
+	UpdateLanguages()
+	pnlMainMenu:Call( "UpdateLanguage( \"" .. lang:JavascriptSafe() .. "\" )" )
 
 end
 
---
---
---
 function UpdateGames()
 
 	local games = engine.GetGames()
-	local json = util.TableToJSON( games );
+	local json = util.TableToJSON( games )
 
-	pnlMainMenu:Call( "UpdateGames( "..json..")" );	
+	pnlMainMenu:Call( "UpdateGames( " .. json .. ")" )
 
 end
 
 function UpdateSubscribedAddons()
 
 	local subscriptions = engine.GetAddons()
-	local json = util.TableToJSON( subscriptions );
+	local json = util.TableToJSON( subscriptions )
 
-	pnlMainMenu:Call( "subscriptions.Update( "..json.." )" );
+	pnlMainMenu:Call( "subscriptions.Update( " .. json .. " )" )
 
 end
 
@@ -299,23 +308,23 @@ hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 
 	pnlMainMenu:RefreshContent()
 
-	UpdateGames();
-	UpdateServerSettings();
-	UpdateSubscribedAddons();
+	UpdateGames()
+	UpdateServerSettings()
+	UpdateSubscribedAddons()
 
 	-- We update the maps with a delay because another hook updates the maps on content changed
 	-- so we really only want to update this after that.
-	timer.Simple( 0.5, function() UpdateMapList(); end )
+	timer.Simple( 0.5, function() UpdateMapList() end )
 
-end );
+end )
 
 --
 -- Initialize
 --
 timer.Simple( 0, function()
 
-	pnlMainMenu = vgui.Create( "MainMenuPanel" );
-	pnlMainMenu:Call( "UpdateVersion( '"..VERSIONSTR.."', '"..BRANCH.."' )" );
+	pnlMainMenu = vgui.Create( "MainMenuPanel" )
+	pnlMainMenu:Call( "UpdateVersion( '" .. VERSIONSTR .. "', '" .. BRANCH .. "' )" )
 
 	local language = GetConVarString( "gmod_language" )
 	LanguageChanged( language )

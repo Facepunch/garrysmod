@@ -1,0 +1,6 @@
+//
+// Default mapcycle file for Garry's Mod.
+//
+// It is empty because Garry's Mod does not use mapcycle.txt
+// It only exists so that mapcycle.txt from mountable games ( Portal 2 ) does not load and spam the console with errors
+//

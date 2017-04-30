@@ -41,7 +41,7 @@ end
 function PlayerStartDriving( ply, ent, mode )
 
 	local method = Type[mode]
-	if ( !method ) then ErrorNoHalt( "Unknown drive type " .. (mode) ) return; end
+	if ( !method ) then ErrorNoHalt( "Unknown drive type " .. (mode) .. "!\n" ) return; end
 
 	local id = util.NetworkStringToID( mode )
 
@@ -142,7 +142,7 @@ end
 --
 function CreateMove( cmd )
 
-	method = GetMethod( LocalPlayer() )
+	local method = GetMethod( LocalPlayer() )
 	if ( !method ) then return end
 
 	method:SetupControls( cmd )
@@ -155,7 +155,7 @@ end
 --
 function CalcView( ply, view )
 
-	method = GetMethod( ply )
+	local method = GetMethod( ply )
 	if ( !method ) then return end
 
 	method:CalcView( view )
@@ -170,7 +170,7 @@ end
 --
 function StartMove( ply, mv, cmd )
 
-	method = GetMethod( ply )
+	local method = GetMethod( ply )
 	if ( !method ) then return end
 
 	method:StartMove( mv, cmd )
@@ -184,7 +184,7 @@ end
 --
 function Move( ply, mv )
 
-	method = GetMethod( ply )
+	local method = GetMethod( ply )
 	if ( !method ) then return end
 
 	method:Move( mv )
@@ -197,7 +197,7 @@ end
 --
 function FinishMove( ply, mv )
 
-	method = GetMethod( ply )
+	local method = GetMethod( ply )
 	if ( !method ) then return end
 
 	method:FinishMove( mv )

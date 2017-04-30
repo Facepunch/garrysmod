@@ -1,5 +1,0 @@
-"0"
-{
-	"Text"			"#Tool_duplicator_name"
-	"Description"		"#Tool_duplicator_desc"
-}

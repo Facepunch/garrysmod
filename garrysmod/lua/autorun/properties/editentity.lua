@@ -1,41 +1,38 @@
 
 AddCSLuaFile()
 
-properties.Add( "editentity", 
-{
-	MenuLabel		=	"Edit Properties..",
-	Order			=	90001,
-	PrependSpacer	=	true,
-	MenuIcon		=	"icon16/pencil.png",
-	
-	Filter		=	function( self, ent, ply ) 
+properties.Add( "editentity", {
+	MenuLabel = "Edit Properties..",
+	Order = 90001,
+	PrependSpacer = true,
+	MenuIcon = "icon16/pencil.png",
 
-						if ( !IsValid( ent ) ) then return false end
-						if ( !ent.Editable ) then return false end
-						if ( !gamemode.Call( "CanProperty", ply, "editentity", ent ) ) then return false end
+	Filter = function( self, ent, ply )
 
-						return true 
+		if ( !IsValid( ent ) ) then return false end
+		if ( !ent.Editable ) then return false end
+		if ( !gamemode.Call( "CanProperty", ply, "editentity", ent ) ) then return false end
 
-					end,
-					
-	Action		=	function( self, ent )
-	
-						local window = g_ContextMenu:Add( "DFrame" )
-							window:SetSize( 320, 400 )
-							window:SetTitle( tostring( ent ) )
-							window:Center()
-							window:SetSizable( true )
+		return true
 
-						local control = window:Add( "DEntityProperties" )
-							control:SetEntity( ent )
-							control:Dock( FILL )
+	end,
 
-							control.OnEntityLost = function()
+	Action = function( self, ent )
 
-								window:Remove()
+		local window = g_ContextMenu:Add( "DFrame" )
+		window:SetSize( 320, 400 )
+		window:SetTitle( tostring( ent ) )
+		window:Center()
+		window:SetSizable( true )
 
-							end
-					end,
+		local control = window:Add( "DEntityProperties" )
+		control:SetEntity( ent )
+		control:Dock( FILL )
 
+		control.OnEntityLost = function()
 
-});
+			window:Remove()
+
+		end
+	end
+} )

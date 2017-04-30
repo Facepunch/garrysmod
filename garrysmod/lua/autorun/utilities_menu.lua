@@ -5,71 +5,181 @@
 
 if ( SERVER ) then AddCSLuaFile( "utilities_menu.lua" ) return end
 
+local function Undo( pnl )
 
-local function Undo( CPanel )
+	-- This is added by the undo module dynamically
 
-	CPanel:AddControl( "Header", { Text = "#Undo" }  )
-	
-	-- The rest is added by the undo module dynamically
-	
 end
 
-local function User_Cleanup( CPanel )
+local function User_Cleanup( pnl )
 
-	CPanel:AddControl( "Header", { Text = "#Cleanup" }  )
-	
-	-- The rest is added by the undo module dynamically
-	
+	-- This is added by the cleanup module dynamically
+
 end
 
-local function ServerSettings( CPanel )
+local function ServerSettings( pnl )
 
-	CPanel:AddControl( "Header", { Text = "#Server Settings" }  )
-		
-	CPanel:AddControl( "TextBox", 	{ Label = "#Server Password",			Command = "sv_password", 	WaitForEnter =	"1" }  )	
-	
-	-- Not needed anymore
-	--CPanel:AddControl( "Button", 	{ Label = "#Enable/Disable AI",			Command = "ai_disable", 	Text = "Toggle" }  )	
-	
-	-- sbox_maxnpcs 0
-	--CPanel:AddControl( "CheckBox", 	{ Label = "#Allow NPCs",				Command = "sbox_allownpcs" }  )	
-	
-	CPanel:AddControl( "CheckBox", 	{ Label = "#Allow Flying (Noclip)",		Command = "sbox_noclip" }  )	
-	CPanel:AddControl( "CheckBox", 	{ Label = "#Allow Weapons",				Command = "sbox_weapons" }  )
-	CPanel:AddControl( "CheckBox", 	{ Label = "#God Mode",					Command = "sbox_godmode" }  )	
-	CPanel:AddControl( "CheckBox", 	{ Label = "#Enable PvP Damage",			Command = "sbox_playershurtplayers" }  )	
-	
-	CPanel:AddControl( "Slider", 	{ Label = "#Gravity", Type = "Float", 	Command = "sv_gravity", 	Min = "-200", 	Max = "600" }  )
-	CPanel:AddControl( "Slider", 	{ Label = "#Physics Timescale",	Type = "Float", 	Command = "phys_timescale", 	Min = "0", 	Max = "2" }  )
-	CPanel:AddControl( "Slider", 	{ Label = "#Physics Iterations", Type = "Integer", 	Command = "gmod_physiterations", 	Min = "1", 	Max = "10" }  )
-	
+	pnl:AddControl( "Header", { Description = "#utilities.serversettings" } )
+
+	local ConVarsDefault = {
+		hostname = "Garry's Mod",
+		-- sv_password = "", -- Can be read by addons/servers
+		sv_kickerrornum = "0",
+		sv_allowcslua = "0",
+		sv_sticktoground = "1",
+		sv_playerpickupallowed = "1",
+		mp_falldamage = "0",
+		sv_gravity = "600",
+		sv_friction = "8",
+		phys_timescale = "1.00",
+		gmod_physiterations = "4",
+		sv_defaultdeployspeed = "4.00",
+		sv_noclipspeed = "5",
+		sv_timeout = "65"
+	}
+	pnl:AddControl( "ComboBox", { MenuButton = 1, Folder = "util_server", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+
+	pnl:AddControl( "TextBox", { Label = "#utilities.hostname", Command = "hostname", WaitForEnter = "1" } )
+	pnl:AddControl( "TextBox", { Label = "#utilities.password", Command = "sv_password", WaitForEnter = "1" } )
+
+	pnl:AddControl( "CheckBox", { Label = "#utilities.kickerrornum", Command = "sv_kickerrornum" } )
+	pnl:AddControl( "CheckBox", { Label = "#utilities.allowcslua", Command = "sv_allowcslua" } )
+	pnl:AddControl( "CheckBox", { Label = "#utilities.sticktoground", Command = "sv_sticktoground", Help = true } )
+	pnl:AddControl( "CheckBox", { Label = "#utilities.epickupallowed", Command = "sv_playerpickupallowed" } )
+	pnl:AddControl( "CheckBox", { Label = "#utilities.falldamage", Command = "mp_falldamage" } )
+
+	-- Fun convars
+	pnl:AddControl( "Slider", { Label = "#utilities.gravity", Type = "Integer", Command = "sv_gravity", Min = "-500", Max = "1000" } )
+	pnl:AddControl( "Slider", { Label = "#utilities.friction", Type = "Integer", Command = "sv_friction", Min = "0", Max = "16" } ) -- Float
+	pnl:AddControl( "Slider", { Label = "#utilities.timescale", Type = "Float", Command = "phys_timescale", Min = "0", Max = "2" } )
+	pnl:AddControl( "Slider", { Label = "#utilities.deployspeed", Type = "Float", Command = "sv_defaultdeployspeed", Min = "0.1", Max = "10" } )
+	pnl:AddControl( "Slider", { Label = "#utilities.noclipspeed", Type = "Integer", Command = "sv_noclipspeed", Min = "1", Max = "10" } ) -- Switch this and friction back to Float once Sliders don't reset the convar from 8 to 8.00, etc
+
+	-- Technical convars
+	pnl:AddControl( "Slider", { Label = "#utilities.iterations", Type = "Integer", Command = "gmod_physiterations", Min = "1", Max = "10" } )
+	pnl:AddControl( "Slider", { Label = "#utilities.sv_timeout", Type = "Integer", Command = "sv_timeout", Min = "60", Max = "300" } )
+
 end
 
+local function SandboxSettings( pnl )
 
-	
---[[
+	pnl:AddControl( "Header", { Description = "#utilities.sandboxsettings" } )
+
+	local ConVarsDefault = {
+		sbox_persist = "",
+		sbox_noclip = "1",
+		sbox_weapons = "1",
+		sbox_godmode = "0",
+		sbox_playershurtplayers = "1",
+		physgun_limited = "0",
+		physgun_maxrange = "4096",
+		sbox_bonemanip_npc = "1",
+		sbox_bonemanip_player = "0",
+		sbox_bonemanip_misc = "0"
+	}
+
+	local ConVarsLimits = {}
+	for id, str in pairs( cleanup.GetTable() ) do
+		local cvar = GetConVar( "sbox_max" .. str )
+		if ( !cvar ) then continue end
+
+		ConVarsDefault[ "sbox_max" .. str ] = cvar:GetDefault()
+		table.insert( ConVarsLimits, {
+			command = "sbox_max" .. str,
+			default = cvar:GetDefault(),
+			label = language.GetPhrase( "max_" .. str )
+		} )
+	end
+
+	pnl:AddControl( "ComboBox", { MenuButton = 1, Folder = "util_sandbox", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+
+	pnl:AddControl( "TextBox", { Label = "#persistent_mode", Command = "sbox_persist", WaitForEnter = "1" } )
+	pnl:ControlHelp( "#persistent_mode.help" ):DockMargin( 16, 4, 16, 8 )
+
+	pnl:AddControl( "CheckBox", { Label = "#noclip", Command = "sbox_noclip" } )
+	pnl:AddControl( "CheckBox", { Label = "#enable_weapons", Command = "sbox_weapons" } )
+	pnl:AddControl( "CheckBox", { Label = "#god_mode", Command = "sbox_godmode" } )
+	pnl:AddControl( "CheckBox", { Label = "#players_damage_players", Command = "sbox_playershurtplayers" } )
+
+	pnl:AddControl( "CheckBox", { Label = "#bone_manipulate_npcs", Command = "sbox_bonemanip_npc" } )
+	pnl:AddControl( "CheckBox", { Label = "#bone_manipulate_players", Command = "sbox_bonemanip_player" } )
+	pnl:AddControl( "CheckBox", { Label = "#bone_manipulate_others", Command = "sbox_bonemanip_misc" } )
+
+	for id, t in SortedPairsByMemberValue( ConVarsLimits, "label" ) do
+		pnl:AddControl( "Slider", { Label = t.label, Command = t.command, Min = "0", Max = "200" } )
+	end
+
+end
+
+local function PhysgunSettings( pnl )
+
+	pnl:AddControl( "Header", { Description = "#utilities.physgunsettings" } )
+
+	local ConVarsDefault = {
+		physgun_halo = "1",
+		physgun_drawbeams = "1",
+		gm_snapgrid = "0",
+		gm_snapangles = "45",
+		physgun_rotation_sensitivity = "0.05",
+		physgun_wheelspeed = "10"
+	}
+	pnl:AddControl( "ComboBox", { MenuButton = 1, Folder = "util_physgun", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+
+	pnl:AddControl( "CheckBox", { Label = "#utilities.physgun_halo", Command = "physgun_halo" } )
+	pnl:AddControl( "CheckBox", { Label = "#utilities.physgun_drawbeams", Command = "physgun_drawbeams" } )
+
+	pnl:AddControl( "Slider", { Label = "#utilities.gm_snapgrid", Type = "Integer", Command = "gm_snapgrid", Min = "0", Max = "128" } )
+	pnl:AddControl( "Slider", { Label = "#utilities.gm_snapangles", Type = "Integer", Command = "gm_snapangles", Min = "5", Max = "90" } )
+
+	pnl:AddControl( "Slider", { Label = "#utilities.physgun_rotation_sensitivity", Type = "Float", Command = "physgun_rotation_sensitivity", Min = "0.01", Max = "1" } )
+	pnl:AddControl( "Slider", { Label = "#utilities.physgun_wheelspeed", Type = "Integer", Command = "physgun_wheelspeed", Min = "0", Max = "50" } )
+
+end
+
+local function PhysgunSVSettings( pnl )
+
+	pnl:AddControl( "Header", { Description = "#utilities.physgunsvsettings" } )
+
+	local ConVarsDefault = {
+		physgun_limited = "0",
+		physgun_maxrange = "4096",
+		physgun_teleportDistance = "0",
+		physgun_maxSpeed = "5000",
+		physgun_maxAngular = "5000",
+		physgun_timeToArrive = "0.05",
+		physgun_timeToArriveRagdoll = "0.1"
+	}
+	pnl:AddControl( "ComboBox", { MenuButton = 1, Folder = "util_physgun_sv", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+
+	pnl:AddControl( "CheckBox", { Label = "#utilities.physgun_limited", Command = "physgun_limited", Help = true } )
+
+	pnl:AddControl( "Slider", { Label = "#utilities.physgun_maxrange", Type = "Integer", Command = "physgun_maxrange", Min = "128", Max = "8192" } )
+	pnl:AddControl( "Slider", { Label = "#utilities.physgun_tpdist", Type = "Integer", Command = "physgun_teleportdistance", Min = "0", Max = "10000" } )
+	pnl:AddControl( "Slider", { Label = "#utilities.physgun_maxspeed", Type = "Integer", Command = "physgun_maxspeed", Min = "0", Max = "10000" } )
+	pnl:AddControl( "Slider", { Label = "#utilities.physgun_maxangular", Type = "Integer", Command = "physgun_maxangular", Min = "0", Max = "10000" } )
+	pnl:AddControl( "Slider", { Label = "#utilities.physgun_timetoarrive", Type = "Float", Command = "physgun_timetoarrive", Min = "0", Max = "2" } )
+	pnl:AddControl( "Slider", { Label = "#utilities.physgun_timetoarriveragdoll", Type = "Float", Command = "physgun_timetoarriveragdoll", Min = "0", Max = "2", Help = true } )
+
+end
+
 -- Tool Menu
---]]
-local function PopulateUtilityMenus()
+hook.Add( "PopulateToolMenu", "PopulateUtilityMenus", function()
 
-	spawnmenu.AddToolMenuOption( "Utilities", "User", 	"User_Cleanup",	"#Cleanup", 	"", 	"", 	User_Cleanup )
-	spawnmenu.AddToolMenuOption( "Utilities", "User", 	"Undo", 	"#Undo", 			"", 	"", 	Undo )
-	
-	spawnmenu.AddToolMenuOption( "Utilities", "Admin", 	"Admin_Cleanup", 	"#Cleanup", 	"", 	"", 	User_Cleanup )
-	spawnmenu.AddToolMenuOption( "Utilities", "Admin", 	"ServerSettings", 	"#Settings", 	"", 	"", 	ServerSettings )
+	spawnmenu.AddToolMenuOption( "Utilities", "User", "User_Cleanup", "#spawnmenu.utilities.cleanup", "", "", User_Cleanup )
+	spawnmenu.AddToolMenuOption( "Utilities", "User", "Undo", "#spawnmenu.utilities.undo", "", "", Undo )
+	spawnmenu.AddToolMenuOption( "Utilities", "User", "PhysgunSettings", "#spawnmenu.utilities.physgunsettings", "", "", PhysgunSettings )
 
-end
+	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "Admin_Cleanup", "#spawnmenu.utilities.cleanup", "", "", User_Cleanup )
+	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "ServerSettings", "#spawnmenu.utilities.server_settings", "", "", ServerSettings )
+	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "SandboxSettings", "#spawnmenu.utilities.sandbox_settings", "", "", SandboxSettings )
+	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "PhysgunSVSettings", "#spawnmenu.utilities.physgunsettings", "", "", PhysgunSVSettings )
 
-hook.Add( "PopulateToolMenu", "PopulateUtilityMenus", PopulateUtilityMenus )
+end )
 
---[[ 
 -- Categories
---]]
-local function CreateUtilitiesCategories()
+hook.Add( "AddToolMenuCategories", "CreateUtilitiesCategories", function()
 
-	spawnmenu.AddToolCategory( "Utilities", 	"User", 	"#User" )
-	spawnmenu.AddToolCategory( "Utilities", 	"Admin", 	"#Admin" )
+	spawnmenu.AddToolCategory( "Utilities", "User", "#spawnmenu.utilities.user" )
+	spawnmenu.AddToolCategory( "Utilities", "Admin", "#spawnmenu.utilities.admin" )
 
-end	
-
-hook.Add( "AddToolMenuCategories", "CreateUtilitiesCategories", CreateUtilitiesCategories )
+end )

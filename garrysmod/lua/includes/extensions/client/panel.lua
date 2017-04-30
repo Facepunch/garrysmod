@@ -6,16 +6,15 @@ include ( "panel/scriptedpanels.lua" )
 
 local meta = FindMetaTable( "Panel" )
 
-AccessorFunc( meta, "m_strCookieName",  "CookieName" )
+AccessorFunc( meta, "m_strCookieName", "CookieName" )
 
 meta.SetFGColorEx = meta.SetFGColor
 meta.SetBGColorEx = meta.SetBGColor
 
-
 --[[---------------------------------------------------------
-   Name:	SetFGColor
-   Desc:	Override to make it possible to pass Color's
------------------------------------------------------------]]  
+	Name: SetFGColor
+	Desc: Override to make it possible to pass Color's
+-----------------------------------------------------------]]
 function meta:SetFGColor( r, g, b, a )
 
 	if ( istable( r ) ) then
@@ -26,11 +25,10 @@ function meta:SetFGColor( r, g, b, a )
 
 end
 
-
 --[[---------------------------------------------------------
-   Name:	SetBGColor
-   Desc:	Override to make it possible to pass Color's
------------------------------------------------------------]]  
+	Name: SetBGColor
+	Desc: Override to make it possible to pass Color's
+-----------------------------------------------------------]]
 function meta:SetBGColor( r, g, b, a )
 
 	if ( istable( r ) ) then
@@ -41,34 +39,25 @@ function meta:SetBGColor( r, g, b, a )
 
 end
 
-
 --[[---------------------------------------------------------
 	Name: SetHeight
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:SetHeight( h )
-
 	self:SetSize( self:GetWide(), h )
-
 end
-
 meta.SetTall = meta.SetHeight
 
-
 --[[---------------------------------------------------------
 	Name: SetHeight
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:SetWidth( w )
-
 	self:SetSize( w, self:GetTall() )
-
 end
-
 meta.SetWide = meta.SetWidth
-
 
 --[[---------------------------------------------------------
 	Name: StretchToParent (borders)
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:StretchToParent( l, u, r, d )
 
 	local w, h = self:GetParent():GetSize()
@@ -76,19 +65,19 @@ function meta:StretchToParent( l, u, r, d )
 	if ( l != nil ) then
 		self.x = l
 	end
-	
+
 	if ( u != nil ) then
 		self.y = u
 	end
-	
+
 	if ( r != nil ) then
 		self:SetWide( w - self.x - r )
 	end
-	
+
 	if ( d != nil ) then
 		self:SetTall( h - self.y - d )
 	end
-	
+
 	--self:SetPos( l, u )
 	--self:SetSize( w - (r + l), h - (d + u) )
 
@@ -96,77 +85,64 @@ end
 
 --[[---------------------------------------------------------
 	Name: CopyHeight
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:CopyHeight( pnl )
-
 	self:SetTall( pnl:GetTall() )
-
 end
 
 --[[---------------------------------------------------------
 	Name: CopyWidth
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:CopyWidth( pnl )
-
 	self:SetWide( pnl:GetWide() )
-
 end
 
 --[[---------------------------------------------------------
 	Name: CopyPos
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:CopyPos( pnl )
-
 	self:SetPos( pnl:GetPos() )
-
 end
 
 --[[---------------------------------------------------------
 	Name: Align with the edge of the parent
------------------------------------------------------------]]  
-function meta:AlignBottom( m ) m = m or 0; self:SetPos( self.x, self:GetParent():GetTall() - self:GetTall() - m ) end 
-function meta:AlignRight( m ) m = m or 0; self:SetPos( self:GetParent():GetWide() - self:GetWide() - m, self.y ) end
-function meta:AlignTop( m ) m = m or 0; self:SetPos( self.x, m ) end
-function meta:AlignLeft( m ) m = m or 0; self:SetPos( m, self.y ) end
+-----------------------------------------------------------]]
+function meta:AlignBottom( m ) self:SetPos( self.x, self:GetParent():GetTall() - self:GetTall() - ( m or 0 ) ) end 
+function meta:AlignRight( m ) self:SetPos( self:GetParent():GetWide() - self:GetWide() - ( m or 0 ), self.y ) end
+function meta:AlignTop( m ) self:SetPos( self.x, m or 0 ) end
+function meta:AlignLeft( m ) self:SetPos( m or 0, self.y ) end
 
 --[[---------------------------------------------------------
 	Name: Move relative to another panel
------------------------------------------------------------]]  
-function meta:MoveAbove( pnl, m ) m = m or 0; self:SetPos( self.x, pnl.y - self:GetTall() - m ) end
-function meta:MoveBelow( pnl, m ) m = m or 0; self:SetPos( self.x, pnl.y + pnl:GetTall() + m ) end
-function meta:MoveRightOf( pnl, m ) m = m or 0; self:SetPos( pnl.x + pnl:GetWide() + m, self.y ) end
-function meta:MoveLeftOf( pnl,  m ) m = m or 0; self:SetPos( pnl.x - self:GetWide() - m, self.y ) end
-
+-----------------------------------------------------------]]
+function meta:MoveAbove( pnl, m ) self:SetPos( self.x, pnl.y - self:GetTall() - ( m or 0 ) ) end
+function meta:MoveBelow( pnl, m ) self:SetPos( self.x, pnl.y + pnl:GetTall() + ( m or 0 ) ) end
+function meta:MoveRightOf( pnl, m ) self:SetPos( pnl.x + pnl:GetWide() + ( m or 0 ), self.y ) end
+function meta:MoveLeftOf( pnl, m ) self:SetPos( pnl.x - self:GetWide() - ( m or 0 ), self.y ) end
 
 --[[---------------------------------------------------------
 	Name: StretchRightTo
------------------------------------------------------------]]  
-function meta:StretchRightTo( pnl, m ) m = m or 0; self:SetWide( pnl.x - self.x -  m ) end
-function meta:StretchBottomTo( pnl, m ) m = m or 0; self:SetTall( pnl.y - self.y - m ) end
+-----------------------------------------------------------]]
+function meta:StretchRightTo( pnl, m ) self:SetWide( pnl.x - self.x - ( m or 0 ) ) end
+function meta:StretchBottomTo( pnl, m ) self:SetTall( pnl.y - self.y - ( m or 0 ) ) end
 
 --[[---------------------------------------------------------
 	Name: CenterVertical
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:CenterVertical( fraction )
-
-	fraction = fraction or 0.5
-	self:SetPos( self.x, self:GetParent():GetTall() * fraction -  self:GetTall() * 0.5 )
-
+	self:SetPos( self.x, self:GetParent():GetTall() * ( fraction or 0.5 ) - self:GetTall() * 0.5 )
 end
 
 --[[---------------------------------------------------------
 	Name: CenterHorizontal
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:CenterHorizontal( fraction )
-
-	fraction = fraction or 0.5
-	self:SetPos( self:GetParent():GetWide() * fraction - self:GetWide() * 0.5, self.y )
-
+	self:SetPos( self:GetParent():GetWide() * ( fraction or 0.5 ) - self:GetWide() * 0.5, self.y )
 end
 
 --[[---------------------------------------------------------
 	Name: CenterHorizontal
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:Center()
 
 	self:CenterVertical()
@@ -176,11 +152,11 @@ end
 
 --[[---------------------------------------------------------
 	Name: CopyBounds
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:CopyBounds( pnl )
 
 	local x, y, w, h = pnl:GetBounds()
-	
+
 	self:SetPos( x, y )
 	self:SetSize( w, h )
 
@@ -188,11 +164,11 @@ end
 
 --[[---------------------------------------------------------
 	Name: GetCookieNumber
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:SetCookieName( cookiename )
 
 	self.m_strCookieName = cookiename
-	
+
 	-- If we have a loadcookies function, call it.
 	if ( self.LoadCookies ) then
 		self:LoadCookies()
@@ -201,53 +177,63 @@ function meta:SetCookieName( cookiename )
 
 end
 
-
 --[[---------------------------------------------------------
 	Name: GetCookieNumber
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:GetCookieNumber( cookiename, default )
 
 	local name = self:GetCookieName()
 	if ( !name ) then return default end
-	
-	return cookie.GetNumber( name.."."..cookiename, default )
+
+	return cookie.GetNumber( name .. "." .. cookiename, default )
 
 end
 
 --[[---------------------------------------------------------
 	Name: GetCookie
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:GetCookie( cookiename, default )
 
 	local name = self:GetCookieName()
 	if ( !name ) then return default end
-	
-	return cookie.GetString( name.."."..cookiename, default )
+
+	return cookie.GetString( name .. "." .. cookiename, default )
 
 end
 
 --[[---------------------------------------------------------
 	Name: SetCookie
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:SetCookie( cookiename, value )
 
 	local name = self:GetCookieName()
 	if ( !name ) then return end
-	
-	return cookie.Set( name.."."..cookiename, value )
+
+	return cookie.Set( name .. "." .. cookiename, value )
 
 end
 
+--[[---------------------------------------------------------
+	Name: DeleteCookie
+-----------------------------------------------------------]]
+function meta:DeleteCookie( cookiename )
+
+	local name = self:GetCookieName()
+	if ( !name ) then return end
+
+	return cookie.Delete( name .. "." .. cookiename )
+
+end
 
 --[[---------------------------------------------------------
 	Name: InvalidateParent
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:InvalidateParent( layoutnow )
 
 	local parent = self:GetParent()
 	if ( !parent ) then return end
 	if ( self.LayingOutParent ) then return end
-	
+
 	self.LayingOutParent = true
 	parent:InvalidateLayout( layoutnow )
 	self.LayingOutParent = false
@@ -257,82 +243,80 @@ end
 --[[---------------------------------------------------------
 	Name: PositionLabel
 -----------------------------------------------------------]] 
-function meta:PositionLabel( LabelWidth, X, Y, Lbl, Control )
+function meta:PositionLabel( labelWidth, x, y, lbl, ctrl )
 
-	Lbl:SetWide( LabelWidth )
-	Lbl:SetPos( X, Y )
-	
-	Control.y = Y
-	Control:MoveRightOf( Lbl, 0 )
+	lbl:SetWide( labelWidth )
+	lbl:SetPos( x, y )
 
-	return Y + math.max( Lbl:GetTall(), Control:GetTall() )
+	ctrl.y = y
+	ctrl:MoveRightOf( lbl, 0 )
+
+	return y + math.max( lbl:GetTall(), ctrl:GetTall() )
 
 end
 
-
-
-
 --[[---------------------------------------------------------
-   Name: SetTooltip
+	Name: SetTooltip
 -----------------------------------------------------------]]
 function meta:SetTooltip( tooltip )
 	self.strTooltipText = tooltip
 end
-
 meta.SetToolTip = meta.SetTooltip
 
 --[[---------------------------------------------------------
-   Name: SetTooltipPanel
+	Name: SetTooltipPanel
 -----------------------------------------------------------]]
 function meta:SetTooltipPanel( panel )
 	self.pnlTooltipPanel = panel
 end
-
 meta.SetToolTipPanel = meta.SetTooltipPanel
 
-
 --[[---------------------------------------------------------
-   Name: SizeToContentsY (Only works on Labels)
+	Name: SizeToContentsY (Only works on Labels)
 -----------------------------------------------------------]]
 function meta:SizeToContentsY( addval )
+
 	local w, h = self:GetContentSize()
-	if (!w || !h ) then return end
-	addval = addval or 0
-	self:SetTall( h )
+	if ( !w || !h ) then return end
+
+	self:SetTall( h + ( addval or 0 ) )
+
 end
 
 --[[---------------------------------------------------------
-   Name: SizeToContentsX (Only works on Labels)
+	Name: SizeToContentsX (Only works on Labels)
 -----------------------------------------------------------]]
 function meta:SizeToContentsX( addval )
+
 	local w, h = self:GetContentSize()
-	if (!w || !h) then return end
-	addval = addval or 0
-	self:SetWide( w + addval )
+	if ( !w || !h ) then return end
+
+	self:SetWide( w + ( addval or 0 ) )
+
 end
 
 --[[---------------------------------------------------------
-   Name: SetSkin
+	Name: SetSkin
 -----------------------------------------------------------]]
 function meta:SetSkin( strSkin )
-	
+
 	if ( self.m_ForceSkinName == strSkin ) then return end
-	
+
 	self.m_ForceSkinName = strSkin
 	self.m_iSkinIndex = nil
 	derma.RefreshSkins()
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: GetSkin
+	Name: GetSkin
 -----------------------------------------------------------]]
 function meta:GetSkin()
 
 	local skin = nil
-	
+
 	if ( derma.SkinChangeIndex() == self.m_iSkinIndex ) then
-	
+
 		skin = self.m_Skin
 		if ( skin ) then return skin end
 
@@ -342,95 +326,91 @@ function meta:GetSkin()
 	if ( !skin && self.m_ForceSkinName ) then
 		skin = derma.GetNamedSkin( self.m_ForceSkinName )
 	end
-	
+
 	-- No skin, inherit from parent
 	local parent = self:GetParent()
 	if ( !skin && IsValid( parent ) ) then
 		skin = parent:GetSkin()
 	end
-	
+
 	-- Parent had no skin, use default
-	if ( !skin) then
+	if ( !skin ) then
 		skin = derma.GetDefaultSkin()
 	end
-	
+
 	-- Save skin details on us so we don't have to keep looking up
-	self.m_Skin 		= skin
-	self.m_iSkinIndex 	= derma.SkinChangeIndex()
-	
+	self.m_Skin = skin
+	self.m_iSkinIndex = derma.SkinChangeIndex()
+
 	self:InvalidateLayout( false )
-	
+
 	return skin
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: ToggleVisible
+	Name: ToggleVisible
 -----------------------------------------------------------]]
 function meta:ToggleVisible()
-	
 	self:SetVisible( !self:IsVisible() )
-	
 end
 
 function meta:Distance( pnl )
-	
-	if ( !IsValid( pnl ) ) then return 0 end	
+
+	if ( !IsValid( pnl ) ) then return 0 end
+
 	return self:DistanceFrom( pnl.x + pnl:GetWide() * 0.5, pnl.y + pnl:GetTall() * 0.5 )
-	
+
 end
 
 function meta:DistanceFrom( x, y )
-	
-	local x = self.x + self:GetWide() * 0.5 - x;
-	local y = self.y + self:GetTall() * 0.5 - y;
-	
-	return math.sqrt( x * x + y *y )
-	
+
+	local x = self.x + self:GetWide() * 0.5 - x
+	local y = self.y + self:GetTall() * 0.5 - y
+
+	return math.sqrt( x * x + y * y )
+
 end
 
-
 --[[---------------------------------------------------------
-   Name: Retusn the child position on this panel. Even if its parented to children of children.
+	Name: Retusn the child position on this panel. Even if its parented to children of children.
 -----------------------------------------------------------]]
 function meta:GetChildPosition( pnl )
 
-
-	local x = 0;
-	local y = 0;
+	local x = 0
+	local y = 0
 
 	while ( IsValid( pnl ) && pnl != self ) do
-		
+
 		x = x + pnl.x
 		y = y + pnl.y
-		
-		pnl = pnl:GetParent();
+
+		pnl = pnl:GetParent()
 
 	end
 
-	return x, y;
+	return x, y
 
 end
 
 --[[---------------------------------------------------------
-   Name: Returns true if the panel is valid. This does not
+	Name: Returns true if the panel is valid. This does not
 		check the type. If the passed object is anything other
 		than a panel or nil, this will error. (speed)
 -----------------------------------------------------------]]
 function ValidPanel( pnl )
 
-	if (!pnl) then return false end
-	
+	if ( !pnl ) then return false end
+
 	return pnl:IsValid() 
 
 end
-
 
 function meta:InvalidateChildren( bRecurse )
 
 	local children = self:GetChildren()
 	for k, v in pairs( children ) do
-	
+
 		if ( bRecurse ) then
 			v:InvalidateChildren( true )
 		else
@@ -438,23 +418,16 @@ function meta:InvalidateChildren( bRecurse )
 		end
 
 	end
-	
+
 	self:InvalidateLayout( true )
 
 end
 
-function meta:IsOurChild( pPanel )
+function meta:IsOurChild( child )
 
-	if ( pPanel == self ) then return true end
+	if ( !IsValid( child ) ) then return false end
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
-	
-		if ( v:IsOurChild( pPanel ) ) then return true end
-
-	end
-	
-	return false
+	return child:HasParent( self )
 
 end
 
@@ -462,7 +435,7 @@ function meta:CopyBase( pnl )
 
 	self:CopyBounds( pnl )
 	self:Dock( pnl:GetDock() )
-	
+
 	// TODO. More.
 
 end
@@ -470,17 +443,13 @@ end
 function meta:Add( pnl )
 
 	if ( isstring( pnl ) ) then
-	
 		local pnl = vgui.Create( pnl, self )
-		return pnl	
-		
+		return pnl
 	end
-	
+
 	if ( istable( pnl ) ) then
-	
 		local pnl = vgui.CreateFromTable( pnl, self )
-		return pnl	
-		
+		return pnl
 	end
 
 	pnl:SetParent( self )
@@ -495,84 +464,77 @@ function meta:GetClosestChild( x, y )
 
 	local children = self:GetChildren()
 	for k, v in pairs( children ) do
-	
 		local dist = v:DistanceFrom( x, y )
 		if ( dist < distance ) then
-			distance = dist;
+			distance = dist
 			closest = v
 		end
 	end
-	
+
 	return closest, distance
 
 end
 
 function meta:LocalCursorPos()
-			
 	return self:ScreenToLocal( gui.MouseX(), gui.MouseY() )
-		
 end
 
 function meta:MoveToAfter( pnl )
 
 	local children = self:GetParent():GetChildren()
-	
+
 	-- remove us from the table
 	table.RemoveByValue( children, self )
-		
+
 	-- find the key, where we want to be
 	local key = table.KeyFromValue( children, pnl )
-	
+
 	if ( key ) then
 		-- insert us where we wanna be
-		table.insert( children, key+1, self )
+		table.insert( children, key + 1, self )
 	else
-		return false;
+		return false
 	end
-	
+
 	for k, v in pairs( children ) do
 		v:SetZPos( k )
 	end
-		
+
 end
 
 function meta:MoveToBefore( pnl )
 
 	local children = self:GetParent():GetChildren()
-	
+
 	-- remove us from the table
 	table.RemoveByValue( children, self )
-		
+
 	-- find the key, where we want to be
 	local key = table.KeyFromValue( children, pnl )
-	
+
 	if ( key ) then
 		-- insert us where we wanna be
 		table.insert( children, key, self )
 	else
 		return false
 	end
-	
+
 	for k, v in pairs( children ) do
 		v:SetZPos( k )
 	end
-		
+
 end
 
 function meta:Clear()
 
 	for k, panel in pairs( self:GetChildren() ) do
-	
 		panel:Remove()
-	
 	end
 
 end
 
 function meta:IsHovered()
-
 	return vgui.GetHoveredPanel() == self
-	
 end
 
 function meta:Show()
@@ -583,20 +545,15 @@ function meta:Hide()
 	self:SetVisible( false )
 end
 
-
-function meta:IsChildHovered( iDepth )
+function meta:IsChildHovered( bImmediate )
 
 	local Hovered = vgui.GetHoveredPanel()
 	if ( !IsValid( Hovered ) ) then return false end
+	if ( Hovered == self ) then return false end
 
-	for i=1, iDepth do
+	-- Check immediate child only (with support for old depth parameter)
+	if ( bImmediate == true or bImmediate == 1 ) then return Hovered:GetParent() == self end
 
-		Hovered = Hovered:GetParent()
-		if ( !IsValid( Hovered ) ) then return false end
-		if ( Hovered == self ) then return true end
-
-	end
-
-	return false
+	return Hovered:HasParent( self )
 
 end

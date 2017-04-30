@@ -1,5 +1,5 @@
 
-local MenuGradient = Material( "../html/img/gradient.png", "nocull smooth" )
+local MenuGradient = Material( "html/img/gradient.png", "nocull smooth" )
 
 local Images = {}
 
@@ -30,8 +30,8 @@ local function Render( tbl )
 	surface.SetMaterial( tbl.mat )
 	surface.SetDrawColor( 255, 255, 255, tbl.Alpha )
 
-	local w =  ScrH() * tbl.Size * tbl.Ratio
-	local h =  ScrH() * tbl.Size
+	local w = ScrH() * tbl.Size * tbl.Ratio
+	local h = ScrH() * tbl.Size
 
 	local x = ScrW() * 0.5
 	local y = ScrH() * 0.5
@@ -42,21 +42,17 @@ end
 
 function DrawBackground()
 
-	if ( !IsInGame() ) then 
+	if ( !IsInGame() ) then
 
 		if ( Active ) then
-			Think( Active );
-			Render( Active );
+			Think( Active )
+			Render( Active )
 		end
 
 		if ( Outgoing ) then
 
-			Think( Outgoing );
-			Render( Outgoing );
-
-			if ( Outgoing.Alpha <= 0 ) then
-				Outgoing = nil
-			end
+			Think( Outgoing )
+			Render( Outgoing )
 
 		end
 
@@ -65,8 +61,6 @@ function DrawBackground()
 	surface.SetMaterial( MenuGradient )
 	surface.SetDrawColor( 255, 255, 255, 255 )
 	surface.DrawTexturedRect( 0, 0, 1024, ScrH() )
-
-	
 
 end
 
@@ -86,12 +80,32 @@ local LastGamemode = "none"
 
 function ChangeBackground( currentgm )
 
+	if ( IsInGame() ) then return end -- Don't try to load new images while in-game
+
 	if ( currentgm && currentgm == LastGamemode ) then return end
 	if ( currentgm ) then LastGamemode = currentgm end
-	
+
 	local img = table.Random( Images )
 
-	Outgoing = Active;
+	if ( !img ) then return end
+
+	-- Remove the texture from memory
+	-- There's a bit of internal magic going on here
+	local DoUnload = Outgoing != nil
+
+	if ( Outgoing && Outgoing.Name == img ) then
+		DoUnload = false
+	end
+
+	if ( Outgoing && Active && Outgoing.Name == Active.Name ) then
+		DoUnload = false
+	end
+
+	if ( DoUnload ) then
+		Outgoing.mat:SetUndefined( "$basetexture" )
+	end
+
+	Outgoing = Active
 	if ( Outgoing ) then
 		Outgoing.AlphaVel = 255
 	end
@@ -99,8 +113,7 @@ function ChangeBackground( currentgm )
 	local mat = Material( img, "nocull smooth" )
 	if ( !mat || mat:IsError() ) then return end
 
-	Active = 
-	{
+	Active = {
 		Ratio = mat:GetInt( "$realwidth" ) / mat:GetInt( "$realheight" ),
 		Size = 1,
 		Angle = 0,
@@ -108,12 +121,13 @@ function ChangeBackground( currentgm )
 		SizeVel = ( 0.3 / 30 ),
 		Alpha = 255,
 		DieTime = 30,
-		mat = mat
+		mat = mat,
+		Name = img
 	}
 
 	if ( Active.Ratio < ScrW() / ScrH() ) then
 
-		Active.Size = Active.Size * ( ScrW() / ScrH()  );
+		Active.Size = Active.Size + ( ( ScrW() / ScrH() ) - Active.Ratio )
 
 	end
 

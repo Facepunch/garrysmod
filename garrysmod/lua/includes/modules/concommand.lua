@@ -1,31 +1,17 @@
 
--- Please don't edit this file!
-
--- Redirect call from the engine to the module (todo: change engine)
-function InjectConsoleCommand( player, command, arguments, args )
-	return concommand.Run( player, command, arguments, args )
-end
-
-
-function InjectCommandAutocomplete( command, arguments )
-	return concommand.AutoComplete( command, arguments )
-end
-
-
-
 local AddConsoleCommand = AddConsoleCommand
 local string = string
-
+local Msg = Msg
 
 --[[---------------------------------------------------------
    Name: concommand
    Desc: A module to take care of the registration and calling
          of Lua console commands.
 -----------------------------------------------------------]]
-module("concommand")
+module( "concommand" )
 
-local CommandList 	= {}
-local CompleteList 	= {}
+local CommandList = {}
+local CompleteList = {}
 
 --[[---------------------------------------------------------
    Name: concommand.GetTable( )
@@ -56,7 +42,6 @@ function Remove( name )
 	CompleteList[ LowerName ] = nil
 end
 
-
 --[[---------------------------------------------------------
    Name: concommand.Run( )
    Desc: Called by the engine when an unknown console command is run
@@ -70,11 +55,9 @@ function Run( player, command, arguments, args )
 		return true
 	end
 
-	if ( player:IsValid() ) then
-		player:ChatPrint( "Unknown Command: '" .. command .. "'\n" )
-	end
-	
-	return false;
+	Msg( "Unknown command: " .. command .. "\n" )
+
+	return false
 end
 
 --[[---------------------------------------------------------
@@ -88,6 +71,5 @@ function AutoComplete( command, arguments )
 	if ( CompleteList[ LowerCommand ] != nil ) then
 		return CompleteList[ LowerCommand ]( command, arguments )
 	end
-	
-end
 
+end

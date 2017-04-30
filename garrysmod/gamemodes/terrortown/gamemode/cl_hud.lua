@@ -233,7 +233,7 @@ local function InfoPaint(client)
    ShadowedText(tostring(health), "HealthAmmo", bar_width, health_y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT)
 
    if ttt_health_label:GetBool() then
-      local health_status = util.HealthToString(health)
+      local health_status = util.HealthToString(health, client:GetMaxHealth())
       draw.SimpleText(L[health_status], "TabLarge", x + margin*2, health_y + bar_height/2, COLOR_WHITE, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
    end
 
@@ -318,37 +318,57 @@ end
 function GM:HUDPaint()
    local client = LocalPlayer()
 
-   GAMEMODE:HUDDrawTargetID()
-
-   MSTACK:Draw(client)
+   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTargetID" ) then
+       hook.Call( "HUDDrawTargetID", GAMEMODE )
+   end
+   
+   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTMStack" ) then
+       MSTACK:Draw(client)
+   end
 
    if (not client:Alive()) or client:Team() == TEAM_SPEC then
-      SpecHUDPaint(client)
+      if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTSpecHUD" ) then
+          SpecHUDPaint(client)
+      end
 
       return
    end
 
+   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTRadar" ) then
+       RADAR:Draw(client)
+   end
+   
+   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTButton" ) then
+       TBHUD:Draw(client)
+   end
+   
+   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTWSwitch" ) then
+       WSWITCH:Draw(client)
+   end
 
-   RADAR:Draw(client)
-   TBHUD:Draw(client)
-   WSWITCH:Draw(client)
+   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTVoice" ) then
+       VOICE.Draw(client)
+   end
+   
+   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTDisguise" ) then
+       DISGUISE.Draw(client)
+   end
 
-   VOICE.Draw(client)
-   DISGUISE.Draw(client)
-
-   GAMEMODE:HUDDrawPickupHistory()
+   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTPickupHistory" ) then
+       hook.Call( "HUDDrawPickupHistory", GAMEMODE )
+   end
 
    -- Draw bottom left info panel
-   InfoPaint(client)
+   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTInfoPanel" ) then
+       InfoPaint(client)
+   end
 end
 
 -- Hide the standard HUD stuff
-local hud = {"CHudHealth", "CHudBattery", "CHudAmmo", "CHudSecondaryAmmo"}
+local hud = {["CHudHealth"] = true, ["CHudBattery"] = true, ["CHudAmmo"] = true, ["CHudSecondaryAmmo"] = true}
 function GM:HUDShouldDraw(name)
-   for k, v in pairs(hud) do
-      if name == v then return false end
-   end
+   if hud[name] then return false end
 
-   return true
+   return self.BaseClass.HUDShouldDraw(self, name)
 end
 

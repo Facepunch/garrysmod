@@ -1,28 +1,30 @@
 
-AddCSLuaFile();
+AddCSLuaFile()
 
-include( 'duplicator/transport.lua' )
-include( 'duplicator/arming.lua' )
+include( "duplicator/transport.lua" )
+include( "duplicator/arming.lua" )
 
 if ( CLIENT ) then
 
-	include( 'duplicator/icon.lua' )
+	include( "duplicator/icon.lua" )
 
 else
 
-	AddCSLuaFile( 'duplicator/arming.lua' );
-	AddCSLuaFile( 'duplicator/transport.lua' );
-	AddCSLuaFile( 'duplicator/icon.lua' );
+	AddCSLuaFile( "duplicator/arming.lua" )
+	AddCSLuaFile( "duplicator/transport.lua" )
+	AddCSLuaFile( "duplicator/icon.lua" )
 	util.AddNetworkString( "CopiedDupe" )
 
 end
 
-TOOL.Category		= "Construction"
-TOOL.Name			= "#tool.duplicator.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
-TOOL.Stored			= true
+TOOL.Category = "Construction"
+TOOL.Name = "#tool.duplicator.name"
+TOOL.Stored = true
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
 
 cleanup.Register( "duplicates" )
 
@@ -48,11 +50,10 @@ function TOOL:LeftClick( trace )
 
 	--
 	-- Spawn it rotated with the player - but not pitch.
-	-- 
+	--
 	local SpawnAngle = self:GetOwner():EyeAngles()
 	SpawnAngle.pitch = 0
 	SpawnAngle.roll = 0
-	
 
 	--
 	-- Spawn them all at our chosen positions
@@ -73,21 +74,21 @@ function TOOL:LeftClick( trace )
 	-- Create one undo for the whole creation
 	--
 	undo.Create( "Duplicator" )
-	
+
 		for k, ent in pairs( Ents ) do
 			undo.AddEntity( ent )
 		end
-		
-		for k, ent in pairs( Ents )	do 
-			self:GetOwner():AddCleanup( "duplicates", ent ) 
+
+		for k, ent in pairs( Ents )	do
+			self:GetOwner():AddCleanup( "duplicates", ent )
 		end
-		
+
 		undo.SetPlayer( self:GetOwner() )
-		
+
 	undo.Finish()
 
 	return true
-	
+
 end
 
 --
@@ -104,7 +105,7 @@ function TOOL:RightClick( trace )
 	duplicator.SetLocalPos( trace.HitPos )
 	duplicator.SetLocalAng( Angle( 0, self:GetOwner():EyeAngles().yaw, 0 ) )
 
-	Dupe = duplicator.Copy( trace.Entity )
+	local Dupe = duplicator.Copy( trace.Entity )
 
 	duplicator.SetLocalPos( Vector( 0, 0, 0 ) )
 	duplicator.SetLocalAng( Angle( 0, 0, 0 ) )
@@ -115,34 +116,28 @@ function TOOL:RightClick( trace )
 	-- Tell the clientside that they're holding something new
 	--
 	net.Start( "CopiedDupe" )
-		net.WriteUInt( 1, 1 );
+		net.WriteUInt( 1, 1 )
 	net.Send( self:GetOwner() )
-
 
 	--
 	-- Store the dupe on the player
 	--
-	self:GetOwner().CurrentDupe = Dupe;
+	self:GetOwner().CurrentDupe = Dupe
 
 	return true
-	
-end
 
+end
 
 --[[---------------------------------------------------------
 	Builds the context menu
 -----------------------------------------------------------]]
 function TOOL.BuildCPanel( CPanel )
-	
-	CPanel:AddControl( "Header", { Text = "#tool.duplicator.name", Description	= "#tool.duplicator.desc" }  )
 
-		local params = {}
-		params.Text = "#tool.duplicator.showsaves"
-		params.Command = "dupe_show"
-	CPanel:AddControl( "Button", params )
+	CPanel:AddControl( "Header", { Description = "#tool.duplicator.desc" } )
+
+	CPanel:AddControl( "Button", { Text = "#tool.duplicator.showsaves", Command = "dupe_show" } )
 
 end
-
 
 if ( CLIENT ) then
 
@@ -151,7 +146,7 @@ if ( CLIENT ) then
 	-- This allows us to enable the save button in the spawn menu
 	--
 	net.Receive( "CopiedDupe", function( len, client )
-		
+
 			if ( net.ReadUInt( 1 ) == 1 ) then
 				hook.Run( "DupeSaveAvailable" )
 			else

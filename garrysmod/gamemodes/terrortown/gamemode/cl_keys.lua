@@ -30,7 +30,7 @@ function GM:PlayerBindPress(ply, bind, pressed)
       end
       return true
    elseif bind == "+attack" then
-      if WSWITCH.Show then
+      if WSWITCH:PreventAttack() then
          if not pressed then
             WSWITCH:ConfirmSelection()
          end
@@ -82,11 +82,6 @@ function GM:PlayerBindPress(ply, bind, pressed)
             GAMEMODE.ForcedMouse = true
          end
       end
-   elseif bind == "messagemode" and pressed and ply:IsSpec() then
-      if GAMEMODE.round_state == ROUND_ACTIVE and DetectiveMode() then
-         LANG.Msg("spec_teamchat_hint")
-         return true
-      end
    elseif bind == "noclip" and pressed then
       if not GetConVar("sv_cheats"):GetBool() then
          RunConsoleCommand("ttt_equipswitch")
@@ -95,6 +90,8 @@ function GM:PlayerBindPress(ply, bind, pressed)
    elseif (bind == "gmod_undo" or bind == "undo") and pressed then
       RunConsoleCommand("ttt_dropammo")
       return true
+   elseif bind == "phys_swap" and pressed then
+      RunConsoleCommand("ttt_quickslot", "5")
    end
 end
 
@@ -118,3 +115,10 @@ function GM:KeyRelease(ply, key)
    end
 end
 
+function GM:PlayerButtonUp(ply, btn)
+   -- Would be nice to clean up this whole "all key handling in massive
+   -- functions" thing. oh well
+   if btn == KEY_PAD_ENTER then
+      WEPS.DisguiseToggle(ply)
+   end
+end

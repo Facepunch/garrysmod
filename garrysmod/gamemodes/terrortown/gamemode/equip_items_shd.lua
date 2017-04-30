@@ -16,17 +16,24 @@
 
 
 -- Special equipment bitflags. Every unique piece of equipment needs its own
--- id. The number should increase by a factor of two for every item (ie. ids
--- should be powers of two). So if you were to add five more pieces of
--- equipment, they should have the following ids: 8, 16, 32, 64, 128...
+-- id. 
+--
+-- Use the GenerateNewEquipmentID function (see below) to get a unique ID for
+-- your equipment. This is guaranteed not to clash with other addons (as long
+-- as they use the same safe method).
+--
+-- Details you shouldn't need:
+-- The number should increase by a factor of two for every item (ie. ids
+-- should be powers of two).
 EQUIP_NONE     = 0
 EQUIP_ARMOR    = 1
 EQUIP_RADAR    = 2
 EQUIP_DISGUISE = 4
 
+EQUIP_MAX      = 4
 
 -- Icon doesn't have to be in this dir, but all default ones are in here
-local mat_dir = "VGUI/ttt/"
+local mat_dir = "vgui/ttt/"
 
 
 -- Stick to around 35 characters per description line, and add a "\n" where you
@@ -109,3 +116,8 @@ function GetEquipmentItem(role, id)
    end
 end
 
+ -- Utility function to register a new Equipment ID
+function GenerateNewEquipmentID()
+   EQUIP_MAX = EQUIP_MAX * 2
+   return EQUIP_MAX
+end

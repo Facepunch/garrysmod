@@ -39,7 +39,6 @@ AddCSLuaFile("vgui/sb_row.lua")
 AddCSLuaFile("vgui/sb_team.lua")
 AddCSLuaFile("vgui/sb_info.lua")
 
-include("resources.lua")
 include("shared.lua")
 
 include("karma.lua")
@@ -57,17 +56,19 @@ include("corpse.lua")
 include("player_ext_shd.lua")
 include("player_ext.lua")
 include("player.lua")
-include("tags.lua")
 
+-- Round times
 CreateConVar("ttt_roundtime_minutes", "10", FCVAR_NOTIFY)
 CreateConVar("ttt_preptime_seconds", "30", FCVAR_NOTIFY)
 CreateConVar("ttt_posttime_seconds", "30", FCVAR_NOTIFY)
 CreateConVar("ttt_firstpreptime", "60")
 
+-- Haste mode
 local ttt_haste = CreateConVar("ttt_haste", "1", FCVAR_NOTIFY)
 CreateConVar("ttt_haste_starting_minutes", "5", FCVAR_NOTIFY)
 CreateConVar("ttt_haste_minutes_per_death", "0.5", FCVAR_NOTIFY)
 
+-- Player Spawning
 CreateConVar("ttt_spawn_wave_interval", "0")
 
 CreateConVar("ttt_traitor_pct", "0.25")
@@ -93,12 +94,9 @@ CreateConVar("ttt_det_credits_starting", "1")
 CreateConVar("ttt_det_credits_traitorkill", "0")
 CreateConVar("ttt_det_credits_traitordead", "1")
 
-
-CreateConVar("ttt_announce_deaths", "1", FCVAR_ARCHIVE + FCVAR_NOTIFY)
-
+-- Other
 CreateConVar("ttt_use_weapon_spawn_scripts", "1")
-
-CreateConVar("ttt_always_use_mapcycle", "0")
+CreateConVar("ttt_weapon_spawn_count", "0")
 
 CreateConVar("ttt_round_limit", "6", FCVAR_ARCHIVE + FCVAR_NOTIFY + FCVAR_REPLICATED)
 CreateConVar("ttt_time_limit_minutes", "75", FCVAR_NOTIFY + FCVAR_REPLICATED)
@@ -122,10 +120,44 @@ local ttt_dbgwin = CreateConVar("ttt_debug_preventwin", "0")
 -- Localise stuff we use often. It's like Lua go-faster stripes.
 local math = math
 local table = table
-local umsg = umsg
+local net = net
 local player = player
 local timer = timer
+local util = util
 
+-- Pool some network names.
+util.AddNetworkString("TTT_RoundState")
+util.AddNetworkString("TTT_RagdollSearch")
+util.AddNetworkString("TTT_GameMsg")
+util.AddNetworkString("TTT_GameMsgColor")
+util.AddNetworkString("TTT_RoleChat")
+util.AddNetworkString("TTT_TraitorVoiceState")
+util.AddNetworkString("TTT_LastWordsMsg")
+util.AddNetworkString("TTT_RadioMsg")
+util.AddNetworkString("TTT_ReportStream")
+util.AddNetworkString("TTT_LangMsg")
+util.AddNetworkString("TTT_ServerLang")
+util.AddNetworkString("TTT_Equipment")
+util.AddNetworkString("TTT_Credits")
+util.AddNetworkString("TTT_Bought")
+util.AddNetworkString("TTT_BoughtItem")
+util.AddNetworkString("TTT_InterruptChat")
+util.AddNetworkString("TTT_PlayerSpawned")
+util.AddNetworkString("TTT_PlayerDied")
+util.AddNetworkString("TTT_CorpseCall")
+util.AddNetworkString("TTT_ClearClientState")
+util.AddNetworkString("TTT_PerformGesture")
+util.AddNetworkString("TTT_Role")
+util.AddNetworkString("TTT_RoleList")
+util.AddNetworkString("TTT_ConfirmUseTButton")
+util.AddNetworkString("TTT_C4Config")
+util.AddNetworkString("TTT_C4DisarmResult")
+util.AddNetworkString("TTT_C4Warn")
+util.AddNetworkString("TTT_ShowPrints")
+util.AddNetworkString("TTT_ScanResult")
+util.AddNetworkString("TTT_FlareScorch")
+util.AddNetworkString("TTT_Radar")
+util.AddNetworkString("TTT_Spectate")
 ---- Round mechanics
 function GM:Initialize()
    MsgN("Trouble In Terrorist Town gamemode initializing...")
@@ -182,14 +214,6 @@ function GM:Initialize()
    if not cstrike then
       ErrorNoHalt("TTT WARNING: CS:S does not appear to be mounted by GMod. Things may break in strange ways. Server admin? Check the TTT readme for help.\n")
    end
-
-   GAMEMODE:CheckFileConsistency()
-end
-
-function GM:InitPostEntity()
-   self.Customized = WEPS.HasCustomEquipment()
-
-   self:UpdateServerTags()
 end
 
 -- Used to do this in Initialize, but server cfg has not always run yet by that
@@ -205,7 +229,9 @@ function GM:InitCvars()
    self.cvar_init = true
 end
 
-function GM:GetGameDescription() return self.Name end
+function GM:InitPostEntity()
+   WEPS.ForcePrecache()
+end
 
 -- Convar replication is broken in gmod, so we do this.
 -- I don't like it any more than you do, dear reader.
@@ -224,13 +250,9 @@ function GM:SyncGlobals()
 end
 
 function SendRoundState(state, ply)
-   if ply then
-      umsg.Start("round_state", ply)
-   else
-      umsg.Start("round_state")
-   end
-   umsg.Char(state)
-   umsg.End()
+   net.Start("TTT_RoundState")
+      net.WriteUInt(state, 3)
+   return ply and net.Send(ply) or net.Broadcast()
 end
 
 -- Round state is encapsulated by set/get so that it can easily be changed to
@@ -296,10 +318,9 @@ local function WinChecker()
       if CurTime() > GetGlobalFloat("ttt_round_end", 0) then
          EndRound(WIN_TIMELIMIT)
       else
-         local win = CheckForWin()
+         local win = hook.Call("TTTCheckForWin", GAMEMODE)
          if win != WIN_NONE then
             EndRound(win)
-            return
          end
       end
    end
@@ -307,7 +328,7 @@ end
 
 local function NameChangeKick()
    if not GetConVar("ttt_namechange_kick"):GetBool() then
-      timer.Destroy("namecheck")
+      timer.Remove("namecheck")
       return
    end
 
@@ -373,7 +394,7 @@ local function CleanUp()
    end
 
    -- a different kind of cleanup
-   util.UnbridledHateForULX()
+   util.SafeRemoveHook("PlayerSay", "ULXMeCheck")
 end
 
 local function SpawnEntities()
@@ -400,7 +421,7 @@ local function StopRoundTimers()
    -- remove all timers
    timer.Stop("wait2prep")
    timer.Stop("prep2begin")
-   timer.Stop("end2begin")
+   timer.Stop("end2prep")
    timer.Stop("winchecker")
 end
 
@@ -419,25 +440,23 @@ local function CheckForAbort()
 end
 
 function GM:TTTDelayRoundStartForVote()
-   -- No voting system available in GM13 (yet)
-   --return self:InGamemodeVote()
+   -- Can be used for custom voting systems
+   --return true, 30
    return false
 end
 
 function PrepareRound()
-   GAMEMODE:UpdateServerTags()
-
    -- Check playercount
    if CheckForAbort() then return end
 
-   if GetGlobalBool("InContinueVote", false) then
-      GAMEMODE:FinishContinueVote() -- may start a gamemode vote
-   end
+   local delay_round, delay_length = hook.Call("TTTDelayRoundStartForVote", GAMEMODE)
 
-   if hook.Call("TTTDelayRoundStartForVote", GAMEMODE) then
-      LANG.Msg("round_voting", {num = 30})
+   if delay_round then
+      delay_length = delay_length or 30
 
-      timer.Create("delayedprep", 30, 1, PrepareRound)
+      LANG.Msg("round_voting", {num = delay_length})
+
+      timer.Create("delayedprep", delay_length, 1, PrepareRound)
       return
    end
 
@@ -485,7 +504,7 @@ function PrepareRound()
    -- selectmute timer.
    timer.Create("restartmute", 1, 1, function() MuteForRestart(false) end)
 
-   SendUserMessage("clearclientstate")
+   net.Start("TTT_ClearClientState") net.Broadcast()
 
    -- In case client's cleanup fails, make client set all players to innocent role
    timer.Simple(1, SendRoleReset)
@@ -564,11 +583,9 @@ function SpawnWillingPlayers(dead_only)
                      -- spawning
                      while c < num_spawns and #to_spawn > 0 do
                         for k, ply in pairs(to_spawn) do
-                           if IsValid(ply) then
-                              if ply:SpawnForRound() then
-                                 -- a spawn ent is now occupied
-                                 c = c + 1
-                              end
+                           if IsValid(ply) and ply:SpawnForRound() then
+                              -- a spawn ent is now occupied
+                              c = c + 1
                            end
                            -- Few possible cases:
                            -- 1) player has now been spawned
@@ -588,7 +605,7 @@ function SpawnWillingPlayers(dead_only)
                      MsgN("Spawned " .. c .. " players in spawn wave.")
 
                      if #to_spawn == 0 then
-                        timer.Destroy("spawnwave")
+                        timer.Remove("spawnwave")
                         MsgN("Spawn waves ending, all players spawned.")
                      end
                   end
@@ -632,8 +649,6 @@ function BeginRound()
    -- Remove their ragdolls
    ents.TTT.RemoveRagdolls(true)
 
-   WEPS.ForcePrecache()
-
    if CheckForAbort() then return end
 
    -- Select traitors & co. This is where things really start so we can't abort
@@ -646,6 +661,7 @@ function BeginRound()
    -- traitor, but for whatever reason does not get the traitor state msg. So
    -- re-send after a second just to make sure everyone is getting it.
    timer.Simple(1, SendFullStateUpdate)
+   timer.Simple(10, SendFullStateUpdate)
 
    SCORE:HandleSelection() -- log traitors and detectives
 
@@ -689,11 +705,6 @@ function PrintResultMessage(type)
    end
 end
 
-local function ShouldMapSwitch()
-   return true -- no voting until fretta replacement arrives
---   return GetConVar("ttt_always_use_mapcycle"):GetBool()
-end
-
 function CheckForMapSwitch()
    -- Check for mapswitch
    local rounds_left = math.max(0, GetGlobalInt("ttt_rounds_left", 6) - 1)
@@ -703,29 +714,18 @@ function CheckForMapSwitch()
    local switchmap = false
    local nextmap = string.upper(game.GetMapNext())
 
-   if ShouldMapSwitch() then
-      if rounds_left <= 0 then
-         LANG.Msg("limit_round", {mapname = nextmap})
-         switchmap = true
-      elseif time_left <= 0 then
-         LANG.Msg("limit_time", {mapname = nextmap})
-         switchmap = true
-      end
-   else
-      -- we only get here if fretta_voting is on and always_use_mapcycle off
-      if rounds_left <= 0 or time_left <= 0 then
-         LANG.Msg("limit_vote")
-
-         -- pending fretta replacement...
-         switchmap = true
-         --GAMEMODE:StartFrettaVote()
-      end
+   if rounds_left <= 0 then
+      LANG.Msg("limit_round", {mapname = nextmap})
+      switchmap = true
+   elseif time_left <= 0 then
+      LANG.Msg("limit_time", {mapname = nextmap})
+      switchmap = true
    end
 
    if switchmap then
       timer.Stop("end2prep")
       timer.Simple(15, game.LoadNextMap)
-   elseif ShouldMapSwitch() then
+   else
       LANG.Msg("limit_left", {num = rounds_left,
                               time = math.ceil(time_left / 60),
                               mapname = nextmap})
@@ -753,12 +753,6 @@ function EndRound(type)
    -- We may need to start a timer for a mapswitch, or start a vote
    CheckForMapSwitch()
 
-   -- Show unobtrusive vote window (only if fretta voting enabled and only if
-   -- not already in a round/time limit induced vote)
-   --if not GAMEMODE:InGamemodeVote() then
-   --   GAMEMODE:StartContinueVote()
-   --end
-
    KARMA.RoundEnd()
 
    -- now handle potentially error prone scoring stuff
@@ -784,7 +778,7 @@ function GM:MapTriggeredEnd(wintype)
 end
 
 -- The most basic win check is whether both sides have one dude alive
-function CheckForWin()
+function GM:TTTCheckForWin()
    if ttt_dbgwin:GetBool() then return WIN_NONE end
 
    if GAMEMODE.MapWin == WIN_TRAITOR or GAMEMODE.MapWin == WIN_INNOCENT then
@@ -857,7 +851,7 @@ function SelectRoles()
       if IsValid(v) and (not v:IsSpec()) then
          -- save previous role and sign up as possible traitor/detective
 
-         local r = GAMEMODE.LastRole[v:UniqueID()] or v:GetRole() or ROLE_INNOCENT
+         local r = GAMEMODE.LastRole[v:SteamID()] or v:GetRole() or ROLE_INNOCENT
 
          table.insert(prev_roles[r], v)
 
@@ -898,7 +892,7 @@ function SelectRoles()
    -- traitor, so becoming detective does not mean you lost a chance to be
    -- traitor
    local ds = 0
-   local min_karma = GetConVarNumber("ttt_detective_min_karma") or 0
+   local min_karma = GetConVarNumber("ttt_detective_karma_min") or 0
    while (ds < det_count) and (#choices >= 1) do
 
       -- sometimes we need all remaining choices to be detective to fill the
@@ -941,8 +935,8 @@ function SelectRoles()
       -- initialize credit count for everyone based on their role
       ply:SetDefaultCredits()
 
-      -- store a uid -> role map
-      GAMEMODE.LastRole[ply:UniqueID()] = ply:GetRole()
+      -- store a steamid -> role map
+      GAMEMODE.LastRole[ply:SteamID()] = ply:GetRole()
    end
 end
 

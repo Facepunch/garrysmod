@@ -1,16 +1,6 @@
 
-TOOL.Category		= "Render"
-TOOL.Name			= "#tool.paint.name"
-TOOL.Command		= nil
-TOOL.ConfigName		= ""
-
-game.AddDecal( "Eye",					"decals/eye" );
-game.AddDecal( "Smile",					"decals/smile" );
-game.AddDecal( "Light",					"decals/light" );
-game.AddDecal( "Dark",					"decals/dark" );
-game.AddDecal( "Noughtsncrosses",		"decals/noughtsncrosses" );
-game.AddDecal( "Nought",				"decals/nought" );
-game.AddDecal( "Cross",					"decals/cross" );
+TOOL.Category = "Render"
+TOOL.Name = "#tool.paint.name"
 
 TOOL.LeftClickAutomatic = true
 TOOL.RightClickAutomatic = true
@@ -18,23 +8,26 @@ TOOL.RequiresTraceHit = true
 
 TOOL.ClientConVar[ "decal" ] = "Blood"
 
-local function PlaceDecal( Player, Entity, Data )
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" },
+	{ name = "reload" }
+}
 
-	if ( Entity == nil ) then return end
-	if ( !Entity:IsWorld() && !IsValid( Entity ) ) then return end
+local function PlaceDecal( ply, ent, data )
 
-	local Bone = Entity:GetPhysicsObjectNum( Data.bone or 0 )
-	if ( !IsValid( Bone ) ) then 
-		Bone = Entity
-	end
+	if ( !IsValid( ent ) && !ent:IsWorld() ) then return end
 
-	util.Decal( Data.decal, Bone:LocalToWorld(Data.Pos1), Bone:LocalToWorld(Data.Pos2) )
-		
+	local bone = ent:GetPhysicsObjectNum( data.bone or 0 )
+	if ( !IsValid( bone ) ) then bone = ent end
+
 	if ( SERVER ) then
-		local i = Entity.DecalCount or 0;
+		util.Decal( data.decal, bone:LocalToWorld( data.Pos1 ), bone:LocalToWorld( data.Pos2 ), ply )
+
+		local i = ent.DecalCount or 0
 		i = i + 1
-		duplicator.StoreEntityModifier( Entity, "decal" .. i, Data )
-		Entity.DecalCount = i
+		duplicator.StoreEntityModifier( ent, "decal" .. i, data )
+		ent.DecalCount = i
 	end
 
 end
@@ -42,35 +35,41 @@ end
 --
 -- Register decal duplicator
 --
-for i=1,32 do
+for i = 1, 32 do
 
-	function PlaceDecal_delayed( Player, Entity, Data )
-		timer.Simple( i*0.05, function() PlaceDecal( Player, Entity, Data ) end )
-	end
+	duplicator.RegisterEntityModifier( "decal" .. i, function( ply, ent, data )
+		timer.Simple( i * 0.05, function() PlaceDecal( ply, ent, data ) end )
+	end )
 
-	duplicator.RegisterEntityModifier( "decal"..i, PlaceDecal_delayed )
+end
 
+function TOOL:Reload( trace )
+	if ( !IsValid( trace.Entity ) ) then return false end
+
+	trace.Entity:RemoveAllDecals()
+
+	return true
 end
 
 function TOOL:LeftClick( trace )
 
-	return self:RightClick( trace, true );
-	
+	return self:RightClick( trace, true )
+
 end
 
 function TOOL:RightClick( trace, bNoDelay )
 
-	self:GetOwner():EmitSound( "SprayCan.Paint" )
-	local decal	= self:GetClientInfo( "decal" )
-	
+	self:GetSWEP():EmitSound( "SprayCan.Paint" )
+	local decal = self:GetClientInfo( "decal" )
+
 	local Pos1 = trace.HitPos + trace.HitNormal
 	local Pos2 = trace.HitPos - trace.HitNormal
-	
+
 	local Bone = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone or 0 )
 	if ( !Bone ) then
 		Bone = trace.Entity
 	end
-	
+
 	Pos1 = Bone:WorldToLocal( Pos1 )
 	Pos2 = Bone:WorldToLocal( Pos2 )
 
@@ -85,8 +84,16 @@ function TOOL:RightClick( trace, bNoDelay )
 	end
 
 	return false
-	
+
 end
+
+game.AddDecal( "Eye", "decals/eye" )
+game.AddDecal( "Dark", "decals/dark" )
+game.AddDecal( "Smile", "decals/smile" )
+game.AddDecal( "Light", "decals/light" )
+game.AddDecal( "Cross", "decals/cross" )
+game.AddDecal( "Nought", "decals/nought" )
+game.AddDecal( "Noughtsncrosses", "decals/noughtsncrosses" )
 
 list.Add( "PaintMaterials", "Eye" )
 list.Add( "PaintMaterials", "Smile" )
@@ -120,23 +127,15 @@ list.Add( "PaintMaterials", "Cross" )
 
 function TOOL.BuildCPanel( CPanel )
 
-	-- HEADER
-	CPanel:AddControl( "Header", { Text = "#tool.paint.name", Description	= "#tool.paint_desc" }  )
-	
 	local Options = list.Get( "PaintMaterials" )
 	table.sort( Options )
-	
-	local RealOptions = {}
 
+	local listbox = CPanel:AddControl( "ListBox", { Label = "#tool.paint.texture", Height = 17 + table.Count( Options ) * 17 } )
 	for k, decal in pairs( Options ) do
-	
-		--local MatName = util.DecalMaterial( decal )	
-		RealOptions[ decal ] = { paint_decal = decal }
-	
+		local line = listbox:AddLine( decal )
+		line.data = { paint_decal = decal }
+
+		if ( GetConVarString( "paint_decal" ) == tostring( decal ) ) then line:SetSelected( true ) end
 	end
-		
-	CPanel:AddControl( "ListBox", { Label = "#tool.paint.texture", Height = "300", Options = RealOptions } )
-	
-	
-									
+
 end

@@ -221,7 +221,7 @@ vgui.Register("TTTTips", PANEL, "Panel")
 
 local tips_panel = nil
 function TIPS.Create()
-   if ValidPanel(tips_panel) then
+   if IsValid(tips_panel) then
       tips_panel:Remove()
       tips_panel = nil
    end

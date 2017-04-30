@@ -77,12 +77,12 @@ util.tobool = tobool
    Desc: Convert the local position on an entity to world pos
 -----------------------------------------------------------]]
 function util.LocalToWorld( ent, lpos, bone )
-	_bone = bone or 0
+	bone = bone or 0
 	if (ent:EntIndex() == 0) then
 		return lpos
 	else
-		if (ent:GetPhysicsObjectNum(_bone) ~= nil && ent:GetPhysicsObjectNum(_bone):IsValid()) then
-			return ent:GetPhysicsObjectNum(_bone):LocalToWorld(lpos)
+		if (ent:GetPhysicsObjectNum(bone) ~= nil && ent:GetPhysicsObjectNum(bone):IsValid()) then
+			return ent:GetPhysicsObjectNum(bone):LocalToWorld(lpos)
 		else
 			return ent:LocalToWorld(lpos)
 		end
@@ -191,14 +191,14 @@ local T =
 	--
 	Started = function( self )
 
-		self.endtime = CurTime() + time
+		return self.endtime != nil
 
 	end,
 
 	--
 	-- Returns true if the time has elapsed
 	--
-	Elapsed = function( self, time )
+	Elapsed = function( self )
 
 		return self.endtime == nil || self.endtime <= CurTime()
 
@@ -305,4 +305,45 @@ function util.Stack()
 	t.objs = {}
 	return t
 
+end
+
+--Helper for the following functions.
+local function GetUniqueID( sid )
+	return util.CRC( "gm_"..sid.."_gm" )
+end
+
+--[[---------------------------------------------------------
+   Name: GetPData( steamid, name, default )
+   Desc: Gets the persistant data from a player by steamid
+-----------------------------------------------------------]]
+function util.GetPData( steamid, name, default )
+
+	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
+	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr(name) .. " LIMIT 1" )
+	if ( val == nil ) then return default end
+	
+	return val
+	
+end
+
+--[[---------------------------------------------------------
+   Name: SetPData( steamid, name, value )
+   Desc: Sets the persistant data of a player by steamid
+-----------------------------------------------------------]]
+function util.SetPData( steamid, name, value )
+
+	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
+	sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( "..SQLStr(name)..", "..SQLStr(value).." )" )
+	
+end
+
+--[[---------------------------------------------------------
+   Name: RemovePData( steamid, name )
+   Desc: Removes the persistant data from a player by steamid
+-----------------------------------------------------------]]
+function util.RemovePData( steamid, name )
+
+	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
+	sql.Query( "DELETE FROM playerpdata WHERE infoid = "..SQLStr(name) )
+	
 end

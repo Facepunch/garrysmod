@@ -1,47 +1,37 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
-
---]]
 
 local tblOpenMenus = {}
 
-function RegisterDermaMenuForClose( menu )
+function RegisterDermaMenuForClose( dmenu )
 
-	table.insert( tblOpenMenus, menu )
-
-end
-
-
-function DermaMenu( parentmenu )
-
-	if (!parentmenu) then CloseDermaMenus() end
-	
-	local menu = vgui.Create( "DMenu" )
-	
-	return menu
+	table.insert( tblOpenMenus, dmenu )
 
 end
 
+function DermaMenu( parentmenu, parent )
+
+	if ( !parentmenu ) then CloseDermaMenus() end
+
+	local dmenu = vgui.Create( "DMenu", parent )
+
+	return dmenu
+
+end
 
 function CloseDermaMenus()
 
-	for k, menu in pairs( tblOpenMenus ) do
-	
-		if ( IsValid( menu ) ) then
-		
-			menu:SetVisible( false )
-			if ( menu:GetDeleteSelf() ) then
-				menu:Remove()
+	for k, dmenu in pairs( tblOpenMenus ) do
+
+		if ( IsValid( dmenu ) ) then
+
+			dmenu:SetVisible( false )
+			if ( dmenu:GetDeleteSelf() ) then
+				dmenu:Remove()
 			end
-			
+
 		end
-	
-	end	
-	
+
+	end
+
 	tblOpenMenus = {}
 	hook.Run( "CloseDermaMenus" )
 
@@ -54,18 +44,16 @@ end
 local function DermaDetectMenuFocus( panel, mousecode )
 
 	if ( IsValid( panel ) ) then
-	
+
 		if ( panel.m_bIsMenuComponent ) then return end
 
 		-- Is the parent a menu?
 		return DermaDetectMenuFocus( panel:GetParent(), mousecode )
-		
+
 	end
-	
+
 	CloseDermaMenus()
 
 end
-
-
 
 hook.Add( "VGUIMousePressed", "DermaDetectMenuFocus", DermaDetectMenuFocus )

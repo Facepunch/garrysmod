@@ -36,6 +36,11 @@ end
 -- If detective mode, announce when someone's body is found
 local bodyfound = CreateConVar("ttt_announce_body_found", "1")
 
+function GM:TTTCanIdentifyCorpse(ply, corpse, was_traitor)
+   -- return true to allow corpse identification, false to disallow
+   return true
+end
+
 local function IdentifyBody(ply, rag)
    if not ply:IsTerror() then return end
 
@@ -44,11 +49,15 @@ local function IdentifyBody(ply, rag)
       CORPSE.SetFound(rag, true)
       return
    end
+   
+   if not hook.Run("TTTCanIdentifyCorpse", ply, rag, (rag.was_role == ROLE_TRAITOR)) then
+      return
+   end
 
    local finder = ply:Nick()
    local nick = CORPSE.GetPlayerNick(rag, "")
    local traitor = (rag.was_role == ROLE_TRAITOR)
-
+   
    -- Announce body
    if bodyfound:GetBool() and not CORPSE.GetFound(rag, false) then
       local roletext = nil
@@ -69,7 +78,7 @@ local function IdentifyBody(ply, rag)
    -- Register find
    if not CORPSE.GetFound(rag, false) then
       -- will return either false or a valid ply
-      local deadply = player.GetByUniqueID(rag.uqid)
+      local deadply = player.GetBySteamID(rag.sid)
       if deadply then
          deadply:SetNWBool("body_found", true)
 
@@ -77,10 +86,9 @@ local function IdentifyBody(ply, rag)
             -- update innocent's list of traitors
             SendConfirmedTraitors(GetInnocentFilter(false))
          end
-
          SCORE:HandleBodyFound(ply, deadply)
       end
-
+      hook.Call( "TTTBodyFound", GAMEMODE, ply, deadply, rag )
       CORPSE.SetFound(rag, true)
    else
       -- re-set because nwvars are unreliable
@@ -89,9 +97,9 @@ local function IdentifyBody(ply, rag)
    end
 
    -- Handle kill list
-   for k, vicid in pairs(rag.kills) do
+   for k, vicsid in pairs(rag.kills) do
       -- filter out disconnected
-      local vic = player.GetByUniqueID(vicid)
+      local vic = player.GetBySteamID(vicsid)
 
       -- is this an unconfirmed dead?
       if IsValid(vic) and (not vic:GetNWBool("body_found", false)) then
@@ -147,7 +155,9 @@ local function CallDetective(ply, cmd, args)
    if IsValid(rag) and rag:GetPos():Distance(ply:GetPos()) < 128 then
       if CORPSE.GetFound(rag, false) then
          -- show indicator to detectives
-         SendUserMessage("corpse_call", GetDetectiveFilter(true), rag:GetPos())
+         net.Start("TTT_CorpseCall")
+            net.WriteVector(rag:GetPos())
+         net.Send(GetDetectiveFilter(true))
 
          LANG.Msg("body_call", {player = ply:Nick(),
                                 victim = CORPSE.GetPlayerNick(rag, "someone")})
@@ -159,12 +169,30 @@ local function CallDetective(ply, cmd, args)
 end
 concommand.Add("ttt_call_detective", CallDetective)
 
+local function bitsRequired(num)
+   local bits, max = 0, 1
+   while max <= num do
+      bits = bits + 1
+      max = max + max
+   end
+   return bits
+end
+
+function GM:TTTCanSearchCorpse(ply, corpse, is_covert, is_long_range, was_traitor)
+   -- return true to allow corpse search, false to disallow.
+   return true
+end
+
 -- Send a usermessage to client containing search results
 function CORPSE.ShowSearch(ply, rag, covert, long_range)
    if not IsValid(ply) or not IsValid(rag) then return end
 
    if rag:IsOnFire() then
       LANG.Msg(ply, "body_burning")
+      return
+   end
+   
+   if not hook.Run("TTTCanSearchCorpse", ply, rag, covert, long_range, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
 
@@ -179,8 +207,8 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    local words = rag.last_words or ""
    local hshot = rag.was_headshot or false
    local dtime = rag.time or 0
-
-   local owner = player.GetByUniqueID(rag.uqid)
+   
+   local owner = player.GetBySteamID(rag.sid)
    owner = IsValid(owner) and owner:EntIndex() or -1
 
    -- basic sanity check
@@ -217,9 +245,9 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
 
    -- build list of people this traitor killed
    local kill_entids = {}
-   for k, vicid in pairs(rag.kills) do
+   for k, vicsid in pairs(rag.kills) do
       -- also send disconnected players as a marker
-      local vic = player.GetByUniqueID(vicid)
+      local vic = player.GetBySteamID(vicsid)
       table.insert(kill_entids, IsValid(vic) and vic:EntIndex() or -1)
    end
 
@@ -230,50 +258,41 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
       lastid = IsValid(rag.lastid.ent) and rag.lastid.ent:EntIndex() or -1
    end
 
-   -- If found by detective, send to all, else just the finder
-   local receiver = ply
-   if ply:IsActiveDetective() then receiver = nil end
-
    -- Send a message with basic info
-   umsg.Start("ragsrch", receiver)
-   umsg.Short(rag:EntIndex()) -- 2 bytes
-   umsg.Short(owner)  -- 2 bytes
-   umsg.String(nick)
-   umsg.Short(eq)     -- 2 bytes
-   umsg.Char(role)    -- 1 byte
-   umsg.Char(c4)      -- 1 byte
-   umsg.Long(dmg)     -- 4 bytes, enum goes high
-   umsg.String(wep)   -- 2 bytes(?)
-   umsg.Bool(hshot)   -- 1 byte
-   umsg.Short(dtime)  -- 2 bytes
-   umsg.Short(stime)  -- 2 bytes
+   net.Start("TTT_RagdollSearch")
+      net.WriteUInt(rag:EntIndex(), 16) -- 16 bits
+      net.WriteUInt(owner, 8) -- 128 max players. ( 8 bits )
+      net.WriteString(nick)
+      net.WriteUInt(eq, 16) -- Equipment ( 16 = max. )
+      net.WriteUInt(role, 2) -- ( 2 bits )
+      net.WriteInt(c4, bitsRequired(C4_WIRE_COUNT) + 1) -- -1 -> 2^bits ( default c4: 4 bits )
+      net.WriteUInt(dmg, 30) -- DMG_BUCKSHOT is the highest. ( 30 bits )
+      net.WriteString(wep)
+      net.WriteBit(hshot) -- ( 1 bit )
+      net.WriteInt(dtime, 16)
+      net.WriteInt(stime, 16)
 
-   umsg.Char(#kill_entids)  -- 1 byte + (2 * #kills) bytes
-   for k, idx in pairs(kill_entids) do
-      -- might be possible to use chars here but this is safer
-      umsg.Short(idx)
-   end
-
-   umsg.Short(lastid)
-
-   -- Who found this, so if we get this from a detective we can decide not to
-   -- show a window
-   umsg.Short(ply:EntIndex())
-
-   -- Will there be a last words umsg coming up?
-   umsg.Bool(words != "") -- 1b
-   umsg.End()
-
-   if words != "" then
-      -- umsgs only have 128 bytes of room, so if last words is really long we
-      -- have to truncate
-      if string.len(words) > 127 then
-         words = string.sub(words, -127)
+      net.WriteUInt(#kill_entids, 8)
+      for k, idx in pairs(kill_entids) do
+         net.WriteUInt(idx, 8) -- first game.MaxPlayers() of entities are for players.
       end
 
-      umsg.Start("ragsrch_lw", ply)
-      umsg.String(words)
-      umsg.End()
+      net.WriteUInt(lastid, 8)
+
+      -- Who found this, so if we get this from a detective we can decide not to
+      -- show a window
+      net.WriteUInt(ply:EntIndex(), 8)
+
+      net.WriteString(words)
+
+      -- 133 + string data + #kill_entids * 8
+      -- 200
+
+   -- If found by detective, send to all, else just the finder
+   if ply:IsActiveDetective() then
+      net.Broadcast()
+   else
+      net.Send(ply)
    end
 end
 
@@ -299,7 +318,7 @@ local function GetKillerSample(victim, attacker, dmg)
 
    local sample = {}
    sample.killer = attacker
-   sample.killer_uid = attacker:UniqueID()
+   sample.killer_sid = attacker:SteamID()
    sample.victim = victim
    sample.t      = CurTime() + (-1 * (0.019 * dist)^2 + GetConVarNumber("ttt_killer_dna_basetime"))
 
@@ -367,6 +386,10 @@ function CORPSE.Create(ply, attacker, dmginfo)
 
    rag:SetPos(ply:GetPos())
    rag:SetModel(ply:GetModel())
+   rag:SetSkin(ply:GetSkin())
+   for key, value in pairs(ply:GetBodyGroups()) do
+      rag:SetBodygroup(value.id, ply:GetBodygroup(value.id))	
+   end
    rag:SetAngles(ply:GetAngles())
    rag:SetColor(ply:GetColor())
 
@@ -375,10 +398,13 @@ function CORPSE.Create(ply, attacker, dmginfo)
 
    -- nonsolid to players, but can be picked up and shot
    rag:SetCollisionGroup(rag_collide:GetBool() and COLLISION_GROUP_WEAPON or COLLISION_GROUP_DEBRIS_TRIGGER)
+   timer.Simple( 1, function() if IsValid( rag ) then rag:CollisionRulesChanged() end end )
 
    -- flag this ragdoll as being a player's
    rag.player_ragdoll = true
-   rag.uqid = ply:UniqueID()
+   rag.sid = ply:SteamID()
+
+   rag.uqid = ply:UniqueID() -- backwards compatibility; use rag.sid instead
 
    -- network data
    CORPSE.SetPlayerNick(rag, ply)
@@ -435,6 +461,8 @@ function CORPSE.Create(ply, attacker, dmginfo)
       local efn = ply.effect_fn
       timer.Simple(0, function() efn(rag) end)
    end
+   
+   hook.Run("TTTOnCorpseCreated", rag, ply)
 
    return rag -- we'll be speccing this
 end

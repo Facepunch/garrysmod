@@ -1,8 +1,8 @@
 versioninfo
 {
 	"editorversion" "400"
-	"editorbuild" "5004"
-	"mapversion" "13"
+	"editorbuild" "6171"
+	"mapversion" "14"
 	"formatversion" "100"
 	"prefab" "0"
 }
@@ -20,7 +20,7 @@ viewsettings
 world
 {
 	"id" "1"
-	"mapversion" "13"
+	"mapversion" "14"
 	"classname" "worldspawn"
 	"detailmaterial" "detail/detailsprites"
 	"detailvbsp" "detail.vbsp"
@@ -1357,6 +1357,7 @@ entity
 	"description" "Open Traitor-only door"
 	"origin" "200 384 -240"
 	"targetname" "traitorbutton1"
+	"UsableRange" "128"
 	"wait" "0"
 	connections
 	{
@@ -1564,6 +1565,7 @@ entity
 	"RemoveOnPress" "0"
 	"spawnflags" "0"
 	"targetname" "creditbutton"
+	"UsableRange" "1024"
 	"wait" "1"
 	connections
 	{

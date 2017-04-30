@@ -26,7 +26,7 @@ if ( CLIENT ) then
 		-- And send it to the server
 		--
 		net.Start( "ArmDupe" )
-			net.WriteUInt( dupe.data:len(), 32 )		
+			net.WriteUInt( dupe.data:len(), 32 )
 			net.WriteData( dupe.data, dupe.data:len() )
 		net.SendToServer()
 
@@ -41,14 +41,18 @@ if ( SERVER ) then
 	--
 	util.AddNetworkString( "ArmDupe" )
 
+	local LastDupeArm = 0
 	net.Receive( "ArmDupe", function( len, client )
-					
-			local len		= net.ReadUInt( 32 )
-			local data		= net.ReadData( len )
+			if ( LastDupeArm > CurTime() ) then return end
+			
+			LastDupeArm = CurTime() + 1
+			
+			local len = net.ReadUInt( 32 )
+			local data = net.ReadData( len )
 
 			if ( !IsValid( client ) ) then return end
 
-			-- Hook.. can arn dupe..
+			-- Hook.. can arm dupe..
 
 			local uncompressed = util.Decompress( data )
 			if ( !uncompressed ) then 
@@ -73,4 +77,3 @@ if ( SERVER ) then
 	end )
 
 end
-

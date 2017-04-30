@@ -1,64 +1,68 @@
 
 dupe = new WorkshopFiles();
 
-function ControllerDupes($scope, $rootScope, $location, $timeout, $routeParams) 
+function ControllerDupes($scope, $rootScope, $location, $timeout, $routeParams)
 {
-
-	$rootScope.ShowBack = true;	
+	$rootScope.ShowBack = true;
 	Scope = $scope;
 
 	dupe.Init( 'ws_dupe', $scope, $rootScope );
 
 	$scope.ArmDupe = function( entry )
 	{
-		if ( entry.local )
-			return lua.Run( "ws_dupe:Arm( %s );", entry.info.file );
+		if ( !IN_ENGINE ) return;
+
+		if ( entry.local ) {
+			gmod.ArmDupe( entry.info.file );
+			return;
+		}
 
 		//
 		// TODO: Some kind of `please wait` while we download 200kb
 		//
 
-		lua.Run( "ws_dupe:DownloadAndArm( %s );", entry.info.fileid );
-
+		gmod.DownloadDupe( entry.info.fileid );
 	}
 
 	$scope.DeleteLocal = function( entry )
 	{
-		lua.Run( "file.Delete( %s, \"MOD\" );", entry.info.file );
-		lua.Run( "file.Delete( %s, \"MOD\" );", entry.background );
-		
+		if ( IN_ENGINE )
+		{
+			gmod.DeleteLocal( entry.info.file );
+			gmod.DeleteLocal( entry.info.background );
+		}
+
 		$scope.Switch( $scope.Category, $scope.Offset );
 	}
 
-	$scope.DoSave = function()
+	$scope.ReloadView = function()
 	{
-		lua.Run( "RunConsoleCommand( \"gm_save\", \"spawnmenu\" );" );
-
-		$( '.savegamebutton' ).css( 'opacity', '0.3' );
-		$( '.savegamebutton' ).css( 'pointer-events', 'none' );
-
-		setTimeout( function()
+		if ( IS_SPAWN_MENU )
 		{
-			$( '.savegamebutton' ).css( 'opacity', '1.0' );
-			$( '.savegamebutton' ).css( 'pointer-events', 'auto' );
+			if ( $routeParams.Category )
+			{
+				$timeout( function() { $scope.SwitchWithTag( $routeParams.Category, 0, $routeParams.Tag ); }, 100 );
+				return;
+			}
 
-		}, 5000 );
-	}
-
-	if (IS_SPAWN_MENU) 
-	{
-		if ($routeParams.Category) 
-		{
-			$timeout(function () { $scope.SwitchWithTag( $routeParams.Category, 0, $routeParams.Tag ); }, 10 );
-			return;
+			$timeout( function() { $scope.Switch( 'local', 0 ); }, 100 );
 		}
+		else
+		{
+			$scope.Switch( 'local', 0 );
+		}
+	}
 
-		$timeout(function () { $scope.SwitchWithTag( 'trending', 0, '' ); }, 10 );
-	}
-	else 
-	{
-		$scope.Switch('local', 0);
-	}
+	// This is just to fix the spawnmenu initial size being 512x512 for first few frames
+	$scope.ReloadView();
+	$( window ).resize( function() {
+		//if ( $scope.ResizeTimeout ) $timeout.cancel( $scope.ResizeTimeout );
+		//$scope.ResizeTimeout = $timeout( function() { $scope.ReloadView(); }, 250 );
+
+		if ( $scope.ReloadedView ) return;
+		$scope.ReloadedView = true;
+		$scope.ResizeTimeout = $timeout( function() { $scope.ReloadView(); }, 250 );
+	} );
 }
 
 function OnGameSaved()

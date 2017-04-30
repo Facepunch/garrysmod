@@ -98,9 +98,9 @@ lua\vgui\vgui_panellist.lua
 lua\skins\default.lua
 lua\includes\init.lua
 lua\includes\util.lua
+lua\includes\util\color.lua
 lua\includes\util\sql.lua
 lua\includes\modules\baseclass.lua
-lua\includes\modules\net.lua
 lua\includes\modules\concommand.lua
 lua\includes\modules\drive.lua
 lua\includes\modules\saverestore.lua
@@ -108,7 +108,6 @@ lua\includes\modules\gamemode.lua
 lua\includes\modules\hook.lua
 lua\includes\modules\weapons.lua
 lua\includes\modules\properties.lua
-lua\includes\modules\timer.lua
 lua\includes\modules\scripted_ents.lua
 lua\includes\modules\matproxy.lua
 lua\includes\modules\player_manager.lua
@@ -117,6 +116,7 @@ lua\includes\modules\widget.lua
 lua\includes\modules\menubar.lua
 lua\includes\modules\team.lua
 lua\includes\modules\undo.lua
+lua\includes\modules\utf8.lua
 lua\includes\modules\search.lua
 lua\includes\modules\usermessage.lua
 lua\includes\modules\cleanup.lua
@@ -135,6 +135,7 @@ lua\includes\modules\controlpanel.lua
 lua\includes\modules\presets.lua
 lua\includes\modules\cookie.lua
 lua\includes\modules\notification.lua
+lua\includes\modules\halo.lua
 lua\includes\gmsave.lua
 lua\includes\util\model_database.lua
 lua\includes\util\vgui_showlayout.lua
@@ -142,15 +143,15 @@ lua\includes\util\javascript_util.lua
 lua\includes\util\workshop_files.lua
 lua\includes\util\tooltips.lua
 lua\includes\util\client.lua
-lua\includes\extensions\util\worldpicker.lua
 lua\includes\gui\icon_progress.lua
+lua\includes\extensions\util\worldpicker.lua
 lua\includes\extensions\debug.lua
 lua\includes\extensions\entity.lua
+lua\includes\extensions\net.lua
 lua\includes\extensions\math.lua
 lua\includes\extensions\player.lua
 lua\includes\extensions\player_auth.lua
 lua\includes\extensions\string.lua
-lua\includes\modules\halo.lua
 lua\includes\extensions\table.lua
 lua\includes\extensions\file.lua
 lua\includes\extensions\ents.lua
@@ -181,8 +182,6 @@ lua\autorun\developer_functions.lua
 lua\drive\drive_base.lua
 lua\drive\drive_noclip.lua
 lua\drive\drive_sandbox.lua
-lua\autorun\menubar\display_options.lua
-lua\autorun\menubar\ai_options.lua
 lua\autorun\properties\bone_manipulate.lua
 lua\autorun\properties\remove.lua
 lua\autorun\properties\statue.lua
@@ -193,7 +192,6 @@ lua\autorun\properties\ignite.lua
 lua\autorun\properties\collisions.lua
 lua\autorun\properties\gravity.lua
 lua\autorun\properties\npc_scale.lua
-lua\autorun\game_ep2.lua
 lua\autorun\game_hl2.lua
 lua\autorun\menubar.lua
 lua\autorun\properties.lua

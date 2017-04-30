@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+ "$basetexture" "vgui/ttt/icon_bullet"
+ "$vertexcolor" 1
+ "$vertexalpha" 1
+ "$translucent" 1
+}

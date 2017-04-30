@@ -1,0 +1,908 @@
+// de_port soundscapes
+// Author: Michael Booth, Turtle Rock Studios, Inc., May 2005
+
+// NOTE: I'm re-using soundscapes pieces from de_inferno and de_train here
+
+
+//------------------------------------------------------------------------------------------
+//
+// Generic outdoors ambience
+//
+"port.Outside"
+{
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_outdoors_1.wav"
+	}
+
+
+	// wind gusts
+	"playrandom"
+	{
+		"time"		"15,30"
+		"volume"	"0.3"
+		"pitch"		"90,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_gust_2.wav"
+			"wave"	"ambient/wind/wind_gust_8.wav"
+			"wave"	"ambient/wind/wind_gust_10.wav"
+		}
+	}
+
+	// seagulls
+	"playrandom"
+	{
+		"time"		"30,60"
+		"volume"	"0.05,0.1"
+		"pitch"		"95,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/creatures/seagull_idle1.wav"
+			"wave"	"ambient/creatures/seagull_idle2.wav"
+			"wave"	"ambient/creatures/seagull_idle3.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Florescent light hum 
+//
+"port.LightHum"
+{
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"0.2"
+		"soundlevel"  	"SNDLVL_50dB"
+
+		"wave"	"ambient/machines/fluorescent_hum_1.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Florescent light hum (2nd version because cant play 2 identical at same time)
+//
+"port.LightHum2"
+{
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"0.2"
+		"soundlevel"  	"SNDLVL_50dB"
+
+		"wave"	"ambient/machines/fluorescent_hum_2.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Metal stress sounds
+//
+"port.MetalStress"
+{
+	"playrandom"
+	{
+		"time"		"30,60"
+		"volume"	"0.3"
+		"pitch"		"95,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/metal_stress1.wav"
+			"wave"	"ambient/materials/metal_stress4.wav"
+			"wave"	"ambient/materials/metal_stress5.wav"
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// The area of the T spawn, down the first ramp.
+// This includes the narrow path all the way around the white building that
+// partially bounds the T spawn area.
+//
+"port.TSpawn"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		name "port.Outside"
+	}
+
+	// Position 0: A spot in the trees up on the cliff (birdsong)
+
+	// Position 1: In the air conditioning units on the side of the building
+	"playrandom"
+	{
+		"position"		"1"
+		"pitch"			"100"
+		"volume"		"1.0"
+		"time"			"60,90"
+		"soundlevel" 	"SNDLVL_75dB"
+
+		"rndwave"
+		{
+			"wave"			"ambient/machines/air_conditioner_cycle.wav"
+		}
+	}
+
+	// Position 2: In the broken down white van (cricket chirp)
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.Cricket"
+	}
+
+	// Position 3: In the big air ducts on the roof
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"0.5"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/machines/turbine_loop_2.wav"
+	}
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 4: In one of the windows on the 2nd floor of the building the white van is against
+	"playlooping"
+	{
+		"position"		"4"	
+		"pitch"			"100"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_80dB"
+
+		"wave"	"ambient/machines/refinery_loop_1.wav"
+	}
+
+	// Position 5: In the tall white cylindrical tanks around the other side of the building
+	"playlooping"
+	{
+		"position"		"5"	
+		"pitch"			"85"
+		"volume"		"0.35"
+		"soundlevel"  	"SNDLVL_80dB"
+
+		"wave"	"ambient/machines/gas_loop_1.wav"
+	}
+
+	// Position 6: In the middle first floor window of the building with the A/C unit, on the side facing the Tank Farm
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// The road around the Tank Farm from the red containers down around
+// to the gravel pile by the yellow building on the pier
+//
+"port.TankFarmRoad"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		name "port.Outside"
+	}
+
+	// Position 0: Repeat position #6 from "port.TSpawn" (the window)
+
+	// Position 1: Repeat position #5 from "port.TSpawn" (the white cylinders)
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"85"
+		"volume"		"0.35"
+		"soundlevel"  	"SNDLVL_80dB"
+
+		"wave"	"ambient/machines/gas_loop_1.wav"
+	}
+
+	// Position 2: A spot hovering in the middle of the big tanks (metal stress groans)
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"port.MetalStress"
+	}
+
+	// Position 3: The orange drain in front of the tunnel entrance (water drips)
+	"playrandom"
+	{
+		"position"		"3"	
+		"time"			"1,2"
+		"pitch"			"100,100"
+		"volume"		"0.5"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/water/distant_drip1.wav"
+			"wave"	"ambient/water/distant_drip2.wav"
+			"wave"	"ambient/water/distant_drip3.wav"
+			"wave"	"ambient/water/distant_drip4.wav"
+		}
+	}
+
+	// NOTE: Space 4, 5, and 6 out so they cover the oceanfront by the tank farm
+	// Position 4: A spot out in the ocean a few feet (mild waves and seagulls)
+
+	// Position 5: A spot out in the ocean a few feet (mild waves and seagulls)
+	"playlooping"
+	{
+		"position"		"5"	
+		"pitch"			"100"
+		"volume"		"0.4"
+		"soundlevel"  	"SNDLVL_100dB"
+
+		"wave"	"ambient/nature/water_gently_lapping.wav"
+	}
+
+	// Position 6: A spot out in the ocean a few feet (mild waves and seagulls)
+
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// The Tank Farm, including the stairways up to the Tank Farm area
+//
+"port.TankFarm"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		name "port.Outside"
+	}
+
+	// Position 0: In the two cylindrical tanks
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"0.35"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 1: Inside a Tank to the left
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"port.MetalStress"
+	}
+
+	// Position 2: Inside a Tank to the right
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"port.MetalStress"
+	}
+
+	// Position 3: In a grass tuft up against a Tank (crickets)
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"inferno.Cricket"
+	}
+
+	// Position 4: In the two electrical boxes across from the cylindrical tanks
+	"playlooping"
+	{
+		"position"		"4"	
+		"pitch"			"100"
+		"volume"		"0.8"
+		"soundlevel"  	"SNDLVL_55dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_1.wav"
+	}
+
+	// Position 5: A spot on the roof of the big Tank closest to the TSpawn (birds)
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"name"				"inferno.Birds"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// The Pier includes the long yellow building on the pier and the path all the way around it
+//
+"port.Pier"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		name "port.Outside"
+	}
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"0.1"
+		"soundlevel"  	"SNDLVL_100dB"
+
+		"wave"	"ambient/nature/water_gently_lapping.wav"
+	}
+
+
+	// Position 0: Between the garage door and the two big red crates in the back on the ground (cricket)
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"inferno.Cricket"
+	}
+
+	// Position 1: A spot on the roof of the building (birds)
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"inferno.Birds"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// This area is the three outdoor paths around the warehouse, not including the dock area
+// facing the ship.
+//
+"port.AroundTheWarehouse"
+{
+	"dsp"	"6"
+
+	// underlying area "tone" - a little quieter with no wind
+	"playlooping"
+	{
+		"volume"	"0.15"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_outdoors_1.wav"
+	}
+
+	// seagulls
+	"playrandom"
+	{
+		"time"		"30,60"
+		"volume"	"0.05,0.1"
+		"pitch"		"95,100"
+
+		"rndwave"
+		{
+			"wave"	"ambient/creatures/seagull_idle1.wav"
+			"wave"	"ambient/creatures/seagull_idle2.wav"
+			"wave"	"ambient/creatures/seagull_idle3.wav"
+		}
+	}
+
+
+
+	// Position 0: One of the dark pipe openings in the wall of the ramp up to the TSpawn
+
+	// Position 1: The other dark pipe opening in the wall
+
+	// Position 2: Inside one of the Tanks in the farm
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"port.MetalStress"
+	}
+
+	// Position 3: On top of the Tank clostest to the TSpawn (birds)
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 4: On the ground between the light blue dumpster full of gravel and the blue truck crate next to it (cricket)
+	"playsoundscape"
+	{
+		"positionoverride"	"4"
+		"name"				"inferno.Cricket"
+	}
+
+	// Position 5: Out in the ocean a few yards behind the stack of red crates near the pier (ocean sounds)
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// Inside the warehouse
+//
+"port.Warehouse"
+{
+	"dsp"	"6"
+
+	// underlying area "tone"
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/underground_hall_loop1.wav"
+	}
+
+	// Position 0: The two power boxes at the top of the stairs
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"0.8"
+		"soundlevel"  	"SNDLVL_55dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_1.wav"
+	}
+
+	// Position 1: Inside one of the boxes on the upper shelves (cricket)
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"volume"			"1.4"
+		"name"				"inferno.Cricket"
+	}
+
+	// Position 2: A foot or so outside the large open bay door towards the ship
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"0.75"
+		"soundlevel"  	"SNDLVL_65dB"
+
+		"wave"	"ambient/wind/wind_outdoors_1.wav"
+	}
+
+	// Position 3: A foor outside the open door on one side of the warehouse
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_65dB"
+
+		"wave"	"ambient/wind/dry_air_short.wav"
+	}
+
+	// Position 4: A foor outside the other open door on one side of the warehouse
+	"playlooping"
+	{
+		"position"		"4"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_65dB"
+
+		"wave"	"ambient/wind/wind1.wav"
+	}
+}
+
+
+
+//------------------------------------------------------------------------------------------
+//
+// Tunnel tone
+//
+"port.TunnelTone"
+{
+	"dsp"	"6"
+
+	"playlooping"
+	{
+		"volume"	"0.4"
+		"pitch"		"100"
+		"wave"		"ambient/tones/tunnel_wind_loop.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// In the tunnels from the warehouse to the start of the stairs up by the big white pipes
+//
+"port.WarehouseTunnel"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name"	"port.TunnelTone"
+	}
+
+	// Position 0: The two white pipes with the red turn handles across from the "storage" room
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"100"
+		"volume"		"0.35"
+		"soundlevel"  	"SNDLVL_75dB"
+
+		"wave"	"ambient/machines/gas_loop_1.wav"
+	}
+
+
+	// Position 1: The electrical box next to the pipes of #0
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"0.8"
+		"soundlevel"  	"SNDLVL_55dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_1.wav"
+	}
+
+	// Position 2: The light near (-608, 665, 407)
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"volume"			"1.5"
+		"name"				"port.LightHum"
+	}
+
+	// Position 3: The light near (-856, 415, 472)
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"volume"			"1.5"
+		"name"				"port.LightHum2"
+	}
+
+	// Position 4: A spot in the orange pipes along the wall where they turn the corner
+	"playlooping"
+	{
+		"position"		"4"	
+		"pitch"			"100"
+		"volume"		"0.15"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 5: THe light near (-183, 432, 439)
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"volume"			"1.5"
+		"name"				"port.LightHum"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// The tunnel from WarehouseTunnel to TunnelA2
+//
+"port.TunnelA3"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name"	"port.TunnelTone"
+	}
+
+	// Position 0: The big white pipes on the wall (338, 369, 459)
+	"playlooping"
+	{
+		"position"		"0"	
+		"pitch"			"90"
+		"volume"		"0.15"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 1: The fan/vent above the stairs near (232, 390, 519)
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_75dB"
+
+		"wave"	"ambient/machines/air_conditioner_loop_1.wav"
+	}
+
+	// Position 2: The light near (454, 796, 533)
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"port.LightHum"
+	}
+
+	// Position 3: The light near (882, 864, 541)
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"port.LightHum2"
+	}
+
+	// Position 4: Just behind the door at (1028, 908, 525)
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// The tunnel in from entrance A2
+//
+"port.TunnelA2"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name"	"port.TunnelTone"
+	}
+
+	// Position 0: The thin white pipes near (1726, 800, 535)
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"0.35"
+		"soundlevel"  	"SNDLVL_75dB"
+
+		"wave"	"ambient/machines/gas_loop_1.wav"
+	}
+
+	// Position 1: The light near (1561, 876, 550)
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"port.LightHum"
+	}
+
+	// Position 2: The electrical box near (1337, 617, 509)
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"100"
+		"volume"		"0.8"
+		"soundlevel"  	"SNDLVL_55dB"
+
+		"wave"	"ambient/machines/power_transformer_loop_1.wav"
+	}
+
+	// Position 3: The light near (1285, 313, 566)
+	"playsoundscape"
+	{
+		"positionoverride"	"3"
+		"name"				"port.LightHum2"
+	}
+
+	// Position 4: In the center of the inaccessible room near (1031, 341, 511)
+	"playlooping"
+	{
+		"position"		"4"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_75dB"
+
+		"wave"	"ambient/machines/turbine_loop_2.wav"
+	}
+
+	// Position 5: In the vents near (1330, 308, 532)
+	"playlooping"
+	{
+		"position"		"5"	
+		"pitch"			"100"
+		"volume"		"1.0"
+		"soundlevel"  	"SNDLVL_75dB"
+
+		"wave"	"ambient/machines/air_conditioner_loop_1.wav"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// The tunnel in from entrance A1 - transition to TunnelA2 just after the big grey pipes in the wall
+//
+"port.TunnelA1"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		"name"	"port.TunnelTone"
+	}
+
+	// Position 0: Just behind the door marked "Danger"
+	"playlooping"
+	{
+		"position"		"0"
+		"pitch"			"100"
+		"volume"		"0.6"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/atmosphere/engine_room.wav"
+	}
+
+	// Position 1: The light near (1280, -471, 525)
+	"playsoundscape"
+	{
+		"positionoverride"	"1"
+		"name"				"port.LightHum"
+	}
+
+	// Position 2: Down the orange drain in the dead end
+	"playrandom"
+	{
+		"position"		"2"	
+		"time"			"1,2"
+		"pitch"			"100,100"
+		"volume"		"0.5"
+		"soundlevel"  	"SNDLVL_60dB"
+
+		"rndwave"
+		{
+			"wave"	"ambient/water/distant_drip1.wav"
+			"wave"	"ambient/water/distant_drip2.wav"
+			"wave"	"ambient/water/distant_drip3.wav"
+			"wave"	"ambient/water/distant_drip4.wav"
+		}
+	}
+
+	// Position 3: The big grey pipes near (1001, -358, 518)
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"100"
+		"volume"		"0.35"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/machines/gas_loop_1.wav"
+	}
+
+	// Position 4: The other set of big grey pipes
+	"playlooping"
+	{
+		"position"		"4"	
+		"pitch"			"90"
+		"volume"		"0.35"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+	// Position 5: The light on the wall between the big grey pipes
+	"playsoundscape"
+	{
+		"positionoverride"	"5"
+		"name"				"port.LightHum2"
+	}
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// The dock area between the ship and the warehouse
+//
+"port.Docks"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		name "port.Outside"
+	}
+
+	// Position 0: On the ship's deck (metal stress sounds)
+	"playsoundscape"
+	{
+		"positionoverride"	"0"
+		"name"				"port.MetalStress"
+	}
+
+	// Position 1: Out in the ocean a few yards near (-2177, 2264, 545) (ocean sounds)
+
+	// Position 2: In the trees up on the cliff (birds)
+	"playsoundscape"
+	{
+		"positionoverride"	"2"
+		"name"				"inferno.Birds"
+	}
+
+	// Position 3: At the water surface between the right gangplank and the crates (water lapping)
+
+	// Position 4: At the water surface between the left and right gangplanks (water lapping)
+	"playlooping"
+	{
+		"position"		"4"	
+		"pitch"			"100"
+		"volume"		"0.7"
+		"soundlevel"  	"SNDLVL_80dB"
+
+		"wave"	"ambient/water/lake_water.wav"
+	}
+
+	// Position 5: At the water surface between the left gangplank and end of the ship (water lapping)
+}
+
+
+//------------------------------------------------------------------------------------------
+//
+// On the deck of the ship
+//
+"port.Ship"
+{
+	"dsp"	"6"
+
+	"playsoundscape"
+	{
+		name "port.Outside"
+	}
+
+	"playlooping"
+	{
+		"pitch"			"100"
+		"volume"		"0.5"
+		"soundlevel"  	"SNDLVL_100dB"
+
+		"wave"	"ambient/water/lake_water.wav"
+	}
+
+
+	// Position 0: Behind one of the windows in the "bridge" of the ship (ship's radio, etc)
+
+	// Positions 1-4: Various spots in the pipes (gas hiss)
+	"playlooping"
+	{
+		"position"		"1"	
+		"pitch"			"90"
+		"volume"		"0.1"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/gas/steam_loop1.wav"
+	}
+
+	"playlooping"
+	{
+		"position"		"2"	
+		"pitch"			"90"
+		"volume"		"0.4"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/machines/gas_loop_1.wav"
+	}
+
+	"playlooping"
+	{
+		"position"		"3"	
+		"pitch"			"90"
+		"volume"		"0.4"
+		"soundlevel"  	"SNDLVL_80dB"
+
+		"wave"	"ambient/machines/turbine_loop_1.wav"
+	}
+
+	"playlooping"
+	{
+		"position"		"4"	
+		"pitch"			"90"
+		"volume"		"0.1"
+		"soundlevel"  	"SNDLVL_70dB"
+
+		"wave"	"ambient/gas/steam2.wav"
+	}
+}

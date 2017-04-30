@@ -1,5 +1,0 @@
-"0"
-{
-	"Text"			"#Tool_nocollide_name"
-	"Description"		"#Tool_nocollide_desc"	
-}

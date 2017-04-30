@@ -14,7 +14,6 @@ App.config(function ( $routeProvider, $locationProvider )
 	$routeProvider.when('/saves/', { templateUrl: 'template/saves.html' } );
 } );
 
-
 function UpdateDigest( scope, timeout )
 {
 	if ( !scope ) return;

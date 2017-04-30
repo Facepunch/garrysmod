@@ -23,7 +23,7 @@ function GetEquipmentForRole(role)
                limited  = v.LimitedStock,
                kind     = v.Kind or WEAPON_NONE,
                slot     = (v.Slot or 0) + 1,
-               material = v.Icon or "VGUI/ttt/icon_id",
+               material = v.Icon or "vgui/ttt/icon_id",
                -- the below should be specified in EquipMenuData, in which case
                -- these values are overwritten
                type     = "Type not specified",
@@ -73,7 +73,7 @@ local function PreqLabels(parent, x, y)
    local tbl = {}
 
    tbl.credits = vgui.Create("DLabel", parent)
-   tbl.credits:SetToolTip(GetTranslation("equip_help_cost"))
+   tbl.credits:SetTooltip(GetTranslation("equip_help_cost"))
    tbl.credits:SetPos(x, y)
    tbl.credits.Check = function(s, sel)
                           local credits = LocalPlayer():GetCredits()
@@ -81,7 +81,7 @@ local function PreqLabels(parent, x, y)
                        end
 
    tbl.owned = vgui.Create("DLabel", parent)
-   tbl.owned:SetToolTip(GetTranslation("equip_help_carry"))
+   tbl.owned:SetTooltip(GetTranslation("equip_help_carry"))
    tbl.owned:CopyPos(tbl.credits)
    tbl.owned:MoveBelow(tbl.credits, y)
    tbl.owned.Check = function(s, sel)
@@ -95,7 +95,7 @@ local function PreqLabels(parent, x, y)
                      end
 
    tbl.bought = vgui.Create("DLabel", parent)
-   tbl.bought:SetToolTip(GetTranslation("equip_help_stock"))
+   tbl.bought:SetTooltip(GetTranslation("equip_help_stock"))
    tbl.bought:CopyPos(tbl.owned)
    tbl.bought:MoveBelow(tbl.owned, y)
    tbl.bought.Check = function(s, sel)
@@ -157,13 +157,13 @@ local function TraitorMenuPopup()
    end
 
    -- Close any existing traitor menu
-   if eqframe and ValidPanel(eqframe) then eqframe:Close() end
+   if eqframe and IsValid(eqframe) then eqframe:Close() end
 
    local credits = ply:GetCredits()
    local can_order = credits > 0
 
    local dframe = vgui.Create("DFrame")
-   local w, h = 500, 350
+   local w, h = 570, 412
    dframe:SetSize(w, h)
    dframe:Center()
    dframe:SetTitle(GetTranslation("equip_title"))
@@ -209,7 +209,7 @@ local function TraitorMenuPopup()
    --- Construct icon listing
    local dlist = vgui.Create("EquipSelect", dequip)
    dlist:SetPos(0,0)
-   dlist:SetSize(154, h - 75)
+   dlist:SetSize(216, h - 75)
    dlist:EnableVerticalScrollbar(true)
    dlist:EnableHorizontal(true)
    dlist:SetPadding(4)
@@ -228,7 +228,7 @@ local function TraitorMenuPopup()
             ic = vgui.Create("LayeredIcon", dlist)
 
             local marker = vgui.Create("DImage")
-            marker:SetImage("VGUI/ttt/custom_marker")
+            marker:SetImage("vgui/ttt/custom_marker")
             marker.PerformLayout = function(s)
                                       s:AlignBottom(2)
                                       s:AlignRight(2)
@@ -248,7 +248,7 @@ local function TraitorMenuPopup()
          -- Slot marker icon
          if ItemIsWeapon(item) then
             local slot = vgui.Create("SimpleIconLabelled")
-            slot:SetIcon("VGUI/ttt/slotcap")
+            slot:SetIcon("vgui/ttt/slotcap")
             slot:SetIconColor(color_slot[ply:GetRole()] or COLOR_GREY)
             slot:SetIconSize(16)
 
@@ -293,7 +293,7 @@ local function TraitorMenuPopup()
       dlist:AddPanel(ic)
    end
 
-   local dlistw = 154
+   local dlistw = 216
 
    local bw, bh = 100, 25
 
@@ -368,6 +368,8 @@ local function TraitorMenuPopup()
       dsheet:AddSheet(GetTranslation("xfer_name"), dtransfer, "icon16/group_gear.png", false,false, "Transfer credits")
    end
 
+   hook.Run("TTTEquipmentTabs", dsheet)
+
 
    -- couple panelselect with info
    dlist.OnActivePanelChanged = function(self, _, new)
@@ -426,7 +428,7 @@ end
 concommand.Add("ttt_cl_traitorpopup", TraitorMenuPopup)
 
 local function ForceCloseTraitorMenu(ply, cmd, args)
-   if ValidPanel(eqframe) then
+   if IsValid(eqframe) then
       eqframe:Close()
    end
 end
@@ -444,31 +446,31 @@ function GM:OnContextMenuOpen()
    RunConsoleCommand("ttt_cl_traitorpopup")
 end
 
-local function ReceiveEquipment(um)
+local function ReceiveEquipment()
    local ply = LocalPlayer()
    if not IsValid(ply) then return end
 
-   ply.equipment_items = um:ReadShort()
+   ply.equipment_items = net.ReadUInt(16)
 end
-usermessage.Hook("equipment", ReceiveEquipment)
+net.Receive("TTT_Equipment", ReceiveEquipment)
 
-local function ReceiveCredits(um)
+local function ReceiveCredits()
    local ply = LocalPlayer()
    if not IsValid(ply) then return end
 
-   ply.equipment_credits = um:ReadChar()
+   ply.equipment_credits = net.ReadUInt(8)
 end
-usermessage.Hook("credits", ReceiveCredits)
+net.Receive("TTT_Credits", ReceiveCredits)
 
 local r = 0
-local function ReceiveBought(um)
+local function ReceiveBought()
    local ply = LocalPlayer()
    if not IsValid(ply) then return end
 
    ply.bought = {}
-   local num = um:ReadShort()
+   local num = net.ReadUInt(8)
    for i=1,num do
-      local s = um:ReadString()
+      local s = net.ReadString()
       if s != "" then
          table.insert(ply.bought, s)
       end
@@ -484,14 +486,14 @@ local function ReceiveBought(um)
       r = 0
    end
 end
-usermessage.Hook("bought", ReceiveBought)
+net.Receive("TTT_Bought", ReceiveBought)
 
 -- Player received the item he has just bought, so run clientside init
-local function ReceiveBoughtItem(um)
-   local is_item = um:ReadBool()
-   local id = is_item and um:ReadShort() or um:ReadString()
+local function ReceiveBoughtItem()
+   local is_item = net.ReadBit() == 1
+   local id = is_item and net.ReadUInt(16) or net.ReadString()
 
    -- I can imagine custom equipment wanting this, so making a hook
    hook.Run("TTTBoughtItem", is_item, id)
 end
-usermessage.Hook("bought_item", ReceiveBoughtItem)
+net.Receive("TTT_BoughtItem", ReceiveBoughtItem)

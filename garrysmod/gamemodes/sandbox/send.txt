@@ -1,5 +1,5 @@
 #
-# These files aren't filly sent to the client because they
+# These files aren't fully sent to the client because they
 # should never change. Instead we send the CRC of this file
 # so the client can load their version - and we know it's kewl.
 #
@@ -25,28 +25,28 @@ gamemodes\sandbox\gamemode\spawnmenu\toolmenu.lua
 gamemodes\sandbox\gamemode\spawnmenu\controls\manifest.lua
 gamemodes\sandbox\gamemode\spawnmenu\toolpanel.lua
 gamemodes\sandbox\gamemode\spawnmenu\controls\control_presets.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\manifest.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\manifest.lua
 gamemodes\sandbox\gamemode\spawnmenu\controls\preset_editor.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\content.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\content.lua
 gamemodes\sandbox\gamemode\spawnmenu\controls\ropematerial.lua
 gamemodes\sandbox\gamemode\spawnmenu\controlpanel.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\Contentcontainer.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentHeader.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentSearch.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentIcon.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentSidebar.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentSidebarToolbox.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\PostProcessIcon.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentTypes\Custom.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentTypes\AddonProps.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentTypes\Entities.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentTypes\GameProps.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentTypes\PostProcess.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentTypes\NPCs.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentTypes\Weapons.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentTypes\Vehicles.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentTypes\saves.lua
-gamemodes\sandbox\gamemode\spawnmenu\CreationMenu\Content\ContentTypes\dupes.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contentcontainer.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contentheader.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contentsearch.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contenticon.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contentsidebar.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contentsidebartoolbox.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\postprocessicon.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contenttypes\custom.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contenttypes\addonprops.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contenttypes\entities.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contenttypes\gameprops.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contenttypes\postprocess.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contenttypes\npcs.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contenttypes\weapons.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contenttypes\vehicles.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contenttypes\saves.lua
+gamemodes\sandbox\gamemode\spawnmenu\creationmenu\content\contenttypes\dupes.lua
 gamemodes\sandbox\entities\weapons\gmod_camera.lua
 gamemodes\sandbox\entities\weapons\gmod_tool\cl_init.lua
 gamemodes\sandbox\entities\weapons\gmod_tool\shared.lua
@@ -103,14 +103,14 @@ gamemodes\sandbox\entities\entities\gmod_light.lua
 gamemodes\sandbox\entities\entities\gmod_thruster.lua
 gamemodes\sandbox\entities\entities\gmod_wheel.lua
 gamemodes\sandbox\entities\entities\gmod_ghost.lua
-gamemodes\sandbox\entities\effects\LaserTracer\init.lua
+gamemodes\sandbox\entities\effects\lasertracer.lua
 gamemodes\sandbox\entities\effects\balloon_pop.lua
-gamemodes\sandbox\entities\effects\entity_remove\init.lua
-gamemodes\sandbox\entities\effects\inflator_magic\init.lua
+gamemodes\sandbox\entities\effects\entity_remove.lua
+gamemodes\sandbox\entities\effects\inflator_magic.lua
 gamemodes\sandbox\entities\effects\phys_freeze.lua
 gamemodes\sandbox\entities\effects\camera_flash.lua
 gamemodes\sandbox\entities\effects\phys_unfreeze.lua
 gamemodes\sandbox\entities\effects\propspawn.lua
-gamemodes\sandbox\entities\effects\selection_indicator\init.lua
-gamemodes\sandbox\entities\effects\selection_ring\init.lua
-gamemodes\sandbox\entities\effects\wheel_indicator\init.lua
+gamemodes\sandbox\entities\effects\selection_indicator.lua
+gamemodes\sandbox\entities\effects\selection_ring.lua
+gamemodes\sandbox\entities\effects\wheel_indicator.lua

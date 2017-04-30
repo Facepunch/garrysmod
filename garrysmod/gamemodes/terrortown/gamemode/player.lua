@@ -69,7 +69,9 @@ function GM:PlayerSpawn(ply)
    ply.has_spawned = true
 
    -- let the client do things on spawn
-   SendUserMessage("plyspawned", ply, ply:IsSpec())
+   net.Start("TTT_PlayerSpawned")
+      net.WriteBit(ply:IsSpec())
+   net.Send(ply)
 
    if ply:IsSpec() then
       ply:StripAll()
@@ -82,22 +84,21 @@ function GM:PlayerSpawn(ply)
    -- ye olde hooks
    hook.Call("PlayerLoadout", GAMEMODE, ply)
    hook.Call("PlayerSetModel", GAMEMODE, ply)
+   hook.Call("TTTPlayerSetColor", GAMEMODE, ply)
 
-   local oldhands = ply:GetHands()
-   if IsValid(oldhands) then oldhands:Remove() end
-
-   local hands = ents.Create( "gmod_hands" )
-   if IsValid(hands) then
-      ply:SetHands(hands)
-      hands:SetOwner(ply)
-
-      -- Find model and attach to vm, currently ours
-      ply:SetPlayerHands(ply)
-      ply:DeleteOnRemove(hands)
-      hands:Spawn()
-   end
+   ply:SetupHands()
 
    SCORE:HandleSpawn(ply)
+end
+
+function GM:PlayerSetHandsModel( pl, ent )
+   local simplemodel = player_manager.TranslateToPlayerModelName(pl:GetModel())
+   local info = player_manager.TranslatePlayerHands(simplemodel)
+   if info then
+      ent:SetModel(info.model)
+      ent:SetSkin(info.skin)
+      ent:SetBodyGroups(info.body)
+   end
 end
 
 function GM:IsSpawnpointSuitable(ply, spwn, force, rigged)
@@ -251,8 +252,22 @@ function GM:PlayerSetModel(ply)
    util.PrecacheModel(mdl)
    ply:SetModel(mdl)
 
-   ply:SetColor(GAMEMODE.playercolor or COLOR_WHITE)
+   -- Always clear color state, may later be changed in TTTPlayerSetColor
+   ply:SetColor(COLOR_WHITE)
 end
+
+
+function GM:TTTPlayerSetColor(ply)
+   local clr = COLOR_WHITE
+   if GAMEMODE.playercolor then
+      -- If this player has a colorable model, always use the same color as all
+      -- other colorable players, so color will never be the factor that lets
+      -- you tell players apart.
+      clr = GAMEMODE.playercolor
+   end
+   ply:SetPlayerColor( Vector( clr.r/255.0, clr.g/255.0, clr.b/255.0 ) )
+end
+
 
 -- Only active players can use kill cmd
 function GM:CanPlayerSuicide(ply)
@@ -301,6 +316,7 @@ function GM:KeyPress(ply, key)
       if key == IN_ATTACK then
          -- snap to random guy
          ply:Spectate(OBS_MODE_ROAMING)
+         ply:SetEyeAngles(angle_zero) -- After exiting propspec, this could be set to awkward values
          ply:SpectateEntity(nil)
 
          local alive = util.GetAlivePlayers()
@@ -310,6 +326,7 @@ function GM:KeyPress(ply, key)
          local target = table.Random(alive)
          if IsValid(target) then
             ply:SetPos(target:EyePos())
+            ply:SetEyeAngles(target:EyeAngles())
          end
       elseif key == IN_ATTACK2 then
          -- spectate either the next guy or a random guy in chase
@@ -386,14 +403,6 @@ function GM:KeyRelease(ply, key)
       end
    end
 
-end
-
-function GM:PlayerButtonUp(ply, btn)
-   -- Would be nice to clean up this whole "all key handling in massive
-   -- functions" thing. oh well
-   if btn == KEY_PAD_ENTER then
-      WEPS.DisguiseToggle(ply)
-   end
 end
 
 -- Normally all dead players are blocked from IN_USE on the server, meaning we
@@ -513,6 +522,8 @@ local function CheckCreditAward(victim, attacker)
    if (not victim:IsTraitor()) and (not GAMEMODE.AwardedCredits or GetConVar("ttt_credits_award_repeat"):GetBool()) then
       local inno_alive = 0
       local inno_dead = 0
+      local inno_total = 0
+      
       for _, ply in pairs(player.GetAll()) do
          if not ply:GetTraitor() then
             if ply:IsTerror() then
@@ -663,7 +674,7 @@ function GM:PlayerDeath( victim, infl, attacker)
 
    victim:Extinguish()
 
-   SendUserMessage("plydied", victim)
+   net.Start("TTT_PlayerDied") net.Send(victim)
 
    if HasteMode() and GetRoundState() == ROUND_ACTIVE then
       IncRoundEnd(GetConVar("ttt_haste_minutes_per_death"):GetFloat() * 60)
@@ -781,7 +792,7 @@ end
 -- rather high drop already. Hence we do our own fall damage handling in
 -- OnPlayerHitGround.
 function GM:GetFallDamage(ply, speed)
-   return 1
+   return 0
 end
 
 local fallsounds = {
@@ -914,6 +925,8 @@ function GM:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
          -- barrel bangs can hurt us even if we threw them, but that's our fault
       elseif hurter and ent == hurter:GetPhysicsAttacker() and dmginfo:IsDamageType(DMG_BLAST) then
          owner = ent
+      elseif hurter and hurter:IsVehicle() and IsValid(hurter:GetDriver()) then
+         owner = hurter:GetDriver()
       end
 
 

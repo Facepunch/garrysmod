@@ -1,26 +1,22 @@
 
-surface.CreateFont( "ScoreboardDefault",
-{
-	font		= "Helvetica",
-	size		= 22,
-	weight		= 800
-})
+surface.CreateFont( "ScoreboardDefault", {
+	font	= "Helvetica",
+	size	= 22,
+	weight	= 800
+} )
 
-surface.CreateFont( "ScoreboardDefaultTitle",
-{
-	font		= "Helvetica",
-	size		= 32,
-	weight		= 800
-})
-
+surface.CreateFont( "ScoreboardDefaultTitle", {
+	font	= "Helvetica",
+	size	= 32,
+	weight	= 800
+} )
 
 --
 -- This defines a new panel type for the player row. The player row is given a player
 -- and then from that point on it pretty much looks after itself. It updates player info
 -- in the think function, and removes itself when the player leaves the server.
 --
-local PLAYER_LINE = 
-{
+local PLAYER_LINE = {
 	Init = function( self )
 
 		self.AvatarButton = self:Add( "DButton" )
@@ -28,40 +24,44 @@ local PLAYER_LINE =
 		self.AvatarButton:SetSize( 32, 32 )
 		self.AvatarButton.DoClick = function() self.Player:ShowProfile() end
 
-		self.Avatar		= vgui.Create( "AvatarImage", self.AvatarButton )
+		self.Avatar = vgui.Create( "AvatarImage", self.AvatarButton )
 		self.Avatar:SetSize( 32, 32 )
-		self.Avatar:SetMouseInputEnabled( false )		
+		self.Avatar:SetMouseInputEnabled( false )
 
-		self.Name		= self:Add( "DLabel" )
+		self.Name = self:Add( "DLabel" )
 		self.Name:Dock( FILL )
 		self.Name:SetFont( "ScoreboardDefault" )
+		self.Name:SetTextColor( Color( 93, 93, 93 ) )
 		self.Name:DockMargin( 8, 0, 0, 0 )
 
-		self.Mute		= self:Add( "DImageButton" )
+		self.Mute = self:Add( "DImageButton" )
 		self.Mute:SetSize( 32, 32 )
 		self.Mute:Dock( RIGHT )
 
-		self.Ping		= self:Add( "DLabel" )
+		self.Ping = self:Add( "DLabel" )
 		self.Ping:Dock( RIGHT )
 		self.Ping:SetWidth( 50 )
 		self.Ping:SetFont( "ScoreboardDefault" )
+		self.Ping:SetTextColor( Color( 93, 93, 93 ) )
 		self.Ping:SetContentAlignment( 5 )
 
-		self.Deaths		= self:Add( "DLabel" )
+		self.Deaths = self:Add( "DLabel" )
 		self.Deaths:Dock( RIGHT )
 		self.Deaths:SetWidth( 50 )
 		self.Deaths:SetFont( "ScoreboardDefault" )
+		self.Deaths:SetTextColor( Color( 93, 93, 93 ) )
 		self.Deaths:SetContentAlignment( 5 )
 
-		self.Kills		= self:Add( "DLabel" )
+		self.Kills = self:Add( "DLabel" )
 		self.Kills:Dock( RIGHT )
 		self.Kills:SetWidth( 50 )
 		self.Kills:SetFont( "ScoreboardDefault" )
+		self.Kills:SetTextColor( Color( 93, 93, 93 ) )
 		self.Kills:SetContentAlignment( 5 )
 
 		self:Dock( TOP )
 		self:DockPadding( 3, 3, 3, 3 )
-		self:SetHeight( 32 + 3*2 )
+		self:SetHeight( 32 + 3 * 2 )
 		self:DockMargin( 2, 0, 2, 2 )
 
 	end,
@@ -71,7 +71,6 @@ local PLAYER_LINE =
 		self.Player = pl
 
 		self.Avatar:SetPlayer( pl )
-		self.Name:SetText( pl:Nick() )
 
 		self:Think( self )
 
@@ -83,22 +82,28 @@ local PLAYER_LINE =
 	Think = function( self )
 
 		if ( !IsValid( self.Player ) ) then
+			self:SetZPos( 9999 ) -- Causes a rebuild
 			self:Remove()
 			return
 		end
 
+		if ( self.PName == nil || self.PName != self.Player:Nick() ) then
+			self.PName = self.Player:Nick()
+			self.Name:SetText( self.PName )
+		end
+		
 		if ( self.NumKills == nil || self.NumKills != self.Player:Frags() ) then
-			self.NumKills	=	self.Player:Frags()
+			self.NumKills = self.Player:Frags()
 			self.Kills:SetText( self.NumKills )
 		end
 
 		if ( self.NumDeaths == nil || self.NumDeaths != self.Player:Deaths() ) then
-			self.NumDeaths	=	self.Player:Deaths()
+			self.NumDeaths = self.Player:Deaths()
 			self.Deaths:SetText( self.NumDeaths )
 		end
 
 		if ( self.NumPing == nil || self.NumPing != self.Player:Ping() ) then
-			self.NumPing	=	self.Player:Ping()
+			self.NumPing = self.Player:Ping()
 			self.Ping:SetText( self.NumPing )
 		end
 
@@ -122,15 +127,16 @@ local PLAYER_LINE =
 		-- Connecting players go at the very bottom
 		--
 		if ( self.Player:Team() == TEAM_CONNECTING ) then
-			self:SetZPos( 2000 )
+			self:SetZPos( 2000 + self.Player:EntIndex() )
+			return
 		end
 
 		--
-		-- This is what sorts the list. The panels are docked in the z order, 
+		-- This is what sorts the list. The panels are docked in the z order,
 		-- so if we set the z order according to kills they'll be ordered that way!
 		-- Careful though, it's a signed short internally, so needs to range between -32,768k and +32,767
 		--
-		self:SetZPos( (self.NumKills * -50) + self.NumDeaths )
+		self:SetZPos( ( self.NumKills * -50 ) + self.NumDeaths + self.Player:EntIndex() )
 
 	end,
 
@@ -149,7 +155,7 @@ local PLAYER_LINE =
 			return
 		end
 
-		if  ( !self.Player:Alive() ) then
+		if ( !self.Player:Alive() ) then
 			draw.RoundedBox( 4, 0, 0, w, h, Color( 230, 200, 200, 255 ) )
 			return
 		end
@@ -161,20 +167,19 @@ local PLAYER_LINE =
 
 		draw.RoundedBox( 4, 0, 0, w, h, Color( 230, 230, 230, 255 ) )
 
-	end,
+	end
 }
 
 --
 -- Convert it from a normal table into a Panel Table based on DPanel
 --
-PLAYER_LINE = vgui.RegisterTable( PLAYER_LINE, "DPanel" );
+PLAYER_LINE = vgui.RegisterTable( PLAYER_LINE, "DPanel" )
 
 --
--- Here we define a new panel table for the scoreboard. It basically consists 
+-- Here we define a new panel table for the scoreboard. It basically consists
 -- of a header and a scrollpanel - into which the player lines are placed.
 --
-local SCORE_BOARD = 
-{
+local SCORE_BOARD = {
 	Init = function( self )
 
 		self.Header = self:Add( "Panel" )
@@ -231,16 +236,16 @@ local SCORE_BOARD =
 
 			self.Scores:AddItem( pl.ScoreEntry )
 
-		end		
+		end
 
-	end,
+	end
 }
 
-SCORE_BOARD = vgui.RegisterTable( SCORE_BOARD, "EditablePanel" );
+SCORE_BOARD = vgui.RegisterTable( SCORE_BOARD, "EditablePanel" )
 
 --[[---------------------------------------------------------
-   Name: gamemode:ScoreboardShow( )
-   Desc: Sets the scoreboard to visible
+	Name: gamemode:ScoreboardShow( )
+	Desc: Sets the scoreboard to visible
 -----------------------------------------------------------]]
 function GM:ScoreboardShow()
 
@@ -257,8 +262,8 @@ function GM:ScoreboardShow()
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:ScoreboardHide( )
-   Desc: Hides the scoreboard
+	Name: gamemode:ScoreboardHide( )
+	Desc: Hides the scoreboard
 -----------------------------------------------------------]]
 function GM:ScoreboardHide()
 
@@ -268,12 +273,9 @@ function GM:ScoreboardHide()
 
 end
 
-
 --[[---------------------------------------------------------
-   Name: gamemode:HUDDrawScoreBoard( )
-   Desc: If you prefer to draw your scoreboard the stupid way (without vgui)
+	Name: gamemode:HUDDrawScoreBoard( )
+	Desc: If you prefer to draw your scoreboard the stupid way (without vgui)
 -----------------------------------------------------------]]
 function GM:HUDDrawScoreBoard()
-
 end
-

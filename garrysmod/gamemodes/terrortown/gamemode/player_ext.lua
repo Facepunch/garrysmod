@@ -65,9 +65,9 @@ function plymeta:SetDefaultCredits()
 end
 
 function plymeta:SendCredits()
-   umsg.Start("credits", self)
-   umsg.Char(self:GetCredits())
-   umsg.End()
+   net.Start("TTT_Credits")
+       net.WriteUInt(self:GetCredits(), 8)
+   net.Send(self)
 end
 
 --- Equipment items
@@ -81,9 +81,9 @@ end
 
 -- We do this instead of an NW var in order to limit the info to just this ply
 function plymeta:SendEquipment()
-   umsg.Start("equipment", self)
-   umsg.Short(self.equipment_items)
-   umsg.End()
+   net.Start("TTT_Equipment")
+      net.WriteUInt(self.equipment_items, 16)
+   net.Send(self)
 end
 
 function plymeta:ResetEquipment()
@@ -93,12 +93,12 @@ end
 
 function plymeta:SendBought()
    -- Send all as string, even though equipment are numbers, for simplicity
-   umsg.Start("bought", self)
-   umsg.Short(#self.bought)
-   for k,v in pairs(self.bought) do
-      umsg.String(v)
-   end
-   umsg.End()
+   net.Start("TTT_Bought")
+      net.WriteUInt(#self.bought, 8)
+      for k, v in pairs(self.bought) do
+         net.WriteString(v)
+      end
+   net.Send(self)
 end
 
 local function ResendBought(ply)
@@ -200,19 +200,20 @@ function plymeta:RecordKill(victim)
       self.kills = {}
    end
 
-   table.insert(self.kills, victim:UniqueID())
+   table.insert(self.kills, victim:SteamID())
 end
 
 
 function plymeta:SetSpeed(slowed)
+   local mul = hook.Call("TTTPlayerSpeed", GAMEMODE, self, slowed) or 1
    if slowed then
-      self:SetWalkSpeed(120)
-      self:SetRunSpeed(120)
-      self:SetMaxSpeed(120)
+      self:SetWalkSpeed(120 * mul)
+      self:SetRunSpeed(120 * mul)
+      self:SetMaxSpeed(120 * mul)
    else
-      self:SetWalkSpeed(220)
-      self:SetRunSpeed(220)
-      self:SetMaxSpeed(220)
+      self:SetWalkSpeed(220 * mul)
+      self:SetRunSpeed(220 * mul)
+      self:SetMaxSpeed(220 * mul)
    end
 end
 
@@ -237,9 +238,9 @@ function plymeta:SendLastWords(dmginfo)
 
    self.death_type = dtype
 
-   umsg.Start("interrupt_chat", self)
-   umsg.Long(self.last_words_id)
-   umsg.End()
+   net.Start("TTT_InterruptChat")
+      net.WriteUInt(self.last_words_id, 32)
+   net.Send(self)
 
    -- any longer than this and you're out of luck
    local ply = self
@@ -269,6 +270,7 @@ end
 -- true, only spawns if player is dead, else just makes sure he is healed.
 function plymeta:SpawnForRound(dead_only)
    hook.Call("PlayerSetModel", GAMEMODE, self)
+   hook.Call("TTTPlayerSetColor", GAMEMODE, self)
 
    -- wrong alive status and not a willing spec who unforced after prep started
    -- (and will therefore be "alive")
@@ -279,6 +281,9 @@ function plymeta:SpawnForRound(dead_only)
    end
 
    if not self:ShouldSpawn() then return false end
+
+   -- reset propspec state that they may have gotten during prep
+   PROPSPEC.Clear(self)
 
    -- respawn anyone else
    if self:Team() == TEAM_SPEC then
@@ -338,7 +343,7 @@ function plymeta:SpectateEntity(ent)
    oldSpectateEntity(self, ent)
 
    if IsValid(ent) and ent:IsPlayer() then
-      self:SetPlayerHands(ent)
+      self:SetupHands(ent)
    end
 end
 
@@ -350,28 +355,4 @@ end
 
 function plymeta:GetAvoidDetective()
    return self:GetInfoNum("ttt_avoid_detective", 0) > 0
-end
-
--- Sets hands to be the correct model for given player and attaches to their
--- viewmodel. Note that the player is not necessarily *self*, but can be a
--- spectated player.
-function plymeta:SetPlayerHands(ply)
-   local hands = self:GetHands()
-   if not IsValid(hands) or not IsValid(ply) then return end
-
-   -- Find hands model
-   local simplemodel = util.GetSimpleModelName(ply:GetModel())
-   local info = player_manager.TranslatePlayerHands(simplemodel)
-   if info then
-      hands:SetModel(info.model)
-      hands:SetSkin(info.skin)
-      hands:SetBodyGroups(info.body)
-   end
-
-   -- Attach to vm
-   local vm = ply:GetViewModel(0)
-   if vm then
-      hands:AttachToViewmodel(vm)
-      vm:DeleteOnRemove(hands)
-   end
 end

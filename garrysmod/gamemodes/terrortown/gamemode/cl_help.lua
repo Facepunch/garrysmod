@@ -92,6 +92,9 @@ function HELPSCRN:Show()
 
    cb = dgui:CheckBox(GetTranslation("set_fastsw"), "ttt_weaponswitcher_fast")
    cb:SetTooltip(GetTranslation("set_fastsw_tip"))
+      
+   cb = dgui:CheckBox(GetTranslation("set_fastsw_menu"), "ttt_weaponswitcher_displayfast")
+   cb:SetTooltip(GetTranslation("set_fastswmenu_tip"))
 
    cb = dgui:CheckBox(GetTranslation("set_wswitch"), "ttt_weaponswitcher_stay")
    cb:SetTooltip(GetTranslation("set_wswitch_tip"))
@@ -174,7 +177,7 @@ cvars.AddChangeCallback("ttt_mute_team_check", MuteTeamCallback)
 
 --- Tutorial
 
-local imgpath = "VGUI/ttt/help/tut0%d"
+local imgpath = "vgui/ttt/help/tut0%d"
 local tutorial_pages = 6
 function HELPSCRN:CreateTutorial(parent)
    local w, h = parent:GetSize()

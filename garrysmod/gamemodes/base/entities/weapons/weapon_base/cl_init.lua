@@ -1,8 +1,8 @@
 
-include('shared.lua')
+include( "ai_translations.lua" )
+include( "sh_anim.lua" )
+include( "shared.lua" )
 
-
-SWEP.PrintName			= "Scripted Weapon"		-- 'Nice' Weapon name (Shown on HUD)	
 SWEP.Slot				= 0						-- Slot in the weapon selection menu
 SWEP.SlotPos			= 10					-- Position in the slot
 SWEP.DrawAmmo			= true					-- Should draw the default HL2 ammo counter
@@ -93,8 +93,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: SWEP:FreezeMovement()
-   Desc: Return true to freeze moving the view
+	Name: SWEP:FreezeMovement()
+	Desc: Return true to freeze moving the view
 -----------------------------------------------------------]]
 function SWEP:FreezeMovement()
 	return false
@@ -102,37 +102,37 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: SWEP:ViewModelDrawn( ViewModel )
-   Desc: Called straight after the viewmodel has been drawn
+	Name: SWEP:ViewModelDrawn( ViewModel )
+	Desc: Called straight after the viewmodel has been drawn
 -----------------------------------------------------------]]
 function SWEP:ViewModelDrawn( ViewModel )
 end
 
 
 --[[---------------------------------------------------------
-   Name: OnRestore
-   Desc: Called immediately after a "load"
+	Name: OnRestore
+	Desc: Called immediately after a "load"
 -----------------------------------------------------------]]
 function SWEP:OnRestore()
 end
 
 --[[---------------------------------------------------------
-   Name: OnRemove
-   Desc: Called just before entity is deleted
+	Name: OnRemove
+	Desc: Called just before entity is deleted
 -----------------------------------------------------------]]
 function SWEP:OnRemove()
 end
 
 --[[---------------------------------------------------------
-   Name: CustomAmmoDisplay
-   Desc: Return a table
+	Name: CustomAmmoDisplay
+	Desc: Return a table
 -----------------------------------------------------------]]
 function SWEP:CustomAmmoDisplay()
 end
 
 --[[---------------------------------------------------------
-   Name: GetViewModelPosition
-   Desc: Allows you to re-position the view model
+	Name: GetViewModelPosition
+	Desc: Allows you to re-position the view model
 -----------------------------------------------------------]]
 function SWEP:GetViewModelPosition( pos, ang )
 
@@ -141,8 +141,8 @@ function SWEP:GetViewModelPosition( pos, ang )
 end
 
 --[[---------------------------------------------------------
-   Name: TranslateFOV
-   Desc: Allows the weapon to translate the player's FOV (clientside)
+	Name: TranslateFOV
+	Desc: Allows the weapon to translate the player's FOV (clientside)
 -----------------------------------------------------------]]
 function SWEP:TranslateFOV( current_fov )
 	
@@ -152,8 +152,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: DrawWorldModel
-   Desc: Draws the world model (not the viewmodel)
+	Name: DrawWorldModel
+	Desc: Draws the world model (not the viewmodel)
 -----------------------------------------------------------]]
 function SWEP:DrawWorldModel()
 	
@@ -163,8 +163,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: DrawWorldModelTranslucent
-   Desc: Draws the world model (not the viewmodel)
+	Name: DrawWorldModelTranslucent
+	Desc: Draws the world model (not the viewmodel)
 -----------------------------------------------------------]]
 function SWEP:DrawWorldModelTranslucent()
 	
@@ -174,8 +174,8 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: AdjustMouseSensitivity()
-   Desc: Allows you to adjust the mouse sensitivity.
+	Name: AdjustMouseSensitivity
+	Desc: Allows you to adjust the mouse sensitivity.
 -----------------------------------------------------------]]
 function SWEP:AdjustMouseSensitivity()
 
@@ -184,8 +184,8 @@ function SWEP:AdjustMouseSensitivity()
 end
 
 --[[---------------------------------------------------------
-   Name: GetTracerOrigin()
-   Desc: Allows you to override where the tracer comes from (in first person view)
+	Name: GetTracerOrigin
+	Desc: Allows you to override where the tracer comes from (in first person view)
 		 returning anything but a vector indicates that you want the default action
 -----------------------------------------------------------]]
 function SWEP:GetTracerOrigin()
@@ -198,3 +198,30 @@ function SWEP:GetTracerOrigin()
 
 end
 
+--[[---------------------------------------------------------
+	Name: FireAnimationEvent
+	Desc: Allows you to override weapon animation events
+-----------------------------------------------------------]]
+function SWEP:FireAnimationEvent( pos, ang, event, options )
+
+	if ( !self.CSMuzzleFlashes ) then return end
+
+	-- CS Muzzle flashes
+	if ( event == 5001 or event == 5011 or event == 5021 or event == 5031 ) then
+	
+		local data = EffectData()
+		data:SetFlags( 0 )
+		data:SetEntity( self.Owner:GetViewModel() )
+		data:SetAttachment( math.floor( ( event - 4991 ) / 10 ) )
+		data:SetScale( 1 )
+
+		if ( self.CSMuzzleX ) then
+			util.Effect( "CS_MuzzleFlash_X", data )
+		else
+			util.Effect( "CS_MuzzleFlash", data )
+		end
+	
+		return true
+	end
+
+end

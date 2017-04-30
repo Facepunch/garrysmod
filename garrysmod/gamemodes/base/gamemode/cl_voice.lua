@@ -1,3 +1,4 @@
+
 local PANEL = {}
 local PlayerVoicePanels = {}
 
@@ -10,7 +11,7 @@ function PANEL:Init()
 	self.LabelName:SetTextColor( Color( 255, 255, 255, 255 ) )
 
 	self.Avatar = vgui.Create( "AvatarImage", self )
-	self.Avatar:Dock( LEFT );
+	self.Avatar:Dock( LEFT )
 	self.Avatar:SetSize( 32, 32 )
 
 	self.Color = color_transparent
@@ -41,7 +42,11 @@ function PANEL:Paint( w, h )
 
 end
 
-function PANEL:Think( )
+function PANEL:Think()
+	
+	if ( IsValid( self.ply ) ) then
+		self.LabelName:SetText( self.ply:Nick() )
+	end
 
 	if ( self.fadeAnim ) then
 		self.fadeAnim:Run()
@@ -60,8 +65,8 @@ function PANEL:FadeOut( anim, delta, data )
 		end
 		
 	return end
-			
-	self:SetAlpha( 255 - (255 * delta) )
+	
+	self:SetAlpha( 255 - ( 255 * delta ) )
 
 end
 
@@ -86,7 +91,7 @@ function GM:PlayerStartVoice( ply )
 
 		PlayerVoicePanels[ ply ]:SetAlpha( 255 )
 
-		return;
+		return
 
 	end
 
@@ -96,9 +101,8 @@ function GM:PlayerStartVoice( ply )
 	pnl:Setup( ply )
 	
 	PlayerVoicePanels[ ply ] = pnl
-	
-end
 
+end
 
 local function VoiceClean()
 
@@ -111,12 +115,10 @@ local function VoiceClean()
 	end
 
 end
-
 timer.Create( "VoiceClean", 10, 0, VoiceClean )
 
-
 function GM:PlayerEndVoice( ply )
-	
+
 	if ( IsValid( PlayerVoicePanels[ ply ] ) ) then
 
 		if ( PlayerVoicePanels[ ply ].fadeAnim ) then return end
@@ -125,9 +127,8 @@ function GM:PlayerEndVoice( ply )
 		PlayerVoicePanels[ ply ].fadeAnim:Start( 2 )
 
 	end
-	
-end
 
+end
 
 local function CreateVoiceVGUI()
 
@@ -136,7 +137,7 @@ local function CreateVoiceVGUI()
 	g_VoicePanelList:ParentToHUD()
 	g_VoicePanelList:SetPos( ScrW() - 300, 100 )
 	g_VoicePanelList:SetSize( 250, ScrH() - 200 )
-	g_VoicePanelList:SetDrawBackground( false )
+	g_VoicePanelList:SetPaintBackground( false )
 
 end
 

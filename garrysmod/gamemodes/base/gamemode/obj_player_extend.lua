@@ -1,15 +1,15 @@
 
 local meta = FindMetaTable( "Player" )
-if (!meta) then return end
+if ( !meta ) then return end
 
 -- In this file we're adding functions to the player meta table.
 -- This means you'll be able to call functions here straight from the player object
 -- You can even override already existing functions.
 
 --[[---------------------------------------------------------
-   Name:	AddFrozenPhysicsObject
-   Desc:	For the Physgun, adds a frozen object to the player's list
------------------------------------------------------------]]  
+   Name: AddFrozenPhysicsObject
+   Desc: For the Physgun, adds a frozen object to the player's list
+-----------------------------------------------------------]]
 function meta:AddFrozenPhysicsObject( ent, phys )
 
 	-- Get the player's table
@@ -20,13 +20,13 @@ function meta:AddFrozenPhysicsObject( ent, phys )
 	
 	-- Make a new table that contains the info
 	local entry = {}
-	entry.ent 	= ent
-	entry.phys 	= phys
+	entry.ent	= ent
+	entry.phys	= phys
 	
 	table.insert( tab.FrozenPhysicsObjects, entry )
 	
 	gamemode.Call( "PlayerFrozeObject", self, ent, phys )
-	
+
 end
 
 local function PlayerUnfreezeObject( ply, ent, object )
@@ -47,25 +47,24 @@ local function PlayerUnfreezeObject( ply, ent, object )
 	gamemode.Call( "PlayerUnfrozeObject", ply, ent, object )
 	
 	return 1
-	
+
 end
 
-
 --[[---------------------------------------------------------
-   Name:	UnfreezePhysicsObjects
-   Desc:	For the Physgun, unfreezes all frozen physics objects
------------------------------------------------------------]]  
+   Name: UnfreezePhysicsObjects
+   Desc: For the Physgun, unfreezes all frozen physics objects
+-----------------------------------------------------------]]
 function meta:PhysgunUnfreeze( weapon )
 
 	-- Get the player's table
 	local tab = self:GetTable()
-	if (!tab.FrozenPhysicsObjects) then return 0 end
+	if ( !tab.FrozenPhysicsObjects ) then return 0 end
 
 	-- Detect double click. Unfreeze all objects on double click.
 	if ( tab.LastPhysUnfreeze && CurTime() - tab.LastPhysUnfreeze < 0.25 ) then
 		return self:UnfreezePhysicsObjects()
 	end
-		
+	
 	local tr = self:GetEyeTrace()
 	if ( tr.HitNonWorld && IsValid( tr.Entity ) ) then
 	
@@ -73,12 +72,12 @@ function meta:PhysgunUnfreeze( weapon )
 		local UnfrozenObjects = 0
 		
 		for k, ent in pairs( Ents ) do
-					
+			
 			local objects = ent:GetPhysicsObjectCount()
 	
 			for i=1, objects do
 	
-				local physobject = ent:GetPhysicsObjectNum( i-1 )
+				local physobject = ent:GetPhysicsObjectNum( i - 1 )
 				UnfrozenObjects = UnfrozenObjects + PlayerUnfreezeObject( self, ent, physobject )
 		
 			end
@@ -91,7 +90,7 @@ function meta:PhysgunUnfreeze( weapon )
 	
 	end
 	
-	tab.LastPhysUnfreeze = CurTime()	
+	tab.LastPhysUnfreeze = CurTime()
 	return 0
 
 end
@@ -99,14 +98,14 @@ end
 --[[---------------------------------------------------------
    Name:	UnfreezePhysicsObjects
    Desc:	For the Physgun, unfreezes all frozen physics objects
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 function meta:UnfreezePhysicsObjects()
 
 	-- Get the player's table
 	local tab = self:GetTable()
 	
 	-- If the table doesn't exist then quit here
-	if (!tab.FrozenPhysicsObjects) then return 0 end
+	if ( !tab.FrozenPhysicsObjects ) then return 0 end
 	
 	local Count = 0
 	
@@ -120,16 +119,16 @@ function meta:UnfreezePhysicsObjects()
 			-- We can't directly test to see if EnableMotion is false right now
 			-- but IsMovable seems to do the job just fine.
 			-- We only test so the count isn't wrong
-			if (v.phys && !v.phys:IsMoveable()) then
+			if ( IsValid( v.phys ) && !v.phys:IsMoveable() ) then
 			
 				-- We need to freeze/unfreeze all physobj's in jeeps to stop it spazzing
-				if (v.ent:GetClass() == "prop_vehicle_jeep") then
+				if ( v.ent:GetClass() == "prop_vehicle_jeep" ) then
 				
 					-- How many physics objects we have
 					local objects = v.ent:GetPhysicsObjectCount()
 	
 					-- Loop through each one
-					for i=0, objects-1 do
+					for i = 0, objects - 1 do
 		
 						local physobject = v.ent:GetPhysicsObjectNum( i )
 						PlayerUnfreezeObject( self, v.ent, physobject )
@@ -145,7 +144,7 @@ function meta:UnfreezePhysicsObjects()
 		end
 	
 	end
-			
+	
 	-- Remove the table
 	tab.FrozenPhysicsObjects = nil
 	
@@ -163,7 +162,7 @@ function meta:UniqueIDTable( key )
 	local id = 0
 	if ( SERVER ) then id = self:UniqueID() end
 	
-	g_UniqueIDTable[ id ] = g_UniqueIDTable[ id ]  or {}
+	g_UniqueIDTable[ id ] = g_UniqueIDTable[ id ] or {}
 	g_UniqueIDTable[ id ][ key ] = g_UniqueIDTable[ id ][ key ] or {}
 	
 	return g_UniqueIDTable[ id ][ key ]
@@ -175,7 +174,9 @@ end
 -----------------------------------------------------------]]
 function meta:GetEyeTrace()
 
-	if ( self.LastPlayerTrace == CurTime() ) then
+	-- Cache the trace results for the current frame, unless we're serverside
+	-- in which case it wouldn't play well with lag compensation at all
+	if ( CLIENT and self.LastPlayerTrace == CurTime() ) then
 		return self.PlayerTrace
 	end
 

@@ -2,7 +2,7 @@
 
 KARMA = {}
 
--- ply uid -> karma table for disconnected players who might reconnect
+-- ply steamid -> karma table for disconnected players who might reconnect
 KARMA.RememberedPlayers = {}
 
 -- Convars, more convenient access than GetConVar bla bla
@@ -33,8 +33,13 @@ local function IsDebug() return config.debug:GetBool() end
 
 local math = math
 
+cvars.AddChangeCallback("ttt_karma_max", function(cvar, old, new)
+   SetGlobalInt("ttt_karma_max", new)
+end)
+
 function KARMA.InitState()
    SetGlobalBool("ttt_karma", config.enabled:GetBool())
+   SetGlobalInt("ttt_karma_max", config.max:GetFloat())
 end
 
 function KARMA.IsEnabled()
@@ -62,8 +67,10 @@ function KARMA.GetKillReward()
    return KARMA.GetHurtReward(config.tbonus:GetFloat())
 end
 
-function KARMA.GivePenalty(ply, penalty)
-   ply:SetLiveKarma(math.max(ply:GetLiveKarma() - penalty, 0))
+function KARMA.GivePenalty(ply, penalty, victim)
+        if not hook.Call( "TTTKarmaGivePenalty", nil, ply, penalty, victim ) then
+                ply:SetLiveKarma(math.max(ply:GetLiveKarma() - penalty, 0))
+        end
 end
 
 function KARMA.GiveReward(ply, reward)
@@ -94,14 +101,11 @@ function KARMA.ApplyKarma(ply)
    end
 end
 
--- Return true if a traitor could have avoided the damage/death
+-- Return true if a traitor could have easily avoided the damage/death
 local function WasAvoidable(attacker, victim, dmginfo)
-   -- C4 deaths are avoidable for traitors, indicated on HUD
-   if attacker:IsTraitor() and victim:IsTraitor() and dmginfo:IsExplosionDamage() then
-      local infl = dmginfo:GetInflictor()
-      if IsValid(infl) and infl:GetClass() == "ttt_c4" then
-         return true
-      end
+   local infl = dmginfo:GetInflictor()
+   if attacker:IsTraitor() and victim:IsTraitor() and IsValid(infl) and infl.Avoidable then
+      return true
    end
 
    return false
@@ -123,7 +127,7 @@ function KARMA.Hurt(attacker, victim, dmginfo)
 
       local penalty = KARMA.GetHurtPenalty(victim:GetLiveKarma(), hurt_amount)
 
-      KARMA.GivePenalty(attacker, penalty)
+      KARMA.GivePenalty(attacker, penalty, victim)
 
       attacker:SetCleanRound(false)
 
@@ -153,7 +157,7 @@ function KARMA.Killed(attacker, victim, dmginfo)
 
       local penalty = KARMA.GetKillPenalty(victim:GetLiveKarma())
 
-      KARMA.GivePenalty(attacker, penalty)
+      KARMA.GivePenalty(attacker, penalty, victim)
 
       attacker:SetCleanRound(false)
 
@@ -199,11 +203,13 @@ function KARMA.RoundIncrement()
    local cleanbonus = config.clean:GetFloat()
 
    for _, ply in pairs(player.GetAll()) do
-      local bonus = healbonus + (ply:GetCleanRound() and cleanbonus or 0)
-      KARMA.GiveReward(ply, bonus)
+      if ply:IsDeadTerror() and ply.death_type ~= KILL_SUICIDE or not ply:IsSpec() then
+         local bonus = healbonus + (ply:GetCleanRound() and cleanbonus or 0)
+         KARMA.GiveReward(ply, bonus)
 
-      if IsDebug() then
-         print(ply, "gets roundincr", incr)
+         if IsDebug() then
+            print(ply, "gets roundincr", incr)
+         end
       end
    end
 
@@ -295,7 +301,7 @@ function KARMA.Remember(ply)
    end
 
    -- if persist is on, this is purely a backup method
-   KARMA.RememberedPlayers[ply:UniqueID()] = ply:GetLiveKarma()
+   KARMA.RememberedPlayers[ply:SteamID()] = ply:GetLiveKarma()
 end
 
 function KARMA.Recall(ply)
@@ -310,11 +316,11 @@ function KARMA.Recall(ply)
       end
    end
 
-   return KARMA.RememberedPlayers[ply:UniqueID()]
+   return KARMA.RememberedPlayers[ply:SteamID()]
 end
 
 function KARMA.LateRecallAndSet(ply)
-   local k = tonumber(ply:GetPData("karma_stored", KARMA.RememberedPlayers[ply:UniqueID()]))
+   local k = tonumber(ply:GetPData("karma_stored", KARMA.RememberedPlayers[ply:SteamID()]))
    if k and k < ply:GetLiveKarma() then
       ply:SetBaseKarma(k)
       ply:SetLiveKarma(k)
@@ -342,7 +348,7 @@ function KARMA.CheckAutoKick(ply)
       if config.persist:GetBool() then
          local k = math.Clamp(config.starting:GetFloat() * 0.8, config.kicklevel:GetFloat() * 1.1, config.max:GetFloat())
          ply:SetPData("karma_stored", k)
-         KARMA.RememberedPlayers[ply:UniqueID()] = k
+         KARMA.RememberedPlayers[ply:SteamID()] = k
       end
 
       if config.autoban:GetBool() then

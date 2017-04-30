@@ -1,7 +1,3 @@
-
-require ( "usermessage" )
-require ( "timer" )
-
 module( "undo", package.seeall )
 
 -- undo.Create("Wheel")
@@ -35,7 +31,8 @@ if ( CLIENT ) then
 		if ( !Panel ) then return end
 		
 		Panel:ClearControls()
-		
+		Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.undo.help" } )
+
 		local ComboBox = Panel:ListBox()
 		ComboBox:SetTall( 500 )
 		
@@ -57,10 +54,10 @@ if ( CLIENT ) then
 		AddUndo
 		Called from server. Adds a new undo to our UI
 	-----------------------------------------------------------]]
-	local function AddUndo( message )
+	local function AddUndo()
 
-		local k 	= message:ReadLong();
-		local v 	= message:ReadString();
+		local k 	= net.ReadInt(16);
+		local v 	= net.ReadString();
 		
 		table.insert( ClientUndos, 1, { Key = k, Name = v } )
 		
@@ -68,7 +65,7 @@ if ( CLIENT ) then
 
 	end
 	
-	usermessage.Hook( "AddUndo", AddUndo )
+	net.Receive( "Undo_AddUndo", AddUndo )
 	
 	
 	--[[---------------------------------------------------------
@@ -77,9 +74,9 @@ if ( CLIENT ) then
 		has been undone or made redundant. We act by updating 
 		out data (We wait until the UI is viewed until updating)
 	-----------------------------------------------------------]]
-	local function Undone( message )
+	local function Undone()
 
-		local key = message:ReadLong();
+		local key = net.ReadInt(16);
 		
 		local NewUndo = {}
 		local i = 1
@@ -98,7 +95,7 @@ if ( CLIENT ) then
 
 	end
 	
-	usermessage.Hook( "Undone", Undone )
+	net.Receive( "Undo_Undone", Undone )
 	
 	--[[---------------------------------------------------------
 		MakeUIDirty
@@ -164,6 +161,9 @@ local PlayerUndo = {}
 --			- Owner (player)
 
 local Current_Undo = nil
+
+util.AddNetworkString("Undo_Undone")
+util.AddNetworkString("Undo_AddUndo")
 
 --[[---------------------------------------------------------
 	GetTable
@@ -293,9 +293,9 @@ local function SendUndoneMessage( ent, id, ply )
 	-- For further optimization we could queue up the ids and send them
 	-- in one batch ever 0.5 seconds or something along those lines.
 	
-	umsg.Start( "Undone", ply )
-		umsg.Long( id )
-	umsg.End()
+	net.Start( "Undo_Undone" )
+	    net.WriteInt( id, 16 )
+	net.Send( ply )
 
 end
 
@@ -315,10 +315,10 @@ function Finish( NiceText )
 	
 	NiceText = NiceText or Current_Undo.Name
 	
-	umsg.Start( "AddUndo", Current_Undo.Owner )
-		umsg.Long( id )
-		umsg.String( NiceText )
-	umsg.End()
+	net.Start( "Undo_AddUndo" )
+		net.WriteInt( id, 16 )
+		net.WriteString( NiceText )
+	net.Send( Current_Undo.Owner )
 	
 	-- Have one of the entities in the undo tell us when it gets undone.
 	if ( Current_Undo.Entities[1] ) then
@@ -366,9 +366,9 @@ function Do_Undo( undo )
 	
 	if (count > 0) then
 		if ( undo.CustomUndoText ) then
-			undo.Owner:SendLua( "GAMEMODE:OnUndo( '"..undo.Name.."', '"..undo.CustomUndoText.."' )" )
+			undo.Owner:SendLua( 'hook.Run("OnUndo","' .. undo.Name .. '","' .. undo.CustomUndoText .. '")' )
 		else
-			undo.Owner:SendLua( "GAMEMODE:OnUndo( '"..undo.Name.."' )" )
+			undo.Owner:SendLua( 'hook.Run("OnUndo","' .. undo.Name .. '")' )
 		end
 	end
 	
@@ -404,9 +404,9 @@ local function CC_UndoLast( pl, command, args )
 	
 	local count = Do_Undo( last )
 	
-	umsg.Start( "Undone", pl )
-		umsg.Long( lastk )
-	umsg.End()
+	net.Start( "Undo_Undone" )
+		net.WriteInt( lastk, 16 )
+	net.Send( pl )
 	
 	PlayerUndo[ index ][ lastk ] = nil
 	
@@ -445,5 +445,3 @@ end
 concommand.Add("undo",					CC_UndoLast, nil, "", { FCVAR_DONTRECORD } )
 concommand.Add("gmod_undo",				CC_UndoLast, nil, "", { FCVAR_DONTRECORD } )
 concommand.Add("gmod_undonum",			CC_UndoNum, nil, "", { FCVAR_DONTRECORD } )
-
-	

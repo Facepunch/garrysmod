@@ -1,14 +1,14 @@
+
 --
 -- Name: NEXTBOT:BehaveStart
 -- Desc: Called to initialize the behaviour.\n\n You shouldn't override this - it's used to kick off the coroutine that runs the bot's behaviour. \n\nThis is called automatically when the NPC is created, there should be no need to call it manually.
--- Arg1: 
+-- Arg1:
 -- Ret1:
 --
 function ENT:BehaveStart()
 
-	local s = self
 	self.BehaveThread = coroutine.create( function() self:RunBehaviour() end )
-	
+
 end
 
 --
@@ -21,11 +21,26 @@ function ENT:BehaveUpdate( fInterval )
 
 	if ( !self.BehaveThread ) then return end
 
+	--
+	-- Give a silent warning to developers if RunBehaviour has returned
+	--
+	if ( coroutine.status( self.BehaveThread ) == "dead" ) then
+
+		self.BehaveThread = nil
+		Msg( self, " Warning: ENT:RunBehaviour() has finished executing\n" )
+
+		return
+
+	end
+
+	--
+	-- Continue RunBehaviour's execution
+	--
 	local ok, message = coroutine.resume( self.BehaveThread )
 	if ( ok == false ) then
 
 		self.BehaveThread = nil
-		Msg( self, "error: ", message, "\n" );
+		ErrorNoHalt( self, " Error: ", message, "\n" )
 
 	end
 
@@ -42,17 +57,17 @@ function ENT:BodyUpdate()
 	local act = self:GetActivity()
 
 	--
-	-- This helper function does a lot of useful stuff for us. 
+	-- This helper function does a lot of useful stuff for us.
 	-- It sets the bot's move_x move_y pose parameters, sets their animation speed relative to the ground speed, and calls FrameAdvance.
 	--
-	-- 
+	--
 	if ( act == ACT_RUN || act == ACT_WALK ) then
 
 		self:BodyMoveXY()
 
 	end
 
-	-- 
+	--
 	-- If we're not walking or running we probably just want to update the anim system
 	--
 	self:FrameAdvance()
@@ -62,24 +77,24 @@ end
 --
 -- Name: NEXTBOT:OnLeaveGround
 -- Desc: Called when the bot's feet leave the ground - for whatever reason
--- Arg1:
+-- Arg1: Entity|ent|Entity that the NextBot "jumped" from
 -- Ret1:
 --
-function ENT:OnLeaveGround()
+function ENT:OnLeaveGround( ent )
 
-	--MsgN( "OnLeaveGround" )
+	--MsgN( "OnLeaveGround", ent )
 
 end
 
 --
 -- Name: NEXTBOT:OnLeaveGround
 -- Desc: Called when the bot's feet return to the ground
--- Arg1:
+-- Arg1: Entity|ent|Entity that the NextBot landed on
 -- Ret1:
 --
-function ENT:OnLandOnGround()
+function ENT:OnLandOnGround( ent )
 
-	--MsgN( "OnLandOnGround" )
+	--MsgN( "OnLandOnGround", ent )
 
 end
 
@@ -123,24 +138,44 @@ end
 -- Arg1: CTakeDamageInfo|info|damage info
 -- Ret1:
 --
-function ENT:OnKilled( damageinfo )
+function ENT:OnKilled( dmginfo )
 
-	self:BecomeRagdoll( damageinfo )
+	hook.Run( "OnNPCKilled", self, dmginfo:GetAttacker(), dmginfo:GetInflictor() )
+
+	self:BecomeRagdoll( dmginfo )
 
 end
 
 --
 -- Name: NEXTBOT:OnOtherKilled
 -- Desc: Called when someone else or something else has been killed
--- Arg1:
+-- Arg1: Entity|victim|entity that was killed
+-- Arg2: CTakeDamageInfo|info|damage info
 -- Ret1:
 --
-function ENT:OnOtherKilled()
+function ENT:OnOtherKilled( victim, info )
 
-	--MsgN( "OnOtherKilled" )
+	--MsgN( "OnOtherKilled", victim, info )
 
 end
 
+function ENT:OnContact( ent )
+
+	--MsgN( "OnContact", ent )
+
+end
+
+function ENT:OnIgnite()
+
+	--MsgN( "OnIgnite" )
+
+end
+
+function ENT:OnNavAreaChanged( old, new )
+
+	--MsgN( "OnNavAreaChanged", old, new )
+
+end
 
 --
 -- Name: NextBot:FindSpots
@@ -151,7 +186,7 @@ end
 function ENT:FindSpots( tbl )
 
 	local tbl = tbl or {}
-	
+
 	tbl.pos			= tbl.pos			or self:WorldSpaceCenter()
 	tbl.radius		= tbl.radius		or 1000
 	tbl.stepdown	= tbl.stepdown		or 20
@@ -165,13 +200,13 @@ function ENT:FindSpots( tbl )
 	local areas = navmesh.Find( tbl.pos, tbl.radius, tbl.stepdown, tbl.stepup )
 
 	local found = {}
-	
+
 	-- In each area
 	for _, area in pairs( areas ) do
 
 		-- get the spots
-		local spots 
-		
+		local spots
+
 		if ( tbl.type == 'hiding' ) then spots = area:GetHidingSpots() end
 
 		for k, vec in pairs( spots ) do
@@ -180,7 +215,7 @@ function ENT:FindSpots( tbl )
 			path:Invalidate()
 
 			path:Compute( self, vec, 1 ) -- TODO: This is bullshit - it's using 'self.pos' not tbl.pos
-				
+
 			table.insert( found, { vector = vec, distance = path:GetLength() } )
 
 		end
@@ -198,7 +233,7 @@ end
 -- Arg2: table|options|A table containing a bunch of tweakable options. See the function definition for more details
 -- Ret1: vector|If it finds a spot it will return a vector. If not it will return nil.
 --
-function ENT:FindSpot( type,  options )
+function ENT:FindSpot( type, options )
 
 	local spots = self:FindSpots( options )
 	if ( !spots || #spots == 0 ) then return end
@@ -225,15 +260,15 @@ end
 --
 -- Name: NextBot:HandleStuck
 -- Desc: Called from Lua when the NPC is stuck. This should only be called from the behaviour coroutine - so if you want to override this function and do something special that yields - then go for it.\n\nYou should always call self.loco:ClearStuck() in this function to reset the stuck status - so it knows it's unstuck.
--- Arg1: 
--- Ret1: 
+-- Arg1:
+-- Ret1:
 --
 function ENT:HandleStuck()
 
 	--
 	-- Clear the stuck status
 	--
-	self.loco:ClearStuck();
+	self.loco:ClearStuck()
 
 end
 
@@ -267,8 +302,8 @@ function ENT:MoveToPos( pos, options )
 		-- If we're stuck then call the HandleStuck function and abandon
 		if ( self.loco:IsStuck() ) then
 
-			self:HandleStuck();
-			
+			self:HandleStuck()
+
 			return "stuck"
 
 		end
@@ -300,16 +335,16 @@ end
 -- Desc: To be called in the behaviour coroutine only! Plays an animation sequence and waits for it to end before returning.
 -- Arg1: string|name|The sequence name
 -- Arg2: number|the speed (default 1)
--- Ret1: 
+-- Ret1:
 --
 function ENT:PlaySequenceAndWait( name, speed )
 
 	local len = self:SetSequence( name )
 	speed = speed or 1
-	
+
 	self:ResetSequenceInfo()
 	self:SetCycle( 0 )
-	self:SetPlaybackRate( speed  );
+	self:SetPlaybackRate( speed )
 
 	-- wait for it to finish
 	coroutine.wait( len / speed )
@@ -323,18 +358,16 @@ end
 -- Arg2: entity|called|The entity that called the use
 -- Arg3: number|type|The type of use (USE_ON, USE_OFF, USE_TOGGLE, USE_SET)
 -- Arg4: number|value|Any passed value
--- Ret1: 
+-- Ret1:
 --
 function ENT:Use( activator, caller, type, value )
-
 end
 
 --
 -- Name: NEXTBOT:Think
 -- Desc: Called periodically
 -- Arg1:
--- Ret1: 
+-- Ret1:
 --
 function ENT:Think()
-
 end

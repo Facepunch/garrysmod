@@ -1,6 +1,4 @@
-
-local GetTranslation = LANG.GetTranslation
-local GetPTranslation = LANG.GetParamTranslation
+local TryTranslation = LANG.TryTranslation
 
 GM.PickupHistory = {}
 GM.PickupHistoryLast = 0
@@ -15,10 +13,9 @@ local pickupclr = {
 }
 
 function GM:HUDWeaponPickedUp( wep )
-   local client = LocalPlayer()
-   if (not IsValid(client)) or (not client:Alive()) then return end
+   if not (IsValid(wep) and IsValid(LocalPlayer())) or (not LocalPlayer():Alive()) then return end
 
-   local name = LANG.TryTranslation(wep.GetPrintName and wep:GetPrintName() or "MASSIVE PHASER ARRAY")
+   local name = TryTranslation(wep.GetPrintName and wep:GetPrintName() or wep:GetClass() or "Unknown Weapon Name")
 
    local pickup = {}
    pickup.time      = CurTime()
@@ -28,7 +25,7 @@ function GM:HUDWeaponPickedUp( wep )
    pickup.fadein    = 0.04
    pickup.fadeout   = 0.3
 
-   local role = client.GetRole and client:GetRole() or ROLE_INNOCENT
+   local role = LocalPlayer().GetRole and LocalPlayer():GetRole() or ROLE_INNOCENT
    pickup.color = pickupclr[role]
 
    pickup.upper = true
@@ -49,7 +46,7 @@ end
 
 function GM:HUDItemPickedUp( itemname )
 
-   if not LocalPlayer():Alive() then return end
+   if not (IsValid(LocalPlayer()) and LocalPlayer():Alive()) then return end
 
    local pickup = {}
    pickup.time      = CurTime()
@@ -79,9 +76,9 @@ function GM:HUDItemPickedUp( itemname )
 end
 
 function GM:HUDAmmoPickedUp( itemname, amount )
-   if (not IsValid(LocalPlayer())) or (not LocalPlayer():Alive()) then return end
+   if not (IsValid(LocalPlayer()) and LocalPlayer():Alive()) then return end
 
-   local itemname_trans = LANG.TryTranslation(string.lower("ammo_" .. itemname))
+   local itemname_trans = TryTranslation(string.lower("ammo_" .. itemname))
 
    if self.PickupHistory then
 
@@ -126,7 +123,7 @@ end
 
 
 function GM:HUDDrawPickupHistory()
-   if (self.PickupHistory == nil) then return end
+   if (not self.PickupHistory) then return end
 
    local x, y = ScrW() - self.PickupHistoryWide - 20, self.PickupHistoryTop
    local tall = 0

@@ -1,4 +1,3 @@
-
 function GetTraitors()
    local trs = {}
    for k,v in ipairs(player.GetAll()) do
@@ -15,24 +14,25 @@ function CountTraitors() return #GetTraitors() end
 -- Send every player their role
 local function SendPlayerRoles()
    for k, v in pairs(player.GetAll()) do
-      umsg.Start("ttt_role", v)
-      umsg.Char(v:GetRole())
-      umsg.End()
+      net.Start("TTT_Role")
+         net.WriteUInt(v:GetRole(), 2)
+      net.Send(v)
    end
 end
 
 local function SendRoleListMessage(role, role_ids, ply_or_rf)
-   umsg.Start("role_list", ply_or_rf)
-   -- send what kind of list this is
-   umsg.Char(role)
+   net.Start("TTT_RoleList")
+      net.WriteUInt(role, 2)
 
-   -- list contents
-   local num_ids = #role_ids
-   umsg.Char(num_ids)
-   for i=1, num_ids do
-      umsg.Short(role_ids[i])
-   end
-   umsg.End()
+      -- list contents
+      local num_ids = #role_ids
+      net.WriteUInt(num_ids, 8)
+      for i=1, num_ids do
+         net.WriteUInt(role_ids[i] - 1, 7)
+      end
+
+   if ply_or_rf then net.Send(ply_or_rf)
+   else net.Broadcast() end
 end
 
 local function SendRoleList(role, ply_or_rf, pred)
@@ -93,50 +93,65 @@ end
 
 function SendRoleReset(ply_or_rf)
    local plys = player.GetAll()
-   umsg.Start("role_list", ply_or_rf)
-   umsg.Char(ROLE_INNOCENT)
-   umsg.Char(#plys)
-   for k, v in pairs(plys) do
-      umsg.Short(v:EntIndex())
-   end
-   umsg.End()
+
+   net.Start("TTT_RoleList")
+      net.WriteUInt(ROLE_INNOCENT, 2)
+
+      net.WriteUInt(#plys, 8)
+      for k, v in pairs(plys) do
+         net.WriteUInt(v:EntIndex() - 1, 7)
+      end
+
+   if ply_or_rf then net.Send(ply_or_rf)
+   else net.Broadcast() end
 end
 
 ---- Console commands
 
-local function force_terror(ply)
-   if cvars.Bool("sv_cheats", 0) then
-      ply:SetRole(ROLE_INNOCENT)
-      ply:UnSpectate()
-      ply:SetTeam(TEAM_TERROR)
+local function request_rolelist(ply)
+   -- Client requested a state update. Note that the client can only use this
+   -- information after entities have been initialised (e.g. in InitPostEntity).
+   if GetRoundState() != ROUND_WAIT then
 
-      ply:StripAll()
+      SendRoleReset(ply)
+      SendDetectiveList(ply)
 
-      ply:Spawn()
-      ply:PrintMessage(HUD_PRINTTALK, "You are now on the terrorist team.")
-
-      SendFullStateUpdate()
+      if ply:IsTraitor() then
+         SendTraitorList(ply)
+      else
+         SendConfirmedTraitors(ply)
+      end
    end
 end
-concommand.Add("ttt_force_terror", force_terror)
+concommand.Add("_ttt_request_rolelist", request_rolelist)
+
+local function force_terror(ply)
+   ply:SetRole(ROLE_INNOCENT)
+   ply:UnSpectate()
+   ply:SetTeam(TEAM_TERROR)
+
+   ply:StripAll()
+
+   ply:Spawn()
+   ply:PrintMessage(HUD_PRINTTALK, "You are now on the terrorist team.")
+
+   SendFullStateUpdate()
+end
+concommand.Add("ttt_force_terror", force_terror, nil, nil, FCVAR_CHEAT)
 
 local function force_traitor(ply)
-   if cvars.Bool("sv_cheats", 0) then
-      ply:SetRole(ROLE_TRAITOR)
+   ply:SetRole(ROLE_TRAITOR)
 
-      SendFullStateUpdate()
-   end
+   SendFullStateUpdate()
 end
-concommand.Add("ttt_force_traitor", force_traitor)
+concommand.Add("ttt_force_traitor", force_traitor, nil, nil, FCVAR_CHEAT)
 
 local function force_detective(ply)
-   if cvars.Bool("sv_cheats", 0) then
-      ply:SetRole(ROLE_DETECTIVE)
+   ply:SetRole(ROLE_DETECTIVE)
 
-      SendFullStateUpdate()
-   end
+   SendFullStateUpdate()
 end
-concommand.Add("ttt_force_detective", force_detective)
+concommand.Add("ttt_force_detective", force_detective, nil, nil, FCVAR_CHEAT)
 
 
 local function force_spectate(ply, cmd, arg)
@@ -150,7 +165,6 @@ local function force_spectate(ply, cmd, arg)
 
          GAMEMODE:PlayerSpawnAsSpectator(ply)
          ply:SetTeam(TEAM_SPEC)
-         ply:SetRole(ROLE_INNOCENT)
          ply:SetForceSpec(true)
          ply:Spawn()
 
@@ -159,5 +173,7 @@ local function force_spectate(ply, cmd, arg)
    end
 end
 concommand.Add("ttt_spectate", force_spectate)
-
+net.Receive("TTT_Spectate", function(l, pl)
+   force_spectate(pl, nil, { net.ReadBool() and 1 or 0 })
+end)
 

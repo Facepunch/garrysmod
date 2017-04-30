@@ -1,10 +1,10 @@
 
 App = angular.module( 'CSavesApp', [ 'tranny' ] );
 
-App.config(function ( $routeProvider, $locationProvider )
+App.config( function ( $routeProvider, $locationProvider )
 {
-	$routeProvider.when('/', { templateUrl: 'template/creations/saves.html' });
-	$routeProvider.when('/list/:Category/:Tag/', { templateUrl: 'template/creations/saves.html' });
+	$routeProvider.when( '/', { templateUrl: 'template/creations/saves.html' } );
+	$routeProvider.when( '/list/:Category/:Tag/', { templateUrl: 'template/creations/saves.html' } );
 } );
 
 var CreationScope		= null;
@@ -15,17 +15,23 @@ function CSaves( $scope, $timeout, $location )
 	CreationScope		= $scope;
 	CreationLocation	= $location;
 
-	CreationScope.Categories = 
+	CreationScope.MyCategories =
+	[
+		"local",
+		"subscribed_ugc",
+		//"favorites_ugc"
+	];
+
+	CreationScope.Categories =
 	[
 		"trending",
 		"popular",
-		"latest",
-		"friends",
+		"latest"
 	];
 
-	CreationScope.SimpleCategories =
+	CreationScope.CategoriesSecondary =
 	[
-		"local",
+		"friends",
 		"mine"
 	];
 
@@ -38,28 +44,27 @@ function CSaves( $scope, $timeout, $location )
 		"others"
 	];
 
-	$scope.IfElse = function ( b, a, c )
+	$scope.IfElse = function( b, a, c )
 	{
 		if ( b ) return a;
 		return c;
 	}
 
-	$scope.OpenWorkshopFile = function (id) 
+	$scope.OpenWorkshopFile = function( id )
 	{
-		if ( !id ) return;
-		lua.Run("steamworks.ViewFile( %s )", String(id));
+		if ( !id || !IN_ENGINE ) return;
+		gmod.OpenWorkshopFile( id );
 	}
 
-	$scope.SaveSave = function ()
+	$scope.SaveSave = function()
 	{
-		lua.Run( "RunConsoleCommand( \"gm_save\", \"spawnmenu\" );" );
+		if ( IN_ENGINE ) gmod.SaveSave();
 
 		$scope.SaveDisabled = "disabled";
 
-		$timeout( function ()
+		$timeout( function()
 		{
 			$scope.SaveDisabled = "";
-
 		}, 5000 );
 	}
 

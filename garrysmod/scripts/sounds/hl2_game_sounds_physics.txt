@@ -181,6 +181,34 @@
 	}
 }
 
+"Snow.StepLeft"
+{
+
+	"CompatibilityAttenuation"	"1.0"
+	"pitch"			"PITCH_NORM"
+	"volume"		"1.0"
+	"rndwave"
+	{
+		"wave"		"player/footsteps/snow1.wav"
+		"wave"		"player/footsteps/snow2.wav"
+		"wave"		"player/footsteps/snow3.wav"
+	}
+}
+
+"Snow.StepRight"
+{
+
+	"CompatibilityAttenuation"	"1.0"
+	"pitch"			"PITCH_NORM"
+	"volume"		"1.0"
+	"rndwave"
+	{
+		"wave"		"player/footsteps/snow4.wav"
+		"wave"		"player/footsteps/snow5.wav"
+		"wave"		"player/footsteps/snow6.wav"
+	}
+}
+
 "Dirt.StepLeft"
 {
 	"soundlevel"		"SNDLVL_75dB"

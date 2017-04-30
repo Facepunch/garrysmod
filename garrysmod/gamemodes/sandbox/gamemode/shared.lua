@@ -42,71 +42,7 @@ cleanup.Register( "sents" )
 cleanup.Register( "vehicles" )
 
 
-physgun_limited = CreateConVar( "physgun_limited", "0", FCVAR_REPLICATED )
-
-
---[[---------------------------------------------------------
-   Name: gamemode:CanConstrain( ply, trace, mode )
-   Return true if the player is allowed to do this constrain
------------------------------------------------------------]]
-function GM:CanConstrain( ply, trace, mode )
-
-	-- Not allowed to constrain their fellow players
-	if (trace.Entity:IsValid() && trace.Entity:IsPlayer()) then
-		return false
-	end
-	
-	-- Give the entity a chance to decide
-	if ( trace.Entity.CanConstrain ) then
-		return trace.Entity:CanConstrain( ply, trace, mode )
-	end
-	
-	--Msg( "Can Constrain "..mode.."\n" )
-
-	return true
-	
-end
-
---[[---------------------------------------------------------
-   Name: gamemode:CanConstruct( ply, trace, mode )
-   Return true if the player is allowed to do this construction
------------------------------------------------------------]]
-function GM:CanConstruct( ply, trace, mode )
-
-	if ( mode == "remover" && !trace.Entity:IsValid() ) then
-		return false
-	end
-	
-	-- The jeep spazzes out when applying something
-	-- todo: Find out what it's reacting badly to and change it in _physprops
-	if ( mode == "physprop" && trace.Entity:IsValid() && trace.Entity:GetClass() == "prop_vehicle_jeep" ) then
-		return false
-	end
-	
-	-- Give the entity a chance to decide
-	if ( trace.Entity.CanConstruct ) then
-		return trace.Entity:CanConstruct( ply, trace, mode )
-	end
-
-	return true
-	
-end
-
---[[---------------------------------------------------------
-   Name: gamemode:CanPose( ply, trace, mode )
-   Return true if the player is allowed to do this constrain
------------------------------------------------------------]]
-function GM:CanPose( ply, trace, mode )
-	return true
-end
-
---[[---------------------------------------------------------
-   Name: gamemode:CanRender( ply, trace, mode )
-   Return true if the player is allowed to do this constrain
------------------------------------------------------------]]
-function GM:CanRender( ply, trace, mode )
-	return true
-end
+local physgun_limited = CreateConVar( "physgun_limited", "0", FCVAR_REPLICATED )
 
 --[[---------------------------------------------------------
    Name: gamemode:CanTool( ply, trace, mode )
@@ -221,17 +157,6 @@ function GM:PhysgunPickup( ply, ent )
 	
 end
 
---[[---------------------------------------------------------
-   Name: gamemode:CanPlayerUnfreeze( )
-   Desc: Can the player unfreeze this entity & physobject
------------------------------------------------------------]]
-function GM:CanPlayerUnfreeze( ply, entity, physobject )
-
-	if ( entity:GetPersistent() ) then return false end
-
-	return true
-end
-
 
 --[[---------------------------------------------------------
    Name: gamemode:EntityKeyValue( ent, key, value )
@@ -239,7 +164,6 @@ end
 	      Returning a string it will override the value
 -----------------------------------------------------------]]
 function GM:EntityKeyValue( ent, key, value )
-
 
 	-- Physgun not allowed on this prop..
 	if ( key == "gmod_allowphysgun" && value == '0' ) then
@@ -261,10 +185,10 @@ end
 function GM:PlayerNoClip( pl, on )
 	
 	-- Don't allow if player is in vehicle
-	if ( pl:InVehicle() ) then return false end
+	if ( !IsValid( pl ) || pl:InVehicle() || !pl:Alive() ) then return false end
 	
-	-- Always allow in single player
-	if ( game.SinglePlayer() ) then return true end
+	-- Always allow to turn off noclip, and in single player
+	if ( !on || game.SinglePlayer() ) then return true end
 
 	return GetConVarNumber( "sbox_noclip" ) > 0
 	
@@ -309,6 +233,13 @@ function GM:CanProperty( pl, property, ent )
 		
 		return GetConVarNumber( "sbox_bonemanip_misc" ) != 0
 
+	end
+
+	--
+	-- Weapons can only be property'd if nobody is holding them
+	--
+	if ( ent:IsWeapon() and IsValid( ent:GetOwner() ) ) then
+		return false
 	end
 
 	-- Give the entity a chance to decide

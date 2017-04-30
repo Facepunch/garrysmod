@@ -1,21 +1,21 @@
 
 module( "halo", package.seeall )
 
-local matColor	= Material( "model_color" )
-local mat_Copy	= Material( "pp/copy" )
-local mat_Add	= Material( "pp/add" )
-local mat_Sub	= Material( "pp/sub" )
-local rt_Stencil	= render.GetBloomTex0()
+local mat_Copy		= Material( "pp/copy" )
+local mat_Add		= Material( "pp/add" )
+local mat_Sub		= Material( "pp/sub" )
 local rt_Store		= render.GetScreenEffectTexture( 0 )
+local rt_Blur		= render.GetScreenEffectTexture( 1 )
 
 local List = {}
+local RenderEnt = NULL
 
 function Add( ents, color, blurx, blury, passes, add, ignorez )
 
 	if ( add == nil ) then add = true end
 	if ( ignorez == nil ) then ignorez = false end
 
-	local t = 
+	local t =
 	{
 		Ents = ents,
 		Color = color,
@@ -26,150 +26,133 @@ function Add( ents, color, blurx, blury, passes, add, ignorez )
 		Additive = add,
 		IgnoreZ = ignorez
 	}
-	
+
 	table.insert( List, t )
 
 end
 
+function RenderedEntity()
+	return RenderEnt
+end
+
 function Render( entry )
 
-	local OldRT = render.GetRenderTarget()
-	
-	-- Copy what's currently on the screen to another texture
+	local rt_Scene = render.GetRenderTarget()
+
+
+	-- Store a copy of the original scene
 	render.CopyRenderTargetToTexture( rt_Store )
-	
-	-- Clear the colour and the stencils, not the depth
-	if ( entry.Additive ) then			
+
+
+	-- Clear our scene so that additive/subtractive rendering with it will work later
+	if ( entry.Additive ) then
 		render.Clear( 0, 0, 0, 255, false, true )
 	else
 		render.Clear( 255, 255, 255, 255, false, true )
 	end
-		
-	
-	-- FILL STENCIL
-	-- Write to the stencil..		
-	cam.Start3D( EyePos(), EyeAngles() )
-	
-		cam.IgnoreZ( entry.IgnoreZ )
-		render.OverrideDepthEnable( true, false )									-- Don't write depth
-		
-		render.SetStencilEnable( true );
-		render.SetStencilFailOperation( STENCILOPERATION_KEEP );
-		render.SetStencilZFailOperation( STENCILOPERATION_KEEP );
-		render.SetStencilPassOperation( STENCILOPERATION_REPLACE );
-		render.SetStencilCompareFunction( STENCILCOMPARISONFUNCTION_ALWAYS );
-		render.SetStencilWriteMask( 1 );
-		render.SetStencilReferenceValue( 1 );
-		
-		render.SetBlend( 0 ); -- don't render any colour
-		
-		for k, v in pairs( entry.Ents ) do
-		
-			if ( !IsValid( v ) ) then continue end
-			
-			render.PushFlashlightMode( true )
-				v:DrawModel()
-			render.PopFlashlightMode()
-		
-		end
-			
-	cam.End3D()	
-	
-	-- FILL COLOUR
-	-- Write to the colour buffer
-	cam.Start3D( EyePos(), EyeAngles() )
 
-		render.MaterialOverride( matColor )			
-		cam.IgnoreZ( entry.IgnoreZ )
-		
-		render.SetStencilEnable( true );
-		render.SetStencilWriteMask( 0 );
-		render.SetStencilReferenceValue( 0 );
-		render.SetStencilTestMask( 1 );
-		render.SetStencilFailOperation( STENCILOPERATION_KEEP );
-		render.SetStencilPassOperation( STENCILOPERATION_KEEP );
-		render.SetStencilZFailOperation( STENCILOPERATION_KEEP );
-		render.SetStencilCompareFunction( STENCILCOMPARISONFUNCTION_NOTEQUAL );
-		
-		for k, v in pairs( entry.Ents ) do
-			
-			if ( !IsValid( v ) ) then continue end
-			
-			render.SetColorModulation( entry.Color.r/255, entry.Color.g/255, entry.Color.b/255 )
-			render.SetBlend( entry.Color.a/255 );
 
-			v:DrawModel()
-			
-		end
-			
-		render.MaterialOverride( nil )
-		render.SetStencilEnable( false );
+	-- Render colored props to the scene and set their pixels high
+	cam.Start3D()
+		render.SetStencilEnable( true )
+			render.SuppressEngineLighting(true)
+			cam.IgnoreZ( entry.IgnoreZ )
 
-	cam.End3D()
-	
-	-- BLUR IT
-		render.CopyRenderTargetToTexture( rt_Stencil )
-		render.OverrideDepthEnable( false, false )
-		render.SetStencilEnable( false );
-		render.BlurRenderTarget( rt_Stencil, entry.BlurX, entry.BlurY, 1 )
-	
-	-- Put our scene back
-		render.SetRenderTarget( OldRT )
-		render.SetColorModulation( 1, 1, 1 )
-		render.SetStencilEnable( false );
-		render.OverrideDepthEnable( true, false )
-		render.SetBlend( 1 );
-		mat_Copy:SetTexture( "$basetexture", rt_Store )
-		render.SetMaterial( mat_Copy )
-		render.DrawScreenQuad()
-		
-	
-	-- DRAW IT TO THE SCEEN
+				render.SetStencilWriteMask( 1 )
+				render.SetStencilTestMask( 1 )
+				render.SetStencilReferenceValue( 1 )
 
-		render.SetStencilEnable( true );
-		render.SetStencilWriteMask( 0 );
-		render.SetStencilReferenceValue( 0 );
-		render.SetStencilTestMask( 1 );
-		render.SetStencilFailOperation( STENCILOPERATION_KEEP );
-		render.SetStencilPassOperation( STENCILOPERATION_KEEP );
-		render.SetStencilZFailOperation( STENCILOPERATION_KEEP );
-		render.SetStencilCompareFunction( STENCILCOMPARISONFUNCTION_EQUAL );
-		    
-		if ( entry.Additive ) then	
-			mat_Add:SetTexture( "$basetexture", rt_Stencil )
-			render.SetMaterial( mat_Add )
-		else
-			mat_Sub:SetTexture( "$basetexture", rt_Stencil )
-			render.SetMaterial( mat_Sub )
-		end
-		
-		for i=0, entry.DrawPasses do
-			render.DrawScreenQuad()
-		end
-	
-	-- PUT EVERYTHING BACK HOW WE FOUND IT
+				render.SetStencilCompareFunction( STENCIL_ALWAYS )
+				render.SetStencilPassOperation( STENCIL_REPLACE )
+				render.SetStencilFailOperation( STENCIL_KEEP )
+				render.SetStencilZFailOperation( STENCIL_KEEP )
 
-		render.SetStencilWriteMask( 0 );
-		render.SetStencilReferenceValue( 0 );
-		render.SetStencilTestMask( 0 );
+				
+					for k, v in pairs( entry.Ents ) do
+
+						if ( !IsValid( v ) ) then continue end
+
+						RenderEnt = v
+
+						v:DrawModel()
+
+					end
+
+					RenderEnt = NULL
+
+				render.SetStencilCompareFunction( STENCIL_EQUAL )
+				render.SetStencilPassOperation( STENCIL_KEEP )
+				-- render.SetStencilFailOperation( STENCIL_KEEP )
+				-- render.SetStencilZFailOperation( STENCIL_KEEP )
+
+					cam.Start2D()
+						surface.SetDrawColor( entry.Color )
+						surface.DrawRect( 0, 0, ScrW(), ScrH() )
+					cam.End2D()
+
+			cam.IgnoreZ( false )
+			render.SuppressEngineLighting(false)
 		render.SetStencilEnable( false )
-		render.OverrideDepthEnable( false )
-		render.SetBlend( 1 )
-		
-		cam.IgnoreZ( false )
+	cam.End3D()
 
+
+	-- Store a blurred version of the colored props in an RT
+	render.CopyRenderTargetToTexture( rt_Blur )
+	render.BlurRenderTarget( rt_Blur, entry.BlurX, entry.BlurY, 1 )
+
+
+	-- Restore the original scene
+	render.SetRenderTarget( rt_Scene )
+	mat_Copy:SetTexture( "$basetexture", rt_Store )
+	render.SetMaterial( mat_Copy )
+	render.DrawScreenQuad()
+
+
+	-- Draw back our blured colored props additively/subtractively, ignoring the high bits
+	render.SetStencilEnable( true )
+
+		render.SetStencilCompareFunction( STENCIL_NOTEQUAL )
+		-- render.SetStencilPassOperation( STENCIL_KEEP )
+		-- render.SetStencilFailOperation( STENCIL_KEEP )
+		-- render.SetStencilZFailOperation( STENCIL_KEEP )
+
+			if ( entry.Additive ) then
+
+				mat_Add:SetTexture( "$basetexture", rt_Blur )
+				render.SetMaterial( mat_Add )
+
+			else
+
+				mat_Sub:SetTexture( "$basetexture", rt_Blur )
+				render.SetMaterial( mat_Sub )
+
+			end
+
+			for i = 0, entry.DrawPasses do
+
+				render.DrawScreenQuad()
+
+			end
+
+	render.SetStencilEnable( false )
+
+
+	-- Return original values
+	render.SetStencilTestMask( 0 )
+	render.SetStencilWriteMask( 0 )
+	render.SetStencilReferenceValue( 0 )
 end
 
 hook.Add( "PostDrawEffects", "RenderHalos", function()
 
-	hook.Run( "PreDrawHalos" );
+	hook.Run( "PreDrawHalos" )
 
 	if ( #List == 0 ) then return end
-	
-	for k, v in pairs( List ) do
+
+	for k, v in ipairs( List ) do
 		Render( v )
 	end
-		
+
 	List = {}
-	
+
 end )

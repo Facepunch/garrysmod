@@ -50,25 +50,24 @@ function TBHUD:UseFocused()
 end
 
 local confirm_sound = Sound("buttons/button24.wav")
-function TBHUD.ReceiveUseConfirm(um)
+function TBHUD.ReceiveUseConfirm()
    surface.PlaySound(confirm_sound)
 
    TBHUD:CacheEnts()
 end
-usermessage.Hook("ttt_confirm_use_tbutton", TBHUD.ReceiveUseConfirm)
+net.Receive("TTT_ConfirmUseTButton", TBHUD.ReceiveUseConfirm)
 
 local function ComputeRangeFactor(plypos, tgtpos)
    local d = tgtpos - plypos
-   d = d:DotProduct(d)
+   d = d:Dot(d)
    return d / range
 end
 
-local tbut_normal = surface.GetTextureID("VGUI/ttt/tbut_hand_line")
-local tbut_focus = surface.GetTextureID("VGUI/ttt/tbut_hand_filled")
+local tbut_normal = surface.GetTextureID("vgui/ttt/tbut_hand_line")
+local tbut_focus = surface.GetTextureID("vgui/ttt/tbut_hand_filled")
 local size = 32
 local mid  = size / 2
 local focus_range = 25
-local range = 1024 ^ 2
 
 local use_key = Key("+use", "USE")
 
@@ -95,7 +94,7 @@ function TBHUD:Draw(client)
 
             if (not IsOffScreen(scrpos)) and but:IsUsable() then
                d = pos - plypos
-               d = d:DotProduct(d) / range
+               d = d:Dot(d) / (but:GetUsableRange() ^ 2)
                -- draw if this button is within range, with alpha based on distance
                if d < 1 then
                   surface.SetDrawColor(255, 255, 255, 200 * (1 - d))

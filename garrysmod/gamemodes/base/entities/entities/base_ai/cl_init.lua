@@ -1,19 +1,19 @@
 
-include('shared.lua')
+include( "shared.lua" )
 
 ENT.RenderGroup = RENDERGROUP_OPAQUE
 
 --[[---------------------------------------------------------
-   Name: Draw
-   Desc: Draw it!
+	Name: Draw
+	Desc: Draw it!
 -----------------------------------------------------------]]
 function ENT:Draw()
 	self:DrawModel()
 end
 
 --[[---------------------------------------------------------
-   Name: DrawTranslucent
-   Desc: Draw translucent
+	Name: DrawTranslucent
+	Desc: Draw translucent
 -----------------------------------------------------------]]
 function ENT:DrawTranslucent()
 
@@ -21,5 +21,5 @@ function ENT:DrawTranslucent()
 	-- You shouldn't really be drawing your model here unless it's translucent
 
 	self:Draw()
-	
+
 end

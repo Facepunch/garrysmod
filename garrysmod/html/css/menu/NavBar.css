@@ -45,6 +45,10 @@
 	right: 0;
 }
 
+#NavBar .right li:hover, #NavBar .center li:hover
+{
+	box-shadow: 0px 0px 20px #fff;
+}
 
 #NavBar LI, UL.popup LI, #NavBar .button
 {

@@ -99,7 +99,7 @@ function clr(color) return color.r, color.g, color.b, color.a; end
 if CLIENT then
    -- Is screenpos on screen?
    function IsOffScreen(scrpos)
-      return scrpos.x < 0 or scrpos.y < 0 or scrpos.x > ScrW() or scrpos.y > ScrH()
+      return not scrpos.visible or scrpos.x < 0 or scrpos.y < 0 or scrpos.x > ScrW() or scrpos.y > ScrH()
    end
 end
 
@@ -171,10 +171,6 @@ function util.SafeRemoveHook(event, name)
    if h and h[event] and h[event][name] then
       hook.Remove(event, name)
    end
-end
-
-function util.UnbridledHateForULX()
-   util.SafeRemoveHook("PlayerSay", "ULXMeCheck")
 end
 
 function util.noop() end
@@ -276,8 +272,6 @@ function math.ExponentialDecay(halflife, dt)
    return exp((-0.69314718 / halflife) * dt)
 end
 
-Warning = ErrorNoHalt
-
 function Dev(level, ...)
    if cvars and cvars.Number("developer", 0) >= level then
       Msg("[TTT dev]")
@@ -307,21 +301,23 @@ end
 
 if CLIENT then
    local healthcolors = {
-      healthy = Color(0,255,0,255),
-      hurt    = Color(170,230,10,255),
-      wounded = Color(230,215,10,255),
-      badwound= Color(255,140,0,255),
-      death   = Color(255,0,0,255)
+      healthy = Color(0, 255, 0, 255),
+      hurt    = Color(170, 230, 10, 255),
+      wounded = Color(230, 215, 10, 255),
+      badwound= Color(255, 140, 0, 255),
+      death   = Color(255, 0, 0, 255)
    };
 
-   function util.HealthToString(health)
-      if health > 90 then
+   function util.HealthToString(health, maxhealth)
+      maxhealth = maxhealth or 100
+
+      if health > maxhealth * 0.9 then
          return "hp_healthy", healthcolors.healthy
-      elseif health > 70 then
+      elseif health > maxhealth * 0.7 then
          return "hp_hurt", healthcolors.hurt
-      elseif health > 45 then
+      elseif health > maxhealth * 0.45 then
          return "hp_wounded", healthcolors.wounded
-      elseif health > 20 then
+      elseif health > maxhealth * 0.2 then
          return "hp_badwnd", healthcolors.badwound
       else
          return "hp_death", healthcolors.death
@@ -329,21 +325,23 @@ if CLIENT then
    end
 
    local karmacolors = {
-      max  = Color(255,255,255,255),
-      high = Color(255,240,135,255),
-      med  = Color(245,220,60,255),
-      low  = Color(255,180,0,255),
-      min  = Color(255,130,0,255),
+      max  = Color(255, 255, 255, 255),
+      high = Color(255, 240, 135, 255),
+      med  = Color(245, 220, 60, 255),
+      low  = Color(255, 180, 0, 255),
+      min  = Color(255, 130, 0, 255),
    };
 
    function util.KarmaToString(karma)
-      if karma > 890 then
+      local maxkarma = GetGlobalInt("ttt_karma_max", 1000)
+
+      if karma > maxkarma * 0.89 then
          return "karma_max", karmacolors.max
-      elseif karma > 800 then
+      elseif karma > maxkarma * 0.8 then
          return "karma_high", karmacolors.high
-      elseif karma > 650 then
+      elseif karma > maxkarma * 0.65 then
          return "karma_med", karmacolors.med
-      elseif karma > 500 then
+      elseif karma > maxkarma * 0.5 then
          return "karma_low", karmacolors.low
       else
          return "karma_min", karmacolors.min
@@ -371,21 +369,4 @@ function util.SimpleTime(seconds, fmt)
     local m = seconds % 60
 
     return string.format(fmt, m, s, ms)
-end
-
-
--- Find the simple name that player_manager likes
-local simplemodel_cache = {}
-function util.GetSimpleModelName(model)
-   local cached = simplemodel_cache[model]
-   if cached then return cached end
-
-   local lst = player_manager.AllValidModels()
-   for simple, mdl in pairs(lst) do
-      if mdl == model then
-         simplemodel_cache[mdl] = simple
-         return simple
-      end
-   end
-   return "css_phoenix"
 end

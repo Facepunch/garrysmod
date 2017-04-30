@@ -7,6 +7,7 @@ local pairs = pairs
 local Msg = Msg
 local setmetatable = setmetatable
 local math = math
+local utf8 = utf8
 
 module("markup")
 
@@ -103,7 +104,7 @@ local function ExtractParams(p1,p2,p3)
 			if (rgba == nil) then
 				rgba = {}
 				local x = { "r", "g", "b", "a" }
-				n = 1
+				local n = 1
 				for k, v in string.gmatch(p2, "(%d+),?") do
 					rgba[ x[n] ] = k
 					n = n + 1
@@ -137,8 +138,8 @@ local function CheckTextOrTag(p)
 		
 		local text_block = {}
 		text_block.text = p 
-		text_block.colour = colour_stack[ table.getn(colour_stack) ]
-		text_block.font = font_stack[ table.getn(font_stack) ]
+		text_block.colour = colour_stack[ #colour_stack ]
+		text_block.font = font_stack[ #font_stack ]
 		table.insert(blocks, text_block)
 		
 	end
@@ -240,6 +241,8 @@ end
    Usage: markup.Parse("<font=Default>changed font</font>\n<colour=255,0,255,255>changed colour</colour>")
 -----------------------------------------------------------]]
 function Parse(ml, maxwidth)
+
+	ml = utf8.force( ml ) -- Ensure we have valid UTF-8 data
 	
 	colour_stack = { {r=255,g=255,b=255,a=255} }
 	font_stack = { "DermaDefault" }
@@ -269,8 +272,9 @@ function Parse(ml, maxwidth)
 		blocks[i].text = string.gsub(blocks[i].text, "&gt;", ">")
 		blocks[i].text = string.gsub(blocks[i].text, "&lt;", "<")
 		blocks[i].text = string.gsub(blocks[i].text, "&amp;", "&")
-		for j=1,string.len(blocks[i].text) do
-			local ch = string.sub(blocks[i].text,j,j)
+		for j, c in utf8.codes( blocks[ i ].text ) do
+
+			local ch = utf8.char( c )
 			
 			if (ch == "\n") then
 			
@@ -355,10 +359,11 @@ function Parse(ml, maxwidth)
 							end
 						end
 						
-						if (lastSpacePos == string.len(curString)) then
-							ch = string.sub(curString,lastSpacePos,lastSpacePos) .. ch
-							j = lastSpacePos
-							curString = string.sub(curString, 1, lastSpacePos-1)
+						if (lastSpacePos == string.len(curString) && lastSpacePos > 0) then
+							local sequenceStartPos = utf8.offset(curString,0,lastSpacePos)
+							ch = string.match(curString, utf8.charpattern, sequenceStartPos) .. ch
+							j = utf8.offset(curString,1,sequenceStartPos)
+							curString = string.sub(curString, 1, sequenceStartPos - 1)
 						else
 							ch = string.sub(curString,lastSpacePos+1) .. ch
 							j = lastSpacePos+1

@@ -5,31 +5,21 @@ local PT = LANG.GetParamTranslation
 
 local is_dmg = util.BitSet
 
+local dtt = { search_dmg_crush = DMG_CRUSH, search_dmg_bullet = DMG_BULLET, search_dmg_fall = DMG_FALL, 
+search_dmg_boom = DMG_BLAST, search_dmg_club = DMG_CLUB, search_dmg_drown = DMG_DROWN, search_dmg_stab = DMG_SLASH, 
+search_dmg_burn = DMG_BURN, search_dmg_tele = DMG_SONIC, search_dmg_car = DMG_VEHICLE }
+
 -- "From his body you can tell XXX"
 local function DmgToText(d)
-   if is_dmg(d, DMG_CRUSH) then
-      return T("search_dmg_crush")
-   elseif is_dmg(d, DMG_BULLET) then
-      return T("search_dmg_bullet")
-   elseif is_dmg(d, DMG_FALL) then
-      return T("search_dmg_fall")
-   elseif is_dmg(d, DMG_BLAST) then
-      return T("search_dmg_boom")
-   elseif is_dmg(d, DMG_CLUB) then
-      return T("search_dmg_club")
-   elseif is_dmg(d, DMG_DROWN) then
-      return T("search_dmg_drown")
-   elseif is_dmg(d, DMG_SLASH) then
-      return T("search_dmg_stab")
-   elseif is_dmg(d, DMG_BURN) or is_dmg(d, DMG_DIRECT) then
-      return T("search_dmg_burn")
-   elseif is_dmg(d, DMG_SONIC) then
-      return T("search_dmg_tele")
-   elseif is_dmg(d, DMG_VEHICLE) then
-      return T("search_dmg_car")
-   else
-      return T("search_dmg_other")
+   for k, v in pairs(dtt) do
+      if is_dmg(d, v) then
+        return T(k)
+      end
    end
+   if is_dmg(d, DMG_DIRECT) then
+      return T("search_dmg_burn")
+   end
+   return T("search_dmg_other")
 end
 
 -- Info type to icon mapping
@@ -40,16 +30,15 @@ end
 -- Those that have a lot of possible data values are defined separately, either
 -- as a function or a table.
 
+local dtm = { bullet = DMG_BULLET, rock = DMG_CRUSH, splode = DMG_BLAST, fall = DMG_FALL, fire = DMG_BURN }
+
 local function DmgToMat(d)
-   if is_dmg(d, DMG_BULLET) then
-      return "bullet"
-   elseif is_dmg(d, DMG_CRUSH) then
-      return "rock"
-   elseif is_dmg(d, DMG_BLAST) then
-      return "splode"
-   elseif is_dmg(d, DMG_FALL) then
-      return "fall"
-   elseif is_dmg(d, DMG_BURN) or is_dmg(d, DMG_DIRECT) then
+   for k, v in pairs(dtm) do
+      if is_dmg(d, v) then
+         return k
+      end
+   end
+   if is_dmg(d, DMG_DIRECT) then
       return "fire"
    else
       return "skull"
@@ -58,7 +47,7 @@ end
 
 local function WeaponToIcon(d)
    local wep = util.WeaponForClass(d)
-   return wep and wep.Icon or "VGUI/ttt/icon_nades"
+   return wep and wep.Icon or "vgui/ttt/icon_nades"
 end
 
 local TypeToMat = {
@@ -76,11 +65,11 @@ local TypeToMat = {
    stime="wtester",
    lastid="lastid",
    kills="list"
-};
+}
 
 -- Accessor for better fail handling
 local function IconForInfoType(t, data)
-   local base = "VGUI/ttt/icon_"
+   local base = "vgui/ttt/icon_"
    local mat = TypeToMat[t]
 
    if type(mat) == "table" then
@@ -231,6 +220,8 @@ function PreprocSearch(raw)
       end
    end
 
+   hook.Call("TTTBodySearchPopulate", nil, search, raw)
+
    return search
 end
 
@@ -243,7 +234,7 @@ local function SearchInfoController(search, dactive, dtext)
              local t = pnew.info_type
              local data = search[t]
              if not data then
-                ErrorNoHalt("Search: data not found", t, data)
+                ErrorNoHalt("Search: data not found", t, data,"\n")
                 return
              end
 
@@ -324,7 +315,7 @@ local function ShowSearchScreen(search_raw)
    ddesc:SetSize(descw, desch)
 
    local dactive = vgui.Create("DImage", ddesc)
-   dactive:SetImage("VGUI/ttt/icon_id")
+   dactive:SetImage("vgui/ttt/icon_id")
    dactive:SetPos(m, m)
    dactive:SetSize(64, 64)
 
@@ -381,7 +372,6 @@ local function ShowSearchScreen(search_raw)
 
       -- Certain items need a special icon conveying additional information
       if t == "nick" then
-         local name = info.nick
          local avply = IsValid(search_raw.owner) and search_raw.owner or nil
 
          ic = vgui.Create("SimpleIconAvatar", dlist)
@@ -431,22 +421,31 @@ local function StoreSearchResult(search)
    end
 end
 
+local function bitsRequired(num)
+   local bits, max = 0, 1
+   while max <= num do
+      bits = bits + 1
+      max = max + max
+   end
+   return bits
+end
+
 local search = {}
-local function ReceiveRagdollSearch(um)
+local function ReceiveRagdollSearch()
    search = {}
 
    -- Basic info
-   search.eidx = um:ReadShort()
+   search.eidx = net.ReadUInt(16)
 
-   search.owner = Entity(um:ReadShort())
-   if not (IsValid(search.owner) and search.owner:IsPlayer() and (not search.owner:Alive())) then
+   search.owner = Entity(net.ReadUInt(8))
+   if not (IsValid(search.owner) and search.owner:IsPlayer() and (not search.owner:IsTerror())) then
       search.owner = nil
    end
 
-   search.nick = um:ReadString()
+   search.nick = net.ReadString()
 
    -- Equipment
-   local eq = um:ReadShort()
+   local eq = net.ReadUInt(16)
 
    -- All equipment pieces get their own icon
    search.eq_armor = util.BitSet(eq, EQUIP_ARMOR)
@@ -454,67 +453,49 @@ local function ReceiveRagdollSearch(um)
    search.eq_disg = util.BitSet(eq, EQUIP_DISGUISE)
 
    -- Traitor things
-   search.role = um:ReadChar()
-   search.c4 = um:ReadChar()
+   search.role = net.ReadUInt(2)
+   search.c4 = net.ReadInt(bitsRequired(C4_WIRE_COUNT) + 1)
 
    -- Kill info
-   search.dmg = um:ReadLong()
-   search.wep = um:ReadString()
-   search.head = um:ReadBool()
-   search.dtime = um:ReadShort()
-   search.stime = um:ReadShort()
+   search.dmg = net.ReadUInt(30)
+   search.wep = net.ReadString()
+   search.head = net.ReadBit() == 1
+   search.dtime = net.ReadInt(16)
+   search.stime = net.ReadInt(16)
 
    -- Players killed
-   local num_kills = um:ReadChar()
+   local num_kills = net.ReadUInt(8)
    if num_kills > 0 then
       search.kills = {}
       for i=1,num_kills do
-         table.insert(search.kills, um:ReadShort())
+         table.insert(search.kills, net.ReadUInt(8))
       end
    else
       search.kills = nil
    end
 
-   search.lastid = {idx=um:ReadShort()}
+   search.lastid = {idx=net.ReadUInt(8)}
 
    -- should we show a menu for this result?
-   search.finder = um:ReadShort()
+   search.finder = net.ReadUInt(8)
 
    search.show = (LocalPlayer():EntIndex() == search.finder)
 
-   -- continuation bit for last words
-   search.has_words = um:ReadBool()
+   --
+   -- last words
+   --
+   local words = net.ReadString()
+   search.words = (words ~= "") and words or nil
+   
+   hook.Call("TTTBodySearchEquipment", nil, search, eq)
 
-   if not search.has_words then
-
-      if search.show then
-         ShowSearchScreen(search)
-      end
-
-      StoreSearchResult(search)
-
-      search = nil
+   if search.show then
+      ShowSearchScreen(search)
    end
 
-   -- if there's a last words msg coming up, don't show search yet
+   StoreSearchResult(search)
+
+   search = nil
 end
-usermessage.Hook("ragsrch", ReceiveRagdollSearch)
 
-local function ReceiveRagdollWords(um)
-   -- can't do anything with this if we haven't received the first msg. I don't
-   -- know if Source protects vs. receiving umsgs out of order, not dealing with
-   -- that case either way
-   if search and search.has_words then
-      search.words = um:ReadString()
-
-      if search.show then
-         ShowSearchScreen(search)
-      end
-
-      StoreSearchResult(search)
-
-      search = nil
-   end
-end
-usermessage.Hook("ragsrch_lw", ReceiveRagdollWords)
-
+net.Receive("TTT_RagdollSearch", ReceiveRagdollSearch)

@@ -187,7 +187,7 @@ function ReadVar( restore )
 	
 	local typename = restore:StartBlock()
 	
-		itype = GetTypeStr( typename )
+		local itype = GetTypeStr( typename )
 	
 		if (itype == TYPE_FLOAT) then 
 			retval = restore:ReadFloat()
