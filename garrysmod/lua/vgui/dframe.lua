@@ -86,6 +86,18 @@ function PANEL:SetTitle( strTitle )
 
 end
 
+function PANEL:SetTitleColor( col )
+
+	self.lblTitle:SetTextColor( col )
+
+end
+
+function PANEL:GetTitleColor()
+
+	return self.lblTitle:GetTextColor()
+
+end
+
 function PANEL:Close()
 
 	self:SetVisible( false )
