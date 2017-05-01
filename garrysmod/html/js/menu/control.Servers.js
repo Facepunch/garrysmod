@@ -232,7 +232,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 
 	data.hasmap = DoWeHaveMap( data.map );
 
-	data.recommended = math.min(0.006 * Math.pow(data.ping, 2.05), data.ping); // Model ping using an exponential equation
+	data.recommended = Math.min(0.006 * Math.pow(data.ping, 2.05), data.ping); // Model ping using an exponential equation
 
 	if ( data.players == 0 ) data.recommended += 100; // Server is empty
 	if ( data.players == data.maxplayers ) data.recommended += 75; // Server is full
