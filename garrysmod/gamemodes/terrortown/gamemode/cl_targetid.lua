@@ -151,6 +151,9 @@ function GM:HUDDrawTargetID()
    local ent = trace.Entity
    if (not IsValid(ent)) or ent.NoTarget then return end
 
+   local c = hook.Call("TTTDontDrawTargetID", GAMEMODE, trace)
+   if (c) then	return end
+   
    -- some bools for caching what kind of ent we are looking at
    local target_traitor = false
    local target_detective = false
