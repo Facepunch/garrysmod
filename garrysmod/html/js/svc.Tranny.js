@@ -3,7 +3,7 @@ angular.module( 'tranny', [] )
 
 .directive( 'ngTranny', function ( $parse )
 {
-	return function ( scope, element, attrs )
+	return function( scope, element, attrs )
 	{
 		var strName = "";
 

@@ -2,9 +2,8 @@
 function JS_Language( html )
 
 	html:AddFunction( "language", "Update", function( phrase )
-
-		return language.GetPhrase( phrase );
-
+		if ( !phrase ) then return end
+		return language.GetPhrase( phrase )
 	end )
 
 end
@@ -12,9 +11,7 @@ end
 function JS_Utility( html )
 
 	html:AddFunction( "util", "MotionSensorAvailable", function()
-
 		return motionsensor.IsAvailable()
-
 	end )
 
 end

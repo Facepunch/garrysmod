@@ -22,10 +22,10 @@ function WorkshopFileBase( namespace, requiredtags )
 			return self:FetchLocal( offset, perpage )
 		end
 		if ( type == "subscribed" ) then
-			return self:FetchSubscribed( offset, perpage )
+			return self:FetchSubscribed( offset, perpage, tags, "", false )
 		end
 		if ( type == "subscribed_ugc" ) then
-			return self:FetchSubscribedUGC( offset, perpage, tags )
+			return self:FetchSubscribed( offset, perpage, tags, "", true )
 		end
 
 		local userid = "0"
@@ -45,9 +45,14 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	end
 
-	function ret:FetchSubscribedUGC( offset, perpage, tags, type )
+	function ret:FetchSubscribed( offset, perpage, tags, searchTXT, isUGC )
 
-		local subscriptions = engine.GetUserContent( "" )
+		local subscriptions = {}
+		if ( isUGC ) then
+			subscriptions = engine.GetUserContent()
+		else
+			subscriptions = engine.GetAddons()
+		end
 
 		-- Newest files are on top
 		table.sort( subscriptions, function( a, b )
@@ -81,37 +86,6 @@ function WorkshopFileBase( namespace, requiredtags )
 
 			if ( searchedItems[ offset + i + 1 ] ) then
 				table.insert( data.results, searchedItems[ offset + i + 1 ].wsid )
-			end
-
-			i = i + 1
-
-		end
-
-		self:FillFileInfo( data )
-
-	end
-
-	function ret:FetchSubscribed( offset, perpage )
-
-		local subscriptions = engine.GetAddons()
-
-		-- Newest files are on top
-		table.sort( subscriptions, function( a, b )
-			if ( a.timeadded == 0 ) then a.timeadded = os.time() end -- For newly added addons (within game session)
-			if ( b.timeadded == 0 ) then a.timeadded = os.time() end
-			return a.timeadded > b.timeadded
-		end )
-
-		local data = {
-			totalresults = #subscriptions,
-			results = {}
-		}
-
-		local i = 0
-		while ( i < perpage ) do
-
-			if ( subscriptions[ offset + i + 1 ] ) then
-				table.insert( data.results, subscriptions[ offset + i + 1 ].wsid )
 			end
 
 			i = i + 1
