@@ -10,7 +10,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	ret.HTML = nil
 
-	function ret:Fetch( type, offset, perpage, extratags )
+	function ret:Fetch( type, offset, perpage, extratags, searchText )
 
 		local tags = table.Copy( requiredtags )
 		for k, v in pairs( extratags ) do
@@ -22,10 +22,10 @@ function WorkshopFileBase( namespace, requiredtags )
 			return self:FetchLocal( offset, perpage )
 		end
 		if ( type == "subscribed" ) then
-			return self:FetchSubscribed( offset, perpage, tags, "", false )
+			return self:FetchSubscribed( offset, perpage, tags, searchText, false )
 		end
 		if ( type == "subscribed_ugc" ) then
-			return self:FetchSubscribed( offset, perpage, tags, "", true )
+			return self:FetchSubscribed( offset, perpage, tags, searchText, true )
 		end
 
 		local userid = "0"
@@ -45,7 +45,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	end
 
-	function ret:FetchSubscribed( offset, perpage, tags, searchTXT, isUGC )
+	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC )
 
 		local subscriptions = {}
 		if ( isUGC ) then
@@ -61,18 +61,24 @@ function WorkshopFileBase( namespace, requiredtags )
 			return a.timeadded > b.timeadded
 		end )
 
-		-- First build a list of items that fit our search terms ( tags only for now )
+		-- First build a list of items that fit our search terms
 		local searchedItems = {}
 		for id, sub in pairs( subscriptions ) do
+
+			-- Search for tags
 			local found = true
 			for id, tag in pairs( tags ) do
-				if ( !sub.tags:lower():find( tag ) ) then
-					found = false
-				end
+				if ( !sub.tags:lower():find( tag ) ) then found = false end
 			end
-			
 			if ( !found ) then continue end
+
+			-- Search for searchText
+			if ( searchText:Trim() != "" ) then
+				if ( !sub.title:lower():find( searchText:lower() ) ) then continue end
+			end
+
 			searchedItems[ #searchedItems + 1 ] = sub
+
 		end
 
 		-- Build the page!

@@ -63,9 +63,16 @@ DIV.page DIV.options A:hover
 	color: #ffa;
 }
 
+
 DIV.page DIV.options.active, DIV.page DIV.options A.active
 {
 	color: #ff5;
+}
+
+DIV.page DIV.options .search_bar
+{
+	padding: 2px 4px;
+	box-sizing: border-box;
 }
 
 @media screen and (max-width: 1280px)

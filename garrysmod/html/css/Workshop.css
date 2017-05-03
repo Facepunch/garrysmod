@@ -1,4 +1,4 @@
-workshopicon 
+workshopicon
 {
 	width: 200px;
 	height: 200px;
@@ -7,7 +7,7 @@ workshopicon
 	position: relative;
 	overflow: hidden;
 	background-color: #666;
-	background-position: center; 
+	background-position: center;
 	-webkit-box-shadow: 0px 0px 1px 1px rgba( 0, 0, 0, 0.3 );
 	border-radius: 3px;
 	border: 3px solid white;
@@ -120,15 +120,25 @@ workshopicon description
 	font-size: 11px;
 	padding: 32px 8px;
 	color: #fff;
-	
+	cursor: default;
+
 	opacity: 0;
 	-webkit-transition: opacity 100ms ease-in 0ms;
+}
+
+workshopicon .checkbox
+{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	margin: 3px 3px;
+	z-index: 32;
 }
 
 workshopicon:hover description
 {
 	display: inherit;
-	
+
 	opacity: 1;
 	-webkit-transition: opacity 50ms ease-in 0ms;
 }
@@ -145,13 +155,13 @@ workshopmessage
 
 workshopcontainer
 {
-	position: absolute; 
-	left: 0px; 
-	top: 64px; 
-	bottom: 0px; 
-	right: 0px; 
-	background-color: white; 
-	border-radius: 3px; 
+	position: absolute;
+	left: 0px;
+	top: 64px;
+	bottom: 0px;
+	right: 0px;
+	background-color: white;
+	border-radius: 3px;
 	padding: 8px;
 }
 

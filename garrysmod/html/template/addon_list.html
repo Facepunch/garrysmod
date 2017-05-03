@@ -12,22 +12,30 @@
 						<a ng-click="SwitchWithTag( 'subscribed', 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
 					</li>
 
-					<!--<li><hr/></li>
-					<li><input type="text" placeholder="Search Subscriptions"/></li>
-					<li>
+					<li>&nbsp;</li>
+					<li><input type="text" class="search_bar" ng-tranny="'addons.search'" ng-model="SubscriptionSearchText" ng-change="HandleOnSearch()"/></li>
+					<!--<li>
 						<input type="checkbox" ng-model="ServerSettings.enabled_only" id="enabled_only" />
 						<label ng-Tranny="'addons.enabled_only'"></label>
 					</li>
 					<li>
 						<input type="checkbox" ng-model="ServerSettings.disabled_only" id="disabled_only" />
 						<label ng-Tranny="'addons.disabled_only'"></label>
-					</li>
-					<li><hr/></li>-->
+					</li>-->
 					<li>&nbsp;</li>
 
-					<li><a ng-click="DisplayPopupMessage( 'addons.enableall.warning', EnableAllSubscribed )" ng-Tranny="'addons.enableall'"></a></li>
-					<li><a ng-click="DisplayPopupMessage( 'addons.disableall.warning', DisableAllSubscribed )" ng-Tranny="'addons.disableall'"></a></li>
-					<li><a ng-click="DisplayPopupMessage( 'addons.uninstallall.warning', UninstallAllSubscribed )" ng-Tranny="'addons.uninstallall'"></a></li>
+					<container ng-show="!IsAnySelected()">
+						<li><a ng-click="DisplayPopupMessage( 'addons.enableall.warning', EnableAllSubscribed )" ng-Tranny="'addons.enableall'"></a></li>
+						<li><a ng-click="DisplayPopupMessage( 'addons.disableall.warning', DisableAllSubscribed )" ng-Tranny="'addons.disableall'"></a></li>
+						<li><a ng-click="DisplayPopupMessage( 'addons.uninstallall.warning', UninstallAllSubscribed )" ng-Tranny="'addons.uninstallall'"></a></li>
+					</container>
+
+					<container ng-show="IsAnySelected()">
+						<li><a ng-click="DisplayPopupMessage( 'addons.enable_selected.warning', EnableAllSelected )" ng-Tranny="'addons.enable_selected'"></a></li>
+						<li><a ng-click="DisplayPopupMessage( 'addons.disable_selected.warning', DisableAllSelected )" ng-Tranny="'addons.disable_selected'"></a></li>
+						<li><a ng-click="DisplayPopupMessage( 'addons.uninstall_selected.warning', UninstallAllSelected )" ng-Tranny="'addons.uninstall_selected'"></a></li>
+						<li><a ng-click="UnselectAll()" ng-Tranny="'addons.unselectall'"></a></li>
+					</container>
 				</ul>
 			</li>
 
@@ -82,6 +90,7 @@
 				<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
 				<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
 				<description>{{file.info.description}}</description>
+				<input type="checkbox" class="checkbox" ng-show="Category == 'subscribed'" ng-model="SelectedItems[ file.id ]" <!--ng-click="$event.stopPropagation()"-->> 
 
 				<controls>
 					<left>

@@ -21,6 +21,9 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 	this.Scope.Loading			= true;
 	this.Scope.PerPage			= 5;
 
+	// Addon Subscriptions menu exclusive
+	this.Scope.SubscriptionSearchText = "";
+
 	this.Scope.Go = function( delta )
 	{
 		if ( scope.Offset + delta >= scope.TotalResults ) return;
@@ -31,7 +34,7 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 
 	this.Scope.GoToPage = function( page )
 	{
-		var Offset = (page-1) * scope.PerPage;
+		var Offset = ( page - 1 ) * scope.PerPage;
 
 		if ( Offset >= scope.TotalResults ) return;
 		if ( Offset < 0 ) return;
@@ -39,15 +42,25 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		scope.SwitchWithTag( scope.Category, Offset, scope.Tagged, scope.MapName )
 	}
 
-
 	this.Scope.Switch = function( type, offset )
 	{
 		this.SwitchWithTag( type, offset, "", scope.MapName );
 		scope.Category = type; // Do we need this here?
 	}
 
+	var hackyWackyTimer = 0;
+	this.Scope.HandleOnSearch = function()
+	{
+		clearTimeout( hackyWackyTimer );
+		hackyWackyTimer = setTimeout( function() {
+			scope.SwitchWithTag( scope.Category, 0, scope.Tagged, scope.MapName )
+		}, 500 );
+	}
+
 	this.Scope.SwitchWithTag = function( type, offset, searchtag, mapname )
 	{
+		clearTimeout( hackyWackyTimer );
+
 		// Fills in perpage
 		self.RefreshDimensions();
 
@@ -76,11 +89,11 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		{
 			// fumble
 			if ( scope.MapName && scope.Tagged ) {
-				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged, scope.MapName );
+				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged + "," + scope.MapName, scope.SubscriptionSearchText );
 			} else if ( scope.MapName ) {
-				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.MapName );
+				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.MapName, scope.SubscriptionSearchText );
 			} else {
-				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged );
+				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged, scope.SubscriptionSearchText );
 			}
 		}
 	}
