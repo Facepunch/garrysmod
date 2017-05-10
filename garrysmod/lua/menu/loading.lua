@@ -12,6 +12,7 @@ g_ServerURL		= ""
 g_MaxPlayers	= ""
 g_SteamID		= ""
 
+local showloadingurl = CreateClientConVar( "cl_showloadingurl", "1", true, false, "Show custom loading screens" )
 local PANEL = {}
 
 --[[---------------------------------------------------------
@@ -25,7 +26,10 @@ end
 
 
 function PANEL:ShowURL( url, force )
-
+	if force and not showloadingurl:GetBool() then
+		return;
+	end
+	
 	if ( string.len( url ) < 5 ) then
 		return;
 	end
