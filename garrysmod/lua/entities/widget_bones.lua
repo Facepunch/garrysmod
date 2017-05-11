@@ -137,17 +137,18 @@ function ENT:Setup( ent )
 		if ( !ent:BoneHasFlag( k, BONE_USED_BY_VERTEX_LOD0 ) ) then continue end
 
 		local btn = ents.Create( "widget_bone" )
-			btn:FollowBone( ent, k )
-			btn:SetLocalPos( Vector( 0, 0, 0 ) )
-			btn:SetLocalAngles( Angle( 0, 0, 0 ) )
-			btn:Spawn()
-			btn:SetSize( ent:BoneLength( k ) * 2 )
+		btn:FollowBone( ent, k )
+		btn:SetLocalPos( Vector( 0, 0, 0 ) )
+		btn:SetLocalAngles( Angle( 0, 0, 0 ) )
+		btn:Spawn()
+		btn:SetSize( ent:BoneLength( k ) * 2 )
 
-			btn.OnClick = function( x, ply )
-				self:OnBoneClick( k, ply )
-			end
+		btn.OnClick = function( x, ply )
+			self:OnBoneClick( k, ply )
+		end
 
-			self:DeleteOnRemove( btn )
+		self:DeleteOnRemove( btn )
+
 	end
 
 end

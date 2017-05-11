@@ -171,6 +171,7 @@ scripted_ents.Register( widget_bonemanip_rotate, "widget_bonemanip_rotate" )
 
 local widget_bonemanip_scale = {
 	Base = "widget_axis",
+	IsScaleArrow = true,
 
 	OnArrowDragged = function( self, num, dist, pl, mv )
 
@@ -179,6 +180,7 @@ local widget_bonemanip_scale = {
 
 		local ent = self:GetParent()
 		if ( !IsValid( ent ) ) then return end
+
 		local bone = self:GetParentAttachment()
 		if ( bone <= 0 ) then return end
 
@@ -189,7 +191,7 @@ local widget_bonemanip_scale = {
 		if ( num == 3 ) then v.z = dist end
 
 		ent:ManipulateBoneScale( bone, ent:GetManipulateBoneScale( bone ) + v * 0.1 )
-		ent:ManipulateBoneScale( ent:GetBoneParent(bone), ent:GetManipulateBoneScale( ent:GetBoneParent(bone) ) + v )
+		ent:ManipulateBoneScale( ent:GetBoneParent( bone ), ent:GetManipulateBoneScale( ent:GetBoneParent( bone ) ) + v )
 
 	end,
 
@@ -201,13 +203,16 @@ local widget_bonemanip_scale = {
 
 		local ent = self:GetParent()
 		if ( !IsValid( ent ) ) then return end
+
 		local bone = self:GetParentAttachment()
 		if ( !bone || bone <= 0 ) then return end
-		local pbone = ent:GetBoneParent(bone)
+
+		local pbone = ent:GetBoneParent( bone )
 		if ( !pbone || pbone <= 0 ) then return end
+
 		local pos, ang = ent:GetBonePosition( pbone )
 
-		v = v + (pos-v)*0.5;
+		v = v + ( pos - v ) * 0.5
 
 		return v, ang
 
