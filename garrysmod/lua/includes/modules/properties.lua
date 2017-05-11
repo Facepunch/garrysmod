@@ -101,9 +101,9 @@ function GetHovered( eyepos, eyevec )
 		filter = filter
 	} )
 
-	// Hit COLLISION_GROUP_DEBRIS and stuff
+	-- Hit COLLISION_GROUP_DEBRIS and stuff
 	if ( !trace.Hit || !IsValid( trace.Entity ) ) then
-		local trace = util.TraceLine( {
+		trace = util.TraceLine( {
 			start = eyepos,
 			endpos = eyepos + eyevec * 1024,
 			filter = filter,
