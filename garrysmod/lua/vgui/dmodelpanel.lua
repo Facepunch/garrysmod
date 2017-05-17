@@ -51,7 +51,7 @@ function PANEL:SetModel( strModelName )
 	-- Note: Not in menu dll
 	if ( !ClientsideModel ) then return end
 
-	self.Entity = ClientsideModel( strModelName, RENDER_GROUP_OPAQUE_ENTITY )
+	self.Entity = ClientsideModel( strModelName, RENDERGROUP_OTHER )
 	if ( !IsValid( self.Entity ) ) then return end
 
 	self.Entity:SetNoDraw( true )
