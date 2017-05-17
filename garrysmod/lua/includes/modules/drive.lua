@@ -23,6 +23,7 @@ function Register( name, table, base )
 	-- it up in the meta table
 	--
 	if ( base ) then
+		Type[ base ] = Type[ base ] or baseclass.Get( base )
 		setmetatable( Type[ name ], { __index = Type[ base ] } )
 	end
 
