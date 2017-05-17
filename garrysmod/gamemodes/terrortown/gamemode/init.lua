@@ -911,23 +911,26 @@ function SelectRoles()
       local pick = math.random(1, #choices)
       local pply = choices[pick]
 
-      -- we are less likely to be a detective unless we were innocent last round
-      if (IsValid(pply) and
-          ((pply:GetBaseKarma() > min_karma and
-           table.HasValue(prev_roles[ROLE_INNOCENT], pply)) or
-           math.random(1,3) == 2)) then
+ --If Karma too low
+		if pply:GetBaseKarma() < min_karma then
+			table.remove(choices, pick)
+		else
+		-- we are less likely to be a detective unless we were innocent last round
+			if (IsValid(pply) and
+				((table.HasValue(prev_roles[ROLE_INNOCENT], pply)) or
+				math.random(1,3) == 2)) then
 
-         -- if a player has specified he does not want to be detective, we skip
-         -- him here (he might still get it if we don't have enough
-         -- alternatives)
-         if not pply:GetAvoidDetective() then
-            pply:SetRole(ROLE_DETECTIVE)
-            ds = ds + 1
-         end
+			 -- if a player has specified he does not want to be detective, we skip
+			 -- him here (he might still get it if we don't have enough
+			 -- alternatives)
+				if not pply:GetAvoidDetective() then
+					pply:SetRole(ROLE_DETECTIVE)
+					ds = ds + 1
+				end
 
-         table.remove(choices, pick)
-      end
-   end
+				table.remove(choices, pick)
+			end
+		end
 
    GAMEMODE.LastRole = {}
 
