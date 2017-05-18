@@ -23,7 +23,7 @@ function vgui.Create( classname, parent, name, ... )
 
 		local metatable = PanelFactory[ classname ]
 
-		local panel = vgui.Create( metatable.Base, parent, name or classname )
+		local panel = vgui.Create( metatable.Base, parent, name or classname, ... )
 		if ( !panel ) then
 			Error( "Tried to create panel with invalid base '" .. metatable.Base .. "'\n" );
 		end
@@ -34,7 +34,7 @@ function vgui.Create( classname, parent, name, ... )
 
 		-- Call the Init function if we have it
 		if ( panel.Init ) then
-			panel:Init(...)
+			panel:Init( ... )
 		end
 
 		panel:Prepare()
@@ -51,7 +51,7 @@ function vgui.CreateFromTable( metatable, parent, name, ... )
 
 	if ( !istable( metatable ) ) then return nil end
 
-	local panel = vgui.Create( metatable.Base, parent, name )
+	local panel = vgui.Create( metatable.Base, parent, name, ... )
 
 	table.Merge( panel:GetTable(), metatable )
 	panel.BaseClass = PanelFactory[ metatable.Base ]
@@ -59,7 +59,7 @@ function vgui.CreateFromTable( metatable, parent, name, ... )
 
 	-- Call the Init function if we have it
 	if ( panel.Init ) then
-		panel:Init(...)
+		panel:Init( ... )
 	end
 
 	panel:Prepare()
