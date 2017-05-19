@@ -7,7 +7,7 @@ net.Receivers = {}
 --
 function net.Receive( name, func )
 		
-	net.Receivers[ name:lower() ] = func
+	net.Receivers[ name ] = func
 
 end
 
@@ -21,7 +21,7 @@ function net.Incoming( len, client )
 	
 	if ( !strName ) then return end
 	
-	local func = net.Receivers[ strName:lower() ]
+	local func = net.Receivers[ strName ]
 	if ( !func ) then return end
 
 	--
