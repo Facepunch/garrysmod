@@ -230,8 +230,6 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		workshopid:		workshopid
 	};
 
-	data.hasmap = DoWeHaveMap( data.map );
-
 	data.recommended = data.ping;
 	if ( data.players == 0 ) data.recommended += 100; // Server is empty
 	if ( data.players == data.maxplayers ) data.recommended += 75; // Server is full
