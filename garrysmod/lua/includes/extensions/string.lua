@@ -17,7 +17,7 @@ end
 
 --[[---------------------------------------------------------
    Name: string.JavascriptSafe( string )
-   Desc: Takes a string and escapes it for insertion in to a JavaScript string
+   Desc: Takes a string and escapes it for insertion into a JavaScript string
 -----------------------------------------------------------]]
 local javascript_escape_replacements = {
 	["\\"] = "\\\\",
@@ -46,7 +46,7 @@ end
 
 --[[---------------------------------------------------------
    Name: string.PatternSafe( string )
-   Desc: Takes a string and escapes it for insertion in to a Lua pattern
+   Desc: Takes a string and escapes it for insertion into a Lua pattern
 -----------------------------------------------------------]]
 local pattern_escape_replacements = {
 	["("] = "%(",
@@ -66,6 +66,91 @@ local pattern_escape_replacements = {
 
 function string.PatternSafe( str )
 	return ( str:gsub( ".", pattern_escape_replacements ) )
+end
+
+--[[---------------------------------------------------------
+   Name: string.HTMLEncode( string )
+   Desc: Converts a string to its HTML entities
+   Desc: The html_entities table is taken straight from PHP's
+-----------------------------------------------------------]]
+
+local html_entities = {['"']="&quot;",["'"]="&#039;",["<"]="&lt;",[">"]="&gt;",[" "]="&nbsp;",["¡"]="&iexcl;",["¢"]="&cent;",["£"]="&pound;",["¤"]="&curren;",["¥"]="&yen;",["¦"]="&brvbar;",["§"]="&sect;",["¨"]="&uml;",["©"]="&copy;",["ª"]="&ordf;",["«"]="&laquo;",["¬"]="&not;",["­"]="&shy;",["®"]="&reg;",["¯"]="&macr;",["°"]="&deg;",["±"]="&plusmn;",["²"]="&sup2;",["³"]="&sup3;",["´"]="&acute;",["µ"]="&micro;",["¶"]="&para;",["·"]="&middot;",["¸"]="&cedil;",["¹"]="&sup1;",["º"]="&ordm;",["»"]="&raquo;",["¼"]="&frac14;",["½"]="&frac12;",["¾"]="&frac34;",["¿"]="&iquest;",["À"]="&Agrave;",["Á"]="&Aacute;",["Â"]="&Acirc;",["Ã"]="&Atilde;",["Ä"]="&Auml;",["Å"]="&Aring;",["Æ"]="&AElig;",["Ç"]="&Ccedil;",["È"]="&Egrave;",["É"]="&Eacute;",["Ê"]="&Ecirc;",["Ë"]="&Euml;",["Ì"]="&Igrave;",["Í"]="&Iacute;",["Î"]="&Icirc;",["Ï"]="&Iuml;",["Ð"]="&ETH;",["Ñ"]="&Ntilde;",["Ò"]="&Ograve;",["Ó"]="&Oacute;",["Ô"]="&Ocirc;",["Õ"]="&Otilde;",["Ö"]="&Ouml;",["×"]="&times;",["Ø"]="&Oslash;",["Ù"]="&Ugrave;",["Ú"]="&Uacute;",["Û"]="&Ucirc;",["Ü"]="&Uuml;",["Ý"]="&Yacute;",["Þ"]="&THORN;",["ß"]="&szlig;",["à"]="&agrave;",["á"]="&aacute;",["â"]="&acirc;",["ã"]="&atilde;",["ä"]="&auml;",["å"]="&aring;",["æ"]="&aelig;",["ç"]="&ccedil;",["è"]="&egrave;",["é"]="&eacute;",["ê"]="&ecirc;",["ë"]="&euml;",["ì"]="&igrave;",["í"]="&iacute;",["î"]="&icirc;",["ï"]="&iuml;",["ð"]="&eth;",["ñ"]="&ntilde;",["ò"]="&ograve;",["ó"]="&oacute;",["ô"]="&ocirc;",["õ"]="&otilde;",["ö"]="&ouml;",["÷"]="&divide;",["ø"]="&oslash;",["ù"]="&ugrave;",["ú"]="&uacute;",["û"]="&ucirc;",["ü"]="&uuml;",["ý"]="&yacute;",["þ"]="&thorn;",["ÿ"]="&yuml;",["Œ"]="&OElig;",["œ"]="&oelig;",["Š"]="&Scaron;",["š"]="&scaron;",["Ÿ"]="&Yuml;",["ƒ"]="&fnof;",["ˆ"]="&circ;",["˜"]="&tilde;",["Α"]="&Alpha;",["Β"]="&Beta;",["Γ"]="&Gamma;",["Δ"]="&Delta;",["Ε"]="&Epsilon;",["Ζ"]="&Zeta;",["Η"]="&Eta;",["Θ"]="&Theta;",["Ι"]="&Iota;",["Κ"]="&Kappa;",["Λ"]="&Lambda;",["Μ"]="&Mu;",["Ν"]="&Nu;",["Ξ"]="&Xi;",["Ο"]="&Omicron;",["Π"]="&Pi;",["Ρ"]="&Rho;",["Σ"]="&Sigma;",["Τ"]="&Tau;",["Υ"]="&Upsilon;",["Φ"]="&Phi;",["Χ"]="&Chi;",["Ψ"]="&Psi;",["Ω"]="&Omega;",["α"]="&alpha;",["β"]="&beta;",["γ"]="&gamma;",["δ"]="&delta;",["ε"]="&epsilon;",["ζ"]="&zeta;",["η"]="&eta;",["θ"]="&theta;",["ι"]="&iota;",["κ"]="&kappa;",["λ"]="&lambda;",["μ"]="&mu;",["ν"]="&nu;",["ξ"]="&xi;",["ο"]="&omicron;",["π"]="&pi;",["ρ"]="&rho;",["ς"]="&sigmaf;",["σ"]="&sigma;",["τ"]="&tau;",["υ"]="&upsilon;",["φ"]="&phi;",["χ"]="&chi;",["ψ"]="&psi;",["ω"]="&omega;",["ϑ"]="&thetasym;",["ϒ"]="&upsih;",["ϖ"]="&piv;",[" "]="&ensp;",[" "]="&emsp;",[" "]="&thinsp;",["‌"]="&zwnj;",["‍"]="&zwj;",["‎"]="&lrm;",["‏"]="&rlm;",["–"]="&ndash;",["—"]="&mdash;",["‘"]="&lsquo;",["’"]="&rsquo;",["‚"]="&sbquo;",["“"]="&ldquo;",["”"]="&rdquo;",["„"]="&bdquo;",["†"]="&dagger;",["‡"]="&Dagger;",["•"]="&bull;",["…"]="&hellip;",["‰"]="&permil;",["′"]="&prime;",["″"]="&Prime;",["‹"]="&lsaquo;",["›"]="&rsaquo;",["‾"]="&oline;",["⁄"]="&frasl;",["€"]="&euro;",["ℑ"]="&image;",["℘"]="&weierp;",["ℜ"]="&real;",["™"]="&trade;",["ℵ"]="&alefsym;",["←"]="&larr;",["↑"]="&uarr;",["→"]="&rarr;",["↓"]="&darr;",["↔"]="&harr;",["↵"]="&crarr;",["⇐"]="&lArr;",["⇑"]="&uArr;",["⇒"]="&rArr;",["⇓"]="&dArr;",["⇔"]="&hArr;",["∀"]="&forall;",["∂"]="&part;",["∃"]="&exist;",["∅"]="&empty;",["∇"]="&nabla;",["∈"]="&isin;",["∉"]="&notin;",["∋"]="&ni;",["∏"]="&prod;",["∑"]="&sum;",["−"]="&minus;",["∗"]="&lowast;",["√"]="&radic;",["∝"]="&prop;",["∞"]="&infin;",["∠"]="&ang;",["∧"]="&and;",["∨"]="&or;",["∩"]="&cap;",["∪"]="&cup;",["∫"]="&int;",["∴"]="&there4;",["∼"]="&sim;",["≅"]="&cong;",["≈"]="&asymp;",["≠"]="&ne;",["≡"]="&equiv;",["≤"]="&le;",["≥"]="&ge;",["⊂"]="&sub;",["⊃"]="&sup;",["⊄"]="&nsub;",["⊆"]="&sube;",["⊇"]="&supe;",["⊕"]="&oplus;",["⊗"]="&otimes;",["⊥"]="&perp;",["⋅"]="&sdot;",["⌈"]="&lceil;",["⌉"]="&rceil;",["⌊"]="&lfloor;",["⌋"]="&rfloor;",["⟨"]="&lang;",["⟩"]="&rang;",["◊"]="&loz;",["♠"]="&spades;",["♣"]="&clubs;",["♥"]="&hearts;",["♦"]="&diams;"}
+
+function string.HTMLEncode( str )
+
+	if (html_entities[str] ~= nil) then
+
+		return html_entities[str]
+
+	else
+
+		str = ( str:gsub( "&", "&amp;" ) )
+
+		for i,v in pairs( html_entities ) do
+
+			str = ( str:gsub( string.PatternSafe( i ), v ) )
+
+		end
+
+		return str
+
+	end
+
+end
+
+--[[---------------------------------------------------------
+   Name: string.HTMLDecode( string )
+   Desc: Converts HTML entities back to a normal string
+   Desc: The html_entities_reverse table is taken straight from PHP's
+-----------------------------------------------------------]]
+
+local html_entities_reverse = {["\""]="&quot;",["<"]="&lt;",[">"]="&gt;",[" "]="&nbsp;",["¡"]="&iexcl;",["¢"]="&cent;",["£"]="&pound;",["¤"]="&curren;",["¥"]="&yen;",["¦"]="&brvbar;",["§"]="&sect;",["¨"]="&uml;",["©"]="&copy;",["ª"]="&ordf;",["«"]="&laquo;",["¬"]="&not;",["­"]="&shy;",["®"]="&reg;",["¯"]="&macr;",["°"]="&deg;",["±"]="&plusmn;",["²"]="&sup2;",["³"]="&sup3;",["´"]="&acute;",["µ"]="&micro;",["¶"]="&para;",["·"]="&middot;",["¸"]="&cedil;",["¹"]="&sup1;",["º"]="&ordm;",["»"]="&raquo;",["¼"]="&frac14;",["½"]="&frac12;",["¾"]="&frac34;",["¿"]="&iquest;",["À"]="&Agrave;",["Á"]="&Aacute;",["Â"]="&Acirc;",["Ã"]="&Atilde;",["Ä"]="&Auml;",["Å"]="&Aring;",["Æ"]="&AElig;",["Ç"]="&Ccedil;",["È"]="&Egrave;",["É"]="&Eacute;",["Ê"]="&Ecirc;",["Ë"]="&Euml;",["Ì"]="&Igrave;",["Í"]="&Iacute;",["Î"]="&Icirc;",["Ï"]="&Iuml;",["Ð"]="&ETH;",["Ñ"]="&Ntilde;",["Ò"]="&Ograve;",["Ó"]="&Oacute;",["Ô"]="&Ocirc;",["Õ"]="&Otilde;",["Ö"]="&Ouml;",["×"]="&times;",["Ø"]="&Oslash;",["Ù"]="&Ugrave;",["Ú"]="&Uacute;",["Û"]="&Ucirc;",["Ü"]="&Uuml;",["Ý"]="&Yacute;",["Þ"]="&THORN;",["ß"]="&szlig;",["à"]="&agrave;",["á"]="&aacute;",["â"]="&acirc;",["ã"]="&atilde;",["ä"]="&auml;",["å"]="&aring;",["æ"]="&aelig;",["ç"]="&ccedil;",["è"]="&egrave;",["é"]="&eacute;",["ê"]="&ecirc;",["ë"]="&euml;",["ì"]="&igrave;",["í"]="&iacute;",["î"]="&icirc;",["ï"]="&iuml;",["ð"]="&eth;",["ñ"]="&ntilde;",["ò"]="&ograve;",["ó"]="&oacute;",["ô"]="&ocirc;",["õ"]="&otilde;",["ö"]="&ouml;",["÷"]="&divide;",["ø"]="&oslash;",["ù"]="&ugrave;",["ú"]="&uacute;",["û"]="&ucirc;",["ü"]="&uuml;",["ý"]="&yacute;",["þ"]="&thorn;",["ÿ"]="&yuml;",["&"]="&amp;"}
+
+function string.HTMLDecode( str )
+
+	if (html_entities_reverse[str] ~= nil) then
+
+		return html_entities_reverse[str]
+
+	else
+
+		local tmp_str = tostring(str)
+		for symbol,entity in pairs(html_entities_reverse) do
+			tmp_str = table.concat(string.Explode(entity,tmp_str),symbol)
+		end
+		tmp_str = table.concat(string.Explode("&#039;",tmp_str),"'")
+		return tmp_str
+
+	end
+
+end
+
+--[[---------------------------------------------------------
+   Name: string.URLEncode( string )
+   Desc: Takes a string and "encodes" it for compatibility in URLs
+-----------------------------------------------------------]]
+
+function string.URLEncode( str )
+
+	str = string.gsub( str, "([^%w%-%_%.%~])", function( hex )
+		return string.format( "%%%02X", string.byte( hex ) )
+	end )
+	return ( str )
+
+end
+
+--[[---------------------------------------------------------
+   Name: string.URLDecode( string )
+   Desc: Takes a string and "decodes" it from compatibility in URLs
+-----------------------------------------------------------]]
+
+function string.URLDecode( str )
+
+	str = string.gsub( string.gsub( str, "+", " " ), "%%(%x%x)", function( hex )
+		return string.char( tonumber( hex, 16 ) )
+	end )
+	return ( str )
+
 end
 
 --[[---------------------------------------------------------
