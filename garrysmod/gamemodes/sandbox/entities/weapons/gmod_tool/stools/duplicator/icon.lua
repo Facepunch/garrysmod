@@ -79,6 +79,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	--
 	render.SetMaterial( Material( "gui/dupe_bg.png" ) )
 	render.DrawScreenQuadEx( 0, 0, 512, 512 )
+	render.UpdateRefractTexture()
 
 	--
 	-- BLACK OUTLINE
