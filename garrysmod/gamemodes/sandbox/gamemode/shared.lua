@@ -99,6 +99,10 @@ end
 -----------------------------------------------------------]]
 function GM:GravGunPickupAllowed( ply, ent )
 
+	if ( ent:IsValid() && ent:GetNWBool( "gravity_disabled", false ) ) then
+		return false
+	end
+
 	if ( ent:IsValid() && ent.GravGunPickupAllowed ) then
 		return ent:GravGunPickupAllowed( ply )
 	end
