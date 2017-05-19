@@ -87,6 +87,8 @@ function OpenEntityMenu( ent, tr )
 	end
 
 	menu:Open()
+	
+	hook.Run( "OnPropertiesMenuOpened", menu )
 
 end
 
