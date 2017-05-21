@@ -1114,7 +1114,7 @@ function GM:Tick()
          -- if spectators are alive, ie. they picked spectator mode, then
          -- DeathThink doesn't run, so we have to SpecThink here
          if ply:Alive() then
-            self:SpectatorThink(ply)
+            hook.Call("SpectatorThink", self, ply)
          end
       end
    end
