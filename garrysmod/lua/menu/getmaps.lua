@@ -195,11 +195,7 @@ local function LoadFavourites()
 end
 
 local IgnorePatterns = {
-	"^background",
-	"^devtest",
-	"^ep1_background",
-	"^ep2_background",
-	"^styleguide",
+	"background"
 }
 
 local IgnoreMaps = {
