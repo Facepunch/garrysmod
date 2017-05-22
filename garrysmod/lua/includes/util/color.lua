@@ -71,3 +71,21 @@ function COLOR:ToVector( )
 	return Vector( self.r / 255, self.g / 255, self.b / 255 )
 
 end
+
+--[[---------------------------------------------------------
+	Converts color to an integer/hex - loss of precision / alpha lost
+-----------------------------------------------------------]]
+function COLOR:ToInt( c )
+	return bit.lshift( c.r,16 ) + bit.lshift( c.g, 8 ) + bit.lshift( c.b, 0 )
+end
+
+--[[---------------------------------------------------------
+	Converts integer to color - no alpha
+-----------------------------------------------------------]]
+function IntToColor( int )
+        return Color( 
+        	bit.band( bit.rshift( int,16 ), 0xFF ), 
+        	bit.band( bit.rshift( int,8 ), 0xFF ), 
+        	bit.band( bit.rshift( int,0 ), 0xFF ) 
+        )
+end
