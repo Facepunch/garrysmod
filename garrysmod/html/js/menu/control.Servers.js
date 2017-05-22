@@ -237,10 +237,11 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( data.players == data.maxplayers ) data.recommended += 75; // Server is full
 	if ( data.pass ) data.recommended += 300; // If we can't join it, don't put it to the top
 
-	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
-	if ( data.players >= 16 ) data.recommended -= 40;
-	if ( data.players >= 32 ) data.recommended -= 20;
-	if ( data.players >= 64 ) data.recommended -= 10;
+	// Reduce the impact of the server's ping on the ranking a little bit
+	data.recommended -= Math.min(data.players, 40);	
+	data.recommended -= Math.min(data.players, 30);	
+	data.recommended -= Math.min(data.players, 20);	
+	data.recommended -= Math.min(data.players, 10);
 
 	data.listen = data.desc.indexOf('[L]') >= 0;
 	if ( data.listen ) data.desc = data.desc.substr( 4 );
@@ -260,7 +261,6 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	gm.order = gm.num_players + Math.random();
 
 	UpdateDigest( Scope, 50 );
-
 }
 
 function MissingGamemodeIcon( element )
