@@ -108,9 +108,9 @@ function ENT:Setup( ent, boneid, rotate )
 	self.ArrowZ:SetAxisIndex( 3 )
 
 	if ( self.IsScaleArrow && EntName == "widget_axis_arrow" ) then
-		self.ArrowX:SetIsScaleArrow( true )
-		self.ArrowY:SetIsScaleArrow( true )
-		self.ArrowZ:SetIsScaleArrow( true )
+		if ( IsValid( self.ArrowX ) ) then self.ArrowX:SetIsScaleArrow( true ) end
+		if ( IsValid( self.ArrowY ) ) then self.ArrowY:SetIsScaleArrow( true ) end
+		if ( IsValid( self.ArrowZ ) ) then self.ArrowZ:SetIsScaleArrow( true ) end
 	end
 
 end

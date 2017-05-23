@@ -63,7 +63,7 @@ function ENT:TestCollision( startpos, delta, isbox, extents )
 
 	--debugoverlay.Cross( hitpos, 0.5, 60 )
 
-	local fraction = (hitpos-startpos):Length() / delta:Length()
+	local fraction = ( hitpos - startpos ):Length() / delta:Length()
 
 	return {
 		HitPos		= hitpos,

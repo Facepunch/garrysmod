@@ -13,23 +13,21 @@ local widget_bone = {
 		local p = self:GetParent()
 		if ( !IsValid( p ) ) then return end
 
-		local i = self:GetParentAttachment()
+		local bp = p:GetBoneParent( self:GetParentAttachment() )
+		if ( bp <= 0 ) then return end
 
-		local i = p:GetBoneParent( i )
-		if ( i <= 0 ) then return end
-
-		return p:GetBonePosition( i )
+		return p:GetBonePosition( bp )
 
 	end,
 
 	OverlayRender = function( self )
 
+		local pp = self:GetParentPos()
+		if ( !pp ) then return end
+
 		local fwd = self:GetAngles():Forward()
 		local len = self:GetSize() / 2
 		local w = len * 0.2
-		local pp = self:GetParentPos()
-
-		if ( !pp ) then return end
 
 		if ( len > 10 ) then
 			render.SetMaterial( matBone )
@@ -74,7 +72,7 @@ local widget_bone = {
 		local hit, norm, fraction = util.IntersectRayWithOBB( startpos, delta, self:GetPos(), ang, mins, maxs )
 		if ( !hit ) then return end
 
-		--debugoverlay.BoxAngles( self:GetPos(), mins, maxs, ang, 0.5, Color( 255, 255, 0, 100 ) )
+		--debugoverlay.BoxAngles( self:GetPos(), mins, maxs, ang, 0.1, Color( 0, 255, 0, 64 ) )
 
 		return {
 			HitPos		= hit,
@@ -97,6 +95,18 @@ local widget_bone = {
 		size = math.ceil( size )
 
 		self:SetSize( size )
+
+	end,
+
+	CalcAbsolutePosition = function( self, v, a )
+
+		local ent = self:GetParent()
+		if ( !IsValid( ent ) ) then return end
+
+		local bone = self:GetParentAttachment()
+		if ( bone <= 0 ) then return end
+
+		return ent:GetBonePosition( bone )
 
 	end
 }

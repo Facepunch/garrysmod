@@ -9,10 +9,11 @@ properties.Add( "bone_manipulate", {
 	Filter = function( self, ent, ply )
 
 		if ( !gamemode.Call( "CanProperty", ply, "bonemanipulate", ent ) ) then return false end
-		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end  -- If our ent has an attached entity, we want to use and modify its bones instead
+		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end -- If our ent has an attached entity, we want to use and modify its bones instead
 
 		local bonecount = ent:GetBoneCount()
-		if ( !bonecount || bonecount <= 1 ) then return false end
+		if ( bonecount <= 1 ) then return false end
+
 		return ents.FindByClassAndParent( "widget_bones", ent ) == nil
 
 	end,
@@ -45,7 +46,7 @@ properties.Add( "bone_manipulate", {
 			-- If we have an old axis, remove it
 			if ( IsValid( w.axis ) ) then w.axis:Remove() end
 
-			--  We clicked on the same bone
+			-- We clicked on the same bone
 			if ( w.LastBonePress == boneid ) then
 				w.BonePressCount = w.BonePressCount + 1
 				if ( w.BonePressCount >= 3 ) then w.BonePressCount = 0 end
@@ -75,7 +76,7 @@ properties.Add( "bone_manipulate_end", {
 
 	Filter = function( self, ent )
 
-		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end  -- If our ent has an attached entity, we want to use and modify its bones instead
+		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end -- If our ent has an attached entity, we want to use and modify its bones instead
 
 		return ents.FindByClassAndParent( "widget_bones", ent ) != nil
 
@@ -112,6 +113,7 @@ local widget_bonemanip_move = {
 
 		local ent = self:GetParent()
 		if ( !IsValid( ent ) ) then return end
+
 		local bone = self:GetParentAttachment()
 		if ( bone <= 0 ) then return end
 
@@ -133,11 +135,13 @@ local widget_bonemanip_move = {
 
 		local ent = self:GetParent()
 		if ( !IsValid( ent ) ) then return end
-		local bone = ent:GetBoneParent( self:GetParentAttachment() )
-		if ( !bone || bone <= 0 ) then return end
-		local pos, ang = ent:GetBonePosition( bone )
 
-		return v, ang
+		local bone = ent:GetBoneParent( self:GetParentAttachment() )
+		if ( bone <= 0 ) then return end
+
+		local _, ang = ent:GetBonePosition( bone )
+		local pos, _ = ent:GetBonePosition( self:GetParentAttachment() )
+		return pos, ang
 
 	end
 }
@@ -154,6 +158,7 @@ local widget_bonemanip_rotate = {
 
 		local ent = self:GetParent()
 		if ( !IsValid( ent ) ) then return end
+
 		local bone = self:GetParentAttachment()
 		if ( bone <= 0 ) then return end
 
@@ -205,16 +210,15 @@ local widget_bonemanip_scale = {
 		if ( !IsValid( ent ) ) then return end
 
 		local bone = self:GetParentAttachment()
-		if ( !bone || bone <= 0 ) then return end
+		if ( bone <= 0 ) then return end
 
 		local pbone = ent:GetBoneParent( bone )
-		if ( !pbone || pbone <= 0 ) then return end
+		if ( pbone <= 0 ) then return end
 
-		local pos, ang = ent:GetBonePosition( pbone )
+		local pos, ang = ent:GetBonePosition( bone )
+		local pos2, _ = ent:GetBonePosition( pbone )
 
-		v = v + ( pos - v ) * 0.5
-
-		return v, ang
+		return pos + ( pos2 - pos ) * 0.5, ang
 
 	end
 }
