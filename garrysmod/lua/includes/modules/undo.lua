@@ -1,11 +1,5 @@
 module( "undo", package.seeall )
 
--- undo.Create("Wheel")
--- undo.AddEntity( axis )
--- undo.AddEntity( constraint )
--- undo.SetPlayer( self.Owner )
--- undo.Finish()
-
 if ( CLIENT ) then
 
 	local ClientUndos = {}
@@ -336,9 +330,41 @@ end
 --[[---------------------------------------------------------
    Undos an undo
 -----------------------------------------------------------]]
+
+local maxhistory = GetConVar( "sv_maxredohistory" )
+
 function Do_Undo( undo )
 
 	if ( !undo ) then return false end
+	
+	local hasentity = false
+	for k,v in pairs(undo.Entities) do
+		if IsValid(v) and v:GetClass() != "phys_constraint" then
+			hasentity = true
+		end
+	end
+
+	if hasentity then
+		redo[undo.Owner] = redo[undo.Owner] or {}
+		for k,v in pairs(undo.Entities) do
+			if IsValid(v:GetPhysicsObject()) then
+				v.Velocity = v:GetPhysicsObject():GetVelocity()
+			end
+		end
+		local buffer = duplicator.CopyEnts(undo.Entities)
+		
+		for k,v in pairs(buffer) do
+			if v.Type == "nextbot" then
+				table.remove(buffer, k)
+			end
+		end
+	
+		table.insert(redo[undo.Owner], buffer)
+	
+		if #redo[undo.Owner] > math.Clamp(undo.Owner:GetInfoNum("redo_maxstored", 30), 0, math.min(maxhistory:GetInt(), undo.Owner:GetInfoNum("cl_maxredohistory", 50)) then
+			table.remove(redo[undo.Owner], 1)
+		end
+	end
 	
 	local count = 0
 	
