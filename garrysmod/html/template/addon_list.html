@@ -127,7 +127,9 @@
 	<!-- Angular is bad -->
 	<div class="modaldialog" ng-show="PopupMessageDisplayed">
 		<div class="centermessage">
+			<label ng-tranny="'addons.warning'"></label>
 			<label ng-tranny="PopupMessageDisplayedMessage"></label>
+			<label ng-tranny="'addons.cannotundo'" ng-show="PopupMessageDisplayedMessage == 'addons.uninstallall.warning' || PopupMessageDisplayedMessage == 'addons.uninstall_selected.warning'"></label>
 			<a ng-click="ExecutePopupFunction()" ng-tranny="'addons.confirm'" class="confirm"></a>
 			<a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'"></a>
 		</div>

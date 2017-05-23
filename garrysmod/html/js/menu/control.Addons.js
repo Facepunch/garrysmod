@@ -30,6 +30,8 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		"weapon",
 		"tool",
 		"npc",
+		"entity",
+		"effects",
 		"vehicle",
 		"model"
 	];
