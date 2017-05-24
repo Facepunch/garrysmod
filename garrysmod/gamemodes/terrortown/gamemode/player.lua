@@ -75,6 +75,7 @@ function GM:PlayerSpawn(ply)
 
    if ply:IsSpec() then
       ply:StripAll()
+      ply:KillSilent()
       ply:Spectate(OBS_MODE_ROAMING)
       return
    end

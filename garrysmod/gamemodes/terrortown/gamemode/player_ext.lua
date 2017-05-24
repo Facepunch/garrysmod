@@ -12,7 +12,7 @@ function plymeta:SetRagdollSpec(s)
 end
 function plymeta:GetRagdollSpec() return self.spec_ragdoll end
 
-AccessorFunc(plymeta, "force_spec", "ForceSpec", FORCE_BOOL)
+function plymeta:SetForceSpec(state) self:SetNWBool("force_spec", state) end
 
 --- Karma
 

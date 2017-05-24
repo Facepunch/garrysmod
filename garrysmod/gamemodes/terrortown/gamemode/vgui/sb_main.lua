@@ -61,14 +61,14 @@ end
 function ScoreGroup(p)
    if not IsValid(p) then return -1 end -- will not match any group panel
 
-   local group = hook.Call( "TTTScoreGroup", nil, p )
+   local group = hook.Call("TTTScoreGroup", nil, p)
 
    if group then -- If that hook gave us a group, use it
       return group
    end
 
    if DetectiveMode() then
-      if p:IsSpec() and (not p:Alive()) then
+      if p:IsSpec() and (not p:Alive()) and (not p:GetForceSpec()) then
          if p:GetNWBool("body_found", false) then
             return GROUP_FOUND
          else
