@@ -88,6 +88,20 @@ function player.GetBySteamID64( ID )
 
 end
 
+function player.GetByAccountID( ID )
+
+	for _, pl in pairs( player.GetAll() ) do
+
+		if ( pl:AccountID() == ID ) then
+			return pl
+		end
+
+	end
+
+	return false
+
+end
+
 --[[---------------------------------------------------------
 	Name: DebugInfo
 	Desc: Prints debug information for the player
