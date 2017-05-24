@@ -233,14 +233,26 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	data.hasmap = DoWeHaveMap( data.map );
 
 	data.recommended = data.ping;
+	
+	if ( data.recommended <= 30 ) data.recommended = 30 // Weight all servers bellow 30ms the same	
+	if ( data.players < 7) data.recommended += ( 7 - data.players ) * 5 // Decrease the number of empty-like servers
+	
 	if ( data.players == 0 ) data.recommended += 100; // Server is empty
-	if ( data.players == data.maxplayers ) data.recommended += 75; // Server is full
+	
+	if ( data.players == data.maxplayers ) data.recommended += 37; // Server is full
+	if ( data.players >= data.maxplayers * 0.95 ) data.recommended += 37; // Server is almost full
+	
 	if ( data.pass ) data.recommended += 300; // If we can't join it, don't put it to the top
 
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
 	if ( data.players >= 16 ) data.recommended -= 40;
 	if ( data.players >= 32 ) data.recommended -= 20;
 	if ( data.players >= 64 ) data.recommended -= 10;
+	
+	// Increase the impact of the server's ping on high slot servers, so they don't dominate the list
+	if ( data.maxplayers >= 50 ) data.recommended += 5
+	if ( data.maxplayers >= 75 ) data.recommended += 10
+	if ( data.maxplayers >= 100 ) data.recommended += 20
 
 	data.listen = data.desc.indexOf('[L]') >= 0;
 	if ( data.listen ) data.desc = data.desc.substr( 4 );
