@@ -7,7 +7,7 @@ ENT.Editable = true
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Float", 0, "Force", { KeyName = "force", Edit = { type = "Float", order = 1, min = -2000, max = 2000 } } )
+	self:NetworkVar( "Float", 0, "Force", { KeyName = "force", Edit = { type = "Float", order = 1, min = -2000, max = 2000, title = "#tool.balloon.force" } } )
 
 	if ( SERVER ) then
 		self:NetworkVarNotify( "Force", function() self:PhysWake() end )

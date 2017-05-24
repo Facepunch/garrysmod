@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 properties.Add( "persist", {
-	MenuLabel = "Make Persistent",
+	MenuLabel = "#makepersistent",
 	Order = 400,
 	MenuIcon = "icon16/link.png",
 
@@ -40,7 +40,7 @@ properties.Add( "persist", {
 } )
 
 properties.Add( "persist_end", {
-	MenuLabel = "Stop Persisting",
+	MenuLabel = "#stoppersisting",
 	Order = 400,
 	MenuIcon = "icon16/link_break.png",
 

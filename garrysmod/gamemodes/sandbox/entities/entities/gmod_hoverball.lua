@@ -9,8 +9,8 @@ ENT.Editable = true
 function ENT:SetupDataTables()
 
 	self:NetworkVar( "Float", 0, "TargetZ" )
-	self:NetworkVar( "Float", 1, "SpeedVar", { KeyName = "speed", Edit = { type = "Float", order = 1, min = 0, max = 20 } } )
-	self:NetworkVar( "Float", 2, "AirResistanceVar", { KeyName = "resistance", Edit = { type = "Float", order = 2, min = 0, max = 10 } } )
+	self:NetworkVar( "Float", 1, "SpeedVar", { KeyName = "speed", Edit = { type = "Float", order = 1, min = 0, max = 20, title = "#tool.hoverball.speed" } } )
+	self:NetworkVar( "Float", 2, "AirResistanceVar", { KeyName = "resistance", Edit = { type = "Float", order = 2, min = 0, max = 10, title = "#tool.hoverball.resistance" } } )
 
 end
 

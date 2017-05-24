@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 properties.Add( "editentity", {
-	MenuLabel = "Edit Properties..",
+	MenuLabel = "#entedit",
 	Order = 90001,
 	PrependSpacer = true,
 	MenuIcon = "icon16/pencil.png",
