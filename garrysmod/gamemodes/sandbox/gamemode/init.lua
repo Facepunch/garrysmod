@@ -140,6 +140,8 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerUnfrozeObject( ply, entity, physobject )
 
+	if ( DisablePropCreateEffect ) then return end
+	
 	local effectdata = EffectData()
 		effectdata:SetOrigin( physobject:GetPos() )
 		effectdata:SetEntity( entity )
