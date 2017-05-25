@@ -55,6 +55,89 @@ function COLOR:__eq( c )
 end
 
 --[[---------------------------------------------------------
+	Add two colors
+-----------------------------------------------------------]]
+function COLOR:__add( c )
+
+	return Color( self.r + c.r, self.g + c.g, self.b + c.b, self.a + c.a )
+
+end
+
+--[[---------------------------------------------------------
+	Subtract two colors
+-----------------------------------------------------------]]
+function COLOR:__sub( c )
+
+	return Color( self.r - c.r, self.g - c.g, self.b - c.b, self.a - c.a )
+
+end
+
+--[[---------------------------------------------------------
+	Multiply two colors
+-----------------------------------------------------------]]
+function COLOR:__mul( c )
+
+	if ( isnumber( self ) ) then
+		return Color( self * c.r, self * c.g, self * c.b, self * c.a )
+	elseif ( isnumber( c ) ) then
+		return Color( self.r * c, self.g * c, self.b * c, self.a * c )
+	end
+
+	return Color( self.r * c.r, self.g * c.g, self.b * c.b, self.a * c.a )
+
+end
+
+--[[---------------------------------------------------------
+	Divide two colors
+-----------------------------------------------------------]]
+function COLOR:__div( c )
+
+	if ( isnumber( self ) ) then
+		return Color( self / c.r, self / c.g, self / c.b, self / c.a )
+	elseif ( isnumber( c ) ) then
+		return Color( self.r / c, self.g / c, self.b / c, self.a / c )
+	end
+
+	return Color( self.r / c.r, self.g / c.g, self.b / c.b, self.a / c.a )
+
+end
+
+--[[---------------------------------------------------------
+	Modulate two colors
+-----------------------------------------------------------]]
+function COLOR:__mod( c )
+
+	if ( isnumber( c ) ) then
+		return Color( self.r % c, self.g % c, self.b % c, self.a % c )
+	end
+
+	return Color( self.r % c.r, self.g % c.g, self.b % c.b, self.a % c.a )
+
+end
+
+--[[---------------------------------------------------------
+	Power two colors
+-----------------------------------------------------------]]
+function COLOR:__pow( c )
+
+	if ( isnumber( c ) ) then
+		return Color( self.r ^ c, self.g ^ c, self.b ^ c, self.a ^ c )
+	end
+
+	return Color( self.r ^ c.r, self.g ^ c.g, self.b ^ c.b, self.a ^ c.a )
+
+end
+
+--[[---------------------------------------------------------
+	Returns color object length
+-----------------------------------------------------------]]
+function COLOR:__len()
+
+	return 4
+
+end
+
+--[[---------------------------------------------------------
 	Converts a color to HSV
 -----------------------------------------------------------]]
 function COLOR:ToHSV()
