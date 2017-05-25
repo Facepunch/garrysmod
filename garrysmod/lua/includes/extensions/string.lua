@@ -33,7 +33,6 @@ local javascript_escape_replacements = {
 }
 
 function string.JavascriptSafe( str )
-
 	str = str:gsub( ".", javascript_escape_replacements )
 
 	-- U+2028 and U+2029 are treated as line separators in JavaScript, handle separately as they aren't single-byte
@@ -41,7 +40,6 @@ function string.JavascriptSafe( str )
 	str = str:gsub( "\226\128\169", "\\\226\128\169" )
 
 	return str
-
 end
 
 --[[---------------------------------------------------------
@@ -105,8 +103,8 @@ end
 	Desc: Takes a table and turns it into a string
 	Usage: string.Implode( " ", { "This", "Is", "A", "Table" } )
 -----------------------------------------------------------]]
-function string.Implode( seperator, Table ) return
-	table.concat( Table, seperator )
+function string.Implode( seperator, Table )
+	return table.concat( Table, seperator )
 end
 
 --[[---------------------------------------------------------
@@ -182,7 +180,6 @@ local function pluralizeString(str, quantity)
 end
 
 function string.NiceTime( seconds )
-
 	if ( seconds == nil ) then return "a few seconds" end
 
 	if ( seconds < 60 ) then
@@ -212,7 +209,6 @@ function string.NiceTime( seconds )
 
 	local t = math.floor( seconds / ( 60 * 60 * 24 * 365 ) )
 	return t .. pluralizeString( " year", t )
-
 end
 
 function string.Left( str, num ) return string.sub( str, 1, num ) end
@@ -255,8 +251,7 @@ function string.TrimLeft( s, char )
 end
 
 function string.NiceSize( size )
-
-	size = tonumber( size )
+	size = tonumber( size ) or 0
 
 	if ( size <= 0 ) then return "0" end
 	if ( size < 1024 ) then return size .. " Bytes" end
@@ -264,25 +259,20 @@ function string.NiceSize( size )
 	if ( size < 1024 * 1024 * 1024 ) then return math.Round( size / ( 1024 * 1024 ), 2 ) .. " MB" end
 
 	return math.Round( size / ( 1024 * 1024 * 1024 ), 2 ) .. " GB"
-
 end
 
 -- Note: These use Lua index numbering, not what you'd expect
 -- ie they start from 1, not 0.
 
 function string.SetChar( s, k, v )
-
 	local start = s:sub( 0, k-1 )
 	local send = s:sub( k+1 )
 
 	return start .. v .. send
-
 end
 
 function string.GetChar( s, k )
-
 	return s:sub( k, k )
-
 end
 
 local meta = getmetatable( "" )
@@ -299,25 +289,18 @@ function meta:__index( key )
 end
 
 function string.StartWith( String, Start )
-
    return string.sub( String, 1, string.len (Start ) ) == Start
-
 end
 
 function string.EndsWith( String, End )
-
    return End == "" or string.sub( String, -string.len( End ) ) == End
-
 end
 
 function string.FromColor( color )
-
    return Format( "%i %i %i %i", color.r, color.g, color.b, color.a )
-
 end
 
 function string.ToColor( str )
-
 	local col = Color( 255, 255, 255, 255 )
 
 	local r, g, b, a = str:match( "(%d+) (%d+) (%d+) (%d+)" )
@@ -328,11 +311,9 @@ function string.ToColor( str )
 	col.a = tonumber( a ) or 255
 
 	return col
-
 end
 
 function string.Comma( number )
-
 	local number, k = tostring( number ), nil
 
 	while true do
@@ -341,5 +322,4 @@ function string.Comma( number )
 	end
 
 	return number
-
 end
