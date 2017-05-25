@@ -24,8 +24,8 @@ local function BanID( player, command, arguments )
 
 	if ( !player:IsAdmin() ) then return end
 	
-	local length 	= arguments[1]
-	local id 		= arguments[2]
+	local length = arguments[1]
+	local id     = arguments[2]
 	
 	RunConsoleCommand( "banid", length, id );
 	
