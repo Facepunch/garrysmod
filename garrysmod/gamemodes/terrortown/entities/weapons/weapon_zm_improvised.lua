@@ -148,7 +148,7 @@ function SWEP:PrimaryAttack()
          --edata:SetDamageType(DMG_CLUB)
          edata:SetEntity(hitEnt)
 
-         if hitEnt:IsPlayer() or hitEnt:GetClass() == "prop_ragdoll" then
+         if hitEnt:IsPlayer() and hitEnt:IsTerror() or hitEnt:GetClass() == "prop_ragdoll" then
             util.Effect("BloodImpact", edata)
 
             -- does not work on players rah
@@ -227,7 +227,7 @@ function SWEP:SecondaryAttack()
 
    local tr = self.Owner:GetEyeTrace(MASK_SHOT)
 
-   if tr.Hit and IsValid(tr.Entity) and tr.Entity:IsPlayer() and (self.Owner:EyePos() - tr.HitPos):Length() < 100 then
+   if tr.Hit and IsValid(tr.Entity) and tr.Entity:IsPlayer() and tr.Entity:IsTerror() and (self.Owner:EyePos() - tr.HitPos):Length() < 100 then
       local ply = tr.Entity
 
       if SERVER and (not ply:IsFrozen()) then

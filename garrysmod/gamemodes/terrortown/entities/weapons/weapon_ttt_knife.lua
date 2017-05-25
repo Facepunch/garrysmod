@@ -81,7 +81,7 @@ function SWEP:PrimaryAttack()
       edata:SetNormal(tr.Normal)
       edata:SetEntity(hitEnt)
 
-      if hitEnt:IsPlayer() or hitEnt:GetClass() == "prop_ragdoll" then
+      if hitEnt:IsPlayer() and hitEnt:IsTerror() or hitEnt:GetClass() == "prop_ragdoll" then
          util.Effect("BloodImpact", edata)
       end
    else
@@ -94,7 +94,7 @@ function SWEP:PrimaryAttack()
 
 
    if SERVER and tr.Hit and tr.HitNonWorld and IsValid(hitEnt) then
-      if hitEnt:IsPlayer() then
+      if hitEnt:IsPlayer() and hitEnt:IsTerror() then
          -- knife damage is never karma'd, so don't need to take that into
          -- account we do want to avoid rounding error strangeness caused by
          -- other damage scaling, causing a death when we don't expect one, so
@@ -275,7 +275,7 @@ if CLIENT then
    function SWEP:DrawHUD()
       local tr = self.Owner:GetEyeTrace(MASK_SHOT)
 
-      if tr.HitNonWorld and IsValid(tr.Entity) and tr.Entity:IsPlayer()
+      if tr.HitNonWorld and IsValid(tr.Entity) and tr.Entity:IsPlayer() and tr.Entity:IsTerror()
          and tr.Entity:Health() < (self.Primary.Damage + 10) then
 
          local x = ScrW() / 2.0
