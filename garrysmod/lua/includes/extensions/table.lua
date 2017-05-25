@@ -716,3 +716,13 @@ function table.GetKeys( tab )
 	return keys
 
 end
+
+function table.ForceEmpty( t )
+ 
+ 	if ( t == nil ) then t = {} end
+ 	
+ 	table.Empty(t)
+ 	
+	return t
+ 
+end
