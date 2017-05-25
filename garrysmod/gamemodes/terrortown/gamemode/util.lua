@@ -232,7 +232,7 @@ end
 
 -- Returns copy of table with only specific keys copied
 function table.CopyKeys(tbl, keys)
-   if not (tbl and keys) then return end
+   if not tbl and keys then return end
 
    local out = {}
    local val = nil

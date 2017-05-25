@@ -5,8 +5,8 @@ local PT = LANG.GetParamTranslation
 
 local is_dmg = util.BitSet
 
-local dtt = { search_dmg_crush = DMG_CRUSH, search_dmg_bullet = DMG_BULLET, search_dmg_fall = DMG_FALL, 
-search_dmg_boom = DMG_BLAST, search_dmg_club = DMG_CLUB, search_dmg_drown = DMG_DROWN, search_dmg_stab = DMG_SLASH, 
+local dtt = { search_dmg_crush = DMG_CRUSH, search_dmg_bullet = DMG_BULLET, search_dmg_fall = DMG_FALL,
+search_dmg_boom = DMG_BLAST, search_dmg_club = DMG_CLUB, search_dmg_drown = DMG_DROWN, search_dmg_stab = DMG_SLASH,
 search_dmg_burn = DMG_BURN, search_dmg_tele = DMG_SONIC, search_dmg_car = DMG_VEHICLE }
 
 -- "From his body you can tell XXX"
@@ -271,8 +271,6 @@ local function ShowSearchScreen(search_raw)
 
    ry = ry + desch + m
 
-   local butx, buty = rx, ry
-
    local dframe = vgui.Create("DFrame")
    dframe:SetSize(w, h)
    dframe:Center()
@@ -438,7 +436,7 @@ local function ReceiveRagdollSearch()
    search.eidx = net.ReadUInt(16)
 
    search.owner = Entity(net.ReadUInt(8))
-   if not (IsValid(search.owner) and search.owner:IsPlayer() and (not search.owner:IsTerror())) then
+   if not IsValid(search.owner) and search.owner:IsPlayer() and (not search.owner:IsTerror()) then
       search.owner = nil
    end
 
@@ -479,14 +477,14 @@ local function ReceiveRagdollSearch()
    -- should we show a menu for this result?
    search.finder = net.ReadUInt(8)
 
-   search.show = (LocalPlayer():EntIndex() == search.finder)
+   search.show = LocalPlayer():EntIndex() == search.finder
 
    --
    -- last words
    --
    local words = net.ReadString()
    search.words = (words ~= "") and words or nil
-   
+
    hook.Call("TTTBodySearchEquipment", nil, search, eq)
 
    if search.show then

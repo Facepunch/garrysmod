@@ -42,7 +42,7 @@ function DISGUISE.Draw(client)
    surface.SetTextColor(255, 0, 0, 230)
 
    local text = trans("disg_hud")
-   local w, h = surface.GetTextSize(text)
+   local h = surface.GetTextSize(text)
 
    surface.SetTextPos(36, ScrH() - 160 - h)
    surface.DrawText(text)

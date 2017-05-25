@@ -325,8 +325,6 @@ local function TraitorMenuPopup()
    dfields.desc:SetContentAlignment(7)
    dfields.desc:MoveBelow(dfields.type, 1)
 
-   local iw, ih = dinfo:GetSize()
-
    local dhelp = vgui.Create("ColoredBox", dinfobg)
    dhelp:SetColor(Color(90, 90, 95))
    dhelp:SetSize(diw, dih - 205)
@@ -436,7 +434,7 @@ concommand.Add("ttt_cl_traitorpopup_close", ForceCloseTraitorMenu)
 
 function GM:OnContextMenuOpen()
    local r = GetRoundState()
-   if r == ROUND_ACTIVE and not (LocalPlayer():GetTraitor() or LocalPlayer():GetDetective()) then
+   if r == ROUND_ACTIVE and not LocalPlayer():GetTraitor() or LocalPlayer():GetDetective() then
       return
    elseif r == ROUND_POST or r == ROUND_PREP then
       CLSCORE:Reopen()

@@ -305,7 +305,7 @@ local function PlaceWeapon(swep, pos, ang)
    return ent
 end
 
--- Spawns a bunch of guns (scaling with maxplayers count or 
+-- Spawns a bunch of guns (scaling with maxplayers count or
 -- by ttt_weapon_spawn_max cvar) at randomly selected
 -- entities of the classes given the table
 local function PlaceWeaponsAtEnts(spots_classes)
@@ -317,13 +317,13 @@ local function PlaceWeaponsAtEnts(spots_classes)
    end
 
    local spawnables = ents.TTT.GetSpawnableSWEPs()
-   
+
    local max = GetConVar( "ttt_weapon_spawn_count" ):GetInt()
-   if max == 0 then 
+   if max == 0 then
       max = game.MaxPlayers()
       max = max + math.max(3, 0.33 * max)
    end
-   
+
    local num = 0
    local w = nil
    for k, v in RandomPairs(spots) do
