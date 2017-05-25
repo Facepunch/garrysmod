@@ -151,7 +151,7 @@ function LANG.SetActiveLanguage(lang_name)
 end
 
 function LANG.Init()
-   local lang_name = GetConVarString("ttt_language")
+   local lang_name = GetConVar("ttt_language"):GetString()
 
    -- if we want to use the server language, we'll be switching to it as soon as
    -- we hear from the server which one it is, for now use default
@@ -266,10 +266,10 @@ function LANG.ProcessMsg(name, params)
             params[k] = LANG.GetTranslation(name)
          end
       end
-      
+
       text = interp(raw, params)
    end
-   
+
    LANG.ShowStyledMsg(text, LANG.GetStyle(name))
 end
 
@@ -293,7 +293,7 @@ local styledmessages = {
       "buy_no_stock",
       "buy_pending",
       "buy_received",
-      
+
       "xfer_no_recip",
       "xfer_no_credits",
       "xfer_success",
