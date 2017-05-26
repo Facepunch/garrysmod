@@ -451,3 +451,31 @@ function GetConVarString( name )
 	local c = GetConVar( name )
 	return ( c and c:GetString() ) or ""
 end
+
+--[[---------------------------------------------------------
+   Name: SteamIDTo32( steamid )
+   Desc: Given a STEAM_0 style Steam ID will return a 32bit Steam ID
+-----------------------------------------------------------]]
+function util.SteamIDTo32( steamid )
+
+	steamid = tostring( steamid )
+	local y, z = 0, 0
+	y, z = string.match( steamid, "STEAM_0:(%d):(%d+)" )
+
+	return z * 2 + y
+	
+end
+
+--[[---------------------------------------------------------
+   Name: SteamIDFrom32( steamid32 )
+   Desc: Given a 32bit Steam ID will return a STEAM_0 style Steam ID
+-----------------------------------------------------------]]
+function util.SteamIDFrom32( steamid32 )
+	
+	steamid32 = tonumber( steamid32 )
+	local y = steamid32 % 2
+	local z = ( steamid32 - y ) / 2
+
+	return "STEAM_0:" .. y .. ":" .. z
+
+end

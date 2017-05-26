@@ -88,6 +88,32 @@ function player.GetBySteamID64( ID )
 
 end
 
+function player.GetBySteamID32( ID )
+
+	ID = tonumber( ID )
+
+	for _, pl in pairs( player.GetAll() ) do
+
+		if ( pl:SteamID32() == ID ) then
+			return pl
+		end
+
+	end
+
+	return false
+
+end
+
+
+function meta:SteamID32()
+
+	local y, z = 0, 0
+	y,z = string.match( self:SteamID(), "STEAM_0:(%d):(%d+)" )
+
+	return z * 2 + y
+
+end
+
 --[[---------------------------------------------------------
 	Name: DebugInfo
 	Desc: Prints debug information for the player
