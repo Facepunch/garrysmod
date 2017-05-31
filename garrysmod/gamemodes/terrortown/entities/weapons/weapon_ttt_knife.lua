@@ -276,7 +276,7 @@ if CLIENT then
       local tr = self.Owner:GetEyeTrace(MASK_SHOT)
 
       if tr.HitNonWorld and IsValid(tr.Entity) and tr.Entity:IsPlayer()
-         and tr.Entity:Health() < (self.Primary.Damage + 10) then
+         and tr.Entity:Health() < (self.Primary.Damage + 10)  and self.Owner:Alive() then
 
          local x = ScrW() / 2.0
          local y = ScrH() / 2.0
