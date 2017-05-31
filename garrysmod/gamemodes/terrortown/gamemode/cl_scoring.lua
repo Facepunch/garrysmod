@@ -100,12 +100,12 @@ function CLSCORE:FillDList(dlst)
    end
 end
 
-function CLSCORE:BuildEventLogPanel(dpanel)
+function CLSCORE:BuildEventLogPanel(dframe)
    local margin = 10
 
-   local w, h = dpanel:GetSize()
+   local w, h = dframe:GetSize()
 
-   local dlist = vgui.Create("DListView", dpanel)
+   local dlist = vgui.Create("DListView", dframe)
    dlist:SetPos(0, 0)
    dlist:SetSize(w, h - margin*2)
    dlist:SetSortable(true)
@@ -127,11 +127,11 @@ function CLSCORE:BuildEventLogPanel(dpanel)
    self:FillDList(dlist)
 end
 
-function CLSCORE:BuildScorePanel(dpanel)
+function CLSCORE:BuildScorePanel(dframe)
    local margin = 10
-   local w, h = dpanel:GetSize()
+   local w, h = dframe:GetSize()
 
-   local dlist = vgui.Create("DListView", dpanel)
+   local dlist = vgui.Create("DListView", dframe)
    dlist:SetPos(0, 0)
    dlist:SetSize(w, h)
    dlist:SetSortable(true)
@@ -204,24 +204,24 @@ function CLSCORE:BuildScorePanel(dpanel)
    dlist:SortByColumn(6)
 end
 
-function CLSCORE:AddAward(y, pw, award, dpanel)
+function CLSCORE:AddAward(y, pw, award, dframe)
    local nick = award.nick
    local text = award.text
    local title = string.upper(award.title)
 
-   local titlelbl = vgui.Create("DLabel", dpanel)
+   local titlelbl = vgui.Create("DLabel", dframe)
    titlelbl:SetText(title)
    titlelbl:SetFont("TabLarge")
    titlelbl:SizeToContents()
    local tiw, tih = titlelbl:GetSize()
 
-   local nicklbl = vgui.Create("DLabel", dpanel)
+   local nicklbl = vgui.Create("DLabel", dframe)
    nicklbl:SetText(nick)
    nicklbl:SetFont("DermaDefaultBold")
    nicklbl:SizeToContents()
    local nw, nh = nicklbl:GetSize()
 
-   local txtlbl = vgui.Create("DLabel", dpanel)
+   local txtlbl = vgui.Create("DLabel", dframe)
    txtlbl:SetText(text)
    txtlbl:SetFont("DermaDefault")
    txtlbl:SizeToContents()
@@ -250,8 +250,8 @@ local wintitle = {
    [WIN_INNOCENT] = {txt = "hilite_win_innocent", c = Color(5, 190, 5, 255)}
 }
 
-function CLSCORE:BuildHilitePanel(dpanel)
-   local w, h = dpanel:GetSize()
+function CLSCORE:BuildHilitePanel(dframe)
+   local w, h = dframe:GetSize()
 
    local title = wintitle[WIN_INNOCENT]
    local endtime = self.StartTime
@@ -275,12 +275,12 @@ function CLSCORE:BuildHilitePanel(dpanel)
    local numtr = table.Count(self.TraitorIDs)
 
 
-   local bg = vgui.Create("ColoredBox", dpanel)
+   local bg = vgui.Create("ColoredBox", dframe)
    bg:SetColor(Color(50, 50, 50, 255))
    bg:SetSize(w,h)
    bg:SetPos(0,0)
 
-   local winlbl = vgui.Create("DLabel", dpanel)
+   local winlbl = vgui.Create("DLabel", dframe)
    winlbl:SetFont("WinHuge")
    winlbl:SetText( T(title.txt) )
    winlbl:SetTextColor(COLOR_WHITE)
@@ -294,7 +294,7 @@ function CLSCORE:BuildHilitePanel(dpanel)
                   end
 
    local ysubwin = ywin + winlbl:GetTall()
-   local partlbl = vgui.Create("DLabel", dpanel)
+   local partlbl = vgui.Create("DLabel", dframe)
 
    local plytxt = PT(numtr == 1 and "hilite_players2" or "hilite_players1",
                      {numplayers = numply, numtraitors = numtr})
@@ -303,7 +303,7 @@ function CLSCORE:BuildHilitePanel(dpanel)
    partlbl:SizeToContents()
    partlbl:SetPos(xwin, ysubwin + 8)
 
-   local timelbl = vgui.Create("DLabel", dpanel)
+   local timelbl = vgui.Create("DLabel", dframe)
    timelbl:SetText(PT("hilite_duration", {time= util.SimpleTime(roundtime, "%02i:%02i")}))
    timelbl:SizeToContents()
    timelbl:SetPos(xwin + winlbl:GetWide() - timelbl:GetWide(), ysubwin + 8)
@@ -314,7 +314,7 @@ function CLSCORE:BuildHilitePanel(dpanel)
    local xa = (w - wa) / 2
    local ya = h - ha
 
-   local awardp = vgui.Create("DPanel", dpanel)
+   local awardp = vgui.Create("DPanel", dframe)
    awardp:SetSize(wa, ha)
    awardp:SetPos(xa, ya)
    awardp:SetPaintBackground(false)
@@ -352,36 +352,36 @@ end
 function CLSCORE:ShowPanel()
    local margin = 15
 
-   local dpanel = vgui.Create("DFrame")
+   local dframe = vgui.Create("DFrame")
    local w, h = 700, 500
-   dpanel:SetSize(700, 500)
-   dpanel:Center()
-   dpanel:SetTitle(T("report_title"))
-   dpanel:SetVisible(true)
-   dpanel:ShowCloseButton(true)
-   dpanel:SetMouseInputEnabled(true)
-   dpanel:SetKeyboardInputEnabled(true)
-   dpanel.OnKeyCodePressed = util.BasicKeyHandler
+   dframe:SetSize(700, 500)
+   dframe:Center()
+   dframe:SetTitle(T("report_title"))
+   dframe:SetVisible(true)
+   dframe:ShowCloseButton(true)
+   dframe:SetMouseInputEnabled(true)
+   dframe:SetKeyboardInputEnabled(true)
+   dframe.OnKeyCodePressed = util.BasicKeyHandler
 
    -- keep it around so we can reopen easily
-   dpanel:SetDeleteOnClose(false)
-   self.Panel = dpanel
+   dframe:SetDeleteOnClose(false)
+   self.Panel = dframe
 
-   local dbut = vgui.Create("DButton", dpanel)
+   local dbut = vgui.Create("DButton", dframe)
    local bw, bh = 100, 25
    dbut:SetSize(bw, bh)
    dbut:SetPos(w - bw - margin, h - bh - margin/2)
    dbut:SetText(T("close"))
-   dbut.DoClick = function() dpanel:Close() end
+   dbut.DoClick = function() dframe:Close() end
 
-   local dsave = vgui.Create("DButton", dpanel)
+   local dsave = vgui.Create("DButton", dframe)
    dsave:SetSize(bw,bh)
    dsave:SetPos(margin, h - bh - margin/2)
    dsave:SetText(T("report_save"))
    dsave:SetTooltip(T("report_save_tip"))
    dsave:SetConsoleCommand("ttt_save_events")
 
-   local dtabsheet = vgui.Create("DPropertySheet", dpanel)
+   local dtabsheet = vgui.Create("DPropertySheet", dframe)
    dtabsheet:SetPos(margin, margin + 15)
    dtabsheet:SetSize(w - margin*2, h - margin*3 - bh)
    local padding = dtabsheet:GetPadding()
@@ -411,10 +411,10 @@ function CLSCORE:ShowPanel()
 
    dtabsheet:AddSheet(T("report_tab_scores"), dtabscores, "icon16/user.png", false, false, T("report_tab_scores_tip"))
 
-   dpanel:MakePopup()
+   dframe:MakePopup()
 
    -- makepopup grabs keyboard, whereas we only need mouse
-   dpanel:SetKeyboardInputEnabled(false)
+   dframe:SetKeyboardInputEnabled(false)
 end
 
 function CLSCORE:ClearPanel()
