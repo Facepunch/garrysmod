@@ -34,9 +34,7 @@ function sql.TableExists( name )
 
 	local r = sql.Query( "select name FROM sqlite_master WHERE name="..SQLStr( name ).." AND type='table'" );
 	
-	if ( r ) then return true end
-	
-	return false
+	return r
 
 end
 
