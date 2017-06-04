@@ -17,11 +17,8 @@ function sql.SQLStr( str_in, bNoQuotes )
 		str = string.sub( str, 1, null_chr - 1 )
 	end
 	
-	if ( bNoQuotes ) then
-		return str
-	end
-	
-	return "'" .. str .. "'"
+	-- If no quotes return string, otherwise add quotes
+	return bNoQuotes and str or "'" .. str .. "'"
 end
 
 SQLStr = sql.SQLStr
@@ -31,12 +28,9 @@ SQLStr = sql.SQLStr
     Returns true if the table exists. False if it doesn't
 -----------------------------------------------------------]]
 function sql.TableExists( name )
-
-	local r = sql.Query( "select name FROM sqlite_master WHERE name="..SQLStr( name ).." AND type='table'" );
 	
-	if ( r ) then return true end
-	
-	return false
+	-- Query table name. If found return true, otherwise return false.
+	return sql.Query( "select name FROM sqlite_master WHERE name="..SQLStr( name ).." AND type='table'" ) and true or false
 
 end
 
@@ -50,9 +44,8 @@ function sql.QueryRow( query, row )
 
 	local r = sql.Query( query );
 	
-	if ( r ) then return r[ row ] end
-	
-	return r
+	-- Return row queried or nil on failure
+	return r and r[ row ] or nil
 
 end
 
