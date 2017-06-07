@@ -117,10 +117,10 @@ if CLIENT then
 
       return false
    end
-   local ply = LocalPlayer()
+   local ply = LocalPlayer
    local gmod_GetWeapons = plymeta.GetWeapons
    function plymeta:GetWeapons()
-      if self != ply then
+      if self != ply() then
          return {}
       else
          return gmod_GetWeapons(self)
