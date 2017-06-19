@@ -79,6 +79,8 @@ function TOOL:RightClick( trace )
 
 	end
 
+	self:GetOwner():SendLua( string.format( "for i=1,%i do achievements.Remover()end", count ) )
+
 	return true
 
 end
