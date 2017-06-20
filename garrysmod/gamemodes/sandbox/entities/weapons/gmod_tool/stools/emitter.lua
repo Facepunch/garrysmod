@@ -56,34 +56,30 @@ function TOOL:LeftClick( trace, worldweld )
 
 	if ( !self:GetSWEP():CheckLimit( "emitters" ) ) then return false end
 
-	local Pos = trace.HitPos
+	local pos = trace.HitPos
 	if ( trace.Entity != NULL && ( !trace.Entity:IsWorld() || worldweld ) ) then else
-
-		Pos = Pos + trace.HitNormal
-
+		pos = pos + trace.HitNormal
 	end
 
-	local Ang = trace.HitNormal:Angle()
-	Ang:RotateAroundAxis( trace.HitNormal, 0 )
+	local ang = trace.HitNormal:Angle()
+	ang:RotateAroundAxis( trace.HitNormal, 0 )
 
-	local emitter = MakeEmitter( ply, key, delay, toggle, effect, starton, nil, nil, nil, nil, { Pos = Pos, Angle = Ang }, scale )
-
-	local weld
-
-	-- Don't weld to world
-	if ( trace.Entity != NULL && ( !trace.Entity:IsWorld() || worldweld ) ) then
-
-		weld = constraint.Weld( emitter, trace.Entity, 0, trace.PhysicsBone, 0, true, true )
-
-		-- >:(
-		emitter:GetPhysicsObject():EnableCollisions( false )
-		emitter.nocollide = true
-
-	end
+	local emitter = MakeEmitter( ply, key, delay, toggle, effect, starton, nil, scale, { Pos = pos, Angle = ang } )
 
 	undo.Create( "Emitter" )
 		undo.AddEntity( emitter )
-		undo.AddEntity( weld )
+
+		-- Don't weld to world
+		if ( trace.Entity != NULL && ( !trace.Entity:IsWorld() || worldweld ) ) then
+			local weld = constraint.Weld( emitter, trace.Entity, 0, trace.PhysicsBone, 0, true, true )
+
+			if ( IsValid( emitter:GetPhysicsObject() ) ) then emitter:GetPhysicsObject():EnableCollisions( false ) end
+			emitter.nocollide = true
+
+			ply:AddCleanup( "emitters", weld )
+			undo.AddEntity( weld )
+		end
+
 		undo.SetPlayer( ply )
 	undo.Finish()
 
@@ -99,7 +95,7 @@ end
 
 if ( SERVER ) then
 
-	function MakeEmitter( ply, key, delay, toggle, effect, starton, Vel, aVel, frozen, nocollide, Data, scale )
+	function MakeEmitter( ply, key, delay, toggle, effect, starton, nocollide, scale, Data )
 
 		if ( IsValid( ply ) && !ply:CheckLimit( "emitters" ) ) then return nil end
 
@@ -121,7 +117,9 @@ if ( SERVER ) then
 		emitter.NumDown = numpad.OnDown( ply, key, "Emitter_On", emitter )
 		emitter.NumUp = numpad.OnUp( ply, key, "Emitter_Off", emitter )
 
-		if ( nocollide == true ) then emitter:GetPhysicsObject():EnableCollisions( false ) end
+		if ( nocollide && IsValid( emitter:GetPhysicsObject() ) ) then
+			emitter:GetPhysicsObject():EnableCollisions( false )
+		end
 
 		local ttable = {
 			key = key,
@@ -145,7 +143,7 @@ if ( SERVER ) then
 
 	end
 
-	duplicator.RegisterEntityClass( "gmod_emitter", MakeEmitter, "key", "delay", "toggle", "effect", "starton", "Vel", "aVel", "frozen", "nocollide", "Data", "scale" )
+	duplicator.RegisterEntityClass( "gmod_emitter", MakeEmitter, "key", "delay", "toggle", "effect", "starton", "nocollide", "scale", "Data" )
 
 end
 

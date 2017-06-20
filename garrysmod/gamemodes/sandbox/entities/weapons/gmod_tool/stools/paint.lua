@@ -66,9 +66,7 @@ function TOOL:RightClick( trace, bNoDelay )
 	local Pos2 = trace.HitPos - trace.HitNormal
 
 	local Bone = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone or 0 )
-	if ( !Bone ) then
-		Bone = trace.Entity
-	end
+	if ( !IsValid( Bone ) ) then Bone = trace.Entity end
 
 	Pos1 = Bone:WorldToLocal( Pos1 )
 	Pos2 = Bone:WorldToLocal( Pos2 )

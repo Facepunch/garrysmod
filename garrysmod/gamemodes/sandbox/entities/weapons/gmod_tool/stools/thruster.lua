@@ -97,12 +97,13 @@ function TOOL:LeftClick( trace )
 			if ( collision ) then
 
 				if ( IsValid( thruster:GetPhysicsObject() ) ) then thruster:GetPhysicsObject():EnableCollisions( false ) end
+				thruster:SetCollisionGroup( COLLISION_GROUP_WORLD )
 				thruster.nocollide = true
 
 			end
 
-			undo.AddEntity( const )
 			ply:AddCleanup( "thrusters", const )
+			undo.AddEntity( const )
 
 		end
 
@@ -143,7 +144,10 @@ if ( SERVER ) then
 		thruster.NumBackDown = numpad.OnDown( pl, key_bck, "Thruster_On", thruster, -1 )
 		thruster.NumBackUp = numpad.OnUp( pl, key_bck, "Thruster_Off", thruster, -1 )
 
-		if ( nocollide == true && IsValid( thruster:GetPhysicsObject() ) ) then thruster:GetPhysicsObject():EnableCollisions( false ) end
+		if ( nocollide == true ) then
+			if ( IsValid( thruster:GetPhysicsObject() ) ) then thruster:GetPhysicsObject():EnableCollisions( false ) end
+			thruster:SetCollisionGroup( COLLISION_GROUP_WORLD )
+		end
 
 		table.Merge( thruster:GetTable(), {
 			key = key,
