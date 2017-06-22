@@ -1059,3 +1059,17 @@ L.hat_retrieve = "You picked up a Detective's hat."
 
 --- 3-9-2017
 L.sb_sortby = "Sort By:"
+
+--- 6-22-17
+L.set_title_cross = "Crosshair settings"
+
+L.set_cross_color_enable = "Enable custom crosshair color"
+L.set_cross_color = "Custom crosshair color"
+L.set_cross_gap_enable = "Enable custom crosshair gap"
+L.set_cross_gap = "Custom crosshair gap"
+L.set_cross_static_enable = "Enable static crosshair"
+L.set_ironsight_cross_opacity = "Ironsight crosshair opacity"
+L.set_cross_weaponscale_enable = "Enable weapon crosshair scale"
+L.set_cross_thickness = "Crosshair thickness"
+L.set_cross_outlinethickness = "Crosshair outline thickness"
+L.set_cross_dot_enable = "Enable crosshair dot"
