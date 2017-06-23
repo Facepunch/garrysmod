@@ -148,8 +148,6 @@ if ( SERVER ) then
 		balloon:SetForce( force )
 		balloon:SetPlayer( pl )
 
-		balloon:SetMaterial( skin )
-
 		balloon.Player = pl
 		balloon.r = r
 		balloon.g = g

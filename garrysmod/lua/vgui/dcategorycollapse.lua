@@ -81,13 +81,13 @@ function PANEL:Add( strName )
 		if ( button.AltLine ) then
 
 			if ( button.Depressed || button.m_bSelected ) then	return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Selected ) end
-			if ( hovered ) then									return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Hover ) end
+			if ( button.Hovered ) then							return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Hover ) end
 			return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text )
 
 		end
 
 		if ( button.Depressed || button.m_bSelected ) then	return button:SetTextStyleColor( skin.Colours.Category.Line.Text_Selected ) end
-		if ( hovered ) then									return button:SetTextStyleColor( skin.Colours.Category.Line.Text_Hover ) end
+		if ( button.Hovered ) then							return button:SetTextStyleColor( skin.Colours.Category.Line.Text_Hover ) end
 		return button:SetTextStyleColor( skin.Colours.Category.Line.Text )
 
 	end

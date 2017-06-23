@@ -122,7 +122,6 @@ function ENT:Draw()
 
 end
 
-
 function ENT:DrawDebug( ragdoll, controller, pos, ang, rotation, scale, center, changed_sensor )
 
 	local UpdateTime = 0.1
@@ -300,7 +299,7 @@ function ENT:SetRagdoll( ragdoll )
 		--
 		-- Makes the physics objects follow the set bone positions
 		--
-		ragdoll:RagdollUpdatePhysics( i )
+		ragdoll:RagdollUpdatePhysics()
 
 	end )
 
