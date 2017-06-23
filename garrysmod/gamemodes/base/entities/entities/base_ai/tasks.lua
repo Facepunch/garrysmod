@@ -24,7 +24,7 @@ function ENT:TaskStart_PlaySequence( data )
 
 	if ( data.Speed && data.Speed > 0 ) then
 
-		SequenceID = self:SetPlaybackRate( data.Speed )
+		self:SetPlaybackRate( data.Speed )
 		Duration = Duration / data.Speed
 
 	end

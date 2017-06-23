@@ -36,8 +36,6 @@ properties.Add( "drive", {
 			drivemode = ent:GetEntityDriveMode( player )
 		end
 
-		if ( !drivemode ) then  end
-
 		drive.PlayerStartDriving( player, ent, drivemode )
 
 	end

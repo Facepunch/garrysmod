@@ -78,16 +78,16 @@ util.tobool = tobool
 -----------------------------------------------------------]]
 function util.LocalToWorld( ent, lpos, bone )
 	bone = bone or 0
+
 	if (ent:EntIndex() == 0) then
 		return lpos
-	else
-		if (ent:GetPhysicsObjectNum(bone) ~= nil && ent:GetPhysicsObjectNum(bone):IsValid()) then
-			return ent:GetPhysicsObjectNum(bone):LocalToWorld(lpos)
-		else
-			return ent:LocalToWorld(lpos)
-		end
 	end
-	return nil
+
+	if (ent:GetPhysicsObjectNum(bone) ~= nil && ent:GetPhysicsObjectNum(bone):IsValid()) then
+		return ent:GetPhysicsObjectNum(bone):LocalToWorld(lpos)
+	end
+
+	return ent:LocalToWorld(lpos)
 end
 
 
@@ -249,8 +249,8 @@ local T =
 	-- Ret1:
 	--
 	Pop = function( self, num )
-		
-		local num = num or 1
+
+		num = num or 1
 
 		if ( num > #self.objs ) then
 			error( "Overpopped stack!" );

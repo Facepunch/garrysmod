@@ -19,7 +19,7 @@ end
 
 function GetResults( str )
 
-	local str = str:lower()
+	str = str:lower()
 	if ( str == "" ) then return {} end
 
 	local results = {}

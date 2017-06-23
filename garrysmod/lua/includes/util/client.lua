@@ -167,7 +167,7 @@ local function RenderSpawnIcon_Special( model, pos, middle, size, x, y, z )
 
 end
 
-SpawniconGenFunctions = {}
+local SpawniconGenFunctions = {}
 
 function PositionSpawnIcon( model, pos, noAngles )
 
@@ -285,3 +285,5 @@ SpawniconGenFunctions[ "models/infected/charger.mdl" ] = function( a, b, c, d ) 
 SpawniconGenFunctions[ "models/infected/jockey.mdl" ] = function( a, b, c, d ) return RenderSpawnIcon_Special( a, b, c, d, -50, 0, 7 ) end
 SpawniconGenFunctions[ "models/infected/spitter.mdl" ] = function( a, b, c, d ) return RenderSpawnIcon_Special( a, b, c, d, -1, 0, -70 ) end // as good as deleted
 SpawniconGenFunctions[ "models/infected/hulk_dlc3.mdl" ] = SpawniconGenFunctions[ "models/infected/hulk.mdl" ]
+
+_G.SpawniconGenFunctions = SpawniconGenFunctions

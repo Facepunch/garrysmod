@@ -10,11 +10,7 @@ local Shape = 0.5
 local SuperDOFWindow = nil
 local Status = "Preview"
 
-local sldDistance = nil
-local lblDistance = nil
-local lblSize = nil
 local FocusGrabber = false
-local ScreenshotTimer = 0
 
 function PANEL:Init()
 
@@ -149,7 +145,6 @@ local matFB = Material( "pp/fb" )
 function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, bSpin, inView, ViewFOV )
 
 	local OldRT = render.GetRenderTarget()
-	local view = { x = 0, y = 0, w = ScrW(), h = ScrH() }
 	local fDistance = vOrigin:Distance( vFocus )
 
 	fAngleSize = fAngleSize * math.Clamp( 256 / fDistance, 0.1, 1 ) * 0.5

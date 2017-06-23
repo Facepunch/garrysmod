@@ -1,11 +1,8 @@
 
-local MsgN			= MsgN
 local IsValid		= IsValid
 local setmetatable	= setmetatable
 local SERVER		= SERVER
-local math			= math
 local util			= util
-local Vector		= Vector
 local ErrorNoHalt	= ErrorNoHalt
 local baseclass		= baseclass
 local LocalPlayer	= LocalPlayer

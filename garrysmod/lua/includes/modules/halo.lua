@@ -19,7 +19,6 @@ function Add( ents, color, blurx, blury, passes, add, ignorez )
 	{
 		Ents = ents,
 		Color = color,
-		Hidden = when_hidden,
 		BlurX = blurx or 2,
 		BlurY = blury or 2,
 		DrawPasses = passes or 1,

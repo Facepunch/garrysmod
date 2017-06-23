@@ -303,7 +303,7 @@ function meta:InstallDataTable()
 	--
 	self.NetworkVarElement = function( ent, typename, index, element, name, other_data )
 
-		ent.DTVar( ent, typename, index, name, keyname )
+		ent.DTVar( ent, typename, index, name )
 
 		ent[ "Set" .. name ] = function( self, value )
 			local old = self.dt[ name ]

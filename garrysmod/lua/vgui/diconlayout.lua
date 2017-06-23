@@ -46,7 +46,7 @@ function PANEL:LayoutIcons_TOP()
 
 		if ( !v:IsVisible() ) then continue end
 
-		local w, h = v:GetSize()
+		local w = v:GetWide()
 		if ( x + w > MaxWidth || ( v.OwnLine && x > self.m_iBorder ) ) then
 
 			x = self.m_iBorder
@@ -81,7 +81,7 @@ function PANEL:LayoutIcons_LEFT()
 
 		if ( !v:IsVisible() ) then continue end
 
-		local w, h = v:GetSize()
+		local h = v:GetTall()
 		if ( y + h > MaxHeight || ( v.OwnLine && y > self.m_iBorder ) ) then
 
 			y = self.m_iBorder

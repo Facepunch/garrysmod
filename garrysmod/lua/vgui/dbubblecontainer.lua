@@ -36,10 +36,6 @@ function PANEL:Paint( w, h )
 	local top = h - 32
 	draw.RoundedBox( 8, 0, 0, w, top, self.m_bgColor )
 
-	local tipx = self.Center - 32
-	if ( tipx < 8 ) then tipx = 8 end
-	if ( tipx > w - 64 - 8 ) then tipx = w - 64 - 8 end
-
 	surface.SetDrawColor( self.m_bgColor )
 	surface.SetMaterial( self.matPoint )
 	surface.DrawTexturedRect( self.Center - 32, top, 64, 32 )

@@ -182,8 +182,6 @@ function ENT:OverlayRender()
 
 	if ( self:IsHovered() ) then
 		col = Color( 20, 50, 100, 255 )
-	elseif ( self:SomethingHovered() ) then
-		-- less alpha
 	end
 
 	if ( self:IsPressed() ) then

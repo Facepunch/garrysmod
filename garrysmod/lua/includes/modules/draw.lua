@@ -1,15 +1,7 @@
 
-local CurTime = CurTime
-local pairs = pairs
-local table = table
 local string = string
-local type = type
 local surface = surface
-local Msg = Msg
 local math = math
-local setmetatable = setmetatable
-local ScrW = ScrW
-local ScrH = ScrH
 local Color = Color
 local tostring = tostring
 local color_white = color_white

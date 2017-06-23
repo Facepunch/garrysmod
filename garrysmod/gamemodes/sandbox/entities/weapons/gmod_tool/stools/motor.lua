@@ -59,7 +59,7 @@ function TOOL:LeftClick( trace )
 
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
-		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
+		local LPos2 = self:GetLocalPos( 2 )
 		local Norm1, Norm2 = self:GetNormal( 1 ), self:GetNormal( 2 )
 		local Phys1 = self:GetPhys( 1 )
 		local WPos2 = self:GetPos( 2 )
@@ -80,7 +80,7 @@ function TOOL:LeftClick( trace )
 		Phys1:Wake()
 
 		-- Set the hinge Axis perpendicular to the trace hit surface
-		LPos1 = Phys1:WorldToLocal( WPos2 + Norm2 * 64 )
+		local LPos1 = Phys1:WorldToLocal( WPos2 + Norm2 * 64 )
 
 		local constraint, axis = constraint.Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, time, nocollide, toggle, self:GetOwner(), limit, forekey, backkey, 1 )
 

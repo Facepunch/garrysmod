@@ -423,7 +423,7 @@ function PANEL:Refresh()
 	local ent = self.ModelPanel:GetEntity()
 	local pos = ent:GetPos()
 
-	local tab = PositionSpawnIcon( ent, pos )
+	PositionSpawnIcon( ent, pos )
 
 	ent:SetSkin( self.SpawnIcon:GetSkinID() )
 	ent:SetBodyGroups( self.SpawnIcon:GetBodyGroup() )
@@ -475,7 +475,7 @@ function PANEL:FillAnimations( ent )
 			end )
 		end
 
-		combo:ChooseOptionID( ent:GetSkin( l ) + 1 )
+		combo:ChooseOptionID( ent:GetSkin() + 1 )
 		combo.OnSelect = function( pnl, index, value, data ) data()	end
 
 	end

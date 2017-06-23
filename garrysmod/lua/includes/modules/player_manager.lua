@@ -1,7 +1,3 @@
-local hook = hook
-local player = player
-local pairs = pairs
-local Msg = Msg
 local ErrorNoHalt = ErrorNoHalt
 local baseclass = baseclass
 local setmetatable = setmetatable
@@ -330,7 +326,6 @@ end
 
 function SetPlayerClass( ply, classname )
 
-	local t = Type[ classname ]
 	if ( !Type[ classname ] ) then ErrorNoHalt( "SetPlayerClass - attempt to use unknown player class "..classname .. "!\n" ) end
 
 	local id = util.NetworkStringToID( classname )

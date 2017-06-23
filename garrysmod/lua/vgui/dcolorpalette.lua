@@ -14,7 +14,7 @@ AccessorFunc( PANEL, "m_NumRows", "NumRows", FORCE_NUMBER )
 
 local function CreateColorTable( rows )
 
-	local rows = rows or 8
+	rows = rows or 8
 	local index = 0
 	local ColorTable = {}
 

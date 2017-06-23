@@ -85,7 +85,6 @@ function PANEL:SetValue( val )
 
 	if ( val == nil ) then return end
 
-	local OldValue = val
 	val = tonumber( val )
 	val = val or 0
 

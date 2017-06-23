@@ -10,7 +10,6 @@ TOOL.Information = {
 }
 
 local VarsOnHand = 15
-local FingerVars = VarsOnHand * 2
 
 -- Returns true if it has TF2 hands
 local function HasTF2Hands( pEntity )
@@ -20,11 +19,6 @@ end
 -- Returns true if it has Portal 2 hands
 local function HasP2Hands( pEntity )
 	return pEntity:LookupBone( "wrist_A_L" ) != nil || pEntity:LookupBone( "index_1_L" ) != nil
-end
-
--- Returns true if it has Zeno Clash hands
-local function HasZenoHands( pEntity )
-	return pEntity:LookupBone( "Bip01_L_Hand" ) != nil
 end
 
 local TranslateTable_TF2 = {}
@@ -364,9 +358,7 @@ function TOOL:ApplyValues( pEntity, iHand )
 		local Var = self:GetClientInfo( i )
 		local VecComp = string.Explode( " ", Var )
 
-		local sin = math.sin( CurTime() * 10 ) * 10
-
-		local Ang = nil
+		local Ang
 
 		if ( bP2 ) then
 			if ( i < 3 ) then
@@ -473,8 +465,8 @@ function TOOL:RightClick( trace )
 	local LeftHand, RightHand = self:GetHandPositions( ent )
 	if ( !LeftHand ) then return false end
 
-	local LeftHand = ( LeftHand:GetTranslation() - trace.HitPos ):Length()
-	local RightHand = ( RightHand:GetTranslation() - trace.HitPos ):Length()
+	LeftHand = ( LeftHand:GetTranslation() - trace.HitPos ):Length()
+	RightHand = ( RightHand:GetTranslation() - trace.HitPos ):Length()
 
 	local Hand = 0
 	if ( LeftHand < RightHand ) then
@@ -623,8 +615,6 @@ function TOOL:DrawHUD()
 
 	if ( !IsValid( selected ) ) then return end
 	if ( selected:IsWorld() ) then return end
-
-	local Bone = nil
 
 	local lefthand, righthand = self:GetHandPositions( selected )
 

@@ -231,7 +231,7 @@ function PANEL:Paint( w, h )
 	surface.SetDrawColor( 0, 50, 0, 255 )
 	surface.DrawRect( 5, self:GetTall() - 9, self:GetWide() - 10, 3 )
 
-	local w = self:GetWide() * 0.25
+	w = self:GetWide() * 0.25
 	local x = math.fmod( SysTime() * 200, self:GetWide() + w ) - w
 
 	if ( x + w > self:GetWide() - 11 ) then w = ( self:GetWide() - 11 ) - x end

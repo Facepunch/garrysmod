@@ -185,7 +185,6 @@ end
 function SWEP:Think()
 
 	local vm = self.Owner:GetViewModel()
-	local curtime = CurTime()
 	local idletime = self:GetNextIdle()
 
 	if ( idletime > 0 && CurTime() > idletime ) then

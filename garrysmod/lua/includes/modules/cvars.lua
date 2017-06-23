@@ -1,4 +1,3 @@
-local Msg               = Msg
 local table             = table
 local pairs             = pairs
 local type              = type

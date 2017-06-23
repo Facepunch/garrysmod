@@ -98,9 +98,9 @@ local function Find( ply, command, arguments )
 end
 
 if ( SERVER ) then
-	concommand.Add( "lua_find", Find, _, "", { FCVAR_DONTRECORD } )
-	concommand.Add( "lua_findhooks", Find, _, "", { FCVAR_DONTRECORD } )
+	concommand.Add( "lua_find", Find, nil, "", { FCVAR_DONTRECORD } )
+	concommand.Add( "lua_findhooks", Find, nil, "", { FCVAR_DONTRECORD } )
 else
-	concommand.Add( "lua_find_cl", Find, _, "", { FCVAR_DONTRECORD } )
-	concommand.Add( "lua_findhooks_cl", Find, _, "", { FCVAR_DONTRECORD } )
+	concommand.Add( "lua_find_cl", Find, nil, "", { FCVAR_DONTRECORD } )
+	concommand.Add( "lua_findhooks_cl", Find, nil, "", { FCVAR_DONTRECORD } )
 end

@@ -95,8 +95,6 @@ function TOOL:RightClick( trace )
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
 
-	local iNum = self:NumObjects()
-
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
 
@@ -109,7 +107,7 @@ function TOOL:RightClick( trace )
 		tr.filter[ 2 ] = trace.Entity
 	end
 
-	local tr = util.TraceLine( tr )
+	tr = util.TraceLine( tr )
 	if ( !tr.Hit ) then
 		self:ClearObjects()
 		return

@@ -118,7 +118,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:AddControl( control, data )
 
-	local data = table.LowerKeyNames( data )
+	data = table.LowerKeyNames( data )
 	local original = control
 	control = string.lower( control )
 

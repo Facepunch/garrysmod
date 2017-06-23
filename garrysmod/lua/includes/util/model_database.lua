@@ -83,7 +83,7 @@ end
 -----------------------------------------------------------]]
 function NumModelSkins( ModelName )
 
-	local ModelName = string.lower( ModelName )
+	ModelName = string.lower( ModelName )
 	local safeModelName = SQLStr( ModelName )
 	local num = sql.QueryValue( "SELECT numskins FROM modelinfo WHERE name = " .. safeModelName )
 	if ( num == nil ) then return 0 end

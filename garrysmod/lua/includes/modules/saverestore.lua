@@ -1,14 +1,9 @@
 
 local Msg			= Msg
-local tostring 		= tostring
 local type			= type
 local pairs			= pairs
-local string		= string
 local gmod			= gmod
-local PrintTable	= PrintTable
-local CLIENT		= CLIENT
 local table			= table
-local debug			= debug
 
 
 --[[
@@ -116,7 +111,7 @@ local function IsWritable( k, v )
 	if ( itype == TYPE_NONE ) then return false end
 	if ( itype == TYPE_STRING && k == "SR_Recursion" ) then return false end
 
-	local itype = GetType( v )
+	itype = GetType( v )
 	if ( itype == TYPE_NONE ) then return false end
 		
 	return true

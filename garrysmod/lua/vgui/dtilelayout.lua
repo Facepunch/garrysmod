@@ -50,7 +50,6 @@ end
 
 function PANEL:FindFreeTile( x, y, w, h )
 
-	x = x or 1
 	y = y or 1
 
 	local span = math.floor( ( self:GetWide() - self:GetBorder() * 2 + self:GetSpaceX() ) / ( self:GetBaseSize() + self:GetSpaceX() ) )
@@ -120,7 +119,6 @@ end
 function PANEL:LayoutTiles()
 
 	local StartLine = 1
-	local LastX = 1
 	local tilesize = self:GetBaseSize()
 	local MaxWidth = math.floor( ( self:GetWide() - self:GetBorder() * 2 + self:GetSpaceX() ) / ( tilesize + self:GetSpaceX() ) )
 
@@ -147,9 +145,6 @@ function PANEL:LayoutTiles()
 		if ( v.OwnLine ) then
 			StartLine = y + 1
 		end
-
-		LastX = x
-
 	end
 
 end

@@ -95,8 +95,6 @@ function TOOL:DrawHUD()
 
 	if ( !IsValid( selected ) ) then return end
 
-	local vEyePos = selected:EyePos()
-
 	local eyeattachment = selected:LookupAttachment( "eyes" )
 	if ( eyeattachment == 0 ) then return end
 
@@ -107,11 +105,6 @@ function TOOL:DrawHUD()
 	-- Try to get each eye position.. this is a real guess and won't work on non-humans
 	local Leye = ( attachment.Pos + attachment.Ang:Right() * 1.5 ):ToScreen()
 	local Reye = ( attachment.Pos - attachment.Ang:Right() * 1.5 ):ToScreen()
-
-	-- Work out the side distance to give a rough headsize box..
-	local player_eyes = LocalPlayer():EyeAngles()
-	local side = ( attachment.Pos + player_eyes:Right() * 10 ):ToScreen()
-	local size = 4
 
 	local Owner = self:GetOwner()
 

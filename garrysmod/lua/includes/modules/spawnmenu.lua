@@ -69,7 +69,7 @@ end
 
 function AddToolCategory( tab, RealName, PrintName )
 
-	local tab = GetToolMenu( tab )
+	tab = GetToolMenu( tab )
 
 	-- Does this category already exist?
 	for k, v in ipairs( tab ) do

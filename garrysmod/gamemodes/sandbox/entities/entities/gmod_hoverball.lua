@@ -111,7 +111,6 @@ function ENT:PhysicsSimulate( phys, deltatime )
 	phys:Wake()
 
 	local Pos = phys:GetPos()
-	local Vel = phys:GetVelocity()
 	local Distance = self:GetTargetZ() - Pos.z
 	local AirResistance = self:GetAirResistance()
 

@@ -25,7 +25,6 @@ local widget_bone = {
 		local pp = self:GetParentPos()
 		if ( !pp ) then return end
 
-		local fwd = self:GetAngles():Forward()
 		local len = self:GetSize() / 2
 		local w = len * 0.2
 

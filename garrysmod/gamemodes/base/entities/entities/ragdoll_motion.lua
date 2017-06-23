@@ -6,8 +6,6 @@ ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.Editable = true
 
-local matBone = Material( "widgets/bone.png", "unlitsmooth" )
-
 function ENT:SetupDataTables()
 
 	--

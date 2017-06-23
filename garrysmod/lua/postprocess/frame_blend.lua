@@ -150,7 +150,6 @@ frame_blend.BlendFrame = function()
 
 	render.UpdateScreenEffectTexture()
 
-	local delta = ( NumFramesTaken - padding ) / ( frames - padding * 2 )
 	local curve = FrameCurve( NumFramesTaken - padding, frames-padding * 2 )
 	if ( !curve ) then return end
 

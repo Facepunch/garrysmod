@@ -50,14 +50,6 @@ local function UpdateHovered( pl, mv )
 	if ( tr.Entity:IsWorld() ) then return end
 	if ( !tr.Entity:IsWidget() ) then return end
 
---	debugoverlay.Cross( tr.HitPos, 1, 60 )
-	
-	if ( OldHovered != tr.Entity ) then
-		
-		-- On hover changed? why bother?
-		
-	end
-	
 	pl:SetHoveredWidget( tr.Entity )
 	pl.WidgetHitPos = tr.HitPos
 
