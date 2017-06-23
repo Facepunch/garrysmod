@@ -96,7 +96,7 @@ end
 
 function PANEL:FilterByText( text )
 
-	local text = string.lower( text )
+	text = string.lower( text )
 
 	for k, v in pairs( self.IconLayout:GetChildren() ) do
 

@@ -640,8 +640,8 @@ function Spawn_SENT( player, EntityName, tr )
 
 	end
 
-	local entity = nil
-	local PrintName = nil
+	local entity
+	local PrintName
 	local sent = scripted_ents.GetStored( EntityName )
 
 	if ( sent ) then

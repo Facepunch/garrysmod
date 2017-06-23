@@ -100,33 +100,31 @@ function char( ... )
 			error( "bad argument #" .. k .. " to char (out of range)", 2 )
 		end
 
-		local b1, b2, b3, b4 = nil, nil, nil, nil
-
 		if v < 0x80 then -- Single-byte sequence
 
 			table.insert( buf, string.char( v ) )
 
 		elseif v < 0x800 then -- Two-byte sequence
 
-			b1 = bit.bor( 0xC0, bit.band( bit.rshift( v, 6 ), 0x1F ) )
-			b2 = bit.bor( 0x80, bit.band( v, 0x3F ) )
+			local b1 = bit.bor( 0xC0, bit.band( bit.rshift( v, 6 ), 0x1F ) )
+			local b2 = bit.bor( 0x80, bit.band( v, 0x3F ) )
 
 			table.insert( buf, string.char( b1, b2 ) )
 
 		elseif v < 0x10000 then -- Three-byte sequence
 
-			b1 = bit.bor( 0xE0, bit.band( bit.rshift( v, 12 ), 0x0F ) )
-			b2 = bit.bor( 0x80, bit.band( bit.rshift( v, 6 ), 0x3F ) )
-			b3 = bit.bor( 0x80, bit.band( v, 0x3F ) )
+			local b1 = bit.bor( 0xE0, bit.band( bit.rshift( v, 12 ), 0x0F ) )
+			local b2 = bit.bor( 0x80, bit.band( bit.rshift( v, 6 ), 0x3F ) )
+			local b3 = bit.bor( 0x80, bit.band( v, 0x3F ) )
 
 			table.insert( buf, string.char( b1, b2, b3 ) )
 
 		else -- Four-byte sequence
 
-			b1 = bit.bor( 0xF0, bit.band( bit.rshift( v, 18 ), 0x07 ) )
-			b2 = bit.bor( 0x80, bit.band( bit.rshift( v, 12 ), 0x3F ) )
-			b3 = bit.bor( 0x80, bit.band( bit.rshift( v, 6 ), 0x3F ) )
-			b4 = bit.bor( 0x80, bit.band( v, 0x3F ) )
+			local b1 = bit.bor( 0xF0, bit.band( bit.rshift( v, 18 ), 0x07 ) )
+			local b2 = bit.bor( 0x80, bit.band( bit.rshift( v, 12 ), 0x3F ) )
+			local b3 = bit.bor( 0x80, bit.band( bit.rshift( v, 6 ), 0x3F ) )
+			local b4 = bit.bor( 0x80, bit.band( v, 0x3F ) )
 
 			table.insert( buf, string.char( b1, b2, b3, b4 ) )
 

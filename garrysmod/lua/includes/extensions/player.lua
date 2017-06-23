@@ -19,7 +19,7 @@ function meta:__index( key )
 	--
 	-- Search the entity metatable
 	--
-	local val = entity[key]
+	val = entity[key]
 	if ( val != nil ) then return val end
 
 	--

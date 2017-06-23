@@ -201,10 +201,9 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 	y = y or gui.MouseY()
 
 	local OwnerHeight = 0
-	local OwnerWidth = 0
 
 	if ( ownerpanel ) then
-		OwnerWidth, OwnerHeight = ownerpanel:GetSize()
+		OwnerHeight = ownerpanel:GetTall()
 	end
 
 	self:PerformLayout()

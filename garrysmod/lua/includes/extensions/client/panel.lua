@@ -365,8 +365,8 @@ end
 
 function meta:DistanceFrom( x, y )
 
-	local x = self.x + self:GetWide() * 0.5 - x
-	local y = self.y + self:GetTall() * 0.5 - y
+	x = self.x + self:GetWide() * 0.5 - x
+	y = self.y + self:GetTall() * 0.5 - y
 
 	return math.sqrt( x * x + y * y )
 

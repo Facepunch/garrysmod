@@ -37,18 +37,16 @@ local function DrawWorldTip( tip )
 	
 	local black = Color( 0, 0, 0, 255 )
 	local tipcol = Color( TipColor.r, TipColor.g, TipColor.b, 255 )
-	
-	local x = 0
-	local y = 0
+
 	local padding = 10
 	local offset = 50
-	
+
 	surface.SetFont( "GModWorldtip" )
 	local w, h = surface.GetTextSize( tip.text )
-	
-	x = pos.x - w 
-	y = pos.y - h 
-	
+
+	local x = pos.x - w
+	local y = pos.y - h
+
 	x = x - offset
 	y = y - offset
 
@@ -66,8 +64,7 @@ local function DrawWorldTip( tip )
 	
 	
 	draw.RoundedBox( 8, x-padding, y-padding, w+padding*2, h+padding*2, tipcol )
-	
-	local verts = {}
+
 	verts[1] = { x=x+w/1.5, y=y+h }
 	verts[2] = { x=x+w, y=y+h/2 }
 	verts[3] = { x=pos.x-offset/2, y=pos.y-offset/2 }

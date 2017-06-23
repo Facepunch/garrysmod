@@ -4,7 +4,6 @@ local table = table
 local surface = surface
 local tostring = tostring
 local pairs = pairs
-local Msg = Msg
 local setmetatable = setmetatable
 local math = math
 local utf8 = utf8
@@ -26,7 +25,6 @@ TEXT_ALIGN_BOTTOM	= 4
 -----------------------------------------------------------]]
 local colour_stack = { {r=255,g=255,b=255,a=255} }
 local font_stack = { "DermaDefault" }
-local curtag = nil
 local blocks = {}
 
 local colourmap = {

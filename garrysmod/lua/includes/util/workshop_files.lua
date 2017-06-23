@@ -47,7 +47,8 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC )
 
-		local subscriptions = {}
+		local subscriptions
+
 		if ( isUGC ) then
 			subscriptions = engine.GetUserContent()
 		else

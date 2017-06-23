@@ -236,7 +236,7 @@ function PANEL:OnCursorMoved( x, y )
 	if ( !self.Enabled ) then return end
 	if ( !self.Dragging ) then return end
 
-	local x, y = self:ScreenToLocal( 0, gui.MouseY() )
+	x, y = self:ScreenToLocal( 0, gui.MouseY() )
 
 	-- Uck.
 	y = y - self.btnUp:GetTall()

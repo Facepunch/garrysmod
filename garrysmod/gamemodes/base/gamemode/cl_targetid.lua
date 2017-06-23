@@ -9,17 +9,11 @@ function GM:HUDDrawTargetID()
 	local trace = util.TraceLine( tr )
 	if ( !trace.Hit ) then return end
 	if ( !trace.HitNonWorld ) then return end
-	
-	local text = "ERROR"
+	if ( !trace.Entity:IsPlayer() ) then return end
+
+	local text = trace.Entity:Nick()
 	local font = "TargetID"
-	
-	if ( trace.Entity:IsPlayer() ) then
-		text = trace.Entity:Nick()
-	else
-		return
-		--text = trace.Entity:GetClass()
-	end
-	
+
 	surface.SetFont( font )
 	local w, h = surface.GetTextSize( text )
 	
@@ -44,14 +38,14 @@ function GM:HUDDrawTargetID()
 	draw.SimpleText( text, font, x, y, self:GetTeamColor( trace.Entity ) )
 	
 	y = y + h + 5
-	
-	local text = trace.Entity:Health() .. "%"
-	local font = "TargetIDSmall"
-	
+
+	text = trace.Entity:Health() .. "%"
+	font = "TargetIDSmall"
+
 	surface.SetFont( font )
-	local w, h = surface.GetTextSize( text )
-	local x = MouseX - w / 2
-	
+	w = surface.GetTextSize( text )
+	x = MouseX - w / 2
+
 	draw.SimpleText( text, font, x + 1, y + 1, Color( 0, 0, 0, 120 ) )
 	draw.SimpleText( text, font, x + 2, y + 2, Color( 0, 0, 0, 50 ) )
 	draw.SimpleText( text, font, x, y, self:GetTeamColor( trace.Entity ) )

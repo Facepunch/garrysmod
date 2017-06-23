@@ -39,7 +39,7 @@ end
 
 function PANEL:SetValue( val )
 
-	local val = tonumber( val )
+	val = tonumber( val )
 	if ( val == nil ) then return end
 	if ( val == self:GetFloatValue() ) then return end
 

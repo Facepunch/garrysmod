@@ -218,7 +218,8 @@ function meta:SlideDown( length )
 	self:SetVisible( true )
 	self:SetTall( 0 )
 	
-	local anim = self:SizeTo( -1, height, length )
+
+	self:SizeTo( -1, height, length )
 
 end
 

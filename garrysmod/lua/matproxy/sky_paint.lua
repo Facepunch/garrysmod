@@ -7,6 +7,8 @@ matproxy.Add( {
 
 	bind = function( self, mat, ent )
 
+		local g_SkyPaint = g_SkyPaint
+
 		if ( !IsValid( g_SkyPaint ) ) then return end
 
 		mat:SetVector( "$TOPCOLOR",		g_SkyPaint:GetTopColor() )

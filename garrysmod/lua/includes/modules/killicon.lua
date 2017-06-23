@@ -61,9 +61,9 @@ function GetSize( name )
 	if (t.size) then
 		return t.size.w, t.size.h
 	end
-	
-	local w, h = 0
-	
+
+	local w, h
+
 	if ( t.type == TYPE_FONT ) then
 	
 		surface.SetFont( t.font )

@@ -187,8 +187,8 @@ end
 -----------------------------------------------------------]]
 local function MakeTable( t, nice, indent, done )
 	local str = ""
-	local done = done or {}
-	local indent = indent or 0
+	done = done or {}
+	indent = indent or 0
 	local idt = ""
 	if nice then idt = string.rep( "\t", indent ) end
 	local nl, tab  = "", ""
@@ -251,7 +251,7 @@ end
 -----------------------------------------------------------]]
 function table.Sanitise( t, done )
 
-	local done = done or {}
+	done = done or {}
 	local tbl = {}
 
 	for k, v in pairs ( t ) do
@@ -484,8 +484,6 @@ local function fnPairsSorted( pTable, Index )
 		pTable.__SortedIndex = nil
 		return
 	end
-
-	Index = Index + 1
 
 	return Key, pTable[ Key ]
 

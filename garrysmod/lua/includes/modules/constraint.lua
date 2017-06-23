@@ -247,8 +247,6 @@ function Find( Ent1, Ent2, Type, Bone1, Bone2 )
 
 	if ( !Ent1:GetTable().Constraints ) then return end
 
-	local c = Ent1:GetTable().Constraints
-
 	for k, v in pairs( Ent1:GetTable().Constraints ) do
 
 		if ( v:IsValid() ) then
@@ -293,10 +291,12 @@ end
 ------------------------------------------------------------------------]]
 local function CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, iFixed )
 
-	local minMass = 0
+	local minMass
 
-	if ( Ent1:IsWorld() ) then minMass = Phys2:GetMass()
-	elseif ( Ent2:IsWorld() ) then minMass = Phys1:GetMass()
+	if ( Ent1:IsWorld() ) then
+		minMass = Phys2:GetMass()
+	elseif ( Ent2:IsWorld() ) then
+		minMass = Phys1:GetMass()
 	else
 		minMass = math.min( Phys1:GetMass(), Phys2:GetMass() )
 	end
@@ -490,7 +490,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
 	local WPos1 = Phys1:LocalToWorld( LPos1 )
 	local WPos2 = Phys2:LocalToWorld( LPos2 )
-	local addlength = math.Clamp( addlength or 0, -56756, 56756 )
+	math.Clamp( addlength or 0, -56756, 56756 )
 	local Constraint = nil
 
 	-- Make Constraint
@@ -847,7 +847,6 @@ function AdvBallsocket( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torq
 	local Phys1 = Ent1:GetPhysicsObjectNum( Bone1 )
 	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
 	local WPos1 = Phys1:LocalToWorld( LPos1 )
-	local WPos2 = Phys2:LocalToWorld( LPos2 )
 
 	if ( Phys1 == Phys2 ) then return false end
 
@@ -1257,8 +1256,6 @@ function Winch( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd
 
 	local Phys1 = Ent1:GetPhysicsObjectNum( Bone1 )
 	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
-	local WPos1 = Phys1:LocalToWorld( LPos1 )
-	local WPos2 = Phys2:LocalToWorld( LPos2 )
 
 	if ( Phys1 == Phys2 ) then return false end
 
@@ -1328,8 +1325,6 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 
 	local Phys1 = Ent1:GetPhysicsObjectNum( Bone1 )
 	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
-	local WPos1 = Phys1:LocalToWorld( LPos1 )
-	local WPos2 = Phys2:LocalToWorld( LPos2 )
 
 	if ( Phys1 == Phys2 ) then return false end
 
@@ -1404,8 +1399,6 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 
 	local Phys1 = Ent1:GetPhysicsObjectNum( Bone1 )
 	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
-	local WPos1 = Phys1:LocalToWorld( LPos1 )
-	local WPos2 = Phys2:LocalToWorld( LPos2 )
 
 	if ( Phys1 == Phys2 ) then return false end
 

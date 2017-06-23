@@ -2,7 +2,6 @@
 local cl_drawspawneffect = CreateConVar( "cl_drawspawneffect", "1", { FCVAR_ARCHIVE } )
 
 local matRefract = Material( "models/spawn_effect" )
-local matLight = Material( "models/spawn_effect2" )
 
 function EFFECT:Init( data )
 
@@ -55,13 +54,8 @@ end
 function EFFECT:RenderOverlay( entity )
 
 	local Fraction = ( self.LifeTime - CurTime() ) / self.Time
-	local ColFrac = ( Fraction - 0.5 ) * 2
 
 	Fraction = math.Clamp( Fraction, 0, 1 )
-	ColFrac = math.Clamp( ColFrac, 0, 1 )
-
-	-- Change our model's alpha so the texture will fade out
-	--entity:SetColor( 255, 255, 255, 1 + 254 * (ColFrac) )
 
 	-- Place the camera a tiny bit closer to the entity.
 	-- It will draw a big bigger and we will skip any z buffer problems

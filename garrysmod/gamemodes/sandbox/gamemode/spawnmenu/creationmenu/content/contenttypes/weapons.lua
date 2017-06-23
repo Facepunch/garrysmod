@@ -15,8 +15,6 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, nod
 
 	end
 
-	Weapons = nil
-
 	-- Loop through each category
 	for CategoryName, v in SortedPairs( Categorised ) do
 

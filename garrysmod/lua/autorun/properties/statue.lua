@@ -41,7 +41,7 @@ properties.Add( "statue", {
 
 		for bone = 1, bones-1 do
 
-			local constraint = constraint.Weld( ent, ent, 0, bone, forcelimit )
+			local constraint = constraint.Weld( ent, ent, 0, bone )
 
 			if ( constraint ) then
 

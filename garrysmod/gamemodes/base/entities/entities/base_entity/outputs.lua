@@ -30,7 +30,7 @@ local function FireSingleOutput( output, this, activator, data )
 
 	if ( output.times == 0 ) then return false end
 
-	local entitiesToFire = {}
+	local entitiesToFire
 
 	if ( output.entities == "!activator" ) then
 		entitiesToFire = { activator }

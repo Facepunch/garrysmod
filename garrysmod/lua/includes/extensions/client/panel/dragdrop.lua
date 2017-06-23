@@ -202,15 +202,6 @@ function dragndrop.Think()
 	if ( IsValid( dragndrop.m_DropMenu ) ) then return end
 
 	--
-	-- We're dragging but no mouse buttons are down..
-	-- So force the drop whereever it is!
-	--
-	if ( dragndrop.m_Dragging != nil && !input.IsMouseDown( MOUSE_LEFT ) && !input.IsMouseDown( MOUSE_RIGHT ) ) then
-		--dragndrop.m_Dragging:DragMouseRelease( dragndrop.m_MouseCode )
-		--return
-	end
-
-	--
 	-- We're holding down a panel, watch for start of dragging
 	--
 	if ( IsValid( dragndrop.m_DragWatch ) ) then

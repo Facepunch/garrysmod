@@ -86,9 +86,8 @@ function PLAYER:SetModel()
 	local skin = self.Player:GetInfoNum( "cl_playerskin", 0 )
 	self.Player:SetSkin( skin )
 
-	local groups = self.Player:GetInfo( "cl_playerbodygroups" )
-	if ( groups == nil ) then groups = "" end
-	local groups = string.Explode( " ", groups )
+	local groups = self.Player:GetInfo( "cl_playerbodygroups" ) or ""
+	groups = string.Explode( " ", groups )
 	for k = 0, self.Player:GetNumBodyGroups() - 1 do
 		self.Player:SetBodygroup( k, tonumber( groups[ k + 1 ] ) or 0 )
 	end
@@ -102,10 +101,10 @@ function PLAYER:Spawn()
 
 	BaseClass.Spawn( self )
 
-	local col = self.Player:GetInfo( "cl_playercolor" )
-	self.Player:SetPlayerColor( Vector( col ) )
+	local col = Vector( self.Player:GetInfo( "cl_playercolor" ) )
+	self.Player:SetPlayerColor( col )
 
-	local col = Vector( self.Player:GetInfo( "cl_weaponcolor" ) )
+	col = Vector( self.Player:GetInfo( "cl_weaponcolor" ) )
 	if col:Length() == 0 then
 		col = Vector( 0.001, 0.001, 0.001 )
 	end

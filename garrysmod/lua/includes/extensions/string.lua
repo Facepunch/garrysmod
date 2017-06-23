@@ -333,7 +333,8 @@ end
 
 function string.Comma( number )
 
-	local number, k = tostring( number ), nil
+	local number = tostring( number )
+	local k
 
 	while true do
 		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", "%1,%2" )

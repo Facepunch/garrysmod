@@ -624,15 +624,13 @@ function CreateEntityFromTable( Player, EntTable )
 
 	for iNumber, Key in pairs( EntityClass.Args ) do
 
-		local Arg = nil
-	
 		-- Translate keys from old system
 		if ( Key == "pos" || Key == "position" ) then Key = "Pos" end
 		if ( Key == "ang" || Key == "Ang" || Key == "angle" ) then Key = "Angle" end
 		if ( Key == "model" ) then Key = "Model" end
-		
-		Arg = EntTable[ Key ]
-		
+
+		local Arg = EntTable[ Key ]
+
 		-- Special keys
 		if ( Key == "Data" ) then Arg = EntTable end
 		

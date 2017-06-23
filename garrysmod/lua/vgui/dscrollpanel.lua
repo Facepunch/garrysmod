@@ -96,7 +96,7 @@ function PANEL:ScrollToChild( panel )
 	self:PerformLayout()
 
 	local x, y = self.pnlCanvas:GetChildPosition( panel )
-	local w, h = panel:GetSize()
+	local h = panel:GetTall()
 
 	y = y + h * 0.5
 	y = y - self:GetTall() * 0.5
@@ -109,12 +109,11 @@ function PANEL:PerformLayout()
 
 	local Tall = self.pnlCanvas:GetTall()
 	local Wide = self:GetWide()
-	local YPos = 0
 
 	self:Rebuild()
 
 	self.VBar:SetUp( self:GetTall(), self.pnlCanvas:GetTall() )
-	YPos = self.VBar:GetOffset()
+	local YPos = self.VBar:GetOffset()
 
 	if ( self.VBar.Enabled ) then Wide = Wide - self.VBar:GetWide() end
 

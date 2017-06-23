@@ -185,7 +185,7 @@ end
 --
 function ENT:FindSpots( tbl )
 
-	local tbl = tbl or {}
+	tbl = tbl or {}
 
 	tbl.pos			= tbl.pos			or self:WorldSpaceCenter()
 	tbl.radius		= tbl.radius		or 1000
@@ -281,7 +281,7 @@ end
 --
 function ENT:MoveToPos( pos, options )
 
-	local options = options or {}
+	options = options or {}
 
 	local path = Path( "Follow" )
 	path:SetMinLookAheadDistance( options.lookahead or 300 )
