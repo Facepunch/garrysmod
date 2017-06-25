@@ -1,8 +1,8 @@
 
-if ( SERVER ) then return end
+if (SERVER) then return end
 
-local meta = FindMetaTable( "Entity" )
-if ( !meta ) then return end
+local meta = FindMetaTable("Entity")
+if (not meta) then return end
 
 
 --
@@ -13,5 +13,5 @@ if ( !meta ) then return end
 -- Set them to nil if you don't want to override anything.
 --
 
-AccessorFunc( meta, "m_RenderAngles", "RenderAngles" )
-AccessorFunc( meta, "m_RenderOrigin", "RenderOrigin" )
+AccessorFunc(meta, "m_RenderAngles", "RenderAngles")
+AccessorFunc(meta, "m_RenderOrigin", "RenderOrigin")

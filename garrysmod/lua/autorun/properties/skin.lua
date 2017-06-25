@@ -6,19 +6,19 @@ properties.Add( "skin", {
 	Order = 601,
 	MenuIcon = "icon16/picture_edit.png",
 
-	Filter = function( self, ent, ply )
+	Filter = function(self, ent, ply)
 
-		if ( !IsValid( ent ) ) then return false end
-		if ( ent:IsPlayer() ) then return false end
-		if ( !gamemode.Call( "CanProperty", ply, "skin", ent ) ) then return false end
-		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end  -- If our ent has an attached entity, we want to modify its skin instead
-		if ( !ent:SkinCount() ) then return false end
+		if (not IsValid( ent)) then return false end
+		if (ent:IsPlayer()) then return false end
+		if (not gamemode.Call( "CanProperty", ply, "skin", ent)) then return false end
+		if (IsValid( ent.AttachedEntity)) then ent = ent.AttachedEntity end  -- If our ent has an attached entity, we want to modify its skin instead
+		if (not ent:SkinCount()) then return false end
 
 		return ent:SkinCount() > 1
 
 	end,
 
-	MenuOpen = function( self, option, ent, tr )
+	MenuOpen = function(self, option, ent, tr)
 
 		--
 		-- Add a submenu to our automatically created menu option
@@ -28,45 +28,45 @@ properties.Add( "skin", {
 		--
 		-- Create a check item for each skin
 		--
-		local target = IsValid( ent.AttachedEntity ) and ent.AttachedEntity or ent
+		local target = IsValid(ent.AttachedEntity) and ent.AttachedEntity or ent
 
 		local num = target:SkinCount()
 
 		for i = 0, num - 1 do
 
-			local option = submenu:AddOption( "Skin " .. i, function() self:SetSkin( ent, i ) end )
-			if ( target:GetSkin() == i ) then
-				option:SetChecked( true )
+			local option = submenu:AddOption("Skin " .. i, function() self:SetSkin( ent, i) end)
+			if (target:GetSkin() == i) then
+				option:SetChecked(true)
 			end
 
 		end
 
 	end,
 
-	Action = function( self, ent )
+	Action = function(self, ent)
 
 		-- Nothing - we use SetSkin below
 
 	end,
 
-	SetSkin = function( self, ent, id )
+	SetSkin = function(self, ent, id)
 
 		self:MsgStart()
-			net.WriteEntity( ent )
-			net.WriteUInt( id, 8 )
+			net.WriteEntity(ent)
+			net.WriteUInt(id, 8)
 		self:MsgEnd()
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function(self, length, player)
 
 		local ent = net.ReadEntity()
-		local skinid = net.ReadUInt( 8 )
+		local skinid = net.ReadUInt(8)
 
-		if ( !self:Filter( ent, player ) ) then return end
+		if (not self:Filter( ent, player)) then return end
 
-		ent = IsValid( ent.AttachedEntity ) and ent.AttachedEntity or ent
-		ent:SetSkin( skinid )
+		ent = IsValid(ent.AttachedEntity) and ent.AttachedEntity or ent
+		ent:SetSkin(skinid)
 
 	end
 

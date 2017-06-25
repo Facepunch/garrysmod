@@ -1,12 +1,12 @@
 
-hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
+hook.Add("PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node)
 
 	-- Get a list of available NPCs
-	local NPCList = list.Get( "NPC" )
+	local NPCList = list.Get("NPC")
 
 	-- Categorize them
 	local Categories = {}
-	for k, v in pairs( NPCList ) do
+	for k, v in pairs(NPCList) do
 
 		local Category = v.Category or "Other"
 		local Tab = Categories[ Category ] or {}
@@ -18,23 +18,23 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
 	end
 
 	-- Create an icon for each one and put them on the panel
-	for CategoryName, v in SortedPairs( Categories ) do
+	for CategoryName, v in SortedPairs(Categories) do
 
 		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, "icon16/monkey.png" )
+		local node = tree:AddNode(CategoryName, "icon16/monkey.png")
 
 		-- When we click on the node - populate it using this function
-		node.DoPopulate = function( self )
+		node.DoPopulate = function(self)
 
 			-- If we've already populated it - forget it.
-			if ( self.PropPanel ) then return end
+			if (self.PropPanel) then return end
 
 			-- Create the container panel
-			self.PropPanel = vgui.Create( "ContentContainer", pnlContent )
-			self.PropPanel:SetVisible( false )
-			self.PropPanel:SetTriggerSpawnlistChange( false )
+			self.PropPanel = vgui.Create("ContentContainer", pnlContent)
+			self.PropPanel:SetVisible(false)
+			self.PropPanel:SetTriggerSpawnlistChange(false)
 
-			for name, ent in SortedPairsByMemberValue( v, "Name" ) do
+			for name, ent in SortedPairsByMemberValue(v, "Name") do
 
 				spawnmenu.CreateContentIcon( "npc", self.PropPanel, {
 					nicename	= ent.Name or name,
@@ -49,18 +49,18 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
 		end
 
 		-- If we click on the node populate it and switch to it.
-		node.DoClick = function( self )
+		node.DoClick = function(self)
 
 			self:DoPopulate()
-			pnlContent:SwitchPanel( self.PropPanel )
+			pnlContent:SwitchPanel(self.PropPanel)
 
 		end
 
 	end
 
 	-- Select the first node
-	local FirstNode = tree:Root():GetChildNode( 0 )
-	if ( IsValid( FirstNode ) ) then
+	local FirstNode = tree:Root():GetChildNode( 0)
+	if (IsValid( FirstNode)) then
 		FirstNode:InternalDoClick()
 	end
 
@@ -68,8 +68,8 @@ end )
 
 spawnmenu.AddCreationTab( "#spawnmenu.category.npcs", function()
 
-	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
-	ctrl:CallPopulateHook( "PopulateNPCs" )
+	local ctrl = vgui.Create("SpawnmenuContentPanel")
+	ctrl:CallPopulateHook("PopulateNPCs")
 	return ctrl
 
 end, "icon16/monkey.png", 20 )

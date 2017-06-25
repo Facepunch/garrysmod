@@ -1309,7 +1309,7 @@ entity
 	"id" "179"
 	"classname" "ttt_game_text"
 	"color" "255 255 0"
-	"message" "YOU ARE A DETECTIVE!"
+	"message" "YOU ARE A DETECTIVEnot "
 	"targetname" "showresult_pass"
 	"origin" "-80.2829 -352 -224"
 	editor
@@ -1560,7 +1560,7 @@ entity
 {
 	"id" "410"
 	"classname" "ttt_traitor_button"
-	"description" "Oh Bad King, grant me ye credits!"
+	"description" "Oh Bad King, grant me ye creditsnot "
 	"origin" "-74.74 272 -256"
 	"RemoveOnPress" "0"
 	"spawnflags" "0"

@@ -63,85 +63,85 @@ local ScaleXZ = {
 	"bip_forearm_R",
 }
 
-local function GetNiceBoneScale( name, scale )
+local function GetNiceBoneScale(name, scale)
 
-	if ( table.HasValue( ScaleYZ, name ) || string.find( name:lower(), "leg" ) || string.find( name:lower(), "arm" ) ) then
-		return Vector( 0, scale, scale )
+	if (table.HasValue( ScaleYZ, name) or string.find( name:lower(), "leg") or string.find( name:lower(), "arm")) then
+		return Vector(0, scale, scale)
 	end
 
-	if ( table.HasValue( ScaleXZ, name ) ) then
-		return Vector( scale, 0, scale )
+	if (table.HasValue( ScaleXZ, name)) then
+		return Vector(scale, 0, scale)
 	end
 
-	return Vector( scale, scale, scale )
+	return Vector(scale, scale, scale)
 
 end
 
 --Scale the specified bone by Scale
-local function ScaleBone( ent, bone, scale, type )
-	if ( !bone || CLIENT ) then return false end
+local function ScaleBone(ent, bone, scale, type)
+	if (not bone or CLIENT) then return false end
 
-	local physBone = ent:TranslateBoneToPhysBone( bone )
+	local physBone = ent:TranslateBoneToPhysBone(bone)
 	for i = 0, ent:GetBoneCount() do
 
-		if ( ent:TranslateBoneToPhysBone( i ) != physBone ) then continue end
+		if (ent:TranslateBoneToPhysBone( i) ~= physBone) then continue end
 
 		-- Some bones are scaled only in certain directions (like legs don't scale on length)
-		local v = GetNiceBoneScale( ent:GetBoneName( i ), scale ) * 0.1
-		local TargetScale = ent:GetManipulateBoneScale( i ) + v * 0.1
+		local v = GetNiceBoneScale(ent:GetBoneName( i), scale) * 0.1
+		local TargetScale = ent:GetManipulateBoneScale(i) + v * 0.1
 
-		if ( TargetScale.x < 0 ) then TargetScale.x = 0 end
-		if ( TargetScale.y < 0 ) then TargetScale.y = 0 end
-		if ( TargetScale.z < 0 ) then TargetScale.z = 0 end
+		if (TargetScale.x < 0) then TargetScale.x = 0 end
+		if (TargetScale.y < 0) then TargetScale.y = 0 end
+		if (TargetScale.z < 0) then TargetScale.z = 0 end
 
-		ent:ManipulateBoneScale( i, TargetScale )
+		ent:ManipulateBoneScale(i, TargetScale)
 	end
 
 end
 
 --Scale UP
-function TOOL:LeftClick( trace, scale )
+function TOOL:LeftClick(trace, scale)
 
-	if ( !IsValid( trace.Entity ) ) then return false end
-	if ( !trace.Entity:IsNPC() && trace.Entity:GetClass() != "prop_ragdoll" /*&& !trace.Entity:IsPlayer()*/ ) then return false end
+	if (not IsValid( trace.Entity)) then return false end
+	if (not trace.Entity:IsNPC() and trace.Entity:GetClass() ~= "prop_ragdoll" /*and not trace.Entity:IsPlayer()*/) then return false end
 
-	local bone = trace.Entity:TranslatePhysBoneToBone( trace.PhysicsBone )
-	ScaleBone( trace.Entity, bone, scale or 1 )
-	self:GetWeapon():SetNextPrimaryFire( CurTime() + 0.01 )
+	local bone = trace.Entity:TranslatePhysBoneToBone(trace.PhysicsBone)
+	ScaleBone(trace.Entity, bone, scale or 1)
+	self:GetWeapon():SetNextPrimaryFire( CurTime() + 0.01)
 
 	local effectdata = EffectData()
-	effectdata:SetOrigin( trace.HitPos )
-	util.Effect( "inflator_magic", effectdata )
+	effectdata:SetOrigin(trace.HitPos)
+	util.Effect("inflator_magic", effectdata)
 
 	return false
 
 end
 
 -- Scale DOWN
-function TOOL:RightClick( trace )
+function TOOL:RightClick(trace)
 
-	return self:LeftClick( trace, -1 )
+	return self:LeftClick(trace, -1)
 
 end
 
 -- Reset scaling
-function TOOL:Reload( trace )
+function TOOL:Reload(trace)
 
-	if ( !IsValid( trace.Entity ) ) then return false end
-	if ( !trace.Entity:IsNPC() && trace.Entity:GetClass() != "prop_ragdoll" /*&& !trace.Entity:IsPlayer()*/ ) then return false end
+	if (not IsValid( trace.Entity)) then return false end
+	if (not trace.Entity:IsNPC() and trace.Entity:GetClass() ~= "prop_ragdoll" /*and not trace.Entity:IsPlayer()*/) then return false end
 
-	if ( CLIENT ) then return true end
+	if (CLIENT) then return true end
 
 	for i = 0, trace.Entity:GetBoneCount() do
-		trace.Entity:ManipulateBoneScale( i, Vector( 1, 1, 1 ) )
+		trace.Entity:ManipulateBoneScale(i, Vector( 1, 1, 1))
 	end
 
 	return true
 
 end
 
-function TOOL.BuildCPanel( CPanel )
+function TOOL.BuildCPanel(CPanel)
 
-	CPanel:AddControl( "Header", { Description = "#tool.inflator.desc" } )
+	CPanel:AddControl("Header", { Description = "#tool.inflator.desc" })
 
 end

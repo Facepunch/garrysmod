@@ -16,15 +16,15 @@ L.round_minplayers = "Não há jogadores suficientes para começar uma nova roda
 L.round_voting     = "Voto em andamento, atrasando nova rodada em {num} segundos..."
 L.round_begintime  = "Uma nova rodada começa em {num} segundos. Preparem-se."
 L.round_selected   = "Os Traidores foram escolhidos."
-L.round_started    = "Uma nova rodada começou!"
+L.round_started    = "Uma nova rodada começounot "
 L.round_restart    = "A rodada foi forçada a reiniciar por um admin."
 
 L.round_traitors_one  = "Traidor, você é um assassino solitário."
 L.round_traitors_more = "Traidor, estes são seus alliados: {names}"
 
 L.win_time         = "O tempo acabou. Os Traidores perderam."
-L.win_traitor      = "Traidores venceram!"
-L.win_innocent     = "Traidores foram derrotados!"
+L.win_traitor      = "Traidores venceramnot "
+L.win_innocent     = "Traidores foram derrotadosnot "
 L.win_showreport   = "Veremos os resultados da rodada por {num} segundos."
 
 L.limit_round      = "Limite de rodadas alcançado. {mapname} será carregado logo."
@@ -38,24 +38,24 @@ L.credit_tr_all    = "Traidores, vocês foram recompensados com {num} crédito(s
 L.credit_kill      = "Você ganhou {num} crédito(s) por matar um {role}."
 
 --- Karma
-L.karma_dmg_full   = "Seu Karma é {amount}, então você receberá dano normalmente!"
+L.karma_dmg_full   = "Seu Karma é {amount}, então você receberá dano normalmentenot "
 L.karma_dmg_other  = "Seu Karma é {amount}. Portanto, todo dano que receber será reduzido em {num}%."
 
 --- Body identification messages
 L.body_found       = "{finder} achou o corpo de {victim}. {role}"
 
 -- The {role} in body_found will be replaced by one of the following:
-L.body_found_t     = "Ele era um Traidor!"
+L.body_found_t     = "Ele era um Traidornot "
 L.body_found_d     = "Ele era um Detetive."
 L.body_found_i     = "Ele era inocente."
 
 L.body_confirm     = "{finder} confirmou a morte de {victim}."
 
-L.body_call        = "{player} chamou o Detetive para investigar o corpo de {victim}!"
-L.body_call_error  = "Você deve confirmar a morte de um jogador antes de chamar um Detetive!"
+L.body_call        = "{player} chamou o Detetive para investigar o corpo de {victim}not "
+L.body_call_error  = "Você deve confirmar a morte de um jogador antes de chamar um Detetivenot "
 
-L.body_burning     = "Wow! Esse corpo está pegando fogo!"
-L.body_credits     = "Você achou {num} crédito(s) no corpo!"
+L.body_burning     = "Wownot  Esse corpo está pegando fogonot "
+L.body_credits     = "Você achou {num} crédito(s) no corponot "
 
 --- Menus and windows
 L.close = "Fechar"
@@ -93,7 +93,7 @@ L.equip_confirm    = "Comprar equipamento"
 -- Disguiser tab in equipment menu
 L.disg_name      = "Disfarçar-se"
 L.disg_menutitle = "Controle do Disfarce"
-L.disg_not_owned = "Você não está carregando um Disfarce!"
+L.disg_not_owned = "Você não está carregando um Disfarcenot "
 L.disg_enable    = "Habilitar Disfarce"
 
 L.disg_help1     = "Quando o Disfarce está hablilitado, seu nome, saúde e karma não são mostrados quando alguém te olha. Em adição, você será escondido do radar do Detetive."
@@ -102,16 +102,16 @@ L.disg_help2     = "Aperte Numpad+Enter para alternar o uso do disfarce sem abri
 -- Radar tab in equipment menu
 L.radar_name      = "Radar"
 L.radar_menutitle = "Controle do Radar"
-L.radar_not_owned = "Você não carrega um Radar!"
+L.radar_not_owned = "Você não carrega um Radarnot "
 L.radar_scan      = "Procurar"
 L.radar_auto      = "Fazer scan automaticamente"
 L.radar_help      = "Resultados são mostrados por {num} segundos, depois o Radar precisa recarregar para ser usado novamente."
-L.radar_charging  = "Seu Radar ainda está carregando!"
+L.radar_charging  = "Seu Radar ainda está carregandonot "
 
 -- Transfer tab in equipment menu
 L.xfer_name       = "Transferir"
 L.xfer_menutitle  = "Transferir créditos"
-L.xfer_no_credits = "Você não tem créditos para dar!"
+L.xfer_no_credits = "Você não tem créditos para darnot "
 L.xfer_send       = "Enviar créditos"
 L.xfer_help       = "Você só pode doar créditos para {role} companheiros."
 
@@ -141,18 +141,18 @@ L.radio_button_steps   = "Passos"
 
 
 -- Intro screen shown after joining
-L.intro_help     = "Se você é novato, aperte F1 para instruções!"
+L.intro_help     = "Se você é novato, aperte F1 para instruçõesnot "
 
 -- Radiocommands/quickchat
 L.quick_title   = "Atalhos do chat"
 
 L.quick_yes     = "Sim."
 L.quick_no      = "Não."
-L.quick_help    = "Socorro!"
+L.quick_help    = "Socorronot "
 L.quick_imwith  = "Estou com {player}."
 L.quick_see     = "Eu vejo {player}."
 L.quick_suspect = "{player} está agindo de maneira suspeita."
-L.quick_traitor = "{player} é um Traidor!"
+L.quick_traitor = "{player} é um Traidornot "
 L.quick_inno    = "{player} é um Inocente."
 L.quick_check   = "Alguém vivo?"
 
@@ -173,7 +173,7 @@ L.search_call   = "Chamar detetive"
 -- Descriptions of pieces of information found
 L.search_nick   = "Este é o corpo de {player}."
 
-L.search_role_t = "Esta pessoa era um Traidor!"
+L.search_role_t = "Esta pessoa era um Traidornot "
 L.search_role_d = "Esta pessoa era um Detetive."
 L.search_role_i = "Esta pessoa era Inocente."
 
@@ -191,7 +191,7 @@ L.search_dmg_club   = "Este corpo está com muitos ferimentos. Claramente foi es
 L.search_dmg_drown  = "O corpo revela sinais de afogamento."
 L.search_dmg_stab   = "Ele foi esfaqueado antes de sangrar até a morte."
 L.search_dmg_burn   = "Cheiro de terrorista assado por aqui..."
-L.search_dmg_tele   = "Parece que o DNA foi embaralhado por causa de emissões de táquion!"
+L.search_dmg_tele   = "Parece que o DNA foi embaralhado por causa de emissões de táquionnot "
 L.search_dmg_car    = "Quando atravessou a estrada, foi atropelado por um barbeiro."
 L.search_dmg_other  = "Não foi possível identificar uma provável causa da morte."
 
@@ -281,9 +281,9 @@ L.buy_no_stock    = "Esta arma está fora de estoque, você já a comprou nessa 
 L.buy_pending     = "Você já tem um pedido em andamento, espere sua encomenda chegar para pedir uma nova."
 L.buy_received    = "Você recebeu um equipamento especial."
 
-L.drop_no_room    = "Não há espaço para jogar esta arma fora!"
+L.drop_no_room    = "Não há espaço para jogar esta arma foranot "
 
-L.disg_turned_on  = "Disfarce habilitado!"
+L.disg_turned_on  = "Disfarce habilitadonot "
 L.disg_turned_off = "Disfarce desabilitado."
 
 -- Equipment item descriptions
@@ -311,7 +311,7 @@ L.item_disg_desc  = [[
 Esconde sua identificação e quando você
 foi 'a última pessoa vista' se habilitado.
 
-Habilite o uso na aba Disfarce 
+Habilite o uso na aba Disfarce
 deste menu ou aperte Numpad+Enter.]]
 
 -- C4
@@ -337,9 +337,9 @@ L.c4_remove_destroy2 = "Confirmar: destruir"
 L.c4_disarm       = "Desarmar C4"
 L.c4_disarm_cut   = "Clique para cortar o fio {num}"
 
-L.c4_disarm_t     = "Corte um fio para desarmar a bomba. Como Traidor, todos os fios são seguros. Já para inocentes não é tão fácil!"
+L.c4_disarm_t     = "Corte um fio para desarmar a bomba. Como Traidor, todos os fios são seguros. Já para inocentes não é tão fácilnot "
 L.c4_disarm_owned = "Corte um fio para desarmar a bomba. A bomba é sua, qualquer fio irá desarmá-la."
-L.c4_disarm_other = "Corte um fio seguro para desarmar a bomba. Explodirá se você escolher o fio errado!"
+L.c4_disarm_other = "Corte um fio seguro para desarmar a bomba. Explodirá se você escolher o fio erradonot "
 
 L.c4_status_armed    = "ARMADA"
 L.c4_status_disarmed = "DESARMADA"
@@ -354,13 +354,13 @@ L.vis_desc        = [[
 Dispositivo que analisa a cena do crime.
 
 Analisa o cadáver e mostra como
-a vítima foi morta, mas só se 
+a vítima foi morta, mas só se
 morreu a tiros.]]
 
 -- Decoy
 L.decoy_name      = "Isca"
 L.decoy_no_room   = "Você não pode carregar essa isca."
-L.decoy_broken    = "Suca isca foi destruída!"
+L.decoy_broken    = "Suca isca foi destruídanot "
 
 L.decoy_help_pri  = "{primaryfire} plantar isca."
 
@@ -392,7 +392,7 @@ estranho.]]
 -- Health station
 L.hstation_name   = "Estação de Cura"
 L.hstation_hint   = "Aperte {usekey} para ser curado. Carga: {num}."
-L.hstation_broken = "Sua Estação de Cura foi destruída!"
+L.hstation_broken = "Sua Estação de Cura foi destruídanot "
 L.hstation_help   = "{primaryfire} coloca Estação de Cura."
 
 L.hstation_desc   = [[
@@ -421,7 +421,7 @@ A energia causa dano em pessoas
 próximas.]]
 
 -- Radio
-L.radio_broken    = "Seu Rádio foi destruído!"
+L.radio_broken    = "Seu Rádio foi destruídonot "
 L.radio_help_pri  = "{primaryfire} coloca o Rádio."
 
 L.radio_desc      = [[
@@ -473,9 +473,9 @@ L.dna_identify    = "O cadáver deve ser identificado para mostrar o DNA do assa
 L.dna_notfound    = "Nenhuma amostra de DNA no corpo."
 L.dna_limit       = "Tempo de armazenamento alcançado. Remova velhas amostras para colocar novas."
 L.dna_decayed     = "Amostra de DNA do assassino foi perdida."
-L.dna_killer      = "Coletou uma amostra de DNA do assassino deste cadáver!"
+L.dna_killer      = "Coletou uma amostra de DNA do assassino deste cadávernot "
 L.dna_no_killer   = "O DNA não pôde ser revelado (assassino desconectou-se?)."
-L.dna_armed       = "Essa bomba tá viva! Disarme primeiro!"
+L.dna_armed       = "Essa bomba tá vivanot  Disarme primeironot "
 L.dna_object      = "Coletada(s) {num} amostra(s) de DNA deste objeto."
 L.dna_gone        = "Não há DNA nessa área."
 
@@ -523,12 +523,12 @@ L.tele_name       = "Teletransporte"
 L.tele_failed     = "Teletransporte falhou."
 L.tele_marked     = "Local de teletransporte marcado."
 
-L.tele_no_ground  = "Não pode teletransportar-se a não ser que esteja em chão firme!"
-L.tele_no_crouch  = "Não pode teletransportar-se agachado!"
+L.tele_no_ground  = "Não pode teletransportar-se a não ser que esteja em chão firmenot "
+L.tele_no_crouch  = "Não pode teletransportar-se agachadonot "
 L.tele_no_mark    = "Nenhum local marcado. Determine um local para teletransportar-se."
 
-L.tele_no_mark_ground = "Não pode marcar lugar, não é chão firme!"
-L.tele_no_mark_crouch = "Não pode marcar lugar enquanto agachado!"
+L.tele_no_mark_ground = "Não pode marcar lugar, não é chão firmenot "
+L.tele_no_mark_crouch = "Não pode marcar lugar enquanto agachadonot "
 
 L.tele_help_pri   = "{primaryfire} teletransporta para local marcado."
 L.tele_help_sec   = "{secondaryfire} marca local de teletransporte."
@@ -587,7 +587,7 @@ L.target_unid  = "Corpo não identificado"
 L.target_traitor = "TRAIDOR ALIADO"
 L.target_detective = "DETETIVE"
 
-L.target_credits = "Olhe corpos para ver se tem créditos não gastos!"
+L.target_credits = "Olhe corpos para ver se tem créditos não gastosnot "
 
 -- Traitor buttons (HUD buttons with hand icons that only traitors can see)
 L.tbut_single  = "Uso único"
@@ -609,7 +609,7 @@ L.mute_off     = "Ninguém mutado"
 L.punch_title  = "SOCÔMETRO"
 L.punch_help   = "Movimentar-se ou pular: soca objeto. Agachar: solta objeto."
 L.punch_bonus  = "Sua pontuação ruim diminuiu seu limite do Socômetro em {num}"
-L.punch_malus  = "Sua boa pontuação aumentou seu limite do Socômetro em {num}!"
+L.punch_malus  = "Sua boa pontuação aumentou seu limite do Socômetro em {num}not "
 
 L.spec_help    = "Clique para observar jogadores, ou aperte {usekey} em um objeto para possuí-lo."
 
@@ -617,30 +617,30 @@ L.spec_help    = "Clique para observar jogadores, ou aperte {usekey} em um objet
 
 -- These are spread over multiple lines, hence the square brackets instead of
 -- quotes. That's a Lua thing. Every line break (enter) will show up in-game.
-L.info_popup_innocent = [[Você é um Terrorista inocente! Mas há Traidores à solta...
+L.info_popup_innocent = [[Você é um Terrorista inocentenot  Mas há Traidores à solta...
 Em quem confiar, e quem está por aí para te encher de balas?
 
-Cuidado e trabalhe em conjunto com seus camaradas e saiam dessa vivos!]]
+Cuidado e trabalhe em conjunto com seus camaradas e saiam dessa vivosnot ]]
 
-L.info_popup_detective = [[Você é um Detetive! O QG de Terroristas te deu recursos especiais para achar os traidores.
+L.info_popup_detective = [[Você é um Detetivenot  O QG de Terroristas te deu recursos especiais para achar os traidores.
 Use-os para ajudar os inocentes a sobreviver, mas tenha cuidado:
-os Traidores podem estar querendo te derrubar primeiro!
+os Traidores podem estar querendo te derrubar primeironot
 
-Aperte {menukey} para pegar seu equipamento!]]
+Aperte {menukey} para pegar seu equipamentonot ]]
 
-L.info_popup_traitor_alone = [[Você é um TRAIDOR! Não tem comparsas nessa rodada.
+L.info_popup_traitor_alone = [[Você é um TRAIDORnot  Não tem comparsas nessa rodada.
 
-Mate todos os outros para ganhar!
+Mate todos os outros para ganharnot
 
-Aperte {menukey} para pegar seu equipamento especial!]]
+Aperte {menukey} para pegar seu equipamento especialnot ]]
 
-L.info_popup_traitor = [[Você é um TRAIDOR! Trabalhe com seus comparsas para mator todos.
+L.info_popup_traitor = [[Você é um TRAIDORnot  Trabalhe com seus comparsas para mator todos.
 Seja cuidadoso, sua traição pode ser descoberta...
 
 Esses são seus aliados:
 {traitorlist}
 
-Aperte {menukey} para pegar seu equipamento especial!]]
+Aperte {menukey} para pegar seu equipamento especialnot ]]
 
 --- Various other text
 L.name_kick = "Um jogador foi automaticamente expulso por mudar seu nome durante uma rodada."
@@ -652,7 +652,7 @@ Você pode sair desse modo apertando {helpkey} e desmarcando o modo Somente-Espe
 L.idle_popup_close = "Fazer nada."
 L.idle_popup_off   = "Desabilitar modo Somente-Espectador agora."
 
-L.idle_warning = "Aviso: você parece estar ausente/AFK, e será feito de espectador se não mostrar atividade!"
+L.idle_warning = "Aviso: você parece estar ausente/AFK, e será feito de espectador se não mostrar atividadenot "
 
 L.spec_mode_warning = "Você está no modo Espectador e não renascerá no começo de novas rodadas. Para desabilitar, aperte F1, vá para Configurações e desmarque a opção 'modo Somente-Espectador'."
 
@@ -685,11 +685,11 @@ L.tip9 = "O Poltergeist pode tornar um objeto comum em um projétil mortal. Cada
 
 L.tip10 = "Como Traidor ou Detetive, fique de olho em mensagens vermelhas no topo da tela. São importantes para você."
 
-L.tip11 = "Como Traidor ou Detetive, tenha em mente que será recompensado com créditos se você e seus companheiros agirem corretamente. Lembre-se de gastá-los!"
+L.tip11 = "Como Traidor ou Detetive, tenha em mente que será recompensado com créditos se você e seus companheiros agirem corretamente. Lembre-se de gastá-losnot "
 
-L.tip12 = "O Scanner de DNA do Detetive pode coletar amostras em armas e itens e então usadas para saber onde está o jogador que as usou por último. Útil quando pega amostra em cadáveres e C4 desarmadas!"
+L.tip12 = "O Scanner de DNA do Detetive pode coletar amostras em armas e itens e então usadas para saber onde está o jogador que as usou por último. Útil quando pega amostra em cadáveres e C4 desarmadasnot "
 
-L.tip13 = "Quando perto de alguém que matou, um pouco do seu DNA é deixado no cadáver. Este DNA pode ser usado com DNA Scanner para encontrar a sua localização atual. Melhor esconder o corpo depois de esfaquear alguém!"
+L.tip13 = "Quando perto de alguém que matou, um pouco do seu DNA é deixado no cadáver. Este DNA pode ser usado com DNA Scanner para encontrar a sua localização atual. Melhor esconder o corpo depois de esfaquear alguémnot "
 
 L.tip14 = "Quanto mais longe você estiver de alguém que você mata, mais rápido a amostra de DNA no corpo da vítima vai decair."
 
@@ -765,8 +765,8 @@ L.report_save_error  = "Sem Log de Eventos para salvar."
 L.report_save_result = "O Log de Eventos foi salvo em:"
 
 -- Big title window
-L.hilite_win_traitors = "TRAIDORES VENCEM!"
-L.hilite_win_innocent = "INOCENTES VENCEM!"
+L.hilite_win_traitors = "TRAIDORES VENCEMnot "
+L.hilite_win_innocent = "INOCENTES VENCEMnot "
 
 L.hilite_players1 = "{numplayers} participaram, {numtraitors} eram Traidores"
 L.hilite_players2 = "{numplayers} participaram, um deles era Traidor"
@@ -837,9 +837,9 @@ L.ev_c4_disarm2  = "{player} falhou ao desarmar a C4 plantada por {owner}"
 L.ev_credit      = "{finder} achou {num} crédito(s) no cadáver de {player}"
 
 L.ev_start       = "A rodada começou"
-L.ev_win_traitor = "Os ignóbeis traidores ganharam a rodada!"
-L.ev_win_inno    = "Os amáveis terroristas inocentes ganharam a rodada!"
-L.ev_win_time    = "Os traidores ficaram sem tempo e perderam!"
+L.ev_win_traitor = "Os ignóbeis traidores ganharam a rodadanot "
+L.ev_win_inno    = "Os amáveis terroristas inocentes ganharam a rodadanot "
+L.ev_win_time    = "Os traidores ficaram sem tempo e perderamnot "
 
 --- Awards/highlights
 
@@ -873,8 +873,8 @@ L.aw_all1_text  = "foi responsável pela morte de todos os inocentes nessa rodad
 L.aw_all2_title = "Lobo Solitário"
 L.aw_all2_text  = "foi responsável pela morte de todos os traidores nessa rodada."
 
-L.aw_nkt1_title = "Peguei um Chefe!"
-L.aw_nkt1_text  = "conseguiu matar um inocente. Parabéns!"
+L.aw_nkt1_title = "Peguei um Chefenot "
+L.aw_nkt1_text  = "conseguiu matar um inocente. Parabénsnot "
 
 L.aw_nkt2_title = "Uma Bala pra Dois"
 L.aw_nkt2_text  = "mostrou que não foi um tiro de sorte por matar outro."
@@ -888,7 +888,7 @@ L.aw_nkt4_text  = "comeu inocentes terroristas no jantar. Um jantar de {num} pra
 L.aw_nkt5_title = "Operação Contra-Terrorista"
 L.aw_nkt5_text  = "é pago por cada assassinato. Agora pode comprar outro iate luxuoso."
 
-L.aw_nki1_title = "Traia isto!"
+L.aw_nki1_title = "Traia istonot "
 L.aw_nki1_text  = "achou um Traidor. Atirou num Traidor. Fácil."
 
 L.aw_nki2_title = "Aplicado no Esquadrão Justiça"
@@ -993,7 +993,7 @@ L.aw_msx2_text  = "sabe derrubar um alvo com M16, marcando {num} mortes."
 L.aw_tkl1_title = "Ops"
 L.aw_tkl1_text  = "apertou no gatilho enquanto mirava em um companheiro."
 
-L.aw_tkl2_title = "Duas vezes ops!"
+L.aw_tkl2_title = "Duas vezes opsnot "
 L.aw_tkl2_text  = "pensou que eram Traidores duas vezes, estava errado em ambas."
 
 L.aw_tkl3_title = "Karma Consciente"
@@ -1018,12 +1018,12 @@ L.aw_brn2_title = "Piromaníaco"
 L.aw_brn2_text  = "foi ouvida altas risadas depois de queimar uma de suas muitas vítimas."
 
 L.aw_brn3_title = "Derrapagem Pirra"
-L.aw_brn3_text  = "queimou todos, mas agora está sem Granadas Incendiárias! E agora!?"
+L.aw_brn3_text  = "queimou todos, mas agora está sem Granadas Incendiáriasnot  E agoranot ?"
 
 L.aw_fnd1_title = "Médico Legista"
 L.aw_fnd1_text  = "achou {num} corpos por aí."
 
-L.aw_fnd2_title = "Temos que pegar você!"
+L.aw_fnd2_title = "Temos que pegar vocênot "
 L.aw_fnd2_text  = "achou {num} cadáveres para sua coleção."
 
 L.aw_fnd3_title = "Cheiro de Morte"

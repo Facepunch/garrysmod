@@ -74,7 +74,7 @@ local use_key = Key("+use", "USE")
 local GetTranslation = LANG.GetTranslation
 local GetPTranslation = LANG.GetParamTranslation
 function TBHUD:Draw(client)
-   if self.buttons_count != 0 then
+   if self.buttons_count ~= 0 then
       surface.SetTexture(tbut_normal)
 
       -- we're doing slowish distance computation here, so lots of probably

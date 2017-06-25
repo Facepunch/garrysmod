@@ -14,7 +14,7 @@ CreateConVar("ttt_killer_dna_range", "550")
 CreateConVar("ttt_killer_dna_basetime", "100")
 
 -- First spawn on the server
-function GM:PlayerInitialSpawn( ply )
+function GM:PlayerInitialSpawn(ply)
    if not GAMEMODE.cvar_init then
       GAMEMODE:InitCvars()
    end
@@ -30,7 +30,7 @@ function GM:PlayerInitialSpawn( ply )
    end
 
    -- Game has started, tell this guy where the round is at
-   if rstate != ROUND_WAIT then
+   if rstate ~= ROUND_WAIT then
       SendRoundState(rstate, ply)
       SendConfirmedTraitors(ply)
       SendDetectiveList(ply)
@@ -43,7 +43,7 @@ function GM:PlayerInitialSpawn( ply )
    end
 end
 
-function GM:NetworkIDValidated( name, steamid )
+function GM:NetworkIDValidated(name, steamid)
    -- edge case where player authed after initspawn
    for _, p in pairs(player.GetAll()) do
       if IsValid(p) and p:SteamID() == steamid and p.delay_karma_recall then
@@ -91,7 +91,7 @@ function GM:PlayerSpawn(ply)
    SCORE:HandleSpawn(ply)
 end
 
-function GM:PlayerSetHandsModel( pl, ent )
+function GM:PlayerSetHandsModel(pl, ent)
    local simplemodel = player_manager.TranslateToPlayerModelName(pl:GetModel())
    local info = player_manager.TranslatePlayerHands(simplemodel)
    if info then
@@ -111,7 +111,7 @@ function GM:IsSpawnpointSuitable(ply, spwn, force, rigged)
 
    if not util.IsInWorld(pos) then return false end
 
-   local blocking = ents.FindInBox(pos + Vector( -16, -16, 0 ), pos + Vector( 16, 16, 64 ))
+   local blocking = ents.FindInBox(pos + Vector( -16, -16, 0), pos + Vector( 16, 16, 64))
 
    for k, p in pairs(blocking) do
       if IsValid(p) and p:IsPlayer() and p:IsTerror() and p:Alive() then
@@ -196,7 +196,7 @@ function GM:PlayerSelectSpawn(ply)
 
    local num = table.Count(self.SpawnPoints)
    if num == 0 then
-      Error("No spawn entity found!\n")
+      Error("No spawn entity foundnot \n")
       return
    end
 
@@ -265,7 +265,7 @@ function GM:TTTPlayerSetColor(ply)
       -- you tell players apart.
       clr = GAMEMODE.playercolor
    end
-   ply:SetPlayerColor( Vector( clr.r/255.0, clr.g/255.0, clr.b/255.0 ) )
+   ply:SetPlayerColor(Vector( clr.r/255.0, clr.g/255.0, clr.b/255.0))
 end
 
 
@@ -437,7 +437,7 @@ function GM:PlayerDisconnected(ply)
       ply:SetRole(ROLE_NONE)
    end
 
-   if GetRoundState() != ROUND_PREP then
+   if GetRoundState() ~= ROUND_PREP then
       -- Keep traitor entindices in sync on traitor clients
       SendTraitorList(GetTraitorFilter(false), nil)
 
@@ -502,7 +502,7 @@ end
 
 -- See if we should award credits now
 local function CheckCreditAward(victim, attacker)
-   if GetRoundState() != ROUND_ACTIVE then return end
+   if GetRoundState() ~= ROUND_ACTIVE then return end
    if not IsValid(victim) then return end
 
    -- DETECTIVE AWARD
@@ -523,7 +523,7 @@ local function CheckCreditAward(victim, attacker)
       local inno_alive = 0
       local inno_dead = 0
       local inno_total = 0
-      
+
       for _, ply in pairs(player.GetAll()) do
          if not ply:GetTraitor() then
             if ply:IsTerror() then
@@ -723,7 +723,7 @@ function GM:SpectatorThink(ply)
    end
 
    -- when speccing a player
-   if ply:GetObserverMode() != OBS_MODE_ROAMING and (not ply.propspec) and (not ply:GetRagdollSpec()) then
+   if ply:GetObserverMode() ~= OBS_MODE_ROAMING and (not ply.propspec) and (not ply:GetRagdollSpec()) then
       local tgt = ply:GetObserverTarget()
       if IsValid(tgt) and tgt:IsPlayer() then
          if (not tgt:IsTerror()) or (not tgt:Alive()) then
@@ -966,7 +966,7 @@ function GM:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
          -- if we already blamed this on a pusher, no need to do more
          -- else we override whatever was in was_pushed with info pointing
          -- at our damage owner
-         if push.att != owner then
+         if push.att ~= owner then
             owner_time = owner_time or CurTime()
 
             push.att = owner
@@ -1032,7 +1032,7 @@ function GM:PlayerTakeDamage(ent, infl, att, amount, dmginfo)
    util.StartBleeding(ent, dmginfo:GetDamage(), 5)
 
    -- general actions for pvp damage
-   if ent != att and IsValid(att) and att:IsPlayer() and GetRoundState() == ROUND_ACTIVE and math.floor(dmginfo:GetDamage()) > 0 then
+   if ent ~= att and IsValid(att) and att:IsPlayer() and GetRoundState() == ROUND_ACTIVE and math.floor(dmginfo:GetDamage()) > 0 then
 
       -- scale everything to karma damage factor except the knife, because it
       -- assumes a kill
@@ -1099,7 +1099,7 @@ function GM:Tick()
          end
 
          -- Run DNA Scanner think also when it is not deployed
-         if IsValid(ply.scanner_weapon) and wep != ply.scanner_weapon then
+         if IsValid(ply.scanner_weapon) and wep ~= ply.scanner_weapon then
             ply.scanner_weapon:Think()
          end
       elseif tm == TEAM_SPEC then

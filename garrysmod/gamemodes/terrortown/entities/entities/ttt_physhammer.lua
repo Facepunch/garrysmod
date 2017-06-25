@@ -32,7 +32,7 @@ function ENT:Initialize()
 end
 
 function ENT:StickTo(ent)
-   if (not IsValid(ent)) or ent:IsPlayer() or ent:GetMoveType() != MOVETYPE_VPHYSICS then return false end
+   if (not IsValid(ent)) or ent:IsPlayer() or ent:GetMoveType() ~= MOVETYPE_VPHYSICS then return false end
 
    local phys = ent:GetPhysicsObject()
    if (not IsValid(phys)) or (not phys:IsMoveable()) then return false end

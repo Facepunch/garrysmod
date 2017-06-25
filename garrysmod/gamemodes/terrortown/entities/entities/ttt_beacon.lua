@@ -68,7 +68,7 @@ function ENT:OnTakeDamage(dmginfo)
       sound.Play(zapsound, self:GetPos())
 
       if IsValid(self:GetOwner()) then
-         TraitorMsg(self:GetOwner(), "ONE OF YOUR BEACONS HAS BEEN DESTROYED!")
+         TraitorMsg(self:GetOwner(), "ONE OF YOUR BEACONS HAS BEEN DESTROYEDnot ")
       end
    end
 end

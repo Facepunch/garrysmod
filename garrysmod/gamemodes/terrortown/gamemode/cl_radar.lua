@@ -74,7 +74,7 @@ local function DrawTarget(tgt, size, offset, no_shrink)
 
    scrpos.x = math.Clamp(scrpos.x, sz, ScrW() - sz)
    scrpos.y = math.Clamp(scrpos.y, sz, ScrH() - sz)
-   
+
    if IsOffScreen(scrpos) then return end
 
    surface.DrawTexturedRect(scrpos.x - sz, scrpos.y - sz, sz * 2, sz * 2)
@@ -122,7 +122,7 @@ function RADAR:Draw(client)
    surface.SetFont("HudSelectionText")
 
    -- C4 warnings
-   if self.bombs_count != 0 and client:IsActiveTraitor() then
+   if self.bombs_count ~= 0 and client:IsActiveTraitor() then
       surface.SetTexture(c4warn)
       surface.SetTextColor(200, 55, 55, 220)
       surface.SetDrawColor(255, 255, 255, 200)
@@ -144,7 +144,7 @@ function RADAR:Draw(client)
    end
 
    -- Samples
-   if self.samples_count != 0 then
+   if self.samples_count ~= 0 then
       surface.SetTexture(sample_scan)
       surface.SetTextColor(200, 50, 50, 255)
       surface.SetDrawColor(255, 255, 255, 240)

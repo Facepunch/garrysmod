@@ -1,45 +1,45 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_pMother", "Mother" )
+AccessorFunc(PANEL, "m_pMother", "Mother")
 
 function PANEL:Init()
 
-	self:SetMouseInputEnabled( true )
-	self:SetTextInset( 5, 0 )
-	self:SetTall( 19 )
-	self:SetDark( true )
+	self:SetMouseInputEnabled(true)
+	self:SetTextInset(5, 0)
+	self:SetTall(19)
+	self:SetDark(true)
 
 end
 
-function PANEL:OnMousePressed( mcode )
+function PANEL:OnMousePressed(mcode)
 
-	if ( mcode == MOUSE_LEFT ) then
-		self:Select( true )
+	if (mcode == MOUSE_LEFT) then
+		self:Select(true)
 	end
 
-	self:SetTextColor( Color( 0, 0, 0, 255 ) )
+	self:SetTextColor(Color( 0, 0, 0, 255))
 end
 
-function PANEL:Paint( w, h )
-	if ( self.m_pMother:GetSelectedValues() == self:GetText() ) then
-		draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 128, 255, 200 ) )
-	elseif ( self.Hovered ) then
-		draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 128, 255, 128 ) )
+function PANEL:Paint(w, h)
+	if (self.m_pMother:GetSelectedValues() == self:GetText()) then
+		draw.RoundedBox(0, 0, 0, w, h, Color( 0, 128, 255, 200))
+	elseif (self.Hovered) then
+		draw.RoundedBox(0, 0, 0, w, h, Color( 0, 128, 255, 128))
 	end
 end
 
-function PANEL:OnCursorMoved( x, y )
+function PANEL:OnCursorMoved(x, y)
 
-	if ( input.IsMouseDown( MOUSE_LEFT ) ) then
-		self:Select( false )
+	if (input.IsMouseDown( MOUSE_LEFT)) then
+		self:Select(false)
 	end
 
 end
 
-function PANEL:Select( bOnlyMe )
+function PANEL:Select(bOnlyMe)
 
-	self.m_pMother:SelectItem( self, bOnlyMe )
+	self.m_pMother:SelectItem(self, bOnlyMe)
 
 	self:DoClick()
 
@@ -51,10 +51,10 @@ function PANEL:DoClick()
 
 end
 
-function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
+function PANEL:GenerateExample(ClassName, PropertySheet, Width, Height)
 end
 
-derma.DefineControl( "DListBoxItem", "", PANEL, "DLabel" )
+derma.DefineControl("DListBoxItem", "", PANEL, "DLabel")
 
 --[[---------------------------------------------------------
 	DListBox
@@ -62,18 +62,18 @@ derma.DefineControl( "DListBoxItem", "", PANEL, "DLabel" )
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_bSelectMultiple", "Multiple", FORCE_BOOL )
-AccessorFunc( PANEL, "SelectedItems", "SelectedItems" )	-- All selected in a table
+AccessorFunc(PANEL, "m_bSelectMultiple", "Multiple", FORCE_BOOL)
+AccessorFunc(PANEL, "SelectedItems", "SelectedItems")	-- All selected in a table
 
-Derma_Hook( PANEL, "Paint", "Paint", "ListBox" )
+Derma_Hook(PANEL, "Paint", "Paint", "ListBox")
 
 function PANEL:Init()
 
-	self:SetMultiple( true )
-	self:EnableHorizontal( false )
-	self:EnableVerticalScrollbar( true )
+	self:SetMultiple(true)
+	self:EnableHorizontal(false)
+	self:EnableVerticalScrollbar(true)
 
-	self:SetPadding( 1 )
+	self:SetPadding(1)
 
 	self.SelectedItems = {}
 
@@ -82,17 +82,17 @@ end
 function PANEL:Clear()
 
 	self.SelectedItems = {}
-	DPanelList.Clear( self, true )
+	DPanelList.Clear(self, true)
 
 end
 
-function PANEL:AddItem( strLabel )
+function PANEL:AddItem(strLabel)
 
-	local item = vgui.Create( "DListBoxItem", self )
-	item:SetMother( self )
-	item:SetText( strLabel )
+	local item = vgui.Create("DListBoxItem", self)
+	item:SetMother(self)
+	item:SetText(strLabel)
 
-	DPanelList.AddItem( self, item )
+	DPanelList.AddItem(self, item)
 
 	return item
 
@@ -103,13 +103,13 @@ function PANEL:Rebuild()
 	local Offset = 0
 
 	local x, y = self.Padding, self.Padding
-	for k, panel in pairs( self.Items ) do
+	for k, panel in pairs(self.Items) do
 
 		local w = panel:GetWide()
 		local h = panel:GetTall()
 
-		panel:SetPos( self.Padding, y )
-		panel:SetWide( self:GetCanvas():GetWide() - self.Padding * 2 )
+		panel:SetPos(self.Padding, y)
+		panel:SetWide(self:GetCanvas():GetWide() - self.Padding * 2)
 
 		x = x + w + self.Spacing
 
@@ -119,19 +119,19 @@ function PANEL:Rebuild()
 
 	end
 
-	self:GetCanvas():SetTall( Offset + (self.Padding * 2) - self.Spacing )
+	self:GetCanvas():SetTall( Offset + (self.Padding * 2) - self.Spacing)
 
 end
 
-function PANEL:SelectItem( item, onlyme )
+function PANEL:SelectItem(item, onlyme)
 
-	if ( !onlyme && item:IsSelected() ) then return end
+	if (not onlyme and item:IsSelected()) then return end
 
 	-- Unselect old items
-	if ( onlyme || !self.m_bSelectMultiple ) then
+	if (onlyme or not self.m_bSelectMultiple) then
 
-		for k, v in pairs( self.SelectedItems ) do
-			v:SetSelected( false )
+		for k, v in pairs(self.SelectedItems) do
+			v:SetSelected(false)
 		end
 
 		self.SelectedItems = {}
@@ -139,20 +139,20 @@ function PANEL:SelectItem( item, onlyme )
 
 	end
 
-	if ( self.OnSelect ) then self:OnSelect( item ) end
+	if (self.OnSelect) then self:OnSelect( item) end
 
 	self.m_pSelected = item
-	item:SetSelected( true )
-	table.insert( self.SelectedItems, item )
+	item:SetSelected(true)
+	table.insert(self.SelectedItems, item)
 
 end
 
-function PANEL:SelectByName( strName )
+function PANEL:SelectByName(strName)
 
-	for k, panel in pairs( self.Items ) do
+	for k, panel in pairs(self.Items) do
 
-		if ( panel:GetValue() == strName ) then
-			self:SelectItem( panel, true )
+		if (panel:GetValue() == strName) then
+			self:SelectItem(panel, true)
 		return end
 
 	end
@@ -163,13 +163,13 @@ function PANEL:GetSelectedValues()
 
 	local items = self:GetSelectedItems()
 
-	if ( #items > 1 ) then
+	if (#items > 1) then
 
 		local ret = {}
-		for _, v in pairs( items ) do table.insert( ret, v:GetValue() ) end
+		for _, v in pairs(items) do table.insert( ret, v:GetValue()) end
 		return ret
 
-	elseif ( #items == 1 ) then
+	elseif (#items == 1) then
 
 		return items[1]:GetValue()
 
@@ -177,18 +177,18 @@ function PANEL:GetSelectedValues()
 
 end
 
-function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
+function PANEL:GenerateExample(ClassName, PropertySheet, Width, Height)
 
-	local ctrl = vgui.Create( ClassName )
-	ctrl:AddItem( "Bread" )
-	ctrl:AddItem( "Carrots" )
-	ctrl:AddItem( "Toilet Paper" )
-	ctrl:AddItem( "Air Freshner" )
-	ctrl:AddItem( "Shovel" )
-	ctrl:SetSize( 100, 300 )
+	local ctrl = vgui.Create(ClassName)
+	ctrl:AddItem("Bread")
+	ctrl:AddItem("Carrots")
+	ctrl:AddItem("Toilet Paper")
+	ctrl:AddItem("Air Freshner")
+	ctrl:AddItem("Shovel")
+	ctrl:SetSize(100, 300)
 
-	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
+	PropertySheet:AddSheet(ClassName, ctrl, nil, true, true)
 
 end
 
-derma.DefineControl( "DListBox", "", PANEL, "DPanelList" )
+derma.DefineControl("DListBox", "", PANEL, "DPanelList")

@@ -3,13 +3,13 @@ local PANEL = {}
 
 function PANEL:Init()
 
-	self.Label = vgui.Create( "DLabel", self )
-	self.Label:SetText( "" )
-	self.Label:SetDark( true )
+	self.Label = vgui.Create("DLabel", self)
+	self.Label:SetText("")
+	self.Label:SetDark(true)
 
 end
 
-function PANEL:SetConVar( cvar )
+function PANEL:SetConVar(cvar)
 	self.ConVarValue = cvar
 end
 
@@ -17,18 +17,18 @@ function PANEL:ConVar()
 	return self.ConVarValue
 end
 
-function PANEL:ControlValues( kv )
+function PANEL:ControlValues(kv)
 
-	self:SetConVar( kv.convar or "" )
-	self.Label:SetText( kv.label or "" )
+	self:SetConVar(kv.convar or "")
+	self.Label:SetText(kv.label or "")
 
 end
 
 function PANEL:PerformLayout()
 
 	local y = 5
-	self.Label:SetPos( 5, y )
-	self.Label:SetWide( self:GetWide() )
+	self.Label:SetPos(5, y)
+	self.Label:SetWide(self:GetWide())
 
 	y = y + self.Label:GetTall()
 	y = y + 5
@@ -46,7 +46,7 @@ end
 
 function PANEL:Think()
 
-	if ( self.NextPoll && self.NextPoll > CurTime() ) then return end
+	if (self.NextPoll and self.NextPoll > CurTime()) then return end
 
 	self.NextPoll = CurTime() + 0.1
 
@@ -54,4 +54,4 @@ function PANEL:Think()
 
 end
 
-vgui.Register( "ContextBase", PANEL, "Panel" )
+vgui.Register("ContextBase", PANEL, "Panel")

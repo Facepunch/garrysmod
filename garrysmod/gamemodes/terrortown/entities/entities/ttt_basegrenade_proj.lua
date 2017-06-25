@@ -27,7 +27,7 @@ end
 
 
 function ENT:SetDetonateTimer(length)
-   self:SetDetonateExact( CurTime() + length )
+   self:SetDetonateExact(CurTime() + length)
 end
 
 function ENT:SetDetonateExact(t)
@@ -36,12 +36,12 @@ end
 
 -- override to describe what happens when the nade explodes
 function ENT:Explode(tr)
-   ErrorNoHalt("ERROR: BaseGrenadeProjectile explosion code not overridden!\n")
+   ErrorNoHalt("ERROR: BaseGrenadeProjectile explosion code not overriddennot \n")
 end
 
 function ENT:Think()
    local etime = self:GetExplodeTime() or 0
-   if etime != 0 and etime < CurTime() then
+   if etime ~= 0 and etime < CurTime() then
       -- if thrower disconnects before grenade explodes, just don't explode
       if SERVER and (not IsValid(self:GetThrower())) then
          self:Remove()

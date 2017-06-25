@@ -1,91 +1,91 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_bBorder",			"DrawBorder" )
-AccessorFunc( PANEL, "m_bDeleteSelf",		"DeleteSelf" )
-AccessorFunc( PANEL, "m_iMinimumWidth",		"MinimumWidth" )
-AccessorFunc( PANEL, "m_bDrawColumn",		"DrawColumn" )
-AccessorFunc( PANEL, "m_iMaxHeight",		"MaxHeight" )
+AccessorFunc(PANEL, "m_bBorder",			"DrawBorder")
+AccessorFunc(PANEL, "m_bDeleteSelf",		"DeleteSelf")
+AccessorFunc(PANEL, "m_iMinimumWidth",		"MinimumWidth")
+AccessorFunc(PANEL, "m_bDrawColumn",		"DrawColumn")
+AccessorFunc(PANEL, "m_iMaxHeight",		"MaxHeight")
 
-AccessorFunc( PANEL, "m_pOpenSubMenu",		"OpenSubMenu" )
+AccessorFunc(PANEL, "m_pOpenSubMenu",		"OpenSubMenu")
 
 function PANEL:Init()
 
-	self:SetIsMenu( true )
-	self:SetDrawBorder( true )
-	self:SetPaintBackground( true )
-	self:SetMinimumWidth( 100 )
-	self:SetDrawOnTop( true )
-	self:SetMaxHeight( ScrH() * 0.9 )
-	self:SetDeleteSelf( true )
+	self:SetIsMenu(true)
+	self:SetDrawBorder(true)
+	self:SetPaintBackground(true)
+	self:SetMinimumWidth(100)
+	self:SetDrawOnTop(true)
+	self:SetMaxHeight(ScrH() * 0.9)
+	self:SetDeleteSelf(true)
 
-	self:SetPadding( 0 )
+	self:SetPadding(0)
 
 	-- Automatically remove this panel when menus are to be closed
-	RegisterDermaMenuForClose( self )
+	RegisterDermaMenuForClose(self)
 
 end
 
-function PANEL:AddPanel( pnl )
+function PANEL:AddPanel(pnl)
 
-	self:AddItem( pnl )
+	self:AddItem(pnl)
 	pnl.ParentMenu = self
 
 end
 
-function PANEL:AddOption( strText, funcFunction )
+function PANEL:AddOption(strText, funcFunction)
 
-	local pnl = vgui.Create( "DMenuOption", self )
-	pnl:SetMenu( self )
-	pnl:SetText( strText )
-	if ( funcFunction ) then pnl.DoClick = funcFunction end
+	local pnl = vgui.Create("DMenuOption", self)
+	pnl:SetMenu(self)
+	pnl:SetText(strText)
+	if (funcFunction) then pnl.DoClick = funcFunction end
 
-	self:AddPanel( pnl )
-
-	return pnl
-
-end
-
-function PANEL:AddCVar( strText, convar, on, off, funcFunction )
-
-	local pnl = vgui.Create( "DMenuOptionCVar", self )
-	pnl:SetMenu( self )
-	pnl:SetText( strText )
-	if ( funcFunction ) then pnl.DoClick = funcFunction end
-
-	pnl:SetConVar( convar )
-	pnl:SetValueOn( on )
-	pnl:SetValueOff( off )
-
-	self:AddPanel( pnl )
+	self:AddPanel(pnl)
 
 	return pnl
 
 end
 
-function PANEL:AddSpacer( strText, funcFunction )
+function PANEL:AddCVar(strText, convar, on, off, funcFunction)
 
-	local pnl = vgui.Create( "DPanel", self )
-	pnl.Paint = function( p, w, h )
-		derma.SkinHook( "Paint", "MenuSpacer", p, w, h )
+	local pnl = vgui.Create("DMenuOptionCVar", self)
+	pnl:SetMenu(self)
+	pnl:SetText(strText)
+	if (funcFunction) then pnl.DoClick = funcFunction end
+
+	pnl:SetConVar(convar)
+	pnl:SetValueOn(on)
+	pnl:SetValueOff(off)
+
+	self:AddPanel(pnl)
+
+	return pnl
+
+end
+
+function PANEL:AddSpacer(strText, funcFunction)
+
+	local pnl = vgui.Create("DPanel", self)
+	pnl.Paint = function(p, w, h)
+		derma.SkinHook("Paint", "MenuSpacer", p, w, h)
 	end
 
-	pnl:SetTall( 1 )
-	self:AddPanel( pnl )
+	pnl:SetTall(1)
+	self:AddPanel(pnl)
 
 	return pnl
 
 end
 
-function PANEL:AddSubMenu( strText, funcFunction )
+function PANEL:AddSubMenu(strText, funcFunction)
 
-	local pnl = vgui.Create( "DMenuOption", self )
-	local SubMenu = pnl:AddSubMenu( strText, funcFunction )
+	local pnl = vgui.Create("DMenuOption", self)
+	local SubMenu = pnl:AddSubMenu(strText, funcFunction)
 
-	pnl:SetText( strText )
-	if ( funcFunction ) then pnl.DoClick = funcFunction end
+	pnl:SetText(strText)
+	if (funcFunction) then pnl.DoClick = funcFunction end
 
-	self:AddPanel( pnl )
+	self:AddPanel(pnl)
 
 	return SubMenu, pnl
 
@@ -94,50 +94,50 @@ end
 function PANEL:Hide()
 
 	local openmenu = self:GetOpenSubMenu()
-	if ( openmenu ) then
+	if (openmenu) then
 		openmenu:Hide()
 	end
 
-	self:SetVisible( false )
-	self:SetOpenSubMenu( nil )
+	self:SetVisible(false)
+	self:SetOpenSubMenu(nil)
 
 end
 
-function PANEL:OpenSubMenu( item, menu )
+function PANEL:OpenSubMenu(item, menu)
 
 	-- Do we already have a menu open?
 	local openmenu = self:GetOpenSubMenu()
-	if ( IsValid( openmenu ) ) then
+	if (IsValid( openmenu)) then
 
-		-- Don't open it again!
-		if ( menu && openmenu == menu ) then return end
+		-- Don't open it againnot
+		if (menu and openmenu == menu) then return end
 
-		-- Close it!
-		self:CloseSubMenu( openmenu )
+		-- Close itnot
+		self:CloseSubMenu(openmenu)
 
 	end
 
-	if ( !IsValid( menu ) ) then return end
+	if (not IsValid( menu)) then return end
 
-	local x, y = item:LocalToScreen( self:GetWide(), 0 )
-	menu:Open( x - 3, y, false, item )
+	local x, y = item:LocalToScreen(self:GetWide(), 0)
+	menu:Open(x - 3, y, false, item)
 
-	self:SetOpenSubMenu( menu )
+	self:SetOpenSubMenu(menu)
 
 end
 
-function PANEL:CloseSubMenu( menu )
+function PANEL:CloseSubMenu(menu)
 
 	menu:Hide()
-	self:SetOpenSubMenu( nil )
+	self:SetOpenSubMenu(nil)
 
 end
 
-function PANEL:Paint( w, h )
+function PANEL:Paint(w, h)
 
-	if ( !self:GetPaintBackground() ) then return end
+	if (not self:GetPaintBackground()) then return end
 
-	derma.SkinHook( "Paint", "Menu", self, w, h )
+	derma.SkinHook("Paint", "Menu", self, w, h)
 	return true
 
 end
@@ -146,7 +146,7 @@ function PANEL:ChildCount()
 	return #self:GetCanvas():GetChildren()
 end
 
-function PANEL:GetChild( num )
+function PANEL:GetChild(num)
 	return self:GetCanvas():GetChildren()[ num ]
 end
 
@@ -155,34 +155,34 @@ function PANEL:PerformLayout()
 	local w = self:GetMinimumWidth()
 
 	-- Find the widest one
-	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
+	for k, pnl in pairs(self:GetCanvas():GetChildren()) do
 
 		pnl:PerformLayout()
-		w = math.max( w, pnl:GetWide() )
+		w = math.max(w, pnl:GetWide())
 
 	end
 
-	self:SetWide( w )
+	self:SetWide(w)
 
 	local y = 0 -- for padding
 
-	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
+	for k, pnl in pairs(self:GetCanvas():GetChildren()) do
 
-		pnl:SetWide( w )
-		pnl:SetPos( 0, y )
-		pnl:InvalidateLayout( true )
+		pnl:SetWide(w)
+		pnl:SetPos(0, y)
+		pnl:InvalidateLayout(true)
 
 		y = y + pnl:GetTall()
 
 	end
 
-	y = math.min( y, self:GetMaxHeight() )
+	y = math.min(y, self:GetMaxHeight())
 
-	self:SetTall( y )
+	self:SetTall(y)
 
-	derma.SkinHook( "Layout", "Menu", self )
+	derma.SkinHook("Layout", "Menu", self)
 
-	DScrollPanel.PerformLayout( self )
+	DScrollPanel.PerformLayout(self)
 
 end
 
@@ -191,11 +191,11 @@ end
 	x and y are optional, if they're not provided the menu
 		will appear at the cursor.
 -----------------------------------------------------------]]
-function PANEL:Open( x, y, skipanimation, ownerpanel )
+function PANEL:Open(x, y, skipanimation, ownerpanel)
 
-	RegisterDermaMenuForClose( self )
+	RegisterDermaMenuForClose(self)
 
-	local maunal = x && y
+	local maunal = x and y
 
 	x = x or gui.MouseX()
 	y = y or gui.MouseY()
@@ -203,7 +203,7 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 	local OwnerHeight = 0
 	local OwnerWidth = 0
 
-	if ( ownerpanel ) then
+	if (ownerpanel) then
 		OwnerWidth, OwnerHeight = ownerpanel:GetSize()
 	end
 
@@ -212,36 +212,36 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 	local w = self:GetWide()
 	local h = self:GetTall()
 
-	self:SetSize( w, h )
+	self:SetSize(w, h)
 
-	if ( y + h > ScrH() ) then y = ( ( maunal && ScrH() ) or ( y + OwnerHeight ) ) - h end
-	if ( x + w > ScrW() ) then x = ( ( maunal && ScrW() ) or x ) - w end
-	if ( y < 1 ) then y = 1 end
-	if ( x < 1 ) then x = 1 end
+	if (y + h > ScrH()) then y = ( ( maunal and ScrH()) or ( y + OwnerHeight)) - h end
+	if (x + w > ScrW()) then x = ( ( maunal and ScrW()) or x) - w end
+	if (y < 1) then y = 1 end
+	if (x < 1) then x = 1 end
 
-	self:SetPos( x, y )
+	self:SetPos(x, y)
 
-	-- Popup!
+	-- Popupnot
 	self:MakePopup()
 
-	-- Make sure it's visible!
-	self:SetVisible( true )
+	-- Make sure it's visiblenot
+	self:SetVisible(true)
 
 	-- Keep the mouse active while the menu is visible.
-	self:SetKeyboardInputEnabled( false )
+	self:SetKeyboardInputEnabled(false)
 
 end
 
 --
 -- Called by DMenuOption
 --
-function PANEL:OptionSelectedInternal( option )
+function PANEL:OptionSelectedInternal(option)
 
-	self:OptionSelected( option, option:GetText() )
+	self:OptionSelected(option, option:GetText())
 
 end
 
-function PANEL:OptionSelected( option, text )
+function PANEL:OptionSelected(option, text)
 
 	-- For override
 
@@ -249,47 +249,47 @@ end
 
 function PANEL:ClearHighlights()
 
-	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
+	for k, pnl in pairs(self:GetCanvas():GetChildren()) do
 		pnl.Highlight = nil
 	end
 
 end
 
-function PANEL:HighlightItem( item )
+function PANEL:HighlightItem(item)
 
-	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
-		if ( pnl == item ) then
+	for k, pnl in pairs(self:GetCanvas():GetChildren()) do
+		if (pnl == item) then
 			pnl.Highlight = true
 		end
 	end
 
 end
 
-function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
+function PANEL:GenerateExample(ClassName, PropertySheet, Width, Height)
 
 	local MenuItemSelected = function()
-		Derma_Message( "Choosing a menu item worked!" )
+		Derma_Message("Choosing a menu item workednot ")
 	end
 
-	local ctrl = vgui.Create( "Button" )
-	ctrl:SetText( "Test Me!" )
+	local ctrl = vgui.Create("Button")
+	ctrl:SetText("Test Menot ")
 	ctrl.DoClick = function()
 		local menu = DermaMenu()
 
-		menu:AddOption( "Option One", MenuItemSelected )
-		menu:AddOption( "Option 2", MenuItemSelected )
+		menu:AddOption("Option One", MenuItemSelected)
+		menu:AddOption("Option 2", MenuItemSelected)
 
-		local submenu = menu:AddSubMenu( "Option Free" )
-		submenu:AddOption( "Submenu 1", MenuItemSelected )
-		submenu:AddOption( "Submenu 2", MenuItemSelected )
+		local submenu = menu:AddSubMenu("Option Free")
+		submenu:AddOption("Submenu 1", MenuItemSelected)
+		submenu:AddOption("Submenu 2", MenuItemSelected)
 
-		menu:AddOption( "Option For", MenuItemSelected )
+		menu:AddOption("Option For", MenuItemSelected)
 
 		menu:Open()
 	end
 
-	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
+	PropertySheet:AddSheet(ClassName, ctrl, nil, true, true)
 
 end
 
-derma.DefineControl( "DMenu", "A Menu", PANEL, "DScrollPanel" )
+derma.DefineControl("DMenu", "A Menu", PANEL, "DScrollPanel")

@@ -55,7 +55,7 @@ local function CopyDmg(dmg)
    return d
 end
 
-function SCORE:HandleKill( victim, attacker, dmginfo )
+function SCORE:HandleKill(victim, attacker, dmginfo)
    if not (IsValid(victim) and victim:IsPlayer()) then return end
 
    local e = {
@@ -86,7 +86,7 @@ function SCORE:HandleKill( victim, attacker, dmginfo )
    self:AddEvent(e)
 end
 
-function SCORE:HandleSpawn( ply )
+function SCORE:HandleSpawn(ply)
    if ply:Team() == TEAM_TERROR then
       self:AddEvent({id=EVENT_SPAWN, ni=ply:Nick(), sid=ply:SteamID()})
    end
@@ -215,9 +215,9 @@ local function EncodeForStream(events)
    -- may want to filter out data later
    -- just serialize for now
 
-   local result = util.TableToJSON( events )
+   local result = util.TableToJSON(events)
    if not result then
-      ErrorNoHalt("Round report event encoding failed!\n")
+      ErrorNoHalt("Round report event encoding failednot \n")
       return false
    else
       return result
@@ -235,7 +235,7 @@ function SCORE:StreamToClients()
    -- a just-in-case thing if a round somehow manages to be > 64K
    local cut = {}
    local max = 65500
-   while #s != 0 do
+   while #s ~= 0 do
       local bit = string.sub(s, 1, max - 1)
       table.insert(cut, bit)
 
@@ -245,7 +245,7 @@ function SCORE:StreamToClients()
    local parts = #cut
    for k, bit in pairs(cut) do
       net.Start("TTT_ReportStream")
-      net.WriteBit((k != parts)) -- continuation bit, 1 if there's more coming
+      net.WriteBit((k ~= parts)) -- continuation bit, 1 if there's more coming
       net.WriteString(bit)
       net.Broadcast()
    end

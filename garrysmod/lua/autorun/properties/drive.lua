@@ -6,39 +6,39 @@ properties.Add( "drive", {
 	Order = 1100,
 	MenuIcon = "icon16/joystick.png",
 
-	Filter = function( self, ent, ply )
+	Filter = function(self, ent, ply)
 
-		if ( !IsValid( ent ) || !IsValid( ply ) ) then return false end
-		if ( ent:IsPlayer() || IsValid( ply:GetVehicle() ) ) then return false end
-		if ( !gamemode.Call( "CanProperty", ply, "drive", ent ) ) then return false end
-		if ( !gamemode.Call( "CanDrive", ply, ent ) ) then return false end
+		if (not IsValid( ent) or not IsValid( ply)) then return false end
+		if (ent:IsPlayer() or IsValid( ply:GetVehicle())) then return false end
+		if (not gamemode.Call( "CanProperty", ply, "drive", ent)) then return false end
+		if (not gamemode.Call( "CanDrive", ply, ent)) then return false end
 
 		return true
 
 	end,
 
-	Action = function( self, ent )
+	Action = function(self, ent)
 
 		self:MsgStart()
-			net.WriteEntity( ent )
+			net.WriteEntity(ent)
 		self:MsgEnd()
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function(self, length, player)
 
 		local ent = net.ReadEntity()
-		if ( !self:Filter( ent, player ) ) then return false end
+		if (not self:Filter( ent, player)) then return false end
 
 		local drivemode = "drive_sandbox"
 
-		if ( ent.GetEntityDriveMode ) then
-			drivemode = ent:GetEntityDriveMode( player )
+		if (ent.GetEntityDriveMode) then
+			drivemode = ent:GetEntityDriveMode(player)
 		end
 
-		if ( !drivemode ) then  end
+		if (not drivemode) then  end
 
-		drive.PlayerStartDriving( player, ent, drivemode )
+		drive.PlayerStartDriving(player, ent, drivemode)
 
 	end
 

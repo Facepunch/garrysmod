@@ -106,7 +106,7 @@ end
 
 local function FirstBlood(events, scores, players, traitors)
    for k, e in pairs(events) do
-      if e.id == EVENT_KILL and e.att.sid != e.vic.sid and e.att.sid != -1 then
+      if e.id == EVENT_KILL and e.att.sid ~= e.vic.sid and e.att.sid ~= -1 then
          local award = {nick=e.att.ni}
          if not award.nick or award.nick == "" then return nil end
 
@@ -239,7 +239,7 @@ end
 local function FallDeath(events, scores, players, traitors)
    for k, e in pairs(events) do
       if e.id == EVENT_KILL and is_dmg(e.dmg.t, DMG_FALL) then
-         if e.att.ni != "" then
+         if e.att.ni ~= "" then
             return {title=T("aw_fal1_title"), nick=e.att.ni, text=T("aw_fal1_text"), priority=math.random(7, 15)}
          else
             return {title=T("aw_fal2_title"), nick=e.vic.ni, text=T("aw_fal2_text"), priority=math.random(1, 5)}
@@ -253,7 +253,7 @@ end
 local function FallKill(events, scores, players, traitors)
    for k, e in pairs(events) do
       if e.id == EVENT_KILL and is_dmg(e.dmg.t, DMG_CRUSH) and is_dmg(e.dmg.t, DMG_PHYSGUN) then
-         if e.att.ni != "" then
+         if e.att.ni ~= "" then
             return {title=T("aw_fal3_title"), nick=e.att.ni, text=T("aw_fal3_text"), priority=math.random(10, 15)}
          end
       end

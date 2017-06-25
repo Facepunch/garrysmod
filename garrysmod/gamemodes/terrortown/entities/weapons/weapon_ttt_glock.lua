@@ -24,7 +24,7 @@ SWEP.Primary.Automatic     = true
 SWEP.Primary.DefaultClip   = 20
 SWEP.Primary.ClipMax       = 60
 SWEP.Primary.Ammo          = "Pistol"
-SWEP.Primary.Sound         = Sound( "Weapon_Glock.Single" )
+SWEP.Primary.Sound         = Sound("Weapon_Glock.Single")
 
 SWEP.AutoSpawnable         = true
 
@@ -38,4 +38,4 @@ SWEP.UseHands              = true
 SWEP.ViewModel             = "models/weapons/cstrike/c_pist_glock18.mdl"
 SWEP.WorldModel            = "models/weapons/w_pist_glock18.mdl"
 
-SWEP.IronSightsPos         = Vector( -5.79, -3.9982, 2.8289 )
+SWEP.IronSightsPos         = Vector(-5.79, -3.9982, 2.8289)

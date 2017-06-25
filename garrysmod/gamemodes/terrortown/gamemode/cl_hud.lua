@@ -45,23 +45,23 @@ local ammo_colors = {
 
 
 -- Modified RoundedBox
-local Tex_Corner8 = surface.GetTextureID( "gui/corner8" )
+local Tex_Corner8 = surface.GetTextureID("gui/corner8")
 local function RoundedMeter( bs, x, y, w, h, color)
    surface.SetDrawColor(clr(color))
 
-   surface.DrawRect( x+bs, y, w-bs*2, h )
-   surface.DrawRect( x, y+bs, bs, h-bs*2 )
+   surface.DrawRect(x+bs, y, w-bs*2, h)
+   surface.DrawRect(x, y+bs, bs, h-bs*2)
 
-   surface.SetTexture( Tex_Corner8 )
-   surface.DrawTexturedRectRotated( x + bs/2 , y + bs/2, bs, bs, 0 )
-   surface.DrawTexturedRectRotated( x + bs/2 , y + h -bs/2, bs, bs, 90 )
+   surface.SetTexture(Tex_Corner8)
+   surface.DrawTexturedRectRotated(x + bs/2 , y + bs/2, bs, bs, 0)
+   surface.DrawTexturedRectRotated(x + bs/2 , y + h -bs/2, bs, bs, 90)
 
    if w > 14 then
-      surface.DrawRect( x+w-bs, y+bs, bs, h-bs*2 )
-      surface.DrawTexturedRectRotated( x + w - bs/2 , y + bs/2, bs, bs, 270 )
-      surface.DrawTexturedRectRotated( x + w - bs/2 , y + h - bs/2, bs, bs, 180 )
+      surface.DrawRect(x+w-bs, y+bs, bs, h-bs*2)
+      surface.DrawTexturedRectRotated(x + w - bs/2 , y + bs/2, bs, bs, 270)
+      surface.DrawTexturedRectRotated(x + w - bs/2 , y + h - bs/2, bs, bs, 180)
    else
-      surface.DrawRect( x + math.max(w-bs, bs), y, bs/2, h )
+      surface.DrawRect(x + math.max(w-bs, bs), y, bs/2, h)
    end
 
 end
@@ -117,7 +117,7 @@ local function DrawBg(x, y, width, height, client)
 
    -- main border, traitor based
    local col = bg_colors.innocent
-   if GAMEMODE.round_state != ROUND_ACTIVE then
+   if GAMEMODE.round_state ~= ROUND_ACTIVE then
       col = bg_colors.noround
    elseif client:GetTraitor() then
       col = bg_colors.traitor
@@ -158,7 +158,7 @@ local function PunchPaint(client)
    dr.SimpleText(L.punch_help, "TabLarge", ScrW() / 2, margin, COLOR_WHITE, TEXT_ALIGN_CENTER)
 
    local bonus = client:GetNWInt("bonuspunches", 0)
-   if bonus != 0 then
+   if bonus ~= 0 then
       local text
       if bonus < 0 then
          text = interp(L.punch_bonus, {num = bonus})
@@ -240,7 +240,7 @@ local function InfoPaint(client)
    -- Draw ammo
    if client:GetActiveWeapon().Primary then
       local ammo_clip, ammo_max, ammo_inv = GetAmmo(client)
-      if ammo_clip != -1 then
+      if ammo_clip ~= -1 then
          local ammo_y = health_y + bar_height + margin
          PaintBar(x+margin, ammo_y, bar_width, bar_height, ammo_colors, ammo_clip/ammo_max)
          local text = string.format("%i + %02i", ammo_clip, ammo_inv)
@@ -318,48 +318,48 @@ end
 function GM:HUDPaint()
    local client = LocalPlayer()
 
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTargetID" ) then
-       hook.Call( "HUDDrawTargetID", GAMEMODE )
+   if hook.Call("HUDShouldDraw", GAMEMODE, "TTTTargetID") then
+       hook.Call("HUDDrawTargetID", GAMEMODE)
    end
-   
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTMStack" ) then
+
+   if hook.Call("HUDShouldDraw", GAMEMODE, "TTTMStack") then
        MSTACK:Draw(client)
    end
 
    if (not client:Alive()) or client:Team() == TEAM_SPEC then
-      if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTSpecHUD" ) then
+      if hook.Call("HUDShouldDraw", GAMEMODE, "TTTSpecHUD") then
           SpecHUDPaint(client)
       end
 
       return
    end
 
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTRadar" ) then
+   if hook.Call("HUDShouldDraw", GAMEMODE, "TTTRadar") then
        RADAR:Draw(client)
    end
-   
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTTButton" ) then
+
+   if hook.Call("HUDShouldDraw", GAMEMODE, "TTTTButton") then
        TBHUD:Draw(client)
    end
-   
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTWSwitch" ) then
+
+   if hook.Call("HUDShouldDraw", GAMEMODE, "TTTWSwitch") then
        WSWITCH:Draw(client)
    end
 
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTVoice" ) then
+   if hook.Call("HUDShouldDraw", GAMEMODE, "TTTVoice") then
        VOICE.Draw(client)
    end
-   
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTDisguise" ) then
+
+   if hook.Call("HUDShouldDraw", GAMEMODE, "TTTDisguise") then
        DISGUISE.Draw(client)
    end
 
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTPickupHistory" ) then
-       hook.Call( "HUDDrawPickupHistory", GAMEMODE )
+   if hook.Call("HUDShouldDraw", GAMEMODE, "TTTPickupHistory") then
+       hook.Call("HUDDrawPickupHistory", GAMEMODE)
    end
 
    -- Draw bottom left info panel
-   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTInfoPanel" ) then
+   if hook.Call("HUDShouldDraw", GAMEMODE, "TTTInfoPanel") then
        InfoPaint(client)
    end
 end

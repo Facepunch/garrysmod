@@ -63,7 +63,7 @@ function CLSCORE.DeclareEventDisplay(event_id, event_fns)
    if not tonumber(event_id) then
       Error("Event ??? display: invalid event id\n")
    end
-   if (not event_fns) or type(event_fns) != "table" then
+   if (not event_fns) or type(event_fns) ~= "table" then
       Error(Format("Event %d display: no display functions found.\n", event_id))
    end
    if not event_fns.text then
@@ -163,7 +163,7 @@ function CLSCORE:BuildScorePanel(dpanel)
    local bonus = ScoreTeamBonus(scores, wintype)
 
    for id, s in pairs(scores) do
-      if id != -1 then
+      if id ~= -1 then
          local was_traitor = s.was_traitor
          local role = was_traitor and T("traitor") or (s.was_detective and T("detective") or "")
 
@@ -282,7 +282,7 @@ function CLSCORE:BuildHilitePanel(dpanel)
 
    local winlbl = vgui.Create("DLabel", dpanel)
    winlbl:SetFont("WinHuge")
-   winlbl:SetText( T(title.txt) )
+   winlbl:SetText(T(title.txt))
    winlbl:SetTextColor(COLOR_WHITE)
    winlbl:SizeToContents()
    local xwin = (w - winlbl:GetWide())/2
@@ -425,7 +425,7 @@ function CLSCORE:ClearPanel()
       -- we need this hack as opposed to just calling Remove because gmod does
       -- not offer a means of killing the tooltip, and doesn't clean it up
       -- properly on Remove
-      input.SetCursorPos( ScrW()/2, ScrH()/2 )
+      input.SetCursorPos(ScrW()/2, ScrH()/2)
       local pnl = self.Panel
       timer.Simple(0, function() pnl:Remove() end)
    end
@@ -537,7 +537,7 @@ local function ReceiveReportStream(len)
 
       local json_events = buff -- util.Decompress(buff)
       if not json_events then
-         ErrorNoHalt("Round report decompression failed!\n")
+         ErrorNoHalt("Round report decompression failednot \n")
       else
          -- convert the json string back to a table
          local events = util.JSONToTable(json_events)
@@ -545,7 +545,7 @@ local function ReceiveReportStream(len)
          if istable(events) then
             CLSCORE:ReportEvents(events)
          else
-            ErrorNoHalt("Round report event decoding failed!\n")
+            ErrorNoHalt("Round report event decoding failednot \n")
          end
       end
 

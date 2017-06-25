@@ -48,15 +48,15 @@ function SWEP:OnDrop()
 end
 
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
    self:HealthDrop()
 end
 function SWEP:SecondaryAttack()
-   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
    self:HealthDrop()
 end
 
-local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
+local throwsound = Sound("Weapon_SLAM.SatchelThrow")
 
 -- ye olde droppe code
 function SWEP:HealthDrop()
@@ -69,7 +69,7 @@ function SWEP:HealthDrop()
       local vsrc = ply:GetShootPos()
       local vang = ply:GetAimVector()
       local vvel = ply:GetVelocity()
-      
+
       local vthrow = vvel + vang * 200
 
       local health = ents.Create("ttt_health_station")
@@ -83,7 +83,7 @@ function SWEP:HealthDrop()
          local phys = health:GetPhysicsObject()
          if IsValid(phys) then
             phys:SetVelocity(vthrow)
-         end   
+         end
          self:Remove()
 
          self.Planted = true

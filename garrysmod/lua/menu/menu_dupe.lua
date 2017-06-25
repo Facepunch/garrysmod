@@ -1,71 +1,71 @@
 
-ws_dupe = WorkshopFileBase( "dupe", { "dupe" } )
+ws_dupe = WorkshopFileBase("dupe", { "dupe" })
 
 
-function ws_dupe:FetchLocal( offset, perpage )
+function ws_dupe:FetchLocal(offset, perpage)
 
-	local f = file.Find( "dupes/*.dupe", "MOD", "datedesc" )
+	local f = file.Find("dupes/*.dupe", "MOD", "datedesc")
 
 	local saves = {}
 
-	for k, v in pairs( f ) do
+	for k, v in pairs(f) do
 
-		if ( k <= offset ) then continue end
-		if ( k > offset + perpage ) then break end
+		if (k <= offset) then continue end
+		if (k > offset + perpage) then break end
 
-		local entry = 
+		local entry =
 		{
 			file	= "dupes/" .. v,
 			name	= v:StripExtension(),
 			preview	= "dupes/" .. v:StripExtension() .. ".jpg"
 		}
 
-		table.insert( saves, entry );
+		table.insert(saves, entry)
 
 	end
 
-	local results = 
+	local results =
 	{
 		totalresults	= #f,
 		results			= saves
 	}
 
-	local json = util.TableToJSON( results, false );
-	pnlMainMenu:Call( "dupe.ReceiveLocal( "..json.." )" );
+	local json = util.TableToJSON(results, false)
+	pnlMainMenu:Call("dupe.ReceiveLocal( "..json..")")
 
 end
 
-function ws_dupe:FinishPublish( filename, imagename, name, desc, ChosenTag )
+function ws_dupe:FinishPublish(filename, imagename, name, desc, ChosenTag)
 
-	steamworks.Publish( { "dupe", ChosenTag }, filename, imagename, name, desc );
+	steamworks.Publish({ "dupe", ChosenTag }, filename, imagename, name, desc)
 
 end
 
-function ws_dupe:Publish( filename, image )
+function ws_dupe:Publish(filename, image)
 
-	--MsgN( "PUBLISHING ", filename );
-	--MsgN( "Image ", image );
+	--MsgN("PUBLISHING ", filename)
+	--MsgN("Image ", image)
 
 	--
 	-- Create the window
 	--
-	local Window = vgui.Create( "DFrame" )
-		Window:SetTitle( "Publish Creation" )
-		Window:SetSize( 400, 350 )
-		Window:LoadGWENFile( "resource/ui/DupeUpload.gwen" )
+	local Window = vgui.Create("DFrame")
+		Window:SetTitle("Publish Creation")
+		Window:SetSize(400, 350)
+		Window:LoadGWENFile("resource/ui/DupeUpload.gwen")
 		Window:Center()
 		Window:MakePopup()
 
 	--
 	-- Store the fields
 	--
-	local Submit		= Window:Find( "upload" )
-	local Title			= Window:Find( "name" )
-	local Description	= Window:Find( "description" )
-	local Error			= Window:Find( "error" )
-	local Image			= Window:Find( "image" )
+	local Submit		= Window:Find("upload")
+	local Title			= Window:Find("name")
+	local Description	= Window:Find("description")
+	local Error			= Window:Find("error")
+	local Image			= Window:Find("image")
 
-	Image:SetImage( "../" .. image )
+	Image:SetImage("../" .. image)
 
 	--
 	-- Hook up action
@@ -74,13 +74,13 @@ function ws_dupe:Publish( filename, image )
 
 		local ChosenTag = nil;
 
-		local FindTag = function( tagname )
-			
-			local cb = Window:Find( "tag_"..tagname )
-			if ( !cb:GetChecked() ) then return true end
+		local FindTag = function(tagname)
 
-			if ( ChosenTag != nil ) then
-				Error:SetText( "Choose only one tag!" );
+			local cb = Window:Find("tag_"..tagname)
+			if (not cb:GetChecked()) then return true end
+
+			if (ChosenTag ~= nil) then
+				Error:SetText("Choose only one tagnot ")
 				return false;
 			end
 
@@ -89,28 +89,28 @@ function ws_dupe:Publish( filename, image )
 
 		end
 
-		if ( !FindTag( "posed" ) ) then return; end
-		if ( !FindTag( "scenes" ) ) then return; end
-		if ( !FindTag( "machines" ) ) then return; end
-		if ( !FindTag( "vehicles" ) ) then return; end
-		if ( !FindTag( "buildings" ) ) then return; end
-		if ( !FindTag( "others" ) ) then return; end
+		if (not FindTag( "posed")) then return; end
+		if (not FindTag( "scenes")) then return; end
+		if (not FindTag( "machines")) then return; end
+		if (not FindTag( "vehicles")) then return; end
+		if (not FindTag( "buildings")) then return; end
+		if (not FindTag( "others")) then return; end
 
-		if ( ChosenTag == nil ) then
-			Error:SetText( "Choose a tag!" );
+		if (ChosenTag == nil) then
+			Error:SetText("Choose a tagnot ")
 			return;
 		end
 
-		if ( Title:GetText() == "" ) then
-			Error:SetText( "You must provide a title!" );
+		if (Title:GetText() == "") then
+			Error:SetText("You must provide a titlenot ")
 			return;
 		end
 
-		--MsgN( "Publish with tag ", ChosenTag );
+		--MsgN("Publish with tag ", ChosenTag)
 
-		local error = self:FinishPublish( filename, image, Title:GetText(), Description:GetText(), ChosenTag );
-		if ( error ) then
-			Error:SetText( error );
+		local error = self:FinishPublish(filename, image, Title:GetText(), Description:GetText(), ChosenTag)
+		if (error) then
+			Error:SetText(error)
 			return;
 		end
 
@@ -121,11 +121,11 @@ function ws_dupe:Publish( filename, image )
 end
 
 --
--- Called from the engine!
+-- Called from the enginenot
 --
-concommand.Add( "dupe_publish", function( ply, cmd, args )
+concommand.Add("dupe_publish", function( ply, cmd, args)
 
-	ws_dupe:Publish( args[1], args[2] );
+	ws_dupe:Publish(args[1], args[2])
 	gui.ActivateGameUI();
 
 end, nil, "", { FCVAR_DONTRECORD } )

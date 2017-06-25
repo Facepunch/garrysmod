@@ -18,7 +18,7 @@ ENT.RenderGroup		= RENDERGROUP_OPAQUE
 
 ENT.AutomaticFrameAdvance = false
 
-function ENT:SetAutomaticFrameAdvance( bUsingAnim )
+function ENT:SetAutomaticFrameAdvance(bUsingAnim)
 	self.AutomaticFrameAdvance = bUsingAnim
 end
 
@@ -27,14 +27,14 @@ function ENT:OnRemove()
 end
 
 
-function ENT:PhysicsCollide( data, physobj )
+function ENT:PhysicsCollide(data, physobj)
 end
 
 
-function ENT:PhysicsUpdate( physobj )
+function ENT:PhysicsUpdate(physobj)
 end
 
-if ( CLIENT ) then
+if (CLIENT) then
 
 	function ENT:Draw()
 
@@ -53,37 +53,37 @@ if ( CLIENT ) then
 
 end
 
-if ( SERVER ) then
+if (SERVER) then
 
-	function ENT:OnTakeDamage( dmginfo )
+	function ENT:OnTakeDamage(dmginfo)
 
 	--[[
-		Msg( tostring(dmginfo) .. "\n" )
-		Msg( "Inflictor:\t" .. tostring(dmginfo:GetInflictor()) .. "\n" )
-		Msg( "Attacker:\t" .. tostring(dmginfo:GetAttacker()) .. "\n" )
-		Msg( "Damage:\t" .. tostring(dmginfo:GetDamage()) .. "\n" )
-		Msg( "Base Damage:\t" .. tostring(dmginfo:GetBaseDamage()) .. "\n" )
-		Msg( "Force:\t" .. tostring(dmginfo:GetDamageForce()) .. "\n" )
-		Msg( "Position:\t" .. tostring(dmginfo:GetDamagePosition()) .. "\n" )
-		Msg( "Reported Pos:\t" .. tostring(dmginfo:GetReportedPosition()) .. "\n" )	-- ??
+		Msg(tostring(dmginfo) .. "\n")
+		Msg("Inflictor:\t" .. tostring(dmginfo:GetInflictor()) .. "\n")
+		Msg("Attacker:\t" .. tostring(dmginfo:GetAttacker()) .. "\n")
+		Msg("Damage:\t" .. tostring(dmginfo:GetDamage()) .. "\n")
+		Msg("Base Damage:\t" .. tostring(dmginfo:GetBaseDamage()) .. "\n")
+		Msg("Force:\t" .. tostring(dmginfo:GetDamageForce()) .. "\n")
+		Msg("Position:\t" .. tostring(dmginfo:GetDamagePosition()) .. "\n")
+		Msg("Reported Pos:\t" .. tostring(dmginfo:GetReportedPosition()) .. "\n")	-- ??
 	--]]
 
 	end
 
 
-	function ENT:Use( activator, caller, type, value )
+	function ENT:Use(activator, caller, type, value)
 	end
 
 
-	function ENT:StartTouch( entity )
+	function ENT:StartTouch(entity)
 	end
 
 
-	function ENT:EndTouch( entity )
+	function ENT:EndTouch(entity)
 	end
 
 
-	function ENT:Touch( entity )
+	function ENT:Touch(entity)
 	end
 
 	--[[---------------------------------------------------------
@@ -98,7 +98,7 @@ if ( SERVER ) then
 		Note that you need to call ent:StartMotionController to tell the entity
 			to start calling this function..
 	-----------------------------------------------------------]]
-	function ENT:PhysicsSimulate( phys, deltatime )
+	function ENT:PhysicsSimulate(phys, deltatime)
 		return SIM_NOTHING
 	end
 

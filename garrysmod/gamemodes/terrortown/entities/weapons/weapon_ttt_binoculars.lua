@@ -60,10 +60,10 @@ end
 
 
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + 0.1 )
+   self:SetNextPrimaryFire(CurTime() + 0.1)
 
    if self:IsTargetingCorpse() and not self.dt.processing then
-      self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+      self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
       if SERVER then
          self.dt.processing = true
@@ -74,7 +74,7 @@ end
 
 local click = Sound("weapons/sniper/sniper_zoomin.wav")
 function SWEP:SecondaryAttack()
-   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 
    if CLIENT and IsFirstTimePredicted() then
       LocalPlayer():EmitSound(click)
@@ -133,7 +133,7 @@ function SWEP:IsTargetingCorpse()
    local ent = tr.Entity
 
    return (IsValid(ent) and ent:GetClass() == "prop_ragdoll" and
-           CORPSE.GetPlayerNick(ent, false) != false)
+           CORPSE.GetPlayerNick(ent, false) ~= false)
 end
 
 local confirm = Sound("npc/turret_floor/click1.wav")
@@ -195,15 +195,15 @@ if CLIENT then
       local x = ScrW() / 2.0
       local y = ScrH() / 2.0
 
-      surface.DrawLine( x - length, y, x - gap, y )
-      surface.DrawLine( x + length, y, x + gap, y )
-      surface.DrawLine( x, y - length, x, y - gap )
-      surface.DrawLine( x, y + length, x, y + gap )
+      surface.DrawLine(x - length, y, x - gap, y)
+      surface.DrawLine(x + length, y, x + gap, y)
+      surface.DrawLine(x, y - length, x, y - gap)
+      surface.DrawLine(x, y + length, x, y + gap)
 
 
       surface.SetFont("DefaultFixedDropShadow")
       surface.SetTextColor(0, 255, 0, 200)
-      surface.SetTextPos( x + length, y - length )
+      surface.SetTextPos(x + length, y - length)
       surface.DrawText("LEVEL " .. self.dt.zoom)
 
       if corpse then

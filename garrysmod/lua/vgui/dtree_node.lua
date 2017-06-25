@@ -1,53 +1,53 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_pRoot", "Root" )
+AccessorFunc(PANEL, "m_pRoot", "Root")
 
-AccessorFunc( PANEL, "m_pParentNode", "ParentNode" )
+AccessorFunc(PANEL, "m_pParentNode", "ParentNode")
 
-AccessorFunc( PANEL, "m_strFolder", "Folder" )
-AccessorFunc( PANEL, "m_strFileName", "FileName" )
-AccessorFunc( PANEL, "m_strPathID", "PathID" )
-AccessorFunc( PANEL, "m_strWildCard", "WildCard" )
-AccessorFunc( PANEL, "m_bNeedsPopulating", "NeedsPopulating" )
-AccessorFunc( PANEL, "m_bShowFiles", "ShowFiles", FORCE_BOOL )
+AccessorFunc(PANEL, "m_strFolder", "Folder")
+AccessorFunc(PANEL, "m_strFileName", "FileName")
+AccessorFunc(PANEL, "m_strPathID", "PathID")
+AccessorFunc(PANEL, "m_strWildCard", "WildCard")
+AccessorFunc(PANEL, "m_bNeedsPopulating", "NeedsPopulating")
+AccessorFunc(PANEL, "m_bShowFiles", "ShowFiles", FORCE_BOOL)
 
-AccessorFunc( PANEL, "m_bDirty", "Dirty", FORCE_BOOL )
-AccessorFunc( PANEL, "m_bHideExpander", "HideExpander", FORCE_BOOL )
-AccessorFunc( PANEL, "m_bNeedsChildSearch", "NeedsChildSearch", FORCE_BOOL )
+AccessorFunc(PANEL, "m_bDirty", "Dirty", FORCE_BOOL)
+AccessorFunc(PANEL, "m_bHideExpander", "HideExpander", FORCE_BOOL)
+AccessorFunc(PANEL, "m_bNeedsChildSearch", "NeedsChildSearch", FORCE_BOOL)
 
-AccessorFunc( PANEL, "m_bForceShowExpander", "ForceShowExpander", FORCE_BOOL )
-AccessorFunc( PANEL, "m_bDoubleClickToOpen", "DoubleClickToOpen", FORCE_BOOL )
+AccessorFunc(PANEL, "m_bForceShowExpander", "ForceShowExpander", FORCE_BOOL)
+AccessorFunc(PANEL, "m_bDoubleClickToOpen", "DoubleClickToOpen", FORCE_BOOL)
 
-AccessorFunc( PANEL, "m_bLastChild", "LastChild", FORCE_BOOL )
-AccessorFunc( PANEL, "m_bDrawLines", "DrawLines", FORCE_BOOL )
-AccessorFunc( PANEL, "m_strDraggableName", "DraggableName" )
+AccessorFunc(PANEL, "m_bLastChild", "LastChild", FORCE_BOOL)
+AccessorFunc(PANEL, "m_bDrawLines", "DrawLines", FORCE_BOOL)
+AccessorFunc(PANEL, "m_strDraggableName", "DraggableName")
 
 function PANEL:Init()
 
-	self:SetDoubleClickToOpen( true )
+	self:SetDoubleClickToOpen(true)
 
-	self.Label = vgui.Create( "DTree_Node_Button", self )
-	self.Label:SetDragParent( self )
+	self.Label = vgui.Create("DTree_Node_Button", self)
+	self.Label:SetDragParent(self)
 	self.Label.DoClick = function() self:InternalDoClick() end
 	self.Label.DoDoubleClick = function() self:InternalDoClick() end
 	self.Label.DoRightClick = function() self:InternalDoRightClick() end
-	self.Label.DragHover = function( s, t ) self:DragHover( t ) end
+	self.Label.DragHover = function(s, t) self:DragHover( t) end
 
-	self.Expander = vgui.Create( "DExpandButton", self )
-	self.Expander.DoClick = function() self:SetExpanded( !self.m_bExpanded ) end
-	self.Expander:SetVisible( false )
+	self.Expander = vgui.Create("DExpandButton", self)
+	self.Expander.DoClick = function() self:SetExpanded( not self.m_bExpanded) end
+	self.Expander:SetVisible(false)
 
-	self.Icon = vgui.Create( "DImage", self )
-	self.Icon:SetImage( "icon16/folder.png" )
+	self.Icon = vgui.Create("DImage", self)
+	self.Icon:SetImage("icon16/folder.png")
 	self.Icon:SizeToContents()
 
-	self.animSlide = Derma_Anim( "Anim", self, self.AnimSlide )
+	self.animSlide = Derma_Anim("Anim", self, self.AnimSlide)
 
 	self.fLastClick = SysTime()
 
-	self:SetDrawLines( false )
-	self:SetLastChild( false )
+	self:SetDrawLines(false)
+	self:SetLastChild(false)
 
 end
 
@@ -57,32 +57,32 @@ end
 
 function PANEL:InternalDoClick()
 
-	self:GetRoot():SetSelectedItem( self )
+	self:GetRoot():SetSelectedItem( self)
 
-	if ( self:DoClick() ) then return end
-	if ( self:GetRoot():DoClick( self ) ) then return end
+	if (self:DoClick()) then return end
+	if (self:GetRoot():DoClick( self)) then return end
 
-	if ( !self.m_bDoubleClickToOpen || ( SysTime() - self.fLastClick < 0.3 ) ) then
-		self:SetExpanded( !self.m_bExpanded )
+	if (not self.m_bDoubleClickToOpen or ( SysTime() - self.fLastClick < 0.3)) then
+		self:SetExpanded(not self.m_bExpanded)
 	end
 
 	self.fLastClick = SysTime()
 
 end
 
-function PANEL:OnNodeSelected( node )
+function PANEL:OnNodeSelected(node)
 
 	local parent = self:GetParentNode()
-	if ( IsValid( parent ) && parent.OnNodeSelected ) then
-		parent:OnNodeSelected( node )
+	if (IsValid( parent) and parent.OnNodeSelected) then
+		parent:OnNodeSelected(node)
 	end
 
 end
 
 function PANEL:InternalDoRightClick()
 
-	if ( self:DoRightClick() ) then return end
-	if ( self:GetRoot():DoRightClick( self ) ) then return end
+	if (self:DoRightClick()) then return end
+	if (self:GetRoot():DoRightClick( self)) then return end
 
 end
 
@@ -94,35 +94,35 @@ function PANEL:DoRightClick()
 	return false
 end
 
-function PANEL:AnimSlide( anim, delta, data )
+function PANEL:AnimSlide(anim, delta, data)
 
-	if ( !self.ChildNodes ) then anim:Stop() return end
+	if (not self.ChildNodes) then anim:Stop() return end
 
-	if ( anim.Started ) then
+	if (anim.Started) then
 		data.To = self:GetTall()
 		data.Visible = self.ChildNodes:IsVisible()
 	end
 
-	if ( anim.Finished ) then
+	if (anim.Finished) then
 		self:InvalidateLayout()
-		self.ChildNodes:SetVisible( data.Visible )
-		self:SetTall( data.To )
+		self.ChildNodes:SetVisible(data.Visible)
+		self:SetTall(data.To)
 		self:GetParentNode():ChildExpanded()
 		return
 	end
 
-	self.ChildNodes:SetVisible( true )
+	self.ChildNodes:SetVisible(true)
 
-	self:SetTall( Lerp( delta, data.From, data.To ) )
+	self:SetTall(Lerp( delta, data.From, data.To))
 
 	self:GetParentNode():ChildExpanded()
 
 end
 
-function PANEL:SetIcon( str )
-	if ( !str || str == "" ) then return end
+function PANEL:SetIcon(str)
+	if (not str or str == "") then return end
 
-	self.Icon:SetImage( str )
+	self.Icon:SetImage(str)
 end
 
 function PANEL:ShowIcons()
@@ -137,73 +137,73 @@ function PANEL:GetIndentSize()
 	return self:GetParentNode():GetIndentSize()
 end
 
-function PANEL:SetText( strName )
+function PANEL:SetText(strName)
 
-	self.Label:SetText( strName )
+	self.Label:SetText(strName)
 
 end
 
-function PANEL:ExpandRecurse( bExpand )
+function PANEL:ExpandRecurse(bExpand)
 
-	self:SetExpanded( bExpand, true )
+	self:SetExpanded(bExpand, true)
 
-	if ( !self.ChildNodes ) then return end
+	if (not self.ChildNodes) then return end
 
-	for k, Child in pairs( self.ChildNodes:GetItems() ) do
-		if ( Child.ExpandRecurse ) then
-			Child:ExpandRecurse( bExpand )
+	for k, Child in pairs(self.ChildNodes:GetItems()) do
+		if (Child.ExpandRecurse) then
+			Child:ExpandRecurse(bExpand)
 		end
 	end
 
 end
 
-function PANEL:ExpandTo( bExpand )
+function PANEL:ExpandTo(bExpand)
 
-	self:SetExpanded( bExpand, true )
-	self:GetParentNode():ExpandTo( bExpand )
+	self:SetExpanded(bExpand, true)
+	self:GetParentNode():ExpandTo( bExpand)
 
 end
 
-function PANEL:SetExpanded( bExpand, bSurpressAnimation )
+function PANEL:SetExpanded(bExpand, bSurpressAnimation)
 
-	self:GetParentNode():ChildExpanded( bExpand )
-	self.Expander:SetExpanded( bExpand )
+	self:GetParentNode():ChildExpanded( bExpand)
+	self.Expander:SetExpanded(bExpand)
 	self.m_bExpanded = bExpand
-	self:InvalidateLayout( true )
+	self:InvalidateLayout(true)
 
-	if ( !self.ChildNodes ) then return end
+	if (not self.ChildNodes) then return end
 
 	local StartTall = self:GetTall()
 	self.animSlide:Stop()
 
 	-- Populate the child folders..
-	if ( bExpand && self:PopulateChildrenAndSelf( true ) ) then
+	if (bExpand and self:PopulateChildrenAndSelf( true)) then
 		-- Could really do with a 'loading' thing here
 		return
 	end
 
-	if ( self.ChildNodes ) then
-		self.ChildNodes:SetVisible( bExpand )
-		if ( bExpand ) then
-			self.ChildNodes:InvalidateLayout( true )
+	if (self.ChildNodes) then
+		self.ChildNodes:SetVisible(bExpand)
+		if (bExpand) then
+			self.ChildNodes:InvalidateLayout(true)
 		end
 	end
 
-	self:InvalidateLayout( true )
+	self:InvalidateLayout(true)
 
 	-- Do animation..
-	if ( !bSurpressAnimation ) then
-		self.animSlide:Start( 0.3, { From = StartTall } )
+	if (not bSurpressAnimation) then
+		self.animSlide:Start(0.3, { From = StartTall })
 		self.animSlide:Run()
 	end
 
 end
 
-function PANEL:ChildExpanded( bExpand )
+function PANEL:ChildExpanded(bExpand)
 
-	self.ChildNodes:InvalidateLayout( true )
-	self:InvalidateLayout( true )
-	self:GetParentNode():ChildExpanded( bExpand )
+	self.ChildNodes:InvalidateLayout(true)
+	self:InvalidateLayout(true)
+	self:GetParentNode():ChildExpanded( bExpand)
 
 end
 
@@ -212,32 +212,32 @@ end
 
 function PANEL:HasChildren()
 
-	if ( !IsValid( self.ChildNodes ) ) then return false end
+	if (not IsValid( self.ChildNodes)) then return false end
 	return self.ChildNodes:HasChildren()
 
 end
 
 function PANEL:DoChildrenOrder()
 
-	if ( !self.ChildNodes ) then return end
+	if (not self.ChildNodes) then return end
 
-	local last = table.Count( self.ChildNodes:GetChildren() )
-	for k, Child in pairs( self.ChildNodes:GetChildren() ) do
-		Child:SetLastChild( k == last )
+	local last = table.Count(self.ChildNodes:GetChildren())
+	for k, Child in pairs(self.ChildNodes:GetChildren()) do
+		Child:SetLastChild(k == last)
 	end
 
 end
 
 function PANEL:PerformRootNodeLayout()
 
-	self.Expander:SetVisible( false )
-	self.Label:SetVisible( false )
-	self.Icon:SetVisible( false )
+	self.Expander:SetVisible(false)
+	self.Label:SetVisible(false)
+	self.Icon:SetVisible(false)
 
-	if ( IsValid( self.ChildNodes ) ) then
+	if (IsValid( self.ChildNodes)) then
 
-		self.ChildNodes:Dock( TOP )
-		self:SetTall( self.ChildNodes:GetTall() )
+		self.ChildNodes:Dock(TOP)
+		self:SetTall(self.ChildNodes:GetTall())
 
 	end
 
@@ -245,50 +245,50 @@ end
 
 function PANEL:PerformLayout()
 
-	if ( self:IsRootNode() ) then
+	if (self:IsRootNode()) then
 		return self:PerformRootNodeLayout()
 	end
 
-	if ( self.animSlide:Active() ) then return end
+	if (self.animSlide:Active()) then return end
 
 	local LineHeight = self:GetLineHeight()
 
-	if ( self.m_bHideExpander ) then
+	if (self.m_bHideExpander) then
 
-		self.Expander:SetPos( -11, 0 )
-		self.Expander:SetSize( 15, 15 )
-		self.Expander:SetVisible( false )
+		self.Expander:SetPos(-11, 0)
+		self.Expander:SetSize(15, 15)
+		self.Expander:SetVisible(false)
 
 	else
 
-		self.Expander:SetPos( 2, 0 )
-		self.Expander:SetSize( 15, 15 )
-		self.Expander:SetVisible( self:HasChildren() || self:GetForceShowExpander() )
-		self.Expander:SetZPos( 10 )
+		self.Expander:SetPos(2, 0)
+		self.Expander:SetSize(15, 15)
+		self.Expander:SetVisible(self:HasChildren() or self:GetForceShowExpander())
+		self.Expander:SetZPos(10)
 
 	end
 
-	self.Label:StretchToParent( 0, nil, 0, nil )
-	self.Label:SetTall( LineHeight )
+	self.Label:StretchToParent(0, nil, 0, nil)
+	self.Label:SetTall(LineHeight)
 
-	if ( self:ShowIcons() ) then
-		self.Icon:SetVisible( true )
-		self.Icon:SetPos( self.Expander.x + self.Expander:GetWide() + 4, ( LineHeight - self.Icon:GetTall() ) * 0.5 )
-		self.Label:SetTextInset( self.Icon.x + self.Icon:GetWide() + 4, 0 )
+	if (self:ShowIcons()) then
+		self.Icon:SetVisible(true)
+		self.Icon:SetPos(self.Expander.x + self.Expander:GetWide() + 4, ( LineHeight - self.Icon:GetTall()) * 0.5)
+		self.Label:SetTextInset(self.Icon.x + self.Icon:GetWide() + 4, 0)
 	else
-		self.Icon:SetVisible( false )
-		self.Label:SetTextInset( self.Expander.x + self.Expander:GetWide() + 4, 0 )
+		self.Icon:SetVisible(false)
+		self.Label:SetTextInset(self.Expander.x + self.Expander:GetWide() + 4, 0)
 	end
 
-	if ( !self.ChildNodes || !self.ChildNodes:IsVisible() ) then
-		self:SetTall( LineHeight )
+	if (not self.ChildNodes or not self.ChildNodes:IsVisible()) then
+		self:SetTall(LineHeight)
 		return
 	end
 
 	self.ChildNodes:SizeToContents()
-	self:SetTall( LineHeight + self.ChildNodes:GetTall() )
+	self:SetTall(LineHeight + self.ChildNodes:GetTall())
 
-	self.ChildNodes:StretchToParent( LineHeight, LineHeight, 0, 0 )
+	self.ChildNodes:StretchToParent(LineHeight, LineHeight, 0, 0)
 
 	self:DoChildrenOrder()
 
@@ -296,17 +296,17 @@ end
 
 function PANEL:CreateChildNodes()
 
-	if ( self.ChildNodes ) then return end
+	if (self.ChildNodes) then return end
 
-	self.ChildNodes = vgui.Create( "DListLayout", self )
-	self.ChildNodes:SetDropPos( "852" )
-	self.ChildNodes:SetVisible( self.m_bExpanded )
+	self.ChildNodes = vgui.Create("DListLayout", self)
+	self.ChildNodes:SetDropPos("852")
+	self.ChildNodes:SetVisible(self.m_bExpanded)
 	self.ChildNodes.OnChildRemoved = function()
 
 		self.ChildNodes:InvalidateLayout()
 
-		if ( !self.ChildNodes:HasChildren() ) then
-			self:SetExpanded( false )
+		if (not self.ChildNodes:HasChildren()) then
+			self:SetExpanded(false)
 		end
 
 	end
@@ -321,143 +321,143 @@ function PANEL:CreateChildNodes()
 
 end
 
-function PANEL:AddPanel( pPanel )
+function PANEL:AddPanel(pPanel)
 
 	self:CreateChildNodes()
 
-	self.ChildNodes:Add( pPanel )
+	self.ChildNodes:Add(pPanel)
 	self:InvalidateLayout()
 
 end
 
-function PANEL:AddNode( strName, strIcon )
+function PANEL:AddNode(strName, strIcon)
 
 	self:CreateChildNodes()
 
-	local pNode = vgui.Create( "DTree_Node", self )
-	pNode:SetText( strName )
-	pNode:SetParentNode( self )
-	pNode:SetTall( self:GetLineHeight() )
-	pNode:SetRoot( self:GetRoot() )
-	pNode:SetIcon( strIcon )
-	pNode:SetDrawLines( !self:IsRootNode() )
+	local pNode = vgui.Create("DTree_Node", self)
+	pNode:SetText(strName)
+	pNode:SetParentNode(self)
+	pNode:SetTall(self:GetLineHeight())
+	pNode:SetRoot(self:GetRoot())
+	pNode:SetIcon(strIcon)
+	pNode:SetDrawLines(not self:IsRootNode())
 
-	self:InstallDraggable( pNode )
+	self:InstallDraggable(pNode)
 
-	self.ChildNodes:Add( pNode )
-	self:InvalidateLayout()
-
-	return pNode
-
-end
-
-function PANEL:InsertNode( pNode )
-
-	self:CreateChildNodes()
-
-	pNode:SetParentNode( self )
-	pNode:SetRoot( self:GetRoot() )
-	self:InstallDraggable( pNode )
-
-	self.ChildNodes:Add( pNode )
+	self.ChildNodes:Add(pNode)
 	self:InvalidateLayout()
 
 	return pNode
 
 end
 
-function PANEL:InstallDraggable( pNode )
+function PANEL:InsertNode(pNode)
+
+	self:CreateChildNodes()
+
+	pNode:SetParentNode(self)
+	pNode:SetRoot(self:GetRoot())
+	self:InstallDraggable(pNode)
+
+	self.ChildNodes:Add(pNode)
+	self:InvalidateLayout()
+
+	return pNode
+
+end
+
+function PANEL:InstallDraggable(pNode)
 
 	local DragName = self:GetDraggableName()
-	if ( !DragName ) then return end
+	if (not DragName) then return end
 
 	-- Make this node draggable
-	pNode:SetDraggableName( DragName )
-	pNode:Droppable( DragName )
+	pNode:SetDraggableName(DragName)
+	pNode:Droppable(DragName)
 
 	-- Allow item dropping onto us
-	self.ChildNodes:MakeDroppable( DragName, true, true )
+	self.ChildNodes:MakeDroppable(DragName, true, true)
 
 end
 
-function PANEL:DroppedOn( pnl )
+function PANEL:DroppedOn(pnl)
 
-	self:InsertNode( pnl )
-	self:SetExpanded( true )
+	self:InsertNode(pnl)
+	self:SetExpanded(true)
 
 end
 
-function PANEL:AddFolder( strName, strFolder, strPath, bShowFiles, strWildCard, bDontForceExpandable )
+function PANEL:AddFolder(strName, strFolder, strPath, bShowFiles, strWildCard, bDontForceExpandable)
 
-	local node = self:AddNode( strName )
-	node:MakeFolder( strFolder, strPath, bShowFiles, strWildCard, bDontForceExpandable )
+	local node = self:AddNode(strName)
+	node:MakeFolder(strFolder, strPath, bShowFiles, strWildCard, bDontForceExpandable)
 	return node
 
 end
 
-function PANEL:MakeFolder( strFolder, strPath, bShowFiles, strWildCard, bDontForceExpandable )
+function PANEL:MakeFolder(strFolder, strPath, bShowFiles, strWildCard, bDontForceExpandable)
 
 	-- Store the data
-	self:SetNeedsPopulating( true )
-	self:SetWildCard( strWildCard || "*" )
-	self:SetFolder( strFolder )
-	self:SetPathID( strPath )
-	self:SetShowFiles( bShowFiles || false )
+	self:SetNeedsPopulating(true)
+	self:SetWildCard(strWildCard or "*")
+	self:SetFolder(strFolder)
+	self:SetPathID(strPath)
+	self:SetShowFiles(bShowFiles or false)
 
 	self:CreateChildNodes()
-	self:SetNeedsChildSearch( true )
+	self:SetNeedsChildSearch(true)
 
-	if ( !bDontForceExpandable ) then
-		self:SetForceShowExpander( true )
+	if (not bDontForceExpandable) then
+		self:SetForceShowExpander(true)
 	end
 
 end
 
-function PANEL:FilePopulateCallback( files, folders, foldername, path, bAndChildren, wildcard )
+function PANEL:FilePopulateCallback(files, folders, foldername, path, bAndChildren, wildcard)
 
 	local showfiles = self:GetShowFiles()
 
-	self.ChildNodes:InvalidateLayout( true )
+	self.ChildNodes:InvalidateLayout(true)
 
 	local FileCount = 0
 
-	if ( folders ) then
+	if (folders) then
 
-		for k, File in SortedPairsByValue( folders ) do
+		for k, File in SortedPairsByValue(folders) do
 
-			local Node = self:AddNode( File )
-			Node:MakeFolder( foldername .. "/" .. File, path, showfiles, wildcard, true )
+			local Node = self:AddNode(File)
+			Node:MakeFolder(foldername .. "/" .. File, path, showfiles, wildcard, true)
 			FileCount = FileCount + 1
 
 		end
 
 	end
 
-	if ( showfiles ) then
+	if (showfiles) then
 
-		for k, File in SortedPairs( files ) do
+		for k, File in SortedPairs(files) do
 
 			local icon = "icon16/page_white.png"
 
-			local Node = self:AddNode( File, icon )
-			Node:SetFileName( foldername .. "/" .. File )
+			local Node = self:AddNode(File, icon)
+			Node:SetFileName(foldername .. "/" .. File)
 			FileCount = FileCount + 1
 
 		end
 
 	end
 
-	if ( FileCount == 0 ) then
+	if (FileCount == 0) then
 		self.ChildNodes:Remove()
 		self.ChildNodes = nil
 
 		self:SetNeedsPopulating( false)
-		self:SetShowFiles( nil )
-		self:SetWildCard( nil )
+		self:SetShowFiles(nil)
+		self:SetWildCard(nil)
 
 		self:InvalidateLayout()
 
-		self.Expander:SetExpanded( true )
+		self.Expander:SetExpanded(true)
 
 		return
 	end
@@ -466,25 +466,25 @@ function PANEL:FilePopulateCallback( files, folders, foldername, path, bAndChild
 
 end
 
-function PANEL:FilePopulate( bAndChildren, bExpand )
+function PANEL:FilePopulate(bAndChildren, bExpand)
 
-	if ( !self:GetNeedsPopulating() ) then return end
+	if (not self:GetNeedsPopulating()) then return end
 
 	local folder = self:GetFolder()
 	local path = self:GetPathID()
 	local wildcard = self:GetWildCard()
 
-	if ( !folder || !wildcard || !path ) then return false end
+	if (not folder or not wildcard or not path) then return false end
 
-	local files, folders = file.Find( folder .. "/" .. wildcard, path )
+	local files, folders = file.Find(folder .. "/" .. wildcard, path)
 
-	self:SetNeedsPopulating( false )
-	self:SetNeedsChildSearch( false )
+	self:SetNeedsPopulating(false)
+	self:SetNeedsChildSearch(false)
 
-	self:FilePopulateCallback( files, folders, folder, path, bAndChildren, wildcard )
+	self:FilePopulateCallback(files, folders, folder, path, bAndChildren, wildcard)
 
-	if ( bExpand ) then
-		self:SetExpanded( true )
+	if (bExpand) then
+		self:SetExpanded(true)
 	end
 
 	return true
@@ -493,11 +493,11 @@ end
 
 function PANEL:PopulateChildren()
 
-	for k, v in pairs( self.ChildNodes:GetChildren() ) do
+	for k, v in pairs(self.ChildNodes:GetChildren()) do
 		timer.Simple( k * 0.1, function()
 
-			if ( IsValid( v ) ) then
-				v:FilePopulate( false )
+			if (IsValid( v)) then
+				v:FilePopulate(false)
 			end
 
 		end )
@@ -505,18 +505,18 @@ function PANEL:PopulateChildren()
 
 end
 
-function PANEL:PopulateChildrenAndSelf( bExpand )
+function PANEL:PopulateChildrenAndSelf(bExpand)
 
 	-- Make sure we're populated
-	if ( self:FilePopulate( true, bExpand ) ) then return true end
+	if (self:FilePopulate( true, bExpand)) then return true end
 
 	self:PopulateChildren()
 
 end
 
-function PANEL:SetSelected( b )
+function PANEL:SetSelected(b)
 
-	self.Label:SetSelected( b )
+	self.Label:SetSelected(b)
 	self.Label:InvalidateLayout()
 
 end
@@ -530,13 +530,13 @@ end
 --
 -- DragHoverClick
 --
-function PANEL:DragHoverClick( HoverTime )
+function PANEL:DragHoverClick(HoverTime)
 
-	if ( !self.m_bExpanded ) then
-		self:SetExpanded( true )
+	if (not self.m_bExpanded) then
+		self:SetExpanded(true)
 	end
 
-	if ( self:GetRoot():GetClickOnDragHover() ) then
+	if (self:GetRoot():GetClickOnDragHover()) then
 
 		self:InternalDoClick()
 
@@ -547,15 +547,15 @@ end
 function PANEL:MoveToTop()
 
 	local parent = self:GetParentNode()
-	if ( !IsValid(parent) ) then return end
+	if (not IsValid(parent)) then return end
 
-	self:GetParentNode():MoveChildTo( self, 1 )
+	self:GetParentNode():MoveChildTo( self, 1)
 
 end
 
-function PANEL:MoveChildTo( child )
+function PANEL:MoveChildTo(child)
 
-	self.ChildNodes:InsertAtTop( child )
+	self.ChildNodes:InsertAtTop(child)
 
 end
 
@@ -569,9 +569,9 @@ end
 
 function PANEL:CleanList()
 
-	for k, panel in pairs( self.Items ) do
+	for k, panel in pairs(self.Items) do
 
-		if ( !IsValid( panel ) || panel:GetParent() != self.pnlCanvas ) then
+		if (not IsValid( panel) or panel:GetParent() ~= self.pnlCanvas) then
 			self.Items[k] = nil
 		end
 
@@ -579,26 +579,26 @@ function PANEL:CleanList()
 
 end
 
-function PANEL:Insert( pNode, pNodeNextTo, bBefore )
+function PANEL:Insert(pNode, pNodeNextTo, bBefore)
 
-	pNode:SetParentNode( self )
-	pNode:SetRoot( self:GetRoot() )
+	pNode:SetParentNode(self)
+	pNode:SetRoot(self:GetRoot())
 
 	self:CreateChildNodes()
 
-	if ( bBefore ) then
-		self.ChildNodes:InsertBefore( pNodeNextTo, pNode )
+	if (bBefore) then
+		self.ChildNodes:InsertBefore(pNodeNextTo, pNode)
 	else
-		self.ChildNodes:InsertAfter( pNodeNextTo, pNode )
+		self.ChildNodes:InsertAfter(pNodeNextTo, pNode)
 	end
 
 	self:InvalidateLayout()
 
 end
 
-function PANEL:LeaveTree( pnl )
+function PANEL:LeaveTree(pnl)
 
-	self.ChildNodes:RemoveItem( pnl, true )
+	self.ChildNodes:RemoveItem(pnl, true)
 	self:InvalidateLayout()
 
 end
@@ -609,48 +609,48 @@ function PANEL:OnModified()
 
 end
 
-function PANEL:GetChildNode( iNum )
+function PANEL:GetChildNode(iNum)
 
-	if ( !IsValid( self.ChildNodes ) ) then return end
-	return self.ChildNodes:GetChild( iNum )
+	if (not IsValid( self.ChildNodes)) then return end
+	return self.ChildNodes:GetChild(iNum)
 
 end
 
-function PANEL:Paint( w, h )
+function PANEL:Paint(w, h)
 
-	derma.SkinHook( "Paint", "TreeNode", self, w, h )
+	derma.SkinHook("Paint", "TreeNode", self, w, h)
 
 end
 
 function PANEL:Copy()
 
-	local copy = vgui.Create( "DTree_Node", self:GetParent() )
-	copy:SetText( self:GetText() )
-	copy:SetIcon( self:GetIcon() )
-	copy:SetRoot( self:GetRoot() )
-	copy:SetParentNode( self:GetParentNode() )
+	local copy = vgui.Create("DTree_Node", self:GetParent())
+	copy:SetText(self:GetText())
+	copy:SetIcon(self:GetIcon())
+	copy:SetRoot(self:GetRoot())
+	copy:SetParentNode(self:GetParentNode())
 
-	if ( self.ChildNodes ) then
+	if (self.ChildNodes) then
 
-		for k, v in pairs( self.ChildNodes:GetChildren() ) do
+		for k, v in pairs(self.ChildNodes:GetChildren()) do
 
 			local childcopy = v:Copy()
-			copy:InsertNode( childcopy )
+			copy:InsertNode(childcopy)
 
 		end
 
 	end
 
-	self:SetupCopy( copy )
+	self:SetupCopy(copy)
 
 	return copy
 
 end
 
-function PANEL:SetupCopy( copy )
+function PANEL:SetupCopy(copy)
 
 	-- TODO.
 
 end
 
-derma.DefineControl( "DTree_Node", "Tree Node", PANEL, "DPanel" )
+derma.DefineControl("DTree_Node", "Tree Node", PANEL, "DPanel")

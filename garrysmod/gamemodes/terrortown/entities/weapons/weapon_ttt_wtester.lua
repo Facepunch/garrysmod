@@ -96,7 +96,7 @@ end
 
 local beep_miss = Sound("player/suit_denydevice.wav")
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
    -- will be tracing against players
    self.Owner:LagCompensation(true)
@@ -154,7 +154,7 @@ function SWEP:GatherRagdollSample(ent)
             self:PerformScan(#self.ItemSamples)
          end
       end
-   elseif ply != nil then
+   elseif ply ~= nil then
       -- not valid but not nil -> disconnected?
       self:Report("dna_no_killer")
    else
@@ -230,13 +230,13 @@ function SWEP:RemoveItemSample(idx)
       end
 
       table.remove(self.ItemSamples, idx)
-      
+
       self:SendPrints(false)
-   end   
+   end
 end
 
 function SWEP:SecondaryAttack()
-   self:SetNextSecondaryFire( CurTime() + 0.05 )
+   self:SetNextSecondaryFire(CurTime() + 0.05)
 
    if CLIENT then return end
 
@@ -314,7 +314,7 @@ if SERVER then
       local pos = target:LocalToWorld(target:OBBCenter())
 
       self:SendScan(pos)
-      
+
       self:SetLastScanned(idx)
       self.NowRepeating = self:GetRepeating()
 
@@ -332,7 +332,7 @@ if SERVER then
          end
       elseif self.NowRepeating and IsValid(self.Owner) then
          -- owner changed his mind since running last scan?
-         if self:GetRepeating() then 
+         if self:GetRepeating() then
             self:PerformScan(self:GetLastScanned(), true)
          else
             self.NowRepeating = self:GetRepeating()
@@ -394,15 +394,15 @@ if CLIENT then
       local x = ScrW() / 2.0
       local y = ScrH() / 2.0
 
-      surface.DrawLine( x - length, y, x - gap, y )
-      surface.DrawLine( x + length, y, x + gap, y )
-      surface.DrawLine( x, y - length, x, y - gap )
-      surface.DrawLine( x, y + length, x, y + gap )
+      surface.DrawLine(x - length, y, x - gap, y)
+      surface.DrawLine(x + length, y, x + gap, y)
+      surface.DrawLine(x, y - length, x, y - gap)
+      surface.DrawLine(x, y + length, x, y + gap)
 
       if ent and can_sample then
          surface.SetFont("DefaultFixedDropShadow")
          surface.SetTextColor(0, 255, 0, 255)
-         surface.SetTextPos( x + length*2, y - length*2 )
+         surface.SetTextPos(x + length*2, y - length*2)
          surface.DrawText("TYPE: " .. (ent:GetClass() == "prop_ragdoll" and "BODY" or "ITEM"))
          surface.SetTextPos( x + length*2, y - length*2 + 15)
          surface.DrawText("ID:   #" .. ent:EntIndex())
@@ -470,7 +470,7 @@ if CLIENT then
                         scanned_pnl:SetIconColor(COLOR_WHITE)
                      end
 
-      if ilist.VBar then 
+      if ilist.VBar then
          ilist.VBar:Remove()
          ilist.VBar = nil
       end
@@ -572,7 +572,7 @@ if CLIENT then
       mwrap:SetPos(m,100)
       mwrap:SetSize(370, 90)
 
-      
+
       local bar = vgui.Create("TTTProgressBar", mwrap)
       bar:SetSize(370, 35)
       bar:SetPos(0, 0)
@@ -729,7 +729,7 @@ if CLIENT then
 else -- SERVER
 
    local function ScanPrint(ply, cmd, args)
-      if #args != 1 then return end
+      if #args ~= 1 then return end
 
       local tester = GetTester(ply)
       if IsValid(tester) then
@@ -743,7 +743,7 @@ else -- SERVER
    concommand.Add("ttt_wtester_scan", ScanPrint)
 
    local function RemoveSample(ply, cmd, args)
-      if #args != 1 then return end
+      if #args ~= 1 then return end
 
       local idx = tonumber(args[1])
       if not idx then return end

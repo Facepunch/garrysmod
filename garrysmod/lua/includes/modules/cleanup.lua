@@ -1,12 +1,12 @@
-module( "cleanup", package.seeall )
+module("cleanup", package.seeall)
 
 local cleanup_types = {}
 
-local function IsType( type )
+local function IsType(type)
 
-	for key, val in pairs( cleanup_types ) do
+	for key, val in pairs(cleanup_types) do
 
-		if ( val == type ) then return true end
+		if (val == type) then return true end
 
 	end
 
@@ -14,17 +14,17 @@ local function IsType( type )
 
 end
 
-function Register( type )
+function Register(type)
 
-	if ( type == "all" ) then return end
+	if (type == "all") then return end
 
-	for key, val in pairs( cleanup_types ) do
+	for key, val in pairs(cleanup_types) do
 
 		if val == type then return end
 
 	end
 
-	table.insert( cleanup_types, type )
+	table.insert(cleanup_types, type)
 
 end
 
@@ -33,7 +33,7 @@ function GetTable()
 end
 
 
-if ( SERVER ) then
+if (SERVER) then
 
 	local cleanup_list = {}
 
@@ -41,47 +41,47 @@ if ( SERVER ) then
 		return cleanup_list
 	end
 
-	local function Save( save )
+	local function Save(save)
 
-		saverestore.WriteTable( cleanup_list, save )
-
-	end
-
-	local function Restore( restore )
-
-		cleanup_list = saverestore.ReadTable( restore )
+		saverestore.WriteTable(cleanup_list, save)
 
 	end
 
-	saverestore.AddSaveHook( "CleanupTable", Save )
-	saverestore.AddRestoreHook( "CleanupTable", Restore )
+	local function Restore(restore)
 
-	function Add( pl, type, ent )
+		cleanup_list = saverestore.ReadTable(restore)
 
-		if ( !ent ) then return end
+	end
 
-		if ( !IsType( type ) ) then return end
+	saverestore.AddSaveHook("CleanupTable", Save)
+	saverestore.AddRestoreHook("CleanupTable", Restore)
+
+	function Add(pl, type, ent)
+
+		if (not ent) then return end
+
+		if (not IsType( type)) then return end
 
 		local id = pl:UniqueID()
 
 		cleanup_list[ id ] = cleanup_list[ id ] or {}
 		cleanup_list[ id ][ type ] = cleanup_list[ id ][ type ] or {}
 
-		if ( !IsValid( ent ) ) then return end
+		if (not IsValid( ent)) then return end
 
-		table.insert( cleanup_list[ id ][ type ], ent )
+		table.insert(cleanup_list[ id ][ type ], ent)
 
 	end
 
-	function ReplaceEntity( from, to )
+	function ReplaceEntity(from, to)
 
 		local ActionTaken = false
 
-		for _, PlayerTable in pairs( cleanup_list ) do
-			for _, TypeTable in pairs( PlayerTable ) do
-				for key, ent in pairs( TypeTable ) do
+		for _, PlayerTable in pairs(cleanup_list) do
+			for _, TypeTable in pairs(PlayerTable) do
+				for key, ent in pairs(TypeTable) do
 
-					if ( ent == from ) then
+					if (ent == from) then
 						TypeTable[ key ] = to
 						ActionTaken = true
 					end
@@ -95,73 +95,73 @@ if ( SERVER ) then
 	end
 
 
-	function CC_Cleanup( pl, command, args )
+	function CC_Cleanup(pl, command, args)
 
-		if ( !IsValid( pl ) ) then return end
+		if (not IsValid( pl)) then return end
 
 		local id = pl:UniqueID()
 
-		if ( !cleanup_list[ id ] ) then return end
+		if (not cleanup_list[ id ]) then return end
 
-		if ( !args[ 1 ] ) then
+		if (not args[ 1 ]) then
 
 			local count = 0
 
-			for key, val in pairs( cleanup_list[ id ] ) do
+			for key, val in pairs(cleanup_list[ id ]) do
 
-				for key, ent in pairs( val ) do
+				for key, ent in pairs(val) do
 
-					if ( IsValid( ent ) ) then ent:Remove() end
+					if (IsValid( ent)) then ent:Remove() end
 					count = count + 1
 
 				end
 
-				table.Empty( val )
+				table.Empty(val)
 
 			end
 
 			-- Send tooltip command to client
-			if ( count > 0 ) then
-				pl:SendLua( 'hook.Run("OnCleanup","all")' )
+			if (count > 0) then
+				pl:SendLua('hook.Run("OnCleanup","all")')
 			end
 
 			return
 
 		end
 
-		if ( !IsType( args[1] ) ) then return end
-		if ( !cleanup_list[id][ args[1] ] ) then return end
+		if (not IsType( args[1])) then return end
+		if (not cleanup_list[id][ args[1] ]) then return end
 
-		for key, ent in pairs( cleanup_list[id][ args[1] ] ) do
+		for key, ent in pairs(cleanup_list[id][ args[1] ]) do
 
-			if ( IsValid( ent ) ) then ent:Remove() end
+			if (IsValid( ent)) then ent:Remove() end
 
 		end
 
-		table.Empty( cleanup_list[id][ args[1] ] )
+		table.Empty(cleanup_list[id][ args[1] ])
 
 		-- Send tooltip command to client
-		pl:SendLua( 'hook.Run("OnCleanup","' .. args[1] .. '")' )
+		pl:SendLua('hook.Run("OnCleanup","' .. args[1] .. '")')
 
 	end
 
-	function CC_AdminCleanup( pl, command, args )
+	function CC_AdminCleanup(pl, command, args)
 
-		if ( IsValid( pl ) && !pl:IsAdmin() ) then return end
+		if (IsValid( pl) and not pl:IsAdmin()) then return end
 
-		if ( !args[ 1 ] ) then
+		if (not args[ 1 ]) then
 
-			for key, ply in pairs( cleanup_list ) do
+			for key, ply in pairs(cleanup_list) do
 
-				for key, type in pairs( ply ) do
+				for key, type in pairs(ply) do
 
-					for key, ent in pairs( type ) do
+					for key, ent in pairs(type) do
 
-						if ( IsValid( ent ) ) then ent:Remove() end
+						if (IsValid( ent)) then ent:Remove() end
 
 					end
 
-					table.Empty( type )
+					table.Empty(type)
 
 				end
 
@@ -170,71 +170,71 @@ if ( SERVER ) then
 			game.CleanUpMap()
 
 			-- Send tooltip command to client
-			if ( IsValid( pl ) ) then pl:SendLua( 'hook.Run("OnCleanup","all")' ) end
+			if (IsValid( pl)) then pl:SendLua( 'hook.Run("OnCleanup","all")') end
 
 			return
 
 		end
 
-		if ( !IsType( args[ 1 ] ) ) then return end
+		if (not IsType( args[ 1 ])) then return end
 
-		for key, ply in pairs( cleanup_list ) do
+		for key, ply in pairs(cleanup_list) do
 
-			if ( ply[ args[ 1 ] ] != nil ) then
+			if (ply[ args[ 1 ] ] ~= nil) then
 
-				for key, ent in pairs( ply[ args[ 1 ] ] ) do
+				for key, ent in pairs(ply[ args[ 1 ] ]) do
 
-					if ( IsValid( ent ) ) then ent:Remove() end
+					if (IsValid( ent)) then ent:Remove() end
 
 				end
 
-				table.Empty( ply[ args[ 1 ] ] )
+				table.Empty(ply[ args[ 1 ] ])
 
 			end
 
 		end
 
 		-- Send tooltip command to client
-		if ( IsValid( pl ) ) then pl:SendLua( 'hook.Run("OnCleanup","' .. args[1] .. '")' ) end
+		if (IsValid( pl)) then pl:SendLua( 'hook.Run("OnCleanup","' .. args[1] .. '")') end
 
 	end
 
-	concommand.Add( "gmod_cleanup", CC_Cleanup, nil, "", { FCVAR_DONTRECORD } )
-	concommand.Add( "gmod_admin_cleanup", CC_AdminCleanup, nil, "", { FCVAR_DONTRECORD } )
+	concommand.Add("gmod_cleanup", CC_Cleanup, nil, "", { FCVAR_DONTRECORD })
+	concommand.Add("gmod_admin_cleanup", CC_AdminCleanup, nil, "", { FCVAR_DONTRECORD })
 
 else
 
 	function UpdateUI()
 
 		local cleanup_types_s = {}
-		for id, val in pairs( cleanup_types ) do
-			cleanup_types_s[ language.GetPhrase( "Cleanup_" .. val ) ] = val
+		for id, val in pairs(cleanup_types) do
+			cleanup_types_s[ language.GetPhrase("Cleanup_" .. val) ] = val
 		end
 
-		local Panel = controlpanel.Get( "User_Cleanup" )
-		if ( IsValid( Panel ) ) then
+		local Panel = controlpanel.Get("User_Cleanup")
+		if (IsValid( Panel)) then
 			Panel:ClearControls()
-			Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.cleanup.help" } )
-			Panel:Button( "#CleanupAll", "gmod_cleanup" )
+			Panel:AddControl("Header", { Description = "#spawnmenu.utilities.cleanup.help" })
+			Panel:Button("#CleanupAll", "gmod_cleanup")
 
-			for key, val in SortedPairs( cleanup_types_s ) do
-				Panel:Button( key, "gmod_cleanup", val )
+			for key, val in SortedPairs(cleanup_types_s) do
+				Panel:Button(key, "gmod_cleanup", val)
 			end
 		end
 
-		local Panel = controlpanel.Get( "Admin_Cleanup" )
-		if ( IsValid( Panel ) ) then
+		local Panel = controlpanel.Get("Admin_Cleanup")
+		if (IsValid( Panel)) then
 			Panel:ClearControls()
-			Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.cleanup.help" } )
-			Panel:Button( "#CleanupAll", "gmod_admin_cleanup" )
+			Panel:AddControl("Header", { Description = "#spawnmenu.utilities.cleanup.help" })
+			Panel:Button("#CleanupAll", "gmod_admin_cleanup")
 
-			for key, val in SortedPairs( cleanup_types_s ) do
-				Panel:Button( key, "gmod_admin_cleanup", val )
+			for key, val in SortedPairs(cleanup_types_s) do
+				Panel:Button(key, "gmod_admin_cleanup", val)
 			end
 		end
 
 	end
 
-	hook.Add( "PostReloadToolsMenu", "BuildCleanupUI", UpdateUI )
+	hook.Add("PostReloadToolsMenu", "BuildCleanupUI", UpdateUI)
 
 end

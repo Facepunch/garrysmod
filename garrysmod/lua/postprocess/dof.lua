@@ -1,8 +1,8 @@
 
-CreateClientConVar( "pp_dof", "0", false, false )
+CreateClientConVar("pp_dof", "0", false, false)
 
-local pp_dof_initlength = CreateClientConVar( "pp_dof_initlength", "256", true, false )
-local pp_dof_spacing = CreateClientConVar( "pp_dof_spacing", "512", true, false )
+local pp_dof_initlength = CreateClientConVar("pp_dof_initlength", "256", true, false)
+local pp_dof_spacing = CreateClientConVar("pp_dof_spacing", "512", true, false)
 
 -- Global table to hold the DoF effect
 DOF_Ents = {}
@@ -13,15 +13,15 @@ local NUM_DOF_NODES = 16
 
 function DOF_Kill()
 
-	for k, v in pairs( DOF_Ents ) do
+	for k, v in pairs(DOF_Ents) do
 
-		if ( IsValid( v ) ) then
+		if (IsValid( v)) then
 			v:Remove()
 		end
 
 	end
 
-	DOFModeHack( false )
+	DOFModeHack(false)
 
 end
 
@@ -32,12 +32,12 @@ function DOF_Start()
 	for i = 0, NUM_DOF_NODES do
 
 		local effectdata = EffectData()
-		effectdata:SetScale( i )
-		util.Effect( "dof_node", effectdata )
+		effectdata:SetScale(i)
+		util.Effect("dof_node", effectdata)
 
 	end
 
-	DOFModeHack( true )
+	DOFModeHack(true)
 
 end
 
@@ -48,11 +48,11 @@ hook.Add( "Think", "DOFThink", function()
 
 end )
 
-cvars.AddChangeCallback( "pp_dof", function( name, oldvalue, newvalue )
+cvars.AddChangeCallback("pp_dof", function( name, oldvalue, newvalue)
 
-	if ( !GAMEMODE:PostProcessPermitted( "dof" ) ) then return end
+	if (not GAMEMODE:PostProcessPermitted( "dof")) then return end
 
-	if ( newvalue != "0" ) then
+	if (newvalue ~= "0") then
 		DOF_Start()
 	else
 		DOF_Kill()
@@ -67,18 +67,18 @@ list.Set( "PostProcess", "#dof_pp", {
 	convar = "pp_dof",
 	category = "#effects_pp",
 
-	cpanel = function( CPanel )
+	cpanel = function(CPanel)
 
-		CPanel:AddControl( "Header", { Description = "#dof_pp.desc" } )
-		CPanel:AddControl( "CheckBox", { Label = "#dof_pp.enable", Command = "pp_dof" } )
+		CPanel:AddControl("Header", { Description = "#dof_pp.desc" })
+		CPanel:AddControl("CheckBox", { Label = "#dof_pp.enable", Command = "pp_dof" })
 
 		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "dof" }
 		params.Options[ "#preset.default" ] = { pp_dof_initlength = "256", pp_dof_spacing = "512" }
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
+		params.CVars = table.GetKeys(params.Options[ "#preset.default" ])
+		CPanel:AddControl("ComboBox", params)
 
-		CPanel:AddControl( "Slider", { Label = "#dof_pp.spacing", Command = "pp_dof_spacing", Type = "Float", Min = "8", Max = "1024" } )
-		CPanel:AddControl( "Slider", { Label = "#dof_pp.start_distance", Command = "pp_dof_initlength", Type = "Float", Min = "9", Max = "1024" } )
+		CPanel:AddControl("Slider", { Label = "#dof_pp.spacing", Command = "pp_dof_spacing", Type = "Float", Min = "8", Max = "1024" })
+		CPanel:AddControl("Slider", { Label = "#dof_pp.start_distance", Command = "pp_dof_initlength", Type = "Float", Min = "9", Max = "1024" })
 
 	end
 

@@ -113,7 +113,7 @@ function ENT:UpdateTransmitState()
 end
 
 local function TraitorUseCmd(ply, cmd, args)
-   if #args != 1 then return end
+   if #args ~= 1 then return end
 
    if IsValid(ply) and ply:IsActiveTraitor() then
       local idx = tonumber(args[1])

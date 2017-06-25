@@ -11,124 +11,124 @@ TOOL.Information = {
 	{ name = "right" }
 }
 
-cleanup.Register( "cameras" )
+cleanup.Register("cameras")
 
-local function CheckLimit( ply, key )
+local function CheckLimit(ply, key)
 
 	-- TODO: Clientside prediction
-	if ( CLIENT ) then return true end
+	if (CLIENT) then return true end
 
 	local found = false
-	for id, camera in pairs( ents.FindByClass( "gmod_cameraprop" ) ) do
-		if ( !camera.controlkey || camera.controlkey != key ) then continue end
-		if ( IsValid( camera:GetPlayer() ) && ply != camera:GetPlayer() ) then continue end
+	for id, camera in pairs(ents.FindByClass( "gmod_cameraprop")) do
+		if (not camera.controlkey or camera.controlkey ~= key) then continue end
+		if (IsValid( camera:GetPlayer()) and ply ~= camera:GetPlayer()) then continue end
 		found = true
 		break
 	end
 
-	if ( !found ) then
-		if ( !ply:CheckLimit( "cameras" ) ) then return false end
+	if (not found) then
+		if (not ply:CheckLimit( "cameras")) then return false end
 	end
 
 	return true
 
 end
 
-local function MakeCamera( ply, key, locked, toggle, Data )
-	if ( IsValid( ply ) && !CheckLimit( ply, key ) ) then return false end
+local function MakeCamera(ply, key, locked, toggle, Data)
+	if (IsValid( ply) and not CheckLimit( ply, key)) then return false end
 
-	local ent = ents.Create( "gmod_cameraprop" )
-	if ( !IsValid( ent ) ) then return end
+	local ent = ents.Create("gmod_cameraprop")
+	if (not IsValid( ent)) then return end
 
-	duplicator.DoGeneric( ent, Data )
+	duplicator.DoGeneric(ent, Data)
 
-	if ( key ) then
-		for id, camera in pairs( ents.FindByClass( "gmod_cameraprop" ) ) do
-			if ( !camera.controlkey || camera.controlkey != key ) then continue end
-			if ( IsValid( ply ) && IsValid( camera:GetPlayer() ) && ply != camera:GetPlayer() ) then continue end
+	if (key) then
+		for id, camera in pairs(ents.FindByClass( "gmod_cameraprop")) do
+			if (not camera.controlkey or camera.controlkey ~= key) then continue end
+			if (IsValid( ply) and IsValid( camera:GetPlayer()) and ply ~= camera:GetPlayer()) then continue end
 			camera:Remove()
 		end
 
-		ent:SetKey( key )
+		ent:SetKey(key)
 		ent.controlkey = key
 	end
 
-	ent:SetPlayer( ply )
+	ent:SetPlayer(ply)
 
 	ent.toggle = toggle
 	ent.locked = locked
 
 	ent:Spawn()
 
-	ent:SetTracking( NULL, Vector( 0 ) )
-	ent:SetLocked( locked )
+	ent:SetTracking(NULL, Vector( 0))
+	ent:SetLocked(locked)
 
-	if ( toggle == 1 ) then
-		numpad.OnDown( ply, key, "Camera_Toggle", ent )
+	if (toggle == 1) then
+		numpad.OnDown(ply, key, "Camera_Toggle", ent)
 	else
-		numpad.OnDown( ply, key, "Camera_On", ent )
-		numpad.OnUp( ply, key, "Camera_Off", ent )
+		numpad.OnDown(ply, key, "Camera_On", ent)
+		numpad.OnUp(ply, key, "Camera_Off", ent)
 	end
 
-	if ( IsValid( ply ) ) then
-		ply:AddCleanup( "cameras", ent )
-		ply:AddCount( "cameras", ent )
+	if (IsValid( ply)) then
+		ply:AddCleanup("cameras", ent)
+		ply:AddCount("cameras", ent)
 	end
 
 	return ent
 
 end
-duplicator.RegisterEntityClass( "gmod_cameraprop", MakeCamera, "controlkey", "locked", "toggle", "Data" )
+duplicator.RegisterEntityClass("gmod_cameraprop", MakeCamera, "controlkey", "locked", "toggle", "Data")
 
-function TOOL:LeftClick( trace )
+function TOOL:LeftClick(trace)
 
 	local ply = self:GetOwner()
-	local key = self:GetClientNumber( "key" )
-	if ( key == -1 ) then return false end
+	local key = self:GetClientNumber("key")
+	if (key == -1) then return false end
 
-	if ( !CheckLimit( ply, key ) ) then return false end
+	if (not CheckLimit( ply, key)) then return false end
 
-	if ( CLIENT ) then return true end
+	if (CLIENT) then return true end
 
-	local locked = self:GetClientNumber( "locked" )
-	local toggle = self:GetClientNumber( "toggle" )
+	local locked = self:GetClientNumber("locked")
+	local toggle = self:GetClientNumber("toggle")
 
-	local ent = MakeCamera( ply, key, locked, toggle, { Pos = trace.StartPos, Angle = ply:EyeAngles() } )
+	local ent = MakeCamera(ply, key, locked, toggle, { Pos = trace.StartPos, Angle = ply:EyeAngles() })
 
-	undo.Create( "Camera" )
-		undo.AddEntity( ent )
-		undo.SetPlayer( ply )
+	undo.Create("Camera")
+		undo.AddEntity(ent)
+		undo.SetPlayer(ply)
 	undo.Finish()
 
 	return true, ent
 
 end
 
-function TOOL:RightClick( trace )
+function TOOL:RightClick(trace)
 
-	local _, camera = self:LeftClick( trace, true )
+	local _, camera = self:LeftClick(trace, true)
 
-	if ( CLIENT ) then return true end
+	if (CLIENT) then return true end
 
-	if ( !IsValid( camera ) ) then return false end
+	if (not IsValid( camera)) then return false end
 
-	if ( trace.Entity:IsWorld() ) then
+	if (trace.Entity:IsWorld()) then
 
 		trace.Entity = self:GetOwner()
 		trace.HitPos = self:GetOwner():GetPos()
 
 	end
 
-	camera:SetTracking( trace.Entity, trace.Entity:WorldToLocal( trace.HitPos ) )
+	camera:SetTracking(trace.Entity, trace.Entity:WorldToLocal( trace.HitPos))
 
 	return true
 
 end
 
-function TOOL.BuildCPanel( CPanel )
+function TOOL.BuildCPanel(CPanel)
 
-	CPanel:AddControl( "Numpad", { Label = "#tool.camera.key", Command = "camera_key" } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.camera.static", Command = "camera_locked", Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.toggle", Command = "camera_toggle" } )
+	CPanel:AddControl("Numpad", { Label = "#tool.camera.key", Command = "camera_key" })
+	CPanel:AddControl("CheckBox", { Label = "#tool.camera.static", Command = "camera_locked", Help = true })
+	CPanel:AddControl("CheckBox", { Label = "#tool.toggle", Command = "camera_toggle" })
 
 end

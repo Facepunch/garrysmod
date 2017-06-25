@@ -35,7 +35,7 @@ function ScoreEvent(e, scores)
 
       if aid == vid then
          scores[vid].suicides = scores[vid].suicides + 1
-      elseif aid != -1 then
+      elseif aid ~= -1 then
          if e.vic.tr then
             scores[aid].traitors = scores[aid].traitors + 1
          elseif not e.vic.tr then

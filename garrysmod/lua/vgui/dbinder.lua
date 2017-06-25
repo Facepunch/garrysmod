@@ -1,31 +1,31 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_iSelectedNumber", "SelectedNumber" )
+AccessorFunc(PANEL, "m_iSelectedNumber", "SelectedNumber")
 
-Derma_Install_Convar_Functions( PANEL )
+Derma_Install_Convar_Functions(PANEL)
 
 function PANEL:Init()
 
-	self:SetSelected( 0 )
-	self:SetSize( 60, 30 )
+	self:SetSelected(0)
+	self:SetSize(60, 30)
 
 end
 
 function PANEL:UpdateText()
 
-	local str = input.GetKeyName( self.m_iSelectedNumber )
-	if ( !str ) then str = "NONE" end
+	local str = input.GetKeyName(self.m_iSelectedNumber)
+	if (not str) then str = "NONE" end
 
-	str = language.GetPhrase( str )
+	str = language.GetPhrase(str)
 
-	self:SetText( str )
+	self:SetText(str)
 
 end
 
 function PANEL:DoClick()
 
-	self:SetText( "PRESS A KEY" )
+	self:SetText("PRESS A KEY")
 	input.StartKeyTrapping()
 	self.Trapping = true
 
@@ -33,34 +33,34 @@ end
 
 function PANEL:DoRightClick()
 
-	self:SetText( "NONE" )
-	self:SetValue( 0 )
+	self:SetText("NONE")
+	self:SetValue(0)
 
 end
 
-function PANEL:SetSelected( iNum )
+function PANEL:SetSelected(iNum)
 
-	self:SetSelectedNumber( iNum )
-	self:ConVarChanged( iNum )
+	self:SetSelectedNumber(iNum)
+	self:ConVarChanged(iNum)
 	self:UpdateText()
-	self:OnChange( iNum )
+	self:OnChange(iNum)
 
 end
 
 function PANEL:Think()
 
-	if ( input.IsKeyTrapping() && self.Trapping ) then
+	if (input.IsKeyTrapping() and self.Trapping) then
 
 		local code = input.CheckKeyTrapping()
-		if ( code ) then
+		if (code) then
 
-			if ( code == KEY_ESCAPE ) then
+			if (code == KEY_ESCAPE) then
 
-				self:SetValue( self.m_iSelectedNumber )
+				self:SetValue(self.m_iSelectedNumber)
 
 			else
 
-				self:SetValue( code )
+				self:SetValue(code)
 
 			end
 
@@ -74,9 +74,9 @@ function PANEL:Think()
 
 end
 
-function PANEL:SetValue( iNumValue )
+function PANEL:SetValue(iNumValue)
 
-	self:SetSelected( iNumValue )
+	self:SetSelected(iNumValue)
 
 end
 
@@ -89,4 +89,4 @@ end
 function PANEL:OnChange()
 end
 
-derma.DefineControl( "DBinder", "", PANEL, "DButton" )
+derma.DefineControl("DBinder", "", PANEL, "DButton")

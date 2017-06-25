@@ -10,38 +10,38 @@ local umsg 		= umsg
 	using this they're always sent as long. Which sucks if you're sending
 	numbers that are always under 100 etc.
 --]]
-function SendUserMessage( name, ply, ... )
+function SendUserMessage(name, ply, ...)
 
-	umsg.Start( name, ply )
-	
-	for k, v in pairs( {...} ) do
-	
-		local t = type( v )
-		
-		if ( t == "string" ) then
-			umsg.String( v )
-		elseif ( IsEntity( v ) ) then
-			umsg.Entity( v )
-		elseif ( t == "number" ) then
-			umsg.Long( v )
-		elseif ( t == "Vector" ) then
-			umsg.Vector( v )
-		elseif ( t == "Angle" ) then
-			umsg.Angle( v )
-		elseif ( t == "boolean" ) then
-			umsg.Bool( v )
+	umsg.Start(name, ply)
+
+	for k, v in pairs({...}) do
+
+		local t = type(v)
+
+		if (t == "string") then
+			umsg.String(v)
+		elseif (IsEntity( v)) then
+			umsg.Entity(v)
+		elseif (t == "number") then
+			umsg.Long(v)
+		elseif (t == "Vector") then
+			umsg.Vector(v)
+		elseif (t == "Angle") then
+			umsg.Angle(v)
+		elseif (t == "boolean") then
+			umsg.Bool(v)
 		else
-			ErrorNoHalt( "SendUserMessage: Couldn't send type "..t.."\n" )
+			ErrorNoHalt("SendUserMessage: Couldn't send type "..t.."\n")
 		end
 	end
-	
+
 	umsg.End()
 
 end
 
 --[[---------------------------------------------------------
    Name: usermessage
-   Desc: Enables the server to send the client messages 
+   Desc: Enables the server to send the client messages
 		 (in a bandwidth friendly manner)
 -----------------------------------------------------------]]
 module("usermessage")
@@ -62,10 +62,10 @@ end
    Name: Hook
    Desc: Adds a hook
 -----------------------------------------------------------]]
-function Hook( messagename, func, ... )
+function Hook(messagename, func, ...)
 
-	if ( SERVER ) then
-		umsg.PoolString( messagename )
+	if (SERVER) then
+		umsg.PoolString(messagename)
 		return
 	end
 
@@ -73,22 +73,22 @@ function Hook( messagename, func, ... )
 
 	Hooks[ messagename ].Function 	= func
 	Hooks[ messagename ].PreArgs	= {...}
-	
+
 end
 
 --[[---------------------------------------------------------
-   Name: Call( name, args )
+   Name: Call(name, args)
    Desc: Called by the engine to call a gamemode hook
 -----------------------------------------------------------]]
-function IncomingMessage( MessageName, msg )
+function IncomingMessage(MessageName, msg)
 
-	if ( Hooks[ MessageName ] ) then
-	
-		Hooks[ MessageName ].Function( msg, unpack(Hooks[ MessageName ].PreArgs) )
+	if (Hooks[ MessageName ]) then
+
+		Hooks[ MessageName ].Function(msg, unpack(Hooks[ MessageName ].PreArgs))
 		return
-	
+
 	end
-	
+
 	Msg("Warning: Unhandled usermessage '"..MessageName.."'\n")
 
 end

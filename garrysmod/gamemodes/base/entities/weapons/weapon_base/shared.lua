@@ -33,7 +33,7 @@ SWEP.Secondary.Ammo			= "Pistol"
 -----------------------------------------------------------]]
 function SWEP:Initialize()
 
-	self:SetHoldType( "pistol" )
+	self:SetHoldType("pistol")
 
 end
 
@@ -45,19 +45,19 @@ end
 function SWEP:PrimaryAttack()
 
 	-- Make sure we can shoot first
-	if ( !self:CanPrimaryAttack() ) then return end
+	if (not self:CanPrimaryAttack()) then return end
 
 	-- Play shoot sound
 	self.Weapon:EmitSound("Weapon_AR2.Single")
-	
+
 	-- Shoot 9 bullets, 150 damage, 0.75 aimcone
-	self:ShootBullet( 150, 1, 0.01 )
-	
+	self:ShootBullet(150, 1, 0.01)
+
 	-- Remove 1 bullet from our clip
-	self:TakePrimaryAmmo( 1 )
-	
+	self:TakePrimaryAmmo(1)
+
 	-- Punch the player's view
-	self.Owner:ViewPunch( Angle( -1, 0, 0 ) )
+	self.Owner:ViewPunch(Angle( -1, 0, 0))
 
 end
 
@@ -69,19 +69,19 @@ end
 function SWEP:SecondaryAttack()
 
 	-- Make sure we can shoot first
-	if ( !self:CanSecondaryAttack() ) then return end
+	if (not self:CanSecondaryAttack()) then return end
 
 	-- Play shoot sound
 	self.Weapon:EmitSound("Weapon_Shotgun.Single")
-	
+
 	-- Shoot 9 bullets, 150 damage, 0.75 aimcone
-	self:ShootBullet( 150, 9, 0.2 )
-	
+	self:ShootBullet(150, 9, 0.2)
+
 	-- Remove 1 bullet from our clip
-	self:TakeSecondaryAmmo( 1 )
-	
+	self:TakeSecondaryAmmo(1)
+
 	-- Punch the player's view
-	self.Owner:ViewPunch( Angle( -10, 0, 0 ) )
+	self.Owner:ViewPunch(Angle( -10, 0, 0))
 
 end
 
@@ -91,7 +91,7 @@ end
    Desc: Reload is being pressed
 -----------------------------------------------------------]]
 function SWEP:Reload()
-	self.Weapon:DefaultReload( ACT_VM_RELOAD );
+	self.Weapon:DefaultReload(ACT_VM_RELOAD)
 end
 
 
@@ -104,11 +104,11 @@ end
 
 
 --[[---------------------------------------------------------
-   Name: SWEP:Holster( weapon_to_swap_to )
+   Name: SWEP:Holster(weapon_to_swap_to)
    Desc: Weapon wants to holster
    RetV: Return true to allow the weapon to holster
 -----------------------------------------------------------]]
-function SWEP:Holster( wep )
+function SWEP:Holster(wep)
 	return true
 end
 
@@ -127,9 +127,9 @@ end
 -----------------------------------------------------------]]
 function SWEP:ShootEffects()
 
-	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) 		-- View model animation
+	self.Weapon:SendWeaponAnim(ACT_VM_PRIMARYATTACK) 		-- View model animation
 	self.Owner:MuzzleFlash()								-- Crappy muzzle light
-	self.Owner:SetAnimation( PLAYER_ATTACK1 )				-- 3rd Person Animation
+	self.Owner:SetAnimation(PLAYER_ATTACK1)				-- 3rd Person Animation
 
 end
 
@@ -138,62 +138,62 @@ end
    Name: SWEP:ShootBullet( )
    Desc: A convenience function to shoot bullets
 -----------------------------------------------------------]]
-function SWEP:ShootBullet( damage, num_bullets, aimcone )
-	
+function SWEP:ShootBullet(damage, num_bullets, aimcone)
+
 	local bullet = {}
 	bullet.Num 		= num_bullets
 	bullet.Src 		= self.Owner:GetShootPos()			-- Source
 	bullet.Dir 		= self.Owner:GetAimVector()			-- Dir of bullet
-	bullet.Spread 	= Vector( aimcone, aimcone, 0 )		-- Aim Cone
-	bullet.Tracer	= 5									-- Show a tracer on every x bullets 
+	bullet.Spread 	= Vector(aimcone, aimcone, 0)		-- Aim Cone
+	bullet.Tracer	= 5									-- Show a tracer on every x bullets
 	bullet.Force	= 1									-- Amount of force to give to phys objects
 	bullet.Damage	= damage
 	bullet.AmmoType = "Pistol"
-	
-	self.Owner:FireBullets( bullet )
-	
+
+	self.Owner:FireBullets(bullet)
+
 	self:ShootEffects()
-	
+
 end
 
 
 --[[---------------------------------------------------------
-   Name: SWEP:TakePrimaryAmmo(   )
+   Name: SWEP:TakePrimaryAmmo( )
    Desc: A convenience function to remove ammo
 -----------------------------------------------------------]]
-function SWEP:TakePrimaryAmmo( num )
-	
+function SWEP:TakePrimaryAmmo(num)
+
 	-- Doesn't use clips
-	if ( self.Weapon:Clip1() <= 0 ) then 
-	
-		if ( self:Ammo1() <= 0 ) then return end
-		
-		self.Owner:RemoveAmmo( num, self.Weapon:GetPrimaryAmmoType() )
-	
+	if (self.Weapon:Clip1() <= 0) then
+
+		if (self:Ammo1() <= 0) then return end
+
+		self.Owner:RemoveAmmo(num, self.Weapon:GetPrimaryAmmoType())
+
 	return end
-	
-	self.Weapon:SetClip1( self.Weapon:Clip1() - num )	
-	
+
+	self.Weapon:SetClip1(self.Weapon:Clip1() - num)
+
 end
 
 
 --[[---------------------------------------------------------
-   Name: SWEP:TakeSecondaryAmmo(   )
+   Name: SWEP:TakeSecondaryAmmo( )
    Desc: A convenience function to remove ammo
 -----------------------------------------------------------]]
-function SWEP:TakeSecondaryAmmo( num )
-	
+function SWEP:TakeSecondaryAmmo(num)
+
 	-- Doesn't use clips
-	if ( self.Weapon:Clip2() <= 0 ) then 
-	
-		if ( self:Ammo2() <= 0 ) then return end
-		
-		self.Owner:RemoveAmmo( num, self.Weapon:GetSecondaryAmmoType() )
-	
+	if (self.Weapon:Clip2() <= 0) then
+
+		if (self:Ammo2() <= 0) then return end
+
+		self.Owner:RemoveAmmo(num, self.Weapon:GetSecondaryAmmoType())
+
 	return end
-	
-	self.Weapon:SetClip2( self.Weapon:Clip2() - num )	
-	
+
+	self.Weapon:SetClip2(self.Weapon:Clip2() - num)
+
 end
 
 
@@ -203,13 +203,13 @@ end
 -----------------------------------------------------------]]
 function SWEP:CanPrimaryAttack()
 
-	if ( self.Weapon:Clip1() <= 0 ) then
-	
-		self:EmitSound( "Weapon_Pistol.Empty" )
-		self:SetNextPrimaryFire( CurTime() + 0.2 )
+	if (self.Weapon:Clip1() <= 0) then
+
+		self:EmitSound("Weapon_Pistol.Empty")
+		self:SetNextPrimaryFire(CurTime() + 0.2)
 		self:Reload()
 		return false
-		
+
 	end
 
 	return true
@@ -223,12 +223,12 @@ end
 -----------------------------------------------------------]]
 function SWEP:CanSecondaryAttack()
 
-	if ( self.Weapon:Clip2() <= 0 ) then
-	
-		self.Weapon:EmitSound( "Weapon_Pistol.Empty" )
-		self.Weapon:SetNextSecondaryFire( CurTime() + 0.2 )
+	if (self.Weapon:Clip2() <= 0) then
+
+		self.Weapon:EmitSound("Weapon_Pistol.Empty")
+		self.Weapon:SetNextSecondaryFire(CurTime() + 0.2)
 		return false
-		
+
 	end
 
 	return true
@@ -257,7 +257,7 @@ end
    Desc: Returns how much of ammo1 the player has
 -----------------------------------------------------------]]
 function SWEP:Ammo1()
-	return self.Owner:GetAmmoCount( self.Weapon:GetPrimaryAmmoType() )
+	return self.Owner:GetAmmoCount(self.Weapon:GetPrimaryAmmoType())
 end
 
 
@@ -266,16 +266,16 @@ end
    Desc: Returns how much of ammo2 the player has
 -----------------------------------------------------------]]
 function SWEP:Ammo2()
-	return self.Owner:GetAmmoCount( self.Weapon:GetSecondaryAmmoType() )
+	return self.Owner:GetAmmoCount(self.Weapon:GetSecondaryAmmoType())
 end
 
 --[[---------------------------------------------------------
    Name: SetDeploySpeed
-   Desc: Sets the weapon deploy speed. 
+   Desc: Sets the weapon deploy speed.
 		 This value needs to match on client and server.
 -----------------------------------------------------------]]
-function SWEP:SetDeploySpeed( speed )
-	self.m_WeaponDeploySpeed = tonumber( speed )
+function SWEP:SetDeploySpeed(speed)
+	self.m_WeaponDeploySpeed = tonumber(speed)
 end
 
 --[[---------------------------------------------------------
@@ -283,8 +283,8 @@ end
    Desc: Callback so the weapon can override the impact effects it makes
 		 return true to not do the default thing - which is to call UTIL_ImpactTrace in c++
 -----------------------------------------------------------]]
-function SWEP:DoImpactEffect( tr, nDamageType )
-		
+function SWEP:DoImpactEffect(tr, nDamageType)
+
 	return false;
-	
+
 end

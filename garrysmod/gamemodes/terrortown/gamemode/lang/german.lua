@@ -16,15 +16,15 @@ L.round_minplayers = "Zu wenig Spieler um eine neue Runde zu beginnen..."
 L.round_voting     = "Es läuft eine Umfrage, verzögere neue Runde um {num} Sekunde(n)..."
 L.round_begintime  = "Eine neue Runde beginnt in {num} Sekunde(n). Bereite dich vor."
 L.round_selected   = "Die Verräter wurden ausgewählt."
-L.round_started    = "Die Runde hat begonnen!"
+L.round_started    = "Die Runde hat begonnennot "
 L.round_restart    = "Ein Admin erzwang den Neustart der Runde."
 
 L.round_traitors_one  = "Verräter, du bist alleine."
 L.round_traitors_more = "Verräter, dies sind die Namen deiner Verbündeten: {names}"
 
 L.win_time         = "Die Zeit ist abgelaufen. Die Verräter haben verloren."
-L.win_traitor      = "Die Verräter haben gewonnen!"
-L.win_innocent     = "Die Verräter wurden besiegt!"
+L.win_traitor      = "Die Verräter haben gewonnennot "
+L.win_innocent     = "Die Verräter wurden besiegtnot "
 L.win_showreport   = "Schauen wir uns den Rundenbericht die nächste(n) {num} Sekunde(n) an."
 
 L.limit_round      = "Rundenlimit erreicht. {mapname} wird bald geladen."
@@ -38,24 +38,24 @@ L.credit_tr_all    = "Verräter, euch wurde(n) {num} Ausrüstungs-Credit(s) für
 L.credit_kill      = "Dir wurde(n) {num} Credit(s) gegeben, da du einen {role} getötet hast."
 
 --- Karma
-L.karma_dmg_full   = "Dein Karma ist {amount}, also verteilst du diese Runde vollen Schaden!"
-L.karma_dmg_other  = "Dein Karma ist {amount}. Daher ist dein Schaden um {num}% reduziert!"
+L.karma_dmg_full   = "Dein Karma ist {amount}, also verteilst du diese Runde vollen Schadennot "
+L.karma_dmg_other  = "Dein Karma ist {amount}. Daher ist dein Schaden um {num}% reduziertnot "
 
 --- Body identification messages
 L.body_found       = "{finder} fand den Körper von {victim}. {role}"
 
 -- The {role} in body_found will be replaced by one of the following:
-L.body_found_t     = "Er war ein Verräter!"
+L.body_found_t     = "Er war ein Verräternot "
 L.body_found_d     = "Er war ein Detektiv."
 L.body_found_i     = "Er war unschuldig."
 
 L.body_confirm     = "{finder} bestätigte den Tod von {victim}."
 
-L.body_call        = "{player} rief einen Detektiv zum Körper von {victim}!"
-L.body_call_error  = "Du musst erst den Tod dieses Spielers bestätigen, bevor du einen Detektiv rufen kannst!"
+L.body_call        = "{player} rief einen Detektiv zum Körper von {victim}not "
+L.body_call_error  = "Du musst erst den Tod dieses Spielers bestätigen, bevor du einen Detektiv rufen kannstnot "
 
-L.body_burning     = "Autsch! Diese Leiche brennt lichterloh!"
-L.body_credits     = "Du hast {num} Credit(s) an diesem Körper gefunden!"
+L.body_burning     = "Autschnot  Diese Leiche brennt lichterlohnot "
+L.body_credits     = "Du hast {num} Credit(s) an diesem Körper gefundennot "
 
 --- Menus and windows
 L.close  = "Schließen"
@@ -92,7 +92,7 @@ L.equip_confirm    = "Ausrüstung kaufen"
 -- Disguiser tab in equipment menu
 L.disg_name      = "Tarnung"
 L.disg_menutitle = "Tarnung-Einstellungen"
-L.disg_not_owned = "Du trägst keine Tarnung!"
+L.disg_not_owned = "Du trägst keine Tarnungnot "
 L.disg_enable    = "Tarnung aktivieren"
 
 L.disg_help1     = "Wenn deine Tarnung aktiv ist, werden dein Name, Leben und Karma nicht angezeigt, wenn dich jemand anschaut. Zusätzlich tauchst du nicht auf dem Radar des Detektivs auf."
@@ -101,16 +101,16 @@ L.disg_help2     = "Drücke Enter auf dem Numpad um die Tarnung an oder aus zu s
 -- Radar tab in equipment menu
 L.radar_name      = "Radar"
 L.radar_menutitle = "Radar-Einstellungen"
-L.radar_not_owned = "Du trägst kein Radar!"
+L.radar_not_owned = "Du trägst kein Radarnot "
 L.radar_scan      = "Scan durchführen"
 L.radar_auto      = "Scan automatisch wiederholen"
 L.radar_help      = "Scan-Ergebnisse werden {num} Sekunden angezeigt, danach ist das Radar wieder aufgeladen und kann erneut genutzt werden."
-L.radar_charging  = "Dein Radar lädt immer noch auf!"
+L.radar_charging  = "Dein Radar lädt immer noch aufnot "
 
 -- Transfer tab in equipment menu
 L.xfer_name       = "Transfer"
 L.xfer_menutitle  = "Credits transferieren"
-L.xfer_no_credits = "Du kannst keine Credits abgeben!"
+L.xfer_no_credits = "Du kannst keine Credits abgebennot "
 L.xfer_send       = "Sende einen Credit"
 L.xfer_help       = "Du kannst Credits nur an weitere {role} senden."
 
@@ -140,18 +140,18 @@ L.radio_button_steps   = "Schritte"
 
 
 -- Intro screen shown after joining
-L.intro_help     = "Wenn du zum ersten Mal spielst, dann drücke F1 für Instruktionen!"
+L.intro_help     = "Wenn du zum ersten Mal spielst, dann drücke F1 für Instruktionennot "
 
 -- Radiocommands/quickchat
 L.quick_title   = "Quickchat-Befehle"
 
 L.quick_yes     = "Ja."
 L.quick_no      = "Nein."
-L.quick_help    = "Hilfe!"
+L.quick_help    = "Hilfenot "
 L.quick_imwith  = "Ich bin bei {player}."
 L.quick_see     = "Ich sehe {player}."
 L.quick_suspect = "{player} verhält sich verdächtig."
-L.quick_traitor = "{player} ist ein Verräter!"
+L.quick_traitor = "{player} ist ein Verräternot "
 L.quick_inno    = "{player} ist unschuldig."
 L.quick_check   = "Lebt noch irgendjemand?"
 
@@ -172,9 +172,9 @@ L.search_call    = "Detektiv rufen"
 -- Descriptions of pieces of information found
 L.search_nick   = "Dies ist der Körper von {player}."
 
-L.search_role_t = "Diese Person war ein Verräter!"
+L.search_role_t = "Diese Person war ein Verräternot "
 L.search_role_d = "Diese Person war ein Detektiv."
-L.search_role_i = "Diese Person war ein unschuldiger Terrorist!"
+L.search_role_i = "Diese Person war ein unschuldiger Terroristnot "
 
 L.search_words  = "Etwas sagt dir, dass die letzten Worte dieser Person \"{lastwords}\" waren."
 L.search_armor  = "Sie trug eine nicht-standardmäßige Körperrüstung."
@@ -190,7 +190,7 @@ L.search_dmg_club   = "Der Körper ist ramponiert und verbeult. Die Person wurde
 L.search_dmg_drown  = "Der Körper zeigt Anzeichen und Symptome von Ertrinken."
 L.search_dmg_stab   = "Sie wurde stark geschnitten und hatte tiefe Wunden und verblutete schlussendlich."
 L.search_dmg_burn   = "Es riecht hier nach gerösteten Terroristen..."
-L.search_dmg_tele   = "Es scheint, als sei ihre DNA durch Tachyonen verunstaltet worden!"
+L.search_dmg_tele   = "Es scheint, als sei ihre DNA durch Tachyonen verunstaltet wordennot "
 L.search_dmg_car    = "Als diese Person die Straße überquerte, wurde sie von einem rücksichtslosen Fahrer überrollt."
 L.search_dmg_other  = "Du kannst keinen spezifischen Grund für den Tod dieser Person finden."
 
@@ -280,10 +280,10 @@ L.buy_no_stock    = "Diese Waffe ist nicht mehr vorrätig: Du hast sie bereits g
 L.buy_pending     = "Du hast bereits eine Bestellung aufgegeben, warte bis du sie erhältst."
 L.buy_received    = "Du hast deine Spezialausrüstung erhalten."
 
-L.drop_no_room    = "Du hast hier keinen Platz um deine Waffe fallen zu lassen!"
+L.drop_no_room    = "Du hast hier keinen Platz um deine Waffe fallen zu lassennot "
 
-L.disg_turned_on  = "Tarnung aktiviert!"
-L.disg_turned_off = "Tarnung deaktiviert!"
+L.disg_turned_on  = "Tarnung aktiviertnot "
+L.disg_turned_off = "Tarnung deaktiviertnot "
 
 -- Equipment item descriptions
 L.item_passive    = "Gegenstand mit passivem Effekt"
@@ -333,9 +333,9 @@ L.c4_remove_destroy2 = "Bestätigen: Vernichten"
 L.c4_disarm       = "C4 entschärfen"
 L.c4_disarm_cut   = "Klicke zum Durchschneiden von Kabel {num}"
 
-L.c4_disarm_t     = "Durchschneide ein Kabel zum Entschärfen der Bombe. Wenn du Verräter bist, ist jedes Kabel sicher. Unschuldige haben es da nicht so einfach!"
+L.c4_disarm_t     = "Durchschneide ein Kabel zum Entschärfen der Bombe. Wenn du Verräter bist, ist jedes Kabel sicher. Unschuldige haben es da nicht so einfachnot "
 L.c4_disarm_owned = "Durchschneide ein Kabel zum Entschärfen der Bombe. Es ist deine Bombe, also wird jedes Kabel sie sicher entschärfen."
-L.c4_disarm_other = "Durchschneide das richtige Kabel, um die Bombe zu entschärfen. Sie explodiert, wenn du das falsche triffst!"
+L.c4_disarm_other = "Durchschneide das richtige Kabel, um die Bombe zu entschärfen. Sie explodiert, wenn du das falsche triffstnot "
 
 L.c4_status_armed    = "SCHARF"
 L.c4_status_disarmed = "ENTSCHÄRFT"
@@ -356,7 +356,7 @@ nur bei Tod durch Beschuss.]]
 -- Decoy
 L.decoy_name      = "Attrappe"
 L.decoy_no_room   = "Du kannst diese Attrappe nicht tragen."
-L.decoy_broken    = "Deine Attrappe wurde zerstört!"
+L.decoy_broken    = "Deine Attrappe wurde zerstörtnot "
 
 L.decoy_help_pri  = "{primaryfire} platziert die Attrappe."
 L.decoy_desc      = [[
@@ -386,7 +386,7 @@ bestimmtes Geräusch.]]
 -- Health station
 L.hstation_name   = "Gesundheitsstation"
 L.hstation_hint   = "Drücke {usekey} um Leben zu regenerieren. Ladung: {num}."
-L.hstation_broken = "Deine Gesundheitsstation wurde zerstört!"
+L.hstation_broken = "Deine Gesundheitsstation wurde zerstörtnot "
 L.hstation_help   = "{primaryfire} platziert die Gesundheitsstation."
 
 L.hstation_desc   = [[
@@ -413,7 +413,7 @@ herumwirbeln zu lassen.
 Die Energiespitzen schädigen nahestehende Spieler.]]
 
 -- Radio
-L.radio_broken    = "Dein Radio wurde zerstört!"
+L.radio_broken    = "Dein Radio wurde zerstörtnot "
 L.radio_help_pri  = "{primaryfire} platziert das Radio."
 
 L.radio_desc      = [[
@@ -464,9 +464,9 @@ L.dna_identify    = "Die Leiche muss identifiziert sein, um die DNA des Mörders
 L.dna_notfound    = "Keine Spuren von DNA am Ziel gefunden."
 L.dna_limit       = "Speicherlimit erreicht. Entferne alte Spuren, um neue hinzuzufügen."
 L.dna_decayed     = "Die DNA-Spur des Mörders ist verfallen."
-L.dna_killer      = "Es wurde eine DNA-Spur des Mörders von der Leiche aufgesammelt!"
+L.dna_killer      = "Es wurde eine DNA-Spur des Mörders von der Leiche aufgesammeltnot "
 L.dna_no_killer   = "Die DNA konnte nicht erlangt werden (Mörder vom Server gegangen?)."
-L.dna_armed       = "Die Bombe ist scharf! Entschärfe sie zuerst!"
+L.dna_armed       = "Die Bombe ist scharfnot  Entschärfe sie zuerstnot "
 L.dna_object      = "{num} neue DNA-Spuren von diesem Objekt aufgesammelt."
 L.dna_gone        = "DNA nicht in diesem Bereich gefunden."
 
@@ -514,12 +514,12 @@ L.tele_name       = "Teleporter"
 L.tele_failed     = "Teleport fehlgeschlagen."
 L.tele_marked     = "Teleportstelle markiert."
 
-L.tele_no_ground  = "Kann nur auf solidem Untergrund teleportieren!"
-L.tele_no_crouch  = "Kann nicht geduckt teleportieren!"
+L.tele_no_ground  = "Kann nur auf solidem Untergrund teleportierennot "
+L.tele_no_crouch  = "Kann nicht geduckt teleportierennot "
 L.tele_no_mark    = "Keine Stelle markiert. Markiere ein Ziel vor dem Teleportieren."
 
-L.tele_no_mark_ground = "Kann keine Teleportstelle markieren, während man nicht auf solidem Untergrund steht!"
-L.tele_no_mark_crouch = "Kann keine Teleportstelle markieren, während man geduckt ist!"
+L.tele_no_mark_ground = "Kann keine Teleportstelle markieren, während man nicht auf solidem Untergrund stehtnot "
+L.tele_no_mark_crouch = "Kann keine Teleportstelle markieren, während man geduckt istnot "
 
 L.tele_help_pri   = "{primaryfire} teleportiert dich zur markierten Stelle."
 L.tele_help_sec   = "{secondaryfire} markiert momentane Position."
@@ -600,7 +600,7 @@ L.mute_off     = "Niemanden stumm gestellt"
 L.punch_title  = "PUNCH-O-METER"
 L.punch_help   = "Die Bewegungstasten oder Springen: Objekt bewegen. Ducken: Objekt verlassen."
 L.punch_bonus  = "Deine schlechte Punktzahl hat dein Punch-O-Meter Limit um {num} verringert."
-L.punch_malus  = "Deine gute Punktzahl hat dein Punch-O-Meter Limit um {num} erhöht!"
+L.punch_malus  = "Deine gute Punktzahl hat dein Punch-O-Meter Limit um {num} erhöhtnot "
 
 L.spec_help    = "Klicke um Spielern zu zuschauen, oder drücke {usekey} auf ein physikalisches Objekt um die Kontrolle zu erhalten."
 
@@ -608,27 +608,27 @@ L.spec_help    = "Klicke um Spielern zu zuschauen, oder drücke {usekey} auf ein
 
 -- These are spread over multiple lines, hence the square brackets instead of
 -- quotes. That's a Lua thing. Every line break (enter) will show up in-game.
-L.info_popup_innocent = [[Du bist ein unschuldiger Terrorist!
+L.info_popup_innocent = [[Du bist ein unschuldiger Terroristnot
 Aber es gibt Verräter… Wem kannst du trauen, und wem füllst du den Körper mit Blei?
-Gib Acht und arbeite mit anderen zusammen um zu überleben!]]
+Gib Acht und arbeite mit anderen zusammen um zu überlebennot ]]
 
-L.info_popup_detective = [[Du bist ein Detektiv! Das Terroristen Hauptquartier hat dir spezielle Ressourcen gegeben um die Verräter zu finden.
-Benutze sie um den Unschuldigen zu helfen, aber sei auf der Hut: Die Verräter werden zusehen dich als erstes zu töten!
+L.info_popup_detective = [[Du bist ein Detektivnot  Das Terroristen Hauptquartier hat dir spezielle Ressourcen gegeben um die Verräter zu finden.
+Benutze sie um den Unschuldigen zu helfen, aber sei auf der Hut: Die Verräter werden zusehen dich als erstes zu tötennot
 
-Drücke {menukey} für neue Ausrüstung!]]
+Drücke {menukey} für neue Ausrüstungnot ]]
 
-L.info_popup_traitor_alone = [[Du bist ein VERRÄTER! Du hast keine weiteren Verräter diese Runde.
-Töte ALLE anderen um zu gewinnen!
+L.info_popup_traitor_alone = [[Du bist ein VERRÄTERnot  Du hast keine weiteren Verräter diese Runde.
+Töte ALLE anderen um zu gewinnennot
 
-Drücke {menukey} um den Verräter Shop zu öffnen!]]
+Drücke {menukey} um den Verräter Shop zu öffnennot ]]
 
-L.info_popup_traitor = [[Du bist VERRÄTER! Arbeite mit deinen Verräter Kollegen um alle anderen Terroristen zu töten.
+L.info_popup_traitor = [[Du bist VERRÄTERnot  Arbeite mit deinen Verräter Kollegen um alle anderen Terroristen zu töten.
 Aber sei vorsichtig, damit dein Verrat nicht aufgedeckt wird...
 
 Das sind deine Kollegen:
 {traitorlist}
 
-Drücke {menukey} um den Verräter Shop zu öffnen!]]
+Drücke {menukey} um den Verräter Shop zu öffnennot ]]
 
 --- Various other text
 L.name_kick = "Ein Spieler wurde automatisch gekickt, weil er seinen Namen während einer laufenden Runde geändert hat."
@@ -640,7 +640,7 @@ Du kannst den Nur-Zuschauer-Modus ausschalten, indem du {helpkey} drückst und d
 L.idle_popup_close = "Nichts tun"
 L.idle_popup_off   = "Deaktiviere Nur-Zuschauer-Modus"
 
-L.idle_warning = "Warnung: Du scheinst AFK zu sein und wirst zum Zuschauer, außer du zeigst Aktivität!"
+L.idle_warning = "Warnung: Du scheinst AFK zu sein und wirst zum Zuschauer, außer du zeigst Aktivitätnot "
 
 L.spec_mode_warning = "Du bist im Zuschauermodus und wirst nicht spielen, wenn eine Runde beginnt. Um diesen Modus zu verlassen, drücke F1, gehe in die Einstellungen und nimm den Haken bei ‘Nur-Zuschauer-Modus’ raus."
 
@@ -673,11 +673,11 @@ L.tip9 = "Der Poltergeist kann physikalische Objekte in tödliche Projektile ver
 
 L.tip10 = "Halte als Verräter auf rote oder als Detektiv auf blaue Nachrichten in der oberen rechten Bildschirmecke Ausschau. Diese sind wichtig für dich."
 
-L.tip11 = "Behalte als Verräter oder Detektiv im Kopf, dass du Credits verdienst, wenn deine Partner gut arbeiten. Vergiss nicht diese auch auszugeben!"
+L.tip11 = "Behalte als Verräter oder Detektiv im Kopf, dass du Credits verdienst, wenn deine Partner gut arbeiten. Vergiss nicht diese auch auszugebennot "
 
-L.tip12 = "Der DNA-Scanner des Detektivs kann genutzt werden um DNA-Proben von Waffen und Objekten zu erhalten. Diese können zum Scannen benutzt werden um die Position des Spielers herauszufinden, der diese benutzt hat. Nützlich, wenn du eine Probe von einer Leiche oder einer entschärften Ladung C4 erhalten hast!"
+L.tip12 = "Der DNA-Scanner des Detektivs kann genutzt werden um DNA-Proben von Waffen und Objekten zu erhalten. Diese können zum Scannen benutzt werden um die Position des Spielers herauszufinden, der diese benutzt hat. Nützlich, wenn du eine Probe von einer Leiche oder einer entschärften Ladung C4 erhalten hastnot "
 
-L.tip13 = "Wenn du in der Nähe von jemandem standest, den du getötet hast, hinterlässt du deine DNA auf der Leiche. Diese DNA kann ein Detektiv mit seinem DNA-Scanner untersuchen um deine momentane Position herauszufinden. Es wäre besser wenn du die Leiche versteckst, nachdem du jemanden mit dem Messer getötet hast!"
+L.tip13 = "Wenn du in der Nähe von jemandem standest, den du getötet hast, hinterlässt du deine DNA auf der Leiche. Diese DNA kann ein Detektiv mit seinem DNA-Scanner untersuchen um deine momentane Position herauszufinden. Es wäre besser wenn du die Leiche versteckst, nachdem du jemanden mit dem Messer getötet hastnot "
 
 L.tip14 = "Je weiter du dich von der Leiche entfernst, an der deine DNA hängt, dest schneller verschwindet die DNA Spur."
 
@@ -753,8 +753,8 @@ L.report_save_error  = "Keine Ereignis-Log Daten vorhanden."
 L.report_save_result = "Der Ereignis-Log wurde gespeichert:"
 
 -- Big title window
-L.hilite_win_traitors = "VERRATEN!"
-L.hilite_win_innocent = "ÜBERLEBT!"
+L.hilite_win_traitors = "VERRATENnot "
+L.hilite_win_innocent = "ÜBERLEBTnot "
 
 L.hilite_players1 = "{numplayers} Spieler nahmen teil, davon waren {numtraitors} Verräter."
 L.hilite_players2 = "{numplayers} Spieler nahmen teil, einer war ein Verräter."
@@ -825,9 +825,9 @@ L.ev_c4_disarm2  = "{player} hat beim Entschärfen des C4s von {owner} versagt"
 L.ev_credit      = "{finder} fand {num} Credit(s) beim Leichnam von {player}"
 
 L.ev_start       = "Die Runde hat begonnen"
-L.ev_win_traitor = "Die heimtückischen Verräter haben die Runde gewonnen!"
-L.ev_win_inno    = "Die liebenswerten unschuldigen Terroristen haben die Runde gewonnen!"
-L.ev_win_time    = "Den Verrätern ist die Zeit ausgegangen und sie verloren!"
+L.ev_win_traitor = "Die heimtückischen Verräter haben die Runde gewonnennot "
+L.ev_win_inno    = "Die liebenswerten unschuldigen Terroristen haben die Runde gewonnennot "
+L.ev_win_time    = "Den Verrätern ist die Zeit ausgegangen und sie verlorennot "
 
 --- Awards/highlights
 
@@ -861,8 +861,8 @@ L.aw_all1_text  = "war für jede einzelne Tötung der Unschuldigen in dieser Run
 L.aw_all2_title = "Einsamer Wolf"
 L.aw_all2_text  = "war für jede einzelne Tötung der Verräter in dieser Runde verantwortlich."
 
-L.aw_nkt1_title = "Ich hab' einen, Boss!"
-L.aw_nkt1_text  = "hat es geschafft einen einzigen Unschuldigen zu töten. Wie süß!"
+L.aw_nkt1_title = "Ich hab' einen, Bossnot "
+L.aw_nkt1_text  = "hat es geschafft einen einzigen Unschuldigen zu töten. Wie süßnot "
 
 L.aw_nkt2_title = "Eine Kugel für zwei"
 L.aw_nkt2_text  = "zeigte, dass der Erste nicht nur Glück war, indem er auch noch einen Zweiten umbrachte."
@@ -871,12 +871,12 @@ L.aw_nkt3_title = "Serien-Verräter"
 L.aw_nkt3_text  = "beendete heute drei unschuldige Leben."
 
 L.aw_nkt4_title = "Wolf unter eher Schaf-gleichen Wölfen"
-L.aw_nkt4_text  = "verspeist Unschuldige zum Frühstück. Heute ist es mit {num} Stück groß ausgefallen!"
+L.aw_nkt4_text  = "verspeist Unschuldige zum Frühstück. Heute ist es mit {num} Stück groß ausgefallennot "
 
 L.aw_nkt5_title = "Konter-terroristische Maßnahme"
 L.aw_nkt5_text  = "wird pro Tötung bezahlt. Bald gibt's eine neue Yacht."
 
-L.aw_nki1_title = "Betray This!"
+L.aw_nki1_title = "Betray Thisnot "
 L.aw_nki1_text  = "fand einen Verräter. Tötete einen Verräter. Ganz simpel."
 
 L.aw_nki2_title = "Mitglied beim Gerechtigkeits-Trupp"
@@ -951,7 +951,7 @@ L.aw_sip2_text  = "tötete {num} Leute, die sich nicht einmal selbst schreien h�
 L.aw_knf1_title = "Das Messer kennt dich"
 L.aw_knf1_text  = "hat jemandem über das Internet ins Gesicht gestochen."
 
-L.aw_knf2_title = "Woher hast du das!?"
+L.aw_knf2_title = "Woher hast du dasnot ?"
 L.aw_knf2_text  = "war zwar kein Verräter, hat allerdings trotzdem jemanden aufgeschlitzt."
 
 L.aw_knf3_title = "Such A 'Knife' Man"
@@ -985,7 +985,7 @@ L.aw_tkl2_title = "Doppeltes Versehen"
 L.aw_tkl2_text  = "verdächtigte zwei Leute als Verräter. Leider zwei Mal falsch."
 
 L.aw_tkl3_title = "Karma-bewusst"
-L.aw_tkl3_text  = "tötete zwei Verbündete und machte dann auch beim Dritten kein Halt. Immerhin ist drei 'ne Glückszahl!"
+L.aw_tkl3_text  = "tötete zwei Verbündete und machte dann auch beim Dritten kein Halt. Immerhin ist drei 'ne Glückszahlnot "
 
 L.aw_tkl4_title = "Teamkiller"
 L.aw_tkl4_text  = "brachte das komplette eigene Team um. OMGBANBANBAN."
@@ -1006,7 +1006,7 @@ L.aw_brn2_title = "Pyromane"
 L.aw_brn2_text  = "wurde laut knisternd erhört, nachdem er eines seiner vielen Opfer verbrannte."
 
 L.aw_brn3_title = "Pyromanische Brennerei"
-L.aw_brn3_text  = "hat sie alle verbrannt, aber hat nun keine Brandgranaten mehr! Wie will er die Lage meistern!?"
+L.aw_brn3_text  = "hat sie alle verbrannt, aber hat nun keine Brandgranaten mehrnot  Wie will er die Lage meisternnot ?"
 
 L.aw_fnd1_title = "Gerichtsmediziner"
 L.aw_fnd1_text  = "fand {num} Leichen, die in der Gegend herumlagen."

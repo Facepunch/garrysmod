@@ -12,7 +12,7 @@ local ConVarExists      = ConVarExists
    Name: cvar
    Desc: Callbacks when cvars change
 -----------------------------------------------------------]]
-module( "cvars" )
+module("cvars")
 
 local ConVars = {}
 
@@ -20,11 +20,11 @@ local ConVars = {}
 --[[---------------------------------------------------------
    Name: GetConVarCallbacks
 -----------------------------------------------------------]]
-function GetConVarCallbacks( name, CreateIfNotFound )
+function GetConVarCallbacks(name, CreateIfNotFound)
 
 	local Tab = ConVars[ name ]
 
-	if ( CreateIfNotFound && !Tab ) then
+	if (CreateIfNotFound and not Tab) then
 		Tab = {}
 		ConVars[ name ] = Tab
 	end
@@ -36,19 +36,19 @@ end
    Name: OnConVarChanged
    Desc: Called by the engine
 -----------------------------------------------------------]]
-function OnConVarChanged( name, oldvalue, newvalue )
+function OnConVarChanged(name, oldvalue, newvalue)
 
-	local Callbacks = GetConVarCallbacks( name )
-	if (!Callbacks) then return end
+	local Callbacks = GetConVarCallbacks(name)
+	if (not Callbacks) then return end
 
-	for k, v in pairs( Callbacks ) do
+	for k, v in pairs(Callbacks) do
 
-		if type( v ) == "table" then
-			v[ 1 ]( name, oldvalue, newvalue )
+		if type(v) == "table" then
+			v[ 1 ](name, oldvalue, newvalue)
 		else
-			v( name, oldvalue, newvalue )
+			v(name, oldvalue, newvalue)
 		end
-	
+
 	end
 
 end
@@ -57,26 +57,26 @@ end
    Name: OnConvarChanged
    Desc: Called by the engine
 -----------------------------------------------------------]]
-function AddChangeCallback( name, func, sIdentifier )
+function AddChangeCallback(name, func, sIdentifier)
 
-	if ( sIdentifier ) then
-		assert( type( sIdentifier ) == "string", format( "bad argument #%i (string expected, got %s)", 3, type( sIdentifier ) ) )
+	if (sIdentifier) then
+		assert(type( sIdentifier) == "string", format( "bad argument #%i (string expected, got %s)", 3, type( sIdentifier)))
 	end
 
-	local tab = GetConVarCallbacks( name, true )
+	local tab = GetConVarCallbacks(name, true)
 
 	if sIdentifier then
 		for i = 1, #tab do
 			local a = tab[ i ];
-			if type( a ) == "table" and a[ 2 ] == sIdentifier then
+			if type(a) == "table" and a[ 2 ] == sIdentifier then
 				tab[ i ][ 1 ] = func
 				return
 			end
 		end
 
-		table.insert( tab, { func, sIdentifier } )
+		table.insert(tab, { func, sIdentifier })
 	else
-		table.insert( tab, func )
+		table.insert(tab, func)
 	end
 
 end
@@ -85,19 +85,19 @@ end
    Name: RemoveChangeCallback
    Desc: Removes callback with identifier
 -----------------------------------------------------------]]
-function RemoveChangeCallback( name, sIdentifier )
+function RemoveChangeCallback(name, sIdentifier)
 
-	if ( sIdentifier ) then
-		assert( type( sIdentifier ) == "string", format( "bad argument #%i (string expected, got %s)", 2, type( sIdentifier ) ) )
+	if (sIdentifier) then
+		assert(type( sIdentifier) == "string", format( "bad argument #%i (string expected, got %s)", 2, type( sIdentifier)))
 	end
 
-	local tab = GetConVarCallbacks( name, true )
+	local tab = GetConVarCallbacks(name, true)
 
 	for i = 1, #tab do
 		local a = tab[ i ]
 
-		if type( a ) == "table" and a[ 2 ] == sIdentifier then
-			table.remove( tab, i )
+		if type(a) == "table" and a[ 2 ] == sIdentifier then
+			table.remove(tab, i)
 			break
 		end
 	end
@@ -107,32 +107,32 @@ end
 --[[---------------------------------------------------------
    String
 -----------------------------------------------------------]]
-function String( name, default )
+function String(name, default)
 
-	if ( !ConVarExists( name ) ) then return default end
+	if (not ConVarExists( name)) then return default end
 
-	return GetConVarString( name )
+	return GetConVarString(name)
 
 end
 
 --[[---------------------------------------------------------
    Number
 -----------------------------------------------------------]]
-function Number( name, default )
+function Number(name, default)
 
-	if ( !ConVarExists( name ) ) then return default end
+	if (not ConVarExists( name)) then return default end
 
-	return GetConVarNumber( name )
+	return GetConVarNumber(name)
 
 end
 
 --[[---------------------------------------------------------
    Bool
 -----------------------------------------------------------]]
-function Bool( name, default )
+function Bool(name, default)
 
-	if ( default ) then default = 1 else default = 0 end
+	if (default) then default = 1 else default = 0 end
 
-	return Number( name, default ) != 0
+	return Number(name, default) ~= 0
 
 end

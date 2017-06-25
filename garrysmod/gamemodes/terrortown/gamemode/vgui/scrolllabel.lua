@@ -71,8 +71,8 @@ function PANEL:PerformLayout()
    self.Scroll:SetUp(self:GetTall(), self.Label:GetTall())
    self.Scroll:SetEnabled(was_on) -- setup mangles enabled state
 
-   self.Label:SetPos( 0, self.Scroll:GetOffset() )
-   self.Label:SetSize( self:GetWide() - (self.Scroll.Enabled and 16 or 0), self.Label:GetTall() )
+   self.Label:SetPos(0, self.Scroll:GetOffset())
+   self.Label:SetSize(self:GetWide() - (self.Scroll.Enabled and 16 or 0), self.Label:GetTall())
 end
 
 vgui.Register("ScrollLabel", PANEL, "Panel")

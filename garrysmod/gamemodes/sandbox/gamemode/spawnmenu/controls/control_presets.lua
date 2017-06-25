@@ -1,70 +1,70 @@
 
-include( "preset_editor.lua" )
+include("preset_editor.lua")
 
 local PANEL = {}
 
 function PANEL:Init()
 
-	self.DropDown = vgui.Create( "DComboBox", self )
-	self.DropDown.OnSelect = function( dropdown, index, value, data ) self:OnSelect( index, value, data ) end
-	self.DropDown:SetText( "Presets" )
-	self.DropDown:Dock( FILL )
+	self.DropDown = vgui.Create("DComboBox", self)
+	self.DropDown.OnSelect = function(dropdown, index, value, data) self:OnSelect( index, value, data) end
+	self.DropDown:SetText("Presets")
+	self.DropDown:Dock(FILL)
 
-	self.Button = vgui.Create( "DImageButton", self )
+	self.Button = vgui.Create("DImageButton", self)
 	self.Button.DoClick = function() self:OpenPresetEditor() end
-	self.Button:Dock( RIGHT )
-	self.Button:SetToolTip( "#preset.edit" )
-	self.Button:SetMaterial( "icon16/wrench.png" )
-	self.Button:SetStretchToFit( false )
-	self.Button:SetSize( 20, 20 )
-	self.Button:DockMargin( 0, 0, 0, 0 )
+	self.Button:Dock(RIGHT)
+	self.Button:SetToolTip("#preset.edit")
+	self.Button:SetMaterial("icon16/wrench.png")
+	self.Button:SetStretchToFit(false)
+	self.Button:SetSize(20, 20)
+	self.Button:DockMargin(0, 0, 0, 0)
 
-	self.AddButton = vgui.Create( "DImageButton", self )
+	self.AddButton = vgui.Create("DImageButton", self)
 	self.AddButton.DoClick = function()
-		if ( !IsValid( self ) ) then return end
+		if (not IsValid( self)) then return end
 
 		self:QuickSavePreset()
 	end
-	self.AddButton:Dock( RIGHT )
-	self.AddButton:SetToolTip( "#preset.add" )
-	self.AddButton:SetMaterial( "icon16/add.png" )
-	self.AddButton:SetStretchToFit( false )
-	self.AddButton:SetSize( 20, 20 )
-	self.AddButton:DockMargin( 2, 0, 0, 0 )
+	self.AddButton:Dock(RIGHT)
+	self.AddButton:SetToolTip("#preset.add")
+	self.AddButton:SetMaterial("icon16/add.png")
+	self.AddButton:SetStretchToFit(false)
+	self.AddButton:SetSize(20, 20)
+	self.AddButton:DockMargin(2, 0, 0, 0)
 
-	self:SetTall( 20 )
+	self:SetTall(20)
 
 	self.Options = {}
 	self.ConVars = {}
 
 end
 
-function PANEL:SetLabel( strName )
+function PANEL:SetLabel(strName)
 
-	self.Label:SetText( strName )
+	self.Label:SetText(strName)
 
 end
 
-function PANEL:AddOption( strName, data )
+function PANEL:AddOption(strName, data)
 
-	self.DropDown:AddChoice( strName, data )
+	self.DropDown:AddChoice(strName, data)
 
 	self.Options[ strName ] = data
 
 end
 
-function PANEL:SetOptions( Options )
-	if ( Options ) then
-		table.Merge( self.Options, Options )
+function PANEL:SetOptions(Options)
+	if (Options) then
+		table.Merge(self.Options, Options)
 	end
 end
 
-function PANEL:OnSelect( index, value, data )
+function PANEL:OnSelect(index, value, data)
 
-	if ( !data ) then return end
+	if (not data) then return end
 
-	for k, v in pairs( data ) do
-		RunConsoleCommand( k, v )
+	for k, v in pairs(data) do
+		RunConsoleCommand(k, v)
 	end
 
 end
@@ -74,39 +74,39 @@ function PANEL:QuickSavePreset()
 		"#preset.saveas_title",
 		"#preset.saveas_desc",
 		"",
-		function( text )
-			if ( !text || text:Trim() == "" ) then return end
+		function(text)
+			if (not text or text:Trim() == "") then return end
 
 			local tabValues = {}
-			for k, v in pairs( self:GetConVars() ) do
-				tabValues[ v ] = GetConVarString( v )
+			for k, v in pairs(self:GetConVars()) do
+				tabValues[ v ] = GetConVarString(v)
 			end
 
-			-- TODO: Handle same name overrides!
-			presets.Add( self.m_strPreset, text, tabValues )
+			-- TODO: Handle same name overridesnot
+			presets.Add(self.m_strPreset, text, tabValues)
 			self:Update()
 		end,
-		function( text )
+		function(text)
 		end
 	)
 end
 
 function PANEL:OpenPresetEditor()
 
-	if ( !self.m_strPreset ) then return end
+	if (not self.m_strPreset) then return end
 
-	self.Window = vgui.Create( "PresetEditor" )
+	self.Window = vgui.Create("PresetEditor")
 	self.Window:MakePopup()
 	self.Window:Center()
-	self.Window:SetType( self.m_strPreset )
-	self.Window:SetConVars( self.ConVars )
-	self.Window:SetPresetControl( self )
+	self.Window:SetType(self.m_strPreset)
+	self.Window:SetConVars(self.ConVars)
+	self.Window:SetPresetControl(self)
 
 end
 
-function PANEL:AddConVar( convar )
+function PANEL:AddConVar(convar)
 
-	table.insert( self.ConVars, convar )
+	table.insert(self.ConVars, convar)
 
 end
 
@@ -116,7 +116,7 @@ function PANEL:GetConVars()
 
 end
 
-function PANEL:SetPreset( strName )
+function PANEL:SetPreset(strName)
 
 	self.m_strPreset = strName
 	self:ReloadPresets()
@@ -127,20 +127,20 @@ function PANEL:ReloadPresets()
 
 	self:Clear()
 
-	for name, data in pairs( self.Options ) do
-		self:AddOption( name, data )
+	for name, data in pairs(self.Options) do
+		self:AddOption(name, data)
 	end
 
-	local Presets = presets.GetTable( self.m_strPreset )
+	local Presets = presets.GetTable(self.m_strPreset)
 	local sortedPresets, i = {}, 1
-	for name in pairs( Presets ) do
+	for name in pairs(Presets) do
 		sortedPresets[ i ] = name
 		i = i + 1
 	end
-	table.sort( sortedPresets )
+	table.sort(sortedPresets)
 
-	for _, name in ipairs( sortedPresets ) do
-		self.DropDown:AddChoice( name, Presets[ name ] )
+	for _, name in ipairs(sortedPresets) do
+		self.DropDown:AddChoice(name, Presets[ name ])
 	end
 
 end
@@ -157,4 +157,4 @@ function PANEL:Clear()
 
 end
 
-vgui.Register( "ControlPresets", PANEL, "Panel" )
+vgui.Register("ControlPresets", PANEL, "Panel")

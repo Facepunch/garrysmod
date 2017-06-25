@@ -6,7 +6,7 @@ ENT.Base = "ttt_basegrenade_proj"
 ENT.Model = Model("models/weapons/w_eq_smokegrenade_thrown.mdl")
 
 
-AccessorFunc( ENT, "radius", "Radius", FORCE_NUMBER )
+AccessorFunc(ENT, "radius", "Radius", FORCE_NUMBER)
 
 function ENT:Initialize()
    if not self:GetRadius() then self:SetRadius(20) end
@@ -36,7 +36,7 @@ if CLIENT then
             p:SetEndAlpha(200)
             p:SetVelocity(VectorRand() * math.Rand(900, 1300))
             p:SetLifeTime(0)
-            
+
             p:SetDieTime(math.Rand(50, 70))
 
             p:SetStartSize(math.random(140, 150))
@@ -62,7 +62,7 @@ function ENT:Explode(tr)
       self:SetSolid(SOLID_NONE)
 
       -- pull out of the surface
-      if tr.Fraction != 1.0 then
+      if tr.Fraction ~= 1.0 then
          self:SetPos(tr.HitPos + tr.HitNormal * 0.6)
       end
 
@@ -72,11 +72,11 @@ function ENT:Explode(tr)
    else
       local spos = self:GetPos()
       local trs = util.TraceLine({start=spos + Vector(0,0,64), endpos=spos + Vector(0,0,-128), filter=self})
-      util.Decal("SmallScorch", trs.HitPos + trs.HitNormal, trs.HitPos - trs.HitNormal)      
+      util.Decal("SmallScorch", trs.HitPos + trs.HitNormal, trs.HitPos - trs.HitNormal)
 
       self:SetDetonateExact(0)
 
-      if tr.Fraction != 1.0 then
+      if tr.Fraction ~= 1.0 then
          spos = tr.HitPos + tr.HitNormal * 0.6
       end
 

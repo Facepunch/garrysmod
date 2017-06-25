@@ -7,7 +7,7 @@
 --
 function ENT:BehaveStart()
 
-	self.BehaveThread = coroutine.create( function() self:RunBehaviour() end )
+	self.BehaveThread = coroutine.create(function() self:RunBehaviour() end)
 
 end
 
@@ -17,17 +17,17 @@ end
 -- Arg1: number|interval|How long since the last update
 -- Ret1:
 --
-function ENT:BehaveUpdate( fInterval )
+function ENT:BehaveUpdate(fInterval)
 
-	if ( !self.BehaveThread ) then return end
+	if (not self.BehaveThread) then return end
 
 	--
 	-- Give a silent warning to developers if RunBehaviour has returned
 	--
-	if ( coroutine.status( self.BehaveThread ) == "dead" ) then
+	if (coroutine.status( self.BehaveThread) == "dead") then
 
 		self.BehaveThread = nil
-		Msg( self, " Warning: ENT:RunBehaviour() has finished executing\n" )
+		Msg(self, " Warning: ENT:RunBehaviour() has finished executing\n")
 
 		return
 
@@ -36,11 +36,11 @@ function ENT:BehaveUpdate( fInterval )
 	--
 	-- Continue RunBehaviour's execution
 	--
-	local ok, message = coroutine.resume( self.BehaveThread )
-	if ( ok == false ) then
+	local ok, message = coroutine.resume(self.BehaveThread)
+	if (ok == false) then
 
 		self.BehaveThread = nil
-		ErrorNoHalt( self, " Error: ", message, "\n" )
+		ErrorNoHalt(self, " Error: ", message, "\n")
 
 	end
 
@@ -61,7 +61,7 @@ function ENT:BodyUpdate()
 	-- It sets the bot's move_x move_y pose parameters, sets their animation speed relative to the ground speed, and calls FrameAdvance.
 	--
 	--
-	if ( act == ACT_RUN || act == ACT_WALK ) then
+	if (act == ACT_RUN or act == ACT_WALK) then
 
 		self:BodyMoveXY()
 
@@ -80,9 +80,9 @@ end
 -- Arg1: Entity|ent|Entity that the NextBot "jumped" from
 -- Ret1:
 --
-function ENT:OnLeaveGround( ent )
+function ENT:OnLeaveGround(ent)
 
-	--MsgN( "OnLeaveGround", ent )
+	--MsgN("OnLeaveGround", ent)
 
 end
 
@@ -92,9 +92,9 @@ end
 -- Arg1: Entity|ent|Entity that the NextBot landed on
 -- Ret1:
 --
-function ENT:OnLandOnGround( ent )
+function ENT:OnLandOnGround(ent)
 
-	--MsgN( "OnLandOnGround", ent )
+	--MsgN("OnLandOnGround", ent)
 
 end
 
@@ -106,7 +106,7 @@ end
 --
 function ENT:OnStuck()
 
-	--MsgN( "OnStuck" )
+	--MsgN("OnStuck")
 
 end
 
@@ -118,7 +118,7 @@ end
 --
 function ENT:OnUnStuck()
 
-	--MsgN( "OnUnStuck" )
+	--MsgN("OnUnStuck")
 
 end
 
@@ -128,7 +128,7 @@ end
 -- Arg1: CTakeDamageInfo|info|damage info
 -- Ret1:
 --
-function ENT:OnInjured( damageinfo )
+function ENT:OnInjured(damageinfo)
 
 end
 
@@ -138,11 +138,11 @@ end
 -- Arg1: CTakeDamageInfo|info|damage info
 -- Ret1:
 --
-function ENT:OnKilled( dmginfo )
+function ENT:OnKilled(dmginfo)
 
-	hook.Run( "OnNPCKilled", self, dmginfo:GetAttacker(), dmginfo:GetInflictor() )
+	hook.Run("OnNPCKilled", self, dmginfo:GetAttacker(), dmginfo:GetInflictor())
 
-	self:BecomeRagdoll( dmginfo )
+	self:BecomeRagdoll(dmginfo)
 
 end
 
@@ -153,27 +153,27 @@ end
 -- Arg2: CTakeDamageInfo|info|damage info
 -- Ret1:
 --
-function ENT:OnOtherKilled( victim, info )
+function ENT:OnOtherKilled(victim, info)
 
-	--MsgN( "OnOtherKilled", victim, info )
+	--MsgN("OnOtherKilled", victim, info)
 
 end
 
-function ENT:OnContact( ent )
+function ENT:OnContact(ent)
 
-	--MsgN( "OnContact", ent )
+	--MsgN("OnContact", ent)
 
 end
 
 function ENT:OnIgnite()
 
-	--MsgN( "OnIgnite" )
+	--MsgN("OnIgnite")
 
 end
 
-function ENT:OnNavAreaChanged( old, new )
+function ENT:OnNavAreaChanged(old, new)
 
-	--MsgN( "OnNavAreaChanged", old, new )
+	--MsgN("OnNavAreaChanged", old, new)
 
 end
 
@@ -183,7 +183,7 @@ end
 -- Arg1: table|specs|This table should contain the search info.\n\n * 'type' - the type (either 'hiding')\n * 'pos' - the position to search.\n * 'radius' - the radius to search.\n * 'stepup' - the highest step to step up.\n * 'stepdown' - the highest we can step down without being hurt.
 -- Ret1: table|An unsorted table of tables containing\n * 'vector' - the position of the hiding spot\n * 'distance' - the distance to that position
 --
-function ENT:FindSpots( tbl )
+function ENT:FindSpots(tbl)
 
 	local tbl = tbl or {}
 
@@ -194,29 +194,29 @@ function ENT:FindSpots( tbl )
 	tbl.type		= tbl.type			or 'hiding'
 
 	-- Use a path to find the length
-	local path = Path( "Follow" )
+	local path = Path("Follow")
 
 	-- Find a bunch of areas within this distance
-	local areas = navmesh.Find( tbl.pos, tbl.radius, tbl.stepdown, tbl.stepup )
+	local areas = navmesh.Find(tbl.pos, tbl.radius, tbl.stepdown, tbl.stepup)
 
 	local found = {}
 
 	-- In each area
-	for _, area in pairs( areas ) do
+	for _, area in pairs(areas) do
 
 		-- get the spots
 		local spots
 
-		if ( tbl.type == 'hiding' ) then spots = area:GetHidingSpots() end
+		if (tbl.type == 'hiding') then spots = area:GetHidingSpots() end
 
-		for k, vec in pairs( spots ) do
+		for k, vec in pairs(spots) do
 
 			-- Work out the length, and add them to a table
 			path:Invalidate()
 
-			path:Compute( self, vec, 1 ) -- TODO: This is bullshit - it's using 'self.pos' not tbl.pos
+			path:Compute(self, vec, 1) -- TODO: This is bullshit - it's using 'self.pos' not tbl.pos
 
-			table.insert( found, { vector = vec, distance = path:GetLength() } )
+			table.insert(found, { vector = vec, distance = path:GetLength() })
 
 		end
 
@@ -233,27 +233,27 @@ end
 -- Arg2: table|options|A table containing a bunch of tweakable options. See the function definition for more details
 -- Ret1: vector|If it finds a spot it will return a vector. If not it will return nil.
 --
-function ENT:FindSpot( type, options )
+function ENT:FindSpot(type, options)
 
-	local spots = self:FindSpots( options )
-	if ( !spots || #spots == 0 ) then return end
+	local spots = self:FindSpots(options)
+	if (not spots or #spots == 0) then return end
 
-	if ( type == "near" ) then
+	if (type == "near") then
 
-		table.SortByMember( spots, "distance", true )
+		table.SortByMember(spots, "distance", true)
 		return spots[1].vector
 
 	end
 
-	if ( type == "far" ) then
+	if (type == "far") then
 
-		table.SortByMember( spots, "distance", false )
+		table.SortByMember(spots, "distance", false)
 		return spots[1].vector
 
 	end
 
 	-- random
-	return spots[ math.random( 1, #spots ) ].vector
+	return spots[ math.random(1, #spots) ].vector
 
 end
 
@@ -274,33 +274,33 @@ end
 
 --
 -- Name: NextBot:MoveToPos
--- Desc: To be called in the behaviour coroutine only! Will yield until the bot has reached the goal or is stuck
+-- Desc: To be called in the behaviour coroutine onlynot  Will yield until the bot has reached the goal or is stuck
 -- Arg1: Vector|pos|The position we want to get to
 -- Arg2: table|options|A table containing a bunch of tweakable options. See the function definition for more details
 -- Ret1: string|Either "failed", "stuck", "timeout" or "ok" - depending on how the NPC got on
 --
-function ENT:MoveToPos( pos, options )
+function ENT:MoveToPos(pos, options)
 
 	local options = options or {}
 
-	local path = Path( "Follow" )
-	path:SetMinLookAheadDistance( options.lookahead or 300 )
-	path:SetGoalTolerance( options.tolerance or 20 )
-	path:Compute( self, pos )
+	local path = Path("Follow")
+	path:SetMinLookAheadDistance(options.lookahead or 300)
+	path:SetGoalTolerance(options.tolerance or 20)
+	path:Compute(self, pos)
 
-	if ( !path:IsValid() ) then return "failed" end
+	if (not path:IsValid()) then return "failed" end
 
-	while ( path:IsValid() ) do
+	while (path:IsValid()) do
 
-		path:Update( self )
+		path:Update(self)
 
 		-- Draw the path (only visible on listen servers or single player)
-		if ( options.draw ) then
+		if (options.draw) then
 			path:Draw()
 		end
 
 		-- If we're stuck then call the HandleStuck function and abandon
-		if ( self.loco:IsStuck() ) then
+		if (self.loco:IsStuck()) then
 
 			self:HandleStuck()
 
@@ -311,15 +311,15 @@ function ENT:MoveToPos( pos, options )
 		--
 		-- If they set maxage on options then make sure the path is younger than it
 		--
-		if ( options.maxage ) then
-			if ( path:GetAge() > options.maxage ) then return "timeout" end
+		if (options.maxage) then
+			if (path:GetAge() > options.maxage) then return "timeout" end
 		end
 
 		--
 		-- If they set repath then rebuild the path every x seconds
 		--
-		if ( options.repath ) then
-			if ( path:GetAge() > options.repath ) then path:Compute( self, pos ) end
+		if (options.repath) then
+			if (path:GetAge() > options.repath) then path:Compute( self, pos) end
 		end
 
 		coroutine.yield()
@@ -332,22 +332,22 @@ end
 
 --
 -- Name: NextBot:PlaySequenceAndWait
--- Desc: To be called in the behaviour coroutine only! Plays an animation sequence and waits for it to end before returning.
+-- Desc: To be called in the behaviour coroutine onlynot  Plays an animation sequence and waits for it to end before returning.
 -- Arg1: string|name|The sequence name
 -- Arg2: number|the speed (default 1)
 -- Ret1:
 --
-function ENT:PlaySequenceAndWait( name, speed )
+function ENT:PlaySequenceAndWait(name, speed)
 
-	local len = self:SetSequence( name )
+	local len = self:SetSequence(name)
 	speed = speed or 1
 
 	self:ResetSequenceInfo()
-	self:SetCycle( 0 )
-	self:SetPlaybackRate( speed )
+	self:SetCycle(0)
+	self:SetPlaybackRate(speed)
 
 	-- wait for it to finish
-	coroutine.wait( len / speed )
+	coroutine.wait(len / speed)
 
 end
 
@@ -360,7 +360,7 @@ end
 -- Arg4: number|value|Any passed value
 -- Ret1:
 --
-function ENT:Use( activator, caller, type, value )
+function ENT:Use(activator, caller, type, value)
 end
 
 --

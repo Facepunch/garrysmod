@@ -1,5 +1,5 @@
 
-include( "spawnmenu/spawnmenu.lua" )
+include("spawnmenu/spawnmenu.lua")
 
 --[[---------------------------------------------------------
 	If false is returned then the spawn menu is never created.
@@ -16,8 +16,8 @@ end
 -----------------------------------------------------------]]
 function GM:SpawnMenuOpen()
 
-	GAMEMODE:SuppressHint( "OpeningMenu" )
-	GAMEMODE:AddHint( "OpeningContext", 20 )
+	GAMEMODE:SuppressHint("OpeningMenu")
+	GAMEMODE:AddHint("OpeningContext", 20)
 
 	return true
 
@@ -29,36 +29,36 @@ end
 -----------------------------------------------------------]]
 function GM:ContextMenuOpen()
 
-	GAMEMODE:SuppressHint( "OpeningContext" )
-	GAMEMODE:AddHint( "ContextClick", 20 )
+	GAMEMODE:SuppressHint("OpeningContext")
+	GAMEMODE:AddHint("ContextClick", 20)
 
 	return true
 
 end
 
 --[[---------------------------------------------------------
-	Backwards compatibility. Do Not Use!!!
+	Backwards compatibility. Do Not Usenot not not
 -----------------------------------------------------------]]
-function GM:GetSpawnmenuTools( name )
-	return spawnmenu.GetToolMenu( name )
+function GM:GetSpawnmenuTools(name)
+	return spawnmenu.GetToolMenu(name)
 end
 
 --[[---------------------------------------------------------
-	Backwards compatibility. Do Not Use!!!
+	Backwards compatibility. Do Not Usenot not not
 -----------------------------------------------------------]]
-function GM:AddSTOOL( category, itemname, text, command, controls, cpanelfunction )
-	self:AddToolmenuOption( "Main", category, itemname, text, command, controls, cpanelfunction )
+function GM:AddSTOOL(category, itemname, text, command, controls, cpanelfunction)
+	self:AddToolmenuOption("Main", category, itemname, text, command, controls, cpanelfunction)
 end
 
 --[[---------------------------------------------------------
 	Don't hook or override this function.
-	Hook AddToolMenuTabs instead!
+	Hook AddToolMenuTabs insteadnot
 -----------------------------------------------------------]]
 function GM:AddGamemodeToolMenuTabs()
 
 	-- This is named like this to force it to be the first tab
-	spawnmenu.AddToolTab( "Main",		"#spawnmenu.tools_tab", "icon16/wrench.png" )
-	spawnmenu.AddToolTab( "Utilities",	"#spawnmenu.utilities_tab", "icon16/page_white_wrench.png" )
+	spawnmenu.AddToolTab("Main",		"#spawnmenu.tools_tab", "icon16/wrench.png")
+	spawnmenu.AddToolTab("Utilities",	"#spawnmenu.utilities_tab", "icon16/page_white_wrench.png")
 
 end
 
@@ -67,7 +67,7 @@ end
 -----------------------------------------------------------]]
 function GM:AddToolMenuTabs()
 
-	-- Hook me!
+	-- Hook menot
 
 end
 
@@ -76,10 +76,10 @@ end
 -----------------------------------------------------------]]
 function GM:AddGamemodeToolMenuCategories()
 
-	spawnmenu.AddToolCategory( "Main", "Constraints",	"#spawnmenu.tools.constraints" )
-	spawnmenu.AddToolCategory( "Main", "Construction",	"#spawnmenu.tools.construction" )
-	spawnmenu.AddToolCategory( "Main", "Poser",			"#spawnmenu.tools.posing" )
-	spawnmenu.AddToolCategory( "Main", "Render",		"#spawnmenu.tools.render" )
+	spawnmenu.AddToolCategory("Main", "Constraints",	"#spawnmenu.tools.constraints")
+	spawnmenu.AddToolCategory("Main", "Construction",	"#spawnmenu.tools.construction")
+	spawnmenu.AddToolCategory("Main", "Poser",			"#spawnmenu.tools.posing")
+	spawnmenu.AddToolCategory("Main", "Render",		"#spawnmenu.tools.render")
 
 end
 

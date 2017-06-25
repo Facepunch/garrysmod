@@ -97,7 +97,7 @@ function SWEP:Think()
          self:SendWeaponAnim(ACT_VM_THROW)
 
          if SERVER then
-            self.Owner:SetAnimation( PLAYER_ATTACK1 )
+            self.Owner:SetAnimation(PLAYER_ATTACK1)
          end
       else
          -- still cooking it, see if our time is up
@@ -169,7 +169,7 @@ end
 
 -- subclasses must override with their own grenade ent
 function SWEP:GetGrenadeName()
-   ErrorNoHalt("SWEP BASEGRENADE ERROR: GetGrenadeName not overridden! This is probably wrong!\n")
+   ErrorNoHalt("SWEP BASEGRENADE ERROR: GetGrenadeName not overriddennot  This is probably wrongnot \n")
    return "ttt_firegrenade_proj"
 end
 

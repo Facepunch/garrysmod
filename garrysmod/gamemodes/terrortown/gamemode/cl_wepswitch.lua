@@ -25,7 +25,7 @@ local margin = 10
 local width = 300
 local height = 20
 
-local barcorner = surface.GetTextureID( "gui/corner8" )
+local barcorner = surface.GetTextureID("gui/corner8")
 
 local col_active = {
    tip = {
@@ -76,21 +76,21 @@ function WSWITCH:DrawBarBg(x, y, w, h, col)
    surface.SetTexture(barcorner)
 
    surface.SetDrawColor(c.r, c.g, c.b, c.a)
-   surface.DrawTexturedRectRotated( rx + bh , ry + bh, b, b, 0 ) 
-   surface.DrawTexturedRectRotated( rx + bh , ry + rh -bh, b, b, 90 ) 
-   surface.DrawRect( rx, ry+b, b, rh-b*2 )
-   surface.DrawRect( rx+b, ry, h - 4, rh )
-   
+   surface.DrawTexturedRectRotated(rx + bh , ry + bh, b, b, 0)
+   surface.DrawTexturedRectRotated(rx + bh , ry + rh -bh, b, b, 90)
+   surface.DrawRect(rx, ry+b, b, rh-b*2)
+   surface.DrawRect(rx+b, ry, h - 4, rh)
+
    -- Draw the remainder
    -- Could just draw a full roundedrect bg and overdraw it with the tip, but
    -- I don't have to do the hard work here anymore anyway
    c = col.bg
    surface.SetDrawColor(c.r, c.g, c.b, c.a)
 
-   surface.DrawRect( rx+b+h-4, ry,  rw - (h - 4) - b*2,  rh )
-   surface.DrawTexturedRectRotated( rx + rw - bh , ry + rh - bh, b, b, 180 ) 
-   surface.DrawTexturedRectRotated( rx + rw - bh , ry + bh, b, b, 270 ) 
-   surface.DrawRect( rx+rw-b,  ry+b,  b,  rh-b*2 )
+   surface.DrawRect(rx+b+h-4, ry,  rw - (h - 4) - b*2,  rh)
+   surface.DrawTexturedRectRotated(rx + rw - bh , ry + rh - bh, b, b, 180)
+   surface.DrawTexturedRectRotated(rx + rw - bh , ry + bh, b, b, 270)
+   surface.DrawRect(rx+rw-b,  ry+b,  b,  rh-b*2)
 
 end
 
@@ -104,7 +104,7 @@ function WSWITCH:DrawWeapon(x, y, c, wep)
 
    -- Clip1 will be -1 if a melee weapon
    -- Ammo1 will be false if weapon has no owner (was just dropped)
-   if cl1 != -1 and am1 != false then
+   if cl1 ~= -1 and am1 ~= false then
       ammo = Format("%i + %02i", cl1, am1)
    end
 
@@ -154,7 +154,7 @@ function WSWITCH:Draw(client)
 
       self:DrawBarBg(x, y, width, height, col)
       if not self:DrawWeapon(x, y, col, wep) then
-         
+
          self:UpdateWeaponCache()
          return
       end
@@ -173,7 +173,7 @@ local function CopyVals(src, dest)
       if IsValid(v) then
          table.insert(dest, v)
       end
-   end   
+   end
 end
 
 function WSWITCH:UpdateWeaponCache()
@@ -227,7 +227,7 @@ function WSWITCH:DoSelect(idx)
    if self.cv.fast:GetBool() then
       -- immediately confirm if fastswitch is on
       self:ConfirmSelection(self.cv.display:GetBool())
-   end   
+   end
 end
 
 -- Numeric key access to direct slots
@@ -297,7 +297,7 @@ end
 
 -- Allow for suppression of the attack command
 function WSWITCH:PreventAttack()
-   return self.Show and !self.cv.fast:GetBool()
+   return self.Show and not self.cv.fast:GetBool()
 end
 
 function WSWITCH:Think()
@@ -317,7 +317,7 @@ function WSWITCH:SelectAndConfirm(slot)
 end
 
 local function QuickSlot(ply, cmd, args)
-   if (not IsValid(ply)) or (not args) or #args != 1 then return end
+   if (not IsValid(ply)) or (not args) or #args ~= 1 then return end
 
    local slot = tonumber(args[1])
    if not slot then return end
@@ -329,7 +329,7 @@ local function QuickSlot(ply, cmd, args)
       else
          WSWITCH:SelectAndConfirm(slot)
       end
-   end   
+   end
 end
 concommand.Add("ttt_quickslot", QuickSlot)
 

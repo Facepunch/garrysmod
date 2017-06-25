@@ -1,7 +1,7 @@
 
 local PANEL = {}
 
---AccessorFunc( PANEL, "m_ConVarR", "ConVarR" )
+--AccessorFunc(PANEL, "m_ConVarR", "ConVarR")
 
 --[[---------------------------------------------------------
 	Name: Init
@@ -16,11 +16,11 @@ end
 --[[---------------------------------------------------------
 	Name: AddOption
 -----------------------------------------------------------]]
-function PANEL:AddOption( strName, tabConVars )
+function PANEL:AddOption(strName, tabConVars)
 
-	self:AddChoice( strName, tabConVars )
+	self:AddChoice(strName, tabConVars)
 
-	for k, v in pairs( tabConVars ) do
+	for k, v in pairs(tabConVars) do
 		self.ConVars[ k ] = 1
 	end
 
@@ -29,11 +29,11 @@ end
 --[[---------------------------------------------------------
 	Name: OnSelect
 -----------------------------------------------------------]]
-function PANEL:OnSelect( index, value, data )
+function PANEL:OnSelect(index, value, data)
 
-	for k, v in pairs( data ) do
+	for k, v in pairs(data) do
 
-		RunConsoleCommand( k, tostring( v ) )
+		RunConsoleCommand(k, tostring( v))
 
 	end
 
@@ -42,7 +42,7 @@ end
 --[[---------------------------------------------------------
 	Name: Think
 -----------------------------------------------------------]]
-function PANEL:Think( CheckConvarChanges )
+function PANEL:Think(CheckConvarChanges)
 
 	self:CheckConVarChanges()
 
@@ -53,10 +53,10 @@ end
 -----------------------------------------------------------]]
 function PANEL:ConVarsChanged()
 
-	for k, v in pairs( self.ConVars ) do
+	for k, v in pairs(self.ConVars) do
 
-		if ( self[ k ] == nil ) then return true end
-		if ( self[ k ] != GetConVarString( k ) ) then return true end
+		if (self[ k ] == nil) then return true end
+		if (self[ k ] ~= GetConVarString( k)) then return true end
 
 	end
 
@@ -67,13 +67,13 @@ end
 --[[---------------------------------------------------------
 	Name: CheckForMatch
 -----------------------------------------------------------]]
-function PANEL:CheckForMatch( cvars )
+function PANEL:CheckForMatch(cvars)
 
-	if ( table.Count( cvars ) == 0 ) then return false end
+	if (table.Count( cvars) == 0) then return false end
 
-	for k, v in pairs( cvars ) do
+	for k, v in pairs(cvars) do
 
-		if ( tostring(v) != GetConVarString( k ) ) then
+		if (tostring(v) ~= GetConVarString( k)) then
 			return false
 		end
 
@@ -88,16 +88,16 @@ end
 -----------------------------------------------------------]]
 function PANEL:CheckConVarChanges()
 
-	if (!self:ConVarsChanged()) then return end
+	if (not self:ConVarsChanged()) then return end
 
-	for k, v in pairs( self.ConVars ) do
-		self[ k ] = GetConVarString( k )
+	for k, v in pairs(self.ConVars) do
+		self[ k ] = GetConVarString(k)
 	end
 
-	for k, v in pairs( self.Data ) do
+	for k, v in pairs(self.Data) do
 
-		if ( self:CheckForMatch( v ) ) then
-			self:SetText( self:GetOptionText(k) )
+		if (self:CheckForMatch( v)) then
+			self:SetText(self:GetOptionText(k))
 			return
 		end
 
@@ -105,4 +105,4 @@ function PANEL:CheckConVarChanges()
 
 end
 
-vgui.Register( "CtrlListBox", PANEL, "DComboBox" )
+vgui.Register("CtrlListBox", PANEL, "DComboBox")

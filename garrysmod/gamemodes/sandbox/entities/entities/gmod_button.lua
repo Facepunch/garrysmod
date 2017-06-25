@@ -1,32 +1,32 @@
 
 AddCSLuaFile()
-DEFINE_BASECLASS( "base_gmodentity" )
+DEFINE_BASECLASS("base_gmodentity")
 
 ENT.PrintName = "Button"
 ENT.Editable = true
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Int", 0, "Key" )
-	self:NetworkVar( "Bool", 0, "On" )
-	self:NetworkVar( "Bool", 1, "IsToggle", { KeyName = "tg", Edit = { type = "Boolean", order = 1, title = "#tool.button.toggle" } } )
-	self:NetworkVar( "String", 0, "Label", { KeyName = "lbl", Edit = { type = "Generic", order = 2, title = "#tool.button.text" } } )
+	self:NetworkVar("Int", 0, "Key")
+	self:NetworkVar("Bool", 0, "On")
+	self:NetworkVar("Bool", 1, "IsToggle", { KeyName = "tg", Edit = { type = "Boolean", order = 1, title = "#tool.button.toggle" } })
+	self:NetworkVar("String", 0, "Label", { KeyName = "lbl", Edit = { type = "Generic", order = 2, title = "#tool.button.text" } })
 
-	if ( SERVER ) then
-		self:SetOn( false )
-		self:SetIsToggle( false )
+	if (SERVER) then
+		self:SetOn(false)
+		self:SetIsToggle(false)
 	end
 
 end
 
 function ENT:Initialize()
 
-	if ( SERVER ) then
+	if (SERVER) then
 
-		self:PhysicsInit( SOLID_VPHYSICS )
-		self:SetMoveType( MOVETYPE_VPHYSICS )
-		self:SetSolid( SOLID_VPHYSICS )
-		self:SetUseType( ONOFF_USE )
+		self:PhysicsInit(SOLID_VPHYSICS)
+		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetSolid(SOLID_VPHYSICS)
+		self:SetUseType(ONOFF_USE)
 
 	else
 
@@ -40,48 +40,48 @@ function ENT:GetOverlayText()
 
 	local text = self:GetLabel()
 
-	text = string.gsub( text, "\\", "" )
-	text = string.sub( text, 0, 20 )
+	text = string.gsub(text, "\\", "")
+	text = string.sub(text, 0, 20)
 
-	if ( text == "" ) then return "" end
+	if (text == "") then return "" end
 
 	local txt =  "\"" .. text .. "\""
 
-	if ( txt == "" ) then return "" end
-	if ( game.SinglePlayer() ) then return txt end
+	if (txt == "") then return "" end
+	if (game.SinglePlayer()) then return txt end
 
 	return txt .. "\n(" .. self:GetPlayerName() .. ")"
 
 end
 
-function ENT:Use( activator, caller, type, value )
+function ENT:Use(activator, caller, type, value)
 
-	if ( !activator:IsPlayer() ) then return end -- Who the frig is pressing this shit!?
+	if (not activator:IsPlayer()) then return end -- Who the frig is pressing this shitnot ?
 
-	if ( self:GetIsToggle() ) then
+	if (self:GetIsToggle()) then
 
-		if ( type == USE_ON ) then
-			self:Toggle( !self:GetOn(), activator )
+		if (type == USE_ON) then
+			self:Toggle(not self:GetOn(), activator)
 		end
 		return
 
 	end
 
-	if ( IsValid( self.LastUser ) ) then return end -- Someone is already using this button
+	if (IsValid( self.LastUser)) then return end -- Someone is already using this button
 
 	--
 	-- Switch off
 	--
-	if ( self:GetOn() ) then
-		self:Toggle( false, activator )
+	if (self:GetOn()) then
+		self:Toggle(false, activator)
 		return
 	end
 
 	--
 	-- Switch on
 	--
-	self:Toggle( true, activator )
-	self:NextThink( CurTime() )
+	self:Toggle(true, activator)
+	self:NextThink(CurTime())
 	self.LastUser = activator
 
 end
@@ -89,10 +89,10 @@ end
 function ENT:Think()
 
 	-- Add a world tip if the player is looking at it
-	self.BaseClass.Think( self )
+	self.BaseClass.Think(self)
 
 	-- Update the animation
-	if ( CLIENT ) then
+	if (CLIENT) then
 
 		self:UpdateLever()
 
@@ -102,16 +102,16 @@ function ENT:Think()
 	-- If the player looks away while holding down use it will stay on
 	-- Lets fix that..
 	--
-	if ( SERVER && self:GetOn() && !self:GetIsToggle() ) then
+	if (SERVER and self:GetOn() and not self:GetIsToggle()) then
 
-		if ( !IsValid( self.LastUser ) || !self.LastUser:KeyDown( IN_USE ) ) then
+		if (not IsValid( self.LastUser) or not self.LastUser:KeyDown( IN_USE)) then
 
-			self:Toggle( false, self.LastUser )
+			self:Toggle(false, self.LastUser)
 			self.LastUser = nil
 
 		end
 
-		self:NextThink( CurTime() )
+		self:NextThink(CurTime())
 
 	end
 
@@ -120,17 +120,17 @@ end
 --
 -- Makes the button trigger the keys
 --
-function ENT:Toggle( bEnable, ply )
+function ENT:Toggle(bEnable, ply)
 
-	if ( bEnable ) then
+	if (bEnable) then
 
-		numpad.Activate( self:GetPlayer(), self:GetKey(), true )
-		self:SetOn( true )
+		numpad.Activate(self:GetPlayer(), self:GetKey(), true)
+		self:SetOn(true)
 
 	else
 
-		numpad.Deactivate( self:GetPlayer(), self:GetKey(), true )
-		self:SetOn( false )
+		numpad.Deactivate(self:GetPlayer(), self:GetKey(), true)
+		self:SetOn(false)
 
 	end
 
@@ -142,11 +142,11 @@ end
 function ENT:UpdateLever()
 
 	local TargetPos = 0.0
-	if ( self:GetOn() ) then TargetPos = 1.0 end
+	if (self:GetOn()) then TargetPos = 1.0 end
 
-	self.PosePosition = math.Approach( self.PosePosition, TargetPos, FrameTime() * 5.0 )
+	self.PosePosition = math.Approach(self.PosePosition, TargetPos, FrameTime() * 5.0)
 
-	self:SetPoseParameter( "switch", self.PosePosition )
+	self:SetPoseParameter("switch", self.PosePosition)
 	self:InvalidateBoneCache()
 
 end

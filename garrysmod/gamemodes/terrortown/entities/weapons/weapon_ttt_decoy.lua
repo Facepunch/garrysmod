@@ -49,17 +49,17 @@ function SWEP:OnDrop()
 end
 
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
    self:DecoyStick()
 end
 function SWEP:SecondaryAttack()
-   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 
    self:DecoyStick()
 end
 
-local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
+local throwsound = Sound("Weapon_SLAM.SatchelThrow")
 
 -- Drop is disabled to prevent traitors from placing the decoy in unreachable
 -- places.
@@ -73,7 +73,7 @@ function SWEP:DecoyDrop()
       local vsrc = ply:GetShootPos()
       local vang = ply:GetAimVector()
       local vvel = ply:GetVelocity()
-      
+
       local vthrow = vvel + vang * 200
 
       local decoy = ents.Create("ttt_decoy")
@@ -83,7 +83,7 @@ function SWEP:DecoyDrop()
          decoy:Spawn()
 
          decoy:PointAtEntity(ply)
-         
+
          local ang = decoy:GetAngles()
          ang:RotateAroundAxis(ang:Right(), 90)
          decoy:SetAngles(ang)
@@ -92,7 +92,7 @@ function SWEP:DecoyDrop()
          local phys = decoy:GetPhysicsObject()
          if IsValid(phys) then
             phys:SetVelocity(vthrow)
-         end   
+         end
 
          self:PlacedDecoy(decoy)
       end
@@ -128,7 +128,7 @@ function SWEP:DecoyStick()
                decoy:SetAngles(ang)
                decoy:SetOwner(ply)
                decoy:Spawn()
-               
+
                local phys = decoy:GetPhysicsObject()
                if IsValid(phys) then
                   phys:EnableMotion(false)

@@ -148,7 +148,7 @@ local function LateLoadout(id)
 end
 
 -- Note that this is called both when a player spawns and when a round starts
-function GM:PlayerLoadout( ply )
+function GM:PlayerLoadout(ply)
    if IsValid(ply) and (not ply:IsSpec()) then
       -- clear out equipment flags
       ply:ResetEquipment()
@@ -341,7 +341,7 @@ end
 
 -- Equipment buying
 local function OrderEquipment(ply, cmd, args)
-   if not IsValid(ply) or #args != 1 then return end
+   if not IsValid(ply) or #args ~= 1 then return end
 
    if not (ply:IsActiveTraitor() or ply:IsActiveDetective()) then return end
 
@@ -351,7 +351,7 @@ local function OrderEquipment(ply, cmd, args)
    -- it's an item if the arg is an id instead of an ent name
    local id = args[1]
    local is_item = tonumber(id)
-   
+
    if not hook.Run("TTTCanOrderEquipment", ply, id, is_item) then return end
 
    -- we use weapons.GetStored to save time on an unnecessary copy, we will not
@@ -459,7 +459,7 @@ concommand.Add("ttt_cheat_credits", CheatCredits, nil, nil, FCVAR_CHEAT)
 
 local function TransferCredits(ply, cmd, args)
    if (not IsValid(ply)) or (not ply:IsActiveSpecial()) then return end
-   if #args != 2 then return end
+   if #args ~= 2 then return end
 
    local sid = tostring(args[1])
    local credits = tonumber(args[2])

@@ -27,7 +27,7 @@ SWEP.Primary.DefaultClip   = 6
 SWEP.Primary.ClipMax       = 6
 SWEP.Primary.Ammo          = "Gravity"
 SWEP.Primary.Automatic     = false
-SWEP.Primary.Sound         = Sound( "weapons/airboat/airboat_gun_energy1.wav" )
+SWEP.Primary.Sound         = Sound("weapons/airboat/airboat_gun_energy1.wav")
 
 SWEP.Secondary.Automatic   = false
 
@@ -133,7 +133,7 @@ end
 function SWEP:SecondaryAttack()
    if self.IsCharging then return end
 
-   self:SetNextSecondaryFire( CurTime() + 0.1 )
+   self:SetNextSecondaryFire(CurTime() + 0.1)
 
    if not (self:CanPrimaryAttack() and (self:GetNextPrimaryFire() - CurTime()) <= 0) then return end
 
@@ -241,8 +241,8 @@ if SERVER then
    end
 end
 
-local function around( val )
-   return math.Round( val * (10 ^ 3) ) / (10 ^ 3);
+local function around(val)
+   return math.Round(val * (10 ^ 3)) / (10 ^ 3)
 end
 
 if CLIENT then
@@ -250,7 +250,7 @@ if CLIENT then
 
    function SWEP:UpdateGhost(pos, c, a)
       if IsValid(self.Ghost) then
-         if self.Ghost:GetPos() != pos then
+         if self.Ghost:GetPos() ~= pos then
             self.Ghost:SetPos(pos)
             local ang = LocalPlayer():GetAimVector():Angle()
             ang:RotateAroundAxis(ang:Right(), 90)

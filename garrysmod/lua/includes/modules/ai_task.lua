@@ -1,6 +1,6 @@
 
 -- Serverside only.
-if ( CLIENT ) then return end
+if (CLIENT) then return end
 
 local setmetatable 	= setmetatable
 local tostring 		= tostring
@@ -9,7 +9,7 @@ local Msg			= Msg
 local Error			= Error
 local ai			= ai
 
-module( "ai_task" )
+module("ai_task")
 
 --[[---------------------------------------------------------
 	ENUMs for which kind of task it is.
@@ -41,19 +41,19 @@ end
 --[[---------------------------------------------------------
 	Creates an engine based task
 -----------------------------------------------------------]]
-function Task:InitEngine( _taskname_, _taskdata_ )
+function Task:InitEngine(_taskname_, _taskdata_)
 
 	self.TaskName 	= _taskname_
 	self.TaskID		= nil
 	self.TaskData 	= _taskdata_
 	self.Type 		= TYPE_ENGINE
-	
+
 end
 
 --[[---------------------------------------------------------
 	Creates an engine based task
 -----------------------------------------------------------]]
-function Task:InitFunctionName( _start, _end, _taskdata_ )
+function Task:InitFunctionName(_start, _end, _taskdata_)
 	self.StartFunctionName	= _start
 	self.FunctionName 		= _end
 	self.TaskData 			= _taskdata_
@@ -80,70 +80,70 @@ end
 --[[---------------------------------------------------------
 	Start
 -----------------------------------------------------------]]
-function Task:Start( npc )
-	
-	if ( self:IsFNameType() ) then self:Start_FName( npc ) return end
-	
-	if ( self:IsEngineType() ) then
-	
-		if (!self.TaskID) then self.TaskID = ai.GetTaskID( self.TaskName ) end
-	
-		npc:StartEngineTask( self.TaskID, self.TaskData )
+function Task:Start(npc)
+
+	if (self:IsFNameType()) then self:Start_FName( npc) return end
+
+	if (self:IsEngineType()) then
+
+		if (not self.TaskID) then self.TaskID = ai.GetTaskID( self.TaskName) end
+
+		npc:StartEngineTask(self.TaskID, self.TaskData)
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
 	Start_FName (called from Task:Start)
 -----------------------------------------------------------]]
-function Task:Start_FName( npc )
+function Task:Start_FName(npc)
 
-	if (!self.StartFunctionName) then return end
-	--if (!npc[ self.StartFunctionName ]) then return end
-	
+	if (not self.StartFunctionName) then return end
+	--if (not npc[ self.StartFunctionName ]) then return end
+
 	-- Run the start function. Safely.
-	npc[ self.StartFunctionName ]( npc, self.TaskData )
+	npc[ self.StartFunctionName ](npc, self.TaskData)
 
 end
 
 --[[---------------------------------------------------------
 	IsFNameType
 -----------------------------------------------------------]]
-function Task:Run( npc )
-	
-	if ( self:IsFNameType() ) then self:Run_FName( npc ) return end
-	
-	if ( self:IsEngineType() ) then
-		npc:RunEngineTask( self.TaskID, self.TaskData )
+function Task:Run(npc)
+
+	if (self:IsFNameType()) then self:Run_FName( npc) return end
+
+	if (self:IsEngineType()) then
+		npc:RunEngineTask(self.TaskID, self.TaskData)
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
 	Run_FName
 -----------------------------------------------------------]]
-function Task:Run_FName( npc )
-	
-	if (!self.FunctionName) then return end
-	--if (!npc[ self.StartFunctionName ]) then return end
-	
+function Task:Run_FName(npc)
+
+	if (not self.FunctionName) then return end
+	--if (not npc[ self.StartFunctionName ]) then return end
+
 	-- Run the start function. Safely.
-	npc[ self.FunctionName ]( npc, self.TaskData )
-	
+	npc[ self.FunctionName ](npc, self.TaskData)
+
 end
 
 --[[---------------------------------------------------------
-	Create a new empty task (this is ai_task.New )
+	Create a new empty task (this is ai_task.New)
 -----------------------------------------------------------]]
 function New()
 
 	local pNewTask = {}
-	setmetatable( pNewTask, Task )
-	
+	setmetatable(pNewTask, Task)
+
 	pNewTask:Init()
-	
-	--table.insert( Task_Index, pNewTask )
-	
+
+	--table.insert(Task_Index, pNewTask)
+
 	return pNewTask
 
 end

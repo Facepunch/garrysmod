@@ -11,20 +11,20 @@
 	data.Loop	- Optional. Should the sequence be looped
 
 -----------------------------------------------------------]]
-function ENT:TaskStart_PlaySequence( data )
+function ENT:TaskStart_PlaySequence(data)
 
 	local SequenceID = data.ID
 
-	if ( data.Name ) then SequenceID = self:LookupSequence( data.Name )	end
+	if (data.Name) then SequenceID = self:LookupSequence( data.Name)	end
 
-	self:ResetSequence( SequenceID )
-	self:SetNPCState( NPC_STATE_SCRIPT )
+	self:ResetSequence(SequenceID)
+	self:SetNPCState(NPC_STATE_SCRIPT)
 
 	local Duration = self:SequenceDuration()
 
-	if ( data.Speed && data.Speed > 0 ) then
+	if (data.Speed and data.Speed > 0) then
 
-		SequenceID = self:SetPlaybackRate( data.Speed )
+		SequenceID = self:SetPlaybackRate(data.Speed)
 		Duration = Duration / data.Speed
 
 	end
@@ -34,13 +34,13 @@ function ENT:TaskStart_PlaySequence( data )
 
 end
 
-function ENT:Task_PlaySequence( data )
+function ENT:Task_PlaySequence(data)
 
 	-- Wait until sequence is finished
-	if ( CurTime() < self.TaskSequenceEnd or self.Loop ) then return end
+	if (CurTime() < self.TaskSequenceEnd or self.Loop) then return end
 
 	self:TaskComplete()
-	self:SetNPCState( NPC_STATE_NONE )
+	self:SetNPCState(NPC_STATE_NONE)
 
 	-- Clean up
 	self.TaskSequenceEnd = nil
@@ -58,24 +58,24 @@ end
 	data.Speed	- Optional. Playback speed of sequence
 
 -----------------------------------------------------------]]
-function ENT:TaskStart_FindEnemy( data )
+function ENT:TaskStart_FindEnemy(data)
 
-	local et = ents.FindInSphere( self:GetPos(), data.Radius or 512 )
-	for k, v in ipairs( et ) do
+	local et = ents.FindInSphere(self:GetPos(), data.Radius or 512)
+	for k, v in ipairs(et) do
 
-		if ( v:IsValid() && v != self && v:GetClass() == data.Class ) then
+		if (v:IsValid() and v ~= self and v:GetClass() == data.Class) then
 
-			self:SetEnemy( v, true )
-			self:UpdateEnemyMemory( v, v:GetPos() )
+			self:SetEnemy(v, true)
+			self:UpdateEnemyMemory(v, v:GetPos())
 			self:TaskComplete()
 			return
 		end
 
 	end
 
-	self:SetEnemy( NULL )
+	self:SetEnemy(NULL)
 
 end
 
-function ENT:Task_FindEnemy( data )
+function ENT:Task_FindEnemy(data)
 end

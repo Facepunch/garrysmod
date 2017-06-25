@@ -202,7 +202,7 @@ local function ReceiveRoundState()
    local o = GetRoundState()
    GAMEMODE.round_state = net.ReadUInt(3)
 
-   if o != GAMEMODE.round_state then
+   if o ~= GAMEMODE.round_state then
       RoundStateChange(o, GAMEMODE.round_state)
    end
 
@@ -249,7 +249,7 @@ function GM:CleanUpMap()
    -- Ragdolls sometimes stay around on clients. Deleting them can create issues
    -- so all we can do is try to hide them.
    for _, ent in pairs(ents.FindByClass("prop_ragdoll")) do
-      if IsValid(ent) and CORPSE.GetPlayerNick(ent, "") != "" then
+      if IsValid(ent) and CORPSE.GetPlayerNick(ent, "") ~= "" then
          ent:SetNoDraw(true)
          ent:SetSolid(SOLID_NONE)
          ent:SetColor(Color(0,0,0,0))
@@ -283,7 +283,7 @@ net.Receive("TTT_PlayerDied", PlayerDeath)
 function GM:ShouldDrawLocalPlayer(ply) return false end
 
 local view = {origin = vector_origin, angles = angle_zero, fov=0}
-function GM:CalcView( ply, origin, angles, fov )
+function GM:CalcView(ply, origin, angles, fov)
    view.origin = origin
    view.angles = angles
    view.fov    = fov
@@ -307,7 +307,7 @@ function GM:CalcView( ply, origin, angles, fov )
    if IsValid(wep) then
       local func = wep.CalcView
       if func then
-         view.origin, view.angles, view.fov = func( wep, ply, origin*1, angles*1, fov )
+         view.origin, view.angles, view.fov = func(wep, ply, origin*1, angles*1, fov)
       end
    end
 
@@ -320,7 +320,7 @@ function GM:DrawDeathNotice() end
 function GM:Tick()
    local client = LocalPlayer()
    if IsValid(client) then
-      if client:Alive() and client:Team() != TEAM_SPEC then
+      if client:Alive() and client:Team() ~= TEAM_SPEC then
          WSWITCH:Think()
          RADIO:StoreTarget()
       end
@@ -352,11 +352,11 @@ function CheckIdle()
       if idle_limit <= 0 then idle_limit = 300 end -- networking sucks sometimes
 
 
-      if client:GetAngles() != idle.ang then
+      if client:GetAngles() ~= idle.ang then
          -- Normal players will move their viewing angles all the time
          idle.ang = client:GetAngles()
          idle.t = CurTime()
-      elseif gui.MouseX() != idle.mx or gui.MouseY() != idle.my then
+      elseif gui.MouseX() ~= idle.mx or gui.MouseY() ~= idle.my then
          -- Players in eg. the Help will move their mouse occasionally
          idle.mx = gui.MouseX()
          idle.my = gui.MouseY()

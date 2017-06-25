@@ -36,7 +36,7 @@ function PROPSPEC.Target(ply, ent)
 
    local phys = ent:GetPhysicsObject()
 
-   if ent:GetName() != "" and (not GAMEMODE.propspec_allow_named) then return end
+   if ent:GetName() ~= "" and (not GAMEMODE.propspec_allow_named) then return end
    if (not IsValid(phys)) or (not phys:IsMoveable()) then return end
 
    -- normally only specific whitelisted ent classes can be possessed, but
@@ -73,7 +73,7 @@ local propspec_force = CreateConVar("ttt_spec_prop_force", "110")
 function PROPSPEC.Key(ply, key)
    local ent = ply.propspec.ent
    local phys = IsValid(ent) and ent:GetPhysicsObject()
-   if (not IsValid(ent)) or (not IsValid(phys)) then 
+   if (not IsValid(ent)) or (not IsValid(phys)) then
       PROPSPEC.End(ply)
       return false
    end

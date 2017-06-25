@@ -105,7 +105,7 @@ function GM:PlayerCanSeePlayersChat(text, team_only, listener, speaker)
 	local sTeam = speaker:Team() == TEAM_SPEC
 	local lTeam = listener:Team() == TEAM_SPEC
 
-	if (GetRoundState() != ROUND_ACTIVE) or   -- Round isn't active
+	if (GetRoundState() ~= ROUND_ACTIVE) or   -- Round isn't active
 	(not GetConVar("ttt_limit_spectator_chat"):GetBool()) or   -- Spectators can chat freely
 	(not DetectiveMode()) or   -- Mumbling
 	(not sTeam and ((team_only and not speaker:IsSpecial()) or (not team_only))) or   -- If someone alive talks (and not a special role in teamchat's case)
@@ -133,8 +133,8 @@ function GM:PlayerSay(ply, text, team_only)
          for k, v in pairs(string.Explode(" ", text)) do
             -- grab word characters and whitelisted interpunction
             -- necessary or leetspeek will be used (by trolls especially)
-            local word, interp = string.match(v, "(%a*)([%.,;!%?]*)")
-            if word != "" then
+            local word, interp = string.match(v, "(%a*)([%.,;not %?]*)")
+            if word ~= "" then
                table.insert(filtered, mumbles[math.random(1, #mumbles)] .. interp)
             end
          end
@@ -207,7 +207,7 @@ function GM:PlayerCanHearPlayersVoice(listener, speaker)
       end
    end
 
-   return true, (loc_voice:GetBool() and GetRoundState() != ROUND_POST)
+   return true, (loc_voice:GetBool() and GetRoundState() ~= ROUND_POST)
 end
 
 local function SendTraitorVoiceState(speaker, state)
@@ -267,7 +267,7 @@ local LastWordContext = {
 
 local function LastWordsMsg(ply, words)
    -- only append "--" if there's no ending interpunction
-   local final = string.match(words, "[\\.\\!\\?]$") != nil
+   local final = string.match(words, "[\\.\\not \\?]$") ~= nil
 
    -- add optional context relating to death type
    local context = LastWordContext[ply.death_type] or ""
@@ -308,7 +308,7 @@ local function LastWords(ply, cmd, args)
 
          -- ignore admin commands
          local firstchar = string.sub(words, 1, 1)
-         if firstchar == "!" or firstchar == "@" or firstchar == "/" then return end
+         if firstchar == "not " or firstchar == "@" or firstchar == "/" then return end
 
 
          if ttt_lastwords:GetBool() or ply.death_type == KILL_FALL then

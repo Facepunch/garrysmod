@@ -49,8 +49,8 @@ SWEP.IsSilent               = true
 SWEP.DeploySpeed            = 2
 
 function SWEP:PrimaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+   self.Weapon:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 
    if not IsValid(self.Owner) then return end
 
@@ -73,7 +73,7 @@ function SWEP:PrimaryAttack()
 
    -- effects
    if IsValid(hitEnt) then
-      self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
+      self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
 
       local edata = EffectData()
       edata:SetStart(spos)
@@ -85,11 +85,11 @@ function SWEP:PrimaryAttack()
          util.Effect("BloodImpact", edata)
       end
    else
-      self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
+      self.Weapon:SendWeaponAnim(ACT_VM_MISSCENTER)
    end
 
    if SERVER then
-      self.Owner:SetAnimation( PLAYER_ATTACK1 )
+      self.Owner:SetAnimation(PLAYER_ATTACK1)
    end
 
 
@@ -137,7 +137,7 @@ function SWEP:StabKill(tr, spos, sdest)
    local retr = util.TraceLine({start=spos, endpos=sdest, filter=self.Owner, mask=MASK_SHOT_HULL})
 
    -- if that fails, just trace to worldcenter so we have SOMETHING
-   if retr.Entity != target then
+   if retr.Entity ~= target then
       local center = target:LocalToWorld(target:OBBCenter())
       retr = util.TraceLine({start=spos, endpos=center, filter=self.Owner, mask=MASK_SHOT_HULL})
    end
@@ -198,17 +198,17 @@ function SWEP:StabKill(tr, spos, sdest)
 end
 
 function SWEP:SecondaryAttack()
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+   self.Weapon:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 
 
-   self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
+   self.Weapon:SendWeaponAnim(ACT_VM_MISSCENTER)
 
    if SERVER then
       local ply = self.Owner
       if not IsValid(ply) then return end
 
-      ply:SetAnimation( PLAYER_ATTACK1 )
+      ply:SetAnimation(PLAYER_ATTACK1)
 
       local ang = ply:EyeAngles()
 
@@ -256,8 +256,8 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Equip()
-   self.Weapon:SetNextPrimaryFire( CurTime() + (self.Primary.Delay * 1.5) )
-   self.Weapon:SetNextSecondaryFire( CurTime() + (self.Secondary.Delay * 1.5) )
+   self.Weapon:SetNextPrimaryFire(CurTime() + (self.Primary.Delay * 1.5))
+   self.Weapon:SetNextSecondaryFire(CurTime() + (self.Secondary.Delay * 1.5))
 end
 
 function SWEP:PreDrop()

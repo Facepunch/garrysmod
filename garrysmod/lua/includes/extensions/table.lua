@@ -1,12 +1,12 @@
 
 --[[---------------------------------------------------------
-	Name: Inherit( t, base )
+	Name: Inherit(t, base)
 	Desc: Copies any missing data from base to t
 -----------------------------------------------------------]]
-function table.Inherit( t, base )
+function table.Inherit(t, base)
 
-	for k, v in pairs( base ) do 
-		if ( t[ k ] == nil ) then t[ k ] = v end
+	for k, v in pairs(base) do
+		if (t[ k ] == nil) then t[ k ] = v end
 	end
 
 	t[ "BaseClass" ] = base
@@ -19,23 +19,23 @@ end
 	Name: Copy(t, lookup_table)
 	Desc: Taken straight from http://lua-users.org/wiki/PitLibTablestuff
 		and modified to the new Lua 5.1 code by me.
-		Original function by PeterPrade!
+		Original function by PeterPradenot
 -----------------------------------------------------------]]
-function table.Copy( t, lookup_table )
-	if ( t == nil ) then return nil end
+function table.Copy(t, lookup_table)
+	if (t == nil) then return nil end
 
 	local copy = {}
-	setmetatable( copy, debug.getmetatable( t ) )
-	for i, v in pairs( t ) do
-		if ( !istable( v ) ) then
+	setmetatable(copy, debug.getmetatable( t))
+	for i, v in pairs(t) do
+		if (not istable( v)) then
 			copy[ i ] = v
 		else
 			lookup_table = lookup_table or {}
 			lookup_table[ t ] = copy
-			if ( lookup_table[ v ] ) then
+			if (lookup_table[ v ]) then
 				copy[ i ] = lookup_table[ v ] -- we already copied this table. reuse the copy.
 			else
-				copy[ i ] = table.Copy( v, lookup_table ) -- not yet copied. copy it.
+				copy[ i ] = table.Copy(v, lookup_table) -- not yet copied. copy it.
 			end
 		end
 	end
@@ -43,26 +43,26 @@ function table.Copy( t, lookup_table )
 end
 
 --[[---------------------------------------------------------
-	Name: Empty( tab )
+	Name: Empty(tab)
 	Desc: Empty a table
 -----------------------------------------------------------]]
-function table.Empty( tab )
-	for k, v in pairs( tab ) do
+function table.Empty(tab)
+	for k, v in pairs(tab) do
 		tab[ k ] = nil
 	end
 end
 
 --[[---------------------------------------------------------
-	Name: CopyFromTo( FROM, TO )
+	Name: CopyFromTo(FROM, TO)
 	Desc: Make TO exactly the same as FROM - but still the same table.
 -----------------------------------------------------------]]
-function table.CopyFromTo( from, to )
+function table.CopyFromTo(from, to)
 
 	-- Erase values from table TO
-	table.Empty( to )
+	table.Empty(to)
 
 	-- Copy values over
-	table.Merge( to, from )
+	table.Merge(to, from)
 
 end
 
@@ -70,13 +70,13 @@ end
 	Name: Merge
 	Desc: xx
 -----------------------------------------------------------]]
-function table.Merge( dest, source )
+function table.Merge(dest, source)
 
-	for k, v in pairs( source ) do
-		if ( type( v ) == "table" && type( dest[ k ] ) == "table" ) then
+	for k, v in pairs(source) do
+		if (type( v) == "table" and type( dest[ k ]) == "table") then
 			-- don't overwrite one table with another
 			-- instead merge them recurisvely
-			table.Merge( dest[ k ], v )
+			table.Merge(dest[ k ], v)
 		else
 			dest[ k ] = v
 		end
@@ -90,51 +90,51 @@ end
 	Name: HasValue
 	Desc: Returns whether the value is in given table
 -----------------------------------------------------------]]
-function table.HasValue( t, val )
-	for k, v in pairs( t ) do
-		if ( v == val ) then return true end
+function table.HasValue(t, val)
+	for k, v in pairs(t) do
+		if (v == val) then return true end
 	end
 	return false
 end
 
 --[[---------------------------------------------------------
-	Name: table.Add( dest, source )
+	Name: table.Add(dest, source)
 	Desc: Unlike merge this adds the two tables together and discards keys.
 -----------------------------------------------------------]]
-function table.Add( dest, source )
+function table.Add(dest, source)
 
 	-- At least one of them needs to be a table or this whole thing will fall on its ass
-	if ( type( source ) != "table" ) then return dest end
-	if ( type( dest ) != "table" ) then dest = {} end
+	if (type( source) ~= "table") then return dest end
+	if (type( dest) ~= "table") then dest = {} end
 
-	for k, v in pairs( source ) do
-		table.insert( dest, v )
+	for k, v in pairs(source) do
+		table.insert(dest, v)
 	end
 
 	return dest
 end
 
 --[[---------------------------------------------------------
-	Name: table.SortDesc( table )
+	Name: table.SortDesc(table)
 	Desc: Like Lua's default sort, but descending
 -----------------------------------------------------------]]
-function table.SortDesc( t )
-	return table.sort( t, function( a, b ) return a > b end )
+function table.SortDesc(t)
+	return table.sort(t, function( a, b) return a > b end)
 end
 
 --[[---------------------------------------------------------
-	Name: table.SortByKey( table )
+	Name: table.SortByKey(table)
 	Desc: Returns a table sorted numerically by Key value
 -----------------------------------------------------------]]
-function table.SortByKey( t, desc )
+function table.SortByKey(t, desc)
 
 	local temp = {}
 
-	for key, _ in pairs( t ) do table.insert( temp, key ) end
-	if ( desc ) then
-		table.sort( temp, function( a, b ) return t[ a ] < t[ b ] end )
+	for key, _ in pairs(t) do table.insert( temp, key) end
+	if (desc) then
+		table.sort(temp, function( a, b) return t[ a ] < t[ b ] end)
 	else
-		table.sort( temp, function( a, b ) return t[ a ] > t[ b ] end )
+		table.sort(temp, function( a, b) return t[ a ] > t[ b ] end)
 	end
 
 	return temp
@@ -142,92 +142,92 @@ function table.SortByKey( t, desc )
 end
 
 --[[---------------------------------------------------------
-	Name: table.Count( table )
+	Name: table.Count(table)
 	Desc: Returns the number of keys in a table
 -----------------------------------------------------------]]
-function table.Count( t )
+function table.Count(t)
 	local i = 0
-	for k in pairs( t ) do i = i + 1 end
+	for k in pairs(t) do i = i + 1 end
 	return i
 end
 
 --[[---------------------------------------------------------
-	Name: table.Random( table )
+	Name: table.Random(table)
 	Desc: Return a random key
 -----------------------------------------------------------]]
-function table.Random( t )
-	local rk = math.random( 1, table.Count( t ) )
+function table.Random(t)
+	local rk = math.random(1, table.Count( t))
 	local i = 1
-	for k, v in pairs( t ) do 
-		if ( i == rk ) then return v, k end
-		i = i + 1 
+	for k, v in pairs(t) do
+		if (i == rk) then return v, k end
+		i = i + 1
 	end
 end
 
 --[[----------------------------------------------------------------------
-	Name: table.IsSequential( table )
-	Desc: Returns true if the tables 
+	Name: table.IsSequential(table)
+	Desc: Returns true if the tables
 		keys are sequential
 -------------------------------------------------------------------------]]
-function table.IsSequential( t )
+function table.IsSequential(t)
 	local i = 1
-	for key, value in pairs( t ) do
-		if ( t[ i ] == nil ) then return false end
+	for key, value in pairs(t) do
+		if (t[ i ] == nil) then return false end
 		i = i + 1
 	end
 	return true
 end
 
 --[[---------------------------------------------------------
-	Name: table.ToString( table,name,nice )
+	Name: table.ToString(table,name,nice)
 	Desc: Convert a simple table to a string
 		table = the table you want to convert (table)
 		name  = the name of the table (string)
 		nice  = whether to add line breaks and indents (bool)
 -----------------------------------------------------------]]
-local function MakeTable( t, nice, indent, done )
+local function MakeTable(t, nice, indent, done)
 	local str = ""
 	local done = done or {}
 	local indent = indent or 0
 	local idt = ""
-	if nice then idt = string.rep( "\t", indent ) end
+	if nice then idt = string.rep("\t", indent) end
 	local nl, tab  = "", ""
-	if ( nice ) then nl, tab = "\n", "\t" end
+	if (nice) then nl, tab = "\n", "\t" end
 
-	local sequential = table.IsSequential( t )
+	local sequential = table.IsSequential(t)
 
-	for key, value in pairs( t ) do
+	for key, value in pairs(t) do
 
 		str = str .. idt .. tab .. tab
 
-		if !sequential then
-			if type( key ) == "number" or type( key ) == "boolean" then 
-				key = "[" .. tostring( key ) .. "]" .. tab .. "="
+		if not sequential then
+			if type(key) == "number" or type( key) == "boolean" then
+				key = "[" .. tostring(key) .. "]" .. tab .. "="
 			else
-				key = tostring( key ) .. tab .. "="
+				key = tostring(key) .. tab .. "="
 			end
 		else
 			key = ""
 		end
 
-		if ( istable( value ) && !done[ value ] ) then
+		if (istable( value) and not done[ value ]) then
 
 			done [ value ] = true
-			str = str .. key .. tab .. "{" .. nl .. MakeTable( value, nice, indent + 1, done )
+			str = str .. key .. tab .. "{" .. nl .. MakeTable(value, nice, indent + 1, done)
 			str = str .. idt .. tab .. tab .. tab .. tab .."},".. nl
 
 		else
-		
-			if ( type( value ) == "string" ) then 
-				value = '"' .. tostring( value ) .. '"'
-			elseif ( type( value ) == "Vector" ) then
+
+			if (type( value) == "string") then
+				value = '"' .. tostring(value) .. '"'
+			elseif (type( value) == "Vector") then
 				value = "Vector(" .. value.x .. "," .. value.y .. "," .. value.z .. ")"
-			elseif ( type( value ) == "Angle" ) then
+			elseif (type( value) == "Angle") then
 				value = "Angle(" .. value.pitch .. "," .. value.yaw .. "," .. value.roll .. ")"
 			else
-				value = tostring( value )
+				value = tostring(value)
 			end
-		
+
 			str = str .. key .. tab .. value .. "," .. nl
 
 		end
@@ -236,41 +236,41 @@ local function MakeTable( t, nice, indent, done )
 	return str
 end
 
-function table.ToString( t, n, nice )
+function table.ToString(t, n, nice)
 	local nl, tab  = "", ""
-	if ( nice ) then nl, tab = "\n", "\t" end
+	if (nice) then nl, tab = "\n", "\t" end
 
 	local str = ""
-	if ( n ) then str = n .. tab .. "=" .. tab end
-	return str .. "{" .. nl .. MakeTable( t, nice ) .. "}"
+	if (n) then str = n .. tab .. "=" .. tab end
+	return str .. "{" .. nl .. MakeTable(t, nice) .. "}"
 end
 
 --[[---------------------------------------------------------
-	Name: table.Sanitise( table )
+	Name: table.Sanitise(table)
 	Desc: Converts a table containing vectors, angles, bools so it can be converted to and from keyvalues
 -----------------------------------------------------------]]
-function table.Sanitise( t, done )
+function table.Sanitise(t, done)
 
 	local done = done or {}
 	local tbl = {}
 
-	for k, v in pairs ( t ) do
-	
-		if ( istable( v ) and !done[ v ] ) then
+	for k, v in pairs (t) do
+
+		if (istable( v) and not done[ v ]) then
 
 			done[ v ] = true
-			tbl[ k ] = table.Sanitise( v, done )
+			tbl[ k ] = table.Sanitise(v, done)
 
 		else
 
-			if ( type( v ) == "Vector" ) then
+			if (type( v) == "Vector") then
 
 				local x, y, z = v.x, v.y, v.z
 				if y == 0 then y = nil end
 				if z == 0 then z = nil end
 				tbl[ k ] = { __type = "Vector", x = x, y = y, z = z }
 
-			elseif ( type( v ) == "Angle" ) then
+			elseif (type( v) == "Angle") then
 
 				local p, y, r = v.pitch, v.yaw, v.roll
 				if p == 0 then p = nil end
@@ -278,13 +278,13 @@ function table.Sanitise( t, done )
 				if r == 0 then r = nil end
 				tbl[ k ] = { __type = "Angle", p = p, y = y, r = r }
 
-			elseif ( type( v ) == "boolean" ) then
-			
-				tbl[ k ] = { __type = "Bool", tostring( v ) }
+			elseif (type( v) == "boolean") then
+
+				tbl[ k ] = { __type = "Bool", tostring(v) }
 
 			else
 
-				tbl[ k ] = tostring( v )
+				tbl[ k ] = tostring(v)
 
 			end
 
@@ -297,83 +297,83 @@ function table.Sanitise( t, done )
 end
 
 --[[---------------------------------------------------------
-	Name: table.DeSanitise( table )
+	Name: table.DeSanitise(table)
 	Desc: Converts a Sanitised table back
 -----------------------------------------------------------]]
-function table.DeSanitise( t, done )
+function table.DeSanitise(t, done)
 
 	local done = done or {}
 	local tbl = {}
 
-	for k, v in pairs ( t ) do
+	for k, v in pairs (t) do
 
-		if ( istable( v ) and !done[ v ] ) then
+		if (istable( v) and not done[ v ]) then
 
 			done[ v ] = true
 
-			if ( v.__type ) then
-			
-				if ( v.__type == "Vector" ) then
-				
-					tbl[ k ] = Vector( v.x, v.y, v.z )
-				
-				elseif ( v.__type == "Angle" ) then
-				
-					tbl[ k ] = Angle( v.p, v.y, v.r )
-				
-				elseif ( v.__type == "Bool" ) then
-				
-					tbl[ k ] = ( v[ 1 ] == "true" )
-				
+			if (v.__type) then
+
+				if (v.__type == "Vector") then
+
+					tbl[ k ] = Vector(v.x, v.y, v.z)
+
+				elseif (v.__type == "Angle") then
+
+					tbl[ k ] = Angle(v.p, v.y, v.r)
+
+				elseif (v.__type == "Bool") then
+
+					tbl[ k ] = (v[ 1 ] == "true")
+
 				end
-			
+
 			else
-			
-				tbl[ k ] = table.DeSanitise( v, done )
-			
+
+				tbl[ k ] = table.DeSanitise(v, done)
+
 			end
-			
+
 		else
-		
+
 			tbl[ k ] = v
-		
+
 		end
-		
+
 	end
 
 	return tbl
 
 end
 
-function table.ForceInsert( t, v )
+function table.ForceInsert(t, v)
 
-	if ( t == nil ) then t = {} end
+	if (t == nil) then t = {} end
 
-	table.insert( t, v )
+	table.insert(t, v)
 
 	return t
 
 end
 
 --[[---------------------------------------------------------
-	Name: table.SortByMember( table )
+	Name: table.SortByMember(table)
 	Desc: Sorts table by named member
 -----------------------------------------------------------]]
-function table.SortByMember( Table, MemberName, bAsc )
+function table.SortByMember(Table, MemberName, bAsc)
 
-	local TableMemberSort = function( a, b, MemberName, bReverse ) 
+	local TableMemberSort = function(a, b, MemberName, bReverse)
 
 		--
 		-- All this error checking kind of sucks, but really is needed
 		--
-		if ( !istable( a ) ) then return !bReverse end
-		if ( !istable( b ) ) then return bReverse end
-		if ( !a[ MemberName ] ) then return !bReverse end
-		if ( !b[ MemberName ] ) then return bReverse end
+		if (not istable( a)) then return not bReverse end
+		if (not istable( b)) then return bReverse end
+		if (not a[ MemberName ]) then return not bReverse end
+		if (not b[ MemberName ]) then return bReverse end
 
-		if ( type( a[ MemberName ] ) == "string" ) then
+		if (type( a[ MemberName ]) == "string") then
 
-			if ( bReverse ) then
+			if (bReverse) then
 				return a[ MemberName ]:lower() < b[ MemberName ]:lower()
 			else
 				return a[ MemberName ]:lower() > b[ MemberName ]:lower()
@@ -381,7 +381,7 @@ function table.SortByMember( Table, MemberName, bAsc )
 
 		end
 
-		if ( bReverse ) then
+		if (bReverse) then
 			return a[ MemberName ] < b[ MemberName ]
 		else
 			return a[ MemberName ] > b[ MemberName ]
@@ -389,31 +389,31 @@ function table.SortByMember( Table, MemberName, bAsc )
 
 	end
 
-	table.sort( Table, function( a, b ) return TableMemberSort( a, b, MemberName, bAsc or false ) end )
+	table.sort(Table, function( a, b) return TableMemberSort( a, b, MemberName, bAsc or false) end)
 
 end
 
 --[[---------------------------------------------------------
-	Name: table.LowerKeyNames( table )
+	Name: table.LowerKeyNames(table)
 	Desc: Lowercase the keynames of all tables
 -----------------------------------------------------------]]
-function table.LowerKeyNames( Table )
+function table.LowerKeyNames(Table)
 
 	local OutTable = {}
 
-	for k, v in pairs( Table ) do
+	for k, v in pairs(Table) do
 
 		-- Recurse
-		if ( istable( v ) ) then
-			v = table.LowerKeyNames( v )
+		if (istable( v)) then
+			v = table.LowerKeyNames(v)
 		end
 
 		OutTable[ k ] = v
 
-		if ( isstring( k ) ) then
+		if (isstring( k)) then
 
 			OutTable[ k ]  = nil
-			OutTable[ string.lower( k ) ] = v
+			OutTable[ string.lower(k) ] = v
 
 		end
 
@@ -424,19 +424,19 @@ function table.LowerKeyNames( Table )
 end
 
 --[[---------------------------------------------------------
-	Name: table.LowerKeyNames( table )
+	Name: table.LowerKeyNames(table)
 	Desc: Lowercase the keynames of all tables
 -----------------------------------------------------------]]
-function table.CollapseKeyValue( Table )
+function table.CollapseKeyValue(Table)
 
 	local OutTable = {}
 
-	for k, v in pairs( Table ) do
+	for k, v in pairs(Table) do
 
 		local Val = v.Value
 
-		if ( istable( Val ) ) then
-			Val = table.CollapseKeyValue( Val )
+		if (istable( Val)) then
+			Val = table.CollapseKeyValue(Val)
 		end
 
 		OutTable[ v.Key ] = Val
@@ -448,31 +448,31 @@ function table.CollapseKeyValue( Table )
 end
 
 --[[---------------------------------------------------------
-	Name: table.ClearKeys( table, bSaveKey )
+	Name: table.ClearKeys(table, bSaveKey)
 	Desc: Clears the keys, converting to a numbered format
 -----------------------------------------------------------]]
-function table.ClearKeys( Table, bSaveKey )
+function table.ClearKeys(Table, bSaveKey)
 
 	local OutTable = {}
 
-	for k, v in pairs( Table ) do
-		if ( bSaveKey ) then
+	for k, v in pairs(Table) do
+		if (bSaveKey) then
 			v.__key = k
 		end
-		table.insert( OutTable, v )
+		table.insert(OutTable, v)
 	end
 
 	return OutTable
 
 end
 
-local function fnPairsSorted( pTable, Index )
+local function fnPairsSorted(pTable, Index)
 
-	if ( Index == nil ) then
+	if (Index == nil) then
 		Index = 1
 	else
-		for k, v in pairs( pTable.__SortedIndex ) do
-			if ( v == Index ) then
+		for k, v in pairs(pTable.__SortedIndex) do
+			if (v == Index) then
 				Index = k + 1
 				break
 			end
@@ -480,7 +480,7 @@ local function fnPairsSorted( pTable, Index )
 	end
 
 	local Key = pTable.__SortedIndex[ Index ]
-	if ( !Key ) then
+	if (not Key) then
 		pTable.__SortedIndex = nil
 		return
 	end
@@ -495,19 +495,19 @@ end
 	A Pairs function
 		Sorted by TABLE KEY
 -----------------------------------------------------------]]
-function SortedPairs( pTable, Desc )
+function SortedPairs(pTable, Desc)
 
-	pTable = table.Copy( pTable )
+	pTable = table.Copy(pTable)
 
 	local SortedIndex = {}
-	for k, v in pairs( pTable ) do
-		table.insert( SortedIndex, k )
+	for k, v in pairs(pTable) do
+		table.insert(SortedIndex, k)
 	end
 
-	if ( Desc ) then
-		table.sort( SortedIndex, function( a, b ) return a > b end )
+	if (Desc) then
+		table.sort(SortedIndex, function( a, b) return a > b end)
 	else
-		table.sort( SortedIndex )
+		table.sort(SortedIndex)
 	end
 
 	pTable.__SortedIndex = SortedIndex
@@ -520,22 +520,22 @@ end
 	A Pairs function
 		Sorted by VALUE
 -----------------------------------------------------------]]
-function SortedPairsByValue( pTable, Desc )
+function SortedPairsByValue(pTable, Desc)
 
-	pTable = table.Copy( pTable )
+	pTable = table.Copy(pTable)
 
 	local SortedIndex = {}
-	for k, v in pairs( pTable ) do
-		table.insert( SortedIndex, { key = k, val = v } )
+	for k, v in pairs(pTable) do
+		table.insert(SortedIndex, { key = k, val = v })
 	end
 
-	if ( Desc ) then
-		table.sort( SortedIndex, function( a, b ) return a.val > b.val end )
+	if (Desc) then
+		table.sort(SortedIndex, function( a, b) return a.val > b.val end)
 	else
-		table.sort( SortedIndex, function( a, b ) return a.val < b.val end )
+		table.sort(SortedIndex, function( a, b) return a.val < b.val end)
 	end
 
-	for k, v in pairs( SortedIndex ) do
+	for k, v in pairs(SortedIndex) do
 		SortedIndex[ k ] = v.key
 	end
 
@@ -547,20 +547,20 @@ end
 
 --[[---------------------------------------------------------
 	A Pairs function
-		Sorted by Member Value (All table entries must be a table!)
+		Sorted by Member Value (All table entries must be a tablenot)
 -----------------------------------------------------------]]
-function SortedPairsByMemberValue( pTable, pValueName, Desc )
+function SortedPairsByMemberValue(pTable, pValueName, Desc)
 
-	pTable = table.Copy( pTable )
+	pTable = table.Copy(pTable)
 	Desc = Desc or false
 
-	local pSortedTable = table.ClearKeys( pTable, true )
+	local pSortedTable = table.ClearKeys(pTable, true)
 
-	table.SortByMember( pSortedTable, pValueName, !Desc )
+	table.SortByMember(pSortedTable, pValueName, not Desc)
 
 	local SortedIndex = {}
-	for k, v in ipairs( pSortedTable ) do
-		table.insert( SortedIndex, v.__key )
+	for k, v in ipairs(pSortedTable) do
+		table.insert(SortedIndex, v.__key)
 	end
 
 	pTable.__SortedIndex = SortedIndex
@@ -572,22 +572,22 @@ end
 --[[---------------------------------------------------------
 	A Pairs function
 -----------------------------------------------------------]]
-function RandomPairs( pTable, Desc )
+function RandomPairs(pTable, Desc)
 
-	pTable = table.Copy( pTable )
+	pTable = table.Copy(pTable)
 
 	local SortedIndex = {}
-	for k, v in pairs( pTable ) do
-		table.insert( SortedIndex, { key = k, val = math.random( 1, 1000 ) } )
+	for k, v in pairs(pTable) do
+		table.insert(SortedIndex, { key = k, val = math.random( 1, 1000) })
 	end
 
-	if ( Desc ) then
-		table.sort( SortedIndex, function(a,b) return a.val>b.val end )
+	if (Desc) then
+		table.sort(SortedIndex, function(a,b) return a.val>b.val end)
 	else
-		table.sort( SortedIndex, function(a,b) return a.val<b.val end )
+		table.sort(SortedIndex, function(a,b) return a.val<b.val end)
 	end
 
-	for k, v in pairs( SortedIndex ) do
+	for k, v in pairs(SortedIndex) do
 		SortedIndex[ k ] = v.key
 	end
 
@@ -600,41 +600,41 @@ end
 --[[---------------------------------------------------------
 	GetFirstKey
 -----------------------------------------------------------]]
-function table.GetFirstKey( t )
-	local k, v = next( t )
+function table.GetFirstKey(t)
+	local k, v = next(t)
 	return k
 end
 
-function table.GetFirstValue( t )
-	local k, v = next( t )
+function table.GetFirstValue(t)
+	local k, v = next(t)
 	return v
 end
 
-function table.GetLastKey( t )
-	local k, v = next( t, table.Count(t) - 1 )
+function table.GetLastKey(t)
+	local k, v = next(t, table.Count(t) - 1)
 	return k
 end
 
-function table.GetLastValue( t )
-	local k, v = next( t, table.Count(t) - 1 )
+function table.GetLastValue(t)
+	local k, v = next(t, table.Count(t) - 1)
 	return v
 end
 
-function table.FindNext( tab, val )
+function table.FindNext(tab, val)
 	local bfound = false
-	for k, v in pairs( tab ) do
-		if ( bfound ) then return v end
-		if ( val == v ) then bfound = true end
+	for k, v in pairs(tab) do
+		if (bfound) then return v end
+		if (val == v) then bfound = true end
 	end
 
-	return table.GetFirstValue( tab )
+	return table.GetFirstValue(tab)
 end
 
-function table.FindPrev( tab, val )
+function table.FindPrev(tab, val)
 
-	local last = table.GetLastValue( tab )
-	for k, v in pairs( tab ) do
-		if ( val == v ) then return last end
+	local last = table.GetLastValue(tab)
+	for k, v in pairs(tab) do
+		if (val == v) then return last end
 		last = v
 	end
 
@@ -642,13 +642,13 @@ function table.FindPrev( tab, val )
 
 end
 
-function table.GetWinningKey( tab )
+function table.GetWinningKey(tab)
 
 	local highest = -10000
 	local winner = nil
 
-	for k, v in pairs( tab ) do
-		if ( v > highest ) then 
+	for k, v in pairs(tab) do
+		if (v > highest) then
 			winner = k
 			highest = v
 		end
@@ -658,31 +658,31 @@ function table.GetWinningKey( tab )
 
 end
 
-function table.KeyFromValue( tbl, val )
-	for key, value in pairs( tbl ) do
-		if ( value == val ) then return key end
+function table.KeyFromValue(tbl, val)
+	for key, value in pairs(tbl) do
+		if (value == val) then return key end
 	end
 end
 
-function table.RemoveByValue( tbl, val )
+function table.RemoveByValue(tbl, val)
 
-	local key = table.KeyFromValue( tbl, val )
-	if ( !key ) then return false end
+	local key = table.KeyFromValue(tbl, val)
+	if (not key) then return false end
 
-	table.remove( tbl, key )
+	table.remove(tbl, key)
 	return key
 
 end
 
-function table.KeysFromValue( tbl, val )
+function table.KeysFromValue(tbl, val)
 	local res = {}
-	for key, value in pairs( tbl ) do
-		if ( value == val ) then res[ #res + 1 ] = key end
+	for key, value in pairs(tbl) do
+		if (value == val) then res[ #res + 1 ] = key end
 	end
 	return res
 end
 
-function table.Reverse( tbl )
+function table.Reverse(tbl)
 
 	local len = #tbl
 	local ret = {}
@@ -695,20 +695,20 @@ function table.Reverse( tbl )
 
 end
 
-function table.ForEach( tab, funcname )
+function table.ForEach(tab, funcname)
 
-	for k, v in pairs( tab ) do
-		funcname( k, v )
+	for k, v in pairs(tab) do
+		funcname(k, v)
 	end
 
 end
 
-function table.GetKeys( tab )
+function table.GetKeys(tab)
 
 	local keys = {}
 	local id = 1
 
-	for k, v in pairs( tab ) do
+	for k, v in pairs(tab) do
 		keys[ id ] = k
 		id = id + 1
 	end

@@ -1,17 +1,17 @@
 
-ws_save = WorkshopFileBase( "save", { "save" } )
+ws_save = WorkshopFileBase("save", { "save" })
 
 
-function ws_save:FetchLocal( offset, perpage )
+function ws_save:FetchLocal(offset, perpage)
 
-	local f = file.Find( "saves/*.gms", "MOD", "datedesc" )
+	local f = file.Find("saves/*.gms", "MOD", "datedesc")
 
 	local saves = {}
 
-	for k, v in pairs( f ) do
+	for k, v in pairs(f) do
 
-		if ( k <= offset ) then continue end
-		if ( k > offset + perpage ) then break end
+		if (k <= offset) then continue end
+		if (k > offset + perpage) then break end
 
 		local entry =
 		{
@@ -20,7 +20,7 @@ function ws_save:FetchLocal( offset, perpage )
 			preview	= "saves/" .. v:StripExtension() .. ".jpg"
 		}
 
-		table.insert( saves, entry )
+		table.insert(saves, entry)
 
 	end
 
@@ -29,63 +29,63 @@ function ws_save:FetchLocal( offset, perpage )
 		results			= saves
 	}
 
-	local json = util.TableToJSON( results, false )
-	pnlMainMenu:Call( "save.ReceiveLocal( " .. json .. " )" )
+	local json = util.TableToJSON(results, false)
+	pnlMainMenu:Call("save.ReceiveLocal( " .. json .. ")")
 
 end
 
-function ws_save:DownloadAndLoad( id )
+function ws_save:DownloadAndLoad(id)
 
-	steamworks.Download( id, true, function( name )
+	steamworks.Download(id, true, function( name)
 
-		ws_save:Load( name )
+		ws_save:Load(name)
 
 	end )
 
 end
 
 
-function ws_save:Load( filename )
+function ws_save:Load(filename)
 
-	RunConsoleCommand( "gm_load", filename )
-
-end
-
-
-function ws_save:FinishPublish( filename, imagename, name, desc, chosentag )
-
-	local info = GetSaveFileDetails( filename )
-	if ( !info ) then return "Couldn't get save information!" end
-
-	steamworks.Publish( { "save", info.map, chosentag }, filename, imagename, name, desc )
+	RunConsoleCommand("gm_load", filename)
 
 end
 
-function ws_save:Publish( filename, image )
 
-	--MsgN( "PUBLISHING ", filename )
-	--MsgN( "Image ", image )
+function ws_save:FinishPublish(filename, imagename, name, desc, chosentag)
+
+	local info = GetSaveFileDetails(filename)
+	if (not info) then return "Couldn't get save informationnot " end
+
+	steamworks.Publish({ "save", info.map, chosentag }, filename, imagename, name, desc)
+
+end
+
+function ws_save:Publish(filename, image)
+
+	--MsgN("PUBLISHING ", filename)
+	--MsgN("Image ", image)
 
 	--
 	-- Create the window
 	--
-	local Window = vgui.Create( "DFrame" )
-		Window:SetTitle( "Publish Creation" )
-		Window:SetSize( 400, 350 )
-		Window:LoadGWENFile( "resource/ui/SaveUpload.gwen" )
+	local Window = vgui.Create("DFrame")
+		Window:SetTitle("Publish Creation")
+		Window:SetSize(400, 350)
+		Window:LoadGWENFile("resource/ui/SaveUpload.gwen")
 		Window:Center()
 		Window:MakePopup()
 
 	--
 	-- Store the fields
 	--
-	local Submit		= Window:Find( "upload" )
-	local Title			= Window:Find( "name" )
-	local Description	= Window:Find( "description" )
-	local Error			= Window:Find( "error" )
-	local Image			= Window:Find( "image" )
+	local Submit		= Window:Find("upload")
+	local Title			= Window:Find("name")
+	local Description	= Window:Find("description")
+	local Error			= Window:Find("error")
+	local Image			= Window:Find("image")
 
-	Image:SetImage( "../" .. image )
+	Image:SetImage("../" .. image)
 
 	--
 	-- Hook up action
@@ -94,13 +94,13 @@ function ws_save:Publish( filename, image )
 
 		local ChosenTag = nil
 
-		local FindTag = function( tagname )
+		local FindTag = function(tagname)
 
-			local cb = Window:Find( "tag_" .. tagname )
-			if ( !cb:GetChecked() ) then return true end
+			local cb = Window:Find("tag_" .. tagname)
+			if (not cb:GetChecked()) then return true end
 
-			if ( ChosenTag != nil ) then
-				Error:SetText( "Choose only one tag!" )
+			if (ChosenTag ~= nil) then
+				Error:SetText("Choose only one tagnot ")
 				return false
 			end
 
@@ -109,27 +109,27 @@ function ws_save:Publish( filename, image )
 
 		end
 
-		if ( !FindTag( "scenes" ) ) then return end
-		if ( !FindTag( "machines" ) ) then return end
-		if ( !FindTag( "buildings" ) ) then return end
-		if ( !FindTag( "courses" ) ) then return end
-		if ( !FindTag( "others" ) ) then return end
+		if (not FindTag( "scenes")) then return end
+		if (not FindTag( "machines")) then return end
+		if (not FindTag( "buildings")) then return end
+		if (not FindTag( "courses")) then return end
+		if (not FindTag( "others")) then return end
 
-		if ( ChosenTag == nil ) then
-			Error:SetText( "Choose a tag!" )
+		if (ChosenTag == nil) then
+			Error:SetText("Choose a tagnot ")
 			return
 		end
 
-		if ( Title:GetText() == "" ) then
-			Error:SetText( "You must provide a title!" )
+		if (Title:GetText() == "") then
+			Error:SetText("You must provide a titlenot ")
 			return
 		end
 
-		--MsgN( "Publish with tag ", ChosenTag )
+		--MsgN("Publish with tag ", ChosenTag)
 
-		local error = self:FinishPublish( filename, image, Title:GetText(), Description:GetText(), ChosenTag )
-		if ( error ) then
-			Error:SetText( error )
+		local error = self:FinishPublish(filename, image, Title:GetText(), Description:GetText(), ChosenTag)
+		if (error) then
+			Error:SetText(error)
 			return
 		end
 
@@ -140,11 +140,11 @@ function ws_save:Publish( filename, image )
 end
 
 --
--- Called from the engine!
+-- Called from the enginenot
 --
-concommand.Add( "save_publish", function( ply, cmd, args )
+concommand.Add("save_publish", function( ply, cmd, args)
 
-	ws_save:Publish( args[1], args[2] )
+	ws_save:Publish(args[1], args[2])
 	gui.ActivateGameUI()
 
 end, nil, "", { FCVAR_DONTRECORD } )

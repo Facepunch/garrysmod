@@ -11,9 +11,9 @@ end
 -- Sets the entity to edit.
 -- This can be called any time, even when another entity has been set.
 --
-function PANEL:SetEntity( entity )
+function PANEL:SetEntity(entity)
 
-	if ( self.m_Entity == entity ) then return end
+	if (self.m_Entity == entity) then return end
 
 	self.m_Entity = entity
 	self:RebuildControls()
@@ -33,8 +33,8 @@ function PANEL:RebuildControls()
 	--
 	-- It's kewl to return here - because it will leave an empty property sheet.
 	--
-	if ( !IsValid( self.m_Entity ) ) then return end
-	if ( !isfunction( self.m_Entity.GetEditingData ) ) then return end
+	if (not IsValid( self.m_Entity)) then return end
+	if (not isfunction( self.m_Entity.GetEditingData)) then return end
 
 	--
 	-- Call EditVariable for each entry in the entity's EditingData
@@ -42,13 +42,13 @@ function PANEL:RebuildControls()
 	local editor = self.m_Entity:GetEditingData()
 
 	local i = 1000
-	for name, edit in pairs( editor ) do
-		if ( edit.order == nil ) then edit.order = i end
+	for name, edit in pairs(editor) do
+		if (edit.order == nil) then edit.order = i end
 		i = i + 1
 	end
 
-	for name, edit in SortedPairsByMemberValue( editor, "order" ) do
-		self:EditVariable( name, edit )
+	for name, edit in SortedPairsByMemberValue(editor, "order") do
+		self:EditVariable(name, edit)
 	end
 
 end
@@ -56,39 +56,39 @@ end
 --
 -- Called internally. Adds an entity variable to watch.
 --
-function PANEL:EditVariable( varname, editdata )
+function PANEL:EditVariable(varname, editdata)
 
-	if ( !istable( editdata ) ) then return end
-	if ( !isstring( editdata.type ) ) then return end
+	if (not istable( editdata)) then return end
+	if (not isstring( editdata.type)) then return end
 
 	--
 	-- Create a property row in the specified category.
 	--
-	local row = self:CreateRow( editdata.category or "#entedit.general", editdata.title or varname )
+	local row = self:CreateRow(editdata.category or "#entedit.general", editdata.title or varname)
 
 	--
 	-- This is where the real business is done. Setup creates the specific controls for
 	-- the 'type' (eg, Float, Boolean). If the type isn't found it reverts to a generic textbox.
 	--
-	row:Setup( editdata.type, editdata )
+	row:Setup(editdata.type, editdata)
 
 	--
 	-- These functions need to be implemented for each row. This is how it
 	-- gets and sets the data from the entity. DataUpdate is called peridocailly
 	-- but only when it's not being edited.
 	--
-	row.DataUpdate = function( _ )
-		if ( !IsValid( self.m_Entity ) ) then self:EntityLost() return end
-		row:SetValue( self.m_Entity:GetNetworkKeyValue( varname ) )
+	row.DataUpdate = function(_)
+		if (not IsValid( self.m_Entity)) then self:EntityLost() return end
+		row:SetValue(self.m_Entity:GetNetworkKeyValue( varname))
 	end
 
 	--
 	-- This is called when the data has changed as a result of user input.
 	-- We use it to edit the value on the entity itself.
 	--
-	row.DataChanged = function( _, val )
-		if ( !IsValid( self.m_Entity ) ) then self:EntityLost() return end
-		self.m_Entity:EditValue( varname, tostring( val ) )
+	row.DataChanged = function(_, val)
+		if (not IsValid( self.m_Entity)) then self:EntityLost() return end
+		self.m_Entity:EditValue(varname, tostring( val))
 	end
 
 end
@@ -125,4 +125,4 @@ function PANEL:PostAutoRefresh()
 
 end
 
-derma.DefineControl( "DEntityProperties", "", PANEL, "DProperties" )
+derma.DefineControl("DEntityProperties", "", PANEL, "DProperties")

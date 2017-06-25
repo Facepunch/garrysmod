@@ -1,4 +1,4 @@
---=============================================================================--							 
+--=============================================================================--
 --
 --  A really simple module to allow easy additions to lists of items
 --
@@ -7,7 +7,7 @@
 local table 	= table
 local pairs		= pairs
 
-module( "list" )
+module("list")
 
 
 local g_Lists = {}
@@ -15,29 +15,29 @@ local g_Lists = {}
 --
 --	Get a list
 --
-function Get( list )
+function Get(list)
 
 	g_Lists[ list ] = g_Lists[ list ] or {}
-	return table.Copy( g_Lists[ list ] )
-	
+	return table.Copy(g_Lists[ list ])
+
 end
 
 --
 --	Get a list
 --
-function GetForEdit( list )
+function GetForEdit(list)
 
 	g_Lists[ list ] = g_Lists[ list ] or {}
 	return g_Lists[ list ]
-	
+
 end
 
 --
 --	Set a key value
 --
-function Set( list, key, value )
+function Set(list, key, value)
 
-	local list = GetForEdit( list )
+	local list = GetForEdit(list)
 	list[ key ] = value
 
 end
@@ -46,24 +46,24 @@ end
 --
 --   Add a value to a list
 --
-function Add( list, value )
+function Add(list, value)
 
-	local list = GetForEdit( list )
-	table.insert( list, value )
+	local list = GetForEdit(list)
+	table.insert(list, value)
 
 end
 
 --
 --	Returns true if the list contains the value (as a value - not a key)
 --
-function Contains( list, value )
+function Contains(list, value)
 
-	if ( !g_Lists[ list ] ) then return false end
+	if (not g_Lists[ list ]) then return false end
 
-	for k, v in pairs( g_Lists[ list ] ) do
+	for k, v in pairs(g_Lists[ list ]) do
 
 		-- If it contains this entry, bail early
-		if ( v == value ) then return true end
+		if (v == value) then return true end
 
 	end
 

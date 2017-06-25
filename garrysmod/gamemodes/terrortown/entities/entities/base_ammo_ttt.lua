@@ -8,7 +8,7 @@ ENT.Type = "anim"
 ENT.AmmoType = "Pistol"
 ENT.AmmoAmount = 1
 ENT.AmmoMax = 10
-ENT.Model = Model( "models/items/boxsrounds.mdl" )
+ENT.Model = Model("models/items/boxsrounds.mdl")
 
 
 function ENT:RealInit() end -- bw compat
@@ -17,11 +17,11 @@ function ENT:RealInit() end -- bw compat
 -- Using self.BaseClass gave weird problems, so stuff has been moved into a fn
 -- Subclasses can easily call this whenever they want to
 function ENT:Initialize()
-   self:SetModel( self.Model )
+   self:SetModel(self.Model)
 
-   self:PhysicsInit( SOLID_VPHYSICS )
-   self:SetMoveType( MOVETYPE_VPHYSICS )
-   self:SetSolid( SOLID_BBOX )
+   self:PhysicsInit(SOLID_VPHYSICS)
+   self:SetMoveType(MOVETYPE_VPHYSICS)
+   self:SetSolid(SOLID_BBOX)
 
    self:SetCollisionGroup( COLLISION_GROUP_WEAPON)
    local b = 26
@@ -86,7 +86,7 @@ function ENT:CheckForWeapon(ply)
 end
 
 function ENT:Touch(ent)
-   if SERVER and self.taken != true then
+   if SERVER and self.taken ~= true then
       if (ent:IsValid() and ent:IsPlayer() and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent)) then
 
          local ammo = ent:GetAmmoCount(self.AmmoType)

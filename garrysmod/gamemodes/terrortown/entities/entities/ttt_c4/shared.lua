@@ -35,8 +35,8 @@ ENT.Avoidable = true
 
 AccessorFunc( ENT, "thrower", "Thrower")
 
-AccessorFunc( ENT, "radius", "Radius", FORCE_NUMBER )
-AccessorFunc( ENT, "dmg", "Dmg", FORCE_NUMBER )
+AccessorFunc(ENT, "radius", "Radius", FORCE_NUMBER)
+AccessorFunc(ENT, "dmg", "Dmg", FORCE_NUMBER)
 
 AccessorFunc( ENT, "arm_time", "ArmTime", FORCE_NUMBER)
 AccessorFunc( ENT, "timer_length", "TimerLength", FORCE_NUMBER)
@@ -86,7 +86,7 @@ end
 
 function ENT:SetDetonateTimer(length)
    self:SetTimerLength(length)
-   self:SetExplodeTime( CurTime() + length )
+   self:SetExplodeTime(CurTime() + length)
 end
 
 
@@ -94,7 +94,7 @@ function ENT:UseOverride(activator)
    if IsValid(activator) and activator:IsPlayer() then
       -- Traitors not allowed to disarm other traitor's C4 until he is dead
       local owner = self:GetOwner()
-      if self:GetArmed() and owner != activator and activator:GetTraitor() and (IsValid(owner) and owner:Alive() and owner:GetTraitor()) then
+      if self:GetArmed() and owner ~= activator and activator:GetTraitor() and (IsValid(owner) and owner:Alive() and owner:GetTraitor()) then
          LANG.Msg(activator, "c4_no_disarm")
          return
       end
@@ -204,12 +204,12 @@ function ENT:Explode(tr)
       self:SetSolid(SOLID_NONE)
 
       -- pull out of the surface
-      if tr.Fraction != 1.0 then
+      if tr.Fraction ~= 1.0 then
          self:SetPos(tr.HitPos + tr.HitNormal * 0.6)
       end
 
       local pos = self:GetPos()
-      if util.PointContents(pos) == CONTENTS_WATER or GetRoundState() != ROUND_ACTIVE then
+      if util.PointContents(pos) == CONTENTS_WATER or GetRoundState() ~= ROUND_ACTIVE then
          self:Remove()
          self:SetExplodeTime(0)
          return
@@ -240,7 +240,7 @@ function ENT:Explode(tr)
       effect:SetRadius(r_outer)
       effect:SetMagnitude(self:GetDmg())
 
-      if tr.Fraction != 1.0 then
+      if tr.Fraction ~= 1.0 then
          effect:SetNormal(tr.HitNormal)
       end
 
@@ -314,7 +314,7 @@ function ENT:Think()
    end
 
    local etime = self:GetExplodeTime()
-   if self:GetArmed() and etime != 0 and etime < CurTime() then
+   if self:GetArmed() and etime ~= 0 and etime < CurTime() then
       -- find the ground if it's near and pass it to the explosion
       local spos = self:GetPos()
       local tr = util.TraceLine({start=spos, endpos=spos + Vector(0,0,-32), mask=MASK_SHOT_HULL, filter=self:GetThrower()})
@@ -386,7 +386,7 @@ if SERVER then
 
       SCORE:HandleC4Disarm(ply, owner, true)
 
-      if ply != owner and IsValid(owner) then
+      if ply ~= owner and IsValid(owner) then
          LANG.Msg(owner, "c4_disarm_warn")
       end
 

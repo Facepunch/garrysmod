@@ -9,108 +9,108 @@ local ErrorNoHalt	= ErrorNoHalt
 	HTTP Module. Interaction with HTTP.
 -----------------------------------------------------------]]
 
-module( "http" )
+module("http")
 
 --[[---------------------------------------------------------
 
 	Get the contents of a webpage.
-	
-	Callback should be 
-	
-	function callback( (args optional), contents, size )
-	
------------------------------------------------------------]]
-function Fetch( url, onsuccess, onfailure, header )
 
-	local request = 
+	Callback should be
+
+	function callback((args optional), contents, size)
+
+-----------------------------------------------------------]]
+function Fetch(url, onsuccess, onfailure, header)
+
+	local request =
 	{
 		url			= url,
 		method		= "get",
 		headers = header or {},
 
-		success		= function( code, body, headers )
-	
-			if ( !onsuccess ) then return end
+		success		= function(code, body, headers)
 
-			onsuccess( body, body:len(), headers, code )
+			if (not onsuccess) then return end
+
+			onsuccess(body, body:len(), headers, code)
 
 		end,
 
-		failed		= function( err )
+		failed		= function(err)
 
-			if ( !onfailure ) then return end
+			if (not onfailure) then return end
 
-			onfailure( err )
+			onfailure(err)
 
 		end
 	}
 
-	HTTP( request )
+	HTTP(request)
 
 end
 
 
-function Post( url, params, onsuccess, onfailure, header )
+function Post(url, params, onsuccess, onfailure, header)
 
-	local request = 
+	local request =
 	{
 		url			= url,
 		method		= "post",
 		parameters	= params,
 		headers = header or {},
 
-		success		= function( code, body, headers )
-	
-			if ( !onsuccess ) then return end
+		success		= function(code, body, headers)
 
-			onsuccess( body, body:len(), headers, code )
+			if (not onsuccess) then return end
+
+			onsuccess(body, body:len(), headers, code)
 
 		end,
 
-		failed		= function( err )
+		failed		= function(err)
 
-			if ( !onfailure ) then return end
+			if (not onfailure) then return end
 
-			onfailure( err )
+			onfailure(err)
 
 		end
 	}
 
-	HTTP( request )
+	HTTP(request)
 
 end
 
 --[[
 
-Or use HTTP( table )
+Or use HTTP(table)
 
-local request = 
+local request =
 {
 	url			= "http://pastebin.com/raw.php?i=3jsf50nL",
 
 	method		= "post",
 
-	parameters  = 
+	parameters  =
 	{
 			id			=	"548",
 			country		=	"England"
 	}
 
-	success		= function( code, body, headers )
-	
-		Msg( "Request Successful\n" )
-		Msg( "Code: ", code, "\n" )
-		Msg( "Body Length:\n", body:len(), "\n" )
-		Msg( "Body:\n", body, "\n" )
-		PrintTable( headers )
+	success		= function(code, body, headers)
+
+		Msg("Request Successful\n")
+		Msg("Code: ", code, "\n")
+		Msg("Body Length:\n", body:len(), "\n")
+		Msg("Body:\n", body, "\n")
+		PrintTable(headers)
 
 	end,
 
-	failed		= function( reason )
-		Msg( "Request failed: ", reason, "\n" )
+	failed		= function(reason)
+		Msg("Request failed: ", reason, "\n")
 	end
 }
 
-HTTP( request )
+HTTP(request)
 
 ---]]

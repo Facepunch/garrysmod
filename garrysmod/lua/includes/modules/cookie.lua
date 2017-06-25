@@ -1,26 +1,26 @@
 
-if ( !sql.TableExists( "cookies" ) ) then
+if (not sql.TableExists( "cookies")) then
 
-	sql.Query( "CREATE TABLE IF NOT EXISTS cookies ( key TEXT NOT NULL PRIMARY KEY, value TEXT );" )
+	sql.Query("CREATE TABLE IF NOT EXISTS cookies ( key TEXT NOT NULL PRIMARY KEY, value TEXT)")
 
 end
 
-module( "cookie", package.seeall )
+module("cookie", package.seeall)
 
 local CachedEntries = {}
 local BufferedWrites = {}
 local BufferedDeletes = {}
 
-local function GetCache( key )
-	if ( BufferedDeletes[ key ] ) then return nil end
+local function GetCache(key)
+	if (BufferedDeletes[ key ]) then return nil end
 
 	local entry = CachedEntries[ key ]
 
-	if ( entry == nil || SysTime() > entry[ 1 ] ) then
-		local name = SQLStr( key )
-		local val = sql.QueryValue( "SELECT value FROM cookies WHERE key = " .. name )
+	if (entry == nil or SysTime() > entry[ 1 ]) then
+		local name = SQLStr(key)
+		local val = sql.QueryValue("SELECT value FROM cookies WHERE key = " .. name)
 
-		if !val then
+		if not val then
 			return false
 		end
 
@@ -39,12 +39,12 @@ end
 local function CommitToSQLite()
 	sql.Begin()
 
-	for k, v in pairs( BufferedWrites ) do
-		sql.Query( "INSERT OR REPLACE INTO cookies ( key, value ) VALUES ( " .. SQLStr( k ) .. ", " .. SQLStr( v ) .. " )" )
+	for k, v in pairs(BufferedWrites) do
+		sql.Query("INSERT OR REPLACE INTO cookies ( key, value) VALUES ( " .. SQLStr( k) .. ", " .. SQLStr( v) .. ")")
 	end
 
-	for k, v in pairs( BufferedDeletes ) do
-		sql.Query( "DELETE FROM cookies WHERE key = " .. SQLStr( k ) )
+	for k, v in pairs(BufferedDeletes) do
+		sql.Query("DELETE FROM cookies WHERE key = " .. SQLStr( k))
 	end
 
 	BufferedWrites = {}
@@ -54,13 +54,13 @@ local function CommitToSQLite()
 end
 
 local function ScheduleCommit()
-	timer.Create( "Cookie_CommitToSQLite", 0.1, 1, CommitToSQLite )
+	timer.Create("Cookie_CommitToSQLite", 0.1, 1, CommitToSQLite)
 end
 
-local function SetCache( key, value )
-	if ( value == nil ) then return Delete( key ) end
+local function SetCache(key, value)
+	if (value == nil) then return Delete( key) end
 
-	if !CachedEntries[ key ] then
+	if not CachedEntries[ key ] then
 		CachedEntries[ key ] = { SysTime() + 30, value }
 	end
 
@@ -71,27 +71,27 @@ local function SetCache( key, value )
 end
 
 -- Get a String Value
-function GetString( name, default )
+function GetString(name, default)
 
-	local val = GetCache( name )
-	if ( !val ) then return default end
+	local val = GetCache(name)
+	if (not val) then return default end
 
 	return val
 
 end
 
 -- Get a Number Value
-function GetNumber( name, default )
+function GetNumber(name, default)
 
-	local val = GetCache( name )
-	if ( !val ) then return default end
+	local val = GetCache(name)
+	if (not val) then return default end
 
-	return tonumber( val )
+	return tonumber(val)
 
 end
 
 -- Delete a Value
-function Delete( name )
+function Delete(name)
 
 	CachedEntries[ name ] = nil
 	BufferedWrites[ name ] = nil
@@ -102,15 +102,15 @@ function Delete( name )
 end
 
 -- Set a Value
-function Set( name, value )
-	SetCache( name, value )
+function Set(name, value)
+	SetCache(name, value)
 end
 
-if ( !CLIENT_DLL ) then return end
+if (not CLIENT_DLL) then return end
 
-concommand.Add( "lua_cookieclear", function( ply, command, arguments )
+concommand.Add("lua_cookieclear", function( ply, command, arguments)
 
-	sql.Query( "DELETE FROM cookies" )
+	sql.Query("DELETE FROM cookies")
 	FlushCache()
 
 end )

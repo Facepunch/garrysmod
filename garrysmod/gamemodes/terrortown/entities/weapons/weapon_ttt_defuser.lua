@@ -42,7 +42,7 @@ SWEP.WeaponID                 = AMMO_DEFUSER
 
 local defuse = Sound("c4.disarmfinish")
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
    local spos = self.Owner:GetShootPos()
    local sdest = spos + (self.Owner:GetAimVector() * 80)
@@ -57,14 +57,14 @@ function SWEP:PrimaryAttack()
             sound.Play(defuse, bomb:GetPos())
          end
 
-         self:SetNextPrimaryFire( CurTime() + (self.Primary.Delay * 2) )
+         self:SetNextPrimaryFire(CurTime() + (self.Primary.Delay * 2))
       end
    end
 end
 
 function SWEP:SecondaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self:SetNextSecondaryFire( CurTime() + 0.1 )
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+   self:SetNextSecondaryFire(CurTime() + 0.1)
 end
 
 

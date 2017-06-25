@@ -2,15 +2,15 @@
 --[[---------------------------------------------------------
 	Register the convars that will control this effect
 -----------------------------------------------------------]]
-local pp_stereoscopy = CreateClientConVar( "pp_stereoscopy", "0", false, false )
-local pp_stereoscopy_size = CreateClientConVar( "pp_stereoscopy_size", "6", true, false )
+local pp_stereoscopy = CreateClientConVar("pp_stereoscopy", "0", false, false)
+local pp_stereoscopy_size = CreateClientConVar("pp_stereoscopy_size", "6", true, false)
 
 --[[---------------------------------------------------------
 	Can be called from engine or hooks using bloom.Draw
 -----------------------------------------------------------]]
-function RenderStereoscopy( ViewOrigin, ViewAngles )
+function RenderStereoscopy(ViewOrigin, ViewAngles)
 
-	render.Clear( 0, 0, 0, 255 )
+	render.Clear(0, 0, 0, 255)
 
 	local w = ScrW() / 2.2
 	local h = ScrH() / 2.2
@@ -27,23 +27,23 @@ function RenderStereoscopy( ViewOrigin, ViewAngles )
 	-- Left
 	view.x = ScrW() / 2 - w - 10
 	view.origin = ViewOrigin + Right
-	render.RenderView( view )
+	render.RenderView(view)
 
 	-- Right
 	view.x = ScrW() / 2 + 10
 	view.origin = ViewOrigin - Right
-	render.RenderView( view )
+	render.RenderView(view)
 
 end
 
 --[[---------------------------------------------------------
 	The function to draw the bloom (called from the hook)
 -----------------------------------------------------------]]
-hook.Add( "RenderScene", "RenderStereoscopy", function( ViewOrigin, ViewAngles, ViewFOV )
+hook.Add("RenderScene", "RenderStereoscopy", function( ViewOrigin, ViewAngles, ViewFOV)
 
-	if ( !pp_stereoscopy:GetBool() ) then return end
+	if (not pp_stereoscopy:GetBool()) then return end
 
-	RenderStereoscopy( ViewOrigin, ViewAngles )
+	RenderStereoscopy(ViewOrigin, ViewAngles)
 
 	-- Return true to override drawing the scene
 	return true
@@ -56,17 +56,17 @@ list.Set( "PostProcess", "#stereoscopy_pp", {
 	convar = "pp_stereoscopy",
 	category = "#effects_pp",
 
-	cpanel = function( CPanel )
+	cpanel = function(CPanel)
 
-		CPanel:AddControl( "Header", { Description = "#stereoscopy_pp.desc" } )
-		CPanel:AddControl( "CheckBox", { Label = "#stereoscopy_pp.enable", Command = "pp_stereoscopy" } )
+		CPanel:AddControl("Header", { Description = "#stereoscopy_pp.desc" })
+		CPanel:AddControl("CheckBox", { Label = "#stereoscopy_pp.enable", Command = "pp_stereoscopy" })
 
 		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "stereoscopy" }
 		params.Options[ "#preset.default" ] = { pp_stereoscopy_size = "6" }
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
+		params.CVars = table.GetKeys(params.Options[ "#preset.default" ])
+		CPanel:AddControl("ComboBox", params)
 
-		CPanel:AddControl( "Slider", { Label = "#stereoscopy_pp.size", Command = "pp_stereoscopy_size", Type = "Float", Min = "0", Max = "10" } )
+		CPanel:AddControl("Slider", { Label = "#stereoscopy_pp.size", Command = "pp_stereoscopy_size", Type = "Float", Min = "0", Max = "10" })
 
 	end
 

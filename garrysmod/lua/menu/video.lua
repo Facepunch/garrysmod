@@ -5,12 +5,12 @@
 |_|  \__,_|\___\___| .__/ \__,_|_| |_|\___|_| |_|
                    |_| 2012 --]]
 
-vid_width	= CreateConVar( "vid_width",	"640", { FCVAR_ARCHIVE } )
-vid_fps		= CreateConVar( "vid_fps",		"30", { FCVAR_ARCHIVE } )
+vid_width	= CreateConVar("vid_width",	"640", { FCVAR_ARCHIVE })
+vid_fps		= CreateConVar("vid_fps",		"30", { FCVAR_ARCHIVE })
 
 concommand.Add( "gm_video", function()
 
-	if ( ActiveVideo ) then
+	if (ActiveVideo) then
 
 		ActiveVideo:Finish()
 		ActiveVideo = nil
@@ -35,9 +35,9 @@ concommand.Add( "gm_video", function()
 
 	});
 
-	if ( !ActiveVideo ) then
+	if (not ActiveVideo) then
 
-		MsgN( "Couldn't record video: ", error )
+		MsgN("Couldn't record video: ", error)
 		return
 
 	end
@@ -47,8 +47,8 @@ end, nil, "", { FCVAR_DONTRECORD } )
 
 hook.Add( "DrawOverlay", "CaptureFrames", function()
 
-	if ( !ActiveVideo ) then return end
+	if (not ActiveVideo) then return end
 
-	ActiveVideo:AddFrame( FrameTime(), true );
+	ActiveVideo:AddFrame(FrameTime(), true)
 
 end )

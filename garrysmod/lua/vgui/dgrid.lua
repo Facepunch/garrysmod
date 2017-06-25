@@ -1,19 +1,19 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_iCols", "Cols" )
-AccessorFunc( PANEL, "m_iColWide", "ColWide" )
-AccessorFunc( PANEL, "m_iRowHeight", "RowHeight" )
+AccessorFunc(PANEL, "m_iCols", "Cols")
+AccessorFunc(PANEL, "m_iColWide", "ColWide")
+AccessorFunc(PANEL, "m_iRowHeight", "RowHeight")
 
 function PANEL:Init()
 
 	self.Items = {}
 
-	self:SetCols( 4 )
-	self:SetColWide( 32 )
-	self:SetRowHeight( 32 )
+	self:SetCols(4)
+	self:SetColWide(32)
+	self:SetRowHeight(32)
 
-	self:SetMouseInputEnabled( true )
+	self:SetMouseInputEnabled(true)
 
 end
 
@@ -25,28 +25,28 @@ function PANEL:GetItems()
 
 end
 
-function PANEL:AddItem( item )
+function PANEL:AddItem(item)
 
-	if ( !IsValid( item ) ) then return end
+	if (not IsValid( item)) then return end
 
-	item:SetVisible( true )
-	item:SetParent( self )
+	item:SetVisible(true)
+	item:SetParent(self)
 
-	table.insert( self.Items, item )
+	table.insert(self.Items, item)
 
 	self:InvalidateLayout()
 
 end
 
-function PANEL:RemoveItem( item, bDontDelete )
+function PANEL:RemoveItem(item, bDontDelete)
 
-	for k, panel in pairs( self.Items ) do
+	for k, panel in pairs(self.Items) do
 
-		if ( panel == item ) then
+		if (panel == item) then
 
-			table.remove( self.Items, k )
+			table.remove(self.Items, k)
 
-			if ( !bDontDelete ) then
+			if (not bDontDelete) then
 				panel:Remove()
 			end
 
@@ -62,30 +62,30 @@ function PANEL:PerformLayout()
 
 	local i = 0
 
-	self.m_iCols = math.floor( self.m_iCols )
+	self.m_iCols = math.floor(self.m_iCols)
 
-	for k, panel in pairs( self.Items ) do
+	for k, panel in pairs(self.Items) do
 
-		local x = ( i % self.m_iCols ) * self.m_iColWide
-		local y = math.floor( i / self.m_iCols ) * self.m_iRowHeight
+		local x = (i % self.m_iCols) * self.m_iColWide
+		local y = math.floor(i / self.m_iCols) * self.m_iRowHeight
 
-		panel:SetPos( x, y )
+		panel:SetPos(x, y)
 
 		i = i + 1
 	end
 
-	self:SetWide( self.m_iColWide * self.m_iCols )
-	self:SetTall( math.ceil( i / self.m_iCols ) * self.m_iRowHeight )
+	self:SetWide(self.m_iColWide * self.m_iCols)
+	self:SetTall(math.ceil( i / self.m_iCols) * self.m_iRowHeight)
 
 end
 
-function PANEL:SortByMember( key, desc )
+function PANEL:SortByMember(key, desc)
 
 	desc = desc or true
 
-	table.sort( self.Items, function( a, b )
+	table.sort(self.Items, function( a, b)
 
-		if ( desc ) then
+		if (desc) then
 
 			local ta = a
 			local tb = b
@@ -95,8 +95,8 @@ function PANEL:SortByMember( key, desc )
 
 		end
 
-		if ( a[ key ] == nil ) then return false end
-		if ( b[ key ] == nil ) then return true end
+		if (a[ key ] == nil) then return false end
+		if (b[ key ] == nil) then return true end
 
 		return a[ key ] > b[ key ]
 
@@ -104,4 +104,4 @@ function PANEL:SortByMember( key, desc )
 
 end
 
-derma.DefineControl( "DGrid", "A really simple grid layout panel", PANEL, "Panel" )
+derma.DefineControl("DGrid", "A really simple grid layout panel", PANEL, "Panel")

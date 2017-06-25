@@ -1,5 +1,5 @@
 
-include( "toolpanel.lua" )
+include("toolpanel.lua")
 
 local PANEL = {}
 
@@ -12,7 +12,7 @@ function PANEL:Init()
 
 	self:LoadTools()
 
-	self:SetFadeTime( 0 )
+	self:SetFadeTime(0)
 
 end
 
@@ -23,9 +23,9 @@ function PANEL:LoadTools()
 
 	local tools = spawnmenu.GetTools()
 
-	for strName, pTable in pairs( tools ) do
+	for strName, pTable in pairs(tools) do
 
-		self:AddToolPanel( strName, pTable )
+		self:AddToolPanel(strName, pTable)
 
 	end
 
@@ -34,16 +34,16 @@ end
 --[[---------------------------------------------------------
 	LoadTools
 -----------------------------------------------------------]]
-function PANEL:AddToolPanel( Name, ToolTable )
+function PANEL:AddToolPanel(Name, ToolTable)
 
 	-- I hate relying on a table's internal structure
 	-- but this isn't really that avoidable.
 
-	local Panel = vgui.Create( "ToolPanel" )
-	Panel:SetTabID( Name )
-	Panel:LoadToolsFromTable( ToolTable.Items )
+	local Panel = vgui.Create("ToolPanel")
+	Panel:SetTabID(Name)
+	Panel:LoadToolsFromTable(ToolTable.Items)
 
-	self:AddSheet( ToolTable.Label, Panel, ToolTable.Icon )
+	self:AddSheet(ToolTable.Label, Panel, ToolTable.Icon)
 	self.ToolPanels[ Name ] = Panel
 
 end
@@ -51,19 +51,19 @@ end
 --[[---------------------------------------------------------
 	Name: Paint
 -----------------------------------------------------------]]
-function PANEL:Paint( w, h )
+function PANEL:Paint(w, h)
 
-	DPropertySheet.Paint( self, w, h )
+	DPropertySheet.Paint(self, w, h)
 
 end
 
 --[[---------------------------------------------------------
 	Name: GetToolPanel
 -----------------------------------------------------------]]
-function PANEL:GetToolPanel( id )
+function PANEL:GetToolPanel(id)
 
 	return self.ToolPanels[ id ]
 
 end
 
-vgui.Register( "ToolMenu", PANEL, "DPropertySheet" )
+vgui.Register("ToolMenu", PANEL, "DPropertySheet")

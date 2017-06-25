@@ -179,7 +179,7 @@ local function TraitorMenuPopup()
    -- Add a callback when switching tabs
    local oldfunc = dsheet.SetActiveTab
    dsheet.SetActiveTab = function(self, new)
-      if self.m_pActiveTab != new and self.OnTabChanged then
+      if self.m_pActiveTab ~= new and self.OnTabChanged then
          self:OnTabChanged(self.m_pActiveTab, new)
       end
       oldfunc(self, new)
@@ -471,7 +471,7 @@ local function ReceiveBought()
    local num = net.ReadUInt(8)
    for i=1,num do
       local s = net.ReadString()
-      if s != "" then
+      if s ~= "" then
          table.insert(ply.bought, s)
       end
    end
@@ -479,7 +479,7 @@ local function ReceiveBought()
    -- This usermessage sometimes fails to contain the last weapon that was
    -- bought, even though resending then works perfectly. Possibly a bug in
    -- bf_read. Anyway, this hack is a workaround: we just request a new umsg.
-   if num != #ply.bought and r < 10 then -- r is an infinite loop guard
+   if num ~= #ply.bought and r < 10 then -- r is an infinite loop guard
       RunConsoleCommand("ttt_resend_bought")
       r = r + 1
    else

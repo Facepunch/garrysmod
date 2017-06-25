@@ -7,73 +7,73 @@
 -- If called from ENT:KeyValue, then the first parameter is the key, and
 -- the second is value.
 
-function ENT:StoreOutput( name, info )
-	local rawData = string.Explode( ",", info )
+function ENT:StoreOutput(name, info)
+	local rawData = string.Explode(",", info)
 
 	local Output = {}
 	Output.entities = rawData[1] or ""
 	Output.input = rawData[2] or ""
 	Output.param = rawData[3] or ""
-	Output.delay = tonumber( rawData[4] ) or 0
-	Output.times = tonumber( rawData[5] ) or -1
+	Output.delay = tonumber(rawData[4]) or 0
+	Output.times = tonumber(rawData[5]) or -1
 
 	self.m_tOutputs = self.m_tOutputs or {}
 	self.m_tOutputs[ name ] = self.m_tOutputs[ name ] or {}
 
-	table.insert( self.m_tOutputs[ name ], Output )
+	table.insert(self.m_tOutputs[ name ], Output)
 end
 
 -- Nice helper function, this does all the work. Returns false if the
 -- output should be removed from the list.
 
-local function FireSingleOutput( output, this, activator, data )
+local function FireSingleOutput(output, this, activator, data)
 
-	if ( output.times == 0 ) then return false end
+	if (output.times == 0) then return false end
 
 	local entitiesToFire = {}
 
-	if ( output.entities == "!activator" ) then
+	if (output.entities == "not activator") then
 		entitiesToFire = { activator }
-	elseif ( output.entities == "!self" ) then
+	elseif (output.entities == "not self") then
 		entitiesToFire = { this }
-	elseif ( output.entities == "!player" ) then
+	elseif (output.entities == "not player") then
 		entitiesToFire = player.GetAll()
 	else
-		entitiesToFire = ents.FindByName( output.entities )
+		entitiesToFire = ents.FindByName(output.entities)
 	end
 
-	for _, ent in pairs( entitiesToFire ) do
-		if ( output.delay == 0 ) then
-			if ( IsValid( ent ) ) then
-				ent:Input( output.input, activator, this, data or output.param )
+	for _, ent in pairs(entitiesToFire) do
+		if (output.delay == 0) then
+			if (IsValid( ent)) then
+				ent:Input(output.input, activator, this, data or output.param)
 			end
 		else
 			timer.Simple( output.delay, function()
-				if ( IsValid( ent ) ) then
-					ent:Input( output.input, activator, this, data or output.param )
+				if (IsValid( ent)) then
+					ent:Input(output.input, activator, this, data or output.param)
 				end
 			end )
 		end
 	end
 
-	if ( output.times ~= -1 ) then
+	if (output.times ~= -1) then
 		output.times = output.times - 1
 	end
 
-	return ( output.times > 0 ) || ( output.times == -1 )
+	return (output.times > 0) or ( output.times == -1)
 end
 
 -- This function is used to trigger an output.
 
-function ENT:TriggerOutput( name, activator, data )
-	if ( !self.m_tOutputs ) then return end
-	if ( !self.m_tOutputs[ name ] ) then return end
+function ENT:TriggerOutput(name, activator, data)
+	if (not self.m_tOutputs) then return end
+	if (not self.m_tOutputs[ name ]) then return end
 
 	local OutputList = self.m_tOutputs[ name ]
 
 	for idx = #OutputList, 1, -1 do
 
-		if ( OutputList[ idx ] and !FireSingleOutput( OutputList[ idx ], self.Entity, activator, data ) ) then
+		if (OutputList[ idx ] and not FireSingleOutput( OutputList[ idx ], self.Entity, activator, data)) then
 
 			self.m_tOutputs[ name ][ idx ] = nil
 

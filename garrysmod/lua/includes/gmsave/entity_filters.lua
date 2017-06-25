@@ -1,5 +1,5 @@
 
-local ClassInfo = {} 
+local ClassInfo = {}
 
 ClassInfo[ "scene_manager" ]				= { ['save'] = false }
 ClassInfo[ "predicted_viewmodel" ]			= { ['save'] = false }
@@ -46,28 +46,28 @@ ClassInfo[ "shadow_control" ]				= { ['save'] = false }
 ClassInfo[ "sky_camera" ]					= { ['save'] = false }
 ClassInfo[ "soundent" ]						= { ['save'] = false }
 
-function gmsave.ShouldSaveEntity( ent, t )
+function gmsave.ShouldSaveEntity(ent, t)
 
 	local info = ClassInfo[ t.classname ]
 
 	--
-	-- Filtered out - we don't want to save these entity types!
+	-- Filtered out - we don't want to save these entity typesnot
 	--
-	if ( info && info.save == false ) then return false end
+	if (info and info.save == false) then return false end
 
 	--
 	-- Should we save the parent entity?
-	-- If not, don't save this!
+	-- If not, don't save thisnot
 	--
 	local parent = ent:GetParent()
-	if ( IsValid( parent ) ) then
-		if ( !gmsave.ShouldSaveEntity( parent, parent:GetSaveTable() ) ) then return false end
+	if (IsValid( parent)) then
+		if (not gmsave.ShouldSaveEntity( parent, parent:GetSaveTable())) then return false end
 	end
 
 	--
-	-- If this is a weapon, and it has a valid owner.. don't save it!
+	-- If this is a weapon, and it has a valid owner.. don't save itnot
 	--
-	if ( ent:IsWeapon() && IsValid( ent:GetOwner() ) ) then
+	if (ent:IsWeapon() and IsValid( ent:GetOwner())) then
 		return false
 	end
 

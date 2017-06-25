@@ -4,15 +4,15 @@ DermaAnimation.__index = DermaAnimation
 
 function DermaAnimation:Run()
 
-	if ( !self.Running ) then return end
+	if (not self.Running) then return end
 
 	local time = SysTime()
-	local delta = ( time - self.StartTime ) / self.Length
-	delta = delta ^ ( 1.0 - ( delta - 0.5 ) )
+	local delta = (time - self.StartTime) / self.Length
+	delta = delta ^ (1.0 - ( delta - 0.5))
 
 	-- If we have ended we run once more with the Finished member set
 	-- This allows us to clean up in the same function..
-	if ( time > self.EndTime ) then
+	if (time > self.EndTime) then
 
 		self.Finished = true
 		self.Running = nil
@@ -20,15 +20,15 @@ function DermaAnimation:Run()
 
 	end
 
-	self.Func( self.Panel, self, delta, self.Data )
+	self.Func(self.Panel, self, delta, self.Data)
 	self.Started = nil
 
 end
 
 
-function DermaAnimation:Start( Length, Data )
+function DermaAnimation:Start(Length, Data)
 
-	if ( self.Length == 0 ) then return end
+	if (self.Length == 0) then return end
 
 	self.Running = true
 	self.Started = true
@@ -43,7 +43,7 @@ end
 
 function DermaAnimation:Stop()
 
-	if ( !self.Running ) then return end
+	if (not self.Running) then return end
 
 	self.Finished = true
 	self.Running = nil
@@ -56,14 +56,14 @@ function DermaAnimation:Active()
 
 end
 
-function Derma_Anim( name, panel, func )
+function Derma_Anim(name, panel, func)
 
 	local anim = {}
 	anim.Name = name
 	anim.Panel = panel
 	anim.Func = func
 
-	setmetatable( anim, DermaAnimation )
+	setmetatable(anim, DermaAnimation)
 
 	return anim
 
