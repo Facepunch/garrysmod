@@ -99,28 +99,28 @@ if SERVER then
 
    function ENT:UseOverride(ply)
       if not ttt_hats_reclaim:GetBool() then return end
-      
+
       if IsValid(ply) and not self:GetBeingWorn() then
-         if GetRoundState() != ROUND_ACTIVE then
+         if GetRoundState() ~= ROUND_ACTIVE then
             SafeRemoveEntity(self)
             return
          elseif not CanEquipHat(ply) then
             return
          end
-   
+
          sound.Play("weapon.ImpactSoft", self:GetPos(), 75, 100, 1)
-   
+
          self:SetMoveType(MOVETYPE_NONE)
          self:SetSolid(SOLID_NONE)
          self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-   
+
          self:SetParent(ply)
          self.Wearer = ply
-   
+
          ply.hat = self.Entity
-   
+
          self:SetBeingWorn(true)
-   
+
          LANG.Msg(ply, "hat_retrieve")
       end
    end

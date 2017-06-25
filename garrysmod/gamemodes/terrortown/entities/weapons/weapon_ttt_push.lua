@@ -25,7 +25,7 @@ SWEP.Primary.DefaultClip   = -1
 SWEP.Primary.Automatic     = true
 SWEP.Primary.Delay         = 3
 SWEP.Primary.Cone          = 0.005
-SWEP.Primary.Sound         = Sound( "weapons/ar2/fire1.wav" )
+SWEP.Primary.Sound         = Sound("weapons/ar2/fire1.wav")
 SWEP.Primary.SoundLevel    = 54
 
 SWEP.Secondary.ClipSize    = -1
@@ -68,8 +68,8 @@ end
 function SWEP:PrimaryAttack()
    if self.IsCharging then return end
 
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+   self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 
    self:FirePulse(600, 300)
 end
@@ -77,8 +77,8 @@ end
 function SWEP:SecondaryAttack()
    if self.IsCharging then return end
 
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+   self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 
    self.IsCharging = true
 end
@@ -86,7 +86,7 @@ end
 function SWEP:FirePulse(force_fwd, force_up)
    if not IsValid(self.Owner) then return end
 
-   self.Owner:SetAnimation( PLAYER_ATTACK1 )
+   self.Owner:SetAnimation(PLAYER_ATTACK1)
 
    sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
 
@@ -99,7 +99,7 @@ function SWEP:FirePulse(force_fwd, force_up)
    bullet.Num    = num
    bullet.Src    = self.Owner:GetShootPos()
    bullet.Dir    = self.Owner:GetAimVector()
-   bullet.Spread = Vector( cone, cone, 0 )
+   bullet.Spread = Vector(cone, cone, 0)
    bullet.Tracer = 1
    bullet.Force  = force_fwd / 10
    bullet.Damage = 1
@@ -123,7 +123,7 @@ function SWEP:FirePulse(force_fwd, force_up)
                         end
                      end
 
-   self.Owner:FireBullets( bullet )
+   self.Owner:FireBullets(bullet)
 
 end
 
@@ -133,7 +133,7 @@ local CHARGE_FORCE_UP_MIN = 100
 local CHARGE_FORCE_UP_MAX = 350
 function SWEP:ChargedAttack()
    local charge = math.Clamp(self:GetCharge(), 0, 1)
-   
+
    self.IsCharging = false
    self:SetCharge(0)
 
@@ -149,8 +149,8 @@ function SWEP:ChargedAttack()
 
    local force_up = ((charge * diff) - diff) + max
 
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+   self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
 
    self:FirePulse(force_fwd, force_up)
 end
@@ -188,7 +188,7 @@ function SWEP:Think()
          return true
       end
 
-      
+
       if SERVER and self:GetCharge() < 1 and self.NextCharge < CurTime() then
          self:SetCharge(math.min(1, self:GetCharge() + CHARGE_AMOUNT))
 
@@ -216,22 +216,22 @@ if CLIENT then
          local length = 10
          local gap = 5
 
-         surface.DrawLine( x - length, y, x - gap, y )
-         surface.DrawLine( x + length, y, x + gap, y )
-         surface.DrawLine( x, y - length, x, y - gap )
-         surface.DrawLine( x, y + length, x, y + gap )
+         surface.DrawLine(x - length, y, x - gap, y)
+         surface.DrawLine(x + length, y, x + gap, y)
+         surface.DrawLine(x, y - length, x, y - gap)
+         surface.DrawLine(x, y + length, x, y + gap)
       end
 
       if nxt > CurTime() and charge == 0 then
          local w = 40
 
-         w = (w * ( math.max(0, nxt - CurTime()) /  self.Primary.Delay )) / 2
+         w = (w * ( math.max(0, nxt - CurTime()) /  self.Primary.Delay)) / 2
 
          local bx = x + 30
          surface.DrawLine(bx, y - w, bx, y + w)
 
          bx = x - 30
-         surface.DrawLine(bx, y - w, bx, y + w) 
+         surface.DrawLine(bx, y - w, bx, y + w)
       end
 
       if charge > 0 then

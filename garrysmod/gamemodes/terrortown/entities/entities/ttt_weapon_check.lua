@@ -47,8 +47,8 @@ local function HasAny(ply)
 end
 
 local function HasNamed(name)
-   return function(ply) 
-             return ply:HasWeapon(name) 
+   return function(ply)
+             return ply:HasWeapon(name)
           end
 end
 
@@ -73,7 +73,7 @@ function ENT:TestWeapons(weptype)
    local maxs = self:LocalToWorld(self:OBBMaxs())
 
    local check = self:GetWeaponChecker(weptype)
-   
+
    if check == nil then
       ErrorNoHalt("ttt_weapon_check: invalid parameter\n")
       return 0
@@ -100,7 +100,7 @@ function ENT:AcceptInput(name, activator, caller, data)
       local wepname = tostring(data)
 
       if not weptype and not wepname then
-         ErrorNoHalt("ttt_weapon_check: Invalid parameter to CheckForWeapons input!\n")
+         ErrorNoHalt("ttt_weapon_check: Invalid parameter to CheckForWeapons inputnot \n")
          return false
       end
 

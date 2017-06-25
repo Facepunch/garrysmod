@@ -99,7 +99,7 @@ end
 -- for the same key event in multiplayer.
 function GM:KeyPress(ply, key)
    if not IsFirstTimePredicted() then return end
-   if not IsValid(ply) or ply != LocalPlayer() then return end
+   if not IsValid(ply) or ply ~= LocalPlayer() then return end
 
    if key == IN_SPEED and ply:IsActiveTraitor() then
       timer.Simple(0.05, function() RunConsoleCommand("+voicerecord") end)
@@ -108,7 +108,7 @@ end
 
 function GM:KeyRelease(ply, key)
    if not IsFirstTimePredicted() then return end
-   if not IsValid(ply) or ply != LocalPlayer() then return end
+   if not IsValid(ply) or ply ~= LocalPlayer() then return end
 
    if key == IN_SPEED and ply:IsActiveTraitor() then
       timer.Simple(0.05, function() RunConsoleCommand("-voicerecord") end)

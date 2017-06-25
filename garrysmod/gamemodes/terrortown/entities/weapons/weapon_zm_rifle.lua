@@ -41,8 +41,8 @@ SWEP.UseHands              = true
 SWEP.ViewModel             = Model("models/weapons/cstrike/c_snip_scout.mdl")
 SWEP.WorldModel            = Model("models/weapons/w_snip_scout.mdl")
 
-SWEP.IronSightsPos         = Vector( 5, -15, -2 )
-SWEP.IronSightsAng         = Vector( 2.6, 1.37, 3.5 )
+SWEP.IronSightsPos         = Vector(5, -15, -2)
+SWEP.IronSightsAng         = Vector(2.6, 1.37, 3.5)
 
 function SWEP:SetZoom(state)
    if CLIENT then
@@ -56,9 +56,9 @@ function SWEP:SetZoom(state)
    end
 end
 
-function SWEP:PrimaryAttack( worldsnd )
-   self.BaseClass.PrimaryAttack( self.Weapon, worldsnd )
-   self:SetNextSecondaryFire( CurTime() + 0.1 )
+function SWEP:PrimaryAttack(worldsnd)
+   self.BaseClass.PrimaryAttack(self.Weapon, worldsnd)
+   self:SetNextSecondaryFire(CurTime() + 0.1)
 end
 
 -- Add some zoom to ironsights for this gun
@@ -68,7 +68,7 @@ function SWEP:SecondaryAttack()
 
    local bIronsights = not self:GetIronsights()
 
-   self:SetIronsights( bIronsights )
+   self:SetIronsights(bIronsights)
 
    if SERVER then
       self:SetZoom(bIronsights)
@@ -86,10 +86,10 @@ function SWEP:PreDrop()
 end
 
 function SWEP:Reload()
-	if ( self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
-   self:DefaultReload( ACT_VM_RELOAD )
-   self:SetIronsights( false )
-   self:SetZoom( false )
+	if (self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount( self.Primary.Ammo) <= 0) then return end
+   self:DefaultReload(ACT_VM_RELOAD)
+   self:SetIronsights(false)
+   self:SetZoom(false)
 end
 
 
@@ -103,8 +103,8 @@ if CLIENT then
    local scope = surface.GetTextureID("sprites/scope")
    function SWEP:DrawHUD()
       if self:GetIronsights() then
-         surface.SetDrawColor( 0, 0, 0, 255 )
-         
+         surface.SetDrawColor(0, 0, 0, 255)
+
          local scrW = ScrW()
          local scrH = ScrH()
 
@@ -115,17 +115,17 @@ if CLIENT then
          -- crosshair
          local gap = 80
          local length = scope_size
-         surface.DrawLine( x - length, y, x - gap, y )
-         surface.DrawLine( x + length, y, x + gap, y )
-         surface.DrawLine( x, y - length, x, y - gap )
-         surface.DrawLine( x, y + length, x, y + gap )
+         surface.DrawLine(x - length, y, x - gap, y)
+         surface.DrawLine(x + length, y, x + gap, y)
+         surface.DrawLine(x, y - length, x, y - gap)
+         surface.DrawLine(x, y + length, x, y + gap)
 
          gap = 0
          length = 50
-         surface.DrawLine( x - length, y, x - gap, y )
-         surface.DrawLine( x + length, y, x + gap, y )
-         surface.DrawLine( x, y - length, x, y - gap )
-         surface.DrawLine( x, y + length, x, y + gap )
+         surface.DrawLine(x - length, y, x - gap, y)
+         surface.DrawLine(x + length, y, x + gap, y)
+         surface.DrawLine(x, y - length, x, y - gap)
+         surface.DrawLine(x, y + length, x, y + gap)
 
 
          -- cover edges
@@ -133,10 +133,10 @@ if CLIENT then
          local w = (x - sh) + 2
          surface.DrawRect(0, 0, w, scope_size)
          surface.DrawRect(x + sh - 2, 0, w, scope_size)
-         
+
          -- cover gaps on top and bottom of screen
-         surface.DrawLine( 0, 0, scrW, 0 )
-         surface.DrawLine( 0, scrH - 1, scrW, scrH - 1 )
+         surface.DrawLine(0, 0, scrW, 0)
+         surface.DrawLine(0, scrH - 1, scrW, scrH - 1)
 
          surface.SetDrawColor(255, 0, 0, 255)
          surface.DrawLine(x, y, x + 1, y + 1)

@@ -1,4 +1,4 @@
-local meta = FindMetaTable( "Vector" )
+local meta = FindMetaTable("Vector")
 
 -- Nothing in here, still leaving this file here just in case
 
@@ -7,6 +7,6 @@ local meta = FindMetaTable( "Vector" )
 -----------------------------------------------------------]]
 function meta:ToColor( )
 
-	return Color( self.x * 255, self.y * 255, self.z * 255 )
+	return Color(self.x * 255, self.y * 255, self.z * 255)
 
 end

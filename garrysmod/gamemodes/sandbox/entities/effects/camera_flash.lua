@@ -1,12 +1,12 @@
 
-function EFFECT:Init( data )
+function EFFECT:Init(data)
 
 	local vOffset = data:GetOrigin()
 	local ent = data:GetEntity()
 
-	local dlight = DynamicLight( ent:EntIndex() )
+	local dlight = DynamicLight(ent:EntIndex())
 
-	if ( dlight ) then
+	if (dlight) then
 
 		local c = self:GetColor()
 

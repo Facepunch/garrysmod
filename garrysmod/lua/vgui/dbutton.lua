@@ -1,25 +1,25 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_bBorder", "DrawBorder", FORCE_BOOL )
+AccessorFunc(PANEL, "m_bBorder", "DrawBorder", FORCE_BOOL)
 
 function PANEL:Init()
 
-	self:SetContentAlignment( 5 )
+	self:SetContentAlignment(5)
 
 	--
 	-- These are Lua side commands
 	-- Defined above using AccessorFunc
 	--
-	self:SetDrawBorder( true )
-	self:SetPaintBackground( true )
+	self:SetDrawBorder(true)
+	self:SetPaintBackground(true)
 
-	self:SetTall( 22 )
-	self:SetMouseInputEnabled( true )
-	self:SetKeyboardInputEnabled( true )
+	self:SetTall(22)
+	self:SetMouseInputEnabled(true)
+	self:SetKeyboardInputEnabled(true)
 
-	self:SetCursor( "hand" )
-	self:SetFont( "DermaDefault" )
+	self:SetCursor("hand")
+	self:SetFont("DermaDefault")
 
 end
 
@@ -29,31 +29,31 @@ function PANEL:IsDown()
 
 end
 
-function PANEL:SetImage( img )
+function PANEL:SetImage(img)
 
-	if ( !img ) then
+	if (not img) then
 
-		if ( IsValid( self.m_Image ) ) then
+		if (IsValid( self.m_Image)) then
 			self.m_Image:Remove()
 		end
 
 		return
 	end
 
-	if ( !IsValid( self.m_Image ) ) then
-		self.m_Image = vgui.Create( "DImage", self )
+	if (not IsValid( self.m_Image)) then
+		self.m_Image = vgui.Create("DImage", self)
 	end
 
-	self.m_Image:SetImage( img )
+	self.m_Image:SetImage(img)
 	self.m_Image:SizeToContents()
 	self:InvalidateLayout()
 
 end
 PANEL.SetIcon = PANEL.SetImage
 
-function PANEL:Paint( w, h )
+function PANEL:Paint(w, h)
 
-	derma.SkinHook( "Paint", "Button", self, w, h )
+	derma.SkinHook("Paint", "Button", self, w, h)
 
 	--
 	-- Draw the button text
@@ -62,13 +62,13 @@ function PANEL:Paint( w, h )
 
 end
 
-function PANEL:UpdateColours( skin )
+function PANEL:UpdateColours(skin)
 
-	if ( !self:IsEnabled() )					then return self:SetTextStyleColor( skin.Colours.Button.Disabled ) end
-	if ( self:IsDown() || self.m_bSelected )	then return self:SetTextStyleColor( skin.Colours.Button.Down ) end
-	if ( self.Hovered )							then return self:SetTextStyleColor( skin.Colours.Button.Hover ) end
+	if (not self:IsEnabled())					then return self:SetTextStyleColor( skin.Colours.Button.Disabled) end
+	if (self:IsDown() or self.m_bSelected)	then return self:SetTextStyleColor( skin.Colours.Button.Down) end
+	if (self.Hovered)							then return self:SetTextStyleColor( skin.Colours.Button.Hover) end
 
-	return self:SetTextStyleColor( skin.Colours.Button.Normal )
+	return self:SetTextStyleColor(skin.Colours.Button.Normal)
 
 end
 
@@ -79,53 +79,53 @@ function PANEL:PerformLayout()
 	-- and make the text align to the left, then set the inset
 	-- so the text will be to the right of the icon.
 	--
-	if ( IsValid( self.m_Image ) ) then
+	if (IsValid( self.m_Image)) then
 
-		self.m_Image:SetPos( 4, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
+		self.m_Image:SetPos(4, ( self:GetTall() - self.m_Image:GetTall()) * 0.5)
 
-		self:SetTextInset( self.m_Image:GetWide() + 16, 0 )
+		self:SetTextInset(self.m_Image:GetWide() + 16, 0)
 
 	end
 
-	DLabel.PerformLayout( self )
+	DLabel.PerformLayout(self)
 
 end
 
-function PANEL:SetConsoleCommand( strName, strArgs )
+function PANEL:SetConsoleCommand(strName, strArgs)
 
-	self.DoClick = function( self, val )
-		RunConsoleCommand( strName, strArgs )
+	self.DoClick = function(self, val)
+		RunConsoleCommand(strName, strArgs)
 	end
 
 end
 
 function PANEL:SizeToContents()
 	local w, h = self:GetContentSize()
-	self:SetSize( w + 8, h + 4 )
+	self:SetSize(w + 8, h + 4)
 end
 
-function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
+function PANEL:GenerateExample(ClassName, PropertySheet, Width, Height)
 
-	local ctrl = vgui.Create( ClassName )
-	ctrl:SetText( "Example Button" )
-	ctrl:SetWide( 200 )
+	local ctrl = vgui.Create(ClassName)
+	ctrl:SetText("Example Button")
+	ctrl:SetWide(200)
 
-	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
+	PropertySheet:AddSheet(ClassName, ctrl, nil, true, true)
 
 end
 
-local PANEL = derma.DefineControl( "DButton", "A standard Button", PANEL, "DLabel" )
+local PANEL = derma.DefineControl("DButton", "A standard Button", PANEL, "DLabel")
 
-PANEL = table.Copy( PANEL )
+PANEL = table.Copy(PANEL)
 
-function PANEL:SetActionFunction( func )
+function PANEL:SetActionFunction(func)
 
-	self.DoClick = function( self, val ) func( self, "Command", 0, 0 ) end
+	self.DoClick = function(self, val) func( self, "Command", 0, 0) end
 
 end
 
 -- No example for this control. Should we remove this completely?
-function PANEL:GenerateExample( class, tabs, w, h )
+function PANEL:GenerateExample(class, tabs, w, h)
 end
 
-derma.DefineControl( "Button", "Backwards Compatibility", PANEL, "DLabel" )
+derma.DefineControl("Button", "Backwards Compatibility", PANEL, "DLabel")

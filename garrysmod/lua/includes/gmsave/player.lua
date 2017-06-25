@@ -1,5 +1,5 @@
 
-function gmsave.PlayerSave( ent )
+function gmsave.PlayerSave(ent)
 
 	local tab = {}
 
@@ -11,12 +11,12 @@ function gmsave.PlayerSave( ent )
 
 end
 
-function gmsave.PlayerLoad( ent, tab )
+function gmsave.PlayerLoad(ent, tab)
 
-	if ( tab == nil ) then return end
+	if (tab == nil) then return end
 
-	if ( tab.Origin ) then ent:SetPos( tab.Origin ) end
-	if ( tab.Angle ) then ent:SetEyeAngles( tab.Angle ) end
-	if ( tab.MoveType ) then ent:SetMoveType( tab.MoveType ) end
+	if (tab.Origin) then ent:SetPos( tab.Origin) end
+	if (tab.Angle) then ent:SetEyeAngles( tab.Angle) end
+	if (tab.MoveType) then ent:SetMoveType( tab.MoveType) end
 
 end

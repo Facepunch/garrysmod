@@ -14,4 +14,4 @@ function PANEL:GetDecimals()
 	return 0
 end
 
-derma.DefineControl( "DProperty_Int", "", PANEL, "DProperty_Float" )
+derma.DefineControl("DProperty_Int", "", PANEL, "DProperty_Float")

@@ -2,25 +2,25 @@
 ENT.Type = "point"
 ENT.DisableDuplicator = true
 
-AccessorFunc( ENT, "m_bDefaultCode", "DefaultCode" )
+AccessorFunc(ENT, "m_bDefaultCode", "DefaultCode")
 
 function ENT:Initialize()
 end
 
-function ENT:KeyValue( key, value )
+function ENT:KeyValue(key, value)
 
-	if ( key == "Code" ) then
-		self:SetDefaultCode( value )
+	if (key == "Code") then
+		self:SetDefaultCode(value)
 	end
 
 end
 
-function ENT:SetupGlobals( activator, caller )
+function ENT:SetupGlobals(activator, caller)
 
 	ACTIVATOR = activator
 	CALLER = caller
 
-	if ( IsValid( activator ) && activator:IsPlayer() ) then
+	if (IsValid( activator) and activator:IsPlayer()) then
 		TRIGGER_PLAYER = activator
 	end
 
@@ -34,20 +34,20 @@ function ENT:KillGlobals()
 
 end
 
-function ENT:RunCode( activator, caller, code )
+function ENT:RunCode(activator, caller, code)
 
-	self:SetupGlobals( activator, caller )
+	self:SetupGlobals(activator, caller)
 
-		RunString( code )
+		RunString(code)
 
 	self:KillGlobals()
 
 end
 
-function ENT:AcceptInput( name, activator, caller, data )
+function ENT:AcceptInput(name, activator, caller, data)
 
-	if ( name == "RunCode" ) then self:RunCode( activator, caller, self:GetDefaultCode() ) return true end
-	if ( name == "RunPassedCode" ) then self:RunCode( activator, caller, data ) return true end
+	if (name == "RunCode") then self:RunCode( activator, caller, self:GetDefaultCode()) return true end
+	if (name == "RunPassedCode") then self:RunCode( activator, caller, data) return true end
 
 	return false
 

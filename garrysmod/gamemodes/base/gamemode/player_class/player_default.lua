@@ -1,7 +1,7 @@
 
 AddCSLuaFile()
 
-include( 'taunt_camera.lua' )
+include('taunt_camera.lua')
 
 local PLAYER = {}
 
@@ -57,29 +57,29 @@ end
 --
 function PLAYER:Loadout()
 
-	self.Player:Give( "weapon_pistol" )
-	self.Player:GiveAmmo( 255, "Pistol", true )
+	self.Player:Give("weapon_pistol")
+	self.Player:GiveAmmo(255, "Pistol", true)
 
 end
 
 function PLAYER:SetModel()
 
-	local cl_playermodel = self.Player:GetInfo( "cl_playermodel" )
-	local modelname = player_manager.TranslatePlayerModel( cl_playermodel )
-	util.PrecacheModel( modelname )
-	self.Player:SetModel( modelname )
+	local cl_playermodel = self.Player:GetInfo("cl_playermodel")
+	local modelname = player_manager.TranslatePlayerModel(cl_playermodel)
+	util.PrecacheModel(modelname)
+	self.Player:SetModel(modelname)
 
 end
 
 -- Clientside only
-function PLAYER:CalcView( view ) end		-- Setup the player's view
-function PLAYER:CreateMove( cmd ) end		-- Creates the user command on the client
+function PLAYER:CalcView(view) end		-- Setup the player's view
+function PLAYER:CreateMove(cmd) end		-- Creates the user command on the client
 function PLAYER:ShouldDrawLocal() end		-- Return true if we should draw the local player
 
 -- Shared
-function PLAYER:StartMove( cmd, mv ) end	-- Copies from the user command to the move
-function PLAYER:Move( mv ) end				-- Runs the move (can run multiple times for the same client)
-function PLAYER:FinishMove( mv ) end		-- Copy the results of the move back to the Player
+function PLAYER:StartMove(cmd, mv) end	-- Copies from the user command to the move
+function PLAYER:Move(mv) end				-- Runs the move (can run multiple times for the same client)
+function PLAYER:FinishMove(mv) end		-- Copy the results of the move back to the Player
 
 --
 -- Name: PLAYER:ViewModelChanged
@@ -89,7 +89,7 @@ function PLAYER:FinishMove( mv ) end		-- Copy the results of the move back to th
 -- Arg3: string|new|The new model
 -- Ret1:
 --
-function PLAYER:ViewModelChanged( vm, old, new )
+function PLAYER:ViewModelChanged(vm, old, new)
 end
 
 --
@@ -99,7 +99,7 @@ end
 -- Arg2: Entity|weapon|The weapon
 -- Ret1:
 --
-function PLAYER:PreDrawViewModel( vm, weapon )
+function PLAYER:PreDrawViewModel(vm, weapon)
 end
 
 --
@@ -109,7 +109,7 @@ end
 -- Arg2: Entity|weapon|The weapon
 -- Ret1:
 --
-function PLAYER:PostDrawViewModel( vm, weapon )
+function PLAYER:PostDrawViewModel(vm, weapon)
 end
 
 --
@@ -122,9 +122,9 @@ function PLAYER:GetHandsModel()
 
 	-- return { model = "models/weapons/c_arms_cstrike.mdl", skin = 1, body = "0100000" }
 
-	local playermodel = player_manager.TranslateToPlayerModelName( self.Player:GetModel() )
-	return player_manager.TranslatePlayerHands( playermodel )
+	local playermodel = player_manager.TranslateToPlayerModelName(self.Player:GetModel())
+	return player_manager.TranslatePlayerHands(playermodel)
 
 end
 
-player_manager.RegisterClass( "player_default", PLAYER, nil )
+player_manager.RegisterClass("player_default", PLAYER, nil)

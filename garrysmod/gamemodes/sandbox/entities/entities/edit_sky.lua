@@ -1,6 +1,6 @@
 
 AddCSLuaFile()
-DEFINE_BASECLASS( "base_edit" )
+DEFINE_BASECLASS("base_edit")
 
 ENT.Spawnable = true
 ENT.AdminOnly = true
@@ -10,15 +10,15 @@ ENT.Category = "Editors"
 
 function ENT:Initialize()
 
-	BaseClass.Initialize( self )
-	self:SetMaterial( "gmod/edit_sky" )
+	BaseClass.Initialize(self)
+	self:SetMaterial("gmod/edit_sky")
 
 	--
 	-- Over-ride the sky controller with this.
 	--
-	if ( CLIENT ) then
+	if (CLIENT) then
 
-		if ( IsValid( g_SkyPaint ) ) then
+		if (IsValid( g_SkyPaint)) then
 			-- TODO: Copy settings from `current` sky to here.
 		end
 
@@ -33,13 +33,13 @@ function ENT:Think()
 	--
 	-- Find an env_sun - if we don't already have one.
 	--
-	if ( SERVER && self.EnvSun == nil ) then
+	if (SERVER and self.EnvSun == nil) then
 
 		-- so this closure only gets called once - even if it fails
 		self.EnvSun = false
 
-		local list = ents.FindByClass( "env_sun" )
-		if ( #list > 0 ) then
+		local list = ents.FindByClass("env_sun")
+		if (#list > 0) then
 			self.EnvSun = list[ 1 ]
 		end
 
@@ -48,12 +48,12 @@ function ENT:Think()
 	--
 	-- If we have a sun - force our sun normal to its value
 	--
-	if ( SERVER && IsValid( self.EnvSun ) ) then
+	if (SERVER and IsValid( self.EnvSun)) then
 
-		local vec = self.EnvSun:GetInternalVariable( "m_vDirection" )
+		local vec = self.EnvSun:GetInternalVariable("m_vDirection")
 
-		if ( isvector( vec ) ) then
-			self:SetSunNormal( vec )
+		if (isvector( vec)) then
+			self:SetSunNormal(vec)
 		end
 
 	end
@@ -65,8 +65,8 @@ end
 --
 function ENT:SetupDataTables()
 
-	local SetupDataTables = scripted_ents.GetMember( "env_skypaint", "SetupDataTables" )
-	SetupDataTables( self )
+	local SetupDataTables = scripted_ents.GetMember("env_skypaint", "SetupDataTables")
+	SetupDataTables(self)
 
 end
 

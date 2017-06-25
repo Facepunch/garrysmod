@@ -278,7 +278,7 @@ function PANEL:Init()
    self:SetPaintBackground(false)
 end
 
-vgui.Register( "DisarmPanel", PANEL, "DPanel" )
+vgui.Register("DisarmPanel", PANEL, "DPanel")
 
 
 surface.CreateFont("C4Timer", {

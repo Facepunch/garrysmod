@@ -4,26 +4,26 @@ local DupeInClipboard	= false
 
 spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 
-	HTML = vgui.Create( "DHTML" )
-	JS_Language( HTML )
-	JS_Workshop( HTML )
+	HTML = vgui.Create("DHTML")
+	JS_Language(HTML)
+	JS_Workshop(HTML)
 
-	ws_dupe = WorkshopFileBase( "dupe", { "dupe" } )
+	ws_dupe = WorkshopFileBase("dupe", { "dupe" })
 	ws_dupe.HTML = HTML
 
-	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
-	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ).. " );" )
+	HTML:OpenURL("asset://garrysmod/html/dupes.html")
+	HTML:Call("SetDupeSaveState( " .. tostring( DupeInClipboard).. ")")
 
-	function ws_dupe:FetchLocal( offset, perpage )
+	function ws_dupe:FetchLocal(offset, perpage)
 
-		local f = file.Find( "dupes/*.dupe", "MOD", "datedesc" )
+		local f = file.Find("dupes/*.dupe", "MOD", "datedesc")
 
 		local saves = {}
 
-		for k, v in pairs( f ) do
+		for k, v in pairs(f) do
 
-			if ( k <= offset ) then continue end
-			if ( k > offset + perpage ) then break end
+			if (k <= offset) then continue end
+			if (k > offset + perpage) then break end
 
 			local entry = {
 				file	= "dupes/" .. v,
@@ -31,7 +31,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 				preview	= "dupes/" .. v:StripExtension() .. ".jpg"
 			}
 
-			table.insert( saves, entry )
+			table.insert(saves, entry)
 
 		end
 
@@ -40,32 +40,32 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 			results			= saves
 		}
 
-		local json = util.TableToJSON( results, false )
-		HTML:Call( "dupe.ReceiveLocal( "..json.." )" )
+		local json = util.TableToJSON(results, false)
+		HTML:Call("dupe.ReceiveLocal( "..json..")")
 
 	end
 
-	function ws_dupe:Arm( filename )
+	function ws_dupe:Arm(filename)
 
-		RunConsoleCommand( "dupe_arm", filename )
+		RunConsoleCommand("dupe_arm", filename)
 
 	end
 
-	function ws_dupe:DownloadAndArm( id )
+	function ws_dupe:DownloadAndArm(id)
 
-		MsgN( "Downloading Dupe...\n" )
-		steamworks.Download( id, true, function( name )
+		MsgN("Downloading Dupe...\n")
+		steamworks.Download(id, true, function( name)
 
-			MsgN( "Finished - arming!\n" )
-			ws_dupe:Arm( name )
+			MsgN("Finished - armingnot \n")
+			ws_dupe:Arm(name)
 
 		end )
 
 	end
 
-	function ws_dupe:Publish( filename, imagename )
+	function ws_dupe:Publish(filename, imagename)
 
-		RunConsoleCommand( "dupe_publish", filename, imagename )
+		RunConsoleCommand("dupe_publish", filename, imagename)
 
 	end
 
@@ -77,9 +77,9 @@ hook.Add( "DupeSaveAvailable", "UpdateDupeSpawnmenuAvailable", function()
 
 	DupeInClipboard = true
 
-	if ( !IsValid( HTML ) ) then return end
+	if (not IsValid( HTML)) then return end
 
-	HTML:Call( "SetDupeSaveState( true );" )
+	HTML:Call("SetDupeSaveState( true)")
 
 end )
 
@@ -87,24 +87,24 @@ hook.Add( "DupeSaveUnavailable", "UpdateDupeSpawnmenuUnavailable", function()
 
 	DupeInClipboard = false
 
-	if ( !IsValid( HTML ) ) then return end
+	if (not IsValid( HTML)) then return end
 
-	HTML:Call( "SetDupeSaveState( false );" )
+	HTML:Call("SetDupeSaveState( false)")
 
 end )
 
 hook.Add( "DupeSaved", "DuplicationSavedSpawnMenu", function()
 
-	if ( !IsValid( HTML ) ) then return end
+	if (not IsValid( HTML)) then return end
 
-	HTML:Call( "ShowLocalDupes();" )
+	HTML:Call("ShowLocalDupes()")
 
 end )
 
 concommand.Add( "dupe_show", function()
 
-	g_SpawnMenu:OpenCreationMenuTab( "#spawnmenu.category.dupes" )
+	g_SpawnMenu:OpenCreationMenuTab("#spawnmenu.category.dupes")
 
-	timer.Simple( 1.0, function() if ( !IsValid( HTML ) ) then return end HTML:Call( "ShowLocalDupes();" ) end )
+	timer.Simple(1.0, function() if ( not IsValid( HTML)) then return end HTML:Call( "ShowLocalDupes()") end)
 
 end, nil, "", { FCVAR_DONTRECORD } )

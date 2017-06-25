@@ -111,7 +111,7 @@ end
 local function request_rolelist(ply)
    -- Client requested a state update. Note that the client can only use this
    -- information after entities have been initialised (e.g. in InitPostEntity).
-   if GetRoundState() != ROUND_WAIT then
+   if GetRoundState() ~= ROUND_WAIT then
 
       SendRoleReset(ply)
       SendDetectiveList(ply)

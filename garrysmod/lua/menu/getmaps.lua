@@ -133,10 +133,10 @@ local function UpdateMaps()
 	MapNames[ "trade_" ] = "Team Fortress 2"
 	MapNames[ "pass_" ] = "Team Fortress 2"
 
-	MapNames[ "zpa_" ] = "Zombie Panic! Source"
-	MapNames[ "zpl_" ] = "Zombie Panic! Source"
-	MapNames[ "zpo_" ] = "Zombie Panic! Source"
-	MapNames[ "zps_" ] = "Zombie Panic! Source"
+	MapNames[ "zpa_" ] = "Zombie Panicnot  Source"
+	MapNames[ "zpl_" ] = "Zombie Panicnot  Source"
+	MapNames[ "zpo_" ] = "Zombie Panicnot  Source"
+	MapNames[ "zps_" ] = "Zombie Panicnot  Source"
 
 	MapNames[ "bhop_" ] = "Bunny Hop"
 	MapNames[ "cinema_" ] = "Cinema"
@@ -167,16 +167,16 @@ local function UpdateMaps()
 
 	local GamemodeList = engine.GetGamemodes()
 
-	for k, gm in ipairs( GamemodeList ) do
+	for k, gm in ipairs(GamemodeList) do
 
 		local Name = gm.title or "Unnammed Gamemode"
-		local Maps = string.Split( gm.maps, "|" )
+		local Maps = string.Split(gm.maps, "|")
 
-		if ( Maps && gm.maps != "" ) then
+		if (Maps and gm.maps ~= "") then
 
-			for k, pattern in ipairs( Maps ) do
+			for k, pattern in ipairs(Maps) do
 				-- When in doubt, just try to match it with string.find
-				MapPatterns[ string.lower( pattern ) ] = Name
+				MapPatterns[ string.lower(pattern) ] = Name
 			end
 
 		end
@@ -189,8 +189,8 @@ local favmaps
 
 local function LoadFavourites()
 
-	local cookiestr = cookie.GetString( "favmaps" )
-	favmaps = favmaps || (cookiestr && string.Explode( ";", cookiestr ) || {})
+	local cookiestr = cookie.GetString("favmaps")
+	favmaps = favmaps or (cookiestr and string.Explode( ";", cookiestr) or {})
 
 end
 
@@ -220,41 +220,41 @@ local IgnoreMaps = {
 
 local MapList = {}
 
-local function RefreshMaps( skip )
+local function RefreshMaps(skip)
 
-	if ( !skip ) then UpdateMaps() end
+	if (not skip) then UpdateMaps() end
 
 	MapList = {}
 
-	local maps = file.Find( "maps/*.bsp", "GAME" )
+	local maps = file.Find("maps/*.bsp", "GAME")
 	LoadFavourites()
 
-	for k, v in ipairs( maps ) do
-		local name = string.lower( string.gsub( v, "%.bsp$", "" ) )
-		local prefix = string.match( name, "^(.-_)" )
+	for k, v in ipairs(maps) do
+		local name = string.lower(string.gsub( v, "%.bsp$", ""))
+		local prefix = string.match(name, "^(.-_)")
 
 		local Ignore = IgnoreMaps[ name ] or IgnoreMaps[ prefix ]
 
 		-- Don't loop if it's already ignored
-		if ( Ignore ) then continue end
+		if (Ignore) then continue end
 
-		for _, ignore in ipairs( IgnorePatterns ) do
-			if ( string.find( name, ignore ) ) then
+		for _, ignore in ipairs(IgnorePatterns) do
+			if (string.find( name, ignore)) then
 				Ignore = true
 				break
 			end
 		end
 
 		-- Don't add useless maps
-		if ( Ignore ) then continue end
+		if (Ignore) then continue end
 
 		-- Check if the map has a simple name or prefix
 		local Category = MapNames[ name ] or MapNames[ prefix ]
 
 		-- Check if the map has an embedded prefix, or is TTT/Sandbox
-		if ( !Category ) then
-			for pattern, category in pairs( MapPatterns ) do
-				if ( string.find( name, pattern ) ) then
+		if (not Category) then
+			for pattern, category in pairs(MapPatterns) do
+				if (string.find( name, pattern)) then
 					Category = category
 				end
 			end
@@ -265,15 +265,15 @@ local function RefreshMaps( skip )
 
 		local fav
 
-		if ( table.HasValue( favmaps, name ) ) then
+		if (table.HasValue( favmaps, name)) then
 			fav = true
 		end
 
 		local csgo
 
-		if ( Category == "Counter-Strike" ) then
-			if ( file.Exists( "maps/" .. name .. ".bsp", "csgo" ) ) then
-				if ( file.Exists( "maps/" .. name .. ".bsp", "cstrike" ) ) then -- Map also exists in CS:GO
+		if (Category == "Counter-Strike") then
+			if (file.Exists( "maps/" .. name .. ".bsp", "csgo")) then
+				if (file.Exists( "maps/" .. name .. ".bsp", "cstrike")) then -- Map also exists in CS:GO
 					csgo = true
 				else
 					Category = "CS: Global Offensive"
@@ -281,80 +281,80 @@ local function RefreshMaps( skip )
 			end
 		end
 
-		if ( !MapList[ Category ] ) then
+		if (not MapList[ Category ]) then
 			MapList[ Category ] = {}
 		end
 
-		table.insert( MapList[ Category ], name )
+		table.insert(MapList[ Category ], name)
 
-		if ( fav ) then
-			if ( !MapList[ "Favourites" ] ) then
+		if (fav) then
+			if (not MapList[ "Favourites" ]) then
 				MapList[ "Favourites" ] = {}
 			end
 
-			table.insert( MapList[ "Favourites" ], name )
+			table.insert(MapList[ "Favourites" ], name)
 		end
 
-		if ( csgo ) then
-			if ( !MapList[ "CS: Global Offensive" ] ) then
+		if (csgo) then
+			if (not MapList[ "CS: Global Offensive" ]) then
 				MapList[ "CS: Global Offensive" ] = {}
 			end
 			-- We have to make the CS:GO name different from the CS:S name to prevent Favourites conflicts
-			table.insert( MapList[ "CS: Global Offensive" ], name .. " " )
+			table.insert(MapList[ "CS: Global Offensive" ], name .. " ")
 		end
 
 	end
 
 end
 
-hook.Add( "MenuStart", "FindMaps", RefreshMaps )
+hook.Add("MenuStart", "FindMaps", RefreshMaps)
 
-hook.Add( "GameContentChanged", "RefreshMaps", RefreshMaps )
+hook.Add("GameContentChanged", "RefreshMaps", RefreshMaps)
 
 function GetMapList()
 	-- Nice maplist accessor instead of a global table
 	return MapList
 end
 
-function ToggleFavourite( map )
+function ToggleFavourite(map)
 
 	LoadFavourites()
 
-	if ( table.HasValue( favmaps, map ) ) then -- is favourite, remove it
-		table.remove( favmaps, table.KeysFromValue( favmaps, map )[1] )
+	if (table.HasValue( favmaps, map)) then -- is favourite, remove it
+		table.remove(favmaps, table.KeysFromValue( favmaps, map)[1])
 	else -- not favourite, add it
-		table.insert( favmaps, map )
+		table.insert(favmaps, map)
 	end
 
-	cookie.Set( "favmaps", table.concat( favmaps, ";" ) )
+	cookie.Set("favmaps", table.concat( favmaps, ";"))
 
-	RefreshMaps( true )
+	RefreshMaps(true)
 
 	UpdateMapList()
 
 end
 
-function SaveLastMap( map, cat )
+function SaveLastMap(map, cat)
 
-	local t = string.Explode( ";", cookie.GetString( "lastmap", "" ) )
-	if ( !map ) then map = t[ 1 ] or "gm_flatgrass" end
-	if ( !cat ) then cat = t[ 2 ] or "Sandbox" end
+	local t = string.Explode(";", cookie.GetString( "lastmap", ""))
+	if (not map) then map = t[ 1 ] or "gm_flatgrass" end
+	if (not cat) then cat = t[ 2 ] or "Sandbox" end
 
-	cookie.Set( "lastmap", map .. ";" .. cat )
+	cookie.Set("lastmap", map .. ";" .. cat)
 
 end
 
 function LoadLastMap()
 
-	local t = string.Explode( ";", cookie.GetString( "lastmap", "" ) )
+	local t = string.Explode(";", cookie.GetString( "lastmap", ""))
 
 	local map = t[ 1 ] or "gm_flatgrass"
 	local cat = t[ 2 ] or "Sandbox"
 
-	cat = string.gsub( cat, "'", "\\'" )
+	cat = string.gsub(cat, "'", "\\'")
 
-	if ( !file.Exists( "maps/" .. map .. ".bsp", "GAME" ) ) then return end
+	if (not file.Exists( "maps/" .. map .. ".bsp", "GAME")) then return end
 
-	pnlMainMenu:Call( "SetLastMap('" .. map .. "','" .. cat .. "')" )
+	pnlMainMenu:Call("SetLastMap('" .. map .. "','" .. cat .. "')")
 
 end

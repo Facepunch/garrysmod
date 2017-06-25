@@ -42,7 +42,7 @@ if CLIENT then
    -- Open one of TTT's icons with VTFEdit to see what kind of settings to use
    -- when exporting to VTF. Once you have a VTF and VMT, you can
    -- resource.AddFile("materials/vgui/...") them here. GIVE YOUR ICON A UNIQUE
-   -- FILENAME, or it WILL be overwritten by other servers! Gmod does not check
+   -- FILENAME, or it WILL be overwritten by other serversnot  Gmod does not check
    -- if the files are different, it only looks at the name. I recommend you
    -- create your own directory so that this does not happen,
    -- eg. /materials/vgui/ttt/mycoolserver/mygun.vmt
@@ -93,7 +93,7 @@ SWEP.Weight             = 5
 SWEP.AutoSwitchTo       = false
 SWEP.AutoSwitchFrom     = false
 
-SWEP.Primary.Sound          = Sound( "Weapon_Pistol.Empty" )
+SWEP.Primary.Sound          = Sound("Weapon_Pistol.Empty")
 SWEP.Primary.Recoil         = 1.5
 SWEP.Primary.Damage         = 1
 SWEP.Primary.NumShots       = 1
@@ -148,7 +148,7 @@ if CLIENT then
       local scale = math.max(0.2,  10 * self:GetPrimaryCone())
 
       local LastShootTime = self:LastShootTime()
-      scale = scale * (2 - math.Clamp( (CurTime() - LastShootTime) * 5, 0.0, 1.0 ))
+      scale = scale * (2 - math.Clamp( (CurTime() - LastShootTime) * 5, 0.0, 1.0))
 
       local alpha = sights and sights_opacity:GetFloat() or 1
       local bright = crosshair_brightness:GetFloat() or 1
@@ -169,10 +169,10 @@ if CLIENT then
 
       local gap = math.floor(20 * scale * (sights and 0.8 or 1))
       local length = math.floor(gap + (25 * crosshair_size:GetFloat()) * scale)
-      surface.DrawLine( x - length, y, x - gap, y )
-      surface.DrawLine( x + length, y, x + gap, y )
-      surface.DrawLine( x, y - length, x, y - gap )
-      surface.DrawLine( x, y + length, x, y + gap )
+      surface.DrawLine(x - length, y, x - gap, y)
+      surface.DrawLine(x + length, y, x + gap, y)
+      surface.DrawLine(x, y - length, x, y - gap)
+      surface.DrawLine(x, y + length, x, y + gap)
    end
 
    local GetPTranslation = LANG.GetParamTranslation
@@ -226,30 +226,30 @@ end
 -- Shooting functions largely copied from weapon_cs_base
 function SWEP:PrimaryAttack(worldsnd)
 
-   self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextSecondaryFire(CurTime() + self.Primary.Delay)
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
    if not self:CanPrimaryAttack() then return end
 
    if not worldsnd then
-      self:EmitSound( self.Primary.Sound, self.Primary.SoundLevel )
+      self:EmitSound(self.Primary.Sound, self.Primary.SoundLevel)
    elseif SERVER then
       sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
    end
 
-   self:ShootBullet( self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots, self:GetPrimaryCone() )
+   self:ShootBullet(self.Primary.Damage, self.Primary.Recoil, self.Primary.NumShots, self:GetPrimaryCone())
 
-   self:TakePrimaryAmmo( 1 )
+   self:TakePrimaryAmmo(1)
 
    local owner = self.Owner
    if not IsValid(owner) or owner:IsNPC() or (not owner.ViewPunch) then return end
 
-   owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) * self.Primary.Recoil, 0 ) )
+   owner:ViewPunch(Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) * self.Primary.Recoil, 0))
 end
 
 function SWEP:DryFire(setnext)
    if CLIENT and LocalPlayer() == self.Owner then
-      self:EmitSound( "Weapon_Pistol.Empty" )
+      self:EmitSound("Weapon_Pistol.Empty")
    end
 
    setnext(self, CurTime() + 0.2)
@@ -286,12 +286,12 @@ local function Sparklies(attacker, tr, dmginfo)
    end
 end
 
-function SWEP:ShootBullet( dmg, recoil, numbul, cone )
+function SWEP:ShootBullet(dmg, recoil, numbul, cone)
 
    self:SendWeaponAnim(self.PrimaryAnim)
 
    self.Owner:MuzzleFlash()
-   self.Owner:SetAnimation( PLAYER_ATTACK1 )
+   self.Owner:SetAnimation(PLAYER_ATTACK1)
 
    if not IsFirstTimePredicted() then return end
 
@@ -304,7 +304,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
    bullet.Num    = numbul
    bullet.Src    = self.Owner:GetShootPos()
    bullet.Dir    = self.Owner:GetAimVector()
-   bullet.Spread = Vector( cone, cone, 0 )
+   bullet.Spread = Vector(cone, cone, 0)
    bullet.Tracer = 4
    bullet.TracerName = self.Tracer or "Tracer"
    bullet.Force  = 10
@@ -313,7 +313,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
       bullet.Callback = Sparklies
    end
 
-   self.Owner:FireBullets( bullet )
+   self.Owner:FireBullets(bullet)
 
    -- Owner can die after firebullets
    if (not IsValid(self.Owner)) or (not self.Owner:Alive()) or self.Owner:IsNPC() then return end
@@ -326,7 +326,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 
       local eyeang = self.Owner:EyeAngles()
       eyeang.pitch = eyeang.pitch - recoil
-      self.Owner:SetEyeAngles( eyeang )
+      self.Owner:SetEyeAngles(eyeang)
    end
 
 end
@@ -362,15 +362,15 @@ function SWEP:Deploy()
 end
 
 function SWEP:Reload()
-   if ( self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
+   if (self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount( self.Primary.Ammo) <= 0) then return end
    self:DefaultReload(self.ReloadAnim)
-   self:SetIronsights( false )
+   self:SetIronsights(false)
 end
 
 
 function SWEP:OnRestore()
    self.NextSecondaryAttack = 0
-   self:SetIronsights( false )
+   self:SetIronsights(false)
 end
 
 function SWEP:Ammo1()
@@ -380,12 +380,12 @@ end
 -- The OnDrop() hook is useless for this as it happens AFTER the drop. OwnerChange
 -- does not occur when a drop happens for some reason. Hence this thing.
 function SWEP:PreDrop()
-   if SERVER and IsValid(self.Owner) and self.Primary.Ammo != "none" then
+   if SERVER and IsValid(self.Owner) and self.Primary.Ammo ~= "none" then
       local ammo = self:Ammo1()
 
       -- Do not drop ammo if we have another gun that uses this type
       for _, w in pairs(self.Owner:GetWeapons()) do
-         if IsValid(w) and w != self and w:GetPrimaryAmmoType() == self:GetPrimaryAmmoType() then
+         if IsValid(w) and w ~= self and w:GetPrimaryAmmoType() == self:GetPrimaryAmmoType() then
             ammo = 0
          end
       end
@@ -434,7 +434,7 @@ function SWEP:Equip(newowner)
       end
    end
 
-   if SERVER and IsValid(newowner) and self.StoredAmmo > 0 and self.Primary.Ammo != "none" then
+   if SERVER and IsValid(newowner) and self.StoredAmmo > 0 and self.Primary.Ammo ~= "none" then
       local ammo = newowner:GetAmmoCount(self.Primary.Ammo)
       local given = math.min(self.StoredAmmo, self.Primary.ClipMax - ammo)
 
@@ -498,7 +498,7 @@ function SWEP:DyingShot()
          local eyeang = self.Owner:EyeAngles()
          eyeang.pitch = eyeang.pitch - math.Rand(-punch, punch)
          eyeang.yaw = eyeang.yaw - math.Rand(-punch, punch)
-         self.Owner:SetEyeAngles( eyeang )
+         self.Owner:SetEyeAngles(eyeang)
 
          MsgN(self.Owner:Nick() .. " fired his DYING SHOT")
 
@@ -518,12 +518,12 @@ local ttt_lowered = CreateConVar("ttt_ironsights_lowered", "1", FCVAR_ARCHIVE)
 local LOWER_POS = Vector(0, 0, -2)
 
 local IRONSIGHT_TIME = 0.25
-function SWEP:GetViewModelPosition( pos, ang )
+function SWEP:GetViewModelPosition(pos, ang)
    if not self.IronSightsPos then return pos, ang end
 
    local bIron = self:GetIronsights()
 
-   if bIron != self.bLastIron then
+   if bIron ~= self.bLastIron then
       self.bLastIron = bIron
       self.fIronTime = CurTime()
 
@@ -546,7 +546,7 @@ function SWEP:GetViewModelPosition( pos, ang )
 
    if fIronTime > CurTime() - IRONSIGHT_TIME then
 
-      mul = math.Clamp( (CurTime() - fIronTime) / IRONSIGHT_TIME, 0, 1 )
+      mul = math.Clamp((CurTime() - fIronTime) / IRONSIGHT_TIME, 0, 1)
 
       if not bIron then mul = 1 - mul end
    end
@@ -555,9 +555,9 @@ function SWEP:GetViewModelPosition( pos, ang )
 
    if self.IronSightsAng then
       ang = ang * 1
-      ang:RotateAroundAxis( ang:Right(),    self.IronSightsAng.x * mul )
-      ang:RotateAroundAxis( ang:Up(),       self.IronSightsAng.y * mul )
-      ang:RotateAroundAxis( ang:Forward(),  self.IronSightsAng.z * mul )
+      ang:RotateAroundAxis(ang:Right(),    self.IronSightsAng.x * mul)
+      ang:RotateAroundAxis(ang:Up(),       self.IronSightsAng.y * mul)
+      ang:RotateAroundAxis(ang:Forward(),  self.IronSightsAng.z * mul)
    end
 
    pos = pos + offset.x * ang:Right() * mul

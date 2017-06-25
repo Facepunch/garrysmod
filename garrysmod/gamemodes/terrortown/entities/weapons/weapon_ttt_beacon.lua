@@ -59,21 +59,21 @@ function SWEP:OnDrop()
 end
 
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
    if self:CanPrimaryAttack() then
       self:BeaconDrop()
    end
 end
 function SWEP:SecondaryAttack()
-   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 
    if self:CanPrimaryAttack() then
       self:BeaconStick()
    end
 end
 
-local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
+local throwsound = Sound("Weapon_SLAM.SatchelThrow")
 
 -- might be able to move this drop/stick stuff into something more general now
 -- that a number of weapons use it
@@ -87,7 +87,7 @@ function SWEP:BeaconDrop()
       local vsrc = ply:GetShootPos()
       local vang = ply:GetAimVector()
       local vvel = ply:GetVelocity()
-      
+
       local vthrow = vvel + vang * 200
 
       local beacon = ents.Create("ttt_beacon")
@@ -97,7 +97,7 @@ function SWEP:BeaconDrop()
          beacon:Spawn()
 
          beacon:PointAtEntity(ply)
-         
+
          local ang = beacon:GetAngles()
          ang:RotateAroundAxis(ang:Right(), 90)
          beacon:SetAngles(ang)
@@ -106,7 +106,7 @@ function SWEP:BeaconDrop()
          local phys = beacon:GetPhysicsObject()
          if IsValid(phys) then
             phys:SetVelocity(vthrow)
-         end   
+         end
 
          self:PlacedBeacon()
       end

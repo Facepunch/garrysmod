@@ -1,157 +1,157 @@
 
 
 --
--- Widgets are like gui controls in the 3D world(!!!)
+-- Widgets are like gui controls in the 3D world(not not not)
 --
 
 widgets = {}
 
 --
 -- Holds the currently hovered widget
--- 
+--
 widgets.Hovered = nil
-widgets.HoveredPos = Vector( 0, 0, 0 )
+widgets.HoveredPos = Vector(0, 0, 0)
 
 --
 -- Holds the current pressed widget
--- 
+--
 widgets.Pressed = nil
 
-local function UpdateHovered( pl, mv )
+local function UpdateHovered(pl, mv)
 
-	if ( !IsValid( pl ) ) then return end
+	if (not IsValid( pl)) then return end
 
-	if ( !pl:Alive() ) then 
-		pl:SetHoveredWidget( NULL ) 
-		return 
+	if (not pl:Alive()) then
+		pl:SetHoveredWidget(NULL)
+		return
 	end
 
 	local OldHovered = pl:GetHoveredWidget()
-	pl:SetHoveredWidget( NULL )
+	pl:SetHoveredWidget(NULL)
 
-	local trace = 
+	local trace =
 	{
 		start	= pl:EyePos(),
 		endpos	= pl:EyePos() + pl:GetAimVector() * 256,
-		filter	= function( ent )
-		
-			return IsValid( ent ) && ent:IsWidget()
-		
+		filter	= function(ent)
+
+			return IsValid(ent) and ent:IsWidget()
+
 		end
 	}
-	
---	debugoverlay.Line( trace.start, trace.endpos, 0.5 )
+
+--	debugoverlay.Line(trace.start, trace.endpos, 0.5)
 
 	widgets.Tracing = true
-	local tr = util.TraceLine( trace )
+	local tr = util.TraceLine(trace)
 	widgets.Tracing = false
 
-	if ( !IsValid( tr.Entity ) ) then return end
-	if ( tr.Entity:IsWorld() ) then return end
-	if ( !tr.Entity:IsWidget() ) then return end
+	if (not IsValid( tr.Entity)) then return end
+	if (tr.Entity:IsWorld()) then return end
+	if (not tr.Entity:IsWidget()) then return end
 
---	debugoverlay.Cross( tr.HitPos, 1, 60 )
-	
-	if ( OldHovered != tr.Entity ) then
-		
+--	debugoverlay.Cross(tr.HitPos, 1, 60)
+
+	if (OldHovered ~= tr.Entity) then
+
 		-- On hover changed? why bother?
-		
+
 	end
-	
-	pl:SetHoveredWidget( tr.Entity )
+
+	pl:SetHoveredWidget(tr.Entity)
 	pl.WidgetHitPos = tr.HitPos
 
 end
 
-local function UpdateButton( pl, mv, btn, mousebutton )
+local function UpdateButton(pl, mv, btn, mousebutton)
 
-	local now = mv:KeyDown( btn )
-	local was = mv:KeyWasDown( btn )
+	local now = mv:KeyDown(btn)
+	local was = mv:KeyWasDown(btn)
 	local hvr = pl:GetHoveredWidget()
 	local prs = pl:GetPressedWidget()
-	
-	if ( now && !was && IsValid( hvr ) ) then
-		hvr:OnPress( pl, mousebutton, mv ) 
+
+	if (now and not was and IsValid( hvr)) then
+		hvr:OnPress(pl, mousebutton, mv)
 	end
-	
-	if ( !now && was && IsValid( prs ) ) then
-		prs:OnRelease( pl, mousebutton, mv )	
+
+	if (not now and was and IsValid( prs)) then
+		prs:OnRelease(pl, mousebutton, mv)
 	end
 end
 
 
 --
--- The idea here is to have exactly the same 
+-- The idea here is to have exactly the same
 -- behaviour on the client as the server.
 --
-function widgets.PlayerTick( pl, mv )
+function widgets.PlayerTick(pl, mv)
 
-	UpdateHovered( pl, mv )
-	
-	UpdateButton( pl, mv, IN_ATTACK, 1 )
-	UpdateButton( pl, mv, IN_ATTACK2, 2 )
-	
+	UpdateHovered(pl, mv)
+
+	UpdateButton(pl, mv, IN_ATTACK, 1)
+	UpdateButton(pl, mv, IN_ATTACK2, 2)
+
 	local prs = pl:GetPressedWidget()
-	
-	if ( IsValid( prs ) ) then
-		prs:PressedThinkInternal( pl, mv )
+
+	if (IsValid( prs)) then
+		prs:PressedThinkInternal(pl, mv)
 	end
-	
+
 end
 
 
 ---
----  Render the widgets!
+---  Render the widgetsnot
 ---
 
 local RenderList = {}
 
-function widgets.RenderMe( ent )
+function widgets.RenderMe(ent)
 
 	--
 	-- The pressed widget gets to decide what should draw
 	--
-	if ( LocalPlayer() && IsValid(LocalPlayer():GetPressedWidget()) ) then
-	
-		if ( !LocalPlayer():GetPressedWidget():PressedShouldDraw( ent ) ) then 
-			return 
-		end
-	
-	end
-	
+	if (LocalPlayer() and IsValid(LocalPlayer():GetPressedWidget())) then
 
-	table.insert( RenderList, ent )
+		if (not LocalPlayer():GetPressedWidget():PressedShouldDraw( ent)) then
+			return
+		end
+
+	end
+
+
+	table.insert(RenderList, ent)
 
 end
 
-hook.Add( "PostDrawEffects", "RenderWidgets", function() 
+hook.Add( "PostDrawEffects", "RenderWidgets", function()
 
 	--
-	-- Don't do anything if we don't have widgets to render!
+	-- Don't do anything if we don't have widgets to rendernot
 	--
-	if ( #RenderList == 0 ) then return end
+	if (#RenderList == 0) then return end
 
-	cam.Start3D( EyePos(), EyeAngles() )
+	cam.Start3D(EyePos(), EyeAngles())
 
-		for k, v in pairs( RenderList ) do
-	
+		for k, v in pairs(RenderList) do
+
 			v:OverlayRender()
-	
+
 		end
-	
+
 	cam.End3D()
-	
+
 	RenderList = {}
 
 end )
 
 
-hook.Add( "PlayerTick", "TickWidgets", function( pl, mv ) widgets.PlayerTick( pl, mv ) end )
+hook.Add("PlayerTick", "TickWidgets", function( pl, mv) widgets.PlayerTick( pl, mv) end)
 
 
 
 
-local ENTITY = FindMetaTable( "Entity" )
+local ENTITY = FindMetaTable("Entity")
 
 function ENTITY:IsWidget()
 	return self.Widget

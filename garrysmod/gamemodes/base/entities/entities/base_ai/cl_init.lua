@@ -1,11 +1,11 @@
 
-include( "shared.lua" )
+include("shared.lua")
 
 ENT.RenderGroup = RENDERGROUP_OPAQUE
 
 --[[---------------------------------------------------------
 	Name: Draw
-	Desc: Draw it!
+	Desc: Draw itnot
 -----------------------------------------------------------]]
 function ENT:Draw()
 	self:DrawModel()

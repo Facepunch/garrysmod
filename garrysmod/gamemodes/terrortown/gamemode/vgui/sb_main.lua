@@ -53,7 +53,7 @@ GROUP_SPEC = 4
 GROUP_COUNT = 4
 
 function AddScoreGroup(name) -- Utility function to register a score group
-   if _G["GROUP_"..name] then error("Group of name '"..name.."' already exists!") return end
+   if _G["GROUP_"..name] then error("Group of name '"..name.."' already existsnot ") return end
    GROUP_COUNT = GROUP_COUNT + 1
    _G["GROUP_"..name] = GROUP_COUNT
 end
@@ -61,7 +61,7 @@ end
 function ScoreGroup(p)
    if not IsValid(p) then return -1 end -- will not match any group panel
 
-   local group = hook.Call( "TTTScoreGroup", nil, p )
+   local group = hook.Call("TTTScoreGroup", nil, p)
 
    if group then -- If that hook gave us a group, use it
       return group
@@ -76,7 +76,7 @@ function ScoreGroup(p)
             -- To terrorists, missing players show as alive
             if client:IsSpec() or
                client:IsActiveTraitor() or
-               ((GAMEMODE.round_state != ROUND_ACTIVE) and client:IsTerror()) then
+               ((GAMEMODE.round_state ~= ROUND_ACTIVE) and client:IsTerror()) then
                return GROUP_NOTFOUND
             else
                return GROUP_TERROR
@@ -124,8 +124,8 @@ function PANEL:Init()
    self.hostdesc:SetText(GetTranslation("sb_playing"))
    self.hostdesc:SetContentAlignment(9)
 
-   self.hostname = vgui.Create( "DLabel", self )
-   self.hostname:SetText( GetHostName() )
+   self.hostname = vgui.Create("DLabel", self)
+   self.hostname:SetText(GetHostName())
    self.hostname:SetContentAlignment(6)
 
    self.mapchange = vgui.Create("DLabel", self)
@@ -141,7 +141,7 @@ function PANEL:Init()
                           end
 
 
-   self.ply_frame = vgui.Create( "TTTPlayerFrame", self )
+   self.ply_frame = vgui.Create("TTTPlayerFrame", self)
 
    self.ply_groups = {}
 
@@ -163,26 +163,26 @@ function PANEL:Init()
       self.ply_groups[GROUP_FOUND] = t
    end
 
-   hook.Call( "TTTScoreGroups", nil, self.ply_frame:GetCanvas(), self.ply_groups )
+   hook.Call("TTTScoreGroups", nil, self.ply_frame:GetCanvas(), self.ply_groups)
 
    -- the various score column headers
    self.cols = {}
-   self:AddColumn( GetTranslation("sb_ping"), nil, nil,         "ping" )
-   self:AddColumn( GetTranslation("sb_deaths"), nil, nil,       "deaths" )
-   self:AddColumn( GetTranslation("sb_score"), nil, nil,        "score" )
+   self:AddColumn(GetTranslation("sb_ping"), nil, nil,         "ping")
+   self:AddColumn(GetTranslation("sb_deaths"), nil, nil,       "deaths")
+   self:AddColumn(GetTranslation("sb_score"), nil, nil,        "score")
 
    if KARMA.IsEnabled() then
-      self:AddColumn( GetTranslation("sb_karma"), nil, nil,     "karma" )
+      self:AddColumn(GetTranslation("sb_karma"), nil, nil,     "karma")
    end
 
    self.sort_headers = {}
    -- Reuse some translations
-   self:AddFakeColumn( GetTranslation("sb_sortby"), nil, nil,       nil ) -- "Sort by:"
-   self:AddFakeColumn( GetTranslation("equip_spec_name"), nil, nil, "name" )
-   self:AddFakeColumn( GetTranslation("col_role"), nil, nil,        "role" )
+   self:AddFakeColumn(GetTranslation("sb_sortby"), nil, nil,       nil) -- "Sort by:"
+   self:AddFakeColumn(GetTranslation("equip_spec_name"), nil, nil, "name")
+   self:AddFakeColumn(GetTranslation("col_role"), nil, nil,        "role")
 
    -- Let hooks add their column headers (via AddColumn() or AddFakeColumn())
-   hook.Call( "TTTScoreboardColumns", nil, self )
+   hook.Call("TTTScoreboardColumns", nil, self)
 
    self:UpdateScoreboard()
    self:StartUpdateTimer()
@@ -198,7 +198,7 @@ local function sort_header_handler(self_, lbl)
       if lbl.HeadingIdentifier == sorting:GetString() then
          ascending:SetBool(not ascending:GetBool())
       else
-         sorting:SetString( lbl.HeadingIdentifier )
+         sorting:SetString(lbl.HeadingIdentifier)
          ascending:SetBool(true)
       end
 
@@ -213,20 +213,20 @@ end
 
 -- For headings only the label parameter is relevant, second param is included for
 -- parity with sb_row
-local function column_label_work(self_, table_to_add, label, width, sort_identifier, sort_func )
-   local lbl = vgui.Create( "DLabel", self_ )
-   lbl:SetText( label )
+local function column_label_work(self_, table_to_add, label, width, sort_identifier, sort_func)
+   local lbl = vgui.Create("DLabel", self_)
+   lbl:SetText(label)
    local can_sort = false
    lbl.IsHeading = true
    lbl.Width = width or 50 -- Retain compatibility with existing code
 
-   if sort_identifier != nil then
+   if sort_identifier ~= nil then
       can_sort = true
       -- If we have an identifier and an existing sort function then it was a built-in
       -- Otherwise...
       if _G.sboard_sort[sort_identifier] == nil then
          if sort_func == nil then
-            ErrorNoHalt( "Sort ID provided without a sorting function, Label = ", label, " ; ID = ", sort_identifier )
+            ErrorNoHalt("Sort ID provided without a sorting function, Label = ", label, " ; ID = ", sort_identifier)
             can_sort = false
          else
             _G.sboard_sort[sort_identifier] = sort_func
@@ -241,18 +241,18 @@ local function column_label_work(self_, table_to_add, label, width, sort_identif
       lbl.DoClick = sort_header_handler(self_, lbl)
    end
 
-   table.insert( table_to_add, lbl )
+   table.insert(table_to_add, lbl)
    return lbl
 end
 
-function PANEL:AddColumn( label, _, width, sort_id, sort_func )
-   return column_label_work( self, self.cols, label, width, sort_id, sort_func )
+function PANEL:AddColumn(label, _, width, sort_id, sort_func)
+   return column_label_work(self, self.cols, label, width, sort_id, sort_func)
 end
 
 -- Adds just column headers without player-specific data
 -- Identical to PANEL:AddColumn except it adds to the sort_headers table instead
-function PANEL:AddFakeColumn( label, _, width, sort_id, sort_func )
-   return column_label_work( self, self.sort_headers, label, width, sort_id, sort_func )
+function PANEL:AddFakeColumn(label, _, width, sort_id, sort_func)
+   return column_label_work(self, self.sort_headers, label, width, sort_id, sort_func)
 end
 
 function PANEL:StartUpdateTimer()
@@ -282,9 +282,9 @@ function PANEL:Paint()
    draw.RoundedBox( 8, 0, y_logo_off + 25, self:GetWide(), 32, colors.bar)
 
    -- TTT Logo
-   surface.SetTexture( logo )
-   surface.SetDrawColor( 255, 255, 255, 255 )
-   surface.DrawTexturedRect( 5, 0, 256, 256 )
+   surface.SetTexture(logo)
+   surface.SetDrawColor(255, 255, 255, 255)
+   surface.DrawTexturedRect(5, 0, 256, 256)
 
 end
 
@@ -400,7 +400,7 @@ function PANEL:ApplySchemeSettings()
    end
 end
 
-function PANEL:UpdateScoreboard( force )
+function PANEL:UpdateScoreboard(force)
    if not force and not self:IsVisible() then return end
 
    local layout = false
@@ -419,7 +419,7 @@ function PANEL:UpdateScoreboard( force )
 
    for k, group in pairs(self.ply_groups) do
       if IsValid(group) then
-         group:SetVisible( group:HasRows() )
+         group:SetVisible(group:HasRows())
          group:UpdatePlayerData()
       end
    end
@@ -431,14 +431,14 @@ function PANEL:UpdateScoreboard( force )
    end
 end
 
-vgui.Register( "TTTScoreboard", PANEL, "Panel" )
+vgui.Register("TTTScoreboard", PANEL, "Panel")
 
 ---- PlayerFrame is defined in sandbox and is basically a little scrolling
 ---- hack. Just putting it here (slightly modified) because it's tiny.
 
 local PANEL = {}
 function PANEL:Init()
-   self.pnlCanvas  = vgui.Create( "Panel", self )
+   self.pnlCanvas  = vgui.Create("Panel", self)
    self.YOffset = 0
 
    self.scroll = vgui.Create("DVScrollBar", self)
@@ -446,7 +446,7 @@ end
 
 function PANEL:GetCanvas() return self.pnlCanvas end
 
-function PANEL:OnMouseWheeled( dlta )
+function PANEL:OnMouseWheeled(dlta)
    self.scroll:AddScroll(dlta * -2)
 
    self:InvalidateLayout()
@@ -469,7 +469,7 @@ function PANEL:PerformLayout()
 
    self.YOffset = self.scroll:GetOffset()
 
-   self.pnlCanvas:SetPos( 0, self.YOffset )
-   self.pnlCanvas:SetSize( self:GetWide() - (self.scroll.Enabled and 16 or 0), self.pnlCanvas:GetTall() )
+   self.pnlCanvas:SetPos(0, self.YOffset)
+   self.pnlCanvas:SetSize(self:GetWide() - (self.scroll.Enabled and 16 or 0), self.pnlCanvas:GetTall())
 end
-vgui.Register( "TTTPlayerFrame", PANEL, "Panel" )
+vgui.Register("TTTPlayerFrame", PANEL, "Panel")

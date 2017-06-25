@@ -1,9 +1,9 @@
 
-AddCSLuaFile( "cl_init.lua" )
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 
-include( "shared.lua" )
-include( "outputs.lua" )
+include("shared.lua")
+include("outputs.lua")
 
 --[[---------------------------------------------------------
 	Name: Initialize
@@ -16,7 +16,7 @@ end
 	Name: KeyValue
 	Desc: Called when a keyvalue is added to us
 -----------------------------------------------------------]]
-function ENT:KeyValue( key, value )
+function ENT:KeyValue(key, value)
 end
 
 --[[---------------------------------------------------------
@@ -31,7 +31,7 @@ end
 	Name: AcceptInput
 	Desc: Accepts input, return true to override/accept input
 -----------------------------------------------------------]]
-function ENT:AcceptInput( name, activator, caller, data )
+function ENT:AcceptInput(name, activator, caller, data)
 	return false
 end
 
@@ -54,19 +54,19 @@ end
 -- Default generic spawn function
 -- So you don't have to add one your entitie unless you want to.
 --
-function ENT:SpawnFunction( ply, tr, ClassName )
+function ENT:SpawnFunction(ply, tr, ClassName)
 
-	if ( !tr.Hit ) then return end
+	if (not tr.Hit) then return end
 
 	local SpawnPos = tr.HitPos + tr.HitNormal * 10
 	local SpawnAng = ply:EyeAngles()
 	SpawnAng.p = 0
 	SpawnAng.y = SpawnAng.y + 180
 
-	local ent = ents.Create( ClassName )
-	ent:SetCreator( ply )
-	ent:SetPos( SpawnPos )
-	ent:SetAngles( SpawnAng )
+	local ent = ents.Create(ClassName)
+	ent:SetCreator(ply)
+	ent:SetPos(SpawnPos)
+	ent:SetAngles(SpawnAng)
 	ent:Spawn()
 	ent:Activate()
 

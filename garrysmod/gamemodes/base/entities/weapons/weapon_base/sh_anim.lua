@@ -23,16 +23,16 @@ local ActIndex = {
 
 --[[---------------------------------------------------------
    Name: SetWeaponHoldType
-   Desc: Sets up the translation table, to translate from normal 
+   Desc: Sets up the translation table, to translate from normal
 			standing idle pose, to holding weapon pose.
 -----------------------------------------------------------]]
-function SWEP:SetWeaponHoldType( t )
+function SWEP:SetWeaponHoldType(t)
 
-	t = string.lower( t )
+	t = string.lower(t)
 	local index = ActIndex[ t ]
-	
-	if ( index == nil ) then
-		Msg( "SWEP:SetWeaponHoldType - ActIndex[ \""..t.."\" ] isn't set! (defaulting to normal)\n" )
+
+	if (index == nil) then
+		Msg("SWEP:SetWeaponHoldType - ActIndex[ \""..t.."\" ] isn't setnot  (defaulting to normal)\n")
 		t = "normal"
 		index = ActIndex[ t ]
 	end
@@ -50,18 +50,18 @@ function SWEP:SetWeaponHoldType( t )
 	self.ActivityTranslate [ ACT_MP_JUMP ] 						= index+7
 	self.ActivityTranslate [ ACT_RANGE_ATTACK1 ] 				= index+8
 	self.ActivityTranslate [ ACT_MP_SWIM ] 						= index+9
-	
+
 	-- "normal" jump animation doesn't exist
 	if t == "normal" then
 		self.ActivityTranslate [ ACT_MP_JUMP ] = ACT_HL2MP_JUMP_SLAM
 	end
 
-	self:SetupWeaponHoldTypeForAI( t )
+	self:SetupWeaponHoldTypeForAI(t)
 
 end
 
 -- Default hold pos is the pistol
-SWEP:SetWeaponHoldType( "pistol" )
+SWEP:SetWeaponHoldType("pistol")
 
 --[[---------------------------------------------------------
    Name: weapon:TranslateActivity( )
@@ -69,19 +69,19 @@ SWEP:SetWeaponHoldType( "pistol" )
 		 So for example, ACT_HL2MP_RUN becomes ACT_HL2MP_RUN_PISTOL
 		 Depending on how you want the player to be holding the weapon
 -----------------------------------------------------------]]
-function SWEP:TranslateActivity( act )
+function SWEP:TranslateActivity(act)
 
-	if ( self.Owner:IsNPC() ) then
-		if ( self.ActivityTranslateAI[ act ] ) then
+	if (self.Owner:IsNPC()) then
+		if (self.ActivityTranslateAI[ act ]) then
 			return self.ActivityTranslateAI[ act ]
 		end
 		return -1
 	end
 
-	if ( self.ActivityTranslate[ act ] != nil ) then
+	if (self.ActivityTranslate[ act ] ~= nil) then
 		return self.ActivityTranslate[ act ]
 	end
-	
+
 	return -1
 
 end

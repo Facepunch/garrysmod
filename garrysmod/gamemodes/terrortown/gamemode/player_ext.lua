@@ -1,7 +1,7 @@
 
 -- serverside extensions to player table
 
-local plymeta = FindMetaTable( "Player" )
+local plymeta = FindMetaTable("Player")
 if not plymeta then Error("FAILED TO FIND PLAYER TABLE") return end
 
 function plymeta:SetRagdollSpec(s)
@@ -250,7 +250,7 @@ end
 
 function plymeta:ResetViewRoll()
    local ang = self:EyeAngles()
-   if ang.r != 0 then
+   if ang.r ~= 0 then
       ang.r = 0
       self:SetEyeAngles(ang)
    end

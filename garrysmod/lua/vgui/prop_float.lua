@@ -14,53 +14,53 @@ function PANEL:GetDecimals()
 	return 2
 end
 
-function PANEL:Setup( vars )
+function PANEL:Setup(vars)
 
 	self:Clear()
 
-	local ctrl = self:Add( "DNumSlider" )
-	ctrl:Dock( FILL )
-	ctrl:SetDecimals( self:GetDecimals() )
+	local ctrl = self:Add("DNumSlider")
+	ctrl:Dock(FILL)
+	ctrl:SetDecimals(self:GetDecimals())
 
 	-- Apply vars
-	ctrl:SetMin( vars.min || 0 )
-	ctrl:SetMax( vars.max || 1 )
+	ctrl:SetMin(vars.min or 0)
+	ctrl:SetMax(vars.max or 1)
 
 	-- The label needs mouse input so we can scratch
-	self:GetRow().Label:SetMouseInputEnabled( true )
+	self:GetRow().Label:SetMouseInputEnabled( true)
 	-- Take the scratch and place it on the Row's label
-	ctrl.Scratch:SetParent( self:GetRow().Label )
+	ctrl.Scratch:SetParent(self:GetRow().Label)
 	-- Hide the numslider's label
-	ctrl.Label:SetVisible( false )
+	ctrl.Label:SetVisible(false)
 	-- Move the text area to the left
-	ctrl.TextArea:Dock( LEFT )
+	ctrl.TextArea:Dock(LEFT)
 	-- Add a margin onto the slider - so it's not right up the side
-	ctrl.Slider:DockMargin( 0, 3, 8, 3 )
+	ctrl.Slider:DockMargin(0, 3, 8, 3)
 
 	-- Return true if we're editing
-	self.IsEditing = function( self )
+	self.IsEditing = function(self)
 		return ctrl:IsEditing()
 	end
 
 	-- Set the value
-	self.SetValue = function( self, val )
-		ctrl:SetValue( val )
+	self.SetValue = function(self, val)
+		ctrl:SetValue(val)
 	end
 
 	-- Alert row that value changed
-	ctrl.OnValueChanged = function( ctrl, newval )
+	ctrl.OnValueChanged = function(ctrl, newval)
 
-		self:ValueChanged( newval )
+		self:ValueChanged(newval)
 
 	end
 
 	self.Paint = function()
 
-		-- PERFORMANCE !!!
-		ctrl.Slider:SetVisible( self:IsEditing() || self:GetRow():IsChildHovered() )
+		-- PERFORMANCE not not not
+		ctrl.Slider:SetVisible(self:IsEditing() or self:GetRow():IsChildHovered())
 
 	end
 
 end
 
-derma.DefineControl( "DProperty_Float", "", PANEL, "DProperty_Generic" )
+derma.DefineControl("DProperty_Float", "", PANEL, "DProperty_Generic")

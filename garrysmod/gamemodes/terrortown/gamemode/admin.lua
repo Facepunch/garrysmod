@@ -69,7 +69,7 @@ function PrintReport(ply)
       end
    else
       if IsValid(ply) then
-         pr("You do not appear to be RCON or a superadmin!")
+         pr("You do not appear to be RCON or a superadminnot ")
       end
    end
 end
@@ -85,7 +85,7 @@ local function PrintKarma(ply)
 
    else
       if IsValid(ply) then
-         pr("You do not appear to be RCON or a superadmin!")
+         pr("You do not appear to be RCON or a superadminnot ")
       end
    end
 end
@@ -105,7 +105,7 @@ local dmglog_save    = CreateConVar("ttt_damagelog_save", "0")
 local function PrintDamageLog(ply)
    local pr = GetPrintFn(ply)
 
-   if (not IsValid(ply)) or ply:IsSuperAdmin() or GetRoundState() != ROUND_ACTIVE then
+   if (not IsValid(ply)) or ply:IsSuperAdmin() or GetRoundState() ~= ROUND_ACTIVE then
       ServerLog(Format("%s used ttt_print_damagelog\n", IsValid(ply) and ply:Nick() or "console"))
       pr("*** Damage log:\n")
 
@@ -120,7 +120,7 @@ local function PrintDamageLog(ply)
       pr("*** Damage log end.")
    else
       if IsValid(ply) then
-         pr("You do not appear to be RCON or a superadmin, nor are we in the post-round phase!")
+         pr("You do not appear to be RCON or a superadmin, nor are we in the post-round phasenot ")
       end
    end
 end

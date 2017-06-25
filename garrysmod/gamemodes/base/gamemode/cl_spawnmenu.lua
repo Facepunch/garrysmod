@@ -53,11 +53,11 @@ end
 --[[---------------------------------------------------------
 	+menu binds
 -----------------------------------------------------------]]
-concommand.Add( "+menu", function() hook.Call( "OnSpawnMenuOpen", GAMEMODE ) end, nil, "Opens the spawnmenu", { FCVAR_DONTRECORD } )
-concommand.Add( "-menu", function() if ( input.IsKeyTrapping() ) then return end hook.Call( "OnSpawnMenuClose", GAMEMODE ) end, nil, "Closes the spawnmenu", { FCVAR_DONTRECORD } )
+concommand.Add("+menu", function() hook.Call( "OnSpawnMenuOpen", GAMEMODE) end, nil, "Opens the spawnmenu", { FCVAR_DONTRECORD })
+concommand.Add("-menu", function() if ( input.IsKeyTrapping()) then return end hook.Call( "OnSpawnMenuClose", GAMEMODE) end, nil, "Closes the spawnmenu", { FCVAR_DONTRECORD })
 
 --[[---------------------------------------------------------
 	+menu_context binds
 -----------------------------------------------------------]]
-concommand.Add( "+menu_context", function() hook.Call( "OnContextMenuOpen", GAMEMODE ) end, nil, "Opens the context menu", { FCVAR_DONTRECORD } )
-concommand.Add( "-menu_context", function() if ( input.IsKeyTrapping() ) then return end hook.Call( "OnContextMenuClose", GAMEMODE ) end, nil, "Closes the context menu", { FCVAR_DONTRECORD } )
+concommand.Add("+menu_context", function() hook.Call( "OnContextMenuOpen", GAMEMODE) end, nil, "Opens the context menu", { FCVAR_DONTRECORD })
+concommand.Add("-menu_context", function() if ( input.IsKeyTrapping()) then return end hook.Call( "OnContextMenuClose", GAMEMODE) end, nil, "Closes the context menu", { FCVAR_DONTRECORD })

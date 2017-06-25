@@ -7,27 +7,27 @@ properties.Add( "editentity", {
 	PrependSpacer = true,
 	MenuIcon = "icon16/pencil.png",
 
-	Filter = function( self, ent, ply )
+	Filter = function(self, ent, ply)
 
-		if ( !IsValid( ent ) ) then return false end
-		if ( !ent.Editable ) then return false end
-		if ( !gamemode.Call( "CanProperty", ply, "editentity", ent ) ) then return false end
+		if (not IsValid( ent)) then return false end
+		if (not ent.Editable) then return false end
+		if (not gamemode.Call( "CanProperty", ply, "editentity", ent)) then return false end
 
 		return true
 
 	end,
 
-	Action = function( self, ent )
+	Action = function(self, ent)
 
-		local window = g_ContextMenu:Add( "DFrame" )
-		window:SetSize( 320, 400 )
-		window:SetTitle( tostring( ent ) )
+		local window = g_ContextMenu:Add("DFrame")
+		window:SetSize(320, 400)
+		window:SetTitle(tostring( ent))
 		window:Center()
-		window:SetSizable( true )
+		window:SetSizable(true)
 
-		local control = window:Add( "DEntityProperties" )
-		control:SetEntity( ent )
-		control:Dock( FILL )
+		local control = window:Add("DEntityProperties")
+		control:SetEntity(ent)
+		control:Dock(FILL)
 
 		control.OnEntityLost = function()
 

@@ -3,13 +3,13 @@ local PANEL = {}
 
 local border = 0
 local border_w = 8
-local matHover = Material( "gui/ps_hover.png", "nocull" )
-local boxHover = GWEN.CreateTextureBorder( border, border, 64 - border * 2, 64 - border * 2, border_w, border_w, border_w, border_w, matHover )
+local matHover = Material("gui/ps_hover.png", "nocull")
+local boxHover = GWEN.CreateTextureBorder(border, border, 64 - border * 2, 64 - border * 2, border_w, border_w, border_w, border_w, matHover)
 
 -- This function is used as the paint function for selected buttons.
-local function HighlightedButtonPaint( self, w, h )
+local function HighlightedButtonPaint(self, w, h)
 
-	boxHover( 0, 0, w, h, color_white )
+	boxHover(0, 0, w, h, color_white)
 
 end
 
@@ -17,134 +17,134 @@ function PANEL:Init()
 
 	-- A panellist is a panel that you shove other panels
 	-- into and it makes a nice organised frame.
-	self.List = vgui.Create( "DPanelList", self )
-	self.List:EnableHorizontal( true )
+	self.List = vgui.Create("DPanelList", self)
+	self.List:EnableHorizontal(true)
 	self.List:EnableVerticalScrollbar()
-	self.List:SetSpacing( 1 )
-	self.List:SetPadding( 3 )
+	self.List:SetSpacing(1)
+	self.List:SetPadding(3)
 
-	Derma_Hook( self.List, "Paint", "Paint", "Panel" )
+	Derma_Hook(self.List, "Paint", "Paint", "Panel")
 
 	self.Controls = {}
 	self.Height = 2
 
 end
 
-function PANEL:AddModel( model, ConVars )
+function PANEL:AddModel(model, ConVars)
 
 	-- Creeate a spawnicon and set the model
-	local Icon = vgui.Create( "SpawnIcon", self )
-	Icon:SetModel( model )
-	Icon:SetTooltip( model )
+	local Icon = vgui.Create("SpawnIcon", self)
+	Icon:SetModel(model)
+	Icon:SetTooltip(model)
 	Icon.Model = model
-	Icon.ConVars = ConVars || {}
+	Icon.ConVars = ConVars or {}
 
 	local ConVarName = self:ConVar()
 
 	-- Run a console command when the Icon is clicked
-	Icon.DoClick = function ( self )
+	Icon.DoClick = function (self)
 
-		for k, v in pairs( self.ConVars ) do
-			LocalPlayer():ConCommand( Format( "%s \"%s\"\n", k, v ) )
+		for k, v in pairs(self.ConVars) do
+			LocalPlayer():ConCommand( Format( "%s \"%s\"\n", k, v))
 		end
 
 		-- Note: We run this command after all the optional stuff
-		LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, model ) )
+		LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, model))
 
 	end
 
 	-- Add the Icon us
-	self.List:AddItem( Icon )
-	table.insert( self.Controls, Icon )
+	self.List:AddItem(Icon)
+	table.insert(self.Controls, Icon)
 
 end
 
-function PANEL:AddModelEx( name, model, skin )
+function PANEL:AddModelEx(name, model, skin)
 
 	-- Creeate a spawnicon and set the model
-	local Icon = vgui.Create( "SpawnIcon", self )
-	Icon:SetModel( model, skin )
-	Icon:SetTooltip( model )
+	local Icon = vgui.Create("SpawnIcon", self)
+	Icon:SetModel(model, skin)
+	Icon:SetTooltip(model)
 	Icon.Model = model
 	Icon.Value = name
-	Icon.ConVars = ConVars || {}
+	Icon.ConVars = ConVars or {}
 
 	local ConVarName = self:ConVar()
 
 	-- Run a console command when the Icon is clicked
-	Icon.DoClick = function ( self ) LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, Icon.Value ) ) end
+	Icon.DoClick = function (self) LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, Icon.Value)) end
 
 	-- Add the Icon us
-	self.List:AddItem( Icon )
-	table.insert( self.Controls, Icon )
+	self.List:AddItem(Icon)
+	table.insert(self.Controls, Icon)
 
 end
 
-function PANEL:ControlValues( kv )
+function PANEL:ControlValues(kv)
 
-	self.BaseClass.ControlValues( self, kv )
+	self.BaseClass.ControlValues(self, kv)
 
-	self.Height = kv.height || 2
+	self.Height = kv.height or 2
 
 	-- Load the list of models from our keyvalues file
 	-- This is the old way
 
-	if ( kv.models ) then
-		for k, v in SortedPairs( kv.models ) do
-			self:AddModel( k, v )
+	if (kv.models) then
+		for k, v in SortedPairs(kv.models) do
+			self:AddModel(k, v)
 		end
 	end
 
 	--
 	-- Passing in modelstable is the new way
 	--
-	if ( kv.modelstable ) then
+	if (kv.modelstable) then
 		local tmp = {} -- HACK: Order by skin too.
-		for k, v in SortedPairsByMemberValue( kv.modelstable, "model" ) do
-			tmp[ k ] = v.model .. ( v.skin || 0 )
+		for k, v in SortedPairsByMemberValue(kv.modelstable, "model") do
+			tmp[ k ] = v.model .. (v.skin or 0)
 		end
 
-		for k, v in SortedPairsByValue( tmp ) do
+		for k, v in SortedPairsByValue(tmp) do
 			v = kv.modelstable[ k ]
-			self:AddModelEx( k, v.model, v.skin || 0 )
+			self:AddModelEx(k, v.model, v.skin or 0)
 		end
 	end
 
-	self:InvalidateLayout( true )
+	self:InvalidateLayout(true)
 
 end
 
 function PANEL:PerformLayout()
 
-	local y = self.BaseClass.PerformLayout( self )
+	local y = self.BaseClass.PerformLayout(self)
 
-	if ( self.Height >= 1 ) then
-		local Height = ( 64 + self.List:GetSpacing() ) * math.max( self.Height, 1 ) + self.List:GetPadding() * 2 - self.List:GetSpacing()
+	if (self.Height >= 1) then
+		local Height = (64 + self.List:GetSpacing()) * math.max( self.Height, 1) + self.List:GetPadding() * 2 - self.List:GetSpacing()
 
-		self.List:SetPos( 0, y )
-		self.List:SetSize( self:GetWide(), Height )
+		self.List:SetPos(0, y)
+		self.List:SetSize(self:GetWide(), Height)
 
 		y = y + Height
 
-		self:SetTall( y + 5 )
+		self:SetTall(y + 5)
 	else -- Height is set to 0 or less, auto stretch
-		self.List:SetWide( self:GetWide() )
-		self.List:SizeToChildren( false, true )
-		self:SetTall( self.List:GetTall() + 5 )
+		self.List:SetWide(self:GetWide())
+		self.List:SizeToChildren(false, true)
+		self:SetTall(self.List:GetTall() + 5)
 	end
 
 end
 
-function PANEL:FindAndSelectButton( Value )
+function PANEL:FindAndSelectButton(Value)
 
 	self.CurrentValue = Value
 
-	for k, Icon in pairs( self.Controls ) do
+	for k, Icon in pairs(self.Controls) do
 
-		if ( Icon.Model == Value || Icon.Value == Value ) then
+		if (Icon.Model == Value or Icon.Value == Value) then
 
 			-- Remove the old overlay
-			if ( self.SelectedIcon ) then
+			if (self.SelectedIcon) then
 				self.SelectedIcon.PaintOver = self.OldSelectedPaintOver
 			end
 
@@ -161,12 +161,12 @@ end
 
 function PANEL:TestForChanges()
 
-	local Value = GetConVarString( self:ConVar() )
+	local Value = GetConVarString(self:ConVar())
 
-	if ( Value == self.CurrentValue ) then return end
+	if (Value == self.CurrentValue) then return end
 
-	self:FindAndSelectButton( Value )
+	self:FindAndSelectButton(Value)
 
 end
 
-vgui.Register( "PropSelect", PANEL, "ContextBase" )
+vgui.Register("PropSelect", PANEL, "ContextBase")

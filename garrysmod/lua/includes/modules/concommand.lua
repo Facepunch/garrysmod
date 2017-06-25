@@ -8,7 +8,7 @@ local Msg = Msg
    Desc: A module to take care of the registration and calling
          of Lua console commands.
 -----------------------------------------------------------]]
-module( "concommand" )
+module("concommand")
 
 local CommandList = {}
 local CompleteList = {}
@@ -22,22 +22,22 @@ function GetTable()
 end
 
 --[[---------------------------------------------------------
-   Name: concommand.Add( name, func, completefunc )
+   Name: concommand.Add(name, func, completefunc)
    Desc: Register a new console command
 -----------------------------------------------------------]]
-function Add( name, func, completefunc, help, flags )
-	local LowerName = string.lower( name )
+function Add(name, func, completefunc, help, flags)
+	local LowerName = string.lower(name)
 	CommandList[ LowerName ] = func
 	CompleteList[ LowerName ] = completefunc
-	AddConsoleCommand( name, help, flags )
+	AddConsoleCommand(name, help, flags)
 end
 
 --[[---------------------------------------------------------
-   Name: concommand.Remove( name )
+   Name: concommand.Remove(name)
    Desc: Removes a console command
 -----------------------------------------------------------]]
-function Remove( name )
-	local LowerName = string.lower( name )
+function Remove(name)
+	local LowerName = string.lower(name)
 	CommandList[ LowerName ] = nil
 	CompleteList[ LowerName ] = nil
 end
@@ -46,16 +46,16 @@ end
    Name: concommand.Run( )
    Desc: Called by the engine when an unknown console command is run
 -----------------------------------------------------------]]
-function Run( player, command, arguments, args )
+function Run(player, command, arguments, args)
 
-	local LowerCommand = string.lower( command )
+	local LowerCommand = string.lower(command)
 
-	if ( CommandList[ LowerCommand ] != nil ) then
-		CommandList[ LowerCommand ]( player, command, arguments, args )
+	if (CommandList[ LowerCommand ] ~= nil) then
+		CommandList[ LowerCommand ](player, command, arguments, args)
 		return true
 	end
 
-	Msg( "Unknown command: " .. command .. "\n" )
+	Msg("Unknown command: " .. command .. "\n")
 
 	return false
 end
@@ -64,12 +64,12 @@ end
    Name: concommand.AutoComplete( )
    Desc: Returns a table for the autocompletion
 -----------------------------------------------------------]]
-function AutoComplete( command, arguments )
+function AutoComplete(command, arguments)
 
-	local LowerCommand = string.lower( command )
+	local LowerCommand = string.lower(command)
 
-	if ( CompleteList[ LowerCommand ] != nil ) then
-		return CompleteList[ LowerCommand ]( command, arguments )
+	if (CompleteList[ LowerCommand ] ~= nil) then
+		return CompleteList[ LowerCommand ](command, arguments)
 	end
 
 end

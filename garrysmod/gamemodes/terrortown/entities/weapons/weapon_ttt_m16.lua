@@ -27,7 +27,7 @@ SWEP.Primary.Cone          = 0.018
 SWEP.Primary.ClipSize      = 20
 SWEP.Primary.ClipMax       = 60
 SWEP.Primary.DefaultClip   = 20
-SWEP.Primary.Sound         = Sound( "Weapon_M4A1.Single" )
+SWEP.Primary.Sound         = Sound("Weapon_M4A1.Single")
 
 SWEP.AutoSpawnable         = true
 SWEP.Spawnable             = true
@@ -57,13 +57,13 @@ function SWEP:SecondaryAttack()
 
    local bIronsights = not self:GetIronsights()
 
-   self:SetIronsights( bIronsights )
+   self:SetIronsights(bIronsights)
 
    if SERVER then
-      self:SetZoom( bIronsights )
+      self:SetZoom(bIronsights)
    end
 
-   self:SetNextSecondaryFire( CurTime() + 0.3 )
+   self:SetNextSecondaryFire(CurTime() + 0.3)
 end
 
 function SWEP:PreDrop()

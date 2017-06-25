@@ -89,7 +89,7 @@ function MSTACK:AddMessageEx(item)
    -- Insert at the top
    table.insert(self.msgs, 1, item)
 
-   self.last = item.time   
+   self.last = item.time
 end
 
 -- Add a given message to the stack, will be rendered in a different color if it
@@ -99,7 +99,7 @@ function MSTACK:AddMessage(text, traitor_only)
    self:AddColoredBgMessage(text, traitor_only and msgcolors.traitor_bg or msgcolors.generic_bg)
 end
 
--- Oh joy, I get to write my own wrapping function. Thanks Lua!
+-- Oh joy, I get to write my own wrapping function. Thanks Luanot
 -- Splits a string into a table of strings that are under the given width.
 function MSTACK:WrapText(text, width)
    surface.SetFont(msgfont)
@@ -109,7 +109,7 @@ function MSTACK:WrapText(text, width)
    if w <= width then
       return {text} -- Nope, but wrap in table for uniformity
    end
-   
+
    local words = string.Explode(" ", text) -- No spaces means you're screwed
 
    local lines = {""}
@@ -192,8 +192,8 @@ function MSTACK:Draw(client)
             draw.TextShadow(spec, 1, alpha)
          end
 
-         if alpha == 0 then 
-            self.msgs[k] = nil 
+         if alpha == 0 then
+            self.msgs[k] = nil
          end
 
          running_y = y + height

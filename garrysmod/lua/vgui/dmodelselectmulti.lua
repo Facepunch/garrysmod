@@ -4,23 +4,23 @@ local PANEL = {}
 function PANEL:Init()
 
 	self.ModelPanels = {}
-	self:SetTall( 66 * 2 + 26 )
+	self:SetTall(66 * 2 + 26)
 
 end
 
-function PANEL:SetHeight( numHeight )
+function PANEL:SetHeight(numHeight)
 
-	self:SetTall( 66 * ( numHeight or 2 ) + 26 )
+	self:SetTall(66 * ( numHeight or 2) + 26)
 
 end
 
-function PANEL:AddModelList( Name, ModelList, strConVar, bDontSort, bDontCallListConVars )
+function PANEL:AddModelList(Name, ModelList, strConVar, bDontSort, bDontCallListConVars)
 
-	local ModelSelect = vgui.Create( "DModelSelect", self )
+	local ModelSelect = vgui.Create("DModelSelect", self)
 
-	ModelSelect:SetModelList( ModelList, strConVar, bDontSort, bDontCallListConVars )
+	ModelSelect:SetModelList(ModelList, strConVar, bDontSort, bDontCallListConVars)
 
-	self:AddSheet( Name, ModelSelect )
+	self:AddSheet(Name, ModelSelect)
 
 	self.ModelPanels[Name] = ModelSelect
 
@@ -28,4 +28,4 @@ function PANEL:AddModelList( Name, ModelList, strConVar, bDontSort, bDontCallLis
 
 end
 
-derma.DefineControl( "DModelSelectMulti", "", PANEL, "DPropertySheet" )
+derma.DefineControl("DModelSelectMulti", "", PANEL, "DPropertySheet")

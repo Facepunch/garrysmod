@@ -11,26 +11,26 @@ end
 --[[---------------------------------------------------------
 	Name: StartTouch
 -----------------------------------------------------------]]
-function ENT:StartTouch( entity )
+function ENT:StartTouch(entity)
 end
 
 --[[---------------------------------------------------------
 	Name: EndTouch
 -----------------------------------------------------------]]
-function ENT:EndTouch( entity )
+function ENT:EndTouch(entity)
 end
 
 --[[---------------------------------------------------------
 	Name: Touch
 -----------------------------------------------------------]]
-function ENT:Touch( entity )
+function ENT:Touch(entity)
 end
 
 --[[---------------------------------------------------------
 	Name: PassesTriggerFilters
 	Desc: Return true if this object should trigger us
 -----------------------------------------------------------]]
-function ENT:PassesTriggerFilters( entity )
+function ENT:PassesTriggerFilters(entity)
 	return true
 end
 
@@ -38,7 +38,7 @@ end
 	Name: KeyValue
 	Desc: Called when a keyvalue is added to us
 -----------------------------------------------------------]]
-function ENT:KeyValue( key, value )
+function ENT:KeyValue(key, value)
 end
 
 --[[---------------------------------------------------------

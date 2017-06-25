@@ -49,7 +49,7 @@ function PANEL:Paint()
    -- Alternating row background
    local y = 24
    for i, row in ipairs(self.rows_sorted) do
-      if (i % 2) != 0 then
+      if (i % 2) ~= 0 then
          surface.SetDrawColor(75,75,75, 100)
          surface.DrawRect(0, y, self:GetWide(), row:GetTall())
       end
@@ -89,7 +89,7 @@ function PANEL:AddPlayerRow(ply)
 end
 
 function PANEL:HasPlayerRow(ply)
-   return self.rows[ply] != nil
+   return self.rows[ply] ~= nil
 end
 
 function PANEL:HasRows()
@@ -115,13 +115,13 @@ function PANEL:UpdateSortCache()
       local sort_func = sboard_sort[sort_mode]
 
       local comp = 0
-      if sort_func != nil then
+      if sort_func ~= nil then
          comp = sort_func(plya, plyb)
       end
 
       local ret = true
 
-      if comp != 0 then
+      if comp ~= 0 then
          ret = comp > 0
       else
          ret = strlower(plya:GetName()) > strlower(plyb:GetName())

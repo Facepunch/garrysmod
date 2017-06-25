@@ -1,17 +1,17 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_DNDName", "DnD" )
-AccessorFunc( PANEL, "m_bLiveDrag", "UseLiveDrag" )
+AccessorFunc(PANEL, "m_DNDName", "DnD")
+AccessorFunc(PANEL, "m_bLiveDrag", "UseLiveDrag")
 
 function PANEL:Init()
 
-	self:SetPaintBackgroundEnabled( false )
-	self:SetPaintBorderEnabled( false )
-	self:SetMouseInputEnabled( true )
-	self:SetPaintBackground( false )
+	self:SetPaintBackgroundEnabled(false)
+	self:SetPaintBorderEnabled(false)
+	self:SetMouseInputEnabled(true)
+	self:SetPaintBackground(false)
 
-	self:SetDropPos( "5" )
+	self:SetDropPos("5")
 
 end
 
@@ -19,35 +19,35 @@ end
 -- Determines where we can drop stuff - relative to the other children
 -- Param is a string of numpad numbers, ie "852" is top middle bottom
 --
-function PANEL:SetDropPos( strPos )
+function PANEL:SetDropPos(strPos)
 
-	self.bDropLeft		= string.find( strPos, "4" )
-	self.bDropCenter	= string.find( strPos, "5" )
-	self.bDropRight		= string.find( strPos, "6" )
-	self.bDropTop		= string.find( strPos, "8" )
-	self.bDropBottom	= string.find( strPos, "2" )
+	self.bDropLeft		= string.find(strPos, "4")
+	self.bDropCenter	= string.find(strPos, "5")
+	self.bDropRight		= string.find(strPos, "6")
+	self.bDropTop		= string.find(strPos, "8")
+	self.bDropBottom	= string.find(strPos, "2")
 
 end
 
-function PANEL:MakeDroppable( name, bAllowCopy )
+function PANEL:MakeDroppable(name, bAllowCopy)
 
-	self:SetDnD( name )
+	self:SetDnD(name)
 
-	if ( bAllowCopy ) then
-		self:Receiver( name, self.DropAction_Copy, { copy = "Copy", move = "Move" } )
+	if (bAllowCopy) then
+		self:Receiver(name, self.DropAction_Copy, { copy = "Copy", move = "Move" })
 	else
-		self:Receiver( name, self.DropAction_Normal )
+		self:Receiver(name, self.DropAction_Normal)
 	end
 
 end
 
-function PANEL:DropAction_Copy( Drops, bDoDrop, Command, x, y )
+function PANEL:DropAction_Copy(Drops, bDoDrop, Command, x, y)
 
-	if ( Command && Command == "copy" ) then
+	if (Command and Command == "copy") then
 
-		for k, v in pairs( Drops ) do
+		for k, v in pairs(Drops) do
 
-			if ( v.Copy ) then
+			if (v.Copy) then
 				Drops[k] = v:Copy()
 			end
 
@@ -55,20 +55,20 @@ function PANEL:DropAction_Copy( Drops, bDoDrop, Command, x, y )
 
 	end
 
-	self:DropAction_Normal( Drops, bDoDrop, Command, x, y )
+	self:DropAction_Normal(Drops, bDoDrop, Command, x, y)
 
 end
 
-function PANEL:DropAction_Simple( Drops, bDoDrop, Command, x, y )
+function PANEL:DropAction_Simple(Drops, bDoDrop, Command, x, y)
 
-	self:SetDropTarget( 0, 0, self:GetWide(), 2 )
+	self:SetDropTarget(0, 0, self:GetWide(), 2)
 
-	if ( bDoDrop ) then
+	if (bDoDrop) then
 
-		for k, v in pairs( Drops ) do
+		for k, v in pairs(Drops) do
 
-			v = v:OnDrop( self )
-			v:SetParent( self )
+			v = v:OnDrop(self)
+			v:SetParent(self)
 
 		end
 
@@ -78,59 +78,59 @@ function PANEL:DropAction_Simple( Drops, bDoDrop, Command, x, y )
 
 end
 
-function PANEL:DropAction_Normal( Drops, bDoDrop, Command, x, y )
+function PANEL:DropAction_Normal(Drops, bDoDrop, Command, x, y)
 
-	local closest = self:GetClosestChild( x, y )
-	if ( !IsValid( closest ) ) then
-		return self:DropAction_Simple( Drops, bDoDrop, Command, x, y )
+	local closest = self:GetClosestChild(x, y)
+	if (not IsValid( closest)) then
+		return self:DropAction_Simple(Drops, bDoDrop, Command, x, y)
 	end
 
 	local h = closest:GetTall()
 	local w = closest:GetWide()
 
-	local disty = y - ( closest.y + h * 0.5 )
-	local distx = x - ( closest.x + w * 0.5 )
+	local disty = y - (closest.y + h * 0.5)
+	local distx = x - (closest.x + w * 0.5)
 
 	local drop = 0
-	if ( self.bDropCenter ) then drop = 5 end
+	if (self.bDropCenter) then drop = 5 end
 
-	if ( disty < 0 && self.bDropTop && ( drop == 0 || math.abs( disty ) > h * 0.1 ) ) then drop = 8 end
-	if ( disty >= 0 && self.bDropBottom && ( drop == 0 || math.abs( disty ) > h * 0.1 ) ) then drop = 2 end
-	if ( distx < 0 && self.bDropLeft && ( drop == 0 || math.abs( distx ) > w * 0.1 ) ) then drop = 4 end
-	if ( distx >= 0 && self.bDropRight && ( drop == 0 || math.abs( distx ) > w * 0.1 ) ) then drop = 6 end
+	if (disty < 0 and self.bDropTop and ( drop == 0 or math.abs( disty) > h * 0.1)) then drop = 8 end
+	if (disty >= 0 and self.bDropBottom and ( drop == 0 or math.abs( disty) > h * 0.1)) then drop = 2 end
+	if (distx < 0 and self.bDropLeft and ( drop == 0 or math.abs( distx) > w * 0.1)) then drop = 4 end
+	if (distx >= 0 and self.bDropRight and ( drop == 0 or math.abs( distx) > w * 0.1)) then drop = 6 end
 
-	self:UpdateDropTarget( drop, closest )
+	self:UpdateDropTarget(drop, closest)
 
-	if ( table.HasValue( Drops, closest ) ) then return end
+	if (table.HasValue( Drops, closest)) then return end
 
-	if ( !bDoDrop && !self:GetUseLiveDrag() ) then return end
+	if (not bDoDrop and not self:GetUseLiveDrag()) then return end
 
 	-- This keeps the drop order the same,
 	-- whether we add it before an object or after
-	if ( drop == 6 || drop == 2 ) then
-		Drops = table.Reverse( Drops )
+	if (drop == 6 or drop == 2) then
+		Drops = table.Reverse(Drops)
 	end
 
-	for k, v in pairs( Drops ) do
+	for k, v in pairs(Drops) do
 
 		-- Don't drop one of our parents onto us
 		-- because we'll be sucked into a vortex
-		if ( v:IsOurChild( self ) ) then continue end
+		if (v:IsOurChild( self)) then continue end
 
-		v = v:OnDrop( self )
+		v = v:OnDrop(self)
 
-		if ( drop == 5 ) then
-			closest:DroppedOn( v )
+		if (drop == 5) then
+			closest:DroppedOn(v)
 		end
 
-		if ( drop == 8 || drop == 4 ) then
-			v:SetParent( self )
-			v:MoveToBefore( closest )
+		if (drop == 8 or drop == 4) then
+			v:SetParent(self)
+			v:MoveToBefore(closest)
 		end
 
-		if ( drop == 2 || drop == 6 ) then
-			v:SetParent( self )
-			v:MoveToAfter( closest )
+		if (drop == 2 or drop == 6) then
+			v:SetParent(self)
+			v:MoveToAfter(closest)
 		end
 
 	end
@@ -139,31 +139,31 @@ function PANEL:DropAction_Normal( Drops, bDoDrop, Command, x, y )
 
 end
 
-function PANEL:UpdateDropTarget( drop, pnl )
+function PANEL:UpdateDropTarget(drop, pnl)
 
-	if ( drop == 5 ) then
-		return self:SetDropTarget( pnl.x, pnl.y, pnl:GetWide(), pnl:GetTall() )
+	if (drop == 5) then
+		return self:SetDropTarget(pnl.x, pnl.y, pnl:GetWide(), pnl:GetTall())
 	end
 
-	if ( drop == 8 ) then
-		return self:SetDropTarget( pnl.x, pnl.y - 2, pnl:GetWide(), 4 )
+	if (drop == 8) then
+		return self:SetDropTarget(pnl.x, pnl.y - 2, pnl:GetWide(), 4)
 	end
 
-	if ( drop == 2 ) then
-		return self:SetDropTarget( pnl.x, pnl.y + pnl:GetTall() - 2, pnl:GetWide(), 4 )
+	if (drop == 2) then
+		return self:SetDropTarget(pnl.x, pnl.y + pnl:GetTall() - 2, pnl:GetWide(), 4)
 	end
 
-	if ( drop == 4 ) then
-		return self:SetDropTarget( pnl.x - 2, pnl.y - 2, 4, pnl:GetTall() )
+	if (drop == 4) then
+		return self:SetDropTarget(pnl.x - 2, pnl.y - 2, 4, pnl:GetTall())
 	end
 
-	if ( drop == 6 ) then
-		return self:SetDropTarget( pnl.x + pnl:GetWide() - 2, pnl.y, 4, pnl:GetTall() )
+	if (drop == 6) then
+		return self:SetDropTarget(pnl.x + pnl:GetWide() - 2, pnl.y, 4, pnl:GetTall())
 	end
 
-	-- Unhandled!
+	-- Unhandlednot
 	--self:ClearDropTarget()
 
 end
 
-derma.DefineControl( "DDragBase", "", PANEL, "DPanel" )
+derma.DefineControl("DDragBase", "", PANEL, "DPanel")

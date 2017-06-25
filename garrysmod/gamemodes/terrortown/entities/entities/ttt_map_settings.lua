@@ -20,10 +20,10 @@ function ENT:KeyValue(k, v)
    elseif k == "cbar_buttons" then
       Dev(2, "ttt_map_settings: crowbar button unlocking = " .. v)
       GAMEMODE.crowbar_unlocks[OPEN_BUT] = (v == "1")
-   elseif k == "cbar_other" then 
+   elseif k == "cbar_other" then
       Dev(2, "ttt_map_settings: crowbar movelinear unlocking = " .. v)
       GAMEMODE.crowbar_unlocks[OPEN_NOTOGGLE] = (v == "1")
-   elseif k == "plymodel" and v != "" then -- can ignore if empty
+   elseif k == "plymodel" and v ~= "" then -- can ignore if empty
       if util.IsValidModel(v) then
          util.PrecacheModel(v)
          GAMEMODE.force_plymodel = v
@@ -45,7 +45,7 @@ function ENT:AcceptInput(name, activator, caller, data)
       local mdlname = tostring(data)
 
       if not mdlname then
-         ErrorNoHalt("ttt_map_settings: Invalid parameter to SetPlayerModels input!\n")
+         ErrorNoHalt("ttt_map_settings: Invalid parameter to SetPlayerModels inputnot \n")
          return false
       elseif not util.IsValidModel(mdlname) then
          ErrorNoHalt("ttt_map_settings: Invalid model given: " .. mdlname .. "\n")

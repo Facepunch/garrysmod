@@ -1,23 +1,23 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_bFirstPerson", "FirstPerson" )
+AccessorFunc(PANEL, "m_bFirstPerson", "FirstPerson")
 
 function PANEL:Init()
 
 	self.mx = 0
 	self.my = 0
-	self.aLookAngle = Angle( 0, 0, 0 )
+	self.aLookAngle = Angle(0, 0, 0)
 
 end
 
-function PANEL:OnMousePressed( mousecode )
+function PANEL:OnMousePressed(mousecode)
 
-	self:MouseCapture( true )
+	self:MouseCapture(true)
 	self.Capturing = true
 	self.MouseKey = mousecode
 
-	self:SetFirstPerson( true )
+	self:SetFirstPerson(true)
 
 	self:CaptureMouse()
 
@@ -25,9 +25,9 @@ end
 
 function PANEL:Think()
 
-	if ( !self.Capturing ) then return end
+	if (not self.Capturing) then return end
 
-	if ( self.m_bFirstPerson ) then
+	if (self.m_bFirstPerson) then
 		return self:FirstPersonControls()
 	end
 
@@ -40,8 +40,8 @@ function PANEL:CaptureMouse()
 	local dx = x - self.mx
 	local dy = y - self.my
 
-	local centerx, centery = self:LocalToScreen( self:GetWide() * 0.5, self:GetTall() * 0.5 )
-	input.SetCursorPos( centerx, centery )
+	local centerx, centery = self:LocalToScreen(self:GetWide() * 0.5, self:GetTall() * 0.5)
+	input.SetCursorPos(centerx, centery)
 	self.mx = centerx
 	self.my = centery
 
@@ -57,11 +57,11 @@ function PANEL:FirstPersonControls()
 	x = x * -0.5 * scale
 	y = y * 0.5 * scale
 
-	if ( self.MouseKey == MOUSE_LEFT ) then
+	if (self.MouseKey == MOUSE_LEFT) then
 
-		if ( input.IsShiftDown() ) then y = 0 end
+		if (input.IsShiftDown()) then y = 0 end
 
-		self.aLookAngle = self.aLookAngle + Angle( y * 4, x * 4, 0 )
+		self.aLookAngle = self.aLookAngle + Angle(y * 4, x * 4, 0)
 
 		self.vCamPos = self.Entity:OBBCenter() - self.aLookAngle:Forward() * self.vCamPos:Length()
 
@@ -69,50 +69,50 @@ function PANEL:FirstPersonControls()
 	end
 
 	-- Look around
-	self.aLookAngle = self.aLookAngle + Angle( y, x, 0 )
+	self.aLookAngle = self.aLookAngle + Angle(y, x, 0)
 
-	local Movement = Vector( 0, 0, 0 )
+	local Movement = Vector(0, 0, 0)
 
 	-- TODO: Use actual key bindings, not hardcoded keys.
-	if ( input.IsKeyDown( KEY_W ) || input.IsKeyDown( KEY_UP ) ) then Movement = Movement + self.aLookAngle:Forward() end
-	if ( input.IsKeyDown( KEY_S ) || input.IsKeyDown( KEY_DOWN ) ) then Movement = Movement - self.aLookAngle:Forward() end
-	if ( input.IsKeyDown( KEY_A ) || input.IsKeyDown( KEY_LEFT ) ) then Movement = Movement - self.aLookAngle:Right() end
-	if ( input.IsKeyDown( KEY_D ) || input.IsKeyDown( KEY_RIGHT ) ) then Movement = Movement + self.aLookAngle:Right() end
-	if ( input.IsKeyDown( KEY_SPACE ) || input.IsKeyDown( KEY_SPACE ) ) then Movement = Movement + self.aLookAngle:Up() end
-	if ( input.IsKeyDown( KEY_LCONTROL ) || input.IsKeyDown( KEY_LCONTROL ) ) then Movement = Movement - self.aLookAngle:Up() end
+	if (input.IsKeyDown( KEY_W) or input.IsKeyDown( KEY_UP)) then Movement = Movement + self.aLookAngle:Forward() end
+	if (input.IsKeyDown( KEY_S) or input.IsKeyDown( KEY_DOWN)) then Movement = Movement - self.aLookAngle:Forward() end
+	if (input.IsKeyDown( KEY_A) or input.IsKeyDown( KEY_LEFT)) then Movement = Movement - self.aLookAngle:Right() end
+	if (input.IsKeyDown( KEY_D) or input.IsKeyDown( KEY_RIGHT)) then Movement = Movement + self.aLookAngle:Right() end
+	if (input.IsKeyDown( KEY_SPACE) or input.IsKeyDown( KEY_SPACE)) then Movement = Movement + self.aLookAngle:Up() end
+	if (input.IsKeyDown( KEY_LCONTROL) or input.IsKeyDown( KEY_LCONTROL)) then Movement = Movement - self.aLookAngle:Up() end
 
 	local speed = 0.5
-	if ( input.IsShiftDown() ) then speed = 4.0 end
+	if (input.IsShiftDown()) then speed = 4.0 end
 
 	self.vCamPos = self.vCamPos + Movement * speed
 
 end
 
-function PANEL:OnMouseWheeled( dlta )
+function PANEL:OnMouseWheeled(dlta)
 
 	local scale = self:GetFOV() / 180
 	self.fFOV = self.fFOV + dlta * -10.0 * scale
 
 end
 
-function PANEL:OnMouseReleased( mousecode )
+function PANEL:OnMouseReleased(mousecode)
 
-	self:MouseCapture( false )
+	self:MouseCapture(false)
 	self.Capturing = false
 
 end
 
-function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
+function PANEL:GenerateExample(ClassName, PropertySheet, Width, Height)
 
-	local ctrl = vgui.Create( ClassName )
-	ctrl:SetSize( 300, 300 )
-	ctrl:SetModel( "models/props_junk/PlasticCrate01a.mdl" )
-	ctrl:GetEntity():SetSkin( 2 )
-	ctrl:SetLookAng( Angle( 45, 0, 0 ) )
-	ctrl:SetCamPos( Vector( -20, 0, 20 ) )
+	local ctrl = vgui.Create(ClassName)
+	ctrl:SetSize(300, 300)
+	ctrl:SetModel("models/props_junk/PlasticCrate01a.mdl")
+	ctrl:GetEntity():SetSkin( 2)
+	ctrl:SetLookAng(Angle( 45, 0, 0))
+	ctrl:SetCamPos(Vector( -20, 0, 20))
 
-	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
+	PropertySheet:AddSheet(ClassName, ctrl, nil, true, true)
 
 end
 
-derma.DefineControl( "DAdjustableModelPanel", "A panel containing a model", PANEL, "DModelPanel" )
+derma.DefineControl("DAdjustableModelPanel", "A panel containing a model", PANEL, "DModelPanel")

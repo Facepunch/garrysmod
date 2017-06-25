@@ -14,7 +14,7 @@ function TauntCamera()
 
 	local WasOn					= false
 
-	local CustomAngles			= Angle( 0, 0, 0 )
+	local CustomAngles			= Angle(0, 0, 0)
 	local PlayerLockAngles		= nil
 
 	local InLerp				= 0
@@ -23,29 +23,29 @@ function TauntCamera()
 	--
 	-- Draw the local player if we're active in any way
 	--
-	CAM.ShouldDrawLocalPlayer = function( self, ply, on )
+	CAM.ShouldDrawLocalPlayer = function(self, ply, on)
 
-		return on || OutLerp < 1
+		return on or OutLerp < 1
 
 	end
 
 	--
 	-- Implements the third person, rotation view (with lerping in/out)
 	--
-	CAM.CalcView = function( self, view, ply, on )
+	CAM.CalcView = function(self, view, ply, on)
 
-		if ( !ply:Alive() || !IsValid( ply:GetViewEntity() ) || ply:GetViewEntity() != ply ) then on = false end
+		if (not ply:Alive() or not IsValid( ply:GetViewEntity()) or ply:GetViewEntity() ~= ply) then on = false end
 
-		if ( WasOn != on ) then
+		if (WasOn ~= on) then
 
-			if ( on ) then InLerp = 0 end
-			if ( !on ) then OutLerp = 0 end
+			if (on) then InLerp = 0 end
+			if (not on) then OutLerp = 0 end
 
 			WasOn = on
 
 		end
 
-		if ( !on && OutLerp >= 1 ) then
+		if (not on and OutLerp >= 1) then
 
 			CustomAngles = view.angles * 1
 			PlayerLockAngles = nil
@@ -54,29 +54,29 @@ function TauntCamera()
 
 		end
 
-		if ( PlayerLockAngles == nil ) then return end
+		if (PlayerLockAngles == nil) then return end
 
 		--
 		-- Simple 3rd person camera
 		--
 		local TargetOrigin = view.origin - CustomAngles:Forward() * 100
-		local tr = util.TraceHull( { start = view.origin, endpos = TargetOrigin, mask = MASK_SHOT, filter = player.GetAll(), mins = Vector( -8, -8, -8 ), maxs = Vector( 8, 8, 8 ) } )
+		local tr = util.TraceHull({ start = view.origin, endpos = TargetOrigin, mask = MASK_SHOT, filter = player.GetAll(), mins = Vector( -8, -8, -8), maxs = Vector( 8, 8, 8) })
 		TargetOrigin = tr.HitPos + tr.HitNormal
 
-		if ( InLerp < 1 ) then
+		if (InLerp < 1) then
 
 			InLerp = InLerp + FrameTime() * 5.0
-			view.origin = LerpVector( InLerp, view.origin, TargetOrigin )
-			view.angles = LerpAngle( InLerp, PlayerLockAngles, CustomAngles )
+			view.origin = LerpVector(InLerp, view.origin, TargetOrigin)
+			view.angles = LerpAngle(InLerp, PlayerLockAngles, CustomAngles)
 			return true
 
 		end
 
-		if ( OutLerp < 1 ) then
+		if (OutLerp < 1) then
 
 			OutLerp = OutLerp + FrameTime() * 3.0
-			view.origin = LerpVector( 1-OutLerp, view.origin, TargetOrigin )
-			view.angles = LerpAngle( 1-OutLerp, PlayerLockAngles, CustomAngles )
+			view.origin = LerpVector(1-OutLerp, view.origin, TargetOrigin)
+			view.angles = LerpAngle(1-OutLerp, PlayerLockAngles, CustomAngles)
 			return true
 
 		end
@@ -91,12 +91,12 @@ function TauntCamera()
 	-- Freezes the player in position and uses the input from the user command to
 	-- rotate the custom third person camera
 	--
-	CAM.CreateMove = function( self, cmd, ply, on )
+	CAM.CreateMove = function(self, cmd, ply, on)
 
-		if ( !ply:Alive() ) then on = false end
-		if ( !on ) then return end
+		if (not ply:Alive()) then on = false end
+		if (not on) then return end
 
-		if ( PlayerLockAngles == nil ) then
+		if (PlayerLockAngles == nil) then
 			PlayerLockAngles = CustomAngles * 1
 		end
 
@@ -109,7 +109,7 @@ function TauntCamera()
 		--
 		-- Lock the player's controls and angles
 		--
-		cmd:SetViewAngles( PlayerLockAngles )
+		cmd:SetViewAngles(PlayerLockAngles)
 		cmd:ClearButtons()
 		cmd:ClearMovement()
 

@@ -1,37 +1,37 @@
 
 local PANEL = {}
 
-DEFINE_BASECLASS( "DCollapsibleCategory" )
+DEFINE_BASECLASS("DCollapsibleCategory")
 
 AccessorFunc( PANEL, "m_bSizeToContents",	"AutoSize", FORCE_BOOL)
-AccessorFunc( PANEL, "m_iSpacing",			"Spacing" )
-AccessorFunc( PANEL, "m_Padding",			"Padding" )
+AccessorFunc(PANEL, "m_iSpacing",			"Spacing")
+AccessorFunc(PANEL, "m_Padding",			"Padding")
 
 function PANEL:Init()
 
 	self.Items = {}
 
-	self:SetSpacing( 4 )
-	self:SetPadding( 10 )
+	self:SetSpacing(4)
+	self:SetPadding(10)
 
-	self:SetPaintBackground( true )
+	self:SetPaintBackground(true)
 
-	self:SetMouseInputEnabled( true )
-	self:SetKeyboardInputEnabled( true )
+	self:SetMouseInputEnabled(true)
+	self:SetKeyboardInputEnabled(true)
 
 end
 
-function PANEL:SetName( name )
+function PANEL:SetName(name)
 
-	self:SetLabel( name )
+	self:SetLabel(name)
 
 end
 
 function PANEL:Clear()
 
-	for k, v in pairs( self.Items ) do
+	for k, v in pairs(self.Items) do
 
-		if ( IsValid(v) ) then v:Remove() end
+		if (IsValid(v)) then v:Remove() end
 
 	end
 
@@ -39,165 +39,165 @@ function PANEL:Clear()
 
 end
 
-function PANEL:AddItem( left, right )
+function PANEL:AddItem(left, right)
 
 	self:InvalidateLayout()
 
-	local Panel = vgui.Create( "DSizeToContents", self )
-	--Panel.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "CategoryButton", panel, w, h ) end
-	Panel:SetSizeX( false )
-	Panel:Dock( TOP )
-	Panel:DockPadding( 10, 10, 10, 0 )
+	local Panel = vgui.Create("DSizeToContents", self)
+	--Panel.Paint = function(panel, w, h) derma.SkinHook( "Paint", "CategoryButton", panel, w, h) end
+	Panel:SetSizeX(false)
+	Panel:Dock(TOP)
+	Panel:DockPadding(10, 10, 10, 0)
 	Panel:InvalidateLayout()
 
-	if ( IsValid( right ) ) then
+	if (IsValid( right)) then
 
-		left:SetParent( Panel )
-		left:Dock( LEFT )
-		left:InvalidateLayout( true )
-		left:SetSize( 100, 20 )
+		left:SetParent(Panel)
+		left:Dock(LEFT)
+		left:InvalidateLayout(true)
+		left:SetSize(100, 20)
 
-		right:SetParent( Panel )
-		right:SetPos( 110, 0 )
-		right:InvalidateLayout( true )
+		right:SetParent(Panel)
+		right:SetPos(110, 0)
+		right:InvalidateLayout(true)
 
-	elseif ( IsValid( left ) ) then
+	elseif (IsValid( left)) then
 
-		left:SetParent( Panel )
-		left:Dock( TOP )
+		left:SetParent(Panel)
+		left:Dock(TOP)
 
 	end
 
-	table.insert( self.Items, Panel )
+	table.insert(self.Items, Panel)
 
 end
 
-function PANEL:TextEntry( strLabel, strConVar )
+function PANEL:TextEntry(strLabel, strConVar)
 
-	local left = vgui.Create( "DLabel", self )
-	left:SetText( strLabel )
-	left:SetDark( true )
+	local left = vgui.Create("DLabel", self)
+	left:SetText(strLabel)
+	left:SetDark(true)
 
-	local right = vgui.Create( "DTextEntry", self )
-	right:SetConVar( strConVar )
-	right:Dock( TOP )
+	local right = vgui.Create("DTextEntry", self)
+	right:SetConVar(strConVar)
+	right:Dock(TOP)
 
-	self:AddItem( left, right )
+	self:AddItem(left, right)
 
 	return right, left
 
 end
 
-function PANEL:ComboBox( strLabel, strConVar )
+function PANEL:ComboBox(strLabel, strConVar)
 
-	local left = vgui.Create( "DLabel", self )
-	left:SetText( strLabel )
-	left:SetDark( true )
+	local left = vgui.Create("DLabel", self)
+	left:SetText(strLabel)
+	left:SetDark(true)
 
-	local right = vgui.Create( "DComboBox", self )
-	right:SetConVar( strConVar )
-	right:Dock( FILL )
-	function right:OnSelect( index, value, data )
-		if ( !self.m_strConVar ) then return end
-		RunConsoleCommand( self.m_strConVar, tostring( data or value ) )
+	local right = vgui.Create("DComboBox", self)
+	right:SetConVar(strConVar)
+	right:Dock(FILL)
+	function right:OnSelect(index, value, data)
+		if (not self.m_strConVar) then return end
+		RunConsoleCommand(self.m_strConVar, tostring( data or value))
 	end
 
-	self:AddItem( left, right )
+	self:AddItem(left, right)
 
 	return right, left
 
 end
 
-function PANEL:NumberWang( strLabel, strConVar, numMin, numMax, numDecimals )
+function PANEL:NumberWang(strLabel, strConVar, numMin, numMax, numDecimals)
 
-	local left = vgui.Create( "DLabel", self )
-	left:SetText( strLabel )
-	left:SetDark( true )
+	local left = vgui.Create("DLabel", self)
+	left:SetText(strLabel)
+	left:SetDark(true)
 
-	local right = vgui.Create( "DNumberWang", self )
-	right:SetMinMax( numMin, numMax )
+	local right = vgui.Create("DNumberWang", self)
+	right:SetMinMax(numMin, numMax)
 
-	if ( numDecimals != nil ) then right:SetDecimals( numDecimals ) end
+	if (numDecimals ~= nil) then right:SetDecimals( numDecimals) end
 
-	right:SetConVar( strConVar )
+	right:SetConVar(strConVar)
 	right:SizeToContents()
 
-	self:AddItem( left, right )
+	self:AddItem(left, right)
 
 	return right, left
 
 end
 
-function PANEL:NumSlider( strLabel, strConVar, numMin, numMax, numDecimals )
+function PANEL:NumSlider(strLabel, strConVar, numMin, numMax, numDecimals)
 
-	local left = vgui.Create( "DNumSlider", self )
-	left:SetText( strLabel )
-	left:SetMinMax( numMin, numMax )
-	left:SetDark( true )
+	local left = vgui.Create("DNumSlider", self)
+	left:SetText(strLabel)
+	left:SetMinMax(numMin, numMax)
+	left:SetDark(true)
 
-	if ( numDecimals != nil ) then left:SetDecimals( numDecimals ) end
+	if (numDecimals ~= nil) then left:SetDecimals( numDecimals) end
 
-	left:SetConVar( strConVar )
+	left:SetConVar(strConVar)
 	left:SizeToContents()
 
-	self:AddItem( left, nil )
+	self:AddItem(left, nil)
 
 	return left
 
 end
 
-function PANEL:CheckBox( strLabel, strConVar )
+function PANEL:CheckBox(strLabel, strConVar)
 
-	local left = vgui.Create( "DCheckBoxLabel", self )
-	left:SetText( strLabel )
-	left:SetDark( true )
-	left:SetConVar( strConVar )
+	local left = vgui.Create("DCheckBoxLabel", self)
+	left:SetText(strLabel)
+	left:SetDark(true)
+	left:SetConVar(strConVar)
 
-	self:AddItem( left, nil )
-
-	return left
-
-end
-
-function PANEL:Help( strHelp )
-
-	local left = vgui.Create( "DLabel", self )
-
-	left:SetDark( true )
-	left:SetWrap( true )
-	left:SetTextInset( 0, 0 )
-	left:SetText( strHelp )
-	left:SetContentAlignment( 7 )
-	left:SetAutoStretchVertical( true )
-	left:DockMargin( 8, 0, 8, 8 )
-
-	self:AddItem( left, nil )
-
-	left:InvalidateLayout( true )
+	self:AddItem(left, nil)
 
 	return left
 
 end
 
-function PANEL:ControlHelp( strHelp )
+function PANEL:Help(strHelp)
 
-	local Panel = vgui.Create( "DSizeToContents", self )
-	Panel:SetSizeX( false )
-	Panel:Dock( TOP )
+	local left = vgui.Create("DLabel", self)
+
+	left:SetDark(true)
+	left:SetWrap(true)
+	left:SetTextInset(0, 0)
+	left:SetText(strHelp)
+	left:SetContentAlignment(7)
+	left:SetAutoStretchVertical(true)
+	left:DockMargin(8, 0, 8, 8)
+
+	self:AddItem(left, nil)
+
+	left:InvalidateLayout(true)
+
+	return left
+
+end
+
+function PANEL:ControlHelp(strHelp)
+
+	local Panel = vgui.Create("DSizeToContents", self)
+	Panel:SetSizeX(false)
+	Panel:Dock(TOP)
 	Panel:InvalidateLayout()
 
-	local left = vgui.Create( "DLabel", Panel )
-	left:SetDark( true )
-	left:SetWrap( true )
-	left:SetTextInset( 0, 0 )
-	left:SetText( strHelp )
-	left:SetContentAlignment( 5 )
-	left:SetAutoStretchVertical( true )
-	left:DockMargin( 32, 0, 32, 8 )
-	left:Dock( TOP )
-	left:SetTextColor( self:GetSkin().Colours.Tree.Hover )
+	local left = vgui.Create("DLabel", Panel)
+	left:SetDark(true)
+	left:SetWrap(true)
+	left:SetTextInset(0, 0)
+	left:SetText(strHelp)
+	left:SetContentAlignment(5)
+	left:SetAutoStretchVertical(true)
+	left:DockMargin(32, 0, 32, 8)
+	left:Dock(TOP)
+	left:SetTextColor(self:GetSkin().Colours.Tree.Hover)
 
-	table.insert( self.Items, Panel )
+	table.insert(self.Items, Panel)
 
 	return left
 
@@ -206,18 +206,18 @@ end
 --[[---------------------------------------------------------
 	Note: If you're running a console command like "maxplayers 10" you
 	need to add the "10" to the arguments, like so
-	Button( "LabelName", "maxplayers", "10" )
+	Button("LabelName", "maxplayers", "10")
 -----------------------------------------------------------]]
-function PANEL:Button( strName, strConCommand, ... --[[ console command args!! --]] )
+function PANEL:Button(strName, strConCommand, ... --[[ console command argsnot not  --]])
 
-	local left = vgui.Create( "DButton", self )
+	local left = vgui.Create("DButton", self)
 
-	if ( strConCommand ) then
-		left:SetConsoleCommand( strConCommand, ... )
+	if (strConCommand) then
+		left:SetConsoleCommand(strConCommand, ...)
 	end
 
-	left:SetText( strName )
-	self:AddItem( left, nil )
+	left:SetText(strName)
+	self:AddItem(left, nil)
 
 	return left
 
@@ -225,26 +225,26 @@ end
 
 function PANEL:PanelSelect()
 
-	local left = vgui.Create( "DPanelSelect", self )
-	self:AddItem( left, nil )
+	local left = vgui.Create("DPanelSelect", self)
+	self:AddItem(left, nil)
 	return left
 
 end
 
-function PANEL:ListBox( strLabel )
+function PANEL:ListBox(strLabel)
 
-	if ( strLabel ) then
-		local left = vgui.Create( "DLabel", self )
-		left:SetText( strLabel )
-		self:AddItem( left )
-		left:SetDark( true )
+	if (strLabel) then
+		local left = vgui.Create("DLabel", self)
+		left:SetText(strLabel)
+		self:AddItem(left)
+		left:SetDark(true)
 	end
 
-	local right = vgui.Create( "DListBox", self )
-	--right:SetConVar( strConVar )
+	local right = vgui.Create("DListBox", self)
+	--right:SetConVar(strConVar)
 	right.Stretch = true
 
-	self:AddItem( right )
+	self:AddItem(right)
 
 	return right, left
 
@@ -254,7 +254,7 @@ function PANEL:Rebuild()
 end
 
 -- No example for this control
-function PANEL:GenerateExample( class, tabs, w, h )
+function PANEL:GenerateExample(class, tabs, w, h)
 end
 
-derma.DefineControl( "DForm", "WHAT", PANEL, "DCollapsibleCategory" )
+derma.DefineControl("DForm", "WHAT", PANEL, "DCollapsibleCategory")

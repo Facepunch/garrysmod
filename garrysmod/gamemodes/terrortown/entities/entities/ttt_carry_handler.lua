@@ -12,15 +12,15 @@ ENT.Owner = nil
 
 function ENT:Initialize()
    if SERVER and IsValid(self.Carried) then
-      
+
 --      self:SetModel("models/weapons/w_bugbait.mdl")
       self:SetModel(self.Carried:GetModel())
 --      self:SetSkin(self.Carried:GetSkin())
 --      self:SetColor(se.Carried:GetColor())
    end
-   self:PhysicsInit( SOLID_VPHYSICS )
-   self:SetMoveType( MOVETYPE_VPHYSICS )
-   self:SetSolid( SOLID_VPHYSICS )
+   self:PhysicsInit(SOLID_VPHYSICS)
+   self:SetMoveType(MOVETYPE_VPHYSICS)
+   self:SetSolid(SOLID_VPHYSICS)
    self:SetCollisionGroup(COLLISION_GROUP_NONE)
 --   self:SetSolid(SOLID_NONE)
    self:SetNoDraw(true)
@@ -54,8 +54,8 @@ function ENT:Initialize()
 --         if not carphys:IsPenetrating() then
 --            phys:SetPos(carphys:GetPos())
 --            phys:SetAngle(carphys:GetAngle())
---            carphys:SetPos( phys:GetPos() )
---            carphys:SetAngle( phys:GetAngle() )
+--            carphys:SetPos(phys:GetPos())
+--            carphys:SetAngle(phys:GetAngle())
 --         end
 
       end
@@ -74,7 +74,7 @@ function ENT:OnRemove()
 --      self.Carried:SetNoDraw(false)
 --      self.Carried:SetSolid(SOLID_VPHYSICS)
       self.Carried:SetMoveType(MOVETYPE_VPHYSICS)
-      
+
       local carphys = self.Carried:GetPhysicsObject()
       if IsValid(carphys) then
          carphys:SetDamping(0,0)

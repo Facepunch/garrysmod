@@ -1,4 +1,4 @@
-local meta = FindMetaTable( "Entity" )
+local meta = FindMetaTable("Entity")
 
 if not meta then return end
 

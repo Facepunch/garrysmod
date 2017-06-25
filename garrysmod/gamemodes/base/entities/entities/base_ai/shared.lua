@@ -19,25 +19,25 @@ end
 
 --[[---------------------------------------------------------
 	Name: PhysicsCollide
-	Desc: Called when physics collides. The table contains 
+	Desc: Called when physics collides. The table contains
 			data on the collision
 -----------------------------------------------------------]]
-function ENT:PhysicsCollide( data, physobj )
+function ENT:PhysicsCollide(data, physobj)
 end
 
 --[[---------------------------------------------------------
 	Name: PhysicsUpdate
 	Desc: Called to update the physics .. or something.
 -----------------------------------------------------------]]
-function ENT:PhysicsUpdate( physobj )
+function ENT:PhysicsUpdate(physobj)
 end
 
 --[[---------------------------------------------------------
 	Name: SetAutomaticFrameAdvance
-	Desc: If you're not using animation you should turn this 
+	Desc: If you're not using animation you should turn this
 		off - it will save lots of bandwidth.
 -----------------------------------------------------------]]
-function ENT:SetAutomaticFrameAdvance( bUsingAnim )
+function ENT:SetAutomaticFrameAdvance(bUsingAnim)
 
 	self.AutomaticFrameAdvance = bUsingAnim
 

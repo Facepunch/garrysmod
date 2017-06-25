@@ -14,19 +14,19 @@ ENT.Type = "nextbot"
 function ENT:Initialize()
 end
 
-if ( SERVER ) then
+if (SERVER) then
 
 	--
 	-- All of the AI logic is serverside - so we derive it from a
 	-- specialized class on the server.
 	--
-	include( "sv_nextbot.lua" )
+	include("sv_nextbot.lua")
 
 else
 
 	--[[---------------------------------------------------------
 		Name: Draw
-		Desc: Draw it!
+		Desc: Draw itnot
 	-----------------------------------------------------------]]
 	function ENT:Draw()
 		self:DrawModel()

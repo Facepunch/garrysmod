@@ -1,17 +1,17 @@
 
 local tblOpenMenus = {}
 
-function RegisterDermaMenuForClose( dmenu )
+function RegisterDermaMenuForClose(dmenu)
 
-	table.insert( tblOpenMenus, dmenu )
+	table.insert(tblOpenMenus, dmenu)
 
 end
 
-function DermaMenu( parentmenu, parent )
+function DermaMenu(parentmenu, parent)
 
-	if ( !parentmenu ) then CloseDermaMenus() end
+	if (not parentmenu) then CloseDermaMenus() end
 
-	local dmenu = vgui.Create( "DMenu", parent )
+	local dmenu = vgui.Create("DMenu", parent)
 
 	return dmenu
 
@@ -19,12 +19,12 @@ end
 
 function CloseDermaMenus()
 
-	for k, dmenu in pairs( tblOpenMenus ) do
+	for k, dmenu in pairs(tblOpenMenus) do
 
-		if ( IsValid( dmenu ) ) then
+		if (IsValid( dmenu)) then
 
-			dmenu:SetVisible( false )
-			if ( dmenu:GetDeleteSelf() ) then
+			dmenu:SetVisible(false)
+			if (dmenu:GetDeleteSelf()) then
 				dmenu:Remove()
 			end
 
@@ -33,7 +33,7 @@ function CloseDermaMenus()
 	end
 
 	tblOpenMenus = {}
-	hook.Run( "CloseDermaMenus" )
+	hook.Run("CloseDermaMenus")
 
 end
 
@@ -41,14 +41,14 @@ end
 -- Here we detect when the mouse is pressed on another panel
 -- This allows us to close the menus.
 --
-local function DermaDetectMenuFocus( panel, mousecode )
+local function DermaDetectMenuFocus(panel, mousecode)
 
-	if ( IsValid( panel ) ) then
+	if (IsValid( panel)) then
 
-		if ( panel.m_bIsMenuComponent ) then return end
+		if (panel.m_bIsMenuComponent) then return end
 
 		-- Is the parent a menu?
-		return DermaDetectMenuFocus( panel:GetParent(), mousecode )
+		return DermaDetectMenuFocus(panel:GetParent(), mousecode)
 
 	end
 
@@ -56,4 +56,4 @@ local function DermaDetectMenuFocus( panel, mousecode )
 
 end
 
-hook.Add( "VGUIMousePressed", "DermaDetectMenuFocus", DermaDetectMenuFocus )
+hook.Add("VGUIMousePressed", "DermaDetectMenuFocus", DermaDetectMenuFocus)

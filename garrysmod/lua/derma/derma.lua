@@ -14,7 +14,7 @@ local isfunction	= isfunction
 local istable		= istable
 local PrintTable	= PrintTable
 
-module( "derma" )
+module("derma")
 
 Controls = {}
 SkinList = {}
@@ -24,11 +24,11 @@ local DefaultSkin = {}
 local SkinMetaTable = {}
 local iSkinChangeIndex = 1
 
-SkinMetaTable.__index = function ( self, key )
+SkinMetaTable.__index = function (self, key)
 	return DefaultSkin[ key ]
 end
 
-local function FindPanelsByClass( SeekingClass )
+local function FindPanelsByClass(SeekingClass)
 
 	local outtbl = {}
 
@@ -38,11 +38,11 @@ local function FindPanelsByClass( SeekingClass )
 	-- bit slow - because this function is only used when reloading.
 	--
 	local tbl = debug.getregistry()
-	for k, v in pairs( tbl ) do
+	for k, v in pairs(tbl) do
 
-		if ( ispanel( v ) && v.ClassName && v.ClassName == SeekingClass ) then
+		if (ispanel( v) and v.ClassName and v.ClassName == SeekingClass) then
 
-			table.insert( outtbl, v )
+			table.insert(outtbl, v)
 
 		end
 
@@ -56,30 +56,30 @@ end
 -- Find all the panels that use this class and
 -- if allowed replace the functions with the new ones.
 --
-local function ReloadClass( classname )
+local function ReloadClass(classname)
 
-	local ctrl = vgui.GetControlTable( classname )
-	if ( !ctrl ) then return end
+	local ctrl = vgui.GetControlTable(classname)
+	if (not ctrl) then return end
 
-	local tbl = FindPanelsByClass( classname )
+	local tbl = FindPanelsByClass(classname)
 
-	for k, v in pairs ( tbl ) do
+	for k, v in pairs (tbl) do
 
-		if ( !v.AllowAutoRefresh ) then continue end
+		if (not v.AllowAutoRefresh) then continue end
 
-		if ( v.PreAutoRefresh ) then
+		if (v.PreAutoRefresh) then
 			v:PreAutoRefresh()
 		end
 
-		for name, func in pairs( ctrl ) do
+		for name, func in pairs(ctrl) do
 
-			if ( !isfunction( func ) ) then continue end
+			if (not isfunction( func)) then continue end
 
 			v[ name ] = func
 
 		end
 
-		if ( v.PostAutoRefresh ) then
+		if (v.PostAutoRefresh) then
 			v:PostAutoRefresh()
 		end
 
@@ -99,9 +99,9 @@ end
 --[[---------------------------------------------------------
 	DefineControl
 -----------------------------------------------------------]]
-function DefineControl( strName, strDescription, strTable, strBase )
+function DefineControl(strName, strDescription, strTable, strBase)
 
-	local bReloading = Controls[ strName ] != nil
+	local bReloading = Controls[ strName ] ~= nil
 
 	-- Add Derma table to PANEL table.
 	strTable.Derma = {
@@ -111,7 +111,7 @@ function DefineControl( strName, strDescription, strTable, strBase )
 	}
 
 	-- Register control with VGUI
-	vgui.Register( strName, strTable, strBase )
+	vgui.Register(strName, strTable, strBase)
 
 	-- Store control
 	Controls[ strName ] = strTable.Derma
@@ -120,9 +120,9 @@ function DefineControl( strName, strDescription, strTable, strBase )
 	-- TODO: STOP THIS
 	_G[ strName ] = strTable
 
-	if ( bReloading ) then
-		Msg( "Reloaded Control: ", strName, "\n" )
-		ReloadClass( strName )
+	if (bReloading) then
+		Msg("Reloaded Control: ", strName, "\n")
+		ReloadClass(strName)
 	end
 
 	return strTable
@@ -132,14 +132,14 @@ end
 --[[---------------------------------------------------------
 	DefineSkin
 -----------------------------------------------------------]]
-function DefineSkin( strName, strDescription, strTable )
+function DefineSkin(strName, strDescription, strTable)
 
 	strTable.Name = strName
 	strTable.Description = strDescription
 	strTable.Base = strBase or "Default"
 
-	if ( strName != "Default" ) then
-		setmetatable( strTable, SkinMetaTable )
+	if (strName ~= "Default") then
+		setmetatable(strTable, SkinMetaTable)
 	else
 		DefaultSkin = strTable
 	end
@@ -153,7 +153,7 @@ end
 -----------------------------------------------------------]]
 function GetSkinTable()
 
-	return table.Copy( SkinList )
+	return table.Copy(SkinList)
 
 end
 
@@ -165,13 +165,13 @@ function GetDefaultSkin()
 	local skin = nil
 
 	-- Check gamemode skin preference
-	if ( gamemode ) then
-		local skinname = gamemode.Call( "ForceDermaSkin" )
-		if ( skinname ) then skin = GetNamedSkin( skinname ) end
+	if (gamemode) then
+		local skinname = gamemode.Call("ForceDermaSkin")
+		if (skinname) then skin = GetNamedSkin( skinname) end
 	end
 
 	-- default
-	if ( !skin ) then skin = DefaultSkin end
+	if (not skin) then skin = DefaultSkin end
 
 	return skin
 end
@@ -179,50 +179,50 @@ end
 --[[---------------------------------------------------------
 	Returns 'Named' Skin
 -----------------------------------------------------------]]
-function GetNamedSkin( name )
+function GetNamedSkin(name)
 	return SkinList[ name ]
 end
 
 --[[---------------------------------------------------------
-	SkinHook( strType, strName, panel )
+	SkinHook(strType, strName, panel)
 -----------------------------------------------------------]]
-function SkinHook( strType, strName, panel, w, h )
+function SkinHook(strType, strName, panel, w, h)
 
 	local Skin = panel:GetSkin()
 
-	if ( !Skin ) then return end
+	if (not Skin) then return end
 	local func = Skin[ strType .. strName ]
-	if ( !func ) then return end
+	if (not func) then return end
 
-	return func( Skin, panel, w, h )
+	return func(Skin, panel, w, h)
 
 end
 
 --[[---------------------------------------------------------
-	SkinTexture( strName, panel, default )
+	SkinTexture(strName, panel, default)
 -----------------------------------------------------------]]
-function SkinTexture( strName, panel, default )
+function SkinTexture(strName, panel, default)
 
 	local Skin = panel:GetSkin()
 
-	if ( !Skin ) then return default end
+	if (not Skin) then return default end
 
 	local Textures = Skin.tex
 
-	if ( !Textures ) then return default end
+	if (not Textures) then return default end
 
 	return Textures[ strName ] or default
 
 end
 
 --[[---------------------------------------------------------
-	Color( strName, panel, default )
+	Color(strName, panel, default)
 -----------------------------------------------------------]]
-function Color( strName, panel, default )
+function Color(strName, panel, default)
 
 	local Skin = panel:GetSkin()
 
-	if ( !Skin ) then return default end
+	if (not Skin) then return default end
 
 	return Skin[ strName ] or default
 

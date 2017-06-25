@@ -3,14 +3,14 @@ local PANEL = {}
 
 function PANEL:Init()
 
-	self:SetTextInset( 32, 0 )
-	self:SetContentAlignment( 4 )
+	self:SetTextInset(32, 0)
+	self:SetContentAlignment(4)
 
 end
 
-function PANEL:Paint( w, h )
+function PANEL:Paint(w, h)
 
-	derma.SkinHook( "Paint", "TreeNodeButton", self, w, h )
+	derma.SkinHook("Paint", "TreeNodeButton", self, w, h)
 
 	--
 	-- Draw the button text
@@ -19,19 +19,19 @@ function PANEL:Paint( w, h )
 
 end
 
-function PANEL:UpdateColours( skin )
+function PANEL:UpdateColours(skin)
 
-	if ( self:IsSelected() ) then return self:SetTextStyleColor( skin.Colours.Tree.Selected ) end
-	if ( self.Hovered ) then return self:SetTextStyleColor( skin.Colours.Tree.Hover ) end
+	if (self:IsSelected()) then return self:SetTextStyleColor( skin.Colours.Tree.Selected) end
+	if (self.Hovered) then return self:SetTextStyleColor( skin.Colours.Tree.Hover) end
 
-	return self:SetTextStyleColor( skin.Colours.Tree.Normal )
+	return self:SetTextStyleColor(skin.Colours.Tree.Normal)
 
 end
 
 function PANEL:GenerateExample()
 
-	-- Do nothing!
+	-- Do nothingnot
 
 end
 
-derma.DefineControl( "DTree_Node_Button", "Tree Node Button", PANEL, "DButton" )
+derma.DefineControl("DTree_Node_Button", "Tree Node Button", PANEL, "DButton")

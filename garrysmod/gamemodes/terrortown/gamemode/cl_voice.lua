@@ -13,7 +13,7 @@ local function LastWordsRecv()
    local was_detective = IsValid(sender) and sender:IsDetective()
    local nick = IsValid(sender) and sender:Nick() or "<Unknown>"
 
-   chat.AddText(Color( 150, 150, 150 ),
+   chat.AddText(Color( 150, 150, 150),
                 Format("(%s) ", string.upper(GetTranslation("last_words"))),
                 was_detective and Color(50, 200, 255) or Color(0, 200, 0),
                 nick,
@@ -31,7 +31,7 @@ local function RoleChatRecv()
    local text = net.ReadString()
 
    if role == ROLE_TRAITOR then
-      chat.AddText(Color( 255, 30, 40 ),
+      chat.AddText(Color( 255, 30, 40),
                    Format("(%s) ", string.upper(GetTranslation("traitor"))),
                    Color( 255, 200, 20),
                    sender:Nick(),
@@ -39,7 +39,7 @@ local function RoleChatRecv()
                    ": " .. text)
 
    elseif role == ROLE_DETECTIVE then
-      chat.AddText(Color( 20, 100, 255 ),
+      chat.AddText(Color( 20, 100, 255),
                    Format("(%s) ", string.upper(GetTranslation("detective"))),
                    Color( 25, 200, 255),
                    sender:Nick(),
@@ -73,19 +73,19 @@ local function AddDetectiveText(ply, text)
 end
 
 function GM:OnPlayerChat(ply, text, teamchat, dead)
-   if not IsValid(ply) then return BaseClass.OnPlayerChat(self, ply, text, teamchat, dead) end 
-   
+   if not IsValid(ply) then return BaseClass.OnPlayerChat(self, ply, text, teamchat, dead) end
+
    if ply:IsActiveDetective() then
       AddDetectiveText(ply, text)
       return true
    end
-   
+
    local team = ply:Team() == TEAM_SPEC
-   
+
    if team and not dead then
       dead = true
    end
-   
+
    if teamchat and ((not team and not ply:IsSpecial()) or team) then
       teamchat = false
    end
@@ -198,7 +198,7 @@ function RADIO:ShowRadioCommands(state)
                dlabel.txt = GetTranslation(command.text)
                dlabel.Think = function(s)
                                  local tgt, v = RADIO:GetTarget()
-                                 if s.target != tgt then
+                                 if s.target ~= tgt then
                                     s.target = tgt
 
                                     tgt = string.Interp(s.txt, {player = RADIO.ToPrintable(tgt)})
@@ -256,7 +256,7 @@ function RADIO:GetTargetType()
       else
          return ent, false
       end
-   elseif ent:GetClass() == "prop_ragdoll" and CORPSE.GetPlayerNick(ent, "") != "" then
+   elseif ent:GetClass() == "prop_ragdoll" and CORPSE.GetPlayerNick(ent, "") ~= "" then
 
       if DetectiveMode() and not CORPSE.GetFound(ent, false) then
          return "quick_corpse", true
@@ -306,7 +306,7 @@ end
 -- Radio commands are a console cmd instead of directly sent from RADIO, because
 -- this way players can bind keys to them
 local function RadioCommand(ply, cmd, arg)
-   if not IsValid(ply) or #arg != 1 then
+   if not IsValid(ply) or #arg ~= 1 then
       print("ttt_radio failed, too many arguments?")
       return
    end
@@ -428,9 +428,9 @@ g_VoicePanelList = nil
 -- 5 at 5000
 local function VoiceNotifyThink(pnl)
    if not (IsValid(pnl) and LocalPlayer() and IsValid(pnl.ply)) then return end
-   if not (GetGlobalBool("ttt_locational_voice", false) and (not pnl.ply:IsSpec()) and (pnl.ply != LocalPlayer())) then return end
-   if LocalPlayer():IsActiveTraitor() && pnl.ply:IsActiveTraitor() then return end
-   
+   if not (GetGlobalBool("ttt_locational_voice", false) and (not pnl.ply:IsSpec()) and (pnl.ply ~= LocalPlayer())) then return end
+   if LocalPlayer():IsActiveTraitor() and pnl.ply:IsActiveTraitor() then return end
+
    local d = LocalPlayer():GetPos():Distance(pnl.ply:GetPos())
 
    pnl:SetAlpha(math.max(-0.1 * d + 255, 15))
@@ -438,7 +438,7 @@ end
 
 local PlayerVoicePanels = {}
 
-function GM:PlayerStartVoice( ply )
+function GM:PlayerStartVoice(ply)
    local client = LocalPlayer()
    if not IsValid(g_VoicePanelList) or not IsValid(client) then return end
 
@@ -465,11 +465,11 @@ function GM:PlayerStartVoice( ply )
    local pnl = g_VoicePanelList:Add("VoiceNotify")
    pnl:Setup(ply)
    pnl:Dock(TOP)
-   
+
    local oldThink = pnl.Think
-   pnl.Think = function( self )
-                  oldThink( self )
-                  VoiceNotifyThink( self )
+   pnl.Think = function(self)
+                  oldThink(self)
+                  VoiceNotifyThink(self)
                end
 
    local shade = Color(0, 0, 0, 150)
@@ -508,7 +508,7 @@ local function ReceiveVoiceState()
    local state = net.ReadBit() == 1
 
    -- prevent glitching due to chat starting/ending across round boundary
-   if GAMEMODE.round_state != ROUND_ACTIVE then return end
+   if GAMEMODE.round_state ~= ROUND_ACTIVE then return end
    if (not IsValid(LocalPlayer())) or (not LocalPlayer():IsActiveTraitor()) then return end
 
    local ply = player.GetByID(idx)
@@ -523,17 +523,17 @@ end
 net.Receive("TTT_TraitorVoiceState", ReceiveVoiceState)
 
 local function VoiceClean()
-   for ply, pnl in pairs( PlayerVoicePanels ) do
+   for ply, pnl in pairs(PlayerVoicePanels) do
       if (not IsValid(pnl)) or (not IsValid(ply)) then
          GAMEMODE:PlayerEndVoice(ply)
       end
    end
 end
-timer.Create( "VoiceClean", 10, 0, VoiceClean )
+timer.Create("VoiceClean", 10, 0, VoiceClean)
 
 
 function GM:PlayerEndVoice(ply, no_reset)
-   if IsValid( PlayerVoicePanels[ply] ) then
+   if IsValid(PlayerVoicePanels[ply]) then
       PlayerVoicePanels[ply]:Remove()
       PlayerVoicePanels[ply] = nil
    end
@@ -548,7 +548,7 @@ function GM:PlayerEndVoice(ply, no_reset)
 end
 
 local function CreateVoiceVGUI()
-    g_VoicePanelList = vgui.Create( "DPanel" )
+    g_VoicePanelList = vgui.Create("DPanel")
 
     g_VoicePanelList:ParentToHUD()
     g_VoicePanelList:SetPos(25, 25)
@@ -563,7 +563,7 @@ local function CreateVoiceVGUI()
     MutedState:SetTextColor(Color(240, 240, 240, 250))
     MutedState:SetVisible(false)
 end
-hook.Add( "InitPostEntity", "CreateVoiceVGUI", CreateVoiceVGUI )
+hook.Add("InitPostEntity", "CreateVoiceVGUI", CreateVoiceVGUI)
 
 local MuteStates = {MUTE_NONE, MUTE_TERROR, MUTE_ALL, MUTE_SPEC}
 
@@ -577,7 +577,7 @@ local MuteText = {
 local function SetMuteState(state)
    if MutedState then
       MutedState:SetText(string.upper(GetTranslation(MuteText[state])))
-      MutedState:SetVisible(state != MUTE_NONE)
+      MutedState:SetVisible(state ~= MUTE_NONE)
    end
 end
 
@@ -609,7 +609,7 @@ end
 local function GetDrainRate()
    if not GetGlobalBool("ttt_voice_drain", false) then return 0 end
 
-   if GetRoundState() != ROUND_ACTIVE then return 0 end
+   if GetRoundState() ~= ROUND_ACTIVE then return 0 end
    local ply = LocalPlayer()
    if (not IsValid(ply)) or ply:IsSpec() then return 0 end
 

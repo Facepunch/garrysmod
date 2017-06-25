@@ -4,24 +4,24 @@ local PANEL = {}
 function PANEL:Init()
 
 	self:EnableVerticalScrollbar()
-	self:SetTall( 66 * 2 + 2 )
+	self:SetTall(66 * 2 + 2)
 
 end
 
-function PANEL:SetHeight( numHeight )
+function PANEL:SetHeight(numHeight)
 
-	self:SetTall( 66 * ( numHeight or 2 ) + 2 )
+	self:SetTall(66 * ( numHeight or 2) + 2)
 
 end
 
-function PANEL:SetModelList( ModelList, strConVar, bDontSort, bDontCallListConVars )
+function PANEL:SetModelList(ModelList, strConVar, bDontSort, bDontCallListConVars)
 
-	for model, v in pairs( ModelList ) do
+	for model, v in pairs(ModelList) do
 
-		local icon = vgui.Create( "SpawnIcon" )
-		icon:SetModel( model )
-		icon:SetSize( 64, 64 )
-		icon:SetTooltip( model )
+		local icon = vgui.Create("SpawnIcon")
+		icon:SetModel(model)
+		icon:SetSize(64, 64)
+		icon:SetTooltip(model)
 		icon.Model = model
 		icon.ConVars = v
 
@@ -29,23 +29,23 @@ function PANEL:SetModelList( ModelList, strConVar, bDontSort, bDontCallListConVa
 
 		-- some model lists, like from wheels, have extra convars in the ModelList
 		-- we'll need to add those too
-		if ( !bDontCallListConVars && istable( v ) ) then
-			table.Merge( convars, v ) -- copy them in to new list
+		if (not bDontCallListConVars and istable( v)) then
+			table.Merge(convars, v) -- copy them in to new list
 		end
 
 		-- make strConVar optional so we can have everything in the ModelList instead, if we want to
-		if ( strConVar ) then
+		if (strConVar) then
 			convars[strConVar] = model
 		end
 
-		self:AddPanel( icon, convars )
+		self:AddPanel(icon, convars)
 
 	end
 
-	if ( !bDontSort ) then
-		self:SortByMember( "Model", false )
+	if (not bDontSort) then
+		self:SortByMember("Model", false)
 	end
 
 end
 
-derma.DefineControl( "DModelSelect", "", PANEL, "DPanelSelect" )
+derma.DefineControl("DModelSelect", "", PANEL, "DPanelSelect")

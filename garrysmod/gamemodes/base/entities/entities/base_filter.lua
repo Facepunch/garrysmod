@@ -12,12 +12,12 @@ end
 	Name: KeyValue
 	Desc: Called when a keyvalue is added to us
 -----------------------------------------------------------]]
-function ENT:KeyValue( key, value )
+function ENT:KeyValue(key, value)
 end
 
 --[[---------------------------------------------------------
 	Name: Think
-	Desc: Entity's think function. 
+	Desc: Entity's think function.
 -----------------------------------------------------------]]
 function ENT:Think()
 end
@@ -32,13 +32,13 @@ end
 --[[---------------------------------------------------------
 	Name: PassesFilter
 -----------------------------------------------------------]]
-function ENT:PassesFilter( trigger, ent )
+function ENT:PassesFilter(trigger, ent)
 	return true
 end
 
 --[[---------------------------------------------------------
 	Name: PassesDamageFilter
 -----------------------------------------------------------]]
-function ENT:PassesDamageFilter( dmg )
+function ENT:PassesDamageFilter(dmg)
 	return true
 end

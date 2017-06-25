@@ -76,7 +76,7 @@ function StartFires(pos, tr, num, lifetime, explode, dmgowner)
       end
 
    end
-   
+
 end
 
 function SpawnFire(pos, size, attack, fuel, owner, parent)
@@ -92,7 +92,7 @@ function SpawnFire(pos, size, attack, fuel, owner, parent)
    fire:SetKeyValue("fireattack", attack)
    fire:SetKeyValue("health", fuel)
    fire:SetKeyValue("damagescale", "-10") -- only neg. value prevents dmg
-   
+
    fire:Spawn()
    fire:Activate()
 
@@ -180,7 +180,7 @@ function ENT:Think()
             dmg:SetAttacker(self)
          end
          dmg:SetInflictor(self.firechild)
-         
+
          RadiusDamage(dmg, self:GetPos(), 132, self)
 
          self.next_hurt = CurTime() + self.hurt_interval
@@ -211,7 +211,7 @@ function ENT:BackupDraw()
    side.r = side.r + 0.1
 
    cam.Start3D2D(vstart, side, 1)
-   draw.DrawText("FIRE! IT BURNS!", "Default", 0, 0, COLOR_RED, ALIGN_CENTER)
+   draw.DrawText("FIREnot  IT BURNSnot ", "Default", 0, 0, COLOR_RED, ALIGN_CENTER)
    cam.End3D2D()
 
    render.SetMaterial(fakefire)

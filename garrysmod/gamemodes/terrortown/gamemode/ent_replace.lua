@@ -305,7 +305,7 @@ local function PlaceWeapon(swep, pos, ang)
    return ent
 end
 
--- Spawns a bunch of guns (scaling with maxplayers count or 
+-- Spawns a bunch of guns (scaling with maxplayers count or
 -- by ttt_weapon_spawn_max cvar) at randomly selected
 -- entities of the classes given the table
 local function PlaceWeaponsAtEnts(spots_classes)
@@ -317,13 +317,13 @@ local function PlaceWeaponsAtEnts(spots_classes)
    end
 
    local spawnables = ents.TTT.GetSpawnableSWEPs()
-   
-   local max = GetConVar( "ttt_weapon_spawn_count" ):GetInt()
-   if max == 0 then 
+
+   local max = GetConVar("ttt_weapon_spawn_count"):GetInt()
+   if max == 0 then
       max = game.MaxPlayers()
       max = max + math.max(3, 0.33 * max)
    end
-   
+
    local num = 0
    local w = nil
    for k, v in RandomPairs(spots) do
@@ -529,7 +529,7 @@ local function ImportEntities(map)
    local lines = string.Explode("\n", buf)
    local num = 0
    for k, line in ipairs(lines) do
-      if (not string.match(line, "^#")) and (not string.match(line, "^setting")) and line != "" and string.byte(line) != 0 then
+      if (not string.match(line, "^#")) and (not string.match(line, "^setting")) and line ~= "" and string.byte(line) ~= 0 then
          local data = string.Explode("\t", line)
 
          local fail = true -- pessimism
@@ -594,8 +594,8 @@ function ents.TTT.ProcessImportScript(map)
    MsgN("Importing entities...")
    local result = ImportEntities(map)
    if result then
-      MsgN("Weapon placement script import successful!")
+      MsgN("Weapon placement script import successfulnot ")
    else
-      ErrorNoHalt("Weapon placement script import failed!\n")
+      ErrorNoHalt("Weapon placement script import failednot \n")
    end
 end

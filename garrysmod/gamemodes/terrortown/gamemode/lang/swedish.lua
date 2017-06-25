@@ -16,15 +16,15 @@ L.round_minplayers = "För få spelare för att påbörja ny runda..."
 L.round_voting     = "Omröstning pågår, fördröjer ny runda med {num} sekunder..."
 L.round_begintime  = "En ny runda påbörjas om {num} sekunder. Bered dig."
 L.round_selected   = "Förrädarna har blivit utvalda."
-L.round_started    = "Rundan har påbörjats!"
+L.round_started    = "Rundan har påbörjatsnot "
 L.round_restart    = "Rundan har blivit omstartad av en admin."
 
 L.round_traitors_one  = "Förrädare, du står ensam"
 L.round_traitors_more = "Förrädare, detta är dina lagkamrater: {names}"
 
 L.win_time         = "Tiden har tagit slut. Förrädarna har förlorat."
-L.win_traitor      = "Förrädarna har vunnit!"
-L.win_innocent     = "Förrädarna har blivit besegrade!"
+L.win_traitor      = "Förrädarna har vunnitnot "
+L.win_innocent     = "Förrädarna har blivit besegradenot "
 L.win_showreport   = "Låt oss ta en titt på rund-rapporten i {num} sekunder."
 
 L.limit_round      = "Gränsen för antalet rundor har nåtts. {mapname} kommer laddas snart."
@@ -38,24 +38,24 @@ L.credit_tr_all    = "Förrädare, ni har blivit tilldelade {num} verktygskredit
 L.credit_kill      = "Du har blivit tilldelad {num} kredit(er) för att ha dödat en {role}."
 
 --- Karma
-L.karma_dmg_full   = "Din Karma är {amount}, så du utdelar full skada denna runda!"
+L.karma_dmg_full   = "Din Karma är {amount}, så du utdelar full skada denna rundanot "
 L.karma_dmg_other  = "Din Karma är {amount}. Till följd av detta är skadan du utdelar reducerad med {num}%"
 
 --- Body identification messages
 L.body_found       = "{finder} fann {victim}s kropp. {role}"
 
 -- The {role} in body_found will be replaced by one of the following:
-L.body_found_t     = "Han var en Förrädare!"
+L.body_found_t     = "Han var en Förrädarenot "
 L.body_found_d     = "Han var en Detektiv."
 L.body_found_i     = "Han var oskyldig."
 
 L.body_confirm     = "{finder} bekräftade att {victim} har dött."
 
-L.body_call        = "{player} kallade en Detektiv till {victim}s kropp!"
-L.body_call_error  = "Du måste bekräfta denna spelarens död för att kunna kalla på en Detektiv!"
+L.body_call        = "{player} kallade en Detektiv till {victim}s kroppnot "
+L.body_call_error  = "Du måste bekräfta denna spelarens död för att kunna kalla på en Detektivnot "
 
-L.body_burning     = "Aj! Den här kroppen brinner!"
-L.body_credits     = "Du fann {num} kredit(er) på kroppen!"
+L.body_burning     = "Ajnot  Den här kroppen brinnernot "
+L.body_credits     = "Du fann {num} kredit(er) på kroppennot "
 
 --- Menus and windows
 L.close = "Stäng"
@@ -94,7 +94,7 @@ L.equip_confirm    = "Köp föremål"
 -- Disguiser tab in equipment menu
 L.disg_name      = "Förklädare"
 L.disg_menutitle = "Förklädningskontroll"
-L.disg_not_owned = "Du har ingen Förklädare!"
+L.disg_not_owned = "Du har ingen Förklädarenot "
 L.disg_enable    = "Aktivera förklädare"
 
 L.disg_help1     = "När din förklädare är påslagen visas inte ditt namn, din hälsa eller din karma när någon tittar på dig. Du syns heller inte på en Detektivs radar."
@@ -103,16 +103,16 @@ L.disg_help2     = "Tryck på Numpad Enter för att sätta på/stänga av förkl
 -- Radar tab in equipment menu
 L.radar_name      = "Radar"
 L.radar_menutitle = "Radar-kontroll"
-L.radar_not_owned = "Du har ingen Radar!"
+L.radar_not_owned = "Du har ingen Radarnot "
 L.radar_scan      = "Utför skanning"
 L.radar_auto      = "Auto-repetera skanning"
 L.radar_help      = "Skannings-resultat visas i {num} sekunder. Efter detta laddas Radarn om och kan användas igen."
-L.radar_charging  = "Din Radar laddar fortfarande!"
+L.radar_charging  = "Din Radar laddar fortfarandenot "
 
 -- Transfer tab in equipment menu
 L.xfer_name       = "Överför"
 L.xfer_menutitle  = "Överför krediter"
-L.xfer_no_credits = "Du har inga krediter att ge!"
+L.xfer_no_credits = "Du har inga krediter att genot "
 L.xfer_send       = "Sänd en kredit"
 L.xfer_help       = "Du kan endast överföra krediter till dina {role}-kamrater."
 
@@ -142,18 +142,18 @@ L.radio_button_steps   = "Fotsteg"
 
 
 -- Intro screen shown after joining
-L.intro_help     = "Om du är ny till detta spel, tryck F1 för att få instruktioner!"
+L.intro_help     = "Om du är ny till detta spel, tryck F1 för att få instruktionernot "
 
 -- Radiocommands/quickchat
 L.quick_title   = "Snabb-knappar"
 
 L.quick_yes     = "Ja."
 L.quick_no      = "Nej."
-L.quick_help    = "Hjälp!"
+L.quick_help    = "Hjälpnot "
 L.quick_imwith  = "Jag är med {player}."
 L.quick_see     = "Jag ser {player}."
 L.quick_suspect = "{player} beter sig skumt."
-L.quick_traitor = "{player} är en Förrädare!"
+L.quick_traitor = "{player} är en Förrädarenot "
 L.quick_inno    = "{player} är oskyldig."
 L.quick_check   = "Lever någon fortfarande?"
 
@@ -174,7 +174,7 @@ L.search_call   = "Kalla på Detektiv"
 -- Descriptions of pieces of information found
 L.search_nick   = "Detta är {player}s kropp."
 
-L.search_role_t = "Den här personen var en Förrädare!"
+L.search_role_t = "Den här personen var en Förrädarenot "
 L.search_role_d = "Den här personen var en Detektiv."
 L.search_role_i = "Den här personen var en oskyldig terrorist."
 
@@ -192,7 +192,7 @@ L.search_dmg_club   = "Kroppen är alldeles blåslagen och mörbultad. Uppenbarl
 L.search_dmg_drown  = "Kroppen visar tecken på drunkning."
 L.search_dmg_stab   = "Han blev stucken och förblödde hastigt."
 L.search_dmg_burn   = "Det luktar grillad terrorist häromkring..."
-L.search_dmg_tele   = "Vem kunde ana det? Att teleportera till en plats där någon redan står är inte så bra för den som står där!"
+L.search_dmg_tele   = "Vem kunde ana det? Att teleportera till en plats där någon redan står är inte så bra för den som står därnot "
 L.search_dmg_car    = "När den här terroristen gick över vägen, blev han överkörd av en hänsynslös bilförare."
 L.search_dmg_other  = "Du kan inte hitta en specifik orsakt till den här terroristens död."
 
@@ -279,9 +279,9 @@ L.buy_no_stock    = "Det här vapnet finns inte tillgängligt: du har redan köp
 L.buy_pending     = "Du har redan en beställning som väntar, vänta tills du får den."
 L.buy_received    = "Du har fått ditt specialverktyg."
 
-L.drop_no_room    = "Det finns ingen plats här för att släppa ditt vapen!"
+L.drop_no_room    = "Det finns ingen plats här för att släppa ditt vapennot "
 
-L.disg_turned_on  = "Förklädnad aktiverad!"
+L.disg_turned_on  = "Förklädnad aktiveradnot "
 L.disg_turned_off = "Förklädnad avaktiverad."
 
 -- Equipment item descriptions
@@ -301,14 +301,14 @@ L.item_radar_desc = [[
 Tillåter dig att skanna efter livstecken.
 
 Startar automatiskt så fort du
-köper den. Konfigurera den i 
+köper den. Konfigurera den i
 Radar-fliken i den här menyn.]]
 
 L.item_disg       = "Förklädare"
 L.item_disg_desc  = [[
-Döljer din identitet när den är 
-påslagen. Hindrar även att man 
-blir den sista sedda personen 
+Döljer din identitet när den är
+påslagen. Hindrar även att man
+blir den sista sedda personen
 av ett offer.
 
 Slå av/på i Förklädnads-fliken
@@ -338,9 +338,9 @@ L.c4_remove_destroy2 = "Bekräfta: förstör"
 L.c4_disarm       = "Desarmera C4"
 L.c4_disarm_cut   = "Klicka för att klippa av sladd nummer {num}"
 
-L.c4_disarm_t     = "Klipp av en sladd för att desarmera bomben. Eftersom du är en Förrädare är varje sladd säker. De oskylda har det inte lika lätt!"
+L.c4_disarm_t     = "Klipp av en sladd för att desarmera bomben. Eftersom du är en Förrädare är varje sladd säker. De oskylda har det inte lika lättnot "
 L.c4_disarm_owned = "Klipp av en sladd för att desarmera bomben. Det är din bomb, så varje sladd kommer att desarmera den."
-L.c4_disarm_other = "Klipp av en säker sladd för att desarmera bomben. Den kommer att explodera om du klipper fel!"
+L.c4_disarm_other = "Klipp av en säker sladd för att desarmera bomben. Den kommer att explodera om du klipper felnot "
 
 L.c4_status_armed    = "ARMERAD"
 L.c4_status_disarmed = "DESARMERAD"
@@ -362,7 +362,7 @@ han dog av skottskador.]]
 -- Decoy
 L.decoy_name      = "Lockbete"
 L.decoy_no_room   = "Du kan ej bära detta Lockbete."
-L.decoy_broken    = "Ditt Lockbete har förstörts!"
+L.decoy_broken    = "Ditt Lockbete har förstörtsnot "
 
 L.decoy_help_pri  = "{primaryfire} riggar Lockbetet."
 
@@ -380,8 +380,8 @@ L.defuser_help    = "{primaryfire} desarmerar C4 i siktet."
 L.defuser_desc    = [[
 Desarmerar C4 omedelbart.
 
-Kan användas oändligt många 
-gånger. C4 märks tydligare 
+Kan användas oändligt många
+gånger. C4 märks tydligare
 om du bär detta verktyg.]]
 
 -- Flare gun
@@ -397,7 +397,7 @@ tydligt ljud.]]
 -- Health station
 L.hstation_name   = "Hälsostation"
 L.hstation_hint   = "Tryck {usekey} för att få hälsa. Laddning: {num}."
-L.hstation_broken = "Din Hälsostation har blivit förstörd!"
+L.hstation_broken = "Din Hälsostation har blivit förstördnot "
 L.hstation_help   = "{primaryfire} placerar Hälsostationen."
 
 L.hstation_desc   = [[
@@ -430,7 +430,7 @@ Explosionerna skadar spelare
 i närheten.]]
 
 -- Radio
-L.radio_broken    = "Din Radio har blivit förstörd!"
+L.radio_broken    = "Din Radio har blivit förstördnot "
 L.radio_help_pri  = "{primaryfire} placerar Radion."
 
 L.radio_desc      = [[
@@ -454,10 +454,10 @@ Offer skriker inte när de blir dödade.]]
 L.newton_name     = "Avståndsknuffare"
 
 L.newton_desc     = [[
-Knuffa spelare från ett 
+Knuffa spelare från ett
 bekvämt avstånd.
 
-Oändligt med ammunition, men 
+Oändligt med ammunition, men
 laddar om långsamt.]]
 
 -- Binoculars
@@ -474,7 +474,7 @@ L.binoc_help_sec  = "{secondaryfire} ändrar inzoomnings-nivån."
 
 -- UMP
 L.ump_desc        = [[
-Experimentell k-pist som 
+Experimentell k-pist som
 desorienterar målen.
 
 Använder vanlig k-pist-ammunition.]]
@@ -485,9 +485,9 @@ L.dna_identify    = "Liket måste vara identifierat för att återfå mördarens
 L.dna_notfound    = "Inget DNA-prov kunde hittas på målet."
 L.dna_limit       = "Lagringsbegränsningen nådd. Ta bort gamla prov för att lägga till nya."
 L.dna_decayed     = "Mördarens DNA-prov har förruttnat."
-L.dna_killer      = "Hittade ett prov av mördarens DNA på liket!"
+L.dna_killer      = "Hittade ett prov av mördarens DNA på liketnot "
 L.dna_no_killer   = "DNAt kunde inte återfås (har mördaren gått ur spelet?)"
-L.dna_armed       = "Bomben går fortfarande! Desarmera den först!"
+L.dna_armed       = "Bomben går fortfarandenot  Desarmera den förstnot "
 L.dna_object      = "Samlade in {num} nya DNA-prov från föremålet."
 L.dna_gone        = "DNA kunde inte hittas i området. (Har mördaren gått ur spelet?)"
 
@@ -536,18 +536,18 @@ L.tele_name       = "Teleportör"
 L.tele_failed     = "Teleportering misslyckad."
 L.tele_marked     = "Teleporteringsplats markerad."
 
-L.tele_no_ground  = "Kan ej teleportera om du inte står på fast mark!"
-L.tele_no_crouch  = "Kan ej teleportera när du duckar!"
+L.tele_no_ground  = "Kan ej teleportera om du inte står på fast marknot "
+L.tele_no_crouch  = "Kan ej teleportera när du duckarnot "
 L.tele_no_mark    = "Ingen plats markerad. Markera en destination innan du teleporterar."
 
-L.tele_no_mark_ground = "Kan ej markera en teleporteringsplats om du inte står på fast mark!"
-L.tele_no_mark_crouch = "Kan ej markera en teleporteringsplats om du duckar!"
+L.tele_no_mark_ground = "Kan ej markera en teleporteringsplats om du inte står på fast marknot "
+L.tele_no_mark_crouch = "Kan ej markera en teleporteringsplats om du duckarnot "
 
 L.tele_help_pri   = "{primaryfire} teleporterar till markerad plats."
 L.tele_help_sec   = "{secondaryfire} markerar nuvarande plats."
 
 L.tele_desc       = [[
-Teleportera till en 
+Teleportera till en
 tidigare markerad plats.
 
 Teleportering orsakar oljud,
@@ -623,7 +623,7 @@ L.mute_off     = "Ingen nedtystad"
 L.punch_title  = "KNUFF-MÄTARE"
 L.punch_help   = "Rörelsetangenter eller hoppa: knuffa föremål. Ducka: lämna föremål."
 L.punch_bonus  = "Din dåliga poäng har sänkt din knuff-mätargräns med {num}"
-L.punch_malus  = "Din goda poäng har höjt din knuff-mätargräns med {num}!"
+L.punch_malus  = "Din goda poäng har höjt din knuff-mätargräns med {num}not "
 
 L.spec_help    = "Klicka för att se spelet genom en spelares ögon eller tryck {usekey} på ett föremål för att styra det."
 
@@ -631,30 +631,30 @@ L.spec_help    = "Klicka för att se spelet genom en spelares ögon eller tryck 
 
 -- These are spread over multiple lines, hence the square brackets instead of
 -- quotes. That's a Lua thing. Every line break (enter) will show up in-game.
-L.info_popup_innocent = [[Du är en oskyldig Terrorist! Men det finns förrädare omkring...
+L.info_popup_innocent = [[Du är en oskyldig Terroristnot  Men det finns förrädare omkring...
 Vem kan du lita på, och vem är ute för att mörda dig?
 
-Var aktsam och arbeta med dina kamrater för att komma ut härifrån levande!]]
+Var aktsam och arbeta med dina kamrater för att komma ut härifrån levandenot ]]
 
-L.info_popup_detective = [[Du är en Detektiv! Terrorist-högkvarteren har givit dig speciella resurser för att finna förrädarna.
+L.info_popup_detective = [[Du är en Detektivnot  Terrorist-högkvarteren har givit dig speciella resurser för att finna förrädarna.
 Använd dem för att hjälpa de oskyldiga överleva, men var försiktig:
-förrädarna kommer att försöka ta ned dig först!
+förrädarna kommer att försöka ta ned dig förstnot
 
-Tryck {menukey} för att få dina verktyg!]]
+Tryck {menukey} för att få dina verktygnot ]]
 
-L.info_popup_traitor_alone = [[Du är en FÖRRÄDARE! Du har inga förrädarkamrater denna runda.
+L.info_popup_traitor_alone = [[Du är en FÖRRÄDAREnot  Du har inga förrädarkamrater denna runda.
 
-Döda alla andra för att vinna!
+Döda alla andra för att vinnanot
 
-Tryck {menukey} för att få dina verktyg!]]
+Tryck {menukey} för att få dina verktygnot ]]
 
-L.info_popup_traitor = [[Du är en FÖRRÄDARE! Arbeta med dina förrädarkamrater för att döda alla andra.
+L.info_popup_traitor = [[Du är en FÖRRÄDAREnot  Arbeta med dina förrädarkamrater för att döda alla andra.
 Men var försiktig, annars kan ditt förräderi upptäckas...
 
 Detta är dina kamrater:
 {traitorlist}
 
-Tryck {menukey} för att få dina verktyg!]]
+Tryck {menukey} för att få dina verktygnot ]]
 
 --- Various other text
 L.name_kick = "En spelare blev utsparkad automatiskt för att ha bytt sitt namn under en runda."
@@ -666,7 +666,7 @@ Du kan slå av/på Åskådar-läge när som helst genom att trycka på {helpkey}
 L.idle_popup_close = "Gör ingenting"
 L.idle_popup_off   = "Stäng av Åskådar-läge nu"
 
-L.idle_warning = "Varning: du verkar vara borta, och kommer att bli tvingad att åskåda om du inte gör någonting!"
+L.idle_warning = "Varning: du verkar vara borta, och kommer att bli tvingad att åskåda om du inte gör någontingnot "
 
 L.spec_mode_warning = "Du är i Åskådar-läge och kommer inte att starta när en runda påbörjas. För att stänga av detta läge, tryck F1, gå till inställningar och bocka av 'Åskådar-läge'."
 
@@ -699,11 +699,11 @@ L.tip9 = "Poltergeisten kan förvandla vilket rörligt föremål som helst till 
 
 L.tip10 = "Som en Förrädare eller som en Detektiv bör du hålla ett öga på röda meddelanden i det övre högra hörnet av skärmen, då dessa innehåller viktig information."
 
-L.tip11 = "Som en Förrädare eller som en Detektiv får du extra verktygskrediter om dina kamrater arbetar väl. Kom också ihåg att spendera dem!"
+L.tip11 = "Som en Förrädare eller som en Detektiv får du extra verktygskrediter om dina kamrater arbetar väl. Kom också ihåg att spendera demnot "
 
-L.tip12 = "Detektivernas DNA-skanner kan användas till att samla DNA-prov från vapen och föremål för att sedan skanna och finna dess användare. Detta är användbart när du kan hitta ett prov från ett lik eller en avstängd C4!"
+L.tip12 = "Detektivernas DNA-skanner kan användas till att samla DNA-prov från vapen och föremål för att sedan skanna och finna dess användare. Detta är användbart när du kan hitta ett prov från ett lik eller en avstängd C4not "
 
-L.tip13 = "Om du är nära ditt mordoffer kommer ditt DNA att hamna på liket. DNAt kan sedan användas med Detektivernas DNA-skannrar för att hitta var du är. Du gör därför bäst i att gömma liken efter att du har knivhuggit det!"
+L.tip13 = "Om du är nära ditt mordoffer kommer ditt DNA att hamna på liket. DNAt kan sedan användas med Detektivernas DNA-skannrar för att hitta var du är. Du gör därför bäst i att gömma liken efter att du har knivhuggit detnot "
 
 L.tip14 = "Ju längre ifrån du är ditt mordoffer, desto kortare tid kommer ditt DNA finnas kvar på liket innan det förruttnar."
 
@@ -851,9 +851,9 @@ L.ev_c4_disarm2  = "{player} misslyckades med att desarmera C4 som placerades av
 L.ev_credit      = "{finder} fann {num} kredit(er) på {player}s lik"
 
 L.ev_start       = "Rundan började"
-L.ev_win_traitor = "De usla förrädarna vann rundan!"
-L.ev_win_inno    = "De älskvärda oskyldiga terroristerna vann rundan!"
-L.ev_win_time    = "Förrädarna fick slut på tid och förlorade!"
+L.ev_win_traitor = "De usla förrädarna vann rundannot "
+L.ev_win_inno    = "De älskvärda oskyldiga terroristerna vann rundannot "
+L.ev_win_time    = "Förrädarna fick slut på tid och förloradenot "
 
 --- Awards/highlights
 
@@ -887,8 +887,8 @@ L.aw_all1_text  = "var ansvarig för alla de oskyldigas dödande den här rundan
 L.aw_all2_title = "Ensamvarg"
 L.aw_all2_text  = "var ansvarig för alla förrädarnas dödande den här rundan."
 
-L.aw_nkt1_title = "Jag Fick En, Chefen!"
-L.aw_nkt1_text  = "lyckades döda en enda oskyldig. Schysst!!"
+L.aw_nkt1_title = "Jag Fick En, Chefennot "
+L.aw_nkt1_text  = "lyckades döda en enda oskyldig. Schysstnot not "
 
 L.aw_nkt2_title = "En Kula För Två"
 L.aw_nkt2_text  = "visade att den första inte bara var tur genom att döda en till."
@@ -1004,7 +1004,7 @@ L.aw_msx1_text  = "prickade av {num} människor från listan med sin M16."
 L.aw_msx2_title = "Galenskap På Medelavstånd"
 L.aw_msx2_text  = "lyckades plocka ner {num} mål med sin M16."
 
-L.aw_tkl1_title = "Aja-baja!"
+L.aw_tkl1_title = "Aja-bajanot "
 L.aw_tkl1_text  = "slant med fingret när han siktade på en kompis."
 
 L.aw_tkl2_title = "De Såg Ut Som Förrädare"
@@ -1032,7 +1032,7 @@ L.aw_brn2_title = "Leker Med Elden"
 L.aw_brn2_text  = "lärde sig tydligen inte vad mamma lärt honom, vilket flera människor får sota för."
 
 L.aw_brn3_title = "Pyrrhic Burnery"
-L.aw_brn3_text  = "burned them all, but is now all out of incendiary grenades! How will he cope!?"
+L.aw_brn3_text  = "burned them all, but is now all out of incendiary grenadesnot  How will he copenot ?"
 
 L.aw_fnd1_title = "Coroner"
 L.aw_fnd1_text  = "found {num} bodies lying around."
@@ -1041,10 +1041,10 @@ L.aw_fnd2_title = "Gotta Catch Em All"
 L.aw_fnd2_text  = "found {num} corpses for his collection."
 
 L.aw_fnd3_title = "Death Scent"
-L.aw_fnd3_text  = "keeps stumbling on random corpses, {num} times this round." 
+L.aw_fnd3_text  = "keeps stumbling on random corpses, {num} times this round."
 
 L.aw_crd1_title = "Recycler"
-L.aw_crd1_text  = "scrounged up {num} leftover credits from corpses." 
+L.aw_crd1_text  = "scrounged up {num} leftover credits from corpses."
 
 L.aw_tod1_title = "Pyrrhusseger"
 L.aw_tod1_text  = "dog bara några sekunder innan hans lag vann rundan."
@@ -1055,10 +1055,10 @@ L.aw_tod2_text  = "dog precis efter att rundan påbörjats."
 --- v23
 L.set_avoid_det     = "Undvik att bli vald som Detective"
 L.set_avoid_det_tip = "Aktivera det här för att be servern att inte välja dig som Detective om möjligt. Betyder inte att du är Traitor oftare."
- 
+
 --- v24
 L.drop_no_ammo = "Otillräcklig ammunition i vapnets klipp att släppa som en ammo låda."
- 
+
 --- v31
 L.set_cross_brightness = "Hårkors ljushet"
 L.set_cross_size = "Hårkors storlek"

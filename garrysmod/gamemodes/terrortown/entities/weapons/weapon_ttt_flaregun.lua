@@ -31,7 +31,7 @@ SWEP.Primary.ClipSize      = 4
 SWEP.Primary.Automatic     = false
 SWEP.Primary.DefaultClip   = 4
 SWEP.Primary.ClipMax       = 4
-SWEP.Primary.Sound         = Sound( "Weapon_USP.SilencedShot" )
+SWEP.Primary.Sound         = Sound("Weapon_USP.SilencedShot")
 
 SWEP.Kind                  = WEAPON_EQUIP
 SWEP.CanBuy                = {ROLE_TRAITOR} -- only traitors can buy
@@ -168,37 +168,37 @@ function SWEP:ShootFlare()
    bullet.Num       = 1
    bullet.Src       = self.Owner:GetShootPos()
    bullet.Dir       = self.Owner:GetAimVector()
-   bullet.Spread    = Vector( cone, cone, 0 )
+   bullet.Spread    = Vector(cone, cone, 0)
    bullet.Tracer    = 1
    bullet.Force     = 2
    bullet.Damage    = self.Primary.Damage
    bullet.TracerName = self.Tracer
    bullet.Callback = IgniteTarget
 
-   self.Owner:FireBullets( bullet )
+   self.Owner:FireBullets(bullet)
 end
 
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
    if not self:CanPrimaryAttack() then return end
 
-   self:EmitSound( self.Primary.Sound )
+   self:EmitSound(self.Primary.Sound)
 
-   self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
+   self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 
    self:ShootFlare()
 
-   self:TakePrimaryAmmo( 1 )
+   self:TakePrimaryAmmo(1)
 
    if IsValid(self.Owner) then
-      self.Owner:SetAnimation( PLAYER_ATTACK1 )
+      self.Owner:SetAnimation(PLAYER_ATTACK1)
 
-      self.Owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0 ) )
+      self.Owner:ViewPunch(Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0))
    end
 
-   if ( (game.SinglePlayer() && SERVER) || CLIENT ) then
-      self:SetNWFloat( "LastShootTime", CurTime() )
+   if ((game.SinglePlayer() and SERVER) or CLIENT) then
+      self:SetNWFloat("LastShootTime", CurTime())
    end
 end
 

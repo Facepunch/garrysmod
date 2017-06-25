@@ -49,7 +49,7 @@ local function IdentifyBody(ply, rag)
       CORPSE.SetFound(rag, true)
       return
    end
-   
+
    if not hook.Run("TTTCanIdentifyCorpse", ply, rag, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
@@ -57,7 +57,7 @@ local function IdentifyBody(ply, rag)
    local finder = ply:Nick()
    local nick = CORPSE.GetPlayerNick(rag, "")
    local traitor = (rag.was_role == ROLE_TRAITOR)
-   
+
    -- Announce body
    if bodyfound:GetBool() and not CORPSE.GetFound(rag, false) then
       local roletext = nil
@@ -88,7 +88,7 @@ local function IdentifyBody(ply, rag)
          end
          SCORE:HandleBodyFound(ply, deadply)
       end
-      hook.Call( "TTTBodyFound", GAMEMODE, ply, deadply, rag )
+      hook.Call("TTTBodyFound", GAMEMODE, ply, deadply, rag)
       CORPSE.SetFound(rag, true)
    else
       -- re-set because nwvars are unreliable
@@ -119,14 +119,14 @@ end
 -- Covert identify concommand for traitors
 local function IdentifyCommand(ply, cmd, args)
    if not IsValid(ply) then return end
-   if #args != 2 then return end
+   if #args ~= 2 then return end
 
    local eidx = tonumber(args[1])
    local id = tonumber(args[2])
    if (not eidx) or (not id) then return end
 
 
-   if (not ply.search_id) or ply.search_id.id != id or ply.search_id.eidx != eidx then
+   if (not ply.search_id) or ply.search_id.id ~= id or ply.search_id.eidx ~= eidx then
       ply.search_id = nil
       return
    end
@@ -145,7 +145,7 @@ concommand.Add("ttt_confirm_death", IdentifyCommand)
 -- Call detectives to a corpse
 local function CallDetective(ply, cmd, args)
    if not IsValid(ply) then return end
-   if #args != 1 then return end
+   if #args ~= 1 then return end
    if not ply:IsActive() then return end
 
    local eidx = tonumber(args[1])
@@ -191,7 +191,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
       LANG.Msg(ply, "body_burning")
       return
    end
-   
+
    if not hook.Run("TTTCanSearchCorpse", ply, rag, covert, long_range, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
@@ -207,7 +207,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    local words = rag.last_words or ""
    local hshot = rag.was_headshot or false
    local dtime = rag.time or 0
-   
+
    local owner = player.GetBySteamID(rag.sid)
    owner = IsValid(owner) and owner:EntIndex() or -1
 
@@ -230,7 +230,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    end
 
    -- time of death relative to current time (saves bits)
-   if dtime != 0 then
+   if dtime ~= 0 then
       dtime = math.Round(CurTime() - dtime)
    end
 
@@ -261,14 +261,14 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    -- Send a message with basic info
    net.Start("TTT_RagdollSearch")
       net.WriteUInt(rag:EntIndex(), 16) -- 16 bits
-      net.WriteUInt(owner, 8) -- 128 max players. ( 8 bits )
+      net.WriteUInt(owner, 8) -- 128 max players. ( 8 bits)
       net.WriteString(nick)
-      net.WriteUInt(eq, 16) -- Equipment ( 16 = max. )
-      net.WriteUInt(role, 2) -- ( 2 bits )
-      net.WriteInt(c4, bitsRequired(C4_WIRE_COUNT) + 1) -- -1 -> 2^bits ( default c4: 4 bits )
-      net.WriteUInt(dmg, 30) -- DMG_BUCKSHOT is the highest. ( 30 bits )
+      net.WriteUInt(eq, 16) -- Equipment ( 16 = max.)
+      net.WriteUInt(role, 2) -- ( 2 bits)
+      net.WriteInt(c4, bitsRequired(C4_WIRE_COUNT) + 1) -- -1 -> 2^bits ( default c4: 4 bits)
+      net.WriteUInt(dmg, 30) -- DMG_BUCKSHOT is the highest. ( 30 bits)
       net.WriteString(wep)
-      net.WriteBit(hshot) -- ( 1 bit )
+      net.WriteBit(hshot) -- ( 1 bit)
       net.WriteInt(dtime, 16)
       net.WriteInt(stime, 16)
 
@@ -388,7 +388,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
    rag:SetModel(ply:GetModel())
    rag:SetSkin(ply:GetSkin())
    for key, value in pairs(ply:GetBodyGroups()) do
-      rag:SetBodygroup(value.id, ply:GetBodygroup(value.id))	
+      rag:SetBodygroup(value.id, ply:GetBodygroup(value.id))
    end
    rag:SetAngles(ply:GetAngles())
    rag:SetColor(ply:GetColor())
@@ -398,7 +398,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
 
    -- nonsolid to players, but can be picked up and shot
    rag:SetCollisionGroup(rag_collide:GetBool() and COLLISION_GROUP_WEAPON or COLLISION_GROUP_DEBRIS_TRIGGER)
-   timer.Simple( 1, function() if IsValid( rag ) then rag:CollisionRulesChanged() end end )
+   timer.Simple(1, function() if IsValid( rag) then rag:CollisionRulesChanged() end end)
 
    -- flag this ragdoll as being a player's
    rag.player_ragdoll = true
@@ -461,7 +461,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
       local efn = ply.effect_fn
       timer.Simple(0, function() efn(rag) end)
    end
-   
+
    hook.Run("TTTOnCorpseCreated", rag, ply)
 
    return rag -- we'll be speccing this

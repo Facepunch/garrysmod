@@ -13,7 +13,7 @@ end
 	Name: KeyValue
 	Desc: Called when a keyvalue is added to us
 -----------------------------------------------------------]]
-function ENT:KeyValue( key, value )
+function ENT:KeyValue(key, value)
 end
 
 --[[---------------------------------------------------------

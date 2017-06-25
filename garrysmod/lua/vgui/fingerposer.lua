@@ -1,7 +1,7 @@
 
 local PANEL = {}
 
-local MatBackground = surface.GetTextureID( "vgui/hand" )
+local MatBackground = surface.GetTextureID("vgui/hand")
 
 local ow = 310
 local oh = 270
@@ -33,19 +33,19 @@ function PANEL:Init()
 	self.Hand = 0
 	self.FingerVars = {}
 
-	self.Label:SetBright( true )
+	self.Label:SetBright(true)
 
 	for i = 0, 14 do
 
-		if ( self.NumVars == 18 && i > 10 ) then break end
+		if (self.NumVars == 18 and i > 10) then break end
 
-		self.FingerVars[ i ] = vgui.Create( "FingerVar", self )
+		self.FingerVars[ i ] = vgui.Create("FingerVar", self)
 
-		self.FingerVars[ i ]:SetVarName( "finger_" .. i )
+		self.FingerVars[ i ]:SetVarName("finger_" .. i)
 
-		if ( i > 2 && i % 3 != 0 ) then
+		if (i > 2 and i % 3 ~= 0) then
 
-			self.FingerVars[ i ]:SetRestrictX( true )
+			self.FingerVars[ i ]:SetRestrictX(true)
 
 		end
 
@@ -53,25 +53,25 @@ function PANEL:Init()
 
 end
 
-function PANEL:ControlValues( kv )
+function PANEL:ControlValues(kv)
 
-	if ( kv.hand == 1 ) then
-		self.Label:SetText( "#tool.finger.righthand" )
+	if (kv.hand == 1) then
+		self.Label:SetText("#tool.finger.righthand")
 		self.Hand = 1
 	else
-		self.Label:SetText( "#tool.finger.lefthand" )
+		self.Label:SetText("#tool.finger.lefthand")
 		self.Hand = 0
 	end
 
 	self.NumVars = kv.numvars
 
-	self:InvalidateLayout( true )
+	self:InvalidateLayout(true)
 
 end
 
 function PANEL:PerformLayout()
 
-	local y = self.BaseClass.PerformLayout( self )
+	local y = self.BaseClass.PerformLayout(self)
 
 	y = y + 200
 	y = y + 5
@@ -82,25 +82,25 @@ function PANEL:PerformLayout()
 
 		for var = 0, 2 do
 
-			local ID = ( finger * 3 ) + var
+			local ID = (finger * 3) + var
 
 			local Pos = FingerPositions[ ID + 1 ]
-			if ( Pos && self.FingerVars[ ID ] ) then
-				self.FingerVars[ ID ]:SetPos( Pos[1] * w - 24, Pos[2] * h - 24 )
+			if (Pos and self.FingerVars[ ID ]) then
+				self.FingerVars[ ID ]:SetPos(Pos[1] * w - 24, Pos[2] * h - 24)
 			end
 
 		end
 
 	end
 
-	self:SetTall( y )
+	self:SetTall(y)
 
 end
-function PANEL:Paint( w, h )
+function PANEL:Paint(w, h)
 
-	surface.SetTexture( MatBackground )
-	surface.SetDrawColor( 255, 255, 255, 255 )
-	surface.DrawTexturedRect( 0, 0, w, h )
+	surface.SetTexture(MatBackground)
+	surface.SetDrawColor(255, 255, 255, 255)
+	surface.DrawTexturedRect(0, 0, w, h)
 
 	return true
 
@@ -112,35 +112,35 @@ end
 
 function PANEL:UpdateHovered()
 
-	if ( self.Dragging ) then return end
+	if (self.Dragging) then return end
 
 	local x, y = self:CursorPos()
 
 	local distance = 256
 	local hovered = nil
-	for k, v in pairs( self.FingerVars ) do
+	for k, v in pairs(self.FingerVars) do
 
 		local val = v:GetValue()
 		local AddX = val[1] * v:GetWide()
 		local AddY = val[2] * v:GetTall()
 
-		local dist = math.Distance( x, y, v.x + v:GetWide() / 2 + AddX, v.y + v:GetTall() / 2 + AddY )
-		if ( dist < distance ) then
+		local dist = math.Distance(x, y, v.x + v:GetWide() / 2 + AddX, v.y + v:GetTall() / 2 + AddY)
+		if (dist < distance) then
 			hovered = v
 			distance = dist
 		end
 
 	end
 
-	if ( !hovered || hovered != self.HoveredPanel ) then
+	if (not hovered or hovered ~= self.HoveredPanel) then
 
-		if ( IsValid( self.HoveredPanel ) ) then
+		if (IsValid( self.HoveredPanel)) then
 			self.HoveredPanel.HoveredFingerVar = nil
 		end
 
 		self.HoveredPanel = hovered
 
-		if ( IsValid( self.HoveredPanel ) ) then
+		if (IsValid( self.HoveredPanel)) then
 			self.HoveredPanel.HoveredFingerVar = true
 		end
 
@@ -148,14 +148,14 @@ function PANEL:UpdateHovered()
 
 end
 
-function PANEL:OnMousePressed( mousecode )
+function PANEL:OnMousePressed(mousecode)
 
 	self:UpdateHovered()
 
-	if ( !IsValid( self.HoveredPanel ) ) then return end
+	if (not IsValid( self.HoveredPanel)) then return end
 
-	self.HoveredPanel:OnMousePressed( mousecode )
+	self.HoveredPanel:OnMousePressed(mousecode)
 
 end
 
-vgui.Register( "fingerposer", PANEL, "ContextBase" )
+vgui.Register("fingerposer", PANEL, "ContextBase")

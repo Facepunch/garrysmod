@@ -1,13 +1,13 @@
 
-EFFECT.Mat = Material( "pp/dof" )
+EFFECT.Mat = Material("pp/dof")
 
-function EFFECT:Init( data )
+function EFFECT:Init(data)
 
-	table.insert( DOF_Ents, self.Entity )
+	table.insert(DOF_Ents, self.Entity)
 	self.Scale = data:GetScale()
 
 	local size = 32
-	self:SetCollisionBounds( Vector( -size, -size, -size ), Vector( size, size, size ) )
+	self:SetCollisionBounds(Vector( -size, -size, -size), Vector( size, size, size))
 
 end
 
@@ -20,21 +20,21 @@ function EFFECT:Think( )
 	self.offset = DOF_OFFSET
 
 	-- Just return if it hasn't
-	--if ( spacing == self.spacing && offset == self.offset ) then return true end
+	--if (spacing == self.spacing and offset == self.offset) then return true end
 
 	local pos = ply:EyePos()
 	local fwd = ply:EyeAngles():Forward()
 
-	if ( ply:GetViewEntity() != ply ) then
+	if (ply:GetViewEntity() ~= ply) then
 		pos = ply:GetViewEntity():GetPos()
 		fwd = ply:GetViewEntity():GetForward()
 	end
 
-	pos = pos + ( fwd * self.spacing ) + ( fwd * self.offset )
+	pos = pos + (fwd * self.spacing) + ( fwd * self.offset)
 
-	self:SetParent( nil )
-	self:SetPos( pos )
-	self:SetParent( ply )
+	self:SetParent(nil)
+	self:SetPos(pos)
+	self:SetParent(ply)
 
 	-- We don't kill this, the pp effect should
 	return true
@@ -47,9 +47,9 @@ function EFFECT:Render()
 	render.UpdateRefractTexture()
 	//render.UpdateScreenEffectTexture()
 
-	local SpriteSize = ( self.spacing + self.offset ) * 8
+	local SpriteSize = (self.spacing + self.offset) * 8
 
-	render.SetMaterial( self.Mat )
-	render.DrawSprite( self:GetPos(), SpriteSize, SpriteSize, Color( 255, 255, 255 ) )
+	render.SetMaterial(self.Mat)
+	render.DrawSprite(self:GetPos(), SpriteSize, SpriteSize, Color( 255, 255, 255))
 
 end

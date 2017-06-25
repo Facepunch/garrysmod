@@ -1,20 +1,20 @@
 
-module( "weapons", package.seeall )
+module("weapons", package.seeall)
 
 local WeaponList = {}
 
 --[[---------------------------------------------------------
-	Name: TableInherit( t, base )
+	Name: TableInherit(t, base)
 	Desc: Copies any missing data from base to t
 -----------------------------------------------------------]]
-local function TableInherit( t, base )
+local function TableInherit(t, base)
 
-	for k, v in pairs( base ) do
+	for k, v in pairs(base) do
 
-		if ( t[ k ] == nil ) then
+		if (t[ k ] == nil) then
 			t[ k ] = v
-		elseif ( k != "BaseClass" && istable( t[ k ] ) ) then
-			TableInherit( t[ k ], v )
+		elseif (k ~= "BaseClass" and istable( t[ k ])) then
+			TableInherit(t[ k ], v)
 		end
 
 	end
@@ -26,31 +26,31 @@ local function TableInherit( t, base )
 end
 
 --[[---------------------------------------------------------
-	Name: IsBasedOn( name, base )
+	Name: IsBasedOn(name, base)
 	Desc: Checks if name is based on base
 -----------------------------------------------------------]]
-function IsBasedOn( name, base )
-	local t = GetStored( name )
-	if ( !t ) then return false end
-	if ( t.Base == name ) then return false end
+function IsBasedOn(name, base)
+	local t = GetStored(name)
+	if (not t) then return false end
+	if (t.Base == name) then return false end
 
-	if ( t.Base == base ) then return true end
-	return IsBasedOn( t.Base, base )
+	if (t.Base == base) then return true end
+	return IsBasedOn(t.Base, base)
 end
 
 
 --[[---------------------------------------------------------
-	Name: Register( table, string, bool )
+	Name: Register(table, string, bool)
 	Desc: Used to register your SWEP with the engine
 -----------------------------------------------------------]]
-function Register( t, name )
+function Register(t, name)
 
 	local old = WeaponList[ name ]
 
 	t.ClassName = name
 	WeaponList[ name ] = t
 
-	--baseclass.Set( name, t )
+	--baseclass.Set(name, t)
 
 	list.Set( "Weapon", name, {
 		ClassName = name,
@@ -61,41 +61,41 @@ function Register( t, name )
 	} )
 
 	-- Allow all SWEPS to be duplicated, unless specified
-	if ( !t.DisableDuplicator ) then
-		duplicator.Allow( name )
+	if (not t.DisableDuplicator) then
+		duplicator.Allow(name)
 	end
 
 	--
 	-- If we're reloading this entity class
 	-- then refresh all the existing entities.
 	--
-	if ( old != nil ) then
+	if (old ~= nil) then
 
 		--
 		-- For each entity using this class
 		--
-		for _, entity in pairs( ents.FindByClass( name ) ) do
+		for _, entity in pairs(ents.FindByClass( name)) do
 
 			--
 			-- Replace the contents with this entity table
 			--
-			table.Merge( entity, t )
+			table.Merge(entity, t)
 
 			--
 			-- Call OnReloaded hook (if it has one)
 			--
-			if ( entity.OnReloaded ) then
+			if (entity.OnReloaded) then
 				entity:OnReloaded()
 			end
 
 		end
 
 		-- Update SWEP table of entities that are based on this SWEP
-		for _, e in pairs( ents.GetAll() ) do
-			if ( IsBasedOn( e:GetClass(), name ) ) then
-				table.Merge( e, Get( e:GetClass() ) )
+		for _, e in pairs(ents.GetAll()) do
+			if (IsBasedOn( e:GetClass(), name)) then
+				table.Merge(e, Get( e:GetClass()))
 
-				if ( e.OnReloaded ) then
+				if (e.OnReloaded) then
 					e:OnReloaded()
 				end
 			end
@@ -113,39 +113,39 @@ function OnLoaded()
 	--
 	-- Once all the scripts are loaded we can set up the baseclass
 	-- - we have to wait until they're all setup because load order
-	-- could cause some entities to load before their bases!
+	-- could cause some entities to load before their basesnot
 	--
-	for k, v in pairs( WeaponList ) do
+	for k, v in pairs(WeaponList) do
 
-		baseclass.Set( k, Get( k ) )
+		baseclass.Set(k, Get( k))
 
 	end
 
 end
 
 --[[---------------------------------------------------------
-	Name: Get( string )
+	Name: Get(string)
 	Desc: Get a weapon by name.
 -----------------------------------------------------------]]
-function Get( name )
+function Get(name)
 
-	local Stored = GetStored( name )
-	if ( !Stored ) then return nil end
+	local Stored = GetStored(name)
+	if (not Stored) then return nil end
 
 	-- Create/copy a new table
-	local retval = table.Copy( Stored )
+	local retval = table.Copy(Stored)
 	retval.Base = retval.Base or "weapon_base"
 
 	-- If we're not derived from ourselves (a base weapon)
 	-- then derive from our 'Base' weapon.
-	if ( retval.Base != name ) then
+	if (retval.Base ~= name) then
 
-		local BaseWeapon = Get( retval.Base )
+		local BaseWeapon = Get(retval.Base)
 
-		if ( !BaseWeapon ) then
-			Msg( "SWEP (", name, ") is derived from non existant SWEP (", retval.Base, ") - Expect errors!\n" )
+		if (not BaseWeapon) then
+			Msg("SWEP (", name, ") is derived from non existant SWEP (", retval.Base, ") - Expect errorsnot \n")
 		else
-			retval = TableInherit( retval, Get( retval.Base ) )
+			retval = TableInherit(retval, Get( retval.Base))
 		end
 
 	end
@@ -154,22 +154,22 @@ function Get( name )
 end
 
 --[[---------------------------------------------------------
-	Name: GetStored( string )
+	Name: GetStored(string)
 	Desc: Gets the REAL weapon table, not a copy
 -----------------------------------------------------------]]
-function GetStored( name )
+function GetStored(name)
 	return WeaponList[ name ]
 end
 
 --[[---------------------------------------------------------
-	Name: GetList( string )
+	Name: GetList(string)
 	Desc: Get a list of all the registered SWEPs
 -----------------------------------------------------------]]
 function GetList()
 	local result = {}
 
-	for k, v in pairs( WeaponList ) do
-		table.insert( result, v )
+	for k, v in pairs(WeaponList) do
+		table.insert(result, v)
 	end
 
 	return result

@@ -1,6 +1,6 @@
 -- shared extensions to player table
 
-local plymeta = FindMetaTable( "Player" )
+local plymeta = FindMetaTable("Player")
 if not plymeta then return end
 
 local math = math
@@ -17,7 +17,7 @@ function plymeta:GetDetective() return self:GetRole() == ROLE_DETECTIVE end
 plymeta.IsTraitor = plymeta.GetTraitor
 plymeta.IsDetective = plymeta.GetDetective
 
-function plymeta:IsSpecial() return self:GetRole() != ROLE_INNOCENT end
+function plymeta:IsSpecial() return self:GetRole() ~= ROLE_INNOCENT end
 
 -- Player is alive and in an active round
 function plymeta:IsActive()
@@ -96,7 +96,7 @@ function plymeta:GetEquipmentItems() return self.equipment_items or EQUIP_NONE e
 -- player has any equipment item.
 function plymeta:HasEquipmentItem(id)
    if not id then
-      return self:GetEquipmentItems() != EQUIP_NONE
+      return self:GetEquipmentItems() ~= EQUIP_NONE
    else
       return util.BitSet(self:GetEquipmentItems(), id)
    end
@@ -120,7 +120,7 @@ if CLIENT then
 
    local gmod_GetWeapons = plymeta.GetWeapons
    function plymeta:GetWeapons()
-      if self != LocalPlayer() then
+      if self ~= LocalPlayer() then
          return {}
       else
          return gmod_GetWeapons(self)

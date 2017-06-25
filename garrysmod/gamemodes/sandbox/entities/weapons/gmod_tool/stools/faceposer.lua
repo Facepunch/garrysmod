@@ -10,37 +10,37 @@ TOOL.Information = {
 	{ name = "right" }
 }
 
-local function IsUselessFaceFlex( strName )
+local function IsUselessFaceFlex(strName)
 
-	if ( strName == "gesture_rightleft" ) then return true end
-	if ( strName == "gesture_updown" ) then return true end
-	if ( strName == "head_forwardback" ) then return true end
-	if ( strName == "chest_rightleft" ) then return true end
-	if ( strName == "body_rightleft" ) then return true end
-	if ( strName == "eyes_rightleft" ) then return true end
-	if ( strName == "eyes_updown" ) then return true end
-	if ( strName == "head_tilt" ) then return true end
-	if ( strName == "head_updown" ) then return true end
-	if ( strName == "head_rightleft" ) then return true end
+	if (strName == "gesture_rightleft") then return true end
+	if (strName == "gesture_updown") then return true end
+	if (strName == "head_forwardback") then return true end
+	if (strName == "chest_rightleft") then return true end
+	if (strName == "body_rightleft") then return true end
+	if (strName == "eyes_rightleft") then return true end
+	if (strName == "eyes_updown") then return true end
+	if (strName == "head_tilt") then return true end
+	if (strName == "head_updown") then return true end
+	if (strName == "head_rightleft") then return true end
 
 	return false
 
 end
 
 function TOOL:FacePoserEntity()
-	return self:GetWeapon():GetNWEntity( 1 )
+	return self:GetWeapon():GetNWEntity( 1)
 end
 
-function TOOL:SetFacePoserEntity( ent )
-	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
-	return self:GetWeapon():SetNWEntity( 1, ent )
+function TOOL:SetFacePoserEntity(ent)
+	if (IsValid( ent) and ent:GetClass() == "prop_effect") then ent = ent.AttachedEntity end
+	return self:GetWeapon():SetNWEntity( 1, ent)
 end
 
 function TOOL:Think()
 
 	-- If we're on the client just make sure the context menu is up to date
-	if ( CLIENT ) then
-		if ( self:FacePoserEntity() == gLastFacePoseEntity ) then return end
+	if (CLIENT) then
+		if (self:FacePoserEntity() == gLastFacePoseEntity) then return end
 		gLastFacePoseEntity = self:FacePoserEntity()
 		self:UpdateFaceControlPanel()
 
@@ -48,54 +48,54 @@ function TOOL:Think()
 	end
 
 	-- On the server we continually set the flex weights
-	if ( self.FaceTimer > CurTime() ) then return end
+	if (self.FaceTimer > CurTime()) then return end
 
 	local ent = self:FacePoserEntity()
-	if ( !IsValid( ent ) ) then return end
+	if (not IsValid( ent)) then return end
 
 	local FlexNum = ent:GetFlexNum()
-	if ( FlexNum <= 0 ) then return end
+	if (FlexNum <= 0) then return end
 
 	for i = 0, FlexNum do
 
-		local Name = ent:GetFlexName( i )
+		local Name = ent:GetFlexName(i)
 
-		if ( IsUselessFaceFlex( Name ) ) then
+		if (IsUselessFaceFlex( Name)) then
 
-			ent:SetFlexWeight( i, 0 )
+			ent:SetFlexWeight(i, 0)
 
 		else
 
-			local num = self:GetClientNumber( "flex" .. i )
-			ent:SetFlexWeight( i, num )
+			local num = self:GetClientNumber("flex" .. i)
+			ent:SetFlexWeight(i, num)
 
 		end
 
 	end
 
-	local num = self:GetClientNumber( "scale" )
-	ent:SetFlexScale( num )
+	local num = self:GetClientNumber("scale")
+	ent:SetFlexScale(num)
 
 end
 
 --[[---------------------------------------------------------
 	Alt fire sucks the facepose from the model's face
 -----------------------------------------------------------]]
-function TOOL:RightClick( trace )
+function TOOL:RightClick(trace)
 
 	local ent = trace.Entity
-	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	if (IsValid( ent) and ent:GetClass() == "prop_effect") then ent = ent.AttachedEntity end
 
-	if ( SERVER ) then
-		self:SetFacePoserEntity( ent )
+	if (SERVER) then
+		self:SetFacePoserEntity(ent)
 	end
 
-	if ( !IsValid( ent ) ) then return true end
+	if (not IsValid( ent)) then return true end
 
 	local FlexNum = ent:GetFlexNum()
-	if ( FlexNum == 0 ) then return false end
+	if (FlexNum == 0) then return false end
 
-	if ( SERVER ) then
+	if (SERVER) then
 
 		-- This stops it applying the current sliders to the newly selected face..
 		-- it should probably be linked to the ping somehow.. but 1 second seems pretty safe
@@ -103,7 +103,7 @@ function TOOL:RightClick( trace )
 
 		-- In multiplayer the rest is only done on the client to save bandwidth.
 		-- We can't do that in single player because these functions don't get called on the client
-		if ( !game.SinglePlayer() ) then return true end
+		if (not game.SinglePlayer()) then return true end
 
 	end
 
@@ -111,15 +111,15 @@ function TOOL:RightClick( trace )
 
 		local Weight = "0.0"
 
-		if ( i <= FlexNum ) then
-			Weight = ent:GetFlexWeight( i )
+		if (i <= FlexNum) then
+			Weight = ent:GetFlexWeight(i)
 		end
 
-		self:GetOwner():ConCommand( "faceposer_flex" .. i .. " " .. Weight )
+		self:GetOwner():ConCommand( "faceposer_flex" .. i .. " " .. Weight)
 
 	end
 
-	self:GetOwner():ConCommand( "faceposer_scale " .. ent:GetFlexScale() )
+	self:GetOwner():ConCommand( "faceposer_scale " .. ent:GetFlexScale())
 
 	return true
 
@@ -129,38 +129,38 @@ end
 	Just select as the current object
 	Current settings will get applied
 -----------------------------------------------------------]]
-function TOOL:LeftClick( trace )
+function TOOL:LeftClick(trace)
 
 	local ent = trace.Entity
-	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	if (IsValid( ent) and ent:GetClass() == "prop_effect") then ent = ent.AttachedEntity end
 
-	if ( !IsValid( ent ) ) then return false end
-	if ( ent:GetFlexNum() == 0 ) then return false end
+	if (not IsValid( ent)) then return false end
+	if (ent:GetFlexNum() == 0) then return false end
 
 	self.FaceTimer = 0
-	self:SetFacePoserEntity( ent )
+	self:SetFacePoserEntity(ent)
 
 	return true
 
 end
 
-if ( SERVER ) then
+if (SERVER) then
 
-	function CC_Face_Randomize( pl, command, arguments )
+	function CC_Face_Randomize(pl, command, arguments)
 
 		for i=0, 64 do
-			local num = math.Rand( 0, 1 )
-			pl:ConCommand( "faceposer_flex" .. i .. " " .. string.format( "%.3f", num ) )
+			local num = math.Rand(0, 1)
+			pl:ConCommand("faceposer_flex" .. i .. " " .. string.format( "%.3f", num))
 		end
 
 	end
 
-	concommand.Add( "faceposer_randomize", CC_Face_Randomize )
+	concommand.Add("faceposer_randomize", CC_Face_Randomize)
 
 end
 
 -- The rest of the code is clientside only, it is not used on server
-if ( SERVER ) then return end
+if (SERVER) then return end
 
 for i=0, 64 do
 	TOOL.ClientConVar[ "flex" .. i ] = "0"
@@ -169,36 +169,36 @@ end
 TOOL.ClientConVar[ "scale" ] = "1.0"
 
 -- Updates the spawn menu panel
-function TOOL:UpdateFaceControlPanel( index )
+function TOOL:UpdateFaceControlPanel(index)
 
-	local CPanel = controlpanel.Get( "faceposer" )
-	if ( !CPanel ) then Msg("Couldn't find faceposer panel!\n") return end
+	local CPanel = controlpanel.Get("faceposer")
+	if (not CPanel) then Msg("Couldn't find faceposer panelnot \n") return end
 
 	CPanel:ClearControls()
-	self.BuildCPanel( CPanel, self:FacePoserEntity() )
+	self.BuildCPanel(CPanel, self:FacePoserEntity())
 
 end
 
 -- Updates the Control Panel
 local ConVarsDefault = TOOL:BuildConVarList()
 
-function TOOL.BuildCPanel( CPanel, FaceEntity )
+function TOOL.BuildCPanel(CPanel, FaceEntity)
 
-	CPanel:AddControl( "Header", { Description = "#tool.faceposer.desc" } )
+	CPanel:AddControl("Header", { Description = "#tool.faceposer.desc" })
 
 	FaceEntity = FaceEntity or gLastFacePoseEntity
-	if ( !IsValid( FaceEntity ) || FaceEntity:GetFlexNum() == 0 ) then return end
+	if (not IsValid( FaceEntity) or FaceEntity:GetFlexNum() == 0) then return end
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "face", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:AddControl("ComboBox", { MenuButton = 1, Folder = "face", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault) })
 
-	local QuickFace = vgui.Create( "MatSelect", CPanel )
-	QuickFace:SetItemWidth( 64 )
-	QuickFace:SetItemHeight( 32 )
+	local QuickFace = vgui.Create("MatSelect", CPanel)
+	QuickFace:SetItemWidth(64)
+	QuickFace:SetItemHeight(32)
 
-	QuickFace.List:SetSpacing( 1 )
-	QuickFace.List:SetPadding( 0 )
+	QuickFace.List:SetSpacing(1)
+	QuickFace.List:SetPadding(0)
 
-	QuickFace:SetNumRows( 3 )
+	QuickFace:SetNumRows(3)
 
 	-- Todo: These really need to be the name of the flex.
 
@@ -207,7 +207,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 		Clear[ "faceposer_flex" .. i ] = 0
 	end
 
-	QuickFace:AddMaterialEx( "#faceposer.clear", "vgui/face/clear", nil, Clear )
+	QuickFace:AddMaterialEx("#faceposer.clear", "vgui/face/clear", nil, Clear)
 
 	QuickFace:AddMaterialEx( "#faceposer.openeyes", "vgui/face/open_eyes", nil, {
 		faceposer_flex0 = "1",
@@ -344,59 +344,59 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 		faceposer_flex44 = "0",
 	} )
 
-	CPanel:AddItem( QuickFace )
+	CPanel:AddItem(QuickFace)
 
-	CPanel:AddControl( "Slider", { Label = "#tool.faceposer.scale", Command = "faceposer_scale", Type = "Float", Min = -5, Max = 5, Help = true } )
-	CPanel:AddControl( "Button", { Text = "#tool.faceposer.randomize", Command = "faceposer_randomize" } )
+	CPanel:AddControl("Slider", { Label = "#tool.faceposer.scale", Command = "faceposer_scale", Type = "Float", Min = -5, Max = 5, Help = true })
+	CPanel:AddControl("Button", { Text = "#tool.faceposer.randomize", Command = "faceposer_randomize" })
 
 	local lastItem
 	for i=0, FaceEntity:GetFlexNum() do
 
-		local Name = FaceEntity:GetFlexName( i )
+		local Name = FaceEntity:GetFlexName(i)
 
-		if ( !IsUselessFaceFlex( Name ) ) then
+		if (not IsUselessFaceFlex( Name)) then
 
-			local min, max = FaceEntity:GetFlexBounds( i )
+			local min, max = FaceEntity:GetFlexBounds(i)
 
-			local ctrl = CPanel:AddControl( "Slider", { Label = Name, Command = "faceposer_flex" .. i, Type = "Float", Min = min, Max = max } )
-			ctrl:SetHeight( 10 ) -- this makes the controls all bunched up like how we want
+			local ctrl = CPanel:AddControl("Slider", { Label = Name, Command = "faceposer_flex" .. i, Type = "Float", Min = min, Max = max })
+			ctrl:SetHeight(10) -- this makes the controls all bunched up like how we want
 			lastItem = ctrl
 
 		end
 
 	end
-	lastItem:DockPadding( 0, 0, 0, 20 )
+	lastItem:DockPadding(0, 0, 0, 20)
 
 end
 
-local FacePoser = surface.GetTextureID( "gui/faceposer_indicator" )
+local FacePoser = surface.GetTextureID("gui/faceposer_indicator")
 
 -- Draw a box indicating the face we have selected
 function TOOL:DrawHUD()
 
-	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
+	if (GetConVarNumber( "gmod_drawtooleffects") == 0) then return end
 
 	local selected = self:FacePoserEntity()
 
-	if ( !IsValid( selected ) || selected:IsWorld() || selected:GetFlexNum() == 0 ) then return end
+	if (not IsValid( selected) or selected:IsWorld() or selected:GetFlexNum() == 0) then return end
 
 	local pos = selected:GetPos()
-	local eyeattachment = selected:LookupAttachment( "eyes" )
-	if ( eyeattachment != 0 ) then
-		local attachment = selected:GetAttachment( eyeattachment )
+	local eyeattachment = selected:LookupAttachment("eyes")
+	if (eyeattachment ~= 0) then
+		local attachment = selected:GetAttachment(eyeattachment)
 		pos = attachment.Pos
 	end
 
 	local scrpos = pos:ToScreen()
-	if ( !scrpos.visible ) then return end
+	if (not scrpos.visible) then return end
 
 	-- Work out the side distance to give a rough headsize box..
 	local player_eyes = LocalPlayer():EyeAngles()
-	local side = ( pos + player_eyes:Right() * 20 ):ToScreen()
-	local size = math.abs( side.x - scrpos.x )
+	local side = (pos + player_eyes:Right() * 20):ToScreen()
+	local size = math.abs(side.x - scrpos.x)
 
-	surface.SetDrawColor( 255, 255, 255, 255 )
-	surface.SetTexture( FacePoser )
-	surface.DrawTexturedRect( scrpos.x - size, scrpos.y - size, size * 2, size * 2 )
+	surface.SetDrawColor(255, 255, 255, 255)
+	surface.SetTexture(FacePoser)
+	surface.DrawTexturedRect(scrpos.x - size, scrpos.y - size, size * 2, size * 2)
 
 end

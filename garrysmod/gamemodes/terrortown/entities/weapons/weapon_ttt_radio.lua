@@ -50,15 +50,15 @@ function SWEP:OnDrop()
 end
 
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
    self:RadioDrop()
 end
 function SWEP:SecondaryAttack()
-   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
    self:RadioStick()
 end
 
-local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
+local throwsound = Sound("Weapon_SLAM.SatchelThrow")
 
 -- c4 plant but different
 function SWEP:RadioDrop()
@@ -71,7 +71,7 @@ function SWEP:RadioDrop()
       local vsrc = ply:GetShootPos()
       local vang = ply:GetAimVector()
       local vvel = ply:GetVelocity()
-      
+
       local vthrow = vvel + vang * 200
 
       local radio = ents.Create("ttt_radio")
@@ -84,7 +84,7 @@ function SWEP:RadioDrop()
          local phys = radio:GetPhysicsObject()
          if IsValid(phys) then
             phys:SetVelocity(vthrow)
-         end   
+         end
          self:Remove()
 
          self.Planted = true

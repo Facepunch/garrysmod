@@ -6,33 +6,33 @@ TOOL.ClientConVar[ "arg" ] = "0"
 
 TOOL.Information = { { name = "left" } }
 
-function TOOL:LeftClick( trace, attach )
+function TOOL:LeftClick(trace, attach)
 
-	local type = self:GetClientNumber( "type", 0 )
-	local name = self:GetClientInfo( "name", 0 )
-	local arg = self:GetClientInfo( "arg", 0 )
+	local type = self:GetClientNumber("type", 0)
+	local name = self:GetClientInfo("name", 0)
+	local arg = self:GetClientInfo("arg", 0)
 
-	if ( CLIENT ) then return true end
+	if (CLIENT) then return true end
 
-	if ( type == 0 ) then
+	if (type == 0) then
 
-		Spawn_SENT( self:GetOwner(), name, trace )
+		Spawn_SENT(self:GetOwner(), name, trace)
 
-	elseif ( type == 1 ) then
+	elseif (type == 1) then
 
-		Spawn_Vehicle( self:GetOwner(), name, trace )
+		Spawn_Vehicle(self:GetOwner(), name, trace)
 
-	elseif ( type == 2 ) then
+	elseif (type == 2) then
 
-		Spawn_NPC( self:GetOwner(), name, arg, trace )
+		Spawn_NPC(self:GetOwner(), name, arg, trace)
 
-	elseif ( type == 3 ) then
+	elseif (type == 3) then
 
-		Spawn_Weapon( self:GetOwner(), name, trace )
+		Spawn_Weapon(self:GetOwner(), name, trace)
 
-	elseif ( type == 4 ) then
+	elseif (type == 4) then
 
-		CCSpawn( self:GetOwner(), nil, { name } ) -- Props
+		CCSpawn(self:GetOwner(), nil, { name }) -- Props
 
 	end
 

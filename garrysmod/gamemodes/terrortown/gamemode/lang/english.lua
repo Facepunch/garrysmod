@@ -16,15 +16,15 @@ L.round_minplayers = "Not enough players to start a new round..."
 L.round_voting     = "Vote in progress, delaying new round by {num} seconds..."
 L.round_begintime  = "A new round begins in {num} seconds. Prepare yourself."
 L.round_selected   = "The Traitors have been selected."
-L.round_started    = "The round has begun!"
+L.round_started    = "The round has begunnot "
 L.round_restart    = "The round has been forced to restart by an admin."
 
 L.round_traitors_one  = "Traitor, you stand alone."
 L.round_traitors_more = "Traitor, these are your allies: {names}"
 
 L.win_time         = "Time has run out. The Traitors lose."
-L.win_traitor      = "The Traitors have won!"
-L.win_innocent     = "The Traitors have been defeated!"
+L.win_traitor      = "The Traitors have wonnot "
+L.win_innocent     = "The Traitors have been defeatednot "
 L.win_showreport   = "Let's look at the round report for {num} seconds."
 
 L.limit_round      = "Round limit reached. {mapname} will load soon."
@@ -38,24 +38,24 @@ L.credit_tr_all    = "Traitors, you have been awarded {num} equipment credit(s) 
 L.credit_kill      = "You have received {num} credit(s) for killing a {role}."
 
 --- Karma
-L.karma_dmg_full   = "Your Karma is {amount}, so you deal full damage this round!"
+L.karma_dmg_full   = "Your Karma is {amount}, so you deal full damage this roundnot "
 L.karma_dmg_other  = "Your Karma is {amount}. As a result all damage you deal is reduced by {num}%"
 
 --- Body identification messages
 L.body_found       = "{finder} found the body of {victim}. {role}"
 
 -- The {role} in body_found will be replaced by one of the following:
-L.body_found_t     = "They were a Traitor!"
+L.body_found_t     = "They were a Traitornot "
 L.body_found_d     = "They were a Detective."
 L.body_found_i     = "They were Innocent."
 
 L.body_confirm     = "{finder} confirmed the death of {victim}."
 
-L.body_call        = "{player} called a Detective to the body of {victim}!"
-L.body_call_error  = "You must confirm the death of this player before calling a Detective!"
+L.body_call        = "{player} called a Detective to the body of {victim}not "
+L.body_call_error  = "You must confirm the death of this player before calling a Detectivenot "
 
-L.body_burning     = "Ouch! This corpse is on fire!"
-L.body_credits     = "You found {num} credit(s) on the body!"
+L.body_burning     = "Ouchnot  This corpse is on firenot "
+L.body_credits     = "You found {num} credit(s) on the bodynot "
 
 --- Menus and windows
 L.close = "Close"
@@ -93,7 +93,7 @@ L.equip_confirm    = "Buy equipment"
 -- Disguiser tab in equipment menu
 L.disg_name      = "Disguiser"
 L.disg_menutitle = "Disguise control"
-L.disg_not_owned = "You are not carrying a Disguiser!"
+L.disg_not_owned = "You are not carrying a Disguisernot "
 L.disg_enable    = "Enable disguise"
 
 L.disg_help1     = "When your disguise is active, your name, health and karma do not show when someone looks at you. In addition, you will be hidden from a Detective's radar."
@@ -102,16 +102,16 @@ L.disg_help2     = "Press Numpad Enter to toggle the disguise without using the 
 -- Radar tab in equipment menu
 L.radar_name      = "Radar"
 L.radar_menutitle = "Radar control"
-L.radar_not_owned = "You are not carrying a Radar!"
+L.radar_not_owned = "You are not carrying a Radarnot "
 L.radar_scan      = "Perform scan"
 L.radar_auto      = "Auto-repeat scan"
 L.radar_help      = "Scan results show for {num} seconds, after which the Radar will have recharged and can be used again."
-L.radar_charging  = "Your Radar is still charging!"
+L.radar_charging  = "Your Radar is still chargingnot "
 
 -- Transfer tab in equipment menu
 L.xfer_name       = "Transfer"
 L.xfer_menutitle  = "Transfer credits"
-L.xfer_no_credits = "You have no credits to give!"
+L.xfer_no_credits = "You have no credits to givenot "
 L.xfer_send       = "Send a credit"
 L.xfer_help       = "You can only transfer credits to fellow {role} players."
 
@@ -141,18 +141,18 @@ L.radio_button_steps   = "Footsteps"
 
 
 -- Intro screen shown after joining
-L.intro_help     = "If you're new to the game, press F1 for instructions!"
+L.intro_help     = "If you're new to the game, press F1 for instructionsnot "
 
 -- Radiocommands/quickchat
 L.quick_title   = "Quickchat keys"
 
 L.quick_yes     = "Yes."
 L.quick_no      = "No."
-L.quick_help    = "Help!"
+L.quick_help    = "Helpnot "
 L.quick_imwith  = "I'm with {player}."
 L.quick_see     = "I see {player}."
 L.quick_suspect = "{player} acts suspicious."
-L.quick_traitor = "{player} is a Traitor!"
+L.quick_traitor = "{player} is a Traitornot "
 L.quick_inno    = "{player} is innocent."
 L.quick_check   = "Anyone still alive?"
 
@@ -173,7 +173,7 @@ L.search_call   = "Call Detective"
 -- Descriptions of pieces of information found
 L.search_nick   = "This is the body of {player}."
 
-L.search_role_t = "This person was a Traitor!"
+L.search_role_t = "This person was a Traitornot "
 L.search_role_d = "This person was a Detective."
 L.search_role_i = "This person was an innocent terrorist."
 
@@ -191,7 +191,7 @@ L.search_dmg_club   = "The body is bruised and battered. Clearly they were clubb
 L.search_dmg_drown  = "The body shows the telltale signs of drowning."
 L.search_dmg_stab   = "They were stabbed and cut before quickly bleeding to death."
 L.search_dmg_burn   = "Smells like roasted terrorist around here..."
-L.search_dmg_tele   = "It looks like their DNA was scrambled by tachyon emissions!"
+L.search_dmg_tele   = "It looks like their DNA was scrambled by tachyon emissionsnot "
 L.search_dmg_car    = "When this terrorist crossed the road, they were run over by a reckless driver."
 L.search_dmg_other  = "You cannot find a specific cause of this terrorist's death."
 
@@ -281,9 +281,9 @@ L.buy_no_stock    = "This weapon is out of stock: you already bought it this rou
 L.buy_pending     = "You already have an order pending, wait until you receive it."
 L.buy_received    = "You have received your special equipment."
 
-L.drop_no_room    = "You have no room here to drop your weapon!"
+L.drop_no_room    = "You have no room here to drop your weaponnot "
 
-L.disg_turned_on  = "Disguise enabled!"
+L.disg_turned_on  = "Disguise enablednot "
 L.disg_turned_off = "Disguise disabled."
 
 -- Equipment item descriptions
@@ -337,9 +337,9 @@ L.c4_remove_destroy2 = "Confirm: destroy"
 L.c4_disarm       = "Disarm C4"
 L.c4_disarm_cut   = "Click to cut wire {num}"
 
-L.c4_disarm_t     = "Cut a wire to disarm the bomb. As you are Traitor, every wire is safe. Innocents don't have it so easy!"
+L.c4_disarm_t     = "Cut a wire to disarm the bomb. As you are Traitor, every wire is safe. Innocents don't have it so easynot "
 L.c4_disarm_owned = "Cut a wire to disarm the bomb. It's your bomb, so every wire will disarm it."
-L.c4_disarm_other = "Cut a safe wire to disarm the bomb. It will explode if you get it wrong!"
+L.c4_disarm_other = "Cut a safe wire to disarm the bomb. It will explode if you get it wrongnot "
 
 L.c4_status_armed    = "ARMED"
 L.c4_status_disarmed = "DISARMED"
@@ -360,7 +360,7 @@ they died of gunshot wounds.]]
 -- Decoy
 L.decoy_name      = "Decoy"
 L.decoy_no_room   = "You cannot carry this decoy."
-L.decoy_broken    = "Your Decoy has been destroyed!"
+L.decoy_broken    = "Your Decoy has been destroyednot "
 
 L.decoy_help_pri  = "{primaryfire} plants the Decoy."
 
@@ -392,7 +392,7 @@ sound.]]
 -- Health station
 L.hstation_name   = "Health Station"
 L.hstation_hint   = "Press {usekey} to receive health. Charge: {num}."
-L.hstation_broken = "Your Health Station has been destroyed!"
+L.hstation_broken = "Your Health Station has been destroyednot "
 L.hstation_help   = "{primaryfire} places the Health Station."
 
 L.hstation_desc   = [[
@@ -421,7 +421,7 @@ The energy bursts damage people in
 close proximity.]]
 
 -- Radio
-L.radio_broken    = "Your Radio has been destroyed!"
+L.radio_broken    = "Your Radio has been destroyednot "
 L.radio_help_pri  = "{primaryfire} places the Radio."
 
 L.radio_desc      = [[
@@ -473,9 +473,9 @@ L.dna_identify    = "Corpse must be identified to retrieve killer's DNA."
 L.dna_notfound    = "No DNA sample found on target."
 L.dna_limit       = "Storage limit reached. Remove old samples to add new ones."
 L.dna_decayed     = "DNA sample of the killer has decayed."
-L.dna_killer      = "Collected a sample of the killer's DNA from the corpse!"
+L.dna_killer      = "Collected a sample of the killer's DNA from the corpsenot "
 L.dna_no_killer   = "The DNA could not be retrieved (killer disconnected?)."
-L.dna_armed       = "This bomb is live! Disarm it first!"
+L.dna_armed       = "This bomb is livenot  Disarm it firstnot "
 L.dna_object      = "Collected {num} new DNA sample(s) from the object."
 L.dna_gone        = "DNA not detected in area."
 
@@ -523,12 +523,12 @@ L.tele_name       = "Teleporter"
 L.tele_failed     = "Teleport failed."
 L.tele_marked     = "Teleport location marked."
 
-L.tele_no_ground  = "Cannot teleport unless standing on solid ground!"
-L.tele_no_crouch  = "Cannot teleport while crouched!"
+L.tele_no_ground  = "Cannot teleport unless standing on solid groundnot "
+L.tele_no_crouch  = "Cannot teleport while crouchednot "
 L.tele_no_mark    = "No location marked. Mark a destination before teleporting."
 
-L.tele_no_mark_ground = "Cannot mark a teleport location unless standing on solid ground!"
-L.tele_no_mark_crouch = "Cannot mark a teleport location while crouched!"
+L.tele_no_mark_ground = "Cannot mark a teleport location unless standing on solid groundnot "
+L.tele_no_mark_crouch = "Cannot mark a teleport location while crouchednot "
 
 L.tele_help_pri   = "{primaryfire} teleports to marked location."
 L.tele_help_sec   = "{secondaryfire} marks current location."
@@ -609,7 +609,7 @@ L.mute_off     = "None muted"
 L.punch_title  = "PUNCH-O-METER"
 L.punch_help   = "Move keys or jump: punch object. Crouch: leave object."
 L.punch_bonus  = "Your bad score lowered your punch-o-meter limit by {num}"
-L.punch_malus  = "Your good score increased your punch-o-meter limit by {num}!"
+L.punch_malus  = "Your good score increased your punch-o-meter limit by {num}not "
 
 L.spec_help    = "Click to spectate players, or press {usekey} on a physics object to possess it."
 
@@ -617,30 +617,30 @@ L.spec_help    = "Click to spectate players, or press {usekey} on a physics obje
 
 -- These are spread over multiple lines, hence the square brackets instead of
 -- quotes. That's a Lua thing. Every line break (enter) will show up in-game.
-L.info_popup_innocent = [[You are an innocent Terrorist! But there are traitors around...
+L.info_popup_innocent = [[You are an innocent Terroristnot  But there are traitors around...
 Who can you trust, and who is out to fill you with bullets?
 
-Watch your back and work with your comrades to get out of this alive!]]
+Watch your back and work with your comrades to get out of this alivenot ]]
 
-L.info_popup_detective = [[You are a Detective! Terrorist HQ has given you special resources to find the traitors.
+L.info_popup_detective = [[You are a Detectivenot  Terrorist HQ has given you special resources to find the traitors.
 Use them to help the innocent survive, but be careful:
-the traitors will be looking to take you down first!
+the traitors will be looking to take you down firstnot
 
-Press {menukey} to receive your equipment!]]
+Press {menukey} to receive your equipmentnot ]]
 
-L.info_popup_traitor_alone = [[You are a TRAITOR! You have no fellow traitors this round.
+L.info_popup_traitor_alone = [[You are a TRAITORnot  You have no fellow traitors this round.
 
-Kill all others to win!
+Kill all others to winnot
 
-Press {menukey} to receive your special equipment!]]
+Press {menukey} to receive your special equipmentnot ]]
 
-L.info_popup_traitor = [[You are a TRAITOR! Work with fellow traitors to kill all others.
+L.info_popup_traitor = [[You are a TRAITORnot  Work with fellow traitors to kill all others.
 But take care, or your treason may be discovered...
 
 These are your comrades:
 {traitorlist}
 
-Press {menukey} to receive your special equipment!]]
+Press {menukey} to receive your special equipmentnot ]]
 
 --- Various other text
 L.name_kick = "A player was automatically kicked for changing their name during a round."
@@ -652,7 +652,7 @@ You can toggle Spectator-only mode at any time by pressing {helpkey} and uncheck
 L.idle_popup_close = "Do nothing"
 L.idle_popup_off   = "Disable Spectator-only mode now"
 
-L.idle_warning = "Warning: you appear to be idle/AFK, and will be made to spectate unless you show activity!"
+L.idle_warning = "Warning: you appear to be idle/AFK, and will be made to spectate unless you show activitynot "
 
 L.spec_mode_warning = "You are in Spectator Mode and will not spawn when a round starts. To disable this mode, press F1, go to Settings and uncheck 'Spectate-only mode'."
 
@@ -685,11 +685,11 @@ L.tip9 = "The Poltergeist can turn any physics object into a deadly projectile. 
 
 L.tip10 = "As Traitor or Detective, keep an eye on red messages in the top right. These will be important for you."
 
-L.tip11 = "As Traitor or Detective, keep in mind you are rewarded extra equipment credits if you and your comrades perform well. Make sure you remember to spend them!"
+L.tip11 = "As Traitor or Detective, keep in mind you are rewarded extra equipment credits if you and your comrades perform well. Make sure you remember to spend themnot "
 
-L.tip12 = "The Detectives' DNA Scanner can be used to gather DNA samples from weapons and items and then scan to find the location of the player who used them. Useful when you can get a sample from a corpse or a disarmed C4!"
+L.tip12 = "The Detectives' DNA Scanner can be used to gather DNA samples from weapons and items and then scan to find the location of the player who used them. Useful when you can get a sample from a corpse or a disarmed C4not "
 
-L.tip13 = "When you are close to someone you kill, some of your DNA is left on the corpse. This DNA can be used with a Detective's DNA Scanner to find your current location. Better hide the body after you knife someone!"
+L.tip13 = "When you are close to someone you kill, some of your DNA is left on the corpse. This DNA can be used with a Detective's DNA Scanner to find your current location. Better hide the body after you knife someonenot "
 
 L.tip14 = "The further you are away from someone you kill, the faster your DNA sample on their body will decay."
 
@@ -837,9 +837,9 @@ L.ev_c4_disarm2  = "{player} failed to disarm C4 planted by {owner}"
 L.ev_credit      = "{finder} found {num} credit(s) on the corpse of {player}"
 
 L.ev_start       = "The round started"
-L.ev_win_traitor = "The dastardly traitors won the round!"
-L.ev_win_inno    = "The lovable innocent terrorists won the round!"
-L.ev_win_time    = "The traitors ran out of time and lost!"
+L.ev_win_traitor = "The dastardly traitors won the roundnot "
+L.ev_win_inno    = "The lovable innocent terrorists won the roundnot "
+L.ev_win_time    = "The traitors ran out of time and lostnot "
 
 --- Awards/highlights
 
@@ -873,8 +873,8 @@ L.aw_all1_text  = "was responsible for every kill made by the innocent this roun
 L.aw_all2_title = "Lone Wolf"
 L.aw_all2_text  = "was responsible for every kill made by a traitor this round."
 
-L.aw_nkt1_title = "I Got One, Boss!"
-L.aw_nkt1_text  = "managed to kill a single innocent. Sweet!"
+L.aw_nkt1_title = "I Got One, Bossnot "
+L.aw_nkt1_text  = "managed to kill a single innocent. Sweetnot "
 
 L.aw_nkt2_title = "A Bullet For Two"
 L.aw_nkt2_text  = "showed the first one was not a lucky shot by killing another."
@@ -1018,7 +1018,7 @@ L.aw_brn2_title = "Pyroid"
 L.aw_brn2_text  = "was heard cackling loudly after burning one of their many victims."
 
 L.aw_brn3_title = "Pyrrhic Burnery"
-L.aw_brn3_text  = "burned them all, but is now all out of incendiary grenades! How will they cope!?"
+L.aw_brn3_text  = "burned them all, but is now all out of incendiary grenadesnot  How will they copenot ?"
 
 L.aw_fnd1_title = "Coroner"
 L.aw_fnd1_text  = "found {num} bodies lying around."

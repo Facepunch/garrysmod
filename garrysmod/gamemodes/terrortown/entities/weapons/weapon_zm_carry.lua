@@ -250,17 +250,17 @@ function SWEP:AllowPickup(target)
            (not phys:HasGameFlag(FVPHYSICS_NO_PLAYER_PICKUP)) and
            phys:GetMass() < CARRY_WEIGHT_LIMIT and
            (not PlayerStandsOn(target)) and
-           (target.CanPickup != false) and
-           (target:GetClass() != "prop_ragdoll" or allow_rag:GetBool()) and
+           (target.CanPickup ~= false) and
+           (target:GetClass() ~= "prop_ragdoll" or allow_rag:GetBool()) and
            ((not target:IsWeapon()) or allow_wep:GetBool()))
 end
 
 function SWEP:DoAttack(pickup)
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self.Weapon:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+   self.Weapon:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
 
    if IsValid(self.EntHolding) then
-      self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
+      self.Weapon:SendWeaponAnim(ACT_VM_MISSCENTER)
 
       if (not pickup) and self.EntHolding:GetClass() == "prop_ragdoll" then
          -- see if we can pin this ragdoll to a wall in front of us
@@ -295,7 +295,7 @@ function SWEP:DoAttack(pickup)
 
             if self:AllowPickup(ent) then
                self:Pickup()
-               self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
+               self.Weapon:SendWeaponAnim(ACT_VM_HITCENTER)
 
                -- make the refire slower to avoid immediately dropping
                local delay = (ent:GetClass() == "prop_ragdoll") and 0.8 or 0.5
@@ -367,7 +367,7 @@ function SWEP:Pickup()
          self.CarryHack:SetOwner(ply)
          self.CarryHack:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
          self.CarryHack:SetSolid(SOLID_NONE)
-         
+
          -- set the desired angles before adding the constraint
          self.CarryHack:SetAngles(self.Owner:GetAngles())
 

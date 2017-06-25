@@ -18,25 +18,25 @@ TOOL.Information = {
 	{ name = "right" }
 }
 
-cleanup.Register( "trails" )
+cleanup.Register("trails")
 
-local function SetTrails( ply, ent, data )
+local function SetTrails(ply, ent, data)
 
-	if ( IsValid( ent.SToolTrail ) ) then
+	if (IsValid( ent.SToolTrail)) then
 
 		ent.SToolTrail:Remove()
 		ent.SToolTrail = nil
 
 	end
 
-	if ( !data ) then
+	if (not data) then
 
-		duplicator.ClearEntityModifier( ent, "trail" )
+		duplicator.ClearEntityModifier(ent, "trail")
 		return
 
 	end
 
-	if ( data.StartSize == 0 ) then
+	if (data.StartSize == 0) then
 
 		data.StartSize = 0.0001
 
@@ -46,74 +46,74 @@ local function SetTrails( ply, ent, data )
 	-- Lock down the trail material - only allow what the server allows
 	-- This is here to fix a crash exploit
 	--
-	if ( !game.SinglePlayer() && !list.Contains( "trail_materials", data.Material ) ) then return end
+	if (not game.SinglePlayer() and not list.Contains( "trail_materials", data.Material)) then return end
 
-	local trail_entity = util.SpriteTrail( ent, 0, data.Color, false, data.StartSize, data.EndSize, data.Length, 1 / ( ( data.StartSize + data.EndSize ) * 0.5 ), data.Material .. ".vmt" )
+	local trail_entity = util.SpriteTrail(ent, 0, data.Color, false, data.StartSize, data.EndSize, data.Length, 1 / ( ( data.StartSize + data.EndSize) * 0.5), data.Material .. ".vmt")
 
 	ent.SToolTrail = trail_entity
 
-	if ( IsValid( ply ) ) then
-		ply:AddCleanup( "trails", trail_entity )
+	if (IsValid( ply)) then
+		ply:AddCleanup("trails", trail_entity)
 	end
 
-	duplicator.StoreEntityModifier( ent, "trail", data )
+	duplicator.StoreEntityModifier(ent, "trail", data)
 
 	return trail_entity
 
 end
-duplicator.RegisterEntityModifier( "trail", SetTrails )
+duplicator.RegisterEntityModifier("trail", SetTrails)
 
-function TOOL:LeftClick( trace )
+function TOOL:LeftClick(trace)
 
-	if ( !IsValid( trace.Entity ) ) then return false end
-	if ( !trace.Entity:EntIndex() == 0 ) then return false end
-	if ( trace.Entity:IsPlayer() ) then return false end
-	if ( CLIENT ) then return true end
+	if (not IsValid( trace.Entity)) then return false end
+	if (not trace.Entity:EntIndex() == 0) then return false end
+	if (trace.Entity:IsPlayer()) then return false end
+	if (CLIENT) then return true end
 
-	local r = math.Clamp( self:GetClientNumber( "r", 255 ), 0, 255 )
-	local g = math.Clamp( self:GetClientNumber( "g", 255 ), 0, 255 )
-	local b = math.Clamp( self:GetClientNumber( "b", 255 ), 0, 255 )
-	local a = math.Clamp( self:GetClientNumber( "a", 255 ), 0, 255 )
+	local r = math.Clamp(self:GetClientNumber( "r", 255), 0, 255)
+	local g = math.Clamp(self:GetClientNumber( "g", 255), 0, 255)
+	local b = math.Clamp(self:GetClientNumber( "b", 255), 0, 255)
+	local a = math.Clamp(self:GetClientNumber( "a", 255), 0, 255)
 
-	local length = self:GetClientNumber( "length", 5 )
-	local endsize = self:GetClientNumber( "endsize", 0 )
-	local startsize = self:GetClientNumber( "startsize", 32 )
-	local mat = self:GetClientInfo( "material", "sprites/obsolete" )
+	local length = self:GetClientNumber("length", 5)
+	local endsize = self:GetClientNumber("endsize", 0)
+	local startsize = self:GetClientNumber("startsize", 32)
+	local mat = self:GetClientInfo("material", "sprites/obsolete")
 
 	-- Clamp sizes in multiplayer
-	if ( !game.SinglePlayer() ) then
+	if (not game.SinglePlayer()) then
 
-		length = math.Clamp( length, 0.1, 10 )
-		endsize = math.Clamp( endsize, 0, 128 )
-		startsize = math.Clamp( startsize, 0, 128 )
+		length = math.Clamp(length, 0.1, 10)
+		endsize = math.Clamp(endsize, 0, 128)
+		startsize = math.Clamp(startsize, 0, 128)
 
 	end
 
 	local Trail = SetTrails( self:GetOwner(), trace.Entity, {
-		Color = Color( r, g, b, a ),
+		Color = Color(r, g, b, a),
 		Length = length,
 		StartSize = startsize,
 		EndSize = endsize,
 		Material = mat
 	} )
 
-	undo.Create( "Trail" )
-		undo.AddEntity( Trail )
-		undo.SetPlayer( self:GetOwner() )
+	undo.Create("Trail")
+		undo.AddEntity(Trail)
+		undo.SetPlayer(self:GetOwner())
 	undo.Finish()
 
 	return true
 
 end
 
-function TOOL:RightClick( trace )
+function TOOL:RightClick(trace)
 
-	if ( !IsValid( trace.Entity ) ) then return false end
-	if ( !trace.Entity:EntIndex() == 0 ) then return false end
-	if ( trace.Entity:IsPlayer() ) then return false end
-	if ( CLIENT ) then return true end
+	if (not IsValid( trace.Entity)) then return false end
+	if (not trace.Entity:EntIndex() == 0) then return false end
+	if (trace.Entity:IsPlayer()) then return false end
+	if (CLIENT) then return true end
 
-	SetTrails( self:GetOwner(), trace.Entity, nil )
+	SetTrails(self:GetOwner(), trace.Entity, nil)
 	return true
 
 end
@@ -122,41 +122,41 @@ end
 -- Add default materials to list
 -- Note: Addons can easily add to this list in their -- own file placed in autorun or something.
 --
-list.Set( "trail_materials", "#trail.plasma", "trails/plasma" )
-list.Set( "trail_materials", "#trail.tube", "trails/tube" )
-list.Set( "trail_materials", "#trail.electric", "trails/electric" )
-list.Set( "trail_materials", "#trail.smoke", "trails/smoke" )
-list.Set( "trail_materials", "#trail.laser", "trails/laser" )
-list.Set( "trail_materials", "#trail.physbeam", "trails/physbeam" )
-list.Set( "trail_materials", "#trail.love", "trails/love" )
-list.Set( "trail_materials", "#trail.lol", "trails/lol" )
+list.Set("trail_materials", "#trail.plasma", "trails/plasma")
+list.Set("trail_materials", "#trail.tube", "trails/tube")
+list.Set("trail_materials", "#trail.electric", "trails/electric")
+list.Set("trail_materials", "#trail.smoke", "trails/smoke")
+list.Set("trail_materials", "#trail.laser", "trails/laser")
+list.Set("trail_materials", "#trail.physbeam", "trails/physbeam")
+list.Set("trail_materials", "#trail.love", "trails/love")
+list.Set("trail_materials", "#trail.lol", "trails/lol")
 
-if ( IsMounted( "tf" ) ) then
-	list.Set( "trail_materials", "#trail.beam001_blu", "effects/beam001_blu" )
-	list.Set( "trail_materials", "#trail.beam001_red", "effects/beam001_red" )
-	list.Set( "trail_materials", "#trail.beam001_white", "effects/beam001_white" )
-	list.Set( "trail_materials", "#trail.arrowtrail_blu", "effects/arrowtrail_blu" )
-	list.Set( "trail_materials", "#trail.arrowtrail_red", "effects/arrowtrail_red" )
-	list.Set( "trail_materials", "#trail.repair_claw_trail_blue", "effects/repair_claw_trail_blue" )
-	list.Set( "trail_materials", "#trail.repair_claw_trail_red", "effects/repair_claw_trail_red" )
-	list.Set( "trail_materials", "#trail.australiumtrail_red", "effects/australiumtrail_red" )
-	list.Set( "trail_materials", "#trail.beam_generic01", "effects/beam_generic01" )
+if (IsMounted( "tf")) then
+	list.Set("trail_materials", "#trail.beam001_blu", "effects/beam001_blu")
+	list.Set("trail_materials", "#trail.beam001_red", "effects/beam001_red")
+	list.Set("trail_materials", "#trail.beam001_white", "effects/beam001_white")
+	list.Set("trail_materials", "#trail.arrowtrail_blu", "effects/arrowtrail_blu")
+	list.Set("trail_materials", "#trail.arrowtrail_red", "effects/arrowtrail_red")
+	list.Set("trail_materials", "#trail.repair_claw_trail_blue", "effects/repair_claw_trail_blue")
+	list.Set("trail_materials", "#trail.repair_claw_trail_red", "effects/repair_claw_trail_red")
+	list.Set("trail_materials", "#trail.australiumtrail_red", "effects/australiumtrail_red")
+	list.Set("trail_materials", "#trail.beam_generic01", "effects/beam_generic01")
 end
 
 local ConVarsDefault = TOOL:BuildConVarList()
 
-function TOOL.BuildCPanel( CPanel )
+function TOOL.BuildCPanel(CPanel)
 
-	CPanel:AddControl( "Header", { Description = "#tool.trails.desc" } )
+	CPanel:AddControl("Header", { Description = "#tool.trails.desc" })
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "trails", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:AddControl("ComboBox", { MenuButton = 1, Folder = "trails", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault) })
 
-	CPanel:AddControl( "Color", { Label = "#tool.trails.color", Red = "trails_r", Green = "trails_g", Blue = "trails_b", Alpha = "trails_a" } )
+	CPanel:AddControl("Color", { Label = "#tool.trails.color", Red = "trails_r", Green = "trails_g", Blue = "trails_b", Alpha = "trails_a" })
 
-	CPanel:NumSlider( "#tool.trails.length", "trails_length", 0, 10, 2 )
-	CPanel:NumSlider( "#tool.trails.startsize", "trails_startsize", 0, 128, 2 )
-	CPanel:NumSlider( "#tool.trails.endsize", "trails_endsize", 0, 128, 2 )
+	CPanel:NumSlider("#tool.trails.length", "trails_length", 0, 10, 2)
+	CPanel:NumSlider("#tool.trails.startsize", "trails_startsize", 0, 128, 2)
+	CPanel:NumSlider("#tool.trails.endsize", "trails_endsize", 0, 128, 2)
 
-	CPanel:MatSelect( "trails_material", list.Get( "trail_materials" ), true, 0.25, 0.25 )
+	CPanel:MatSelect("trails_material", list.Get( "trail_materials"), true, 0.25, 0.25)
 
 end

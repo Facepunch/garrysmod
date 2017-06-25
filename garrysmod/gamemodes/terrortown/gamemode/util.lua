@@ -207,7 +207,7 @@ function table.EqualValues(a, b)
    if a == b then return true end
 
    for k, v in pairs(a) do
-      if v != b[k] then
+      if v ~= b[k] then
          return false
       end
    end

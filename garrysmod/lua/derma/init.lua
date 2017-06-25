@@ -3,7 +3,7 @@
 -- The default font used by everything Derma
 --
 
-if ( system.IsLinux() ) then
+if (system.IsLinux()) then
 
 	surface.CreateFont( "DermaDefault", {
 		font		= "DejaVu Sans",
@@ -39,17 +39,17 @@ surface.CreateFont( "DermaLarge", {
 	weight		= 500
 } )
 
-include( "derma.lua" )
-include( "derma_example.lua" )
-include( "derma_menus.lua" )
-include( "derma_animation.lua" )
-include( "derma_utils.lua" )
-include( "derma_gwen.lua" )
+include("derma.lua")
+include("derma_example.lua")
+include("derma_menus.lua")
+include("derma_animation.lua")
+include("derma_utils.lua")
+include("derma_gwen.lua")
 
-function Derma_Hook( panel, functionname, hookname, typename )
+function Derma_Hook(panel, functionname, hookname, typename)
 
-	panel[ functionname ] = function ( self, a, b, c, d )
-		return derma.SkinHook( hookname, typename, self, a, b, c, d )
+	panel[ functionname ] = function (self, a, b, c, d)
+		return derma.SkinHook(hookname, typename, self, a, b, c, d)
 	end
 
 end
@@ -67,46 +67,46 @@ end
 	Call ConVarStringThink or ConVarNumberThink from the
 	Think function to get any changes from the ConVars.
 
-	Have SetValue( value ) implemented, to receive the
+	Have SetValue(value) implemented, to receive the
 	value.
 
 --]]
 
-function Derma_Install_Convar_Functions( PANEL )
+function Derma_Install_Convar_Functions(PANEL)
 
-	function PANEL:SetConVar( strConVar )
+	function PANEL:SetConVar(strConVar)
 		self.m_strConVar = strConVar
 	end
 
-	function PANEL:ConVarChanged( strNewValue )
+	function PANEL:ConVarChanged(strNewValue)
 
-		if ( !self.m_strConVar ) then return end
-		RunConsoleCommand( self.m_strConVar, tostring( strNewValue ) )
+		if (not self.m_strConVar) then return end
+		RunConsoleCommand(self.m_strConVar, tostring( strNewValue))
 
 	end
 
 	-- Todo: Think only every 0.1 seconds?
 	function PANEL:ConVarStringThink()
 
-		if ( !self.m_strConVar ) then return end
+		if (not self.m_strConVar) then return end
 
-		local strValue = GetConVarString( self.m_strConVar )
-		if ( self.m_strConVarValue == strValue ) then return end
+		local strValue = GetConVarString(self.m_strConVar)
+		if (self.m_strConVarValue == strValue) then return end
 
 		self.m_strConVarValue = strValue
-		self:SetValue( self.m_strConVarValue )
+		self:SetValue(self.m_strConVarValue)
 
 	end
 
 	function PANEL:ConVarNumberThink()
 
-		if ( !self.m_strConVar ) then return end
+		if (not self.m_strConVar) then return end
 
-		local strValue = GetConVarNumber( self.m_strConVar )
-		if ( self.m_strConVarValue == strValue ) then return end
+		local strValue = GetConVarNumber(self.m_strConVar)
+		if (self.m_strConVarValue == strValue) then return end
 
 		self.m_strConVarValue = strValue
-		self:SetValue( self.m_strConVarValue )
+		self:SetValue(self.m_strConVarValue)
 
 	end
 

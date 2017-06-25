@@ -29,7 +29,7 @@ SWEP.Primary.Automatic     = true
 SWEP.Primary.DefaultClip   = 20
 SWEP.Primary.ClipMax       = 60
 SWEP.Primary.Ammo          = "Pistol"
-SWEP.Primary.Sound         = Sound( "Weapon_USP.SilencedShot" )
+SWEP.Primary.Sound         = Sound("Weapon_USP.SilencedShot")
 SWEP.Primary.SoundLevel    = 50
 
 SWEP.Kind                  = WEAPON_EQUIP
@@ -43,7 +43,7 @@ SWEP.UseHands              = true
 SWEP.ViewModel             = "models/weapons/cstrike/c_pist_usp.mdl"
 SWEP.WorldModel            = "models/weapons/w_pist_usp_silencer.mdl"
 
-SWEP.IronSightsPos         = Vector( -5.91, -4, 2.84 )
+SWEP.IronSightsPos         = Vector(-5.91, -4, 2.84)
 SWEP.IronSightsAng         = Vector(-0.5, 0, 0)
 
 SWEP.PrimaryAnim           = ACT_VM_PRIMARYATTACK_SILENCED
@@ -57,6 +57,6 @@ end
 -- We were bought as special equipment, and we have an extra to give
 function SWEP:WasBought(buyer)
    if IsValid(buyer) then -- probably already self.Owner
-      buyer:GiveAmmo( 20, "Pistol" )
+      buyer:GiveAmmo(20, "Pistol")
    end
 end

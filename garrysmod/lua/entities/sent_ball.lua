@@ -1,7 +1,7 @@
 
 AddCSLuaFile()
 
-DEFINE_BASECLASS( "base_anim" )
+DEFINE_BASECLASS("base_anim")
 
 ENT.PrintName = "Bouncy Ball"
 ENT.Author = "Garry Newman"
@@ -18,10 +18,10 @@ ENT.MaxSize = 128
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Float", 0, "BallSize", { KeyName = "ballsize", Edit = { type = "Float", min = self.MinSize, max = self.MaxSize, order = 1 } } )
-	self:NetworkVar( "Vector", 0, "BallColor", { KeyName = "ballcolor", Edit = { type = "VectorColor", order = 2 } } )
+	self:NetworkVar("Float", 0, "BallSize", { KeyName = "ballsize", Edit = { type = "Float", min = self.MinSize, max = self.MaxSize, order = 1 } })
+	self:NetworkVar("Vector", 0, "BallColor", { KeyName = "ballcolor", Edit = { type = "VectorColor", order = 2 } })
 
-	self:NetworkVarNotify( "BallSize", self.OnBallSizeChanged )
+	self:NetworkVarNotify("BallSize", self.OnBallSizeChanged)
 
 end
 
@@ -31,15 +31,15 @@ end
 -- ply is the name of the player that is spawning it
 -- tr is the trace from the player's eyes
 --
-function ENT:SpawnFunction( ply, tr, ClassName )
+function ENT:SpawnFunction(ply, tr, ClassName)
 
-	if ( !tr.Hit ) then return end
+	if (not tr.Hit) then return end
 
-	local size = math.random( 16, 48 )
+	local size = math.random(16, 48)
 
-	local ent = ents.Create( ClassName )
-	ent:SetPos( tr.HitPos + tr.HitNormal * size )
-	ent:SetBallSize( size )
+	local ent = ents.Create(ClassName)
+	ent:SetPos(tr.HitPos + tr.HitNormal * size)
+	ent:SetBallSize(size)
 	ent:Spawn()
 	ent:Activate()
 
@@ -50,111 +50,111 @@ end
 function ENT:Initialize()
 
 	-- We do NOT want to execute anything below in this FUNCTION on CLIENT
-	if ( CLIENT ) then return end
+	if (CLIENT) then return end
 
 	-- Use the helibomb model just for the shadow (because it's about the same size)
-	self:SetModel( "models/Combine_Helicopter/helicopter_bomb01.mdl" )
+	self:SetModel("models/Combine_Helicopter/helicopter_bomb01.mdl")
 
 	-- We will put this here just in case, even though it should be called from OnBallSizeChanged in any case
 	self:RebuildPhysics()
 
 	-- Select a random color for the ball
 	self:SetBallColor( table.Random( {
-		Vector( 1, 0.3, 0.3 ),
-		Vector( 0.3, 1, 0.3 ),
-		Vector( 1, 1, 0.3 ),
-		Vector( 0.2, 0.3, 1 ),
+		Vector(1, 0.3, 0.3),
+		Vector(0.3, 1, 0.3),
+		Vector(1, 1, 0.3),
+		Vector(0.2, 0.3, 1),
 	} ) )
 
 end
 
-function ENT:RebuildPhysics( value )
+function ENT:RebuildPhysics(value)
 
 	-- This is necessary so that the vphysics.dll will not crash when attaching constraints to the new PhysObj after old one was destroyed
 	-- TODO: Somehow figure out why it happens and/or move this code/fix to the constraint library
 	self.ConstraintSystem = nil
 
-	local size = math.Clamp( value or self:GetBallSize(), self.MinSize, self.MaxSize ) / 2.1
-	self:PhysicsInitSphere( size, "metal_bouncy" )
-	self:SetCollisionBounds( Vector( -size, -size, -size ), Vector( size, size, size ) )
+	local size = math.Clamp(value or self:GetBallSize(), self.MinSize, self.MaxSize) / 2.1
+	self:PhysicsInitSphere(size, "metal_bouncy")
+	self:SetCollisionBounds(Vector( -size, -size, -size), Vector( size, size, size))
 
 	self:PhysWake()
 
 end
 
-function ENT:OnBallSizeChanged( varname, oldvalue, newvalue )
+function ENT:OnBallSizeChanged(varname, oldvalue, newvalue)
 
 	-- Do not rebuild if the size wasn't changed
-	if ( oldvalue == newvalue ) then return end
+	if (oldvalue == newvalue) then return end
 
-	self:RebuildPhysics( newvalue )
+	self:RebuildPhysics(newvalue)
 
 end
 
-local BounceSound = Sound( "garrysmod/balloon_pop_cute.wav" )
+local BounceSound = Sound("garrysmod/balloon_pop_cute.wav")
 
-function ENT:PhysicsCollide( data, physobj )
+function ENT:PhysicsCollide(data, physobj)
 
 	-- Play sound on bounce
-	if ( data.Speed > 60 && data.DeltaTime > 0.2 ) then
+	if (data.Speed > 60 and data.DeltaTime > 0.2) then
 
-		local pitch = 32 + 128 - math.Clamp( self:GetBallSize(), self.MinSize, self.MaxSize )
-		sound.Play( BounceSound, self:GetPos(), 75, math.random( pitch - 10, pitch + 10 ), math.Clamp( data.Speed / 150, 0, 1 ) )
+		local pitch = 32 + 128 - math.Clamp(self:GetBallSize(), self.MinSize, self.MaxSize)
+		sound.Play(BounceSound, self:GetPos(), 75, math.random( pitch - 10, pitch + 10), math.Clamp( data.Speed / 150, 0, 1))
 
 	end
 
 	-- Bounce like a crazy bitch
-	local LastSpeed = math.max( data.OurOldVelocity:Length(), data.Speed )
+	local LastSpeed = math.max(data.OurOldVelocity:Length(), data.Speed)
 	local NewVelocity = physobj:GetVelocity()
 	NewVelocity:Normalize()
 
-	LastSpeed = math.max( NewVelocity:Length(), LastSpeed )
+	LastSpeed = math.max(NewVelocity:Length(), LastSpeed)
 
 	local TargetVelocity = NewVelocity * LastSpeed * 0.9
 
-	physobj:SetVelocity( TargetVelocity )
+	physobj:SetVelocity(TargetVelocity)
 
 end
 
-function ENT:OnTakeDamage( dmginfo )
+function ENT:OnTakeDamage(dmginfo)
 
 	-- React physically when shot/getting blown
-	self:TakePhysicsDamage( dmginfo )
+	self:TakePhysicsDamage(dmginfo)
 
 end
 
-function ENT:Use( activator, caller )
+function ENT:Use(activator, caller)
 
 	self:Remove()
 
-	if ( activator:IsPlayer() ) then
+	if (activator:IsPlayer()) then
 
 		-- Give the collecting player some free health
 		local health = activator:Health()
-		activator:SetHealth( health + 5 )
-		activator:SendLua( "achievements.EatBall()" )
+		activator:SetHealth(health + 5)
+		activator:SendLua("achievements.EatBall()")
 
 	end
 
 end
 
-if ( SERVER ) then return end -- We do NOT want to execute anything below in this FILE on SERVER
+if (SERVER) then return end -- We do NOT want to execute anything below in this FILE on SERVER
 
-local matBall = Material( "sprites/sent_ball" )
+local matBall = Material("sprites/sent_ball")
 
 function ENT:Draw()
 
-	render.SetMaterial( matBall )
+	render.SetMaterial(matBall)
 
 	local pos = self:GetPos()
-	local lcolor = render.ComputeLighting( pos, Vector( 0, 0, 1 ) )
+	local lcolor = render.ComputeLighting(pos, Vector( 0, 0, 1))
 	local c = self:GetBallColor()
 
-	lcolor.x = c.r * ( math.Clamp( lcolor.x, 0, 1 ) + 0.5 ) * 255
-	lcolor.y = c.g * ( math.Clamp( lcolor.y, 0, 1 ) + 0.5 ) * 255
-	lcolor.z = c.b * ( math.Clamp( lcolor.z, 0, 1 ) + 0.5 ) * 255
+	lcolor.x = c.r * (math.Clamp( lcolor.x, 0, 1) + 0.5) * 255
+	lcolor.y = c.g * (math.Clamp( lcolor.y, 0, 1) + 0.5) * 255
+	lcolor.z = c.b * (math.Clamp( lcolor.z, 0, 1) + 0.5) * 255
 
-	local size = math.Clamp( self:GetBallSize(), self.MinSize, self.MaxSize )
-	render.DrawSprite( pos, size, size, Color( lcolor.x, lcolor.y, lcolor.z, 255 ) )
+	local size = math.Clamp(self:GetBallSize(), self.MinSize, self.MaxSize)
+	render.DrawSprite(pos, size, size, Color( lcolor.x, lcolor.y, lcolor.z, 255))
 
 end

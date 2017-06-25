@@ -10,32 +10,32 @@ local PANEL = {}
 function PANEL:Init()
 end
 
-function PANEL:Setup( vars )
+function PANEL:Setup(vars)
 
 	self:Clear()
 
-	local ctrl = self:Add( "DCheckBox" )
-	ctrl:SetPos( 0, 2 )
+	local ctrl = self:Add("DCheckBox")
+	ctrl:SetPos(0, 2)
 
 	-- Return true if we're editing
-	self.IsEditing = function( self )
+	self.IsEditing = function(self)
 		return ctrl:IsEditing()
 	end
 
 	-- Set the value
-	self.SetValue = function( self, val )
-		ctrl:SetChecked( tobool( val ) )
+	self.SetValue = function(self, val)
+		ctrl:SetChecked(tobool( val))
 	end
 
 	-- Alert row that value changed
-	ctrl.OnChange = function( ctrl, newval )
+	ctrl.OnChange = function(ctrl, newval)
 
-		if ( newval ) then newval = 1 else newval = 0 end
+		if (newval) then newval = 1 else newval = 0 end
 
-		self:ValueChanged( newval )
+		self:ValueChanged(newval)
 
 	end
 
 end
 
-derma.DefineControl( "DProperty_Boolean", "", PANEL, "DProperty_Generic" )
+derma.DefineControl("DProperty_Boolean", "", PANEL, "DProperty_Generic")

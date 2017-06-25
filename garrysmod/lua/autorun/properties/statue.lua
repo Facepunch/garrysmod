@@ -6,71 +6,71 @@ properties.Add( "statue", {
 	Order = 1501,
 	MenuIcon = "icon16/lock.png",
 
-	Filter = function( self, ent, ply )
-		if ( !IsValid( ent ) ) then return false end
-		if ( ent:GetClass() != "prop_ragdoll" ) then return false end
-		if ( ent:GetNWBool( "IsStatue" ) ) then return false end
-		if ( !gamemode.Call( "CanProperty", ply, "statue", ent ) ) then return false end
+	Filter = function(self, ent, ply)
+		if (not IsValid( ent)) then return false end
+		if (ent:GetClass() ~= "prop_ragdoll") then return false end
+		if (ent:GetNWBool( "IsStatue")) then return false end
+		if (not gamemode.Call( "CanProperty", ply, "statue", ent)) then return false end
 		return true
 	end,
 
-	Action = function( self, ent )
+	Action = function(self, ent)
 
 		self:MsgStart()
-			net.WriteEntity( ent )
+			net.WriteEntity(ent)
 		self:MsgEnd()
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function(self, length, player)
 
 		local ent = net.ReadEntity()
 
-		if ( !IsValid( ent ) ) then return end
-		if ( !IsValid( player ) ) then return end
-		if ( ent:GetClass() != "prop_ragdoll" ) then return end
-		if ( !self:Filter( ent, player ) ) then return end
+		if (not IsValid( ent)) then return end
+		if (not IsValid( player)) then return end
+		if (ent:GetClass() ~= "prop_ragdoll") then return end
+		if (not self:Filter( ent, player)) then return end
 
 		local bones = ent:GetPhysicsObjectCount()
-		if ( bones < 2 ) then return end
-		if ( ent.StatueInfo ) then return end
+		if (bones < 2) then return end
+		if (ent.StatueInfo) then return end
 
 		ent.StatueInfo = {}
 
-		undo.Create( "Statue" )
+		undo.Create("Statue")
 
 		for bone = 1, bones-1 do
 
-			local constraint = constraint.Weld( ent, ent, 0, bone, forcelimit )
+			local constraint = constraint.Weld(ent, ent, 0, bone, forcelimit)
 
-			if ( constraint ) then
+			if (constraint) then
 
 				ent.StatueInfo[bone] = constraint
-				player:AddCleanup( "constraints", constraint )
-				undo.AddEntity( constraint )
+				player:AddCleanup("constraints", constraint)
+				undo.AddEntity(constraint)
 
 			end
 
 			local effectdata = EffectData()
-				 effectdata:SetOrigin( ent:GetPhysicsObjectNum( bone ):GetPos() )
-				 effectdata:SetScale( 1 )
-				 effectdata:SetMagnitude( 1 )
-			util.Effect( "GlassImpact", effectdata, true, true )
+				 effectdata:SetOrigin(ent:GetPhysicsObjectNum( bone):GetPos())
+				 effectdata:SetScale(1)
+				 effectdata:SetMagnitude(1)
+			util.Effect("GlassImpact", effectdata, true, true)
 
 		end
 
-		ent:SetNWBool( "IsStatue", true )
+		ent:SetNWBool("IsStatue", true)
 
 		undo.AddFunction( function()
 
-			if ( IsValid( ent ) ) then
-				ent:SetNWBool( "IsStatue", false )
+			if (IsValid( ent)) then
+				ent:SetNWBool("IsStatue", false)
 				ent.StatueInfo = nil
 			end
 
 		end )
 
-		undo.SetPlayer( player )
+		undo.SetPlayer(player)
 		undo.Finish()
 
 	end
@@ -82,43 +82,43 @@ properties.Add( "statue_stop", {
 	Order = 1501,
 	MenuIcon = "icon16/lock_open.png",
 
-	Filter = function( self, ent, ply )
-		if ( !IsValid( ent ) ) then return false end
-		if ( ent:GetClass() != "prop_ragdoll" ) then return false end
-		if ( !ent:GetNWBool( "IsStatue" ) ) then return false end
-		if ( !gamemode.Call( "CanProperty", ply, "unstatue", ent ) ) then return false end
+	Filter = function(self, ent, ply)
+		if (not IsValid( ent)) then return false end
+		if (ent:GetClass() ~= "prop_ragdoll") then return false end
+		if (not ent:GetNWBool( "IsStatue")) then return false end
+		if (not gamemode.Call( "CanProperty", ply, "unstatue", ent)) then return false end
 		return true
 	end,
 
-	Action = function( self, ent )
+	Action = function(self, ent)
 
 		self:MsgStart()
-			net.WriteEntity( ent )
+			net.WriteEntity(ent)
 		self:MsgEnd()
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function(self, length, player)
 
 		local ent = net.ReadEntity()
 
-		if ( !IsValid( ent ) ) then return end
-		if ( !IsValid( player ) ) then return end
-		if ( ent:GetClass() != "prop_ragdoll" ) then return end
+		if (not IsValid( ent)) then return end
+		if (not IsValid( player)) then return end
+		if (ent:GetClass() ~= "prop_ragdoll") then return end
 
 		local bones = ent:GetPhysicsObjectCount()
-		if ( bones < 2 ) then return end
-		if ( !ent.StatueInfo ) then return end
+		if (bones < 2) then return end
+		if (not ent.StatueInfo) then return end
 
-		for k, v in pairs( ent.StatueInfo ) do
+		for k, v in pairs(ent.StatueInfo) do
 
-			if ( IsValid( v ) ) then
+			if (IsValid( v)) then
 				v:Remove()
 			end
 
 		end
 
-		ent:SetNWBool( "IsStatue", false )
+		ent:SetNWBool("IsStatue", false)
 		ent.StatueInfo = nil
 
 	end

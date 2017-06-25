@@ -1,19 +1,19 @@
 Trouble in Terrorist Town
 =========================
-Garry's Mod 13 gamemode 
+Garry's Mod 13 gamemode
 By Bad King Urgrain
 http://ttt.badking.net/
 
 
 Description
 ===========
-Disaster strikes in the Terrorist team! These plucky bomb-planting fighters 
-have traitors in their midst who are looking to kill them all! But who are 
+Disaster strikes in the Terrorist teamnot  These plucky bomb-planting fighters
+have traitors in their midst who are looking to kill them allnot  But who are
 the traitors... and who will come out of this alive?
 
 Installation
 ============
-If you're looking at a version of TTT included in gmod, you're already done!
+If you're looking at a version of TTT included in gmod, you're already donenot
 
 If you're dealing with a .zip version, extract .zip contents into:
   "X:\Steam\steamapps\common\garrysmod\garrysmod\"
@@ -31,7 +31,7 @@ Dedicated server (srcds) preparation
 The gamemode _requires_ CS:S content to be installed. The Garry's Mod wiki
 has some information on this here:
 * http://wiki.garrysmod.com/page/Mounting_Content_on_a_DS
-  
+
 If you want TTT to automatically switch maps every few rounds, place a
 mapcycle.txt in the "\garrysmod\" directory. It should contain a list of map
 names, exactly like the mapcycle.txt in Source games like CS:S or HL2DM. If you
@@ -43,8 +43,8 @@ instant reloading. These are all caused by the server not having CS:S content
 installed. If the issues persist despite making sure the CS:S content is there,
 try moving the "cstrike" directory into the "orangebox" one, so you get "\servername\orangebox\cstrike\".
 
-While TTT tries to do this automatically, you'll also want to turn off "sv_alltalk" if it's on. 
-It will override TTT's voice handling, and let dead people talk to living players during a round (bad). 
+While TTT tries to do this automatically, you'll also want to turn off "sv_alltalk" if it's on.
+It will override TTT's voice handling, and let dead people talk to living players during a round (bad).
 So put "sv_alltalk 0" in your server.cfg.
 
 Note that you should disable "sv_allowcslua" (disabled by default, but you should add "sv_allowcslua 0" just incase) functionality. With it on,

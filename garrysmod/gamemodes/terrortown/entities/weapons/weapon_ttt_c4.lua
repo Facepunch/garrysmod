@@ -8,7 +8,7 @@ SWEP.HoldType               = "slam"
 if CLIENT then
    SWEP.PrintName           = "C4"
    SWEP.Slot                = 6
-   
+
    SWEP.ViewModelFlip      = false
    SWEP.ViewModelFOV       = 54
    SWEP.DrawCrosshair      = false
@@ -47,15 +47,15 @@ SWEP.Secondary.Delay        = 1.0
 
 SWEP.NoSights               = true
 
-local throwsound = Sound( "Weapon_SLAM.SatchelThrow" )
+local throwsound = Sound("Weapon_SLAM.SatchelThrow")
 
 function SWEP:PrimaryAttack()
-   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
    self:BombDrop()
 end
 
 function SWEP:SecondaryAttack()
-   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextSecondaryFire(CurTime() + self.Secondary.Delay)
    self:BombStick()
 end
 
@@ -100,7 +100,7 @@ function SWEP:BombDrop()
 
       end
 
-      ply:SetAnimation( PLAYER_ATTACK1 )
+      ply:SetAnimation(PLAYER_ATTACK1)
    end
 
    self:EmitSound(throwsound)
@@ -155,7 +155,7 @@ function SWEP:BombStick()
             end
          end
 
-         ply:SetAnimation( PLAYER_ATTACK1 )
+         ply:SetAnimation(PLAYER_ATTACK1)
       end
    end
 end

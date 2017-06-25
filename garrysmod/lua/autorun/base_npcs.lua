@@ -2,8 +2,8 @@
 -- Don't try to edit this file if you're trying to add new NPCs.
 -- Just make a new file and copy the format below.
 
-local function AddNPC( t, class )
-	list.Set( "NPC", class or t.Class, t )
+local function AddNPC(t, class)
+	list.Set("NPC", class or t.Class, t)
 end
 
 local Category = "Humans + Resistance"
@@ -97,7 +97,7 @@ AddNPC( {
 	Name = "Medic",
 	Class = "npc_citizen",
 	Category = Category,
-	SpawnFlags = 8 + 131072, --bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ),
+	SpawnFlags = 8 + 131072, --bit.bor(SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC),
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
 }, "Medic" )
@@ -117,7 +117,7 @@ AddNPC( {
 	KeyValues = { citizentype = CT_DOWNTRODDEN, SquadName = "resistance" }
 } )
 
-if ( IsMounted( "ep2" ) ) then
+if (IsMounted( "ep2")) then
 
 	AddNPC( {
 		Name = "Uriah",
@@ -135,7 +135,7 @@ if ( IsMounted( "ep2" ) ) then
 
 end
 
-if ( IsMounted( "lostcoast" ) ) then
+if (IsMounted( "lostcoast")) then
 	AddNPC( {
 		Name = "Fisherman",
 		Class = "npc_fisherman",
@@ -224,10 +224,10 @@ AddNPC( {
 	KeyValues = { SquadName = "zombies" }
 } )
 
-if ( IsMounted( "ep2" ) ) then
-	game.AddParticles( "particles/grub_blood.pcf" )
-	game.AddParticles( "particles/antlion_gib_02.pcf" )
-	game.AddParticles( "particles/antlion_worker.pcf" )
+if (IsMounted( "ep2")) then
+	game.AddParticles("particles/grub_blood.pcf")
+	game.AddParticles("particles/antlion_gib_02.pcf")
+	game.AddParticles("particles/antlion_worker.pcf")
 
 	AddNPC( {
 			Name = "Antlion Guardian",
@@ -253,7 +253,7 @@ if ( IsMounted( "ep2" ) ) then
 	} )
 end
 
-if ( IsMounted( "episodic" ) ) then
+if (IsMounted( "episodic")) then
 	AddNPC( {
 		Name = "Zombine",
 		Class = "npc_zombine",
@@ -315,7 +315,7 @@ AddNPC( {
 	Category = Category,
 	OnFloor = true,
 	TotalSpawnFlags = 0,
-	Rotate = Angle( 0, 180, 0 ),
+	Rotate = Angle(0, 180, 0),
 	Offset = 2,
 	KeyValues = { SquadName = "overwatch" }
 } )
@@ -451,7 +451,7 @@ AddNPC( {
 	KeyValues = { SquadName = "overwatch" }
 } )
 
-if ( IsMounted( "ep2" ) ) then
+if (IsMounted( "ep2")) then
 	AddNPC( {
 		Name = "Hunter",
 		Class = "npc_hunter",
@@ -460,31 +460,31 @@ if ( IsMounted( "ep2" ) ) then
 	} )
 end
 
-if ( IsMounted( "hl1" ) ) then
+if (IsMounted( "hl1")) then
 
 	Category = "Half-Life: Source"
 
-	AddNPC( { Name = "Alien Grunt", Class = "monster_alien_grunt", Category = Category } )
-	AddNPC( { Name = "Nihilanth", Class = "monster_nihilanth", Category = Category, Offset = 1200 } )
-	AddNPC( { Name = "Tentacle", Class = "monster_tentacle", Category = Category } )
-	AddNPC( { Name = "Alien Slave", Class = "monster_alien_slave", Category = Category } )
-	AddNPC( { Name = "Gonarch", Class = "monster_bigmomma", Category = Category } )
-	AddNPC( { Name = "Bullsquid", Class = "monster_bullchicken", Category = Category } )
-	AddNPC( { Name = "Gargantua", Class = "monster_gargantua", Category = Category } )
-	AddNPC( { Name = "Assassin", Class = "monster_human_assassin", Category = Category } )
-	AddNPC( { Name = "Baby Crab", Class = "monster_babycrab", Category = Category } )
-	AddNPC( { Name = "Grunt", Class = "monster_human_grunt", Category = Category } )
-	AddNPC( { Name = "Cockroach", Class = "monster_cockroach", Category = Category } )
-	AddNPC( { Name = "Houndeye", Class = "monster_houndeye", Category = Category } )
-	AddNPC( { Name = "Scientist", Class = "monster_scientist", Category = Category } )
-	AddNPC( { Name = "Snark", Class = "monster_snark", Category = Category } )
-	AddNPC( { Name = "Zombie", Class = "monster_zombie", Category = Category } )
-	AddNPC( { Name = "Headcrab", Class = "monster_headcrab", Category = Category } )
-	AddNPC( { Name = "Controller", Class = "monster_alien_controller", Category = Category } )
-	AddNPC( { Name = "Security Officer", Class = "monster_barney", Category = Category } )
+	AddNPC({ Name = "Alien Grunt", Class = "monster_alien_grunt", Category = Category })
+	AddNPC({ Name = "Nihilanth", Class = "monster_nihilanth", Category = Category, Offset = 1200 })
+	AddNPC({ Name = "Tentacle", Class = "monster_tentacle", Category = Category })
+	AddNPC({ Name = "Alien Slave", Class = "monster_alien_slave", Category = Category })
+	AddNPC({ Name = "Gonarch", Class = "monster_bigmomma", Category = Category })
+	AddNPC({ Name = "Bullsquid", Class = "monster_bullchicken", Category = Category })
+	AddNPC({ Name = "Gargantua", Class = "monster_gargantua", Category = Category })
+	AddNPC({ Name = "Assassin", Class = "monster_human_assassin", Category = Category })
+	AddNPC({ Name = "Baby Crab", Class = "monster_babycrab", Category = Category })
+	AddNPC({ Name = "Grunt", Class = "monster_human_grunt", Category = Category })
+	AddNPC({ Name = "Cockroach", Class = "monster_cockroach", Category = Category })
+	AddNPC({ Name = "Houndeye", Class = "monster_houndeye", Category = Category })
+	AddNPC({ Name = "Scientist", Class = "monster_scientist", Category = Category })
+	AddNPC({ Name = "Snark", Class = "monster_snark", Category = Category })
+	AddNPC({ Name = "Zombie", Class = "monster_zombie", Category = Category })
+	AddNPC({ Name = "Headcrab", Class = "monster_headcrab", Category = Category })
+	AddNPC({ Name = "Controller", Class = "monster_alien_controller", Category = Category })
+	AddNPC({ Name = "Security Officer", Class = "monster_barney", Category = Category })
 
-	--AddNPC( { Name = "Turret", Class = "monster_turret", Category = Category } )
-	--AddNPC( { Name = "Mini Turret", Class = "monster_miniturret", Category = Category } )
-	--AddNPC( { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = -20, OnFloor = true } )
+	--AddNPC({ Name = "Turret", Class = "monster_turret", Category = Category })
+	--AddNPC({ Name = "Mini Turret", Class = "monster_miniturret", Category = Category })
+	--AddNPC({ Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = -20, OnFloor = true })
 
 end

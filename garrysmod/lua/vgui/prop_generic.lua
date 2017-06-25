@@ -7,7 +7,7 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_pRow", "Row" )
+AccessorFunc(PANEL, "m_pRow", "Row")
 
 function PANEL:Init()
 end
@@ -17,7 +17,7 @@ function PANEL:Think()
 	--
 	-- Periodically update the value
 	--
-	if ( !self:IsEditing() && isfunction( self.m_pRow.DataUpdate ) ) then
+	if (not self:IsEditing() and isfunction( self.m_pRow.DataUpdate)) then
 
 		self.m_pRow:DataUpdate()
 
@@ -28,42 +28,42 @@ end
 --
 -- Called by this control, or a derived control, to alert the row of the change
 --
-function PANEL:ValueChanged( newval, bForce )
+function PANEL:ValueChanged(newval, bForce)
 
-	if ( (self:IsEditing() || bForce) && isfunction( self.m_pRow.DataChanged ) ) then
+	if ((self:IsEditing() or bForce) and isfunction( self.m_pRow.DataChanged)) then
 
-		self.m_pRow:DataChanged( newval )
+		self.m_pRow:DataChanged(newval)
 
 	end
 
 end
 
-function PANEL:Setup( vars )
+function PANEL:Setup(vars)
 
 	self:Clear()
 
-	local text = self:Add( "DTextEntry" )
-	if ( !vars || !vars.waitforenter ) then text:SetUpdateOnType( true ) end
-	text:SetPaintBackground( false )
-	text:Dock( FILL )
+	local text = self:Add("DTextEntry")
+	if (not vars or not vars.waitforenter) then text:SetUpdateOnType( true) end
+	text:SetPaintBackground(false)
+	text:Dock(FILL)
 
 	-- Return true if we're editing
-	self.IsEditing = function( self )
+	self.IsEditing = function(self)
 		return text:IsEditing()
 	end
 
 	-- Set the value
-	self.SetValue = function( self, val )
-		text:SetText( util.TypeToString( val ) )
+	self.SetValue = function(self, val)
+		text:SetText(util.TypeToString( val))
 	end
 
 	-- Alert row that value changed
-	text.OnValueChange = function( text, newval )
+	text.OnValueChange = function(text, newval)
 
-		self:ValueChanged( newval )
+		self:ValueChanged(newval)
 
 	end
 
 end
 
-derma.DefineControl( "DProperty_Generic", "", PANEL, "Panel" )
+derma.DefineControl("DProperty_Generic", "", PANEL, "Panel")
