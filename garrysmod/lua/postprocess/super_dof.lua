@@ -10,11 +10,7 @@ local Shape = 0.5
 local SuperDOFWindow = nil
 local Status = "Preview"
 
-local sldDistance = nil
-local lblDistance = nil
-local lblSize = nil
 local FocusGrabber = false
-local ScreenshotTimer = 0
 
 function PANEL:Init()
 

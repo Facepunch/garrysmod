@@ -3,10 +3,6 @@
 if ( CLIENT ) then return end
 
 local setmetatable 	= setmetatable
-local tostring 		= tostring
-local table			= table
-local Msg			= Msg
-local Error			= Error
 local ai			= ai
 
 module( "ai_task" )

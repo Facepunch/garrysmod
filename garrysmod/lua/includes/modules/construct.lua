@@ -1,13 +1,8 @@
 local ents = ents
-local pairs = pairs
-local table = table
-local tonumber = tonumber
 local SERVER = SERVER
 local duplicator = duplicator
-local print = print
 local numpad = numpad
 local Msg = Msg
-local MsgN = MsgN
 
 module("construct")
 

@@ -12,13 +12,9 @@ if ( !SERVER ) then return end
 local tonumber		= tonumber
 local pairs			= pairs
 local unpack		= unpack
-local type			= type
 local table			= table
-local concommand	= concommand
-local PrintTable	= PrintTable
 local ErrorNoHalt	= ErrorNoHalt
 local saverestore	= saverestore
-local tostring		= tostring
 local math			= math
 local IsValid		= IsValid
 

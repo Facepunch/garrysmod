@@ -1,14 +1,9 @@
 
 local Msg			= Msg
-local tostring 		= tostring
 local type			= type
 local pairs			= pairs
-local string		= string
 local gmod			= gmod
-local PrintTable	= PrintTable
-local CLIENT		= CLIENT
 local table			= table
-local debug			= debug
 
 
 --[[

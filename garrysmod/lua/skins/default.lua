@@ -1,6 +1,5 @@
 
 local surface = surface
-local draw = draw
 local Color = Color
 
 SKIN = {}

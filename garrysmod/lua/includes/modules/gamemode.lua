@@ -1,12 +1,9 @@
 
 -- Globals that we need
 local gmod 			= gmod
-local pairs 		= pairs
 local Msg 			= Msg
 local hook 			= hook
 local table			= table
-local MsgN			= MsgN
-local PrintTable	= PrintTable
 local baseclass		= baseclass
 
 
