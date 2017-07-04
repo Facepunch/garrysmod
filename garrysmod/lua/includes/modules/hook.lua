@@ -4,7 +4,7 @@ local isfunction = isfunction
 local isstring = isstring
 local IsValid = IsValid
 local type = type
-local error = error
+local ErrorNoHalt = ErrorNoHalt
 
 module( "hook" )
 
@@ -25,8 +25,8 @@ end
 -----------------------------------------------------------]]
 function Add( event_name, name, func )
 
-	if ( !isstring( event_name ) ) then error( "bad argument #1 to 'Add' (string expected, got " .. type( event_name ) .. ")" ) end
-	if ( !isfunction( func ) ) then error( "bad argument #3 to 'Add' (function expected, got " .. type( func ) .. ")" ) end
+	if ( !isstring( event_name ) ) then ErrorNoHalt( "bad argument #1 to 'Add' (string expected, got " .. type( event_name ) .. ")" ) end
+	if ( !isfunction( func ) ) then ErrorNoHalt( "bad argument #3 to 'Add' (function expected, got " .. type( func ) .. ")" ) end
 
 	if ( Hooks[ event_name ] == nil ) then
 		Hooks[ event_name ] = {}
@@ -44,7 +44,7 @@ end
 -----------------------------------------------------------]]
 function Remove( event_name, name )
 
-	if ( !isstring( event_name ) ) then error( "bad argument #1 to 'Remove' (string expected, got " .. type( event_name ) .. ")" ) end
+	if ( !isstring( event_name ) ) then ErrorNoHalt( "bad argument #1 to 'Remove' (string expected, got " .. type( event_name ) .. ")" ) end
 	if ( !Hooks[ event_name ] ) then return end
 
 	Hooks[ event_name ][ name ] = nil
