@@ -473,7 +473,7 @@ if SERVER then
       if not idx or not time then return end
 
       local bomb = ents.GetByIndex(idx)
-      if IsValid(bomb) and (not bomb:GetArmed()) then
+      if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and (not bomb:GetArmed()) then
 
          if bomb:GetPos():Distance(ply:GetPos()) > 256 then
             -- These cases should never arise in normal play, so no messages
@@ -538,7 +538,7 @@ if SERVER then
       if not idx then return end
 
       local bomb = ents.GetByIndex(idx)
-      if IsValid(bomb) and bomb.GetArmed and (not bomb:GetArmed()) then
+      if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and (not bomb:GetArmed()) then
          if bomb:GetPos():Distance(ply:GetPos()) > 256 then
             return
          elseif not ply:CanCarryType(WEAPON_EQUIP1) then
@@ -569,7 +569,7 @@ if SERVER then
       if not idx then return end
 
       local bomb = ents.GetByIndex(idx)
-      if IsValid(bomb) and (not bomb:GetArmed()) then
+      if IsValid(bomb) and bomb:GetClass() == "ttt_c4" and (not bomb:GetArmed()) then
          if bomb:GetPos():Distance(ply:GetPos()) > 256 then
             return
          else
