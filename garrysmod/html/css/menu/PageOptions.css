@@ -12,13 +12,17 @@ DIV.page DIV.options
 
 DIV.page DIV.innerpage
 {
-	position: absolute; 
-	left: 300px; 
-	top: 16px; 
-	bottom: 16px; 
-	right: 16px; 
-	padding: 16px; 
+	position: absolute;
+	left: 300px;
+	top: 16px;
+	bottom: 16px;
+	right: 16px;
+	padding: 16px;
 	padding-top: 0;
+}
+
+div.options h2 {
+	margin-top: 0px;
 }
 
 DIV.page DIV.options UL
@@ -63,7 +67,6 @@ DIV.page DIV.options A:hover
 	color: #ffa;
 }
 
-
 DIV.page DIV.options.active, DIV.page DIV.options A.active
 {
 	color: #ff5;
@@ -73,6 +76,15 @@ DIV.page DIV.options .search_bar
 {
 	padding: 2px 4px;
 	box-sizing: border-box;
+	margin-top: 12px;
+	margin-bottom: 8px;
+}
+
+@media screen and (max-height: 768px) {
+	DIV.page DIV.options UL.submenu LI
+	{
+		margin-bottom: -8px;
+	}
 }
 
 @media screen and (max-width: 1280px)
@@ -82,20 +94,20 @@ DIV.page DIV.options .search_bar
 		width: 250px;
 		font-size: 70%;
 	}
-	
+
 	DIV.page DIV.innerpage
 	{
 		left: 250px;
 	}
-	
+
 	DIV.page DIV.options, DIV.page DIV.options A
 	{
 		font-size: 16px;
 	}
-	
-	DIV.page DIV.options UL
+
+	DIV.page DIV.options UL.submenu LI
 	{
-		margin-left: 5px;
+		margin-bottom: -4px;
 	}
 }
 
@@ -104,17 +116,17 @@ DIV.page DIV.options .search_bar
 	{
 		padding-top: 0px;
 	}
-	
+
 	DIV.page DIV.options UL
 	{
 		padding: 0px;
 	}
-	
+
 	DIV.page DIV.options UL LI
 	{
 		margin-bottom: 0px;
 	}
-	
+
 	DIV.page DIV.options, DIV.page DIV.options A
 	{
 		font-size: 20px;

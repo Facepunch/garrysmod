@@ -7,8 +7,6 @@
 
 				<li><h2 ng-tranny="'saves'"></h2></li>
 
-				<li>&nbsp;</li>
-
 				<li ng-repeat="cat in MyCategories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
 					<a ng-click="Switch( cat, 0 )" ng-Tranny="'saves.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
 

@@ -3,8 +3,6 @@
 		<ul>
 			<li><h2 ng-tranny="'addons'"></h2></li>
 
-			<li>&nbsp;</li>
-
 			<li>
 				<a class="{{IfElse( Category == 'subscribed', 'active', '' )}}" ng-click="Switch( 'subscribed', 0 )" ng-Tranny="'addons.subscribed'"></a>
 				<ul ng-show="Category == 'subscribed'" class="submenu">
@@ -12,7 +10,7 @@
 						<a ng-click="SwitchWithTag( 'subscribed', 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
 					</li>
 
-					<li>&nbsp;</li>
+					<!--<li>&nbsp;</li>-->
 					<li><input type="text" class="search_bar" ng-tranny="'addons.search'" ng-model="SubscriptionSearchText" ng-change="HandleOnSearch()"/></li>
 					<!--<li>
 						<input type="checkbox" ng-model="ServerSettings.enabled_only" id="enabled_only" />
@@ -21,8 +19,8 @@
 					<li>
 						<input type="checkbox" ng-model="ServerSettings.disabled_only" id="disabled_only" />
 						<label ng-Tranny="'addons.disabled_only'"></label>
-					</li>-->
-					<li>&nbsp;</li>
+					</li>
+					<li>&nbsp;</li>-->
 
 					<container ng-show="!IsAnySelected()">
 						<li><a ng-click="DisplayPopupMessage( 'addons.enableall.warning', EnableAllSubscribed )" ng-Tranny="'addons.enableall'"></a></li>
