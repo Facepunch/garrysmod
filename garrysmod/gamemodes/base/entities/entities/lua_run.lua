@@ -5,6 +5,7 @@ ENT.DisableDuplicator = true
 AccessorFunc( ENT, "m_bDefaultCode", "DefaultCode" )
 
 function ENT:Initialize()
+	
 end
 
 function ENT:KeyValue( key, value )
@@ -15,32 +16,35 @@ function ENT:KeyValue( key, value )
 
 end
 
-function ENT:SetupGlobals( activator, caller )
-
-	ACTIVATOR = activator
-	CALLER = caller
+function ENT:SetupGlobals( activator, caller, code )
+	
+	self.compiledCode = CompileString( value, tostring(self) )
+	if ( not self.compiledCode ) then return end
+	
+	local meta = {
+		__index = _G
+	}
+	
+	local environment = {
+		ACTIVATOR = activator,
+		CALLER = caller
+	}
 
 	if ( IsValid( activator ) && activator:IsPlayer() ) then
-		TRIGGER_PLAYER = activator
+		environment.TRIGGER_PLAYER = activator
 	end
-
-end
-
-function ENT:KillGlobals()
-
-	ACTIVATOR = nil
-	CALLER = nil
-	TRIGGER_PLAYER = nil
+	
+	setmetatable( environment, meta )
+	self.compiledCode = setfenv( self.compiledCode, environment )
 
 end
 
 function ENT:RunCode( activator, caller, code )
 
-	self:SetupGlobals( activator, caller )
-
-		RunString( code )
-
-	self:KillGlobals()
+	self:SetupGlobals( activator, caller, code )
+	
+	if ( not self.compiledCode ) then return end
+	ProtectedCall( self.compiledCode )
 
 end
 
