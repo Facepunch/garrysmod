@@ -164,6 +164,21 @@ function GM:PlayerFootstep(ply, pos, foot, sound, volume, rf)
    end
 end
 
+-- Predicted move speed changes
+function GM:SetupMove(ply, mv, cmd)
+   if (ply:Alive() and ply:Team() == TEAM_TERROR) then
+
+      local basespeed = 220
+      -- Slow down ironsighters
+      local wep = ply:GetActiveWeapon()
+      if IsValid(wep) and wep.GetIronsights and wep:GetIronsights() then
+         basespeed = 120
+      end
+      local mul = hook.Call("TTTPlayerSpeed", GAMEMODE, self, slowed) or 1
+      mv:SetMaxClientSpeed(basespeed * mul)
+   end
+end
+
 
 -- Weapons and items that come with TTT. Weapons that are not in this list will
 -- get a little marker on their icon if they're buyable, showing they are custom

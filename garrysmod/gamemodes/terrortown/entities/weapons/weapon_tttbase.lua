@@ -244,7 +244,7 @@ function SWEP:PrimaryAttack(worldsnd)
    local owner = self.Owner
    if not IsValid(owner) or owner:IsNPC() or (not owner.ViewPunch) then return end
 
-   owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) * self.Primary.Recoil, 0 ) )
+   owner:ViewPunch( Angle( util.SharedRandom(self:GetClass(), -0.2,-0.1) * self.Primary.Recoil, util.SharedRandom(self:GetClass(), -0.1,0.1) * self.Primary.Recoil, 0 ) )
 end
 
 function SWEP:DryFire(setnext)
@@ -293,8 +293,6 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
    self.Owner:MuzzleFlash()
    self.Owner:SetAnimation( PLAYER_ATTACK1 )
 
-   if not IsFirstTimePredicted() then return end
-
    local sights = self:GetIronsights()
 
    numbul = numbul or 1
@@ -328,7 +326,6 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
       eyeang.pitch = eyeang.pitch - recoil
       self.Owner:SetEyeAngles( eyeang )
    end
-
 end
 
 function SWEP:GetPrimaryCone()
@@ -349,7 +346,6 @@ function SWEP:DrawWeaponSelection() end
 
 function SWEP:SecondaryAttack()
    if self.NoSights or (not self.IronSightsPos) then return end
-   --if self:GetNextSecondaryFire() > CurTime() then return end
 
    self:SetIronsights(not self:GetIronsights())
 
@@ -448,17 +444,22 @@ end
 function SWEP:WasBought(buyer)
 end
 
--- Dummy functions that will be replaced when SetupDataTables runs. These are
--- here for when that does not happen (due to e.g. stacking base classes)
-function SWEP:GetIronsights() return false end
-function SWEP:SetIronsights() end
+function SWEP:SetIronsightsUnpredicted(ironsights) self.IronsightsUnpredicted = ironsights end
+function SWEP:GetIronsightsUnpredicted() return self.IronsightsUnpredicted end
+function SWEP:GetIronsights() return self:GetIronsightsPredicted() end
+function SWEP:SetIronsights(ironsights) 
+   self:SetIronsightsPredicted(ironsights)
+   if (CLIENT and IsFirstTimePredicted()) then
+      self:SetIronsightsUnpredicted(ironsights)
+   end
+end
 
 -- Set up ironsights dt bool. Weapons using their own DT vars will have to make
 -- sure they call this.
 function SWEP:SetupDataTables()
    -- Put it in the last slot, least likely to interfere with derived weapon's
    -- own stuff.
-   self:NetworkVar("Bool", 3, "Ironsights")
+   self:NetworkVar("Bool", 3, "IronsightsPredicted")
 end
 
 function SWEP:Initialize()
@@ -521,7 +522,7 @@ local IRONSIGHT_TIME = 0.25
 function SWEP:GetViewModelPosition( pos, ang )
    if not self.IronSightsPos then return pos, ang end
 
-   local bIron = self:GetIronsights()
+   local bIron = self:GetIronsightsUnpredicted()
 
    if bIron != self.bLastIron then
       self.bLastIron = bIron

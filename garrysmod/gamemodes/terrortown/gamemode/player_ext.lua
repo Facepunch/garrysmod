@@ -205,16 +205,7 @@ end
 
 
 function plymeta:SetSpeed(slowed)
-   local mul = hook.Call("TTTPlayerSpeed", GAMEMODE, self, slowed) or 1
-   if slowed then
-      self:SetWalkSpeed(120 * mul)
-      self:SetRunSpeed(120 * mul)
-      self:SetMaxSpeed(120 * mul)
-   else
-      self:SetWalkSpeed(220 * mul)
-      self:SetRunSpeed(220 * mul)
-      self:SetMaxSpeed(220 * mul)
-   end
+   error "Player:SetSpeed is deprecated - please remove this call"
 end
 
 function plymeta:ResetLastWords()
@@ -307,7 +298,6 @@ function plymeta:InitialSpawn()
    -- Change some gmod defaults
    self:SetCanZoom(false)
    self:SetJumpPower(160)
-   self:SetSpeed(false)
    self:SetCrouchedWalkSpeed(0.3)
 
    -- Always spawn innocent initially, traitor will be selected later
