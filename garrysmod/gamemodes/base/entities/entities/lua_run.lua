@@ -18,7 +18,7 @@ end
 
 function ENT:SetupGlobals( activator, caller, code )
 	
-	self.compiledCode = CompileString( value, tostring(self) )
+	self.compiledCode = CompileString( code, tostring(self) )
 	if ( not self.compiledCode ) then return end
 	
 	local meta = {
