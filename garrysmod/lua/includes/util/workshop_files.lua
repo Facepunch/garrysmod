@@ -54,10 +54,10 @@ function WorkshopFileBase( namespace, requiredtags )
 			subscriptions = engine.GetAddons()
 		end
 
-		-- Newest files are on top
+		for id, e in pairs( subscriptions ) do
+			if ( e.timeadded == 0 ) then e.timeadded = os.time() end
+		end
 		table.sort( subscriptions, function( a, b )
-			if ( a.timeadded == 0 ) then a.timeadded = os.time() end -- For newly added addons (within game session)
-			if ( b.timeadded == 0 ) then a.timeadded = os.time() end
 			return a.timeadded > b.timeadded
 		end )
 
