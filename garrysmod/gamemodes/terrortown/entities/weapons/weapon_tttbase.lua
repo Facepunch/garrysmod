@@ -486,9 +486,10 @@ function SWEP:Initialize()
 end
 
 function SWEP:CalcViewModel()
+   if (not CLIENT) then return end
    self.bIron = self:GetIronsights()
    self.fIronTime = self:GetIronsightsTime()
-   self.fCurrentTime = CurTime()
+   self.fCurrentTime = CurTime() - SysTime()
 end
 
 function SWEP:Think()
@@ -536,7 +537,7 @@ function SWEP:GetViewModelPosition( pos, ang )
    if not self.IronSightsPos or self.bIron == nil then return pos, ang end
 
    local bIron = self.bIron
-   local time = self.fCurrentTime
+   local time = self.fCurrentTime + SysTime()
 
    if bIron then
       self.SwayScale = 0.3
