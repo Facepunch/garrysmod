@@ -174,7 +174,7 @@ function GM:SetupMove(ply, mv, cmd)
       if IsValid(wep) and wep.GetIronsights and wep:GetIronsights() then
          basespeed = 120
       end
-      local mul = hook.Call("TTTPlayerSpeed", GAMEMODE, self, slowed) or 1
+      local mul = hook.Call("TTTPlayerSpeedModifier", GAMEMODE, self, slowed) or 1
       mv:SetMaxClientSpeed(basespeed * mul)
    end
 end

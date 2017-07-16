@@ -205,7 +205,7 @@ end
 
 
 function plymeta:SetSpeed(slowed)
-   error "Player:SetSpeed is deprecated - please remove this call"
+   error "Player:SetSpeed is deprecated - please remove this call and use the TTTPlayerSpeedModifier hook in a predicted environment"
 end
 
 function plymeta:ResetLastWords()
