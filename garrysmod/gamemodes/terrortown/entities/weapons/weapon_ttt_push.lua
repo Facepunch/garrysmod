@@ -1,5 +1,7 @@
 AddCSLuaFile()
 
+DEFINE_BASECLASS "weapon_tttbase"
+
 SWEP.HoldType               = "physgun"
 
 if CLIENT then
@@ -181,6 +183,7 @@ function SWEP:Holster()
 end
 
 function SWEP:Think()
+   BaseClass.Think(self)
    if self.IsCharging and IsValid(self.Owner) and self.Owner:IsTerror() then
       -- on client this is prediction
       if not self.Owner:KeyDown(IN_ATTACK2) then

@@ -444,21 +444,20 @@ end
 function SWEP:WasBought(buyer)
 end
 
-function SWEP:SetIronsightsUnpredicted(ironsights) self.IronsightsUnpredicted = ironsights end
-function SWEP:GetIronsightsUnpredicted() return self.IronsightsUnpredicted end
-function SWEP:GetIronsights() return self:GetIronsightsPredicted() end
-function SWEP:SetIronsights(ironsights) 
-   self:SetIronsightsPredicted(ironsights)
-   if (CLIENT and IsFirstTimePredicted()) then
-      self:SetIronsightsUnpredicted(ironsights)
-   end
+function SWEP:SetIronsights(b)
+   self:SetIronsightsPredicted(b)
+   self:SetIronsightsTime(CurTime())
+end
+function SWEP:GetIronsights()
+   return self:GetIronsightsPredicted()
 end
 
 --- Dummy functions that will be replaced when SetupDataTables runs. These are
 --- here for when that does not happen (due to e.g. stacking base classes)
+function SWEP:GetIronsightsTime() return -1 end
+function SWEP:SetIronsightsTime() end
 function SWEP:GetIronsightsPredicted() return false end
 function SWEP:SetIronsightsPredicted() end
-
 
 -- Set up ironsights dt bool. Weapons using their own DT vars will have to make
 -- sure they call this.
@@ -466,6 +465,7 @@ function SWEP:SetupDataTables()
    -- Put it in the last slot, least likely to interfere with derived weapon's
    -- own stuff.
    self:NetworkVar("Bool", 3, "IronsightsPredicted")
+   self:NetworkVar("Float", 3, "IronsightsTime")
 end
 
 function SWEP:Initialize()
@@ -485,7 +485,14 @@ function SWEP:Initialize()
    end
 end
 
+function SWEP:CalcViewModel()
+   self.bIron = self:GetIronsights()
+   self.fIronTime = self:GetIronsightsTime()
+   self.fCurrentTime = CurTime()
+end
+
 function SWEP:Think()
+   self:CalcViewModel()
 end
 
 function SWEP:DyingShot()
@@ -526,34 +533,29 @@ local LOWER_POS = Vector(0, 0, -2)
 
 local IRONSIGHT_TIME = 0.25
 function SWEP:GetViewModelPosition( pos, ang )
-   if not self.IronSightsPos then return pos, ang end
+   if not self.IronSightsPos or self.bIron == nil then return pos, ang end
 
-   local bIron = self:GetIronsightsUnpredicted()
+   local bIron = self.bIron
+   local time = self.fCurrentTime
 
-   if bIron != self.bLastIron then
-      self.bLastIron = bIron
-      self.fIronTime = CurTime()
-
-      if bIron then
-         self.SwayScale = 0.3
-         self.BobScale = 0.1
-      else
-         self.SwayScale = 1.0
-         self.BobScale = 1.0
-      end
-
+   if bIron then
+      self.SwayScale = 0.3
+      self.BobScale = 0.1
+   else
+      self.SwayScale = 1.0
+      self.BobScale = 1.0
    end
 
-   local fIronTime = self.fIronTime or 0
-   if (not bIron) and fIronTime < CurTime() - IRONSIGHT_TIME then
+   local fIronTime = self.fIronTime
+   if (not bIron) and fIronTime < time - IRONSIGHT_TIME then
       return pos, ang
    end
 
    local mul = 1.0
 
-   if fIronTime > CurTime() - IRONSIGHT_TIME then
+   if fIronTime > time - IRONSIGHT_TIME then
 
-      mul = math.Clamp( (CurTime() - fIronTime) / IRONSIGHT_TIME, 0, 1 )
+      mul = math.Clamp( (time - fIronTime) / IRONSIGHT_TIME, 0, 1 )
 
       if not bIron then mul = 1 - mul end
    end

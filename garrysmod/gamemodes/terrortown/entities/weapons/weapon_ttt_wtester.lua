@@ -2,6 +2,8 @@
 
 AddCSLuaFile()
 
+DEFINE_BASECLASS "weapon_tttbase"
+
 SWEP.HoldType              = "normal"
 
 if CLIENT then

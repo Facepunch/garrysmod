@@ -2,6 +2,8 @@
 
 AddCSLuaFile()
 
+DEFINE_BASECLASS "weapon_tttbase"
+
 SWEP.HoldReady             = "grenade"
 SWEP.HoldNormal            = "slam"
 
@@ -84,6 +86,7 @@ end
 
 
 function SWEP:Think()
+   BaseClass.Think(self)
    local ply = self.Owner
    if not IsValid(ply) then return end
 

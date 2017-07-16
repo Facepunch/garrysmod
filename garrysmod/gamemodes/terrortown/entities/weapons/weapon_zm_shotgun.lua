@@ -1,5 +1,7 @@
 AddCSLuaFile()
 
+DEFINE_BASECLASS "weapon_tttbase"
+
 SWEP.HoldType              = "shotgun"
 
 if CLIENT then
@@ -46,7 +48,7 @@ SWEP.reloadtimer           = 0
 function SWEP:SetupDataTables()
    self:DTVar("Bool", 0, "reloading")
 
-   return self.BaseClass.SetupDataTables(self)
+   return BaseClass.SetupDataTables(self)
 end
 
 function SWEP:Reload()
@@ -134,6 +136,7 @@ function SWEP:CanPrimaryAttack()
 end
 
 function SWEP:Think()
+   BaseClass.Think(self)
    if self.dt.reloading and IsFirstTimePredicted() then
       if self.Owner:KeyDown(IN_ATTACK) then
          self:FinishReload()
@@ -157,7 +160,7 @@ end
 function SWEP:Deploy()
    self.dt.reloading = false
    self.reloadtimer = 0
-   return self.BaseClass.Deploy(self)
+   return BaseClass.Deploy(self)
 end
 
 -- The shotgun's headshot damage multiplier is based on distance. The closer it
