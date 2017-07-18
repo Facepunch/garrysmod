@@ -87,7 +87,7 @@ function ENT:OnLeaveGround( ent )
 end
 
 --
--- Name: NEXTBOT:OnLeaveGround
+-- Name: NEXTBOT:OnLandOnGround
 -- Desc: Called when the bot's feet return to the ground
 -- Arg1: Entity|ent|Entity that the NextBot landed on
 -- Ret1:
