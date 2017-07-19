@@ -73,8 +73,7 @@ function PANEL:AddFakeColumn() end
 
 local namecolor = {
    default = COLOR_WHITE,
-   admin = Color(220, 180, 0, 255),
-   dev = Color(100, 240, 105, 255)
+   admin = Color(220, 180, 0, 255)
 }
 
 local rolecolor = {
@@ -86,9 +85,7 @@ local rolecolor = {
 function GM:TTTScoreboardColorForPlayer(ply)
    if not IsValid(ply) then return namecolor.default end
 
-   if ply:SteamID() == "STEAM_0:0:1963640" then
-      return namecolor.dev
-   elseif ply:IsAdmin() and GetGlobalBool("ttt_highlight_admins", true) then
+   if ply:IsAdmin() and GetGlobalBool("ttt_highlight_admins", true) then
       return namecolor.admin
    end
    return namecolor.default
