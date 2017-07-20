@@ -150,15 +150,7 @@ derma.DefineControl( "DListView_Column", "", table.Copy( PANEL ), "Panel" )
 	DListView_ColumnPlain
 -----------------------------------------------------------]]
 
-function PANEL:Init()
-
-	self.Header = vgui.Create( "DListViewHeaderLabel", self )
-
-	self.DraggerBar = vgui.Create( "DListView_DraggerBar", self )
-
-	self:SetMinWidth( 10 )
-	self:SetMaxWidth( 1920 * 10 )
-
+function PANEL:DoClick()
 end
 
-derma.DefineControl( "DListView_ColumnPlain", "", PANEL, "Panel" )
+derma.DefineControl( "DListView_ColumnPlain", "", PANEL, "DListView_Column" )
