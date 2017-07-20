@@ -25,7 +25,7 @@ function Material( name, words )
 	str = str .. (words:find("noclamp") and "1" or "0")
 	str = str .. (words:find("smooth") and "1" or "0")
 	
-	return C_Material( name, str )
+	return select( 1, C_Material( name, str ) )
 
 end
 
