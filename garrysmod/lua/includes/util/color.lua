@@ -1,4 +1,4 @@
-local COLOR = {}
+local COLOR = { MetaName = "Color" }
 COLOR.__index = COLOR
 
 --[[---------------------------------------------------------
