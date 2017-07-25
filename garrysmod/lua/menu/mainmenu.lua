@@ -1,6 +1,7 @@
 
 include( 'background.lua' )
 include( 'cef_credits.lua' )
+include( 'openurl.lua' )
 
 pnlMainMenu = nil
 
