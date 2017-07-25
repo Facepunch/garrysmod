@@ -64,10 +64,10 @@ hook.Add( "DrawOverlay","sandbox_search_progress", function()
 	draw.RoundedBox( 0, x, y, maxw * ( totalCalls / expectedCalls ), 8, Color( 0, 128, 255, 200 ) )
 end )
 
-local model_list = nil
 --
 -- Model Search
 --
+local model_list = nil
 search.AddProvider( function( str )
 
 	str = str:PatternSafe()
@@ -79,11 +79,15 @@ search.AddProvider( function( str )
 
 	end
 
-	local list = {}
+	local models = {}
 
 	for k, v in pairs( model_list ) do
 
-		if ( v:find( str ) ) then
+		-- Don't search in the models/ bit of every model, because every model has this bit
+		local modelpath = v
+		if ( modelpath:StartWith( "models/" ) ) then modelpath = modelpath:sub( 8 ) end
+
+		if ( modelpath:find( str ) ) then
 
 			if ( IsUselessModel( v ) ) then continue end
 
@@ -94,15 +98,15 @@ search.AddProvider( function( str )
 				words = { v }
 			}
 
-			table.insert( list, entry )
+			table.insert( models, entry )
 
 		end
 
-		if ( #list >= 256 ) then break end
+		if ( #models >= 512 ) then break end
 
 	end
 
-	return list
+	return models
 
 end, "props" )
 
