@@ -177,8 +177,13 @@ end
 function meta:SetPData( name, value )
 
 	name = Format( "%s[%s]", self:UniqueID(), name )
-	sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" )
-
+	local ok = sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" )
+	if not ok then
+		error(sql.LastError())
+		return false
+	end
+	return true
+	
 end
 
 --[[---------------------------------------------------------
@@ -188,8 +193,13 @@ end
 function meta:RemovePData( name )
 
 	name = Format( "%s[%s]", self:UniqueID(), name )
-	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
-
+	local ok = sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
+	if not ok then
+		error(sql.LastError())
+		return false
+	end
+	return true
+	
 end
 
 --
