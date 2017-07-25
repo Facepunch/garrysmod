@@ -177,8 +177,7 @@ end
 function meta:SetPData( name, value )
 
 	name = Format( "%s[%s]", self:UniqueID(), name )
-	local ok = sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" )
-	return ok
+	return sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" ) ~= false
 	
 end
 
@@ -189,8 +188,7 @@ end
 function meta:RemovePData( name )
 
 	name = Format( "%s[%s]", self:UniqueID(), name )
-	local ok = sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
-	return ok
+	return sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) ) ~= false
 	
 end
 
