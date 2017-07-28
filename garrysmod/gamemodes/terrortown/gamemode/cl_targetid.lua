@@ -145,7 +145,9 @@ function GM:HUDDrawTargetID()
 
    local L = GetLang()
 
-   DrawPropSpecLabels(client)
+   if hook.Call("TTTDrawTargetID", GAMEMODE, client) != false then
+      DrawPropSpecLabels(client)
+   end
 
    local trace = client:GetEyeTrace(MASK_SHOT)
    local ent = trace.Entity
