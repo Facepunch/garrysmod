@@ -1,5 +1,7 @@
 AddCSLuaFile()
 
+DEFINE_BASECLASS "weapon_tttbase"
+
 SWEP.HoldType              = "ar2"
 
 if CLIENT then
@@ -202,6 +204,7 @@ if SERVER then
    local CHARGE_DELAY = 0.025
 
    function SWEP:Think()
+      BaseClass.Think(self)
       if not IsValid(self.Owner) then return end
 
       if self.IsCharging and self.Owner:KeyDown(IN_ATTACK2) then

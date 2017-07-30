@@ -41,7 +41,6 @@ SWEP.IronSightsPos         = Vector(-7.58, -9.2, 0.55)
 SWEP.IronSightsAng         = Vector(2.599, -1.3, -3.6)
 
 function SWEP:SetZoom(state)
-   if CLIENT then return end
    if not (IsValid(self.Owner) and self.Owner:IsPlayer()) then return end
    if state then
       self.Owner:SetFOV(35, 0.5)
@@ -59,9 +58,7 @@ function SWEP:SecondaryAttack()
 
    self:SetIronsights( bIronsights )
 
-   if SERVER then
-      self:SetZoom( bIronsights )
-   end
+   self:SetZoom( bIronsights )
 
    self:SetNextSecondaryFire( CurTime() + 0.3 )
 end
