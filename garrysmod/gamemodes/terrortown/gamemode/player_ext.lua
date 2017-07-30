@@ -205,7 +205,12 @@ end
 
 
 function plymeta:SetSpeed(slowed)
-   error "Player:SetSpeed is deprecated - please remove this call and use the TTTPlayerSpeedModifier hook in both CLIENT and SERVER states"
+   -- For player movement prediction to work properly, ply:SetSpeed turned out
+   -- to be a bad idea. It now uses GM:SetupMove, and the TTTPlayerSpeedModifier
+   -- hook is provided to let you change player speed without messing up
+   -- prediction. It needs to be hooked on both client and server and return the
+   -- same results (ie. same implementation).
+   error "Player:SetSpeed has been removed - please remove this call and use the TTTPlayerSpeedModifier hook in both CLIENT and SERVER environments"
 end
 
 function plymeta:ResetLastWords()

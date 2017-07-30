@@ -3,7 +3,7 @@ GM.Author = "Bad King Urgrain"
 GM.Email = "thegreenbunny@gmail.com"
 GM.Website = "ttt.badking.net"
 -- Date of latest changes (YYYY-MM-DD)
-GM.Version = "2017-04-20"
+GM.Version = "2017-07-30"
 
 
 GM.Customized = false
@@ -166,7 +166,7 @@ end
 
 -- Predicted move speed changes
 function GM:SetupMove(ply, mv, cmd)
-   if (ply:Alive() and ply:Team() == TEAM_TERROR) then
+   if ply:IsTerror() then
 
       local basespeed = 220
       -- Slow down ironsighters
@@ -174,7 +174,7 @@ function GM:SetupMove(ply, mv, cmd)
       if IsValid(wep) and wep.GetIronsights and wep:GetIronsights() then
          basespeed = 120
       end
-      local mul = hook.Call("TTTPlayerSpeedModifier", GAMEMODE, self, slowed) or 1
+      local mul = hook.Call("TTTPlayerSpeedModifier", GAMEMODE, ply, slowed) or 1
       mv:SetMaxClientSpeed(basespeed * mul)
    end
 end

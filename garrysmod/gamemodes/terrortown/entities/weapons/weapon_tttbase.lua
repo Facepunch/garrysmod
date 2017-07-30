@@ -492,6 +492,8 @@ function SWEP:CalcViewModel()
    self.fCurrentTime = CurTime() - SysTime()
 end
 
+-- Note that if you override Think in your SWEP, you should call
+-- BaseClass.Think(self) so as not to break ironsights
 function SWEP:Think()
    self:CalcViewModel()
 end
@@ -534,7 +536,7 @@ local LOWER_POS = Vector(0, 0, -2)
 
 local IRONSIGHT_TIME = 0.25
 function SWEP:GetViewModelPosition( pos, ang )
-   if not self.IronSightsPos or self.bIron == nil then return pos, ang end
+   if (not self.IronSightsPos) or (self.bIron == nil) then return pos, ang end
 
    local bIron = self.bIron
    local time = self.fCurrentTime + SysTime()
