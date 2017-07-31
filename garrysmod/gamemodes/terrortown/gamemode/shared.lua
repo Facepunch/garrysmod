@@ -3,7 +3,7 @@ GM.Author = "Bad King Urgrain"
 GM.Email = "thegreenbunny@gmail.com"
 GM.Website = "ttt.badking.net"
 -- Date of latest changes (YYYY-MM-DD)
-GM.Version = "2017-07-30"
+GM.Version = "2017-07-31"
 
 
 GM.Customized = false
@@ -174,7 +174,7 @@ function GM:SetupMove(ply, mv, cmd)
       if IsValid(wep) and wep.GetIronsights and wep:GetIronsights() then
          basespeed = 120
       end
-      local mul = hook.Call("TTTPlayerSpeedModifier", GAMEMODE, ply, slowed) or 1
+      local mul = hook.Call("TTTPlayerSpeedModifier", GAMEMODE, ply) or 1
       mv:SetMaxClientSpeed(basespeed * mul)
    end
 end
