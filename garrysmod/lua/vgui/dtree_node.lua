@@ -149,7 +149,7 @@ function PANEL:ExpandRecurse( bExpand )
 
 	if ( !self.ChildNodes ) then return end
 
-	for k, Child in pairs( self.ChildNodes:GetItems() ) do
+	for k, Child in pairs( self.ChildNodes:GetChildren() ) do
 		if ( Child.ExpandRecurse ) then
 			Child:ExpandRecurse( bExpand )
 		end
