@@ -165,9 +165,8 @@ function GM:PlayerFootstep(ply, pos, foot, sound, volume, rf)
 end
 
 -- Predicted move speed changes
-function GM:SetupMove(ply, mv, cmd)
+function GM:Move(ply, mv)
    if ply:IsTerror() then
-
       local basespeed = 220
       -- Slow down ironsighters
       local wep = ply:GetActiveWeapon()
@@ -176,6 +175,7 @@ function GM:SetupMove(ply, mv, cmd)
       end
       local mul = hook.Call("TTTPlayerSpeedModifier", GAMEMODE, ply) or 1
       mv:SetMaxClientSpeed(basespeed * mul)
+      mv:SetMaxSpeed(basespeed * mul)
    end
 end
 
