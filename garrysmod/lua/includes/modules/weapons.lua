@@ -45,7 +45,7 @@ end
 -----------------------------------------------------------]]
 function Register( t, name )
 
-	if ( hook.Run( "PreWeaponRegister", t, name ) == true ) then return end
+	if ( hook.Run( "PreRegisterSWEP", t, name ) == true ) then return end
 
 	local old = WeaponList[ name ]
 
