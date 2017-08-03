@@ -168,12 +168,14 @@ end
 function GM:Move(ply, mv)
    if ply:IsTerror() then
       local basespeed = 220
+      local slowed = false
       -- Slow down ironsighters
       local wep = ply:GetActiveWeapon()
       if IsValid(wep) and wep.GetIronsights and wep:GetIronsights() then
          basespeed = 120
+         slowed = true
       end
-      local mul = hook.Call("TTTPlayerSpeedModifier", GAMEMODE, ply) or 1
+      local mul = hook.Call("TTTPlayerSpeedModifier", GAMEMODE, ply, slowed, mv) or 1
       mv:SetMaxClientSpeed(basespeed * mul)
       mv:SetMaxSpeed(basespeed * mul)
    end
