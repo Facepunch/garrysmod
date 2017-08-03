@@ -447,6 +447,9 @@ end
 function SWEP:SetIronsights(b)
    self:SetIronsightsPredicted(b)
    self:SetIronsightsTime(CurTime())
+   if CLIENT then
+      self:CalcViewModel()
+   end
 end
 function SWEP:GetIronsights()
    return self:GetIronsightsPredicted()
@@ -462,8 +465,6 @@ function SWEP:SetIronsightsPredicted() end
 -- Set up ironsights dt bool. Weapons using their own DT vars will have to make
 -- sure they call this.
 function SWEP:SetupDataTables()
-   -- Put it in the last slot, least likely to interfere with derived weapon's
-   -- own stuff.
    self:NetworkVar("Bool", 3, "IronsightsPredicted")
    self:NetworkVar("Float", 3, "IronsightsTime")
 end
@@ -486,10 +487,11 @@ function SWEP:Initialize()
 end
 
 function SWEP:CalcViewModel()
-   if (not CLIENT) then return end
+   if (not CLIENT) or (not IsFirstTimePredicted()) then return end
    self.bIron = self:GetIronsights()
    self.fIronTime = self:GetIronsightsTime()
-   self.fCurrentTime = CurTime() - SysTime()
+   self.fCurrentTime = CurTime()
+   self.fCurrentSysTime = SysTime()
 end
 
 -- Note that if you override Think in your SWEP, you should call
@@ -531,6 +533,7 @@ function SWEP:DyingShot()
 end
 
 local ttt_lowered = CreateConVar("ttt_ironsights_lowered", "1", FCVAR_ARCHIVE)
+local host_timescale = GetConVar("host_timescale")
 
 local LOWER_POS = Vector(0, 0, -2)
 
@@ -539,7 +542,7 @@ function SWEP:GetViewModelPosition( pos, ang )
    if (not self.IronSightsPos) or (self.bIron == nil) then return pos, ang end
 
    local bIron = self.bIron
-   local time = self.fCurrentTime + SysTime()
+   local time = self.fCurrentTime + (SysTime() - self.fCurrentSysTime) * game.GetTimeScale() * host_timescale:GetFloat()
 
    if bIron then
       self.SwayScale = 0.3
@@ -557,7 +560,6 @@ function SWEP:GetViewModelPosition( pos, ang )
    local mul = 1.0
 
    if fIronTime > time - IRONSIGHT_TIME then
-
       mul = math.Clamp( (time - fIronTime) / IRONSIGHT_TIME, 0, 1 )
 
       if not bIron then mul = 1 - mul end
