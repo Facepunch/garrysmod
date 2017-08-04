@@ -172,7 +172,7 @@ function GM:Move(ply, mv)
       -- Slow down ironsighters
       local wep = ply:GetActiveWeapon()
       if IsValid(wep) and wep.GetIronsights and wep:GetIronsights() then
-         basespeed = 120 / 220
+         basemul = 120 / 220
          slowed = true
       end
       local mul = hook.Call("TTTPlayerSpeedModifier", GAMEMODE, ply, slowed, mv) or 1
