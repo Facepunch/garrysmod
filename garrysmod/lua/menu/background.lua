@@ -91,6 +91,7 @@ function ChangeBackground( currentgm )
 
 	-- Remove the texture from memory
 	-- There's a bit of internal magic going on here
+	--[[
 	local DoUnload = Outgoing != nil
 
 	if ( Outgoing && Outgoing.Name == img ) then
@@ -104,6 +105,7 @@ function ChangeBackground( currentgm )
 	if ( DoUnload ) then
 		Outgoing.mat:SetUndefined( "$basetexture" )
 	end
+	]]
 
 	Outgoing = Active
 	if ( Outgoing ) then

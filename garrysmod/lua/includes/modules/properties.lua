@@ -126,18 +126,16 @@ function OnScreenClick( eyepos, eyevec )
 
 end
 
-
 -- Receives commands from clients
 if ( SERVER ) then
 
 	util.AddNetworkString( "properties" )
 
 	net.Receive( "properties", function( len, client )
+		if ( !IsValid( client ) ) then return end
 
 		local name = net.ReadString()
-
 		if ( !name ) then return end
-		if ( !IsValid( client ) ) then return end
 
 		local prop = List[ name ]
 		if ( !prop ) then return end
@@ -187,7 +185,6 @@ if ( CLIENT ) then
 	-- Hook the GUIMousePressed call, which is called when the client clicks on the
 	-- gui.
 	--
-
 	local wasPressed = false
 	hook.Add( "PreventScreenClicks", "PropertiesPreventClicks", function()
 
