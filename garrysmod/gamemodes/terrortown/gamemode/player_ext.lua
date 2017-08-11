@@ -304,6 +304,9 @@ function plymeta:InitialSpawn()
    self:SetCanZoom(false)
    self:SetJumpPower(160)
    self:SetCrouchedWalkSpeed(0.3)
+   self:SetRunSpeed(220)
+   self:SetWalkSpeed(220)
+   self:SetMaxSpeed(220)
 
    -- Always spawn innocent initially, traitor will be selected later
    self:ResetStatus()
