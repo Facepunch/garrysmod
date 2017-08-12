@@ -14,7 +14,7 @@ function GM:HandlePlayerJumping( ply, velocity )
 
 			ply.m_fGroundTime = CurTime()
 			
-		elseif ( CurTime() - ply.m_fGroundTime ) > 0 && velocity:Length2D() < 0.5 then
+		elseif ( CurTime() - ply.m_fGroundTime ) > 0 && velocity:Length2DSqr() < 0.25 then
 
 			ply.m_bJumping = true
 			ply.m_bFirstJumpFrame = false
@@ -300,8 +300,8 @@ function GM:CalcMainActivity( ply, velocity )
 
 	else
 
-		local len2d = velocity:Length2D()
-		if ( len2d > 150 ) then ply.CalcIdeal = ACT_MP_RUN elseif ( len2d > 0.5 ) then ply.CalcIdeal = ACT_MP_WALK end
+		local len2d = velocity:Length2DSqr()
+		if ( len2d > 22500 ) then ply.CalcIdeal = ACT_MP_RUN elseif ( len2d > 0.25 ) then ply.CalcIdeal = ACT_MP_WALK end
 
 	end
 
