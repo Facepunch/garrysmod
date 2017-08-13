@@ -6,6 +6,7 @@ if (!IN_ENGINE)
 	}
 }
 
+window.GM_Languages = [];
 var gScope = null;
 var GamemodeDetails = {}
 var MapIndex = {}
@@ -60,6 +61,7 @@ function MenuController( $scope, $rootScope )
 	{
 		$rootScope.Language = lang;
 		lua.Run( "RunConsoleCommand( \"gmod_language\", \"" + lang + "\" )" )
+		window.GM_Language = lang;
 
 		$( '.language_list' ).hide();
 	}
@@ -304,10 +306,13 @@ function DoWeHaveMap( map )
 function UpdateLanguages( lang )
 {
 	gScope.Languages = [];
+	window.GM_Languages = [];
 
 	for ( k in lang )
 	{
-		gScope.Languages.push( lang[k].substr( 0, lang[k].length - 4 ) )
+		var lang_abbrev = lang[k].substr( 0, lang[k].length - 4 )
+		gScope.Languages.push( lang_abbrev )
+		window.GM_Languages.push( lang_abbrev )
 	}
 }
 

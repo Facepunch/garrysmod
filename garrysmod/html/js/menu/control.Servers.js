@@ -88,10 +88,10 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 	$scope.ServerRank = function( sv )
 	{
-		if ( sv.recommended < 50 )	return "rank5";
-		if ( sv.recommended < 100 )	return "rank4";
-		if ( sv.recommended < 200 )	return "rank3";
-		if ( sv.recommended < 300 )	return "rank2";
+		if ( sv.recommended < 150 )	return "rank5";
+		if ( sv.recommended < 200 )	return "rank4";
+		if ( sv.recommended < 250 )	return "rank3";
+		if ( sv.recommended < 350 )	return "rank2";
 		return "rank1";
 	}
 
@@ -198,12 +198,39 @@ function GetGamemode( name, type )
 		num_players:	0,
 		OrderByMain:	'recommended',
 		OrderBy:		['recommended', 'ping', 'address'],
-		info:			GetGamemodeInfo( name )
+		info:			GetGamemodeInfo( name ),
+		rand:			Math.random()
 	};
 
 	ServerTypes[type].list.push( ServerTypes[type].gamemodes[name] )
 
 	return ServerTypes[type].gamemodes[name];
+}
+
+var LanguageAbbreviations = {
+	"es-ES": "es",
+	"en-PT": "en",
+	"pt-PT": "pt",
+	"pt-BR": "br"
+}
+
+var LanguageFlags = {
+	"es": "es-ES",
+	"br": "pt-BR",
+	"pt": "pt-PT"
+}
+
+function GetLanguageAbbreviation( lang )
+{
+	var ret = LanguageAbbreviations[lang] || lang;
+	if (ret == "en") // Assume servers are english
+		return false; 
+	return ret;
+}
+
+function GetLanguageFlag( lang )
+{
+	return LanguageFlags[lang] || lang;
 }
 
 function AddServer( type, id, ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid )
@@ -232,18 +259,41 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 
 	data.hasmap = DoWeHaveMap( data.map );
 
-	data.recommended = data.ping;
-	if ( data.players == 0 ) data.recommended += 100; // Server is empty
-	if ( data.players == data.maxplayers ) data.recommended += 75; // Server is full
-	if ( data.pass ) data.recommended += 300; // If we can't join it, don't put it to the top
+	// Ping isn't very noticeable up to a point - let's guesstimate around 75 is the point we notice
+	data.recommended = Math.max(data.ping - 75, 0);
 
-	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
-	if ( data.players >= 16 ) data.recommended -= 40;
-	if ( data.players >= 32 ) data.recommended -= 20;
-	if ( data.players >= 64 ) data.recommended -= 10;
+	if ( data.players == 0 ) 
+		data.recommended += 40; // Server is empty
+	else if ( data.players >= data.maxplayers - data.botplayers ) // Server is full
+		data.recommended += 50;
+	else // Player counts usually enhance gameplay up to a point - at least 20
+		data.recommended -= Math.max(0, data.players - 98) + Math.min(data.players, 30) * 3;
+	
+	if ( data.pass ) // If we can't join it, don't put it to the top
+		data.recommended += 500; 
 
-	data.listen = data.desc.indexOf('[L]') >= 0;
+	// base recommended at 0, all max subtracted variables above need to be readded
+	data.recommended += 98 + 90;
+
+	data.listen = data.desc.indexOf('[L] ') == 0;
 	if ( data.listen ) data.desc = data.desc.substr( 4 );
+
+	var namelower = data.name.toLowerCase();
+	for ( var i = 0; i < window.GM_Languages.length; i++ )
+	{
+		var lang = window.GM_Languages[i];
+		var haslang = namelower.indexOf( "[" + lang + "] " ) == 0;
+		if (haslang)
+		{
+			data.lang = GetLanguageFlag( lang );
+			if (GetLanguageAbbreviation( lang ) == window.GM_Language)
+				// If server is natively our language, it's better for us!
+				data.recommended -= 190;
+
+			data.name = data.name.substr( 3 + lang.length );
+			break;
+		}
+	}
 
 	var gm = GetGamemode( data.gamemode, type );
 	gm.servers.push( data );
@@ -257,7 +307,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( gm.num_players == 0 ) gm.element_class = "noplayers";
 	if ( gm.num_players > 50 ) gm.element_class = "lotsofplayers";
 
-	gm.order = gm.num_players + Math.random();
+	gm.order = gm.num_players + gm.rand;
 
 	UpdateDigest( Scope, 50 );
 

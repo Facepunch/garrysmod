@@ -88,7 +88,11 @@
 				<div class='body scrollable' style="top: 32px; left: 8px; right: 8px; bottom: 8px;">
 					
 					<div ng-repeat="server in CurrentGamemode.servers|filter:CurrentGamemode.Search|orderBy:CurrentGamemode.OrderBy:CurrentGamemode.OrderReverse|limitTo:128" class="server {{ServerClass(server)}} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-click="SelectServer( server )">
-						<name><img src='img/server-passworded.png' style="margin-right: 8px;" ng-show="server.pass"/>{{server.name}}</name>
+						<name>
+							<img src='img/server-passworded.png' style="margin-right: 8px;" ng-show="server.pass"/>
+							<img src='../resource/localization/{{server.lang}}.png' style="margin-right: 8px;" ng-show="server.lang"/>
+							{{server.name}}
+						</name>
 						<ping>{{server.ping}}</ping>
 						<players>{{server.players}} / {{server.maxplayers}}</players>
 						<map>{{server.map}}</map>
