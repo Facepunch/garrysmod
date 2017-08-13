@@ -96,14 +96,17 @@ function PANEL:RefreshResults( str )
 
 	local results = search.GetResults( str )
 	for id, result in pairs( results ) do
-		result.icon:SetParent( GetHUDPanel() ) -- Don't parent the icons to search panel prematurely
+		if ( !IsValid( result.icon ) ) then ErrorNoHalt( "Failed to create icon for " .. ( result.words && isstring( result.words[ 1 ] ) && result.words[ 1 ] || result.text ).. "\n" ) continue end
+		result.icon:SetParent( vgui.GetWorldPanel() ) -- Don't parent the icons to search panel prematurely
 	end
 
 	-- I know this is not perfect, but this is the best I am willing to do with how the search library was set up
 	if ( OldResults == #results ) then -- No updates, don't rebuild
-		for id, result in pairs( results ) do result.icon:Remove() end -- Kill all icons
+		for id, result in pairs( results ) do
+			if ( IsValid( result.icon ) ) then result.icon:Remove() end -- Kill all icons
+		end
 		return
-	end 
+	end
 	OldResults = #results
 
 	self.PropPanel:Clear()
