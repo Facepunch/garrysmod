@@ -244,9 +244,11 @@ function SCORE:StreamToClients()
 
    local parts = #cut
    for k, bit in pairs(cut) do
-      net.Start("TTT_ReportStream")
-      net.WriteBit((k != parts)) -- continuation bit, 1 if there's more coming
-      net.WriteString(bit)
-      net.Broadcast()
+      timer.Simple((k - 1) * 1, function()
+         net.Start("TTT_ReportStream")
+         net.WriteBit((k != parts)) -- continuation bit, 1 if there's more coming
+         net.WriteString(bit)
+         net.Broadcast()
+      end)
    end
 end
