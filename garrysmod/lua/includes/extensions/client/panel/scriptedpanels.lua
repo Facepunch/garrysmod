@@ -34,7 +34,7 @@ function vgui.Create( classname, parent, name, ... )
 
 		-- Call the Init function if we have it
 		if ( panel.Init ) then
-			panel:Init()
+			panel:Init( ... )
 		end
 
 		panel:Prepare()
@@ -59,7 +59,7 @@ function vgui.CreateFromTable( metatable, parent, name, ... )
 
 	-- Call the Init function if we have it
 	if ( panel.Init ) then
-		panel:Init()
+		panel:Init( ... )
 	end
 
 	panel:Prepare()
