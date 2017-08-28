@@ -35,14 +35,14 @@ function EFFECT:Think()
 	self.Alpha = self.Alpha - FrameTime() * 255 * 5 * self.Speed
 	self.Size = self.Size + FrameTime() * 256 * self.Speed
 
-	if ( self.Alpha < 0 ) then return false end
+	if ( (self.Alpha or -1) < 0 ) then return false end
 	return true
 
 end
 
 function EFFECT:Render()
 
-	if ( self.Alpha < 1 ) then return end
+	if ( (self.Alpha or -1) < 1 ) then return end
 
 	render.SetMaterial( self.Mat )
 
