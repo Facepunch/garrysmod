@@ -63,6 +63,7 @@ SKIN.colTextEntryBorder			= Color( 20, 20, 20, 255 )
 SKIN.colTextEntryText			= Color( 20, 20, 20, 255 )
 SKIN.colTextEntryTextHighlight	= Color( 20, 200, 250, 255 )
 SKIN.colTextEntryTextCursor		= Color( 0, 0, 100, 255 )
+SKIN.colTextEntryTextPlaceholder= Color( 128, 128, 128, 255 )
 
 SKIN.colMenuBG					= Color( 255, 255, 255, 200 )
 SKIN.colMenuBorder				= Color( 0, 0, 0, 200 )
@@ -437,6 +438,22 @@ function SKIN:PaintTextEntry( panel, w, h )
 			self.tex.TextBox( 0, 0, w, h )
 		end
 
+	end
+
+	-- Hack on a hack, but this produces the most close appearance to what it will actually look if text was actually there
+	if ( panel.GetPlaceholderText && panel.GetPlaceholderColor && panel:GetPlaceholderText() && panel:GetPlaceholderText():Trim() != "" && panel:GetPlaceholderColor() && ( !panel:GetText() || panel:GetText() == "" ) ) then
+
+		local oldText = panel:GetText()
+
+		local str = panel:GetPlaceholderText()
+		if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
+		str = language.GetPhrase( str )
+
+		panel:SetText( str )
+		panel:DrawTextEntryText( panel:GetPlaceholderColor(), panel:GetHighlightColor(), panel:GetCursorColor() )
+		panel:SetText( oldText )
+
+		return
 	end
 
 	panel:DrawTextEntryText( panel:GetTextColor(), panel:GetHighlightColor(), panel:GetCursorColor() )
