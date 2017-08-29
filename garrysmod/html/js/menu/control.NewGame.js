@@ -141,6 +141,12 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		return "favtoggle";
 	}
 
+	EscapeConVarValue = function( str )
+	{
+		str = str.replace( /\\/g,'\\\\' );
+		return str.replace( new RegExp( '"', 'g' ), '\\\"' );
+	}
+
 	$scope.StartGame = function()
 	{
 		lua.Run( 'SaveLastMap( "' + $rootScope.Map + '", "' + $rootScope.LastCategory + '" )' );
@@ -161,26 +167,25 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		{
 			for ( k in $scope.ServerSettings.Numeric )
 			{
-				lua.Run( 'RunConsoleCommand( "'+$scope.ServerSettings.Numeric[k].name+'", "'+$scope.ServerSettings.Numeric[k].Value+'" )' )
+				lua.Run( 'RunConsoleCommand( "'+$scope.ServerSettings.Numeric[k].name+'", "' + EscapeConVarValue( $scope.ServerSettings.Numeric[k].Value ) + '" )' )
 			}
 
 			for ( k in $scope.ServerSettings.Text )
 			{
-				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettings.Text[k].name + '", "' + $scope.ServerSettings.Text[k].Value + '" )' )
+				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettings.Text[k].name + '", "' + EscapeConVarValue( $scope.ServerSettings.Text[k].Value ) + '" )' )
 			}
 
 			for ( k in $scope.ServerSettings.CheckBox )
 			{
-				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettings.CheckBox[k].name + '", "' + ($scope.ServerSettings.CheckBox[k].Value?1:0) + '" )' )
+				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettings.CheckBox[k].name + '", "' + ( $scope.ServerSettings.CheckBox[k].Value ? 1 : 0 ) + '" )' )
 			}
 
-			lua.Run( 'RunConsoleCommand( "hostname", "' + $rootScope.ServerSettings.hostname + '" )' )
+			lua.Run( 'RunConsoleCommand( "hostname", "' + EscapeConVarValue( $rootScope.ServerSettings.hostname ) + '" )' )
 			lua.Run( 'RunConsoleCommand( "p2p_enabled", "' + ( $rootScope.ServerSettings.p2p_enabled ? 1 : 0 ) + '" )' )
 			lua.Run( 'RunConsoleCommand( "p2p_friendsonly", "' + ( $rootScope.ServerSettings.p2p_friendsonly ? 1 : 0 ) + '" )' )
 			lua.Run( 'RunConsoleCommand( "sv_lan", "' + ( $rootScope.ServerSettings.sv_lan ? 1 : 0 ) + '" )' )
 			lua.Run( 'RunConsoleCommand( "maxplayers", "' + $rootScope.MaxPlayers + '" )' )
 			lua.Run( 'RunConsoleCommand( "map", "' + $rootScope.Map.trim() + '" )' )
-			lua.Run( 'RunConsoleCommand( "hostname", "' + $rootScope.ServerSettings.hostname + '" )' )
 		}, 200 );
 
 		$location.url( "/" )
