@@ -15,6 +15,7 @@ function PANEL:Init()
 
 	self.Search = self:Add( "DTextEntry" )
 	self.Search:Dock( FILL )
+	self.Search:SetPlaceholderText( "#spawnmenu.search" )
 
 	self.Search.OnEnter = function() self:RefreshResults() end
 	self.Search.OnFocusChanged = function( _, b ) if ( b ) then ContentPanel:SwitchPanel( self.PropPanel ) end end

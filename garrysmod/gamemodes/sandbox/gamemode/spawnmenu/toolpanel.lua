@@ -19,13 +19,19 @@ function PANEL:Init()
 
 	self.SearchBar = vgui.Create( "DTextEntry", leftContainer )
 	self.SearchBar:SetWidth( 130 )
+	self.SearchBar:SetPlaceholderText( "#spawnmenu.quick_search" )
 	self.SearchBar:DockMargin( 0, 0, 0, 5 )
 	self.SearchBar:Dock( TOP )
 	self.SearchBar:SetUpdateOnType( true )
 	self.SearchBar.OnValueChange = function( s, text )
 		for id, category in pairs( self.List.pnlCanvas:GetChildren() ) do
 			local count = 0
-		
+			local category_matched = false
+
+			if ( string.find( category.Header:GetText():lower(), text:lower() ) ) then
+				category_matched = true
+			end
+
 			for id, item in pairs( category:GetChildren() ) do
 				if ( item == category.Header ) then continue end
 
@@ -33,7 +39,7 @@ function PANEL:Init()
 				if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
 				str = language.GetPhrase( str )
 
-				if ( !string.find( str:lower(), text:lower() ) ) then
+				if ( !category_matched && !string.find( str:lower(), text:lower() ) ) then
 					item:SetVisible( false )
 				else
 					item:SetVisible( true )
@@ -41,7 +47,8 @@ function PANEL:Init()
 				end
 				item:InvalidateLayout()
 			end
-			if ( count < 1 ) then 
+
+			if ( count < 1 && !category_matched ) then
 				category:SetVisible( false )
 			else
 				category:SetVisible( true )
