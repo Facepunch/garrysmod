@@ -414,7 +414,7 @@ function meta:InvalidateChildren( bRecurse )
 		if ( bRecurse ) then
 			v:InvalidateChildren( true )
 		else
-			v:InvalidateChildren( false )
+			v:InvalidateLayout( true )
 		end
 
 	end
