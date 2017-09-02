@@ -187,6 +187,9 @@ end
 -- Both text and binary are supported
 --
 do
+	local assert = assert
+	local isstring = isstring
+	local type = type
 	local util_Compress = util.Compress
 	local net_WriteUInt = net.WriteUInt
 	local net_WriteData = net.WriteData
