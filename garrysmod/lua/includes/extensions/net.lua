@@ -192,11 +192,17 @@ do
 	local net_WriteData = net.WriteData
 
 	function net.WriteCompressed( data )
-		local compressed = ( #data ~= 0 ) and util_Compress( data ) or ""
-		local length = #compressed
-		net_WriteUInt( length, 16 )
-		net_WriteData( compressed, length )
-		return length
+		assert( isstring( data ), "net.WriteCompressed: string expected, got " .. type( data ) )
+		if #data ~= 0 then
+			local compressed = util_Compress( data )
+			local length = #compressed
+			net_WriteUInt( length, 16 )
+			net_WriteData( compressed, length )
+			return length
+		else
+			net_WriteUInt( 0, 16 )
+			return 0
+		end
 	end
 
 	local net_ReadUInt = net.ReadUInt
