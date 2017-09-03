@@ -45,7 +45,5 @@ hook.Add( "RenderScreenspaceEffects", "RenderBokeh", function()
 end )
 
 hook.Add( "NeedsDepthPass", "NeedsDepthPass_Bokeh", function()
-
-	return pp_bokeh:GetBool()
-
-end )
+	if pp_bokeh:GetBool()==true then return true end 
+end)
