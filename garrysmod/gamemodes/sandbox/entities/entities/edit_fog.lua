@@ -25,7 +25,7 @@ end
 
 function ENT:SetupWorldFog()
 
-	render.FogMode( 1 )
+	render.FogMode( MATERIAL_FOG_LINEAR )
 	render.FogStart( self:GetFogStart() )
 	render.FogEnd( self:GetFogEnd() )
 	render.FogMaxDensity( self:GetDensity() )
