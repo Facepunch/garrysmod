@@ -763,7 +763,7 @@ function Paste( Player, EntityList, ConstraintList )
 		ApplyBoneModifiers ( Player, Ent )
 	
 		if ( Ent.PostEntityPaste ) then
-			Ent:PostEntityPaste( Player, Ent, CreatedEntities )
+			Ent:PostEntityPaste( Player || NULL, Ent, CreatedEntities )
 		end
 	
 	end
