@@ -102,6 +102,12 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	end
 
+	function ret:RetrieveUserName( steamid )
+		steamworks.RequestPlayerInfo( steamid, function( name )
+			pnlMainMenu:Call( namespace .. ".ReceiveUserName( \"" .. steamid .. "\", \"" .. name .. "\" )" )
+		end )
+	end
+	
 	function ret:FillFileInfo( results )
 
 		--
@@ -144,6 +150,10 @@ function WorkshopFileBase( namespace, requiredtags )
 						result.description = string.gsub( result.description, "%[img%]([^%]]*)%[/img%]", "" ) -- Gotta remove inner content of img tags
 						result.description = string.gsub( result.description, "%[([^%]]*)%]", "" )
 						result.description = string.Trim( result.description )
+					end
+
+					if ( !result.ownername || result.ownername == "" || result.ownername == "[unknown]" ) then
+						self:RetrieveUserName( result.owner )
 					end
 
 					local json = util.TableToJSON( result, false )
