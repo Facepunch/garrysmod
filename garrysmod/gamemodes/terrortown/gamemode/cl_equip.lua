@@ -3,6 +3,8 @@
 local GetTranslation = LANG.GetTranslation
 local GetPTranslation = LANG.GetParamTranslation
 
+CreateClientConVar("ttt_cl_toggle_popups", "1", true, false)
+
 -- Buyable weapons are loaded automatically. Buyable items are defined in
 -- equip_items_shd.lua
 
@@ -439,11 +441,19 @@ function GM:OnContextMenuOpen()
    if r == ROUND_ACTIVE and not (LocalPlayer():GetTraitor() or LocalPlayer():GetDetective()) then
       return
    elseif r == ROUND_POST or r == ROUND_PREP then
-      CLSCORE:Reopen()
+      if GetConVar("ttt_cl_toggle_popups"):GetBool() then
+         CLSCORE:Toggle()
+      else
+         CLSCORE:Reopen()
+      end
       return
    end
 
-   RunConsoleCommand("ttt_cl_traitorpopup")
+   if IsValid(eqframe) and GetConVar("ttt_cl_toggle_popups"):GetBool() then
+      eqframe:Close()
+   else
+      RunConsoleCommand("ttt_cl_traitorpopup")
+   end
 end
 
 local function ReceiveEquipment()

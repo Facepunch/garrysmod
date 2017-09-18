@@ -524,6 +524,12 @@ function CLSCORE:Reopen()
    end
 end
 
+function CLSCORE:Toggle()
+   if self.Panel and self.Panel:IsValid() then
+      self.Panel:SetVisible(not self.Panel:IsVisible())
+   end
+end
+
 local buff = ""
 local function ReceiveReportStream(len)
    local cont = net.ReadBit() == 1
