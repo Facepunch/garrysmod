@@ -519,7 +519,7 @@ function CLSCORE:ReportEvents(events)
 end
 
 function CLSCORE:Reopen()
-   if self.Panel and self.Panel:IsValid() and not self.Panel:IsVisible() then
+   if IsValid(self.Panel) and not self.Panel:IsVisible() then
       self.Panel:SetVisible(true)
    end
 end
