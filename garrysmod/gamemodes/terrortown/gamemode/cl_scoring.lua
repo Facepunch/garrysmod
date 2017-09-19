@@ -525,8 +525,8 @@ function CLSCORE:Reopen()
 end
 
 function CLSCORE:Toggle()
-   if self.Panel and self.Panel:IsValid() then
-      self.Panel:SetVisible(not self.Panel:IsVisible())
+   if IsValid(self.Panel) then
+      self.Panel:ToggleVisible()
    end
 end
 
