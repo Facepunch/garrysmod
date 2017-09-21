@@ -128,7 +128,7 @@ end
 function SWEP:ShootEffects()
 
 	self.Weapon:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) 		-- View model animation
-	self.Owner:MuzzleFlash()								-- Crappy muzzle light
+	self.Owner:MuzzleFlash()								-- Lousy muzzle light
 	self.Owner:SetAnimation( PLAYER_ATTACK1 )				-- 3rd Person Animation
 
 end

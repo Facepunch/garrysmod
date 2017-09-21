@@ -523,7 +523,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 
 	local rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
 
-	-- What the fuck
+	-- What in the world
 	if ( !Constraint ) then Constraint, rope = rope, nil end
 
 	local ctable = {

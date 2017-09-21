@@ -174,7 +174,7 @@ function PANEL:Init()
 		self.BodyList = pnl:Add( "DListLayout" )
 		self.BodyList:Dock( FILL )
 
-			--This kind of works but they don't move their stupid mouths. So fuck off.
+			--This kind of works but they don't move their stupid mouths.
 			--[[
 			self.Scenes = pnl:Add( "DTree" )
 			self.Scenes:Dock( BOTTOM )

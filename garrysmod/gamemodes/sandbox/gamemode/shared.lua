@@ -201,7 +201,7 @@ end
 function GM:CanProperty( pl, property, ent )
 	
 	--
-	-- Always a chance some bastard got through
+	-- Always a chance some guy got through
 	--
 	if ( !IsValid( ent ) ) then return false end
 

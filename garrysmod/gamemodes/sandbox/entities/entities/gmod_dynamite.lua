@@ -50,7 +50,7 @@ function ENT:OnTakeDamage( dmginfo )
 end
 
 --
--- Blow that mother fucker up, BAATCHH
+-- Blow that guy up!
 --
 function ENT:Explode( delay, ply )
 

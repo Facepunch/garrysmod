@@ -247,7 +247,7 @@ function tobool( val )
 end
 
 --[[---------------------------------------------------------
-	Universal function to filter out crappy models by name
+	Universal function to filter out junky models by name
 -----------------------------------------------------------]]
 local UselessModels = { 
 	"_gesture", "_anim", "_gst", "_pst", "_shd", "_ss", "_posture", "_anm", 

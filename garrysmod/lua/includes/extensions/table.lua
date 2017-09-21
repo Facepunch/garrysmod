@@ -103,7 +103,7 @@ end
 -----------------------------------------------------------]]
 function table.Add( dest, source )
 
-	-- At least one of them needs to be a table or this whole thing will fall on its ass
+	-- At least one of them needs to be a table or this whole thing will fail
 	if ( type( source ) != "table" ) then return dest end
 	if ( type( dest ) != "table" ) then dest = {} end
 

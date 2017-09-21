@@ -42,7 +42,7 @@ end
 
 --[[---------------------------------------------------------
 	Since we're going to be expanding this a lot I've tried
-	to add accessors for all of this crap to make it harder
+	to add accessors for all of this stuff to make it harder
 	for us to mess everything up.
 -----------------------------------------------------------]]
 function ToolObj:GetEnt( i )

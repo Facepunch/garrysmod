@@ -656,7 +656,7 @@ end
 function GM:OnPlayerChangedTeam( ply, oldteam, newteam )
 
 	-- Here's an immediate respawn thing by default. If you want to
-	-- re-create something more like CS or some shit you could probably
+	-- re-create something more like CS or similar you could probably
 	-- change to a spectator or something while dead.
 	if ( newteam == TEAM_SPECTATOR ) then
 	

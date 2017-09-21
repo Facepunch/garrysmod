@@ -165,7 +165,6 @@ function RADIO:ShowRadioCommands(state)
 
          radioframe:CenterVertical()
 
-         -- ASS
          radioframe.ForceResize = function(s)
                                      local w, label = 0, nil
                                      for k,v in pairs(s.Items) do
