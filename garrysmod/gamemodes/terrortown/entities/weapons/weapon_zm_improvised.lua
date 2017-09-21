@@ -168,7 +168,7 @@ function SWEP:PrimaryAttack()
 
 
    if CLIENT then
-      -- used to be some shit here
+      -- used to be some stuff here
    else -- SERVER
 
       -- Do another trace that sees nodraw stuff like func_button

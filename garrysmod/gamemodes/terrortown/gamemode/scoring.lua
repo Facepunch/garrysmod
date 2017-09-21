@@ -74,7 +74,7 @@ function SCORE:HandleKill( victim, attacker, dmginfo )
       e.att.tr = attacker:GetTraitor()
 
       -- If a traitor gets himself killed by another traitor's C4, it's his own
-      -- damn fault for ignoring the indicator.
+      -- fault for ignoring the indicator.
       if dmginfo:IsExplosionDamage() and attacker:GetTraitor() and victim:GetTraitor() then
          local infl = dmginfo:GetInflictor()
          if IsValid(infl) and infl:GetClass() == "ttt_c4" then

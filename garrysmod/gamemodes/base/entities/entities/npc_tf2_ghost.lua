@@ -44,7 +44,7 @@ function ENT:RunBehaviour()
 			self:StartActivity( ACT_IDLE ) -- when we finished, go into the idle anim
 		else
 
-			-- some activity to signify that we didn't find shit
+			-- some activity to signify that we didn't find stuff
 
 		end
 

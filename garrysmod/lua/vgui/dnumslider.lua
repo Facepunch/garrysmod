@@ -39,7 +39,7 @@ function PANEL:Init()
 
 	--
 	-- You really shouldn't be messing with the internals of these controls from outside..
-	-- .. but if you are, this might stop your code from fucking us both.
+	-- .. but if you are, this might stop your code from hurting us both.
 	--
 	self.Wang = self.Scratch
 

@@ -20,7 +20,7 @@ function ENT:Initialize()
 
 	if ( SERVER ) then
 
-		self:SetModel( "models/props_lab/tpplug.mdl" ) -- TODO: Find something better than this shitty shit.
+		self:SetModel( "models/props_lab/tpplug.mdl" ) -- TODO: Find something better than this weird model.
 		self:PhysicsInit( SOLID_VPHYSICS )
 		self:SetMoveType( MOVETYPE_VPHYSICS )
 		self:SetSolid( SOLID_VPHYSICS )

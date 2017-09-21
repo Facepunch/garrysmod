@@ -43,7 +43,7 @@ end
 
 function EFFECT:Render()
 
-	-- Note: UpdateScreenEffectTexture fucks up the water, RefractTexture is lower quality
+	-- Note: UpdateScreenEffectTexture messes up the water, RefractTexture is lower quality
 	render.UpdateRefractTexture()
 	//render.UpdateScreenEffectTexture()
 

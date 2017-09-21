@@ -150,7 +150,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	-- ACUAL RENDER!
 	--
 
-	-- We just fucked the depth up - so clean it
+	-- We just messed the depth up - so clean it
 	render.ClearDepth()
 
 	-- Set up the lighting. This is over-bright on purpose - to make the ents pop

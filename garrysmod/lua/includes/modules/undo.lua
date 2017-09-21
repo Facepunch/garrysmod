@@ -116,7 +116,7 @@ if ( CLIENT ) then
 	-----------------------------------------------------------]]
 	local function CPanelUpdate( panel )
 	
-		-- This is kind of a shitty way of doing it - but we only want
+		-- This is kind of a bad way of doing it - but we only want
 		-- to update the UI when it's visible.
 		if ( bIsDirty ) then
 		

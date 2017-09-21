@@ -89,7 +89,7 @@ local function GetTypeStr( name )
 	if (name == "ConVar") then return TYPE_NONE end
 	if (name == "PhysObj") then return TYPE_NONE end
 	
-	-- Bitch about it incase I've forgot to hook a savable type up
+	-- Write it to console incase I've forgot to hook a savable type up
 	Msg("Can't save unknown type "..name.."\n")
 	return TYPE_NONE
 

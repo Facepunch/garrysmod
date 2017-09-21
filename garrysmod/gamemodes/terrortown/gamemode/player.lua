@@ -354,7 +354,7 @@ function GM:KeyPress(ply, key)
          ply:SetEyeAngles(ang)
          return true
       elseif key == IN_JUMP then
-         -- unfuck if you're on a ladder etc
+         -- fix if you're on a ladder etc
          if not (ply:GetMoveType() == MOVETYPE_NOCLIP) then
             ply:SetMoveType(MOVETYPE_NOCLIP)
          end
@@ -583,7 +583,7 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
       -- Note that funny things can happen here because we fire a gun while the
       -- player is dead. Specifically, this DoPlayerDeath is run twice for
       -- him. This is ugly, and we have to return the first one to prevent crazy
-      -- shit.
+      -- stuff.
    end
 
    -- Drop all weapons

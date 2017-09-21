@@ -73,7 +73,7 @@ end
 -- Get the motor constraint :)
 function ENT:GetMotor()
 
-	-- Fuck knows why it's doing this here.
+	-- Not sure why it's doing this here.
 	if ( !IsValid( self.Motor ) ) then
 
 		self.Motor = constraint.FindConstraintEntity( self.Entity, "Motor" )

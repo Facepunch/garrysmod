@@ -208,7 +208,7 @@ end
 	Name: gamemode:StartChat( teamsay )
 	Desc: Start Chat.
 
-			If you want to display your chat shit different here's what you'd do:
+			If you want to display your chat stuff different here's what you'd do:
 			In StartChat show your text box and return true to hide the default
 			Update the text in your box with the text passed to ChatTextChanged
 			Close and clear your text box when FinishChat is called.

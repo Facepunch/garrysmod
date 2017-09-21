@@ -240,7 +240,7 @@ local EntitySaver =
 		end
 
 		--
-		-- Exclude this crap
+		-- Exclude this stuff
 		--
 		for k, v in pairs( data ) do
 
@@ -442,7 +442,7 @@ function GenericDuplicatorFunction( Player, data )
 end
 
 --[[---------------------------------------------------------
-	Automates the process of adding crap the EntityMods table
+	Automates the process of adding stuff the EntityMods table
 -----------------------------------------------------------]]
 function StoreEntityModifier( Entity, Type, Data )
 
@@ -471,7 +471,7 @@ function ClearEntityModifier( Entity, Type )
 end
 
 --[[---------------------------------------------------------
-	Automates the process of adding crap the BoneMods table
+	Automates the process of adding stuff the BoneMods table
 -----------------------------------------------------------]]
 function StoreBoneModifier( Entity, BoneID, Type, Data )
 
