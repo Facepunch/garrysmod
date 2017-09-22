@@ -13,6 +13,23 @@ TOOL.Information = {
 	{ name = "reload" }
 }
 
+local function ConstrainProp( constraint, self )
+
+	if ( constraint ) then
+
+		undo.Create( "Weld" )
+			undo.AddEntity( constraint )
+			undo.SetPlayer( self:GetOwner() )
+		undo.Finish()
+
+		self:GetOwner():AddCleanup( "constraints", constraint )
+
+	end
+
+	self:ClearObjects()
+			
+end
+
 function TOOL:LeftClick( trace )
 
 	if ( self:GetOperation() == 1 ) then return false end
@@ -51,20 +68,18 @@ function TOOL:LeftClick( trace )
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 
-		local constraint = constraint.Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide )
-		if ( constraint ) then
+		if self:GetEnt(1):IsWorld() then
 
-			undo.Create( "Weld" )
-				undo.AddEntity( constraint )
-				undo.SetPlayer( self:GetOwner() )
-			undo.Finish()
+			local constraint = constraint.Weld( Ent2, Ent1, Bone1, Bone2, forcelimit, nocollide )
 
-			self:GetOwner():AddCleanup( "constraints", constraint )
+			ConstrainProp( constraint, self )
+			return true
 
 		end
 
-		-- Clear the objects so we're ready to go again
-		self:ClearObjects()
+		local constraint = constraint.Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide )
+		
+		ConstrainProp( constraint, self )
 
 	end
 
