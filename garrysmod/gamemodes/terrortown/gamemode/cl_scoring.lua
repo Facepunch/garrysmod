@@ -518,12 +518,6 @@ function CLSCORE:ReportEvents(events)
    self:ShowPanel()
 end
 
-function CLSCORE:Reopen()
-   if IsValid(self.Panel) and not self.Panel:IsVisible() then
-      self.Panel:SetVisible(true)
-   end
-end
-
 function CLSCORE:Toggle()
    if IsValid(self.Panel) then
       self.Panel:ToggleVisible()

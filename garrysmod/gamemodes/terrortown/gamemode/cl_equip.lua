@@ -3,8 +3,6 @@
 local GetTranslation = LANG.GetTranslation
 local GetPTranslation = LANG.GetParamTranslation
 
-local allowPopupToggling = CreateClientConVar("ttt_cl_toggle_popups", "1", true, false)
-
 -- Buyable weapons are loaded automatically. Buyable items are defined in
 -- equip_items_shd.lua
 
@@ -441,15 +439,11 @@ function GM:OnContextMenuOpen()
    if r == ROUND_ACTIVE and not (LocalPlayer():GetTraitor() or LocalPlayer():GetDetective()) then
       return
    elseif r == ROUND_POST or r == ROUND_PREP then
-      if allowPopupToggling:GetBool() then
-         CLSCORE:Toggle()
-      else
-         CLSCORE:Reopen()
-      end
+      CLSCORE:Toggle()
       return
    end
 
-   if IsValid(eqframe) and allowPopupToggling:GetBool() then
+   if IsValid(eqframe) then
       eqframe:Close()
    else
       RunConsoleCommand("ttt_cl_traitorpopup")
