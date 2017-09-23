@@ -11,7 +11,6 @@ local math_Round = math.Round
 
 local string_sub = string.sub
 local string_find = string.find
-local string_len = string.len
 local string_gsub = string.gsub
 local string_match = string.match
 local string_format = string.format
@@ -33,7 +32,7 @@ end
 local function string_ToTable( str )
 	local tbl = {}
 
-	for i = 1, string_len( str ) do
+	for i = 1, #str do
 		tbl[i] = string_sub( str, i, i )
 	end
 
@@ -70,7 +69,7 @@ local function string_Explode( sep, str, withpattern )
 	local ret = {}
 	local current_pos = 1
 
-	for i = 1, string_len( str ) do
+	for i = 1, #str do
 		local start_pos, end_pos = string_find( str, sep, current_pos, withpattern )
 		if ( start_pos == nil ) then break end
 		ret[ i ] = string_sub( str, current_pos, start_pos - 1 )
@@ -262,12 +261,12 @@ function string.GetChar( str, pos )
 end
 
 function string.StartWith( str, Start )
-   return string_sub( str, 1, string_len( Start ) ) == Start
+   return string_sub( str, 1, #Start ) == Start
 
 end
 
 function string.EndsWith( str, End )
-   return End == "" or string_sub( str, -string_len( End ) ) == End
+   return End == "" or string_sub( str, -#End ) == End
 end
 
 function string.FromColor( col )
