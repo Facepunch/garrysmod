@@ -73,6 +73,10 @@ end
 
 function PANEL:OnRemove()
 
+	for _, childItem in pairs( self:GetChildren() ) do
+		childItem:Remove()
+	end
+
 	for id, pnl in pairs( self.Menus ) do
 		pnl:Remove()
 	end
