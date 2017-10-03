@@ -580,6 +580,12 @@ function PANEL:CleanList()
 
 end
 
+function PANEL:Clear()
+	for k, panel in pairs( self.Items ) do
+		self.Items[k] = nil
+	end
+end
+
 function PANEL:Insert( pNode, pNodeNextTo, bBefore )
 
 	pNode:SetParentNode( self )
