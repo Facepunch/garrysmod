@@ -426,7 +426,7 @@ function PANEL:FilePopulateCallback( files, folders, foldername, path, bAndChild
 		for k, File in SortedPairsByValue( folders ) do
 
 			local Node = self:AddNode( File )
-			Node:MakeFolder( foldername .. "/" .. File, path, showfiles, wildcard, true )
+			Node:MakeFolder( string.Trim( foldername .. "/" .. File, "/" ), path, showfiles, wildcard, true )
 			FileCount = FileCount + 1
 
 		end
@@ -440,7 +440,7 @@ function PANEL:FilePopulateCallback( files, folders, foldername, path, bAndChild
 			local icon = "icon16/page_white.png"
 
 			local Node = self:AddNode( File, icon )
-			Node:SetFileName( foldername .. "/" .. File )
+			Node:SetFileName( string.Trim( foldername .. "/" .. File, "/" ) )
 			FileCount = FileCount + 1
 
 		end
@@ -475,8 +475,9 @@ function PANEL:FilePopulate( bAndChildren, bExpand )
 	local wildcard = self:GetWildCard()
 
 	if ( !folder || !wildcard || !path ) then return false end
-
-	local files, folders = file.Find( folder .. "/" .. wildcard, path )
+	
+	local files, folders = file.Find( string.Trim( folder .. "/" .. wildcard, "/" ), path )
+	if folders[1] == "/" then table.remove(folders, 1) end
 
 	self:SetNeedsPopulating( false )
 	self:SetNeedsChildSearch( false )

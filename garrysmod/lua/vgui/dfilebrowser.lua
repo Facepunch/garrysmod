@@ -180,13 +180,13 @@ function PANEL:SetupFiles()
 		self.FileHeader = self.Files:AddColumn( "Files" ).Header
 
 		self.Files.DoDoubleClick = function( pnl, _, line )
-			self:OnDoubleClick( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), line )
+			self:OnDoubleClick( string.Trim( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), "/" ), line )
 		end
 		self.Files.OnRowSelected = function( pnl, _, line )
-			self:OnSelect( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), line )
+			self:OnSelect( string.Trim( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), "/" ), line )
 		end
 		self.Files.OnRowRightClick = function( pnl, _, line )
-			self:OnRightClick( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), line )
+			self:OnRightClick( string.Trim( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), "/" ), line )
 		end
 	end
 	self.Divider:SetRight( self.Files )
