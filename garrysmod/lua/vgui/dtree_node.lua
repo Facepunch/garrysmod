@@ -475,9 +475,9 @@ function PANEL:FilePopulate( bAndChildren, bExpand )
 	local wildcard = self:GetWildCard()
 
 	if ( !folder || !wildcard || !path ) then return false end
-	
+
 	local files, folders = file.Find( string.Trim( folder .. "/" .. wildcard, "/" ), path )
-	if folders[1] == "/" then table.remove(folders, 1) end
+	if ( folders && folders[ 1 ] == "/" ) then table.remove( folders, 1 ) end
 
 	self:SetNeedsPopulating( false )
 	self:SetNeedsChildSearch( false )
