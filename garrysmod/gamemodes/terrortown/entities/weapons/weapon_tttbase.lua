@@ -241,14 +241,14 @@ function SWEP:PrimaryAttack(worldsnd)
 
    self:TakePrimaryAmmo( 1 )
 
-   local owner = self.Owner
+   local owner = self:GetOwner()
    if not IsValid(owner) or owner:IsNPC() or (not owner.ViewPunch) then return end
 
    owner:ViewPunch( Angle( util.SharedRandom(self:GetClass(),-0.2,-0.1,0) * self.Primary.Recoil, util.SharedRandom(self:GetClass(),-0.1,0.1,1) * self.Primary.Recoil, 0 ) )
 end
 
 function SWEP:DryFire(setnext)
-   if CLIENT and LocalPlayer() == self.Owner then
+   if CLIENT and LocalPlayer() == self:GetOwner() then
       self:EmitSound( "Weapon_Pistol.Empty" )
    end
 
@@ -258,7 +258,7 @@ function SWEP:DryFire(setnext)
 end
 
 function SWEP:CanPrimaryAttack()
-   if not IsValid(self.Owner) then return end
+   if not IsValid(self:GetOwner()) then return end
 
    if self:Clip1() <= 0 then
       self:DryFire(self.SetNextPrimaryFire)
@@ -268,7 +268,7 @@ function SWEP:CanPrimaryAttack()
 end
 
 function SWEP:CanSecondaryAttack()
-   if not IsValid(self.Owner) then return end
+   if not IsValid(self:GetOwner()) then return end
 
    if self:Clip2() <= 0 then
       self:DryFire(self.SetNextSecondaryFire)
@@ -290,8 +290,8 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 
    self:SendWeaponAnim(self.PrimaryAnim)
 
-   self.Owner:MuzzleFlash()
-   self.Owner:SetAnimation( PLAYER_ATTACK1 )
+   self:GetOwner():MuzzleFlash()
+   self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
 
    local sights = self:GetIronsights()
 
@@ -300,8 +300,8 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 
    local bullet = {}
    bullet.Num    = numbul
-   bullet.Src    = self.Owner:GetShootPos()
-   bullet.Dir    = self.Owner:GetAimVector()
+   bullet.Src    = self:GetOwner():GetShootPos()
+   bullet.Dir    = self:GetOwner():GetAimVector()
    bullet.Spread = Vector( cone, cone, 0 )
    bullet.Tracer = 4
    bullet.TracerName = self.Tracer or "Tracer"
@@ -311,10 +311,10 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
       bullet.Callback = Sparklies
    end
 
-   self.Owner:FireBullets( bullet )
+   self:GetOwner():FireBullets( bullet )
 
    -- Owner can die after firebullets
-   if (not IsValid(self.Owner)) or (not self.Owner:Alive()) or self.Owner:IsNPC() then return end
+   if (not IsValid(self:GetOwner())) or (not self:GetOwner():Alive()) or self:GetOwner():IsNPC() then return end
 
    if ((game.SinglePlayer() and SERVER) or
        ((not game.SinglePlayer()) and CLIENT and IsFirstTimePredicted())) then
@@ -322,9 +322,9 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
       -- reduce recoil if ironsighting
       recoil = sights and (recoil * 0.6) or recoil
 
-      local eyeang = self.Owner:EyeAngles()
+      local eyeang = self:GetOwner():EyeAngles()
       eyeang.pitch = eyeang.pitch - recoil
-      self.Owner:SetEyeAngles( eyeang )
+      self:GetOwner():SetEyeAngles( eyeang )
    end
 end
 
@@ -358,7 +358,7 @@ function SWEP:Deploy()
 end
 
 function SWEP:Reload()
-   if ( self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
+   if ( self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
    self:DefaultReload(self.ReloadAnim)
    self:SetIronsights( false )
 end
@@ -370,17 +370,17 @@ function SWEP:OnRestore()
 end
 
 function SWEP:Ammo1()
-   return IsValid(self.Owner) and self.Owner:GetAmmoCount(self.Primary.Ammo) or false
+   return IsValid(self:GetOwner()) and self:GetOwner():GetAmmoCount(self.Primary.Ammo) or false
 end
 
 -- The OnDrop() hook is useless for this as it happens AFTER the drop. OwnerChange
 -- does not occur when a drop happens for some reason. Hence this thing.
 function SWEP:PreDrop()
-   if SERVER and IsValid(self.Owner) and self.Primary.Ammo != "none" then
+   if SERVER and IsValid(self:GetOwner()) and self.Primary.Ammo != "none" then
       local ammo = self:Ammo1()
 
       -- Do not drop ammo if we have another gun that uses this type
-      for _, w in pairs(self.Owner:GetWeapons()) do
+      for _, w in pairs(self:GetOwner():GetWeapons()) do
          if IsValid(w) and w != self and w:GetPrimaryAmmoType() == self:GetPrimaryAmmoType() then
             ammo = 0
          end
@@ -389,7 +389,7 @@ function SWEP:PreDrop()
       self.StoredAmmo = ammo
 
       if ammo > 0 then
-         self.Owner:RemoveAmmo(ammo, self.Primary.Ammo)
+         self:GetOwner():RemoveAmmo(ammo, self.Primary.Ammo)
       end
    end
 end
@@ -510,18 +510,18 @@ function SWEP:DyingShot()
       end
 
       -- Owner should still be alive here
-      if IsValid(self.Owner) then
+      if IsValid(self:GetOwner()) then
          local punch = self.Primary.Recoil or 5
 
          -- Punch view to disorient aim before firing dying shot
-         local eyeang = self.Owner:EyeAngles()
+         local eyeang = self:GetOwner():EyeAngles()
          eyeang.pitch = eyeang.pitch - math.Rand(-punch, punch)
          eyeang.yaw = eyeang.yaw - math.Rand(-punch, punch)
-         self.Owner:SetEyeAngles( eyeang )
+         self:GetOwner():SetEyeAngles( eyeang )
 
-         MsgN(self.Owner:Nick() .. " fired his DYING SHOT")
+         MsgN(self:GetOwner():Nick() .. " fired his DYING SHOT")
 
-         self.Owner.dying_wep = self
+         self:GetOwner().dying_wep = self
 
          self:PrimaryAttack(true)
 

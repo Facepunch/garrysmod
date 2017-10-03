@@ -260,7 +260,7 @@ local function StartTeleport(ply, teleport, weapon)
 end
 
 function SWEP:TeleportRecall()
-   local ply = self.Owner
+   local ply = self:GetOwner()
    if IsValid(ply) and ply:IsTerror() then
       local mark = self:GetTeleportMark()
       if mark then
@@ -299,7 +299,7 @@ local function CanStoreTeleportPos(ply, pos)
 end
 
 function SWEP:TeleportStore()
-   local ply = self.Owner
+   local ply = self:GetOwner()
    if IsValid(ply) and ply:IsTerror() then
 
       local allow, msg = CanStoreTeleportPos(ply, self:GetPos())
@@ -330,8 +330,8 @@ if CLIENT then
 end
 
 function SWEP:Deploy()
-   if SERVER and IsValid(self.Owner) then
-      self.Owner:DrawViewModel(false)
+   if SERVER and IsValid(self:GetOwner()) then
+      self:GetOwner():DrawViewModel(false)
    end
 
    return true

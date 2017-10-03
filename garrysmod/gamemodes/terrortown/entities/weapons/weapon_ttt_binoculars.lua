@@ -91,9 +91,9 @@ end
 function SWEP:SetZoom(level)
    if SERVER then
       self.dt.zoom = level
-      self.Owner:SetFOV(self.ZoomLevels[level], 0.3)
+      self:GetOwner():SetFOV(self.ZoomLevels[level], 0.3)
 
-      self.Owner:DrawViewModel(false)
+      self:GetOwner():DrawViewModel(false)
    end
 end
 
@@ -119,8 +119,8 @@ function SWEP:Holster()
 end
 
 function SWEP:Deploy()
-   if SERVER and IsValid(self.Owner) then
-      self.Owner:DrawViewModel(false)
+   if SERVER and IsValid(self:GetOwner()) then
+      self:GetOwner():DrawViewModel(false)
    end
    return true
 end
@@ -131,7 +131,7 @@ function SWEP:Reload()
 end
 
 function SWEP:IsTargetingCorpse()
-   local tr = self.Owner:GetEyeTrace(MASK_SHOT)
+   local tr = self:GetOwner():GetEyeTrace(MASK_SHOT)
    local ent = tr.Entity
 
    return (IsValid(ent) and ent:GetClass() == "prop_ragdoll" and
@@ -141,8 +141,8 @@ end
 local confirm = Sound("npc/turret_floor/click1.wav")
 function SWEP:IdentifyCorpse()
    if SERVER then
-      local tr = self.Owner:GetEyeTrace(MASK_SHOT)
-      CORPSE.ShowSearch(self.Owner, tr.Entity, false, true)
+      local tr = self:GetOwner():GetEyeTrace(MASK_SHOT)
+      CORPSE.ShowSearch(self:GetOwner(), tr.Entity, false, true)
    elseif IsFirstTimePredicted() then
       LocalPlayer():EmitSound(confirm)
    end
@@ -167,7 +167,7 @@ end
 
 
 function SWEP:OnRemove()
-   if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
+   if CLIENT and IsValid(self:GetOwner()) and self:GetOwner() == LocalPlayer() and self:GetOwner():Alive() then
       RunConsoleCommand("lastinv")
    end
 end
@@ -230,7 +230,7 @@ if CLIENT then
 
 
    function SWEP:DrawWorldModel()
-      if not IsValid(self.Owner) then
+      if not IsValid(self:GetOwner()) then
          self:DrawModel()
       end
    end
