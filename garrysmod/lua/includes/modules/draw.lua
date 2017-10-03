@@ -31,7 +31,9 @@ TEXT_ALIGN_BOTTOM	= 4
 -----------------------------------------------------------]]
 local tex_corner8	= surface.GetTextureID( "gui/corner8" )
 local tex_corner16	= surface.GetTextureID( "gui/corner16" )
+local tex_corner32	= surface.GetTextureID( "gui/corner32" )
 local tex_corner64	= surface.GetTextureID( "gui/corner64" )
+local tex_corner512	= surface.GetTextureID( "gui/corner512" )
 local tex_white		= surface.GetTextureID( "vgui/white" )
 
 local CachedFontHeights = {}
@@ -206,7 +208,9 @@ function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
 
 	local tex = tex_corner8
 	if ( bordersize > 8 ) then tex = tex_corner16 end
+	if ( bordersize > 16 ) then tex = tex_corner32 end
 	if ( bordersize > 32 ) then tex = tex_corner64 end
+	if ( bordersize > 64 ) then tex = tex_corner512 end
 
 	surface.SetTexture( tex )
 
