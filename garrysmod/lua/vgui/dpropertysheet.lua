@@ -1,8 +1,8 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_pPropertySheet",	"PropertySheet" )
-AccessorFunc( PANEL, "m_pPanel",			"Panel" )
+AccessorFunc( PANEL, "m_pPropertySheet", "PropertySheet" )
+AccessorFunc( PANEL, "m_pPanel", "Panel" )
 
 Derma_Hook( PANEL, "Paint", "Paint", "Tab" )
 
@@ -61,17 +61,17 @@ function PANEL:UpdateColours( skin )
 
 	if ( self:IsActive() ) then
 
-		if ( self:GetDisabled() )	then return self:SetTextStyleColor( skin.Colours.Tab.Active.Disabled ) end
-		if ( self:IsDown() )		then return self:SetTextStyleColor( skin.Colours.Tab.Active.Down ) end
-		if ( self.Hovered )			then return self:SetTextStyleColor( skin.Colours.Tab.Active.Hover ) end
+		if ( self:GetDisabled() ) then return self:SetTextStyleColor( skin.Colours.Tab.Active.Disabled ) end
+		if ( self:IsDown() ) then return self:SetTextStyleColor( skin.Colours.Tab.Active.Down ) end
+		if ( self.Hovered ) then return self:SetTextStyleColor( skin.Colours.Tab.Active.Hover ) end
 
 		return self:SetTextStyleColor( skin.Colours.Tab.Active.Normal )
 
 	end
 
-	if ( self:GetDisabled() )	then return self:SetTextStyleColor( skin.Colours.Tab.Inactive.Disabled ) end
-	if ( self:IsDown() )		then return self:SetTextStyleColor( skin.Colours.Tab.Inactive.Down ) end
-	if ( self.Hovered )			then return self:SetTextStyleColor( skin.Colours.Tab.Inactive.Hover ) end
+	if ( self:GetDisabled() ) then return self:SetTextStyleColor( skin.Colours.Tab.Inactive.Disabled ) end
+	if ( self:IsDown() ) then return self:SetTextStyleColor( skin.Colours.Tab.Inactive.Down ) end
+	if ( self.Hovered ) then return self:SetTextStyleColor( skin.Colours.Tab.Inactive.Hover ) end
 
 	return self:SetTextStyleColor( skin.Colours.Tab.Inactive.Normal )
 
@@ -130,11 +130,11 @@ local PANEL = {}
 
 Derma_Hook( PANEL, "Paint", "Paint", "PropertySheet" )
 
-AccessorFunc( PANEL, "m_pActiveTab",	"ActiveTab" )
-AccessorFunc( PANEL, "m_iPadding",		"Padding" )
-AccessorFunc( PANEL, "m_fFadeTime",		"FadeTime" )
+AccessorFunc( PANEL, "m_pActiveTab", "ActiveTab" )
+AccessorFunc( PANEL, "m_iPadding", "Padding" )
+AccessorFunc( PANEL, "m_fFadeTime", "FadeTime" )
 
-AccessorFunc( PANEL, "m_bShowIcons",	"ShowIcons" )
+AccessorFunc( PANEL, "m_bShowIcons", "ShowIcons" )
 
 function PANEL:Init()
 
@@ -156,7 +156,11 @@ end
 
 function PANEL:AddSheet( label, panel, material, NoStretchX, NoStretchY, Tooltip )
 
-	if ( !IsValid( panel ) ) then return end
+	if ( !IsValid( panel ) ) then
+		ErrorNoHalt( "DPropertySheet:AddSheet tried to add invalid panel!" )
+		debug.Trace()
+		return
+	end
 
 	local Sheet = {}
 
@@ -189,9 +193,12 @@ end
 
 function PANEL:SetActiveTab( active )
 
-	if ( self.m_pActiveTab == active ) then return end
+	if ( !IsValid( active ) || self.m_pActiveTab == active ) then return end
 
-	if ( self.m_pActiveTab) then
+	if ( IsValid( self.m_pActiveTab ) ) then
+
+		-- Only run this callback when we actually switch a tab, not when a tab is initially set active
+		self:OnActiveTabChanged( self.m_pActiveTab, active )
 
 		if ( self:GetFadeTime() > 0 ) then
 
@@ -202,11 +209,16 @@ function PANEL:SetActiveTab( active )
 			self.m_pActiveTab:GetPanel():SetVisible( false )
 
 		end
+
 	end
 
 	self.m_pActiveTab = active
 	self:InvalidateLayout()
 
+end
+
+function PANEL:OnActiveTabChanged( old, new )
+	-- For override
 end
 
 function PANEL:Think()
@@ -217,33 +229,51 @@ end
 
 function PANEL:CrossFade( anim, delta, data )
 
+	if ( !data || !IsValid( data.OldTab ) || !IsValid( data.NewTab ) ) then return end
+
 	local old = data.OldTab:GetPanel()
 	local new = data.NewTab:GetPanel()
 
-	if ( anim.Finished ) then
-		old:SetVisible( false )
-		new:SetAlpha( 255 )
+	if ( !IsValid( old ) && !IsValid( new ) ) then return end
 
-		old:SetZPos( 0 )
-		new:SetZPos( 0 )
+	if ( anim.Finished ) then
+		if ( IsValid( old ) ) then
+			old:SetAlpha( 255 )
+			old:SetZPos( 0 )
+			old:SetVisible( false )
+		end
+
+		if ( IsValid( new ) ) then
+			new:SetAlpha( 255 )
+			new:SetZPos( 0 )
+			new:SetVisible( true ) // In case new == old
+		end
 
 		return
 	end
 
 	if ( anim.Started ) then
+		if ( IsValid( old ) ) then
+			old:SetAlpha( 255 )
+			old:SetZPos( 0 )
+		end
 
-		old:SetZPos( 0 )
-		new:SetZPos( 1 )
-
-		old:SetAlpha( 255 )
-		new:SetAlpha( 0 )
+		if ( IsValid( new ) ) then
+			new:SetAlpha( 0 )
+			new:SetZPos( 1 )
+		end
 
 	end
 
-	old:SetVisible( true )
-	new:SetVisible( true )
+	if ( IsValid( old ) ) then
+		old:SetVisible( true )
+		if ( !IsValid( new ) ) then old:SetAlpha( 255 * ( 1 - delta ) ) end
+	end
 
-	new:SetAlpha( 255 * delta )
+	if ( IsValid( new ) ) then
+		new:SetVisible( true )
+		new:SetAlpha( 255 * delta )
+	end
 
 end
 
@@ -266,12 +296,12 @@ function PANEL:PerformLayout()
 
 		if ( v.Tab:GetPanel() == ActivePanel ) then
 
-			v.Tab:GetPanel():SetVisible( true )
+			if ( IsValid( v.Tab:GetPanel() ) ) then v.Tab:GetPanel():SetVisible( true ) end
 			v.Tab:SetZPos( 100 )
 
 		else
 
-			v.Tab:GetPanel():SetVisible( false )
+			if ( IsValid( v.Tab:GetPanel() ) ) then v.Tab:GetPanel():SetVisible( false ) end
 			v.Tab:SetZPos( 1 )
 
 		end
@@ -280,20 +310,22 @@ function PANEL:PerformLayout()
 
 	end
 
-	if ( !ActivePanel.NoStretchX ) then
-		ActivePanel:SetWide( self:GetWide() - Padding * 2 )
-	else
-		ActivePanel:CenterHorizontal()
-	end
+	if ( IsValid( ActivePanel ) ) then
+		if ( !ActivePanel.NoStretchX ) then
+			ActivePanel:SetWide( self:GetWide() - Padding * 2 )
+		else
+			ActivePanel:CenterHorizontal()
+		end
 
-	if ( !ActivePanel.NoStretchY ) then
-		local _, y = ActivePanel:GetPos()
-		ActivePanel:SetTall( self:GetTall() - y - Padding )
-	else
-		ActivePanel:CenterVertical()
-	end
+		if ( !ActivePanel.NoStretchY ) then
+			local _, y = ActivePanel:GetPos()
+			ActivePanel:SetTall( self:GetTall() - y - Padding )
+		else
+			ActivePanel:CenterVertical()
+		end
 
-	ActivePanel:InvalidateLayout()
+		ActivePanel:InvalidateLayout()
+	end
 
 	-- Give the animation a chance
 	self.animFade:Run()
@@ -308,7 +340,7 @@ function PANEL:SizeToContentWidth()
 
 		if ( IsValid( v.Panel ) ) then
 			v.Panel:InvalidateLayout( true )
-			wide = math.max( wide, v.Panel:GetWide() + self.m_iPadding * 2 )
+			wide = math.max( wide, v.Panel:GetWide() + self:GetPadding() * 2 )
 		end
 
 	end
@@ -365,7 +397,7 @@ function PANEL:CloseTab( tab, bRemovePanelToo )
 	self.tabScroller:InvalidateLayout( true )
 
 	if ( tab == self:GetActiveTab() ) then
-		self.m_pActiveTab = self.Items[#self.Items].Tab
+		self.m_pActiveTab = self.Items[ #self.Items ].Tab
 	end
 
 	local pnl = tab:GetPanel()
