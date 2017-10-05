@@ -70,7 +70,7 @@ end
 function SWEP:PullPin()
    if self:GetPin() then return end
 
-   local ply = self.Owner
+   local ply = self:GetOwner()
    if not IsValid(ply) then return end
 
    self:SendWeaponAnim(ACT_VM_PULLPIN)
@@ -87,7 +87,7 @@ end
 
 function SWEP:Think()
    BaseClass.Think(self)
-   local ply = self.Owner
+   local ply = self:GetOwner()
    if not IsValid(ply) then return end
 
    -- pin pulled and attack loose = throw
@@ -100,7 +100,7 @@ function SWEP:Think()
          self:SendWeaponAnim(ACT_VM_THROW)
 
          if SERVER then
-            self.Owner:SetAnimation( PLAYER_ATTACK1 )
+            self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
          end
       else
          -- still cooking it, see if our time is up
@@ -115,7 +115,7 @@ end
 
 
 function SWEP:BlowInFace()
-   local ply = self.Owner
+   local ply = self:GetOwner()
    if not IsValid(ply) then return end
 
    if self.was_thrown then return end
@@ -142,7 +142,7 @@ function SWEP:Throw()
    if CLIENT then
       self:SetThrowTime(0)
    elseif SERVER then
-      local ply = self.Owner
+      local ply = self:GetOwner()
       if not IsValid(ply) then return end
 
       if self.was_thrown then return end
@@ -256,7 +256,7 @@ function SWEP:Initialize()
 end
 
 function SWEP:OnRemove()
-   if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
+   if CLIENT and IsValid(self:GetOwner()) and self:GetOwner() == LocalPlayer() and self:GetOwner():Alive() then
       RunConsoleCommand("use", "weapon_ttt_unarmed")
    end
 end
