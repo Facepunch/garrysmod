@@ -17,7 +17,7 @@ Returns a copy of a rotated vector. Kind of like v:GetNormalized()
 function meta:GetRotated(ang)
   if(not ang) then return nil end
   local v = Vector()
-	v:Set(self)
+  v:Set(self)
   v:Rotate(ang)
   return v
 end
