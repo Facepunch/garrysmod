@@ -119,7 +119,7 @@ function PANEL:Think()
 	
 	self:CheckForStatusChanges()
 	self:CheckDownloadTables()
-	self:MousePos()
+	self:MouseInput()
 	
 end
 
@@ -240,8 +240,8 @@ function UpdateLoadPanel( strJavascript )
 
 end
 
-function PANEL:MousePos()
-	pnlLoading.JavascriptRun = string.format( "if ( window.MousePos ) MousePos( %i, %i );", gui.MouseX(), gui.MouseY() )
+function PANEL:MouseInput()
+	pnlLoading.JavascriptRun = string.format( "if ( window.MouseInput ) MouseInput( %i, %i );", gui.MouseX(), gui.MouseY() )
 end
 
 function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode )
