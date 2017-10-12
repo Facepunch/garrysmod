@@ -15,7 +15,7 @@ end
 Returns a copy of a rotated vector. Kind of like v:GetNormalized()
 -----------------------------------------------------------]]
 function meta:GetRotated(ang)
-  local v = Vector(self)
-  v:Rotate(ang)
-  return v
+	local v = Vector(self)
+	v:Rotate(ang)
+	return v
 end
