@@ -20,7 +20,7 @@ local PANEL = {}
 function PANEL:Init()
 
 	self:SetSize( ScrW(), ScrH() )
-
+	
 end
 
 
@@ -41,7 +41,7 @@ function PANEL:ShowURL( url, force )
 	self.HTML:SetSize( ScrW(), ScrH() );
 	self.HTML:Dock( FILL )
 	self.HTML:OpenURL( url )
-		
+			
 	self:InvalidateLayout()
 	
 	self.LoadedURL = url
@@ -241,7 +241,7 @@ function UpdateLoadPanel( strJavascript )
 end
 
 function PANEL:MouseInput()
-	pnlLoading.JavascriptRun = string.format( "if ( window.MouseInput ) MouseInput( %i, %i );", gui.MouseX(), gui.MouseY() )
+	pnlLoading.JavascriptRun = string.format( "if ( window.MouseInput ) MouseInput( %i, %i, \"%s\", \"%s\" );", gui.MouseX(), gui.MouseY(), input.IsMouseDown(MOUSE_LEFT), input.IsMouseDown(MOUSE_RIGHT) )
 end
 
 function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode )
@@ -249,7 +249,7 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 	if ( engine.IsPlayingDemo() ) then return end
 
 	g_ServerName	= servername
-	g_MapName		= mapname
+	g_MapNamew		= mapname
 	g_ServerURL		= serverurl
 	g_MaxPlayers	= maxplayers
 	g_SteamID		= steamid
