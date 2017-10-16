@@ -89,6 +89,39 @@ function PrintTable( t, indent, done )
 
 end
 
+function PrintExtract(tT,sS)
+	local vS, vT, vK, sS = type(sS), type(tT), "", tostring(sS or "Data")
+	if(vT ~= "table") then
+		Msg("{"..vT.."}["..tostring(sS or "Data").."] = <"..tostring(tT)..">")
+		return 
+	end
+	if(next(tT) == nil) then
+		Msg(sS.." = {}")
+		return
+	end
+	Msg(sS.." = {}")
+	for k,v in pairs(tT) do
+		if(type(k) == "string") then
+			vK = sS.."[\""..k.."\"]"
+		else
+			vK = sS.."["..tostring(k).."]"
+		end
+		if(type(v) ~= "table") then
+			if(type(v) == "string") then
+				Msg(vK.." = \""..v.."\"")
+			else
+				Msg(vK.." = "..tostring(v))
+			end
+		else
+			if(v == tT) then
+				Msg(vK.." = "..sS)
+			else
+				PrintExtract(v,vK)
+			end
+		end
+	end
+end
+
 --[[---------------------------------------------------------
 	Returns a random vector
 -----------------------------------------------------------]]
