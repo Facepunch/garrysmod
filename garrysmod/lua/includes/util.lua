@@ -92,17 +92,24 @@ end
 function PrintExtract(tT,sS)
 	local vS, vT, vK, sS = type(sS), type(tT), "", tostring(sS or "Data")
 	if(vT ~= "table") then
-		print("{"..vT.."}["..tostring(sS or "Data").."] = <"..tostring(tT)..">",nil)
+		Msg("{"..vT.."}["..tostring(sS or "Data").."] = <"..tostring(tT)..">",nil)
 		return nil 
 	end
-	if(next(tT) == nil) then print(sS.." = {}"); return nil end
-	print(sS.." = {}")
+	if(next(tT) == nil) then
+		Msg(sS.." = {}")
+		return nil
+	end
+	Msg(sS.." = {}")
 	for k,v in pairs(tT) do
-		if(type(k) == "string") then vK = sS.."[\""..k.."\"]"
-		else vK = sS.."["..tostring(k).."]" end
+		if(type(k) == "string") then
+			vK = sS.."[\""..k.."\"]"
+		else
+			vK = sS.."["..tostring(k).."]" end
 		if(type(v) ~= "table") then
-			if(type(v) == "string") then print(vK.." = \""..v.."\"",nil)
-			else print(vK.." = "..tostring(v),nil) end
+			if(type(v) == "string") then
+				Msg(vK.." = \""..v.."\"",nil)
+			else
+				Msg(vK.." = "..tostring(v),nil) end
 		else PrintExtract(v,vK) end
 	end
 end
