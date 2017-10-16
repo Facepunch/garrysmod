@@ -93,11 +93,11 @@ function PrintExtract(tT,sS)
 	local vS, vT, vK, sS = type(sS), type(tT), "", tostring(sS or "Data")
 	if(vT ~= "table") then
 		Msg("{"..vT.."}["..tostring(sS or "Data").."] = <"..tostring(tT)..">")
-		return nil 
+		return 
 	end
 	if(next(tT) == nil) then
 		Msg(sS.." = {}")
-		return nil
+		return
 	end
 	Msg(sS.." = {}")
 	for k,v in pairs(tT) do
@@ -115,7 +115,6 @@ function PrintExtract(tT,sS)
 		else
 			if(v == tT) then
 				Msg(vK.." = "..sS)
-				return nil
 			else
 				PrintExtract(v,vK)
 			end
