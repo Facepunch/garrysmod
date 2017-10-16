@@ -92,7 +92,7 @@ end
 function PrintExtract(tT,sS)
 	local vS, vT, vK, sS = type(sS), type(tT), "", tostring(sS or "Data")
 	if(vT ~= "table") then
-		Msg("{"..vT.."}["..tostring(sS or "Data").."] = <"..tostring(tT)..">",nil)
+		Msg("{"..vT.."}["..tostring(sS or "Data").."] = <"..tostring(tT)..">")
 		return nil 
 	end
 	if(next(tT) == nil) then
@@ -104,12 +104,13 @@ function PrintExtract(tT,sS)
 		if(type(k) == "string") then
 			vK = sS.."[\""..k.."\"]"
 		else
-			vK = sS.."["..tostring(k).."]" end
+			vK = sS.."["..tostring(k).."]"
+		end
 		if(type(v) ~= "table") then
 			if(type(v) == "string") then
-				Msg(vK.." = \""..v.."\"",nil)
+				Msg(vK.." = \""..v.."\"")
 			else
-				Msg(vK.." = "..tostring(v),nil)
+				Msg(vK.." = "..tostring(v))
 			end
 		else
 			if(v == tT) then
