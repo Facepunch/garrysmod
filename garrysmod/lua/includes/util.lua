@@ -109,8 +109,16 @@ function PrintExtract(tT,sS)
 			if(type(v) == "string") then
 				Msg(vK.." = \""..v.."\"",nil)
 			else
-				Msg(vK.." = "..tostring(v),nil) end
-		else PrintExtract(v,vK) end
+				Msg(vK.." = "..tostring(v),nil)
+			end
+		else
+			if(v == tT) then
+				Msg(vK.." = "..sS)
+				return nil
+			else
+				PrintExtract(v,vK)
+			end
+		end
 	end
 end
 
