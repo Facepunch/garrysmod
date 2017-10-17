@@ -356,16 +356,16 @@ function table.ForceInsert( t, v )
 end
 
 --[[---------------------------------------------------------
-	Name: table.GetByMemberValue( table, memberKey, memberValue )
-	Desc: Gets a member table and its index by its value at a specified key, returns the first found entry
+	Name: table.FindMemberByColumn( Table, columnName, columnValue )
+	Desc: Returns the first found entry which has value columnValue associated with key columnName
 -----------------------------------------------------------]]
-function table.GetByMemberValue( Table, memberKey, memberValue )
+function table.FindMemberByColumn( Table, columnName, columnValue )
 
 	for k, v in pairs( Table ) do
 		
-		if istable( v ) and v[memberKey] == memberValue then
+		if istable( v ) and v[columnName] == columnValue then
 			
-			return v, k
+			return k, v
 		end
 	end
 end
