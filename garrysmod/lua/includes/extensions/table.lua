@@ -356,6 +356,21 @@ function table.ForceInsert( t, v )
 end
 
 --[[---------------------------------------------------------
+	Name: table.FindMemberByKey( Table, key, val )
+	Desc: Returns the first found entry which has value "val" associated with key "key"
+-----------------------------------------------------------]]
+function table.FindMemberByKey( Table, key, val )
+
+	for k, v in pairs( Table ) do
+		
+		if istable( v ) and v[key] == val then
+			
+			return k, v
+		end
+	end
+end
+
+--[[---------------------------------------------------------
 	Name: table.SortByMember( table )
 	Desc: Sorts table by named member
 -----------------------------------------------------------]]
