@@ -95,7 +95,7 @@ function PANEL:DoRightClick()
 end
 
 function PANEL:Clear()
-	self.ChildNodes:Clear()
+	if ( IsValid( self.ChildNodes ) ) then self.ChildNodes:Clear() end
 end
 
 function PANEL:AnimSlide( anim, delta, data )
