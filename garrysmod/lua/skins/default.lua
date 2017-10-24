@@ -123,24 +123,24 @@ SKIN.tex.Tab_Bar					= GWEN.CreateTextureBorder( 128, 352, 127, 31, 4, 4, 4, 4 )
 
 SKIN.tex.Window = {}
 
-SKIN.tex.Window.Normal			= GWEN.CreateTextureBorder( 0, 0, 127, 127, 8, 32, 8, 8 )
-SKIN.tex.Window.Inactive		= GWEN.CreateTextureBorder( 128, 0, 127, 127, 8, 32, 8, 8 )
+SKIN.tex.Window.Normal			= GWEN.CreateTextureBorder( 0, 0, 127, 127, 8, 24, 8, 8 )
+SKIN.tex.Window.Inactive		= GWEN.CreateTextureBorder( 128, 0, 127, 127, 8, 24, 8, 8 )
 
-SKIN.tex.Window.Close			= GWEN.CreateTextureNormal( 32, 448, 31, 31 )
-SKIN.tex.Window.Close_Hover		= GWEN.CreateTextureNormal( 64, 448, 31, 31 )
-SKIN.tex.Window.Close_Down		= GWEN.CreateTextureNormal( 96, 448, 31, 31 )
+SKIN.tex.Window.Close			= GWEN.CreateTextureNormal( 32, 448, 31, 24 )
+SKIN.tex.Window.Close_Hover		= GWEN.CreateTextureNormal( 64, 448, 31, 24 )
+SKIN.tex.Window.Close_Down		= GWEN.CreateTextureNormal( 96, 448, 31, 24 )
 
-SKIN.tex.Window.Maxi			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448, 31, 31 )
-SKIN.tex.Window.Maxi_Hover		= GWEN.CreateTextureNormal( 64 + 96 * 2, 448, 31, 31 )
-SKIN.tex.Window.Maxi_Down		= GWEN.CreateTextureNormal( 96 + 96 * 2, 448, 31, 31 )
+SKIN.tex.Window.Maxi			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448, 31, 24 )
+SKIN.tex.Window.Maxi_Hover		= GWEN.CreateTextureNormal( 64 + 96 * 2, 448, 31, 24 )
+SKIN.tex.Window.Maxi_Down		= GWEN.CreateTextureNormal( 96 + 96 * 2, 448, 31, 24 )
 
-SKIN.tex.Window.Restore			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448 + 32, 31, 31 )
-SKIN.tex.Window.Restore_Hover	= GWEN.CreateTextureNormal( 64 + 96 * 2, 448 + 32, 31, 31 )
-SKIN.tex.Window.Restore_Down	= GWEN.CreateTextureNormal( 96 + 96 * 2, 448 + 32, 31, 31 )
+SKIN.tex.Window.Restore			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448 + 32, 31, 24 )
+SKIN.tex.Window.Restore_Hover	= GWEN.CreateTextureNormal( 64 + 96 * 2, 448 + 32, 31, 24 )
+SKIN.tex.Window.Restore_Down	= GWEN.CreateTextureNormal( 96 + 96 * 2, 448 + 32, 31, 24 )
 
-SKIN.tex.Window.Mini			= GWEN.CreateTextureNormal( 32 + 96, 448, 31, 31 )
-SKIN.tex.Window.Mini_Hover		= GWEN.CreateTextureNormal( 64 + 96, 448, 31, 31 )
-SKIN.tex.Window.Mini_Down		= GWEN.CreateTextureNormal( 96 + 96, 448, 31, 31 )
+SKIN.tex.Window.Mini			= GWEN.CreateTextureNormal( 32 + 96, 448, 31, 24 )
+SKIN.tex.Window.Mini_Hover		= GWEN.CreateTextureNormal( 64 + 96, 448, 31, 24 )
+SKIN.tex.Window.Mini_Down		= GWEN.CreateTextureNormal( 96 + 96, 448, 31, 24 )
 
 SKIN.tex.Scroller = {}
 SKIN.tex.Scroller.TrackV				= GWEN.CreateTextureBorder( 384,		208, 15, 127, 4, 4, 4, 4 )
