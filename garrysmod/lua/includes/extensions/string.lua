@@ -253,7 +253,7 @@ end
 -- Note: These use Lua index numbering, not what you'd expect
 -- ie. they start from 1, not 0.
 function string.SetChar( str, pos, char )
-	return string_sub( str, 0, pos - 1 ) .. char .. string_sub( str, pos + 1 )
+	return string_sub( str, 1, pos - 1 ) .. char .. string_sub( str, pos + 1 )
 end
 
 function string.GetChar( str, pos )
