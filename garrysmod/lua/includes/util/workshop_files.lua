@@ -104,7 +104,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	function ret:RetrieveUserName( steamid )
 		steamworks.RequestPlayerInfo( steamid, function( name )
-			pnlMainMenu:Call( namespace .. ".ReceiveUserName( \"" .. steamid .. "\", \"" .. name .. "\" )" )
+			self.HTML:Call( namespace .. ".ReceiveUserName( \"" .. steamid .. "\", \"" .. name .. "\" )" )
 		end )
 	end
 	
