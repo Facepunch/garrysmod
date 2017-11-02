@@ -408,6 +408,27 @@ end
 
 local SF_WEAPON_START_CONSTRAINED = 1
 
+-- prevent cheats better
+function SWEP:UpdateDormancy(dormant)
+   if (not SERVER) then
+      return
+   end
+
+   for _, ply in pairs(player.GetAll()) do 
+      if (ply == newowner) then
+         continue
+      end
+      self:SetPreventTransmit(ply, dormant)
+   end
+end
+
+function SWEP:OverrideHolster(wep)
+   self:UpdateDormancy(true)
+   if (self.RealHolster) then
+      return self:RealHolster(wep)
+   end
+end
+
 -- Picked up by player. Transfer of stored ammo and such.
 function SWEP:Equip(newowner)
    if SERVER then
@@ -428,6 +449,7 @@ function SWEP:Equip(newowner)
          local newflags = bit.band(flags, bit.bnot(SF_WEAPON_START_CONSTRAINED))
          self:SetKeyValue("spawnflags", newflags)
       end
+      self:UpdateDormancy(true)
    end
 
    if SERVER and IsValid(newowner) and self.StoredAmmo > 0 and self.Primary.Ammo != "none" then
@@ -484,6 +506,14 @@ function SWEP:Initialize()
    if self.SetHoldType then
       self:SetHoldType(self.HoldType or "pistol")
    end
+
+   if (self.Holster and not self.RealHolster) then
+      self.RealHolster = self.Holster
+   end
+   self.Holster = self.OverrideHolster
+
+   self:UpdateDormancy(true)
+
 end
 
 function SWEP:CalcViewModel()
