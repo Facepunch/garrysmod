@@ -11,7 +11,7 @@ You can test [changes for the next update](http://wiki.garrysmod.com/changelist/
 
 Pull Requests
 ---
-Pull requests are welcome. 
+Pull requests are welcome but will be declined.
 
 Please make sure your [line endings are correct](https://github.com/sugarcrm/sugarcrm_dev/wiki/Line-Ending-issues-on-Windows-with-git).
 
