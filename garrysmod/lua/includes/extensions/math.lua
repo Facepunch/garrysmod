@@ -37,7 +37,7 @@ end
 	Desc: Clamp value between 2 values
 ------------------------------------------------------------]]
 function math.Clamp( _in, low, high)
-    return math.min( math.max( _in, low ), high ) )
+	return math.min( math.max( _in, low ), high ) )
 end
 
 --[[---------------------------------------------------------
