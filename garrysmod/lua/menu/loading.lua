@@ -6,8 +6,6 @@
 --
 --=============================================================================--
 
-CreateClientConVar( "cl_loading_volume", "1.0", true, false )
-
 g_ServerName	= ""
 g_MapName		= ""
 g_ServerURL		= ""
@@ -253,10 +251,7 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 	g_SteamID		= steamid
 	g_GameMode		= gamemode
 
-	local volume = 1.0
-	if ( ConVarExists( "cl_loading_volume" ) ) then
-		volume = GetConVar( "cl_loading_volume" ):GetFloat()
-	end
+	local volume = GetConVar( "volume" ):GetFloat()
 
 	MsgN( servername )
 	MsgN( serverurl )
