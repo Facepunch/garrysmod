@@ -227,6 +227,12 @@ function PANEL:Think()
 
 end
 
+function PANEL:GetItems()
+
+	return self.Items
+
+end
+
 function PANEL:CrossFade( anim, delta, data )
 
 	if ( !data || !IsValid( data.OldTab ) || !IsValid( data.NewTab ) ) then return end
@@ -369,10 +375,12 @@ function PANEL:SetupCloseButton( func )
 	self.CloseButton = self.tabScroller:Add( "DImageButton" )
 	self.CloseButton:SetImage( "icon16/circlecross.png" )
 	self.CloseButton:SetColor( Color( 10, 10, 10, 200 ) )
-	self.CloseButton:DockMargin( 0, 0, 0, 8 )
-	self.CloseButton:SetWide( 16 )
+	self.CloseButton:DockMargin( 1, 1, 1, 9 )
+	self.CloseButton:SetWide( 18 )
 	self.CloseButton:Dock( RIGHT )
-	self.CloseButton.DoClick = function() func() end
+	self.CloseButton.DoClick = function()
+		if ( func ) then func() end
+	end
 
 end
 

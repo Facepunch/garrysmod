@@ -44,7 +44,7 @@ function PANEL:SetValue( val )
 	if ( val == self:GetFloatValue() ) then return end
 
 	self:SetFloatValue( val )
-	self:OnValueChanged()
+	self:OnValueChanged( val )
 	self:UpdateConVar()
 
 end
