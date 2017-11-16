@@ -8,6 +8,7 @@ local function UpdateMaps()
 	MapNames = {}
 
 	MapNames[ "aoc_" ] = "Age of Chivalry"
+	MapNames[ "infra_" ] = "INFRA"
 
 	MapPatterns[ "^asi-" ] = "Alien Swarm"
 	MapNames[ "lobby" ] = "Alien Swarm"
