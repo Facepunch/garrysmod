@@ -1,23 +1,21 @@
 
--- Globals that we need
-local gmod 			= gmod
-local Msg 			= Msg
-local hook 			= hook
+local gmod			= gmod
+local Msg			= Msg
+local hook			= hook
 local table			= table
 local baseclass		= baseclass
 
-
 --[[---------------------------------------------------------
-   Name: gamemode
-   Desc: A module to manage gamemodes
+	Name: gamemode
+	Desc: A module to manage gamemodes
 -----------------------------------------------------------]]
 module( "gamemode" )
 
 local GameList = {}
 
 --[[---------------------------------------------------------
-   Name: RegisterGamemode( table, string )
-   Desc: Used to register your gamemode with the engine
+	Name: RegisterGamemode( table, string )
+	Desc: Used to register your gamemode with the engine
 -----------------------------------------------------------]]
 function Register( t, name, derived )
 
@@ -62,16 +60,16 @@ function Register( t, name, derived )
 end
 
 --[[---------------------------------------------------------
-   Name: Get( string )
-   Desc: Get a gamemode by name.
+	Name: Get( string )
+	Desc: Get a gamemode by name.
 -----------------------------------------------------------]]
 function Get( name )
 	return GameList[ name ]
 end
 
 --[[---------------------------------------------------------
-   Name: Call( name, args )
-   Desc: Calls a gamemode function
+	Name: Call( name, args )
+	Desc: Calls a gamemode function
 -----------------------------------------------------------]]
 function Call( name, ... )
 
@@ -83,4 +81,3 @@ function Call( name, ... )
 	return hook.Call( name, CurrentGM, ... )
 
 end
-

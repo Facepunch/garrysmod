@@ -1,24 +1,21 @@
-local table             = table
-local pairs             = pairs
-local type              = type
-local assert            = assert
-local format            = string.format
-local GetConVarString   = GetConVarString
-local GetConVarNumber   = GetConVarNumber
-local ConVarExists      = ConVarExists
+
+local table				= table
+local pairs				= pairs
+local type				= type
+local assert			= assert
+local format			= string.format
+local GetConVarString	= GetConVarString
+local GetConVarNumber	= GetConVarNumber
+local ConVarExists		= ConVarExists
 
 --[[---------------------------------------------------------
-   Name: cvar
-   Desc: Callbacks when cvars change
+	Name: cvar
+	Desc: Callbacks when cvars change
 -----------------------------------------------------------]]
 module( "cvars" )
 
 local ConVars = {}
 
-
---[[---------------------------------------------------------
-   Name: GetConVarCallbacks
------------------------------------------------------------]]
 function GetConVarCallbacks( name, CreateIfNotFound )
 
 	local Tab = ConVars[ name ]
@@ -32,13 +29,13 @@ function GetConVarCallbacks( name, CreateIfNotFound )
 end
 
 --[[---------------------------------------------------------
-   Name: OnConVarChanged
-   Desc: Called by the engine
+	Name: OnConVarChanged
+	Desc: Called by the engine
 -----------------------------------------------------------]]
 function OnConVarChanged( name, oldvalue, newvalue )
 
 	local Callbacks = GetConVarCallbacks( name )
-	if (!Callbacks) then return end
+	if ( !Callbacks ) then return end
 
 	for k, v in pairs( Callbacks ) do
 
@@ -47,14 +44,14 @@ function OnConVarChanged( name, oldvalue, newvalue )
 		else
 			v( name, oldvalue, newvalue )
 		end
-	
+
 	end
 
 end
 
 --[[---------------------------------------------------------
-   Name: OnConvarChanged
-   Desc: Called by the engine
+	Name: OnConvarChanged
+	Desc: Called by the engine
 -----------------------------------------------------------]]
 function AddChangeCallback( name, func, sIdentifier )
 
@@ -64,10 +61,10 @@ function AddChangeCallback( name, func, sIdentifier )
 
 	local tab = GetConVarCallbacks( name, true )
 
-	if sIdentifier then
+	if ( sIdentifier ) then
 		for i = 1, #tab do
 			local a = tab[ i ];
-			if type( a ) == "table" and a[ 2 ] == sIdentifier then
+			if ( type( a ) == "table" and a[ 2 ] == sIdentifier ) then
 				tab[ i ][ 1 ] = func
 				return
 			end
@@ -81,8 +78,8 @@ function AddChangeCallback( name, func, sIdentifier )
 end
 
 --[[---------------------------------------------------------
-   Name: RemoveChangeCallback
-   Desc: Removes callback with identifier
+	Name: RemoveChangeCallback
+	Desc: Removes callback with identifier
 -----------------------------------------------------------]]
 function RemoveChangeCallback( name, sIdentifier )
 
@@ -95,7 +92,7 @@ function RemoveChangeCallback( name, sIdentifier )
 	for i = 1, #tab do
 		local a = tab[ i ]
 
-		if type( a ) == "table" and a[ 2 ] == sIdentifier then
+		if ( type( a ) == "table" and a[ 2 ] == sIdentifier ) then
 			table.remove( tab, i )
 			break
 		end
@@ -103,9 +100,6 @@ function RemoveChangeCallback( name, sIdentifier )
 
 end
 
---[[---------------------------------------------------------
-   String
------------------------------------------------------------]]
 function String( name, default )
 
 	if ( !ConVarExists( name ) ) then return default end
@@ -114,9 +108,6 @@ function String( name, default )
 
 end
 
---[[---------------------------------------------------------
-   Number
------------------------------------------------------------]]
 function Number( name, default )
 
 	if ( !ConVarExists( name ) ) then return default end
@@ -125,9 +116,6 @@ function Number( name, default )
 
 end
 
---[[---------------------------------------------------------
-   Bool
------------------------------------------------------------]]
 function Bool( name, default )
 
 	if ( default ) then default = 1 else default = 0 end

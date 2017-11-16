@@ -16,7 +16,7 @@ function Register( name, table, base )
 	Type[ name ] = table;
 
 	--
-	-- If we have a base method then hook 
+	-- If we have a base method then hook
 	-- it up in the meta table
 	--
 	if ( base ) then
@@ -90,7 +90,7 @@ function GetMethod( ply )
 		method.Entity = ent
 		method.Player = ply
 		method.ModeID = modeid
-	
+
 	setmetatable( method, { __index = type } )
 
 	ply.m_CurrentDriverMethod = method
@@ -108,7 +108,7 @@ function DestroyMethod( pl )
 
 end
 --
--- Called when the player first 
+-- Called when the player first
 -- starts driving this entity
 --
 function Start( ply, ent )
@@ -123,7 +123,7 @@ function Start( ply, ent )
 		ply.m_PreDriveObserveMode = ply:GetObserverMode()
 
 		-- Lock the player's eye angles to our angles
-		local ang = ent:GetAngles() 
+		local ang = ent:GetAngles()
 		ply:SetEyeAngles( ang )
 
 		-- Hide the controlling player's world model

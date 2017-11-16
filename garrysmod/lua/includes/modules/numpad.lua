@@ -190,7 +190,7 @@ end
 -----------------------------------------------------------]]
 function OnUp( ply, key, name, ... )
 
-	if ( !key ) then ErrorNoHalt("ERROR: numpad.OnUp key is nil!\n") return end
+	if ( !key ) then ErrorNoHalt( "ERROR: numpad.OnUp key is nil!\n" ) return end
 	keys_out[ key ] = keys_out[ key ] or {}
 
 	local impulse = {}
