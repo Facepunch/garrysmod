@@ -527,7 +527,7 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintTab( panel, w, h )
 
-	if ( panel:GetPropertySheet():GetActiveTab() == panel ) then
+	if ( panel:IsActive() ) then
 		return self:PaintActiveTab( panel, w, h )
 	end
 
