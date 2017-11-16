@@ -1,9 +1,5 @@
 
-local hook 			= hook
 local HTTP 			= HTTP
-local pairs 		= pairs
-local table			= table
-local ErrorNoHalt	= ErrorNoHalt
 
 --[[---------------------------------------------------------
 	HTTP Module. Interaction with HTTP.
