@@ -55,7 +55,15 @@ function ChangeTooltip( panel )
 	
 	if ( !Text && !Panel ) then return end
 
-	Tooltip = vgui.Create( "DTooltip" )
+	if ( Panel ) then
+
+		Tooltip = vgui.Create( Panel )
+
+	else
+	
+		Tooltip = vgui.Create( "DTooltip" )
+
+	end
 	
 	if ( Text ) then
 	
