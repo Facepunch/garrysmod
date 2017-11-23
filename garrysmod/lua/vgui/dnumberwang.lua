@@ -1,3 +1,4 @@
+
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_numMin",		"Min" )
@@ -11,7 +12,7 @@ local function AnchorValue( wang, button, mcode )
 	button:OldOnMousePressed( mcode )
 	wang.mouseAnchor = gui.MouseY()
 	wang.valAnchor = wang:GetValue()
-	
+
 end
 
 local function UnAnchorValue( wang, button, mcode )
@@ -46,8 +47,8 @@ function PANEL:Init()
 	self.Up.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "NumberUp", panel, w, h ) end
 
 	self.Up.OldOnMousePressed = self.Up.OnMousePressed
-	self.Up.OnMousePressed = function( button, mcode ) AnchorValue( self, button, mcode ) end
 	self.Up.OldOnMouseReleased = self.Up.OnMouseReleased
+	self.Up.OnMousePressed = function( button, mcode ) AnchorValue( self, button, mcode ) end
 	self.Up.OnMouseReleased = function( button, mcode ) UnAnchorValue( self, button, mcode ) end
 	self.Up.OnMouseWheeled = function( button, delta ) self:SetValue( self:GetValue() + delta ) end
 
@@ -57,8 +58,8 @@ function PANEL:Init()
 	self.Down.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "NumberDown", panel, w, h ) end
 
 	self.Down.OldOnMousePressed = self.Down.OnMousePressed
-	self.Down.OnMousePressed = function( button, mcode ) AnchorValue( self, button, mcode ) end
 	self.Down.OldOnMouseReleased = self.Down.OnMouseReleased
+	self.Down.OnMousePressed = function( button, mcode ) AnchorValue( self, button, mcode ) end
 	self.Down.OnMouseReleased = function( button, mcode ) UnAnchorValue( self, button, mcode ) end
 	self.Down.OnMouseWheeled = function( button, delta ) self:SetValue( self:GetValue() + delta ) end
 
