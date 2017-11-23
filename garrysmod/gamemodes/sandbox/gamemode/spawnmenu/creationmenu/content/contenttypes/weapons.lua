@@ -68,6 +68,7 @@ end )
 spawnmenu.AddCreationTab( "#spawnmenu.category.weapons", function()
 
 	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
+	ctrl:EnableSearch( "weapons", "PopulateWeapons" )
 	ctrl:CallPopulateHook( "PopulateWeapons" )
 	return ctrl
 
