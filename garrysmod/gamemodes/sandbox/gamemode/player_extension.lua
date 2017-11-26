@@ -11,13 +11,14 @@ function meta:CheckLimit( str )
 	-- No limits in single player
 	if ( game.SinglePlayer() ) then return true end
 	
-	local ret = hook.Run( 'PlayerCheckLimit', self, str )
+	local c = cvars.Number( "sbox_max" .. str, 0 )
+	local count = self:GetCount( str )
+	
+	local ret = hook.Run( 'PlayerCheckLimit', self, str, c, count )
 	if ( ret != nil ) then return ret end
 	
-	local c = cvars.Number( "sbox_max" .. str, 0 )
-
 	if ( c < 0 ) then return true end
-	if ( self:GetCount( str ) > c - 1 ) then
+	if ( count > c - 1 ) then
 		if ( SERVER ) then self:LimitHit( str ) end
 		return false
 	end
