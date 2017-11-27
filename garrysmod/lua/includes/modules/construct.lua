@@ -4,6 +4,7 @@ local SERVER = SERVER
 local duplicator = duplicator
 local numpad = numpad
 local Msg = Msg
+local IsValid = IsValid
 
 module( "construct" )
 
