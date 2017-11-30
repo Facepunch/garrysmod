@@ -26,12 +26,12 @@ SWEP.CanBuy                = {ROLE_DETECTIVE}
 SWEP.LimitedStock          = false
 SWEP.AmmoEnt               = "item_ammo_smg1_ttt"
 
-SWEP.Primary.Damage        = 9
-SWEP.Primary.Delay         = 0.1
+SWEP.Primary.Damage        = 18 --default 9
+SWEP.Primary.Delay         = 0.12 --default 0.1
 SWEP.Primary.Cone          = 0.02
-SWEP.Primary.ClipSize      = 30
+SWEP.Primary.ClipSize      = 25 --default 30
 SWEP.Primary.ClipMax       = 60
-SWEP.Primary.DefaultClip   = 30
+SWEP.Primary.DefaultClip   = 25 --default 30
 SWEP.Primary.Automatic     = true
 SWEP.Primary.Ammo          = "smg1"
 SWEP.Primary.Recoil        = 1.2

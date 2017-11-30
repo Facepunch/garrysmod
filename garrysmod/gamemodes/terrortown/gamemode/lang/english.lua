@@ -129,12 +129,12 @@ L.radio_notplaced = "You must place the Radio to play sound on it."
 L.radio_button_scream  = "Scream"
 L.radio_button_expl    = "Explosion"
 L.radio_button_pistol  = "Pistol shots"
-L.radio_button_m16     = "M16 shots"
+L.radio_button_m16     = "AR shots"
 L.radio_button_deagle  = "Deagle shots"
-L.radio_button_mac10   = "MAC10 shots"
+L.radio_button_mac10   = "MAC-10 shots"
 L.radio_button_shotgun = "Shotgun shots"
-L.radio_button_rifle   = "Rifle shot"
-L.radio_button_huge    = "H.U.G.E burst"
+L.radio_button_rifle   = "Sniper shot"
+L.radio_button_huge    = "M249 burst"
 L.radio_button_c4      = "C4 beeping"
 L.radio_button_burn    = "Burning"
 L.radio_button_steps   = "Footsteps"
@@ -432,13 +432,14 @@ play sounds on it using the Radio tab
 in this menu.]]
 
 -- Silenced pistol
-L.sipistol_name   = "Silenced Pistol"
+L.sipistol_name   = "Silenced USP"
 
 L.sipistol_desc   = [[
 Low-noise handgun, uses normal pistol
 ammo.
 
-Victims will not scream when killed.]]
+Deals extra headshot damage and 
+victims will not scream when killed.]]
 
 -- Newton launcher
 L.newton_name     = "Newton launcher"
@@ -514,9 +515,9 @@ L.grenade_fire    = "Incendiary grenade"
 
 L.unarmed_name    = "Holstered"
 L.crowbar_name    = "Crowbar"
-L.pistol_name     = "Pistol"
-L.rifle_name      = "Rifle"
-L.shotgun_name    = "Shotgun"
+L.pistol_name     = "Five-seven"
+L.rifle_name      = "Scout"
+L.shotgun_name    = "M1014"
 
 -- Teleporter
 L.tele_name       = "Teleporter"
