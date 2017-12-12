@@ -16,3 +16,27 @@ function meta:SnapTo( component, degrees )
 	return self
 
 end
+
+--[[---------------------------------------------------------
+	Returns a rounded angle
+-----------------------------------------------------------]]
+function meta:Round( decimals )
+
+	return Angle( math.Round( self[1], decimals ), math.Round( self[2], decimals ), math.Round( self[3], decimals ) )
+end
+
+--[[---------------------------------------------------------
+	Returns a rounded down angle
+-----------------------------------------------------------]]
+function meta:Floor()
+
+	return Angle( math.floor( self[1] ), math.floor( self[2] ), math.floor( self[3] ) )
+
+--[[---------------------------------------------------------
+	Returns a rounded up angle
+-----------------------------------------------------------]]
+function meta:Ceil()
+
+	return Angle( math.ceil( self[1] ), math.ceil( self[2] ), math.ceil( self[3] ) )
+
+end
