@@ -20,23 +20,23 @@ end
 --[[---------------------------------------------------------
 	Returns a rounded angle
 -----------------------------------------------------------]]
-function meta:Round( decimals )
+function meta:GetRound( decimals )
 
-	return Angle( math.Round( self[1], decimals ), math.Round( self[2], decimals ), math.Round( self[3], decimals ) )
+	return Angle( math.Round( self.p, decimals ), math.Round( self.y, decimals ), math.Round( self.r, decimals ) )
 end
 
 --[[---------------------------------------------------------
 	Returns a rounded down angle
 -----------------------------------------------------------]]
-function meta:Floor()
+function meta:GetFloor()
 
-	return Angle( math.floor( self[1] ), math.floor( self[2] ), math.floor( self[3] ) )
+	return Angle( math.floor( self.p ), math.floor( self.y ), math.floor( self.r ) )
 
 --[[---------------------------------------------------------
 	Returns a rounded up angle
 -----------------------------------------------------------]]
-function meta:Ceil()
+function meta:GetCeil()
 
-	return Angle( math.ceil( self[1] ), math.ceil( self[2] ), math.ceil( self[3] ) )
+	return Angle( math.ceil( self.p ), math.ceil( self.y ), math.ceil( self.r ) )
 
 end
