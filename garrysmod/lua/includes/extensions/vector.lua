@@ -14,24 +14,24 @@ end
 --[[---------------------------------------------------------
 	Returns a rounded vector
 -----------------------------------------------------------]]
-function meta:Round( decimals )
+function meta:GetRound( decimals )
 
-	return Vector( math.Round( self[1], decimals ), math.Round( self[2], decimals ), math.Round( self[3], decimals ) )
+	return Vector( math.Round( self.x, decimals ), math.Round( self.y, decimals ), math.Round( self.z, decimals ) )
 end
 
 --[[---------------------------------------------------------
 	Returns a rounded down vector
 -----------------------------------------------------------]]
-function meta:Floor()
+function meta:GetFloor()
 
-	return Vector( math.floor( self[1] ), math.floor( self[2] ), math.floor( self[3] ) )
+	return Vector( math.floor( self.x ), math.floor( self.y ), math.floor( self.z ) )
 
 --[[---------------------------------------------------------
 	Returns a rounded up vector
 -----------------------------------------------------------]]
-function meta:Ceil()
+function meta:GetCeil()
 
-	return Vector( math.ceil( self[1] ), math.ceil( self[2] ), math.ceil( self[3] ) )
+	return Vector( math.ceil( self.x ), math.ceil( self.y ), math.ceil( self.z ) )
 
 end
 
