@@ -217,3 +217,109 @@ end
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
 end
+
+function math.DoubleToInt32s( double )
+    local high, low = 0,0
+    -- Sign
+    if double < 0 or 1/double < 0 then
+        high = 0x80000000
+        double = -double
+    end
+
+    -- Spcial cases
+    if double == 0 then -- Zero
+        return high, 0
+    elseif double == math.huge then -- Inf
+        return high + 0x7FF00000, 0
+    elseif double ~= double then -- NaN
+        return 0x7FFFFFFF,0xFFFFFFFF
+    end
+
+    local mantissa, exponent = math.frexp( double )
+    if exponent > -1022 then
+        -- Normalized numbers
+        mantissa = mantissa*(2^53)
+        low = mantissa % 0x100000000
+        return high + bit.lshift(exponent+1022,20) + (mantissa-low)*2^-32 - 0x00100000, low
+    else
+        -- Denormalized numbers
+        mantissa = mantissa*(2^(exponent+1074))
+        low = mantissa % 0x100000000
+        return high + (mantissa-low)*2^-32, low
+    end
+end
+
+function math.Int32sToDouble( high, low )
+    local mantissa 
+    local negative = bit.band(high,0x80000000) ~= 0
+    local exponent = bit.rshift(bit.band(high,0x7FF00000),20)-1022
+    high = bit.band(high,0x000FFFFF)
+
+    -- Spcial cases
+    if exponent == 1025 then
+        if high == 0 and low == 0 then
+            return negative and -math.huge or math.huge
+        end
+        return 0/0
+    end
+
+    if low < 0 then low = low + 0x100000000 end -- Fix sign for low bits
+
+    if exponent > -1022 then
+        -- Normalized
+        return negative
+            and -math.ldexp( (high*2^32+low)*(2^-53)+0.5, exponent ) 
+            or   math.ldexp( (high*2^32+low)*(2^-53)+0.5, exponent )
+    else 
+        -- Denormalized
+        return negative 
+            and -math.ldexp( (high*2^32+low)*(2^(exponent+970)), exponent ) 
+            or   math.ldexp( (high*2^32+low)*(2^(exponent+970)), exponent )
+    end
+end
+
+function math.FloatToInt32( float )
+    -- Sign
+    local sign = 0
+    if float < 0 or 1/float < 0 then
+        sign = 0x80000000
+        float = -float
+    end
+
+    -- Spcial cases
+    if float == 0 then -- Zero
+        return sign
+    elseif float == math.huge then -- Inf
+        return sign + 0x7F800000
+    elseif float ~= float then -- NaN
+        return 0x7fffffff
+    end
+
+    local mantissa, exponent = math.frexp( float )
+    if exponent > -126 then -- Normalized
+        return sign + bit.lshift(exponent+126,23) + math.floor(mantissa*(2^24)+0.5)-0x800000      
+    else -- Denormalized
+        return sign + math.floor(mantissa*(2^(exponent+149))+0.5)
+    end
+end
+
+function math.Int32ToFloat( int )
+    local mantissa 
+    local negative = bit.band(int,0x80000000) ~= 0
+    local exponent = bit.rshift(bit.band(int,0x7F800000),23)-126
+    int = bit.band(int,0x007fffff)
+
+    -- Spcial cases
+    if exponent == 129 then
+        if int == 0 then
+            return negative and -math.huge or math.huge
+        end
+        return 0/0
+    end
+
+    if exponent ~= -126 then -- Normalized
+        return negative and -math.ldexp( int*(2^-24)+0.5, exponent ) or math.ldexp( int*(2^-24)+0.5, exponent )
+    else -- Denormalized
+        return negative and -math.ldexp( int*(2^-23), exponent ) or math.ldexp( int*(2^-23), exponent )
+    end
+end
