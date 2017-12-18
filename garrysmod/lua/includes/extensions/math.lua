@@ -250,7 +250,6 @@ function math.DoubleToInt32s( double )
 end
 
 function math.Int32sToDouble( high, low )
-    local mantissa 
     local negative = bit.band(high,0x80000000) ~= 0
     local exponent = bit.rshift(bit.band(high,0x7FF00000),20)-1022
     high = bit.band(high,0x000FFFFF)
@@ -304,7 +303,6 @@ function math.FloatToInt32( float )
 end
 
 function math.Int32ToFloat( int )
-    local mantissa 
     local negative = bit.band(int,0x80000000) ~= 0
     local exponent = bit.rshift(bit.band(int,0x7F800000),23)-126
     int = bit.band(int,0x007fffff)
