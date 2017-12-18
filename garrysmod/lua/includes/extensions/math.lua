@@ -265,7 +265,7 @@ function math.Int32sToDouble( high, low )
 
     if low < 0 then low = low + 0x100000000 end -- Fix sign for low bits
 
-    if exponent > -1022 then
+    if exponent ~= -1022 then
         -- Normalized
         return negative
             and -math.ldexp( (high*2^32+low)*(2^-53)+0.5, exponent ) 
@@ -273,8 +273,8 @@ function math.Int32sToDouble( high, low )
     else 
         -- Denormalized
         return negative 
-            and -math.ldexp( (high*2^32+low)*(2^(exponent+970)), exponent ) 
-            or   math.ldexp( (high*2^32+low)*(2^(exponent+970)), exponent )
+            and -math.ldexp( (high*2^32+low)*(2^-52), exponent ) 
+            or   math.ldexp( (high*2^32+low)*(2^-52), exponent )
     end
 end
 
