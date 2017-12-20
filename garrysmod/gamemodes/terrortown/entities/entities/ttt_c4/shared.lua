@@ -199,6 +199,7 @@ end
 
 local c4boom = Sound("c4.explode")
 function ENT:Explode(tr)
+   hook.Call("TTTC4Explode", nil, self)
    if SERVER then
       self:SetNoDraw(true)
       self:SetSolid(SOLID_NONE)
