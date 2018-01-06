@@ -131,7 +131,7 @@ function MenuController( $scope, $rootScope )
 		if ( gScope.Branch == "dev" )			return lua.Run( "gui.OpenURL( 'http://wiki.garrysmod.com/changelist/' )" );
 		if ( gScope.Branch == "prerelease" )	return lua.Run( "gui.OpenURL( 'http://wiki.garrysmod.com/changelist/prerelease/' )" );
 
-		lua.Run( "gui.OpenURL( 'http://www.garrysmod.com/updates/' )" );
+		lua.Run( "gui.OpenURL( 'http://gmod.facepunch.com/changes/' )" );
 	}
 
 	// Background
