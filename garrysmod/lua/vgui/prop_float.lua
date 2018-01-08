@@ -25,8 +25,8 @@ function PANEL:Setup( vars )
 	ctrl:SetDecimals( self:GetDecimals() )
 
 	-- Apply vars
-	ctrl:SetMin( vars.min || 0 )
-	ctrl:SetMax( vars.max || 1 )
+	ctrl:SetMin( tonumber(vars && vars.min) || 0 )
+	ctrl:SetMax( tonumber(vars && vars.max) || 1 )
 
 	-- The label needs mouse input so we can scratch
 	self:GetRow().Label:SetMouseInputEnabled( true )
