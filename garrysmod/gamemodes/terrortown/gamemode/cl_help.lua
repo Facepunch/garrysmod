@@ -65,30 +65,7 @@ function HELPSCRN:Show()
    end
    cb:SetTooltip(GetTranslation("set_startpopup_tip"))
 
-   cb = dgui:NumSlider(GetTranslation("set_cross_opacity"), "ttt_ironsights_crosshair_opacity", 0, 1, 1)
-   if cb.Label then
-      cb.Label:SetWrap(true)
-   end
-   cb:SetTooltip(GetTranslation("set_cross_opacity"))
-
-   cb = dgui:NumSlider(GetTranslation("set_cross_brightness"), "ttt_crosshair_brightness", 0, 1, 1)
-   if cb.Label then
-      cb.Label:SetWrap(true)
-   end
-
-   cb = dgui:NumSlider(GetTranslation("set_cross_size"), "ttt_crosshair_size", 0.1, 3, 1)
-   if cb.Label then
-      cb.Label:SetWrap(true)
-   end
-
-   dgui:CheckBox(GetTranslation("set_cross_disable"), "ttt_disable_crosshair")
-
-   dgui:CheckBox(GetTranslation("set_minimal_id"), "ttt_minimal_targetid")
-
    dgui:CheckBox(GetTranslation("set_healthlabel"), "ttt_health_label")
-
-   cb = dgui:CheckBox(GetTranslation("set_lowsights"), "ttt_ironsights_lowered")
-   cb:SetTooltip(GetTranslation("set_lowsights_tip"))
 
    cb = dgui:CheckBox(GetTranslation("set_fastsw"), "ttt_weaponswitcher_fast")
    cb:SetTooltip(GetTranslation("set_fastsw_tip"))
@@ -102,7 +79,7 @@ function HELPSCRN:Show()
    cb = dgui:CheckBox(GetTranslation("set_cues"), "ttt_cl_soundcues")
 
    dsettings:AddItem(dgui)
-
+   
    --- Gameplay area
 
    local dplay = vgui.Create("DForm", dsettings)
@@ -121,6 +98,76 @@ function HELPSCRN:Show()
    mute:SetTooltip(GetTranslation("set_mute_tip"))
 
    dsettings:AddItem(dplay)
+   
+   -- Crosshair area
+   
+   local dgui = vgui.Create("DForm", dsettings)
+   dgui:SetName(GetTranslation("set_title_cross"))
+
+   dgui:CheckBox(GetTranslation("set_cross_color_enable"), "ttt_crosshair_color_enable")
+
+   cm = vgui.Create("DColorMixer")
+   cm:SetLabel(GetTranslation("set_cross_color"))
+   cm:SetTall(120)
+   cm:SetAlphaBar(false)
+   cm:SetPalette(false)
+   cm:SetColor(Color(30, 160, 160, 255))     
+   cm:SetConVarR("ttt_crosshair_color_r")
+   cm:SetConVarG("ttt_crosshair_color_g")
+   cm:SetConVarB("ttt_crosshair_color_b")
+   dgui:AddItem(cm)
+
+   dgui:CheckBox(GetTranslation("set_cross_gap_enable"), "ttt_crosshair_gap_enable")
+ 
+   cb = dgui:NumSlider(GetTranslation("set_cross_gap"), "ttt_crosshair_gap", 0, 30, 0)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+
+   cb = dgui:NumSlider(GetTranslation("set_cross_opacity"), "ttt_crosshair_opacity", 0, 1, 1)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+   
+   cb = dgui:NumSlider(GetTranslation("set_ironsight_cross_opacity"), "ttt_ironsights_crosshair_opacity", 0, 1, 1)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+
+   cb = dgui:NumSlider(GetTranslation("set_cross_brightness"), "ttt_crosshair_brightness", 0, 1, 1)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+
+   cb = dgui:NumSlider(GetTranslation("set_cross_size"), "ttt_crosshair_size", 0.1, 3, 1)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+   
+   cb = dgui:NumSlider(GetTranslation("set_cross_thickness"), "ttt_crosshair_thickness", 1, 10, 0)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+   
+   cb = dgui:NumSlider(GetTranslation("set_cross_outlinethickness"), "ttt_crosshair_outlinethickness", 0, 5, 0)
+   if cb.Label then
+      cb.Label:SetWrap(true)
+   end
+   
+   dgui:CheckBox(GetTranslation("set_cross_disable"), "ttt_disable_crosshair")
+
+   dgui:CheckBox(GetTranslation("set_minimal_id"), "ttt_minimal_targetid")
+   
+   dgui:CheckBox(GetTranslation("set_cross_static_enable"), "ttt_crosshair_static")
+ 
+   dgui:CheckBox(GetTranslation("set_cross_dot_enable"), "ttt_crosshair_dot") 
+   
+   dgui:CheckBox(GetTranslation("set_cross_weaponscale_enable"), "ttt_crosshair_weaponscale")
+
+   cb = dgui:CheckBox(GetTranslation("set_lowsights"), "ttt_ironsights_lowered")
+   cb:SetTooltip(GetTranslation("set_lowsights_tip"))
+
+   dsettings:AddItem(dgui)  
 
    --- Language area
    local dlanguage = vgui.Create("DForm", dsettings)
