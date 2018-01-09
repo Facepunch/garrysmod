@@ -287,6 +287,7 @@ function PANEL:PerformLayout()
 end
 
 function PANEL:DoClick(x, y)
+   if GetRoundState() ~= ROUND_ACTIVE then return end
    self:SetOpen(not self.open)
 end
 
