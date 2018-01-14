@@ -49,16 +49,16 @@ meta.WriteUInt8 = meta.WriteByte
 meta.ReadUInt8 = meta.ReadByte
 
 function meta:WriteInt8( int8 )
-	if int8 >= 0x80 then
-		int8 = int8 - 0x100
+	if int8 < 0 then
+		int8 = int8 + 0x100
 	end
 	self:WriteUInt8( int8 )
 end
 
 function meta:ReadInt8( )
 	local int8 = self:ReadUInt8()
-	if int8 < 0 then
-		int = int8 + 0x100
+	if int8 >= 0x80 then
+		int8 = int8 - 0x100
 	end
 	return int8
 end
