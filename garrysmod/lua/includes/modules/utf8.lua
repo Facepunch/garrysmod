@@ -68,6 +68,11 @@ local function decode( str, startPos )
 	local endPos    = startPos + contByteCount
 	local codePoint = 0
 
+	-- The string doesn't have enough data for this many continutation bytes
+	if #str < endPos then
+		return nil
+	end
+
 	-- Validate our continuation bytes
 	for _, bX in ipairs { str:byte( startPos + 1, endPos ) } do
 		
