@@ -173,6 +173,7 @@ end
 function OnDown( ply, key, name, ... )
 
 	if ( !key ) then ErrorNoHalt( "ERROR: numpad.OnDown key is nil!\n" ) return end
+	if ( key ~= key ) then ErrorNoHalt( "ERROR: numpad.OnDown key is NaN!\n" ) return end
 	keys_in[ key ] = keys_in[ key ] or {}
 
 	local impulse = {}
