@@ -4,31 +4,31 @@
 	Desc: The physgun wants to freeze a prop
 -----------------------------------------------------------]]
 function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
-	
+
 	-- Object is already frozen (!?)
 	if ( !phys:IsMoveable() ) then return false end
 	if ( ent:GetUnFreezable() ) then return false end
-	
+
 	phys:EnableMotion( false )
-	
+
 	-- With the jeep we need to pause all of its physics objects
 	-- to stop it spazzing out and killing the server.
 	if ( ent:GetClass() == "prop_vehicle_jeep" ) then
-	
+
 		local objects = ent:GetPhysicsObjectCount()
-		
+
 		for i = 0, objects - 1 do
-		
+
 			local physobject = ent:GetPhysicsObjectNum( i )
 			physobject:EnableMotion( false )
-		
+
 		end
-	
+
 	end
 
 	-- Add it to the player's frozen props
 	ply:AddFrozenPhysicsObject( ent, phys )
-	
+
 	return true
 
 end
@@ -44,36 +44,36 @@ function GM:OnPhysgunReload( weapon, ply )
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerAuthed( )
+	Name: gamemode:PlayerAuthed()
 	Desc: Player's STEAMID has been authed
 -----------------------------------------------------------]]
 function GM:PlayerAuthed( ply, SteamID, UniqueID )
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerCanPickupWeapon( )
+	Name: gamemode:PlayerCanPickupWeapon()
 	Desc: Called when a player tries to pickup a weapon.
 		return true to allow the pickup.
 -----------------------------------------------------------]]
-function GM:PlayerCanPickupWeapon( player, entity )
+function GM:PlayerCanPickupWeapon( ply, entity )
 
 	return true
 
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerCanPickupItem( )
+	Name: gamemode:PlayerCanPickupItem()
 	Desc: Called when a player tries to pickup an item.
 		 return true to allow the pickup.
 -----------------------------------------------------------]]
-function GM:PlayerCanPickupItem( player, entity )
+function GM:PlayerCanPickupItem( ply, entity )
 
 	return true
 
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:CanPlayerUnfreeze( )
+	Name: gamemode:CanPlayerUnfreeze()
 	Desc: Can the player unfreeze this entity & physobject
 -----------------------------------------------------------]]
 function GM:CanPlayerUnfreeze( ply, entity, physobject )
@@ -83,19 +83,19 @@ function GM:CanPlayerUnfreeze( ply, entity, physobject )
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerDisconnected( )
+	Name: gamemode:PlayerDisconnected()
 	Desc: Player has disconnected from the server.
 -----------------------------------------------------------]]
-function GM:PlayerDisconnected( player )
+function GM:PlayerDisconnected( ply )
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerSay( )
+	Name: gamemode:PlayerSay()
 	Desc: A player (or server) has used say. Return a string
 		 for the player to say. Return an empty string if the
 		 player should say nothing.
 -----------------------------------------------------------]]
-function GM:PlayerSay( player, text, teamonly )
+function GM:PlayerSay( ply, text, teamonly )
 
 	return text
 
@@ -111,11 +111,11 @@ function GM:PlayerDeathThink( pl )
 	if ( pl.NextSpawnTime && pl.NextSpawnTime > CurTime() ) then return end
 
 	if ( pl:IsBot() || pl:KeyPressed( IN_ATTACK ) || pl:KeyPressed( IN_ATTACK2 ) || pl:KeyPressed( IN_JUMP ) ) then
-	
+
 		pl:Spawn()
-	
+
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -123,14 +123,14 @@ end
 	Desc: A player has attempted to use a specific entity
 		Return true if the player can use it
 ------------------------------------------------------------]]
-function GM:PlayerUse( pl, entity )
+function GM:PlayerUse( ply, entity )
 
 	return true
 
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerSilentDeath( )
+	Name: gamemode:PlayerSilentDeath()
 	Desc: Called when a player dies silently
 -----------------------------------------------------------]]
 function GM:PlayerSilentDeath( Victim )
@@ -146,7 +146,7 @@ util.AddNetworkString( "PlayerKilledSelf" )
 util.AddNetworkString( "PlayerKilledByPlayer" )
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerDeath( )
+	Name: gamemode:PlayerDeath()
 	Desc: Called when a player dies.
 -----------------------------------------------------------]]
 function GM:PlayerDeath( ply, inflictor, attacker )
@@ -154,9 +154,9 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	-- Don't spawn for at least 2 seconds
 	ply.NextSpawnTime = CurTime() + 2
 	ply.DeathTime = CurTime()
-	
+
 	if ( IsValid( attacker ) && attacker:GetClass() == "trigger_hurt" ) then attacker = ply end
-	
+
 	if ( IsValid( attacker ) && attacker:IsVehicle() && IsValid( attacker:GetDriver() ) ) then
 		attacker = attacker:GetDriver()
 	end
@@ -169,56 +169,56 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	-- This can be right or wrong with NPCs since combine can be holding a
 	-- pistol but kill you by hitting you with their arm.
 	if ( IsValid( inflictor ) && inflictor == attacker && ( inflictor:IsPlayer() || inflictor:IsNPC() ) ) then
-	
+
 		inflictor = inflictor:GetActiveWeapon()
 		if ( !IsValid( inflictor ) ) then inflictor = attacker end
 
 	end
 
 	if ( attacker == ply ) then
-	
+
 		net.Start( "PlayerKilledSelf" )
 			net.WriteEntity( ply )
 		net.Broadcast()
-		
+
 		MsgAll( attacker:Nick() .. " suicided!\n" )
-		
+
 	return end
 
 	if ( attacker:IsPlayer() ) then
-	
+
 		net.Start( "PlayerKilledByPlayer" )
-		
+
 			net.WriteEntity( ply )
 			net.WriteString( inflictor:GetClass() )
 			net.WriteEntity( attacker )
-		
+
 		net.Broadcast()
-		
+
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
-		
+
 	return end
-	
+
 	net.Start( "PlayerKilled" )
-	
+
 		net.WriteEntity( ply )
 		net.WriteString( inflictor:GetClass() )
 		net.WriteString( attacker:GetClass() )
 
 	net.Broadcast()
-	
+
 	MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
-	
+
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerInitialSpawn( )
+	Name: gamemode:PlayerInitialSpawn()
 	Desc: Called just before the player's first spawn
 -----------------------------------------------------------]]
 function GM:PlayerInitialSpawn( pl )
 
 	pl:SetTeam( TEAM_UNASSIGNED )
-	
+
 	if ( GAMEMODE.TeamBased ) then
 		pl:ConCommand( "gm_showteam" )
 	end
@@ -226,18 +226,18 @@ function GM:PlayerInitialSpawn( pl )
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerSpawnAsSpectator( )
+	Name: gamemode:PlayerSpawnAsSpectator()
 	Desc: Player spawns as a spectator
 -----------------------------------------------------------]]
 function GM:PlayerSpawnAsSpectator( pl )
 
 	pl:StripWeapons()
-	
+
 	if ( pl:Team() == TEAM_UNASSIGNED ) then
-	
+
 		pl:Spectate( OBS_MODE_FIXED )
 		return
-		
+
 	end
 
 	pl:SetTeam( TEAM_SPECTATOR )
@@ -246,7 +246,7 @@ function GM:PlayerSpawnAsSpectator( pl )
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerSpawn( )
+	Name: gamemode:PlayerSpawn()
 	Desc: Called when a player spawns
 -----------------------------------------------------------]]
 function GM:PlayerSpawn( pl )
@@ -259,7 +259,7 @@ function GM:PlayerSpawn( pl )
 
 		self:PlayerSpawnAsSpectator( pl )
 		return
-	
+
 	end
 
 	-- Stop observer mode
@@ -272,14 +272,14 @@ function GM:PlayerSpawn( pl )
 
 	-- Call item loadout function
 	hook.Call( "PlayerLoadout", GAMEMODE, pl )
-	
+
 	-- Set player model
 	hook.Call( "PlayerSetModel", GAMEMODE, pl )
 
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerSetModel( )
+	Name: gamemode:PlayerSetModel()
 	Desc: Set the player's model
 -----------------------------------------------------------]]
 function GM:PlayerSetModel( pl )
@@ -289,7 +289,7 @@ function GM:PlayerSetModel( pl )
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerSetHandsModel( )
+	Name: gamemode:PlayerSetHandsModel()
 	Desc: Sets the player's view model hands model
 -----------------------------------------------------------]]
 function GM:PlayerSetHandsModel( pl, ent )
@@ -309,7 +309,7 @@ function GM:PlayerSetHandsModel( pl, ent )
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerLoadout( )
+	Name: gamemode:PlayerLoadout()
 	Desc: Give the player the default spawning weapons/ammo
 -----------------------------------------------------------]]
 function GM:PlayerLoadout( pl )
@@ -326,18 +326,18 @@ function GM:PlayerSelectTeamSpawn( TeamID, pl )
 
 	local SpawnPoints = team.GetSpawnPoints( TeamID )
 	if ( !SpawnPoints || table.Count( SpawnPoints ) == 0 ) then return end
-	
+
 	local ChosenSpawnPoint = nil
-	
+
 	for i = 0, 6 do
-	
+
 		local ChosenSpawnPoint = table.Random( SpawnPoints )
 		if ( hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ChosenSpawnPoint, i == 6 ) ) then
 			return ChosenSpawnPoint
 		end
-	
+
 	end
-	
+
 	return ChosenSpawnPoint
 
 end
@@ -350,28 +350,28 @@ end
 function GM:IsSpawnpointSuitable( pl, spawnpointent, bMakeSuitable )
 
 	local Pos = spawnpointent:GetPos()
-	
+
 	-- Note that we're searching the default hull size here for a player in the way of our spawning.
 	-- This seems pretty rough, seeing as our player's hull could be different.. but it should do the job
 	-- (HL2DM kills everything within a 128 unit radius)
 	local Ents = ents.FindInBox( Pos + Vector( -16, -16, 0 ), Pos + Vector( 16, 16, 64 ) )
-	
+
 	if ( pl:Team() == TEAM_SPECTATOR ) then return true end
-	
+
 	local Blockers = 0
-	
+
 	for k, v in pairs( Ents ) do
 		if ( IsValid( v ) && v != pl && v:GetClass() == "player" && v:Alive() ) then
-		
+
 			Blockers = Blockers + 1
-			
+
 			if ( bMakeSuitable ) then
 				v:Kill()
 			end
-			
+
 		end
 	end
-	
+
 	if ( bMakeSuitable ) then return true end
 	if ( Blockers > 0 ) then return false end
 	return true
@@ -385,36 +385,36 @@ end
 function GM:PlayerSelectSpawn( pl )
 
 	if ( self.TeamBased ) then
-	
+
 		local ent = self:PlayerSelectTeamSpawn( pl:Team(), pl )
 		if ( IsValid( ent ) ) then return ent end
-	
+
 	end
 
 	-- Save information about all of the spawn points
 	-- in a team based game you'd split up the spawns
 	if ( !IsTableOfEntitiesValid( self.SpawnPoints ) ) then
-	
+
 		self.LastSpawnPoint = 0
 		self.SpawnPoints = ents.FindByClass( "info_player_start" )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_deathmatch" ) )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_combine" ) )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_rebel" ) )
-		
+
 		-- CS Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_counterterrorist" ) )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_terrorist" ) )
-		
+
 		-- DOD Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_axis" ) )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_allies" ) )
 
 		-- (Old) GMod Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "gmod_player_start" ) )
-		
+
 		-- TF Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_teamspawn" ) )
-		
+
 		-- INS Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "ins_spawnpoint" ) )
 
@@ -451,9 +451,9 @@ function GM:PlayerSelectSpawn( pl )
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_position" ) )
 
 	end
-	
+
 	local Count = table.Count( self.SpawnPoints )
-	
+
 	if ( Count == 0 ) then
 		Msg("[PlayerSelectSpawn] Error! No spawn points!\n")
 		return nil
@@ -462,15 +462,15 @@ function GM:PlayerSelectSpawn( pl )
 	-- If any of the spawnpoints have a MASTER flag then only use that one.
 	-- This is needed for single player maps.
 	for k, v in pairs( self.SpawnPoints ) do
-		
+
 		if ( v:HasSpawnFlags( 1 ) && hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, v, true ) ) then
 			return v
 		end
-		
+
 	end
-	
+
 	local ChosenSpawnPoint = nil
-	
+
 	-- Try to work out the best, random spawnpoint
 	for i = 1, Count do
 
@@ -478,19 +478,19 @@ function GM:PlayerSelectSpawn( pl )
 
 		if ( IsValid( ChosenSpawnPoint ) && ChosenSpawnPoint:IsInWorld() ) then
 			if ( ( ChosenSpawnPoint == pl:GetVar( "LastSpawnpoint" ) || ChosenSpawnPoint == self.LastSpawnPoint ) && Count > 1 ) then continue end
-			
+
 			if ( hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ChosenSpawnPoint, i == Count ) ) then
-			
+
 				self.LastSpawnPoint = ChosenSpawnPoint
 				pl:SetVar( "LastSpawnpoint", ChosenSpawnPoint )
 				return ChosenSpawnPoint
-			
+
 			end
-			
+
 		end
-		
+
 	end
-	
+
 	return ChosenSpawnPoint
 
 end
@@ -511,20 +511,20 @@ function GM:ScalePlayerDamage( ply, hitgroup, dmginfo )
 
 	-- More damage if we're shot in the head
 	if ( hitgroup == HITGROUP_HEAD ) then
-	
+
 		dmginfo:ScaleDamage( 2 )
-	
+
 	end
-	
+
 	-- Less damage if we're shot in the arms or legs
 	if ( hitgroup == HITGROUP_LEFTARM ||
 		 hitgroup == HITGROUP_RIGHTARM ||
 		 hitgroup == HITGROUP_LEFTLEG ||
 		 hitgroup == HITGROUP_RIGHTLEG ||
 		 hitgroup == HITGROUP_GEAR ) then
-	
+
 		dmginfo:ScaleDamage( 0.25 )
-	
+
 	end
 
 end
@@ -589,22 +589,22 @@ end
 		can join a team or not
 -----------------------------------------------------------]]
 function GM:PlayerCanJoinTeam( ply, teamid )
-	
+
 	local TimeBetweenSwitches = GAMEMODE.SecondsBetweenTeamSwitches or 10
 	if ( ply.LastTeamSwitch && RealTime()-ply.LastTeamSwitch < TimeBetweenSwitches ) then
 		ply.LastTeamSwitch = ply.LastTeamSwitch + 1
 		ply:ChatPrint( Format( "Please wait %i more seconds before trying to change team again", ( TimeBetweenSwitches - ( RealTime() - ply.LastTeamSwitch ) ) + 1 ) )
 		return false
 	end
-	
+
 	-- Already on this team!
 	if ( ply:Team() == teamid ) then
 		ply:ChatPrint( "You're already on that team" )
 		return false
 	end
-	
+
 	return true
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -615,17 +615,17 @@ function GM:PlayerRequestTeam( ply, teamid )
 
 	-- No changing teams if not teambased!
 	if ( !GAMEMODE.TeamBased ) then return end
-	
+
 	-- This team isn't joinable
 	if ( !team.Joinable( teamid ) ) then
 		ply:ChatPrint( "You can't join that team" )
 	return end
-	
+
 	-- This team isn't joinable
 	if ( !GAMEMODE:PlayerCanJoinTeam( ply, teamid ) ) then
 		-- Messages here should be outputted by this function
 	return end
-	
+
 	GAMEMODE:PlayerJoinTeam( ply, teamid )
 
 end
@@ -637,7 +637,7 @@ end
 function GM:PlayerJoinTeam( ply, teamid )
 
 	local iOldTeam = ply:Team()
-	
+
 	if ( ply:Alive() ) then
 		if ( iOldTeam == TEAM_SPECTATOR || iOldTeam == TEAM_UNASSIGNED ) then
 			ply:KillSilent()
@@ -648,7 +648,7 @@ function GM:PlayerJoinTeam( ply, teamid )
 
 	ply:SetTeam( teamid )
 	ply.LastTeamSwitch = RealTime()
-	
+
 	GAMEMODE:OnPlayerChangedTeam( ply, iOldTeam, teamid )
 
 end
@@ -662,27 +662,27 @@ function GM:OnPlayerChangedTeam( ply, oldteam, newteam )
 	-- re-create something more like CS or some shit you could probably
 	-- change to a spectator or something while dead.
 	if ( newteam == TEAM_SPECTATOR ) then
-	
+
 		-- If we changed to spectator mode, respawn where we are
 		local Pos = ply:EyePos()
 		ply:Spawn()
 		ply:SetPos( Pos )
-		
+
 	elseif ( oldteam == TEAM_SPECTATOR ) then
-	
+
 		-- If we're changing from spectator, join the game
 		ply:Spawn()
-	
+
 	else
-	
+
 		-- If we're straight up changing teams just hang
 		-- around until we're ready to respawn onto the
 		-- team that we chose
-		
+
 	end
-	
+
 	PrintMessage( HUD_PRINTTALK, Format( "%s joined '%s'", ply:Nick(), team.GetName( newteam ) ) )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -700,12 +700,12 @@ end
 	Desc: Return true to disable default action
 -----------------------------------------------------------]]
 function GM:OnPlayerHitGround( ply, bInWater, bOnFloater, flFallSpeed )
-	
+
 	-- Apply damage and play collision sound here
 	-- then return true to disable the default action
 	--MsgN( ply, bInWater, bOnFloater, flFallSpeed )
 	--return true
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -717,7 +717,7 @@ function GM:GetFallDamage( ply, flFallSpeed )
 	if( GetConVarNumber( "mp_falldamage" ) > 0 ) then -- realistic fall damage is on
 		return ( flFallSpeed - 526.5 ) * ( 100 / 396 ) -- the Source SDK value
 	end
-	
+
 	return 10
 
 end
@@ -732,7 +732,7 @@ function GM:PlayerCanSeePlayersChat( strText, bTeamOnly, pListener, pSpeaker )
 		if ( !IsValid( pSpeaker ) || !IsValid( pListener ) ) then return false end
 		if ( pListener:Team() != pSpeaker:Team() ) then return false end
 	end
-	
+
 	return true
 
 end
@@ -792,6 +792,13 @@ function GM:AllowPlayerPickup( ply, object )
 
 	return true
 
+end
+
+--[[---------------------------------------------------------
+	Name: gamemode:PlayerDroppedWeapon()
+	Desc: Player has dropped a weapon
+-----------------------------------------------------------]]
+function GM:PlayerDroppedWeapon( ply, weapon )
 end
 
 --[[---------------------------------------------------------
