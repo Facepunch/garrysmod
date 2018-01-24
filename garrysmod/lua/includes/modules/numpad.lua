@@ -14,6 +14,7 @@ local pairs			= pairs
 local unpack		= unpack
 local table			= table
 local ErrorNoHalt	= ErrorNoHalt
+local MsgN			= MsgN
 local saverestore	= saverestore
 local math			= math
 local IsValid		= IsValid
@@ -173,6 +174,7 @@ end
 function OnDown( ply, key, name, ... )
 
 	if ( !key ) then ErrorNoHalt( "ERROR: numpad.OnDown key is nil!\n" ) return end
+	if ( key ~= key ) then MsgN( "ERROR: numpad.OnDown key is NaN!" ) return end
 	keys_in[ key ] = keys_in[ key ] or {}
 
 	local impulse = {}
@@ -191,6 +193,7 @@ end
 function OnUp( ply, key, name, ... )
 
 	if ( !key ) then ErrorNoHalt( "ERROR: numpad.OnUp key is nil!\n" ) return end
+	if ( key ~= key ) then MsgN( "ERROR: numpad.OnUp key is NaN!" ) return end
 	keys_out[ key ] = keys_out[ key ] or {}
 
 	local impulse = {}
