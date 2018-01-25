@@ -1,4 +1,3 @@
-
 local Category = ""
 
 local function ADD_ITEM( name, class )
@@ -76,6 +75,7 @@ ADD_WEAPON( "357", "weapon_357" )
 
 Category = "Other"
 ADD_WEAPON( "Physics Gun", "weapon_physgun" )
+ADD_WEAPON( "Cubemap", "weapon_cubemap" )
 
 -- NPC Weapons
 list.Add( "NPCUsableWeapons", { class = "weapon_stunstick", title = "Stunstick" } )
