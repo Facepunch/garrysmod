@@ -6,15 +6,13 @@ WeaponData
 	"printname"	"#HL2_AlyxGun"
 	"viewmodel"				"models/weapons/c_pistol.mdl"
 	"playermodel"			"models/weapons/w_alyx_gun.mdl"	//FIXME: 
-	"anim_prefix"			"alyxgun"
+	"anim_prefix"			"pistol"
 	"bucket"				"1"
 	"bucket_position"		"4"
 
 	"clip_size"				"30"
-	"clip2_size"			"-1"
 
 	"default_clip"			"30"
-	"default_clip2"			"-1"
 
 	"primary_ammo"			"AlyxGun"
 
@@ -25,7 +23,7 @@ WeaponData
 	SoundData
 	{
 
-		"reload"		"Weapon_Alyx_Gun.Reload"
+		"reload"		"Weapon_SMG1.Reload"
 		"reload_npc"	"Weapon_Alyx_Gun.NPC_Reload"
 		"empty"			"Weapon_Alyx_Gun.Empty"
 		"single_shot"	"Weapon_Alyx_Gun.Single"
