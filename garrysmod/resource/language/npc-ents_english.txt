@@ -28,6 +28,7 @@
 		"npc_manhack"					"Manhack"
 		"npc_metropolice"				"Metro-Police"
 		"npc_monk"						"Father Grigori"
+		"npc_fisherman"					"Fisherman"
 		"npc_mossman"					"Mossman"
 		"npc_rollermine"				"Rollermine"
 		"npc_stalker"					"Stalker"
