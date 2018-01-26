@@ -333,7 +333,12 @@ end
 
 function string.Comma( number )
 
-	local number, k = tostring( number ), nil
+	if isnumber( number ) then
+		number = string.format( "%f", number )
+		number = string.match( number, "^(.-)%.?0*$" ) -- Remove trailing zeros
+	end
+
+	local k
 
 	while true do
 		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", "%1,%2" )
