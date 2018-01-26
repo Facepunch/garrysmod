@@ -1,4 +1,3 @@
-
 local error = error
 local isnumber = isnumber
 local tonumber = tonumber
@@ -43,13 +42,13 @@ string.ToTable = string_ToTable
 
 local javascript_escape_replacements = {
 	["\\"] = "\\\\",
-	["\0"] = "\\x00" ,
-	["\b"] = "\\b" ,
-	["\t"] = "\\t" ,
-	["\n"] = "\\n" ,
-	["\v"] = "\\v" ,
-	["\f"] = "\\f" ,
-	["\r"] = "\\r" ,
+	["\0"] = "\\x00",
+	["\b"] = "\\b",
+	["\t"] = "\\t",
+	["\n"] = "\\n",
+	["\v"] = "\\v",
+	["\f"] = "\\f",
+	["\r"] = "\\r",
 	["\""] = "\\\"",
 	["\'"] = "\\\'"
 }
@@ -87,8 +86,8 @@ function string.Split( str, delimiter, withpattern )
 	return string_Explode( delimiter, str, withpattern )
 end
 
-function string.Implode( sep, table ) return
-	table_concat( table, sep )
+function string.Implode( sep, table )
+	return table_concat( table, sep )
 end
 
 function string.GetExtensionFromFilename( path )
@@ -125,9 +124,6 @@ end
 
 string.FormattedTime = string_FormattedTime
 
---[[---------------------------------------------------------
-	Name: Old time functions
------------------------------------------------------------]]
 function string.ToMinutesSecondsMilliseconds( seconds )
 	return string_FormattedTime( seconds, "%02i:%02i:%02i" )
 end
@@ -284,7 +280,11 @@ function string.ToColor( str )
 end
 
 function string.Comma( num )
-	num = tostring( num )
+	if ( isnumber( num ) ) then
+		-- Force number to float representation, then cut off trailing zeros
+		num = string_match( string_format( "%f", num ), "^(.-)%.?0*$" )
+	end
+
 	local k
 
 	repeat

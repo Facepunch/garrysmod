@@ -205,6 +205,22 @@ WorkshopFiles.prototype.ReceiveFileInfo = function( id, data )
 },
 
 //
+// ReceiveUserName
+//
+WorkshopFiles.prototype.ReceiveUserName = function( id, data )
+{
+	for ( k in this.Scope.Files )
+	{
+		if ( !this.Scope.Files[k].filled || !this.Scope.Files[k] || this.Scope.Files[k].info.owner != id ) continue;
+
+		this.Scope.Files[k].filled	= true;
+		this.Scope.Files[k].info.ownername = data;
+
+		this.Changed();
+	}
+},
+
+//
 // ReceiveImage
 //
 WorkshopFiles.prototype.ReceiveImage = function( id, url )

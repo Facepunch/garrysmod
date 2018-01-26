@@ -8,6 +8,7 @@ local function UpdateMaps()
 	MapNames = {}
 
 	MapNames[ "aoc_" ] = "Age of Chivalry"
+	MapNames[ "infra_" ] = "INFRA"
 
 	MapPatterns[ "^asi-" ] = "Alien Swarm"
 	MapNames[ "lobby" ] = "Alien Swarm"
@@ -137,6 +138,7 @@ local function UpdateMaps()
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
 	MapNames[ "zpo_" ] = "Zombie Panic! Source"
 	MapNames[ "zps_" ] = "Zombie Panic! Source"
+	MapNames[ "zph_" ] = "Zombie Panic! Source"
 
 	MapNames[ "bhop_" ] = "Bunny Hop"
 	MapNames[ "cinema_" ] = "Cinema"

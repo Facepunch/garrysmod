@@ -418,6 +418,7 @@ end
 ------------------------------------------------------------------------]]
 function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 
+	if ( Ent1 == Ent2 && Bone1 == Bone2 ) then return false end
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
 
@@ -425,23 +426,28 @@ function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 
 		-- A weld already exists between these two physics objects.
 		-- There's totally no point in re-creating it. It doesn't make
-		-- the weld any stronger - that's just an urban ledgend.
+		-- the weld any stronger - that's just an urban legend.
 		return false
 
+	end
+
+	-- Don't weld World to objects, weld objects to World!
+	-- Prevents crazy physics on some props
+	if ( Ent1:IsWorld() ) then
+		Ent1 = Ent2
+		Ent2 = game.GetWorld()
 	end
 
 	local Phys1 = Ent1:GetPhysicsObjectNum( Bone1 )
 	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
 
-	if ( Ent1 == Ent2 && Bone1 == Bone2 ) then return false end
-
 	onStartConstraint( Ent1, Ent2 )
 
 		-- Create the constraint
 		local Constraint = ents.Create( "phys_constraint" )
-			if ( forcelimit) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
-			if ( nocollide ) then Constraint:SetKeyValue( "spawnflags", 1 ) end
-			Constraint:SetPhysConstraintObjects( Phys2, Phys1 )
+		if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
+		if ( nocollide ) then Constraint:SetKeyValue( "spawnflags", 1 ) end
+		Constraint:SetPhysConstraintObjects( Phys2, Phys1 )
 		Constraint:Spawn()
 		Constraint:Activate()
 
@@ -500,13 +506,13 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 
 			-- Create the constraint
 			Constraint = ents.Create( "phys_lengthconstraint" )
-				Constraint:SetPos( WPos1 )
-				Constraint:SetKeyValue( "attachpoint", tostring( WPos2 ) )
-				Constraint:SetKeyValue( "minlength", "0.0" )
-				Constraint:SetKeyValue( "length", length + addlength )
-				if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
-				if ( rigid ) then Constraint:SetKeyValue( "spawnflags", 2 ) end
-				Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
+			Constraint:SetPos( WPos1 )
+			Constraint:SetKeyValue( "attachpoint", tostring( WPos2 ) )
+			Constraint:SetKeyValue( "minlength", "0.0" )
+			Constraint:SetKeyValue( "length", length + addlength )
+			if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
+			if ( rigid ) then Constraint:SetKeyValue( "spawnflags", 2 ) end
+			Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
 			Constraint:Spawn()
 			Constraint:Activate()
 
@@ -562,7 +568,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
 
 	local Phys1 = Ent1:GetPhysicsObjectNum( Bone1 )
-	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2)
+	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
 	local WPos1 = Phys1:LocalToWorld( LPos1 )
 	local WPos2 = Phys2:LocalToWorld( LPos2 )
 
@@ -782,7 +788,7 @@ function Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, 
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
 
 	local Phys1 = Ent1:GetPhysicsObjectNum( Bone1 )
-	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2)
+	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
 	local WPos1 = Phys1:LocalToWorld( LPos1 )
 	local WPos2 = Phys2:LocalToWorld( LPos2 )
 

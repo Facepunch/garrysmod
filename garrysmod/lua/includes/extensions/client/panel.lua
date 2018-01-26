@@ -268,6 +268,7 @@ meta.SetToolTip = meta.SetTooltip
 -----------------------------------------------------------]]
 function meta:SetTooltipPanel( panel )
 	self.pnlTooltipPanel = panel
+	if ( IsValid( panel ) ) then panel:SetVisible( false ) end
 end
 meta.SetToolTipPanel = meta.SetTooltipPanel
 

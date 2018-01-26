@@ -3,16 +3,23 @@ include( "contentheader.lua" )
 
 local PANEL = {}
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
+Derma_Hook( PANEL, "Paint", "Paint", "Tree" )
+PANEL.m_bBackground = true -- Hack for above
+
 function PANEL:Init()
 
 	self:SetOpenSize( 200 )
 	self:DockPadding( 5, 5, 5, 5 )
 
+	local label = vgui.Create( "DTextEntry", self )
+	label:Dock( TOP )
+	label:SetZPos( 1 )
+	label:DockMargin( 0, 0, 0, 2 )
+	label:SetTooltip( "#spawnmenu.listname_tooltip" )
+
 	local panel = vgui.Create( "DPanel", self )
 	panel:Dock( TOP )
+	panel:SetZPos( 2 )
 	panel:SetSize( 24, 24 )
 	panel:DockPadding( 2, 2, 2, 2 )
 
@@ -21,24 +28,41 @@ function PANEL:Init()
 	Button:Dock( LEFT )
 	Button:SetStretchToFit( false )
 	Button:SetSize( 20, 20 )
+	Button:SetCursor( "sizeall" )
+	Button:SetTooltip( "#spawnmenu.header_tooltip" )
 	local slot = Button:Droppable( "SandboxContentPanel" )
 
-	Button.OnDrop = function( self, target )
+	Button.OnDrop = function( s, target )
 
 		local label = vgui.Create( "ContentHeader", target )
 		return label
 
 	end
 
-	local panel = vgui.Create( "DPanel", self )
+	local panel = vgui.Create( "Panel", self )
 	panel:Dock( FILL )
+	panel:SetZPos( 3 )
 
-	local label = vgui.Create( "DTextEntry", panel )
-	label:Dock( TOP )
-	label:DockMargin( 0, 0, 0, 2 )
+	local icon_filter = vgui.Create( "DTextEntry", panel )
+	icon_filter:Dock( TOP )
+	icon_filter:SetUpdateOnType( true )
+	icon_filter:SetPlaceholderText( "#spawnmenu.quick_filter" )
+	icon_filter:DockMargin( 0, 2, 0, 1 )
 
 	local icons = vgui.Create( "DIconBrowser", panel )
 	icons:Dock( FILL )
+
+	icon_filter.OnValueChange = function( s, str )
+		icons:FilterByText( str )
+	end
+
+	local overlay = vgui.Create( "DPanel", self )
+	overlay:SetZPos( 9999 )
+	overlay.Paint = function( s, w, h )
+		surface.SetDrawColor( 0, 0, 0, 200 )
+		surface.DrawRect( 0, 0, w, h )
+	end
+	self.Overlay = overlay
 
 	--
 	-- If we select a node from the sidebar, update the text/icon/actions in the toolbox (at the bottom)
@@ -51,8 +75,10 @@ function PANEL:Init()
 			label:SetText( node:GetText() )
 			icons:SelectIcon( node:GetIcon() )
 			icons:ScrollToSelected()
+			overlay:SetVisible( false )
 		else
 			label:SetText( "" )
+			overlay:SetVisible( true )
 		end
 
 		label.OnChange = function()
@@ -69,6 +95,11 @@ function PANEL:Init()
 
 	end )
 
+end
+
+function PANEL:PerformLayout()
+	-- Not using docking because it will mess up other elements using docking!
+	self.Overlay:SetSize( self:GetSize() )
 end
 
 vgui.Register( "ContentSidebarToolbox", PANEL, "DDrawer" )

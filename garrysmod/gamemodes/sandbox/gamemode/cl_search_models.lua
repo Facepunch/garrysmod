@@ -53,9 +53,9 @@ hook.Add( "DrawOverlay","sandbox_search_progress", function()
 		c:SetText( c.OriginalText .. " ( Scanning: " .. math.ceil( totalCalls / expectedCalls * 100 ) .. "% )")
 	end]]
 
-	if ( !g_SpawnMenu:IsVisible() ) then return end
-
 	local pnl = g_SpawnMenu.SearchPropPanel
+	if ( !g_SpawnMenu:IsVisible() || !pnl:IsVisible() ) then return end
+
 	local x, y = pnl:LocalToScreen( 0, 0 )
 	local maxw = pnl:GetWide()
 	if ( pnl.VBar && pnl.VBar.Enabled ) then maxw = maxw - 20 end
@@ -113,68 +113,57 @@ end, "props" )
 --
 -- Entity, vehicles
 --
-search.AddProvider( function( str )
+local function AddSearchProvider( listname, ctype, stype )
+	search.AddProvider( function( str )
 
-	str = str:PatternSafe()
+		str = str:PatternSafe()
 
-	local results = {}
+		local results = {}
+		local entities = {}
 
-	local entities = {}
+		for k, v in pairs( list.Get( listname ) ) do
+			if ( listname == "Weapon" && !v.Spawnable ) then continue end
+			v.ClassName = k
+			v.PrintName = v.PrintName or v.Name
+			v.ScriptedEntityType = ctype
+			table.insert( entities, v )
+		end
 
-	//for k, v in pairs( scripted_ents.GetSpawnable() ) do
-	for k, v in pairs( list.Get( "SpawnableEntities" ) ) do
-		v.ClassName = k
-		v.ScriptedEntityType = "entity"
-		table.insert( entities, v )
-	end
+		for k, v in pairs( entities ) do
 
-	for k, v in pairs( list.Get( "Vehicles" ) ) do
-		v.ClassName = k
-		v.PrintName = v.Name
-		v.ScriptedEntityType = "vehicle"
-		table.insert( entities, v )
-	end
+			local name = v.PrintName
+			local name_c = v.ClassName
+			if ( !name && !name_c ) then continue end
 
-	for k, v in pairs( list.Get( "NPC" ) ) do
-		v.ClassName = k
-		v.PrintName = v.Name
-		v.ScriptedEntityType = "npc"
-		table.insert( entities, v )
-	end
+			if ( ( name && name:lower():find( str ) ) || ( name_c && name_c:lower():find( str ) ) ) then
 
-	for k, v in pairs( list.Get( "Weapon" ) ) do
-		v.ClassName = k
-		v.ScriptedEntityType = "weapon"
-		table.insert( entities, v )
-	end
+				local entry = {
+					text = v.PrintName or v.ClassName,
+					icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, {
+						nicename = v.PrintName or v.ClassName,
+						spawnname = v.ClassName,
+						material = "entities/" .. v.ClassName .. ".png",
 
-	for k, v in pairs( entities ) do
+						admin = v.AdminOnly
+					} ),
+					words = { v }
+				}
 
-		local name = v.ClassName or v.PrintName
-		if ( !name ) then continue end
+				table.insert( results, entry )
 
-		if ( name:lower():find( str ) ) then -- TODO: Search print name AND class name?
+			end
 
-			local entry = {
-				text = v.PrintName or v.ClassName,
-				icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, {
-					nicename = v.PrintName or v.ClassName,
-					spawnname = v.ClassName,
-					material = "entities/" .. v.ClassName .. ".png",
-
-					admin = v.AdminOnly
-				} ),
-				words = { v }
-			}
-
-			table.insert( results, entry )
+			if ( #results >= 128 ) then break end
 
 		end
 
-		if ( #results >= 128 ) then break end
+		table.SortByMember( results, "text", true )
+		return results
 
-	end
+	end, stype )
+end
 
-	return results
-
-end, "entities" )
+AddSearchProvider( "SpawnableEntities", "entity", "entities" )
+AddSearchProvider( "Vehicles", "vehicle", "vehicles" )
+AddSearchProvider( "NPC", "npc", "npcs" )
+AddSearchProvider( "Weapon", "weapon", "weapons" )

@@ -71,6 +71,7 @@ end )
 spawnmenu.AddCreationTab( "#spawnmenu.category.vehicles", function()
 
 	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
+	ctrl:EnableSearch( "vehicles", "PopulateVehicles" )
 	ctrl:CallPopulateHook( "PopulateVehicles" )
 	return ctrl
 

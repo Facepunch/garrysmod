@@ -69,6 +69,7 @@ end )
 spawnmenu.AddCreationTab( "#spawnmenu.category.npcs", function()
 
 	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
+	ctrl:EnableSearch( "npcs", "PopulateNPCs" )
 	ctrl:CallPopulateHook( "PopulateNPCs" )
 	return ctrl
 

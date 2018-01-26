@@ -2,11 +2,8 @@
 -- Serverside only.
 if ( CLIENT ) then return end
 
-local setmetatable 	= setmetatable
-local tostring 		= tostring
-local table			= table
-local Msg			= Msg
-local Error			= Error
+local setmetatable	= setmetatable
+--local table			= table
 local ai			= ai
 
 module( "ai_task" )
@@ -29,25 +26,20 @@ local TYPE_FNAME	= 2
 local Task = {}
 Task.__index = Task
 
-
---[[---------------------------------------------------------
-	Init
------------------------------------------------------------]]
 function Task:Init()
 	self.Type = nil
 end
-
 
 --[[---------------------------------------------------------
 	Creates an engine based task
 -----------------------------------------------------------]]
 function Task:InitEngine( _taskname_, _taskdata_ )
 
-	self.TaskName 	= _taskname_
+	self.TaskName	= _taskname_
 	self.TaskID		= nil
-	self.TaskData 	= _taskdata_
-	self.Type 		= TYPE_ENGINE
-	
+	self.TaskData	= _taskdata_
+	self.Type		= TYPE_ENGINE
+
 end
 
 --[[---------------------------------------------------------
@@ -55,42 +47,30 @@ end
 -----------------------------------------------------------]]
 function Task:InitFunctionName( _start, _end, _taskdata_ )
 	self.StartFunctionName	= _start
-	self.FunctionName 		= _end
-	self.TaskData 			= _taskdata_
-	self.Type 				= TYPE_FNAME
+	self.FunctionName		= _end
+	self.TaskData			= _taskdata_
+	self.Type				= TYPE_FNAME
 end
 
-
---[[---------------------------------------------------------
-	IsOldType
------------------------------------------------------------]]
 function Task:IsEngineType()
-	return (self.Type == TYPE_ENGINE)
+	return ( self.Type == TYPE_ENGINE )
 end
 
-
---[[---------------------------------------------------------
-	IsFNameType
------------------------------------------------------------]]
 function Task:IsFNameType()
-	return (self.Type == TYPE_FNAME)
+	return ( self.Type == TYPE_FNAME )
 end
 
-
---[[---------------------------------------------------------
-	Start
------------------------------------------------------------]]
 function Task:Start( npc )
-	
+
 	if ( self:IsFNameType() ) then self:Start_FName( npc ) return end
-	
+
 	if ( self:IsEngineType() ) then
-	
-		if (!self.TaskID) then self.TaskID = ai.GetTaskID( self.TaskName ) end
-	
+
+		if ( !self.TaskID ) then self.TaskID = ai.GetTaskID( self.TaskName ) end
+
 		npc:StartEngineTask( self.TaskID, self.TaskData )
 	end
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -98,38 +78,32 @@ end
 -----------------------------------------------------------]]
 function Task:Start_FName( npc )
 
-	if (!self.StartFunctionName) then return end
-	--if (!npc[ self.StartFunctionName ]) then return end
-	
+	if ( !self.StartFunctionName ) then return end
+	--if ( !npc[ self.StartFunctionName ] ) then return end
+
 	-- Run the start function. Safely.
 	npc[ self.StartFunctionName ]( npc, self.TaskData )
 
 end
 
---[[---------------------------------------------------------
-	IsFNameType
------------------------------------------------------------]]
 function Task:Run( npc )
-	
+
 	if ( self:IsFNameType() ) then self:Run_FName( npc ) return end
-	
+
 	if ( self:IsEngineType() ) then
 		npc:RunEngineTask( self.TaskID, self.TaskData )
 	end
-	
+
 end
 
---[[---------------------------------------------------------
-	Run_FName
------------------------------------------------------------]]
 function Task:Run_FName( npc )
-	
-	if (!self.FunctionName) then return end
+
+	if ( !self.FunctionName ) then return end
 	--if (!npc[ self.StartFunctionName ]) then return end
-	
+
 	-- Run the start function. Safely.
 	npc[ self.FunctionName ]( npc, self.TaskData )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -139,11 +113,11 @@ function New()
 
 	local pNewTask = {}
 	setmetatable( pNewTask, Task )
-	
+
 	pNewTask:Init()
-	
+
 	--table.insert( Task_Index, pNewTask )
-	
+
 	return pNewTask
 
 end

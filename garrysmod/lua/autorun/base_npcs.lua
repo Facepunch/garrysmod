@@ -305,7 +305,7 @@ AddNPC( {
 	Name = "Rollermine",
 	Class = "npc_rollermine",
 	Category = Category,
-	Offset = 16,
+	Offset = 20,
 	KeyValues = { SquadName = "overwatch" }
 } )
 

@@ -102,7 +102,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 	$scope.MapIcon = function( m, cat )
 	{
 		// BSP version 21
-		if ( cat == "Left 4 Dead 2" || cat == "Portal 2"  || cat == "CS: Global Offensive" || cat == "Blade Symphony" || cat == "Alien Swarm" || cat == "Dino D-Day" )
+		if ( /*cat == "Left 4 Dead 2" || cat == "Portal 2"  || cat == "CS: Global Offensive" || cat == "Blade Symphony" || cat == "Alien Swarm" || cat == "Dino D-Day" ||*/ cat == "INFRA" )
 		{
 			return "img/incompatible.png"
 		}

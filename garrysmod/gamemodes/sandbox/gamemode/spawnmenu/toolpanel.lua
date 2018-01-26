@@ -19,7 +19,7 @@ function PANEL:Init()
 
 	self.SearchBar = vgui.Create( "DTextEntry", leftContainer )
 	self.SearchBar:SetWidth( 130 )
-	self.SearchBar:SetPlaceholderText( "#spawnmenu.quick_search" )
+	self.SearchBar:SetPlaceholderText( "#spawnmenu.quick_filter" )
 	self.SearchBar:DockMargin( 0, 0, 0, 5 )
 	self.SearchBar:Dock( TOP )
 	self.SearchBar:SetUpdateOnType( true )
