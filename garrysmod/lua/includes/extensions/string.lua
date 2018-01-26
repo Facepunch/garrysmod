@@ -5,7 +5,7 @@ local math = math
 --[[---------------------------------------------------------
 	Name: string.ToTable( string )
 -----------------------------------------------------------]]
-function string.ToTable ( str )
+function string.ToTable( str )
 	local tbl = {}
 
 	for i = 1, string.len( str ) do
@@ -16,8 +16,8 @@ function string.ToTable ( str )
 end
 
 --[[---------------------------------------------------------
-   Name: string.JavascriptSafe( string )
-   Desc: Takes a string and escapes it for insertion in to a JavaScript string
+	Name: string.JavascriptSafe( string )
+	Desc: Takes a string and escapes it for insertion in to a JavaScript string
 -----------------------------------------------------------]]
 local javascript_escape_replacements = {
 	["\\"] = "\\\\",
@@ -45,8 +45,8 @@ function string.JavascriptSafe( str )
 end
 
 --[[---------------------------------------------------------
-   Name: string.PatternSafe( string )
-   Desc: Takes a string and escapes it for insertion in to a Lua pattern
+	Name: string.PatternSafe( string )
+	Desc: Takes a string and escapes it for insertion in to a Lua pattern
 -----------------------------------------------------------]]
 local pattern_escape_replacements = {
 	["("] = "%(",
@@ -69,9 +69,9 @@ function string.PatternSafe( str )
 end
 
 --[[---------------------------------------------------------
-   Name: explode(seperator ,string)
-   Desc: Takes a string and turns it into a table
-   Usage: string.explode( " ", "Seperate this string")
+	Name: explode(seperator ,string)
+	Desc: Takes a string and turns it into a table
+	Usage: string.explode( " ", "Seperate this string")
 -----------------------------------------------------------]]
 local totable = string.ToTable
 local string_sub = string.sub
@@ -152,10 +152,10 @@ end
 			If 'Format' is not specified the function returns a table
 			conatining values for hours, mins, secs, ms
 
-   Examples: string.FormattedTime( 123.456, "%02i:%02i:%02i")	==> "02:03:45"
-			 string.FormattedTime( 123.456, "%02i:%02i")		==> "02:03"
-			 string.FormattedTime( 123.456, "%2i:%02i")			==> " 2:03"
-			 string.FormattedTime( 123.456 )					==> { h = 0, m = 2, s = 3, ms = 45 }
+	Examples: string.FormattedTime( 123.456, "%02i:%02i:%02i")	==> "02:03:45"
+			  string.FormattedTime( 123.456, "%02i:%02i")		==> "02:03"
+			  string.FormattedTime( 123.456, "%2i:%02i")		==> " 2:03"
+			  string.FormattedTime( 123.456 )					==> { h = 0, m = 2, s = 3, ms = 45 }
 -------------------------------------------------------------------]]
 function string.FormattedTime( seconds, format )
 	if ( not seconds ) then seconds = 0 end
@@ -177,7 +177,7 @@ end
 function string.ToMinutesSecondsMilliseconds( TimeInSeconds ) return string.FormattedTime( TimeInSeconds, "%02i:%02i:%02i" ) end
 function string.ToMinutesSeconds( TimeInSeconds ) return string.FormattedTime( TimeInSeconds, "%02i:%02i" ) end
 
-local function pluralizeString(str, quantity)
+local function pluralizeString( str, quantity )
 	return str .. ( ( quantity ~= 1 ) and "s" or "" )
 end
 
@@ -272,8 +272,8 @@ end
 
 function string.SetChar( s, k, v )
 
-	local start = s:sub( 0, k-1 )
-	local send = s:sub( k+1 )
+	local start = s:sub( 0, k - 1 )
+	local send = s:sub( k + 1 )
 
 	return start .. v .. send
 
@@ -300,19 +300,19 @@ end
 
 function string.StartWith( String, Start )
 
-   return string.sub( String, 1, string.len (Start ) ) == Start
+	return string.sub( String, 1, string.len( Start ) ) == Start
 
 end
 
 function string.EndsWith( String, End )
 
-   return End == "" or string.sub( String, -string.len( End ) ) == End
+	return End == "" or string.sub( String, -string.len( End ) ) == End
 
 end
 
 function string.FromColor( color )
 
-   return Format( "%i %i %i %i", color.r, color.g, color.b, color.a )
+	return Format( "%i %i %i %i", color.r, color.g, color.b, color.a )
 
 end
 
@@ -333,7 +333,7 @@ end
 
 function string.Comma( number )
 
-	if isnumber( number ) then
+	if ( isnumber( number ) ) then
 		number = string.format( "%f", number )
 		number = string.match( number, "^(.-)%.?0*$" ) -- Remove trailing zeros
 	end
