@@ -562,9 +562,18 @@ function GM:CanPlayerSuicide( ply )
 end
 
 --[[---------------------------------------------------------
-	Name: gamemode:PlayerLeaveVehicle()
+	Name: gamemode:CanPlayerEnterVehicle( player, vehicle, role )
+	Desc: Return true if player can enter vehicle
 -----------------------------------------------------------]]
-function GM:PlayerLeaveVehicle( ply, vehicle )
+function GM:CanPlayerEnterVehicle( ply, vehicle, role )
+	return true
+end
+
+--[[---------------------------------------------------------
+	Name: gamemode:PlayerEnteredVehicle( player, vehicle, role )
+	Desc: Player entered the vehicle fine
+-----------------------------------------------------------]]
+function GM:PlayerEnteredVehicle( ply, vehicle, role )
 end
 
 --[[---------------------------------------------------------
@@ -573,6 +582,13 @@ end
 -----------------------------------------------------------]]
 function GM:CanExitVehicle( vehicle, passenger )
 	return true
+end
+
+--[[---------------------------------------------------------
+	Name: gamemode:PlayerLeaveVehicle()
+	Desc: Player left the vehicle
+-----------------------------------------------------------]]
+function GM:PlayerLeaveVehicle( ply, vehicle )
 end
 
 --[[---------------------------------------------------------
