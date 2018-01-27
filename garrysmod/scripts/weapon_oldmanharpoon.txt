@@ -1,12 +1,12 @@
 WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
-	"printname"	"#HL2_SMG1"
-	"viewmodel"			"models/lostcoast/fisherman/harpoon.mdl"
+	"printname"	"HARPOON"
+	//"viewmodel"			"models/lostcoast/fisherman/harpoon.mdl"
 	"playermodel"			"models/lostcoast/fisherman/harpoon.mdl"
 	"anim_prefix"			"smg2"
-	"bucket"				"2"
-	"bucket_position"		"0"
+	"bucket"				"0"
+	"bucket_position"		"4"
 
 	"clip_size"				"-1"
 	"clip2_size"			"-1"
@@ -43,14 +43,6 @@ WeaponData
 				"y"			"128"
 				"width"		"128"
 				"height"	"64"
-		}
-		"ammo"
-		{
-				"file"		"sprites/a_icons1"
-				"x"			"55"
-				"y"			"60"
-				"width"		"73"
-				"height"	"15"
 		}
 		"crosshair"
 		{
