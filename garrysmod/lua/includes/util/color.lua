@@ -80,3 +80,18 @@ function COLOR:Unpack()
 	return self.r, self.g, self.b, self.a
 	
 end
+
+function COLOR:SetUnpacked( r, g, b, a )
+
+	self.r = r or 255
+	self.g = g or 255
+	self.b = b or 255
+	self.a = a or 255
+
+end
+
+function COLOR:ToTable()
+
+	return { self.r, self.g, self.b, self.a }
+
+end
