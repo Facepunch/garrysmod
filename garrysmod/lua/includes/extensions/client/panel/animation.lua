@@ -1,10 +1,11 @@
+
 if ( SERVER ) then return end
 
 local meta = FindMetaTable( "Panel" )
 
 --[[---------------------------------------------------------
-   Name:	SetTerm
-   Desc:	Kill the panel at this time
+	Name: SetTerm
+	Desc: Kill the panel at this time
 -----------------------------------------------------------]]
 function meta:SetTerm( term )
 
@@ -14,9 +15,8 @@ function meta:SetTerm( term )
 end
 
 --[[---------------------------------------------------------
-   Name:	AnimationThinkInternal
-   Desc:	anim
------------------------------------------------------------]]
+	Name: AnimationThinkInternal
+-----------------------------------------------------------]]  
 function meta:AnimationThinkInternal()
 
 	local systime = SysTime()
@@ -37,9 +37,9 @@ function meta:AnimationThinkInternal()
 
 				-- Ease of -1 == ease in out
 				if ( anim.Ease < 0 ) then
-					Frac = Fraction ^ (1.0 - ((Fraction-0.5)))
+					Frac = Fraction ^ ( 1.0 - ( ( Fraction - 0.5 ) ) )
 				elseif ( anim.Ease > 0 && anim.Ease < 1 ) then
-					Frac = 1 - ((1 - Fraction) ^ (1 / anim.Ease))
+					Frac = 1 - ( ( 1 - Fraction ) ^ ( 1 / anim.Ease ) )
 				end
 
 				anim:Think( self, Frac )
@@ -59,12 +59,12 @@ function meta:AnimationThinkInternal()
 end
 
 --[[---------------------------------------------------------
-   Name:	SetAnimationEnabled
-   Desc:	anim
------------------------------------------------------------]]
+	Name: SetAnimationEnabled
+	Desc: Enables animations on a panel
+-----------------------------------------------------------]]  
 function meta:SetAnimationEnabled( b )
 
-	if (!b) then
+	if ( !b ) then
 		self.AnimationThink = nil
 		return
 	end
@@ -95,14 +95,14 @@ function meta:AnimTail()
 		last = math.max( last, anim.EndTime )
 	end
 
-	return last;
+	return last
 
 end
 
 --[[---------------------------------------------------------
-   Name:	NewAnimation
-   Desc:	anim
------------------------------------------------------------]]
+	Name: NewAnimation
+	Desc: Creates a new animation
+-----------------------------------------------------------]]  
 function meta:NewAnimation( length, delay, ease, callback )
 
 	if ( delay == nil ) then delay = 0 end
@@ -111,7 +111,7 @@ function meta:NewAnimation( length, delay, ease, callback )
 	if ( self.m_AnimQueue ) then
 
 		delay = delay + self:AnimTail()
-		self.m_AnimQueue = false;
+		self.m_AnimQueue = false
 
 	else
 
@@ -119,8 +119,7 @@ function meta:NewAnimation( length, delay, ease, callback )
 
 	end
 
-	local anim =
-	{
+	local anim = {
 		EndTime = delay + length,
 		StartTime = delay,
 		Ease = ease,
@@ -128,7 +127,7 @@ function meta:NewAnimation( length, delay, ease, callback )
 	}
 
 	self:SetAnimationEnabled( true )
-	if (self.m_AnimList == nil) then self.m_AnimList = {} end
+	if ( self.m_AnimList == nil ) then self.m_AnimList = {} end
 
 	table.insert( self.m_AnimList, anim )
 
@@ -145,7 +144,7 @@ local function MoveThink( anim, panel, fraction )
 end
 
 --[[---------------------------------------------------------
-   Name:	MoveTo
+	Name: MoveTo
 -----------------------------------------------------------]]
 function meta:MoveTo( x, y, length, delay, ease, callback )
 
@@ -178,14 +177,14 @@ local function SizeThink( anim, panel, fraction )
 end
 
 --[[---------------------------------------------------------
-   Name:	SizeTo
+	Name: SizeTo
 -----------------------------------------------------------]]
 function meta:SizeTo( w, h, length, delay, ease, callback )
 
 	local anim = self:NewAnimation( length, delay, ease, callback )
 
-	anim.SizeX = w != -1;
-	anim.SizeY = h != -1;
+	anim.SizeX = w != -1
+	anim.SizeY = h != -1
 
 	if ( !anim.SizeX ) then  w = self:GetWide() end
 	if ( !anim.SizeY ) then  h = self:GetTall() end
@@ -198,11 +197,11 @@ function meta:SizeTo( w, h, length, delay, ease, callback )
 end
 
 --[[---------------------------------------------------------
-   Name:	SlideUp
+	Name: SlideUp
 -----------------------------------------------------------]]
 function meta:SlideUp( length )
 
-	local height = self:GetTall();
+	local height = self:GetTall()
 	local anim = self:SizeTo( -1, 0, length )
 	anim.OnEnd = function()
 		self:SetVisible( false )
@@ -212,11 +211,11 @@ function meta:SlideUp( length )
 end
 
 --[[---------------------------------------------------------
-   Name:	SlideDown
+	Name: SlideDown
 -----------------------------------------------------------]]
 function meta:SlideDown( length )
 
-	local height = self:GetTall();
+	local height = self:GetTall()
 	self:SetVisible( true )
 	self:SetTall( 0 )
 
@@ -236,7 +235,7 @@ local function ColorThink( anim, panel, fraction )
 end
 
 --[[---------------------------------------------------------
-   Name:	ColorTo
+	Name: ColorTo
 -----------------------------------------------------------]]
 function meta:ColorTo( col, length, delay, callback )
 
@@ -259,7 +258,7 @@ local function AlphaThink( anim, panel, fraction )
 end
 
 --[[---------------------------------------------------------
-   Name:	AlphaTo
+	Name: AlphaTo
 -----------------------------------------------------------]]
 function meta:AlphaTo( alpha, length, delay, callback )
 
@@ -268,7 +267,6 @@ function meta:AlphaTo( alpha, length, delay, callback )
 	anim.Think = AlphaThink
 
 end
-
 
 local function MoveByThink( anim, panel, fraction )
 
@@ -283,7 +281,7 @@ local function MoveByThink( anim, panel, fraction )
 end
 
 --[[---------------------------------------------------------
-   Name:	MoveBy
+	Name: MoveBy
 -----------------------------------------------------------]]
 function meta:MoveBy( x, y, length, delay, ease, callback )
 
@@ -292,7 +290,6 @@ function meta:MoveBy( x, y, length, delay, ease, callback )
 	anim.Think = MoveByThink
 
 end
-
 
 local function LerpPositions( anim, panel )
 
@@ -304,7 +301,7 @@ local function LerpPositions( anim, panel )
 	local Length = Distance:Length()
 
 	if ( anim.UseGravity && Length > 1 ) then
-		Speed = Speed * (Length * 0.1)
+		Speed = Speed * ( Length * 0.1 )
 	end
 
 	if ( Length < Speed ) then
@@ -314,7 +311,7 @@ local function LerpPositions( anim, panel )
 	end
 
 	Distance:Normalize()
-	Distance = Pos + (Distance * Speed)
+	Distance = Pos + ( Distance * Speed )
 
 	panel:SetPosReal( Distance.x, Distance.y )
 
@@ -327,7 +324,7 @@ local function NewSetPos( self, x, y )
 end
 
 --[[---------------------------------------------------------
-   Name:	LerpPositions
+	Name: LerpPositions
 -----------------------------------------------------------]]
 function meta:LerpPositions( speed, usegravity )
 
@@ -336,7 +333,7 @@ function meta:LerpPositions( speed, usegravity )
 	self.SetPosReal = self.SetPos
 	self.SetPos = NewSetPos
 
-	self.LerpAnim = self:NewAnimation( 60 * 60 * 24 )
+	self.LerpAnim = self:NewAnimation( 86400 )
 	self.LerpAnim.Speed = speed
 	self.LerpAnim.UseGravity = usegravity
 	self.LerpAnim.Think = LerpPositions
