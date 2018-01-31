@@ -53,7 +53,7 @@ AddVehicle( {
 	}
 }, "Pod" )
 
-if ( IsMounted( "ep2" ) ) then 
+if ( IsMounted( "ep2" ) ) then
 	AddVehicle( {
 		Name = "Jalopy",
 		Model = "models/vehicle.mdl",
@@ -185,7 +185,7 @@ AddVehicle( {
 	}
 }, "Chair_Office2" )
 
-if ( IsMounted( "ep2" ) ) then 
+if ( IsMounted( "ep2" ) ) then
 	AddVehicle( {
 		Name = "Jalopy Seat",
 		Model = "models/nova/jalopy_seat.mdl",

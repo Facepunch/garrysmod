@@ -268,7 +268,7 @@ function GM:CalcMainActivity( ply, velocity )
 
 	if ( customact == nil ) then
 		ply.m_nSpecificMainActivity = ACT_INVALID
-		
+
 		if ( customseq == nil ) then
 			ply.m_nSpecificMainSequence = -1
 		elseif ( customseq > -1 ) then
@@ -276,7 +276,7 @@ function GM:CalcMainActivity( ply, velocity )
 		end
 	elseif ( customseq == nil ) then
 		ply.m_nSpecificMainSequence = -1
-		
+
 		if ( customact > ACT_INVALID ) then
 			return customact, -1
 		end
@@ -285,7 +285,7 @@ function GM:CalcMainActivity( ply, velocity )
 		if ( ply:GetCycle() < 1 ) then
 			return customact, customseq
 		end
-		
+
 		ply.m_nSpecificMainActivity = -1
 		ply.m_nSpecificMainSequence = -1
 	end
@@ -341,7 +341,7 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 
 		self:MouthMoveAnimation( ply )
 	end
-	
+
 	self:GrabEarAnimation( ply )
 end
 
@@ -496,7 +496,7 @@ end
 function GM:GrabEarAnimation( ply )
 	-- Don't show this when we're playing a taunt!
 	if ( ply:IsPlayingTaunt() ) then return end
-	
+
 	local weight = ply.ChatGestureWeight || 0
 
 	if ( weight == 0 ) then
