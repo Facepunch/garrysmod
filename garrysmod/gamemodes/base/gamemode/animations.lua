@@ -1,4 +1,26 @@
-GESTURE_SLOT_COUNT = 7
+-- FIXME: https://github.com/Facepunch/garrysmod-issues/issues/3075
+ACT_HL2MP_SIT_MELEE2 = 2016
+ACT_HL2MP_SIT_KNIFE = 2017
+ACT_HL2MP_IDLE_COWER = 2056
+ACT_HL2MP_SIT_CAMERA = 2058
+ACT_HL2MP_SIT_DUEL = 2059
+ACT_HL2MP_SIT_PASSIVE = 2060
+ACT_GMOD_DEATH = 2061
+ACT_GMOD_SHOWOFF_STAND_01 = 2062
+ACT_GMOD_SHOWOFF_STAND_02 = 2063
+ACT_GMOD_SHOWOFF_STAND_03 = 2064
+ACT_GMOD_SHOWOFF_STAND_04 = 2065
+ACT_GMOD_SHOWOFF_DUCK_01 = 2066
+ACT_GMOD_SHOWOFF_DUCK_02 = 2067
+ACT_FLINCH = 2068
+ACT_FLINCH_BACK = 2069
+ACT_FLINCH_SHOULDER_LEFT = 2070
+ACT_FLINCH_SHOULDER_RIGHT = 2071
+ACT_DRIVE_POD = 2072
+ACT_HL2MP_ZOMBIE_SLUMP_ALT_IDLE = 2073
+ACT_HL2MP_ZOMBIE_SLUMP_ALT_RISE_FAST = 2074
+ACT_HL2MP_ZOMBIE_SLUMP_ALT_RISE_SLOW = 2075
+LAST_SHARED_ACTIVITY = 2076
 
 local math_min = math.min
 local list_Get = list.Get
@@ -66,14 +88,15 @@ function GM:HandlePlayerDriving( ply )
 	end
 
 	if ( usefunc ) then
-		local seq = fHandleAnimation( vehicle, ply )
+		local seq, act = fHandleAnimation( vehicle, ply )
 
-		-- vehicle.HandleAnimation did not give us an animation
-		if ( seq != nil && seq >= 0 ) then
+		-- vehicle.HandleAnimation gave us a specific sequence
+		if ( seq != nil && seq > -1 ) then
 			ply.CalcSeqOverride = seq
-			ply.CalcIdeal = ply:GetSequenceActivity( seq )
+			ply.CalcIdeal = act != nil && act > ACT_INVALID && act || ply:GetSequenceActivity( seq )
 		else
-			ply.CalcIdeal = SeatActivities[ vehicle:GetClass() ] || ACT_BUSY_SIT_CHAIR
+			-- If an activity wasn't provided, fallback to default activities based on vehicle class
+			ply.CalcIdeal = act != nil && act > ACT_INVALID && act || SeatActivities[ vehicle:GetClass() ] || ACT_BUSY_SIT_CHAIR
 		end
 	else
 		ply.CalcIdeal = SeatActivities[ vehicle:GetClass() ] || ACT_BUSY_SIT_CHAIR
@@ -240,17 +263,29 @@ function GM:CalcMainActivity( ply, velocity )
 
 	-- All of the above operations should still be done regardless of the custom sequence
 	-- to keep condition variables and layers updated
+	local customact = ply.m_nSpecificMainActivity
 	local customseq = ply.m_nSpecificMainSequence
 
-	if ( customseq == nil ) then
-		ply.m_nSpecificMainActivity = -1
+	if ( customact == nil ) then
+		ply.m_nSpecificMainActivity = ACT_INVALID
+		
+		if ( customseq == nil ) then
+			ply.m_nSpecificMainSequence = -1
+		elseif ( customseq > -1 ) then
+			return ACT_INVALID, customseq
+		end
+	elseif ( customseq == nil ) then
 		ply.m_nSpecificMainSequence = -1
-	elseif ( customseq >= 0 ) then
+		
+		if ( customact > ACT_INVALID ) then
+			return customact, -1
+		end
+	elseif ( customact > ACT_INVALID || customseq > -1 ) then
 		-- FIXME: https://github.com/Facepunch/garrysmod-requests/issues/704
 		if ( ply:GetCycle() < 1 ) then
-			return ply.m_nSpecificMainActivity, customseq
+			return customact, customseq
 		end
-
+		
 		ply.m_nSpecificMainActivity = -1
 		ply.m_nSpecificMainSequence = -1
 	end
@@ -280,14 +315,7 @@ function GM:CalcPlaybackRate( ply, velocity, maxseqgroundspeed )
 end
 
 function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
-	if ( ply.m_nSpecificMainSequence < 0 ) then
-		ply:SetPlaybackRate( hook_Call( "CalcPlaybackRate", self, ply, velocity, maxseqgroundspeed ) || 1 )
-
-		-- Don't show this when we're playing a taunt!
-		if ( !ply:IsPlayingTaunt() ) then
-			self:GrabEarAnimation( ply )
-		end
-	end
+	ply:SetPlaybackRate( hook_Call( "CalcPlaybackRate", self, ply, velocity, maxseqgroundspeed ) || 1 )
 
 	if ( CLIENT ) then
 		local vehicle = ply:GetVehicle()
@@ -313,6 +341,8 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 
 		self:MouthMoveAnimation( ply )
 	end
+	
+	self:GrabEarAnimation( ply )
 end
 
 local DefaultAnims = {
@@ -336,7 +366,7 @@ function GM:TranslateActivity( ply, act )
 	local newact = ply:TranslateWeaponActivity( act )
 
 	-- Select idle anims if the weapon didn't decide
-	return ( newact == act || newact < 0 ) && DefaultAnims[ act ] || newact
+	return newact != act && newact > -1 && newact || DefaultAnims[ act ]
 end
 
 local GestureTranslations = {}
@@ -379,14 +409,6 @@ local function GetEventActivity( ply, event )
 	return translation[ ply.m_bInSwim && 3 || ply:Crouching() && 2 || 1 ]
 end
 
-local function AnimResetAllSlots( ply )
-	local fAnimResetGestureSlot = ply.AnimResetGestureSlot
-
-	for i = 0, GESTURE_SLOT_COUNT - 1 do
-		fAnimResetGestureSlot( ply, i )
-	end
-end
-
 local FlinchAnims = {
 	[ ACT_MP_GESTURE_FLINCH_CHEST ] = true,
 	[ ACT_MP_GESTURE_FLINCH_HEAD ] = true,
@@ -417,42 +439,54 @@ function GM:DoAnimationEvent( ply, event, data )
 		ply.m_bInSwim = true
 		ply:AnimResetGestureSlot( GESTURE_SLOT_SWIM )
 		ply:AnimRestartMainSequence()
+	elseif ( event == PLAYERANIMEVENT_DIE ) then
+		ply.m_nSpecificMainActivity = ACT_INVALID
+		ply.m_nSpecificMainSequence = -1
+
+		ply:AnimRestartMainSequence()
 	elseif ( FlinchAnims[ event ] ) then
+		-- FIXME: https://github.com/Facepunch/garrysmod-requests/issues/1090
 		ply:AnimRestartGesture( GESTURE_SLOT_FLINCH, event, true )
 	elseif ( event == PLAYERANIMEVENT_CANCEL ) then
-		AnimResetAllSlots( ply )
+		if ( data == nil ) then
+			ply:AnimResetGestureSlots()
+		else
+			ply:AnimResetGestureSlot( data )
+		end
 	elseif ( event == PLAYERANIMEVENT_SPAWN ) then
-		ply.m_nSpecificMainActivity = -1
+		ply.m_nSpecificMainActivity = ACT_INVALID
 		ply.m_nSpecificMainSequence = -1
-		ply.m_bWasOnGround = false
+		ply.m_bWasOnGround = ply:OnGround()
 		ply.m_bInSwim = false
 		ply.m_bJumping = false
 
-		AnimResetAllSlots( ply )
+		ply:AnimResetGestureSlots()
 	-- Can't set m_PoseParameterData.m_flLastAimTurnTime from Lua
 	--elseif ( event == PLAYERANIMEVENT_SNAP_YAW ) then
 	elseif ( event == PLAYERANIMEVENT_CUSTOM ) then
-		local act = hook_Call( "TranslateActivity", self, ply, data )
+		if ( data != nil && data > ACT_INVALID ) then
+			local act = hook_Call( "TranslateActivity", self, ply, data ) || data
 
-		if ( act != nil && act > ACT_INVALID ) then
-			local seq = ply:SelectWeightedSequence( act )
-
-			if ( seq != -1 ) then
+			if ( act > ACT_INVALID ) then
 				ply.m_nSpecificMainActivity = act
-				ply.m_nSpecificMainSequence = seq
+				ply.m_nSpecificMainSequence = -1
 				ply:AnimRestartMainSequence()
 			end
 		end
 	elseif ( event == PLAYERANIMEVENT_CUSTOM_GESTURE ) then
-		ply:AnimRestartGesture( GESTURE_SLOT_CUSTOM, data, true )
+		if ( data != nil ) then
+			ply:AnimRestartGesture( GESTURE_SLOT_CUSTOM, data, true )
+		end
 	elseif ( event == PLAYERANIMEVENT_CUSTOM_SEQUENCE ) then
-		if ( data >= 0 && data < ply:GetSequenceCount() ) then
+		if ( data != nil && data > -1 ) then
 			ply.m_nSpecificMainActivity = ply:GetSequenceActivity( data )
 			ply.m_nSpecificMainSequence = data
 			ply:AnimRestartMainSequence()
 		end
 	elseif ( event == PLAYERANIMEVENT_CUSTOM_GESTURE_SEQUENCE ) then
-		ply:AddVCDSequenceToGestureSlot( GESTURE_SLOT_CUSTOM, data, 0, true )
+		if ( data != nil ) then
+			ply:AddVCDSequenceToGestureSlot( GESTURE_SLOT_CUSTOM, data, 0, true )
+		end
 	end
 
 	return ACT_INVALID
@@ -460,6 +494,9 @@ end
 
 -- If you don't want the player to grab his ear in your gamemode then just override this
 function GM:GrabEarAnimation( ply )
+	-- Don't show this when we're playing a taunt!
+	if ( ply:IsPlayingTaunt() ) then return end
+	
 	local weight = ply.ChatGestureWeight || 0
 
 	if ( weight == 0 ) then

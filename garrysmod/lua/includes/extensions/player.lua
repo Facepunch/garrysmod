@@ -228,6 +228,16 @@ function meta:SetupHands( ply )
 
 end
 
+GESTURE_SLOT_COUNT = 7
+
+function meta:AnimResetGestureSlots()
+	local fAnimResetGestureSlot = self.AnimResetGestureSlot
+
+	for i = 0, GESTURE_SLOT_COUNT - 1 do
+		fAnimResetGestureSlot( self, i )
+	end
+end
+
 --
 -- Those functions have been removed from the engine since AddFlag and RemoveFlag
 -- made them obsolete, but we'll keep a Lua version of them for backward compatibility

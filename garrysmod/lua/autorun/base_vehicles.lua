@@ -71,8 +71,10 @@ end
 
 local Category = "Chairs"
 
+-- Returns sequence, activity
+-- Returning -1 for the sequence will select a weighted one based on the activity
 local function HandleRollercoasterAnimation( vehicle, player )
-	return player:SelectWeightedSequence( ACT_GMOD_SIT_ROLLERCOASTER ) 
+	return -1, ACT_GMOD_SIT_ROLLERCOASTER
 end
 
 AddVehicle( {
@@ -206,14 +208,15 @@ end
 -- PhoeniX-Storms Vehicles
 
 local function HandlePHXSeatAnimation( vehicle, player )
-	return player:SelectWeightedSequence( ACT_HL2MP_SIT ) 
+	return -1, ACT_HL2MP_SIT
 end
 
 local function HandlePHXVehicleAnimation( vehicle, ply )
-	return ply:SelectWeightedSequence( ACT_DRIVE_JEEP ) 
+	return -1, ACT_DRIVE_JEEP
 end
+
 local function HandlePHXAirboatAnimation( vehicle, ply )
-	return ply:SelectWeightedSequence( ACT_DRIVE_AIRBOAT ) 
+	return -1, ACT_DRIVE_AIRBOAT
 end
 
 AddVehicle( {
