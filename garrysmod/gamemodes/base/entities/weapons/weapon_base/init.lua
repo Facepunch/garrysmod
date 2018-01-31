@@ -4,8 +4,6 @@ AddCSLuaFile( "ai_translations.lua" )
 AddCSLuaFile( "sh_anim.lua" )
 AddCSLuaFile( "shared.lua" )
 
-include( "ai_translations.lua" )
-include( "sh_anim.lua" )
 include( "shared.lua" )
 
 SWEP.Weight				= 5			-- Decides whether we should switch from/to this

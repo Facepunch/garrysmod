@@ -1,4 +1,7 @@
 
+include( "ai_translations.lua" )
+include( "sh_anim.lua" )
+
 -- Variables that are used on both client and server
 
 SWEP.PrintName		= "Scripted Weapon"		-- 'Nice' Weapon name (Shown on HUD)

@@ -1,87 +1,107 @@
-
-local ActIndex = {
-	[ "pistol" ] 		= ACT_HL2MP_IDLE_PISTOL,
-	[ "smg" ] 			= ACT_HL2MP_IDLE_SMG1,
-	[ "grenade" ] 		= ACT_HL2MP_IDLE_GRENADE,
-	[ "ar2" ] 			= ACT_HL2MP_IDLE_AR2,
-	[ "shotgun" ] 		= ACT_HL2MP_IDLE_SHOTGUN,
-	[ "rpg" ]	 		= ACT_HL2MP_IDLE_RPG,
-	[ "physgun" ] 		= ACT_HL2MP_IDLE_PHYSGUN,
-	[ "crossbow" ] 		= ACT_HL2MP_IDLE_CROSSBOW,
-	[ "melee" ] 		= ACT_HL2MP_IDLE_MELEE,
-	[ "slam" ] 			= ACT_HL2MP_IDLE_SLAM,
-	[ "normal" ]		= ACT_HL2MP_IDLE,
-	[ "fist" ]			= ACT_HL2MP_IDLE_FIST,
-	[ "melee2" ]		= ACT_HL2MP_IDLE_MELEE2,
-	[ "passive" ]		= ACT_HL2MP_IDLE_PASSIVE,
-	[ "knife" ]			= ACT_HL2MP_IDLE_KNIFE,
-	[ "duel" ]			= ACT_HL2MP_IDLE_DUEL,
-	[ "camera" ]		= ACT_HL2MP_IDLE_CAMERA,
-	[ "magic" ]			= ACT_HL2MP_IDLE_MAGIC,
-	[ "revolver" ]		= ACT_HL2MP_IDLE_REVOLVER
+-- Store holdtypes for registration by jump activity
+-- This prevents having to change ACT_HL2MP_JUMP -> ACT_HL2MP_JUMP_SLAM manually
+local JumpActs = {
+	[ "pistol" ]		= ACT_HL2MP_JUMP_PISTOL,
+	[ "smg" ]			= ACT_HL2MP_JUMP_SMG1,
+	[ "grenade" ]		= ACT_HL2MP_JUMP_GRENADE,
+	[ "ar2" ]			= ACT_HL2MP_JUMP_AR2,
+	[ "shotgun" ]		= ACT_HL2MP_JUMP_SHOTGUN,
+	[ "rpg" ]	 		= ACT_HL2MP_JUMP_RPG,
+	[ "physgun" ]		= ACT_HL2MP_JUMP_PHYSGUN,
+	[ "crossbow" ]		= ACT_HL2MP_JUMP_CROSSBOW,
+	[ "melee" ]			= ACT_HL2MP_JUMP_MELEE,
+	[ "slam" ]			= ACT_HL2MP_JUMP_SLAM,
+	[ "normal" ]		= ACT_HL2MP_JUMP_SLAM, -- "normal" jump animation/ACT_HL2MP_JUMP doesn't exist in m_anm
+	[ "fist" ]			= ACT_HL2MP_JUMP_FIST,
+	[ "melee2" ]		= ACT_HL2MP_JUMP_MELEE2,
+	[ "passive" ]		= ACT_HL2MP_JUMP_PASSIVE,
+	[ "knife" ]			= ACT_HL2MP_JUMP_KNIFE,
+	[ "duel" ]			= ACT_HL2MP_JUMP_DUEL,
+	[ "camera" ]		= ACT_HL2MP_JUMP_CAMERA,
+	[ "magic" ]			= ACT_HL2MP_JUMP_MAGIC,
+	[ "revolver" ]		= ACT_HL2MP_JUMP_REVOLVER
 }
 
---[[---------------------------------------------------------
-   Name: SetWeaponHoldType
-   Desc: Sets up the translation table, to translate from normal 
-			standing idle pose, to holding weapon pose.
------------------------------------------------------------]]
-function SWEP:SetWeaponHoldType( t )
+local HoldTypes = {}
 
-	t = string.lower( t )
-	local index = ActIndex[ t ]
-	
-	if ( index == nil ) then
-		Msg( "SWEP:SetWeaponHoldType - ActIndex[ \""..t.."\" ] isn't set! (defaulting to normal)\n" )
-		t = "normal"
-		index = ActIndex[ t ]
+for holdtype, jumpact in pairs( JumpActs ) do
+	local acttbl = {}
+	HoldTypes[ holdtype ] = acttbl
+	local suffix = holdtype == "normal" && "" || holdtype == "smg" && "_SMG1" || "_" .. string.upper( holdtype )
+
+	acttbl[ ACT_MP_STAND_IDLE ]						= _G[ "ACT_HL2MP_IDLE".. suffix ]
+	acttbl[ ACT_MP_WALK ]							= _G[ "ACT_HL2MP_WALK".. suffix ]
+	acttbl[ ACT_MP_CROUCH_IDLE ]					= _G[ "ACT_HL2MP_IDLE_CROUCH".. suffix ]
+	acttbl[ ACT_MP_CROUCHWALK ]						= _G[ "ACT_HL2MP_WALK_CROUCH".. suffix ]
+	acttbl[ ACT_MP_SWIM ]							= _G[ "ACT_HL2MP_SWIM" .. suffix ]
+	acttbl[ ACT_MP_SWIM_IDLE ]						= _G[ "ACT_HL2MP_SWIM_IDLE" .. suffix ]
+
+	acttbl[ ACT_MP_JUMP ]							= jumpact
+
+	local sitact									= _G[ "ACT_HL2MP_SIT".. suffix ]
+	acttbl[ ACT_BUSY_SIT_GROUND ]					= sitact
+	acttbl[ ACT_BUSY_SIT_CHAIR ]					= sitact
+
+	local runact									= _G[ "ACT_HL2MP_RUN".. suffix ]
+	acttbl[ ACT_MP_RUN ]							= runact
+	acttbl[ ACT_MP_SPRINT ]							= runact
+
+	local attackact									= _G[ "ACT_HL2MP_GESTURE_RANGE_ATTACK" .. suffix ]
+	acttbl[ ACT_MP_ATTACK_STAND_PRIMARYFIRE ]		= attackact
+	acttbl[ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE ]		= attackact
+	acttbl[ ACT_MP_ATTACK_SWIM_PRIMARYFIRE ]		= attackact
+	acttbl[ ACT_MP_ATTACK_AIRWALK_PRIMARYFIRE ]		= attackact
+	acttbl[ ACT_MP_ATTACK_STAND_SECONDARYFIRE ]		= attackact
+	acttbl[ ACT_MP_ATTACK_CROUCH_SECONDARYFIRE ]	= attackact
+	acttbl[ ACT_MP_ATTACK_SWIM_SECONDARYFIRE ]		= attackact
+	acttbl[ ACT_MP_ATTACK_AIRWALK_SECONDARYFIRE ]	= attackact
+
+	-- Grenade attacking regardless of holdtype
+	local grenadeact								= ACT_HL2MP_GESTURE_RANGE_ATTACK_GRENADE
+	acttbl[ ACT_MP_ATTACK_STAND_GRENADE ]			= grenadeact
+	acttbl[ ACT_MP_ATTACK_CROUCH_GRENADE ]			= grenadeact
+	acttbl[ ACT_MP_ATTACK_SWIM_GRENADE ]			= grenadeact
+	acttbl[ ACT_MP_ATTACK_AIRWALK_GRENADE ]			= grenadeact
+
+	local reloadact									= _G[ "ACT_HL2MP_GESTURE_RELOAD" .. suffix ]
+	acttbl[ ACT_MP_RELOAD_STAND ]					= reloadact
+	acttbl[ ACT_MP_RELOAD_CROUCH ]					= reloadact
+	acttbl[ ACT_MP_RELOAD_SWIM ]					= reloadact
+	acttbl[ ACT_MP_RELOAD_AIRWALK ]					= reloadact
+end
+
+function SWEP:SetWeaponHoldType( holdtype )
+	holdtype = string.lower( holdtype )
+	local acttbl = HoldTypes[ holdtype ]
+
+	if ( acttbl == nil ) then
+		Msg( "SWEP:SetWeaponHoldType - invalid holdtype \"" .. holdtype .. "\", defaulting to \"normal\"\n" )
+		holdtype = "normal"
+		acttbl = HoldTypes[ holdtype ]
 	end
 
-	self.ActivityTranslate = {}
-	self.ActivityTranslate [ ACT_MP_STAND_IDLE ] 				= index
-	self.ActivityTranslate [ ACT_MP_WALK ] 						= index+1
-	self.ActivityTranslate [ ACT_MP_RUN ] 						= index+2
-	self.ActivityTranslate [ ACT_MP_CROUCH_IDLE ] 				= index+3
-	self.ActivityTranslate [ ACT_MP_CROUCHWALK ] 				= index+4
-	self.ActivityTranslate [ ACT_MP_ATTACK_STAND_PRIMARYFIRE ] 	= index+5
-	self.ActivityTranslate [ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE ] = index+5
-	self.ActivityTranslate [ ACT_MP_RELOAD_STAND ]		 		= index+6
-	self.ActivityTranslate [ ACT_MP_RELOAD_CROUCH ]		 		= index+6
-	self.ActivityTranslate [ ACT_MP_JUMP ] 						= index+7
-	self.ActivityTranslate [ ACT_RANGE_ATTACK1 ] 				= index+8
-	self.ActivityTranslate [ ACT_MP_SWIM ] 						= index+9
-	
-	-- "normal" jump animation doesn't exist
-	if t == "normal" then
-		self.ActivityTranslate [ ACT_MP_JUMP ] = ACT_HL2MP_JUMP_SLAM
+	local ActivityTranslate = {}
+	self.ActivityTranslate = ActivityTranslate
+
+	-- Shallow copy
+	for k, v in pairs( acttbl ) do
+		ActivityTranslate[ k ] = v
 	end
 
-	self:SetupWeaponHoldTypeForAI( t )
-
+	self:SetupWeaponHoldTypeForAI( holdtype )
 end
 
 -- Default hold pos is the pistol
 SWEP:SetWeaponHoldType( "pistol" )
 
---[[---------------------------------------------------------
-   Name: weapon:TranslateActivity( )
-   Desc: Translate a player's Activity into a weapon's activity
-		 So for example, ACT_HL2MP_RUN becomes ACT_HL2MP_RUN_PISTOL
-		 Depending on how you want the player to be holding the weapon
------------------------------------------------------------]]
 function SWEP:TranslateActivity( act )
+	local newact
 
-	if ( self.Owner:IsNPC() ) then
-		if ( self.ActivityTranslateAI[ act ] ) then
-			return self.ActivityTranslateAI[ act ]
-		end
-		return -1
+	if ( self:GetOwner():IsNPC() ) then
+		newact = self.ActivityTranslateAI[ act ]
+	else
+		newact = self.ActivityTranslate[ act ]
 	end
 
-	if ( self.ActivityTranslate[ act ] != nil ) then
-		return self.ActivityTranslate[ act ]
-	end
-	
-	return -1
-
+	return newact || -1
 end

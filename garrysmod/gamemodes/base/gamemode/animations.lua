@@ -1,388 +1,526 @@
+GESTURE_SLOT_COUNT = 7
 
-function GM:HandlePlayerJumping( ply, velocity )
+local math_min = math.min
+local list_Get = list.Get
+local FrameTime = FrameTime
+local math_sqrt = math.sqrt
+local hook_Call = hook.Call
+local isfunction = isfunction
+local math_Clamp = math.Clamp
+local math_Approach = math.Approach
 
-	if ( ply:GetMoveType() == MOVETYPE_NOCLIP ) then
-		ply.m_bJumping = false
-		return
-	end
-
-	-- airwalk more like hl2mp, we airwalk until we have 0 velocity, then it's the jump animation
-	-- underwater we're alright we airwalking
-	if ( !ply.m_bJumping && !ply:OnGround() && ply:WaterLevel() <= 0 ) then
-
-		if ( !ply.m_fGroundTime ) then
-
-			ply.m_fGroundTime = CurTime()
-			
-		elseif ( CurTime() - ply.m_fGroundTime ) > 0 && velocity:Length2D() < 0.5 then
-
-			ply.m_bJumping = true
-			ply.m_bFirstJumpFrame = false
-			ply.m_flJumpStartTime = 0
-
-		end
-	end
-
-	if ply.m_bJumping then
-	
-		if ply.m_bFirstJumpFrame then
-
-			ply.m_bFirstJumpFrame = false
-			ply:AnimRestartMainSequence()
-
-		end
-		
-		if ( ply:WaterLevel() >= 2 ) || ( ( CurTime() - ply.m_flJumpStartTime ) > 0.2 && ply:OnGround() ) then
-
-			ply.m_bJumping = false
-			ply.m_fGroundTime = nil
-			ply:AnimRestartMainSequence()
-
-		end
-		
-		if ply.m_bJumping then
-			ply.CalcIdeal = ACT_MP_JUMP
-			return true
-		end
-	end
-
-	return false
-
-end
-
-function GM:HandlePlayerDucking( ply, velocity )
-
-	if ( !ply:Crouching() ) then return false end
-
-	if ( velocity:Length2DSqr() > 0.25 ) then
-		ply.CalcIdeal = ACT_MP_CROUCHWALK
+function GM:ToggleNoClipAnim( ply, noclip )
+	-- Reset the layer
+	if ( noclip ) then
+		ply:AnimRestartGesture( GESTURE_SLOT_CUSTOM, ACT_GMOD_NOCLIP_LAYER, true )
 	else
-		ply.CalcIdeal = ACT_MP_CROUCH_IDLE
-	end
+		ply:AnimResetGestureSlot( GESTURE_SLOT_CUSTOM )
 
-	return true
-
-end
-
-function GM:HandlePlayerNoClipping( ply, velocity )
-
-	if ( ply:GetMoveType() != MOVETYPE_NOCLIP || ply:InVehicle() ) then
-
-		if ( ply.m_bWasNoclipping ) then
-
-			ply.m_bWasNoclipping = nil
-			ply:AnimResetGestureSlot( GESTURE_SLOT_CUSTOM )
-			if ( CLIENT ) then ply:SetIK( true ) end
-
+		if ( !ply:OnGround() ) then
+			-- Don't airwalk out of noclip
+			ply.m_bJumping = true
 		end
-
-		return
-
-	end
-
-	if ( !ply.m_bWasNoclipping ) then
-
-		ply:AnimRestartGesture( GESTURE_SLOT_CUSTOM, ACT_GMOD_NOCLIP_LAYER, false )
-		if ( CLIENT ) then ply:SetIK( false ) end
-
-	end
-
-	return true
-
-end
-
-function GM:HandlePlayerVaulting( ply, velocity )
-
-	if ( velocity:LengthSqr() < 1000000 ) then return end
-	if ( ply:IsOnGround() ) then return end
-
-	ply.CalcIdeal = ACT_MP_SWIM
-
-	return true
-
-end
-
-function GM:HandlePlayerSwimming( ply, velocity )
-
-	if ( ply:WaterLevel() < 2 or ply:IsOnGround() ) then
-		ply.m_bInSwim = false
-		return false
-	end
-
-	ply.CalcIdeal = ACT_MP_SWIM
-	ply.m_bInSwim = true
-
-	return true
-
-end
-
-function GM:HandlePlayerLanding( ply, velocity, WasOnGround )
-
-	if ( ply:GetMoveType() == MOVETYPE_NOCLIP ) then return end
-
-	if ( ply:IsOnGround() && !WasOnGround ) then
-		ply:AnimRestartGesture( GESTURE_SLOT_JUMP, ACT_LAND, true )
-	end
-
-end
-
-function GM:HandlePlayerDriving( ply )
-
-	if ( !ply:InVehicle() ) then return false end
-
-	local pVehicle = ply:GetVehicle()
-
-	if ( !pVehicle.HandleAnimation && pVehicle.GetVehicleClass ) then
-		local c = pVehicle:GetVehicleClass()
-		local t = list.Get( "Vehicles" )[ c ]
-		if ( t && t.Members && t.Members.HandleAnimation ) then
-			pVehicle.HandleAnimation = t.Members.HandleAnimation
-		else
-			pVehicle.HandleAnimation = true -- Prevent this if block from trying to assign HandleAnimation again.
-		end
-	end
-
-	local class = pVehicle:GetClass()
-
-	if ( isfunction( pVehicle.HandleAnimation ) ) then
-		local seq = pVehicle:HandleAnimation( ply )
-		if ( seq != nil ) then
-			ply.CalcSeqOverride = seq
-		end
-	end
-
-	if ( ply.CalcSeqOverride == -1 ) then -- pVehicle.HandleAnimation did not give us an animation
-		if ( class == "prop_vehicle_jeep" ) then
-			ply.CalcSeqOverride = ply:LookupSequence( "drive_jeep" )
-		elseif ( class == "prop_vehicle_airboat" ) then
-			ply.CalcSeqOverride = ply:LookupSequence( "drive_airboat" )
-		elseif ( class == "prop_vehicle_prisoner_pod" && pVehicle:GetModel() == "models/vehicles/prisoner_pod_inner.mdl" ) then
-			-- HACK!!
-			ply.CalcSeqOverride = ply:LookupSequence( "drive_pd" )
-		else
-			ply.CalcSeqOverride = ply:LookupSequence( "sit_rollercoaster" )
-		end
-	end
-	
-	local use_anims = ( ply.CalcSeqOverride == ply:LookupSequence( "sit_rollercoaster" ) || ply.CalcSeqOverride == ply:LookupSequence( "sit" ) )
-	if ( use_anims && ply:GetAllowWeaponsInVehicle() && IsValid( ply:GetActiveWeapon() ) ) then
-		local holdtype = ply:GetActiveWeapon():GetHoldType()
-		if ( holdtype == "smg" ) then holdtype = "smg1" end
-
-		local seqid = ply:LookupSequence( "sit_" .. holdtype )
-		if ( seqid != -1 ) then
-			ply.CalcSeqOverride = seqid
-		end
-	end
-
-	return true
-end
-
---[[---------------------------------------------------------
-   Name: gamemode:UpdateAnimation()
-   Desc: Animation updates (pose params etc) should be done here
------------------------------------------------------------]]
-function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
-
-	local len = velocity:Length()
-	local movement = 1.0
-
-	if ( len > 0.2 ) then
-		movement = ( len / maxseqgroundspeed )
-	end
-
-	local rate = math.min( movement, 2 )
-
-	-- if we're under water we want to constantly be swimming..
-	if ( ply:WaterLevel() >= 2 ) then
-		rate = math.max( rate, 0.5 )
-	elseif ( !ply:IsOnGround() && len >= 1000 ) then
-		rate = 0.1
-	end
-
-	ply:SetPlaybackRate( rate )
-
-	if ( ply:InVehicle() ) then
-
-		local Vehicle = ply:GetVehicle()
-		
-		-- We only need to do this clientside..
-		if ( CLIENT ) then
-			--
-			-- This is used for the 'rollercoaster' arms
-			--
-			local Velocity = Vehicle:GetVelocity()
-			local fwd = Vehicle:GetUp()
-			local dp = fwd:Dot( Vector( 0, 0, 1 ) )
-			local dp2 = fwd:Dot( Velocity )
-
-			ply:SetPoseParameter( "vertical_velocity", ( dp < 0 and dp or 0 ) + dp2 * 0.005 )
-
-			-- Pass the vehicles steer param down to the player
-			local steer = Vehicle:GetPoseParameter( "vehicle_steer" )
-			steer = steer * 2 - 1 -- convert from 0..1 to -1..1
-			if ( Vehicle:GetClass() == "prop_vehicle_prisoner_pod" ) then steer = 0 ply:SetPoseParameter( "aim_yaw", math.NormalizeAngle( ply:GetAimVector():Angle().y - Vehicle:GetAngles().y - 90 ) ) end
-			ply:SetPoseParameter( "vehicle_steer", steer )
-
-		end
-		
 	end
 
 	if ( CLIENT ) then
-		GAMEMODE:GrabEarAnimation( ply )
-		GAMEMODE:MouthMoveAnimation( ply )
+		ply:SetIK( noclip )
 	end
-
 end
 
---
--- If you don't want the player to grab his ear in your gamemode then
--- just override this.
---
-function GM:GrabEarAnimation( ply )
+local SeatActivities = {
+	prop_vehicle_jeep = ACT_DRIVE_JEEP,
+	prop_vehicle_airboat = ACT_DRIVE_AIRBOAT,
+	prop_vehicle_prisoner_pod = ACT_DRIVE_POD
+}
 
-	ply.ChatGestureWeight = ply.ChatGestureWeight or 0
+function GM:HandlePlayerDriving( ply )
+	local vehicle = ply:GetVehicle()
 
-	-- Don't show this when we're playing a taunt!
-	if ( ply:IsPlayingTaunt() ) then return end
+	if ( !vehicle:IsValid() ) then
+		return false
+	end
 
-	if ( ply:IsTyping() ) then
-		ply.ChatGestureWeight = math.Approach( ply.ChatGestureWeight, 1, FrameTime() * 5.0 )
+	local fHandleAnimation = vehicle.HandleAnimation
+	local usefunc = true
+
+	if ( fHandleAnimation == nil ) then
+		local t = list_Get( "Vehicles" )[ vehicle:GetVehicleClass() ]
+
+		if ( t == nil ) then
+			-- Prevent this if block from trying to assign HandleAnimation again
+			vehicle.HandleAnimation = false
+		else
+			local members = t.Members
+
+			if ( members == nil ) then
+				vehicle.HandleAnimation = false
+				usefunc = false
+			else
+				fHandleAnimation = members.HandleAnimation
+				vehicle.HandleAnimation = fHandleAnimation
+				usefunc = isfunction( fHandleAnimation )
+			end
+		end
 	else
-		ply.ChatGestureWeight = math.Approach( ply.ChatGestureWeight, 0, FrameTime() * 5.0 )
+		usefunc = isfunction( fHandleAnimation )
 	end
 
-	if ( ply.ChatGestureWeight > 0 ) then
-	
-		ply:AnimRestartGesture( GESTURE_SLOT_VCD, ACT_GMOD_IN_CHAT, true )
-		ply:AnimSetGestureWeight( GESTURE_SLOT_VCD, ply.ChatGestureWeight )
-	
+	if ( usefunc ) then
+		local seq = fHandleAnimation( vehicle, ply )
+
+		-- vehicle.HandleAnimation did not give us an animation
+		if ( seq != nil && seq >= 0 ) then
+			ply.CalcSeqOverride = seq
+			ply.CalcIdeal = ply:GetSequenceActivity( seq )
+		else
+			ply.CalcIdeal = SeatActivities[ vehicle:GetClass() ] || ACT_BUSY_SIT_CHAIR
+		end
+	else
+		ply.CalcIdeal = SeatActivities[ vehicle:GetClass() ] || ACT_BUSY_SIT_CHAIR
 	end
 
+	ply.m_bInSwim = false
+	ply.m_bJumping = false
+
+	return true
 end
 
---
--- Moves the mouth when talking on voicecom
---
-function GM:MouthMoveAnimation( ply )
+function GM:HandlePlayerNoClipping( ply, velocity )
+	if ( ply:GetMoveType() == MOVETYPE_NOCLIP && !ply:InVehicle() ) then
+		ply.m_bInSwim = false
+		ply.m_bJumping = false
 
-	local flexes = {
-		ply:GetFlexIDByName( "jaw_drop" ),
-		ply:GetFlexIDByName( "left_part" ),
-		ply:GetFlexIDByName( "right_part" ),
-		ply:GetFlexIDByName( "left_mouth_drop" ),
-		ply:GetFlexIDByName( "right_mouth_drop" )
-	}
-
-	local weight = ply:IsSpeaking() and math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) or 0
-
-	for k, v in pairs( flexes ) do
-
-		ply:SetFlexWeight( v, weight )
-
+		return true
 	end
 
+	return false
+end
+
+function GM:HandlePlayerLanding( ply, velocity, wasonground, onground )
+	if ( onground && !wasonground ) then
+		ply:AnimRestartGesture( GESTURE_SLOT_JUMP, ACT_LAND, true )
+
+		return true
+	end
+
+	return false
+end
+
+function GM:HandlePlayerSwimming( ply, velocity, onground )
+	if ( !onground && ply:WaterLevel() >= 2 ) then
+		ply.CalcIdeal = velocity:Length2DSqr() > 0.25 && ACT_MP_SWIM || ACT_MP_SWIM_IDLE
+
+		ply.m_bInSwim = true
+		ply.m_bJumping = false
+
+		-- If this isn't done, the player is stuck in an unlooping walk activity
+		if ( ply.m_bWasOnGround ) then
+			ply:AnimRestartMainSequence()
+		end
+
+		return true
+	end
+
+	return false
+end
+
+function GM:HandlePlayerVaulting( ply, velocity, onground )
+	if ( !onground && velocity:LengthSqr() >= 1000000 ) then
+		ply.CalcIdeal = ACT_MP_SWIM
+
+		ply.m_bInSwim = true
+		ply.m_bJumping = true
+
+		return true
+	end
+
+	return false
+end
+
+function GM:HandlePlayerAirWalking( ply, velocity, onground )
+	-- Airwalk more like HL2MP, we airwalk until we have 0.25 velocity, then it's the jump animation
+	if ( !( onground || ply.m_bJumping ) ) then
+		local len2d = velocity:Length2DSqr()
+		ply.m_bInSwim = false
+
+		if ( len2d > 0.25 ) then
+			ply.CalcIdeal = ply:Crouching() && ACT_MP_CROUCHWALK || len2d > 22500 && ACT_MP_RUN || ACT_MP_WALK --ACT_MP_AIRWALK
+
+			ply.m_bJumping = false
+
+			return true
+		end
+
+		ply.m_bJumping = true
+	end
+
+	return false
+end
+
+function GM:HandlePlayerJumping( ply, velocity, onground )
+	if ( !onground ) then
+		ply.CalcIdeal = ACT_MP_JUMP
+
+		ply.m_bInSwim = false
+		ply.m_bJumping = true
+
+		return true
+	end
+
+	return false
+end
+
+function GM:HandlePlayerDucking( ply, velocity, onground )
+	if ( ply:Crouching() ) then
+		ply.CalcIdeal = velocity:Length2DSqr() > 0.25 && ACT_MP_CROUCHWALK || ACT_MP_CROUCH_IDLE
+
+		ply.m_bInSwim = false
+		ply.m_bJumping = false
+
+		return true
+	end
+
+	return false
+end
+
+function GM:HandlePlayerMoving( ply, velocity )
+	local len2d = velocity:Length2DSqr()
+
+	if ( ply.m_bInSwim ) then
+		ply:AnimRestartMainSequence()
+	end
+
+	ply.m_bInSwim = false
+	ply.m_bJumping = false
+
+	if ( len2d > 0.25 ) then
+		ply.CalcIdeal = len2d > 22500 && ACT_MP_RUN || ACT_MP_WALK
+
+		return true
+	end
+
+	return false
 end
 
 function GM:CalcMainActivity( ply, velocity )
-
 	ply.CalcIdeal = ACT_MP_STAND_IDLE
 	ply.CalcSeqOverride = -1
 
-	self:HandlePlayerLanding( ply, velocity, ply.m_bWasOnGround )
+	local vehicle = self:HandlePlayerDriving( ply )
 
-	if ( self:HandlePlayerNoClipping( ply, velocity ) ||
-		self:HandlePlayerDriving( ply ) ||
-		self:HandlePlayerVaulting( ply, velocity ) ||
-		self:HandlePlayerJumping( ply, velocity ) ||
-		self:HandlePlayerSwimming( ply, velocity ) ||
-		self:HandlePlayerDucking( ply, velocity ) ) then
+	if ( vehicle ) then
+		if ( ply.m_bWasNoclipping ) then
+			ply.m_bWasNoclipping = false
+			hook_Call( "ToggleNoClipAnim", self, ply, false )
+		end
 
+		ply.m_bWasOnGround = false
 	else
+		local noclip = self:HandlePlayerNoClipping( ply, velocity )
+		local onground = false
 
-		local len2d = velocity:Length2D()
-		if ( len2d > 150 ) then ply.CalcIdeal = ACT_MP_RUN elseif ( len2d > 0.5 ) then ply.CalcIdeal = ACT_MP_WALK end
+		if ( noclip != ply.m_bWasNoclipping ) then
+			ply.m_bWasNoclipping = noclip
+			hook_Call( "ToggleNoClipAnim", self, ply, noclip )
+		elseif ( !noclip ) then
+			onground = ply:OnGround()
 
+			if ( ( self:HandlePlayerLanding( ply, velocity, ply.m_bWasOnGround, onground ) ||
+				!( self:HandlePlayerSwimming( ply, velocity, onground ) ||
+				self:HandlePlayerVaulting( ply, velocity, onground ) ||
+				self:HandlePlayerAirWalking( ply, velocity, onground ) ||
+				self:HandlePlayerJumping( ply, velocity, onground ) ) ) &&
+				!self:HandlePlayerDucking( ply, velocity ) ) then
+				self:HandlePlayerMoving( ply, velocity )
+			end
+		end
+
+		ply.m_bWasOnGround = onground
 	end
 
-	ply.m_bWasOnGround = ply:IsOnGround()
-	ply.m_bWasNoclipping = ( ply:GetMoveType() == MOVETYPE_NOCLIP && !ply:InVehicle() )
+	-- All of the above operations should still be done regardless of the custom sequence
+	-- to keep condition variables and layers updated
+	local customseq = ply.m_nSpecificMainSequence
+
+	if ( customseq == nil ) then
+		ply.m_nSpecificMainActivity = -1
+		ply.m_nSpecificMainSequence = -1
+	elseif ( customseq >= 0 ) then
+		-- FIXME: https://github.com/Facepunch/garrysmod-requests/issues/704
+		if ( ply:GetCycle() < 1 ) then
+			return ply.m_nSpecificMainActivity, customseq
+		end
+
+		ply.m_nSpecificMainActivity = -1
+		ply.m_nSpecificMainSequence = -1
+	end
 
 	return ply.CalcIdeal, ply.CalcSeqOverride
-
 end
 
-local IdleActivity = ACT_HL2MP_IDLE
-local IdleActivityTranslate = {}
-IdleActivityTranslate[ ACT_MP_STAND_IDLE ]					= IdleActivity
-IdleActivityTranslate[ ACT_MP_WALK ]						= IdleActivity + 1
-IdleActivityTranslate[ ACT_MP_RUN ]							= IdleActivity + 2
-IdleActivityTranslate[ ACT_MP_CROUCH_IDLE ]					= IdleActivity + 3
-IdleActivityTranslate[ ACT_MP_CROUCHWALK ]					= IdleActivity + 4
-IdleActivityTranslate[ ACT_MP_ATTACK_STAND_PRIMARYFIRE ]	= IdleActivity + 5
-IdleActivityTranslate[ ACT_MP_ATTACK_CROUCH_PRIMARYFIRE ]	= IdleActivity + 5
-IdleActivityTranslate[ ACT_MP_RELOAD_STAND ]				= IdleActivity + 6
-IdleActivityTranslate[ ACT_MP_RELOAD_CROUCH ]				= IdleActivity + 6
-IdleActivityTranslate[ ACT_MP_JUMP ]						= ACT_HL2MP_JUMP_SLAM
-IdleActivityTranslate[ ACT_MP_SWIM ]						= IdleActivity + 9
-IdleActivityTranslate[ ACT_LAND ]							= ACT_LAND
+function GM:CalcPlaybackRate( ply, velocity, maxseqgroundspeed )
+	-- If we're under water we want to constantly be swimming..
+	if ( ply:WaterLevel() >= 2 ) then
+		return math_Clamp( velocity:Length() / maxseqgroundspeed, 0.5, 2 )
+	end
 
--- it is preferred you return ACT_MP_* in CalcMainActivity, and if you have a specific need to not tranlsate through the weapon do it here
+	-- Slow swim while vaulting
+	if ( ply.m_bInSwim && ply.m_bJumping ) then
+		return 0.1
+	end
+
+	local len = velocity:LengthSqr()
+
+	if ( len > 0.04 ) then
+		-- Scale walking/running animations by current speed
+		return math_min( math_sqrt( len ) / maxseqgroundspeed, 2 )
+	end
+
+	return 1
+end
+
+function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
+	if ( ply.m_nSpecificMainSequence < 0 ) then
+		ply:SetPlaybackRate( hook_Call( "CalcPlaybackRate", self, ply, velocity, maxseqgroundspeed ) || 1 )
+
+		-- Don't show this when we're playing a taunt!
+		if ( !ply:IsPlayingTaunt() ) then
+			self:GrabEarAnimation( ply )
+		end
+	end
+
+	if ( CLIENT ) then
+		local vehicle = ply:GetVehicle()
+
+		if ( vehicle:IsValid() ) then
+			-- This is used for the 'rollercoaster' arms
+			local fwd = vehicle:GetUp()
+			local dp = math_min( fwd:Dot( vector_up ), 0 )
+			local dp2 = fwd:Dot( vehicle:GetAbsVelocity() ) -- Actually equates to CBaseEntity::GetLocalVelocity
+
+			local fSetPoseParameter = ply.SetPoseParameter
+			fSetPoseParameter( ply, "vertical_velocity", ( dp < 0 && dp || 0 ) + dp2 * 0.005 )
+
+			-- Pass the vehicles steer param down to the player
+			if ( vehicle:GetClass() == "prop_vehicle_prisoner_pod" ) then
+				-- Normalise the angle and rotate it -90 degrees
+				fSetPoseParameter( ply, "aim_yaw", ( ply:GetAimVector():Angle().y - vehicle:GetAngles().y + 90 ) % 360 - 180 )
+				fSetPoseParameter( ply, "vehicle_steer", 0 )
+			else
+				fSetPoseParameter( ply, "vehicle_steer", vehicle:GetPoseParameter( "vehicle_steer" ) * 2 - 1 ) -- convert from 0..1 to -1..1
+			end
+		end
+
+		self:MouthMoveAnimation( ply )
+	end
+end
+
+local DefaultAnims = {
+	[ ACT_LAND ]			= ACT_LAND,
+	[ ACT_BUSY_SIT_GROUND ]	= ACT_HL2MP_SIT,
+	[ ACT_BUSY_SIT_CHAIR ]	= ACT_HL2MP_SIT,
+	[ ACT_MP_STAND_IDLE ]	= ACT_HL2MP_IDLE,
+	[ ACT_MP_CROUCH_IDLE ]	= ACT_HL2MP_IDLE_CROUCH,
+	[ ACT_MP_RUN ]			= ACT_HL2MP_RUN,
+	[ ACT_MP_WALK ]			= ACT_HL2MP_WALK,
+	--[ ACT_MP_AIRWALK ]		= ACT_HL2MP_WALK,
+	[ ACT_MP_CROUCHWALK ]	= ACT_HL2MP_WALK_CROUCH,
+	[ ACT_MP_SPRINT ]		= ACT_HL2MP_RUN,
+	[ ACT_MP_JUMP ]			= ACT_HL2MP_JUMP_SLAM, -- ACT_HL2MP_JUMP isn't in m_anm
+	[ ACT_MP_SWIM ]			= ACT_HL2MP_SWIM,
+	[ ACT_MP_SWIM_IDLE ]	= ACT_HL2MP_SWIM_IDLE
+}
+
+-- It is preferred you return ACT_MP_* in CalcMainActivity, and if you have a specific need to not tranlsate through the weapon do it here
 function GM:TranslateActivity( ply, act )
-
 	local newact = ply:TranslateWeaponActivity( act )
 
-	-- select idle anims if the weapon didn't decide
-	if ( act == newact ) then
-		return IdleActivityTranslate[ act ]
-	end
-
-	return newact
-
+	-- Select idle anims if the weapon didn't decide
+	return ( newact == act || newact < 0 ) && DefaultAnims[ act ] || newact
 end
 
-function GM:DoAnimationEvent( ply, event, data )
+local GestureTranslations = {}
 
-	if ( event == PLAYERANIMEVENT_ATTACK_PRIMARY ) then
-	
-		if ply:Crouching() then
-			ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, true )
-		else
-			ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PRIMARYFIRE, true )
-		end
-		
-		return ACT_VM_PRIMARYATTACK
-	
-	elseif ( event == PLAYERANIMEVENT_ATTACK_SECONDARY ) then
-	
-		-- there is no gesture, so just fire off the VM event
-		return ACT_VM_SECONDARYATTACK
-		
-	elseif ( event == PLAYERANIMEVENT_RELOAD ) then
-	
-		if ply:Crouching() then
-			ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_CROUCH, true )
-		else
-			ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND, true )
-		end
-		
-		return ACT_INVALID
-		
-	elseif ( event == PLAYERANIMEVENT_JUMP ) then
-	
-		ply.m_bJumping = true
-		ply.m_bFirstJumpFrame = true
-		ply.m_flJumpStartTime = CurTime()
-	
-		ply:AnimRestartMainSequence()
-	
-		return ACT_INVALID
-	
-	elseif ( event == PLAYERANIMEVENT_CANCEL_RELOAD ) then
-	
-		ply:AnimResetGestureSlot( GESTURE_SLOT_ATTACK_AND_RELOAD )
-		
-		return ACT_INVALID
+local function RegisterStateActivity( stand, crouch, swim, airwalk, translatedact )
+	local translation = { stand, crouch, swim }
+	GestureTranslations[ stand ] = translation
+	GestureTranslations[ crouch ] = translation
+	GestureTranslations[ swim ] = translation
+
+	-- Airwalking is just a layer for walking/running in the air
+	-- in GMod and HL2:DM and thus unique anims aren't used
+	-- but the airwalk enums still translate to the proper alternatives
+	GestureTranslations[ airwalk ] = translation
+
+	if ( translatedact != nil ) then
+		DefaultAnims[ stand ] = translatedact
+		DefaultAnims[ crouch ] = translatedact
+		DefaultAnims[ swim ] = translatedact
+		DefaultAnims[ airwalk ] = translatedact
+	end
+end
+
+RegisterStateActivity( ACT_MP_ATTACK_STAND_PRIMARYFIRE, ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, ACT_MP_ATTACK_SWIM_PRIMARYFIRE, ACT_MP_ATTACK_AIRWALK_PRIMARYFIRE, ACT_HL2MP_GESTURE_RANGE_ATTACK )
+RegisterStateActivity( ACT_MP_ATTACK_STAND_SECONDARYFIRE, ACT_MP_ATTACK_CROUCH_SECONDARYFIRE, ACT_MP_ATTACK_SWIM_SECONDARYFIRE, ACT_MP_ATTACK_AIRWALK_SECONDARYFIRE, ACT_HL2MP_GESTURE_RANGE_ATTACK )
+RegisterStateActivity( ACT_MP_ATTACK_STAND_GRENADE, ACT_MP_ATTACK_CROUCH_GRENADE, ACT_MP_ATTACK_SWIM_GRENADE, ACT_MP_ATTACK_AIRWALK_GRENADE, ACT_HL2MP_GESTURE_RANGE_ATTACK_GRENADE )
+RegisterStateActivity( ACT_MP_RELOAD_STAND, ACT_MP_RELOAD_CROUCH, ACT_MP_RELOAD_SWIM, ACT_MP_RELOAD_AIRWALK, ACT_HL2MP_GESTURE_RELOAD )
+
+-- These aren't used in the default player anims but should still be translated by player state
+RegisterStateActivity( ACT_MP_RELOAD_STAND_LOOP, ACT_MP_RELOAD_CROUCH_LOOP, ACT_MP_RELOAD_SWIM_LOOP, ACT_MP_RELOAD_AIRWALK_LOOP )
+RegisterStateActivity( ACT_MP_RELOAD_STAND_END, ACT_MP_RELOAD_CROUCH_END, ACT_MP_RELOAD_SWIM_END, ACT_MP_RELOAD_AIRWALK_END )
+
+local function GetEventActivity( ply, event )
+	local translation = GestureTranslations[ event ]
+
+	if ( translation == nil ) then
+		return event
 	end
 
+	return translation[ ply.m_bInSwim && 3 || ply:Crouching() && 2 || 1 ]
+end
+
+local function AnimResetAllSlots( ply )
+	local fAnimResetGestureSlot = ply.AnimResetGestureSlot
+
+	for i = 0, GESTURE_SLOT_COUNT - 1 do
+		fAnimResetGestureSlot( ply, i )
+	end
+end
+
+local FlinchAnims = {
+	[ ACT_MP_GESTURE_FLINCH_CHEST ] = true,
+	[ ACT_MP_GESTURE_FLINCH_HEAD ] = true,
+	[ ACT_MP_GESTURE_FLINCH_LEFTARM ] = true,
+	[ ACT_MP_GESTURE_FLINCH_RIGHTARM ] = true,
+	[ ACT_MP_GESTURE_FLINCH_LEFTLEG ] = true,
+	[ ACT_MP_GESTURE_FLINCH_RIGHTLEG ] = true
+}
+
+function GM:DoAnimationEvent( ply, event, data )
+	if ( event == PLAYERANIMEVENT_ATTACK_PRIMARY ) then
+		ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, GetEventActivity( ply, ACT_MP_ATTACK_STAND_PRIMARYFIRE ), true )
+	elseif ( event == PLAYERANIMEVENT_ATTACK_SECONDARY ) then
+		ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, GetEventActivity( ply, ACT_MP_ATTACK_STAND_SECONDARYFIRE ), true )
+	elseif ( event == PLAYERANIMEVENT_ATTACK_GRENADE ) then
+		ply:AnimRestartGesture( GESTURE_SLOT_GRENADE, GetEventActivity( ply, ACT_MP_ATTACK_STAND_GRENADE ), true )
+	elseif ( event == PLAYERANIMEVENT_RELOAD ) then
+		ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, GetEventActivity( ply, ACT_MP_RELOAD_STAND ), true )
+	elseif ( event == PLAYERANIMEVENT_RELOAD_LOOP ) then
+		ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, GetEventActivity( ply, ACT_MP_RELOAD_STAND_LOOP ), true )
+	elseif ( event == PLAYERANIMEVENT_RELOAD_END ) then
+		ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, GetEventActivity( ply, ACT_MP_RELOAD_STAND_END ), true )
+	elseif ( event == PLAYERANIMEVENT_JUMP || event == PLAYERANIMEVENT_DOUBLEJUMP ) then
+		ply.m_bJumping = true
+		ply:AnimResetGestureSlot( GESTURE_SLOT_JUMP )
+		ply:AnimRestartMainSequence()
+	elseif ( event == PLAYERANIMEVENT_SWIM ) then
+		ply.m_bInSwim = true
+		ply:AnimResetGestureSlot( GESTURE_SLOT_SWIM )
+		ply:AnimRestartMainSequence()
+	elseif ( FlinchAnims[ event ] ) then
+		ply:AnimRestartGesture( GESTURE_SLOT_FLINCH, event, true )
+	elseif ( event == PLAYERANIMEVENT_CANCEL ) then
+		AnimResetAllSlots( ply )
+	elseif ( event == PLAYERANIMEVENT_SPAWN ) then
+		ply.m_nSpecificMainActivity = -1
+		ply.m_nSpecificMainSequence = -1
+		ply.m_bWasOnGround = false
+		ply.m_bInSwim = false
+		ply.m_bJumping = false
+
+		AnimResetAllSlots( ply )
+	-- Can't set m_PoseParameterData.m_flLastAimTurnTime from Lua
+	--elseif ( event == PLAYERANIMEVENT_SNAP_YAW ) then
+	elseif ( event == PLAYERANIMEVENT_CUSTOM ) then
+		local act = hook_Call( "TranslateActivity", self, ply, data )
+
+		if ( act != nil && act > ACT_INVALID ) then
+			local seq = ply:SelectWeightedSequence( act )
+
+			if ( seq != -1 ) then
+				ply.m_nSpecificMainActivity = act
+				ply.m_nSpecificMainSequence = seq
+				ply:AnimRestartMainSequence()
+			end
+		end
+	elseif ( event == PLAYERANIMEVENT_CUSTOM_GESTURE ) then
+		ply:AnimRestartGesture( GESTURE_SLOT_CUSTOM, data, true )
+	elseif ( event == PLAYERANIMEVENT_CUSTOM_SEQUENCE ) then
+		if ( data >= 0 && data < ply:GetSequenceCount() ) then
+			ply.m_nSpecificMainActivity = ply:GetSequenceActivity( data )
+			ply.m_nSpecificMainSequence = data
+			ply:AnimRestartMainSequence()
+		end
+	elseif ( event == PLAYERANIMEVENT_CUSTOM_GESTURE_SEQUENCE ) then
+		ply:AddVCDSequenceToGestureSlot( GESTURE_SLOT_CUSTOM, data, 0, true )
+	end
+
+	return ACT_INVALID
+end
+
+-- If you don't want the player to grab his ear in your gamemode then just override this
+function GM:GrabEarAnimation( ply )
+	local weight = ply.ChatGestureWeight || 0
+
+	if ( weight == 0 ) then
+		if ( !ply:IsTyping() ) then
+			-- No slot work has to be done if no animation is in progress
+			return
+		end
+
+		weight = math_Approach( 0, 1, FrameTime() * 5 )
+		ply.ChatGestureWeight = weight
+	elseif ( weight == 1 ) then
+		if ( !ply:IsTyping() ) then
+			weight = math_Approach( 1, 0, FrameTime() * 5 )
+			ply.ChatGestureWeight = weight
+		end
+	else
+		weight = math_Approach( weight, ply:IsTyping() && 1 || 0, FrameTime() * 5 )
+		ply.ChatGestureWeight = weight
+	end
+
+	ply:AnimRestartGesture( GESTURE_SLOT_VCD, ACT_GMOD_IN_CHAT, true )
+	ply:AnimSetGestureWeight( GESTURE_SLOT_VCD, weight )
+end
+
+-- Clientside only
+if ( SERVER ) then return end
+
+--[[local flexes = {
+	"jaw_drop",
+	"left_part",
+	"right_part",
+	"left_mouth_drop",
+	"right_mouth_drop"
+}
+
+local flex_length = #flexes
+
+local function UpdateMouthFlexes( ply, weight )
+	for i = 1, flex_length do
+		ply:SetFlexWeight( ply:GetFlexIDByName( flexes[ i ] ), weight )
+	end
+end]]
+
+-- Unroll the loop and localise repetative functions
+local function UpdateMouthFlexes( ply, weight )
+	local fSetFlexWeight = ply.SetFlexWeight
+	local fGetFlexIDByName = ply.GetFlexIDByName
+	fSetFlexWeight( ply, fGetFlexIDByName( ply, "jaw_drop" ), weight )
+	fSetFlexWeight( ply, fGetFlexIDByName( ply, "left_part" ), weight )
+	fSetFlexWeight( ply, fGetFlexIDByName( ply, "right_part" ), weight )
+	fSetFlexWeight( ply, fGetFlexIDByName( ply, "left_mouth_drop" ), weight )
+	fSetFlexWeight( ply, fGetFlexIDByName( ply, "right_mouth_drop" ), weight )
+end
+
+-- Moves the mouth when talking on voicecom
+function GM:MouthMoveAnimation( ply )
+	if ( ply:IsSpeaking() ) then
+		ply.m_bSpeaking = true
+		UpdateMouthFlexes( ply, math_Clamp( ply:VoiceVolume() * 2, 0, 2 ) )
+	elseif ( ply.m_bSpeaking ) then
+		ply.m_bSpeaking = false
+		UpdateMouthFlexes( ply, 0 )
+	end
 end
