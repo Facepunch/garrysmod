@@ -34,7 +34,7 @@ function PANEL:Setup( vars )
 	local btn = self:Add( "DButton" )
 	btn:Dock( LEFT )
 	btn:DockMargin( 0, 2, 4, 2 )
-	btn:SetWide( 20 - 4 )
+	btn:SetWide( 16 )
 	btn:SetText( "" )
 
 	btn.Paint = function( btn, w, h )

@@ -110,7 +110,7 @@ end
 function SWEP:PrimaryAttack()
    self:SetNextPrimaryFire(CurTime() + 0.1)
    if not self:CanPrimaryAttack() then return end
-
+   if IsValid(self.hammer) then return end
    if SERVER then
       if self.IsCharging then return end
 
@@ -138,7 +138,7 @@ function SWEP:SecondaryAttack()
    self:SetNextSecondaryFire( CurTime() + 0.1 )
 
    if not (self:CanPrimaryAttack() and (self:GetNextPrimaryFire() - CurTime()) <= 0) then return end
-
+   if IsValid(self.hammer) then return end
    if SERVER then
       local ply = self:GetOwner()
       if not IsValid(ply) then return end
@@ -174,6 +174,7 @@ function SWEP:CreateHammer(tgt, pos)
       local stuck = hammer:StickTo(tgt)
 
       if not stuck then hammer:Remove() end
+      self.hammer = hammer
    end
 end
 

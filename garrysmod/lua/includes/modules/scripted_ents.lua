@@ -23,10 +23,10 @@ local function TableInherit( t, base )
 
 	for k, v in pairs( base ) do
 
-		if ( t[k] == nil ) then
-			t[k] = v
-		elseif ( istable( t[k] ) ) then
-			TableInherit( t[k], v )
+		if ( t[ k ] == nil ) then
+			t[ k ] = v
+		elseif ( k != "BaseClass" && istable( t[ k ] ) ) then
+			TableInherit( t[ k ], v )
 		end
 
 	end
