@@ -228,7 +228,7 @@ local function InfoPaint(client)
    local health = math.max(0, client:Health())
    local health_y = y + margin
 
-   PaintBar(x + margin, health_y, bar_width, bar_height, health_colors, health/100)
+   PaintBar(x + margin, health_y, bar_width, bar_height, health_colors, health/client:GetMaxHealth())
 
    ShadowedText(tostring(health), "HealthAmmo", bar_width, health_y, COLOR_WHITE, TEXT_ALIGN_RIGHT, TEXT_ALIGN_RIGHT)
 
