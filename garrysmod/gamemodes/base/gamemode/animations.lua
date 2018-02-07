@@ -229,8 +229,8 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 	end
 
 	if ( CLIENT ) then
-		GAMEMODE:GrabEarAnimation( ply )
-		hook.Run("MouthMoveAnimation", ply)
+		self:GrabEarAnimation( ply )
+		hook.Call("MouthMoveAnimation", self, ply)
 	end
 
 end
