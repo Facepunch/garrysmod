@@ -192,7 +192,7 @@ local favmaps
 local function LoadFavourites()
 
 	local cookiestr = cookie.GetString( "favmaps" )
-	favmaps = favmaps || (cookiestr && string.Explode( ";", cookiestr ) || {})
+	favmaps = favmaps || ( cookiestr && string.Explode( ";", cookiestr ) || {} )
 
 end
 
@@ -357,6 +357,6 @@ function LoadLastMap()
 
 	if ( !file.Exists( "maps/" .. map .. ".bsp", "GAME" ) ) then return end
 
-	pnlMainMenu:Call( "SetLastMap('" .. map .. "','" .. cat .. "')" )
+	pnlMainMenu:Call( "SetLastMap('" .. map:JavascriptSafe() .. "','" .. cat:JavascriptSafe() .. "')" )
 
 end
