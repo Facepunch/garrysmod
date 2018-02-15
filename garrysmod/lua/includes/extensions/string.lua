@@ -110,13 +110,12 @@ function string.GetFileFromFilename( path )
 end
 
 local function string_FormattedTime( seconds, format )
-	local hours = math_floor( seconds / 3600 )
-	local minutes = math_floor( ( seconds / 60 ) % 60 )
+	local minutes = math_floor( seconds / 60 % 60 )
 	local millisecs = ( seconds - math_floor( seconds ) ) * 100
 	seconds = math_floor( seconds % 60 )
 
 	if ( format == nil ) then
-		return { h = hours, m = minutes, s = seconds, ms = millisecs }
+		return { h = math_floor( seconds / 3600 ), m = minutes, s = seconds, ms = millisecs }
 	end
 
 	return string_format( format, minutes, seconds, millisecs )
