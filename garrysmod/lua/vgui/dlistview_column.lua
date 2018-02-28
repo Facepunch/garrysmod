@@ -77,7 +77,7 @@ function PANEL:Init()
 	self.DraggerBar = vgui.Create( "DListView_DraggerBar", self )
 
 	self:SetMinWidth( 10 )
-	self:SetMaxWidth( 1920 * 10 )
+	self:SetMaxWidth( 19200 )
 
 end
 
@@ -132,7 +132,7 @@ end
 
 function PANEL:SetWidth( iSize )
 
-	iSize = math.Clamp( iSize, self.m_iMinWidth, self.m_iMaxWidth )
+	iSize = math.Clamp( iSize, self:GetMinWidth(), self:GetMaxWidth() )
 
 	-- If the column changes size we need to lay the data out too
 	if ( math.floor( iSize ) != self:GetWide() ) then
