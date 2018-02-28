@@ -111,8 +111,8 @@ end
 
 function PANEL:PerformLayout()
 
-	if ( self.m_iTextAlign ) then
-		self.Header:SetContentAlignment( self.m_iTextAlign )
+	if ( self:GetTextAlign() ) then
+		self.Header:SetContentAlignment( self:GetTextAlign() )
 	end
 
 	self.Header:SetPos( 0, 0 )
