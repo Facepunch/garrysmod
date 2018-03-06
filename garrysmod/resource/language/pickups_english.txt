@@ -65,7 +65,7 @@
 		"StriderMinigun_ammo"			"Strider minigun Ammo"
 		"HelicopterGun_ammo"			"Helicopter gun Ammo"
 		"9mmRound_ammo"				"9mm Rounds"
-		"MP5_Grenade_ammo"			"MP5 Grenades
+		"MP5_Grenade_ammo"			"MP5 Grenades"
 		"Hornet_ammo"				"Hornets"
 		"StriderMinigunDirect"			"Strider minigun Ammo"
 		"CombineHeavyCannon_ammo"		"Heavy Combine Cannon Ammo"
