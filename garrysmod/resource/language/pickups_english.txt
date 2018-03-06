@@ -53,7 +53,21 @@
 		"RPG_round_ammo"			"RPG Round"
 		"SLAM_ammo"					"SLAM Ammo"
 		"AlyxGun_ammo"				"Alyx Gun Ammo"
-		"SniperRound_ammo"	"Sniper Rounds"
-		"FlareRound_ammo"	"Flare Rounds
+		"SniperRound_ammo"			"Sniper Rounds"
+		"SniperPenetratedRound_ammo"		"Sniper Ammo"
+		"FlareRound_ammo"			"Flare Rounds"
+		"Thumper_ammo"				"Portable Thumpers"
+		"Gravity_ammo"				"Gravity Ammo"
+		"Battery_ammo"				"Battery Ammo"
+		"GaussEnergy_ammo"			"Gauss Energy"
+		"CombineCannon_ammo"			"Combine Cannon Ammo"
+		"AirboatGun_ammo"			"Airboat gun Ammo"
+		"StriderMinigun_ammo"			"Strider minigun Ammo"
+		"HelicopterGun_ammo"			"Helicopter gun Ammo"
+		"9mmRound_ammo"				"9mm Rounds"
+		"MP5_Grenade_ammo"			"MP5 Grenades
+		"Hornet_ammo"				"Hornets"
+		"StriderMinigunDirect"			"Strider minigun Ammo"
+		"CombineHeavyCannon_ammo"		"Heavy Combine Cannon Ammo"
 	}
 }
