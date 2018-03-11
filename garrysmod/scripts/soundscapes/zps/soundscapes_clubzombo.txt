@@ -1,3 +1,5 @@
+
+
 //---------------------------------------
 //Music loop
 "clubzombo.mainfloor"
@@ -6,8 +8,8 @@
 	"playlooping"
 	{
 	"volume"	"1"
-	"pitch"	"100"
-	"wave"	"zombo/zombo2.wav"
+	"pitch"		"100"
+	"wave"		"zombo/zombo2.wav"
 	}
 }
 
@@ -18,8 +20,8 @@
 	"playlooping"
 	{
 	"volume"	".5"
-	"pitch"	"100"
-	"wave"	"zombo/zombo2.wav"
+	"pitch"		"100"
+	"wave"		"zombo/zombo2.wav"
 	}
 }
 
@@ -30,8 +32,8 @@
 	"playlooping"
 	{
 	"volume"	".5"
-	"pitch"	"100"
-	"wave"	"zombo/zombo2.wav"
+	"pitch"		"100"
+	"wave"		"zombo/zombo2.wav"
 	}
 }
 
@@ -42,8 +44,8 @@
 	"playlooping"
 	{
 	"volume"	"1"
-	"pitch"	"100"
-	"wave"	"zombo/zombo_cutoff.wav"
+	"pitch"		"100"
+	"wave"		"zombo/zombo_cutoff.wav"
 	}
 }
 
@@ -54,56 +56,57 @@
 	"playlooping"
 	{
 	"volume"	".8"
-	"pitch"	"100"
-	"wave"	"zombo/zombo_cutoff.wav"
+	"pitch"		"100"
+	"wave"		"zombo/zombo_cutoff.wav"
 	}
 
-//Rain loop
+//Rain loop	
 	
 	"dsp"	"0"
   	"playlooping"
 	{
 		"volume"	"1"
-		"pitch"	"100"
-		"wave"	"ambient/rain/rain_spatter-01.wav"
+		"pitch"		"100"
+		"wave"		"ambient/rain/rain_spatter-01.wav"
 	}
-
 //city
+
 	"dsp"	"0"
 	"playlooping"
 	{
 		"volume"	"1"
-		"wave"	"ambient/city/city1.wav"
+		"wave"		"ambient/city/city1.wav"
 	}
-
-//Rain looå
+//Rain loop	
+	
 	"dsp"	"0"
     	"playlooping"
 	{
 		"volume"	"1"
-		"pitch"	"100"
-		"wave"	"ambient/rain/heavy_rain-02.wav"
+		"pitch"		"100"
+		"wave"		"ambient/rain/heavy_rain-02.wav"
 	}
 
 //rain hits
+
 	"dsp"	"0"
 	"playlooping"
 
 	{
 		"volume"	"1"
-		"pitch"	"1"
+		"pitch"		"1"
 		"position"	"0,1,2,3"
-		"wave"	"ambient/rain/rain_metal_light.wav"
+		"wave"		"ambient/rain/rain_metal_light.wav"
 	}
-
 //random stuff
+
 	"dsp"	"0"
 	"Playrandom"
 	{
 
 	"volume"	"0.04,0.5"
 	"time" 		"2,12"
-	"pitch"	"80,110"
+	"pitch"		"80,110"
 	"position"	"random"
 	
 	"rndwave"
@@ -116,13 +119,13 @@
 		"wave"	"ambient/explosions/battle_loop2.wav"
 		}
 	}
-
 //more rain
+
 "Playrandom"
 	{
 		"volume"	"0.1,0.6"
 		"time" 		"0.5,3"
-		"pitch"	"80,110"
+		"pitch"		"80,110"
 		"position"	"random"
 	
 	"rndwave"
@@ -133,14 +136,14 @@
 		"wave"	"ambient/water/rain_drip4.wav"
 		}
 	}
-
 //Thunder strikes
+	
 	"playrandom"
 	{
 
-		"time"	"10,30"
+		"time"		"10,30"
 		"volume"	"1"
-		"pitch"	"95,105"
+		"pitch"		"95,105"
 
 		"rndwave"
 		{
@@ -148,5 +151,9 @@
 			"wav"	"Ambient/Thunder/Thunder_Medium-02.wav"
 			"wav"	"Ambient/Thunder/Thunder_Low-02.wav"
 		}
+	
 	}
+	
+	
 }
+
