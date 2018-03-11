@@ -1,0 +1,68 @@
+//NightMare soundScape
+//By Knights
+
+
+
+//--------------------------------------------------------------------------------------------
+//First Sound
+//--------------------------------------------------------------------------------------------
+
+"zp_outsideRain" 
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/rain/heavy_rain-01.wav"
+	}
+
+	"playlooping" 
+	{ 
+		"volume" 	"5" 
+		"pitch" 	"100" 
+		"wave" 		"ambient/city/city1.wav"
+	}
+
+	"playrandom"
+	{
+		"time"		"20,40"
+		"volume"	"8,9"
+		"pitch"		"95,105"
+
+		"rndwave"
+		{
+			"wave"	"ambient/atmosphere/thunder3.wav"
+			"wave"	"ambient/atmosphere/thunder4.wav"
+			"wave"	"ambient/atmosphere/thunder1.wav"
+			"wave"	"ambient/machines/heli_pass1.wav"
+			"wave"	"ambient/levels/prison/inside_battle6.wav"
+			"wave"	"ambient/machines/aircraft_distant_flyby3.wav"
+		}
+	}
+}
+
+
+"zp_insideRain" 
+{ 
+	"dsp" "1" 
+
+	"playlooping" 
+	{ 
+		"volume" 	"5" 
+		"pitch" 	"100" 
+		"wave" 		"ambient/rain/rain_roof-03.wav" 
+	} 
+
+	"playlooping" 
+	{ 
+		"volume" 	"5" 
+		"pitch" 	"100" 
+		"wave" 		"ambient/wind/inside_wind_hall-01.wav" 
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+//Next Sound
+//--------------------------------------------------------------------------------------------
