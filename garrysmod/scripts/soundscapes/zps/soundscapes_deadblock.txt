@@ -1,0 +1,59 @@
+//Deadblock Soundscape
+//By MapMan
+
+"deadblock_lobby" 
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/city/inside_city1.wav"
+	}
+}
+
+
+"deadblock_outside" 
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/city/city_skyline-01.wav"
+	}
+
+	"playrandom"
+	{
+		"time"		"40,50"
+		"volume"	"0.05,0.15"
+		"pitch"		"95,105"
+
+		"rndwave"
+		{
+			"wave"	"ambient/siren/distant_siren-01.wav"
+			"wave"	"ambient/siren/distant_siren-02.wav"
+                        "wave"  "ambient/wind/outside_wind-04.wav"
+		}
+
+	
+	}
+	
+}
+
+
+
+"deadblock_inside" 
+{ 
+	"dsp" "1" 
+	"playlooping" 
+	{ 
+		"volume" "0.5" 
+		"pitch" "100" 
+		"wave" "ambient/city/city_ambience-01.wav" 
+		"wave" "ambient/wind/inside_wind_hall-01.wav" 
+	} 
+}
+
