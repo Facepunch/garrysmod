@@ -1,0 +1,257 @@
+    //////////////////////
+   //   soundscapes    //
+  // for zps_blackout //
+ //     by Jonny     //
+//////////////////////
+
+"blackout.outside"
+{
+	"dsp" "0"
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"pitch"		"100"
+		"wave"		"ambient/levels/canals/windmill_wind_loop1.wav"
+	}
+	"playlooping"
+	{
+		"volume"	"1.0"
+		"pitch"		"100"
+		"position"	"5"
+		"wave"		"ambient/levels/canals/windmill_wind_loop1.wav"
+		"soundlevel"	"SNDLVL_80dB"
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+"blackout.basement_flooded"
+{
+	"dsp" "0"
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"		"ambient/atmosphere/underground_hall_loop1.wav"
+		"pitch"		"100"
+	}
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"wave"		"ambient/water/drip_loop1.wav"
+		"pitch"		"100"
+	}
+		"playlooping"
+	{
+		"volume"	"0.1"
+		"wave"		"npc/zombie_poison/pz_breathe_loop1.wav"
+		"pitch"		"100"
+	}
+		"playrandom"
+	{
+		"time"		"2,3"
+		"volume"	"0.35,0.6"
+		"pitch"		"96,104"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/water/distant_drip1.wav"
+			"wave"	"ambient/water/distant_drip2.wav"
+			"wave"	"ambient/water/distant_drip3.wav"
+			"wave"	"ambient/water/distant_drip4.wav"
+		}
+	}
+				"playrandom"
+	{
+		"time"		"13,17"
+		"volume"	"0.4,0.6"
+		"pitch"		"96,104"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/rustypipes1.wav"
+			"wave"	"ambient/materials/rustypipes2.wav"
+			"wave"	"ambient/materials/rustypipes3.wav"
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+"blackout.basement"
+{
+	"dsp" "0"
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"		"ambient/atmosphere/underground_hall_loop1.wav"
+		"pitch"		"100"
+	}
+			"playrandom"
+	{
+		"time"		"13,17"
+		"volume"	"0.4,0.6"
+		"pitch"		"96,104"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/cartrap_rope1.wav"
+			"wave"	"ambient/materials/cartrap_rope2.wav"
+			"wave"	"ambient/materials/cartrap_rope3.wav"
+			"wave"	"ambient/materials/creak5.wav"
+			"wave"	"ambient/materials/rustypipes1.wav"
+			"wave"	"ambient/materials/rustypipes2.wav"
+			"wave"	"ambient/materials/rustypipes3.wav"
+		}
+	}
+	"playlooping"
+	{
+		"volume"	"1.0"
+		"pitch"		"100"
+		"position"	"0"
+		"wave"		"ambient/levels/canals/waterleak_loop1.wav"
+		"soundlevel"	"SNDLVL_75dB"
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+"blackout.attic"
+{
+	"dsp" "0"
+	"playlooping"
+	{
+		"volume"	"0.3"
+		"wave"		"ambient/atmosphere/Drone2LP.wav"
+		"pitch"		"100"
+	}
+		"playlooping"
+	{
+		"volume"	"0.04"
+		"pitch"		"100"
+		"wave"		"ambient/levels/canals/windmill_wind_loop1.wav"
+	}
+	"playrandom"
+	{
+		"time"		"7,14"
+		"volume"	"0.6,1.0"
+		"pitch"		"96,104"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/wood_creak1.wav"
+			"wave"	"ambient/materials/wood_creak2.wav"
+			"wave"	"ambient/materials/wood_creak3.wav"
+			"wave"	"ambient/materials/wood_creak4.wav"
+			"wave"	"ambient/materials/wood_creak5.wav"
+			"wave"	"ambient/materials/wood_creak6.wav"
+		}
+	}
+		"playrandom"
+	{
+		"time"		"30,60"
+		"volume"	"0.3,0.4"
+		"pitch"		"97,103"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/creatures/rats1.wav"
+			"wave"	"ambient/creatures/rats2.wav"
+			"wave"	"ambient/creatures/rats3.wav"
+			"wave"	"ambient/creatures/rats4.wav"
+		}
+	}
+	"playlooping"
+	{
+		"volume"	"0.8"
+		"pitch"		"100"
+		"position"	"1"
+		"wave"		"ambient/movie/movie_reel.wav"
+		"soundlevel"	"SNDLVL_60dB"
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+
+"blackout.inside"
+{
+	"dsp" "0"
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"		"ambient/atmosphere/ambience5.wav"
+		"pitch"		"100"
+	}
+		"playrandom"
+	{
+		"time"		"18,36"
+		"volume"	"0.35,0.6"
+		"pitch"		"97,103"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_140db"
+
+		"rndwave"
+		{
+			"wave"	"ambient/levels/streetwar/city_scream3.wav"
+			"wave"	"ambient/levels/prison/inside_battle_antlion4.wav"
+			"wave"	"ambient/levels/prison/inside_battle_antlion8.wav"
+			"wave"	"ambient/levels/prison/inside_battle_zombie1.wav"
+			"wave"	"ambient/levels/prison/inside_battle_zombie2.wav"
+			"wave"	"ambient/levels/prison/inside_battle_zombie3.wav"
+			"wave"	"ambient/levels/citadel/strange_talk1.wav"
+			"wave"	"ambient/levels/citadel/strange_talk9.wav"
+			"wave"	"ambient/creatures/town_child_scream1.wav"
+			"wave"	"ambient/creatures/town_moan1.wav"
+			"wave"	"ambient/creatures/town_muffled_cry1.wav"
+			"wave"	"ambient/creatures/town_scared_breathing1.wav"
+			"wave"	"ambient/creatures/town_scared_breathing2.wav"
+			"wave"	"ambient/creatures/town_scared_sob1.wav"
+			"wave"	"ambient/creatures/town_scared_sob2.wav"
+		}
+	}
+	"playlooping"
+	{
+		"volume"	"1.0"
+		"pitch"		"100"
+		"position"	"0"
+		"wave"		"ambient/levels/canals/windmill_wind_loop1.wav"
+		"soundlevel"	"SNDLVL_60dB"
+	}
+	"playlooping"
+	{
+		"volume"	"1.0"
+		"pitch"		"100"
+		"position"	"1"
+		"wave"		"npc/zombie_poison/pz_breathe_loop1.wav"
+		"soundlevel"	"SNDLVL_60dB"
+	}
+	"playlooping"
+	{
+		"volume"	"1.0"
+		"pitch"		"100"
+		"position"	"2"
+		"wave"		"ambient/levels/canals/windmill_wind_loop1.wav"
+		"soundlevel"	"SNDLVL_60dB"
+	}
+	"playlooping"
+	{
+		"volume"	"1.0"
+		"pitch"		"100"
+		"position"	"3"
+		"wave"		"ambient/levels/canals/windmill_wind_loop1.wav"
+		"soundlevel"	"SNDLVL_60dB"
+	}
+}
