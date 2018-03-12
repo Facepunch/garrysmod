@@ -69,7 +69,7 @@ end
 
 function SWEP:Initialize()
 
-	self:SetHoldType( "pistol" )
+	self:SetHoldType( "revolver" )
 
 	self:InitializeTools()
 
