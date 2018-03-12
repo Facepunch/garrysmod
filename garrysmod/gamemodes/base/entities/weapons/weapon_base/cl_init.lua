@@ -20,6 +20,14 @@ SWEP.WepSelectIcon		= surface.GetTextureID( "weapons/swep" )
 -- This is the corner of the speech bubble
 SWEP.SpeechBubbleLid	= surface.GetTextureID( "gui/speech_lid" )
 
+SWEP.Author			= ""
+SWEP.Contact		= ""
+SWEP.Purpose		= ""
+SWEP.Instructions	= ""
+
+SWEP.ViewModelFOV	= 62
+SWEP.ViewModelFlip	= false
+
 --[[---------------------------------------------------------
 	You can draw to the HUD here - it will only draw when
 	the client has the weapon deployed..
@@ -114,13 +122,6 @@ end
 	Desc: Called immediately after a "load"
 -----------------------------------------------------------]]
 function SWEP:OnRestore()
-end
-
---[[---------------------------------------------------------
-	Name: OnRemove
-	Desc: Called just before entity is deleted
------------------------------------------------------------]]
-function SWEP:OnRemove()
 end
 
 --[[---------------------------------------------------------
