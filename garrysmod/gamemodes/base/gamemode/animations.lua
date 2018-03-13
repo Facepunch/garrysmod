@@ -30,6 +30,7 @@ local hook_Call = hook.Call
 local isfunction = isfunction
 local math_Clamp = math.Clamp
 local math_Approach = math.Approach
+local math_Truncate = math.Truncate
 
 function GM:ToggleNoClipAnim( ply, noclip )
 	-- Reset the layer
@@ -448,11 +449,8 @@ function GM:DoAnimationEvent( ply, event, data )
 		-- FIXME: https://github.com/Facepunch/garrysmod-requests/issues/1090
 		ply:AnimRestartGesture( GESTURE_SLOT_FLINCH, event, true )
 	elseif ( event == PLAYERANIMEVENT_CANCEL ) then
-		if ( data == nil ) then
-			ply:AnimResetGestureSlots()
-		else
-			ply:AnimResetGestureSlot( data )
-		end
+		ply.m_nSpecificMainActivity = ACT_INVALID
+		ply.m_nSpecificMainSequence = -1
 	elseif ( event == PLAYERANIMEVENT_SPAWN ) then
 		ply.m_nSpecificMainActivity = ACT_INVALID
 		ply.m_nSpecificMainSequence = -1
@@ -464,8 +462,16 @@ function GM:DoAnimationEvent( ply, event, data )
 	-- Can't set m_PoseParameterData.m_flLastAimTurnTime from Lua
 	--elseif ( event == PLAYERANIMEVENT_SNAP_YAW ) then
 	elseif ( event == PLAYERANIMEVENT_CUSTOM ) then
-		if ( data != nil && data > ACT_INVALID ) then
-			local act = hook_Call( "TranslateActivity", self, ply, data ) || data
+		data = math_Truncate( data )
+
+		if ( data > ACT_INVALID ) then
+			local act = hook_Call( "TranslateActivity", self, ply, data )
+
+			if ( act == nil ) then
+				act = data
+			else
+				act = math_Truncate( act )
+			end
 
 			if ( act > ACT_INVALID ) then
 				ply.m_nSpecificMainActivity = act
@@ -474,19 +480,19 @@ function GM:DoAnimationEvent( ply, event, data )
 			end
 		end
 	elseif ( event == PLAYERANIMEVENT_CUSTOM_GESTURE ) then
-		if ( data != nil ) then
-			ply:AnimRestartGesture( GESTURE_SLOT_CUSTOM, data, true )
-		end
+		ply:AnimRestartGesture( GESTURE_SLOT_CUSTOM, data, true )
 	elseif ( event == PLAYERANIMEVENT_CUSTOM_SEQUENCE ) then
-		if ( data != nil && data > -1 ) then
+		data = math_Truncate( data )
+
+		if ( data >= 0 ) then
 			ply.m_nSpecificMainActivity = ply:GetSequenceActivity( data )
 			ply.m_nSpecificMainSequence = data
 			ply:AnimRestartMainSequence()
 		end
 	elseif ( event == PLAYERANIMEVENT_CUSTOM_GESTURE_SEQUENCE ) then
-		if ( data != nil ) then
-			ply:AddVCDSequenceToGestureSlot( GESTURE_SLOT_CUSTOM, data, 0, true )
-		end
+		ply:AddVCDSequenceToGestureSlot( GESTURE_SLOT_CUSTOM, data, 0, true )
+	elseif ( event == PLAYERANIMEVENT_CANCEL_RELOAD ) then
+		ply:AnimResetGestureSlot( GESTURE_SLOT_ATTACK_AND_RELOAD )
 	end
 
 	return ACT_INVALID
