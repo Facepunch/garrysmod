@@ -338,11 +338,12 @@ function string.Comma( number )
 		number = string.match( number, "^(.-)%.?0*$" ) -- Remove trailing zeros
 	end
 
-	local k
+	local Times = #number / 4
 
-	while true do
-		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", "%1,%2" )
-		if ( k == 0 ) then break end
+	if Times < 1 then return number end 
+
+	for i = 1, Times do
+		number = string.gsub( number, "^(-?%d+)(%d%d%d)", "%1,%2" )
 	end
 
 	return number
