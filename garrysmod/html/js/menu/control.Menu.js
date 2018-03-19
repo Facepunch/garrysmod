@@ -104,6 +104,11 @@ function MenuController( $scope, $rootScope )
 		lua.Run( "gui.HideGameUI()" );
 	}
 
+	$scope.AddServerToFavorites = function()
+	{
+		lua.Run( "serverlist.AddCurrentServerToFavorites()" );
+	}
+
 	$scope.Disconnect = function ()
 	{
 		lua.Run( "RunConsoleCommand( 'disconnect' )" );
@@ -139,6 +144,7 @@ function MenuController( $scope, $rootScope )
 
 	// InGame
 	$scope.InGame = false;
+	$scope.ShowFavButton = false;
 
 	// Kinect options
 	$scope.kinect =
@@ -179,6 +185,12 @@ function MenuController( $scope, $rootScope )
 function SetInGame( bool )
 {
 	gScope.InGame = bool;
+	UpdateDigest( gScope, 50 );
+}
+
+function SetShowFavButton( bool )
+{
+	gScope.ShowFavButton = bool;
 	UpdateDigest( gScope, 50 );
 }
 
