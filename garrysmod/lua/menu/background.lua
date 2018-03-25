@@ -64,17 +64,20 @@ function DrawBackground()
 
 end
 
-function ClearBackgroundImages( img )
+function ClearBackgroundImages()
 
 	Images = {}
 
 end
 
 function AddBackgroundImage( img )
+	if ( not img or type( img ) != "string" ) then return end
+	if not ( file.Exists(img,"GAME") ) then return end
 
 	table.insert( Images, img )
 
 end
+
 
 local LastGamemode = "none"
 
