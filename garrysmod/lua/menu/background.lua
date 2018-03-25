@@ -71,8 +71,14 @@ function ClearBackgroundImages()
 end
 
 function AddBackgroundImage( img )
-	if ( not img or type( img ) != "string" ) then return end
-	if not ( file.Exists(img,"GAME") ) then return end
+	local Type = type(img)
+	if ( Type != "string" ) then
+		error("Data type "..Type.." is invalid")
+	end
+
+	if not ( file.Exists(img,"GAME") ) then
+		error("The path "..img.." doesn't exist")
+	end
 
 	table.insert( Images, img )
 
