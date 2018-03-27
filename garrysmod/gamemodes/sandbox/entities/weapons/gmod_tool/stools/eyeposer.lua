@@ -38,9 +38,12 @@ end
 function TOOL:LeftClick( trace )
 
 	if ( !self.SelectedEntity ) then
-		if ( !IsValid( trace.Entity ) ) then return end
+		local ent = trace.Entity
+		if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
 
-		self.SelectedEntity = trace.Entity
+		if ( !IsValid( ent ) ) then return end
+
+		self.SelectedEntity = ent
 
 		local eyeattachment = self.SelectedEntity:LookupAttachment( "eyes" )
 		if ( eyeattachment == 0 ) then return end
@@ -71,15 +74,18 @@ function TOOL:RightClick( trace )
 	self:GetWeapon():SetNWEntity( 0, NULL )
 	self.SelectedEntity = nil
 
-	if ( !IsValid( trace.Entity ) ) then return end
+	local ent = trace.Entity
+	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+
+	if ( !IsValid( ent ) ) then return end
 	if ( CLIENT ) then return true end
 
 	local pos = self:GetOwner():EyePos()
 
-	local LocalPos = ConvertRelativeToEyesAttachment( trace.Entity, pos )
+	local LocalPos = ConvertRelativeToEyesAttachment( ent, pos )
 	if ( !LocalPos ) then return false end
 
-	SetEyeTarget( self:GetOwner(), trace.Entity, { EyeTarget = LocalPos } )
+	SetEyeTarget( self:GetOwner(), ent, { EyeTarget = LocalPos } )
 
 	return true
 
@@ -95,8 +101,6 @@ function TOOL:DrawHUD()
 
 	if ( !IsValid( selected ) ) then return end
 
-	local vEyePos = selected:EyePos()
-
 	local eyeattachment = selected:LookupAttachment( "eyes" )
 	if ( eyeattachment == 0 ) then return end
 
@@ -108,14 +112,8 @@ function TOOL:DrawHUD()
 	local Leye = ( attachment.Pos + attachment.Ang:Right() * 1.5 ):ToScreen()
 	local Reye = ( attachment.Pos - attachment.Ang:Right() * 1.5 ):ToScreen()
 
-	-- Work out the side distance to give a rough headsize box..
-	local player_eyes = LocalPlayer():EyeAngles()
-	local side = ( attachment.Pos + player_eyes:Right() * 10 ):ToScreen()
-	local size = 4
-
-	local Owner = self:GetOwner()
-
 	-- Get Target
+	local Owner = self:GetOwner()
 	local trace = Owner:GetEyeTrace()
 	local scrhit = trace.HitPos:ToScreen()
 	local x = scrhit.x
