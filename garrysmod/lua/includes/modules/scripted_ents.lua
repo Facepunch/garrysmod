@@ -65,7 +65,7 @@ function Register( t, name )
 	tab.t.ClassName	= name
 
 	if ( !Base ) then
-		Msg( "WARNING: Scripted entity "..name.." has an invalid base entity!\n" )
+		Msg( "WARNING: Scripted entity " .. name .. " has an invalid base entity!\n" )
 	end
 
 	SEntList[ name ] = tab
@@ -126,7 +126,8 @@ function Register( t, name )
 		DropToFloor		= t.DropToFloor,
 		Author			= t.Author,
 		AdminOnly		= t.AdminOnly,
-		Information		= t.Information
+		Information		= t.Information,
+		ScriptedEntityType = t.ScriptedEntityType
 	} )
 
 end
