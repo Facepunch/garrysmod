@@ -48,6 +48,13 @@ function TOOL:Reload( trace )
 
 	trace.Entity:RemoveAllDecals()
 
+	if ( SERVER ) then
+		for i = 1, 32 do
+			duplicator.ClearEntityModifier( trace.Entity, "decal" .. i )
+		end
+		trace.Entity.DecalCount = nil
+	end
+
 	return true
 end
 
