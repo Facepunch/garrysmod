@@ -198,9 +198,11 @@ end
 function IsValid( object )
 
 	if ( !object ) then return false end
-	if ( !object.IsValid ) then return false end
 
-	return object:IsValid()
+	local isvalid = object.IsValid
+	if ( !isvalid ) then return false end
+
+	return isvalid( object )
 
 end
 
