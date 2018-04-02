@@ -1,0 +1,411 @@
+"TableToKeyValues"
+{
+	"parentid"		"0"
+	"icon"		"icon16/wrench_orange.png"
+	"id"		"6"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Chess"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/black_dama.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/black_pawn.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/black_bishop.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/black_king.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/black_queen.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/black_knight.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/black_rook.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/board.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/white_dama.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/white_pawn.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/white_bishop.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/white_king.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/white_queen.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/white_knight.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/games/chess/white_rook.mdl"
+		}
+		"17"
+		{
+			"type"		"header"
+			"text"		"City Props"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/huge/evildisc_corp.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/huge/tower.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/huge/road_short.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/huge/road_medium.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/huge/road_long.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/huge/road_curve.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/small_ramp.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/big_ramp.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/t_light_head.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/t_light_single_a.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/t_light_x.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/t_light_single_b.mdl"
+		}
+		"30"
+		{
+			"type"		"header"
+			"text"		"Explosives"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/rocket1.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/flakshell_big.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/ww2bomb.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/mk-82.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/box_amraam.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/amraam.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/box_torpedo.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/torpedo.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/cannon.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/cannonball.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/smallcannonball.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/cannonball_solid.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/ball.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/oildrum001_explosive.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/potato_launcher_explosive.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/smallcannon.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/smallcannonclip.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/potato_launcher.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/potato_launcher_cap.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/potato_launcher_chamber.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/potato.mdl"
+		}
+		"52"
+		{
+			"type"		"header"
+			"text"		"Misc"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/carseat.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/carseat2.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/carseat3.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/xqm/modernchair.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/wheelaxis.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/xqm/hoverboard.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/xqm/podremake.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/facepunch_logo.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/sp_screen.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/rt_screen.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/fender.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/playfield.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/soccerball.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/concrete_pipe01.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/concrete_barrier00.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/concrete_barrier01.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/bunker01.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/xqm/button1.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/xqm/button2.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/xqm/button3.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/xqm/hydcontrolbox.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/various/211.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/noesis/donut.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/egg.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/props_phx2/garbage_metalcan001a.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/empty_barrel.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/oildrum001.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/facepunch_barrel.mdl"
+		}
+	}
+	"name"		"Builder"
+	"version"		"3"
+}
