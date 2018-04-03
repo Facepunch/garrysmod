@@ -3,6 +3,7 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.PrintName = "World Anchor"
+ENT.DoNotDuplicate = true
 
 if ( CLIENT ) then return end
 

@@ -718,6 +718,18 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 		Subdiv = 1,
 	}
 
+	local ctable = {
+		Type = "Slider",
+		Ent1 = Ent1,
+		Ent2 = Ent2,
+		Bone1 = Bone1,
+		Bone2 = Bone2,
+		LPos1 = LPos1,
+		LPos2 = LPos2,
+		width = width,
+		material = material
+	}
+
 	-- Start World Hack.
 	-- Attaching a slider to the world makes it really sucks so we make
 	-- a prop and attach to that.
@@ -758,18 +770,6 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 		Constraint:DeleteOnRemove( StaticAnchor )
 
 	end
-
-	local ctable = {
-		Type = "Slider",
-		Ent1 = Ent1,
-		Ent2 = Ent2,
-		Bone1 = Bone1,
-		Bone2 = Bone2,
-		LPos1 = LPos1,
-		LPos2 = LPos2,
-		width = width,
-		material = material
-	}
 
 	Constraint:SetTable( ctable )
 
