@@ -168,7 +168,7 @@ function GM:HandlePlayerAirWalking( ply, velocity, onground )
 		ply.m_bInSwim = false
 
 		if ( len2d > 0.25 ) then
-			ply.CalcIdeal = ply:Crouching() && ACT_MP_CROUCHWALK || len2d > 22500 && ACT_MP_RUN || ACT_MP_WALK --ACT_MP_AIRWALK
+			ply.CalcIdeal = ply:IsFlagSet( FL_ANIMDUCKING ) && ACT_MP_CROUCHWALK || len2d > 22500 && ACT_MP_RUN || ACT_MP_WALK --ACT_MP_AIRWALK
 
 			ply.m_bJumping = false
 
@@ -195,7 +195,7 @@ function GM:HandlePlayerJumping( ply, velocity, onground )
 end
 
 function GM:HandlePlayerDucking( ply, velocity, onground )
-	if ( ply:Crouching() ) then
+	if ( ply:IsFlagSet( FL_ANIMDUCKING ) ) then
 		ply.CalcIdeal = velocity:Length2DSqr() > 0.25 && ACT_MP_CROUCHWALK || ACT_MP_CROUCH_IDLE
 
 		ply.m_bInSwim = false
@@ -407,7 +407,7 @@ local function GetEventActivity( ply, event )
 		return event
 	end
 
-	return translation[ ply.m_bInSwim && 3 || ply:Crouching() && 2 || 1 ]
+	return translation[ ply.m_bInSwim && 3 || ply:IsFlagSet( FL_ANIMDUCKING ) && 2 || 1 ]
 end
 
 local FlinchAnims = {
