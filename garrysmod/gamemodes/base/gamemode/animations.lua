@@ -52,7 +52,7 @@ end
 
 function GM:HandlePlayerDucking( ply, velocity )
 
-	if ( !ply:Crouching() ) then return false end
+	if ( !ply:IsFlagSet( FL_ANIMDUCKING ) ) then return false end
 
 	if ( velocity:Length2DSqr() > 0.25 ) then
 		ply.CalcIdeal = ACT_MP_CROUCHWALK
