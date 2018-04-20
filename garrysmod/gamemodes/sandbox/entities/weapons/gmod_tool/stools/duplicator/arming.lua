@@ -1,4 +1,7 @@
 
+local net = net
+local util = util
+
 if ( CLIENT ) then
 
 	--
@@ -13,12 +16,13 @@ if ( CLIENT ) then
 		--
 		local dupe = engine.OpenDupe( arg[1] )
 		if ( !dupe ) then
-			MsgN( "Error loading dupe.. (", arg[1], ")" );
-			return 
+			MsgN( "Error loading dupe.. (", arg[1], ")" )
+
+			return
 		end
 
 		local uncompressed = util.Decompress( dupe.data )
-		if ( !uncompressed ) then 
+		if ( !uncompressed ) then
 			MsgN( "Couldn't decompress dupe!" )
 		return end
 
@@ -36,6 +40,9 @@ end
 
 if ( SERVER ) then
 
+	local hook = hook
+	local ents = ents
+
 	--
 	-- Add the name of the net message to the string table (or it won't be able to send!)
 	--
@@ -44,25 +51,48 @@ if ( SERVER ) then
 	local LastDupeArm = 0
 	net.Receive( "ArmDupe", function( len, client )
 			if ( LastDupeArm > CurTime() ) then return end
-			
+
 			LastDupeArm = CurTime() + 1
-			
+
 			local len = net.ReadUInt( 32 )
 			local data = net.ReadData( len )
 
 			if ( !IsValid( client ) ) then return end
 
-			-- Hook.. can arm dupe..
+			-- Let the gamemode decide whether we continue or not
+			if ( hook.Call( "CanArmDupe", GAMEMODE, client ) == false ) then return end
 
 			local uncompressed = util.Decompress( data )
-			if ( !uncompressed ) then 
+			if ( !uncompressed ) then
 				MsgN( "Couldn't decompress dupe!" )
-			return end
 
+				return
+			end
+
+			-- Make sure they are sending us valid data
 			local Dupe = util.JSONToTable( uncompressed )
 			if ( !istable( Dupe ) ) then return end
+			if ( !istable( Dupe.Constraints ) ) then return end
+			if ( !istable( Dupe.Entities) ) then return end
 			if ( !isvector( Dupe.Mins ) ) then return end
 			if ( !isvector( Dupe.Maxs ) ) then return end
+
+			-- Check if the table index is an valid entity and
+			-- the ent data is a table, and also if the client
+			-- send more entities than there are entities to duplicate
+			local dupedEntities = 0
+			local entCount = ents.GetCount()
+			for entIndex, entData in pairs( Dupe.Entities ) do
+				local ent = Entity( entIndex )
+
+				if ( !IsValid( ent ) or !istable( entData ) or dupedEntities > entCount ) then
+					print( client, "Send invalid dupe data!" )
+
+					return
+				end
+
+				dupedEntities = dupedEntities + 1
+			end
 
 			client.CurrentDupe = Dupe;
 
