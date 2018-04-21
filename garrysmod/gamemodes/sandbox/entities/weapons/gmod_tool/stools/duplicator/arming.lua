@@ -41,7 +41,6 @@ end
 if ( SERVER ) then
 
 	local hook = hook
-	local ents = ents
 
 	--
 	-- Add the name of the net message to the string table (or it won't be able to send!)
@@ -79,19 +78,14 @@ if ( SERVER ) then
 
 			-- Check if the table index is an valid entity and
 			-- the ent data is a table, and also if the client
-			-- send more entities than there are entities to duplicate
-			local dupedEntities = 0
-			local entCount = ents.GetCount()
 			for entIndex, entData in pairs( Dupe.Entities ) do
 				local ent = Entity( entIndex )
 
-				if ( !IsValid( ent ) or !istable( entData ) or dupedEntities > entCount ) then
+				if ( !IsValid( ent ) or !istable( entData ) ) then
 					print( client, "Send invalid dupe data!" )
 
 					return
 				end
-
-				dupedEntities = dupedEntities + 1
 			end
 
 			client.CurrentDupe = Dupe;
