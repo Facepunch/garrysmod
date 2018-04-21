@@ -59,7 +59,7 @@ if ( SERVER ) then
 			if ( !IsValid( client ) ) then return end
 
 			-- Let the gamemode decide whether we continue or not
-			if ( hook.Call( "CanArmDupe", GAMEMODE, client, len ) == false ) then return end
+			if ( hook.Call( "CanArmDupe", GAMEMODE, client ) == false ) then return end
 
 			local uncompressed = util.Decompress( data )
 			if ( !uncompressed ) then
@@ -75,18 +75,6 @@ if ( SERVER ) then
 			if ( !istable( Dupe.Entities) ) then return end
 			if ( !isvector( Dupe.Mins ) ) then return end
 			if ( !isvector( Dupe.Maxs ) ) then return end
-
-			-- Check if the table index is an valid entity and
-			-- the ent data is a table, and also if the client
-			for entIndex, entData in pairs( Dupe.Entities ) do
-				local ent = Entity( entIndex )
-
-				if ( !IsValid( ent ) or !istable( entData ) ) then
-					print( client, "Send invalid dupe data!" )
-
-					return
-				end
-			end
 
 			client.CurrentDupe = Dupe;
 
