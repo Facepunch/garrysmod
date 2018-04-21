@@ -59,7 +59,7 @@ if ( SERVER ) then
 			if ( !IsValid( client ) ) then return end
 
 			-- Let the gamemode decide whether we continue or not
-			if ( hook.Call( "CanArmDupe", GAMEMODE, client ) == false ) then return end
+			if ( hook.Call( "CanArmDupe", GAMEMODE, client, len ) == false ) then return end
 
 			local uncompressed = util.Decompress( data )
 			if ( !uncompressed ) then
