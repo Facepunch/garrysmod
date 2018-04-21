@@ -30,7 +30,7 @@ function table.Copy( t, lookup_table )
 		if ( !istable( v ) ) then
 			copy[ i ] = v
 		else
-			lookup_table = lookup_table or {}
+			local lookup_table = lookup_table or {}
 			lookup_table[ t ] = copy
 			if ( lookup_table[ v ] ) then
 				copy[ i ] = lookup_table[ v ] -- we already copied this table. reuse the copy.
