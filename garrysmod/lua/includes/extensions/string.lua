@@ -348,3 +348,14 @@ function string.Comma( number )
 	return number
 
 end
+
+function string.Interpolate( str, lookuptable )
+
+	return ( string.gsub( str, "{([_%a][_%w]*)}", function ( key )
+		local value = lookuptable[ key ]
+		if (value == nil) then return end
+
+		return tostring( value )
+	end) )
+
+end
