@@ -353,7 +353,7 @@ function string.Interpolate( str, lookuptable )
 
 	return ( string.gsub( str, "{([_%a][_%w]*)}", function ( key )
 		local value = lookuptable[ key ]
-		if (value == nil) then return end
+		assert( value != nil, "string.Interpolate: lookup failed for '" .. key .. "'" )
 
 		return tostring( value )
 	end) )
