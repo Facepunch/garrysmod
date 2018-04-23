@@ -330,7 +330,7 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 	--
 	-- Offset the position
 	--
-	local Offset = NPCData.Offset or 32
+	local Offset = NPCData.Offset || 32
 	NPC:SetPos( Position + Normal * Offset )
 
 	-- Rotate to face player (expected behaviour)
@@ -414,6 +414,13 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 
 	if ( NPCData.Health ) then
 		NPC:SetHealth( NPCData.Health )
+	end
+
+	-- Body groups
+	if ( NPCData.BodyGroups ) then
+		for k, v in pairs( NPCData.BodyGroups ) do
+			NPC:SetBodygroup( k, v )
+		end
 	end
 
 	return NPC
@@ -797,7 +804,7 @@ local function MakeVehicle( Player, Pos, Ang, Model, Class, VName, VTable, data 
 
 	Ent:SetModel( Model )
 
-	// Fallback vehiclescripts for HL2 maps ( dupe support )
+	-- Fallback vehiclescripts for HL2 maps ( dupe support )
 	if ( Model == "models/buggy.mdl" ) then Ent:SetKeyValue( "vehiclescript", "scripts/vehicles/jeep_test.txt" ) end
 	if ( Model == "models/vehicle.mdl" ) then Ent:SetKeyValue( "vehiclescript", "scripts/vehicles/jalopy.txt" ) end
 

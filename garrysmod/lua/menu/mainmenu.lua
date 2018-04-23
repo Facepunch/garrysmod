@@ -1,7 +1,7 @@
 
-include( 'background.lua' )
-include( 'cef_credits.lua' )
-include( 'openurl.lua' )
+include( "background.lua" )
+include( "cef_credits.lua" )
+include( "openurl.lua" )
 
 pnlMainMenu = nil
 
@@ -74,7 +74,21 @@ function PANEL:Paint()
 			self.HTML:QueueJavascript( "SetInGame( false )" )
 
 		end
+	end
 
+	if ( self.CanAddServerToFavorites != CanAddServerToFavorites() ) then
+
+		self.CanAddServerToFavorites = CanAddServerToFavorites()
+
+		if ( self.CanAddServerToFavorites ) then
+
+			self.HTML:QueueJavascript( "SetShowFavButton( true )" )
+
+		else
+
+			self.HTML:QueueJavascript( "SetShowFavButton( false )" )
+
+		end
 	end
 
 end
@@ -325,7 +339,7 @@ function GetServers( category, id )
 		end,
 
 		Type = category,
-		GameDir = 'garrysmod',
+		GameDir = "garrysmod",
 		AppID = 4000,
 	}
 
