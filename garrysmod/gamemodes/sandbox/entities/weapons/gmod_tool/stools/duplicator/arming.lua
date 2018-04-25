@@ -8,19 +8,19 @@ if ( CLIENT ) then
 	concommand.Add( "dupe_arm", function( ply, cmd, arg )
 
 		if ( !arg[1] ) then return end
-		--
+
 		-- Load the dupe (engine takes care of making sure it's a dupe)
-		--
 		local dupe = engine.OpenDupe( arg[1] )
 		if ( !dupe ) then
 			MsgN( "Error loading dupe.. (", arg[1], ")" );
-			return 
+			return
 		end
 
 		local uncompressed = util.Decompress( dupe.data )
-		if ( !uncompressed ) then 
+		if ( !uncompressed ) then
 			MsgN( "Couldn't decompress dupe!" )
-		return end
+			return
+		end
 
 		--
 		-- And send it to the server
@@ -44,23 +44,25 @@ if ( SERVER ) then
 	local LastDupeArm = 0
 	net.Receive( "ArmDupe", function( len, client )
 			if ( LastDupeArm > CurTime() ) then return end
-			
+
 			LastDupeArm = CurTime() + 1
-			
-			local len = net.ReadUInt( 32 )
-			local data = net.ReadData( len )
+
+			local length = net.ReadUInt( 32 )
+			local data = net.ReadData( length )
 
 			if ( !IsValid( client ) ) then return end
 
 			-- Hook.. can arm dupe..
 
 			local uncompressed = util.Decompress( data )
-			if ( !uncompressed ) then 
+			if ( !uncompressed ) then
 				MsgN( "Couldn't decompress dupe!" )
 			return end
 
 			local Dupe = util.JSONToTable( uncompressed )
 			if ( !istable( Dupe ) ) then return end
+			if ( !istable( Dupe.Constraints ) ) then return end
+			if ( !istable( Dupe.Entities ) ) then return end
 			if ( !isvector( Dupe.Mins ) ) then return end
 			if ( !isvector( Dupe.Maxs ) ) then return end
 
