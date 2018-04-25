@@ -46,19 +46,21 @@ end
 function SWEP:PrimaryAttack()
 
 	if ( CLIENT ) then return end
-
+	
+	self.Owner:LagCompensation(true)
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
 		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * 64,
 		filter = self.Owner
 	} )
-
+	self.Owner:LagCompensation(false)
+	
 	local ent = tr.Entity
 
 	local need = self.HealAmount
 	if ( IsValid( ent ) ) then need = math.min( ent:GetMaxHealth() - ent:Health(), self.HealAmount ) end
 
-	if ( IsValid( ent ) && self:Clip1() >= need && ( ent:IsPlayer() or ent:IsNPC() ) && ent:Health() < 100 ) then
+	if ( IsValid( ent ) && self:Clip1() >= need && ( ent:IsPlayer() or ent:IsNPC() ) && ent:Health() < ent:GetMaxHealth() ) then
 
 		self:TakePrimaryAmmo( need )
 
