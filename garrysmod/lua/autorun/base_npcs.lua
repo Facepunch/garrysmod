@@ -476,7 +476,7 @@ if ( IsMounted( "hl1" ) ) then
 	AddNPC( { Name = "Grunt", Class = "monster_human_grunt", Category = Category } )
 	AddNPC( { Name = "Cockroach", Class = "monster_cockroach", Category = Category } )
 	AddNPC( { Name = "Houndeye", Class = "monster_houndeye", Category = Category } )
-	AddNPC( { Name = "Scientist", Class = "monster_scientist", Category = Category } )
+	AddNPC( { Name = "Scientist", Class = "monster_scientist", Category = Category, KeyValues = { body = "-1" } } )
 	AddNPC( { Name = "Snark", Class = "monster_snark", Category = Category } )
 	AddNPC( { Name = "Zombie", Class = "monster_zombie", Category = Category } )
 	AddNPC( { Name = "Headcrab", Class = "monster_headcrab", Category = Category } )
