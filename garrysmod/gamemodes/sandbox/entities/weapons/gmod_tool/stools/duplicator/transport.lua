@@ -43,7 +43,7 @@ concommand.Add( "dupe_save", function( ply, cmd, arg )
 		local endbyte = math.min( start + send_size, length )
 		local size = endbyte - start
 
-		//print( "S [ " .. i .. " / " .. parts .. " ] Size: " .. size .. " Start: " .. start .. " End: " .. endbyte )
+		-- print( "S [ " .. i .. " / " .. parts .. " ] Size: " .. size .. " Start: " .. start .. " End: " .. endbyte )
 
 		net.Start( "ReceiveDupe" )
 			net.WriteUInt( i, 8 )
@@ -68,12 +68,12 @@ if ( CLIENT ) then
 			local part = net.ReadUInt( 8 )
 			local total = net.ReadUInt( 8 )
 
-			local len = net.ReadUInt( 32 )
-			local data = net.ReadData( len )
+			local length = net.ReadUInt( 32 )
+			local data = net.ReadData( length )
 
 			buffer = buffer .. data
 
-			//MsgN( "R [ " .. part .. " / " .. total .. " ] Size: " .. data:len() )
+			-- MsgN( "R [ " .. part .. " / " .. total .. " ] Size: " .. data:len() )
 
 			if ( part != total ) then return end
 

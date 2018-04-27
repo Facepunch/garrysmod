@@ -84,6 +84,7 @@ function GM:HandlePlayerDriving( ply )
 				usefunc = isfunction( fHandleAnimation )
 			end
 		end
+
 	else
 		usefunc = isfunction( fHandleAnimation )
 	end
