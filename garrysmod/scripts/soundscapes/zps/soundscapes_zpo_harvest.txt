@@ -1,0 +1,42 @@
+//Harvest soundScape
+//By Cheque
+
+
+"ambient_outside" 
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"1.5"
+		"pitch"		"100"
+		"wave"		"ambient/crickets/crickets-02.wav"
+	}
+
+}
+
+//Animal Ambient - the soundscape entity exists in the map, but there's an issue with
+//this working properly - perhaps someone can take a look at it?
+
+//Animal sounds play every 90 seconds, but the ones that do play stay looped over the next one that plays until all four sounds are playing looped over each other.
+
+//"ambient_outside_animal"
+//{
+//	"playrandom"
+//	{
+//		"time"		"90"
+//		"volume"	"0.2"
+//		"pitch"		"95,105"
+//		"attenuation"	"0.5"
+//
+//		"rndwave"
+//		{
+//			"wave"	"ambient/crow/crow-01.wav"
+//			"wave"	"ambient/dog/dog_crying-01.wav"
+//			"wave"	"ambient/dog/dog_small_barking-01.wav"
+//			"wave"	"ambient/dog/dog_unhappy-01.wav"
+//			}
+//
+//	
+//	}
+//}

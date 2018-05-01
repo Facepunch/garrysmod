@@ -1,0 +1,135 @@
+"murksvilleCrickets"
+{ 
+"dsp" "0"
+"playlooping" 
+{ 
+"volume" "0.5" 
+"pitch" "100" 
+"wave" "ambient/crickets/crickets-03.wav"
+}
+
+"playrandom"
+{
+"time" "1,3"
+"volume" "0.1,0.2"
+"pitch" "100"
+"position" "2"
+"rndwave"
+{
+"wave" "ambient/hums/neon_hum-02.wav"
+
+}
+}
+
+
+"playrandom"
+{
+"time" "5,15"
+"volume" "0.5,1"
+"pitch" "100"
+"position" "1"
+"rndwave"
+{
+"wave" "npc/crow/alert2.wav"
+"wave" "npc/crow/alert3.wav"
+"wave" "npc/crow/idle1.wav"
+"wave" "npc/crow/idle2.wav"
+"wave" "npc/crow/pain1.wav"
+"wave" "npc/crow/pain2.wav"
+
+}
+} 
+
+}  // end of crickets
+
+"murksvilleLake"
+{ 
+"dsp"   "0"
+"playlooping" 
+{ 
+"volume"       "1" 
+"pitch"        "100" 
+"wave"         "ambient/water/lake_water.wav"
+}
+
+"playlooping" 
+{ 
+"volume"       "0.2" 
+"pitch"        "100" 
+"wave"         "ambient/crickets/crickets-03.wav"
+}
+
+
+}  // end of lake
+
+
+"murksvilleBorder"
+{ 
+"dsp"   "0"
+"playlooping" 
+{ 
+"volume"       "0.2" 
+"pitch"        "100" 
+"wave"         "ambient/atmosphere/engine_room.wav"
+}
+
+"playlooping" 
+{ 
+"volume"       "0.1" 
+"pitch"        "100" 
+"wave"         "ambient/crickets/crickets-03.wav"
+}
+
+
+}  // end of border
+
+"murksvilleIndoor"
+{ 
+"dsp"   "0"
+"playlooping" 
+{ 
+"volume"       "0.2" 
+"pitch"        "100" 
+"wave"         "ambient/atmosphere/engine_room.wav"
+}
+
+} // end of indoor
+
+
+"murksvilleIndoorDrip"
+{ 
+"dsp"   "0"
+"playlooping" 
+{ 
+"volume"       "0.1" 
+"pitch"        "100" 
+"wave"         "ambient/atmosphere/engine_room.wav"
+}
+
+"playlooping" 
+{ 
+"volume"       "0.2" 
+"pitch"        "100" 
+"wave"         "ambient/waterdripping/water_drip-02.wav"
+}
+
+}  // end of drip
+
+"murksvilleIndoorLake"
+{ 
+"dsp"   "0"
+"playlooping" 
+{ 
+"volume"       "0.1" 
+"pitch"        "100" 
+"wave"         "ambient/atmosphere/engine_room.wav"
+}
+
+"playlooping" 
+{ 
+"volume"       "0.2" 
+"pitch"        "100" 
+"wave"         "ambient/water/lake_water.wav"
+}
+
+}  // end of drip

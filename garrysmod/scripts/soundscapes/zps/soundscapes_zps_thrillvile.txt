@@ -1,0 +1,346 @@
+//
+
+"outside"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"Playlooping"
+{
+	"wave"	"ambient/wind/wasteland_wind.wav"
+	"volume"".5"
+
+}
+"Playlooping"
+{
+	"wave"	"ambient/levels/canals/swamp_frogs_loop2.wav"
+	"position" "0,1,2,3"
+	"volume"	"1"
+
+}
+"playlooping"
+{
+	"wave"	"ambient/water/lake_water.wav"
+	"volume"	".5"
+	"position"	"2,3,4,5"
+}
+
+"playlooping"
+{
+  "wave" "ambient/hums/hum-03.wav"
+  "volume" "1"
+  "position" "6"
+}
+
+"playlooping"
+{
+  "wave" "custom/hellhound.wav"
+  "volume" "1"
+  "position" "7"
+}
+
+
+"playrandom"
+{
+	"time"		"1,12"
+	"volume"	"0.10,0.15"
+	"pitch"		"50,120"
+	"position"	"0,1,2"
+	"rndwave"
+{
+		"wave"	"ambient/levels/canals/swamp_bird1.wav"
+		"wave"	"ambient/levels/canals/swamp_bird2.wav"
+		"wave"	"ambient/levels/canals/swamp_bird3.wav"
+		"wave"	"ambient/levels/canals/swamp_bird4.wav"
+		}
+
+	}
+}
+///////////////////////////////////////////////////
+"hellhoundSong" {
+  "dsp" "1"
+  "dsp_volume" 1
+  "playlooping"
+  {
+	  "wave"	"custom/hellhound.wav"
+	  "volume"	"1"
+  }
+}
+///////////////////////////////////////////////////
+"pigstick"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"playlooping"
+{
+	"wave"	"ambient/refrigerator/refrigerator-03.wav"
+	"volume"	"1"
+	"position"	"0"
+}
+"playlooping"
+{
+	"wave"	"ambient/flies/flys-01.wav"
+	"volume"	"0.7"
+}
+"playlooping"
+{
+	"wave"	"ambient/hums/hum-03.wav"
+	"volume"	"1"
+	"position"	"1"
+	}
+}
+//////////////////////////////////////////////////////
+
+"workshop"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"playlooping"
+{
+	"wave"	"ambient/levels/canals/tunnel_wind_loop1.wav"
+	"volume"	"0.5"
+}
+
+"playlooping"
+{
+	"wave"	"ambient/levels/canals/waterleak_loop1.wav"
+	"volume"	"0.3"
+	"position"	"1,2"
+}
+
+}
+//////////////////////////////////////////////////////
+
+"teacups"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"playlooping"
+{
+	"wave"	"ambient/levels/canals/tunnel_wind_loop1.wav"
+	"volume"	"0.5"
+	}
+}
+//////////////////////////////////////////////////////
+
+"drainage"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"playlooping"
+{
+	"wave"	"ambient/levels/canals/tunnel_wind_loop1.wav"
+	"volume"	"0.4"
+}
+
+"playlooping"
+{
+	"wave"  "ambient/waterdripping/water_drip-02.wav"
+	"volume"	"0.7"
+	}
+
+
+"playrandom"
+{
+	"time"		"15,45"
+	"volume"	"0.2"
+	"pitch"		"50,120"
+	"rndwave"
+{
+		"wave"	"ambient/materials/creaking.wav"
+		}
+
+	}
+	
+}
+
+//////////////////////////////////////////////////////
+
+"cookie"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+	
+"playlooping"
+{
+	"wave"	"ambient/refrigerator/refrigerator-03.wav"
+	"volume"	"1"
+	"position"	"0"
+	}
+
+"playlooping"
+{
+	"wave"	"ambient/levels/canals/tunnel_wind_loop1.wav"
+	"volume"	"0.2"
+}
+}
+
+//////////////////////////////////////////////////////
+
+"staff"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+	
+"playlooping"
+{
+	"wave"	"ambient/levels/canals/tunnel_wind_loop1.wav"
+	"volume"	"0.5"
+}
+
+"playlooping"
+{
+	"wave"	"ambient/refrigerator/refrigerator-03.wav"
+	"volume"	"1"
+	"position"	"0"
+	}
+}
+//////////////////////////////////////////////////////
+
+"attic"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"playlooping"
+{
+	"wave"	"ambient/levels/canals/tunnel_wind_loop1.wav"
+	"volume"	"0.5"
+}
+
+"playlooping"
+{
+	"wave"	"ambient/arcades/crackman.wav"
+	"volume"	"0.3"
+	"position" "0"
+	}
+"playlooping"
+{
+	"wave"	"ambient/arcades/random_arcade-01.wav"
+	"volume"	"0.3"
+	"position" "1"
+	}
+	
+}
+//////////////////////////////////////////////////////
+
+"souvenirs"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"playlooping"
+{
+	"wave"	"custom/music/two.wav"
+	"volume"	"0.5"
+	}
+"playlooping"
+{
+	"wave"	"ambient/refrigerator/refrigerator-03.wav"
+	"volume"	"1"
+	"position"	"0"
+	}
+"playlooping"
+{
+	"wave"	"custom/fm_noise.wav"
+	"volume"	"0.7"
+	"position"	"1"
+	}
+}
+
+//////////////////////////////////////////////////////
+"arcade"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"playlooping"
+{
+	"wave"	"ambient/hums/neon_hum-02.wav"
+	"volume"	"1"
+	"position"	"0"
+	}
+"playlooping"
+{
+	"wave"	"ambient/wind/inside_wind_hall-01.wav"
+	"volume"	"0.4"
+	}
+	
+"playlooping"
+{
+	"wave"	"ambient/arcades/crackman.wav"
+	"volume"	"0.3"
+	"position" "0"
+	}
+	
+"playlooping"
+{
+	"wave"	"ambient/arcades/zaiden_dx.wav"
+	"volume"	"0.3"
+	"position" "1"
+	}
+	
+"playlooping"
+{
+	"wave"	"ambient/arcades/golder_hax.wav"
+	"volume"	"0.3"
+	"position" "2"
+	}
+	
+"playlooping"
+{
+	"wave"	"ambient/arcades/random_arcade-01.wav"
+	"volume"	"0.3"
+	"position" "3"
+	}
+	
+"playlooping"
+{
+	"wave"	"ambient/arcades/zalaga.wav"
+	"volume"	"0.3"
+	"position" "4"
+	}
+	
+}
+//////////////////////////////////////////////////////
+"bar"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+
+"playlooping"
+{
+	"wave"	"ambient/wind/inside_wind_hall-01.wav"
+	"volume"	"0.4"
+	}
+"playlooping"
+{
+	"wave"	"ambient/refrigerator/refrigerator-03.wav"
+	"volume"	"1"
+	"position"	"0"
+	}
+
+"playlooping"
+{
+	"wave"	"custom/fm_noise.wav"
+	"volume"	"0.2"
+	"position"	"1"
+	}
+}
+//////////////////////////////////////////////////////
+"ghost"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"playlooping"
+{
+	"wave"	"ambient/wind/inside_wind_hall-01.wav"
+	"volume"	"0.8"
+	}
+}

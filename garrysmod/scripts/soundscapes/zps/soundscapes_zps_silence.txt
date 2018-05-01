@@ -1,0 +1,571 @@
+//ZPS_Silence SoundScape
+//Written by dR.Vodker
+//
+
+"ZP.Silence_Critters01"
+{
+	"playrandom"
+	{
+		"volume"		"0.075,0.1"
+		"time"			"12.0, 35.0"
+		"pitch"			"90,100"
+		"attenuation"	"0.61"
+		"soundlevel"	"SNDLVL_140dB"
+		"position"		"random"
+		"rndwave"
+		{
+			"wave" "ambient\creatures\rats1.wav"
+			"wave" "ambient\creatures\rats2.wav"
+			"wave" "ambient\creatures\rats3.wav"
+			"wave" "ambient\creatures\rats4.wav"
+			"wave" "ambient\creatures\flies1.wav"
+			"wave" "ambient\creatures\flies2.wav"
+			"wave" "ambient\creatures\flies3.wav"
+			"wave" "ambient\creatures\flies4.wav"
+			"wave" "ambient\creatures\flies5.wav"
+			"wave" "ambient\creatures\town_muffled_cry1.wav"
+			"wave" "npc\antlion\idle1.wav"
+			"wave" "npc\barnacle\barnacle_tongue_pull3.wav"
+			"wave" "npc\headcrab_poison\ph_idle1.wav"
+			"wave" "npc\headcrab_poison\ph_rattle1.wav"
+			"wave" "ambient\creatures\town_scared_breathing1.wav"
+			"wave" "ambient\creatures\town_scared_breathing2.wav"
+			"wave" "ambient\creatures\town_scared_sob1.wav"
+			"wave" "ambient\creatures\town_scared_sob2.wav"
+			"wave" "ambient\levels\streetwar\city_scream3.wav"
+			"wave" "ambient\levels\streetwar\gunship_distant2.wav"
+			"wave" "ambient\voices\citizen_beaten4.wav"
+			"wave" "ambient\voices\citizen_beaten3.wav"
+		}
+	}
+}
+
+"ZP.Silence_Critters02"
+{
+	"playrandom"
+	{
+		"volume"		"0.075,0.1"
+		"time"			"15.0, 35.0"
+		"pitch"			"90,100"
+		"attenuation"	"0.65"
+		"soundlevel"	"SNDLVL_100dB"
+		"position"		"random"
+		"rndwave"
+		{
+			"wave" "ambient\creatures\rats1.wav"
+			"wave" "ambient\creatures\rats2.wav"
+			"wave" "ambient\creatures\rats3.wav"
+			"wave" "ambient\creatures\rats4.wav"
+			"wave" "ambient\creatures\flies1.wav"
+			"wave" "ambient\creatures\flies2.wav"
+			"wave" "ambient\creatures\flies3.wav"
+			"wave" "ambient\creatures\flies4.wav"
+			"wave" "ambient\creatures\flies5.wav"
+			"wave" "ambient\creatures\town_scared_breathing1.wav"
+			"wave" "ambient\creatures\town_scared_breathing2.wav"
+		}
+	}
+}
+
+"ZP.Silence_Env01"
+{
+	"playrandom"
+	{
+		"volume"		"0.075,0.1"
+		"time"			"38.0, 62.0"
+		"pitch"			"90,100"
+		"soundlevel"	"SNDLVL_140dB"
+		"position"		"0"
+		"rndwave"
+		{
+			"wave" "ambient\atmosphere\cave_hit1.wav"
+			"wave" "ambient\atmosphere\hole_hit1.wav"
+			"wave" "ambient\atmosphere\hole_hit2.wav"
+			"wave" "ambient\atmosphere\hole_hit3.wav"
+			"wave" "ambient\atmosphere\hole_hit5.wav"
+			"wave" "ambient\atmosphere\metallic1.wav"
+			"wave" "ambient\levels\citadel\citadel_flyer1.wav"
+			"wave" "ambient\levels\citadel\strange_talk9.wav"
+			"wave" "ambient\levels\labs\teleport_winddown1.wav"
+		}
+	}
+}
+
+"ZP.Silence_Env02"
+{
+	"playrandom"
+	{
+		"volume"		"0.075,0.1"
+		"time"			"24.0, 37.0"
+		"pitch"			"90,100"
+		"soundlevel"	"SNDLVL_140dB"
+		"position"		"1"
+		"rndwave"
+		{
+			"wave" "ambient\materials\bump1.wav"
+			"wave" "ambient\materials\cartrap_rope1.wav"
+			"wave" "ambient\materials\cartrap_rope2.wav"
+			"wave" "ambient\materials\cartrap_rope3.wav"
+			"wave" "ambient\materials\creak5.wav"
+			"wave" "ambient\materials\footsteps_wood2.wav"
+			"wave" "ambient\materials\footsteps_wood1.wav"
+		}
+	}
+}
+
+"ZP.Silence_Env03"
+{
+	"playrandom"
+	{
+		"volume"		"0.075,0.1"
+		"time"			"17.0, 52.0"
+		"pitch"			"90,100"
+		"soundlevel"	"SNDLVL_140dB"
+		"position"		"2"
+		"rndwave"
+		{
+			"wave" "ambient\materials\metal_rattle1.wav"
+			"wave" "ambient\materials\metal_rattle2.wav"
+			"wave" "ambient\materials\metal_rattle3.wav"
+			"wave" "ambient\materials\metal_rattle4.wav"
+			"wave" "ambient\materials\metal_stress3.wav"
+			"wave" "ambient\materials\metal_stress4.wav"
+		}
+	}
+}
+
+"ZP.Silence_Env04"
+{
+	"playrandom"
+	{
+		"volume"		"0.075,0.1"
+		"time"			"38.0, 54.0"
+		"pitch"			"90,100"
+		"soundlevel"	"SNDLVL_140dB"
+		"position"		"3"
+		"rndwave"
+		{
+			"wave" "ambient\materials\rustypipes2.wav"
+			"wave" "ambient\materials\shuffle1.wav"
+			"wave" "ambient\materials\squeekyfloor1.wav"
+			"wave" "ambient\materials\squeekyfloor2.wav"
+			"wave" "ambient\materials\wood_creak1.wav"
+			"wave" "ambient\materials\wood_creak2.wav"
+			"wave" "ambient\materials\wood_creak3.wav"
+			"wave" "ambient\materials\wood_creak4.wav"
+			"wave" "ambient\materials\wood_creak5.wav"
+			"wave" "ambient\materials\wood_creak6.wav"
+		}
+	}
+}
+
+"ZP.Silence_Outside"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"		"1"
+		"wave"			"ambient/wind/wind_ghosttown-01.wav"
+		"soundlevel"	"SNDLVL_180dB"
+		"pitch"			"100"
+	}
+}
+
+"ZP.Silence_OutsideTank"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_Outside"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.5"
+		"wave"			"ambient/gas/steam_loop1.wav"
+		"pitch"			"75"
+		"soundlevel"	"SNDLVL_60dB"
+		"position"		"0"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.5"
+		"wave"			"ambient/machines/lab_loop1.wav"
+		"pitch"			"95"
+		"soundlevel"	"SNDLVL_60dB"
+		"position"		"1"
+	}
+}
+
+"ZP.Silence_OutsideWall"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_Outside"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.75"
+		"wave"			"ambient/machines/wall_loop1.wav"
+		"pitch"			"95"
+		"soundlevel"	"SNDLVL_50dB"
+		"position"		"0"
+	}
+}
+
+"ZP.Silence_Inside"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.25"
+		"wave"		"ambient\hums\hum-01.wav"
+		"pitch"		"50"
+		"soundlevel"	"SNDLVL_180dB"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"wave"		"ambient\bell\bells_loop.wav"
+		"pitch"		"25"
+		"soundlevel"	"SNDLVL_180dB"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"wave"		"ambient\atmosphere\tunnel1.wav"
+		"pitch"		"90"
+		"soundlevel"	"SNDLVL_180dB"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.060"
+		"wave"		"ambient\computer\computer-01.wav"
+		"soundlevel"	"SNDLVL_180dB"
+		"pitch"		"100"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.075"
+		"wave"		"ambient\levels\citadel\teleport_windup_loop1.wav"
+		"pitch"		"25"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.075"
+		"wave"		"ambient\machines\combine_terminal_loop1.wav"
+		"pitch"		"10"
+	}
+	
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_Env01"
+	} 
+	
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_Env02"
+	} 
+	
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_Env03"
+	} 
+	
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_Env04"
+	} 
+	
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_Critters01"
+	} 
+}
+
+"ZP.Silence_InsideFridges"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_Inside"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"1"
+		"wave"			"ambient/machines/combine_shield_loop3.wav"
+		"pitch"			"95"
+		"soundlevel"	"SNDLVL_50dB"
+		"position"		"7"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"1"
+		"wave"			"ambient/machines/combine_shield_loop3.wav"
+		"pitch"			"95"
+		"soundlevel"	"SNDLVL_50dB"
+		"position"		"6"
+	}
+}
+
+"ZP.Silence_BasementCorridor"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"		"0.35"
+		"wave"			"ambient\atmosphere\cave_outdoor1.wav"
+		"pitch"			"50"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.25"
+		"wave"			"ambient\atmosphere\corridor.wav"
+		"pitch"			"95"
+	}
+	
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_Critters02"
+	}
+}
+
+"ZP.Silence_BasementCorridorVent"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_BasementCorridor"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.6"
+		"wave"			"ambient\atmosphere\sewer_air1.wav"
+		"pitch"			"95"
+		"soundlevel"	"SNDLVL_60dB"
+		"position"		"0"
+	}
+
+}
+
+"ZP.Silence_BasementLaundry"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"		"0.35"
+		"wave"			"ambient\atmosphere\cave_outdoor1.wav"
+		"pitch"			"50"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.1"
+		"wave"			"ambient\atmosphere\ambience6.wav"
+		"pitch"			"95"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.1"
+		"wave"			"ambient\atmosphere\corridor.wav"
+		"pitch"			"95"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"1"
+		"wave"			"ambient\atmosphere\laundry_amb.wav"
+		"pitch"			"95"
+		"position"		"0"
+	}
+	
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_Critters02"
+	}
+}
+
+"ZP.Silence_BasementCrematory"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"		"0.35"
+		"wave"			"ambient\atmosphere\cave_outdoor1.wav"
+		"pitch"			"50"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.15"
+		"wave"			"ambient\atmosphere\corridor.wav"
+		"pitch"			"95"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"1"
+		"wave"			"ambient\fire\fire_big_loop1.wav"
+		"soundlevel"	"SNDLVL_70dB"
+		"pitch"			"95"
+		"position"		"0"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.5"
+		"wave"			"ambient\airconditioner\air_conditioner-01.wav"
+		"soundlevel"	"SNDLVL_60dB"
+		"pitch"			"95"
+		"position"		"1"
+	}
+	
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_Critters02"
+	}
+}
+
+"ZP.Silence_BasementCells"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"		"0.175"
+		"wave"			"ambient\atmosphere\cave_outdoor1.wav"
+		"pitch"			"50"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.1"
+		"wave"			"ambient\atmosphere\corridor.wav"
+		"pitch"			"95"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.125"
+		"wave"			"ambient\atmosphere\trainstation_ambient_loop1.wav"
+		"pitch"			"95"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.8"
+		"wave"			"ambient\airconditioner\air_conditioner-01.wav"
+		"pitch"			"95"
+		"soundlevel"	"SNDLVL_60dB"
+		"position"		"0"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.8"
+		"wave"			"ambient/vents/ventilation-01.wav"
+		"pitch"			"95"
+		"soundlevel"	"SNDLVL_60dB"
+		"position"		"1"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.8"
+		"wave"			"ambient/vents/ventilation-02.wav"
+		"pitch"			"95"
+		"soundlevel"	"SNDLVL_60dB"
+		"position"		"2"
+	}
+	
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_Critters02"
+	}
+}
+
+
+"ZP.Silence_InCell01"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"		"0.25"
+		"wave"			"ambient\atmosphere\cave_outdoor1.wav"
+		"pitch"			"50"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"wave"		"ambient\bell\bells_loop.wav"
+		"pitch"		"25"
+		"soundlevel"	"SNDLVL_180dB"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.04"
+		"wave"			"ambient\atmosphere\corridor.wav"
+		"pitch"			"95"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.04"
+		"wave"			"ambient\atmosphere\trainstation_ambient_loop1.wav"
+		"pitch"			"95"
+	}
+}
+
+"ZP.Silence_InCell02"
+{
+	"dsp"	"1"
+
+	"playsoundscape"
+	{ 
+		"name"	"ZP.Silence_InCell01"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.1"
+		"wave"			"ambient\voices\crying_loop1.wav"
+		"pitch"			"90"
+	}
+}
+
+"ZP.Silence_InCell03"
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"		"0.25"
+		"wave"			"ambient\atmosphere\cave_outdoor1.wav"
+		"pitch"			"50"
+	}
+}

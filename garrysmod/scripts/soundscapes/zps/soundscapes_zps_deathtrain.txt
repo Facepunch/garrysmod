@@ -1,0 +1,70 @@
+"deathtrain.inside_razor"
+{
+	// Generator noises
+	"playlooping"
+	{
+		"volume"	".3"	
+		"wave"	"zps_deathtrain/razor_generator.wav"
+	}
+
+	// Rumble noises
+	"playlooping"
+	{
+		"volume"	".2"
+		"wave"	"ambient/machines/train_rumble.wav"
+	}
+
+	// Train noises
+	"playlooping"
+	{
+		"volume"	".2"
+		"wave"	"ambient/machines/razor_train_wheels_loop1.wav"
+	}
+}
+
+"deathtrain.inside"
+{
+
+	// Rumble noises
+	"playlooping"
+	{
+		"volume"	".2"
+		"wave"	"ambient/machines/train_rumble.wav"
+	}
+
+	// Train noises
+	"playlooping"
+	{
+		"volume"	".2"
+		"wave"	"ambient/machines/razor_train_wheels_loop1.wav"
+	}
+}
+
+"deathtrain.outside"
+{
+	// Train noises
+	"playlooping"
+	{
+		"volume"	".3"
+		"wave"	"ambient/machines/razor_train_wheels_loop2.wav"
+	}
+
+	// Sound of freight swoozh sound
+	"playlooping"
+	{
+		"volume"	".4"
+		"wave"	"ambient/machines/train_freight_loop2.wav"
+	}
+
+	// Ambient sounds from the outside
+	"playrandom"
+	{
+		"time"		"20, 25"
+		"volume"		"0.7,0.8"
+		"pitch"		"100"
+		"rndwave"
+		{
+			"wave"	"ambient/alarms/train_horn_distant1.wav"
+		}
+	}
+}

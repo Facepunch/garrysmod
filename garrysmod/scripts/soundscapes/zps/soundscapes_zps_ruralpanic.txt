@@ -1,0 +1,236 @@
+//Rural Panic Beta 4 RC1 Soundscape 
+//by Reanimated
+
+"rp_outside_generic"
+{
+	//base sounds
+	"playlooping"
+	{
+		"volume"	"0.85"
+		"pitch"		"100"
+		"wave" "ambient/wind/wind_light-01.wav"
+	}
+
+	//common sounds
+	"playrandom"
+	{
+		"time"		"10,30"
+		"volume"	"0.3,0.8"
+		"pitch"		"95,105"
+		
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_hit1.wav"
+			"wave"	"ambient/wind/wind_hit2.wav"
+			"wave"	"ambient/wind/wind_hit3.wav"
+			"wave"	"ambient/atmosphere/thunder3.wav"
+			"wave"	"ambient/atmosphere/thunder4.wav"
+			"wave"	"ambient/thunder/thunder_medium-01.wav"
+			"wave"	"ambient/thunder/thunder_medium-02.wav"
+		}
+	}
+
+	//uncommon sounds animal
+	//"playrandom"
+	//{
+		//"time"		"45,120"
+		//"volume"	"0.15,0.8"
+		//"pitch"		"95,105"
+		//"position"	"random"
+		//"soundlevel"	"SNDLVL_90dB"
+		
+		//"rndwave"
+		//{
+			//"wave"	"ambient/dog/dog_large_barking-01.wav"
+			//"wave"	"ambient/dog/dog_barking-01.wav"
+			//"wave"	"ambient/dog/dog_barking-02.wav"
+		//}	
+	//}
+
+	//uncommon sounds birds
+	//"playrandom"
+	//{
+		//"time"		"45,120"
+		//"volume"	"0.15,0.8"
+		//"pitch"		"95,105"
+		//"position"	"random"
+		//"soundlevel"	"SNDLVL_90dB"
+		
+		//"rndwave"
+		//{
+			//"wave"	"ambient/crow/crow-01.wav"
+			//"wave"	"ambient/owl/owl-03.wav"
+			//"wave"	"ambient/owl/owls-01.wav"
+		//}	
+	//}
+
+	//uncommon sounds mechanical
+	"playrandom"
+	{
+		"time"		"90,180"
+		"volume"	"0.25,0.6"
+		"pitch"		"95,105"
+
+		
+		"rndwave"
+		{
+			"wave"	"ambient/machines/aircraft_distant_flyby3.wav"
+			"wave"	"ambient/machines/heli_pass_distant1.wav"
+			"wave"	"ambient/alarms/train_horn_distant1.wav"
+		}	
+	}
+
+}
+
+// wood sounds
+"rp_outside_woods"
+{
+
+	"playlooping"
+	{
+		"volume"	"0.6"
+		"pitch"		"100"
+		"wave" "ambient/wind/wind_light-01.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"	"0.8"
+		"pitch"		"100"
+		"wave" "ambient/crickets/crickets-02.wav"
+	}
+
+	//common sounds
+	"playrandom"
+	{
+		"time"		"10,30"
+		"volume"	"0.3,0.8"
+		"pitch"		"95,105"
+		
+		"rndwave"
+		{
+			"wave"	"ambient/wind/wind_hit1.wav"
+			"wave"	"ambient/wind/wind_hit2.wav"
+			"wave"	"ambient/wind/wind_hit3.wav"
+			"wave"	"ambient/atmosphere/thunder3.wav"
+			"wave"	"ambient/atmosphere/thunder4.wav"
+			"wave"	"ambient/thunder/thunder_medium-01.wav"
+			"wave"	"ambient/thunder/thunder_medium-02.wav"
+			//"wave"	"ambient/crow/crow-01.wav"
+			//"wave"	"ambient/owl/owl-03.wav"
+			//"wave"	"ambient/owl/owls-01.wav"
+			//"wave"	"ambient/dog/dog_barking-01.wav"
+			//"wave"	"ambient/dog/dog_barking-02.wav"
+		}
+	}
+}
+
+// roadside sounds
+"rp_outside_roadside"
+{
+
+	"playlooping"
+	{
+		"volume"	"0.6"
+		"pitch"		"100"
+		"wave" "ambient/wind/wind_light-01.wav"
+	}
+
+
+	"playrandom"
+	{
+		"time"		"45,90"
+		"volume"	"0.15,0.4"
+		"pitch"		"95,105"
+
+		
+		"rndwave"
+		{
+			"wave"	"ambient/machines/truck_pass_distant1.wav"
+			"wave"	"ambient/machines/truck_pass_distant2.wav"
+			"wave"	"ambient/machines/truck_pass_distant3.wav"
+			"wave"	"ambient/levels/streetwar/apc_distant2.wav"
+		}	
+	}
+}
+
+// Cliffside sounds, louder winds
+"rp_cliffside"
+{
+
+	"playlooping"
+	{
+		"volume"	"0.8"
+		"pitch"		"100"
+		"wave" "ambient/wind/wind_light-01.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"	"1"
+		"pitch"		"100"
+		"wave" "ambient/wind/wind_cold-01.wav"
+	}
+}
+
+// Barn Ambience
+"rp_barn_interior"
+{
+	"playlooping" 
+	{ 
+	"volume" ".9" 
+	"pitch" "100" 
+	"wave" "ambient/wind/inside_wind_hall-01.wav" 
+	} 
+
+	"playrandom"
+	{
+		"time"		"30,60"
+		"volume"	"0.4,0.9"
+		"pitch"		"95,105"
+
+		
+		"rndwave"
+		{
+			"wave"	"ambient/materials/wood_creak4.wav"
+			"wave"	"ambient/materials/wood_creak5.wav"
+			"wave"	"ambient/materials/wood_creak2.wav"
+			"wave"	"ambient/materials/wood_creak6.wav"
+			"wave"	"ambient/creatures/town_scared_breathing2.wav"
+			"wave"	"ambient/creatures/town_scared_sob1.wav"
+		}
+	}
+}
+
+// House Ambience
+"rp_house_interior"
+{
+	"playlooping" 
+	{ 
+	"volume" ".7" 
+	"pitch" "100" 
+	"wave" "ambient/wind/inside_wind_hall-01.wav" 
+	}
+
+	"playrandom"
+	{
+		"time"		"30,60"
+		"volume"	"0.4,0.9"
+		"pitch"		"95,105"
+		"position"	"random"
+		"soundlevel"	"SNDLVL_90dB"
+
+		
+		"rndwave"
+		{
+			"wave"	"ambient/materials/wood_creak4.wav"
+			"wave"	"ambient/materials/wood_creak5.wav"
+			"wave"	"ambient/materials/wood_creak2.wav"
+			"wave"	"ambient/materials/wood_creak6.wav"
+			"wave"	"ambient/creatures/town_scared_breathing2.wav"
+			"wave"	"ambient/creatures/town_scared_sob1.wav"
+			"wave"	"ambient/materials/cupdrop.wav"	
+			"wave"  "ambient/materials/platedrop1.wav"
+		}	
+	} 
+}
