@@ -14,32 +14,27 @@ concommand.Add( "dupe_save", function( ply, cmd, arg )
 
 	if ( !IsValid( ply ) ) then return end
 
-	if ( ply.m_NextDupeSave && ply.m_NextDupeSave > CurTime() ) then return end
-	ply.m_NextDupeSave = CurTime() + 1
-
-	--
-	-- No dupe to save (!)
-	--
+	-- No dupe to save
 	if ( !ply.CurrentDupe ) then return end
 
-	--
+	-- Current dupe was armed from a file. Don't allow to immediate resave.
+	if ( ply.CurrentDupeArmed ) then return end
+
+	if ( ply.m_NextDupeSave && ply.m_NextDupeSave > CurTime() ) then ServerLog( tostring( ply ) .. " tried to save a dupe too quickly!\n" ) return end
+	ply.m_NextDupeSave = CurTime() + 1
+
 	-- Convert dupe to JSON
-	--
 	local json = util.TableToJSON( ply.CurrentDupe )
 
-	--
 	-- Compress it
-	--
 	local compressed = util.Compress( json )
 	local length = compressed:len()
 	local send_size = 60000
 	local parts = math.ceil( length / send_size )
 
-	MsgN( "Compressed Dupe for sending: ", json:len(), " => ", length, " ( sending in ", parts , " parts )" );
+	ServerLog( tostring( ply ) .. " requested a Dupe. Size: " .. json:len() .. " ( " .. length .. " compressed, " .. parts .. " parts )\n" )
 
-	--
 	-- And send it(!)
-	--
 	local start = 0
 	for i = 1, parts do
 

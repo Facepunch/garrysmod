@@ -122,6 +122,7 @@ function TOOL:RightClick( trace )
 	--
 	-- Store the dupe on the player
 	--
+	self:GetOwner().CurrentDupeArmed = false
 	self:GetOwner().CurrentDupe = Dupe
 
 	return true
@@ -147,11 +148,11 @@ if ( CLIENT ) then
 	--
 	net.Receive( "CopiedDupe", function( len, client )
 
-			if ( net.ReadUInt( 1 ) == 1 ) then
-				hook.Run( "DupeSaveAvailable" )
-			else
-				hook.Run( "DupeSaveUnavailable" )
-			end
+		if ( net.ReadUInt( 1 ) == 1 ) then
+			hook.Run( "DupeSaveAvailable" )
+		else
+			hook.Run( "DupeSaveUnavailable" )
+		end
 
 	end )
 
