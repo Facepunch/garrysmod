@@ -14,6 +14,9 @@ concommand.Add( "dupe_save", function( ply, cmd, arg )
 
 	if ( !IsValid( ply ) ) then return end
 
+	if ( ply.m_NextDupeSave && ply.m_NextDupeSave > CurTime() ) then return end
+	ply.m_NextDupeSave = CurTime() + 1
+
 	--
 	-- No dupe to save (!)
 	--
