@@ -14,12 +14,8 @@ concommand.Add( "dupe_save", function( ply, cmd, arg )
 
 	if ( !IsValid( ply ) ) then return end
 
-
-	-- Make sure they are not spamming this command
-	local curtime = CurTime()
-	if ( ( ply.LastDupeSave or 0 ) > curtime ) then return end
-
-	ply.LastDupeSave = curtime + 2
+	if ( ply.LastDupeSaved && ply.LastDupeSaved > CurTime() ) then return end
+	ply.LastDupeSaved = CurTime() + 1
 
 	--
 	-- No dupe to save (!)
