@@ -17,10 +17,13 @@ concommand.Add( "dupe_save", function( ply, cmd, arg )
 	-- No dupe to save
 	if ( !ply.CurrentDupe ) then return end
 
-	-- Current dupe was armed from a file. Don't allow to immediate resave.
+	-- Current dupe was armed from a file. Don't allow immediate resave.
 	if ( ply.CurrentDupeArmed ) then return end
 
-	if ( ply.m_NextDupeSave && ply.m_NextDupeSave > CurTime() ) then ServerLog( tostring( ply ) .. " tried to save a dupe too quickly!\n" ) return end
+	if ( ply.m_NextDupeSave && ply.m_NextDupeSave > CurTime() && !game.SinglePlayer() ) then
+		ServerLog( tostring( ply ) .. " tried to save a dupe too quickly!\n" )
+		return
+	end
 	ply.m_NextDupeSave = CurTime() + 1
 
 	-- Convert dupe to JSON
