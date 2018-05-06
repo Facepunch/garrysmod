@@ -11,8 +11,8 @@ end
 
 SWEP.Base                   = "weapon_tttbase"
 
-SWEP.ViewModel              = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel             = "models/weapons/w_crowbar.mdl"
+SWEP.ViewModel              = ""
+SWEP.WorldModel             = ""
 
 SWEP.Primary.ClipSize       = -1
 SWEP.Primary.DefaultClip    = -1
@@ -53,12 +53,6 @@ function SWEP:Reload()
 end
 
 function SWEP:Deploy()
-   if SERVER and IsValid(self:GetOwner()) then
-      self:GetOwner():DrawViewModel(false)
-   end
-
-   self:DrawShadow(false)
-
    return true
 end
 
