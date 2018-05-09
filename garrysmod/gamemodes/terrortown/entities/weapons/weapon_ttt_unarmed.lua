@@ -7,12 +7,13 @@ if CLIENT then
    SWEP.Slot                = 5
 
    SWEP.ViewModelFOV        = 10
+   SWEP.UseHands = false
 end
 
 SWEP.Base                   = "weapon_tttbase"
 
-SWEP.ViewModel              = ""
-SWEP.WorldModel             = ""
+SWEP.ViewModel              = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel             = "models/weapons/w_crowbar.mdl"
 
 SWEP.Primary.ClipSize       = -1
 SWEP.Primary.DefaultClip    = -1
@@ -41,6 +42,14 @@ end
 
 function SWEP:ShouldDropOnDie()
    return false
+end
+
+function SWEP:PreDrawViewModel()
+    return true
+end
+
+function SWEP:PreDrawWorldModel()
+   return true
 end
 
 function SWEP:PrimaryAttack()
