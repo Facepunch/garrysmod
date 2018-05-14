@@ -273,70 +273,77 @@ Scheme
 				"tall_hidef" "20"
 				"weight"	 "0"
 				"outline"	 "1"
+				"antialias" "1"
 			}
 		}
 		"Default"
 		{
 			"1"
 			{
-				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Roboto" [$WINDOWS]
 				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"16"
 				"weight"	"500"
+				"antialias" "1"
 			}
 		}
 		"DefaultBold"
 		{
 			"1"
 			{
-				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Roboto" [$WINDOWS]
 				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"16"
 				"weight"	"1000"
+				"antialias" "1"
 			}
 		}
 		"DefaultUnderline"
 		{
 			"1"
 			{
-				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Roboto" [$WINDOWS]
 				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"16"
 				"weight"	"500"
 				"underline" "1"
+				"antialias" "1"
 			}
 		}
 		"DefaultSmall"
 		{
 			"1"
 			{
-				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Roboto" [$WINDOWS]
 				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"12" [$WINDOWS]
 				"tall"		"14" [$OSX]
 				"tall"		"16" [$LINUX]
 				"weight"	"0"
+				"antialias" "1"
 			}
 		}
 		"DefaultSmallDropShadow"
 		{
 			"1"
 			{
-				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Roboto" [$WINDOWS]
 				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"13"
 				"weight"	"0"
 				"dropshadow" "1"
+				"antialias" "1"
 			}
 		}
 		"DefaultVerySmall"
 		{
 			"1"
 			{
-				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Roboto" [$WINDOWS]
 				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"12"
 				"weight"	"0"
+				"antialias" "1"
 			}
 		}
 
@@ -344,50 +351,55 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Roboto" [$WINDOWS]
 				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"18"
 				"weight"	"0"
+				"antialias" "1"
 			}
 		}
 		"UiBold"
 		{
 			"1"	[$WIN32]
 			{
-				"name"		"Tahoma" [$WINDOWS]
+				"name"		"Roboto" [$WINDOWS]
 				"name"		"Verdana" [!$WINDOWS]
 				"tall"		"12"
 				"weight"	"1000"
+				"antialias" "1"
 			}
 			"1"	[$X360]
 			{
-				"name"		"Tahoma"
+				"name"		"Roboto"
 				"tall"		"24"
 				"weight"	"2000"
 				"outline"	"1"
+				"antialias" "1"
 			}
 		}
 		"ChapterTitle"	[$X360]
 		{
 			"1"
 			{
-				"name"			"Tahoma"
+				"name"			"Roboto"
 				"tall"			"20"
 				"tall_hidef"	"28"
 				"weight"		"2000"
 				"outline"		"1"
+				"antialias" "1"
 			}
 		}
 		"ChapterTitleBlur"	[$X360]
 		{
 			"1"
 			{
-				"name"			"Tahoma"
+				"name"			"Roboto"
 				"tall"			"20"
 				"tall_hidef"	"28"
 				"weight"		"2000"
 				"blur"			"3"
 				"blur_hidef"	"5"
+				"antialias" "1"
 			}
 		}
 		"MenuLarge"
@@ -400,7 +412,7 @@ Scheme
 			}
 			"1"	[!$LINUX]
 			{
-				"name"		"Verdana"
+				"name"		"Roboto"
 				"tall"		"16"
 				"weight"	"600"
 				"antialias" "1"
@@ -419,7 +431,7 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana"
+				"name"		"Roboto"
 				"tall"		"20"
 				"weight"	"1200"
 				"antialias" "1"
@@ -431,7 +443,7 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana"
+				"name"		"Roboto"
 				"tall"		"18"
 				"weight"	"1200"
 				"antialias" "1"
@@ -444,7 +456,7 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Verdana"
+				"name"		"Roboto"
 				"tall"		"15"
 				"weight"	"1200"
 				"antialias" "1"
@@ -453,7 +465,7 @@ Scheme
 			}
 			"2"
 			{
-				"name"		"Verdana"
+				"name"		"Roboto"
 				"tall"		"20"
 				"weight"	"1200"
 				"antialias" "1"
@@ -485,6 +497,7 @@ Scheme
 				"tall"		"10" [$WINDOWS]
 				"tall"		"14" [!$WINDOWS]
 				"weight"	"500"
+				"antialias" "1"
 			}
 		}
 
@@ -539,6 +552,7 @@ Scheme
 				"name"		"Trebuchet MS"
 				"tall"		"40"
 				"weight"	"900"
+				"antialias" "1"
 			}
 		}
 		"HUDNumber1"
@@ -548,6 +562,7 @@ Scheme
 				"name"		"Trebuchet MS"
 				"tall"		"41"
 				"weight"	"900"
+				"antialias" "1"
 			}
 		}
 		"HUDNumber2"
@@ -557,6 +572,7 @@ Scheme
 				"name"		"Trebuchet MS"
 				"tall"		"42"
 				"weight"	"900"
+				"antialias" "1"
 			}
 		}
 		"HUDNumber3"
@@ -566,6 +582,7 @@ Scheme
 				"name"		"Trebuchet MS"
 				"tall"		"43"
 				"weight"	"900"
+				"antialias" "1"
 			}
 		}
 		"HUDNumber4"
@@ -575,6 +592,7 @@ Scheme
 				"name"		"Trebuchet MS"
 				"tall"		"44"
 				"weight"	"900"
+				"antialias" "1"
 			}
 		}
 		"HUDNumber5"
@@ -584,6 +602,7 @@ Scheme
 				"name"		"Trebuchet MS"
 				"tall"		"45"
 				"weight"	"900"
+				"antialias" "1"
 			}
 		}
 		"DefaultFixed"
@@ -596,13 +615,8 @@ Scheme
 				"tall"		"11" [$LINUX]
 				"tall"		"10"
 				"weight"	"0"
+				"antialias" "1"
 			}
-//			"1"
-//			{
-//				"name"		"FixedSys"
-//				"tall"		"20"
-//				"weight"	"0"
-//			}
 		}
 
 		"DefaultFixedDropShadow"
@@ -617,54 +631,53 @@ Scheme
 				"tall"		"10"
 				"weight"	"0"
 				"dropshadow" "1"
+				"antialias" "1"
 			}
-//			"1"
-//			{
-//				"name"		"FixedSys"
-//				"tall"		"20"
-//				"weight"	"0"
-//			}
 		}
 
 		"CloseCaption_Normal"
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$POSIX]
+				"name"		"Roboto" [!$POSIX]
 				"name"		"Verdana" [$POSIX]
 				"tall"		"16"
 				"weight"	"500"
+				"antialias" "1"
 			}
 		}
 		"CloseCaption_Italic"
 		{
 			"1"
 			{
-				"name"		"Tahoma"
+				"name"		"Roboto"
 				"tall"		"16"
 				"weight"	"500"
 				"italic"	"1"
+				"antialias" "1"
 			}
 		}
 		"CloseCaption_Bold"
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$POSIX]
+				"name"		"Roboto" [!$POSIX]
 				"name"		"Verdana Bold" [$POSIX]
 				"tall"		"16"
 				"weight"	"900"
+				"antialias" "1"
 			}
 		}
 		"CloseCaption_BoldItalic"
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$POSIX]
+				"name"		"Roboto" [!$POSIX]
 				"name"		"Verdana Bold Italic" [$POSIX]
 				"tall"		"16"
 				"weight"	"900"
 				"italic"	"1"
+				"antialias" "1"
 			}
 		}
 
@@ -812,7 +825,7 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma" [!$POSIX]
+				"name"		"Roboto" [!$POSIX]
 				"name"		"Verdana" [$POSIX]
 				"tall"		"35"
 				"tall_lodef"	"40"
@@ -826,23 +839,25 @@ Scheme
 		{
 			"1"
 			{
-				"name"		"Tahoma"
+				"name"		"Roboto"
 				"tall"		"16"
 				"weight"	"0"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
 				"yres"	"480 599"
+				"antialias" "1"
 			}
 			"2"
 			{
-				"name"		"Tahoma"
+				"name"		"Roboto"
 				"tall"		"16"
 				"weight"	"0"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
 				"yres"	"600 767"
+				"antialias" "1"
 			}
 			"3"
 			{
-				"name"		"Tahoma"
+				"name"		"Roboto"
 				"tall"		"16"
 				"weight"	"0"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
@@ -851,7 +866,7 @@ Scheme
 			}
 			"4"
 			{
-				"name"		"Tahoma"
+				"name"		"Roboto"
 				"tall"		"19"
 				"weight"	"0"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
@@ -860,7 +875,7 @@ Scheme
 			}
 			"5"
 			{
-				"name"		"Tahoma"
+				"name"		"Roboto"
 				"tall"		"19"
 				"weight"	"0"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
@@ -1309,12 +1324,18 @@ Scheme
 	}
 
 	//////////////////////// CUSTOM FONT FILES /////////////////////////////
-	//
-	// specifies all the custom (non-system) font files that need to be loaded to service the above described fonts
+	// specifies all the custom (non-system) font files that need to be
+	// loaded to service the above described fonts
+	////////////////////////////////////////////////////////////////////////
+	
 	CustomFontFiles
 	{
 		"1"		"resource/HALFLIFE2.ttf"
 		"2"		"resource/HL2EP2.ttf"
 		"3"		"resource/marlett.ttf"
+		"4"		"resource/fonts/Roboto-Light.ttf"
+		"5"		"resource/fonts/Roboto-Regular.ttf"
+		"6"		"resource/fonts/Roboto-Medium.ttf"
+		"7"		"resource/fonts/Roboto-Bold.ttf"
 	}
 }
