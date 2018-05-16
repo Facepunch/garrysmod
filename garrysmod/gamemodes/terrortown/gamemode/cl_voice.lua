@@ -60,14 +60,6 @@ function GM:ChatText(idx, name, text, type)
       end
    end
 
-   if idx == 0 and type == "none" then
-      if string.sub(text, 1, 6) == "(VOTE)" then
-         chat.AddText(Color(255, 180, 0), string.sub(text, 8))
-
-         return true
-      end
-   end
-
    return BaseClass.ChatText(self, idx, name, text, type)
 end
 
@@ -360,7 +352,8 @@ end
 local function RadioComplete(cmd, arg)
    local c = {}
    for k, cmd in pairs(RADIO.Commands) do
-      table.insert(c, cmd.cmd)
+      local rcmd = "ttt_radio " .. cmd.cmd
+      table.insert(c, rcmd)
    end
    return c
 end
@@ -572,15 +565,12 @@ local function CreateVoiceVGUI()
 end
 hook.Add( "InitPostEntity", "CreateVoiceVGUI", CreateVoiceVGUI )
 
-MUTE_NONE = 0
-MUTE_TERROR = TEAM_TERROR
-MUTE_SPEC = TEAM_SPEC
-
-local MuteStates = {MUTE_NONE, MUTE_TERROR, MUTE_SPEC}
+local MuteStates = {MUTE_NONE, MUTE_TERROR, MUTE_ALL, MUTE_SPEC}
 
 local MuteText = {
    [MUTE_NONE]   = "",
    [MUTE_TERROR] = "mute_living",
+   [MUTE_ALL]    = "mute_all",
    [MUTE_SPEC]   = "mute_specs"
 };
 

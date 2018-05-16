@@ -6,15 +6,11 @@ TOOL.LeftClickAutomatic = true
 TOOL.RightClickAutomatic = true
 TOOL.RequiresTraceHit = true
 
-if ( CLIENT ) then
-
-	function TOOL.BuildCPanel( CPanel )
-
-		CPanel:AddControl( "Header", { Description = "#tool.inflator.desc" } )
-
-	end
-
-end
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" },
+	{ name = "reload" }
+}
 
 local ScaleYZ = {
 	"ValveBiped.Bip01_L_UpperArm",
@@ -47,7 +43,7 @@ local ScaleYZ = {
 	"ValveBiped.leg_bone2_R",
 	"ValveBiped.leg_bone3_L",
 	"ValveBiped.leg_bone3_R",
-	
+
 	-- Team Fortress 2
 	"bip_knee_L",
 	"bip_knee_R",
@@ -81,12 +77,9 @@ local function GetNiceBoneScale( name, scale )
 
 end
 
---[[------------------------------------------------------------
-	Scale the specified bone by Scale
---------------------------------------------------------------]]
+--Scale the specified bone by Scale
 local function ScaleBone( ent, bone, scale, type )
-
-	if ( !bone ) then return false end
+	if ( !bone || CLIENT ) then return false end
 
 	local physBone = ent:TranslateBoneToPhysBone( bone )
 	for i = 0, ent:GetBoneCount() do
@@ -106,16 +99,14 @@ local function ScaleBone( ent, bone, scale, type )
 
 end
 
---[[------------------------------------------------------------
-	Scale UP
---------------------------------------------------------------]]
-function TOOL:LeftClick( trace )
+--Scale UP
+function TOOL:LeftClick( trace, scale )
 
-	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
-	if ( !trace.Entity:IsNPC() && trace.Entity:GetClass() != "prop_ragdoll" ) then return false end
+	if ( !IsValid( trace.Entity ) ) then return false end
+	if ( !trace.Entity:IsNPC() && trace.Entity:GetClass() != "prop_ragdoll" /*&& !trace.Entity:IsPlayer()*/ ) then return false end
 
-	local Bone = trace.Entity:TranslatePhysBoneToBone( trace.PhysicsBone )
-	ScaleBone( trace.Entity, Bone, 1 )
+	local bone = trace.Entity:TranslatePhysBoneToBone( trace.PhysicsBone )
+	ScaleBone( trace.Entity, bone, scale or 1 )
 	self:GetWeapon():SetNextPrimaryFire( CurTime() + 0.01 )
 
 	local effectdata = EffectData()
@@ -126,39 +117,31 @@ function TOOL:LeftClick( trace )
 
 end
 
---[[------------------------------------------------------------
-	Scale DOWN
---------------------------------------------------------------]]
+-- Scale DOWN
 function TOOL:RightClick( trace )
 
-	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
-	if ( !trace.Entity:IsNPC() && trace.Entity:GetClass() != "prop_ragdoll" ) then return false end
-
-	local Bone = trace.Entity:TranslatePhysBoneToBone( trace.PhysicsBone )
-	ScaleBone( trace.Entity, Bone, -1 )
-	self:GetWeapon():SetNextSecondaryFire( CurTime() + 0.01 )
-
-	local effectdata = EffectData()
-	effectdata:SetOrigin( trace.HitPos )
-	util.Effect( "inflator_magic", effectdata )
-
-	return false
+	return self:LeftClick( trace, -1 )
 
 end
 
---[[------------------------------------------------------------
-	Remove Scaling
---------------------------------------------------------------]]
+-- Reset scaling
 function TOOL:Reload( trace )
 
-	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
-	if ( !trace.Entity:IsNPC() && trace.Entity:GetClass() != "prop_ragdoll" ) then return false end
-	if ( CLIENT ) then return false end
+	if ( !IsValid( trace.Entity ) ) then return false end
+	if ( !trace.Entity:IsNPC() && trace.Entity:GetClass() != "prop_ragdoll" /*&& !trace.Entity:IsPlayer()*/ ) then return false end
 
-	for i=0, trace.Entity:GetBoneCount() do
+	if ( CLIENT ) then return true end
+
+	for i = 0, trace.Entity:GetBoneCount() do
 		trace.Entity:ManipulateBoneScale( i, Vector( 1, 1, 1 ) )
 	end
 
 	return true
+
+end
+
+function TOOL.BuildCPanel( CPanel )
+
+	CPanel:AddControl( "Header", { Description = "#tool.inflator.desc" } )
 
 end

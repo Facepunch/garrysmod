@@ -1,6 +1,8 @@
 
 function EFFECT:Init( data )
 
+	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
+
 	local vOffset = data:GetOrigin()
 
 	local NumParticles = 16

@@ -1,15 +1,6 @@
---[[__                                       _
- / _| __ _  ___ ___ _ __  _   _ _ __   ___| |__
-| |_ / _` |/ __/ _ \ '_ \| | | | '_ \ / __| '_ \
-|  _| (_| | (_|  __/ |_) | |_| | | | | (__| | | |
-|_|  \__,_|\___\___| .__/ \__,_|_| |_|\___|_| |_|
-                   |_| 2010 --]]
 
 local PANEL = {}
 
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:Init()
 
 	local ButtonSize = 32
@@ -20,7 +11,7 @@ function PANEL:Init()
 	self.BackButton:SetSize( ButtonSize, ButtonSize )
 	self.BackButton:SetMaterial( "gui/HTML/back" )
 	self.BackButton:Dock( LEFT )
-	self.BackButton:DockMargin( Spacing*3, Margins, Spacing, Margins )
+	self.BackButton:DockMargin( Spacing * 3, Margins, Spacing, Margins )
 	self.BackButton.DoClick = function()
 		self.BackButton:SetDisabled( true )
 		self.Cur = self.Cur - 1
@@ -51,7 +42,7 @@ function PANEL:Init()
 	self.HomeButton:SetSize( ButtonSize, ButtonSize )
 	self.HomeButton:SetMaterial( "gui/HTML/home" )
 	self.HomeButton:Dock( LEFT )
-	self.HomeButton:DockMargin( Spacing, Margins, Spacing*3, Margins )
+	self.HomeButton:DockMargin( Spacing, Margins, Spacing * 3, Margins )
 	self.HomeButton.DoClick = function()
 		if ( self.HTML.URL == self.HomeURL ) then return end
 		self.HTML:StopLoading()
@@ -62,7 +53,7 @@ function PANEL:Init()
 	self.StopButton:SetSize( ButtonSize, ButtonSize )
 	self.StopButton:SetMaterial( "gui/HTML/stop" )
 	self.StopButton:Dock( RIGHT )
-	self.StopButton:DockMargin( Spacing*3, Margins, Spacing*3, Margins )
+	self.StopButton:DockMargin( Spacing * 3, Margins, Spacing * 3, Margins )
 	self.StopButton.DoClick = function() self.HTML:Stop() end
 
 	self.AddressBar = vgui.Create( "DTextEntry", self )
@@ -137,13 +128,13 @@ function PANEL:UpdateHistory( url )
 	end
 
 	-- Check if we refreshed or hooked into the panel just after creation.
-	if self.History[ self.Cur ] == url then return end
+	if ( self.History[ self.Cur ] == url ) then return end
 
 	-- We were back in the history queue, but now we're navigating
 	-- So clear the front out so we can re-write history!!
 	if ( self.Cur < table.Count( self.History ) ) then
 
-		for i=self.Cur+1, table.Count( self.History ) do
+		for i = self.Cur + 1, table.Count( self.History ) do
 			self.History[i] = nil
 		end
 

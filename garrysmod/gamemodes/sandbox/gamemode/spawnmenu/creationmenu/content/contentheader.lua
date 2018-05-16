@@ -1,10 +1,9 @@
 
-surface.CreateFont( "ContentHeader",
-{
+surface.CreateFont( "ContentHeader", {
 	font	= "Helvetica",
 	size	= 50,
 	weight	= 1000
-})
+} )
 
 local PANEL = {}
 
@@ -23,7 +22,13 @@ end
 function PANEL:PerformLayout()
 
 	self:SizeToContents()
-	self:SetTall( 64 )
+
+end
+
+function PANEL:SizeToContents()
+
+	local w, h = self:GetContentSize()
+	self:SetSize( w + 16, 64 ) -- Add a bit more room so it looks nice as a textbox :)
 
 end
 
@@ -54,6 +59,13 @@ function PANEL:PaintOver( w, h )
 
 end
 
+function PANEL:OnLabelTextChanged( txt )
+
+	hook.Run( "SpawnlistContentChanged" )
+	return txt
+
+end
+
 function PANEL:DoRightClick()
 	local pCanvas = self:GetSelectionCanvas()
 	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 ) then
@@ -73,7 +85,7 @@ vgui.Register( "ContentHeader", PANEL, "DLabelEditable" )
 
 spawnmenu.AddContentType( "header", function( container, obj )
 
-	if ( !obj.text || type(obj.text) != "string" ) then return end
+	if ( !obj.text || type( obj.text ) != "string" ) then return end
 
 	local label = vgui.Create( "ContentHeader", container )
 	label:SetText( obj.text )

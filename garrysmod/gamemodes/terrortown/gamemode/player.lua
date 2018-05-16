@@ -405,14 +405,6 @@ function GM:KeyRelease(ply, key)
 
 end
 
-function GM:PlayerButtonUp(ply, btn)
-   -- Would be nice to clean up this whole "all key handling in massive
-   -- functions" thing. oh well
-   if btn == KEY_PAD_ENTER then
-      WEPS.DisguiseToggle(ply)
-   end
-end
-
 -- Normally all dead players are blocked from IN_USE on the server, meaning we
 -- can't let them search bodies. This sucks because searching bodies is
 -- fun. Hence on the client we override +use for specs and use this instead.
@@ -800,7 +792,7 @@ end
 -- rather high drop already. Hence we do our own fall damage handling in
 -- OnPlayerHitGround.
 function GM:GetFallDamage(ply, speed)
-   return 1
+   return 0
 end
 
 local fallsounds = {
@@ -1096,14 +1088,6 @@ function GM:Tick()
             end
          else
             ply.drowning = nil
-         end
-
-         -- Slow down ironsighters
-         local wep = ply:GetActiveWeapon()
-         if IsValid(wep) and wep.GetIronsights and wep:GetIronsights() then
-            ply:SetSpeed(true)
-         else
-            ply:SetSpeed(false)
          end
 
          -- Run DNA Scanner think also when it is not deployed

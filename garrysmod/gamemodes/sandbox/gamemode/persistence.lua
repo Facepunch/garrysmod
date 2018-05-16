@@ -3,10 +3,10 @@ if ( CLIENT ) then return end
 
 hook.Add( "ShutDown", "SavePersistenceOnShutdown", function() hook.Run( "PersistenceSave" ) end )
 
-hook.Add( "PersistenceSave", "PersistenceSave", function()
+hook.Add( "PersistenceSave", "PersistenceSave", function( name )
 
-	local PersistPage = GetConVarString( "sbox_persist" )
-	if ( PersistPage == "0" ) then return end
+	local PersistPage = name or GetConVarString( "sbox_persist" )
+	if ( PersistPage == "" ) then return end
 
 	local Ents = ents.GetAll()
 
@@ -25,7 +25,7 @@ hook.Add( "PersistenceSave", "PersistenceSave", function()
 
 	file.CreateDir( "persist" )
 	file.Write( "persist/" .. game.GetMap() .. "_" .. PersistPage .. ".txt", out )
-	
+
 end )
 
 hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
@@ -46,11 +46,26 @@ hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
 
 end )
 
+cvars.AddChangeCallback( "sbox_persist", function( name, old, new )
+
+	-- A timer in case someone tries to rapily change the convar, such as addons with "live typing" or whatever
+	timer.Create( "sbox_persist_change_timer", 1, 1, function()
+		hook.Run( "PersistenceSave", old )
+
+		game.CleanUpMap() -- Maybe this should be moved to PersistenceLoad?
+
+		if ( new == "" ) then return end
+
+		hook.Run( "PersistenceLoad", new )
+	end )
+
+end, "sbox_persist_load" )
+
 hook.Add( "InitPostEntity", "PersistenceInit", function()
 
 	local PersistPage = GetConVarString( "sbox_persist" )
-	if ( PersistPage == "0" ) then return end
+	if ( PersistPage == "" ) then return end
 
-	hook.Run( "PersistenceLoad", PersistPage );
-	
+	hook.Run( "PersistenceLoad", PersistPage )
+
 end )

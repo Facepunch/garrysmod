@@ -9,33 +9,40 @@ TOOL.ClientConVar[ "fixed" ] = "1"
 TOOL.ClientConVar[ "speed" ] = "64"
 TOOL.ClientConVar[ "material" ] = "cable/rope"
 
+TOOL.Information = {
+	{ name = "left", stage = 0 },
+	{ name = "left_1", stage = 1, op = 1 },
+	{ name = "right", stage = 0 },
+	{ name = "reload" }
+}
+
 function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
-	
+
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
-	
+
 	local iNum = self:NumObjects()
-	
+
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
 	self:SetOperation( 1 )
-	
+
 	if ( iNum > 0 ) then
-		
+
 		if ( CLIENT ) then
 			self:ClearObjects()
 			return true
 		end
-		
+
 		if ( ( !IsValid( self:GetEnt( 1 ) ) && !IsValid( self:GetEnt( 2 ) ) ) || iNum > 1 ) then
 
 			self:ClearObjects()
 			return true
-			
+
 		end
-		
+
 		-- Get client's CVars
 		local width = self:GetClientNumber( "width", 3 )
 		local bind = self:GetClientNumber( "group", 1 )
@@ -43,7 +50,7 @@ function TOOL:LeftClick( trace )
 		local fixed = self:GetClientNumber( "fixed", 1 )
 		local speed = self:GetClientNumber( "speed", 64 )
 		local material = self:GetClientInfo( "material" )
-		
+
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
@@ -52,7 +59,7 @@ function TOOL:LeftClick( trace )
 
 		local Length1 = ( WPos1 - WPos2 ):Length()
 		local Length2 = Length1 + AddLength
-	
+
 		local constraint, rope, controller, slider = constraint.Hydraulic( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, speed, material )
 
 		undo.Create( "Hydraulic" )
@@ -62,21 +69,21 @@ function TOOL:LeftClick( trace )
 			if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
 			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
-		
+
 		if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
 		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
 		if ( IsValid( slider ) ) then self:GetOwner():AddCleanup( "ropeconstraints", slider ) end
 		if ( IsValid( controller ) ) then self:GetOwner():AddCleanup( "ropeconstraints", controller ) end
-		
+
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()
-		
+
 	else
-	
+
 		self:SetStage( iNum + 1 )
-		
+
 	end
-	
+
 	return true
 
 end
@@ -101,19 +108,19 @@ function TOOL:RightClick( trace )
 	if ( IsValid( trace.Entity ) ) then
 		tr.filter[ 2 ] = trace.Entity
 	end
-	
+
 	local tr = util.TraceLine( tr )
 	if ( !tr.Hit ) then
 		self:ClearObjects()
 		return
 	end
-	
+
 	-- Don't try to constrain world to world
 	if ( trace.HitWorld && tr.HitWorld ) then
 		self:ClearObjects()
 		return
 	end
-	
+
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then
 		self:ClearObjects()
 		return
@@ -129,15 +136,15 @@ function TOOL:RightClick( trace )
 		self:ClearObjects()
 		return
 	end
-		
+
 	local Phys2 = tr.Entity:GetPhysicsObjectNum( tr.PhysicsBone )
 	self:SetObject( 2, tr.Entity, tr.HitPos, Phys2, tr.PhysicsBone, tr.HitNormal )
-	
+
 	if ( CLIENT ) then
 		self:ClearObjects()
 		return true
 	end
-	
+
 	-- Get client's CVars
 	local width = self:GetClientNumber( "width", 3 )
 	local bind = self:GetClientNumber( "group", 1 )
@@ -145,7 +152,7 @@ function TOOL:RightClick( trace )
 	local fixed = self:GetClientNumber( "fixed", 1 )
 	local speed = self:GetClientNumber( "speed", 64 )
 	local material = self:GetClientInfo( "material" )
-	
+
 	-- Get information we're about to use
 	local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 	local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
@@ -164,7 +171,7 @@ function TOOL:RightClick( trace )
 		if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
 		undo.SetPlayer( self:GetOwner() )
 	undo.Finish()
-	
+
 	if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
 	if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
 	if ( IsValid( slider ) ) then self:GetOwner():AddCleanup( "ropeconstraints", slider ) end
@@ -172,7 +179,7 @@ function TOOL:RightClick( trace )
 
 	-- Clear the objects so we're ready to go again
 	self:ClearObjects()
-	
+
 	return true
 
 end
@@ -197,7 +204,7 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Header", { Description = "#tool.hydraulic.help" } )
-	
+
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "hydraulic", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.hydraulic.controls", Command = "hydraulic_group" } )

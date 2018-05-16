@@ -3,32 +3,36 @@ EFFECT.Mat = Material( "effects/select_dot" )
 
 function EFFECT:Init( data )
 
-	for i = 0, 5 do
-
-		local effectdata = EffectData()
-		effectdata:SetOrigin( data:GetOrigin() )
-		effectdata:SetNormal( data:GetNormal() )
-		effectdata:SetEntity( data:GetEntity() )
-		effectdata:SetAttachment( data:GetAttachment() )
-		util.Effect( "selection_ring", effectdata )
-
-	end
-
-	local Pos = data:GetOrigin()
+	local pos = data:GetOrigin()
+	local att = data:GetAttachment()
+	local ent = data:GetEntity()
+	local nrml = data:GetNormal()
 
 	self:SetRenderBounds( Vector( -8, -8, -8 ), Vector( 8, 8, 8 ) )
-	self:SetPos( Pos )
+	self:SetPos( pos )
 
 	-- This 0.01 is a hack.. to prevent the angle being weird and messing up when we change it back to a normal
-	self:SetAngles( data:GetNormal():Angle() + Angle( 0.01, 0.01, 0.01 ) )
+	self:SetAngles( nrml:Angle() + Angle( 0.01, 0.01, 0.01 ) )
 
-	if ( IsValid( data:GetEntity() ) ) then
-		self:SetParentPhysNum( data:GetAttachment() )
-		self:SetParent( data:GetEntity() )
+	if ( IsValid( ent ) ) then
+		self:SetParentPhysNum( att )
+		self:SetParent( ent )
 	end
 
 	self.Size = 4
 	self.Alpha = 255
+
+	local effectdata = EffectData()
+	effectdata:SetOrigin( pos )
+	effectdata:SetNormal( nrml )
+	effectdata:SetEntity( ent )
+	effectdata:SetAttachment( att )
+
+	for i = 0, 5 do
+
+		util.Effect( "selection_ring", effectdata )
+
+	end
 
 end
 

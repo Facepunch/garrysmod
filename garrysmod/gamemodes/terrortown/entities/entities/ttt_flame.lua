@@ -3,7 +3,6 @@
 AddCSLuaFile()
 
 ENT.Type = "anim"
---ENT.Model = Model("models/Gibs/metal_gib4.mdl")
 ENT.Model = Model("models/weapons/w_eq_flashbang_thrown.mdl")
 
 AccessorFunc(ENT, "dmgparent", "DamageParent")

@@ -2,9 +2,10 @@
 local function AddRecursive( pnl, folder, path, wildcard )
 
 	local files, folders = file.Find( folder .. "*", path )
+	if ( !files ) then MsgN( "Warning! Not opening '" .. folder .. "' because we cannot search in it!"  ) return end
 
 	for k, v in pairs( files ) do
-		
+
 		if ( !string.EndsWith( v, ".mdl" ) ) then continue end
 
 		local cp = spawnmenu.GetContentType( "model" )
@@ -22,7 +23,6 @@ local function AddRecursive( pnl, folder, path, wildcard )
 
 end
 
-
 hook.Add( "PopulateContent", "AddonProps", function( pnlContent, tree, node )
 
 	local ViewPanel = vgui.Create( "ContentContainer", pnlContent )
@@ -31,11 +31,11 @@ hook.Add( "PopulateContent", "AddonProps", function( pnlContent, tree, node )
 	local MyNode = node:AddNode( "#spawnmenu.category.addons", "icon16/folder_database.png" )
 
 	for _, addon in SortedPairsByMemberValue( engine.GetAddons(), "title" ) do
-	
+
 		if ( !addon.downloaded || !addon.mounted ) then continue end
 		if ( addon.models <= 0 ) then continue end
 
-		local models = MyNode:AddNode( addon.title .. " ("..addon.models..")", "icon16/bricks.png" )
+		local models = MyNode:AddNode( addon.title .. " (" .. addon.models .. ")", "icon16/bricks.png" )
 		models.DoClick = function()
 
 			ViewPanel:Clear( true )
@@ -43,7 +43,7 @@ hook.Add( "PopulateContent", "AddonProps", function( pnlContent, tree, node )
 			pnlContent:SwitchPanel( ViewPanel )
 
 		end
-	
+
 	end
 
 end )

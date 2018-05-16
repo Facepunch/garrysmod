@@ -1054,4 +1054,35 @@
 		"settitlebarvisible"		"1"
 		"title"		"#Frame_Untitled"
 	}
+
+	// GMOD
+	"ChromiumCredits"
+	{
+		"ControlName"		"Button"
+		"fieldName"		"ChromiumCredits"
+		"xpos"		"216"
+		"ypos"		"270"
+		"wide"		"260"
+		"tall"		"24"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"RoundedCorners"		"15"
+		"pin_corner_to_sibling"		"0"
+		"pin_to_sibling_corner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"		"4"
+		"labelText"		"Chromium Embedded Framework Credits"
+		"textAlignment"		"west"
+		"dulltext"		"0"
+		"brighttext"		"0"
+		"wrap"		"0"
+		"centerwrap"		"0"
+		"textinsetx"		"6"
+		"textinsety"		"0"
+		"auto_wide_tocontents"		"0"
+		"Command"		"ChromiumCredits"
+		"Default"		"0"
+		"selected"		"0"
+	}
 }

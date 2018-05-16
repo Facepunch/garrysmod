@@ -5,9 +5,8 @@ Derma_Hook( PANEL, "Paint", "Paint", "ComboBox" )
 
 Derma_Install_Convar_Functions( PANEL )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
+AccessorFunc( PANEL, "m_bDoSort", "SortItems", FORCE_BOOL )
+
 function PANEL:Init()
 
 	self.DropButton = vgui.Create( "DPanel", self )
@@ -21,17 +20,16 @@ function PANEL:Init()
 	self:SetContentAlignment( 4 )
 	self:SetTextInset( 8, 0 )
 	self:SetIsMenu( true )
+	self:SetSortItems( true )
 
 end
 
---[[---------------------------------------------------------
-	Name: Clear
------------------------------------------------------------]]
 function PANEL:Clear()
 
 	self:SetText( "" )
 	self.Choices = {}
 	self.Data = {}
+	self.selected = nil
 
 	if ( self.Menu ) then
 		self.Menu:Remove()
@@ -40,18 +38,12 @@ function PANEL:Clear()
 
 end
 
---[[---------------------------------------------------------
-	Name: GetOptionText
------------------------------------------------------------]]
 function PANEL:GetOptionText( id )
 
 	return self.Choices[ id ]
 
 end
 
---[[---------------------------------------------------------
-	Name: GetOptionData
------------------------------------------------------------]]
 function PANEL:GetOptionData( id )
 
 	return self.Data[ id ]
@@ -78,9 +70,6 @@ function PANEL:GetOptionTextByData( data )
 
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
 function PANEL:PerformLayout()
 
 	self.DropButton:SetSize( 15, 15 )
@@ -89,9 +78,6 @@ function PANEL:PerformLayout()
 
 end
 
---[[---------------------------------------------------------
-	Name: ChooseOption
------------------------------------------------------------]]
 function PANEL:ChooseOption( value, index )
 
 	if ( self.Menu ) then
@@ -109,9 +95,6 @@ function PANEL:ChooseOption( value, index )
 
 end
 
---[[---------------------------------------------------------
-	Name: ChooseOptionID
------------------------------------------------------------]]
 function PANEL:ChooseOptionID( index )
 
 	local value = self:GetOptionText( index )
@@ -119,18 +102,12 @@ function PANEL:ChooseOptionID( index )
 
 end
 
---[[---------------------------------------------------------
-	Name: GetSelected
------------------------------------------------------------]]
 function PANEL:GetSelectedID()
 
 	return self.selected
 
 end
 
---[[---------------------------------------------------------
-	Name: GetSelected
------------------------------------------------------------]]
 function PANEL:GetSelected()
 
 	if ( !self.selected ) then return end
@@ -139,18 +116,12 @@ function PANEL:GetSelected()
 
 end
 
---[[---------------------------------------------------------
-	Name: OnSelect
------------------------------------------------------------]]
 function PANEL:OnSelect( index, value, data )
 
 	-- For override
 
 end
 
---[[---------------------------------------------------------
-	Name: AddChoice
------------------------------------------------------------]]
 function PANEL:AddChoice( value, data, select )
 
 	local i = table.insert( self.Choices, value )
@@ -175,15 +146,10 @@ function PANEL:IsMenuOpen()
 
 end
 
---[[---------------------------------------------------------
-	Name: OpenMenu
------------------------------------------------------------]]
 function PANEL:OpenMenu( pControlOpener )
 
-	if ( pControlOpener ) then
-		if ( pControlOpener == self.TextEntry ) then
-			return
-		end
+	if ( pControlOpener && pControlOpener == self.TextEntry ) then
+		return
 	end
 
 	-- Don't do anything if there aren't any options..
@@ -196,12 +162,22 @@ function PANEL:OpenMenu( pControlOpener )
 		self.Menu = nil
 	end
 
-	self.Menu = DermaMenu()
+	self.Menu = DermaMenu( false, self )
 
-	local sorted = {}
-	for k, v in pairs( self.Choices ) do table.insert( sorted, { id = k, data = v } ) end
-	for k, v in SortedPairsByMemberValue( sorted, "data" ) do
-		self.Menu:AddOption( v.data, function() self:ChooseOption( v.data, v.id ) end )
+	if ( self:GetSortItems() ) then
+		local sorted = {}
+		for k, v in pairs( self.Choices ) do
+			local val = tostring( v ) --tonumber( v ) || v -- This would make nicer number sorting, but SortedPairsByMemberValue doesn't seem to like number-string mixing
+			if ( string.len( val ) > 1 && !tonumber( val ) && val:StartWith( "#" ) ) then val = language.GetPhrase( val:sub( 2 ) ) end
+			table.insert( sorted, { id = k, data = v, label = val } )
+		end
+		for k, v in SortedPairsByMemberValue( sorted, "label" ) do
+			self.Menu:AddOption( v.data, function() self:ChooseOption( v.data, v.id ) end )
+		end
+	else
+		for k, v in pairs( self.Choices ) do
+			self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
+		end
 	end
 
 	local x, y = self:LocalToScreen( 0, self:GetTall() )
@@ -255,9 +231,6 @@ function PANEL:DoClick()
 
 end
 
---[[---------------------------------------------------------
-	Name: GenerateExample
------------------------------------------------------------]]
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )

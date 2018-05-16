@@ -17,10 +17,10 @@ function ENT:StoreOutput( name, info )
 	Output.delay = tonumber( rawData[4] ) or 0
 	Output.times = tonumber( rawData[5] ) or -1
 
-	self.Outputs = self.Outputs or {}
-	self.Outputs[ name ] = self.Outputs[ name ] or {}
+	self.m_tOutputs = self.m_tOutputs or {}
+	self.m_tOutputs[ name ] = self.m_tOutputs[ name ] or {}
 
-	table.insert( self.Outputs[ name ], Output )
+	table.insert( self.m_tOutputs[ name ], Output )
 end
 
 -- Nice helper function, this does all the work. Returns false if the
@@ -66,16 +66,16 @@ end
 -- This function is used to trigger an output.
 
 function ENT:TriggerOutput( name, activator, data )
-	if ( !self.Outputs ) then return end
-	if ( !self.Outputs[ name ] ) then return end
+	if ( !self.m_tOutputs ) then return end
+	if ( !self.m_tOutputs[ name ] ) then return end
 
-	local OutputList = self.Outputs[ name ]
+	local OutputList = self.m_tOutputs[ name ]
 
 	for idx = #OutputList, 1, -1 do
 
 		if ( OutputList[ idx ] and !FireSingleOutput( OutputList[ idx ], self.Entity, activator, data ) ) then
 
-			self.Outputs[ name ][ idx ] = nil
+			self.m_tOutputs[ name ][ idx ] = nil
 
 		end
 

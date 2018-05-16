@@ -105,7 +105,7 @@ local function DrawPropSpecLabels(client)
             scrpos = nil
          end
       else
-         local _, healthcolor = util.HealthToString(ply:Health())
+         local _, healthcolor = util.HealthToString(ply:Health(), ply:GetMaxHealth())
          surface.SetTextColor(clr(healthcolor))
 
          scrpos = ply:EyePos()
@@ -145,7 +145,9 @@ function GM:HUDDrawTargetID()
 
    local L = GetLang()
 
-   DrawPropSpecLabels(client)
+   if hook.Call( "HUDShouldDraw", GAMEMODE, "TTTPropSpec" ) then
+      DrawPropSpecLabels(client)
+   end
 
    local trace = client:GetEyeTrace(MASK_SHOT)
    local ent = trace.Entity
@@ -190,14 +192,14 @@ function GM:HUDDrawTargetID()
       local _ -- Stop global clutter
       -- in minimalist targetID, colour nick with health level
       if minimal then
-         _, color = util.HealthToString(ent:Health())
+         _, color = util.HealthToString(ent:Health(), ent:GetMaxHealth())
       end
 
-      if client:IsTraitor() and GAMEMODE.round_state == ROUND_ACTIVE then
+      if client:IsTraitor() and GetRoundState() == ROUND_ACTIVE then
          target_traitor = ent:IsTraitor()
       end
 
-      target_detective = ent:IsDetective()
+      target_detective = GetRoundState() > ROUND_PREP and ent:IsDetective() or false
 
    elseif cls == "prop_ragdoll" then
       -- only show this if the ragdoll has a nick, else it could be a mattress
@@ -265,7 +267,7 @@ function GM:HUDDrawTargetID()
    -- Draw subtitle: health or type
    local clr = rag_color
    if ent:IsPlayer() then
-      text, clr = util.HealthToString(ent:Health())
+      text, clr = util.HealthToString(ent:Health(), ent:GetMaxHealth())
 
       -- HealthToString returns a string id, need to look it up
       text = L[text]

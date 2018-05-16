@@ -22,6 +22,7 @@ end
 
 function PANEL:SetValue( val )
 
+	if ( tonumber( val ) == 0 ) then val = 0 end // Tobool bugs out with "0.00"
 	val = tobool( val )
 
 	self:SetChecked( val )
@@ -117,7 +118,7 @@ end
 
 function PANEL:PerformLayout()
 
-	local x = self.m_iIndent or 0
+	local x = self.m_iIndent || 0
 
 	self.Button:SetSize( 15, 15 )
 	self.Button:SetPos( x, math.floor( ( self:GetTall() - self.Button:GetTall() ) / 2 ) )

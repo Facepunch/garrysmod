@@ -3,9 +3,16 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Dynamite"
-ENT.RenderGroup = RENDERGROUP_OPAQUE
+ENT.RenderGroup = RENDERGROUP_BOTH
+ENT.Editable = true
 
-AccessorFunc( ENT, "m_ShouldRemove", "ShouldRemove" )
+function ENT:SetupDataTables()
+
+	self:NetworkVar( "Bool", 0, "ShouldRemove", { KeyName = "sr", Edit = { type = "Boolean", order = 1, title = "#tool.dynamite.remove" } } )
+	self:NetworkVar( "Float", 0, "Damage", { KeyName = "force", Edit = { type = "Float", order = 2, min = 0, max = 500, title = "#tool.dynamite.damage" } } )
+	self:NetworkVar( "Float", 1, "Delay", { KeyName = "delay", Edit = { type = "Float", order = 3, min = 0, max = 10, title = "#tool.dynamite.delay" } } )
+
+end
 
 function ENT:Initialize()
 
@@ -19,10 +26,18 @@ end
 
 function ENT:Setup( damage )
 
-	self.Damage = damage
+	self:SetDamage( damage )
 
-	-- Wot no translation :(
-	self:SetOverlayText( "Damage: " .. math.floor( self.Damage ) )
+end
+
+function ENT:GetOverlayText()
+
+	local txt = "Damage: " .. math.floor( math.Clamp( self:GetDamage(), 0, 1500 ) )
+
+	if ( txt == "" ) then return "" end
+	if ( game.SinglePlayer() ) then return txt end
+
+	return txt .. "\n(" .. self:GetPlayerName() .. ")"
 
 end
 
@@ -43,13 +58,13 @@ function ENT:Explode( delay, ply )
 
 	ply = ply or self.Entity
 
-	local _delay = delay or 0
+	local _delay = delay or self:GetDelay()
 
 	if ( _delay == 0 ) then
 
 		local radius = 300
 
-		util.BlastDamage( self, ply, self:GetPos(), radius, self.Damage )
+		util.BlastDamage( self, ply, self:GetPos(), radius, math.Clamp( self:GetDamage(), 0, 1500 ) )
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( self:GetPos() )
@@ -60,7 +75,7 @@ function ENT:Explode( delay, ply )
 
 	else
 
-		timer.Simple( delay, function() if ( !IsValid( self ) ) then return end self:Explode( 0, ply ) end )
+		timer.Simple( _delay, function() if ( !IsValid( self ) ) then return end self:Explode( 0, ply ) end )
 
 	end
 

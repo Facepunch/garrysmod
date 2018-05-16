@@ -2,9 +2,8 @@
 function JS_Language( html )
 
 	html:AddFunction( "language", "Update", function( phrase )
-
-		return language.GetPhrase( phrase );
-
+		if ( !phrase ) then return end
+		return language.GetPhrase( phrase )
 	end )
 
 end
@@ -12,9 +11,7 @@ end
 function JS_Utility( html )
 
 	html:AddFunction( "util", "MotionSensorAvailable", function()
-
 		return motionsensor.IsAvailable()
-
 	end )
 
 end
@@ -23,7 +20,9 @@ function JS_Workshop( html )
 
 	html:AddFunction( "gmod", "OpenWorkshopFile", function( param ) steamworks.ViewFile( param ) end )
 	html:AddFunction( "gmod", "DeleteLocal", function( param ) file.Delete( param, "MOD" ) end )
-	html:AddFunction( "gmod", "FetchItems", function( namespace, cat, offset, perpage, ... ) _G[ namespace ]:Fetch( cat, tonumber( offset ), tonumber( perpage ), { ... } ) end )
+	html:AddFunction( "gmod", "FetchItems", function( namespace, cat, offset, perpage, extraTags, searchText )
+		_G[ namespace ]:Fetch( cat, tonumber( offset ), tonumber( perpage ), string.Explode( ",", extraTags ), searchText )
+	end )
 	html:AddFunction( "gmod", "Vote", function( id, vote ) steamworks.Vote( id, tobool( vote ) ) end )
 	html:AddFunction( "gmod", "Publish", function( namespace, file, background ) _G[ namespace ]:Publish( file, background ) end )
 

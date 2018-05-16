@@ -1,4 +1,5 @@
-if SERVER then return end
+
+if ( SERVER ) then return end
 
 --[[
 
@@ -54,10 +55,6 @@ function dragndrop.Drop()
 		local menu = DermaMenu()
 		menu.OnRemove = function( m ) -- If user clicks outside of the menu - drop the dragging
 			dragndrop.StopDragging()
-
-			if ( gui.EnableScreenClicker ) then -- TODO: We only should do this if we enabled it.
-				gui.EnableScreenClicker( false )
-			end
 		end
 
 		for k, v in pairs( dragndrop.m_ReceiverSlot.Menu ) do
@@ -421,7 +418,7 @@ end
 function meta:DragMousePress( mcode )
 
 	if ( IsValid( dragndrop.m_DropMenu ) ) then return end
-	if ( dragndrop.IsDragging() ) then return end
+	if ( dragndrop.IsDragging() ) then dragndrop.StopDragging() return end
 
 	if ( IsValid( self.m_pDragParent ) ) then
 		return self.m_pDragParent:DragMousePress( mcode )

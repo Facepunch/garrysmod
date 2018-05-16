@@ -109,7 +109,6 @@ function ENT:Think()
 
 end
 
-
 function ENT:GetPos( ent, phys, lpos )
 
 	if ( ent:EntIndex() == 0 ) then
@@ -123,7 +122,6 @@ function ENT:GetPos( ent, phys, lpos )
 	end
 
 end
-
 
 function ENT:SetConstraint( c )
 
@@ -223,8 +221,11 @@ numpad.Register( "WinchOff", WinchOff )
 ------------------------------------------------------------------------]]
 local function WinchToggle( pl, winch, dir )
 	if ( !IsValid( winch ) ) then return false end
-	if ( winch:GetDirection() == dir ) then winch:SetDirection( 0 )
-	else winch:SetDirection( dir ) end
+	if ( winch:GetDirection() == dir ) then
+		winch:SetDirection( 0 )
+	else
+		winch:SetDirection( dir )
+	end
 end
 numpad.Register( "WinchToggle", WinchToggle )
 

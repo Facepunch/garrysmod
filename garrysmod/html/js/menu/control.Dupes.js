@@ -35,20 +35,34 @@ function ControllerDupes($scope, $rootScope, $location, $timeout, $routeParams)
 		$scope.Switch( $scope.Category, $scope.Offset );
 	}
 
-	if ( IS_SPAWN_MENU )
+	$scope.ReloadView = function()
 	{
-		if ( $routeParams.Category )
+		if ( IS_SPAWN_MENU )
 		{
-			$timeout( function() { $scope.SwitchWithTag( $routeParams.Category, 0, $routeParams.Tag ); }, 10 );
-			return;
-		}
+			if ( $routeParams.Category )
+			{
+				$timeout( function() { $scope.SwitchWithTag( $routeParams.Category, 0, $routeParams.Tag ); }, 100 );
+				return;
+			}
 
-		$timeout( function() { $scope.SwitchWithTag( 'trending', 0, '' ); }, 10 );
+			$timeout( function() { $scope.Switch( 'local', 0 ); }, 100 );
+		}
+		else
+		{
+			$scope.Switch( 'local', 0 );
+		}
 	}
-	else
-	{
-		$scope.Switch( 'local', 0 );
-	}
+
+	// This is just to fix the spawnmenu initial size being 512x512 for first few frames
+	$scope.ReloadView();
+	$( window ).resize( function() {
+		//if ( $scope.ResizeTimeout ) $timeout.cancel( $scope.ResizeTimeout );
+		//$scope.ResizeTimeout = $timeout( function() { $scope.ReloadView(); }, 250 );
+
+		if ( $scope.ReloadedView ) return;
+		$scope.ReloadedView = true;
+		$scope.ResizeTimeout = $timeout( function() { $scope.ReloadView(); }, 250 );
+	} );
 }
 
 function OnGameSaved()

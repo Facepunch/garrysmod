@@ -8,7 +8,14 @@ include( "prop_tools.lua" )
 function CCSpawn( player, command, arguments )
 
 	if ( arguments[ 1 ] == nil ) then return end
-	if ( arguments[ 1 ]:find( "[./\\][/\\]" ) ) then return end
+	if ( arguments[ 1 ]:find( "%.[/\\]" ) ) then return end
+
+	-- Clean up the path from attempted blacklist bypasses
+	arguments[ 1 ] = arguments[ 1 ]:gsub( "\\\\+", "/" )
+	arguments[ 1 ] = arguments[ 1 ]:gsub( "//+", "/" )
+	arguments[ 1 ] = arguments[ 1 ]:gsub( "\\/+", "/" )
+	arguments[ 1 ] = arguments[ 1 ]:gsub( "/\\+", "/" )
+
 	if ( !gamemode.Call( "PlayerSpawnObject", player, arguments[ 1 ], arguments[ 2 ] ) ) then return end
 	if ( !util.IsValidModel( arguments[ 1 ] ) ) then return end
 
@@ -291,7 +298,8 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 		if ( IsValid( Player ) ) then
 			Player:SendLua( "Derma_Message( \"Sorry! You can't spawn that NPC!\" )" )
 		end
-	return end
+		return
+	end
 
 	if ( NPCData.AdminOnly && !Player:IsAdmin() ) then return end
 
@@ -322,9 +330,8 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 	--
 	-- Offset the position
 	--
-	local Offset = NPCData.Offset or 32
-	Position = Position + Normal * Offset
-	NPC:SetPos( Position )
+	local Offset = NPCData.Offset || 32
+	NPC:SetPos( Position + Normal * Offset )
 
 	-- Rotate to face player (expected behaviour)
 	local Angles = Angle( 0, 0, 0 )
@@ -405,6 +412,17 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 		NPC:DropToFloor()
 	end
 
+	if ( NPCData.Health ) then
+		NPC:SetHealth( NPCData.Health )
+	end
+
+	-- Body groups
+	if ( NPCData.BodyGroups ) then
+		for k, v in pairs( NPCData.BodyGroups ) do
+			NPC:SetBodygroup( k, v )
+		end
+	end
+
 	return NPC
 
 end
@@ -463,84 +481,113 @@ function Spawn_NPC( player, NPCClassName, WeaponName, tr )
 end
 concommand.Add( "gmod_spawnnpc", function( ply, cmd, args ) Spawn_NPC( ply, args[ 1 ], args[ 2 ] ) end )
 
-local function GenericNPCDuplicator( Player, Model, Class, Equipment, SpawnFlags, Data )
+-- This should be in base_npcs.lua really
+local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, data )
 
-	if ( !gamemode.Call( "PlayerSpawnNPC", Player, Class, Equipment ) ) then return end
+	if ( !gamemode.Call( "PlayerSpawnNPC", ply, class, equipment ) ) then return end
 
-	local Entity = InternalSpawnNPC( Player, Data.Pos, Vector( 0, 0, 1 ), Class, Equipment, SpawnFlags, true )
+	local normal = Vector( 0, 0, 1 )
 
-	if ( IsValid( Entity ) ) then
-		local pos = Entity:GetPos() -- Hack! Prevnets the NPCs from falling through the floor
+	local NPCList = list.Get( "NPC" )
+	local NPCData = NPCList[ class ]
+	if ( NPCData && NPCData.OnCeiling ) then normal = Vector( 0, 0, -1 ) end
 
-		duplicator.DoGeneric( Entity, Data )
+	local ent = InternalSpawnNPC( ply, data.Pos, normal, class, equipment, spawnflags, true )
 
-		Entity:SetPos( pos )
-		Entity:DropToFloor()
+	if ( IsValid( ent ) ) then
+		local pos = ent:GetPos() -- Hack! Prevnets the NPCs from falling through the floor
 
-		if ( IsValid( Player ) ) then
-			gamemode.Call( "PlayerSpawnedNPC", Player, Entity )
-			Player:AddCleanup( "npcs", Entity )
+		duplicator.DoGeneric( ent, data )
+
+		if ( !NPCData.OnCeiling ) then
+			ent:SetPos( pos )
+			ent:DropToFloor()
 		end
 
-		table.Add( Entity:GetTable(), Data )
+		if ( IsValid( ply ) ) then
+			gamemode.Call( "PlayerSpawnedNPC", ply, ent )
+			ply:AddCleanup( "npcs", ent )
+		end
+
+		table.Add( ent:GetTable(), data )
 
 	end
 
-	return Entity
+	return ent
 
 end
 
 -- Huuuuuuuuhhhh
-duplicator.RegisterEntityClass( "npc_alyx", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_antlion", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_antlionguard", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_barnacle", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_barney", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_breen", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_combine_s", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_combine_p", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_combine_e", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_crow", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_cscanner", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_dog", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_eli", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_fastzombie", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_gman", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_headcrab", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_headcrab_black", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_headcrab_fast", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_kleiner", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_manhack", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_metropolice", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_monk", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_mossman", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_pigeon", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_rollermine", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_seagull", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_zombie", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_zombie_torso", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_citizen_rebel", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_citizen", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_citizen_dt", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_citizen_medic", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_stalker", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "npc_fisherman", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
+local function AddNPCToDuplicator( class ) duplicator.RegisterEntityClass( class, GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" ) end
+
+-- HL2
+AddNPCToDuplicator( "npc_alyx" )
+AddNPCToDuplicator( "npc_magnusson" )
+AddNPCToDuplicator( "npc_breen" )
+AddNPCToDuplicator( "npc_kleiner" )
+AddNPCToDuplicator( "npc_antlion" )
+AddNPCToDuplicator( "npc_antlion_worker" )
+AddNPCToDuplicator( "npc_antlion_grub" )
+AddNPCToDuplicator( "npc_antlionguard" )
+AddNPCToDuplicator( "npc_barnacle" )
+AddNPCToDuplicator( "npc_barney" )
+AddNPCToDuplicator( "npc_combine_s" )
+AddNPCToDuplicator( "npc_crow" )
+AddNPCToDuplicator( "npc_cscanner" )
+AddNPCToDuplicator( "npc_clawscanner" )
+AddNPCToDuplicator( "npc_dog" )
+AddNPCToDuplicator( "npc_eli" )
+AddNPCToDuplicator( "npc_gman" )
+AddNPCToDuplicator( "npc_headcrab" )
+AddNPCToDuplicator( "npc_headcrab_black" )
+AddNPCToDuplicator( "npc_headcrab_poison" )
+AddNPCToDuplicator( "npc_headcrab_fast" )
+AddNPCToDuplicator( "npc_manhack" )
+AddNPCToDuplicator( "npc_metropolice" )
+AddNPCToDuplicator( "npc_monk" )
+AddNPCToDuplicator( "npc_mossman" )
+AddNPCToDuplicator( "npc_pigeon" )
+AddNPCToDuplicator( "npc_rollermine" )
+AddNPCToDuplicator( "npc_strider" )
+AddNPCToDuplicator( "npc_helicopter" )
+AddNPCToDuplicator( "npc_combinegunship" )
+AddNPCToDuplicator( "npc_combinedropship" )
+AddNPCToDuplicator( "npc_turret_ceiling" )
+AddNPCToDuplicator( "npc_combine_camera" )
+AddNPCToDuplicator( "npc_turret_floor" )
+AddNPCToDuplicator( "npc_vortigaunt" )
+AddNPCToDuplicator( "npc_hunter" )
+AddNPCToDuplicator( "npc_sniper" )
+AddNPCToDuplicator( "npc_seagull" )
+AddNPCToDuplicator( "npc_citizen" )
+AddNPCToDuplicator( "npc_stalker" )
+AddNPCToDuplicator( "npc_fisherman" )
+AddNPCToDuplicator( "npc_zombie" )
+AddNPCToDuplicator( "npc_zombie_torso" )
+AddNPCToDuplicator( "npc_zombine" )
+AddNPCToDuplicator( "npc_poisonzombie" )
+AddNPCToDuplicator( "npc_fastzombie" )
+AddNPCToDuplicator( "npc_fastzombie_torso" )
 
 -- HL1
-duplicator.RegisterEntityClass( "monster_bigmomma", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_bullchicken", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_gargantua", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_human_assassin", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_babycrab", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_human_grunt", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_cockroach", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_houndeye", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_scientist", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_snark", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_zombie", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_barney", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_alien_controller", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
-duplicator.RegisterEntityClass( "monster_headcrab", GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" )
+AddNPCToDuplicator( "monster_alien_grunt" )
+AddNPCToDuplicator( "monster_alien_slave" )
+AddNPCToDuplicator( "monster_alien_controller" )
+AddNPCToDuplicator( "monster_barney" )
+AddNPCToDuplicator( "monster_bigmomma" )
+AddNPCToDuplicator( "monster_bullchicken" )
+AddNPCToDuplicator( "monster_babycrab" )
+AddNPCToDuplicator( "monster_cockroach" )
+AddNPCToDuplicator( "monster_houndeye" )
+AddNPCToDuplicator( "monster_headcrab" )
+AddNPCToDuplicator( "monster_gargantua" )
+AddNPCToDuplicator( "monster_human_assassin" )
+AddNPCToDuplicator( "monster_human_grunt" )
+AddNPCToDuplicator( "monster_scientist" )
+AddNPCToDuplicator( "monster_snark" )
+AddNPCToDuplicator( "monster_nihilanth" )
+AddNPCToDuplicator( "monster_tentacle" )
+AddNPCToDuplicator( "monster_zombie" )
 
 --[[---------------------------------------------------------
 	Name: CanPlayerSpawnSENT
@@ -757,7 +804,7 @@ local function MakeVehicle( Player, Pos, Ang, Model, Class, VName, VTable, data 
 
 	Ent:SetModel( Model )
 
-	// Fallback vehiclescripts for HL2 maps ( dupe support )
+	-- Fallback vehiclescripts for HL2 maps ( dupe support )
 	if ( Model == "models/buggy.mdl" ) then Ent:SetKeyValue( "vehiclescript", "scripts/vehicles/jeep_test.txt" ) end
 	if ( Model == "models/vehicle.mdl" ) then Ent:SetKeyValue( "vehiclescript", "scripts/vehicles/jalopy.txt" ) end
 

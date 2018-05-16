@@ -22,26 +22,23 @@ SWEP.InfoIcon = surface.GetTextureID( "gui/info" )
 SWEP.ToolNameHeight = 0
 SWEP.InfoBoxHeight = 0
 
-surface.CreateFont( "GModToolName",
-{
+surface.CreateFont( "GModToolName", {
 	font = "Roboto Bk",
 	size = 80,
 	weight = 1000
-})
+} )
 
-surface.CreateFont( "GModToolSubtitle",
-{
+surface.CreateFont( "GModToolSubtitle", {
 	font = "Roboto Bk",
 	size = 24,
 	weight = 1000
-})
+} )
 
-surface.CreateFont( "GModToolHelp",
-{
+surface.CreateFont( "GModToolHelp", {
 	font = "Roboto Bk",
 	size = 17,
 	weight = 1000
-})
+} )
 
 --[[---------------------------------------------------------
 	Draws the help on the HUD (disabled if gmod_drawhelp is 0)
@@ -98,18 +95,18 @@ function SWEP:DrawHUD()
 	y = y + 4
 
 	TextTable.font = "GModToolHelp"
-	
+
 	if ( !self:GetToolObject().Information ) then
 		TextTable.pos = { x + self.InfoBoxHeight, y }
 		TextTable.text = self:GetToolObject():GetHelpText()
 		w, h = draw.TextShadow( TextTable, 1 )
-		
+
 		surface.SetDrawColor( 255, 255, 255, 255 )
 		surface.SetTexture( self.InfoIcon )
 		surface.DrawTexturedRect( x + 1, y + 1, h - 3, h - 3 )
-		
+
 		self.InfoBoxHeight = h + 8
-		
+
 		return
 	end
 
@@ -121,7 +118,7 @@ function SWEP:DrawHUD()
 		if ( !v.name ) then continue end
 		if ( v.stage && v.stage != self:GetStage() ) then continue end
 		if ( v.op && v.op != self:GetToolObject():GetOperation() ) then continue end
-	
+
 		local txt = "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. v.name
 		if ( v.name == "info" ) then
 			txt = self:GetToolObject():GetHelpText()
@@ -131,15 +128,16 @@ function SWEP:DrawHUD()
 		TextTable.pos = { x + 21, y + h2 }
 
 		w, h = draw.TextShadow( TextTable, 1 )
-	
+
 		if ( !v.icon ) then
 			if ( v.name:StartWith( "info" ) ) then v.icon = "gui/info" end
 			if ( v.name:StartWith( "left" ) ) then v.icon = "gui/lmb.png" end
 			if ( v.name:StartWith( "right" ) ) then v.icon = "gui/rmb.png" end
 			if ( v.name:StartWith( "reload" ) ) then v.icon = "gui/r.png" end
+			if ( v.name:StartWith( "use" ) ) then v.icon = "gui/e.png" end
 		end
-		if ( !v.icon2 && v.name:EndsWith( "use" ) ) then v.icon2 = "gui/e.png" end
-	
+		if ( !v.icon2 && !v.name:StartWith( "use" ) && v.name:EndsWith( "use" ) ) then v.icon2 = "gui/e.png" end
+
 		self.Icons = self.Icons or {}
 		if ( v.icon && !self.Icons[ v.icon ] ) then self.Icons[ v.icon ] = Material( v.icon ) end
 		if ( v.icon2 && !self.Icons[ v.icon2 ] ) then self.Icons[ v.icon2 ] = Material( v.icon2 ) end
@@ -154,7 +152,7 @@ function SWEP:DrawHUD()
 			surface.SetDrawColor( 255, 255, 255, 255 )
 			surface.SetMaterial( self.Icons[ v.icon2 ] )
 			surface.DrawTexturedRect( x - 25, y + h2, 16, 16 )
-			
+
 			draw.SimpleText( "+", "default", x - 8, y + h2 + 2, color_white )
 		end
 
@@ -200,9 +198,9 @@ end
 function SWEP:FreezeMovement()
 
 	local mode = self:GetMode()
-	
+
 	if ( !self:GetToolObject() ) then return false end
-	
+
 	return self:GetToolObject():FreezeMovement()
 
 end

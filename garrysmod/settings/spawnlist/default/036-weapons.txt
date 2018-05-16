@@ -1,0 +1,216 @@
+"TableToKeyValues"
+{
+	"parentid"		"33"
+	"icon"		"icon16/page.png"
+	"id"		"36"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_decoy.mdl"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_flashbang.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_fraggrenade.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_fraggrenade_thrown.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_incendiarygrenade.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_molotov.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_molotov_thrown.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_smokegrenade.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_eq_taser.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_ied.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_knife.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_knife_gg.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_mach_m249para.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_mach_negev.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_deagle.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_elite.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_fiveseven.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_glock18.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_hkp2000.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_p250.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_pist_tec9.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_ak47.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_aug.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_famas.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_galilar.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_m4a1.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_rif_sg556.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_shot_mag7.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_shot_nova.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_shot_sawedoff.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_shot_xm1014.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_smg_bizon.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_smg_mac10.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_smg_mp7.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_smg_mp9.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_smg_p90.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_smg_ump45.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_snip_awp.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_snip_g3sg1.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_snip_scar20.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/weapons/w_snip_ssg08.mdl"
+		}
+	}
+	"name"		"Weapons"
+	"version"		"3"
+}

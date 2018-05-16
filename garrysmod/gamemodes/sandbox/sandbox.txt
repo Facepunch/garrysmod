@@ -4,42 +4,41 @@
 	"title"		"Sandbox"
 	"maps"		"^gm_|^gmod_|^phys_"
 	"menusystem"	"1"
-	
+
 	"settings"
 	{
 		1
 		{
 			"name"		"physgun_limited"
 			"text"		"limit_physgun"
-			"help"		"When enabled the physgun can only pick up props and ragdolls"
+			"help"		"If enabled, the Physics Gun will not be able to pick up certain map entities"
 			"type"		"CheckBox"
 			"default"	"0"
 		}
 
-		
 		2
 		{
 			"name"		"sbox_noclip"
 			"text"		"noclip"
-			"help"		"When enabled players will be able to noclip"
-			"type"		"CheckBox"
-			"default"	"1"
-		}
-		
-		3
-		{
-			"name"		"sbox_godmode"
-			"text"		"god_mode"
-			"help"		"When enabled all players will be invincible"
+			"help"		"If enabled, players will be able to use noclip"
 			"type"		"CheckBox"
 			"default"	"1"
 		}
 
+		3
+		{
+			"name"		"sbox_godmode"
+			"text"		"god_mode"
+			"help"		"If enabled, all players will be invincible"
+			"type"		"CheckBox"
+			"default"	"0"
+		}
+
 		4
 		{
-			"name"		"sbox_playershurtplayers"	
+			"name"		"sbox_playershurtplayers"
 			"text"		"players_damage_players"
-			"help"		"If enabled player's will be able to hurt each other"
+			"help"		"If enabled, players will be able to hurt each other"
 			"type"		"CheckBox"
 			"default"	"1"
 		}
@@ -52,7 +51,7 @@
 			"type"		"Numeric"
 			"default"	"200"
 		}
-		
+
 		6
 		{
 			"name"		"sbox_maxragdolls"
@@ -61,7 +60,7 @@
 			"type"		"Numeric"
 			"default"	"10"
 		}
-		
+
 		7
 		{
 			"name"		"sbox_maxvehicles"
@@ -70,7 +69,7 @@
 			"type"		"Numeric"
 			"default"	"4"
 		}
-		
+
 		8
 		{
 			"name"		"sbox_maxeffects"
@@ -79,7 +78,7 @@
 			"type"		"Numeric"
 			"default"	"200"
 		}
-		
+
 		9
 		{
 			"name"		"sbox_maxballoons"
@@ -88,8 +87,17 @@
 			"type"		"Numeric"
 			"default"	"100"
 		}
-		
+
 		10
+		{
+			"name"		"sbox_maxcameras"
+			"text"		"max_cameras"
+			"help"		"Maximum cameras a single player can create"
+			"type"		"Numeric"
+			"default"	"10"
+		}
+
+		11
 		{
 			"name"		"sbox_maxnpcs"
 			"text"		"max_npcs"
@@ -98,7 +106,7 @@
 			"default"	"10"
 		}
 
-		11
+		12
 		{
 			"name"		"sbox_maxsents"
 			"text"		"max_entities"
@@ -107,7 +115,7 @@
 			"default"	"100"
 		}
 
-		12
+		13
 		{
 			"name"		"sbox_maxdynamite"
 			"text"		"max_dynamite"
@@ -115,8 +123,8 @@
 			"type"		"Numeric"
 			"default"	"10"
 		}
-		
-		13
+
+		14
 		{
 			"name"		"sbox_maxlamps"
 			"text"		"max_lamps"
@@ -124,8 +132,8 @@
 			"type"		"Numeric"
 			"default"	"3"
 		}
-		
-		14
+
+		15
 		{
 			"name"		"sbox_maxlights"
 			"text"		"max_lights"
@@ -133,8 +141,8 @@
 			"type"		"Numeric"
 			"default"	"5"
 		}
-		
-		15
+
+		16
 		{
 			"name"		"sbox_maxwheels"
 			"text"		"max_wheels"
@@ -142,8 +150,8 @@
 			"type"		"Numeric"
 			"default"	"50"
 		}
-		
-		16
+
+		17
 		{
 			"name"		"sbox_maxthrusters"
 			"text"		"max_thrusters"
@@ -151,8 +159,8 @@
 			"type"		"Numeric"
 			"default"	"50"
 		}
-		
-		17
+
+		18
 		{
 			"name"		"sbox_maxhoverballs"
 			"text"		"max_hoverballs"
@@ -160,8 +168,8 @@
 			"type"		"Numeric"
 			"default"	"50"
 		}
-	
-		18
+
+		19
 		{
 			"name"		"sbox_maxbuttons"
 			"text"		"max_buttons"
@@ -169,8 +177,8 @@
 			"type"		"Numeric"
 			"default"	"50"
 		}
-	
-		19
+
+		20
 		{
 			"name"		"sbox_maxemitters"
 			"text"		"max_emitters"
@@ -178,16 +186,18 @@
 			"type"		"Numeric"
 			"default"	"20"
 		}
-	
-		20
+
+		21
 		{
 			"name"		"sbox_weapons"
 			"text"		"enable_weapons"
+			"help"		"If enabled, each player will receive default Half-Life 2 weapons on each spawn"
 			"type"		"CheckBox"
 			"default"	"1"
+			"singleplayer" "1"
 		}
 
-		21
+		22
 		{
 			"name"		"sbox_bonemanip_npc"
 			"text"		"bone_manipulate_npcs"
@@ -196,7 +206,7 @@
 			"default"	"1"
 		}
 
-		22
+		23
 		{
 			"name"		"sbox_bonemanip_player"
 			"text"		"bone_manipulate_players"
@@ -205,7 +215,7 @@
 			"default"	"0"
 		}
 
-		23
+		24
 		{
 			"name"		"sbox_bonemanip_misc"
 			"text"		"bone_manipulate_others"
@@ -214,13 +224,14 @@
 			"default"	"0"
 		}
 
-		24
+		25
 		{
 			"name"		"sbox_persist"
 			"text"		"persistent_mode"
-			"help"		"Set to anything but 0 to enable persistence mode"
+			"help"		"Enables 'Make Persistent' option when you right click on props while holding C, allowing you to save them across sessions. Leave empty to disable"
 			"type"		"Text"
 			"default"	""
+			"singleplayer" "1"
 		}
 	}
 }

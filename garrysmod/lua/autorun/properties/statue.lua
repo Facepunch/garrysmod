@@ -2,30 +2,30 @@
 AddCSLuaFile()
 
 properties.Add( "statue", {
-	MenuLabel = "Make Statue",
+	MenuLabel = "#makestatue",
 	Order = 1501,
 	MenuIcon = "icon16/lock.png",
-	
-	Filter = function( self, ent, ply ) 
+
+	Filter = function( self, ent, ply )
 		if ( !IsValid( ent ) ) then return false end
 		if ( ent:GetClass() != "prop_ragdoll" ) then return false end
 		if ( ent:GetNWBool( "IsStatue" ) ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "statue", ent ) ) then return false end
-		return true 
+		return true
 	end,
 
 	Action = function( self, ent )
-	
+
 		self:MsgStart()
 			net.WriteEntity( ent )
 		self:MsgEnd()
-		
+
 	end,
 
 	Receive = function( self, length, player )
 
 		local ent = net.ReadEntity()
-		
+
 		if ( !IsValid( ent ) ) then return end
 		if ( !IsValid( player ) ) then return end
 		if ( ent:GetClass() != "prop_ragdoll" ) then return end
@@ -34,75 +34,74 @@ properties.Add( "statue", {
 		local bones = ent:GetPhysicsObjectCount()
 		if ( bones < 2 ) then return end
 		if ( ent.StatueInfo ) then return end
-		
+
 		ent.StatueInfo = {}
-		
+
 		undo.Create( "Statue" )
-		
+
 		for bone = 1, bones-1 do
-		
+
 			local constraint = constraint.Weld( ent, ent, 0, bone, forcelimit )
-			
+
 			if ( constraint ) then
-		
+
 				ent.StatueInfo[bone] = constraint
 				player:AddCleanup( "constraints", constraint )
 				undo.AddEntity( constraint )
-			
+
 			end
-			
+
 			local effectdata = EffectData()
 				 effectdata:SetOrigin( ent:GetPhysicsObjectNum( bone ):GetPos() )
 				 effectdata:SetScale( 1 )
 				 effectdata:SetMagnitude( 1 )
 			util.Effect( "GlassImpact", effectdata, true, true )
-			
+
 		end
 
 		ent:SetNWBool( "IsStatue", true )
-		
-		
-		undo.AddFunction( function() 
-		
+
+		undo.AddFunction( function()
+
 			if ( IsValid( ent ) ) then
 				ent:SetNWBool( "IsStatue", false )
 				ent.StatueInfo = nil
 			end
-		
+
 		end )
-		
+
 		undo.SetPlayer( player )
 		undo.Finish()
-		
-	end	
+
+	end
 
 } )
 
 properties.Add( "statue_stop", {
-	MenuLabel = "Un-Statue",
+	MenuLabel = "#unstatue",
 	Order = 1501,
 	MenuIcon = "icon16/lock_open.png",
-	
-	Filter = function( self, ent, ply ) 
+
+	Filter = function( self, ent, ply )
 		if ( !IsValid( ent ) ) then return false end
 		if ( ent:GetClass() != "prop_ragdoll" ) then return false end
 		if ( !ent:GetNWBool( "IsStatue" ) ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "unstatue", ent ) ) then return false end
-		return true 
+		return true
 	end,
 
 	Action = function( self, ent )
-	
+
 		self:MsgStart()
 			net.WriteEntity( ent )
 		self:MsgEnd()
-		
+
 	end,
 
 	Receive = function( self, length, player )
 
 		local ent = net.ReadEntity()
-		
+
 		if ( !IsValid( ent ) ) then return end
 		if ( !IsValid( player ) ) then return end
 		if ( ent:GetClass() != "prop_ragdoll" ) then return end
@@ -110,18 +109,18 @@ properties.Add( "statue_stop", {
 		local bones = ent:GetPhysicsObjectCount()
 		if ( bones < 2 ) then return end
 		if ( !ent.StatueInfo ) then return end
-		
+
 		for k, v in pairs( ent.StatueInfo ) do
-		
+
 			if ( IsValid( v ) ) then
 				v:Remove()
 			end
-		
+
 		end
-		
+
 		ent:SetNWBool( "IsStatue", false )
 		ent.StatueInfo = nil
-		
-	end	
+
+	end
 
 } )

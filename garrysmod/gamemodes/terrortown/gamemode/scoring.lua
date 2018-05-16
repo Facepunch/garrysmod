@@ -60,8 +60,8 @@ function SCORE:HandleKill( victim, attacker, dmginfo )
 
    local e = {
       id=EVENT_KILL,
-      att={ni="", uid=-1, tr=false},
-      vic={ni=victim:Nick(), uid=victim:UniqueID(), tr=false},
+      att={ni="", sid=-1, tr=false},
+      vic={ni=victim:Nick(), sid=victim:SteamID(), tr=false},
       dmg=CopyDmg(dmginfo)};
 
    e.dmg.h = victim.was_headshot
@@ -70,7 +70,7 @@ function SCORE:HandleKill( victim, attacker, dmginfo )
 
    if IsValid(attacker) and attacker:IsPlayer() then
       e.att.ni = attacker:Nick()
-      e.att.uid = attacker:UniqueID()
+      e.att.sid = attacker:SteamID()
       e.att.tr = attacker:GetTraitor()
 
       -- If a traitor gets himself killed by another traitor's C4, it's his own
@@ -88,7 +88,7 @@ end
 
 function SCORE:HandleSpawn( ply )
    if ply:Team() == TEAM_TERROR then
-      self:AddEvent({id=EVENT_SPAWN, ni=ply:Nick(), uid=ply:UniqueID()})
+      self:AddEvent({id=EVENT_SPAWN, ni=ply:Nick(), sid=ply:SteamID()})
    end
 end
 
@@ -97,9 +97,9 @@ function SCORE:HandleSelection()
    local detectives = {}
    for k, ply in pairs(player.GetAll()) do
       if ply:GetTraitor() then
-         table.insert(traitors, ply:UniqueID())
+         table.insert(traitors, ply:SteamID())
       elseif ply:GetDetective() then
-         table.insert(detectives, ply:UniqueID())
+         table.insert(detectives, ply:SteamID())
       end
    end
 
@@ -107,7 +107,7 @@ function SCORE:HandleSelection()
 end
 
 function SCORE:HandleBodyFound(finder, found)
-   self:AddEvent({id=EVENT_BODYFOUND, ni=finder:Nick(), uid=finder:UniqueID(), b=found:Nick()})
+   self:AddEvent({id=EVENT_BODYFOUND, ni=finder:Nick(), sid=finder:SteamID(), b=found:Nick()})
 end
 
 function SCORE:HandleC4Explosion(planter, arm_time, exp_time)
@@ -138,7 +138,7 @@ function SCORE:HandleC4Disarm(disarmer, owner, success)
 end
 
 function SCORE:HandleCreditFound(finder, found_nick, credits)
-   self:AddEvent({id=EVENT_CREDITFOUND, ni=finder:Nick(), uid=finder:UniqueID(), b=found_nick, cr=credits})
+   self:AddEvent({id=EVENT_CREDITFOUND, ni=finder:Nick(), sid=finder:SteamID(), b=found_nick, cr=credits})
 end
 
 function SCORE:ApplyEventLogScores(wintype)
@@ -146,12 +146,12 @@ function SCORE:ApplyEventLogScores(wintype)
    local traitors = {}
    local detectives = {}
    for k, ply in pairs(player.GetAll()) do
-      scores[ply:UniqueID()] = {}
+      scores[ply:SteamID()] = {}
 
       if ply:GetTraitor() then
-         table.insert(traitors, ply:UniqueID())
+         table.insert(traitors, ply:SteamID())
       elseif ply:GetDetective() then
-         table.insert(detectives, ply:UniqueID())
+         table.insert(detectives, ply:SteamID())
       end
    end
 
@@ -160,8 +160,8 @@ function SCORE:ApplyEventLogScores(wintype)
    local dead = {traitors = 0, innos = 0}
    local scored_log = ScoreEventLog(self.Events, scores, traitors, detectives)
    local ply = nil
-   for id, s in pairs(scored_log) do
-      ply = player.GetByUniqueID(id)
+   for sid, s in pairs(scored_log) do
+      ply = player.GetBySteamID(sid)
       if ply and ply:ShouldScore() then
          ply:AddFrags(KillsToPoints(s, ply:GetTraitor()))
       end
@@ -170,8 +170,8 @@ function SCORE:ApplyEventLogScores(wintype)
    -- team scores
    local bonus = ScoreTeamBonus(scored_log, wintype)
 
-   for id, s in pairs(scored_log) do
-      ply = player.GetByUniqueID(id)
+   for sid, s in pairs(scored_log) do
+      ply = player.GetBySteamID(sid)
       if ply and ply:ShouldScore() then
          ply:AddFrags(ply:GetTraitor() and bonus.traitors or bonus.innos)
       end
@@ -180,8 +180,8 @@ function SCORE:ApplyEventLogScores(wintype)
    -- count deaths
    for k, e in pairs(self.Events) do
       if e.id == EVENT_KILL then
-         local victim = player.GetByUniqueID(e.vic.uid)
-         if IsValid(victim) then
+         local victim = player.GetBySteamID(e.vic.sid)
+         if IsValid(victim) and victim:ShouldScore() then
             victim:AddDeaths(1)
          end
       end

@@ -9,10 +9,9 @@
 --
 
 local bDoing = false
-local fnAction = func
+local fnAction = nil
 
-util.worldpicker = 
-{
+util.worldpicker = {
 	--
 	-- Start world picking
 	--
@@ -23,7 +22,7 @@ util.worldpicker =
 		gui.EnableScreenClicker( true )
 
 	end,
-	
+
 	--
 	-- Finish world picking - you shouldn't have to call this (called from hook below)
 	--
@@ -34,14 +33,14 @@ util.worldpicker =
 		gui.EnableScreenClicker( false )
 
 	end,
-	
+
 	Active = function() return bDoing end
 }
 
 hook.Add( "VGUIMousePressAllowed", "WorldPickerMouseDisable", function( code )
 
 	if ( !bDoing ) then return false end
-	
+
 	local dir = gui.ScreenToVector( gui.MousePos() )
 	local tr = util.TraceLine( {
 		start = LocalPlayer():GetShootPos(),
@@ -51,7 +50,7 @@ hook.Add( "VGUIMousePressAllowed", "WorldPickerMouseDisable", function( code )
 
 	util.worldpicker.Finish( tr )
 
-	-- Don't register this click	
+	-- Don't register this click
 	return true
 
 end )

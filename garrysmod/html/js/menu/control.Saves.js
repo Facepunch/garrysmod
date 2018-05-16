@@ -3,20 +3,32 @@ save = new WorkshopFiles();
 
 function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 {
-
 	$rootScope.ShowBack = true;
 	Scope = $scope;
 
 	save.Init( 'ws_save', $scope, $rootScope );
 
-	Scope.Categories =
+	$scope.MyCategories =
+	[
+		"local",
+		"subscribed_ugc",
+		//"favorites_ugc"
+	];
+
+	$scope.Categories =
 	[
 		"trending",
 		"popular",
 		"latest"
 	];
 
-	Scope.SubCategories =
+	$scope.CategoriesSecondary =
+	[
+		"friends",
+		"mine"
+	];
+
+	$scope.SubCategories =
 	[
 		"scenes",
 		"machines",
@@ -52,20 +64,34 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 		$scope.Switch( $scope.Category, $scope.Offset );
 	}
 
-	if ( IS_SPAWN_MENU )
+	$scope.ReloadView = function()
 	{
-		if ( $routeParams.Category )
+		if ( IS_SPAWN_MENU )
 		{
-			$timeout( function() { $scope.SwitchWithTag( $routeParams.Category, 0, $routeParams.Tag, $scope.MapName ); }, 100 );
-			return;
-		}
+			if ( $routeParams.Category )
+			{
+				$timeout( function() { $scope.SwitchWithTag( $routeParams.Category, 0, $routeParams.Tag, $scope.MapName ); }, 100 );
+				return;
+			}
 
-		$timeout( function() { $scope.SwitchWithTag( 'trending', 0, $scope.MapName ); }, 100 );
+			$timeout( function() { $scope.SwitchWithTag( 'local', 0, $scope.MapName ); }, 100 );
+		}
+		else
+		{
+			$scope.Switch( 'local', 0 );
+		}
 	}
-	else
-	{
-		$scope.Switch( 'local', 0 );
-	}
+
+	// This is just to fix the spawnmenu initial size being 512x512 for first few frames
+	$scope.ReloadView();
+	$( window ).resize( function() {
+		//if ( $scope.ResizeTimeout ) $timeout.cancel( $scope.ResizeTimeout );
+		//$scope.ResizeTimeout = $timeout( function() { $scope.ReloadView(); }, 250 );
+
+		if ( $scope.ReloadedView ) return;
+		$scope.ReloadedView = true;
+		$scope.ResizeTimeout = $timeout( function() { $scope.ReloadView(); }, 250 );
+	} );
 }
 
 function OnGameSaved()

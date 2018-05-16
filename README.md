@@ -5,7 +5,7 @@ This repo consists of all Lua, text, and config extensions for Garry's Mod. Bina
 
 Next Update
 ---
-Current game discussion as well as update progress can be found in the [Next Update](https://facepunch.com/showthread.php?t=1485127) thread on Facepunch.
+Current game discussion as well as update progress can be found in the [Next Update](https://facepunch.com/showthread.php?t=1560743) thread on Facepunch.
 
 You can test [changes for the next update](http://wiki.garrysmod.com/changelist/) on the [Garry's Mod Dev Branch](http://wiki.garrysmod.com/page/Dev_Branch) through Steam.
 
@@ -22,3 +22,9 @@ Issues and Requests
 To report bugs please visit the [Garry's Mod Issue tracker](https://github.com/Facepunch/garrysmod-issues/).
 
 To request features please visit the [Garry's Mod Request tracker](https://github.com/Facepunch/garrysmod-requests/).
+
+
+Translations
+---
+You can contribute to the game's translation on the following website:
+http://translate.garrysmod.com/project/garrysmod

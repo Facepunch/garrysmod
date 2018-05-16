@@ -1,50 +1,49 @@
-
 AddCSLuaFile()
 
-SWEP.HoldType = "normal"
+SWEP.HoldType               = "normal"
 
 if CLIENT then
-   SWEP.PrintName = "vis_name"
-   SWEP.Slot = 6
+   SWEP.PrintName           = "vis_name"
+   SWEP.Slot                = 6
 
-   SWEP.ViewModelFOV = 10
+   SWEP.ViewModelFOV        = 10
+   SWEP.ViewModelFlip       = false
+   SWEP.DrawCrosshair       = false
 
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "vis_desc"
    };
 
-   SWEP.Icon = "vgui/ttt/icon_cse"
+   SWEP.Icon                = "vgui/ttt/icon_cse"
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                   = "weapon_tttbase"
 
-SWEP.ViewModel  = Model("models/weapons/v_crowbar.mdl")
-SWEP.WorldModel = Model("models/Items/battery.mdl")
+SWEP.ViewModel              = Model("models/weapons/v_crowbar.mdl")
+SWEP.WorldModel             = Model("models/Items/battery.mdl")
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
 SWEP.Primary.ClipSize       = -1
 SWEP.Primary.DefaultClip    = -1
 SWEP.Primary.Automatic      = false
-SWEP.Primary.Ammo       = "none"
-SWEP.Primary.Delay = 1.0
+SWEP.Primary.Ammo           = "none"
+SWEP.Primary.Delay          = 1.0
 
 SWEP.Secondary.ClipSize     = -1
 SWEP.Secondary.DefaultClip  = -1
 SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
-SWEP.Secondary.Delay = 0.2
+SWEP.Secondary.Ammo         = "none"
+SWEP.Secondary.Delay        = 0.2
 
-SWEP.Kind = WEAPON_EQUIP
-SWEP.CanBuy = {ROLE_DETECTIVE} -- only detectives can buy
-SWEP.WeaponID = AMMO_CSE
+SWEP.Kind                   = WEAPON_EQUIP
+SWEP.CanBuy                 = {ROLE_DETECTIVE} -- only detectives can buy
+SWEP.WeaponID               = AMMO_CSE
 
-SWEP.LimitedStock = true -- only buyable once
-SWEP.NoSights = true
-SWEP.AllowDrop = false
+SWEP.LimitedStock           = true -- only buyable once
+SWEP.NoSights               = true
+SWEP.AllowDrop              = false
 
-SWEP.DeathScanDelay = 15
+SWEP.DeathScanDelay         = 15
 
 function SWEP:PrimaryAttack()
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
@@ -77,7 +76,7 @@ function SWEP:Reload()
 end
 
 function SWEP:OnRemove()
-   if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
+   if CLIENT and IsValid(self:GetOwner()) and self:GetOwner() == LocalPlayer() and self:GetOwner():Alive() then
       RunConsoleCommand("lastinv")
    end
 end
@@ -88,7 +87,7 @@ function SWEP:DropDevice()
    local cse = nil
 
    if SERVER then
-      local ply = self.Owner
+      local ply = self:GetOwner()
       if not IsValid(ply) then return end
 
       if self.Planted then return end

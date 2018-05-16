@@ -73,19 +73,19 @@ local function GetPlayerFilter(pred)
 end
 
 function GetTraitorFilter(alive_only)
-   return GetPlayerFilter(function(p) return p:GetTraitor() and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return p:GetTraitor() and (not alive_only or p:IsTerror()) end)
 end
 
 function GetDetectiveFilter(alive_only)
-   return GetPlayerFilter(function(p) return p:IsDetective() and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return p:IsDetective() and (not alive_only or p:IsTerror()) end)
 end
 
 function GetInnocentFilter(alive_only)
-   return GetPlayerFilter(function(p) return (not p:IsTraitor()) and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return (not p:IsTraitor()) and (not alive_only or p:IsTerror()) end)
 end
 
 function GetRoleFilter(role, alive_only)
-   return GetPlayerFilter(function(p) return p:IsRole(role) and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return p:IsRole(role) and (not alive_only or p:IsTerror()) end)
 end
 
 ---- Communication control
@@ -186,7 +186,7 @@ function GM:PlayerCanHearPlayersVoice(listener, speaker)
    end
 
    -- Specific mute
-   if listener:IsSpec() and listener.mute_team == speaker:Team() then
+   if listener:IsSpec() and listener.mute_team == speaker:Team() or listener.mute_team == MUTE_ALL then
       return false, false
    end
 
@@ -226,7 +226,7 @@ end
 
 local function TraitorGlobalVoice(ply, cmd, args)
    if not IsValid(ply) or not ply:IsActiveTraitor() then return end
-   if not #args == 1 then return end
+   if #args != 1 then return end
    local state = tonumber(args[1])
 
    ply.traitor_gvoice = (state == 1)
@@ -237,7 +237,7 @@ concommand.Add("tvog", TraitorGlobalVoice)
 
 local function MuteTeam(ply, cmd, args)
    if not IsValid(ply) then return end
-   if not #args == 1 and tonumber(args[1]) then return end
+   if not (#args == 1 and tonumber(args[1])) then return end
    if not ply:IsSpec() then
       ply.mute_team = -1
       return
@@ -246,8 +246,13 @@ local function MuteTeam(ply, cmd, args)
    local t = tonumber(args[1])
    ply.mute_team = t
 
-   local name = (t != 0) and team.GetName(t) or "None"
-   ply:ChatPrint(name .. " muted.")
+   if t == MUTE_ALL then
+      ply:ChatPrint("All muted.")
+   elseif t == MUTE_NONE or t == TEAM_UNASSIGNED or not team.Valid(t) then
+      ply:ChatPrint("None muted.")
+   else
+      ply:ChatPrint(team.GetName(t) .. " muted.")
+   end
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 
@@ -323,6 +328,8 @@ concommand.Add("_deathrec", LastWords)
 -- Override or hook in plugin for spam prevention and whatnot. Return true
 -- to block a command.
 function GM:TTTPlayerRadioCommand(ply, msg_name, msg_target)
+   if ply.LastRadioCommand and ply.LastRadioCommand > (CurTime() - 0.5) then return true end
+   ply.LastRadioCommand = CurTime()
 end
 
 local function RadioCommand(ply, cmd, args)

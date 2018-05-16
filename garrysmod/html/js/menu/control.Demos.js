@@ -1,13 +1,32 @@
 
 demo = new WorkshopFiles();
 
-
 function ControllerDemos( $scope, $element, $rootScope, $location )
 {
 	$rootScope.ShowBack = true;
 	Scope = $scope;
 
 	demo.Init( 'demo', $scope, $rootScope );
+
+	$scope.MyCategories =
+	[
+		"local",
+		"subscribed_ugc",
+		//"favorites_ugc"
+	];
+
+	$scope.Categories =
+	[
+		"trending",
+		"popular",
+		"latest"
+	];
+
+	$scope.CategoriesSecondary =
+	[
+		"friends",
+		"mine",
+	];
 
 	$scope.PlayDemo = function ( entry )
 	{
@@ -33,7 +52,6 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 
 		lua.Run( "demo:DownloadAndToVideo( %s );", entry.info.fileid );
 	}
-	
 
 	$scope.DeleteLocal = function ( entry )
 	{
@@ -42,7 +60,6 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 
 		$scope.Switch( $scope.Category, $scope.Offset );
 	}
-
 
 	$scope.Switch( 'local', 0 );
 }

@@ -8,6 +8,7 @@ local function UpdateMaps()
 	MapNames = {}
 
 	MapNames[ "aoc_" ] = "Age of Chivalry"
+	MapNames[ "infra_" ] = "INFRA"
 
 	MapPatterns[ "^asi-" ] = "Alien Swarm"
 	MapNames[ "lobby" ] = "Alien Swarm"
@@ -86,6 +87,7 @@ local function UpdateMaps()
 	MapNames[ "l4d_" ] = "Left 4 Dead"
 
 	MapPatterns[ "^c[%d]m" ] = "Left 4 Dead 2"
+	MapPatterns[ "^c1[%d]m" ] = "Left 4 Dead 2"
 	MapNames[ "curling_stadium" ] = "Left 4 Dead 2"
 	MapNames[ "tutorial_standards" ] = "Left 4 Dead 2"
 	MapNames[ "tutorial_standards_vs" ] = "Left 4 Dead 2"
@@ -136,6 +138,7 @@ local function UpdateMaps()
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
 	MapNames[ "zpo_" ] = "Zombie Panic! Source"
 	MapNames[ "zps_" ] = "Zombie Panic! Source"
+	MapNames[ "zph_" ] = "Zombie Panic! Source"
 
 	MapNames[ "bhop_" ] = "Bunny Hop"
 	MapNames[ "cinema_" ] = "Cinema"
@@ -189,7 +192,7 @@ local favmaps
 local function LoadFavourites()
 
 	local cookiestr = cookie.GetString( "favmaps" )
-	favmaps = favmaps || (cookiestr && string.Explode( ";", cookiestr ) || {})
+	favmaps = favmaps || ( cookiestr && string.Explode( ";", cookiestr ) || {} )
 
 end
 
@@ -352,6 +355,8 @@ function LoadLastMap()
 
 	cat = string.gsub( cat, "'", "\\'" )
 
-	pnlMainMenu:Call( "SetLastMap('" .. map .. "','" .. cat .. "')" )
+	if ( !file.Exists( "maps/" .. map .. ".bsp", "GAME" ) ) then return end
+
+	pnlMainMenu:Call( "SetLastMap('" .. map:JavascriptSafe() .. "','" .. cat:JavascriptSafe() .. "')" )
 
 end

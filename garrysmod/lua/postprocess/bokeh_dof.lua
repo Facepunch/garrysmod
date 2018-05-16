@@ -1,11 +1,10 @@
 
 local blur_mat = Material( "pp/bokehblur" )
 
-local pp_bokeh			= CreateClientConVar( "pp_bokeh", "0", false, false )
-local pp_bokeh_blur		= CreateClientConVar( "pp_bokeh_blur", "5", true, false )
-local pp_bokeh_distance	= CreateClientConVar( "pp_bokeh_distance", "0.1", true, false )
-local pp_bokeh_focus	= CreateClientConVar( "pp_bokeh_focus", "1.0", true, false )
-
+local pp_bokeh = CreateClientConVar( "pp_bokeh", "0", false, false )
+local pp_bokeh_blur = CreateClientConVar( "pp_bokeh_blur", "5", true, false )
+local pp_bokeh_distance = CreateClientConVar( "pp_bokeh_distance", "0.1", true, false )
+local pp_bokeh_focus = CreateClientConVar( "pp_bokeh_focus", "1.0", true, false )
 
 local function DrawBokehDOF()
 
@@ -20,7 +19,7 @@ local function DrawBokehDOF()
 
 	render.SetMaterial( blur_mat )
 	render.DrawScreenQuad()
-	
+
 end
 
 local function OnChange( name, oldvalue, newvalue )
@@ -47,6 +46,6 @@ end )
 
 hook.Add( "NeedsDepthPass", "NeedsDepthPass_Bokeh", function()
 
-	return pp_bokeh:GetBool()
+	if ( pp_bokeh:GetBool() ) then return true end
 
 end )

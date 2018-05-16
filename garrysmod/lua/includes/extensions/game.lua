@@ -24,6 +24,13 @@ local AmmoTypes = {}
 game.AddAmmoType = function ( tbl )
 
 	if ( !tbl.name ) then return end
+	
+	for id, ammo in ipairs( AmmoTypes ) do
+		if ( tbl.name == ammo.name ) then
+			AmmoTypes[id] = tbl
+			return
+		end
+	end
 
 	table.insert( AmmoTypes, tbl )
 

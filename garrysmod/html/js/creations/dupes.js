@@ -15,19 +15,23 @@ function CDupes( $scope, $timeout, $location )
 	CreationScope		= $scope;
 	CreationLocation	= $location;
 
-	CreationScope.DupeDisabled = "disabled";
+	CreationScope.MyCategories =
+	[
+		"local",
+		"subscribed_ugc",
+		//"favorites_ugc"
+	];
 
 	CreationScope.Categories =
 	[
 		"trending",
 		"popular",
-		"latest",
-		"friends",
+		"latest"
 	];
 
-	CreationScope.SimpleCategories =
+	CreationScope.CategoriesSecondary =
 	[
-		"local",
+		"friends",
 		"mine"
 	];
 
@@ -40,6 +44,8 @@ function CDupes( $scope, $timeout, $location )
 		"buildings",
 		"others"
 	];
+
+	CreationScope.DupeDisabled = "disabled";
 
 	$scope.IfElse = function ( b, a, c )
 	{

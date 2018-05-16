@@ -29,7 +29,6 @@ L.win_showreport   = "¡Echa un vistazo al informe de la ronda durante {num} seg
 
 L.limit_round      = "Se ha alcanzado el límite de rondas. El próximo mapa será {mapname}."
 L.limit_time       = "Se ha alcanzado el límite de tiempo. El próximo mapa será {mapname}."
-L.limit_vote       = "Ha finalizado la partida. ¡Es hora de votar!"
 L.limit_left       = "Quedan {num} ronda{s} o {time} minutos para cambiar de mapa a {mapname}."
 
 --- Credit awards
@@ -144,10 +143,6 @@ L.radio_button_steps   = "Pasos"
 -- Intro screen shown after joining
 L.intro_help     = "¡Si eres nuevo en el juego pulsa F1 para ver las instrucciones!"
 
--- "Continue playing" vote
-L.contvote_continue = "Seguir jugando este"
-L.contvote_change   = "Iniciar una votación"
-
 -- Radiocommands/quickchat
 L.quick_title   = "Teclas de acceso rápido a chat"
 
@@ -257,6 +252,8 @@ L.set_lowsights     = "Bajar el arma al usar la mira"
 L.set_lowsights_tip = "Actívalo para posicionar el arma más abajo cuando apuntes con ella. Esto hará más fácil dar en el blanco, pero será menos realista."
 L.set_fastsw        = "Cambio rápido de arma"
 L.set_fastsw_tip    = "Actívalo para pasar de un arma a otra rápidamente sin abrir el menú de cambio de arma."
+L.set_fastsw_menu   = "Activar arma rápida conmutación"
+L.set_fastswmenu_tip  = "Si se activa la arma rápida conmutación, el intercambiador de menú aparecerá"
 L.set_wswitch       = "Desactivar autocierre del menú de cambio de arma"
 L.set_wswitch_tip   = "Por defecto, el menú de cambio de arma se cierra automáticamente al pasar unos segundos. Activa esto para que no se cierre."
 L.set_cues          = "Reproducir una señal cuando la ronda empieza o acaba"
@@ -614,6 +611,7 @@ L.radar_hud    = "El radar estará listo en: {time}"
 -- Spectator muting of living/dead
 L.mute_living  = "Jugadores vivos enmudecidos"
 L.mute_specs   = "Espectadores enmudecidos"
+L.mute_all     = "Cada enmudecido"
 L.mute_off     = "Nadie enmudecido"
 
 -- Spectators and prop possession
@@ -1067,3 +1065,6 @@ L.set_cross_size = "Tamaño de la mira"
 
 -- 5-25-15
 L.hat_retrieve = "Recogiste el sombrero de un detective."
+
+--- 3-9-2017
+L.sb_sortby = "Ordene por:"

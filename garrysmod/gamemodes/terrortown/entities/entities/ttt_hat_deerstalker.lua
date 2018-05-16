@@ -126,18 +126,16 @@ if SERVER then
    end
 
    local function TestHat(ply, cmd, args)
-      if cvars.Bool("sv_cheats", 0) then
-         local hat = ents.Create("ttt_hat_deerstalker")
+      local hat = ents.Create("ttt_hat_deerstalker")
 
-         hat:SetPos(ply:GetPos() + Vector(0,0,70))
-         hat:SetAngles(ply:GetAngles())
+      hat:SetPos(ply:GetPos() + Vector(0,0,70))
+      hat:SetAngles(ply:GetAngles())
 
-         hat:SetParent(ply)
+      hat:SetParent(ply)
 
-         ply.hat = hat
+      ply.hat = hat
 
-         hat:Spawn()
-      end
+      hat:Spawn()
    end
-   concommand.Add("ttt_debug_testhat", TestHat)
+   concommand.Add("ttt_debug_testhat", TestHat, nil, nil, FCVAR_CHEAT)
 end

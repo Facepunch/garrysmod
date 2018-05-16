@@ -154,7 +154,7 @@ end
 ---- DISARM
 
 local disarm_beep    = Sound("buttons/blip2.wav")
-local wire_cut       = Sound("ttt/wirecut.mp3")
+local wire_cut       = Sound("ttt/wirecut.wav")
 
 local c4_bomb_mat    = Material("vgui/ttt/c4_bomb")
 local c4_cut_mat     = Material("vgui/ttt/c4_cut")
@@ -457,9 +457,8 @@ end
 ---- Communication
 
 local function C4ConfigHook()
-   local idx = net.ReadUInt(16)
+   local bomb = net.ReadEntity()
 
-   local bomb = ents.GetByIndex(idx)
    if IsValid(bomb) then
       if not bomb:GetArmed() then
          ShowC4Config(bomb)
@@ -471,12 +470,9 @@ end
 net.Receive("TTT_C4Config", C4ConfigHook)
 
 local function C4DisarmResultHook()
-   local idx = net.ReadUInt(16)
-   local result = {}
-
+   local bomb = net.ReadEntity()
    local correct = net.ReadBit() == 1
 
-   local bomb = ents.GetByIndex(idx)
    if IsValid(bomb) then
       if correct and disarm_success then
          disarm_success()

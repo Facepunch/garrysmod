@@ -3,15 +3,19 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Button"
+ENT.Editable = true
 
 function ENT:SetupDataTables()
 
 	self:NetworkVar( "Int", 0, "Key" )
 	self:NetworkVar( "Bool", 0, "On" )
-	self:NetworkVar( "Bool", 1, "IsToggle" )
+	self:NetworkVar( "Bool", 1, "IsToggle", { KeyName = "tg", Edit = { type = "Boolean", order = 1, title = "#tool.button.toggle" } } )
+	self:NetworkVar( "String", 0, "Label", { KeyName = "lbl", Edit = { type = "Generic", order = 2, title = "#tool.button.text" } } )
 
-	self:SetOn( false )
-	self:SetIsToggle( false )
+	if ( SERVER ) then
+		self:SetOn( false )
+		self:SetIsToggle( false )
+	end
 
 end
 
@@ -32,19 +36,21 @@ function ENT:Initialize()
 
 end
 
+function ENT:GetOverlayText()
 
-function ENT:SetLabel( text )
+	local text = self:GetLabel()
 
 	text = string.gsub( text, "\\", "" )
 	text = string.sub( text, 0, 20 )
 
-	if ( text != "" ) then
+	if ( text == "" ) then return "" end
 
-		text = "\"" .. text .. "\""
+	local txt =  "\"" .. text .. "\""
 
-	end
+	if ( txt == "" ) then return "" end
+	if ( game.SinglePlayer() ) then return txt end
 
-	self:SetOverlayText( text )
+	return txt .. "\n(" .. self:GetPlayerName() .. ")"
 
 end
 
@@ -67,10 +73,9 @@ function ENT:Use( activator, caller, type, value )
 	-- Switch off
 	--
 	if ( self:GetOn() ) then
-
 		self:Toggle( false, activator )
-
-	return end
+		return
+	end
 
 	--
 	-- Switch on
@@ -83,18 +88,13 @@ end
 
 function ENT:Think()
 
+	-- Add a world tip if the player is looking at it
 	self.BaseClass.Think( self )
 
-	--
-	-- Add a world tip if the player is looking at it
-	--
+	-- Update the animation
 	if ( CLIENT ) then
 
 		self:UpdateLever()
-
-		if ( self:GetOverlayText() != "" && self:BeingLookedAtByLocalPlayer() ) then
-			AddWorldTip( self:EntIndex(), self:GetOverlayText(), 0.5, self:GetPos(), self.Entity )
-		end
 
 	end
 
@@ -122,7 +122,6 @@ end
 --
 function ENT:Toggle( bEnable, ply )
 
-
 	if ( bEnable ) then
 
 		numpad.Activate( self:GetPlayer(), self:GetKey(), true )
@@ -149,11 +148,5 @@ function ENT:UpdateLever()
 
 	self:SetPoseParameter( "switch", self.PosePosition )
 	self:InvalidateBoneCache()
-
-end
-
-function ENT:Draw()
-
-	self:DrawModel()
 
 end

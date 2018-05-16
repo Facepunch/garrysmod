@@ -4,16 +4,14 @@ DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Emitter"
 ENT.RenderGroup = RENDERGROUP_OPAQUE
-
-local matLight = Material( "sprites/light_ignorez" )
-local matBeam = Material( "effects/lamp_beam" )
+ENT.Editable = true
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Float", 0, "Delay" )
-	self:NetworkVar( "Float", 1, "Scale" )
-	self:NetworkVar( "Bool", 0, "Toggle" )
-	self:NetworkVar( "Bool", 1, "On" )
+	self:NetworkVar( "Bool", 1, "On", { KeyName = "on", Edit = { type = "Boolean", order = 1, title = "#entedit.enabled" } } )
+	self:NetworkVar( "Bool", 0, "Toggle", { KeyName = "tg", Edit = { type = "Boolean", order = 1, title = "#tool.emitter.toggle" } } )
+	self:NetworkVar( "Float", 0, "Delay", { KeyName = "dl", Edit = { type = "Float", order = 1, min = 0.01, max = 2, title = "#tool.emitter.delay" } } )
+	self:NetworkVar( "Float", 1, "Scale", { KeyName = "sc", Edit = { type = "Float", order = 1, min = 0, max = 6, title = "#tool.emitter.scale" } } )
 	self:NetworkVar( "String", 0, "Effect" )
 
 end
@@ -39,7 +37,7 @@ end
 
 function ENT:Draw()
 
-	-- Don't draw if we
+	-- Don't draw if the player is holding Camera SWEP in their hands
 	local ply = LocalPlayer()
 	local wep = ply:GetActiveWeapon()
 
@@ -91,7 +89,7 @@ end
 
 if ( SERVER ) then
 
-	numpad.Register( "Emitter_On", 	function ( pl, ent )
+	numpad.Register( "Emitter_On", function ( pl, ent )
 
 		if ( !IsValid( ent ) ) then return end
 
@@ -311,6 +309,7 @@ list.Set( "EffectType", "explosion", {
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
+		effectdata:SetFlags( 4 )
 		util.Effect( "explosion", effectdata, true, true )
 
 	end

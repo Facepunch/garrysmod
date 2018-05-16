@@ -1,3 +1,4 @@
+
 local PANEL = {}
 
 function PANEL:Init()
@@ -7,7 +8,7 @@ function PANEL:Init()
 end
 
 --
--- Sets the entity to edit. 
+-- Sets the entity to edit.
 -- This can be called any time, even when another entity has been set.
 --
 function PANEL:SetEntity( entity )
@@ -63,7 +64,7 @@ function PANEL:EditVariable( varname, editdata )
 	--
 	-- Create a property row in the specified category.
 	--
-	local row = self:CreateRow( editdata.category or "Main", editdata.title or varname )
+	local row = self:CreateRow( editdata.category or "#entedit.general", editdata.title or varname )
 
 	--
 	-- This is where the real business is done. Setup creates the specific controls for
@@ -123,6 +124,5 @@ function PANEL:PostAutoRefresh()
 	self:RebuildControls()
 
 end
-
 
 derma.DefineControl( "DEntityProperties", "", PANEL, "DProperties" )

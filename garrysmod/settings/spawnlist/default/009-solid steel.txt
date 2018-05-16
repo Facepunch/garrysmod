@@ -1,0 +1,491 @@
+"TableToKeyValues"
+{
+	"parentid"		"6"
+	"icon"		"icon16/page.png"
+	"id"		"9"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Beams"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/box_beam_4.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/box_beam_8.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/box_beam_12.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/box_beam_16.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/box_beam_24.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/box_beam_32.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/box_beam_48.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/crossbeam_4.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/crossbeam_8.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/crossbeam_12.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/crossbeam_16.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam_4.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam_16.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam_32.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam_48.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam_64.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam_96.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam_16_2d.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam_16_3d.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam2_4.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam2_8.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam2_16.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam2_32.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam2_48.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam2_60.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam2_96.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/l_beam_4.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/i_beam_8.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/l-beam__16.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/l-beam__24.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/l-beam__32.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/l-beam__48.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/u_beam_8.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/u_beam_12.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/u_beam_16.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/u_beam_24.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/u_beam_32.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/u_beam_48.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/iron_beam1.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/iron_beam2.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/iron_beam3.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/misc/iron_beam4.mdl"
+		}
+		"44"
+		{
+			"type"		"header"
+			"text"		"Sliders"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_12x12x12.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_12x12x24.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_12x12x48.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_12x12x96.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_bar_10x10x96.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_bar_10x10x144.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_bar_10x10x192.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_bar_10x10x240.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_bar_10x10x288.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_bar_10x10x336.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_bar_10x10x384.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_bar_10x10x768.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_bar_10x10x1152.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_bar_10x10x1536.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/xeon133/slider/slider_stand_12x12x24.mdl"
+		}
+		"60"
+		{
+			"type"		"header"
+			"text"		"Corner Beams"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/steel_beam45_3.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/steel_beam45_4.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/steel_beam45_8.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/steel_beam45_12.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/steel_beam45_16.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/steel_beam_4.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/steel_beam_8.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/steel_beam_12.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/steel_beam_24.mdl"
+		}
+		"70"
+		{
+			"type"		"header"
+			"text"		"Supports"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/step_beam_16.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/step_beam_32.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/step_beam_48.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/step_beam_64.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/step_beam_96.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/steel_support_24_4.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/truss_48.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/truss_96.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/truss_144.mdl"
+		}
+		"80"
+		{
+			"type"		"header"
+			"text"		"Misc"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/plank_4.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/plank_8.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/plank_16.mdl"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/plank_24.mdl"
+		}
+		"85"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/plank_48.mdl"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/sheetmetal_90_4.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/sheetmetal_box_4.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/sheetmetal_box90_4.mdl"
+		}
+		"89"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/sheetmetal_h90_4.mdl"
+		}
+		"90"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/sheetmetal_h_4.mdl"
+		}
+		"91"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/sheetmetal_i_4.mdl"
+		}
+		"92"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/sheetmetal_plus_4.mdl"
+		}
+		"93"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/sheetmetal_plusb_4.mdl"
+		}
+		"94"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/sheetmetal_t_4.mdl"
+		}
+		"95"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/sheetmetal_u_4.mdl"
+		}
+		"96"
+		{
+			"type"		"model"
+			"model"		"models/mechanics/solid_steel/sheetmetal_y_8.mdl"
+		}
+	}
+	"name"		"Solid Steel"
+	"version"		"3"
+}

@@ -29,9 +29,10 @@ function ENT:SetupDataTables()
 	self:NetworkVar( "Bool", 0, "DrawStars", { KeyName = "drawstars", Edit = { type = "Boolean", category = "Stars", order = 10 } } )
 	self:NetworkVar( "String", 0, "StarTexture", { KeyName = "startexture", Edit = { type = "Texture", group = "Stars", category = "Stars", order = 11 } } )
 
-	self:NetworkVarElement( "Angle", 0, 'p', "StarScale", { KeyName = "starscale", Edit = { type = "Float", min = 0, max = 5, category = "Stars", order = 12 } } )
-	self:NetworkVarElement( "Angle", 0, 'y', "StarFade", { KeyName = "starfade", Edit = { type = "Float", min = 0, max = 5, category = "Stars", order = 13 } } )
-	self:NetworkVarElement( "Angle", 0, 'r', "StarSpeed", { KeyName = "starspeed", Edit = { type = "Float", min = 0, max = 5, category = "Stars", order = 14 } } )
+	self:NetworkVar( "Int", 0, "StarLayers", { KeyName = "starlayers", Edit = { type = "Int", min = 1, max = 3, category = "Stars", order = 12 } } )
+	self:NetworkVarElement( "Angle", 0, 'p', "StarScale", { KeyName = "starscale", Edit = { type = "Float", min = 0, max = 5, category = "Stars", order = 13 } } )
+	self:NetworkVarElement( "Angle", 0, 'y', "StarFade", { KeyName = "starfade", Edit = { type = "Float", min = 0, max = 5, category = "Stars", order = 14 } } )
+	self:NetworkVarElement( "Angle", 0, 'r', "StarSpeed", { KeyName = "starspeed", Edit = { type = "Float", min = 0, max = 2, category = "Stars", order = 15 } } )
 
 	self:NetworkVar( "Float", 1, "HDRScale", { KeyName = "hdrscale", Edit = { type = "Float", category = "Main", min = 0, max = 1, order = 4 } } )
 
@@ -54,6 +55,7 @@ function ENT:SetupDataTables()
 		self:SetDuskIntensity( 1 )
 
 		self:SetDrawStars( true )
+		self:SetStarLayers( 1 )
 		self:SetStarSpeed( 0.01 )
 		self:SetStarScale( 0.5 )
 		self:SetStarFade( 1.5 )

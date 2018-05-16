@@ -4,12 +4,13 @@ DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Hoverball"
 ENT.RenderGroup = RENDERGROUP_BOTH
+ENT.Editable = true
 
 function ENT:SetupDataTables()
 
 	self:NetworkVar( "Float", 0, "TargetZ" )
-	self:NetworkVar( "Float", 1, "SpeedVar" )
-	self:NetworkVar( "Float", 2, "AirResistanceVar" )
+	self:NetworkVar( "Float", 1, "SpeedVar", { KeyName = "speed", Edit = { type = "Float", order = 1, min = 0, max = 20, title = "#tool.hoverball.speed" } } )
+	self:NetworkVar( "Float", 2, "AirResistanceVar", { KeyName = "resistance", Edit = { type = "Float", order = 2, min = 0, max = 10, title = "#tool.hoverball.resistance" } } )
 
 end
 
@@ -157,9 +158,10 @@ function ENT:SetZVelocity( z )
 	end
 
 	self.ZVelocity = z * FrameTime() * 5000
+
 end
 
-function ENT:GetAirResistance( )
+function ENT:GetAirResistance()
 	return self:GetAirResistanceVar()
 end
 
@@ -172,7 +174,7 @@ function ENT:SetStrength( strength )
 
 	local phys = self:GetPhysicsObject()
 
-	if ( phys:IsValid() ) then
+	if ( IsValid( phys ) ) then
 		phys:SetMass( 150 * strength )
 	end
 

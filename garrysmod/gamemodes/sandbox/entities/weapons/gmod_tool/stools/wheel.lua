@@ -14,66 +14,72 @@ TOOL.ClientConVar[ "rx" ] = "90"
 TOOL.ClientConVar[ "ry" ] = "0"
 TOOL.ClientConVar[ "rz" ] = "90"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" },
+	{ name = "use" }
+}
+
 cleanup.Register( "wheels" )
 
---[[---------------------------------------------------------
-	Places a wheel
------------------------------------------------------------]]
+local function IsValidWheelModel( model )
+	for mdl, _ in pairs( list.Get( "WheelModels" ) ) do
+		if ( mdl:lower() == model:lower() ) then return true end
+	end
+	return false
+end
+
+-- Places a wheel
 function TOOL:LeftClick( trace )
 
 	if ( trace.Entity && trace.Entity:IsPlayer() ) then return false end
-	
+
 	-- If there's no physics object then we can't constraint it!
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
-	
+
 	if ( CLIENT ) then return true end
-	
-	local ply = self:GetOwner()
 
 	if ( !self:GetSWEP():CheckLimit( "wheels" ) ) then return false end
 
-	local targetPhys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
-	
+	-- Check the model's validity
+	local model = self:GetClientInfo( "model" )
+	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidWheelModel( model ) ) then return false end
+
 	-- Get client's CVars
 	local torque = self:GetClientNumber( "torque" )
 	local friction = self:GetClientNumber( "friction" )
 	local nocollide = self:GetClientNumber( "nocollide" )
 	local limit = self:GetClientNumber( "forcelimit" )
 	local toggle = self:GetClientNumber( "toggle" ) != 0
-	local model = self:GetClientInfo( "model" )
-	
+
 	local fwd = self:GetClientNumber( "fwd" )
 	local bck = self:GetClientNumber( "bck" )
-	
-	if ( !util.IsValidModel( model ) ) then return false end
-	if ( !util.IsValidProp( model ) ) then return false end
 
-	-- Create the wheel
-	local wheelEnt = MakeWheel( ply, trace.HitPos, Angle( 0, 0, 0 ), model, fwd, bck, nil, nil, toggle, torque )
+	local ply = self:GetOwner()
 
 	-- Make sure we have our wheel angle
 	self.wheelAngle = Angle( math.NormalizeAngle( self:GetClientNumber( "rx" ) ), math.NormalizeAngle( self:GetClientNumber( "ry" ) ), math.NormalizeAngle( self:GetClientNumber( "rz" ) ) )
-	
-	local TargetAngle = trace.HitNormal:Angle() + self.wheelAngle
-	wheelEnt:SetAngles( TargetAngle )
-	
+
+	-- Create the wheel
+	local wheelEnt = MakeWheel( ply, trace.HitPos, trace.HitNormal:Angle() + self.wheelAngle, model, fwd, bck, nil, nil, toggle, torque )
+
+	-- Position
 	local CurPos = wheelEnt:GetPos()
 	local NearestPoint = wheelEnt:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
 	local wheelOffset = CurPos - NearestPoint
 
 	wheelEnt:SetPos( trace.HitPos + wheelOffset )
-	
+
 	-- Wake up the physics object so that the entity updates
-	wheelEnt:GetPhysicsObject():Wake()
-	
-	local TargetPos = wheelEnt:GetPos()
+	if ( IsValid( wheelEnt:GetPhysicsObject() ) ) then wheelEnt:GetPhysicsObject():Wake() end
 
 	-- Set the hinge Axis perpendicular to the trace hit surface
-	local LPos1 = wheelEnt:GetPhysicsObject():WorldToLocal( TargetPos + trace.HitNormal )
+	local targetPhys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
+	local LPos1 = wheelEnt:GetPhysicsObject():WorldToLocal( wheelEnt:GetPos() + trace.HitNormal )
 	local LPos2 = targetPhys:WorldToLocal( trace.HitPos )
-	
-	local constraint, axis = constraint.Motor( wheelEnt, trace.Entity, 0, trace.PhysicsBone, LPos1,	LPos2, friction, torque, 0, nocollide, toggle, ply, limit )
-	
+
+	local constraint, axis = constraint.Motor( wheelEnt, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, friction, torque, 0, nocollide, toggle, ply, limit )
+
 	undo.Create( "Wheel" )
 		undo.AddEntity( axis )
 		undo.AddEntity( constraint )
@@ -83,29 +89,24 @@ function TOOL:LeftClick( trace )
 
 	ply:AddCleanup( "wheels", axis )
 	ply:AddCleanup( "wheels", constraint )
-	ply:AddCleanup( "wheels", wheelEnt )
-	
+
 	wheelEnt:SetMotor( constraint )
 	wheelEnt:SetDirection( constraint.direction )
 	wheelEnt:SetAxis( trace.HitNormal )
-	wheelEnt:SetToggle( toggle )
 	wheelEnt:DoDirectionEffect()
-	wheelEnt:SetBaseTorque( torque )
 
 	return true
 
 end
 
---[[---------------------------------------------------------
-	Apply new values to the wheel
------------------------------------------------------------]]
+-- Apply new values to the wheel
 function TOOL:RightClick( trace )
 
 	if ( trace.Entity && trace.Entity:GetClass() != "gmod_wheel" ) then return false end
 	if ( CLIENT ) then return true end
-	
+
 	local wheelEnt = trace.Entity
-	
+
 	-- Only change your own wheels..
 	if ( IsValid( wheelEnt:GetPlayer() ) && wheelEnt:GetPlayer() != self:GetOwner() ) then
 		return false
@@ -116,74 +117,68 @@ function TOOL:RightClick( trace )
 	local toggle = self:GetClientNumber( "toggle" ) != 0
 	local fwd = self:GetClientNumber( "fwd" )
 	local bck = self:GetClientNumber( "bck" )
-		
+
 	wheelEnt.BaseTorque = torque
 	wheelEnt:SetTorque( torque )
 	wheelEnt:SetToggle( toggle )
-	
+
 	-- Make sure the table exists!
 	wheelEnt.KeyBinds = wheelEnt.KeyBinds or {}
-	
+
 	wheelEnt.key_f = fwd
 	wheelEnt.key_r = bck
-	
+
 	-- Remove old binds
 	numpad.Remove( wheelEnt.KeyBinds[ 1 ] )
 	numpad.Remove( wheelEnt.KeyBinds[ 2 ] )
 	numpad.Remove( wheelEnt.KeyBinds[ 3 ] )
 	numpad.Remove( wheelEnt.KeyBinds[ 4 ] )
-	
+
 	-- Add new binds
 	wheelEnt.KeyBinds[ 1 ] = numpad.OnDown( self:GetOwner(), fwd, "WheelForward", wheelEnt, true )
 	wheelEnt.KeyBinds[ 2 ] = numpad.OnUp( self:GetOwner(), fwd, "WheelForward", wheelEnt, false )
 	wheelEnt.KeyBinds[ 3 ] = numpad.OnDown( self:GetOwner(), bck, "WheelReverse", wheelEnt, true )
 	wheelEnt.KeyBinds[ 4 ] = numpad.OnUp( self:GetOwner(), bck, "WheelReverse", wheelEnt, false )
-	
+
 	return true
 
 end
 
 if ( SERVER ) then
 
-	--[[---------------------------------------------------------
-		For duplicator, creates the wheel.
-	-----------------------------------------------------------]]
-	function MakeWheel( pl, Pos, Ang, Model, key_f, key_r, axis, direction, toggle, BaseTorque, Data )
+	-- For duplicator, creates the wheel.
+	function MakeWheel( pl, pos, ang, model, key_f, key_r, axis, direction, toggle, BaseTorque, Data )
 
-		if ( IsValid( pl ) ) then
-			if ( !pl:CheckLimit( "wheels" ) ) then return false end
-		end
-	
+		if ( IsValid( pl ) && !pl:CheckLimit( "wheels" ) ) then return false end
+		if ( !IsValidWheelModel( model ) ) then return false end
+
 		local wheel = ents.Create( "gmod_wheel" )
 		if ( !IsValid( wheel ) ) then return end
-		
-		wheel:SetModel( Model )
-		wheel:SetPos( Pos )
-		wheel:SetAngles( Ang )
+
+		wheel:SetModel( model )
+		wheel:SetPos( pos )
+		wheel:SetAngles( ang )
 		wheel:Spawn()
-		
+
 		wheel:SetPlayer( pl )
 
 		duplicator.DoGenericPhysics( wheel, pl, Data )
-	
+
 		wheel.key_f = key_f
 		wheel.key_r = key_r
-		
+
 		if ( axis ) then
 			wheel.Axis = axis
 		end
-		
-		direction = direction or 1
-		wheel:SetDirection( direction )
-		
-		toggle = toggle or false
-		wheel:SetToggle( toggle )
-		
+
+		wheel:SetDirection( direction or 1 )
+		wheel:SetToggle( toggle or false )
+
 		wheel:SetBaseTorque( BaseTorque )
 		wheel:UpdateOverlayText()
-		
+
 		wheel.KeyBinds = {}
-		
+
 		-- Bind to keypad
 		wheel.KeyBinds[ 1 ] = numpad.OnDown( pl, key_f, "WheelForward", wheel, true )
 		wheel.KeyBinds[ 2 ] = numpad.OnUp( pl, key_f, "WheelForward", wheel, false )
@@ -191,58 +186,55 @@ if ( SERVER ) then
 		wheel.KeyBinds[ 4 ] = numpad.OnUp( pl, key_r, "WheelReverse", wheel, false )
 
 		if ( IsValid( pl ) ) then
-
 			pl:AddCount( "wheels", wheel )
-
+			pl:AddCleanup( "wheels", wheel )
 		end
-		
+
 		return wheel
-		
+
 	end
 	duplicator.RegisterEntityClass( "gmod_wheel", MakeWheel, "Pos", "Ang", "Model", "key_f", "key_r", "Axis", "Direction", "Toggle", "BaseTorque", "Data" )
 
 end
 
-function TOOL:UpdateGhostWheel( ent, player )
+function TOOL:UpdateGhostWheel( ent, ply )
 
 	if ( !IsValid( ent ) ) then return end
-	
-	local tr = util.GetPlayerTrace( player )
-	local trace = util.TraceLine( tr )
-	if ( !trace.Hit ) then return end
-	
-	if ( trace.Entity:IsPlayer() ) then
-	
+
+	local trace = ply:GetEyeTrace()
+	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:IsPlayer() /*|| trace.Entity:GetClass() == "gmod_wheel"*/ ) ) then
+
 		ent:SetNoDraw( true )
 		return
-		
+
 	end
-	
+
 	local Ang = trace.HitNormal:Angle() + self.wheelAngle
 	local CurPos = ent:GetPos()
 	local NearestPoint = ent:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
 	local WheelOffset = CurPos - NearestPoint
-	
+
 	local min = ent:OBBMins()
 	ent:SetPos( trace.HitPos + WheelOffset )
 	ent:SetAngles( Ang )
-	
+
 	ent:SetNoDraw( false )
-	
+
 end
 
---[[---------------------------------------------------------
-	Maintains the ghost wheel
------------------------------------------------------------]]
+-- Maintains the ghost wheel
 function TOOL:Think()
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
+	local mdl = self:GetClientInfo( "model" )
+	if ( !IsValidWheelModel( mdl ) ) then self:ReleaseGhostEntity() return end
+
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
 		self.wheelAngle = Angle( math.NormalizeAngle( self:GetClientNumber( "rx" ) ), math.NormalizeAngle( self:GetClientNumber( "ry" ) ), math.NormalizeAngle( self:GetClientNumber( "rz" ) ) )
-		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 	end
-	
+
 	self:UpdateGhostWheel( self.GhostEntity, self:GetOwner() )
-	
+
 end
 
 local ConVarsDefault = TOOL:BuildConVarList()
@@ -250,12 +242,10 @@ local ConVarsDefault = TOOL:BuildConVarList()
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Header", { Description = "#tool.wheel.desc" } )
-	
+
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "wheel", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.wheel.forward", Command = "wheel_fwd", Label2 = "#tool.wheel.reverse", Command2 = "wheel_bck" } )
-
-	CPanel:AddControl( "PropSelect", { Label = "#tool.wheel.model", ConVar = "wheel_model", Height = 4, Models = list.Get( "WheelModels" ) } )
 
 	CPanel:AddControl( "Slider", { Label = "#tool.wheel.torque", Command = "wheel_torque", Type = "Float", Min = 10, Max = 10000 } )
 	CPanel:AddControl( "Slider", { Label = "#tool.wheel.forcelimit", Command = "wheel_forcelimit", Type = "Float", Min = 0, Max = 50000 } )
@@ -263,6 +253,8 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "CheckBox", { Label = "#tool.wheel.nocollide", Command = "wheel_nocollide" } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.wheel.toggle", Command = "wheel_toggle" } )
+
+	CPanel:AddControl( "PropSelect", { Label = "#tool.wheel.model", ConVar = "wheel_model", Height = 0, Models = list.Get( "WheelModels" ) } )
 
 end
 

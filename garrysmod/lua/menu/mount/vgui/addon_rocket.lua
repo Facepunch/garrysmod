@@ -1,7 +1,7 @@
 
 PANEL.Base = "DPanel"
 
-local matWorkshopRocket = Material( "gui/workshop_rocket.png", "nocull smooth mips" )
+local matWorkshopRocket = Material( "gui/workshop_rocket.png", "nocull smooth" )
 
 function PANEL:Init()
 
@@ -38,12 +38,12 @@ function PANEL:Paint()
 
 		surface.SetDrawColor( 255, 255, 255, 255 )
 		surface.SetMaterial( matWorkshopRocket )
-		surface.DrawTexturedRectRotated( self:GetWide()*0.5, self:GetTall()*0.5, self.Size*2, self.Size*2, angle )
+		surface.DrawTexturedRectRotated( self:GetWide() * 0.5, self:GetTall() * 0.5, self.Size * 2, self.Size * 2, angle )
 
 		if ( self.Material ) then
 
 			surface.SetMaterial( self.Material )
-			surface.DrawTexturedRectRotated( self:GetWide()*0.5, self:GetTall()*0.5, self.Size, self.Size, angle )
+			surface.DrawTexturedRectRotated( self:GetWide() * 0.5, self:GetTall() * 0.5, self.Size, self.Size, angle )
 
 		end
 

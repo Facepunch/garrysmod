@@ -54,7 +54,7 @@ end
 
 function ENT:SetPlayer( ply )
 
-	if ( IsValid(ply) ) then
+	if ( IsValid( ply ) ) then
 
 		self:SetVar( "Founder", ply )
 		self:SetVar( "FounderIndex", ply:UniqueID() )

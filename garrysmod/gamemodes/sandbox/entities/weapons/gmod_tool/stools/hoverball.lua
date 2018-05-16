@@ -9,7 +9,16 @@ TOOL.ClientConVar[ "resistance" ] = "0"
 TOOL.ClientConVar[ "strength" ] = "1"
 TOOL.ClientConVar[ "model" ] = "models/dav0r/hoverball.mdl"
 
+TOOL.Information = { { name = "left" } }
+
 cleanup.Register( "hoverballs" )
+
+local function IsValidHoverballModel( model )
+	for mdl, _ in pairs( list.Get( "HoverballModels" ) ) do
+		if ( mdl:lower() == model:lower() ) then return true end
+	end
+	return false
+end
 
 function TOOL:LeftClick( trace )
 
@@ -29,11 +38,8 @@ function TOOL:LeftClick( trace )
 	local strength = math.Clamp( self:GetClientNumber( "strength" ), 0.1, 20 )
 	local resistance = math.Clamp( self:GetClientNumber( "resistance" ), 0, 20 )
 
-	if ( !util.IsValidModel( model ) ) then return false end
-	if ( !util.IsValidProp( model ) ) then return false end
-
 	-- We shot an existing hoverball - just change its values
-	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_hoverball" && trace.Entity.pl == ply ) then
+	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_hoverball" && trace.Entity:GetPlayer() == ply ) then
 
 		trace.Entity:SetSpeed( speed )
 		trace.Entity:SetAirResistance( resistance )
@@ -54,12 +60,13 @@ function TOOL:LeftClick( trace )
 		trace.Entity.key_d = key_d
 		trace.Entity.speed = speed
 		trace.Entity.strength = strength
-		trace.Entity.resistance	= resistance
+		trace.Entity.resistance = resistance
 
 		return true
 
 	end
 
+	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidHoverballModel( model ) ) then return false end
 	if ( !self:GetSWEP():CheckLimit( "hoverballs" ) ) then return false end
 
 	local ball = MakeHoverBall( ply, trace.HitPos, key_d, key_u, speed, resistance, strength, model )
@@ -70,35 +77,27 @@ function TOOL:LeftClick( trace )
 
 	ball:SetPos( trace.HitPos + Offset )
 
-	local const, nocollide
-
-	-- Don't weld to world
-	if ( trace.Entity != NULL && !trace.Entity:IsWorld() ) then
-
-		const = constraint.Weld( ball, trace.Entity, 0, trace.PhysicsBone, 0, 0, true )
-
-		if ( IsValid( ball:GetPhysicsObject() ) ) then ball:GetPhysicsObject():EnableCollisions( false ) end
-		ball.nocollide = true
-
-	end
-
 	undo.Create( "HoverBall" )
 		undo.AddEntity( ball )
-		undo.AddEntity( const )
+
+		-- Don't weld to world
+		if ( IsValid( trace.Entity ) ) then
+
+			local const = constraint.Weld( ball, trace.Entity, 0, trace.PhysicsBone, 0, 0, true )
+
+			if ( IsValid( ball:GetPhysicsObject() ) ) then ball:GetPhysicsObject():EnableCollisions( false ) end
+			ball:SetCollisionGroup( COLLISION_GROUP_WORLD )
+			ball.nocollide = true
+
+			ply:AddCleanup( "hoverballs", const )
+			undo.AddEntity( const )
+
+		end
+
 		undo.SetPlayer( ply )
 	undo.Finish()
 
-	ply:AddCleanup( "hoverballs", ball )
-	ply:AddCleanup( "hoverballs", const )
-	ply:AddCleanup( "hoverballs", nocollide )
-
 	return true
-
-end
-
-function TOOL:RightClick( trace )
-
-	return self:LeftClick( trace )
 
 end
 
@@ -106,9 +105,8 @@ if ( SERVER ) then
 
 	function MakeHoverBall( ply, Pos, key_d, key_u, speed, resistance, strength, model, Vel, aVel, frozen, nocollide )
 
-		if ( IsValid( ply ) ) then
-			if ( !ply:CheckLimit( "hoverballs" ) ) then return end
-		end
+		if ( IsValid( ply ) && !ply:CheckLimit( "hoverballs" ) ) then return false end
+		if ( !IsValidHoverballModel( model ) ) then return false end
 
 		local ball = ents.Create( "gmod_hoverball" )
 		if ( !IsValid( ball ) ) then return false end
@@ -130,7 +128,10 @@ if ( SERVER ) then
 		ball.NumBackDown = numpad.OnDown( ply, key_d, "Hoverball_Down", ball, true )
 		ball.NumBackUp = numpad.OnUp( ply, key_d, "Hoverball_Down", ball, false )
 
-		if ( nocollide == true && IsValid( ball:GetPhysicsObject() ) ) then ball:GetPhysicsObject():EnableCollisions( false ) end
+		if ( nocollide == true ) then
+			if ( IsValid( ball:GetPhysicsObject() ) ) then ball:GetPhysicsObject():EnableCollisions( false ) end
+			ball:SetCollisionGroup( COLLISION_GROUP_WORLD )
+		end
 
 		local ttable = {
 			key_d = key_d,
@@ -147,6 +148,7 @@ if ( SERVER ) then
 
 		if ( IsValid( ply ) ) then
 			ply:AddCount( "hoverballs", ball )
+			ply:AddCleanup( "hoverballs", ball )
 		end
 
 		DoPropSpawnedEffect( ball )
@@ -158,15 +160,12 @@ if ( SERVER ) then
 
 end
 
-function TOOL:UpdateGhostHoverball( ent, pl )
+function TOOL:UpdateGhostHoverball( ent, ply )
 
 	if ( !IsValid( ent ) ) then return end
 
-	local tr = util.GetPlayerTrace( pl )
-	local trace	= util.TraceLine( tr )
-	if ( !trace.Hit ) then return end
-
-	if ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_hoverball" ) then
+	local trace = ply:GetEyeTrace()
+	if ( !trace.Hit || trace.Entity && ( trace.Entity:GetClass() == "gmod_hoverball" || trace.Entity:IsPlayer() ) ) then
 
 		ent:SetNoDraw( true )
 		return
@@ -185,8 +184,11 @@ end
 
 function TOOL:Think()
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
-		self:MakeGhostEntity( self:GetClientInfo( "model" ), Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+	local mdl = self:GetClientInfo( "model" )
+	if ( !IsValidHoverballModel( mdl ) ) then self:ReleaseGhostEntity() return end
+
+	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
+		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
 	end
 
 	self:UpdateGhostHoverball( self.GhostEntity, self:GetOwner() )
@@ -205,14 +207,14 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Slider", { Label = "#tool.hoverball.speed", Command = "hoverball_speed", Type = "Float", Min = 0, Max = 20, Help = true } )
 	CPanel:AddControl( "Slider", { Label = "#tool.hoverball.resistance", Command = "hoverball_resistance", Type = "Float", Min = 0, Max = 10, Help = true } )
 	CPanel:AddControl( "Slider", { Label = "#tool.hoverball.strength", Command = "hoverball_strength", Type = "Float", Min = 0.1, Max = 10, Help = true } )
-	CPanel:AddControl( "PropSelect", { Label = "#tool.hoverball.model", ConVar = "hoverball_model", Models = list.Get( "HoverballModels" ), Height = 4 } )
+
+	CPanel:AddControl( "PropSelect", { Label = "#tool.hoverball.model", ConVar = "hoverball_model", Models = list.Get( "HoverballModels" ), Height = 0 } )
 
 end
 
--- This list is getting populated from right to left for some reason!
-
-list.Set( "HoverballModels", "models/MaxOfS2D/hover_propeller.mdl", {} )
 list.Set( "HoverballModels", "models/dav0r/hoverball.mdl", {} )
-list.Set( "HoverballModels", "models/MaxOfS2D/hover_rings.mdl", {} )
-list.Set( "HoverballModels", "models/MaxOfS2D/hover_classic.mdl", {} )
-list.Set( "HoverballModels", "models/MaxOfS2D/hover_basic.mdl", {} )
+list.Set( "HoverballModels", "models/maxofs2d/hover_basic.mdl", {} )
+list.Set( "HoverballModels", "models/maxofs2d/hover_classic.mdl", {} )
+list.Set( "HoverballModels", "models/maxofs2d/hover_plate.mdl", {} )
+list.Set( "HoverballModels", "models/maxofs2d/hover_propeller.mdl", {} )
+list.Set( "HoverballModels", "models/maxofs2d/hover_rings.mdl", {} )

@@ -1,0 +1,12 @@
+"Snow Day"
+{
+	"pp_bloom_color"		"0.000000"
+	"pp_bloom_color_b"		"240"
+	"pp_bloom_color_g"		"240"
+	"pp_bloom_color_r"		"240"
+	"pp_bloom_darken"		"0.303000"
+	"pp_bloom_multiply"		"5.481000"
+	"pp_bloom_passes"		"1.000000"
+	"pp_bloom_sizex"		"0.000000"
+	"pp_bloom_sizey"		"4.567000"
+}
