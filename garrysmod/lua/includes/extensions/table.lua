@@ -499,7 +499,11 @@ function SortedPairs( pTable, Desc )
 
 	local sortedTbl = toKeyValues( pTable )
 
-	table.SortByMember( sortedTbl, "key", !Desc )
+	if ( Desc ) then
+		table.sort( sortedTbl, function( a, b ) return a.key > b.key end )
+	else
+		table.sort( sortedTbl, function( a, b ) return a.key < b.key end )
+	end
 
 	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
 
@@ -514,7 +518,11 @@ function SortedPairsByValue( pTable, Desc )
 
 	local sortedTbl = toKeyValues( pTable )
 
-	table.SortByMember( sortedTbl, "val", !Desc )
+	if ( Desc ) then
+		table.sort( sortedTbl, function( a, b ) return a.val > b.val end )
+	else
+		table.sort( sortedTbl, function( a, b ) return a.val < b.val end )
+	end
 
 	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
 
@@ -548,8 +556,13 @@ function RandomPairs( pTable, Desc )
 	for k,v in pairs( sortedTbl ) do
 		v.rand = math.random( 1, 1000000 )
 	end
-
-	table.SortByMember( sortedTbl, "rand", !Desc )
+	
+	-- descending/ascending for a random order, really?
+	if ( Desc ) then
+		table.sort( sortedTbl, function(a,b) return a.rand > b.rand end )
+	else
+		table.sort( sortedTbl, function(a,b) return a.rand < b.rand end )
+	end
 
 	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
 
