@@ -579,7 +579,7 @@ if CLIENT then
    function SWEP:DrawHUD()
       self.BaseClass.DrawHUD(self)
 
-      if self.dt.can_rag_pin and IsValid(self.dt.carried_rag) and LocalPlayer():IsTraitor() then
+      if LocalPlayer():IsSpec() or self.dt.can_rag_pin and IsValid(self.dt.carried_rag) and LocalPlayer():IsTraitor() then
          local client = LocalPlayer()
 
          local tr = util.TraceLine({start  = client:EyePos(),
