@@ -466,28 +466,28 @@ function table.ClearKeys( Table, bSaveKey )
 
 end
 
-local function fnPairsSorted( pTable, Index )
+local function keyValuePairs(state)
 
-	if ( Index == nil ) then
-		Index = 1
-	else
-		for k, v in pairs( pTable.__SortedIndex ) do
-			if ( v == Index ) then
-				Index = k + 1
-				break
-			end
-		end
+	state.Index = state.Index + 1
+
+	local keyValue = state.KeyValues[ state.Index ]
+
+	if( !keyValue ) then return end
+
+	return keyValue.key, keyValue.val
+
+end
+
+
+local function toKeyValues(tbl)
+
+	local result = {}
+
+	for k,v in pairs( tbl ) do
+		table.insert( result, { key = k, val = v } )
 	end
 
-	local Key = pTable.__SortedIndex[ Index ]
-	if ( !Key ) then
-		pTable.__SortedIndex = nil
-		return
-	end
-
-	Index = Index + 1
-
-	return Key, pTable[ Key ]
+	return result
 
 end
 
@@ -497,24 +497,18 @@ end
 -----------------------------------------------------------]]
 function SortedPairs( pTable, Desc )
 
-	pTable = table.Copy( pTable )
-
-	local SortedIndex = {}
-	for k, v in pairs( pTable ) do
-		table.insert( SortedIndex, k )
-	end
+	local sortedTbl = toKeyValues( pTable )
 
 	if ( Desc ) then
-		table.sort( SortedIndex, function( a, b ) return a > b end )
+		table.sort( sortedTbl, function( a, b ) return a.key > b.key end )
 	else
-		table.sort( SortedIndex )
+		table.sort( sortedTbl, function( a, b ) return a.key < b.key end )
 	end
 
-	pTable.__SortedIndex = SortedIndex
-
-	return fnPairsSorted, pTable, nil
+	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
 
 end
+
 
 --[[---------------------------------------------------------
 	A Pairs function
@@ -522,26 +516,15 @@ end
 -----------------------------------------------------------]]
 function SortedPairsByValue( pTable, Desc )
 
-	pTable = table.Copy( pTable )
-
-	local SortedIndex = {}
-	for k, v in pairs( pTable ) do
-		table.insert( SortedIndex, { key = k, val = v } )
-	end
+	local sortedTbl = toKeyValues( pTable )
 
 	if ( Desc ) then
-		table.sort( SortedIndex, function( a, b ) return a.val > b.val end )
+		table.sort( sortedTbl, function( a, b ) return a.val > b.val end )
 	else
-		table.sort( SortedIndex, function( a, b ) return a.val < b.val end )
+		table.sort( sortedTbl, function( a, b ) return a.val < b.val end )
 	end
 
-	for k, v in pairs( SortedIndex ) do
-		SortedIndex[ k ] = v.key
-	end
-
-	pTable.__SortedIndex = SortedIndex
-
-	return fnPairsSorted, pTable, nil
+	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
 
 end
 
@@ -551,21 +534,15 @@ end
 -----------------------------------------------------------]]
 function SortedPairsByMemberValue( pTable, pValueName, Desc )
 
-	pTable = table.Copy( pTable )
-	Desc = Desc or false
+	local sortedTbl = toKeyValues( pTable )
 
-	local pSortedTable = table.ClearKeys( pTable, true )
-
-	table.SortByMember( pSortedTable, pValueName, !Desc )
-
-	local SortedIndex = {}
-	for k, v in ipairs( pSortedTable ) do
-		table.insert( SortedIndex, v.__key )
+	for k,v in pairs( sortedTbl ) do
+		v.member = v.val[ pValueName ]
 	end
 
-	pTable.__SortedIndex = SortedIndex
+	table.SortByMember( sortedTbl, "member", !Desc )
 
-	return fnPairsSorted, pTable, nil
+	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
 
 end
 
@@ -574,26 +551,20 @@ end
 -----------------------------------------------------------]]
 function RandomPairs( pTable, Desc )
 
-	pTable = table.Copy( pTable )
+	local sortedTbl = toKeyValues( pTable )
 
-	local SortedIndex = {}
-	for k, v in pairs( pTable ) do
-		table.insert( SortedIndex, { key = k, val = math.random( 1, 1000 ) } )
+	for k,v in pairs( sortedTbl ) do
+		v.rand = math.random( 1, 1000000 )
 	end
-
+	
+	-- descending/ascending for a random order, really?
 	if ( Desc ) then
-		table.sort( SortedIndex, function(a,b) return a.val>b.val end )
+		table.sort( sortedTbl, function(a,b) return a.rand > b.rand end )
 	else
-		table.sort( SortedIndex, function(a,b) return a.val<b.val end )
+		table.sort( sortedTbl, function(a,b) return a.rand < b.rand end )
 	end
 
-	for k, v in pairs( SortedIndex ) do
-		SortedIndex[ k ] = v.key
-	end
-
-	pTable.__SortedIndex = SortedIndex
-
-	return fnPairsSorted, pTable, nil
+	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
 
 end
 
