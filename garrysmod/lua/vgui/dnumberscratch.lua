@@ -130,7 +130,7 @@ function PANEL:OnCursorMoved( x, y )
 	local maxzoom = 10 ^ ( 1 + self:GetDecimals() )
 
 	zoom = math.Clamp( zoom + ( ( y * -0.6 ) / ControlScale ), 0.01, maxzoom )
-	self:SetZoom( zoom )
+	if ( !input.IsKeyDown( KEY_LSHIFT ) ) then self:SetZoom( zoom ) end
 
 	local value = self:GetFloatValue()
 	value = math.Clamp( value + ( x * ControlScale * 0.002 ), self:GetMin(), self:GetMax() )
