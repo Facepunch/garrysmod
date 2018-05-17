@@ -64,17 +64,26 @@ function DrawBackground()
 
 end
 
-function ClearBackgroundImages( img )
+function ClearBackgroundImages()
 
 	Images = {}
 
 end
 
 function AddBackgroundImage( img )
+	local Type = type(img)
+	if ( Type != "string" ) then
+		error("Data type "..Type.." is invalid")
+	end
+
+	if not ( file.Exists(img,"GAME") ) then
+		error("The path "..img.." doesn't exist")
+	end
 
 	table.insert( Images, img )
 
 end
+
 
 local LastGamemode = "none"
 
