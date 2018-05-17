@@ -46,15 +46,21 @@ end
 function SWEP:PrimaryAttack()
 
 	if ( CLIENT ) then return end
-	
-	self.Owner:LagCompensation(true)
+
+	if ( self.Owner:IsPlayer() ) then
+		self.Owner:LagCompensation( true )
+	end
+
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
 		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * 64,
 		filter = self.Owner
 	} )
-	self.Owner:LagCompensation(false)
-	
+
+	if ( self.Owner:IsPlayer() ) then
+		self.Owner:LagCompensation( false )
+	end
+
 	local ent = tr.Entity
 
 	local need = self.HealAmount
