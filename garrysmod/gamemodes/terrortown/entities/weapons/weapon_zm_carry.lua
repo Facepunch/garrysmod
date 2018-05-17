@@ -579,16 +579,18 @@ if CLIENT then
    function SWEP:DrawHUD()
       self.BaseClass.DrawHUD(self)
 
-      if self.dt.can_rag_pin and IsValid(self.dt.carried_rag) and LocalPlayer():IsTraitor() then
+      if self.dt.can_rag_pin and IsValid(self.dt.carried_rag) then
          local client = LocalPlayer()
 
-         local tr = util.TraceLine({start  = client:EyePos(),
-                                    endpos = client:EyePos() + (client:GetAimVector() * PIN_RAG_RANGE),
-                                    filter = {client, self, self.dt.carried_rag},
-                                    mask   = MASK_SOLID})
+         if not client:IsSpec() and client:IsTraitor() then
+            local tr = util.TraceLine({start  = client:EyePos(),
+               endpos = client:EyePos() + (client:GetAimVector() * PIN_RAG_RANGE),
+               filter = {client, self, self.dt.carried_rag},
+               mask   = MASK_SOLID})
 
-         if tr.HitWorld and (not tr.HitSky) then
-            draw.SimpleText(PT("magnet_help", key_params), "TabLarge", ScrW() / 2, ScrH() / 2 - 50, COLOR_RED, TEXT_ALIGN_CENTER)
+            if tr.HitWorld and (not tr.HitSky) then
+               draw.SimpleText(PT("magnet_help", key_params), "TabLarge", ScrW() / 2, ScrH() / 2 - 50, COLOR_RED, TEXT_ALIGN_CENTER)
+            end
          end
       end
    end
