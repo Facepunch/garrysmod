@@ -5,7 +5,7 @@
 -----------------------------------------------------------]]
 function table.Inherit( t, base )
 
-	for k, v in pairs( base ) do 
+	for k, v in pairs( base ) do
 		if ( t[ k ] == nil ) then t[ k ] = v end
 	end
 
@@ -158,15 +158,15 @@ end
 function table.Random( t )
 	local rk = math.random( 1, table.Count( t ) )
 	local i = 1
-	for k, v in pairs( t ) do 
+	for k, v in pairs( t ) do
 		if ( i == rk ) then return v, k end
-		i = i + 1 
+		i = i + 1
 	end
 end
 
 --[[----------------------------------------------------------------------
 	Name: table.IsSequential( table )
-	Desc: Returns true if the tables 
+	Desc: Returns true if the tables
 		keys are sequential
 -------------------------------------------------------------------------]]
 function table.IsSequential( t )
@@ -201,7 +201,7 @@ local function MakeTable( t, nice, indent, done )
 		str = str .. idt .. tab .. tab
 
 		if !sequential then
-			if type( key ) == "number" or type( key ) == "boolean" then 
+			if type( key ) == "number" or type( key ) == "boolean" then
 				key = "[" .. tostring( key ) .. "]" .. tab .. "="
 			else
 				key = tostring( key ) .. tab .. "="
@@ -217,8 +217,8 @@ local function MakeTable( t, nice, indent, done )
 			str = str .. idt .. tab .. tab .. tab .. tab .."},".. nl
 
 		else
-		
-			if ( type( value ) == "string" ) then 
+
+			if ( type( value ) == "string" ) then
 				value = '"' .. tostring( value ) .. '"'
 			elseif ( type( value ) == "Vector" ) then
 				value = "Vector(" .. value.x .. "," .. value.y .. "," .. value.z .. ")"
@@ -227,7 +227,7 @@ local function MakeTable( t, nice, indent, done )
 			else
 				value = tostring( value )
 			end
-		
+
 			str = str .. key .. tab .. value .. "," .. nl
 
 		end
@@ -255,7 +255,7 @@ function table.Sanitise( t, done )
 	local tbl = {}
 
 	for k, v in pairs ( t ) do
-	
+
 		if ( istable( v ) and !done[ v ] ) then
 
 			done[ v ] = true
@@ -279,7 +279,7 @@ function table.Sanitise( t, done )
 				tbl[ k ] = { __type = "Angle", p = p, y = y, r = r }
 
 			elseif ( type( v ) == "boolean" ) then
-			
+
 				tbl[ k ] = { __type = "Bool", tostring( v ) }
 
 			else
@@ -312,33 +312,33 @@ function table.DeSanitise( t, done )
 			done[ v ] = true
 
 			if ( v.__type ) then
-			
+
 				if ( v.__type == "Vector" ) then
-				
+
 					tbl[ k ] = Vector( v.x, v.y, v.z )
-				
+
 				elseif ( v.__type == "Angle" ) then
-				
+
 					tbl[ k ] = Angle( v.p, v.y, v.r )
-				
+
 				elseif ( v.__type == "Bool" ) then
-				
+
 					tbl[ k ] = ( v[ 1 ] == "true" )
-				
+
 				end
-			
+
 			else
-			
+
 				tbl[ k ] = table.DeSanitise( v, done )
-			
+
 			end
-			
+
 		else
-		
+
 			tbl[ k ] = v
-		
+
 		end
-		
+
 	end
 
 	return tbl
@@ -361,7 +361,7 @@ end
 -----------------------------------------------------------]]
 function table.SortByMember( Table, MemberName, bAsc )
 
-	local TableMemberSort = function( a, b, MemberName, bReverse ) 
+	local TableMemberSort = function( a, b, MemberName, bReverse )
 
 		--
 		-- All this error checking kind of sucks, but really is needed
@@ -466,20 +466,18 @@ function table.ClearKeys( Table, bSaveKey )
 
 end
 
-local function keyValuePairs(state)
+local function keyValuePairs( state )
 
 	state.Index = state.Index + 1
 
 	local keyValue = state.KeyValues[ state.Index ]
-
-	if( !keyValue ) then return end
+	if ( !keyValue ) then return end
 
 	return keyValue.key, keyValue.val
 
 end
 
-
-local function toKeyValues(tbl)
+local function toKeyValues( tbl )
 
 	local result = {}
 
@@ -508,7 +506,6 @@ function SortedPairs( pTable, Desc )
 	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
 
 end
-
 
 --[[---------------------------------------------------------
 	A Pairs function
@@ -556,7 +553,7 @@ function RandomPairs( pTable, Desc )
 	for k,v in pairs( sortedTbl ) do
 		v.rand = math.random( 1, 1000000 )
 	end
-	
+
 	-- descending/ascending for a random order, really?
 	if ( Desc ) then
 		table.sort( sortedTbl, function(a,b) return a.rand > b.rand end )
@@ -582,12 +579,12 @@ function table.GetFirstValue( t )
 end
 
 function table.GetLastKey( t )
-	local k, v = next( t, table.Count(t) - 1 )
+	local k, v = next( t, table.Count( t ) - 1 )
 	return k
 end
 
 function table.GetLastValue( t )
-	local k, v = next( t, table.Count(t) - 1 )
+	local k, v = next( t, table.Count( t ) - 1 )
 	return v
 end
 
@@ -619,7 +616,7 @@ function table.GetWinningKey( tab )
 	local winner = nil
 
 	for k, v in pairs( tab ) do
-		if ( v > highest ) then 
+		if ( v > highest ) then
 			winner = k
 			highest = v
 		end
