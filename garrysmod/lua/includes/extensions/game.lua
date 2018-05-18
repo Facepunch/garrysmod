@@ -24,7 +24,7 @@ local AmmoNames = {}
 --
 function game.AddAmmoType( tbl )
 	if ( !isstring( tbl.name ) ) then
-		ErrorNoHalt( "bad argument #1 to 'game.AddAmmoType' ('name' key expected a string, got " .. type( tbl.name ) .. ")" )
+		ErrorNoHalt( "bad argument #1 to 'game.AddAmmoType' ('name' key expected a string, got " .. type( tbl.name ) .. ")\n" )
 		return
 	end
 
