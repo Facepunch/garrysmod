@@ -5,6 +5,10 @@
 -- So when you derive from this class - you should ideally only override Setup.
 --
 
+local function ColorToString( col )
+	return math.floor( col.r ) .. " " .. math.floor( col.g ) .. " " .. math.floor( col.b ) .. " " .. math.floor( col.a )
+end
+
 DEFINE_BASECLASS( "DProperty_Generic" )
 
 local PANEL = {}
@@ -19,7 +23,11 @@ function PANEL:ValueChanged( newval, bForce )
 
 	BaseClass.ValueChanged( self, newval, bForce )
 
-	self.VectorValue = Vector( newval )
+	if ( isvector( self.VectorValue ) ) then
+		self.VectorValue = Vector( newval )
+	else
+		self.VectorValue = string.ToColor( newval )
+	end
 
 end
 
@@ -40,7 +48,11 @@ function PANEL:Setup( vars )
 	btn.Paint = function( btn, w, h )
 
 		if ( self.VectorValue ) then
-			surface.SetDrawColor( 255 * self.VectorValue.x, 255 * self.VectorValue.y, 255 * self.VectorValue.z, 255 )
+			if ( isvector( self.VectorValue ) ) then
+				surface.SetDrawColor( self.VectorValue:ToColor() )
+			else
+				surface.SetDrawColor( self.VectorValue )
+			end
 			surface.DrawRect( 2, 2, w - 4, h - 4 )
 		end
 
@@ -55,17 +67,22 @@ function PANEL:Setup( vars )
 	btn.DoClick = function()
 
 		local color = vgui.Create( "DColorCombo", self )
+		if ( type( self.VectorValue ) == "table" ) then color.Mixer:SetAlphaBar( true ) end
 		color:SetupCloseButton( function() CloseDermaMenus() end )
 		color.OnValueChanged = function( color, newcol )
 
-			-- convert color to vector
-			local vec = Vector( newcol.r / 255, newcol.g / 255, newcol.b / 255 )
-
-			self:ValueChanged( tostring( vec ), true )
+			if ( isvector( self.VectorValue ) ) then
+				-- convert color to vector
+				local vec = Vector( newcol.r / 255, newcol.g / 255, newcol.b / 255 )
+				self:ValueChanged( tostring( vec ), true )
+			else
+				self:ValueChanged( ColorToString( newcol ), true )
+			end
 
 		end
 
-		local col = Color( 255 * self.VectorValue.r, 255 * self.VectorValue.g, 255 * self.VectorValue.b, 255 )
+		local col = self.VectorValue
+		if ( isvector( self.VectorValue ) ) then col = self.VectorValue:ToColor() end
 		color:SetColor( col )
 
 		local menu = DermaMenu()
@@ -77,8 +94,13 @@ function PANEL:Setup( vars )
 
 	-- Set the value
 	self.SetValue = function( self, val )
-		__SetValue( self, val )
 		self.VectorValue = val
+
+		if ( isvector( self.VectorValue ) ) then
+			__SetValue( self, val )
+		else
+			__SetValue( self, ColorToString( val ) )
+		end
 	end
 
 end

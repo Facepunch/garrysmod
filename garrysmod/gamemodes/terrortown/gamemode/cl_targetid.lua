@@ -140,6 +140,8 @@ local rag_color = Color(200,200,200,255)
 
 local GetLang = LANG.GetUnsafeLanguageTable
 
+local MAX_TRACE_LENGTH = math.sqrt(3) * 2 * 16384
+
 function GM:HUDDrawTargetID()
    local client = LocalPlayer()
 
@@ -149,7 +151,17 @@ function GM:HUDDrawTargetID()
       DrawPropSpecLabels(client)
    end
 
-   local trace = client:GetEyeTrace(MASK_SHOT)
+   local startpos = client:EyePos()
+   local endpos = client:GetAimVector()
+   endpos:Mul(MAX_TRACE_LENGTH)
+   endpos:Add(startpos)
+
+   local trace = util.TraceLine({
+      start = startpos,
+      endpos = endpos,
+      mask = MASK_SHOT,
+      filter = client:GetObserverMode() == OBS_MODE_IN_EYE and {client, client:GetObserverTarget()} or client
+   })
    local ent = trace.Entity
    if (not IsValid(ent)) or ent.NoTarget then return end
 

@@ -7,7 +7,6 @@ local ListCache = {}
 function WorkshopFileBase( namespace, requiredtags )
 
 	local ret = {}
-
 	ret.HTML = nil
 
 	function ret:Fetch( type, offset, perpage, extratags, searchText )
@@ -104,10 +103,10 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	function ret:RetrieveUserName( steamid )
 		steamworks.RequestPlayerInfo( steamid, function( name )
-			self.HTML:Call( namespace .. ".ReceiveUserName( \"" .. steamid .. "\", \"" .. name .. "\" )" )
+			self.HTML:Call( namespace .. ".ReceiveUserName( \"" .. steamid:JavascriptSafe() .. "\", \"" .. name:JavascriptSafe() .. "\" )" )
 		end )
 	end
-	
+
 	function ret:FillFileInfo( results )
 
 		--
@@ -126,11 +125,15 @@ function WorkshopFileBase( namespace, requiredtags )
 		--
 		for k, v in pairs( results.results ) do
 
+			v = v:JavascriptSafe()
+
 			--
 			-- Got it cached?
 			--
 			if ( PreviewCache[ v ] ) then
+
 				self.HTML:Call( namespace .. ".ReceiveImage( \"" .. v .. "\", \"" .. PreviewCache[ v ] .. "\" )" )
+
 			end
 
 			--
@@ -170,8 +173,8 @@ function WorkshopFileBase( namespace, requiredtags )
 							-- Download failed
 							if ( !name ) then return end
 
-							self.HTML:Call( namespace .. ".ReceiveImage( \"" .. v .. "\", \"" .. name .. "\" )" )
-							PreviewCache[ v ] = name
+							PreviewCache[ v ] = name:JavascriptSafe()
+							self.HTML:Call( namespace .. ".ReceiveImage( \"" .. v .. "\", \"" .. PreviewCache[ v ] .. "\" )" )
 
 						end )
 
@@ -191,6 +194,8 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	function ret:CountVotes( id )
 
+		id = id:JavascriptSafe()
+
 		if ( VoteCache[ id ] ) then
 
 			self.HTML:Call( namespace .. ".ReceiveVoteInfo( \"" .. id .. "\", " .. VoteCache[ id ] .. " )" )
@@ -199,9 +204,8 @@ function WorkshopFileBase( namespace, requiredtags )
 
 			steamworks.VoteInfo( id, function( result )
 
-				local json = util.TableToJSON( result, false )
-				VoteCache[ id ] = json
-				self.HTML:Call( namespace .. ".ReceiveVoteInfo( \"" .. id .. "\", " .. json .. " )" )
+				VoteCache[ id ] = util.TableToJSON( result, false )
+				self.HTML:Call( namespace .. ".ReceiveVoteInfo( \"" .. id .. "\", " .. VoteCache[ id ] .. " )" )
 
 			end )
 		end

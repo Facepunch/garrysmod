@@ -1,7 +1,6 @@
 
 ws_save = WorkshopFileBase( "save", { "save" } )
 
-
 function ws_save:FetchLocal( offset, perpage )
 
 	local f = file.Find( "saves/*.gms", "MOD", "datedesc" )
@@ -13,8 +12,7 @@ function ws_save:FetchLocal( offset, perpage )
 		if ( k <= offset ) then continue end
 		if ( k > offset + perpage ) then break end
 
-		local entry =
-		{
+		local entry = {
 			file	= "saves/" .. v,
 			name	= v:StripExtension(),
 			preview	= "saves/" .. v:StripExtension() .. ".jpg"
@@ -44,13 +42,11 @@ function ws_save:DownloadAndLoad( id )
 
 end
 
-
 function ws_save:Load( filename )
 
 	RunConsoleCommand( "gm_load", filename )
 
 end
-
 
 function ws_save:FinishPublish( filename, imagename, name, desc, chosentag )
 
@@ -70,11 +66,11 @@ function ws_save:Publish( filename, image )
 	-- Create the window
 	--
 	local Window = vgui.Create( "DFrame" )
-		Window:SetTitle( "Publish Creation" )
-		Window:SetSize( 400, 350 )
-		Window:LoadGWENFile( "resource/ui/SaveUpload.gwen" )
-		Window:Center()
-		Window:MakePopup()
+	Window:SetTitle( "Publish Creation" )
+	Window:SetSize( 400, 350 )
+	Window:LoadGWENFile( "resource/ui/SaveUpload.gwen" )
+	Window:Center()
+	Window:MakePopup()
 
 	--
 	-- Store the fields
