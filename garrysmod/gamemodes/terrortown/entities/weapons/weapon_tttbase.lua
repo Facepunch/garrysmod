@@ -445,10 +445,12 @@ function SWEP:WasBought(buyer)
 end
 
 function SWEP:SetIronsights(b)
-   self:SetIronsightsPredicted(b)
-   self:SetIronsightsTime(CurTime())
-   if CLIENT then
-      self:CalcViewModel()
+   if (b ~= self:GetIronsights()) then
+      self:SetIronsightsPredicted(b)
+      self:SetIronsightsTime(CurTime())
+      if CLIENT then
+         self:CalcViewModel()
+      end
    end
 end
 function SWEP:GetIronsights()
