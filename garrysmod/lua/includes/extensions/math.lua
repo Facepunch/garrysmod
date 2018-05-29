@@ -214,9 +214,11 @@ end
 function math.IntToString( num, base, caps --[[= false]] )
 	-- Make sure we're dealing with positive integers
 	num = tonumber( string_format( "%u", num ) )
+	base = math_floor( base )
 
-	-- Don't allow for an infinite loop or out-of-range table accesses
-	base = math_floor( math_Clamp( base, 2, 36 ) )
+	if ( base < 2 || base > maxbase ) then
+		error( "bad argument #2 to 'IntToString' (base out of range)", 2 )
+	end
 
 	local tbl = caps && translateUpper || translate
 	local ret = ""
