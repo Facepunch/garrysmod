@@ -58,6 +58,7 @@ function Register( t, name )
 		Category = t.Category or "Other",
 		Spawnable = t.Spawnable,
 		AdminOnly = t.AdminOnly,
+		ScriptedEntityType = t.ScriptedEntityType
 	} )
 
 	-- Allow all SWEPS to be duplicated, unless specified

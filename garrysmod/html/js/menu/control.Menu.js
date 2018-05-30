@@ -104,6 +104,11 @@ function MenuController( $scope, $rootScope )
 		lua.Run( "gui.HideGameUI()" );
 	}
 
+	$scope.AddServerToFavorites = function()
+	{
+		lua.Run( "serverlist.AddCurrentServerToFavorites()" );
+	}
+
 	$scope.Disconnect = function ()
 	{
 		lua.Run( "RunConsoleCommand( 'disconnect' )" );
@@ -131,7 +136,7 @@ function MenuController( $scope, $rootScope )
 		if ( gScope.Branch == "dev" )			return lua.Run( "gui.OpenURL( 'http://wiki.garrysmod.com/changelist/' )" );
 		if ( gScope.Branch == "prerelease" )	return lua.Run( "gui.OpenURL( 'http://wiki.garrysmod.com/changelist/prerelease/' )" );
 
-		lua.Run( "gui.OpenURL( 'http://www.garrysmod.com/updates/' )" );
+		lua.Run( "gui.OpenURL( 'http://gmod.facepunch.com/changes/' )" );
 	}
 
 	// Background
@@ -139,6 +144,7 @@ function MenuController( $scope, $rootScope )
 
 	// InGame
 	$scope.InGame = false;
+	$scope.ShowFavButton = false;
 
 	// Kinect options
 	$scope.kinect =
@@ -170,11 +176,21 @@ function MenuController( $scope, $rootScope )
 			lua.Run( "RunConsoleCommand( \"sensor_color_show\", %s )", $scope.kinect.show_color ? "1" : "0" );
 		}
 	}
+
+	util.MotionSensorAvailable( function( available ) {
+		$scope.kinect.available = available;
+	} );
 }
 
 function SetInGame( bool )
 {
 	gScope.InGame = bool;
+	UpdateDigest( gScope, 50 );
+}
+
+function SetShowFavButton( bool )
+{
+	gScope.ShowFavButton = bool;
 	UpdateDigest( gScope, 50 );
 }
 

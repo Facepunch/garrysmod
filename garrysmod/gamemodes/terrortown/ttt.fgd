@@ -46,6 +46,11 @@
 @PointClass base(Weapon) studio("models/weapons/w_mach_m249para.mdl") = weapon_zm_sledge : "HUGE249" []
 @PointClass base(Weapon) studio("models/weapons/w_rif_m4a1.mdl") = weapon_ttt_m16 : "M16" []
 @PointClass base(Weapon) studio("models/weapons/w_pist_glock18.mdl") = weapon_ttt_glock : "Glock" []
+@PointClass base(Weapon) studio("models/weapons/w_knife_t.mdl") = weapon_ttt_knife : "Knife" []
+@PointClass base(Weapon) studio("models/weapons/w_pist_usp_silencer.mdl") = weapon_ttt_sipistol : "Silent Pistol" []
+@PointClass base(Weapon) studio("models/weapons/w_357.mdl") = weapon_ttt_flaregun : "Flaregun" []
+@PointClass base(Weapon) studio("models/weapons/w_physics.mdl") = weapon_ttt_push : "Newton launcher" []
+@PointClass base(Weapon) studio("models/weapons/w_IRifle.mdl") = weapon_ttt_phammer : "Poltergeist" []
 
 @SolidClass base(Trigger, Targetname) iconsprite("editor/obsolete.vmt") = ttt_traitor_check :
 	"A trigger volume that checks if there is a traitor inside."

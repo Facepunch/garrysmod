@@ -8,6 +8,26 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 
 	demo.Init( 'demo', $scope, $rootScope );
 
+	$scope.MyCategories =
+	[
+		"local",
+		"subscribed_ugc",
+		//"favorites_ugc"
+	];
+
+	$scope.Categories =
+	[
+		"trending",
+		"popular",
+		"latest"
+	];
+
+	$scope.CategoriesSecondary =
+	[
+		"friends",
+		"mine",
+	];
+
 	$scope.PlayDemo = function ( entry )
 	{
 		if ( entry.local )

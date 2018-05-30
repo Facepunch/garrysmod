@@ -6,8 +6,6 @@ ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.Editable = true
 
-local matBone = Material( "widgets/bone.png", "unlitsmooth" )
-
 function ENT:SetupDataTables()
 
 	--
@@ -121,7 +119,6 @@ function ENT:Draw()
 	self:DrawModel()
 
 end
-
 
 function ENT:DrawDebug( ragdoll, controller, pos, ang, rotation, scale, center, changed_sensor )
 
@@ -300,7 +297,7 @@ function ENT:SetRagdoll( ragdoll )
 		--
 		-- Makes the physics objects follow the set bone positions
 		--
-		ragdoll:RagdollUpdatePhysics( i )
+		ragdoll:RagdollUpdatePhysics()
 
 	end )
 

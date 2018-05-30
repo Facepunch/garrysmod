@@ -1,4 +1,5 @@
-if SERVER then return end
+
+if ( SERVER ) then return end
 
 --[[
 
@@ -417,7 +418,7 @@ end
 function meta:DragMousePress( mcode )
 
 	if ( IsValid( dragndrop.m_DropMenu ) ) then return end
-	if ( dragndrop.IsDragging() ) then return end
+	if ( dragndrop.IsDragging() ) then dragndrop.StopDragging() return end
 
 	if ( IsValid( self.m_pDragParent ) ) then
 		return self.m_pDragParent:DragMousePress( mcode )

@@ -270,7 +270,7 @@ local T =
 	-- Arg1:
 	-- Ret1: any|The item
 	--
-	Top = function( self, time )
+	Top = function( self )
 
 		return self.top
 
@@ -282,7 +282,7 @@ local T =
 	-- Arg1:
 	-- Ret1: number|The size of the stack
 	--
-	Size = function( self, time )
+	Size = function( self )
 
 		return #self.objs
 

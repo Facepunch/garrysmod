@@ -1,10 +1,22 @@
 
 AddCSLuaFile()
 
-local matArrow = Material( "widgets/arrow.png", "nocull alphatest smooth mips" )
-
 DEFINE_BASECLASS( "widget_base" )
 
+local matArrow = Material( "widgets/arrow.png", "nocull alphatest smooth mips" )
+local matScale = Material( "widgets/scale.png", "nocull alphatest smooth mips" )
+
+function ENT:SetupDataTables()
+
+	BaseClass.SetupDataTables( self )
+
+	self:NetworkVar( "Bool", 2, "IsScaleArrow" )
+
+	if ( SERVER ) then
+		self:SetIsScaleArrow( false )
+	end
+
+end
 --
 -- Set our dimensions etc
 --
@@ -33,7 +45,11 @@ function ENT:OverlayRender()
 		c.b = c.b * 0.5
 	end
 
-	render.SetMaterial( matArrow )
+	if ( self:GetIsScaleArrow() ) then
+		render.SetMaterial( matScale )
+	else
+		render.SetMaterial( matArrow )
+	end
 
 	render.DepthRange( 0, 0.01 )
 	render.DrawBeam( self:GetPos(), self:GetPos() + fwd * size, 2, 1, 0, Color( c.r, c.g, c.b, c.a * 0.1 ) )
@@ -56,7 +72,7 @@ function ENT:TestCollision( startpos, delta, isbox, extents )
 	local hit, norm, fraction = util.IntersectRayWithOBB( startpos, delta, self:GetPos(), self:GetAngles(), mins, maxs )
 	if ( !hit ) then return end
 
-	--debugoverlay.BoxAngles( self:GetPos(), mins, maxs, self:GetAngles(), 0.5, Color( 255, 255, 0, 100 ) )
+	--debugoverlay.BoxAngles( self:GetPos(), mins, maxs, self:GetAngles(), 0.1, Color( 0, 0, 255, 64 ) )
 
 	return {
 		HitPos		= hit,

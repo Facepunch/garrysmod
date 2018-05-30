@@ -268,6 +268,7 @@ meta.SetToolTip = meta.SetTooltip
 -----------------------------------------------------------]]
 function meta:SetTooltipPanel( panel )
 	self.pnlTooltipPanel = panel
+	if ( IsValid( panel ) ) then panel:SetVisible( false ) end
 end
 meta.SetToolTipPanel = meta.SetTooltipPanel
 
@@ -414,7 +415,7 @@ function meta:InvalidateChildren( bRecurse )
 		if ( bRecurse ) then
 			v:InvalidateChildren( true )
 		else
-			v:InvalidateChildren( false )
+			v:InvalidateLayout( true )
 		end
 
 	end

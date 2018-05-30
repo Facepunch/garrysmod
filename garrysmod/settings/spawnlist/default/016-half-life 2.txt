@@ -1,0 +1,8 @@
+"TableToKeyValues"
+{
+	"parentid"		"0"
+	"icon"		"games/16/hl2.png"
+	"id"		"16"
+	"name"		"Half-Life 2"
+	"version"		"3"
+}

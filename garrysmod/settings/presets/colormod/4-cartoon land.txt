@@ -1,0 +1,13 @@
+"Cartoon Land"
+{
+	"pp_colormod"		"1"
+	"pp_colormod_addb"		"0"
+	"pp_colormod_addg"		"0"
+	"pp_colormod_addr"		"0"
+	"pp_colormod_brightness"		"-0.037000"
+	"pp_colormod_color"		"5.000000"
+	"pp_colormod_contrast"		"1.346000"
+	"pp_colormod_mulb"		"0"
+	"pp_colormod_mulg"		"0"
+	"pp_colormod_mulr"		"0"
+}

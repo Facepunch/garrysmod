@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 properties.Add( "statue", {
-	MenuLabel = "Make Statue",
+	MenuLabel = "#makestatue",
 	Order = 1501,
 	MenuIcon = "icon16/lock.png",
 
@@ -78,7 +78,7 @@ properties.Add( "statue", {
 } )
 
 properties.Add( "statue_stop", {
-	MenuLabel = "Un-Statue",
+	MenuLabel = "#unstatue",
 	Order = 1501,
 	MenuIcon = "icon16/lock_open.png",
 

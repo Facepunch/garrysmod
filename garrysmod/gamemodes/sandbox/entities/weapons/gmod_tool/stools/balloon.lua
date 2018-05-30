@@ -64,7 +64,7 @@ function TOOL:LeftClick( trace, attach )
 	--
 	if	( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_balloon" && trace.Entity.Player == ply ) then
 
-		trace.Entity:GetPhysicsObject():Wake()
+		if ( IsValid( trace.Entity:GetPhysicsObject() ) ) then trace.Entity:GetPhysicsObject():Wake() end
 		trace.Entity:SetColor( Color( r, g, b, 255 ) )
 		trace.Entity:SetForce( force )
 		trace.Entity.force = force
@@ -147,8 +147,6 @@ if ( SERVER ) then
 		balloon:SetColor( Color( r, g, b, 255 ) )
 		balloon:SetForce( force )
 		balloon:SetPlayer( pl )
-
-		balloon:SetMaterial( skin )
 
 		balloon.Player = pl
 		balloon.r = r
