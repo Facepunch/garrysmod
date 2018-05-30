@@ -6,8 +6,6 @@ local function AddNPC( t, class )
 	list.Set( "NPC", class or t.Class, t )
 end
 
-
-
 local Category = "Humans + Resistance"
 
 AddNPC( {
@@ -99,7 +97,7 @@ AddNPC( {
 	Name = "Medic",
 	Class = "npc_citizen",
 	Category = Category,
-	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ) or nil,
+	SpawnFlags = 8 + 131072, --bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ),
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
 }, "Medic" )
@@ -120,6 +118,7 @@ AddNPC( {
 } )
 
 if ( IsMounted( "ep2" ) ) then
+
 	AddNPC( {
 		Name = "Uriah",
 		Class = "npc_vortigaunt",
@@ -133,6 +132,7 @@ if ( IsMounted( "ep2" ) ) then
 		Class = "npc_magnusson",
 		Category = Category
 	} )
+
 end
 
 if ( IsMounted( "lostcoast" ) ) then
@@ -143,8 +143,6 @@ if ( IsMounted( "lostcoast" ) ) then
 		Weapons = { "weapon_oldmanharpoon" }
 	} ) -- Has no death sequence
 end
-
-
 
 Category = "Zombies + Insects"
 
@@ -226,15 +224,6 @@ AddNPC( {
 	KeyValues = { SquadName = "zombies" }
 } )
 
-if ( IsMounted( "episodic" ) ) then
-	AddNPC( {
-		Name = "Zombine",
-		Class = "npc_zombine",
-		Category = Category,
-		KeyValues = { SquadName = "zombies" }
-	} )
-end
-
 if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/grub_blood.pcf" )
 	game.AddParticles( "particles/antlion_gib_02.pcf" )
@@ -264,7 +253,14 @@ if ( IsMounted( "ep2" ) ) then
 	} )
 end
 
-
+if ( IsMounted( "episodic" ) ) then
+	AddNPC( {
+		Name = "Zombine",
+		Class = "npc_zombine",
+		Category = Category,
+		KeyValues = { SquadName = "zombies" }
+	} )
+end
 
 Category = "Animals"
 
@@ -278,24 +274,20 @@ AddNPC( {
 AddNPC( {
 	Name = "Crow",
 	Class = "npc_crow",
-	Category = Category,
-	NoDrop = true
+	Category = Category
 } )
 
 AddNPC( {
 	Name = "Pigeon",
 	Class = "npc_pigeon",
-	Category = Category,
-	NoDrop = true
+	Category = Category
 } )
 
 AddNPC( {
 	Name = "Seagull",
 	Class = "npc_seagull",
-	Category = Category,
-	NoDrop = true
+	Category = Category
 } )
-
 
 
 Category = "Combine"
@@ -305,7 +297,7 @@ AddNPC( {
 	Class = "npc_metropolice",
 	Category = Category,
 	Weapons = { "weapon_stunstick", "weapon_pistol", "weapon_smg1" },
-	SpawnFlags = SF_NPC_DROP_HEALTHKIT,
+	SpawnFlags = 8,
 	KeyValues = { SquadName = "overwatch" }
 } )
 
@@ -314,8 +306,7 @@ AddNPC( {
 	Class = "npc_rollermine",
 	Category = Category,
 	Offset = 20,
-	KeyValues = { SquadName = "overwatch" },
-	NoDrop = true
+	KeyValues = { SquadName = "overwatch" }
 } )
 
 AddNPC( {
@@ -374,7 +365,7 @@ AddNPC( {
 	Model = "models/combine_super_soldier.mdl",
 	Weapons = { "weapon_ar2" },
 	KeyValues = { Numgrenades = 10, SquadName = "overwatch" },
-	SpawnFlags = SF_NPC_NO_PLAYER_PUSHAWAY
+	SpawnFlags = 16384
 }, "CombineElite" )
 
 AddNPC( {
@@ -382,8 +373,7 @@ AddNPC( {
 	Class = "npc_cscanner",
 	Category = Category,
 	Offset = 20,
-	KeyValues = { SquadName = "overwatch" },
-	NoDrop = true
+	KeyValues = { SquadName = "overwatch" }
 } )
 
 AddNPC( {
@@ -391,8 +381,7 @@ AddNPC( {
 	Class = "npc_clawscanner",
 	Category = Category,
 	Offset = 20,
-	KeyValues = { SquadName = "overwatch" },
-	NoDrop = true
+	KeyValues = { SquadName = "overwatch" }
 } )
 
 AddNPC( {
@@ -400,8 +389,7 @@ AddNPC( {
 	Class = "npc_combinegunship",
 	Category = Category,
 	Offset = 300,
-	KeyValues = { SquadName = "overwatch" },
-	NoDrop = true
+	KeyValues = { SquadName = "overwatch" }
 } )
 
 AddNPC( {
@@ -409,8 +397,7 @@ AddNPC( {
 	Class = "npc_combinedropship",
 	Category = Category,
 	Offset = 300,
-	KeyValues = { SquadName = "overwatch" },
-	NoDrop = true
+	KeyValues = { SquadName = "overwatch" }
 } )
 
 AddNPC( {
@@ -419,8 +406,7 @@ AddNPC( {
 	Category = Category,
 	Offset = 300,
 	Health = 600,
-	KeyValues = { SquadName = "overwatch" },
-	NoDrop = true
+	KeyValues = { SquadName = "overwatch" }
 } )
 
 AddNPC( {
@@ -429,8 +415,7 @@ AddNPC( {
 	Category = Category,
 	OnCeiling = true,
 	Offset = 2,
-	KeyValues = { SquadName = "overwatch" },
-	NoDrop = true
+	KeyValues = { SquadName = "overwatch" }
 } )
 
 AddNPC( {
@@ -463,16 +448,8 @@ AddNPC( {
 	Name = "Manhack",
 	Class = "npc_manhack",
 	Category = Category,
-	KeyValues = { SquadName = "overwatch" },
-	NoDrop = true
+	KeyValues = { SquadName = "overwatch" }
 } )
-
--- Broken model, laser doesn't follow model
---[[AddNPC( {
-	Name = "Sniper",
-	Class = "npc_sniper",
-	Category = Category
-} )]]
 
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {
@@ -481,17 +458,7 @@ if ( IsMounted( "ep2" ) ) then
 		Category = Category,
 		KeyValues = { SquadName = "overwatch" }
 	} )
-
-	-- Broken model and NPC behaviour
-	--[[AddNPC( {
-		Name = "Advisor",
-		Class = "npc_advisor",
-		Category = Category,
-		Model = "models/advisor.mdl" -- Advisor has no default model
-	} )]]
 end
-
-
 
 if ( not IsMounted( "hl1" ) ) then return end
 
@@ -520,24 +487,5 @@ AddNPC( { Name = "G-Man", Class = "monster_gman", Category = Category } )
 AddNPC( { Name = "Ichthyosaur", Class = "monster_ichthyosaur", Category = Category, NoDrop = true, InWater = true, Offset = 64 } )
 AddNPC( { Name = "Leech", Class = "monster_leech", Category = Category, NoDrop = true, InWater = true, Offset = 64 } )
 AddNPC( { Name = "Flyer", Class = "monster_flyer", Category = Category, Offset = function() return math.random( 100, 500 ) end, NoDrop = true } )
-
--- FIXME: https://github.com/Facepunch/garrysmod-issues/issues/3485
--- There also isn't a way to retrieve the created squad for undoing
---[[AddNPC( { Name = "Flyer Squad", Class = "monster_flyer_flock", Category = Category, Offset = function() return math.random( 100, 500 ) end, NoDrop = true,
+AddNPC( { Name = "Flyer Squad", Class = "monster_flyer_flock", Category = Category, Offset = function() return math.random( 100, 500 ) end, NoDrop = true,
 	KeyValues = { iFlockSize = function() return math.random( 3, 7 ) end, flFlockRadius = 64 } } )]]
-
-AddNPC( { Name = "Dead Barney", Class = "monster_barney_dead", Category = Category, OnFloor = true,
-	KeyValues = { pose = function() return math.random( 0, 2 ) end } } )
-AddNPC( { Name = "Dead Grunt", Class = "monster_hgrunt_dead", Category = Category, OnFloor = true,
-	KeyValues = { pose = function() return math.random( 0, 2 ) end } } )
-AddNPC( { Name = "Dead Scientist", Class = "monster_scientist_dead", Category = Category, OnFloor = true,
-	KeyValues = { body = -1, pose = function() return math.random( 0, 2 ) end } } )
-
--- Broken model
---AddNPC( { Name = "Dead HEV Suit", Class = "monster_hevsuit_dead", Category = Category, OnFloor = true, KeyValues = { pose = function() return math.random( 0, 3 ) end } } )
-
--- Don't exist in-game
---AddNPC( { Name = "Turret", Class = "monster_turret", Category = Category } )
---AddNPC( { Name = "Mini Turret", Class = "monster_miniturret", Category = Category } )
---AddNPC( { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = -20, OnFloor = true } )
---AddNPC( { Name = "Apache Helicopter", Class = "monster_apache", Category = Category } )
