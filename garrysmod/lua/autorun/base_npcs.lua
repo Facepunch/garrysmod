@@ -144,7 +144,7 @@ if ( IsMounted( "lostcoast" ) ) then
 	} ) -- Has no death sequence
 end
 
-Category = "Zombies + Insects"
+Category = "Zombies + Enemy Aliens"
 
 AddNPC( {
 	Name = "Zombie",
