@@ -303,19 +303,23 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 
 	if ( NPCData.AdminOnly && !Player:IsAdmin() ) then return end
 
+	if ( NPCData.InWater && bit.band( util.PointContents( Position ), CONTENTS_WATER ) == 0 ) then
+		return nil
+	end
+
 	local bDropToFloor = false
 
 	--
 	-- This NPC has to be spawned on a ceiling ( Barnacle )
 	--
-	if ( NPCData.OnCeiling && Vector( 0, 0, -1 ):Dot( Normal ) < 0.95 ) then
-		return nil
-	end
-
+	if ( NPCData.OnCeiling ) then
+		if ( Vector( 0, 0, -1 ):Dot( Normal ) < 0.95 ) then
+			return nil
+		end
 	--
 	-- This NPC has to be spawned on a floor ( Turrets )
 	--
-	if ( NPCData.OnFloor && Vector( 0, 0, 1 ):Dot( Normal ) < 0.95 ) then
+	elseif ( NPCData.OnFloor && Vector( 0, 0, 1 ):Dot( Normal ) < 0.95 ) then
 		return nil
 	else
 		bDropToFloor = true
@@ -330,7 +334,16 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 	--
 	-- Offset the position
 	--
-	local Offset = NPCData.Offset || 32
+	local Offset = NPCData.Offset
+
+	if ( isfunction( Offset ) ) then
+		Offset = Offset( NPC )
+	end
+
+	if ( Offset == nil ) then
+		Offset = 32
+	end
+
 	NPC:SetPos( Position + Normal * Offset )
 
 	-- Rotate to face player (expected behaviour)
@@ -377,7 +390,13 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 	--
 	if ( NPCData.KeyValues ) then
 		for k, v in pairs( NPCData.KeyValues ) do
-			NPC:SetKeyValue( k, v )
+			if ( isfunction( v ) ) then
+				v = v( NPC )
+
+				if ( v == nil ) then continue end
+			end
+
+			NPC:SetKeyValue( k, tostring( v ) )
 		end
 	end
 
@@ -408,7 +427,7 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 	NPC:Spawn()
 	NPC:Activate()
 
-	if ( bDropToFloor && !NPCData.OnCeiling ) then
+	if ( bDropToFloor ) then
 		NPC:DropToFloor()
 	end
 
@@ -499,7 +518,7 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 
 		duplicator.DoGeneric( ent, data )
 
-		if ( !NPCData.OnCeiling ) then
+		if ( !NPCData.OnCeiling && !NPCData.NoDrop ) then
 			ent:SetPos( pos )
 			ent:DropToFloor()
 		end
@@ -521,6 +540,7 @@ end
 local function AddNPCToDuplicator( class ) duplicator.RegisterEntityClass( class, GenericNPCDuplicator, "Model", "Class", "Equipment", "SpawnFlags", "Data" ) end
 
 -- HL2
+AddNPCToDuplicator( "npc_advisor" )
 AddNPCToDuplicator( "npc_alyx" )
 AddNPCToDuplicator( "npc_magnusson" )
 AddNPCToDuplicator( "npc_breen" )
@@ -573,21 +593,29 @@ AddNPCToDuplicator( "npc_fastzombie_torso" )
 AddNPCToDuplicator( "monster_alien_grunt" )
 AddNPCToDuplicator( "monster_alien_slave" )
 AddNPCToDuplicator( "monster_alien_controller" )
+AddNPCToDuplicator( "monster_barnacle" )
 AddNPCToDuplicator( "monster_barney" )
 AddNPCToDuplicator( "monster_bigmomma" )
 AddNPCToDuplicator( "monster_bullchicken" )
 AddNPCToDuplicator( "monster_babycrab" )
 AddNPCToDuplicator( "monster_cockroach" )
+AddNPCToDuplicator( "monster_flyer" )
 AddNPCToDuplicator( "monster_houndeye" )
 AddNPCToDuplicator( "monster_headcrab" )
 AddNPCToDuplicator( "monster_gargantua" )
+AddNPCToDuplicator( "monster_gman" )
 AddNPCToDuplicator( "monster_human_assassin" )
 AddNPCToDuplicator( "monster_human_grunt" )
+AddNPCToDuplicator( "monster_ichthyosaur" )
+AddNPCToDuplicator( "monster_leech" )
 AddNPCToDuplicator( "monster_scientist" )
 AddNPCToDuplicator( "monster_snark" )
 AddNPCToDuplicator( "monster_nihilanth" )
 AddNPCToDuplicator( "monster_tentacle" )
 AddNPCToDuplicator( "monster_zombie" )
+AddNPCToDuplicator( "monster_barney_dead" )
+AddNPCToDuplicator( "monster_hgrunt_dead" )
+AddNPCToDuplicator( "monster_scientist_dead" )
 
 --[[---------------------------------------------------------
 	Name: CanPlayerSpawnSENT
