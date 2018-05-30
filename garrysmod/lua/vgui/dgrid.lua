@@ -81,7 +81,9 @@ end
 
 function PANEL:SortByMember( key, desc )
 
-	desc = desc or true
+	if ( desc == nil ) then 
+		desc = true
+	end
 
 	table.sort( self.Items, function( a, b )
 

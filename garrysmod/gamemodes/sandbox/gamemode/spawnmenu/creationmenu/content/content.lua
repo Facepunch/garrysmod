@@ -44,6 +44,10 @@ function PANEL:EnableModify()
 	self.ContentNavBar:EnableModify()
 end
 
+function PANEL:EnableSearch( ... )
+	self.ContentNavBar:EnableSearch( ... )
+end
+
 function PANEL:CallPopulateHook( HookName )
 
 	hook.Call( HookName, GAMEMODE, self, self.ContentNavBar.Tree, self.OldSpawnlists )

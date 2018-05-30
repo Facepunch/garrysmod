@@ -24,7 +24,7 @@ local function TableInherit( t, base )
 	for k, v in pairs( base ) do
 		if ( t[ k ] == nil ) then
 			t[ k ] = v
-		elseif ( istable( t[ k ] ) && istable( v ) ) then
+		elseif ( k != "BaseClass" && istable( t[ k ] ) && istable( v ) ) then
 			TableInherit( t[ k ], v )
 		end
 	end
@@ -82,7 +82,7 @@ function Register( t, name )
 	tab.t.ClassName	= name
 
 	if ( !Base ) then
-		Msg( "WARNING: Scripted entity "..name.." has an invalid base entity!\n" )
+		Msg( "WARNING: Scripted entity " .. name .. " has an invalid base entity!\n" )
 	end
 
 	SEntList[ name ] = tab
@@ -143,7 +143,8 @@ function Register( t, name )
 		DropToFloor		= t.DropToFloor,
 		Author			= t.Author,
 		AdminOnly		= t.AdminOnly,
-		Information		= t.Information
+		Information		= t.Information,
+		ScriptedEntityType = t.ScriptedEntityType
 	} )
 
 end

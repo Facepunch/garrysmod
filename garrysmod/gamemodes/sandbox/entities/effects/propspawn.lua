@@ -2,7 +2,6 @@
 local cl_drawspawneffect = CreateConVar( "cl_drawspawneffect", "1", { FCVAR_ARCHIVE } )
 
 local matRefract = Material( "models/spawn_effect" )
-local matLight = Material( "models/spawn_effect2" )
 
 function EFFECT:Init( data )
 

@@ -84,5 +84,5 @@
 "+lookdown"			"#Valve_Look_Down"
 "+strafe"			"#Valve_Strafe_Modifier"
 "+klook"			"#Valve_Keyboard_Look_Modifier"
-"toggleconsole"		"Toggle Console"
+"toggleconsole"		"#Valve_Console_Toggle"
 

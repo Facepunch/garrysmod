@@ -1,0 +1,351 @@
+"TableToKeyValues"
+{
+	"parentid"		"6"
+	"icon"		"icon16/page.png"
+	"id"		"10"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Bars"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar1.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar2.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar3.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar4.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar5.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar6.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar7.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar8.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar25x25x1.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar25x25x2.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar25x25x3.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar25x25x4.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar25x25x5.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar25x25x6.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar25x25x7.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_bars/sf_bar25x25x8.mdl"
+		}
+		"18"
+		{
+			"type"		"header"
+			"text"		"Plates"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate1x1.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate1x2.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate1x3.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate1x4.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate1x5.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate1x6.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate1x7.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate1x8.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate2x2.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate2x3.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate2x4.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate2x5.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate2x6.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate2x7.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate2x8.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate3x3.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate3x4.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate3x5.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate3x6.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate3x7.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate3x8.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate4x4.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate4x5.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate4x6.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate4x7.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate4x8.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate5x5.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate5x6.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate5x7.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate5x8.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate6x6.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate6x7.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate6x8.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate7x7.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate7x8.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_plates/sf_plate8x8.mdl"
+		}
+		"55"
+		{
+			"type"		"header"
+			"text"		"Triangles"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_tris/sf_tri1x1.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_tris/sf_tri2x2.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_tris/sf_tri3x3.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_tris/sf_tri4x4.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_tris/sf_tri5x5.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_tris/sf_tri6x6.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_tris/sf_tri7x7.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_tris/sf_tri8x8.mdl"
+		}
+		"64"
+		{
+			"type"		"header"
+			"text"		"Tubes"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_tubes/sf_tube1x360.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_tubes/sf_tube1x270.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_tubes/sf_tube1x180.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/squad/sf_tubes/sf_tube1x90.mdl"
+		}
+	}
+	"name"		"Super Flat"
+	"version"		"3"
+}

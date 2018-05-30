@@ -139,6 +139,10 @@ function PANEL:DropAction_Normal( Drops, bDoDrop, Command, x, y )
 
 end
 
+function PANEL:OnModified()
+	-- For override
+end
+
 function PANEL:UpdateDropTarget( drop, pnl )
 
 	if ( drop == 5 ) then

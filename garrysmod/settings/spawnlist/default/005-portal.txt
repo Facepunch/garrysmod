@@ -1,0 +1,959 @@
+"TableToKeyValues"
+{
+	"parentid"		"0"
+	"icon"		"games/16/portal.png"
+	"id"		"5"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Characters"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/Player/chell.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/props/turret_01.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_body.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/props/metal_box.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"6"
+		{
+			"skin"		"1"
+			"type"		"model"
+			"model"		"models/props/metal_box.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/props/cake/cake.mdl"
+			"wide"		"128"
+			"tall"		"128"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_ball_reference.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_ball_reference.mdl"
+			"skin"		"1"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_ball_reference.mdl"
+			"skin"		"2"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_ball_reference.mdl"
+			"skin"		"3"
+		}
+		"12"
+		{
+			"type"		"header"
+			"text"		"Props"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/props/switch001.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/props/pedestal_center_reference.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/props/button_base_reference.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/props/button_top_reference.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/props/light_rail_endcap.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/Weapons/w_portalgun.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/props/security_camera_prop_reference.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/props/radio_reference.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/props/portal_cleanser_1.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/props/autoportal_frame/autoportal_frame.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/props/lift_platform.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/props/toilet_body_reference.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/props/toilet_lid_reference.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/props/table_reference.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/props/door_01_frame_wide_reference.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/props/door_01_frame_reference.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/props/bed_body_reference.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/bts_clipboard.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/clear_tube_90deg.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/clear_tube_broken.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/clear_tube_straight.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/clear_tube_tjoint.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/props/box_dropper.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/Glados_bunker.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/props/glados_stairs.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_disc_01.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_disc_02.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_disc_03.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_disc_04.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_platform_reference.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/Glados_Screenborder_Curve.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/phone_body.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/phone_reciever.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/projector.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/props/water_bottle/water_bottle.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/props_junk/garbage_coffeemug001a_forevergibs.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/props/food_can/food_can.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/props/food_can/food_can_open.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/props/saucepan/saucepan.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/props/pc_case_open/pc_case_open.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/props/pc_case02/pc_case02.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/props/milk_carton/milk_carton.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/props/milk_carton/milk_carton_open.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_monitor_pose01/lab_monitor_pose01.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_monitor_pose01/lab_monitor_pose02.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_monitor_pose01/lab_monitor_pose03.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/props/hospital_ivstand01.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_desk05/lab_desk05.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_desk03/lab_desk03.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_desk04/lab_desk04.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_desk01/lab_desk01.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_desk02/lab_desk02.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/bts_table_static.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_chair/lab_chair.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/bts_chair.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/bts_stool_static.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/props/kb_mouse/keyboard.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/props/kb_mouse/mouse.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/props/bts_bed/bts_bed.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_shelf_small/lab_shelf_small.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/props/lab_shelf/lab_shelf.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/props/door_02.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/props/sphere.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/props/sphere.mdl"
+			"skin"		"9"
+		}
+		"77"
+		{
+			"type"		"header"
+			"text"		"Background Props"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/props/glados_pillar/glados_pillar.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/Glados_Aperturedoor.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/fan01_small.mdl"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/fan01.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/props/bed_cover_reference.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/props/claw/claw.mdl"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/props/claw/claw_body.mdl"
+		}
+		"85"
+		{
+			"type"		"model"
+			"model"		"models/props/claw/claw_pincer01.mdl"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/props/claw/claw_pincer02.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/cage_light.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/bts_turret.mdl"
+		}
+		"89"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/metal_block.mdl"
+		}
+		"90"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/ladder_01.mdl"
+		}
+		"91"
+		{
+			"type"		"model"
+			"model"		"models/props/box_dropper_cover.mdl"
+		}
+		"92"
+		{
+			"type"		"model"
+			"model"		"models/props/box_dropper_cover_broken.mdl"
+		}
+		"93"
+		{
+			"type"		"model"
+			"model"		"models/props/box_dropper_cover_broken_cover.mdl"
+		}
+		"94"
+		{
+			"type"		"model"
+			"model"		"models/props/clock.mdl"
+		}
+		"95"
+		{
+			"type"		"model"
+			"model"		"models/props/combine_ball_catcher.mdl"
+		}
+		"96"
+		{
+			"type"		"model"
+			"model"		"models/props/combine_ball_launcher.mdl"
+		}
+		"97"
+		{
+			"type"		"model"
+			"model"		"models/props/door_01_lftdoor_reference.mdl"
+		}
+		"98"
+		{
+			"type"		"model"
+			"model"		"models/props/door_01_rtdoor_reference.mdl"
+		}
+		"99"
+		{
+			"type"		"model"
+			"model"		"models/props/gladosroom_shelves.mdl"
+		}
+		"100"
+		{
+			"type"		"model"
+			"model"		"models/props/gladosroom_spherecenter.mdl"
+		}
+		"101"
+		{
+			"type"		"model"
+			"model"		"models/props/gladosroom_spheremid.mdl"
+		}
+		"102"
+		{
+			"type"		"model"
+			"model"		"models/props/round_elevator_doors.mdl"
+		}
+		"103"
+		{
+			"type"		"model"
+			"model"		"models/props/light_rail_corner.mdl"
+		}
+		"104"
+		{
+			"type"		"model"
+			"model"		"models/props/light_rail_platform.mdl"
+		}
+		"105"
+		{
+			"type"		"model"
+			"model"		"models/props/light_rail_platform_02.mdl"
+		}
+		"106"
+		{
+			"type"		"model"
+			"model"		"models/props/pedestal_base_reference.mdl"
+		}
+		"107"
+		{
+			"type"		"model"
+			"model"		"models/props/128_fuse_set01/128_fuse_set01.mdl"
+		}
+		"108"
+		{
+			"type"		"model"
+			"model"		"models/props/128_fuse_set02/128_fuse_set02.mdl"
+		}
+		"109"
+		{
+			"type"		"model"
+			"model"		"models/props/128_fuse_set03/128_fuse_set03.mdl"
+		}
+		"110"
+		{
+			"type"		"model"
+			"model"		"models/props/128_fuse_set04/128_fuse_set04.mdl"
+		}
+		"111"
+		{
+			"type"		"model"
+			"model"		"models/props/128_fuse_set05/128_fuse_set05.mdl"
+		}
+		"112"
+		{
+			"type"		"model"
+			"model"		"models/props/128_fuse_set06/128_fuse_set06.mdl"
+		}
+		"113"
+		{
+			"type"		"model"
+			"model"		"models/props/128_fuse_set07/128_fuse_set07.mdl"
+		}
+		"114"
+		{
+			"type"		"model"
+			"model"		"models/props/128_fuse_set08/128_fuse_set08.mdl"
+		}
+		"115"
+		{
+			"type"		"model"
+			"model"		"models/props/128_fuse_set09/128_fuse_set09.mdl"
+		}
+		"116"
+		{
+			"type"		"model"
+			"model"		"models/props/128_fuse_set10/128_fuse_set10.mdl"
+		}
+		"117"
+		{
+			"type"		"model"
+			"model"		"models/props/elevatorshaft_wall/elevatorshaft_wall.mdl"
+		}
+		"118"
+		{
+			"type"		"model"
+			"model"		"models/props/elevator_caps/elevator_caps.mdl"
+		}
+		"119"
+		{
+			"type"		"model"
+			"model"		"models/props/round_elevator_body.mdl"
+		}
+		"120"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/mini_piston_body.mdl"
+		}
+		"121"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/mini_piston_inside.mdl"
+		}
+		"122"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/horizontal_piston_base.mdl"
+		}
+		"123"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/horizontal_piston_body.mdl"
+		}
+		"124"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/vertical_large_piston_base.mdl"
+		}
+		"125"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/vertical_large_piston_body.mdl"
+		}
+		"126"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/vertical_med_piston_base.mdl"
+		}
+		"127"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/vertical_med_piston_body.mdl"
+		}
+		"128"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/vertical_small_piston_base.mdl"
+		}
+		"129"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/vertical_small_piston_body.mdl"
+		}
+		"130"
+		{
+			"type"		"model"
+			"model"		"models/props/glados_ceiling_light/glados_ceiling_light.mdl"
+		}
+		"131"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/Glados_Floorlight.mdl"
+		}
+		"132"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/Lab_Floorlight.mdl"
+		}
+		"133"
+		{
+			"type"		"model"
+			"model"		"models/props/light_rail_wall_emitter.mdl"
+		}
+		"134"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/glados_generator.mdl"
+		}
+		"135"
+		{
+			"type"		"model"
+			"model"		"models/props/shelf128/shelf128_group01.mdl"
+		}
+		"136"
+		{
+			"type"		"model"
+			"model"		"models/props/server_wall/server_wall.mdl"
+		}
+		"137"
+		{
+			"type"		"model"
+			"model"		"models/props/shelf128/shelf128.mdl"
+		}
+		"138"
+		{
+			"type"		"model"
+			"model"		"models/props/rot_door/rot_door_frame.mdl"
+		}
+		"139"
+		{
+			"type"		"model"
+			"model"		"models/props/rot_door/rot_door_hinges.mdl"
+		}
+		"140"
+		{
+			"type"		"model"
+			"model"		"models/props/shelf128/shelf128_group02.mdl"
+		}
+		"141"
+		{
+			"type"		"model"
+			"model"		"models/props/shelf128/shelf128_group03.mdl"
+		}
+		"142"
+		{
+			"type"		"model"
+			"model"		"models/props/sign_frame01/sign_frame01.mdl"
+		}
+		"143"
+		{
+			"type"		"model"
+			"model"		"models/props/sign_frame02/sign_frame02.mdl"
+		}
+		"144"
+		{
+			"type"		"model"
+			"model"		"models/props/speaker_system01/speaker_system01.mdl"
+		}
+		"145"
+		{
+			"type"		"model"
+			"model"		"models/props/speaker_system01/speaker_system02.mdl"
+		}
+		"146"
+		{
+			"type"		"model"
+			"model"		"models/props/vert_door/vert_door_frame.mdl"
+		}
+		"147"
+		{
+			"type"		"model"
+			"model"		"models/props/vert_door/vert_door_lower.mdl"
+		}
+		"148"
+		{
+			"type"		"model"
+			"model"		"models/props/vert_door/vert_door_upper.mdl"
+		}
+		"149"
+		{
+			"type"		"model"
+			"model"		"models/props/wall_pipes_corner02/wall_pipes_corner02.mdl"
+		}
+		"150"
+		{
+			"type"		"model"
+			"model"		"models/props/wall_pipes_bend01/wall_pipes_bend01.mdl"
+		}
+		"151"
+		{
+			"type"		"model"
+			"model"		"models/props/wall_pipes_bend01/wall_pipes_bend01_flipped.mdl"
+		}
+		"152"
+		{
+			"type"		"model"
+			"model"		"models/props/wall_pipes_bend02/wall_pipes_bend02.mdl"
+		}
+		"153"
+		{
+			"type"		"model"
+			"model"		"models/props/wall_pipes_bend03/wall_pipes_bend03.mdl"
+		}
+		"154"
+		{
+			"type"		"model"
+			"model"		"models/props/wall_pipes_corner/wall_pipes_corner.mdl"
+		}
+		"155"
+		{
+			"type"		"model"
+			"model"		"models/props/wall_pipes_horiz/wall_pipes_horiz.mdl"
+		}
+		"156"
+		{
+			"type"		"model"
+			"model"		"models/props/wall_pipes_terminate01/wall_pipes_terminate01.mdl"
+		}
+		"157"
+		{
+			"type"		"model"
+			"model"		"models/props/wall_pipes_tjunc01/wall_pipes_tjunc01.mdl"
+		}
+		"158"
+		{
+			"type"		"model"
+			"model"		"models/props/wall_pipes_wave/wall_pipes_wave.mdl"
+		}
+		"159"
+		{
+			"type"		"model"
+			"model"		"models/props/wall_pipes_wave/wall_pipes_wave_flipped.mdl"
+		}
+		"160"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/rocket_sentry.mdl"
+		}
+		"161"
+		{
+			"type"		"model"
+			"model"		"models/props_bts/rocket.mdl"
+		}
+		"162"
+		{
+			"type"		"header"
+			"text"		"Chamber Signs"
+		}
+		"163"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num00.mdl"
+			"skin"		"6"
+		}
+		"164"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num01.mdl"
+			"skin"		"6"
+		}
+		"165"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num02.mdl"
+			"skin"		"6"
+		}
+		"166"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num03.mdl"
+			"skin"		"6"
+		}
+		"167"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num04.mdl"
+			"skin"		"6"
+		}
+		"168"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num05.mdl"
+			"skin"		"6"
+		}
+		"169"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num06.mdl"
+			"skin"		"6"
+		}
+		"170"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num07.mdl"
+			"skin"		"6"
+		}
+		"171"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num08.mdl"
+			"skin"		"6"
+		}
+		"172"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num09.mdl"
+			"skin"		"6"
+		}
+		"173"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num10.mdl"
+			"skin"		"6"
+		}
+		"174"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num11.mdl"
+			"skin"		"6"
+		}
+		"175"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num12.mdl"
+			"skin"		"6"
+		}
+		"176"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num13.mdl"
+			"skin"		"6"
+		}
+		"177"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num14.mdl"
+			"skin"		"6"
+		}
+		"178"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num15.mdl"
+			"skin"		"6"
+		}
+		"179"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num16.mdl"
+			"skin"		"6"
+		}
+		"180"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num17.mdl"
+			"skin"		"6"
+		}
+		"181"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num18.mdl"
+			"skin"		"6"
+		}
+		"182"
+		{
+			"type"		"model"
+			"model"		"models/props_animsigns/signage_num19.mdl"
+			"skin"		"6"
+		}
+	}
+	"needsapp"		"portal"
+	"name"		"Portal"
+	"version"		"3"
+}

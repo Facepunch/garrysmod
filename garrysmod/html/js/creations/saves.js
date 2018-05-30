@@ -15,17 +15,23 @@ function CSaves( $scope, $timeout, $location )
 	CreationScope		= $scope;
 	CreationLocation	= $location;
 
+	CreationScope.MyCategories =
+	[
+		"local",
+		"subscribed_ugc",
+		//"favorites_ugc"
+	];
+
 	CreationScope.Categories =
 	[
 		"trending",
 		"popular",
-		"latest",
-		"friends",
+		"latest"
 	];
 
-	CreationScope.SimpleCategories =
+	CreationScope.CategoriesSecondary =
 	[
-		"local",
+		"friends",
 		"mine"
 	];
 

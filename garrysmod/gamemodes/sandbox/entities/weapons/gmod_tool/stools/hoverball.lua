@@ -77,23 +77,23 @@ function TOOL:LeftClick( trace )
 
 	ball:SetPos( trace.HitPos + Offset )
 
-	local const
-
-	-- Don't weld to world
-	if ( trace.Entity != NULL && !trace.Entity:IsWorld() ) then
-
-		const = constraint.Weld( ball, trace.Entity, 0, trace.PhysicsBone, 0, 0, true )
-
-		if ( IsValid( ball:GetPhysicsObject() ) ) then ball:GetPhysicsObject():EnableCollisions( false ) end
-		ball.nocollide = true
-
-		ply:AddCleanup( "hoverballs", const )
-
-	end
-
 	undo.Create( "HoverBall" )
 		undo.AddEntity( ball )
-		undo.AddEntity( const )
+
+		-- Don't weld to world
+		if ( IsValid( trace.Entity ) ) then
+
+			local const = constraint.Weld( ball, trace.Entity, 0, trace.PhysicsBone, 0, 0, true )
+
+			if ( IsValid( ball:GetPhysicsObject() ) ) then ball:GetPhysicsObject():EnableCollisions( false ) end
+			ball:SetCollisionGroup( COLLISION_GROUP_WORLD )
+			ball.nocollide = true
+
+			ply:AddCleanup( "hoverballs", const )
+			undo.AddEntity( const )
+
+		end
+
 		undo.SetPlayer( ply )
 	undo.Finish()
 
@@ -128,7 +128,10 @@ if ( SERVER ) then
 		ball.NumBackDown = numpad.OnDown( ply, key_d, "Hoverball_Down", ball, true )
 		ball.NumBackUp = numpad.OnUp( ply, key_d, "Hoverball_Down", ball, false )
 
-		if ( nocollide == true && IsValid( ball:GetPhysicsObject() ) ) then ball:GetPhysicsObject():EnableCollisions( false ) end
+		if ( nocollide == true ) then
+			if ( IsValid( ball:GetPhysicsObject() ) ) then ball:GetPhysicsObject():EnableCollisions( false ) end
+			ball:SetCollisionGroup( COLLISION_GROUP_WORLD )
+		end
 
 		local ttable = {
 			key_d = key_d,

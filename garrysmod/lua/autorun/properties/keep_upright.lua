@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 properties.Add( "keepupright", {
-	MenuLabel = "Keep Upright",
+	MenuLabel = "#keepupright",
 	Order = 900,
 	MenuIcon = "icon16/arrow_up.png",
 
@@ -58,7 +58,7 @@ properties.Add( "keepupright", {
 } )
 
 properties.Add( "keepupright_stop", {
-	MenuLabel = "Stop Keep Upright",
+	MenuLabel = "#keepupright_stop",
 	Order = 900,
 	MenuIcon = "icon16/arrow_rotate_clockwise.png",
 

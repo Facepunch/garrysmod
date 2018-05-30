@@ -8,6 +8,7 @@ BODY
 	padding: 0;
 	font-size: 12px;
 	-webkit-font-smoothing: antialiased;
+	outline: none;
 }
 
 INPUT

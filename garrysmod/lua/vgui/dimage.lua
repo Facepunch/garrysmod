@@ -140,12 +140,6 @@ function PANEL:FixVertexLitMaterial()
 
 end
 
-function PANEL:GetImage()
-
-	return self.ImageName
-
-end
-
 function PANEL:SizeToContents( strImage )
 
 	self:SetSize( self.ActualWidth, self.ActualHeight )

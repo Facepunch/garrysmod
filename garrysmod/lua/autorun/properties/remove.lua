@@ -24,14 +24,16 @@ properties.Add( "remove", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
+		if ( !IsValid( ply ) ) then return false end
 
 		local ent = net.ReadEntity()
-
 		if ( !IsValid( ent ) ) then return false end
-		if ( !IsValid( player ) ) then return false end
+
+		-- Don't allow removal of players or objects that cannot be physically targeted by properties
 		if ( ent:IsPlayer() ) then return false end
-		if ( !self:Filter( ent, player ) ) then return false end
+		if ( ent:GetPhysicsObjectCount() < 1 && bit.band( ent:GetSolidFlags(), FSOLID_USE_TRIGGER_BOUNDS ) == 0 ) then return false end
+		if ( !self:Filter( ent, ply ) ) then return false end
 
 		-- Remove all constraints (this stops ropes from hanging around)
 		constraint.RemoveAll( ent )
@@ -49,7 +51,7 @@ properties.Add( "remove", {
 		ed:SetEntity( ent )
 		util.Effect( "entity_remove", ed, true, true )
 
-		player:SendLua( "achievements.Remover()" )
+		ply:SendLua( "achievements.Remover()" )
 
 	end
 

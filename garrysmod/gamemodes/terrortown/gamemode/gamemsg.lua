@@ -226,7 +226,7 @@ end
 
 local function TraitorGlobalVoice(ply, cmd, args)
    if not IsValid(ply) or not ply:IsActiveTraitor() then return end
-   if not #args == 1 then return end
+   if #args != 1 then return end
    local state = tonumber(args[1])
 
    ply.traitor_gvoice = (state == 1)
@@ -237,7 +237,7 @@ concommand.Add("tvog", TraitorGlobalVoice)
 
 local function MuteTeam(ply, cmd, args)
    if not IsValid(ply) then return end
-   if not #args == 1 and tonumber(args[1]) then return end
+   if not (#args == 1 and tonumber(args[1])) then return end
    if not ply:IsSpec() then
       ply.mute_team = -1
       return
@@ -328,6 +328,8 @@ concommand.Add("_deathrec", LastWords)
 -- Override or hook in plugin for spam prevention and whatnot. Return true
 -- to block a command.
 function GM:TTTPlayerRadioCommand(ply, msg_name, msg_target)
+   if ply.LastRadioCommand and ply.LastRadioCommand > (CurTime() - 0.5) then return true end
+   ply.LastRadioCommand = CurTime()
 end
 
 local function RadioCommand(ply, cmd, args)

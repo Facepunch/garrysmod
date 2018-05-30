@@ -64,6 +64,13 @@ function GM:EntityTakeDamage( ent, info )
 end
 
 --[[---------------------------------------------------------
+   Name: gamemode:PlayerHurt( )
+   Desc: Called when a player is hurt.
+-----------------------------------------------------------]]
+function GM:PlayerHurt( player, attacker, healthleft, healthtaken )
+end
+
+--[[---------------------------------------------------------
    Name: gamemode:CreateEntityRagdoll( entity, ragdoll )
    Desc: A ragdoll of an entity has been created
 -----------------------------------------------------------]]

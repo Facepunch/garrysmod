@@ -88,20 +88,20 @@ function PANEL:SetBodyGroup( k, v )
 
 end
 
-function PANEL:SetModel( mdl, iSkin, BodyGorups )
+function PANEL:SetModel( mdl, iSkin, BodyGroups )
 
 	if ( !mdl ) then debug.Trace() return end
 
 	self:SetModelName( mdl )
 	self:SetSkinID( iSkin )
 
-	if ( tostring( BodyGorups ):len() != 9 ) then
-		BodyGorups = "000000000"
+	if ( tostring( BodyGroups ):len() != 9 ) then
+		BodyGroups = "000000000"
 	end
 
-	self.m_strBodyGroups = BodyGorups
+	self.m_strBodyGroups = BodyGroups
 
-	self.Icon:SetModel( mdl, iSkin, BodyGorups )
+	self.Icon:SetModel( mdl, iSkin, BodyGroups )
 
 	if ( iSkin && iSkin > 0 ) then
 		self:SetTooltip( Format( "%s (Skin %i)", mdl, iSkin + 1 ) )
