@@ -3,7 +3,6 @@
 
 	<title>Creations</title>
 
-	
 	<link rel="stylesheet" type="text/css" href="css/Workshop.css" />
 	<link rel="stylesheet" type="text/css" href="css/creations/Creations.css" />
 
@@ -27,7 +26,7 @@
 <body ng-app="CDupesApp" ng-controller="CDupes">
 
 	<div class="options">
-			
+
 		<!-- DUPES -->
 
 		<ul>
@@ -35,8 +34,19 @@
 			<li class="headline" ng-tranny="'dupes'"></li>
 			<li class="subtitle"></li>
 
-			<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+			<li ng-repeat="cat in MyCategories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+				<a ng-href='#/list/{{cat}}/' ng-Tranny="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
 
+				<ul ng-show="cat == Category && cat != 'local'" style="margin-top: 4px; margin-bottom: 15px;">
+					<li ng-repeat="subcat in SubCategories" class="clickable {{IfElse( Tagged == subcat, 'active', 'notactive' )}}">
+						<a ng-href='#/list/{{cat}}/{{subcat}}/' ng-Tranny="'dupes.'+subcat" ng-show="cat != ''" class="{{IfElse( Tagged == subcat, 'active', 'notactive' )}}">{{subcat}}</a>
+					</li>
+				</ul>
+			</li>
+
+			<li>&nbsp;</li>
+
+			<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
 				<a ng-href='#/list/{{cat}}/' ng-Tranny="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
 
 				<ul ng-show="cat == Category" style="margin-top: 4px; margin-bottom: 15px;">
@@ -44,25 +54,29 @@
 						<a ng-href='#/list/{{cat}}/{{subcat}}/' ng-Tranny="'dupes.'+subcat" ng-show="cat != ''" class="{{IfElse( Tagged == subcat, 'active', 'notactive' )}}">{{subcat}}</a>
 					</li>
 				</ul>
-
 			</li>
 
 			<li>&nbsp;</li>
 
-			<li ng-repeat="cat in SimpleCategories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+			<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
 				<a ng-href='#/list/{{cat}}/' ng-Tranny="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+
+				<ul ng-show="cat == Category" style="margin-top: 4px; margin-bottom: 15px;">
+					<li ng-repeat="subcat in SubCategories" class="clickable {{IfElse( Tagged == subcat, 'active', 'notactive' )}}">
+						<a ng-href='#/list/{{cat}}/{{subcat}}/' ng-Tranny="'dupes.'+subcat" ng-show="cat != ''" class="{{IfElse( Tagged == subcat, 'active', 'notactive' )}}">{{subcat}}</a>
+					</li>
+				</ul>
 			</li>
 
 			<li>&nbsp;</li>
 
 			<li><button ng-click="SaveDupe();" ng-tranny="'dupes.savedupe'" class="savedupebutton {{DupeDisabled}}" enabled="false">..</button></li>
-			
+
 		</ul>
 
-			<!--
-			<input type="button" value="Reload Page" onClick="document.location.reload(true)">
-			-->
-		
+		<!--
+		<input type="button" value="Reload Page" onClick="document.location.reload(true)">
+		-->
 
 	</div>
 

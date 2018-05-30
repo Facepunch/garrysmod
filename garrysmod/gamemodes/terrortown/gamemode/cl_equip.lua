@@ -439,11 +439,15 @@ function GM:OnContextMenuOpen()
    if r == ROUND_ACTIVE and not (LocalPlayer():GetTraitor() or LocalPlayer():GetDetective()) then
       return
    elseif r == ROUND_POST or r == ROUND_PREP then
-      CLSCORE:Reopen()
+      CLSCORE:Toggle()
       return
    end
 
-   RunConsoleCommand("ttt_cl_traitorpopup")
+   if IsValid(eqframe) then
+      eqframe:Close()
+   else
+      RunConsoleCommand("ttt_cl_traitorpopup")
+   end
 end
 
 local function ReceiveEquipment()

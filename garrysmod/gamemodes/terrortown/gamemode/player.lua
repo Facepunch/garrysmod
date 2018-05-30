@@ -792,7 +792,7 @@ end
 -- rather high drop already. Hence we do our own fall damage handling in
 -- OnPlayerHitGround.
 function GM:GetFallDamage(ply, speed)
-   return 1
+   return 0
 end
 
 local fallsounds = {
@@ -1088,14 +1088,6 @@ function GM:Tick()
             end
          else
             ply.drowning = nil
-         end
-
-         -- Slow down ironsighters
-         local wep = ply:GetActiveWeapon()
-         if IsValid(wep) and wep.GetIronsights and wep:GetIronsights() then
-            ply:SetSpeed(true)
-         else
-            ply:SetSpeed(false)
          end
 
          -- Run DNA Scanner think also when it is not deployed

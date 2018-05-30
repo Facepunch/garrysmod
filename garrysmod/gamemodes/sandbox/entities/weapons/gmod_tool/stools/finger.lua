@@ -10,7 +10,6 @@ TOOL.Information = {
 }
 
 local VarsOnHand = 15
-local FingerVars = VarsOnHand * 2
 
 -- Returns true if it has TF2 hands
 local function HasTF2Hands( pEntity )
@@ -204,7 +203,7 @@ TranslateTable_Poral2[ "ValveBiped.Bip01_R_Finger32" ] = "ring_2_R"
 local TranslateTable_DOG = {}
 TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger0" ] = "Dog_Model.Thumb1_L"
 TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger01" ] = "Dog_Model.Thumb2_L"
-//TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger02" ] = "Dog_Model.Thumb3_L"
+--TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger02" ] = "Dog_Model.Thumb3_L"
 TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger1" ] = "Dog_Model.Index1_L"
 TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger11" ] = "Dog_Model.Index2_L"
 TranslateTable_DOG[ "ValveBiped.Bip01_L_Finger12" ] = "Dog_Model.Index3_L"
@@ -364,8 +363,6 @@ function TOOL:ApplyValues( pEntity, iHand )
 		local Var = self:GetClientInfo( i )
 		local VecComp = string.Explode( " ", Var )
 
-		local sin = math.sin( CurTime() * 10 ) * 10
-
 		local Ang = nil
 
 		if ( bP2 ) then
@@ -464,9 +461,10 @@ end
 function TOOL:RightClick( trace )
 
 	local ent = trace.Entity
+	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
 
 	if ( !IsValid( ent ) || ent:IsPlayer() ) then self:SetHand( NULL, 0 ) return true end
-	if ( ent:GetClass() != "prop_ragdoll" && !ent:IsNPC() ) then return false end
+	if ( ent:GetClass() != "prop_ragdoll" && ent:GetClass() != "prop_dynamic" && !ent:IsNPC() ) then return false end
 
 	if ( CLIENT ) then return false end
 
@@ -572,7 +570,7 @@ if ( SERVER ) then return end
 -- Notice the return above.
 -- The rest of this file CLIENT ONLY.
 
-for i=0, VarsOnHand do
+for i = 0, VarsOnHand do
 	TOOL.ClientConVar[ "" .. i ] = "0 0"
 end
 
@@ -623,8 +621,6 @@ function TOOL:DrawHUD()
 
 	if ( !IsValid( selected ) ) then return end
 	if ( selected:IsWorld() ) then return end
-
-	local Bone = nil
 
 	local lefthand, righthand = self:GetHandPositions( selected )
 

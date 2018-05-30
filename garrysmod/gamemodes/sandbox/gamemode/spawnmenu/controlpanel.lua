@@ -147,7 +147,7 @@ function PANEL:AddControl( control, data )
 
 	end
 
-	if ( control == "checkbox" || control == "toggle" ) then
+	if ( control == "checkbox" or control == "toggle" ) then
 
 		local ctrl = self:CheckBox( data.label or "Untitled", data.command )
 
@@ -168,6 +168,10 @@ function PANEL:AddControl( control, data )
 
 		if ( data.help ) then
 			self:ControlHelp( data.label .. ".help" )
+		end
+
+		if ( data.default ) then
+			ctrl:SetDefaultValue( data.default )
 		end
 
 		return ctrl

@@ -26,17 +26,19 @@ local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlC
 		--
 		-- Fill the viewpanel with models that are in this node's folder
 		--
-		local Path = node:GetFolder()
-		local SearchString = Path .. "/*.mdl"
+		local node_path = node:GetFolder()
+		local SearchString = node_path .. "/*.mdl"
 
-		local Models = file.Find( SearchString, node:GetPathID() )
-		for k, v in pairs( Models ) do
-
-			local cp = spawnmenu.GetContentType( "model" )
-			if ( cp ) then
-				cp( ViewPanel, { model = Path .. "/" .. v } )
+		local mdls = file.Find( SearchString, node:GetPathID() )
+		if ( mdls ) then
+			for k, v in pairs( mdls ) do
+				local cp = spawnmenu.GetContentType( "model" )
+				if ( cp ) then
+					cp( ViewPanel, { model = node_path .. "/" .. v } )
+				end
 			end
-
+		else
+			MsgN( "Warning! Not opening '" .. node_path .. "' because we cannot search in it!"  )
 		end
 
 		--

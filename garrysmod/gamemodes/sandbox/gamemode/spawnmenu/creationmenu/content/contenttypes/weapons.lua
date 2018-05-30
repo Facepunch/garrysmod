@@ -39,7 +39,7 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, nod
 				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", self.PropPanel, {
 					nicename	= ent.PrintName or ent.ClassName,
 					spawnname	= ent.ClassName,
-					material	= "entities/"..ent.ClassName..".png",
+					material	= "entities/" .. ent.ClassName .. ".png",
 					admin		= ent.AdminOnly
 				} )
 
@@ -68,6 +68,7 @@ end )
 spawnmenu.AddCreationTab( "#spawnmenu.category.weapons", function()
 
 	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
+	ctrl:EnableSearch( "weapons", "PopulateWeapons" )
 	ctrl:CallPopulateHook( "PopulateWeapons" )
 	return ctrl
 

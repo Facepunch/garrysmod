@@ -57,15 +57,18 @@ include("player_ext_shd.lua")
 include("player_ext.lua")
 include("player.lua")
 
+-- Round times
 CreateConVar("ttt_roundtime_minutes", "10", FCVAR_NOTIFY)
 CreateConVar("ttt_preptime_seconds", "30", FCVAR_NOTIFY)
 CreateConVar("ttt_posttime_seconds", "30", FCVAR_NOTIFY)
 CreateConVar("ttt_firstpreptime", "60")
 
+-- Haste mode
 local ttt_haste = CreateConVar("ttt_haste", "1", FCVAR_NOTIFY)
 CreateConVar("ttt_haste_starting_minutes", "5", FCVAR_NOTIFY)
 CreateConVar("ttt_haste_minutes_per_death", "0.5", FCVAR_NOTIFY)
 
+-- Player Spawning
 CreateConVar("ttt_spawn_wave_interval", "0")
 
 CreateConVar("ttt_traitor_pct", "0.25")
@@ -91,7 +94,7 @@ CreateConVar("ttt_det_credits_starting", "1")
 CreateConVar("ttt_det_credits_traitorkill", "0")
 CreateConVar("ttt_det_credits_traitordead", "1")
 
-
+-- Other
 CreateConVar("ttt_use_weapon_spawn_scripts", "1")
 CreateConVar("ttt_weapon_spawn_count", "0")
 
@@ -154,7 +157,7 @@ util.AddNetworkString("TTT_ShowPrints")
 util.AddNetworkString("TTT_ScanResult")
 util.AddNetworkString("TTT_FlareScorch")
 util.AddNetworkString("TTT_Radar")
-
+util.AddNetworkString("TTT_Spectate")
 ---- Round mechanics
 function GM:Initialize()
    MsgN("Trouble In Terrorist Town gamemode initializing...")
@@ -332,7 +335,7 @@ local function NameChangeKick()
    if GetRoundState() == ROUND_ACTIVE then
       for _, ply in pairs(player.GetHumans()) do
          if ply.spawn_nick then
-            if ply.has_spawned and ply.spawn_nick != ply:Nick() then
+            if ply.has_spawned and ply.spawn_nick != ply:Nick() and not hook.Call("TTTNameChangeKick", GAMEMODE, ply) then
                local t = GetConVar("ttt_namechange_bantime"):GetInt()
                local msg = "Changed name during a round"
                if t > 0 then
@@ -418,7 +421,7 @@ local function StopRoundTimers()
    -- remove all timers
    timer.Stop("wait2prep")
    timer.Stop("prep2begin")
-   timer.Stop("end2begin")
+   timer.Stop("end2prep")
    timer.Stop("winchecker")
 end
 

@@ -2,6 +2,8 @@
 
 AddCSLuaFile()
 
+DEFINE_BASECLASS "weapon_tttbase"
+
 SWEP.HoldType              = "normal"
 
 if CLIENT then
@@ -69,7 +71,7 @@ if CLIENT then
    CreateClientConVar("ttt_dna_scan_repeat", 1, true, true)
 else
    function SWEP:GetRepeating()
-      local ply = self.Owner
+      local ply = self:GetOwner()
       return IsValid(ply) and ply:GetInfoNum("ttt_dna_scan_repeat", 1) == 1
    end
 end
@@ -99,12 +101,12 @@ function SWEP:PrimaryAttack()
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
    -- will be tracing against players
-   self.Owner:LagCompensation(true)
+   self:GetOwner():LagCompensation(true)
 
-   local spos = self.Owner:GetShootPos()
-   local sdest = spos + (self.Owner:GetAimVector() * self.Range)
+   local spos = self:GetOwner():GetShootPos()
+   local sdest = spos + (self:GetOwner():GetAimVector() * self.Range)
 
-   local tr = util.TraceLine({start=spos, endpos=sdest, filter=self.Owner, mask=MASK_SHOT})
+   local tr = util.TraceLine({start=spos, endpos=sdest, filter=self:GetOwner(), mask=MASK_SHOT})
    local ent = tr.Entity
    if IsValid(ent) and (not ent:IsPlayer()) then
       if SERVER then
@@ -122,11 +124,11 @@ function SWEP:PrimaryAttack()
       end
    else
       if CLIENT then
-         self.Owner:EmitSound(beep_miss)
+         self:GetOwner():EmitSound(beep_miss)
       end
    end
 
-   self.Owner:LagCompensation(false)
+   self:GetOwner():LagCompensation(false)
 end
 
 function SWEP:GatherRagdollSample(ent)
@@ -177,7 +179,7 @@ function SWEP:GatherObjectSample(ent)
 end
 
 function SWEP:Report(msg, params)
-   LANG.Msg(self.Owner, msg, params)
+   LANG.Msg(self:GetOwner(), msg, params)
 end
 
 function SWEP:AddPlayerSample(corpse, killer)
@@ -186,9 +188,9 @@ function SWEP:AddPlayerSample(corpse, killer)
       if not table.HasTable(self.ItemSamples, prnt) then
          table.insert(self.ItemSamples, prnt)
 
-         DamageLog("SAMPLE:\t " .. self.Owner:Nick() .. " retrieved DNA of " .. (IsValid(killer) and killer:Nick() or "<disconnected>") .. " from corpse of " .. (IsValid(corpse) and CORPSE.GetPlayerNick(corpse) or "<invalid>"))
+         DamageLog("SAMPLE:\t " .. self:GetOwner():Nick() .. " retrieved DNA of " .. (IsValid(killer) and killer:Nick() or "<disconnected>") .. " from corpse of " .. (IsValid(corpse) and CORPSE.GetPlayerNick(corpse) or "<invalid>"))
 
-         hook.Call("TTTFoundDNA", GAMEMODE, self.Owner, killer, corpse)
+         hook.Call("TTTFoundDNA", GAMEMODE, self:GetOwner(), killer, corpse)
       end
       return true
    end
@@ -205,17 +207,17 @@ function SWEP:AddItemSample(ent)
       for _, p in pairs(ent.fingerprints) do
          local prnt = {source=ent, ply=p, type=SAMPLE_ITEM, cls=ent:GetClass()}
 
-         if p == self.Owner then
+         if p == self:GetOwner() then
             own = own + 1
          elseif table.HasTable(self.ItemSamples, prnt) then
             old = old + 1
          else
             table.insert(self.ItemSamples, prnt)
 
-            DamageLog("SAMPLE:\t " .. self.Owner:Nick() .. " retrieved DNA of " .. (IsValid(p) and p:Nick() or "<disconnected>") .. " from " .. ent:GetClass())
+            DamageLog("SAMPLE:\t " .. self:GetOwner():Nick() .. " retrieved DNA of " .. (IsValid(p) and p:Nick() or "<disconnected>") .. " from " .. ent:GetClass())
 
             new = new + 1
-            hook.Call("TTTFoundDNA", GAMEMODE, self.Owner, p, ent)
+            hook.Call("TTTFoundDNA", GAMEMODE, self:GetOwner(), p, ent)
          end
       end
       return new, old, own
@@ -248,7 +250,7 @@ if SERVER then
    -- samples and 20 item samples (with 20 matches) has been verified as
    -- working in the old DNA sampler.
    function SWEP:SendPrints(should_open)
-      net.Start("TTT_ShowPrints", self.Owner)
+      net.Start("TTT_ShowPrints", self:GetOwner())
         net.WriteBit(should_open)
         net.WriteUInt(#self.ItemSamples, 8)
 
@@ -256,17 +258,17 @@ if SERVER then
           net.WriteString(v.cls)
         end
 
-      net.Send(self.Owner)
+      net.Send(self:GetOwner())
    end
 
    function SWEP:SendScan(pos)
-      local clear = (pos == nil) or (not IsValid(self.Owner))
-      net.Start("TTT_ScanResult", self.Owner)
+      local clear = (pos == nil) or (not IsValid(self:GetOwner()))
+      net.Start("TTT_ScanResult", self:GetOwner())
         net.WriteBit(clear)
         if not clear then
           net.WriteVector(pos)
         end
-      net.Send(self.Owner)
+      net.Send(self:GetOwner())
    end
 
    function SWEP:ClearScanState()
@@ -297,7 +299,7 @@ if SERVER then
       if self:GetCharge() < MAX_CHARGE then return end
 
       local sample = self.ItemSamples[idx]
-      if (not sample) or (not IsValid(self.Owner)) then
+      if (not sample) or (not IsValid(self:GetOwner())) then
          if repeated then self:ClearScanState() end
          return
       end
@@ -318,7 +320,7 @@ if SERVER then
       self:SetLastScanned(idx)
       self.NowRepeating = self:GetRepeating()
 
-      local dist = math.ceil(self.Owner:GetPos():Distance(pos))
+      local dist = math.ceil(self:GetOwner():GetPos():Distance(pos))
 
       self:SetCharge(math.max(0, self:GetCharge() - math.max(50, dist / 2)))
    end
@@ -330,7 +332,7 @@ if SERVER then
 
             self.NextCharge = CurTime() + CHARGE_DELAY
          end
-      elseif self.NowRepeating and IsValid(self.Owner) then
+      elseif self.NowRepeating and IsValid(self:GetOwner()) then
          -- owner changed his mind since running last scan?
          if self:GetRepeating() then 
             self:PerformScan(self:GetLastScanned(), true)
@@ -359,10 +361,10 @@ if CLIENT then
    function SWEP:DrawHUD()
       self:DrawHelp()
 
-      local spos = self.Owner:GetShootPos()
-      local sdest = spos + (self.Owner:GetAimVector() * self.Range)
+      local spos = self:GetOwner():GetShootPos()
+      local sdest = spos + (self:GetOwner():GetAimVector() * self.Range)
 
-      local tr = util.TraceLine({start=spos, endpos=sdest, filter=self.Owner, mask=MASK_SHOT})
+      local tr = util.TraceLine({start=spos, endpos=sdest, filter=self:GetOwner(), mask=MASK_SHOT})
 
       local length = 20
       local gap = 6
@@ -767,8 +769,8 @@ function SWEP:OnDrop()
 end
 
 function SWEP:PreDrop()
-   if IsValid(self.Owner) then
-      self.Owner.scanner_weapon = nil
+   if IsValid(self:GetOwner()) then
+      self:GetOwner().scanner_weapon = nil
    end
 end
 
@@ -777,16 +779,16 @@ function SWEP:Reload()
 end
 
 function SWEP:Deploy()
-   if SERVER and IsValid(self.Owner) then
-      self.Owner:DrawViewModel(false)
-      self.Owner.scanner_weapon = self
+   if SERVER and IsValid(self:GetOwner()) then
+      self:GetOwner():DrawViewModel(false)
+      self:GetOwner().scanner_weapon = self
    end
    return true
 end
 
 if CLIENT then
    function SWEP:DrawWorldModel()
-      if not IsValid(self.Owner) then
+      if not IsValid(self:GetOwner()) then
          self:DrawModel()
       end
    end

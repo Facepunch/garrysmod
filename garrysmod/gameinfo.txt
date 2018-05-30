@@ -17,6 +17,7 @@
 		SearchPaths
 		{
 			// None of this matters really
+			// Game content mounting is controlled by cfg/mount.cfg, and not here!
 			game+mod			garrysmod/addons/*
 
 			game+mod			garrysmod/garrysmod.vpk

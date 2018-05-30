@@ -76,8 +76,13 @@ function PANEL:AddPanel( pnl )
 	table.insert( self.Panels, pnl )
 
 	pnl:SetParent( self.pnlCanvas )
-	self:InvalidateLayout(true)
+	self:InvalidateLayout( true )
 
+end
+
+function PANEL:Clear()
+	self.pnlCanvas:Clear()
+	self.Panels = {}
 end
 
 function PANEL:OnMouseWheeled( dlta )
@@ -97,12 +102,12 @@ function PANEL:Think()
 	self.FrameTime = VGUIFrameTime()
 
 	if ( self.btnRight:IsDown() ) then
-		self.OffsetX = self.OffsetX + (500 * FrameRate)
+		self.OffsetX = self.OffsetX + ( 500 * FrameRate )
 		self:InvalidateLayout( true )
 	end
 
 	if ( self.btnLeft:IsDown() ) then
-		self.OffsetX = self.OffsetX - (500 * FrameRate)
+		self.OffsetX = self.OffsetX - ( 500 * FrameRate )
 		self:InvalidateLayout( true )
 	end
 
@@ -111,9 +116,9 @@ function PANEL:Think()
 		local x, y = self:LocalCursorPos()
 
 		if ( x < 30 ) then
-			self.OffsetX = self.OffsetX - (350 * FrameRate)
+			self.OffsetX = self.OffsetX - ( 350 * FrameRate )
 		elseif ( x > self:GetWide() - 30 ) then
-			self.OffsetX = self.OffsetX + (350 * FrameRate)
+			self.OffsetX = self.OffsetX + ( 350 * FrameRate )
 		end
 
 		self:InvalidateLayout( true )
@@ -131,6 +136,7 @@ function PANEL:PerformLayout()
 	local x = 0
 
 	for k, v in pairs( self.Panels ) do
+		if ( !IsValid( v ) ) then continue end
 
 		v:SetPos( x, 0 )
 		v:SetTall( h )
@@ -160,6 +166,24 @@ function PANEL:PerformLayout()
 
 	self.btnLeft:SetVisible( self.pnlCanvas.x < 0 )
 	self.btnRight:SetVisible( self.pnlCanvas.x + self.pnlCanvas:GetWide() > self:GetWide() )
+
+end
+
+function PANEL:GenerateExample( classname, sheet, w, h )
+
+	local scroller = vgui.Create( "DHorizontalScroller" )
+	scroller:Dock( TOP )
+	scroller:SetHeight( 64 )
+	scroller:DockMargin( 5, 50, 5, 50 )
+	scroller:SetOverlap( -4 )
+
+	for i = 0, 16 do
+		local img = vgui.Create( "DImage", scroller )
+		img:SetImage( "scripted/breen_fakemonitor_1" )
+		scroller:AddPanel( img )
+	end
+
+	sheet:AddSheet( classname, scroller, nil, true, true )
 
 end
 

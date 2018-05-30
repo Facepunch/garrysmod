@@ -17,9 +17,14 @@ function PANEL:Init()
 
 end
 
+function PANEL:EnableSearch( stype, hookname )
+	self.Search = vgui.CreateFromTable( pnlSearch, self )
+	self.Search:SetSearchType( stype, hookname or "PopulateContent" )
+end
+
 function PANEL:EnableModify()
 
-	self.Search = vgui.CreateFromTable( pnlSearch, self )
+	self:EnableSearch()
 	self:CreateSaveNotification()
 
 	self.Toolbox = vgui.Create( "ContentSidebarToolbox", self )
