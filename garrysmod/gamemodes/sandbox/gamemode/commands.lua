@@ -308,14 +308,14 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 	--
 	-- This NPC has to be spawned on a ceiling ( Barnacle )
 	--
-	if ( NPCData.OnCeiling && Vector( 0, 0, -1 ):Dot( Normal ) < 0.95 ) then
-		return nil
-	end
-
+	if ( NPCData.OnCeiling ) then
+		if ( Vector( 0, 0, -1 ):Dot( Normal ) < 0.95 ) then
+			return nil
+		end
 	--
 	-- This NPC has to be spawned on a floor ( Turrets )
 	--
-	if ( NPCData.OnFloor && Vector( 0, 0, 1 ):Dot( Normal ) < 0.95 ) then
+	elseif ( NPCData.OnFloor && Vector( 0, 0, 1 ):Dot( Normal ) < 0.95 ) then
 		return nil
 	else
 		bDropToFloor = true
@@ -408,7 +408,7 @@ local function InternalSpawnNPC( Player, Position, Normal, Class, Equipment, Spa
 	NPC:Spawn()
 	NPC:Activate()
 
-	if ( bDropToFloor && !NPCData.OnCeiling ) then
+	if ( bDropToFloor ) then
 		NPC:DropToFloor()
 	end
 
@@ -499,7 +499,7 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 
 		duplicator.DoGeneric( ent, data )
 
-		if ( !NPCData.OnCeiling ) then
+		if ( !NPCData.OnCeiling && !NPCData.NoDrop ) then
 			ent:SetPos( pos )
 			ent:DropToFloor()
 		end
