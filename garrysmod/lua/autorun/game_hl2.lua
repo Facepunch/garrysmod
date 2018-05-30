@@ -74,6 +74,11 @@ ADD_WEAPON( "SMG", "weapon_smg1" )
 ADD_WEAPON( "AR2", "weapon_ar2" )
 ADD_WEAPON( "357", "weapon_357" )
 
+
+Category = "Half-Life: Source"
+ADD_WEAPON( "Hand Grenade", "weapon_handgrenade" )
+
+
 Category = "Other"
 ADD_WEAPON( "Physics Gun", "weapon_physgun" )
 
