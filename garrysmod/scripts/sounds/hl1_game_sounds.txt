@@ -2641,7 +2641,7 @@
 }
 
 
-"Sentry.Shoot"
+"HL1Sentry.Shoot"
 {
 	"channel"	"CHAN_WEAPON"
 	"volume"	"0.9"
@@ -2655,7 +2655,7 @@
 }
 
 
-"Sentry.Die"
+"HL1Sentry.Die"
 {
 	"channel"	"CHAN_BODY"
 	"volume"	"0.65"
