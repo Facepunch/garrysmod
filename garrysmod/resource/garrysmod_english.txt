@@ -40,7 +40,7 @@
 		"HL2_AmmoFull"		"FULL"
 		"HL2_Saved"		"Game Saved"
 		
-		"HL1_HandGrenade"	"Hand grenade"
+		"HL1_HandGrenade"	"HAND GRENADE"
 		"HL2_357Handgun"	".357 MAGNUM"
 		"HL2_Pulse_Rifle"	"PULSE-RIFLE"
 		"HL2_Bugbait"		"BUGBAIT"
