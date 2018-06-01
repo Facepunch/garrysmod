@@ -108,7 +108,6 @@
 		"hornet"						"Hornet"
 		"grenade_mp5"					"MP5 Grenade"
 		"grenade_hand"					"Hand Grenade"
-		"grenade_spit"					"Bullsquid Spit"
 		"bmortar"						"Big Momma Mortar Shot"
 		"controller_energy_ball"		"Energy Ball"
 		"controller_head_ball"			"Energy Ball"
