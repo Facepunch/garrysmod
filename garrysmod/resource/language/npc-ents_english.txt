@@ -57,6 +57,7 @@
 		"npc_zombine"					"Zombine"
 		"func_tank_combine_cannon"		"Combine Autogun"
 		"func_tank"						"Mounted Gun"
+		"grenade_spit"					"Antlion Spit"
 
 		// GMod specific stuff
 		"gmod_dynamite"					"Dynamite"
@@ -125,7 +126,7 @@
 		"prop_physics"					"Physics Prop"
 		"prop_physics_multiplayer"		"Physics Prop"
 		"prop_vehicle_driveable"		"Vehicle"
-		"prop_vehicle_jeep"				"Jeep"
+		"prop_vehicle_jeep"				"Vehicle"
 		"prop_vehicle_prisoner_pod"		"Pod"
 		"prop_vehicle_airboat"			"Airboat"
 		"prop_vehicle_apc"				"Combine APC"
