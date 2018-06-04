@@ -1,4 +1,4 @@
-﻿"lang"
+"lang"
 {
 	"Language" "English"
 
@@ -57,6 +57,7 @@
 		"npc_zombine"					"Zombine"
 		"func_tank_combine_cannon"		"Combine Autogun"
 		"func_tank"						"Mounted Gun"
+		"grenade_spit"					"Antlion Spit"
 
 		// GMod specific stuff
 		"gmod_dynamite"					"Dynamite"
@@ -131,6 +132,7 @@
 		"npc_bullseye"					"Target"
 		"npc_launcher"					"Launcher"
 		"weapon_striderbuster"			"Magnusson Device"
+		"prop_stickybomb"				"Magnusson Device"
 		"crossbow_bolt"					"Crossbow Bolt"
 		"rpg_missile"					"RPG Missile"
 		"grenade_ar2"					"SMG Grenade"
@@ -138,10 +140,12 @@
 		"prop_ragdoll_attached"			"Ragdoll"
 		"prop_physics"					"Physics Prop"
 		"prop_physics_multiplayer"		"Physics Prop"
+		"prop_vehicle_driveable"		"Vehicle"
 		"prop_vehicle_jeep"				"Vehicle"
 		"prop_vehicle_prisoner_pod"		"Pod"
 		"prop_vehicle_airboat"			"Airboat"
 		"prop_vehicle_apc"				"Combine APC"
+		"prop_vehicle_crane"			"Crane"
 		"prop_door_rotating"			"Door"
 		"prop_thumper"					"Thumper"
 		"prop_combine_ball"				"Combine Ball"
