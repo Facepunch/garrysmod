@@ -201,13 +201,12 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 	end
 
 	ply:SetPlaybackRate( rate )
+	
+        -- We only need to do this clientside..
+	if ( CLIENT ) then
+		if ( ply:InVehicle() ) then
 
-	if ( ply:InVehicle() ) then
-
-		local Vehicle = ply:GetVehicle()
-
-		-- We only need to do this clientside..
-		if ( CLIENT ) then
+			local Vehicle = ply:GetVehicle()
 			--
 			-- This is used for the 'rollercoaster' arms
 			--
@@ -225,10 +224,6 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 			ply:SetPoseParameter( "vehicle_steer", steer )
 
 		end
-
-	end
-
-	if ( CLIENT ) then
 		GAMEMODE:GrabEarAnimation( ply )
 		GAMEMODE:MouthMoveAnimation( ply )
 	end
