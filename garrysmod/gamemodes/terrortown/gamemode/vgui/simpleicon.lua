@@ -131,7 +131,7 @@ function PANEL:PerformLayout()
 end
 
 function PANEL:EnableMousePassthrough(pnl)
-   for _, p in pairs(self.Layers) do
+   for _, p in ipairs(self.Layers) do
       if p == pnl then
          p.OnMousePressed  = function(s, mc) s:GetParent():OnMousePressed(mc) end
          p.OnCursorEntered = function(s) s:GetParent():OnCursorEntered() end

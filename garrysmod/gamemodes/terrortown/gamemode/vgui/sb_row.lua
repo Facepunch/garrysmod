@@ -221,7 +221,7 @@ function PANEL:UpdatePlayerData()
 end
 
 function PANEL:ApplySchemeSettings()
-   for k,v in pairs(self.cols) do
+   for k, v in ipairs(self.cols) do
       v:SetFont("treb_small")
       v:SetTextColor(COLOR_WHITE)
    end
@@ -239,7 +239,7 @@ end
 
 function PANEL:LayoutColumns()
    local cx = self:GetWide()
-   for k,v in ipairs(self.cols) do
+   for k, v in ipairs(self.cols) do
       v:SizeToContents()
       cx = cx - v.Width
       v:SetPos(cx - v:GetWide()/2, (SB_ROW_HEIGHT - v:GetTall()) / 2)

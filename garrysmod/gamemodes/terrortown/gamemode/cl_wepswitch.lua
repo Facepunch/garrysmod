@@ -145,7 +145,7 @@ function WSWITCH:Draw(client)
    local y = ScrH() - (#weps * (height + margin))
 
    local col = col_dark
-   for k, wep in pairs(weps) do
+   for k, wep in ipairs(weps) do
       if self.Selected == k then
          col = col_active
       else

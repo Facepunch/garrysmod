@@ -79,7 +79,7 @@ function ENT:TestWeapons(weptype)
       return 0
    end
 
-   for _,ply in pairs(player.GetAll()) do
+   for _,ply in ipairs(player.GetAll()) do
       if IsValid(ply) and ply:IsTerror() then
          local pos = ply:GetPos()
          local center = ply:LocalToWorld(ply:OBBCenter())

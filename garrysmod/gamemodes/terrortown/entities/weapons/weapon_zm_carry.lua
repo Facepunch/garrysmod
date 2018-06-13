@@ -153,7 +153,7 @@ function SWEP:CheckValidity()
 end
 
 local function PlayerStandsOn(ent)
-   for _, ply in pairs(player.GetAll()) do
+   for _, ply in ipairs(player.GetAll()) do
       if ply:GetGroundEntity() == ent and ply:IsTerror() then
          return true
       end
@@ -496,7 +496,7 @@ function SWEP:PinRagdoll()
       local bone = self.Constr.Bone2
 
       -- only allow one rope per bone
-      for _, c in pairs(constraint.FindConstraints(rag, CONSTRAINT_TYPE)) do
+      for _, c in ipairs(constraint.FindConstraints(rag, CONSTRAINT_TYPE)) do
          if c.Bone1 == bone then
             c.Constraint:Remove()
          end
