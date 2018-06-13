@@ -206,11 +206,7 @@ function GM:Initialize()
       RunConsoleCommand("sv_alltalk", "0")
    end
 
-   local cstrike = false
-   for _, g in ipairs(engine.GetGames()) do
-      if g.folder == 'cstrike' then cstrike = true end
-   end
-   if not cstrike then
+   if not IsMounted("cstrike") then
       ErrorNoHalt("TTT WARNING: CS:S does not appear to be mounted by GMod. Things may break in strange ways. Server admin? Check the TTT readme for help.\n")
    end
 end
