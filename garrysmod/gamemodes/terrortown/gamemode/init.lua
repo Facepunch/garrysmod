@@ -532,10 +532,10 @@ function TellTraitorsAboutTraitors()
 
    -- This is ugly as hell, but it's kinda nice to filter out the names of the
    -- traitors themselves in the messages to them
-   local traitornicks_count = #traitornicks
+   local traitornicks_min = #traitornicks < 2
    for k,v in ipairs(player.GetAll()) do
       if v:IsTraitor() then
-         if traitornicks_count < 2 then
+         if traitornicks_min then
             LANG.Msg(v, "round_traitors_one")
             return
          else
