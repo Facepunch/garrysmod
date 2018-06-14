@@ -4,6 +4,7 @@ local net = net
 local string = string
 local table = table
 local pairs = pairs
+local ipairs = ipairs
 local IsValid = IsValid
 
 -- NOTE: most uses of the Msg functions here have been moved to the LANG

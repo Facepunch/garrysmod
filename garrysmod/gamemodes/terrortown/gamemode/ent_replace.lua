@@ -5,6 +5,7 @@ ents.TTT = {}
 local table = table
 local math = math
 local pairs = pairs
+local ipairs = ipairs
 
 local function ReplaceSingle(ent, newname)
 

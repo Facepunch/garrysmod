@@ -4,6 +4,7 @@ local math = math
 local string = string
 local table = table
 local pairs = pairs
+local ipairs = ipairs
 
 SCORE = SCORE or {}
 SCORE.Events = SCORE.Events or {}

@@ -6,6 +6,7 @@ local math = math
 local string = string
 local table = table
 local pairs = pairs
+local ipairs = ipairs
 
 -- attempts to get the weapon used from a DamageInfo instance needed because the
 -- GetAmmoType value is useless and inflictor isn't properly set (yet)

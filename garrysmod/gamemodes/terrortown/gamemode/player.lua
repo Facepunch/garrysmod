@@ -6,6 +6,7 @@ local table = table
 local player = player
 local timer = timer
 local pairs = pairs
+local ipairs = ipairs
 
 CreateConVar("ttt_bots_are_spectators", "0", FCVAR_ARCHIVE)
 CreateConVar("ttt_dyingshot", "0")
