@@ -1,10 +1,98 @@
 local gmod                        = gmod
 local pairs                        = pairs
 local isfunction        = isfunction
+local isnumber                = isnumber
 local isstring                = isstring
 local IsValid                = IsValid
-
+local setmetatable                = setmetatable
 module( "hook" )
+
+local HookTable = {}
+local HookTableMeta = { __index = HookTable }
+local HOOK_FUNC, HOOK_NAME, HOOK_FUNC_ORIGINAL, HOOK_PRIORITY, HOOK_NEXT = 1, 2, 3, 4, 5
+
+function HookTable.New()
+
+	return setmetatable( {}, HookTableMeta )
+
+end
+
+function HookTable:Add( name, func, priority )
+
+	local runfunc
+	if ( isstring( name ) ) then
+		runfunc = func
+	else
+		runfunc = function( ... )
+			if ( IsValid( name ) ) then
+				return func( name, ... )
+			end
+			self:Remove( name )
+		end
+	end
+
+	local addhook = {}
+	addhook[ HOOK_FUNC ] = runfunc
+	addhook[ HOOK_NAME ] = name
+	addhook[ HOOK_FUNC_ORIGINAL ] = func
+	addhook[ HOOK_PRIORITY ] = priority
+
+	self:Remove( name )
+
+	if ( self.root ) then
+		local v, prev = self.root
+		while v do
+			if ( addhook[ HOOK_PRIORITY ] < v[ HOOK_PRIORITY ] ) then
+				if ( v == self.root ) then
+					self.root = addhook
+				else
+					prev[ HOOK_NEXT ] = addhook
+				end
+				addhook[ HOOK_NEXT ] = v
+				break
+			elseif ( !v[ HOOK_NEXT ] ) then
+				v[ HOOK_NEXT ] = addhook
+				break
+			end
+			prev = v
+			v = v[ HOOK_NEXT ]
+		end
+	else
+		self.root = addhook
+	end
+end
+
+function HookTable:Remove( name )
+
+	local v, prev = self.root
+	while v do
+		if ( v[ HOOK_NAME ] == name ) then
+			if ( v == self.root ) then
+				self.root = v[ HOOK_NEXT ]
+			else
+				prev[ HOOK_NEXT ] = v[ HOOK_NEXT ]
+			end
+			break
+		end
+		prev = v
+		v = v[ HOOK_NEXT ]
+	end
+
+end
+
+function HookTable:GetTable()
+
+	local hooks = {}
+
+	local v = self.root
+	while v do
+		hooks[ v[ HOOK_NAME ] ] = v[ HOOK_FUNC_ORIGINAL ]
+		v = v[ HOOK_NEXT ]
+	end
+
+	return hooks
+
+end
 
 local Hooks = {}
 
@@ -12,7 +100,15 @@ local Hooks = {}
     Name: GetTable
     Desc: Returns a table of all hooks.
 -----------------------------------------------------------]]
-function GetTable() return Hooks end
+function GetTable()
+
+	local hooks = {}
+	for k, v in pairs( Hooks ) do
+		hooks[ k ] = v:GetTable()
+	end
+	return hooks
+
+end
 
 
 --[[---------------------------------------------------------
@@ -20,16 +116,17 @@ function GetTable() return Hooks end
     Args: string hookName, any identifier, function func
     Desc: Add a hook to listen to the specified event.
 -----------------------------------------------------------]]
-function Add( event_name, name, func )
+function Add( event_name, name, func, priority )
 
 	if ( !isfunction( func ) ) then return end
 	if ( !isstring( event_name ) ) then return end
+	if ( priority == nil ) then priority = 0 elseif ( !isnumber( priority ) ) then return end
 
-	if (Hooks[ event_name ] == nil) then
-			Hooks[ event_name ] = {}
+	if ( Hooks[ event_name ] == nil ) then
+		Hooks[ event_name ] = HookTable.New()
 	end
 
-	Hooks[ event_name ][ name ] = func
+	Hooks[ event_name ]:Add( name, func, priority )
 
 end
 
@@ -44,7 +141,7 @@ function Remove( event_name, name )
 	if ( !isstring( event_name ) ) then return end
 	if ( !Hooks[ event_name ] ) then return end
 
-	Hooks[ event_name ][ name ] = nil
+	Hooks[ event_name ]:Remove( name )
 
 end
 
@@ -69,46 +166,21 @@ function Call( name, gm, ... )
 	--
 	-- Run hooks
 	--
-	local HookTable = Hooks[ name ]
-	if ( HookTable != nil ) then
-	
-		local a, b, c, d, e, f;
+	local hooktable = Hooks[ name ]
+	if ( hooktable != nil ) then
 
-		for k, v in pairs( HookTable ) do 
+		local a, b, c, d, e, f
+		local v = hooktable.root
+		while v do
+			a, b, c, d, e, f = v[ HOOK_FUNC ]( ... )
 			
-			if ( isstring( k ) ) then
-				
-				--
-				-- If it's a string, it's cool
-				--
-				a, b, c, d, e, f = v( ... )
-
-			else
-
-				--
-				-- If the key isn't a string - we assume it to be an entity
-				-- Or panel, or something else that IsValid works on.
-				--
-				if ( IsValid( k ) ) then
-					--
-					-- If the object is valid - pass it as the first argument (self)
-					--
-					a, b, c, d, e, f = v( k, ... )
-				else
-					--
-					-- If the object has become invalid - remove it
-					--
-					HookTable[ k ] = nil
-				end
-			end
-
 			--
 			-- Hook returned a value - it overrides the gamemode function
 			--
 			if ( a != nil ) then
 				return a, b, c, d, e, f
 			end
-				
+			v = v[ HOOK_NEXT ]
 		end
 	end
 	
