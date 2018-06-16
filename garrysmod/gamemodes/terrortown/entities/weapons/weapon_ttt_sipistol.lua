@@ -22,7 +22,7 @@ SWEP.Base                  = "weapon_tttbase"
 
 SWEP.Primary.Recoil        = 1.35
 SWEP.Primary.Damage        = 25 --default 28
-SWEP.HeadshotMultiplier    = 2.5 --not default
+SWEP.HeadshotMultiplier    = 3 --not default
 SWEP.Primary.Delay         = 0.15 --default 0.38
 SWEP.Primary.Cone          = 0.02
 SWEP.Primary.ClipSize      = 20
