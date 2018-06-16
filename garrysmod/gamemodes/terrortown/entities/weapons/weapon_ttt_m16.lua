@@ -18,11 +18,11 @@ SWEP.Base                  = "weapon_tttbase"
 SWEP.Kind                  = WEAPON_HEAVY
 SWEP.WeaponID              = AMMO_M16
 
-SWEP.Primary.Delay         = 0.19
+SWEP.Primary.Delay         = 0.15
 SWEP.Primary.Recoil        = 1.8 --default 1.6
 SWEP.Primary.Automatic     = false --default true
 SWEP.Primary.Ammo          = "Pistol"
-SWEP.Primary.Damage        = 29 --default 23
+SWEP.Primary.Damage        = 30 --default 23
 SWEP.Primary.Cone          = 0.018
 SWEP.Primary.ClipSize      = 10 --default 20
 SWEP.Primary.ClipMax       = 60
