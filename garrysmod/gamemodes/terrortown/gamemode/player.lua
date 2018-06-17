@@ -708,7 +708,7 @@ function GM:SpectatorThink(ply)
          -- move to spectator spawn if mapper defined any
          local spec_spawns = ents.FindByClass("ttt_spectator_spawn")
 		 local spec_spawns_count = #spec_spawns 
-         if spec_spawns and spec_spawns_count > 0 then
+         if spec_spawns_count > 0 then
             local spawn = spec_spawns[math.random(1, spec_spawns_count)]
             ply:SetPos(spawn:GetPos())
             ply:SetEyeAngles(spawn:GetAngles())
