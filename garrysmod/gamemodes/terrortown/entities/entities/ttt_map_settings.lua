@@ -9,7 +9,7 @@ function ENT:Initialize()
    GAMEMODE.propspec_allow_named = false
 
    timer.Simple(0, function()
-	  if not IsValid(self) then return end
+      if not IsValid(self) then return end
       self:TriggerOutput("MapSettingsSpawned", self)
    end)
 end
