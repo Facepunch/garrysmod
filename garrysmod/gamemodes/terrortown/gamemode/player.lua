@@ -184,7 +184,7 @@ local function PointsAroundSpawn(spwn)
 end
 
 function GM:PlayerSelectSpawn(ply)
-   if (not self.SpawnPoints) or (table.Count(self.SpawnPoints) == 0) or (not IsTableOfEntitiesValid(self.SpawnPoints)) then
+   if (not self.SpawnPoints) or (#self.SpawnPoints == 0) or (not IsTableOfEntitiesValid(self.SpawnPoints)) then
 
       self.SpawnPoints = GetSpawnEnts(true, false)
 
@@ -195,7 +195,7 @@ function GM:PlayerSelectSpawn(ply)
       -- ones anyway.
    end
 
-   local num = table.Count(self.SpawnPoints)
+   local num = #self.SpawnPoints
    if num == 0 then
       Error("No spawn entity found!\n")
       return
@@ -207,7 +207,7 @@ function GM:PlayerSelectSpawn(ply)
 
    -- Optimistic attempt: assume there are sufficient spawns for all and one is
    -- free
-   for k, spwn in pairs(self.SpawnPoints) do
+   for k, spwn in ipairs(self.SpawnPoints) do
       if self:IsSpawnpointSuitable(ply, spwn, false) then
          return spwn
       end
@@ -216,12 +216,12 @@ function GM:PlayerSelectSpawn(ply)
    -- That did not work, so now look around spawns
    local picked = nil
 
-   for k, spwn in pairs(self.SpawnPoints) do
+   for k, spwn in ipairs(self.SpawnPoints) do
       picked = spwn -- just to have something if all else fails
 
       -- See if we can jury rig a spawn near this one
       local rigged = PointsAroundSpawn(spwn)
-      for _, rig in pairs(rigged) do
+      for _, rig in ipairs(rigged) do
          if self:IsSpawnpointSuitable(ply, rig, false, true) then
             local rig_spwn = ents.Create("info_player_terrorist")
             if IsValid(rig_spwn) then
@@ -321,10 +321,11 @@ function GM:KeyPress(ply, key)
          ply:SpectateEntity(nil)
 
          local alive = util.GetAlivePlayers()
+		 local alive_count = #alive
 
-         if #alive < 1 then return end
+         if alive_count < 1 then return end
 
-         local target = table.Random(alive)
+         local target = alive[math.random(1, alive_count)]
          if IsValid(target) then
             ply:SetPos(target:EyePos())
             ply:SetEyeAngles(target:EyeAngles())
@@ -498,7 +499,7 @@ local deathsounds = {
 local function PlayDeathSound(victim)
    if not IsValid(victim) then return end
 
-   sound.Play(table.Random(deathsounds), victim:GetShootPos(), 90, 100)
+   sound.Play(deathsounds[math.random(1, #deathsounds)], victim:GetShootPos(), 90, 100)
 end
 
 -- See if we should award credits now
@@ -706,8 +707,9 @@ function GM:SpectatorThink(ply)
 
          -- move to spectator spawn if mapper defined any
          local spec_spawns = ents.FindByClass("ttt_spectator_spawn")
-         if spec_spawns and #spec_spawns > 0 then
-            local spawn = table.Random(spec_spawns)
+		 local spec_spawns_count = #spec_spawns 
+         if spec_spawns and spec_spawns_count > 0 then
+            local spawn = spec_spawns[math.random(1, spec_spawns_count)]
             ply:SetPos(spawn:GetPos())
             ply:SetEyeAngles(spawn:GetAngles())
          end
@@ -861,7 +863,7 @@ function GM:OnPlayerHitGround(ply, in_water, on_floater, speed)
 
       -- play CS:S fall sound if we got somewhat significant damage
       if damage > 5 then
-         sound.Play(table.Random(fallsounds), ply:GetShootPos(), 55 + math.Clamp(damage, 0, 50), 100)
+         sound.Play(fallsounds[math.random(1, 3)], ply:GetShootPos(), 55 + math.Clamp(damage, 0, 50), 100)
       end
    end
 end

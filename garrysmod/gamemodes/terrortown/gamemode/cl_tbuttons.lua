@@ -24,9 +24,7 @@ function TBHUD:CacheEnts()
    if IsValid(LocalPlayer()) and LocalPlayer():IsActiveTraitor() then
       self.buttons = {}
       for _, ent in ipairs(ents.FindByClass("ttt_traitor_button")) do
-         if IsValid(ent) then
-            self.buttons[ent:EntIndex()] = ent
-         end
+         self.buttons[ent:EntIndex()] = ent
       end
    else
       self.buttons = {}

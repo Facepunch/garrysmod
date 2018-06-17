@@ -520,7 +520,7 @@ end
 
 function TellTraitorsAboutTraitors()
    local traitornicks = {}
-   for k,v in ipairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       if v:IsTraitor() then
          table.insert(traitornicks, v:Nick())
       end
@@ -529,7 +529,7 @@ function TellTraitorsAboutTraitors()
    -- This is ugly as hell, but it's kinda nice to filter out the names of the
    -- traitors themselves in the messages to them
    local traitornicks_min = #traitornicks < 2
-   for k,v in ipairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       if v:IsTraitor() then
          if traitornicks_min then
             LANG.Msg(v, "round_traitors_one")
@@ -886,7 +886,7 @@ function SelectRoles()
    -- traitor, so becoming detective does not mean you lost a chance to be
    -- traitor
    local ds = 0
-   local min_karma = GetConVarNumber("ttt_detective_karma_min") or 0
+   local min_karma = GetConVar("ttt_detective_karma_min"):GetInt() or 0
    while (ds < det_count) and (#choices >= 1) do
 
       -- sometimes we need all remaining choices to be detective to fill the

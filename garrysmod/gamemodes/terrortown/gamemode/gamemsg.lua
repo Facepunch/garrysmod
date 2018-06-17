@@ -141,7 +141,7 @@ function GM:PlayerSay(ply, text, team_only)
          end
 
          -- make sure we have something to say
-         if table.Count(filtered) < 1 then
+         if #filtered < 1 then
             table.insert(filtered, mumbles[math.random(1, #mumbles)])
          end
 

@@ -28,7 +28,7 @@ if CLIENT then
       for i=1, 20 do
          local prpos = VectorRand() * r
          prpos.z = prpos.z + 32
-         local p = em:Add(table.Random(smokeparticles), center + prpos)
+         local p = em:Add(smokeparticles[math.random(1, 2)], center + prpos)
          if p then
             local gray = math.random(75, 200)
             p:SetColor(gray, gray, gray)

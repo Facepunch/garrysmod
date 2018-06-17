@@ -334,7 +334,7 @@ function CLSCORE:BuildHilitePanel(dpanel)
       end
    end
 
-   local num_choices = table.Count(award_choices)
+   local num_choices = #award_choices
    local max_awards = 5
 
    -- sort descending by priority
