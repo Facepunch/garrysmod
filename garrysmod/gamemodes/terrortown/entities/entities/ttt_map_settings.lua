@@ -8,7 +8,10 @@ function ENT:Initialize()
    -- settings entity exists (a reliable way of identifying a TTT map)
    GAMEMODE.propspec_allow_named = false
 
-   timer.Simple(0, function() self:TriggerOutput("MapSettingsSpawned", self) end)
+   timer.Simple(0, function()
+	  if not IsValid(self) then return end
+      self:TriggerOutput("MapSettingsSpawned", self)
+   end)
 end
 
 function ENT:KeyValue(k, v)
