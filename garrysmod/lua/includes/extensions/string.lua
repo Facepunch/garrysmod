@@ -348,3 +348,17 @@ function string.Comma( number )
 	return number
 
 end
+
+function string.CardinalToOrdinal( cardinal )
+	if cardinal % 100 == 11 or cardinal % 100 == 12 or cardinal % 100 == 13 then
+		return cardinal .. "th"
+	elseif cardinal % 10 == 1 then
+		return cardinal .. "st"
+	elseif cardinal % 10 == 2 then
+		return cardinal .. "nd"
+	elseif cardinal % 10 == 3 then
+		return cardinal .. "rd"
+	else
+		return cardinal .. "th"
+	end
+end
