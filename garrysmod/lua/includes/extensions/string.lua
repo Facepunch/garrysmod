@@ -350,7 +350,7 @@ function string.Comma( number )
 end
 
 function string.CardinalToOrdinal( cardinal )
-	if cardinal % 100 == 11 or cardinal % 100 == 12 or cardinal % 100 == 13 then
+	if cardinal % 100 == 11 || cardinal % 100 == 12 || cardinal % 100 == 13 then
 		return cardinal .. "th"
 	elseif cardinal % 10 == 1 then
 		return cardinal .. "st"
