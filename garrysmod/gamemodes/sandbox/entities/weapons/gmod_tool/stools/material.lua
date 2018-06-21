@@ -127,6 +127,28 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Header", { Description = "#tool.material.help" } )
 
-	CPanel:MatSelect( "material_override", list.Get( "OverrideMaterials" ), true, 0.25, 0.25 )
+	local filter = CPanel:AddControl( "TextBox", { Label = "#spawnmenu.quick_filter_tool" } )
+	filter:SetUpdateOnType( true )
 
+	-- Remove duplicate materials
+	local materials = {}
+	for id, str in pairs( list.Get( "OverrideMaterials" ) ) do
+		if ( !materials[ str ] ) then
+			materials[ str ] = true
+		end
+	end
+
+	local matlist = CPanel:MatSelect( "material_override", table.GetKeys( materials ), true, 0.25, 0.25 )
+
+	filter.OnValueChange = function( s, txt )
+		for id, pnl in pairs( matlist.Controls ) do
+			if ( !pnl.Value:lower():find( txt:lower() ) ) then
+				pnl:SetVisible( false )
+			else
+				pnl:SetVisible( true )
+			end
+		end
+		matlist:InvalidateChildren()
+		CPanel:InvalidateChildren()
+	end
 end
