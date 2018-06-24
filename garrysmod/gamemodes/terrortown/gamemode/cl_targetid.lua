@@ -17,6 +17,11 @@ local ClassHint = {
    }
 };
 
+-- Access for servers to display hints using their own HUD/UI.
+function GM:GetClassHints()
+    return ClassHint
+end
+
 -- Basic access for servers to add/modify hints. They override hints stored on
 -- the entities themselves.
 function GM:AddClassHint(cls, hint)
