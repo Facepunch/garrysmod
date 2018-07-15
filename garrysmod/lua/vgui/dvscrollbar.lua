@@ -268,27 +268,26 @@ function PANEL:Grip()
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout(width, height)
 
-	local Wide = self:GetWide()
-	local BtnHeight = Wide
+	local BtnHeight = width
 	if ( self:GetHideButtons() ) then BtnHeight = 0 end
 	local Scroll = self:GetScroll() / self.CanvasSize
-	local BarSize = math.max( self:BarScale() * ( self:GetTall() - ( BtnHeight * 2 ) ), 10 )
-	local Track = self:GetTall() - ( BtnHeight * 2 ) - BarSize
+	local BarSize = math.max( self:BarScale() * ( height - ( BtnHeight * 2 ) ), 10 )
+	local Track = height - ( BtnHeight * 2 ) - BarSize
 	Track = Track + 1
 
 	Scroll = Scroll * Track
 
 	self.btnGrip:SetPos( 0, BtnHeight + Scroll )
-	self.btnGrip:SetSize( Wide, BarSize )
+	self.btnGrip:SetSize( width, BarSize )
 
 	if ( BtnHeight > 0 ) then
-		self.btnUp:SetPos( 0, 0, Wide, Wide )
-		self.btnUp:SetSize( Wide, BtnHeight )
+		self.btnUp:SetPos( 0, 0, width, width )
+		self.btnUp:SetSize( width, BtnHeight )
 
 		self.btnDown:SetPos( 0, self:GetTall() - BtnHeight )
-		self.btnDown:SetSize( Wide, BtnHeight )
+		self.btnDown:SetSize( width, BtnHeight )
 		
 		self.btnUp:SetVisible( true )
 		self.btnDown:SetVisible( true )
