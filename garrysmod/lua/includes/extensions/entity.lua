@@ -56,8 +56,10 @@ end
 
 if ( SERVER ) then
 
-	function meta:SetCreator( ply )
-		if ( !isentity( ply ) ) then
+	function meta:SetCreator( ply --[[= NULL]] )
+		if ( ply == nil ) then
+			ply = NULL
+		elseif ( !isentity( ply ) ) then
 			error( "bad argument #1 to 'SetCreator' (Entity expected, got " .. type( ply ) .. ")", 2 )
 		end
 
