@@ -173,6 +173,8 @@ vgui.Register( "SpawnMenu", PANEL, "EditablePanel" )
 -----------------------------------------------------------]]
 local function CreateSpawnMenu()
 
+	hook.Run( "PreReloadToolsMenu" )
+
 	-- If we have an old spawn menu remove it.
 	if ( IsValid( g_SpawnMenu ) ) then
 
