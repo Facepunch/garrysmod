@@ -4,6 +4,7 @@ local math = math
 local string = string
 local table = table
 local pairs = pairs
+local ipairs = ipairs
 
 SCORE = SCORE or {}
 SCORE.Events = SCORE.Events or {}
@@ -95,7 +96,7 @@ end
 function SCORE:HandleSelection()
    local traitors = {}
    local detectives = {}
-   for k, ply in pairs(player.GetAll()) do
+   for k, ply in ipairs(player.GetAll()) do
       if ply:GetTraitor() then
          table.insert(traitors, ply:SteamID())
       elseif ply:GetDetective() then
@@ -145,7 +146,7 @@ function SCORE:ApplyEventLogScores(wintype)
    local scores = {}
    local traitors = {}
    local detectives = {}
-   for k, ply in pairs(player.GetAll()) do
+   for k, ply in ipairs(player.GetAll()) do
       scores[ply:SteamID()] = {}
 
       if ply:GetTraitor() then
@@ -243,7 +244,7 @@ function SCORE:StreamToClients()
    end
 
    local parts = #cut
-   for k, bit in pairs(cut) do
+   for k, bit in ipairs(cut) do
       net.Start("TTT_ReportStream")
       net.WriteBit((k != parts)) -- continuation bit, 1 if there's more coming
       net.WriteString(bit)

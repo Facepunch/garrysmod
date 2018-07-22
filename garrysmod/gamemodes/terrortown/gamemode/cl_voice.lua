@@ -168,7 +168,7 @@ function RADIO:ShowRadioCommands(state)
          -- ASS
          radioframe.ForceResize = function(s)
                                      local w, label = 0, nil
-                                     for k,v in pairs(s.Items) do
+                                     for k, v in pairs(s.Items) do
                                         label = v:GetChild(0)
                                         if label:GetWide() > w then
                                            w = label:GetWide()

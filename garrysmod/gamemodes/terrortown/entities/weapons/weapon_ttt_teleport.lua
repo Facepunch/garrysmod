@@ -177,7 +177,7 @@ local function CanTeleportToPos(ply, pos)
 
       local blocking_plys = {}
 
-      for _, block in pairs(blockers) do
+      for _, block in ipairs(blockers) do
          if IsValid(block) then
             if block:IsPlayer() and block != ply then
                if block:IsTerror() and block:Alive() then
@@ -207,7 +207,7 @@ local function DoTeleport(ply, teleport, weapon)
       elseif block_plys and #block_plys > 0 then
          -- if blocked by player, maybe telefrag
          if ttt_telefrags:GetBool() then
-            for _, p in pairs(block_plys) do
+            for _, p in ipairs(block_plys) do
                Telefrag(p, ply, weapon)
             end
          else

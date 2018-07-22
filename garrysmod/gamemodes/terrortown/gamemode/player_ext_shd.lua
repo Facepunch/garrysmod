@@ -182,7 +182,7 @@ if CLIENT then
    };
 
    -- Insert all the "simple" gestures that do not need weight control
-   for _, a in pairs{ACT_GMOD_GESTURE_AGREE, ACT_GMOD_GESTURE_DISAGREE,
+   for _, a in ipairs{ACT_GMOD_GESTURE_AGREE, ACT_GMOD_GESTURE_DISAGREE,
                      ACT_GMOD_GESTURE_WAVE, ACT_GMOD_GESTURE_BECON,
                      ACT_GMOD_GESTURE_BOW, ACT_GMOD_GESTURE_SALUTE,
                      ACT_GMOD_CHEER, ACT_SIGNAL_FORWARD, ACT_SIGNAL_HALT,

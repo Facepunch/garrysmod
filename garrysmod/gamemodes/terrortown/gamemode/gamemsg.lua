@@ -4,6 +4,7 @@ local net = net
 local string = string
 local table = table
 local pairs = pairs
+local ipairs = ipairs
 local IsValid = IsValid
 
 -- NOTE: most uses of the Msg functions here have been moved to the LANG
@@ -55,7 +56,7 @@ end
 
 -- Round start info popup
 function ShowRoundStartPopup()
-   for k, v in pairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       if IsValid(v) and v:Team() == TEAM_TERROR and v:Alive() then
          v:ConCommand("ttt_cl_startpopup")
       end
@@ -64,7 +65,7 @@ end
 
 local function GetPlayerFilter(pred)
    local filter = {}
-   for k, v in pairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       if IsValid(v) and pred(v) then
          table.insert(filter, v)
       end
@@ -140,7 +141,7 @@ function GM:PlayerSay(ply, text, team_only)
          end
 
          -- make sure we have something to say
-         if table.Count(filtered) < 1 then
+         if #filtered < 1 then
             table.insert(filtered, mumbles[math.random(1, #mumbles)])
          end
 

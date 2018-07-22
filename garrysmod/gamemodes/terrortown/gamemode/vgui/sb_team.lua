@@ -137,7 +137,7 @@ end
 
 function PANEL:UpdatePlayerData()
    local to_remove = {}
-   for k,v in pairs(self.rows) do
+   for k, v in pairs(self.rows) do
       -- Player still belongs in this group?
       if IsValid(v) and IsValid(v:GetPlayer()) and ScoreGroup(v:GetPlayer()) == self.group then
          v:UpdatePlayerData()
@@ -149,7 +149,7 @@ function PANEL:UpdatePlayerData()
 
    if #to_remove == 0 then return end
 
-   for k,ply in pairs(to_remove) do
+   for k, ply in pairs(to_remove) do
       local pnl = self.rows[ply]
       if IsValid(pnl) then
          pnl:Remove()

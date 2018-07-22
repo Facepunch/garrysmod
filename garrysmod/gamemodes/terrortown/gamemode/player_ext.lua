@@ -95,7 +95,7 @@ function plymeta:SendBought()
    -- Send all as string, even though equipment are numbers, for simplicity
    net.Start("TTT_Bought")
       net.WriteUInt(#self.bought, 8)
-      for k, v in pairs(self.bought) do
+      for k, v in ipairs(self.bought) do
          net.WriteString(v)
       end
    net.Send(self)

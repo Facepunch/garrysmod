@@ -105,7 +105,7 @@ function RadiusDamage(dmginfo, pos, radius, inflictor)
    local victims = ents.FindInSphere(pos, radius)
 
    local tr = nil
-   for k, vic in pairs(victims) do
+   for k, vic in ipairs(victims) do
       if IsValid(vic) and inflictor:Visible(vic) then
          if vic:IsPlayer() and vic:Alive() and vic:Team() == TEAM_TERROR then
             vic:TakeDamageInfo(dmginfo)

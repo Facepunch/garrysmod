@@ -14,8 +14,8 @@ function GetEquipmentForRole(role)
       local tbl = table.Copy(EquipmentItems)
 
       -- find buyable weapons to load info from
-      for k, v in pairs(weapons.GetList()) do
-         if v and v.CanBuy then
+      for k, v in ipairs(weapons.GetList()) do
+         if v.CanBuy then
             local data = v.EquipMenuData or {}
             local base = {
                id       = WEPS.GetClass(v),
@@ -310,7 +310,7 @@ local function TraitorMenuPopup()
    dinfo:StretchToParent(0, 0, 0, dih - 135)
 
    local dfields = {}
-   for _, k in pairs({"name", "type", "desc"}) do
+   for _, k in ipairs({"name", "type", "desc"}) do
       dfields[k] = vgui.Create("DLabel", dinfo)
       dfields[k]:SetTooltip(GetTranslation("equip_spec_" .. k))
       dfields[k]:SetPos(m*3, m*2)

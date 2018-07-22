@@ -145,7 +145,7 @@ local function AllKills(events, scores, players, traitors)
       end
    end
 
-   if table.Count(tr_killers) == 1 then
+   if #tr_killers == 1 then
       local id = tr_killers[1]
       if not table.HasValue(traitors, id) then
          local killer = players[id]
@@ -155,7 +155,7 @@ local function AllKills(events, scores, players, traitors)
       end
    end
 
-   if table.Count(in_killers) == 1 then
+   if #in_killers == 1 then
       local id = in_killers[1]
       if table.HasValue(traitors, id) then
          local killer = players[id]
@@ -178,7 +178,7 @@ local function NumKills_Traitor(events, scores, players, traitors)
       end
    end
 
-   local choices = table.Count(trs)
+   local choices = #trs
    if choices > 0 then
       -- award a random killer
       local pick = math.random(1, choices)
@@ -213,8 +213,8 @@ local function NumKills_Inno(events, scores, players, traitors)
       end
    end
 
-   local choices = table.Count(ins)
-   if table.Count(ins) > 0 then
+   local choices = #ins
+   if choices > 0 then
       -- award a random killer
       local pick = math.random(1, choices)
       local sid = ins[pick]
