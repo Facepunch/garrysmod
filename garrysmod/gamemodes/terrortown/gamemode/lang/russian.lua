@@ -1059,3 +1059,25 @@ L.hat_retrieve = "Вы подобрали шляпу детектива."
 
 --- 3-9-2017
 L.sb_sortby = "Сортировка:"
+
+--- 2018-07-24
+L.equip_tooltip_main = "Меню снаряжения"
+L.equip_tooltip_radar = "Управление радаром"
+L.equip_tooltip_disguise = "Управление Маскировкой"
+L.equip_tooltip_radio = "Управление Радио"
+L.equip_tooltip_xfer = "Передача кредитов"
+
+L.confgrenade_name = "Отталкивающая граната"
+L.polter_name = "Полтергейст"
+L.stungun_name = "Прототип UMP"
+
+L.knife_instant = "МГНОВЕННОЕ УБИЙСТВО"
+
+L.dna_hud_type = "ТИП"
+L.dna_hud_body = "ТЕЛО"
+L.dna_hud_item = "ПРЕДМЕТ"
+
+L.binoc_zoom_level = "УРОВЕНЬ"
+L.binoc_body = "ОБНАРУЖЕНО ТЕЛО"
+
+L.idle_popup_title = "Бездействие"
