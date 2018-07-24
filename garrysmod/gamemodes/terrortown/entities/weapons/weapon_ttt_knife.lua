@@ -272,6 +272,7 @@ function SWEP:OnRemove()
 end
 
 if CLIENT then
+   local T = LANG.GetTranslation
    function SWEP:DrawHUD()
       local tr = self:GetOwner():GetEyeTrace(MASK_SHOT)
 
@@ -291,7 +292,7 @@ if CLIENT then
          surface.DrawLine(x - outer, y + outer, x - inner, y + inner)
          surface.DrawLine(x + outer, y - outer, x + inner, y - inner)
 
-         draw.SimpleText("INSTANT KILL", "TabLarge", x, y - 30, COLOR_RED, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
+         draw.SimpleText(T("knife_instant"), "TabLarge", x, y - 30, COLOR_RED, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
       end
 
       return self.BaseClass.DrawHUD(self)

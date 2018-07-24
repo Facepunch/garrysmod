@@ -4,7 +4,7 @@ AddCSLuaFile()
 SWEP.HoldType           = "grenade"
 
 if CLIENT then
-   SWEP.PrintName       = "Discombobulator"
+   SWEP.PrintName       = "confgrenade_name"
    SWEP.Slot            = 3
 
    SWEP.ViewModelFlip   = false
