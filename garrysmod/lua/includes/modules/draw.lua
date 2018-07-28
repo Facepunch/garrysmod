@@ -302,3 +302,14 @@ end
 function NoTexture()
 	surface.SetTexture( tex_white )
 end
+
+--[[---------------------------------------------------------
+	Name: OutlinedBox( x, y, w, h, thickness, colour )
+	Desc: Draw an outlined box.
+-----------------------------------------------------------]]
+function OutlinedBox( x, y, w, h, thickness, colour )
+ 	surface.SetDrawColor( colour )
+	for i = 0, thickness - 1 do
+		surface.DrawOutlinedRect( x + i, y + i, w - i * 2, h - i * 2 )
+	end
+ end
