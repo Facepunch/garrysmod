@@ -307,7 +307,7 @@ end
 	Name: OutlinedBox( x, y, w, h, thickness, clr )
 	Desc: Draw an outlined box.
 -----------------------------------------------------------]]
-function draw.OutlinedBox( x, y, w, h, thickness, colour )
+function OutlinedBox( x, y, w, h, thickness, colour )
 
 	surface.SetDrawColor( colour )
 	for i = 0, thickness - 1 do
