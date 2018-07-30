@@ -52,6 +52,9 @@ end
 
 function Register( t, name )
 
+	local Type = t.Type
+	if ( !Type ) then Type = "anim" end
+
 	local Base = t.Base
 	if ( !Base ) then Base = BaseClasses[ t.Type ] end
 
