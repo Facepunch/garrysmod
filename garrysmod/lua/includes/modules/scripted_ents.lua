@@ -53,15 +53,15 @@ end
 function Register( t, name )
 
 	local Type = t.Type
-	if ( !Type ) then Type = "anim" end
+	if ( !Type ) then Type = "anim" t.Type = Type end
 
 	local Base = t.Base
-	if ( !Base ) then Base = BaseClasses[ t.Type ] end
+	if ( !Base ) then Base = BaseClasses[ Type ] end
 
 	local old = SEntList[ name ]
 	local tab = {}
 
-	tab.type		= t.Type
+	tab.type		= Type
 	tab.t			= t
 	tab.isBaseType	= true
 	tab.Base		= Base
