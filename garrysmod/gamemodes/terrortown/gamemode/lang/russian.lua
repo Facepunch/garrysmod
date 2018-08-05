@@ -765,7 +765,7 @@ L.report_save_error  = "Нет данных журнала событий для
 L.report_save_result = "Журнал событий сохранён в:"
 
 -- Big title window
-L.hilite_win_traitors = "Победа предетелей"
+L.hilite_win_traitors = "Победа предателей"
 L.hilite_win_innocent = "Победа невиновных"
 
 L.hilite_players1 = "Игроков: {numplayers}. {numtraitors} из них были предателями."
