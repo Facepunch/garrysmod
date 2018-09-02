@@ -531,23 +531,8 @@ end
 -- Clientside only
 if ( SERVER ) then return end
 
---[[local flexes = {
-	"jaw_drop",
-	"left_part",
-	"right_part",
-	"left_mouth_drop",
-	"right_mouth_drop"
-}
-
-local flex_length = #flexes
-
-local function UpdateMouthFlexes( ply, weight )
-	for i = 1, flex_length do
-		ply:SetFlexWeight( ply:GetFlexIDByName( flexes[ i ] ), weight )
-	end
-end]]
-
--- Unroll the loop and localise repetative functions
+-- Skip a loop by calling SetFlexWeight for each flex manually
+-- Localise player functions to save on __index calls
 local function UpdateMouthFlexes( ply, weight )
 	local fSetFlexWeight = ply.SetFlexWeight
 	local fGetFlexIDByName = ply.GetFlexIDByName
