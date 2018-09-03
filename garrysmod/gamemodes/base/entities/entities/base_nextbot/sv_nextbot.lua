@@ -11,6 +11,9 @@ function ENT:BehaveStart()
 
 end
 
+function ENT:RunBehaviour()
+end
+
 --
 -- Name: NEXTBOT:BehaveUpdate
 -- Desc: Called to update the bot's behaviour
