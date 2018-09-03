@@ -57,7 +57,8 @@ function PANEL:AddSheet( label, panel, material )
 	if ( !IsValid( self.ActiveButton ) ) then
 		self:SetActiveButton( Sheet.Button )
 	end
-
+	
+	return Sheet
 end
 
 function PANEL:SetActiveButton( active )
