@@ -248,7 +248,7 @@ function PANEL:Init()
 		cam_pos:DockMargin( 0, 0, 0, 3 )
 		cam_pos:SetZPos( 102 )
 		cam_pos.OnChange = function( p, b )
-			self.ModelPanel:SetCamPos( Angle( cam_pos:GetText() ) )
+			self.ModelPanel:SetCamPos( Vector( cam_pos:GetText() ) )
 		end
 		self.TargetCamPosPanel = cam_pos
 
