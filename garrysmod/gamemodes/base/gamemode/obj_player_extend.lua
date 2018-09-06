@@ -174,16 +174,22 @@ end
 -----------------------------------------------------------]]
 function meta:GetEyeTrace()
 
-	-- Cache the trace results for the current frame, unless we're serverside
-	-- in which case it wouldn't play well with lag compensation at all
-	if ( CLIENT and self.LastPlayerTrace == CurTime() ) then
-		return self.PlayerTrace
+	if ( CLIENT ) then
+		local curtime = CurTime()
+
+		-- Cache the trace results for the current frame, unless we're serverside
+		-- in which case it wouldn't play well with lag compensation at all
+		if ( self.LastPlayerTrace == curtime ) then
+			return self.PlayerTrace
+		end
+
+		self.LastPlayerTrace = curtime
 	end
 
-	self.PlayerTrace = util.TraceLine( util.GetPlayerTrace( self ) )
-	self.LastPlayerTrace = CurTime()
-	
-	return self.PlayerTrace
+	local tr = util.TraceLine( util.GetPlayerTrace( self ) )
+	self.PlayerTrace = tr
+
+	return tr
 
 end
 
@@ -193,16 +199,19 @@ end
 -----------------------------------------------------------]]
 function meta:GetEyeTraceNoCursor()
 
-	if ( self:GetTable().LastPlayerAimTrace == CurTime() ) then
-		return self:GetTable().PlayerAimTrace
+	if ( CLIENT ) then
+		local curtime = CurTime()
+
+		if ( self.LastPlayerAimTrace == curtime ) then
+			return self.PlayerAimTrace
+		end
+
+		self.LastPlayertAimTrace = curtime
 	end
 
-	-- Use the players eye angles rather than their aim vector..
-	local fwd = self:EyeAngles():Forward()
+	local tr = util.TraceLine( util.GetPlayerTrace( self, self:EyeAngles():Forward() ) )
+	self.PlayerAimTrace = tr
 
-	self:GetTable().PlayerAimTrace = util.TraceLine( util.GetPlayerTrace( self, fwd ) )
-	self:GetTable().LastPlayertAimTrace = CurTime()
-	
-	return self:GetTable().PlayerAimTrace
+	return tr
 
 end
