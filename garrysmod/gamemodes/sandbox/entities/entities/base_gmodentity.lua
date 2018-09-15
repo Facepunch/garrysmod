@@ -69,12 +69,17 @@ end
 
 function ENT:SetPlayer( ply )
 
+	self.Founder = ply
+
 	if ( IsValid( ply ) ) then
 
-		self:SetVar( "Founder", ply )
-		self:SetVar( "FounderIndex", ply:UniqueID() )
-
 		self:SetNWString( "FounderName", ply:Nick() )
+		self.FounderIndex = ply:UniqueID()
+
+	else
+
+		self:SetNWString( "FounderName", "" )
+		self.FounderIndex = nil
 
 	end
 
