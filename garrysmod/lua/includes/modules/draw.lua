@@ -162,6 +162,18 @@ function DrawText( text, font, x, y, colour, xalign )
 end
 
 --[[---------------------------------------------------------
+	Name: Box( x, y, w, h, color )
+	Desc: Draws a box, yes, just a box
+	Usage: color is a table with r/g/b/a elements
+-----------------------------------------------------------]]
+function Box( x, y, w, h, color )
+
+	surface.SetDrawColor( color.r, color.g, color.b, color.a )
+	surface.DrawRect( x, y, w, h )
+
+end
+
+--[[---------------------------------------------------------
 	Name: RoundedBox( bordersize, x, y, w, h, color )
 	Desc: Draws a rounded box - ideally bordersize will be 8 or 16
 	Usage: color is a table with r/g/b/a elements
