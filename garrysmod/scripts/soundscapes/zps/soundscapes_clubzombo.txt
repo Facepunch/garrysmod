@@ -1,0 +1,158 @@
+
+
+//---------------------------------------
+//Music loop
+"clubzombo.mainfloor"
+{
+	"dsp"	"0"
+	"playlooping"
+	{
+	"volume"	"1"
+	"pitch"		"100"
+	"wave"		"zombo/zombo2.wav"
+	}
+}
+
+//Music loop
+"clubzombo.hallway"
+{
+	"dsp"	"0"
+	"playlooping"
+	{
+	"volume"	".5"
+	"pitch"		"100"
+	"wave"		"zombo/zombo2.wav"
+	}
+}
+
+//Music loop
+"clubzombo.bar"
+{
+	"dsp"	"0"
+	"playlooping"
+	{
+	"volume"	".5"
+	"pitch"		"100"
+	"wave"		"zombo/zombo2.wav"
+	}
+}
+
+//Music loop
+"clubzombo.readyroom"
+{
+	"dsp"	"0"
+	"playlooping"
+	{
+	"volume"	"1"
+	"pitch"		"100"
+	"wave"		"zombo/zombo_cutoff.wav"
+	}
+}
+
+//Music loop
+"clubzombo.outside"
+{
+	"dsp"	"0"
+	"playlooping"
+	{
+	"volume"	".8"
+	"pitch"		"100"
+	"wave"		"zombo/zombo_cutoff.wav"
+	}
+
+//Rain loop	
+	
+	"dsp"	"0"
+  	"playlooping"
+	{
+		"volume"	"1"
+		"pitch"		"100"
+		"wave"		"ambient/rain/rain_spatter-01.wav"
+	}
+//city
+
+	"dsp"	"0"
+	"playlooping"
+	{
+		"volume"	"1"
+		"wave"		"ambient/city/city1.wav"
+	}
+//Rain loop	
+	
+	"dsp"	"0"
+    	"playlooping"
+	{
+		"volume"	"1"
+		"pitch"		"100"
+		"wave"		"ambient/rain/heavy_rain-02.wav"
+	}
+
+//rain hits
+
+	"dsp"	"0"
+	"playlooping"
+
+	{
+		"volume"	"1"
+		"pitch"		"1"
+		"position"	"0,1,2,3"
+		"wave"		"ambient/rain/rain_metal_light.wav"
+	}
+//random stuff
+
+	"dsp"	"0"
+	"Playrandom"
+	{
+
+	"volume"	"0.04,0.5"
+	"time" 		"2,12"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/siren/distant_siren-01.wav"
+		"wave"	"ambient/siren/distant_siren-02.wav"
+		"wave"	"ambient/siren/distant_siren-03.wav"
+		"wave"	"ambient/siren/police_siren-01.wav"
+		"wave"	"ambient/explosions/battle_loop1.wav"
+		"wave"	"ambient/explosions/battle_loop2.wav"
+		}
+	}
+//more rain
+
+"Playrandom"
+	{
+		"volume"	"0.1,0.6"
+		"time" 		"0.5,3"
+		"pitch"		"80,110"
+		"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/water/rain_drip1.wav"
+		"wave"	"ambient/water/rain_drip2.wav"
+		"wave"	"ambient/water/rain_drip3.wav"
+		"wave"	"ambient/water/rain_drip4.wav"
+		}
+	}
+//Thunder strikes
+	
+	"playrandom"
+	{
+
+		"time"		"10,30"
+		"volume"	"1"
+		"pitch"		"95,105"
+
+		"rndwave"
+		{
+			"wav"	"Ambient/Thunder/Thunder_loud-02.wav"
+			"wav"	"Ambient/Thunder/Thunder_Medium-02.wav"
+			"wav"	"Ambient/Thunder/Thunder_Low-02.wav"
+		}
+	
+	}
+	
+	
+}
