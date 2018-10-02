@@ -1,0 +1,277 @@
+  /////////////////////////
+ //      HEY!		//
+/////////////////////////
+
+"warehouse"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"Playlooping"
+{
+	"wave"	"ambient/hums/hum-02.wav"
+	"volume""0.8"
+	}
+}
+////////////////////////////////////////////////////////////
+"yard"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"Playlooping"
+{
+
+	"volume""0.2"
+	"wave"	"ambient/city/inside_city1.wav"
+}
+"Playlooping"
+{
+
+	"volume""1"
+	"wave"	"ambient/birds/summerevening.wav"
+}
+"Playrandom"
+{
+
+	"volume"	"0.04,0.4"
+	"time" 		"0.2,5"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/creatures/flies1.wav"
+		"wave"	"ambient/creatures/flies2.wav"
+		"wave"	"ambient/creatures/flies3.wav"
+		"wave"	"ambient/creatures/flies4.wav"
+		"wave"	"ambient/creatures/flies5.wav"
+		}
+	}
+"Playrandom"
+{
+
+	"volume"	"0.1,0.5"
+	"time" 		"2,6"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/birds/mocking_bird1.wav"
+		"wave"	"ambient/birds/mocking_bird2.wav"
+		"wave"	"ambient/birds/mocking_bird3.wav"
+		"wave"	"ambient/birds/mocking_bird4.wav"
+		"wave"	"ambient/dog/dog_large_barking_one_hit_1.wav"
+		"wave"	"ambient/dog/dog_large_barking_one_hit_2.wav"
+		}
+	}
+"Playrandom"
+{
+
+	"volume"	"0.1,0.5"
+	"time" 		"2,6"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/birds/nightingale1.wav"
+		"wave"	"ambient/birds/nightingale2.wav"
+		"wave"	"ambient/birds/nightingale3.wav"
+		"wave"	"ambient/birds/nightingale4.wav"
+		"wave"	"ambient/birds/nightingale5.wav"
+		}
+	}
+}
+
+//////////////////////////////////////////////////////////////
+"staff"
+{
+	"dsp"		"9"
+	"dsp_volume"	"1"
+"Playlooping"
+{
+	"volume"	"1"
+	"position"	"0"
+	"wave"	"ambient/waterdripping/water_drip-01.wav"
+
+}
+"Playlooping"
+{
+	"wave"	"ambient/hums/hum-01.wav"
+	"volume""0.2"
+
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+"shop"
+{
+	"dsp"	"1"
+
+"playlooping"
+{
+	"volume"	"0.8"
+	"wave"	"ambient/hums/hum-01.wav"
+
+	}
+
+"Playrandom"
+{
+
+	"volume"	"0.1,0.4"
+	"time" 		"0.2,5"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/creatures/flies1.wav"
+		"wave"	"ambient/creatures/flies2.wav"
+		"wave"	"ambient/creatures/flies3.wav"
+		"wave"	"ambient/creatures/flies4.wav"
+		"wave"	"ambient/creatures/flies5.wav"
+		}
+	}
+"Playrandom"
+{
+
+	"volume"	"0.7"
+	"time" 		"14,33"
+	"pitch"		"100"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/fx/supermarket01.mp3"
+		"wave"	"ambient/fx/supermarket02.mp3"
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+"policebase"
+{
+	"dsp"	"1"
+
+"playlooping"
+{
+	"volume"	"0.8"
+	"wave"	"ambient/atmosphere/drone1lp.wav"
+
+}
+"Playlooping"
+{
+	"volume"	"1"
+	"position"	"random"
+	"wave"	"ambient/waterdripping/water_drip-01.wav"
+	}
+"Playlooping"
+{
+	"wave"	"ambient/machines/diesel_engine_idle1.wav"
+	"position" "0,1"
+	"volume"	"0.8"
+	"pitch"		"200"
+
+	}
+"Playrandom"
+{
+
+	"volume"	"0.6,1"
+	"time" 		"3,25"
+	"pitch"		"60,120"
+	"position"	"random"
+	"rndwave"
+	{
+		"wave"	"ambient/fx/shredding_synthhit.mp3"
+		"wave"	"ambient/fx/shredding_synthhit2.mp3"
+		"wave"	"ambient/fx/shredding_synthhit3.mp3"
+		"wave"	"ambient/fx/shredding_synthhit4.mp3"
+		"wave"	"ambient/fx/shredding_synthhit5.mp3"
+		"wave"	"ambient/fx/shredding_synthhit6.mp3"
+		"wave"	"ambient/fx/shredding_synthhit7.mp3"		
+		}
+	}
+}
+/////////////////////////////////////////////////////////////////
+
+"apartment"
+{
+	"dsp"	"1"
+
+"playlooping"
+{
+	"volume"	"0.8"
+	"wave"	"ambient/hums/hum-02.wav"
+
+}
+
+
+"Playrandom"
+{
+
+	"volume"	"1"
+	"time" 		"0.4,6"
+	"pitch"		"100"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/fx/metalscrape01.mp3"
+		"wave"	"ambient/fx/metalscrape02.mp3"
+		"wave"	"ambient/fx/metalscrape03.mp3"
+		"wave"	"ambient/fx/metalscrape04.mp3"
+		"wave"	"ambient/fx/metalscrape05.mp3"
+		"wave"	"ambient/fx/metalscrape06.mp3"
+		"wave"	"ambient/fx/metalscrape07.mp3"
+		
+		}
+	}
+"Playrandom"
+{
+
+	"volume"	"0.1,0.4"
+	"time" 		"0.2,8"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/creatures/rats1.wav"
+		"wave"	"ambient/creatures/rats2.wav"
+		"wave"	"ambient/creatures/rats3.wav"
+		"wave"	"ambient/creatures/rats4.wav"
+		
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+"nuke"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+	
+"Playrandom"
+{
+
+	"volume"	"0.1,0.8"
+	"time" 		"0.2,3"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/explosions/explode_1.wav"
+		"wave"	"ambient/explosions/explode_2.wav"
+		"wave"	"ambient/explosions/explode_3.wav"
+		"wave"	"ambient/explosions/explode_4.wav"
+		"wave"	"ambient/explosions/explode_5.wav"
+		"wave"	"ambient/explosions/explode_6.wav"
+		"wave"	"ambient/explosions/explode_7.wav"
+		"wave"	"ambient/explosions/explode_8.wav"
+		"wave"	"ambient/explosions/explode_9.wav"
+		
+		}
+	}
+}
