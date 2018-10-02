@@ -1,0 +1,116 @@
+"wellington_outside"
+{
+
+	"dsp"	"0"
+  	"playlooping"
+	{
+		"volume"	"0.3"
+		"pitch"		"100"
+		"wave"		"hometown\ukrain.wav"
+	}
+
+
+
+	"Playrandom"
+	{
+
+	"volume"	"0.3,0.4"
+	"time" 		"18,22"
+	"pitch"		"130,100"
+
+	"rndwave"
+	        {
+		"wave"		"hometown\ukwind.wav"
+		"wave"		"hometown\ukwindlowpitch.wav"
+		}
+	}
+
+
+
+	"playrandom"
+	{
+		"time"	"18, 24"
+		"volume"	"1"
+		"pitch"	"100, 80"
+
+		"rndwave"
+		{
+			"wave"	"hometown\ukthunder1.mp3"
+			"wave"	"hometown\ukthunder2.mp3"
+		}
+	}
+}
+
+
+
+
+
+
+
+
+"wellington_generic"
+{
+	"dsp"	"0"
+
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"wave"		"ambient/atmosphere/Drone2LP.wav"
+		"pitch"		"100"
+	}
+
+
+	"playrandom"
+	{
+		"time"	"1, 5"
+		"volume"	"0.5"
+		"pitch"	"80,120"
+		"position"	"random"
+
+		"rndwave"
+		{
+			"wave"	"ambient\materials\creak5.wav"
+			"wave"	"ambient\atmosphere\cave_hit1.wav"
+			"wave"	"ambient\atmosphere\cave_hit2.wav"
+			"wave"	"ambient\atmosphere\cave_hit3.wav"
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+"wellington_pool"
+{
+
+	"dsp"	"0"
+
+	"playlooping"
+	{
+		"volume"	"0.2"
+		"wave"		"hometown/uklakewater.wav"
+		"pitch"		"100"
+	}
+
+
+	"playrandom"
+	{
+		"time"	"1, 5"
+		"volume"	"0.5"
+		"pitch"	"80,120"
+		"position"	"random"
+
+		"rndwave"
+		{
+			"wave"	"ambient\atmosphere\cave_hit1.wav"
+			"wave"	"ambient\atmosphere\cave_hit2.wav"
+			"wave"	"ambient\atmosphere\cave_hit3.wav"
+		}
+	}
+}
