@@ -1,0 +1,209 @@
+  /////////////////////////
+ //      HEY!		//
+/////////////////////////
+
+"outside"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"Playlooping"
+{
+	"wave"	"ambient/levels/canals/swamp_frogs_loop2.wav"
+	"volume""0.5"
+	}
+"Playrandom"
+{
+
+	"volume"	"0.04,0.4"
+	"time" 		"0.2,5"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/creatures/flies1.wav"
+		"wave"	"ambient/creatures/flies2.wav"
+		"wave"	"ambient/creatures/flies3.wav"
+		"wave"	"ambient/creatures/flies4.wav"
+		"wave"	"ambient/creatures/flies5.wav"
+		}
+	}
+"Playrandom"
+{
+
+	"volume"	"0.1,0.5"
+	"time" 		"2,6"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/levels/canals/swamp_bird1.wav"
+		"wave"	"ambient/levels/canals/swamp_bird2.wav"
+		"wave"	"ambient/levels/canals/swamp_bird3.wav"
+		"wave"	"ambient/levels/canals/swamp_bird4.wav"
+		"wave"	"ambient/levels/canals/swamp_bird5.wav"
+		"wave"	"ambient/levels/canals/swamp_bird6.wav"
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////
+"cap"
+{
+	"dsp"		"1"
+	"dsp_volume"	"1"
+
+"Playlooping"
+{
+	"wave"	"ambient/levels/canals/swamp_frogs_loop2.wav"
+	"volume""0.2"
+	}
+"Playrandom"
+{
+
+	"volume"	"0.04,0.4"
+	"time" 		"0.2,5"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/creatures/flies1.wav"
+		"wave"	"ambient/creatures/flies2.wav"
+		"wave"	"ambient/creatures/flies3.wav"
+		"wave"	"ambient/creatures/flies4.wav"
+		"wave"	"ambient/creatures/flies5.wav"
+		}
+	}
+"Playrandom"
+{
+
+	"volume"	"0.02,0.1"
+	"time" 		"2,6"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/levels/canals/swamp_bird1.wav"
+		"wave"	"ambient/levels/canals/swamp_bird2.wav"
+		"wave"	"ambient/levels/canals/swamp_bird3.wav"
+		"wave"	"ambient/levels/canals/swamp_bird4.wav"
+		"wave"	"ambient/levels/canals/swamp_bird5.wav"
+		"wave"	"ambient/levels/canals/swamp_bird6.wav"
+		}
+	}
+}
+//////////////////////////////////////////////////////////////
+"office"
+{
+	"dsp"		"9"
+	"dsp_volume"	"1"
+"Playlooping"
+{
+	"wave"	"ambient/levels/canals/swamp_frogs_loop2.wav"
+	"volume""0.1"
+	}
+"Playlooping"
+{
+	"wave"	"ambient/music/hellhound.wav"
+	"volume""1"
+	"position" "0"
+	}
+"Playrandom"
+{
+
+	"volume"	"0.04,0.4"
+	"time" 		"0.2,5"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/creatures/flies1.wav"
+		"wave"	"ambient/creatures/flies2.wav"
+		"wave"	"ambient/creatures/flies3.wav"
+		"wave"	"ambient/creatures/flies4.wav"
+		"wave"	"ambient/creatures/flies5.wav"
+		}
+	}
+"Playrandom"
+{
+
+	"volume"	"0.02,0.1"
+	"time" 		"2,6"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/levels/canals/swamp_bird1.wav"
+		"wave"	"ambient/levels/canals/swamp_bird2.wav"
+		"wave"	"ambient/levels/canals/swamp_bird3.wav"
+		"wave"	"ambient/levels/canals/swamp_bird4.wav"
+		"wave"	"ambient/levels/canals/swamp_bird5.wav"
+		"wave"	"ambient/levels/canals/swamp_bird6.wav"
+		}
+	}
+"Playlooping"
+{
+	"wave"	"ambient/hums/hum-01.wav"
+	"volume""0.2"
+
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+"dry"
+{
+	"dsp"	"1"
+
+"Playlooping"
+{
+	"wave"	"ambient/levels/canals/swamp_frogs_loop2.wav"
+	"volume""0.2"
+	}
+"Playlooping"
+{
+	"wave"	"ambient/music/standby.wav"
+	"volume""1"
+	"position" "0"
+	}
+"Playrandom"
+{
+
+	"volume"	"0.04,0.4"
+	"time" 		"0.2,5"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/creatures/flies1.wav"
+		"wave"	"ambient/creatures/flies2.wav"
+		"wave"	"ambient/creatures/flies3.wav"
+		"wave"	"ambient/creatures/flies4.wav"
+		"wave"	"ambient/creatures/flies5.wav"
+		}
+	}
+"Playrandom"
+{
+
+	"volume"	"0.01,0.2"
+	"time" 		"2,6"
+	"pitch"		"80,110"
+	"position"	"random"
+	
+	"rndwave"
+	{
+		"wave"	"ambient/levels/canals/swamp_bird1.wav"
+		"wave"	"ambient/levels/canals/swamp_bird2.wav"
+		"wave"	"ambient/levels/canals/swamp_bird3.wav"
+		"wave"	"ambient/levels/canals/swamp_bird4.wav"
+		"wave"	"ambient/levels/canals/swamp_bird5.wav"
+		"wave"	"ambient/levels/canals/swamp_bird6.wav"
+		}
+	}
+}
