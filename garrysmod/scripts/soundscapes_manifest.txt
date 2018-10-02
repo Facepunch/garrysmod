@@ -127,7 +127,7 @@ soundscapes_manifest
 	"file"		"scripts/soundscapes/zps/soundscapes_zpo_murksville.txt"
 	"file"		"scripts/soundscapes/zps/soundscapes_zpo_shreddingfield.txt"
 	"file"		"scripts/soundscapes/zps/soundscapes_zpo_zomboeing.txt"
-	"file"		"scripts/soundscapes/zps/soundscapes_zpo_deathtrain.txt"
+	"file"		"scripts/soundscapes/zps/soundscapes_zps_deathtrain.txt"
 	"file"		"scripts/soundscapes/zps/soundscapes_zps_ruralpanic.txt"
 	"file"		"scripts/soundscapes/zps/soundscapes_zps_silence.txt"
 	"file"		"scripts/soundscapes/zps/soundscapes_zps_thrillvile.txt"
