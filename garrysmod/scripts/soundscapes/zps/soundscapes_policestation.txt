@@ -1,0 +1,91 @@
+//Haunted soundScape
+//By Knights
+
+
+
+//--------------------------------------------------------------------------------------------
+//First Sound
+//--------------------------------------------------------------------------------------------
+
+"zp_lobbysong" 
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/city/inside_city1.wav"
+	}
+
+	"playrandom"
+	{
+		"time"		"20,40"
+		"volume"	"0.05,0.15"
+		"pitch"		"95,105"
+
+		"rndwave"
+		{
+			"wav"	"Ambient/Siren/Distant_Siren-02.wav"
+			"WAV"	"Ambient/DistantGunfire/Distant_Battle-01.WAV"
+			"wav"	"Ambient/Siren/Distant_Siren-03.wav"
+			}
+
+	
+	}
+	
+}
+
+
+"zp_cityambience" 
+{
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"100"
+		"wave"		"ambient/city/city1.wav"
+	}
+
+	"playrandom"
+	{
+		"time"		"20,40"
+		"volume"	"0.05,0.15"
+		"pitch"		"95,105"
+
+		"rndwave"
+		{
+			"wav"	"Ambient/Siren/Distant_Siren-02.wav"
+			"wav"	"Ambient/Siren/Distant_Siren-03.wav"
+			"wav"	"Ambient/DistantGunfire/Distant_Battle-01.wav"
+			}
+
+	
+	}
+	
+}
+
+
+
+"zp_cityinsideambience" 
+{ 
+"dsp" "1" 
+"playlooping" 
+{ 
+"volume" "5" 
+"pitch" "100" 
+"wave" "ambient/rain/rain_roof-03.wav" 
+} 
+
+"playlooping" 
+{ 
+"volume" "5" 
+"pitch" "100" 
+"wave" "ambient/wind/inside_wind_hall-01.wav" 
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+//Next Sound
+//--------------------------------------------------------------------------------------------
