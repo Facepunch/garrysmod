@@ -1,0 +1,110 @@
+// Frozenheart Soundscapes
+
+"Plaza.Inside"
+{
+
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	".5"
+		"pitch"		"100"
+		"wave"		"ambient/wind/inside_wind_hall-01.wav"
+	}
+}
+
+"Plaza.Offices"
+{
+
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	".15"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/indoor2.wav"
+	}
+	
+	"playlooping"
+	{
+	  "volume"  ".2"
+	  "pitch" "100"
+	  "position" "0"
+	  "wave"    "ambient/atmosphere/drone1lp.wav"
+	}
+}
+
+"Plaza.Garage"
+{
+
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	".2"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/cargo_hold2.wav"
+	}
+	
+		"playlooping"
+	{
+		"volume"	".1"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_howling-01.wav"
+	}
+	
+		"playlooping"
+	{
+		"volume"	".25"
+		"pitch"		"100"
+		"position" "0"
+		"wave"		"ambient/atmosphere/engine_room.wav"
+	}
+}
+
+"Frozenheart.Highway"
+{
+
+	"dsp"	"1"
+
+	"playlooping"
+	{
+		"volume"	".3"
+		"pitch"		"100"
+		"wave"		"ambient/wind/outside_wind-04.wav"
+	}
+	
+	"playlooping"
+	{
+		"volume"	".2"
+		"pitch"		"100"
+		"wave"		"ambient/wind/wind_cold-01.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"	".4"
+		"pitch"		"100"
+		"wave"		"ambient/atmosphere/town_ambience.wav"
+	}
+
+	"playlooping"
+	{
+		"volume"	".1"
+		"pitch"		"100"
+		"wave"		"ambient/machines/diesel_engine_idle1.wav"
+		"position" "0"
+	}
+	
+  "playrandom"
+  {
+  	"time"		"20,45"
+  	"volume"	"0.3,0.4"
+  	"pitch"		"50,120"
+  	"rndwave"
+    {
+    	"wave"	"ambient/wind/windgust_strong.wav"
+    	"wave"	"ambient/wind/windgust.wav"
+   	}
+	}
+}
