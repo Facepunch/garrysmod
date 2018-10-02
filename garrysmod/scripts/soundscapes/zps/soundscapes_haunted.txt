@@ -1,0 +1,399 @@
+//Haunted soundScape
+//By Knights
+//Updated by dR.Vodker
+
+
+
+//--------------------------------------------------------------------------------------------
+//First Sound
+//--------------------------------------------------------------------------------------------
+
+
+"ZP.Haunted_OutsideAmbience" 
+{
+	"dsp"	"1"
+	"dsp_volume"	"1.15"
+
+	"playlooping"
+	{
+		"volume"	"1"
+		"pitch"		"100"
+		"wave"		"ambient/wind/outside_wind-03.wav"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"pitch"		"105"
+		"wave"		"ambient/atmosphere/drone4lp.wav"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.1"
+		"pitch"		"95"
+		"wave"		"ambient/crickets/crickets-01.wav"
+	}
+	
+	"playrandom"
+	{
+		"time"		"20,40"
+		"volume"	"1,0.25"
+		"pitch"		"95,105"
+
+		"rndwave"
+		{
+			"wave"	"ambient/owl/owl-03.wav"
+			"wave"	"ambient/levels/canals/swamp_bird4.wav"
+			"wave"	"ambient/levels/canals/swamp_bird1.wav"
+			"wave"	"ambient/thunder/thunder_low-04.wav"
+			"wave"	"ambient/thunder/thunder_low-02.wav"
+			"wave"	"ambient/levels/coast/coastbird6.wav"
+			"wave"	"ambient/levels/coast/coastbird7.wav"
+			"wave"  "ambient/levels/canals/swamp_bird1.wav"
+		}
+	}
+}
+
+
+"ZP.Haunted_OutsideCrickets" 
+{
+	"dsp"	"1"
+	"dsp_volume"	"1.15"
+
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"95"	
+		
+		"wave"		"ambient/crickets/crickets-02.wav"
+	}
+	
+	"playlooping"
+	{
+		"volume"	"0.85"
+		"pitch"		"105"	
+		
+		"wave"		"ambient/crickets/crickets-03.wav"
+	}
+	
+
+	
+	"playsoundscape"
+	{
+	
+	"name" "ZP.Haunted_OutsideAmbience"
+	
+	}
+}
+
+
+"ZP.Haunted_OutsideLake" 
+{
+	"dsp"	"1"
+	"dsp_volume"	"1.15"
+
+	"playlooping"
+	{
+		"volume"	"0.5"
+		"pitch"		"110"	
+		
+		"wave"		"ambient/water/lake_water.wav"
+
+	}
+	
+	"playsoundscape"
+	{
+	
+		"name" "ZP.Haunted_OutsideAmbience"
+	
+	}
+}
+
+
+"ZP.Haunted_InsideAmbience" 
+{ 
+	"dsp" "9" 
+	"dsp_volume"	"1.15"
+	
+	"playlooping" 
+	{ 
+		"volume" "0.75" 
+		"pitch" "50" 
+		
+		"wave" "ambient/wind/inside_wind_hall-01.wav" 
+	} 
+	
+	"playlooping" 
+	{ 
+		"volume" "0.25" 
+		"pitch" "90" 
+		
+		"wave" "ambient/atmosphere/cave_outdoor1.wav" 
+	} 
+	
+	"playlooping" 
+	{ 
+		"volume" "0.15" 
+		"pitch" "105" 
+		
+		"wave" "ambient/hums/hum-02.wav" 
+	} 
+
+	"playrandom"
+	{
+		"time"		"15,35"
+		"volume"	"0.65,0.25"
+		"pitch"		"85,110"
+
+		"rndwave"
+		{
+			"wave"	"ambient/materials/creaking.wav"
+			"wave"	"ambient/materials/wood_creak4.wav"
+			"wave"	"npc/strider/creak2.wav"
+			"wave"	"ambient/materials/wood_creak6.wav"
+			"wave"	"ambient/voices/playground_memory.wav"
+			"wave"	"ambient/materials/cupdrop.wav"	
+			"wave"  "ambient/materials/platedrop1.wav"	
+			"wave"  "ambient/materials/door_hit1.wav"	
+			"wave"	"ambient/atmosphere/cave_hit6.wav"
+			"wave"	"ambient/atmosphere/hole_hit1.wav"
+			"wave"	"ambient/creatures/flies1.wav"
+			"wave"	"ambient/creatures/flies4.wav"
+			"wave"	"ambient/creatures/rats2.wav"
+			"wave"	"ambient/creatures/rats4.wav"
+			"wave"	"ambient/creatures/teddy.wav"
+			"wave"	"ambient/levels/canals/toxic_slime_gurgle2.wav"
+			"wave"	"ambient/levels/canals/toxic_slime_gurgle8.wav"
+			"wave"	"ambient/machines/thumper_hit.wav"
+			"wave"	"ambient/materials/bump1.wav"
+			"wave"	"ambient/materials/cartrap_rope3.wav"
+			"wave"	"ambient/materials/clang1.wav"
+			"wave"	"ambient/materials/flush1.wav"
+			"wave"	"ambient/materials/footsteps_stairs1.wav"
+			"wave"	"ambient/materials/footsteps_wood2.wav"
+			"wave"	"ambient/materials/footsteps_wood1.wav"
+			"wave"	"ambient/materials/platedrop2.wav"
+			"wave"	"ambient/materials/roust_crash1.wav"
+			"wave"	"ambient/materials/roust_crash2.wav"
+			"wave"	"ambient/materials/shuffle1.wav"
+			"wave"	"ambient/materials/squeekyfloor1.wav"
+			"wave"	"ambient/materials/squeekyfloor2.wav"
+		}
+	}
+	
+	"playrandom"
+	{
+		"time"		"45,60"
+		"volume"	"0.15,0.075"
+		"pitch"		"50,85"
+
+		"rndwave"
+		{
+			"wave"	"ambient/levels/citadel/citadel_flyer1.wav"
+			"wave"	"ambient/levels/labs/teleport_winddown1.wav"
+			"wave"	"ambient/atmosphere/city_skybeam1.wav"
+			"wave"	"ambient/atmosphere/city_skypass1.wav"
+			"wave"	"ambient/atmosphere/metallic1.wav"
+			"wave"	"ambient/atmosphere/thunder4.wav"
+			"wave"	"ambient/levels/citadel/citadel_ambient_voices1.wav"
+			"wave" 	"ambient/voices/playground_memory.wav"
+		}
+	}
+}
+
+
+"ZP.Haunted_InsidePitFire" 
+{
+	"dsp"			 "9" 
+	"dsp_volume"	"1.15"
+
+	"playlooping"
+	{
+		"volume"		"0.3"
+		"pitch"			"95"	
+		
+		"soundlevel"	"SNDLVL_75dB"
+		
+		"position"		"0"
+		
+		"wave"			"ambient/fire/fire_small_loop2.wav"
+
+	}
+	
+	"playsoundscape"
+	{
+	
+	"name" "ZP.Haunted_InsideAmbience"
+	
+	}
+}
+
+"ZP.Haunted_InsideDiesel" 
+{
+	"dsp" "9" 
+	"dsp_volume"	"1.15"
+
+	"playlooping"
+	{
+		"volume"		"0.65"
+		"pitch"			"115"	
+		
+		"soundlevel"	"SNDLVL_60dB"
+		
+		"position"		"0"
+		
+		"wave"			"ambient/machines/diesel_engine_idle1.wav"
+
+	}
+	
+	"playsoundscape"
+	{
+	
+	"name" "ZP.Haunted_InsideAmbience"
+	
+	}
+}
+
+"ZP.Haunted_InsideFishermanHouse" 
+{ 
+	"dsp"			"9" 
+	"dsp_volume"	"1.15"
+	
+	"playlooping" 
+	{ 
+		"volume" "0.75" 
+		"pitch" "50" 
+		
+		"wave"		"ambient/wind/inside_wind_hall-01.wav" 
+	} 
+	
+	"playlooping" 
+	{ 
+		"volume" "0.075" 
+		"pitch" "95" 
+		
+		"wave"		"ambient/atmosphere/cave_outdoor1.wav" 
+	} 
+	
+	"playlooping" 
+	{ 
+		"volume"	"0.1" 
+		"pitch"		"105" 
+		
+		"wave"		"ambient/hums/hum-02.wav" 
+	} 
+}
+
+"ZP.Haunted_Ready"
+{
+	"dsp"			"20"
+	"dsp_volume"	"1.15"
+	
+//	"playsoundscape"
+//	{ 
+//		"name"		"ZP.Haunted_OutsideAmbience"
+//		"volume"	"1"
+//	} 
+	
+	"playlooping"
+	{
+		"volume"		"0.75"
+		"pitch"			"125,100,75,50,150"
+		
+		"soundlevel"	"SNDLVL_70dB"
+		
+		"wave"			"custom/env_drone01.wav"
+		"position"		"0"
+	}
+}
+
+"ZP.Haunted_TheRoom"
+{
+	"dsp"			"11"
+	"dsp_volume"	"1.25"
+
+	
+	"playlooping"
+	{
+		"volume"		"0.45"
+		"pitch"			"95"
+		
+		"wave"			"ambient/levels/citadel/citadel_drone_loop5.wav"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.0075"
+		"pitch"			"95"
+		
+		"wave"			"ambient/levels/citadel/citadel_ambient_scream_loop1.wav"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.05"
+		"pitch"			"75"
+		
+		"wave"			"ambient/levels/citadel/citadel_ambient_voices1.wav"
+	}
+	
+	"playlooping"
+	{
+		"volume"		"0.5"
+		"pitch"			"75"
+		
+		"wave"		"ambient/atmosphere/ambience6.wav"
+	}
+}
+
+
+//--------------------------------------------------------------------------------------------
+//Next Sound
+//--------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------
+
+// These are the info_target calls down below
+
+//position 0 - top entrance
+//position 1 - terrain
+//position 2 - bottom entrance
+
+//{
+	
+//	"playlooping"
+//	{
+//		"wave"		"ambient/atmosphere/cave_outdoor1.wav"
+//		"volume"	".6"
+//		"pitch"		"100"		
+//	}
+
+//	"dsp" "24"
+
+//	"playrandom"
+//	{
+//		"position"	"1"
+//		"time"		"10,40"
+//		"volume"	".3"
+//		"pitch"		"100"
+
+//		"rndwave"
+//		{
+//			"wave"	"ambient/atmosphere/terrain_rumble1.wav"
+//		}
+//	}
+
+//	"playsoundscape"
+//	{
+//		"position"	"0"
+//		"name"		"ambient/atmosphere/terrain_rumble1.wav"
+//		"volume"	".3"
+//	}
+
+//	"playsoundscape"
+//	{
+//		"position"	"2"
+//		"name"		"ge_caves.wetroom"
+//		"volume"	".3"
+//	}
+//}
