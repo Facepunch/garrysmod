@@ -171,7 +171,7 @@ function PANEL:Think()
 
 	end
 
-	local screenX, screenY = self:LocalToScreen(0, 0)
+	local screenX, screenY = self:LocalToScreen( 0, 0 )
 
 	if ( self.Hovered && self.m_bSizable && mousex > ( screenX + self:GetWide() - 20 ) && mousey > ( screenY + self:GetTall() - 20 ) ) then
 
@@ -207,7 +207,7 @@ end
 
 function PANEL:OnMousePressed()
 
-	local screenX, screenY = self:LocalToScreen(0, 0)
+	local screenX, screenY = self:LocalToScreen( 0, 0 )
 
 	if ( self.m_bSizable && gui.MouseX() > ( screenX + self:GetWide() - 20 ) && gui.MouseY() > ( screenY + self:GetTall() - 20 ) ) then
 		self.Sizing = { gui.MouseX() - self:GetWide(), gui.MouseY() - self:GetTall() }
@@ -215,7 +215,7 @@ function PANEL:OnMousePressed()
 		return
 	end
 
-	if ( self:GetDraggable() && gui.MouseY() < (screenY + 24) ) then
+	if ( self:GetDraggable() && gui.MouseY() < ( screenY + 24 ) ) then
 		self.Dragging = { gui.MouseX() - self.x, gui.MouseY() - self.y }
 		self:MouseCapture( true )
 		return
