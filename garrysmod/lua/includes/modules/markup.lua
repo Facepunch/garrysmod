@@ -232,6 +232,15 @@ function MarkupObject:Draw( xOffset, yOffset, halign, valign, alphaoverride )
 end
 
 --[[---------------------------------------------------------
+	Name: Escape(str)
+	Desc: Converts a string to its escaped, markup-unparseable, safe equivalent
+	Usage: markup.Escape("<font=Default>The font will not change & these < > & symbols will also appear</font>")
+-----------------------------------------------------------]]
+function Escape( str )
+	return (str:gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"))
+end
+
+--[[---------------------------------------------------------
 	Name: Parse(ml, maxwidth)
 	Desc: Parses the pseudo-html markup language, and creates a
 		  MarkupObject, which can be used to the draw the
