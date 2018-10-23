@@ -105,7 +105,7 @@ function CanBeTargeted( ent, ply )
 		if ( ent:GetPos():Distance( ply:GetShootPos() ) > maxRange + 1024 ) then return false end
 	end
 
-	return !( ent:GetPhysicsObjectCount() < 1 && bit.band( ent:GetSolidFlags(), FSOLID_USE_TRIGGER_BOUNDS ) == 0 && bit.band( ent:GetSolidFlags(), FSOLID_CUSTOMRAYTEST ) == 0 )
+	return !( ent:GetPhysicsObjectCount() < 1 && ent:GetSolid() == SOLID_NONE && bit.band( ent:GetSolidFlags(), FSOLID_USE_TRIGGER_BOUNDS ) == 0 && bit.band( ent:GetSolidFlags(), FSOLID_CUSTOMRAYTEST ) == 0 )
 end
 
 function GetHovered( eyepos, eyevec )

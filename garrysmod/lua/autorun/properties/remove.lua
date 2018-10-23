@@ -33,7 +33,7 @@ properties.Add( "remove", {
 		-- Don't allow removal of players or objects that cannot be physically targeted by properties
 		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
 		if ( !self:Filter( ent, ply ) ) then return end
-print(ent)
+
 		-- Remove all constraints (this stops ropes from hanging around)
 		constraint.RemoveAll( ent )
 
