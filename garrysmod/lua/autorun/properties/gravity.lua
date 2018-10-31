@@ -32,15 +32,16 @@ properties.Add( "gravity", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		local bones = ent:GetPhysicsObjectCount()
 		local b = ent:GetNWBool( "gravity_disabled" );
 
-		for  i=0, bones-1 do
+		for i = 0, bones-1 do
 
 			local phys = ent:GetPhysicsObjectNum( i )
 			if ( IsValid( phys ) ) then

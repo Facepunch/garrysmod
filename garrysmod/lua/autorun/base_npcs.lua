@@ -488,4 +488,7 @@ AddNPC( { Name = "Ichthyosaur", Class = "monster_ichthyosaur", Category = Catego
 AddNPC( { Name = "Leech", Class = "monster_leech", Category = Category, NoDrop = true, InWater = true, Offset = 64 } )
 AddNPC( { Name = "Flyer", Class = "monster_flyer", Category = Category, Offset = function() return math.random( 100, 500 ) end, NoDrop = true } )
 AddNPC( { Name = "Flyer Squad", Class = "monster_flyer_flock", Category = Category, Offset = function() return math.random( 100, 500 ) end, NoDrop = true,
-	KeyValues = { iFlockSize = function() return math.random( 3, 7 ) end, flFlockRadius = 64 } } )]]
+	KeyValues = { iFlockSize = function() return math.random( 3, 7 ) end, flFlockRadius = 64 } } )
+AddNPC( { Name = "Heavy Turret", Class = "monster_turret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
+AddNPC( { Name = "Mini Turret", Class = "monster_miniturret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
+AddNPC( { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = 0, OnFloor = true, SpawnFlags = 32 } )

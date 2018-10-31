@@ -42,6 +42,20 @@ if ( !sql.TableExists( "playerpdata" ) ) then
 end
 
 -- These are totally in the wrong place.
+function player.GetByAccountID( ID )
+
+	for _, pl in pairs( player.GetAll() ) do
+
+		if ( pl:AccountID() == ID ) then
+			return pl
+		end
+
+	end
+
+	return false
+
+end
+
 function player.GetByUniqueID( ID )
 
 	for _, pl in pairs( player.GetAll() ) do
