@@ -72,6 +72,10 @@ function PANEL:PerformLayout()
 
 end
 
+function PANEL:OnSizeChanged( newW, newH )
+	self.Icon:SetSize( newW, newH )
+end
+
 function PANEL:SetSpawnIcon( name )
 	self.m_strIconName = name
 	self.Icon:SetSpawnIcon( name )
