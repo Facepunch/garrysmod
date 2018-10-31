@@ -483,8 +483,8 @@ if ( IsMounted( "hl1" ) ) then
 	AddNPC( { Name = "Controller", Class = "monster_alien_controller", Category = Category } )
 	AddNPC( { Name = "Security Officer", Class = "monster_barney", Category = Category } )
 
-	--AddNPC( { Name = "Turret", Class = "monster_turret", Category = Category } )
-	--AddNPC( { Name = "Mini Turret", Class = "monster_miniturret", Category = Category } )
-	--AddNPC( { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = -20, OnFloor = true } )
+	AddNPC( { Name = "Heavy Turret", Class = "monster_turret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
+	AddNPC( { Name = "Mini Turret", Class = "monster_miniturret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
+	AddNPC( { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = 0, OnFloor = true, SpawnFlags = 32 } )
 
 end
