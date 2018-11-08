@@ -4,8 +4,7 @@
 	Desc: Distance between two 2d points
 ------------------------------------------------------------]]
 function math.Distance( x1, y1, x2, y2 )
-	local xd = x2 - x1
-	local yd = y2 - y1
+	local xd, yd = (x2 - x1), (y2 - y1)
 	return math.sqrt( xd * xd + yd * yd )
 end
 math.Dist = math.Distance -- Backwards compatibility
@@ -28,8 +27,7 @@ local intbin = {
 }
 
 function math.IntToBin( int )
-	local str = string.gsub( string.format( "%o", int ), "(.)", function ( d ) return intbin[ d ] end )
-	return str
+	return string.gsub( string.format( "%o", int ), "(.)", function ( d ) return intbin[ d ] end )
 end
 
 --[[---------------------------------------------------------
@@ -37,8 +35,8 @@ end
 	Desc: Clamp value between 2 values
 ------------------------------------------------------------]]
 function math.Clamp( _in, low, high )
-	if ( _in < low ) then return low end
-	if ( _in > high ) then return high end
+	if ( low and _in < low ) then return low end
+	if ( high and _in > high ) then return high end
 	return _in
 end
 
