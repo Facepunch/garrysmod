@@ -263,22 +263,16 @@ function meta:Freeze( b )
 end
 
 --[[---------------------------------------------------------
-	GodEnable
-	Enables godmode on the player
+	God
+	Toggles godmode on the player
 -----------------------------------------------------------]]
-function meta:GodEnable()
+function meta:God( b )
 
-	self:AddFlags( FL_GODMODE )
-
-end
-
---[[---------------------------------------------------------
-	GodDisable
-	Disables godmode on the player
------------------------------------------------------------]]
-function meta:GodDisable()
-
-	self:RemoveFlags( FL_GODMODE )
+	if( b ) then
+		self:AddFlags( FL_GODMODE )		
+	else
+		self:RemoveFlags( FL_GODMODE )	
+	end
 
 end
 
