@@ -246,7 +246,9 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
 	ctrl:AddChoice( "Some Choice" )
-	ctrl:AddChoice( "Another Choice" )
+	ctrl:AddChoice( "Another Choice", "myData" )
+	ctrl:AddChoice( "Default Choice", "myData2", true )
+	ctrl:AddChoice( "Icon Choice", "myData3", false, "icon16/star.png" )
 	ctrl:SetWide( 150 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )

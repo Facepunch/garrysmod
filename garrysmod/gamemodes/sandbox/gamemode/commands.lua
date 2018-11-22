@@ -45,7 +45,7 @@ function CCSpawn( ply, command, arguments )
 end
 concommand.Add( "gm_spawn", CCSpawn, nil, "Spawns props/ragdolls" )
 
-local function MakeRagdoll( ply, model, Data )
+local function MakeRagdoll( ply, _, _, model, _, Data )
 
 	if ( !gamemode.Call( "PlayerSpawnRagdoll", ply, model ) ) then return end
 
@@ -68,7 +68,7 @@ local function MakeRagdoll( ply, model, Data )
 end
 
 -- Register the "prop_ragdoll" class with the duplicator, (Args in brackets will be retreived for every bone)
-duplicator.RegisterEntityClass( "prop_ragdoll", MakeRagdoll, "Model", "Data" )
+duplicator.RegisterEntityClass( "prop_ragdoll", MakeRagdoll, "Pos", "Ang", "Model", "PhysicsObjects", "Data" )
 
 --[[---------------------------------------------------------
 	Name: GMODSpawnRagdoll - player spawns a ragdoll
@@ -93,7 +93,12 @@ function GMODSpawnRagdoll( ply, model, iSkin, strBody )
 
 end
 
-function MakeProp( ply, model, Data )
+function MakeProp( ply, Pos, Ang, model, _, Data )
+
+	-- Uck.
+	Data.Pos = Pos
+	Data.Angle = Ang
+	Data.Model = model
 
 	-- Make sure this is allowed
 	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnProp", ply, model ) ) then return end
@@ -117,8 +122,8 @@ function MakeProp( ply, model, Data )
 
 end
 
-duplicator.RegisterEntityClass( "prop_physics", MakeProp, "Model", "Data" )
-duplicator.RegisterEntityClass( "prop_physics_multiplayer", MakeProp, "Model", "Data" )
+duplicator.RegisterEntityClass( "prop_physics", MakeProp, "Pos", "Ang", "Model", "PhysicsObjects", "Data" )
+duplicator.RegisterEntityClass( "prop_physics_multiplayer", MakeProp, "Pos", "Ang", "Model", "PhysicsObjects", "Data" )
 
 function MakeEffect( ply, Data )
 

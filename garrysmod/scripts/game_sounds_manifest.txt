@@ -9,7 +9,6 @@ game_sounds_manifest
 	"precache_file"		"scripts/sounds/hl2_game_sounds_ambient_generic.txt"
 	"precache_file"		"scripts/sounds/hl2_game_sounds_header.txt"
 	"precache_file"		"scripts/sounds/hl2_game_sounds_items.txt"
-	"precache_file"		"scripts/sounds/hl2_game_sounds_manifest.txt"
 	"precache_file"		"scripts/sounds/hl2_game_sounds_physics.txt"
 	"precache_file"		"scripts/sounds/hl2_game_sounds_player.txt"
 	"precache_file"		"scripts/sounds/hl2_game_sounds_ui.txt"
