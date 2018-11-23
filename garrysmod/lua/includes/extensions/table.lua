@@ -57,10 +57,7 @@ end
 	Desc: Returns whether a table has iterable items in it, useful for non-sequential tables
 -----------------------------------------------------------]]
 function table.IsEmpty( tab )
-	for k, v in pairs( tab ) do
-		return false
-	end
-	return true
+	return next( tab ) == nil
 end
 
 --[[---------------------------------------------------------
