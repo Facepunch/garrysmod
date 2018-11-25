@@ -25,7 +25,7 @@ SWEP.UseHands               = true
 SWEP.ViewModel              = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.WorldModel             = "models/weapons/w_knife_t.mdl"
 
-SWEP.Primary.Damage         = 50
+SWEP.Primary.Damage         = 200 --default 50
 SWEP.Primary.ClipSize       = -1
 SWEP.Primary.DefaultClip    = -1
 SWEP.Primary.Automatic      = true

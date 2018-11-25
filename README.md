@@ -1,6 +1,7 @@
-Garry's Mod
+Nick Cagematch TTT
 =========
 
+<<<<<<< HEAD
 This repo consists of all Lua, text, and config extensions for Garry's Mod. Binary sources are not public, but are derived from the [Source SDK](https://github.com/ValveSoftware/source-sdk-2013).
 
 Next Update
@@ -28,3 +29,6 @@ Translations
 ---
 You can contribute to the game's translation on the following website:
 http://translate.garrysmod.com/project/garrysmod
+=======
+This repo includes configuration changes made to [Trouble in Terrorist Town](https://github.com/Facepunch/garrysmod/tree/master/garrysmod/gamemodes/terrortown). Oh, and all of the rest of [Garry's Mod](https://github.com/Facepunch/garrysmod) because TTT isn't a seperate repo.
+>>>>>>> refs/remotes/origin/master

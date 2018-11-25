@@ -3,7 +3,7 @@ AddCSLuaFile()
 SWEP.HoldType              = "pistol"
 
 if CLIENT then
-   SWEP.PrintName          = "Glock"
+   SWEP.PrintName          = "Glock 18"
    SWEP.Slot               = 1
 
    SWEP.ViewModelFlip      = false
@@ -16,12 +16,12 @@ end
 SWEP.Base                  = "weapon_tttbase"
 
 SWEP.Primary.Recoil        = 0.9
-SWEP.Primary.Damage        = 12
+SWEP.Primary.Damage        = 14 --default 12
 SWEP.Primary.Delay         = 0.10
 SWEP.Primary.Cone          = 0.028
-SWEP.Primary.ClipSize      = 20
+SWEP.Primary.ClipSize      = 17 --default 20
 SWEP.Primary.Automatic     = true
-SWEP.Primary.DefaultClip   = 20
+SWEP.Primary.DefaultClip   = 17 --default 20
 SWEP.Primary.ClipMax       = 60
 SWEP.Primary.Ammo          = "Pistol"
 SWEP.Primary.Sound         = Sound( "Weapon_Glock.Single" )

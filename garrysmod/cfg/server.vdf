@@ -1,0 +1,16 @@
+"CVars"
+{
+	"gmod_physiterations"		"4"
+	"ttt_lang_serverdefault"		"english"
+	"ttt_karma"		"1"
+	"ttt_limit_spectator_chat"		"1"
+	"ttt_limit_spectator_voice"		"1"
+	"ttt_bots_are_spectators"		"0"
+	"ttt_announce_deaths"		"1"
+	"ttt_round_limit"		"6"
+	"ttt_sherlock_mode"		"1"
+	"ttt_minimum_players"		"2"
+	"ttt_ironsights_lowered"		"1"
+	"ttt_crowbar_unlocks"		"1"
+	"ttt_fire_fallback"		"0"
+}

@@ -3,7 +3,7 @@ AddCSLuaFile()
 SWEP.HoldType              = "crossbow"
 
 if CLIENT then
-   SWEP.PrintName          = "H.U.G.E-249"
+   SWEP.PrintName          = "M249"
    SWEP.Slot               = 2
 
    SWEP.ViewModelFlip      = false
@@ -21,15 +21,15 @@ SWEP.AutoSpawnable         = true
 SWEP.Kind                  = WEAPON_HEAVY
 SWEP.WeaponID              = AMMO_M249
 
-SWEP.Primary.Damage        = 7
-SWEP.Primary.Delay         = 0.06
-SWEP.Primary.Cone          = 0.09
+SWEP.Primary.Damage        = 14 --default 7
+SWEP.Primary.Delay         = 0.09 --default 0.06
+SWEP.Primary.Cone          = 0.08
 SWEP.Primary.ClipSize      = 150
 SWEP.Primary.ClipMax       = 150
 SWEP.Primary.DefaultClip   = 150
 SWEP.Primary.Automatic     = true
 SWEP.Primary.Ammo          = "AirboatGun"
-SWEP.Primary.Recoil        = 1.9
+SWEP.Primary.Recoil        = 1.3 --default 1.9
 SWEP.Primary.Sound         = Sound("Weapon_m249.Single")
 
 SWEP.UseHands              = true
