@@ -786,8 +786,10 @@ function CCGiveSWEP( ply, command, arguments )
 
 	if ( !gamemode.Call( "PlayerGiveSWEP", ply, arguments[1], swep ) ) then return end
 
-	MsgAll( "Giving " .. ply:Nick() .. " a " .. swep.ClassName .. "\n" )
-	ply:Give( swep.ClassName )
+	if ( !ply:HasWeapon( swep.ClassName ) ) then
+		MsgAll( "Giving " .. ply:Nick() .. " a " .. swep.ClassName .. "\n" )
+		ply:Give( swep.ClassName )
+	end
 
 	-- And switch to it
 	ply:SelectWeapon( swep.ClassName )
