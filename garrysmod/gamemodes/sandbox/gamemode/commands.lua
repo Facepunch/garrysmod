@@ -147,7 +147,7 @@ function MakeEffect( ply, model, Data )
 
 end
 
-duplicator.RegisterEntityClass( "prop_effect", MakeEffect, "Data" )
+duplicator.RegisterEntityClass( "prop_effect", MakeEffect, "Model", "Data" )
 
 --[[---------------------------------------------------------
 	Name: FixInvalidPhysicsObject
