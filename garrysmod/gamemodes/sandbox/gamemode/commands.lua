@@ -125,7 +125,7 @@ end
 duplicator.RegisterEntityClass( "prop_physics", MakeProp, "Pos", "Ang", "Model", "PhysicsObjects", "Data" )
 duplicator.RegisterEntityClass( "prop_physics_multiplayer", MakeProp, "Pos", "Ang", "Model", "PhysicsObjects", "Data" )
 
-function MakeEffect( ply, Data )
+function MakeEffect( ply, model, Data )
 
 	-- Make sure this is allowed
 	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnEffect", ply, model ) ) then return end
