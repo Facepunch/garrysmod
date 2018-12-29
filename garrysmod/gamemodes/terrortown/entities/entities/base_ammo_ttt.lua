@@ -31,7 +31,7 @@ function ENT:Initialize()
       self:SetTrigger(true)
    end
 
-   self.taken = false
+   self.tickRemoval = false
 
    -- this made the ammo get physics'd too early, meaning it would fall
    -- through physics surfaces it was lying on on the client, leading to
