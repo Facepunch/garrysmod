@@ -86,7 +86,7 @@ function ENT:CheckForWeapon(ply)
 end
 
 function ENT:Touch(ent)
-  if (SERVER amd self.tickRemoval ~= true) and ent:IsValid() and ent:IsPlayer() and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent) then
+  if (SERVER and self.tickRemoval ~= true) and ent:IsValid() and ent:IsPlayer() and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent) then
     local ammo = ent:GetAmmoCount(self.AmmoType)
     -- need clipmax info and room for at least 1/4th
     if self.AmmoMax >= (ammo + math.ceil(self.AmmoAmount * 0.25)) then
