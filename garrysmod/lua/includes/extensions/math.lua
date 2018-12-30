@@ -217,3 +217,12 @@ end
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
 end
+
+--[[---------------------------------------------------------
+	Name: Distance( low, high )
+	Desc: Distance between two 2d points
+------------------------------------------------------------]]
+
+function math.Sign( value )
+	return value / math.abs(value)
+end
