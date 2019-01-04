@@ -132,6 +132,7 @@ function MakeEffect( ply, model, Data )
 
 	local Prop = ents.Create( "prop_effect" )
 	duplicator.DoGeneric( Prop, Data )
+	Prop.AttachedEntityInfo = table.Copy( Data.AttachedEntityInfo )
 	Prop:Spawn()
 
 	duplicator.DoGenericPhysics( Prop, ply, Data )
@@ -141,7 +142,9 @@ function MakeEffect( ply, model, Data )
 		gamemode.Call( "PlayerSpawnedEffect", ply, model, Prop )
 	end
 
-	DoPropSpawnedEffect( Prop )
+	if IsValid( Prop.AttachedEntity ) then
+		DoPropSpawnedEffect( Prop.AttachedEntity )
+	end
 
 	return Prop
 
@@ -231,7 +234,9 @@ function GMODSpawnEffect( ply, model, iSkin, strBody )
 		gamemode.Call( "PlayerSpawnedEffect", ply, model, e )
 	end
 
-	DoPropSpawnedEffect( e )
+	if ( IsValid( e.AttachedEntity ) ) then
+		DoPropSpawnedEffect( e.AttachedEntity )
+	end
 
 	undo.Create( "Effect" )
 		undo.SetPlayer( ply )
@@ -283,6 +288,10 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 	ent:SetPos( tr.HitPos )
 	ent:Spawn()
 	ent:Activate()
+
+	if ( entity_name == "prop_effect" and IsValid( ent.AttachedEntity ) ) then
+		ent.AttachedEntity:SetBodyGroups( strBody )
+	end
 
 	-- Attempt to move the object so it sits flush
 	-- We could do a TraceEntity instead of doing all
