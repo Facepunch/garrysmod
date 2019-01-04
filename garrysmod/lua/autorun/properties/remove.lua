@@ -9,6 +9,7 @@ properties.Add( "remove", {
 	Filter = function( self, ent, ply )
 
 		if ( !gamemode.Call( "CanProperty", ply, "remove", ent ) ) then return false end
+		if ( !gamemode.Call( "CanProperty", ply, "remover", ent ) ) then return false end
 		if ( !IsValid( ent ) ) then return false end
 		if ( ent:IsPlayer() ) then return false end
 
