@@ -96,10 +96,10 @@ local function SandboxSettings( pnl )
 	pnl:AddControl( "TextBox", { Label = "#persistent_mode", Command = "sbox_persist", WaitForEnter = "1" } )
 	pnl:ControlHelp( "#persistent_mode.help" ):DockMargin( 16, 4, 16, 8 )
 
-	pnl:AddControl( "CheckBox", { Label = "#noclip", Command = "sbox_noclip" } )
 	pnl:AddControl( "CheckBox", { Label = "#enable_weapons", Command = "sbox_weapons" } )
-	pnl:AddControl( "CheckBox", { Label = "#god_mode", Command = "sbox_godmode" } )
+	pnl:AddControl( "CheckBox", { Label = "#allow_god_mode", Command = "sbox_godmode" } )
 	pnl:AddControl( "CheckBox", { Label = "#players_damage_players", Command = "sbox_playershurtplayers" } )
+	pnl:AddControl( "CheckBox", { Label = "#allow_noclip", Command = "sbox_noclip" } )
 
 	pnl:AddControl( "CheckBox", { Label = "#bone_manipulate_npcs", Command = "sbox_bonemanip_npc" } )
 	pnl:AddControl( "CheckBox", { Label = "#bone_manipulate_players", Command = "sbox_bonemanip_player" } )

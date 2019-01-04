@@ -476,15 +476,15 @@ if ( IsMounted( "hl1" ) ) then
 	AddNPC( { Name = "Grunt", Class = "monster_human_grunt", Category = Category } )
 	AddNPC( { Name = "Cockroach", Class = "monster_cockroach", Category = Category } )
 	AddNPC( { Name = "Houndeye", Class = "monster_houndeye", Category = Category } )
-	AddNPC( { Name = "Scientist", Class = "monster_scientist", Category = Category } )
+	AddNPC( { Name = "Scientist", Class = "monster_scientist", Category = Category, KeyValues = { body = "-1" } } )
 	AddNPC( { Name = "Snark", Class = "monster_snark", Category = Category } )
 	AddNPC( { Name = "Zombie", Class = "monster_zombie", Category = Category } )
 	AddNPC( { Name = "Headcrab", Class = "monster_headcrab", Category = Category } )
 	AddNPC( { Name = "Controller", Class = "monster_alien_controller", Category = Category } )
 	AddNPC( { Name = "Security Officer", Class = "monster_barney", Category = Category } )
 
-	--AddNPC( { Name = "Turret", Class = "monster_turret", Category = Category } )
-	--AddNPC( { Name = "Mini Turret", Class = "monster_miniturret", Category = Category } )
-	--AddNPC( { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = -20, OnFloor = true } )
+	AddNPC( { Name = "Heavy Turret", Class = "monster_turret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
+	AddNPC( { Name = "Mini Turret", Class = "monster_miniturret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
+	AddNPC( { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = 0, OnFloor = true, SpawnFlags = 32 } )
 
 end

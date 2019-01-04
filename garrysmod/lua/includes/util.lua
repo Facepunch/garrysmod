@@ -17,14 +17,14 @@ local C_Material = Material
 function Material( name, words )
 
 	if ( !words ) then return C_Material( name ) end
-	
+
 	local str = (words:find("vertexlitgeneric") and "1" or "0")
 	str = str .. (words:find("nocull") and "1" or "0")
 	str = str .. (words:find("alphatest") and "1" or "0")
 	str = str .. (words:find("mips") and "1" or "0")
 	str = str .. (words:find("noclamp") and "1" or "0")
 	str = str .. (words:find("smooth") and "1" or "0")
-	
+
 	return C_Material( name, str )
 
 end
@@ -65,6 +65,8 @@ function PrintTable( t, indent, done )
 		if ( isnumber( a ) && isnumber( b ) ) then return a < b end
 		return tostring( a ) < tostring( b )
 	end )
+
+	done[ t ] = true
 
 	for i = 1, #keys do
 		local key = keys[ i ]
@@ -179,15 +181,15 @@ function AccessorFunc( tab, varname, name, iForce )
 	if ( iForce == FORCE_STRING ) then
 		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tostring( v ) end
 	return end
-	
+
 	if ( iForce == FORCE_NUMBER ) then
 		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tonumber( v ) end
 	return end
-	
+
 	if ( iForce == FORCE_BOOL ) then
 		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tobool( v ) end
 	return end
-	
+
 	tab[ "Set" .. name ] = function( self, v ) self[ varname ] = v end
 
 end
@@ -198,9 +200,11 @@ end
 function IsValid( object )
 
 	if ( !object ) then return false end
-	if ( !object.IsValid ) then return false end
 
-	return object:IsValid()
+	local isvalid = object.IsValid
+	if ( !isvalid ) then return false end
+
+	return isvalid( object )
 
 end
 
@@ -249,23 +253,23 @@ end
 --[[---------------------------------------------------------
 	Universal function to filter out crappy models by name
 -----------------------------------------------------------]]
-local UselessModels = { 
-	"_gesture", "_anim", "_gst", "_pst", "_shd", "_ss", "_posture", "_anm", 
+local UselessModels = {
+	"_gesture", "_anim", "_gst", "_pst", "_shd", "_ss", "_posture", "_anm",
 	"ghostanim","_paths", "_shared", "anim_", "gestures_", "shared_ragdoll_"
 }
 
-function IsUselessModel( modelname ) 
+function IsUselessModel( modelname )
 
 	local modelname = modelname:lower()
 
 	if ( !modelname:find( ".mdl", 1, true ) ) then return true end
-	
+
 	for k, v in pairs( UselessModels ) do
-		if ( modelname:find( v, 1, true ) ) then 
-			return true 
+		if ( modelname:find( v, 1, true ) ) then
+			return true
 		end
 	end
-	
+
 	return false
 
 end
@@ -290,23 +294,23 @@ end
 -----------------------------------------------------------]]
 function TimedSin( freq, min, max, offset )
 	return math.sin( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
-end 
+end
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
 function TimedCos( freq, min, max, offset )
 	return math.cos( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
-end 
+end
 
 --[[---------------------------------------------------------
 	IsEnemyEntityName
 -----------------------------------------------------------]]
 local EnemyNames = {
-	npc_antlion = true, npc_antlionguard = true, npc_antlionguardian = true, npc_barnacle = true, 
-	npc_breen = true, npc_clawscanner = true, npc_combine_s = true, npc_cscanner = true, npc_fastzombie = true, 
-	npc_fastzombie_torso = true, npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true, 
-	npc_hunter = true, npc_metropolice = true, npc_manhack = true, npc_poisonzombie = true, 
+	npc_antlion = true, npc_antlionguard = true, npc_antlionguardian = true, npc_barnacle = true,
+	npc_breen = true, npc_clawscanner = true, npc_combine_s = true, npc_cscanner = true, npc_fastzombie = true,
+	npc_fastzombie_torso = true, npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true,
+	npc_hunter = true, npc_metropolice = true, npc_manhack = true, npc_poisonzombie = true,
 	npc_strider = true, npc_stalker = true, npc_zombie = true, npc_zombie_torso = true, npc_zombine = true
 }
 
@@ -318,8 +322,8 @@ end
 	IsFriendEntityName
 -----------------------------------------------------------]]
 local FriendlyNames = {
-	npc_alyx = true, npc_barney = true, npc_citizen = true, npc_dog = true, npc_eli = true, 
-	npc_fisherman = true, npc_gman = true, npc_kleiner = true, npc_magnusson = true, 
+	npc_alyx = true, npc_barney = true, npc_citizen = true, npc_dog = true, npc_eli = true,
+	npc_fisherman = true, npc_gman = true, npc_kleiner = true, npc_magnusson = true,
 	npc_monk = true, npc_mossman = true, npc_odessa = true, npc_vortigaunt = true
 }
 
@@ -352,7 +356,7 @@ end
 --[[---------------------------------------------------------
 	Replacement for C++'s iff ? aa : bb
 -----------------------------------------------------------]]
-function Either( iff, aa, bb ) 
+function Either( iff, aa, bb )
 	if ( iff ) then return aa end
 	return bb
 end
@@ -433,10 +437,10 @@ function GetConVar( name )
 		if not c then
 			return
 		end
-		
+
 		ConVarCache[ name ] = c
 	end
-	
+
 	return c
 end
 

@@ -46,7 +46,7 @@
 					
 						<img ng-src='../gamemodes/{{gamemode.name}}/icon24.png' onerror="MissingGamemodeIcon(this)"/>
 
-						<div class='stats'>{{gamemode.num_players}} <span ng-tranny="'servers_players_on'"></span> {{gamemode.num_servers}} <span ng-tranny="'servers_servers'"></span></div>
+						<div class='stats'>{{gamemode.num_players}} <span ng-tranny="gamemode.num_players == 1 && 'servers_player_on' || 'servers_players_on'"></span> {{gamemode.num_servers}} <span ng-tranny="gamemode.num_servers == 1 && 'servers_server' || 'servers_servers'"></span></div>
 						<div class='name'>
 							{{GamemodeName(gamemode)}}
 						</div>

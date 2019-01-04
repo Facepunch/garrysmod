@@ -77,20 +77,21 @@ end
 function PANEL:DrawModel()
 
 	local curparent = self
-	local rightx = self:GetWide()
-	local leftx = 0
-	local topy = 0
-	local bottomy = self:GetTall()
-	local previous = curparent
-	while( curparent:GetParent() != nil ) do
+	local leftx, topy = self:LocalToScreen( 0, 0 )
+	local rightx, bottomy = self:LocalToScreen( self:GetWide(), self:GetTall() )
+	while ( curparent:GetParent() != nil ) do
 		curparent = curparent:GetParent()
-		local x, y = previous:GetPos()
-		topy = math.Max( y, topy + y )
-		leftx = math.Max( x, leftx + x )
-		bottomy = math.Min( y + previous:GetTall(), bottomy + y )
-		rightx = math.Min( x + previous:GetWide(), rightx + x )
+
+		local x1, y1 = curparent:LocalToScreen( 0, 0 )
+		local x2, y2 = curparent:LocalToScreen( curparent:GetWide(), curparent:GetTall() )
+
+		leftx = math.max( leftx, x1 )
+		topy = math.max( topy, y1 )
+		rightx = math.min( rightx, x2 )
+		bottomy = math.min( bottomy, y2 )
 		previous = curparent
 	end
+
 	render.SetScissorRect( leftx, topy, rightx, bottomy, true )
 
 	local ret = self:PreDrawModel( self.Entity )
@@ -130,7 +131,7 @@ function PANEL:Paint( w, h )
 	render.SetLightingOrigin( self.Entity:GetPos() )
 	render.ResetModelLighting( self.colAmbientLight.r / 255, self.colAmbientLight.g / 255, self.colAmbientLight.b / 255 )
 	render.SetColorModulation( self.colColor.r / 255, self.colColor.g / 255, self.colColor.b / 255 )
-	render.SetBlend( ( self:GetAlpha() / 255 ) * ( self.colColor.a / 255 ) )
+	render.SetBlend( ( self:GetAlpha() / 255 ) * ( self.colColor.a / 255 ) ) -- * surface.GetAlphaMultiplier()
 
 	for i = 0, 6 do
 		local col = self.DirectionalLight[ i ]

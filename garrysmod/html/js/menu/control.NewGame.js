@@ -69,7 +69,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 	$scope.SelectMap = function ( m )
 	{
 		$rootScope.Map = m;
-		$rootScope.LastCategory = $scope.CurrentCategory
+		$rootScope.LastCategory = $scope.CurrentCategory;
 	}
 
 	$scope.DoubleClick = ""
@@ -249,6 +249,11 @@ function SetLastMap( map, category )
 		rootScope.LastCategory = category;
 		UpdateDigest( rootScope, 50 );
 	}
+
+	setTimeout( function() {
+		var elem = document.querySelector( '.mapicon.selected' );
+		if ( elem ) elem.scrollIntoView( { behavior: 'smooth', block: 'center' } );
+	}, 100 );
 }
 
 function UpdateServerSettings( sttngs )

@@ -433,7 +433,7 @@ end
 function TOOL:LeftClick( trace )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
-	if ( trace.Entity:GetClass() != "prop_ragdoll" && !trace.Entity:IsNPC() ) then return false end
+	--if ( trace.Entity:GetClass() != "prop_ragdoll" && !trace.Entity:IsNPC() ) then return false end
 
 	local LeftHand, RightHand = self:GetHandPositions( trace.Entity )
 
@@ -464,7 +464,7 @@ function TOOL:RightClick( trace )
 	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
 
 	if ( !IsValid( ent ) || ent:IsPlayer() ) then self:SetHand( NULL, 0 ) return true end
-	if ( ent:GetClass() != "prop_ragdoll" && ent:GetClass() != "prop_dynamic" && !ent:IsNPC() ) then return false end
+	--if ( ent:GetClass() != "prop_ragdoll" && ent:GetClass() != "prop_dynamic" && !ent:IsNPC() ) then return false end
 
 	if ( CLIENT ) then return false end
 

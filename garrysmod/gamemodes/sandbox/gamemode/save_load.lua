@@ -12,16 +12,19 @@ if ( SERVER ) then
 	concommand.Add( "gm_save", function( ply, cmd, args )
 
 		if ( !IsValid( ply ) ) then return end
-		if ( !game.SinglePlayer() && !ply:IsAdmin() ) then return end -- gmsave.SaveMap is very expensive for big maps/lots of entities. Do not allow random ppl to save the map in multiplayer!
+
+		-- gmsave.SaveMap is very expensive for big maps/lots of entities. Do not allow random ppl to save the map in multiplayer!
+		-- TODO: Actually do proper hooks for this
+		if ( !game.SinglePlayer() && !ply:IsAdmin() ) then return end
+
 		if ( ply.m_NextSave && ply.m_NextSave > CurTime() && !game.SinglePlayer() ) then
-
-			ServerLog( "Player is saving too quickly! " .. tostring( ply ) .. "\n" )
-
-		return end
+			ServerLog( tostring( ply ) ..  " tried to save too quickly!\n" )
+			return
+		end
 
 		ply.m_NextSave = CurTime() + 10
 
-		ServerLog( "Sending save to player " .. tostring( ply ) .. "\n" )
+		ServerLog( tostring( ply ) .. " requrested a save.\n" )
 
 		local save = gmsave.SaveMap( ply )
 		if ( !save ) then return end
@@ -75,8 +78,8 @@ else
 		local done = net.ReadBool()
 		local showsave = net.ReadBool()
 
-		local len = net.ReadUInt( 16 )
-		local data = net.ReadData( len )
+		local length = net.ReadUInt( 16 )
+		local data = net.ReadData( length )
 
 		buffer = buffer .. data
 

@@ -18,7 +18,7 @@
 
 "HL2Player.FlashLightOn"
 {
-	"channel"	"CHAN_WEAPON"
+	"channel"	"CHAN_AUTO" // GMOD
 	"volume"	"0.8"
 	"soundlevel"    "SNDLVL_75dB"
 	"pitch"	"PITCH_NORM"
@@ -28,7 +28,7 @@
 
 "HL2Player.FlashLightOff"
 {
-	"channel"	"CHAN_WEAPON"
+	"channel"	"CHAN_AUTO" // GMOD
 	"volume"	"0.8"
 	"soundlevel"  "SNDLVL_75dB"
 	"pitch"	"PITCH_NORM"

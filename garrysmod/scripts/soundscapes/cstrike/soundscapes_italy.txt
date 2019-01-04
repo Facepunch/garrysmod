@@ -426,37 +426,4 @@
 	
 }
 
-
-"wood_scape"
-
-{
-
-	"playrandom"
-	{
-
-		"time"		"7,20"
-		"volume"		".07,.3"
-		"pitch"		"70,110"
-
-		"rndwave"
-		{
-			"wave"	"ambient/misc/wood1.wav"
-			"wave"	"ambient/misc/wood2.wav"
-			"wave"	"ambient/misc/wood3.wav"
-			"wave"	"ambient/misc/wood4.wav"
-			"wave"	"ambient/misc/wood5.wav"
-			"wave"	"ambient/misc/wood6.wav"
-
-		}
-
-	}
-
-
-}
-
-
-
-
-
-
-
+// GMOD: Removed "wood_scape" as it was duplicate from havana.txt

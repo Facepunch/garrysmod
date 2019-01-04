@@ -5,7 +5,7 @@ GM.PickupHistoryTop = ScrH() / 2
 GM.PickupHistoryWide = 300
 GM.PickupHistoryCorner = surface.GetTextureID( "gui/corner8" )
 
-local function AddGeneticPickup( self, itemname )
+local function AddGenericPickup( self, itemname )
 	local pickup		= {}
 	pickup.time			= CurTime()
 	pickup.name			= itemname
@@ -39,7 +39,7 @@ function GM:HUDWeaponPickedUp( wep )
 	if ( !IsValid( wep ) ) then return end
 	if ( !isfunction( wep.GetPrintName ) ) then return end
 
-	local pickup = AddGeneticPickup( self, wep:GetPrintName() )
+	local pickup = AddGenericPickup( self, wep:GetPrintName() )
 	pickup.color = Color( 255, 200, 50, 255 )
 
 end
@@ -52,7 +52,7 @@ function GM:HUDItemPickedUp( itemname )
 
 	if ( !IsValid( LocalPlayer() ) || !LocalPlayer():Alive() ) then return end
 
-	local pickup = AddGeneticPickup( self, "#" .. itemname )
+	local pickup = AddGenericPickup( self, "#" .. itemname )
 	pickup.color = Color( 180, 255, 180, 255 )
 
 end
@@ -82,7 +82,7 @@ function GM:HUDAmmoPickedUp( itemname, amount )
 
 	end
 
-	local pickup = AddGeneticPickup( self, "#" .. itemname .. "_ammo" )
+	local pickup = AddGenericPickup( self, "#" .. itemname .. "_ammo" )
 	pickup.color = Color( 180, 200, 255, 255 )
 	pickup.amount = tostring( amount )
 

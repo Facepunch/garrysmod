@@ -25,10 +25,11 @@ properties.Add( "collision_off", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		ent:SetCollisionGroup( COLLISION_GROUP_WORLD )
 
@@ -59,10 +60,11 @@ properties.Add( "collision_on", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		ent:SetCollisionGroup( COLLISION_GROUP_NONE )
 
