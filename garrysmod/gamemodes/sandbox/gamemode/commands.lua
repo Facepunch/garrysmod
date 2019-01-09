@@ -132,7 +132,7 @@ function MakeEffect( ply, model, Data )
 
 	local Prop = ents.Create( "prop_effect" )
 	duplicator.DoGeneric( Prop, Data )
-	Prop.AttachedEntityInfo = table.Copy( Data.AttachedEntityInfo )
+	Prop.AttachedEntityInfo = table.Copy( Data.AttachedEntityInfo ) -- This shouldn't be neccesary
 	Prop:Spawn()
 
 	duplicator.DoGenericPhysics( Prop, ply, Data )
@@ -142,7 +142,7 @@ function MakeEffect( ply, model, Data )
 		gamemode.Call( "PlayerSpawnedEffect", ply, model, Prop )
 	end
 
-	if IsValid( Prop.AttachedEntity ) then
+	if ( IsValid( Prop.AttachedEntity ) ) then
 		DoPropSpawnedEffect( Prop.AttachedEntity )
 	end
 
@@ -288,10 +288,6 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 	ent:SetPos( tr.HitPos )
 	ent:Spawn()
 	ent:Activate()
-
-	if ( entity_name == "prop_effect" and IsValid( ent.AttachedEntity ) ) then
-		ent.AttachedEntity:SetBodyGroups( strBody )
-	end
 
 	-- Attempt to move the object so it sits flush
 	-- We could do a TraceEntity instead of doing all
@@ -751,24 +747,22 @@ function Spawn_SENT( ply, EntityName, tr )
 
 	end
 
-	if ( IsValid( entity ) ) then
+	if ( !IsValid( entity ) ) then return end
 
-		if ( IsValid( ply ) ) then
-			gamemode.Call( "PlayerSpawnedSENT", ply, entity )
-		end
-
-		undo.Create( "SENT" )
-			undo.SetPlayer( ply )
-			undo.AddEntity( entity )
-			if ( PrintName ) then
-				undo.SetCustomUndoText( "Undone " .. PrintName )
-			end
-		undo.Finish( "Scripted Entity (" .. tostring( EntityName ) .. ")" )
-
-		ply:AddCleanup( "sents", entity )
-		entity:SetVar( "Player", ply )
-
+	if ( IsValid( ply ) ) then
+		gamemode.Call( "PlayerSpawnedSENT", ply, entity )
 	end
+
+	undo.Create( "SENT" )
+		undo.SetPlayer( ply )
+		undo.AddEntity( entity )
+		if ( PrintName ) then
+			undo.SetCustomUndoText( "Undone " .. PrintName )
+		end
+	undo.Finish( "Scripted Entity (" .. tostring( EntityName ) .. ")" )
+
+	ply:AddCleanup( "sents", entity )
+	entity:SetVar( "Player", ply )
 
 end
 concommand.Add( "gm_spawnsent", function( ply, cmd, args ) Spawn_SENT( ply, args[ 1 ] ) end )
@@ -836,14 +830,14 @@ function Spawn_Weapon( ply, wepname, tr )
 
 	local entity = ents.Create( swep.ClassName )
 
-	if ( IsValid( entity ) ) then
+	if ( !IsValid( entity ) ) then return end
 
-		entity:SetPos( tr.HitPos + tr.HitNormal * 32 )
-		entity:Spawn()
+	DoPropSpawnedEffect( entity )
 
-		gamemode.Call( "PlayerSpawnedSWEP", ply, entity )
+	entity:SetPos( tr.HitPos + tr.HitNormal * 32 )
+	entity:Spawn()
 
-	end
+	gamemode.Call( "PlayerSpawnedSWEP", ply, entity )
 
 end
 concommand.Add( "gm_spawnswep", function( ply, cmd, args ) Spawn_Weapon( ply, args[1] ) end )
