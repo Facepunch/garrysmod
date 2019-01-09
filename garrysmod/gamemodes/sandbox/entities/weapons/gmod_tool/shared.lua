@@ -142,6 +142,7 @@ end
 
 -- Think does stuff every frame
 function SWEP:Think()
+
 	local owner = self:GetOwner()
 	if ( !owner:IsPlayer() ) then return end
 
@@ -184,6 +185,7 @@ function SWEP:Think()
 	self.RequiresTraceHit = tool.RequiresTraceHit || true
 
 	tool:Think()
+
 end
 
 -- The shoot effect

@@ -25,6 +25,7 @@ function ENT:Initialize()
 		self.AttachedEntity:Spawn()
 		self.AttachedEntity:SetParent( self.Entity )
 		self.AttachedEntity:DrawShadow( false )
+		self.AttachedEntity:SetBodyGroups( self:GetBodyGroups() )
 
 		self:SetModel( "models/props_junk/watermelon01.mdl" )
 
@@ -115,7 +116,7 @@ end
 function ENT:PostEntityPaste( ply )
 
 	-- Restore the attached entity using the information we've saved
-	if ( IsValid( self.AttachedEntity ) ) and ( self.AttachedEntityInfo ) then
+	if ( IsValid( self.AttachedEntity ) and self.AttachedEntityInfo ) then
 
 		-- Apply skin, bodygroups, bone manipulator, etc.
 		duplicator.DoGeneric( self.AttachedEntity, self.AttachedEntityInfo )
