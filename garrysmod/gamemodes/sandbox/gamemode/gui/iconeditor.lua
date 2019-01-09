@@ -154,6 +154,7 @@ function PANEL:Init()
 	local ps = self:Add( "DPropertySheet" )
 	ps:Dock( FILL )
 	ps:DockMargin( 4, 0, 0, 0 )
+	self.PropertySheet = ps
 
 	local right = ps:Add( "Panel" )
 	right:Dock( FILL )
@@ -169,7 +170,7 @@ function PANEL:Init()
 	pnl:Dock( FILL )
 	pnl:DockPadding( 3, 0, 3, 0 )
 
-	ps:AddSheet( "Bodygroups", pnl )
+	self.BodygroupTab = ps:AddSheet( "Bodygroups", pnl )
 
 		self.BodyList = pnl:Add( "DListLayout" )
 		self.BodyList:Dock( FILL )
@@ -452,10 +453,12 @@ function PANEL:FillAnimations( ent )
 	end
 
 	self.BodyList:Clear()
+	local newItems = 0
 
 	if ( ent:SkinCount() > 1 ) then
 
 		local combo = self.BodyList:Add( "DComboBox" )
+		newItems = newItems + 1
 
 		for l = 0, ent:SkinCount() - 1 do
 			combo:AddChoice( "Skin " .. l, function()
@@ -485,6 +488,7 @@ function PANEL:FillAnimations( ent )
 		if ( ent:GetBodygroupCount( k ) <= 1 ) then continue end
 
 		local combo = self.BodyList:Add( "DComboBox" )
+		newItems = newItems + 1
 
 		for l = 0, ent:GetBodygroupCount( k ) - 1 do
 
@@ -513,6 +517,14 @@ function PANEL:FillAnimations( ent )
 		combo.OnSelect = function( pnl, index, value, data ) data() end
 
 	end
+
+	if ( newItems > 0 ) then
+		self.BodygroupTab.Tab:SetVisible( true )
+	else
+		self.BodygroupTab.Tab:SetVisible( false )
+	end
+	local propertySheet = self.PropertySheet
+	propertySheet.tabScroller:InvalidateLayout()
 
 end
 
