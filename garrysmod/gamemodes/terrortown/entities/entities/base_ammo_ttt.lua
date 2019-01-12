@@ -8,6 +8,7 @@ ENT.Type = "anim"
 ENT.AmmoType = "Pistol"
 ENT.AmmoAmount = 1
 ENT.AmmoMax = 10
+ENT.AmmoEntMax = 1
 ENT.Model = Model( "models/items/boxsrounds.mdl" )
 
 
@@ -40,6 +41,7 @@ function ENT:Initialize()
    --	if (phys:IsValid()) then
    --		phys:Wake()
    --	end
+   self.AmmoEntMax = self.AmmoAmount
 end
 
 -- Pseudo-clone of SDK's UTIL_ItemCanBeTouchedByPlayer
@@ -97,7 +99,7 @@ function ENT:Touch(ent)
       local newEntAmount = self.AmmoAmount - given
       self.AmmoAmount = newEntAmount
 
-      if self.AmmoAmount <= 0 then
+      if self.AmmoAmount <= 0 or self.AmmoEntMax < math.Ceil(self.AmmoAmount * 0.15) then
         self.tickRemoval = true
         self:Remove()
       end
