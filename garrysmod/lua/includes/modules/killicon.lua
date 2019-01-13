@@ -48,6 +48,24 @@ function Exists( name )
 
 end
 
+function SetSize( name, width, height )
+	
+	if (!Icons[name]) then 
+		Msg("Warning: killicon not found '"..name.."'\n")
+		return
+	end
+	
+	local t = Icons[name]
+	
+	if (!t.size) then 
+		t.size = {}
+	end
+	
+	t.size.w = width
+	t.size.h = height
+	
+end
+
 function GetSize( name )
 
 	if (!Icons[name]) then 
