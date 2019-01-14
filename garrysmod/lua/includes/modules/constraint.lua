@@ -17,59 +17,18 @@ if ( CLIENT ) then return end
 -- I think 128 constraints is around the max that causes the crash
 -- So at this number we'll refuse to add more to the system
 local MAX_CONSTRAINTS_PER_SYSTEM = 100
-local ConstraintSystems = {}
-
---[[----------------------------------------------------------------------
-	Go through each constraint system and check it for redundancy
-------------------------------------------------------------------------]]
-local function GarbageCollectConstraintSystems()
-
-	for k, System in pairs( ConstraintSystems ) do
-
-		-- System was already deleted (most likely by CleanUpMap)
-		if ( !IsValid( System ) ) then
-
-			ConstraintSystems[ k ] = nil
-
-		else
-
-			local Count = 0
-			for id, Entity in pairs( System.UsedEntities ) do
-				if ( Entity:IsValid() ) then Count = Count + 1 end
-			end
-
-			if ( Count == 0 ) then
-
-				System:Remove()
-				ConstraintSystems[ k ] = nil
-
-			end
-
-		end
-
-	end
-
-
-end
-
 
 --[[----------------------------------------------------------------------
 	CreateConstraintSystem
 ------------------------------------------------------------------------]]
 local function CreateConstraintSystem()
-
-	-- This is probably the best place to be calling this
-	GarbageCollectConstraintSystems()
-
 	local iterations = GetConVarNumber( "gmod_physiterations" )
 
 	local System = ents.Create("phys_constraintsystem")
 	System:SetKeyValue( "additionaliterations", iterations )
 	System:Spawn()
 	System:Activate()
-
-	table.insert( ConstraintSystems, System )
-	System.UsedEntities = {}
+	System.Count = 0
 
 	return System
 
@@ -117,16 +76,27 @@ local function FindOrCreateConstraintSystem( Ent1, Ent2 )
 	Ent1.ConstraintSystem = System
 	Ent2.ConstraintSystem = System
 
-	System.UsedEntities = System.UsedEntities or {}
-	table.insert( System.UsedEntities, Ent1 )
-	table.insert( System.UsedEntities, Ent2 )
-
-	local ConstraintNum = System:GetVar( "constraints", 0 )
-	System:SetVar( "constraints", ConstraintNum + 1 )
-
-	--Msg("System has "..tostring( System:GetVar( "constraints", 0 ) ).." constraints\n")
-
 	return System
+
+end
+
+--[[----------------------------------------------------------------------
+	AddConstraintToSystem( System, Constraint )
+	Increments the system's constraint counter and registers the CallOnRemove that decrements the counter
+------------------------------------------------------------------------]]
+local function AddConstraintSystemCount( System, Constraint )
+
+	if Constraint:IsValid() then
+		Constraint:CallOnRemove( "PhysConstraintSystemDecrement", function()
+			if System:IsValid() then
+				System.Count = System.Count - 1
+				if System.Count == 0 then
+					System:Remove()
+				end
+			end
+		end)
+		System.Count = System.Count + 1
+	end
 
 end
 
@@ -473,6 +443,7 @@ function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 	}
 
 	Constraint:SetTable( ctable )
+	AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
 
 	Phys1:Wake()
 	Phys2:Wake()
@@ -551,6 +522,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 	if ( IsValid( Constraint ) ) then
 		Constraint:SetTable( ctable )
 		AddConstraintTable( Ent1, Constraint, Ent2 )
+		AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
 	end
 
 	return Constraint, rope
@@ -615,6 +587,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 		}
 
 		Constraint:SetTable( ctable )
+		AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
 
 		-- Make Rope
 		local kv = {
@@ -665,6 +638,7 @@ function Keepupright( Ent, Ang, Bone, angularlimit )
 		angularlimit = angularlimit
 	}
 	Constraint:SetTable( ctable )
+	AddConstraintSystemCount( Ent.ConstraintSystem, Constraint )
 
 	--
 	-- This is a hack to keep the KeepUpright context menu in sync..
@@ -772,6 +746,7 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 	}
 
 	Constraint:SetTable( ctable )
+	AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
 
 	return Constraint, rope
 
@@ -834,6 +809,7 @@ function Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, 
 	}
 
 	Constraint:SetTable( ctable )
+	AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
 
 	return Constraint
 
@@ -909,6 +885,7 @@ function AdvBallsocket( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torq
 	}
 
 	Constraint:SetTable( ctable )
+	AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
 
 	return Constraint
 
@@ -958,6 +935,7 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	}
 
 	Constraint:SetTable( ctable )
+	AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
 
 	return Constraint
 
@@ -1112,6 +1090,7 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 	}
 
 	Constraint:SetTable( ctable )
+	AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
 
 	if ( numpadkey_fwd ) then
 
@@ -1182,6 +1161,7 @@ function Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimi
 		material = material
 	}
 	Constraint:SetTable( ctable )
+	AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
 
 	-- make Rope
 	local World = game.GetWorld()
@@ -1245,6 +1225,7 @@ function Ballsocket( Ent1, Ent2, Bone1, Bone2, LPos, forcelimit, torquelimit, no
 	}
 
 	Constraint:SetTable( ctable )
+	AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
 
 	return Constraint
 
