@@ -48,6 +48,16 @@ function Exists( name )
 
 end
 
+function GetTexture( name )
+	
+	if (!Icons[name]) then 
+		Msg("Warning: killicon not found '"..name.."'\n")
+		return nil
+	end
+	
+	return Icons[name].texture
+end
+
 function SetSize( name, width, height )
 	
 	if (!Icons[name]) then 
