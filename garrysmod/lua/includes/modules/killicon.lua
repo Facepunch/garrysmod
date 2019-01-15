@@ -56,6 +56,7 @@ function GetTexture( name )
 	end
 	
 	return Icons[name].texture
+	
 end
 
 function SetSize( name, width, height )
