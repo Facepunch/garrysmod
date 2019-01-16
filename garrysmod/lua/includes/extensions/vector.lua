@@ -153,7 +153,7 @@ Convets the vector to resized version of itself
 -----------------------------------------------------------]]
 function meta:Middle(vec)
 	self:Add(vec)
-	self:Div(2)
+	self:Mul(0.5)
 	return self
 end
 
