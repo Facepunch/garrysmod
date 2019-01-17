@@ -20,7 +20,7 @@ end
 --[[---------------------------------------------------------
 Converts Vector to Angle - data is copied
 -----------------------------------------------------------]]
-function meta:ToAngle(arr)
+function meta:ToAngle()
 	return Angle(self.x, self.y, self.z)
 end
 
