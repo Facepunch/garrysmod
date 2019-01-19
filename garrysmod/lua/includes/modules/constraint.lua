@@ -55,7 +55,7 @@ local function FindOrCreateConstraintSystem( Ent1, Ent2 )
 	end
 
 	-- Don't add to this system - we have too many constraints on it already.
-	if ( System && System:IsValid() && System:GetVar( "constraints", 0 ) > MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
+	if ( System && System:IsValid() && System.Count > MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
 
 	-- Does Ent2 have a constraint system?
 	if ( !System && !Ent2:IsWorld() && Ent2:GetTable().ConstraintSystem && Ent2:GetTable().ConstraintSystem:IsValid() ) then
@@ -63,7 +63,7 @@ local function FindOrCreateConstraintSystem( Ent1, Ent2 )
 	end
 
 	-- Don't add to this system - we have too many constraints on it already.
-	if ( System && System:IsValid() && System:GetVar( "constraints", 0 ) > MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
+	if ( System && System:IsValid() && System.Count > MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
 
 	-- No constraint system yet (Or they're both full) - make a new one
 	if ( !System || !System:IsValid() ) then
