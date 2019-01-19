@@ -88,23 +88,25 @@ function ENT:CheckForWeapon(ply)
 end
 
 function ENT:Touch(ent)
-  if (SERVER and self.tickRemoval ~= true) and ent:IsValid() and ent:IsPlayer() and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent) then
-    local ammo = ent:GetAmmoCount(self.AmmoType)
-    -- need clipmax info and room for at least 1/4th
-    if self.AmmoMax >= (ammo + math.ceil(self.AmmoAmount * 0.25)) then
-      local given = self.AmmoAmount
-      given = math.min(given, self.AmmoMax - ammo)
-      ent:GiveAmmo(given, self.AmmoType)
+   if (SERVER and self.tickRemoval ~= true) and ent:IsValid() and ent:IsPlayer() and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent) then
+     local ammo = ent:GetAmmoCount(self.AmmoType)
+     
+     -- need clipmax info and room for at least 1/4th
+     if self.AmmoMax >= (ammo + math.ceil(self.AmmoAmount * 0.25)) then
+       local given = self.AmmoAmount
+       given = math.min(given, self.AmmoMax - ammo)
+       ent:GiveAmmo(given, self.AmmoType)
 
-      local newEntAmount = self.AmmoAmount - given
-      self.AmmoAmount = newEntAmount
-
-      if self.AmmoAmount <= 0 or  math.ceil(self.AmmoEntMax * 0.15) > self.AmmoAmount then
-        self.tickRemoval = true
-        self:Remove()
-      end
-    end
-  end
+       local newEntAmount = self.AmmoAmount - given
+       self.AmmoAmount = newEntAmount
+       print(self.AmmoEntMax, math.ceil(self.AmmoEntMax * 0.25), self.AmmoAmount)
+       
+       if self.AmmoAmount <= 0 or math.ceil(self.AmmoEntMax * 0.25) > self.AmmoAmount then
+         self.tickRemoval = true
+         self:Remove()
+       end
+     end
+   end
 end
 
 -- Hack to force ammo to physwake
