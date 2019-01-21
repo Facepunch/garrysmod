@@ -146,3 +146,12 @@ function meta:GetMiddle(vec)
 	local v = Vector(self)
 	return v:Middle()
 end
+
+--[[---------------------------------------------------------
+Returns a copy of the zero point vector
+-----------------------------------------------------------]]
+function meta:GetZero()
+	local v = Vector(self)
+	v:Zero()
+	return v
+end
