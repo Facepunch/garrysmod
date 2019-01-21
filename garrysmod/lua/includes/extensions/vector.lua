@@ -106,24 +106,6 @@ function meta:GetNegate()
 end
 
 --[[---------------------------------------------------------
-Convets the vector to point version of itself
------------------------------------------------------------]]
-function meta:Zero()
-	self.x = 0
-	self.y = 0
-	self.z = 0
-	return self
-end
-
---[[---------------------------------------------------------
-Returns a copy of the point vector
------------------------------------------------------------]]
-function meta:GetZero()
-	local v = Vector(self)
-	return v:Zero()
-end
-
---[[---------------------------------------------------------
 Returns a flag if the vector is a zero vector
 -----------------------------------------------------------]]
 function meta:IsZero()
