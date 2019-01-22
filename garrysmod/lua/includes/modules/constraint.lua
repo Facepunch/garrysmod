@@ -522,7 +522,10 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 	if ( IsValid( Constraint ) ) then
 		Constraint:SetTable( ctable )
 		AddConstraintTable( Ent1, Constraint, Ent2 )
-		AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
+
+		if Ent1.ConstraintSystem then
+			AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
+		end
 	end
 
 	return Constraint, rope
