@@ -500,9 +500,6 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 
 	local rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
 
-	-- What the fuck
-	if ( !Constraint ) then Constraint, rope = rope, nil end
-
 	local ctable = {
 		Type = "Rope",
 		Ent1 = Ent1,
@@ -519,17 +516,17 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 		rigid = rigid
 	}
 
-	if ( IsValid( Constraint ) ) then
+
+	if ( Constraint ) then
 		Constraint:SetTable( ctable )
 		AddConstraintTable( Ent1, Constraint, Ent2 )
-
-		if Ent1.ConstraintSystem then
-			AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
-		end
+		AddConstraintSystemCount( Ent1.ConstraintSystem, Constraint )
+		return Constraint, rope
+	elseif ( rope ) then
+		rope:SetTable( ctable )
+		AddConstraintTable( Ent1, rope, Ent2 )
+		return rope
 	end
-
-	return Constraint, rope
-
 end
 duplicator.RegisterConstraint( "Rope", Rope, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "length", "addlength", "forcelimit", "width", "material", "rigid" )
 
