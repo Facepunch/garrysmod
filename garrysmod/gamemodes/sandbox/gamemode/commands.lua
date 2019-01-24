@@ -127,15 +127,19 @@ duplicator.RegisterEntityClass( "prop_physics_multiplayer", MakeProp, "Pos", "An
 
 function MakeEffect( ply, model, Data )
 
+	Data.Model = model
+
 	-- Make sure this is allowed
 	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnEffect", ply, model ) ) then return end
 
 	local Prop = ents.Create( "prop_effect" )
 	duplicator.DoGeneric( Prop, Data )
-	Prop.AttachedEntityInfo = table.Copy( Data.AttachedEntityInfo ) -- This shouldn't be neccesary
+	if ( Data.AttachedEntityInfo ) then
+		Prop.AttachedEntityInfo = table.Copy( Data.AttachedEntityInfo ) -- This shouldn't be neccesary
+	end
 	Prop:Spawn()
 
-	duplicator.DoGenericPhysics( Prop, ply, Data )
+	-- duplicator.DoGenericPhysics( Prop, ply, Data )
 
 	-- Tell the gamemode we just spawned something
 	if ( IsValid( ply ) ) then
@@ -288,6 +292,11 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 	ent:SetPos( tr.HitPos )
 	ent:Spawn()
 	ent:Activate()
+
+	-- Special case for effects
+	if ( entity_name == "prop_effect" && IsValid( ent.AttachedEntity ) ) then
+		ent.AttachedEntity:SetBodyGroups( strBody )
+	end
 
 	-- Attempt to move the object so it sits flush
 	-- We could do a TraceEntity instead of doing all
