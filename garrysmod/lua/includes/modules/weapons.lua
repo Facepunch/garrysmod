@@ -151,7 +151,7 @@ function Get( name, retval )
 		local base = Get( retval.Base )
 
 		if ( !base ) then
-			Msg( "ERROR: Trying to derive weapon " .. tostring( name ) .. " from non existant SWEP " .. tostring( SEntList[ name ].Base ) .. "!\n" )
+			Msg( "ERROR: Trying to derive weapon " .. tostring( name ) .. " from non existant SWEP " .. tostring( retval.Base ) .. "!\n" )
 		else
 			retval = TableInherit( retval, base )
 		end
