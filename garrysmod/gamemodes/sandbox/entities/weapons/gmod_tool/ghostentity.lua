@@ -10,6 +10,10 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 	-- It's done clientside in multiplayer
 	if ( SERVER && !game.SinglePlayer() ) then return end
 	if ( CLIENT && game.SinglePlayer() ) then return end
+
+	-- The reason we need this is because in multiplayer, when you holster a tool serverside,
+	-- either by using the spawnnmenu's Weapons tab or by simply entering a vehicle,
+	-- the Think hook is called once after Holster is called on the client, recreating the ghost entity right after it was removed.
 	if ( !IsFirstTimePredicted() ) then return end
 
 	-- Release the old ghost entity
