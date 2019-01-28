@@ -99,7 +99,6 @@ function ENT:Touch(ent)
 
        local newEntAmount = self.AmmoAmount - given
        self.AmmoAmount = newEntAmount
-       print(self.AmmoEntMax, math.ceil(self.AmmoEntMax * 0.25), self.AmmoAmount)
        
        if self.AmmoAmount <= 0 or math.ceil(self.AmmoEntMax * 0.25) > self.AmmoAmount then
          self.tickRemoval = true
