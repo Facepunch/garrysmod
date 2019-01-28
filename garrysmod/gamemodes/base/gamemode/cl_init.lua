@@ -178,7 +178,7 @@ end
 function GM:OnChatTab( str )
 
 	str = string.TrimRight(str)
-	
+
 	local LastWord
 	for word in string.gmatch( str, "[^ ]+" ) do
 		LastWord = word
@@ -603,7 +603,7 @@ function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 			end
 
 			hook.Call( "PostDrawPlayerHands", self, hands, ViewModel, Player, Weapon )
-			
+
 		end
 
 	end
@@ -674,6 +674,16 @@ end
 	Desc: The mouse has been released on the game screen
 -----------------------------------------------------------]]
 function GM:GUIMouseReleased( mousecode, AimVector )
+end
+
+--[[---------------------------------------------------------
+	Player class has been changed
+-----------------------------------------------------------]]
+function GM:PlayerClassChanged( ply, newID )
+
+	-- Initialize the class on client
+	player_manager.SetPlayerClass( ply, util.NetworkIDToString( newID ) )
+
 end
 
 function GM:PreDrawHUD()
