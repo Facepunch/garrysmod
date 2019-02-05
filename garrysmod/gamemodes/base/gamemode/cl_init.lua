@@ -681,8 +681,15 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerClassChanged( ply, newID )
 
+	-- No class is set
+	if ( newID < 1 ) then return end
+
+	-- Invalid class ID?
+	local classname = util.NetworkIDToString( newID )
+	if ( !classname ) then return end
+
 	-- Initialize the class on client
-	player_manager.SetPlayerClass( ply, util.NetworkIDToString( newID ) )
+	player_manager.SetPlayerClass( ply, classname )
 
 end
 
