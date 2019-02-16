@@ -1,38 +1,5 @@
 
---[[---------------------------------------------------------
-    Resolve an existing Promise
------------------------------------------------------------]]
-local function PromiseResolve(promise, res)
-  if promise:IsSettled() then return end
-  local safe, args = pcall(function()
-    if getmetatable(res) == Promise then
-      res:Then(function(res)
-        PromiseResolve(promise, res)
-      end, function(err)
-        PromiseReject(promise, err)
-      end)
-    else
-      promise._state = RESOLVED
-      promise._value = res
-      for i, handler in ipairs(promise._handlers) do
-        handler.onresolve(res)
-      end
-    end
-  end)
-  if not safe then PromiseReject(promise, args) end
-end
-
---[[---------------------------------------------------------
-    Reject an existing Promise
------------------------------------------------------------]]
-local function PromiseReject(promise, err)
-  if promise:IsSettled() then return end
-  promise._state = REJECTED
-  promise._value = err
-  for i, handler in ipairs(promise._handlers) do
-    handler.onreject(err)
-  end
-end
+promise = promise or {}
 
 --[[---------------------------------------------------------
     Promise object definition
@@ -57,6 +24,33 @@ function Promise:_New(callback)
   end)
   if not safe then PromiseReject(self, err) end
   return self
+end
+function Promise:_Resolve(res)
+  if self:IsSettled() then return end
+  local safe, args = pcall(function()
+    if getmetatable(res) == Promise then
+      res:Then(function(res)
+        self:_Resolve(res)
+      end, function(err)
+        self:_Reject(args)
+      end)
+    else
+      self._state = RESOLVED
+      self._value = res
+      for i, handler in ipairs(self._handlers) do
+        handler.onresolve(res)
+      end
+    end
+  end)
+  if not safe then self:_Reject(args) end
+end
+function Promise:_Reject(err)
+  if self:IsSettled() then return end
+  self._state = REJECTED
+  self._value = err
+  for i, handler in ipairs(self._handlers) do
+    handler.onreject(err)
+  end
 end
 function Promise:IsPending()
   return self._state == PENDING
@@ -121,8 +115,6 @@ function Promise:Await()
   else error(self._value) end
 end
 setmetatable(Promise, {__call = Promise._New})
-
-promise = promise or {}
 
 --[[---------------------------------------------------------
     Returns a new Promise
