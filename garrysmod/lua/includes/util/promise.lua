@@ -19,7 +19,7 @@ function Promise:_New(callback)
     callback(function(res)
       self:_Resolve(res)
     end, function(err)
-      self:_Reject(args)
+      self:_Reject(err)
     end)
   end)
   if not safe then self:_Reject(args) end
@@ -32,7 +32,7 @@ function Promise:_Resolve(res)
       res:Then(function(res)
         self:_Resolve(res)
       end, function(err)
-        self:_Reject(args)
+        self:_Reject(err)
       end)
     else
       self._state = RESOLVED
@@ -175,7 +175,7 @@ function promise.Async(callback)
       local safe, args = pcall(function()
         resolve(callback())
       end)
-      if not safe then reject(err) end
+      if not safe then reject(args) end
     end)
     coroutines[id] = co
     id = id+1
