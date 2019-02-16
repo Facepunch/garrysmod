@@ -149,8 +149,8 @@ function promise.All(promises)
 end
 
 --[[---------------------------------------------------------
-    Returns that a Promise that is resolved/rejected
-    with the first Promise that is settled
+    Returns a Promise that is resolved/rejected
+    with the first settled Promise
 -----------------------------------------------------------]]
 function promise.First(promises)
   return Promise(function(resolve, reject)
