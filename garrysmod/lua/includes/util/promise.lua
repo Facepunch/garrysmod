@@ -159,3 +159,36 @@ function promise.First(promises)
     end
   end)
 end
+
+--[[---------------------------------------------------------
+    Returns a Promise that is resolved when the function
+    passed as a parameter stops running, or rejected if an
+    error occurs during the coroutine
+-----------------------------------------------------------]]
+
+local id = 0
+local coroutines = {}
+hook.Add("Think", "PromiseAsyncCoroutines", function()
+  for id, co in pairs(coroutines) do
+    if co == nil then continue end
+    local status = coroutine.status(co)
+    if status == "suspended" then
+			coroutine.resume(co)
+		elseif status == "dead" then
+			coroutines[id] = nil
+		end
+  end
+end)
+
+function promise.Async(callback)
+  return Promise(function(resolve, reject)
+    local co = coroutine.create(function()
+      local safe, args = pcall(function()
+        resolve(callback())
+      end)
+      if not safe then reject(err) end
+    end)
+    coroutines[id] = co
+    id = id+1
+  end)
+end
