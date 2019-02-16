@@ -103,3 +103,17 @@ local request = {
 HTTP( request )
 
 --]]
+
+function Promise(request)	
+	return promise.New(function(resolve, reject)		
+		request.success = function(code, body, headers)
+			resolve({
+				code = code,
+				body = body,
+				headers = headers
+			})
+		end
+		request.failure = reject			
+		HTTP(request)
+	end)	
+end
