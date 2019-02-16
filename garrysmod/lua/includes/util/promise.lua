@@ -17,12 +17,12 @@ function Promise:_New(callback)
   setmetatable(self, Promise)
   local safe, args = pcall(function()
     callback(function(res)
-      PromiseResolve(self, res)
+      self:_Resolve(res)
     end, function(err)
-      PromiseReject(self, err)
+      self:_Reject(args)
     end)
   end)
-  if not safe then PromiseReject(self, err) end
+  if not safe then self:_Reject(args) end
   return self
 end
 function Promise:_Resolve(res)
