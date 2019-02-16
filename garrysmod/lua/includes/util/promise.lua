@@ -1,5 +1,5 @@
 
-promise = promise or {}
+promise = {}
 
 --[[---------------------------------------------------------
     Promise object definition
