@@ -182,7 +182,6 @@ end
 
 hook.Add("Think", "PromiseAsyncCoroutines", function()
   for id, co in pairs(coroutines) do
-    if co == nil then continue end
     local status = coroutine.status(co)
     if status == "suspended" then
 			coroutine.resume(co)
