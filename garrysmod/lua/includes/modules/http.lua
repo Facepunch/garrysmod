@@ -105,7 +105,7 @@ HTTP( request )
 --]]
 
 function Promise(request)	
-	return promise.New(function(resolve, reject)		
+	return util.Promise(function(resolve, reject)		
 		request.success = function(code, body, headers)
 			resolve({
 				code = code,
