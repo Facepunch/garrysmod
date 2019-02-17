@@ -106,9 +106,7 @@ function Promise:Await()
   if not coroutine.running() then return end
   while self:IsPending() do coroutine.yield() end
   if self:IsResolved() then
-    if getmetatable(self._value) == Promise then
-      return self._value:Await()
-    else return self._value end
+    return self._value
   else error(self._value) end
 end
 setmetatable(Promise, {__call = Promise._New})
