@@ -109,6 +109,11 @@ function Promise:Await()
     return self._value
   else error(self._value) end
 end
+function Promise:__tostring()
+  if self:IsPending() then return "Promise: pending"
+  elseif self:IsResolved() then return "Promise: fulfilled ("..tostring(self._value)..")"
+  else return "Promise: rejected ("..tostring(self._value)..")" end
+end
 setmetatable(Promise, {__call = Promise._New})
 
 --[[---------------------------------------------------------
