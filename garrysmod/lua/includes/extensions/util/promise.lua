@@ -130,16 +130,14 @@ end
 -----------------------------------------------------------]]
 function util.PromiseAll(promises)
   return Promise(function(resolve, reject)
-    local remaining = #promises
+    local remaining = table.Count(promises)
     if remaining > 0 then
-      for i, promise in ipairs(promises) do
+      local results = {}
+      for key, promise in pairs(promises) do
         promise:Then(function(res)
+          results[key] = res
           remaining = remaining - 1
           if remaining == 0 then
-            local results = {}
-            for i, promise in ipairs(promises) do
-              table.insert(results, promise._value)
-            end
             resolve(results)
           end
         end, reject)
@@ -154,7 +152,7 @@ end
 -----------------------------------------------------------]]
 function util.PromiseFirst(promises)
   return Promise(function(resolve, reject)
-    for i, promise in ipairs(promises) do
+    for key, promise in pairs(promises) do
       promise:Then(resolve, reject)
     end
   end)
