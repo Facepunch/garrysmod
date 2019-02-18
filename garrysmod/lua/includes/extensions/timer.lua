@@ -5,6 +5,6 @@
 -----------------------------------------------------------]]
 function timer.Loop(delay, callback)
   timer.Simple(delay, function()
-    if callback() then timer.DrG_Loop(delay, callback) end
+    if callback() then timer.Loop(delay, callback) end
   end)
 end
