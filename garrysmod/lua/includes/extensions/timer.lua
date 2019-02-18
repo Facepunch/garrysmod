@@ -5,6 +5,7 @@
 -----------------------------------------------------------]]
 function timer.Loop(delay, callback)
   timer.Simple(delay, function()
-    if callback() then timer.Loop(delay, callback) end
+    local loop, newdelay = callback()
+    if loop then timer.Loop(newdelay or delay, callback) end
   end)
 end
