@@ -114,6 +114,6 @@ function Promise(request)
 			})
 		end
 		request.failure = reject			
-		HTTP(request)
+		if not HTTP(request) then reject("HTTP failed") end
 	end)	
 end
