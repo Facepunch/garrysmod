@@ -93,7 +93,7 @@ local function IdlePopup()
    local dframe = vgui.Create("DFrame")
    dframe:SetSize(w, h)
    dframe:Center()
-   dframe:SetTitle("Idle")
+   dframe:SetTitle(GetTranslation("idle_popup_title"))
    dframe:SetVisible(true)
    dframe:SetMouseInputEnabled(true)
 

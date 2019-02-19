@@ -14,6 +14,11 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 
 	local FOV = 17
 
+	-- Rendering icon the way we do is kinda bad and wil crash the game with too many entities in the dupe
+	-- Try to mitigate that to some degree by not rendering the outline when we are above 800 entities
+	-- 1000 was tested without problems, but we want to give it some space as 1000 was tested in "perfect conditions" with nothing else happening on the map
+	local DoDisableOutline = table.Count( Dupe.Entities ) > 800
+
 	--
 	-- This is gonna take some cunning to look awesome!
 	--
@@ -87,63 +92,65 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	--
 	render.SuppressEngineLighting( true )
 
-	local BorderSize	= CamDist * 0.004
-	local Up			= EyeAng:Up() * BorderSize
-	local Right			= EyeAng:Right() * BorderSize
+	if ( !DoDisableOutline ) then
+		local BorderSize	= CamDist * 0.004
+		local Up			= EyeAng:Up() * BorderSize
+		local Right			= EyeAng:Right() * BorderSize
 
-	render.SetColorModulation( 1, 1, 1, 1 )
-	render.MaterialOverride( Material( "models/debug/debugwhite" ) )
+		render.SetColorModulation( 1, 1, 1, 1 )
+		render.MaterialOverride( Material( "models/debug/debugwhite" ) )
 
-	-- Render each entity in a circle
-	for k, v in pairs( Dupe.Entities ) do
+		-- Render each entity in a circle
+		for k, v in pairs( Dupe.Entities ) do
 
-		for i = 0, math.pi * 2, 0.2 do
+			for i = 0, math.pi * 2, 0.2 do
 
-			view.origin = CamPos + Up * math.sin( i ) + Right * math.cos( i )
+				view.origin = CamPos + Up * math.sin( i ) + Right * math.cos( i )
 
-			cam.Start( view )
+				cam.Start( view )
+
+					render.Model( {
+						model	= v.Model,
+						pos		= v.Pos,
+						angle	= v.Angle,
+
+					}, entities[ k ] )
+
+				cam.End()
+
+			end
+
+		end
+
+		-- Because we just messed up the depth
+		render.ClearDepth()
+		render.SetColorModulation( 0, 0, 0, 1 )
+
+		-- Try to keep the border size consistent with zoom size
+		local BorderSize	= CamDist * 0.002
+		local Up			= EyeAng:Up() * BorderSize
+		local Right			= EyeAng:Right() * BorderSize
+
+		-- Render each entity in a circle
+		for k, v in pairs( Dupe.Entities ) do
+
+			for i = 0, math.pi * 2, 0.2 do
+
+				view.origin = CamPos + Up * math.sin( i ) + Right * math.cos( i )
+				cam.Start( view )
 
 				render.Model( {
 					model	= v.Model,
 					pos		= v.Pos,
 					angle	= v.Angle,
-
+					skin	= v.Skin
 				}, entities[ k ] )
 
-			cam.End()
+				cam.End()
+
+			end
 
 		end
-
-	end
-
-	-- Because ee just messed up the depth
-	render.ClearDepth()
-	render.SetColorModulation( 0, 0, 0, 1 )
-
-	-- Try to keep the border size consistent with zoom size
-	local BorderSize	= CamDist * 0.002
-	local Up			= EyeAng:Up() * BorderSize
-	local Right			= EyeAng:Right() * BorderSize
-
-	-- Render each entity in a circle
-	for k, v in pairs( Dupe.Entities ) do
-
-		for i = 0, math.pi * 2, 0.2 do
-
-			view.origin = CamPos + Up * math.sin( i ) + Right * math.cos( i )
-			cam.Start( view )
-
-			render.Model( {
-				model	= v.Model,
-				pos		= v.Pos,
-				angle	= v.Angle,
-				skin	= v.Skin
-			}, entities[ k ] )
-
-			cam.End()
-
-		end
-
 	end
 
 	--

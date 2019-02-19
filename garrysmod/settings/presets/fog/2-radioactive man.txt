@@ -1,0 +1,9 @@
+"Radioactive Man"
+{
+	"Fog_Color"		"0.000000 255.000000 13.000000"
+	"fog_colorskybox"		"0.000000 255.000000 13.000000"
+	"Fog_End"		"0.000000"
+	"fog_endskybox"		"0.000000"
+	"Fog_Start"		"500.000000"
+	"fog_startskybox"		"500.000000"
+}

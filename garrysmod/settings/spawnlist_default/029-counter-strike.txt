@@ -1,0 +1,9 @@
+"TableToKeyValues"
+{
+	"parentid"		"0"
+	"icon"		"games/16/cstrike.png"
+	"id"		"29"
+	"needsapp"		"cstrike"
+	"name"		"Counter-Strike"
+	"version"		"3"
+}

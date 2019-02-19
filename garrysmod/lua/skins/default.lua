@@ -487,12 +487,17 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintMenuOption( panel, w, h )
 
-	if ( panel.m_bBackground && (panel.Hovered || panel.Highlight) ) then
+	if ( panel.m_bBackground && !panel:IsEnabled() ) then
+		surface.SetDrawColor( Color( 0, 0, 0, 50 ) )
+		surface.DrawRect( 0, 0, w, h )
+	end
+
+	if ( panel.m_bBackground && ( panel.Hovered || panel.Highlight) ) then
 		self.tex.MenuBG_Hover( 0, 0, w, h )
 	end
 
 	if ( panel:GetChecked() ) then
-		self.tex.Menu_Check( 5, h/2-7, 15, 15 )
+		self.tex.Menu_Check( 5, h / 2 - 7, 15, 15 )
 	end
 
 end

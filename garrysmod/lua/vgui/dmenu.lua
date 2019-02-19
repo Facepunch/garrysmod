@@ -107,7 +107,7 @@ function PANEL:OpenSubMenu( item, menu )
 
 	-- Do we already have a menu open?
 	local openmenu = self:GetOpenSubMenu()
-	if ( IsValid( openmenu ) ) then
+	if ( IsValid( openmenu ) && openmenu:IsVisible() ) then
 
 		-- Don't open it again!
 		if ( menu && openmenu == menu ) then return end

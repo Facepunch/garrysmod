@@ -23,6 +23,7 @@ local function UpdateMaps()
 	MapNames[ "free_" ] = "Blade Symphony"
 	MapNames[ "practice_box" ] = "Blade Symphony"
 	MapNames[ "tut_training" ] = "Blade Symphony"
+	MapNames[ "lightstyle_test" ] = "Blade Symphony"
 
 	MapNames[ "ar_" ] = "Counter-Strike"
 	MapNames[ "cs_" ] = "Counter-Strike"
@@ -192,7 +193,7 @@ local favmaps
 local function LoadFavourites()
 
 	local cookiestr = cookie.GetString( "favmaps" )
-	favmaps = favmaps || (cookiestr && string.Explode( ";", cookiestr ) || {})
+	favmaps = favmaps || ( cookiestr && string.Explode( ";", cookiestr ) || {} )
 
 end
 
@@ -357,6 +358,6 @@ function LoadLastMap()
 
 	if ( !file.Exists( "maps/" .. map .. ".bsp", "GAME" ) ) then return end
 
-	pnlMainMenu:Call( "SetLastMap('" .. map .. "','" .. cat .. "')" )
+	pnlMainMenu:Call( "SetLastMap('" .. map:JavascriptSafe() .. "','" .. cat:JavascriptSafe() .. "')" )
 
 end

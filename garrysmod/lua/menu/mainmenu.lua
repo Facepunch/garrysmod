@@ -1,7 +1,7 @@
 
-include( 'background.lua' )
-include( 'cef_credits.lua' )
-include( 'openurl.lua' )
+include( "background.lua" )
+include( "cef_credits.lua" )
+include( "openurl.lua" )
 
 pnlMainMenu = nil
 
@@ -74,7 +74,21 @@ function PANEL:Paint()
 			self.HTML:QueueJavascript( "SetInGame( false )" )
 
 		end
+	end
 
+	if ( self.CanAddServerToFavorites != CanAddServerToFavorites() ) then
+
+		self.CanAddServerToFavorites = CanAddServerToFavorites()
+
+		if ( self.CanAddServerToFavorites ) then
+
+			self.HTML:QueueJavascript( "SetShowFavButton( true )" )
+
+		else
+
+			self.HTML:QueueJavascript( "SetShowFavButton( false )" )
+
+		end
 	end
 
 end
@@ -92,7 +106,7 @@ function PANEL:RefreshGamemodes()
 
 	self.HTML:QueueJavascript( "UpdateGamemodes( " .. json .. " )" )
 	self:UpdateBackgroundImages()
-	self.HTML:QueueJavascript( "UpdateCurrentGamemode( '" .. engine.ActiveGamemode() .. "' )" )
+	self.HTML:QueueJavascript( "UpdateCurrentGamemode( '" .. engine.ActiveGamemode():JavascriptSafe() .. "' )" )
 
 end
 
@@ -129,25 +143,6 @@ function PANEL:Call( js )
 end
 
 vgui.Register( "MainMenuPanel", PANEL, "EditablePanel" )
-
-function UpdateSteamName( id, time )
-
-	if ( !id ) then return end
-
-	if ( !time ) then time = 0.2 end
-
-	local name = steamworks.GetPlayerName( id )
-	if ( name != "" && name != "[unknown]" ) then
-
-		pnlMainMenu:Call( "SteamName( \"" .. id .. "\", \"" .. name .. "\" )" )
-		return
-
-	end
-
-	steamworks.RequestPlayerInfo( id )
-	timer.Simple( time, function() UpdateSteamName( id, time + 0.2 ) end )
-
-end
 
 --
 -- Called from JS when starting a new game
@@ -207,48 +202,132 @@ function GetPlayerList( serverip )
 	serverlist.PlayerList( serverip, function( tbl )
 
 		local json = util.TableToJSON( tbl )
-		pnlMainMenu:Call( "SetPlayerList( '" .. serverip .. "', " .. json .. ")" )
+		pnlMainMenu:Call( "SetPlayerList( '" .. serverip:JavascriptSafe() .. "', " .. json .. ")" )
 
 	end )
 
 end
 
+local BlackList = {
+	Addresses = {},
+	Hostnames = {},
+	Descripts = {},
+	Gamemodes = {},
+	Maps = {},
+}
+
+local NewsList = {}
+
+GetAPIManifest( function( result )
+	result = util.JSONToTable( result )
+	if ( !result ) then return end
+
+	NewsList = result.News.Blogs or {}
+	LoadNewsList()
+
+	for k, v in pairs( result.Servers.Banned or {} ) do
+		if ( v:StartWith( "map:" ) ) then
+			table.insert( BlackList.Maps, v:sub( 5 ) )
+		elseif ( v:StartWith( "desc:" ) ) then
+			table.insert( BlackList.Descripts, v:sub( 6 ) )
+		elseif ( v:StartWith( "host:" ) ) then
+			table.insert( BlackList.Hostnames, v:sub( 6 ) )
+		elseif ( v:StartWith( "gm:" ) ) then
+			table.insert( BlackList.Gamemodes, v:sub( 4 ) )
+		else
+			table.insert( BlackList.Addresses, v )
+		end
+	end
+end )
+
+function LoadNewsList()
+	if ( !pnlMainMenu ) then return end
+
+	local json = util.TableToJSON( NewsList )
+	pnlMainMenu:Call( "UpdateNewsList(" .. json .. ")" )
+end
+
+local function IsServerBlacklisted( address, hostname, description, gm, map )
+	local addressNoPort = address:match( "[^:]*" )
+
+	for k, v in ipairs( BlackList.Addresses ) do
+		if ( address == v || addressNoPort == v ) then
+			return true
+		end
+	end
+
+	for k, v in ipairs( BlackList.Hostnames ) do
+		if string.match( hostname, v ) then
+			return true
+		end
+	end
+
+	for k, v in ipairs( BlackList.Descripts ) do
+		if string.match( description, v ) then
+			return true
+		end
+	end
+
+	for k, v in ipairs( BlackList.Gamemodes ) do
+		if string.match( gm, v ) then
+			return true
+		end
+	end
+
+	for k, v in ipairs( BlackList.Maps ) do
+		if string.match( map, v ) then
+			return true
+		end
+	end
+
+	return false
+end
+
 local Servers = {}
 local ShouldStop = {}
 
-function GetServers( type, id )
+function GetServers( category, id )
 
-	ShouldStop[ type ] = false
-	Servers[ type ] = {}
+	category = string.JavascriptSafe( category )
+	id = string.JavascriptSafe( id )
+
+	ShouldStop[ category ] = false
+	Servers[ category ] = {}
 
 	local data = {
-		Callback = function( ping , name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid )
+		Callback = function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, workshopid )
 
-			if Servers[ type ] && Servers[ type ][ address ] then return end
-			Servers[ type ][ address ] = true
+			if Servers[ category ] && Servers[ category ][ address ] then print( "Server Browser Error!", address, category ) return end
+			Servers[ category ][ address ] = true
 
-			name = string.JavascriptSafe( name )
-			desc = string.JavascriptSafe( desc )
-			map = string.JavascriptSafe( map )
-			address = string.JavascriptSafe( address )
-			gamemode = string.JavascriptSafe( gamemode )
-			workshopid = string.JavascriptSafe( workshopid )
+			if ( !IsServerBlacklisted( address, name, desc, gm, map ) ) then
 
-			if ( pass ) then pass = "true" else pass = "false" end
+				name = string.JavascriptSafe( name )
+				desc = string.JavascriptSafe( desc )
+				map = string.JavascriptSafe( map )
+				address = string.JavascriptSafe( address )
+				gm = string.JavascriptSafe( gm )
+				workshopid = string.JavascriptSafe( workshopid )
 
-			pnlMainMenu:Call( "AddServer( '"..type.."', '"..id.."', "..ping..", \""..name.."\", \""..desc.."\", \""..map.."\", "..players..", "..maxplayers..", "..botplayers..", "..pass..", "..lastplayed..", \""..address.."\", \""..gamemode.."\", \""..workshopid.."\" )" )
+				pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s" );',
+					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid ) )
+			else
 
-			return !ShouldStop[ type ]
+				Msg( "Ignoring blacklisted server: ", name, " @ ", address, "\n" )
+
+			end
+
+			return !ShouldStop[ category ]
 
 		end,
 
 		Finished = function()
-			pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
-			Servers[ type ] = {}
+			pnlMainMenu:Call( "FinishedServeres( '" .. category:JavascriptSafe() .. "' )" )
+			Servers[ category ] = {}
 		end,
 
-		Type = type,
-		GameDir = 'garrysmod',
+		Type = category,
+		GameDir = "garrysmod",
 		AppID = 4000,
 	}
 
@@ -256,10 +335,10 @@ function GetServers( type, id )
 
 end
 
-function DoStopServers( type )
-	pnlMainMenu:Call( "FinishedServeres( '" .. type .. "' )" )
-	ShouldStop[ type ] = true
-	Servers[ type ] = {}
+function DoStopServers( category )
+	pnlMainMenu:Call( "FinishedServeres( '" .. category:JavascriptSafe() .. "' )" )
+	ShouldStop[ category ] = true
+	Servers[ category ] = {}
 end
 
 --
@@ -325,7 +404,7 @@ end )
 timer.Simple( 0, function()
 
 	pnlMainMenu = vgui.Create( "MainMenuPanel" )
-	pnlMainMenu:Call( "UpdateVersion( '" .. VERSIONSTR .. "', '" .. BRANCH .. "' )" )
+	pnlMainMenu:Call( "UpdateVersion( '" .. VERSIONSTR:JavascriptSafe() .. "', '" .. BRANCH:JavascriptSafe() .. "' )" )
 
 	local language = GetConVarString( "gmod_language" )
 	LanguageChanged( language )

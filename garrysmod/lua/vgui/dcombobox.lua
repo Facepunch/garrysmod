@@ -29,6 +29,7 @@ function PANEL:Clear()
 	self:SetText( "" )
 	self.Choices = {}
 	self.Data = {}
+	self.ChoiceIcons = {}
 	self.selected = nil
 
 	if ( self.Menu ) then
@@ -122,12 +123,16 @@ function PANEL:OnSelect( index, value, data )
 
 end
 
-function PANEL:AddChoice( value, data, select )
+function PANEL:AddChoice( value, data, select, icon )
 
 	local i = table.insert( self.Choices, value )
 
 	if ( data ) then
 		self.Data[ i ] = data
+	end
+	
+	if ( icon ) then
+		self.ChoiceIcons[ i ] = icon
 	end
 
 	if ( select ) then
@@ -172,11 +177,17 @@ function PANEL:OpenMenu( pControlOpener )
 			table.insert( sorted, { id = k, data = v, label = val } )
 		end
 		for k, v in SortedPairsByMemberValue( sorted, "label" ) do
-			self.Menu:AddOption( v.data, function() self:ChooseOption( v.data, v.id ) end )
+			local option = self.Menu:AddOption( v.data, function() self:ChooseOption( v.data, v.id ) end )
+			if ( self.ChoiceIcons[ v.id ] ) then
+				option:SetIcon( self.ChoiceIcons[ v.id ] )
+			end
 		end
 	else
 		for k, v in pairs( self.Choices ) do
-			self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
+			local option = self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
+			if ( self.ChoiceIcons[ k ] ) then
+				option:SetIcon( self.ChoiceIcons[ k ] )
+			end
 		end
 	end
 
@@ -235,7 +246,9 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
 	ctrl:AddChoice( "Some Choice" )
-	ctrl:AddChoice( "Another Choice" )
+	ctrl:AddChoice( "Another Choice", "myData" )
+	ctrl:AddChoice( "Default Choice", "myData2", true )
+	ctrl:AddChoice( "Icon Choice", "myData3", false, "icon16/star.png" )
 	ctrl:SetWide( 150 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )

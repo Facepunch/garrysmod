@@ -24,15 +24,16 @@ properties.Add( "keepupright", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 
 		if ( !IsValid( ent ) ) then return end
-		if ( !IsValid( player ) ) then return end
-		if ( ent:GetClass() != "prop_physics" ) then return false end
+		if ( !IsValid( ply ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( ent:GetClass() != "prop_physics" ) then return end
 		if ( ent:GetNWBool( "IsUpright" ) ) then return end
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		local Phys = ent:GetPhysicsObjectNum( 0 )
 		if ( !IsValid( Phys ) ) then return end
@@ -48,7 +49,7 @@ properties.Add( "keepupright", {
 
 		if ( constraint ) then
 
-			player:AddCleanup( "constraints", constraint )
+			ply:AddCleanup( "constraints", constraint )
 			ent:SetNWBool( "IsUpright", true )
 
 		end
@@ -77,12 +78,13 @@ properties.Add( "keepupright_stop", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 
 		if ( !IsValid( ent ) ) then return end
-		if ( !IsValid( player ) ) then return end
+		if ( !IsValid( ply ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
 		if ( ent:GetClass() != "prop_physics" ) then return end
 		if ( !ent:GetNWBool( "IsUpright" ) ) then return end
 

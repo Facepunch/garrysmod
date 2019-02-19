@@ -55,7 +55,7 @@ if ( SERVER ) then
 	end
 
 	function meta:GetCreator()
-		return self.m_PlayerCreator
+		return self.m_PlayerCreator || NULL
 	end
 
 end

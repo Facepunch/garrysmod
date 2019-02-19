@@ -18,7 +18,7 @@ function PANEL:SetSubMenu( menu )
 
 	self.SubMenu = menu
 
-	if ( !self.SubMenuArrow ) then
+	if ( !IsValid( self.SubMenuArrow ) ) then
 
 		self.SubMenuArrow = vgui.Create( "DPanel", self )
 		self.SubMenuArrow.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "MenuRightArrow", panel, w, h ) end
@@ -30,8 +30,8 @@ end
 function PANEL:AddSubMenu()
 
 	local SubMenu = DermaMenu( self )
-		SubMenu:SetVisible( false )
-		SubMenu:SetParent( self )
+	SubMenu:SetVisible( false )
+	SubMenu:SetParent( self )
 
 	self:SetSubMenu( SubMenu )
 
@@ -126,7 +126,7 @@ function PANEL:PerformLayout()
 
 	self:SetSize( w, 22 )
 
-	if ( self.SubMenuArrow ) then
+	if ( IsValid( self.SubMenuArrow ) ) then
 
 		self.SubMenuArrow:SetSize( 15, 15 )
 		self.SubMenuArrow:CenterVertical()

@@ -90,6 +90,24 @@ function OpenEntityMenu( ent, tr )
 
 end
 
+-- Use this check in your properties to see if given entity can be affected by it
+-- Ideally this should be done automatically for you, but due to how this system was set up, its now impossible
+function CanBeTargeted( ent, ply )
+	if ( !IsValid( ent ) ) then return false end
+	if ( ent:IsPlayer() ) then return false end
+
+	-- Check the range if player object is given
+	-- This is not perfect, but it is close enough and its definitely better than nothing
+	if ( IsValid( ply ) ) then
+		local mins = ent:OBBMins()
+		local maxs = ent:OBBMaxs()
+		local maxRange = math.max( math.abs( mins.x ) + maxs.x, math.abs( mins.y ) + maxs.y, math.abs( mins.z ) + maxs.z )
+		if ( ent:GetPos():Distance( ply:GetShootPos() ) > maxRange + 1024 ) then return false end
+	end
+
+	return !( ent:GetPhysicsObjectCount() < 1 && ent:GetSolid() == SOLID_NONE && bit.band( ent:GetSolidFlags(), FSOLID_USE_TRIGGER_BOUNDS ) == 0 && bit.band( ent:GetSolidFlags(), FSOLID_CUSTOMRAYTEST ) == 0 )
+end
+
 function GetHovered( eyepos, eyevec )
 
 	local filter = { LocalPlayer():GetViewEntity() }

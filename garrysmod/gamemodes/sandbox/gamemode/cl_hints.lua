@@ -15,9 +15,20 @@ local function ThrowHint( name )
 
 	if ( engine.IsPlayingDemo() ) then return end
 
-	GAMEMODE:AddNotify( "#Hint_"..name, NOTIFY_HINT, 20 )
-	
-	surface.PlaySound( "ambient/water/drip"..math.random(1, 4)..".wav" )
+	local text = language.GetPhrase( "Hint_" .. name )
+
+	local s, e, group = string.find( text, "%%([^%%]+)%%" )
+	while ( s ) do
+		local key = input.LookupBinding( group )
+		if ( !key ) then key = "<NOT BOUND>" end
+
+		text = string.gsub( text, "%%([^%%]+)%%", "'" .. key:upper() .. "'" )
+		s, e, group = string.find( text, "%%([^%%]+)%%" )
+	end
+
+	GAMEMODE:AddNotify( text, NOTIFY_HINT, 20 )
+
+	surface.PlaySound( "ambient/water/drip" .. math.random( 1, 4 ) .. ".wav" )
 
 end
 
@@ -27,11 +38,11 @@ end
 --
 function GM:AddHint( name, delay )
 
-	if (ProcessedHints[ name ]) then return end
+	if ( ProcessedHints[ name ] ) then return end
 
-	timer.Create( "HintSystem_"..name, delay, 1, function() ThrowHint( name ) end )
+	timer.Create( "HintSystem_" .. name, delay, 1, function() ThrowHint( name ) end )
 	ProcessedHints[ name ] = true
-	
+
 end
 
 --
@@ -39,8 +50,8 @@ end
 --
 function GM:SuppressHint( name )
 
-	timer.Remove( "HintSystem_"..name )
-	
+	timer.Remove( "HintSystem_" .. name )
+
 end
 
 -- Show opening menu hint if they haven't opened the menu within 30 seconds
