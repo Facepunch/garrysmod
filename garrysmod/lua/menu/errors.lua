@@ -49,7 +49,7 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, addontitle, ad
 		last	= SysTime(),
 		times	= 1,
 		title	= addontitle,
-		x		= 32,
+		x	= 32,
 		text	= text
 	}
 
