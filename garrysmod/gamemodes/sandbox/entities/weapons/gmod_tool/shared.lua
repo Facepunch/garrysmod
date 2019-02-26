@@ -1,7 +1,7 @@
 
 -- Variables that are used on both client and server
 
-SWEP.PrintName		= "Tool Gun"
+SWEP.PrintName		= "#GMOD_ToolGun"
 SWEP.Author			= ""
 SWEP.Contact		= ""
 SWEP.Purpose		= ""
