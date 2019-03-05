@@ -221,7 +221,7 @@ end
 --[[---------------------------------------------------------
 	Name: GetLinearSpace(nStart, nEnd, nAmount)
 	Desc: Generates additional `nAmount` points in linaer space between `nStart` and `nEnd`
-	Rets: A table including the start, end points including the generated mid points
+	Rets: A table including the start, end and the generated mid points
 	Usage: math.GetLinearSpace(0, 10, 3) --> {0,2.5,5,7.5,10}
 -----------------------------------------------------------]]
 function GetLinearSpace(nS, nE, nN)
