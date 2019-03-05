@@ -229,7 +229,7 @@ function math.LinearSet(nStart, nEnd, nAmount)
 	fAmt = ((fAmt >= 0) and fAmt or 0)
 	local iAmt, dAmt = (fAmt + 1), (nEnd - nStart)
 	local fStart, fEnd, nAdd = 1, (fAmt+2), (dAmt / iAmt)
-	local tO = {[fStart]=nStart, [fEnd] = nEnd}
+	local tO = {[fStart] = nStart, [fEnd] = nEnd}
 	while ( fStart <= fEnd ) do
 		fStart, fEnd = (fStart + 1), (fEnd - 1)
 		tO[fStart] = tO[fStart - 1] + nAdd
