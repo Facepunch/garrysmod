@@ -222,10 +222,10 @@ end
 	Name: GetLinearSpace(nStart, nEnd, nAmount)
 	Desc: Generates additional `nAmount` points in linaer space between `nStart` and `nEnd`
 	Rets: A table including the start, end and the generated mid points
-	Usage: math.GetLinearSpace(0, 10, 3) --> {0,2.5,5,7.5,10}
+	Usage: math.LinearSet(0, 10, 3) --> {0,2.5,5,7.5,10}
 -----------------------------------------------------------]]
-function LinearSet(nS, nE, nN)
-	local fN = math.Clamp(math.floor(tonumber(nN) or 0), 0, 1000)
+function math.LinearSet(nS, nE, nN)
+	local fN = math.floor(tonumber(nN) or 0); fN = ((fN >= 0) and fN or 0)
 	local iE, dI, fS, fE = (fN + 1), (nE - nS), 1, (fN+2)
 	local tO, nI, nD = {[fS]=nS, [fE] = nE}, 1, (dI / iE)
 	while(fS <= fE) do fS, fE = (fS + 1), (fE - 1)
