@@ -218,7 +218,6 @@ function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
 end
 
-
 --[[---------------------------------------------------------
 	Name: GetLinearSpace(nStart, nEnd, nAmount)
 	Desc: Generates additional `nAmount` points in linaer space between `nStart` and `nEnd`
