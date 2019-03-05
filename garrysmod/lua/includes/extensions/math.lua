@@ -228,8 +228,7 @@ function math.LinearSet(nStart, nEnd, nAmount)
 	local fAmt = math.floor(tonumber(nAmount) or 0)
 	fAmt = ((fAmt >= 0) and fAmt or 0)
 	local iAmt, dAmt = (fAmt + 1), (nEnd - nStart)
-	local nI, nAdd = 1, (dAmt / iAmt)
-	local fStart, fEnd = 1, (fAmt+2)
+	local fStart, fEnd, nAdd = 1, (fAmt+2), (dAmt / iAmt)
 	local tO = {[fStart]=nStart, [fEnd] = nEnd}
 	while ( fStart <= fEnd ) do
 		fStart, fEnd = (fStart + 1), (fEnd - 1)
