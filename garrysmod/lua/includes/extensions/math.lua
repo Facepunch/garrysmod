@@ -224,7 +224,7 @@ end
 	Rets: A table including the start, end and the generated mid points
 	Usage: math.GetLinearSpace(0, 10, 3) --> {0,2.5,5,7.5,10}
 -----------------------------------------------------------]]
-function GetLinearSpace(nS, nE, nN)
+function LinearSet(nS, nE, nN)
 	local fN = math.Clamp(math.floor(tonumber(nN) or 0), 0, 1000)
 	local iE, dI, fS, fE = (fN + 1), (nE - nS), 1, (fN+2)
 	local tO, nI, nD = {[fS]=nS, [fE] = nE}, 1, (dI / iE)
