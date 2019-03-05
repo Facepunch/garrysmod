@@ -234,7 +234,7 @@ function math.LinearSet(nStart, nEnd, nAmount)
 	while ( fStart <= fEnd ) do
 		fStart, fEnd = (fStart + 1), (fEnd - 1)
 		tO[fStart] = tO[fStart - 1] + nAdd
-    tO[fEnd]   = tO[fEnd   + 1] - nAdd
+		tO[fEnd]   = tO[fEnd   + 1] - nAdd
 	end
 	return tO
 end
