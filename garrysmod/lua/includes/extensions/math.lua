@@ -224,14 +224,17 @@ end
 	Rets: A table including the start, end and the generated mid points
 	Usage: math.LinearSet(0, 10, 3) --> {0,2.5,5,7.5,10}
 -----------------------------------------------------------]]
-function math.LinearSet(nS, nE, nN)
-	local fN = math.floor(tonumber(nN) or 0)
-	fN = ((fN >= 0) and fN or 0)
-	local iE, dI, fS, fE = (fN + 1), (nE - nS), 1, (fN+2)
-	local tO, nI, nD = {[fS]=nS, [fE] = nE}, 1, (dI / iE)
-	while(fS <= fE) do
-		fS, fE = (fS + 1), (fE - 1)
-		tO[fS], tO[fE] = tO[fS-1]+nD, tO[fE+1]-nD
+function math.LinearSet(nStart, nEnd, nAmount)
+	local fAmt = math.floor(tonumber(nAmount) or 0)
+	fAmt = ((fAmt >= 0) and fAmt or 0)
+	local iAmt, dAmt = (fAmt + 1), (nEnd - nStart)
+	local nI, nAdd = 1, (dAmt / iAmt)
+	local fStart, fEnd = 1, (fAmt+2)
+	local tO = {[fStart]=nStart, [fEnd] = nEnd}
+	while ( fStart <= fEnd ) do
+		fStart, fEnd = (fStart + 1), (fEnd - 1)
+		tO[fStart] = tO[fStart - 1] + nAdd
+    tO[fEnd]   = tO[fEnd   + 1] - nAdd
 	end
 	return tO
 end
