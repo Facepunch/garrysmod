@@ -219,7 +219,7 @@ function math.Remap( value, inMin, inMax, outMin, outMax )
 end
 
 --[[---------------------------------------------------------
-	Name: GetLinearSpace(nStart, nEnd, nAmount)
+	Name: LinearSet(nStart, nEnd, nAmount)
 	Desc: Generates additional `nAmount` points in linaer space between `nStart` and `nEnd`
 	Rets: A table including the start, end and the generated mid points
 	Usage: math.LinearSet(0, 10, 3) --> {0,2.5,5,7.5,10}
