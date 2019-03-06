@@ -135,7 +135,6 @@ DIV.page DIV.options .search_bar
 }
 
 @media screen and (max-height: 420px) {
-
 	DIV.page DIV.options UL
 	{
 		margin: 0px;
@@ -146,6 +145,15 @@ DIV.page DIV.options .search_bar
 		display: none;
 	}
 }
+
+@media screen and (max-width: 640px) {
+	DIV.page DIV.options
+	{
+		padding-top: 0px;
+		padding-left: 0px;
+	}
+}
+
 
 /* Pop up confirmation message when uninstalling ALL addons */
 
