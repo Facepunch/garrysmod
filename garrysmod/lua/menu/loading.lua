@@ -92,7 +92,9 @@ function PANEL:Think()
 
 	self:CheckForStatusChanges()
 	self:CheckDownloadTables()
-
+	
+	self:InputDetails(gui.MouseX(),gui.MouseY())
+	
 end
 
 function PANEL:StatusChanged( strStatus )
@@ -241,4 +243,11 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 	pnlLoading.JavascriptRun = string.format( 'if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s" );',
 		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe() )
 
+end	
+
+function PANEL:InputDetails( x, y )
+	local object = ( "document.elementFromPoint(" .. x .. ", " .. y .. ")" )
+	if input.IsMouseDown( MOUSE_LEFT ) then
+		UpdateLoadPanel( object .. ".click();" )
+	end
 end
