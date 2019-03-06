@@ -61,6 +61,7 @@ function SWEP:PrimaryAttack()
 		ent:SetPos( self.Owner:GetShootPos() + Forward * 32 )
 		ent:SetAngles( self.Owner:EyeAngles() )
 		ent:Spawn()
+		ent:Activate()
 
 		ent:SetVelocity( Forward * 2000 )
 		ent:SetOwner( self.Owner )
