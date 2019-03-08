@@ -86,7 +86,7 @@ end
 ------------------------------------------------------------------------]]
 local function AddConstraintSystemCount( System, Constraint )
 
-	if Constraint:IsValid() then
+	if System and System:IsValid() and Constraint and Constraint:IsValid() then
 		Constraint:CallOnRemove( "PhysConstraintSystemDecrement", function()
 			if System:IsValid() then
 				System.Count = System.Count - 1
