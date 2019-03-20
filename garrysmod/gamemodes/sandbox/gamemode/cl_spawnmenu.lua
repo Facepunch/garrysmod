@@ -18,6 +18,7 @@ function GM:SpawnMenuOpen()
 
 	GAMEMODE:SuppressHint( "OpeningMenu" )
 	GAMEMODE:AddHint( "OpeningContext", 20 )
+	GAMEMODE:AddHint( "EditingSpawnlists", 5 )
 
 	return true
 
