@@ -12,7 +12,7 @@ local RenderEnt = NULL
 
 function Add( entities, color, blurx, blury, passes, add, ignorez )
 
-	if ( table.Count( entities ) < 1 ) then return end
+	if ( table.IsEmpty( entities ) ) then return end
 	if ( add == nil ) then add = true end
 	if ( ignorez == nil ) then ignorez = false end
 
