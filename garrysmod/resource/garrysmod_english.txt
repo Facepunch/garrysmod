@@ -56,7 +56,7 @@
 		"HL2_Bugbait"		"BUGBAIT"
 		"HL2_Crossbow"		"CROSSBOW"
 		"HL2_Crowbar"		"CROWBAR"
-		"HL2_CubeMap"		"CUBEMAPS"
+		"HL2_Cubemap"		"CUBEMAPS"
 		"HL2_GravityGun"	"GRAVITY GUN"
 		"HL2_Grenade"		"GRENADE"
 		"HL2_Harpoon"		"HARPOON"
