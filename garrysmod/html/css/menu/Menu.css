@@ -296,5 +296,27 @@ loading
 	bottom: 0px;
 	width: 100%;
 	left: 0;
+}
 
+/* 800x600 and lower */
+@media (max-width: 800px) {
+	.news_item {
+		height: 128px;
+		width: 256px;
+	}
+
+	.news_item div font {
+		font-size: x-small;
+	}
+	.news_item div {
+		font-size: medium;
+	}
+}
+
+/* 640x480 and lower */
+@media (max-width: 640px) {
+	.news {
+		right: 5px;
+		top: 65px;
+	}
 }

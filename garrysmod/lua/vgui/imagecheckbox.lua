@@ -15,17 +15,29 @@ function PANEL:SetMaterial( On )
 
 end
 
-function PANEL:Set( OnOff )
+function PANEL:SetChecked( bOn )
 
-	if ( self.State == OnOff ) then return end
-	self.MatOn:SetVisible( OnOff )
-	self.State = OnOff
+	if ( self.State == bOn ) then return end
+	self.MatOn:SetVisible( bOn )
+	self.State = bOn
+
+end
+
+function PANEL:GetChecked()
+
+	return self.State
+
+end
+
+function PANEL:Set( bOn )
+
+	self:SetChecked( bOn )
 
 end
 
 function PANEL:DoClick()
 
-	self:Set( !self.State )
+	self:SetChecked( !self.State )
 
 end
 
