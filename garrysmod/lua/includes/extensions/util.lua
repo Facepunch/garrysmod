@@ -222,88 +222,71 @@ function util.Timer( startdelay )
 end
 
 
---
--- Stack
---
---
-local T = 
+local STACK = 
 {
-
-	--
-	-- Name: Stack:Push
-	-- Desc: Push an item onto the stack
-	-- Arg1: any|object|The item you want to push
-	-- Ret1:
-	--
 	Push = function( self, obj )
 
-		self.top = obj
-		self.objs[ #self.objs + 1 ] = obj
+		local len = self[0] + 1
+		self[ len ] = obj
+		self[0] = len
 
 	end,
 
-	--
-	-- Name: Stack:Pop
-	-- Desc: Pop an item from the stack
-	-- Arg1: number|amount|Optional amount of items you want to pop (defaults to 1)
-	-- Ret1:
-	--
-	Pop = function( self, num )
-		
-		local num = num or 1
+	Pop = function( self, num--[[= 1]] )
 
-		if ( num > #self.objs ) then
-			error( "Overpopped stack!" );
+		if ( num == nil ) then
+			num = 1
+		elseif ( num < 0 ) then
+			error( string.format( "tried to pop %d elements in stack, expected >=0", num ), 2 )
+		else
+			num = math.floor( num )
 		end
 
-		for i = num, 1, -1 do
-			table.remove( self.objs )
+		local len = self[0]
+
+		if ( num > len ) then
+			error( string.format( "tried to pop %u element%s in stack of length %u", num, num == 1 && "" || "s", len ), 2 )
 		end
 
-		self.top = self.objs[ #self.objs ]
+		local newlen = len - num
+
+		-- Pop up to the last element
+		for i = len, newlen + 2, -1 do
+			self[ i ] = nil
+		end
+
+		local ret = self[ newlen + 1 ]
+		self[ newlen + 1 ] = nil
+		self[0] = newlen
+
+		return ret
 
 	end,
 
-	--
-	-- Name: Stack:Top
-	-- Desc: Get the item at the top of the stack
-	-- Arg1:
-	-- Ret1: any|The item
-	--
 	Top = function( self )
 
-		return self.top
+		local len = self[0]
+
+		if ( len == 0 ) then
+			return nil
+		end
+
+		return self[ len ]
 
 	end,
 
-	--
-	-- Name: Stack:Size
-	-- Desc: Returns the size of the stack
-	-- Arg1:
-	-- Ret1: number|The size of the stack
-	--
 	Size = function( self )
 
-		return #self.objs
+		return self[0]
 
-	end,
-
+	end
 }
 
-T.__index = T
+STACK.__index = STACK
 
---
--- Name: util.Stack
--- Desc: Returns a new Stack object
--- Arg1:
--- Ret1: Stack|a brand new stack object
---
 function util.Stack()
 
-	local t = {}
-	setmetatable( t, T )
-	t.objs = {}
-	return t
+	return setmetatable( { [0] = 0 }, STACK )
 
 end
 
