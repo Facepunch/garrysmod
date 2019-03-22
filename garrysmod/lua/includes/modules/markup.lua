@@ -161,20 +161,7 @@ local function ProcessMatches( p1, p2, p3 )
 end
 
 local MarkupObject = {}
-
---[[---------------------------------------------------------
-	Name: MarkupObject:Create()
-	Desc: Called by Parse. Creates a new table, and setups the
-		  metatable.
-	Usage: ** INTERNAL ** Do not use!
------------------------------------------------------------]]
-function MarkupObject:Create()
-	local o = {}
-	setmetatable( o, self )
-	self.__index = self
-
-	return o
-end
+MarkupObject.__index = MarkupObject
 
 --[[---------------------------------------------------------
 	Name: MarkupObject:GetWidth()
@@ -459,9 +446,9 @@ function Parse( ml, maxwidth )
 		end
 	end
 
-	local newObject = MarkupObject:Create()
-	newObject.totalHeight = totalHeight
-	newObject.totalWidth = xMax
-	newObject.blocks = new_block_list
-	return newObject
+	return setmetatable( {
+		totalHeight = totalHeight,
+		totalWidth = xMax,
+		blocks = new_block_list
+	}, MarkupObject )
 end
