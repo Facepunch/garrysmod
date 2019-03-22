@@ -1,18 +1,18 @@
-// Snark
+// Hand grenade
 
 WeaponData
 {
 	// Weapon data is loaded by both the Game and Client DLLs.
-	"printname"		"#HL1_Snarks"
-	"viewmodel"		"models/v_squeak.mdl"
-	"playermodel"		"models/w_squeak.mdl"
-	"anim_prefix"		"squeak"
+	"printname"		"#HL1_HandGrenade"
+	"viewmodel"		"models/v_grenade.mdl"
+	"playermodel"		"models/w_grenade.mdl"
+	"anim_prefix"		"crowbar"
 	"bucket"		"4"
-	"bucket_position"	"13"
+	"bucket_position"	"2"
 
 	"clip_size"		"-1"
 	"default_clip"		"5"
-	"primary_ammo"		"Snark"
+	"primary_ammo"		"Grenade"
 	"secondary_ammo"	"None"
 
 	"weight"		"5"
@@ -30,22 +30,22 @@ WeaponData
 		{
 			"file"		"sprites/640hud3"
 			"x"			"0"
-			"y"			"135"
+			"y"			"0"
 			"width"		"170"
 			"height"	"45"
 		}
 		"weapon_s"
-		{
+		{	
 			"file"		"sprites/640hud6"
 			"x"			"0"
-			"y"			"135"
+			"y"			"0"
 			"width"		"170"
 			"height"	"45"
 		}
 		"ammo"
 		{
 			"file"		"sprites/640hud7"
-			"x"			"96"
+			"x"			"48"
 			"y"			"96"
 			"width"		"24"
 			"height"	"24"

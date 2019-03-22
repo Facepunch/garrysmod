@@ -62,7 +62,7 @@ function PANEL:AddMaterial( label, value )
 
 	Mat.DoRightClick = function( button )
 		local menu = DermaMenu()
-		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( value ) end ):SetIcon( "icon16/page_copy.png" )
+		menu:AddOption( "Copy to Clipboard", function() SetClipboardText( value ) end ):SetIcon( "icon16/page_copy.png" )
 		menu:Open()
 	end
 

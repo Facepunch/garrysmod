@@ -8,7 +8,6 @@ ENT.Type = "anim"
 ENT.AmmoType = "Pistol"
 ENT.AmmoAmount = 1
 ENT.AmmoMax = 10
-ENT.AmmoEntMax = 1
 ENT.Model = Model( "models/items/boxsrounds.mdl" )
 
 
@@ -32,7 +31,7 @@ function ENT:Initialize()
       self:SetTrigger(true)
    end
 
-   self.tickRemoval = false
+   self.taken = false
 
    -- this made the ammo get physics'd too early, meaning it would fall
    -- through physics surfaces it was lying on on the client, leading to
@@ -41,7 +40,6 @@ function ENT:Initialize()
    --	if (phys:IsValid()) then
    --		phys:Wake()
    --	end
-   self.AmmoEntMax = self.AmmoAmount
 end
 
 -- Pseudo-clone of SDK's UTIL_ItemCanBeTouchedByPlayer
@@ -88,23 +86,22 @@ function ENT:CheckForWeapon(ply)
 end
 
 function ENT:Touch(ent)
-   if (SERVER and self.tickRemoval ~= true) and ent:IsValid() and ent:IsPlayer() and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent) then
-     local ammo = ent:GetAmmoCount(self.AmmoType)
-     
-     -- need clipmax info and room for at least 1/4th
-     if self.AmmoMax >= (ammo + math.ceil(self.AmmoAmount * 0.25)) then
-       local given = self.AmmoAmount
-       given = math.min(given, self.AmmoMax - ammo)
-       ent:GiveAmmo(given, self.AmmoType)
+   if SERVER and self.taken != true then
+      if (ent:IsValid() and ent:IsPlayer() and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent)) then
 
-       local newEntAmount = self.AmmoAmount - given
-       self.AmmoAmount = newEntAmount
-       
-       if self.AmmoAmount <= 0 or math.ceil(self.AmmoEntMax * 0.25) > self.AmmoAmount then
-         self.tickRemoval = true
-         self:Remove()
-       end
-     end
+         local ammo = ent:GetAmmoCount(self.AmmoType)
+         -- need clipmax info and room for at least 1/4th
+         if self.AmmoMax >= (ammo + math.ceil(self.AmmoAmount * 0.25)) then
+            local given = self.AmmoAmount
+            given = math.min(given, self.AmmoMax - ammo)
+            ent:GiveAmmo( given, self.AmmoType)
+
+            self:Remove()
+
+            -- just in case remove does not happen soon enough
+            self.taken = true
+         end
+      end
    end
 end
 
@@ -121,3 +118,4 @@ if SERVER then
       end
    end
 end
+

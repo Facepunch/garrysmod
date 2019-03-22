@@ -214,45 +214,57 @@ local BlackList = {
 	Descripts = {},
 	Gamemodes = {},
 	Maps = {},
+	Translations = {},
+	TranslatedHostnames = {}
 }
 
-local NewsList = {}
+steamworks.FileInfo( 580620784, function( result )
 
-GetAPIManifest( function( result )
-	result = util.JSONToTable( result )
 	if ( !result ) then return end
 
-	NewsList = result.News.Blogs or {}
-	LoadNewsList()
+	steamworks.Download( result.fileid, false, function( name )
 
-	for k, v in pairs( result.Servers.Banned or {} ) do
-		if ( v:StartWith( "map:" ) ) then
-			table.insert( BlackList.Maps, v:sub( 5 ) )
-		elseif ( v:StartWith( "desc:" ) ) then
-			table.insert( BlackList.Descripts, v:sub( 6 ) )
-		elseif ( v:StartWith( "host:" ) ) then
-			table.insert( BlackList.Hostnames, v:sub( 6 ) )
-		elseif ( v:StartWith( "gm:" ) ) then
-			table.insert( BlackList.Gamemodes, v:sub( 4 ) )
-		else
-			table.insert( BlackList.Addresses, v )
-		end
-	end
+		local fs = file.Open( name, "r", "MOD" )
+		local data = fs:Read( fs:Size() )
+		fs:Close()
+
+		BlackList = util.JSONToTable( data ) or {}
+
+		BlackList.Addresses = BlackList.Addresses or {}
+		BlackList.Hostnames = BlackList.Hostnames or {}
+		BlackList.Descripts = BlackList.Descripts or {}
+		BlackList.Gamemodes = BlackList.Gamemodes or {}
+		BlackList.Maps = BlackList.Maps or {}
+		BlackList.Translations = BlackList.Translations or {}
+		BlackList.TranslatedHostnames = BlackList.TranslatedHostnames or {}
+
+	end )
+
 end )
+steamworks.Unsubscribe( 580620784 )
 
-function LoadNewsList()
-	if ( !pnlMainMenu ) then return end
-
-	local json = util.TableToJSON( NewsList )
-	pnlMainMenu:Call( "UpdateNewsList(" .. json .. ")" )
-end
-
-local function IsServerBlacklisted( address, hostname, description, gm, map )
-	local addressNoPort = address:match( "[^:]*" )
+local function IsServerBlacklisted( address, hostname, description, gamemode, map )
+	address = address:match( "[^:]*" )
 
 	for k, v in ipairs( BlackList.Addresses ) do
-		if ( address == v || addressNoPort == v ) then
+		if address == v then
 			return true
+		end
+	end
+
+	if ( #BlackList.TranslatedHostnames > 0 && table.Count( BlackList.Translations ) > 1 ) then
+		local hostname_tr = hostname
+		for bad, good in pairs( BlackList.Translations ) do
+			while ( hostname_tr:find( bad ) ) do
+				local s, e = hostname_tr:find( bad )
+				hostname_tr = hostname_tr:sub( 0, s - 1 ) .. good .. hostname_tr:sub( e + 1 )
+			end
+		end
+
+		for k, v in ipairs( BlackList.TranslatedHostnames ) do
+			if string.match( hostname_tr, v ) then
+				return true
+			end
 		end
 	end
 
@@ -269,7 +281,7 @@ local function IsServerBlacklisted( address, hostname, description, gm, map )
 	end
 
 	for k, v in ipairs( BlackList.Gamemodes ) do
-		if string.match( gm, v ) then
+		if string.match( gamemode, v ) then
 			return true
 		end
 	end
@@ -295,22 +307,22 @@ function GetServers( category, id )
 	Servers[ category ] = {}
 
 	local data = {
-		Callback = function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, workshopid )
+		Callback = function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid )
 
 			if Servers[ category ] && Servers[ category ][ address ] then print( "Server Browser Error!", address, category ) return end
 			Servers[ category ][ address ] = true
 
-			if ( !IsServerBlacklisted( address, name, desc, gm, map ) ) then
+			if ( !IsServerBlacklisted( address, name, desc, gamemode, map ) ) then
 
 				name = string.JavascriptSafe( name )
 				desc = string.JavascriptSafe( desc )
 				map = string.JavascriptSafe( map )
 				address = string.JavascriptSafe( address )
-				gm = string.JavascriptSafe( gm )
+				gamemode = string.JavascriptSafe( gamemode )
 				workshopid = string.JavascriptSafe( workshopid )
 
 				pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s" );',
-					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid ) )
+					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gamemode, workshopid ) )
 			else
 
 				Msg( "Ignoring blacklisted server: ", name, " @ ", address, "\n" )

@@ -128,32 +128,25 @@ end
 	Name: Get( string )
 	Desc: Get a weapon by name.
 -----------------------------------------------------------]]
-function Get( name, retval )
+function Get( name )
 
 	local Stored = GetStored( name )
 	if ( !Stored ) then return nil end
 
 	-- Create/copy a new table
-	local retval = retval or {}
-	for k, v in pairs( Stored ) do
-		if ( istable( v ) ) then
-			retval[ k ] = table.Copy( v )
-		else
-			retval[ k ] = v
-		end
-	end
+	local retval = table.Copy( Stored )
 	retval.Base = retval.Base or "weapon_base"
 
 	-- If we're not derived from ourselves (a base weapon)
 	-- then derive from our 'Base' weapon.
 	if ( retval.Base != name ) then
 
-		local base = Get( retval.Base )
+		local BaseWeapon = Get( retval.Base )
 
-		if ( !base ) then
-			Msg( "ERROR: Trying to derive weapon " .. tostring( name ) .. " from non existant SWEP " .. tostring( retval.Base ) .. "!\n" )
+		if ( !BaseWeapon ) then
+			Msg( "SWEP (", name, ") is derived from non existant SWEP (", retval.Base, ") - Expect errors!\n" )
 		else
-			retval = TableInherit( retval, base )
+			retval = TableInherit( retval, Get( retval.Base ) )
 		end
 
 	end

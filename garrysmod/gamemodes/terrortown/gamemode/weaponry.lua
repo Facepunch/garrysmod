@@ -132,8 +132,8 @@ end
 -- calling this function is used to get them the weapons anyway as soon as
 -- possible.
 local function LateLoadout(id)
-   local ply = Entity(id)
-   if not IsValid(ply) or not ply:IsPlayer() then
+   local ply = player.GetByID(id)
+   if not IsValid(ply) then
       timer.Remove("lateloadout" .. id)
       return
    end

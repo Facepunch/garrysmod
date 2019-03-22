@@ -416,10 +416,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 
 	end
 
-	-- Add some padding to the bottom of the list
-	local padding = vgui.Create( "Panel", CPanel )
-	padding:Dock( TOP )
-	padding:SetHeight( 7 )
+	flexControllers[ #flexControllers ]:DockPadding( 0, 0, 0, 20 )
 
 	filter.OnValueChange = function( pnl, txt )
 		for id, flxpnl in pairs( flexControllers ) do

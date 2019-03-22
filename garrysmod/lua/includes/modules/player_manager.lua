@@ -8,6 +8,7 @@ local util = util
 
 module( "player_manager" )
 
+
 -- Stores a table of valid player models
 local ModelList = {}
 local ModelListRev = {}
@@ -296,46 +297,6 @@ AddValidHands( "dod_american", "models/weapons/c_arms_dod.mdl", 1, "10000000" )
 
 local Type = {}
 
-local function LookupPlayerClass( ply )
-
-	local id = ply:GetClassID()
-	if ( id == 0 ) then return end
-
-	--
-	-- Check the cache
-	--
-	local method = ply.m_CurrentPlayerClass
-	if ( method && method.Player == ply && method.ClassID == id && method.Func ) then return method end
-
-	--
-	-- No class, lets create one
-	--
-	local classname = util.NetworkIDToString( id )
-	if ( !classname ) then return end
-
-	--
-	-- Get that type. Fail if we don't have the type.
-	--
-	local t = Type[ classname ]
-	if ( !t ) then return end
-
-	local method = {}
-	method.Player	= ply
-	method.ClassID	= id
-	method.Func		= function() end
-
-	setmetatable( method, { __index = t } )
-
-	ply.m_CurrentPlayerClass = method
-
-	-- TODO: We probably want to reset previous DTVar stuff on the player
-	method.Player:InstallDataTable()
-	method:SetupDataTables()
-	method:Init()
-	return method
-
-end
-
 function RegisterClass( name, table, base )
 
 	Type[ name ] = table
@@ -371,10 +332,6 @@ function SetPlayerClass( ply, classname )
 	local id = util.NetworkStringToID( classname )
 	ply:SetClassID( id )
 
-	-- Initialize the player class so the datatable and everything is set up
-	-- This probably could be done better
-	LookupPlayerClass( ply )
-
 end
 
 function GetPlayerClass( ply )
@@ -389,6 +346,45 @@ end
 function ClearPlayerClass( ply )
 
 	ply:SetClassID( 0 )
+
+end
+
+local function LookupPlayerClass( ply )
+
+	local id = ply:GetClassID()
+	if ( id == 0 ) then return end
+
+	--
+	-- Check the cache
+	--
+	local method = ply.m_CurrentPlayerClass
+	if ( method && method.Player == ply && method.ClassID == id && method.Func ) then return method end
+
+	--
+	-- No class, lets create one
+	--
+	local classname = util.NetworkIDToString( id )
+	if ( !classname ) then return end
+
+	--
+	-- Get that type. Fail if we don't have the type.
+	--
+	local t = Type[ classname ]
+	if ( !t ) then return end
+
+	local method = {}
+	method.Player	= ply
+	method.ClassID	= id
+	method.Func		= function() end
+
+	setmetatable( method, { __index = t } )
+
+	ply.m_CurrentPlayerClass = method
+
+	method.Player:InstallDataTable()
+	method:SetupDataTables()
+	method:Init()
+	return method
 
 end
 

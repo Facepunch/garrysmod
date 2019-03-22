@@ -374,10 +374,3 @@ end
 --
 function ENT:Think()
 end
-
---
--- Name: NEXTBOT:HandleAnimEvent
--- Desc: Called for serverside events
---
-function ENT:HandleAnimEvent( event, eventtime, cycle, typee, options )
-end

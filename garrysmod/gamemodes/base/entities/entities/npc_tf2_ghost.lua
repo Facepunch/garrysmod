@@ -12,6 +12,9 @@ function ENT:Initialize()
 
 end
 
+function ENT:BehaveAct()
+end
+
 function ENT:RunBehaviour()
 
 	while ( true ) do
@@ -56,7 +59,7 @@ end
 -- List the NPC as spawnable
 --
 list.Set( "NPC", "npc_tf2_ghost", {
-	Name = "Example NPC",
+	Name = "Test NPC",
 	Class = "npc_tf2_ghost",
 	Category = "Nextbot"
 } )

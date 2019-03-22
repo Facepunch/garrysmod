@@ -125,36 +125,29 @@ end
 duplicator.RegisterEntityClass( "prop_physics", MakeProp, "Pos", "Ang", "Model", "PhysicsObjects", "Data" )
 duplicator.RegisterEntityClass( "prop_physics_multiplayer", MakeProp, "Pos", "Ang", "Model", "PhysicsObjects", "Data" )
 
-function MakeEffect( ply, model, Data )
-
-	Data.Model = model
+function MakeEffect( ply, Data )
 
 	-- Make sure this is allowed
 	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnEffect", ply, model ) ) then return end
 
 	local Prop = ents.Create( "prop_effect" )
 	duplicator.DoGeneric( Prop, Data )
-	if ( Data.AttachedEntityInfo ) then
-		Prop.AttachedEntityInfo = table.Copy( Data.AttachedEntityInfo ) -- This shouldn't be neccesary
-	end
 	Prop:Spawn()
 
-	-- duplicator.DoGenericPhysics( Prop, ply, Data )
+	duplicator.DoGenericPhysics( Prop, ply, Data )
 
 	-- Tell the gamemode we just spawned something
 	if ( IsValid( ply ) ) then
 		gamemode.Call( "PlayerSpawnedEffect", ply, model, Prop )
 	end
 
-	if ( IsValid( Prop.AttachedEntity ) ) then
-		DoPropSpawnedEffect( Prop.AttachedEntity )
-	end
+	DoPropSpawnedEffect( Prop )
 
 	return Prop
 
 end
 
-duplicator.RegisterEntityClass( "prop_effect", MakeEffect, "Model", "Data" )
+duplicator.RegisterEntityClass( "prop_effect", MakeEffect, "Data" )
 
 --[[---------------------------------------------------------
 	Name: FixInvalidPhysicsObject
@@ -238,9 +231,7 @@ function GMODSpawnEffect( ply, model, iSkin, strBody )
 		gamemode.Call( "PlayerSpawnedEffect", ply, model, e )
 	end
 
-	if ( IsValid( e.AttachedEntity ) ) then
-		DoPropSpawnedEffect( e.AttachedEntity )
-	end
+	DoPropSpawnedEffect( e )
 
 	undo.Create( "Effect" )
 		undo.SetPlayer( ply )
@@ -292,11 +283,6 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 	ent:SetPos( tr.HitPos )
 	ent:Spawn()
 	ent:Activate()
-
-	-- Special case for effects
-	if ( entity_name == "prop_effect" && IsValid( ent.AttachedEntity ) ) then
-		ent.AttachedEntity:SetBodyGroups( strBody )
-	end
 
 	-- Attempt to move the object so it sits flush
 	-- We could do a TraceEntity instead of doing all
@@ -756,22 +742,24 @@ function Spawn_SENT( ply, EntityName, tr )
 
 	end
 
-	if ( !IsValid( entity ) ) then return end
+	if ( IsValid( entity ) ) then
 
-	if ( IsValid( ply ) ) then
-		gamemode.Call( "PlayerSpawnedSENT", ply, entity )
-	end
-
-	undo.Create( "SENT" )
-		undo.SetPlayer( ply )
-		undo.AddEntity( entity )
-		if ( PrintName ) then
-			undo.SetCustomUndoText( "Undone " .. PrintName )
+		if ( IsValid( ply ) ) then
+			gamemode.Call( "PlayerSpawnedSENT", ply, entity )
 		end
-	undo.Finish( "Scripted Entity (" .. tostring( EntityName ) .. ")" )
 
-	ply:AddCleanup( "sents", entity )
-	entity:SetVar( "Player", ply )
+		undo.Create( "SENT" )
+			undo.SetPlayer( ply )
+			undo.AddEntity( entity )
+			if ( PrintName ) then
+				undo.SetCustomUndoText( "Undone " .. PrintName )
+			end
+		undo.Finish( "Scripted Entity (" .. tostring( EntityName ) .. ")" )
+
+		ply:AddCleanup( "sents", entity )
+		entity:SetVar( "Player", ply )
+
+	end
 
 end
 concommand.Add( "gm_spawnsent", function( ply, cmd, args ) Spawn_SENT( ply, args[ 1 ] ) end )
@@ -798,10 +786,8 @@ function CCGiveSWEP( ply, command, arguments )
 
 	if ( !gamemode.Call( "PlayerGiveSWEP", ply, arguments[1], swep ) ) then return end
 
-	if ( !ply:HasWeapon( swep.ClassName ) ) then
-		MsgAll( "Giving " .. ply:Nick() .. " a " .. swep.ClassName .. "\n" )
-		ply:Give( swep.ClassName )
-	end
+	MsgAll( "Giving " .. ply:Nick() .. " a " .. swep.ClassName .. "\n" )
+	ply:Give( swep.ClassName )
 
 	-- And switch to it
 	ply:SelectWeapon( swep.ClassName )
@@ -839,14 +825,14 @@ function Spawn_Weapon( ply, wepname, tr )
 
 	local entity = ents.Create( swep.ClassName )
 
-	if ( !IsValid( entity ) ) then return end
+	if ( IsValid( entity ) ) then
 
-	DoPropSpawnedEffect( entity )
+		entity:SetPos( tr.HitPos + tr.HitNormal * 32 )
+		entity:Spawn()
 
-	entity:SetPos( tr.HitPos + tr.HitNormal * 32 )
-	entity:Spawn()
+		gamemode.Call( "PlayerSpawnedSWEP", ply, entity )
 
-	gamemode.Call( "PlayerSpawnedSWEP", ply, entity )
+	end
 
 end
 concommand.Add( "gm_spawnswep", function( ply, cmd, args ) Spawn_Weapon( ply, args[1] ) end )

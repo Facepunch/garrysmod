@@ -216,8 +216,8 @@ spawnmenu.AddContentType( "model", function( container, obj )
 	icon.OpenMenu = function( icon )
 
 		local menu = DermaMenu()
-		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( string.gsub( obj.model, "\\", "/" ) ) end ):SetIcon( "icon16/page_copy.png" )
-		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "4" ) RunConsoleCommand( "creator_name", obj.model ) end ):SetIcon( "icon16/brick_add.png" )
+		menu:AddOption( "Copy to Clipboard", function() SetClipboardText( string.gsub( obj.model, "\\", "/" ) ) end ):SetIcon( "icon16/page_copy.png" )
+		menu:AddOption( "Spawn using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "4" ) RunConsoleCommand( "creator_name", obj.model ) end ):SetIcon( "icon16/brick_add.png" )
 
 		local submenu, submenu_opt = menu:AddSubMenu( "Re-Render", function() icon:RebuildSpawnIcon() end )
 		submenu_opt:SetIcon( "icon16/picture_save.png" )
@@ -268,7 +268,7 @@ spawnmenu.AddContentType( "model", function( container, obj )
 		submenu_r:AddOption( "512 x 512", function() ChangeIconSize( 512, 512 ) end )
 
 		menu:AddSpacer()
-		menu:AddOption( "#spawnmenu.menu.delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/bin_closed.png" )
+		menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/bin_closed.png" )
 		menu:Open()
 
 	end

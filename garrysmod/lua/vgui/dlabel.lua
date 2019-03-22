@@ -189,13 +189,11 @@ function PANEL:OnMouseReleased( mousecode )
 	self:MouseCapture( false )
 
 	if ( self:GetDisabled() ) then return end
-	if ( !self.Depressed && dragndrop.m_DraggingMain != self ) then return end
+	if ( !self.Depressed ) then return end
 
-	if ( self.Depressed ) then
-		self.Depressed = nil
-		self:OnReleased()
-		self:InvalidateLayout( true )
-	end
+	self.Depressed = nil
+	self:OnReleased()
+	self:InvalidateLayout( true )
 
 	--
 	-- If we were being dragged then don't do the default behaviour!
@@ -203,7 +201,7 @@ function PANEL:OnMouseReleased( mousecode )
 	if ( self:DragMouseRelease( mousecode ) ) then
 		return
 	end
-	
+
 	if ( self:IsSelectable() && mousecode == MOUSE_LEFT ) then
 
 		local canvas = self:GetSelectionCanvas()

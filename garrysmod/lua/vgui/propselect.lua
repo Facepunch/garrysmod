@@ -54,7 +54,7 @@ function PANEL:AddModel( model, ConVars )
 	end
 	Icon.OpenMenu = function( button )
 		local menu = DermaMenu()
-		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( model ) end ):SetIcon( "icon16/page_copy.png" )
+		menu:AddOption( "Copy to Clipboard", function() SetClipboardText( model ) end ):SetIcon( "icon16/page_copy.png" )
 		menu:Open()
 	end
 

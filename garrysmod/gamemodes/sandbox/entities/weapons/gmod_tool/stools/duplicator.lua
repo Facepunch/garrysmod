@@ -19,6 +19,7 @@ end
 
 TOOL.Category = "Construction"
 TOOL.Name = "#tool.duplicator.name"
+TOOL.Stored = true
 
 TOOL.Information = {
 	{ name = "left" },
@@ -38,7 +39,7 @@ function TOOL:LeftClick( trace )
 	-- Get the copied dupe. We store it on the player so it will still exist if they die and respawn.
 	--
 	local dupe = self:GetOwner().CurrentDupe
-	if ( !dupe ) then return false end
+	if ( !dupe ) then return end
 
 	--
 	-- We want to spawn it flush on thr ground. So get the point that we hit
