@@ -21,7 +21,7 @@ end
 function GM:SpawnMenuOpened()
 	self:SuppressHint( "OpeningMenu" )
 	self:AddHint( "OpeningContext", 20 )
-  self:AddHint( "EditingSpawnlists", 5 )
+	self:AddHint( "EditingSpawnlists", 5 )
 end
 
 function GM:SpawnMenuClosed()
