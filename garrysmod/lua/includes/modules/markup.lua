@@ -11,6 +11,7 @@ local Color = Color
 
 local MarkupObject = {}
 debug.getregistry().MarkupObject = MarkupObject
+MarkupObject.__index = MarkupObject
 
 module("markup")
 
