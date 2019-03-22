@@ -52,6 +52,11 @@ function PANEL:AddModel( model, ConVars )
 		LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, model ) )
 
 	end
+	Icon.OpenMenu = function( button )
+		local menu = DermaMenu()
+		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( model ) end ):SetIcon( "icon16/page_copy.png" )
+		menu:Open()
+	end
 
 	-- Add the Icon us
 	self.List:AddItem( Icon )
@@ -73,6 +78,11 @@ function PANEL:AddModelEx( name, model, skin )
 
 	-- Run a console command when the Icon is clicked
 	Icon.DoClick = function ( self ) LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, Icon.Value ) ) end
+	Icon.OpenMenu = function( button )
+		local menu = DermaMenu()
+		menu:AddOption( "Copy to Clipboard", function() SetClipboardText( model ) end ):SetIcon( "icon16/page_copy.png" )
+		menu:Open()
+	end
 
 	-- Add the Icon us
 	self.List:AddItem( Icon )

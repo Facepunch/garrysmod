@@ -343,29 +343,29 @@ local function TraitorMenuPopup()
    dconfirm:SetText(GetTranslation("equip_confirm"))
 
 
-   dsheet:AddSheet(GetTranslation("equip_tabtitle"), dequip, "icon16/bomb.png", false, false, "Traitor equipment menu")
+   dsheet:AddSheet(GetTranslation("equip_tabtitle"), dequip, "icon16/bomb.png", false, false, GetTranslation("equip_tooltip_main"))
 
    -- Item control
    if ply:HasEquipmentItem(EQUIP_RADAR) then
       local dradar = RADAR.CreateMenu(dsheet, dframe)
-      dsheet:AddSheet(GetTranslation("radar_name"), dradar, "icon16/magnifier.png", false,false, "Radar control")
+      dsheet:AddSheet(GetTranslation("radar_name"), dradar, "icon16/magnifier.png", false, false, GetTranslation("equip_tooltip_radar"))
    end
 
    if ply:HasEquipmentItem(EQUIP_DISGUISE) then
       local ddisguise = DISGUISE.CreateMenu(dsheet)
-      dsheet:AddSheet(GetTranslation("disg_name"), ddisguise, "icon16/user.png", false,false, "Disguise control")
+      dsheet:AddSheet(GetTranslation("disg_name"), ddisguise, "icon16/user.png", false, false, GetTranslation("equip_tooltip_disguise"))
    end
 
    -- Weapon/item control
    if IsValid(ply.radio) or ply:HasWeapon("weapon_ttt_radio") then
       local dradio = TRADIO.CreateMenu(dsheet)
-      dsheet:AddSheet(GetTranslation("radio_name"), dradio, "icon16/transmit.png", false,false, "Radio control")
+      dsheet:AddSheet(GetTranslation("radio_name"), dradio, "icon16/transmit.png", false, false, GetTranslation("equip_tooltip_radio"))
    end
 
    -- Credit transferring
    if credits > 0 then
       local dtransfer = CreateTransferMenu(dsheet)
-      dsheet:AddSheet(GetTranslation("xfer_name"), dtransfer, "icon16/group_gear.png", false,false, "Transfer credits")
+      dsheet:AddSheet(GetTranslation("xfer_name"), dtransfer, "icon16/group_gear.png", false, false, GetTranslation("equip_tooltip_xfer"))
    end
 
    hook.Run("TTTEquipmentTabs", dsheet)

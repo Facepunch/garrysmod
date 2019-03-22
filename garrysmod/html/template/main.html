@@ -31,4 +31,16 @@
 
 		</div>
 
+		<div class='news' ng-hide="NewsList.length == 0">
+			<div class="news_item" style="{{NewsItemBackground( CurrentNewsItem.HeaderImage )}}">
+				<div>
+					<span ng-click="OpenInSteam( CurrentNewsItem.Url )">{{CurrentNewsItem.Title}}</span>
+					<font>{{CurrentNewsItem.SummaryHtml}}</font>
+				</div>
+			</div>
+			<div class='news_buttons'>
+				<div class="{{IfElse( NewsItem.Url == CurrentNewsItem.Url, 'selected', '' )}}" ng-repeat="NewsItem in NewsList | orderBy: 'Date'" ng-click="SelectItem(NewsItem)"></div>
+			</div>
+		</div>
+
 	</div>

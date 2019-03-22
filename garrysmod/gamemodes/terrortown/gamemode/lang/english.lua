@@ -1059,3 +1059,25 @@ L.hat_retrieve = "You picked up a Detective's hat."
 
 --- 3-9-2017
 L.sb_sortby = "Sort By:"
+
+--- 2018-07-24
+L.equip_tooltip_main = "Equipment menu"
+L.equip_tooltip_radar = "Radar control"
+L.equip_tooltip_disguise = "Disguise control"
+L.equip_tooltip_radio = "Radio control"
+L.equip_tooltip_xfer = "Transfer credits"
+
+L.confgrenade_name = "Discombobulator"
+L.polter_name = "Poltergeist"
+L.stungun_name = "UMP Prototype"
+
+L.knife_instant = "INSTANT KILL"
+
+L.dna_hud_type = "TYPE"
+L.dna_hud_body = "BODY"
+L.dna_hud_item = "ITEM"
+
+L.binoc_zoom_level = "LEVEL"
+L.binoc_body = "BODY DETECTED"
+
+L.idle_popup_title = "Idle"

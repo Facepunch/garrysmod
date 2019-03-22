@@ -124,11 +124,15 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 			lua.Run( "RunConsoleCommand( \"password\", \"" + gm.password + "\" )" )
 
 		lua.Run( "JoinServer( \"" + gm.address + "\" )" )
+		$scope.DoStopRefresh();
 	}
 
 	$scope.SwitchType = function( type )
 	{
 		if ( Scope.ServerType == type ) return;
+
+		// Stop refreshing previous type
+		$scope.DoStopRefresh();
 
 		var FirstTime = false;
 		if ( !ServerTypes[type] )
@@ -216,7 +220,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	var data =
 	{
 		ping:			parseInt( ping ),
-		name:			name,
+		name:			name.trim(),
 		desc:			desc,
 		map:			map,
 		players:		parseInt( players ) - parseInt( botplayers ),
@@ -233,16 +237,18 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	data.hasmap = DoWeHaveMap( data.map );
 
 	data.recommended = data.ping;
-	if ( data.players == 0 ) data.recommended += 100; // Server is empty
-	if ( data.players == data.maxplayers ) data.recommended += 75; // Server is full
-	if ( data.pass ) data.recommended += 300; // If we can't join it, don't put it to the top
+	if ( data.players == 0 ) data.recommended += 75; // Server is empty
+	if ( data.players >= data.maxplayers ) data.recommended += 100; // Server is full, can't join it
+	if ( data.pass ) data.recommended += 300; // Password protected, can't join it
 
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
-	if ( data.players >= 16 ) data.recommended -= 40;
-	if ( data.players >= 32 ) data.recommended -= 20;
+	if ( data.players >= 4 ) data.recommended -= 10;
+	if ( data.players >= 8 ) data.recommended -= 15;
+	if ( data.players >= 16 ) data.recommended -= 15;
+	if ( data.players >= 32 ) data.recommended -= 10;
 	if ( data.players >= 64 ) data.recommended -= 10;
 
-	data.listen = data.desc.indexOf('[L]') >= 0;
+	data.listen = data.desc.indexOf( '[L]' ) >= 0;
 	if ( data.listen ) data.desc = data.desc.substr( 4 );
 
 	var gm = GetGamemode( data.gamemode, type );

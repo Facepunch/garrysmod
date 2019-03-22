@@ -14,7 +14,7 @@ end
 function ENT:Initialize()
    local weps = ents.TTT.GetSpawnableSWEPs()
    if weps then
-      local w = table.Random(weps)
+      local w = weps[math.random(#weps)]
       local ent = ents.Create(WEPS.GetClass(w))
       if IsValid(ent) then
          local pos = self:GetPos()
