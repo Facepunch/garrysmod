@@ -9,6 +9,10 @@ local math = math
 local utf8 = utf8
 local Color = Color
 
+local MarkupObject = {}
+MarkupObject.__index = MarkupObject
+debug.getregistry().MarkupObject = MarkupObject
+
 module("markup")
 
 --[[---------------------------------------------------------
@@ -159,9 +163,6 @@ local function ProcessMatches( p1, p2, p3 )
 	if ( p2 ) then CheckTextOrTag( p2 ) end
 	if ( p3 ) then CheckTextOrTag( p3 ) end
 end
-
-local MarkupObject = {}
-MarkupObject.__index = MarkupObject
 
 --[[---------------------------------------------------------
 	Name: MarkupObject:GetWidth()
