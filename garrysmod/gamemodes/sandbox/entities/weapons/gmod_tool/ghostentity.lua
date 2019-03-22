@@ -14,7 +14,7 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 	-- The reason we need this is because in multiplayer, when you holster a tool serverside,
 	-- either by using the spawnnmenu's Weapons tab or by simply entering a vehicle,
 	-- the Think hook is called once after Holster is called on the client, recreating the ghost entity right after it was removed.
-	if ( self.GhostEntityLastDelete && self.GhostEntityLastDelete + 0.1 > CurTime() ) then return end
+	if ( !IsFirstTimePredicted() ) then return end
 
 	-- Release the old ghost entity
 	self:ReleaseGhostEntity()
@@ -71,7 +71,6 @@ function ToolObj:ReleaseGhostEntity()
 		if ( !IsValid( self.GhostEntity ) ) then self.GhostEntity = nil return end
 		self.GhostEntity:Remove()
 		self.GhostEntity = nil
-		self.GhostEntityLastDelete = CurTime()
 	end
 
 	-- This is unused!
@@ -83,7 +82,6 @@ function ToolObj:ReleaseGhostEntity()
 		end
 
 		self.GhostEntities = nil
-		self.GhostEntityLastDelete = CurTime()
 	end
 
 	-- This is unused!

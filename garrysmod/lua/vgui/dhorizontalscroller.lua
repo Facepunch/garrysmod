@@ -137,6 +137,7 @@ function PANEL:PerformLayout()
 
 	for k, v in pairs( self.Panels ) do
 		if ( !IsValid( v ) ) then continue end
+		if ( !v:IsVisible() ) then continue end
 
 		v:SetPos( x, 0 )
 		v:SetTall( h )

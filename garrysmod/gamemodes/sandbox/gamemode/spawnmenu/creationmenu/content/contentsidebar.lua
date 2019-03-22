@@ -61,6 +61,8 @@ function PANEL:CreateSaveNotification()
 
 		SavePanel:SlideDown( 0.2 )
 
+		GAMEMODE:AddHint( "EditingSpawnlistsSave", 5 )
+
 	end )
 
 end

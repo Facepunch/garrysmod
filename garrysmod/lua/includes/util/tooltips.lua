@@ -44,7 +44,7 @@ function ChangeTooltip( panel )
 	RemoveTooltip()
 
 	local Text, Panel, PositionPanel = FindTooltip( panel )
-	if ( !Text && !Panel ) then return end
+	if ( !Text && !IsValid( Panel ) ) then return end
 
 	Tooltip = vgui.Create( "DTooltip" )
 
