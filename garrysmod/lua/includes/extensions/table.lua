@@ -112,10 +112,12 @@ end
 function table.Add( dest, ... )
 
 	local sources = { ... }
+	
+	if ( type( dest ) != "table" ) then dest = {} end
+
 
 	for i, source in ipairs( sources ) do
 
-		if ( type( dest ) != "table" ) then dest = {} end
 
 		-- At least one of them needs to be a table or this whole thing will fall on its ass
 		if ( type( source ) == "table" ) then
