@@ -158,7 +158,7 @@ if ( CLIENT ) then
 		end
 
 		-- Turn the table into a nil so we can return easy
-		if ( table.Count( CommandList ) == 0 ) then
+		if ( table.IsEmpty( CommandList ) ) then
 
 			CommandList = nil
 

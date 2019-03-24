@@ -371,7 +371,7 @@ function meta:InstallDataTable()
 		--
 		-- If there's nothing in our table - then return nil.
 		--
-		if ( table.Count( dt ) == 0 ) then return nil end
+		if ( table.IsEmpty( dt ) ) then return nil end
 
 		return dt
 

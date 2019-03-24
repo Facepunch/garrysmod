@@ -196,7 +196,7 @@ function RemoveConstraints( Ent, Type )
 
 	end
 
-	if ( table.Count( c ) == 0 ) then
+	if ( table.IsEmpty( c ) ) then
 		-- Update the network var and clear the constraints table.
 		Ent:IsConstrained()
 	end
