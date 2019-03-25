@@ -69,7 +69,7 @@ end
 -----------------------------------------------------------]]
 function PANEL:CheckForMatch( cvars )
 
-	if ( table.Count( cvars ) == 0 ) then return false end
+	if ( table.IsEmpty( cvars ) ) then return false end
 
 	for k, v in pairs( cvars ) do
 

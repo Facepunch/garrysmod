@@ -325,7 +325,7 @@ end
 function GM:PlayerSelectTeamSpawn( TeamID, pl )
 
 	local SpawnPoints = team.GetSpawnPoints( TeamID )
-	if ( !SpawnPoints || table.Count( SpawnPoints ) == 0 ) then return end
+	if ( !SpawnPoints || table.IsEmpty( SpawnPoints ) ) then return end
 
 	local ChosenSpawnPoint = nil
 
