@@ -194,8 +194,7 @@ function GM:PlayerSelectSpawn(ply)
       -- ones anyway.
    end
 
-   local num = table.Count(self.SpawnPoints)
-   if num == 0 then
+   if table.IsEmpty(self.SpawnPoints) then
       Error("No spawn entity found!\n")
       return
    end
