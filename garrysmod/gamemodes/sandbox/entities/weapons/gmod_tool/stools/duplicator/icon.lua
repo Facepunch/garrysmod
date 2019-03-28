@@ -14,11 +14,6 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 
 	local FOV = 17
 
-	-- Rendering icon the way we do is kinda bad and wil crash the game with too many entities in the dupe
-	-- Try to mitigate that to some degree by not rendering the outline when we are above 800 entities
-	-- 1000 was tested without problems, but we want to give it some space as 1000 was tested in "perfect conditions" with nothing else happening on the map
-	local DoDisableOutline = table.Count( Dupe.Entities ) > 800
-
 	--
 	-- This is gonna take some cunning to look awesome!
 	--
@@ -48,7 +43,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	-- Create a bunch of entities we're gonna use to render.
 	--
 	local entities = {}
-
+	local i = 0
 	for k, v in pairs( Dupe.Entities ) do
 
 		if ( v.Class == "prop_ragdoll" ) then
@@ -76,8 +71,13 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 			entities[ k ] = ClientsideModel( v.Model or "error.mdl", RENDERGROUP_OTHER )
 
 		end
+		i = i + 1
 
 	end
+	-- Rendering icon the way we do is kinda bad and wil crash the game with too many entities in the dupe
+	-- Try to mitigate that to some degree by not rendering the outline when we are above 800 entities
+	-- 1000 was tested without problems, but we want to give it some space as 1000 was tested in "perfect conditions" with nothing else happening on the map
+	local DoDisableOutline = i > 800
 
 	--
 	-- DRAW THE BLUE BACKGROUND
