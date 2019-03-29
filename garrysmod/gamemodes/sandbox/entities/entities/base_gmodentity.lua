@@ -5,18 +5,33 @@ DEFINE_BASECLASS( "base_anim" )
 ENT.Spawnable = false
 
 if ( CLIENT ) then
-	ENT.MaxWorldTipDistance = 256
+	ENT.MaxWorldtipDistance = 256
 
 	function ENT:BeingLookedAtByLocalPlayer()
 		local ply = LocalPlayer()
-		if ( not IsValid( ply ) ) then return false end
+		if ( !IsValid( ply ) ) then return false end
 
 		local view = ply:GetViewEntity()
 		local dist = self.MaxWorldtipDistance
 		dist = dist * dist
-		local pos = view:IsPlayer() && view:GetShootPos() || view:GetPos()
 
-		return pos:DistToSqr( self:GetPos() ) <= dist && ply:GetEyeTrace().Entity == self
+		-- If we're spectating a player, perform an eye trace
+		if ( view:IsPlayer() ) then
+			return view:EyePos():DistToSqr( self:GetPos() ) <= dist && view:GetEyeTrace().Entity == self
+		end
+
+		-- If we're not spectating a player, perform a manual trace from the entity's position
+		local pos = view:GetPos()
+
+		if ( pos:DistToSqr( self:GetPos() ) <= dist ) then
+			return util.TraceLine( {
+				start = pos,
+				endpos = pos + ( view:GetAngles():Forward() * dist ),
+				filter = view
+			} ).Entity == self
+		end
+
+		return false
 	end
 
 	function ENT:Think()
