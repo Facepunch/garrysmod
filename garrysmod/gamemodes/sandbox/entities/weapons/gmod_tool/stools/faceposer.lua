@@ -204,7 +204,7 @@ local function PrettifyName( name )
 
 	-- Try to split text into words, where words would start with single uppercase character
 	local newParts = {}
-	for id, str in pairs( string.Explode( " ", name ) ) do
+	for id, str in ipairs( string.Explode( " ", name ) ) do
 		local wordStart = 1
 		for i = 2, str:len() do
 			local c = str[ i ]

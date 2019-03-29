@@ -68,7 +68,7 @@ hook.Add( "PopulateMenuBar", "NPCOptions_MenuBar", function( menubar )
 	wpns:AddCVar( "#menubar.npcs.noweapon", "gmod_npcweapon", "none" )
 	wpns:AddSpacer()
 
-	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
+	for _, v in ipairs( list.Get( "NPCUsableWeapons" ) ) do
 		wpns:AddCVar( v.title, "gmod_npcweapon", v.class )
 	end
 

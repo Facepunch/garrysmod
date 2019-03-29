@@ -44,7 +44,7 @@ end
 -- These are totally in the wrong place.
 function player.GetByAccountID( ID )
 
-	for _, pl in pairs( player.GetAll() ) do
+	for _, pl in ipairs( player.GetAll() ) do
 
 		if ( pl:AccountID() == ID ) then
 			return pl
@@ -58,7 +58,7 @@ end
 
 function player.GetByUniqueID( ID )
 
-	for _, pl in pairs( player.GetAll() ) do
+	for _, pl in ipairs( player.GetAll() ) do
 
 		if ( pl:UniqueID() == ID ) then
 			return pl
@@ -74,7 +74,7 @@ function player.GetBySteamID( ID )
 
 	ID = string.upper( ID )
 
-	for _, pl in pairs( player.GetAll() ) do
+	for _, pl in ipairs( player.GetAll() ) do
 
 		if ( pl:SteamID() == ID ) then
 			return pl
@@ -90,7 +90,7 @@ function player.GetBySteamID64( ID )
 
 	ID = tostring( ID )
 
-	for _, pl in pairs( player.GetAll() ) do
+	for _, pl in ipairs( player.GetAll() ) do
 
 		if ( pl:SteamID64() == ID ) then
 			return pl

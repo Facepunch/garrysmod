@@ -128,7 +128,7 @@ end
 
 local toolmodes = file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" )
 
-for key, val in pairs( toolmodes ) do
+for key, val in ipairs( toolmodes ) do
 
 	local char1, char2, toolmode = string.find( val, "([%w_]*).lua" )
 

@@ -224,12 +224,12 @@ function PANEL:ShowFolder( path )
 		filters = "*.*"
 	end
 
-	for _, filter in pairs( string.Explode( " ", filters ) ) do
+	for _, filter in ipairs( string.Explode( " ", filters ) ) do
 
 		local files = file.Find( string.Trim( path .. "/" .. ( filter || "*.*" ), "/" ), self.m_strPath )
 		if ( !istable( files ) ) then continue end
 
-		for _, v in pairs( files ) do
+		for _, v in ipairs( files ) do
 
 			if ( self.m_bModels ) then
 

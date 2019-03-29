@@ -37,7 +37,7 @@ function OnConVarChanged( name, oldvalue, newvalue )
 	local Callbacks = GetConVarCallbacks( name )
 	if ( !Callbacks ) then return end
 
-	for k, v in pairs( Callbacks ) do
+	for k, v in ipairs( Callbacks ) do
 
 		if type( v ) == "table" then
 			v[ 1 ]( name, oldvalue, newvalue )

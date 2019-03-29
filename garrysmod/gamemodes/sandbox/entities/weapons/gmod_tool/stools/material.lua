@@ -132,7 +132,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	-- Remove duplicate materials. table.HasValue is used to preserve material order
 	local materials = {}
-	for id, str in pairs( list.Get( "OverrideMaterials" ) ) do
+	for id, str in ipairs( list.Get( "OverrideMaterials" ) ) do
 		if ( !table.HasValue( materials, str ) ) then
 			table.insert( materials, str )
 		end

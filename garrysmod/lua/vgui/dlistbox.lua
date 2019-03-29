@@ -166,7 +166,7 @@ function PANEL:GetSelectedValues()
 	if ( #items > 1 ) then
 
 		local ret = {}
-		for _, v in pairs( items ) do table.insert( ret, v:GetValue() ) end
+		for _, v in ipairs( items ) do table.insert( ret, v:GetValue() ) end
 		return ret
 
 	elseif ( #items == 1 ) then

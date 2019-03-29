@@ -360,7 +360,7 @@ function GM:IsSpawnpointSuitable( pl, spawnpointent, bMakeSuitable )
 
 	local Blockers = 0
 
-	for k, v in pairs( Ents ) do
+	for k, v in ipairs( Ents ) do
 		if ( IsValid( v ) && v != pl && v:GetClass() == "player" && v:Alive() ) then
 
 			Blockers = Blockers + 1

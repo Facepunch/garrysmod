@@ -437,7 +437,7 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 
 	-- Check if this is a valid entity from the list, or the user is trying to fool us.
 	local valid = false
-	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
+	for _, v in ipairs( list.Get( "NPCUsableWeapons" ) ) do
 		if v.class == Equipment then valid = true break end
 	end
 

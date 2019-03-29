@@ -84,7 +84,7 @@ function Register( t, name )
 		--
 		-- For each entity using this class
 		--
-		for _, entity in pairs( ents.FindByClass( name ) ) do
+		for _, entity in ipairs( ents.FindByClass( name ) ) do
 
 			--
 			-- Replace the contents with this entity table
@@ -101,7 +101,7 @@ function Register( t, name )
 		end
 
 		-- Update entity table of entities that are based on this entity
-		for _, e in pairs( ents.GetAll() ) do
+		for _, e in ipairs( ents.GetAll() ) do
 			if ( IsBasedOn( e:GetClass(), name ) ) then
 				table.Merge( e, Get( e:GetClass() ) )
 

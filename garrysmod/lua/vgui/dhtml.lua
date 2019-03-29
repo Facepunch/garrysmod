@@ -23,7 +23,7 @@ function PANEL:Think()
 
 	if ( self.JS && !self:IsLoading() ) then
 
-		for k, v in pairs( self.JS ) do
+		for k, v in ipairs( self.JS ) do
 
 			self:RunJavascript( v )
 

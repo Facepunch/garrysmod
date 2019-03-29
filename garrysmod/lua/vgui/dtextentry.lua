@@ -217,7 +217,7 @@ function PANEL:OpenAutoComplete( tab )
 
 	self.Menu = DermaMenu()
 
-	for k, v in pairs( tab ) do
+	for k, v in ipairs( tab ) do
 
 		self.Menu:AddOption( v, function() self:SetText( v ) self:SetCaretPos( v:len() ) self:RequestFocus() end )
 

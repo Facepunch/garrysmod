@@ -15,7 +15,7 @@ local function GetAllFiles( tab, folder, extension, path )
 		return
 	end
 
-	for k, v in pairs( files ) do
+	for k, v in ipairs( files ) do
 
 		if ( v:EndsWith( extension ) ) then
 			table.insert( tab, ( folder .. v ):lower() )
@@ -23,7 +23,7 @@ local function GetAllFiles( tab, folder, extension, path )
 
 	end
 
-	for k, v in pairs( folders ) do
+	for k, v in ipairs( folders ) do
 		expectedCalls = expectedCalls + 1
 		table.insert( queuedSearch, { tab, folder .. v .. "/", extension, path } )
 	end
