@@ -67,7 +67,7 @@ function PANEL:Setup( vars )
 	btn.DoClick = function()
 
 		local color = vgui.Create( "DColorCombo", self )
-		if istable( self.VectorValue ) then color.Mixer:SetAlphaBar( true ) end
+		if ( istable( self.VectorValue ) ) then color.Mixer:SetAlphaBar( true ) end
 		color:SetupCloseButton( function() CloseDermaMenus() end )
 		color.OnValueChanged = function( color, newcol )
 

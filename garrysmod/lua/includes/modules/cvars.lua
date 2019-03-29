@@ -39,7 +39,7 @@ function OnConVarChanged( name, oldvalue, newvalue )
 
 	for k, v in pairs( Callbacks ) do
 
-		if istable( v ) then
+		if ( istable( v ) ) then
 			v[ 1 ]( name, oldvalue, newvalue )
 		else
 			v( name, oldvalue, newvalue )

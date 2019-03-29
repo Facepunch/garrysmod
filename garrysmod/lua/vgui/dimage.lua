@@ -68,7 +68,7 @@ function PANEL:SetMaterial( Mat )
 
 	-- Everybody makes mistakes,
 	-- that's why they put erasers on pencils.
-	if isstring( Mat ) then
+	if ( isstring( Mat ) ) then
 		self:SetImage( Mat )
 		return
 	end

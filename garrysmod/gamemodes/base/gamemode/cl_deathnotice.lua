@@ -26,7 +26,7 @@ local Deaths = {}
 
 local function PlayerIDOrNameToString( var )
 
-	if isstring( var ) then
+	if ( isstring( var ) ) then
 		if ( var == "" ) then return "" end
 		return "#" .. var
 	end

@@ -209,7 +209,7 @@ local function MakeTable( t, nice, indent, done )
 		str = str .. idt .. tab .. tab
 
 		if !sequential then
-			if isnumber( key ) or isbool( key ) then
+			if ( isnumber( key ) or isbool( key ) ) then
 				key = "[" .. tostring( key ) .. "]" .. tab .. "="
 			else
 				key = tostring( key ) .. tab .. "="
@@ -226,11 +226,11 @@ local function MakeTable( t, nice, indent, done )
 
 		else
 
-			if isstring( value ) then
+			if ( isstring( value ) ) then
 				value = '"' .. tostring( value ) .. '"'
-			elseif isvector( value ) then
+			elseif ( isvector( value ) ) then
 				value = "Vector(" .. value.x .. "," .. value.y .. "," .. value.z .. ")"
-			elseif isangle( value ) then
+			elseif ( isangle( value ) ) then
 				value = "Angle(" .. value.pitch .. "," .. value.yaw .. "," .. value.roll .. ")"
 			else
 				value = tostring( value )
@@ -271,14 +271,14 @@ function table.Sanitise( t, done )
 
 		else
 
-			if isvector( v ) then
+			if ( isvector( v ) ) then
 
 				local x, y, z = v.x, v.y, v.z
 				if y == 0 then y = nil end
 				if z == 0 then z = nil end
 				tbl[ k ] = { __type = "Vector", x = x, y = y, z = z }
 
-			elseif isangle( v ) then
+			elseif ( isangle( v ) ) then
 
 				local p, y, r = v.pitch, v.yaw, v.roll
 				if p == 0 then p = nil end
@@ -286,7 +286,7 @@ function table.Sanitise( t, done )
 				if r == 0 then r = nil end
 				tbl[ k ] = { __type = "Angle", p = p, y = y, r = r }
 
-			elseif isbool( v ) then
+			elseif ( isbool( v ) ) then
 
 				tbl[ k ] = { __type = "Bool", tostring( v ) }
 
@@ -379,7 +379,7 @@ function table.SortByMember( Table, MemberName, bAsc )
 		if ( !a[ MemberName ] ) then return !bReverse end
 		if ( !b[ MemberName ] ) then return bReverse end
 
-		if isstring( a[ MemberName ] ) then
+		if ( isstring( a[ MemberName ] ) ) then
 
 			if ( bReverse ) then
 				return a[ MemberName ]:lower() < b[ MemberName ]:lower()
