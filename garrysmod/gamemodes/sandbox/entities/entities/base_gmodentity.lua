@@ -5,22 +5,16 @@ DEFINE_BASECLASS( "base_anim" )
 ENT.Spawnable = false
 
 if ( CLIENT ) then
-	ENT.ViewDistance = 256
+	ENT.MaxWorldTipDistance = 256
 
 	function ENT:BeingLookedAtByLocalPlayer()
 		local ply = LocalPlayer()
 		if ( not IsValid( ply ) ) then return false end
 
 		local view = ply:GetViewEntity()
-		local dist = self.ViewDistance
+		local dist = self.MaxWorldtipDistance
 		dist = dist * dist
-		local pos
-
-		if ( view:IsPlayer() ) then
-			pos = view:GetShootPos()
-		else
-			pos = view:GetPos()
-		end
+		local pos = view:IsPlayer() && view:GetShootPos() || view:GetPos()
 
 		return pos:DistToSqr( self:GetPos() ) <= dist && ply:GetEyeTrace().Entity == self
 	end
