@@ -36,9 +36,9 @@ function PANEL:Init()
 	self:SetDecimals( 2 )
 	self:SetTall( 20 )
 	self:SetMinMax( 0, 100 )
-	
-	self.m_iInterval = 1
-	
+
+	self:SetInterval( 1 )
+
 	self:SetUpdateOnType( true )
 	self:SetNumeric( true )
 
@@ -46,7 +46,7 @@ function PANEL:Init()
 
 	self.Up = vgui.Create( "DButton", self )
 	self.Up:SetText( "" )
-	self.Up.DoClick = function( button, mcode ) self:SetValue( self:GetValue() + self.m_iInterval ) end
+	self.Up.DoClick = function( button, mcode ) self:SetValue( self:GetValue() + self:GetInterval() ) end
 	self.Up.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "NumberUp", panel, w, h ) end
 
 	self.Up.OldOnMousePressed = self.Up.OnMousePressed
@@ -57,7 +57,7 @@ function PANEL:Init()
 
 	self.Down = vgui.Create( "DButton", self )
 	self.Down:SetText( "" )
-	self.Down.DoClick = function( button, mcode ) self:SetValue( self:GetValue() - self.m_iInterval ) end
+	self.Down.DoClick = function( button, mcode ) self:SetValue( self:GetValue() - self:GetInterval() ) end
 	self.Down.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "NumberDown", panel, w, h ) end
 
 	self.Down.OldOnMousePressed = self.Down.OnMousePressed
@@ -97,14 +97,6 @@ function PANEL:SetMinMax( min, max )
 	self:SetMin( min )
 	self:SetMax( max )
 
-end
-
-function PANEL:SetInterval( val )
-	self.m_iInterval = tonumber( val ) or 1
-end
-
-function PANEL:GetInterval( val )
-	return tonumber( self.m_iInterval or 1 )
 end
 
 function PANEL:SetMin( min )
