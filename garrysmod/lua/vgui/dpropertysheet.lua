@@ -120,6 +120,24 @@ function PANEL:GenerateExample()
 
 end
 
+function PANEL:DoRightClick()
+
+	if ( !IsValid( self:GetPropertySheet() ) ) then return end
+
+	local tabs = DermaMenu()
+	for k, v in pairs( self:GetPropertySheet().Items ) do
+		if ( !v || !IsValid( v.Tab ) || !v.Tab:IsVisible() ) then continue end
+		local option = tabs:AddOption( v.Tab:GetText(), function()
+			if ( !v || !IsValid( v.Tab ) || !IsValid( self:GetPropertySheet() ) || !IsValid( self:GetPropertySheet().tabScroller ) ) then return end
+			v.Tab:DoClick()
+			self:GetPropertySheet().tabScroller:ScrollToChild( v.Tab )
+		end )
+		if ( IsValid( v.Tab.Image ) ) then option:SetIcon( v.Tab.Image:GetImage() ) end
+	end
+	tabs:Open()
+
+end
+
 derma.DefineControl( "DTab", "A Tab for use on the PropertySheet", PANEL, "DButton" )
 
 --[[---------------------------------------------------------
