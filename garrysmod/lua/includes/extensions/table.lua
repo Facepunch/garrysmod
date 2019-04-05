@@ -1,4 +1,8 @@
 
+function table.Pack( ... )
+	return { ... }, select( "#", ... )
+end
+
 --[[---------------------------------------------------------
 	Name: Inherit( t, base )
 	Desc: Copies any missing data from base to t
