@@ -166,13 +166,6 @@ function util.BasicKeyHandler(pnl, kc)
    end
 end
 
-function util.SafeRemoveHook(event, name)
-   local h = hook.GetTable()
-   if h and h[event] and h[event][name] then
-      hook.Remove(event, name)
-   end
-end
-
 function util.noop() end
 function util.passthrough(x) return x end
 
