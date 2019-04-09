@@ -31,6 +31,12 @@ function net.Incoming( len, client )
 	
 	func( len, client )
 
+	hook.Add("OnNetMessageReceived", "OnNetMessageReceived", function()
+		
+		return strName, len
+			
+	end )
+
 end
 
 --
