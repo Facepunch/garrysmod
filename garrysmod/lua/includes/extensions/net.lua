@@ -20,18 +20,18 @@ function net.Incoming( len, client )
 	local strName = util.NetworkIDToString( i )
 	
 	if ( !strName ) then return end
-	
-	local func = net.Receivers[ strName:lower() ]
-	if ( !func ) then return end
 
 	--
 	-- len includes the 16 bit int which told us the message name
 	--
 	len = len - 16
+
+	hook.Run( "OnNetMessageReceived", strName, len, client )
+
+	local func = net.Receivers[ strName:lower() ]
+	if ( !func ) then return end
 	
 	func( len, client )
-
-	hook.Run("OnNetMessageReceived", strName, len)
 
 end
 
