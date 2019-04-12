@@ -701,11 +701,11 @@ function table.Compare(tab1,tab2)
 	local t1,t2 = {}, {}
 
 	for k,v in pairs(tab1) do
-		t1[k] = (t1[k] or 0) + 1
+		t1[k] = (t1[k] or 0)
 	end
 
 	for k,v in pairs(tab2) do
-		t2[k] = (t2[k] or 0) + 1
+		t2[k] = (t2[k] or 0) 
 	end
 
 	for k,v in pairs(t1) do
