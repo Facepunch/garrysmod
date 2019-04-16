@@ -225,7 +225,7 @@ end
 	Usage: math.LinearSet(0, 10, 3) --> {0,2.5,5,7.5,10}
 -----------------------------------------------------------]]
 function math.LinearSet(nStart, nEnd, nAmount)
-	local fAmt = math.floor(tonumber(nAmount) or 0)
+	local fAmt = math.floor(tonumber(nAmount) or 100)
 	fAmt = ((fAmt >= 0) and fAmt or 0)
 	local iAmt, dAmt = (fAmt + 1), (nEnd - nStart)
 	local fStart, fEnd, nAdd = 1, (fAmt+2), (dAmt / iAmt)
