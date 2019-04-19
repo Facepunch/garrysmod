@@ -917,7 +917,7 @@ end
 
 function SKIN:PaintCategoryList( panel, w, h )
 
-	self.tex.CategoryList.Outer( 0, 0, w, h )
+	self.tex.CategoryList.Outer( 0, 0, w, h, panel:GetBackgroundColor() )
 
 end
 
