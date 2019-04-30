@@ -181,7 +181,7 @@ local ban_functions = {
    ulx    = ULib and ULib.kickban, -- has (ply, length, reason) signature
 
    evolve = function(p, l, r)
-               evolve:Ban(p:AccountID(), l * 60, r) -- time in seconds
+               evolve:Ban(p:UniqueID(), l * 60, r) -- time in seconds
             end,
 
    sm     = function(p, l, r)
