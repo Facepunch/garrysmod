@@ -64,13 +64,13 @@
 		"HL2_Saved"			"Game Saved"
 
 		// Garry's Mod weapons
-		"GMOD_Camera"		"CAMERA"
-		"GMOD_Fists"		"FISTS"
-		"GMOD_FlechetteGun"	"FLECHETTE GUN"
-		"GMOD_ManhackGun"	"MANHACK GUN"
-		"GMOD_MedKit"		"MEDKIT"
-		"GMOD_Physgun"		"PHYSICS GUN"
-		"GMOD_ToolGun"		"TOOL GUN"
+		"GMOD_Camera"		"Camera"
+		"GMOD_Fists"		"Fists"
+		"GMOD_FlechetteGun"	"Flechette Gun"
+		"GMOD_ManhackGun"	"Manhack Gun"
+		"GMOD_MedKit"		"Medkit"
+		"GMOD_Physgun"		"Physics Gun"
+		"GMOD_ToolGun"		"Tool Gun"
 
 		// Half-Life 2 weapons
 		"HL2_357Handgun"	".357 MAGNUM"
