@@ -307,7 +307,10 @@ function util.Stack()
 
 end
 
-local util_SteamIDTo64 = util.SteamIDTo64
+--Helper for the following functions.
+local function GetUniqueID( sid )
+	return util.CRC( "gm_"..sid.."_gm" )
+end
 
 --[[---------------------------------------------------------
    Name: GetPData( steamid, name, default )
@@ -315,7 +318,7 @@ local util_SteamIDTo64 = util.SteamIDTo64
 -----------------------------------------------------------]]
 function util.GetPData( steamid, name, default )
 
-	name = Format( "%s[%s]", util_SteamIDTo64( steamid ), name )
+	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
 	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr(name) .. " LIMIT 1" )
 	if ( val == nil ) then return default end
 	
@@ -329,7 +332,7 @@ end
 -----------------------------------------------------------]]
 function util.SetPData( steamid, name, value )
 
-	name = Format( "%s[%s]", util_SteamIDTo64( steamid ), name )
+	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
 	sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( "..SQLStr(name)..", "..SQLStr(value).." )" )
 	
 end
@@ -340,7 +343,7 @@ end
 -----------------------------------------------------------]]
 function util.RemovePData( steamid, name )
 
-	name = Format( "%s[%s]", util_SteamIDTo64( steamid ), name )
+	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = "..SQLStr(name) )
 	
 end
