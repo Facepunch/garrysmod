@@ -59,7 +59,7 @@ local function GetPlayerIndex( ply )
 
 	if ( !IsValid( ply ) ) then return 0 end
 
-	return ply:AccountID()
+	return ply:AccountID() or 0
 
 end
 

@@ -62,7 +62,7 @@ if ( SERVER ) then
 
 		if ( !IsType( type ) ) then return end
 
-		local id = pl:AccountID()
+		local id = pl:AccountID() or 0
 
 		cleanup_list[ id ] = cleanup_list[ id ] or {}
 		cleanup_list[ id ][ type ] = cleanup_list[ id ][ type ] or {}
@@ -99,7 +99,7 @@ if ( SERVER ) then
 
 		if ( !IsValid( pl ) ) then return end
 
-		local id = pl:AccountID()
+		local id = pl:AccountID() or 0
 
 		if ( !cleanup_list[ id ] ) then return end
 

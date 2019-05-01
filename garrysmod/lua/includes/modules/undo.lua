@@ -308,7 +308,7 @@ function Finish( NiceText )
 	if (Current_Undo.Owner == nil) then return end
 	if (!Current_Undo.Owner:IsValid()) then return end
 	
-	local index = Current_Undo.Owner:AccountID()
+	local index = Current_Undo.Owner:AccountID() or 0
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 	
 	local id = table.insert( PlayerUndo[ index ], Current_Undo )
@@ -381,7 +381,7 @@ end
 -----------------------------------------------------------]]
 local function CC_UndoLast( pl, command, args )
 
-	local index = pl:AccountID()
+	local index = pl:AccountID() or 0
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 	
 	local last = nil
@@ -424,7 +424,7 @@ end
 local function CC_UndoNum( pl, command, args )
 
 	if (!args[1]) then return end	
-	local index = pl:AccountID()
+	local index = pl:AccountID() or 0
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 	
 	local UndoNum = tonumber( args[1] )

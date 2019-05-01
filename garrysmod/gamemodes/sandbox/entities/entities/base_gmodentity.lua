@@ -72,7 +72,7 @@ function ENT:SetPlayer( ply )
 	if ( IsValid( ply ) ) then
 
 		self:SetVar( "Founder", ply )
-		self:SetVar( "FounderIndex", ply:AccountID() )
+		self:SetVar( "FounderIndex", ply:AccountID() or 0 )
 
 		self:SetNWString( "FounderName", ply:Nick() )
 
