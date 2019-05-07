@@ -27,7 +27,7 @@ function PANEL:IsDown()
 
 end
 
-function PANEL:SetColor( color, displayTooltip = false )
+function PANEL:SetColor( color, displayTooltip )
 
 	if ( displayTooltip == true ) then
 		
