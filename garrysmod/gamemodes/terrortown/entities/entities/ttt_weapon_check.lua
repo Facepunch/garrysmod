@@ -19,7 +19,7 @@ end
 
 local function HasWeaponType(ply, weptype)
    for _, wep in pairs(ply:GetWeapons()) do
-      if IsValid(wep) and WEPS.TypeForWeapon(wep:GetClass()) == weptype then
+      if WEPS.TypeForWeapon(wep:GetClass()) == weptype then
          return true
       end
    end
@@ -79,8 +79,8 @@ function ENT:TestWeapons(weptype)
       return 0
    end
 
-   for _,ply in pairs(player.GetAll()) do
-      if IsValid(ply) and ply:IsTerror() then
+   for _,ply in ipairs(player.GetAll()) do
+      if ply:IsTerror() then
          local pos = ply:GetPos()
          local center = ply:LocalToWorld(ply:OBBCenter())
          if VectorInside(pos, mins, maxs) or VectorInside(center, mins, maxs) then

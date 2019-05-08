@@ -33,10 +33,8 @@ function PrintTraitors(ply)
       local ps = player.GetAll()
       table.sort(ps, TraitorSort)
 
-      for _, p in pairs(ps) do
-         if IsValid(p) then
-            pr(p:GetTraitor() and "TRAITOR" or "Innocent", ":", p:Nick())
-         end
+      for _, p in ipairs(ps) do
+         pr(p:GetTraitor() and "TRAITOR" or "Innocent", ":", p:Nick())
       end
    end
 end
@@ -46,7 +44,7 @@ function PrintGroups(ply)
    local pr = GetPrintFn(ply)
 
    pr("User", "-", "Group")
-   for _, p in pairs(player.GetAll()) do
+   for _, p in ipairs(player.GetAll()) do
       pr(p:Nick(), "-", p:GetNWString("UserGroup"))
    end
 end

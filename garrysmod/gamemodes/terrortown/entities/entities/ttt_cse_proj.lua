@@ -93,7 +93,7 @@ function ENT:ShowSceneForCorpse(corpse)
 
    if not scene then return end
 
-   for _, dummy_key in pairs({"victim", "killer"}) do
+   for _, dummy_key in ipairs({"victim", "killer"}) do
       local dummy = scene[dummy_key]
 
       if dummy then

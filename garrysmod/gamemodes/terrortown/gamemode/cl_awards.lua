@@ -178,7 +178,7 @@ local function NumKills_Traitor(events, scores, players, traitors)
       end
    end
 
-   local choices = table.Count(trs)
+   local choices = #trs
    if choices > 0 then
       -- award a random killer
       local pick = math.random(1, choices)
@@ -213,7 +213,7 @@ local function NumKills_Inno(events, scores, players, traitors)
       end
    end
 
-   local choices = table.Count(ins)
+   local choices = #ins
    if not table.IsEmpty(ins) then
       -- award a random killer
       local pick = math.random(1, choices)

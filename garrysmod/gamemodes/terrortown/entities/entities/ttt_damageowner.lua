@@ -18,8 +18,8 @@ function ENT:AcceptInput(name, activator, caller, data)
       if not self.Damager then return end
 
       if IsValid(activator) and activator:IsPlayer() then
-         for _, ent in pairs(ents.FindByName(self.Damager) or {}) do
-            if IsValid(ent) and ent.SetDamageOwner then
+         for _, ent in ipairs(ents.FindByName(self.Damager) or {}) do
+            if ent.SetDamageOwner then
                Dev(2, "Setting damageowner on", ent, ent:GetName())
 
                ent:SetDamageOwner(activator)
@@ -32,8 +32,8 @@ function ENT:AcceptInput(name, activator, caller, data)
    elseif name == "ClearDamageOwner" then
       if not self.Damager then return end
 
-      for _, ent in pairs(ents.FindByName(self.Damager) or {}) do
-         if IsValid(ent) and ent.SetDamageOwner then
+      for _, ent in ipairs(ents.FindByName(self.Damager) or {}) do
+         if ent.SetDamageOwner then
             Dev(2, "Clearing damageowner on", ent, ent:GetName())
             ent:SetDamageOwner(nil)
          end

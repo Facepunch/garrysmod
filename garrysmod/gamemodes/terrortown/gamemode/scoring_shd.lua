@@ -149,13 +149,13 @@ local WeaponNames = nil
 function GetWeaponClassNames()
    if not WeaponNames then
       local tbl = {}
-      for k,v in pairs(weapons.GetList()) do
+      for k,v in ipairs(weapons.GetList()) do
          if v and v.WeaponID then
             tbl[v.WeaponID] = WEPS.GetClass(v)
          end
       end
 
-      for k,v in pairs(scripted_ents.GetList()) do
+      for k,v in ipairs(scripted_ents.GetList()) do
          local id = v and (v.WeaponID or (v.t and v.t.WeaponID))
          if id then
             tbl[id] = WEPS.GetClass(v)

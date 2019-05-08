@@ -149,7 +149,7 @@ function PANEL:UpdatePlayerData()
 
    if #to_remove == 0 then return end
 
-   for k,ply in pairs(to_remove) do
+   for k,ply in ipairs(to_remove) do
       local pnl = self.rows[ply]
       if IsValid(pnl) then
          pnl:Remove()

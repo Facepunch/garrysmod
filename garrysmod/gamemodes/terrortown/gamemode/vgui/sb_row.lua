@@ -221,7 +221,7 @@ function PANEL:UpdatePlayerData()
 end
 
 function PANEL:ApplySchemeSettings()
-   for k,v in pairs(self.cols) do
+   for k,v in ipairs(self.cols) do
       v:SetFont("treb_small")
       v:SetTextColor(COLOR_WHITE)
    end

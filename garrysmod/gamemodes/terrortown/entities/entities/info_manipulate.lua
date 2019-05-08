@@ -56,7 +56,7 @@ function ENT:CreateReplacement()
    end
 
    if self.RawOutputs then
-      for k, v in pairs(self.RawOutputs) do
+      for k, v in ipairs(self.RawOutputs) do
          tgt:SetKeyValue("OnPressed", tostring(v))
       end
    end

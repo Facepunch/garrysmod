@@ -6,6 +6,7 @@ local table = table
 local player = player
 local timer = timer
 local pairs = pairs
+local ipairs = ipairs
 
 CreateConVar("ttt_bots_are_spectators", "0", FCVAR_ARCHIVE)
 CreateConVar("ttt_dyingshot", "0")
@@ -45,7 +46,7 @@ end
 
 function GM:NetworkIDValidated( name, steamid )
    -- edge case where player authed after initspawn
-   for _, p in pairs(player.GetAll()) do
+   for _, p in ipairs(player.GetAll()) do
       if IsValid(p) and p:SteamID() == steamid and p.delay_karma_recall then
          KARMA.LateRecallAndSet(p)
          return
@@ -113,8 +114,8 @@ function GM:IsSpawnpointSuitable(ply, spwn, force, rigged)
 
    local blocking = ents.FindInBox(pos + Vector( -16, -16, 0 ), pos + Vector( 16, 16, 64 ))
 
-   for k, p in pairs(blocking) do
-      if IsValid(p) and p:IsPlayer() and p:IsTerror() and p:Alive() then
+   for k, p in ipairs(blocking) do
+      if p:IsPlayer() and p:IsTerror() and p:Alive() then
          if force then
             p:Kill()
          else
@@ -133,9 +134,9 @@ local SpawnTypes = {"info_player_deathmatch", "info_player_combine",
 
 function GetSpawnEnts(shuffled, force_all)
    local tbl = {}
-   for k, classname in pairs(SpawnTypes) do
-      for _, e in pairs(ents.FindByClass(classname)) do
-         if IsValid(e) and (not e.BeingRemoved) then
+   for k, classname in ipairs(SpawnTypes) do
+      for _, e in ipairs(ents.FindByClass(classname)) do
+         if not e.BeingRemoved then
             table.insert(tbl, e)
          end
       end
@@ -146,8 +147,8 @@ function GetSpawnEnts(shuffled, force_all)
    -- uses it for observer starts that are in places where players cannot really
    -- spawn well. At all.
    if force_all or #tbl == 0 then
-      for _, e in pairs(ents.FindByClass("info_player_start")) do
-         if IsValid(e) and (not e.BeingRemoved) then
+      for _, e in ipairs(ents.FindByClass("info_player_start")) do
+         if not e.BeingRemoved then
             table.insert(tbl, e)
          end
       end
@@ -205,7 +206,7 @@ function GM:PlayerSelectSpawn(ply)
 
    -- Optimistic attempt: assume there are sufficient spawns for all and one is
    -- free
-   for k, spwn in pairs(self.SpawnPoints) do
+   for k, spwn in ipairs(self.SpawnPoints) do
       if self:IsSpawnpointSuitable(ply, spwn, false) then
          return spwn
       end
@@ -214,12 +215,12 @@ function GM:PlayerSelectSpawn(ply)
    -- That did not work, so now look around spawns
    local picked = nil
 
-   for k, spwn in pairs(self.SpawnPoints) do
+   for k, spwn in ipairs(self.SpawnPoints) do
       picked = spwn -- just to have something if all else fails
 
       -- See if we can jury rig a spawn near this one
       local rigged = PointsAroundSpawn(spwn)
-      for _, rig in pairs(rigged) do
+      for _, rig in ipairs(rigged) do
          if self:IsSpawnpointSuitable(ply, rig, false, true) then
             local rig_spwn = ents.Create("info_player_terrorist")
             if IsValid(rig_spwn) then
@@ -236,7 +237,7 @@ function GM:PlayerSelectSpawn(ply)
    end
 
    -- Last attempt, force one
-   for k, spwn in pairs(self.SpawnPoints) do
+   for k, spwn in ipairs(self.SpawnPoints) do
       if self:IsSpawnpointSuitable(ply, spwn, true) then
          return spwn
       end
@@ -507,7 +508,7 @@ local function CheckCreditAward(victim, attacker)
    -- DETECTIVE AWARD
    if IsValid(attacker) and attacker:IsPlayer() and attacker:IsActiveDetective() and victim:IsTraitor() then
       local amt = GetConVarNumber("ttt_det_credits_traitordead") or 1
-      for _, ply in pairs(player.GetAll()) do
+      for _, ply in ipairs(player.GetAll()) do
          if ply:IsActiveDetective() then
             ply:AddCredits(amt)
          end
@@ -523,7 +524,7 @@ local function CheckCreditAward(victim, attacker)
       local inno_dead = 0
       local inno_total = 0
       
-      for _, ply in pairs(player.GetAll()) do
+      for _, ply in ipairs(player.GetAll()) do
          if not ply:GetTraitor() then
             if ply:IsTerror() then
                inno_alive = inno_alive + 1
@@ -553,7 +554,7 @@ local function CheckCreditAward(victim, attacker)
          if amt > 0 then
             LANG.Msg(GetTraitorFilter(true), "credit_tr_all", {num = amt})
 
-            for _, ply in pairs(player.GetAll()) do
+            for _, ply in ipairs(player.GetAll()) do
                if ply:IsActiveTraitor() then
                   ply:AddCredits(amt)
                end

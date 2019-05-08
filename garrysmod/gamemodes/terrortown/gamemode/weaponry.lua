@@ -37,7 +37,7 @@ local function GetLoadoutWeapons(r)
          [ROLE_DETECTIVE]= {}
       };
 
-      for k, w in pairs(weapons.GetList()) do
+      for k, w in ipairs(weapons.GetList()) do
          if w and type(w.InLoadoutFor) == "table" then
             for _, wrole in pairs(w.InLoadoutFor) do
                table.insert(tbl[wrole], WEPS.GetClass(w))

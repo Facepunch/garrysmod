@@ -14,7 +14,7 @@ function GetEquipmentForRole(role)
       local tbl = table.Copy(EquipmentItems)
 
       -- find buyable weapons to load info from
-      for k, v in pairs(weapons.GetList()) do
+      for k, v in ipairs(weapons.GetList()) do
          if v and v.CanBuy then
             local data = v.EquipMenuData or {}
             local base = {

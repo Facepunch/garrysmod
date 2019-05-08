@@ -13,37 +13,35 @@ local function PushPullRadius(pos, pusher)
    local push_force = 256
 
    -- pull physics objects and push players
-   for k, target in pairs(ents.FindInSphere(pos, radius)) do
-      if IsValid(target) then
-         local tpos = target:LocalToWorld(target:OBBCenter())
-         local dir = (tpos - pos):GetNormal()
-         local phys = target:GetPhysicsObject()
+   for k, target in ipairs(ents.FindInSphere(pos, radius)) do
+      local tpos = target:LocalToWorld(target:OBBCenter())
+      local dir = (tpos - pos):GetNormal()
+      local phys = target:GetPhysicsObject()
 
-         if target:IsPlayer() and (not target:IsFrozen()) and ((not target.was_pushed) or target.was_pushed.t != CurTime()) then
+      if target:IsPlayer() and (not target:IsFrozen()) and ((not target.was_pushed) or target.was_pushed.t != CurTime()) then
 
-            -- always need an upwards push to prevent the ground's friction from
-            -- stopping nearly all movement
-            dir.z = math.abs(dir.z) + 1
+         -- always need an upwards push to prevent the ground's friction from
+         -- stopping nearly all movement
+         dir.z = math.abs(dir.z) + 1
 
-            local push = dir * push_force
+         local push = dir * push_force
 
-            -- try to prevent excessive upwards force
-            local vel = target:GetVelocity() + push
-            vel.z = math.min(vel.z, push_force)
+         -- try to prevent excessive upwards force
+         local vel = target:GetVelocity() + push
+         vel.z = math.min(vel.z, push_force)
 
-            -- mess with discomb jumps
-            if pusher == target and (not ttt_allow_jump:GetBool()) then
-               vel = VectorRand() * vel:Length()
-               vel.z = math.abs(vel.z)
-            end
-
-            target:SetVelocity(vel)
-
-            target.was_pushed = {att=pusher, t=CurTime(), wep="weapon_ttt_confgrenade"}
-
-         elseif IsValid(phys) then
-            phys:ApplyForceCenter(dir * -1 * phys_force)
+         -- mess with discomb jumps
+         if pusher == target and (not ttt_allow_jump:GetBool()) then
+            vel = VectorRand() * vel:Length()
+            vel.z = math.abs(vel.z)
          end
+
+         target:SetVelocity(vel)
+
+         target.was_pushed = {att=pusher, t=CurTime(), wep="weapon_ttt_confgrenade"}
+
+      elseif IsValid(phys) then
+         phys:ApplyForceCenter(dir * -1 * phys_force)
       end
    end
 

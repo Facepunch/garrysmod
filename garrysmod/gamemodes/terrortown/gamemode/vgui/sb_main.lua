@@ -382,7 +382,7 @@ function PANEL:ApplySchemeSettings()
    local highlight_color = Color(175, 175, 175, 255)
    local default_color = COLOR_WHITE
 
-   for k,v in pairs(self.cols) do
+   for k,v in ipairs(self.cols) do
       v:SetFont("treb_small")
       if sorting == v.HeadingIdentifier then
          v:SetTextColor(highlight_color)
@@ -391,7 +391,7 @@ function PANEL:ApplySchemeSettings()
       end
    end
 
-   for k,v in pairs(self.sort_headers) do
+   for k,v in ipairs(self.sort_headers) do
       v:SetFont("treb_small")
       if sorting == v.HeadingIdentifier then
          v:SetTextColor(highlight_color)
@@ -408,13 +408,11 @@ function PANEL:UpdateScoreboard( force )
 
    -- Put players where they belong. Groups will dump them as soon as they don't
    -- anymore.
-   for k, p in pairs(player.GetAll()) do
-      if IsValid(p) then
-         local group = ScoreGroup(p)
-         if self.ply_groups[group] and not self.ply_groups[group]:HasPlayerRow(p) then
-            self.ply_groups[group]:AddPlayerRow(p)
-            layout = true
-         end
+   for k, p in ipairs(player.GetAll()) do
+      local group = ScoreGroup(p)
+      if self.ply_groups[group] and not self.ply_groups[group]:HasPlayerRow(p) then
+         self.ply_groups[group]:AddPlayerRow(p)
+         layout = true
       end
    end
 

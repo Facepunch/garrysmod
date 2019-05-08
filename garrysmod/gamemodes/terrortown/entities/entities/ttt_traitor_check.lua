@@ -20,8 +20,8 @@ function ENT:CountTraitors()
    local maxs = self:LocalToWorld(self:OBBMaxs())
 
    local trs = 0
-   for _,ply in pairs(player.GetAll()) do
-      if IsValid(ply) and ply:IsActiveTraitor() and ply:Alive() then
+   for _,ply in ipairs(player.GetAll()) do
+      if ply:IsActiveTraitor() and ply:Alive() then
          local pos = ply:GetPos()
          if VectorInside(pos, mins, maxs) then
             trs = trs + 1

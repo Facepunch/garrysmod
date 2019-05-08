@@ -6,6 +6,7 @@ local math = math
 local string = string
 local table = table
 local pairs = pairs
+local ipairs = ipairs
 
 -- attempts to get the weapon used from a DamageInfo instance needed because the
 -- GetAmmoType value is useless and inflictor isn't properly set (yet)
@@ -53,8 +54,8 @@ end
 
 function util.GetAlivePlayers()
    local alive = {}
-   for k, p in pairs(player.GetAll()) do
-      if IsValid(p) and p:Alive() and p:IsTerror() then
+   for k, p in ipairs(player.GetAll()) do
+      if p:Alive() and p:IsTerror() then
          table.insert(alive, p)
       end
    end
@@ -71,7 +72,7 @@ function util.GetNextAlivePlayer(ply)
    local choice = nil
 
    if IsValid(ply) then
-      for k,p in pairs(alive) do
+      for k,p in ipairs(alive) do
          if prev == ply then
             choice = p
          end
