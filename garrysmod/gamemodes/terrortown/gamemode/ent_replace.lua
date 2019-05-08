@@ -263,7 +263,7 @@ local SpawnableAmmoClasses = nil
 function ents.TTT.GetSpawnableAmmo()
    if not SpawnableAmmoClasses then
       local tbl = {}
-      for k,v in ipairs(scripted_ents.GetList()) do
+      for k,v in pairs(scripted_ents.GetList()) do
          if v and (v.AutoSpawnable or (v.t and v.t.AutoSpawnable)) then
             table.insert(tbl, k)
          end
