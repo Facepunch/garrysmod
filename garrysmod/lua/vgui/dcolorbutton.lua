@@ -29,7 +29,7 @@ end
 
 function PANEL:SetColor( color, displayTooltip )
 
-	if ( displayTooltip == true ) then
+	if ( displayTooltip == true or displayTooltip == nil ) then
 		
 		local colorStr = "R: " .. color.r .. "\nG: " .. color.g .. "\nB: " .. color.b .. "\nA: " .. color.a
 		self:SetTooltip( colorStr )
