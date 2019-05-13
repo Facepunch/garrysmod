@@ -162,9 +162,12 @@ function CreateContextMenu()
 	IconLayout:SetSpaceY( 8 )
 	IconLayout:SetLayoutDir( LEFT )
 	IconLayout:SetWorldClicker( true )
-	IconLayout:SetStretchHeight( false )
-	IconLayout:SetWide( 240 + 32 )
+	IconLayout:SetStretchWidth( true )
+	IconLayout:SetStretchHeight( false ) -- No infinite re-layouts
 	IconLayout:Dock( LEFT )
+
+	-- This overrides DIconLayout's OnMousePressed (which is inherited from DPanel), but we don't care about that in this case
+	IconLayout.OnMousePressed = function( s, ... ) s:GetParent():OnMousePressed( ... ) end
 
 	for k, v in pairs( list.Get( "DesktopWindows" ) ) do
 
