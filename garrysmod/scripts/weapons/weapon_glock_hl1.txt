@@ -5,7 +5,7 @@ WeaponData
 	// Weapon data is loaded by both the Game and Client DLLs.
 	"printname"		"#HL1_Glock"
 	"viewmodel"		"models/v_9mmhandgun.mdl"
-	"playermodel"		"models/w_9mmhandgun.mdl"
+	"playermodel"		"models/weapons/w_9mmhandgun.mdl"
 	"anim_prefix"		"glock"
 	"bucket"		"1"
 	"bucket_position"	"11"
@@ -23,7 +23,7 @@ WeaponData
 	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
 	SoundData
 	{
-		"empty"		"Weapons.Empty"
+		"empty"		"HL1Weapons.Empty"
 		"single_shot"	"HL1Weapon_Glock.Single"
 		"special1"	"HL1Weapon_Glock.Special1"
 		"special2"	"HL1Weapon_Glock.Special2"

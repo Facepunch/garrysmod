@@ -5,7 +5,7 @@ WeaponData
 	// Weapon data is loaded by both the Game and Client DLLs.
 	"printname"		"#HL1_TauCannon"
 	"viewmodel"		"models/v_gauss.mdl"
-	"playermodel"		"models/w_gauss.mdl"
+	"playermodel"		"models/weapons/w_gauss_hls.mdl"
 	"anim_prefix"		"gauss"
 	"bucket"		"3"
 	"bucket_position"	"11"
