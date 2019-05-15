@@ -7,10 +7,10 @@ if not meta then return end
     Desc: Returns if a player is an admin.
 -----------------------------------------------------------]]
 function meta:IsAdmin() 
-    if self:IsSuperAdmin() then return true end
-    if self:IsUserGroup("admin") then return true end
+	if self:IsSuperAdmin() then return true end
+	if self:IsUserGroup("admin") then return true end
 
-    return false
+	return false
 end
 
 --[[---------------------------------------------------------
@@ -18,7 +18,7 @@ end
     Desc: Returns if a player is a superadmin.
 -----------------------------------------------------------]]
 function meta:IsSuperAdmin()
-    return self:IsUserGroup("superadmin")
+	return self:IsUserGroup("superadmin")
 end
 
 --[[---------------------------------------------------------
@@ -26,9 +26,9 @@ end
     Desc: Returns if a player is in the specified usergroup.
 -----------------------------------------------------------]]
 function meta:IsUserGroup(name)
-    if not self:IsValid() then return false end
+	if not self:IsValid() then return false end
 
-    return self:GetNWString("UserGroup") == name
+	return self:GetNWString("UserGroup") == name
 end
 
 --[[---------------------------------------------------------
@@ -36,7 +36,7 @@ end
     Desc: Returns the player's usergroup.
 -----------------------------------------------------------]]
 function meta:GetUserGroup()
-    return self:GetNWString("UserGroup", "user")
+	return self:GetNWString("UserGroup", "user")
 end
 
 
@@ -51,7 +51,7 @@ if not SERVER then return end
     Desc: Sets the player's usergroup. ( Serverside Only )
 -----------------------------------------------------------]]
 function meta:SetUserGroup(name)
-    self:SetNWString("UserGroup", name)
+	self:SetNWString("UserGroup", name)
 end
 
 
@@ -67,39 +67,39 @@ local UsersKV = util.KeyValuesToTable( file.Read( "settings/users.txt", "GAME" )
 
 -- Extract the data into the SteamIDs table
 for key, tab in pairs( UsersKV ) do
-    for name, steamid in pairs( tab ) do
-        SteamIDs[ steamid ] = {}
-        SteamIDs[ steamid ].name = name
-        SteamIDs[ steamid ].group = key
-    end
+	for name, steamid in pairs( tab ) do
+		SteamIDs[ steamid ] = {}
+		SteamIDs[ steamid ].name = name
+		SteamIDs[ steamid ].group = key
+	end
 end
 
 function util.GetUserGroups()
-    return SteamIDs
+	return SteamIDs
 end
 
 hook.Add("PlayerInitialSpawn", "PlayerAuthSpawn", function(ply)
-    local steamid = ply:SteamID()
-    
-    if game.SinglePlayer() or ply:IsListenServerHost() then
-        ply:SetUserGroup("superadmin")
-        return
-    end
-    
-    if SteamIDs[steamid] == nil then
-        ply:SetUserGroup("user")
-        return
-    end
+	local steamid = ply:SteamID()
+	
+	if game.SinglePlayer() or ply:IsListenServerHost() then
+		ply:SetUserGroup("superadmin")
+		return
+	end
+	
+	if SteamIDs[steamid] == nil then
+		ply:SetUserGroup("user")
+		return
+	end
 
-    -- Admin SteamID need to be fully authenticated by Steam!
-    if ply.IsFullyAuthenticated and not ply:IsFullyAuthenticated() then
-        ply:ChatPrint(string.format("Hey '%s' - Your SteamID wasn't fully authenticated, so your usergroup has not been set to '%s.'",
-            SteamIDs[steamid].name, SteamIDs[steamid].group))
-        ply:ChatPrint("Try restarting Steam.")
-        return
-    end
+	-- Admin SteamID need to be fully authenticated by Steam!
+	if ply.IsFullyAuthenticated and not ply:IsFullyAuthenticated() then
+		ply:ChatPrint(string.format("Hey '%s' - Your SteamID wasn't fully authenticated, so your usergroup has not been set to '%s.'",
+			SteamIDs[steamid].name, SteamIDs[steamid].group))
+		ply:ChatPrint("Try restarting Steam.")
+		return
+	end
 
-    ply:SetUserGroup(SteamIDs[steamid].group)
-    ply:ChatPrint(string.format("Hey '%s' - You're in the '%s' group on this server.",
-        SteamIDs[steamid].name, SteamIDs[steamid].group))
+	ply:SetUserGroup(SteamIDs[steamid].group)
+	ply:ChatPrint(string.format("Hey '%s' - You're in the '%s' group on this server.",
+		SteamIDs[steamid].name, SteamIDs[steamid].group))
 end)

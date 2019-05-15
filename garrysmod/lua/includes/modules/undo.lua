@@ -294,7 +294,7 @@ local function SendUndoneMessage( ent, id, ply )
 	-- in one batch ever 0.5 seconds or something along those lines.
 	
 	net.Start( "Undo_Undone" )
-	    net.WriteInt( id, 16 )
+		net.WriteInt( id, 16 )
 	net.Send( ply )
 
 end
