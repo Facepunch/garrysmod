@@ -3,10 +3,10 @@ local meta = FindMetaTable("Player")
 if not meta then return end
 
 --[[---------------------------------------------------------
-    Name: IsAdmin
-    Desc: Returns if a player is an admin.
+	Name: IsAdmin
+	Desc: Returns if a player is an admin.
 -----------------------------------------------------------]]
-function meta:IsAdmin() 
+function meta:IsAdmin()
 	if self:IsSuperAdmin() then return true end
 	if self:IsUserGroup("admin") then return true end
 
@@ -14,16 +14,16 @@ function meta:IsAdmin()
 end
 
 --[[---------------------------------------------------------
-    Name: IsSuperAdmin
-    Desc: Returns if a player is a superadmin.
+	Name: IsSuperAdmin
+	Desc: Returns if a player is a superadmin.
 -----------------------------------------------------------]]
 function meta:IsSuperAdmin()
 	return self:IsUserGroup("superadmin")
 end
 
 --[[---------------------------------------------------------
-    Name: IsUserGroup
-    Desc: Returns if a player is in the specified usergroup.
+	Name: IsUserGroup
+	Desc: Returns if a player is in the specified usergroup.
 -----------------------------------------------------------]]
 function meta:IsUserGroup(name)
 	if not self:IsValid() then return false end
@@ -32,8 +32,8 @@ function meta:IsUserGroup(name)
 end
 
 --[[---------------------------------------------------------
-    Name: GetUserGroup
-    Desc: Returns the player's usergroup.
+	Name: GetUserGroup
+	Desc: Returns the player's usergroup.
 -----------------------------------------------------------]]
 function meta:GetUserGroup()
 	return self:GetNWString("UserGroup", "user")
@@ -47,8 +47,8 @@ end
 if not SERVER then return end
 
 --[[---------------------------------------------------------
-    Name: SetUserGroup
-    Desc: Sets the player's usergroup. ( Serverside Only )
+	Name: SetUserGroup
+	Desc: Sets the player's usergroup. ( Serverside Only )
 -----------------------------------------------------------]]
 function meta:SetUserGroup(name)
 	self:SetNWString("UserGroup", name)
@@ -80,12 +80,12 @@ end
 
 hook.Add("PlayerInitialSpawn", "PlayerAuthSpawn", function(ply)
 	local steamid = ply:SteamID()
-	
+
 	if game.SinglePlayer() or ply:IsListenServerHost() then
 		ply:SetUserGroup("superadmin")
 		return
 	end
-	
+
 	if SteamIDs[steamid] == nil then
 		ply:SetUserGroup("user")
 		return
