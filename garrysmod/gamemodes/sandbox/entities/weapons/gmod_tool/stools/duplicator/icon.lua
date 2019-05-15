@@ -74,10 +74,6 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 		i = i + 1
 
 	end
-	-- Rendering icon the way we do is kinda bad and wil crash the game with too many entities in the dupe
-	-- Try to mitigate that to some degree by not rendering the outline when we are above 800 entities
-	-- 1000 was tested without problems, but we want to give it some space as 1000 was tested in "perfect conditions" with nothing else happening on the map
-	local DoDisableOutline = i > 800
 
 	--
 	-- DRAW THE BLUE BACKGROUND
@@ -92,7 +88,10 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	--
 	render.SuppressEngineLighting( true )
 
-	if ( !DoDisableOutline ) then
+	-- Rendering icon the way we do is kinda bad and will crash the game with too many entities in the dupe
+	-- Try to mitigate that to some degree by not rendering the outline when we are above 800 entities
+	-- 1000 was tested without problems, but we want to give it some space as 1000 was tested in "perfect conditions" with nothing else happening on the map
+	if ( i < 800 ) then
 		local BorderSize	= CamDist * 0.004
 		local Up			= EyeAng:Up() * BorderSize
 		local Right			= EyeAng:Right() * BorderSize
