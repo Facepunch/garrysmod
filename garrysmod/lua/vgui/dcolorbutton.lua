@@ -27,9 +27,9 @@ function PANEL:IsDown()
 
 end
 
-function PANEL:SetColor( color, displayTooltip )
+function PANEL:SetColor( color, hideTooltip )
 
-	if ( displayTooltip == true or displayTooltip == nil ) then
+	if ( hideTooltip == false or hideTooltip == nil ) then
 		
 		local colorStr = "R: " .. color.r .. "\nG: " .. color.g .. "\nB: " .. color.b .. "\nA: " .. color.a
 		self:SetTooltip( colorStr )
