@@ -149,7 +149,7 @@ end
 	Name: Get( string )
 	Desc: Get a weapon by name.
 -----------------------------------------------------------]]
-function Get( name )
+function Get( name, retval )
 
 	local Stored = GetStored( name )
 
@@ -159,6 +159,7 @@ function Get( name )
 
 	-- Create/copy a new table
 	local retval = DeepCopy( Stored )
+	retval.Base = retval.Base or "weapon_base"
 
 	-- If we're not derived from ourselves (a base weapon)
 	-- then derive from our 'Base' weapon.

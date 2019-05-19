@@ -183,7 +183,7 @@ local function PointsAroundSpawn(spwn)
 end
 
 function GM:PlayerSelectSpawn(ply)
-   if (not self.SpawnPoints) or (table.Count(self.SpawnPoints) == 0) or (not IsTableOfEntitiesValid(self.SpawnPoints)) then
+   if (not self.SpawnPoints) or (table.IsEmpty(self.SpawnPoints)) or (not IsTableOfEntitiesValid(self.SpawnPoints)) then
 
       self.SpawnPoints = GetSpawnEnts(true, false)
 
@@ -194,8 +194,7 @@ function GM:PlayerSelectSpawn(ply)
       -- ones anyway.
    end
 
-   local num = table.Count(self.SpawnPoints)
-   if num == 0 then
+   if table.IsEmpty(self.SpawnPoints) then
       Error("No spawn entity found!\n")
       return
    end

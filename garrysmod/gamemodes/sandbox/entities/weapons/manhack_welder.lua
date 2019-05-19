@@ -24,7 +24,7 @@ SWEP.Weight				= 5
 SWEP.AutoSwitchTo		= false
 SWEP.AutoSwitchFrom		= false
 
-SWEP.PrintName			= "Manhack Gun"
+SWEP.PrintName			= "#GMOD_ManhackGun"
 SWEP.Slot				= 3
 SWEP.SlotPos			= 1
 SWEP.DrawAmmo			= false

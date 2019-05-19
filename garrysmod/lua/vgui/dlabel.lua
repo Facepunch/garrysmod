@@ -1,8 +1,8 @@
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_colText",		"TextColor" ) -- Why are there 2 of these?
-AccessorFunc( PANEL, "m_colTextStyle",	"TextStyleColor" ) -- Why are there 2 of these?
+AccessorFunc( PANEL, "m_colText",		"TextColor" )
+AccessorFunc( PANEL, "m_colTextStyle",	"TextStyleColor" )
 AccessorFunc( PANEL, "m_FontName",		"Font" )
 
 AccessorFunc( PANEL, "m_bDoubleClicking",		"DoubleClickingEnabled",	FORCE_BOOL )
@@ -10,15 +10,15 @@ AccessorFunc( PANEL, "m_bAutoStretchVertical",	"AutoStretchVertical",		FORCE_BOO
 AccessorFunc( PANEL, "m_bIsMenuComponent",		"IsMenu",					FORCE_BOOL )
 
 AccessorFunc( PANEL, "m_bBackground",	"PaintBackground",	FORCE_BOOL )
-AccessorFunc( PANEL, "m_bBackground",	"DrawBackground",	FORCE_BOOL ) -- deprecated
-AccessorFunc( PANEL, "m_bDisabled",		"Disabled",			FORCE_BOOL ) -- Why this exists? We have SetEnabled already!
+AccessorFunc( PANEL, "m_bBackground",	"DrawBackground",	FORCE_BOOL ) -- deprecated, see line above
+AccessorFunc( PANEL, "m_bDisabled",		"Disabled",			FORCE_BOOL ) -- deprecated, use SetEnabled/IsEnabled isntead
 
-AccessorFunc( PANEL, "m_bIsToggle",		"IsToggle",			FORCE_BOOL ) -- Why does this exist? Why here?
-AccessorFunc( PANEL, "m_bToggle",		"Toggle",			FORCE_BOOL ) -- Why does this exist? Why here?
+AccessorFunc( PANEL, "m_bIsToggle",		"IsToggle",		FORCE_BOOL )
+AccessorFunc( PANEL, "m_bToggle",		"Toggle",		FORCE_BOOL )
 
-AccessorFunc( PANEL, "m_bBright",		"Bright",			FORCE_BOOL ) -- Why does this exist? Why not SetColor?
-AccessorFunc( PANEL, "m_bDark",			"Dark",				FORCE_BOOL ) -- Why does this exist? Why not SetColor?
-AccessorFunc( PANEL, "m_bHighlight",	"Highlight",		FORCE_BOOL ) -- Why does this exist? Why not SetColor?
+AccessorFunc( PANEL, "m_bBright",		"Bright",		FORCE_BOOL )
+AccessorFunc( PANEL, "m_bDark",			"Dark",			FORCE_BOOL )
+AccessorFunc( PANEL, "m_bHighlight",	"Highlight",	FORCE_BOOL )
 
 function PANEL:Init()
 
@@ -58,7 +58,7 @@ PANEL.SetColor = PANEL.SetTextColor
 
 function PANEL:GetColor()
 
-	return self.m_colTextStyle -- Shouldn't this be m_colText?
+	return self.m_colText || self.m_colTextStyle
 
 end
 
@@ -189,11 +189,13 @@ function PANEL:OnMouseReleased( mousecode )
 	self:MouseCapture( false )
 
 	if ( self:GetDisabled() ) then return end
-	if ( !self.Depressed ) then return end
+	if ( !self.Depressed && dragndrop.m_DraggingMain != self ) then return end
 
-	self.Depressed = nil
-	self:OnReleased()
-	self:InvalidateLayout( true )
+	if ( self.Depressed ) then
+		self.Depressed = nil
+		self:OnReleased()
+		self:InvalidateLayout( true )
+	end
 
 	--
 	-- If we were being dragged then don't do the default behaviour!
@@ -201,7 +203,7 @@ function PANEL:OnMouseReleased( mousecode )
 	if ( self:DragMouseRelease( mousecode ) ) then
 		return
 	end
-
+	
 	if ( self:IsSelectable() && mousecode == MOUSE_LEFT ) then
 
 		local canvas = self:GetSelectionCanvas()

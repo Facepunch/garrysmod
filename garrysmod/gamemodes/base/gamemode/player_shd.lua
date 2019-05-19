@@ -109,7 +109,8 @@ function GM:FindUseEntity( ply, ent )
 	if ( !IsValid( ent ) ) then
 		local traceEnt = util.TraceLine( {
 			start = ply:GetShootPos(),
-			endpos = ply:GetShootPos() + ply:GetAimVector() * 72
+			endpos = ply:GetShootPos() + ply:GetAimVector() * 72,
+			filter = ply
 		} ).Entity
 		if ( IsValid( traceEnt ) ) then return traceEnt end
 	end

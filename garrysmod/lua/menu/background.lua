@@ -40,9 +40,15 @@ local function Render( tbl )
 
 end
 
+local function ShouldBackgroundUpdate()
+
+	return !IsInGame() && !IsInLoading()
+
+end
+
 function DrawBackground()
 
-	if ( !IsInGame() ) then
+	if ( ShouldBackgroundUpdate() ) then
 
 		if ( Active ) then
 			Think( Active )
@@ -80,7 +86,7 @@ local LastGamemode = "none"
 
 function ChangeBackground( currentgm )
 
-	if ( IsInGame() ) then return end -- Don't try to load new images while in-game
+	if ( !ShouldBackgroundUpdate() ) then return end -- Don't try to load new images while in-game or loading
 
 	if ( currentgm && currentgm == LastGamemode ) then return end
 	if ( currentgm ) then LastGamemode = currentgm end

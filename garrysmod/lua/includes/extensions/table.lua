@@ -53,6 +53,14 @@ function table.Empty( tab )
 end
 
 --[[---------------------------------------------------------
+	Name: IsEmpty( tab )
+	Desc: Returns whether a table has iterable items in it, useful for non-sequential tables
+-----------------------------------------------------------]]
+function table.IsEmpty( tab )
+	return next( tab ) == nil
+end
+
+--[[---------------------------------------------------------
 	Name: CopyFromTo( FROM, TO )
 	Desc: Make TO exactly the same as FROM - but still the same table.
 -----------------------------------------------------------]]
@@ -612,7 +620,7 @@ end
 
 function table.GetWinningKey( tab )
 
-	local highest = -10000
+	local highest = -math.huge
 	local winner = nil
 
 	for k, v in pairs( tab ) do

@@ -38,7 +38,7 @@ function ENT:RunCode( activator, caller, code )
 
 	self:SetupGlobals( activator, caller )
 
-		RunString( code )
+		RunString( code, "lua_run#" .. self:EntIndex() )
 
 	self:KillGlobals()
 

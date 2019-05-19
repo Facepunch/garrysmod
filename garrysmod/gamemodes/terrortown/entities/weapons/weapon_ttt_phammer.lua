@@ -5,7 +5,7 @@ DEFINE_BASECLASS "weapon_tttbase"
 SWEP.HoldType              = "ar2"
 
 if CLIENT then
-   SWEP.PrintName          = "Poltergeist"
+   SWEP.PrintName          = "polter_name"
    SWEP.Slot               = 7
 
    SWEP.ViewModelFlip      = false

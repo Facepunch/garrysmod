@@ -8,7 +8,7 @@ function ENT:Initialize()
    local ammos = ents.TTT.GetSpawnableAmmo()
 
    if ammos then
-      local cls = table.Random(ammos)
+      local cls = ammos[math.random(#ammos)]
       local ent = ents.Create(cls)
       if IsValid(ent) then
          ent:SetPos(self:GetPos())
