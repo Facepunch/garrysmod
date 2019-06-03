@@ -5,16 +5,23 @@ AddCSLuaFile()
 -- Note that this just controls what BaseClass provides.
 -- If you're changing the base scroll to the bottom of the file too.
 --
-DEFINE_BASECLASS( "drive_base" );
+DEFINE_BASECLASS( "drive_base" )
 
 
-drive.Register( "drive_noclip", 
+drive.Register( "drive_noclip",
 {
 	--
-	-- Called before each move. You should use your entity and cmd to 
+	-- Called before each move. You should use your entity and cmd to
 	-- fill mv with information you need for your move.
 	--
-	StartMove =  function( self, mv, cmd )
+	StartMove = function( self, mv, cmd )
+
+		--
+		-- Use (E) was pressed - stop it.
+		--
+		if ( mv:KeyReleased( IN_USE ) ) then
+			self:Stop()
+		end
 
 		--
 		-- Update move position and velocity from our entity
@@ -25,7 +32,7 @@ drive.Register( "drive_noclip",
 	end,
 
 	--
-	-- Runs the actual move. On the client when there's 
+	-- Runs the actual move. On the client when there's
 	-- prediction errors this can be run multiple times.
 	-- You should try to only change mv.
 	--
@@ -60,7 +67,7 @@ drive.Register( "drive_noclip",
 		-- a little bit of air resistance. If no keys are down we apply
 		-- more resistance so we slow down more.
 		--
-		if ( math.abs(mv:GetForwardSpeed()) + math.abs(mv:GetSideSpeed()) + math.abs(mv:GetUpSpeed()) < 0.1 ) then
+		if ( math.abs( mv:GetForwardSpeed() ) + math.abs( mv:GetSideSpeed() ) + math.abs( mv:GetUpSpeed() ) < 0.1 ) then
 			vel = vel * 0.90
 		else
 			vel = vel * 0.99
@@ -84,7 +91,7 @@ drive.Register( "drive_noclip",
 	-- The move is finished. Use mv to set the new positions
 	-- on your entities/players.
 	--
-	FinishMove =  function( self, mv )
+	FinishMove = function( self, mv )
 
 		--
 		-- Update our entity!
@@ -99,7 +106,7 @@ drive.Register( "drive_noclip",
 		if ( SERVER && IsValid( self.Entity:GetPhysicsObject() ) ) then
 
 			self.Entity:GetPhysicsObject():EnableMotion( true )
-			self.Entity:GetPhysicsObject():SetPos( mv:GetOrigin() );
+			self.Entity:GetPhysicsObject():SetPos( mv:GetOrigin() )
 			self.Entity:GetPhysicsObject():Wake()
 			self.Entity:GetPhysicsObject():EnableMotion( false )
 
@@ -110,7 +117,7 @@ drive.Register( "drive_noclip",
 	--
 	-- Calculates the view when driving the entity
 	--
-	CalcView =  function( self, view )
+	CalcView = function( self, view )
 
 		--
 		-- Use the utility method on drive_base.lua to give us a 3rd person view
@@ -121,4 +128,4 @@ drive.Register( "drive_noclip",
 
 	end,
 
-}, "drive_base" );
+}, "drive_base" )
