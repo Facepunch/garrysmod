@@ -447,8 +447,10 @@ function GM:PlayerSelectSpawn( pl )
 		-- ZM Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombiemaster" ) )
 
-		-- L4D2
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_position" ) )
+		-- L4D Maps
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_rescue" ) )
+		-- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
+		--self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_position" ) )
 
 	end
 
