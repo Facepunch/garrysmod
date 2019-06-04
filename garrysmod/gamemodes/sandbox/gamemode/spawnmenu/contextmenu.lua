@@ -23,7 +23,7 @@ function PANEL:Open()
 	self:SetHangOpen( false )
 
 	-- If the spawn menu is open, try to close it..
-	if ( g_SpawnMenu:IsVisible() ) then
+	if ( IsValid( g_SpawnMenu ) && g_SpawnMenu:IsVisible() ) then
 		g_SpawnMenu:Close( true )
 	end
 
@@ -135,12 +135,17 @@ vgui.Register( "ContextMenu", PANEL, "EditablePanel" )
 
 function CreateContextMenu()
 
+	if ( !hook.Run( "ContextMenuEnabled" ) ) then return end
+
 	if ( IsValid( g_ContextMenu ) ) then
 		g_ContextMenu:Remove()
 		g_ContextMenu = nil
 	end
 
 	g_ContextMenu = vgui.Create( "ContextMenu" )
+
+	if ( !IsValid( g_ContextMenu ) ) then return end
+
 	g_ContextMenu:SetVisible( false )
 
 	--
@@ -217,19 +222,20 @@ end
 function GM:OnContextMenuOpen()
 
 	-- Let the gamemode decide whether we should open or not..
-	if ( !hook.Call( "ContextMenuOpen", GAMEMODE ) ) then return end
+	if ( !hook.Call( "ContextMenuOpen", self ) ) then return end
 
 	if ( IsValid( g_ContextMenu ) && !g_ContextMenu:IsVisible() ) then
 		g_ContextMenu:Open()
 		menubar.ParentTo( g_ContextMenu )
 	end
 
+	hook.Call( "ContextMenuOpened", self )
+
 end
 
 function GM:OnContextMenuClose()
 
-	if ( IsValid( g_ContextMenu ) ) then
-		g_ContextMenu:Close()
-	end
+	if ( IsValid( g_ContextMenu ) ) then g_ContextMenu:Close() end
+	hook.Call( "ContextMenuClosed", self )
 
 end
