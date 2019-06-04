@@ -220,9 +220,15 @@ local function MakeTable( t, nice, indent, done )
 
 		if ( istable( value ) && !done[ value ] ) then
 
-			done [ value ] = true
-			str = str .. key .. tab .. "{" .. nl .. MakeTable( value, nice, indent + 1, done )
-			str = str .. idt .. tab .. tab .. tab .. tab .."},".. nl
+			if ( IsColor( value ) ) then
+				done[ value ] = true
+				value = "Color(" .. value.r .. "," .. value.g .. "," .. value.b .. "," .. value.a .. ")"
+				str = str .. key .. tab .. value .. "," .. nl
+			else
+				done[ value ] = true
+				str = str .. key .. tab .. '{' .. nl .. MakeTable (value, nice, indent + 1, done)
+				str = str .. idt .. tab .. tab ..tab .. tab .."},".. nl
+			end
 
 		else
 
