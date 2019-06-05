@@ -89,13 +89,13 @@ function PrintTable( t, indent, done )
 
 end
 
-function VectorRand( min --[[= -1]], max --[[= 1]] )
+function VectorRand( min, max )
 	min = min || -1
 	max = max || 1
 	return Vector( math.Rand( min, max ), math.Rand( min, max ), math.Rand( min, max ) )
 end
 
-function AngleRand( min --[[-90 pitch, -180 yaw/roll]], max --[[= 90 pitch, 180 yaw/roll]] )
+function AngleRand( min, max )
 	return Angle( math.Rand( min || -90, max || 90 ), math.Rand( min || -180, max || 180 ), math.Rand( min || -180, max || 180 ) )
 end
 
