@@ -5,6 +5,12 @@ ENT.DisableDuplicator = true
 AccessorFunc( ENT, "m_bDefaultCode", "DefaultCode" )
 
 function ENT:Initialize()
+
+	-- If the entity has its first spawnflag set, run the code automatically
+	if ( self:HasSpawnFlags( 1 ) ) then
+		self:RunCode( self, self, self:GetDefaultCode() )
+	end
+
 end
 
 function ENT:KeyValue( key, value )
