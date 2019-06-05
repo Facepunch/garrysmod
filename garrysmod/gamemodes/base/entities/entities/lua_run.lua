@@ -1,4 +1,7 @@
 
+-- A spawnflag constant for addons
+SF_LUA_RUN_ON_SPAWN = 1
+
 ENT.Type = "point"
 ENT.DisableDuplicator = true
 
@@ -7,7 +10,7 @@ AccessorFunc( ENT, "m_bDefaultCode", "DefaultCode" )
 function ENT:Initialize()
 
 	-- If the entity has its first spawnflag set, run the code automatically
-	if ( self:HasSpawnFlags( 1 ) ) then
+	if ( self:HasSpawnFlags( SF_LUA_RUN_ON_SPAWN ) ) then
 		self:RunCode( self, self, self:GetDefaultCode() )
 	end
 
