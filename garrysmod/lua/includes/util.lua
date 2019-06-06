@@ -451,3 +451,56 @@ function GetConVarString( name )
 	local c = GetConVar( name )
 	return ( c and c:GetString() ) or ""
 end
+
+function ErrorNoHaltStack(sMessage, uLevel)
+	if (not isstring(sMessage)) then
+		error(string.format("bad argument #1 to 'ErrorNoHaltStack' (string expected, got %s)", type(sMessage)), 2)
+	end
+
+	if (uLevel == nil) then
+		uLevel = 2
+	elseif (isnumber(uLevel)) then
+		uLevel = uLevel + 1
+	else
+		error(string.format("bad argument #2 to 'ErrorNoHaltStack' (number expected, got %s)", type(uLevel)), 2)
+	end
+
+	if (uLevel <= 0) then
+		ErrorNoHalt(string.format("[ERROR] %s\n", sMessage))
+
+		return
+	end
+
+	local tInfo = debug.getinfo(uLevel, "nS")
+
+	if (tInfo == nil) then
+		ErrorNoHalt(string.format("[ERROR] %s\n", sMessage))
+
+		return
+	end
+
+	local sSource = tInfo.source
+
+	-- Strip off = character from source
+	if (string.sub(sSource, 1, 1) == "=") then
+		sSource = string.sub(sSource, 2)
+	end
+
+	if (sSource == "[C]") then
+		sMessage = string.format("[ERROR] %s\n", sMessage)
+	else
+		sMessage = string.format("[ERROR] %s:%i: %s\n", sSource, tInfo.lastlinedefined, sMessage)
+	end
+
+	local uStackLevel = 1
+
+	repeat
+		sMessage = sMessage .. string.rep(" ", uStackLevel + 1) .. string.format("%u. %s - %s:%i\n", uStackLevel, tInfo.name or "unknown", tInfo.short_src, tInfo.lastlinedefined)
+		uStackLevel = uStackLevel + 1
+
+		uLevel = uLevel + 1
+		tInfo = debug.getinfo(uLevel, "nS")
+	until (tInfo == nil)
+
+	ErrorNoHalt(sMessage)
+end
