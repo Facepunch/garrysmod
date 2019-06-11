@@ -3,6 +3,7 @@ local table				= table
 local pairs				= pairs
 local type				= type
 local isstring			= isstring
+local istable			= istable
 local assert			= assert
 local format			= string.format
 local GetConVarString	= GetConVarString
