@@ -355,6 +355,7 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 		if ( Vector( 0, 0, -1 ):Dot( Normal ) < 0.95 ) then
 			return nil
 		end
+
 	--
 	-- This NPC has to be spawned on a floor ( Turrets )
 	--
