@@ -147,7 +147,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 				steamworks.FileInfo( v, function( result )
 
-					if ( !result ) then return end
+					if ( !result && result.error != nil ) then return end
 
 					if ( result.description ) then
 						result.description = string.gsub( result.description, "%[img%]([^%]]*)%[/img%]", "" ) -- Gotta remove inner content of img tags
