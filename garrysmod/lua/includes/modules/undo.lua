@@ -288,7 +288,7 @@ local function SendUndoneMessage( ent, id, ply )
 	if ( !IsValid( ply ) ) then return end
 
 	-- For further optimization we could queue up the ids and send them
-	-- in one batch ever 0.5 seconds or something along those lines.
+	-- in one batch every 0.5 seconds or something along those lines.
 
 	net.Start( "Undo_Undone" )
 		net.WriteInt( id, 16 )
@@ -302,7 +302,12 @@ end
 function Finish( NiceText )
 
 	if ( !Current_Undo ) then return end
-	if ( !IsValid( Current_Undo.Owner ) ) then return end
+
+	-- Do not add undos that have no owner or anything to undo
+	if ( !IsValid( Current_Undo.Owner ) || ( table.IsEmpty( Current_Undo.Entities ) && table.IsEmpty( Current_Undo.Functions ) ) ) then 
+		Current_Undo = nil
+		return
+	end
 
 	local index = Current_Undo.Owner:UniqueID()
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
@@ -317,7 +322,7 @@ function Finish( NiceText )
 	net.Send( Current_Undo.Owner )
 
 	-- Have one of the entities in the undo tell us when it gets undone.
-	if ( Current_Undo.Entities[ 1 ] ) then
+	if ( IsValid( Current_Undo.Entities[ 1 ] ) ) then
 
 		local ent = Current_Undo.Entities[ 1 ]
 		ent:CallOnRemove( "undo" .. id, SendUndoneMessage, id, Current_Undo.Owner )
@@ -416,23 +421,26 @@ end
 --[[---------------------------------------------------------
 	Console command
 -----------------------------------------------------------]]
-local function CC_UndoNum( pl, command, args )
+local function CC_UndoNum( ply, command, args )
 
 	if ( !args[ 1 ] ) then return end
-	local index = pl:UniqueID()
+
+	local index = ply:UniqueID()
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
 	local UndoNum = tonumber( args[ 1 ] )
-
-	-- Delete the undo whatever happens
-	--net.Start( "Undo_Undone" )
-	--	net.WriteInt( id, 16 )
-	--net.Send( ply )
-
 	if ( !PlayerUndo[ index ][ UndoNum ] ) then return end
 
 	-- Undo!
 	Do_Undo( PlayerUndo[ index ][ UndoNum ] )
+
+	-- Notify the client UI that the undo happened
+	-- This is normally called by the deleted entity via SendUndoneMessage
+	-- But in cases where the undo only has functions that will not do
+	net.Start( "Undo_Undone" )
+		net.WriteInt( UndoNum, 16 )
+	net.Send( ply )
+
 	PlayerUndo[ index ][ UndoNum ] = nil
 
 end
