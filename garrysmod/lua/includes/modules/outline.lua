@@ -50,12 +50,15 @@ local function Render()
 		render.SetStencilPassOperation(STENCIL_REPLACE)
 		
 		cam.Start3D()
-			for k,v in ipairs(List) do
-				render.SetStencilReferenceValue(k)
-				
+			for k=1,ListSize do
+				local v = List[k]
 				local mode = v[MODE]
 				
-				for k2,v2 in ipairs(v[ENTS]) do
+				render.SetStencilReferenceValue(k)
+				
+				for k2=1,#v[ENTS] do
+					local v2 = v[ENTS][k2]
+					
 					if !IsValid(v2) then continue end
 					
 					local visible = LocalPlayer():IsLineOfSightClear(v2)
@@ -71,10 +74,10 @@ local function Render()
 		render.SetStencilCompareFunction(STENCIL_EQUAL)
 		
 		cam.Start2D()
-			for k,v in ipairs(List) do
-				render.SetStencilReferenceValue(k)
+			for i=1,ListSize do
+				render.SetStencilReferenceValue(i)
 				
-				surface.SetDrawColor(v[COLOR])
+				surface.SetDrawColor(List[i][COLOR])
 				surface.DrawRect(0,0,w,h)
 			end
 		cam.End2D()
