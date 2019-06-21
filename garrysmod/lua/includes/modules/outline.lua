@@ -1,3 +1,5 @@
+OUTLINE_MODE_BOTH,OUTLINE_MODE_NOTVISIBLE,OUTLINE_MODE_VISIBLE = 0,1,2
+
 module("outline",package.seeall)
 
 local List,ListSize = {},0
@@ -9,7 +11,6 @@ local StoreTexture	= render.GetScreenEffectTexture(0)
 local DrawTexture	= render.GetScreenEffectTexture(1)
 
 local ENTS,COLOR,MODE = 1,2,3
-local MODE_NOTVISIBLE,MODE_VISIBLE = 1,2
 
 function Add(ents,color,mode)
 	if ListSize>=255 then return end		--Maximum 255 reference values
@@ -19,7 +20,7 @@ function Add(ents,color,mode)
 	table.insert(List,{
 		[ENTS] = ents,
 		[COLOR] = color,
-		[MODE] = mode
+		[MODE] = mode or OUTLINE_MODE_BOTH
 	})
 	
 	ListSize = ListSize+1
@@ -62,7 +63,7 @@ local function Render()
 					if !IsValid(v2) then continue end
 					
 					local visible = LocalPlayer():IsLineOfSightClear(v2)
-					if mode==MODE_NOTVISIBLE and visible or mode==MODE_VISIBLE and !visible then continue end
+					if mode==OUTLINE_MODE_NOTVISIBLE and visible or mode==OUTLINE_MODE_VISIBLE and !visible then continue end
 					
 					RenderEnt = v2
 					v2:DrawModel()
