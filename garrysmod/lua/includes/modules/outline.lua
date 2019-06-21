@@ -64,9 +64,7 @@ local function Render()
 					local v2 = ents[k2]
 					
 					if !IsValid(v2) then continue end
-					
-					local visible = LocalPlayer():IsLineOfSightClear(v2)
-					if mode==OUTLINE_MODE_NOTVISIBLE and visible or mode==OUTLINE_MODE_VISIBLE and !visible then continue end
+					if mode==OUTLINE_MODE_NOTVISIBLE and LocalPlayer():IsLineOfSightClear(v2) or mode==OUTLINE_MODE_VISIBLE and !LocalPlayer():IsLineOfSightClear(v2) then continue end
 					
 					RenderEnt = v2
 					v2:DrawModel()
