@@ -57,8 +57,11 @@ local function Render()
 				
 				render.SetStencilReferenceValue(k)
 				
-				for k2=1,#v[ENTS] do
-					local v2 = v[ENTS][k2]
+				local ents = v[ENTS]
+				local entssize = #ents		
+		
+				for k2=1,entssize do
+					local v2 = ents[k2]
 					
 					if !IsValid(v2) then continue end
 					
