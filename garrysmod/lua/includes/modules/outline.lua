@@ -98,7 +98,7 @@ local function Render()
 		
 		for x=-1,1 do
 			for y=-1,1 do
-				if x==0 and x==0 then continue end
+				if x==0 and y==0 then continue end
 				
 				render.DrawScreenQuadEx(x,y,ScrW(),ScrH())
 			end
