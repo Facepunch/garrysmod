@@ -63,6 +63,7 @@ if ( CLIENT ) then
 	require ( "markup" )		-- Text markup library
 	require ( "effects" )
 	require ( "halo" )
+	require ( "outline" )
 	require ( "killicon" )
 	require ( "spawnmenu" )
 	require ( "controlpanel" )
