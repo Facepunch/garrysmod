@@ -38,7 +38,7 @@ function Material( name, words )
 		tMaterials[ name .. str ] = C_Material( name, str )
 	end
 
-	return tMaterials[ name .. str ]
+	return material:IsError() and material or tMaterials[ name .. str ]
 
 end
 
