@@ -24,7 +24,7 @@ function Material( name, words )
 			tMaterials[ name ] = C_Material( name )
 		end
 		
-		return tMaterials[ name ]
+		return material:IsError() and material or tMaterials[ name ]
 	end
 
 	local str = (words:find("vertexlitgeneric") and "1" or "0")
