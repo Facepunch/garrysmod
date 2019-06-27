@@ -19,7 +19,8 @@ local tMaterials = {}
 function Material( name, words )
 
 	if ( !words ) then
-		if not tMaterials[ name ] then
+		local material = C_Material( name )
+		if ( not tMaterials[ name ] and not material:IsError() ) then
 			tMaterials[ name ] = C_Material( name )
 		end
 		
