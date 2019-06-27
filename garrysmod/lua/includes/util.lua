@@ -34,7 +34,8 @@ function Material( name, words )
 	str = str .. (words:find("noclamp") and "1" or "0")
 	str = str .. (words:find("smooth") and "1" or "0")
 	
-	if not tMaterials[ name .. str ] then
+	local material = C_Material( name, str )
+	if ( not tMaterials[ name .. str ] and not material:IsError() ) then
 		tMaterials[ name .. str ] = C_Material( name, str )
 	end
 
