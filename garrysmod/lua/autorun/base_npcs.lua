@@ -483,7 +483,7 @@ if ( IsMounted( "hl1" ) ) then
 	Category = "Half-Life: Source"
 
 	AddNPC( { Name = "Alien Grunt", Class = "monster_alien_grunt", Category = Category } )
-	AddNPC( { Name = "Nihilanth", Class = "monster_nihilanth", Category = Category, Offset = 1200 } )
+	AddNPC( { Name = "Nihilanth", Class = "monster_nihilanth", Category = Category, Offset = 1200, SpawnFlags = 262144, NoDrop = true } )
 	AddNPC( { Name = "Tentacle", Class = "monster_tentacle", Category = Category } )
 	AddNPC( { Name = "Alien Slave", Class = "monster_alien_slave", Category = Category } )
 	AddNPC( { Name = "Gonarch", Class = "monster_bigmomma", Category = Category } )
@@ -498,7 +498,7 @@ if ( IsMounted( "hl1" ) ) then
 	AddNPC( { Name = "Snark", Class = "monster_snark", Category = Category } )
 	AddNPC( { Name = "Zombie", Class = "monster_zombie", Category = Category } )
 	AddNPC( { Name = "Headcrab", Class = "monster_headcrab", Category = Category } )
-	AddNPC( { Name = "Controller", Class = "monster_alien_controller", Category = Category } )
+	AddNPC( { Name = "Controller", Class = "monster_alien_controller", Category = Category, NoDrop = true } )
 	AddNPC( { Name = "Security Officer", Class = "monster_barney", Category = Category } )
 
 	AddNPC( { Name = "Heavy Turret", Class = "monster_turret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
