@@ -194,6 +194,16 @@ function PANEL:Think()
 
 end
 
+function PANEL:SetPos(x,y)
+	if (x > ScrW()-1 or x < -self:GetWide()) or ( y > ScrH()-1 or y < -self:GetTall()) then -- if the screen position happens to be out of bounds when using PANEL:SetPos(x,y) function...
+		self:Close() -- ... close the DFrame ...
+		error("DFrame's position is out of bounds! X:"..x.." Y: "..y, 2) -- ... and throw an error message ...
+	else -- ... otherwise ...
+		self.x = x; -- .. set the x and y position as normal ...
+		self.y = y;
+	end
+end
+
 function PANEL:Paint( w, h )
 
 	if ( self.m_bBackgroundBlur ) then
