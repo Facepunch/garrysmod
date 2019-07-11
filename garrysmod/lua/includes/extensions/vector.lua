@@ -73,7 +73,7 @@ end
 Convets the vector to bisector of two vectors
 -----------------------------------------------------------]]
 function meta:Bisect(vec)
-	ns, nv = self:Length(), vec:Length()
+	local ns, nv = self:Length(), vec:Length()
 	self:Mul(nv)
 	self:Add(vec:GetMul(ns))
 	return self
@@ -82,7 +82,7 @@ end
 --[[---------------------------------------------------------
 Returns a copy of bisector of two vectors
 -----------------------------------------------------------]]
-function meta:Bisect(vec)
+function meta:GetBisect(vec)
 	local v = Vector(self)
 	return v:Bisect(vec)
 end
@@ -100,7 +100,7 @@ end
 --[[---------------------------------------------------------
 Returns a copy of the nagated vector
 -----------------------------------------------------------]]
-function meta:GetNegate()
+function meta:GetNegated()
 	local v = Vector(self)
 	return v:GetNegate()
 end
@@ -125,7 +125,7 @@ end
 --[[---------------------------------------------------------
 Returns a copy of the resized vector
 -----------------------------------------------------------]]
-function meta:GetResize(vec)
+function meta:GetResized(vec)
 	local v = Vector(self)
 	return v:Resize()
 end
@@ -144,7 +144,7 @@ Returns a copy of the resized vector
 -----------------------------------------------------------]]
 function meta:GetMiddle(vec)
 	local v = Vector(self)
-	return v:Middle()
+	return v:Middle(vec)
 end
 
 --[[---------------------------------------------------------
