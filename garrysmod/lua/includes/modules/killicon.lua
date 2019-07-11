@@ -59,6 +59,32 @@ function GetTexture( name )
 	
 end
 
+function killicon.GetFontInfo( name )
+	
+	if (!Icons[name]) then 
+		Msg("Warning: killicon not found '"..name.."'\n")
+		return nil
+	end
+	
+	return { font = Icons[name].font, char = Icons[name].character }
+	
+end
+
+function killicon.SetFont( name, font )
+
+	if (!Icons[name]) then 
+		Msg("Warning: killicon not found '"..name.."'\n")
+		return nil
+	end
+
+	local t = Icons[name]
+	t.font = font
+	
+	-- Size needs to be recalculated for new font
+	t.size = nil
+	
+end
+
 function SetSize( name, width, height )
 	
 	if (!Icons[name]) then 
