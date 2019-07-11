@@ -59,7 +59,7 @@ function GetTexture( name )
 	
 end
 
-function killicon.GetFontInfo( name )
+function GetFontInfo( name )
 	
 	if (!Icons[name]) then 
 		Msg("Warning: killicon not found '"..name.."'\n")
@@ -70,7 +70,7 @@ function killicon.GetFontInfo( name )
 	
 end
 
-function killicon.SetFont( name, font )
+function SetFont( name, font )
 
 	if (!Icons[name]) then 
 		Msg("Warning: killicon not found '"..name.."'\n")
