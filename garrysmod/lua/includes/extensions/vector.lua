@@ -82,7 +82,7 @@ end
 --[[---------------------------------------------------------
 Returns a copy of bisector of two vectors
 -----------------------------------------------------------]]
-function meta:GetBisect(vec)
+function meta:GetBisected(vec)
 	local v = Vector(self)
 	return v:Bisect(vec)
 end
