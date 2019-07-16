@@ -478,7 +478,7 @@ end
 
 
 
-if ( IsMounted( "hl1" ) ) then
+if ( IsMounted( "hl1" ) || IsMounted( "hl1mp" ) ) then
 
 	Category = "Half-Life: Source"
 
