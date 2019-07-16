@@ -382,6 +382,11 @@ function UpdateSubscribedAddons()
 
 end
 
+function UpdateAddonDisabledState()
+	local noaddons, noworkshop = GetAddonStatus()
+	pnlMainMenu:Call( "UpdateAddonDisabledState( " .. tostring( noaddons ) .. ", " .. tostring( noworkshop ) .. " )" )
+end
+
 hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 
 	if ( !IsValid( pnlMainMenu ) ) then return end
