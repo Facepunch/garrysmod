@@ -81,7 +81,7 @@ local function Render()
 					
 					if ( !IsValid( ent ) ) then continue end
 					
-					if ( ( mode == OUTLINE_MODE_NOTVISIBLE && LocalPlayer():IsLineOfSightClear( ent ) ) || ( mode==OUTLINE_MODE_VISIBLE && !LocalPlayer():IsLineOfSightClear( ent ) ) ) then continue end
+					if ( ( mode == OUTLINE_MODE_NOTVISIBLE && LocalPlayer():IsLineOfSightClear( ent ) ) || ( mode == OUTLINE_MODE_VISIBLE && !LocalPlayer():IsLineOfSightClear( ent ) ) ) then continue end
 					
 					RenderEnt = ent
 					
