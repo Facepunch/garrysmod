@@ -52,7 +52,6 @@
 @PointClass base(Weapon) studio("models/weapons/w_physics.mdl") = weapon_ttt_push : "Newton launcher" []
 @PointClass base(Weapon) studio("models/weapons/w_IRifle.mdl") = weapon_ttt_phammer : "Poltergeist" []
 @PointClass base(Weapon) studio("models/weapons/w_c4.mdl") = weapon_ttt_c4 : "C4" []
-@PointClass base(Weapon) studio("models/props/cs_office/radio.mdl") = weapon_ttt_radio : "Radio" []
 @PointClass base(Weapon) studio("models/weapons/w_slam.mdl") = weapon_ttt_teleport : "Teleporter" []
 @PointClass base(Weapon) studio("models/weapons/w_smg_ump45.mdl") = weapon_ttt_stungun : "UMP Prototype" []
 @PointClass base(Weapon) studio("models/props/cs_office/microwave.mdl") = ttt_health_station : "Health Station" []
