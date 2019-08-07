@@ -403,6 +403,10 @@ hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 
 end )
 
+hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str )
+	Derma_Message( str, "Failed to load save!", "OK" )
+end )
+
 --
 -- Initialize
 --
