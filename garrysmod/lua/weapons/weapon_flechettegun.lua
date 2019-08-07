@@ -44,6 +44,10 @@ end
 function SWEP:Reload()
 end
 
+function SWEP:CanBePickedUpByNPCs()
+	return true
+end
+
 function SWEP:PrimaryAttack()
 
 	self:SetNextPrimaryFire( CurTime() + 0.1 )
@@ -58,7 +62,7 @@ function SWEP:PrimaryAttack()
 	local ent = ents.Create( "hunter_flechette" )
 	if ( !IsValid( ent ) ) then return end
 
-	local Forward = self.Owner:EyeAngles():Forward()
+	local Forward = self.Owner:GetAimVector()
 
 	ent:SetPos( self.Owner:GetShootPos() + Forward * 32 )
 	ent:SetAngles( self.Owner:EyeAngles() )
