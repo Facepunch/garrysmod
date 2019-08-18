@@ -135,18 +135,10 @@ function GM:HUDDrawPickupHistory()
 
 			surface.SetTexture( self.PickupHistoryCorner )
 
-			surface.SetDrawColor( v.color.r, v.color.g, v.color.b, alpha )
-			surface.DrawTexturedRectRotated( rx + bordersize / 2, ry + bordersize / 2, bordersize, bordersize, 0 )
-			surface.DrawTexturedRectRotated( rx + bordersize / 2, ry + rh -bordersize / 2, bordersize, bordersize, 90 )
-			surface.DrawRect( rx, ry + bordersize, bordersize, rh-bordersize * 2 )
-			surface.DrawRect( rx + bordersize, ry, v.height - 4, rh )
 
-			surface.SetDrawColor( 230 * colordelta, 230 * colordelta, 230 * colordelta, alpha )
-			surface.DrawRect( rx + bordersize + v.height - 4, ry, rw - ( v.height - 4 ) - bordersize * 2, rh )
-			surface.DrawTexturedRectRotated( rx + rw - bordersize / 2 , ry + rh - bordersize / 2, bordersize, bordersize, 180 )
-			surface.DrawTexturedRectRotated( rx + rw - bordersize / 2 , ry + bordersize / 2, bordersize, bordersize, 270 )
-			surface.DrawRect( rx + rw-bordersize, ry + bordersize, bordersize, rh-bordersize * 2 )
-
+			draw.RoundedBoxEx(6, rx, ry , rw*0.15, rh, Color(v.color.r, v.color.g, v.color.b, alpha), true,false,true,false)
+			draw.RoundedBoxEx(6, rx+rw*0.15, ry , rw*0.85, rh, Color(230 * colordelta, 230 * colordelta, 230 * colordelta, alpha), false,true,false,true)
+			
 			draw.SimpleText( v.name, v.font, v.x + v.height + 9, v.y - ( v.height / 2 ) + 1, Color( 0, 0, 0, alpha * 0.5 ) )
 
 			draw.SimpleText( v.name, v.font, v.x + v.height + 8, v.y - ( v.height / 2 ), Color( 255, 255, 255, alpha ) )
