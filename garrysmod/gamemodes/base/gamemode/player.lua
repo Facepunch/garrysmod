@@ -215,7 +215,7 @@ end
 	Name: gamemode:PlayerInitialSpawn()
 	Desc: Called just before the player's first spawn
 -----------------------------------------------------------]]
-function GM:PlayerInitialSpawn( pl )
+function GM:PlayerInitialSpawn( pl, transiton )
 
 	pl:SetTeam( TEAM_UNASSIGNED )
 
@@ -249,7 +249,7 @@ end
 	Name: gamemode:PlayerSpawn()
 	Desc: Called when a player spawns
 -----------------------------------------------------------]]
-function GM:PlayerSpawn( pl )
+function GM:PlayerSpawn( pl, transiton )
 
 	--
 	-- If the player doesn't have a team in a TeamBased game
@@ -270,8 +270,11 @@ function GM:PlayerSpawn( pl )
 	player_manager.OnPlayerSpawn( pl )
 	player_manager.RunClass( pl, "Spawn" )
 
-	-- Call item loadout function
-	hook.Call( "PlayerLoadout", GAMEMODE, pl )
+	-- If we are in transition, do not touch player's weapons
+	if ( !transiton ) then
+		-- Call item loadout function
+		hook.Call( "PlayerLoadout", GAMEMODE, pl )
+	end
 
 	-- Set player model
 	hook.Call( "PlayerSetModel", GAMEMODE, pl )
@@ -382,7 +385,10 @@ end
 	Name: gamemode:PlayerSelectSpawn( player )
 	Desc: Find a spawn point entity for this player
 -----------------------------------------------------------]]
-function GM:PlayerSelectSpawn( pl )
+function GM:PlayerSelectSpawn( pl, transiton )
+
+	-- If we are in transition, do not reset player's position
+	if ( transiton ) then return end
 
 	if ( self.TeamBased ) then
 
