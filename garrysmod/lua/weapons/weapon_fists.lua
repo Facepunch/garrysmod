@@ -132,7 +132,10 @@ function SWEP:DealDamage()
 			dmginfo:SetDamage( math.random( 12, 24 ) )
 		end
 
+		SuppressHostEvents( NULL ) -- Let the breakable gibs spawn in multiplayer on client
 		tr.Entity:TakeDamageInfo( dmginfo )
+		SuppressHostEvents( self.Owner )
+
 		hit = true
 
 	end
