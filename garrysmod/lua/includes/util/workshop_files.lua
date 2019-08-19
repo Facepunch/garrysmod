@@ -9,7 +9,7 @@ function WorkshopFileBase( namespace, requiredtags )
 	local ret = {}
 	ret.HTML = nil
 
-	function ret:Fetch( type, offset, perpage, extratags, searchText )
+	function ret:Fetch( type, offset, perpage, extratags, searchText, filter )
 
 		local tags = table.Copy( requiredtags )
 		for k, v in pairs( extratags ) do
@@ -21,10 +21,10 @@ function WorkshopFileBase( namespace, requiredtags )
 			return self:FetchLocal( offset, perpage )
 		end
 		if ( type == "subscribed" ) then
-			return self:FetchSubscribed( offset, perpage, tags, searchText, false )
+			return self:FetchSubscribed( offset, perpage, tags, searchText, false, filter )
 		end
 		if ( type == "subscribed_ugc" ) then
-			return self:FetchSubscribed( offset, perpage, tags, searchText, true )
+			return self:FetchSubscribed( offset, perpage, tags, searchText, true, filter )
 		end
 
 		local userid = "0"
@@ -44,7 +44,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	end
 
-	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC )
+	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC, filter )
 
 		local subscriptions = {}
 		if ( isUGC ) then
@@ -74,6 +74,13 @@ function WorkshopFileBase( namespace, requiredtags )
 			-- Search for searchText
 			if ( searchText:Trim() != "" ) then
 				if ( !sub.title:lower():find( searchText:lower() ) ) then continue end
+			end
+
+			if ( filter && filter == "enabledonly" ) then
+				if ( !steamworks.ShouldMountAddon( sub.wsid ) ) then continue end
+			end
+			if ( filter && filter == "disabledonly" ) then
+				if ( steamworks.ShouldMountAddon( sub.wsid ) ) then continue end
 			end
 
 			searchedItems[ #searchedItems + 1 ] = sub
