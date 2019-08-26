@@ -93,7 +93,7 @@ function TOOL:LeftClick( trace, attach )
 		if ( attach ) then
 
 			-- The real model should have an attachment!
-			local attachpoint = Pos + vector_origin
+			local attachpoint = Pos
 
 			local LPos1 = balloon:WorldToLocal( attachpoint )
 			local LPos2 = trace.Entity:WorldToLocal( trace.HitPos )
