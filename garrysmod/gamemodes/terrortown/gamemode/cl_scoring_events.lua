@@ -130,7 +130,7 @@ local function GetWeaponName(gun)
    -- Standard TTT weapons are sent as numeric IDs to save bandwidth
    if tonumber(gun) then
       wname = EnumToWep(gun)
-   elseif type(gun) == "string" then
+   elseif isstring(gun) then
       -- Custom weapons or ones that are otherwise ID-less are sent as
       -- string
       local wep = util.WeaponForClass(gun)
