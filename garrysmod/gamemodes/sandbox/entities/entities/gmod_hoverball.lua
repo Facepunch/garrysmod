@@ -111,7 +111,6 @@ function ENT:PhysicsSimulate( phys, deltatime )
 	phys:Wake()
 
 	local Pos = phys:GetPos()
-	local Vel = phys:GetVelocity()
 	local Distance = self:GetTargetZ() - Pos.z
 	local AirResistance = self:GetAirResistance()
 
@@ -135,7 +134,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 
 	Exponent = math.Clamp( Exponent, -5000, 5000 )
 
-	local Linear = vector_origin
+	local Linear = Vector(0, 0, 0)
 	local Angular = vector_origin
 
 	Linear.z = Exponent
