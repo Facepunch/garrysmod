@@ -62,6 +62,6 @@ function ENT:AttachToViewmodel( vm )
 	self:SetMoveType( MOVETYPE_NONE )
 
 	self:SetPos( vector_origin )
-	self:SetAngles( Angle( 0, 0, 0 ) )
+	self:SetAngles( angle_zero )
 
 end

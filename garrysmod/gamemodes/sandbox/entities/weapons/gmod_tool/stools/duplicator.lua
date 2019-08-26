@@ -65,7 +65,7 @@ function TOOL:LeftClick( trace )
 	DisablePropCreateEffect = nil
 
 	duplicator.SetLocalPos( vector_origin )
-	duplicator.SetLocalAng( Angle( 0, 0, 0 ) )
+	duplicator.SetLocalAng( angle_zero )
 
 	--
 	-- Create one undo for the whole creation
@@ -105,7 +105,7 @@ function TOOL:RightClick( trace )
 	local Dupe = duplicator.Copy( trace.Entity )
 
 	duplicator.SetLocalPos( vector_origin )
-	duplicator.SetLocalAng( Angle( 0, 0, 0 ) )
+	duplicator.SetLocalAng( angle_zero )
 
 	if ( !Dupe ) then return false end
 

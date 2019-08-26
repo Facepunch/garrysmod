@@ -187,7 +187,7 @@ function TOOL:UpdateGhostBalloon( ent, ply )
 	if ( modeltable.skin ) then ent:SetSkin( modeltable.skin ) end
 
 	ent:SetPos( pos )
-	ent:SetAngles( Angle( 0, 0, 0 ) )
+	ent:SetAngles( angle_zero )
 
 	ent:SetNoDraw( false )
 
@@ -200,7 +200,7 @@ function TOOL:Think()
 		local modeltable = list.Get( "BalloonModels" )[ self:GetClientInfo( "model" ) ]
 		if ( !modeltable ) then self:ReleaseGhostEntity() return end
 
-		self:MakeGhostEntity( modeltable.model, vector_origin, Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( modeltable.model, vector_origin, angle_zero )
 		if ( IsValid( self.GhostEntity ) ) then self.GhostEntity.model = self:GetClientInfo( "model" ) end
 
 	end

@@ -109,7 +109,7 @@ function ENT:OnSwitch( bOn )
 
 	-- The local positions are the offsets from parent..
 	self.flashlight:SetLocalPos( vector_origin )
-	self.flashlight:SetLocalAngles( Angle( 0, 0, 0 ) )
+	self.flashlight:SetLocalAngles( angle_zero )
 
 	self.flashlight:SetKeyValue( "enableshadows", 1 )
 	self.flashlight:SetKeyValue( "nearz", 12 )

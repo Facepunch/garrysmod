@@ -7,7 +7,7 @@ function PANEL:Init()
 
 	self.mx = 0
 	self.my = 0
-	self.aLookAngle = Angle( 0, 0, 0 )
+	self.aLookAngle = angle_zero
 
 end
 

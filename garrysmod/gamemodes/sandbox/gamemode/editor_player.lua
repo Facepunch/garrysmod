@@ -23,7 +23,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		mdl:SetDirectionalLight( BOX_LEFT, Color( 80, 160, 255, 255 ) )
 		mdl:SetAmbientLight( Vector( -64, -64, -64 ) )
 		mdl:SetAnimated( true )
-		mdl.Angles = Angle( 0, 0, 0 )
+		mdl.Angles = angle_zero
 		mdl:SetLookAt( Vector( -100, 0, -22 ) )
 
 		local sheet = window:Add( "DPropertySheet" )

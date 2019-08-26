@@ -184,7 +184,7 @@ function render.Model( tbl, ent )
 	ent:SetNoDraw( true )
 
 	ent:SetPos( tbl.pos or vector_origin )
-	ent:SetAngles( tbl.angle or Angle( 0, 0, 0 ) )
+	ent:SetAngles( tbl.angle or angle_zero )
 	ent:DrawModel()
 
 	--

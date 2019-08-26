@@ -149,7 +149,7 @@ function ENT:Setup( ent )
 		local btn = ents.Create( "widget_bone" )
 		btn:FollowBone( ent, k )
 		btn:SetLocalPos( vector_origin )
-		btn:SetLocalAngles( Angle( 0, 0, 0 ) )
+		btn:SetLocalAngles( angle_zero )
 		btn:Spawn()
 		btn:SetSize( ent:BoneLength( k ) * 2 )
 

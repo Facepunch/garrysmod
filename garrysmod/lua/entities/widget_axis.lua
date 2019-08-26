@@ -78,7 +78,7 @@ function ENT:Setup( ent, boneid, rotate )
 
 	self:FollowBone( ent, boneid )
 	self:SetLocalPos( vector_origin )
-	self:SetLocalAngles( Angle( 0, 0, 0 ) )
+	self:SetLocalAngles( angle_zero )
 
 	local EntName = "widget_axis_arrow"
 	if ( rotate ) then EntName = "widget_axis_disc" end
