@@ -35,6 +35,7 @@ function SWEP:Initialize()
 
 end
 
+local primaryPunchAngle = Angle( -1, 0, 0 )
 --[[---------------------------------------------------------
 	Name: SWEP:PrimaryAttack()
 	Desc: +attack1 has been pressed
@@ -54,10 +55,11 @@ function SWEP:PrimaryAttack()
 	self:TakePrimaryAmmo( 1 )
 
 	-- Punch the player's view
-	self.Owner:ViewPunch( Angle( -1, 0, 0 ) )
+	self.Owner:ViewPunch( primaryPunchAngle )
 
 end
 
+local secondaryPunchAngle = Angle( -10, 0, 0 )
 --[[---------------------------------------------------------
 	Name: SWEP:SecondaryAttack()
 	Desc: +attack2 has been pressed
@@ -77,7 +79,7 @@ function SWEP:SecondaryAttack()
 	self:TakeSecondaryAmmo( 1 )
 
 	-- Punch the player's view
-	self.Owner:ViewPunch( Angle( -10, 0, 0 ) )
+	self.Owner:ViewPunch( secondaryPunchAngle )
 
 end
 

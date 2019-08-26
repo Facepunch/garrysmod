@@ -118,6 +118,8 @@ function SWEP:PrimaryAttack()
    self:GetOwner():LagCompensation(false)
 end
 
+local hitAngleModifier = Angle(-28,0,0)
+
 function SWEP:StabKill(tr, spos, sdest)
    local target = tr.Entity
 
@@ -147,11 +149,11 @@ function SWEP:StabKill(tr, spos, sdest)
    local bone = retr.PhysicsBone
    local pos = retr.HitPos
    local norm = tr.Normal
-   local ang = Angle(-28,0,0) + norm:Angle()
+   local ang = tr.Normal:Angle()
+   ang:Add(hitAngleModifier)
    ang:RotateAroundAxis(ang:Right(), -90)
    pos = pos - (ang:Forward() * 7)
 
-   local prints = self.fingerprints
    local ignore = self:GetOwner()
 
    target.effect_fn = function(rag)
@@ -161,7 +163,8 @@ function SWEP:StabKill(tr, spos, sdest)
                          if IsValid(rtr.Entity) and rtr.Entity == rag then
                             bone = rtr.PhysicsBone
                             pos = rtr.HitPos
-                            ang = Angle(-28,0,0) + rtr.Normal:Angle()
+                            ang = rtr.Normal:Angle()
+                            ang:Add(hitAngleModifier)
                             ang:RotateAroundAxis(ang:Right(), -90)
                             pos = pos - (ang:Forward() * 10)
 
@@ -230,7 +233,8 @@ function SWEP:SecondaryAttack()
 
       local thr = vfw * vel + ply:GetVelocity()
 
-      local knife_ang = Angle(-28,0,0) + ang
+      local knife_ang = ang
+      knife_ang:Add(hitAngleModifier)
       knife_ang:RotateAroundAxis(knife_ang:Right(), -90)
 
       local knife = ents.Create("ttt_knife_proj")

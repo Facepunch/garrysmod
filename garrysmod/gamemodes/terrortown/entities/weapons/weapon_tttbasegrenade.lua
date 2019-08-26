@@ -128,7 +128,7 @@ function SWEP:BlowInFace()
    local src = ply:GetPos() + (ply:Crouching() and ply:GetViewOffsetDucked() or ply:GetViewOffset())
    src = src + (ang:Right() * 10)
 
-   self:CreateGrenade(src, Angle(0,0,0), Vector(0,0,1), Vector(0,0,1), ply)
+   self:CreateGrenade(src, angle_zero, vector_up, CreateGrenade, ply)
 
    self:SetThrowTime(0)
    self:Remove()
@@ -163,7 +163,7 @@ function SWEP:Throw()
       tang.p=math.Clamp(tang.p,-90,90) -- Makes the grenade not go backwards :/
       local vel = math.min(800, (90 - tang.p) * 6)
       local thr = tang:Forward() * vel + ply:GetVelocity()
-      self:CreateGrenade(src, Angle(0,0,0), thr, Vector(600, math.random(-1200, 1200), 0), ply)
+      self:CreateGrenade(src, angle_zero, thr, Vector(600, math.random(-1200, 1200), 0), ply)
 
       self:SetThrowTime(0)
       self:Remove()

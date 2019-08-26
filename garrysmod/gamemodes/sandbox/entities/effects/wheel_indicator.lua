@@ -1,6 +1,8 @@
 
 EFFECT.Mat = Material( "effects/wheel_ring" )
 
+local posAdd = Angle( 0.01, 0.01, 0.01 )
+
 function EFFECT:Init( data )
 
 	local size = 64
@@ -11,7 +13,9 @@ function EFFECT:Init( data )
 	if ( !IsValid( self.Wheel ) ) then return end
 
 	-- This 0.01 is a hack.. to prevent the angle being weird and messing up when we change it back to a normal
-	self:SetAngles( data:GetNormal():Angle() + Angle( 0.01, 0.01, 0.01 ) )
+	local angle = data:GetNormal():Angle()
+	angle:Add(posAdd)
+	self:SetAngles( angle )
 
 	self:SetParent( self.Wheel )
 

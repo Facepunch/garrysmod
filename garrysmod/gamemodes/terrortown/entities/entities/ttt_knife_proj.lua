@@ -43,6 +43,8 @@ function ENT:Initialize()
    self.Stuck = false
 end
 
+local hitAngleModifier = Angle(-28,0,0)
+
 function ENT:HitPlayer(other, tr)
 
    local range_dmg = math.max(self.Damage, self.StartPos:Distance(self:GetPos()) / 3)
@@ -58,7 +60,8 @@ function ENT:HitPlayer(other, tr)
       dmg:SetDamagePosition(self:GetPos())
       dmg:SetDamageType(DMG_SLASH)
 
-      local ang = Angle(-28,0,0) + tr.Normal:Angle()
+      local ang = tr.Normal:Angle()
+      ang:Add(hitAngleModifier)
       ang:RotateAroundAxis(ang:Right(), -90)
       other:DispatchTraceAttack(dmg, self:GetPos() + ang:Forward() * 3, other:GetPos())
 
@@ -85,8 +88,8 @@ function ENT:KillPlayer(other, tr)
    -- this bone is why we need the trace
    local bone = tr.PhysicsBone
    local pos = tr.HitPos
-   local norm = tr.Normal
-   local ang = Angle(-28,0,0) + norm:Angle()
+   local ang = tr.Normal:Angle()
+   ang:Add(hitAngleModifier)
    ang:RotateAroundAxis(ang:Right(), -90)
    pos = pos - (ang:Forward() * 8)
 

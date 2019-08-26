@@ -1,6 +1,10 @@
 
 EFFECT.Mat = Material( "effects/select_dot" )
 
+local min = Vector( -8, -8, -8 )
+local max = Vector( 8, 8, 8 )
+local positionAdd = Angle( 0.01, 0.01, 0.01 )
+
 function EFFECT:Init( data )
 
 	local pos = data:GetOrigin()
@@ -8,11 +12,11 @@ function EFFECT:Init( data )
 	local ent = data:GetEntity()
 	local nrml = data:GetNormal()
 
-	self:SetRenderBounds( Vector( -8, -8, -8 ), Vector( 8, 8, 8 ) )
+	self:SetRenderBounds( min, max )
 	self:SetPos( pos )
 
 	-- This 0.01 is a hack.. to prevent the angle being weird and messing up when we change it back to a normal
-	self:SetAngles( nrml:Angle() + Angle( 0.01, 0.01, 0.01 ) )
+	self:SetAngles( nrml:Angle() + positionAdd )
 
 	if ( IsValid( ent ) ) then
 		self:SetParentPhysNum( att )

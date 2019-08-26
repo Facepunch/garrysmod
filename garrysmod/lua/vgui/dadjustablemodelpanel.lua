@@ -102,14 +102,17 @@ function PANEL:OnMouseReleased( mousecode )
 
 end
 
+local LookingAngle = Angle( 45, 0, 0 )
+local LookingPos = Vector( -20, 0, 20 )
+
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
 	ctrl:SetSize( 300, 300 )
 	ctrl:SetModel( "models/props_junk/PlasticCrate01a.mdl" )
 	ctrl:GetEntity():SetSkin( 2 )
-	ctrl:SetLookAng( Angle( 45, 0, 0 ) )
-	ctrl:SetCamPos( Vector( -20, 0, 20 ) )
+	ctrl:SetLookAng( LookingAngle )
+	ctrl:SetCamPos( LookingPos )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 

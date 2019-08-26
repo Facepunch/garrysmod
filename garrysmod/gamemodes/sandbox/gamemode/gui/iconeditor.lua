@@ -329,6 +329,8 @@ function PANEL:RightLayout()
 
 end
 
+local lookingAngle = Angle( 0, -180, 0 )
+
 function PANEL:OriginLayout()
 
 	local ent = self.ModelPanel:GetEntity()
@@ -337,7 +339,7 @@ function PANEL:OriginLayout()
 
 	self.ModelPanel:SetCamPos( campos )
 	self.ModelPanel:SetFOV( 45 )
-	self.ModelPanel:SetLookAng( Angle( 0, -180, 0 ) )
+	self.ModelPanel:SetLookAng( lookingAngle )
 
 end
 
