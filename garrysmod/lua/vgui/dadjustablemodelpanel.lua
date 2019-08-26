@@ -71,7 +71,7 @@ function PANEL:FirstPersonControls()
 	-- Look around
 	self.aLookAngle = self.aLookAngle + Angle( y, x, 0 )
 
-	local Movement = vector_origin
+	local Movement = Vector(0, 0, 0)
 
 	-- TODO: Use actual key bindings, not hardcoded keys.
 	if ( input.IsKeyDown( KEY_W ) || input.IsKeyDown( KEY_UP ) ) then Movement = Movement + self.aLookAngle:Forward() end

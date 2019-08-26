@@ -146,7 +146,7 @@ function Particle( name )
 end
 
 -- Some nice globals so we don't keep creating objects for no reason
-vector_origin		= vector_origin
+vector_origin		= Vector( 0, 0, 0 )
 vector_up			= Vector( 0, 0, 1 )
 angle_zero			= Angle( 0, 0, 0 )
 

@@ -118,7 +118,7 @@ local widget_bonemanip_move = {
 		local bone = self:GetParentAttachment()
 		if ( bone <= 0 ) then return end
 
-		local v = vector_origin
+		local v = Vector(0, 0, 0)
 
 		if ( num == 1 ) then v.x = dist end
 		if ( num == 2 ) then v.y = dist end
@@ -190,7 +190,7 @@ local widget_bonemanip_scale = {
 		local bone = self:GetParentAttachment()
 		if ( bone <= 0 ) then return end
 
-		local v = vector_origin
+		local v = Vector(0, 0, 0)
 
 		if ( num == 1 ) then v.x = dist end
 		if ( num == 2 ) then v.y = dist end

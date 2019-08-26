@@ -14,7 +14,7 @@ module( "duplicator", package.seeall )
 --
 -- When saving or loading all coordinates are saved relative to these
 --
-local LocalPos = vector_origin
+local LocalPos = Vector( 0, 0, 0 )
 local LocalAng = Angle( 0, 0, 0 )
 
 --
