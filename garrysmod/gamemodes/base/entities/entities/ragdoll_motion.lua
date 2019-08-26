@@ -84,7 +84,7 @@ function ENT:PhysicsUpdate( physobj )
 	if ( self:IsPlayerHolding() ) then return end
 	if ( self:IsConstrained() ) then return end
 
-	physobj:SetVelocity( Vector( 0, 0, 0 ) )
+	physobj:SetVelocity( vector_origin )
 	physobj:Sleep()
 
 end

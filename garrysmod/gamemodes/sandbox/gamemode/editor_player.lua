@@ -18,7 +18,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		local mdl = window:Add( "DModelPanel" )
 		mdl:Dock( FILL )
 		mdl:SetFOV( 36 )
-		mdl:SetCamPos( Vector( 0, 0, 0 ) )
+		mdl:SetCamPos( vector_origin )
 		mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 160, 80, 255 ) )
 		mdl:SetDirectionalLight( BOX_LEFT, Color( 80, 160, 255, 255 ) )
 		mdl:SetAmbientLight( Vector( -64, -64, -64 ) )

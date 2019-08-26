@@ -686,7 +686,7 @@ function CreateStaticAnchorPoint( Pos )
 	Anchor:Spawn()
 	Anchor:Activate()
 
-	return Anchor, Anchor:GetPhysicsObject(), 0, Vector( 0, 0, 0 )
+	return Anchor, Anchor:GetPhysicsObject(), 0, vector_origin
 
 end
 

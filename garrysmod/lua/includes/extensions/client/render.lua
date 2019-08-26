@@ -183,7 +183,7 @@ function render.Model( tbl, ent )
 	ent:SetModel( tbl.model or "error.mdl" )
 	ent:SetNoDraw( true )
 
-	ent:SetPos( tbl.pos or Vector( 0, 0, 0 ) )
+	ent:SetPos( tbl.pos or vector_origin )
 	ent:SetAngles( tbl.angle or Angle( 0, 0, 0 ) )
 	ent:DrawModel()
 

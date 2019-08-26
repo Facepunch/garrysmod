@@ -131,7 +131,7 @@ end
 
 function math.BSplinePoint( tDiff, tPoints, tMax )
 
-	local Q = Vector( 0, 0, 0 )
+	local Q = vector_origin
 	local tinc = tMax / ( #tPoints - 3 )
 
 	tDiff = tDiff + tinc

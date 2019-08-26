@@ -14,7 +14,7 @@ module( "duplicator", package.seeall )
 --
 -- When saving or loading all coordinates are saved relative to these
 --
-local LocalPos = Vector( 0, 0, 0 )
+local LocalPos = vector_origin
 local LocalAng = Angle( 0, 0, 0 )
 
 --
@@ -215,7 +215,7 @@ local EntitySaver =
 			
 				if ( s != Vector( 1, 1, 1 ) ) then t[ 's' ] = s end -- scale
 				if ( a != Angle( 0, 0, 0 ) ) then t[ 'a' ] = a end -- angle
-				if ( p != Vector( 0, 0, 0 ) ) then t[ 'p' ] = p end -- position
+				if ( p != vector_origin ) then t[ 'p' ] = p end -- position
 		
 				if ( !table.IsEmpty( t ) ) then
 					data.BoneManip[ i ] = t

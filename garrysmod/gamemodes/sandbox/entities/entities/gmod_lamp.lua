@@ -108,7 +108,7 @@ function ENT:OnSwitch( bOn )
 	self.flashlight:SetParent( self.Entity )
 
 	-- The local positions are the offsets from parent..
-	self.flashlight:SetLocalPos( Vector( 0, 0, 0 ) )
+	self.flashlight:SetLocalPos( vector_origin )
 	self.flashlight:SetLocalAngles( Angle( 0, 0, 0 ) )
 
 	self.flashlight:SetKeyValue( "enableshadows", 1 )

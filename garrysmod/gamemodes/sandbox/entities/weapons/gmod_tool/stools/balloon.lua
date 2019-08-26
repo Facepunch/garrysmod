@@ -93,7 +93,7 @@ function TOOL:LeftClick( trace, attach )
 		if ( attach ) then
 
 			-- The real model should have an attachment!
-			local attachpoint = Pos + Vector( 0, 0, 0 )
+			local attachpoint = Pos + vector_origin
 
 			local LPos1 = balloon:WorldToLocal( attachpoint )
 			local LPos2 = trace.Entity:WorldToLocal( trace.HitPos )
@@ -200,7 +200,7 @@ function TOOL:Think()
 		local modeltable = list.Get( "BalloonModels" )[ self:GetClientInfo( "model" ) ]
 		if ( !modeltable ) then self:ReleaseGhostEntity() return end
 
-		self:MakeGhostEntity( modeltable.model, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( modeltable.model, vector_origin, Angle( 0, 0, 0 ) )
 		if ( IsValid( self.GhostEntity ) ) then self.GhostEntity.model = self:GetClientInfo( "model" ) end
 
 	end
