@@ -50,6 +50,8 @@ function EFFECT:Think()
 
 end
 
+local laserColor = Color( 0, 255, 0, 255 )
+
 function EFFECT:Render()
 
 	local fDelta = ( self.DieTime - CurTime() ) / self.TracerTime
@@ -61,6 +63,6 @@ function EFFECT:Render()
 
 	render.DrawBeam( self.EndPos - self.Dir * ( fDelta - sinWave * self.Length ),
 		self.EndPos - self.Dir * ( fDelta + sinWave * self.Length ),
-		2 + sinWave * 16, 1, 0, Color( 0, 255, 0, 255 ) )
+		2 + sinWave * 16, 1, 0, laserColor )
 
 end

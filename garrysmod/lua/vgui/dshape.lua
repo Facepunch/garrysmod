@@ -14,7 +14,7 @@ end
 
 function PANEL:Init()
 
-	self:SetColor( Color( 255, 255, 255, 255 ) )
+	self:SetColor( color_white )
 
 	self:SetMouseInputEnabled( false )
 	self:SetKeyboardInputEnabled( false )

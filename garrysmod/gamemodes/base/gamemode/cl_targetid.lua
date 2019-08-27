@@ -3,6 +3,10 @@
    Name: gamemode:HUDDrawTargetID( )
    Desc: Draw the target id (the name of the player you're currently looking at)
 -----------------------------------------------------------]]
+
+local shadowColor1 = Color( 0, 0, 0, 120 )
+local shadowColor2 = Color( 0, 0, 0, 50 )
+
 function GM:HUDDrawTargetID()
 
 	local tr = util.GetPlayerTrace( LocalPlayer() )
@@ -39,8 +43,8 @@ function GM:HUDDrawTargetID()
 	y = y + 30
 	
 	-- The fonts internal drop shadow looks lousy with AA on
-	draw.SimpleText( text, font, x + 1, y + 1, Color( 0, 0, 0, 120 ) )
-	draw.SimpleText( text, font, x + 2, y + 2, Color( 0, 0, 0, 50 ) )
+	draw.SimpleText( text, font, x + 1, y + 1, shadowColor1 )
+	draw.SimpleText( text, font, x + 2, y + 2, shadowColor2 )
 	draw.SimpleText( text, font, x, y, self:GetTeamColor( trace.Entity ) )
 	
 	y = y + h + 5
@@ -52,8 +56,8 @@ function GM:HUDDrawTargetID()
 	local w, h = surface.GetTextSize( text )
 	local x = MouseX - w / 2
 	
-	draw.SimpleText( text, font, x + 1, y + 1, Color( 0, 0, 0, 120 ) )
-	draw.SimpleText( text, font, x + 2, y + 2, Color( 0, 0, 0, 50 ) )
+	draw.SimpleText( text, font, x + 1, y + 1, shadowColor1 )
+	draw.SimpleText( text, font, x + 2, y + 2, shadowColor2 )
 	draw.SimpleText( text, font, x, y, self:GetTeamColor( trace.Entity ) )
 
 end

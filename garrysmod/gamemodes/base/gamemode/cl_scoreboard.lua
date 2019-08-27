@@ -11,6 +11,13 @@ surface.CreateFont( "ScoreboardDefaultTitle", {
 	weight	= 800
 } )
 
+
+local scoreBoardTextColor = Color( 93, 93, 93 )
+
+local colorConnecting = Color( 200, 200, 200, 200 )
+local colorDead = Color( 230, 200, 200, 255 )
+local colorAdmin = Color( 230, 255, 230, 255 )
+local colorDefault = Color( 230, 230, 230, 255 )
 --
 -- This defines a new panel type for the player row. The player row is given a player
 -- and then from that point on it pretty much looks after itself. It updates player info
@@ -31,7 +38,7 @@ local PLAYER_LINE = {
 		self.Name = self:Add( "DLabel" )
 		self.Name:Dock( FILL )
 		self.Name:SetFont( "ScoreboardDefault" )
-		self.Name:SetTextColor( Color( 93, 93, 93 ) )
+		self.Name:SetTextColor( scoreBoardTextColor )
 		self.Name:DockMargin( 8, 0, 0, 0 )
 
 		self.Mute = self:Add( "DImageButton" )
@@ -42,21 +49,21 @@ local PLAYER_LINE = {
 		self.Ping:Dock( RIGHT )
 		self.Ping:SetWidth( 50 )
 		self.Ping:SetFont( "ScoreboardDefault" )
-		self.Ping:SetTextColor( Color( 93, 93, 93 ) )
+		self.Ping:SetTextColor( scoreBoardTextColor )
 		self.Ping:SetContentAlignment( 5 )
 
 		self.Deaths = self:Add( "DLabel" )
 		self.Deaths:Dock( RIGHT )
 		self.Deaths:SetWidth( 50 )
 		self.Deaths:SetFont( "ScoreboardDefault" )
-		self.Deaths:SetTextColor( Color( 93, 93, 93 ) )
+		self.Deaths:SetTextColor( scoreBoardTextColor )
 		self.Deaths:SetContentAlignment( 5 )
 
 		self.Kills = self:Add( "DLabel" )
 		self.Kills:Dock( RIGHT )
 		self.Kills:SetWidth( 50 )
 		self.Kills:SetFont( "ScoreboardDefault" )
-		self.Kills:SetTextColor( Color( 93, 93, 93 ) )
+		self.Kills:SetTextColor( scoreBoardTextColor )
 		self.Kills:SetContentAlignment( 5 )
 
 		self:Dock( TOP )
@@ -91,7 +98,7 @@ local PLAYER_LINE = {
 			self.PName = self.Player:Nick()
 			self.Name:SetText( self.PName )
 		end
-		
+
 		if ( self.NumKills == nil || self.NumKills != self.Player:Frags() ) then
 			self.NumKills = self.Player:Frags()
 			self.Kills:SetText( self.NumKills )
@@ -151,21 +158,21 @@ local PLAYER_LINE = {
 		--
 
 		if ( self.Player:Team() == TEAM_CONNECTING ) then
-			draw.RoundedBox( 4, 0, 0, w, h, Color( 200, 200, 200, 200 ) )
+			draw.RoundedBox( 4, 0, 0, w, h, colorConnecting )
 			return
 		end
 
 		if ( !self.Player:Alive() ) then
-			draw.RoundedBox( 4, 0, 0, w, h, Color( 230, 200, 200, 255 ) )
+			draw.RoundedBox( 4, 0, 0, w, h, colorDead )
 			return
 		end
 
 		if ( self.Player:IsAdmin() ) then
-			draw.RoundedBox( 4, 0, 0, w, h, Color( 230, 255, 230, 255 ) )
+			draw.RoundedBox( 4, 0, 0, w, h, colorAdmin )
 			return
 		end
 
-		draw.RoundedBox( 4, 0, 0, w, h, Color( 230, 230, 230, 255 ) )
+		draw.RoundedBox( 4, 0, 0, w, h, colorDefault )
 
 	end
 }
@@ -188,7 +195,7 @@ local SCORE_BOARD = {
 
 		self.Name = self.Header:Add( "DLabel" )
 		self.Name:SetFont( "ScoreboardDefaultTitle" )
-		self.Name:SetTextColor( Color( 255, 255, 255, 255 ) )
+		self.Name:SetTextColor( color_white )
 		self.Name:Dock( TOP )
 		self.Name:SetHeight( 40 )
 		self.Name:SetContentAlignment( 5 )

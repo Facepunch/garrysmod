@@ -191,7 +191,7 @@ function CreateContextMenu()
 		label:Dock( BOTTOM )
 		label:SetText( v.title )
 		label:SetContentAlignment( 5 )
-		label:SetTextColor( Color( 255, 255, 255, 255 ) )
+		label:SetTextColor( color_white )
 		label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 
 		icon.DoClick = function()

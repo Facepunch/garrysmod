@@ -6,11 +6,13 @@ AccessorFunc( PANEL, "m_Color", "Color" )
 AccessorFunc( PANEL, "m_Rotation", "Rotation" )
 AccessorFunc( PANEL, "m_Handle", "Handle" )
 
+local handlePos = Vector(0.5, 0.5, 0)
+
 function PANEL:Init()
 
-	self:SetColor( Color( 255, 255, 255, 255 ) )
+	self:SetColor( color_white )
 	self:SetRotation( 0 )
-	self:SetHandle( Vector(0.5, 0.5, 0) )
+	self:SetHandle( handlePos )
 
 	self:SetMouseInputEnabled( false )
 	self:SetKeyboardInputEnabled( false )

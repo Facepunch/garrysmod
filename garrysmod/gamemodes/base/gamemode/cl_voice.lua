@@ -8,7 +8,7 @@ function PANEL:Init()
 	self.LabelName:SetFont( "GModNotify" )
 	self.LabelName:Dock( FILL )
 	self.LabelName:DockMargin( 8, 0, 0, 0 )
-	self.LabelName:SetTextColor( Color( 255, 255, 255, 255 ) )
+	self.LabelName:SetTextColor( color_white )
 
 	self.Avatar = vgui.Create( "AvatarImage", self )
 	self.Avatar:Dock( LEFT )

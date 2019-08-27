@@ -3,6 +3,9 @@
 	Starts up the ghost entity
 	The most important part of this is making sure it gets deleted properly
 -----------------------------------------------------------]]
+
+local ghostColor = Color( 255, 255, 255, 150 )
+
 function ToolObj:MakeGhostEntity( model, pos, angle )
 
 	util.PrecacheModel( model )
@@ -43,7 +46,7 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 	self.GhostEntity:SetMoveType( MOVETYPE_NONE )
 	self.GhostEntity:SetNotSolid( true )
 	self.GhostEntity:SetRenderMode( RENDERMODE_TRANSALPHA )
-	self.GhostEntity:SetColor( Color( 255, 255, 255, 150 ) )
+	self.GhostEntity:SetColor( ghostColor )
 
 end
 

@@ -144,7 +144,7 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 	--
 	-- I've made this all look more complicated than it is. Here's the easy version
 	--
-	-- chat.AddText( player, Color( 255, 255, 255 ), ": ", strText )
+	-- chat.AddText( player, color_white, ": ", strText )
 	--
 
 	local tab = {}
@@ -470,12 +470,16 @@ function GM:InputMouseApply( cmd, x, y, angle )
 
 end
 
+
+local textAchievementColorPlayer = Color( 230, 230, 230 )
+local textAchievementColorEarned = Color( 255, 200, 0 )
+
 --[[---------------------------------------------------------
 	Name: gamemode:OnAchievementAchieved()
 -----------------------------------------------------------]]
 function GM:OnAchievementAchieved( ply, achid )
 
-	chat.AddText( ply, Color( 230, 230, 230 ), " earned the achievement ", Color( 255, 200, 0 ), achievements.GetName( achid ) )
+	chat.AddText( ply, textAchievementColorPlayer, " earned the achievement ", textAchievementColorEarned, achievements.GetName( achid ) )
 
 end
 
