@@ -157,14 +157,16 @@ function PANEL:Think()
 
 end
 
+local outlineColor = Color( 200, 200, 200, 100 )
+local innerColor = Color( 0, 0, 0, 200 )
 function PANEL:Paint()
 
 	if ( !self.Enabled || self.BarScale <= 0 ) then	return true	end
 
-	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 200, 200, 200, 100 ) )
+	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), outlineColor )
 
 	local Pos = ( self:GetTall() - self:ScrollbarSize() ) * self.Pos
-	draw.RoundedBox( 4, 2, Pos + 2, self:GetWide() - 4, self:ScrollbarSize() - 4, Color( 0, 0, 0, 200 ) )
+	draw.RoundedBox( 4, 2, Pos + 2, self:GetWide() - 4, self:ScrollbarSize() - 4, innerColor )
 
 	return true
 

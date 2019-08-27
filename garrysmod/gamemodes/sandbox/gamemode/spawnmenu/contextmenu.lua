@@ -133,6 +133,7 @@ end
 --
 vgui.Register( "ContextMenu", PANEL, "EditablePanel" )
 
+local expensiveShadowColor = Color( 0, 0, 0, 200 )
 function CreateContextMenu()
 
 	if ( !hook.Run( "ContextMenuEnabled" ) ) then return end
@@ -192,7 +193,7 @@ function CreateContextMenu()
 		label:SetText( v.title )
 		label:SetContentAlignment( 5 )
 		label:SetTextColor( color_white )
-		label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
+		label:SetExpensiveShadow( 1, expensiveShadowColor )
 
 		icon.DoClick = function()
 

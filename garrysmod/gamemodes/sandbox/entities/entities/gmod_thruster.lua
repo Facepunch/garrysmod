@@ -359,7 +359,7 @@ local colorFlame1 = Color( 0, 0, 255, 128 )
 local colorFlame2 = Color( 255, 255, 255, 128 )
 local colorFlame3 = Color( 255, 255, 255, 0 )
 local colorBlackInvisible = Color( 0, 0, 0, 0 )
-
+local colorFlame4 = Color( 0, 0, 255, 128)
 
 --[[---------------------------------------------------------
 	Register the effects
@@ -397,7 +397,7 @@ list.Set( "ThrusterEffects", "#thrustereffect.flames", {
 		scroll = scroll * 1.3
 		render.SetMaterial( matFire )
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, 8 * Scale, scroll, Color( 0, 0, 255, 128) )
+			render.AddBeam( vOffset, 8 * Scale, scroll, colorFlame4 )
 			render.AddBeam( vOffset + vNormal * 60 * Scale, 16 * Scale, scroll + 1, colorFlame2 )
 			render.AddBeam( vOffset + vNormal * 148 * Scale, 16 * Scale, scroll + 3, colorFlame3 )
 		render.EndBeam()

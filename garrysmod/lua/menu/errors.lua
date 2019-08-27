@@ -59,6 +59,9 @@ end )
 
 local matAlert = Material( "icon16/error.png" )
 
+local boxShadowColor = Color( 40, 40, 40, 255 )
+local boxColor = Color( 240, 240, 240, 255 )
+
 hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 
 	if ( table.IsEmpty( Errors ) ) then return end
@@ -74,8 +77,8 @@ hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 		if ( v.y == nil ) then v.y = idealy end
 		if ( v.w == nil ) then v.w = surface.GetTextSize( v.text ) + 48 end
 
-		draw.RoundedBox( 2, v.x + 2, v.y + 2, v.w, height, Color( 40, 40, 40, 255 ) )
-		draw.RoundedBox( 2, v.x, v.y, v.w, height, Color( 240, 240, 240, 255 ) )
+		draw.RoundedBox( 2, v.x + 2, v.y + 2, v.w, height, boxShadowColor )
+		draw.RoundedBox( 2, v.x, v.y, v.w, height, boxColor )
 
 		if ( v.last > Recent ) then
 

@@ -7,11 +7,13 @@ surface.CreateFont( "ContentHeader", {
 
 local PANEL = {}
 
+local expensiveShadowColor = Color( 0, 0, 0, 130 )
+
 function PANEL:Init()
 
 	self:SetFont( "ContentHeader" )
 	self:SetBright( true )
-	self:SetExpensiveShadow( 2, Color( 0, 0, 0, 130 ) )
+	self:SetExpensiveShadow( 2, expensiveShadowColor )
 
 	self:SetSize( 64, 64 )
 

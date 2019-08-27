@@ -42,6 +42,8 @@ hook.Add( "Think", "sandbox_queued_search", function()
 	end
 end )
 
+local colorBoxSearchOutline = Color( 0, 0, 0, 200 )
+local colorBoxSearchProgress = Color( 0, 128, 255, 200 )
 hook.Add( "DrawOverlay","sandbox_search_progress", function()
 	if ( !IsValid( g_SpawnMenu ) || !IsValid( g_SpawnMenu.SearchPropPanel ) || expectedCalls == 1 || totalCalls == expectedCalls ) then return end
 
@@ -60,8 +62,8 @@ hook.Add( "DrawOverlay","sandbox_search_progress", function()
 	local maxw = pnl:GetWide()
 	if ( pnl.VBar && pnl.VBar.Enabled ) then maxw = maxw - 20 end
 
-	draw.RoundedBox( 0, x, y, maxw, 8, Color( 0, 0, 0, 200 ) )
-	draw.RoundedBox( 0, x, y, maxw * ( totalCalls / expectedCalls ), 8, Color( 0, 128, 255, 200 ) )
+	draw.RoundedBox( 0, x, y, maxw, 8, colorBoxSearchOutline )
+	draw.RoundedBox( 0, x, y, maxw * ( totalCalls / expectedCalls ), 8, colorBoxSearchProgress )
 end )
 
 --

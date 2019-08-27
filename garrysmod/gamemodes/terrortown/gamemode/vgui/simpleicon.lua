@@ -181,9 +181,11 @@ AccessorFunc(PANEL, "IconFont", "IconFont")
 AccessorFunc(PANEL, "IconTextShadow", "IconTextShadow")
 AccessorFunc(PANEL, "IconTextPos", "IconTextPos")
 
+local iconTextColor = Color(255, 200, 0)
+
 function PANEL:Init()
    self:SetIconText("")
-   self:SetIconTextColor(Color(255, 200, 0))
+   self:SetIconTextColor(iconTextColor)
    self:SetIconFont("TargetID")
    self:SetIconTextShadow({opacity=255, offset=2})
    self:SetIconTextPos({32, 32})

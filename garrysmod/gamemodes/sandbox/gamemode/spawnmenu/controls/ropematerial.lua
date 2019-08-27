@@ -27,9 +27,11 @@ function PANEL:Init()
 
 end
 
+local boxColor = Color( 128, 128, 128, 255 )
+
 function PANEL:Paint( w, h )
 
-	draw.RoundedBox( 4, 0, 0, w, h, Color( 128, 128, 128, 255 ) )
+	draw.RoundedBox( 4, 0, 0, w, h, boxColor )
 
 end
 

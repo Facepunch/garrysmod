@@ -3,6 +3,12 @@ AddCSLuaFile()
 
 local default_animations = { "idle_all_01", "menu_walk" }
 
+local textColor = Color( 0, 0, 0, 255 )
+local directionalLightRightColor = Color( 255, 160, 80, 255 )
+local directionalLightLeftColor = Color( 80, 160, 255, 255 )
+local ambientLightPos = Vector( -64, -64, -64 )
+local lookAtPos = Vector( -100, 0, -22 )
+
 list.Set( "DesktopWindows", "PlayerEditor", {
 
 	title		= "Player Model",
@@ -19,12 +25,12 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		mdl:Dock( FILL )
 		mdl:SetFOV( 36 )
 		mdl:SetCamPos( vector_origin )
-		mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 160, 80, 255 ) )
-		mdl:SetDirectionalLight( BOX_LEFT, Color( 80, 160, 255, 255 ) )
-		mdl:SetAmbientLight( Vector( -64, -64, -64 ) )
+		mdl:SetDirectionalLight( BOX_RIGHT, directionalLightRightColor )
+		mdl:SetDirectionalLight( BOX_LEFT, directionalLightLeftColor )
+		mdl:SetAmbientLight( ambientLightPos )
 		mdl:SetAnimated( true )
 		mdl.Angles = angle_zero
-		mdl:SetLookAt( Vector( -100, 0, -22 ) )
+		mdl:SetLookAt( lookAtPos )
 
 		local sheet = window:Add( "DPropertySheet" )
 		sheet:Dock( RIGHT )
@@ -51,7 +57,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		local lbl = controls:Add( "DLabel" )
 		lbl:SetText( "Player color" )
-		lbl:SetTextColor( Color( 0, 0, 0, 255 ) )
+		lbl:SetTextColor( textColor )
 		lbl:Dock( TOP )
 
 		local plycol = controls:Add( "DColorMixer" )
@@ -62,7 +68,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		local lbl = controls:Add( "DLabel" )
 		lbl:SetText( "Physgun color" )
-		lbl:SetTextColor( Color( 0, 0, 0, 255 ) )
+		lbl:SetTextColor( textColor )
 		lbl:DockMargin( 0, 32, 0, 0 )
 		lbl:Dock( TOP )
 

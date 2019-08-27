@@ -5,6 +5,13 @@ AccessorFunc( PANEL, "m_strModel", "Model" )
 AccessorFunc( PANEL, "m_pOrigin", "Origin" )
 AccessorFunc( PANEL, "m_bCustomIcon", "CustomIcon" )
 
+local linePos1, lineColor1 = Vector( 0, 0, 100 ), Color( 0, 0, 255 )
+local linePos2, lineColor2 = Vector( 0, 100, 0 ), Color( 0, 255, 0 )
+local linePos3, lineColor3 = Vector( 100, 0, 0 ), Color( 255, 0, 0 )
+local wireFrameVector = Vector( 1, 1, 1 ) 
+
+local backGroundColor = Color( 0, 0, 0, 128 )
+
 function PANEL:Init()
 
 	self:SetSize( 762, 502 )
@@ -18,7 +25,7 @@ function PANEL:Init()
 		local bg = left:Add( "DPanel" )
 		bg:Dock( FILL )
 		bg:DockMargin( 0, 0, 0, 4 )
-		bg.Paint = function( self, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
+		bg.Paint = function( self, w, h ) draw.RoundedBox( 0, 0, 0, w, h, backGroundColor ) end
 
 		self.SpawnIcon = bg:Add( "SpawnIcon" )
 		//self.SpawnIcon.DoClick = function() self:RenderIcon() end
@@ -30,15 +37,15 @@ function PANEL:Init()
 		local mat_wireframe = Material( "models/wireframe" )
 		function self.ModelPanel.PostDrawModel( mdlpnl, ent )
 			if ( self.ShowOrigin ) then
-				render.DrawLine( vector_origin, Vector( 0, 0, 100 ), Color( 0, 0, 255 ) )
-				render.DrawLine( vector_origin, Vector( 0, 100, 0 ), Color( 0, 255, 0 ) )
-				render.DrawLine( vector_origin, Vector( 100, 0, 0 ), Color( 255, 0, 0 ) )
+				render.DrawLine( vector_origin, linePos1, lineColor1 )
+				render.DrawLine( vector_origin, linePos2, lineColor2 )
+				render.DrawLine( vector_origin, linePos3, lineColor3 )
 			end
 
 			if ( self.ShowBBox ) then
 				local mins, maxs = ent:GetRenderBounds()
 				local scale = 1
-				mat_wireframe:SetVector( "$color", Vector( 1, 1, 1 ) )
+				mat_wireframe:SetVector( "$color", wireFrameVector )
 				render.SetMaterial( mat_wireframe )
 
 				render.DrawBox( ent:GetPos(), ent:GetAngles(), mins * scale, maxs * scale )
@@ -263,16 +270,26 @@ function PANEL:Init()
 
 end
 
+
+local base_AmbientLightColor = Color( 255 * 0.3, 255 * 0.3, 255 * 0.3 )
+
+local color_BOX_FRONT =  Color( 255 * 1.3, 255 * 1.3, 255 * 1.3 )
+local color_BOX_BACK =  Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 )
+local color_BOX_RIGHT =  Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 )
+local color_BOX_LEFT =  Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 )
+local color_BOX_TOP =  Color( 255 * 2.3, 255 * 2.3, 255 * 2.3 )
+local color_BOX_BOTTOM =  Color( 255 * 0.1, 255 * 0.1, 255 * 0.1 )
+
 function PANEL:SetDefaultLighting()
 
-	self.ModelPanel:SetAmbientLight( Color( 255 * 0.3, 255 * 0.3, 255 * 0.3 ) )
+	self.ModelPanel:SetAmbientLight( base_AmbientLightColor )
 
-	self.ModelPanel:SetDirectionalLight( BOX_FRONT, Color( 255 * 1.3, 255 * 1.3, 255 * 1.3 ) )
-	self.ModelPanel:SetDirectionalLight( BOX_BACK, Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 ) )
-	self.ModelPanel:SetDirectionalLight( BOX_RIGHT, Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 ) )
-	self.ModelPanel:SetDirectionalLight( BOX_LEFT, Color( 255 * 0.2, 255 * 0.2, 255 * 0.2 ) )
-	self.ModelPanel:SetDirectionalLight( BOX_TOP, Color( 255 * 2.3, 255 * 2.3, 255 * 2.3 ) )
-	self.ModelPanel:SetDirectionalLight( BOX_BOTTOM, Color( 255 * 0.1, 255 * 0.1, 255 * 0.1 ) )
+	self.ModelPanel:SetDirectionalLight( BOX_FRONT, color_BOX_FRONT )
+	self.ModelPanel:SetDirectionalLight( BOX_BACK, color_BOX_BACK )
+	self.ModelPanel:SetDirectionalLight( BOX_RIGHT, color_BOX_RIGHT )
+	self.ModelPanel:SetDirectionalLight( BOX_LEFT, color_BOX_LEFT )
+	self.ModelPanel:SetDirectionalLight( BOX_TOP, color_BOX_TOP )
+	self.ModelPanel:SetDirectionalLight( BOX_BOTTOM, color_BOX_BOTTOM )
 
 end
 
@@ -432,9 +449,6 @@ function PANEL:Refresh()
 	self.ModelPanel.LayoutEntity = function() self:UpdateEntity( self.ModelPanel:GetEntity() )  end
 
 	local ent = self.ModelPanel:GetEntity()
-	local pos = ent:GetPos()
-
-	local tab = PositionSpawnIcon( ent, pos )
 
 	ent:SetSkin( self.SpawnIcon:GetSkinID() )
 	ent:SetBodyGroups( self.SpawnIcon:GetBodyGroup() )
