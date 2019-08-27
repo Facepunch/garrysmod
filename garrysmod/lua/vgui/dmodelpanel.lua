@@ -11,6 +11,9 @@ AccessorFunc( PANEL, "colAmbientLight",	"AmbientLight" )
 AccessorFunc( PANEL, "colColor",		"Color" )
 AccessorFunc( PANEL, "bAnimated",		"Animated" )
 
+
+local camPos = Vector( 50, 50, 50 )
+local camLookAt = Vector( 0, 0, 40 )
 function PANEL:Init()
 
 	self.Entity = nil
@@ -18,8 +21,8 @@ function PANEL:Init()
 	self.DirectionalLight = {}
 	self.FarZ = 4096
 
-	self:SetCamPos( Vector( 50, 50, 50 ) )
-	self:SetLookAt( Vector( 0, 0, 40 ) )
+	self:SetCamPos( camPos )
+	self:SetLookAt( camLookAt )
 	self:SetFOV( 70 )
 
 	self:SetText( "" )
@@ -28,8 +31,8 @@ function PANEL:Init()
 
 	self:SetAmbientLight( Color( 50, 50, 50 ) )
 
-	self:SetDirectionalLight( BOX_TOP, Color( 255, 255, 255 ) )
-	self:SetDirectionalLight( BOX_FRONT, Color( 255, 255, 255 ) )
+	self:SetDirectionalLight( BOX_TOP, color_white )
+	self:SetDirectionalLight( BOX_FRONT, color_white )
 
 	self:SetColor( Color( 255, 255, 255, 255 ) )
 

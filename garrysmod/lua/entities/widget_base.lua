@@ -40,7 +40,7 @@ function ENT:Initialize()
 	self:DrawShadow( false )
 	self:EnableCustomCollisions()
 	self.Color = Color( 0, 255, 255 )
-	self.Color_Hover = Color( 255, 255, 255 )
+	self.Color_Hover = color_white
 
 	if ( SERVER ) then
 		self:SetSize( 4 )

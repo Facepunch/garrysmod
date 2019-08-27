@@ -132,6 +132,9 @@ function GM:GetTeamNumColor( num )
 
 end
 
+
+local deadColor = Color( 255, 30, 40 )
+local teamColor = Color( 30, 160, 40 )
 --[[---------------------------------------------------------
 	Name: gamemode:OnPlayerChat()
 		Process the player's chat.. return true for no default
@@ -147,12 +150,12 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 	local tab = {}
 
 	if ( bPlayerIsDead ) then
-		table.insert( tab, Color( 255, 30, 40 ) )
+		table.insert( tab, deadColor )
 		table.insert( tab, "*DEAD* " )
 	end
 
 	if ( bTeamOnly ) then
-		table.insert( tab, Color( 30, 160, 40 ) )
+		table.insert( tab, teamColor )
 		table.insert( tab, "(TEAM) " )
 	end
 
@@ -162,7 +165,7 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 		table.insert( tab, "Console" )
 	end
 
-	table.insert( tab, Color( 255, 255, 255 ) )
+	table.insert( tab, color_white )
 	table.insert( tab, ": " .. strText )
 
 	chat.AddText( unpack(tab) )

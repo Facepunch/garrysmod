@@ -234,7 +234,7 @@ function Parse( ml, maxwidth )
 
 	ml = utf8.force( ml ) -- Ensure we have valid UTF-8 data
 
-	colour_stack = { Color( 255, 255, 255 ) }
+	colour_stack = { color_white }
 	font_stack = { "DermaDefault" }
 	blocks = {}
 

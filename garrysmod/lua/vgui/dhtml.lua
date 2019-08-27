@@ -77,7 +77,7 @@ function PANEL:ConsoleMessage( msg, file, line )
 		end
 
 		MsgC( Color( 255, 160, 255 ), "[HTML] " )
-		MsgC( Color( 255, 255, 255 ), file, ":", line, ": ", msg, "\n" )
+		MsgC( color_white, file, ":", line, ": ", msg, "\n" )
 		return
 
 	end
@@ -100,7 +100,7 @@ function PANEL:ConsoleMessage( msg, file, line )
 	-- Plain ol' console.log
 	--
 	MsgC( Color( 255, 160, 255 ), "[HTML] " )
-	MsgC( Color( 255, 255, 255 ), msg, "\n" )
+	MsgC( color_white, msg, "\n" )
 
 end
 
