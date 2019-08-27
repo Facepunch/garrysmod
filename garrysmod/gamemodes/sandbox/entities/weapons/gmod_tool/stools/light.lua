@@ -19,7 +19,7 @@ TOOL.Information = {
 
 cleanup.Register( "lights" )
 
-local yaw90 = Angle( 90, 0, 0 )
+local angleYaw90 = Angle( 90, 0, 0 )
 
 function TOOL:LeftClick( trace, attach )
 
@@ -35,7 +35,7 @@ function TOOL:LeftClick( trace, attach )
 	local pos = trace.HitPos + trace.HitNormal * 8
 
 	local ang = trace.HitNormal:Angle()
-	ang:Sub(yaw90)
+	ang:Sub(angleYaw90)
 
 	local r = math.Clamp( self:GetClientNumber( "r" ), 0, 255 )
 	local g = math.Clamp( self:GetClientNumber( "g" ), 0, 255 )
@@ -197,7 +197,7 @@ function TOOL:UpdateGhostLight( ent, pl )
 	ent:SetPos( trace.HitPos + trace.HitNormal * 8 )
 
 	local ang = trace.HitNormal:Angle()
-	ang:Sub(yaw90)
+	ang:Sub(angleYaw90)
 	ent:SetAngles( ang )
 
 	ent:SetNoDraw( false )

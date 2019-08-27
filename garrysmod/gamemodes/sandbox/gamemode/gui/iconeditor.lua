@@ -329,7 +329,7 @@ function PANEL:RightLayout()
 
 end
 
-local lookingAngle = Angle( 0, -180, 0 )
+local lookAngle = Angle( 0, -180, 0 )
 
 function PANEL:OriginLayout()
 
@@ -339,7 +339,7 @@ function PANEL:OriginLayout()
 
 	self.ModelPanel:SetCamPos( campos )
 	self.ModelPanel:SetFOV( 45 )
-	self.ModelPanel:SetLookAng( lookingAngle )
+	self.ModelPanel:SetLookAng( lookAngle )
 
 end
 

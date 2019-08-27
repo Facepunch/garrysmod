@@ -213,7 +213,7 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 			--
 			local Velocity = Vehicle:GetVelocity()
 			local fwd = Vehicle:GetUp()
-			local dp = fwd:Dot( Vector( 0, 0, 1 ) )
+			local dp = fwd:Dot( vector_up )
 			local dp2 = fwd:Dot( Velocity )
 
 			ply:SetPoseParameter( "vertical_velocity", ( dp < 0 && dp || 0 ) + dp2 * 0.005 )
