@@ -85,34 +85,32 @@ include("util.lua")
 include("lang_shd.lua") -- uses some of util
 include("equip_items_shd.lua")
 
-function DetectiveMode() return GetGlobalBool("ttt_detective", false) end
-function HasteMode() return GetGlobalBool("ttt_haste", false) end
+function DetectiveMode()
+	return GetGlobalBool("ttt_detective", false)
+end
+
+function HasteMode()
+	return GetGlobalBool("ttt_haste", false)
+end
 
 -- Create teams
 TEAM_TERROR = 1
 TEAM_SPEC = TEAM_SPECTATOR
 
 function GM:CreateTeams()
-   team.SetUp(TEAM_TERROR, "Terrorists", Color(0, 200, 0, 255), false)
-   team.SetUp(TEAM_SPEC, "Spectators", Color(200, 200, 0, 255), true)
-
-   -- Not that we use this, but feels good
-   team.SetSpawnPoint(TEAM_TERROR, "info_player_deathmatch")
-   team.SetSpawnPoint(TEAM_SPEC, "info_player_deathmatch")
+	team.SetUp(TEAM_TERROR, "Terrorists", Color(0, 200, 0, 255), false)
+	team.SetUp(TEAM_SPEC, "Spectators", Color(200, 200, 0, 255), true)
+	-- Not that we use this, but feels good
+	team.SetSpawnPoint(TEAM_TERROR, "info_player_deathmatch")
+	team.SetSpawnPoint(TEAM_SPEC, "info_player_deathmatch")
 end
 
 -- Everyone's model
-local ttt_playermodels = {
-   Model("models/player/phoenix.mdl"),
-   Model("models/player/arctic.mdl"),
-   Model("models/player/guerilla.mdl"),
-   Model("models/player/leet.mdl")
-};
+local ttt_playermodels = {Model("models/player/phoenix.mdl"), Model("models/player/arctic.mdl"), Model("models/player/guerilla.mdl"), Model("models/player/leet.mdl")}
 
 function GetRandomPlayerModel()
-   return table.Random(ttt_playermodels)
+	return table.Random(ttt_playermodels)
 end
-
 local ttt_playercolors = {
    all = {
       COLOR_WHITE,
@@ -140,47 +138,47 @@ local ttt_playercolors = {
 };
 
 CreateConVar("ttt_playercolor_mode", "1")
+
 function GM:TTTPlayerColor(model)
-   local mode = GetConVarNumber("ttt_playercolor_mode") or 0
-   if mode == 1 then
-      return table.Random(ttt_playercolors.serious)
-   elseif mode == 2 then
-      return table.Random(ttt_playercolors.all)
-   elseif mode == 3 then
-      -- Full randomness
-      return Color(math.random(0, 255), math.random(0, 255), math.random(0, 255))
-   end
-   -- No coloring
-   return COLOR_WHITE
+	local mode = GetConVarNumber("ttt_playercolor_mode") or 0
+
+	if mode == 1 then
+		return table.Random(ttt_playercolors.serious)
+	elseif mode == 2 then
+		return table.Random(ttt_playercolors.all)
+	elseif mode == 3 then
+		-- Full randomness
+		return Color(math.random(0, 255), math.random(0, 255), math.random(0, 255))
+	end
+	-- No coloring
+
+	return COLOR_WHITE
 end
 
 -- Kill footsteps on player and client
 function GM:PlayerFootstep(ply, pos, foot, sound, volume, rf)
-   if IsValid(ply) and (ply:Crouching() or ply:GetMaxSpeed() < 150 or ply:IsSpec()) then
-      -- do not play anything, just prevent normal sounds from playing
-      return true
-   end
+	if IsValid(ply) and (ply:Crouching() or ply:GetMaxSpeed() < 150 or ply:IsSpec()) then return true end -- do not play anything, just prevent normal sounds from playing
 end
 
 -- Predicted move speed changes
 function GM:Move(ply, mv)
-   if ply:IsTerror() then
-      local basemul = 1
-      local slowed = false
-      -- Slow down ironsighters
-      local wep = ply:GetActiveWeapon()
-      if IsValid(wep) and wep.GetIronsights and wep:GetIronsights() then
-         basemul = 120 / 220
-         slowed = true
-      end
-      local mul = hook.Call("TTTPlayerSpeedModifier", GAMEMODE, ply, slowed, mv) or 1
-      mul = basemul * mul
-      mv:SetMaxClientSpeed(mv:GetMaxClientSpeed() * mul)
-      mv:SetMaxSpeed(mv:GetMaxSpeed() * mul)
-   end
+	if ply:IsTerror() then
+		local basemul = 1
+		local slowed = false
+		-- Slow down ironsighters
+		local wep = ply:GetActiveWeapon()
+
+		if IsValid(wep) and wep.GetIronsights and wep:GetIronsights() then
+			basemul = 120 / 220
+			slowed = true
+		end
+
+		local mul = hook.Call("TTTPlayerSpeedModifier", GAMEMODE, ply, slowed, mv) or 1
+		mul = basemul * mul
+		mv:SetMaxClientSpeed(mv:GetMaxClientSpeed() * mul)
+		mv:SetMaxSpeed(mv:GetMaxSpeed() * mul)
+	end
 end
-
-
 -- Weapons and items that come with TTT. Weapons that are not in this list will
 -- get a little marker on their icon if they're buyable, showing they are custom
 -- and unique to the server.
