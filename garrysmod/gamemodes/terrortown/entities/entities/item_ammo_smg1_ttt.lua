@@ -1,7 +1,5 @@
 -- MAC10 ammo override
-
 AddCSLuaFile()
-
 ENT.Type = "anim"
 ENT.Base = "base_ammo_ttt"
 ENT.AmmoType = "SMG1"
