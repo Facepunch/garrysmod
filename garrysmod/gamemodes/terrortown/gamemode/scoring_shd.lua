@@ -59,8 +59,6 @@ function ScoreEventLog(events, scores, traitors, detectives)
 		scores[k].was_detective = table.HasValue(detectives, k)
 	end
 
-	local tmp = nil
-
 	for k, e in pairs(events) do
 		ScoreEvent(e, scores)
 	end

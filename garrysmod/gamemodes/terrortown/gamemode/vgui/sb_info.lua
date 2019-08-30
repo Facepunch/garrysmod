@@ -1,7 +1,6 @@
 ---- Player info panel, based on sandbox scoreboard's infocard
 local vgui = vgui
 local GetTranslation = LANG.GetTranslation
-local GetPTranslation = LANG.GetParamTranslation
 --- Base stuff
 local PANEL = {}
 
@@ -230,8 +229,6 @@ function PANEL:DoClick()
 		self:GetParent():UpdateTag()
 	end
 end
-
-local select_color = Color(255, 200, 0, 255)
 
 function PANEL:PaintOver()
 	if self.Player and self.Player.sb_tag == self.Tag then

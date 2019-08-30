@@ -1,8 +1,5 @@
 -- Traitor radar rendering
-local render = render
 local surface = surface
-local string = string
-local player = player
 local math = math
 RADAR = {}
 RADAR.targets = {}
@@ -189,7 +186,7 @@ function RADAR:Draw(client)
 		time = FormatTime(remaining, "%02i:%02i")
 	})
 
-	local w, h = surface.GetTextSize(text)
+	local h = select(2, surface.GetTextSize(text))
 	surface.SetTextPos(36, ScrH() - 140 - h)
 	surface.DrawText(text)
 end
@@ -255,7 +252,6 @@ net.Receive("TTT_Radar", ReceiveRadarScan)
 local GetTranslation = LANG.GetTranslation
 
 function RADAR.CreateMenu(parent, frame)
-	local w, h = parent:GetSize()
 	local dform = vgui.Create("DForm", parent)
 	dform:SetName(GetTranslation("radar_menutitle"))
 	dform:StretchToParent(0, 0, 0, 0)

@@ -93,7 +93,7 @@ function GM:HUDAmmoPickedUp(itemname, amount)
 	local w, h = surface.GetTextSize(pickup.name)
 	pickup.height = h
 	pickup.width = w
-	local w, h = surface.GetTextSize(pickup.amount)
+	local w = select(1, surface.GetTextSize(pickup.amount))
 	pickup.xwidth = w
 	pickup.width = pickup.width + w + 16
 

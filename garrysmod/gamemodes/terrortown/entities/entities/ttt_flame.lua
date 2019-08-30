@@ -48,7 +48,6 @@ end
 function StartFires(pos, tr, num, lifetime, explode, dmgowner)
 	for i = 1, num do
 		local ang = Angle(-math.Rand(0, 180), math.Rand(0, 360), math.Rand(0, 360))
-		local vstart = pos + tr.HitNormal * 64
 		local flame = ents.Create("ttt_flame")
 		flame:SetPos(pos)
 
@@ -94,7 +93,6 @@ end
 -- does no block checking, radius should be very small
 function RadiusDamage(dmginfo, pos, radius, inflictor)
 	local victims = ents.FindInSphere(pos, radius)
-	local tr = nil
 
 	for k, vic in pairs(victims) do
 		if IsValid(vic) and inflictor:Visible(vic) then

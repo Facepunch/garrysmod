@@ -319,8 +319,6 @@ if CLIENT then
 		cam.End3D2D()
 	end
 
-	local draw = draw
-
 	function SWEP:DrawHUD()
 		local x = ScrW() / 2.0
 		local y = ScrH() / 2.0

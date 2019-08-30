@@ -583,7 +583,6 @@ local function CreateVoiceVGUI()
 end
 
 hook.Add("InitPostEntity", "CreateVoiceVGUI", CreateVoiceVGUI)
-local MuteStates = {MUTE_NONE, MUTE_TERROR, MUTE_ALL, MUTE_SPEC}
 
 local MuteText = {
 	[MUTE_NONE] = "",

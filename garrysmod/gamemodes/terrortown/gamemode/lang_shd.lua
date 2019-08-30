@@ -6,7 +6,7 @@ LANG = {}
 util.IncludeClientFile("cl_lang.lua")
 -- Add all lua files in our /lang/ dir
 local dir = GM.FolderName or "terrortown"
-local files, dirs = file.Find(dir .. "/gamemode/lang/*.lua", "LUA")
+local files = select(1, file.Find(dir .. "/gamemode/lang/*.lua", "LUA"))
 
 for _, fname in pairs(files) do
 	local path = "lang/" .. fname

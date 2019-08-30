@@ -163,7 +163,7 @@ function SWEP:GatherObjectSample(ent)
 	if ent:GetClass() == "ttt_c4" and ent:GetArmed() then
 		self:Report("dna_armed")
 	else
-		local collected, old, own = self:AddItemSample(ent)
+		local collected = select(1, self:AddItemSample(ent))
 
 		if collected == -1 then
 			self:Report("dna_limit")

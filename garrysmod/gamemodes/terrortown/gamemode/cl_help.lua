@@ -1,6 +1,6 @@
 ---- Help screen
 local GetTranslation = LANG.GetTranslation
-local GetPTranslation = LANG.GetParamTranslation
+
 CreateConVar("ttt_spectator_mode", "0", FCVAR_ARCHIVE)
 CreateConVar("ttt_mute_team_check", "0")
 CreateClientConVar("ttt_avoid_detective", "0", true, true)
@@ -154,12 +154,11 @@ local imgpath = "vgui/ttt/help/tut0%d"
 local tutorial_pages = 6
 
 function HELPSCRN:CreateTutorial(parent)
-	local w, h = parent:GetSize()
-	local m = 5
 	local bg = vgui.Create("ColoredBox", parent)
 	bg:StretchToParent(0, 0, 0, 0)
 	bg:SetTall(330)
 	bg:SetColor(COLOR_BLACK)
+
 	local tut = vgui.Create("DImage", parent)
 	tut:StretchToParent(0, 0, 0, 0)
 	tut:SetVerticalScrollbarEnabled(false)
@@ -167,6 +166,7 @@ function HELPSCRN:CreateTutorial(parent)
 	tut:SetWide(1024)
 	tut:SetTall(512)
 	tut.current = 1
+
 	local bw, bh = 100, 30
 	local bar = vgui.Create("TTTProgressBar", parent)
 	bar:SetSize(200, bh)
@@ -183,12 +183,14 @@ function HELPSCRN:CreateTutorial(parent)
 	end
 
 	bar:UpdateText()
+
 	local bnext = vgui.Create("DButton", parent)
 	bnext:SetFont("Trebuchet22")
 	bnext:SetSize(bw, bh)
 	bnext:SetText(GetTranslation("next"))
 	bnext:CopyPos(bar)
 	bnext:AlignRight(1)
+
 	local bprev = vgui.Create("DButton", parent)
 	bprev:SetFont("Trebuchet22")
 	bprev:SetSize(bw, bh)

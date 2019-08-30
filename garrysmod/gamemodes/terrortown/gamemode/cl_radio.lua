@@ -74,7 +74,7 @@ function TRADIO.CreateMenu(parent)
 	dhelp:SetTextColor(COLOR_WHITE)
 
 	if IsValid(client.radio) then
-		local board = CreateSoundBoard(wrap) -- nigga what
+		CreateSoundBoard(wrap) -- nigga what
 	elseif client:HasWeapon("weapon_ttt_radio") then
 		dhelp:SetText(LANG.GetTranslation("radio_notplaced"))
 	end

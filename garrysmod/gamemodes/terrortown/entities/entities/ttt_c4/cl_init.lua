@@ -1,7 +1,6 @@
 -- bomb menus
 include("shared.lua")
 local starttime = C4_MINIMUM_TIME
-local beep = Sound("weapons/c4/c4_click.wav")
 local T = LANG.GetTranslation
 local PT = LANG.GetParamTranslation
 
@@ -26,13 +25,14 @@ function ShowC4Config(bomb)
 	dformtime:SetPos(m, m)
 	dformtime:SetSize(w - m * 4, h / 2)
 	dformtime:SetName(T("c4_arm_timer"))
+
 	local dclock = vgui.Create("DLabel", dformtime)
 	dclock:SetFont("TimeLeft")
 	dclock:SetText(util.SimpleTime(starttime, "%02i:%02i"))
 	dclock:SizeToContents()
 	dclock:SetPos(m * 2, m * 2)
 	dformtime:AddItem(dclock)
-	local ch, cw = dclock:GetSize()
+
 	local dtime = vgui.Create("DNumSlider", dformtime)
 	dtime:SetWide(w - m * 4)
 	dtime:SetText(T("c4_arm_seconds"))
@@ -146,7 +146,12 @@ local c4_wirecut_mat = Material("vgui/ttt/c4_wire_cut")
 local on_wire_cut = nil
 -- Wire
 local PANEL = {}
-local wire_colors = {Color(200, 0, 0, 255), Color(255, 255, 0, 255), Color(90, 90, 250, 255), Color(255, 255, 255, 255), Color(20, 200, 20, 255), Color(255, 160, 50, 255)} -- red -- yellow -- blue -- white/grey -- green -- brown
+local wire_colors = {Color(200, 0, 0, 255),-- red 
+Color(255, 255, 0, 255), -- yellow
+Color(90, 90, 250, 255),-- blue 
+Color(255, 255, 255, 255),-- white/grey
+Color(20, 200, 20, 255), -- green
+Color(255, 160, 50, 255)}  -- brown
 
 function PANEL:Init()
 	self.BaseClass.Init(self)
@@ -218,7 +223,6 @@ function PANEL:Init()
 	self:SetWireCount(C4_WIRE_COUNT)
 	self.Wires = {}
 	local wx, wy = -84, 70
-	local wc = 1
 
 	for i = 1, self:GetWireCount() do
 		local w = vgui.Create("DisarmWire", self)

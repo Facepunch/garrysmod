@@ -2,8 +2,8 @@
 local math = math
 local table = table
 local player = player
-local timer = timer
 local pairs = pairs
+
 CreateConVar("ttt_bots_are_spectators", "0", FCVAR_ARCHIVE)
 CreateConVar("ttt_dyingshot", "0")
 CreateConVar("ttt_killer_dna_range", "550")
@@ -152,7 +152,7 @@ end
 local function PointsAroundSpawn(spwn)
 	if not IsValid(spwn) then return {} end
 	local pos = spwn:GetPos()
-	local w, h = 36, 72 -- bit roomier than player hull
+	local w = 36 -- bit roomier than player hull
 	-- all rigged positions
 	-- could be done without typing them out, but would take about as much time
 	--pos + Vector( 0,  0,  h) -- just in case we're outside

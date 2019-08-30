@@ -120,7 +120,6 @@ function CLSCORE:BuildEventLogPanel(dpanel)
 end
 
 function CLSCORE:BuildScorePanel(dpanel)
-	local margin = 10
 	local w, h = dpanel:GetSize()
 	local dlist = vgui.Create("DListView", dpanel)
 	dlist:SetPos(0, 0)
@@ -214,7 +213,7 @@ function CLSCORE:AddAward(y, pw, award, dpanel)
 	txtlbl:SetText(text)
 	txtlbl:SetFont("DermaDefault")
 	txtlbl:SizeToContents()
-	local tw, th = txtlbl:GetSize()
+	local tw = select(1, txtlbl:GetSize())
 	titlelbl:SetPos((pw - tiw) / 2, y)
 	y = y + tih + 2
 	local fw = nw + tw + 5
@@ -328,7 +327,6 @@ function CLSCORE:BuildHilitePanel(dpanel)
 		end
 	end
 
-	local num_choices = table.Count(award_choices)
 	local max_awards = 5
 	-- sort descending by priority
 	table.SortByMember(award_choices, "priority")

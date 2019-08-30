@@ -303,7 +303,6 @@ local function ShowSearchScreen(search_raw)
 	local descw, desch = rw - m * 2, 80
 	local descx, descy = rx, ry
 	ry = ry + desch + m
-	local butx, buty = rx, ry
 	local dframe = vgui.Create("DFrame")
 	dframe:SetSize(w, h)
 	dframe:Center()

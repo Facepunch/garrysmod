@@ -1,11 +1,8 @@
 -- HUD HUD HUD
-local table = table
 local surface = surface
 local draw = draw
 local math = math
 local string = string
-local GetTranslation = LANG.GetTranslation
-local GetPTranslation = LANG.GetParamTranslation
 local GetLang = LANG.GetUnsafeLanguageTable
 local interp = string.Interp
 
@@ -126,7 +123,6 @@ local function DrawBg(x, y, width, height, client)
 	draw.RoundedBox(8, x, y, tw, th, col)
 end
 
-local sf = surface
 local dr = draw
 
 local function ShadowedText(text, font, x, y, color, xalign, yalign)
@@ -190,7 +186,6 @@ local function SpecHUDPaint(client)
 	local text = L[roundstate_string[GAMEMODE.round_state]]
 	ShadowedText(text, "TraitorState", x + margin, round_y, COLOR_WHITE)
 	-- Draw round/prep/post time remaining
-	local text = util.SimpleTime(math.max(0, GetGlobalFloat("ttt_round_end", 0) - CurTime()), "%02i:%02i")
 	ShadowedText(text, "TimeLeft", time_x + margin, time_y, COLOR_WHITE)
 	local tgt = client:GetObserverTarget()
 

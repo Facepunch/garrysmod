@@ -155,7 +155,6 @@ function SWEP:StabKill(tr, spos, sdest)
 	local ang = Angle(-28, 0, 0) + norm:Angle()
 	ang:RotateAroundAxis(ang:Right(), -90)
 	pos = pos - (ang:Forward() * 7)
-	local prints = self.fingerprints
 	local ignore = self:GetOwner()
 
 	target.effect_fn = function(rag)

@@ -57,7 +57,6 @@ function ENT:Explode(tr)
 			self:SetPos(tr.HitPos + tr.HitNormal * 0.6)
 		end
 
-		local pos = self:GetPos()
 		self:Remove()
 	else
 		local spos = self:GetPos()
