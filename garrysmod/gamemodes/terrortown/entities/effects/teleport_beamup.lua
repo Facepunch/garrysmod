@@ -1,11 +1,7 @@
 
 local mat_rising = Material( "models/props_combine/stasisshield_sheet" )
---local mat_rising = Material( "models/shadertest/shader4" )
---local mat_rising = Material( "models/props_lab/Tank_Glass001" )
-local mat_sparkle = Material("models/effects/comball_tape")
---local mat_sparkle = Material( "models/props_combine/stasisshield_sheet" )
+
 local top = 80
-local mid = 32
 local final_height = top
 
 local loopsound = Sound("ambient/levels/labs/teleport_mechanism_windup1.wav")
