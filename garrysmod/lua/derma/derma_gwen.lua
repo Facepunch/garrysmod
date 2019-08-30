@@ -60,10 +60,10 @@ function GWEN.CreateTextureNormal( _xo, _yo, _wo, _ho, material_override )
 	return function( x, y, w, h, col )
 
 		local tex = mat:GetTexture( "$basetexture" )
-		_x = _xo / tex:Width()
-		_y = _yo / tex:Height()
-		_w = _wo / tex:Width()
-		_h = _ho / tex:Height()
+		local _x = _xo / tex:Width()
+		local _y = _yo / tex:Height()
+		local _w = _wo / tex:Width()
+		local _h = _ho / tex:Height()
 
 		surface.SetMaterial( mat )
 
@@ -87,10 +87,10 @@ function GWEN.CreateTextureCentered( _xo, _yo, _wo, _ho, material_override )
 	return function( x, y, w, h, col )
 
 		local tex = mat:GetTexture( "$basetexture" )
-		_x = _xo / tex:Width()
-		_y = _yo / tex:Height()
-		_w = _wo / tex:Width()
-		_h = _ho / tex:Height()
+		local _x = _xo / tex:Width()
+		local _y = _yo / tex:Height()
+		local _w = _wo / tex:Width()
+		local _h = _ho / tex:Height()
 
 		x = x + ( w - _wo ) * 0.5
 		y = y + ( h - _ho ) * 0.5
