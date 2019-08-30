@@ -161,16 +161,19 @@ local gunsounds = {
 }
 
 function ENT:PlayDelayedSound(snd, ampl, last)
-	-- maybe we can get destroyed while a timer is still up
-	if IsValid(self) then
-		if istable(snd) then
-			snd = table.Random(snd)
-		end
 
-		sound.Play(snd, self:GetPos(), ampl)
-		self.Playing = not last
-		--print("Playing", snd, last)
-	end
+   -- maybe we can get destroyed while a timer is still up
+   if IsValid(self) then
+      if istable(snd) then
+         snd = table.Random(snd)
+      end
+
+      sound.Play(snd, self:GetPos(), ampl)
+      self.Playing = not last
+
+      --print("Playing", snd, last)
+   end
+  
 end
 
 function ENT:PlaySound(snd)

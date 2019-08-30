@@ -235,7 +235,6 @@ function LANG.SetStyle(name, style)
 	if isstring(style) then
 		style = LANG.Styles[style]
 	end
-
 	LANG.MsgStyle[name] = style
 end
 
