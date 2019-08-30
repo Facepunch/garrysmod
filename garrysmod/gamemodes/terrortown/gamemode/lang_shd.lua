@@ -26,9 +26,9 @@ if SERVER then
 	--   2) LANG.Msg(name, params)       -- sent to all
 	--   3) LANG.Msg(role, name, params) -- sent to plys with role
 	function LANG.Msg(arg1, arg2, arg3)
-		if type(arg1) == "string" then
+		if isstring(arg1) then
 			LANG.ProcessMsg(nil, arg1, arg2)
-		elseif type(arg1) == "number" then
+		elseif isnumber(arg1) then
 			LANG.ProcessMsg(GetRoleFilter(arg1), arg2, arg3)
 		else
 			LANG.ProcessMsg(arg1, arg2, arg3)

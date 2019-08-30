@@ -241,7 +241,7 @@ function table.CopyKeys(tbl, keys)
 	for _, k in pairs(keys) do
 		val = tbl[k]
 
-		if type(val) == "table" then
+		if istable(val) then
 			out[k] = table.Copy(val)
 		else
 			out[k] = val

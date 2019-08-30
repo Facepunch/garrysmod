@@ -62,7 +62,7 @@ function CLSCORE.DeclareEventDisplay(event_id, event_fns)
 		Error("Event ??? display: invalid event id\n")
 	end
 
-	if (not event_fns) or type(event_fns) ~= "table" then
+	if (not event_fns) or not istable(event_fns) then
 		Error(Format("Event %d display: no display functions found.\n", event_id))
 	end
 
