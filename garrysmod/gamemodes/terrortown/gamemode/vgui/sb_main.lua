@@ -340,7 +340,7 @@ function PANEL:PerformLayout()
    local tw, _ = surface.GetTextSize(hname)
    while tw > hw do
       hname = string.sub(hname, 1, -6) .. "..."
-      tw, th = surface.GetTextSize(hname)
+      tw = select(1, surface.GetTextSize(hname))
    end
 
    self.hostname:SetText(hname)
