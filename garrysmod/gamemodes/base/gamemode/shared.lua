@@ -264,10 +264,3 @@ function GM:OnViewModelChanged( vm, old, new )
 	end
 
 end
-
---[[---------------------------------------------------------
-	Disable properties serverside for all non-sandbox derived gamemodes.
------------------------------------------------------------]]
-function GM:CanProperty( pl, property, ent )
-	return false
-end
