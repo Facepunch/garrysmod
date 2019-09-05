@@ -43,7 +43,7 @@ end
 
 function PANEL:Toggle()
 
-	if ( self:GetChecked() == nil || !self:GetChecked() ) then
+	if ( !self:GetChecked() ) then
 		self:SetValue( true )
 	else
 		self:SetValue( false )
