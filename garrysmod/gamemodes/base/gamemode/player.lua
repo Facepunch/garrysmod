@@ -140,10 +140,8 @@ function GM:PlayerSilentDeath( Victim )
 
 end
 
--- Pool network strings used for PlayerDeaths.
+-- Pool network string used for PlayerDeath.
 util.AddNetworkString( "PlayerKilled" )
-util.AddNetworkString( "PlayerKilledSelf" )
-util.AddNetworkString( "PlayerKilledByPlayer" )
 
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerDeath()
@@ -177,7 +175,8 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if ( attacker == ply ) then
 
-		net.Start( "PlayerKilledSelf" )
+		net.Start( "PlayerKilled" )
+			net.WriteUInt( 1, 2 )
 			net.WriteEntity( ply )
 		net.Broadcast()
 
@@ -187,8 +186,9 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if ( attacker:IsPlayer() ) then
 
-		net.Start( "PlayerKilledByPlayer" )
+		net.Start( "PlayerKilled" )
 
+			net.WriteUInt( 2, 2 )
 			net.WriteEntity( ply )
 			net.WriteString( inflictor:GetClass() )
 			net.WriteEntity( attacker )
@@ -201,6 +201,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	net.Start( "PlayerKilled" )
 
+		net.WriteUInt( 0, 2 )
 		net.WriteEntity( ply )
 		net.WriteString( inflictor:GetClass() )
 		net.WriteString( attacker:GetClass() )
