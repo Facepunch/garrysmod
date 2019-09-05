@@ -39,38 +39,46 @@ local function PlayerIDOrNameToString( var )
 
 end
 
+local RecvPlayerDeath = {
+	-- PlayerKilled
+	[0] = function()
 
-local function RecvPlayerKilledByPlayer()
+		local victim	= net.ReadEntity()
+		if ( !IsValid( victim ) ) then return end
+		local inflictor	= net.ReadString()
+		local attacker	= "#" .. net.ReadString()
 
-	local victim	= net.ReadEntity()
-	local inflictor	= net.ReadString()
-	local attacker	= net.ReadEntity()
+		GAMEMODE:AddDeathNotice( attacker, -1, inflictor, victim:Name(), victim:Team() )
 
-	if ( !IsValid( attacker ) ) then return end
-	if ( !IsValid( victim ) ) then return end
+	end,
 
-	GAMEMODE:AddDeathNotice( attacker:Name(), attacker:Team(), inflictor, victim:Name(), victim:Team() )
+	-- PlayerKilledSelf
+	[1] = function()
 
-end
-net.Receive( "PlayerKilledByPlayer", RecvPlayerKilledByPlayer )
+		local victim = net.ReadEntity()
+		if ( !IsValid( victim ) ) then return end
+		GAMEMODE:AddDeathNotice( nil, 0, "suicide", victim:Name(), victim:Team() )
 
-local function RecvPlayerKilledSelf()
+	end,
 
-	local victim = net.ReadEntity()
-	if ( !IsValid( victim ) ) then return end
-	GAMEMODE:AddDeathNotice( nil, 0, "suicide", victim:Name(), victim:Team() )
+	-- PlayerKilledByPlayer
+	[2] = function()
 
-end
-net.Receive( "PlayerKilledSelf", RecvPlayerKilledSelf )
+		local victim	= net.ReadEntity()
+		local inflictor	= net.ReadString()
+		local attacker	= net.ReadEntity()
 
+		if ( !IsValid( attacker ) ) then return end
+		if ( !IsValid( victim ) ) then return end
+
+		GAMEMODE:AddDeathNotice( attacker:Name(), attacker:Team(), inflictor, victim:Name(), victim:Team() )
+
+	end
+}
 local function RecvPlayerKilled()
 
-	local victim	= net.ReadEntity()
-	if ( !IsValid( victim ) ) then return end
-	local inflictor	= net.ReadString()
-	local attacker	= "#" .. net.ReadString()
-
-	GAMEMODE:AddDeathNotice( attacker, -1, inflictor, victim:Name(), victim:Team() )
+	local deathType = net.ReadUInt( 2 )
+	RecvPlayerDeath[deathType]()
 
 end
 net.Receive( "PlayerKilled", RecvPlayerKilled )
