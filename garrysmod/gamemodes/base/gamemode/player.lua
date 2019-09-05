@@ -39,7 +39,7 @@ end
 -----------------------------------------------------------]]
 function GM:OnPhysgunReload( weapon, ply )
 
-	ply:PhysgunUnfreeze( weapon )
+	ply:PhysgunUnfreeze()
 
 end
 
