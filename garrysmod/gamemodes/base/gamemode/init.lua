@@ -4,8 +4,6 @@ include( 'player.lua' )
 include( 'npc.lua' )
 include( 'variable_edit.lua' )
 
-GM.PlayerSpawnTime = {}
-
 --[[---------------------------------------------------------
    Name: gamemode:Initialize()
    Desc: Called immediately after starting the gamemode
