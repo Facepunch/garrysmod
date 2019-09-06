@@ -4,6 +4,10 @@ local PANEL = {}
 function PANEL:Init()
 end
 
+function PANEL:GetDTextEntry()
+	return self.textbox
+end
+
 function PANEL:SizeToContents()
 
 	local w, h = self:GetContentSize()
@@ -39,6 +43,7 @@ function PANEL:DoDoubleClick()
 	TextEdit:OnGetFocus() -- Because the keyboard input might not be enabled yet! (spawnmenu)
 	TextEdit:SelectAllText( true )
 
+	self.textbox = TextEdit
 end
 
 function PANEL:OnLabelTextChanged( text )
