@@ -57,6 +57,14 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 end
 
 --[[---------------------------------------------------------
+   Name: gamemode:PlayerShouldTakeDamage
+   Return true if this player should take damage from this attacker
+-----------------------------------------------------------]]
+function GM:PlayerShouldTakeDamage( ply, attacker )
+	return true
+end
+
+--[[---------------------------------------------------------
    Name: gamemode:EntityTakeDamage( ent, info )
    Desc: The entity has received damage
 -----------------------------------------------------------]]
