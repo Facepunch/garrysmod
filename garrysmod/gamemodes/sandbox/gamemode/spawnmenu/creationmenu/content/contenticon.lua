@@ -198,10 +198,10 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 	icon.OpenMenu = function( icon )
 
 		local menu = DermaMenu()
-			menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
-			menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "0" ) RunConsoleCommand( "creator_name", obj.spawnname ) end )
+			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( obj.spawnname ) end ):SetIcon( "icon16/page_copy.png" )
+			menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "0" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
 			menu:AddSpacer()
-			menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
+			menu:AddOption( "#spawnmenu.menu.delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end ):SetIcon( "icon16/bin_closed.png" )
 		menu:Open()
 
 	end
@@ -234,10 +234,10 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 	icon.OpenMenu = function( icon )
 
 		local menu = DermaMenu()
-			menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
-			menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "1" ) RunConsoleCommand( "creator_name", obj.spawnname ) end )
+			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( obj.spawnname ) end ):SetIcon( "icon16/page_copy.png" )
+			menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "1" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
 			menu:AddSpacer()
-			menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
+			menu:AddOption( "#spawnmenu.menu.delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end ):SetIcon( "icon16/bin_closed.png" )
 		menu:Open()
 
 	end
@@ -285,10 +285,10 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 			local weapon = table.Random( obj.weapon )
 			if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
 
-			menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
-			menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "2" ) RunConsoleCommand( "creator_name", obj.spawnname ) RunConsoleCommand( "creator_arg", weapon ) end )
+			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( obj.spawnname ) end ):SetIcon( "icon16/page_copy.png" )
+			menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "2" ) RunConsoleCommand( "creator_name", obj.spawnname ) RunConsoleCommand( "creator_arg", weapon ) end ):SetIcon( "icon16/brick_add.png" )
 			menu:AddSpacer()
-			menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
+			menu:AddOption( "#spawnmenu.menu.delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end ):SetIcon( "icon16/bin_closed.png" )
 		menu:Open()
 
 	end
@@ -331,10 +331,10 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 	icon.OpenMenu = function( icon )
 
 		local menu = DermaMenu()
-			menu:AddOption( "Copy to Clipboard", function() SetClipboardText( obj.spawnname ) end )
-			menu:AddOption( "Spawn Using Toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "3" ) RunConsoleCommand( "creator_name", obj.spawnname ) end )
+			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( obj.spawnname ) end ):SetIcon( "icon16/page_copy.png" )
+			menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "3" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
 			menu:AddSpacer()
-			menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
+			menu:AddOption( "#spawnmenu.menu.delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end ):SetIcon( "icon16/bin_closed.png" )
 		menu:Open()
 
 	end

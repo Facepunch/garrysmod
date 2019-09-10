@@ -10,10 +10,12 @@ CreateClientConVar("ttt_avoid_detective", "0", true, true)
 
 HELPSCRN = {}
 
+local dframe
 function HELPSCRN:Show()
+   if IsValid(dframe) then return end
    local margin = 15
 
-   local dframe = vgui.Create("DFrame")
+   dframe = vgui.Create("DFrame")
    local w, h = 630, 470
    dframe:SetSize(w, h)
    dframe:Center()

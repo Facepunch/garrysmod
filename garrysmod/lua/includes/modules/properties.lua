@@ -90,10 +90,46 @@ function OpenEntityMenu( ent, tr )
 
 end
 
+function OnScreenClick( eyepos, eyevec )
+
+	local ent, tr = GetHovered( eyepos, eyevec )
+	if ( !IsValid( ent ) ) then return end
+
+	OpenEntityMenu( ent, tr )
+
+end
+
+-- Use this check in your properties to see if given entity can be affected by it
+-- Ideally this should be done automatically for you, but due to how this system was set up, its now impossible
+function CanBeTargeted( ent, ply )
+	if ( !IsValid( ent ) ) then return false end
+	if ( ent:IsPlayer() ) then return false end
+
+	-- Check the range if player object is given
+	-- This is not perfect, but it is close enough and its definitely better than nothing
+	if ( IsValid( ply ) ) then
+		local mins = ent:OBBMins()
+		local maxs = ent:OBBMaxs()
+		local maxRange = math.max( math.abs( mins.x ) + maxs.x, math.abs( mins.y ) + maxs.y, math.abs( mins.z ) + maxs.z )
+		if ( ent:GetPos():Distance( ply:GetShootPos() ) > maxRange + 1024 ) then return false end
+	end
+
+	return !( ent:GetPhysicsObjectCount() < 1 && ent:GetSolid() == SOLID_NONE && bit.band( ent:GetSolidFlags(), FSOLID_USE_TRIGGER_BOUNDS ) == 0 && bit.band( ent:GetSolidFlags(), FSOLID_CUSTOMRAYTEST ) == 0 )
+end
+
 function GetHovered( eyepos, eyevec )
 
-	local filter = { LocalPlayer():GetViewEntity() }
-	if ( LocalPlayer():GetViewEntity() == LocalPlayer() && IsValid( LocalPlayer():GetVehicle() ) && !LocalPlayer():GetVehicle():GetThirdPersonMode() ) then table.insert( filter, LocalPlayer():GetVehicle() ) end
+	local ply = LocalPlayer()
+	local filter = ply:GetViewEntity()
+
+	if ( filter == ply ) then
+		local veh = ply:GetVehicle()
+
+		if ( veh:IsValid() && ( !veh:IsVehicle() || !veh:GetThirdPersonMode() ) ) then
+			-- A dirty hack for prop_vehicle_crane. util.TraceLine returns the vehicle but it hits phys_bone_follower - something that needs looking into
+			filter = { filter, veh, unpack( ents.FindByClass( "phys_bone_follower" ) ) }
+		end
+	end
 
 	local trace = util.TraceLine( {
 		start = eyepos,
@@ -114,15 +150,6 @@ function GetHovered( eyepos, eyevec )
 	if ( !trace.Hit || !IsValid( trace.Entity ) ) then return end
 
 	return trace.Entity, trace
-
-end
-
-function OnScreenClick( eyepos, eyevec )
-
-	local ent, tr = GetHovered( eyepos, eyevec )
-	if ( !IsValid( ent ) ) then return end
-
-	OpenEntityMenu( ent, tr )
 
 end
 
@@ -151,7 +178,7 @@ if ( CLIENT ) then
 
 	hook.Add( "PreDrawHalos", "PropertiesHover", function()
 
-		if ( !IsValid( vgui.GetHoveredPanel() ) || vgui.GetHoveredPanel() != g_ContextMenu ) then return end
+		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
 
 		local ent = GetHovered( EyePos(), LocalPlayer():GetAimVector() )
 		if ( !IsValid( ent ) ) then return end
@@ -167,13 +194,9 @@ if ( CLIENT ) then
 
 	end )
 
-	--
-	-- Hook the GUIMousePressed call, which is called when the client clicks on the
-	-- gui.
-	--
 	hook.Add( "GUIMousePressed", "PropertiesClick", function( code, vector )
 
-		if ( !IsValid( vgui.GetHoveredPanel() ) || vgui.GetHoveredPanel() != g_ContextMenu ) then return end
+		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
 
 		if ( code == MOUSE_RIGHT && !input.IsButtonDown( MOUSE_LEFT ) ) then
 			OnScreenClick( EyePos(), vector )
@@ -181,10 +204,6 @@ if ( CLIENT ) then
 
 	end )
 
-	--
-	-- Hook the GUIMousePressed call, which is called when the client clicks on the
-	-- gui.
-	--
 	local wasPressed = false
 	hook.Add( "PreventScreenClicks", "PropertiesPreventClicks", function()
 
@@ -192,7 +211,7 @@ if ( CLIENT ) then
 
 		if ( wasPressed && input.IsButtonDown( MOUSE_RIGHT ) && !input.IsButtonDown( MOUSE_LEFT ) ) then return true end
 
-		if ( !IsValid( vgui.GetHoveredPanel() ) || vgui.GetHoveredPanel() != g_ContextMenu ) then return end
+		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
 
 		local ply = LocalPlayer()
 		if ( !IsValid( ply ) ) then return end

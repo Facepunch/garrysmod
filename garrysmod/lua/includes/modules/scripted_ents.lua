@@ -150,7 +150,7 @@ function OnLoaded()
 
 end
 
-function Get( name )
+function Get( name, retval )
 
 	-- Do we have an alias?
 	if ( Aliases[ name ] ) then
@@ -160,24 +160,24 @@ function Get( name )
 	if ( SEntList[ name ] == nil ) then return nil end
 
 	-- Create/copy a new table
-	local retval = {}
+	local retval = retval or {}
 	for k, v in pairs( SEntList[ name ].t ) do
-		retval[k] = v
+		if ( istable( v ) ) then
+			retval[ k ] = table.Copy( v )
+		else
+			retval[ k ] = v
+		end
 	end
 
 	-- Derive from base class
-	if ( name != SEntList[ name ].Base ) then
+	if ( SEntList[ name ].Base != name ) then
 
 		local base = Get( SEntList[ name ].Base )
 
 		if ( !base ) then
-
 			Msg("ERROR: Trying to derive entity " .. tostring( name ) .. " from non existant entity " .. tostring( SEntList[ name ].Base ) .. "!\n" )
-
 		else
-
 			retval = TableInherit( retval, base )
-
 		end
 
 	end

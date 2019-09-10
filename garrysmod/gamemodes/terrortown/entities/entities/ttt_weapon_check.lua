@@ -61,7 +61,7 @@ local checkers = {
 };
 
 function ENT:GetWeaponChecker(check)
-   if type(check) == "string" then
+   if isstring(check) then
       return HasNamed(check)
    else
       return checkers[check]

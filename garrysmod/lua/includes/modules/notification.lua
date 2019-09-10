@@ -126,7 +126,11 @@ local function UpdateNotice( pnl, total_h )
 
 	pnl.fx = x
 	pnl.fy = y
-	pnl:SetPos( pnl.fx, pnl.fy )
+
+	-- If the panel is too high up (out of screen), do not update its position. This lags a lot when there are lot of panels outside of the screen
+	if ( ideal_y > -ScrH() ) then
+		pnl:SetPos( pnl.fx, pnl.fy )
+	end
 
 	return total_h + h
 

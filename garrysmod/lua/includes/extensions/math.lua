@@ -28,13 +28,13 @@ function math.DistanceSqr( x1, y1, x2, y2 )
 	return xd * xd + yd * yd
 end
 
-local function math_Clamp( _in, low, high )
-	if ( _in < low ) then return low end
-	if ( _in > high ) then return high end
-
-	return _in
+--[[---------------------------------------------------------
+	Name: Clamp( in, low, high )
+	Desc: Clamp value between 2 values
+------------------------------------------------------------]]
+function math.Clamp( _in, low, high )
+	return math_min( math_max( _in, low ), high )
 end
-math.Clamp = math_Clamp
 
 function math.Rand( low, high )
 	return low + ( high - low ) * math_random()

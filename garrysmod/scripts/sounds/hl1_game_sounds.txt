@@ -747,6 +747,51 @@
 }
 
 
+// weapon_crossbow
+"HL1Weapon_Crossbow.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"1.0"
+	"soundlevel"		"SNDLVL_140db"
+	"pitch"			"93,108"
+
+	"wave"			"weapons/xbow_fire1.wav"
+}
+
+"HL1Weapon_Crossbow.Reload"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"0.95,1.0"
+	"pitch"			"93,108"
+	"soundlevel"		"SNDLVL_NORM"
+
+	"wave"			"weapons/xbow_reload1.wav"
+}
+
+"HL1Weapon_Crossbow.BoltHitBody"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"1.0"
+	"soundlevel"		"SNDLVL_95db"
+
+	"rndwave"
+	{
+		"wave"		"weapons/xbow_hitbod1.wav"
+		"wave"		"weapons/xbow_hitbod2.wav"
+	}
+}
+
+"HL1Weapon_Crossbow.BoltHitWorld"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		".95,1.0"
+	"pitch"			"98,105"
+	"soundlevel"		"SNDLVL_95db"
+
+	"wave"			"weapons/xbow_hit1.wav"
+}
+
+
 // weapon_crowbar
 "HL1Weapon_Crowbar.Single"
 {
@@ -873,7 +918,7 @@
 	"wave"			"items/9mmclip2.wav"
 }
 
-"Weapon_Glock.Single"
+"HL1Weapon_Glock.Single"
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
@@ -949,7 +994,7 @@
 
 
 // weapon_mp5
-"Weapon_MP5.Single"
+"HL1Weapon_MP5.Single"
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
@@ -963,7 +1008,7 @@
 	}
 }
 
-"Weapon_MP5.Double"
+"HL1Weapon_MP5.Double"
 {
 	"channel"		"CHAN_WEAPON"
 	"volume"		"1.0"
@@ -1093,7 +1138,7 @@
 	"wave"		"weapons/mine_charge.wav"
 }
 
-"TripmineGrenade.Activate"
+"TripmineGrenade.ActivateHL1"
 {
 	"channel"	"CHAN_VOICE"
 	"soundlevel"  	"SNDLVL_75db"
@@ -1863,6 +1908,62 @@
 		"wave"		"headcrab/hc_attack2.wav"
 		"wave"		"headcrab/hc_attack3.wav"
 	}
+}
+
+"Headcrab.Idle"
+{
+    "channel"   "CHAN_VOICE"
+    "volume"    "VOL_NORM"
+    "soundlevel"    "SNDLVL_80db"
+    "pitch"     "PITCH_NORM"
+    "rndwave"
+    {
+        "wave"      "headcrab/hc_idle1.wav"
+        "wave"      "headcrab/hc_idle2.wav"
+        "wave"      "headcrab/hc_idle3.wav"
+        "wave"      "headcrab/hc_idle4.wav"
+        "wave"      "headcrab/hc_idle5.wav"
+    }
+}
+
+"Headcrab.Die"
+{
+    "channel"   "CHAN_VOICE"
+    "volume"    "VOL_NORM"
+    "soundlevel"    "SNDLVL_80db"
+    "pitch"     "PITCH_NORM"
+    "rndwave"
+    {
+        "wave"      "headcrab/hc_die1.wav"
+        "wave"      "headcrab/hc_die2.wav"
+    }
+}
+
+"Headcrab.Alert"
+{
+    "channel"   "CHAN_VOICE"
+    "volume"    "VOL_NORM"
+    "soundlevel"    "SNDLVL_80db"
+    "pitch"     "PITCH_NORM"
+    //"rndwave"
+    //{
+        "wave"      "headcrab/hc_alert1.wav"
+    //  "wave"      "headcrab/hc_alert2.wav"
+    //}
+}
+
+"Headcrab.Pain"
+{
+    "channel"   "CHAN_VOICE"
+    "volume"    "VOL_NORM"
+    "soundlevel"    "SNDLVL_80db"
+    "pitch"     "PITCH_NORM"
+    "rndwave"
+    {
+        "wave"      "headcrab/hc_pain1.wav"
+        "wave"      "headcrab/hc_pain2.wav"
+        "wave"      "headcrab/hc_pain3.wav"
+    }
 }
 
 "HGrunt.Reload"
@@ -2641,7 +2742,7 @@
 }
 
 
-"Sentry.Shoot"
+"HL1Sentry.Shoot"
 {
 	"channel"	"CHAN_WEAPON"
 	"volume"	"0.9"
@@ -2655,7 +2756,7 @@
 }
 
 
-"Sentry.Die"
+"HL1Sentry.Die"
 {
 	"channel"	"CHAN_BODY"
 	"volume"	"0.65"
@@ -2670,7 +2771,7 @@
 
 "Vortigaunt.Pain"
 {
-	"channel"	"CHAN_WEAPON"
+	"channel"	"CHAN_VOICE"
 	"volume"	"VOL_NORM"
 	"soundlevel"	"SNDLVL_80db"
 	"rndwave"
@@ -2682,7 +2783,7 @@
 
 "Vortigaunt.Die"
 {
-	"channel"	"CHAN_WEAPON"
+	"channel"	"CHAN_VOICE"
 	"volume"	"VOL_NORM"
 	"soundlevel"	"SNDLVL_90db"
 	"rndwave"
@@ -2854,7 +2955,10 @@
 	"soundlevel"	"SNDLVL_NORM"
 	"rndwave"
 	{
-		"wave"		"items/null.wav"
+		"wave"      "player/pl_swim1.wav"
+        	"wave"      "player/pl_swim2.wav"
+        	"wave"      "player/pl_swim3.wav"
+        	"wave"      "player/pl_swim4.wav"
 	}
 }
 
@@ -3403,6 +3507,22 @@
 	}
 }
 
+"Player.Swim"
+{
+	"channel"	"CHAN_STATIC"
+	"volume"	"VOL_NORM"
+	"pitch"		"PITCH_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"rndwave"
+	{
+		"wave"		"player/pl_wade1.wav"
+		"wave"		"player/pl_wade2.wav"
+		"wave"		"player/pl_wade3.wav"
+		"wave"		"player/pl_wade4.wav"
+	}
+}
+
 "Player.PickupWeapon"
 {
 	"channel"	"CHAN_ITEM"
@@ -3815,8 +3935,8 @@
 "Player.DrownStart"
 {
 	"channel"	"CHAN_VOICE"
-	"volume"	"0.5"
-	"soundlevel"  "SNDLVL_75dB"
+	"volume"	"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
 
 	"wave"	"player/pl_wade1.wav"
 }

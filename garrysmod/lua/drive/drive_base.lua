@@ -1,31 +1,31 @@
 
 AddCSLuaFile()
 
-drive.Register( "drive_base", 
+drive.Register( "drive_base",
 {
 	--
-	-- You should override these :) 
+	-- You should override these :)
 	-- see drive_noclip.lua for help
-	-- 
+	--
 	Init = function( self, cmd )						end,
 	SetupControls = function( self, cmd )				end,
-	StartMove =  function( self, mv, cmd )				end,
+	StartMove = function( self, mv, cmd )				end,
 	Move = function( self, mv )							end,
-	FinishMove =  function( self, mv )					end,
-	CalcView =  function( self, view )					end,
+	FinishMove = function( self, mv )					end,
+	CalcView = function( self, view )					end,
 
 
 	--
 	-- Utility methods
 	--
 
-	
+
 	--
-	-- Call this in your drive method at 
+	-- Call this in your drive method at
 	-- any point to stop driving.
 	--
 	Stop = function( self )
-		self.StopDriving = true	
+		self.StopDriving = true
 	end,
 
 	--
@@ -51,16 +51,17 @@ drive.Register( "drive_base",
 			-- > Trace a hull (cube) from the old eye position to the new
 			--
 			local tr = util.TraceHull( {
-											start	= view.origin,
-											endpos	= neworigin,
-											mins	= Vector( hullsize, hullsize, hullsize ) * -1,
-											maxs	= Vector( hullsize, hullsize, hullsize ),
-											filter	= entityfilter
-										})
+				start	= view.origin,
+				endpos	= neworigin,
+				mins	= Vector( hullsize, hullsize, hullsize ) * -1,
+				maxs	= Vector( hullsize, hullsize, hullsize ),
+				filter	= entityfilter
+			} )
+
 			--
 			-- > If we hit something then stop there
 			--		[ stops the camera going through walls ]
-			--							
+			--
 			if ( tr.Hit ) then
 				neworigin = tr.HitPos
 			end
@@ -79,4 +80,4 @@ drive.Register( "drive_base",
 
 	end
 
-});
+} )

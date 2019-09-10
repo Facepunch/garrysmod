@@ -196,7 +196,7 @@ function RemoveConstraints( Ent, Type )
 
 	end
 
-	if ( table.Count( c ) == 0 ) then
+	if ( table.IsEmpty( c ) ) then
 		-- Update the network var and clear the constraints table.
 		Ent:IsConstrained()
 	end
@@ -1327,7 +1327,7 @@ duplicator.RegisterConstraint( "Winch", Winch, "pl", "Ent1", "Ent2", "Bone1", "B
 	Hydraulic( ... )
 	Creates a Hydraulic constraint
 ------------------------------------------------------------------------]]
-function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, key, fixed, speed, material )
+function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, key, fixed, speed, material, toggle )
 
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
@@ -1338,6 +1338,7 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 	local WPos2 = Phys2:LocalToWorld( LPos2 )
 
 	if ( Phys1 == Phys2 ) then return false end
+	if ( toggle == nil ) then toggle = true end -- Retain original behavior
 
 	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, fixed )
 
@@ -1358,7 +1359,7 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 		fixed = fixed,
 		fwd_speed = speed,
 		bwd_speed = speed,
-		toggle = true,
+		toggle = toggle,
 		material = material
 	}
 	Constraint:SetTable( ctable )
@@ -1388,7 +1389,12 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 
 		Constraint:DeleteOnRemove( controller )
 
-		numpad.OnDown( pl, key, "HydraulicToggle", controller )
+		if ( toggle ) then
+			numpad.OnDown( pl, key, "HydraulicToggle", controller )
+		else
+			numpad.OnUp( pl, key, "HydraulicDir", controller, -1 )
+			numpad.OnDown( pl, key, "HydraulicDir", controller, 1 )
+		end
 
 		return Constraint, rope, controller, slider
 	else
@@ -1396,7 +1402,7 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 	end
 
 end
-duplicator.RegisterConstraint( "Hydraulic", Hydraulic, "pl", "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "Length1", "Length2", "width", "key", "fixed", "fwd_speed", "material" )
+duplicator.RegisterConstraint( "Hydraulic", Hydraulic, "pl", "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "Length1", "Length2", "width", "key", "fixed", "fwd_speed", "material", "toggle" )
 
 
 --[[----------------------------------------------------------------------

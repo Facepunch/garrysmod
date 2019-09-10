@@ -23,6 +23,7 @@ local function UpdateMaps()
 	MapNames[ "free_" ] = "Blade Symphony"
 	MapNames[ "practice_box" ] = "Blade Symphony"
 	MapNames[ "tut_training" ] = "Blade Symphony"
+	MapNames[ "lightstyle_test" ] = "Blade Symphony"
 
 	MapNames[ "ar_" ] = "Counter-Strike"
 	MapNames[ "cs_" ] = "Counter-Strike"
@@ -30,6 +31,7 @@ local function UpdateMaps()
 	MapNames[ "es_" ] = "Counter-Strike"
 	MapNames[ "fy_" ] = "Counter-Strike"
 	MapNames[ "gd_" ] = "Counter-Strike"
+	MapNames[ "dz_" ] = "Counter-Strike"
 	MapNames[ "training1" ] = "Counter-Strike"
 
 	MapNames[ "dod_" ] = "Day Of Defeat"

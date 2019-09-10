@@ -103,13 +103,14 @@ properties.Add( "bodygroups", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 		local body = net.ReadUInt( 8 )
 		local id = net.ReadUInt( 8 )
 
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		ent = IsValid( ent.AttachedEntity ) and ent.AttachedEntity or ent
 

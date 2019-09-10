@@ -83,9 +83,9 @@ search.AddProvider( function( str )
 
 	for k, v in pairs( model_list ) do
 
-		-- Don't search in the models/ bit of every model, because every model has this bit
+		-- Don't search in the models/ bit of every model, because every model has this bit, unless they are looking for direct model path
 		local modelpath = v
-		if ( modelpath:StartWith( "models/" ) ) then modelpath = modelpath:sub( 8 ) end
+		if ( modelpath:StartWith( "models/" ) && !str:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8 ) end
 
 		if ( modelpath:find( str ) ) then
 

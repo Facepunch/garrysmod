@@ -38,7 +38,7 @@ local function GetLoadoutWeapons(r)
       };
 
       for k, w in pairs(weapons.GetList()) do
-         if w and type(w.InLoadoutFor) == "table" then
+         if w and istable(w.InLoadoutFor) then
             for _, wrole in pairs(w.InLoadoutFor) do
                table.insert(tbl[wrole], WEPS.GetClass(w))
             end
@@ -132,8 +132,8 @@ end
 -- calling this function is used to get them the weapons anyway as soon as
 -- possible.
 local function LateLoadout(id)
-   local ply = player.GetByID(id)
-   if not IsValid(ply) then
+   local ply = Entity(id)
+   if not IsValid(ply) or not ply:IsPlayer() then
       timer.Remove("lateloadout" .. id)
       return
    end

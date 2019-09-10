@@ -99,7 +99,7 @@ function PANEL:Open()
 	self.m_bHangOpen = false
 
 	-- If the context menu is open, try to close it..
-	if ( g_ContextMenu:IsVisible() ) then
+	if ( IsValid( g_ContextMenu ) && g_ContextMenu:IsVisible() ) then
 		g_ContextMenu:Close( true )
 	end
 
@@ -173,13 +173,15 @@ vgui.Register( "SpawnMenu", PANEL, "EditablePanel" )
 -----------------------------------------------------------]]
 local function CreateSpawnMenu()
 
+	if ( !hook.Run( "SpawnMenuEnabled" ) ) then return end
+
 	-- If we have an old spawn menu remove it.
 	if ( IsValid( g_SpawnMenu ) ) then
-
 		g_SpawnMenu:Remove()
 		g_SpawnMenu = nil
-
 	end
+
+	hook.Run( "PreReloadToolsMenu" )
 
 	-- Start Fresh
 	spawnmenu.ClearToolMenus()
@@ -205,7 +207,11 @@ local function CreateSpawnMenu()
 	hook.Run( "PopulateToolMenu" )
 
 	g_SpawnMenu = vgui.Create( "SpawnMenu" )
-	g_SpawnMenu:SetVisible( false )
+
+	if ( IsValid( g_SpawnMenu ) ) then
+		g_SpawnMenu:SetVisible( false )
+		hook.Run( "SpawnMenuCreated", g_SpawnMenu )
+	end
 
 	CreateContextMenu()
 
@@ -219,20 +225,21 @@ concommand.Add( "spawnmenu_reload", CreateSpawnMenu )
 function GM:OnSpawnMenuOpen()
 
 	-- Let the gamemode decide whether we should open or not..
-	if ( !hook.Run( "SpawnMenuOpen" ) ) then return end
+	if ( !hook.Call( "SpawnMenuOpen", self ) ) then return end
 
 	if ( IsValid( g_SpawnMenu ) ) then
-
 		g_SpawnMenu:Open()
 		menubar.ParentTo( g_SpawnMenu )
-
 	end
+
+	hook.Call( "SpawnMenuOpened", self )
 
 end
 
 function GM:OnSpawnMenuClose()
 
 	if ( IsValid( g_SpawnMenu ) ) then g_SpawnMenu:Close() end
+	hook.Call( "SpawnMenuClosed", self )
 
 end
 

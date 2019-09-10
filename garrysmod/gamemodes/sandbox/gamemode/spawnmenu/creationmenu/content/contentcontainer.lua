@@ -131,7 +131,7 @@ hook.Add( "SpawnlistOpenGenericMenu", "SpawnlistOpenGenericMenu", function( canv
 
 		hook.Run( "SpawnlistContentChanged" )
 
-	end )
+	end ):SetIcon( "icon16/bin_closed.png" )
 
 	menu:Open()
 

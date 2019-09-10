@@ -42,6 +42,20 @@ if ( !sql.TableExists( "playerpdata" ) ) then
 end
 
 -- These are totally in the wrong place.
+function player.GetByAccountID( ID )
+
+	for _, pl in pairs( player.GetAll() ) do
+
+		if ( pl:AccountID() == ID ) then
+			return pl
+		end
+
+	end
+
+	return false
+
+end
+
 function player.GetByUniqueID( ID )
 
 	for _, pl in pairs( player.GetAll() ) do
@@ -144,7 +158,7 @@ if ( CLIENT ) then
 		end
 
 		-- Turn the table into a nil so we can return easy
-		if ( table.Count( CommandList ) == 0 ) then
+		if ( table.IsEmpty( CommandList ) ) then
 
 			CommandList = nil
 
@@ -177,7 +191,7 @@ end
 function meta:SetPData( name, value )
 
 	name = Format( "%s[%s]", self:UniqueID(), name )
-	sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" )
+	return sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" ) ~= false
 
 end
 
@@ -188,7 +202,7 @@ end
 function meta:RemovePData( name )
 
 	name = Format( "%s[%s]", self:UniqueID(), name )
-	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
+	return sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) ) ~= false
 
 end
 

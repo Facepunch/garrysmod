@@ -1,7 +1,7 @@
 
 -- Variables that are used on both client and server
 
-SWEP.PrintName		= "Tool Gun"
+SWEP.PrintName		= "#GMOD_ToolGun"
 SWEP.Author			= ""
 SWEP.Contact		= ""
 SWEP.Purpose		= ""
@@ -143,34 +143,46 @@ end
 -- Think does stuff every frame
 function SWEP:Think()
 
-	self.Mode = self.Owner:GetInfo( "gmod_toolmode" )
+	local owner = self:GetOwner()
+	if ( !owner:IsPlayer() ) then return end
 
-	local tool = self:GetToolObject()
+	local curmode = owner:GetInfo( "gmod_toolmode" )
+	self.Mode = curmode
+
+	local tool = self:GetToolObject( curmode )
 	if ( !tool ) then return end
 
 	tool:CheckObjects()
 
-	self.last_mode = self.current_mode
-	self.current_mode = self.Mode
+	local lastmode = self.current_mode
+	self.last_mode = lastmode
+	self.current_mode = curmode
 
 	-- Release ghost entities if we're not allowed to use this new mode?
 	if ( !tool:Allowed() ) then
-		self:GetToolObject( self.last_mode ):ReleaseGhostEntity()
+		if ( lastmode ) then
+			local lastmode_obj = self:GetToolObject( lastmode )
+
+			if ( lastmode_obj ) then
+				lastmode_obj:ReleaseGhostEntity()
+			end
+		end
+
 		return
 	end
 
-	if ( self.last_mode != self.current_mode ) then
+	if ( lastmode && lastmode != curmode ) then
+		local lastmode_obj = self:GetToolObject( lastmode )
 
-		if ( !self:GetToolObject( self.last_mode ) ) then return end
-
-		-- We want to release the ghost entity just in case
-		self:GetToolObject( self.last_mode ):Holster()
-
+		if ( lastmode_obj ) then
+			-- We want to release the ghost entity just in case
+			lastmode_obj:Holster()
+		end
 	end
 
-	self.Primary.Automatic = tool.LeftClickAutomatic or false
-	self.Secondary.Automatic = tool.RightClickAutomatic or false
-	self.RequiresTraceHit = tool.RequiresTraceHit or true
+	self.Primary.Automatic = tool.LeftClickAutomatic || false
+	self.Secondary.Automatic = tool.RightClickAutomatic || false
+	self.RequiresTraceHit = tool.RequiresTraceHit || true
 
 	tool:Think()
 
@@ -187,6 +199,7 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 	self.Owner:SetAnimation( PLAYER_ATTACK1 ) -- 3rd Person Animation
 
 	if ( !bFirstTimePredicted ) then return end
+	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
 
 	local effectdata = EffectData()
 	effectdata:SetOrigin( hitpos )

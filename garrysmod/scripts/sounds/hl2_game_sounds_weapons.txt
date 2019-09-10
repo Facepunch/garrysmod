@@ -1179,13 +1179,16 @@
 	}
 }
 
+// GMOD: This file doesn't exist and is not used in HL2. It is however used in HL:S
 "Weapon_357.Reload"
 {
 	"channel"		"CHAN_ITEM"
-	"volume"		"0.7"
+	//"volume"		"0.7"
+	"volume"		"1.0"
 	"soundlevel"		"SNDLVL_NORM"
 
-	"wave"			")weapons/357/reload1.wav"
+	//"wave"			")weapons/357/reload1.wav"
+	"wave"			"weapons/357_reload1.wav"
 }
 
 "Weapon_357.OpenLoader"

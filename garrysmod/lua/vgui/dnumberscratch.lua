@@ -61,6 +61,12 @@ function PANEL:GetFraction()
 
 end
 
+function PANEL:GetDecimals()
+
+	return ( self.m_iDecimals or 0 )
+
+end
+
 function PANEL:GetRange()
 	return self:GetMax() - self:GetMin()
 end
@@ -121,14 +127,10 @@ function PANEL:OnCursorMoved( x, y )
 
 	local ControlScale = 100 / zoom
 
-	local maxzoom = 20
-
-	if ( self:GetDecimals() ) then
-		maxzoom = 10000
-	end
+	local maxzoom = 10 ^ ( 1 + self:GetDecimals() )
 
 	zoom = math.Clamp( zoom + ( ( y * -0.6 ) / ControlScale ), 0.01, maxzoom )
-	self:SetZoom( zoom )
+	if ( !input.IsKeyDown( KEY_LSHIFT ) ) then self:SetZoom( zoom ) end
 
 	local value = self:GetFloatValue()
 	value = math.Clamp( value + ( x * ControlScale * 0.002 ), self:GetMin(), self:GetMax() )
@@ -287,10 +289,8 @@ function PANEL:DrawScreen( x, y, w, h )
 		self:DrawNotches( 10 ^ i, x, y, w, h, range, value, min, max )
 	end
 
-	if ( self:GetDecimals() ) then
-		for i = 0, 3 do
-			self:DrawNotches( 1 / 10 ^ i, x, y, w, h, range, value, min, max )
-		end
+	for i = 0, self:GetDecimals() do
+		self:DrawNotches( 1 / 10 ^ i, x, y, w, h, range, value, min, max )
 	end
 
 	--
@@ -306,10 +306,7 @@ function PANEL:DrawScreen( x, y, w, h )
 	surface.SetTextColor( 255, 255, 255, 255 )
 	surface.SetFont( "DermaLarge" )
 
-	local str = Format( "%i", self:GetFloatValue() )
-	if ( self:GetDecimals() ) then
-		str = Format( "%.2f", self:GetFloatValue() )
-	end
+	local str = self:GetTextValue()
 	str = string.Comma( str )
 
 	local tw, th = surface.GetTextSize( str )
