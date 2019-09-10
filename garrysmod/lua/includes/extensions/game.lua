@@ -45,10 +45,6 @@ function game.AddAmmoType( tbl )
 	AmmoNames[ name ] = tbl
 end
 
-function game.GetAmmoType( name )
-	return AmmoNames[ string.lower( name ) ]
-end
-
 --
 -- Called by the engine to retrive the ammo types. 
 -- You should never have to call this manually.
