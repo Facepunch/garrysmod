@@ -142,8 +142,6 @@ function GM:HandlePlayerDriving( ply )
 		end
 	end
 
-	local class = pVehicle:GetClass()
-
 	if ( isfunction( pVehicle.HandleAnimation ) ) then
 		local seq = pVehicle:HandleAnimation( ply )
 		if ( seq != nil ) then
@@ -152,6 +150,7 @@ function GM:HandlePlayerDriving( ply )
 	end
 
 	if ( ply.CalcSeqOverride == -1 ) then -- pVehicle.HandleAnimation did not give us an animation
+		local class = pVehicle:GetClass()
 		if ( class == "prop_vehicle_jeep" ) then
 			ply.CalcSeqOverride = ply:LookupSequence( "drive_jeep" )
 		elseif ( class == "prop_vehicle_airboat" ) then
@@ -202,21 +201,18 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 
 	ply:SetPlaybackRate( rate )
 
-	if ( ply:InVehicle() ) then
-
-		local Vehicle = ply:GetVehicle()
-
-		-- We only need to do this clientside..
-		if ( CLIENT ) then
+	-- We only need to do this clientside..
+	if ( CLIENT ) then
+		if ( ply:InVehicle() ) then
 			--
 			-- This is used for the 'rollercoaster' arms
 			--
+			local Vehicle = ply:GetVehicle()
 			local Velocity = Vehicle:GetVelocity()
 			local fwd = Vehicle:GetUp()
 			local dp = fwd:Dot( Vector( 0, 0, 1 ) )
-			local dp2 = fwd:Dot( Velocity )
 
-			ply:SetPoseParameter( "vertical_velocity", ( dp < 0 && dp || 0 ) + dp2 * 0.005 )
+			ply:SetPoseParameter( "vertical_velocity", ( dp < 0 && dp || 0 ) + fwd:Dot( Velocity ) * 0.005 )
 
 			-- Pass the vehicles steer param down to the player
 			local steer = Vehicle:GetPoseParameter( "vehicle_steer" )
@@ -225,10 +221,6 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 			ply:SetPoseParameter( "vehicle_steer", steer )
 
 		end
-
-	end
-
-	if ( CLIENT ) then
 		GAMEMODE:GrabEarAnimation( ply )
 		GAMEMODE:MouthMoveAnimation( ply )
 	end
@@ -291,14 +283,12 @@ function GM:CalcMainActivity( ply, velocity )
 
 	self:HandlePlayerLanding( ply, velocity, ply.m_bWasOnGround )
 
-	if ( self:HandlePlayerNoClipping( ply, velocity ) ||
+	if !( self:HandlePlayerNoClipping( ply, velocity ) ||
 		self:HandlePlayerDriving( ply ) ||
 		self:HandlePlayerVaulting( ply, velocity ) ||
 		self:HandlePlayerJumping( ply, velocity ) ||
 		self:HandlePlayerSwimming( ply, velocity ) ||
 		self:HandlePlayerDucking( ply, velocity ) ) then
-
-	else
 
 		local len2d = velocity:Length2DSqr()
 		if ( len2d > 22500 ) then ply.CalcIdeal = ACT_MP_RUN elseif ( len2d > 0.25 ) then ply.CalcIdeal = ACT_MP_WALK end
