@@ -200,15 +200,14 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 	end
 
 	ply:SetPlaybackRate( rate )
-	
-        -- We only need to do this clientside..
+
+	-- We only need to do this clientside..
 	if ( CLIENT ) then
 		if ( ply:InVehicle() ) then
-
-			local Vehicle = ply:GetVehicle()
 			--
 			-- This is used for the 'rollercoaster' arms
 			--
+			local Vehicle = ply:GetVehicle()
 			local Velocity = Vehicle:GetVelocity()
 			local fwd = Vehicle:GetUp()
 			local dp = fwd:Dot( Vector( 0, 0, 1 ) )
