@@ -98,7 +98,7 @@ function GM:ShowTeam( ply )
 	if ( ply.LastTeamSwitch && RealTime() - ply.LastTeamSwitch < TimeBetweenSwitches ) then
 		ply.LastTeamSwitch = ply.LastTeamSwitch + 1
 		ply:ChatPrint( Format( "Please wait %i more seconds before trying to change team again", ( TimeBetweenSwitches - ( RealTime() - ply.LastTeamSwitch ) ) + 1 ) )
-		return false
+		return
 	end
 	
 	-- For clientside see cl_pickteam.lua
