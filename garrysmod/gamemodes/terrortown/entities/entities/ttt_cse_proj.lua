@@ -47,9 +47,8 @@ function ENT:GetNearbyCorpses()
 
    local near_corpses = {}
 
-   local n = #near
    local ent = nil
-   for i=1, n do
+   for i=1, #near do
       ent = near[i]
       if IsValid(ent) and ent.player_ragdoll and ent.scene then
          table.insert(near_corpses, {ent=ent, dist=pos:LengthSqr()})
@@ -93,7 +92,7 @@ function ENT:ShowSceneForCorpse(corpse)
 
    if not scene then return end
 
-   for _, dummy_key in pairs({"victim", "killer"}) do
+   for _, dummy_key in ipairs({"victim", "killer"}) do
       local dummy = scene[dummy_key]
 
       if dummy then
@@ -203,5 +202,3 @@ function ENT:Explode(tr)
 
    end
 end
-
-

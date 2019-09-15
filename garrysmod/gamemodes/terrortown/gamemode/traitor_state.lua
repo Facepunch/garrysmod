@@ -13,7 +13,7 @@ function CountTraitors() return #GetTraitors() end
 
 -- Send every player their role
 local function SendPlayerRoles()
-   for k, v in pairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       net.Start("TTT_Role")
          net.WriteUInt(v:GetRole(), 2)
       net.Send(v)
@@ -37,7 +37,7 @@ end
 
 local function SendRoleList(role, ply_or_rf, pred)
    local role_ids = {}
-   for k, v in pairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       if v:IsRole(role) then
          if not pred or (pred and pred(v)) then
             table.insert(role_ids, v:EntIndex())
@@ -60,7 +60,7 @@ function SendInnocentList(ply_or_rf)
    -- sending traitors only a list of actual innocents.
    local inno_ids = {}
    local traitor_ids = {}
-   for k, v in pairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       if v:IsRole(ROLE_INNOCENT) then
          table.insert(inno_ids, v:EntIndex())
       elseif v:IsRole(ROLE_TRAITOR) then
@@ -98,7 +98,7 @@ function SendRoleReset(ply_or_rf)
       net.WriteUInt(ROLE_INNOCENT, 2)
 
       net.WriteUInt(#plys, 8)
-      for k, v in pairs(plys) do
+      for k, v in ipairs(plys) do
          net.WriteUInt(v:EntIndex() - 1, 7)
       end
 
@@ -176,4 +176,3 @@ concommand.Add("ttt_spectate", force_spectate)
 net.Receive("TTT_Spectate", function(l, pl)
    force_spectate(pl, nil, { net.ReadBool() and 1 or 0 })
 end)
-
