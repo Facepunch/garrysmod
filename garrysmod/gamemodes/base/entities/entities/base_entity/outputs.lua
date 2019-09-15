@@ -42,7 +42,7 @@ local function FireSingleOutput( output, this, activator, data )
 		entitiesToFire = ents.FindByName( output.entities )
 	end
 
-	for _, ent in ipairs( entitiesToFire ) do
+	for _, ent in pairs( entitiesToFire ) do
 		if ( output.delay == 0 ) then
 			if ( IsValid( ent ) ) then
 				ent:Input( output.input, activator, this, data or output.param )

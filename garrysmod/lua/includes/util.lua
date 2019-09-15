@@ -266,7 +266,7 @@ function IsUselessModel( modelname )
 
 	if ( !modelname:find( ".mdl", 1, true ) ) then return true end
 
-	for k, v in ipairs( UselessModels ) do
+	for k, v in pairs( UselessModels ) do
 		if ( modelname:find( v, 1, true ) ) then
 			return true
 		end

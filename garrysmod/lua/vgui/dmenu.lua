@@ -155,7 +155,7 @@ function PANEL:PerformLayout()
 	local w = self:GetMinimumWidth()
 
 	-- Find the widest one
-	for k, pnl in ipairs( self:GetCanvas():GetChildren() ) do
+	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
 
 		pnl:PerformLayout()
 		w = math.max( w, pnl:GetWide() )
@@ -166,7 +166,7 @@ function PANEL:PerformLayout()
 
 	local y = 0 -- for padding
 
-	for k, pnl in ipairs( self:GetCanvas():GetChildren() ) do
+	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
 
 		pnl:SetWide( w )
 		pnl:SetPos( 0, y )
@@ -249,7 +249,7 @@ end
 
 function PANEL:ClearHighlights()
 
-	for k, pnl in ipairs( self:GetCanvas():GetChildren() ) do
+	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
 		pnl.Highlight = nil
 	end
 
@@ -257,7 +257,7 @@ end
 
 function PANEL:HighlightItem( item )
 
-	for k, pnl in ipairs( self:GetCanvas():GetChildren() ) do
+	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
 		if ( pnl == item ) then
 			pnl.Highlight = true
 		end

@@ -268,7 +268,7 @@ function GM:MouthMoveAnimation( ply )
 
 	local weight = ply:IsSpeaking() && math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) || 0
 
-	for k, v in ipairs( flexes ) do
+	for k, v in pairs( flexes ) do
 
 		ply:SetFlexWeight( v, weight )
 

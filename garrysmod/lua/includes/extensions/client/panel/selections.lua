@@ -36,7 +36,8 @@ function meta:UnselectAll()
 
 	self:SetSelected( false )
 
-	for k, v in ipairs( self:GetChildren() ) do
+	local children = self:GetChildren()
+	for k, v in pairs( children ) do
 		v:UnselectAll()
 	end
 
@@ -164,7 +165,8 @@ function meta:GetChildrenInRect( x, y, w, h )
 
 	local tab = {}
 
-	for k, v in ipairs( self:GetChildren() ) do
+	local children = self:GetChildren()
+	for k, v in pairs( children ) do
 
 		local vw, vh = v:GetSize()
 
@@ -191,7 +193,8 @@ function meta:GetSelectedChildren()
 
 	local tab = {}
 
-	for k, v in ipairs( self:GetChildren() ) do
+	local children = self:GetChildren()
+	for k, v in pairs( children ) do
 
 		if ( v:IsSelected() ) then
 			table.insert( tab, v )
@@ -209,7 +212,8 @@ function meta:NumSelectedChildren()
 
 	local i = 0
 
-	for k, v in ipairs( self:GetChildren() ) do
+	local children = self:GetChildren()
+	for k, v in pairs( children ) do
 
 		if ( v:IsSelected() ) then
 			i = i + 1
@@ -232,7 +236,8 @@ function meta:EndBoxSelection()
 
 	local x, y, w, h = GetSelectionRect()
 
-	for k, v in ipairs( self:GetChildrenInRect( x, y, w, h, true ) ) do
+	local children = self:GetChildrenInRect( x, y, w, h, true )
+	for k, v in pairs( children ) do
 
 		v:ToggleSelection()
 
