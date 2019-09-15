@@ -53,7 +53,7 @@ end
 function plymeta:GetBaseKarma() return self:GetNWFloat("karma", 1000) end
 
 function plymeta:HasEquipmentWeapon()
-   for _, wep in ipairs(self:GetWeapons()) do
+   for _, wep in pairs(self:GetWeapons()) do
       if IsValid(wep) and wep:IsEquipment() then
          return true
       end
@@ -71,7 +71,7 @@ end
 function plymeta:CanCarryType(t)
    if not t then return false end
 
-   for _, w in ipairs(self:GetWeapons()) do
+   for _, w in pairs(self:GetWeapons()) do
       if w.Kind and w.Kind == t then
          return false
       end
@@ -109,7 +109,7 @@ end
 if CLIENT then
    -- Server has this, but isn't shared for some reason
    function plymeta:HasWeapon(cls)
-      for _, wep in ipairs(self:GetWeapons()) do
+      for _, wep in pairs(self:GetWeapons()) do
          if IsValid(wep) and wep:GetClass() == cls then
             return true
          end
@@ -182,7 +182,7 @@ if CLIENT then
    };
 
    -- Insert all the "simple" gestures that do not need weight control
-   for _, a in ipairs{ACT_GMOD_GESTURE_AGREE, ACT_GMOD_GESTURE_DISAGREE,
+   for _, a in pairs{ACT_GMOD_GESTURE_AGREE, ACT_GMOD_GESTURE_DISAGREE,
                      ACT_GMOD_GESTURE_WAVE, ACT_GMOD_GESTURE_BECON,
                      ACT_GMOD_GESTURE_BOW, ACT_GMOD_GESTURE_SALUTE,
                      ACT_GMOD_CHEER, ACT_SIGNAL_FORWARD, ACT_SIGNAL_HALT,
