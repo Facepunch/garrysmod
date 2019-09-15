@@ -190,6 +190,16 @@
 
 		21
 		{
+			"name"		"gmod_maxammo"
+			"text"		"gmod_maxammo"
+			"help"		"Forces amount of maximum ammo reserves for all weapons of each player. Values 0 and below mean use weapon's ammo type maximum ammo setting instead."
+			"type"		"Numeric"
+			"default"	"9999"
+			"singleplayer"	"1"
+		}
+
+		22
+		{
 			"name"		"sbox_noclip"
 			"text"		"allow_noclip"
 			"help"		"If enabled, players will be able to use noclip"
@@ -197,7 +207,7 @@
 			"default"	"1"
 		}
 
-		22
+		23
 		{
 			"name"		"sbox_bonemanip_npc"
 			"text"		"bone_manipulate_npcs"
@@ -206,7 +216,7 @@
 			"default"	"1"
 		}
 
-		23
+		24
 		{
 			"name"		"sbox_bonemanip_player"
 			"text"		"bone_manipulate_players"
@@ -215,7 +225,7 @@
 			"default"	"0"
 		}
 
-		24
+		25
 		{
 			"name"		"sbox_bonemanip_misc"
 			"text"		"bone_manipulate_others"
@@ -224,7 +234,7 @@
 			"default"	"0"
 		}
 
-		25
+		26
 		{
 			"name"		"sbox_persist"
 			"text"		"persistent_mode"

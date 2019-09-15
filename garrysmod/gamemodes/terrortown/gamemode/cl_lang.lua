@@ -240,7 +240,7 @@ end
 
 -- Set a style by name or directly as style-function
 function LANG.SetStyle(name, style)
-   if type(style) == "string" then
+   if isstring(style) then
       style = LANG.Styles[style]
    end
 
@@ -259,7 +259,7 @@ function LANG.ProcessMsg(name, params)
    if params then
       -- some of our params may be string names themselves
       for k, v in pairs(params) do
-         if type(v) == "string" then
+         if isstring(v) then
             local name = LANG.GetNameParam(v)
             if not name then continue end
 
