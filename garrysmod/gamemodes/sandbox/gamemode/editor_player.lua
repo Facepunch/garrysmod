@@ -89,7 +89,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		local function MakeNiceName( str )
 			local newname = {}
 
-			for _, s in pairs( string.Explode( "_", str ) ) do
+			for _, s in ipairs( string.Explode( "_", str ) ) do
 				if ( string.len( s ) == 1 ) then table.insert( newname, string.upper( s ) ) continue end
 				table.insert( newname, string.upper( string.Left( s, 1 ) ) .. string.Right( s, string.len( s ) - 1 ) ) -- Ugly way to capitalize first letters.
 			end

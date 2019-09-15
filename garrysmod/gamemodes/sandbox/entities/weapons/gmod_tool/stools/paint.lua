@@ -134,7 +134,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	-- Remove duplicates.
 	local Options = {}
-	for id, str in pairs( list.Get( "PaintMaterials" ) ) do
+	for id, str in ipairs( list.Get( "PaintMaterials" ) ) do
 		if ( !table.HasValue( Options, str ) ) then
 			table.insert( Options, str )
 		end
@@ -143,7 +143,7 @@ function TOOL.BuildCPanel( CPanel )
 	table.sort( Options )
 
 	local listbox = CPanel:AddControl( "ListBox", { Label = "#tool.paint.texture", Height = 17 + table.Count( Options ) * 17 } )
-	for k, decal in pairs( Options ) do
+	for k, decal in ipairs( Options ) do
 		local line = listbox:AddLine( decal )
 		line.data = { paint_decal = decal }
 

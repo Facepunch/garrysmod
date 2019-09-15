@@ -107,7 +107,7 @@ end
 --[[---------------------------------------------------------
 	Name: Align with the edge of the parent
 -----------------------------------------------------------]]
-function meta:AlignBottom( m ) self:SetPos( self.x, self:GetParent():GetTall() - self:GetTall() - ( m or 0 ) ) end 
+function meta:AlignBottom( m ) self:SetPos( self.x, self:GetParent():GetTall() - self:GetTall() - ( m or 0 ) ) end
 function meta:AlignRight( m ) self:SetPos( self:GetParent():GetWide() - self:GetWide() - ( m or 0 ), self.y ) end
 function meta:AlignTop( m ) self:SetPos( self.x, m or 0 ) end
 function meta:AlignLeft( m ) self:SetPos( m or 0, self.y ) end
@@ -242,7 +242,7 @@ end
 
 --[[---------------------------------------------------------
 	Name: PositionLabel
------------------------------------------------------------]] 
+-----------------------------------------------------------]]
 function meta:PositionLabel( labelWidth, x, y, lbl, ctrl )
 
 	lbl:SetWide( labelWidth )
@@ -417,14 +417,13 @@ function ValidPanel( pnl )
 
 	if ( !pnl ) then return false end
 
-	return pnl:IsValid() 
+	return pnl:IsValid()
 
 end
 
 function meta:InvalidateChildren( bRecurse )
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		if ( bRecurse ) then
 			v:InvalidateChildren( true )
@@ -477,8 +476,7 @@ function meta:GetClosestChild( x, y )
 	local distance = 9999
 	local closest = nil
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 		local dist = v:DistanceFrom( x, y )
 		if ( dist < distance ) then
 			distance = dist
@@ -511,7 +509,7 @@ function meta:MoveToAfter( pnl )
 		return false
 	end
 
-	for k, v in pairs( children ) do
+	for k, v in ipairs( children ) do
 		v:SetZPos( k )
 	end
 
@@ -534,7 +532,7 @@ function meta:MoveToBefore( pnl )
 		return false
 	end
 
-	for k, v in pairs( children ) do
+	for k, v in ipairs( children ) do
 		v:SetZPos( k )
 	end
 
@@ -542,7 +540,7 @@ end
 
 function meta:Clear()
 
-	for k, panel in pairs( self:GetChildren() ) do
+	for k, panel in ipairs( self:GetChildren() ) do
 		panel:Remove()
 	end
 

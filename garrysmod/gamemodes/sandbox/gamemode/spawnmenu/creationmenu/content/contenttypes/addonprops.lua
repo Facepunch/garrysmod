@@ -4,7 +4,7 @@ local function AddRecursive( pnl, folder, path, wildcard )
 	local files, folders = file.Find( folder .. "*", path )
 	if ( !files ) then MsgN( "Warning! Not opening '" .. folder .. "' because we cannot search in it!"  ) return end
 
-	for k, v in pairs( files ) do
+	for k, v in ipairs( files ) do
 
 		if ( !string.EndsWith( v, ".mdl" ) ) then continue end
 
@@ -15,7 +15,7 @@ local function AddRecursive( pnl, folder, path, wildcard )
 
 	end
 
-	for k, v in pairs( folders ) do
+	for k, v in ipairs( folders ) do
 
 		AddRecursive( pnl, folder .. v .. "/", path, wildcard )
 

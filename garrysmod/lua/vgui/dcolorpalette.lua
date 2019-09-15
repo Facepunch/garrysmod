@@ -110,7 +110,7 @@ function PANEL:NetworkColorChange()
 		if ( !IsValid( pnl ) || pnl == self ) then continue end
 		if ( pnl:GetNumRows() != self:GetNumRows() || pnl:GetCookieName() != self:GetCookieName() ) then continue end
 		local tab = {}
-		for id, p in pairs( self:GetChildren() ) do
+		for id, p in ipairs( self:GetChildren() ) do
 			tab[ p:GetID() ] = p:GetColor()
 		end
 		pnl:SetColorButtons( tab )
@@ -152,7 +152,7 @@ function PANEL:PaintOver( w, h )
 	surface.SetDrawColor( 0, 0, 0, 200 )
 
 	local childW = 0
-	for id, child in pairs( self:GetChildren() ) do
+	for id, child in ipairs( self:GetChildren() ) do
 		if ( childW + child:GetWide() > w ) then break end
 		childW = childW + child:GetWide()
 	end
@@ -182,7 +182,7 @@ function PANEL:SetButtonSize( val )
 
 	self.m_buttonsize = math.floor( val )
 
-	for k, v in pairs( self:GetChildren() ) do
+	for k, v in ipairs( self:GetChildren() ) do
 		v:SetSize( self:GetButtonSize(), self:GetButtonSize() )
 	end
 

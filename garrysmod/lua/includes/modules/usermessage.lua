@@ -13,11 +13,11 @@ local umsg 		= umsg
 function SendUserMessage( name, ply, ... )
 
 	umsg.Start( name, ply )
-	
+
 	for k, v in pairs( {...} ) do
-	
+
 		local t = type( v )
-		
+
 		if ( t == "string" ) then
 			umsg.String( v )
 		elseif ( IsEntity( v ) ) then
@@ -34,14 +34,14 @@ function SendUserMessage( name, ply, ... )
 			ErrorNoHalt( "SendUserMessage: Couldn't send type "..t.."\n" )
 		end
 	end
-	
+
 	umsg.End()
 
 end
 
 --[[---------------------------------------------------------
    Name: usermessage
-   Desc: Enables the server to send the client messages 
+   Desc: Enables the server to send the client messages
 		 (in a bandwidth friendly manner)
 -----------------------------------------------------------]]
 module("usermessage")
@@ -73,7 +73,7 @@ function Hook( messagename, func, ... )
 
 	Hooks[ messagename ].Function 	= func
 	Hooks[ messagename ].PreArgs	= {...}
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -83,13 +83,12 @@ end
 function IncomingMessage( MessageName, msg )
 
 	if ( Hooks[ MessageName ] ) then
-	
+
 		Hooks[ MessageName ].Function( msg, unpack(Hooks[ MessageName ].PreArgs) )
 		return
-	
+
 	end
-	
+
 	Msg("Warning: Unhandled usermessage '"..MessageName.."'\n")
 
 end
-

@@ -7,7 +7,7 @@ function demo:FetchLocal( offset, perpage )
 
 	local saves = {}
 
-	for k, v in pairs( f ) do
+	for k, v in ipairs( f ) do
 
 		if ( k <= offset ) then continue end
 		if ( k > offset + perpage ) then break end
@@ -73,4 +73,3 @@ function demo:FinishPublish( filename, imagename, name, desc )
 	steamworks.Publish( { "demo", info.mapname }, filename, imagename, name, desc )
 
 end
-

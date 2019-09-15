@@ -10,7 +10,7 @@ hook.Add( "PersistenceSave", "PersistenceSave", function( name )
 
 	local Ents = ents.GetAll()
 
-	for k, v in pairs( Ents ) do
+	for k, v in ipairs( Ents ) do
 
 		if ( !v:GetPersistent() ) then
 			Ents[ k ] = nil

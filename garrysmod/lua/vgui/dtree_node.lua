@@ -226,7 +226,7 @@ function PANEL:DoChildrenOrder()
 	if ( !IsValid( self.ChildNodes ) ) then return end
 
 	local last = table.Count( self.ChildNodes:GetChildren() )
-	for k, Child in pairs( self.ChildNodes:GetChildren() ) do
+	for k, Child in ipairs( self.ChildNodes:GetChildren() ) do
 		Child:SetLastChild( k == last )
 	end
 
@@ -499,7 +499,7 @@ end
 
 function PANEL:PopulateChildren()
 
-	for k, v in pairs( self.ChildNodes:GetChildren() ) do
+	for k, v in ipairs( self.ChildNodes:GetChildren() ) do
 		timer.Simple( k * 0.1, function()
 
 			if ( IsValid( v ) ) then
@@ -638,7 +638,7 @@ function PANEL:Copy()
 
 	if ( self.ChildNodes ) then
 
-		for k, v in pairs( self.ChildNodes:GetChildren() ) do
+		for k, v in ipairs( self.ChildNodes:GetChildren() ) do
 
 			local childcopy = v:Copy()
 			copy:InsertNode( childcopy )

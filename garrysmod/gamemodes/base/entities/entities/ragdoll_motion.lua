@@ -162,7 +162,7 @@ function ENT:DrawDebug( ragdoll, controller, pos, ang, rotation, scale, center, 
 	--
 	-- Draw bones
 	--
-	for k, v in pairs( motionsensor.DebugBones ) do
+	for k, v in ipairs( motionsensor.DebugBones ) do
 
 		debugoverlay.Line( realbonepos[ v[1] ], realbonepos[ v[2] ], StayTime, col_bone, true )
 
@@ -171,7 +171,7 @@ function ENT:DrawDebug( ragdoll, controller, pos, ang, rotation, scale, center, 
 	--
 	-- Draw translated sensor bones
 	--
-	for k, v in pairs( motionsensor.DebugBones ) do
+	for k, v in ipairs( motionsensor.DebugBones ) do
 
 		debugoverlay.Line( fixedbonepos[ v[1] ], fixedbonepos[ v[2] ], StayTime, col_tran_bn, true )
 

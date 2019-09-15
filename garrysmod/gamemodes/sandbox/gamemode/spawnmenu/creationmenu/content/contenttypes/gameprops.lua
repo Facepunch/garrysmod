@@ -31,7 +31,7 @@ local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlC
 
 		local mdls = file.Find( SearchString, node:GetPathID() )
 		if ( mdls ) then
-			for k, v in pairs( mdls ) do
+			for k, v in ipairs( mdls ) do
 				local cp = spawnmenu.GetContentType( "model" )
 				if ( cp ) then
 					cp( ViewPanel, { model = node_path .. "/" .. v } )
