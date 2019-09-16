@@ -196,6 +196,7 @@
 			"type"		"Numeric"
 			"default"	"9999"
 			"singleplayer"	"1"
+			"dontcreate"	"1"
 		}
 
 		22
