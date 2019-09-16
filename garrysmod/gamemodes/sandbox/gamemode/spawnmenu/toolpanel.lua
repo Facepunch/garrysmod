@@ -28,7 +28,7 @@ function PANEL:Init()
 			local count = 0
 			local category_matched = false
 
-			if ( string.find( category.Header:GetText():lower(), text:lower() ) ) then
+			if ( string.find( category.Header:GetText():lower(), text:lower(), nil, true ) ) then
 				category_matched = true
 			end
 
@@ -39,7 +39,7 @@ function PANEL:Init()
 				if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
 				str = language.GetPhrase( str )
 
-				if ( !category_matched && !string.find( str:lower(), text:lower() ) ) then
+				if ( !category_matched && !string.find( str:lower(), text:lower(), nil, true ) ) then
 					item:SetVisible( false )
 				else
 					item:SetVisible( true )

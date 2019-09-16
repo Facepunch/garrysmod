@@ -180,6 +180,8 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 				bgtab.Tab:SetVisible( true )
 			end
+
+			sheet.tabScroller:InvalidateLayout()
 		end
 
 		local function UpdateFromConvars()

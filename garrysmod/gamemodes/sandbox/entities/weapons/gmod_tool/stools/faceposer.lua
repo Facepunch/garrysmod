@@ -422,7 +422,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 	padding:SetHeight( 7 )
 
 	filter.OnValueChange = function( pnl, txt )
-		for id, flxpnl in ipairs( flexControllers ) do
+		for id, flxpnl in pairs( flexControllers ) do
 			if ( !flxpnl:GetText():lower():find( txt:lower(), nil, true ) && !flxpnl.originalName:lower():find( txt:lower(), nil, true ) ) then
 				flxpnl:SetVisible( false )
 			else
