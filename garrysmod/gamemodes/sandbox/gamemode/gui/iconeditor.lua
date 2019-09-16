@@ -406,7 +406,7 @@ function PANEL:SetIcon( icon )
 		self.LeftPanel:SetWide( 400 )
 	end
 
-	if ( !model || model == "" ) then
+	if ( !model or model == "" ) then
 
 		self:SetModel( "error.mdl" )
 		self.SpawnIcon:SetSpawnIcon( icon:GetIconName() )
@@ -447,7 +447,7 @@ function PANEL:FillAnimations( ent )
 
 	self.AnimList:Clear()
 
-	for k, v in SortedPairsByValue( ent:GetSequenceList() ) do
+	for k, v in SortedPairsByValue( ent:GetSequenceList() or {} ) do
 
 		local line = self.AnimList:AddLine( string.lower( v ) )
 
@@ -544,7 +544,12 @@ function PANEL:SetFromEntity( ent )
 
 	if ( !IsValid( ent ) ) then return end
 
-	self.SpawnIcon:SetModel( ent:GetModel(), ent:GetSkin() )//, ent:GetBodyGroup() )
+	local bodyStr = ""
+	for i = 0, 8 do
+		bodyStr = bodyStr .. math.min( ent:GetBodygroup( i ) or 0, 9 )
+	end
+
+	self.SpawnIcon:SetModel( ent:GetModel(), ent:GetSkin(), bodyStr )
 	self:SetModel( ent:GetModel() )
 	self:Refresh()
 
