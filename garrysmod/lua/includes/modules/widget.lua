@@ -32,13 +32,15 @@ local function UpdateHovered( pl, mv )
 	local trace =
 	{
 		start	= pl:EyePos(),
-		endpos	= pl:EyePos() + pl:GetAimVector() * 256,
+		endpos	= pl:GetAimVector(),
 		filter	= function( ent )
 
 			return IsValid( ent ) && ent:IsWidget()
 
 		end
 	}
+	trace.endpos:Mult( 256 )
+	trace.endpos:Add( trace.start )
 
 --	debugoverlay.Line( trace.start, trace.endpos, 0.5 )
 
