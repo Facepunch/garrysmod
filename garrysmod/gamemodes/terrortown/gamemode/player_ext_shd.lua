@@ -154,6 +154,21 @@ if CLIENT then
       self:AnimSetGestureWeight(GESTURE_SLOT_CUSTOM, weight)
    end
 
+   local simple_runners = {
+      ACT_GMOD_GESTURE_DISAGREE,
+      ACT_GMOD_GESTURE_SALUTE,
+      ACT_GMOD_GESTURE_BECON,
+      ACT_GMOD_GESTURE_AGREE,
+      ACT_GMOD_GESTURE_WAVE,
+      ACT_GMOD_GESTURE_BOW,
+      ACT_SIGNAL_FORWARD,
+      ACT_SIGNAL_GROUP,
+      ACT_SIGNAL_HALT,
+      ACT_GMOD_CHEER,
+      ACT_ITEM_PLACE,
+      ACT_ITEM_DROP,
+      ACT_ITEM_GIVE
+   }
    local function MakeSimpleRunner(act)
       return function (ply, w)
                 -- just let this gesture play itself and get out of its way
@@ -182,12 +197,7 @@ if CLIENT then
    };
 
    -- Insert all the "simple" gestures that do not need weight control
-   for _, a in ipairs{ACT_GMOD_GESTURE_AGREE, ACT_GMOD_GESTURE_DISAGREE,
-                     ACT_GMOD_GESTURE_WAVE, ACT_GMOD_GESTURE_BECON,
-                     ACT_GMOD_GESTURE_BOW, ACT_GMOD_GESTURE_SALUTE,
-                     ACT_GMOD_CHEER, ACT_SIGNAL_FORWARD, ACT_SIGNAL_HALT,
-                     ACT_SIGNAL_GROUP, ACT_ITEM_PLACE, ACT_ITEM_DROP,
-                     ACT_ITEM_GIVE} do
+   for _, a in ipairs(simple_runners) do
       act_runner[a] = MakeSimpleRunner(a)
    end
 
