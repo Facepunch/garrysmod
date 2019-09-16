@@ -82,7 +82,7 @@ else
       net.Start("TTT_FlareScorch")
          net.WriteEntity(ent)
          net.WriteUInt(#tbl, 8)
-         for _, p in pairs(tbl) do
+         for _, p in ipairs(tbl) do
             net.WriteVector(p)
          end
       net.Broadcast()
