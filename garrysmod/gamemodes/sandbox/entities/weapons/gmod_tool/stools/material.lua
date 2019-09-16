@@ -141,7 +141,7 @@ function TOOL.BuildCPanel( CPanel )
 	local matlist = CPanel:MatSelect( "material_override", materials, true, 0.25, 0.25 )
 
 	filter.OnValueChange = function( s, txt )
-		for id, pnl in pairs( matlist.Controls ) do
+		for id, pnl in ipairs( matlist.Controls ) do
 			if ( !pnl.Value:lower():find( txt:lower(), nil, true ) ) then
 				pnl:SetVisible( false )
 			else
