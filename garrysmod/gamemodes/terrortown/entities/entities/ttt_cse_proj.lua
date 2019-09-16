@@ -73,6 +73,7 @@ function ENT:OnTakeDamage(dmginfo)
    end
 end
 
+local dummy_keys = {"victim", "killer"}
 function ENT:ShowSceneForCorpse(corpse)
    local scene = corpse.scene
    local hit = scene.hit_trace
@@ -92,7 +93,7 @@ function ENT:ShowSceneForCorpse(corpse)
 
    if not scene then return end
 
-   for _, dummy_key in ipairs({"victim", "killer"}) do
+   for _, dummy_key in ipairs(dummy_keys) do
       local dummy = scene[dummy_key]
 
       if dummy then
