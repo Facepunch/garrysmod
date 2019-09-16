@@ -28,19 +28,18 @@ local function UpdateHovered( pl, mv )
 
 	local OldHovered = pl:GetHoveredWidget()
 	pl:SetHoveredWidget( NULL )
-
+	
+	local eyePos = pl:EyePos()
 	local trace =
 	{
-		start	= pl:EyePos(),
-		endpos	= pl:GetAimVector(),
+		start	= eyePos,
+		endpos	= pl:GetAimVector():Mult( 256 ):Add( eyePos ),
 		filter	= function( ent )
 
 			return IsValid( ent ) && ent:IsWidget()
 
 		end
 	}
-	trace.endpos:Mult( 256 )
-	trace.endpos:Add( trace.start )
 
 --	debugoverlay.Line( trace.start, trace.endpos, 0.5 )
 
