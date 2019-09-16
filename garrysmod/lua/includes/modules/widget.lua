@@ -30,10 +30,14 @@ local function UpdateHovered( pl, mv )
 	pl:SetHoveredWidget( NULL )
 	
 	local eyePos = pl:EyePos()
+	local aimVector = pl:GetAimVector()
+	aimVector:Mult( 256 )
+	aimVector:Add( eyePos )
+	
 	local trace =
 	{
 		start	= eyePos,
-		endpos	= pl:GetAimVector():Mult( 256 ):Add( eyePos ),
+		endpos	= aimVector,
 		filter	= function( ent )
 
 			return IsValid( ent ) && ent:IsWidget()
