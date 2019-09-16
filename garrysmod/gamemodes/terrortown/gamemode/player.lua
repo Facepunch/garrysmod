@@ -54,6 +54,9 @@ function GM:NetworkIDValidated( name, steamid )
 end
 
 function GM:PlayerSpawn(ply)
+   -- stop bleeding
+   util.StopBleeding(ply)
+  
    -- Some spawns may be tilted
    ply:ResetViewRoll()
 
@@ -657,7 +660,10 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
    end
 end
 
-function GM:PlayerDeath( victim, infl, attacker)
+function GM:PlayerDeath(victim, infl, attacker)
+   -- stop bleeding
+   util.StopBleeding(victim)
+
    -- tell no one
    self:PlayerSilentDeath(victim)
 

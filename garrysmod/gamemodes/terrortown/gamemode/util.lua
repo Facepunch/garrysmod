@@ -148,6 +148,10 @@ function util.StartBleeding(ent, dmg, t)
                 function() DoBleed(ent) end)
 end
 
+function util.StopBleeding(ent)
+   timer.Remove("bleed" .. ent:EntIndex())
+end
+
 local zapsound = Sound("npc/assassin/ball_zap1.wav")
 function util.EquipmentDestroyed(pos)
    local effect = EffectData()
