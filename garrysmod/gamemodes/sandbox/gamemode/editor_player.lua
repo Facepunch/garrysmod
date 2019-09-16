@@ -87,14 +87,14 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		-- Helper functions
 
 		local function MakeNiceName( str )
-			local newname = {}
+			local newname = ""
 
 			for _, s in ipairs( string.Explode( "_", str ) ) do
-				if ( string.len( s ) == 1 ) then table.insert( newname, string.upper( s ) ) continue end
-				table.insert( newname, string.upper( string.Left( s, 1 ) ) .. string.Right( s, string.len( s ) - 1 ) ) -- Ugly way to capitalize first letters.
+				if ( string.len( s ) == 1 ) then newname = newname.. string.upper( s ) continue end
+				newname = newname.. string.upper( string.Left( s, 1 ) ) .. string.Right( s, string.len( s ) - 1 ) -- Ugly way to capitalize first letters.
 			end
 
-			return string.Implode( " ", newname )
+			return newname
 		end
 
 		local function PlayPreviewAnimation( panel, playermodel )

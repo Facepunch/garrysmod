@@ -30,7 +30,7 @@ function WorkshopFileBase( namespace, requiredtags )
 		local userid = "0"
 		if ( type == "mine" ) then userid = "1" end
 
-		local cachename = type .. "-" .. string.Implode( "/", tags ) .. offset .. "-" .. perpage .. "-" .. userid
+		local cachename = type .. "-" .. string.concat( tags, "/" ) .. offset .. "-" .. perpage .. "-" .. userid
 
 		if ( ListCache[ cachename ] ) then
 			self:FillFileInfo( ListCache[ cachename ] )
