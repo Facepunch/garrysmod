@@ -106,14 +106,6 @@ function meta:GetNegated()
 end
 
 --[[---------------------------------------------------------
-Returns a flag if the vector is a zero vector
------------------------------------------------------------]]
-function meta:IsZero()
-	return (self.x == 0 and self.y == 0 and self.z == 0)
-end
-
-
---[[---------------------------------------------------------
 Convets the vector to resized version of itself
 -----------------------------------------------------------]]
 function meta:Resize(num)
@@ -131,7 +123,7 @@ function meta:GetResized(vec)
 end
 
 --[[---------------------------------------------------------
-Convets the vector to resized version of itself
+Convets the vector to resized midpoint of itself
 -----------------------------------------------------------]]
 function meta:Middle(vec)
 	self:Add(vec)
@@ -140,7 +132,7 @@ function meta:Middle(vec)
 end
 
 --[[---------------------------------------------------------
-Returns a copy of the resized vector
+Returns a copy of the midpoint vector
 -----------------------------------------------------------]]
 function meta:GetMiddle(vec)
 	local v = Vector(self)
@@ -154,4 +146,14 @@ function meta:GetZero()
 	local v = Vector(self)
 	v:Zero()
 	return v
+end
+
+--[[---------------------------------------------------------
+Sets a vector equal to three numbers
+-----------------------------------------------------------]]
+function meta:SetEx(x, y, z)
+	self.x = tonumber(x) or 0
+	self.y = tonumber(y) or 0
+	self.z = tonumber(z) or 0
+	return self
 end
