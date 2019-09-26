@@ -149,11 +149,20 @@ function meta:GetZero()
 end
 
 --[[---------------------------------------------------------
-Sets a vector equal to three numbers
+Applies new basis to a vector by the three axises of an angle
 -----------------------------------------------------------]]
-function meta:SetEx(x, y, z)
-	self.x = tonumber(x) or 0
-	self.y = tonumber(y) or 0
-	self.z = tonumber(z) or 0
+function meta:Basis(ang)
+	self.x = self:Dot(ang:Forward())
+	self.y = self:Dot(ang:Right())
+	self.z = self:Dot(ang:Up())
 	return self
+end
+
+--[[---------------------------------------------------------
+Applies new basis to a vector by the three axises of an angle
+-----------------------------------------------------------]]
+function meta:GetBasis(ang)
+	local v = Vector(self)
+	v:Basis()
+	return v
 end
