@@ -9,7 +9,7 @@ if ( SERVER ) then
 end
 
 properties.Add( "motioncontrol_ragdoll", {
-	MenuLabel = "Control With Motion Sensor",
+	MenuLabel = "#control_with_motion_sensor",
 	Order = 2500,
 	MenuIcon = "icon16/controller.png",
 

@@ -14,36 +14,37 @@ concommand.Add( "dupe_save", function( ply, cmd, arg )
 
 	if ( !IsValid( ply ) ) then return end
 
-	--
-	-- No dupe to save (!)
-	--
+	-- No dupe to save
 	if ( !ply.CurrentDupe ) then return end
 
-	--
+	-- Current dupe was armed from a file. Don't allow immediate resave.
+	if ( ply.CurrentDupeArmed ) then return end
+
+	if ( ply.m_NextDupeSave && ply.m_NextDupeSave > CurTime() && !game.SinglePlayer() ) then
+		ServerLog( tostring( ply ) .. " tried to save a dupe too quickly!\n" )
+		return
+	end
+	ply.m_NextDupeSave = CurTime() + 1
+
 	-- Convert dupe to JSON
-	--
 	local json = util.TableToJSON( ply.CurrentDupe )
 
-	--
 	-- Compress it
-	--
 	local compressed = util.Compress( json )
 	local length = compressed:len()
 	local send_size = 60000
 	local parts = math.ceil( length / send_size )
 
-	MsgN( "Compressed Dupe for sending: ", json:len(), " => ", length, " ( sending in ", parts , " parts )" );
+	ServerLog( tostring( ply ) .. " requested a Dupe. Size: " .. json:len() .. " ( " .. length .. " compressed, " .. parts .. " parts )\n" )
 
-	--
 	-- And send it(!)
-	--
 	local start = 0
 	for i = 1, parts do
 
 		local endbyte = math.min( start + send_size, length )
 		local size = endbyte - start
 
-		//print( "S [ " .. i .. " / " .. parts .. " ] Size: " .. size .. " Start: " .. start .. " End: " .. endbyte )
+		-- print( "S [ " .. i .. " / " .. parts .. " ] Size: " .. size .. " Start: " .. start .. " End: " .. endbyte )
 
 		net.Start( "ReceiveDupe" )
 			net.WriteUInt( i, 8 )
@@ -68,12 +69,12 @@ if ( CLIENT ) then
 			local part = net.ReadUInt( 8 )
 			local total = net.ReadUInt( 8 )
 
-			local len = net.ReadUInt( 32 )
-			local data = net.ReadData( len )
+			local length = net.ReadUInt( 32 )
+			local data = net.ReadData( length )
 
 			buffer = buffer .. data
 
-			//MsgN( "R [ " .. part .. " / " .. total .. " ] Size: " .. data:len() )
+			-- MsgN( "R [ " .. part .. " / " .. total .. " ] Size: " .. data:len() )
 
 			if ( part != total ) then return end
 

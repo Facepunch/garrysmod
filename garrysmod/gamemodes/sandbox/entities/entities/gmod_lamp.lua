@@ -16,16 +16,18 @@ AccessorFunc( ENT, "Texture", "FlashlightTexture" )
 --
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Bool", 0, "On", { KeyName = "on", Edit = { type = "Boolean", order = 1 } } )
-	self:NetworkVar( "Bool", 1, "Toggle", { KeyName = "toggle", Edit = { type = "Boolean", order = 2 } } )
-	self:NetworkVar( "Float", 0, "LightFOV", { KeyName = "fov", Edit = { type = "Float", order = 3, min = 10, max = 170 } } )
-	self:NetworkVar( "Float", 1, "Distance", { KeyName = "dist", Edit = { type = "Float", order = 4, min = 64, max = 2048 } } )
-	self:NetworkVar( "Float", 2, "Brightness", { KeyName = "bright", Edit = { type = "Float", order = 5, min = 0, max = 8 } } )
+	self:NetworkVar( "Bool", 0, "On", { KeyName = "on", Edit = { type = "Boolean", order = 1, title = "#entedit.enabled" } } )
+	self:NetworkVar( "Bool", 1, "Toggle", { KeyName = "toggle", Edit = { type = "Boolean", order = 2, title = "#tool.lamp.toggle" } } )
+	self:NetworkVar( "Float", 0, "LightFOV", { KeyName = "fov", Edit = { type = "Float", order = 3, min = 10, max = 170, title = "#tool.lamp.fov" } } )
+	self:NetworkVar( "Float", 1, "Distance", { KeyName = "dist", Edit = { type = "Float", order = 4, min = 64, max = 2048, title = "#tool.lamp.distance" } } )
+	self:NetworkVar( "Float", 2, "Brightness", { KeyName = "bright", Edit = { type = "Float", order = 5, min = 0, max = 8, title = "#tool.lamp.brightness" } } )
 
-	self:NetworkVarNotify( "On", self.OnUpdateLight )
-	self:NetworkVarNotify( "LightFOV", self.OnUpdateLight )
-	self:NetworkVarNotify( "Brightness", self.OnUpdateLight )
-	self:NetworkVarNotify( "Distance", self.OnUpdateLight )
+	if ( SERVER ) then
+		self:NetworkVarNotify( "On", self.OnUpdateLight )
+		self:NetworkVarNotify( "LightFOV", self.OnUpdateLight )
+		self:NetworkVarNotify( "Brightness", self.OnUpdateLight )
+		self:NetworkVarNotify( "Distance", self.OnUpdateLight )
+	end
 
 end
 
@@ -107,15 +109,19 @@ function ENT:OnSwitch( bOn )
 
 	-- The local positions are the offsets from parent..
 	self.flashlight:SetLocalPos( Vector( 0, 0, 0 ) )
-	self.flashlight:SetLocalAngles( Angle(0,0,0) )
+	self.flashlight:SetLocalAngles( Angle( 0, 0, 0 ) )
 
 	self.flashlight:SetKeyValue( "enableshadows", 1 )
-	self.flashlight:SetKeyValue( "farz", self:GetDistance() )
 	self.flashlight:SetKeyValue( "nearz", 12 )
-	self.flashlight:SetKeyValue( "lightfov", self:GetLightFOV() )
+	self.flashlight:SetKeyValue( "lightfov", math.Clamp( self:GetLightFOV(), 10, 170 ) ) 
+
+	local dist = self:GetDistance()
+	if ( !game.SinglePlayer() ) then dist = math.Clamp( dist, 64, 2048 ) end
+	self.flashlight:SetKeyValue( "farz", dist )
 
 	local c = self:GetColor()
 	local b = self:GetBrightness()
+	if ( !game.SinglePlayer() ) then b = math.Clamp( b, 0, 8 ) end
 	self.flashlight:SetKeyValue( "lightcolor", Format( "%i %i %i 255", c.r * b, c.g * b, c.b * b ) )
 
 	self.flashlight:Spawn()
@@ -139,12 +145,14 @@ function ENT:OnUpdateLight( name, old, new )
 	if ( !IsValid( self.flashlight ) ) then return end
 
 	if ( name == "LightFOV" ) then
-		self.flashlight:Input( "FOV", NULL, NULL, tostring( new ) )
+		self.flashlight:Input( "FOV", NULL, NULL, tostring( math.Clamp( new, 10, 170 ) ) )
 	elseif ( name == "Distance" ) then
-		self.flashlight:SetKeyValue( "farz", self:GetDistance() )
+		if ( !game.SinglePlayer() ) then new = math.Clamp( new, 64, 2048 ) end
+		self.flashlight:SetKeyValue( "farz", new )
 	elseif ( name == "Brightness" ) then
 		local c = self:GetColor()
-		local b = self:GetBrightness()
+		local b = new
+		if ( !game.SinglePlayer() ) then b = math.Clamp( b, 0, 8 ) end
 		self.flashlight:SetKeyValue( "lightcolor", Format( "%i %i %i 255", c.r * b, c.g * b, c.b * b ) )
 	end
 
@@ -155,11 +163,15 @@ function ENT:UpdateLight()
 	if ( !IsValid( self.flashlight ) ) then return end
 
 	self.flashlight:Input( "SpotlightTexture", NULL, NULL, self:GetFlashlightTexture() )
-	self.flashlight:Input( "FOV", NULL, NULL, tostring( self:GetLightFOV() ) )
-	self.flashlight:SetKeyValue( "farz", self:GetDistance() )
+	self.flashlight:Input( "FOV", NULL, NULL, tostring( math.Clamp( self:GetLightFOV(), 10, 170 ) ) )
+
+	local dist = self:GetDistance()
+	if ( !game.SinglePlayer() ) then dist = math.Clamp( dist, 64, 2048 ) end
+	self.flashlight:SetKeyValue( "farz", dist )
 
 	local c = self:GetColor()
 	local b = self:GetBrightness()
+	if ( !game.SinglePlayer() ) then b = math.Clamp( b, 0, 8 ) end
 	self.flashlight:SetKeyValue( "lightcolor", Format( "%i %i %i 255", c.r * b, c.g * b, c.b * b ) )
 
 end

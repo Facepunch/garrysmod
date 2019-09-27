@@ -6,7 +6,14 @@ local queuedSearch = {}
 
 local function GetAllFiles( tab, folder, extension, path )
 
-	local files, folders = file.Find( folder .. "/*", path )
+	totalCalls = totalCalls + 1
+
+	local files, folders = file.Find( folder .. "*", path )
+
+	if ( !files ) then
+		MsgN( "Warning! Ignoring '" .. folder .. "' because we cannot search in it!"  )
+		return
+	end
 
 	for k, v in pairs( files ) do
 
@@ -15,8 +22,6 @@ local function GetAllFiles( tab, folder, extension, path )
 		end
 
 	end
-
-	totalCalls = totalCalls + 1
 
 	for k, v in pairs( folders ) do
 		expectedCalls = expectedCalls + 1
@@ -48,9 +53,9 @@ hook.Add( "DrawOverlay","sandbox_search_progress", function()
 		c:SetText( c.OriginalText .. " ( Scanning: " .. math.ceil( totalCalls / expectedCalls * 100 ) .. "% )")
 	end]]
 
-	if ( !g_SpawnMenu:IsVisible() ) then return end
-
 	local pnl = g_SpawnMenu.SearchPropPanel
+	if ( !g_SpawnMenu:IsVisible() || !pnl:IsVisible() ) then return end
+
 	local x, y = pnl:LocalToScreen( 0, 0 )
 	local maxw = pnl:GetWide()
 	if ( pnl.VBar && pnl.VBar.Enabled ) then maxw = maxw - 20 end
@@ -59,13 +64,11 @@ hook.Add( "DrawOverlay","sandbox_search_progress", function()
 	draw.RoundedBox( 0, x, y, maxw * ( totalCalls / expectedCalls ), 8, Color( 0, 128, 255, 200 ) )
 end )
 
-local model_list = nil
 --
 -- Model Search
 --
+local model_list = nil
 search.AddProvider( function( str )
-
-	str = str:PatternSafe()
 
 	if ( model_list == nil ) then
 
@@ -74,11 +77,15 @@ search.AddProvider( function( str )
 
 	end
 
-	local list = {}
+	local models = {}
 
 	for k, v in pairs( model_list ) do
 
-		if ( v:find( str ) ) then
+		-- Don't search in the models/ bit of every model, because every model has this bit, unless they are looking for direct model path
+		local modelpath = v
+		if ( modelpath:StartWith( "models/" ) && !str:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8 ) end
+
+		if ( modelpath:find( str, nil, true ) ) then
 
 			if ( IsUselessModel( v ) ) then continue end
 
@@ -89,83 +96,70 @@ search.AddProvider( function( str )
 				words = { v }
 			}
 
-			table.insert( list, entry )
+			table.insert( models, entry )
 
 		end
 
-		if ( #list >= 256 ) then break end
+		if ( #models >= 512 ) then break end
 
 	end
 
-	return list
+	return models
 
 end, "props" )
 
 --
 -- Entity, vehicles
 --
-search.AddProvider( function( str )
+local function AddSearchProvider( listname, ctype, stype )
+	search.AddProvider( function( str )
 
-	str = str:PatternSafe()
+		local results = {}
+		local entities = {}
 
-	local results = {}
+		for k, v in pairs( list.Get( listname ) ) do
+			if ( listname == "Weapon" && !v.Spawnable ) then continue end
+			v.ClassName = k
+			v.PrintName = v.PrintName or v.Name
+			v.ScriptedEntityType = ctype
+			table.insert( entities, v )
+		end
 
-	local entities = {}
+		for k, v in pairs( entities ) do
 
-	//for k, v in pairs( scripted_ents.GetSpawnable() ) do
-	for k, v in pairs( list.Get( "SpawnableEntities" ) ) do
-		v.ClassName = k
-		v.ScriptedEntityType = "entity"
-		table.insert( entities, v )
-	end
+			local name = v.PrintName
+			local name_c = v.ClassName
+			if ( !name && !name_c ) then continue end
 
-	for k, v in pairs( list.Get( "Vehicles" ) ) do
-		v.ClassName = k
-		v.PrintName = v.Name
-		v.ScriptedEntityType = "vehicle"
-		table.insert( entities, v )
-	end
+			if ( ( name && name:lower():find( str, nil, true ) ) || ( name_c && name_c:lower():find( str, nil, true ) ) ) then
 
-	for k, v in pairs( list.Get( "NPC" ) ) do
-		v.ClassName = k
-		v.PrintName = v.Name
-		v.ScriptedEntityType = "npc"
-		table.insert( entities, v )
-	end
+				local entry = {
+					text = v.PrintName or v.ClassName,
+					icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, {
+						nicename = v.PrintName or v.ClassName,
+						spawnname = v.ClassName,
+						material = "entities/" .. v.ClassName .. ".png",
 
-	for k, v in pairs( list.Get( "Weapon" ) ) do
-		v.ClassName = k
-		v.ScriptedEntityType = "weapon"
-		table.insert( entities, v )
-	end
+						admin = v.AdminOnly
+					} ),
+					words = { v }
+				}
 
-	for k, v in pairs( entities ) do
+				table.insert( results, entry )
 
-		local name = v.ClassName or v.PrintName
-		if ( !name ) then continue end
+			end
 
-		if ( name:lower():find( str ) ) then -- TODO: Search print name AND class name?
-
-			local entry = {
-				text = v.PrintName or v.ClassName,
-				icon = spawnmenu.CreateContentIcon( v.ScriptedEntityType or "entity", nil, {
-					nicename = v.PrintName or v.ClassName,
-					spawnname = v.ClassName,
-					material = "entities/" .. v.ClassName .. ".png",
-
-					admin = v.AdminOnly
-				} ),
-				words = { v }
-			}
-
-			table.insert( results, entry )
+			if ( #results >= 128 ) then break end
 
 		end
 
-		if ( #results >= 128 ) then break end
+		table.SortByMember( results, "text", true )
+		return results
 
-	end
+	end, stype )
+end
 
-	return results
-
-end, "entities" )
+AddSearchProvider( "SpawnableEntities", "entity", "entities" )
+AddSearchProvider( "Vehicles", "vehicle", "vehicles" )
+AddSearchProvider( "NPC", "npc", "npcs" )
+AddSearchProvider( "Weapon", "weapon", "weapons" )

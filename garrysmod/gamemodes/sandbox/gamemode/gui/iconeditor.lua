@@ -151,27 +151,34 @@ function PANEL:Init()
 			end )
 		end
 
-	local ps = self:Add( "DPropertySheet" )
-	ps:Dock( FILL )
-	ps:DockMargin( 4, 0, 0, 0 )
-
-	local right = ps:Add( "Panel" )
+	local right = self:Add( "DPropertySheet" )
 	right:Dock( FILL )
-	ps:AddSheet( "Animations", right )
+	right:SetPadding( 0 )
+	right:DockMargin( 4, 0, 0, 0 )
+	self.PropertySheet = right
 
-		self.AnimList = right:Add( "DListView" )
+	-- Animations
+
+	local anims = right:Add( "Panel" )
+	anims:Dock( FILL )
+	anims:DockPadding( 2, 0, 2, 2 )
+	right:AddSheet( "Animations", anims, "icon16/monkey.png" )
+
+		self.AnimList = anims:Add( "DListView" )
 		self.AnimList:AddColumn( "name" )
 		self.AnimList:Dock( FILL )
 		self.AnimList:SetMultiSelect( false )
 		self.AnimList:SetHideHeaders( true )
 
-	local pnl = ps:Add( "Panel" )
+	-- Bodygroups
+
+	local pnl = right:Add( "Panel" )
 	pnl:Dock( FILL )
-	pnl:DockPadding( 3, 0, 3, 0 )
+	pnl:DockPadding( 7, 0, 7, 7 )
 
-	ps:AddSheet( "Bodygroups", pnl )
+	self.BodygroupTab = right:AddSheet( "Bodygroups", pnl, "icon16/brick.png" )
 
-		self.BodyList = pnl:Add( "DListLayout" )
+		self.BodyList = pnl:Add( "DScrollPanel" )
 		self.BodyList:Dock( FILL )
 
 			--This kind of works but they don't move their stupid mouths. So fuck off.
@@ -193,10 +200,12 @@ function PANEL:Init()
 			local materials = self.Scenes.RootNode:AddFolder( "Scenes", "scenes/", true )
 			materials:SetIcon( "icon16/photos.png" )--]]
 
-	local settings = ps:Add( "Panel" )
+	-- Settings
+
+	local settings = right:Add( "Panel" )
 	settings:Dock( FILL )
-	settings:DockPadding( 7, 0, 7, 0 )
-	ps:AddSheet( "Settings", settings )
+	settings:DockPadding( 7, 0, 7, 7 )
+	right:AddSheet( "Settings", settings, "icon16/cog.png" )
 
 		local bbox = settings:Add( "DCheckBoxLabel" )
 		bbox:SetText( "Show Bounding Box" )
@@ -248,7 +257,7 @@ function PANEL:Init()
 		cam_pos:DockMargin( 0, 0, 0, 3 )
 		cam_pos:SetZPos( 102 )
 		cam_pos.OnChange = function( p, b )
-			self.ModelPanel:SetCamPos( Angle( cam_pos:GetText() ) )
+			self.ModelPanel:SetCamPos( Vector( cam_pos:GetText() ) )
 		end
 		self.TargetCamPosPanel = cam_pos
 
@@ -397,7 +406,7 @@ function PANEL:SetIcon( icon )
 		self.LeftPanel:SetWide( 400 )
 	end
 
-	if ( !model || model == "" ) then
+	if ( !model or model == "" ) then
 
 		self:SetModel( "error.mdl" )
 		self.SpawnIcon:SetSpawnIcon( icon:GetIconName() )
@@ -438,7 +447,7 @@ function PANEL:FillAnimations( ent )
 
 	self.AnimList:Clear()
 
-	for k, v in SortedPairsByValue( ent:GetSequenceList() ) do
+	for k, v in SortedPairsByValue( ent:GetSequenceList() or {} ) do
 
 		local line = self.AnimList:AddLine( string.lower( v ) )
 
@@ -452,10 +461,14 @@ function PANEL:FillAnimations( ent )
 	end
 
 	self.BodyList:Clear()
+	local newItems = 0
 
 	if ( ent:SkinCount() > 1 ) then
 
 		local combo = self.BodyList:Add( "DComboBox" )
+		combo:Dock( TOP )
+		combo:DockMargin( 0, 0, 0, 3 )
+		newItems = newItems + 1
 
 		for l = 0, ent:SkinCount() - 1 do
 			combo:AddChoice( "Skin " .. l, function()
@@ -485,6 +498,9 @@ function PANEL:FillAnimations( ent )
 		if ( ent:GetBodygroupCount( k ) <= 1 ) then continue end
 
 		local combo = self.BodyList:Add( "DComboBox" )
+		combo:Dock( TOP )
+		combo:DockMargin( 0, 0, 0, 3 )
+		newItems = newItems + 1
 
 		for l = 0, ent:GetBodygroupCount( k ) - 1 do
 
@@ -514,13 +530,26 @@ function PANEL:FillAnimations( ent )
 
 	end
 
+	if ( newItems > 0 ) then
+		self.BodygroupTab.Tab:SetVisible( true )
+	else
+		self.BodygroupTab.Tab:SetVisible( false )
+	end
+	local propertySheet = self.PropertySheet
+	propertySheet.tabScroller:InvalidateLayout()
+
 end
 
 function PANEL:SetFromEntity( ent )
 
 	if ( !IsValid( ent ) ) then return end
 
-	self.SpawnIcon:SetModel( ent:GetModel(), ent:GetSkin() )//, ent:GetBodyGroup() )
+	local bodyStr = ""
+	for i = 0, 8 do
+		bodyStr = bodyStr .. math.min( ent:GetBodygroup( i ) or 0, 9 )
+	end
+
+	self.SpawnIcon:SetModel( ent:GetModel(), ent:GetSkin(), bodyStr )
 	self:SetModel( ent:GetModel() )
 	self:Refresh()
 

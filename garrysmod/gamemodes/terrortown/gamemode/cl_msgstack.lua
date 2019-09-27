@@ -89,7 +89,7 @@ function MSTACK:AddMessageEx(item)
    -- Insert at the top
    table.insert(self.msgs, 1, item)
 
-   self.last = item.time   
+   self.last = item.time
 end
 
 -- Add a given message to the stack, will be rendered in a different color if it
@@ -110,10 +110,8 @@ function MSTACK:WrapText(text, width)
       return {text} -- Nope, but wrap in table for uniformity
    end
    
-   local words = string.Explode(" ", text) -- No spaces means you're screwed
-
    local lines = {""}
-   for i, wrd in pairs(words) do
+   for i, wrd in ipairs(string.Explode(" ", text)) do -- No spaces means you're screwed
       local l = #lines
       local added = lines[l] .. " " .. wrd
       w, _ = surface.GetTextSize(added)
@@ -192,8 +190,8 @@ function MSTACK:Draw(client)
             draw.TextShadow(spec, 1, alpha)
          end
 
-         if alpha == 0 then 
-            self.msgs[k] = nil 
+         if alpha == 0 then
+            self.msgs[k] = nil
          end
 
          running_y = y + height
@@ -225,4 +223,3 @@ local function ReceiveCustomMsg()
    MSTACK:AddColoredMessage(text, clr)
 end
 net.Receive("TTT_GameMsgColor", ReceiveCustomMsg)
-

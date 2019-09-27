@@ -18,7 +18,7 @@ surface.CreateFont( "WorkshopLarge", {
 })
 
 local pnlRocket			= vgui.RegisterFile( "addon_rocket.lua" )
-local matProgressCog	= Material( "gui/progress_cog.png", "nocull smooth mips" )
+local matProgressCog	= Material( "gui/progress_cog.png", "nocull smooth" )
 local matHeader			= Material( "gui/steamworks_header.png" )
 
 AccessorFunc( PANEL, "m_bDrawProgress", "DrawProgress", FORCE_BOOL )

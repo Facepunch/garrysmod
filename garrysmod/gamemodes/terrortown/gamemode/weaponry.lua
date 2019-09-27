@@ -38,7 +38,7 @@ local function GetLoadoutWeapons(r)
       };
 
       for k, w in pairs(weapons.GetList()) do
-         if w and type(w.InLoadoutFor) == "table" then
+         if w and istable(w.InLoadoutFor) then
             for _, wrole in pairs(w.InLoadoutFor) do
                table.insert(tbl[wrole], WEPS.GetClass(w))
             end
@@ -59,7 +59,7 @@ local function GiveLoadoutWeapons(ply)
    if not weps then return end
 
    for _, cls in pairs(weps) do
-      if not ply:HasWeapon(cls) then
+      if not ply:HasWeapon(cls) and ply:CanCarryType(WEPS.TypeForWeapon(cls)) then
          ply:Give(cls)
       end
    end
@@ -74,7 +74,7 @@ local function HasLoadoutWeapons(ply)
 
 
    for _, cls in pairs(weps) do
-      if not ply:HasWeapon(cls) then
+      if not ply:HasWeapon(cls) and ply:CanCarryType(WEPS.TypeForWeapon(cls)) then
          return false
       end
    end
@@ -132,8 +132,8 @@ end
 -- calling this function is used to get them the weapons anyway as soon as
 -- possible.
 local function LateLoadout(id)
-   local ply = player.GetByID(id)
-   if not IsValid(ply) then
+   local ply = Entity(id)
+   if not IsValid(ply) or not ply:IsPlayer() then
       timer.Remove("lateloadout" .. id)
       return
    end
@@ -170,8 +170,8 @@ function GM:PlayerLoadout( ply )
 end
 
 function GM:UpdatePlayerLoadouts()
-   for k, v in pairs(player.GetAll()) do
-      GAMEMODE:PlayerLoadout(v)
+   for _, ply in ipairs(player.GetAll()) do
+      hook.Call("PlayerLoadout", GAMEMODE, ply)
    end
 end
 
@@ -334,6 +334,11 @@ local function HasPendingOrder(ply)
    return timer.Exists("give_equipment" .. tostring(ply:SteamID()))
 end
 
+function GM:TTTCanOrderEquipment(ply, id, is_item)
+   --- return true to allow buying of an equipment item, false to disallow
+   return true
+end
+
 -- Equipment buying
 local function OrderEquipment(ply, cmd, args)
    if not IsValid(ply) or #args != 1 then return end
@@ -346,6 +351,8 @@ local function OrderEquipment(ply, cmd, args)
    -- it's an item if the arg is an id instead of an ent name
    local id = args[1]
    local is_item = tonumber(id)
+   
+   if not hook.Run("TTTCanOrderEquipment", ply, id, is_item) then return end
 
    -- we use weapons.GetStored to save time on an unnecessary copy, we will not
    -- be modifying it

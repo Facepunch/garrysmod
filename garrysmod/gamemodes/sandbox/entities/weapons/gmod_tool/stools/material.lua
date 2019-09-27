@@ -72,11 +72,6 @@ function TOOL:Reload( trace )
 
 end
 
-if ( IsMounted( "tf" ) ) then
-	list.Add( "OverrideMaterials", "models/player/shared/gold_player" )
-	list.Add( "OverrideMaterials", "models/player/shared/ice_player" )
-end
-
 list.Add( "OverrideMaterials", "models/wireframe" )
 list.Add( "OverrideMaterials", "debug/env_cubemap_model" )
 list.Add( "OverrideMaterials", "models/shadertest/shader3" )
@@ -123,10 +118,37 @@ list.Add( "OverrideMaterials", "phoenix_storms/wire/pcb_blue" )
 list.Add( "OverrideMaterials", "hunter/myplastic" )
 list.Add( "OverrideMaterials", "models/XQM/LightLinesRed_tool" )
 
+if ( IsMounted( "tf" ) ) then
+	list.Add( "OverrideMaterials", "models/player/shared/gold_player" )
+	list.Add( "OverrideMaterials", "models/player/shared/ice_player" )
+end
+
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Header", { Description = "#tool.material.help" } )
 
-	CPanel:MatSelect( "material_override", list.Get( "OverrideMaterials" ), true, 0.25, 0.25 )
+	local filter = CPanel:AddControl( "TextBox", { Label = "#spawnmenu.quick_filter_tool" } )
+	filter:SetUpdateOnType( true )
 
+	-- Remove duplicate materials. table.HasValue is used to preserve material order
+	local materials = {}
+	for id, str in pairs( list.Get( "OverrideMaterials" ) ) do
+		if ( !table.HasValue( materials, str ) ) then
+			table.insert( materials, str )
+		end
+	end
+
+	local matlist = CPanel:MatSelect( "material_override", materials, true, 0.25, 0.25 )
+
+	filter.OnValueChange = function( s, txt )
+		for id, pnl in pairs( matlist.Controls ) do
+			if ( !pnl.Value:lower():find( txt:lower(), nil, true ) ) then
+				pnl:SetVisible( false )
+			else
+				pnl:SetVisible( true )
+			end
+		end
+		matlist:InvalidateChildren()
+		CPanel:InvalidateChildren()
+	end
 end

@@ -177,6 +177,10 @@ function PANEL:PerformLayout()
 
 end
 
+function PANEL:Clear()
+	self:GetCanvas():Clear()
+end
+
 function PANEL:GetCanvas()
 
 	if ( !IsValid( self.Canvas ) ) then

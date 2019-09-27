@@ -7,31 +7,30 @@ local ListCache = {}
 function WorkshopFileBase( namespace, requiredtags )
 
 	local ret = {}
-
 	ret.HTML = nil
 
-	function ret:Fetch( type, offset, perpage, extratags )
-
-		if ( type == "local" ) then
-			return self:FetchLocal( offset, perpage )
-		end
-
-		if ( type == "subscribed" ) then
-			return self:FetchSubscribed( offset, perpage )
-		end
-
-		local userid = "0"
-
-		if ( type == "mine" ) then userid = "1" end
+	function ret:Fetch( type, offset, perpage, extratags, searchText, filter )
 
 		local tags = table.Copy( requiredtags )
-
 		for k, v in pairs( extratags ) do
 			if ( v == "" ) then continue end
 			table.insert( tags, v )
 		end
 
-		local cachename = type.."-"..string.Implode( "/", tags ) .. offset .. "-" .. perpage .. "-" .. userid
+		if ( type == "local" ) then
+			return self:FetchLocal( offset, perpage )
+		end
+		if ( type == "subscribed" ) then
+			return self:FetchSubscribed( offset, perpage, tags, searchText, false, filter )
+		end
+		if ( type == "subscribed_ugc" ) then
+			return self:FetchSubscribed( offset, perpage, tags, searchText, true, filter )
+		end
+
+		local userid = "0"
+		if ( type == "mine" ) then userid = "1" end
+
+		local cachename = type .. "-" .. string.Implode( "/", tags ) .. offset .. "-" .. perpage .. "-" .. userid
 
 		if ( ListCache[ cachename ] ) then
 			self:FillFileInfo( ListCache[ cachename ] )
@@ -45,25 +44,71 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	end
 
-	function ret:FetchSubscribed( offset, perpage )
+	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC, filter )
 
-		local subscriptions = engine.GetAddons()
+		local subscriptions = {}
+		if ( isUGC ) then
+			subscriptions = engine.GetUserContent()
+		else
+			subscriptions = engine.GetAddons()
+		end
 
-		--
-		-- Reverse the table - so newest files are on top (todo - properly)
-		--
-		subscriptions = table.Reverse( subscriptions )
+		for id, e in pairs( subscriptions ) do
+			if ( e.timeadded == 0 ) then e.timeadded = os.time() end
+		end
+		table.sort( subscriptions, function( a, b )
+			return a.timeadded > b.timeadded
+		end )
 
+		-- First build a list of items that fit our search terms
+		local searchedItems = {}
+		local localFileHack = -1
+		for id, item in pairs( subscriptions ) do
+
+			-- This is a dirty hack for local addons, ideally should be done in engine, or not use solely IDs to identify addons
+			if ( item.wsid == "0" ) then
+				item.wsid = tostring( localFileHack ) -- why is this a string?
+				localFileHack = localFileHack - 1
+			end
+
+			-- Search for tags
+			local found = true
+			for id, tag in pairs( tags ) do
+				if ( !item.tags:lower():find( tag ) ) then found = false end
+			end
+			if ( !found ) then continue end
+
+			-- Search for searchText
+			if ( searchText:Trim() != "" ) then
+				if ( !item.title:lower():find( searchText:lower() ) ) then continue end
+			end
+
+			if ( filter && filter == "enabledonly" ) then
+				if ( !steamworks.ShouldMountAddon( item.wsid ) ) then continue end
+			end
+			if ( filter && filter == "disabledonly" ) then
+				if ( steamworks.ShouldMountAddon( item.wsid ) ) then continue end
+			end
+
+			searchedItems[ #searchedItems + 1 ] = item
+
+		end
+
+		-- Build the page!
 		local data = {
-			totalresults = #subscriptions,
+			totalresults = #searchedItems,
+			extraresults = {},
 			results = {}
 		}
 
 		local i = 0
 		while ( i < perpage ) do
 
-			if ( subscriptions[ offset + i + 1 ] ) then
-				table.insert( data.results, subscriptions[ offset + i + 1 ].wsid )
+			if ( searchedItems[ offset + i + 1 ] ) then
+
+				local res = table.insert( data.results, searchedItems[ offset + i + 1 ].wsid )
+				data.extraresults[ res ] = searchedItems[ offset + i + 1 ]
+
 			end
 
 			i = i + 1
@@ -72,6 +117,13 @@ function WorkshopFileBase( namespace, requiredtags )
 
 		self:FillFileInfo( data )
 
+	end
+
+	function ret:RetrieveUserName( steamid, func )
+		steamworks.RequestPlayerInfo( steamid, function( name )
+			self.HTML:Call( namespace .. ".ReceiveUserName( \"" .. steamid:JavascriptSafe() .. "\", \"" .. name:JavascriptSafe() .. "\" )" )
+			if ( func ) then func( name ) end
+		end )
 	end
 
 	function ret:FillFileInfo( results )
@@ -92,17 +144,38 @@ function WorkshopFileBase( namespace, requiredtags )
 		--
 		for k, v in pairs( results.results ) do
 
+			v = v:JavascriptSafe()
+
 			--
 			-- Got it cached?
 			--
 			if ( PreviewCache[ v ] ) then
+
 				self.HTML:Call( namespace .. ".ReceiveImage( \"" .. v .. "\", \"" .. PreviewCache[ v ] .. "\" )" )
+
 			end
 
 			--
 			-- Get the file information
 			--
-			if ( InfoCache[ v ] ) then
+			if ( tonumber( v ) <= 0 ) then
+
+				-- Local addon
+				local extra = results.extraresults[ k ]
+				if ( !extra ) then extra = {} end
+
+				extra.ownername = "Local"
+				extra.description = "Non workshop local floating addon."
+
+				local json = util.TableToJSON( extra, false )
+
+				self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. json .. " )" )
+				self.HTML:Call( namespace .. ".ReceiveImage( \"" .. v .. "\", \"html/img/localaddon.png\" )" )
+
+				-- Do not try to get votes for this one
+				continue
+
+			elseif ( InfoCache[ v ] ) then
 
 				self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. InfoCache[ v ] .. " )" )
 
@@ -110,12 +183,21 @@ function WorkshopFileBase( namespace, requiredtags )
 
 				steamworks.FileInfo( v, function( result )
 
-					if ( !result ) then return end
+					if ( !result && result.error != nil ) then return end
 
 					if ( result.description ) then
 						result.description = string.gsub( result.description, "%[img%]([^%]]*)%[/img%]", "" ) -- Gotta remove inner content of img tags
 						result.description = string.gsub( result.description, "%[([^%]]*)%]", "" )
 						result.description = string.Trim( result.description )
+					end
+
+					if ( result.owner && ( !result.ownername || result.ownername == "" || result.ownername == "[unknown]" ) ) then
+						self:RetrieveUserName( result.owner, function( name )
+							result.ownername = name
+
+							local json = util.TableToJSON( result, false )
+							InfoCache[ v ] = json
+						end )
 					end
 
 					local json = util.TableToJSON( result, false )
@@ -132,8 +214,8 @@ function WorkshopFileBase( namespace, requiredtags )
 							-- Download failed
 							if ( !name ) then return end
 
-							self.HTML:Call( namespace .. ".ReceiveImage( \"" .. v .. "\", \"" .. name .. "\" )" )
-							PreviewCache[ v ] = name
+							PreviewCache[ v ] = name:JavascriptSafe()
+							self.HTML:Call( namespace .. ".ReceiveImage( \"" .. v .. "\", \"" .. PreviewCache[ v ] .. "\" )" )
 
 						end )
 
@@ -153,6 +235,8 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	function ret:CountVotes( id )
 
+		id = id:JavascriptSafe()
+
 		if ( VoteCache[ id ] ) then
 
 			self.HTML:Call( namespace .. ".ReceiveVoteInfo( \"" .. id .. "\", " .. VoteCache[ id ] .. " )" )
@@ -161,9 +245,8 @@ function WorkshopFileBase( namespace, requiredtags )
 
 			steamworks.VoteInfo( id, function( result )
 
-				local json = util.TableToJSON( result, false )
-				VoteCache[ id ] = json
-				self.HTML:Call( namespace .. ".ReceiveVoteInfo( \"" .. id .. "\", " .. json .. " )" )
+				VoteCache[ id ] = util.TableToJSON( result, false )
+				self.HTML:Call( namespace .. ".ReceiveVoteInfo( \"" .. id .. "\", " .. VoteCache[ id ] .. " )" )
 
 			end )
 		end
@@ -172,8 +255,8 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	function ret:Publish( filename, image )
 
-		//MsgN( "PUBLISHING ", filename )
-		//MsgN( "Image ", image )
+		--MsgN( "PUBLISHING ", filename )
+		--MsgN( "Image ", image )
 
 		--
 		-- Create the window

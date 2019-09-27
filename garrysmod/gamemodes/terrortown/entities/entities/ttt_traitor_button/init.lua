@@ -119,7 +119,7 @@ local function TraitorUseCmd(ply, cmd, args)
       local idx = tonumber(args[1])
       if idx then
          local ent = Entity(idx)
-         if IsValid(ent) and ent.TraitorUse then
+         if IsValid(ent) and ent:GetClass() == "ttt_traitor_button" and ent.TraitorUse then
             ent:TraitorUse(ply)
          end
       end

@@ -3,7 +3,7 @@ AddCSLuaFile()
 SWEP.HoldType              = "ar2"
 
 if CLIENT then
-   SWEP.PrintName          = "UMP Prototype"
+   SWEP.PrintName          = "stungun_name"
    SWEP.Slot               = 6
 
    SWEP.ViewModelFlip      = false
@@ -58,8 +58,8 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 
    local bullet = {}
    bullet.Num    = numbul
-   bullet.Src    = self.Owner:GetShootPos()
-   bullet.Dir    = self.Owner:GetAimVector()
+   bullet.Src    = self:GetOwner():GetShootPos()
+   bullet.Dir    = self:GetOwner():GetAimVector()
    bullet.Spread = Vector( cone, cone, 0 )
    bullet.Tracer = 4
    bullet.Force  = 5
@@ -90,16 +90,16 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
                      end
 
 
-   self.Owner:FireBullets( bullet )
+   self:GetOwner():FireBullets( bullet )
    self:SendWeaponAnim(self.PrimaryAnim)
 
    -- Owner can die after firebullets, giving an error at muzzleflash
-   if not IsValid(self.Owner) or not self.Owner:Alive() then return end
+   if not IsValid(self:GetOwner()) or not self:GetOwner():Alive() then return end
 
-   self.Owner:MuzzleFlash()
-   self.Owner:SetAnimation( PLAYER_ATTACK1 )
+   self:GetOwner():MuzzleFlash()
+   self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
 
-   if self.Owner:IsNPC() then return end
+   if self:GetOwner():IsNPC() then return end
 
    if ((game.SinglePlayer() and SERVER) or
        ((not game.SinglePlayer()) and CLIENT and IsFirstTimePredicted() )) then
@@ -107,9 +107,9 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
       -- reduce recoil if ironsighting
       recoil = sights and (recoil * 0.75) or recoil
 
-      local eyeang = self.Owner:EyeAngles()
+      local eyeang = self:GetOwner():EyeAngles()
       eyeang.pitch = eyeang.pitch - recoil
-      self.Owner:SetEyeAngles( eyeang )
+      self:GetOwner():SetEyeAngles( eyeang )
 
    end
 end

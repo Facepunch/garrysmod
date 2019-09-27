@@ -18,6 +18,8 @@ function PANEL:Setup( vars )
 
 	self:Clear()
 
+	vars = vars or {}
+
 	local ctrl = self:Add( "DNumSlider" )
 	ctrl:Dock( FILL )
 	ctrl:SetDecimals( self:GetDecimals() )

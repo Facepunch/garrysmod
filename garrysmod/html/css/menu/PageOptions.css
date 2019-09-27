@@ -12,13 +12,17 @@ DIV.page DIV.options
 
 DIV.page DIV.innerpage
 {
-	position: absolute; 
-	left: 300px; 
-	top: 16px; 
-	bottom: 16px; 
-	right: 16px; 
-	padding: 16px; 
+	position: absolute;
+	left: 300px;
+	top: 16px;
+	bottom: 16px;
+	right: 16px;
+	padding: 16px;
 	padding-top: 0;
+}
+
+div.options h2 {
+	margin-top: 0px;
 }
 
 DIV.page DIV.options UL
@@ -40,11 +44,11 @@ DIV.page DIV.options, DIV.page DIV.options A
 	letter-spacing: -1.0px;
 	text-decoration: none;
 	color: #fff;
-	font-weight: bolder;
+	font-weight: bold;
 	text-shadow: 2px 2px 1px #000;
 }
 
-DIV.page DIV.options .submenu A
+DIV.page DIV.options .submenu A, DIV.page DIV.options .submenu LABEL
 {
 	font-size: 17px;
 	letter-spacing: 0px;
@@ -55,6 +59,7 @@ DIV.page DIV.options UL.submenu LI
 {
 	padding: 0;
 	margin: 0;
+	margin-bottom: -4px;
 }
 
 DIV.page DIV.options A:hover
@@ -67,6 +72,21 @@ DIV.page DIV.options.active, DIV.page DIV.options A.active
 	color: #ff5;
 }
 
+DIV.page DIV.options .search_bar
+{
+	padding: 2px 4px;
+	box-sizing: border-box;
+	margin-top: 12px;
+	margin-bottom: 8px;
+}
+
+@media screen and (max-height: 768px) {
+	DIV.page DIV.options UL.submenu LI
+	{
+		margin-bottom: -8px;
+	}
+}
+
 @media screen and (max-width: 1280px)
 {
 	DIV.page DIV.options
@@ -74,20 +94,20 @@ DIV.page DIV.options.active, DIV.page DIV.options A.active
 		width: 250px;
 		font-size: 70%;
 	}
-	
+
 	DIV.page DIV.innerpage
 	{
 		left: 250px;
 	}
-	
+
 	DIV.page DIV.options, DIV.page DIV.options A
 	{
 		font-size: 16px;
 	}
-	
-	DIV.page DIV.options UL
+
+	DIV.page DIV.options UL.submenu LI
 	{
-		margin-left: 5px;
+		margin-bottom: -4px;
 	}
 }
 
@@ -96,17 +116,17 @@ DIV.page DIV.options.active, DIV.page DIV.options A.active
 	{
 		padding-top: 0px;
 	}
-	
+
 	DIV.page DIV.options UL
 	{
 		padding: 0px;
 	}
-	
+
 	DIV.page DIV.options UL LI
 	{
 		margin-bottom: 0px;
 	}
-	
+
 	DIV.page DIV.options, DIV.page DIV.options A
 	{
 		font-size: 20px;
@@ -115,7 +135,6 @@ DIV.page DIV.options.active, DIV.page DIV.options A.active
 }
 
 @media screen and (max-height: 420px) {
-
 	DIV.page DIV.options UL
 	{
 		margin: 0px;
@@ -125,4 +144,73 @@ DIV.page DIV.options.active, DIV.page DIV.options A.active
 	{
 		display: none;
 	}
+}
+
+@media screen and (max-width: 640px) {
+	DIV.page DIV.options
+	{
+		padding-top: 0px;
+		padding-left: 0px;
+	}
+}
+
+
+/* Pop up confirmation message when uninstalling ALL addons */
+
+body div.modaldialog {
+	background: rgba( 0, 0, 0, 0.5 );
+	width: 100%;
+	height: 100%;
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+}
+
+body div.centermessage {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	background: white;
+	border-radius: 5px;
+
+	padding: 20px;
+	max-width: 500px;
+	text-align: center;
+}
+
+body div.centermessage label {
+	color: black;
+	display: block;
+	font-size: 20px;
+	margin-bottom: 20px;
+}
+
+body div.centermessage a {
+	display: block;
+	color: black;
+	font-size: 16px;
+	border-radius: 4px;
+	background: #ddd;
+	padding: 5px 10px;
+	/*margin: 0px 25px;*/
+}
+body div.centermessage a:hover {
+	background: #e3e3e3;
+}
+
+body div.centermessage a.confirm {
+	background: #f40;
+	color: white;
+	padding: 10px 20px;
+	font-size: 32px;
+	/*margin: 0px;*/
+	margin-bottom: 10px;
+}
+
+body div.centermessage a.confirm:hover {
+	background: #f60;
 }

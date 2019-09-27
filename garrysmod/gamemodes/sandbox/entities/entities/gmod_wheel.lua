@@ -161,7 +161,7 @@ function ENT:SetTorque( torque )
 	self.TorqueScale = torque / self.BaseTorque
 
 	local Motor = self:GetMotor()
-	if (!Motor || !Motor:IsValid()) then return end
+	if ( !IsValid( Motor ) ) then return end
 	Motor:Fire( "Scale", Motor.direction * Motor.forcescale * self.TorqueScale , 0 )
 
 	self:SetOverlayText( "Torque: " .. math.floor( torque ) )

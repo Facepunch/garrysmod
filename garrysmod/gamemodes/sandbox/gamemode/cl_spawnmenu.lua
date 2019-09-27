@@ -15,12 +15,28 @@ end
 	Return false to dissallow it.
 -----------------------------------------------------------]]
 function GM:SpawnMenuOpen()
-
-	GAMEMODE:SuppressHint( "OpeningMenu" )
-	GAMEMODE:AddHint( "OpeningContext", 20 )
-
 	return true
+end
 
+function GM:SpawnMenuOpened()
+	self:SuppressHint( "OpeningMenu" )
+	self:AddHint( "OpeningContext", 20 )
+	self:AddHint( "EditingSpawnlists", 5 )
+end
+
+function GM:SpawnMenuClosed()
+end
+
+function GM:SpawnMenuCreated(spawnmenu)
+end
+
+--[[---------------------------------------------------------
+	If false is returned then the context menu is never created.
+	This saves load times if your mod doesn't actually use the
+	context menu for any reason.
+-----------------------------------------------------------]]
+function GM:ContextMenuEnabled()
+	return true
 end
 
 --[[---------------------------------------------------------
@@ -28,12 +44,18 @@ end
 	Return false to dissallow it.
 -----------------------------------------------------------]]
 function GM:ContextMenuOpen()
-
-	GAMEMODE:SuppressHint( "OpeningContext" )
-	GAMEMODE:AddHint( "ContextClick", 20 )
-
 	return true
+end
 
+function GM:ContextMenuOpened()
+	self:SuppressHint( "OpeningContext" )
+	self:AddHint( "ContextClick", 20 )
+end
+
+function GM:ContextMenuClosed()
+end
+
+function GM:ContextMenuCreated()
 end
 
 --[[---------------------------------------------------------
@@ -48,6 +70,9 @@ end
 -----------------------------------------------------------]]
 function GM:AddSTOOL( category, itemname, text, command, controls, cpanelfunction )
 	self:AddToolmenuOption( "Main", category, itemname, text, command, controls, cpanelfunction )
+end
+
+function GM:PreReloadToolsMenu()
 end
 
 --[[---------------------------------------------------------
@@ -90,6 +115,12 @@ function GM:AddToolMenuCategories()
 
 	-- Hook this function to add custom stuff
 
+end
+
+function GM:PopulateToolMenu()
+end
+
+function GM:PostReloadToolsMenu()
 end
 
 --[[---------------------------------------------------------

@@ -1,6 +1,5 @@
 
 local surface = surface
-local draw = draw
 local Color = Color
 
 SKIN = {}
@@ -63,6 +62,7 @@ SKIN.colTextEntryBorder			= Color( 20, 20, 20, 255 )
 SKIN.colTextEntryText			= Color( 20, 20, 20, 255 )
 SKIN.colTextEntryTextHighlight	= Color( 20, 200, 250, 255 )
 SKIN.colTextEntryTextCursor		= Color( 0, 0, 100, 255 )
+SKIN.colTextEntryTextPlaceholder= Color( 128, 128, 128, 255 )
 
 SKIN.colMenuBG					= Color( 255, 255, 255, 200 )
 SKIN.colMenuBorder				= Color( 0, 0, 0, 200 )
@@ -122,24 +122,24 @@ SKIN.tex.Tab_Bar					= GWEN.CreateTextureBorder( 128, 352, 127, 31, 4, 4, 4, 4 )
 
 SKIN.tex.Window = {}
 
-SKIN.tex.Window.Normal			= GWEN.CreateTextureBorder( 0, 0, 127, 127, 8, 32, 8, 8 )
-SKIN.tex.Window.Inactive		= GWEN.CreateTextureBorder( 128, 0, 127, 127, 8, 32, 8, 8 )
+SKIN.tex.Window.Normal			= GWEN.CreateTextureBorder( 0, 0, 127, 127, 8, 24, 8, 8 )
+SKIN.tex.Window.Inactive		= GWEN.CreateTextureBorder( 128, 0, 127, 127, 8, 24, 8, 8 )
 
-SKIN.tex.Window.Close			= GWEN.CreateTextureNormal( 32, 448, 31, 31 )
-SKIN.tex.Window.Close_Hover		= GWEN.CreateTextureNormal( 64, 448, 31, 31 )
-SKIN.tex.Window.Close_Down		= GWEN.CreateTextureNormal( 96, 448, 31, 31 )
+SKIN.tex.Window.Close			= GWEN.CreateTextureNormal( 32, 448, 31, 24 )
+SKIN.tex.Window.Close_Hover		= GWEN.CreateTextureNormal( 64, 448, 31, 24 )
+SKIN.tex.Window.Close_Down		= GWEN.CreateTextureNormal( 96, 448, 31, 24 )
 
-SKIN.tex.Window.Maxi			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448, 31, 31 )
-SKIN.tex.Window.Maxi_Hover		= GWEN.CreateTextureNormal( 64 + 96 * 2, 448, 31, 31 )
-SKIN.tex.Window.Maxi_Down		= GWEN.CreateTextureNormal( 96 + 96 * 2, 448, 31, 31 )
+SKIN.tex.Window.Maxi			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448, 31, 24 )
+SKIN.tex.Window.Maxi_Hover		= GWEN.CreateTextureNormal( 64 + 96 * 2, 448, 31, 24 )
+SKIN.tex.Window.Maxi_Down		= GWEN.CreateTextureNormal( 96 + 96 * 2, 448, 31, 24 )
 
-SKIN.tex.Window.Restore			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448 + 32, 31, 31 )
-SKIN.tex.Window.Restore_Hover	= GWEN.CreateTextureNormal( 64 + 96 * 2, 448 + 32, 31, 31 )
-SKIN.tex.Window.Restore_Down	= GWEN.CreateTextureNormal( 96 + 96 * 2, 448 + 32, 31, 31 )
+SKIN.tex.Window.Restore			= GWEN.CreateTextureNormal( 32 + 96 * 2, 448 + 32, 31, 24 )
+SKIN.tex.Window.Restore_Hover	= GWEN.CreateTextureNormal( 64 + 96 * 2, 448 + 32, 31, 24 )
+SKIN.tex.Window.Restore_Down	= GWEN.CreateTextureNormal( 96 + 96 * 2, 448 + 32, 31, 24 )
 
-SKIN.tex.Window.Mini			= GWEN.CreateTextureNormal( 32 + 96, 448, 31, 31 )
-SKIN.tex.Window.Mini_Hover		= GWEN.CreateTextureNormal( 64 + 96, 448, 31, 31 )
-SKIN.tex.Window.Mini_Down		= GWEN.CreateTextureNormal( 96 + 96, 448, 31, 31 )
+SKIN.tex.Window.Mini			= GWEN.CreateTextureNormal( 32 + 96, 448, 31, 24 )
+SKIN.tex.Window.Mini_Hover		= GWEN.CreateTextureNormal( 64 + 96, 448, 31, 24 )
+SKIN.tex.Window.Mini_Down		= GWEN.CreateTextureNormal( 96 + 96, 448, 31, 24 )
 
 SKIN.tex.Scroller = {}
 SKIN.tex.Scroller.TrackV				= GWEN.CreateTextureBorder( 384,		208, 15, 127, 4, 4, 4, 4 )
@@ -439,6 +439,22 @@ function SKIN:PaintTextEntry( panel, w, h )
 
 	end
 
+	-- Hack on a hack, but this produces the most close appearance to what it will actually look if text was actually there
+	if ( panel.GetPlaceholderText && panel.GetPlaceholderColor && panel:GetPlaceholderText() && panel:GetPlaceholderText():Trim() != "" && panel:GetPlaceholderColor() && ( !panel:GetText() || panel:GetText() == "" ) ) then
+
+		local oldText = panel:GetText()
+
+		local str = panel:GetPlaceholderText()
+		if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
+		str = language.GetPhrase( str )
+
+		panel:SetText( str )
+		panel:DrawTextEntryText( panel:GetPlaceholderColor(), panel:GetHighlightColor(), panel:GetCursorColor() )
+		panel:SetText( oldText )
+
+		return
+	end
+
 	panel:DrawTextEntryText( panel:GetTextColor(), panel:GetHighlightColor(), panel:GetCursorColor() )
 
 end
@@ -471,12 +487,17 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintMenuOption( panel, w, h )
 
-	if ( panel.m_bBackground && (panel.Hovered || panel.Highlight) ) then
+	if ( panel.m_bBackground && !panel:IsEnabled() ) then
+		surface.SetDrawColor( Color( 0, 0, 0, 50 ) )
+		surface.DrawRect( 0, 0, w, h )
+	end
+
+	if ( panel.m_bBackground && ( panel.Hovered || panel.Highlight) ) then
 		self.tex.MenuBG_Hover( 0, 0, w, h )
 	end
 
 	if ( panel:GetChecked() ) then
-		self.tex.Menu_Check( 5, h/2-7, 15, 15 )
+		self.tex.Menu_Check( 5, h / 2 - 7, 15, 15 )
 	end
 
 end
@@ -510,7 +531,7 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintTab( panel, w, h )
 
-	if ( panel:GetPropertySheet():GetActiveTab() == panel ) then
+	if ( panel:IsActive() ) then
 		return self:PaintActiveTab( panel, w, h )
 	end
 
@@ -896,7 +917,7 @@ end
 
 function SKIN:PaintCategoryList( panel, w, h )
 
-	self.tex.CategoryList.Outer( 0, 0, w, h )
+	self.tex.CategoryList.Outer( 0, 0, w, h, panel:GetBackgroundColor() )
 
 end
 

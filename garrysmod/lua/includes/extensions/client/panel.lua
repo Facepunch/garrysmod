@@ -256,6 +256,20 @@ function meta:PositionLabel( labelWidth, x, y, lbl, ctrl )
 end
 
 --[[---------------------------------------------------------
+	Name: GetTooltip
+-----------------------------------------------------------]]
+function meta:GetTooltip()
+	return self.strTooltipText
+end
+
+--[[---------------------------------------------------------
+	Name: GetTooltipPanel
+-----------------------------------------------------------]]
+function meta:GetTooltipPanel()
+	return self.pnlTooltipPanel
+end
+
+--[[---------------------------------------------------------
 	Name: SetTooltip
 -----------------------------------------------------------]]
 function meta:SetTooltip( tooltip )
@@ -268,6 +282,7 @@ meta.SetToolTip = meta.SetTooltip
 -----------------------------------------------------------]]
 function meta:SetTooltipPanel( panel )
 	self.pnlTooltipPanel = panel
+	if ( IsValid( panel ) ) then panel:SetVisible( false ) end
 end
 meta.SetToolTipPanel = meta.SetTooltipPanel
 
@@ -414,7 +429,7 @@ function meta:InvalidateChildren( bRecurse )
 		if ( bRecurse ) then
 			v:InvalidateChildren( true )
 		else
-			v:InvalidateChildren( false )
+			v:InvalidateLayout( true )
 		end
 
 	end

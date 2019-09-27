@@ -107,7 +107,7 @@ end
 
 hook.Add( "PreDrawHalos", "AddPhysgunHalos", function()
 
-	if ( !PhysgunHalos || table.Count( PhysgunHalos ) == 0 ) then return end
+	if ( !PhysgunHalos || table.IsEmpty( PhysgunHalos ) ) then return end
 
 
 	for k, v in pairs( PhysgunHalos ) do

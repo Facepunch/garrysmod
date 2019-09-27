@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 properties.Add( "persist", {
-	MenuLabel = "Make Persistent",
+	MenuLabel = "#makepersistent",
 	Order = 400,
 	MenuIcon = "icon16/link.png",
 
@@ -24,11 +24,12 @@ properties.Add( "persist", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 		if ( !IsValid( ent ) ) then return end
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		-- TODO: Start some kind of animation, take 5 seconds to make something persistent
 
@@ -40,7 +41,7 @@ properties.Add( "persist", {
 } )
 
 properties.Add( "persist_end", {
-	MenuLabel = "Stop Persisting",
+	MenuLabel = "#stoppersisting",
 	Order = 400,
 	MenuIcon = "icon16/link_break.png",
 
@@ -61,11 +62,12 @@ properties.Add( "persist_end", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 		if ( !IsValid( ent ) ) then return end
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		-- TODO: Start some kind of animation, take 5 seconds to make something persistent
 

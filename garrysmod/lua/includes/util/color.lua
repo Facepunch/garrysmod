@@ -170,10 +170,10 @@ Color = setmetatable( {}, {
 	__call = function( _, r, g, b, a )
 
 		return setmetatable( {
-			r = math.min( tonumber(r), 255 ),
-			g = math.min( tonumber(g), 255 ),
-			b = math.min( tonumber(b), 255 ),
-			a = a && math.min( tonumber(a), 255 ) || 255
+			r = math.max( math.min( tonumber(r), 255 ), 0 ),
+			g = math.max( math.min( tonumber(g), 255 ), 0 ),
+			b = math.max( math.min( tonumber(b), 255 ), 0 ),
+			a = a && math.max( math.min( tonumber(a), 255 ), 0 ) || 255
 		}, COLOR )
 
 	end
@@ -398,10 +398,34 @@ function COLOR:ToHSV()
 end
 
 --[[---------------------------------------------------------
-	Converts Color To Vector - loss of precision / alpha lost
+	Converts color to vector - loss of precision / alpha lost
 -----------------------------------------------------------]]
-function COLOR:ToVector( )
+function COLOR:ToVector()
 
 	return Vector( self.r / 255, self.g / 255, self.b / 255 )
+
+end
+
+--[[---------------------------------------------------------
+	Unpacks the color into four variables
+-----------------------------------------------------------]]
+function COLOR:Unpack()
+	
+	return self.r, self.g, self.b, self.a
+	
+end
+
+function COLOR:SetUnpacked( r, g, b, a )
+
+	self.r = r or 255
+	self.g = g or 255
+	self.b = b or 255
+	self.a = a or 255
+
+end
+
+function COLOR:ToTable()
+
+	return { self.r, self.g, self.b, self.a }
 
 end

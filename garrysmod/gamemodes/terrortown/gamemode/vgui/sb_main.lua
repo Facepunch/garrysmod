@@ -22,6 +22,9 @@ surface.CreateFont("treb_small", {font = "Trebuchet18",
                                   size = 14,
                                   weight = 700})
 
+CreateClientConVar("ttt_scoreboard_sorting", "name", true, false, "name | role | karma | score | deaths | ping")
+CreateClientConVar("ttt_scoreboard_ascending", "1", true, false, "Should scoreboard ordering be in ascending order")
+
 local logo = surface.GetTextureID("vgui/ttt/score_logo")
 
 local PANEL = {}
@@ -85,6 +88,36 @@ function ScoreGroup(p)
    return p:IsTerror() and GROUP_TERROR or GROUP_SPEC
 end
 
+
+-- Comparison functions used to sort scoreboard
+sboard_sort = {
+   name = function (plya, plyb)
+      -- Automatically sorts by name if this returns 0
+      return 0
+   end,
+   ping = function (plya, plyb)
+      return plya:Ping() - plyb:Ping()
+   end,
+   deaths = function (plya, plyb)
+      return plya:Deaths() - plyb:Deaths()
+   end,
+   score = function (plya, plyb)
+      return plya:Frags() - plyb:Frags()
+   end,
+   role = function (plya, plyb)
+      local comp = (plya:GetRole() or 0) - (plyb:GetRole() or 0)
+      -- Reverse on purpose;
+      --    otherwise the default ascending order puts boring innocents first
+      comp = 0 - comp
+      return comp
+   end,
+   karma = function (plya, plyb)
+      return (plya:GetBaseKarma() or 0) - (plyb:GetBaseKarma() or 0)
+   end
+}
+
+----- PANEL START
+
 function PANEL:Init()
 
    self.hostdesc = vgui.Create("DLabel", self)
@@ -134,31 +167,93 @@ function PANEL:Init()
 
    -- the various score column headers
    self.cols = {}
-   self:AddColumn( GetTranslation("sb_ping") )
-   self:AddColumn( GetTranslation("sb_deaths") )
-   self:AddColumn( GetTranslation("sb_score") )
+   self:AddColumn( GetTranslation("sb_ping"), nil, nil,         "ping" )
+   self:AddColumn( GetTranslation("sb_deaths"), nil, nil,       "deaths" )
+   self:AddColumn( GetTranslation("sb_score"), nil, nil,        "score" )
 
    if KARMA.IsEnabled() then
-      self:AddColumn( GetTranslation("sb_karma") )
+      self:AddColumn( GetTranslation("sb_karma"), nil, nil,     "karma" )
    end
 
-   -- Let hooks add their column headers (via AddColumn())
+   self.sort_headers = {}
+   -- Reuse some translations
+   -- Columns spaced out a bit to allow for more room for translations
+   self:AddFakeColumn( GetTranslation("sb_sortby"), nil, 70,       nil ) -- "Sort by:"
+   self:AddFakeColumn( GetTranslation("equip_spec_name"), nil, 70, "name" )
+   self:AddFakeColumn( GetTranslation("col_role"), nil, 70,        "role" )
+
+   -- Let hooks add their column headers (via AddColumn() or AddFakeColumn())
    hook.Call( "TTTScoreboardColumns", nil, self )
 
    self:UpdateScoreboard()
    self:StartUpdateTimer()
 end
 
--- For headings only the label parameter is relevant, func is included for
+local function sort_header_handler(self_, lbl)
+   return function()
+      surface.PlaySound("ui/buttonclick.wav")
+
+      local sorting = GetConVar("ttt_scoreboard_sorting")
+      local ascending = GetConVar("ttt_scoreboard_ascending")
+
+      if lbl.HeadingIdentifier == sorting:GetString() then
+         ascending:SetBool(not ascending:GetBool())
+      else
+         sorting:SetString( lbl.HeadingIdentifier )
+         ascending:SetBool(true)
+      end
+
+      for _, scoregroup in pairs(self_.ply_groups) do
+         scoregroup:UpdateSortCache()
+         scoregroup:InvalidateLayout()
+      end
+
+      self_:ApplySchemeSettings()
+   end
+end
+
+-- For headings only the label parameter is relevant, second param is included for
 -- parity with sb_row
-function PANEL:AddColumn( label, func, width )
-   local lbl = vgui.Create( "DLabel", self )
+local function column_label_work(self_, table_to_add, label, width, sort_identifier, sort_func )
+   local lbl = vgui.Create( "DLabel", self_ )
    lbl:SetText( label )
+   local can_sort = false
    lbl.IsHeading = true
    lbl.Width = width or 50 -- Retain compatibility with existing code
 
-   table.insert( self.cols, lbl )
+   if sort_identifier != nil then
+      can_sort = true
+      -- If we have an identifier and an existing sort function then it was a built-in
+      -- Otherwise...
+      if _G.sboard_sort[sort_identifier] == nil then
+         if sort_func == nil then
+            ErrorNoHalt( "Sort ID provided without a sorting function, Label = ", label, " ; ID = ", sort_identifier )
+            can_sort = false
+         else
+            _G.sboard_sort[sort_identifier] = sort_func
+         end
+      end
+   end
+
+   if can_sort then
+      lbl:SetMouseInputEnabled(true)
+      lbl:SetCursor("hand")
+      lbl.HeadingIdentifier = sort_identifier
+      lbl.DoClick = sort_header_handler(self_, lbl)
+   end
+
+   table.insert( table_to_add, lbl )
    return lbl
+end
+
+function PANEL:AddColumn( label, _, width, sort_id, sort_func )
+   return column_label_work( self, self.cols, label, width, sort_id, sort_func )
+end
+
+-- Adds just column headers without player-specific data
+-- Identical to PANEL:AddColumn except it adds to the sort_headers table instead
+function PANEL:AddFakeColumn( label, _, width, sort_id, sort_func )
+   return column_label_work( self, self.sort_headers, label, width, sort_id, sort_func )
 end
 
 function PANEL:StartUpdateTimer()
@@ -261,6 +356,16 @@ function PANEL:PerformLayout()
       cx = cx - v.Width
       v:SetPos(cx - v:GetWide()/2, cy)
    end
+
+   -- sort headers
+   -- reuse cy
+   -- cx = logo width + buffer space
+   local cx = 256 + 8
+   for k,v in ipairs(self.sort_headers) do
+      v:SizeToContents()
+      cx = cx + v.Width
+      v:SetPos(cx - v:GetWide()/2, cy)
+   end
 end
 
 function PANEL:ApplySchemeSettings()
@@ -272,9 +377,27 @@ function PANEL:ApplySchemeSettings()
    self.hostname:SetTextColor(COLOR_BLACK)
    self.mapchange:SetTextColor(COLOR_WHITE)
 
+   local sorting = GetConVar("ttt_scoreboard_sorting"):GetString()
+
+   local highlight_color = Color(175, 175, 175, 255)
+   local default_color = COLOR_WHITE
+
    for k,v in pairs(self.cols) do
       v:SetFont("treb_small")
-      v:SetTextColor(COLOR_WHITE)
+      if sorting == v.HeadingIdentifier then
+         v:SetTextColor(highlight_color)
+      else
+         v:SetTextColor(default_color)
+      end
+   end
+
+   for k,v in pairs(self.sort_headers) do
+      v:SetFont("treb_small")
+      if sorting == v.HeadingIdentifier then
+         v:SetTextColor(highlight_color)
+      else
+         v:SetTextColor(default_color)
+      end
    end
 end
 
@@ -285,7 +408,7 @@ function PANEL:UpdateScoreboard( force )
 
    -- Put players where they belong. Groups will dump them as soon as they don't
    -- anymore.
-   for k, p in pairs(player.GetAll()) do
+   for k, p in ipairs(player.GetAll()) do
       if IsValid(p) then
          local group = ScoreGroup(p)
          if self.ply_groups[group] and not self.ply_groups[group]:HasPlayerRow(p) then

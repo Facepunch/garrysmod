@@ -94,9 +94,13 @@ function PANEL:DoRightClick()
 	return false
 end
 
+function PANEL:Clear()
+	if ( IsValid( self.ChildNodes ) ) then self.ChildNodes:Clear() end
+end
+
 function PANEL:AnimSlide( anim, delta, data )
 
-	if ( !self.ChildNodes ) then anim:Stop() return end
+	if ( !IsValid( self.ChildNodes ) ) then anim:Stop() return end
 
 	if ( anim.Started ) then
 		data.To = self:GetTall()
@@ -147,7 +151,7 @@ function PANEL:ExpandRecurse( bExpand )
 
 	self:SetExpanded( bExpand, true )
 
-	if ( !self.ChildNodes ) then return end
+	if ( !IsValid( self.ChildNodes ) ) then return end
 
 	for k, Child in pairs( self.ChildNodes:GetItems() ) do
 		if ( Child.ExpandRecurse ) then
@@ -171,7 +175,7 @@ function PANEL:SetExpanded( bExpand, bSurpressAnimation )
 	self.m_bExpanded = bExpand
 	self:InvalidateLayout( true )
 
-	if ( !self.ChildNodes ) then return end
+	if ( !IsValid( self.ChildNodes ) ) then return end
 
 	local StartTall = self:GetTall()
 	self.animSlide:Stop()
@@ -182,7 +186,7 @@ function PANEL:SetExpanded( bExpand, bSurpressAnimation )
 		return
 	end
 
-	if ( self.ChildNodes ) then
+	if ( IsValid( self.ChildNodes ) ) then
 		self.ChildNodes:SetVisible( bExpand )
 		if ( bExpand ) then
 			self.ChildNodes:InvalidateLayout( true )
@@ -219,7 +223,7 @@ end
 
 function PANEL:DoChildrenOrder()
 
-	if ( !self.ChildNodes ) then return end
+	if ( !IsValid( self.ChildNodes ) ) then return end
 
 	local last = table.Count( self.ChildNodes:GetChildren() )
 	for k, Child in pairs( self.ChildNodes:GetChildren() ) do
@@ -280,7 +284,7 @@ function PANEL:PerformLayout()
 		self.Label:SetTextInset( self.Expander.x + self.Expander:GetWide() + 4, 0 )
 	end
 
-	if ( !self.ChildNodes || !self.ChildNodes:IsVisible() ) then
+	if ( !IsValid( self.ChildNodes ) || !self.ChildNodes:IsVisible() ) then
 		self:SetTall( LineHeight )
 		return
 	end
@@ -296,7 +300,7 @@ end
 
 function PANEL:CreateChildNodes()
 
-	if ( self.ChildNodes ) then return end
+	if ( IsValid( self.ChildNodes ) ) then return end
 
 	self.ChildNodes = vgui.Create( "DListLayout", self )
 	self.ChildNodes:SetDropPos( "852" )
@@ -305,7 +309,8 @@ function PANEL:CreateChildNodes()
 
 		self.ChildNodes:InvalidateLayout()
 
-		if ( !self.ChildNodes:HasChildren() ) then
+		-- Root node should never be closed
+		if ( !self.ChildNodes:HasChildren() && !self:IsRootNode() ) then
 			self:SetExpanded( false )
 		end
 
@@ -426,7 +431,7 @@ function PANEL:FilePopulateCallback( files, folders, foldername, path, bAndChild
 		for k, File in SortedPairsByValue( folders ) do
 
 			local Node = self:AddNode( File )
-			Node:MakeFolder( foldername .. "/" .. File, path, showfiles, wildcard, true )
+			Node:MakeFolder( string.Trim( foldername .. "/" .. File, "/" ), path, showfiles, wildcard, true )
 			FileCount = FileCount + 1
 
 		end
@@ -440,7 +445,7 @@ function PANEL:FilePopulateCallback( files, folders, foldername, path, bAndChild
 			local icon = "icon16/page_white.png"
 
 			local Node = self:AddNode( File, icon )
-			Node:SetFileName( foldername .. "/" .. File )
+			Node:SetFileName( string.Trim( foldername .. "/" .. File, "/" ) )
 			FileCount = FileCount + 1
 
 		end
@@ -451,7 +456,7 @@ function PANEL:FilePopulateCallback( files, folders, foldername, path, bAndChild
 		self.ChildNodes:Remove()
 		self.ChildNodes = nil
 
-		self:SetNeedsPopulating( false)
+		self:SetNeedsPopulating( false )
 		self:SetShowFiles( nil )
 		self:SetWildCard( nil )
 
@@ -476,7 +481,8 @@ function PANEL:FilePopulate( bAndChildren, bExpand )
 
 	if ( !folder || !wildcard || !path ) then return false end
 
-	local files, folders = file.Find( folder .. "/" .. wildcard, path )
+	local files, folders = file.Find( string.Trim( folder .. "/" .. wildcard, "/" ), path )
+	if ( folders && folders[ 1 ] == "/" ) then table.remove( folders, 1 ) end
 
 	self:SetNeedsPopulating( false )
 	self:SetNeedsChildSearch( false )

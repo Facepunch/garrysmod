@@ -2,7 +2,7 @@
 <div class="page" ng-controller="ControllerDupes">
 
 		<div style="position: absolute; left: 0px; top: 0px; bottom: 0px; right: 0px;">
-			
+
 			<workshopcontainer>
 
 				<workshopmessage ng-show="Loading" ng-Tranny="'dupes.loading'">...</workshopmessage>
@@ -16,30 +16,26 @@
 
 					<name ng-click="OpenWorkshopFile( file.id )" ng-hide="file.local">{{file.info.title}}</name>
 					<author ng-hide="file.local">{{file.info.ownername}}</author>
-					
+
 					<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
 					<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
-					
+
 					<description>{{file.info.description}}</description>
 
 					<controls>
 
-						
 						<left>
 						<!--
-							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>	
+							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
 							<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
 						-->
-						
 							<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'dupes.publish'">..</control>
 							<control ng-show="!file.local" ng-click="OpenWorkshopFile( file.id )" ng-Tranny="'dupes.commentandrate'">..</control>
 
 						</left>
 
 						<right>
-						
 							<control ng-click="ArmDupe( file )" ng-Tranny="'dupes.arm'">..</control>
-						
 						</right>
 
 					</controls>
@@ -60,7 +56,7 @@
 				</center>
 
 			</workshopcontainer>
-			
+
 		</div>
 
 	</div>

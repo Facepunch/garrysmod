@@ -2,6 +2,7 @@
 local function AddRecursive( pnl, folder, path, wildcard )
 
 	local files, folders = file.Find( folder .. "*", path )
+	if ( !files ) then MsgN( "Warning! Not opening '" .. folder .. "' because we cannot search in it!"  ) return end
 
 	for k, v in pairs( files ) do
 
