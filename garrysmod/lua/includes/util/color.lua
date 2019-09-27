@@ -40,9 +40,9 @@ debug.getregistry().Color = COLOR
 -----------------------------------------------------------]]
 function Color( r, g, b, a )
 	return setmetatable( {
-		r = math.max( math.min( tonumber(r), 255 ), 0 ),
-		g = math.max( math.min( tonumber(g), 255 ), 0 ),
-		b = math.max( math.min( tonumber(b), 255 ), 0 ),
+		r = r == nil && 255 || math.max( math.min( tonumber(r), 255 ), 0 ),
+		g = g == nil && 255 || math.max( math.min( tonumber(g), 255 ), 0 ),
+		b = b == nil && 255 || math.max( math.min( tonumber(b), 255 ), 0 ),
 		a = a == nil && 255 || math.max( math.min( tonumber(a), 255 ), 0 )
 	}, COLOR )
 end
