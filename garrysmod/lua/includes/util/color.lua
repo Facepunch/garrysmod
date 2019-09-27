@@ -8,7 +8,7 @@ COLOR.__index = COLOR
 debug.getregistry().Color = COLOR
 
 --[[---------------------------------------------------------
-	To easily create a colour table
+	To easily create a color table
 -----------------------------------------------------------]]
 function Color( r, g, b, a )
 
@@ -64,10 +64,34 @@ function COLOR:ToHSV()
 end
 
 --[[---------------------------------------------------------
-	Converts Color To Vector - loss of precision / alpha lost
+	Converts color to vector - loss of precision / alpha lost
 -----------------------------------------------------------]]
-function COLOR:ToVector( )
+function COLOR:ToVector()
 
 	return Vector( self.r / 255, self.g / 255, self.b / 255 )
+
+end
+
+--[[---------------------------------------------------------
+	Unpacks the color into four variables
+-----------------------------------------------------------]]
+function COLOR:Unpack()
+	
+	return self.r, self.g, self.b, self.a
+	
+end
+
+function COLOR:SetUnpacked( r, g, b, a )
+
+	self.r = r or 255
+	self.g = g or 255
+	self.b = b or 255
+	self.a = a or 255
+
+end
+
+function COLOR:ToTable()
+
+	return { self.r, self.g, self.b, self.a }
 
 end
