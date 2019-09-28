@@ -1,3 +1,7 @@
+local CurTime = CurTime
+local IsValid = IsValid
+local isvector = isvector
+local math = math
 
 matproxy.Add( {
 	name = "PlayerWeaponColor",

@@ -1,4 +1,4 @@
-
+local surface = surface
 local meta = FindMetaTable( "Panel" )
 
 GWEN = {}

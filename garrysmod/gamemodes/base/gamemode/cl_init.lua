@@ -8,6 +8,11 @@ include( "cl_deathnotice.lua" )
 include( "cl_pickteam.lua" )
 include( "cl_voice.lua" )
 
+local IsValid = IsValid
+local LocalPlayer = LocalPlayer
+local player_manager = player_manager
+local drive = drive
+
 --[[---------------------------------------------------------
 	Name: gamemode:Initialize()
 	Desc: Called immediately after starting the gamemode

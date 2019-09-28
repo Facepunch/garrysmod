@@ -1,4 +1,7 @@
 
+local RealTime = RealTime
+local IsValid = IsValid
+
 matproxy.Add( {
 	name = "SkyPaint",
 
@@ -6,27 +9,27 @@ matproxy.Add( {
 	end,
 
 	bind = function( self, mat, ent )
+		local skyPaint = g_SkyPaint
+		if ( !IsValid( skyPaint ) ) then return end
 
-		if ( !IsValid( g_SkyPaint ) ) then return end
+		mat:SetVector( "$TOPCOLOR",		skyPaint:GetTopColor() )
+		mat:SetVector( "$BOTTOMCOLOR",	skyPaint:GetBottomColor() )
+		mat:SetVector( "$SUNNORMAL",	skyPaint:GetSunNormal() )
+		mat:SetVector( "$SUNCOLOR",		skyPaint:GetSunColor() )
+		mat:SetVector( "$DUSKCOLOR",	skyPaint:GetDuskColor() )
+		mat:SetFloat( "$FADEBIAS",		skyPaint:GetFadeBias() )
+		mat:SetFloat( "$HDRSCALE",		skyPaint:GetHDRScale() )
+		mat:SetFloat( "$DUSKSCALE",		skyPaint:GetDuskScale() )
+		mat:SetFloat( "$DUSKINTENSITY",	skyPaint:GetDuskIntensity() )
+		mat:SetFloat( "$SUNSIZE",		skyPaint:GetSunSize() )
 
-		mat:SetVector( "$TOPCOLOR",		g_SkyPaint:GetTopColor() )
-		mat:SetVector( "$BOTTOMCOLOR",	g_SkyPaint:GetBottomColor() )
-		mat:SetVector( "$SUNNORMAL",	g_SkyPaint:GetSunNormal() )
-		mat:SetVector( "$SUNCOLOR",		g_SkyPaint:GetSunColor() )
-		mat:SetVector( "$DUSKCOLOR",	g_SkyPaint:GetDuskColor() )
-		mat:SetFloat( "$FADEBIAS",		g_SkyPaint:GetFadeBias() )
-		mat:SetFloat( "$HDRSCALE",		g_SkyPaint:GetHDRScale() )
-		mat:SetFloat( "$DUSKSCALE",		g_SkyPaint:GetDuskScale() )
-		mat:SetFloat( "$DUSKINTENSITY",	g_SkyPaint:GetDuskIntensity() )
-		mat:SetFloat( "$SUNSIZE",		g_SkyPaint:GetSunSize() )
+		if ( skyPaint:GetDrawStars() ) then
 
-		if ( g_SkyPaint:GetDrawStars() ) then
-
-			mat:SetInt( "$STARLAYERS",		g_SkyPaint:GetStarLayers() )
-			mat:SetFloat( "$STARSCALE",		g_SkyPaint:GetStarScale() )
-			mat:SetFloat( "$STARFADE",		g_SkyPaint:GetStarFade() )
-			mat:SetFloat( "$STARPOS",		RealTime() * g_SkyPaint:GetStarSpeed() )
-			mat:SetTexture( "$STARTEXTURE",	g_SkyPaint:GetStarTexture() )
+			mat:SetInt( "$STARLAYERS",		skyPaint:GetStarLayers() )
+			mat:SetFloat( "$STARSCALE",		skyPaint:GetStarScale() )
+			mat:SetFloat( "$STARFADE",		skyPaint:GetStarFade() )
+			mat:SetFloat( "$STARPOS",		RealTime() * skyPaint:GetStarSpeed() )
+			mat:SetTexture( "$STARTEXTURE",	skyPaint:GetStarTexture() )
 
 		else
 
