@@ -1,3 +1,4 @@
+
 local COLOR = {}
 
 local numerical_keys = { [1] = "r", [2] = "g", [3] = "b", [4] = "a" }
@@ -53,7 +54,7 @@ end
 function ColorAlpha( c, a )
 
 	return Color( c.r, c.g, c.b, a )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -70,27 +71,36 @@ end
 	Returns color as a string
 -----------------------------------------------------------]]
 function COLOR:__tostring()
-	
+
 	return string.format( "%d %d %d %d", self.r, self.g, self.b, self.a )
-	
+
 end
 
 --[[---------------------------------------------------------
 	Compares two colors
 -----------------------------------------------------------]]
 function COLOR:__eq( c )
-	
+
 	return self.r == c.r and self.g == c.g and self.b == c.b and self.a == c.a
-	
+
+end
+
+--[[---------------------------------------------------------
+	Converts a color to HSL color space
+-----------------------------------------------------------]]
+function COLOR:ToHSL()
+
+	return ColorToHSL( self )
+
 end
 
 --[[---------------------------------------------------------
 	Converts a color to HSV
 -----------------------------------------------------------]]
 function COLOR:ToHSV()
-	
+
 	return ColorToHSV( self )
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -106,9 +116,9 @@ end
 	Unpacks the color into four variables
 -----------------------------------------------------------]]
 function COLOR:Unpack()
-	
+
 	return self.r, self.g, self.b, self.a
-	
+
 end
 
 function COLOR:SetUnpacked( r, g, b, a )
