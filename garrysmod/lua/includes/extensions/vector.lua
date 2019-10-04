@@ -125,7 +125,7 @@ end
 --[[---------------------------------------------------------
 Convets the vector to resized midpoint of itself
 -----------------------------------------------------------]]
-function meta:Middle(vec)
+function meta:Center(vec)
 	self:Add(vec)
 	self:Mul(0.5)
 	return self
@@ -134,9 +134,9 @@ end
 --[[---------------------------------------------------------
 Returns a copy of the midpoint vector
 -----------------------------------------------------------]]
-function meta:GetMiddle(vec)
+function meta:GetCenter(vec)
 	local v = Vector(self)
-	return v:Middle(vec)
+	return v:Center(vec)
 end
 
 --[[---------------------------------------------------------
