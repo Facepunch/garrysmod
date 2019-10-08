@@ -162,6 +162,17 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		lua.Run( "steamworks.Subscribe( %s )", String( gm.info.workshopid ) );
 	}
 
+	$scope.ToggleFavorite = function( server )
+	{
+		if ( server.favorite ) {
+			server.favorite = false;
+			lua.Run( "serverlist.RemoveServerFromFavorites( %s )", String( server.address ) );
+		} else {
+			server.favorite = true;
+			lua.Run( "serverlist.AddServerToFavorites( %s )", String( server.address ) );
+		}
+	}
+
 	$scope.ShouldShowInstall = function( gm )
 	{
 		if ( !gm ) return false;
@@ -231,8 +242,13 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		address:		address,
 		gamemode:		gamemode,
 		password:		'',
-		workshopid:		workshopid
+		workshopid:		workshopid,
+		favorite:		false // This needs to be set properly
 	};
+
+	if ( type == "favorite" ) {
+		data.favorite = true; // This needs to be set properly
+	}
 
 	data.hasmap = DoWeHaveMap( data.map );
 
@@ -271,7 +287,11 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 
 function MissingGamemodeIcon( element )
 {
-	element.src = "../gamemodes/base/icon24.png";
+	if ( !IN_ENGINE ) {
+		element.src = "../../img/addon.png";
+	} else {
+		element.src = "../gamemodes/base/icon24.png";
+	}
 	return true;
 }
 

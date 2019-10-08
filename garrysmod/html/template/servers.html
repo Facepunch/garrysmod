@@ -76,7 +76,11 @@
 				<div class='body scrollable'>
 
 					<div ng-repeat="server in CurrentGamemode.servers|filter:CurrentGamemode.Search|orderBy:CurrentGamemode.OrderBy:CurrentGamemode.OrderReverse|limitTo:256" class="server {{ServerClass(server)}} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-click="SelectServer( server )">
-						<name><img src='img/server-passworded.png' style="margin-right: 8px;" ng-show="server.pass"/>{{server.name}}</name>
+						<name>
+							<a class='unfavbutton {{IfElse( !server.favorite, "removed", "" )}}' ng-show="ServerType == 'favorite'" ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
+							<img src='img/server-passworded.png' style="margin-right: 8px;" ng-show="server.pass"/>
+							<span>{{server.name}}</span>
+						</name>
 						<ping>{{server.ping}}</ping>
 						<players>{{server.players}} / {{server.maxplayers}}</players>
 						<map>{{server.map}}</map>
