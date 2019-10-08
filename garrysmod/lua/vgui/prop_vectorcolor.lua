@@ -103,6 +103,16 @@ function PANEL:Setup( vars )
 		end
 	end
 
+	-- Enabled/disabled support
+	self.IsEnabled = function( self )
+		return btn:IsEnabled()
+	end
+	local oldSetEnabled = self.SetEnabled
+	self.SetEnabled = function( self, b )
+		btn:SetEnabled( b )
+		oldSetEnabled( b ) -- Also handle the text entry
+	end
+
 end
 
 derma.DefineControl( "DProperty_VectorColor", "", PANEL, "DProperty_Generic" )

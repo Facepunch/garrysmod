@@ -79,6 +79,8 @@ end
 
 function PANEL:OnMousePressed( mousecode )
 
+	if ( !self:IsEnabled() ) then return end
+
 	if ( self:GetZoom() == 0 ) then self:SetZoom( self:IdealZoom() ) end
 
 	self:SetActive( true )
