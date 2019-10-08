@@ -1,0 +1,7 @@
+
+# Non english language files, use https://crowdin.com/project/garrysmod for suggesting changes to that
+!/garrysmod/resource/localization/en
+/garrysmod/resource/localization
+
+#Misc
+/garrysmod/resource/chromium
