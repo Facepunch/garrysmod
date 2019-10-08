@@ -43,14 +43,6 @@ WeaponData
 				"font"		"WeaponIcons"
 				"character"	"c"
 		}
-		"ammo2"
-		{
-			"file"		"sprites/640hud7"
-			"x"			"48"
-			"y"			"72"
-			"width"		"24"
-			"height"	"24"
-		}
 		"crosshair"
 		{
 				"font"		"Crosshairs"

@@ -49,21 +49,20 @@ WeaponData
 				"width"		"128"
 				"height"	"64"
 		}
+		"weapon_small"
+		{
+				"font"		"WeaponIconsSmall"
+				"character"	"b"
+		}
 		"ammo"
 		{
-				"file"		"sprites/a_icons1"
-				"x"			"55"
-				"y"			"90"
-				"width"		"73"
-				"height"	"20"
+				"font"		"WeaponIconsSmall"
+				"character"	"s"
 		}
 		"crosshair"
 		{
-				"file"		"sprites/crosshairs"
-				"x"			"0"
-				"y"			"48"
-				"width"		"24"
-				"height"	"24"
+				"font"		"Crosshairs"
+				"character"	"Q"
 		}
 		"autoaim"
 		{
