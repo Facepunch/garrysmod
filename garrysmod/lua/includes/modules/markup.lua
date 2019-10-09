@@ -236,8 +236,13 @@ end
 	Desc: Converts a string to its escaped, markup-unparseable, safe equivalent
 	Usage: markup.Escape("<font=Default>The font will not change & these < > & symbols will also appear</font>")
 -----------------------------------------------------------]]
+local markupEscapeEntities = {
+	["&"] = "&amp;",
+	["<"] = "&lt;",
+	[">"] = "&gt;"
+}
 function Escape( str )
-	return (tostring(str):gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"))
+	return (tostring(str):gsub("[&<>]", markupEscapeEntities))
 end
 
 --[[---------------------------------------------------------
