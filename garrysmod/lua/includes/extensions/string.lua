@@ -259,11 +259,11 @@ function string.NiceSize( size )
 	size = tonumber( size )
 
 	if ( size <= 0 ) then return "0" end
-	if ( size < 1024 ) then return size .. " Bytes" end
-	if ( size < 1024 * 1024 ) then return math.Round( size / 1024, 2 ) .. " KB" end
-	if ( size < 1024 * 1024 * 1024 ) then return math.Round( size / ( 1024 * 1024 ), 2 ) .. " MB" end
+	if ( size < 1000 ) then return size .. " Bytes" end
+	if ( size < 1000 * 1000 ) then return math.Round( size / 1000, 2 ) .. " KB" end
+	if ( size < 1000 * 1000 * 1000 ) then return math.Round( size / ( 1000 * 1000 ), 2 ) .. " MB" end
 
-	return math.Round( size / ( 1024 * 1024 * 1024 ), 2 ) .. " GB"
+	return math.Round( size / ( 1000 * 1000 * 1000 ), 2 ) .. " GB"
 
 end
 
