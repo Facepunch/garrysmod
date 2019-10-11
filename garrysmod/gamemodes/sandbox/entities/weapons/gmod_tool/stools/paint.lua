@@ -132,7 +132,14 @@ list.Add( "PaintMaterials", "Cross" )
 
 function TOOL.BuildCPanel( CPanel )
 
-	local Options = list.Get( "PaintMaterials" )
+	-- Remove duplicates.
+	local Options = {}
+	for id, str in pairs( list.Get( "PaintMaterials" ) ) do
+		if ( !table.HasValue( Options, str ) ) then
+			table.insert( Options, str )
+		end
+	end
+
 	table.sort( Options )
 
 	local listbox = CPanel:AddControl( "ListBox", { Label = "#tool.paint.texture", Height = 17 + table.Count( Options ) * 17 } )

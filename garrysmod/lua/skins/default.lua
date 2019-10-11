@@ -281,10 +281,12 @@ SKIN.Colours.Properties.Title				= GWEN.TextureColor( 4 + 8 * 13, 500 )
 SKIN.Colours.Properties.Column_Normal		= GWEN.TextureColor( 4 + 8 * 14, 508 )
 SKIN.Colours.Properties.Column_Selected		= GWEN.TextureColor( 4 + 8 * 15, 508 )
 SKIN.Colours.Properties.Column_Hover		= GWEN.TextureColor( 4 + 8 * 14, 500 )
+SKIN.Colours.Properties.Column_Disabled		= Color( 240, 240, 240 )
 SKIN.Colours.Properties.Border				= GWEN.TextureColor( 4 + 8 * 15, 500 )
 SKIN.Colours.Properties.Label_Normal		= GWEN.TextureColor( 4 + 8 * 16, 508 )
 SKIN.Colours.Properties.Label_Selected		= GWEN.TextureColor( 4 + 8 * 17, 508 )
 SKIN.Colours.Properties.Label_Hover			= GWEN.TextureColor( 4 + 8 * 16, 500 )
+SKIN.Colours.Properties.Label_Disabled		= GWEN.TextureColor( 4 + 8 * 16, 508 )
 
 SKIN.Colours.Category = {}
 SKIN.Colours.Category.Header				= GWEN.TextureColor( 4 + 8 * 18, 500 )
@@ -487,12 +489,17 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintMenuOption( panel, w, h )
 
-	if ( panel.m_bBackground && (panel.Hovered || panel.Highlight) ) then
+	if ( panel.m_bBackground && !panel:IsEnabled() ) then
+		surface.SetDrawColor( Color( 0, 0, 0, 50 ) )
+		surface.DrawRect( 0, 0, w, h )
+	end
+
+	if ( panel.m_bBackground && ( panel.Hovered || panel.Highlight) ) then
 		self.tex.MenuBG_Hover( 0, 0, w, h )
 	end
 
 	if ( panel:GetChecked() ) then
-		self.tex.Menu_Check( 5, h/2-7, 15, 15 )
+		self.tex.Menu_Check( 5, h / 2 - 7, 15, 15 )
 	end
 
 end
@@ -912,7 +919,7 @@ end
 
 function SKIN:PaintCategoryList( panel, w, h )
 
-	self.tex.CategoryList.Outer( 0, 0, w, h )
+	self.tex.CategoryList.Outer( 0, 0, w, h, panel:GetBackgroundColor() )
 
 end
 

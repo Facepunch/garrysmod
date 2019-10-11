@@ -416,11 +416,14 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 
 	end
 
-	flexControllers[ #flexControllers ]:DockPadding( 0, 0, 0, 20 )
+	-- Add some padding to the bottom of the list
+	local padding = vgui.Create( "Panel", CPanel )
+	padding:Dock( TOP )
+	padding:SetHeight( 7 )
 
 	filter.OnValueChange = function( pnl, txt )
 		for id, flxpnl in pairs( flexControllers ) do
-			if ( !flxpnl:GetText():lower():find( txt:lower() ) && !flxpnl.originalName:lower():find( txt:lower() ) ) then
+			if ( !flxpnl:GetText():lower():find( txt:lower(), nil, true ) && !flxpnl.originalName:lower():find( txt:lower(), nil, true ) ) then
 				flxpnl:SetVisible( false )
 			else
 				flxpnl:SetVisible( true )

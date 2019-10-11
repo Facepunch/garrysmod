@@ -147,7 +147,9 @@ local color_darkened = Color(255,255,255, 80)
 local color_slot = {
    [ROLE_TRAITOR]   = Color(180, 50, 40, 255),
    [ROLE_DETECTIVE] = Color(50, 60, 180, 255)
-};
+}
+
+local fieldstbl = {"name", "type", "desc"}
 
 local eqframe = nil
 local function TraitorMenuPopup()
@@ -195,7 +197,7 @@ local function TraitorMenuPopup()
 
    -- Determine if we already have equipment
    local owned_ids = {}
-   for _, wep in pairs(ply:GetWeapons()) do
+   for _, wep in ipairs(ply:GetWeapons()) do
       if IsValid(wep) and wep:IsEquipment() then
          table.insert(owned_ids, wep:GetClass())
       end
@@ -310,7 +312,7 @@ local function TraitorMenuPopup()
    dinfo:StretchToParent(0, 0, 0, dih - 135)
 
    local dfields = {}
-   for _, k in pairs({"name", "type", "desc"}) do
+   for _, k in ipairs(fieldstbl) do
       dfields[k] = vgui.Create("DLabel", dinfo)
       dfields[k]:SetTooltip(GetTranslation("equip_spec_" .. k))
       dfields[k]:SetPos(m*3, m*2)

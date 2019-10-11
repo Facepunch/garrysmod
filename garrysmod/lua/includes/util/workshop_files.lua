@@ -9,7 +9,7 @@ function WorkshopFileBase( namespace, requiredtags )
 	local ret = {}
 	ret.HTML = nil
 
-	function ret:Fetch( type, offset, perpage, extratags, searchText )
+	function ret:Fetch( type, offset, perpage, extratags, searchText, filter )
 
 		local tags = table.Copy( requiredtags )
 		for k, v in pairs( extratags ) do
@@ -21,10 +21,10 @@ function WorkshopFileBase( namespace, requiredtags )
 			return self:FetchLocal( offset, perpage )
 		end
 		if ( type == "subscribed" ) then
-			return self:FetchSubscribed( offset, perpage, tags, searchText, false )
+			return self:FetchSubscribed( offset, perpage, tags, searchText, false, filter )
 		end
 		if ( type == "subscribed_ugc" ) then
-			return self:FetchSubscribed( offset, perpage, tags, searchText, true )
+			return self:FetchSubscribed( offset, perpage, tags, searchText, true, filter )
 		end
 
 		local userid = "0"
@@ -44,7 +44,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	end
 
-	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC )
+	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC, filter )
 
 		local subscriptions = {}
 		if ( isUGC ) then
@@ -62,27 +62,42 @@ function WorkshopFileBase( namespace, requiredtags )
 
 		-- First build a list of items that fit our search terms
 		local searchedItems = {}
-		for id, sub in pairs( subscriptions ) do
+		local localFileHack = -1
+		for id, item in pairs( subscriptions ) do
+
+			-- This is a dirty hack for local addons, ideally should be done in engine, or not use solely IDs to identify addons
+			if ( item.wsid == "0" ) then
+				item.wsid = tostring( localFileHack ) -- why is this a string?
+				localFileHack = localFileHack - 1
+			end
 
 			-- Search for tags
 			local found = true
 			for id, tag in pairs( tags ) do
-				if ( !sub.tags:lower():find( tag ) ) then found = false end
+				if ( !item.tags:lower():find( tag ) ) then found = false end
 			end
 			if ( !found ) then continue end
 
 			-- Search for searchText
 			if ( searchText:Trim() != "" ) then
-				if ( !sub.title:lower():find( searchText:lower() ) ) then continue end
+				if ( !item.title:lower():find( searchText:lower() ) ) then continue end
 			end
 
-			searchedItems[ #searchedItems + 1 ] = sub
+			if ( filter && filter == "enabledonly" ) then
+				if ( !steamworks.ShouldMountAddon( item.wsid ) ) then continue end
+			end
+			if ( filter && filter == "disabledonly" ) then
+				if ( steamworks.ShouldMountAddon( item.wsid ) ) then continue end
+			end
+
+			searchedItems[ #searchedItems + 1 ] = item
 
 		end
 
 		-- Build the page!
 		local data = {
 			totalresults = #searchedItems,
+			extraresults = {},
 			results = {}
 		}
 
@@ -90,7 +105,10 @@ function WorkshopFileBase( namespace, requiredtags )
 		while ( i < perpage ) do
 
 			if ( searchedItems[ offset + i + 1 ] ) then
-				table.insert( data.results, searchedItems[ offset + i + 1 ].wsid )
+
+				local res = table.insert( data.results, searchedItems[ offset + i + 1 ].wsid )
+				data.extraresults[ res ] = searchedItems[ offset + i + 1 ]
+
 			end
 
 			i = i + 1
@@ -101,9 +119,10 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	end
 
-	function ret:RetrieveUserName( steamid )
+	function ret:RetrieveUserName( steamid, func )
 		steamworks.RequestPlayerInfo( steamid, function( name )
 			self.HTML:Call( namespace .. ".ReceiveUserName( \"" .. steamid:JavascriptSafe() .. "\", \"" .. name:JavascriptSafe() .. "\" )" )
+			if ( func ) then func( name ) end
 		end )
 	end
 
@@ -139,7 +158,24 @@ function WorkshopFileBase( namespace, requiredtags )
 			--
 			-- Get the file information
 			--
-			if ( InfoCache[ v ] ) then
+			if ( tonumber( v ) <= 0 ) then
+
+				-- Local addon
+				local extra = results.extraresults[ k ]
+				if ( !extra ) then extra = {} end
+
+				extra.ownername = "Local"
+				extra.description = "Non workshop local floating addon."
+
+				local json = util.TableToJSON( extra, false )
+
+				self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. json .. " )" )
+				self.HTML:Call( namespace .. ".ReceiveImage( \"" .. v .. "\", \"html/img/localaddon.png\" )" )
+
+				-- Do not try to get votes for this one
+				continue
+
+			elseif ( InfoCache[ v ] ) then
 
 				self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. InfoCache[ v ] .. " )" )
 
@@ -147,7 +183,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 				steamworks.FileInfo( v, function( result )
 
-					if ( !result ) then return end
+					if ( !result && result.error != nil ) then return end
 
 					if ( result.description ) then
 						result.description = string.gsub( result.description, "%[img%]([^%]]*)%[/img%]", "" ) -- Gotta remove inner content of img tags
@@ -155,8 +191,13 @@ function WorkshopFileBase( namespace, requiredtags )
 						result.description = string.Trim( result.description )
 					end
 
-					if ( !result.ownername || result.ownername == "" || result.ownername == "[unknown]" ) then
-						self:RetrieveUserName( result.owner )
+					if ( result.owner && ( !result.ownername || result.ownername == "" || result.ownername == "[unknown]" ) ) then
+						self:RetrieveUserName( result.owner, function( name )
+							result.ownername = name
+
+							local json = util.TableToJSON( result, false )
+							InfoCache[ v ] = json
+						end )
 					end
 
 					local json = util.TableToJSON( result, false )

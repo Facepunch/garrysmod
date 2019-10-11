@@ -94,15 +94,17 @@ end
 --[[---------------------------------------------------------
 	Returns a random vector
 -----------------------------------------------------------]]
-function VectorRand()
-	return Vector( math.Rand( -1.0, 1.0 ), math.Rand( -1.0, 1.0 ), math.Rand( -1.0, 1.0 ) )
+function VectorRand( min, max )
+	min = min || -1
+	max = max || 1
+	return Vector( math.Rand( min, max ), math.Rand( min, max ), math.Rand( min, max ) )
 end
 
 --[[---------------------------------------------------------
 	Returns a random angle
 -----------------------------------------------------------]]
-function AngleRand()
-	return Angle( math.Rand( -90, 90 ), math.Rand( -180, 180 ), math.Rand( -180, 180 ) )
+function AngleRand( min, max )
+	return Angle( math.Rand( min || -90, max || 90 ), math.Rand( min || -180, max || 180 ), math.Rand( min || -180, max || 180 ) )
 end
 
 --[[---------------------------------------------------------
@@ -408,7 +410,7 @@ end
 --
 -- This is supposed to be clientside, but was exposed to both states for years due to a bug.
 --
-function CreateClientConVar( name, default, shouldsave, userdata, helptext )
+function CreateClientConVar( name, default, shouldsave, userdata, helptext, min, max )
 
 	local iFlags = 0
 
@@ -420,7 +422,7 @@ function CreateClientConVar( name, default, shouldsave, userdata, helptext )
 		iFlags = bit.bor( iFlags, FCVAR_USERINFO )
 	end
 
-	return CreateConVar( name, default, iFlags, helptext )
+	return CreateConVar( name, default, iFlags, helptext, min, max )
 
 end
 

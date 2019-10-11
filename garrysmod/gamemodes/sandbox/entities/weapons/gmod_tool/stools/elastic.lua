@@ -53,12 +53,12 @@ function TOOL:LeftClick( trace )
 		-- Add The constraint to the players undo table
 
 		undo.Create( "Elastic" )
-			undo.AddEntity( constraint )
+			if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
 			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
 
-		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
+		if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
 		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
 
 		-- Clear the objects so we're ready to go again

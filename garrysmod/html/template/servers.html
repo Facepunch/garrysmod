@@ -12,9 +12,9 @@
 				<li><a class="{{IfElse( ServerType == 'history', 'active', '' )}}" ng-tranny="'servers_history'" ng-click="SwitchType( 'history' )"></a></li>
 				<li><a class="{{IfElse( ServerType == 'lan', 'active', '' )}}" ng-tranny="'servers_local'" ng-click="SwitchType( 'lan' )"></a></li>
 				<li>&nbsp;</li>
-				<li ng-hide="CurrentGamemode != null">&nbsp;</li>
-				<li ng-hide="CurrentGamemode != null"><a ng-hide="Refreshing[ ServerType ] == 'true'" ng-tranny="'servers_refresh'" ng-click="Refresh()">refresh</a></li>
-				<li ng-hide="CurrentGamemode != null"><a ng-hide="Refreshing[ ServerType ] == 'false'" ng-tranny="'servers_stoprefresh'" ng-click="DoStopRefresh()">Stop refresh</a></li>
+				<li>&nbsp;</li>
+				<li ng-hide="CurrentGamemode != null || Refreshing[ ServerType ] == 'true'"><a ng-tranny="'servers_refresh'" ng-click="Refresh()">refresh</a></li>
+				<li ng-hide="Refreshing[ ServerType ] == 'false'"><a ng-tranny="'servers_stoprefresh'" ng-click="DoStopRefresh()">Stop refresh</a></li>
 				<li>&nbsp;</li>
 				<li><a ng-click="MenuOption( this, 'OpenServerBrowser')" ng-Tranny="'legacy_browser'"></a></li>
 
@@ -24,36 +24,24 @@
 
 		<div class="innerpage" ng-hide="CurrentGamemode != null">
 
-			<h1 class="menuheader"><span ng-Tranny="'servers_gamemodes'"></span><small ng-Tranny="'servers_gamemodes.subtitle'"></small></h1>
+			<h1 class="menuheader">
+				<span ng-Tranny="'servers_gamemodes'"></span>
+				<small ng-Tranny="'servers_gamemodes.subtitle'"></small>
+				<input ng-model="Search.name" class="gm_search searchbox" ng-Tranny="'searchbar_placeholder'" />
+			</h1>
 
-			<div class=' ' style="">
+			<div class='server_gamemodes whiterounded scrollable'>
 
-				<div style="width: 280px; float: right;">
-					<div style="padding: 16px;">
-						
+				<div class='gamemode {{gamemode.element_class}}' ng-repeat="gamemode in GamemodeList|filter:Search|orderBy:'-(order)'" ng-click="SelectGamemode( gamemode )">
+
+					<img ng-src='../gamemodes/{{gamemode.name}}/icon24.png' onerror="MissingGamemodeIcon(this)"/>
+
+					<div class='stats'>{{gamemode.num_players}} <span ng-tranny="gamemode.num_players == 1 && 'servers_player_on' || 'servers_players_on'"></span> {{gamemode.num_servers}} <span ng-tranny="gamemode.num_servers == 1 && 'servers_server' || 'servers_servers'"></span></div>
+					<div class='name'>
+						{{GamemodeName(gamemode)}}
 					</div>
-				</div>
 
-				<div style="width: 280px; float: left;">
-					<div style="padding: 16px;">
-						
-					</div>
-				</div>
-
-				<div class='server_gamemodes whiterounded scrollable'>
-
-					<div class='gamemode {{gamemode.element_class}}' ng-repeat="gamemode in GamemodeList|orderBy:'-(order)'" ng-click="SelectGamemode( gamemode )">
-					
-						<img ng-src='../gamemodes/{{gamemode.name}}/icon24.png' onerror="MissingGamemodeIcon(this)"/>
-
-						<div class='stats'>{{gamemode.num_players}} <span ng-tranny="'servers_players_on'"></span> {{gamemode.num_servers}} <span ng-tranny="'servers_servers'"></span></div>
-						<div class='name'>
-							{{GamemodeName(gamemode)}}
-						</div>
-
-						<span class='installgamemode' ng-show="ShouldShowInstall( gamemode )" ng-click="InstallGamemode( gamemode );$event.stopPropagation()">&nbsp;</span>
-					
-					</div>
+					<span class='installgamemode' ng-show="ShouldShowInstall( gamemode )" ng-click="InstallGamemode( gamemode );$event.stopPropagation()">&nbsp;</span>
 
 				</div>
 
@@ -71,13 +59,13 @@
 			<div class='installgamemode' ng-show="ShouldShowInstall( CurrentGamemode )" ng-click="InstallGamemode( CurrentGamemode );$event.stopPropagation()" ng-tranny="'servers_install_gamemode'"></div>
 
 			<div class='controls' style='position: absolute; left: 0; right: 0; margin-top: 5px;'>
-				<input ng-model="CurrentGamemode.Search.$" class="searchbox" ng-Tranny="'searchbar_placeholer'" />
+				<input ng-model="CurrentGamemode.Search.$" class="searchbox" ng-Tranny="'searchbar_placeholder'" />
 				<a class='bglink' ng-click="SelectGamemode(null)"><img src='img/bg_arrow_left.png' /> <span ng-tranny="'return_to_gamemodes'"></span></a>
 			</div>
 
 			<div class='serverlist'>
 
-				<div class='header' style="top: 8px; left: 8px; right: 8px;">
+				<div class='header'>
 					<name ng-click="ChangeOrder( CurrentGamemode, 'name' )" ng-tranny="'server_name_header'"></name>
 					<ping ng-click="ChangeOrder( CurrentGamemode, 'ping' )" ng-tranny="'server_ping'"></ping>
 					<players ng-click="ChangeOrder( CurrentGamemode, '-players' )" ng-tranny="'server_players'"></players>
@@ -85,10 +73,14 @@
 					<rank ng-click="ChangeOrder( CurrentGamemode, 'recommended' )" ng-tranny="'server_ranking'"></rank>
 				</div>
 
-				<div class='body scrollable' style="top: 32px; left: 8px; right: 8px; bottom: 8px;">
-					
-					<div ng-repeat="server in CurrentGamemode.servers|filter:CurrentGamemode.Search|orderBy:CurrentGamemode.OrderBy:CurrentGamemode.OrderReverse|limitTo:128" class="server {{ServerClass(server)}} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-click="SelectServer( server )">
-						<name><img src='img/server-passworded.png' style="margin-right: 8px;" ng-show="server.pass"/>{{server.name}}</name>
+				<div class='body scrollable'>
+
+					<div ng-repeat="server in CurrentGamemode.servers|filter:CurrentGamemode.Search|orderBy:CurrentGamemode.OrderBy:CurrentGamemode.OrderReverse|limitTo:256" class="server {{ServerClass(server)}} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-click="SelectServer( server )">
+						<name>
+							<a class='unfavbutton {{IfElse( !server.favorite, "removed", "" )}}' ng-show="ServerType == 'favorite'" ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
+							<img src='img/server-passworded.png' style="margin-right: 8px;" ng-show="server.pass"/>
+							<span>{{server.name}}</span>
+						</name>
 						<ping>{{server.ping}}</ping>
 						<players>{{server.players}} / {{server.maxplayers}}</players>
 						<map>{{server.map}}</map>
@@ -141,4 +133,3 @@
 		</div>
 
 	</div>
-	

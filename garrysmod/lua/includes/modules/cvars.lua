@@ -2,6 +2,8 @@
 local table				= table
 local pairs				= pairs
 local type				= type
+local isstring			= isstring
+local istable			= istable
 local assert			= assert
 local format			= string.format
 local GetConVarString	= GetConVarString
@@ -39,7 +41,7 @@ function OnConVarChanged( name, oldvalue, newvalue )
 
 	for k, v in pairs( Callbacks ) do
 
-		if type( v ) == "table" then
+		if ( istable( v ) ) then
 			v[ 1 ]( name, oldvalue, newvalue )
 		else
 			v( name, oldvalue, newvalue )
@@ -56,7 +58,7 @@ end
 function AddChangeCallback( name, func, sIdentifier )
 
 	if ( sIdentifier ) then
-		assert( type( sIdentifier ) == "string", format( "bad argument #%i (string expected, got %s)", 3, type( sIdentifier ) ) )
+		assert( isstring( sIdentifier ), format( "bad argument #%i (string expected, got %s)", 3, type( sIdentifier ) ) )
 	end
 
 	local tab = GetConVarCallbacks( name, true )
@@ -64,7 +66,7 @@ function AddChangeCallback( name, func, sIdentifier )
 	if ( sIdentifier ) then
 		for i = 1, #tab do
 			local a = tab[ i ];
-			if ( type( a ) == "table" and a[ 2 ] == sIdentifier ) then
+			if ( istable( v ) and a[ 2 ] == sIdentifier ) then
 				tab[ i ][ 1 ] = func
 				return
 			end
@@ -84,7 +86,7 @@ end
 function RemoveChangeCallback( name, sIdentifier )
 
 	if ( sIdentifier ) then
-		assert( type( sIdentifier ) == "string", format( "bad argument #%i (string expected, got %s)", 2, type( sIdentifier ) ) )
+		assert( isstring( sIdentifier ), format( "bad argument #%i (string expected, got %s)", 2, type( sIdentifier ) ) )
 	end
 
 	local tab = GetConVarCallbacks( name, true )
@@ -92,7 +94,7 @@ function RemoveChangeCallback( name, sIdentifier )
 	for i = 1, #tab do
 		local a = tab[ i ]
 
-		if ( type( a ) == "table" and a[ 2 ] == sIdentifier ) then
+		if ( istable( a ) and a[ 2 ] == sIdentifier ) then
 			table.remove( tab, i )
 			break
 		end

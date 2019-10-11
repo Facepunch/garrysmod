@@ -69,7 +69,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 	$scope.SelectMap = function ( m )
 	{
 		$rootScope.Map = m;
-		$rootScope.LastCategory = $scope.CurrentCategory
+		$rootScope.LastCategory = $scope.CurrentCategory;
 	}
 
 	$scope.DoubleClick = ""
@@ -163,29 +163,36 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 			lua.Run( 'RunConsoleCommand( "commentary", "0" )' )
 		}
 
+		// $scope.ServerSettings gets changed from Lua between this point and the timeout below
+		// Perhaps UpdateServerSettings() in mainmenu.lua shouldn't call to JS if the gamemode wasn't actually changed?
+		// Or maybe this entire system needs changing
+		$scope.ServerSettingsSaved = $scope.ServerSettings;
+
 		setTimeout( function()
 		{
-			for ( k in $scope.ServerSettings.Numeric )
+			for ( k in $scope.ServerSettingsSaved.Numeric )
 			{
-				lua.Run( 'RunConsoleCommand( "'+$scope.ServerSettings.Numeric[k].name+'", "' + EscapeConVarValue( $scope.ServerSettings.Numeric[k].Value ) + '" )' )
+				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettingsSaved.Numeric[ k ].name + '", "' + EscapeConVarValue( $scope.ServerSettingsSaved.Numeric[ k ].Value ) + '" )' )
 			}
 
-			for ( k in $scope.ServerSettings.Text )
+			for ( k in $scope.ServerSettingsSaved.Text )
 			{
-				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettings.Text[k].name + '", "' + EscapeConVarValue( $scope.ServerSettings.Text[k].Value ) + '" )' )
+				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettingsSaved.Text[ k ].name + '", "' + EscapeConVarValue( $scope.ServerSettingsSaved.Text[ k ].Value ) + '" )' )
 			}
 
-			for ( k in $scope.ServerSettings.CheckBox )
+			for ( k in $scope.ServerSettingsSaved.CheckBox )
 			{
-				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettings.CheckBox[k].name + '", "' + ( $scope.ServerSettings.CheckBox[k].Value ? 1 : 0 ) + '" )' )
+				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettingsSaved.CheckBox[ k ].name + '", "' + ( $scope.ServerSettingsSaved.CheckBox[ k ].Value ? 1 : 0 ) + '" )' )
 			}
 
-			lua.Run( 'RunConsoleCommand( "hostname", "' + EscapeConVarValue( $rootScope.ServerSettings.hostname ) + '" )' )
-			lua.Run( 'RunConsoleCommand( "p2p_enabled", "' + ( $rootScope.ServerSettings.p2p_enabled ? 1 : 0 ) + '" )' )
-			lua.Run( 'RunConsoleCommand( "p2p_friendsonly", "' + ( $rootScope.ServerSettings.p2p_friendsonly ? 1 : 0 ) + '" )' )
-			lua.Run( 'RunConsoleCommand( "sv_lan", "' + ( $rootScope.ServerSettings.sv_lan ? 1 : 0 ) + '" )' )
+			lua.Run( 'RunConsoleCommand( "hostname", "' + EscapeConVarValue( $scope.ServerSettingsSaved.hostname ) + '" )' )
+			lua.Run( 'RunConsoleCommand( "p2p_enabled", "' + ( $scope.ServerSettingsSaved.p2p_enabled ? 1 : 0 ) + '" )' )
+			lua.Run( 'RunConsoleCommand( "p2p_friendsonly", "' + ( $scope.ServerSettingsSaved.p2p_friendsonly ? 1 : 0 ) + '" )' )
+			lua.Run( 'RunConsoleCommand( "sv_lan", "' + ( $scope.ServerSettingsSaved.sv_lan ? 1 : 0 ) + '" )' )
 			lua.Run( 'RunConsoleCommand( "maxplayers", "' + $rootScope.MaxPlayers + '" )' )
 			lua.Run( 'RunConsoleCommand( "map", "' + $rootScope.Map.trim() + '" )' )
+
+			$scope.ServerSettingsSaved = undefined;
 		}, 200 );
 
 		$location.url( "/" )
@@ -224,15 +231,15 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 		oldp2p = $scope.ServerSettings.p2p_enabled;
 		oldSvLan = $scope.ServerSettings.sv_lan;
-		
+
 		if ( !$scope.ServerSettings.p2p_enabled ) {
-			if (document.getElementById("p2p_friendsonly") !== null) {
-				document.getElementById("p2p_friendsonly").disabled = true;
+			if ( document.getElementById( "p2p_friendsonly" ) !== null ) {
+				document.getElementById( "p2p_friendsonly" ).disabled = true;
 			}
 			$scope.ServerSettings.p2p_friendsonly = false;
 			UpdateDigest( $scope, 50 );
-		} else {
-			document.getElementById("p2p_friendsonly").disabled = false;
+		} else if ( document.getElementById( "p2p_friendsonly" ) !== null ) {
+			document.getElementById( "p2p_friendsonly" ).disabled = false;
 		}
 	}
 }
@@ -249,6 +256,11 @@ function SetLastMap( map, category )
 		rootScope.LastCategory = category;
 		UpdateDigest( rootScope, 50 );
 	}
+
+	setTimeout( function() {
+		var elem = document.querySelector( '.mapicon.selected' );
+		if ( elem ) elem.scrollIntoView( { behavior: 'smooth', block: 'center' } );
+	}, 100 );
 }
 
 function UpdateServerSettings( sttngs )

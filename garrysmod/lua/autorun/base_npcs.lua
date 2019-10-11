@@ -6,6 +6,8 @@ local function AddNPC( t, class )
 	list.Set( "NPC", class or t.Class, t )
 end
 
+
+
 local Category = "Humans + Resistance"
 
 AddNPC( {
@@ -97,7 +99,7 @@ AddNPC( {
 	Name = "Medic",
 	Class = "npc_citizen",
 	Category = Category,
-	SpawnFlags = 8 + 131072, --bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ),
+	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ) or nil,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
 	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
 }, "Medic" )
@@ -118,7 +120,6 @@ AddNPC( {
 } )
 
 if ( IsMounted( "ep2" ) ) then
-
 	AddNPC( {
 		Name = "Uriah",
 		Class = "npc_vortigaunt",
@@ -132,7 +133,6 @@ if ( IsMounted( "ep2" ) ) then
 		Class = "npc_magnusson",
 		Category = Category
 	} )
-
 end
 
 if ( IsMounted( "lostcoast" ) ) then
@@ -143,6 +143,8 @@ if ( IsMounted( "lostcoast" ) ) then
 		Weapons = { "weapon_oldmanharpoon" }
 	} ) -- Has no death sequence
 end
+
+
 
 Category = "Zombies + Enemy Aliens"
 
@@ -224,6 +226,15 @@ AddNPC( {
 	KeyValues = { SquadName = "zombies" }
 } )
 
+if ( IsMounted( "episodic" ) ) then
+	AddNPC( {
+		Name = "Zombine",
+		Class = "npc_zombine",
+		Category = Category,
+		KeyValues = { SquadName = "zombies" }
+	} )
+end
+
 if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/grub_blood.pcf" )
 	game.AddParticles( "particles/antlion_gib_02.pcf" )
@@ -253,14 +264,7 @@ if ( IsMounted( "ep2" ) ) then
 	} )
 end
 
-if ( IsMounted( "episodic" ) ) then
-	AddNPC( {
-		Name = "Zombine",
-		Class = "npc_zombine",
-		Category = Category,
-		KeyValues = { SquadName = "zombies" }
-	} )
-end
+
 
 Category = "Animals"
 
@@ -274,20 +278,24 @@ AddNPC( {
 AddNPC( {
 	Name = "Crow",
 	Class = "npc_crow",
-	Category = Category
+	Category = Category,
+	NoDrop = true
 } )
 
 AddNPC( {
 	Name = "Pigeon",
 	Class = "npc_pigeon",
-	Category = Category
+	Category = Category,
+	NoDrop = true
 } )
 
 AddNPC( {
 	Name = "Seagull",
 	Class = "npc_seagull",
-	Category = Category
+	Category = Category,
+	NoDrop = true
 } )
+
 
 
 Category = "Combine"
@@ -297,7 +305,7 @@ AddNPC( {
 	Class = "npc_metropolice",
 	Category = Category,
 	Weapons = { "weapon_stunstick", "weapon_pistol", "weapon_smg1" },
-	SpawnFlags = 8,
+	SpawnFlags = SF_NPC_DROP_HEALTHKIT,
 	KeyValues = { SquadName = "overwatch" }
 } )
 
@@ -306,7 +314,8 @@ AddNPC( {
 	Class = "npc_rollermine",
 	Category = Category,
 	Offset = 20,
-	KeyValues = { SquadName = "overwatch" }
+	KeyValues = { SquadName = "overwatch" },
+	NoDrop = true
 } )
 
 AddNPC( {
@@ -365,7 +374,7 @@ AddNPC( {
 	Model = "models/combine_super_soldier.mdl",
 	Weapons = { "weapon_ar2" },
 	KeyValues = { Numgrenades = 10, SquadName = "overwatch" },
-	SpawnFlags = 16384
+	SpawnFlags = SF_NPC_NO_PLAYER_PUSHAWAY
 }, "CombineElite" )
 
 AddNPC( {
@@ -373,7 +382,8 @@ AddNPC( {
 	Class = "npc_cscanner",
 	Category = Category,
 	Offset = 20,
-	KeyValues = { SquadName = "overwatch" }
+	KeyValues = { SquadName = "overwatch" },
+	NoDrop = true
 } )
 
 AddNPC( {
@@ -381,7 +391,8 @@ AddNPC( {
 	Class = "npc_clawscanner",
 	Category = Category,
 	Offset = 20,
-	KeyValues = { SquadName = "overwatch" }
+	KeyValues = { SquadName = "overwatch" },
+	NoDrop = true
 } )
 
 AddNPC( {
@@ -389,7 +400,8 @@ AddNPC( {
 	Class = "npc_combinegunship",
 	Category = Category,
 	Offset = 300,
-	KeyValues = { SquadName = "overwatch" }
+	KeyValues = { SquadName = "overwatch" },
+	NoDrop = true
 } )
 
 AddNPC( {
@@ -397,7 +409,8 @@ AddNPC( {
 	Class = "npc_combinedropship",
 	Category = Category,
 	Offset = 300,
-	KeyValues = { SquadName = "overwatch" }
+	KeyValues = { SquadName = "overwatch" },
+	NoDrop = true
 } )
 
 AddNPC( {
@@ -406,7 +419,8 @@ AddNPC( {
 	Category = Category,
 	Offset = 300,
 	Health = 600,
-	KeyValues = { SquadName = "overwatch" }
+	KeyValues = { SquadName = "overwatch" },
+	NoDrop = true
 } )
 
 AddNPC( {
@@ -415,7 +429,8 @@ AddNPC( {
 	Category = Category,
 	OnCeiling = true,
 	Offset = 2,
-	KeyValues = { SquadName = "overwatch" }
+	KeyValues = { SquadName = "overwatch" },
+	NoDrop = true
 } )
 
 AddNPC( {
@@ -448,7 +463,8 @@ AddNPC( {
 	Name = "Manhack",
 	Class = "npc_manhack",
 	Category = Category,
-	KeyValues = { SquadName = "overwatch" }
+	KeyValues = { SquadName = "overwatch" },
+	NoDrop = true
 } )
 
 if ( IsMounted( "ep2" ) ) then
@@ -460,12 +476,14 @@ if ( IsMounted( "ep2" ) ) then
 	} )
 end
 
-if ( IsMounted( "hl1" ) ) then
+
+
+if ( IsMounted( "hl1" ) || IsMounted( "hl1mp" ) ) then
 
 	Category = "Half-Life: Source"
 
 	AddNPC( { Name = "Alien Grunt", Class = "monster_alien_grunt", Category = Category } )
-	AddNPC( { Name = "Nihilanth", Class = "monster_nihilanth", Category = Category, Offset = 1200 } )
+	AddNPC( { Name = "Nihilanth", Class = "monster_nihilanth", Category = Category, Offset = 1200, SpawnFlags = 262144, NoDrop = true } )
 	AddNPC( { Name = "Tentacle", Class = "monster_tentacle", Category = Category } )
 	AddNPC( { Name = "Alien Slave", Class = "monster_alien_slave", Category = Category } )
 	AddNPC( { Name = "Gonarch", Class = "monster_bigmomma", Category = Category } )
@@ -480,7 +498,7 @@ if ( IsMounted( "hl1" ) ) then
 	AddNPC( { Name = "Snark", Class = "monster_snark", Category = Category } )
 	AddNPC( { Name = "Zombie", Class = "monster_zombie", Category = Category } )
 	AddNPC( { Name = "Headcrab", Class = "monster_headcrab", Category = Category } )
-	AddNPC( { Name = "Controller", Class = "monster_alien_controller", Category = Category } )
+	AddNPC( { Name = "Controller", Class = "monster_alien_controller", Category = Category, NoDrop = true } )
 	AddNPC( { Name = "Security Officer", Class = "monster_barney", Category = Category } )
 
 	AddNPC( { Name = "Heavy Turret", Class = "monster_turret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )

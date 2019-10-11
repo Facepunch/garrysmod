@@ -374,3 +374,20 @@ end
 --
 function ENT:Think()
 end
+
+--
+-- Name: NEXTBOT:HandleAnimEvent
+-- Desc: Called for serverside events
+--
+function ENT:HandleAnimEvent( event, eventtime, cycle, typee, options )
+end
+
+--
+-- Name: NEXTBOT:OnTraceAttack
+-- Desc: Called serverside when the nextbot is attacked
+--
+function ENT:OnTraceAttack( dmginfo, dir, trace )
+
+	hook.Run( "ScaleNPCDamage", self, trace.HitGroup, dmginfo )
+
+end

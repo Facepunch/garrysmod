@@ -53,7 +53,7 @@ end
 
 function util.GetAlivePlayers()
    local alive = {}
-   for k, p in pairs(player.GetAll()) do
+   for k, p in ipairs(player.GetAll()) do
       if IsValid(p) and p:Alive() and p:IsTerror() then
          table.insert(alive, p)
       end
@@ -71,7 +71,7 @@ function util.GetNextAlivePlayer(ply)
    local choice = nil
 
    if IsValid(ply) then
-      for k,p in pairs(alive) do
+      for k,p in ipairs(alive) do
          if prev == ply then
             choice = p
          end
@@ -148,6 +148,10 @@ function util.StartBleeding(ent, dmg, t)
                 function() DoBleed(ent) end)
 end
 
+function util.StopBleeding(ent)
+   timer.Remove("bleed" .. ent:EntIndex())
+end
+
 local zapsound = Sound("npc/assassin/ball_zap1.wav")
 function util.EquipmentDestroyed(pos)
    local effect = EffectData()
@@ -163,13 +167,6 @@ function util.BasicKeyHandler(pnl, kc)
       RunConsoleCommand("jpeg")
    else
       pnl:Close()
-   end
-end
-
-function util.SafeRemoveHook(event, name)
-   local h = hook.GetTable()
-   if h and h[event] and h[event][name] then
-      hook.Remove(event, name)
    end
 end
 
@@ -238,7 +235,7 @@ function table.CopyKeys(tbl, keys)
    local val = nil
    for _, k in pairs(keys) do
       val = tbl[k]
-      if type(val) == "table" then
+      if istable(val) then
          out[k] = table.Copy(val)
       else
          out[k] = val

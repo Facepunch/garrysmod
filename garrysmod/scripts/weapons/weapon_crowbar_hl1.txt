@@ -1,0 +1,48 @@
+// Crowbar
+
+WeaponData
+{
+	// Weapon data is loaded by both the Game and Client DLLs.
+	"printname"		"#HL1_Crowbar"
+	"viewmodel"			"models/v_crowbar.mdl"
+	"playermodel"			"models/weapons/w_crowbar_hls.mdl"
+	"anim_prefix"			"crowbar"
+	"bucket"			"0"
+	"bucket_position"		"6"
+
+	"clip_size"			"-1"
+	"primary_ammo"			"None"
+	"secondary_ammo"		"None"
+
+	"weight"			"0"
+	"item_flags"			"0"
+
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+		"single_shot"		"HL1Weapon_Crowbar.Single"
+		"melee_hit"		"HL1Weapon_Crowbar.Melee_Hit"
+		"melee_hit_world"	"HL1Weapon_Crowbar.Melee_HitWorld"
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"sprites/640hud1"
+			"x"		"0"
+			"y"		"0"
+			"width"		"170"
+			"height"	"45"
+		}
+		"weapon_s"
+		{
+			"file"		"sprites/640hud4"
+			"x"		"0"
+			"y"		"0"
+			"width"		"170"
+			"height"	"45"
+		}
+	}
+}

@@ -22,7 +22,7 @@ function PANEL:OnMousePressed( mcode )
 end
 
 function PANEL:Paint( w, h )
-	if ( self.m_pMother:GetSelectedValues() == self:GetText() ) then
+	if ( self:IsSelected() ) then
 		draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 128, 255, 200 ) )
 	elseif ( self.Hovered ) then
 		draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 128, 255, 128 ) )

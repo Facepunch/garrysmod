@@ -158,7 +158,7 @@ if ( CLIENT ) then
 		end
 
 		-- Turn the table into a nil so we can return easy
-		if ( table.Count( CommandList ) == 0 ) then
+		if ( table.IsEmpty( CommandList ) ) then
 
 			CommandList = nil
 
@@ -191,7 +191,7 @@ end
 function meta:SetPData( name, value )
 
 	name = Format( "%s[%s]", self:UniqueID(), name )
-	sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" )
+	return sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" ) ~= false
 
 end
 
@@ -202,7 +202,7 @@ end
 function meta:RemovePData( name )
 
 	name = Format( "%s[%s]", self:UniqueID(), name )
-	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
+	return sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) ) ~= false
 
 end
 

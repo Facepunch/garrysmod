@@ -1,0 +1,42 @@
+weapon_manifest
+{
+	"file"		"scripts/weapons/weapon_357.txt"
+	"file"		"scripts/weapons/weapon_alyxgun.txt"
+	"file"		"scripts/weapons/weapon_annabelle.txt"
+	"file"		"scripts/weapons/weapon_ar2.txt"
+	"file"		"scripts/weapons/weapon_bugbait.txt"
+	"file"		"scripts/weapons/weapon_citizenpackage.txt"
+	"file"		"scripts/weapons/weapon_citizensuitcase.txt"
+	"file"		"scripts/weapons/weapon_crossbow.txt"
+	"file"		"scripts/weapons/weapon_crowbar.txt"
+	"file"		"scripts/weapons/weapon_cubemap.txt"
+	"file"		"scripts/weapons/weapon_frag.txt"
+	"file"		"scripts/weapons/weapon_physcannon.txt"
+	"file"		"scripts/weapons/weapon_physgun.txt"
+	"file"		"scripts/weapons/weapon_pistol.txt"
+	"file"		"scripts/weapons/weapon_rpg.txt"
+	"file"		"scripts/weapons/weapon_shotgun.txt"
+	"file"		"scripts/weapons/weapon_smg1.txt"
+	"file"		"scripts/weapons/weapon_stunstick.txt"
+
+	// Other
+	"file"		"scripts/weapons/weapon_oldmanharpoon.txt"
+	"file"		"scripts/weapons/weapon_physgun.txt"
+	"file"		"scripts/weapons/weapon_swep.txt"
+
+	// HL1
+	"file"		"scripts/weapons/weapon_357_hl1.txt"
+	"file"		"scripts/weapons/weapon_crossbow_hl1.txt"
+	"file"		"scripts/weapons/weapon_crowbar_hl1.txt"
+	"file"		"scripts/weapons/weapon_egon.txt"
+	"file"		"scripts/weapons/weapon_gauss.txt"
+	"file"		"scripts/weapons/weapon_glock_hl1.txt"
+	"file"		"scripts/weapons/weapon_handgrenade.txt"
+	"file"		"scripts/weapons/weapon_hornetgun.txt"
+	"file"		"scripts/weapons/weapon_mp5_hl1.txt"
+	"file"		"scripts/weapons/weapon_rpg_hl1.txt"
+	"file"		"scripts/weapons/weapon_satchel.txt"
+	"file"		"scripts/weapons/weapon_shotgun_hl1.txt"
+	"file"		"scripts/weapons/weapon_snark.txt"
+	"file"		"scripts/weapons/weapon_tripmine.txt"
+}

@@ -71,14 +71,6 @@ function GM:PhysgunDrop( ply, ent )
 end
 
 --[[---------------------------------------------------------
-   Name: gamemode:PlayerShouldTakeDamage
-   Return true if this player should take damage from this attacker
------------------------------------------------------------]]
-function GM:PlayerShouldTakeDamage( ply, attacker )
-	return true
-end
-
---[[---------------------------------------------------------
    Name: Text to show in the server browser
 -----------------------------------------------------------]]
 function GM:GetGameDescription()

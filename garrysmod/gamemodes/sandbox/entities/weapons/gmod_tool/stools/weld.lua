@@ -3,6 +3,7 @@ TOOL.Category = "Constraints"
 TOOL.Name = "#tool.weld.name"
 
 TOOL.ClientConVar[ "forcelimit" ] = "0"
+TOOL.ClientConVar[ "nocollide" ] = "0"
 
 TOOL.Information = {
 	{ name = "left", stage = 0 },
@@ -45,7 +46,7 @@ function TOOL:LeftClick( trace )
 
 		-- Get client's CVars
 		local forcelimit = self:GetClientNumber( "forcelimit" )
-		local nocollide = false
+		local nocollide = self:GetClientNumber( "nocollide", 0 ) != 0
 
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
@@ -170,7 +171,7 @@ function TOOL:RightClick( trace )
 
 		-- Get client's CVars
 		local forcelimit = self:GetClientNumber( "forcelimit" )
-		local nocollide = false
+		local nocollide = self:GetClientNumber( "nocollide", 0 ) != 0
 
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
@@ -277,5 +278,6 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Header", { Description = "#tool.weld.help" } )
 	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "weld_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
+	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "weld_nocollide" } )
 
 end

@@ -70,8 +70,6 @@ end )
 local model_list = nil
 search.AddProvider( function( str )
 
-	str = str:PatternSafe()
-
 	if ( model_list == nil ) then
 
 		model_list = {}
@@ -83,11 +81,11 @@ search.AddProvider( function( str )
 
 	for k, v in pairs( model_list ) do
 
-		-- Don't search in the models/ bit of every model, because every model has this bit
+		-- Don't search in the models/ bit of every model, because every model has this bit, unless they are looking for direct model path
 		local modelpath = v
-		if ( modelpath:StartWith( "models/" ) ) then modelpath = modelpath:sub( 8 ) end
+		if ( modelpath:StartWith( "models/" ) && !str:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8 ) end
 
-		if ( modelpath:find( str ) ) then
+		if ( modelpath:find( str, nil, true ) ) then
 
 			if ( IsUselessModel( v ) ) then continue end
 
@@ -116,8 +114,6 @@ end, "props" )
 local function AddSearchProvider( listname, ctype, stype )
 	search.AddProvider( function( str )
 
-		str = str:PatternSafe()
-
 		local results = {}
 		local entities = {}
 
@@ -135,7 +131,7 @@ local function AddSearchProvider( listname, ctype, stype )
 			local name_c = v.ClassName
 			if ( !name && !name_c ) then continue end
 
-			if ( ( name && name:lower():find( str ) ) || ( name_c && name_c:lower():find( str ) ) ) then
+			if ( ( name && name:lower():find( str, nil, true ) ) || ( name_c && name_c:lower():find( str, nil, true ) ) ) then
 
 				local entry = {
 					text = v.PrintName or v.ClassName,

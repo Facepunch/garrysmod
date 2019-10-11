@@ -215,6 +215,6 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "axis_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
 	CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "axis_torquelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
 	CPanel:AddControl( "Slider", { Label = "#tool.hingefriction", Command = "axis_hingefriction", Type = "Float", Min = 0, Max = 200, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "axis_nocollide" } )
+	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "axis_nocollide", Help = true } )
 
 end

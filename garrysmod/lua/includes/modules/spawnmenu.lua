@@ -284,12 +284,12 @@ function ActivateTool( strName, noCommand )
 
 					local cp = controlpanel.Get( strName )
 					if ( !cp:GetInitialized() ) then
-						cp:FillViaTable( { Text = item.Text, ControlPanelBuildFunction = item.CPanelFunction, Controls = item.Controls } )
+						cp:FillViaTable( { Text = item.Text, ControlPanelBuildFunction = item.CPanelFunction } )
 					end
 
 					ActivateToolPanel( tab, cp )
 
-					break
+					return
 
 				end
 

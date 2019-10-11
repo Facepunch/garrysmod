@@ -380,7 +380,7 @@ function SWEP:PreDrop()
       local ammo = self:Ammo1()
 
       -- Do not drop ammo if we have another gun that uses this type
-      for _, w in pairs(self:GetOwner():GetWeapons()) do
+      for _, w in ipairs(self:GetOwner():GetWeapons()) do
          if IsValid(w) and w != self and w:GetPrimaryAmmoType() == self:GetPrimaryAmmoType() then
             ammo = 0
          end
