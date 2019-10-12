@@ -28,7 +28,7 @@ SWEP.Primary.ClipSize      = 8
 SWEP.Primary.ClipMax       = 24
 SWEP.Primary.DefaultClip   = 8
 SWEP.Primary.Automatic     = true
-SWEP.Primary.NumShots      = 10 --default 8
+SWEP.Primary.NumShots      = 9 --default 8
 SWEP.Primary.Sound         = Sound( "Weapon_XM1014.Single" )
 SWEP.Primary.Recoil        = 7
 
