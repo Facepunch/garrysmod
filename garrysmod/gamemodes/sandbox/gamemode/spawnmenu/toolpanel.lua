@@ -101,8 +101,6 @@ function PANEL:AddCategory( name, lbl, tItems )
 
 	Category:SetCookieName( "ToolMenu." .. tostring( self:GetTabID() ) .. "." .. tostring( name ) )
 
-	local bAlt = true
-
 	local tools = {}
 	for k, v in pairs( tItems ) do
 		local str = v.Text
@@ -110,6 +108,7 @@ function PANEL:AddCategory( name, lbl, tItems )
 		tools[ language.GetPhrase( str ) ] = v
 	end
 
+	local currentMode = GetConVarString( "gmod_toolmode" )
 	for k, v in SortedPairs( tools ) do
 
 		local item = Category:Add( v.Text )
@@ -125,6 +124,13 @@ function PANEL:AddCategory( name, lbl, tItems )
 		item.Name						= v.ItemName
 		item.Controls					= v.Controls
 		item.Text						= v.Text
+
+		-- Try to open the UI for the currently selected tool
+		if ( currentMode == v.ItemName ) then
+			item:SetSelected( true )
+			-- Give it a few moments to load up the spawnmenu and the toolgun
+			timer.Simple( 2, function() spawnmenu.ActivateTool( v.ItemName, true ) end )
+		end
 
 	end
 
