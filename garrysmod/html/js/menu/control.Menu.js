@@ -265,7 +265,20 @@ function UpdateGamemodeInfo( server )
 	// Use the most common title
 	//
 	if ( !gi.titles ) gi.titles = {}
-	if ( !gi.titles[ server.desc ] ) { gi.titles[ server.desc ] = 1; } else {gi.titles[ server.desc ]++;}
+
+	// First try to see if we have a capitalized version already (i.e. sandbox should be Sandbox)
+	if ( server.desc == server.gamemode.toLowerCase() ) {
+		var names = Object.keys( gi.titles );
+		for ( var i = 0; i < names.length; i++ ) {
+			var name = names[ i ];
+			if ( name != name.toLowerCase() && name.toLowerCase() == server.gamemode.toLowerCase() ) {
+				server.desc = name;
+				break;
+			}
+		}
+	}
+
+	if ( !gi.titles[ server.desc ] ) { gi.titles[ server.desc ] = 1; } else { gi.titles[ server.desc ]++; }
 	gi.title = GetHighestKey( gi.titles );
 
 	//
@@ -274,7 +287,7 @@ function UpdateGamemodeInfo( server )
 	//if ( server.workshopid != "" )
 	{
 		if ( !gi.wsid ) gi.wsid = {}
-		if ( !gi.wsid[server.workshopid] ) { gi.wsid[server.workshopid] = 1; } else { gi.wsid[server.workshopid]++; }
+		if ( !gi.wsid[ server.workshopid ] ) { gi.wsid[ server.workshopid ] = 1; } else { gi.wsid[ server.workshopid ]++; }
 		gi.workshopid = GetHighestKey( gi.wsid );
 	}
 }

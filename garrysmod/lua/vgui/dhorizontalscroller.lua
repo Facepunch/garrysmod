@@ -59,8 +59,30 @@ function PANEL:Init()
 
 end
 
-function PANEL:OnDragModified()
-	-- Override me
+function PANEL:GetCanvas()
+	return self.pnlCanvas
+end
+
+function PANEL:ScrollToChild( panel )
+
+	-- make sure our size is all good
+	self:InvalidateLayout( true )
+
+	local x, y = self.pnlCanvas:GetChildPosition( panel )
+	local w, h = panel:GetSize()
+
+	x = x + w * 0.5
+	x = x - self:GetWide() * 0.5
+
+	self:SetScroll( x )
+
+end
+
+function PANEL:SetScroll( x )
+
+	self.OffsetX = x
+	self:InvalidateLayout( true )
+
 end
 
 function PANEL:SetUseLiveDrag( bool )
@@ -141,7 +163,7 @@ function PANEL:PerformLayout()
 
 		v:SetPos( x, 0 )
 		v:SetTall( h )
-		v:ApplySchemeSettings()
+		if ( v.ApplySchemeSettings ) then v:ApplySchemeSettings() end
 
 		x = x + v:GetWide() - self.m_iOverlap
 
@@ -168,6 +190,10 @@ function PANEL:PerformLayout()
 	self.btnLeft:SetVisible( self.pnlCanvas.x < 0 )
 	self.btnRight:SetVisible( self.pnlCanvas.x + self.pnlCanvas:GetWide() > self:GetWide() )
 
+end
+
+function PANEL:OnDragModified()
+	-- Override me
 end
 
 function PANEL:GenerateExample( classname, sheet, w, h )

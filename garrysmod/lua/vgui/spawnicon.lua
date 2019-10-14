@@ -97,7 +97,7 @@ function PANEL:SetModel( mdl, iSkin, BodyGroups )
 	if ( !mdl ) then debug.Trace() return end
 
 	self:SetModelName( mdl )
-	self:SetSkinID( iSkin )
+	self:SetSkinID( iSkin or 0 )
 
 	if ( tostring( BodyGroups ):len() != 9 ) then
 		BodyGroups = "000000000"

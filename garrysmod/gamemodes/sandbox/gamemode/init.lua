@@ -34,11 +34,11 @@ DEFINE_BASECLASS( "gamemode_base" )
 	Name: gamemode:PlayerSpawn()
 	Desc: Called when a player spawns
 -----------------------------------------------------------]]
-function GM:PlayerSpawn( pl )
+function GM:PlayerSpawn( pl, transiton )
 
 	player_manager.SetPlayerClass( pl, "player_sandbox" )
 
-	BaseClass.PlayerSpawn( self, pl )
+	BaseClass.PlayerSpawn( self, pl, transiton )
 
 end
 
@@ -111,9 +111,9 @@ end
 --[[---------------------------------------------------------
 	Called once on the player's first spawn
 -----------------------------------------------------------]]
-function GM:PlayerInitialSpawn( ply )
+function GM:PlayerInitialSpawn( ply, transiton )
 
-	BaseClass.PlayerInitialSpawn( self, ply )
+	BaseClass.PlayerInitialSpawn( self, ply, transiton )
 
 end
 

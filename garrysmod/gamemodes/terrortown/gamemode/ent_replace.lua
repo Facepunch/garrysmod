@@ -62,7 +62,7 @@ local function ReplaceAmmoSingle(ent, cls)
 end
 
 local function ReplaceAmmo()
-   for _, ent in pairs(ents.FindByClass("item_*")) do
+   for _, ent in ipairs(ents.FindByClass("item_*")) do
       ReplaceAmmoSingle(ent)
    end
 end
@@ -97,7 +97,7 @@ end
 
 
 local function ReplaceWeapons()
-   for _, ent in pairs(ents.FindByClass("weapon_*")) do
+   for _, ent in ipairs(ents.FindByClass("weapon_*")) do
       ReplaceWeaponSingle(ent)
    end
 end
@@ -106,7 +106,7 @@ end
 -- Remove ZM ragdolls that don't work, AND old player ragdolls.
 -- Exposed because it's also done at BeginRound
 function ents.TTT.RemoveRagdolls(player_only)
-   for k, ent in pairs(ents.FindByClass("prop_ragdoll")) do
+   for k, ent in ipairs(ents.FindByClass("prop_ragdoll")) do
       if IsValid(ent) then
          if not player_only and string.find(ent:GetModel(), "zm_", 6, true) then
             ent:Remove()
@@ -120,7 +120,7 @@ end
 
 -- People spawn with these, so remove any pickups (ZM maps have them)
 local function RemoveCrowbars()
-   for k, ent in pairs(ents.FindByClass("weapon_zm_improvised")) do
+   for k, ent in ipairs(ents.FindByClass("weapon_zm_improvised")) do
       ent:Remove()
    end
 end
@@ -174,7 +174,7 @@ local broken_parenting_ents = {
 
 function ents.TTT.FixParentedPreCleanup()
    for _, rcls in pairs(broken_parenting_ents) do
-      for k,v in pairs(ents.FindByClass(rcls)) do
+      for k,v in ipairs(ents.FindByClass(rcls)) do
          if v.GetParent and IsValid(v:GetParent()) then
             v.CachedParentName = v:GetParent():GetName()
             v:SetParent(nil)
@@ -189,7 +189,7 @@ end
 
 function ents.TTT.FixParentedPostCleanup()
    for _, rcls in pairs(broken_parenting_ents) do
-      for k,v in pairs(ents.FindByClass(rcls)) do
+      for k,v in ipairs(ents.FindByClass(rcls)) do
          if v.CachedParentName then
             if v.OrigPos then
                v:SetPos(v.OrigPos)
@@ -208,7 +208,7 @@ end
 function ents.TTT.TriggerRoundStateOutputs(r, param)
    r = r or GetRoundState()
 
-   for _, ent in pairs(ents.FindByClass("ttt_map_settings")) do
+   for _, ent in ipairs(ents.FindByClass("ttt_map_settings")) do
       if IsValid(ent) then
          ent:RoundStateTrigger(r, param)
       end
@@ -305,25 +305,25 @@ local function PlaceWeapon(swep, pos, ang)
    return ent
 end
 
--- Spawns a bunch of guns (scaling with maxplayers count or 
+-- Spawns a bunch of guns (scaling with maxplayers count or
 -- by ttt_weapon_spawn_max cvar) at randomly selected
 -- entities of the classes given the table
 local function PlaceWeaponsAtEnts(spots_classes)
    local spots = {}
    for _, s in pairs(spots_classes) do
-      for _, e in pairs(ents.FindByClass(s)) do
+      for _, e in ipairs(ents.FindByClass(s)) do
          table.insert(spots, e)
       end
    end
 
    local spawnables = ents.TTT.GetSpawnableSWEPs()
-   
+
    local max = GetConVar( "ttt_weapon_spawn_count" ):GetInt()
-   if max == 0 then 
+   if max == 0 then
       max = game.MaxPlayers()
       max = max + math.max(3, 0.33 * max)
    end
-   
+
    local num = 0
    local w = nil
    for k, v in RandomPairs(spots) do
@@ -393,7 +393,7 @@ function ents.TTT.PlaceExtraWeapons()
    -- single loop should be faster than checking the table size.
 
    -- Get out of here if there exists any weapon at all
-   for k,v in pairs(ents.FindByClass("weapon_*")) do
+   for k,v in ipairs(ents.FindByClass("weapon_*")) do
       -- See if it's the kind of thing we would spawn, to avoid the carry weapon
       -- and such. Owned weapons are leftovers on players that will go away.
       if IsValid(v) and v.AutoSpawnable and not IsValid(v:GetOwner()) then
@@ -402,16 +402,16 @@ function ents.TTT.PlaceExtraWeapons()
    end
 
    -- All current TTT mappers use these, so if we find one we're good
-   for k,v in pairs(ents.FindByClass("info_player_deathmatch")) do return end
+   for k,v in ipairs(ents.FindByClass("info_player_deathmatch")) do return end
 
    -- CT spawns on the other hand are unlikely to be seen outside CS:S maps
-   for k,v in pairs(ents.FindByClass("info_player_counterterrorist")) do
+   for k,v in ipairs(ents.FindByClass("info_player_counterterrorist")) do
       PlaceExtraWeaponsForCSS()
       return
    end
 
    -- And same for TF2 team spawns
-   for k,v in pairs(ents.FindByClass("info_player_teamspawn")) do
+   for k,v in ipairs(ents.FindByClass("info_player_teamspawn")) do
       PlaceExtraWeaponsForTF2()
       return
    end
@@ -423,13 +423,13 @@ local function RemoveReplaceables()
    -- This could be transformed into lots of FindByClass searches, one for every
    -- key in the replace tables. Hopefully this is faster as more of the work is
    -- done on the C side. Hard to measure.
-   for _, ent in pairs(ents.FindByClass("item_*")) do
+   for _, ent in ipairs(ents.FindByClass("item_*")) do
       if hl2_ammo_replace[ent:GetClass()] then
          ent:Remove()
       end
    end
 
-   for _, ent in pairs(ents.FindByClass("weapon_*")) do
+   for _, ent in ipairs(ents.FindByClass("weapon_*")) do
       if hl2_weapon_replace[ent:GetClass()] then
          ent:Remove()
       end
@@ -440,14 +440,14 @@ local function RemoveWeaponEntities()
    RemoveReplaceables()
 
    for _, cls in pairs(ents.TTT.GetSpawnableAmmo()) do
-      for k, ent in pairs(ents.FindByClass(cls)) do
+      for k, ent in ipairs(ents.FindByClass(cls)) do
          ent:Remove()
       end
    end
 
    for _, sw in pairs(ents.TTT.GetSpawnableSWEPs()) do
       local cn = WEPS.GetClass(sw)
-      for k, ent in pairs(ents.FindByClass(cn)) do
+      for k, ent in ipairs(ents.FindByClass(cn)) do
          ent:Remove()
       end
    end
@@ -525,10 +525,8 @@ local function ImportEntities(map)
 
    local fname = "maps/" .. map .. "_ttt.txt"
 
-   local buf = file.Read(fname, "GAME")
-   local lines = string.Explode("\n", buf)
    local num = 0
-   for k, line in ipairs(lines) do
+   for k, line in ipairs(string.Explode("\n", file.Read(fname, "GAME"))) do
       if (not string.match(line, "^#")) and (not string.match(line, "^setting")) and line != "" and string.byte(line) != 0 then
          local data = string.Explode("\t", line)
 

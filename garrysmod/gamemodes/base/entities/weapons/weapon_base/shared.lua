@@ -48,7 +48,7 @@ function SWEP:PrimaryAttack()
 	self:EmitSound( "Weapon_AR2.Single" )
 
 	-- Shoot 9 bullets, 150 damage, 0.75 aimcone
-	self:ShootBullet( 150, 1, 0.01 )
+	self:ShootBullet( 150, 1, 0.01, self.Primary.Ammo )
 
 	-- Remove 1 bullet from our clip
 	self:TakePrimaryAmmo( 1 )
@@ -71,7 +71,7 @@ function SWEP:SecondaryAttack()
 	self:EmitSound("Weapon_Shotgun.Single")
 
 	-- Shoot 9 bullets, 150 damage, 0.75 aimcone
-	self:ShootBullet( 150, 9, 0.2 )
+	self:ShootBullet( 150, 9, 0.2, self.Secondary.Ammo )
 
 	-- Remove 1 bullet from our clip
 	self:TakeSecondaryAmmo( 1 )
@@ -129,17 +129,17 @@ end
 	Name: SWEP:ShootBullet()
 	Desc: A convenience function to shoot bullets
 -----------------------------------------------------------]]
-function SWEP:ShootBullet( damage, num_bullets, aimcone )
+function SWEP:ShootBullet( damage, num_bullets, aimcone, ammo_type, force, tracer )
 
 	local bullet = {}
 	bullet.Num		= num_bullets
 	bullet.Src		= self.Owner:GetShootPos()			-- Source
 	bullet.Dir		= self.Owner:GetAimVector()			-- Dir of bullet
 	bullet.Spread	= Vector( aimcone, aimcone, 0 )		-- Aim Cone
-	bullet.Tracer	= 5									-- Show a tracer on every x bullets
-	bullet.Force	= 1									-- Amount of force to give to phys objects
+	bullet.Tracer	= tracer || 5						-- Show a tracer on every x bullets
+	bullet.Force	= force || 1						-- Amount of force to give to phys objects
 	bullet.Damage	= damage
-	bullet.AmmoType = "Pistol"
+	bullet.AmmoType = ammo_type || self.Primary.Ammo
 
 	self.Owner:FireBullets( bullet )
 

@@ -1,6 +1,4 @@
 
-AddCSLuaFile()
-
 include( "duplicator/transport.lua" )
 include( "duplicator/arming.lua" )
 

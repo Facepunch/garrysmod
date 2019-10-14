@@ -423,7 +423,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 
 	filter.OnValueChange = function( pnl, txt )
 		for id, flxpnl in pairs( flexControllers ) do
-			if ( !flxpnl:GetText():lower():find( txt:lower() ) && !flxpnl.originalName:lower():find( txt:lower() ) ) then
+			if ( !flxpnl:GetText():lower():find( txt:lower(), nil, true ) && !flxpnl.originalName:lower():find( txt:lower(), nil, true ) ) then
 				flxpnl:SetVisible( false )
 			else
 				flxpnl:SetVisible( true )

@@ -136,7 +136,7 @@ else
 		for _, ent in pairs( ents.FindByClass( "gmod_tool" ) ) do
 			if ( ent:GetOwner() == self ) then wep = ent break end
 		end
-		if ( !IsValid( wep ) ) then return nil end
+		if ( !IsValid( wep ) || !wep.GetToolObject ) then return nil end
 
 		local tool = wep:GetToolObject( mode )
 		if ( !tool ) then return nil end

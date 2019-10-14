@@ -36,6 +36,9 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		"model"
 	];
 
+	$scope.Disabled = false;
+	lua.Run( "UpdateAddonDisabledState();" );
+
 	addon.Init( 'addon', $scope, $rootScope );
 
 	$scope.Switch( 'subscribed', 0 );
@@ -149,5 +152,13 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		var count = 0;
 		for ( var k in $scope.SelectedItems ) if ( $scope.SelectedItems[ k ] ) count++;
 		return count > 0;
+	}
+}
+
+function UpdateAddonDisabledState( noaddons, noworkshop )
+{
+	if ( Scope ) {
+		Scope.Disabled = noworkshop;
+		UpdateDigest( Scope, 50 );
 	}
 }

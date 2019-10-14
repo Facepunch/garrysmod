@@ -81,7 +81,7 @@ function ENT:CheckForWeapon(ply)
    -- Check if player has a weapon that we know needs us. This is called in
    -- Touch, which is called many a time, so we use the cache here to avoid
    -- looping through every weapon the player has to check their AmmoEnt.
-   for _, w in pairs(self.CachedWeapons) do
+   for _, w in ipairs(self.CachedWeapons) do
       if ply:HasWeapon(w) then return true end
    end
    return false
@@ -90,7 +90,7 @@ end
 function ENT:Touch(ent)
    if (SERVER and self.tickRemoval ~= true) and ent:IsValid() and ent:IsPlayer() and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent) then
      local ammo = ent:GetAmmoCount(self.AmmoType)
-     
+
      -- need clipmax info and room for at least 1/4th
      if self.AmmoMax >= (ammo + math.ceil(self.AmmoAmount * 0.25)) then
        local given = self.AmmoAmount
@@ -99,7 +99,7 @@ function ENT:Touch(ent)
 
        local newEntAmount = self.AmmoAmount - given
        self.AmmoAmount = newEntAmount
-       
+
        if self.AmmoAmount <= 0 or math.ceil(self.AmmoEntMax * 0.25) > self.AmmoAmount then
          self.tickRemoval = true
          self:Remove()

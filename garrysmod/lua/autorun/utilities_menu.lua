@@ -23,12 +23,13 @@ local function ServerSettings( pnl )
 
 	local ConVarsDefault = {
 		hostname = "Garry's Mod",
-		-- sv_password = "", -- Can be read by addons/servers
+		-- sv_password = "", -- Can't be read by addons/servers
 		sv_kickerrornum = "0",
 		sv_allowcslua = "0",
 		sv_sticktoground = "1",
 		sv_playerpickupallowed = "1",
 		mp_falldamage = "0",
+		gmod_maxammo = "9999",
 		sv_gravity = "600",
 		sv_friction = "8",
 		phys_timescale = "1.00",
@@ -54,6 +55,7 @@ local function ServerSettings( pnl )
 	pnl:AddControl( "Slider", { Label = "#utilities.timescale", Type = "Float", Command = "phys_timescale", Min = "0", Max = "2" } )
 	pnl:AddControl( "Slider", { Label = "#utilities.deployspeed", Type = "Float", Command = "sv_defaultdeployspeed", Min = "0.1", Max = "10" } )
 	pnl:AddControl( "Slider", { Label = "#utilities.noclipspeed", Type = "Integer", Command = "sv_noclipspeed", Min = "1", Max = "10" } ) -- Switch this and friction back to Float once Sliders don't reset the convar from 8 to 8.00, etc
+	pnl:AddControl( "Slider", { Label = "#utilities.maxammo", Type = "Integer", Command = "gmod_maxammo", Min = "0", Max = "9999", Help = true } )
 
 	-- Technical convars
 	pnl:AddControl( "Slider", { Label = "#utilities.iterations", Type = "Integer", Command = "gmod_physiterations", Min = "1", Max = "10" } )

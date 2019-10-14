@@ -5,7 +5,7 @@ WeaponData
 	// Weapon data is loaded by both the Game and Client DLLs.
 	"printname"		"#HL1_Tripmines"
 	"viewmodel"		"models/v_tripmine.mdl"
-	"playermodel"		"models/w_tripmine.mdl"
+	"playermodel"		"models/weapons/w_tripmine_hls.mdl"
 	"anim_prefix"		"trip"
 	"bucket"		"4"
 	"bucket_position"	"12"

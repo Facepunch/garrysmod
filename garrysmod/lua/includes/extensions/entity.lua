@@ -371,7 +371,7 @@ function meta:InstallDataTable()
 		--
 		-- If there's nothing in our table - then return nil.
 		--
-		if ( table.Count( dt ) == 0 ) then return nil end
+		if ( table.IsEmpty( dt ) ) then return nil end
 
 		return dt
 
@@ -482,7 +482,7 @@ end
 --
 -- Networked var proxies
 --
-function meta:SetNetworkedVarProxy( name, func )
+function meta:SetNetworked2VarProxy( name, func )
 
 	if ( !self.NWVarProxies ) then
 		self.NWVarProxies = {}
@@ -492,7 +492,7 @@ function meta:SetNetworkedVarProxy( name, func )
 
 end
 
-function meta:GetNetworkedVarProxy( name )
+function meta:GetNetworked2VarProxy( name )
 
 	if ( self.NWVarProxies ) then
 		local func = self.NWVarProxies[ name ]
@@ -505,8 +505,8 @@ function meta:GetNetworkedVarProxy( name )
 
 end
 
-meta.SetNWVarProxy = meta.SetNetworkedVarProxy
-meta.GetNWVarProxy = meta.GetNetworkedVarProxy
+meta.SetNW2VarProxy = meta.SetNetworked2VarProxy
+meta.GetNW2VarProxy = meta.GetNetworked2VarProxy
 
 hook.Add( "EntityNetworkedVarChanged", "NetworkedVars", function( ent, name, oldValue, newValue )
 

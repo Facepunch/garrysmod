@@ -58,11 +58,12 @@ Scheme
 		CheckButton.BgColor				"White"
 		CheckButton.Border1  			"Border.Subtle" 		// the left checkbutton border
 		CheckButton.Border2  			"Border.Subtle"		// the right checkbutton border
-		CheckButton.Check				"118 189 118 255"	// color of the check itself
+		CheckButton.Check				"Black"	// color of the check itself
+		CheckButton.DisabledFgColor		"Black"	// color of the check itself when disabled
 		CheckButton.HighlightFgColor	"OffWhite"
 		CheckButton.ArmedBgColor		"Blank"
 		CheckButton.DepressedBgColor	"Blank"
-		CheckButton.DisabledBgColor	   	"153 153 153 255"
+		CheckButton.DisabledBgColor	   	"180 180 180 255"
 
 		ComboBoxButton.ArrowColor		"81 81 81 255"
 		ComboBoxButton.ArmedArrowColor	"110 110 110 255"

@@ -67,7 +67,7 @@ end
 function PANEL:PositionTooltip()
 
 	if ( !IsValid( self.TargetPanel ) ) then
-		self:Remove()
+		self:Close()
 		return
 	end
 

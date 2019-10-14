@@ -67,7 +67,7 @@ function PANEL:Setup( vars )
 	btn.DoClick = function()
 
 		local color = vgui.Create( "DColorCombo", self )
-		if ( type( self.VectorValue ) == "table" ) then color.Mixer:SetAlphaBar( true ) end
+		if ( istable( self.VectorValue ) ) then color.Mixer:SetAlphaBar( true ) end
 		color:SetupCloseButton( function() CloseDermaMenus() end )
 		color.OnValueChanged = function( color, newcol )
 
@@ -101,6 +101,16 @@ function PANEL:Setup( vars )
 		else
 			__SetValue( self, ColorToString( val ) )
 		end
+	end
+
+	-- Enabled/disabled support
+	self.IsEnabled = function( self )
+		return btn:IsEnabled()
+	end
+	local oldSetEnabled = self.SetEnabled
+	self.SetEnabled = function( self, b )
+		btn:SetEnabled( b )
+		oldSetEnabled( b ) -- Also handle the text entry
 	end
 
 end

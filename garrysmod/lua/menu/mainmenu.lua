@@ -382,6 +382,11 @@ function UpdateSubscribedAddons()
 
 end
 
+function UpdateAddonDisabledState()
+	local noaddons, noworkshop = GetAddonStatus()
+	pnlMainMenu:Call( "UpdateAddonDisabledState( " .. tostring( noaddons ) .. ", " .. tostring( noworkshop ) .. " )" )
+end
+
 hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 
 	if ( !IsValid( pnlMainMenu ) ) then return end
@@ -396,6 +401,10 @@ hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 	-- so we really only want to update this after that.
 	timer.Simple( 0.5, function() UpdateMapList() end )
 
+end )
+
+hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str )
+	Derma_Message( str, "Failed to load save!", "OK" )
 end )
 
 --

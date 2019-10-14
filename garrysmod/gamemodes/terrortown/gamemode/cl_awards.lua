@@ -74,7 +74,7 @@ local function ExplosiveGrant(events, scores, players, traitors)
 
    local award = {title= T("aw_exp1_title")}
 
-   if table.Count(bombers) > 0 then
+   if not table.IsEmpty(bombers) then
       for sid, num in pairs(bombers) do
          -- award goes to whoever reaches this first I guess
          if num > 2 then
@@ -145,7 +145,7 @@ local function AllKills(events, scores, players, traitors)
       end
    end
 
-   if table.Count(tr_killers) == 1 then
+   if #tr_killers == 1 then
       local id = tr_killers[1]
       if not table.HasValue(traitors, id) then
          local killer = players[id]
@@ -155,7 +155,7 @@ local function AllKills(events, scores, players, traitors)
       end
    end
 
-   if table.Count(in_killers) == 1 then
+   if #in_killers == 1 then
       local id = in_killers[1]
       if table.HasValue(traitors, id) then
          local killer = players[id]
@@ -214,7 +214,7 @@ local function NumKills_Inno(events, scores, players, traitors)
    end
 
    local choices = table.Count(ins)
-   if table.Count(ins) > 0 then
+   if not table.IsEmpty(ins) then
       -- award a random killer
       local pick = math.random(1, choices)
       local sid = ins[pick]
@@ -268,7 +268,7 @@ local function Headshots(events, scores, players, traitors)
       end
    end
 
-   if table.Count(hs) == 0 then return nil end
+   if table.IsEmpty(hs) then return nil end
 
    -- find the one with the most shots
    local m_id, m_num = FindHighest(hs)
@@ -304,7 +304,7 @@ local function UsedAmmoMost(events, ammotype)
       end
    end
 
-   if table.Count(user) == 0 then return nil end
+   if table.IsEmpty(user) then return nil end
 
    local m_id, m_num = FindHighest(user)
 
@@ -642,7 +642,7 @@ local function Burner(events, scores, players, traitors)
       end
    end
 
-   if table.Count(brn) == 0 then return nil end
+   if table.IsEmpty(brn) then return nil end
 
    -- find the one with the most burnings
    local m_id, m_num = FindHighest(brn)
@@ -678,7 +678,7 @@ local function Coroner(events, scores, players, traitors)
       end
    end
 
-   if table.Count(finders) == 0 then return end
+   if table.IsEmpty(finders) then return end
 
    local m_id, m_num = FindHighest(finders)
 
@@ -713,7 +713,7 @@ local function CreditFound(events, scores, players, traitors)
       end
    end
 
-   if table.Count(finders) == 0 then return end
+   if table.IsEmpty(finders) then return end
 
    local m_id, m_num = FindHighest(finders)
 

@@ -64,7 +64,8 @@ function ENT:Think()
 
 		if ( !self:GetOn() ) then return end
 
-		local dlight = DynamicLight( self:EntIndex() )
+		local noworld = self:GetLightWorld()
+		local dlight = DynamicLight( self:EntIndex(), noworld )
 
 		if ( dlight ) then
 
@@ -87,7 +88,7 @@ function ENT:Think()
 			dlight.Size = size
 			dlight.DieTime = CurTime() + 1
 
-			dlight.noworld = self:GetLightWorld()
+			dlight.noworld = noworld
 			dlight.nomodel = self:GetLightModels()
 
 		end

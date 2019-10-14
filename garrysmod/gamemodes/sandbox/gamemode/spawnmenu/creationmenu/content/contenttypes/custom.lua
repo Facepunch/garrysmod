@@ -189,7 +189,7 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 
 	-- Custom stuff from addons
 	local CustomProps = spawnmenu.GetCustomPropTable()
-	if ( table.Count( CustomProps ) > 0 ) then
+	if ( !table.IsEmpty( CustomProps ) ) then
 		local node = AddCustomizableNode( pnlContent, "#spawnmenu.category.addon_spawnlists", "", tree )
 		node:SetExpanded( true )
 		--node:SetDraggableName( "CustomContent" )

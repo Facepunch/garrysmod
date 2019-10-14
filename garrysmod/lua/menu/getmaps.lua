@@ -31,6 +31,7 @@ local function UpdateMaps()
 	MapNames[ "es_" ] = "Counter-Strike"
 	MapNames[ "fy_" ] = "Counter-Strike"
 	MapNames[ "gd_" ] = "Counter-Strike"
+	MapNames[ "dz_" ] = "Counter-Strike"
 	MapNames[ "training1" ] = "Counter-Strike"
 
 	MapNames[ "dod_" ] = "Day Of Defeat"
