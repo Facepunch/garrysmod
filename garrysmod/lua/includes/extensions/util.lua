@@ -259,13 +259,13 @@ local STACK =
 		local newlen = len - num
 		self[0] = newlen
 
+		newlen = newlen + 1
+		local ret = self[ newlen ]
+
 		-- Pop up to the last element
-		for i = newlen + 1, len - 1 do
+		for i = len, newlen, -1 do
 			self[ i ] = nil
 		end
-
-		local ret = self[ len ]
-		self[ len ] = nil
 
 		return ret
 	end,
