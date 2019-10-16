@@ -222,49 +222,83 @@ function util.Timer( startdelay )
 end
 
 
+local function PopStack( self, num )
+	if ( num == nil ) then
+		num = 1
+	elseif ( num < 0 ) then
+		error( string.format( "attempted to pop %d elements in stack, expected >= 0", num ), 3 )
+	else
+		num = math.floor( num )
+	end
+
+	local len = self[0]
+
+	if ( num > len ) then
+		error( string.format( "attempted to pop %u element%s in stack of length %u", num, num == 1 && "" || "s", len ), 3 )
+	end
+
+	return num, len
+end
+
 local STACK = 
 {
 	Push = function( self, obj )
-
 		local len = self[0] + 1
 		self[ len ] = obj
 		self[0] = len
-
 	end,
 
-	Pop = function( self, num--[[= 1]] )
+	Pop = function( self, num )
+		local len
+		num, len = PopStack( self, num )
 
-		if ( num == nil ) then
-			num = 1
-		elseif ( num < 0 ) then
-			error( string.format( "tried to pop %d elements in stack, expected >=0", num ), 2 )
-		else
-			num = math.floor( num )
-		end
-
-		local len = self[0]
-
-		if ( num > len ) then
-			error( string.format( "tried to pop %u element%s in stack of length %u", num, num == 1 && "" || "s", len ), 2 )
+		if ( num == 0 ) then
+			return nil
 		end
 
 		local newlen = len - num
+		self[0] = newlen
 
 		-- Pop up to the last element
-		for i = len, newlen + 2, -1 do
+		for i = newlen + 1, len - 1 do
 			self[ i ] = nil
 		end
 
-		local ret = self[ newlen + 1 ]
-		self[ newlen + 1 ] = nil
-		self[0] = newlen
+		local ret = self[ len ]
+		self[ len ] = nil
 
 		return ret
+	end,
 
+	PopMulti = function( self, num )
+		local len
+		num, len = PopStack( self, num )
+
+		if ( num == 0 ) then
+			return {}
+		end
+
+		local newlen = len - num
+		self[0] = newlen
+
+		local ret = {}
+		local retpos = 0
+
+		-- Pop each element and add it to the table
+		-- Iterate in reverse since the stack is internally stored
+		-- with 1 being the bottom element and len being the top
+		-- But the return will have 1 as the top element
+		for i = len, newlen + 1, -1 do
+			retpos = retpos + 1
+			ret[ retpos ] = self[ i ]
+
+			self[ i ] = nil
+		end
+
+		return ret
 	end,
 
 	Top = function( self )
-
 		local len = self[0]
 
 		if ( len == 0 ) then
@@ -272,22 +306,17 @@ local STACK =
 		end
 
 		return self[ len ]
-
 	end,
 
 	Size = function( self )
-
 		return self[0]
-
 	end
 }
 
 STACK.__index = STACK
 
 function util.Stack()
-
 	return setmetatable( { [0] = 0 }, STACK )
-
 end
 
 --Helper for the following functions.
