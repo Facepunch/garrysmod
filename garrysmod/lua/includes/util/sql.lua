@@ -32,11 +32,20 @@ SQLStr = sql.SQLStr
 -----------------------------------------------------------]]
 function sql.TableExists( name )
 
-	local r = sql.Query( "select name FROM sqlite_master WHERE name="..SQLStr( name ).." AND type='table'" );
+	local r = sql.Query( "SELECT name FROM sqlite_master WHERE name="..SQLStr( name ).." AND type='table'" );
 	
-	if ( r ) then return true end
+	return r and true or false
+
+end
+
+--[[---------------------------------------------------------
+    Returns true if the index exists. False if it doesn't
+-----------------------------------------------------------]]
+function sql.IndexExists( name )
+
+	local r = sql.Query( "SELECT name FROM sqlite_master WHERE name="..SQLStr( name ).." AND type='index'" );
 	
-	return false
+	return r and true or false
 
 end
 
