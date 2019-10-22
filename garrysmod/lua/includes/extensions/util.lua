@@ -222,89 +222,101 @@ function util.Timer( startdelay )
 end
 
 
---
--- Stack
---
---
-local T = 
+local function PopStack( self, num )
+	if ( num == nil ) then
+		num = 1
+	elseif ( num < 0 ) then
+		error( string.format( "attempted to pop %d elements in stack, expected >= 0", num ), 3 )
+	else
+		num = math.floor( num )
+	end
+
+	local len = self[0]
+
+	if ( num > len ) then
+		error( string.format( "attempted to pop %u element%s in stack of length %u", num, num == 1 && "" || "s", len ), 3 )
+	end
+
+	return num, len
+end
+
+local STACK = 
 {
-
-	--
-	-- Name: Stack:Push
-	-- Desc: Push an item onto the stack
-	-- Arg1: any|object|The item you want to push
-	-- Ret1:
-	--
 	Push = function( self, obj )
-
-		self.top = obj
-		self.objs[ #self.objs + 1 ] = obj
-
+		local len = self[0] + 1
+		self[ len ] = obj
+		self[0] = len
 	end,
 
-	--
-	-- Name: Stack:Pop
-	-- Desc: Pop an item from the stack
-	-- Arg1: number|amount|Optional amount of items you want to pop (defaults to 1)
-	-- Ret1:
-	--
 	Pop = function( self, num )
-		
-		local num = num or 1
+		local len
+		num, len = PopStack( self, num )
 
-		if ( num > #self.objs ) then
-			error( "Overpopped stack!" );
+		if ( num == 0 ) then
+			return nil
 		end
 
-		for i = num, 1, -1 do
-			table.remove( self.objs )
+		local newlen = len - num
+		self[0] = newlen
+
+		newlen = newlen + 1
+		local ret = self[ newlen ]
+
+		-- Pop up to the last element
+		for i = len, newlen, -1 do
+			self[ i ] = nil
 		end
 
-		self.top = self.objs[ #self.objs ]
-
+		return ret
 	end,
 
-	--
-	-- Name: Stack:Top
-	-- Desc: Get the item at the top of the stack
-	-- Arg1:
-	-- Ret1: any|The item
-	--
+	PopMulti = function( self, num )
+		local len
+		num, len = PopStack( self, num )
+
+		if ( num == 0 ) then
+			return {}
+		end
+
+		local newlen = len - num
+		self[0] = newlen
+
+		local ret = {}
+		local retpos = 0
+
+		-- Pop each element and add it to the table
+		-- Iterate in reverse since the stack is internally stored
+		-- with 1 being the bottom element and len being the top
+		-- But the return will have 1 as the top element
+		for i = len, newlen + 1, -1 do
+			retpos = retpos + 1
+			ret[ retpos ] = self[ i ]
+
+			self[ i ] = nil
+		end
+
+		return ret
+	end,
+
 	Top = function( self )
+		local len = self[0]
 
-		return self.top
+		if ( len == 0 ) then
+			return nil
+		end
 
+		return self[ len ]
 	end,
 
-	--
-	-- Name: Stack:Size
-	-- Desc: Returns the size of the stack
-	-- Arg1:
-	-- Ret1: number|The size of the stack
-	--
 	Size = function( self )
-
-		return #self.objs
-
-	end,
-
+		return self[0]
+	end
 }
 
-T.__index = T
+STACK.__index = STACK
 
---
--- Name: util.Stack
--- Desc: Returns a new Stack object
--- Arg1:
--- Ret1: Stack|a brand new stack object
---
 function util.Stack()
-
-	local t = {}
-	setmetatable( t, T )
-	t.objs = {}
-	return t
-
+	return setmetatable( { [0] = 0 }, STACK )
 end
 
 --Helper for the following functions.
