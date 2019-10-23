@@ -166,6 +166,12 @@ function meta:GetChildBones( bone )
 
 end
 
+function DTVar_ReceiveProxyGL( ent, name, id, val )
+	if ( ent.CallDTVarProxies ) then
+		ent:CallDTVarProxies( name, id, val )
+	end
+end
+
 function meta:InstallDataTable()
 
 	self.dt = {}
@@ -259,6 +265,15 @@ function meta:InstallDataTable()
 			v( ent, name, oldval, newval )
 		end
 
+	end
+
+	self.CallDTVarProxies = function( ent, typename, index, newVal )
+		for name, t in pairs( datatable ) do
+			if ( t.index == index && t.typename == typename ) then
+				CallProxies( ent, t.Notify, name, self.dt[ name ], newVal )
+				break
+			end
+		end
 	end
 
 	self.NetworkVar = function( ent, typename, index, name, other_data )
