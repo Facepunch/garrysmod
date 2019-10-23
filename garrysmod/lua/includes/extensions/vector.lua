@@ -166,3 +166,13 @@ function meta:GetBasis(ang)
 	v:Basis()
 	return v
 end
+
+--[[---------------------------------------------------------
+Calculates 3x3 determinant by using other two vectors as rows
+-----------------------------------------------------------]]
+function meta:GetDeterminant(vec2, vec3)
+  local a, b, c = self.x, self.y, self.z
+  local d, e, f = vec2.x, vec2.y, vec2.z
+  local g, h, i = vec3.x, vec3.y, vec3.z
+  return ((a*e*i)+(b*f*g)+(d*h*c)-(g*e*c)-(h*f*a)-(d*b*i))
+end
