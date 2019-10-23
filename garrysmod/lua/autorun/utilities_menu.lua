@@ -48,6 +48,7 @@ local function ServerSettings( pnl )
 	pnl:AddControl( "CheckBox", { Label = "#utilities.sticktoground", Command = "sv_sticktoground", Help = true } )
 	pnl:AddControl( "CheckBox", { Label = "#utilities.epickupallowed", Command = "sv_playerpickupallowed" } )
 	pnl:AddControl( "CheckBox", { Label = "#utilities.falldamage", Command = "mp_falldamage" } )
+	pnl:AddControl( "CheckBox", { Label = "#utilities.gmod_suit", Command = "gmod_suit" } )
 
 	-- Fun convars
 	pnl:AddControl( "Slider", { Label = "#utilities.gravity", Type = "Integer", Command = "sv_gravity", Min = "-500", Max = "1000" } )
