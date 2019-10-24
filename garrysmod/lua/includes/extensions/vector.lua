@@ -34,12 +34,40 @@ function meta:GetRotated(ang)
 end
 
 --[[---------------------------------------------------------
+Returns a copy of a multiplied vector
+-----------------------------------------------------------]]
+function meta:GetMul(num)
+	local v = Vector(self)
+	v:Mul(num)
+	return v
+end
+
+--[[---------------------------------------------------------
 Returns a copy of an added vector
 -----------------------------------------------------------]]
 function meta:GetAdd(vec)
 	local v = Vector(self)
 	v:Add(vec)
 	return v
+end
+
+--[[---------------------------------------------------------
+Adds a unpacked x, y and z to a vector
+-----------------------------------------------------------]]
+function meta:AddEx(x, y, z)
+	self.x = self.x + x
+	self.y = self.y + y
+	self.z = self.z + z
+	return self
+end
+
+--[[---------------------------------------------------------
+Adds a unpacked x, y and z to a copy vector
+-----------------------------------------------------------]]
+function meta:GetAddEx(...)
+	local v = Vector(self)
+	v:AddEx(...)
+	return self
 end
 
 --[[---------------------------------------------------------
@@ -52,12 +80,22 @@ function meta:GetSub(vec)
 end
 
 --[[---------------------------------------------------------
-Returns a copy of a multiplied vector
+Subtracts a unpacked x, y and z from a vector
 -----------------------------------------------------------]]
-function meta:GetMul(num)
+function meta:SubEx(x, y, z)
+	self.x = self.x - x
+	self.y = self.y - y
+	self.z = self.z - z
+	return self
+end
+
+--[[---------------------------------------------------------
+Adds a unpacked x, y and z to a copy vector
+-----------------------------------------------------------]]
+function meta:GetSubEx(...)
 	local v = Vector(self)
-	v:Mul(num)
-	return v
+	v:SubEx(...)
+	return self
 end
 
 --[[---------------------------------------------------------
@@ -84,25 +122,47 @@ Returns a copy of bisector of two vectors
 -----------------------------------------------------------]]
 function meta:GetBisected(vec)
 	local v = Vector(self)
-	return v:Bisect(vec)
+	v:Bisect(vec)
+	return v
 end
 
 --[[---------------------------------------------------------
 Convets the vector to nagated version of itself
 -----------------------------------------------------------]]
-function meta:Negate()
-	self.x = -self.x
-	self.y = -self.y
-	self.z = -self.z
+function meta:Negate(x, y, x)
+	local x = ((x == nil or x) and true or false)
+	local y = ((y == nil or y) and true or false)
+	local z = ((z == nil or z) and true or false)
+	self.x = x and -self.x or self.x
+	self.y = y and -self.y or self.y
+	self.z = z and -self.z or self.z
 	return self
 end
 
 --[[---------------------------------------------------------
 Returns a copy of the nagated vector
 -----------------------------------------------------------]]
-function meta:GetNegated()
+function meta:GetNegated(...)
 	local v = Vector(self)
-	return v:GetNegate()
+	v:Negate(...)
+	return v
+end
+
+--[[---------------------------------------------------------
+Convets the vector to nagated version of itself
+-----------------------------------------------------------]]
+function meta:Nudge(n, v)
+	self:Add(v:GetMul(n))
+	return self
+end
+
+--[[---------------------------------------------------------
+Returns a copy of the nagated vector
+-----------------------------------------------------------]]
+function meta:GetNudge(...)
+	local v = Vector(self)
+	v:Nudge(...)
+	return v
 end
 
 --[[---------------------------------------------------------
@@ -117,9 +177,10 @@ end
 --[[---------------------------------------------------------
 Returns a copy of the resized vector
 -----------------------------------------------------------]]
-function meta:GetResized(vec)
+function meta:GetResized(...)
 	local v = Vector(self)
-	return v:Resize()
+	v:Resize(...)
+	return v
 end
 
 --[[---------------------------------------------------------
@@ -136,7 +197,8 @@ Returns a copy of the midpoint vector
 -----------------------------------------------------------]]
 function meta:GetMidpoint(vec)
 	local v = Vector(self)
-	return v:Midpoint(vec)
+	v:Midpoint(vec)
+	return v
 end
 
 --[[---------------------------------------------------------
