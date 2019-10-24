@@ -13,7 +13,7 @@ end
 --[[---------------------------------------------------------
 Converts Vector to Table - removes all metrods from the copy
 -----------------------------------------------------------]]
-function meta:ToTable(arr)
+function meta:ToTable()
 	local x, y, z = self:Unpack()
 	return {x = x, y = y, z = z}
 end
@@ -22,16 +22,14 @@ end
 Converts Vector to Array - removes all metrods from the copy
 -----------------------------------------------------------]]
 function meta:ToArray()
-	local x, y, z = self:Unpack()
-	return {x, y, z}
+	return {self:Unpack()}
 end
 
 --[[---------------------------------------------------------
 Converts Vector to Angle - data is copied
 -----------------------------------------------------------]]
 function meta:ToAngle()
-	local x, y, z = self:Unpack()
-	return Angle(x, y, z)
+	return Angle(self:Unpack())
 end
 
 --[[---------------------------------------------------------
@@ -64,20 +62,19 @@ end
 --[[---------------------------------------------------------
 Adds a unpacked x, y and z to a vector
 -----------------------------------------------------------]]
-function meta:AddEx(x, y, z)
+function meta:AddUnpacked(x, y, z)
 	self[1] = self[1] + x
 	self[2] = self[2] + y
 	self[3] = self[3] + z
-	return self
 end
 
 --[[---------------------------------------------------------
 Adds a unpacked x, y and z to a copy vector
 -----------------------------------------------------------]]
-function meta:GetAddEx(...)
+function meta:GetAddUnpacked(...)
 	local v = Vector(self)
-	v:AddEx(...)
-	return self
+	v:AddUnpacked(...)
+	return v
 end
 
 --[[---------------------------------------------------------
@@ -92,20 +89,19 @@ end
 --[[---------------------------------------------------------
 Subtracts a unpacked x, y and z from a vector
 -----------------------------------------------------------]]
-function meta:SubEx(x, y, z)
+function meta:SubUnpacked(x, y, z)
 	self[1] = self[1] - x
 	self[2] = self[2] - y
 	self[3] = self[3] - z
-	return self
 end
 
 --[[---------------------------------------------------------
 Adds a unpacked x, y and z to a copy vector
 -----------------------------------------------------------]]
-function meta:GetSubEx(...)
+function meta:GetSubUnpacked(...)
 	local v = Vector(self)
-	v:SubEx(...)
-	return self
+	v:SubUnpacked(...)
+	return v
 end
 
 --[[---------------------------------------------------------
@@ -124,7 +120,6 @@ function meta:Bisect(vec)
 	local ns, nv = self:Length(), vec:Length()
 	self:Mul(nv)
 	self:Add(vec:GetMul(ns))
-	return self
 end
 
 --[[---------------------------------------------------------
@@ -139,12 +134,11 @@ end
 --[[---------------------------------------------------------
 Convets the vector to nagated version of itself
 -----------------------------------------------------------]]
-function meta:Negate(bx, by, bz)
+function meta:Negate()
 	local vx, vy, vz = self:Unpack()
-	self[1] = tobool(bx or (bx == nil)) and -vx or vx
-	self[2] = tobool(by or (by == nil)) and -vy or vy
-	self[3] = tobool(bz or (bz == nil)) and -vz or vz
-	return self
+	self[1] = -vx
+	self[2] = -vy
+	self[3] = -vz
 end
 
 --[[---------------------------------------------------------
@@ -161,7 +155,6 @@ Convets the vector to nagated version of itself
 -----------------------------------------------------------]]
 function meta:Nudge(n, v)
 	self:Add(v:GetMul(n))
-	return self
 end
 
 --[[---------------------------------------------------------
@@ -179,7 +172,6 @@ Convets the vector to resized version of itself
 function meta:Resize(num)
 	self:Normalize()
 	self:Mul(num)
-	return self
 end
 
 --[[---------------------------------------------------------
@@ -197,7 +189,6 @@ Convets the vector to resized midpoint of itself
 function meta:Midpoint(vec)
 	self:Add(vec)
 	self:Mul(0.5)
-	return self
 end
 
 --[[---------------------------------------------------------
@@ -225,8 +216,7 @@ function meta:Basis(ang)
 	local x = self:Dot(ang:Forward())
 	local y = self:Dot(ang:Right())
 	local z = self:Dot(ang:Up())
-	self[1], self[2], self[3] = x, y, z
-	return self
+	self:SetUnpacked(x, y, z)
 end
 
 --[[---------------------------------------------------------
