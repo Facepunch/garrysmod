@@ -6,48 +6,58 @@ local meta = FindMetaTable( "Vector" )
 Converts Vector to Color - alpha precision lost, must reset
 -----------------------------------------------------------]]
 function meta:ToColor()
-	return Color(self.x * 255, self.y * 255, self.z * 255)
+	local x, y, z = self:Unpack()
+	return Color(x * 255, y * 255, z * 255)
 end
 
 --[[---------------------------------------------------------
 Converts Vector to Table - removes all metrods from the copy
 -----------------------------------------------------------]]
 function meta:ToTable(arr)
-	if(arr) then return {self.x, self.y, self.z} end
-	return {x = self.x, y = self.y, z = self.z}
+	local x, y, z = self:Unpack()
+	return {x = x, y = y, z = z}
+end
+
+--[[---------------------------------------------------------
+Converts Vector to Array - removes all metrods from the copy
+-----------------------------------------------------------]]
+function meta:ToArray()
+	local x, y, z = self:Unpack()
+	return {x, y, z}
 end
 
 --[[---------------------------------------------------------
 Converts Vector to Angle - data is copied
 -----------------------------------------------------------]]
 function meta:ToAngle()
-	return Angle(self.x, self.y, self.z)
+	local x, y, z = self:Unpack()
+	return Angle(x, y, z)
 end
 
 --[[---------------------------------------------------------
 Returns a copy of a rotated vector. Kind of like v:GetNormalized()
 -----------------------------------------------------------]]
-function meta:GetRotated(ang)
+function meta:GetRotated(...)
 	local v = Vector(self)
-	v:Rotate(ang)
+	v:Rotate(...)
 	return v
 end
 
 --[[---------------------------------------------------------
 Returns a copy of a multiplied vector
 -----------------------------------------------------------]]
-function meta:GetMul(num)
+function meta:GetMul(...)
 	local v = Vector(self)
-	v:Mul(num)
+	v:Mul(...)
 	return v
 end
 
 --[[---------------------------------------------------------
 Returns a copy of an added vector
 -----------------------------------------------------------]]
-function meta:GetAdd(vec)
+function meta:GetAdd(...)
 	local v = Vector(self)
-	v:Add(vec)
+	v:Add(...)
 	return v
 end
 
@@ -55,9 +65,9 @@ end
 Adds a unpacked x, y and z to a vector
 -----------------------------------------------------------]]
 function meta:AddEx(x, y, z)
-	self.x = self.x + x
-	self.y = self.y + y
-	self.z = self.z + z
+	self[1] = self[1] + x
+	self[2] = self[2] + y
+	self[3] = self[3] + z
 	return self
 end
 
@@ -73,9 +83,9 @@ end
 --[[---------------------------------------------------------
 Returns a copy of a subracted vector
 -----------------------------------------------------------]]
-function meta:GetSub(vec)
+function meta:GetSub(...)
 	local v = Vector(self)
-	v:Sub(vec)
+	v:Sub(...)
 	return v
 end
 
@@ -83,9 +93,9 @@ end
 Subtracts a unpacked x, y and z from a vector
 -----------------------------------------------------------]]
 function meta:SubEx(x, y, z)
-	self.x = self.x - x
-	self.y = self.y - y
-	self.z = self.z - z
+	self[1] = self[1] - x
+	self[2] = self[2] - y
+	self[3] = self[3] - z
 	return self
 end
 
@@ -101,9 +111,9 @@ end
 --[[---------------------------------------------------------
 Returns a copy of a divided vector
 -----------------------------------------------------------]]
-function meta:GetDiv(num)
+function meta:GetDiv(...)
 	local v = Vector(self)
-	v:Div(num)
+	v:Div(...)
 	return v
 end
 
@@ -120,22 +130,20 @@ end
 --[[---------------------------------------------------------
 Returns a copy of bisector of two vectors
 -----------------------------------------------------------]]
-function meta:GetBisected(vec)
+function meta:GetBisected(...)
 	local v = Vector(self)
-	v:Bisect(vec)
+	v:Bisect(...)
 	return v
 end
 
 --[[---------------------------------------------------------
 Convets the vector to nagated version of itself
 -----------------------------------------------------------]]
-function meta:Negate(x, y, x)
-	local x = ((x == nil or x) and true or false)
-	local y = ((y == nil or y) and true or false)
-	local z = ((z == nil or z) and true or false)
-	self.x = x and -self.x or self.x
-	self.y = y and -self.y or self.y
-	self.z = z and -self.z or self.z
+function meta:Negate(bx, by, bz)
+	local vx, vy, vz = self:Unpack()
+	self[1] = tobool(bx or true) and -vx or vx
+	self[2] = tobool(by or true) and -vy or vy
+	self[3] = tobool(bz or true) and -vz or vz
 	return self
 end
 
@@ -195,18 +203,18 @@ end
 --[[---------------------------------------------------------
 Returns a copy of the midpoint vector
 -----------------------------------------------------------]]
-function meta:GetMidpoint(vec)
+function meta:GetMidpoint(...)
 	local v = Vector(self)
-	v:Midpoint(vec)
+	v:Midpoint(...)
 	return v
 end
 
 --[[---------------------------------------------------------
 Returns a copy of the zero point vector
 -----------------------------------------------------------]]
-function meta:GetZero()
+function meta:GetZero(...)
 	local v = Vector(self)
-	v:Zero()
+	v:Zero(...)
 	return v
 end
 
@@ -214,18 +222,19 @@ end
 Applies new basis to a vector by the three axises of an angle
 -----------------------------------------------------------]]
 function meta:Basis(ang)
-	self.x = self:Dot(ang:Forward())
-	self.y = self:Dot(ang:Right())
-	self.z = self:Dot(ang:Up())
+	local x = self:Dot(ang:Forward())
+	local y = self:Dot(ang:Right())
+	local z = self:Dot(ang:Up())
+	self[1], self[2], self[3] = x, y, z
 	return self
 end
 
 --[[---------------------------------------------------------
 Applies new basis to a vector by the three axises of an angle
 -----------------------------------------------------------]]
-function meta:GetBasis(ang)
+function meta:GetBasis(...)
 	local v = Vector(self)
-	v:Basis()
+	v:Basis(...)
 	return v
 end
 
@@ -233,8 +242,8 @@ end
 Calculates 3x3 determinant by using other two vectors as rows
 -----------------------------------------------------------]]
 function meta:GetDeterminant(vec2, vec3)
-  local a, b, c = self:Unpack()
-  local d, e, f = vec2:Unpack()
-  local g, h, i = vec3:Unpack()
-  return ((a*e*i)+(b*f*g)+(d*h*c)-(g*e*c)-(h*f*a)-(d*b*i))
+	local a, b, c = self:Unpack()
+	local d, e, f = vec2:Unpack()
+	local g, h, i = vec3:Unpack()
+	return ((a*e*i)+(b*f*g)+(d*h*c)-(g*e*c)-(h*f*a)-(d*b*i))
 end
