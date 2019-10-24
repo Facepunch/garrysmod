@@ -740,7 +740,7 @@ local mp_falldamage = GetConVar( "mp_falldamage" )
 
 function GM:GetFallDamage( ply, flFallSpeed )
 
-	if mp_falldamage:GetBool() then -- realistic fall damage is on
+	if ( mp_falldamage:GetBool() ) then -- realistic fall damage is on
 		return ( flFallSpeed - 526.5 ) * ( 100 / 396 ) -- the Source SDK value
 	end
 
