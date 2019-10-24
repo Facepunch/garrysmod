@@ -109,10 +109,10 @@ end
 	Name: table.Add( dest, source )
 	Desc: Unlike merge this adds the two or more tables together and discards keys.
 -----------------------------------------------------------]]
-function table.Add( dest, ... )	
-	
+function table.Add( dest, ... )
+
 	if ( !istable( dest ) ) then dest = {} end
-  
+
 	for i, source in ipairs( { ... } ) do
 
 		if ( !istable( source ) ) then return dest end
@@ -120,7 +120,6 @@ function table.Add( dest, ... )
 			for k, v in pairs( source ) do
 				table.insert( dest, v )
 			end
-		end
 	end
 
 	return dest
