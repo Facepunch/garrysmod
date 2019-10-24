@@ -107,16 +107,25 @@ end
 
 --[[---------------------------------------------------------
 	Name: table.Add( dest, source )
-	Desc: Unlike merge this adds the two tables together and discards keys.
+	Desc: Unlike merge this adds the two or more tables together and discards keys.
 -----------------------------------------------------------]]
-function table.Add( dest, source )
+function table.Add( dest, ... )
 
-	-- At least one of them needs to be a table or this whole thing will fall on its ass
-	if ( !istable( source ) ) then return dest end
-	if ( !istable( dest ) ) then dest = {} end
+	local sources = { ... }
 
-	for k, v in pairs( source ) do
-		table.insert( dest, v )
+	-- If destination isn't a table then create a new one
+	if ( type( dest ) != "table" ) then dest = {} end
+
+	for i, source in ipairs( sources ) do
+
+		-- Only process the source if it's a table
+		if ( type( source ) == "table" ) then
+
+			for k, v in pairs( source ) do
+
+				table.insert( dest, v )
+			end
+		end
 	end
 
 	return dest
