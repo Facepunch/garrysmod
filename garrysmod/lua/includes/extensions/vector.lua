@@ -141,9 +141,9 @@ Convets the vector to nagated version of itself
 -----------------------------------------------------------]]
 function meta:Negate(bx, by, bz)
 	local vx, vy, vz = self:Unpack()
-	self[1] = tobool(bx or true) and -vx or vx
-	self[2] = tobool(by or true) and -vy or vy
-	self[3] = tobool(bz or true) and -vz or vz
+	self[1] = tobool(bx or (bx == nil)) and -vx or vx
+	self[2] = tobool(by or (by == nil)) and -vy or vy
+	self[3] = tobool(bz or (bz == nil)) and -vz or vz
 	return self
 end
 
