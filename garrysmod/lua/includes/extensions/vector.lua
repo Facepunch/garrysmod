@@ -147,13 +147,6 @@ function meta:GetNegated(...)
 end
 
 --[[---------------------------------------------------------
-Convets the vector to nagated version of itself
------------------------------------------------------------]]
-function meta:Nudge(num, vec)
-	self:Add(vec:GetMul(num))
-end
-
---[[---------------------------------------------------------
 Returns a copy of the nagated vector
 -----------------------------------------------------------]]
 function meta:GetNudge(...)
