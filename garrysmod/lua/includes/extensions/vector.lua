@@ -5,9 +5,9 @@ local meta = FindMetaTable( "Vector" )
 --[[---------------------------------------------------------
 Converts Vector to Color - alpha precision lost, must reset
 -----------------------------------------------------------]]
-function meta:ToColor()
+function meta:ToColor(num)
 	local x, y, z = self:Unpack()
-	return Color(x * 255, y * 255, z * 255)
+	return Color(x * 255, y * 255, z * 255, (num or 0) * 255)
 end
 
 --[[---------------------------------------------------------
@@ -63,9 +63,7 @@ end
 Adds a unpacked x, y and z to a vector
 -----------------------------------------------------------]]
 function meta:AddUnpacked(x, y, z)
-	self[1] = self[1] + x
-	self[2] = self[2] + y
-	self[3] = self[3] + z
+	self:AddUnpacked(self[1] + x, self[2] + y, self[3] + z)
 end
 
 --[[---------------------------------------------------------
@@ -90,9 +88,7 @@ end
 Subtracts a unpacked x, y and z from a vector
 -----------------------------------------------------------]]
 function meta:SubUnpacked(x, y, z)
-	self[1] = self[1] - x
-	self[2] = self[2] - y
-	self[3] = self[3] - z
+	self:SubUnpacked(self[1] - x, self[2] - y, self[3] - z)
 end
 
 --[[---------------------------------------------------------
@@ -114,12 +110,13 @@ function meta:GetDiv(...)
 end
 
 --[[---------------------------------------------------------
-Convets the vector to bisector of two vectors
+Converts the vector to bisector of two vectors
+Converts vector to result of a*|b| + b*|a|
 -----------------------------------------------------------]]
 function meta:Bisect(vec)
-	local ns, nv = self:Length(), vec:Length()
-	self:Mul(nv)
-	self:Add(vec:GetMul(ns))
+	local na, nb = self:Length(), vec:Length()
+	self:Mul(nb)
+	self:Add(vec:GetMul(na))
 end
 
 --[[---------------------------------------------------------
@@ -135,10 +132,8 @@ end
 Convets the vector to nagated version of itself
 -----------------------------------------------------------]]
 function meta:Negate()
-	local vx, vy, vz = self:Unpack()
-	self[1] = -vx
-	self[2] = -vy
-	self[3] = -vz
+	local x, y, z = self:Unpack()
+	self:SetUnpacked(-x, -y, -z)
 end
 
 --[[---------------------------------------------------------
@@ -153,8 +148,8 @@ end
 --[[---------------------------------------------------------
 Convets the vector to nagated version of itself
 -----------------------------------------------------------]]
-function meta:Nudge(n, v)
-	self:Add(v:GetMul(n))
+function meta:Nudge(num, vec)
+	self:Add(vec:GetMul(num))
 end
 
 --[[---------------------------------------------------------
