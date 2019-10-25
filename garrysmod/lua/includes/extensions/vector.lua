@@ -130,7 +130,7 @@ function meta:GetBisected(...)
 end
 
 --[[---------------------------------------------------------
-Convets the vector to nagated version of itself
+Convets the vector to negated version of itself
 -----------------------------------------------------------]]
 function meta:Negate()
 	local x, y, z = self:Unpack()
@@ -138,7 +138,7 @@ function meta:Negate()
 end
 
 --[[---------------------------------------------------------
-Returns a copy of the nagated vector
+Returns a copy of the negated vector
 -----------------------------------------------------------]]
 function meta:GetNegated(...)
 	local v = Vector(self)
@@ -147,7 +147,7 @@ function meta:GetNegated(...)
 end
 
 --[[---------------------------------------------------------
-Returns a copy of the nagated vector
+Returns a copy of the nudged vector
 -----------------------------------------------------------]]
 function meta:GetNudge(...)
 	local v = Vector(self)
