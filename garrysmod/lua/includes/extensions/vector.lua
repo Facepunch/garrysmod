@@ -224,6 +224,36 @@ function meta:GetBasis(...)
 end
 
 --[[---------------------------------------------------------
+Projects the vector in to an axis defined by the second vector
+-----------------------------------------------------------]]
+function meta:Project(vec)
+	local vn = vec:GetNormalized()
+	local nm = self:Dot(vn)
+	self:Set(vn)
+	self:Mul(nm)
+end
+
+--[[---------------------------------------------------------
+Projects the vector in to an axis defined by the second vector
+-----------------------------------------------------------]]
+function meta:GetProject(...)
+	local v = Vector(self)
+	v:Project(...)
+	return v
+end
+
+--[[---------------------------------------------------------
+Retrieves the angle between two vectors from 0 to math.pi
+-----------------------------------------------------------]]
+function GetAngle(vec)
+	local x = self:GetProject(vec)
+	local y = self:GetSub(x)
+	local nx = x:Dot(vec)
+	local mx = nx/math.abs(nx)
+	return math.atan2(y:Length(), x:Length()*nx)
+end
+
+--[[---------------------------------------------------------
 Calculates 3x3 determinant by using other two vectors as rows
 -----------------------------------------------------------]]
 function meta:GetDeterminant(vec2, vec3)
