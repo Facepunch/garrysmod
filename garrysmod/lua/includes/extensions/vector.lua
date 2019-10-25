@@ -6,9 +6,8 @@ local meta = FindMetaTable( "Vector" )
 Converts Vector to Color - alpha precision lost, must reset
 -----------------------------------------------------------]]
 function meta:ToColor(num)
-	local a = (num == nil and 1 or num)
 	local x, y, z = self:Unpack()
-	return Color(x * 255, y * 255, z * 255, a * 255)
+	return Color(x * 255, y * 255, z * 255, (num == nil and 1 or num) * 255)
 end
 
 --[[---------------------------------------------------------
@@ -65,7 +64,7 @@ Adds a unpacked x, y and z to a vector
 -----------------------------------------------------------]]
 function meta:AddUnpacked(x, y, z)
 	local vx, vy, vz = self:Unpack()
-	self:AddUnpacked(vx + x, vy + y, vz + z)
+	self:SetUnpacked(vx + x, vy + y, vz + z)
 end
 
 --[[---------------------------------------------------------
@@ -91,7 +90,7 @@ Subtracts a unpacked x, y and z from a vector
 -----------------------------------------------------------]]
 function meta:SubUnpacked(x, y, z)
 	local vx, vy, vz = self:Unpack()
-	self:SubUnpacked(vx - x, vy - y, vz - z)
+	self:SetUnpacked(vx - x, vy - y, vz - z)
 end
 
 --[[---------------------------------------------------------
@@ -128,32 +127,6 @@ Returns a copy of bisector of two vectors
 function meta:GetBisected(...)
 	local v = Vector(self)
 	v:Bisect(...)
-	return v
-end
-
---[[---------------------------------------------------------
-Convets the vector to negated version of itself
------------------------------------------------------------]]
-function meta:Negate()
-	local x, y, z = self:Unpack()
-	self:SetUnpacked(-x, -y, -z)
-end
-
---[[---------------------------------------------------------
-Returns a copy of the negated vector
------------------------------------------------------------]]
-function meta:GetNegated(...)
-	local v = Vector(self)
-	v:Negate(...)
-	return v
-end
-
---[[---------------------------------------------------------
-Returns a copy of the nudged vector
------------------------------------------------------------]]
-function meta:GetNudge(...)
-	local v = Vector(self)
-	v:Nudge(...)
 	return v
 end
 
