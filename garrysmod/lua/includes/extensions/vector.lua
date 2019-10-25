@@ -64,7 +64,8 @@ end
 Adds a unpacked x, y and z to a vector
 -----------------------------------------------------------]]
 function meta:AddUnpacked(x, y, z)
-	self:AddUnpacked(self[1] + x, self[2] + y, self[3] + z)
+	local vx, vy, vz = self:Unpack()
+	self:AddUnpacked(vx + x, vy + y, vz + z)
 end
 
 --[[---------------------------------------------------------
@@ -89,7 +90,8 @@ end
 Subtracts a unpacked x, y and z from a vector
 -----------------------------------------------------------]]
 function meta:SubUnpacked(x, y, z)
-	self:SubUnpacked(self[1] - x, self[2] - y, self[3] - z)
+	local vx, vy, vz = self:Unpack()
+	self:SubUnpacked(vx - x, vy - y, vz - z)
 end
 
 --[[---------------------------------------------------------
