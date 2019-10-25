@@ -6,8 +6,9 @@ local meta = FindMetaTable( "Vector" )
 Converts Vector to Color - alpha precision lost, must reset
 -----------------------------------------------------------]]
 function meta:ToColor(num)
+	local a = (num == nil and 1 or num)
 	local x, y, z = self:Unpack()
-	return Color(x * 255, y * 255, z * 255, (num or 0) * 255)
+	return Color(x * 255, y * 255, z * 255, a * 255)
 end
 
 --[[---------------------------------------------------------
@@ -205,6 +206,16 @@ function meta:GetZero(...)
 end
 
 --[[---------------------------------------------------------
+Calculates 3x3 determinant by using other two vectors as rows
+-----------------------------------------------------------]]
+function meta:Determinant(vec2, vec3)
+	local a, b, c = self:Unpack()
+	local d, e, f = vec2:Unpack()
+	local g, h, i = vec3:Unpack()
+	return ((a*e*i)+(b*f*g)+(d*h*c)-(g*e*c)-(h*f*a)-(d*b*i))
+end
+
+--[[---------------------------------------------------------
 Applies new basis to a vector by the three axises of an angle
 -----------------------------------------------------------]]
 function meta:Basis(ang)
@@ -245,20 +256,9 @@ end
 --[[---------------------------------------------------------
 Retrieves the angle between two vectors from 0 to math.pi
 -----------------------------------------------------------]]
-function meta:GetAngle(vec)
-	local x = self:GetProject(vec)
-	local y = self:GetSub(x)
-	local nx = x:Dot(vec)
-	local mx = nx / math.abs(nx)
-	return math.atan2(y:Length(), x:Length()*mx)
-end
-
---[[---------------------------------------------------------
-Calculates 3x3 determinant by using other two vectors as rows
------------------------------------------------------------]]
-function meta:GetDeterminant(vec2, vec3)
-	local a, b, c = self:Unpack()
-	local d, e, f = vec2:Unpack()
-	local g, h, i = vec3:Unpack()
-	return ((a*e*i)+(b*f*g)+(d*h*c)-(g*e*c)-(h*f*a)-(d*b*i))
+function meta:AngleBetween(vec, nrm)
+	if(nrm == nil) then
+		return math.acos(self:Dot(vec) / math.sqrt(self:LengthSqr() * vec:LengthSqr()))
+	end
+	return math.atan2(self:Determinant(vec, nrm:GetNormalized()), self:Dot(vec))
 end
