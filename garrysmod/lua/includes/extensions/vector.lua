@@ -227,10 +227,10 @@ end
 Projects the vector in to an axis defined by the second vector
 -----------------------------------------------------------]]
 function meta:Project(vec)
-	local vn = vec:GetNormalized()
-	local nm = self:Dot(vn)
-	self:Set(vn)
-	self:Mul(nm)
+	local vs = Vector(self)
+	self:Set(vec)
+	self:Normalize()
+	self:Mul(vs:Dot(self))
 end
 
 --[[---------------------------------------------------------
@@ -245,12 +245,12 @@ end
 --[[---------------------------------------------------------
 Retrieves the angle between two vectors from 0 to math.pi
 -----------------------------------------------------------]]
-function GetAngle(vec)
+function meta:GetAngle(vec)
 	local x = self:GetProject(vec)
 	local y = self:GetSub(x)
 	local nx = x:Dot(vec)
-	local mx = nx/math.abs(nx)
-	return math.atan2(y:Length(), x:Length()*nx)
+	local mx = nx / math.abs(nx)
+	return math.atan2(y:Length(), x:Length()*mx)
 end
 
 --[[---------------------------------------------------------
