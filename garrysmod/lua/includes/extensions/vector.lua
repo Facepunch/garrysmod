@@ -26,13 +26,6 @@ function meta:ToArray()
 end
 
 --[[---------------------------------------------------------
-Converts Vector to Angle - data is copied
------------------------------------------------------------]]
-function meta:ToAngle()
-	return Angle( self:Unpack() )
-end
-
---[[---------------------------------------------------------
 Returns a copy of a rotated vector. Kind of like v:GetNormalized()
 -----------------------------------------------------------]]
 function meta:GetRotated( ... )
