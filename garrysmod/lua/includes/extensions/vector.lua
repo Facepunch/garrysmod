@@ -173,7 +173,8 @@ function meta:Determinant( vec2, vec3 )
 	local a, b, c = self:Unpack()
 	local d, e, f = vec2:Unpack()
 	local g, h, i = vec3:Unpack()
-	return ( ( a * e * i ) + ( b * f * g ) + ( d * h * c ) - ( g * e * c ) - ( h * f * a ) - ( d * b * i ) )
+	return ( ( a * e * i ) + ( b * f * g ) + ( d * h * c ) -
+		       ( g * e * c ) - ( h * f * a ) - ( d * b * i ) )
 end
 
 --[[---------------------------------------------------------
