@@ -204,7 +204,7 @@ local function TraitorMenuPopup()
    end
 
    -- Stick to one value for no equipment
-   if #owned_ids == 0 then
+   if table.IsEmpty(owned_ids) then
       owned_ids = nil
    end
 

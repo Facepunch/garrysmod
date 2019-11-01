@@ -147,7 +147,7 @@ function PANEL:UpdatePlayerData()
       end
    end
 
-   if #to_remove == 0 then return end
+   if table.IsEmpty(to_remove) then return end
 
    for k,ply in pairs(to_remove) do
       local pnl = self.rows[ply]

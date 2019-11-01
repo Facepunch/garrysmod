@@ -192,10 +192,10 @@ function ENT:Explode(tr)
          end
       end
 
-      if #corpses > 0 then
-         self:StartScanSound()
-      else
+      if table.IsEmpty(corpses) then
          self:StopScanSound()
+      else
+         self:StartScanSound()
       end
 
       -- "schedule" next show pulse
