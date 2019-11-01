@@ -44,6 +44,23 @@ function meta:GetMul( ... )
 end
 
 --[[---------------------------------------------------------
+Returns a copy of a multiplied vector
+-----------------------------------------------------------]]
+function meta:MulUnpacked( x, y, z )
+	local vx, vy, vz = self:Unpack()
+	self:SetUnpacked( vx * x, vy * y, vz * z )
+end
+
+--[[---------------------------------------------------------
+Returns a copy of a multiplied vector
+-----------------------------------------------------------]]
+function meta:GetMulUnpacked( ... )
+	local v = Vector( self )
+	v:MulUnpacked( ... )
+	return v
+end
+
+--[[---------------------------------------------------------
 Returns a copy of an added vector
 -----------------------------------------------------------]]
 function meta:GetAdd( ... )
@@ -101,6 +118,23 @@ Returns a copy of a divided vector
 function meta:GetDiv( ... )
 	local v = Vector( self )
 	v:Div( ... )
+	return v
+end
+
+--[[---------------------------------------------------------
+Returns a copy of a multiplied vector
+-----------------------------------------------------------]]
+function meta:DivUnpacked( x, y, z )
+	local vx, vy, vz = self:Unpack()
+	self:SetUnpacked( vx / x, vy / y, vz / z )
+end
+
+--[[---------------------------------------------------------
+Returns a copy of a multiplied vector
+-----------------------------------------------------------]]
+function meta:GetDivUnpacked( ... )
+	local v = Vector( self )
+	v:DivUnpacked( ... )
 	return v
 end
 
