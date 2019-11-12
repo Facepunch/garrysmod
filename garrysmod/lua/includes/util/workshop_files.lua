@@ -166,6 +166,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 				extra.ownername = "Local"
 				extra.description = "Non workshop local floating addon."
+				extra.floating = true
 
 				local json = util.TableToJSON( extra, false )
 
