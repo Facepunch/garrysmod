@@ -24,6 +24,7 @@ function Material( name, words )
 	str = str .. (words:find("mips") and "1" or "0")
 	str = str .. (words:find("noclamp") and "1" or "0")
 	str = str .. (words:find("smooth") and "1" or "0")
+	str = str .. (words:find("ignorez") and "1" or "0")
 
 	return C_Material( name, str )
 
