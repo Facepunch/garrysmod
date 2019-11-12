@@ -435,8 +435,9 @@ TR_B deeoo(p110) (p102 t20) target system deactivated {Len 2.46}
 
 // powerup
 
-HEV_AAx fvox/bell, HEV_logon, powerarmor_on, atmospherics_on,vitalsigns_on, automedic_on, weaponselect_on, munitionview_on, communications_on, safe_day {Len 41.76}
-HEV_A0 fvox/bell, HEV_logon {Len 11.07}
+// GMOD: Added the _HL1 bits
+HEV_AAx_HL1 fvox/bell, HEV_logon, powerarmor_on, atmospherics_on,vitalsigns_on, automedic_on, weaponselect_on, munitionview_on, communications_on, safe_day {Len 41.76}
+HEV_A0_HL1 fvox/bell, HEV_logon {Len 11.07}
 
 HEV_A1 fvox/blip blip(p130) powermove_on {Len 3.71}
 HEV_A2 fvox/blip blip powerarmor_on {Len 4.42}
