@@ -259,3 +259,23 @@ function meta:AngleBetween( vec, nrm )
 
 	return math.atan2( self:Determinant( vec, nrm:GetNormalized() ), self:Dot( vec ) )
 end
+
+--[[---------------------------------------------------------
+Recalculates the orthogonality of an up vector according to the
+other vector given as forward direction direction. The call
+changes the self vector assigned as an up direction
+ * self > The up direction being orthogonalized
+ * vF   > The forward direction for the orthogonalization process
+ * bN   > When set to true, normalizes the three unit vectors
+ * vR   > The function returns the right vector on success
+-----------------------------------------------------------]]
+function meta:Orthogonal(vF, bN)
+	local vR = vF:Cross(self)
+	self:Set(vR:Cross(vF))
+	if(bN) then
+		vF:Normalize()
+		vR:Normalize()
+		self:Normalize()
+	end
+	return vR
+end
