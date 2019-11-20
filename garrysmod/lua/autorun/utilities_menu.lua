@@ -29,6 +29,7 @@ local function ServerSettings( pnl )
 		sv_sticktoground = "1",
 		sv_playerpickupallowed = "1",
 		mp_falldamage = "0",
+		gmod_suit = "0",
 		gmod_maxammo = "9999",
 		sv_gravity = "600",
 		sv_friction = "8",
