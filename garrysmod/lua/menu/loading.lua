@@ -97,7 +97,16 @@ end
 
 function PANEL:StatusChanged( strStatus )
 
-	if ( string.find( strStatus, "Downloading " ) ) then
+	local startPos, endPos = string.find( strStatus, "Downloading " )
+	if ( startPos ) then
+		-- Snip everything before the Download part
+		strStatus = string.sub( strStatus, startPos )
+
+		-- Special case needed for workshop, snip the "' via Workshop" part
+		if ( string.EndsWith( strStatus, "via Workshop" ) ) then
+			strStatus = string.gsub( strStatus, "' via Workshop", "" )
+			strStatus = string.gsub( strStatus, "Downloading '", "" ) -- We need to handle the quote marks
+		end
 
 		local Filename = string.gsub( strStatus, "Downloading ", "" )
 
