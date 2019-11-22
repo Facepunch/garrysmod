@@ -126,8 +126,8 @@ function util.TypeToString( v )
 	local t = type( v )
 	t = t:lower()
 
-	if ( t == "vector" ) then
-		return string.format( "%.2f %.2f %.2f", v.x, v.y, v.z )
+	if ( t == "vector" or t == "angle" ) then
+		return string.format( "%.2f %.2f %.2f", v:Unpack() )
 	end
 
 	if ( t == "number" ) then
@@ -358,4 +358,24 @@ function util.RemovePData( steamid, name )
 	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = "..SQLStr(name) )
 	
+end
+
+--[[---------------------------------------------------------
+Recalculates the orthogonality of an up vector according to the
+other vector given as forward direction direction.
+The call changes the vector assigned as an up direction.
+ * vF   > The forward direction for the orthogonalization process
+ * vU   > The up direction being orthogonalized ( modified )
+ * bN   > When set to true, normalizes the three unit vectors
+ * vR   > The function returns the right vector on success
+-----------------------------------------------------------]]
+function util.GetOrthogonal(vF, vU, bN)
+	local vR = vF:Cross(vU)
+	vU:Set(vR:Cross(vF))
+	if(bN) then
+		vF:Normalize()
+		vR:Normalize()
+		vU:Normalize()
+	end
+	return vR
 end
