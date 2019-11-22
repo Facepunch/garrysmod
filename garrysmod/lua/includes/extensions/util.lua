@@ -90,14 +90,25 @@ function util.LocalToWorld( ent, lpos, bone )
 	return nil
 end
 
+--[[---------------------------------------------------------
+   Returns year, month, day in a formatted string.
+-----------------------------------------------------------]]
+function util.Date(vD)
+	return os.date("%Y-%m-%d", vD)
+end
+
+--[[---------------------------------------------------------
+   Returns hour, minute, secon in a formatted string.
+-----------------------------------------------------------]]
+function util.Time(vT)
+	return os.date("%H:%M:%S", vT)
+end
 
 --[[---------------------------------------------------------
    Returns year, month, day and hour, minute, second in a formatted string.
 -----------------------------------------------------------]]
-function util.DateStamp()
-
-	local t = os.date('*t')
-	return t.year.."-"..t.month.."-"..t.day .." ".. Format( "%02i-%02i-%02i", t.hour, t.min, t.sec )
+function util.DateStamp(vS)
+	return os.date("%Y-%m-%d %H:%M:%S", vS)
 end
 
 --[[---------------------------------------------------------
