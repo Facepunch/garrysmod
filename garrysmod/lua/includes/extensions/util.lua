@@ -383,7 +383,7 @@ The call changes the vector assigned as an up direction.
  * bN   > When set to true, normalizes the three unit vectors
  * vR   > The function returns the right vector on success
 -----------------------------------------------------------]]
-function util.GetOrthogonal(vF, vU, bN)
+function util.GetOrghogonalVector(vF, vU, bN)
 	local vR = vF:Cross(vU)
 	vU:Set(vR:Cross(vF))
 	if(bN) then
