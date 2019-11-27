@@ -412,6 +412,31 @@ function SKIN:PaintCheckBox( panel, w, h )
 end
 
 --[[---------------------------------------------------------
+	RadioButton
+-----------------------------------------------------------]]
+function SKIN:PaintRadioButton( panel, w, h )
+
+	if ( panel:GetChecked() ) then
+
+		if ( panel:GetDisabled() ) then
+			self.tex.RadioButtonD_Checked( 0, 0, w, h )
+		else
+			self.tex.RadioButton_Checked( 0, 0, w, h )
+		end
+
+	else
+
+		if ( panel:GetDisabled() ) then
+			self.tex.RadioButtonD( 0, 0, w, h )
+		else
+			self.tex.RadioButton( 0, 0, w, h )
+		end
+
+	end
+
+end
+
+--[[---------------------------------------------------------
 	ExpandButton
 -----------------------------------------------------------]]
 function SKIN:PaintExpandButton( panel, w, h )

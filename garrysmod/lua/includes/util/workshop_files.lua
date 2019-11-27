@@ -234,46 +234,12 @@ function WorkshopFileBase( namespace, requiredtags )
 		--MsgN( "PUBLISHING ", filename )
 		--MsgN( "Image ", image )
 
-		--
-		-- Create the window
-		--
-		local Window = vgui.Create( "DFrame" )
-		Window:SetTitle( "Publish Creation" )
-		Window:SetSize( 400, 350 )
-		Window:LoadGWENFile( "resource/ui/SaveUpload.gwen" ) -- TODO?
-		Window:Center()
-		Window:MakePopup()
-
-		--
-		-- Store the fields
-		--
-		local Submit		= Window:Find( "upload" )
-		local Title			= Window:Find( "name" )
-		local Description	= Window:Find( "description" )
-		local Error			= Window:Find( "error" )
-		local Image			= Window:Find( "image" )
-
-		Image:SetImage( "../" .. image )
-
-		--
-		-- Hook up action
-		--
-		Submit.DoClick = function()
-
-			if ( Title:GetText() == "" ) then
-				Error:SetText( "You must provide a title!" )
-				return
-			end
-
-			local error = self:FinishPublish( filename, image, Title:GetText(), Description:GetText() )
-			if ( error ) then
-				Error:SetText( error )
-				return
-			end
-
-			Window:Remove()
-
-		end
+		local window = vgui.Create( "UGCPublishWindow" )
+		window:SetSize( 600, 400 )
+		window:Setup( namespace, filename, image, self )
+		window:Center()
+		window:MakePopup()
+		window:DoModal() -- We want the user to either finish this or quit
 
 	end
 
