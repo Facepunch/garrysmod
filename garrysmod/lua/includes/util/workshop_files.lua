@@ -225,31 +225,6 @@ function WorkshopFileBase( namespace, requiredtags )
 				end )
 			end
 
-			--
-			-- Get the current voting stats
-			--
-			self:CountVotes( v )
-
-		end
-
-	end
-
-	function ret:CountVotes( id )
-
-		id = id:JavascriptSafe()
-
-		if ( VoteCache[ id ] ) then
-
-			self.HTML:Call( namespace .. ".ReceiveVoteInfo( \"" .. id .. "\", " .. VoteCache[ id ] .. " )" )
-
-		else
-
-			steamworks.VoteInfo( id, function( result )
-
-				VoteCache[ id ] = util.TableToJSON( result, false )
-				self.HTML:Call( namespace .. ".ReceiveVoteInfo( \"" .. id .. "\", " .. VoteCache[ id ] .. " )" )
-
-			end )
 		end
 
 	end

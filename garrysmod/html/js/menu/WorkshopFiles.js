@@ -120,9 +120,9 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		gmod.Vote( entry.id, ( b ? "1" : "0" ) )
 
 		// Update the scores locally (the votes don't update on the server straight away)
-		if ( entry.vote )
+		if ( entry.info )
 		{
-			if ( b ) entry.vote.up++; else entry.vote.down++;
+			if ( b ) entry.info.up++; else entry.info.down++;
 		}
 
 		// And play a sound
@@ -244,21 +244,6 @@ WorkshopFiles.prototype.ReceiveImage = function( id, url )
 		this.Changed();
 	}
 },
-
-//
-// Receive Vote Info
-//
-WorkshopFiles.prototype.ReceiveVoteInfo = function( id, data )
-{
-	for ( k in this.Scope.Files )
-	{
-		if ( this.Scope.Files[k].id != id ) continue;
-
-		this.Scope.Files[k].vote = data;
-
-		this.Changed();
-	}
-}
 
 WorkshopFiles.prototype.Changed = function()
 {
