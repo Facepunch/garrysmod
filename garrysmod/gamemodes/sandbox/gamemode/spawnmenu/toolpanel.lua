@@ -125,11 +125,11 @@ function PANEL:AddCategory( name, lbl, tItems )
 		item.Controls					= v.Controls
 		item.Text						= v.Text
 
-		-- Try to open the UI for the currently selected tool
+		-- Mark this button as the one to select on first spawnmenu open
 		if ( currentMode == v.ItemName ) then
-			item:SetSelected( true )
-			-- Give it a few moments to load up the spawnmenu and the toolgun
-			timer.Simple( 2, function() spawnmenu.ActivateTool( v.ItemName, true ) end )
+			timer.Simple( 0, function() -- Have to wait a frame to get the g_SpawnMenu global, ew
+				g_SpawnMenu.StartupTool = item
+			end )
 		end
 
 	end
