@@ -90,28 +90,14 @@ function util.LocalToWorld( ent, lpos, bone )
 	return nil
 end
 
---[[---------------------------------------------------------
-   Returns year, month, day as a formatted string.
-   You can also provide a second argument to be conveted.
------------------------------------------------------------]]
-function util.Date(vD)
-	return os.date("%Y-%m-%d", vD)
-end
 
 --[[---------------------------------------------------------
-   Returns hour, minute, second as a formatted string.
-   You can also provide a second argument to be conveted.
+   Returns year, month, day and hour, minute, second in a formatted string.
 -----------------------------------------------------------]]
-function util.Time(vT)
-	return os.date("%H:%M:%S", vT)
-end
+function util.DateStamp()
 
---[[---------------------------------------------------------
-   Returns year, month, day and hour, minute, second as a formatted string.
-   You can also provide a second argument to be conveted.
------------------------------------------------------------]]
-function util.DateStamp(vS)
-	return os.date("%Y-%m-%d %H:%M:%S", vS)
+	local t = os.date('*t')
+	return t.year.."-"..t.month.."-"..t.day .." ".. Format( "%02i-%02i-%02i", t.hour, t.min, t.sec )
 end
 
 --[[---------------------------------------------------------
@@ -375,9 +361,10 @@ function util.RemovePData( steamid, name )
 end
 
 --[[---------------------------------------------------------
-Recalculates the orthogonality of an up vector according to the
-other vector given as forward direction direction.
-The call changes the vector assigned as an up direction.
+   Name: GetOrghogonalVector(vF, vU, bN)
+   Desc: Recalculates the orthogonality of an up vector according to the
+         other vector given as forward direction direction.
+         The call changes the vector assigned as an up direction.
  * vF   > The forward direction for the orthogonalization process
  * vU   > The up direction being orthogonalized ( modified )
  * bN   > When set to true, normalizes the three unit vectors
