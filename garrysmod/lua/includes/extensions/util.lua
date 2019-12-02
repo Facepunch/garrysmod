@@ -127,7 +127,7 @@ function util.TypeToString( v )
 	t = t:lower()
 
 	if ( t == "vector" ) then
-		return string.format( "%.2f %.2f %.2f", v:Unpack() )
+		return string.format( "%.2f %.2f %.2f", v.x, v.y, v.z )
 	end
 
 	if ( t == "number" ) then
