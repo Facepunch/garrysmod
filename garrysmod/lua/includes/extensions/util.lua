@@ -361,22 +361,21 @@ function util.RemovePData( steamid, name )
 end
 
 --[[---------------------------------------------------------
-   Name: GetOrghogonalVector(vF, vU, bN)
-   Desc: Recalculates the orthogonality of an up vector according to the
-         other vector given as forward direction direction.
-         The call changes the vector assigned as an up direction.
- * vF   > The forward direction for the orthogonalization process
- * vU   > The up direction being orthogonalized ( modified )
- * bN   > When set to true, normalizes the three unit vectors
- * vR   > The function returns the right vector on success
+   Name: GetOrthogonalEx (vF, vU, bN )
+   Desc: Recalculates the orthogonality of right and up vectors
+         according to forward direction and planae origin vectors.
+ * vF     > The forward direction for the orthogonalization process
+ * vD     > The direction of the forward vector plane origin
+ * bN     > When set to true, normalizes the three unit vectors
+ * vU, vR > The function returns the up and right vectors on success
 -----------------------------------------------------------]]
-function util.OrthogonalizeUp(vF, vU, bN)
-	local vR = vF:Cross(vU)
-	vU:Set(vR:Cross(vF))
-	if(bN) then
+function util.GetOrthogonalEx( vF, vD, bN )
+	local vR = vF:Cross( vD )
+	local vU = vR:Cross( vF )
+	if( bN ) then
 		vF:Normalize()
 		vR:Normalize()
 		vU:Normalize()
 	end
-	return vR
+	return vU, vR
 end
