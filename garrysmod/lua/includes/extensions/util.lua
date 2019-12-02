@@ -126,8 +126,8 @@ function util.TypeToString( v )
 	local t = type( v )
 	t = t:lower()
 
-	if ( t == "vector" ) then
-		return string.format( "%.2f %.2f %.2f", v.x, v.y, v.z )
+	if ( t == "vector" or t == "angle" ) then
+		return string.format( "%.2f %.2f %.2f", v:Unpack() )
 	end
 
 	if ( t == "number" ) then
