@@ -101,7 +101,7 @@ end
 
 --[[---------------------------------------------------------
    Name: Time( vT )
-   Desc: Returns hour, minute, seconds as a formatted string.
+   Desc: Returns hour, minutes and seconds as a formatted string.
          You can also provide an argument to be conveted.
 -----------------------------------------------------------]]
 function util.Time( vT )
@@ -110,7 +110,7 @@ end
 
 --[[---------------------------------------------------------
    Name: DateStamp( vS )
-   Desc: Returns year, month, day, hour, minute and seconds as a formatted string.
+   Desc: Returns year, month, day, hour, minutes and seconds as a formatted string.
          You can also provide an argument to be conveted.
 -----------------------------------------------------------]]
 function util.DateStamp( vS )
