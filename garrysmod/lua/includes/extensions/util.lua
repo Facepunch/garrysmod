@@ -373,7 +373,7 @@ function util.GetOrthogonalEx( vF, vD, bN )
 	local vR = vF:Cross( vD )
 	local vU = vR:Cross( vF )
 
-	if( bN ) then
+	if ( bN ) then
 		vF:Normalize()
 		vR:Normalize()
 		vU:Normalize()
