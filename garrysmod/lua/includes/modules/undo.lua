@@ -380,8 +380,10 @@ end
 	Checks whether a player is allowed to undo
 -----------------------------------------------------------]]
 local function Can_Undo( ply, undo )
+
+	local call = hook.Run( "CanUndo", ply, undo )
 	
-	return hook.Run( "CanUndo", ply, undo )
+	return call == true or call == nil
 
 end
 
