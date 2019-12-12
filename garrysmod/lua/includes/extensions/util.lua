@@ -361,7 +361,7 @@ function util.RemovePData( steamid, name )
 end
 
 --[[---------------------------------------------------------
-   Name: GetOrthogonalEx (vF, vU, bN )
+   Name: GetOrthogonalEx ( vF, vD, bN )
    Desc: Recalculates the orthogonality of right and up vectors
          according to forward direction and planae origin vectors.
  * vF     > The forward direction for the orthogonalization process
