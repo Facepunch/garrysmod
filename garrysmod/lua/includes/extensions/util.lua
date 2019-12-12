@@ -363,8 +363,8 @@ end
 --[[---------------------------------------------------------
    Name: GetOrthogonalEx ( vF, vD, bN )
    Desc: Recalculates the orthogonality of right and up vectors
-         according to forward direction and planae origin vectors.
- * vF     > The forward direction for the orthogonalization process
+         according to forward direction and plane origin vectors.
+ * vF     > The forward direction for the orthogonality process
  * vD     > The direction of the forward vector plane origin
  * bN     > When set to true, normalizes the three unit vectors
  * vU, vR > The function returns the up and right vectors on success
