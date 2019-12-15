@@ -108,6 +108,14 @@ function PANEL:FinishedDownloading( id, title )
 
 end
 
+function PANEL:SetMessage( msg )
+
+	self.Label:SetText( msg )
+
+	self:SetDrawProgress( false )
+
+end
+
 function PANEL:Paint()
 
 	DisableClipping( true )

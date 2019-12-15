@@ -5,21 +5,22 @@
 		<script type="text/javascript" src="js/thirdparty/jquery.js"></script>
 	</head>
 	<body>
-	
+
 		<div id="container">
 
 			<img src='img/gmod_logo_brave.png' class="bounce"/>
-			
+
 			<center>
 				<br />
 				<div class="walk">:v</div>
 			</center>
 
 		</div>
-		
+
+		<!--<div id="spambox">
+		</div>-->
 
 		<script type="text/javascript">
-
 			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode )
 			{
 				// Do with these what you will :)
@@ -32,7 +33,18 @@
 				//$("#spambox").append("gamemode: " + gamemode + "<br>");
 				//$("#spambox").append("mapname: " + mapname + "<br>");
 			}
-	
+
+			// A file has begun downloading
+			function DownloadingFile( file )
+			{
+				//$("#spambox").prepend( "<span style='color:red'>" + file + "</span><br>");
+			}
+
+			// This will not be called when DownloadingFile() is
+			function SetStatusChanged( status )
+			{
+				//$("#spambox").prepend( status + "<br>");
+			}
 		</script>
 
 	</body>

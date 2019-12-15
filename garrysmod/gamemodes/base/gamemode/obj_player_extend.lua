@@ -54,7 +54,7 @@ end
    Name: UnfreezePhysicsObjects
    Desc: For the Physgun, unfreezes all frozen physics objects
 -----------------------------------------------------------]]
-function meta:PhysgunUnfreeze( weapon )
+function meta:PhysgunUnfreeze()
 
 	-- Get the player's table
 	local tab = self:GetTable()

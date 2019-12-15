@@ -39,7 +39,7 @@ end
 -----------------------------------------------------------]]
 function GM:OnPhysgunReload( weapon, ply )
 
-	ply:PhysgunUnfreeze( weapon )
+	ply:PhysgunUnfreeze()
 
 end
 
@@ -267,7 +267,7 @@ function GM:PlayerSpawn( pl, transiton )
 
 	pl:SetupHands()
 
-	player_manager.OnPlayerSpawn( pl )
+	player_manager.OnPlayerSpawn( pl, transiton )
 	player_manager.RunClass( pl, "Spawn" )
 
 	-- If we are in transition, do not touch player's weapons

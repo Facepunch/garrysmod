@@ -115,6 +115,12 @@ function PANEL:Open()
 
 	achievements.SpawnMenuOpen()
 
+	if ( IsValid( self.StartupTool ) && self.StartupTool.Name ) then
+		self.StartupTool:SetSelected( true )
+		spawnmenu.ActivateTool( self.StartupTool.Name, true )
+		self.StartupTool = nil
+	end
+
 end
 
 --[[---------------------------------------------------------

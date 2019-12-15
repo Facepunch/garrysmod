@@ -441,10 +441,11 @@ local function CC_UndoNum( ply, command, args )
 		net.WriteInt( UndoNum, 16 )
 	net.Send( ply )
 
-	PlayerUndo[ index ][ UndoNum ] = nil
+	-- Don't delete the entry completely so nothing new takes its place and ruin CC_UndoLast's logic (expecting newest entry be at highest index)
+	PlayerUndo[ index ][ UndoNum ] = {}
 
 end
 
-concommand.Add("undo",					CC_UndoLast, nil, "", { FCVAR_DONTRECORD } )
-concommand.Add("gmod_undo",				CC_UndoLast, nil, "", { FCVAR_DONTRECORD } )
-concommand.Add("gmod_undonum",			CC_UndoNum, nil, "", { FCVAR_DONTRECORD } )
+concommand.Add( "undo",			CC_UndoLast, nil, "", { FCVAR_DONTRECORD } )
+concommand.Add( "gmod_undo",	CC_UndoLast, nil, "", { FCVAR_DONTRECORD } )
+concommand.Add( "gmod_undonum",	CC_UndoNum, nil, "", { FCVAR_DONTRECORD } )

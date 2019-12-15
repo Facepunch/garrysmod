@@ -48,8 +48,8 @@
 
 					<name ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}</name>
 					<author ng-hide="file.local">{{file.info.ownername}}</author>
-					<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
-					<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
+					<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" style="color: #4a4">+{{file.info.up-file.info.down|number:0}}</votes>
+					<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" style="color: #a44">{{file.info.up-file.info.down|number:0}}</votes>
 					<description>{{file.info.description}}</description>
 
 					<controls>

@@ -6,10 +6,10 @@ concommand.Add( "gm_demo", function( ply, cmd, arg )
 		return
 	end
 
-	local dynamic_name = "demos/" .. game.GetMap() .." ".. util.DateStamp()
+	local dynamic_name = game.GetMap() .." ".. util.DateStamp()
 
-	RunConsoleCommand( "record", dynamic_name .. ".dem" )
-	RunConsoleCommand( "record_screenshot", dynamic_name .. ".jpg" )
+	RunConsoleCommand( "record", "demos/" .. dynamic_name .. ".dem" )
+	RunConsoleCommand( "record_screenshot", dynamic_name )
 
 end )
 
