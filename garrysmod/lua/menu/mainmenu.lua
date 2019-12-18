@@ -27,6 +27,7 @@ function PANEL:Init()
 	self.HTML:SetAllowLua( true )
 	self.HTML:RequestFocus()
 
+	ws_dupe.HTML = self.HTML
 	ws_save.HTML = self.HTML
 	addon.HTML = self.HTML
 	demo.HTML = self.HTML

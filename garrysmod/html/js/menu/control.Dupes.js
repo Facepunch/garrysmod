@@ -8,6 +8,36 @@ function ControllerDupes($scope, $rootScope, $location, $timeout, $routeParams)
 
 	dupe.Init( 'ws_dupe', $scope, $rootScope );
 
+	$scope.MyCategories =
+	[
+		"local",
+		"subscribed_ugc",
+		//"favorites_ugc"
+	];
+
+	$scope.Categories =
+	[
+		"trending",
+		"popular",
+		"latest"
+	];
+
+	$scope.CategoriesSecondary =
+	[
+		"friends",
+		"mine"
+	];
+
+	$scope.SubCategories =
+	[
+		"posed",
+		"scenes",
+		"machines",
+		"vehicles",
+		"buildings",
+		"others"
+	];
+
 	$scope.ArmDupe = function( entry )
 	{
 		if ( !IN_ENGINE ) return;
