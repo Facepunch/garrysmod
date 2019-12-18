@@ -34,7 +34,8 @@ end
 
 function demo:DownloadAndPlay( id )
 
-	steamworks.Download( id, true, function( name )
+	steamworks.DownloadUGC( id, function( name )
+		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, "Failed to download demo from Steam Workshop!" ) return end
 
 		self:Play( name )
 
@@ -50,7 +51,8 @@ end
 
 function demo:DownloadAndToVideo( id )
 
-	steamworks.Download( id, true, function( name )
+	steamworks.DownloadUGC( id, function( name )
+		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, "Failed to download demo from Steam Workshop!" ) return end
 
 		self:ToVideo( name )
 

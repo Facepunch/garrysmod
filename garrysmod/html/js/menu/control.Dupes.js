@@ -51,7 +51,7 @@ function ControllerDupes($scope, $rootScope, $location, $timeout, $routeParams)
 		// TODO: Some kind of `please wait` while we download 200kb
 		//
 
-		gmod.DownloadDupe( entry.info.fileid );
+		gmod.DownloadDupe( entry.info.id );
 	}
 
 	$scope.DeleteLocal = function( entry )
@@ -59,7 +59,7 @@ function ControllerDupes($scope, $rootScope, $location, $timeout, $routeParams)
 		if ( IN_ENGINE )
 		{
 			gmod.DeleteLocal( entry.info.file );
-			gmod.DeleteLocal( entry.info.background );
+			gmod.DeleteLocal( entry.background );
 		}
 
 		$scope.Switch( $scope.Category, $scope.Offset );

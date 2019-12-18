@@ -34,7 +34,7 @@ end
 
 function ws_save:DownloadAndLoad( id )
 
-	steamworks.Download( id, true, function( name )
+	steamworks.DownloadUGC( id, function( name )
 
 		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, "Failed to download save from Steam Workshop!" ) return end
 

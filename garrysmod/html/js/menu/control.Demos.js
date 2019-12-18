@@ -37,7 +37,7 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 		// TODO: Some kind of `please wait` while we download 200kb
 		//
 
-		lua.Run( "demo:DownloadAndPlay( %s );", entry.info.fileid );
+		lua.Run( "demo:DownloadAndPlay( %s );", entry.info.id );
 
 	}
 
@@ -50,7 +50,7 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 		// TODO: Some kind of `please wait` while we download 200kb
 		//
 
-		lua.Run( "demo:DownloadAndToVideo( %s );", entry.info.fileid );
+		lua.Run( "demo:DownloadAndToVideo( %s );", entry.info.id );
 	}
 
 	$scope.DeleteLocal = function ( entry )

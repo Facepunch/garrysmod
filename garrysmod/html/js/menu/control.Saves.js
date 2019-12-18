@@ -50,7 +50,7 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 		// TODO: Some kind of `please wait` while we download 200kb
 		//
 
-		gmod.DownloadSave( entry.info.fileid );
+		gmod.DownloadSave( entry.info.id );
 	}
 
 	$scope.DeleteLocal = function( entry )
@@ -58,7 +58,7 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 		if ( IN_ENGINE )
 		{
 			gmod.DeleteLocal( entry.info.file );
-			gmod.DeleteLocal( entry.info.background );
+			gmod.DeleteLocal( entry.background );
 		}
 
 		$scope.Switch( $scope.Category, $scope.Offset );
