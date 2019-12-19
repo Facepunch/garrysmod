@@ -67,12 +67,12 @@ function demo:ToVideo( filename )
 
 end
 
-function demo:FinishPublish( filename, imagename, name, desc )
+function demo:FinishPublish( filename, imagename, name, desc, chosenTag, other )
 
 	local info = GetDemoFileDetails( filename )
 	if ( !info ) then return "Couldn't get demo information!" end
 
-	steamworks.Publish( { "demo", info.mapname }, filename, imagename, name, desc )
+	steamworks.Publish( filename, imagename, name, desc, { "demo", info.mapname }, other.Callback, other.WorkshopID, other.ChangeNotes )
 
 end
 

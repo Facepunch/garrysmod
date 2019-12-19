@@ -235,9 +235,7 @@ function WorkshopFileBase( namespace, requiredtags )
 		--MsgN( "Image ", image )
 
 		local window = vgui.Create( "UGCPublishWindow" )
-		window:SetSize( 600, 400 )
 		window:Setup( namespace, filename, image, self )
-		window:Center()
 		window:MakePopup()
 		window:DoModal() -- We want the user to either finish this or quit
 

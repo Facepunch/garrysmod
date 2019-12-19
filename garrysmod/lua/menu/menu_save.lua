@@ -50,12 +50,12 @@ function ws_save:Load( filename )
 
 end
 
-function ws_save:FinishPublish( filename, imagename, name, desc, chosentag )
+function ws_save:FinishPublish( filename, imagename, name, desc, chosenTag, other )
 
 	local info = GetSaveFileDetails( filename )
 	if ( !info ) then return "Couldn't get save information!" end
 
-	steamworks.Publish( { "save", info.map, chosentag }, filename, imagename, name, desc )
+	steamworks.Publish( filename, imagename, name, desc, { "save", info.map, chosenTag }, other.Callback, other.WorkshopID, other.ChangeNotes )
 
 end
 

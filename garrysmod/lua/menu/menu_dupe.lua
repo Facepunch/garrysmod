@@ -32,9 +32,9 @@ function ws_dupe:FetchLocal( offset, perpage )
 
 end
 
-function ws_dupe:FinishPublish( filename, imagename, name, desc, ChosenTag )
+function ws_dupe:FinishPublish( filename, imagename, name, desc, chosenTag, other )
 
-	steamworks.Publish( { "dupe", ChosenTag }, filename, imagename, name, desc )
+	steamworks.Publish( filename, imagename, name, desc, { "dupe", chosenTag }, other.Callback, other.WorkshopID, other.ChangeNotes )
 
 end
 
