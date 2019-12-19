@@ -38,6 +38,10 @@ function ControllerDupes($scope, $rootScope, $location, $timeout, $routeParams)
 		"others"
 	];
 
+	$scope.Subscribe = function( file ) { subscriptions.Subscribe( file.id ); }
+	$scope.Unsubscribe = function( file ) { subscriptions.Unsubscribe( file.id ); }
+	$scope.IsSubscribed = function( file ) { return subscriptions.Contains( String( file.id ) ); };
+
 	$scope.ArmDupe = function( entry )
 	{
 		if ( !IN_ENGINE ) return;

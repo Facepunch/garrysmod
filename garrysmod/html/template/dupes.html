@@ -58,7 +58,7 @@
 				<workshopmessage ng-show="Loading" ng-Tranny="'dupes.loading'">...</workshopmessage>
 				<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'dupes.none'">...</workshopmessage>
 
-				<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px">
+				<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{IfElse( IsSubscribed( file ), 'installed', '' )}}">
 
 					<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
 						<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
@@ -79,8 +79,10 @@
 							<control ng-show="file.local" ng-click="DeleteLocal( file )" ng-Tranny="'dupes.delete'">..</control>
 						</left>
 
-						<!--<right>
-						</right>-->
+						<right ng-show="!file.local">
+							<control ng-show="!IsSubscribed( file )" ng-click="Subscribe( file )" ng-Tranny="'ugc.subscribe'">..</control>
+							<control ng-show="IsSubscribed( file )" ng-click="Unsubscribe( file )" ng-Tranny="'ugc.unsubscribe'">..</control>
+						</right>
 
 					</controls>
 

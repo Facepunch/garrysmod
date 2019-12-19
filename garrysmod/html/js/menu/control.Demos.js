@@ -28,6 +28,10 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 		"mine",
 	];
 
+	$scope.Subscribe = function( file ) { subscriptions.Subscribe( file.id ); }
+	$scope.Unsubscribe = function( file ) { subscriptions.Unsubscribe( file.id ); }
+	$scope.IsSubscribed = function( file ) { return subscriptions.Contains( String( file.id ) ); };
+
 	$scope.PlayDemo = function ( entry )
 	{
 		if ( entry.local )
