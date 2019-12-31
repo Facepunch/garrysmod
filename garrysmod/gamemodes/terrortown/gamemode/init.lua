@@ -71,10 +71,10 @@ CreateConVar("ttt_haste_minutes_per_death", "0.5", FCVAR_NOTIFY)
 -- Player Spawning
 CreateConVar("ttt_spawn_wave_interval", "0")
 
-CreateConVar("ttt_traitor_pct", "0.25")
+CreateConVar("ttt_traitor_pct", "0.25", FCVAR_NONE, "percentage of players to be traitor", 0, 1)
 CreateConVar("ttt_traitor_max", "32")
 
-CreateConVar("ttt_detective_pct", "0.13", FCVAR_NOTIFY)
+CreateConVar("ttt_detective_pct", "0.13", FCVAR_NOTIFY, "percentage of players to be detective", 0, 1)
 CreateConVar("ttt_detective_max", "32")
 CreateConVar("ttt_detective_min_players", "8")
 CreateConVar("ttt_detective_karma_min", "600")
@@ -871,7 +871,12 @@ function SelectRoles()
 
    -- first select traitors
    local ts = 0
+   local Start=SysTime()
    while ts < traitor_count do
+      if SysTime()-Start>5 then--this loop should take a fraction of a second, if it takes 5 seconds we got a problem
+         ErrorNoHalt(debug.traceback("infinite loop broken, somehow the number of traitors it was trying to make was greator than the number of players").."\n")
+         break--throw a nonfatal error and break it
+      end
       -- select random index in choices table
       local pick = math.random(1, #choices)
 
@@ -894,8 +899,12 @@ function SelectRoles()
    -- traitor
    local ds = 0
    local min_karma = GetConVarNumber("ttt_detective_karma_min") or 0
-   while (ds < det_count) and (#choices >= 1) do
-
+   local Start=SysTime()
+   while(ds < det_count and #choices >= 1)do
+      if(SysTime()-Start>5)then --has this loop been going on for longer than 5 seconds?
+         ErrorNoHalt(debug.traceback("infinite loop broken, seems like it was trying to make more detectives than was possible").."\n")
+         break--throw a nonfatal error and break it
+      end
       -- sometimes we need all remaining choices to be detective to fill the
       -- roles up, this happens more often with a lot of detective-deniers
       if #choices <= (det_count - ds) then
