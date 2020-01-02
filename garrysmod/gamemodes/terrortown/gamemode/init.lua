@@ -871,7 +871,7 @@ function SelectRoles()
 
    -- first select traitors
    local ts = 0
-   while ts < traitor_count do
+   while (ts < traitor_count) and (#choices >= 1) do
       -- select random index in choices table
       local pick = math.random(1, #choices)
 
