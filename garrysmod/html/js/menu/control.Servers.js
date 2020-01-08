@@ -252,7 +252,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 
 	data.hasmap = DoWeHaveMap( data.map );
 
-	data.recommended = data.ping;
+	data.recommended = 0;
 	if ( data.players == 0 ) data.recommended += 75; // Server is empty
 	if ( data.players >= data.maxplayers ) data.recommended += 100; // Server is full, can't join it
 	if ( data.pass ) data.recommended += 300; // Password protected, can't join it
