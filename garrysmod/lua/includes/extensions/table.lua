@@ -698,3 +698,21 @@ function table.GetKeys( tab )
 	return keys
 
 end
+
+
+--[[---------------------------------------------------------
+	Name: ReverseHole( t )
+	Desc: Reverses the table even if there are holes in it
+-----------------------------------------------------------]]
+function table.ReverseHole( t )
+	
+	local nN = table.maxn( t ) 
+	
+	for iD = 1, math.floor( nN / 2 ) do
+		local iK = ( nN + 1 - iD )
+		t[ iD ], t[ iK ] = t[ iK ], t[ iD ]
+	end
+	
+	return nN
+	
+end
