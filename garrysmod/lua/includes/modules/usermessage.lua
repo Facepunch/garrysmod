@@ -15,24 +15,23 @@ function SendUserMessage( name, ply, ... )
 	if ( SERVER ) then
 		umsg.Start( name, ply )
 
-		for k, v in pairs( {...} ) do
+		for k, v in ipairs( {...} ) do
+			local t = TypeID( v )
 
-			local t = type( v )
-
-			if ( t == "string" ) then
+			if ( t == TYPE_STRING ) then
 				umsg.String( v )
-			elseif ( IsEntity( v ) ) then
+			elseif ( t == TYPE_ENTITY ) then
 				umsg.Entity( v )
-			elseif ( t == "number" ) then
+			elseif ( t == TYPE_NUMBER ) then
 				umsg.Long( v )
-			elseif ( t == "Vector" ) then
+			elseif ( t == TYPE_VECTOR ) then
 				umsg.Vector( v )
-			elseif ( t == "Angle" ) then
+			elseif ( t == TYPE_ANGLE ) then
 				umsg.Angle( v )
-			elseif ( t == "boolean" ) then
+			elseif ( t == TYPE_BOOL ) then
 				umsg.Bool( v )
 			else
-				ErrorNoHalt( "SendUserMessage: Couldn't send type "..t.."\n" )
+				ErrorNoHalt( "SendUserMessage: Couldn't send type "..type( v ).."\n" )
 			end
 		end
 
