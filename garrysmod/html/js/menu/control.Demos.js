@@ -28,6 +28,9 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 		"mine",
 	];
 
+	$scope.Disabled = false;
+	if ( !IS_SPAWN_MENU ) lua.Run( "UpdateAddonDisabledState();" );
+
 	$scope.Subscribe = function( file ) { subscriptions.Subscribe( file.id ); }
 	$scope.Unsubscribe = function( file ) { subscriptions.Unsubscribe( file.id ); }
 	$scope.IsSubscribed = function( file ) { return subscriptions.Contains( String( file.id ) ); };

@@ -37,6 +37,9 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 		"others"
 	];
 
+	$scope.Disabled = false;
+	if ( !IS_SPAWN_MENU ) lua.Run( "UpdateAddonDisabledState();" );
+
 	$scope.Subscribe = function( file ) { subscriptions.Subscribe( file.id ); }
 	$scope.Unsubscribe = function( file ) { subscriptions.Unsubscribe( file.id ); }
 	$scope.IsSubscribed = function( file ) { return subscriptions.Contains( String( file.id ) ); };
