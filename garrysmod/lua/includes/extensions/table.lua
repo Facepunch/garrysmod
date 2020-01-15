@@ -702,10 +702,11 @@ end
 --[[---------------------------------------------------------
 	Name: ReverseHole( t )
 	Desc: Reverses the table even if there are holes in it
+	      You can also provide a second argument as forced table length
 -----------------------------------------------------------]]
 function table.ReverseHole( t )
 	
-	local nN = table.maxn( t ) 
+	local nN = tonumber( n ) or table.maxn( t ) 
 	
 	for iD = 1, math.floor( nN / 2 ) do
 		local iK = ( nN + 1 - iD )
