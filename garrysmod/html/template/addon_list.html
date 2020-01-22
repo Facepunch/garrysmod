@@ -103,7 +103,7 @@
 						<control ng-show="IsSubscribed( file ) && IsEnabled( file )" ng-click="Disable( file )" ng-Tranny="'addon.disable'">..</control>
 						<control ng-show="IsSubscribed( file ) && !IsEnabled( file )" ng-click="Enable( file )" ng-Tranny="'addon.enable'">..</control>
 
-						<control ng-hide="IsSubscribed( file )" ng-click="Subscribe( file )" ng-Tranny="'addon.subscribe'">..</control>
+						<control ng-hide="IsSubscribed( file ) || Disabled" ng-click="Subscribe( file )" ng-Tranny="'addon.subscribe'">..</control>
 						<control ng-show="IsSubscribed( file )" ng-click="Unsubscribe( file )" ng-Tranny="'addon.unsubscribe'">..</control>
 					</right>
 				</controls>

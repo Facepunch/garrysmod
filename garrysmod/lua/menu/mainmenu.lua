@@ -27,6 +27,7 @@ function PANEL:Init()
 	self.HTML:SetAllowLua( true )
 	self.HTML:RequestFocus()
 
+	ws_dupe.HTML = self.HTML
 	ws_save.HTML = self.HTML
 	addon.HTML = self.HTML
 	demo.HTML = self.HTML
@@ -378,8 +379,11 @@ function UpdateSubscribedAddons()
 
 	local subscriptions = engine.GetAddons()
 	local json = util.TableToJSON( subscriptions )
-
 	pnlMainMenu:Call( "subscriptions.Update( " .. json .. " )" )
+
+	local UGCsubs = engine.GetUserContent()
+	local jsonUGC = util.TableToJSON( UGCsubs )
+	pnlMainMenu:Call( "subscriptions.UpdateUGC( " .. jsonUGC .. " )" )
 
 end
 
@@ -387,6 +391,13 @@ function UpdateAddonDisabledState()
 	local noaddons, noworkshop = GetAddonStatus()
 	pnlMainMenu:Call( "UpdateAddonDisabledState( " .. tostring( noaddons ) .. ", " .. tostring( noworkshop ) .. " )" )
 end
+
+-- Called when UGC subscription status changes
+hook.Add( "WorkshopSubscriptionsChanged", "WorkshopSubscriptionsChanged", function( msg )
+
+	UpdateSubscribedAddons()
+
+end )
 
 hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 

@@ -8,7 +8,7 @@ AccessorFunc( PANEL, "m_bCustomIcon", "CustomIcon" )
 function PANEL:Init()
 
 	self:SetSize( 762, 502 )
-	self:SetTitle( "Icon Editor" )
+	self:SetTitle( "#smwidget.icon_editor" )
 
 	local left = self:Add( "Panel" )
 	left:Dock( LEFT )
@@ -21,7 +21,7 @@ function PANEL:Init()
 		bg.Paint = function( self, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
 
 		self.SpawnIcon = bg:Add( "SpawnIcon" )
-		//self.SpawnIcon.DoClick = function() self:RenderIcon() end
+		--self.SpawnIcon.DoClick = function() self:RenderIcon() end
 
 		self.ModelPanel = bg:Add( "DAdjustableModelPanel" )
 		self.ModelPanel:Dock( FILL )
@@ -162,7 +162,7 @@ function PANEL:Init()
 	local anims = right:Add( "Panel" )
 	anims:Dock( FILL )
 	anims:DockPadding( 2, 0, 2, 2 )
-	right:AddSheet( "Animations", anims, "icon16/monkey.png" )
+	right:AddSheet( "#smwidget.animations", anims, "icon16/monkey.png" )
 
 		self.AnimList = anims:Add( "DListView" )
 		self.AnimList:AddColumn( "name" )
@@ -176,7 +176,7 @@ function PANEL:Init()
 	pnl:Dock( FILL )
 	pnl:DockPadding( 7, 0, 7, 7 )
 
-	self.BodygroupTab = right:AddSheet( "Bodygroups", pnl, "icon16/brick.png" )
+	self.BodygroupTab = right:AddSheet( "#smwidget.bodygroups", pnl, "icon16/brick.png" )
 
 		self.BodyList = pnl:Add( "DScrollPanel" )
 		self.BodyList:Dock( FILL )
@@ -205,7 +205,7 @@ function PANEL:Init()
 	local settings = right:Add( "Panel" )
 	settings:Dock( FILL )
 	settings:DockPadding( 7, 0, 7, 7 )
-	right:AddSheet( "Settings", settings, "icon16/cog.png" )
+	right:AddSheet( "#smwidget.settings", settings, "icon16/cog.png" )
 
 		local bbox = settings:Add( "DCheckBoxLabel" )
 		bbox:SetText( "Show Bounding Box" )

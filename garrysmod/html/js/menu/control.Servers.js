@@ -288,7 +288,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 function MissingGamemodeIcon( element )
 {
 	if ( !IN_ENGINE ) {
-		element.src = "../../img/addon.png";
+		element.src = "../../img/addons.png";
 	} else {
 		element.src = "../gamemodes/base/icon24.png";
 	}

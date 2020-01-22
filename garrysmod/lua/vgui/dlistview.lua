@@ -332,7 +332,7 @@ end
 function PANEL:GetSelectedLine()
 
 	for k, Line in pairs( self.Lines ) do
-		if ( Line:IsSelected() ) then return k end
+		if ( Line:IsSelected() ) then return k, Line end
 	end
 
 end

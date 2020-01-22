@@ -26,7 +26,7 @@ AccessorFunc( PANEL, "m_bDrawProgress", "DrawProgress", FORCE_BOOL )
 function PANEL:Init()
 
 	self.Label = self:Add( "DLabel" )
-	self.Label:SetText( "Updating Subscriptions..." )
+	self.Label:SetText( "..." )
 	self.Label:SetFont( "WorkshopLarge" )
 	self.Label:SetTextColor( Color( 255, 255, 255, 200 ) )
 	self.Label:Dock( TOP )
@@ -194,7 +194,7 @@ end
 
 function PANEL:SubscriptionsProgress( iCurrent, iTotal )
 
-	self.Label:SetText( "Fetching Subscriptions..." )
+	self.Label:SetText( "#ugc.fetching" )
 	self:SetDrawProgress( true )
 
 	self.Progress = iCurrent / iTotal

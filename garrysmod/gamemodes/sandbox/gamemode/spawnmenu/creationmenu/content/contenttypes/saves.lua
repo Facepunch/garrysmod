@@ -46,7 +46,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 
 	function ws_save:DownloadAndLoad( id )
 
-		steamworks.Download( id, true, function( name )
+		steamworks.DownloadUGC( id, function( name )
 
 			ws_save:Load( name )
 
