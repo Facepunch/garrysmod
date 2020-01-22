@@ -55,7 +55,7 @@ if ( SERVER ) then
 	end
 
 	function meta:GetCreator()
-		return self.m_PlayerCreator
+		return self.m_PlayerCreator || NULL
 	end
 
 end
@@ -166,6 +166,12 @@ function meta:GetChildBones( bone )
 
 end
 
+function DTVar_ReceiveProxyGL( ent, name, id, val )
+	if ( ent.CallDTVarProxies ) then
+		ent:CallDTVarProxies( name, id, val )
+	end
+end
+
 function meta:InstallDataTable()
 
 	self.dt = {}
@@ -259,6 +265,15 @@ function meta:InstallDataTable()
 			v( ent, name, oldval, newval )
 		end
 
+	end
+
+	self.CallDTVarProxies = function( ent, typename, index, newVal )
+		for name, t in pairs( datatable ) do
+			if ( t.index == index && t.typename == typename ) then
+				CallProxies( ent, t.Notify, name, self.dt[ name ], newVal )
+				break
+			end
+		end
 	end
 
 	self.NetworkVar = function( ent, typename, index, name, other_data )
@@ -371,7 +386,7 @@ function meta:InstallDataTable()
 		--
 		-- If there's nothing in our table - then return nil.
 		--
-		if ( table.Count( dt ) == 0 ) then return nil end
+		if ( table.IsEmpty( dt ) ) then return nil end
 
 		return dt
 
@@ -482,7 +497,7 @@ end
 --
 -- Networked var proxies
 --
-function meta:SetNetworkedVarProxy( name, func )
+function meta:SetNetworked2VarProxy( name, func )
 
 	if ( !self.NWVarProxies ) then
 		self.NWVarProxies = {}
@@ -492,7 +507,7 @@ function meta:SetNetworkedVarProxy( name, func )
 
 end
 
-function meta:GetNetworkedVarProxy( name )
+function meta:GetNetworked2VarProxy( name )
 
 	if ( self.NWVarProxies ) then
 		local func = self.NWVarProxies[ name ]
@@ -505,8 +520,8 @@ function meta:GetNetworkedVarProxy( name )
 
 end
 
-meta.SetNWVarProxy = meta.SetNetworkedVarProxy
-meta.GetNWVarProxy = meta.GetNetworkedVarProxy
+meta.SetNW2VarProxy = meta.SetNetworked2VarProxy
+meta.GetNW2VarProxy = meta.GetNetworked2VarProxy
 
 hook.Add( "EntityNetworkedVarChanged", "NetworkedVars", function( ent, name, oldValue, newValue )
 

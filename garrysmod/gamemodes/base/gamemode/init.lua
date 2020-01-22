@@ -4,8 +4,6 @@ include( 'player.lua' )
 include( 'npc.lua' )
 include( 'variable_edit.lua' )
 
-GM.PlayerSpawnTime = {}
-
 --[[---------------------------------------------------------
    Name: gamemode:Initialize()
    Desc: Called immediately after starting the gamemode
@@ -57,6 +55,14 @@ function GM:DoPlayerDeath( ply, attacker, dmginfo )
 end
 
 --[[---------------------------------------------------------
+   Name: gamemode:PlayerShouldTakeDamage
+   Return true if this player should take damage from this attacker
+-----------------------------------------------------------]]
+function GM:PlayerShouldTakeDamage( ply, attacker )
+	return true
+end
+
+--[[---------------------------------------------------------
    Name: gamemode:EntityTakeDamage( ent, info )
    Desc: The entity has received damage
 -----------------------------------------------------------]]
@@ -98,7 +104,7 @@ function GM:ShowTeam( ply )
 	if ( ply.LastTeamSwitch && RealTime() - ply.LastTeamSwitch < TimeBetweenSwitches ) then
 		ply.LastTeamSwitch = ply.LastTeamSwitch + 1
 		ply:ChatPrint( Format( "Please wait %i more seconds before trying to change team again", ( TimeBetweenSwitches - ( RealTime() - ply.LastTeamSwitch ) ) + 1 ) )
-		return false
+		return
 	end
 	
 	-- For clientside see cl_pickteam.lua

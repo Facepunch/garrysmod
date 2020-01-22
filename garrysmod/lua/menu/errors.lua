@@ -7,10 +7,9 @@
 
 local Errors = {}
 
-
 hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, addontitle, addonid )
 
-	local text = "Something is creating script errors"
+	local text = language.GetPhrase( "errors.something" )
 
 	--
 	-- This error is caused by a specific addon
@@ -31,11 +30,11 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, addontitle, ad
 		--	steamworks.ApplyAddons()
 		--end )
 
-		text = "The addon \"" .. addontitle .. "\" is creating errors, check the console for details"
+		text = string.format( language.GetPhrase( "errors.addon" ), addontitle )
 
 	end
 
-	if  ( addonid == nil ) then addonid = 0 end
+	if ( addonid == nil ) then addonid = 0 end
 
 	if ( Errors[ addonid ] ) then
 
@@ -45,8 +44,7 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, addontitle, ad
 		return
 	end
 
-	local error =
-	{
+	local error = {
 		first	= SysTime(),
 		last	= SysTime(),
 		times	= 1,
@@ -62,8 +60,8 @@ end )
 local matAlert = Material( "icon16/error.png" )
 
 hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
-	
-	if ( table.Count( Errors ) == 0 ) then return end
+
+	if ( table.IsEmpty( Errors ) ) then return end
 
 	local idealy = 32
 	local height = 30
@@ -76,7 +74,6 @@ hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 		if ( v.y == nil ) then v.y = idealy end
 		if ( v.w == nil ) then v.w = surface.GetTextSize( v.text ) + 48 end
 
-		
 		draw.RoundedBox( 2, v.x + 2, v.y + 2, v.w, height, Color( 40, 40, 40, 255 ) )
 		draw.RoundedBox( 2, v.x, v.y, v.w, height, Color( 240, 240, 240, 255 ) )
 
@@ -99,7 +96,7 @@ hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 		idealy = idealy + 40
 
 		if ( v.last < EndTime ) then
-			Errors[k] = nil
+			Errors[ k ] = nil
 		end
 
 	end

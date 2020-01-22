@@ -1,9 +1,11 @@
 AddCSLuaFile()
 
+DEFINE_BASECLASS "weapon_tttbase"
+
 SWEP.HoldType              = "ar2"
 
 if CLIENT then
-   SWEP.PrintName          = "Poltergeist"
+   SWEP.PrintName          = "polter_name"
    SWEP.Slot               = 7
 
    SWEP.ViewModelFlip      = false
@@ -108,11 +110,11 @@ end
 function SWEP:PrimaryAttack()
    self:SetNextPrimaryFire(CurTime() + 0.1)
    if not self:CanPrimaryAttack() then return end
-
+   if IsValid(self.hammer) then return end
    if SERVER then
       if self.IsCharging then return end
 
-      local ply = self.Owner
+      local ply = self:GetOwner()
       if not IsValid(ply) then return end
 
       local tr = util.TraceLine({start=ply:GetShootPos(), endpos=ply:GetShootPos() + ply:GetAimVector() * maxrange, filter={ply, self.Entity}, mask=MASK_SOLID})
@@ -136,9 +138,9 @@ function SWEP:SecondaryAttack()
    self:SetNextSecondaryFire( CurTime() + 0.1 )
 
    if not (self:CanPrimaryAttack() and (self:GetNextPrimaryFire() - CurTime()) <= 0) then return end
-
+   if IsValid(self.hammer) then return end
    if SERVER then
-      local ply = self.Owner
+      local ply = self:GetOwner()
       if not IsValid(ply) then return end
 
       local range = 30000
@@ -159,7 +161,7 @@ end
 function SWEP:CreateHammer(tgt, pos)
    local hammer = ents.Create("ttt_physhammer")
    if IsValid(hammer) then
-      local ang = self.Owner:GetAimVector():Angle()
+      local ang = self:GetOwner():GetAimVector():Angle()
       ang:RotateAroundAxis(ang:Right(), 90)
 
       hammer:SetPos(pos)
@@ -167,11 +169,12 @@ function SWEP:CreateHammer(tgt, pos)
 
       hammer:Spawn()
 
-      hammer:SetOwner(self.Owner)
+      hammer:SetOwner(self:GetOwner())
 
       local stuck = hammer:StickTo(tgt)
 
       if not stuck then hammer:Remove() end
+      self.hammer = hammer
    end
 end
 
@@ -202,10 +205,11 @@ if SERVER then
    local CHARGE_DELAY = 0.025
 
    function SWEP:Think()
-      if not IsValid(self.Owner) then return end
+      BaseClass.Think(self)
+      if not IsValid(self:GetOwner()) then return end
 
-      if self.IsCharging and self.Owner:KeyDown(IN_ATTACK2) then
-         local tr = self.Owner:GetEyeTrace(MASK_SOLID)
+      if self.IsCharging and self:GetOwner():KeyDown(IN_ATTACK2) then
+         local tr = self:GetOwner():GetEyeTrace(MASK_SOLID)
          if tr.HitNonWorld and ValidTarget(tr.Entity) then
 
             if self:GetCharge() >= 1 then
@@ -221,7 +225,7 @@ if SERVER then
                self:SetCharge(0)
                return true
             elseif self.NextCharge < CurTime() then
-               local d = tr.Entity:GetPos():Distance(self.Owner:GetPos())
+               local d = tr.Entity:GetPos():Distance(self:GetOwner():GetPos())
                local f = math.max(1, math.floor(d / maxrange))
 
                self:SetCharge(math.min(1, self:GetCharge() + (CHARGE_AMOUNT / f)))

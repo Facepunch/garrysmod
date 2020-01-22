@@ -36,17 +36,23 @@ local function SetTrails( ply, ent, data )
 
 	end
 
-	if ( data.StartSize == 0 ) then
+	-- Just don't even bother with invisible trails
+	if ( data.StartSize <= 0 && data.EndSize <= 0 ) then return end
 
-		data.StartSize = 0.0001
+		-- This is here to fix crash exploits
+	if ( !game.SinglePlayer() ) then
+
+		-- Lock down the trail material - only allow what the server allows
+		if ( !list.Contains( "trail_materials", data.Material ) ) then return end
+
+		-- Clamp sizes in multiplayer
+		data.Length = math.Clamp( data.Length, 0.1, 10 )
+		data.EndSize = math.Clamp( data.EndSize, 0, 128 )
+		data.StartSize = math.Clamp( data.StartSize, 0, 128 )
 
 	end
 
-	--
-	-- Lock down the trail material - only allow what the server allows
-	-- This is here to fix a crash exploit
-	--
-	if ( !game.SinglePlayer() && !list.Contains( "trail_materials", data.Material ) ) then return end
+	data.StartSize = math.max( 0.0001, data.StartSize )
 
 	local trail_entity = util.SpriteTrail( ent, 0, data.Color, false, data.StartSize, data.EndSize, data.Length, 1 / ( ( data.StartSize + data.EndSize ) * 0.5 ), data.Material .. ".vmt" )
 
@@ -79,15 +85,6 @@ function TOOL:LeftClick( trace )
 	local endsize = self:GetClientNumber( "endsize", 0 )
 	local startsize = self:GetClientNumber( "startsize", 32 )
 	local mat = self:GetClientInfo( "material", "sprites/obsolete" )
-
-	-- Clamp sizes in multiplayer
-	if ( !game.SinglePlayer() ) then
-
-		length = math.Clamp( length, 0.1, 10 )
-		endsize = math.Clamp( endsize, 0, 128 )
-		startsize = math.Clamp( startsize, 0, 128 )
-
-	end
 
 	local Trail = SetTrails( self:GetOwner(), trace.Entity, {
 		Color = Color( r, g, b, a ),

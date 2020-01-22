@@ -5,7 +5,9 @@ local function CanEntityBeSetOnFire( ent )
 
 	-- func_pushable, func_breakable & func_physbox cannot be ignited
 	if ( ent:GetClass() == "item_item_crate" ) then return true end
+	if ( ent:GetClass() == "simple_physics_prop" ) then return true end
 	if ( ent:GetClass():match( "prop_physics*") ) then return true end
+	if ( ent:GetClass():match( "prop_ragdoll*") ) then return true end
 	if ( ent:IsNPC() ) then return true end
 
 	return false
@@ -35,11 +37,12 @@ properties.Add( "ignite", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		ent:Ignite( 360 )
 
@@ -69,11 +72,12 @@ properties.Add( "extinguish", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		ent:Extinguish()
 

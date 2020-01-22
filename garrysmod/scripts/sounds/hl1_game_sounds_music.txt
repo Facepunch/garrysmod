@@ -1,0 +1,396 @@
+//
+// VOL_NORM		1.0f
+//
+//-----------------------------------------------------------------------------
+// common attenuation values
+//-----------------------------------------------------------------------------
+//
+// DON'T USE THESE - USE SNDLVL_ INSTEAD!!!
+//	ATTN_NONE		0.0f	
+//	ATTN_NORM		0.8f
+//	ATTN_IDLE		2.0f
+//	ATTN_STATIC		1.25f 
+//	ATTN_RICOCHET	1.5f
+//	ATTN_GUNFIRE	0.27f
+//
+//	SNDLVL_NONE		= 0,
+//	SNDLVL_25dB		= 25,
+//	SNDLVL_30dB		= 30,
+//	SNDLVL_35dB		= 35,
+//	SNDLVL_40dB		= 40,
+//	SNDLVL_45dB		= 45,
+//	SNDLVL_50dB		= 50,	= 3.9
+//	SNDLVL_55dB		= 55,	= 3.0
+//	SNDLVL_IDLE		= 60,	= 2.0
+//	SNDLVL_TALKING		= 60,	= 2.0
+//	SNDLVL_60dB		= 60,	= 2.0
+//	SNDLVL_65dB		= 65,	= 1.5
+//	SNDLVL_STATIC		= 66,	= 1.25
+//	SNDLVL_70dB		= 70,	= 1.0
+//	SNDLVL_NORM		= 75,
+//	SNDLVL_75dB		= 75,	= 0.8
+//	SNDLVL_80dB		= 80,	= 0.7
+//	SNDLVL_85dB		= 85,	= 0.6
+//	SNDLVL_90dB		= 90,	= 0.5
+//	SNDLVL_95dB		= 95,
+//	SNDLVL_100dB	= 100,	= 0.4
+//	SNDLVL_105dB	= 105,
+//	SNDLVL_120dB	= 120,
+//	SNDLVL_130dB	= 130,
+//	SNDLVL_GUNFIRE	= 140, = 0.27
+//	SNDLVL_140dB	= 140,	= 0.2
+//	SNDLVL_150dB	= 150,	= 0.2
+//
+
+
+"HL1_Music.track_2"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life01.mp3"
+}
+
+"HL1_Music.track_3"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Prospero01_0.mp3"
+}
+
+"HL1_Music.track_4"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life12.mp3"
+}
+
+"HL1_Music.track_5"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life07.mp3"
+}
+
+"HL1_Music.track_6"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life10.mp3"
+}
+
+"HL1_Music.track_7"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Suspense01.mp3"
+}
+
+"HL1_Music.track_8"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Suspense03.mp3"
+}
+
+"HL1_Music.track_9"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life09.mp3"
+}
+
+"HL1_Music.track_10"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life02.mp3"
+}
+
+"HL1_Music.track_11"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life13.mp3"
+}
+
+"HL1_Music.track_12"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life04.mp3"
+}
+
+"HL1_Music.track_13"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life15.mp3"
+}
+
+"HL1_Music.track_14"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life14.mp3"
+}
+
+"HL1_Music.track_15"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life16.mp3"
+}
+
+"HL1_Music.track_16"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Suspense02.mp3"
+}
+
+"HL1_Music.track_17"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life03.mp3"
+}
+
+"HL1_Music.track_18"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life08.mp3"
+}
+
+"HL1_Music.track_19"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.6"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Prospero02.mp3"
+}
+
+"HL1_Music.track_20"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life05.mp3"
+}
+
+"HL1_Music.track_21"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Prospero04.mp3"
+}
+
+"HL1_Music.track_22"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life11.mp3"
+}
+
+"HL1_Music.track_23"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life06.mp3"
+}
+
+"HL1_Music.track_24"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Prospero03.mp3"
+}
+
+"HL1_Music.track_25"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Half-Life17.mp3"
+}
+
+"HL1_Music.track_26"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Prospero05.mp3"
+}
+
+"HL1_Music.track_27"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Suspense05.mp3"
+}
+
+"HL1_Music.track_28"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Suspense07.mp3"
+}
+
+"HL1_Music.track_3_0"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Prospero01_0.mp3"
+}
+
+"HL1_Music.track_3_a"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Prospero01_a.mp3"
+}
+
+"HL1_Music.track_3_b"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Prospero01_b.mp3"
+}
+
+"HL1_Music.track_3_c"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Prospero01_c.mp3"
+}
+
+"HL1_Music.track_3_d"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"1.0"
+	"pitch"			"100"
+
+	"soundlevel"	"0"
+
+	"wave"			"*#music/Prospero01_d.mp3"
+}

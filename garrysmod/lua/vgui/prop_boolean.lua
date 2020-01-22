@@ -22,6 +22,14 @@ function PANEL:Setup( vars )
 		return ctrl:IsEditing()
 	end
 
+	-- Enabled/disabled support
+	self.IsEnabled = function( self )
+		return ctrl:IsEnabled()
+	end
+	self.SetEnabled = function( self, b )
+		ctrl:SetEnabled( b )
+	end
+
 	-- Set the value
 	self.SetValue = function( self, val )
 		ctrl:SetChecked( tobool( val ) )

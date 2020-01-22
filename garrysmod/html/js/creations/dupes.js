@@ -80,6 +80,8 @@ function SetDupeSaveState( b )
 //
 function ShowLocalDupes()
 {
-	CreationLocation.path( "/list/local//" ); // Lolz, hackz
+	// No extra slash at the end so its always different from the real path and thus a redirection will always happen
+	CreationLocation.path( "/list/local/" );
+
 	CreationScope.$apply();
 }

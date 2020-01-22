@@ -7,14 +7,14 @@ Derma_Install_Convar_Functions( PANEL )
 
 function PANEL:Init()
 
-	self:SetSelected( 0 )
+	self:SetSelectedNumber( 0 )
 	self:SetSize( 60, 30 )
 
 end
 
 function PANEL:UpdateText()
 
-	local str = input.GetKeyName( self.m_iSelectedNumber )
+	local str = input.GetKeyName( self:GetSelectedNumber() )
 	if ( !str ) then str = "NONE" end
 
 	str = language.GetPhrase( str )
@@ -38,9 +38,9 @@ function PANEL:DoRightClick()
 
 end
 
-function PANEL:SetSelected( iNum )
+function PANEL:SetSelectedNumber( iNum )
 
-	self:SetSelectedNumber( iNum )
+	self.m_iSelectedNumber = iNum
 	self:ConVarChanged( iNum )
 	self:UpdateText()
 	self:OnChange( iNum )
@@ -56,7 +56,7 @@ function PANEL:Think()
 
 			if ( code == KEY_ESCAPE ) then
 
-				self:SetValue( self.m_iSelectedNumber )
+				self:SetValue( self:GetSelectedNumber() )
 
 			else
 
@@ -76,7 +76,7 @@ end
 
 function PANEL:SetValue( iNumValue )
 
-	self:SetSelected( iNumValue )
+	self:SetSelectedNumber( iNumValue )
 
 end
 

@@ -202,6 +202,18 @@ Scheme
 				"custom"	"1"
 			}
 		}
+		WeaponIconsSmall
+		{
+			"1"
+			{
+				"name"		"HalfLife2"
+				"tall"		"32"
+				"weight"	"0"
+				"antialias" "1"
+				"additive"	"1"
+				"custom"	"1"
+			}
+		}
 		Crosshairs
 		{
 			"1"

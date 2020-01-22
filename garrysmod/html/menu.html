@@ -27,6 +27,7 @@
 	<script type="text/javascript" src="js/menu/control.Addons.js"></script>
 	<script type="text/javascript" src="js/menu/control.Demos.js"></script>
 	<script type="text/javascript" src="js/menu/control.Saves.js"></script>
+	<script type="text/javascript" src="js/menu/control.Dupes.js"></script>
 
 	<script type="text/javascript" src="js/svc.Tranny.js"></script>
 
@@ -53,15 +54,16 @@
 	</div>
 
 	<ul class="right">
-		<li style="" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></li>
-		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleLanguage()"><img style="margin-top: 9px; margin-left: 7px;" ng-src='../resource/localization/{{Language}}.png'><span></span></li>
-		<li style="width: 40px; padding: 0; text-align: center;" ng-click="ToggleGames()"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/games.png'><span></span></li>		
-		<li ng-show="kinect.available" style="width: 40px; padding: 0; text-align: center;" ng-click="TogglePopup('.kinect_settings')"><img style="margin-top: 7px; margin-left: 7px;" ng-src='img/kinect.png'><span></span></li>
+		<li class="bigicon" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></li>
+		<li class="smallicon" ng-click="ToggleLanguage()"><img style="margin-top: 9px;" ng-src='../resource/localization/{{Language}}.png'><span></span></li>
+		<li class="smallicon" ng-click="ToggleGames()"><img style="" ng-src='img/games.png'><span></span></li>
+		<li class="smallicon" ng-click="TogglePopup('.kinect_settings')" ng-show="kinect.available"><img ng-src='img/kinect.png'><span></span></li>
 	</ul>
 
 	<ul class="center" ng-show="InGame">
 
-		<li ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png'><span ng-Tranny="'back_to_game'"></span></a></li>
+		<li class="bigicon" ng-show="ShowFavButton" ng-click="AddServerToFavorites()"><a href="#/"><img src='img/favourite_server.png'><span ng-Tranny="'favorite_this_server'"></span></a></li>
+		<li class="bigicon" ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png'><span ng-Tranny="'back_to_game'"></span></a></li>
 		<!--
 		<li ng-click="Disconnect()"><a href="#/"><img src='img/disconnect.png'><span ng-Tranny="'disconnect'"></span></a></li>
 		-->
@@ -87,10 +89,10 @@
 
 	<li ng-repeat="game in Games|orderBy:'title'" class="{{IfElse( !game.owned, 'notowned', '' )}} {{IfElse( !game.installed, 'notinstalled', '' )}}">
 
-		<input type=checkbox ng-model="game.mounted" ng-show="game.installed" ng-change="GameMountChanged( game )"/> 
+		<input type=checkbox ng-model="game.mounted" ng-show="game.installed" ng-change="GameMountChanged( game )"/>
 		<img src='img/notowned.png' ng-show="!game.owned" width=16 height=16>
 		<img src='img/notinstalled.png' ng-show="game.owned && !game.installed" width=16 height=16>
-		
+
 		<span>{{game.title}}</span>
 
 	</li>
@@ -112,10 +114,10 @@
 			<div ng-show="kinect.show_color">
 
 				<span ng-Tranny="'motionsensor.colorpos'"></span>
-		
+
 				<p style="margin-left: 5px;">
 					<label ng-repeat="option in kinect.color_options" style="display: block">
-						<input type="radio" name="kinect.color" ng-model="kinect.color" value="{{option}}" ng-change="kinect.update()">                
+						<input type="radio" name="kinect.color" ng-model="kinect.color" value="{{option}}" ng-change="kinect.update()">
 						<span ng-Tranny="'motionsensor.showcolor.'+ option"></span>
 					</label>
 				</p>
@@ -123,10 +125,10 @@
 
 			<div  ng-show="kinect.show_color">
 				<span ng-Tranny="'motionsensor.colorsize'"></span>
-		
+
 				<p style="margin-left: 5px;">
 					<label ng-repeat="option in kinect.size_options" style="display: block">
-						<input type="radio" name="kinect.color_size" ng-model="kinect.color_size" value="{{option}}" ng-change="kinect.update()">                
+						<input type="radio" name="kinect.color_size" ng-model="kinect.color_size" value="{{option}}" ng-change="kinect.update()">
 						<span ng-Tranny="'motionsensor.colorsize.'+ option"></span>
 					</label>
 				</p>

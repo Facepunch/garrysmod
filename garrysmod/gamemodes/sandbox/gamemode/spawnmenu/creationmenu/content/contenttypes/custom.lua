@@ -35,9 +35,10 @@ local function SetupCustomNode( node, pnlContent, needsapp )
 		node.DoRightClick = function( self )
 
 			local menu = DermaMenu()
-			menu:AddOption( "Edit", function() self:InternalDoClick() hook.Run( "OpenToolbox" )  end )
-			menu:AddOption( "New Category", function() AddCustomizableNode( pnlContent, "New Category", "", self ) self:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end )
-			menu:AddOption( "Delete", function() node:Remove() hook.Run( "SpawnlistContentChanged" ) end )
+			menu:AddOption( "#spawnmenu.menu.edit", function() self:InternalDoClick() hook.Run( "OpenToolbox" )  end ):SetIcon( "icon16/folder_edit.png" )
+			menu:AddOption( "#spawnmenu.menu.add_subcategory", function() AddCustomizableNode( pnlContent, "New Category", "", self ) self:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/folder_add.png" )
+			menu:AddSpacer()
+			menu:AddOption( "#spawnmenu.menu.delete", function() node:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/folder_delete.png" )
 
 			menu:Open()
 
@@ -165,7 +166,7 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 	node.DoRightClick = function( self )
 
 		local menu = DermaMenu()
-		menu:AddOption( "New Category", function() AddCustomizableNode( pnlContent, "New Category", "", node ) node:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end )
+		menu:AddOption( "New Category", function() AddCustomizableNode( pnlContent, "New Category", "", node ) node:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/folder_add.png" )
 		menu:Open()
 
 	end
@@ -189,7 +190,7 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 
 	-- Custom stuff from addons
 	local CustomProps = spawnmenu.GetCustomPropTable()
-	if ( table.Count( CustomProps ) > 0 ) then
+	if ( !table.IsEmpty( CustomProps ) ) then
 		local node = AddCustomizableNode( pnlContent, "#spawnmenu.category.addon_spawnlists", "", tree )
 		node:SetExpanded( true )
 		--node:SetDraggableName( "CustomContent" )

@@ -38,7 +38,7 @@ local function GetLoadoutWeapons(r)
       };
 
       for k, w in pairs(weapons.GetList()) do
-         if w and type(w.InLoadoutFor) == "table" then
+         if w and istable(w.InLoadoutFor) then
             for _, wrole in pairs(w.InLoadoutFor) do
                table.insert(tbl[wrole], WEPS.GetClass(w))
             end
@@ -132,8 +132,8 @@ end
 -- calling this function is used to get them the weapons anyway as soon as
 -- possible.
 local function LateLoadout(id)
-   local ply = player.GetByID(id)
-   if not IsValid(ply) then
+   local ply = Entity(id)
+   if not IsValid(ply) or not ply:IsPlayer() then
       timer.Remove("lateloadout" .. id)
       return
    end
@@ -174,24 +174,6 @@ function GM:UpdatePlayerLoadouts()
       hook.Call("PlayerLoadout", GAMEMODE, ply)
    end
 end
-
----- Weapon switching
-local function ForceWeaponSwitch(ply, cmd, args)
-   if not ply:IsPlayer() or not args[1] then return end
-   -- Turns out even SelectWeapon refuses to switch to empty guns, gah.
-   -- Worked around it by giving every weapon a single Clip2 round.
-   -- Works because no weapon uses those.
-   local wepname = args[1]
-   local wep = ply:GetWeapon(wepname)
-   if IsValid(wep) then
-      -- Weapons apparently not guaranteed to have this
-      if wep.SetClip2 then
-         wep:SetClip2(1)
-      end
-      ply:SelectWeapon(wepname)
-   end
-end
-concommand.Add("wepswitch", ForceWeaponSwitch)
 
 ---- Weapon dropping
 

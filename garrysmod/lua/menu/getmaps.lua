@@ -8,6 +8,7 @@ local function UpdateMaps()
 	MapNames = {}
 
 	MapNames[ "aoc_" ] = "Age of Chivalry"
+	MapNames[ "infra_" ] = "INFRA"
 
 	MapPatterns[ "^asi-" ] = "Alien Swarm"
 	MapNames[ "lobby" ] = "Alien Swarm"
@@ -22,6 +23,7 @@ local function UpdateMaps()
 	MapNames[ "free_" ] = "Blade Symphony"
 	MapNames[ "practice_box" ] = "Blade Symphony"
 	MapNames[ "tut_training" ] = "Blade Symphony"
+	MapNames[ "lightstyle_test" ] = "Blade Symphony"
 
 	MapNames[ "ar_" ] = "Counter-Strike"
 	MapNames[ "cs_" ] = "Counter-Strike"
@@ -29,6 +31,7 @@ local function UpdateMaps()
 	MapNames[ "es_" ] = "Counter-Strike"
 	MapNames[ "fy_" ] = "Counter-Strike"
 	MapNames[ "gd_" ] = "Counter-Strike"
+	MapNames[ "dz_" ] = "Counter-Strike"
 	MapNames[ "training1" ] = "Counter-Strike"
 
 	MapNames[ "dod_" ] = "Day Of Defeat"
@@ -137,6 +140,7 @@ local function UpdateMaps()
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
 	MapNames[ "zpo_" ] = "Zombie Panic! Source"
 	MapNames[ "zps_" ] = "Zombie Panic! Source"
+	MapNames[ "zph_" ] = "Zombie Panic! Source"
 
 	MapNames[ "bhop_" ] = "Bunny Hop"
 	MapNames[ "cinema_" ] = "Cinema"
@@ -190,7 +194,7 @@ local favmaps
 local function LoadFavourites()
 
 	local cookiestr = cookie.GetString( "favmaps" )
-	favmaps = favmaps || (cookiestr && string.Explode( ";", cookiestr ) || {})
+	favmaps = favmaps || ( cookiestr && string.Explode( ";", cookiestr ) || {} )
 
 end
 
@@ -355,6 +359,6 @@ function LoadLastMap()
 
 	if ( !file.Exists( "maps/" .. map .. ".bsp", "GAME" ) ) then return end
 
-	pnlMainMenu:Call( "SetLastMap('" .. map .. "','" .. cat .. "')" )
+	pnlMainMenu:Call( "SetLastMap('" .. map:JavascriptSafe() .. "','" .. cat:JavascriptSafe() .. "')" )
 
 end

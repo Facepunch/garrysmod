@@ -36,22 +36,36 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		"model"
 	];
 
+	$scope.Disabled = false;
+	lua.Run( "UpdateAddonDisabledState();" );
+
 	addon.Init( 'addon', $scope, $rootScope );
 
 	$scope.Switch( 'subscribed', 0 );
 
 	$scope.Subscribe = function( file )
 	{
-		lua.Run( "steamworks.Subscribe( %s );", String( file.id ) );
+		subscriptions.Subscribe( file.id );
 
 		// Update files if viewing subscribed list?
 	};
 
 	$scope.Unsubscribe = function( file )
 	{
-		lua.Run( "steamworks.Unsubscribe( %s );", String( file.id ) );
+		subscriptions.Unsubscribe( file.id );
 
 		// Update files if viewing subscribed list?
+	};
+
+	$scope.UninstallAllSubscribed = function()
+	{
+		subscriptions.UnsubscribeAll();
+		lua.Run( "steamworks.ApplyAddons();" );
+	}
+
+	$scope.IsSubscribed = function( file )
+	{
+		return subscriptions.Contains( file.id );
 	};
 
 	$scope.DisableAllSubscribed = function()
@@ -66,20 +80,9 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		lua.Run( "steamworks.ApplyAddons();" );
 	}
 
-	$scope.UninstallAllSubscribed = function()
-	{
-		subscriptions.DeleteAll();
-		lua.Run( "steamworks.ApplyAddons();" );
-	}
-
-	$scope.IsSubscribed = function( file )
-	{
-		return subscriptions.Contains( String( file.id ) );
-	};
-
 	$scope.IsEnabled = function( file )
 	{
-		return subscriptions.Enabled( String( file.id ) );
+		return subscriptions.Enabled( file.id );
 	};
 
 	$scope.Disable = function( file )
@@ -149,5 +152,13 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		var count = 0;
 		for ( var k in $scope.SelectedItems ) if ( $scope.SelectedItems[ k ] ) count++;
 		return count > 0;
+	}
+}
+
+function UpdateAddonDisabledState( noaddons, noworkshop )
+{
+	if ( Scope ) {
+		Scope.Disabled = noworkshop;
+		UpdateDigest( Scope, 50 );
 	}
 }

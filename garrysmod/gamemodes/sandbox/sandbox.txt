@@ -18,17 +18,18 @@
 
 		2
 		{
-			"name"		"sbox_noclip"
-			"text"		"noclip"
-			"help"		"If enabled, players will be able to use noclip"
+			"name"		"sbox_weapons"
+			"text"		"enable_weapons"
+			"help"		"If enabled, each player will receive default Half-Life 2 weapons on each spawn"
 			"type"		"CheckBox"
 			"default"	"1"
+			"singleplayer" "1"
 		}
 
 		3
 		{
 			"name"		"sbox_godmode"
-			"text"		"god_mode"
+			"text"		"allow_god_mode"
 			"help"		"If enabled, all players will be invincible"
 			"type"		"CheckBox"
 			"default"	"0"
@@ -189,15 +190,36 @@
 
 		21
 		{
-			"name"		"sbox_weapons"
-			"text"		"enable_weapons"
-			"help"		"If enabled, each player will receive default Half-Life 2 weapons on each spawn"
-			"type"		"CheckBox"
-			"default"	"1"
-			"singleplayer" "1"
+			"name"		"gmod_maxammo"
+			"text"		"gmod_maxammo"
+			"help"		"Forces amount of maximum ammo reserves for all weapons of each player. Values 0 and below mean use weapon's ammo type maximum ammo setting instead."
+			"type"		"Numeric"
+			"default"	"9999"
+			"singleplayer"	"1"
+			"dontcreate"	"1"
 		}
 
 		22
+		{
+			"name"		"gmod_suit"
+			"text"		"gmod_suit"
+			"help"		"Set to non zero to enable Half-Life 2 aux suit power stuff."
+			"type"		"CheckBox"
+			"default"	"0"
+			"singleplayer"	"1"
+			"dontcreate"	"1"
+		}
+
+		23
+		{
+			"name"		"sbox_noclip"
+			"text"		"allow_noclip"
+			"help"		"If enabled, players will be able to use noclip"
+			"type"		"CheckBox"
+			"default"	"1"
+		}
+
+		24
 		{
 			"name"		"sbox_bonemanip_npc"
 			"text"		"bone_manipulate_npcs"
@@ -206,7 +228,7 @@
 			"default"	"1"
 		}
 
-		23
+		25
 		{
 			"name"		"sbox_bonemanip_player"
 			"text"		"bone_manipulate_players"
@@ -215,7 +237,7 @@
 			"default"	"0"
 		}
 
-		24
+		26
 		{
 			"name"		"sbox_bonemanip_misc"
 			"text"		"bone_manipulate_others"
@@ -224,7 +246,7 @@
 			"default"	"0"
 		}
 
-		25
+		27
 		{
 			"name"		"sbox_persist"
 			"text"		"persistent_mode"

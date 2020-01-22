@@ -7,6 +7,7 @@ TOOL.ClientConVar[ "width" ] = "3"
 TOOL.ClientConVar[ "addlength" ] = "100"
 TOOL.ClientConVar[ "fixed" ] = "1"
 TOOL.ClientConVar[ "speed" ] = "64"
+TOOL.ClientConVar[ "toggle" ] = "1"
 TOOL.ClientConVar[ "material" ] = "cable/rope"
 
 TOOL.Information = {
@@ -50,6 +51,7 @@ function TOOL:LeftClick( trace )
 		local fixed = self:GetClientNumber( "fixed", 1 )
 		local speed = self:GetClientNumber( "speed", 64 )
 		local material = self:GetClientInfo( "material" )
+		local toggle = self:GetClientNumber( "toggle" ) != 0
 
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
@@ -60,7 +62,7 @@ function TOOL:LeftClick( trace )
 		local Length1 = ( WPos1 - WPos2 ):Length()
 		local Length2 = Length1 + AddLength
 
-		local constraint, rope, controller, slider = constraint.Hydraulic( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, speed, material )
+		local constraint, rope, controller, slider = constraint.Hydraulic( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, speed, material, toggle )
 
 		undo.Create( "Hydraulic" )
 			if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
@@ -152,6 +154,7 @@ function TOOL:RightClick( trace )
 	local fixed = self:GetClientNumber( "fixed", 1 )
 	local speed = self:GetClientNumber( "speed", 64 )
 	local material = self:GetClientInfo( "material" )
+	local toggle = self:GetClientNumber( "toggle" ) != 0
 
 	-- Get information we're about to use
 	local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
@@ -162,7 +165,7 @@ function TOOL:RightClick( trace )
 	local Length1 = ( WPos1 - WPos2 ):Length()
 	local Length2 = Length1 + AddLength
 
-	local constraint, rope, controller, slider = constraint.Hydraulic( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, speed, material )
+	local constraint, rope, controller, slider = constraint.Hydraulic( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, speed, material, toggle )
 
 	undo.Create( "Hydraulic" )
 		if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
@@ -211,6 +214,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.addlength", Command = "hydraulic_addlength", Type = "Float", Min = -1000, Max = 1000, Help = true } )
 	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.speed", Command = "hydraulic_speed", Type = "Float", Min = 0, Max = 50, Help = true } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.hydraulic.fixed", Command = "hydraulic_fixed", Help = true } )
+	CPanel:AddControl( "CheckBox", { Label = "#tool.toggle", Command = "hydraulic_toggle", Help = true } )
 
 	CPanel:AddControl( "Slider", { Label = "#tool.hydraulic.width", Command = "hydraulic_width", Type = "Float", Min = 0, Max = 5 } )
 	CPanel:AddControl( "RopeMaterial", { Label = "#tool.hydraulic.material", ConVar = "hydraulic_material" } )

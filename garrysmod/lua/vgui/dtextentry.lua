@@ -18,6 +18,9 @@ AccessorFunc( PANEL, "m_colText", "TextColor" )
 AccessorFunc( PANEL, "m_colHighlight", "HighlightColor" )
 AccessorFunc( PANEL, "m_colCursor", "CursorColor" )
 
+AccessorFunc( PANEL, "m_colPlaceholder", "PlaceholderColor" )
+AccessorFunc( PANEL, "m_txtPlaceholder", "PlaceholderText" )
+
 Derma_Install_Convar_Functions( PANEL )
 
 function PANEL:Init()
@@ -108,6 +111,12 @@ end
 function PANEL:GetTextColor()
 
 	return self.m_colText || self:GetSkin().colTextEntryText
+
+end
+
+function PANEL:GetPlaceholderColor()
+
+	return self.m_colPlaceholder || self:GetSkin().colTextEntryTextPlaceholder
 
 end
 

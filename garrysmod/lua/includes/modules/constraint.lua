@@ -196,7 +196,7 @@ function RemoveConstraints( Ent, Type )
 
 	end
 
-	if ( table.Count( c ) == 0 ) then
+	if ( table.IsEmpty( c ) ) then
 		-- Update the network var and clear the constraints table.
 		Ent:IsConstrained()
 	end
@@ -418,6 +418,7 @@ end
 ------------------------------------------------------------------------]]
 function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 
+	if ( Ent1 == Ent2 && Bone1 == Bone2 ) then return false end
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
 
@@ -425,23 +426,28 @@ function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 
 		-- A weld already exists between these two physics objects.
 		-- There's totally no point in re-creating it. It doesn't make
-		-- the weld any stronger - that's just an urban ledgend.
+		-- the weld any stronger - that's just an urban legend.
 		return false
 
+	end
+
+	-- Don't weld World to objects, weld objects to World!
+	-- Prevents crazy physics on some props
+	if ( Ent1:IsWorld() ) then
+		Ent1 = Ent2
+		Ent2 = game.GetWorld()
 	end
 
 	local Phys1 = Ent1:GetPhysicsObjectNum( Bone1 )
 	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
 
-	if ( Ent1 == Ent2 && Bone1 == Bone2 ) then return false end
-
 	onStartConstraint( Ent1, Ent2 )
 
 		-- Create the constraint
 		local Constraint = ents.Create( "phys_constraint" )
-			if ( forcelimit) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
-			if ( nocollide ) then Constraint:SetKeyValue( "spawnflags", 1 ) end
-			Constraint:SetPhysConstraintObjects( Phys2, Phys1 )
+		if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
+		if ( nocollide ) then Constraint:SetKeyValue( "spawnflags", 1 ) end
+		Constraint:SetPhysConstraintObjects( Phys2, Phys1 )
 		Constraint:Spawn()
 		Constraint:Activate()
 
@@ -500,13 +506,13 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 
 			-- Create the constraint
 			Constraint = ents.Create( "phys_lengthconstraint" )
-				Constraint:SetPos( WPos1 )
-				Constraint:SetKeyValue( "attachpoint", tostring( WPos2 ) )
-				Constraint:SetKeyValue( "minlength", "0.0" )
-				Constraint:SetKeyValue( "length", length + addlength )
-				if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
-				if ( rigid ) then Constraint:SetKeyValue( "spawnflags", 2 ) end
-				Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
+			Constraint:SetPos( WPos1 )
+			Constraint:SetKeyValue( "attachpoint", tostring( WPos2 ) )
+			Constraint:SetKeyValue( "minlength", "0.0" )
+			Constraint:SetKeyValue( "length", length + addlength )
+			if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
+			if ( rigid ) then Constraint:SetKeyValue( "spawnflags", 2 ) end
+			Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
 			Constraint:Spawn()
 			Constraint:Activate()
 
@@ -562,7 +568,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
 
 	local Phys1 = Ent1:GetPhysicsObjectNum( Bone1 )
-	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2)
+	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
 	local WPos1 = Phys1:LocalToWorld( LPos1 )
 	local WPos2 = Phys2:LocalToWorld( LPos2 )
 
@@ -782,7 +788,7 @@ function Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, 
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
 
 	local Phys1 = Ent1:GetPhysicsObjectNum( Bone1 )
-	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2)
+	local Phys2 = Ent2:GetPhysicsObjectNum( Bone2 )
 	local WPos1 = Phys1:LocalToWorld( LPos1 )
 	local WPos2 = Phys2:LocalToWorld( LPos2 )
 
@@ -1321,7 +1327,7 @@ duplicator.RegisterConstraint( "Winch", Winch, "pl", "Ent1", "Ent2", "Bone1", "B
 	Hydraulic( ... )
 	Creates a Hydraulic constraint
 ------------------------------------------------------------------------]]
-function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, key, fixed, speed, material )
+function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, key, fixed, speed, material, toggle )
 
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
@@ -1332,6 +1338,7 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 	local WPos2 = Phys2:LocalToWorld( LPos2 )
 
 	if ( Phys1 == Phys2 ) then return false end
+	if ( toggle == nil ) then toggle = true end -- Retain original behavior
 
 	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, fixed )
 
@@ -1352,7 +1359,7 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 		fixed = fixed,
 		fwd_speed = speed,
 		bwd_speed = speed,
-		toggle = true,
+		toggle = toggle,
 		material = material
 	}
 	Constraint:SetTable( ctable )
@@ -1382,7 +1389,12 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 
 		Constraint:DeleteOnRemove( controller )
 
-		numpad.OnDown( pl, key, "HydraulicToggle", controller )
+		if ( toggle ) then
+			numpad.OnDown( pl, key, "HydraulicToggle", controller )
+		else
+			numpad.OnUp( pl, key, "HydraulicDir", controller, -1 )
+			numpad.OnDown( pl, key, "HydraulicDir", controller, 1 )
+		end
 
 		return Constraint, rope, controller, slider
 	else
@@ -1390,7 +1402,7 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 	end
 
 end
-duplicator.RegisterConstraint( "Hydraulic", Hydraulic, "pl", "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "Length1", "Length2", "width", "key", "fixed", "fwd_speed", "material" )
+duplicator.RegisterConstraint( "Hydraulic", Hydraulic, "pl", "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "Length1", "Length2", "width", "key", "fixed", "fwd_speed", "material", "toggle" )
 
 
 --[[----------------------------------------------------------------------

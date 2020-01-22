@@ -13,7 +13,7 @@ local function PushPullRadius(pos, pusher)
    local push_force = 256
 
    -- pull physics objects and push players
-   for k, target in pairs(ents.FindInSphere(pos, radius)) do
+   for k, target in ipairs(ents.FindInSphere(pos, radius)) do
       if IsValid(target) then
          local tpos = target:LocalToWorld(target:OBBCenter())
          local dir = (tpos - pos):GetNormal()

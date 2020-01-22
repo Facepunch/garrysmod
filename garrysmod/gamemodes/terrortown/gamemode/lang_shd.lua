@@ -10,8 +10,8 @@ util.IncludeClientFile("cl_lang.lua")
 
 -- Add all lua files in our /lang/ dir
 local dir = GM.FolderName or "terrortown"
-local files, dirs = file.Find(dir .. "/gamemode/lang/*.lua", "LUA" )
-for _, fname in pairs(files) do
+local files = file.Find(dir .. "/gamemode/lang/*.lua", "LUA" )
+for _, fname in ipairs(files) do
    local path = "lang/" .. fname
    -- filter out directories and temp files (like .lua~)
    if string.Right(fname, 3) == "lua" then
@@ -29,9 +29,9 @@ if SERVER then
    --   2) LANG.Msg(name, params)       -- sent to all
    --   3) LANG.Msg(role, name, params) -- sent to plys with role
    function LANG.Msg(arg1, arg2, arg3)
-      if type(arg1) == "string" then
+      if isstring(arg1) then
          LANG.ProcessMsg(nil, arg1, arg2)
-      elseif type(arg1) == "number" then
+      elseif isnumber(arg1) then
          LANG.ProcessMsg(GetRoleFilter(arg1), arg2, arg3)
       else
          LANG.ProcessMsg(arg1, arg2, arg3)

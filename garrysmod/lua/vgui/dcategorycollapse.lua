@@ -240,7 +240,7 @@ function PANEL:PerformLayout()
 
 	if ( self:GetExpanded() ) then
 
-        if ( IsValid( self.Contents ) && #self.Contents:GetChildren() > 0 ) then self.Contents:SizeToChildren( false, true ) end
+		if ( IsValid( self.Contents ) && #self.Contents:GetChildren() > 0 ) then self.Contents:SizeToChildren( false, true ) end
 		self:SizeToChildren( false, true )
 
 	else

@@ -141,7 +141,7 @@ end
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-	ctrl:SetImage( "brick/brick_model" )
+	ctrl:SetImage( "gui/dupe_bg.png" )
 	ctrl:SetSize( 200, 200 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )

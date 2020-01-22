@@ -188,7 +188,7 @@ local gunsounds = {
 function ENT:PlayDelayedSound(snd, ampl, last)
    -- maybe we can get destroyed while a timer is still up
    if IsValid(self) then
-      if type(snd) == "table" then
+      if istable(snd) then
          snd = table.Random(snd)
       end
 
@@ -268,7 +268,7 @@ if SERVER then
 
    local function RadioCmd(ply, cmd, args)
       if not IsValid(ply) or not ply:IsActiveTraitor() then return end
-      if not #args == 2 then return end
+      if not (#args == 2) then return end
 
       local eidx = tonumber(args[1])
       local snd = tostring(args[2])
@@ -276,7 +276,8 @@ if SERVER then
 
       local radio = Entity(eidx)
       if not IsValid(radio) then return end
-      if not radio:GetOwner() == ply then return end
+      if not (radio:GetOwner() == ply) then return end
+      if not (radio:GetClass() == "ttt_radio") then return end
 
       if not table.HasValue(soundtypes, snd) then
          print("Received radio sound not in table from", ply)

@@ -12,7 +12,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 	ws_dupe.HTML = HTML
 
 	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
-	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ).. " );" )
+	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ) .. " );" )
 
 	function ws_dupe:FetchLocal( offset, perpage )
 
@@ -41,7 +41,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 		}
 
 		local json = util.TableToJSON( results, false )
-		HTML:Call( "dupe.ReceiveLocal( "..json.." )" )
+		HTML:Call( "dupe.ReceiveLocal( " .. json .. " )" )
 
 	end
 
@@ -53,10 +53,10 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 
 	function ws_dupe:DownloadAndArm( id )
 
-		MsgN( "Downloading Dupe...\n" )
-		steamworks.Download( id, true, function( name )
+		MsgN( "Downloading Dupe..." )
+		steamworks.DownloadUGC( id, function( name )
 
-			MsgN( "Finished - arming!\n" )
+			MsgN( "Finished - arming!" )
 			ws_dupe:Arm( name )
 
 		end )

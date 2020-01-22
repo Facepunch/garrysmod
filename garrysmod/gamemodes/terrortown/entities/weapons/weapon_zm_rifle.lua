@@ -45,13 +45,11 @@ SWEP.IronSightsPos         = Vector( 5, -15, -2 )
 SWEP.IronSightsAng         = Vector( 2.6, 1.37, 3.5 )
 
 function SWEP:SetZoom(state)
-   if CLIENT then
-      return
-   elseif IsValid(self.Owner) and self.Owner:IsPlayer() then
+   if IsValid(self:GetOwner()) and self:GetOwner():IsPlayer() then
       if state then
-         self.Owner:SetFOV(20, 0.3)
+         self:GetOwner():SetFOV(20, 0.3)
       else
-         self.Owner:SetFOV(0, 0.2)
+         self:GetOwner():SetFOV(0, 0.2)
       end
    end
 end
@@ -70,9 +68,8 @@ function SWEP:SecondaryAttack()
 
    self:SetIronsights( bIronsights )
 
-   if SERVER then
-      self:SetZoom(bIronsights)
-   else
+   self:SetZoom(bIronsights)
+   if (CLIENT) then
       self:EmitSound(self.Secondary.Sound)
    end
 
@@ -86,7 +83,7 @@ function SWEP:PreDrop()
 end
 
 function SWEP:Reload()
-	if ( self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
+	if ( self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
    self:DefaultReload( ACT_VM_RELOAD )
    self:SetIronsights( false )
    self:SetZoom( false )

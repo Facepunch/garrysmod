@@ -3,8 +3,6 @@
 		<ul>
 			<li><h2 ng-tranny="'addons'"></h2></li>
 
-			<li>&nbsp;</li>
-
 			<li>
 				<a class="{{IfElse( Category == 'subscribed', 'active', '' )}}" ng-click="Switch( 'subscribed', 0 )" ng-Tranny="'addons.subscribed'"></a>
 				<ul ng-show="Category == 'subscribed'" class="submenu">
@@ -12,17 +10,17 @@
 						<a ng-click="SwitchWithTag( 'subscribed', 0, tag )" ng-Tranny="'addons.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
 					</li>
 
-					<li>&nbsp;</li>
+					<!--<li>&nbsp;</li>-->
 					<li><input type="text" class="search_bar" ng-tranny="'addons.search'" ng-model="SubscriptionSearchText" ng-change="HandleOnSearch()"/></li>
-					<!--<li>
-						<input type="checkbox" ng-model="ServerSettings.enabled_only" id="enabled_only" />
+					<li>
+						<input type="checkbox" ng-model="FilerEnabledOnly" ng-change="HandleFilterChange( 1 )"/>
 						<label ng-Tranny="'addons.enabled_only'"></label>
 					</li>
 					<li>
-						<input type="checkbox" ng-model="ServerSettings.disabled_only" id="disabled_only" />
+						<input type="checkbox" ng-model="FilerDisabledOnly" ng-change="HandleFilterChange( 0 )"/>
 						<label ng-Tranny="'addons.disabled_only'"></label>
-					</li>-->
-					<li>&nbsp;</li>
+					</li>
+					<!--<li>&nbsp;</li>-->
 
 					<container ng-show="!IsAnySelected()">
 						<li><a ng-click="DisplayPopupMessage( 'addons.enableall.warning', EnableAllSubscribed )" ng-Tranny="'addons.enableall'"></a></li>
@@ -77,7 +75,8 @@
 
 		<workshopcontainer>
 			<workshopmessage ng-show="Loading" ng-Tranny="'addons.loading'">...</workshopmessage>
-			<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'addons.none'">...</workshopmessage>
+			<workshopmessage ng-show="TotalResults == 0 && !Loading && !Disabled" ng-Tranny="'addons.none'">...</workshopmessage>
+			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled" ng-Tranny="'addons.disabled'">...</workshopmessage>
 
 			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px"  class="{{IfElse( IsSubscribed( file ) && !IsEnabled( file ), 'disabled', '' )}} {{IfElse( IsSubscribed( file ), 'installed', '' )}}">
 
@@ -87,12 +86,12 @@
 
 				<name ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}</name>
 				<author ng-hide="file.local">{{file.info.ownername}}</author>
-				<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
-				<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
+				<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" style="color: #4a4">+{{file.info.up-file.info.down|number:0}}</votes>
+				<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" style="color: #a44">{{file.info.up-file.info.down|number:0}}</votes>
 				<description>{{file.info.description}}</description>
 				<input type="checkbox" class="checkbox" ng-show="Category == 'subscribed'" ng-model="SelectedItems[ file.id ]" <!--ng-click="$event.stopPropagation()"-->> 
 
-				<controls>
+				<controls ng-show="!file.info.floating">
 					<left>
 						<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
 						<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
@@ -104,7 +103,7 @@
 						<control ng-show="IsSubscribed( file ) && IsEnabled( file )" ng-click="Disable( file )" ng-Tranny="'addon.disable'">..</control>
 						<control ng-show="IsSubscribed( file ) && !IsEnabled( file )" ng-click="Enable( file )" ng-Tranny="'addon.enable'">..</control>
 
-						<control ng-hide="IsSubscribed( file )" ng-click="Subscribe( file )" ng-Tranny="'addon.subscribe'">..</control>
+						<control ng-hide="IsSubscribed( file ) || Disabled" ng-click="Subscribe( file )" ng-Tranny="'addon.subscribe'">..</control>
 						<control ng-show="IsSubscribed( file )" ng-click="Unsubscribe( file )" ng-Tranny="'addon.unsubscribe'">..</control>
 					</right>
 				</controls>

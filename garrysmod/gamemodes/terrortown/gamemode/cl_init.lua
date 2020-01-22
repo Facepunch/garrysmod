@@ -111,7 +111,7 @@ local function RoundStateChange(o, n)
       CLSCORE:ClearPanel()
 
       -- people may have died and been searched during prep
-      for _, p in pairs(player.GetAll()) do
+      for _, p in ipairs(player.GetAll()) do
          p.search_result = nil
       end
 
@@ -136,7 +136,7 @@ local function RoundStateChange(o, n)
    end
 
    -- whatever round state we get, clear out the voice flags
-   for k,v in pairs(player.GetAll()) do
+   for k,v in ipairs(player.GetAll()) do
       v.traitor_gvoice = false
    end
 end
@@ -228,7 +228,7 @@ function GM:ClearClientState()
 
    VOICE.InitBattery()
 
-   for _, p in pairs(player.GetAll()) do
+   for _, p in ipairs(player.GetAll()) do
       if IsValid(p) then
          p.sb_tag = nil
          p:SetRole(ROLE_INNOCENT)
@@ -248,7 +248,7 @@ net.Receive("TTT_ClearClientState", GM.ClearClientState)
 function GM:CleanUpMap()
    -- Ragdolls sometimes stay around on clients. Deleting them can create issues
    -- so all we can do is try to hide them.
-   for _, ent in pairs(ents.FindByClass("prop_ragdoll")) do
+   for _, ent in ipairs(ents.FindByClass("prop_ragdoll")) do
       if IsValid(ent) and CORPSE.GetPlayerNick(ent, "") != "" then
          ent:SetNoDraw(true)
          ent:SetSolid(SOLID_NONE)

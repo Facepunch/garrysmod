@@ -36,7 +36,7 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
 
 			for name, ent in SortedPairsByMemberValue( v, "Name" ) do
 
-				spawnmenu.CreateContentIcon( "npc", self.PropPanel, {
+				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", self.PropPanel, {
 					nicename	= ent.Name or name,
 					spawnname	= name,
 					material	= "entities/" .. name .. ".png",
@@ -69,6 +69,7 @@ end )
 spawnmenu.AddCreationTab( "#spawnmenu.category.npcs", function()
 
 	local ctrl = vgui.Create( "SpawnmenuContentPanel" )
+	ctrl:EnableSearch( "npcs", "PopulateNPCs" )
 	ctrl:CallPopulateHook( "PopulateNPCs" )
 	return ctrl
 

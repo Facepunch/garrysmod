@@ -15,9 +15,55 @@ function PANEL:Init()
 	self.HorizontalDivider:SetDividerWidth( 6 )
 	--self.HorizontalDivider:SetCookieName( "SpawnMenuToolMenuDiv" )
 
-	self.List = vgui.Create( "DCategoryList", self.HorizontalDivider )
+	local leftContainer = vgui.Create( "Panel", self.HorizontalDivider )
+
+	self.SearchBar = vgui.Create( "DTextEntry", leftContainer )
+	self.SearchBar:SetWidth( 130 )
+	self.SearchBar:SetPlaceholderText( "#spawnmenu.quick_filter" )
+	self.SearchBar:DockMargin( 0, 0, 0, 5 )
+	self.SearchBar:Dock( TOP )
+	self.SearchBar:SetUpdateOnType( true )
+	self.SearchBar.OnValueChange = function( s, text )
+		for id, category in pairs( self.List.pnlCanvas:GetChildren() ) do
+			local count = 0
+			local category_matched = false
+
+			if ( string.find( category.Header:GetText():lower(), text:lower(), nil, true ) ) then
+				category_matched = true
+			end
+
+			for id, item in pairs( category:GetChildren() ) do
+				if ( item == category.Header ) then continue end
+
+				local str = item.Text
+				if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
+				str = language.GetPhrase( str )
+
+				if ( !category_matched && !string.find( str:lower(), text:lower(), nil, true ) ) then
+					item:SetVisible( false )
+				else
+					item:SetVisible( true )
+					count = count + 1
+				end
+				item:InvalidateLayout()
+			end
+
+			if ( count < 1 && !category_matched ) then
+				category:SetVisible( false )
+			else
+				category:SetVisible( true )
+			end
+			category:InvalidateLayout()
+		end
+		self.List.pnlCanvas:InvalidateLayout()
+		self.List:InvalidateLayout()
+	end
+
+	self.List = vgui.Create( "DCategoryList", leftContainer )
 	self.List:SetWidth( 130 )
-	self.HorizontalDivider:SetLeft( self.List )
+	self.List:Dock( FILL )
+
+	self.HorizontalDivider:SetLeft( leftContainer )
 
 	self.Content = vgui.Create( "DCategoryList", self.HorizontalDivider )
 	self.HorizontalDivider:SetRight( self.Content )
@@ -49,13 +95,11 @@ function PANEL:LoadToolsFromTable( inTable )
 
 end
 
-function PANEL:AddCategory( Name, Label, tItems )
+function PANEL:AddCategory( name, lbl, tItems )
 
-	local Category = self.List:Add( Label )
+	local Category = self.List:Add( lbl )
 
-	Category:SetCookieName( "ToolMenu." .. tostring( self:GetTabID() ) .. "." .. tostring( Name ) )
-
-	local bAlt = true
+	Category:SetCookieName( "ToolMenu." .. tostring( self:GetTabID() ) .. "." .. tostring( name ) )
 
 	local tools = {}
 	for k, v in pairs( tItems ) do
@@ -64,6 +108,7 @@ function PANEL:AddCategory( Name, Label, tItems )
 		tools[ language.GetPhrase( str ) ] = v
 	end
 
+	local currentMode = GetConVarString( "gmod_toolmode" )
 	for k, v in SortedPairs( tools ) do
 
 		local item = Category:Add( v.Text )
@@ -79,6 +124,13 @@ function PANEL:AddCategory( Name, Label, tItems )
 		item.Name						= v.ItemName
 		item.Controls					= v.Controls
 		item.Text						= v.Text
+
+		-- Mark this button as the one to select on first spawnmenu open
+		if ( currentMode == v.ItemName ) then
+			timer.Simple( 0, function() -- Have to wait a frame to get the g_SpawnMenu global, ew
+				g_SpawnMenu.StartupTool = item
+			end )
+		end
 
 	end
 
