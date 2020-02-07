@@ -3,8 +3,13 @@
 if ( SERVER ) then return end
 
 
-function ScreenScale( size )
-	return size * ( ScrW() / 640.0 )	
+function ScreenScaleX( width )
+	return width * ( ScrW() / 640.0 )
 end
 
-SScale = ScreenScale
+function ScreenScaleY( height )
+	return height * ( ScrH() / 480.0 )
+end
+
+ScreenScale = ScreenScaleX
+SScale = ScreenScaleX
