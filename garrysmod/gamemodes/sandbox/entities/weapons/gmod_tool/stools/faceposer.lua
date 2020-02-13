@@ -75,16 +75,8 @@ function TOOL:Think()
 
 		local Name = ent:GetFlexName( i )
 
-		if ( IsUselessFaceFlex( Name ) ) then
-
-			ent:SetFlexWeight( i, 0 )
-
-		else
-
-			local num = self:GetClientNumber( "flex" .. i )
-			ent:SetFlexWeight( i, num )
-
-		end
+		local num = self:GetClientNumber( "flex" .. i )
+		ent:SetFlexWeight( i, num )
 
 	end
 
