@@ -38,12 +38,10 @@ function ENT:Think()
 	if ( !self.direction ) then return true end
 	if ( self.direction == DIR_NONE ) then return true end
 
-	local old_length = self.current_length
 	local current_length = self.current_length
 
 	if ( self.type == TYPE_NORMAL ) then
 
-		local speed = 0
 		local dist = 0
 
 		if ( self.direction == DIR_FORWARD ) then
