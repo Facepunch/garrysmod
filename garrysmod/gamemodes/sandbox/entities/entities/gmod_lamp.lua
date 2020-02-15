@@ -7,6 +7,7 @@ ENT.RenderGroup = RENDERGROUP_BOTH
 ENT.Editable = true
 
 local matLight = Material( "sprites/light_ignorez" )
+--local matBeam = Material( "effects/lamp_beam" )
 
 AccessorFunc( ENT, "Texture", "FlashlightTexture" )
 
