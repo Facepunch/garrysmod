@@ -201,8 +201,9 @@ function CreateContextMenu()
 			--
 			local newv = list.Get( "DesktopWindows" )[ k ]
 
-			if ( v.onewindow ) then
-				if ( IsValid( icon.Window ) ) then icon.Window:Center() return end
+			if ( v.onewindow and IsValid( icon.Window ) ) then
+				icon.Window:Center()
+				return
 			end
 
 			-- Make the window
