@@ -26,8 +26,8 @@ local function CheckLimit( ply, key )
 		break
 	end
 
-	if ( !found ) then
-		if ( !ply:CheckLimit( "cameras" ) ) then return false end
+	if ( !found and !ply:CheckLimit( "cameras" ) ) then
+		return false
 	end
 
 	return true
