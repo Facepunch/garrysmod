@@ -8,8 +8,6 @@ function EFFECT:Init( data )
 
 	if ( dlight ) then
 
-		local c = self:GetColor()
-
 		dlight.Pos = vOffset
 		dlight.r = 255
 		dlight.g = 255
