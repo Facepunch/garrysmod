@@ -28,7 +28,7 @@ local function ConvertRelativeToEyesAttachment( ent, pos )
 	local attachment = ent:GetAttachment( eyeattachment )
 	if ( !attachment ) then return end
 
-	local LocalPos, LocalAng = WorldToLocal( pos, Angle( 0, 0, 0 ), attachment.Pos, attachment.Ang )
+	local LocalPos, _ = WorldToLocal( pos, Angle( 0, 0, 0 ), attachment.Pos, attachment.Ang )
 
 	return LocalPos
 
