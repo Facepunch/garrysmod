@@ -147,11 +147,9 @@ function TOOL:RightClick( trace )
 
 		-- Note: To keep stuff ragdoll friendly try to treat things as physics objects rather than entities
 		local Ang1, Ang2 = Norm1:Angle(), ( -Norm2 ):Angle()
-		local TargetAngle = Phys1:AlignAngles( Ang1, Ang2 )
+		--local TargetAngle = Phys1:AlignAngles( Ang1, Ang2 )
 
 		--Phys1:SetAngles( TargetAngle )
-
-		local TargetPos = WPos2 + ( Phys1:GetPos() - self:GetPos( 1 ) ) + ( Norm2 * 0.2 )
 
 		Phys1:Wake()
 
