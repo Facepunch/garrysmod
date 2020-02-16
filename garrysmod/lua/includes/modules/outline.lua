@@ -24,19 +24,18 @@ local MODE	= 3
 
 function Add( ents, color, mode )
 
-	if ( ListSize >= 255 ) then return end				--Maximum 255 reference values
+	if ( ListSize >= 255 ) then return end			--Maximum 255 reference values
 	if ( !istable( ents ) ) then ents = { ents } end	--Support for passing Entity as first argument
-	if ( ents[ 1 ] == nil ) then return end				--Do not pass empty tables
+	if ( ents[ 1 ] == nil ) then return end			--Do not pass empty tables
 	
 	local t = {
 		[ ENTS ] = ents,
 		[ COLOR ] = color,
 		[ MODE ] = mode or OUTLINE_MODE_BOTH
 	}
-	table.insert( List, t )
 	
 	ListSize = ListSize + 1
-	
+	List[ ListSize ] = t
 end
 
 function RenderedEntity()
@@ -46,6 +45,8 @@ function RenderedEntity()
 end
 
 local function Render()
+	local ply = LocalPlayer()
+	local IsLineOfSightClear = ply.IsLineOfSightClear
 
 	local scene = render.GetRenderTarget()
 	render.CopyRenderTargetToTexture( StoreTexture )
@@ -81,7 +82,9 @@ local function Render()
 					
 					if ( !IsValid( ent ) ) then continue end
 					
-					if ( ( mode == OUTLINE_MODE_NOTVISIBLE && LocalPlayer():IsLineOfSightClear( ent ) ) || ( mode == OUTLINE_MODE_VISIBLE && !LocalPlayer():IsLineOfSightClear( ent ) ) ) then continue end
+					if ( ( mode == OUTLINE_MODE_NOTVISIBLE && IsLineOfSightClear( ply, ent ) ) || ( mode == OUTLINE_MODE_VISIBLE && !IsLineOfSightClear( ply, ent ) ) ) then
+						continue
+					end
 					
 					RenderEnt = ent
 					
