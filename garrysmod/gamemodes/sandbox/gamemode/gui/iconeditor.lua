@@ -467,6 +467,7 @@ function PANEL:FillAnimations( ent )
 
 		local combo = self.BodyList:Add( "DComboBox" )
 		combo:Dock( TOP )
+		combo:SetSortItems( false )
 		combo:DockMargin( 0, 0, 0, 3 )
 		newItems = newItems + 1
 
@@ -499,6 +500,7 @@ function PANEL:FillAnimations( ent )
 
 		local combo = self.BodyList:Add( "DComboBox" )
 		combo:Dock( TOP )
+		combo:SetSortItems( false )
 		combo:DockMargin( 0, 0, 0, 3 )
 		newItems = newItems + 1
 
