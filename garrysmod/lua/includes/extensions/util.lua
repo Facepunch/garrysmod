@@ -123,14 +123,13 @@ end
 --
 function util.TypeToString( v )
 
-	local t = type( v )
-	t = t:lower()
+	local iD = TypeID( v )
 
-	if ( t == "vector" ) then
-		return string.format( "%.2f %.2f %.2f", v.x, v.y, v.z )
+	if ( iD == TYPE_VECTOR or iD == TYPE_ANGLE ) then
+		return string.format( "%.2f %.2f %.2f", v:Unpack() )
 	end
 
-	if ( t == "number" ) then
+	if ( iD == TYPE_NUMBER ) then
 		return util.NiceFloat( v )
 	end
 
