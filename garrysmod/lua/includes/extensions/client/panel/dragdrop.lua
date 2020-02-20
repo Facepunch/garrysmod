@@ -255,7 +255,7 @@ hook.Add( "DrawOverlay", "DragNDropPaint", function()
 
 	end
 
-	DisableClipping( true )
+	local wasEnabled = DisableClipping( true )
 
 		local Alpha = 0.7
 		if ( IsValid( dragndrop.m_Hovered ) ) then Alpha = 0.8 end
@@ -283,7 +283,7 @@ hook.Add( "DrawOverlay", "DragNDropPaint", function()
 
 		surface.SetAlphaMultiplier( 1.0 )
 
-	DisableClipping( false )
+	DisableClipping( wasEnabled )
 
 end )
 hook.Add( "Think", "DragNDropThink", dragndrop.Think )
