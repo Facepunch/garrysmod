@@ -845,7 +845,7 @@ L.ev_win_time    = "Os traidores ficaram sem tempo e perderam!"
 --- Awards/highlights
 
 L.aw_sui1_title = "Líder da Seita Suicída"
-L.aw_sui1_text  = "mostrou aos outros suicídas como funciona sendo o primeiro a partir."
+L.aw_sui1_text  = "mostrou aos outros suicídas como as coisas funcionam sendo o primeiro a partir."
 
 L.aw_sui2_title = "Sozinho e Depressivo"
 L.aw_sui2_text  = "foi o único que se matou."
@@ -884,7 +884,7 @@ L.aw_nkt3_title = "Traidor em Série"
 L.aw_nkt3_text  = "acabou com três vidas inocentes de terrorismo hoje."
 
 L.aw_nkt4_title = "Lobo entre Lobos que mais parecem Ovelhas"
-L.aw_nkt4_text  = "comeu inocentes terroristas no jantar. Um jantar de {num} pratos."
+L.aw_nkt4_text  = "comeu terroristas inocentes no jantar. Um jantar de {num} pratos."
 
 L.aw_nkt5_title = "Operação Contra-Terrorista"
 L.aw_nkt5_text  = "é pago por cada assassinato. Agora pode comprar outro iate luxuoso."
@@ -892,7 +892,7 @@ L.aw_nkt5_text  = "é pago por cada assassinato. Agora pode comprar outro iate l
 L.aw_nki1_title = "Traia Isto!"
 L.aw_nki1_text  = "achou um Traidor. Atirou num Traidor. Fácil."
 
-L.aw_nki2_title = "Aplicado ao Esquadrão da Justiça"
+L.aw_nki2_title = "Ministro da Justiça"
 L.aw_nki2_text  = "escoltou dois Traidores para o além."
 
 L.aw_nki3_title = "Os Traidores Sonham com Ovelhas Traidoras?"
@@ -950,7 +950,7 @@ L.aw_dgl2_title = "Mestre da Desert Eagle"
 L.aw_dgl2_text  = "surpreendeu {num} pessoas com sua Desert Eagle."
 
 L.aw_mac1_title = "Rezar e Matar"
-L.aw_mac1_text  = "matou {num} pessoas com a MAC10, mas não irá falar quanta munição precisou."
+L.aw_mac1_text  = "matou {num} pessoas com a MAC10, mas não dirá quanta munição precisou."
 
 L.aw_mac2_title = "Mac com Queijo"
 L.aw_mac2_text  = "imagina o que aconteceria se ele estivesse com duas MAC10 em suas mãos. {num} vezes dois?"
@@ -991,20 +991,20 @@ L.aw_msx1_text  = "levou {num} pessoas com a M16."
 L.aw_msx2_title = "Loucura de Alcance Médio"
 L.aw_msx2_text  = "sabe derrubar uns alvos com a M16, marcando {num} mortes."
 
-L.aw_tkl1_title = "Foi sem querer"
+L.aw_tkl1_title = "Foi Sem Querer"
 L.aw_tkl1_text  = "pressionou o gatilho enquanto mirava em um companheiro."
 
-L.aw_tkl2_title = "Foi sem querer querendo"
+L.aw_tkl2_title = "Foi Sem Querer Querendo"
 L.aw_tkl2_text  = "pensou que matou dois Traidores, mas estava errado sobre ambos."
 
 L.aw_tkl3_title = "Karma-A-Arma-Ae"
 L.aw_tkl3_text  = "não conseguiu parar depois de matar dois companheiros. Três é seu número da sorte."
 
-L.aw_tkl4_title = "Matador de Comparsas"
+L.aw_tkl4_title = "Os Meus Aliados São Os Meus Inimigos"
 L.aw_tkl4_text  = "matou seu time inteiro. OLOKINHO MEU."
 
 L.aw_tkl5_title = "Papéis Diferentes"
-L.aw_tkl5_text  = "estava interpretando como um louco, honesto. E é por isto que ele matou quase todo seu time."
+L.aw_tkl5_text  = "estava interpretando um louco, honesto. E é por isto que ele matou quase todo seu time."
 
 L.aw_tkl6_title = "Anta"
 L.aw_tkl6_text  = "não conseguiu descobrir em que time estava, e matou mais da metade de seus companheiros."
