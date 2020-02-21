@@ -991,11 +991,11 @@ L.aw_msx1_text  = "levou {num} pessoas com a M16."
 L.aw_msx2_title = "Loucura de Alcance Médio"
 L.aw_msx2_text  = "sabe derrubar uns alvos com a M16, marcando {num} mortes."
 
-L.aw_tkl1_title = "Opa"
+L.aw_tkl1_title = "Foi sem querer"
 L.aw_tkl1_text  = "pressionou o gatilho enquanto mirava em um companheiro."
 
-L.aw_tkl2_title = "Opa, de novo"
-L.aw_tkl2_text  = "pensou que matou dois Traidores, mas estava errada em ambos pensamentos."
+L.aw_tkl2_title = "Foi sem querer querendo"
+L.aw_tkl2_text  = "pensou que matou dois Traidores, mas estava errado sobre ambos."
 
 L.aw_tkl3_title = "Karma-A-Arma-Ae"
 L.aw_tkl3_text  = "não conseguiu parar depois de matar dois companheiros. Três é seu número da sorte."
