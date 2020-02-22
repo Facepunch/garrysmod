@@ -790,9 +790,9 @@ L.something      = "alguma coisa"
 
 -- Kill events
 L.ev_blowup      = "{victim} se explodiu"
-L.ev_blowup_trap = "{victim} foi explodido por {trap}"
+L.ev_blowup_trap = "{victim} foi explodido pelo(a) {trap}"
 
-L.ev_tele_self   = "{victim} se telefragou"
+L.ev_tele_self   = "{victim} deu telefrag em si mesmo"
 L.ev_sui         = "{victim} não aguentou a pressão e cometeu suicídio"
 L.ev_sui_using   = "{victim} se matou usando {tool}"
 
@@ -818,7 +818,7 @@ L.ev_club_using  = "{victim} foi espancado até a morte por {attacker} usando {t
 L.ev_slash       = "{victim} foi esfaqueado por {attacker}"
 L.ev_slash_using = "{victim} foi cortado por {attacker} usando {trap}"
 
-L.ev_tele        = "{victim} foi telefragado por {attacker}"
+L.ev_tele        = "{victim} recebeu um telefrag de {attacker}"
 L.ev_tele_using  = "{victim} foi atomizado pelo(a) {trap} colocado(a) por {attacker}"
 
 L.ev_goomba      = "{victim} foi esmagado pelo grande peso de {attacker}"
@@ -839,7 +839,7 @@ L.ev_credit      = "{finder} achou {num} crédito(s) no cadáver de {player}"
 
 L.ev_start       = "A rodada começou"
 L.ev_win_traitor = "Os traidores covardes venceram a rodada!"
-L.ev_win_inno    = "Os adoráveis ​​terroristas inocentes venceram a rodada!"
+L.ev_win_inno    = "Os adoráveis terroristas inocentes venceram a rodada!"
 L.ev_win_time    = "Os traidores ficaram sem tempo e perderam!"
 
 --- Awards/highlights
@@ -1046,7 +1046,7 @@ L.aw_tod2_text  = "morreu no começo da rodada."
 
 --- v23
 L.set_avoid_det     = "Evitar ser selecionado como Detetive"
-L.set_avoid_det_tip = "Habilite isto para solicitar ao servidor para que ele não te escolha como Detetive. Isso não significa que você terá mais chances de ser um Traidor."
+L.set_avoid_det_tip = "Habilite isto para solicitar ao servidor a não te selecionar como Detetive. Isso não significa que você terá mais chances de ser um Traidor."
 
 --- v24
 L.drop_no_ammo = "Munição insuficiente no clipe da sua arma para largar como uma caixa de munição."
