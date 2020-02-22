@@ -1046,7 +1046,7 @@ L.aw_tod2_text  = "morreu no começo da rodada."
 
 --- v23
 L.set_avoid_det     = "Evitar ser selecionado como Detetive"
-L.set_avoid_det_tip = "Habilite isto para solicitar ao servidor a não te selecionar como Detetive. Isso não significa que você terá mais chances de ser um Traidor."
+L.set_avoid_det_tip = "Habilite isto para solicitar ao servidor a não te selecionar como Detetive, se possível. Isso não significa que você terá mais chances de ser um Traidor."
 
 --- v24
 L.drop_no_ammo = "Munição insuficiente no clipe da sua arma para largar como uma caixa de munição."
