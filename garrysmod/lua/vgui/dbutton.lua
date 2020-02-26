@@ -51,6 +51,42 @@ function PANEL:SetImage( img )
 end
 PANEL.SetIcon = PANEL.SetImage
 
+local function ColorIconPaint( self, w, h )
+
+	surface.SetDrawColor( self.m_ColorIcon )
+	surface.DrawRect( 0, 0, w, h )
+
+end
+
+function PANEL:SetColorIcon( color )
+
+	if ( !color ) then
+
+		self.m_ColorIcon = nil
+
+		self:SetImage()
+
+	else
+
+		assert( IsColor( color ), "Expected a color but " .. type(color) .. " was passed" )
+
+		self:SetImage( "icon16/box.png" )
+
+		self.m_Image.m_ColorIcon = self.m_ColorIcon
+		self.m_ColorIcon = self.m_Image.m_ColorIcon
+		
+		self.m_Image.Paint = ColorIconPaint
+
+	end
+
+end
+
+function PANEL:GetColorIcon()
+
+	return self.m_ColorIcon
+
+end
+
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "Button", self, w, h )
