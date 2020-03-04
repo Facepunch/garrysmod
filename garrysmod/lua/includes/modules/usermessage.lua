@@ -12,30 +12,31 @@ local umsg 		= umsg
 --]]
 function SendUserMessage( name, ply, ... )
 
-	umsg.Start( name, ply )
-	
-	for k, v in pairs( {...} ) do
-	
-		local t = type( v )
-		
-		if ( t == "string" ) then
-			umsg.String( v )
-		elseif ( IsEntity( v ) ) then
-			umsg.Entity( v )
-		elseif ( t == "number" ) then
-			umsg.Long( v )
-		elseif ( t == "Vector" ) then
-			umsg.Vector( v )
-		elseif ( t == "Angle" ) then
-			umsg.Angle( v )
-		elseif ( t == "boolean" ) then
-			umsg.Bool( v )
-		else
-			ErrorNoHalt( "SendUserMessage: Couldn't send type "..t.."\n" )
+	if ( SERVER ) then
+		umsg.Start( name, ply )
+
+		for k, v in ipairs( {...} ) do
+			local t = TypeID( v )
+
+			if ( t == TYPE_STRING ) then
+				umsg.String( v )
+			elseif ( t == TYPE_ENTITY ) then
+				umsg.Entity( v )
+			elseif ( t == TYPE_NUMBER ) then
+				umsg.Long( v )
+			elseif ( t == TYPE_VECTOR ) then
+				umsg.Vector( v )
+			elseif ( t == TYPE_ANGLE ) then
+				umsg.Angle( v )
+			elseif ( t == TYPE_BOOL ) then
+				umsg.Bool( v )
+			else
+				ErrorNoHalt( "SendUserMessage: Couldn't send type "..type( v ).."\n" )
+			end
 		end
+
+		umsg.End()
 	end
-	
-	umsg.End()
 
 end
 
@@ -64,11 +65,6 @@ end
 -----------------------------------------------------------]]
 function Hook( messagename, func, ... )
 
-	if ( SERVER ) then
-		umsg.PoolString( messagename )
-		return
-	end
-
 	Hooks[ messagename ] = {}
 
 	Hooks[ messagename ].Function 	= func
@@ -83,12 +79,12 @@ end
 function IncomingMessage( MessageName, msg )
 
 	if ( Hooks[ MessageName ] ) then
-	
+
 		Hooks[ MessageName ].Function( msg, unpack(Hooks[ MessageName ].PreArgs) )
 		return
-	
+
 	end
-	
+
 	Msg("Warning: Unhandled usermessage '"..MessageName.."'\n")
 
 end
