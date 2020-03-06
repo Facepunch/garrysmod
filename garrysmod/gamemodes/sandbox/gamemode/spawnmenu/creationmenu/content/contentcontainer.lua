@@ -81,6 +81,13 @@ function PANEL:Clear()
 
 end
 
+function PANEL:SetTriggerSpawnlistChange( bTrigger )
+
+	self.m_bTriggerSpawnlistChange = bTrigger
+	self.IconList:SetReadOnly( !bTrigger )
+
+end
+
 function PANEL:OnModified()
 
 	if ( !self:GetTriggerSpawnlistChange() ) then return end
@@ -119,6 +126,8 @@ end
 vgui.Register( "ContentContainer", PANEL, "DScrollPanel" )
 
 hook.Add( "SpawnlistOpenGenericMenu", "SpawnlistOpenGenericMenu", function( canvas )
+
+	if ( canvas:GetReadOnly() ) then return end
 
 	local selected = canvas:GetSelectedChildren()
 

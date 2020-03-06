@@ -12,6 +12,29 @@ AccessorFunc( PANEL, "m_Type", "ContentType" )
 AccessorFunc( PANEL, "m_SpawnName", "SpawnName" )
 AccessorFunc( PANEL, "m_NPCWeapon", "NPCWeapon" )
 
+local function IsParentEditable( self )
+	local parent = self:GetParent()
+	while ( IsValid( parent ) ) do
+		if ( parent.GetTriggerSpawnlistChange ) then return parent:GetTriggerSpawnlistChange() end
+		parent = parent:GetParent()
+	end
+
+	return false
+end
+
+local function DoGenericSpawnmenuRightclickMenu( self )
+	local menu = DermaMenu()
+		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( self:GetSpawnName() ) end ):SetIcon( "icon16/page_copy.png" )
+		if ( isfunction( self.OpenMenuExtra ) ) then
+			self:OpenMenuExtra( menu )
+		end
+		if ( IsParentEditable( self ) ) then
+			menu:AddSpacer()
+			menu:AddOption( "#spawnmenu.menu.delete", function() self:Remove() hook.Run( "SpawnlistContentChanged", self ) end ):SetIcon( "icon16/bin_closed.png" )
+		end
+	menu:Open()
+end
+
 function PANEL:Init()
 
 	self:SetPaintBackground( false )
@@ -171,6 +194,7 @@ function PANEL:Copy()
 	copy:CopyBase( self )
 	copy.DoClick = self.DoClick
 	copy.OpenMenu = self.OpenMenu
+	copy.OpenMenuExtra = self.OpenMenuExtra
 
 	return copy
 
@@ -195,16 +219,10 @@ spawnmenu.AddContentType( "entity", function( container, obj )
 		RunConsoleCommand( "gm_spawnsent", obj.spawnname )
 		surface.PlaySound( "ui/buttonclickrelease.wav" )
 	end
-	icon.OpenMenu = function( icon )
-
-		local menu = DermaMenu()
-			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( obj.spawnname ) end ):SetIcon( "icon16/page_copy.png" )
-			menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "0" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
-			menu:AddSpacer()
-			menu:AddOption( "#spawnmenu.menu.delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end ):SetIcon( "icon16/bin_closed.png" )
-		menu:Open()
-
+	icon.OpenMenuExtra = function( self, menu )
+		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "0" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
 	end
+	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )
@@ -231,16 +249,10 @@ spawnmenu.AddContentType( "vehicle", function( container, obj )
 		RunConsoleCommand( "gm_spawnvehicle", obj.spawnname )
 		surface.PlaySound( "ui/buttonclickrelease.wav" )
 	end
-	icon.OpenMenu = function( icon )
-
-		local menu = DermaMenu()
-			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( obj.spawnname ) end ):SetIcon( "icon16/page_copy.png" )
-			menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "1" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
-			menu:AddSpacer()
-			menu:AddOption( "#spawnmenu.menu.delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end ):SetIcon( "icon16/bin_closed.png" )
-		menu:Open()
-
+	icon.OpenMenuExtra = function( self, menu )
+		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "1" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
 	end
+	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )
@@ -270,7 +282,6 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 	icon:SetColor( Color( 244, 164, 96, 255 ) )
 
 	icon.DoClick = function()
-
 		local weapon = table.Random( obj.weapon )
 		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
 
@@ -278,20 +289,16 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 		surface.PlaySound( "ui/buttonclickrelease.wav" )
 	end
 
-	icon.OpenMenu = function( icon )
+	icon.OpenMenuExtra = function( self, menu )
+		local weapon = table.Random( obj.weapon )
+		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
 
-		local menu = DermaMenu()
-
-			local weapon = table.Random( obj.weapon )
-			if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
-
-			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( obj.spawnname ) end ):SetIcon( "icon16/page_copy.png" )
-			menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "2" ) RunConsoleCommand( "creator_name", obj.spawnname ) RunConsoleCommand( "creator_arg", weapon ) end ):SetIcon( "icon16/brick_add.png" )
-			menu:AddSpacer()
-			menu:AddOption( "#spawnmenu.menu.delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end ):SetIcon( "icon16/bin_closed.png" )
-		menu:Open()
-
+		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
+			RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "2" )
+			RunConsoleCommand( "creator_name", obj.spawnname ) RunConsoleCommand( "creator_arg", weapon )
+		end ):SetIcon( "icon16/brick_add.png" )
 	end
+	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )
@@ -328,16 +335,10 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 
 	end
 
-	icon.OpenMenu = function( icon )
-
-		local menu = DermaMenu()
-			menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( obj.spawnname ) end ):SetIcon( "icon16/page_copy.png" )
-			menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "3" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
-			menu:AddSpacer()
-			menu:AddOption( "#spawnmenu.menu.delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end ):SetIcon( "icon16/bin_closed.png" )
-		menu:Open()
-
+	icon.OpenMenuExtra = function( self, menu )
+		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "3" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
 	end
+	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
 
 	if ( IsValid( container ) ) then
 		container:Add( icon )
