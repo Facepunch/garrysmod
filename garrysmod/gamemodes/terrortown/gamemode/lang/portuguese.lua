@@ -246,7 +246,7 @@ L.set_startpopup_tip = "Quando a rodada começa, um pequeno popup aparece na par
 
 L.set_cross_opacity   = "Opacidade do retículo de ferro da mira"
 L.set_cross_disable   = "Desativar a mira completamente"
-L.set_minimal_id      = "Mostrar apenas informações minimalistas sobre outros terroristas ao olhar para eles (sem karma, dicas, etc)"
+L.set_minimal_id      = "Mostrar apenas informações minimalistas sobre outros terroristas ao olhar para eles"
 L.set_healthlabel     = "Mostrar estado físico na barra de vida"
 L.set_lowsights       = "Abaixar arma ao usar retículo de ferro travado"
 L.set_lowsights_tip   = "Habilite esta opção para posicionar sua arma na parte inferior da tela ao usar o retículo de ferro travado. Isto facilitará a visualização de outros terroristas, porém parecerá menos realista."
@@ -262,7 +262,7 @@ L.set_cues            = "Reproduzir um barulho quando uma rodada começar ou ter
 L.set_title_play    = "Configurações de jogabilidade"
 
 L.set_specmode      = "Modo Somente-Espectador (fique sempre espectando)"
-L.set_specmode_tip  = "No modo Somente-Espectador você não renascerá quando uma nova rodada começar, ao invés disso você continuará como Espectador."
+L.set_specmode_tip  = "No Modo Somente-Espectador você não renascerá quando uma nova rodada começar, ao invés disso você continuará como Espectador."
 L.set_mute          = "Emudecer jogadores vivos enquanto morto"
 L.set_mute_tip      = "Habilite para emudecer jogadores vivos enquanto você estiver morto/espectando."
 
