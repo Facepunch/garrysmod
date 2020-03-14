@@ -766,8 +766,8 @@ L.report_save_error  = "Não há nenhum Registro de Acontecimentos a ser salvo."
 L.report_save_result = "O Registro de Acontecimentos foi salvo em:"
 
 -- Big title window
-L.hilite_win_traitors = "OS TRAIDORES VENCERAM"
-L.hilite_win_innocent = "OS INOCENTES VENCERAM"
+L.hilite_win_traitors = "TRAIDORES VENCEM!"
+L.hilite_win_innocent = "INOCENTES VENCEM!"
 
 L.hilite_players1 = "{numplayers} participaram, {numtraitors} eram Traidores"
 L.hilite_players2 = "{numplayers} participaram, um deles era o Traidor"
