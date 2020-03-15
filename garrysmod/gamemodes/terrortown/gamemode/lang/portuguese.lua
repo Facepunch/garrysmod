@@ -262,7 +262,7 @@ L.set_cues            = "Reproduzir um barulho quando uma rodada começar ou ter
 L.set_title_play    = "Configurações de jogabilidade"
 
 L.set_specmode      = "Modo Somente-Espectador (fique sempre espectando)"
-L.set_specmode_tip  = "No Modo Somente-Espectador você não renascerá quando uma nova rodada começar, ao invés disso você continuará como Espectador."
+L.set_specmode_tip  = "No modo Somente-Espectador você não renascerá quando uma nova rodada começar, ao invés disso você continuará como Espectador."
 L.set_mute          = "Emudecer jogadores vivos enquanto morto"
 L.set_mute_tip      = "Habilite para emudecer jogadores vivos enquanto você estiver morto/espectando."
 
@@ -648,7 +648,7 @@ L.name_kick = "Um jogador foi expulso automaticamente por ter alterado seu nome 
 
 L.idle_popup = [[Você esteve inativo por {num} segundos e foi movido para o modo Somente-Espectador como resultado. Neste modo, você não renascerá quando uma nova rodada começar.
 
-Você pode alternar o modo Somente-Espectador a qualquer momento ao pressionar {helpkey} e desmarcando a opção correspondente na aba Configurações. Você pode optar por desabilita-lo agora mesmo.]]
+Você pode alternar o modo Somente-Espectador a qualquer momento ao pressionar {helpkey} e desmarcar a opção correspondente na aba Configurações. Você pode optar por desabilita-lo agora mesmo.]]
 
 L.idle_popup_close = "Fazer nada"
 L.idle_popup_off   = "Desabilitar o modo Somente-Espectador agora"
