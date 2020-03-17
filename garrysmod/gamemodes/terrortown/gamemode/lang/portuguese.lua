@@ -234,7 +234,7 @@ L.help_tut     = "Tutorial"
 L.help_tut_tip = "Como o TTT funciona, em 6 passos"
 
 L.help_settings = "Configurações"
-L.help_settings_tip = "Configurações específicas de cada jogador"
+L.help_settings_tip = "Configurações pessoais"
 
 -- Settings
 L.set_title_gui = "Configurações da interface"
@@ -246,7 +246,7 @@ L.set_startpopup_tip = "Quando a rodada começa, um pequeno popup aparece na par
 
 L.set_cross_opacity   = "Opacidade do retículo de ferro da mira"
 L.set_cross_disable   = "Desativar a mira completamente"
-L.set_minimal_id      = "Mostrar apenas informações minimalistas sobre outros terroristas ao olhar para eles (sem karma, dicas, etc)"
+L.set_minimal_id      = "Mostrar apenas informações minimalistas sobre outros terroristas ao olhar para eles"
 L.set_healthlabel     = "Mostrar estado físico na barra de vida"
 L.set_lowsights       = "Abaixar arma ao usar retículo de ferro travado"
 L.set_lowsights_tip   = "Habilite esta opção para posicionar sua arma na parte inferior da tela ao usar o retículo de ferro travado. Isto facilitará a visualização de outros terroristas, porém parecerá menos realista."
@@ -646,16 +646,16 @@ Pressione {menukey} para pegar seu equipamento especial!]]
 --- Various other text
 L.name_kick = "Um jogador foi expulso automaticamente por ter alterado seu nome durante uma rodada."
 
-L.idle_popup = [[Você esteve inativo por {num} segundos e foi movido para o modo Somente-Espectador como resultado. Nesse modo, você não renascerá quando uma nova rodada começar.
+L.idle_popup = [[Você esteve inativo por {num} segundos e foi movido para o modo Somente-Espectador como resultado. Neste modo, você não renascerá quando uma nova rodada começar.
 
-Você pode alternar o modo Somente-Espectador a qualquer momento ao pressionar {helpkey} e desmarcando a opção correspondente na aba Configurações. Você pode optar por desabilita-lo agora mesmo.]]
+Você pode alternar o modo Somente-Espectador a qualquer momento ao pressionar {helpkey} e desmarcar a opção correspondente na aba Configurações. Você pode optar por desabilita-lo agora mesmo.]]
 
 L.idle_popup_close = "Fazer nada"
 L.idle_popup_off   = "Desabilitar o modo Somente-Espectador agora"
 
 L.idle_warning = "Aviso: você aparenta estar ausente/AFK e será movido para o time dos Espectadores, a não ser que você demonstre alguma atividade!"
 
-L.spec_mode_warning = "Você está no Modo Espectador e não renascerá quando uma nova rodada começar. Para desabilitar esse modo, pressione F1, clique na aba Configurações e desmarque a opção 'modo Somente-Espectador'."
+L.spec_mode_warning = "Você está no Modo Espectador e não renascerá quando uma nova rodada começar. Para desabilitar este modo, pressione F1, clique na aba Configurações e desmarque a opção 'Modo Somente-Espectador'."
 
 
 --- Tips, shown at bottom of screen to spectators
@@ -766,8 +766,8 @@ L.report_save_error  = "Não há nenhum Registro de Acontecimentos a ser salvo."
 L.report_save_result = "O Registro de Acontecimentos foi salvo em:"
 
 -- Big title window
-L.hilite_win_traitors = "OS TRAIDORES VENCERAM"
-L.hilite_win_innocent = "OS INOCENTES VENCERAM"
+L.hilite_win_traitors = "TRAIDORES VENCEM!"
+L.hilite_win_innocent = "INOCENTES VENCEM!"
 
 L.hilite_players1 = "{numplayers} participaram, {numtraitors} eram Traidores"
 L.hilite_players2 = "{numplayers} participaram, um deles era o Traidor"
@@ -865,7 +865,7 @@ L.aw_fst2_text  = "marcou a primeira morte matando um Traidor aliado. Bom trabal
 L.aw_fst3_title = "Primeiro Assassino"
 L.aw_fst3_text  = "foi o primeiro a matar. Pena que era um camarada inocente."
 
-L.aw_fst4_title = "Primeiro Golpe"
+L.aw_fst4_title = "Tiro Certo"
 L.aw_fst4_text  = "foi o inocente que marcou a primeira morte matando um Traidor."
 
 L.aw_all1_title = "Mais Mortal Entre Iguais"
@@ -883,7 +883,7 @@ L.aw_nkt2_text  = "mostrou que a primeira vítima não foi alva de um tiro de so
 L.aw_nkt3_title = "Traidor em Série"
 L.aw_nkt3_text  = "acabou com três vidas inocentes de terrorismo hoje."
 
-L.aw_nkt4_title = "Lobo entre Lobos que mais parecem Ovelhas"
+L.aw_nkt4_title = "O Lobo entre Lobos que mais parecem Ovelhas"
 L.aw_nkt4_text  = "comeu terroristas inocentes no jantar. Um jantar de {num} pratos."
 
 L.aw_nkt5_title = "Operação Contra-Terrorista"
@@ -892,10 +892,10 @@ L.aw_nkt5_text  = "é pago por cada assassinato. Agora pode comprar outro iate l
 L.aw_nki1_title = "Traia Isto!"
 L.aw_nki1_text  = "achou um Traidor. Atirou num Traidor. Fácil."
 
-L.aw_nki2_title = "Ministro da Justiça"
+L.aw_nki2_title = "Japonês da Federal"
 L.aw_nki2_text  = "escoltou dois Traidores para o além."
 
-L.aw_nki3_title = "Os Traidores Sonham com Ovelhas Traidoras?"
+L.aw_nki3_title = "Traidores Contam Carneirinhos?"
 L.aw_nki3_text  = "colocou três Traidores para dormir."
 
 L.aw_nki4_title = "Funcionário de Assuntos Internos"
@@ -905,7 +905,7 @@ L.aw_fal1_title = "Não, Sr. Bond, espero que você caia"
 L.aw_fal1_text  = "empurrou alguém de um lugar alto."
 
 L.aw_fal2_title = "Pavimentado"
-L.aw_fal2_text  = "deixou seu corpo bater no chão depois de cair de uma altitude significativa."
+L.aw_fal2_text  = "deixou seu corpo bater no chão depois de cair de uma altura significativa."
 
 L.aw_fal3_title = "O Meteorito Humano"
 L.aw_fal3_text  = "esmagou alguém caindo sobre este de uma grande altura."
@@ -914,7 +914,7 @@ L.aw_hed1_title = "Eficiência"
 L.aw_hed1_text  = "descobriu a alegria dos tiros na cabeça e atirou em {num} cabeças."
 
 L.aw_hed2_title = "Neurologia"
-L.aw_hed2_text  = "removeu o cérebro de {num} cabeças para um exame preciso."
+L.aw_hed2_text  = "removeu o cérebro de {num} cabeças para um exame minucioso."
 
 L.aw_hed3_title = "A Culpa da Violência é dos Videogames"
 L.aw_hed3_text  = "aplicou seu treinamento de simulação de assassinato e atirou em {num} cabeças de inimigos."
@@ -943,7 +943,7 @@ L.aw_rfl1_text  = "mostrou que tudo que você precisa para cometer {num} assassi
 L.aw_rfl2_title = "Eu Posso Ver Sua Cabeça Daqui"
 L.aw_rfl2_text  = "conhece o rifle que tem. Agora {num} pessoas conhecem seu rifle também."
 
-L.aw_dgl1_title = "É Como um Pequeno Rifle"
+L.aw_dgl1_title = "É Como Um Pequeno Rifle"
 L.aw_dgl1_text  = "está pegando o jeito de jogar com a Desert Eagle e conseguiu matar {num} pessoas."
 
 L.aw_dgl2_title = "Mestre da Desert Eagle"
@@ -961,16 +961,16 @@ L.aw_sip1_text  = "calou a boca de {num} pessoas com sua pistola silenciada."
 L.aw_sip2_title = "Assassino Silencioso"
 L.aw_sip2_text  = "matou {num} pessoas que não ouviram sua própria morte."
 
-L.aw_knf1_title = "Bom Esfaquear Você"
+L.aw_knf1_title = "Foi Bom Esfaquear Você"
 L.aw_knf1_text  = "esfaqueou a cara de alguém pela internet."
 
 L.aw_knf2_title = "Onde Você Conseguiu Isto?"
 L.aw_knf2_text  = "não era Traidor, mas ainda matou alguém com uma faca."
 
-L.aw_knf3_title = "Tal Homem Faca"
+L.aw_knf3_title = "O Tal Homem Faca"
 L.aw_knf3_text  = "achou {num} facas espalhadas, e fez bom uso delas."
 
-L.aw_knf4_title = "Melhor Homem Faca do Mundo"
+L.aw_knf4_title = "O Melhor Homem Faca do Mundo"
 L.aw_knf4_text  = "matou {num} pessoas com uma faca. Não me pergunte como."
 
 L.aw_flg1_title = "Ao Resgate"
@@ -1004,7 +1004,7 @@ L.aw_tkl4_title = "Os Meus Aliados São Os Meus Inimigos"
 L.aw_tkl4_text  = "matou seu time inteiro. OLOKINHO MEU."
 
 L.aw_tkl5_title = "Papéis Diferentes"
-L.aw_tkl5_text  = "estava interpretando um louco, honesto. E é por isto que ele matou quase todo seu time."
+L.aw_tkl5_text  = "estava interpretando um louco honesto. E é por isto que ele matou quase todo seu time."
 
 L.aw_tkl6_title = "Anta"
 L.aw_tkl6_text  = "não conseguiu descobrir em que time estava, e matou mais da metade de seus companheiros."
@@ -1081,4 +1081,4 @@ L.dna_hud_item = "ITEM"
 L.binoc_zoom_level = "NÍVEL"
 L.binoc_body = "CADÁVER DETECTADO"
 
-L.idle_popup_title = "Ausente"
+L.idle_popup_title = "Ausência"
