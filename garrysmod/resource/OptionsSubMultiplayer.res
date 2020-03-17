@@ -53,7 +53,7 @@
 		"fieldName"		"DownloadFilterCheck"
 		"xpos"		"32" // +6
 		"ypos"		"180" // +48
-		"wide"		"250"
+		"wide"		"300" // GMOD: Fit the workshop one
 		"tall"		"24"
 		"autoResize"		"0"
 		"pinCorner"		"0"
