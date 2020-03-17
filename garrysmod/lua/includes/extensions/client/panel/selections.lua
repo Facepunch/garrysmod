@@ -145,10 +145,9 @@ function meta:StartBoxSelection()
 
 	end
 
-
 	self:MouseCapture( true )
 
-	if ( !input.IsShiftDown() ) then
+	if ( !input.IsShiftDown() && !input.IsControlDown() ) then
 		self:UnselectAll()
 	end
 
@@ -239,7 +238,13 @@ function meta:EndBoxSelection()
 	local children = self:GetChildrenInRect( x, y, w, h, true )
 	for k, v in pairs( children ) do
 
-		v:ToggleSelection()
+		-- If player is holding shift, add new planels to existing selections, do not toggle
+		-- This mimics already familiar behavior of Windows Explorer, etc
+		if ( input.IsShiftDown() ) then
+			v:SetSelected( true )
+		else
+			v:ToggleSelection()
+		end
 
 	end
 
