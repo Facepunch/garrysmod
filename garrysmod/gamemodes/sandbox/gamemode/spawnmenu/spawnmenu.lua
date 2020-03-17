@@ -15,14 +15,12 @@ function PANEL:Init()
 	self.HorizontalDivider:Dock( FILL )
 	self.HorizontalDivider:SetLeftWidth( ScrW() ) -- It will be automatically resized by DHorizontalDivider to account for GetRightMin/GetLeftMin
 	self.HorizontalDivider:SetDividerWidth( 6 )
-	--self.HorizontalDivider:SetCookieName( "SpawnMenuDiv" )
+	self.HorizontalDivider:SetCookieName( "SpawnMenuDiv" )
+	self.HorizontalDivider:SetRightMin( 300 )
+	if ( ScrW() >= 1024 ) then self.HorizontalDivider:SetRightMin( 460 ) end
 
 	self.ToolMenu = vgui.Create( "ToolMenu", self.HorizontalDivider )
 	self.HorizontalDivider:SetRight( self.ToolMenu )
-	self.HorizontalDivider:SetRightMin( 390 )
-	if ( ScrW() > 1280 ) then
-		self.HorizontalDivider:SetRightMin( 460 )
-	end
 
 	self.CreateMenu = vgui.Create( "CreationMenu", self.HorizontalDivider )
 	self.HorizontalDivider:SetLeft( self.CreateMenu )
@@ -147,6 +145,12 @@ function PANEL:PerformLayout()
 
 	local MarginX = math.Clamp( ( ScrW() - 1024 ) * spawnmenu_border:GetFloat(), 25, 256 )
 	local MarginY = math.Clamp( ( ScrH() - 768 ) * spawnmenu_border:GetFloat(), 25, 256 )
+
+	-- At this size we can't spare any space for emptiness
+	if ( ScrW() < 1024 || ScrH() < 768 ) then
+		MarginX = 0
+		MarginY = 0
+	end
 
 	self:DockPadding( 0, 0, 0, 0 )
 	self.HorizontalDivider:DockMargin( MarginX, MarginY, MarginX, MarginY )

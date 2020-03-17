@@ -11,9 +11,10 @@ function PANEL:Init()
 	self.HorizontalDivider:Dock( FILL )
 	self.HorizontalDivider:SetLeftWidth( 130 )
 	self.HorizontalDivider:SetLeftMin( 130 )
-	self.HorizontalDivider:SetRightMin( 256 )
+	self.HorizontalDivider:SetRightMin( 200 )
+	if ( ScrW() >= 1024 ) then self.HorizontalDivider:SetRightMin( 256 ) end
 	self.HorizontalDivider:SetDividerWidth( 6 )
-	--self.HorizontalDivider:SetCookieName( "SpawnMenuToolMenuDiv" )
+	self.HorizontalDivider:SetCookieName( "SpawnMenuToolMenuDiv" )
 
 	local leftContainer = vgui.Create( "Panel", self.HorizontalDivider )
 
