@@ -261,6 +261,11 @@ function Call( event_name, gm, ... )
 
 end
 
+--[[---------------------------------------------------------
+    Name: Run
+    Args: string hookName, vararg args
+    Desc: Calls hooks associated with the hook name.
+-----------------------------------------------------------]]
 function Run( name, ... )
 	return Call( name, gmod && gmod.GetGamemode() || nil, ... )
 end
