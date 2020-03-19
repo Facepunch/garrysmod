@@ -101,6 +101,11 @@ do
 		return getmetatable( value ) == functionMeta
 	end
 
+	--[[---------------------------------------------------------
+		Name: Add
+		Args: string hookName, any identifier, function func
+		Desc: Add a hook to listen to the specified event.
+	-----------------------------------------------------------]]
 	function Add( event_name, name, func )
 
 		if ( !isstring( event_name ) ) then return end
@@ -123,6 +128,11 @@ do
 	end
 end
 
+--[[---------------------------------------------------------
+    Name: Remove
+    Args: string hookName, identifier
+    Desc: Removes the hook with the given indentifier.
+-----------------------------------------------------------]]
 function Remove( event_name, name )
 
 	local event = events[ event_name ]
@@ -132,6 +142,10 @@ function Remove( event_name, name )
 
 end
 
+--[[---------------------------------------------------------
+    Name: GetTable
+    Desc: Returns a table of all hooks.
+-----------------------------------------------------------]]
 function GetTable()
 
 	local new_events = {}
@@ -146,6 +160,11 @@ function GetTable()
 
 end
 
+--[[---------------------------------------------------------
+    Name: Call
+    Args: string hookName, table gamemodeTable, vararg args
+    Desc: Calls hooks associated with the hook name.
+-----------------------------------------------------------]]
 function Call( event_name, gm, ... )
 
 	local event = events[ event_name ]
@@ -228,6 +247,10 @@ function Call( event_name, gm, ... )
 		end
 
 	end
+
+	--
+	-- Call the gamemode function
+	--
 
 	if ( !gm ) then return end
 
