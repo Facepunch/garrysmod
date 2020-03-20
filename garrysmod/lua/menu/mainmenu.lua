@@ -178,7 +178,7 @@ function UpdateServerSettings()
 
 		local Settings = util.KeyValuesToTable( settings_file )
 
-		if ( Settings.settings ) then
+		if ( istable( Settings.settings ) ) then
 
 			array.settings = Settings.settings
 
