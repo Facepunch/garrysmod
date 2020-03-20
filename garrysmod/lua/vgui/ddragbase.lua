@@ -112,7 +112,7 @@ function PANEL:DropAction_Normal( Drops, bDoDrop, Command, x, y )
 		if ( v:IsOurChild( self ) ) then continue end
 
 		-- Copy the panel if we are told to from the DermaMenu(), or if we are moving from a read only panel to a not read only one.
-		if ( ( Command && Command == "copy" || v:GetParent():GetReadOnly() && v:GetParent():GetReadOnly() != self:GetReadOnly() ) && v.Copy ) then v = v:Copy() end
+		if ( ( Command && Command == "copy" || ( IsValid( v:GetParent() ) && v:GetParent().GetReadOnly && v:GetParent():GetReadOnly() && v:GetParent():GetReadOnly() != self:GetReadOnly() ) ) && v.Copy ) then v = v:Copy() end
 
 		v = v:OnDrop( self )
 
