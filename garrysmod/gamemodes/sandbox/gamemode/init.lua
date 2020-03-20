@@ -83,14 +83,11 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerShouldTakeDamage( ply, attacker )
 
-	-- The player should always take damage in single player..
-	if ( game.SinglePlayer() ) then return true end
-
 	-- Global godmode, players can't be damaged in any way
 	if ( cvars.Bool( "sbox_godmode", false ) ) then return false end
 
 	-- No player vs player damage
-	if ( attacker:IsValid() && attacker:IsPlayer() ) then
+	if ( attacker:IsValid() && attacker:IsPlayer() && ply != attacker ) then
 		return cvars.Bool( "sbox_playershurtplayers", true )
 	end
 
