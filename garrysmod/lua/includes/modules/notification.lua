@@ -227,8 +227,8 @@ function PANEL:Paint( w, h )
 
 	local shouldDraw = !( LocalPlayer && IsValid( LocalPlayer() ) && IsValid( LocalPlayer():GetActiveWeapon() ) && LocalPlayer():GetActiveWeapon():GetClass() == "gmod_camera" )
 
-	self.Label:SetVisible( shouldDraw )
-	self.Image:SetVisible( shouldDraw )
+	if ( IsValid( self.Label ) ) then self.Label:SetVisible( shouldDraw ) end
+	if ( IsValid( self.Image ) ) then self.Image:SetVisible( shouldDraw ) end
 
 	if ( !shouldDraw ) then return end
 
