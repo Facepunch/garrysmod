@@ -54,6 +54,14 @@ end
 include( "util/color.lua" )
 
 --[[---------------------------------------------------------
+	Returns if the passed object is a color.
+	This is necessary since the engine `IsColor` function only checks for color metatables - which are not used for regular Lua color types.
+-----------------------------------------------------------]]
+function iscolor(input)
+	return istable(input) and isnumber(input.a) and isnumber(input.g) and isnumber(input.b) and (input.a and isnumber(input.a) or input.a == nil)
+end
+
+--[[---------------------------------------------------------
 	Prints a table to the console
 -----------------------------------------------------------]]
 function PrintTable( t, indent, done )
