@@ -132,7 +132,7 @@ hook.Add( "SpawnlistOpenGenericMenu", "SpawnlistOpenGenericMenu", function( canv
 	local selected = canvas:GetSelectedChildren()
 
 	local menu = DermaMenu()
-	menu:AddOption( "Delete", function()
+	menu:AddOption( "#spawnmenu.menu.delete", function()
 
 		for k, v in pairs( selected ) do
 			v:Remove()
