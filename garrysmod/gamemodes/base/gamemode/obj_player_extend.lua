@@ -172,18 +172,18 @@ end
 --[[---------------------------------------------------------
 	Player Eye Trace
 -----------------------------------------------------------]]
-function meta:GetEyeTrace()
+function meta:GetEyeTrace( skipcache )
 
 	if ( CLIENT ) then
-		local curtime = CurTime()
+		local framenum = FrameNumber()
 
 		-- Cache the trace results for the current frame, unless we're serverside
 		-- in which case it wouldn't play well with lag compensation at all
-		if ( self.LastPlayerTrace == curtime ) then
+		if ( not skipcache and self.LastPlayerTrace == framenum and istable( self.PlayerTrace ) ) then
 			return self.PlayerTrace
 		end
 
-		self.LastPlayerTrace = curtime
+		self.LastPlayerTrace = framenum
 	end
 
 	local tr = util.TraceLine( util.GetPlayerTrace( self ) )
@@ -197,16 +197,16 @@ end
 	GetEyeTraceIgnoreCursor
 	Like GetEyeTrace but doesn't use the cursor aim vector..
 -----------------------------------------------------------]]
-function meta:GetEyeTraceNoCursor()
+function meta:GetEyeTraceNoCursor( skipcache )
 
 	if ( CLIENT ) then
-		local curtime = CurTime()
+		local framenum = FrameNumber()
 
-		if ( self.LastPlayerAimTrace == curtime ) then
+		if ( not skipcache and self.LastPlayerAimTrace == framenum and istable( self.PlayerAimTrace ) ) then
 			return self.PlayerAimTrace
 		end
 
-		self.LastPlayertAimTrace = curtime
+		self.LastPlayerAimTrace = framenum
 	end
 
 	local tr = util.TraceLine( util.GetPlayerTrace( self, self:EyeAngles():Forward() ) )
