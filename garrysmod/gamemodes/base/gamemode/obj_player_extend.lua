@@ -173,13 +173,12 @@ end
 	Player Eye Trace
 -----------------------------------------------------------]]
 function meta:GetEyeTrace( skipcache )
-
 	if ( CLIENT ) then
 		local framenum = FrameNumber()
 
 		-- Cache the trace results for the current frame, unless we're serverside
 		-- in which case it wouldn't play well with lag compensation at all
-		if ( not skipcache and self.LastPlayerTrace == framenum and istable( self.PlayerTrace ) ) then
+		if ( !skipcache && self.LastPlayerTrace == framenum && istable( self.PlayerTrace ) ) then
 			return self.PlayerTrace
 		end
 
@@ -190,7 +189,6 @@ function meta:GetEyeTrace( skipcache )
 	self.PlayerTrace = tr
 
 	return tr
-
 end
 
 --[[---------------------------------------------------------
@@ -198,11 +196,10 @@ end
 	Like GetEyeTrace but doesn't use the cursor aim vector..
 -----------------------------------------------------------]]
 function meta:GetEyeTraceNoCursor( skipcache )
-
 	if ( CLIENT ) then
 		local framenum = FrameNumber()
 
-		if ( not skipcache and self.LastPlayerAimTrace == framenum and istable( self.PlayerAimTrace ) ) then
+		if ( !skipcache && self.LastPlayerAimTrace == framenum && istable( self.PlayerAimTrace ) ) then
 			return self.PlayerAimTrace
 		end
 
@@ -213,5 +210,4 @@ function meta:GetEyeTraceNoCursor( skipcache )
 	self.PlayerAimTrace = tr
 
 	return tr
-
 end
