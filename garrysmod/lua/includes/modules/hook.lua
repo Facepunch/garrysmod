@@ -1,10 +1,7 @@
-local pairs = pairs
-local isstring = isstring
-local isfunction = isfunction
-
-local function getGAMEMODE()
-	return GAMEMODE
-end
+local gmod			= gmod
+local pairs 		= pairs
+local isstring 		= isstring
+local isfunction 	= isfunction
 
 module("hook")
 
@@ -206,5 +203,5 @@ end
 	Desc: Calls hooks associated with the hook name.
 -----------------------------------------------------------]]
 function Run( name, ... )
-	return Call( name, getGAMEMODE(), ... )
+	return Call( name, gmod.GetGamemode(), ... )
 end
