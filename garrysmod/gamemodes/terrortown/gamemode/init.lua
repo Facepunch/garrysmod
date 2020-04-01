@@ -837,11 +837,7 @@ end
 
 function SelectRoles()
    local choices = {}
-   local prev_roles = {
-      [ROLE_INNOCENT] = {},
-      [ROLE_TRAITOR] = {},
-      [ROLE_DETECTIVE] = {}
-   };
+   local prev_roles = {}
 
    if not GAMEMODE.LastRole then GAMEMODE.LastRole = {} end
 
@@ -853,10 +849,8 @@ function SelectRoles()
          -- save previous role and sign up as possible traitor/detective
 
          local r = GAMEMODE.LastRole[v:SteamID()] or v:GetRole() or ROLE_INNOCENT
-
-         table.insert(prev_roles[r], v)
-
-         table.insert(choices, v)
+		 prev_roles[v] = r
+		 choices[#choices + 1] = v
       end
 
       v:SetRole(ROLE_INNOCENT)
@@ -881,7 +875,7 @@ function SelectRoles()
       -- make this guy traitor if he was not a traitor last time, or if he makes
       -- a roll
       if IsValid(pply) and
-         ((not table.HasValue(prev_roles[ROLE_TRAITOR], pply)) or (math.random(1, 3) == 2)) then
+         ((prev_roles[pply] ~= ROLE_TRAITOR) or (math.random(1, 3) == 2)) then
          pply:SetRole(ROLE_TRAITOR)
 
          table.remove(choices, pick)
@@ -913,11 +907,7 @@ function SelectRoles()
       local pply = choices[pick]
 
       -- we are less likely to be a detective unless we were innocent last round
-      if (IsValid(pply) and
-          ((pply:GetBaseKarma() > min_karma and
-           table.HasValue(prev_roles[ROLE_INNOCENT], pply)) or
-           math.random(1,3) == 2)) then
-
+      if (IsValid(pply) and (pply:GetBaseKarma() > min_karma and prev_roles[pply] == ROLE_INNOCENT) or math.random(1,3) == 2) then
          -- if a player has specified he does not want to be detective, we skip
          -- him here (he might still get it if we don't have enough
          -- alternatives)
