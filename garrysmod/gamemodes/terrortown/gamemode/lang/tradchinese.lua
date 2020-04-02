@@ -271,7 +271,7 @@ L.set_title_lang    = "語言設定 "
 
 -- It may be best to leave this next one english, so english players can always
 -- find the language setting even if it's set to a language they don't know.
-L.set_lang          = "Select language:"
+L.set_lang          = "選擇語言 (Select language)："
 
 
 --- Weapons and equipment, HUD and messages
