@@ -230,7 +230,7 @@ if ( CLIENT ) then
 		icon.OpenMenu = function( icon )
 
 			local menu = DermaMenu()
-				menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
+				menu:AddOption( "#spawnmenu.menu.delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
 			menu:Open()
 
 		end
