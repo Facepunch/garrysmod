@@ -76,8 +76,11 @@ function PANEL:DoRightClick()
 end
 
 function PANEL:OpenMenu()
+	-- Do not allow removal from read only panels
+	if ( IsValid( self:GetParent() ) && self:GetParent().GetReadOnly && self:GetParent():GetReadOnly() ) then return end
+
 	local menu = DermaMenu()
-	menu:AddOption( "#spawnmenu.menu.delete", function() self:Remove() hook.Run( "SpawnlistContentChanged", self ) end ):SetIcon( "icon16/bin_closed.png" )
+	menu:AddOption( "#spawnmenu.menu.delete", function() self:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/bin_closed.png" )
 	menu:Open()
 end
 

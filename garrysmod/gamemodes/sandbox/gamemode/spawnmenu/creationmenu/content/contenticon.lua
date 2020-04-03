@@ -12,25 +12,16 @@ AccessorFunc( PANEL, "m_Type", "ContentType" )
 AccessorFunc( PANEL, "m_SpawnName", "SpawnName" )
 AccessorFunc( PANEL, "m_NPCWeapon", "NPCWeapon" )
 
-local function IsParentEditable( self )
-	local parent = self:GetParent()
-	while ( IsValid( parent ) ) do
-		if ( parent.GetTriggerSpawnlistChange ) then return parent:GetTriggerSpawnlistChange() end
-		parent = parent:GetParent()
-	end
-
-	return false
-end
-
 local function DoGenericSpawnmenuRightclickMenu( self )
 	local menu = DermaMenu()
 		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( self:GetSpawnName() ) end ):SetIcon( "icon16/page_copy.png" )
 		if ( isfunction( self.OpenMenuExtra ) ) then
 			self:OpenMenuExtra( menu )
 		end
-		if ( IsParentEditable( self ) ) then
+
+		if ( !IsValid( self:GetParent() ) || !self:GetParent().GetReadOnly || !self:GetParent():GetReadOnly() ) then
 			menu:AddSpacer()
-			menu:AddOption( "#spawnmenu.menu.delete", function() self:Remove() hook.Run( "SpawnlistContentChanged", self ) end ):SetIcon( "icon16/bin_closed.png" )
+			menu:AddOption( "#spawnmenu.menu.delete", function() self:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/bin_closed.png" )
 		end
 	menu:Open()
 end
