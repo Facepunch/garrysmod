@@ -269,7 +269,9 @@ L.set_mute_tip      = "Sätt på detta så hörs inte levande spelare när du ä
 
 L.set_title_lang    = "Språkinställningar"
 
-L.set_lang          = "Välj språk:"
+-- It may be best to leave this next one english, so english players can always
+-- find the language setting even if it's set to a language they don't know.
+L.set_lang          = "Välj språk (Select language):"
 
 
 --- Weapons and equipment, HUD and messages
