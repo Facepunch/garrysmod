@@ -150,6 +150,12 @@ local function UpdateMaps()
 	MapNames[ "zps_" ] = "Zombie Panic! Source"
 	MapNames[ "zph_" ] = "Zombie Panic! Source"
 
+	MapNames[ "fof_" ] = "Fistful of Frags"
+	MapNames[ "cm_" ] = "Fistful of Frags"
+	MapNames[ "gt_" ] = "Fistful of Frags"
+	MapNames[ "tp_" ] = "Fistful of Frags"
+	MapNames[ "vs_" ] = "Fistful of Frags"
+
 	MapNames[ "bhop_" ] = "Bunny Hop"
 	MapNames[ "cinema_" ] = "Cinema"
 	MapNames[ "theater_" ] = "Cinema"
