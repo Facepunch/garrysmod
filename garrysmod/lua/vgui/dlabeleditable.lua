@@ -13,6 +13,8 @@ end
 
 function PANEL:DoDoubleClick()
 
+	if ( !self:IsEnabled() ) then return end
+
 	local TextEdit = vgui.Create( "DTextEntry", self )
 	TextEdit:Dock( FILL )
 	TextEdit:SetText( self:GetText() )

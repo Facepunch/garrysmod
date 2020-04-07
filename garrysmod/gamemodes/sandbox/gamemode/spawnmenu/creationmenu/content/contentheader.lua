@@ -66,6 +66,13 @@ function PANEL:OnLabelTextChanged( txt )
 
 end
 
+function PANEL:IsEnabled()
+
+	-- This is a hack!
+	return !IsValid( self:GetParent() ) || !self:GetParent().GetReadOnly || !self:GetParent():GetReadOnly()
+
+end
+
 function PANEL:DoRightClick()
 	local pCanvas = self:GetSelectionCanvas()
 	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 && self:IsSelected() ) then
