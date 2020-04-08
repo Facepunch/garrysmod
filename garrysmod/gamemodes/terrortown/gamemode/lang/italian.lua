@@ -307,7 +307,7 @@ L.set_title_lang = "Impostazioni lingua"
 -- trovare l'impostazione della lingua anche se è una lingua che non conoscono.
 -- It may be best to leave this next one english, so english players can always
 -- find the language setting even if it's set to a language they don't know.
-L.set_lang = "Language selection:"
+L.set_lang = "Selezionare lingua (Select language):"
 
 -- Armi ed equipaggiamento, HUD e messaggi
 -- Weapons and equipment, HUD and messages
