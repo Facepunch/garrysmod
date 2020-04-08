@@ -271,7 +271,7 @@ L.set_title_lang    = "Configurações de idioma"
 
 -- It may be best to leave this next one english, so english players can always
 -- find the language setting even if it's set to a language they don't know.
-L.set_lang          = "Selecione o idioma (Select language):"
+L.set_lang          = "Selecionar idioma (Select language):"
 
 
 --- Weapons and equipment, HUD and messages
@@ -1046,7 +1046,7 @@ L.aw_tod2_text  = "morreu no começo da rodada."
 
 --- v23
 L.set_avoid_det     = "Evitar ser selecionado como Detetive"
-L.set_avoid_det_tip = "Habilite isto para solicitar ao servidor a não te selecionar como Detetive, se possível. Isso não significa que você terá mais chances de ser um Traidor."
+L.set_avoid_det_tip = "Habilite isto para solicitar ao servidor a não te selecionar como Detetive, se possível. Isto não significa que você terá mais chances de ser um Traidor."
 
 --- v24
 L.drop_no_ammo = "Munição insuficiente no clipe da sua arma para largar como uma caixa de munição."
