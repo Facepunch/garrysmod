@@ -51,7 +51,7 @@ L.body_found = "{finder} ha trovato il corpo di {victim}. {role}"
 
 -- Il {role} in body_found sarà sostituito con una di queste stringhe:
 -- The {role} in body_found will be replaced by one of the following:
-L.body_found_t= "Era un Traditore!"
+L.body_found_t = "Era un Traditore!"
 L.body_found_d = "Era un Detective."
 L.body_found_i = "Era un Innocente."
 
