@@ -199,7 +199,7 @@ search.AddProvider( function( str )
 
 		table.insert( list, entry )
 
-		if ( #list >= 32 ) then break end
+		if ( #list >= GetConVarNumber( "sbox_search_maxresults" ) / 32 ) then break end
 
 	end
 
