@@ -1,7 +1,3 @@
--- Translated by Alessandro Levante (AL24)
--- Tradotto da Alessandro Levante (AL24)
-
--- Stinghe in italiano
 -- Italian language strings
 
 local L = LANG.CreateLanguage("Italiano")
