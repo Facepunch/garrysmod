@@ -12,10 +12,6 @@ L.last_words = "Ultime parole"
 L.terrorists = "Terroristi"
 L.spectators = "Spettatori"
 
-L.noteam = "NO TEAM"
-L.innocenti = "TEAM Innocenti"
-L.traditori = "TEAM Traditori"
-
 -- Messaggi per lo stato del round
 -- Round status messages
 L.round_minplayers = "Non ci sono abbastanza giocatore per cominciare un nuovo round..."
