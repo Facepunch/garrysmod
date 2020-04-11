@@ -127,6 +127,34 @@ function net.ReadTable()
 
 end
 
+function net.WriteArray(tab)
+
+	for k, v in ipairs(tab) do
+
+		net.WriteType(v)
+
+	end
+
+	-- End of table
+	net.WriteType(nil)
+
+end
+
+function net.ReadArray()
+
+	local tab, n = {}, 1
+
+	while true do
+
+		local v = net.ReadType()
+		if (v == nil) then return tab end
+
+		tab[n] = v
+		n = n + 1
+
+	end
+end
+
 net.WriteVars = 
 {
 	[TYPE_NIL]			= function ( t, v )	net.WriteUInt( t, 8 )								end,
