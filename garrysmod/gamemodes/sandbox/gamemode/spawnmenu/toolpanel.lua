@@ -25,11 +25,13 @@ function PANEL:Init()
 	self.SearchBar:Dock( TOP )
 	self.SearchBar:SetUpdateOnType( true )
 	self.SearchBar.OnValueChange = function( s, text )
+		local text = text:Trim():lower()
+
 		for id, category in pairs( self.List.pnlCanvas:GetChildren() ) do
 			local count = 0
 			local category_matched = false
 
-			if ( string.find( category.Header:GetText():lower(), text:lower(), nil, true ) ) then
+			if ( string.find( category.Header:GetText():lower(), text, nil, true ) ) then
 				category_matched = true
 			end
 
@@ -40,7 +42,7 @@ function PANEL:Init()
 				if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
 				str = language.GetPhrase( str )
 
-				if ( !category_matched && !string.find( str:lower(), text:lower(), nil, true ) ) then
+				if ( !category_matched && !string.find( str:lower(), text, nil, true ) ) then
 					item:SetVisible( false )
 				else
 					item:SetVisible( true )
@@ -53,6 +55,15 @@ function PANEL:Init()
 				category:SetVisible( false )
 			else
 				category:SetVisible( true )
+
+				 -- Make sure the category is expanded, but restore the state when we quit searching
+				if ( text == "" ) then
+					category:SetExpanded( category._preSearchState )
+					category._preSearchState = nil
+				else
+					if ( category._preSearchState == nil ) then category._preSearchState = category:GetExpanded() end
+					category:SetExpanded( true )
+				end
 			end
 			category:InvalidateLayout()
 		end
