@@ -35,25 +35,35 @@ local function GarbageCollectConstraintSystems()
 
 			local Count = 0
 			local Constraints = {}
+			local UsedEntitiesNew = {}
 			for id, ent in pairs( System.UsedEntities ) do
-				if ( !IsValid( ent ) ) then continue end
-				Count = Count + 1
 
-				-- Dirtily calculate hpw many constraints this system has
+				-- Note: this will not let the world entity pass, but we don't want that anyway
+				if ( !IsValid( ent ) ) then continue end
+
+				Count = Count + 1
+				UsedEntitiesNew[ ent ] = true
+
+				-- Dirtily calculate how many constraints this system has
 				for i, c in pairs( ent.Constraints or {} ) do
 					if ( IsValid( c ) ) then Constraints[ c ] = true end
 				end
 
 			end
 
-			System.constraints = #table.GetKeys( Constraints )
-
+			-- TODO: Delete if System.constraints == 0?
 			if ( Count == 0 ) then
 
 				System:Remove()
 				ConstraintSystems[ k ] = nil
 
+			else
+
+				System.constraints = #table.GetKeys( Constraints )
+				System.UsedEntities = table.GetKeys( UsedEntitiesNew ) -- Maintain format for addon usage
+
 			end
+
 
 		end
 
@@ -127,9 +137,10 @@ local function FindOrCreateConstraintSystem( Ent1, Ent2 )
 	Ent1.ConstraintSystem = System
 	Ent2.ConstraintSystem = System
 
+	-- This is a bit slow and ugly, but ensure no duplicates
 	System.UsedEntities = System.UsedEntities or {}
-	table.insert( System.UsedEntities, Ent1 )
-	table.insert( System.UsedEntities, Ent2 )
+	if ( !table.HasValue( System.UsedEntities, Ent1 ) ) then table.insert( System.UsedEntities, Ent1 ) end
+	if ( !table.HasValue( System.UsedEntities, Ent2 ) ) then table.insert( System.UsedEntities, Ent2 ) end
 
 	local ConstraintNum = System:GetVar( "constraints", 0 )
 	System:SetVar( "constraints", ConstraintNum + 1 )
