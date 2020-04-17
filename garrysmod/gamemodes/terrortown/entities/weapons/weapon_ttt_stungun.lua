@@ -26,7 +26,7 @@ SWEP.CanBuy                = {ROLE_DETECTIVE}
 SWEP.LimitedStock          = false
 SWEP.AmmoEnt               = "item_ammo_smg1_ttt"
 
-SWEP.Primary.Damage        = 18 --default 9
+SWEP.Primary.Damage        = 16 --default 9
 SWEP.Primary.Delay         = 0.12 --default 0.1
 SWEP.Primary.Cone          = 0.02
 SWEP.Primary.ClipSize      = 25 --default 30
@@ -80,7 +80,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
                               if SERVER and ent:IsPlayer() then
                                  local eyeang = ent:EyeAngles()
 
-                                 local j = 10
+                                 local j = 5 --default 10
                                  eyeang.pitch = math.Clamp(eyeang.pitch + math.Rand(-j, j), -90, 90)
                                  eyeang.yaw = math.Clamp(eyeang.yaw + math.Rand(-j, j), -90, 90)
                                  ent:SetEyeAngles(eyeang)
