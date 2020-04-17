@@ -42,7 +42,7 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 	self.GhostEntity:SetSolid( SOLID_VPHYSICS )
 	self.GhostEntity:SetMoveType( MOVETYPE_NONE )
 	self.GhostEntity:SetNotSolid( true )
-	self.GhostEntity:SetRenderMode( RENDERMODE_TRANSALPHA )
+	self.GhostEntity:SetRenderMode( RENDERMODE_TRANSCOLOR )
 	self.GhostEntity:SetColor( Color( 255, 255, 255, 150 ) )
 
 end

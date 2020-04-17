@@ -33,6 +33,7 @@
 			"help"		"If enabled, all players will be invincible"
 			"type"		"CheckBox"
 			"default"	"0"
+			"singleplayer" "1"
 		}
 
 		4

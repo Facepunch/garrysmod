@@ -30,7 +30,7 @@ Dedicated server (srcds) preparation
 ====================================
 The gamemode _requires_ CS:S content to be installed. The Garry's Mod wiki
 has some information on this here:
-* http://wiki.garrysmod.com/page/Mounting_Content_on_a_DS
+* https://wiki.facepunch.com/gmod/Mounting_Content_on_a_Dedicated_Server
   
 If you want TTT to automatically switch maps every few rounds, place a
 mapcycle.txt in the "\garrysmod\" directory. It should contain a list of map

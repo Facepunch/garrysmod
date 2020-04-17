@@ -115,7 +115,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 		end
 
-		self:FillFileInfo( data )
+		self:FillFileInfo( data, isUGC )
 
 	end
 
@@ -126,7 +126,7 @@ function WorkshopFileBase( namespace, requiredtags )
 		end )
 	end
 
-	function ret:FillFileInfo( results )
+	function ret:FillFileInfo( results, isUGC )
 
 		--
 		-- File info failed..
@@ -184,7 +184,17 @@ function WorkshopFileBase( namespace, requiredtags )
 
 				steamworks.FileInfo( v, function( result )
 
-					if ( !result && result.error != nil ) then return end
+					if ( !result || result.error != nil ) then
+						-- Try to get the title from the GetAddons(), this probably could be done more efficiently
+						local title = "Offline addon"
+						for id, t in pairs( isUGC && engine.GetUserContent() || engine.GetAddons() ) do
+							if ( tonumber( v ) == tonumber( t.wsid ) ) then title = t.title break end
+						end
+
+						local json = util.TableToJSON( { title = title, description = "Failed to get addon info, error code " .. ( result && result.error || "unknown" ) }, false )
+						self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. json .. " )" )
+						return
+					end
 
 					if ( result.description ) then
 						result.description = string.gsub( result.description, "%[img%]([^%]]*)%[/img%]", "" ) -- Gotta remove inner content of img tags
@@ -208,7 +218,7 @@ function WorkshopFileBase( namespace, requiredtags )
 					--
 					-- Now we have the preview id - get the preview image!
 					--
-					if ( !PreviewCache[ v ] ) then
+					if ( !PreviewCache[ v ] && result.previewid ) then
 
 						steamworks.Download( result.previewid, false, function( name )
 

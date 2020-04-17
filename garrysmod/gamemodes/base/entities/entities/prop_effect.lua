@@ -48,7 +48,9 @@ function ENT:Initialize()
 
 	else
 
+		-- So addons can override this
 		self.GripMaterial = Material( "sprites/grip" )
+		self.GripMaterialHover = Material( "sprites/grip_hover" )
 
 		-- Get the attached entity so that clientside functions like properties can interact with it
 		local tab = ents.FindByClassAndParent( "prop_dynamic", self )
@@ -76,9 +78,43 @@ function ENT:Draw()
 		return
 	end
 
-	render.SetMaterial( self.GripMaterial )
+	if ( self:BeingLookedAtByLocalPlayer() ) then
+		render.SetMaterial( self.GripMaterialHover )
+	else
+		render.SetMaterial( self.GripMaterial )
+	end
+
 	render.DrawSprite( self:GetPos(), 16, 16, color_white )
 
+end
+
+-- Copied from base_gmodentity.lua
+ENT.MaxWorldTipDistance = 256
+function ENT:BeingLookedAtByLocalPlayer()
+	local ply = LocalPlayer()
+	if ( !IsValid( ply ) ) then return false end
+
+	local view = ply:GetViewEntity()
+	local dist = self.MaxWorldTipDistance
+	dist = dist * dist
+
+	-- If we're spectating a player, perform an eye trace
+	if ( view:IsPlayer() ) then
+		return view:EyePos():DistToSqr( self:GetPos() ) <= dist && view:GetEyeTrace().Entity == self
+	end
+
+	-- If we're not spectating a player, perform a manual trace from the entity's position
+	local pos = view:GetPos()
+
+	if ( pos:DistToSqr( self:GetPos() ) <= dist ) then
+		return util.TraceLine( {
+			start = pos,
+			endpos = pos + ( view:GetAngles():Forward() * dist ),
+			filter = view
+		} ).Entity == self
+	end
+
+	return false
 end
 
 function ENT:PhysicsUpdate( physobj )

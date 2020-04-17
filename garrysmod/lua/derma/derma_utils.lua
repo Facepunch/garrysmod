@@ -14,7 +14,7 @@ function Derma_DrawBackgroundBlur( panel, starttime )
 
 	local x, y = panel:LocalToScreen( 0, 0 )
 
-	DisableClipping( true )
+	local wasEnabled = DisableClipping( true )
 
 	-- Menu cannot do blur
 	if ( !MENU_DLL ) then
@@ -32,7 +32,7 @@ function Derma_DrawBackgroundBlur( panel, starttime )
 	surface.SetDrawColor( 10, 10, 10, 200 * Fraction )
 	surface.DrawRect( x * -1, y * -1, ScrW(), ScrH() )
 
-	DisableClipping( false )
+	DisableClipping( wasEnabled )
 
 end
 

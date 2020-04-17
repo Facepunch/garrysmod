@@ -106,44 +106,30 @@ function plymeta:HasEquipment()
    return self:HasEquipmentItem() or self:HasEquipmentWeapon()
 end
 
-if CLIENT then
-   -- Server has this, but isn't shared for some reason
-   function plymeta:HasWeapon(cls)
-      for _, wep in ipairs(self:GetWeapons()) do
-         if IsValid(wep) and wep:GetClass() == cls then
-            return true
-         end
-      end
-
-      return false
-   end
-   local ply = LocalPlayer
-   local gmod_GetWeapons = plymeta.GetWeapons
-   function plymeta:GetWeapons()
-      if self != ply() then
-         return {}
-      else
-         return gmod_GetWeapons(self)
-      end
-   end
-end
-
 -- Override GetEyeTrace for an optional trace mask param. Technically traces
 -- like GetEyeTraceNoCursor but who wants to type that all the time, and we
 -- never use cursor tracing anyway.
 function plymeta:GetEyeTrace(mask)
-   if self.LastPlayerTraceMask == mask and self.LastPlayerTrace == CurTime() then
-      return self.PlayerTrace
+   mask = mask or MASK_SOLID
+
+   if CLIENT then
+      local framenum = FrameNumber()
+      
+      if self.LastPlayerTrace == framenum and self.LastPlayerTraceMask == mask then
+         return self.PlayerTrace
+      end
+
+      self.LastPlayerTrace = framenum
+      self.LastPlayerTraceMask = mask
    end
 
    local tr = util.GetPlayerTrace(self)
    tr.mask = mask
 
-   self.PlayerTrace = util.TraceLine(tr)
-   self.LastPlayerTrace = CurTime()
-   self.LastPlayerTraceMask = mask
+   tr = util.TraceLine(tr)
+   self.PlayerTrace = tr
 
-   return self.PlayerTrace
+   return tr
 end
 
 

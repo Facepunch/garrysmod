@@ -24,7 +24,7 @@ end
 function PANEL:DoRightClick()
 
 	local pCanvas = self:GetSelectionCanvas()
-	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 ) then
+	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 && self:IsSelected() ) then
 		return hook.Run( "SpawnlistOpenGenericMenu", pCanvas )
 	end
 
@@ -195,7 +195,7 @@ spawnmenu.AddContentType( "model", function( container, obj )
 	local icon = vgui.Create( "SpawnIcon", container )
 
 	if ( obj.body ) then
-		obj.body = string.Trim( tostring(obj.body), "B" )
+		obj.body = string.Trim( tostring( obj.body ), "B" )
 	end
 
 	if ( obj.wide ) then
@@ -233,6 +233,9 @@ spawnmenu.AddContentType( "model", function( container, obj )
 			editor:Center()
 
 		end ):SetIcon( "icon16/pencil.png" )
+
+		-- Do not allow removal/size changes from read only panels
+		if ( IsValid( icon:GetParent() ) && icon:GetParent().GetReadOnly && icon:GetParent():GetReadOnly() ) then menu:Open() return end
 
 		local ChangeIconSize = function( w, h )
 

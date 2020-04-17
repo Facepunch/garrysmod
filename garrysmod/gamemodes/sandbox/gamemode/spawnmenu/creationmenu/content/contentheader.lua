@@ -66,9 +66,16 @@ function PANEL:OnLabelTextChanged( txt )
 
 end
 
+function PANEL:IsEnabled()
+
+	-- This is a hack!
+	return !IsValid( self:GetParent() ) || !self:GetParent().GetReadOnly || !self:GetParent():GetReadOnly()
+
+end
+
 function PANEL:DoRightClick()
 	local pCanvas = self:GetSelectionCanvas()
-	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 ) then
+	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 && self:IsSelected() ) then
 		return hook.Run( "SpawnlistOpenGenericMenu", pCanvas )
 	end
 
@@ -76,8 +83,11 @@ function PANEL:DoRightClick()
 end
 
 function PANEL:OpenMenu()
+	-- Do not allow removal from read only panels
+	if ( IsValid( self:GetParent() ) && self:GetParent().GetReadOnly && self:GetParent():GetReadOnly() ) then return end
+
 	local menu = DermaMenu()
-	menu:AddOption( "Delete", function() self:Remove() hook.Run( "SpawnlistContentChanged", self ) end )
+	menu:AddOption( "#spawnmenu.menu.delete", function() self:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/bin_closed.png" )
 	menu:Open()
 end
 

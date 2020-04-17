@@ -102,6 +102,9 @@ local function SandboxSettings( pnl )
 
 	pnl:AddControl( "CheckBox", { Label = "#enable_weapons", Command = "sbox_weapons" } )
 	pnl:AddControl( "CheckBox", { Label = "#allow_god_mode", Command = "sbox_godmode" } )
+
+	pnl:ControlHelp( "#utilities.mp_only" ):DockMargin( 16, 16, 16, 4 )
+
 	pnl:AddControl( "CheckBox", { Label = "#players_damage_players", Command = "sbox_playershurtplayers" } )
 	pnl:AddControl( "CheckBox", { Label = "#allow_noclip", Command = "sbox_noclip" } )
 
@@ -110,7 +113,8 @@ local function SandboxSettings( pnl )
 	pnl:AddControl( "CheckBox", { Label = "#bone_manipulate_others", Command = "sbox_bonemanip_misc" } )
 
 	for id, t in SortedPairsByMemberValue( ConVarsLimits, "label" ) do
-		pnl:AddControl( "Slider", { Label = t.label, Command = t.command, Min = "0", Max = "200" } )
+		local ctrl = pnl:AddControl( "Slider", { Label = t.label, Command = t.command, Min = "0", Max = "200" } )
+		ctrl:SetHeight( 16 ) -- This makes the controls all bunched up like how we want
 	end
 
 end

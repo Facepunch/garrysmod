@@ -3,6 +3,7 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "m_DNDName", "DnD" )
 AccessorFunc( PANEL, "m_bLiveDrag", "UseLiveDrag" )
+AccessorFunc( PANEL, "m_bReadOnly", "ReadOnly" )
 
 function PANEL:Init()
 
@@ -10,6 +11,7 @@ function PANEL:Init()
 	self:SetPaintBorderEnabled( false )
 	self:SetMouseInputEnabled( true )
 	self:SetPaintBackground( false )
+	self:SetReadOnly( false )
 
 	self:SetDropPos( "5" )
 
@@ -34,26 +36,15 @@ function PANEL:MakeDroppable( name, bAllowCopy )
 	self:SetDnD( name )
 
 	if ( bAllowCopy ) then
-		self:Receiver( name, self.DropAction_Copy, { copy = "Copy", move = "Move" } )
+		self:Receiver( name, self.DropAction_Copy, { copy = "#spawnmenu.menu.copy_dnd", move = "#spawnmenu.menu.move" } )
 	else
 		self:Receiver( name, self.DropAction_Normal )
 	end
 
 end
 
+-- Backwards compatibility
 function PANEL:DropAction_Copy( Drops, bDoDrop, Command, x, y )
-
-	if ( Command && Command == "copy" ) then
-
-		for k, v in pairs( Drops ) do
-
-			if ( v.Copy ) then
-				Drops[k] = v:Copy()
-			end
-
-		end
-
-	end
 
 	self:DropAction_Normal( Drops, bDoDrop, Command, x, y )
 
@@ -84,6 +75,9 @@ function PANEL:DropAction_Normal( Drops, bDoDrop, Command, x, y )
 	if ( !IsValid( closest ) ) then
 		return self:DropAction_Simple( Drops, bDoDrop, Command, x, y )
 	end
+
+	-- This panel is only meant to be copied from, not edited!
+	if ( self:GetReadOnly() ) then return end
 
 	local h = closest:GetTall()
 	local w = closest:GetWide()
@@ -116,6 +110,9 @@ function PANEL:DropAction_Normal( Drops, bDoDrop, Command, x, y )
 		-- Don't drop one of our parents onto us
 		-- because we'll be sucked into a vortex
 		if ( v:IsOurChild( self ) ) then continue end
+
+		-- Copy the panel if we are told to from the DermaMenu(), or if we are moving from a read only panel to a not read only one.
+		if ( ( Command && Command == "copy" || ( IsValid( v:GetParent() ) && v:GetParent().GetReadOnly && v:GetParent():GetReadOnly() && v:GetParent():GetReadOnly() != self:GetReadOnly() ) ) && v.Copy ) then v = v:Copy() end
 
 		v = v:OnDrop( self )
 
