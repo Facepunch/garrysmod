@@ -823,7 +823,6 @@ local function GetTraitorCount(ply_count)
    return traitor_count
 end
 
-
 local function GetDetectiveCount(ply_count)
    if ply_count < GetConVar("ttt_detective_min_players"):GetInt() then return 0 end
 
@@ -834,128 +833,117 @@ local function GetDetectiveCount(ply_count)
    return det_count
 end
 
-
 function SelectRoles()
-   local choices = {}
-   local prev_roles = {}
+	local choices = {}
+	local prev_roles = {}
 
-   if not GAMEMODE.LastRole then GAMEMODE.LastRole = {} end
+	if not GAMEMODE.LastRole then GAMEMODE.LastRole = {} end
 
-   local plys = player.GetAll()
+	local plys = player.GetAll()
+	for k,v in ipairs(plys) do
+		-- everyone on the spec team is in specmode
+		if IsValid(v) and (not v:IsSpec()) then
+			-- save previous role and sign up as possible traitor/detective
+			local r = GAMEMODE.LastRole[v:SteamID()] or v:GetRole() or ROLE_INNOCENT
+			prev_roles[v] = r
+			choices[#choices + 1] = v
+		end
 
-   for k,v in ipairs(plys) do
-      -- everyone on the spec team is in specmode
-      if IsValid(v) and (not v:IsSpec()) then
-         -- save previous role and sign up as possible traitor/detective
+		v:SetRole(ROLE_INNOCENT)
+	end
 
-         local r = GAMEMODE.LastRole[v:SteamID()] or v:GetRole() or ROLE_INNOCENT
+	-- determine how many of each role we want
+	local choice_count = #choices
+	local traitor_count = GetTraitorCount(choice_count)
+	local det_count = GetDetectiveCount(choice_count)
 
-         prev_roles[v] = r
+	if choice_count == 0 then return end
 
-         choices[#choices + 1] = v
-      end
+	-- first select traitors
+	local ts = 0
+	while (ts < traitor_count) and (#choices >= 1) do
+		-- select random index in choices table
+		local pick = math.random(1, #choices)
 
-      v:SetRole(ROLE_INNOCENT)
-   end
+		-- the player we consider
+		local pply = choices[pick]
 
-   -- determine how many of each role we want
-   local choice_count = #choices
-   local traitor_count = GetTraitorCount(choice_count)
-   local det_count = GetDetectiveCount(choice_count)
+		-- make this guy traitor if he was not a traitor last time, or if he makes
+		-- a roll
+		if IsValid(pply) and ((prev_roles[pply] ~= ROLE_TRAITOR) or (math.random(1, 3) == 2)) then
+			pply:SetRole(ROLE_TRAITOR)
 
-   if choice_count == 0 then return end
+			table.remove(choices, pick)
+			ts = ts + 1
+		end
+	end
 
-   -- first select traitors
-   local ts = 0
-   while (ts < traitor_count) and (#choices >= 1) do
-      -- select random index in choices table
-      local pick = math.random(1, #choices)
+	-- now select detectives, explicitly choosing from players who did not get
+	-- traitor, so becoming detective does not mean you lost a chance to be
+	-- traitor
+	local ds = 0
+	local min_karma = GetConVar("ttt_detective_karma_min"):GetInt() or 0
+	while (ds < det_count) and (#choices >= 1) do
+		-- sometimes we need all remaining choices to be detective to fill the
+		-- roles up, this happens more often with a lot of detective-deniers
+		if #choices <= (det_count - ds) then
+			for k, pply in ipairs(choices) do
+				if IsValid(pply) then
+					pply:SetRole(ROLE_DETECTIVE)
+				end
+			end
 
-      -- the player we consider
-      local pply = choices[pick]
-
-      -- make this guy traitor if he was not a traitor last time, or if he makes
-      -- a roll
-      if IsValid(pply) and
-         ((prev_roles[pply] ~= ROLE_TRAITOR) or (math.random(1, 3) == 2)) then
-         pply:SetRole(ROLE_TRAITOR)
-
-         table.remove(choices, pick)
-         ts = ts + 1
-      end
-   end
-
-   -- now select detectives, explicitly choosing from players who did not get
-   -- traitor, so becoming detective does not mean you lost a chance to be
-   -- traitor
-   local ds = 0
-   local min_karma = GetConVarNumber("ttt_detective_karma_min") or 0
-   while (ds < det_count) and (#choices >= 1) do
-
-      -- sometimes we need all remaining choices to be detective to fill the
-      -- roles up, this happens more often with a lot of detective-deniers
-      if #choices <= (det_count - ds) then
-         for k, pply in ipairs(choices) do
-            if IsValid(pply) then
-               pply:SetRole(ROLE_DETECTIVE)
-            end
-         end
-
-         break -- out of while
-      end
+			break -- out of while
+		end
 
 
-      local pick = math.random(1, #choices)
-      local pply = choices[pick]
+		local pick = math.random(1, #choices)
+		local pply = choices[pick]
 
-      -- we are less likely to be a detective unless we were innocent last round
-      if (IsValid(pply) and (pply:GetBaseKarma() > min_karma and prev_roles[pply] == ROLE_INNOCENT) or math.random(1,3) == 2) then
+		-- we are less likely to be a detective unless we were innocent last round
+		if (IsValid(pply) and ((pply:GetBaseKarma() > min_karma and prev_roles[pply] == ROLE_INNOCENT) or math.random(1,3) == 2)) then
+			-- if a player has specified he does not want to be detective, we skip
+			-- him here (he might still get it if we don't have enough
+			-- alternatives)
+			if not pply:GetAvoidDetective() then
+				pply:SetRole(ROLE_DETECTIVE)
+				ds = ds + 1
+			end
 
-         -- if a player has specified he does not want to be detective, we skip
-         -- him here (he might still get it if we don't have enough
-         -- alternatives)
-         if not pply:GetAvoidDetective() then
-            pply:SetRole(ROLE_DETECTIVE)
-            ds = ds + 1
-         end
+			table.remove(choices, pick)
+		end
+	end
 
-         table.remove(choices, pick)
-      end
-   end
+	GAMEMODE.LastRole = {}
 
-   GAMEMODE.LastRole = {}
+	for _, ply in ipairs(plys) do
+		-- initialize credit count for everyone based on their role
+		ply:SetDefaultCredits()
 
-   for _, ply in ipairs(plys) do
-      -- initialize credit count for everyone based on their role
-      ply:SetDefaultCredits()
-
-      -- store a steamid -> role map
-      GAMEMODE.LastRole[ply:SteamID()] = ply:GetRole()
-   end
+		-- store a steamid -> role map
+		GAMEMODE.LastRole[ply:SteamID()] = ply:GetRole()
+	end
 end
 
+concommand.Add("ttt_roundrestart", function(ply, command, args)
+	-- ply is nil on dedicated server console
+	if (not IsValid(ply)) or ply:IsAdmin() or ply:IsSuperAdmin() or cvars.Bool("sv_cheats", 0) then
+		LANG.Msg("round_restart")
+		StopRoundTimers()
+		-- do prep
+		PrepareRound()
+	else
+		ply:PrintMessage(HUD_PRINTCONSOLE, "You must be a GMod Admin or SuperAdmin on the server to use this command, or sv_cheats must be enabled.")
+	end
+end)
 
-local function ForceRoundRestart(ply, command, args)
-   -- ply is nil on dedicated server console
-   if (not IsValid(ply)) or ply:IsAdmin() or ply:IsSuperAdmin() or cvars.Bool("sv_cheats", 0) then
-      LANG.Msg("round_restart")
-
-      StopRoundTimers()
-
-      -- do prep
-      PrepareRound()
-   else
-      ply:PrintMessage(HUD_PRINTCONSOLE, "You must be a GMod Admin or SuperAdmin on the server to use this command, or sv_cheats must be enabled.")
-   end
-end
-concommand.Add("ttt_roundrestart", ForceRoundRestart)
-
-function ShowVersion(ply)
-   local text = Format("This is TTT version %s\n", GAMEMODE.Version)
-   if IsValid(ply) then
-      ply:PrintMessage(HUD_PRINTNOTIFY, text)
-   else
-      Msg(text)
-   end
-end
-concommand.Add("ttt_version", ShowVersion)
+concommand.Add("ttt_version", function(ply)
+	local text = Format("This is TTT version %s\n", GAMEMODE.Version)
+	if IsValid(ply) then
+		ply:PrintMessage(HUD_PRINTNOTIFY, text)
+	else
+		Msg(text)
+	end
+	
+	text = nil
+end)
