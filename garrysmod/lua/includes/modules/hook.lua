@@ -60,7 +60,7 @@ end
 
 
 --[[---------------------------------------------------------
-    Name: Run
+    Name: Call
     Args: string hookName, table gamemodeTable, vararg args
     Desc: Calls hooks associated with the hook name.
 -----------------------------------------------------------]]
