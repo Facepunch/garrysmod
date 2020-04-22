@@ -77,7 +77,7 @@ CreateConVar("ttt_traitor_max", "32")
 CreateConVar("ttt_detective_pct", "0.13", FCVAR_NOTIFY)
 CreateConVar("ttt_detective_max", "32")
 CreateConVar("ttt_detective_min_players", "8")
-CreateConVar("ttt_detective_karma_min", "600")
+local ttt_min_karma = CreateConVar("ttt_detective_karma_min", "600")
 
 
 -- Traitor credits
@@ -889,7 +889,6 @@ function SelectRoles()
    -- traitor, so becoming detective does not mean you lost a chance to be
    -- traitor
    local ds = 0
-   local min_karma = GetConVar("ttt_detective_karma_min"):GetInt() or 0
    while (ds < det_count) and (#choices >= 1) do
 
       -- sometimes we need all remaining choices to be detective to fill the
@@ -910,7 +909,7 @@ function SelectRoles()
 
       -- we are less likely to be a detective unless we were innocent last round
       if (IsValid(pply) and
-          ((pply:GetBaseKarma() > min_karma and
+          ((pply:GetBaseKarma() > ttt_min_karma:GetInt() and
            prev_roles[pply] == ROLE_INNOCENT) or
            math.random(1,3) == 2)) then
 
