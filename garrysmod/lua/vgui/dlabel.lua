@@ -37,6 +37,7 @@ function PANEL:Init()
 	self:SetPaintBorderEnabled( false )
 
 	self:SetFont( "DermaDefault" )
+	self:SetTextColor(color_white)
 
 end
 
