@@ -96,7 +96,7 @@ function PANEL:SetAvatarIcon( steamid64 )
 
 	else
 
-		local steamid64 = ( isentity( steamid64 ) and steamid64:IsPlayer() and steamid64:SteamID64() ) or steamid64 -- If the passed steamid64 is a player object, grab the steamid64 for convenience
+		local steamid64 = ( isentity( steamid64 ) && steamid64:IsPlayer() && steamid64:SteamID64() ) || steamid64 -- If the passed steamid64 is a player object, grab the steamid64 for convenience
 		
 		self:SetColorIcon() -- Remove color icon first if it exists
 
