@@ -123,6 +123,12 @@ function PANEL:OnSelect( index, value, data )
 
 end
 
+function PANEL:OnMenuOpened( menu )
+
+	-- For override
+
+end
+
 function PANEL:AddChoice( value, data, select, icon )
 
 	local i = table.insert( self.Choices, value )
@@ -195,6 +201,8 @@ function PANEL:OpenMenu( pControlOpener )
 
 	self.Menu:SetMinimumWidth( self:GetWide() )
 	self.Menu:Open( x, y, false, self )
+
+	self:OnMenuOpened( self.Menu )
 
 end
 
