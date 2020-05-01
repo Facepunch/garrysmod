@@ -40,6 +40,9 @@ function PANEL:SetImage( img )
 		return
 	end
 
+	self:SetColorIcon()
+	self:SetAvatarIcon()
+
 	if ( !IsValid( self.m_Image ) ) then
 		self.m_Image = vgui.Create( "DImage", self )
 	end
@@ -50,6 +53,64 @@ function PANEL:SetImage( img )
 
 end
 PANEL.SetIcon = PANEL.SetImage
+
+local function ColorIconPaint( self, w, h )
+
+	if ( self.m_ColorIcon ) then
+
+		surface.SetDrawColor( self.m_ColorIcon )
+		surface.DrawRect( 0, 0, w, h )
+
+	end
+
+end
+
+function PANEL:SetColorIcon( color )
+
+	if ( !color ) then
+
+		self:SetImage()
+
+	else
+
+		assert( IsColor( color ), "Expected a color but " .. type(color) .. " was passed" )
+		
+		self:SetAvatarIcon() -- Remove avatar icon first if it exists
+
+		self:SetImage( "icon16/box.png" )
+
+		self.m_Image.m_ColorIcon = color
+		self.m_ColorIcon = self.m_Image.m_ColorIcon
+		
+		self.m_Image.PaintOver = ColorIconPaint
+
+	end
+
+end
+
+function PANEL:SetAvatarIcon( steamid64 )
+
+	if ( !steamid64 ) then
+
+		self:SetImage()
+
+	else
+
+		local steamid64 = ( isentity( steamid64 ) and steamid64:IsPlayer() and steamid64:SteamID64() ) or steamid64 -- If the passed steamid64 is a player object, grab the steamid64 for convenience
+		
+		self:SetColorIcon() -- Remove color icon first if it exists
+
+		self:SetImage( "icon16/user.png" )
+
+		self.m_Image.m_AvatarImage = vgui.Create( "AvatarImage", self.m_Image )
+		self.m_Image.m_AvatarImage:Dock( FILL )
+		self.m_Image.m_AvatarImage:SetSteamID( steamid64, 16 )
+
+		self.m_Image.m_AvatarImage.SteamID64 = steamid64
+
+	end
+
+end
 
 function PANEL:Paint( w, h )
 

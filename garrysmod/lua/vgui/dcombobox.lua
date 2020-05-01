@@ -30,6 +30,8 @@ function PANEL:Clear()
 	self.Choices = {}
 	self.Data = {}
 	self.ChoiceIcons = {}
+	self.ChoiceColorIcons = {}
+	self.ChoiceAvatarIcons = {}
 	self.selected = nil
 
 	if ( self.Menu ) then
@@ -123,7 +125,7 @@ function PANEL:OnSelect( index, value, data )
 
 end
 
-function PANEL:AddChoice( value, data, select, icon )
+function PANEL:AddChoice( value, data, select, icon, color, steamid64 )
 
 	local i = table.insert( self.Choices, value )
 
@@ -133,6 +135,10 @@ function PANEL:AddChoice( value, data, select, icon )
 	
 	if ( icon ) then
 		self.ChoiceIcons[ i ] = icon
+	elseif ( color ) then
+		self.ChoiceColorIcons[ i ] = color
+	elseif ( steamid64 ) then
+		self.ChoiceAvatarIcons[ i ] = steamid64
 	end
 
 	if ( select ) then
@@ -180,6 +186,10 @@ function PANEL:OpenMenu( pControlOpener )
 			local option = self.Menu:AddOption( v.data, function() self:ChooseOption( v.data, v.id ) end )
 			if ( self.ChoiceIcons[ v.id ] ) then
 				option:SetIcon( self.ChoiceIcons[ v.id ] )
+			elseif ( self.ChoiceColorIcons[ v.id ] ) then
+				option:SetColorIcon( self.ChoiceColorIcons[ v.id ] )
+			elseif ( self.ChoiceAvatarIcons[ v.id ] ) then
+				option:SetAvatarIcon( self.ChoiceAvatarIcons[ v.id ] )
 			end
 		end
 	else
@@ -187,6 +197,10 @@ function PANEL:OpenMenu( pControlOpener )
 			local option = self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
 			if ( self.ChoiceIcons[ k ] ) then
 				option:SetIcon( self.ChoiceIcons[ k ] )
+			elseif ( self.ChoiceColorIcons[ k ] ) then
+				option:SetColorIcon( self.ChoiceColorIcons[ k ] )
+			elseif ( self.ChoiceAvatarIcons[ k ] ) then
+				option:SetAvatarIcon( self.ChoiceAvatarIcons[ k ] )
 			end
 		end
 	end
