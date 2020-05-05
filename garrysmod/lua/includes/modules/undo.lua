@@ -336,7 +336,7 @@ end
 --[[---------------------------------------------------------
 	Undos an undo
 -----------------------------------------------------------]]
-function Do_Undo( undo )
+function Do_Undo( undo, forceUpdateClientUndoList )
 
 	if ( !undo ) then return false end
 
@@ -348,6 +348,39 @@ function Do_Undo( undo )
 
 			func[ 1 ]( undo, unpack( func[ 2 ] ) )
 			count = count + 1
+
+		end
+	end
+
+	-- Force-update the client list
+	if ( undo.Entities && forceUpdateClientUndoList ) then
+		local ownerIndex = undo.Owner:UniqueID()
+		PlayerUndo[ ownerIndex ] = PlayerUndo[ ownerIndex ] or {}
+
+		for index, undoTables in pairs(PlayerUndo[ ownerIndex ]) do
+
+			if ( undoTables.Entities ) then
+				for _, entity in pairs( undoTables.Entities ) do
+
+					-- Check each member for a match ( only needs one )
+					for _, undoEntity in pairs( undo.Entities ) do
+	
+						if ( IsValid( entity ) && IsValid( undoEntity ) && ( entity == undoEntity ) ) then
+							-- Don't delete the entry completely so nothing new takes its place and ruin
+							-- CC_UndoLast's logic (expecting newest entry be at highest index)
+							PlayerUndo[ ownerIndex ][ index ] = {}
+
+							net.Start( "Undo_Undone" )
+								net.WriteInt( index, 16 )
+							net.Send( undo.Owner )
+	
+							break
+						end
+	
+					end
+	
+				end
+			end
 
 		end
 	end
