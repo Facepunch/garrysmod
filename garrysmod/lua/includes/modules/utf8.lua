@@ -351,7 +351,7 @@ end
 --
 -- UTF-8 compilant version of str[idx]
 --
-function idx( str, idx )
+function GetChar( str, idx )
 	idx = strRelToAbsChar( str, idx )
 
 	if idx == 0 then return "" end
@@ -370,7 +370,7 @@ function sub( str, charstart, charend )
 
 	local buf = {}
 	for i = charstart, charend do
-		buf[#buf + 1] = idx( str, i )
+		buf[#buf + 1] = GetChar( str, i )
 	end
 
 	return table.concat( buf )
