@@ -6,6 +6,11 @@ local function UpdateMaps()
 
 	MapPatterns = {}
 	MapNames = {}
+	
+	MapNames["scp_"] = "Secure. Contain. Protect."
+	MapNames["bw_"] = "Basewars"
+	MapNames["basewar_"] = "Basewars"
+	MapNames["basewars_"] = "Basewars"
 
 	MapNames[ "aoc_" ] = "Age of Chivalry"
 	MapNames[ "infra_" ] = "INFRA"
