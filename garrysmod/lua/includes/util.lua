@@ -246,6 +246,15 @@ function Lerp( delta, from, to )
 end
 
 --[[---------------------------------------------------------
+	Precise lerp - Basically the same as `Lerp( ... )`, but will always guarantee that the return value = `to` when `delta` = 1.
+-----------------------------------------------------------]]
+function LerpPrecise( delta, from, to )
+
+	return ( 1 - delta ) * from + delta * to;
+
+end
+
+--[[---------------------------------------------------------
 	Convert Var to Bool
 -----------------------------------------------------------]]
 function tobool( val )
