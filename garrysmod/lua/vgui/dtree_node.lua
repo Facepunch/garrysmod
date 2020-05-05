@@ -234,9 +234,9 @@ end
 
 function PANEL:PerformRootNodeLayout()
 
-	self.Expander:SetVisible( false )
-	self.Label:SetVisible( false )
-	self.Icon:SetVisible( false )
+	if ( IsValid(self.Expander) ) then self.Expander:SetVisible( false ) end
+	if ( IsValid(self.Label) ) then self.Label:SetVisible( false ) end
+	if ( IsValid(self.Icon) ) then self.Icon:SetVisible( false ) end
 
 	if ( IsValid( self.ChildNodes ) ) then
 
