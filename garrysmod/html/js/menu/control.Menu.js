@@ -138,6 +138,16 @@ function MenuController( $scope, $rootScope )
 
 		lua.Run( "gui.OpenURL( 'http://gmod.facepunch.com/changes/' )" );
 	}
+	
+	$scope.Wiki = function()
+	{
+		lua.Run( "gui.OpenURL( 'https://wiki.facepunch.com/gmod/' )" );
+	}
+
+	$scope.Screenshot = function()
+	{
+		lua.Run( "RunConsoleCommand( 'screenshot' )" );
+	}
 
 	// Background
 	ChangeBackground();
