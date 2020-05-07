@@ -138,6 +138,11 @@ function MenuController( $scope, $rootScope )
 
 		lua.Run( "gui.OpenURL( 'http://gmod.facepunch.com/changes/' )" );
 	}
+	
+	$scope.Discord = function()
+	{
+		lua.Run( "gui.OpenURL( 'https://discord.com/invite/gmod' )" );
+	}
 
 	// Background
 	ChangeBackground();
