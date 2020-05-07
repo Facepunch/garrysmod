@@ -7,7 +7,7 @@
 	// Add them to the relevant section
 	//
 	// If you're a Lua coder you can add your own sections and use them
-	// in your script by doing pl:IsUserGroup( "admin" ) etc
+	// in your script by doing if(pl:GetUserGroup() == "admin") then etc
 	//
 
 	"superadmin"
