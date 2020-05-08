@@ -1,6 +1,28 @@
 
 local MenuGradient = Material( "html/img/gradient.png", "nocull smooth" )
 
+local FreeMaterial = nil
+
+local function CreateBackgroundMaterial( path )
+	if FreeMaterial then
+		FreeMaterial:SetDynamicImage( path )
+
+		local ret = FreeMaterial
+		FreeMaterial = nil
+		return ret
+	end
+
+	return DynamicMaterial( path, "0100010" ) -- nocull smooth
+end
+
+local function FreeBackgroundMaterial( mat )
+	if FreeMaterial then
+		DevWarning( "Menu shouldn't be releasing a material when one is already queued for use" )
+	end
+
+	FreeMaterial = mat
+end
+
 local Images = {}
 
 local Active = nil
@@ -95,30 +117,17 @@ function ChangeBackground( currentgm )
 
 	if ( !img ) then return end
 
-	-- Remove the texture from memory
-	-- There's a bit of internal magic going on here
-	--[[
-	local DoUnload = Outgoing != nil
-
-	if ( Outgoing && Outgoing.Name == img ) then
-		DoUnload = false
+	if ( Outgoing ) then
+		FreeBackgroundMaterial( Outgoing.mat )
+		Outgoing.mat = nil
 	end
-
-	if ( Outgoing && Active && Outgoing.Name == Active.Name ) then
-		DoUnload = false
-	end
-
-	if ( DoUnload ) then
-		Outgoing.mat:SetUndefined( "$basetexture" )
-	end
-	]]
 
 	Outgoing = Active
 	if ( Outgoing ) then
 		Outgoing.AlphaVel = 255
 	end
 
-	local mat = Material( img, "nocull smooth" )
+	local mat = CreateBackgroundMaterial( img )
 	if ( !mat || mat:IsError() ) then return end
 
 	Active = {
