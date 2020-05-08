@@ -141,6 +141,7 @@ function AddPropsOfParent( pnlContent, node, parentid, customProps )
 			self.PropPanel = vgui.Create( "ContentContainer", pnlContent )
 			self.PropPanel:SetVisible( false )
 			self.PropPanel:SetTriggerSpawnlistChange( true )
+			if ( node.AddonSpawnlist ) then self.PropPanel.IconList:SetReadOnly( true ) end
 
 			for i, object in SortedPairs( Info.contents ) do
 
