@@ -31,7 +31,7 @@ if ( CLIENT ) then
 		local Panel = controlpanel.Get( "Undo" )
 		if ( !IsValid( Panel ) ) then return end
 
-		Panel:ClearControls()
+		Panel:Clear()
 		Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.undo.help" } )
 
 		local ComboBox = Panel:ListBox()
@@ -99,7 +99,7 @@ if ( CLIENT ) then
 	--[[---------------------------------------------------------
 		MakeUIDirty
 		Makes the UI dirty - it will re-create the controls
-		the next time it is viewed. We also take this opportun
+		the next time it is viewed.
 	-----------------------------------------------------------]]
 	function MakeUIDirty()
 
@@ -138,6 +138,9 @@ if ( CLIENT ) then
 
 		local UndoPanel = controlpanel.Get( "Undo" )
 		if ( !IsValid( UndoPanel ) ) then return end
+
+		-- Mark as dirty please
+		MakeUIDirty()
 
 		-- Panels only think when they're visible
 		UndoPanel.Think = CPanelUpdate
@@ -304,7 +307,7 @@ function Finish( NiceText )
 	if ( !Current_Undo ) then return end
 
 	-- Do not add undos that have no owner or anything to undo
-	if ( !IsValid( Current_Undo.Owner ) || ( table.IsEmpty( Current_Undo.Entities ) && table.IsEmpty( Current_Undo.Functions ) ) ) then 
+	if ( !IsValid( Current_Undo.Owner ) or ( table.IsEmpty( Current_Undo.Entities ) && table.IsEmpty( Current_Undo.Functions ) ) ) then
 		Current_Undo = nil
 		return
 	end
