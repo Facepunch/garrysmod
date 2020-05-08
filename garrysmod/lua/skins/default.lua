@@ -935,7 +935,11 @@ end
 function SKIN:PaintCollapsibleCategory( panel, w, h )
 
 	if ( h < 21 ) then
-		return self.tex.CategoryList.Header( 0, 0, w, h )
+		self.tex.CategoryList.Header( 0, 0, w, h )
+
+		-- Little hack, draw the ComboBox's dropdown arrow to tell the player the category is collapsed and not empty
+		if ( !panel:GetExpanded() ) then self.tex.Input.ComboBox.Button.Down( w - 18, 2, 15, 15 ) end
+		return
 	end
 
 	self.tex.CategoryList.Inner( 0, 0, w, 63 )
