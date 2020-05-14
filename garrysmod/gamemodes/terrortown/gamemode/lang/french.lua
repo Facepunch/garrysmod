@@ -73,7 +73,7 @@ L.equip_statut    = "Statut de la commande"
 L.equip_cost      = "Il vous reste {num} crédit(s)."
 L.equip_help_cost = "Chaque équipement que vous achetez coûte 1 crédit."
 
-L.equip_help_carry = "Vous ne pouvez que acheter où vous avez de la place."
+L.equip_help_carry = "Vous ne pouvez que acheter que où vous avez de la place."
 L.equip_carry      = "Vous pouvez porter cet objet."
 L.equip_carry_own  = "Vous portez déjà cet objet."
 L.equip_carry_slot = "Vous avez déjà une arme dans l’emplacement {slot}."
@@ -177,7 +177,7 @@ L.search_role_t = "C'était un Traitre!"
 L.search_role_d = "C'était un Détective."
 L.search_role_i = "C'était un terroriste innocent."
 
-L.search_words  = "Quelque chose vous dit que quelques unes des dernières paroles de cette personne étaient: '{lastwords}'"
+L.search_words  = "Quelque chose vous dit que quelques-unes des dernières paroles de cette personne étaient: '{lastwords}'"
 L.search_armor  = "Il avait une armure non-standard."
 L.search_disg   = "Il portait un dispositif qui permet de cacher son identité."
 L.search_radar  = "Il portait une sorte de radar. Ce radar ne fonctionne plus."
@@ -189,10 +189,10 @@ L.search_dmg_fall   = "Une chute lui a été fatale."
 L.search_dmg_boom   = "Ses blessures et les vêtements déchirés indiquent qu'une explosion l'a tué."
 L.search_dmg_club   = "Il est couvert d'ecchymoses et semble avoir été battu. Très clairement, il a été frappé à mort."
 L.search_dmg_drown  = "Le corps montre les signes d'une inévitable noyade."
-L.search_dmg_stab   = "Il s'est fait coupé et poignardé avant de saigner à mort."
+L.search_dmg_stab   = "Il s'est fait couper et poignarder avant de saigner à mort."
 L.search_dmg_burn   = "Ça sent le terroriste grillé, non?"
-L.search_dmg_tele   = "On dirait que son ADN a été altéré par des émission de tachyons!"
-L.search_dmg_car    = "Pendant que cette personne traversait la route, ils s'est fait roulé dessus par un conducteur imprudent."
+L.search_dmg_tele   = "On dirait que son ADN a été altéré par des émissions de tachyons!"
+L.search_dmg_car    = "Pendant que cette personne traversait la route, il s'est fait roulé dessus par un conducteur imprudent."
 L.search_dmg_other  = "Vous n'arrivez pas à identifier la cause de sa mort."
 
 L.search_weapon = "Il semblerait qu'un {weapon} a été utilisé pour le tuer."
@@ -396,7 +396,7 @@ L.hstation_broken = "Votre Station de Soins a été détruite!"
 L.hstation_help   = "{primaryfire} place la Station de Soins."
 
 L.hstation_desc   = [[
-Soigne les personnes qui l'utilise.
+Soigne les personnes qui l'utilisent.
 
 Recharge lente. Tout le monde peut l'utiliser, et
 elle peut être endommagée. Peut être vérifiée pour
@@ -648,14 +648,14 @@ L.name_kick = "Un joueur a été automatiquement expulsé pour avoir changé son
 
 L.idle_popup = [[Vous avez étiez absent {num} secondes et a donc été mis dans le mode Spectateur uniquement. Dans ce mode, vous n'apparaîtrez pas quand un nouveau round démarre.
 
-Vous pouvez basculer hors de ce mode quand vous voulez en appuyant sur {helpkey} et en décochant la case adéquat dans l'onglet Options. Vous pouvez aussi choisir de le désactiver maintenant.]]
+Vous pouvez basculer hors de ce mode quand vous voulez en appuyant sur {helpkey} et en décochant la case adéquate dans l'onglet Options. Vous pouvez aussi choisir de le désactiver maintenant.]]
 
 L.idle_popup_close = "Ne rien faire"
 L.idle_popup_off   = "Désactiver le mode maintenant"
 
 L.idle_warning = "Attention: on dirait que vous n'êtes plus là, vous allez être déplacé vers les spectateurs à moins de montrer de l'activité!"
 
-L.spec_mode_warning = "Vous êtes en mode Spectateur et vous n'apparaîtrez pas quand un round commence. Pour désactivez ce mode, appuyez sur F1, allez à Options et décochez 'Mode Spectateur uniquement'."
+L.spec_mode_warning = "Vous êtes en mode Spectateur et vous n'apparaîtrez pas quand un round commence. Pour désactiver ce mode, appuyez sur F1, allez à Options et décochez 'Mode Spectateur uniquement'."
 
 
 --- Tips, shown at bottom of screen to spectators
@@ -670,7 +670,7 @@ L.tip1 = "Les traitres peuvent fouillez un corps silencieusement, sans confirmer
 
 L.tip2 = "Amorcer un explosif C4 avec un minuteur plus long va augmenter le nombre de fils qui va cause une explosion imminente quand un innocent essaiera de la désamorcer. L'explosif beepera plus doucement et à moins grande fréquence."
 
-L.tip3 = "Les Détectives peuvent fouiller un corps pour trouver qui est 'reflété dans ses yeux'. C'est la dernière personne que le mort a vu. Ce n'est pas forcement le tueur si le mort a été tué dans le dos."
+L.tip3 = "Les Détectives peuvent fouiller un corps pour trouver qui est 'reflété dans ses yeux'. C'est la dernière personne que le mort a vue. Ce n'est pas forcement le tueur si le mort a été tué dans le dos."
 
 L.tip4 = "Personne ne saura que vous êtes mort jusqu'à ce qu'ils trouvent votre cadavre et vous identifie en le fouillant."
 
@@ -710,13 +710,13 @@ L.tip21 =  "La Station de Soins des Détectives laisse les joueurs blessés gué
 
 L.tip22 = "La Station de Soins enregistre un échantillon ADN de quiconque l'utilise. Les détectives peuvent l'utiliser avec le Scanner ADN pour trouver qui s'est soigné avec."
 
-L.tip23 = "À l'inverse des armes et du C4, le dispositif Radio pour Traitres ne contiennent pas de échantillon ADN de la personne qui l'a planté. Ne vous inquiétez donc pas d'un Détective qui gâcherai votre couverture."
+L.tip23 = "À l'inverse des armes et du C4, le dispositif Radio pour Traitres ne contiennent pas de échantillon ADN de la personne qui l'a planté. Ne vous inquiétez donc pas d'un Détective qui gâcherait votre couverture."
 
 L.tip24 = "Appuyez sur {helpkey} pour voir un court tutoriel ou modifier des options spécifiques au TTT. Par exemple, vous pouvez désactiver ces astuces pour de bon."
 
 L.tip25 = "Quand un Détective fouille un corps, les résultats sont disponibles pour tous les joueurs à travers le tableau de scores, en cliquant sur le nom de la personne morte."
 
-L.tip26 = "Dans le tableau des scores, une icône de loupe à côté du nom de quelqu'un indique que vous avez déjà cherché des informations à propos de cette personne. Si l'icône est lumineuse, les données viennent d'un Détective et peut contenir des informations additionnelles."
+L.tip26 = "Dans le tableau des scores, une icône de loupe à côté du nom de quelqu'un indique que vous avez déjà cherché des informations à propos de cette personne. Si l'icône est lumineuse, les données viennent d'un Détective et peuvent contenir des informations additionnelles."
 
 L.tip27 = "En tant que Détective, les corps avec une loupe après leur nom ont été fouillés par un Détective et leur résultats sur accessibles pour tout le monde via le tableau des scores."
 
@@ -953,7 +953,7 @@ L.aw_mac1_title = "Prier et Tuer"
 L.aw_mac1_text  = "a tué {num} personnes avec le MAC10, mais ne compte pas dire combien de munitions il a utilisé."
 
 L.aw_mac2_title = "Mac 'n' Cheese"
-L.aw_mac2_text  = "se demande ce qu'il se passerai s'il pouvait porter deux MAC10. {num} fois deux ça fait?"
+L.aw_mac2_text  = "se demande ce qu'il se passerait s'il pouvait porter deux MAC10. {num} fois deux ça fait?"
 
 L.aw_sip1_title = "Silence"
 L.aw_sip1_text  = "a fermé le clapet à {num} piplette(s) avec un pistolet silencieux."
@@ -1019,7 +1019,7 @@ L.aw_brn2_title = "PyroÏde"
 L.aw_brn2_text  = "a été entendu rire aux éclats après avoir brûlé un paquet de ses victimes."
 
 L.aw_brn3_title = "BrÛleur Pyrrhique"
-L.aw_brn3_text  = "les a tous cramé, et maintenant il est à court de grenades incendiaires! Comment vas-t-il surmonter ça!?"
+L.aw_brn3_text  = "les a tous cramé, et maintenant il est à court de grenades incendiaires! Comment va-t-il surmonter ça!?"
 
 L.aw_fnd1_title = "MÉdecin LÉgiste"
 L.aw_fnd1_text  = "a trouvé {num} corps qui traînaient."
