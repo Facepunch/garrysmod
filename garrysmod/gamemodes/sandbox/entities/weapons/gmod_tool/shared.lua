@@ -143,6 +143,10 @@ end
 -- Think does stuff every frame
 function SWEP:Think()
 
+	-- SWEP:Think is called one more time clientside
+	-- after holstering using Player:SelectWeapon in multiplayer
+	if ( CLIENT && self.m_uHolsterFrame == FrameNumber() ) then return end
+
 	local owner = self:GetOwner()
 	if ( !owner:IsPlayer() ) then return end
 
@@ -217,12 +221,14 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 
 end
 
+local toolmask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
+
 -- Trace a line then send the result to a mode function
 function SWEP:PrimaryAttack()
 
 	local mode = self:GetMode()
 	local tr = util.GetPlayerTrace( self.Owner )
-	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
+	tr.mask = toolmask
 	local trace = util.TraceLine( tr )
 	if ( !trace.Hit ) then return end
 
@@ -247,7 +253,7 @@ function SWEP:SecondaryAttack()
 
 	local mode = self:GetMode()
 	local tr = util.GetPlayerTrace( self.Owner )
-	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
+	tr.mask = toolmask
 	local trace = util.TraceLine( tr )
 	if ( !trace.Hit ) then return end
 
@@ -268,13 +274,22 @@ end
 
 function SWEP:Holster()
 
-	-- Just do what the SWEP wants to do if there's no tool
-	if ( !self:GetToolObject() ) then return self.CanHolster end
+	local toolobj = self:GetToolObject()
+	local CanHolster
 
-	local CanHolster = self:GetToolObject():Holster()
-	if ( CanHolster ~= nil ) then return CanHolster end
+	if ( toolobj ) then
+		CanHolster = toolobj:Holster()
+		if ( CanHolster == nil ) then CanHolster = self.CanHolster end
+	else
+		-- Just do what the SWEP wants to do if there's no tool
+		CanHolster = self.CanHolster
+	end
 
-	return self.CanHolster
+	-- Save the frame the weapon was holstered on to prevent
+	-- the extra Think call after calling Player:SelectWeapon in multiplayer
+	if ( CLIENT && CanHolster == true ) then self.m_uHolsterFrame = FrameNumber() end
+
+	return CanHolster
 
 end
 
