@@ -11,11 +11,6 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 	if ( SERVER && !game.SinglePlayer() ) then return end
 	if ( CLIENT && game.SinglePlayer() ) then return end
 
-	-- The reason we need this is because in multiplayer, when you holster a tool serverside,
-	-- either by using the spawnnmenu's Weapons tab or by simply entering a vehicle,
-	-- the Think hook is called once after Holster is called on the client, recreating the ghost entity right after it was removed.
-	if ( !IsFirstTimePredicted() ) then return end
-
 	-- Release the old ghost entity
 	self:ReleaseGhostEntity()
 
@@ -24,6 +19,17 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 
 	if ( CLIENT ) then
 		self.GhostEntity = ents.CreateClientProp( model )
+
+		-- The reason we need this is because in multiplayer, when you holster a tool serverside,
+		-- either by using the spawnnmenu's Weapons tab or by simply entering a vehicle,
+		-- the Think hook is called once after Holster is called on the client, recreating the ghost entity right after it was removed.
+		hook.Add("Think","CleanupToolgunGhost",function()
+			local wep = LocalPlayer():GetActiveWeapon()
+			if ( wep:IsValid() and wep:GetClass()~="gmod_tool" ) then
+				self:ReleaseGhostEntity()
+				hook.Remove("Think","CleanupToolgunGhost")
+			end
+		end)
 	else
 		self.GhostEntity = ents.Create( "prop_physics" )
 	end
