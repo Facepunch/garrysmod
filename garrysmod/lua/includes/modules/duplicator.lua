@@ -304,6 +304,15 @@ function Allow( classname )
 end
 
 --
+-- Disallow this entity to be duplicated
+--
+function Disallow( classname )
+
+	DuplicateAllowed[ classname ] = false
+
+end
+
+--
 -- Returns true if we can copy/paste this entity
 --
 function IsAllowed( classname )
