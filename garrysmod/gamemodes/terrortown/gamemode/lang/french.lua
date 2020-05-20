@@ -1019,7 +1019,7 @@ L.aw_brn2_title = "PyroÏde"
 L.aw_brn2_text  = "a été entendu rire aux éclats après avoir brûlé un paquet de ses victimes."
 
 L.aw_brn3_title = "BrÛleur Pyrrhique"
-L.aw_brn3_text  = "les a tous cramé, et maintenant il est à court de grenades incendiaires! Comment vas-t-il surmonter ça!?"
+L.aw_brn3_text  = "les a tous cramés, et maintenant il est à court de grenades incendiaires! Comment va-t-il surmonter ça!?"
 
 L.aw_fnd1_title = "MÉdecin LÉgiste"
 L.aw_fnd1_text  = "a trouvé {num} corps qui traînaient."
