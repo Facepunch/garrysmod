@@ -353,14 +353,8 @@ function CLSCORE:ShowPanel()
    local margin = 15
 
    local dpanel = vgui.Create("DFrame")
-   if LANG.ActiveLanguage == "français" then
-	tempw, temph = 788, 500
-	dpanel:SetSize(788, 500)
-   else
-    tempw, temph = 700, 500
-	dpanel:SetSize(700, 500)
-   end
-   local w, h = tempw, temph
+   local w, h = 700, 500
+   dpanel:SetSize(700, 500)
    dpanel:Center()
    dpanel:SetTitle(T("report_title"))
    dpanel:SetVisible(true)
