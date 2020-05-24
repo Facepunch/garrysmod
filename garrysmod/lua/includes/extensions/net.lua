@@ -2,6 +2,10 @@ TYPE_COLOR = 255
 
 net.Receivers = {}
 
+function net.Cancel()
+	net.Send(RecipientFilter())
+end
+
 --
 -- Set up a function to receive network messages
 --
