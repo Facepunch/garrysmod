@@ -66,7 +66,7 @@ function AddChangeCallback( name, func, sIdentifier )
 	if ( sIdentifier ) then
 		for i = 1, #tab do
 			local a = tab[ i ];
-			if ( istable( v ) and a[ 2 ] == sIdentifier ) then
+			if ( istable( a ) and a[ 2 ] == sIdentifier ) then
 				tab[ i ][ 1 ] = func
 				return
 			end
