@@ -14,10 +14,14 @@ function meta:CheckLimit( str )
 	local c = cvars.Number( "sbox_max" .. str, 0 )
 	local count = self:GetCount( str )
 	
-	local ret = hook.Run( 'PlayerCheckLimit', self, str, c, count )
-	if ( ret != nil ) then return ret end
+	local ret = hook.Run( "PlayerCheckLimit", self, str, count, c )
+	if ( ret != nil ) then
+		if ( !ret && SERVER ) then self:LimitHit( str ) end
+		return ret
+	end
 	
 	if ( c < 0 ) then return true end
+	
 	if ( count > c - 1 ) then
 		if ( SERVER ) then self:LimitHit( str ) end
 		return false
