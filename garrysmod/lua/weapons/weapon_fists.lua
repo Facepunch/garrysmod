@@ -82,6 +82,8 @@ function SWEP:SecondaryAttack()
 
 end
 
+local phys_pushscale = GetConVar( "phys_pushscale" )
+
 function SWEP:DealDamage()
 
 	local anim = self:GetSequenceName(self.Owner:GetViewModel():GetSequence())
@@ -112,6 +114,7 @@ function SWEP:DealDamage()
 	end
 
 	local hit = false
+	local scale = phys_pushscale:GetFloat()
 
 	if ( SERVER && IsValid( tr.Entity ) && ( tr.Entity:IsNPC() || tr.Entity:IsPlayer() || tr.Entity:Health() > 0 ) ) then
 		local dmginfo = DamageInfo()
@@ -124,11 +127,11 @@ function SWEP:DealDamage()
 		dmginfo:SetDamage( math.random( 8, 12 ) )
 
 		if ( anim == "fists_left" ) then
-			dmginfo:SetDamageForce( self.Owner:GetRight() * 4912 + self.Owner:GetForward() * 9998 ) -- Yes we need those specific numbers
+			dmginfo:SetDamageForce( self.Owner:GetRight() * 4912 * scale + self.Owner:GetForward() * 9998 * scale ) -- Yes we need those specific numbers
 		elseif ( anim == "fists_right" ) then
-			dmginfo:SetDamageForce( self.Owner:GetRight() * -4912 + self.Owner:GetForward() * 9989 )
+			dmginfo:SetDamageForce( self.Owner:GetRight() * -4912 * scale + self.Owner:GetForward() * 9989 * scale )
 		elseif ( anim == "fists_uppercut" ) then
-			dmginfo:SetDamageForce( self.Owner:GetUp() * 5158 + self.Owner:GetForward() * 10012 )
+			dmginfo:SetDamageForce( self.Owner:GetUp() * 5158 * scale + self.Owner:GetForward() * 10012 * scale )
 			dmginfo:SetDamage( math.random( 12, 24 ) )
 		end
 
@@ -140,10 +143,10 @@ function SWEP:DealDamage()
 
 	end
 
-	if ( SERVER && IsValid( tr.Entity ) ) then
+	if ( IsValid( tr.Entity ) ) then
 		local phys = tr.Entity:GetPhysicsObject()
 		if ( IsValid( phys ) ) then
-			phys:ApplyForceOffset( self.Owner:GetAimVector() * 80 * phys:GetMass(), tr.HitPos )
+			phys:ApplyForceOffset( self.Owner:GetAimVector() * 80 * phys:GetMass() * scale, tr.HitPos )
 		end
 	end
 
