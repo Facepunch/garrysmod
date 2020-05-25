@@ -6,6 +6,7 @@
 function ToolObj:MakeGhostEntity( model, pos, angle )
 
 	util.PrecacheModel( model )
+
 	-- We do ghosting serverside in single player
 	-- It's done clientside in multiplayer
 	if ( SERVER && !game.SinglePlayer() ) then return end
@@ -39,7 +40,10 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 	self.GhostEntity:SetAngles( angle )
 	self.GhostEntity:Spawn()
 
-	self.GhostEntity:SetSolid( SOLID_VPHYSICS )
+	-- We do not want physics at all
+	self.GhostEntity:PhysicsDestroy()
+
+	self.GhostEntity:SetSolid( SOLID_NONE )
 	self.GhostEntity:SetMoveType( MOVETYPE_NONE )
 	self.GhostEntity:SetNotSolid( true )
 	self.GhostEntity:SetRenderMode( RENDERMODE_TRANSCOLOR )
