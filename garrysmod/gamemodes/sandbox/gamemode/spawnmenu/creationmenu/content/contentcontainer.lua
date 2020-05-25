@@ -125,14 +125,14 @@ end
 
 vgui.Register( "ContentContainer", PANEL, "DScrollPanel" )
 
-hook.Add( "SpawnlistOpenGenericMenu", "SpawnlistOpenGenericMenu", function( canvas )
+hook.Add( "SpawnlistOpenGenericMenu", "DragAndDropSelectionMenu", function( canvas )
 
 	if ( canvas:GetReadOnly() ) then return end
 
 	local selected = canvas:GetSelectedChildren()
 
 	local menu = DermaMenu()
-	menu:AddOption( "#spawnmenu.menu.delete", function()
+	menu:AddOption( language.GetPhrase( "spawnmenu.menu.deletex" ):format( #selected ), function()
 
 		for k, v in pairs( selected ) do
 			v:Remove()
@@ -141,6 +141,38 @@ hook.Add( "SpawnlistOpenGenericMenu", "SpawnlistOpenGenericMenu", function( canv
 		hook.Run( "SpawnlistContentChanged" )
 
 	end ):SetIcon( "icon16/bin_closed.png" )
+
+	-- This is less than ideal
+	local spawnicons = 0
+	local icon = nil
+	for id, pnl in pairs( selected ) do
+		if ( pnl.InternalAddResizeMenu ) then
+			spawnicons = spawnicons + 1
+			icon = pnl
+		end
+	end
+
+	if ( spawnicons > 0 ) then
+		icon:InternalAddResizeMenu( menu, function( w, h )
+
+			for id, pnl in pairs( selected ) do
+				if ( !pnl.InternalAddResizeMenu ) then continue end
+				pnl:SetSize( w, h )
+				pnl:InvalidateLayout( true )
+				pnl:GetParent():OnModified()
+				pnl:GetParent():Layout()
+				pnl:SetModel( pnl:GetModelName(), pnl:GetSkinID(), pnl:GetBodyGroup() )
+			end
+
+		end, language.GetPhrase( "spawnmenu.menu.resizex" ):format( spawnicons ) )
+
+		menu:AddOption( language.GetPhrase( "spawnmenu.menu.rerenderx" ):format( spawnicons ), function()
+			for id, pnl in pairs( selected ) do
+				if ( !pnl.RebuildSpawnIcon ) then continue end
+				pnl:RebuildSpawnIcon()
+			end
+		end ):SetIcon( "icon16/picture.png" )
+	end
 
 	menu:Open()
 
