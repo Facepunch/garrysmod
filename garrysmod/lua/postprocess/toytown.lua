@@ -34,7 +34,7 @@ hook.Add( "RenderScreenspaceEffects", "RenderToyTown", function()
 	if ( !render.SupportsPixelShaders_2_0() ) then return end
 
 	local NumPasses = pp_toytown_passes:GetInt()
-	local H = ScrH() * pp_toytown_size:GetFloat()
+	local H = math.floor( ScrH() * pp_toytown_size:GetFloat() )
 
 	DrawToyTown( NumPasses, H )
 
