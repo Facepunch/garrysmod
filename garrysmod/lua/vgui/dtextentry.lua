@@ -76,7 +76,7 @@ function PANEL:OnKeyCodeTyped( code )
 		end
 
 		self:FocusNext()
-		self:OnEnter(self:GetValue())
+		self:OnEnter( self:GetText() )
 		self.HistoryPos = 0
 
 	end
