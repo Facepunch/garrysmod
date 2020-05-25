@@ -380,6 +380,17 @@ function Do_Undo( undo )
 end
 
 --[[---------------------------------------------------------
+	Checks whether a player is allowed to undo
+-----------------------------------------------------------]]
+local function Can_Undo( ply, undo )
+
+	local call = hook.Run( "CanUndo", ply, undo )
+	
+	return call == true or call == nil
+
+end
+
+--[[---------------------------------------------------------
 	Console command
 -----------------------------------------------------------]]
 local function CC_UndoLast( pl, command, args )
@@ -399,6 +410,8 @@ local function CC_UndoLast( pl, command, args )
 
 	-- No undos
 	if ( !last ) then return end
+
+	if ( !Can_Undo( pl, PlayerUndo[ index ] ) ) then return end
 
 	-- This is quite messy, but if the player rejoined the server
 	-- 'Owner' might no longer be a valid entity. So replace the Owner
@@ -432,7 +445,7 @@ local function CC_UndoNum( ply, command, args )
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
 	local UndoNum = tonumber( args[ 1 ] )
-	if ( !PlayerUndo[ index ][ UndoNum ] ) then return end
+	if ( !PlayerUndo[ index ][ UndoNum ] || !Can_Undo( ply, PlayerUndo[ index ][ UndoNum ] ) ) then return end
 
 	-- Undo!
 	Do_Undo( PlayerUndo[ index ][ UndoNum ] )
