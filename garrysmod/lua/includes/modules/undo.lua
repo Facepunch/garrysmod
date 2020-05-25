@@ -177,7 +177,7 @@ end
 
 --[[---------------------------------------------------------
 	GetTable
-	Save/Restore the undo tavles
+	Save/Restore the undo tables
 -----------------------------------------------------------]]
 local function Save( save )
 
@@ -411,12 +411,12 @@ local function CC_UndoLast( pl, command, args )
 	-- No undos
 	if ( !last ) then return end
 
-	if ( !Can_Undo( pl, PlayerUndo[ index ] ) ) then return end
-
 	-- This is quite messy, but if the player rejoined the server
 	-- 'Owner' might no longer be a valid entity. So replace the Owner
 	-- with the player that is doing the undoing
 	last.Owner = pl
+
+	if ( !Can_Undo( pl, last ) ) then return end
 
 	local count = Do_Undo( last )
 
@@ -445,10 +445,17 @@ local function CC_UndoNum( ply, command, args )
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
 	local UndoNum = tonumber( args[ 1 ] )
-	if ( !PlayerUndo[ index ][ UndoNum ] || !Can_Undo( ply, PlayerUndo[ index ][ UndoNum ] ) ) then return end
+
+	local TheUndo = PlayerUndo[ index ][ UndoNum ]
+	if ( !TheUndo ) then return end
+
+	-- Do the same as above
+	TheUndo.Owner = ply
+
+	if ( !Can_Undo( ply, TheUndo ) ) then return end
 
 	-- Undo!
-	Do_Undo( PlayerUndo[ index ][ UndoNum ] )
+	Do_Undo( TheUndo )
 
 	-- Notify the client UI that the undo happened
 	-- This is normally called by the deleted entity via SendUndoneMessage
