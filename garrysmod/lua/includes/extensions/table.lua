@@ -172,6 +172,17 @@ function table.Random( t )
 	end
 end
 
+--[[---------------------------------------------------------
+	Name: table.Shuffle( table )
+	Desc: Performs an inline Fisher-Yates shuffle on the table in O(n) time
+-----------------------------------------------------------]]
+function table.Shuffle( t )
+	for i = 1, #t - 1 do
+		local j = math.random( i, #t )
+		t[ i ], t[ j ] = t[ j ], t[ i ]
+	end
+end
+
 --[[----------------------------------------------------------------------
 	Name: table.IsSequential( table )
 	Desc: Returns true if the tables
