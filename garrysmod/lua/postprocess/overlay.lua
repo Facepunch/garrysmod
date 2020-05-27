@@ -26,7 +26,7 @@ function DrawMaterialOverlay( texture, refractamount )
 	mat_Overlay:SetInt( "$ignorez", 1 )
 
 	render.SetMaterial( mat_Overlay )
-	render.DrawScreenQuad()
+	render.DrawScreenQuad( true )
 
 end
 

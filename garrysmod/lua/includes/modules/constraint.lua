@@ -17,58 +17,25 @@ if ( CLIENT ) then return end
 -- I think 128 constraints is around the max that causes the crash
 -- So at this number we'll refuse to add more to the system
 local MAX_CONSTRAINTS_PER_SYSTEM = 100
-local ConstraintSystems = {}
+local CurrentSystem = nil
+local SystemLookup = {}
 
---[[----------------------------------------------------------------------
-	Go through each constraint system and check it for redundancy
-------------------------------------------------------------------------]]
-local function GarbageCollectConstraintSystems()
+hook.Add( "EntityRemoved", "Constraint Library - ConstraintRemoved", function( Ent )
+	local System = SystemLookup[ Ent ]
+	if ( !IsValid( System ) ) then return end
 
-	for k, System in pairs( ConstraintSystems ) do
+	System.__ConstraintCount = ( System.__ConstraintCount or 0 ) - 1
 
-		-- System was already deleted (most likely by CleanUpMap)
-		if ( !IsValid( System ) ) then
-
-			ConstraintSystems[ k ] = nil
-
-		else
-
-			local Count = 0
-			local Constraints = {}
-			local UsedEntitiesNew = {}
-			for id, ent in pairs( System.UsedEntities ) do
-
-				-- Note: this will not let the world entity pass, but we don't want that anyway
-				if ( !IsValid( ent ) ) then continue end
-
-				Count = Count + 1
-				UsedEntitiesNew[ ent ] = true
-
-				-- Dirtily calculate how many constraints this system has
-				for i, c in pairs( ent.Constraints or {} ) do
-					if ( IsValid( c ) ) then Constraints[ c ] = true end
-				end
-
-			end
-
-			-- TODO: Delete if System.constraints == 0?
-			if ( Count == 0 ) then
-
-				System:Remove()
-				ConstraintSystems[ k ] = nil
-
-			else
-
-				System.constraints = #table.GetKeys( Constraints )
-				System.UsedEntities = table.GetKeys( UsedEntitiesNew ) -- Maintain format for addon usage
-
-			end
-
-
-		end
-
+	if System.__ConstraintCount <= 0 then
+		System.__BadConstraintSystem = true
+		System:Remove()
 	end
+end )
 
+local function ConstraintCreated( Constraint )
+	assert( IsValid( CurrentSystem ) )
+	SystemLookup[ Constraint ] = CurrentSystem
+	CurrentSystem.__ConstraintCount = ( CurrentSystem.__ConstraintCount or 0 ) + 1
 end
 
 
@@ -83,9 +50,7 @@ local function CreateConstraintSystem()
 	System:SetKeyValue( "additionaliterations", iterations )
 	System:Spawn()
 	System:Activate()
-
-	table.insert( ConstraintSystems, System )
-	System.UsedEntities = {}
+	System.__ConstraintCount = 0
 
 	return System
 
@@ -102,29 +67,25 @@ end
 ------------------------------------------------------------------------]]
 local function FindOrCreateConstraintSystem( Ent1, Ent2 )
 
-	-- This is probably the best place to be calling this
-	-- Calling this here will cause empty constraintsystems to NOT be reused, but maybe that is better than worse
-	GarbageCollectConstraintSystems()
-
 	local System = nil
 
 	Ent2 = Ent2 or Ent1
 
 	-- Does Ent1 have a constraint system?
-	if ( !Ent1:IsWorld() && IsValid( Ent1.ConstraintSystem ) ) then
+	if ( !Ent1:IsWorld() && IsValid( Ent1.ConstraintSystem ) && !Ent1.ConstraintSystem.__BadConstraintSystem ) then
 		System = Ent1.ConstraintSystem
 	end
 
 	-- Don't add to this system - we have too many constraints on it already.
-	if ( IsValid( System ) && System:GetVar( "constraints", 0 ) > MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
+	if ( IsValid( System ) && ( System.__ConstraintCount or 0 ) >= MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
 
 	-- Does Ent2 have a constraint system?
-	if ( !IsValid( System ) && !Ent2:IsWorld() && IsValid( Ent2.ConstraintSystem ) ) then
+	if ( !IsValid( System ) && !Ent2:IsWorld() && IsValid( Ent2.ConstraintSystem ) && !Ent2.ConstraintSystem.__BadConstraintSystem ) then
 		System = Ent2.ConstraintSystem
 	end
 
 	-- Don't add to this system - we have too many constraints on it already.
-	if ( IsValid( System ) && System:GetVar( "constraints", 0 ) > MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
+	if ( IsValid( System ) && ( System.__ConstraintCount or 0 ) >= MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
 
 	-- No constraint system yet (Or they're both full) - make a new one
 	if ( !IsValid( System ) ) then
@@ -136,16 +97,6 @@ local function FindOrCreateConstraintSystem( Ent1, Ent2 )
 
 	Ent1.ConstraintSystem = System
 	Ent2.ConstraintSystem = System
-
-	-- This is a bit slow and ugly, but ensure no duplicates
-	System.UsedEntities = System.UsedEntities or {}
-	if ( !table.HasValue( System.UsedEntities, Ent1 ) ) then table.insert( System.UsedEntities, Ent1 ) end
-	if ( !table.HasValue( System.UsedEntities, Ent2 ) ) then table.insert( System.UsedEntities, Ent2 ) end
-
-	local ConstraintNum = System:GetVar( "constraints", 0 )
-	System:SetVar( "constraints", ConstraintNum + 1 )
-
-	--Msg( "System has " .. tostring( System:GetVar( "constraints", 0 ) ) .. " constraints\n" )
 
 	return System
 
@@ -159,10 +110,10 @@ end
 local function onStartConstraint( Ent1, Ent2 )
 
 	-- Get constraint system
-	local system = FindOrCreateConstraintSystem( Ent1, Ent2 )
+	CurrentSystem = FindOrCreateConstraintSystem( Ent1, Ent2 )
 
 	-- Any constraints called after this call will use this system
-	SetPhysConstraintSystem( system )
+	SetPhysConstraintSystem( CurrentSystem )
 
 end
 
@@ -173,6 +124,7 @@ end
 local function onFinishConstraint( Ent1, Ent2 )
 
 	-- Turn off constraint system override
+	CurrentSystem = nil
 	SetPhysConstraintSystem( NULL )
 
 end
@@ -344,7 +296,7 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 	if ( width <= 0 ) then return nil end
 
 	-- Clamp the rope to a sensible width
-	width = math.Clamp( width, 1, 100 )
+	width = math.Clamp( width, 0.2, 100 )
 
 	local rope = ents.Create( "keyframe_rope" )
 	rope:SetPos( Pos )
@@ -462,6 +414,7 @@ function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 
 		-- Create the constraint
 		local Constraint = ents.Create( "phys_constraint" )
+		ConstraintCreated( Constraint )
 		if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
 		if ( nocollide ) then Constraint:SetKeyValue( "spawnflags", 1 ) end
 		Constraint:SetPhysConstraintObjects( Phys2, Phys1 )
@@ -494,6 +447,8 @@ function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 	Phys1:Wake()
 	Phys2:Wake()
 
+	_G.C = Constraint
+
 	return Constraint
 
 end
@@ -523,6 +478,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 
 			-- Create the constraint
 			Constraint = ents.Create( "phys_lengthconstraint" )
+			ConstraintCreated( Constraint )
 			Constraint:SetPos( WPos1 )
 			Constraint:SetKeyValue( "attachpoint", tostring( WPos2 ) )
 			Constraint:SetKeyValue( "minlength", "0.0" )
@@ -598,6 +554,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 		onStartConstraint( Ent1, Ent2 )
 
 			Constraint = ents.Create( "phys_spring" )
+			ConstraintCreated( Constraint )
 			Constraint:SetPos( WPos1 )
 			Constraint:SetKeyValue( "springaxis", tostring( WPos2 ) )
 			Constraint:SetKeyValue( "constant", constant )
@@ -665,6 +622,7 @@ function Keepupright( Ent, Ang, Bone, angularlimit )
 	onStartConstraint( Ent )
 
 		local Constraint = ents.Create( "phys_keepupright" )
+		ConstraintCreated( Constraint )
 		Constraint:SetAngles( Ang )
 		Constraint:SetKeyValue( "angularlimit", angularlimit )
 		Constraint:SetPhysConstraintObjects( Phys, Phys )
@@ -758,6 +716,7 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create("phys_slideconstraint")
+		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "slideaxis", tostring( WPos2 ) )
 		Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
@@ -819,6 +778,7 @@ function Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, 
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create("phys_hinge")
+		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "hingeaxis", tostring( WPos2 ) )
 		if ( forcelimit && forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
@@ -882,6 +842,7 @@ function AdvBallsocket( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torq
 		if ( nocollide && nocollide > 0 ) then flags = flags + 1 end
 
 		local Constraint = ents.Create("phys_ragdollconstraint")
+		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "xmin", xmin )
 		Constraint:SetKeyValue( "xmax", xmax )
@@ -957,6 +918,7 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create("logic_collision_pair")
+		ConstraintCreated( Constraint )
 		Constraint:SetKeyValue( "startdisabled", 1 )
 		Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
 		Constraint:Spawn()
@@ -1082,6 +1044,7 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_torque" )
+		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "axis", tostring( WPos2 ) )
 		Constraint:SetKeyValue( "force", torque )
@@ -1169,6 +1132,7 @@ function Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimi
 	onStartConstraint( Ent1, Ent4 )
 
 		local Constraint = ents.Create( "phys_pulleyconstraint" )
+		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos2 )
 		Constraint:SetKeyValue( "position2", tostring( WPos3 ) )
 		Constraint:SetKeyValue( "ObjOffset1", tostring( LPos1 ) )
@@ -1238,6 +1202,7 @@ function Ballsocket( Ent1, Ent2, Bone1, Bone2, LPos, forcelimit, torquelimit, no
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create("phys_ballsocket")
+		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos )
 		if ( forcelimit && forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
 		if ( torquelimit && torquelimit > 0 ) then Constraint:SetKeyValue( "torquelimit", torquelimit ) end

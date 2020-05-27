@@ -31,7 +31,7 @@ if ( CLIENT ) then
 		local Panel = controlpanel.Get( "Undo" )
 		if ( !IsValid( Panel ) ) then return end
 
-		Panel:ClearControls()
+		Panel:Clear()
 		Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.undo.help" } )
 
 		local ComboBox = Panel:ListBox()
@@ -99,7 +99,7 @@ if ( CLIENT ) then
 	--[[---------------------------------------------------------
 		MakeUIDirty
 		Makes the UI dirty - it will re-create the controls
-		the next time it is viewed. We also take this opportun
+		the next time it is viewed.
 	-----------------------------------------------------------]]
 	function MakeUIDirty()
 
@@ -139,6 +139,9 @@ if ( CLIENT ) then
 		local UndoPanel = controlpanel.Get( "Undo" )
 		if ( !IsValid( UndoPanel ) ) then return end
 
+		-- Mark as dirty please
+		MakeUIDirty()
+
 		-- Panels only think when they're visible
 		UndoPanel.Think = CPanelUpdate
 
@@ -174,7 +177,7 @@ end
 
 --[[---------------------------------------------------------
 	GetTable
-	Save/Restore the undo tavles
+	Save/Restore the undo tables
 -----------------------------------------------------------]]
 local function Save( save )
 
@@ -304,7 +307,7 @@ function Finish( NiceText )
 	if ( !Current_Undo ) then return end
 
 	-- Do not add undos that have no owner or anything to undo
-	if ( !IsValid( Current_Undo.Owner ) || ( table.IsEmpty( Current_Undo.Entities ) && table.IsEmpty( Current_Undo.Functions ) ) ) then 
+	if ( !IsValid( Current_Undo.Owner ) or ( table.IsEmpty( Current_Undo.Entities ) && table.IsEmpty( Current_Undo.Functions ) ) ) then
 		Current_Undo = nil
 		return
 	end
@@ -377,6 +380,17 @@ function Do_Undo( undo )
 end
 
 --[[---------------------------------------------------------
+	Checks whether a player is allowed to undo
+-----------------------------------------------------------]]
+local function Can_Undo( ply, undo )
+
+	local call = hook.Run( "CanUndo", ply, undo )
+
+	return call == true or call == nil
+
+end
+
+--[[---------------------------------------------------------
 	Console command
 -----------------------------------------------------------]]
 local function CC_UndoLast( pl, command, args )
@@ -401,6 +415,8 @@ local function CC_UndoLast( pl, command, args )
 	-- 'Owner' might no longer be a valid entity. So replace the Owner
 	-- with the player that is doing the undoing
 	last.Owner = pl
+
+	if ( !Can_Undo( pl, last ) ) then return end
 
 	local count = Do_Undo( last )
 
@@ -429,10 +445,17 @@ local function CC_UndoNum( ply, command, args )
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
 	local UndoNum = tonumber( args[ 1 ] )
-	if ( !PlayerUndo[ index ][ UndoNum ] ) then return end
+
+	local TheUndo = PlayerUndo[ index ][ UndoNum ]
+	if ( !TheUndo ) then return end
+
+	-- Do the same as above
+	TheUndo.Owner = ply
+
+	if ( !Can_Undo( ply, TheUndo ) ) then return end
 
 	-- Undo!
-	Do_Undo( PlayerUndo[ index ][ UndoNum ] )
+	Do_Undo( TheUndo )
 
 	-- Notify the client UI that the undo happened
 	-- This is normally called by the deleted entity via SendUndoneMessage

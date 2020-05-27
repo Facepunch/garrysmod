@@ -250,7 +250,7 @@
 		27
 		{
 			"name"		"sbox_persist"
-			"text"		"persistent_mode"
+			"text"		"persistent_mode_menu"
 			"help"		"Enables 'Make Persistent' option when you right click on props while holding C, allowing you to save them across sessions. Leave empty to disable"
 			"type"		"Text"
 			"default"	""

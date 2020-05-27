@@ -44,7 +44,7 @@ function PANEL:CreateSaveNotification()
 	local SavePanel = vgui.Create( "Panel", self )
 	SavePanel:Dock( TOP )
 	SavePanel:SetVisible( false )
-	SavePanel:DockMargin( 16, 1, 16, 4 )
+	SavePanel:DockMargin( 8, 1, 8, 4 )
 
 	local SaveButton = vgui.Create( "DButton", SavePanel )
 	SaveButton:Dock( FILL )

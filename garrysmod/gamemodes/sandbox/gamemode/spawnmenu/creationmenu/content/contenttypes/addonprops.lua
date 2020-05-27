@@ -27,6 +27,7 @@ hook.Add( "PopulateContent", "AddonProps", function( pnlContent, tree, node )
 
 	local ViewPanel = vgui.Create( "ContentContainer", pnlContent )
 	ViewPanel:SetVisible( false )
+	ViewPanel.IconList:SetReadOnly( true )
 
 	local MyNode = node:AddNode( "#spawnmenu.category.addons", "icon16/folder_database.png" )
 

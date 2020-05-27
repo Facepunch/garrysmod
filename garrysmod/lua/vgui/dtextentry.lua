@@ -76,7 +76,7 @@ function PANEL:OnKeyCodeTyped( code )
 		end
 
 		self:FocusNext()
-		self:OnEnter()
+		self:OnEnter( self:GetText() )
 		self.HistoryPos = 0
 
 	end
@@ -237,7 +237,7 @@ function PANEL:Think()
 
 end
 
-function PANEL:OnEnter()
+function PANEL:OnEnter( val )
 
 	-- For override
 	self:UpdateConvarValue()
