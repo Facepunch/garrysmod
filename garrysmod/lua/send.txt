@@ -145,6 +145,7 @@ lua\includes\util\tooltips.lua
 lua\includes\util\client.lua
 lua\includes\gui\icon_progress.lua
 lua\includes\extensions\util\worldpicker.lua
+lua\includes\extensions\achievements.lua
 lua\includes\extensions\debug.lua
 lua\includes\extensions\entity.lua
 lua\includes\extensions\net.lua
