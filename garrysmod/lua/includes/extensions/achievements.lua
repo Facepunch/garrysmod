@@ -1,6 +1,6 @@
 if SERVER then
 	util.AddNetworkString("achievements")
-	achievements = { }
+	achievements = {}
 end
 
 function achievements.Call(ply, aID, removerCount)
