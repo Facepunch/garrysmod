@@ -43,9 +43,7 @@ function TOOL:LeftClick( trace )
 
 	if ( DoRemoveEntity( trace.Entity ) ) then
 
-		if ( !CLIENT ) then
-			self:GetOwner():SendLua( "achievements.Remover()" )
-		end
+		achievements.Call(self:GetOwner(), 2, 1)
 
 		return true
 
@@ -79,7 +77,7 @@ function TOOL:RightClick( trace )
 
 	end
 
-	self:GetOwner():SendLua( string.format( "for i=1,%i do achievements.Remover() end", Count ) )
+	achievements.Call(self:GetOwner(), 2, Count)
 
 	return true
 
