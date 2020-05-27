@@ -73,7 +73,7 @@ function ENT:OnTakeDamage( dmginfo )
 
 	local attacker = dmginfo:GetAttacker()
 	if ( IsValid( attacker ) && attacker:IsPlayer() ) then
-		attacker:SendLua( "achievements.BalloonPopped()" )
+		achievements.Call(attacker, 0)
 	end
 
 	self:Remove()
