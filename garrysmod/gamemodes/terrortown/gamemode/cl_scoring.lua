@@ -379,7 +379,7 @@ function CLSCORE:ShowPanel()
 
    local dpanel = vgui.Create("DFrame")
 
-   local title
+   local title = self.WinTypes.Default
    local starttime = self.StartTime
    local endtime = starttime
    local events = self.Events
@@ -393,16 +393,12 @@ function CLSCORE:ShowPanel()
       end
    end
 
-   if title == nil then
-      title = self.WinTypes.Default
-   end
-
    -- size the panel based on the win text w/ 88px horizontal padding and 44px veritcal padding
    surface.SetFont("WinHuge")
-   local w, h = surface.GetTextSize(title.Text or self.WinTypes.Default.Text)
+   local w, h = surface.GetTextSize( T(title.Text or self.WinTypes.Default.Text) )
 
-   -- w + padding (100) + DPropertySheet padding (8) + winlbl padding (30) + offset margin (margin * 2) + size margin (margin)
-   w, h = math.max(700, w + 138 + margin * 3), 500
+   -- w + DPropertySheet padding (8) + winlbl padding (30) + offset margin (margin * 2) + size margin (margin)
+   w, h = math.max(700, w + 38 + margin * 3), 500
 
    dpanel:SetSize(w, h)
    dpanel:Center()
