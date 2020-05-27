@@ -500,6 +500,7 @@ function CLSCORE:SaveLog()
    log = log .. string.format("%s | %-25s | %s\n", " TIME", "TYPE", "WHAT HAPPENED") .. string.rep("-", 50) .."\n"
 
    for i = 1, #events do
+      local e = events[i]
       local etxt = self:TextForEvent(e)
       local etime = self:TimeForEvent(e)
       local _, etype = self:IconForEvent(e)
@@ -532,7 +533,7 @@ function CLSCORE:Init(events)
    
    local game, selected, spawn = false, false, false
    for i = 1, #events do
-      e = events[i]
+      local e = events[i]
       if e.id == EVENT_GAME then
          if e.state == ROUND_ACTIVE then
             starttime = e.t
