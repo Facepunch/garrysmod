@@ -311,7 +311,7 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 
 		-- Set new position
 		ent:SetPos( vFlushPoint )
-		achievements.Call(ply, 4)
+		achievements.Call(ply, "SpawnedProp")
 
 	else
 
@@ -322,7 +322,7 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 			phys:SetPos( phys:GetPos() + VecOffset )
 		end
 
-		achievements.Call(ply, 5)
+		achievements.Call(ply, "SpawnedRagdoll")
 
 	end
 
@@ -529,7 +529,7 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 	-- And cleanup
 	ply:AddCleanup( "npcs", SpawnedNPC )
 
-	achievements.Call(ply, 3)
+	achievements.Call(ply, "SpawnedNPC")
 
 end
 concommand.Add( "gmod_spawnnpc", function( ply, cmd, args ) Spawn_NPC( ply, args[ 1 ], args[ 2 ] ) end )
