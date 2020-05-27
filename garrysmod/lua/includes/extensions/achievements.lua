@@ -8,11 +8,11 @@ if SERVER then
 
 	function achievements.Call(ply, aName, data)
 		local aID = achievementsLookup[aName]
-		if not aID then error("Attempt to call unregistered achievement (" .. tostring(aName) .. ")") end
+		if (not aID) then error("Attempt to call unregistered achievement (" .. tostring(aName) .. ")") end
 		net.Start("achievements")
 		net.WriteUInt(aID, bitsize)
 
-		if data then
+		if (data) then
 			net.WriteUInt(data, 16)
 		end
 
@@ -37,9 +37,8 @@ if CLIENT then
 	net.Receive("achievements", function()
 		local aID = net.ReadUInt(bitsize)
 		local func = achievementsLookup[aID]
-		print(aID,func,bitsize)
 
-		if func then
+		if (func) then
 			func(net.ReadUInt(16))
 		end
 	end)
