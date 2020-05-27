@@ -95,6 +95,7 @@ include( "gmsave.lua" )
 -----------------------------------------------------------]]
 
 include ( "extensions/file.lua" )
+include ( "extensions/achievements.lua" )
 include ( "extensions/angle.lua" )
 include ( "extensions/debug.lua" )
 include ( "extensions/entity.lua" )
