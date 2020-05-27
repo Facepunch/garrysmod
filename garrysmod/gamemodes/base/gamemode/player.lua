@@ -175,6 +175,8 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	end
 
+	player_manager.RunClass( ply, "Death", inflictor, attacker )
+
 	if ( attacker == ply ) then
 
 		net.Start( "PlayerKilledSelf" )
