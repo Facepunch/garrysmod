@@ -31,6 +31,8 @@ SWEP.Primary.Automatic     = true
 SWEP.Primary.Ammo          = "AirboatGun"
 SWEP.Primary.Recoil        = 1.3 --default 1.9
 SWEP.Primary.Sound         = Sound("Weapon_m249.Single")
+SWEP.HeadshotMultiplier    = 2 -- Not in stock
+
 
 SWEP.UseHands              = true
 SWEP.ViewModel             = "models/weapons/cstrike/c_mach_m249para.mdl"

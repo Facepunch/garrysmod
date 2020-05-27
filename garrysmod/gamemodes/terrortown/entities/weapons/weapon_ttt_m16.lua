@@ -19,15 +19,15 @@ SWEP.Kind                  = WEAPON_HEAVY
 SWEP.WeaponID              = AMMO_M16
 
 SWEP.Primary.Delay         = 0.17 --default 0.15
-SWEP.Primary.Recoil        = 1.8 --default 1.6
+SWEP.Primary.Recoil        = 1.6 --default 1.6
 SWEP.Primary.Automatic     = true --default true
 SWEP.Primary.Ammo          = "Pistol"
 SWEP.Primary.Damage        = 28 --default 23
 SWEP.Primary.Cone          = 0.018
-SWEP.Primary.ClipSize      = 10 --default 20
+SWEP.Primary.ClipSize      = 20 --default 20
 SWEP.Primary.ClipMax       = 60
-SWEP.Primary.DefaultClip   = 10 --default 20
-SWEP.HeadshotMultiplier    = 2.8 -- Not in stock
+SWEP.Primary.DefaultClip   = 20 --default 20
+SWEP.HeadshotMultiplier    = 2 -- Not in stock
 SWEP.Primary.Sound         = Sound( "Weapon_M4A1.Single" )
 
 SWEP.AutoSpawnable         = true
@@ -41,31 +41,37 @@ SWEP.WorldModel            = "models/weapons/w_rif_m4a1.mdl"
 SWEP.IronSightsPos         = Vector(-7.58, -9.2, 0.55)
 SWEP.IronSightsAng         = Vector(2.599, -1.3, -3.6)
 
-function SWEP:SetZoom(state)
-   if not (IsValid(self:GetOwner()) and self:GetOwner():IsPlayer()) then return end
-   if state then
-      self:GetOwner():SetFOV(35, 0.5)
-   else
-      self:GetOwner():SetFOV(0, 0.2)
-   end
-end
+--function SWEP:SetZoom(state)
+   --if not (IsValid(self:GetOwner()) and self:GetOwner():IsPlayer()) then return end
+   --if state then
+      --self:GetOwner():SetFOV(35, 0.5)
+   --else
+      --self:GetOwner():SetFOV(0, 0.2)
+   --end
+--end
 
 -- Add some zoom to ironsights for this gun
-function SWEP:SecondaryAttack()
-   if not self.IronSightsPos then return end
-   if self:GetNextSecondaryFire() > CurTime() then return end
+--function SWEP:SecondaryAttack()
+   --if not self.IronSightsPos then return end
+   --if self:GetNextSecondaryFire() > CurTime() then return end
 
-   local bIronsights = not self:GetIronsights()
+   --local bIronsights = not self:GetIronsights()
 
-   self:SetIronsights( bIronsights )
+   --self:SetIronsights( bIronsights )
 
-   self:SetZoom( bIronsights )
+   --self:SetZoom( bIronsights )
 
-   self:SetNextSecondaryFire( CurTime() + 0.3 )
+   --self:SetNextSecondaryFire( CurTime() + 0.3 )
+--end
+
+function SWEP:GetPrimaryCone()
+   local cone = self.Primary.Cone or 0.02
+   -- 50% accuracy bonus when sighting
+   return self:GetIronsights() and (cone * 0.5) or cone
 end
 
 function SWEP:PreDrop()
-   self:SetZoom(false)
+   --self:SetZoom(false)
    self:SetIronsights(false)
    return self.BaseClass.PreDrop(self)
 end
@@ -77,11 +83,23 @@ function SWEP:Reload()
     end
     self:DefaultReload(ACT_VM_RELOAD)
     self:SetIronsights(false)
-    self:SetZoom(false)
+    --self:SetZoom(false)
 end
 
 function SWEP:Holster()
    self:SetIronsights(false)
-   self:SetZoom(false)
+   --self:SetZoom(false)
    return true
 end
+
+if ((game.SinglePlayer() and SERVER) or
+       ((not game.SinglePlayer()) and CLIENT and IsFirstTimePredicted() )) then
+
+      -- reduce recoil if ironsighting
+      recoil = sights and (recoil * 0.5) or recoil
+
+      local eyeang = self:GetOwner():EyeAngles()
+      eyeang.pitch = eyeang.pitch - recoil
+      self:GetOwner():SetEyeAngles( eyeang )
+
+   end

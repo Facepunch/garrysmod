@@ -16,9 +16,9 @@ end
 SWEP.Base                  = "weapon_tttbase"
 
 SWEP.Primary.Recoil        = 0.9
-SWEP.Primary.Damage        = 14 --default 12
+SWEP.Primary.Damage        = 12 --default 12
 SWEP.Primary.Delay         = 0.10
-SWEP.Primary.Cone          = 0.028
+SWEP.Primary.Cone          = 0.065 --default .028
 SWEP.Primary.ClipSize      = 17 --default 20
 SWEP.Primary.Automatic     = true
 SWEP.Primary.DefaultClip   = 17 --default 20
@@ -32,7 +32,7 @@ SWEP.AmmoEnt               = "item_ammo_pistol_ttt"
 SWEP.Kind                  = WEAPON_PISTOL
 SWEP.WeaponID              = AMMO_GLOCK
 
-SWEP.HeadshotMultiplier    = 1.75
+SWEP.HeadshotMultiplier    = 2 --default 1.75
 
 SWEP.UseHands              = true
 SWEP.ViewModel             = "models/weapons/cstrike/c_pist_glock18.mdl"

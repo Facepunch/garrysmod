@@ -26,7 +26,7 @@ SWEP.CanBuy                = {ROLE_DETECTIVE}
 SWEP.LimitedStock          = false
 SWEP.AmmoEnt               = "item_ammo_smg1_ttt"
 
-SWEP.Primary.Damage        = 16 --default 9
+SWEP.Primary.Damage        = 8 --default 9
 SWEP.Primary.Delay         = 0.12 --default 0.1
 SWEP.Primary.Cone          = 0.02
 SWEP.Primary.ClipSize      = 25 --default 30
@@ -44,7 +44,7 @@ SWEP.WorldModel            = "models/weapons/w_smg_ump45.mdl"
 SWEP.IronSightsPos         = Vector(-8.735, -10, 4.039)
 SWEP.IronSightsAng         = Vector(-1.201, -0.201, -2)
 
-SWEP.HeadshotMultiplier    = 4.5 -- brain fizz
+SWEP.HeadshotMultiplier    = 2 --default 4.5 -- brain fizz
 --SWEP.DeploySpeed = 3
 
 function SWEP:ShootBullet( dmg, recoil, numbul, cone )
@@ -53,8 +53,10 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
    numbul = numbul or 1
    cone   = cone   or 0.01
 
+--[[
    -- 10% accuracy bonus when sighting
    cone = sights and (cone * 0.9) or cone
+   ]]
 
    local bullet = {}
    bullet.Num    = numbul
@@ -80,7 +82,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
                               if SERVER and ent:IsPlayer() then
                                  local eyeang = ent:EyeAngles()
 
-                                 local j = 5 --default 10
+                                 local j = 2 --default 10
                                  eyeang.pitch = math.Clamp(eyeang.pitch + math.Rand(-j, j), -90, 90)
                                  eyeang.yaw = math.Clamp(eyeang.yaw + math.Rand(-j, j), -90, 90)
                                  ent:SetEyeAngles(eyeang)
@@ -101,6 +103,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 
    if self:GetOwner():IsNPC() then return end
 
+--[[
    if ((game.SinglePlayer() and SERVER) or
        ((not game.SinglePlayer()) and CLIENT and IsFirstTimePredicted() )) then
 
@@ -112,4 +115,5 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
       self:GetOwner():SetEyeAngles( eyeang )
 
    end
+   ]]
 end
