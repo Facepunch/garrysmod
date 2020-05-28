@@ -30,7 +30,7 @@ function achievements.Register(name,func)
 	end
 
 	achievementsN = achievementsN + 1
-	bitsize = math.ceil(math.log(achievementsN) / math.log(2)) + 1
+	bitsize = math.ceil(math.log(achievementsN + 1, 2))
 end
 
 if CLIENT then
