@@ -953,7 +953,7 @@ L.aw_mac1_title = "Prier et Tuer"
 L.aw_mac1_text  = "a tué {num} personnes avec le MAC10, mais ne compte pas dire combien de munitions il a utilisé."
 
 L.aw_mac2_title = "Mac 'n' Cheese"
-L.aw_mac2_text  = "se demande ce qu'il se passerai s'il pouvait porter deux MAC10. {num} fois deux ça fait  ?"
+L.aw_mac2_text  = "se demande ce qu'il se passerai s'il pouvait porter deux MAC10. {num} fois deux ça fait ?"
 
 L.aw_sip1_title = "Silence"
 L.aw_sip1_text  = "a fermé le clapet à {num} piplette(s) avec un pistolet silencieux."
@@ -997,7 +997,7 @@ L.aw_tkl1_text  = "a vu son doigt glisser quand il visait un copain."
 L.aw_tkl2_title = "Double Oups"
 L.aw_tkl2_text  = "a cru qu'il a eu deux Traitres, mais s'est les deux fois trompé."
 
-L.aw_tkl3_title = "OÙ Est Mon Karma  ? !"
+L.aw_tkl3_title = "OÙ Est Mon Karma ?!"
 L.aw_tkl3_text  = "ne s'est pas arrêté après avoir buté deux coéquipiers. Trois c'est son nombre chanceux."
 
 L.aw_tkl4_title = "Équipocide"
