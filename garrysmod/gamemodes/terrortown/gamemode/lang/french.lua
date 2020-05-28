@@ -895,7 +895,7 @@ L.aw_nki1_text  = "a trouvé un traitre. Puis il l'a buté. Facile."
 L.aw_nki2_title = "PostulÉ pour la Justice Squad"
 L.aw_nki2_text  = "a escorté deux traitres dans l'au-delà."
 
-L.aw_nki3_title = "Est-ce Que Les Traitres RÊvent De Moutons Traitres  ?"
+L.aw_nki3_title = "Est-ce Que Les Traitres RÊvent De Moutons Traitres ?"
 L.aw_nki3_text  = "a descendu trois traites."
 
 L.aw_nki4_title = "EmployÉ d'Affaires Internes"
