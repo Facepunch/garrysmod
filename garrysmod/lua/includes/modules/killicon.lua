@@ -5,7 +5,7 @@
 local surface	= surface
 local Msg		= Msg
 local Color		= Color
-local math		= math
+local Material	= Material
 
 --[[---------------------------------------------------------
    Name: killicon
@@ -41,7 +41,7 @@ function AddUV( name, material, color, x, y, w, h )
 	
 	Icons[name] = {}
 	Icons[name].type		= TYPE_MATERIAL
-	Icons[name].material	= material
+	Icons[name].material	= Material( material )
 	Icons[name].color		= color
 	Icons[name].x			= x
 	Icons[name].y			= y
@@ -85,7 +85,7 @@ function GetSize( name )
 		
 	end
 	
-	if ( t.type == TYPE_TEXTURE ) then
+	if ( t.type == TYPE_TEXTURE || t.type == TYPE_MATERIAL ) then
 	
 		-- Estimate the size from the size of the font
 		surface.SetFont( "HL2MPTypeDeath" )
@@ -95,20 +95,16 @@ function GetSize( name )
 		h = h * 0.75
 		
 		-- Make h/w 1:1
-		local tw, th = surface.GetTextureSize( t.texture )
+		local tw, th
+		
+		if ( t.type == TYPE_TEXTURE ) then
+			tw, th = surface.GetTextureSize( t.texture )
+		elseif ( t.type == TYPE_MATERIAL ) then
+			tw = t.w
+			th = t.h
+		end
+		
 		w = tw * (h / th)
-		
-	end
-	
-	if ( t.type == TYPE_MATERIAL ) then
-		
-		local tw, th = surface.GetTextureSize( surface.GetTextureID( t.material:GetName() ) )
-		
-		local uw = math.max( t.x, t.w ) - math.min( t.x, t.w )
-		local uh = math.max( t.y, t.h ) - math.min( t.y, t.h )
-		
-		w = tw * uw
-		h = th * uh
 		
 	end
 	
@@ -160,9 +156,12 @@ function Draw( x, y, name, alpha )
 	
 	if ( t.type == TYPE_MATERIAL ) then
 		
+		y = y - h * 0.3
+		local tw = t.material:Width()
+		local th = t.material:Height()
 		surface.SetMaterial( t.material )
 		surface.SetDrawColor( t.color.r, t.color.g, t.color.b, alpha )
-		surface.DrawTexturedRectUV( x, y, w, h, t.x, t.y, t.w, t.h )
+		surface.DrawTexturedRectUV( x, y, w, h, t.x / tw, t.y / th, (t.x + t.w) / tw, (t.y + t.h) / th )
 		
 	end
 	
