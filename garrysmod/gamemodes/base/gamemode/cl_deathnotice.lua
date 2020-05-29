@@ -22,6 +22,12 @@ killicon.AddFont( "npc_tripmine",		"HL2MPTypeDeath",	"*",	Color_Icon )
 killicon.AddFont( "weapon_crowbar",		"HL2MPTypeDeath",	"6",	Color_Icon )
 killicon.AddFont( "weapon_physcannon",	"HL2MPTypeDeath",	",",	Color_Icon )
 
+-- Prop like objects get the prop kill icon
+killicon.AddAlias( "prop_ragdoll", "prop_physics" )
+killicon.AddAlias( "prop_physics_respawnable", "prop_physics" )
+killicon.AddAlias( "func_pushable", "prop_physics" )
+killicon.AddAlias( "func_physbox", "prop_physics" )
+
 local Deaths = {}
 
 local function PlayerIDOrNameToString( var )
