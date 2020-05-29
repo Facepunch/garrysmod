@@ -9,6 +9,10 @@ if ( CLIENT ) then
 
 		if ( !arg[1] ) then return end
 
+		-- Server doesn't allow us to do this, don't even try to send them data
+		local res = hook.Run( "CanArmDupe", ply )
+		if ( res == false ) then ply:ChatPrint( "Refusing to load dupe, server has blocked usage of the Duplicator tool!" ) return end
+
 		-- Load the dupe (engine takes care of making sure it's a dupe)
 		local dupe = engine.OpenDupe( arg[1] )
 		if ( !dupe ) then
@@ -47,7 +51,11 @@ if ( SERVER ) then
 	util.AddNetworkString( "ArmDupe" )
 
 	local LastDupeArm = 0
-	net.Receive( "ArmDupe", function( len, client )
+	net.Receive( "ArmDupe", function( size, client )
+
+			local res = hook.Run( "CanArmDupe", client )
+			if ( res == false ) then client:ChatPrint( "Server has blocked usage of the Duplicator tool!" ) return end
+
 			if ( LastDupeArm > CurTime() ) then ServerLog( tostring( client ) ..  " tried to arm a dupe too quickly!\n" ) return end
 			LastDupeArm = CurTime() + 1
 
@@ -62,7 +70,8 @@ if ( SERVER ) then
 
 			local uncompressed = util.Decompress( data, 5242880 )
 			if ( !uncompressed ) then
-				MsgN( "Couldn't decompress dupe!" )
+				client:ChatPrint( "Server failed to decompress the duplication!" )
+				MsgN( "Couldn't decompress dupe from " .. client:Nick() .. "!" )
 				return
 			end
 
