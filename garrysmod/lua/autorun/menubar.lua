@@ -68,8 +68,14 @@ hook.Add( "PopulateMenuBar", "NPCOptions_MenuBar", function( menubar )
 	wpns:AddCVar( "#menubar.npcs.noweapon", "gmod_npcweapon", "none" )
 	wpns:AddSpacer()
 
+	-- Sort the items by name, also has the benefit of deduplication
+	local weaponsForSort = {}
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
-		wpns:AddCVar( v.title, "gmod_npcweapon", v.class )
+		weaponsForSort[ language.GetPhrase( v.title ) ] = v.class
+	end
+
+	for title, class in SortedPairs( weaponsForSort ) do
+		wpns:AddCVar( title, "gmod_npcweapon", class )
 	end
 
 end )
