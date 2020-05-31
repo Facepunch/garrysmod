@@ -23,7 +23,7 @@ SWEP.Primary.Recoil        = 7
 SWEP.Primary.Automatic     = false --default true
 SWEP.Primary.Ammo          = "357"
 SWEP.Primary.Damage        = 50
-SWEP.Primary.Cone          = 0.03 --default 0.005
+SWEP.Primary.Cone          = 0.003 --default 0.005
 SWEP.Primary.ClipSize      = 5 --default 10
 SWEP.Primary.ClipMax       = 20 -- keep mirrored to ammo
 SWEP.Primary.DefaultClip   = 5 --default 10
@@ -83,7 +83,7 @@ function SWEP:PreDrop()
 end
 
 function SWEP:Reload()
-	if ( self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
+   if ( self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
    self:DefaultReload( ACT_VM_RELOAD )
    self:SetIronsights( false )
    self:SetZoom( false )
@@ -146,12 +146,6 @@ if CLIENT then
       else
          return self.BaseClass.DrawHUD(self)
       end
-   end
-
-   function SWEP:GetPrimaryCone()
-      local cone = self.Primary.Cone or 0.02
-      -- 90% accuracy bonus when sighting
-      return self:GetIronsights() and (cone * 0.1) or cone
    end
 
    function SWEP:AdjustMouseSensitivity()
