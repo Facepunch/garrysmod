@@ -66,7 +66,7 @@ function CLSCORE.DeclareEventDisplay(event_id, event_fns)
    if not tonumber(event_id) then
       error("Event ??? display: invalid event id", 2)
    end
-   if (not event_fns) or not istable(event_fns) then
+   if not istable(event_fns) then
       error(string.format("Event %d display: no display functions found.", event_id), 2)
    end
    if not event_fns.text then
