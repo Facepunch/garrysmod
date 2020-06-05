@@ -124,7 +124,8 @@
 						<div class="cell" style="padding-top: 5px;">
 							<input type='password' ng-model="CurrentGamemode.Selected.password" ng-show="CurrentGamemode.Selected.pass" ui-keypress="{'enter':'JoinServer( CurrentGamemode.Selected )'}" placeholder="Password" />
 
-							<button class="btn-primary" ng-click="JoinServer( CurrentGamemode.Selected )" ng-tranny="'servers_join_server'"></button>
+							<button ng-hide="CurrentGamemode.Selected.players >= CurrentGamemode.Selected.maxplayers" class="btn-primary" ng-click="JoinServer( CurrentGamemode.Selected )" ng-tranny="'servers_join_server'"></button>
+							<button ng-show="CurrentGamemode.Selected.players >= CurrentGamemode.Selected.maxplayers" class="btn-primary-disabled" ng-tranny="'servers_join_server_full'"></button>
 						</div>
 					</footer>
 

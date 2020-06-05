@@ -79,7 +79,7 @@ UL.category LI.icon
 	position: absolute;
 }
 
-.btn-primary
+.btn-primary, .btn-primary-disabled
 {
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08C), to(#05C));
 	border: 1px solid #CCC;
@@ -90,6 +90,11 @@ UL.category LI.icon
 	cursor: pointer;
 	vertical-align: middle;
 	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary-disabled
+{
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#888), to(#555));
 }
 
 .btn-primary:hover
