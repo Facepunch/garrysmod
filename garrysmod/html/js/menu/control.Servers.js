@@ -30,8 +30,8 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		//
 		// Clear out all of the servers
 		//
-		ServerTypes[Scope.ServerType].gamemodes = {};
-		ServerTypes[Scope.ServerType].list.length = 0;
+		ServerTypes[ Scope.ServerType ].gamemodes = {};
+		ServerTypes[ Scope.ServerType ].list.length = 0;
 
 		if ( !IN_ENGINE )
 			TestUpdateServers( Scope.ServerType, RequestNum[ Scope.ServerType ] );
@@ -41,7 +41,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		//
 		lua.Run( "GetServers( '" + Scope.ServerType + "', '" + RequestNum[ Scope.ServerType ] + "' )" );
 
-		Scope.Refreshing[ Scope.ServerType] = "true";
+		Scope.Refreshing[ Scope.ServerType ] = "true";
 		UpdateDigest( Scope, 50 );
 	}
 
@@ -128,7 +128,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	$scope.JoinServer = function ( srv )
 	{
 		// It's full, why even bother...
-		if ( srv.players >= srv.maxplayers ) return;
+		// if ( srv.players >= srv.maxplayers ) return;
 
 		if ( srv.password )
 			lua.Run( "RunConsoleCommand( \"password\", \"" + srv.password + "\" )" )
