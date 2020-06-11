@@ -8,6 +8,8 @@ local pairs = pairs
 SCORE = SCORE or {}
 SCORE.Events = SCORE.Events or {}
 
+include("scoring_shd.lua")
+
 -- One might wonder why all the key names in the event tables are so annoyingly
 -- short. Well, the serialisation module in gmod (glon) does not do any
 -- compression. At all. This means the difference between all events having a
@@ -201,8 +203,6 @@ function SCORE:Reset()
    self.Events = {}
 end
 
-local MaxStreamLength = 65529 -- 2^16 bytes - 4 (header) - 2 (UInt length in TTT_ReportStream) - 1 (terminanting byte)
-
 function SCORE:StreamToClients()
    local events = util.TableToJSON(self.Events)
    if events == nil then
@@ -220,6 +220,7 @@ function SCORE:StreamToClients()
    -- this was necessary with user messages, now it's
    -- a just-in-case thing if a round somehow manages to be > 64K
    local len = #events
+   local MaxStreamLength = SCORE.MaxStreamLength
 
    if len <= MaxStreamLength then
       net.Start("TTT_ReportStream")

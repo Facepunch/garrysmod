@@ -18,6 +18,8 @@ CLSCORE.Panel = nil
 
 CLSCORE.EventDisplay = {}
 
+include("scoring_shd.lua")
+
 local skull_icon = Material("HUD/killicons/default")
 
 surface.CreateFont("WinHuge", {font = "Trebuchet24",
@@ -528,10 +530,9 @@ local function SortEvents(a, b)
    return a.t < b.t
 end
 
-local MaxStreamLength = 65529 -- This is also in scoring.lua, see the explanation there
 local buff = ""
 net.Receive("TTT_ReportStream_Part", function()
-   buff = buff .. net.ReadData(MaxStreamLength)
+   buff = buff .. net.ReadData(CLSCORE.MaxStreamLength)
 end)
 
 net.Receive("TTT_ReportStream", function()

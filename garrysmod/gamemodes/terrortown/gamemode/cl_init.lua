@@ -12,7 +12,6 @@ surface.CreateFont("Trebuchet22", {font = "Trebuchet MS",
                                    size = 22,
                                    weight = 900})
 
-include("scoring_shd.lua")
 include("corpse_shd.lua")
 include("player_ext_shd.lua")
 include("weaponry_shd.lua")

@@ -43,7 +43,6 @@ include("shared.lua")
 
 include("karma.lua")
 include("entity.lua")
-include("scoring_shd.lua")
 include("radar.lua")
 include("admin.lua")
 include("traitor_state.lua")
