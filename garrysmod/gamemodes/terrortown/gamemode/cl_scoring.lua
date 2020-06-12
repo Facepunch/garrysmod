@@ -18,6 +18,8 @@ CLSCORE.Panel = nil
 
 CLSCORE.EventDisplay = {}
 
+include("scoring_shd.lua")
+
 local skull_icon = Material("HUD/killicons/default")
 
 surface.CreateFont("WinHuge", {font = "Trebuchet24",
@@ -524,38 +526,32 @@ function CLSCORE:Toggle()
    end
 end
 
+local function SortEvents(a, b)
+   return a.t < b.t
+end
+
 local buff = ""
-local function ReceiveReportStream(len)
-   local cont = net.ReadBit() == 1
+net.Receive("TTT_ReportStream_Part", function()
+   buff = buff .. net.ReadData(CLSCORE.MaxStreamLength)
+end)
 
-   buff = buff .. net.ReadString()
+net.Receive("TTT_ReportStream", function()
+   local events = util.Decompress(buff .. net.ReadData(net.ReadUInt(16)))
+   buff = ""
 
-   if cont then
-      return
-   else
-      -- do stuff with buffer contents
-
-      local json_events = buff -- util.Decompress(buff)
-      if not json_events then
-         ErrorNoHalt("Round report decompression failed!\n")
-      else
-         -- convert the json string back to a table
-         local events = util.JSONToTable(json_events)
-
-         if istable(events) then
-            CLSCORE:ReportEvents(events)
-         else
-            ErrorNoHalt("Round report event decoding failed!\n")
-         end
-      end
-
-      -- flush
-      buff = ""
+   if events == "" then
+      ErrorNoHalt("Round report decompression failed!\n")
    end
-end
-net.Receive("TTT_ReportStream", ReceiveReportStream)
 
-local function SaveLog(ply, cmd, args)
-   CLSCORE:SaveLog()
-end
-concommand.Add("ttt_save_events", SaveLog)
+   events = util.JSONToTable(events)
+   if events == nil then
+      ErrorNoHalt("Round report decoding failed!\n")
+   end
+
+   table.sort(events, SortEvents)
+   CLSCORE:ReportEvents(events)
+end)
+
+concommand.Add("ttt_save_events", function()
+	CLSCORE:SaveLog()
+end)

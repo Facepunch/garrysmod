@@ -8,6 +8,8 @@ local pairs = pairs
 SCORE = SCORE or {}
 SCORE.Events = SCORE.Events or {}
 
+include("scoring_shd.lua")
+
 -- One might wonder why all the key names in the event tables are so annoyingly
 -- short. Well, the serialisation module in gmod (glon) does not do any
 -- compression. At all. This means the difference between all events having a
@@ -19,43 +21,42 @@ SCORE.Events = SCORE.Events or {}
 -- We don't actually need to know about 10000ths of seconds after all.
 
 function SCORE:AddEvent(entry, t_override)
-   entry["t"] = math.Round(t_override or CurTime(), 2)
+   entry.t = t_override or CurTime()
    table.insert(self.Events, entry)
 end
 
 local function CopyDmg(dmg)
-
    local wep = util.WeaponFromDamage(dmg)
-
-   -- t = type, a = amount, g = gun, h = headshot
-   local d = {}
-
-   -- util.TableToJSON doesn't handle large integers properly
-   d.t = tostring(dmg:GetDamageType())
-   d.a = dmg:GetDamage()
-   d.h = false
+   local g, n
 
    if wep then
       local id = WepToEnum(wep)
       if id then
-         d.g = id
+         g = id
       else
          -- we can convert each standard TTT weapon name to a preset ID, but
          -- that's not workable with custom SWEPs from people, so we'll just
          -- have to pay the byte tax there
-         d.g = wep:GetClass()
+         g = wep:GetClass()
       end
    else
       local infl = dmg:GetInflictor()
       if IsValid(infl) and infl.ScoreName then
-         d.n = infl.ScoreName
+         n = infl.ScoreName
       end
    end
 
-   return d
+   -- t = type, a = amount, g = gun, h = headshot, n = name
+   return {
+      t = dmg:GetDamageType(),
+      a = dmg:GetDamage(),
+      h = false,
+      g = g,
+      n = n
+   }
 end
 
-function SCORE:HandleKill( victim, attacker, dmginfo )
+function SCORE:HandleKill(victim, attacker, dmginfo)
    if not (IsValid(victim) and victim:IsPlayer()) then return end
 
    local e = {
@@ -86,7 +87,7 @@ function SCORE:HandleKill( victim, attacker, dmginfo )
    self:AddEvent(e)
 end
 
-function SCORE:HandleSpawn( ply )
+function SCORE:HandleSpawn(ply)
    if ply:Team() == TEAM_TERROR then
       self:AddEvent({id=EVENT_SPAWN, ni=ply:Nick(), sid=ply:SteamID()})
    end
@@ -178,7 +179,9 @@ function SCORE:ApplyEventLogScores(wintype)
    end
 
    -- count deaths
-   for k, e in pairs(self.Events) do
+   local events = self.Events
+   for i = 1, #events do
+      local e = events[i]
       if e.id == EVENT_KILL then
          local victim = player.GetBySteamID(e.vic.sid)
          if IsValid(victim) and victim:ShouldScore() then
@@ -200,53 +203,44 @@ function SCORE:Reset()
    self.Events = {}
 end
 
-local function SortEvents(events)
-   -- sort events on time
-   table.sort(events, function(a,b)
-                         if not b or not a then return false end
-                         return a.t and b.t and a.t < b.t
-                      end)
-   return events
-end
-
-local function EncodeForStream(events)
-   events = SortEvents(events)
-
-   -- may want to filter out data later
-   -- just serialize for now
-
-   local result = util.TableToJSON( events )
-   if not result then
-      ErrorNoHalt("Round report event encoding failed!\n")
-      return false
-   else
-      return result
-   end
-end
-
 function SCORE:StreamToClients()
-   local s = EncodeForStream(self.Events)
-   if not s then
-      return -- error occurred
+   local events = util.TableToJSON(self.Events)
+   if events == nil then
+      ErrorNoHalt("Round report event encoding failed!\n")
+      return
+   end
+
+   events = util.Compress(events)
+   if events == "" then
+      ErrorNoHalt("Round report event compression failed!\n")
+      return
    end
 
    -- divide into happy lil bits.
    -- this was necessary with user messages, now it's
    -- a just-in-case thing if a round somehow manages to be > 64K
-   local cut = {}
-   local max = 65500
-   while #s != 0 do
-      local bit = string.sub(s, 1, max - 1)
-      table.insert(cut, bit)
+   local len = #events
+   local MaxStreamLength = SCORE.MaxStreamLength
 
-      s = string.sub(s, max, -1)
-   end
-
-   local parts = #cut
-   for k, bit in pairs(cut) do
+   if len <= MaxStreamLength then
       net.Start("TTT_ReportStream")
-      net.WriteBit((k != parts)) -- continuation bit, 1 if there's more coming
-      net.WriteString(bit)
+         net.WriteUInt(len, 16)
+         net.WriteData(events, len)
+      net.Broadcast()
+   else
+      local curpos = 0
+
+      repeat
+         net.Start("TTT_ReportStream_Part")
+            net.WriteData(string.sub(events, curpos + 1, curpos + MaxStreamLength + 1), MaxStreamLength)
+         net.Broadcast()
+
+         curpos = curpos + MaxStreamLength + 1
+      until(len - curpos <= MaxStreamLength)
+
+      net.Start("TTT_ReportStream")
+         net.WriteUInt(len, 16)
+         net.WriteData(string.sub(events, curpos + 1, len), len - curpos)
       net.Broadcast()
    end
 end
