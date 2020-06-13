@@ -300,6 +300,17 @@ local function SendUndoneMessage( ent, id, ply )
 end
 
 --[[---------------------------------------------------------
+	Checks whether an undo is allowed to be created
+-----------------------------------------------------------]]
+local function Can_CreateUndo( undo )
+
+	local call = hook.Run( "CanCreateUndo", undo.Owner, undo )
+
+	return call == true or call == nil
+
+end
+
+--[[---------------------------------------------------------
 	Finish
 -----------------------------------------------------------]]
 function Finish( NiceText )
@@ -307,9 +318,9 @@ function Finish( NiceText )
 	if ( !Current_Undo ) then return end
 
 	-- Do not add undos that have no owner or anything to undo
-	if ( !IsValid( Current_Undo.Owner ) or ( table.IsEmpty( Current_Undo.Entities ) && table.IsEmpty( Current_Undo.Functions ) ) ) then
+	if ( !IsValid( Current_Undo.Owner ) or ( table.IsEmpty( Current_Undo.Entities ) && table.IsEmpty( Current_Undo.Functions ) ) or !Can_CreateUndo( Current_Undo ) ) then
 		Current_Undo = nil
-		return
+		return false
 	end
 
 	local index = Current_Undo.Owner:UniqueID()
@@ -333,6 +344,8 @@ function Finish( NiceText )
 	end
 
 	Current_Undo = nil
+	
+	return true
 
 end
 
