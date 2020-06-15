@@ -58,14 +58,14 @@ function TOOL:LeftClick( trace )
 
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
-		--local Norm1, Norm2 = self:GetNormal( 1 ), self:GetNormal( 2 )
-		local _, Norm2 = self:GetNormal( 1 ), self:GetNormal( 2 )
+		local Norm1, Norm2 = self:GetNormal( 1 ), self:GetNormal( 2 )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 		local Phys1 = self:GetPhys( 1 )
 		local WPos2 = self:GetPos( 2 )
 
 		-- Note: To keep stuff ragdoll friendly try to treat things as physics objects rather than entities
-		--local Ang1, Ang2 = Norm1:Angle(), ( -Norm2 ):Angle()
+		local Ang1, Ang2 = Norm1:Angle(), ( -Norm2 ):Angle()
+
 		local TargetAngle = Phys1:AlignAngles( Ang1, Ang2 )
 
 		Phys1:SetAngles( TargetAngle )
@@ -147,7 +147,8 @@ function TOOL:RightClick( trace )
 		local WPos2 = self:GetPos( 2 )
 
 		-- Note: To keep stuff ragdoll friendly try to treat things as physics objects rather than entities
-		local Ang1, Ang2 = Norm1:Angle(), ( -Norm2 ):Angle()
+		--local Ang1, Ang2 = Norm1:Angle(), ( -Norm2 ):Angle()
+
 		--local TargetAngle = Phys1:AlignAngles( Ang1, Ang2 )
 
 		--Phys1:SetAngles( TargetAngle )
