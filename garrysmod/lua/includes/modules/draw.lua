@@ -128,22 +128,27 @@ function MultiColorText( font, x, y, xAlign, yAlign, ... )
 
 	surface.SetFont( font )
 
-	local curX = x
-	local curColor = color_white
-	local fullText = ""
+	local ipairs, table, origin = ipairs({ ... })
+	local w, h = 0, 0
 
-	for k, v in pairs{ ... } do
-		if not IsColor( v ) then
-			fullText = fullText .. tostring( v )
+	if ( xAlign != TEXT_ALIGN_LEFT ) then
+		local fullText = ""
+		
+		for k, v in ipairs, table, origin do
+			if not IsColor( v ) then
+				fullText = fullText .. tostring( v )
+			end
 		end
-	end
 
-	local w, h = surface.GetTextSize( fullText )
+		w, h = surface.GetTextSize( fullText )
 
-	if ( xAlign == TEXT_ALIGN_CENTER ) then
-		curX = x - w/2
-	elseif ( xAlign == TEXT_ALIGN_RIGHT ) then
-		curX = x - w
+		if ( xAlign == TEXT_ALIGN_CENTER ) then
+			x = x - w/2
+		elseif ( xAlign == TEXT_ALIGN_RIGHT ) then
+			x = x - w
+		end
+	else
+		h = draw.GetFontHeight( font )
 	end
 
 	if ( yAlign == TEXT_ALIGN_CENTER ) then
@@ -152,16 +157,16 @@ function MultiColorText( font, x, y, xAlign, yAlign, ... )
 		y = y - h
 	end
 
-	for k, v in pairs{ ... } do
+	surface.SetTextColor( color_white )
+	surface.SetTextPos( x, y )
+
+	for k, v in ipairs, table, origin do
 		if IsColor( v ) then
-			curColor = v
-			continue
+			surface.SetTextColor( v )
+		else
+			local text = tostring( v )
+			surface.DrawText( text )
 		end
-		local text = tostring( v )
-		surface.SetTextColor( curColor )
-		surface.SetTextPos( curX, y )
-		surface.DrawText( text )
-		curX = curX + surface.GetTextSize( text )
 	end
 end
 
