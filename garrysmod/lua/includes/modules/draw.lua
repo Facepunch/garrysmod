@@ -114,6 +114,58 @@ function SimpleTextOutlined(text, font, x, y, colour, xalign, yalign, outlinewid
 end
 
 --[[---------------------------------------------------------
+	Name: MultiColorText(font, x, y, xalign, yalign, vararg)
+	Desc: Simple draw text at position, but with multiple colors.
+	Usage: vararg is color tables with r/g/b/a elements followed by a string to be drawn with said color.
+-----------------------------------------------------------]]
+function MultiColorText( font, x, y, xAlign, yAlign, ... )
+	
+	font	= font		or "DermaDefault"
+	x		= x			or 0
+	y		= y			or 0
+	xAlign	= xAlign	or TEXT_ALIGN_LEFT
+	yAlign	= yAlign	or TEXT_ALIGN_TOP
+
+	surface.SetFont( font )
+
+	local curX = x
+	local curColor = color_white
+	local fullText = ""
+
+	for k, v in pairs{ ... } do
+		if not IsColor( v ) then
+			fullText = fullText .. tostring( v )
+		end
+	end
+
+	local w, h = surface.GetTextSize( fullText )
+
+	if ( xAlign == TEXT_ALIGN_CENTER ) then
+		curX = x - w/2
+	elseif ( xAlign == TEXT_ALIGN_RIGHT ) then
+		curX = x - w
+	end
+
+	if ( yAlign == TEXT_ALIGN_CENTER ) then
+		y = y - h/2
+	elseif ( yAlign == TEXT_ALIGN_BOTTOM ) then
+		y = y - h
+	end
+
+	for k, v in pairs{ ... } do
+		if IsColor( v ) then
+			curColor = v
+			continue
+		end
+		local text = tostring( v )
+		surface.SetTextColor( curColor )
+		surface.SetTextPos( curX, y )
+		surface.DrawText( text )
+		curX = curX + surface.GetTextSize( text )
+	end
+end
+
+--[[---------------------------------------------------------
 	Name: DrawText(text, font, x, y, colour, align )
 	Desc: Simple draw text at position, but this will expand newlines and tabs.
 		  color is a table with r/g/b/a elements
