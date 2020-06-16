@@ -164,8 +164,7 @@ function MultiColorText( font, x, y, xAlign, yAlign, ... )
 		if IsColor( v ) then
 			surface.SetTextColor( v )
 		else
-			local text = tostring( v )
-			surface.DrawText( text )
+			surface.DrawText( tostring( v ) )
 		end
 	end
 end
