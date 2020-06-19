@@ -72,6 +72,10 @@ function PANEL:SwitchPanel( panel )
 
 end
 
+function PANEL:OnSizeChanged()
+	self.HorizontalDivider:LoadCookies()
+end
+
 vgui.Register( "SpawnmenuContentPanel", PANEL, "DPanel" )
 
 local function CreateContentPanel()
