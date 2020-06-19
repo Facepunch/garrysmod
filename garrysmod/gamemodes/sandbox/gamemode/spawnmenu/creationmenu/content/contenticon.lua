@@ -5,8 +5,10 @@ local PANEL = {}
 
 local matOverlay_Normal = Material( "gui/ContentIcon-normal.png" )
 local matOverlay_Hovered = Material( "gui/ContentIcon-hovered.png" )
+
 local matOverlay_AdminOnly = Material( "icon16/shield.png" )
 local matOverlay_NPCWeapon = Material( "icon16/monkey.png" )
+local matOverlay_NPCWeaponSelected = Material( "icon16/monkey_tick.png" )
 
 AccessorFunc( PANEL, "m_Color", "Color" )
 AccessorFunc( PANEL, "m_Type", "ContentType" )
@@ -151,6 +153,11 @@ function PANEL:Paint( w, h )
 	-- This whole thing could be more dynamic
 	if ( self:GetIsNPCWeapon() ) then
 		surface.SetMaterial( matOverlay_NPCWeapon )
+
+		if ( self:GetSpawnName() == GetConVarString( "gmod_npcweapon" ) ) then
+			surface.SetMaterial( matOverlay_NPCWeaponSelected )
+		end
+
 		surface.DrawTexturedRect( w - self.Border - 24, self.Border + 8, 16, 16 )
 	end
 	self:ScanForNPCWeapons()
@@ -348,7 +355,12 @@ spawnmenu.AddContentType( "weapon", function( container, obj )
 		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "3" ) RunConsoleCommand( "creator_name", obj.spawnname ) end ):SetIcon( "icon16/brick_add.png" )
 
 		if ( self:GetIsNPCWeapon() ) then
-			menu:AddOption( "#spawnmenu.menu.use_as_npc_gun", function() RunConsoleCommand( "gmod_npcweapon", self:GetSpawnName() ) end ):SetIcon( "icon16/monkey.png" )
+			local opt = menu:AddOption( "#spawnmenu.menu.use_as_npc_gun", function() RunConsoleCommand( "gmod_npcweapon", self:GetSpawnName() ) end )
+			if ( self:GetSpawnName() == GetConVarString( "gmod_npcweapon" ) ) then
+				opt:SetIcon( "icon16/monkey_tick.png" )
+			else
+				opt:SetIcon( "icon16/monkey.png" )
+			end
 		end
 	end
 	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
