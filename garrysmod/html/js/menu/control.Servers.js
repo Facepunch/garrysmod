@@ -21,6 +21,11 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		lua.Run( "DoStopServers( '" + Scope.ServerType + "' )" );
 	}
 
+	$scope.$on( "$destroy", function()
+	{
+		$scope.DoStopRefresh();
+	} );
+
 	$scope.Refresh = function()
 	{
 		if ( !Scope.ServerType ) return;
