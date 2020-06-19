@@ -253,7 +253,7 @@ local function IsServerBlacklisted( address, hostname, description, gm, map )
 	local addressNoPort = address:match( "[^:]*" )
 
 	for k, v in ipairs( BlackList.Addresses ) do
-		if ( address == v || addressNoPort == v ) then
+		if ( address == v || addressNoPort == v || address:sub( 1, v:len() ) == v ) then
 			return v
 		end
 	end
