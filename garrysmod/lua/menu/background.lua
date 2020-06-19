@@ -78,10 +78,8 @@ function DrawBackground()
 		end
 
 		if ( Outgoing ) then
-
 			Think( Outgoing )
 			Render( Outgoing )
-
 		end
 
 	end
@@ -114,8 +112,13 @@ function ChangeBackground( currentgm )
 	if ( currentgm ) then LastGamemode = currentgm end
 
 	local img = table.Random( Images )
-
 	if ( !img ) then return end
+
+	-- We just rolled the same image, no thank you, reroll
+	if ( Active && img == Active.Name && #Images > 1 ) then
+		ChangeBackground()
+		return
+	end
 
 	if ( Outgoing ) then
 		FreeBackgroundMaterial( Outgoing.mat )
