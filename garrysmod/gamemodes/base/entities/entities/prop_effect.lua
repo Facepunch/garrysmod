@@ -12,8 +12,8 @@ ENT.Spawnable = false
 function ENT:Initialize()
 
 	local Radius = 6
-	local min = Vector( 1, 1, 1 ) * Radius * -0.5
-	local max = Vector( 1, 1, 1 ) * Radius * 0.5
+	local mins = Vector( 1, 1, 1 ) * Radius * -0.5
+	local maxs = Vector( 1, 1, 1 ) * Radius * 0.5
 
 	if ( SERVER ) then
 
@@ -32,7 +32,7 @@ function ENT:Initialize()
 		self.AttachedEntity:DeleteOnRemove( self )
 
 		-- Don't use the model's physics - create a box instead
-		self:PhysicsInitBox( min, max )
+		self:PhysicsInitBox( mins, maxs )
 		self:SetSolid( SOLID_VPHYSICS )
 
 		-- Set up our physics object here
@@ -59,11 +59,16 @@ function ENT:Initialize()
 	end
 
 	-- Set collision bounds exactly
-	self:SetCollisionBounds( min, max )
+	self:SetCollisionBounds( mins, maxs )
 
 end
 
 function ENT:Draw()
+
+	if ( halo.RenderedEntity() == self ) then
+		self.AttachedEntity:DrawModel()
+		return
+	end
 
 	if ( GetConVarNumber( "cl_draweffectrings" ) == 0 ) then return end
 
