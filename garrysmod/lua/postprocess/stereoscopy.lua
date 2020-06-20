@@ -15,7 +15,7 @@ function RenderStereoscopy( ViewOrigin, ViewAngles )
 	local w = ScrW() / 2.2
 	local h = ScrH() / 2.2
 
-	local Right = ViewAngles:Right() * pp_stereoscopy_size:GetFloat()
+	local Right = ViewAngles:Right() * math.Clamp( pp_stereoscopy_size:GetFloat(), 0, 10 )
 
 	local view = {}
 
