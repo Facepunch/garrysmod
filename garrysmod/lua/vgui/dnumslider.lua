@@ -10,7 +10,16 @@ function PANEL:Init()
 	self.TextArea:SetPaintBackground( false )
 	self.TextArea:SetWide( 45 )
 	self.TextArea:SetNumeric( true )
-	self.TextArea.OnChange = function( textarea, val ) self:SetValue( self.TextArea:GetText() ) end
+	self.TextArea:SetUpdateOnType( true )
+	self.TextArea.OnValueChange = function( textentry, val )
+		local cPos = self.TextArea:GetCaretPos()
+		local clamped = math.Clamp( tonumber( val ) || 0, self:GetMin(), self:GetMax() )
+		if clamped != val then
+			self.TextArea:SetText( clamped )
+			self.TextArea:SetCaretPos( cPos )
+		end
+		self:SetValue( clamped )
+	end
 	-- Causes automatic clamp to min/max, disabled for now. TODO: Enforce this with a setter/getter?
 	--self.TextArea.OnEnter = function( textarea, val ) textarea:SetText( self.Scratch:GetTextValue() ) end -- Update the text
 
