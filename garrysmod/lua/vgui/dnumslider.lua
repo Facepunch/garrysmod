@@ -11,15 +11,7 @@ function PANEL:Init()
 	self.TextArea:SetWide( 45 )
 	self.TextArea:SetNumeric( true )
 	self.TextArea:SetUpdateOnType( true )
-	self.TextArea.OnValueChange = function( textentry, val )
-		local cPos = self.TextArea:GetCaretPos()
-		local clamped = math.Clamp( tonumber( val ) || 0, self:GetMin(), self:GetMax() )
-		if clamped != val then
-			self.TextArea:SetText( clamped )
-			self.TextArea:SetCaretPos( cPos )
-		end
-		self:SetValue( clamped )
-	end
+	self.TextArea.OnValueChange = function(textentry, val) self:SetValue( val ) end
 	-- Causes automatic clamp to min/max, disabled for now. TODO: Enforce this with a setter/getter?
 	--self.TextArea.OnEnter = function( textarea, val ) textarea:SetText( self.Scratch:GetTextValue() ) end -- Update the text
 
@@ -112,6 +104,12 @@ function PANEL:SetValue( val )
 
 	val = math.Clamp( tonumber( val ) || 0, self:GetMin(), self:GetMax() )
 
+	if ( val ~= ( tonumber( self.TextArea:GetText() ) || 0 ) ) then
+		local cPos = self.TextArea:GetCaretPos()
+		self.TextArea:SetText( tostring( val ) )
+		self.TextArea:SetCaretPos( cPos )
+	end
+
 	if ( self:GetValue() == val ) then return end
 
 	self.Scratch:SetValue( val ) -- This will also call ValueChanged
@@ -157,7 +155,7 @@ end
 
 function PANEL:SetConVar( cvar )
 	self.Scratch:SetConVar( cvar )
-	self.TextArea:SetConVar( cvar )
+	self:SetValue( GetConVar( cvar ):GetString() )
 end
 
 function PANEL:SetText( text )
