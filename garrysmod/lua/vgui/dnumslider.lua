@@ -104,7 +104,7 @@ function PANEL:SetValue( val )
 
 	val = math.Clamp( tonumber( val ) || 0, self:GetMin(), self:GetMax() )
 
-	if ( val ~= ( tonumber( self.TextArea:GetText() ) || 0 ) ) then
+	if ( val != ( tonumber( self.TextArea:GetText() ) || 0 ) ) then
 		local cPos = self.TextArea:GetCaretPos()
 		self.TextArea:SetText( tostring( val ) )
 		self.TextArea:SetCaretPos( cPos )
