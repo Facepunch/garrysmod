@@ -33,6 +33,15 @@ function GetForEdit( list )
 end
 
 --
+--	Get all list names
+--
+function GetTable()
+
+	return table.GetKeys( g_Lists )
+
+end
+
+--
 --	Set a key value
 --
 function Set( list, key, value )
