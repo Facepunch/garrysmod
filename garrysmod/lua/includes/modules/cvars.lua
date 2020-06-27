@@ -52,8 +52,8 @@ function OnConVarChanged( name, oldvalue, newvalue )
 end
 
 --[[---------------------------------------------------------
-	Name: OnConvarChanged
-	Desc: Called by the engine
+	Name: AddChangeCallback
+	Desc: Adds a callback to be called when the named convar changes.
 -----------------------------------------------------------]]
 function AddChangeCallback( name, func, sIdentifier )
 
