@@ -3,6 +3,18 @@ OUTLINE_MODE_BOTH	= 0
 OUTLINE_MODE_NOTVISIBLE	= 1
 OUTLINE_MODE_VISIBLE	= 2
 
+local istable		= istable
+local render		= render
+local LocalPlayer	= LocalPlayer
+local Material		= Material
+local CreateMaterial	= CreateMaterial
+local hook		= hook
+local cam		= cam
+local ScrW		= ScrW
+local ScrH		= ScrH
+local IsValid		= IsValid
+local surface		= surface
+
 module( "outline", package.seeall )
 
 local List, ListSize = {}, 0
