@@ -142,7 +142,7 @@ function ENT:Think()
 end
 
 --[[---------------------------------------------------------
-	Name: Use the same emitter, but get a new one every 2 seconds
+	Use the same emitter, but get a new one every 2 seconds
 		This will fix any draw order issues
 -----------------------------------------------------------]]
 function ENT:GetEmitter( Pos, b3D )
@@ -153,6 +153,10 @@ function ENT:GetEmitter( Pos, b3D )
 		end
 	end
 
+	if ( IsValid( self.Emitter ) ) then
+		self.Emitter:Finish()
+	end
+
 	self.Emitter = ParticleEmitter( Pos, b3D )
 	self.EmitterIs3D = b3D
 	self.EmitterTime = CurTime() + 2
@@ -161,6 +165,10 @@ function ENT:GetEmitter( Pos, b3D )
 end
 
 function ENT:OnRemove()
+
+	if ( IsValid( self.Emitter ) ) then
+		self.Emitter:Finish()
+	end
 
 	if ( self.Sound ) then
 		self.Sound:Stop()
@@ -280,13 +288,26 @@ end
 
 function ENT:SetSound( sound )
 
+	-- No change, don't do shit
+	if ( self.SoundName == sound ) then return end
+
+	-- Gracefully shutdown
+	if ( self:IsOn() ) then
+		self:StopThrustSound()
+	end
+
 	self.SoundName = Sound( sound )
 	self.Sound = nil
+
+	-- Now start the new sound
+	if ( self:IsOn() ) then
+		self:StartThrustSound()
+	end
 
 end
 
 --[[---------------------------------------------------------
-	Sets whether this is a toggle thruster or not
+	Starts the looping sound
 -----------------------------------------------------------]]
 function ENT:StartThrustSound()
 
@@ -308,7 +329,7 @@ function ENT:StartThrustSound()
 end
 
 --[[---------------------------------------------------------
-	Sets whether this is a toggle thruster or not
+	Stop the looping sound
 -----------------------------------------------------------]]
 function ENT:StopThrustSound()
 
@@ -367,12 +388,15 @@ list.Set( "ThrusterEffects", "#thrustereffect.flames", {
 
 		local scroll = self.Seed + ( CurTime() * -10 )
 
+		local size = self:OBBMaxs() - self:OBBMins()
+		size = math.min( size.x, size.y, 50 )
+
 		local Scale = math.Clamp( ( CurTime() - self.OnStart ) * 5, 0, 1 )
 
 		render.SetMaterial( matFire )
 
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, 8 * Scale, scroll, Color( 0, 0, 255, 128 ) )
+			render.AddBeam( vOffset, size * Scale, scroll, Color( 0, 0, 255, 128 ) )
 			render.AddBeam( vOffset + vNormal * 60 * Scale, 32 * Scale, scroll + 1, Color( 255, 255, 255, 128 ) )
 			render.AddBeam( vOffset + vNormal * 148 * Scale, 32 * Scale, scroll + 3, Color( 255, 255, 255, 0 ) )
 		render.EndBeam()
@@ -382,7 +406,7 @@ list.Set( "ThrusterEffects", "#thrustereffect.flames", {
 		render.UpdateRefractTexture()
 		render.SetMaterial( matHeatWave )
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, 8 * Scale, scroll, Color( 0, 0, 255, 128 ) )
+			render.AddBeam( vOffset, size * Scale, scroll, Color( 0, 0, 255, 128 ) )
 			render.AddBeam( vOffset + vNormal * 32 * Scale, 32 * Scale, scroll + 2, Color( 255, 255, 255, 255 ) )
 			render.AddBeam( vOffset + vNormal * 128 * Scale, 48 * Scale, scroll + 5, Color( 0, 0, 0, 0 ) )
 		render.EndBeam()
@@ -391,7 +415,7 @@ list.Set( "ThrusterEffects", "#thrustereffect.flames", {
 		scroll = scroll * 1.3
 		render.SetMaterial( matFire )
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, 8 * Scale, scroll, Color( 0, 0, 255, 128) )
+			render.AddBeam( vOffset, size * Scale, scroll, Color( 0, 0, 255, 128) )
 			render.AddBeam( vOffset + vNormal * 60 * Scale, 16 * Scale, scroll + 1, Color( 255, 255, 255, 128 ) )
 			render.AddBeam( vOffset + vNormal * 148 * Scale, 16 * Scale, scroll + 3, Color( 255, 255, 255, 0 ) )
 		render.EndBeam()
@@ -405,32 +429,34 @@ list.Set( "ThrusterEffects", "#thrustereffect.plasma", {
 		local vOffset = self:LocalToWorld( self:GetOffset() )
 		local vNormal = ( vOffset - self:GetPos() ):GetNormalized()
 
-		local scroll = CurTime() * -20
+		local scroll = self.Seed + ( CurTime() * -20 )
+		local size = self:OBBMaxs() - self:OBBMins()
+		size = math.min( size.x, size.y ) * 1.5
 
 		render.SetMaterial( matPlasma )
 
 		scroll = scroll * 0.9
 
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, 16, scroll, Color( 0, 255, 255, 255 ) )
-			render.AddBeam( vOffset + vNormal * 8, 16, scroll + 0.01, Color( 255, 255, 255, 255 ) )
-			render.AddBeam( vOffset + vNormal * 64, 16, scroll + 0.02, Color( 0, 255, 255, 0 ) )
+			render.AddBeam( vOffset, size, scroll, Color( 0, 255, 255, 255 ) )
+			render.AddBeam( vOffset + vNormal * 8, size, scroll + 0.01, Color( 255, 255, 255, 255 ) )
+			render.AddBeam( vOffset + vNormal * 64, size, scroll + 0.02, Color( 0, 255, 255, 0 ) )
 		render.EndBeam()
 
 		scroll = scroll * 0.9
 
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, 16, scroll, Color( 0, 255, 255, 255 ) )
-			render.AddBeam( vOffset + vNormal * 8, 16, scroll + 0.01, Color( 255, 255, 255, 255 ) )
-			render.AddBeam( vOffset + vNormal * 64, 16, scroll + 0.02, Color( 0, 255, 255, 0 ) )
+			render.AddBeam( vOffset, size, scroll, Color( 0, 255, 255, 255 ) )
+			render.AddBeam( vOffset + vNormal * 8, size, scroll + 0.01, Color( 255, 255, 255, 255 ) )
+			render.AddBeam( vOffset + vNormal * 64, size, scroll + 0.02, Color( 0, 255, 255, 0 ) )
 		render.EndBeam()
 
 		scroll = scroll * 0.9
 
 		render.StartBeam( 3 )
-			render.AddBeam( vOffset, 16, scroll, Color( 0, 255, 255, 255 ) )
-			render.AddBeam( vOffset + vNormal * 8, 16, scroll + 0.01, Color( 255, 255, 255, 255 ) )
-			render.AddBeam( vOffset + vNormal * 64, 16, scroll + 0.02, Color( 0, 255, 255, 0 ) )
+			render.AddBeam( vOffset, size, scroll, Color( 0, 255, 255, 255 ) )
+			render.AddBeam( vOffset + vNormal * 8, size, scroll + 0.01, Color( 255, 255, 255, 255 ) )
+			render.AddBeam( vOffset + vNormal * 64, size, scroll + 0.02, Color( 0, 255, 255, 0 ) )
 		render.EndBeam()
 	end
 } )
@@ -447,7 +473,9 @@ list.Set( "ThrusterEffects", "#thrustereffect.magic", {
 		local vOffset = self:LocalToWorld( self:GetOffset() )
 		local vNormal = ( vOffset - self:GetPos() ):GetNormalized()
 
-		vOffset = vOffset + VectorRand() * 5
+		local size = self:OBBMaxs() - self:OBBMins()
+
+		vOffset = vOffset + VectorRand() * math.min( size.x, size.y ) / 3
 
 		local emitter = self:GetEmitter( vOffset, false )
 
@@ -476,6 +504,8 @@ list.Set( "ThrusterEffects", "#thrustereffect.rings", {
 		local vOffset = self:LocalToWorld( self:GetOffset() )
 		local vNormal = ( vOffset - self:GetPos() ):GetNormalized()
 
+		local size = self:OBBMaxs() - self:OBBMins()
+
 		vOffset = vOffset + vNormal * 5
 
 		local emitter = self:GetEmitter( vOffset, true )
@@ -488,7 +518,7 @@ list.Set( "ThrusterEffects", "#thrustereffect.rings", {
 		particle:SetDieTime( 0.2 )
 		particle:SetStartAlpha( 255 )
 		particle:SetEndAlpha( 0 )
-		particle:SetStartSize( 8 )
+		particle:SetStartSize( math.min( size.x, size.y ) / 2 )
 		particle:SetEndSize( 10 )
 		particle:SetAngles( vNormal:Angle() )
 		particle:SetColor( math.Rand( 10, 100 ), math.Rand( 100, 220 ), math.Rand( 240, 255 ) )
@@ -505,6 +535,8 @@ list.Set( "ThrusterEffects", "#thrustereffect.smoke", {
 
 		self.SmokeTimer = CurTime() + 0.015
 
+		local size = self:OBBMaxs() - self:OBBMins()
+
 		local vOffset = self:LocalToWorld( self:GetOffset() ) + Vector( math.Rand( -3, 3 ), math.Rand( -3, 3 ), math.Rand( -3, 3 ) )
 		local vNormal = ( vOffset - self:GetPos() ):GetNormalized()
 
@@ -513,10 +545,14 @@ list.Set( "ThrusterEffects", "#thrustereffect.smoke", {
 		local particle = emitter:Add( "particles/smokey", vOffset )
 		if ( !particle ) then return end
 
-		particle:SetVelocity( vNormal * math.Rand( 10, 30 ) )
+		local vel_scale = math.Rand( 10, 30 ) * 10 / math.Clamp( self:GetVelocity():Length() / 200, 1, 10 )
+		local velocity = vNormal * vel_scale
+
+		particle:SetVelocity( velocity )
 		particle:SetDieTime( 2.0 )
+		particle:SetGravity( Vector( 0, 0, 32 ) )
 		particle:SetStartAlpha( math.Rand( 50, 150 ) )
-		particle:SetStartSize( math.Rand( 16, 32 ) )
+		particle:SetStartSize( math.min( size.x, size.y ) / 2 )
 		particle:SetEndSize( math.Rand( 64, 128 ) )
 		particle:SetRoll( math.Rand( -0.2, 0.2 ) )
 		particle:SetColor( 200, 200, 210 )
