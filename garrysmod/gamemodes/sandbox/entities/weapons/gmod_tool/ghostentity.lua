@@ -43,7 +43,8 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 	-- We do not want physics at all
 	self.GhostEntity:PhysicsDestroy()
 
-	self.GhostEntity:SetSolid( SOLID_NONE )
+	-- SOLID_NONE causes issues with Entity.NearestPoint used by Wheel tool
+	--self.GhostEntity:SetSolid( SOLID_NONE )
 	self.GhostEntity:SetMoveType( MOVETYPE_NONE )
 	self.GhostEntity:SetNotSolid( true )
 	self.GhostEntity:SetRenderMode( RENDERMODE_TRANSCOLOR )
