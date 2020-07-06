@@ -160,6 +160,8 @@ if ( SERVER ) then
 		wheel:SetAngles( ang )
 		wheel:Spawn()
 
+		DoPropSpawnedEffect( wheel )
+
 		wheel:SetPlayer( pl )
 
 		duplicator.DoGenericPhysics( wheel, pl, Data )

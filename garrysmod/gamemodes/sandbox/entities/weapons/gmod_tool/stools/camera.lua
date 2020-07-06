@@ -60,6 +60,8 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 
 	ent:Spawn()
 
+	DoPropSpawnedEffect( ent )
+
 	ent:SetTracking( NULL, Vector( 0 ) )
 	ent:SetLocked( locked )
 

@@ -140,6 +140,8 @@ if ( SERVER ) then
 
 		balloon:Spawn()
 
+		DoPropSpawnedEffect( balloon )
+
 		duplicator.DoGenericPhysics( balloon, pl, Data )
 
 		force = math.Clamp( force, -1E34, 1E34 )
