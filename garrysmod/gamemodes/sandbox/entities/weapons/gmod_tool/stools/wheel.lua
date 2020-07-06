@@ -210,12 +210,12 @@ function TOOL:UpdateGhostWheel( ent, ply )
 	end
 
 	local Ang = trace.HitNormal:Angle() + self.wheelAngle
+	ent:SetAngles( Ang )
+
 	local CurPos = ent:GetPos()
 	local NearestPoint = ent:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
 	local WheelOffset = CurPos - NearestPoint
-
 	ent:SetPos( trace.HitPos + WheelOffset )
-	ent:SetAngles( Ang )
 
 	ent:SetNoDraw( false )
 
