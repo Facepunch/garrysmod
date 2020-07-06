@@ -24,12 +24,8 @@ function ENT:Draw()
 
 	-- Don't draw it if we're a ragdoll and haven't
 	-- received all of the bone positions yet.
-	if ( self:GetModelPhysBoneCount() > 1 ) then
-
-		if ( !self:GetNWVector( "Vector0", false ) ) then
-			return
-		end
-
+	if ( self:GetModelPhysBoneCount() > 1 and !self:GetNWVector( "Vector0", false ) ) then
+		return
 	end
 
 	BaseClass.Draw( self )

@@ -263,7 +263,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			if ( self.bAnimated ) then self:RunAnimation() end
 
 			if ( self.Pressed ) then
-				local mx, my = gui.MousePos()
+				local mx = gui.MousePos()
 				self.Angles = self.Angles - Angle( 0, ( ( self.PressX or mx ) - mx ) / 2, 0 )
 
 				self.PressX, self.PressY = gui.MousePos()

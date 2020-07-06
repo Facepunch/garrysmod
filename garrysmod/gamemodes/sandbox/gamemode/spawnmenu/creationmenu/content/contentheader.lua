@@ -27,7 +27,7 @@ end
 
 function PANEL:SizeToContents()
 
-	local w, h = self:GetContentSize()
+	local w = self:GetContentSize()
 	self:SetSize( w + 16, 64 ) -- Add a bit more room so it looks nice as a textbox :)
 
 end

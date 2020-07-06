@@ -60,7 +60,7 @@ function TOOL:LeftClick( trace )
 
 	DisablePropCreateEffect = true
 
-		local Ents, Constraints = duplicator.Paste( self:GetOwner(), dupe.Entities, dupe.Constraints )
+		local Ents = duplicator.Paste( self:GetOwner(), dupe.Entities, dupe.Constraints )
 
 	DisablePropCreateEffect = nil
 

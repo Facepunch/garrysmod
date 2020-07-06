@@ -107,7 +107,6 @@ function ENT:DrawTranslucent()
 	render.SetMaterial( matLight )
 
 	local ViewNormal = self:GetPos() - EyePos()
-	local Distance = ViewNormal:Length()
 	ViewNormal:Normalize()
 
 	local Visibile = util.PixelVisible( LightPos, 4, self.PixVis )

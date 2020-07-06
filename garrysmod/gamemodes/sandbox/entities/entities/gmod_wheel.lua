@@ -76,7 +76,7 @@ function ENT:GetMotor()
 	-- Fuck knows why it's doing this here.
 	if ( !IsValid( self.Motor ) ) then
 
-		self.Motor = constraint.FindConstraintEntity( self.Entity, "Motor" )
+		self.Motor = constraint.FindConstraintEntity( self, "Motor" )
 
 	end
 
@@ -178,7 +178,7 @@ function ENT:DoDirectionEffect()
 	local effectdata = EffectData()
 
 		effectdata:SetOrigin( self.Axis )
-		effectdata:SetEntity( self.Entity )
+		effectdata:SetEntity( self )
 		effectdata:SetScale( Motor.direction )
 
 	util.Effect( "wheel_indicator", effectdata, true, true )

@@ -30,7 +30,7 @@ function PANEL:Init()
 	Button:SetSize( 20, 20 )
 	Button:SetCursor( "sizeall" )
 	Button:SetTooltip( "#spawnmenu.header_tooltip" )
-	local slot = Button:Droppable( "SandboxContentPanel" )
+	Button:Droppable( "SandboxContentPanel" )
 
 	Button.OnDrop = function( s, target )
 
