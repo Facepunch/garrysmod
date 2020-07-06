@@ -58,8 +58,10 @@ function PANEL:Init()
 
 				 -- Make sure the category is expanded, but restore the state when we quit searching
 				if ( text == "" ) then
-					category:SetExpanded( category._preSearchState )
-					category._preSearchState = nil
+					if ( category._preSearchState != nil ) then
+						category:SetExpanded( category._preSearchState )
+						category._preSearchState = nil
+					end
 				else
 					if ( category._preSearchState == nil ) then category._preSearchState = category:GetExpanded() end
 					category:SetExpanded( true )
