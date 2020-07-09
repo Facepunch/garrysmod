@@ -267,13 +267,16 @@ list.Set( "ThrusterModels", "models/props_c17/canister02a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trainstation_ornament002.mdl", {} )
 list.Set( "ThrusterModels", "models/props_junk/TrafficCone001a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_c17/clock01.mdl", {} )
-list.Set( "ThrusterModels", "models/props_c17/pottery02a.mdl", {} )
-list.Set( "ThrusterModels", "models/props_c17/pottery03a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_junk/terracotta01.mdl", {} )
 list.Set( "ThrusterModels", "models/props_c17/TrapPropeller_Engine.mdl", {} )
 list.Set( "ThrusterModels", "models/props_c17/FurnitureSink001a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trainstation_ornament001.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trashcan_indoor001b.mdl", {} )
+
+if ( IsMounted( "cstrike" ) ) then
+	list.Set( "ThrusterModels", "models/props_c17/pottery02a.mdl", {} )
+	list.Set( "ThrusterModels", "models/props_c17/pottery03a.mdl", {} )
+end
 
 --PHX
 list.Set( "ThrusterModels", "models/props_phx2/garbage_metalcan001a.mdl", {} )
