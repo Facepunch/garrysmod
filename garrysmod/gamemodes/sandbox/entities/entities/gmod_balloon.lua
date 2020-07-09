@@ -5,8 +5,6 @@ DEFINE_BASECLASS( "base_gmodentity" )
 ENT.PrintName = "Balloon"
 ENT.Editable = true
 
-ENT.RenderGroup = RENDERGROUP_BOTH
-
 function ENT:SetupDataTables()
 
 	self:NetworkVar( "Float", 0, "Force", { KeyName = "force", Edit = { type = "Float", order = 1, min = -2000, max = 2000, title = "#tool.balloon.force" } } )

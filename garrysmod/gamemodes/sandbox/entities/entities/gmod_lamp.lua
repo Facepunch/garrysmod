@@ -3,7 +3,6 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Lamp"
-ENT.RenderGroup = RENDERGROUP_BOTH
 ENT.Editable = true
 
 local matLight = Material( "sprites/light_ignorez" )

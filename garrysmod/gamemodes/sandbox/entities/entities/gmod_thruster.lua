@@ -3,7 +3,6 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Thruster"
-ENT.RenderGroup = RENDERGROUP_BOTH
 
 local matHeatWave = Material( "sprites/heatwave" )
 local matFire = Material( "effects/fire_cloud1" )

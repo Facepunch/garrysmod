@@ -7,7 +7,6 @@ end
 
 ENT.Type = "anim"
 ENT.PrintName = "Camera"
-ENT.RenderGroup = RENDERGROUP_BOTH
 
 local CAMERA_MODEL = Model( "models/dav0r/camera.mdl" )
 

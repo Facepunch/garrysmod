@@ -3,7 +3,6 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Wheel"
-ENT.RenderGroup = RENDERGROUP_BOTH
 
 -- Set up our data table
 function ENT:SetupDataTables()

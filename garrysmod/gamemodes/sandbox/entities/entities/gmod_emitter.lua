@@ -3,7 +3,6 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Emitter"
-ENT.RenderGroup = RENDERGROUP_BOTH
 ENT.Editable = true
 
 function ENT:SetupDataTables()
