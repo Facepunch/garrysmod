@@ -535,13 +535,17 @@ list.Set( "ThrusterEffects", "#thrustereffect.smoke", {
 		self.SmokeTimer = CurTime() + 0.015
 
 		local size = self:OBBMaxs() - self:OBBMins()
+		size = math.min( size.x, size.y ) / 2
 
-		local vOffset = self:LocalToWorld( self:GetOffset() ) + Vector( math.Rand( -3, 3 ), math.Rand( -3, 3 ), math.Rand( -3, 3 ) )
-		local vNormal = ( vOffset - self:GetPos() ):GetNormalized()
+		local vOffset = self:LocalToWorld( self:GetOffset() )
+
+		-- Make the offset farther so the normal isn't jumping around crazily on certain models
+		local vNormalRand = vOffset + ( vOffset - self:GetPos() ):GetNormalized() * 32 + VectorRand() * 3
+		local vNormal = ( vNormalRand - self:GetPos() ):GetNormalized()
 
 		local emitter = self:GetEmitter( vOffset, false )
 
-		local particle = emitter:Add( "particles/smokey", vOffset )
+		local particle = emitter:Add( "particles/smokey", vOffset + VectorRand() * 3 )
 		if ( !particle ) then return end
 
 		local vel_scale = math.Rand( 10, 30 ) * 10 / math.Clamp( self:GetVelocity():Length() / 200, 1, 10 )
@@ -551,7 +555,7 @@ list.Set( "ThrusterEffects", "#thrustereffect.smoke", {
 		particle:SetDieTime( 2.0 )
 		particle:SetGravity( Vector( 0, 0, 32 ) )
 		particle:SetStartAlpha( math.Rand( 50, 150 ) )
-		particle:SetStartSize( math.min( size.x, size.y ) / 2 )
+		particle:SetStartSize( size )
 		particle:SetEndSize( math.Rand( 64, 128 ) )
 		particle:SetRoll( math.Rand( -0.2, 0.2 ) )
 		particle:SetColor( 200, 200, 210 )
