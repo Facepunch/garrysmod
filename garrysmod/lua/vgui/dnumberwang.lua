@@ -149,6 +149,8 @@ function PANEL:SetValue( val )
 
 	end
 
+	local hasChanged = tonumber( val ) != tonumber( self:GetValue() )
+
 	--
 	-- Don't change the value while we're typing into it!
 	-- It causes confusion!
@@ -158,7 +160,9 @@ function PANEL:SetValue( val )
 		self:ConVarChanged( val )
 	end
 
-	self:OnValueChanged( val )
+	if ( hasChanged ) then
+		self:OnValueChanged( val )
+	end
 
 end
 
