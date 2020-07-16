@@ -106,6 +106,18 @@ function table.HasValue( t, val )
 end
 
 --[[---------------------------------------------------------
+	Name: HasKey
+	Desc: Returns whether the key is in given table
+-----------------------------------------------------------]]
+
+function table.HasKey( t, key )
+	for k, v in pairs( t ) do
+		if ( k == key ) then return true end
+	end
+	return false
+end
+
+--[[---------------------------------------------------------
 	Name: table.Add( dest, source )
 	Desc: Unlike merge this adds the two tables together and discards keys.
 -----------------------------------------------------------]]
@@ -643,6 +655,12 @@ end
 function table.KeyFromValue( tbl, val )
 	for key, value in pairs( tbl ) do
 		if ( value == val ) then return key end
+	end
+end
+
+function table.ValueFromKey( tbl, key )
+	for k, v in pairs( tbl ) do
+		if ( k == key ) then return v end
 	end
 end
 
