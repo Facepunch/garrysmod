@@ -68,7 +68,7 @@ end
 
 function PANEL:Spawn()
 
-	self:PerformLayout()
+	self:InvalidateLayout( true )
 
 end
 

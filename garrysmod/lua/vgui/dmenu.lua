@@ -157,7 +157,7 @@ function PANEL:PerformLayout( w, h )
 	-- Find the widest one
 	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
 
-		pnl:PerformLayout()
+		pnl:InvalidateLayout( true )
 		w = math.max( w, pnl:GetWide() )
 
 	end
@@ -207,7 +207,7 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 		OwnerWidth, OwnerHeight = ownerpanel:GetSize()
 	end
 
-	self:PerformLayout()
+	self:InvalidateLayout( true )
 
 	local w = self:GetWide()
 	local h = self:GetTall()
