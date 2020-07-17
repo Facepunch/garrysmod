@@ -69,9 +69,9 @@ function PANEL:ControlValues( kv )
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
-	local y = self.BaseClass.PerformLayout( self )
+	local y = self.BaseClass.PerformLayout( self, w, h )
 
 	y = y + 200
 	y = y + 5

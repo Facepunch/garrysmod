@@ -150,7 +150,7 @@ function PANEL:GetChild( num )
 	return self:GetCanvas():GetChildren()[ num ]
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
 	local w = self:GetMinimumWidth()
 
@@ -182,7 +182,7 @@ function PANEL:PerformLayout()
 
 	derma.SkinHook( "Layout", "Menu", self )
 
-	DScrollPanel.PerformLayout( self )
+	DScrollPanel.PerformLayout( self, w, h )
 
 end
 

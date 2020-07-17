@@ -117,7 +117,7 @@ end
 function PANEL:OnChecked( b )
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
 	self:SizeToContents()
 	self:SetWide( self:GetWide() + 30 )
@@ -134,7 +134,7 @@ function PANEL:PerformLayout()
 
 	end
 
-	DButton.PerformLayout( self )
+	DButton.PerformLayout( self, w, h )
 
 end
 

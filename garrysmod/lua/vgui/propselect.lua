@@ -124,9 +124,9 @@ function PANEL:ControlValues( kv )
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
-	local y = self.BaseClass.PerformLayout( self )
+	local y = self.BaseClass.PerformLayout( self, w, h )
 
 	if ( self.Height >= 1 ) then
 		local Height = ( 64 + self.List:GetSpacing() ) * math.max( self.Height, 1 ) + self.List:GetPadding() * 2 - self.List:GetSpacing()

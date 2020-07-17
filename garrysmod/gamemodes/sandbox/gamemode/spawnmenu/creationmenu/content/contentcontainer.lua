@@ -43,9 +43,9 @@ function PANEL:Layout()
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
-	BaseClass.PerformLayout( self )
+	BaseClass.PerformLayout( self, w, h )
 	self.IconList:SetMinHeight( self:GetTall() - 16 )
 
 end

@@ -195,7 +195,7 @@ function PANEL:SetConVarA( cvar )
 	self:SetAlphaBar( cvar != nil )
 end
 
-function PANEL:PerformLayout( x, y )
+function PANEL:PerformLayout( w, h )
 
 	local h, s, v = ColorToHSV( self.HSV:GetBaseRGB() )
 	self.RGB.LastY = ( 1 - h / 360 ) * self.RGB:GetTall()
