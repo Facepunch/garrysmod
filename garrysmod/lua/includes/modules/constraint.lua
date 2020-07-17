@@ -601,7 +601,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 
 	return Constraint, rope
 end
-duplicator.RegisterConstraint("Elastic", Elastic, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "constant", "damping", "rdamping", "material", "width", "stretchonly")
+duplicator.RegisterConstraint( "Elastic", Elastic, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "constant", "damping", "rdamping", "material", "width", "stretchonly" )
 
 
 --[[----------------------------------------------------------------------
@@ -715,7 +715,7 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 
 	onStartConstraint( Ent1, Ent2 )
 
-		local Constraint = ents.Create("phys_slideconstraint")
+		local Constraint = ents.Create( "phys_slideconstraint" )
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "slideaxis", tostring( WPos2 ) )
@@ -777,7 +777,7 @@ function Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, 
 
 	onStartConstraint( Ent1, Ent2 )
 
-		local Constraint = ents.Create("phys_hinge")
+		local Constraint = ents.Create( "phys_hinge" )
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "hingeaxis", tostring( WPos2 ) )
@@ -841,7 +841,7 @@ function AdvBallsocket( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torq
 		if ( onlyrotation && onlyrotation > 0 ) then flags = flags + 2 end
 		if ( nocollide && nocollide > 0 ) then flags = flags + 1 end
 
-		local Constraint = ents.Create("phys_ragdollconstraint")
+		local Constraint = ents.Create( "phys_ragdollconstraint" )
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "xmin", xmin )
@@ -891,7 +891,7 @@ function AdvBallsocket( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torq
 	return Constraint
 
 end
-duplicator.RegisterConstraint( "AdvBallsocket", AdvBallsocket, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "forcelimit", "torquelimit", "xmin", "ymin", "zmin", "xmax", "ymax", "zmax", "xfric", "yfric", "zfric", "onlyrotation", "nocollide")
+duplicator.RegisterConstraint( "AdvBallsocket", AdvBallsocket, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "forcelimit", "torquelimit", "xmin", "ymin", "zmin", "xmax", "ymax", "zmax", "xfric", "yfric", "zfric", "onlyrotation", "nocollide" )
 
 
 --[[----------------------------------------------------------------------
@@ -917,7 +917,7 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	-- Make Constraint
 	onStartConstraint( Ent1, Ent2 )
 
-		local Constraint = ents.Create("logic_collision_pair")
+		local Constraint = ents.Create( "logic_collision_pair" )
 		ConstraintCreated( Constraint )
 		Constraint:SetKeyValue( "startdisabled", 1 )
 		Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
@@ -1034,7 +1034,7 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 	end
 
 	-- The true at the end stops it adding the axis table to the entity's count stuff.
-	local axis = Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, 0, 0, friction, nocollide, LocalAxis, true )
+	local axis = Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, 0, friction, nocollide, LocalAxis, true )
 
 	-- Delete the axis when either object dies
 	Ent1:DeleteOnRemove( axis )
@@ -1201,7 +1201,7 @@ function Ballsocket( Ent1, Ent2, Bone1, Bone2, LPos, forcelimit, torquelimit, no
 
 	onStartConstraint( Ent1, Ent2 )
 
-		local Constraint = ents.Create("phys_ballsocket")
+		local Constraint = ents.Create( "phys_ballsocket" )
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos )
 		if ( forcelimit && forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
