@@ -71,7 +71,7 @@ end
 --
 function SWEP:Reload()
 
-	if ( !self.Owner:KeyDown( IN_ATTACK2 ) ) then self:SetZoom( self.Owner:IsBot() && 75 || self.Owner:GetInfoNum( "fov_desired", 75 ) ) end
+	if ( !self:GetOwner():KeyDown( IN_ATTACK2 ) ) then self:SetZoom( self:GetOwner():IsBot() && 75 || self:GetOwner():GetInfoNum( "fov_desired", 75 ) ) end
 	self:SetRoll( 0 )
 
 end
@@ -87,7 +87,7 @@ function SWEP:PrimaryAttack()
 	if ( !game.SinglePlayer() && SERVER ) then return end
 	if ( CLIENT && !IsFirstTimePredicted() ) then return end
 
-	self.Owner:ConCommand( "jpeg" )
+	self:GetOwner():ConCommand( "jpeg" )
 
 end
 
@@ -102,9 +102,9 @@ end
 --
 function SWEP:Tick()
 
-	if ( CLIENT && self.Owner != LocalPlayer() ) then return end -- If someone is spectating a player holding this weapon, bail
+	if ( CLIENT && self:GetOwner() != LocalPlayer() ) then return end -- If someone is spectating a player holding this weapon, bail
 
-	local cmd = self.Owner:GetCurrentCommand()
+	local cmd = self:GetOwner():GetCurrentCommand()
 
 	if ( !cmd:KeyDown( IN_ATTACK2 ) ) then return end -- Not holding Mouse 2, bail
 
@@ -136,8 +136,8 @@ end
 --
 function SWEP:Equip()
 
-	if ( self:GetZoom() == 70 && self.Owner:IsPlayer() && !self.Owner:IsBot() ) then
-		self:SetZoom( self.Owner:GetInfoNum( "fov_desired", 75 ) )
+	if ( self:GetZoom() == 70 && self:GetOwner():IsPlayer() && !self:GetOwner():IsBot() ) then
+		self:SetZoom( self:GetOwner():GetInfoNum( "fov_desired", 75 ) )
 	end
 
 end
@@ -151,7 +151,7 @@ function SWEP:DoShootEffect()
 
 	self:EmitSound( self.ShootSound )
 	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-	self.Owner:SetAnimation( PLAYER_ATTACK1 )
+	self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
 
 	if ( SERVER && !game.SinglePlayer() ) then
 
@@ -160,13 +160,13 @@ function SWEP:DoShootEffect()
 		-- shown to other players!
 		--
 
-		local vPos = self.Owner:GetShootPos()
-		local vForward = self.Owner:GetAimVector()
+		local vPos = self:GetOwner():GetShootPos()
+		local vForward = self:GetOwner():GetAimVector()
 
 		local trace = {}
 		trace.start = vPos
 		trace.endpos = vPos + vForward * 256
-		trace.filter = self.Owner
+		trace.filter = self:GetOwner()
 
 		local tr = util.TraceLine( trace )
 
@@ -199,7 +199,7 @@ end
 function SWEP:FreezeMovement()
 
 	-- Don't aim if we're holding the right mouse button
-	if ( self.Owner:KeyDown( IN_ATTACK2 ) || self.Owner:KeyReleased( IN_ATTACK2 ) ) then
+	if ( self:GetOwner():KeyDown( IN_ATTACK2 ) || self:GetOwner():KeyReleased( IN_ATTACK2 ) ) then
 		return true
 	end
 
@@ -219,7 +219,7 @@ end
 
 function SWEP:AdjustMouseSensitivity()
 
-	if ( self.Owner:KeyDown( IN_ATTACK2 ) ) then return 1 end
+	if ( self:GetOwner():KeyDown( IN_ATTACK2 ) ) then return 1 end
 
 	return self:GetZoom() / 80
 

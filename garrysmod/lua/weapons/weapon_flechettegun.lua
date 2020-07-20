@@ -62,11 +62,11 @@ function SWEP:PrimaryAttack()
 	local ent = ents.Create( "hunter_flechette" )
 	if ( !IsValid( ent ) ) then return end
 
-	local Forward = self.Owner:GetAimVector()
+	local Forward = self:GetOwner():GetAimVector()
 
-	ent:SetPos( self.Owner:GetShootPos() + Forward * 32 )
-	ent:SetAngles( self.Owner:EyeAngles() )
-	ent:SetOwner( self.Owner )
+	ent:SetPos( self:GetOwner():GetShootPos() + Forward * 32 )
+	ent:SetAngles( self:GetOwner():EyeAngles() )
+	ent:SetOwner( self:GetOwner() )
 	ent:Spawn()
 	ent:Activate()
 

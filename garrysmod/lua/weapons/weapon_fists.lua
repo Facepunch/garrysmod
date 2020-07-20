@@ -48,14 +48,14 @@ end
 
 function SWEP:UpdateNextIdle()
 
-	local vm = self.Owner:GetViewModel()
+	local vm = self:GetOwner():GetViewModel()
 	self:SetNextIdle( CurTime() + vm:SequenceDuration() / vm:GetPlaybackRate() )
 
 end
 
 function SWEP:PrimaryAttack( right )
 
-	self.Owner:SetAnimation( PLAYER_ATTACK1 )
+	self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
 
 	local anim = "fists_left"
 	if ( right ) then anim = "fists_right" end
@@ -63,7 +63,7 @@ function SWEP:PrimaryAttack( right )
 		anim = "fists_uppercut"
 	end
 
-	local vm = self.Owner:GetViewModel()
+	local vm = self:GetOwner():GetViewModel()
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( anim ) )
 
 	self:EmitSound( SwingSound )
@@ -86,22 +86,22 @@ local phys_pushscale = GetConVar( "phys_pushscale" )
 
 function SWEP:DealDamage()
 
-	local anim = self:GetSequenceName(self.Owner:GetViewModel():GetSequence())
+	local anim = self:GetSequenceName(self:GetOwner():GetViewModel():GetSequence())
 
-	self.Owner:LagCompensation( true )
+	self:GetOwner():LagCompensation( true )
 
 	local tr = util.TraceLine( {
-		start = self.Owner:GetShootPos(),
-		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
-		filter = self.Owner,
+		start = self:GetOwner():GetShootPos(),
+		endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * self.HitDistance,
+		filter = self:GetOwner(),
 		mask = MASK_SHOT_HULL
 	} )
 
 	if ( !IsValid( tr.Entity ) ) then
 		tr = util.TraceHull( {
-			start = self.Owner:GetShootPos(),
-			endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
-			filter = self.Owner,
+			start = self:GetOwner():GetShootPos(),
+			endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * self.HitDistance,
+			filter = self:GetOwner(),
 			mins = Vector( -10, -10, -8 ),
 			maxs = Vector( 10, 10, 8 ),
 			mask = MASK_SHOT_HULL
@@ -119,7 +119,7 @@ function SWEP:DealDamage()
 	if ( SERVER && IsValid( tr.Entity ) && ( tr.Entity:IsNPC() || tr.Entity:IsPlayer() || tr.Entity:Health() > 0 ) ) then
 		local dmginfo = DamageInfo()
 
-		local attacker = self.Owner
+		local attacker = self:GetOwner()
 		if ( !IsValid( attacker ) ) then attacker = self end
 		dmginfo:SetAttacker( attacker )
 
@@ -127,17 +127,17 @@ function SWEP:DealDamage()
 		dmginfo:SetDamage( math.random( 8, 12 ) )
 
 		if ( anim == "fists_left" ) then
-			dmginfo:SetDamageForce( self.Owner:GetRight() * 4912 * scale + self.Owner:GetForward() * 9998 * scale ) -- Yes we need those specific numbers
+			dmginfo:SetDamageForce( self:GetOwner():GetRight() * 4912 * scale + self:GetOwner():GetForward() * 9998 * scale ) -- Yes we need those specific numbers
 		elseif ( anim == "fists_right" ) then
-			dmginfo:SetDamageForce( self.Owner:GetRight() * -4912 * scale + self.Owner:GetForward() * 9989 * scale )
+			dmginfo:SetDamageForce( self:GetOwner():GetRight() * -4912 * scale + self:GetOwner():GetForward() * 9989 * scale )
 		elseif ( anim == "fists_uppercut" ) then
-			dmginfo:SetDamageForce( self.Owner:GetUp() * 5158 * scale + self.Owner:GetForward() * 10012 * scale )
+			dmginfo:SetDamageForce( self:GetOwner():GetUp() * 5158 * scale + self:GetOwner():GetForward() * 10012 * scale )
 			dmginfo:SetDamage( math.random( 12, 24 ) )
 		end
 
 		SuppressHostEvents( NULL ) -- Let the breakable gibs spawn in multiplayer on client
 		tr.Entity:TakeDamageInfo( dmginfo )
-		SuppressHostEvents( self.Owner )
+		SuppressHostEvents( self:GetOwner() )
 
 		hit = true
 
@@ -146,7 +146,7 @@ function SWEP:DealDamage()
 	if ( IsValid( tr.Entity ) ) then
 		local phys = tr.Entity:GetPhysicsObject()
 		if ( IsValid( phys ) ) then
-			phys:ApplyForceOffset( self.Owner:GetAimVector() * 80 * phys:GetMass() * scale, tr.HitPos )
+			phys:ApplyForceOffset( self:GetOwner():GetAimVector() * 80 * phys:GetMass() * scale, tr.HitPos )
 		end
 	end
 
@@ -158,7 +158,7 @@ function SWEP:DealDamage()
 		end
 	end
 
-	self.Owner:LagCompensation( false )
+	self:GetOwner():LagCompensation( false )
 
 end
 
@@ -172,7 +172,7 @@ function SWEP:Deploy()
 
 	local speed = GetConVarNumber( "sv_defaultdeployspeed" )
 
-	local vm = self.Owner:GetViewModel()
+	local vm = self:GetOwner():GetViewModel()
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_draw" ) )
 	vm:SetPlaybackRate( speed )
 
@@ -190,7 +190,7 @@ end
 
 function SWEP:Think()
 
-	local vm = self.Owner:GetViewModel()
+	local vm = self:GetOwner():GetViewModel()
 	local curtime = CurTime()
 	local idletime = self:GetNextIdle()
 

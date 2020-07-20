@@ -47,18 +47,18 @@ function SWEP:PrimaryAttack()
 
 	if ( CLIENT ) then return end
 
-	if ( self.Owner:IsPlayer() ) then
-		self.Owner:LagCompensation( true )
+	if ( self:GetOwner():IsPlayer() ) then
+		self:GetOwner():LagCompensation( true )
 	end
 
 	local tr = util.TraceLine( {
-		start = self.Owner:GetShootPos(),
-		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * 64,
-		filter = self.Owner
+		start = self:GetOwner():GetShootPos(),
+		endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 64,
+		filter = self:GetOwner()
 	} )
 
-	if ( self.Owner:IsPlayer() ) then
-		self.Owner:LagCompensation( false )
+	if ( self:GetOwner():IsPlayer() ) then
+		self:GetOwner():LagCompensation( false )
 	end
 
 	local ent = tr.Entity
@@ -76,14 +76,14 @@ function SWEP:PrimaryAttack()
 		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 
 		self:SetNextPrimaryFire( CurTime() + self:SequenceDuration() + 0.5 )
-		self.Owner:SetAnimation( PLAYER_ATTACK1 )
+		self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
 
 		-- Even though the viewmodel has looping IDLE anim at all times, we need this to make fire animation work in multiplayer
 		timer.Create( "weapon_idle" .. self:EntIndex(), self:SequenceDuration(), 1, function() if ( IsValid( self ) ) then self:SendWeaponAnim( ACT_VM_IDLE ) end end )
 
 	else
 
-		self.Owner:EmitSound( DenySound )
+		self:GetOwner():EmitSound( DenySound )
 		self:SetNextPrimaryFire( CurTime() + 1 )
 
 	end
@@ -94,7 +94,7 @@ function SWEP:SecondaryAttack()
 
 	if ( CLIENT ) then return end
 
-	local ent = self.Owner
+	local ent = self:GetOwner()
 
 	local need = self.HealAmount
 	if ( IsValid( ent ) ) then need = math.min( ent:GetMaxHealth() - ent:Health(), self.HealAmount ) end
@@ -109,7 +109,7 @@ function SWEP:SecondaryAttack()
 		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 
 		self:SetNextSecondaryFire( CurTime() + self:SequenceDuration() + 0.5 )
-		self.Owner:SetAnimation( PLAYER_ATTACK1 )
+		self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
 
 		timer.Create( "weapon_idle" .. self:EntIndex(), self:SequenceDuration(), 1, function() if ( IsValid( self ) ) then self:SendWeaponAnim( ACT_VM_IDLE ) end end )
 
