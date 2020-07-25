@@ -34,6 +34,12 @@ function PANEL:SetImage( strImage, strBackup )
 end
 PANEL.SetIcon = PANEL.SetImage
 
+function PANEL:SetMaterial( mat )
+
+	self.m_Image:SetMaterial( mat )
+
+end
+
 function PANEL:SetColor( col )
 
 	self.m_Image:SetImageColor( col )
