@@ -67,11 +67,7 @@ function Hook( messagename, func, ... )
 	Hooks[ messagename ] = {}
 
 	Hooks[ messagename ].Function 	= func
-<<<<<<< master
-	Hooks[ messagename ].PreArgs	= {...}
-=======
 	Hooks[ messagename ].PreArgs	= { ... }
->>>>>>> master
 
 end
 
@@ -83,15 +79,6 @@ function IncomingMessage( MessageName, msg )
 
 	if ( Hooks[ MessageName ] ) then
 
-<<<<<<< master
-		Hooks[ MessageName ].Function( msg, unpack(Hooks[ MessageName ].PreArgs) )
-		return
-
-	end
-
-	Msg("Warning: Unhandled usermessage '"..MessageName.."'\n")
-
-=======
 		Hooks[ MessageName ].Function( msg, unpack( Hooks[ MessageName ].PreArgs ) )
 		return
 
@@ -99,5 +86,4 @@ function IncomingMessage( MessageName, msg )
 
 	Msg( "Warning: Unhandled usermessage '" .. MessageName .. "'\n" )
 
->>>>>>> master
 end
