@@ -225,8 +225,9 @@ function PANEL:DoChildrenOrder()
 
 	if ( !IsValid( self.ChildNodes ) ) then return end
 
-	local last = table.Count( self.ChildNodes:GetChildren() )
-	for k, Child in ipairs( self.ChildNodes:GetChildren() ) do
+	local children = self.ChildNodes:GetChildren()
+	local last = #children
+	for k, Child in ipairs( children ) do
 		Child:SetLastChild( k == last )
 	end
 
