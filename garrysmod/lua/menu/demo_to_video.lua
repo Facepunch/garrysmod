@@ -79,10 +79,10 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 	inSize:AddChoice( sw .. " x " .. sh .. " (highest)", { sw, sh }, true )
 
 	sw, sh = sw * 0.66666, sh * 0.66666
-	inSize:AddChoice( sw .. " x " .. sh, { sw, sh }, true )
+	inSize:AddChoice( math.ceil(sw) .. " x " .. math.ceil(sh), { sw, sh }, true )
 		
 	sw, sh = sw * 0.5, sh * 0.5
-	inSize:AddChoice( sw .. " x " .. sh, { sw, sh }, true )
+	inSize:AddChoice( math.ceil(sw) .. " x " .. math.ceil(sh), { sw, sh }, true )
 
 	inFrameBlend.OnSelect = function( _, index, value, data ) settings.frameblend = data end
 	inFrameBlend:AddChoice( "Off", 1, true )
