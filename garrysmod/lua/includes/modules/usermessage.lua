@@ -14,11 +14,10 @@ function SendUserMessage( name, ply, ... )
 
 	umsg.Start( name, ply )
 
-	for k, v in ipairs( {...} ) do
+	for k, v in ipairs( { ... } ) do
+		local t = TypeID( v )
 
-		local t = type( v )
-
-		if ( t == "string" ) then
+		if ( t == TYPE_STRING ) then
 			umsg.String( v )
 		elseif ( t == TYPE_ENTITY ) then
 			umsg.Entity( v )
@@ -40,9 +39,8 @@ function SendUserMessage( name, ply, ... )
 end
 
 --[[---------------------------------------------------------
-   Name: usermessage
-   Desc: Enables the server to send the client messages
-		 (in a bandwidth friendly manner)
+	Name: usermessage
+	Desc: Enables the server to send the client messages (in a bandwidth friendly manner)
 -----------------------------------------------------------]]
 module( "usermessage" )
 
