@@ -69,8 +69,6 @@ function TOOL:RightClick( trace )
 
 	if ( self:GetOperation() == 1 ) then return false end
 
-	local iNum = self:NumObjects()
-
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
 

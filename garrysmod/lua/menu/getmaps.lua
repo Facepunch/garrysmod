@@ -34,6 +34,14 @@ local function UpdateMaps()
 	MapNames[ "dz_" ] = "Counter-Strike"
 	MapNames[ "training1" ] = "Counter-Strike"
 
+	-- Various custom cs maps
+	MapNames[ "35hp_" ] = "Counter-Strike (Custom)"
+	MapNames[ "aim_" ] = "Counter-Strike (Custom)"
+	MapNames[ "awp_" ] = "Counter-Strike (Custom)"
+	MapNames[ "am_" ] = "Counter-Strike (Custom)"
+	MapNames[ "fy_" ] = "Counter-Strike (Custom)"
+	MapNames[ "1v1_" ] = "Counter-Strike (Custom)"
+
 	MapNames[ "dod_" ] = "Day Of Defeat"
 
 	MapNames[ "ddd_" ] = "Dino D-Day"
@@ -142,6 +150,12 @@ local function UpdateMaps()
 	MapNames[ "zps_" ] = "Zombie Panic! Source"
 	MapNames[ "zph_" ] = "Zombie Panic! Source"
 
+	MapNames[ "fof_" ] = "Fistful of Frags"
+	MapNames[ "cm_" ] = "Fistful of Frags"
+	MapNames[ "gt_" ] = "Fistful of Frags"
+	MapNames[ "tp_" ] = "Fistful of Frags"
+	MapNames[ "vs_" ] = "Fistful of Frags"
+
 	MapNames[ "bhop_" ] = "Bunny Hop"
 	MapNames[ "cinema_" ] = "Cinema"
 	MapNames[ "theater_" ] = "Cinema"
@@ -168,6 +182,7 @@ local function UpdateMaps()
 	MapNames[ "zm_" ] = "Zombie Survival"
 	MapNames[ "zombiesurvival_" ] = "Zombie Survival"
 	MapNames[ "zs_" ] = "Zombie Survival"
+	MapNames[ "coop_" ] = "Cooperative"
 
 	local GamemodeList = engine.GetGamemodes()
 
@@ -218,6 +233,7 @@ local IgnoreMaps = {
 	[ "d2_coast_02" ] = true,
 	[ "d3_c17_02_camera" ] = true,
 	[ "ep1_citadel_00_demo" ] = true,
+	[ "c5m1_waterfront_sndscape" ] = true,
 	[ "intro" ] = true,
 	[ "test" ] = true
 }
@@ -273,14 +289,14 @@ local function RefreshMaps( skip )
 			fav = true
 		end
 
-		local csgo
+		local csgo = false
 
 		if ( Category == "Counter-Strike" ) then
 			if ( file.Exists( "maps/" .. name .. ".bsp", "csgo" ) ) then
 				if ( file.Exists( "maps/" .. name .. ".bsp", "cstrike" ) ) then -- Map also exists in CS:GO
 					csgo = true
 				else
-					Category = "CS: Global Offensive"
+					Category = "Counter-Strike: GO"
 				end
 			end
 		end
@@ -300,11 +316,11 @@ local function RefreshMaps( skip )
 		end
 
 		if ( csgo ) then
-			if ( !MapList[ "CS: Global Offensive" ] ) then
-				MapList[ "CS: Global Offensive" ] = {}
+			if ( !MapList[ "Counter-Strike: GO" ] ) then
+				MapList[ "Counter-Strike: GO" ] = {}
 			end
 			-- We have to make the CS:GO name different from the CS:S name to prevent Favourites conflicts
-			table.insert( MapList[ "CS: Global Offensive" ], name .. " " )
+			table.insert( MapList[ "Counter-Strike: GO" ], name .. " " )
 		end
 
 	end

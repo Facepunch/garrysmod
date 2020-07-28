@@ -17,7 +17,9 @@ function AddProvider( func, id )
 
 end
 
-function GetResults( str, types )
+function GetResults( str, types, maxResults )
+
+	if ( !maxResults || maxResults < 1 ) then maxResults = 1024 end
 
 	local str = str:lower()
 	if ( str == "" ) then return {} end
@@ -36,7 +38,7 @@ function GetResults( str, types )
 			table.insert( results, e )
 		end
 
-		if ( #results >= 1024 ) then break end
+		if ( #results >= maxResults ) then break end
 
 	end
 

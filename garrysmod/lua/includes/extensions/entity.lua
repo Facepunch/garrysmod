@@ -166,6 +166,12 @@ function meta:GetChildBones( bone )
 
 end
 
+function DTVar_ReceiveProxyGL( ent, name, id, val )
+	if ( ent.CallDTVarProxies ) then
+		ent:CallDTVarProxies( name, id, val )
+	end
+end
+
 function meta:InstallDataTable()
 
 	self.dt = {}
@@ -261,6 +267,15 @@ function meta:InstallDataTable()
 
 	end
 
+	self.CallDTVarProxies = function( ent, typename, index, newVal )
+		for name, t in pairs( datatable ) do
+			if ( t.index == index && t.typename == typename ) then
+				CallProxies( ent, t.Notify, name, self.dt[ name ], newVal )
+				break
+			end
+		end
+	end
+
 	self.NetworkVar = function( ent, typename, index, name, other_data )
 
 		local t = ent.DTVar( ent, typename, index, name )
@@ -303,7 +318,8 @@ function meta:InstallDataTable()
 	--
 	self.NetworkVarElement = function( ent, typename, index, element, name, other_data )
 
-		ent.DTVar( ent, typename, index, name, keyname )
+		local datatab = ent.DTVar( ent, typename, index, name, keyname )
+		datatab.element = element
 
 		ent[ "Set" .. name ] = function( self, value )
 			local old = self.dt[ name ]
@@ -364,7 +380,11 @@ function meta:InstallDataTable()
 			-- Don't try to save entities (yet?)
 			if ( v.typename == "Entity" ) then continue end
 
-			dt[ k ] = v.GetFunc( ent, v.index )
+			if ( v.element ) then
+				dt[ k ] = v.GetFunc( ent, v.index )[ v.element ]
+			else
+				dt[ k ] = v.GetFunc( ent, v.index )
+			end
 
 		end
 
@@ -390,11 +410,16 @@ function meta:InstallDataTable()
 			-- If it contains this entry
 			if ( tab[ k ] == nil ) then continue end
 
+			-- Support old saves/dupes with incorrectly saved data
+			if ( v.element && ( isangle( tab[ k ] ) || isvector( tab[ k ] ) ) ) then
+				tab[ k ] = tab[ k ][ v.element ]
+			end
+
 			-- Set it.
 			if ( ent[ "Set" .. k ] ) then
 				ent[ "Set" .. k ]( ent, tab[ k ] )
 			else
-				v.SetFunc( ent, v.index, tab[k] )
+				v.SetFunc( ent, v.index, tab[ k ] )
 			end
 
 		end

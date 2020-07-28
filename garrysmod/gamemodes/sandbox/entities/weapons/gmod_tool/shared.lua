@@ -44,7 +44,7 @@ function SWEP:InitializeTools()
 		temp[k] = table.Copy( v )
 		temp[k].SWEP = self
 		temp[k].Owner = self.Owner
-		temp[k].Weapon = self.Weapon
+		temp[k].Weapon = self
 		temp[k]:Init()
 
 	end

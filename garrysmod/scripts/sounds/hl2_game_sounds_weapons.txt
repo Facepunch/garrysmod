@@ -779,7 +779,7 @@
 
 "Weapon_RPG.LaserOn"
 {
-	"channel"		"CHAN_WEAPON"
+	"channel"		"CHAN_ITEM" // GMOD
 	"volume"		"0.7"
 	"soundlevel"	"SNDLVL_NORM"
 
@@ -788,7 +788,7 @@
 
 "Weapon_RPG.LaserOff"
 {
-	"channel"		"CHAN_WEAPON"
+	"channel"		"CHAN_ITEM" // GMOD
 	"volume"		"0.7"
 	"soundlevel"	"SNDLVL_NORM"
 

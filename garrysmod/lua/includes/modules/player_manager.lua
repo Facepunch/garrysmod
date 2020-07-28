@@ -408,7 +408,7 @@ end
 -- Should be called on spawn automatically to set the variables below
 -- This is called in the base gamemode :PlayerSpawn function
 --
-function OnPlayerSpawn( ply )
+function OnPlayerSpawn( ply, transiton )
 
 	local class = LookupPlayerClass( ply )
 	if ( !class ) then return end
@@ -420,11 +420,14 @@ function OnPlayerSpawn( ply )
 	ply:SetUnDuckSpeed( class.UnDuckSpeed )
 	ply:SetJumpPower( class.JumpPower )
 	ply:AllowFlashlight( class.CanUseFlashlight )
-	ply:SetMaxHealth( class.MaxHealth )
-	ply:SetHealth( class.StartHealth )
-	ply:SetArmor( class.StartArmor )
 	ply:ShouldDropWeapon( class.DropWeaponOnDie )
 	ply:SetNoCollideWithTeammates( class.TeammateNoCollide )
 	ply:SetAvoidPlayers( class.AvoidPlayers )
+
+	if ( !transiton ) then 
+		ply:SetMaxHealth( class.MaxHealth )
+		ply:SetHealth( class.StartHealth )
+		ply:SetArmor( class.StartArmor )
+	end
 
 end

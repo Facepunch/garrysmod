@@ -2,6 +2,7 @@
 include( "background.lua" )
 include( "cef_credits.lua" )
 include( "openurl.lua" )
+include( "ugcpublish.lua" )
 
 pnlMainMenu = nil
 
@@ -26,6 +27,7 @@ function PANEL:Init()
 	self.HTML:SetAllowLua( true )
 	self.HTML:RequestFocus()
 
+	ws_dupe.HTML = self.HTML
 	ws_save.HTML = self.HTML
 	addon.HTML = self.HTML
 	demo.HTML = self.HTML
@@ -176,7 +178,7 @@ function UpdateServerSettings()
 
 		local Settings = util.KeyValuesToTable( settings_file )
 
-		if ( Settings.settings ) then
+		if ( istable( Settings.settings ) ) then
 
 			array.settings = Settings.settings
 
@@ -222,10 +224,10 @@ GetAPIManifest( function( result )
 	result = util.JSONToTable( result )
 	if ( !result ) then return end
 
-	NewsList = result.News.Blogs or {}
+	NewsList = result.News and result.News.Blogs or {}
 	LoadNewsList()
 
-	for k, v in pairs( result.Servers.Banned or {} ) do
+	for k, v in pairs( result.Servers and result.Servers.Banned or {} ) do
 		if ( v:StartWith( "map:" ) ) then
 			table.insert( BlackList.Maps, v:sub( 5 ) )
 		elseif ( v:StartWith( "desc:" ) ) then
@@ -252,35 +254,37 @@ local function IsServerBlacklisted( address, hostname, description, gm, map )
 
 	for k, v in ipairs( BlackList.Addresses ) do
 		if ( address == v || addressNoPort == v ) then
-			return true
+			return v
 		end
+
+		if ( v:EndsWith( "*" ) && address:sub( 1, v:len() - 1 ) == v:sub( 1, v:len() - 1 ) ) then return v end
 	end
 
 	for k, v in ipairs( BlackList.Hostnames ) do
 		if string.match( hostname, v ) then
-			return true
+			return v
 		end
 	end
 
 	for k, v in ipairs( BlackList.Descripts ) do
 		if string.match( description, v ) then
-			return true
+			return v
 		end
 	end
 
 	for k, v in ipairs( BlackList.Gamemodes ) do
 		if string.match( gm, v ) then
-			return true
+			return v
 		end
 	end
 
 	for k, v in ipairs( BlackList.Maps ) do
 		if string.match( map, v ) then
-			return true
+			return v
 		end
 	end
 
-	return false
+	return nil
 end
 
 local Servers = {}
@@ -295,12 +299,13 @@ function GetServers( category, id )
 	Servers[ category ] = {}
 
 	local data = {
-		Callback = function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, workshopid )
+		Callback = function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, workshopid, isAnon, steamID64 )
 
 			if Servers[ category ] && Servers[ category ][ address ] then print( "Server Browser Error!", address, category ) return end
 			Servers[ category ][ address ] = true
 
-			if ( !IsServerBlacklisted( address, name, desc, gm, map ) ) then
+			local blackListMatch = IsServerBlacklisted( address, name, desc, gm, map )
+			if ( blackListMatch == nil ) then
 
 				name = string.JavascriptSafe( name )
 				desc = string.JavascriptSafe( desc )
@@ -309,11 +314,12 @@ function GetServers( category, id )
 				gm = string.JavascriptSafe( gm )
 				workshopid = string.JavascriptSafe( workshopid )
 
-				pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s" );',
-					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid ) )
+				pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s" );',
+					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid, tostring( isAnon ), steamID64 ) )
+
 			else
 
-				Msg( "Ignoring blacklisted server: ", name, " @ ", address, "\n" )
+				Msg( "Ignoring server '", name, "' @ ", address, " - ", blackListMatch, " is blacklisted\n" )
 
 			end
 
@@ -377,8 +383,11 @@ function UpdateSubscribedAddons()
 
 	local subscriptions = engine.GetAddons()
 	local json = util.TableToJSON( subscriptions )
-
 	pnlMainMenu:Call( "subscriptions.Update( " .. json .. " )" )
+
+	local UGCsubs = engine.GetUserContent()
+	local jsonUGC = util.TableToJSON( UGCsubs )
+	pnlMainMenu:Call( "subscriptions.UpdateUGC( " .. jsonUGC .. " )" )
 
 end
 
@@ -386,6 +395,13 @@ function UpdateAddonDisabledState()
 	local noaddons, noworkshop = GetAddonStatus()
 	pnlMainMenu:Call( "UpdateAddonDisabledState( " .. tostring( noaddons ) .. ", " .. tostring( noworkshop ) .. " )" )
 end
+
+-- Called when UGC subscription status changes
+hook.Add( "WorkshopSubscriptionsChanged", "WorkshopSubscriptionsChanged", function( msg )
+
+	UpdateSubscribedAddons()
+
+end )
 
 hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 

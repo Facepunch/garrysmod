@@ -452,6 +452,12 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	NPC:Spawn()
 	NPC:Activate()
 
+	-- For those NPCs that set their model in Spawn function
+	-- We have to keep the call above for NPCs that want a model set by Spawn() time
+	if ( NPCData.Model && NPC:GetModel() != NPCData.Model ) then
+		NPC:SetModel( NPCData.Model )
+	end
+
 	if ( bDropToFloor ) then
 		NPC:DropToFloor()
 	end

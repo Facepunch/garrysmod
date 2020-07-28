@@ -182,11 +182,19 @@ end
 
 function PANEL:OnChildRemoved()
 
+	-- A panel got removed, we gotta recompress z positions
+	for k, v in pairs( self:GetChildren() ) do
+		v:SetZPos( k )
+	end
+
 	self:Layout()
 
 end
 
 function PANEL:OnChildAdded( child )
+
+	-- Set the Z position for child ordering. Without this self:GetChildren() might return unpredictable results
+	child:SetZPos( self:ChildCount() )
 
 	local dn = self:GetDnD()
 	if ( dn ) then

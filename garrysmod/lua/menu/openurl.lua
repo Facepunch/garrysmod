@@ -1,3 +1,33 @@
+
+local PANEL_Browser = {}
+
+PANEL_Browser.Base = "DFrame"
+
+function PANEL_Browser:Init()
+	self.HTML = vgui.Create( "HTML", self )
+
+	if ( !self.HTML ) then
+		print( "SteamOverlayReplace: Failed to create HTML element" )
+		self:Remove()
+		return
+	end
+
+	self.HTML:Dock( FILL )
+	self.HTML:SetOpenLinksExternally( true )
+
+	self:SetTitle( "Steam overlay replacement" )
+	self:SetSize( ScrW() * 0.75, ScrH() * 0.75 )
+	self:SetSizable( true )
+	self:Center()
+	self:MakePopup()
+end
+
+function PANEL_Browser:SetURL( url )
+	self.HTML:OpenURL( url )
+end
+
+----------------------------------------------
+
 local PANEL = {}
 local PanelInst = nil
 
@@ -67,6 +97,7 @@ function PANEL:DoYes()
 	gui.HideGameUI()
 end
 
+-- Called from the engine
 function RequestOpenURL( url )
 	if IsValid( PanelInst ) then
 		PanelInst:Remove()
@@ -78,4 +109,16 @@ function RequestOpenURL( url )
 	timer.Simple( 0, function()
 		gui.ActivateGameUI()
 	end )
+end
+
+
+function GMOD_OpenURLNoOverlay( url )
+
+	local BrowserInst = vgui.CreateFromTable( PANEL_Browser )
+	BrowserInst:SetURL( url )
+
+	timer.Simple( 0, function()
+		gui.ActivateGameUI()
+	end )
+
 end

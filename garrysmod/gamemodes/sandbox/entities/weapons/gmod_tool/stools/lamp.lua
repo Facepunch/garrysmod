@@ -150,6 +150,8 @@ if ( SERVER ) then
 
 		lamp:Spawn()
 
+		DoPropSpawnedEffect( lamp )
+
 		duplicator.DoGenericPhysics( lamp, pl, Data )
 
 		lamp:SetPlayer( pl )

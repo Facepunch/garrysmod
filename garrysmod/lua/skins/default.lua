@@ -281,10 +281,12 @@ SKIN.Colours.Properties.Title				= GWEN.TextureColor( 4 + 8 * 13, 500 )
 SKIN.Colours.Properties.Column_Normal		= GWEN.TextureColor( 4 + 8 * 14, 508 )
 SKIN.Colours.Properties.Column_Selected		= GWEN.TextureColor( 4 + 8 * 15, 508 )
 SKIN.Colours.Properties.Column_Hover		= GWEN.TextureColor( 4 + 8 * 14, 500 )
+SKIN.Colours.Properties.Column_Disabled		= Color( 240, 240, 240 )
 SKIN.Colours.Properties.Border				= GWEN.TextureColor( 4 + 8 * 15, 500 )
 SKIN.Colours.Properties.Label_Normal		= GWEN.TextureColor( 4 + 8 * 16, 508 )
 SKIN.Colours.Properties.Label_Selected		= GWEN.TextureColor( 4 + 8 * 17, 508 )
 SKIN.Colours.Properties.Label_Hover			= GWEN.TextureColor( 4 + 8 * 16, 500 )
+SKIN.Colours.Properties.Label_Disabled		= GWEN.TextureColor( 4 + 8 * 16, 508 )
 
 SKIN.Colours.Category = {}
 SKIN.Colours.Category.Header				= GWEN.TextureColor( 4 + 8 * 18, 500 )
@@ -321,7 +323,7 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintShadow( panel, w, h )
 
-	SKIN.tex.Shadow( 0, 0, w, h )
+	self.tex.Shadow( 0, 0, w, h )
 
 end
 
@@ -332,9 +334,9 @@ function SKIN:PaintFrame( panel, w, h )
 
 	if ( panel.m_bPaintShadow ) then
 
-		DisableClipping( true )
-		SKIN.tex.Shadow( -4, -4, w+10, h+10 )
-		DisableClipping( false )
+		local wasEnabled = DisableClipping( true )
+		self.tex.Shadow( -4, -4, w+10, h+10 )
+		DisableClipping( wasEnabled )
 
 	end
 
@@ -403,6 +405,31 @@ function SKIN:PaintCheckBox( panel, w, h )
 			self.tex.CheckboxD( 0, 0, w, h )
 		else
 			self.tex.Checkbox( 0, 0, w, h )
+		end
+
+	end
+
+end
+
+--[[---------------------------------------------------------
+	RadioButton
+-----------------------------------------------------------]]
+function SKIN:PaintRadioButton( panel, w, h )
+
+	if ( panel:GetChecked() ) then
+
+		if ( panel:GetDisabled() ) then
+			self.tex.RadioButtonD_Checked( 0, 0, w, h )
+		else
+			self.tex.RadioButton_Checked( 0, 0, w, h )
+		end
+
+	else
+
+		if ( panel:GetDisabled() ) then
+			self.tex.RadioButtonD( 0, 0, w, h )
+		else
+			self.tex.RadioButton( 0, 0, w, h )
 		end
 
 	end
@@ -908,7 +935,11 @@ end
 function SKIN:PaintCollapsibleCategory( panel, w, h )
 
 	if ( h < 21 ) then
-		return self.tex.CategoryList.Header( 0, 0, w, h )
+		self.tex.CategoryList.Header( 0, 0, w, h )
+
+		-- Little hack, draw the ComboBox's dropdown arrow to tell the player the category is collapsed and not empty
+		if ( !panel:GetExpanded() ) then self.tex.Input.ComboBox.Button.Down( w - 18, 2, 15, 15 ) end
+		return
 	end
 
 	self.tex.CategoryList.Inner( 0, 0, w, 63 )

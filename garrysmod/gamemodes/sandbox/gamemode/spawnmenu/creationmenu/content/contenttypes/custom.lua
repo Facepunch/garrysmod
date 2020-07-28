@@ -35,9 +35,10 @@ local function SetupCustomNode( node, pnlContent, needsapp )
 		node.DoRightClick = function( self )
 
 			local menu = DermaMenu()
-			menu:AddOption( "Edit", function() self:InternalDoClick() hook.Run( "OpenToolbox" )  end ):SetIcon( "icon16/folder_edit.png" )
-			menu:AddOption( "New Category", function() AddCustomizableNode( pnlContent, "New Category", "", self ) self:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/folder_add.png" )
-			menu:AddOption( "Delete", function() node:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/folder_delete.png" )
+			menu:AddOption( "#spawnmenu.menu.edit", function() self:InternalDoClick() hook.Run( "OpenToolbox" )  end ):SetIcon( "icon16/folder_edit.png" )
+			menu:AddOption( "#spawnmenu.menu.add_subcategory", function() AddCustomizableNode( pnlContent, "New Category", "", self ) self:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/folder_add.png" )
+			menu:AddSpacer()
+			menu:AddOption( "#spawnmenu.menu.delete", function() node:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/folder_delete.png" )
 
 			menu:Open()
 
@@ -132,13 +133,15 @@ function AddPropsOfParent( pnlContent, node, parentid, customProps )
 
 		local pnlnode = AddCustomizableNode( pnlContent, Info.name, Info.icon, node, Info.needsapp )
 		pnlnode:SetExpanded( true )
+		pnlnode.OnRemove = function( self ) if ( IsValid( self.PropPanel ) ) then self.PropPanel:Remove() end end
 		pnlnode.DoPopulate = function( self )
 
-			if ( self.PropPanel ) then return end
+			if ( IsValid( self.PropPanel ) ) then return end
 
 			self.PropPanel = vgui.Create( "ContentContainer", pnlContent )
 			self.PropPanel:SetVisible( false )
 			self.PropPanel:SetTriggerSpawnlistChange( true )
+			if ( node.AddonSpawnlist ) then self.PropPanel.IconList:SetReadOnly( true ) end
 
 			for i, object in SortedPairs( Info.contents ) do
 
@@ -155,6 +158,8 @@ function AddPropsOfParent( pnlContent, node, parentid, customProps )
 
 end
 
+local CustomizableSpawnlistNode = nil
+local CustomizableSpawnlistParent = nil
 hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, node )
 
 	local node = AddCustomizableNode( pnlContent, "#spawnmenu.category.your_spawnlists", "", tree )
@@ -180,6 +185,7 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 	node:MoveToBack()
 
 	CustomizableSpawnlistNode = node
+	CustomizableSpawnlistParent = pnlContent
 
 	-- Select the first panel
 	local FirstNode = node:GetChildNode( 0 )
@@ -208,5 +214,23 @@ hook.Add( "OnSaveSpawnlist", "DoSaveSpawnlist", function()
 	local Spawnlist = ConstructSpawnlist( CustomizableSpawnlistNode )
 
 	spawnmenu.DoSaveToTextFiles( Spawnlist )
+
+end )
+
+hook.Add( "OnRevertSpawnlist", "DpRevertSpawnlists", function()
+
+	-- First delete all of the existing spawnlists
+	CustomizableSpawnlistNode:Clear()
+
+	-- Next load all the custom spawnlists again
+	AddPropsOfParent( CustomizableSpawnlistParent, CustomizableSpawnlistNode, 0 )
+
+	-- Select the first panel, why this requires a timer?
+	timer.Simple( 0, function() 
+		local FirstNode = CustomizableSpawnlistNode:GetChildNode( 0 )
+		if ( IsValid( FirstNode ) ) then
+			FirstNode:InternalDoClick()
+		end
+	end )
 
 end )

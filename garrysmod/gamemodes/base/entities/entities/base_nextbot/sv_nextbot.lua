@@ -391,3 +391,11 @@ function ENT:OnTraceAttack( dmginfo, dir, trace )
 	hook.Run( "ScaleNPCDamage", self, trace.HitGroup, dmginfo )
 
 end
+
+-- Called when we see a player or another nextbot
+function ENT:OnEntitySight( subject )
+end
+
+-- Called when we see lose sight of a player or a nextbot we saw earlier
+function ENT:OnEntitySightLost( subject )
+end

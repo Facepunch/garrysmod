@@ -53,10 +53,14 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 
 	function ws_dupe:DownloadAndArm( id )
 
-		MsgN( "Downloading Dupe...\n" )
-		steamworks.Download( id, true, function( name )
+		-- Server doesn't allow us to arm dupes, don't even try to download anything
+		local res = hook.Run( "CanArmDupe", LocalPlayer() )
+		if ( res == false ) then LocalPlayer():ChatPrint( "Refusing to download Workshop dupe, server has blocked usage of the Duplicator tool!" ) return end
 
-			MsgN( "Finished - arming!\n" )
+		MsgN( "Downloading Dupe..." )
+		steamworks.DownloadUGC( id, function( name )
+
+			MsgN( "Finished - arming!" )
 			ws_dupe:Arm( name )
 
 		end )

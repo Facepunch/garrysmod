@@ -24,7 +24,7 @@ if ( SERVER ) then
 
 		ply.m_NextSave = CurTime() + 10
 
-		ServerLog( tostring( ply ) .. " requrested a save.\n" )
+		ServerLog( tostring( ply ) .. " requested a save.\n" )
 
 		local save = gmsave.SaveMap( ply )
 		if ( !save ) then return end

@@ -3,7 +3,6 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Light"
-ENT.RenderGroup = RENDERGROUP_BOTH
 ENT.Editable = true
 
 local matLight = Material( "sprites/light_ignorez" )
@@ -107,7 +106,6 @@ function ENT:DrawTranslucent()
 	render.SetMaterial( matLight )
 
 	local ViewNormal = self:GetPos() - EyePos()
-	local Distance = ViewNormal:Length()
 	ViewNormal:Normalize()
 
 	local Visibile = util.PixelVisible( LightPos, 4, self.PixVis )

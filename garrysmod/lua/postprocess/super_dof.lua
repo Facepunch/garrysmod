@@ -137,6 +137,19 @@ function PANEL:ChangeDistanceTo( dist )
 
 end
 
+function PANEL:PositionMyself()
+
+	self:AlignBottom( 50 )
+	self:CenterHorizontal()
+
+end
+
+function PANEL:OnScreenSizeChanged( what, ever )
+
+	self:PositionMyself()
+
+end
+
 local paneltypeSuperDOF = vgui.RegisterTable( PANEL, "DFrame" )
 local texFSB = render.GetSuperFPTex()
 local matFSB = Material( "pp/motionblur" )
@@ -323,9 +336,7 @@ concommand.Add( "pp_superdof", function()
 
 	SuperDOFWindow:InvalidateLayout( true )
 	SuperDOFWindow:MakePopup()
-	SuperDOFWindow:AlignBottom( 50 )
-	SuperDOFWindow:CenterHorizontal()
-	SuperDOFWindow:SetKeyboardInputEnabled( true )
+	SuperDOFWindow:PositionMyself()
 
 end )
 

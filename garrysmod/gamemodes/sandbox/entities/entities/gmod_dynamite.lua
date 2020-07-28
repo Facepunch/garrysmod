@@ -3,7 +3,6 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Dynamite"
-ENT.RenderGroup = RENDERGROUP_BOTH
 ENT.Editable = true
 
 function ENT:SetupDataTables()
@@ -56,7 +55,7 @@ function ENT:Explode( delay, ply )
 
 	if ( !IsValid( self ) ) then return end
 
-	ply = ply or self.Entity
+	ply = ply or self
 
 	local _delay = delay or self:GetDelay()
 

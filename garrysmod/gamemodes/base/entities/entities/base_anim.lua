@@ -9,7 +9,6 @@ ENT.Author			= ""
 ENT.Contact			= ""
 ENT.Purpose			= ""
 ENT.Instructions	= ""
-ENT.RenderGroup		= RENDERGROUP_OPAQUE
 
 -- Defaulting this to OFF. This will automatically save bandwidth
 -- on stuff that is already out there, but might break a few things

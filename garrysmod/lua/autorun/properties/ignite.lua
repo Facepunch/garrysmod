@@ -5,6 +5,7 @@ local function CanEntityBeSetOnFire( ent )
 
 	-- func_pushable, func_breakable & func_physbox cannot be ignited
 	if ( ent:GetClass() == "item_item_crate" ) then return true end
+	if ( ent:GetClass() == "simple_physics_prop" ) then return true end
 	if ( ent:GetClass():match( "prop_physics*") ) then return true end
 	if ( ent:GetClass():match( "prop_ragdoll*") ) then return true end
 	if ( ent:IsNPC() ) then return true end

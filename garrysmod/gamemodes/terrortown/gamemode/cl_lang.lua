@@ -266,10 +266,10 @@ function LANG.ProcessMsg(name, params)
             params[k] = LANG.GetTranslation(name)
          end
       end
-      
+
       text = interp(raw, params)
    end
-   
+
    LANG.ShowStyledMsg(text, LANG.GetStyle(name))
 end
 
@@ -293,7 +293,7 @@ local styledmessages = {
       "buy_no_stock",
       "buy_pending",
       "buy_received",
-      
+
       "xfer_no_recip",
       "xfer_no_credits",
       "xfer_success",
@@ -344,7 +344,7 @@ local styledmessages = {
 
 local set_style = LANG.SetStyle
 for style, msgs in pairs(styledmessages) do
-   for _, name in pairs(msgs) do
+   for _, name in ipairs(msgs) do
       set_style(name, style)
    end
 end

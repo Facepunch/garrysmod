@@ -592,7 +592,7 @@ function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 	if ( Weapon.UseHands || !Weapon:IsScripted() ) then
 
 		local hands = Player:GetHands()
-		if ( IsValid( hands ) ) then
+		if ( IsValid( hands ) && IsValid( hands:GetParent() ) ) then
 
 			if ( not hook.Call( "PreDrawPlayerHands", self, hands, ViewModel, Player, Weapon ) ) then
 

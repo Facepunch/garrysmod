@@ -169,7 +169,7 @@
 	input Display(void) : "Display the message text."
 ]
 
-@PointClass base(Targetname, Parentname, Origin) = ttt_traitor_button :
+@PointClass base(Targetname, Parentname, Origin) sphere(UsableRange) = ttt_traitor_button :
 	"A button only usable by traitors, and only shown on their HUD. Can be used from any point within 1024 units of the button."
 [
 	description(string) : "Description" : "" : "Text describing the function of this button, shown on player HUD."

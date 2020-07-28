@@ -92,3 +92,13 @@ hook.Add( "WorkshopSubscriptionsProgress", "WorkshopSubscriptionsProgress", func
 
 end )
 
+hook.Add( "WorkshopSubscriptionsMessage", "WorkshopSubscriptionsMessage", function( msg )
+
+	if ( !IsValid( vgui_workshop ) ) then
+		vgui_workshop = GetOverlayPanel():Add( pnlWorkshop )
+	end
+
+	vgui_workshop:SetMessage( msg )
+
+end )
+

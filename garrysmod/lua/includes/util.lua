@@ -24,6 +24,7 @@ function Material( name, words )
 	str = str .. (words:find("mips") and "1" or "0")
 	str = str .. (words:find("noclamp") and "1" or "0")
 	str = str .. (words:find("smooth") and "1" or "0")
+	str = str .. (words:find("ignorez") and "1" or "0")
 
 	return C_Material( name, str )
 
@@ -410,7 +411,7 @@ end
 --
 -- This is supposed to be clientside, but was exposed to both states for years due to a bug.
 --
-function CreateClientConVar( name, default, shouldsave, userdata, helptext )
+function CreateClientConVar( name, default, shouldsave, userdata, helptext, min, max )
 
 	local iFlags = 0
 
@@ -422,7 +423,7 @@ function CreateClientConVar( name, default, shouldsave, userdata, helptext )
 		iFlags = bit.bor( iFlags, FCVAR_USERINFO )
 	end
 
-	return CreateConVar( name, default, iFlags, helptext )
+	return CreateConVar( name, default, iFlags, helptext, min, max )
 
 end
 

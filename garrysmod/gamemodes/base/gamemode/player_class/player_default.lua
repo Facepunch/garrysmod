@@ -71,6 +71,9 @@ function PLAYER:SetModel()
 
 end
 
+function PLAYER:Death( inflictor, attacker )
+end
+
 -- Clientside only
 function PLAYER:CalcView( view ) end		-- Setup the player's view
 function PLAYER:CreateMove( cmd ) end		-- Creates the user command on the client

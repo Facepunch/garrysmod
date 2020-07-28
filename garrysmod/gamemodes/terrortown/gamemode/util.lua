@@ -53,7 +53,7 @@ end
 
 function util.GetAlivePlayers()
    local alive = {}
-   for k, p in pairs(player.GetAll()) do
+   for k, p in ipairs(player.GetAll()) do
       if IsValid(p) and p:Alive() and p:IsTerror() then
          table.insert(alive, p)
       end
@@ -71,7 +71,7 @@ function util.GetNextAlivePlayer(ply)
    local choice = nil
 
    if IsValid(ply) then
-      for k,p in pairs(alive) do
+      for k,p in ipairs(alive) do
          if prev == ply then
             choice = p
          end
@@ -146,6 +146,10 @@ function util.StartBleeding(ent, dmg, t)
 
    timer.Create("bleed" .. ent:EntIndex(), delay, times,
                 function() DoBleed(ent) end)
+end
+
+function util.StopBleeding(ent)
+   timer.Remove("bleed" .. ent:EntIndex())
 end
 
 local zapsound = Sound("npc/assassin/ball_zap1.wav")

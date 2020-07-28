@@ -174,7 +174,9 @@ function PANEL:AddControl( control, data )
 			ctrl:SetDefaultValue( data.default )
 		elseif ( data.command ) then
 			local cvar = GetConVar( data.command )
-			ctrl:SetDefaultValue( cvar:GetDefault() )
+			if ( cvar ) then
+				ctrl:SetDefaultValue( cvar:GetDefault() )
+			end
 		end
 
 		return ctrl

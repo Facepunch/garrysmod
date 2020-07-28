@@ -286,6 +286,11 @@ function meta:SetTooltipPanel( panel )
 end
 meta.SetToolTipPanel = meta.SetTooltipPanel
 
+-- Override which panel will be created instead of DTooltip
+function meta:SetTooltipPanelOverride( panel )
+	self.pnlTooltipPanelOverride = panel
+end
+
 --[[---------------------------------------------------------
 	Name: SizeToContentsY (Only works on Labels)
 -----------------------------------------------------------]]

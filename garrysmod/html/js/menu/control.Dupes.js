@@ -8,6 +8,43 @@ function ControllerDupes($scope, $rootScope, $location, $timeout, $routeParams)
 
 	dupe.Init( 'ws_dupe', $scope, $rootScope );
 
+	$scope.MyCategories =
+	[
+		"local",
+		"subscribed_ugc",
+		//"favorites_ugc"
+	];
+
+	$scope.Categories =
+	[
+		"trending",
+		"popular",
+		"latest"
+	];
+
+	$scope.CategoriesSecondary =
+	[
+		"friends",
+		"mine"
+	];
+
+	$scope.SubCategories =
+	[
+		"posed",
+		"scenes",
+		"machines",
+		"vehicles",
+		"buildings",
+		"others"
+	];
+
+	$scope.Disabled = false;
+	if ( !IS_SPAWN_MENU ) lua.Run( "UpdateAddonDisabledState();" );
+
+	$scope.Subscribe = function( file ) { subscriptions.Subscribe( file.id ); }
+	$scope.Unsubscribe = function( file ) { subscriptions.Unsubscribe( file.id ); }
+	$scope.IsSubscribed = function( file ) { return subscriptions.Contains( String( file.id ) ); };
+
 	$scope.ArmDupe = function( entry )
 	{
 		if ( !IN_ENGINE ) return;
@@ -21,7 +58,7 @@ function ControllerDupes($scope, $rootScope, $location, $timeout, $routeParams)
 		// TODO: Some kind of `please wait` while we download 200kb
 		//
 
-		gmod.DownloadDupe( entry.info.fileid );
+		gmod.DownloadDupe( entry.info.id );
 	}
 
 	$scope.DeleteLocal = function( entry )
@@ -29,7 +66,7 @@ function ControllerDupes($scope, $rootScope, $location, $timeout, $routeParams)
 		if ( IN_ENGINE )
 		{
 			gmod.DeleteLocal( entry.info.file );
-			gmod.DeleteLocal( entry.info.background );
+			gmod.DeleteLocal( entry.background );
 		}
 
 		$scope.Switch( $scope.Category, $scope.Offset );

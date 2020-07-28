@@ -8,7 +8,7 @@ AccessorFunc( PANEL, "m_bCustomIcon", "CustomIcon" )
 function PANEL:Init()
 
 	self:SetSize( 762, 502 )
-	self:SetTitle( "Icon Editor" )
+	self:SetTitle( "#smwidget.icon_editor" )
 
 	local left = self:Add( "Panel" )
 	left:Dock( LEFT )
@@ -21,7 +21,7 @@ function PANEL:Init()
 		bg.Paint = function( self, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
 
 		self.SpawnIcon = bg:Add( "SpawnIcon" )
-		//self.SpawnIcon.DoClick = function() self:RenderIcon() end
+		--self.SpawnIcon.DoClick = function() self:RenderIcon() end
 
 		self.ModelPanel = bg:Add( "DAdjustableModelPanel" )
 		self.ModelPanel:Dock( FILL )
@@ -162,7 +162,7 @@ function PANEL:Init()
 	local anims = right:Add( "Panel" )
 	anims:Dock( FILL )
 	anims:DockPadding( 2, 0, 2, 2 )
-	right:AddSheet( "Animations", anims, "icon16/monkey.png" )
+	right:AddSheet( "#smwidget.animations", anims, "icon16/monkey.png" )
 
 		self.AnimList = anims:Add( "DListView" )
 		self.AnimList:AddColumn( "name" )
@@ -176,7 +176,7 @@ function PANEL:Init()
 	pnl:Dock( FILL )
 	pnl:DockPadding( 7, 0, 7, 7 )
 
-	self.BodygroupTab = right:AddSheet( "Bodygroups", pnl, "icon16/brick.png" )
+	self.BodygroupTab = right:AddSheet( "#smwidget.bodygroups", pnl, "icon16/brick.png" )
 
 		self.BodyList = pnl:Add( "DScrollPanel" )
 		self.BodyList:Dock( FILL )
@@ -205,7 +205,7 @@ function PANEL:Init()
 	local settings = right:Add( "Panel" )
 	settings:Dock( FILL )
 	settings:DockPadding( 7, 0, 7, 7 )
-	right:AddSheet( "Settings", settings, "icon16/cog.png" )
+	right:AddSheet( "#smwidget.settings", settings, "icon16/cog.png" )
 
 		local bbox = settings:Add( "DCheckBoxLabel" )
 		bbox:SetText( "Show Bounding Box" )
@@ -430,9 +430,6 @@ function PANEL:Refresh()
 	self.ModelPanel.LayoutEntity = function() self:UpdateEntity( self.ModelPanel:GetEntity() )  end
 
 	local ent = self.ModelPanel:GetEntity()
-	local pos = ent:GetPos()
-
-	local tab = PositionSpawnIcon( ent, pos )
 
 	ent:SetSkin( self.SpawnIcon:GetSkinID() )
 	ent:SetBodyGroups( self.SpawnIcon:GetBodyGroup() )
@@ -465,31 +462,28 @@ function PANEL:FillAnimations( ent )
 
 	if ( ent:SkinCount() > 1 ) then
 
-		local combo = self.BodyList:Add( "DComboBox" )
-		combo:Dock( TOP )
-		combo:DockMargin( 0, 0, 0, 3 )
-		newItems = newItems + 1
+		local skinSlider = self.BodyList:Add( "DNumSlider" )
+		skinSlider:Dock( TOP )
+		skinSlider:DockMargin( 0, 0, 0, 3 )
+		skinSlider:SetText( "Skin" )
+		skinSlider:SetDark( true )
+		skinSlider:SetDecimals( 0 )
+		skinSlider:SetMinMax( 0, ent:SkinCount() - 1 )
+		skinSlider:SetValue( ent:GetSkin() )
+		skinSlider.OnValueChanged = function( s, newVal )
+			newVal = math.Round( newVal )
 
-		for l = 0, ent:SkinCount() - 1 do
-			combo:AddChoice( "Skin " .. l, function()
+			ent:SetSkin( newVal )
 
-				ent:SetSkin( l )
+			if ( self:GetOrigin() ) then self:GetOrigin():SkinChanged( newVal ) end
 
-				if ( self:GetOrigin() ) then
-					self:GetOrigin():SkinChanged( l )
-				end
-
-				-- If we're not using a custom, change our spawnicon
-				-- so we save the new skin in the right place...
-				if ( !self:GetCustomIcon() ) then
-					self.SpawnIcon:SetModel( self.SpawnIcon:GetModelName(), l, self.SpawnIcon:GetBodyGroup() )
-				end
-
-			end )
+			-- If we're not using a custom, change our spawnicon
+			-- so we save the new skin in the right place...
+			if ( !self:GetCustomIcon() ) then
+				self.SpawnIcon:SetModel( self.SpawnIcon:GetModelName(), newVal, self.SpawnIcon:GetBodyGroup() )
+			end
 		end
-
-		combo:ChooseOptionID( ent:GetSkin( l ) + 1 )
-		combo.OnSelect = function( pnl, index, value, data ) data()	end
+		newItems = newItems + 1
 
 	end
 
@@ -497,36 +491,30 @@ function PANEL:FillAnimations( ent )
 
 		if ( ent:GetBodygroupCount( k ) <= 1 ) then continue end
 
-		local combo = self.BodyList:Add( "DComboBox" )
-		combo:Dock( TOP )
-		combo:DockMargin( 0, 0, 0, 3 )
-		newItems = newItems + 1
+		local bgSlider = self.BodyList:Add( "DNumSlider" )
+		bgSlider:Dock( TOP )
+		bgSlider:DockMargin( 0, 0, 0, 3 )
+		bgSlider:SetDark( true )
+		bgSlider:SetDecimals( 0 )
+		bgSlider:SetText( ent:GetBodygroupName( k ) )
+		bgSlider:SetMinMax( 0, ent:GetBodygroupCount( k ) - 1 )
+		bgSlider:SetValue( ent:GetBodygroup( k ) )
+		bgSlider.BodyGroupID = k
+		bgSlider.OnValueChanged = function( s, newVal )
+			newVal = math.Round( newVal )
 
-		for l = 0, ent:GetBodygroupCount( k ) - 1 do
+			ent:SetBodygroup( s.BodyGroupID, newVal )
 
-			combo:AddChoice( ent:GetBodygroupName( k ) .. " " .. l, function()
+			if ( self:GetOrigin() ) then self:GetOrigin():BodyGroupChanged( s.BodyGroupID, newVal ) end
 
-				-- Body Group Changed..
-				ent:SetBodygroup( k, l )
-
-				if ( self:GetOrigin() ) then
-					self:GetOrigin():BodyGroupChanged( k, l )
-				end
-
-				-- If we're not using a custom, change our spawnicon
-				-- so we save the new skin in the right place...
-				if ( !self:GetCustomIcon() ) then
-					self.SpawnIcon:SetBodyGroup( k, l )
-					self.SpawnIcon:SetModel( self.SpawnIcon:GetModelName(), self.SpawnIcon:GetSkinID(), self.SpawnIcon:GetBodyGroup() )
-				end
-
-			end )
-
+			-- If we're not using a custom, change our spawnicon
+			-- so we save the new skin in the right place...
+			if ( !self:GetCustomIcon() ) then
+				self.SpawnIcon:SetBodyGroup( s.BodyGroupID, newVal )
+				self.SpawnIcon:SetModel( self.SpawnIcon:GetModelName(), self.SpawnIcon:GetSkinID(), self.SpawnIcon:GetBodyGroup() )
+			end
 		end
-
-		combo:ChooseOptionID( ent:GetBodygroup( k ) + 1 )
-
-		combo.OnSelect = function( pnl, index, value, data ) data() end
+		newItems = newItems + 1
 
 	end
 

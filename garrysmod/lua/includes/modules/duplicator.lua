@@ -89,7 +89,7 @@ local EntityPhysics =
 		for objectid = 0, num-1 do
 	
 			local obj = Entity:GetPhysicsObjectNum( objectid )
-			if ( !obj:IsValid() ) then continue end
+			if ( !IsValid( obj ) ) then continue end
 
 			data[ objectid ] = {}
 			PhysicsObject.Save( data[ objectid ], obj )
@@ -774,13 +774,14 @@ function Paste( Player, EntityList, ConstraintList )
 	-- Create constraints
 	--
 	for k, Constraint in pairs( ConstraintList ) do
-	
-		local Entity = CreateConstraintFromTable( Constraint, CreatedEntities )
-		
-		if ( Entity && Entity:IsValid() ) then
+
+		local Entity = nil
+		ProtectedCall( function() Entity = CreateConstraintFromTable( Constraint, CreatedEntities ) end )
+
+		if ( IsValid( Entity ) ) then
 			table.insert( CreatedConstraints, Entity )
 		end
-	
+
 	end
 
 	ActionPlayer = oldplayer

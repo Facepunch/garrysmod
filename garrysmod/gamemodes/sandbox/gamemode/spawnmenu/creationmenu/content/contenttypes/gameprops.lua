@@ -63,6 +63,7 @@ hook.Add( "PopulateContent", "GameProps", function( pnlContent, tree, node )
 
 	local ViewPanel = vgui.Create( "ContentContainer", pnlContent )
 	ViewPanel:SetVisible( false )
+	ViewPanel.IconList:SetReadOnly( true )
 
 	local games = engine.GetGames()
 	table.insert( games, {

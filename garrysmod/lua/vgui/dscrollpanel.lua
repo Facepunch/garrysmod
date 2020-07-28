@@ -11,7 +11,7 @@ function PANEL:Init()
 	self.pnlCanvas:SetMouseInputEnabled( true )
 	self.pnlCanvas.PerformLayout = function( pnl )
 
-		self:PerformLayout()
+		self:InvalidateLayout( true )
 		self:InvalidateParent()
 
 	end
@@ -93,7 +93,7 @@ end
 
 function PANEL:ScrollToChild( panel )
 
-	self:PerformLayout()
+	self:InvalidateLayout( true )
 
 	local x, y = self.pnlCanvas:GetChildPosition( panel )
 	local w, h = panel:GetSize()

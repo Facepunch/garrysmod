@@ -21,7 +21,9 @@ function ENT:SetupDataTables()
 	self:NetworkVar( "Float", 0, "BallSize", { KeyName = "ballsize", Edit = { type = "Float", min = self.MinSize, max = self.MaxSize, order = 1 } } )
 	self:NetworkVar( "Vector", 0, "BallColor", { KeyName = "ballcolor", Edit = { type = "VectorColor", order = 2 } } )
 
-	self:NetworkVarNotify( "BallSize", self.OnBallSizeChanged )
+	if ( SERVER ) then
+		self:NetworkVarNotify( "BallSize", self.OnBallSizeChanged )
+	end
 
 end
 
@@ -82,13 +84,15 @@ function ENT:RebuildPhysics( value )
 
 end
 
-function ENT:OnBallSizeChanged( varname, oldvalue, newvalue )
+if ( SERVER ) then
+	function ENT:OnBallSizeChanged( varname, oldvalue, newvalue )
 
-	-- Do not rebuild if the size wasn't changed
-	if ( oldvalue == newvalue ) then return end
+		-- Do not rebuild if the size wasn't changed
+		if ( oldvalue == newvalue ) then return end
 
-	self:RebuildPhysics( newvalue )
+		self:RebuildPhysics( newvalue )
 
+	end
 end
 
 local BounceSound = Sound( "garrysmod/balloon_pop_cute.wav" )

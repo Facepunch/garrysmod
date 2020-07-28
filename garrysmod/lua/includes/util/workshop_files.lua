@@ -115,7 +115,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 		end
 
-		self:FillFileInfo( data )
+		self:FillFileInfo( data, isUGC )
 
 	end
 
@@ -126,7 +126,7 @@ function WorkshopFileBase( namespace, requiredtags )
 		end )
 	end
 
-	function ret:FillFileInfo( results )
+	function ret:FillFileInfo( results, isUGC )
 
 		--
 		-- File info failed..
@@ -166,6 +166,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 				extra.ownername = "Local"
 				extra.description = "Non workshop local floating addon."
+				extra.floating = true
 
 				local json = util.TableToJSON( extra, false )
 
@@ -183,7 +184,17 @@ function WorkshopFileBase( namespace, requiredtags )
 
 				steamworks.FileInfo( v, function( result )
 
-					if ( !result && result.error != nil ) then return end
+					if ( !result || result.error != nil ) then
+						-- Try to get the title from the GetAddons(), this probably could be done more efficiently
+						local title = "Offline addon"
+						for id, t in pairs( isUGC && engine.GetUserContent() || engine.GetAddons() ) do
+							if ( tonumber( v ) == tonumber( t.wsid ) ) then title = t.title break end
+						end
+
+						local json = util.TableToJSON( { title = title, description = "Failed to get addon info, error code " .. ( result && result.error || "unknown" ) }, false )
+						self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. json .. " )" )
+						return
+					end
 
 					if ( result.description ) then
 						result.description = string.gsub( result.description, "%[img%]([^%]]*)%[/img%]", "" ) -- Gotta remove inner content of img tags
@@ -207,7 +218,7 @@ function WorkshopFileBase( namespace, requiredtags )
 					--
 					-- Now we have the preview id - get the preview image!
 					--
-					if ( !PreviewCache[ v ] ) then
+					if ( !PreviewCache[ v ] && result.previewid ) then
 
 						steamworks.Download( result.previewid, false, function( name )
 
@@ -224,31 +235,6 @@ function WorkshopFileBase( namespace, requiredtags )
 				end )
 			end
 
-			--
-			-- Get the current voting stats
-			--
-			self:CountVotes( v )
-
-		end
-
-	end
-
-	function ret:CountVotes( id )
-
-		id = id:JavascriptSafe()
-
-		if ( VoteCache[ id ] ) then
-
-			self.HTML:Call( namespace .. ".ReceiveVoteInfo( \"" .. id .. "\", " .. VoteCache[ id ] .. " )" )
-
-		else
-
-			steamworks.VoteInfo( id, function( result )
-
-				VoteCache[ id ] = util.TableToJSON( result, false )
-				self.HTML:Call( namespace .. ".ReceiveVoteInfo( \"" .. id .. "\", " .. VoteCache[ id ] .. " )" )
-
-			end )
 		end
 
 	end
@@ -258,46 +244,10 @@ function WorkshopFileBase( namespace, requiredtags )
 		--MsgN( "PUBLISHING ", filename )
 		--MsgN( "Image ", image )
 
-		--
-		-- Create the window
-		--
-		local Window = vgui.Create( "DFrame" )
-		Window:SetTitle( "Publish Creation" )
-		Window:SetSize( 400, 350 )
-		Window:LoadGWENFile( "resource/ui/SaveUpload.gwen" ) -- TODO?
-		Window:Center()
-		Window:MakePopup()
-
-		--
-		-- Store the fields
-		--
-		local Submit		= Window:Find( "upload" )
-		local Title			= Window:Find( "name" )
-		local Description	= Window:Find( "description" )
-		local Error			= Window:Find( "error" )
-		local Image			= Window:Find( "image" )
-
-		Image:SetImage( "../" .. image )
-
-		--
-		-- Hook up action
-		--
-		Submit.DoClick = function()
-
-			if ( Title:GetText() == "" ) then
-				Error:SetText( "You must provide a title!" )
-				return
-			end
-
-			local error = self:FinishPublish( filename, image, Title:GetText(), Description:GetText() )
-			if ( error ) then
-				Error:SetText( error )
-				return
-			end
-
-			Window:Remove()
-
-		end
+		local window = vgui.Create( "UGCPublishWindow" )
+		window:Setup( namespace, filename, image, self )
+		window:MakePopup()
+		window:DoModal() -- We want the user to either finish this or quit
 
 	end
 

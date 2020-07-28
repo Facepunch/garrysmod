@@ -48,7 +48,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 
 		if ( v.Class == "prop_ragdoll" ) then
 
-			entities[k] = ClientsideRagdoll( v.Model or "error.mdl", RENDERGROUP_OTHER )
+			entities[ k ] = ClientsideRagdoll( v.Model or "error.mdl", RENDERGROUP_OTHER )
 
 			if ( istable( v.PhysicsObjects ) ) then
 
@@ -106,13 +106,16 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 
 				view.origin = CamPos + Up * math.sin( i ) + Right * math.cos( i )
 
+				-- Set the skin and bodygroups
+				entities[ k ]:SetSkin( v.Skin or 0 )
+				for bg_k, bg_v in pairs( v.BodyG or {} ) do entities[ k ]:SetBodygroup( bg_k, bg_v ) end
+
 				cam.Start( view )
 
 					render.Model( {
 						model	= v.Model,
 						pos		= v.Pos,
-						angle	= v.Angle,
-
+						angle	= v.Angle
 					}, entities[ k ] )
 
 				cam.End()
@@ -141,8 +144,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 				render.Model( {
 					model	= v.Model,
 					pos		= v.Pos,
-					angle	= v.Angle,
-					skin	= v.Skin
+					angle	= v.Angle
 				}, entities[ k ] )
 
 				cam.End()
@@ -191,8 +193,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 		render.Model( {
 			model	= v.Model,
 			pos		= v.Pos,
-			angle	= v.Angle,
-			skin	= v.Skin
+			angle	= v.Angle
 		}, entities[ k ] )
 
 		render.MaterialOverride( nil )

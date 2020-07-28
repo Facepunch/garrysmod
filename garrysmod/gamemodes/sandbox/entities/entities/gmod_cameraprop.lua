@@ -7,7 +7,6 @@ end
 
 ENT.Type = "anim"
 ENT.PrintName = "Camera"
-ENT.RenderGroup = RENDERGROUP_BOTH
 
 local CAMERA_MODEL = Model( "models/dav0r/camera.mdl" )
 
@@ -197,8 +196,8 @@ function ENT:Draw()
 
 	-- Don't draw the camera if we're taking pics
 	local wep = LocalPlayer():GetActiveWeapon()
-	if ( IsValid( wep ) ) then
-		if ( wep:GetClass() == "gmod_camera" ) then return end
+	if ( IsValid( wep ) and wep:GetClass() == "gmod_camera" ) then
+		return
 	end
 
 	self:DrawModel()

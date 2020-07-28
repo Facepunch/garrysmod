@@ -38,9 +38,10 @@
 			<workshopcontainer>
 
 				<workshopmessage ng-show="Loading" ng-Tranny="'demos.loading'">...</workshopmessage>
-				<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'demos.none'">...</workshopmessage>
+				<workshopmessage ng-show="TotalResults == 0 && !Loading && !Disabled" ng-Tranny="'demos.none'">...</workshopmessage>
+				<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled" ng-Tranny="'ugc.disabled'">...</workshopmessage>
 
-				<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px">
+				<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{IfElse( IsSubscribed( file ), 'installed', '' )}}">
 
 					<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
 						<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
@@ -48,8 +49,8 @@
 
 					<name ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}</name>
 					<author ng-hide="file.local">{{file.info.ownername}}</author>
-					<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
-					<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
+					<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" style="color: #4a4">+{{file.info.up-file.info.down|number:0}}</votes>
+					<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" style="color: #a44">{{file.info.up-file.info.down|number:0}}</votes>
 					<description>{{file.info.description}}</description>
 
 					<controls>
@@ -62,6 +63,8 @@
 						</left>
 
 						<right>
+							<control ng-show="!file.local && !IsSubscribed( file ) && !Disabled" ng-click="Subscribe( file )" ng-Tranny="'ugc.subscribe'">..</control>
+							<control ng-show="!file.local && IsSubscribed( file )" ng-click="Unsubscribe( file )" ng-Tranny="'ugc.unsubscribe'">..</control>
 							<control ng-click="DemoToVideo( file )" ng-Tranny="'demos.video'">..</control>
 							<control ng-click="PlayDemo( file )" ng-Tranny="'demos.play'">..</control>
 						</right>

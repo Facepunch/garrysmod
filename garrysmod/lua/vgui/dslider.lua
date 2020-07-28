@@ -65,6 +65,11 @@ function PANEL:SetImageColor( color )
 	-- RETIRED
 end
 
+function PANEL:SetEnabled( b )
+	self.Knob:SetEnabled( b )
+	FindMetaTable( "Panel" ).SetEnabled( self, b ) -- There has to be a better way!
+end
+
 function PANEL:OnCursorMoved( x, y )
 
 	if ( !self.Dragging && !self.Knob.Depressed ) then return end
@@ -105,6 +110,8 @@ function PANEL:TranslateValues( x, y )
 end
 
 function PANEL:OnMousePressed( mcode )
+
+	if ( !self:IsEnabled() ) then return true end
 
 	self:SetDragging( true )
 	self:MouseCapture( true )

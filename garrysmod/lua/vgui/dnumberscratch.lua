@@ -79,6 +79,8 @@ end
 
 function PANEL:OnMousePressed( mousecode )
 
+	if ( !self:IsEnabled() ) then return end
+
 	if ( self:GetZoom() == 0 ) then self:SetZoom( self:IdealZoom() ) end
 
 	self:SetActive( true )
@@ -261,7 +263,7 @@ function PANEL:DrawScreen( x, y, w, h )
 
 	if ( !self:GetShouldDrawScreen() ) then return end
 
-	DisableClipping( true )
+	local wasEnabled = DisableClipping( true )
 
 	--
 	-- Background
@@ -313,7 +315,7 @@ function PANEL:DrawScreen( x, y, w, h )
 	surface.SetTextPos( x + w * 0.5 - tw * 0.5, y + h - th - 5 )
 	surface.DrawText( str )
 
-	DisableClipping( false )
+	DisableClipping( wasEnabled )
 
 end
 

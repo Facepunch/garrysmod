@@ -72,7 +72,7 @@ function PANEL:UpdateColours( skin )
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
 	--
 	-- If we have an image we have to place the image on the left
@@ -87,7 +87,7 @@ function PANEL:PerformLayout()
 
 	end
 
-	DLabel.PerformLayout( self )
+	DLabel.PerformLayout( self, w, h )
 
 end
 

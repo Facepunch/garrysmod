@@ -67,11 +67,11 @@ end
 function PANEL:PositionTooltip()
 
 	if ( !IsValid( self.TargetPanel ) ) then
-		self:Remove()
+		self:Close()
 		return
 	end
 
-	self:PerformLayout()
+	self:InvalidateLayout( true )
 
 	local x, y = input.GetCursorPos()
 	local w, h = self:GetSize()

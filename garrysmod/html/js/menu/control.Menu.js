@@ -51,7 +51,7 @@ function MenuController( $scope, $rootScope )
 	{
 		$scope.Gamemode = gm.name;
 		$scope.GamemodeTitle = gm.title;
-		lua.Run( "RunConsoleCommand( \"gamemode\", \""+gm.name+"\" )" )
+		lua.Run( "RunConsoleCommand( \"gamemode\", \"" + gm.name + "\" )" );
 
 		$( '.gamemode_list' ).hide();
 	}
@@ -59,7 +59,7 @@ function MenuController( $scope, $rootScope )
 	$scope.SelectLanguage = function ( lang )
 	{
 		$rootScope.Language = lang;
-		lua.Run( "RunConsoleCommand( \"gmod_language\", \"" + lang + "\" )" )
+		lua.Run( "RunConsoleCommand( \"gmod_language\", \"" + lang + "\" )" );
 
 		$( '.language_list' ).hide();
 	}
@@ -93,7 +93,7 @@ function MenuController( $scope, $rootScope )
 	//
 	$scope.GameMountChanged = function( mount )
 	{
-		lua.Run( "engine.SetMounted( "+mount.depot+", "+mount.mounted+" )" );
+		lua.Run( "engine.SetMounted( " + mount.depot + ", " + mount.mounted + " )" );
 	}
 
 	//
@@ -237,61 +237,6 @@ function GetGamemodeInfo( name )
 	return GamemodeDetails[name];
 }
 
-function GetHighestKey( obj )
-{
-	var h = 0;
-	var v = "";
-
-	for ( k in obj )
-	{
-		if ( obj[k] > h )
-		{
-			h = obj[k];
-			v = k;
-		}
-	}
-
-	return v;
-}
-
-//
-// Updates information about gamemodes we don't have using server info
-//
-function UpdateGamemodeInfo( server )
-{
-	gi = GetGamemodeInfo( server.gamemode )
-
-	//
-	// Use the most common title
-	//
-	if ( !gi.titles ) gi.titles = {}
-
-	// First try to see if we have a capitalized version already (i.e. sandbox should be Sandbox)
-	if ( server.desc == server.gamemode.toLowerCase() ) {
-		var names = Object.keys( gi.titles );
-		for ( var i = 0; i < names.length; i++ ) {
-			var name = names[ i ];
-			if ( name != name.toLowerCase() && name.toLowerCase() == server.gamemode.toLowerCase() ) {
-				server.desc = name;
-				break;
-			}
-		}
-	}
-
-	if ( !gi.titles[ server.desc ] ) { gi.titles[ server.desc ] = 1; } else { gi.titles[ server.desc ]++; }
-	gi.title = GetHighestKey( gi.titles );
-
-	//
-	// Use the most common workshop id
-	//
-	//if ( server.workshopid != "" )
-	{
-		if ( !gi.wsid ) gi.wsid = {}
-		if ( !gi.wsid[ server.workshopid ] ) { gi.wsid[ server.workshopid ] = 1; } else { gi.wsid[ server.workshopid ]++; }
-		gi.workshopid = GetHighestKey( gi.wsid );
-	}
-}
-
 function UpdateMaps( inmaps )
 {
 	var mapList = []
@@ -361,8 +306,8 @@ function UpdateGames( games )
 
 function UpdateVersion( version, branch )
 {
-	gScope.Version 	= 	version;
-	gScope.Branch 	= 	branch;
+	gScope.Version	= version;
+	gScope.Branch	= branch;
 
 	UpdateDigest( gScope, 100 );
 }

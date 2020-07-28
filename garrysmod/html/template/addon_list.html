@@ -86,12 +86,12 @@
 
 				<name ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}</name>
 				<author ng-hide="file.local">{{file.info.ownername}}</author>
-				<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
-				<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
+				<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" style="color: #4a4">+{{file.info.up-file.info.down|number:0}}</votes>
+				<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" style="color: #a44">{{file.info.up-file.info.down|number:0}}</votes>
 				<description>{{file.info.description}}</description>
 				<input type="checkbox" class="checkbox" ng-show="Category == 'subscribed'" ng-model="SelectedItems[ file.id ]" <!--ng-click="$event.stopPropagation()"-->> 
 
-				<controls>
+				<controls ng-show="!file.info.floating">
 					<left>
 						<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
 						<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
@@ -103,7 +103,7 @@
 						<control ng-show="IsSubscribed( file ) && IsEnabled( file )" ng-click="Disable( file )" ng-Tranny="'addon.disable'">..</control>
 						<control ng-show="IsSubscribed( file ) && !IsEnabled( file )" ng-click="Enable( file )" ng-Tranny="'addon.enable'">..</control>
 
-						<control ng-hide="IsSubscribed( file )" ng-click="Subscribe( file )" ng-Tranny="'addon.subscribe'">..</control>
+						<control ng-hide="IsSubscribed( file ) || Disabled" ng-click="Subscribe( file )" ng-Tranny="'addon.subscribe'">..</control>
 						<control ng-show="IsSubscribed( file )" ng-click="Unsubscribe( file )" ng-Tranny="'addon.unsubscribe'">..</control>
 					</right>
 				</controls>
