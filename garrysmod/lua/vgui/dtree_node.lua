@@ -227,9 +227,11 @@ function PANEL:DoChildrenOrder()
 
 	local children = self.ChildNodes:GetChildren()
 	local last = #children
-	for k, Child in ipairs( children ) do
-		Child:SetLastChild( k == last )
+
+	for i = 1, (last - 1) do
+		children[i]:SetLastChild( false )
 	end
+	children[last]:SetLastChild( true )
 
 end
 
