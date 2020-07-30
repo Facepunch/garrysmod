@@ -51,6 +51,27 @@ function PANEL:SetImage( img )
 end
 PANEL.SetIcon = PANEL.SetImage
 
+function PANEL:SetMaterial( mat )
+
+	if ( !mat ) then
+
+		if ( IsValid( self.m_Image ) ) then
+			self.m_Image:Remove()
+		end
+
+		return
+	end
+
+	if ( !IsValid( self.m_Image ) ) then
+		self.m_Image = vgui.Create( "DImage", self )
+	end
+
+	self.m_Image:SetMaterial( mat )
+	self.m_Image:SizeToContents()
+	self:InvalidateLayout()
+
+end
+
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "Button", self, w, h )
