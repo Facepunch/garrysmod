@@ -622,6 +622,20 @@ function PANEL:GetChildNode( iNum )
 
 end
 
+function PANEL:GetChildNodes()
+
+	if ( !IsValid( self.ChildNodes ) ) then return {} end
+	return self.ChildNodes:GetChildren()
+
+end
+
+function PANEL:GetChildNodeCount()
+
+	if ( !IsValid( self.ChildNodes ) ) then return 0 end
+	return self.ChildNodes:ChildCount()
+
+end
+
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "TreeNode", self, w, h )

@@ -9,6 +9,18 @@ local function SetupCustomNode( node, pnlContent, needsapp )
 	if ( needsapp && needsapp != "" ) then
 		node:SetVisible( IsMounted( needsapp ) )
 		node.NeedsApp = needsapp
+
+		if ( !IsMounted( needsapp ) ) then
+			-- Make it look different
+			node:SetAlpha( 200 )
+
+			-- Give a detailed tooltip explaining why it looks different
+			local name = "a mountable game"
+			for id, t in pairs( engine.GetGames() ) do
+				if ( needsapp == t.folder ) then name = t.title break end
+			end
+			node:SetTooltip( "This spawnlist requires " .. name ..  ", which is not mounted!" )
+		end
 	end
 
 
@@ -158,6 +170,28 @@ function AddPropsOfParent( pnlContent, node, parentid, customProps )
 
 end
 
+-- This helps avoid empty spawnlist list when you delete some but the hidden ones remain so the default spawnlists never regenerate
+-- TODO: Maybe show spawnlists that need games when any spawnlist was changed? Allow to set needed game from in-game?
+local function CheckIfAnyVisible( node, pnlContent )
+	if ( node:GetChildNodeCount() < 1 ) then
+		spawnmenu.PopulateFromEngineTextFiles()
+		AddPropsOfParent( pnlContent, node, 0 )
+		node:SetExpanded( true )
+		return
+	end
+
+	local visible = 0
+	for id, pnl in pairs( node:GetChildNodes() ) do
+		if ( pnl:IsVisible() ) then visible = visible + 1 end
+	end
+
+	if ( visible < 1 ) then
+		for id, pnl in pairs( node:GetChildNodes() ) do
+			pnl:SetVisible( true )
+		end
+	end
+end
+
 local CustomizableSpawnlistNode = nil
 local CustomizableSpawnlistParent = nil
 hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, node )
@@ -181,6 +215,8 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 	end
 
 	AddPropsOfParent( pnlContent, node, 0 )
+
+	CheckIfAnyVisible( node, pnlContent )
 
 	node:MoveToBack()
 
@@ -215,6 +251,8 @@ hook.Add( "OnSaveSpawnlist", "DoSaveSpawnlist", function()
 
 	spawnmenu.DoSaveToTextFiles( Spawnlist )
 
+	CheckIfAnyVisible( CustomizableSpawnlistNode, CustomizableSpawnlistParent )
+
 end )
 
 hook.Add( "OnRevertSpawnlist", "DpRevertSpawnlists", function()
@@ -226,7 +264,7 @@ hook.Add( "OnRevertSpawnlist", "DpRevertSpawnlists", function()
 	AddPropsOfParent( CustomizableSpawnlistParent, CustomizableSpawnlistNode, 0 )
 
 	-- Select the first panel, why this requires a timer?
-	timer.Simple( 0, function() 
+	timer.Simple( 0, function()
 		local FirstNode = CustomizableSpawnlistNode:GetChildNode( 0 )
 		if ( IsValid( FirstNode ) ) then
 			FirstNode:InternalDoClick()

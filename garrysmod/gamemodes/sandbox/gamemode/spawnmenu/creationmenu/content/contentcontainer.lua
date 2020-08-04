@@ -45,6 +45,7 @@ function PANEL:Init()
 			label:MoveToAfter( self.IconList:GetClosestChild( self:GetCanvas():GetWide(), y ) )
 
 			self:OnModified()
+
 			-- Scroll to the newly added item
 			--[[timer.Simple( 0, function()
 				local x, y = label:GetPos()
