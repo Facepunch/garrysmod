@@ -83,6 +83,7 @@ function PANEL:AddSubMenu( strText, funcFunction )
 	local SubMenu = pnl:AddSubMenu( strText, funcFunction )
 
 	pnl:SetText( strText )
+	pnl:SetSkin( self:GetSkin() )
 	if ( funcFunction ) then pnl.DoClick = funcFunction end
 
 	self:AddPanel( pnl )
