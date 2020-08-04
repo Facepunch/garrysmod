@@ -117,8 +117,13 @@ function TOOL:RightClick( trace )
 	if ( trace.Entity:IsWorld() ) then
 
 		trace.Entity = self:GetOwner()
-		trace.HitPos = self:GetOwner():GetPos()
+		trace.HitPos = trace.Entity:GetPos()
 
+	end
+
+	-- We apply the view offset for players in camera entity
+	if ( trace.Entity:IsPlayer() ) then
+		trace.HitPos = trace.Entity:GetPos()
 	end
 
 	camera:SetTracking( trace.Entity, trace.Entity:WorldToLocal( trace.HitPos ) )
