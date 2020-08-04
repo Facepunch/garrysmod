@@ -63,10 +63,12 @@ function ENT:BodyUpdate()
 	-- This helper function does a lot of useful stuff for us.
 	-- It sets the bot's move_x move_y pose parameters, sets their animation speed relative to the ground speed, and calls FrameAdvance.
 	--
-	--
 	if ( act == ACT_RUN || act == ACT_WALK ) then
 
 		self:BodyMoveXY()
+
+		-- BodyMoveXY() already calls FrameAdvance, calling it twice will affect animation playback, specifically on layers
+		return
 
 	end
 
