@@ -100,6 +100,9 @@ function PANEL:OpenForPanel( panel )
 	self.TargetPanel = panel
 	self:PositionTooltip()
 
+	-- Use the parent panel's skin
+	self:SetSkin( panel:GetSkin().Name )
+
 	if ( tooltip_delay:GetFloat() > 0 ) then
 
 		self:SetVisible( false )
