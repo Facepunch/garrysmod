@@ -29,7 +29,7 @@ end
 
 function PANEL:AddSubMenu()
 
-	local SubMenu = DermaMenu( self )
+	local SubMenu = DermaMenu( true, self )
 	SubMenu:SetVisible( false )
 	SubMenu:SetParent( self )
 
