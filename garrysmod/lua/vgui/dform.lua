@@ -99,12 +99,10 @@ function PANEL:PropSelect( strLabel, strConVar, tabList )
 		props:AddModel(mdl)
 	end
 
-	local items = props.List:GetItems()
-
-	for k, v in ipairs(items) do
+	for k, v in ipairs( props.List:GetItems() ) do
 		local dat = tabList[k]
-		local mdl = data.model or data[1]
-		local tip = data.tooltip or data[2]
+		local mdl = dat.model or dat[1]
+		local tip = dat.tooltip or dat[2]
 		v:SetToolTip(tip or mdl)
 	end
 
