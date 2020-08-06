@@ -88,6 +88,31 @@ function PANEL:TextEntry( strLabel, strConVar )
 
 end
 
+function PANEL:PropSelect( strLabel, strConVar, tabList )
+
+	local props = vgui.Create( "PropSelect", self )
+
+	props:ControlValues( { convar = strConVar, label = strLabel } )
+
+	for k, v in ipairs ( tabList ) do
+		local mdl = v.model or v[1]
+		props:AddModel(mdl)
+	end
+
+	local items = props.List:GetItems()
+
+	for k, v in ipairs(items) do
+		local dat = tabList[k]
+		local mdl = data.model or data[1]
+		local tip = data.tooltip or data[2]
+		v:SetToolTip(tip or mdl)
+	end
+
+	self:AddPanel(props)
+
+	return props
+end
+
 function PANEL:ComboBox( strLabel, strConVar )
 
 	local left = vgui.Create( "DLabel", self )
