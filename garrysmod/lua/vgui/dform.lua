@@ -88,19 +88,19 @@ function PANEL:TextEntry( strLabel, strConVar )
 
 end
 
-function PANEL:PropSelect( strLabel, strConVar, tabList )
+function PANEL:PropSelect( strLabel, strConVar, arList )
 
 	local props = vgui.Create( "PropSelect", self )
 
 	props:ControlValues( { convar = strConVar, label = strLabel } )
 
-	for k, v in ipairs ( tabList ) do
+	for k, v in ipairs ( arList ) do
 		local mdl = tostring( v.model or v[1] or "" )
 		props:AddModel(mdl)
 	end
 
 	for k, v in ipairs( props.List:GetItems() ) do
-		local dat = tabList[k]
+		local dat = arList[k]
 		local mdl = tostring( dat.model or dat[1] or "")
 		local tip = tostring( dat.tooltip or dat[2] or mdl )
 		v:SetToolTip(tip)
@@ -109,6 +109,21 @@ function PANEL:PropSelect( strLabel, strConVar, tabList )
 	self:AddPanel(props)
 
 	return props
+end
+
+function PANEL:ControlPresets( strDir, cvList )
+
+	local preset = vgui.Create("ControlPresets", self )
+
+	preset:SetPreset( strDir )
+	preset:AddOption( "Default", cvList )
+	for key, val in pairs( table.GetKeys( cvList ) ) do
+		preset:AddConVar(val)
+	end
+
+	self:AddItem( preset )
+
+	return preset
 end
 
 function PANEL:ComboBox( strLabel, strConVar )
