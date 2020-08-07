@@ -99,8 +99,7 @@ function PANEL:PropSelect( strLab, strVar, arList )
 		local mdl = tostring( dat.model or dat[1] or "")
 		local tip = tostring( dat.tooltip or dat[2] or mdl )
 
-		props:AddModel(mdl)
-		props.List:GetItems()[ID]:SetToolTip(tip)
+		props:AddModel(mdl):SetToolTip(tip)
 	end
 
 	self:AddPanel(props)
