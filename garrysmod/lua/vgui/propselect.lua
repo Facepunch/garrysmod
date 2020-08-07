@@ -62,6 +62,7 @@ function PANEL:AddModel( model, ConVars )
 	self.List:AddItem( Icon )
 	table.insert( self.Controls, Icon )
 
+	return Icon
 end
 
 function PANEL:AddModelEx( name, model, skin )
@@ -88,6 +89,7 @@ function PANEL:AddModelEx( name, model, skin )
 	self.List:AddItem( Icon )
 	table.insert( self.Controls, Icon )
 
+	return Icon
 end
 
 function PANEL:ControlValues( kv )
