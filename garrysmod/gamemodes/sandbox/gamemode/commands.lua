@@ -441,6 +441,9 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
 		if v.class == Equipment then valid = true break end
 	end
+	for _, v in pairs( NPCData.Weapons or {} ) do
+		if v == Equipment then valid = true break end
+	end
 
 	if ( Equipment && Equipment != "none" && valid ) then
 		NPC:SetKeyValue( "additionalequipment", Equipment )
