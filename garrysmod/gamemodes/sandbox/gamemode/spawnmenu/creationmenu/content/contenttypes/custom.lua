@@ -15,11 +15,11 @@ local function SetupCustomNode( node, pnlContent, needsapp )
 			node:SetAlpha( 200 )
 
 			-- Give a detailed tooltip explaining why it looks different
-			local name = "a mountable game"
+			local name = language.GetPhrase( "spawnmenu.mountablegame" )
 			for id, t in pairs( engine.GetGames() ) do
 				if ( needsapp == t.folder ) then name = t.title break end
 			end
-			node:SetTooltip( "This spawnlist requires " .. name ..  ", which is not mounted!" )
+			node:SetTooltip( string.format( language.GetPhrase( "spawnmenu.spawnlistnocontent" ), name ) )
 		end
 	end
 
@@ -172,7 +172,9 @@ end
 
 -- This helps avoid empty spawnlist list when you delete some but the hidden ones remain so the default spawnlists never regenerate
 -- TODO: Maybe show spawnlists that need games when any spawnlist was changed? Allow to set needed game from in-game?
-local function CheckIfAnyVisible( node, pnlContent )
+local function CheckIfAnyVisible( node )
+	local pnlContent = node.SMContentPanel
+
 	if ( node:GetChildNodeCount() < 1 ) then
 		spawnmenu.PopulateFromEngineTextFiles()
 		AddPropsOfParent( pnlContent, node, 0 )
@@ -192,14 +194,13 @@ local function CheckIfAnyVisible( node, pnlContent )
 	end
 end
 
-local CustomizableSpawnlistNode = nil
-local CustomizableSpawnlistParent = nil
 hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, node )
 
 	local node = AddCustomizableNode( pnlContent, "#spawnmenu.category.your_spawnlists", "", tree )
 	node:SetDraggableName( "CustomContent" )
 	node:SetExpanded( true )
 	node.CustomSpawnlist = nil
+	node.SMContentPanel = pnlContent
 
 	node.DoRightClick = function( self )
 
@@ -216,17 +217,19 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 
 	AddPropsOfParent( pnlContent, node, 0 )
 
-	CheckIfAnyVisible( node, pnlContent )
+	CheckIfAnyVisible( node )
 
 	node:MoveToBack()
 
-	CustomizableSpawnlistNode = node
-	CustomizableSpawnlistParent = pnlContent
+	g_SpawnMenu.CustomizableSpawnlistNode = node
 
-	-- Select the first panel
-	local FirstNode = node:GetChildNode( 0 )
-	if ( IsValid( FirstNode ) ) then
-		FirstNode:InternalDoClick()
+	-- Select the first visible panel
+	for id, pnl in pairs( node:GetChildNodes() ) do
+		if ( pnl:IsVisible() ) then
+			pnl:InternalDoClick()
+			pnl:SetExpanded( true )
+			break
+		end
 	end
 
 	-- Custom stuff from addons
@@ -247,28 +250,36 @@ end )
 
 hook.Add( "OnSaveSpawnlist", "DoSaveSpawnlist", function()
 
-	local Spawnlist = ConstructSpawnlist( CustomizableSpawnlistNode )
+	local Spawnlist = ConstructSpawnlist( g_SpawnMenu.CustomizableSpawnlistNode )
 
 	spawnmenu.DoSaveToTextFiles( Spawnlist )
 
-	CheckIfAnyVisible( CustomizableSpawnlistNode, CustomizableSpawnlistParent )
+	CheckIfAnyVisible( g_SpawnMenu.CustomizableSpawnlistNode )
 
 end )
-
-hook.Add( "OnRevertSpawnlist", "DpRevertSpawnlists", function()
+ 
+hook.Add( "OnRevertSpawnlist", "DoRevertSpawnlists", function()
 
 	-- First delete all of the existing spawnlists
-	CustomizableSpawnlistNode:Clear()
+	g_SpawnMenu.CustomizableSpawnlistNode:Clear()
 
 	-- Next load all the custom spawnlists again
-	AddPropsOfParent( CustomizableSpawnlistParent, CustomizableSpawnlistNode, 0 )
+	spawnmenu.PopulateFromEngineTextFiles()
+	AddPropsOfParent( g_SpawnMenu.CustomizableSpawnlistNode.SMContentPanel, g_SpawnMenu.CustomizableSpawnlistNode, 0 )
 
-	-- Select the first panel, why this requires a timer?
+	-- Select the first visible panel. TODO: why this requires a timer?
 	timer.Simple( 0, function()
-		local FirstNode = CustomizableSpawnlistNode:GetChildNode( 0 )
-		if ( IsValid( FirstNode ) ) then
-			FirstNode:InternalDoClick()
+		CheckIfAnyVisible( g_SpawnMenu.CustomizableSpawnlistNode )
+
+		for id, pnl in pairs( g_SpawnMenu.CustomizableSpawnlistNode:GetChildNodes() ) do
+			if ( pnl:IsVisible() ) then
+				pnl:InternalDoClick()
+				pnl:SetExpanded( true )
+				break
+			end
 		end
+
+		g_SpawnMenu.CustomizableSpawnlistNode:SetExpanded( true )
 	end )
 
 end )
