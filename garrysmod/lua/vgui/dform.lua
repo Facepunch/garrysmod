@@ -95,15 +95,15 @@ function PANEL:PropSelect( strLabel, strConVar, tabList )
 	props:ControlValues( { convar = strConVar, label = strLabel } )
 
 	for k, v in ipairs ( tabList ) do
-		local mdl = v.model or v[1]
+		local mdl = tostring( v.model or v[1] or "" )
 		props:AddModel(mdl)
 	end
 
 	for k, v in ipairs( props.List:GetItems() ) do
 		local dat = tabList[k]
-		local mdl = dat.model or dat[1]
-		local tip = dat.tooltip or dat[2]
-		v:SetToolTip(tip or mdl)
+		local mdl = tostring( dat.model or dat[1] or "")
+		local tip = tostring( dat.tooltip or dat[2] or mdl )
+		v:SetToolTip(tip)
 	end
 
 	self:AddPanel(props)
