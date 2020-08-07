@@ -92,7 +92,8 @@ AddNPC( {
 	Class = "npc_citizen",
 	Category = Category,
 	Model = "models/odessa.mdl",
-	KeyValues = { citizentype = CT_UNIQUE, SquadName = "resistance" }
+	KeyValues = { citizentype = CT_UNIQUE, SquadName = "resistance" },
+	Weapons = { "" }
 }, "npc_odessa" )
 
 AddNPC( {
@@ -116,7 +117,8 @@ AddNPC( {
 	Name = "Citizen",
 	Class = "npc_citizen",
 	Category = Category,
-	KeyValues = { citizentype = CT_DOWNTRODDEN, SquadName = "resistance" }
+	KeyValues = { citizentype = CT_DOWNTRODDEN, SquadName = "resistance" },
+	Weapons = { "" } -- Tells the spawnmenu that this NPC can use weapons
 } )
 
 if ( IsMounted( "ep2" ) ) then
