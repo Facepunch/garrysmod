@@ -320,7 +320,10 @@ function ENT:StartThrustSound()
 	if ( !valid ) then return end
 
 	if ( !self.Sound ) then
-		self.Sound = CreateSound( self.Entity, self.SoundName )
+		 -- Make sure the fadeout gets to every player!
+		local filter = RecipientFilter()
+		filter:AddPAS( self:GetPos() )
+		self.Sound = CreateSound( self.Entity, self.SoundName, filter )
 	end
 
 	self.Sound:PlayEx( 0.5, 100 )
