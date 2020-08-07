@@ -88,22 +88,19 @@ function PANEL:TextEntry( strLabel, strConVar )
 
 end
 
-function PANEL:PropSelect( strLabel, strConVar, arList )
+function PANEL:PropSelect( strLab, strVar, arList )
 
 	local props = vgui.Create( "PropSelect", self )
 
-	props:ControlValues( { convar = strConVar, label = strLabel } )
+	props:ControlValues( { convar = strVar, label = strLab } )
 
-	for k, v in ipairs ( arList ) do
-		local mdl = tostring( v.model or v[1] or "" )
-		props:AddModel(mdl)
-	end
-
-	for k, v in ipairs( props.List:GetItems() ) do
-		local dat = arList[k]
+	for ID = 1, #arList do
+		local dat = arList[ID]
 		local mdl = tostring( dat.model or dat[1] or "")
 		local tip = tostring( dat.tooltip or dat[2] or mdl )
-		v:SetToolTip(tip)
+
+		props:AddModel(mdl)
+		props.List:GetItems()[ID]:SetToolTip(tip)
 	end
 
 	self:AddPanel(props)
