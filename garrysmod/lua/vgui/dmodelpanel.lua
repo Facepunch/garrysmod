@@ -92,6 +92,8 @@ function PANEL:DrawModel()
 		previous = curparent
 	end
 
+	render.ClearDepth()
+
 	render.SetScissorRect( leftx, topy, rightx, bottomy, true )
 
 	local ret = self:PreDrawModel( self.Entity )
