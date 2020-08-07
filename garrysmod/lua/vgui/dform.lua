@@ -126,6 +126,25 @@ function PANEL:ControlPresets( strDir, cvList )
 	return preset
 end
 
+function PANEL:NumpadControl( strLab1, strVar1, strLab2, strVar2 )
+
+	if ( strLab1 == nil or strVar1 == nil ) then return nil end
+
+	local numpad = vgui.Create( "CtrlNumPad", self )
+
+	numpad:SetLabel1( tostring( strLabel1 or "" ) )
+	numpad:SetConVar1( tostring( strConVar1 or "" ) )
+
+	if ( strLab2 != nil and strVar2 != nil) then
+		numpad:SetLabel2( tostring( strLab2 or "" ) )
+		numpad:SetConVar2( tostring( strVar2 or "" ) )
+	end
+
+	self:AddPanel(numpad)
+
+	return numpad
+end
+
 function PANEL:ComboBox( strLabel, strConVar )
 
 	local left = vgui.Create( "DLabel", self )
