@@ -153,6 +153,18 @@ function PANEL:SetLabel( strLabel )
 
 end
 
+function PANEL:SetHeaderHeight( height )
+
+	self.Header:SetTall( height )
+
+end
+
+function PANEL:GetHeaderHeight()
+
+	return self.Header:GetTall()
+
+end
+
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "CollapsibleCategory", self, w, h )
@@ -246,7 +258,7 @@ function PANEL:PerformLayout()
 	else
 
 		if ( IsValid( self.Contents ) && !self.OldHeight ) then self.OldHeight = self.Contents:GetTall() end
-		self:SetTall( self.Header:GetTall() )
+		self:SetTall( self:GetHeaderHeight() )
 
 	end
 
@@ -311,6 +323,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	ctrl:SetLabel( "Category List Test Category" )
 	ctrl:SetSize( 300, 300 )
 	ctrl:SetPadding( 10 )
+	ctrl:SetHeaderHeight( 32 )
 
 	-- The contents can be any panel, even a DPanelList
 	local Contents = vgui.Create( "DButton" )
