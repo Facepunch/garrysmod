@@ -233,6 +233,22 @@ function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
 end
 
 --[[---------------------------------------------------------
+	Name: OutlinedBox( x, y, w, h, col, thickness, outlinecol )
+	Desc: Draws an outlined box
+	Usage: color is a table with r/g/b/a elements
+-----------------------------------------------------------]]
+
+function OutlinedBox(x,y,w,h,color,thickness,outlinecolor)
+    surface.SetDrawColor( color )
+    surface.DrawRect( x, y, w, h )
+
+    surface.SetDrawColor( outlinecolor )
+    for i=0,thickness do
+        surface.DrawOutlinedRect( x + i, y + i, w - i * 2, h - i * 2 )
+    end
+end
+
+--[[---------------------------------------------------------
 	Name: WordBox( bordersize, x, y, font, color )
 	Desc: Draws a rounded box - ideally bordersize will be 8 or 16
 	Usage: color is a table with r/g/b/a elements
