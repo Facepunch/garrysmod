@@ -48,16 +48,12 @@ function meta:GetVar( name, default )
 
 end
 
-if ( SERVER ) then
+function meta:SetCreator( ply )
+	self:SetNWEntity( "PlayerCreator", ply )
+end
 
-	function meta:SetCreator( ply )
-		self:SetNWEntity( "PlayerCreator", ply )
-	end
-
-	function meta:GetCreator()
-		return self:GetNWEntity( "PlayerCreator" )
-	end
-
+function meta:GetCreator()
+	return self:GetNWEntity( "PlayerCreator" )
 end
 
 --[[---------------------------------------------------------
