@@ -51,11 +51,11 @@ end
 if ( SERVER ) then
 
 	function meta:SetCreator( ply )
-		self.m_PlayerCreator = ply
+		self:SetNWEntity( "PlayerCreator", ply )
 	end
 
 	function meta:GetCreator()
-		return self.m_PlayerCreator || NULL
+		return self:GetNWEntity( "PlayerCreator" )
 	end
 
 end
