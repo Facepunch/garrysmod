@@ -49,6 +49,7 @@ function meta:GetVar( name, default )
 end
 
 function meta:SetCreator( ply )
+	self.m_PlayerCreator = ply -- Backward compatibility
 	self:SetNWEntity( "PlayerCreator", ply )
 end
 
