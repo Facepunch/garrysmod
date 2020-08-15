@@ -99,7 +99,7 @@ function PANEL:ConsoleMessage( msg, file, line )
 	--
 	-- Plain ol' console.log
 	--
-	MsgC( color_white, "[HTML] " )
+	MsgC( color_purple, "[HTML] " )
 	MsgC( color_white, msg, "\n" )
 
 end
