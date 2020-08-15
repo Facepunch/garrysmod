@@ -1,4 +1,4 @@
-
+local color_purple = Color( 255, 160, 255 )
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bScrollbars",	"Scrollbars",	FORCE_BOOL )
@@ -53,7 +53,7 @@ function PANEL:QueueJavascript( js )
 	end
 
 	self.JS = self.JS or {}
-	self.JS[#self.JS + 1] = js
+	self.JS[self.JS + 1] = js
 	
 	self:Think()
 
