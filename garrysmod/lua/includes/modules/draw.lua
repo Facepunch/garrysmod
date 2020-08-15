@@ -113,6 +113,8 @@ function SimpleTextOutlined(text, font, x, y, colour, xalign, yalign, outlinewid
 
 end
 
+local MultiColorText_StringTable = {}
+
 --[[---------------------------------------------------------
 	Name: MultiColorText(font, x, y, xalign, yalign, vararg)
 	Desc: Simple draw text at position, but with multiple colors.
@@ -132,15 +134,15 @@ function MultiColorText( font, x, y, xAlign, yAlign, ... )
 	local w, h = 0, 0
 
 	if ( xAlign != TEXT_ALIGN_LEFT ) then
-		local fullText = ""
-		
+		table.Empty( MultiColorText_StringTable )
+
 		for k, v in ipairs, table, origin do
 			if not IsColor( v ) then
-				fullText = fullText .. tostring( v )
+				table.insert( MultiColorText_StringTable, tostring( v ) )
 			end
 		end
 
-		w, h = surface.GetTextSize( fullText )
+		w, h = surface.GetTextSize( table.concat( MultiColorText_StringTable, "" ) )
 
 		if ( xAlign == TEXT_ALIGN_CENTER ) then
 			x = x - w/2
