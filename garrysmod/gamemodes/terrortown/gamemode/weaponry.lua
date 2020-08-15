@@ -220,7 +220,7 @@ local function DropActiveWeapon(ply)
       return
    end
 
-   ply:AnimPerformGesture(ACT_ITEM_PLACE)
+   ply:AnimPerformGesture(ACT_GMOD_GESTURE_ITEM_PLACE)
 
    WEPS.DropNotifiedWeapon(ply, wep)
 end
@@ -248,7 +248,7 @@ local function DropActiveAmmo(ply)
 
    wep:SetClip1(0)
 
-   ply:AnimPerformGesture(ACT_ITEM_GIVE)
+   ply:AnimPerformGesture(ACT_GMOD_GESTURE_ITEM_GIVE)
 
    local box = ents.Create(wep.AmmoEnt)
    if not IsValid(box) then return end
