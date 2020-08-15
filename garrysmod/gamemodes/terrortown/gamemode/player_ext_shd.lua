@@ -142,7 +142,6 @@ if CLIENT then
 
    local simple_runners = {
       ACT_GMOD_GESTURE_DISAGREE,
-      ACT_GMOD_GESTURE_SALUTE,
       ACT_GMOD_GESTURE_BECON,
       ACT_GMOD_GESTURE_AGREE,
       ACT_GMOD_GESTURE_WAVE,
@@ -150,10 +149,10 @@ if CLIENT then
       ACT_SIGNAL_FORWARD,
       ACT_SIGNAL_GROUP,
       ACT_SIGNAL_HALT,
-      ACT_GMOD_CHEER,
-      ACT_ITEM_PLACE,
-      ACT_ITEM_DROP,
-      ACT_ITEM_GIVE
+      ACT_GMOD_TAUNT_CHEER,
+      ACT_GMOD_GESTURE_ITEM_PLACE,
+      ACT_GMOD_GESTURE_ITEM_DROP,
+      ACT_GMOD_GESTURE_ITEM_GIVE
    }
    local function MakeSimpleRunner(act)
       return function (ply, w)
