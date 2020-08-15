@@ -76,7 +76,7 @@ function PANEL:ConsoleMessage( msg, file, line )
 			file = string.sub( file, 1, 64 ) .. "..."
 		end
 
-		MsgC( color_white, "[HTML] " )
+		MsgC( color_purple, "[HTML] " )
 		MsgC( color_white, file, ":", line, ": ", msg, "\n" )
 		return
 
