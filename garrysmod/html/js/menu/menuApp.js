@@ -26,6 +26,7 @@ App.filter( 'gamemodeFilter', function() {
 			var found = false;
 			
 			if ( input.name.toLowerCase().indexOf( searchText ) != -1 ) found = true;
+			if ( !found && input.address.indexOf( searchText ) != -1 ) found = true;
 			if ( !found && input.info && input.info.title.toLowerCase().indexOf( searchText ) != -1 ) found = true;
 			
 			if ( found ) output.push( input ); 
