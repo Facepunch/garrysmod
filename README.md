@@ -28,3 +28,5 @@ Translations
 ---
 You can contribute to the game's translation on the following website:
 http://translate.garrysmod.com/project/garrysmod
+
+[![Crowdin](https://badges.crowdin.net/garrysmod/localized.svg)](https://crowdin.com/project/garrysmod)
