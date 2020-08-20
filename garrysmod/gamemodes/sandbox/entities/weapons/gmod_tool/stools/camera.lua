@@ -132,7 +132,11 @@ function TOOL:RightClick( trace )
 
 end
 
+local ConVarsDefault = TOOL:BuildConVarList()
+
 function TOOL.BuildCPanel( CPanel )
+
+	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "camera", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.camera.key", Command = "camera_key" } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.camera.static", Command = "camera_locked", Help = true } )
