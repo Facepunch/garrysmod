@@ -30,9 +30,9 @@ function PANEL:Init()
 		local mat_wireframe = Material( "models/wireframe" )
 		function self.ModelPanel.PostDrawModel( mdlpnl, ent )
 			if ( self.ShowOrigin ) then
-				render.DrawLine( Vector( 0, 0, 0 ), Vector( 0, 0, 100 ), Color( 0, 0, 255 ) )
-				render.DrawLine( Vector( 0, 0, 0 ), Vector( 0, 100, 0 ), Color( 0, 255, 0 ) )
-				render.DrawLine( Vector( 0, 0, 0 ), Vector( 100, 0, 0 ), Color( 255, 0, 0 ) )
+				render.DrawLine( vector_origin, Vector( 0, 0, 100 ), Color( 0, 0, 255 ) )
+				render.DrawLine( vector_origin, Vector( 0, 100, 0 ), Color( 0, 255, 0 ) )
+				render.DrawLine( vector_origin, Vector( 100, 0, 0 ), Color( 255, 0, 0 ) )
 			end
 
 			if ( self.ShowBBox ) then
@@ -333,7 +333,7 @@ function PANEL:OriginLayout()
 
 	local ent = self.ModelPanel:GetEntity()
 	local pos = ent:GetPos()
-	local campos = pos + Vector( 0, 0, 0 )
+	local campos = pos + vector_origin
 
 	self.ModelPanel:SetCamPos( campos )
 	self.ModelPanel:SetFOV( 45 )

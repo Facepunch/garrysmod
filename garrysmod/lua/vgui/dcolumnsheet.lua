@@ -76,7 +76,7 @@ function PANEL:SetActiveButton( active )
 	active.Target:SetVisible( true )
 	active:SetSelected( true )
 	active:SetToggle( true )
-	--active:SetColor( Color( 255, 255, 255, 255 ) )
+	--active:SetColor( color_white )
 
 	self.Content:InvalidateLayout()
 

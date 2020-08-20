@@ -31,7 +31,7 @@ function PANEL:Init()
 	self:SetDirectionalLight( BOX_TOP, Color( 255, 255, 255 ) )
 	self:SetDirectionalLight( BOX_FRONT, Color( 255, 255, 255 ) )
 
-	self:SetColor( Color( 255, 255, 255, 255 ) )
+	self:SetColor( color_white )
 
 end
 

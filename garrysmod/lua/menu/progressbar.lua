@@ -13,7 +13,7 @@ function PANEL:Init()
 
 	self.Label = vgui.Create( "DLabel", self )
 	self.Label:SetFont( "DefaultSmall" )
-	self.Label:SetColor( Color( 0, 0, 0 ) )
+	self.Label:SetColor( color_black )
 
 	self:SetMin( 0 )
 	self:SetMax( 1000 )

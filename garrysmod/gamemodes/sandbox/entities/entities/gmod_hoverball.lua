@@ -133,8 +133,8 @@ function ENT:PhysicsSimulate( phys, deltatime )
 
 	Exponent = math.Clamp( Exponent, -5000, 5000 )
 
-	local Linear = Vector( 0, 0, 0 )
-	local Angular = Vector( 0, 0, 0 )
+	local Linear = vector_origin
+	local Angular = vector_origin
 
 	Linear.z = Exponent
 

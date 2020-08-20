@@ -13,7 +13,7 @@ function PANEL:Init()
 
 	self:SetText( "" )
 
-	self:SetColor( Color( 255, 255, 255, 255 ) )
+	self:SetColor( color_white )
 
 end
 

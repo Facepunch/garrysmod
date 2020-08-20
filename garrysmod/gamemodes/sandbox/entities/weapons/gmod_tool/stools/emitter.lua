@@ -169,7 +169,7 @@ end
 function TOOL:Think()
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != "models/props_lab/tpplug.mdl" ) then
-		self:MakeGhostEntity( "models/props_lab/tpplug.mdl", Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( "models/props_lab/tpplug.mdl", vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostEmitter( self.GhostEntity, self:GetOwner() )

@@ -119,7 +119,7 @@ end
 function PANEL:Paint()
 
 	DisableClipping( true )
-		draw.RoundedBox( 4, -1, -1, self:GetWide()+2, self:GetTall()+2, Color( 0, 0, 0, 255 ) )
+		draw.RoundedBox( 4, -1, -1, self:GetWide() + 2, self:GetTall() + 2, color_black )
 	DisableClipping( false )
 
 	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 50, 50, 50, 255 ) )
@@ -135,12 +135,12 @@ function PANEL:Paint()
 		local w = (self:GetWide() - 64 - 64 - 100)
 		local x = 80
 
-		draw.RoundedBox( 4, x+32 + off, 44 + 18, w, 10, Color( 0, 0, 0, 150 ) )
-		draw.RoundedBox( 4, x+33 + off, 45 + 18, w * math.Clamp( self.TotalProgress, 0.05, 1 )-2, 8, Color( 255, 255, 255, 200 ) )
+		draw.RoundedBox( 4, x + 32 + off, 44 + 18, w, 10, Color( 0, 0, 0, 150 ) )
+		draw.RoundedBox( 4, x + 33 + off, 45 + 18, w * math.Clamp( self.TotalProgress, 0.05, 1 ) - 2, 8, Color( 255, 255, 255, 200 ) )
 
 		-- Current file Progress
-		draw.RoundedBox( 4, x+32, 40, w, 15, Color( 0, 0, 0, 150 ) )
-		draw.RoundedBox( 4, x+33, 41, w * math.Clamp( self.Progress, 0.05, 1 )-2, 15-2, Color( 255, 255, 255, 200 ) )
+		draw.RoundedBox( 4, x + 32, 40, w, 15, Color( 0, 0, 0, 150 ) )
+		draw.RoundedBox( 4, x + 33, 41, w * math.Clamp( self.Progress, 0.05, 1 )-2, 15-2, Color( 255, 255, 255, 200 ) )
 
 	end
 

@@ -7,7 +7,7 @@ function PANEL:Init()
 
 	self.mx = 0
 	self.my = 0
-	self.aLookAngle = Angle( 0, 0, 0 )
+	self.aLookAngle = angle_zero
 
 end
 
@@ -71,15 +71,15 @@ function PANEL:FirstPersonControls()
 	-- Look around
 	self.aLookAngle = self.aLookAngle + Angle( y, x, 0 )
 
-	local Movement = Vector( 0, 0, 0 )
+	local Movement = vector_origin
 
 	-- TODO: Use actual key bindings, not hardcoded keys.
 	if ( input.IsKeyDown( KEY_W ) || input.IsKeyDown( KEY_UP ) ) then Movement = Movement + self.aLookAngle:Forward() end
 	if ( input.IsKeyDown( KEY_S ) || input.IsKeyDown( KEY_DOWN ) ) then Movement = Movement - self.aLookAngle:Forward() end
 	if ( input.IsKeyDown( KEY_A ) || input.IsKeyDown( KEY_LEFT ) ) then Movement = Movement - self.aLookAngle:Right() end
 	if ( input.IsKeyDown( KEY_D ) || input.IsKeyDown( KEY_RIGHT ) ) then Movement = Movement + self.aLookAngle:Right() end
-	if ( input.IsKeyDown( KEY_SPACE ) || input.IsKeyDown( KEY_SPACE ) ) then Movement = Movement + self.aLookAngle:Up() end
-	if ( input.IsKeyDown( KEY_LCONTROL ) || input.IsKeyDown( KEY_LCONTROL ) ) then Movement = Movement - self.aLookAngle:Up() end
+	if ( input.IsKeyDown( KEY_SPACE ) ) then Movement = Movement + self.aLookAngle:Up() end
+	if ( input.IsKeyDown( KEY_LCONTROL ) ) then Movement = Movement - self.aLookAngle:Up() end
 
 	local speed = 0.5
 	if ( input.IsShiftDown() ) then speed = 4.0 end

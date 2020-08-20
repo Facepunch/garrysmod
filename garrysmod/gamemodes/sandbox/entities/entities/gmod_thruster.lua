@@ -409,7 +409,7 @@ list.Set( "ThrusterEffects", "#thrustereffect.flames", {
 		render.SetMaterial( matHeatWave )
 		render.StartBeam( 3 )
 			render.AddBeam( vOffset, size * Scale, scroll, Color( 0, 0, 255, 128 ) )
-			render.AddBeam( vOffset + vNormal * 32 * Scale, 32 * Scale, scroll + 2, Color( 255, 255, 255, 255 ) )
+			render.AddBeam( vOffset + vNormal * 32 * Scale, 32 * Scale, scroll + 2, color_white )
 			render.AddBeam( vOffset + vNormal * 128 * Scale, 48 * Scale, scroll + 5, Color( 0, 0, 0, 0 ) )
 		render.EndBeam()
 
@@ -441,7 +441,7 @@ list.Set( "ThrusterEffects", "#thrustereffect.plasma", {
 
 		render.StartBeam( 3 )
 			render.AddBeam( vOffset, size, scroll, Color( 0, 255, 255, 255 ) )
-			render.AddBeam( vOffset + vNormal * 8, size, scroll + 0.01, Color( 255, 255, 255, 255 ) )
+			render.AddBeam( vOffset + vNormal * 8, size, scroll + 0.01, color_white )
 			render.AddBeam( vOffset + vNormal * 64, size, scroll + 0.02, Color( 0, 255, 255, 0 ) )
 		render.EndBeam()
 
@@ -449,7 +449,7 @@ list.Set( "ThrusterEffects", "#thrustereffect.plasma", {
 
 		render.StartBeam( 3 )
 			render.AddBeam( vOffset, size, scroll, Color( 0, 255, 255, 255 ) )
-			render.AddBeam( vOffset + vNormal * 8, size, scroll + 0.01, Color( 255, 255, 255, 255 ) )
+			render.AddBeam( vOffset + vNormal * 8, size, scroll + 0.01, color_white )
 			render.AddBeam( vOffset + vNormal * 64, size, scroll + 0.02, Color( 0, 255, 255, 0 ) )
 		render.EndBeam()
 
@@ -457,7 +457,7 @@ list.Set( "ThrusterEffects", "#thrustereffect.plasma", {
 
 		render.StartBeam( 3 )
 			render.AddBeam( vOffset, size, scroll, Color( 0, 255, 255, 255 ) )
-			render.AddBeam( vOffset + vNormal * 8, size, scroll + 0.01, Color( 255, 255, 255, 255 ) )
+			render.AddBeam( vOffset + vNormal * 8, size, scroll + 0.01, color_white )
 			render.AddBeam( vOffset + vNormal * 64, size, scroll + 0.02, Color( 0, 255, 255, 0 ) )
 		render.EndBeam()
 	end

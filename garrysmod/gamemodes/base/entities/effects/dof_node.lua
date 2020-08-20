@@ -50,6 +50,6 @@ function EFFECT:Render()
 	local SpriteSize = ( self.spacing + self.offset ) * 8
 
 	render.SetMaterial( self.Mat )
-	render.DrawSprite( self:GetPos(), SpriteSize, SpriteSize, Color( 255, 255, 255 ) )
+	render.DrawSprite( self:GetPos(), SpriteSize, SpriteSize, color_white )
 
 end
