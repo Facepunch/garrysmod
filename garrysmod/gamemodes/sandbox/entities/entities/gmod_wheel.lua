@@ -175,11 +175,9 @@ function ENT:DoDirectionEffect()
 	if ( !IsValid( Motor ) ) then return end
 
 	local effectdata = EffectData()
-
-		effectdata:SetOrigin( self.Axis )
-		effectdata:SetEntity( self )
-		effectdata:SetScale( Motor.direction )
-
+	effectdata:SetOrigin( self.Axis * 100 ) -- Ugly hack, but necessary due to network precision problems of EffectData()
+	effectdata:SetEntity( self )
+	effectdata:SetScale( Motor.direction )
 	util.Effect( "wheel_indicator", effectdata, true, true )
 
 end
