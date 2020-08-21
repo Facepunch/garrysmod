@@ -138,6 +138,7 @@ function MultiColorText( font, x, y, xAlign, yAlign, ... )
 		for k, v in ipairs, table, origin do
 			if not IsColor( v ) then
 				StringTable[i] = tostring( v )
+				i = i + 1
 			end
 		end
 
