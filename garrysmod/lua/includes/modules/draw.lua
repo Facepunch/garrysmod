@@ -134,11 +134,12 @@ function MultiColorText( font, x, y, xAlign, yAlign, ... )
 	local w, h = 0, 0
 
 	if ( xAlign != TEXT_ALIGN_LEFT ) then
-		table.Empty( MultiColorText_StringTable )
+		MultiColorText_StringTable = {}
 
+		local i = 1
 		for k, v in ipairs, table, origin do
 			if not IsColor( v ) then
-				table.insert( MultiColorText_StringTable, tostring( v ) )
+				MultiColorText_StringTable[i] = tostring( v )
 			end
 		end
 
