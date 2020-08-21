@@ -142,7 +142,7 @@ function MultiColorText( font, x, y, xAlign, yAlign, ... )
 			end
 		end
 
-		w, h = surface.GetTextSize( table.concat( StringTable, "" ) )
+		w, h = surface.GetTextSize( table.concat( StringTable ) )
 
 		if ( xAlign == TEXT_ALIGN_CENTER ) then
 			x = x - w/2
