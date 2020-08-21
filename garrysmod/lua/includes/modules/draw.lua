@@ -1,10 +1,13 @@
 
 local string = string
 local surface = surface
+local ipairs = ipairs
 local math = math
 local Color = Color
+local IsColor = IsColor
 local tostring = tostring
 local color_white = color_white
+local table_concat = table.concat
 
 module( "draw" )
 
@@ -142,7 +145,7 @@ function MultiColorText( font, x, y, xAlign, yAlign, ... )
 			end
 		end
 
-		w, h = surface.GetTextSize( table.concat( StringTable ) )
+		w, h = surface.GetTextSize( table_concat( StringTable ) )
 
 		if ( xAlign == TEXT_ALIGN_CENTER ) then
 			x = x - w/2
