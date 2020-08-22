@@ -1,7 +1,7 @@
 
 local PANEL = {}
 
-local color_05050 = Vector( 0.5, 0.5, 0 )
+local vector_05050 = Vector( 0.5, 0.5, 0 )
 local material_1 = Material( "brick/brick_model" )
 
 AccessorFunc( PANEL, "m_Material", "Material" )
