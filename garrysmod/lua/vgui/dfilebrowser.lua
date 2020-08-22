@@ -1,6 +1,8 @@
 
 local PANEL = {}
 
+local color_234234234 = Color( 234, 234, 234 )
+
 AccessorFunc( PANEL, "m_strName",			"Name" )
 AccessorFunc( PANEL, "m_strPath",			"Path" )
 AccessorFunc( PANEL, "m_strFilter",			"FileTypes" )
@@ -173,7 +175,7 @@ function PANEL:SetupFiles()
 	if ( self.m_bModels ) then
 		self.Files = self.Divider:Add( "DIconBrowser" )
 		self.Files:SetManual( true )
-		self.Files:SetBackgroundColor( Color( 234, 234, 234 ) )
+		self.Files:SetBackgroundColor( color_234234234 )
 	else
 		self.Files = self.Divider:Add( "DListView" )
 		self.Files:SetMultiSelect( false )

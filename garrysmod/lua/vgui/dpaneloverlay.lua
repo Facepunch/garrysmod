@@ -3,6 +3,8 @@ local InnerCorner8	= surface.GetTextureID( "gui/icorner8" )
 
 local PANEL = {}
 
+local color_404040255 = Color( 40, 40, 40, 255 )
+
 AccessorFunc( PANEL, "m_Color", "Color" )
 AccessorFunc( PANEL, "m_Type", "Type" )
 
@@ -60,7 +62,7 @@ function PANEL:Paint()
 	end
 
 	if ( self.m_Type == 3 ) then
-		local c = Color( 40, 40, 40, 255 )
+		local c = color_404040255
 		return self:PaintDifferentColours( c, c, self.m_Color, self.m_Color, 8 )
 	end
 

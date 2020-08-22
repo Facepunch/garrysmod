@@ -1,6 +1,9 @@
 
 local PANEL = {}
 
+local color_200200200100 = Color( 200, 200, 200, 100 )
+local color_000200 = Color( 0, 0, 0, 200 )
+
 function PANEL:Init()
 
 	self:SetEnabled( true )
@@ -161,10 +164,10 @@ function PANEL:Paint()
 
 	if ( !self.Enabled || self.BarScale <= 0 ) then	return true	end
 
-	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 200, 200, 200, 100 ) )
+	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), color_200200200100 )
 
 	local Pos = ( self:GetTall() - self:ScrollbarSize() ) * self.Pos
-	draw.RoundedBox( 4, 2, Pos + 2, self:GetWide() - 4, self:ScrollbarSize() - 4, Color( 0, 0, 0, 200 ) )
+	draw.RoundedBox( 4, 2, Pos + 2, self:GetWide() - 4, self:ScrollbarSize() - 4, color_000200 )
 
 	return true
 

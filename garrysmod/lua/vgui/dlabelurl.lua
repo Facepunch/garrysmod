@@ -1,6 +1,9 @@
 
 local PANEL = {}
 
+local color_00255 = Color( 0, 0, 255 ) 
+local color_050255 = Color( 0, 50, 255 )
+
 AccessorFunc( PANEL, "m_colText", "TextColor" )
 AccessorFunc( PANEL, "m_colTextStyle", "TextStyleColor" )
 
@@ -8,7 +11,7 @@ AccessorFunc( PANEL, "m_bAutoStretchVertical", "AutoStretchVertical" )
 
 function PANEL:Init()
 
-	self:SetTextStyleColor( Color( 0, 0, 255 ) )
+	self:SetTextStyleColor( color_00255 )
 
 	-- Nicer default height
 	self:SetTall( 20 )
@@ -41,14 +44,14 @@ end
 
 function PANEL:OnCursorEntered()
 
-	self:SetTextStyleColor( Color( 0, 50, 255 ) )
+	self:SetTextStyleColor( color_050255 )
 	self:UpdateFGColor()
 
 end
 
 function PANEL:OnCursorExited()
 
-	self:SetTextStyleColor( Color( 0, 0, 255 ) )
+	self:SetTextStyleColor( color_00255 )
 	self:UpdateFGColor()
 
 end

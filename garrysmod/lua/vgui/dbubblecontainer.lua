@@ -1,13 +1,15 @@
 
 local PANEL = {}
+local mat = Material( "gui/point.png" )
+local color_190190190230 = Color( 190, 190, 190, 230 )
 
 AccessorFunc( PANEL, "m_bgColor", "BackgroundColor" )
 
 function PANEL:Init()
 
-	self.matPoint = Material( "gui/point.png" )
+	self.matPoint = mat
 	self:DockPadding( 0, 0, 0, 32 )
-	self:SetBackgroundColor( Color( 190, 190, 190, 230 ) )
+	self:SetBackgroundColor( color_190190190230 )
 
 end
 

@@ -68,7 +68,7 @@ function PANEL:AddItem( left, right )
 
 	end
 
-	table.insert( self.Items, Panel )
+	self.Items = { Panel }
 
 end
 
@@ -197,7 +197,7 @@ function PANEL:ControlHelp( strHelp )
 	left:Dock( TOP )
 	left:SetTextColor( self:GetSkin().Colours.Tree.Hover )
 
-	table.insert( self.Items, Panel )
+	self.Items = { Panel }
 
 	return left
 

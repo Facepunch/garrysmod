@@ -1,6 +1,8 @@
 
 local PANEL = {}
 
+local color_25500128 = Color( 255, 0, 0, 128 )
+local color_2550255 = Color( 255, 0, 255 )
 local matGrid = Material( "gui/alpha_grid.png", "nocull" )
 
 AccessorFunc( PANEL, "m_bBorder", "DrawBorder", FORCE_BOOL )
@@ -17,7 +19,7 @@ function PANEL:Init()
 	self:SetCursor( "hand" )
 	self:SetZPos( 0 )
 
-	self:SetColor( Color( 255, 0, 255 ) )
+	self:SetColor( color_2550255 )
 
 end
 
@@ -67,7 +69,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
 	ctrl:SetSize( 64, 64 )
-	ctrl:SetColor( Color( 255, 0, 0, 128 ) )
+	ctrl:SetColor( color_25500128 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 

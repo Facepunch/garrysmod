@@ -32,7 +32,7 @@ function PANEL:AddItem( item )
 	item:SetVisible( true )
 	item:SetParent( self )
 
-	table.insert( self.Items, item )
+	self.Items = { item }
 
 	self:InvalidateLayout()
 

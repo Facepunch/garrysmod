@@ -1,6 +1,9 @@
 
 local PANEL = {}
 
+local color_250250250200 = Color( 250, 250, 250, 200 )
+local color_404040255 = Color( 40, 40, 40, 255 )
+
 function PANEL:Init()
 
 	local ButtonSize = 32
@@ -70,9 +73,9 @@ function PANEL:Init()
 	self.Cur = 1
 
 	-- This is the default look, feel free to change it on your created control :)
-	self:SetButtonColor( Color( 250, 250, 250, 200 ) )
+	self:SetButtonColor( color_250250250200 )
 	self.BorderSize = 4
-	self.BackgroundColor = Color( 40, 40, 40, 255 )
+	self.BackgroundColor = color_404040255
 	self.HomeURL = "http://www.google.com"
 
 end
@@ -140,7 +143,7 @@ function PANEL:UpdateHistory( url )
 
 	end
 
-	self.Cur = table.insert( self.History, url )
+	self.Cur = self.History = { url }
 
 	self:UpdateNavButtonStatus()
 

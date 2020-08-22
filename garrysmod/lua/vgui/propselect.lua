@@ -60,7 +60,7 @@ function PANEL:AddModel( model, ConVars )
 
 	-- Add the Icon us
 	self.List:AddItem( Icon )
-	table.insert( self.Controls, Icon )
+	self.Controls = { Icon }
 
 	return Icon
 end
@@ -87,7 +87,7 @@ function PANEL:AddModelEx( name, model, skin )
 
 	-- Add the Icon us
 	self.List:AddItem( Icon )
-	table.insert( self.Controls, Icon )
+	self.Controls = { Icon }
 
 	return Icon
 end

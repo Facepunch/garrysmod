@@ -1,4 +1,6 @@
 
+local color_000200 = Color( 0, 0, 0, 200 )
+local color_000100 = Color( 0, 0, 0, 100 )
 local PANEL = {
 
 	Init = function( self )
@@ -18,11 +20,11 @@ local PANEL = {
 	UpdateColours = function( self, skin )
 
 		if ( !self:GetParent():GetExpanded() ) then
-			self:SetExpensiveShadow( 0, Color( 0, 0, 0, 200 ) )
+			self:SetExpensiveShadow( 0, color_000200 )
 			return self:SetTextStyleColor( skin.Colours.Category.Header_Closed )
 		end
 
-		self:SetExpensiveShadow( 1, Color( 0, 0, 0, 100 ) )
+		self:SetExpensiveShadow( 1, color_000100 )
 		return self:SetTextStyleColor( skin.Colours.Category.Header )
 
 	end,

@@ -109,7 +109,7 @@ function PANEL:AddItem( item, strLineState )
 	item:SetVisible( true )
 	item:SetParent( self:GetCanvas() )
 	item.m_strLineState = strLineState || item.m_strLineState
-	table.insert( self.Items, item )
+	self.Items = { item }
 
 	--[[if ( self.m_bSortable ) then
 
@@ -134,7 +134,7 @@ function PANEL:InsertBefore( before, insert, strLineState )
 
 	if ( key ) then
 		table.RemoveByValue( self.Items, insert )
-		table.insert( self.Items, key, insert )
+		self.Items[key] = { insert }
 	end
 
 end
@@ -148,7 +148,7 @@ function PANEL:InsertAfter( before, insert, strLineState )
 
 	if ( key ) then
 		table.RemoveByValue( self.Items, insert )
-		table.insert( self.Items, key + 1, insert )
+		self.Items[key + 1] = { insert }
 	end
 
 end
@@ -161,7 +161,7 @@ function PANEL:InsertAtTop( insert, strLineState )
 	local key = 1
 	if ( key ) then
 		table.RemoveByValue( self.Items, insert )
-		table.insert( self.Items, key, insert )
+		self.Items[key] = { insert }
 	end
 
 end

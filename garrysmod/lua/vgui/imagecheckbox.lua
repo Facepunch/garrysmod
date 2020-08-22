@@ -1,6 +1,8 @@
 
 local PANEL = {}
 
+local color_00050 = Color( 0, 0, 0, 50 )
+
 function PANEL:SetMaterial( On )
 
 	if ( self.MatOn ) then
@@ -53,7 +55,7 @@ end
 
 function PANEL:Paint()
 
-	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), Color( 0, 0, 0, 50 ) )
+	draw.RoundedBox( 4, 0, 0, self:GetWide(), self:GetTall(), color_00050 )
 	return true
 
 end

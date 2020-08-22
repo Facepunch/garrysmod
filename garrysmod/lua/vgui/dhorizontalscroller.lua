@@ -36,7 +36,7 @@ function PANEL:Init()
 				end
 
 				table.RemoveByValue( self.Panels, child )
-				table.insert( self.Panels, id, child )
+				self.Panels[id] = { child }
 
 				self:InvalidateLayout()
 
@@ -95,7 +95,7 @@ end
 
 function PANEL:AddPanel( pnl )
 
-	table.insert( self.Panels, pnl )
+	self.Panels = { pnl }
 
 	pnl:SetParent( self.pnlCanvas )
 	self:InvalidateLayout( true )

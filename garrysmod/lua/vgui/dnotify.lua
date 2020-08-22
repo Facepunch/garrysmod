@@ -32,7 +32,7 @@ function PANEL:AddItem( item, LifeLength )
 
 	item:SetVisible( true )
 	item:SetParent( self )
-	table.insert( self.Items, item )
+	self.Items = { item }
 	item:SetAlpha( 1 )
 
 	item:SetTerm( LifeLength )

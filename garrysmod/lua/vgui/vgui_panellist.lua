@@ -1,6 +1,8 @@
 
 local PANEL = {}
 
+local color_000200 = Color( 0, 0, 0, 200 )
+
 function PANEL:Init()
 
 	self.pnlCanvas = vgui.Create( "Panel", self )
@@ -11,7 +13,7 @@ function PANEL:Init()
 	self:SetPadding( 4 )
 	self:EnableHorizontal( false )
 
-	self.BackgroundColor = Color( 0, 0, 0, 200 )
+	self.BackgroundColor = color_000200
 
 end
 
@@ -51,7 +53,7 @@ end
 function PANEL:AddItem( item )
 
 	item:SetParent( self:GetCanvas() )
-	table.insert( self.Items, item )
+	self.Items = { item }
 
 	self:InvalidateLayout()
 

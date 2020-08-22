@@ -1,6 +1,8 @@
 
 local PANEL = {}
 
+local color_101010 = Color( 10, 10, 10 )
+
 AccessorFunc( PANEL, "m_pMenu", "Menu" )
 AccessorFunc( PANEL, "m_bChecked", "Checked" )
 AccessorFunc( PANEL, "m_bCheckable", "IsCheckable" )
@@ -9,7 +11,7 @@ function PANEL:Init()
 
 	self:SetContentAlignment( 4 )
 	self:SetTextInset( 32, 0 ) -- Room for icon on left
-	self:SetTextColor( Color( 10, 10, 10 ) )
+	self:SetTextColor( color_101010 )
 	self:SetChecked( false )
 
 end

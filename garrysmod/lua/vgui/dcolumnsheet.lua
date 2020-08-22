@@ -52,7 +52,7 @@ function PANEL:AddSheet( label, panel, material )
 		--Sheet.Button:SetColor( Color( 150, 150, 150, 100 ) )
 	end
 
-	table.insert( self.Items, Sheet )
+	self.Items = { Sheet }
 
 	if ( !IsValid( self.ActiveButton ) ) then
 		self:SetActiveButton( Sheet.Button )

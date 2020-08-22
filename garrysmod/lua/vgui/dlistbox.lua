@@ -1,6 +1,9 @@
 
 local PANEL = {}
 
+local color_0128255200 = Color( 0, 128, 255, 200 )
+local color_0128255128 = Color( 0, 128, 255, 128 )
+
 AccessorFunc( PANEL, "m_pMother", "Mother" )
 
 function PANEL:Init()
@@ -23,9 +26,9 @@ end
 
 function PANEL:Paint( w, h )
 	if ( self:IsSelected() ) then
-		draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 128, 255, 200 ) )
+		draw.RoundedBox( 0, 0, 0, w, h, color_0128255200 )
 	elseif ( self.Hovered ) then
-		draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 128, 255, 128 ) )
+		draw.RoundedBox( 0, 0, 0, w, h, color_0128255128 )
 	end
 end
 
@@ -143,7 +146,7 @@ function PANEL:SelectItem( item, onlyme )
 
 	self.m_pSelected = item
 	item:SetSelected( true )
-	table.insert( self.SelectedItems, item )
+	SelectedItems = { item }
 
 end
 
@@ -166,7 +169,7 @@ function PANEL:GetSelectedValues()
 	if ( #items > 1 ) then
 
 		local ret = {}
-		for _, v in pairs( items ) do table.insert( ret, v:GetValue() ) end
+		for _, v in pairs( items ) do ret = { v:GetValue() } end
 		return ret
 
 	elseif ( #items == 1 ) then

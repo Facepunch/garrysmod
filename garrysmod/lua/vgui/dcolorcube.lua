@@ -1,6 +1,8 @@
 
 local PANEL = {}
 
+local color_25500 = Color( 255, 0, 0 )
+
 AccessorFunc( PANEL, "m_Hue", "Hue" )
 AccessorFunc( PANEL, "m_BaseRGB", "BaseRGB" )
 AccessorFunc( PANEL, "m_OutRGB", "RGB" )
@@ -17,9 +19,9 @@ function PANEL:Init()
 	self.BGValue:SetImage( "vgui/gradient-d" )
 	self.BGValue:SetImageColor( color_black )
 
-	self:SetBaseRGB( Color( 255, 0, 0 ) )
-	self:SetRGB( Color( 255, 0, 0 ) )
-	self:SetColor( Color( 255, 0, 0 ) )
+	self:SetBaseRGB( color_25500 )
+	self:SetRGB( color_25500 )
+	self:SetColor( color_25500 )
 
 	self:SetLockX( nil )
 	self:SetLockY( nil )

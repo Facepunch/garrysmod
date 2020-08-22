@@ -1,6 +1,9 @@
 
 local PANEL = {}
 
+local color_255255255155 = Color( 255, 255, 255, 155 )
+local color_101010200 = Color( 10, 10, 10, 200 )
+
 AccessorFunc( PANEL, "m_pPropertySheet", "PropertySheet" )
 AccessorFunc( PANEL, "m_pPanel", "Panel" )
 
@@ -50,7 +53,7 @@ function PANEL:PerformLayout()
 	self.Image:SetPos( 7, 3 )
 
 	if ( !self:IsActive() ) then
-		self.Image:SetImageColor( Color( 255, 255, 255, 155 ) )
+		self.Image:SetImageColor( color_255255255155 )
 	else
 		self.Image:SetImageColor( color_white )
 	end
@@ -196,7 +199,7 @@ function PANEL:AddSheet( label, panel, material, NoStretchX, NoStretchY, Tooltip
 
 	panel:SetParent( self )
 
-	table.insert( self.Items, Sheet )
+	self.Items = { Sheet }
 
 	if ( !self:GetActiveTab() ) then
 		self:SetActiveTab( Sheet.Tab )
@@ -392,7 +395,7 @@ function PANEL:SetupCloseButton( func )
 
 	self.CloseButton = self.tabScroller:Add( "DImageButton" )
 	self.CloseButton:SetImage( "icon16/circlecross.png" )
-	self.CloseButton:SetColor( Color( 10, 10, 10, 200 ) )
+	self.CloseButton:SetColor( color_101010200 )
 	self.CloseButton:DockMargin( 1, 1, 1, 9 )
 	self.CloseButton:SetWide( 18 )
 	self.CloseButton:Dock( RIGHT )

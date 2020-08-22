@@ -74,7 +74,7 @@ function PANEL:AddColumn( strName, iPosition )
 
 	if ( iPosition ) then
 
-		table.insert( self.Columns, iPosition, pColumn )
+		self.Columns[iPosition] = { pColumn }
 
 		for i = 1, #self.Columns do
 			self.Columns[ i ]:SetColumnID( i )
@@ -82,7 +82,7 @@ function PANEL:AddColumn( strName, iPosition )
 
 	else
 
-		local ID = table.insert( self.Columns, pColumn )
+		local ID = self.Columns = { pColumn }
 		pColumn:SetColumnID( ID )
 
 	end
@@ -288,7 +288,7 @@ function PANEL:AddLine( ... )
 	self:InvalidateLayout()
 
 	local Line = vgui.Create( "DListView_Line", self.pnlCanvas )
-	local ID = table.insert( self.Lines, Line )
+	local ID = self.Lines = { Line }
 
 	Line:SetListView( self )
 	Line:SetID( ID )
@@ -303,7 +303,7 @@ function PANEL:AddLine( ... )
 	end
 
 	-- Make appear at the bottom of the sorted list
-	local SortID = table.insert( self.Sorted, Line )
+	local SortID = self.Sorted = { Line }
 
 	if ( SortID % 2 == 1 ) then
 		Line:SetAltLine( true )
@@ -542,7 +542,7 @@ function PANEL:GetSelected()
 
 	for k, v in pairs( self.Lines ) do
 		if ( v:IsLineSelected() ) then
-			table.insert( ret, v )
+			ret = { v }
 		end
 	end
 

@@ -95,7 +95,7 @@ function PANEL:Init()
 
 	self:SetButtonSize( 10 )
 
-	table.insert( g_ColorPalettePanels, self )
+	g_ColorPalettePanels = { self }
 
 end
 

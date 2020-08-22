@@ -125,7 +125,7 @@ end
 
 function PANEL:AddChoice( value, data, select, icon )
 
-	local i = table.insert( self.Choices, value )
+	local i = self.Choices = { value }
 
 	if ( data ) then
 		self.Data[ i ] = data
@@ -174,7 +174,7 @@ function PANEL:OpenMenu( pControlOpener )
 		for k, v in pairs( self.Choices ) do
 			local val = tostring( v ) --tonumber( v ) || v -- This would make nicer number sorting, but SortedPairsByMemberValue doesn't seem to like number-string mixing
 			if ( string.len( val ) > 1 && !tonumber( val ) && val:StartWith( "#" ) ) then val = language.GetPhrase( val:sub( 2 ) ) end
-			table.insert( sorted, { id = k, data = v, label = val } )
+			sorted = { id = k, data = v, label = val }
 		end
 		for k, v in SortedPairsByMemberValue( sorted, "label" ) do
 			local option = self.Menu:AddOption( v.data, function() self:ChooseOption( v.data, v.id ) end )

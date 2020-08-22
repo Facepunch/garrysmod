@@ -360,7 +360,7 @@ function PANEL:AddHistory( txt )
 	if ( !txt || txt == "" ) then return end
 
 	table.RemoveByValue( self.History, txt )
-	table.insert( self.History, txt )
+	self.History = { txt }
 
 end
 

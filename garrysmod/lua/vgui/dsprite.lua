@@ -1,6 +1,9 @@
 
 local PANEL = {}
 
+local color_05050 = Vector( 0.5, 0.5, 0 )
+local material_1 = Material( "brick/brick_model" )
+
 AccessorFunc( PANEL, "m_Material", "Material" )
 AccessorFunc( PANEL, "m_Color", "Color" )
 AccessorFunc( PANEL, "m_Rotation", "Rotation" )
@@ -10,7 +13,7 @@ function PANEL:Init()
 
 	self:SetColor( color_white )
 	self:SetRotation( 0 )
-	self:SetHandle( Vector( 0.5, 0.5, 0 ) )
+	self:SetHandle( color_05050 )
 
 	self:SetMouseInputEnabled( false )
 	self:SetKeyboardInputEnabled( false )
@@ -38,7 +41,7 @@ end
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
-	ctrl:SetMaterial( Material( "brick/brick_model" ) )
+	ctrl:SetMaterial( material_1 )
 	ctrl:SetSize( 200, 200 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )

@@ -1,5 +1,7 @@
 
 local PANEL = {}
+local angle_4500 = Angle( 45, 0, 0 )
+local vector_20020 = Vector(-20, 0, 20)
 
 AccessorFunc( PANEL, "m_bFirstPerson", "FirstPerson" )
 
@@ -108,8 +110,8 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	ctrl:SetSize( 300, 300 )
 	ctrl:SetModel( "models/props_junk/PlasticCrate01a.mdl" )
 	ctrl:GetEntity():SetSkin( 2 )
-	ctrl:SetLookAng( Angle( 45, 0, 0 ) )
-	ctrl:SetCamPos( Vector( -20, 0, 20 ) )
+	ctrl:SetLookAng( angle_4500 )
+	ctrl:SetCamPos( vector_20020 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 

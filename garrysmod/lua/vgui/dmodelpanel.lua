@@ -1,6 +1,10 @@
 
 local PANEL = {}
 
+local vector_505050 = Vector( 50, 50, 50 )
+local vector_0040 = Vector( 0, 0, 40 )
+local color_505050 = Color( 50, 50, 50 )
+
 AccessorFunc( PANEL, "m_fAnimSpeed",	"AnimSpeed" )
 AccessorFunc( PANEL, "Entity",			"Entity" )
 AccessorFunc( PANEL, "vCamPos",			"CamPos" )
@@ -18,18 +22,18 @@ function PANEL:Init()
 	self.DirectionalLight = {}
 	self.FarZ = 4096
 
-	self:SetCamPos( Vector( 50, 50, 50 ) )
-	self:SetLookAt( Vector( 0, 0, 40 ) )
+	self:SetCamPos( vector_505050 )
+	self:SetLookAt( vector_0040 )
 	self:SetFOV( 70 )
 
 	self:SetText( "" )
 	self:SetAnimSpeed( 0.5 )
 	self:SetAnimated( false )
 
-	self:SetAmbientLight( Color( 50, 50, 50 ) )
+	self:SetAmbientLight( color_505050 )
 
-	self:SetDirectionalLight( BOX_TOP, Color( 255, 255, 255 ) )
-	self:SetDirectionalLight( BOX_FRONT, Color( 255, 255, 255 ) )
+	self:SetDirectionalLight( BOX_TOP, color_white )
+	self:SetDirectionalLight( BOX_FRONT, color_white )
 
 	self:SetColor( color_white )
 

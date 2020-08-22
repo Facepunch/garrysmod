@@ -150,7 +150,7 @@ function PANEL:ToTable( bigtable )
 		tab.tall = self:GetTall()
 	end
 
-	table.insert( bigtable, tab )
+	bigtable = { tab }
 
 end
 

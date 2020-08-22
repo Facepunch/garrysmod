@@ -1,6 +1,12 @@
 
 local PANEL = {}
 
+local color_15000255 = Color( 150, 0, 0, 255 )
+local color_01500255 = Color( 0, 150, 0, 255 )
+local color_00150255 = Color( 0, 0, 150, 255 )
+local color_808080255 = Color( 80, 80, 80, 255 )
+local color_25500255 = Color( 255, 0, 0, 255 )
+
 AccessorFunc( PANEL, "m_ConVarR", "ConVarR" )
 AccessorFunc( PANEL, "m_ConVarG", "ConVarG" )
 AccessorFunc( PANEL, "m_ConVarB", "ConVarB" )
@@ -75,7 +81,7 @@ function PANEL:Init()
 	self.txtR:SetTall( 20 )
 	self.txtR:Dock( TOP )
 	self.txtR:DockMargin( 0, 0, 0, 0 )
-	self.txtR:SetTextColor( Color( 150, 0, 0, 255 ) )
+	self.txtR:SetTextColor( color_15000255 )
 
 	self.txtG = self.WangsPanel:Add( "DNumberWang" )
 	self.txtG:SetDecimals( 0 )
@@ -83,7 +89,7 @@ function PANEL:Init()
 	self.txtG:SetTall( 20 )
 	self.txtG:Dock( TOP )
 	self.txtG:DockMargin( 0, 4, 0, 0 )
-	self.txtG:SetTextColor( Color( 0, 150, 0, 255 ) )
+	self.txtG:SetTextColor( color_01500255 )
 
 	self.txtB = self.WangsPanel:Add( "DNumberWang" )
 	self.txtB:SetDecimals( 0 )
@@ -91,7 +97,7 @@ function PANEL:Init()
 	self.txtB:SetTall( 20 )
 	self.txtB:Dock( TOP )
 	self.txtB:DockMargin( 0, 4, 0, 0 )
-	self.txtB:SetTextColor( Color( 0, 0, 150, 255 ) )
+	self.txtB:SetTextColor( color_00150255 )
 
 	self.txtA = self.WangsPanel:Add( "DNumberWang" )
 	self.txtA:SetDecimals( 0 )
@@ -99,7 +105,7 @@ function PANEL:Init()
 	self.txtA:SetTall( 20 )
 	self.txtA:Dock( TOP )
 	self.txtA:DockMargin( 0, 4, 0, 0 )
-	self.txtA:SetTextColor( Color( 80, 80, 80, 255 ) )
+	self.txtA:SetTextColor( color_808080255 )
 
 	self.txtR.OnValueChanged = CreateWangFunction( self, "r" )
 	self.txtG.OnValueChanged = CreateWangFunction( self, "g" )
@@ -133,7 +139,7 @@ function PANEL:Init()
 	self:SetAlphaBar( true )
 
 	-- Layout
-	self:SetColor( Color( 255, 0, 0, 255 ) )
+	self:SetColor( color_25500255 )
 	self:SetSize( 256, 230 )
 	self:InvalidateLayout()
 

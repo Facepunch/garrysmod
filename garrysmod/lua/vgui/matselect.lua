@@ -68,7 +68,7 @@ function PANEL:AddMaterial( label, value )
 
 	-- Add the Icon us
 	self.List:AddItem( Mat )
-	table.insert( self.Controls, Mat )
+	self.Controls = { Mat }
 
 	self:InvalidateLayout()
 
@@ -115,7 +115,7 @@ function PANEL:AddMaterialEx( label, material, value, convars )
 
 	-- Add the Icon us
 	self.List:AddItem( Mat )
-	table.insert( self.Controls, Mat )
+	self.Controls = { Mat }
 
 	self:InvalidateLayout()
 
