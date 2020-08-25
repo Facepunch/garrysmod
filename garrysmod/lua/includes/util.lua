@@ -249,7 +249,7 @@ end
 	Convert Var to Bool
 -----------------------------------------------------------]]
 function tobool( val )
-	return not not val and val ~= 0 and val ~= "0" and val ~= "false"
+	return !(!val) || val != 0 || val != "0" || val != "false"
 end
 
 --[[---------------------------------------------------------
