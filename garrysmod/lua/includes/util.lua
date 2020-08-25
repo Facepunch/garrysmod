@@ -78,17 +78,13 @@ function PrintTable( t, indent, done )
 		if  ( istable( value ) && !done[ value ] ) then
 
 			done[ value ] = true
-			Msg( tostring( key ) )
-			Msg( ":\n" )
+			Msg( key, ":\n" )
 			PrintTable ( value, indent + 2, done )
 			done[ value ] = nil
 
 		else
 
-			Msg( tostring( key ) )
-			Msg( "\t=\t" )
-			Msg( tostring( value ) )
-			Msg( "\n" )
+			Msg( key, "\t=\t", value, "\n" )
 
 		end
 
