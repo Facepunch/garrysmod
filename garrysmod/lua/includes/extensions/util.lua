@@ -364,3 +364,23 @@ function util.RemovePData( steamid, name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
 
 end
+
+--[[---------------------------------------------------------
+	Name: SteamIDToAccountID( steamid )
+	Desc: Converts SteamID to AccountID, aka SteamID3
+-----------------------------------------------------------]]
+function util.SteamIDToAccountID( steamid )
+	return tonumber( sub( steamid, 9, 9 ) ) + tonumber( sub( steamid, 11 ) ) * 2
+end
+
+--[[---------------------------------------------------------
+	Name: SteamIDFromAccountID( accountid )
+	Desc: Converts AccountID to SteamID
+-----------------------------------------------------------]]
+function util.SteamIDFromAccountID( accountid )
+	if accountid % 2 == 0 then
+		return "STEAM_0:0:" .. accountid / 2
+	else
+		return "STEAM_0:1:" .. ( accountid - 1 ) / 2
+	end
+end
