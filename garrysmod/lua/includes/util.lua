@@ -57,6 +57,7 @@ include( "util/color.lua" )
 	Prints a table to the console
 -----------------------------------------------------------]]
 function PrintTable( t, indent, done )
+	local Msg = Msg
 
 	done = done or {}
 	indent = indent or 0
@@ -77,14 +78,13 @@ function PrintTable( t, indent, done )
 		if  ( istable( value ) && !done[ value ] ) then
 
 			done[ value ] = true
-			Msg( tostring( key ) .. ":" .. "\n" )
+			Msg( key, ":\n" )
 			PrintTable ( value, indent + 2, done )
 			done[ value ] = nil
 
 		else
 
-			Msg( tostring( key ) .. "\t=\t" )
-			Msg( tostring( value ) .. "\n" )
+			Msg( key, "\t=\t", value, "\n" )
 
 		end
 

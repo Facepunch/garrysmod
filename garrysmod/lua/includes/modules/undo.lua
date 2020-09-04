@@ -314,6 +314,8 @@ function Finish( NiceText )
 
 	local index = Current_Undo.Owner:UniqueID()
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
+	
+	Current_Undo.NiceText = NiceText
 
 	local id = table.insert( PlayerUndo[ index ], Current_Undo )
 
