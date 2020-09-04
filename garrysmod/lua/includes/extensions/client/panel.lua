@@ -324,7 +324,6 @@ function meta:SetSkin( strSkin )
 
 	self.m_ForceSkinName = strSkin
 	self.m_iSkinIndex = nil
-	derma.RefreshSkins()
 
 end
 
