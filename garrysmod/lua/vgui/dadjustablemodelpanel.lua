@@ -21,6 +21,22 @@ function PANEL:OnMousePressed( mousecode )
 
 	self:CaptureMouse()
 
+	-- Helpers for the orbit movement
+	local mins, maxs = self.Entity:GetModelBounds()
+	local center = ( mins + maxs ) / 2
+
+	local hit1 = util.IntersectRayWithPlane( self.vCamPos, self.aLookAngle:Forward(), vector_origin, Vector( 0, 0, 1 ) )
+	self.OrbitPoint = hit1
+
+	local hit2 = util.IntersectRayWithPlane( self.vCamPos, self.aLookAngle:Forward(), vector_origin, Vector( 0, 1, 0 ) )
+	if ( ( !hit1 && hit2 ) || hit2 && hit2:Distance( self.Entity:GetPos() ) < hit1:Distance( self.Entity:GetPos() ) ) then self.OrbitPoint = hit2 end
+
+	local hit3 = util.IntersectRayWithPlane( self.vCamPos, self.aLookAngle:Forward(), vector_origin, Vector( 1, 0, 0 ) )
+	if ( ( ( !hit1 || !hit2 ) && hit3 ) || hit3 && hit3:Distance( self.Entity:GetPos() ) < hit2:Distance( self.Entity:GetPos() ) ) then self.OrbitPoint = hit3 end
+
+	self.OrbitPoint = self.OrbitPoint or center
+	self.OrbitDistance = ( self.OrbitPoint - self.vCamPos ):Length()
+
 end
 
 function PANEL:Think()
@@ -63,7 +79,7 @@ function PANEL:FirstPersonControls()
 
 		self.aLookAngle = self.aLookAngle + Angle( y * 4, x * 4, 0 )
 
-		self.vCamPos = self.Entity:OBBCenter() - self.aLookAngle:Forward() * self.vCamPos:Length()
+		self.vCamPos = self.OrbitPoint - self.aLookAngle:Forward() * self.OrbitDistance
 
 		return
 	end
