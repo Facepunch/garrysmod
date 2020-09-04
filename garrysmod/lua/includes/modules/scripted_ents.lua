@@ -127,7 +127,8 @@ function Register( t, name )
 		Author			= t.Author,
 		AdminOnly		= t.AdminOnly,
 		Information		= t.Information,
-		ScriptedEntityType = t.ScriptedEntityType
+		ScriptedEntityType = t.ScriptedEntityType,
+		IconOverride	= t.IconOverride
 	} )
 
 end
