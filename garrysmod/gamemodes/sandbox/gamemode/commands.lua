@@ -855,17 +855,10 @@ function Spawn_Weapon( ply, wepname, tr )
 
 	gamemode.Call( "PlayerSpawnedSWEP", ply, entity )
 
-	local PrintName = swep.PrintName
-
-    	-- We haven't got a nice name :/
-	if ( PrintName:sub( 0, 1 ) == "#" ) then
-		PrintName = swep.ClassName
-	end
-
 	undo.Create( "SWEP" )
 		undo.SetPlayer( ply )
 		undo.AddEntity( entity )
-		undo.SetCustomUndoText( "Undone " .. PrintName )
+		undo.SetCustomUndoText( "Undone " .. swep.PrintName )
 	undo.Finish( "Scripted Weapon (" .. swep.ClassName .. ")" )
 
 end
