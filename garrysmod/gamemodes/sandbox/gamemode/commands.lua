@@ -858,6 +858,12 @@ function Spawn_Weapon( ply, wepname, tr )
 
 	gamemode.Call( "PlayerSpawnedSWEP", ply, entity )
 
+	undo.Create( "SWEP" )
+		undo.SetPlayer( ply )
+		undo.AddEntity( entity )
+		undo.SetCustomUndoText( "Undone " .. swep.PrintName )
+	undo.Finish( "Scripted Weapon (" .. swep.ClassName .. ")" )
+
 end
 concommand.Add( "gm_spawnswep", function( ply, cmd, args ) Spawn_Weapon( ply, args[1] ) end )
 
