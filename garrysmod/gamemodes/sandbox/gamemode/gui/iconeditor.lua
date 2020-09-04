@@ -261,6 +261,17 @@ function PANEL:Init()
 		end
 		self.TargetCamPosPanel = cam_pos
 
+		local playSpeed = settings:Add( "DNumSlider" )
+		playSpeed:SetText( "Playback Speed" )
+		playSpeed:Dock( TOP )
+		playSpeed:DockMargin( 0, 0, 0, 3 )
+		playSpeed:SetMin( -1 )
+		playSpeed:SetDark( true )
+		playSpeed:SetMax( 2 )
+		playSpeed.OnValueChanged = function( s, value )
+			self.ModelPanel:GetEntity():SetPlaybackRate( value )
+		end
+
 end
 
 function PANEL:SetDefaultLighting()
@@ -362,7 +373,9 @@ function PANEL:UpdateEntity( ent )
 
 	elseif ( ent:GetCycle() != self.AnimTrack:GetSlideX() ) then
 
-		self.AnimTrack:SetSlideX( ent:GetCycle() )
+		local cyc = ent:GetCycle()
+		if ( cyc < 0 ) then cyc = cyc + 1 end
+		self.AnimTrack:SetSlideX( cyc )
 
 	end
 
@@ -450,8 +463,11 @@ function PANEL:FillAnimations( ent )
 
 		line.OnSelect = function()
 
+			local speed = ent:GetPlaybackRate()
 			ent:ResetSequence( v )
 			ent:SetCycle( 0 )
+			ent:SetPlaybackRate( speed )
+			if ( speed < 0 ) then ent:SetCycle( 1 ) end
 
 		end
 
