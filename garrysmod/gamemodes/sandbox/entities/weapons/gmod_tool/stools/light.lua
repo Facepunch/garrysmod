@@ -35,7 +35,7 @@ function TOOL:LeftClick( trace, attach )
 	local r = math.Clamp( self:GetClientNumber( "r" ), 0, 255 )
 	local g = math.Clamp( self:GetClientNumber( "g" ), 0, 255 )
 	local b = math.Clamp( self:GetClientNumber( "b" ), 0, 255 )
-	local brght = math.Clamp( self:GetClientNumber( "brightness" ), 0, 20 )
+	local brght = math.Clamp( self:GetClientNumber( "brightness" ), -10, 20 )
 	local size = self:GetClientNumber( "size" )
 	local toggle = self:GetClientNumber( "toggle" ) != 1
 
@@ -219,7 +219,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Numpad", { Label = "#tool.light.key", Command = "light_key", ButtonSize = 22 } )
 
 	CPanel:AddControl( "Slider", { Label = "#tool.light.ropelength", Command = "light_ropelength", Type = "Float", Min = 0, Max = 256 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.light.brightness", Command = "light_brightness", Type = "Int", Min = 0, Max = 6 } )
+	CPanel:AddControl( "Slider", { Label = "#tool.light.brightness", Command = "light_brightness", Type = "Int", Min = -6, Max = 6 } )
 	CPanel:AddControl( "Slider", { Label = "#tool.light.size", Command = "light_size", Type = "Float", Min = 0, Max = 1024 } )
 
 	CPanel:AddControl( "Checkbox", { Label = "#tool.light.toggle", Command = "light_toggle" } )
