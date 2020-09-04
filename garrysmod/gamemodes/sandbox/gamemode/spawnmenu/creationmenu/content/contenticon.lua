@@ -48,7 +48,7 @@ function PANEL:Init()
 	self.Label:SetTall( 18 )
 	self.Label:SetContentAlignment( 5 )
 	self.Label:DockMargin( 4, 0, 4, 6 )
-	self.Label:SetTextColor( Color( 255, 255, 255, 255 ) )
+	self.Label:SetTextColor( color_white )
 	self.Label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 
 	self.Border = 0
@@ -320,7 +320,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 		local subMenu, swg = menu:AddSubMenu( "#spawnmenu.menu.spawn_with_weapon" )
 		swg:SetIcon( "icon16/gun.png" )
 
-		subMenu:AddOption( "None", function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, "" ) end ):SetIcon( "icon16/cross.png" )
+		subMenu:AddOption( "#menubar.npcs.noweapon", function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, "" ) end ):SetIcon( "icon16/cross.png" )
 
 		-- Kind of a hack!
 		local function addWeps( subm, weps )
