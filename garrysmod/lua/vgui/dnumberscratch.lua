@@ -310,7 +310,7 @@ function PANEL:DrawScreen( x, y, w, h )
 	str = string.Comma( str )
 	local tw, th = surface.GetTextSize( str )
 
-	draw.RoundedBoxEx( 8, x + w * 0.5 - tw / 2 - 10, h - 11, tw + 20, 39, Color( 0, 186, 255, 255 ), true, true, false, false )
+	draw.RoundedBoxEx( 8, x + w * 0.5 - tw / 2 - 10, y + h - 43, tw + 20, 39, Color( 0, 186, 255, 255 ), true, true, false, false )
 
 	surface.SetTextColor( 255, 255, 255, 255 )
 	surface.SetTextPos( x + w * 0.5 - tw * 0.5, y + h - th - 6 )
