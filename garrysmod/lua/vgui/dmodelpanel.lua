@@ -28,8 +28,8 @@ function PANEL:Init()
 
 	self:SetAmbientLight( Color( 50, 50, 50 ) )
 
-	self:SetDirectionalLight( BOX_TOP, Color( 255, 255, 255 ) )
-	self:SetDirectionalLight( BOX_FRONT, Color( 255, 255, 255 ) )
+	self:SetDirectionalLight( BOX_TOP, color_white )
+	self:SetDirectionalLight( BOX_FRONT, color_white )
 
 	self:SetColor( color_white )
 
