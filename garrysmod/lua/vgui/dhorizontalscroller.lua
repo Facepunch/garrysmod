@@ -28,7 +28,7 @@ function PANEL:Init()
 			child:Droppable( dn )
 			child.OnDrop = function()
 
-				local x, y = Canvas:LocalCursorPos()
+				local x = Canvas:LocalCursorPos()
 				local closest, id = self.pnlCanvas:GetClosestChild( x, Canvas:GetTall() / 2 ), 0
 
 				for k, v in pairs( self.Panels ) do
@@ -68,8 +68,8 @@ function PANEL:ScrollToChild( panel )
 	-- make sure our size is all good
 	self:InvalidateLayout( true )
 
-	local x, y = self.pnlCanvas:GetChildPosition( panel )
-	local w, h = panel:GetSize()
+	local x = self.pnlCanvas:GetChildPosition( panel )
+	local w = panel:GetSize()
 
 	x = x + w * 0.5
 	x = x - self:GetWide() * 0.5
@@ -135,7 +135,7 @@ function PANEL:Think()
 
 	if ( dragndrop.IsDragging() ) then
 
-		local x, y = self:LocalCursorPos()
+		local x = self:LocalCursorPos()
 
 		if ( x < 30 ) then
 			self.OffsetX = self.OffsetX - ( 350 * FrameRate )
