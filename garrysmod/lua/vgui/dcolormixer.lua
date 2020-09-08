@@ -340,7 +340,10 @@ function PANEL:DoConVarThink( convar )
 
 	if ( !convar ) then return end
 
-	local fValue = GetConVarNumber( convar )
+	local cVar = GetConVar(convar)
+	if ( !cVar ) then return end
+
+	local fValue = cVar:GetFloat()
 	local fOldValue = self[ "ConVarOld" .. convar ]
 	if ( fOldValue && fValue == fOldValue ) then return fOldValue, false end
 
