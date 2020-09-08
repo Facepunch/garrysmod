@@ -173,7 +173,10 @@ end
 
 function PANEL:TestForChanges()
 
-	local Value = GetConVarString( self:ConVar() )
+	local cVar = GetConVar(self.VarName)
+	if !cVar then return end
+
+	local Value = cVar:GetString()
 
 	if ( Value == self.CurrentValue ) then return end
 
