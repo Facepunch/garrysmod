@@ -34,7 +34,7 @@ function PANEL:OnMousePressed( mousecode )
 	local hit3 = util.IntersectRayWithPlane( self.vCamPos, self.aLookAngle:Forward(), vector_origin, Vector( 1, 0, 0 ) )
 	if ( ( ( !hit1 || !hit2 ) && hit3 ) || hit3 && hit3:Distance( self.Entity:GetPos() ) < hit2:Distance( self.Entity:GetPos() ) ) then self.OrbitPoint = hit3 end
 
-	self.OrbitPoint = self.OrbitPoint or center
+	self.OrbitPoint = self.OrbitPoint || center
 	self.OrbitDistance = ( self.OrbitPoint - self.vCamPos ):Length()
 
 end
