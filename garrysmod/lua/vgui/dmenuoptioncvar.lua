@@ -20,7 +20,11 @@ end
 function PANEL:Think()
 
 	if ( !self.m_strConVar ) then return end
-	local strValue = GetConVarString( self.m_strConVar )
+
+	local cVar = GetConVar(self.m_strConVar)
+	if !cVar then return end
+
+	local strValue = cVar:GetString()
 
 	self:SetChecked( strValue == self.m_strValueOn )
 
