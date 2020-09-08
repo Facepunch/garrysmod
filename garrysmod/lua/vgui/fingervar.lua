@@ -113,7 +113,7 @@ function PANEL:Think()
 	self.UpdateTimer = CurTime() + 0.1
 
 	local cVar = GetConVar(self.VarName)
-	if not cVar then return end
+	if !cVar then return end
 
 	local Value = string.Explode( " ", cVar:GetString() )
 
@@ -122,10 +122,15 @@ function PANEL:Think()
 
 end
 
+local localPly
+
 function PANEL:Paint( w, h )
 
 	-- This part is dirty, the whole fingerposer needs redoing, it's messy
-	local wep = LocalPlayer():GetWeapon( "gmod_tool" )
+
+	if ( !IsValid(localPly) ) then localPly = LocalPlayer() end
+
+	local wep = localPly:GetWeapon( "gmod_tool" )
 	if ( !IsValid( wep ) ) then return end
 
 	local ent = wep:GetNWEntity( "HandEntity" )
