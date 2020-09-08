@@ -26,8 +26,7 @@ local function CreateWangFunction( self, colindex )
 		else
 			self.HSV:SetColor( self:GetColor() )
 
-			local h, s, v = ColorToHSV( self.HSV:GetBaseRGB() )
-			self.RGB.LastY = ( 1 - h / 360 ) * self.RGB:GetTall()
+			self.RGB.LastY = ( 1 - ColorToHSV( self.HSV:GetBaseRGB() ) / 360 ) * self.RGB:GetTall()
 		end
 
 		self:UpdateColor( self:GetColor() )
@@ -197,8 +196,7 @@ end
 
 function PANEL:PerformLayout( w, h )
 
-	local h, s, v = ColorToHSV( self.HSV:GetBaseRGB() )
-	self.RGB.LastY = ( 1 - h / 360 ) * self.RGB:GetTall()
+	self.RGB.LastY = ( 1 - ColorToHSV( self.HSV:GetBaseRGB() ) / 360 ) * self.RGB:GetTall()
 
 end
 
@@ -211,8 +209,7 @@ end
 
 function PANEL:SetColor( color )
 
-	local h, s, v = ColorToHSV( color )
-	self.RGB.LastY = ( 1 - h / 360 ) * self.RGB:GetTall()
+	self.RGB.LastY = ( 1 - ColorToHSV( color ) / 360 ) * self.RGB:GetTall()
 
 	self.HSV:SetColor( color )
 
