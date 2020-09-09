@@ -146,8 +146,6 @@ function PANEL:LayoutTiles()
 			StartLine = y + 1
 		end
 
-		LastX = x
-
 	end
 
 end
