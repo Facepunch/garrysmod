@@ -28,8 +28,7 @@ function PANEL:Init()
 			child:Droppable( dn )
 			child.OnDrop = function()
 
-				local x = Canvas:LocalCursorPos()
-				local closest, id = self.pnlCanvas:GetClosestChild( x, Canvas:GetTall() / 2 ), 0
+				local closest, id = self.pnlCanvas:GetClosestChild( Canvas:LocalCursorPos(), Canvas:GetTall() / 2 ), 0
 
 				for k, v in pairs( self.Panels ) do
 					if ( v == closest ) then id = k break end
@@ -69,9 +68,7 @@ function PANEL:ScrollToChild( panel )
 	self:InvalidateLayout( true )
 
 	local x = self.pnlCanvas:GetChildPosition( panel )
-	local w = panel:GetSize()
-
-	x = x + w * 0.5
+	x = x + panel:GetSize() * 0.5
 	x = x - self:GetWide() * 0.5
 
 	self:SetScroll( x )
