@@ -146,7 +146,7 @@ function PANEL:OnCursorExited()
 
 end
 
-local localPlayer
+local localPlayer = NULL
 function PANEL:OnMousePressed( mousecode )
 
 	if ( self:GetDisabled() ) then return end
