@@ -167,7 +167,7 @@ function PANEL:OnMousePressed( mousecode )
 
 	-- Do not do selections if playing is spawning things while moving
 
-	if ( !IsValid( localPlayer ) ) then localPlayer = LocalPlayer() end
+	if ( !localPlayer:IsValid() ) then localPlayer = LocalPlayer() end
 	local isPlyMoving = localPlayer:KeyDown( IN_FORWARD ) || localPlayer:KeyDown( IN_BACK ) || localPlayer:KeyDown( IN_MOVELEFT ) || localPlayer:KeyDown( IN_MOVERIGHT )
 
 	-- If we're selectable and have shift held down then go up
