@@ -215,6 +215,7 @@ function PANEL:CheckConVarChanges()
 	if !cVar then return end
 
 	local strValue = cVar:GetString()
+
 	if ( self.m_strConVarValue == strValue ) then return end
 
 	self.m_strConVarValue = strValue

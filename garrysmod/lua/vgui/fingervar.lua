@@ -127,7 +127,6 @@ local localPly
 function PANEL:Paint( w, h )
 
 	-- This part is dirty, the whole fingerposer needs redoing, it's messy
-
 	if ( !IsValid(localPly) ) then localPly = LocalPlayer() end
 
 	local wep = localPly:GetWeapon( "gmod_tool" )

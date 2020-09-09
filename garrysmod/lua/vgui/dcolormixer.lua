@@ -25,7 +25,6 @@ local function CreateWangFunction( self, colindex )
 			self.Alpha:SetValue( targetValue / 255 )
 		else
 			self.HSV:SetColor( self:GetColor() )
-
 			self.RGB.LastY = ( 1 - ColorToHSV( self.HSV:GetBaseRGB() ) / 360 ) * self.RGB:GetTall()
 		end
 
@@ -341,6 +340,7 @@ function PANEL:DoConVarThink( convar )
 	if ( !cVar ) then return end
 
 	local fValue = cVar:GetFloat()
+
 	local fOldValue = self[ "ConVarOld" .. convar ]
 	if ( fOldValue && fValue == fOldValue ) then return fOldValue, false end
 
