@@ -122,12 +122,12 @@ function PANEL:Think()
 
 end
 
-local localPly
+local localPly = NULL
 
 function PANEL:Paint( w, h )
 
 	-- This part is dirty, the whole fingerposer needs redoing, it's messy
-	if ( !IsValid(localPly) ) then localPly = LocalPlayer() end
+	if ( !localPly:IsValid() ) then localPly = LocalPlayer() end
 
 	local wep = localPly:GetWeapon( "gmod_tool" )
 	if ( !IsValid( wep ) ) then return end
