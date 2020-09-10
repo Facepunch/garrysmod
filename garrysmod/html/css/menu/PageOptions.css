@@ -80,10 +80,29 @@ DIV.page DIV.options .search_bar
 	margin-bottom: 8px;
 }
 
+div.ugc_content
+{
+	position: absolute;
+	left: 320px;
+	top: 16px;
+	bottom: 16px;
+	right: 16px;
+	padding: 16px;
+	padding-top: 0;
+}
+
 @media screen and (max-height: 768px) {
 	DIV.page DIV.options UL.submenu LI
 	{
 		margin-bottom: -8px;
+	}
+}
+
+@media screen and (max-width: 1024px)
+{
+	div.ugc_content
+	{
+		left: 200px;
 	}
 }
 
