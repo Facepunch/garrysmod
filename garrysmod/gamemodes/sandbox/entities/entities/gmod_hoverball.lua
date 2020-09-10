@@ -7,6 +7,8 @@ ENT.Editable = true
 
 function ENT:SetupDataTables()
 
+	self:NetworkVar( "Bool", 0, "Enabled" )
+
 	self:NetworkVar( "Float", 0, "TargetZ" )
 	self:NetworkVar( "Float", 1, "SpeedVar", { KeyName = "speed", Edit = { type = "Float", order = 1, min = 0, max = 20, title = "#tool.hoverball.speed" } } )
 	self:NetworkVar( "Float", 2, "AirResistanceVar", { KeyName = "resistance", Edit = { type = "Float", order = 2, min = 0, max = 10, title = "#tool.hoverball.resistance" } } )
@@ -44,6 +46,7 @@ function ENT:Initialize()
 		self.ZVelocity = 0
 		self:SetTargetZ( self:GetPos().z )
 		self:SetSpeed( 1 )
+		self:SetEnabled( true )
 
 	end
 
@@ -72,11 +75,18 @@ end
 
 function ENT:UpdateLabel()
 
-	self:SetOverlayText( string.format( "Speed: %i\nResistance: %.2f", self:GetSpeed(), self:GetAirResistance() ) )
+	local strength = 0
+	if ( self:GetPhysicsObject() ) then strength = self:GetPhysicsObject():GetMass() / 150 end
+
+	self:SetOverlayText( string.format( "Speed: %g\nResistance: %g\nStrength: %g", self:GetSpeed(), self:GetAirResistance(), strength ) )
 
 end
 
-function ENT:DrawTranslucent()
+function ENT:Draw()
+
+	BaseClass.Draw( self )
+
+	if ( !self:GetEnabled() || halo.RenderedEntity() == self ) then return end
 
 	local vOffset = self:GetPos()
 	local vPlayerEyes = LocalPlayer():EyePos()
@@ -94,11 +104,11 @@ function ENT:DrawTranslucent()
 	render.DrawSprite( vOffset + vDiff * 4, 48, 48, color )
 	render.DrawSprite( vOffset + vDiff * 4, 52, 52, color )
 
-	BaseClass.DrawTranslucent( self )
-
 end
 
 function ENT:PhysicsSimulate( phys, deltatime )
+
+	if ( !self:GetEnabled() ) then return end
 
 	if ( self.ZVelocity != 0 ) then
 
@@ -159,6 +169,22 @@ function ENT:SetZVelocity( z )
 
 end
 
+function ENT:Toggle()
+
+	self:SetEnabled( !self:GetEnabled() )
+
+	if ( self:GetEnabled() ) then
+		self:SetTargetZ( self:GetPos().z )
+	end
+
+	local phys = self:GetPhysicsObject()
+	if ( IsValid( phys ) ) then
+		phys:EnableGravity( !self:GetEnabled() )
+		phys:Wake()
+	end
+
+end
+
 function ENT:GetAirResistance()
 	return self:GetAirResistanceVar()
 end
@@ -207,6 +233,15 @@ if ( SERVER ) then
 		if ( !IsValid( ent ) ) then return false end
 
 		if ( keydown ) then ent:SetZVelocity( -1 ) else ent:SetZVelocity( 0 ) end
+		return true
+
+	end )
+
+	numpad.Register( "Hoverball_Toggle", function( pl, ent, keydown )
+
+		if ( !IsValid( ent ) ) then return false end
+
+		ent:Toggle()
 		return true
 
 	end )
