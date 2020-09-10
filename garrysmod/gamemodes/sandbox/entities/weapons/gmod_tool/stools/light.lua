@@ -9,7 +9,7 @@ TOOL.ClientConVar[ "g" ] = "255"
 TOOL.ClientConVar[ "b" ] = "255"
 TOOL.ClientConVar[ "brightness" ] = "2"
 TOOL.ClientConVar[ "size" ] = "256"
-TOOL.ClientConVar[ "key" ] = "-1"
+TOOL.ClientConVar[ "key" ] = "37"
 TOOL.ClientConVar[ "toggle" ] = "1"
 
 TOOL.Information = {
