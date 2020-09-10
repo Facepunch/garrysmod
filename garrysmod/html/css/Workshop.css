@@ -199,19 +199,18 @@ controls control:hover
 	background-color: white;
 }
 
-pagnation
+pagination
 {
 	background-color: #fff;
 	border-radius: 4px;
 	margin: 0 auto;
 	padding: 4px 4px;
-	white-space: nowrap;
-	margin-left: 10%;
-	margin-right: 10%;
+	/*white-space: nowrap;*/
+	max-width: 500px;
+	z-index: 64; /* Ensure it is above other elements in case something goes wrong */
 }
 
-
-pagnation .back, pagnation .next
+pagination .back, pagination .next
 {
 	display: block;
 	float: left;
@@ -223,10 +222,29 @@ pagnation .back, pagnation .next
 	background-position: center center;
 }
 
-pagnation .next
+pagination .next
 {
 	float: right;
 	background-image: url('../img/arrow_right.png');
+}
+
+pagination .pages
+{
+	overflow: hidden;
+	margin-top: 6px;
+}
+
+pagination span.pagenum
+{
+	font-size: 14px;
+}
+pagination a.page
+{
+	opacity: 0.5;
+}
+pagination a.page.active
+{
+	opacity: 1;
 }
 
 workshopicon.installed
