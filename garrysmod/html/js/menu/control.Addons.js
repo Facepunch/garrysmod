@@ -37,6 +37,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	];
 
 	$scope.Disabled = false;
+
 	lua.Run( "UpdateAddonDisabledState();" );
 
 	addon.Init( 'addon', $scope, $rootScope );
@@ -46,56 +47,45 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.Subscribe = function( file )
 	{
 		subscriptions.Subscribe( file.id );
-
-		// Update files if viewing subscribed list?
-	};
-
+	}
 	$scope.Unsubscribe = function( file )
 	{
 		subscriptions.Unsubscribe( file.id );
-
-		// Update files if viewing subscribed list?
-	};
-
+	}
 	$scope.UninstallAllSubscribed = function()
 	{
 		subscriptions.UnsubscribeAll();
-		lua.Run( "steamworks.ApplyAddons();" );
+		subscriptions.ApplyChanges();
 	}
-
 	$scope.IsSubscribed = function( file )
 	{
 		return subscriptions.Contains( file.id );
-	};
+	}
 
 	$scope.DisableAllSubscribed = function()
 	{
 		subscriptions.SetAllEnabled( false );
-		lua.Run( "steamworks.ApplyAddons();" );
+		subscriptions.ApplyChanges();
 	}
-
 	$scope.EnableAllSubscribed = function()
 	{
 		subscriptions.SetAllEnabled( true );
-		lua.Run( "steamworks.ApplyAddons();" );
+		subscriptions.ApplyChanges();
 	}
-
 	$scope.IsEnabled = function( file )
 	{
 		return subscriptions.Enabled( file.id );
-	};
-
+	}
 	$scope.Disable = function( file )
 	{
-		lua.Run( "steamworks.SetShouldMountAddon( %s, false );", String( file.id ) )
-		lua.Run( "steamworks.ApplyAddons();" )
-	};
-
+		subscriptions.SetShouldMountAddon( String( file.id ), false );
+		subscriptions.ApplyChanges();
+	}
 	$scope.Enable = function( file )
 	{
-		lua.Run( "steamworks.SetShouldMountAddon( %s, true );", String( file.id ) )
-		lua.Run( "steamworks.ApplyAddons();" )
-	};
+		subscriptions.SetShouldMountAddon( String( file.id ), true );
+		subscriptions.ApplyChanges();
+	}
 
 	$scope.DisplayPopupMessage = function( txt, func )
 	{
@@ -110,7 +100,8 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.ExecutePopupFunction = function()
 	{
 		$scope.PopupMessageDisplayed = false;
-		if ( $scope.PopupMessageDisplayedFunc ) {
+		if ( $scope.PopupMessageDisplayedFunc )
+		{
 			$scope.PopupMessageDisplayedFunc()
 			$scope.PopupMessageDisplayedFunc = null;
 		}
@@ -122,36 +113,44 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	}
 	$scope.EnableAllSelected = function()
 	{
-		for ( var k in $scope.SelectedItems ) {
+		for ( var k in $scope.SelectedItems )
+		{
 			if ( !$scope.SelectedItems[ k ] ) continue;
-			lua.Run( "steamworks.SetShouldMountAddon( %s, true );", String( k ) );
+
+			subscriptions.SetShouldMountAddon( k, true );
 			$scope.SelectedItems[ k ] = false;
 		}
-		lua.Run( "steamworks.ApplyAddons();" )
+		subscriptions.ApplyChanges();
 	}
 	$scope.DisableAllSelected = function()
 	{
-		for ( var k in $scope.SelectedItems ) {
+		for ( var k in $scope.SelectedItems )
+		{
 			if ( !$scope.SelectedItems[ k ] ) continue;
-			lua.Run( "steamworks.SetShouldMountAddon( %s, false );", String( k ) );
+
+			subscriptions.SetShouldMountAddon( k, false );
 			$scope.SelectedItems[ k ] = false;
 		}
-		lua.Run( "steamworks.ApplyAddons();" )
+		subscriptions.ApplyChanges();
 	}
 	$scope.UninstallAllSelected = function()
 	{
-		for ( var k in $scope.SelectedItems ) {
+		for ( var k in $scope.SelectedItems )
+		{
 			if ( !$scope.SelectedItems[ k ] ) continue;
-			lua.Run( "steamworks.Unsubscribe( %s );", String( k ) );
+
+			subscriptions.Unsubscribe( k );
 			$scope.SelectedItems[ k ] = false;
 		}
-		lua.Run( "steamworks.ApplyAddons();" )
+		subscriptions.ApplyChanges();
 	}
 	$scope.IsAnySelected = function()
 	{
-		var count = 0;
-		for ( var k in $scope.SelectedItems ) if ( $scope.SelectedItems[ k ] ) count++;
-		return count > 0;
+		for ( var k in $scope.SelectedItems )
+		{
+			if ( $scope.SelectedItems[ k ] ) return true;
+		}
+		return false;
 	}
 }
 

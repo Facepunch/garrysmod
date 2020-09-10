@@ -78,14 +78,14 @@
 			<workshopmessage ng-show="TotalResults == 0 && !Loading && !Disabled" ng-Tranny="'addons.none'">...</workshopmessage>
 			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled" ng-Tranny="'addons.disabled'">...</workshopmessage>
 
-			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px"  class="{{IfElse( IsSubscribed( file ) && !IsEnabled( file ), 'disabled', '' )}} {{IfElse( IsSubscribed( file ), 'installed', '' )}}">
+			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{IfElse( IsSubscribed( file ) && !IsEnabled( file ), 'disabled', '' )}} {{IfElse( IsSubscribed( file ), 'installed', '' )}}">
 
-				<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
-					<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
+				<preview style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
+					<img src='../{{file.background || "img/downloading.png"}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
 				</preview>
 
-				<name ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}</name>
-				<author ng-hide="file.local">{{file.info.ownername}}</author>
+				<name ng-click="OpenWorkshopFile( file.id )">{{file.info.title || "Loading..."}}</name>
+				<author ng-hide="file.local">{{file.info.ownername || "Loading..."}}</author>
 				<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" style="color: #4a4">+{{file.info.up-file.info.down|number:0}}</votes>
 				<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" style="color: #a44">{{file.info.up-file.info.down|number:0}}</votes>
 				<description>{{file.info.description}}</description>

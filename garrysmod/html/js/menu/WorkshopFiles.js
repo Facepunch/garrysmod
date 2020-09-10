@@ -94,7 +94,7 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 
 		if ( !IN_ENGINE )
 		{
-			setTimeout( function() { WorkshopTestData( scope.Category, self ); }, 0 );
+			setTimeout( function() { WorkshopTestData( scope.Category, self, scope.PerPage ); }, 0 );
 		}
 		else
 		{
