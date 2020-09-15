@@ -7,7 +7,7 @@ local pp_texturize_scale = CreateClientConVar( "pp_texturize_scale", "1", true, 
 
 function DrawTexturize( scale, pMaterial )
 
-	render.UpdateScreenEffectTexture()
+	render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
 
 	matMaterial:SetFloat( "$scalex", ( ScrW() / 64 ) * scale )
 	matMaterial:SetFloat( "$scaley", ( ScrH() / 64 / 8 ) * scale )
