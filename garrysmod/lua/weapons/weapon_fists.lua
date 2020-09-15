@@ -188,6 +188,14 @@ function SWEP:Deploy()
 
 end
 
+function SWEP:Holster()
+
+	self:SetNextMeleeAttack( 0 )
+
+	return true
+
+end
+
 function SWEP:Think()
 
 	local vm = self.Owner:GetViewModel()
