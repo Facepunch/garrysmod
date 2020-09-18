@@ -56,12 +56,12 @@ function PANEL:Init()
 	self.btnUp = vgui.Create( "DButton", self )
 	self.btnUp:SetText( "" )
 	self.btnUp.DoClick = function( self ) self:GetParent():AddScroll( -1 ) end
-	self.btnUp.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonUp", panel, w, h ) end
+	self.btnUp.Paint = function( panel, w, h ) derma.SkinHook( "PaintButtonUp", panel, w, h ) end
 
 	self.btnDown = vgui.Create( "DButton", self )
 	self.btnDown:SetText( "" )
 	self.btnDown.DoClick = function( self ) self:GetParent():AddScroll( 1 ) end
-	self.btnDown.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonDown", panel, w, h ) end
+	self.btnDown.Paint = function( panel, w, h ) derma.SkinHook( "PaintButtonDown", panel, w, h ) end
 
 	self.btnGrip = vgui.Create( "DScrollBarGrip", self )
 
@@ -202,7 +202,7 @@ end
 
 function PANEL:Paint( w, h )
 
-	derma.SkinHook( "Paint", "VScrollBar", self, w, h )
+	derma.SkinHook( "PaintVScrollBar", self, w, h )
 	return true
 
 end

@@ -29,9 +29,9 @@ derma.DefineControl( "DListViewLabel", "", PANEL, "DLabel" )
 
 local PANEL = {}
 
-Derma_Hook( PANEL, "Paint", "Paint", "ListViewLine" )
-Derma_Hook( PANEL, "ApplySchemeSettings", "Scheme", "ListViewLine" )
-Derma_Hook( PANEL, "PerformLayout", "Layout", "ListViewLine" )
+Derma_Hook( PANEL, "Paint", "PaintListViewLine" )
+Derma_Hook( PANEL, "ApplySchemeSettings", "SchemeListViewLine" )
+Derma_Hook( PANEL, "PerformLayout", "LayoutListViewLine" )
 
 AccessorFunc( PANEL, "m_iID", "ID" )
 AccessorFunc( PANEL, "m_pListView", "ListView" )

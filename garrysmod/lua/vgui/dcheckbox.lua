@@ -3,9 +3,9 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "m_bChecked", "Checked", FORCE_BOOL )
 
-Derma_Hook( PANEL, "Paint", "Paint", "CheckBox" )
-Derma_Hook( PANEL, "ApplySchemeSettings", "Scheme", "CheckBox" )
-Derma_Hook( PANEL, "PerformLayout", "Layout", "CheckBox" )
+Derma_Hook( PANEL, "Paint", "PaintCheckBox" )
+Derma_Hook( PANEL, "ApplySchemeSettings", "SchemeCheckBox" )
+Derma_Hook( PANEL, "PerformLayout", "LayoutCheckBox" )
 
 Derma_Install_Convar_Functions( PANEL )
 

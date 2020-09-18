@@ -13,7 +13,7 @@ AccessorFunc( PANEL, "Dragging", "Dragging" )
 AccessorFunc( PANEL, "m_bTrappedInside", "TrapInside" )
 AccessorFunc( PANEL, "m_iNotches", "Notches" )
 
-Derma_Hook( PANEL, "Paint", "Paint", "Slider" )
+Derma_Hook( PANEL, "Paint", "PaintSlider" )
 
 function PANEL:Init()
 
@@ -26,7 +26,7 @@ function PANEL:Init()
 	self.Knob:SetText( "" )
 	self.Knob:SetSize( 15, 15 )
 	self.Knob:NoClipping( true )
-	self.Knob.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "SliderKnob", panel, w, h ) end
+	self.Knob.Paint = function( panel, w, h ) derma.SkinHook( "PaintSliderKnob", panel, w, h ) end
 	self.Knob.OnCursorMoved = function( panel, x, y )
 		local x, y = panel:LocalToScreen( x, y )
 		x, y = self:ScreenToLocal( x, y )

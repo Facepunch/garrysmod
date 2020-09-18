@@ -12,7 +12,7 @@ end
 
 function PANEL:Paint( w, h )
 
-	derma.SkinHook( "Paint", "ScrollBarGrip", self, w, h )
+	derma.SkinHook( "PaintScrollBarGrip", self, w, h )
 	return true
 
 end

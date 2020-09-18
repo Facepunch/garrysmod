@@ -67,7 +67,7 @@ function PANEL:AddSpacer( strText, funcFunction )
 
 	local pnl = vgui.Create( "DPanel", self )
 	pnl.Paint = function( p, w, h )
-		derma.SkinHook( "Paint", "MenuSpacer", p, w, h )
+		derma.SkinHook( "PaintMenuSpacer", p, w, h )
 	end
 
 	pnl:SetTall( 1 )
@@ -137,7 +137,7 @@ function PANEL:Paint( w, h )
 
 	if ( !self:GetPaintBackground() ) then return end
 
-	derma.SkinHook( "Paint", "Menu", self, w, h )
+	derma.SkinHook( "PaintMenu", self, w, h )
 	return true
 
 end
@@ -180,7 +180,7 @@ function PANEL:PerformLayout( w, h )
 
 	self:SetTall( y )
 
-	derma.SkinHook( "Layout", "Menu", self )
+	derma.SkinHook( "LayoutMenu", self )
 
 	DScrollPanel.PerformLayout( self, w, h )
 

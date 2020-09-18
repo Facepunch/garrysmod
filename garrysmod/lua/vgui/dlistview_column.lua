@@ -1,9 +1,9 @@
 
 local PANEL = {}
 
-Derma_Hook( PANEL, "Paint", "Paint", "ListViewHeaderLabel" )
-Derma_Hook( PANEL, "ApplySchemeSettings", "Scheme", "ListViewHeaderLabel" )
-Derma_Hook( PANEL, "PerformLayout", "Layout", "ListViewHeaderLabel" )
+Derma_Hook( PANEL, "Paint", "PaintListViewHeaderLabel" )
+Derma_Hook( PANEL, "ApplySchemeSettings", "SchemeListViewHeaderLabel" )
+Derma_Hook( PANEL, "PerformLayout", "LayoutListViewHeaderLabel" )
 
 function PANEL:Init()
 end
@@ -64,9 +64,9 @@ AccessorFunc( PANEL, "m_bFixedWidth", "FixedWidth" )
 AccessorFunc( PANEL, "m_bDesc", "Descending" )
 AccessorFunc( PANEL, "m_iColumnID", "ColumnID" )
 
-Derma_Hook( PANEL, "Paint", "Paint", "ListViewColumn" )
-Derma_Hook( PANEL, "ApplySchemeSettings", "Scheme", "ListViewColumn" )
-Derma_Hook( PANEL, "PerformLayout", "Layout", "ListViewColumn" )
+Derma_Hook( PANEL, "Paint", "PaintListViewColumn" )
+Derma_Hook( PANEL, "ApplySchemeSettings", "SchemeListViewColumn" )
+Derma_Hook( PANEL, "PerformLayout", "LayoutListViewColumn" )
 
 function PANEL:Init()
 

@@ -4,7 +4,7 @@ local PANEL = {}
 AccessorFunc( PANEL, "m_pPropertySheet", "PropertySheet" )
 AccessorFunc( PANEL, "m_pPanel", "Panel" )
 
-Derma_Hook( PANEL, "Paint", "Paint", "Tab" )
+Derma_Hook( PANEL, "Paint", "PaintTab" )
 
 function PANEL:Init()
 
@@ -146,7 +146,7 @@ derma.DefineControl( "DTab", "A Tab for use on the PropertySheet", PANEL, "DButt
 
 local PANEL = {}
 
-Derma_Hook( PANEL, "Paint", "Paint", "PropertySheet" )
+Derma_Hook( PANEL, "Paint", "PaintPropertySheet" )
 
 AccessorFunc( PANEL, "m_pActiveTab", "ActiveTab" )
 AccessorFunc( PANEL, "m_iPadding", "Padding" )

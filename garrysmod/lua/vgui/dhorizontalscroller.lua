@@ -51,11 +51,11 @@ function PANEL:Init()
 
 	self.btnLeft = vgui.Create( "DButton", self )
 	self.btnLeft:SetText( "" )
-	self.btnLeft.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonLeft", panel, w, h ) end
+	self.btnLeft.Paint = function( panel, w, h ) derma.SkinHook( "PaintButtonLeft", panel, w, h ) end
 
 	self.btnRight = vgui.Create( "DButton", self )
 	self.btnRight:SetText( "" )
-	self.btnRight.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonRight", panel, w, h ) end
+	self.btnRight.Paint = function( panel, w, h ) derma.SkinHook( "PaintButtonRight", panel, w, h ) end
 
 end
 

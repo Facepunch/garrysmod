@@ -27,7 +27,7 @@ function PANEL:Init()
 		end
 		self.Slider:OnMousePressed( mcode )
 	end
-	Derma_Hook( self.Slider, "Paint", "Paint", "NumSlider" )
+	Derma_Hook( self.Slider, "Paint", "PaintNumSlider" )
 
 	self.Label = vgui.Create ( "DLabel", self )
 	self.Label:Dock( LEFT )

@@ -65,7 +65,7 @@ local PANEL = {}
 AccessorFunc( PANEL, "m_bSelectMultiple", "Multiple", FORCE_BOOL )
 AccessorFunc( PANEL, "SelectedItems", "SelectedItems" )	-- All selected in a table
 
-Derma_Hook( PANEL, "Paint", "Paint", "ListBox" )
+Derma_Hook( PANEL, "Paint", "PaintListBox" )
 
 function PANEL:Init()
 

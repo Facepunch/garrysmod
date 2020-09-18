@@ -24,18 +24,18 @@ function PANEL:Init()
 	self.btnClose = vgui.Create( "DButton", self )
 	self.btnClose:SetText( "" )
 	self.btnClose.DoClick = function ( button ) self:Close() end
-	self.btnClose.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "WindowCloseButton", panel, w, h ) end
+	self.btnClose.Paint = function( panel, w, h ) derma.SkinHook( "PaintWindowCloseButton", panel, w, h ) end
 
 	self.btnMaxim = vgui.Create( "DButton", self )
 	self.btnMaxim:SetText( "" )
 	self.btnMaxim.DoClick = function ( button ) self:Close() end
-	self.btnMaxim.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "WindowMaximizeButton", panel, w, h ) end
+	self.btnMaxim.Paint = function( panel, w, h ) derma.SkinHook( "PaintWindowMaximizeButton", panel, w, h ) end
 	self.btnMaxim:SetDisabled( true )
 
 	self.btnMinim = vgui.Create( "DButton", self )
 	self.btnMinim:SetText( "" )
 	self.btnMinim.DoClick = function ( button ) self:Close() end
-	self.btnMinim.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "WindowMinimizeButton", panel, w, h ) end
+	self.btnMinim.Paint = function( panel, w, h ) derma.SkinHook( "PaintWindowMinimizeButton", panel, w, h ) end
 	self.btnMinim:SetDisabled( true )
 
 	self.lblTitle = vgui.Create( "DLabel", self )
@@ -200,7 +200,7 @@ function PANEL:Paint( w, h )
 		Derma_DrawBackgroundBlur( self, self.m_fCreateTime )
 	end
 
-	derma.SkinHook( "Paint", "Frame", self, w, h )
+	derma.SkinHook( "PaintFrame", self, w, h )
 	return true
 
 end

@@ -47,7 +47,7 @@ function PANEL:Init()
 	self.Up = vgui.Create( "DButton", self )
 	self.Up:SetText( "" )
 	self.Up.DoClick = function( button, mcode ) self:SetValue( self:GetValue() + self:GetInterval() ) end
-	self.Up.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "NumberUp", panel, w, h ) end
+	self.Up.Paint = function( panel, w, h ) derma.SkinHook( "PaintNumberUp", panel, w, h ) end
 
 	self.Up.OldOnMousePressed = self.Up.OnMousePressed
 	self.Up.OldOnMouseReleased = self.Up.OnMouseReleased
@@ -58,7 +58,7 @@ function PANEL:Init()
 	self.Down = vgui.Create( "DButton", self )
 	self.Down:SetText( "" )
 	self.Down.DoClick = function( button, mcode ) self:SetValue( self:GetValue() - self:GetInterval() ) end
-	self.Down.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "NumberDown", panel, w, h ) end
+	self.Down.Paint = function( panel, w, h ) derma.SkinHook( "PaintNumberDown", panel, w, h ) end
 
 	self.Down.OldOnMousePressed = self.Down.OnMousePressed
 	self.Down.OldOnMouseReleased = self.Down.OnMouseReleased

@@ -329,7 +329,7 @@ end
 
 function PANEL:Paint( w, h )
 
-	derma.SkinHook( "Paint", "PanelList", self, w, h )
+	derma.SkinHook( "PaintPanelList", self, w, h )
 	return true
 
 end

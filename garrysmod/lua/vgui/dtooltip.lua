@@ -91,7 +91,7 @@ end
 function PANEL:Paint( w, h )
 
 	self:PositionTooltip()
-	derma.SkinHook( "Paint", "Tooltip", self, w, h )
+	derma.SkinHook( "PaintTooltip", self, w, h )
 
 end
 

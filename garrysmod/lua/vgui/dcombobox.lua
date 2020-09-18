@@ -1,7 +1,7 @@
 
 local PANEL = {}
 
-Derma_Hook( PANEL, "Paint", "Paint", "ComboBox" )
+Derma_Hook( PANEL, "Paint", "PaintComboBox" )
 
 Derma_Install_Convar_Functions( PANEL )
 
@@ -10,7 +10,7 @@ AccessorFunc( PANEL, "m_bDoSort", "SortItems", FORCE_BOOL )
 function PANEL:Init()
 
 	self.DropButton = vgui.Create( "DPanel", self )
-	self.DropButton.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ComboDownArrow", panel, w, h ) end
+	self.DropButton.Paint = function( panel, w, h ) derma.SkinHook( "PaintComboDownArrow", panel, w, h ) end
 	self.DropButton:SetMouseInputEnabled( false )
 	self.DropButton.ComboBox = self
 

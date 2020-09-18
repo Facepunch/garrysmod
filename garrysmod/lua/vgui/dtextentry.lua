@@ -104,7 +104,7 @@ function PANEL:ApplySchemeSettings()
 
 	self:SetFontInternal( self.m_FontName )
 
-	derma.SkinHook( "Scheme", "TextEntry", self )
+	derma.SkinHook( "SchemeTextEntry", self )
 
 end
 
@@ -255,14 +255,14 @@ end
 
 function PANEL:Paint( w, h )
 
-	derma.SkinHook( "Paint", "TextEntry", self, w, h )
+	derma.SkinHook( "PaintTextEntry", self, w, h )
 	return false
 
 end
 
 function PANEL:PerformLayout()
 
-	derma.SkinHook( "Layout", "TextEntry", self )
+	derma.SkinHook( "LayoutTextEntry", self )
 
 end
 

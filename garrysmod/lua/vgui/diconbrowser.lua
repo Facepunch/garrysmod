@@ -84,7 +84,7 @@ function PANEL:Fill()
 
 				if ( self.m_pSelectedIcon != btn ) then return end
 
-				derma.SkinHook( "Paint", "Selection", btn, w, h )
+				derma.SkinHook( "PaintSelection", btn, w, h )
 
 			end
 
@@ -119,7 +119,7 @@ function PANEL:Paint( w, h )
 
 	if ( !self.Filled ) then self:Fill() end
 
-	derma.SkinHook( "Paint", "Tree", self, w, h )
+	derma.SkinHook( "PaintTree", self, w, h )
 
 end
 

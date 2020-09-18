@@ -51,7 +51,7 @@ end
 function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 
 	local MatSelect = vgui.Create( "MatSelect", self )
-	Derma_Hook( MatSelect.List, "Paint", "Paint", "Panel" )
+	Derma_Hook( MatSelect.List, "Paint", "PaintPanel" )
 
 	MatSelect:SetConVar( strConVar )
 
@@ -198,7 +198,7 @@ function PANEL:AddControl( control, data )
 		ctrl:ControlValues( data ) -- Yack.
 		self:AddPanel( ctrl )
 
-		Derma_Hook( ctrl.List, "Paint", "Paint", "Panel" )
+		Derma_Hook( ctrl.List, "Paint", "PaintPanel" )
 
 		return ctrl
 
@@ -360,7 +360,7 @@ function PANEL:AddControl( control, data )
 		ctrl:SetNumRows( data.rows or 4 )
 		ctrl:SetConVar( data.convar or nil )
 
-		Derma_Hook( ctrl.List, "Paint", "Paint", "Panel" )
+		Derma_Hook( ctrl.List, "Paint", "PaintPanel" )
 
 		for name, tab in pairs( data.options ) do
 

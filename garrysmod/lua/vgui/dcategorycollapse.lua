@@ -75,7 +75,7 @@ end
 function PANEL:Add( strName )
 
 	local button = vgui.Create( "DButton", self )
-	button.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "CategoryButton", panel, w, h ) end
+	button.Paint = function( panel, w, h ) derma.SkinHook( "PaintCategoryButton", panel, w, h ) end
 	button.UpdateColours = function( button, skin )
 
 		if ( button.AltLine ) then
@@ -167,7 +167,7 @@ end
 
 function PANEL:Paint( w, h )
 
-	derma.SkinHook( "Paint", "CollapsibleCategory", self, w, h )
+	derma.SkinHook( "PaintCollapsibleCategory", self, w, h )
 
 	return false
 

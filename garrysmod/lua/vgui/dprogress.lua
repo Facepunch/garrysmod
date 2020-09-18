@@ -3,7 +3,7 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "m_fFraction", "Fraction" )
 
-Derma_Hook( PANEL, "Paint", "Paint", "Progress" )
+Derma_Hook( PANEL, "Paint", "PaintProgress" )
 
 function PANEL:Init()
 

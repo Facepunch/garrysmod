@@ -21,7 +21,7 @@ function PANEL:SetSubMenu( menu )
 	if ( !IsValid( self.SubMenuArrow ) ) then
 
 		self.SubMenuArrow = vgui.Create( "DPanel", self )
-		self.SubMenuArrow.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "MenuRightArrow", panel, w, h ) end
+		self.SubMenuArrow.Paint = function( panel, w, h ) derma.SkinHook( "PaintMenuRightArrow", panel, w, h ) end
 
 	end
 
@@ -55,7 +55,7 @@ end
 
 function PANEL:Paint( w, h )
 
-	derma.SkinHook( "Paint", "MenuOption", self, w, h )
+	derma.SkinHook( "PaintMenuOption", self, w, h )
 
 	--
 	-- Draw the button text

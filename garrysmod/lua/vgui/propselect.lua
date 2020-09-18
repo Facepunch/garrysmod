@@ -23,7 +23,7 @@ function PANEL:Init()
 	self.List:SetSpacing( 1 )
 	self.List:SetPadding( 3 )
 
-	Derma_Hook( self.List, "Paint", "Paint", "Panel" )
+	Derma_Hook( self.List, "Paint", "PaintPanel" )
 
 	self.Controls = {}
 	self.Height = 2

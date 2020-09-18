@@ -9,9 +9,9 @@ AccessorFunc( PANEL, "m_bDisableTabbing",	"TabbingDisabled",	FORCE_BOOL )
 AccessorFunc( PANEL, "m_bDisabled",	"Disabled" )
 AccessorFunc( PANEL, "m_bgColor",	"BackgroundColor" )
 
-Derma_Hook( PANEL, "Paint", "Paint", "Panel" )
-Derma_Hook( PANEL, "ApplySchemeSettings", "Scheme", "Panel" )
-Derma_Hook( PANEL, "PerformLayout", "Layout", "Panel" )
+Derma_Hook( PANEL, "Paint", "PaintPanel" )
+Derma_Hook( PANEL, "ApplySchemeSettings", "SchemePanel" )
+Derma_Hook( PANEL, "PerformLayout", "LayoutPanel" )
 
 function PANEL:Init()
 

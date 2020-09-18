@@ -74,7 +74,7 @@ end
 
 function PANEL:Paint( w, h )
 
-	derma.SkinHook( "Paint", "Button", self, w, h )
+	derma.SkinHook( "PaintButton", self, w, h )
 
 	--
 	-- Draw the button text

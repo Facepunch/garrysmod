@@ -10,7 +10,7 @@ AccessorFunc( PANEL, "m_iDataHeight", "DataHeight" )
 AccessorFunc( PANEL, "m_bMultiSelect", "MultiSelect" )
 AccessorFunc( PANEL, "m_bHideHeaders", "HideHeaders" )
 
-Derma_Hook( PANEL, "Paint", "Paint", "ListView" )
+Derma_Hook( PANEL, "Paint", "PaintListView" )
 
 function PANEL:Init()
 

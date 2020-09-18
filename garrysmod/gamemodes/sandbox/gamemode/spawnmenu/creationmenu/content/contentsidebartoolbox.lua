@@ -3,7 +3,7 @@ include( "contentheader.lua" )
 
 local PANEL = {}
 
-Derma_Hook( PANEL, "Paint", "Paint", "Tree" )
+Derma_Hook( PANEL, "Paint", "PaintTree" )
 PANEL.m_bBackground = true -- Hack for above
 
 function PANEL:Init()

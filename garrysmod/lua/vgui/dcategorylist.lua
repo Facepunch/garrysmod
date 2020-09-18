@@ -29,7 +29,7 @@ end
 
 function PANEL:Paint( w, h )
 
-	derma.SkinHook( "Paint", "CategoryList", self, w, h )
+	derma.SkinHook( "PaintCategoryList", self, w, h )
 	return false
 
 end

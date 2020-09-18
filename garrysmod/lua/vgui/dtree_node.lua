@@ -638,7 +638,7 @@ end
 
 function PANEL:Paint( w, h )
 
-	derma.SkinHook( "Paint", "TreeNode", self, w, h )
+	derma.SkinHook( "PaintTreeNode", self, w, h )
 
 end
 

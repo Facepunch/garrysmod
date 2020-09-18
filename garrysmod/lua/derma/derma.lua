@@ -189,15 +189,15 @@ end
 --[[---------------------------------------------------------
 	SkinHook( strType, strName, panel )
 -----------------------------------------------------------]]
-function SkinHook( strType, strName, panel, w, h )
+function SkinHook( strName, panel, a, b, c, d, e, f, g )
 
 	local Skin = panel:GetSkin()
 	if ( !Skin ) then return end
 
-	local func = Skin[ strType .. strName ]
+	local func = Skin[ strName ]
 	if ( !func ) then return end
 
-	return func( Skin, panel, w, h )
+	return func( Skin, panel, a, b, c, d, e, f, g )
 
 end
 

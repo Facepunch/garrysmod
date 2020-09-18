@@ -176,7 +176,7 @@ function PANEL:Setup( ugcType, file, imageFile, handler )
 				if ( !val && num == 0 ) then s:SetValue( true ) end -- Don't allow to unselect the only 1 selected
 			end
 
-			Derma_Hook( rb.Button, "Paint", "Paint", "RadioButton" )
+			Derma_Hook( rb.Button, "Paint", "PaintRadioButton" )
 		end
 
 		self.Tags:InvalidateChildren( false ) -- Update position of all the docked elements

@@ -46,10 +46,10 @@ include( "derma_animation.lua" )
 include( "derma_utils.lua" )
 include( "derma_gwen.lua" )
 
-function Derma_Hook( panel, functionname, hookname, typename )
+function Derma_Hook( panel, functionname, hookname )
 
-	panel[ functionname ] = function ( self, a, b, c, d )
-		return derma.SkinHook( hookname, typename, self, a, b, c, d )
+	panel[ functionname ] = function ( self, a, b, c, d, e, f, g )
+		return derma.SkinHook( hookname, self, a, b, c, d, e, f, g )
 	end
 
 end
