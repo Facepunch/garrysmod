@@ -375,7 +375,7 @@ function UpdateGamemodeInfo( server )
 	//
 	// Use the most common workshop id
 	//
-	//if ( server.workshopid != "" )
+	if ( server.workshopid != "" )
 	{
 		if ( !gi.wsid ) gi.wsid = {}
 		if ( !gi.wsid[ server.workshopid ] ) { gi.wsid[ server.workshopid ] = 1; } else { gi.wsid[ server.workshopid ]++; }
