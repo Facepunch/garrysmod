@@ -187,7 +187,7 @@ function GetNamedSkin( name )
 end
 
 --[[---------------------------------------------------------
-	SkinHook( strType, strName, panel )
+	SkinHook( strName, panel, hookArgs )
 -----------------------------------------------------------]]
 function SkinHook( strName, panel, a, b, c, d, e, f, g )
 
