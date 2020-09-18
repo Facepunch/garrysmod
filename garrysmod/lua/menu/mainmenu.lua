@@ -246,7 +246,11 @@ function LoadNewsList()
 	if ( !pnlMainMenu ) then return end
 
 	local json = util.TableToJSON( NewsList )
-	pnlMainMenu:Call( "UpdateNewsList(" .. json .. ")" )
+	pnlMainMenu:Call( "UpdateNewsList(" .. json .. ", " .. cookie.GetString( "hide_newslist", "false" ) .. " )" )
+end
+
+function SaveHideNews( bHide )
+	cookie.Set( "hide_newslist", tostring( bHide ) )
 end
 
 local function IsServerBlacklisted( address, hostname, description, gm, map )
