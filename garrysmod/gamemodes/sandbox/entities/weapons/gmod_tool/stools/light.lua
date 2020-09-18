@@ -78,7 +78,7 @@ function TOOL:LeftClick( trace, attach )
 			local length = math.Clamp( self:GetClientNumber( "ropelength" ), 4, 1024 )
 			local material = self:GetClientInfo( "ropematerial" )
 
-			local LPos1 = Vector( 0, 0, 5 )
+			local LPos1 = Vector( 0, 0, 6.5 )
 			local LPos2 = trace.Entity:WorldToLocal( trace.HitPos )
 
 			if ( IsValid( trace.Entity ) ) then
