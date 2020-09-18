@@ -43,5 +43,5 @@ function meta.SmoothDamp( current, target, current_velocity, smooth_time, max_sp
 		current_velocity[3] = 0
 	end
 
-	return output
+	return output, current_velocity
 end
