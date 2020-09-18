@@ -19,10 +19,7 @@ function ENT:Initialize()
 
 	if ( CLIENT ) then
 
-		self.Refraction = Material( "sprites/heatwave" )
 		self.Glow = Material( "sprites/light_glow02_add" )
-
-		self.NextSmokeEffect = 0
 
 	end
 
@@ -82,11 +79,8 @@ function ENT:UpdateLabel()
 
 end
 
-function ENT:Draw()
-
-	BaseClass.Draw( self )
-
-	if ( !self:GetEnabled() || halo.RenderedEntity() == self ) then return end
+function ENT:DrawEffects()
+	if ( !self:GetEnabled() ) then return end
 
 	local vOffset = self:GetPos()
 	local vPlayerEyes = LocalPlayer():EyePos()
@@ -103,7 +97,13 @@ function ENT:Draw()
 
 	render.DrawSprite( vOffset + vDiff * 4, 48, 48, color )
 	render.DrawSprite( vOffset + vDiff * 4, 52, 52, color )
+end
 
+-- We have to do this to ensure DrawTranslucent is called for Opaque only models to draw our effects
+ENT.RenderGroup = RENDERGROUP_BOTH
+function ENT:DrawTranslucent( flags )
+	self:DrawEffects()
+	BaseClass.DrawTranslucent( self, flags )
 end
 
 function ENT:PhysicsSimulate( phys, deltatime )
