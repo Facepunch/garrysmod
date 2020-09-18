@@ -24,6 +24,14 @@ local DefaultColor = Color(255, 255, 100, 255)
 local TEAM = {}
 TEAM.__index = TEAM
 
+--[[------------------------------------------------------------
+
+	Register our metatable to make it accessible using FindMetaTable
+
+--------------------------------------------------------------]]
+
+debug.getregistry().Team = TEAM
+
 function Register( tbl, name )
 
 	if ( !tbl.Name && name ) then tbl.Name = name end
