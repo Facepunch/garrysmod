@@ -190,7 +190,7 @@ function ENT:CanTool( ply, trace, mode )
 
 end
 
-function ENT:Draw()
+function ENT:Draw( flags )
 
 	if ( GetConVarNumber( "cl_drawcameras" ) == 0 ) then return end
 
@@ -200,6 +200,6 @@ function ENT:Draw()
 		return
 	end
 
-	self:DrawModel()
+	self:DrawModel( flags )
 
 end
