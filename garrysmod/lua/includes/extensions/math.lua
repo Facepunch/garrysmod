@@ -215,3 +215,30 @@ end
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
 end
+
+function math.SmoothDamp( current, target, current_velocity, smooth_time, max_speed, delta_time )
+	smooth_time = math.max( 1e-4, smooth_time )
+	max_speed = max_speed or math.huge
+	delta_time = delta_time or FrameTime()
+
+	local omega = 2 / smooth_time
+	local x = omega * delta_time
+	local max_length = max_speed * smooth_time
+	local exp = 1 / ( 1 + x + 0.48 * x * x + 0.235 * x * x * x )
+
+	local delta = math.Clamp( current - target, -max_length, max_length )
+
+	local new_target = current - delta
+
+	local tmp = ( current_velocity + delta * omega ) * delta_time
+	local output = new_target + ( delta + tmp ) * exp
+
+	current_velocity = ( current_velocity - omega * tmp ) * exp
+
+	if ( target - current > 0 ) == ( output > target ) then
+		output = target
+		current_velocity = ( output - target ) / delta_time
+	end
+
+	return output, current_velocity
+end
