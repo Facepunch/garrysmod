@@ -263,8 +263,10 @@ end
 function TEAM:GetTotalDeaths()
 	
 	local deaths, id = 0, self:GetTeamID()
-	for _, pl in pairs( player.GetAll() ) do
-		if ( pl:Team() == id ) then
+	local players, pl = player.GetAll()
+	for i = 1, #players do
+		pl = players[i]
+		if ( pl:IsValid() && pl:Team() == id ) then
 			deaths = deaths + pl:Deaths()
 		end
 	end
@@ -275,8 +277,10 @@ end
 function TEAM:GetTotalFrags()
 
 	local frags, id = 0, self:GetTeamID()
-	for _, pl in pairs( player.GetAll() ) do
-		if ( pl:Team() == id ) then
+	local players, pl = player.GetAll()
+	for i = 1, #players do
+		pl = players[i]
+		if ( pl:IsValid() && pl:Team() == id ) then
 			frags = frags + pl:Frags()
 		end
 	end
@@ -286,10 +290,13 @@ end
 
 function TEAM:GetPlayers()
 
-	local tbl, id = {}, self:GetTeamID()
-	for _, pl in pairs( player.GetAll() ) do
-		if ( IsValid(pl) and pl:Team() == id ) then
-			tbl[#tbl + 1] = pl
+	local tbl, size, id = {}, 0, self:GetTeamID()
+	local players, pl = player.GetAll()
+	for i = 1, #players do
+		pl = players[i]
+		if ( pl:IsValid() && pl:Team() == id ) then
+			size = size + 1
+			tbl[size] = pl
 		end
 	end
 	return tbl
@@ -304,12 +311,12 @@ end
 
 function TEAM:GetScore()
 	
-	return GetGlobalInt( "Team." .. tostring( self:GetTeamID() ) .. ".Score", 0 )
+	return GetGlobalInt( "Team." .. self:GetTeamID() .. ".Score", 0 )
 
 end
 
 function TEAM:SetScore( score )
 
-	SetGlobalInt( "Team." .. tostring( self:GetTeamID() ) .. ".Score", score )
+	SetGlobalInt( "Team." .. self:GetTeamID() .. ".Score", score )
 
 end
