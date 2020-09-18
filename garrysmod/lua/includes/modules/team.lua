@@ -224,10 +224,15 @@ end
 
 --------------------------------------------------------------]]
 
-AccessorFunc( TEAM, "TeamID", "TeamID" )
 AccessorFunc( TEAM, "Color", "Color" )
 AccessorFunc( TEAM, "SpawnPointTable", "SpawnPointTable" )
 AccessorFunc( TEAM, "SelectableClasses", "SelectableClasses" )
+
+function TEAM:GetTeamID()
+
+	return self.TeamID
+
+end
 
 function TEAM:GetName()
 
