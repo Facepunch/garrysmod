@@ -491,7 +491,7 @@ function PANEL:FillAnimations( ent )
 
 			ent:SetSkin( newVal )
 
-			if ( self:GetOrigin() ) then self:GetOrigin():SkinChanged( newVal ) end
+			if ( IsValid( self:GetOrigin() ) ) then self:GetOrigin():SkinChanged( newVal ) end
 
 			-- If we're not using a custom, change our spawnicon
 			-- so we save the new skin in the right place...
@@ -521,7 +521,7 @@ function PANEL:FillAnimations( ent )
 
 			ent:SetBodygroup( s.BodyGroupID, newVal )
 
-			if ( self:GetOrigin() ) then self:GetOrigin():BodyGroupChanged( s.BodyGroupID, newVal ) end
+			if ( IsValid( self:GetOrigin() ) ) then self:GetOrigin():BodyGroupChanged( s.BodyGroupID, newVal ) end
 
 			-- If we're not using a custom, change our spawnicon
 			-- so we save the new skin in the right place...
