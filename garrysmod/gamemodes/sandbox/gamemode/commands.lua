@@ -11,7 +11,6 @@ local function fixupProp( ply, ent, hitpos, mins, maxs )
 		endpos = endposD,
 		filter = { ent, ply }
 	} )
-	if ( tr_down.Hit ) then debugoverlay.Cross( tr_down.HitPos, 10, 10, Color( 255, 0, 0 ) ) end
 
 	local endposU = ent:LocalToWorld( maxs )
 	local tr_up = util.TraceLine( {
@@ -19,7 +18,6 @@ local function fixupProp( ply, ent, hitpos, mins, maxs )
 		endpos = endposU,
 		filter = { ent, ply }
 	} )
-	if ( tr_up.Hit ) then debugoverlay.Cross( tr_up.HitPos, 10, 10, Color( 0, 0, 255 ) ) end
 
 	-- Both traces hit meaning we are probably inside a wall on both sides, do nothing
 	if ( tr_up.Hit && tr_down.Hit ) then return end
