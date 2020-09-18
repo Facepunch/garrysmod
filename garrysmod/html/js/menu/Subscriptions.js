@@ -58,6 +58,12 @@ Subscriptions.prototype.UnsubscribeAll = function()
 	}
 }
 
+// Ew
+Subscriptions.prototype.GetAll = function()
+{
+	return this.Files;
+}
+
 // Called from engine for Subscriptions
 Subscriptions.prototype.Update = function( json )
 {

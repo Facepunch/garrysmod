@@ -6,9 +6,27 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$rootScope.ShowBack = true;
 	Scope = $scope;
 
+	// This is kind of annoying way of doing things
+	$scope.CreatePresetOpen = false;
+	$scope.CreatePresetSaveEnabled = true;
+	$scope.CreatePresetSaveDisabled = true;
+	$scope.CreatePresetNew = "disable";
+	$scope.CreatePresetName = "";
+
+	$scope.PresetList = {}
+	$scope.LoadPresetMenuOpen = false;
+	$scope.SelectedPreset = undefined;
+
 	$scope.SelectedItems = {};
 	$scope.PopupMessageDisplayed = false;
+	$scope.PopupMessageFiles = [];
 	$scope.PopupMessageDisplayedMessage = "addons.uninstallall.warning";
+
+	// For testing
+	if ( !IN_ENGINE )
+	{
+		$scope.PresetList = { test: { name: "test"}, test2: { name: "test2"}, test23: { name: "test23"}, test24: { name: "test24"}, test25: { name: "test25"}, test26: { name: "test26" } };
+	}
 
 	$scope.Categories =
 	[
@@ -19,6 +37,8 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 
 	$scope.CategoriesSecondary =
 	[
+		"followed",
+		"favorite",
 		"friends",
 		"mine"
 	];
@@ -37,6 +57,8 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	];
 
 	$scope.Disabled = false;
+	$scope.UGCSettingsOpen = false;
+	$scope.UGCSortMethod = "subscribed";
 
 	lua.Run( "UpdateAddonDisabledState();" );
 
@@ -46,6 +68,39 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 
 	$scope.Subscribe = function( file )
 	{
+		if ( !file.info ) file.info = { children: [] };
+		//if ( file.info.children.length < 1 ) { file.info.children = [ 177717299, 1629004850 ] };
+
+		if ( file.info.children.length > 0 )
+		{
+			var needsWarning = false;
+			for ( var i = 0; i < file.info.children.length; i++ )
+			{
+				var wsid = file.info.children[ i ];
+				if ( !$scope.IsSubscribedID( wsid ) )
+				{
+					needsWarning = true;
+					break;
+				}
+			}
+
+			if ( needsWarning )
+			{
+				for ( var i = 0; i < file.info.children.length; i++ )
+				{
+					var wsid = file.info.children[ i ];
+					lua.Run( "MenuGetAddonData( %i );", wsid );
+				}
+
+				$scope.PopupMessageFiles = file.info.children;
+				$scope.DisplayPopupMessage( "addons.addon_depends", function()
+				{
+					subscriptions.Subscribe( file.id );
+				} );
+				return;
+			}
+		}
+
 		subscriptions.Subscribe( file.id );
 	}
 	$scope.Unsubscribe = function( file )
@@ -60,6 +115,10 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.IsSubscribed = function( file )
 	{
 		return subscriptions.Contains( file.id );
+	}
+	$scope.IsSubscribedID = function( fileID )
+	{
+		return subscriptions.Contains( fileID );
 	}
 
 	$scope.DisableAllSubscribed = function()
@@ -96,10 +155,15 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.ClosePopupMessage = function( txt, func )
 	{
 		$scope.PopupMessageDisplayed = false;
+		$scope.PopupMessageFiles = [];
+
+		$scope.CreatePresetOpen = false;
+		$scope.LoadPresetMenuOpen = false;
+		$scope.SelectedPreset = undefined;
 	}
 	$scope.ExecutePopupFunction = function()
 	{
-		$scope.PopupMessageDisplayed = false;
+		$scope.ClosePopupMessage();
 		if ( $scope.PopupMessageDisplayedFunc )
 		{
 			$scope.PopupMessageDisplayedFunc()
@@ -110,6 +174,14 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.UnselectAll = function()
 	{
 		for ( var k in $scope.SelectedItems ) $scope.SelectedItems[ k ] = false;
+	}
+	$scope.SelectAllPage = function()
+	{
+		for ( var k in $scope.Files ) $scope.SelectedItems[ $scope.Files[ k ].id ] = true;
+	}
+	$scope.SelectAll = function()
+	{
+		for ( var k in subscriptions.GetAll() ) $scope.SelectedItems[ k ] = true;
 	}
 	$scope.EnableAllSelected = function()
 	{
@@ -152,12 +224,125 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		}
 		return false;
 	}
+
+	$scope.ToggleSettings = function()
+	{
+		$scope.UGCSettingsOpen = !$scope.UGCSettingsOpen;
+	}
+
+	$scope.OpenCreatePresetMenu = function()
+	{
+		// Reset to defaults..
+		$scope.CreatePresetSaveEnabled = true;
+		$scope.CreatePresetSaveDisabled = true;
+		$scope.CreatePresetNew = "disable";
+		$scope.CreatePresetName = "";
+
+		$scope.CreatePresetOpen = true;
+	}
+	$scope.CreateNewPreset = function()
+	{
+		var newPreset = {
+			enabled: [], disabled: [],
+			name: $scope.CreatePresetName,
+			newAction: $scope.CreatePresetNew
+		}
+
+		var files = subscriptions.GetAll();
+		for ( var id in files )
+		{
+			var enabled = files[ id ].mounted;
+
+			if ( enabled && $scope.CreatePresetSaveEnabled ) newPreset.enabled.push( id );
+			if ( !enabled && $scope.CreatePresetSaveDisabled ) newPreset.disabled.push( id );
+		}
+
+		lua.Run( "CreateNewAddonPreset( %s )", JSON.stringify( newPreset ) );
+
+		$scope.CreatePresetOpen = false;
+	}
+
+	$scope.OpenLoadPresetMenu = function()
+	{
+		lua.Run( "ListAddonPresets()" );
+		$scope.LoadPresetMenuOpen = true;
+	}
+	$scope.SelectPreset = function( preset, newAction )
+	{
+		$scope.SelectedPreset = preset;
+		$scope.CreatePresetNew = newAction;
+	}
+	$scope.DeletePreset = function( preset )
+	{
+		lua.Run( "DeleteAddonPreset( %s )", preset );
+		$scope.SelectedPreset = undefined;
+	}
+	$scope.LoadSelectedPreset = function()
+	{
+		var preset = $scope.PresetList[ $scope.SelectedPreset ];
+		var newAct = $scope.CreatePresetNew;
+
+		var IDsDone = {};
+		for ( var k in preset.disabled )
+		{
+			var id = preset.disabled[ k ];
+			subscriptions.SetShouldMountAddon( id, false );
+			IDsDone[ id ] = true;
+		}
+		for ( var k in preset.enabled )
+		{
+			var id = preset.enabled[ k ];
+			subscriptions.SetShouldMountAddon( id, true );
+			IDsDone[ id ] = true;
+		}
+
+		if ( newAct != "" )
+		{
+			var files = subscriptions.GetAll();
+			for ( var id in files )
+			{
+				if ( !IDsDone[ id ] )
+				{
+					subscriptions.SetShouldMountAddon( id, newAct == "enable" );
+				}
+			}
+		}
+
+		subscriptions.ApplyChanges();
+		$scope.LoadPresetMenuOpen = false;
+		$scope.SelectedPreset = undefined;
+	}
+
+	$scope.GetAddonClasses = function( file )
+	{
+		var classes = [];
+		if ( $scope.IsSubscribed( file ) )
+		{
+			classes.push( $scope.IsEnabled( file ) ? "installed" : "disabled" );
+			if ( file.extra && file.extra.invalid_reason ) classes.push( "invalid" );
+		}
+		return classes.join( " " );
+	}
+}
+
+function ReceivedChildAddonInfo( info )
+{
+	var elem = document.getElementById( "wsid" + info.id )
+	elem.innerText = info.title
+}
+
+function OnReceivePresetList( list )
+{
+	if ( !Scope ) return;
+
+	Scope.PresetList = list;
+	UpdateDigest( Scope, 50 );
 }
 
 function UpdateAddonDisabledState( noaddons, noworkshop )
 {
-	if ( Scope ) {
-		Scope.Disabled = noworkshop;
-		UpdateDigest( Scope, 50 );
-	}
+	if ( !Scope ) return;
+
+	Scope.Disabled = noworkshop;
+	UpdateDigest( Scope, 50 );
 }

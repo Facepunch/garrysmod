@@ -55,6 +55,11 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		scope.SwitchWithTag( scope.Category, 0, scope.Tagged, scope.MapName )
 	}
 
+	this.Scope.HandleSortChange = function()
+	{
+		scope.SwitchWithTag( scope.Category, 0, scope.Tagged, scope.MapName )
+	}
+
 	var hackyWackyTimer = 0;
 	this.Scope.HandleOnSearch = function()
 	{
@@ -100,11 +105,11 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		{
 			// fumble
 			if ( scope.MapName && scope.Tagged ) {
-				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged + "," + scope.MapName, scope.SubscriptionSearchText, filter );
+				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged + "," + scope.MapName, scope.SubscriptionSearchText, filter, scope.UGCSortMethod );
 			} else if ( scope.MapName ) {
-				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.MapName, scope.SubscriptionSearchText, filter );
+				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.MapName, scope.SubscriptionSearchText, filter, scope.UGCSortMethod );
 			} else {
-				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged, scope.SubscriptionSearchText, filter );
+				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged, scope.SubscriptionSearchText, filter, scope.UGCSortMethod );
 			}
 		}
 	}
@@ -181,7 +186,7 @@ WorkshopFiles.prototype.ReceiveIndex = function( data )
 	this.Scope.TotalResults	= data.totalresults;
 	this.Scope.NumResults	= data.numresults;
 
-	this.Scope.Files = []
+	this.Scope.Files = [];
 
 	for ( k in data.results )
 	{
@@ -190,6 +195,7 @@ WorkshopFiles.prototype.ReceiveIndex = function( data )
 			order	: k,
 			id		: data.results[k],
 			filled	: false,
+			extra	: data.extraresults ? data.extraresults[ k ] : {},
 		};
 
 		this.Scope.Files.push( entry );

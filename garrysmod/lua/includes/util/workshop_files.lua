@@ -9,7 +9,7 @@ function WorkshopFileBase( namespace, requiredtags )
 	local ret = {}
 	ret.HTML = nil
 
-	function ret:Fetch( type, offset, perpage, extratags, searchText, filter )
+	function ret:Fetch( type, offset, perpage, extratags, searchText, filter, sort )
 
 		local tags = table.Copy( requiredtags )
 		for k, v in pairs( extratags ) do
@@ -21,10 +21,10 @@ function WorkshopFileBase( namespace, requiredtags )
 			return self:FetchLocal( offset, perpage )
 		end
 		if ( type == "subscribed" ) then
-			return self:FetchSubscribed( offset, perpage, tags, searchText, false, filter )
+			return self:FetchSubscribed( offset, perpage, tags, searchText, false, filter, sort )
 		end
 		if ( type == "subscribed_ugc" ) then
-			return self:FetchSubscribed( offset, perpage, tags, searchText, true, filter )
+			return self:FetchSubscribed( offset, perpage, tags, searchText, true, filter, sort )
 		end
 
 		local userid = "0"
@@ -44,7 +44,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	end
 
-	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC, filter )
+	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC, filter, sort )
 
 		local subscriptions = {}
 		if ( isUGC ) then
@@ -56,9 +56,24 @@ function WorkshopFileBase( namespace, requiredtags )
 		for id, e in pairs( subscriptions ) do
 			if ( e.timeadded == 0 ) then e.timeadded = os.time() end
 		end
-		table.sort( subscriptions, function( a, b )
-			return a.timeadded > b.timeadded
-		end )
+
+		if ( sort == "title" ) then
+			table.sort( subscriptions, function( a, b )
+				return a.title:lower() < b.title:lower()
+			end )
+		elseif ( sort == "size" ) then
+			table.sort( subscriptions, function( a, b )
+				return a.size > b.size
+			end )
+		elseif ( sort == "updated" ) then
+			table.sort( subscriptions, function( a, b )
+				return a.updated > b.updated
+			end )
+		else
+			table.sort( subscriptions, function( a, b )
+				return a.timeadded > b.timeadded
+			end )
+		end
 
 		-- First build a list of items that fit our search terms
 		local searchedItems = {}
