@@ -231,6 +231,7 @@ end
 -- Hook to create the spawnmenu at the appropriate time (when all sents and sweps are loaded)
 hook.Add( "OnGamemodeLoaded", "CreateSpawnMenu", CreateSpawnMenu )
 concommand.Add( "spawnmenu_reload", CreateSpawnMenu )
+cvars.AddChangeCallback( "gmod_language", CreateSpawnMenu, "spawnmenu_reload" )
 
 function GM:OnSpawnMenuOpen()
 
