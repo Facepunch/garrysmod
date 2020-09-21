@@ -650,10 +650,10 @@ function table.KeysFromValue( tbl, val )
 	return res
 end
 
-function table.ValuesFromKey( tab, key )
+function table.MemberValuesFromKey( tab, key )
 	local res = {}
 	for k, v in pairs( tab ) do
-		if ( v[ key ] ~= nil ) then res[ #res + 1 ] = v[ key ] end
+		if ( istable( v ) && v[ key ] != nil ) then res[ #res + 1 ] = v[ key ] end
 	end
 	return res
 end
