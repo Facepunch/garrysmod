@@ -10,17 +10,15 @@ function ENT:Initialize()
 	self:DrawShadow( false )
 	self:SetTransmitWithParent( true ) -- Transmit only when the viewmodel does!
 
-	-- We only need to worry about view model changes on the client that owns these hands
-	if not CLIENT then return end
-	if self:GetOwner() ~= LocalPlayer() then return end
-
 	self.viewHookID = "HandsViewModelChanged_" .. self:EntIndex()
 
-	self:CallOnRemove( "RemoveViewModelChangedHook", function()
-		hook.Remove( "OnViewModelChanged", self.viewHookID )
-	end )
+	if ( SERVER or self:GetOwner() == LocalPlayer() ) then
+		hook.Add( "OnViewModelChanged", self.viewHookID, self.ViewModelChanged )
 
-	hook.Add( "OnViewModelChanged", self.viewHookID, self.ViewModelChanged )
+		self:CallOnRemove( "RemoveViewModelChangedHook", function()
+			hook.Remove( "OnViewModelChanged", self.viewHookID )
+		end )
+	end
 
 end
 
