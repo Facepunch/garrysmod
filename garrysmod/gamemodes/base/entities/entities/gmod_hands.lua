@@ -6,18 +6,21 @@ ENT.RenderGroup = RENDERGROUP_OTHER
 
 function ENT:Initialize()
 
+	self:SetNotSolid( true )
+	self:DrawShadow( false )
+	self:SetTransmitWithParent( true ) -- Transmit only when the viewmodel does!
+
+	-- We only need to worry about view model changes on the client that owns these hands
+	if not CLIENT then return end
+	if self:GetOwner() ~= LocalPlayer() then return end
+
 	self.viewHookID = "HandsViewModelChanged_" .. self:EntIndex()
 
 	self:CallOnRemove( "RemoveViewModelChangedHook", function()
 		hook.Remove( "OnViewModelChanged", self.viewHookID )
 	end )
 
-	-- TODO: Is this hook needed on both realms?
 	hook.Add( "OnViewModelChanged", self.viewHookID, self.ViewModelChanged )
-
-	self:SetNotSolid( true )
-	self:DrawShadow( false )
-	self:SetTransmitWithParent( true ) -- Transmit only when the viewmodel does!
 
 end
 
@@ -56,10 +59,7 @@ end
 function ENT:ViewModelChanged( vm, old, new )
 
 	-- Ignore other peoples viewmodel changes!
-	if ( vm:GetOwner() != self:GetOwner() ) then
-		if CLIENT then hook.Remove( "OnViewModelChanged", self.viewHookID ) end
-		return
-	end
+	if ( vm:GetOwner() != self:GetOwner() ) then return end
 
 	self:AttachToViewmodel( vm )
 
