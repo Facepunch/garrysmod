@@ -54,7 +54,7 @@ SetUp( TEAM_CONNECTING,	"Joining/Connecting",	DefaultColor,	false )
 SetUp( TEAM_UNASSIGNED,	"Unassigned",			DefaultColor,	false )
 SetUp( TEAM_SPECTATOR,	"Spectator",			DefaultColor,	true )
 
-function GetByIndex( id )
+function GetByID( id )
 
 	return TeamList[id]
 
@@ -228,7 +228,7 @@ AccessorFunc( TEAM, "Color", "Color" )
 AccessorFunc( TEAM, "SpawnPointTable", "SpawnPointTable" )
 AccessorFunc( TEAM, "SelectableClasses", "SelectableClasses" )
 
-function TEAM:GetTeamID()
+function TEAM:GetID()
 
 	return self.TeamID
 
@@ -275,7 +275,7 @@ end
 
 function TEAM:GetTotalDeaths()
 	
-	local deaths, id = 0, self:GetTeamID()
+	local deaths, id = 0, self:GetID()
 	local players, pl = player.GetAll()
 	for i = 1, #players do
 		pl = players[i]
@@ -289,7 +289,7 @@ end
 
 function TEAM:GetTotalFrags()
 
-	local frags, id = 0, self:GetTeamID()
+	local frags, id = 0, self:GetID()
 	local players, pl = player.GetAll()
 	for i = 1, #players do
 		pl = players[i]
@@ -303,7 +303,7 @@ end
 
 function TEAM:GetPlayers()
 
-	local tbl, size, id = {}, 0, self:GetTeamID()
+	local tbl, size, id = {}, 0, self:GetID()
 	local players, pl = player.GetAll()
 	for i = 1, #players do
 		pl = players[i]
@@ -324,12 +324,12 @@ end
 
 function TEAM:GetScore()
 	
-	return GetGlobalInt( "Team." .. self:GetTeamID() .. ".Score", 0 )
+	return GetGlobalInt( "Team." .. self:GetID() .. ".Score", 0 )
 
 end
 
 function TEAM:SetScore( score )
 
-	SetGlobalInt( "Team." .. self:GetTeamID() .. ".Score", score )
+	SetGlobalInt( "Team." .. self:GetID() .. ".Score", score )
 
 end
