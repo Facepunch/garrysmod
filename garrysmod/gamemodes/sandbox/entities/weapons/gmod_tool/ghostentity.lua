@@ -6,6 +6,7 @@
 function ToolObj:MakeGhostEntity( model, pos, angle )
 
 	util.PrecacheModel( model )
+
 	-- We do ghosting serverside in single player
 	-- It's done clientside in multiplayer
 	if ( SERVER && !game.SinglePlayer() ) then return end
@@ -14,7 +15,7 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 	-- The reason we need this is because in multiplayer, when you holster a tool serverside,
 	-- either by using the spawnnmenu's Weapons tab or by simply entering a vehicle,
 	-- the Think hook is called once after Holster is called on the client, recreating the ghost entity right after it was removed.
-	if ( self.GhostEntityLastDelete && self.GhostEntityLastDelete + 0.1 > CurTime() ) then return end
+	if ( !IsFirstTimePredicted() ) then return end
 
 	-- Release the old ghost entity
 	self:ReleaseGhostEntity()
@@ -39,10 +40,14 @@ function ToolObj:MakeGhostEntity( model, pos, angle )
 	self.GhostEntity:SetAngles( angle )
 	self.GhostEntity:Spawn()
 
-	self.GhostEntity:SetSolid( SOLID_VPHYSICS )
+	-- We do not want physics at all
+	self.GhostEntity:PhysicsDestroy()
+
+	-- SOLID_NONE causes issues with Entity.NearestPoint used by Wheel tool
+	--self.GhostEntity:SetSolid( SOLID_NONE )
 	self.GhostEntity:SetMoveType( MOVETYPE_NONE )
 	self.GhostEntity:SetNotSolid( true )
-	self.GhostEntity:SetRenderMode( RENDERMODE_TRANSALPHA )
+	self.GhostEntity:SetRenderMode( RENDERMODE_TRANSCOLOR )
 	self.GhostEntity:SetColor( Color( 255, 255, 255, 150 ) )
 
 end
@@ -71,7 +76,6 @@ function ToolObj:ReleaseGhostEntity()
 		if ( !IsValid( self.GhostEntity ) ) then self.GhostEntity = nil return end
 		self.GhostEntity:Remove()
 		self.GhostEntity = nil
-		self.GhostEntityLastDelete = CurTime()
 	end
 
 	-- This is unused!
@@ -83,7 +87,6 @@ function ToolObj:ReleaseGhostEntity()
 		end
 
 		self.GhostEntities = nil
-		self.GhostEntityLastDelete = CurTime()
 	end
 
 	-- This is unused!

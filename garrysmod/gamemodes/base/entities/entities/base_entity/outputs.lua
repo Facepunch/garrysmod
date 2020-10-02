@@ -8,7 +8,11 @@
 -- the second is value.
 
 function ENT:StoreOutput( name, info )
-	local rawData = string.Explode( ",", info )
+	-- Newer Source Engine games use this symbol as a delimiter
+	local rawData = string.Explode( "\x1B", info )
+	if ( #rawData < 2 ) then
+		rawData = string.Explode( ",", info )
+	end
 
 	local Output = {}
 	Output.entities = rawData[1] or ""

@@ -144,7 +144,7 @@ Scheme
 			{
 				"name"		"Tahoma"
 				"tall"		"12"
-				"weight"	"500"
+				"weight"	"700" // GMod: Changed from 500 to match Default
 				"underline" "1"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
 			}
@@ -198,6 +198,18 @@ Scheme
 				"antialias" "1"
 				"blur"		"5"
 				"scanlines"	"2"
+				"additive"	"1"
+				"custom"	"1"
+			}
+		}
+		WeaponIconsSmall
+		{
+			"1"
+			{
+				"name"		"HalfLife2"
+				"tall"		"32"
+				"weight"	"0"
+				"antialias" "1"
 				"additive"	"1"
 				"custom"	"1"
 			}

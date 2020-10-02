@@ -46,6 +46,6 @@ end )
 
 hook.Add( "NeedsDepthPass", "NeedsDepthPass_Bokeh", function()
 
-	return pp_bokeh:GetBool()
+	if ( pp_bokeh:GetBool() ) then return true end
 
 end )

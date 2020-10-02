@@ -22,7 +22,7 @@ local function PlaceDecal( ply, ent, data )
 	if ( !IsValid( bone ) ) then bone = ent end
 
 	if ( SERVER ) then
-		util.Decal( data.decal, bone:LocalToWorld( data.Pos1 ), bone:LocalToWorld( data.Pos2 ) )
+		util.Decal( data.decal, bone:LocalToWorld( data.Pos1 ), bone:LocalToWorld( data.Pos2 ), ply )
 
 		local i = ent.DecalCount or 0
 		i = i + 1
@@ -48,6 +48,13 @@ function TOOL:Reload( trace )
 
 	trace.Entity:RemoveAllDecals()
 
+	if ( SERVER ) then
+		for i = 1, 32 do
+			duplicator.ClearEntityModifier( trace.Entity, "decal" .. i )
+		end
+		trace.Entity.DecalCount = nil
+	end
+
 	return true
 end
 
@@ -66,9 +73,7 @@ function TOOL:RightClick( trace, bNoDelay )
 	local Pos2 = trace.HitPos - trace.HitNormal
 
 	local Bone = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone or 0 )
-	if ( !Bone ) then
-		Bone = trace.Entity
-	end
+	if ( !IsValid( Bone ) ) then Bone = trace.Entity end
 
 	Pos1 = Bone:WorldToLocal( Pos1 )
 	Pos2 = Bone:WorldToLocal( Pos2 )
@@ -127,7 +132,14 @@ list.Add( "PaintMaterials", "Cross" )
 
 function TOOL.BuildCPanel( CPanel )
 
-	local Options = list.Get( "PaintMaterials" )
+	-- Remove duplicates.
+	local Options = {}
+	for id, str in pairs( list.Get( "PaintMaterials" ) ) do
+		if ( !table.HasValue( Options, str ) ) then
+			table.insert( Options, str )
+		end
+	end
+
 	table.sort( Options )
 
 	local listbox = CPanel:AddControl( "ListBox", { Label = "#tool.paint.texture", Height = 17 + table.Count( Options ) * 17 } )

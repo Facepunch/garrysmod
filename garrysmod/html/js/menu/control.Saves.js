@@ -8,14 +8,27 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 
 	save.Init( 'ws_save', $scope, $rootScope );
 
-	Scope.Categories =
+	$scope.MyCategories =
+	[
+		"local",
+		"subscribed_ugc",
+		//"favorites_ugc"
+	];
+
+	$scope.Categories =
 	[
 		"trending",
 		"popular",
 		"latest"
 	];
 
-	Scope.SubCategories =
+	$scope.CategoriesSecondary =
+	[
+		"friends",
+		"mine"
+	];
+
+	$scope.SubCategories =
 	[
 		"scenes",
 		"machines",
@@ -23,6 +36,13 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 		"courses",
 		"others"
 	];
+
+	$scope.Disabled = false;
+	if ( !IS_SPAWN_MENU ) lua.Run( "UpdateAddonDisabledState();" );
+
+	$scope.Subscribe = function( file ) { subscriptions.Subscribe( file.id ); }
+	$scope.Unsubscribe = function( file ) { subscriptions.Unsubscribe( file.id ); }
+	$scope.IsSubscribed = function( file ) { return subscriptions.Contains( String( file.id ) ); };
 
 	$scope.LoadSave = function( entry )
 	{
@@ -37,7 +57,7 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 		// TODO: Some kind of `please wait` while we download 200kb
 		//
 
-		gmod.DownloadSave( entry.info.fileid );
+		gmod.DownloadSave( entry.info.id );
 	}
 
 	$scope.DeleteLocal = function( entry )
@@ -45,26 +65,40 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 		if ( IN_ENGINE )
 		{
 			gmod.DeleteLocal( entry.info.file );
-			gmod.DeleteLocal( entry.info.background );
+			gmod.DeleteLocal( entry.background );
 		}
 
 		$scope.Switch( $scope.Category, $scope.Offset );
 	}
 
-	if ( IS_SPAWN_MENU )
+	$scope.ReloadView = function()
 	{
-		if ( $routeParams.Category )
+		if ( IS_SPAWN_MENU )
 		{
-			$timeout( function() { $scope.SwitchWithTag( $routeParams.Category, 0, $routeParams.Tag, $scope.MapName ); }, 100 );
-			return;
-		}
+			if ( $routeParams.Category )
+			{
+				$timeout( function() { $scope.SwitchWithTag( $routeParams.Category, 0, $routeParams.Tag, $scope.MapName ); }, 100 );
+				return;
+			}
 
-		$timeout( function() { $scope.SwitchWithTag( 'trending', 0, $scope.MapName ); }, 100 );
+			$timeout( function() { $scope.SwitchWithTag( 'local', 0, $scope.MapName ); }, 100 );
+		}
+		else
+		{
+			$scope.Switch( 'local', 0 );
+		}
 	}
-	else
-	{
-		$scope.Switch( 'local', 0 );
-	}
+
+	// This is just to fix the spawnmenu initial size being 512x512 for first few frames
+	$scope.ReloadView();
+	$( window ).resize( function() {
+		//if ( $scope.ResizeTimeout ) $timeout.cancel( $scope.ResizeTimeout );
+		//$scope.ResizeTimeout = $timeout( function() { $scope.ReloadView(); }, 250 );
+
+		if ( $scope.ReloadedView ) return;
+		$scope.ReloadedView = true;
+		$scope.ResizeTimeout = $timeout( function() { $scope.ReloadView(); }, 250 );
+	} );
 }
 
 function OnGameSaved()

@@ -13,7 +13,7 @@ function WEPS.IsEquipment(wep)
 end
 
 function WEPS.GetClass(wep)
-   if type(wep) == "table" then
+   if istable(wep) then
       return wep.ClassName or wep.Classname
    elseif IsValid(wep) then
       return wep:GetClass()

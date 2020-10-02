@@ -97,12 +97,13 @@ function TOOL:LeftClick( trace )
 			if ( collision ) then
 
 				if ( IsValid( thruster:GetPhysicsObject() ) ) then thruster:GetPhysicsObject():EnableCollisions( false ) end
+				thruster:SetCollisionGroup( COLLISION_GROUP_WORLD )
 				thruster.nocollide = true
 
 			end
 
-			undo.AddEntity( const )
 			ply:AddCleanup( "thrusters", const )
+			undo.AddEntity( const )
 
 		end
 
@@ -143,7 +144,10 @@ if ( SERVER ) then
 		thruster.NumBackDown = numpad.OnDown( pl, key_bck, "Thruster_On", thruster, -1 )
 		thruster.NumBackUp = numpad.OnUp( pl, key_bck, "Thruster_Off", thruster, -1 )
 
-		if ( nocollide == true && IsValid( thruster:GetPhysicsObject() ) ) then thruster:GetPhysicsObject():EnableCollisions( false ) end
+		if ( nocollide == true ) then
+			if ( IsValid( thruster:GetPhysicsObject() ) ) then thruster:GetPhysicsObject():EnableCollisions( false ) end
+			thruster:SetCollisionGroup( COLLISION_GROUP_WORLD )
+		end
 
 		table.Merge( thruster:GetTable(), {
 			key = key,
@@ -177,7 +181,7 @@ function TOOL:UpdateGhostThruster( ent, ply )
 	if ( !IsValid( ent ) ) then return end
 
 	local trace = ply:GetEyeTrace()
-	if ( !trace.Hit || trace.Entity && ( trace.Entity:GetClass() == "gmod_thruster" || trace.Entity:IsPlayer() ) ) then
+	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:GetClass() == "gmod_thruster" || trace.Entity:IsPlayer() ) ) then
 
 		ent:SetNoDraw( true )
 		return
@@ -201,7 +205,7 @@ function TOOL:Think()
 	if ( !IsValidThrusterModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
-		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostThruster( self.GhostEntity, self:GetOwner() )
@@ -263,13 +267,16 @@ list.Set( "ThrusterModels", "models/props_c17/canister02a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trainstation_ornament002.mdl", {} )
 list.Set( "ThrusterModels", "models/props_junk/TrafficCone001a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_c17/clock01.mdl", {} )
-list.Set( "ThrusterModels", "models/props_c17/pottery02a.mdl", {} )
-list.Set( "ThrusterModels", "models/props_c17/pottery03a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_junk/terracotta01.mdl", {} )
 list.Set( "ThrusterModels", "models/props_c17/TrapPropeller_Engine.mdl", {} )
 list.Set( "ThrusterModels", "models/props_c17/FurnitureSink001a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trainstation_ornament001.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trashcan_indoor001b.mdl", {} )
+
+if ( IsMounted( "cstrike" ) ) then
+	list.Set( "ThrusterModels", "models/props_c17/pottery02a.mdl", {} )
+	list.Set( "ThrusterModels", "models/props_c17/pottery03a.mdl", {} )
+end
 
 --PHX
 list.Set( "ThrusterModels", "models/props_phx2/garbage_metalcan001a.mdl", {} )

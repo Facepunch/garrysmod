@@ -81,13 +81,13 @@ function PANEL:Add( strName )
 		if ( button.AltLine ) then
 
 			if ( button.Depressed || button.m_bSelected ) then	return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Selected ) end
-			if ( hovered ) then									return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Hover ) end
+			if ( button.Hovered ) then							return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text_Hover ) end
 			return button:SetTextStyleColor( skin.Colours.Category.LineAlt.Text )
 
 		end
 
 		if ( button.Depressed || button.m_bSelected ) then	return button:SetTextStyleColor( skin.Colours.Category.Line.Text_Selected ) end
-		if ( hovered ) then									return button:SetTextStyleColor( skin.Colours.Category.Line.Text_Hover ) end
+		if ( button.Hovered ) then							return button:SetTextStyleColor( skin.Colours.Category.Line.Text_Hover ) end
 		return button:SetTextStyleColor( skin.Colours.Category.Line.Text )
 
 	end
@@ -150,6 +150,18 @@ end
 function PANEL:SetLabel( strLabel )
 
 	self.Header:SetText( strLabel )
+
+end
+
+function PANEL:SetHeaderHeight( height )
+
+	self.Header:SetTall( height )
+
+end
+
+function PANEL:GetHeaderHeight()
+
+	return self.Header:GetTall()
 
 end
 
@@ -240,13 +252,13 @@ function PANEL:PerformLayout()
 
 	if ( self:GetExpanded() ) then
 
-        if ( IsValid( self.Contents ) && #self.Contents:GetChildren() > 0 ) then self.Contents:SizeToChildren( false, true ) end
+		if ( IsValid( self.Contents ) && #self.Contents:GetChildren() > 0 ) then self.Contents:SizeToChildren( false, true ) end
 		self:SizeToChildren( false, true )
 
 	else
 
 		if ( IsValid( self.Contents ) && !self.OldHeight ) then self.OldHeight = self.Contents:GetTall() end
-		self:SetTall( self.Header:GetTall() )
+		self:SetTall( self:GetHeaderHeight() )
 
 	end
 
@@ -311,6 +323,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	ctrl:SetLabel( "Category List Test Category" )
 	ctrl:SetSize( 300, 300 )
 	ctrl:SetPadding( 10 )
+	ctrl:SetHeaderHeight( 32 )
 
 	-- The contents can be any panel, even a DPanelList
 	local Contents = vgui.Create( "DButton" )

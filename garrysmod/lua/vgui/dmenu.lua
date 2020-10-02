@@ -107,7 +107,7 @@ function PANEL:OpenSubMenu( item, menu )
 
 	-- Do we already have a menu open?
 	local openmenu = self:GetOpenSubMenu()
-	if ( IsValid( openmenu ) ) then
+	if ( IsValid( openmenu ) && openmenu:IsVisible() ) then
 
 		-- Don't open it again!
 		if ( menu && openmenu == menu ) then return end
@@ -150,14 +150,14 @@ function PANEL:GetChild( num )
 	return self:GetCanvas():GetChildren()[ num ]
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
 	local w = self:GetMinimumWidth()
 
 	-- Find the widest one
 	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
 
-		pnl:PerformLayout()
+		pnl:InvalidateLayout( true )
 		w = math.max( w, pnl:GetWide() )
 
 	end
@@ -182,7 +182,7 @@ function PANEL:PerformLayout()
 
 	derma.SkinHook( "Layout", "Menu", self )
 
-	DScrollPanel.PerformLayout( self )
+	DScrollPanel.PerformLayout( self, w, h )
 
 end
 
@@ -207,7 +207,7 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 		OwnerWidth, OwnerHeight = ownerpanel:GetSize()
 	end
 
-	self:PerformLayout()
+	self:InvalidateLayout( true )
 
 	local w = self:GetWide()
 	local h = self:GetTall()

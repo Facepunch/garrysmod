@@ -28,3 +28,6 @@ AddCSLuaFile( "sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/game
 AddCSLuaFile( "sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/npcs.lua" )
 AddCSLuaFile( "sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/postprocess.lua" )
 AddCSLuaFile( "sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/weapons.lua" )
+AddCSLuaFile( "sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/vehicles.lua" )
+AddCSLuaFile( "sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/saves.lua" )
+AddCSLuaFile( "sandbox/gamemode/spawnmenu/creationmenu/content/contenttypes/dupes.lua" )

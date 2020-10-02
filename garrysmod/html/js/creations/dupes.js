@@ -15,19 +15,23 @@ function CDupes( $scope, $timeout, $location )
 	CreationScope		= $scope;
 	CreationLocation	= $location;
 
-	CreationScope.DupeDisabled = "disabled";
+	CreationScope.MyCategories =
+	[
+		"local",
+		"subscribed_ugc",
+		//"favorites_ugc"
+	];
 
 	CreationScope.Categories =
 	[
 		"trending",
 		"popular",
-		"latest",
-		"friends",
+		"latest"
 	];
 
-	CreationScope.SimpleCategories =
+	CreationScope.CategoriesSecondary =
 	[
-		"local",
+		"friends",
 		"mine"
 	];
 
@@ -40,6 +44,8 @@ function CDupes( $scope, $timeout, $location )
 		"buildings",
 		"others"
 	];
+
+	CreationScope.DupeDisabled = "disabled";
 
 	$scope.IfElse = function ( b, a, c )
 	{
@@ -74,6 +80,23 @@ function SetDupeSaveState( b )
 //
 function ShowLocalDupes()
 {
-	CreationLocation.path( "/list/local//" ); // Lolz, hackz
+	// No extra slash at the end so its always different from the real path and thus a redirection will always happen
+	CreationLocation.path( "/list/local/" );
+
 	CreationScope.$apply();
+}
+
+
+function WindowResized()
+{
+	// dupe is from control.Dupes.js
+	dupe.RefreshDimensions();
+	dupe.UpdatePageNav();
+
+	// Refresh HTML
+	dupe.DigestUpdate = setTimeout( function()
+	{
+		self.DigestUpdate = 0;
+		Scope.Go( 0 );
+	}, 500 )
 }

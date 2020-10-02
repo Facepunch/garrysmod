@@ -64,7 +64,7 @@ function PANEL:SetExpanded( bExpand )
 end
 
 function PANEL:Clear()
-
+	self:Root():Clear()
 end
 
 function PANEL:Paint( w, h )

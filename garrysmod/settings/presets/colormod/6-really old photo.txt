@@ -1,0 +1,13 @@
+"Really Old Photo"
+{
+	"pp_colormod"		"1"
+	"pp_colormod_addb"		"0"
+	"pp_colormod_addg"		"95"
+	"pp_colormod_addr"		"102"
+	"pp_colormod_brightness"		"-1.710000"
+	"pp_colormod_color"		"0.070000"
+	"pp_colormod_contrast"		"2.550000"
+	"pp_colormod_mulb"		"0"
+	"pp_colormod_mulg"		"0"
+	"pp_colormod_mulr"		"0"
+}

@@ -33,6 +33,15 @@ function GetForEdit( list )
 end
 
 --
+--	Get all list names
+--
+function GetTable()
+
+	return table.GetKeys( g_Lists )
+
+end
+
+--
 --	Set a key value
 --
 function Set( list, key, value )
@@ -42,9 +51,8 @@ function Set( list, key, value )
 
 end
 
-
 --
---   Add a value to a list
+--	Add a value to a list
 --
 function Add( list, value )
 
@@ -68,5 +76,15 @@ function Contains( list, value )
 	end
 
 	return false
+
+end
+
+--
+--	Returns true if the list has an entry
+--
+function HasEntry( list, key )
+
+	if ( !g_Lists[ list ] ) then return false end
+	return g_Lists[ list ][ key ] ~= nil
 
 end

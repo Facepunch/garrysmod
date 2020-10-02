@@ -65,6 +65,11 @@ function PANEL:SetImageColor( color )
 	-- RETIRED
 end
 
+function PANEL:SetEnabled( b )
+	self.Knob:SetEnabled( b )
+	FindMetaTable( "Panel" ).SetEnabled( self, b ) -- There has to be a better way!
+end
+
 function PANEL:OnCursorMoved( x, y )
 
 	if ( !self.Dragging && !self.Knob.Depressed ) then return end
@@ -106,6 +111,11 @@ end
 
 function PANEL:OnMousePressed( mcode )
 
+	if ( !self:IsEnabled() ) then return true end
+
+	-- When starting dragging with not pressing on the knob.
+	self.Knob.Hovered = true
+
 	self:SetDragging( true )
 	self:MouseCapture( true )
 
@@ -115,6 +125,9 @@ function PANEL:OnMousePressed( mcode )
 end
 
 function PANEL:OnMouseReleased( mcode )
+
+	-- This is a hack. Panel.Hovered is not updated when dragging a panel (Source's dragging, not Lua Drag'n'drop)
+	self.Knob.Hovered = vgui.GetHoveredPanel() == self.Knob
 
 	self:SetDragging( false )
 	self:MouseCapture( false )

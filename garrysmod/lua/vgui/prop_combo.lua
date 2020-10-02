@@ -51,6 +51,14 @@ function PANEL:Setup( vars )
 		combo:ChooseOptionID( id )
 	end
 
+	-- Enabled/disabled support
+	self.IsEnabled = function( self )
+		return combo:IsEnabled()
+	end
+	self.SetEnabled = function( self, b )
+		combo:SetEnabled( b )
+	end
+
 end
 
 derma.DefineControl( "DProperty_Combo", "", PANEL, "DProperty_Generic" )

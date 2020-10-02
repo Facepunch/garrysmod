@@ -2,6 +2,7 @@
 local function AddRecursive( pnl, folder, path, wildcard )
 
 	local files, folders = file.Find( folder .. "*", path )
+	if ( !files ) then MsgN( "Warning! Not opening '" .. folder .. "' because we cannot search in it!"  ) return end
 
 	for k, v in pairs( files ) do
 
@@ -26,6 +27,7 @@ hook.Add( "PopulateContent", "AddonProps", function( pnlContent, tree, node )
 
 	local ViewPanel = vgui.Create( "ContentContainer", pnlContent )
 	ViewPanel:SetVisible( false )
+	ViewPanel.IconList:SetReadOnly( true )
 
 	local MyNode = node:AddNode( "#spawnmenu.category.addons", "icon16/folder_database.png" )
 

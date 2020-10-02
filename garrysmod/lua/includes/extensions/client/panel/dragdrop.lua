@@ -1,4 +1,5 @@
-if SERVER then return end
+
+if ( SERVER ) then return end
 
 --[[
 
@@ -254,7 +255,7 @@ hook.Add( "DrawOverlay", "DragNDropPaint", function()
 
 	end
 
-	DisableClipping( true )
+	local wasEnabled = DisableClipping( true )
 
 		local Alpha = 0.7
 		if ( IsValid( dragndrop.m_Hovered ) ) then Alpha = 0.8 end
@@ -282,7 +283,7 @@ hook.Add( "DrawOverlay", "DragNDropPaint", function()
 
 		surface.SetAlphaMultiplier( 1.0 )
 
-	DisableClipping( false )
+	DisableClipping( wasEnabled )
 
 end )
 hook.Add( "Think", "DragNDropThink", dragndrop.Think )
@@ -417,7 +418,7 @@ end
 function meta:DragMousePress( mcode )
 
 	if ( IsValid( dragndrop.m_DropMenu ) ) then return end
-	if ( dragndrop.IsDragging() ) then return end
+	if ( dragndrop.IsDragging() ) then dragndrop.StopDragging() return end
 
 	if ( IsValid( self.m_pDragParent ) ) then
 		return self.m_pDragParent:DragMousePress( mcode )
@@ -456,13 +457,6 @@ function meta:DragMouseRelease( mcode )
 	if ( !dragndrop.IsDragging() ) then
 		dragndrop.Clear()
 		return false
-	end
-
-	for k, v in pairs( dragndrop.m_Dragging ) do
-
-		if ( !IsValid( v ) ) then continue end
-		v:OnStopDragging()
-
 	end
 
 	dragndrop.Drop()

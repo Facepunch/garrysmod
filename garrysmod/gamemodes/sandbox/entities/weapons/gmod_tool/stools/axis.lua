@@ -146,12 +146,10 @@ function TOOL:RightClick( trace )
 		local WPos2 = self:GetPos( 2 )
 
 		-- Note: To keep stuff ragdoll friendly try to treat things as physics objects rather than entities
-		local Ang1, Ang2 = Norm1:Angle(), ( -Norm2 ):Angle()
-		local TargetAngle = Phys1:AlignAngles( Ang1, Ang2 )
+		--local Ang1, Ang2 = Norm1:Angle(), ( -Norm2 ):Angle()
+		--local TargetAngle = Phys1:AlignAngles( Ang1, Ang2 )
 
 		--Phys1:SetAngles( TargetAngle )
-
-		local TargetPos = WPos2 + ( Phys1:GetPos() - self:GetPos( 1 ) ) + ( Norm2 * 0.2 )
 
 		Phys1:Wake()
 
@@ -215,6 +213,6 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "axis_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
 	CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "axis_torquelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
 	CPanel:AddControl( "Slider", { Label = "#tool.hingefriction", Command = "axis_hingefriction", Type = "Float", Min = 0, Max = 200, Help = true } )
-	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "axis_nocollide" } )
+	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "axis_nocollide", Help = true } )
 
 end

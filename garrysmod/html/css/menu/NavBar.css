@@ -16,7 +16,7 @@
 	padding: 0;
 }
 
-#NavBar .left 
+#NavBar .left
 {
 	text-align: left;
 	margin-left: 10px;
@@ -26,7 +26,7 @@
 	padding: 0;
 }
 
-#NavBar .right 
+#NavBar .right
 {
 	float: right;
 	text-align: right;
@@ -38,7 +38,26 @@
 	padding: 0;
 }
 
-#NavBar UL.center 
+#NavBar .smallicon
+{
+	width: 40px;
+	padding: 0;
+	text-align: center;
+}
+
+#NavBar .smallicon img
+{
+	margin-top: 7px;
+	margin-left: 7px;
+}
+
+#NavBar .bigicon img
+{
+	margin-top: -1px;
+	margin-left: -1px;
+}
+
+#NavBar UL.center
 {
 	text-align: center;
 	left: 0;
@@ -101,7 +120,7 @@
 {
 	color: #333;
 	position: relative;
-	top: 11px;
+	top: 13px;
 	padding-left: 8px;
 	padding-right: 16px;
 }

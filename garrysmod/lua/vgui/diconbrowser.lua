@@ -1,6 +1,4 @@
 
-local local_IconList = nil
-
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_strSelectedIcon",		"SelectedIcon" )
@@ -42,6 +40,9 @@ function PANEL:Init()
 
 end
 
+local local_IconList = nil
+local local_IconList_Split = 0
+
 function PANEL:Fill()
 
 	self.Filled = true
@@ -49,6 +50,8 @@ function PANEL:Fill()
 
 	if ( !local_IconList ) then
 		local_IconList = file.Find( "materials/icon16/*.png", "MOD" )
+		local_IconList_Split = #local_IconList
+		table.Add( local_IconList, file.Find( "materials/games/16/*.png", "MOD" ) )
 	end
 
 	for k, v in SortedPairs( local_IconList ) do
@@ -60,7 +63,11 @@ function PANEL:Fill()
 
 			local btn = self.IconLayout:Add( "DImageButton" )
 			btn.FilterText = string.lower( v )
-			btn:SetOnViewMaterial( "icon16/" .. v )
+			if ( k > local_IconList_Split ) then
+				btn:SetOnViewMaterial( "games/16/" .. v )
+			else
+				btn:SetOnViewMaterial( "icon16/" .. v )
+			end
 			btn:SetSize( 22, 22 )
 			btn:SetPos( -22, -22 )
 			btn:SetStretchToFit( false )

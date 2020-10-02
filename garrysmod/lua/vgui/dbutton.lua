@@ -51,6 +51,27 @@ function PANEL:SetImage( img )
 end
 PANEL.SetIcon = PANEL.SetImage
 
+function PANEL:SetMaterial( mat )
+
+	if ( !mat ) then
+
+		if ( IsValid( self.m_Image ) ) then
+			self.m_Image:Remove()
+		end
+
+		return
+	end
+
+	if ( !IsValid( self.m_Image ) ) then
+		self.m_Image = vgui.Create( "DImage", self )
+	end
+
+	self.m_Image:SetMaterial( mat )
+	self.m_Image:SizeToContents()
+	self:InvalidateLayout()
+
+end
+
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "Button", self, w, h )
@@ -72,7 +93,7 @@ function PANEL:UpdateColours( skin )
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
 	--
 	-- If we have an image we have to place the image on the left
@@ -87,7 +108,7 @@ function PANEL:PerformLayout()
 
 	end
 
-	DLabel.PerformLayout( self )
+	DLabel.PerformLayout( self, w, h )
 
 end
 

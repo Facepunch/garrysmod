@@ -6,8 +6,6 @@ ENT.Spawnable = false
 ENT.AdminOnly = false
 ENT.Editable = true
 
-local matBone = Material( "widgets/bone.png", "unlitsmooth" )
-
 function ENT:SetupDataTables()
 
 	--
@@ -86,7 +84,7 @@ function ENT:PhysicsUpdate( physobj )
 	if ( self:IsPlayerHolding() ) then return end
 	if ( self:IsConstrained() ) then return end
 
-	physobj:SetVelocity( Vector( 0, 0, 0 ) )
+	physobj:SetVelocity( vector_origin )
 	physobj:Sleep()
 
 end
@@ -122,7 +120,6 @@ function ENT:Draw()
 
 end
 
-
 function ENT:DrawDebug( ragdoll, controller, pos, ang, rotation, scale, center, changed_sensor )
 
 	local UpdateTime = 0.1
@@ -134,7 +131,7 @@ function ENT:DrawDebug( ragdoll, controller, pos, ang, rotation, scale, center, 
 
 	center = center
 
-	local col_bone = Color( 255, 255, 255, 255 )
+	local col_bone = color_white
 	local col_point = Color( 255, 0, 0, 255 )
 	local col_tran_bn = Color( 0, 255, 0, 255 )
 
@@ -300,7 +297,7 @@ function ENT:SetRagdoll( ragdoll )
 		--
 		-- Makes the physics objects follow the set bone positions
 		--
-		ragdoll:RagdollUpdatePhysics( i )
+		ragdoll:RagdollUpdatePhysics()
 
 	end )
 

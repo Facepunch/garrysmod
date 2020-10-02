@@ -36,11 +36,12 @@ end
 
 function PANEL:PerformLayout()
 
-	if ( self.Contents ) then
+	if ( IsValid( self.Contents ) ) then
 
 		self:SetWide( self.Contents:GetWide() + 8 )
 		self:SetTall( self.Contents:GetTall() + 8 )
 		self.Contents:SetPos( 4, 4 )
+		self.Contents:SetVisible( true )
 
 	else
 
@@ -66,11 +67,11 @@ end
 function PANEL:PositionTooltip()
 
 	if ( !IsValid( self.TargetPanel ) ) then
-		self:Remove()
+		self:Close()
 		return
 	end
 
-	self:PerformLayout()
+	self:InvalidateLayout( true )
 
 	local x, y = input.GetCursorPos()
 	local w, h = self:GetSize()
@@ -99,6 +100,9 @@ function PANEL:OpenForPanel( panel )
 	self.TargetPanel = panel
 	self:PositionTooltip()
 
+	-- Use the parent panel's skin
+	self:SetSkin( panel:GetSkin().Name )
+
 	if ( tooltip_delay:GetFloat() > 0 ) then
 
 		self:SetVisible( false )
@@ -117,7 +121,7 @@ end
 
 function PANEL:Close()
 
-	if ( !self.DeleteContentsOnClose && self.Contents ) then
+	if ( !self.DeleteContentsOnClose && IsValid( self.Contents ) ) then
 
 		self.Contents:SetVisible( false )
 		self.Contents:SetParent( nil )

@@ -20,18 +20,14 @@ function ENT:SetNetworkedBonePosition( i, Pos, Angle )
 
 end
 
-function ENT:Draw()
+function ENT:Draw( flags )
 
 	-- Don't draw it if we're a ragdoll and haven't
 	-- received all of the bone positions yet.
-	if ( self:GetModelPhysBoneCount() > 1 ) then
-
-		if ( !self:GetNWVector( "Vector0", false ) ) then
-			return
-		end
-
+	if ( self:GetModelPhysBoneCount() > 1 and !self:GetNWVector( "Vector0", false ) ) then
+		return
 	end
 
-	BaseClass.Draw( self )
+	BaseClass.Draw( self, flags )
 
 end

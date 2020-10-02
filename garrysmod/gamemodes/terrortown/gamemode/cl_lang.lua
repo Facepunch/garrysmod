@@ -240,7 +240,7 @@ end
 
 -- Set a style by name or directly as style-function
 function LANG.SetStyle(name, style)
-   if type(style) == "string" then
+   if isstring(style) then
       style = LANG.Styles[style]
    end
 
@@ -259,17 +259,17 @@ function LANG.ProcessMsg(name, params)
    if params then
       -- some of our params may be string names themselves
       for k, v in pairs(params) do
-         if type(v) == "string" then
+         if isstring(v) then
             local name = LANG.GetNameParam(v)
             if not name then continue end
 
             params[k] = LANG.GetTranslation(name)
          end
       end
-      
+
       text = interp(raw, params)
    end
-   
+
    LANG.ShowStyledMsg(text, LANG.GetStyle(name))
 end
 
@@ -293,7 +293,7 @@ local styledmessages = {
       "buy_no_stock",
       "buy_pending",
       "buy_received",
-      
+
       "xfer_no_recip",
       "xfer_no_credits",
       "xfer_success",
@@ -344,7 +344,7 @@ local styledmessages = {
 
 local set_style = LANG.SetStyle
 for style, msgs in pairs(styledmessages) do
-   for _, name in pairs(msgs) do
+   for _, name in ipairs(msgs) do
       set_style(name, style)
    end
 end

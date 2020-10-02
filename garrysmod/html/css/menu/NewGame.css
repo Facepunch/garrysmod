@@ -105,6 +105,7 @@ gamesettings bottom button
 	position: absolute;
 	margin: 10px;
 	font-size: 20px;
+	width: 77%;
 }
 
 gamesettings select
@@ -197,14 +198,14 @@ gamesettings .control input[type=text]
 
 gamesettings .control-numeric
 {
-	height: 20px;
+	/*height: 20px;*/
 	overflow: hidden;
 	margin-top: 4px;
 }
 
 gamesettings .control-numeric input[type=text]
 {
-	width: 50px;
+	width: 44px;
 	margin-right: 8px;
 	padding: 2px;
 	float: right;
@@ -218,6 +219,8 @@ gamesettings .control-numeric input[type=text]
 	left: 0;
 	right: 0;
 	padding: 4px;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 .controls UL

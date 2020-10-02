@@ -5,69 +5,143 @@ AccessorFunc( PANEL, "m_strType", "Type" )
 AccessorFunc( PANEL, "m_ConVars", "ConVars" )
 AccessorFunc( PANEL, "m_PresetControl", "PresetControl" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
-	-- This needs to be drawn on top of the spawn menu..
-	self:SetDrawOnTop( true )
-
 	self:SetSize( 450, 350 )
-	self:SetTitle( "Preset Editor" )
+	self:SetMinWidth( 450 )
+	self:SetMinHeight( 350 )
+	self:SetSizable( true )
+	self:SetTitle( "#preset.editor" )
+	self:DockPadding( 6, 29, 6, 6 )
 
-	self.PresetList = vgui.Create( "DListBox", self )
+	local pnlTop = vgui.Create( "Panel", self )
+	pnlTop:Dock( FILL )
+	pnlTop:DockMargin( 0, 0, 0, 5 )
 
-	self.pnlEditor = vgui.Create( "DPanel", self )
+	self.PresetList = vgui.Create( "DListView", pnlTop )
+	self.PresetList:Dock( LEFT )
+	self.PresetList:DockMargin( 0, 0, 5, 0 )
+	self.PresetList:SetWide( 150 )
+	self.PresetList:SetMultiSelect( false )
+	self.PresetList:SetSortable( false )
+	self.PresetList.OnRowSelected = function( s, idx, pnl ) self:OnPresetSelected( pnl ) end
 
-	self.pnlDetails = vgui.Create( "DPanel", self.pnlEditor )
+	local pnlEditor = vgui.Create( "DPanel", pnlTop )
+	pnlEditor:Dock( FILL )
 
-	self.pnlModify = vgui.Create( "DPanel", self.pnlEditor )
+	self.pnlDetails = vgui.Create( "DProperties", pnlEditor )
+	self.pnlDetails:Dock( FILL )
+	self.pnlDetails:DockMargin( 5, 5, 5, 5 )
 
-	-- TODO: ICON!
-	self.btnDelete = vgui.Create( "DButton", self.pnlModify )
-	self.btnDelete.DoClick = function() self:Delete() end
-	self.btnDelete:SetText( "#Delete" )
+	----------
 
-	self.txtRename = vgui.Create( "DTextEntry", self.pnlModify )
+	local pnlModify = vgui.Create( "Panel", pnlEditor )
+	pnlModify:Dock( BOTTOM )
+	pnlModify:SetTall( 20 )
+	pnlModify:DockMargin( 5, 0, 5, 5 )
 
-	self.btnRename = vgui.Create( "DButton", self.pnlModify )
-	self.btnRename:SetText( "#Rename" )
-	self.btnRename.DoClick = function() self:Rename() end
+	local btnDelete = vgui.Create( "DButton", pnlModify )
+	btnDelete.DoClick = function() self:Delete() end
+	btnDelete:SetTooltip( "#preset.delete" )
+	btnDelete:SetImage( "icon16/bin.png" )
+	btnDelete:SetText( "" )
+	btnDelete:Dock( RIGHT )
+	btnDelete:SetWide( 25 )
+	btnDelete:SetEnabled( false )
 
-	self.pnlAdd = vgui.Create( "DPanel", self )
+	self.txtRename = vgui.Create( "DTextEntry", pnlModify )
+	self.txtRename:Dock( FILL )
+	self.txtRename:SetEnabled( false )
+	self.txtRename:SetTooltip( "#preset.rename" )
+
+	local btnRename = vgui.Create( "DButton", pnlModify )
+	btnRename:SetTooltip( "#preset.save" )
+	btnRename:SetImage( "icon16/disk.png" )
+	btnRename:SetText( "" )
+	btnRename:Dock( RIGHT )
+	btnRename:DockMargin( 5, 0, 5, 0 )
+	btnRename:SetWide( 24 )
+	btnRename.DoClick = function() self:SaveChanges() end
+	btnRename:SetEnabled( false )
+
+	----------
+
+	local bottom = vgui.Create( "Panel", self )
+	bottom:Dock( BOTTOM )
+	bottom:SetTall( 30 )
+
+	self.pnlAdd = vgui.Create( "DPanel", bottom )
+	self.pnlAdd:Dock( FILL )
+	self.pnlAdd:DockPadding( 5, 5, 5, 5 )
+	self.pnlAdd:DockMargin( 0, 0, 5, 0 )
 
 	self.txtName = vgui.Create( "DTextEntry", self.pnlAdd )
+	self.txtName:SetTooltip( "#preset.addnew_field" )
+	self.txtName:Dock( FILL )
+	self.txtName:DockMargin( 0, 0, 5, 0 )
+	self.txtName.OnChange = function( s ) self.btnAdd:SetEnabled( s:GetText():Trim() != "" ) end
 
 	self.btnAdd = vgui.Create( "DButton", self.pnlAdd )
-	self.btnAdd:SetText( "#Add Preset" )
+	self.btnAdd:SetText( "#preset.addnew" )
+	self.btnAdd:Dock( RIGHT )
+	self.btnAdd:SetEnabled( false )
 	self.btnAdd.DoClick = function() self:Add() end
 
-	self.pnlClose = vgui.Create( "DPanel", self )
+	----------
 
-	self.btnCloseIt = vgui.Create( "DButton", self.pnlClose )
-	self.btnCloseIt:SetText( "#Close" )
-	self.btnCloseIt.DoClick = function() self:Remove() end
+	local pnlClose = vgui.Create( "DPanel", bottom )
+	pnlClose:Dock( RIGHT )
+	pnlClose:SetWide( 100 )
+	pnlClose:DockPadding( 5, 5, 5, 5 )
+
+	local btnCloseIt = vgui.Create( "DButton", pnlClose )
+	btnCloseIt:SetText( "#preset.close" )
+	btnCloseIt:Dock( FILL )
+	btnCloseIt.DoClick = function() self:Remove() end
 
 end
 
---[[---------------------------------------------------------
-	Name: SetType
------------------------------------------------------------]]
 function PANEL:SetType( strType )
+
 	self.m_strType = strType
+
+	self.PresetList:AddColumn( self:GetType() )
 	self:Update()
+
 end
 
+function PANEL:OnPresetSelected( item )
 
---[[---------------------------------------------------------
-	Name: Update
------------------------------------------------------------]]
+	local name = item:GetValue( 1 )
+
+	self.txtRename:SetText( name )
+	for id, pnl in pairs( self.txtRename:GetParent():GetChildren() ) do pnl:SetEnabled( true ) end
+
+	self.pnlDetails:Clear()
+	for cvar, val in SortedPairs( item:GetTable().Data ) do
+		local Row = self.pnlDetails:CreateRow( name, cvar )
+
+		if ( tonumber( val ) != nil && false ) then
+			Row:Setup( "Float", { min = 0, max = 1000 } )
+			Row:SetValue( val )
+		else
+			Row:Setup( "Generic" )
+		end
+
+		Row:SetValue( val )
+		Row.__Value = val
+		Row.DataChanged = function( s, value ) Row.__Value = value end
+	end
+
+end
+
 function PANEL:Update()
 
 	self.PresetList:Clear()
+	self.pnlDetails:Clear()
+	self.txtRename:SetText( "" )
 
-	local Presets = presets.GetTable( self.m_strType )
+	local Presets = presets.GetTable( self:GetType() )
 	local sortedPresets, i = {}, 1
 	for name in pairs( Presets ) do
 		sortedPresets[i] = name
@@ -76,129 +150,108 @@ function PANEL:Update()
 	table.sort( sortedPresets )
 
 	for _, name in ipairs( sortedPresets ) do
-
-		local item = self.PresetList:AddItem( name )
-		item.Data = Presets[name]
-
+		local item = self.PresetList:AddLine( name )
+		item.Data = Presets[ name ]
 	end
 
 end
 
---[[---------------------------------------------------------
-	Name: PerformLayout
------------------------------------------------------------]]
-function PANEL:PerformLayout()
+function PANEL:SelectPresetByName( name )
 
-	DFrame.PerformLayout( self )
-
-	self.pnlClose:SetSize( 100, 30 )
-	self.pnlClose:AlignRight( 10 )
-	self.pnlClose:AlignBottom( 10 )
-	self.btnCloseIt:StretchToParent( 5, 5, 5, 5 )
-
-	self.pnlAdd:StretchToParent( 10, 10, 10, 10 )
-	self.pnlAdd:CopyHeight( self.pnlClose )
-	self.pnlAdd:AlignBottom( 10 )
-	self.pnlAdd:StretchRightTo( self.pnlClose, 10 )
-
-	self.btnAdd:SetSize( 80, 20 )
-	self.btnAdd:AlignRight( 5 )
-	self.btnAdd:CenterVertical()
-
-	self.txtName:SetPos( 5, 5 )
-	self.txtName:StretchRightTo( self.btnAdd, 5 )
-	self.txtName:CenterVertical()
-
-	self.PresetList:StretchToParent( 10, 30, 5, 5 )
-	self.PresetList:StretchBottomTo( self.pnlAdd, 10 )
-	self.PresetList:SetWide( 130 )
-
-	self.pnlEditor:CopyBounds( self.PresetList )
-	self.pnlEditor:MoveRightOf( self.PresetList, 5 )
-	self.pnlEditor:StretchToParent( nil, nil, 10, nil )
-
-	self.pnlModify:StretchToParent( 5, 5, 5, 5 )
-	self.pnlModify:SetTall( 30 )
-	self.pnlModify:AlignBottom( 5 )
-
-	self.btnDelete:SetSize( 40, 20 )
-	self.btnDelete:AlignRight( 5 )
-	self.btnDelete:CenterVertical()
-
-	self.btnRename:SetSize( 50, 20 )
-	self.btnRename:MoveLeftOf( self.btnDelete, 5 )
-	self.btnRename:CenterVertical()
-
-	self.txtRename:StretchToParent( 5, 5, 5, 5 )
-	self.txtRename:StretchRightTo( self.btnRename, 5 )
-
-	self.pnlDetails:CopyBounds( self.pnlModify )
-	self.pnlDetails:AlignTop( 5 )
-	self.pnlDetails:StretchBottomTo( self.pnlModify, 5 )
+	for id, line in pairs( self.PresetList:GetLines() ) do
+		if ( line:GetValue( 1 ) != name ) then continue end
+		self.PresetList:SelectItem( line )
+	end
 
 end
 
 function PANEL:Delete()
 
-	local Selected = self.PresetList:GetSelectedValues()
-	if ( !Selected ) then return end
+	if ( !self.PresetList:GetSelectedLine() || !IsValid( self.PresetList:GetLine( self.PresetList:GetSelectedLine() ) ) ) then return end
 
-	presets.Remove( self.m_strType, Selected )
+	local Selected = self.PresetList:GetLine( self.PresetList:GetSelectedLine() ):GetValue( 1 ):Trim()
+	if ( Selected == "" ) then return end
+
+	presets.Remove( self:GetType(), Selected )
 	self:Update()
 
-	if ( self.m_PresetControl ) then
-		self.m_PresetControl:Update()
-	end
+	if ( self:GetPresetControl() ) then self:GetPresetControl():Update() end
 
 end
 
-function PANEL:Rename()
+function PANEL:SaveChangesInternal( Selected, ToName )
 
-	local Selected = self.PresetList:GetSelectedValues()
-	if (!Selected) then return end
+	local tabValues = {}
+	local cat = self.pnlDetails:GetCategory( Selected )
+	for k, v in pairs( self:GetConVars() ) do
+		tabValues[ v ] = cat:GetRow( v ).__Value
+	end
 
-	local ToName = self.txtRename:GetValue()
-	if ( !ToName || ToName == "" ) then return end
+	presets.Rename( self:GetType(), Selected, ToName )
+	presets.Add( self:GetType(), ToName, tabValues ) -- Update the values
 
-	-- Todo, Handle name collision
-
-	presets.Rename( self.m_strType, Selected, ToName )
 	self:Update()
 
-	self.PresetList:SelectByName( ToName )
-
 	self.txtRename:SetText( "" )
+	self:SelectPresetByName( ToName )
 
-	if ( self.m_PresetControl ) then
-		self.m_PresetControl:Update()
+	if ( self:GetPresetControl() ) then self:GetPresetControl():Update() end
+
+end
+
+function PANEL:SaveChanges()
+
+	if ( !self.PresetList:GetSelectedLine() || !IsValid( self.PresetList:GetLine( self.PresetList:GetSelectedLine() ) ) ) then return end
+
+	local Selected = self.PresetList:GetLine( self.PresetList:GetSelectedLine() ):GetValue( 1 ):Trim()
+	if ( Selected == "" ) then return end
+
+	local ToName = self.txtRename:GetValue():Trim()
+	if ( !ToName || ToName == "" ) then presets.BadNameAlert() return end
+
+	if ( presets.Exists( self:GetType(), ToName ) && Selected != ToName ) then
+		presets.OverwritePresetPrompt( function()
+			self:SaveChangesInternal( Selected, ToName )
+		end )
+		return
 	end
+
+	self:SaveChangesInternal( Selected, ToName )
+
+end
+
+function PANEL:InternalAdd( ToName )
+
+	local tabValues = {}
+	for k, v in pairs( self:GetConVars() ) do
+		tabValues[ v ] = GetConVarString( v )
+	end
+
+	presets.Add( self:GetType(), ToName, tabValues )
+	self:Update()
+
+	self.txtName:SetText( "" )
+	self:SelectPresetByName( ToName )
+
+	if ( self:GetPresetControl() ) then self:GetPresetControl():Update() end
 
 end
 
 function PANEL:Add()
 
-	if ( !self.m_ConVars ) then return end
+	if ( !self:GetConVars() ) then return end
 
-	local ToName = self.txtName:GetValue()
-	if ( !ToName || ToName == "" ) then return end
+	local ToName = self.txtName:GetValue():Trim()
+	if ( !ToName || ToName == "" ) then presets.BadNameAlert() return end
 
-	-- Todo, Handle name collision
-	local tabValues = {}
-
-	for k, v in pairs( self.m_ConVars ) do
-		tabValues[ v ] = GetConVarString( v )
+	if ( presets.Exists( self:GetType(), ToName ) ) then
+		presets.OverwritePresetPrompt( function()
+			self:InternalAdd( ToName )
+		end )
+		return
 	end
 
-	presets.Add( self.m_strType, ToName, tabValues )
-	self:Update()
-
-	self.PresetList:SelectByName( ToName )
-
-	self.txtName:SetText( "" )
-
-	if ( self.m_PresetControl ) then
-		self.m_PresetControl:Update()
-	end
+	self:InternalAdd( ToName )
 
 end
 

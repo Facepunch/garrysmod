@@ -1,0 +1,76 @@
+// Shotgun
+
+WeaponData
+{
+	// Weapon data is loaded by both the Game and Client DLLs.
+	"printname"		"#HL1_Shotgun"
+	"viewmodel"		"models/v_shotgun.mdl"
+	"playermodel"		"models/weapons/w_shotgun_hls.mdl"
+	"anim_prefix"		"shotgun"
+	"bucket"		"2"
+	"bucket_position"	"12"
+
+	"clip_size"			"8"
+	"default_clip"		"12"
+	"primary_ammo"		"BuckshotHL1"
+	"secondary_ammo"	"None"
+
+	"weight"		"15"
+	"item_flags"		"0"
+	"ITEM_FLAG_NOAUTOSWITCHEMPTY"	"1"
+
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+		"empty"			"HL1Weapons.Empty"
+		"reload"		"HL1Weapon_Shotgun.Reload"
+		"special1"		"HL1Weapon_Shotgun.Special1"
+		"single_shot"		"HL1Weapon_Shotgun.Single"
+		"double_shot"		"HL1Weapon_Shotgun.Double"
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"sprites/640hud1"
+			"x"			"0"
+			"y"			"180"
+			"width"		"170"
+			"height"	"45"
+		}
+		"weapon_s"
+		{	
+			"file"		"sprites/640hud4"
+			"x"			"0"
+			"y"			"180"
+			"width"		"170"
+			"height"	"45"
+		}
+		"ammo"
+		{
+			"file"		"sprites/640hud7"
+			"x"			"72"
+			"y"			"72"
+			"width"		"24"
+			"height"	"24"
+		}
+		"crosshair"
+		{
+			"file"		"sprites/crosshairs"
+			"x"			"48"
+			"y"			"24"
+			"width"		"24"
+			"height"	"24"
+		}
+		"autoaim"
+		{
+			"file"		"sprites/crosshairs"
+			"x"			"72"
+			"y"			"72"
+			"width"		"24"
+			"height"	"24"
+		}
+	}
+}

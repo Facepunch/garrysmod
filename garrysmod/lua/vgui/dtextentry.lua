@@ -18,6 +18,9 @@ AccessorFunc( PANEL, "m_colText", "TextColor" )
 AccessorFunc( PANEL, "m_colHighlight", "HighlightColor" )
 AccessorFunc( PANEL, "m_colCursor", "CursorColor" )
 
+AccessorFunc( PANEL, "m_colPlaceholder", "PlaceholderColor" )
+AccessorFunc( PANEL, "m_txtPlaceholder", "PlaceholderText" )
+
 Derma_Install_Convar_Functions( PANEL )
 
 function PANEL:Init()
@@ -73,7 +76,7 @@ function PANEL:OnKeyCodeTyped( code )
 		end
 
 		self:FocusNext()
-		self:OnEnter()
+		self:OnEnter( self:GetText() )
 		self.HistoryPos = 0
 
 	end
@@ -108,6 +111,12 @@ end
 function PANEL:GetTextColor()
 
 	return self.m_colText || self:GetSkin().colTextEntryText
+
+end
+
+function PANEL:GetPlaceholderColor()
+
+	return self.m_colPlaceholder || self:GetSkin().colTextEntryTextPlaceholder
 
 end
 
@@ -228,7 +237,7 @@ function PANEL:Think()
 
 end
 
-function PANEL:OnEnter()
+function PANEL:OnEnter( val )
 
 	-- For override
 	self:UpdateConvarValue()
@@ -340,7 +349,9 @@ end
 
 function PANEL:OnMousePressed( mcode )
 
-	self:OnGetFocus()
+	if ( mcode == MOUSE_LEFT ) then
+		self:OnGetFocus()
+	end
 
 end
 

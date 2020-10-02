@@ -3,14 +3,13 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Dynamite"
-ENT.RenderGroup = RENDERGROUP_BOTH
 ENT.Editable = true
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Bool", 0, "ShouldRemove", { KeyName = "sr", Edit = { type = "Boolean", order = 1 } } )
-	self:NetworkVar( "Float", 0, "Damage", { KeyName = "force", Edit = { type = "Float", order = 2, min = 0, max = 500 } } )
-	self:NetworkVar( "Float", 1, "Delay", { KeyName = "delay", Edit = { type = "Float", order = 3, min = 0, max = 10 } } )
+	self:NetworkVar( "Bool", 0, "ShouldRemove", { KeyName = "sr", Edit = { type = "Boolean", order = 1, title = "#tool.dynamite.remove" } } )
+	self:NetworkVar( "Float", 0, "Damage", { KeyName = "force", Edit = { type = "Float", order = 2, min = 0, max = 500, title = "#tool.dynamite.damage" } } )
+	self:NetworkVar( "Float", 1, "Delay", { KeyName = "delay", Edit = { type = "Float", order = 3, min = 0, max = 10, title = "#tool.dynamite.delay" } } )
 
 end
 
@@ -32,9 +31,8 @@ end
 
 function ENT:GetOverlayText()
 
-	local txt = "Damage: " .. math.floor( math.Clamp( self:GetDamage(), 0, 1500 ) )
+	local txt = string.format( "Damage: %g\nDelay: %g",  math.Clamp( self:GetDamage(), 0, 1500 ), self:GetDelay() )
 
-	if ( txt == "" ) then return "" end
 	if ( game.SinglePlayer() ) then return txt end
 
 	return txt .. "\n(" .. self:GetPlayerName() .. ")"
@@ -56,7 +54,7 @@ function ENT:Explode( delay, ply )
 
 	if ( !IsValid( self ) ) then return end
 
-	ply = ply or self.Entity
+	ply = ply or self
 
 	local _delay = delay or self:GetDelay()
 

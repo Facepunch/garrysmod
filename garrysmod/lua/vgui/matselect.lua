@@ -60,6 +60,12 @@ function PANEL:AddMaterial( label, value )
 		RunConsoleCommand( self:ConVar(), value )
 	end
 
+	Mat.DoRightClick = function( button )
+		local menu = DermaMenu()
+		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( value ) end ):SetIcon( "icon16/page_copy.png" )
+		menu:Open()
+	end
+
 	-- Add the Icon us
 	self.List:AddItem( Mat )
 	table.insert( self.Controls, Mat )

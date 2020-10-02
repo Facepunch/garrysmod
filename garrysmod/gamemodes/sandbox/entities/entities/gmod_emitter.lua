@@ -3,15 +3,14 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Emitter"
-ENT.RenderGroup = RENDERGROUP_OPAQUE
 ENT.Editable = true
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Bool", 1, "On", { KeyName = "on", Edit = { type = "Boolean", order = 1 } } )
-	self:NetworkVar( "Bool", 0, "Toggle", { KeyName = "tg", Edit = { type = "Boolean", order = 1 } } )
-	self:NetworkVar( "Float", 0, "Delay", { KeyName = "dl", Edit = { type = "Float", order = 1, min = 0.01, max = 2 } } )
-	self:NetworkVar( "Float", 1, "Scale", { KeyName = "sc", Edit = { type = "Float", order = 1, min = 0, max = 6 } } )
+	self:NetworkVar( "Bool", 1, "On", { KeyName = "on", Edit = { type = "Boolean", order = 1, title = "#entedit.enabled" } } )
+	self:NetworkVar( "Bool", 0, "Toggle", { KeyName = "tg", Edit = { type = "Boolean", order = 1, title = "#tool.emitter.toggle" } } )
+	self:NetworkVar( "Float", 0, "Delay", { KeyName = "dl", Edit = { type = "Float", order = 1, min = 0.01, max = 2, title = "#tool.emitter.delay" } } )
+	self:NetworkVar( "Float", 1, "Scale", { KeyName = "sc", Edit = { type = "Float", order = 1, min = 0, max = 6, title = "#tool.emitter.scale" } } )
 	self:NetworkVar( "String", 0, "Effect" )
 
 end
@@ -35,9 +34,9 @@ function ENT:Initialize()
 
 end
 
-function ENT:Draw()
+function ENT:Draw( flags )
 
-	-- Don't draw if we
+	-- Don't draw if the player is holding Camera SWEP in their hands
 	local ply = LocalPlayer()
 	local wep = ply:GetActiveWeapon()
 
@@ -48,7 +47,7 @@ function ENT:Draw()
 
 	end
 
-	BaseClass.Draw( self )
+	BaseClass.Draw( self, flags )
 
 end
 
@@ -309,6 +308,7 @@ list.Set( "EffectType", "explosion", {
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin( pos )
+		effectdata:SetFlags( 4 )
 		util.Effect( "explosion", effectdata, true, true )
 
 	end

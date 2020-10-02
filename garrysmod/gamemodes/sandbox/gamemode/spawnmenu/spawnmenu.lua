@@ -15,14 +15,12 @@ function PANEL:Init()
 	self.HorizontalDivider:Dock( FILL )
 	self.HorizontalDivider:SetLeftWidth( ScrW() ) -- It will be automatically resized by DHorizontalDivider to account for GetRightMin/GetLeftMin
 	self.HorizontalDivider:SetDividerWidth( 6 )
-	--self.HorizontalDivider:SetCookieName( "SpawnMenuDiv" )
+	self.HorizontalDivider:SetCookieName( "SpawnMenuDiv" )
+	self.HorizontalDivider:SetRightMin( 300 )
+	if ( ScrW() >= 1024 ) then self.HorizontalDivider:SetRightMin( 460 ) end
 
 	self.ToolMenu = vgui.Create( "ToolMenu", self.HorizontalDivider )
 	self.HorizontalDivider:SetRight( self.ToolMenu )
-	self.HorizontalDivider:SetRightMin( 390 )
-	if ( ScrW() > 1280 ) then
-		self.HorizontalDivider:SetRightMin( 460 )
-	end
 
 	self.CreateMenu = vgui.Create( "CreationMenu", self.HorizontalDivider )
 	self.HorizontalDivider:SetLeft( self.CreateMenu )
@@ -99,7 +97,7 @@ function PANEL:Open()
 	self.m_bHangOpen = false
 
 	-- If the context menu is open, try to close it..
-	if ( g_ContextMenu:IsVisible() ) then
+	if ( IsValid( g_ContextMenu ) && g_ContextMenu:IsVisible() ) then
 		g_ContextMenu:Close( true )
 	end
 
@@ -114,6 +112,12 @@ function PANEL:Open()
 	self:SetAlpha( 255 )
 
 	achievements.SpawnMenuOpen()
+
+	if ( IsValid( self.StartupTool ) && self.StartupTool.Name ) then
+		self.StartupTool:SetSelected( true )
+		spawnmenu.ActivateTool( self.StartupTool.Name, true )
+		self.StartupTool = nil
+	end
 
 end
 
@@ -141,6 +145,12 @@ function PANEL:PerformLayout()
 
 	local MarginX = math.Clamp( ( ScrW() - 1024 ) * spawnmenu_border:GetFloat(), 25, 256 )
 	local MarginY = math.Clamp( ( ScrH() - 768 ) * spawnmenu_border:GetFloat(), 25, 256 )
+
+	-- At this size we can't spare any space for emptiness
+	if ( ScrW() < 1024 || ScrH() < 768 ) then
+		MarginX = 0
+		MarginY = 0
+	end
 
 	self:DockPadding( 0, 0, 0, 0 )
 	self.HorizontalDivider:DockMargin( MarginX, MarginY, MarginX, MarginY )
@@ -173,13 +183,15 @@ vgui.Register( "SpawnMenu", PANEL, "EditablePanel" )
 -----------------------------------------------------------]]
 local function CreateSpawnMenu()
 
+	if ( !hook.Run( "SpawnMenuEnabled" ) ) then return end
+
 	-- If we have an old spawn menu remove it.
 	if ( IsValid( g_SpawnMenu ) ) then
-
 		g_SpawnMenu:Remove()
 		g_SpawnMenu = nil
-
 	end
+
+	hook.Run( "PreReloadToolsMenu" )
 
 	-- Start Fresh
 	spawnmenu.ClearToolMenus()
@@ -205,7 +217,11 @@ local function CreateSpawnMenu()
 	hook.Run( "PopulateToolMenu" )
 
 	g_SpawnMenu = vgui.Create( "SpawnMenu" )
-	g_SpawnMenu:SetVisible( false )
+
+	if ( IsValid( g_SpawnMenu ) ) then
+		g_SpawnMenu:SetVisible( false )
+		hook.Run( "SpawnMenuCreated", g_SpawnMenu )
+	end
 
 	CreateContextMenu()
 
@@ -219,20 +235,21 @@ concommand.Add( "spawnmenu_reload", CreateSpawnMenu )
 function GM:OnSpawnMenuOpen()
 
 	-- Let the gamemode decide whether we should open or not..
-	if ( !hook.Run( "SpawnMenuOpen" ) ) then return end
+	if ( !hook.Call( "SpawnMenuOpen", self ) ) then return end
 
 	if ( IsValid( g_SpawnMenu ) ) then
-
 		g_SpawnMenu:Open()
 		menubar.ParentTo( g_SpawnMenu )
-
 	end
+
+	hook.Call( "SpawnMenuOpened", self )
 
 end
 
 function GM:OnSpawnMenuClose()
 
 	if ( IsValid( g_SpawnMenu ) ) then g_SpawnMenu:Close() end
+	hook.Call( "SpawnMenuClosed", self )
 
 end
 

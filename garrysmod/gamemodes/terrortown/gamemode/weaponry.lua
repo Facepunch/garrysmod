@@ -38,7 +38,7 @@ local function GetLoadoutWeapons(r)
       };
 
       for k, w in pairs(weapons.GetList()) do
-         if w and type(w.InLoadoutFor) == "table" then
+         if w and istable(w.InLoadoutFor) then
             for _, wrole in pairs(w.InLoadoutFor) do
                table.insert(tbl[wrole], WEPS.GetClass(w))
             end
@@ -59,7 +59,7 @@ local function GiveLoadoutWeapons(ply)
    if not weps then return end
 
    for _, cls in pairs(weps) do
-      if not ply:HasWeapon(cls) then
+      if not ply:HasWeapon(cls) and ply:CanCarryType(WEPS.TypeForWeapon(cls)) then
          ply:Give(cls)
       end
    end
@@ -74,7 +74,7 @@ local function HasLoadoutWeapons(ply)
 
 
    for _, cls in pairs(weps) do
-      if not ply:HasWeapon(cls) then
+      if not ply:HasWeapon(cls) and ply:CanCarryType(WEPS.TypeForWeapon(cls)) then
          return false
       end
    end
@@ -132,8 +132,8 @@ end
 -- calling this function is used to get them the weapons anyway as soon as
 -- possible.
 local function LateLoadout(id)
-   local ply = player.GetByID(id)
-   if not IsValid(ply) then
+   local ply = Entity(id)
+   if not IsValid(ply) or not ply:IsPlayer() then
       timer.Remove("lateloadout" .. id)
       return
    end
@@ -170,28 +170,10 @@ function GM:PlayerLoadout( ply )
 end
 
 function GM:UpdatePlayerLoadouts()
-   for k, v in pairs(player.GetAll()) do
-      GAMEMODE:PlayerLoadout(v)
+   for _, ply in ipairs(player.GetAll()) do
+      hook.Call("PlayerLoadout", GAMEMODE, ply)
    end
 end
-
----- Weapon switching
-local function ForceWeaponSwitch(ply, cmd, args)
-   if not ply:IsPlayer() or not args[1] then return end
-   -- Turns out even SelectWeapon refuses to switch to empty guns, gah.
-   -- Worked around it by giving every weapon a single Clip2 round.
-   -- Works because no weapon uses those.
-   local wepname = args[1]
-   local wep = ply:GetWeapon(wepname)
-   if IsValid(wep) then
-      -- Weapons apparently not guaranteed to have this
-      if wep.SetClip2 then
-         wep:SetClip2(1)
-      end
-      ply:SelectWeapon(wepname)
-   end
-end
-concommand.Add("wepswitch", ForceWeaponSwitch)
 
 ---- Weapon dropping
 
@@ -238,7 +220,7 @@ local function DropActiveWeapon(ply)
       return
    end
 
-   ply:AnimPerformGesture(ACT_ITEM_PLACE)
+   ply:AnimPerformGesture(ACT_GMOD_GESTURE_ITEM_PLACE)
 
    WEPS.DropNotifiedWeapon(ply, wep)
 end
@@ -266,10 +248,10 @@ local function DropActiveAmmo(ply)
 
    wep:SetClip1(0)
 
-   ply:AnimPerformGesture(ACT_ITEM_GIVE)
+   ply:AnimPerformGesture(ACT_GMOD_GESTURE_ITEM_GIVE)
 
    local box = ents.Create(wep.AmmoEnt)
-   if not IsValid(box) then box:Remove() end
+   if not IsValid(box) then return end
 
    box:SetPos(pos + dir)
    box:SetOwner(ply)
@@ -334,6 +316,11 @@ local function HasPendingOrder(ply)
    return timer.Exists("give_equipment" .. tostring(ply:SteamID()))
 end
 
+function GM:TTTCanOrderEquipment(ply, id, is_item)
+   --- return true to allow buying of an equipment item, false to disallow
+   return true
+end
+
 -- Equipment buying
 local function OrderEquipment(ply, cmd, args)
    if not IsValid(ply) or #args != 1 then return end
@@ -346,6 +333,8 @@ local function OrderEquipment(ply, cmd, args)
    -- it's an item if the arg is an id instead of an ent name
    local id = args[1]
    local is_item = tonumber(id)
+   
+   if not hook.Run("TTTCanOrderEquipment", ply, id, is_item) then return end
 
    -- we use weapons.GetStored to save time on an unnecessary copy, we will not
    -- be modifying it

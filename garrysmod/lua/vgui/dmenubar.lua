@@ -87,14 +87,20 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = pnl:Add( ClassName )
 	local m = ctrl:AddMenu( "File" )
-	m:AddOption( "New", function() Msg( "Chose New\n" ) end )
-	m:AddOption( "File", function() Msg( "Chose File\n" ) end )
-	m:AddOption( "Exit", function() Msg( "Chose Exit\n" ) end )
+	m:AddOption( "New", function() MsgN( "Chose New" ) end )
+	m:AddOption( "File", function() MsgN( "Chose File" ) end )
+	m:AddOption( "Exit", function() MsgN( "Chose Exit" ) end )
 
-	local m = ctrl:AddMenu( "Edit" )
-	m:AddOption( "Copy", function() Msg( "Chose Copy\n" ) end )
-	m:AddOption( "Paste", function() Msg( "Chose Paste\n" ) end )
-	m:AddOption( "Blah", function() Msg( "Chose Blah\n" ) end )
+	local m2 = ctrl:AddMenu( "Edit" )
+	m2:AddOption( "Copy", function() MsgN( "Chose Copy" ) end )
+	m2:AddOption( "Paste", function() MsgN( "Chose Paste" ) end )
+	m2:AddOption( "Blah", function() MsgN( "Chose Blah" ) end )
+
+	local sub = m:AddSubMenu( "Sub Menu" )
+	sub:SetDeleteSelf( false )
+	for i = 0, 5 do
+		sub:AddOption( "Option " .. i, function() MsgN( "Chose sub menu option " .. i ) end )
+	end
 
 	PropertySheet:AddSheet( ClassName, pnl, nil, true, true )
 

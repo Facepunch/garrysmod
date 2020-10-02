@@ -386,6 +386,10 @@ function CORPSE.Create(ply, attacker, dmginfo)
 
    rag:SetPos(ply:GetPos())
    rag:SetModel(ply:GetModel())
+   rag:SetSkin(ply:GetSkin())
+   for key, value in pairs(ply:GetBodyGroups()) do
+      rag:SetBodygroup(value.id, ply:GetBodygroup(value.id))	
+   end
    rag:SetAngles(ply:GetAngles())
    rag:SetColor(ply:GetColor())
 
@@ -394,7 +398,6 @@ function CORPSE.Create(ply, attacker, dmginfo)
 
    -- nonsolid to players, but can be picked up and shot
    rag:SetCollisionGroup(rag_collide:GetBool() and COLLISION_GROUP_WEAPON or COLLISION_GROUP_DEBRIS_TRIGGER)
-   timer.Simple( 1, function() if IsValid( rag ) then rag:CollisionRulesChanged() end end )
 
    -- flag this ragdoll as being a player's
    rag.player_ragdoll = true

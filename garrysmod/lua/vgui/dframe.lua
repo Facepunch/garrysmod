@@ -8,10 +8,10 @@ AccessorFunc( PANEL, "m_bScreenLock",		"ScreenLock",		FORCE_BOOL )
 AccessorFunc( PANEL, "m_bDeleteOnClose",	"DeleteOnClose",	FORCE_BOOL )
 AccessorFunc( PANEL, "m_bPaintShadow",		"PaintShadow",		FORCE_BOOL )
 
-AccessorFunc( PANEL, "m_iMinWidth", "MinWidth" )
-AccessorFunc( PANEL, "m_iMinHeight", "MinHeight" )
+AccessorFunc( PANEL, "m_iMinWidth",			"MinWidth",			FORCE_NUMBER )
+AccessorFunc( PANEL, "m_iMinHeight",		"MinHeight",		FORCE_NUMBER )
 
-AccessorFunc( PANEL, "m_bBackgroundBlur", "BackgroundBlur", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bBackgroundBlur",	"BackgroundBlur",	FORCE_BOOL )
 
 function PANEL:Init()
 
@@ -71,6 +71,12 @@ function PANEL:ShowCloseButton( bShow )
 	self.btnClose:SetVisible( bShow )
 	self.btnMaxim:SetVisible( bShow )
 	self.btnMinim:SetVisible( bShow )
+
+end
+
+function PANEL:GetTitle()
+
+	return self.lblTitle:GetText()
 
 end
 
@@ -165,14 +171,16 @@ function PANEL:Think()
 
 	end
 
-	if ( self.Hovered && self.m_bSizable && mousex > ( self.x + self:GetWide() - 20 ) && mousey > ( self.y + self:GetTall() - 20 ) ) then
+	local screenX, screenY = self:LocalToScreen( 0, 0 )
+
+	if ( self.Hovered && self.m_bSizable && mousex > ( screenX + self:GetWide() - 20 ) && mousey > ( screenY + self:GetTall() - 20 ) ) then
 
 		self:SetCursor( "sizenwse" )
 		return
 
 	end
 
-	if ( self.Hovered && self:GetDraggable() && mousey < ( self.y + 24 ) ) then
+	if ( self.Hovered && self:GetDraggable() && mousey < ( screenY + 24 ) ) then
 		self:SetCursor( "sizeall" )
 		return
 	end
@@ -199,13 +207,15 @@ end
 
 function PANEL:OnMousePressed()
 
-	if ( self.m_bSizable && gui.MouseX() > ( self.x + self:GetWide() - 20 ) && gui.MouseY() > ( self.y + self:GetTall() - 20 ) ) then
+	local screenX, screenY = self:LocalToScreen( 0, 0 )
+
+	if ( self.m_bSizable && gui.MouseX() > ( screenX + self:GetWide() - 20 ) && gui.MouseY() > ( screenY + self:GetTall() - 20 ) ) then
 		self.Sizing = { gui.MouseX() - self:GetWide(), gui.MouseY() - self:GetTall() }
 		self:MouseCapture( true )
 		return
 	end
 
-	if ( self:GetDraggable() && gui.MouseY() < (self.y + 24) ) then
+	if ( self:GetDraggable() && gui.MouseY() < ( screenY + 24 ) ) then
 		self.Dragging = { gui.MouseX() - self.x, gui.MouseY() - self.y }
 		self:MouseCapture( true )
 		return
@@ -234,13 +244,13 @@ function PANEL:PerformLayout()
 	end
 
 	self.btnClose:SetPos( self:GetWide() - 31 - 4, 0 )
-	self.btnClose:SetSize( 31, 31 )
+	self.btnClose:SetSize( 31, 24 )
 
 	self.btnMaxim:SetPos( self:GetWide() - 31 * 2 - 4, 0 )
-	self.btnMaxim:SetSize( 31, 31 )
+	self.btnMaxim:SetSize( 31, 24 )
 
 	self.btnMinim:SetPos( self:GetWide() - 31 * 3 - 4, 0 )
-	self.btnMinim:SetSize( 31, 31 )
+	self.btnMinim:SetSize( 31, 24 )
 
 	self.lblTitle:SetPos( 8 + titlePush, 2 )
 	self.lblTitle:SetSize( self:GetWide() - 25 - titlePush, 20 )

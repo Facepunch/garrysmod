@@ -5,7 +5,7 @@ AccessorFunc( PANEL, "m_RGB", "RGB" )
 
 function PANEL:Init()
 
-	self:SetRGB( Color( 255, 255, 255 ) )
+	self:SetRGB( color_white )
 
 	self.Material = Material( "gui/colors.png" ) -- TODO: Light/Dark
 

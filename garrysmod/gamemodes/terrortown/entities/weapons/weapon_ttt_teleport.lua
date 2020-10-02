@@ -177,7 +177,7 @@ local function CanTeleportToPos(ply, pos)
 
       local blocking_plys = {}
 
-      for _, block in pairs(blockers) do
+      for _, block in ipairs(blockers) do
          if IsValid(block) then
             if block:IsPlayer() and block != ply then
                if block:IsTerror() and block:Alive() then
@@ -207,7 +207,7 @@ local function DoTeleport(ply, teleport, weapon)
       elseif block_plys and #block_plys > 0 then
          -- if blocked by player, maybe telefrag
          if ttt_telefrags:GetBool() then
-            for _, p in pairs(block_plys) do
+            for _, p in ipairs(block_plys) do
                Telefrag(p, ply, weapon)
             end
          else
@@ -260,7 +260,7 @@ local function StartTeleport(ply, teleport, weapon)
 end
 
 function SWEP:TeleportRecall()
-   local ply = self.Owner
+   local ply = self:GetOwner()
    if IsValid(ply) and ply:IsTerror() then
       local mark = self:GetTeleportMark()
       if mark then
@@ -299,7 +299,7 @@ local function CanStoreTeleportPos(ply, pos)
 end
 
 function SWEP:TeleportStore()
-   local ply = self.Owner
+   local ply = self:GetOwner()
    if IsValid(ply) and ply:IsTerror() then
 
       local allow, msg = CanStoreTeleportPos(ply, self:GetPos())
@@ -330,8 +330,8 @@ if CLIENT then
 end
 
 function SWEP:Deploy()
-   if SERVER and IsValid(self.Owner) then
-      self.Owner:DrawViewModel(false)
+   if SERVER and IsValid(self:GetOwner()) then
+      self:GetOwner():DrawViewModel(false)
    end
 
    return true

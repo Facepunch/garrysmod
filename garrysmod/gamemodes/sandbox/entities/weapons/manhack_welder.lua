@@ -24,7 +24,7 @@ SWEP.Weight				= 5
 SWEP.AutoSwitchTo		= false
 SWEP.AutoSwitchFrom		= false
 
-SWEP.PrintName			= "Manhack Gun"
+SWEP.PrintName			= "#GMOD_ManhackGun"
 SWEP.Slot				= 3
 SWEP.SlotPos			= 1
 SWEP.DrawAmmo			= false
@@ -40,7 +40,7 @@ function SWEP:Reload()
 end
 
 --[[---------------------------------------------------------
-   Think does nothing
+	Think does nothing
 -----------------------------------------------------------]]
 function SWEP:Think()
 end
@@ -50,7 +50,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:PrimaryAttack()
 
-	local tr = self.Owner:GetEyeTrace()
+	local tr = util.TraceLine( util.GetPlayerTrace( self.Owner ) )
 	--if ( tr.HitWorld ) then return end
 
 	if ( IsFirstTimePredicted() ) then
@@ -72,6 +72,8 @@ function SWEP:PrimaryAttack()
 
 	-- Make a manhack
 	local ent = ents.Create( "npc_manhack" )
+	if ( !IsValid( ent ) ) then return end
+
 	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
 	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
@@ -90,12 +92,14 @@ function SWEP:PrimaryAttack()
 
 	end
 
-	undo.Create("Manhack")
-		undo.AddEntity( weld )
-		undo.AddEntity( nocl )
-		undo.AddEntity( ent )
-		undo.SetPlayer( self.Owner )
-	undo.Finish()
+	if ( self.Owner:IsPlayer() ) then
+		undo.Create( "Manhack" )
+			undo.AddEntity( weld )
+			undo.AddEntity( nocl )
+			undo.AddEntity( ent )
+			undo.SetPlayer( self.Owner )
+		undo.Finish()
+	end
 
 end
 
@@ -104,7 +108,7 @@ end
 -----------------------------------------------------------]]
 function SWEP:SecondaryAttack()
 
-	local tr = self.Owner:GetEyeTrace()
+	local tr = util.TraceLine( util.GetPlayerTrace( self.Owner ) )
 	--if ( tr.HitWorld ) then return end
 
 	self:EmitSound( ShootSound )
@@ -126,6 +130,8 @@ function SWEP:SecondaryAttack()
 
 	-- Make a manhack
 	local ent = ents.Create( "npc_rollermine" )
+	if ( !IsValid( ent ) ) then return end
+
 	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
 	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
@@ -139,19 +145,21 @@ function SWEP:SecondaryAttack()
 
 	end
 
-	undo.Create("Rollermine")
-		undo.AddEntity( weld )
-		undo.AddEntity( nocl )
-		undo.AddEntity( ent )
-		undo.SetPlayer( self.Owner )
-	undo.Finish()
+	if ( self.Owner:IsPlayer() ) then
+		undo.Create( "Rollermine" )
+			undo.AddEntity( weld )
+			undo.AddEntity( nocl )
+			undo.AddEntity( ent )
+			undo.SetPlayer( self.Owner )
+		undo.Finish()
+	end
 
 end
 
 
 --[[---------------------------------------------------------
-   Name: ShouldDropOnDie
-   Desc: Should this weapon be dropped when its owner dies?
+	Name: ShouldDropOnDie
+	Desc: Should this weapon be dropped when its owner dies?
 -----------------------------------------------------------]]
 function SWEP:ShouldDropOnDie()
 	return false

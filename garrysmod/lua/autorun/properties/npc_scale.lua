@@ -24,10 +24,11 @@ properties.Add( "npc_bigger", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
-		if ( !self:Filter( ent, player ) ) then return false end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		ent:SetModelScale( ent:GetModelScale() * 1.25, 1 )
 
@@ -58,10 +59,11 @@ properties.Add( "npc_smaller", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
-		if ( !self:Filter( ent, player ) ) then return false end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		ent:SetModelScale( ent:GetModelScale() * 0.8, 1 )
 

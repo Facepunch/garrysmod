@@ -1,17 +1,10 @@
---=============================================================================--
---  ___  ___   _   _   _    __   _   ___ ___ __ __
--- |_ _|| __| / \ | \_/ |  / _| / \ | o \ o \\ V /
---  | | | _| | o || \_/ | ( |_n| o ||   /   / \ /
---  |_| |___||_n_||_| |_|  \__/|_n_||_|\\_|\\ |_|  2009
---
---=============================================================================--
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_iMin", 	"Min" )
-AccessorFunc( PANEL, "m_iMax", 	"Max" )
-AccessorFunc( PANEL, "m_iValue", 	"Value" )
-AccessorFunc( PANEL, "m_Color", 	"Color" )
+AccessorFunc( PANEL, "m_iMin",	"Min" )
+AccessorFunc( PANEL, "m_iMax",	"Max" )
+AccessorFunc( PANEL, "m_iValue",	"Value" )
+AccessorFunc( PANEL, "m_Color",		"Color" )
 
 --[[---------------------------------------------------------
 	Init
@@ -20,7 +13,7 @@ function PANEL:Init()
 
 	self.Label = vgui.Create( "DLabel", self )
 	self.Label:SetFont( "DefaultSmall" )
-	self.Label:SetColor( Color( 0, 0, 0 ) )
+	self.Label:SetColor( color_black )
 
 	self:SetMin( 0 )
 	self:SetMax( 1000 )
@@ -55,7 +48,7 @@ function PANEL:UpdateText()
 	if ( !self.m_iMin ) then return end
 	if ( !self.m_iValue ) then return end
 
-	local fDelta = 0;
+	local fDelta = 0
 
 	if ( self.m_iMax-self.m_iMin != 0 ) then
 		fDelta = ( self.m_iValue - self.m_iMin ) / (self.m_iMax-self.m_iMin)
@@ -93,7 +86,7 @@ end
 
 function PANEL:Paint()
 
-	local fDelta = 0;
+	local fDelta = 0
 
 	if ( self.m_iMax-self.m_iMin != 0 ) then
 		fDelta = ( self.m_iValue - self.m_iMin ) / (self.m_iMax-self.m_iMin)

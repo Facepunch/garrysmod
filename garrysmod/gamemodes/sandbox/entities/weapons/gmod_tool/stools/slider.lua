@@ -44,13 +44,13 @@ function TOOL:LeftClick( trace )
 		local constraint, rope = constraint.Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 
 		undo.Create( "Slider" )
-			undo.AddEntity( constraint )
+			if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
 			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
 
-		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
-		self:GetOwner():AddCleanup( "ropeconstraints", rope )
+		if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
+		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()
@@ -68,8 +68,6 @@ end
 function TOOL:RightClick( trace )
 
 	if ( self:GetOperation() == 1 ) then return false end
-
-	local iNum = self:NumObjects()
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
@@ -129,13 +127,13 @@ function TOOL:RightClick( trace )
 	local constraint, rope = constraint.Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 
 	undo.Create( "Slider" )
-		undo.AddEntity( constraint )
+		if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
 		if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
 		undo.SetPlayer( self:GetOwner() )
 	undo.Finish()
 
-	self:GetOwner():AddCleanup( "ropeconstraints", constraint )
-	self:GetOwner():AddCleanup( "ropeconstraints", rope )
+	if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
+	if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
 
 	-- Clear the objects so we're ready to go again
 	self:ClearObjects()

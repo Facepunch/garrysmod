@@ -42,50 +42,50 @@ if ( !sql.TableExists( "playerpdata" ) ) then
 end
 
 -- These are totally in the wrong place.
-function player.GetByUniqueID( ID )
-
-	for _, pl in pairs( player.GetAll() ) do
-
-		if ( pl:UniqueID() == ID ) then
-			return pl
+function player.GetByAccountID( ID )
+	local players = player.GetAll()
+	for i = 1, #players do
+		if ( players[i]:AccountID() == ID ) then
+			return players[i]
 		end
-
 	end
-
+	
 	return false
+end
 
+function player.GetByUniqueID( ID )
+	local players = player.GetAll()
+	for i = 1, #players do
+		if ( players[i]:UniqueID() == ID ) then
+			return players[i]
+		end
+	end
+	
+	return false
 end
 
 function player.GetBySteamID( ID )
-
 	ID = string.upper( ID )
-
-	for _, pl in pairs( player.GetAll() ) do
-
-		if ( pl:SteamID() == ID ) then
-			return pl
+	local players = player.GetAll()
+	for i = 1, #players do
+		if ( players[i]:SteamID() == ID ) then
+			return players[i]
 		end
-
 	end
-
+	
 	return false
-
 end
 
 function player.GetBySteamID64( ID )
-
 	ID = tostring( ID )
-
-	for _, pl in pairs( player.GetAll() ) do
-
-		if ( pl:SteamID64() == ID ) then
-			return pl
+	local players = player.GetAll()
+	for i = 1, #players do
+		if ( players[i]:SteamID64() == ID ) then
+			return players[i]
 		end
-
 	end
-
+	
 	return false
-
 end
 
 --[[---------------------------------------------------------
@@ -144,7 +144,7 @@ if ( CLIENT ) then
 		end
 
 		-- Turn the table into a nil so we can return easy
-		if ( table.Count( CommandList ) == 0 ) then
+		if ( table.IsEmpty( CommandList ) ) then
 
 			CommandList = nil
 
@@ -177,7 +177,7 @@ end
 function meta:SetPData( name, value )
 
 	name = Format( "%s[%s]", self:UniqueID(), name )
-	sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" )
+	return sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" ) ~= false
 
 end
 
@@ -188,7 +188,7 @@ end
 function meta:RemovePData( name )
 
 	name = Format( "%s[%s]", self:UniqueID(), name )
-	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
+	return sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) ) ~= false
 
 end
 
@@ -209,7 +209,7 @@ end
 -- Can use flashlight?
 --
 function meta:AllowFlashlight( bAble ) self.m_bFlashlight = bAble end
-function meta:CanUseFlashlight() return self.m_bFlashlight end
+function meta:CanUseFlashlight() return self.m_bFlashlight == true end
 
 -- A function to set up player hands, so coders don't have to copy all the code everytime.
 -- Call this in PlayerSpawn hook

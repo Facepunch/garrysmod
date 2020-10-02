@@ -1,0 +1,41 @@
+
+/*
+	Makes Checkboxes and Radio buttons in Awesomium look like the ones in CEF/Chrome
+*/
+
+input[ type="checkbox" ] {
+	-webkit-appearance: none;
+	width: 13px;
+	height: 13px;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTM0A1t6AAAD+0lEQVRYR82YyS8sURTG608Tw0JCSCSEEERC2FiwIMHCgoX34llriW4zjdBtXHU3QcQcQ0SIELExRcL2vPqO3Puqqk91Fzr9LH4qVfd89/v66jt0GURk3N7e0vn5OZ2dnYmgDTWoVWxubtLCwgLNz8+LoA0139FwMPD+/p6Qm5sbBqKNjQ3a2tqix8fHhKAGtV/VGKenp/T29uaJk5MTFoVCIXp4eBDZ2dmh2tpavuIetck0TpTGODo6otfXV0+gFqLJyUm6u7uL4+LigkpLSyk7O5sKCgro4OCAUJtII6E0Bjp4fn72BGohGhkZoaurqzjq6+spMzOT6e3t5WeoTaSRUBpjf3+fnp6ePIFaq9Hx8TG1t7fztaurSwdramqKM0prOASqqqriMMXFxTpYZWUltzmN0hoOnbS1telQIC8vjyKRiGiU9nDAGnB6etpmAr4VDl9yKYiEmhATExO2zhBQTQAn4+PjoiYRSmNcXl7yEiCFsYIa1EK0urpKQOrYiqr7qoa3CZgeHh7yyEigTQVToAOMxtjYmAjWKmXyVY0W/kTEh15YW1ujubk5ngQSaEONVbO+vp5UgxpVr4V8Y946sbYrYAru7+8TEovFGGhg6lWjPpTN1BnGLdzMzIy4JwKcKGpqaviKe9RCMzs7G1frBmqhsZl6Dee2ZmFnULtFfn4+bW9v6zVrdHRU1EigFhqbqddwg4OD4qEUR6WMjAymp6eHn6EWGr/fH1fvBmqhsZkijBNru0KF293dpdbWVr52dnbqYI2NjdoopeGs927AEIEqKio4TFFRkQ5WXl7Obcrov4RDJy0tLToUyM3N5UXUavTfwgFrQKzyVhOQsnBeGR4etnWGgGoCOBkaGjIlHzNcapdA/9CI5slYXl7mn3FSx1bC4TAtLS2ZEjJWVlY8a9A/NKK5F2CKT4h/gQRGSgVTwDSZRgUDWvgTER96IRaN8taEg6EE2mKxqFn6Wc3HXgy08DPgdwI28peXl4RgA49GI6aEjOinNB8fSjRPxtTUlHhaBnt7e1RXV8dX3AeDQVNCRjDornGiNDZT5zrntu5h7ZKOOzgtl5WVUU5ODhUWFvIbAnzRofG7aCSUxmbqNZzP10/X19dxNDQ0UFZWFtPX18fPfD6fKTE1/bJGQmlspt7D+bgTvATq6Ojga3d3tw7W3NwcZ5SScE6s7QqMHAJVV1dzmJKSEh0MbwHQ9s+o35SkdeQ+jDBqKhTAARNLgWTk9lWQSEk4YA2I47XVBKR95AIBv60zBFQTwAlqWWPOQKldQpytXgmHQrS4uCh2bAU1gDVh7xr9ZhN/vgJeMAcCARoYGBBBmwqmCIWSa379/qM1WvjzIOMvtZ/EBDvSyLwAAAAASUVORK5CYII=');
+	background-position: 13px 0px;
+	padding: 0px !important;
+
+	margin: 3px 3px 0px 4px;
+}
+input[ type="checkbox" ]:hover { background-position: 13px 13px; }
+input[ type="checkbox" ]:active { background-position: 13px 26px; }
+input[ type="checkbox" ]:checked { background-position: 26px 0px; }
+input[ type="checkbox" ]:checked:hover { background-position: 26px 13px; }
+input[ type="checkbox" ]:checked:active { background-position: 26px 26px; }
+input[ type="checkbox" ]:disabled { background-position: 0px 0px; }
+
+/*
+	Radio buttons
+*/
+input[ type="radio" ] {
+	-webkit-appearance: none;
+	width: 13px;
+	height: 13px;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMTM0A1t6AAAEWElEQVRYR82Y11IqQRRF/Vr/xTJ+g1ZdscwZzIoBMWcFBbSMZdbyuW+v4+1xpmkakPvAw6LOnN57umc6Dg1KqYC3tzd1dXWlstmsQPz+/q6LfjQ2l5eXanV1VU1OTgrE+GxdmEo9QXB3d6eur6/Vy8uL+vz8FJ6fnyVHmdGF2d7eVul0Wl1cXIgGzs/PVSqVUjs7O1pSm0d+bm9vpRFfX19OeKqbm5uIcXNzUyp5enpyQmVbW1s1eRp4U4VCQX18fHjJ5XLyVjHx1EtLS9JgHmpiYkK1trYKxOQom5+fF5/t8RH2iOn+/l69vr564e0a0/T0tHQB10NDQ6qxsTECOcroQrS2x0fY03B0dKQeHx/lrfhAc3h4KKa+vj51dnYmN2tubi5qHDnKTk9PFVrb4yPsqe/G0a10matBYRgPmDElEgl5/Vz39/cXNY4cZWjQ2h4fYY+sbUxlV4PCsO6hxXR8fKxmZmaCG46Ojqr29naB2OSnpqYUWpenFGGPTFmWCl8DzYKM1rC4uKhmZ2edFQANYXbW4gmMdC+NoPsYX0BMDqPRhaEinpSuYKwAMbm5uTktqc0TMbIj0JCDgwOBmDcX1tjs7u6qeDyuent7BWJyti5MpZ7IRb3hTFZDPl/Q4ySpJ8KYQFwoXOoitx5+PKMC44xdytZFLqolnd5QKysrMm6YMHBycqKSyaTa0PuorQevZ2NDS360EWM1pFLranl5OdgTbahsXW/yVXvW1wNPYKyGTCYbrFnM8uHhYdkVgJgcZczAcx3bHh/i0csaHmfl5UgkpuQJ6Q62GnuHIEfZ2tqaSujKbI8P8Zgdgp9qicV61P7+vtysqampqHHkKNvb21PdsZi24IkFHh/i6e4Wj7PyctR14+giTq3crKenp6hx5CiLdmsi8PiouVsv9MDlxGtuODg4qFpaWgRikx8bG1O5fF5bvrfHsKcU4sl9e5yVV8KiXjj5cnJVADQkqZeNiEdv/GU9yR9PYPwNcf36eVK6grECxORMd9rE4x6PHi5hbcT4GzL61DKt16+YHmdAnP23TpWCNY/vBCYJEHP6sXWRi3rDmawGVnU+5wYGBoTwp10p8nqSLCwsBB5icrYuclEtLA1s4mw3Dw8PAjE5ymw9sEu4PP9142cQ8x+HfaQ3UIYm7KHBPg+HgvBDBcZqyGQy8i3A/xx8ubE8tLW1CcTkKEODFg8D3nh8cDgwk8NZeTk4IHLu54A4MjJStEOQowwNWjwsFcbjg/9T0OJxVl6Ozs5OeSPcjF3Bbhw5ytCgtT0++PDu6uoSj7PyctR149g/TRexFNiNI0cZGrR4+HOn0m5Fi8dZeTmohIFvbjg+Pq46OjoEYpNHgxYP/zCFPaVA09n1RzzOyiuB4zRHG1cFQBmasIdtyuehYWD0gfE38DHMSYKuYKwAMTnKbD3QOJeHGWr+lzNEjL+BhZZxxYAHYnvxtWGhZVwx8IHYtaNELuoL1fAXW6QEwMq/lNAAAAAASUVORK5CYII=');
+	background-position: 13px 0px;
+	padding: 0px !important;
+
+	margin: 3px 3px 0px 5px;
+}
+input[ type="radio" ]:hover { background-position: 13px 13px; }
+input[ type="radio" ]:active { background-position: 13px 26px; }
+input[ type="radio" ]:checked { background-position: 26px 0px; }
+input[ type="radio" ]:checked:hover { background-position: 26px 13px; }
+input[ type="radio" ]:checked:active { background-position: 26px 26px; }
+input[ type="radio" ]:disabled { background-position: 0px 0px; }

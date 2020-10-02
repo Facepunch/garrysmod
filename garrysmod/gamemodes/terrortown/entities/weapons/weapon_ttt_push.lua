@@ -1,5 +1,7 @@
 AddCSLuaFile()
 
+DEFINE_BASECLASS "weapon_tttbase"
+
 SWEP.HoldType               = "physgun"
 
 if CLIENT then
@@ -84,9 +86,9 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:FirePulse(force_fwd, force_up)
-   if not IsValid(self.Owner) then return end
+   if not IsValid(self:GetOwner()) then return end
 
-   self.Owner:SetAnimation( PLAYER_ATTACK1 )
+   self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
 
    sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
 
@@ -97,15 +99,15 @@ function SWEP:FirePulse(force_fwd, force_up)
 
    local bullet = {}
    bullet.Num    = num
-   bullet.Src    = self.Owner:GetShootPos()
-   bullet.Dir    = self.Owner:GetAimVector()
+   bullet.Src    = self:GetOwner():GetShootPos()
+   bullet.Dir    = self:GetOwner():GetAimVector()
    bullet.Spread = Vector( cone, cone, 0 )
    bullet.Tracer = 1
    bullet.Force  = force_fwd / 10
    bullet.Damage = 1
    bullet.TracerName = "AirboatGunHeavyTracer"
 
-   local owner = self.Owner
+   local owner = self:GetOwner()
    local fwd = force_fwd / num
    local up = force_up / num
    bullet.Callback = function(att, tr, dmginfo)
@@ -123,7 +125,7 @@ function SWEP:FirePulse(force_fwd, force_up)
                         end
                      end
 
-   self.Owner:FireBullets( bullet )
+   self:GetOwner():FireBullets( bullet )
 
 end
 
@@ -181,9 +183,10 @@ function SWEP:Holster()
 end
 
 function SWEP:Think()
-   if self.IsCharging and IsValid(self.Owner) and self.Owner:IsTerror() then
+   BaseClass.Think(self)
+   if self.IsCharging and IsValid(self:GetOwner()) and self:GetOwner():IsTerror() then
       -- on client this is prediction
-      if not self.Owner:KeyDown(IN_ATTACK2) then
+      if not self:GetOwner():KeyDown(IN_ATTACK2) then
          self:ChargedAttack()
          return true
       end

@@ -21,8 +21,8 @@ local function SetColour( ply, ent, data )
 	-- If we're trying to make them transparent them make the render mode
 	-- a transparent type. This used to fix in the engine - but made HL:S props invisible(!)
 	--
-	if ( data.Color && data.Color.a < 255 && data.RenderMode == 0 ) then
-		data.RenderMode = 1
+	if ( data.Color && data.Color.a < 255 && data.RenderMode == RENDERMODE_NORMAL ) then
+		data.RenderMode = RENDERMODE_TRANSCOLOR
 	end
 
 	if ( data.Color ) then ent:SetColor( Color( data.Color.r, data.Color.g, data.Color.b, data.Color.a ) ) end
@@ -83,7 +83,7 @@ function TOOL:Reload( trace )
 	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
 	if ( CLIENT ) then return true end
 
-	SetColour( self:GetOwner(), ent, { Color = Color( 255, 255, 255, 255 ), RenderMode = 0, RenderFX = 0 } )
+	SetColour( self:GetOwner(), ent, { Color = color_white, RenderMode = 0, RenderFX = 0 } )
 	return true
 
 end

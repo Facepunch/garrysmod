@@ -141,7 +141,7 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 	--
 	-- I've made this all look more complicated than it is. Here's the easy version
 	--
-	-- chat.AddText( player, Color( 255, 255, 255 ), ": ", strText )
+	-- chat.AddText( player, color_white, ": ", strText )
 	--
 
 	local tab = {}
@@ -162,7 +162,7 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 		table.insert( tab, "Console" )
 	end
 
-	table.insert( tab, Color( 255, 255, 255 ) )
+	table.insert( tab, color_white )
 	table.insert( tab, ": " .. strText )
 
 	chat.AddText( unpack(tab) )
@@ -178,7 +178,7 @@ end
 function GM:OnChatTab( str )
 
 	str = string.TrimRight(str)
-	
+
 	local LastWord
 	for word in string.gmatch( str, "[^ ]+" ) do
 		LastWord = word
@@ -320,7 +320,7 @@ function GM:CalcVehicleView( Vehicle, ply, view )
 		endpos = TargetOrigin,
 		filter = function( e )
 			local c = e:GetClass() -- Avoid contact with entities that can potentially be attached to the vehicle. Ideally, we should check if "e" is constrained to "Vehicle".
-			return !c:StartWith( "prop_physics" ) &&!c:StartWith( "prop_dynamic" ) && !c:StartWith( "prop_ragdoll" ) && !e:IsVehicle() && !c:StartWith( "gmod_" )
+			return !c:StartWith( "prop_physics" ) &&!c:StartWith( "prop_dynamic" ) && !c:StartWith( "phys_bone_follower" ) && !c:StartWith( "prop_ragdoll" ) && !e:IsVehicle() && !c:StartWith( "gmod_" )
 		end,
 		mins = Vector( -WallOffset, -WallOffset, -WallOffset ),
 		maxs = Vector( WallOffset, WallOffset, WallOffset ),
@@ -592,7 +592,7 @@ function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 	if ( Weapon.UseHands || !Weapon:IsScripted() ) then
 
 		local hands = Player:GetHands()
-		if ( IsValid( hands ) ) then
+		if ( IsValid( hands ) && IsValid( hands:GetParent() ) ) then
 
 			if ( not hook.Call( "PreDrawPlayerHands", self, hands, ViewModel, Player, Weapon ) ) then
 
@@ -603,7 +603,7 @@ function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 			end
 
 			hook.Call( "PostDrawPlayerHands", self, hands, ViewModel, Player, Weapon )
-			
+
 		end
 
 	end
@@ -674,6 +674,23 @@ end
 	Desc: The mouse has been released on the game screen
 -----------------------------------------------------------]]
 function GM:GUIMouseReleased( mousecode, AimVector )
+end
+
+--[[---------------------------------------------------------
+	Player class has been changed
+-----------------------------------------------------------]]
+function GM:PlayerClassChanged( ply, newID )
+
+	-- No class is set
+	if ( newID < 1 ) then return end
+
+	-- Invalid class ID?
+	local classname = util.NetworkIDToString( newID )
+	if ( !classname ) then return end
+
+	-- Initialize the class on client
+	player_manager.SetPlayerClass( ply, classname )
+
 end
 
 function GM:PreDrawHUD()

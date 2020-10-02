@@ -30,7 +30,7 @@ response "CitizenHello"
 
 rule CitizenHello
 {
-	criteria		IsCitizen ConceptTalkHello PlayerNear SeePlayer NotInPanic
+	criteria		IsCitizen ConceptTalkHello IsGordonCriminal PlayerNear SeePlayer NotInPanic
 	response		CitizenHello
 }
 

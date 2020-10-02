@@ -3,7 +3,7 @@
 	Register the convars that will control this effect
 -----------------------------------------------------------]]
 local pp_stereoscopy = CreateClientConVar( "pp_stereoscopy", "0", false, false )
-local pp_stereoscopy_size = CreateClientConVar( "pp_stereoscopy_size", "6", true, false )
+local pp_stereoscopy_size = CreateClientConVar( "pp_stereoscopy_size", "6", true, false, nil, -11.5, 11.5 )
 
 --[[---------------------------------------------------------
 	Can be called from engine or hooks using bloom.Draw

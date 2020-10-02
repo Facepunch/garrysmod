@@ -107,7 +107,7 @@ end
 --[[---------------------------------------------------------
 	Name: Align with the edge of the parent
 -----------------------------------------------------------]]
-function meta:AlignBottom( m ) self:SetPos( self.x, self:GetParent():GetTall() - self:GetTall() - ( m or 0 ) ) end 
+function meta:AlignBottom( m ) self:SetPos( self.x, self:GetParent():GetTall() - self:GetTall() - ( m or 0 ) ) end
 function meta:AlignRight( m ) self:SetPos( self:GetParent():GetWide() - self:GetWide() - ( m or 0 ), self.y ) end
 function meta:AlignTop( m ) self:SetPos( self.x, m or 0 ) end
 function meta:AlignLeft( m ) self:SetPos( m or 0, self.y ) end
@@ -242,7 +242,7 @@ end
 
 --[[---------------------------------------------------------
 	Name: PositionLabel
------------------------------------------------------------]] 
+-----------------------------------------------------------]]
 function meta:PositionLabel( labelWidth, x, y, lbl, ctrl )
 
 	lbl:SetWide( labelWidth )
@@ -253,6 +253,20 @@ function meta:PositionLabel( labelWidth, x, y, lbl, ctrl )
 
 	return y + math.max( lbl:GetTall(), ctrl:GetTall() )
 
+end
+
+--[[---------------------------------------------------------
+	Name: GetTooltip
+-----------------------------------------------------------]]
+function meta:GetTooltip()
+	return self.strTooltipText
+end
+
+--[[---------------------------------------------------------
+	Name: GetTooltipPanel
+-----------------------------------------------------------]]
+function meta:GetTooltipPanel()
+	return self.pnlTooltipPanel
 end
 
 --[[---------------------------------------------------------
@@ -268,8 +282,14 @@ meta.SetToolTip = meta.SetTooltip
 -----------------------------------------------------------]]
 function meta:SetTooltipPanel( panel )
 	self.pnlTooltipPanel = panel
+	if ( IsValid( panel ) ) then panel:SetVisible( false ) end
 end
 meta.SetToolTipPanel = meta.SetTooltipPanel
+
+-- Override which panel will be created instead of DTooltip
+function meta:SetTooltipPanelOverride( panel )
+	self.pnlTooltipPanelOverride = panel
+end
 
 --[[---------------------------------------------------------
 	Name: SizeToContentsY (Only works on Labels)
@@ -304,7 +324,6 @@ function meta:SetSkin( strSkin )
 
 	self.m_ForceSkinName = strSkin
 	self.m_iSkinIndex = nil
-	derma.RefreshSkins()
 
 end
 
@@ -402,7 +421,7 @@ function ValidPanel( pnl )
 
 	if ( !pnl ) then return false end
 
-	return pnl:IsValid() 
+	return pnl:IsValid()
 
 end
 
@@ -414,7 +433,7 @@ function meta:InvalidateChildren( bRecurse )
 		if ( bRecurse ) then
 			v:InvalidateChildren( true )
 		else
-			v:InvalidateChildren( false )
+			v:InvalidateLayout( true )
 		end
 
 	end

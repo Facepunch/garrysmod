@@ -188,7 +188,7 @@ local SCORE_BOARD = {
 
 		self.Name = self.Header:Add( "DLabel" )
 		self.Name:SetFont( "ScoreboardDefaultTitle" )
-		self.Name:SetTextColor( Color( 255, 255, 255, 255 ) )
+		self.Name:SetTextColor( color_white )
 		self.Name:Dock( TOP )
 		self.Name:SetHeight( 40 )
 		self.Name:SetContentAlignment( 5 )
@@ -196,7 +196,7 @@ local SCORE_BOARD = {
 
 		--self.NumPlayers = self.Header:Add( "DLabel" )
 		--self.NumPlayers:SetFont( "ScoreboardDefault" )
-		--self.NumPlayers:SetTextColor( Color( 255, 255, 255, 255 ) )
+		--self.NumPlayers:SetTextColor( color_white )
 		--self.NumPlayers:SetPos( 0, 100 - 30 )
 		--self.NumPlayers:SetSize( 300, 30 )
 		--self.NumPlayers:SetContentAlignment( 4 )

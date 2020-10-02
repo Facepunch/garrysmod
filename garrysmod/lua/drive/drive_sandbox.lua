@@ -7,7 +7,7 @@ AddCSLuaFile()
 --
 --
 
-DEFINE_BASECLASS( "drive_base" );
+DEFINE_BASECLASS( "drive_base" )
 
 
 drive.Register( "drive_sandbox",
@@ -17,15 +17,15 @@ drive.Register( "drive_sandbox",
 	--
 	Init = function( self )
 
-		self.CameraDist 	= 4
-		self.CameraDistVel 	= 0.1
+		self.CameraDist		= 4
+		self.CameraDistVel	= 0.1
 
 	end,
 
 	--
 	-- Calculates the view when driving the entity
 	--
-	CalcView =  function( self, view )
+	CalcView = function( self, view )
 
 		--
 		-- Use the utility method on drive_base.lua to give us a 3rd person view
@@ -69,7 +69,7 @@ drive.Register( "drive_sandbox",
 	-- Called before each move. You should use your entity and cmd to
 	-- fill mv with information you need for your move.
 	--
-	StartMove =  function( self, mv, cmd )
+	StartMove = function( self, mv, cmd )
 
 		--
 		-- Set the observer mode to chase so that the entity is drawn
@@ -159,7 +159,7 @@ drive.Register( "drive_sandbox",
 		-- a little bit of air resistance. If no keys are down we apply
 		-- more resistance so we slow down more.
 		--
-		if ( math.abs(mv:GetForwardSpeed()) + math.abs(mv:GetSideSpeed()) + math.abs(mv:GetUpSpeed()) < 0.1 ) then
+		if ( math.abs( mv:GetForwardSpeed() ) + math.abs( mv:GetSideSpeed() ) + math.abs( mv:GetUpSpeed() ) < 0.1 ) then
 			vel = vel * 0.90
 		else
 			vel = vel * 0.99
@@ -183,7 +183,7 @@ drive.Register( "drive_sandbox",
 	-- The move is finished. Use mv to set the new positions
 	-- on your entities/players.
 	--
-	FinishMove =  function( self, mv )
+	FinishMove = function( self, mv )
 
 		--
 		-- Update our entity!
@@ -198,7 +198,7 @@ drive.Register( "drive_sandbox",
 		if ( SERVER && IsValid( self.Entity:GetPhysicsObject() ) ) then
 
 			self.Entity:GetPhysicsObject():EnableMotion( true )
-			self.Entity:GetPhysicsObject():SetPos( mv:GetOrigin() );
+			self.Entity:GetPhysicsObject():SetPos( mv:GetOrigin() )
 			self.Entity:GetPhysicsObject():Wake()
 			self.Entity:GetPhysicsObject():EnableMotion( false )
 
@@ -206,5 +206,4 @@ drive.Register( "drive_sandbox",
 
 	end
 
-
-}, "drive_base" );
+}, "drive_base" )

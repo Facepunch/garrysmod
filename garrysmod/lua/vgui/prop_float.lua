@@ -18,6 +18,8 @@ function PANEL:Setup( vars )
 
 	self:Clear()
 
+	vars = vars or {}
+
 	local ctrl = self:Add( "DNumSlider" )
 	ctrl:Dock( FILL )
 	ctrl:SetDecimals( self:GetDecimals() )
@@ -40,6 +42,14 @@ function PANEL:Setup( vars )
 	-- Return true if we're editing
 	self.IsEditing = function( self )
 		return ctrl:IsEditing()
+	end
+
+	-- Enabled/disabled support
+	self.IsEnabled = function( self )
+		return ctrl:IsEnabled()
+	end
+	self.SetEnabled = function( self, b )
+		ctrl:SetEnabled( b )
 	end
 
 	-- Set the value

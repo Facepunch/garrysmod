@@ -5,34 +5,48 @@
 		<script type="text/javascript" src="js/thirdparty/jquery.js"></script>
 	</head>
 	<body>
-	
+
 		<div id="container">
 
 			<img src='img/gmod_logo_brave.png' class="bounce"/>
-			
+
 			<center>
 				<br />
 				<div class="walk">:v</div>
 			</center>
 
 		</div>
-		
+
+		<!--<div id="spambox">
+		</div>-->
 
 		<script type="text/javascript">
-
-			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode )
+			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang )
 			{
 				// Do with these what you will :)
 				// this function gets called only when joining a multiplayer server
 
-				//$("#spambox").append("serverurl: " + serverurl + "<br>");
-				//$("#spambox").append("servername: " + servername + "<br>");
-				//$("#spambox").append("maxplayers: " + maxplayers + "<br>");
-				//$("#spambox").append("steamid: " + steamid + "<br>");
-				//$("#spambox").append("gamemode: " + gamemode + "<br>");
-				//$("#spambox").append("mapname: " + mapname + "<br>");
+				/*$("#spambox").append("serverurl: " + serverurl + "<br>");
+				$("#spambox").append("servername: " + servername + "<br>");
+				$("#spambox").append("maxplayers: " + maxplayers + "<br>");
+				$("#spambox").append("steamid: " + steamid + "<br>");
+				$("#spambox").append("gamemode: " + gamemode + "<br>");
+				$("#spambox").append("mapname: " + mapname + "<br>");
+				$("#spambox").append("volume: " + volume + "<br>");
+				$("#spambox").append("lang: " + lang + "<br>");*/
 			}
-	
+
+			// A file has begun downloading
+			function DownloadingFile( file )
+			{
+				//$("#spambox").prepend( "<span style='color:red'>" + file + "</span><br>");
+			}
+
+			// This will not be called when DownloadingFile() is
+			function SetStatusChanged( status )
+			{
+				//$("#spambox").prepend( status + "<br>");
+			}
 		</script>
 
 	</body>

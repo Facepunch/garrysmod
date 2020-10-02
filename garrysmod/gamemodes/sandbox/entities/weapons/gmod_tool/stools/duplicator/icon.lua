@@ -43,12 +43,12 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	-- Create a bunch of entities we're gonna use to render.
 	--
 	local entities = {}
-
+	local i = 0
 	for k, v in pairs( Dupe.Entities ) do
 
 		if ( v.Class == "prop_ragdoll" ) then
 
-			entities[k] = ClientsideRagdoll( v.Model or "error.mdl", RENDERGROUP_OTHER )
+			entities[ k ] = ClientsideRagdoll( v.Model or "error.mdl", RENDERGROUP_OTHER )
 
 			if ( istable( v.PhysicsObjects ) ) then
 
@@ -71,6 +71,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 			entities[ k ] = ClientsideModel( v.Model or "error.mdl", RENDERGROUP_OTHER )
 
 		end
+		i = i + 1
 
 	end
 
@@ -79,6 +80,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	--
 	render.SetMaterial( Material( "gui/dupe_bg.png" ) )
 	render.DrawScreenQuadEx( 0, 0, 512, 512 )
+	render.UpdateRefractTexture()
 
 	--
 	-- BLACK OUTLINE
@@ -86,63 +88,70 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	--
 	render.SuppressEngineLighting( true )
 
-	local BorderSize	= CamDist * 0.004
-	local Up			= EyeAng:Up() * BorderSize
-	local Right			= EyeAng:Right() * BorderSize
+	-- Rendering icon the way we do is kinda bad and will crash the game with too many entities in the dupe
+	-- Try to mitigate that to some degree by not rendering the outline when we are above 800 entities
+	-- 1000 was tested without problems, but we want to give it some space as 1000 was tested in "perfect conditions" with nothing else happening on the map
+	if ( i < 800 ) then
+		local BorderSize	= CamDist * 0.004
+		local Up			= EyeAng:Up() * BorderSize
+		local Right			= EyeAng:Right() * BorderSize
 
-	render.SetColorModulation( 1, 1, 1, 1 )
-	render.MaterialOverride( Material( "models/debug/debugwhite" ) )
+		render.SetColorModulation( 1, 1, 1, 1 )
+		render.MaterialOverride( Material( "models/debug/debugwhite" ) )
 
-	-- Render each entity in a circle
-	for k, v in pairs( Dupe.Entities ) do
+		-- Render each entity in a circle
+		for k, v in pairs( Dupe.Entities ) do
 
-		for i = 0, math.pi * 2, 0.2 do
+			for i = 0, math.pi * 2, 0.2 do
 
-			view.origin = CamPos + Up * math.sin( i ) + Right * math.cos( i )
+				view.origin = CamPos + Up * math.sin( i ) + Right * math.cos( i )
 
-			cam.Start( view )
+				-- Set the skin and bodygroups
+				entities[ k ]:SetSkin( v.Skin or 0 )
+				for bg_k, bg_v in pairs( v.BodyG or {} ) do entities[ k ]:SetBodygroup( bg_k, bg_v ) end
+
+				cam.Start( view )
+
+					render.Model( {
+						model	= v.Model,
+						pos		= v.Pos,
+						angle	= v.Angle
+					}, entities[ k ] )
+
+				cam.End()
+
+			end
+
+		end
+
+		-- Because we just messed up the depth
+		render.ClearDepth()
+		render.SetColorModulation( 0, 0, 0, 1 )
+
+		-- Try to keep the border size consistent with zoom size
+		local BorderSize	= CamDist * 0.002
+		local Up			= EyeAng:Up() * BorderSize
+		local Right			= EyeAng:Right() * BorderSize
+
+		-- Render each entity in a circle
+		for k, v in pairs( Dupe.Entities ) do
+
+			for i = 0, math.pi * 2, 0.2 do
+
+				view.origin = CamPos + Up * math.sin( i ) + Right * math.cos( i )
+				cam.Start( view )
 
 				render.Model( {
 					model	= v.Model,
 					pos		= v.Pos,
-					angle	= v.Angle,
-
+					angle	= v.Angle
 				}, entities[ k ] )
 
-			cam.End()
+				cam.End()
+
+			end
 
 		end
-
-	end
-
-	-- Because ee just messed up the depth
-	render.ClearDepth()
-	render.SetColorModulation( 0, 0, 0, 1 )
-
-	-- Try to keep the border size consistent with zoom size
-	local BorderSize	= CamDist * 0.002
-	local Up			= EyeAng:Up() * BorderSize
-	local Right			= EyeAng:Right() * BorderSize
-
-	-- Render each entity in a circle
-	for k, v in pairs( Dupe.Entities ) do
-
-		for i = 0, math.pi * 2, 0.2 do
-
-			view.origin = CamPos + Up * math.sin( i ) + Right * math.cos( i )
-			cam.Start( view )
-
-			render.Model( {
-				model	= v.Model,
-				pos		= v.Pos,
-				angle	= v.Angle,
-				skin	= v.Skin
-			}, entities[ k ] )
-
-			cam.End()
-
-		end
-
 	end
 
 	--
@@ -184,8 +193,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 		render.Model( {
 			model	= v.Model,
 			pos		= v.Pos,
-			angle	= v.Angle,
-			skin	= v.Skin
+			angle	= v.Angle
 		}, entities[ k ] )
 
 		render.MaterialOverride( nil )

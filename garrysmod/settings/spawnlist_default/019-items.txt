@@ -1,0 +1,156 @@
+"TableToKeyValues"
+{
+	"parentid"		"16"
+	"icon"		"icon16/page.png"
+	"id"		"19"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"model"
+			"model"		"models/Items/ammoCrate_Rockets.mdl"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/Items/ammocrate_smg1.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/Items/AR2_Grenade.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/Items/battery.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/Items/BoxBuckshot.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/Items/BoxFlares.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/Items/BoxMRounds.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/Items/BoxSRounds.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/Items/car_battery01.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/Items/combine_rifle_ammo01.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/Items/combine_rifle_cartridge01.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/Items/CrossbowRounds.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/Items/Flare.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/Items/grenadeAmmo.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/Items/HealthKit.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/Items/hevsuit.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/Items/item_item_crate.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/Items/item_item_crate_chunk01.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/Items/item_item_crate_chunk02.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/Items/item_item_crate_chunk05.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/Items/item_item_crate_chunk06.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/Items/item_item_crate_chunk07.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/Items/item_item_crate_chunk08.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/Items/item_item_crate_chunk09.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/Items/item_item_crate_dynamic.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/Items/357ammo.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/Items/357ammobox.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/Items/ammocrate_ar2.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/Items/ammocrate_grenade.mdl"
+		}
+	}
+	"name"		"Items"
+	"version"		"3"
+}

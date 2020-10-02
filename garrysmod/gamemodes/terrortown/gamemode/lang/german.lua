@@ -270,7 +270,7 @@ L.set_title_lang    = "Spracheinstellungen"
 
 -- It may be best to leave this next one english, so english players can always
 -- find the language setting even if it's set to a language they don't know.
-L.set_lang          = "Select language:"
+L.set_lang          = "Sprache selektieren (Select language):"
 
 
 --- Weapons and equipment, HUD and messages
@@ -1044,3 +1044,6 @@ L.set_cross_size       = "Fadenkreuz Größe"
 
 -- 5-25-15
 L.hat_retrieve = "Du hast den Hut eines Detektivs aufgehoben."
+
+--- 3-9-2017
+L.sb_sortby = "Sortiere nach:"

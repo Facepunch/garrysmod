@@ -14,9 +14,6 @@ function EFFECT:Init( data )
 		local particle = emitter:Add( "effects/spark", vOffset )
 		if ( particle ) then
 
-			particle:SetVelocity( VectorRand() * 50 )
-
-			particle:SetLifeTime( 0 )
 			particle:SetDieTime( 0.5 )
 
 			particle:SetStartAlpha( 255 )
@@ -30,6 +27,7 @@ function EFFECT:Init( data )
 
 			particle:SetAirResistance( 400 )
 
+			particle:SetVelocity( VectorRand() * 50 )
 			particle:SetGravity( Vector( 0, 0, 100 ) )
 
 		end

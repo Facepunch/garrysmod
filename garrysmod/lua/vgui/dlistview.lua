@@ -138,6 +138,8 @@ function PANEL:FixColumnsLayout()
 
 	end
 
+	local TotalMaxWidth = 0
+
 	-- If there's a remainder, try to palm it off on the other panels, equally
 	while ( Remainder != 0 ) do
 
@@ -152,7 +154,12 @@ function PANEL:FixColumnsLayout()
 
 			if ( Remainder == 0 ) then break end
 
+			TotalMaxWidth = TotalMaxWidth + Column:GetMaxWidth()
+
 		end
+
+		-- Total max width of all the columns is less than the width of the DListView, abort!
+		if ( TotalMaxWidth < self.pnlCanvas:GetWide() ) then break end
 
 		Remainder = math.Approach( Remainder, 0, 1 )
 
@@ -202,7 +209,7 @@ function PANEL:PerformLayout()
 	--
 	-- If the data is dirty, re-layout
 	--
-	if ( self:GetDirty( true ) ) then
+	if ( self:GetDirty() ) then
 
 		self:SetDirty( false )
 		local y = self:DataLayout()
@@ -325,7 +332,7 @@ end
 function PANEL:GetSelectedLine()
 
 	for k, Line in pairs( self.Lines ) do
-		if ( Line:IsSelected() ) then return k end
+		if ( Line:IsSelected() ) then return k, Line end
 	end
 
 end
@@ -470,8 +477,8 @@ function PANEL:SortByColumn( ColumnID, Desc )
 			a, b = b, a
 		end
 
-		local aval = a:GetSortValue( ColumnID ) && a:GetSortValue( ColumnID ) || a:GetColumnText( ColumnID )
-		local bval = b:GetSortValue( ColumnID ) && b:GetSortValue( ColumnID ) || b:GetColumnText( ColumnID )
+		local aval = a:GetSortValue( ColumnID ) || a:GetColumnText( ColumnID )
+		local bval = b:GetSortValue( ColumnID ) || b:GetColumnText( ColumnID )
 
 		return aval < bval
 

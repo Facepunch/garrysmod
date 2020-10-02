@@ -10,14 +10,15 @@ local rt_Blur		= render.GetScreenEffectTexture( 1 )
 local List = {}
 local RenderEnt = NULL
 
-function Add( ents, color, blurx, blury, passes, add, ignorez )
+function Add( entities, color, blurx, blury, passes, add, ignorez )
 
+	if ( table.IsEmpty( entities ) ) then return end
 	if ( add == nil ) then add = true end
 	if ( ignorez == nil ) then ignorez = false end
 
 	local t =
 	{
-		Ents = ents,
+		Ents = entities,
 		Color = color,
 		Hidden = when_hidden,
 		BlurX = blurx or 2,

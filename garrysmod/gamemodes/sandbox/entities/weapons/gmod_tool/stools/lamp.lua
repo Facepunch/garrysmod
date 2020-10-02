@@ -5,7 +5,7 @@ TOOL.Name = "#tool.lamp.name"
 TOOL.ClientConVar[ "r" ] = "255"
 TOOL.ClientConVar[ "g" ] = "255"
 TOOL.ClientConVar[ "b" ] = "255"
-TOOL.ClientConVar[ "key" ] = "-1"
+TOOL.ClientConVar[ "key" ] = "37"
 TOOL.ClientConVar[ "fov" ] = "90"
 TOOL.ClientConVar[ "distance" ] = "1024"
 TOOL.ClientConVar[ "brightness" ] = "4"
@@ -82,7 +82,7 @@ function TOOL:LeftClick( trace )
 	if ( !util.IsValidModel( mdl ) || !util.IsValidProp( mdl ) || !IsValidLampModel( mdl ) ) then return false end
 	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
 
-	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = Angle( 0, 0, 0 ) } )
+	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = angle_zero } )
 
 	local CurPos = lamp:GetPos()
 	local NearestPoint = lamp:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -150,6 +150,8 @@ if ( SERVER ) then
 
 		lamp:Spawn()
 
+		DoPropSpawnedEffect( lamp )
+
 		duplicator.DoGenericPhysics( lamp, pl, Data )
 
 		lamp:SetPlayer( pl )
@@ -183,7 +185,7 @@ if ( SERVER ) then
 
 		if ( numpad.FromButton() ) then
 
-			ent:Toggle()
+			ent:Switch( onoff == 1 )
 			return
 
 		end
@@ -224,7 +226,7 @@ function TOOL:Think()
 	if ( !IsValidLampModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
-		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostLamp( self.GhostEntity, self:GetOwner() )

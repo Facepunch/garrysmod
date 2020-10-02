@@ -44,7 +44,7 @@ function PANEL:SetValue( val )
 	if ( val == self:GetFloatValue() ) then return end
 
 	self:SetFloatValue( val )
-	self:OnValueChanged()
+	self:OnValueChanged( val )
 	self:UpdateConVar()
 
 end
@@ -61,6 +61,12 @@ function PANEL:GetFraction()
 
 end
 
+function PANEL:GetDecimals()
+
+	return ( self.m_iDecimals or 0 )
+
+end
+
 function PANEL:GetRange()
 	return self:GetMax() - self:GetMin()
 end
@@ -72,6 +78,8 @@ function PANEL:IdealZoom()
 end
 
 function PANEL:OnMousePressed( mousecode )
+
+	if ( !self:IsEnabled() ) then return end
 
 	if ( self:GetZoom() == 0 ) then self:SetZoom( self:IdealZoom() ) end
 
@@ -121,14 +129,10 @@ function PANEL:OnCursorMoved( x, y )
 
 	local ControlScale = 100 / zoom
 
-	local maxzoom = 20
-
-	if ( self:GetDecimals() ) then
-		maxzoom = 10000
-	end
+	local maxzoom = 10 ^ ( 1 + self:GetDecimals() )
 
 	zoom = math.Clamp( zoom + ( ( y * -0.6 ) / ControlScale ), 0.01, maxzoom )
-	self:SetZoom( zoom )
+	if ( !input.IsKeyDown( KEY_LSHIFT ) ) then self:SetZoom( zoom ) end
 
 	local value = self:GetFloatValue()
 	value = math.Clamp( value + ( x * ControlScale * 0.002 ), self:GetMin(), self:GetMax() )
@@ -259,7 +263,7 @@ function PANEL:DrawScreen( x, y, w, h )
 
 	if ( !self:GetShouldDrawScreen() ) then return end
 
-	DisableClipping( true )
+	local wasEnabled = DisableClipping( true )
 
 	--
 	-- Background
@@ -281,16 +285,14 @@ function PANEL:DrawScreen( x, y, w, h )
 	local targetW = range * self:GetZoom()
 	targetW = targetW - math.max( 0, x - targetX )
 	targetW = math.min( targetW, w - math.max( 0, targetX - x ) )
-	surface.DrawRect( math.max( targetX, x ), y + h * 0.4, targetW, h * 0.6 )
+	surface.DrawRect( math.max( targetX, x ) + 3, y + h * 0.4, targetW - 6, h * 0.6 )
 
 	for i = 1, 4 do
 		self:DrawNotches( 10 ^ i, x, y, w, h, range, value, min, max )
 	end
 
-	if ( self:GetDecimals() ) then
-		for i = 0, 3 do
-			self:DrawNotches( 1 / 10 ^ i, x, y, w, h, range, value, min, max )
-		end
+	for i = 0, self:GetDecimals() do
+		self:DrawNotches( 1 / 10 ^ i, x, y, w, h, range, value, min, max )
 	end
 
 	--
@@ -303,20 +305,18 @@ function PANEL:DrawScreen( x, y, w, h )
 	--
 	-- Text Value
 	--
-	surface.SetTextColor( 255, 255, 255, 255 )
 	surface.SetFont( "DermaLarge" )
-
-	local str = Format( "%i", self:GetFloatValue() )
-	if ( self:GetDecimals() ) then
-		str = Format( "%.2f", self:GetFloatValue() )
-	end
+	local str = self:GetTextValue()
 	str = string.Comma( str )
-
 	local tw, th = surface.GetTextSize( str )
-	surface.SetTextPos( x + w * 0.5 - tw * 0.5, y + h - th - 5 )
+
+	draw.RoundedBoxEx( 8, x + w * 0.5 - tw / 2 - 10, y + h - 43, tw + 20, 39, Color( 0, 186, 255, 255 ), true, true, false, false )
+
+	surface.SetTextColor( 255, 255, 255, 255 )
+	surface.SetTextPos( x + w * 0.5 - tw * 0.5, y + h - th - 6 )
 	surface.DrawText( str )
 
-	DisableClipping( false )
+	DisableClipping( wasEnabled )
 
 end
 

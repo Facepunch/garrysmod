@@ -1,7 +1,15 @@
 
 gmsave = {}
 
-if ( CLIENT ) then return end
+if ( CLIENT ) then
+
+	hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str )
+		Derma_Message( str, "Failed to load save!", "OK" )
+	end )
+
+	return
+
+end
 
 include( "gmsave/entity_filters.lua" )
 include( "gmsave/player.lua" )
