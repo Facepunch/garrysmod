@@ -1,12 +1,14 @@
 
 local PANEL = {}
 AccessorFunc( PANEL, "m_bStretchToFit", "StretchToFit" )
+AccessorFunc( PANEL, "m_bDepressImage", "DepressImage" )
 
 function PANEL:Init()
 
 	self:SetPaintBackground( false )
 	self:SetDrawBorder( false )
 	self:SetStretchToFit( true )
+	self:SetDepressImage( true )
 
 	self:SetCursor( "hand" )
 	self.m_Image = vgui.Create( "DImage", self )
@@ -53,7 +55,7 @@ function PANEL:SetKeepAspect( bKeep )
 
 end
 
--- SetMaterial should replace SetImage for chached materials
+-- SetMaterial should replace SetImage for cached materials
 function PANEL:SetMaterial( Mat )
 
 	self.m_Image:SetMaterial( Mat )
@@ -67,9 +69,11 @@ function PANEL:SizeToContents()
 
 end
 
-function PANEL:OnMousePressed( mousecode )
+function PANEL:DepressImage()
 
-	DButton.OnMousePressed( self, mousecode )
+	if ( !self.m_bDepressImage ) then return end
+
+	self.m_bImageDepressed = true
 
 	if ( self.m_bStretchToFit ) then
 
@@ -86,27 +90,30 @@ function PANEL:OnMousePressed( mousecode )
 
 end
 
+function PANEL:OnMousePressed( mousecode )
+
+	DButton.OnMousePressed( self, mousecode )
+
+	self:DepressImage()
+
+end
+
 function PANEL:OnMouseReleased( mousecode )
 
 	DButton.OnMouseReleased( self, mousecode )
 
-	if ( self.m_bStretchToFit ) then
-
-		self.m_Image:SetPos( 0, 0 )
-		self.m_Image:SetSize( self:GetSize() )
-
-	else
-
-		self.m_Image:SizeToContents()
-		self.m_Image:Center()
-
-	end
+	self.m_bImageDepressed = nil
+	self:InvalidateLayout()
 
 end
 
 function PANEL:PerformLayout()
 
-	if ( self.m_bStretchToFit ) then
+	if ( self.m_bDepressImage && self.m_bImageDepressed ) then
+
+		self:DepressImage()
+
+	elseif ( self.m_bStretchToFit ) then
 
 		self.m_Image:SetPos( 0, 0 )
 		self.m_Image:SetSize( self:GetSize() )
