@@ -298,13 +298,7 @@ local Type = {}
 
 function GetTable()
 
-	local tbl = {}
-	
-	for k, v in pairs( Type ) do
-		tbl[ k ] = v
-	end
-	
-	return tbl
+	return table.Copy( Type )
 
 end
 
@@ -317,9 +311,9 @@ local function LookupPlayerClass( ply )
 	-- Check the cache
 	--
 	local method = ply.m_CurrentPlayerClass
-  if ( method && method.Player == ply ) then
-    if ( method.ClassID == id && method.Func ) then return method end -- current class is still good, behave normally
-    if ( method.Destroy ) then method:Destroy() end -- the class id changed, destroy the old class
+	if ( method && method.Player == ply ) then
+		if ( method.ClassID == id && method.Func ) then return method end -- current class is still good, behave normally
+		if ( method.Destroy ) then method:Destroy() end -- the class id changed, destroy the old class
 	end
 
 	--
