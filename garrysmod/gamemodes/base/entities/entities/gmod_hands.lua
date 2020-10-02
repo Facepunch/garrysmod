@@ -13,7 +13,9 @@ function ENT:Initialize()
 	self.viewHookID = "HandsViewModelChanged_" .. self:EntIndex()
 
 	if ( SERVER or self:GetOwner() == LocalPlayer() ) then
-		hook.Add( "OnViewModelChanged", self.viewHookID, self.ViewModelChanged )
+		hook.Add( "OnViewModelChanged", self.viewHookID, function( ... )
+			self:ViewModelChanged( ... )
+		end )
 
 		self:CallOnRemove( "RemoveViewModelChangedHook", function()
 			hook.Remove( "OnViewModelChanged", self.viewHookID )
