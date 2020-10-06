@@ -139,6 +139,7 @@ end
 function AddPropsOfParent( pnlContent, node, parentid, customProps )
 
 	local Props = customProps or spawnmenu.GetPropTable()
+
 	for FileName, Info in SortedPairs( Props ) do
 
 		if ( parentid != Info.parentid ) then continue end
@@ -164,7 +165,7 @@ function AddPropsOfParent( pnlContent, node, parentid, customProps )
 
 		end
 
-		AddPropsOfParent( pnlContent, pnlnode, Info.id )
+		AddPropsOfParent( pnlContent, pnlnode, Info.id, customProps )
 
 	end
 
