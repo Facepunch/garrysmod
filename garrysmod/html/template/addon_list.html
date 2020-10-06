@@ -191,6 +191,7 @@
 					<b ng-Tranny="'addons.preset_name'"></b> {{PresetList[ SelectedPreset ].name}}<br>
 					<b ng-Tranny="'addons.preset_enabled'"></b> {{PresetList[ SelectedPreset ].enabled.length}}<br>
 					<b ng-Tranny="'addons.preset_disabled'"></b> {{PresetList[ SelectedPreset ].disabled.length}}<br>
+					<input type="checkbox" ng-model="LoadPresetResub"/><label ng-tranny="'addons.preset_resub_missing'"></label><br/>
 
 					<br><b ng-Tranny="'addons.preset_new_action'"></b><br>
 					<input type="radio" name=loadpreset_newitems" value="" ng-model="CreatePresetNew"/><label ng-tranny="'addons.action_nothing'"></label><br/>

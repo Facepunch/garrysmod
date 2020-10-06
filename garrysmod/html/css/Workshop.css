@@ -300,7 +300,7 @@ controls control:hover
 	width: 150px;
 	display: inline-block;
 	max-height: 400px;
-	min-height: 210px;
+	min-height: 230px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }

@@ -15,6 +15,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 
 	$scope.PresetList = {}
 	$scope.LoadPresetMenuOpen = false;
+	$scope.LoadPresetResub = false;
 	$scope.SelectedPreset = undefined;
 
 	$scope.SelectedItems = {};
@@ -266,6 +267,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	{
 		lua.Run( "ListAddonPresets()" );
 		$scope.LoadPresetMenuOpen = true;
+		$scope.LoadPresetResub = false;
 	}
 	$scope.SelectPreset = function( preset, newAction )
 	{
@@ -281,6 +283,22 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	{
 		var preset = $scope.PresetList[ $scope.SelectedPreset ];
 		var newAct = $scope.CreatePresetNew;
+
+		// Resub to missing stuff
+		if ( $scope.LoadPresetResub )
+		{
+			for ( var k in preset.disabled )
+			{
+				var id = preset.disabled[ k ];
+				if ( !subscriptions.Contains( id ) ) subscriptions.Subscribe( id );
+			}
+			for ( var k in preset.enabled )
+			{
+				var id = preset.enabled[ k ];
+				if ( !subscriptions.Contains( id ) ) subscriptions.Subscribe( id );
+			}
+			subscriptions.ApplyChanges();
+		}
 
 		var IDsDone = {};
 		for ( var k in preset.disabled )
