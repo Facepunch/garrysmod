@@ -134,13 +134,14 @@ function PANEL:OnCursorMoved( x, y )
 	zoom = math.Clamp( zoom + ( ( y * -0.6 ) / ControlScale ), 0.01, maxzoom )
 	if ( !input.IsKeyDown( KEY_LSHIFT ) ) then self:SetZoom( zoom ) end
 
+	local oldValue = self:GetFloatValue()
 	local value = self:GetFloatValue()
 	value = math.Clamp( value + ( x * ControlScale * 0.002 ), self:GetMin(), self:GetMax() )
 	self:SetFloatValue( value )
 
 	self:LockCursor()
 
-	self:OnValueChanged( value )
+	if ( oldValue != value ) then self:OnValueChanged( value ) end
 	self:UpdateConVar()
 
 end
