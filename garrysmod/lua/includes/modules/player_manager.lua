@@ -314,7 +314,7 @@ local function LookupPlayerClass( ply )
 	local method = ply.m_CurrentPlayerClass
 	if ( method && method.Player == ply ) then
 		if ( method.ClassID == id && method.Func ) then return method end -- current class is still good, behave normally
-		if ( method.OnRemove ) then method:OnRemove() end -- the class id changed, remove the old class
+		if ( method.ClassChanged ) then method:ClassChanged() end -- the class id changed, remove the old class
 	end
 
 	--
