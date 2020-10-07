@@ -4,6 +4,7 @@ local baseclass = baseclass
 local setmetatable = setmetatable
 local SERVER = SERVER
 local string = string
+local table = table
 local util = util
 
 module( "player_manager" )
@@ -296,6 +297,12 @@ AddValidHands( "dod_american", "models/weapons/c_arms_dod.mdl", 1, "10000000" )
 
 local Type = {}
 
+function GetPlayerClasses()
+
+	return table.Copy( Type )
+
+end
+
 local function LookupPlayerClass( ply )
 
 	local id = ply:GetClassID()
@@ -305,7 +312,10 @@ local function LookupPlayerClass( ply )
 	-- Check the cache
 	--
 	local method = ply.m_CurrentPlayerClass
-	if ( method && method.Player == ply && method.ClassID == id && method.Func ) then return method end
+	if ( method && method.Player == ply ) then
+		if ( method.ClassID == id && method.Func ) then return method end -- current class is still good, behave normally
+		if ( method.ClassChanged ) then method:ClassChanged() end -- the class id changed, remove the old class
+	end
 
 	--
 	-- No class, lets create one
