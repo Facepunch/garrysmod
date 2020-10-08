@@ -3,7 +3,7 @@ TOOL.Category = "Constraints"
 TOOL.Name = "#tool.ballsocket.name"
 
 TOOL.ClientConVar[ "forcelimit" ] = "0"
-TOOL.ClientConVar[ "torquelimit" ] = "0"
+--TOOL.ClientConVar[ "torquelimit" ] = "0"
 TOOL.ClientConVar[ "nocollide" ] = "0"
 
 TOOL.Information = {
@@ -35,7 +35,9 @@ function TOOL:LeftClick( trace )
 		-- Get client's CVars
 		local nocollide = self:GetClientNumber( "nocollide", 0 )
 		local forcelimit = self:GetClientNumber( "forcelimit", 0 )
-		local torquelimit = self:GetClientNumber( "torquelimit", 0 )
+		
+		-- Force this to 0 for now, it does not do anything, and if we fix it in the future, this way existing contraptions won't break
+		local torquelimit = 0 --self:GetClientNumber( "torquelimit", 0 )
 
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
@@ -88,7 +90,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "ballsocket", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
 	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "ballsocket_forcelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
-	CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "ballsocket_torquelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
+	--CPanel:AddControl( "Slider", { Label = "#tool.torquelimit", Command = "ballsocket_torquelimit", Type = "Float", Min = 0, Max = 50000, Help = true } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "ballsocket_nocollide", Help = true } )
 
 end

@@ -30,9 +30,9 @@ function PANEL:Init()
 		local mat_wireframe = Material( "models/wireframe" )
 		function self.ModelPanel.PostDrawModel( mdlpnl, ent )
 			if ( self.ShowOrigin ) then
-				render.DrawLine( Vector( 0, 0, 0 ), Vector( 0, 0, 100 ), Color( 0, 0, 255 ) )
-				render.DrawLine( Vector( 0, 0, 0 ), Vector( 0, 100, 0 ), Color( 0, 255, 0 ) )
-				render.DrawLine( Vector( 0, 0, 0 ), Vector( 100, 0, 0 ), Color( 255, 0, 0 ) )
+				render.DrawLine( vector_origin, Vector( 0, 0, 100 ), Color( 0, 0, 255 ) )
+				render.DrawLine( vector_origin, Vector( 0, 100, 0 ), Color( 0, 255, 0 ) )
+				render.DrawLine( vector_origin, Vector( 100, 0, 0 ), Color( 255, 0, 0 ) )
 			end
 
 			if ( self.ShowBBox ) then
@@ -261,6 +261,17 @@ function PANEL:Init()
 		end
 		self.TargetCamPosPanel = cam_pos
 
+		local playSpeed = settings:Add( "DNumSlider" )
+		playSpeed:SetText( "Playback Speed" )
+		playSpeed:Dock( TOP )
+		playSpeed:DockMargin( 0, 0, 0, 3 )
+		playSpeed:SetMin( -1 )
+		playSpeed:SetDark( true )
+		playSpeed:SetMax( 2 )
+		playSpeed.OnValueChanged = function( s, value )
+			self.ModelPanel:GetEntity():SetPlaybackRate( value )
+		end
+
 end
 
 function PANEL:SetDefaultLighting()
@@ -333,7 +344,7 @@ function PANEL:OriginLayout()
 
 	local ent = self.ModelPanel:GetEntity()
 	local pos = ent:GetPos()
-	local campos = pos + Vector( 0, 0, 0 )
+	local campos = pos + vector_origin
 
 	self.ModelPanel:SetCamPos( campos )
 	self.ModelPanel:SetFOV( 45 )
@@ -362,7 +373,9 @@ function PANEL:UpdateEntity( ent )
 
 	elseif ( ent:GetCycle() != self.AnimTrack:GetSlideX() ) then
 
-		self.AnimTrack:SetSlideX( ent:GetCycle() )
+		local cyc = ent:GetCycle()
+		if ( cyc < 0 ) then cyc = cyc + 1 end
+		self.AnimTrack:SetSlideX( cyc )
 
 	end
 
@@ -450,8 +463,11 @@ function PANEL:FillAnimations( ent )
 
 		line.OnSelect = function()
 
+			local speed = ent:GetPlaybackRate()
 			ent:ResetSequence( v )
 			ent:SetCycle( 0 )
+			ent:SetPlaybackRate( speed )
+			if ( speed < 0 ) then ent:SetCycle( 1 ) end
 
 		end
 
@@ -475,7 +491,7 @@ function PANEL:FillAnimations( ent )
 
 			ent:SetSkin( newVal )
 
-			if ( self:GetOrigin() ) then self:GetOrigin():SkinChanged( newVal ) end
+			if ( IsValid( self:GetOrigin() ) ) then self:GetOrigin():SkinChanged( newVal ) end
 
 			-- If we're not using a custom, change our spawnicon
 			-- so we save the new skin in the right place...
@@ -505,7 +521,7 @@ function PANEL:FillAnimations( ent )
 
 			ent:SetBodygroup( s.BodyGroupID, newVal )
 
-			if ( self:GetOrigin() ) then self:GetOrigin():BodyGroupChanged( s.BodyGroupID, newVal ) end
+			if ( IsValid( self:GetOrigin() ) ) then self:GetOrigin():BodyGroupChanged( s.BodyGroupID, newVal ) end
 
 			-- If we're not using a custom, change our spawnicon
 			-- so we save the new skin in the right place...

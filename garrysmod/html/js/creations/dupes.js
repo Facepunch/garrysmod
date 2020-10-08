@@ -85,3 +85,18 @@ function ShowLocalDupes()
 
 	CreationScope.$apply();
 }
+
+
+function WindowResized()
+{
+	// dupe is from control.Dupes.js
+	dupe.RefreshDimensions();
+	dupe.UpdatePageNav();
+
+	// Refresh HTML
+	dupe.DigestUpdate = setTimeout( function()
+	{
+		self.DigestUpdate = 0;
+		Scope.Go( 0 );
+	}, 500 )
+}

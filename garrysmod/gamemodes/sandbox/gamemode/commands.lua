@@ -1,6 +1,37 @@
 
 include( "prop_tools.lua" )
 
+-- A little hacky function to help prevent spawning props partially inside walls
+-- Maybe it should use physics object bounds, not OBB, and use physics object bounds to initial position too
+local function fixupProp( ply, ent, hitpos, mins, maxs )
+	local entPos = ent:GetPos()
+	local endposD = ent:LocalToWorld( mins )
+	local tr_down = util.TraceLine( {
+		start = entPos,
+		endpos = endposD,
+		filter = { ent, ply }
+	} )
+
+	local endposU = ent:LocalToWorld( maxs )
+	local tr_up = util.TraceLine( {
+		start = entPos,
+		endpos = endposU,
+		filter = { ent, ply }
+	} )
+
+	-- Both traces hit meaning we are probably inside a wall on both sides, do nothing
+	if ( tr_up.Hit && tr_down.Hit ) then return end
+
+	if ( tr_down.Hit ) then ent:SetPos( entPos + ( tr_down.HitPos - endposD ) ) end
+	if ( tr_up.Hit ) then ent:SetPos( entPos + ( tr_up.HitPos - endposU ) ) end
+end
+
+local function TryFixPropPosition( ply, ent, hitpos )
+	fixupProp( ply, ent, hitpos, Vector( ent:OBBMins().x, 0, 0 ), Vector( ent:OBBMaxs().x, 0, 0 ) )
+	fixupProp( ply, ent, hitpos, Vector( 0, ent:OBBMins().y, 0 ), Vector( 0, ent:OBBMaxs().y, 0 ) )
+	fixupProp( ply, ent, hitpos, Vector( 0, 0, ent:OBBMins().z ), Vector( 0, 0, ent:OBBMaxs().z ) )
+end
+
 --[[---------------------------------------------------------
 	Name: CCSpawn
 	Desc: Console Command for a player to spawn different items
@@ -301,7 +332,6 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 	-- Attempt to move the object so it sits flush
 	-- We could do a TraceEntity instead of doing all
 	-- of this - but it feels off after the old way
-
 	local vFlushPoint = tr.HitPos - ( tr.HitNormal * 512 )	-- Find a point that is definitely out of the object in the direction of the floor
 	vFlushPoint = ent:NearestPoint( vFlushPoint )			-- Find the nearest point inside the object to that point
 	vFlushPoint = ent:GetPos() - vFlushPoint				-- Get the difference
@@ -325,6 +355,8 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 		ply:SendLua( "achievements.SpawnedRagdoll()" )
 
 	end
+
+	TryFixPropPosition( ply, ent, tr.HitPos )
 
 	return ent
 
@@ -441,6 +473,9 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
 		if v.class == Equipment then valid = true break end
 	end
+	for _, v in pairs( NPCData.Weapons or {} ) do
+		if v == Equipment then valid = true break end
+	end
 
 	if ( Equipment && Equipment != "none" && valid ) then
 		NPC:SetKeyValue( "additionalequipment", Equipment )
@@ -504,6 +539,8 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 	-- Create the NPC is you can.
 	local SpawnedNPC = InternalSpawnNPC( ply, tr.HitPos, tr.HitNormal, NPCClassName, WeaponName )
 	if ( !IsValid( SpawnedNPC ) ) then return end
+
+	TryFixPropPosition( ply, SpawnedNPC, tr.HitPos )
 
 	-- Give the gamemode an opportunity to do whatever
 	if ( IsValid( ply ) ) then
@@ -765,6 +802,8 @@ function Spawn_SENT( ply, EntityName, tr )
 
 	if ( !IsValid( entity ) ) then return end
 
+	TryFixPropPosition( ply, entity, tr.HitPos )
+
 	if ( IsValid( ply ) ) then
 		gamemode.Call( "PlayerSpawnedSENT", ply, entity )
 	end
@@ -817,7 +856,7 @@ end
 concommand.Add( "gm_giveswep", CCGiveSWEP )
 
 --[[---------------------------------------------------------
-	-- Give a swep.. duh.
+	-- Spawn a SWEP on the ground
 -----------------------------------------------------------]]
 function Spawn_Weapon( ply, wepname, tr )
 
@@ -853,10 +892,27 @@ function Spawn_Weapon( ply, wepname, tr )
 	entity:SetPos( tr.HitPos + tr.HitNormal * 32 )
 	entity:Spawn()
 
+	undo.Create( "SWEP" )
+		undo.SetPlayer( ply )
+		undo.AddEntity( entity )
+		undo.SetCustomUndoText( "Undone " .. tostring( swep.PrintName ) )
+	undo.Finish( "Scripted Weapon (" .. tostring( swep.ClassName ) .. ")" )
+
+	-- Throw it into SENTs category
+	ply:AddCleanup( "sents", entity )
+
+	TryFixPropPosition( ply, entity, tr.HitPos )
+
 	gamemode.Call( "PlayerSpawnedSWEP", ply, entity )
 
 end
 concommand.Add( "gm_spawnswep", function( ply, cmd, args ) Spawn_Weapon( ply, args[1] ) end )
+
+-- Do not allow people to undo weapons from player's hands
+hook.Add( "WeaponEquip", "SpawnWeaponUndoRemoval", function( wep, ply )
+	undo.ReplaceEntity( wep, nil )
+	cleanup.ReplaceEntity( wep, nil )
+end )
 
 local function MakeVehicle( ply, Pos, Ang, model, Class, VName, VTable, data )
 
@@ -953,6 +1009,9 @@ function Spawn_Vehicle( ply, vname, tr )
 
 	local Ent = MakeVehicle( ply, pos, Angles, vehicle.Model, vehicle.Class, vname, vehicle )
 	if ( !IsValid( Ent ) ) then return end
+
+	-- Unstable for Jeeps
+	-- TryFixPropPosition( ply, Ent, tr.HitPos )
 
 	if ( vehicle.Members ) then
 		table.Merge( Ent, vehicle.Members )

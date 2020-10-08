@@ -81,7 +81,7 @@ end
 function ENT:PhysicsSimulate( phys, deltatime )
 
 	local vLinear = Vector( 0, 0, self:GetForce() * 5000 ) * deltatime
-	local vAngular = Vector( 0, 0, 0 )
+	local vAngular = vector_origin
 
 	return vAngular, vLinear, SIM_GLOBAL_FORCE
 

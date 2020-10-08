@@ -183,7 +183,7 @@ function PositionSpawnIcon( model, pos, noAngles )
 	size = math.max( size, math.abs( mn.z ) + math.abs( mx.z ) )
 
 	model:SetPos( pos )
-	if ( !noAngles ) then model:SetAngles( Angle( 0, 0, 0 ) ) end
+	if ( !noAngles ) then model:SetAngles( angle_zero ) end
 
 	local ModelName = model:GetModel()
 	ModelName = string.Replace( ModelName, "--", "/" )

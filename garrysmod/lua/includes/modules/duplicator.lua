@@ -214,8 +214,8 @@ local EntitySaver =
 				local p = ent:GetManipulateBonePosition( i )
 			
 				if ( s != Vector( 1, 1, 1 ) ) then t[ 's' ] = s end -- scale
-				if ( a != Angle( 0, 0, 0 ) ) then t[ 'a' ] = a end -- angle
-				if ( p != Vector( 0, 0, 0 ) ) then t[ 'p' ] = p end -- position
+				if ( a != angle_zero ) then t[ 'a' ] = a end -- angle
+				if ( p != vector_origin ) then t[ 'p' ] = p end -- position
 		
 				if ( !table.IsEmpty( t ) ) then
 					data.BoneManip[ i ] = t

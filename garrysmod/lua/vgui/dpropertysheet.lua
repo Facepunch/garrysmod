@@ -52,7 +52,7 @@ function PANEL:PerformLayout()
 	if ( !self:IsActive() ) then
 		self.Image:SetImageColor( Color( 255, 255, 255, 155 ) )
 	else
-		self.Image:SetImageColor( Color( 255, 255, 255, 255 ) )
+		self.Image:SetImageColor( color_white )
 	end
 
 end

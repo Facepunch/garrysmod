@@ -50,7 +50,7 @@ function TOOL:LeftClick( trace )
 	if ( !util.IsValidModel( model ) || !util.IsValidProp( model ) || !IsValidDynamiteModel( model ) ) then return false end
 	if ( !self:GetSWEP():CheckLimit( "dynamite" ) ) then return false end
 
-	local dynamite = MakeDynamite( ply, trace.HitPos, Angle( 0, 0, 0 ), group, damage, model, remove, delay )
+	local dynamite = MakeDynamite( ply, trace.HitPos, angle_zero, group, damage, model, remove, delay )
 
 	local CurPos = dynamite:GetPos()
 	local Offset = CurPos - dynamite:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -132,7 +132,7 @@ function TOOL:UpdateGhostDynamite( ent, ply )
 		return
 	end
 
-	ent:SetAngles( Angle( 0, 0, 0 ) )
+	ent:SetAngles( angle_zero )
 
 	local CurPos = ent:GetPos()
 	local Offset = CurPos - ent:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -149,7 +149,7 @@ function TOOL:Think()
 	if ( !IsValidDynamiteModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
-		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostDynamite( self.GhostEntity, self:GetOwner() )

@@ -48,7 +48,7 @@ function PANEL:Init()
 	self.Label:SetTall( 18 )
 	self.Label:SetContentAlignment( 5 )
 	self.Label:DockMargin( 4, 0, 4, 6 )
-	self.Label:SetTextColor( Color( 255, 255, 255, 255 ) )
+	self.Label:SetTextColor( color_white )
 	self.Label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 
 	self.Border = 0
@@ -286,7 +286,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 	if ( !obj.nicename ) then return end
 	if ( !obj.spawnname ) then return end
 
-	if ( !obj.weapon ) then obj.weapon = { "" } end
+	if ( !obj.weapon ) then obj.weapon = {} end
 
 	local icon = vgui.Create( "ContentIcon", container )
 	icon:SetContentType( "npc" )
@@ -298,7 +298,7 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 	icon:SetColor( Color( 244, 164, 96, 255 ) )
 
 	icon.DoClick = function()
-		local weapon = table.Random( obj.weapon )
+		local weapon = table.Random( obj.weapon ) or ""
 		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
 
 		RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, weapon )
@@ -306,13 +306,46 @@ spawnmenu.AddContentType( "npc", function( container, obj )
 	end
 
 	icon.OpenMenuExtra = function( self, menu )
-		local weapon = table.Random( obj.weapon )
+		local weapon = table.Random( obj.weapon ) or ""
 		if ( gmod_npcweapon:GetString() != "" ) then weapon = gmod_npcweapon:GetString() end
 
 		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function()
 			RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "2" )
 			RunConsoleCommand( "creator_name", obj.spawnname ) RunConsoleCommand( "creator_arg", weapon )
 		end ):SetIcon( "icon16/brick_add.png" )
+
+		-- Quick access to spawning NPCs with a spcific weapon without the need to change gmod_npcweapon
+		if ( table.IsEmpty( obj.weapon ) ) then return end
+
+		local subMenu, swg = menu:AddSubMenu( "#spawnmenu.menu.spawn_with_weapon" )
+		swg:SetIcon( "icon16/gun.png" )
+
+		subMenu:AddOption( "#menubar.npcs.noweapon", function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, "" ) end ):SetIcon( "icon16/cross.png" )
+
+		-- Kind of a hack!
+		local function addWeps( subm, weps )
+			if ( table.Count( weps ) < 1 ) then return end
+
+			subMenu:AddSpacer()
+			for title, class in SortedPairs( weps ) do
+				subMenu:AddOption( title, function() RunConsoleCommand( "gmod_spawnnpc", obj.spawnname, class ) end ):SetIcon( "icon16/gun.png" )
+			end
+		end
+
+		local weaps = {}
+		for _, class in pairs( obj.weapon ) do
+			if ( class == "" ) then continue end
+			weaps[ language.GetPhrase( class ) ] = class
+		end
+		addWeps( subMenu, weaps )
+
+		local weaps = {}
+		for _, t in pairs( list.Get( "NPCUsableWeapons" ) ) do
+			if ( table.HasValue( obj.weapon, t.class ) ) then continue end
+			weaps[ language.GetPhrase( t.title ) ] = t.class
+		end
+		addWeps( subMenu, weaps )
+
 	end
 	icon.OpenMenu = DoGenericSpawnmenuRightclickMenu
 

@@ -132,7 +132,7 @@ local tblCategory = vgui.RegisterTable( {
 		self.Container:Dock( TOP )
 		self.Container:DockMargin( 16, 0, 0, 0 )
 		self.Container.Paint = function( pnl, w, h )
-			surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+			surface.SetDrawColor( color_white )
 			surface.DrawRect( 0, 0, w, h )
 		end
 

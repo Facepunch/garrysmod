@@ -141,7 +141,7 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 	--
 	-- I've made this all look more complicated than it is. Here's the easy version
 	--
-	-- chat.AddText( player, Color( 255, 255, 255 ), ": ", strText )
+	-- chat.AddText( player, color_white, ": ", strText )
 	--
 
 	local tab = {}
@@ -162,7 +162,7 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 		table.insert( tab, "Console" )
 	end
 
-	table.insert( tab, Color( 255, 255, 255 ) )
+	table.insert( tab, color_white )
 	table.insert( tab, ": " .. strText )
 
 	chat.AddText( unpack(tab) )

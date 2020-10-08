@@ -39,7 +39,7 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, nod
 				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", self.PropPanel, {
 					nicename	= ent.PrintName or ent.ClassName,
 					spawnname	= ent.ClassName,
-					material	= "entities/" .. ent.ClassName .. ".png",
+					material	= ent.IconOverride or "entities/" .. ent.ClassName .. ".png",
 					admin		= ent.AdminOnly
 				} )
 

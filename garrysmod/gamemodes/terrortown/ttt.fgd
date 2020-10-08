@@ -6,19 +6,19 @@
 
 @include "base.fgd" 
 
-@BaseClass color(0 0 200) base(Targetname, Angles, Shadow) = Item
+@BaseClass color(0 0 200) base(Targetname, Angles, Shadow) = TTTItem
 [
 	output OnPlayerTouch(void) : "Fires when the player touches this object"
 ]
 
-@PointClass base(Item) studio("models/items/boxsrounds.mdl")= item_ammo_pistol_ttt : "Box of Pistol ammo" []
-@PointClass base(Item) studio("models/items/boxmrounds.mdl")= item_ammo_smg1_ttt : "MAC10 ammo" []
-@PointClass base(Item) studio("models/items/357ammo.mdl")= item_ammo_357_ttt : "Box of Carbine ammo" []
-@PointClass base(Item) studio("models/items/BoxBuckshot.mdl")= item_box_buckshot_ttt : "Box Buckshot" []
-@PointClass base(Item) studio("models/items/357ammo.mdl")= item_ammo_revolver_ttt : "Box of Deagle ammo" []
+@PointClass base(TTTItem) studio("models/items/boxsrounds.mdl")= item_ammo_pistol_ttt : "Box of Pistol ammo" []
+@PointClass base(TTTItem) studio("models/items/boxmrounds.mdl")= item_ammo_smg1_ttt : "MAC10 ammo" []
+@PointClass base(TTTItem) studio("models/items/357ammo.mdl")= item_ammo_357_ttt : "Box of Carbine ammo" []
+@PointClass base(TTTItem) studio("models/items/BoxBuckshot.mdl")= item_box_buckshot_ttt : "Box Buckshot" []
+@PointClass base(TTTItem) studio("models/items/357ammo.mdl")= item_ammo_revolver_ttt : "Box of Deagle ammo" []
 
-@PointClass base(Item) studio("models/items/boxflares.mdl")= ttt_random_ammo : "Random ammo" []
-@PointClass base(Item) studio("models/weapons/w_shotgun.mdl")= ttt_random_weapon : "Random weapon" [
+@PointClass base(TTTItem) studio("models/items/boxflares.mdl")= ttt_random_ammo : "Random ammo" []
+@PointClass base(TTTItem) studio("models/weapons/w_shotgun.mdl")= ttt_random_weapon : "Random weapon" [
 	auto_ammo(integer) : "Autospawn ammo items" : 0 : "Number of matching ammo entities to spawn around the weapon. Leave some room above this entity for the ammo, it will be spawned there, fall and end up around the gun. Set to 0 to disable."
 ]
 

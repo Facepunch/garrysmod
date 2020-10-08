@@ -170,6 +170,9 @@ end
 -- what should we do?
 function PANEL:SkinChanged( i )
 
+	-- This is called from Icon Editor. Mark the spawnlist as changed. Ideally this would check for GetTriggerSpawnlistChange on the parent
+	hook.Run( "SpawnlistContentChanged" )
+
 	-- Change the skin, and change the model
 	-- this way we can edit the spawnmenu....
 	self:SetSkinID( i )
@@ -178,6 +181,9 @@ function PANEL:SkinChanged( i )
 end
 
 function PANEL:BodyGroupChanged( k, v )
+
+	-- This is called from Icon Editor. Mark the spawnlist as changed. Ideally this would check for GetTriggerSpawnlistChange on the parent
+	hook.Run( "SpawnlistContentChanged" )
 
 	self:SetBodyGroup( k, v )
 	self:SetModel( self:GetModelName(), self:GetSkinID(), self:GetBodyGroup() )

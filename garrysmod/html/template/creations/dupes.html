@@ -1,62 +1,63 @@
 
 <div class="page" ng-controller="ControllerDupes">
 
-		<div style="position: absolute; left: 0px; top: 0px; bottom: 0px; right: 0px;">
+	<div style="position: absolute; left: 0px; top: 0px; bottom: 0px; right: 0px;">
 
-			<workshopcontainer>
+		<workshopcontainer>
 
-				<workshopmessage ng-show="Loading" ng-Tranny="'dupes.loading'">...</workshopmessage>
-				<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'dupes.none'">...</workshopmessage>
+			<workshopmessage ng-show="Loading" ng-Tranny="'dupes.loading'">...</workshopmessage>
+			<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'dupes.none'">...</workshopmessage>
 
-				<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px">
+			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px">
 
-					<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
-						<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
-					</preview>
+				<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
+					<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
+				</preview>
 
-					<name ng-click="OpenWorkshopFile( file.id )" ng-hide="file.local">{{file.info.title}}</name>
-					<author ng-hide="file.local">{{file.info.ownername}}</author>
+				<name ng-click="OpenWorkshopFile( file.id )" ng-hide="file.local">{{file.info.title}}</name>
+				<author ng-hide="file.local">{{file.info.ownername}}</author>
 
-					<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
-					<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
+				<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>
+				<votes ng-show="!file.local && (file.vote.up-file.vote.down) < 0" style="color: #a44">{{file.vote.up-file.vote.down|number:0}}</votes>
 
-					<description>{{file.info.description}}</description>
+				<description>{{file.info.description}}</description>
 
-					<controls>
+				<controls>
 
-						<left>
-						<!--
-							<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
-							<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
-						-->
-							<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'dupes.publish'">..</control>
-							<control ng-show="!file.local" ng-click="OpenWorkshopFile( file.id )" ng-Tranny="'dupes.commentandrate'">..</control>
+					<left>
+					<!--
+						<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
+						<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
+					-->
+						<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'dupes.publish'">..</control>
+						<control ng-show="!file.local" ng-click="OpenWorkshopFile( file.id )" ng-Tranny="'dupes.commentandrate'">..</control>
 
-						</left>
+					</left>
 
-						<right>
-							<control ng-click="ArmDupe( file )" ng-Tranny="'dupes.arm'">..</control>
-						</right>
+					<right>
+						<control ng-click="ArmDupe( file )" ng-Tranny="'dupes.arm'">..</control>
+					</right>
 
-					</controls>
+				</controls>
 
-				</workshopicon>
+			</workshopicon>
 
-				<center>
-					<pagnation ng-hide="Loading || TotalResults == 0">
+			<center>
+				<pagination ng-hide="Loading || TotalResults == 0">
 
 					<a class="back" ng-click="Go( PerPage * -1 )">&nbsp;</a>
 					<a class="next" ng-click="Go( PerPage * 1 )">&nbsp;</a>
 
-					<div style="overflow: hidden; margin-top: 3px;">
-						<span ng-repeat="p in Pages"><a ng-show="p == Page" ng-click="GoToPage( p )"><img src='img/page_active.png?1' /></a><a ng-hide="p == Page"ng-click="GoToPage( p )"><img src='img/page_active.png?1' style="opacity: 0.5"/></a></span>
+					<div class="pages">
+						<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
 					</div>
+					<span class="pagenum">{{Page}}</span>
 
-					</pagnation>
-				</center>
+				</pagination>
+			</center>
 
-			</workshopcontainer>
-
-		</div>
+		</workshopcontainer>
 
 	</div>
+
+</div>

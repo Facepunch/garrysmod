@@ -37,7 +37,7 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, stack, addonti
 
 	-- We know the name, display it to the user
 	if ( isstring( addontitle ) ) then
-		text = string.format( language.GetPhrase( "errors.addon" ), addontitle .. " " .. addonid )
+		text = string.format( language.GetPhrase( "errors.addon" ), addontitle )
 	end
 
 	local error = {

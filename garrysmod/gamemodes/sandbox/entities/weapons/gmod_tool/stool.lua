@@ -52,6 +52,9 @@ function ToolObj:CreateConVars()
 
 		self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, 1, FCVAR_NOTIFY )
 
+		for cvar, default in pairs( self.ServerConVar ) do
+			CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE )
+		end
 	end
 
 end

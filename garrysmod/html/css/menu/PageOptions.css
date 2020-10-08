@@ -80,10 +80,29 @@ DIV.page DIV.options .search_bar
 	margin-bottom: 8px;
 }
 
+div.ugc_content
+{
+	position: absolute;
+	left: 320px;
+	top: 16px;
+	bottom: 16px;
+	right: 16px;
+	padding: 16px;
+	padding-top: 0;
+}
+
 @media screen and (max-height: 768px) {
 	DIV.page DIV.options UL.submenu LI
 	{
 		margin-bottom: -8px;
+	}
+}
+
+@media screen and (max-width: 1024px)
+{
+	div.ugc_content
+	{
+		left: 200px;
 	}
 }
 
@@ -155,9 +174,9 @@ DIV.page DIV.options .search_bar
 }
 
 
-/* Pop up confirmation message when uninstalling ALL addons */
+/* Pop up confirmation message when uninstalling ALL addons, etc */
 
-body div.modaldialog {
+div.modaldialog {
 	background: rgba( 0, 0, 0, 0.5 );
 	width: 100%;
 	height: 100%;
@@ -168,7 +187,7 @@ body div.modaldialog {
 	z-index: 9999;
 }
 
-body div.centermessage {
+div.centermessage {
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -181,36 +200,135 @@ body div.centermessage {
 	max-width: 500px;
 	text-align: center;
 }
+div.centermessage.left {
+	text-align: left;
+}
 
-body div.centermessage label {
+div.centermessage span {
 	color: black;
 	display: block;
 	font-size: 20px;
 	margin-bottom: 20px;
+	cursor: default;
 }
 
-body div.centermessage a {
+div.centermessage label {
+	position: relative;
+	top: -2px;
+	cursor: default;
+}
+
+div.centermessage a
+{
 	display: block;
 	color: black;
 	font-size: 16px;
 	border-radius: 4px;
 	background: #ddd;
 	padding: 5px 10px;
-	/*margin: 0px 25px;*/
+	text-align: center;
+	cursor: default;
 }
-body div.centermessage a:hover {
+div.centermessage a:hover
+{
+	background: #ccc;
+}
+
+div.centermessage a.big
+{
+	padding: 10px 20px;
+	font-size: 32px;
+}
+div.centermessage a:not(:last-child)
+{
+	margin-bottom: 5px;
+}
+
+div.centermessage a.warning {
+	background: #ca1e12;
+	color: white;
+	font-weight: bold;
+}
+div.centermessage a.warning:hover {
+	background: #eb2719;
+}
+
+div.centermessage a.create {
+	background: #4CAF50;
+	color: white;
+	font-weight: bold;
+}
+div.centermessage a.create:hover {
+	background: #63bb66;
+}
+
+input.preset_name
+{
+	width: 100%;
+	padding: 3px 5px;
+}
+
+
+div.centermessage .button {
+	display: block;
+	color: black;
+	font-size: 16px;
+	border-radius: 4px;
+	background: #ddd;
+	padding: 5px 10px;
+}
+div.centermessage .button:hover {
 	background: #e3e3e3;
 }
 
-body div.centermessage a.confirm {
-	background: #f40;
-	color: white;
-	padding: 10px 20px;
-	font-size: 32px;
-	/*margin: 0px;*/
-	margin-bottom: 10px;
+div.centermessage div.button {
+	margin-bottom: 2px;
+	position: relative;
+	background: #ddd;
+}
+div.centermessage .wstitle {
+	text-align: left;
+	width: 100%;
+	display: inline-block;
+	cursor: default;
+	overflow: hidden;
+}
+div.centermessage .wssub {
+	width: 55px;
+	height: 28px;
+	/* background: #4CAF50; */
+	display: inline-block;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+div.centermessage wsbut img {
+	position: relative;
+	top: 2px;
+	right: 2px;
+}
+div.centermessage wsbut
+{
+	background: #b1b1b1;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+div.centermessage wsbut:hover
+{
+	background: #c1c1c1;
+}
+div.centermessage .subbed wsbut
+{
+	background: #4CAF50;
+}
+/*div.centermessage .subbed wsbut:hover
+{
+	background: #55c55a;
+}*/
+div.centermessage .subbed {
+	background: #b2d6b2 !important;
+}
+div.centermessage .subbed:hover {
+	background: #cadeca !important;
 }
 
-body div.centermessage a.confirm:hover {
-	background: #f60;
-}

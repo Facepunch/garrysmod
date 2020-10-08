@@ -128,7 +128,8 @@ end
 
 function GM:HandlePlayerDriving( ply )
 
-	if ( !ply:InVehicle() ) then return false end
+	-- The player must have a parent to be in a vehicle. If there's no parent, we are in the exit anim, so don't do sitting in 3rd person anymore
+	if ( !ply:InVehicle() || !IsValid( ply:GetParent() ) ) then return false end
 
 	local pVehicle = ply:GetVehicle()
 

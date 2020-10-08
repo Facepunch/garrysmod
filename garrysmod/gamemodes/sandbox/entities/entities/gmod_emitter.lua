@@ -34,7 +34,7 @@ function ENT:Initialize()
 
 end
 
-function ENT:Draw()
+function ENT:Draw( flags )
 
 	-- Don't draw if the player is holding Camera SWEP in their hands
 	local ply = LocalPlayer()
@@ -47,7 +47,7 @@ function ENT:Draw()
 
 	end
 
-	BaseClass.Draw( self )
+	BaseClass.Draw( self, flags )
 
 end
 

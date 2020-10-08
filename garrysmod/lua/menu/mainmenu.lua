@@ -246,7 +246,11 @@ function LoadNewsList()
 	if ( !pnlMainMenu ) then return end
 
 	local json = util.TableToJSON( NewsList )
-	pnlMainMenu:Call( "UpdateNewsList(" .. json .. ")" )
+	pnlMainMenu:Call( "UpdateNewsList(" .. json .. ", " .. cookie.GetString( "hide_newslist", "false" ) .. " )" )
+end
+
+function SaveHideNews( bHide )
+	cookie.Set( "hide_newslist", tostring( bHide ) )
 end
 
 local function IsServerBlacklisted( address, hostname, description, gm, map )
@@ -394,6 +398,38 @@ end
 function UpdateAddonDisabledState()
 	local noaddons, noworkshop = GetAddonStatus()
 	pnlMainMenu:Call( "UpdateAddonDisabledState( " .. tostring( noaddons ) .. ", " .. tostring( noworkshop ) .. " )" )
+end
+
+function MenuGetAddonData( wsid )
+	steamworks.FileInfo( wsid, function( data )
+		local json = util.TableToJSON( data ) or ""
+		pnlMainMenu:Call( "ReceivedChildAddonInfo( " .. json .. " )" )
+	end )
+end
+
+local presetCache = {}
+function CreateNewAddonPreset( data )
+	if ( table.IsEmpty( presetCache ) ) then presetCache = util.JSONToTable( LoadAddonPresets() or "" ) or {} end
+
+	local data = util.JSONToTable( data )
+	presetCache[ data.name ] = data
+
+	SaveAddonPresets( util.TableToJSON( presetCache ) )
+end
+function DeleteAddonPreset( name )
+	if ( table.IsEmpty( presetCache ) ) then presetCache = util.JSONToTable( LoadAddonPresets() or "" ) or {} end
+
+	presetCache[ name ] = {}
+	presetCache[ name ] = nil
+
+	SaveAddonPresets( util.TableToJSON( presetCache ) )
+
+	ListAddonPresets()
+end
+function ListAddonPresets()
+	if ( table.IsEmpty( presetCache ) ) then presetCache = util.JSONToTable( LoadAddonPresets() or "" ) or {} end
+
+	pnlMainMenu:Call( "OnReceivePresetList(" .. util.TableToJSON( presetCache ) .. ")" )
 end
 
 -- Called when UGC subscription status changes

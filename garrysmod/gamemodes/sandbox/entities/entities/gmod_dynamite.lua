@@ -31,9 +31,8 @@ end
 
 function ENT:GetOverlayText()
 
-	local txt = "Damage: " .. math.floor( math.Clamp( self:GetDamage(), 0, 1500 ) )
+	local txt = string.format( "Damage: %g\nDelay: %g",  math.Clamp( self:GetDamage(), 0, 1500 ), self:GetDelay() )
 
-	if ( txt == "" ) then return "" end
 	if ( game.SinglePlayer() ) then return txt end
 
 	return txt .. "\n(" .. self:GetPlayerName() .. ")"

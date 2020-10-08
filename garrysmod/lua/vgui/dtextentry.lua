@@ -349,7 +349,9 @@ end
 
 function PANEL:OnMousePressed( mcode )
 
-	self:OnGetFocus()
+	if ( mcode == MOUSE_LEFT ) then
+		self:OnGetFocus()
+	end
 
 end
 

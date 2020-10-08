@@ -20,7 +20,6 @@ if ( CLIENT ) then
 		return ClientUndos
 	end
 
-
 	--[[---------------------------------------------------------
 		UpdateUI
 		Actually updates the UI. Removes old controls and
@@ -55,7 +54,7 @@ if ( CLIENT ) then
 		AddUndo
 		Called from server. Adds a new undo to our UI
 	-----------------------------------------------------------]]
-	local function AddUndo()
+	net.Receive( "Undo_AddUndo", function()
 
 		local k	= net.ReadInt( 16 )
 		local v	= net.ReadString()
@@ -64,8 +63,21 @@ if ( CLIENT ) then
 
 		MakeUIDirty()
 
-	end
-	net.Receive( "Undo_AddUndo", AddUndo )
+	end )
+
+	-- Called from server, fires GM:OnUndo
+	net.Receive( "Undo_FireUndo", function()
+
+		local name = net.ReadString()
+		local hasCustomText = net.ReadBool()
+		local customtext
+		if ( hasCustomText ) then
+			customtext = net.ReadString()
+		end
+
+		hook.Run( "OnUndo", name, customtext )
+
+	end )
 
 
 	--[[---------------------------------------------------------
@@ -166,6 +178,7 @@ local Current_Undo = nil
 
 util.AddNetworkString( "Undo_Undone" )
 util.AddNetworkString( "Undo_AddUndo" )
+util.AddNetworkString( "Undo_FireUndo" )
 
 --[[---------------------------------------------------------
 	GetTable
@@ -315,13 +328,13 @@ function Finish( NiceText )
 	local index = Current_Undo.Owner:UniqueID()
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
-	local id = table.insert( PlayerUndo[ index ], Current_Undo )
+	Current_Undo.NiceText = NiceText or Current_Undo.Name
 
-	NiceText = NiceText or Current_Undo.Name
+	local id = table.insert( PlayerUndo[ index ], Current_Undo )
 
 	net.Start( "Undo_AddUndo" )
 		net.WriteInt( id, 16 )
-		net.WriteString( NiceText )
+		net.WriteString( Current_Undo.NiceText )
 	net.Send( Current_Undo.Owner )
 
 	-- Have one of the entities in the undo tell us when it gets undone.
@@ -368,11 +381,13 @@ function Do_Undo( undo )
 	end
 
 	if ( count > 0 ) then
-		if ( undo.CustomUndoText ) then
-			undo.Owner:SendLua( 'hook.Run("OnUndo","' .. undo.Name .. '","' .. undo.CustomUndoText .. '")' )
-		else
-			undo.Owner:SendLua( 'hook.Run("OnUndo","' .. undo.Name .. '")' )
-		end
+		net.Start( "Undo_FireUndo" )
+			net.WriteString( undo.Name )
+			net.WriteBool( undo.CustomUndoText != nil )
+			if ( undo.CustomUndoText != nil ) then
+				net.WriteString( undo.CustomUndoText )
+			end
+		net.Send( undo.Owner )
 	end
 
 	return count

@@ -193,7 +193,7 @@ DIV.disabled
 	border-radius: 4px;
 }
 
-pagnation
+pagination
 {
 	position: absolute;
 	bottom: 4px;
@@ -260,6 +260,12 @@ loading
 	box-shadow: 0 0 10px 1px rgba( 0, 0, 0, 0.4 );
 	cursor: hand;
 }
+.news_buttons div.new {
+	background: #f55;
+}
+.news_buttons div.selected.new {
+	background: #fcc;
+}
 .news_buttons div.selected {
 	background: #eee;
 }
@@ -272,9 +278,8 @@ loading
 	box-shadow: 0 0 10px 1px rgba( 0, 0, 0, 0.4 );
 	height: 256px;
 	width: 512px;
-	position:relative;
+	position: relative;
 }
-
 .news_item div font {
 	font-weight: normal;
 	font-size: small;

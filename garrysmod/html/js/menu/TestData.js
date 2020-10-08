@@ -19,7 +19,7 @@ function DoTestData()
 
 if ( !IN_ENGINE )
 {
-	setTimeout( function () { DoTestData() }, 10 );
+	setTimeout( function () { DoTestData() }, 100 );
 }
 
 function TestUpdateServers( type, id )

@@ -40,7 +40,7 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, no
 				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "entity", self.PropPanel, {
 					nicename	= ent.PrintName or ent.ClassName,
 					spawnname	= ent.SpawnName,
-					material	= "entities/" .. ent.SpawnName .. ".png",
+					material	= ent.IconOverride or "entities/" .. ent.SpawnName .. ".png",
 					admin		= ent.AdminOnly
 				} )
 
