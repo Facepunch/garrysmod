@@ -208,7 +208,7 @@ end
 
 function PANEL:SetColor( color )
 
-	self.RGB.LastY = ( 1 - ColorToHSV( color ) / 360 ) * self.RGB:GetTall()
+	self.RGB.LastY = ( 1 - select(1, ColorToHSV( color )) / 360 ) * self.RGB:GetTall()
 
 	self.HSV:SetColor( color )
 
