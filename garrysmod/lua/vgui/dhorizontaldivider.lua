@@ -145,7 +145,7 @@ function PANEL:StartGrab()
 
 	self:SetCursor( "sizewe" )
 
-	self:SetHoldPos( self.m_DragBar:CursorPos() )
+	self:SetHoldPos( ( self.m_DragBar:CursorPos() ) )
 
 	self:SetDragging( true )
 	self:MouseCapture( true )
