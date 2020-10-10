@@ -88,6 +88,20 @@ function player.GetBySteamID64( ID )
 	return false
 end
 
+local PlayerCache = nil
+function player.Iterator()
+	if PlayerCache == nil then PlayerCache = player.GetAll() end
+	
+	local players, i = PlayerCache, 0
+	return function()
+		i = i + 1
+		return players[i]
+	end
+end
+
+hook.Add("OnEntityCreated", "player.Iterator", function(ent) if ent:IsPlayer() then PlayerCache = nil end end)
+hook.Add("EntityRemoved", "player.Iterator", function(ent) if ent:IsPlayer() then PlayerCache = nil end end)
+
 --[[---------------------------------------------------------
 	Name: DebugInfo
 	Desc: Prints debug information for the player
