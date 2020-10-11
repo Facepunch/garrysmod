@@ -501,8 +501,53 @@ end
 if ( SERVER ) then
 
 	AccessorFunc( meta, "m_bUnFreezable", "UnFreezable" )
-
+	
+	--
+	-- Door state
+	--
+	
+	DOOR_STATE_CLOSED = 0
+	DOOR_STATE_OPENING = 1
+	DOOR_STATE_OPEN = 2
+	DOOR_STATE_CLOSING = 3
+	DOOR_STATE_AJAR = 4
+	
+	function meta:GetDoorState()
+		return self:GetSaveTable().m_eDoorState
+	end
+	
+	function meta:IsDoorBlocked()
+		return IsValid( self:GetSaveTable().m_hBlocker ) 
+	end
+	
+	function meta:IsDoorLocked()
+		return self:GetSaveTable().m_bLocked
+	end
+	
+	--
+	-- Activator
+	--
+	
+	function meta:GetActivator()
+		return self:GetSaveTable().m_hActivator
+	end
+	
+	function meta:IsActivator( ent )
+		return ent == self:GetSaveTable().m_hActivator
+	end
 end
+
+--
+-- If the entity is a door
+--
+function meta:IsDoor()
+	local class = self:GetClass()
+	if class == "prop_door_rotating" or class == "func_door" or class == "func_door_rotating" then
+		return true
+	end
+	return false
+end
+
 
 --
 -- Networked var proxies
