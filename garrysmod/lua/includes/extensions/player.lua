@@ -91,12 +91,7 @@ end
 local PlayerCache = nil
 function player.Iterator()
 	if PlayerCache == nil then PlayerCache = player.GetAll() end
-	
-	local players, i = PlayerCache, 0
-	return function()
-		i = i + 1
-		return players[i]
-	end
+	return ipairs(PlayerCache)
 end
 
 hook.Add("OnEntityCreated", "player.Iterator", function(ent) if ent:IsPlayer() then PlayerCache = nil end end)
