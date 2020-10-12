@@ -30,12 +30,7 @@ end
 local EntityCache = nil
 function ents.Iterator()
 	if EntityCache == nil then EntityCache = ents.GetAll() end
-	
-	local entities, i = EntityCache, 0
-	return function()
-		i = i + 1
-		return entities[i]
-	end
+	return ipairs(EntityCache)
 end
 
 hook.Add("OnEntityCreated", "ents.Iterator", function(ent) EntityCache = nil end)
