@@ -402,18 +402,14 @@ function Parse( ml, maxwidth )
 							end
 						end
 
-						local previous_blk = new_block_list[ #new_block_list ]
+						local previous_block = new_block_list[ #new_block_list ]
 						local wrap = lastSpacePos == string.len( curString ) && lastSpacePos > 0
-						if ( wrap and surface.GetTextSize( blk.text ) < maxwidth ) then
-							-- Wrap the block onto the next line first, as we can probably fit it there
-							if ( previous_blk ) then
-								local trimmed, trimCharNum = previous_blk.text:gsub(" +$", "")
-								if ( trimCharNum > 0 ) then
-									previous_blk.text = trimmed
-								else
-									previous_blk.text = previous_blk.text .. "-"
-								end
-								previous_blk.thisX = surface.GetTextSize( previous_blk.text )
+						if ( previous_block and previous_block.text:match(" $") and wrap and surface.GetTextSize( blk.text ) < maxwidth ) then
+							-- If the block was preceded by a space, wrap the block onto the next line first, as we can probably fit it there
+							local trimmed, trimCharNum = previous_block.text:gsub(" +$", "")
+							if ( trimCharNum > 0 ) then
+								previous_block.text = trimmed
+								previous_block.thisX = surface.GetTextSize( previous_block.text )
 							end
 						else
 							if ( wrap ) then
@@ -423,6 +419,7 @@ function Parse( ml, maxwidth )
 								j = utf8.offset( curString, 1, sequenceStartPos )
 								curString = string.sub( curString, 1, sequenceStartPos - 1 )
 							else
+								-- Otherwise, strip the trailing space and start a new line
 								ch = string.sub( curString, lastSpacePos + 1 ) .. ch
 								j = lastSpacePos + 1
 								curString = string.sub( curString, 1, math.max( lastSpacePos - 1, 0 ) )
