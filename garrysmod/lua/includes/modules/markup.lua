@@ -245,10 +245,14 @@ end
 	Desc: Converts a string to its escaped, markup-safe equivalent
 	Usage: markup.Escape("<font=Default>The font will remain unchanged & these < > & symbols will also appear normally</font>")
 -----------------------------------------------------------]]
-local escapeEntities = {
+local escapeEntities, unescapeEntities = {
 	["&"] = "&amp;",
 	["<"] = "&lt;",
 	[">"] = "&gt;"
+}, {
+	["&amp;"] = "&",
+	["&lt;"] = "<",
+	["&gt;"] = ">"
 }
 function Escape( str )
 	return ( string.gsub( tostring( str ), "[&<>]", escapeEntities ) )
@@ -293,10 +297,8 @@ function Parse( ml, maxwidth )
 	for i, blk in ipairs( blocks ) do
 
 		surface.SetFont( blocks[ i ].font )
-
-		blocks[ i ].text = string.gsub( blocks[ i ].text, "&gt;", ">" )
-		blocks[ i ].text = string.gsub( blocks[ i ].text, "&lt;", "<" )
-		blocks[ i ].text = string.gsub( blocks[ i ].text, "&amp;", "&" )
+		
+		blocks[ i ].text = string.gsub( blocks[ i ].text, "(&.-;)", unescapeEntities )
 
 		local thisY = 0
 		local curString = ""
