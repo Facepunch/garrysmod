@@ -296,13 +296,13 @@ function Parse( ml, maxwidth )
 	local lineHeight = 0
 	for i, blk in ipairs( blocks ) do
 
-		surface.SetFont( blocks[ i ].font )
+		surface.SetFont( blk.font )
 		
-		blocks[ i ].text = string.gsub( blocks[ i ].text, "(&.-;)", unescapeEntities )
+		blk.text = string.gsub( blk.text, "(&.-;)", unescapeEntities )
 
 		local thisY = 0
 		local curString = ""
-		for j, c in utf8.codes( blocks[ i ].text ) do
+		for j, c in utf8.codes( blk.text ) do
 
 			local ch = utf8.char( c )
 
@@ -318,15 +318,17 @@ function Parse( ml, maxwidth )
 				if ( string.len( curString ) > 0 ) then
 					local x1 = surface.GetTextSize( curString )
 
-					local new_block = {}
-					new_block.text = curString
-					new_block.font = blocks[ i ].font
-					new_block.colour = blocks[ i ].colour
-					new_block.thisY = thisY
-					new_block.thisX = x1
-					new_block.offset = {}
-					new_block.offset.x = xOffset
-					new_block.offset.y = yOffset
+					local new_block = {
+						text = curString,
+						font = blk.font,
+						colour = blk.colour,
+						thisY = thisY,
+						thisX = x1,
+						offset = {
+							x = xOffset,
+							y = yOffset
+						}
+					}
 					table.insert( new_block_list, new_block )
 					if ( xOffset + x1 > xMax ) then
 						xMax = xOffset + x1
@@ -345,15 +347,17 @@ function Parse( ml, maxwidth )
 				if ( string.len( curString ) > 0 ) then
 					local x1 = surface.GetTextSize( curString )
 
-					local new_block = {}
-					new_block.text = curString
-					new_block.font = blocks[ i ].font
-					new_block.colour = blocks[ i ].colour
-					new_block.thisY = thisY
-					new_block.thisX = x1
-					new_block.offset = {}
-					new_block.offset.x = xOffset
-					new_block.offset.y = yOffset
+					local new_block = {
+						text = curString,
+						font = blk.font,
+						colour = blk.colour,
+						thisY = thisY,
+						thisX = x1,
+						offset = {
+							x = xOffset,
+							y = yOffset
+						}
+					}
 					table.insert( new_block_list, new_block )
 					if ( xOffset + x1 > xMax ) then
 						xMax = xOffset + x1
@@ -441,15 +445,17 @@ function Parse( ml, maxwidth )
 								lineHeight = y1
 							end
 
-							local new_block = {}
-							new_block.text = curString
-							new_block.font = blocks[ i ].font
-							new_block.colour = blocks[ i ].colour
-							new_block.thisY = thisY
-							new_block.thisX = x1
-							new_block.offset = {}
-							new_block.offset.x = xOffset
-							new_block.offset.y = yOffset
+							local new_block = {
+								text = curString,
+								font = blk.font,
+								colour = blk.colour,
+								thisY = thisY,
+								thisX = x1,
+								offset = {
+									x = xOffset,
+									y = yOffset
+								}
+							}
 							table.insert( new_block_list, new_block )
 
 							if ( xOffset + x1 > xMax ) then
@@ -485,15 +491,17 @@ function Parse( ml, maxwidth )
 
 			local x1 = surface.GetTextSize( curString )
 
-			local new_block = {}
-			new_block.text = curString
-			new_block.font = blocks[ i ].font
-			new_block.colour = blocks[ i ].colour
-			new_block.thisY = thisY
-			new_block.thisX = x1
-			new_block.offset = {}
-			new_block.offset.x = xOffset
-			new_block.offset.y = yOffset
+			local new_block = {
+				text = curString,
+				font = blk.font,
+				colour = blk.colour,
+				thisY = thisY,
+				thisX = x1,
+				offset = {
+					x = xOffset,
+					y = yOffset
+				}
+			}
 			table.insert( new_block_list, new_block )
 
 			lineHeight = thisY
