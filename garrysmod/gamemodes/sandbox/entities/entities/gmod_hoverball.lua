@@ -106,6 +106,8 @@ function ENT:DrawTranslucent( flags )
 	BaseClass.DrawTranslucent( self, flags )
 end
 
+local Linear = Vector(0,0,0)
+
 function ENT:PhysicsSimulate( phys, deltatime )
 
 	if ( !self:GetEnabled() ) then return end
@@ -143,9 +145,9 @@ function ENT:PhysicsSimulate( phys, deltatime )
 
 	Exponent = math.Clamp( Exponent, -5000, 5000 )
 
-	local Linear = vector_origin
 	local Angular = vector_origin
 
+	Linear:Zero()
 	Linear.z = Exponent
 
 	if ( AirResistance > 0 ) then
