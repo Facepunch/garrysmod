@@ -7,7 +7,7 @@ local ipairs = ipairs
 local setmetatable = setmetatable
 local math = math
 local utf8 = utf8
-local Color = Color
+local _Color = Color
 
 local MarkupObject = {}
 MarkupObject.__index = MarkupObject
@@ -24,6 +24,28 @@ TEXT_ALIGN_CENTER	= 1
 TEXT_ALIGN_RIGHT	= 2
 TEXT_ALIGN_TOP		= 3
 TEXT_ALIGN_BOTTOM	= 4
+
+--[[---------------------------------------------------------
+	Name: Color(Color(r, g, b, a))
+	Desc: Convenience function which converts a Color object into a string
+	      which can be used in the <color=r,g,b,a></color> tag
+
+	      e.g. Color(255, 0, 0, 150) -> 255,0,0,150
+	           Color(255, 0, 0)      -> 255,0,0
+	           Color(255, 0, 0, 255) -> 255,0,0
+
+	Usage: markup.Color(Color(r, g, b, a))
+-----------------------------------------------------------]]
+function Color( col )
+	return
+		col.r .. "," ..
+		col.g .. "," ..
+		col.b ..
+		-- If the alpha value is 255, we don't need to include it in the <color> tag, so just omit it:
+		( col.a == 255 and "" or ( "," .. col.a ) )
+end
+
+local Color = _Color
 
 --[[---------------------------------------------------------
 	Name: Temporary information used when building text frames.
