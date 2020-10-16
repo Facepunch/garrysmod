@@ -143,10 +143,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 
 	Exponent = math.Clamp( Exponent, -5000, 5000 )
 
-	local Linear = vector_origin
-	local Angular = vector_origin
-
-	Linear.z = Exponent
+	local Linear = Vector( 0, 0, Exponent )
 
 	if ( AirResistance > 0 ) then
 
@@ -155,7 +152,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 
 	end
 
-	return Angular, Linear, SIM_GLOBAL_ACCELERATION
+	return vector_origin, Linear, SIM_GLOBAL_ACCELERATION
 
 end
 
