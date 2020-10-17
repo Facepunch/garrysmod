@@ -68,6 +68,7 @@ function PANEL:Fill()
 			else
 				btn:SetOnViewMaterial( "icon16/" .. v )
 			end
+			btn:SetTooltip( btn:GetMatName() )
 			btn:SetSize( 22, 22 )
 			btn:SetPos( -22, -22 )
 			btn:SetStretchToFit( false )
