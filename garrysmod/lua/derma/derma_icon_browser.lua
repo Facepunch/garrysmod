@@ -127,7 +127,7 @@ function Derma_OpenIconBrowser()
 	Search:SetTall( 24 )
 	Search:SetUpdateOnType( true )
 	Search.OnValueChange = function( self )
-		IconBrowser:FilterByText( ( Search:GetValue():gsub( "^icon16/(.+)", "%1" ) ) ) -- If the user typed icon16/ at the start, get rid of it for them
+		IconBrowser:FilterByText( ( Search:GetValue():Trim():gsub( "^icon16/(.+)", "%1" ) ) ) -- If the user typed icon16/ at the start, get rid of it for them and trim any whitespace
 	end
 
 	-- Add a little magnifying glass icon in the right corner of the search box
