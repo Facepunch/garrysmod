@@ -1,6 +1,6 @@
 ---- Brazilian Portuguese language strings
 
-local L = LANG.CreateLanguage("Português brasileiro")
+local L = LANG.CreateLanguage("Português (Brasil)")
 
 --- General text used in various places
 L.traitor    = "Traidor"
