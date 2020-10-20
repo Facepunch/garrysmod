@@ -194,13 +194,14 @@
 					<input type="checkbox" ng-model="LoadPresetResub"/><label ng-tranny="'addons.preset_resub_missing'"></label><br/>
 
 					<br><b ng-Tranny="'addons.preset_new_action'"></b><br>
-					<input type="radio" name=loadpreset_newitems" value="" ng-model="CreatePresetNew"/><label ng-tranny="'addons.action_nothing'"></label><br/>
-					<input type="radio" name=loadpreset_newitems" value="disable" ng-model="CreatePresetNew"/><label ng-tranny="'addons.action_disable'"></label><br/>
-					<input type="radio" name=loadpreset_newitems" value="enable" ng-model="CreatePresetNew"/><label ng-tranny="'addons.action_enable'"></label><br/>
+					<input type="radio" name="loadpreset_newitems" value="" ng-model="CreatePresetNew"/><label ng-tranny="'addons.action_nothing'"></label><br/>
+					<input type="radio" name="loadpreset_newitems" value="disable" ng-model="CreatePresetNew"/><label ng-tranny="'addons.action_disable'"></label><br/>
+					<input type="radio" name="loadpreset_newitems" value="enable" ng-model="CreatePresetNew"/><label ng-tranny="'addons.action_enable'"></label><br/>
 
 					<br>
 					<a ng-click="LoadSelectedPreset()" ng-tranny="'addons.load_preset'" class="create"></a>
-					<a ng-click="DeletePreset( SelectedPreset );" ng-tranny="'addons.delete_preset'" class="warning"></a>
+					<a ng-click="DeletePreset( SelectedPreset )" ng-tranny="'addons.delete_preset'" class="warning"></a>
+					<a ng-click="ExportPreset( SelectedPreset )" ng-tranny="'addons.export_preset'" class="export"></a><br/>
 				</div>
 			</div><!--Space/newline here fucks with alignment, thanks HTML
 		 --><a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'"></a></div>
