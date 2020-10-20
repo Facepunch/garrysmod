@@ -468,7 +468,13 @@ local importPresetURLOptions = {
 	method = "GET",
 	success = function( code, body, headers )
 		urlImportInProgress = false
-		ImportPreset( body or "{}" )
+		body = body or "{}"
+
+		if ( string.StartWith( body, "{" ) and string.EndsWith( body, "}" ) ) then
+			ImportPresetFromJSON( body )
+		else
+			ImportPreset( body )
+		end
 	end,
 	failed = function( reason )
 		urlImportInProgress = false
