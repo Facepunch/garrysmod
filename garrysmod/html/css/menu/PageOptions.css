@@ -244,6 +244,15 @@ div.centermessage a:not(:last-child)
 	margin-bottom: 5px;
 }
 
+div.centermessage a.export {
+	background: #141aba;
+	color: white;
+	font-weight: bold;
+}
+div.centermessage a.export:hover {
+	background: #2228bf;
+}
+
 div.centermessage a.warning {
 	background: #ca1e12;
 	color: white;
