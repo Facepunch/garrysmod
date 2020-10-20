@@ -1,5 +1,4 @@
-
-include( "background.lua" )
+﻿include( "background.lua" )
 include( "cef_credits.lua" )
 include( "openurl.lua" )
 include( "ugcpublish.lua" )
@@ -430,6 +429,189 @@ function ListAddonPresets()
 	if ( table.IsEmpty( presetCache ) ) then presetCache = util.JSONToTable( LoadAddonPresets() or "" ) or {} end
 
 	pnlMainMenu:Call( "OnReceivePresetList(" .. util.TableToJSON( presetCache ) .. ")" )
+end
+
+--
+-- Called from JS
+--
+function ImportPreset(presetData)
+	if ( table.IsEmpty( presetCache ) ) then presetCache = util.JSONToTable( LoadAddonPresets() or "" ) or {} end
+
+	-- Import: Base64 encoded & compressed JSON > compressed JSON > JSON > Lua table
+	-- Export: Lua table > JSON > compressed JSON > Base64 encoded & compressed JSON
+	local data = util.JSONToTable( util.Decompress( util.Base64Decode(presetData) or "" ) or "" )
+	if ( not data or not data.name or not data.enabled or not data.disabled or not data.newAction ) then print( "Got invalid data, aborting preset import..." ) return end
+
+	presetCache[ data.name ] = data
+
+	SaveAddonPresets( util.TableToJSON( presetCache ) )
+end
+
+--
+-- Called from JS
+--
+function ImportPresetFromJSON( presetJSON )
+	if ( table.IsEmpty( presetCache ) ) then presetCache = util.JSONToTable( LoadAddonPresets() or "" ) or {} end
+
+	local data = util.JSONToTable( presetJSON )
+	if ( not data or not data.name or not data.enabled or not data.disabled or not data.newAction ) then print( "Got invalid JSON data, aborting preset import..." ) return end
+
+	presetCache[ data.name ] = data
+
+	SaveAddonPresets( util.TableToJSON( presetCache ) )
+end
+
+-- Flag so that multiple imports don't get started and step on each other
+local urlImportInProgress = false
+-- Table used for HTTP function
+local importPresetURLOptions = {
+	method = "GET",
+	success = function( code, body, headers )
+		urlImportInProgress = false
+		ImportPreset( body or "{}" )
+	end,
+	failed = function( reason )
+		urlImportInProgress = false
+		print( "Failed to retrieve addon collection for reason: " .. reason )
+	end
+}
+--
+-- Called from JS
+--
+function ImportPresetFromURL( presetURL )
+	if ( urlImportInProgress ) then print( "URL preset import already in progress, aborting..." ) return end
+	if ( table.IsEmpty( presetCache ) ) then presetCache = util.JSONToTable( LoadAddonPresets() or "" ) or {} end
+
+	urlImportInProgress = true
+	importPresetURLOptions.url = presetURL
+	HTTP(importPresetURLOptions)
+end
+
+-- Locals for storing collection info and data
+local collectionImportInProgress, currentPreset, collectionQueue, collectionHistory = false, nil, {}, {}
+-- Table used for HTTP function
+local importCollectionURLOptions = {
+	url = "https://api.steampowered.com/ISteamRemoteStorage/GetCollectionDetails/v1/",
+	method = "POST",
+	failed = function( reason )
+		collectionImportInProgress, currentPreset, collectionQueue, collectionHistory = false, nil, {}, {}
+		print( "Failed to retrieve collection info for reason: " .. reason )
+	end
+}
+-- Add this to table after so we can access importCollectionURLOptions in a recursive sense
+importCollectionURLOptions.success = function( code, body, headers )
+	local data, childCollections = util.JSONToTable( body ), {}
+
+	-- Loop over each collection retrieved
+	for i=1, #data.response.collectiondetails do
+		local collection = data.response.collectiondetails[ i ]
+
+		-- Loop over each item in the collection
+		if collection.children then
+			for i2=1, #collection.children do
+				local item = collection.children[ i2 ]
+				item.filetype = tonumber( item.filetype )
+
+				-- Workshop item
+				if ( item.filetype == 0 ) then
+					currentPreset.enabled[ #currentPreset.enabled+1 ] = item.publishedfileid
+				-- Workshop collection
+				elseif ( item.filetype == 2 and not collectionHistory[ item.publishedfileid ] ) then
+					table.insert( childCollections, item.publishedfileid )
+					collectionHistory[ item.publishedfileid ] = true
+				end
+			end
+		end
+
+		collectionQueue[ collection.publishedfileid ] = nil
+	end
+
+	-- Add any child collections
+	if ( #childCollections > 0 ) then
+		local parameters = {
+			collectioncount = tostring( #childCollections )
+		}
+		for i=1, #childCollections do
+			parameters[ string.format( "publishedfileids[%d]", i-1 ) ] = childCollections[ i ]
+			collectionQueue[ childCollections[ i ] ] = true
+		end
+		importCollectionURLOptions.parameters = parameters
+
+		HTTP(importCollectionURLOptions)
+	-- Check if all collections have been processed
+	elseif ( table.IsEmpty( collectionQueue ) ) then
+		if ( #currentPreset.enabled > 0 ) then
+			local addonList = {}
+			for i=1, #currentPreset.enabled do
+				if ( addonList[ currentPreset.enabled[ i ] ] ) then
+					table.remove( currentPreset.enabled, i )
+					i = i-1
+				else
+					addonList[ currentPreset.enabled[ i ] ] = true
+				end
+			end
+
+			presetCache[ currentPreset.name ] = currentPreset
+
+			SaveAddonPresets( util.TableToJSON( presetCache ) )
+		end
+
+		collectionImportInProgress, currentPreset, collectionHistory = false, nil, {}
+	end
+end
+
+--
+-- Called from JS
+--
+function ImportPresetFromCollection( collections )
+	if ( collectionImportInProgress ) then print( "Collection import already in progress, aborting..." ) return end
+	if ( table.IsEmpty( presetCache ) ) then presetCache = util.JSONToTable( LoadAddonPresets() or "" ) or {} end
+
+	-- Filter for valid collection IDs (numbers)
+	local collectionIDs = string.Explode( " ", collections )
+	for i=1, #collectionIDs do
+		if ( not tonumber( collectionIDs[ i ] ) ) then
+			table.remove( collectionIDs, i )
+			i = i-1
+		end
+	end
+
+	if ( #collectionIDs == 0 ) then print( "Didn't get any collection IDs, aborting..." ) return end
+
+	collectionImportInProgress = true
+
+	local parameters = {
+		collectioncount = tostring( #collectionIDs )
+	}
+	for i=1, #collectionIDs do
+		parameters[ string.format( "publishedfileids[%d]", i-1 ) ] = collectionIDs[ i ]
+		collectionQueue[ collectionIDs[ i ] ] = true
+		collectionHistory[ collectionIDs[ i ] ] = true
+	end
+	importCollectionURLOptions.parameters = parameters
+
+	-- Setup preset table
+	currentPreset = {
+		name = string.format( "Collection Preset: %s", collections ),
+		newAction = "disable",
+		enabled = {},
+		disabled = {}
+	}
+
+	HTTP(importCollectionURLOptions)
+end
+
+--
+-- Called from JS
+--
+function ExportPreset( name )
+	if ( table.IsEmpty( presetCache ) ) then presetCache = util.JSONToTable( LoadAddonPresets() or "" ) or {} end
+
+	-- Export: Lua table > JSON > compressed JSON > Base64 encoded & compressed JSON
+	-- Import: Base64 encoded & compressed JSON > compressed JSON > JSON > Lua table
+	local data = util.Base64Encode( util.Compress( util.TableToJSON( presetCache[ name ] or {} ) ) )
+	data = string.Replace(string.Replace(data, "\n", ""), "\r", "")
+	SetClipboardText(data)
 end
 
 -- Called when UGC subscription status changes
