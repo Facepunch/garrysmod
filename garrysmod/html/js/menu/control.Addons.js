@@ -161,6 +161,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		$scope.CreatePresetOpen = false;
 		$scope.LoadPresetMenuOpen = false;
 		$scope.SelectedPreset = undefined;
+		$scope.ImportPresetOpen = false;
 	}
 	$scope.ExecutePopupFunction = function()
 	{
@@ -329,6 +330,40 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		subscriptions.ApplyChanges();
 		$scope.LoadPresetMenuOpen = false;
 		$scope.SelectedPreset = undefined;
+	}
+	$scope.ImportPreset = function()
+	{
+		switch ( $scope.ImportPresetMethod )
+		{
+			case "1":
+				lua.Run( "ImportPreset( %s )", $scope.ImportPresetData );
+				break;
+			case "2":
+				lua.Run( "ImportPresetFromJSON( %s )", $scope.ImportPresetData );
+				break;
+			case "3":
+				lua.Run( "ImportPresetFromURL( %s )", $scope.ImportPresetData );
+				break;
+			case "4":
+				lua.Run( "ImportPresetFromCollection( %s )", $scope.ImportPresetData );
+				break;
+		}
+
+		$scope.ImportPresetOpen = false;
+	}
+	$scope.ExportPreset = function( preset )
+	{
+		lua.Run( "ExportPreset( %s )", preset );
+		$scope.LoadPresetMenuOpen = false;
+		$scope.SelectedPreset = undefined;
+	}
+	$scope.OpenImportPresetMenu = function()
+	{
+		// Reset to defaults..
+		$scope.ImportPresetMethod = "1";
+		$scope.ImportPresetData = "";
+
+		$scope.ImportPresetOpen = true;
 	}
 
 	$scope.GetAddonClasses = function( file )
