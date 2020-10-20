@@ -133,6 +133,7 @@
 			<div class="ugc_settings_cat"><!--<span>Presets:</span>-->
 				<a ng-click="OpenCreatePresetMenu()" ng-Tranny="'addons.create_preset'"></a>
 				<a ng-click="OpenLoadPresetMenu()" ng-Tranny="'addons.load_preset'"></a>
+				<a ng-click="OpenImportPresetMenu()" ng-Tranny="'addons.import_preset'"></a>
 			</div>
 		</div>
 	</div>
@@ -205,5 +206,25 @@
 				</div>
 			</div><!--Space/newline here fucks with alignment, thanks HTML
 		 --><a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'"></a></div>
+	</div>
+
+	<div class="modaldialog" ng-show="ImportPresetOpen">
+		<div class="centermessage left create_preset">
+			<b ng-tranny="'addons.import_preset'"></b>
+			<br/><br/>
+
+			<b ng-Tranny="'addons.preset_import_method'"></b><br/>
+			<input type="radio" name="importpreset_method" value="1" ng-model="ImportPresetMethod"/><label ng-tranny="'addons.import_export'"></label>
+			<input type="radio" name="importpreset_method" value="2" ng-model="ImportPresetMethod"/><label ng-tranny="'addons.import_json'"></label>
+			<input type="radio" name="importpreset_method" value="3" ng-model="ImportPresetMethod"/><label ng-tranny="'addons.import_url'"></label>
+			<input type="radio" name="importpreset_method" value="4" ng-model="ImportPresetMethod"/><label ng-tranny="'addons.import_collection'"></label><br/>
+			<br/>
+
+			<input type="text" class="preset_name" ng-tranny="'addons.preset_data_placeholder'" ng-model="ImportPresetData"/><br/>
+			<br/>
+
+			<a ng-click="ImportPreset()" ng-tranny="'addons.import_preset'" class="create big"></a>
+			<a ng-click="ClosePopupMessage()" ng-tranny="'addons.cancel'"></a>
+		</div>
 	</div>
 </div>
