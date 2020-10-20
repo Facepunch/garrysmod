@@ -472,7 +472,7 @@ local importPresetURLOptions = {
 	end,
 	failed = function( reason )
 		urlImportInProgress = false
-		print( "Failed to retrieve addon collection for reason: " .. reason )
+		print( "Failed to retrieve addon preset for reason: " .. reason )
 	end
 }
 --
