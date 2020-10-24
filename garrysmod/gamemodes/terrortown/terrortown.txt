@@ -28,7 +28,7 @@
 			"name"		"ttt_time_limit_minutes"
 			"text"		"Map Time Limit"
 			"type"		"Numeric"
-			"default"	"75"
+			"default"	"90"
 		}
 		
 		6
@@ -52,7 +52,7 @@
 			"name"		"ttt_posttime_seconds"
 			"text"		"Postround Time"
 			"type"		"Numeric"
-			"default"	"30"
+			"default"	"10"
 		}
 		
 		9
@@ -60,7 +60,7 @@
 			"name"		"ttt_round_limit"
 			"text"		"Round Limit"
 			"type"		"Numeric"
-			"default"	"6"
+			"default"	"12"
 		}
 		
 		10
@@ -92,7 +92,7 @@
 			"name"		"ttt_postround_dm"
 			"text"		"Postround Deathmatch"
 			"type"		"CheckBox"
-			"default"	"0"
+			"default"	"1"
 		}
 		
 		14
@@ -140,7 +140,7 @@
 			"name"		"ttt_det_credits_starting"
 			"text"		"Detective Credits"
 			"type"		"Numeric"
-			"default"	"1"
+			"default"	"2"
 		}
 		
 		20
@@ -164,7 +164,7 @@
 			"name"		"ttt_detective_hats"
 			"text"		"Detective Hats"
 			"type"		"CheckBox"
-			"default"	"0"
+			"default"	"1"
 		}
 		
 		23
@@ -172,7 +172,7 @@
 			"name"		"ttt_allow_discomb_jump"
 			"text"		"Discombob Jumping"
 			"type"		"CheckBox"
-			"default"	"0"
+			"default"	"1"
 		}
 		
 		24
@@ -180,7 +180,7 @@
 			"name"		"ttt_no_nade_throw_during_prep"
 			"text"		"Preround Grenade Throwing"
 			"type"		"CheckBox"
-			"default"	"0"
+			"default"	"1"
 		}
 		
 		25
@@ -188,7 +188,7 @@
 			"name"		"ttt_teleport_telefrags"
 			"text"		"Teleporter Fragging"
 			"type"		"CheckBox"
-			"default"	"0"
+			"default"	"1"
 		}
 		
 		26
@@ -220,7 +220,7 @@
 			"name"		"ttt_namechange_bantime"
 			"text"		"Name Change Ban Time"
 			"type"		"Numeric"
-			"default"	"10"
+			"default"	"20"
 		}
 		
 	}
