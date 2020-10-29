@@ -34,27 +34,20 @@ function ToolObj:CreateConVars()
 
 	local mode = self:GetMode()
 
+	self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, 1, { FCVAR_NOTIFY, FCVAR_REPLICATED } )
+
 	if ( CLIENT ) then
 
 		for cvar, default in pairs( self.ClientConVar ) do
-
 			CreateClientConVar( mode .. "_" .. cvar, default, true, true )
-
 		end
-
-		return
-	end
-
-	-- Note: I changed this from replicated because replicated convars don't work
-	-- when they're created via Lua.
-
-	if ( SERVER ) then
-
-		self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, 1, FCVAR_NOTIFY )
+		
+	else
 
 		for cvar, default in pairs( self.ServerConVar ) do
 			CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE )
 		end
+
 	end
 
 end
@@ -92,7 +85,6 @@ end
 
 function ToolObj:Allowed()
 
-	if ( CLIENT ) then return true end
 	return self.AllowedCVar:GetBool()
 
 end

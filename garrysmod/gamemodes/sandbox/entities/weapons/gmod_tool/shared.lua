@@ -176,7 +176,7 @@ function SWEP:Think()
 
 		if ( lastmode_obj ) then
 			-- We want to release the ghost entity just in case
-			lastmode_obj:Holster()
+			lastmode_obj:ReleaseGhostEntity()
 		end
 	end
 
