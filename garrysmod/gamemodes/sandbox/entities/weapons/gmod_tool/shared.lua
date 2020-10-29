@@ -171,18 +171,13 @@ function SWEP:Think()
 		return
 	end
 
-	if ( lastmode ) then
-		if ( lastmode != curmode ) then
-			local lastmode_obj = self:GetToolObject( lastmode )
+	if ( lastmode && lastmode != curmode ) then
+		local lastmode_obj = self:GetToolObject( lastmode )
 
-			if ( lastmode_obj ) then
-				-- We want to release the ghost entity just in case
-				lastmode_obj:Holster()
-			end
+		if ( lastmode_obj ) then
+			-- We want to release the ghost entity just in case
+			lastmode_obj:Holster()
 		end
-	elseif ( !self.m_bSTOOLDeployed ) then
-		-- We've just initalized, so we need to call Deploy on the tool
-		tool:Deploy()
 	end
 
 	self.Primary.Automatic = tool.LeftClickAutomatic || false
@@ -310,9 +305,6 @@ function SWEP:Deploy()
 
 	self:GetToolObject():UpdateData()
 
-	-- Prevent calling Deploy twice on the tool when we first initialize
-	self.m_bSTOOLDeployed = true
-
 	local CanDeploy = self:GetToolObject():Deploy()
 	if ( CanDeploy ~= nil ) then return CanDeploy end
 
@@ -322,7 +314,7 @@ end
 
 function SWEP:GetToolObject( tool )
 
-	local mode = tool or self:GetMode()
+	local mode = tool or self:GetMode() or ( self:GetOwner():IsPlayer() and self:GetOwner():GetInfo( "gmod_toolmode" ) )
 
 	if ( !self.Tool[ mode ] ) then return false end
 
