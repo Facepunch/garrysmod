@@ -64,6 +64,7 @@ function PANEL:Init()
 	self:SetSize( 680, 104 )
 	self:Center()
 	self:MakePopup()
+	self:DoModal()
 
 	hook.Add( "Think", self, self.AlwaysThink )
 end
