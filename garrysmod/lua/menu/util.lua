@@ -20,7 +20,7 @@ concommand.Add( "whereis", function( _, _, _, path )
 
 			local addonRelativePath = util.RelativePathToFull_Menu( addonInfo.File )
 
-			MsgN( "'", addonInfo.Title, "' - ", addonRelativePath )
+			MsgN( "'", addonInfo.Title, "' - ", addonRelativePath or addonInfo.File )
 			return
 
 		end
