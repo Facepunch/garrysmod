@@ -372,12 +372,13 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 	--
 	player_manager.RunClass( ply, "CalcView", view )
 
-	-- Give the active weapon a go at changing the viewmodel position
+	-- Give the active weapon a go at changing the view
 	if ( IsValid( Weapon ) ) then
 
 		local func = Weapon.CalcView
 		if ( func ) then
-			view.origin, view.angles, view.fov = func( Weapon, ply, origin * 1, angles * 1, fov ) -- Note: *1 to copy the object so the child function can't edit it.
+			local origin, angles, fov = func( Weapon, ply, Vector( view.origin ), Angle( view.angles ), view.fov ) -- Note: Constructor to copy the object so the child function can't edit it.
+			view.origin, view.angles, view.fov = origin or view.origin, angles or view.angles, fov or view.fov
 		end
 
 	end
