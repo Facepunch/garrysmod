@@ -220,7 +220,7 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 	if ( x < 1 ) then x = 1 end
 
 	local p = self:GetParent()
-	if ( IsValid( p ) && p:IsModal() ) then
+	if ( IsValid( p ) && p.IsModal && p:IsModal() ) then
 		-- Can't popup while we are parented to a modal panel
 		-- We will end up behind the modal panel in that case
 
