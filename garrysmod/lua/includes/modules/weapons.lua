@@ -45,6 +45,8 @@ end
 -----------------------------------------------------------]]
 function Register( t, name )
 
+	if ( hook.Run( "PreRegisterSWEP", t, name ) == false ) then return end
+
 	local old = WeaponList[ name ]
 
 	t.ClassName = name

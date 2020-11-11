@@ -52,6 +52,8 @@ end
 
 function Register( t, name )
 
+	if ( hook.Run( "PreRegisterSENT", t, name ) == false ) then return end
+
 	local Base = t.Base
 	if ( !Base ) then Base = BaseClasses[ t.Type ] end
 
