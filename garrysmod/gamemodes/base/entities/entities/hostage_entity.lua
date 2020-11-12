@@ -1,0 +1,1 @@
+ENT.Type = "point"
