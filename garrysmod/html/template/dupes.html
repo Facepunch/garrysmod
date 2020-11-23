@@ -56,8 +56,8 @@
 		<workshopcontainer>
 
 			<workshopmessage ng-show="Loading" ng-Tranny="'dupes.loading'">...</workshopmessage>
-			<workshopmessage ng-show="TotalResults == 0 && !Loading && !Disabled" ng-Tranny="'dupes.none'">...</workshopmessage>
-			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled" ng-Tranny="'ugc.disabled'">...</workshopmessage>
+			<workshopmessage ng-show="TotalResults == 0 && !Loading && ( !Disabled || Category != 'subscribed_ugc' )" ng-Tranny="'dupes.none'">...</workshopmessage>
+			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled && Category == 'subscribed_ugc'" ng-Tranny="'ugc.disabled'">...</workshopmessage>
 
 			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{IfElse( IsSubscribed( file ), 'installed', '' )}}">
 
