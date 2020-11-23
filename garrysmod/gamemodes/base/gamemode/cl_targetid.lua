@@ -6,6 +6,7 @@
 function GM:HUDDrawTargetID()
 
 	local tr = util.GetPlayerTrace( LocalPlayer() )
+	tr.mask = MASK_SHOT
 	local trace = util.TraceLine( tr )
 	if ( !trace.Hit ) then return end
 	if ( !trace.HitNonWorld ) then return end
