@@ -341,6 +341,16 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		}
 		return classes.join( " " );
 	}
+	
+	$scope.GetNiceSize = function( size )
+	{
+		if ( !size || size <= 0 ) return "0 Bytes"
+		if ( size < 1000 ) return size + " Bytes"
+		if ( size < 1000 * 1000 ) return Math.round( size / 1000, 2 ) + " KB"
+		if ( size < 1000 * 1000 * 1000 ) return Math.round( size / ( 1000 * 1000 ), 2 ) + " MB"
+
+		return Math.round( size / ( 1000 * 1000 * 1000 ), 2 ) + " GB"
+	}
 }
 
 function ReceivedChildAddonInfo( info )
