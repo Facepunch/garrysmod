@@ -24,6 +24,8 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 
 	$scope.CategoriesSecondary =
 	[
+		"followed",
+		"favorite",
 		"friends",
 		"mine"
 	];
