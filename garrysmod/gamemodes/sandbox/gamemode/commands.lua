@@ -916,10 +916,7 @@ end )
 
 local function MakeVehicle( ply, Pos, Ang, model, Class, VName, VTable, data )
 
-	-- We don't support this command from dedicated server console
-	if ( !IsValid( ply ) ) then return end
-
-	if ( !gamemode.Call( "PlayerSpawnVehicle", ply, model, VName, VTable ) ) then return end
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnVehicle", ply, model, VName, VTable ) ) then return end
 
 	local Ent = ents.Create( Class )
 	if ( !IsValid( Ent ) ) then return NULL end
