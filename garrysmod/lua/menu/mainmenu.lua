@@ -331,6 +331,18 @@ function GetServers( category, id )
 
 		end,
 
+		CallbackFailed = function( address )
+
+			if Servers[ category ] && Servers[ category ][ address ] then print( "Server Browser Error!", address, category ) return end
+			Servers[ category ][ address ] = true
+
+			pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s" );',
+					category, id, 9999, "The server at address " .. address .. " failed to respond", "Unreachable Servers", "no_map", 0, 2, 0, 'false', 0, address, 'unkn', '0', 'true', '' ) )
+
+			return !ShouldStop[ category ]
+
+		end,
+
 		Finished = function()
 			pnlMainMenu:Call( "FinishedServeres( '" .. category:JavascriptSafe() .. "' )" )
 			Servers[ category ] = {}
