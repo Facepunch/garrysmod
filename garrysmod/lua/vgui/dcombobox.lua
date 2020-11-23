@@ -77,6 +77,9 @@ function PANEL:PerformLayout()
 	self.DropButton:AlignRight( 4 )
 	self.DropButton:CenterVertical()
 
+	-- Make sure the text color is updated
+	DButton.PerformLayout( self, w, h )
+
 end
 
 function PANEL:ChooseOption( value, index )
