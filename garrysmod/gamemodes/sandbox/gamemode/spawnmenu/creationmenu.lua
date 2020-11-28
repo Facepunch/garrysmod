@@ -22,7 +22,7 @@ function PANEL:Populate()
 
 	for k, v in SortedPairsByMemberValue( tabs, "Order" ) do
 
-		if hook.Call("AddCreationTab", v) == false then continue end 
+		if hook.Call("AddCreationTab", v, nil) == false then continue end 
 		
 		--
 		-- Here we create a panel and populate it on the first paint
