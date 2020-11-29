@@ -362,8 +362,10 @@ function Do_Undo( undo )
 	if ( undo.Functions ) then
 		for index, func in pairs( undo.Functions ) do
 
-			func[ 1 ]( undo, unpack( func[ 2 ] ) )
-			count = count + 1
+			local success = func[ 1 ]( undo, unpack( func[ 2 ] ) )
+			if ( success != false ) then
+				count = count + 1
+			end
 
 		end
 	end
