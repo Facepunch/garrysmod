@@ -97,6 +97,8 @@ function GM:PlayerStartVoice( ply )
 
 	if ( !IsValid( ply ) ) then return end
 
+	if hook.Run("ShouldDrawPlayerVoicePanel", ply) == false then return end
+
 	local pnl = g_VoicePanelList:Add( "VoiceNotify" )
 	pnl:Setup( ply )
 	
