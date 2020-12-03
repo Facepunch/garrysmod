@@ -247,7 +247,10 @@ function GM:CanProperty( pl, property, ent )
 
 	-- Give the entity a chance to decide
 	if ( ent.CanProperty ) then
-		return ent:CanProperty( pl, property )
+		local entCanProperty = ent:CanProperty( pl, property )
+		if ( entCanProperty != nil ) then
+			return entCanProperty
+		end
 	end
 
 	return true
