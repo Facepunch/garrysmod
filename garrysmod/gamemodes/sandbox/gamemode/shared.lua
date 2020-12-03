@@ -70,7 +70,10 @@ function GM:CanTool( ply, trace, mode )
 	
 	-- Give the entity a chance to decide
 	if ( trace.Entity.CanTool ) then
-		return trace.Entity:CanTool( ply, trace, mode )
+		local entCanTool = trace.Entity:CanTool( ply, trace, mode )
+		if ( entCanTool != nil ) then
+			return entCanTool
+		end
 	end
 
 	return true
