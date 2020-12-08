@@ -1,4 +1,6 @@
 
+local DUPE_SEND_SIZE = 60000
+
 if ( CLIENT ) then
 
 	--
@@ -28,12 +30,11 @@ if ( CLIENT ) then
 		-- And send it to the server
 		--
 		local length = dupe.data:len()
-		local send_size = 60000
-		local parts = math.ceil( length / send_size )
+		local parts = math.ceil( length / DUPE_SEND_SIZE )
 
 		local start = 0
 		for i = 1, parts do
-			local endbyte = math.min( start + send_size, length )
+			local endbyte = math.min( start + DUPE_SEND_SIZE, length )
 			local size = endbyte - start
 
 			net.Start( "ArmDupe" )
@@ -59,7 +60,7 @@ if ( SERVER ) then
 	util.AddNetworkString( "ArmDupe" )
 
 	net.Receive( "ArmDupe", function( size, client )
-			if ( !IsValid( client ) ) then return end
+			if ( !IsValid( client ) || size < 48 ) then return end
 
 			local res = hook.Run( "CanArmDupe", client )
 			if ( res == false ) then client:ChatPrint( "Server has blocked usage of the Duplicator tool!" ) return end
@@ -68,6 +69,8 @@ if ( SERVER ) then
 			local total = net.ReadUInt( 8 )
 
 			local length = net.ReadUInt( 32 )
+			if ( length > DUPE_SEND_SIZE ) then return end
+
 			local data = net.ReadData( length )
 
 			client.CurrentDupeBuffer = client.CurrentDupeBuffer or {}
