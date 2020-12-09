@@ -37,7 +37,7 @@ if ( CLIENT ) then
 	function ENT:Think()
 		local text = self:GetOverlayText()
 
-		if ( text != "" && self:BeingLookedAtByLocalPlayer() ) then
+		if ( text != "" && self:BeingLookedAtByLocalPlayer() && !self:GetNoDraw() ) then
 			AddWorldTip( self:EntIndex(), text, 0.5, self:GetPos(), self )
 
 			halo.Add( { self }, color_white, 1, 1, 1, true, true )
