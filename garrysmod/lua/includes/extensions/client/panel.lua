@@ -315,6 +315,16 @@ function meta:SizeToContentsX( addval )
 
 end
 
+-- Make sure all children update their skin, if SOMEHOW they cached their skin before the parent
+local function InvalidateSkinRecurse( self )
+
+	for id, pnl in pairs( self:GetChildren() ) do
+		InvalidateSkinRecurse( pnl )
+		pnl.m_iSkinIndex = nil
+	end
+
+end
+
 --[[---------------------------------------------------------
 	Name: SetSkin
 -----------------------------------------------------------]]
@@ -324,6 +334,8 @@ function meta:SetSkin( strSkin )
 
 	self.m_ForceSkinName = strSkin
 	self.m_iSkinIndex = nil
+
+	InvalidateSkinRecurse( self )
 
 end
 

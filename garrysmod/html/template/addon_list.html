@@ -51,8 +51,8 @@
 
 		<workshopcontainer>
 			<workshopmessage ng-show="Loading" ng-Tranny="'addons.loading'">...</workshopmessage>
-			<workshopmessage ng-show="TotalResults == 0 && !Loading && !Disabled" ng-Tranny="'addons.none'">...</workshopmessage>
-			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled" ng-Tranny="'addons.disabled'">...</workshopmessage>
+			<workshopmessage ng-show="TotalResults == 0 && !Loading && ( !Disabled || Category != 'subscribed' )" ng-Tranny="'addons.none'">...</workshopmessage>
+			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled && Category == 'subscribed'" ng-Tranny="'addons.disabled'">...</workshopmessage>
 
 			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{GetAddonClasses( file )}}">
 
@@ -62,8 +62,9 @@
 
 				<name ng-click="OpenWorkshopFile( file.id )">{{file.extra.title || file.info.title || "Loading..."}}</name>
 				<author ng-hide="file.local">{{file.info.ownername || "Loading..."}}</author>
-				<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" style="color: #4a4">+{{file.info.up-file.info.down|number:0}}</votes>
-				<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" style="color: #a44">{{file.info.up-file.info.down|number:0}}</votes>
+				<size ng-hide="!file.info.size">{{GetNiceSize( file.info.size )}}</size>
+				<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" >+{{file.info.up-file.info.down|number:0}}</votes>
+				<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" class="negative">{{file.info.up-file.info.down|number:0}}</votes>
 				<description>{{file.extra.invalid_reason || file.info.description}}</description>
 				<input type="checkbox" class="checkbox" ng-show="Category == 'subscribed'" ng-model="SelectedItems[ file.id ]" <!--ng-click="$event.stopPropagation()"-->>
 

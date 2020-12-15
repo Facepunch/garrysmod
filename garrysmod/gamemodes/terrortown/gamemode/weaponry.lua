@@ -103,7 +103,7 @@ local function CanWearHat(ply)
    return table.HasValue(Hattables, path[3])
 end
 
-CreateConVar("ttt_detective_hats", "0")
+CreateConVar("ttt_detective_hats", "1")
 -- Just hats right now
 local function GiveLoadoutSpecial(ply)
    if ply:IsActiveDetective() and GetConVar("ttt_detective_hats"):GetBool() and CanWearHat(ply) then

@@ -4,7 +4,13 @@ local meta = FindMetaTable( "Entity" )
 -- Return if there's nothing to add on to
 if ( !meta ) then return end
 
-AccessorFunc( meta, "m_bPlayPickupSound", "ShouldPlayPickupSound" )
+function meta:GetShouldPlayPickupSound()
+	return self.m_bPlayPickupSound || false
+end
+
+function meta:SetShouldPlayPickupSound( bPlaySound )
+	self.m_bPlayPickupSound = tobool( bPlaySound ) || false
+end
 
 --
 -- Entity index accessor. This used to be done in engine, but it's done in Lua now because it's faster
@@ -50,7 +56,13 @@ end
 
 if ( SERVER ) then
 
-	function meta:SetCreator( ply )
+	function meta:SetCreator( ply --[[= NULL]] )
+		if ( ply == nil ) then
+			ply = NULL
+		elseif ( !isentity( ply ) ) then
+			error( "bad argument #1 to 'SetCreator' (Entity expected, got " .. type( ply ) .. ")", 2 )
+		end
+
 		self.m_PlayerCreator = ply
 	end
 
@@ -500,7 +512,13 @@ end
 
 if ( SERVER ) then
 
-	AccessorFunc( meta, "m_bUnFreezable", "UnFreezable" )
+	function meta:GetUnFreezable()
+		return self.m_bUnFreezable || false
+	end
+
+	function meta:SetUnFreezable( bFreeze )
+		self.m_bUnFreezable = tobool( bFreeze ) || false
+	end
 
 end
 

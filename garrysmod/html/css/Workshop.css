@@ -56,7 +56,7 @@ workshopicon name
 	color: #666;
 }
 
-workshopicon author, workshopicon votes
+workshopicon author, workshopicon votes, workshopicon size
 {
 	position: absolute;
 	bottom: 0px;
@@ -76,14 +76,20 @@ workshopicon author, workshopicon votes
 	padding: 3px 6px;
 
 }
+workshopicon size
+{
+	top: 22px;
+	bottom: auto;
+	border-radius: 0 0 0 4px;
+}
 
-workshopicon author
+workshopicon author, workshopicon size
 {
 	right: 0px;
 	-webkit-transition: right 100ms ease-out 200ms;
 }
 
-workshopicon:hover author
+workshopicon:hover author, workshopicon:hover size
 {
 	right: -200px;
 	-webkit-transition: right 100ms ease-in 0ms;
@@ -92,7 +98,13 @@ workshopicon:hover author
 workshopicon votes
 {
 	left: 0px;
+	color: #4a4;
 	-webkit-transition: left 100ms ease-out 200ms;
+}
+
+workshopicon votes.negative
+{
+	color: #a44;
 }
 
 workshopicon:hover votes
@@ -388,7 +400,7 @@ workshopicon.installed
 {
 	border-color: #d2fc7b;
 }
-workshopicon.installed name, workshopicon.installed author, workshopicon.installed votes
+workshopicon.installed name, workshopicon.installed author, workshopicon.installed votes, workshopicon.installed size
 {
 	background: #d2fc7b;
 }
@@ -397,7 +409,7 @@ workshopicon.disabled
 {
 	border-color: #cedcb1;
 }
-workshopicon.disabled name, workshopicon.disabled author, workshopicon.disabled votes
+workshopicon.disabled name, workshopicon.disabled author, workshopicon.disabled votes, workshopicon.disabled size
 {
 	background: #cedcb1;
 }
@@ -406,7 +418,7 @@ workshopicon.invalid
 {
 	border-color: #d22;
 }
-workshopicon.invalid name, workshopicon.invalid author, workshopicon.invalid votes
+workshopicon.invalid name, workshopicon.invalid author, workshopicon.invalid votes, workshopicon.invalid size
 {
 	background: #d22;
 	color: #fff;
@@ -416,7 +428,7 @@ workshopicon.invalid.disabled
 {
 	border-color: #922;
 }
-workshopicon.invalid.disabled name, workshopicon.invalid.disabled author, workshopicon.invalid.disabled votes
+workshopicon.invalid.disabled name, workshopicon.invalid.disabled author, workshopicon.invalid.disabled votes, workshopicon.invalid.disabled size
 {
 	background: #922;
 	color: #fff;

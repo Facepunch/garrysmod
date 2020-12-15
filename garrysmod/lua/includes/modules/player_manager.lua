@@ -436,6 +436,7 @@ function OnPlayerSpawn( ply, transiton )
 
 	if ( !transiton ) then 
 		ply:SetMaxHealth( class.MaxHealth )
+		ply:SetMaxArmor( class.MaxArmor )
 		ply:SetHealth( class.StartHealth )
 		ply:SetArmor( class.StartArmor )
 	end

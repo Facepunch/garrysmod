@@ -6,26 +6,52 @@
 	</head>
 	<body>
 
-		<div id="container">
+		<div id="background">
+			<div id="container">
 
-			<img src='img/gmod_logo_brave.png' class="bounce"/>
+				<img src='img/gmod_logo_brave.png' class="bounce"/>
 
-			<center>
-				<br />
-				<div class="walk">:v</div>
-			</center>
+				<center>
+					<br />
+					<div class="walk">:v</div>
+				</center>
+
+			</div>
+
+			<div class="server_info">
+				<img id="mapimg" src="asset://mapimage/invalid_map"></img><div class="text">
+					<span id="serverName">ServerName</span><br>
+					<span id="serverMap">gm_fuckglass</span><br>
+					<span id="serverGamemode">Snadbox</span>
+				</div>
+			</div>
+
+			<div id="spambox">
+			</div>
 
 		</div>
-
-		<!--<div id="spambox">
-		</div>-->
-
 		<script type="text/javascript">
+			window.onload = function()
+			{
+				// Don't tell ANYONE
+				if ( Math.random() > 0.9 )
+				{
+					$("body").addClass( "dark" );
+				}
+			}
+		
 			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang )
 			{
+				$("#serverName").html( servername );
+				$("#serverMap").html( mapname );
+				$("#serverGamemode").html( gamemode );
+				$("#mapimg").attr("src", "asset://mapimage/" + mapname );
+				$("body").css( "background-image", "url( 'asset://mapimage/" + mapname + "' )" );
+
+				$(".server_info").addClass( "visible" );
+
 				// Do with these what you will :)
 				// this function gets called only when joining a multiplayer server
-
 				/*$("#spambox").append("serverurl: " + serverurl + "<br>");
 				$("#spambox").append("servername: " + servername + "<br>");
 				$("#spambox").append("maxplayers: " + maxplayers + "<br>");

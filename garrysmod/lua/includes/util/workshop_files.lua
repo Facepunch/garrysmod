@@ -180,7 +180,7 @@ function WorkshopFileBase( namespace, requiredtags )
 				if ( !extra ) then extra = {} end
 
 				extra.ownername = "Local"
-				extra.description = "Non workshop local floating addon."
+				extra.description = "Non workshop .gma addon."
 				extra.floating = true
 
 				local json = util.TableToJSON( extra, false )

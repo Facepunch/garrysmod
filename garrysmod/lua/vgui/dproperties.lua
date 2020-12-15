@@ -30,7 +30,11 @@ local tblRow = vgui.RegisterTable( {
 
 		local Name = "DProperty_" .. type
 
-		self.Inner = self.Container:Add( Name )
+		if ( vgui.GetControlTable( Name ) ) then
+			self.Inner = self.Container:Add( Name )
+		else
+			print( "DProperties: Failed to create panel (" .. Name .. ")" )
+		end
 		if ( !IsValid( self.Inner ) ) then self.Inner = self.Container:Add( "DProperty_Generic" ) end
 
 		self.Inner:SetRow( self )

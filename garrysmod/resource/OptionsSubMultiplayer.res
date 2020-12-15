@@ -275,6 +275,35 @@
 		"selected"		"0"
 	}
 
+	"DisableSprays"
+	{
+		"ControlName"		"CCvarToggleCheckButton"
+		"fieldName"		"DisableSprays"
+		"xpos"		"240"
+		"ypos"		"76"
+		"wide"		"250"
+		"tall"		"28"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"RoundedCorners"		"15"
+		"pin_corner_to_sibling"		"0"
+		"pin_to_sibling_corner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"		"2"
+		"labelText"		"#GameUI_DisableSprays"
+		"textAlignment"		"west"
+		"dulltext"		"0"
+		"brighttext"		"0"
+		"wrap"		"0"
+		"centerwrap"		"0"
+		"textinsetx"		"6"
+		"textinsety"		"0"
+		"auto_wide_tocontents"		"0"
+		"use_proportional_insets"		"0"
+		"Default"		"1"
+	}
+
 	"EnableSprays"
 	{
 		"ControlName"		"CCvarToggleCheckButton"

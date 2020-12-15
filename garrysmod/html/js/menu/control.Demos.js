@@ -24,6 +24,8 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 
 	$scope.CategoriesSecondary =
 	[
+		"followed",
+		"favorite",
 		"friends",
 		"mine",
 	];

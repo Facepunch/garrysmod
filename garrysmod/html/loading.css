@@ -1,8 +1,11 @@
+
 BODY
 {
-	background: #fff url( 'img/bg.jpg' );
-	-webkit-background-size: 100% 100%;
 	overflow: hidden;
+	margin: 0px;
+
+	background-position: center;
+	background-size: cover;
 }
 
 #container
@@ -32,7 +35,7 @@ BODY
 	-webkit-box-reflect: below -1px -webkit-gradient(linear, left top, left bottom, from(transparent), from(rgba(0, 0, 0, 0.0)), to(rgba(255, 255, 255, 0.5)));
 }
 
-.progressbar .inner 
+.progressbar .inner
 {
 	border-radius: 2px;
 	background-color: rgba( 0, 240, 0, 1.0);
@@ -57,25 +60,23 @@ BODY
 	white-space: nowrap;
 }
 
-
-@-webkit-keyframes walk 
+@-webkit-keyframes walk
 {
-	0% 
+	0%
 	{
 		-webkit-transform: rotateZ(0deg);
 	}
-		
-	50% 
+
+	50%
 	{
 		-webkit-transform: rotateZ(180deg);
 	}
-	
-	100% 
+
+	100%
 	{
 		-webkit-transform: rotateZ(360deg);
 	}
 }
-
 
 .walk
 {
@@ -97,3 +98,51 @@ BODY
 	border: 2px solid #999;
 }
 
+#spambox
+{
+	float: right;
+	overflow: hidden;
+	max-height: 100%;
+}
+
+#background
+{
+	background-image: url( 'img/bg.png' );
+	background-size: 100% 100%;
+	height: 100%;
+}
+body.dark #background
+{
+	background-image: url( 'img/bg_dark.png' );
+	color: #fff;
+}
+
+.server_info
+{
+	display: inline-block;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-image: -webkit-gradient( linear, 0 0, 90% 0, 100% 0, from(  ), to( rgba( 0, 0, 0, 0 ) ), to( rgba( 0, 0, 0, 0 ) ) );
+	background-image: -webkit-linear-gradient( left, rgba( 0, 0, 0, 0.4 ) 0%, rgba( 0, 0, 0, 0.03 ) 75%, rgba( 0, 0, 0, 0 ) 100% );
+	padding: 20px;
+	padding-right: 180px;
+	visibility: hidden;
+}
+.server_info.visible
+{
+	visibility: visible;
+}
+.server_info .text
+{
+	display: inline-block;
+	vertical-align: top;
+
+	line-height2: 21px;
+	font-size: xx-large;
+}
+.server_info img
+{
+	width: 128px;
+	height: 128px;
+	background: #666;
+	margin-right: 16px;
+}
