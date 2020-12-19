@@ -76,7 +76,7 @@ function PANEL:Init()
 	self.Disconnect = vgui.Create( "DButton", self.Buttons )
 	self.Disconnect:SetText( "#openurl.disconnect" )
 	self.Disconnect.DoClick = function() self:DoNope() RunConsoleCommand( "disconnect" ) end
-	self.Disconnect:Dock( RIGHT )
+	self.Disconnect:Dock( LEFT )
 
 	self.Nope = vgui.Create( "DButton", self.Buttons )
 	self.Nope:SetText( "#openurl.nope" )
