@@ -118,6 +118,14 @@ function meta:CallOnRemove( name, func, ... )
 	mytable.OnDieFunctions[ name ] = { Name = name, Function = func, Args = { ... } }
 
 end
+			
+--[[---------------------------------------------------------
+	Name: AddArmor
+	Desc: Adds armor to the entity.
+-----------------------------------------------------------]]
+function meta:AddArmor(value)
+	self:SetArmor( math.Clamp( self:Armor() + value, 0, self:GetMaxArmor() ) )
+end
 
 --[[---------------------------------------------------------
 	Name: RemoveCallOnRemove
