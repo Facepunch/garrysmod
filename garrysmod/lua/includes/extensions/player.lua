@@ -235,6 +235,14 @@ end
 if ( SERVER ) then
 
 --[[---------------------------------------------------------
+	Name: AddArmor
+	Desc: Adds armor to the player.
+-----------------------------------------------------------]]
+function meta:AddArmor(value)
+	self:SetArmor( math.Clamp( self:Armor() + value, 0, self:GetMaxArmor() ) )
+end
+
+--[[---------------------------------------------------------
 	Freeze
 	Freezes or unfreezes the player
 -----------------------------------------------------------]]
