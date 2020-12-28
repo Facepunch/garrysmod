@@ -443,6 +443,12 @@ function meta:DragClick( mcode )
 
 end
 
+function meta:EnableCursorOnRelease( enable )
+
+	self.ReleaseCursor = enable
+
+end
+
 function meta:DragMouseRelease( mcode )
 
 	if ( IsValid( dragndrop.m_DropMenu ) ) then return end
@@ -461,8 +467,7 @@ function meta:DragMouseRelease( mcode )
 
 	dragndrop.Drop()
 
-	-- Todo.. we should only do this if we enabled it!
-	if ( gui.EnableScreenClicker ) then
+	if ( gui.EnableScreenClicker && !self.ReleaseCursor ) then
 		gui.EnableScreenClicker( false )
 	end
 
