@@ -31,7 +31,14 @@ end
 
 function GM:LimitHit( name )
 
-	self:AddNotify( "#SBoxLimit_" .. name, NOTIFY_ERROR, 6 )
+	local str = "#SBoxLimit_" .. name
+	local translated = language.GetPhrase( str )
+	if ( str == translated ) then
+		-- No translation available, apply our own
+		translated = string.format( language.GetPhrase( "hint.hitXlimit" ), language.GetPhrase( name ) )
+	end
+
+	self:AddNotify( translated, NOTIFY_ERROR, 6 )
 	surface.PlaySound( "buttons/button10.wav" )
 
 end
@@ -70,7 +77,14 @@ end
 
 function GM:OnCleanup( name )
 
-	self:AddNotify( "#Cleaned_" .. name, NOTIFY_CLEANUP, 5 )
+	local str = "#Cleaned" .. name
+	local translated = language.GetPhrase( str )
+	if ( str == translated ) then
+		-- No translation available, apply our own
+		translated = string.format( language.GetPhrase( "hint.cleanedX" ), language.GetPhrase( name ) )
+	end
+
+	self:AddNotify( translated, NOTIFY_CLEANUP, 5 )
 
 	-- Find a better sound :X
 	surface.PlaySound( "buttons/button15.wav" )
