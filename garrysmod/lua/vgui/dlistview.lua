@@ -565,7 +565,7 @@ function PANEL:GetValues(bOnlySelected)
 		local lineTbl = {}
 
 		for columnID, column in ipairs(columns) do
-			lineTbl[column.Header:GetText()] = line:GetValue(columnID)
+			lineTbl[columnID] = line:GetValue(columnID)
 		end
 		table.insert(tbl, lineTbl)
 	end
