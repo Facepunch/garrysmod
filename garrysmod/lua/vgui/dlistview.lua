@@ -480,7 +480,7 @@ function PANEL:SortByColumn( ColumnID, Desc )
 		local aval = a:GetSortValue( ColumnID ) || a:GetColumnText( ColumnID )
 		local bval = b:GetSortValue( ColumnID ) || b:GetColumnText( ColumnID )
 
-		return aval < bval
+		return tostring( aval ) < tostring( bval )
 
 	end )
 
