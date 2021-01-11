@@ -20,8 +20,8 @@
 
 			<div class="server_info">
 				<img id="mapimg" src="asset://mapimage/invalid_map"></img><div class="text">
-					<span id="serverName">ServerName</span><br>
-					<span id="serverMap">gm_fuckglass</span><br>
+					<span id="serverName">A really long server name will be here that will be too long to fit on the loading screen</span><br>
+					<span id="serverMap">gm_hilldirt</span><br>
 					<span id="serverGamemode">Snadbox</span>
 				</div>
 			</div>
@@ -33,18 +33,23 @@
 		<script type="text/javascript">
 			window.onload = function()
 			{
-				// Don't tell ANYONE
-				if ( Math.random() > 0.9 )
+				var isHalloween = false;
+
+				var today = new Date()
+				if ( today.getMonth() == 10 && today.getDate() >= 15 || today.getMonth() == 11 && today.getDate() <= 5 ) isHalloween = true;
+
+				// Force it to dark on Spooktober or when it's late
+				if ( isHalloween || ( today.getHours() >= 19 || today.getHours() <= 7 ) )
 				{
 					$("body").addClass( "dark" );
 				}
 			}
-		
-			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang )
+
+			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang, gamemodeNice )
 			{
 				$("#serverName").html( servername );
 				$("#serverMap").html( mapname );
-				$("#serverGamemode").html( gamemode );
+				$("#serverGamemode").html( gamemodeNice );
 				$("#mapimg").attr("src", "asset://mapimage/" + mapname );
 				$("body").css( "background-image", "url( 'asset://mapimage/" + mapname + "' )" );
 

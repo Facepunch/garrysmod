@@ -26,7 +26,7 @@ BODY
 	border-radius: 3px;
 	text-align: left;
 	padding: 1px;
-	background-color: rgba( 0, 0, 0, 0.6);
+	background-color: rgba( 0, 0, 0, 0.6 );
 	float: right;
 }
 
@@ -38,7 +38,7 @@ BODY
 .progressbar .inner
 {
 	border-radius: 2px;
-	background-color: rgba( 0, 240, 0, 1.0);
+	background-color: rgba( 0, 240, 0, 1.0 );
 	width: 0.2%;
 	height: 11px;
 }
@@ -114,6 +114,9 @@ BODY
 body.dark #background
 {
 	background-image: url( 'img/bg_dark.png' );
+}
+body.dark
+{
 	color: #fff;
 }
 
@@ -126,6 +129,7 @@ body.dark #background
 	padding: 20px;
 	padding-right: 180px;
 	visibility: hidden;
+	white-space: nowrap;
 }
 .server_info.visible
 {
@@ -136,7 +140,7 @@ body.dark #background
 	display: inline-block;
 	vertical-align: top;
 
-	line-height2: 21px;
+	line-height: 42px;
 	font-size: xx-large;
 }
 .server_info img
