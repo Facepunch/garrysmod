@@ -18,6 +18,7 @@ function PANEL:Init()
 	self:SetSize( 64, 64 )
 
 	self.m_strBodyGroups = "000000000"
+	self.OverlayFade = 0
 
 end
 
@@ -38,8 +39,12 @@ function PANEL:OpenMenu()
 end
 
 function PANEL:Paint( w, h )
+	-- Do not draw the default background
+end
 
-	self.OverlayFade = math.Clamp( ( self.OverlayFade or 0 ) - RealFrameTime() * 640 * 2, 0, 255 )
+function PANEL:Think()
+
+	self.OverlayFade = math.Clamp( self.OverlayFade - RealFrameTime() * 640 * 2, 0, 255 )
 
 	if ( dragndrop.IsDragging() || !self:IsHovered() ) then return end
 
