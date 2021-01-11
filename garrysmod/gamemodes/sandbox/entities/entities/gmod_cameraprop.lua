@@ -20,6 +20,13 @@ function ENT:SetupDataTables()
 
 end
 
+-- Custom drive mode
+function ENT:GetEntityDriveMode()
+
+	return "drive_noclip"
+
+end
+
 function ENT:Initialize()
 
 	if ( SERVER ) then

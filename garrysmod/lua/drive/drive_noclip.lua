@@ -43,6 +43,10 @@ drive.Register( "drive_noclip",
 		--
 		local speed = 0.0005 * FrameTime()
 		if ( mv:KeyDown( IN_SPEED ) ) then speed = 0.005 * FrameTime() end
+		if ( mv:KeyDown( IN_DUCK ) ) then speed = 0.00005 * FrameTime() end
+
+		-- Simulate noclip's action when holding space
+		if ( mv:KeyDown( IN_JUMP ) ) then mv:SetUpSpeed( 10000 ) end
 
 		--
 		-- Get information from the movedata
@@ -112,20 +116,6 @@ drive.Register( "drive_noclip",
 
 		end
 
-	end,
-
-	--
-	-- Calculates the view when driving the entity
-	--
-	CalcView = function( self, view )
-
-		--
-		-- Use the utility method on drive_base.lua to give us a 3rd person view
-		--
-		local idealdist = math.max( 10, self.Entity:BoundingRadius() ) * 4
-
-		self:CalcView_ThirdPerson( view, idealdist, 2, { self.Entity } )
-
-	end,
+	end
 
 }, "drive_base" )
