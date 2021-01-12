@@ -39,7 +39,7 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
 				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "npc", self.PropPanel, {
 					nicename	= ent.Name or name,
 					spawnname	= name,
-					material	= "entities/" .. name .. ".png",
+					material	= ent.IconOverride or "entities/" .. name .. ".png",
 					weapon		= ent.Weapons,
 					admin		= ent.AdminOnly
 				} )

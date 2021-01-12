@@ -153,7 +153,7 @@ function PANEL:ExpandRecurse( bExpand )
 
 	if ( !IsValid( self.ChildNodes ) ) then return end
 
-	for k, Child in pairs( self.ChildNodes:GetItems() ) do
+	for k, Child in pairs( self.ChildNodes:GetChildren() ) do
 		if ( Child.ExpandRecurse ) then
 			Child:ExpandRecurse( bExpand )
 		end
@@ -619,6 +619,20 @@ function PANEL:GetChildNode( iNum )
 
 	if ( !IsValid( self.ChildNodes ) ) then return end
 	return self.ChildNodes:GetChild( iNum )
+
+end
+
+function PANEL:GetChildNodes()
+
+	if ( !IsValid( self.ChildNodes ) ) then return {} end
+	return self.ChildNodes:GetChildren()
+
+end
+
+function PANEL:GetChildNodeCount()
+
+	if ( !IsValid( self.ChildNodes ) ) then return 0 end
+	return self.ChildNodes:ChildCount()
 
 end
 

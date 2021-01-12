@@ -132,7 +132,7 @@ end
 
 function PANEL:SetWidth( iSize )
 
-	iSize = math.Clamp( iSize, self:GetMinWidth(), self:GetMaxWidth() )
+	iSize = math.Clamp( iSize, self:GetMinWidth(), math.max( self:GetMaxWidth(), 0 ) )
 
 	-- If the column changes size we need to lay the data out too
 	if ( math.floor( iSize ) != self:GetWide() ) then
@@ -144,13 +144,15 @@ function PANEL:SetWidth( iSize )
 
 end
 
-derma.DefineControl( "DListView_Column", "", table.Copy( PANEL ), "Panel" )
+derma.DefineControl( "DListView_Column", "Sortable DListView Column", PANEL, "Panel" )
 
 --[[---------------------------------------------------------
 	DListView_ColumnPlain
 -----------------------------------------------------------]]
 
+local PANEL = {}
+
 function PANEL:DoClick()
 end
 
-derma.DefineControl( "DListView_ColumnPlain", "", PANEL, "DListView_Column" )
+derma.DefineControl( "DListView_ColumnPlain", "Non sortable DListView Column", PANEL, "DListView_Column" )

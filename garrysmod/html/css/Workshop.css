@@ -56,7 +56,7 @@ workshopicon name
 	color: #666;
 }
 
-workshopicon author, workshopicon votes
+workshopicon author, workshopicon votes, workshopicon size
 {
 	position: absolute;
 	bottom: 0px;
@@ -76,14 +76,20 @@ workshopicon author, workshopicon votes
 	padding: 3px 6px;
 
 }
+workshopicon size
+{
+	top: 22px;
+	bottom: auto;
+	border-radius: 0 0 0 4px;
+}
 
-workshopicon author
+workshopicon author, workshopicon size
 {
 	right: 0px;
 	-webkit-transition: right 100ms ease-out 200ms;
 }
 
-workshopicon:hover author
+workshopicon:hover author, workshopicon:hover size
 {
 	right: -200px;
 	-webkit-transition: right 100ms ease-in 0ms;
@@ -92,7 +98,13 @@ workshopicon:hover author
 workshopicon votes
 {
 	left: 0px;
+	color: #4a4;
 	-webkit-transition: left 100ms ease-out 200ms;
+}
+
+workshopicon votes.negative
+{
+	color: #a44;
 }
 
 workshopicon:hover votes
@@ -153,6 +165,13 @@ workshopmessage
 	margin: 64px;
 }
 
+@media screen and (max-height: 800px) {
+	workshopmessage
+	{
+		margin: 16px;
+	}
+}
+
 workshopcontainer
 {
 	position: absolute;
@@ -199,19 +218,148 @@ controls control:hover
 	background-color: white;
 }
 
-pagnation
+.ugc_settings_button
+{
+	height: 44px;
+	width: 44px;
+
+	padding: 6px;
+	background: #eee;
+	border-radius: 4px;
+	box-sizing: border-box;
+
+	position: absolute;
+	bottom: 4px;
+	right: 4px;
+	cursor: default;
+}
+.ugc_settings_button:hover
+{
+	background: #ddd;
+}
+
+.ugc_settings
+{
+	width: 100%;
+
+	padding: 10px;
+	background: #eee;
+
+	z-index: 128;
+	position: absolute;
+	bottom: 52px;
+	left: 0;
+	box-sizing: border-box;
+
+	visibility: hidden;
+	overflow: hidden;
+}
+.ugc_settings.active
+{
+	visibility: visible;
+}
+
+.ugc_settings span
+{
+	display: block;
+	font-weight: bold;
+}
+.ugc_settings label
+{
+	position: relative;
+	top: -2px;
+}
+
+.ugc_settings a
+{
+	font-weight: bold;
+	color: #000;
+	padding: 4px 15px;
+	background: #ddd;
+	display: block;
+	margin-top: 2px;
+	text-align: center;
+	border-radius: 4px;
+	cursor: default;
+}
+.ugc_settings a:hover
+{
+	colo2r: #ff7;
+	background: #ccc;
+}
+
+.ugc_settings_cat
+{
+	vertical-align: top;
+	display: inline-block;
+	padding: 0px 1%;
+	margin: 0 auto;
+}
+
+.create_preset
+{
+	min-width: 350px;
+}
+
+.preset_content
+{
+	min-width: 500px;
+	margin-bottom: 5px;
+}
+.preset_list
+{
+	background: #eee;
+	width: 150px;
+	display: inline-block;
+	max-height: 400px;
+	min-height: 230px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.preset_list font
+{
+	display: block;
+	padding: 5px;
+	cursor: default;
+}
+.preset_list font:hover
+{
+	background: #ddd;
+}
+.preset_list font.active
+{
+	background: #ccc;
+}
+.preset_data
+{
+	width: 345px;
+	padding-left: 5px;
+	display: inline-block;
+	vertical-align: top;
+	cursor: default;
+}
+
+pagination
 {
 	background-color: #fff;
 	border-radius: 4px;
 	margin: 0 auto;
 	padding: 4px 4px;
-	white-space: nowrap;
-	margin-left: 10%;
-	margin-right: 10%;
+	/*white-space: nowrap;*/
+	max-width: 500px;
+	z-index: 64; /* Ensure it is above other elements in case something goes wrong */
 }
 
+@media screen and (max-width: 840px)
+{
+	pagination
+	{
+		margin: 0;
+		margin-right: 48px;
+	}
+}
 
-pagnation .back, pagnation .next
+pagination .back, pagination .next
 {
 	display: block;
 	float: left;
@@ -223,49 +371,66 @@ pagnation .back, pagnation .next
 	background-position: center center;
 }
 
-pagnation .next
+pagination .next
 {
 	float: right;
 	background-image: url('../img/arrow_right.png');
+}
+
+pagination .pages
+{
+	overflow: hidden;
+	margin-top: 6px;
+}
+
+pagination span.pagenum
+{
+	font-size: 14px;
+}
+pagination a.page
+{
+	opacity: 0.5;
+}
+pagination a.page.active
+{
+	opacity: 1;
 }
 
 workshopicon.installed
 {
 	border-color: #d2fc7b;
 }
-
-workshopicon.installed name
+workshopicon.installed name, workshopicon.installed author, workshopicon.installed votes, workshopicon.installed size
 {
-	background-color: #d2fc7b;
-}
-
-workshopicon.installed author
-{
-	background-color: #d2fc7b;
-}
-
-workshopicon.installed votes
-{
-	background-color: #d2fc7b;
+	background: #d2fc7b;
 }
 
 workshopicon.disabled
 {
 	border-color: #cedcb1;
 }
-
-workshopicon.disabled name
+workshopicon.disabled name, workshopicon.disabled author, workshopicon.disabled votes, workshopicon.disabled size
 {
-	background-color: #cedcb1;
+	background: #cedcb1;
 }
 
-workshopicon.disabled author
+workshopicon.invalid
 {
-	background-color: #cedcb1;
+	border-color: #d22;
+}
+workshopicon.invalid name, workshopicon.invalid author, workshopicon.invalid votes, workshopicon.invalid size
+{
+	background: #d22;
+	color: #fff;
 }
 
-workshopicon.disabled votes
+workshopicon.invalid.disabled
 {
-	background-color: #cedcb1;
+	border-color: #922;
+}
+workshopicon.invalid.disabled name, workshopicon.invalid.disabled author, workshopicon.invalid.disabled votes, workshopicon.invalid.disabled size
+{
+	background: #922;
+	color: #fff;
 }
 

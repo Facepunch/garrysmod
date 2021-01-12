@@ -45,7 +45,7 @@ function EFFECT:Render()
 					8,								-- Width
 					texcoord,						-- Start tex coord
 					texcoord + self.Length / 128,	-- End tex coord
-					Color( 255, 255, 255 ) )		-- Color (optional)
+					color_white )		-- Color (optional)
 	end
 
 	render.DrawBeam( self.StartPos,

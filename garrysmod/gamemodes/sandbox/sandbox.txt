@@ -33,6 +33,7 @@
 			"help"		"If enabled, all players will be invincible"
 			"type"		"CheckBox"
 			"default"	"0"
+			"singleplayer" "1"
 		}
 
 		4
@@ -190,6 +191,28 @@
 
 		21
 		{
+			"name"		"gmod_maxammo"
+			"text"		"gmod_maxammo"
+			"help"		"Forces amount of maximum ammo reserves for all weapons of each player. Values 0 and below mean use weapon's ammo type maximum ammo setting instead."
+			"type"		"Numeric"
+			"default"	"9999"
+			"singleplayer"	"1"
+			"dontcreate"	"1"
+		}
+
+		22
+		{
+			"name"		"gmod_suit"
+			"text"		"gmod_suit"
+			"help"		"Set to non zero to enable Half-Life 2 aux suit power stuff."
+			"type"		"CheckBox"
+			"default"	"0"
+			"singleplayer"	"1"
+			"dontcreate"	"1"
+		}
+
+		23
+		{
 			"name"		"sbox_noclip"
 			"text"		"allow_noclip"
 			"help"		"If enabled, players will be able to use noclip"
@@ -197,7 +220,18 @@
 			"default"	"1"
 		}
 
-		22
+		24
+		{
+			"name"		"mp_falldamage"
+			"text"		"realistic_falldamage"
+			"help"		"Enable realistic fall damage"
+			"type"		"CheckBox"
+			"default"	"0"
+			"singleplayer"	"1"
+			"dontcreate"	"1"
+		}
+
+		25
 		{
 			"name"		"sbox_bonemanip_npc"
 			"text"		"bone_manipulate_npcs"
@@ -206,7 +240,7 @@
 			"default"	"1"
 		}
 
-		23
+		26
 		{
 			"name"		"sbox_bonemanip_player"
 			"text"		"bone_manipulate_players"
@@ -215,7 +249,7 @@
 			"default"	"0"
 		}
 
-		24
+		27
 		{
 			"name"		"sbox_bonemanip_misc"
 			"text"		"bone_manipulate_others"
@@ -224,10 +258,10 @@
 			"default"	"0"
 		}
 
-		25
+		28
 		{
 			"name"		"sbox_persist"
-			"text"		"persistent_mode"
+			"text"		"persistent_mode_menu"
 			"help"		"Enables 'Make Persistent' option when you right click on props while holding C, allowing you to save them across sessions. Leave empty to disable"
 			"type"		"Text"
 			"default"	""

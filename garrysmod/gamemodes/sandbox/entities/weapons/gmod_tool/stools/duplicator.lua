@@ -1,6 +1,4 @@
 
-AddCSLuaFile()
-
 include( "duplicator/transport.lua" )
 include( "duplicator/arming.lua" )
 
@@ -62,12 +60,12 @@ function TOOL:LeftClick( trace )
 
 	DisablePropCreateEffect = true
 
-		local Ents, Constraints = duplicator.Paste( self:GetOwner(), dupe.Entities, dupe.Constraints )
+		local Ents = duplicator.Paste( self:GetOwner(), dupe.Entities, dupe.Constraints )
 
 	DisablePropCreateEffect = nil
 
-	duplicator.SetLocalPos( Vector( 0, 0, 0 ) )
-	duplicator.SetLocalAng( Angle( 0, 0, 0 ) )
+	duplicator.SetLocalPos( vector_origin )
+	duplicator.SetLocalAng( angle_zero )
 
 	--
 	-- Create one undo for the whole creation
@@ -106,8 +104,8 @@ function TOOL:RightClick( trace )
 
 	local Dupe = duplicator.Copy( trace.Entity )
 
-	duplicator.SetLocalPos( Vector( 0, 0, 0 ) )
-	duplicator.SetLocalAng( Angle( 0, 0, 0 ) )
+	duplicator.SetLocalPos( vector_origin )
+	duplicator.SetLocalAng( angle_zero )
 
 	if ( !Dupe ) then return false end
 

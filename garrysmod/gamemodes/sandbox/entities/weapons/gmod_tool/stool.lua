@@ -52,6 +52,9 @@ function ToolObj:CreateConVars()
 
 		self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, 1, FCVAR_NOTIFY )
 
+		for cvar, default in pairs( self.ServerConVar ) do
+			CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE )
+		end
 	end
 
 end
@@ -148,99 +151,105 @@ end
 
 ToolObj = nil
 
-if ( CLIENT ) then
+if ( SERVER ) then return end
 
-	-- Keep the tool list handy
-	local TOOLS_LIST = SWEP.Tool
+-- Keep the tool list handy
+local TOOLS_LIST = SWEP.Tool
 
-	-- Add the STOOLS to the tool menu
-	hook.Add( "PopulateToolMenu", "AddSToolsToMenu", function()
+-- Add the STOOLS to the tool menu
+hook.Add( "PopulateToolMenu", "AddSToolsToMenu", function()
 
-		for ToolName, TOOL in pairs( TOOLS_LIST ) do
+	for ToolName, TOOL in pairs( TOOLS_LIST ) do
 
-			if ( TOOL.AddToMenu != false ) then
+		if ( TOOL.AddToMenu != false ) then
 
-				spawnmenu.AddToolMenuOption( TOOL.Tab or "Main",
-											TOOL.Category or "New Category",
-											ToolName,
-											TOOL.Name or "#" .. ToolName,
-											TOOL.Command or "gmod_tool " .. ToolName,
-											TOOL.ConfigName or ToolName,
-											TOOL.BuildCPanel )
-
-			end
+			spawnmenu.AddToolMenuOption( TOOL.Tab or "Main",
+										TOOL.Category or "New Category",
+										ToolName,
+										TOOL.Name or "#" .. ToolName,
+										TOOL.Command or "gmod_tool " .. ToolName,
+										TOOL.ConfigName or ToolName,
+										TOOL.BuildCPanel )
 
 		end
 
-	end )
+	end
 
-	--
-	-- Search
-	--
-	search.AddProvider( function( str )
+end )
 
-		str = str:PatternSafe()
+--
+-- Search
+--
+search.AddProvider( function( str )
 
-		local list = {}
+	local list = {}
 
-		for k, v in pairs( TOOLS_LIST ) do
+	for k, v in pairs( TOOLS_LIST ) do
 
-			if ( !k:find( str ) ) then continue end
+		local niceName = v.Name or "#" .. k
+		if ( niceName:StartWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
 
-			local entry = {
-				text = v.Name or "#" .. k,
-				icon = spawnmenu.CreateContentIcon( "tool", nil, {
-					spawnname = k,
-					nicename = v.Name or "#" .. k
-				} ),
-				words = { k }
-			}
+		if ( !k:lower():find( str, nil, true ) && !niceName:lower():find( str, nil, true ) ) then continue end
 
-			table.insert( list, entry )
+		local entry = {
+			text = niceName,
+			icon = spawnmenu.CreateContentIcon( "tool", nil, {
+				spawnname = k,
+				nicename = v.Name or "#" .. k
+			} ),
+			words = { k }
+		}
 
-			if ( #list >= 32 ) then break end
+		table.insert( list, entry )
 
-		end
+		if ( #list >= GetConVarNumber( "sbox_search_maxresults" ) / 32 ) then break end
 
-		return list
+	end
 
-	end )
+	return list
 
-	--
-	-- Tool spawnmenu icon
-	--
-	spawnmenu.AddContentType( "tool", function( container, obj )
+end )
 
-		if ( !obj.spawnname ) then return end
+--
+-- Tool spawnmenu icon
+--
+spawnmenu.AddContentType( "tool", function( container, obj )
 
-		local icon = vgui.Create( "ContentIcon", container )
-		icon:SetContentType( "tool" )
-		icon:SetSpawnName( obj.spawnname )
-		icon:SetName( obj.nicename or "#tool." .. obj.spawnname .. ".name" )
-		icon:SetMaterial( "gui/tool.png" )
+	if ( !obj.spawnname ) then return end
 
-		icon.DoClick = function()
+	local icon = vgui.Create( "ContentIcon", container )
+	icon:SetContentType( "tool" )
+	icon:SetSpawnName( obj.spawnname )
+	icon:SetName( obj.nicename or "#tool." .. obj.spawnname .. ".name" )
+	icon:SetMaterial( "gui/tool.png" )
 
-			spawnmenu.ActivateTool( obj.spawnname )
+	icon.DoClick = function()
 
-			surface.PlaySound( "ui/buttonclickrelease.wav" )
+		spawnmenu.ActivateTool( obj.spawnname )
 
-		end
+		surface.PlaySound( "ui/buttonclickrelease.wav" )
 
-		icon.OpenMenu = function( icon )
+	end
 
-			local menu = DermaMenu()
-				menu:AddOption( "Delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged", icon ) end )
-			menu:Open()
+	icon.OpenMenu = function( icon )
 
-		end
+		-- Do not allow removal from read only panels
+		if ( IsValid( icon:GetParent() ) && icon:GetParent().GetReadOnly && icon:GetParent():GetReadOnly() ) then return end
 
-		if ( IsValid( container ) ) then
-			container:Add( icon )
-		end
+		local menu = DermaMenu()
+			menu:AddOption( "#spawnmenu.menu.delete", function()
+				icon:Remove()
+				hook.Run( "SpawnlistContentChanged" )
+			end ):SetIcon( "icon16/bin_closed.png" )
+		menu:Open()
 
-		return icon
+	end
 
-	end )
+	if ( IsValid( container ) ) then
+		container:Add( icon )
+	end
 
-end
+	return icon
+
+end )
+

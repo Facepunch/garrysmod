@@ -8,7 +8,7 @@ AccessorFunc( PANEL, "m_bCheckable", "IsCheckable" )
 function PANEL:Init()
 
 	self:SetContentAlignment( 4 )
-	self:SetTextInset( 30, 0 )			-- Room for icon on left
+	self:SetTextInset( 32, 0 ) -- Room for icon on left
 	self:SetTextColor( Color( 10, 10, 10 ) )
 	self:SetChecked( false )
 
@@ -29,7 +29,7 @@ end
 
 function PANEL:AddSubMenu()
 
-	local SubMenu = DermaMenu( self )
+	local SubMenu = DermaMenu( true, self )
 	SubMenu:SetVisible( false )
 	SubMenu:SetParent( self )
 
@@ -117,7 +117,7 @@ end
 function PANEL:OnChecked( b )
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
 	self:SizeToContents()
 	self:SetWide( self:GetWide() + 30 )
@@ -134,7 +134,7 @@ function PANEL:PerformLayout()
 
 	end
 
-	DButton.PerformLayout( self )
+	DButton.PerformLayout( self, w, h )
 
 end
 

@@ -34,7 +34,8 @@ end
 
 function demo:DownloadAndPlay( id )
 
-	steamworks.Download( id, true, function( name )
+	steamworks.DownloadUGC( id, function( name )
+		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, "Failed to download demo from Steam Workshop!" ) return end
 
 		self:Play( name )
 
@@ -50,7 +51,8 @@ end
 
 function demo:DownloadAndToVideo( id )
 
-	steamworks.Download( id, true, function( name )
+	steamworks.DownloadUGC( id, function( name )
+		if ( !name ) then hook.Call( "LoadGModSaveFailed", nil, "Failed to download demo from Steam Workshop!" ) return end
 
 		self:ToVideo( name )
 
@@ -65,12 +67,12 @@ function demo:ToVideo( filename )
 
 end
 
-function demo:FinishPublish( filename, imagename, name, desc )
+function demo:FinishPublish( filename, imagename, name, desc, chosenTag, other )
 
 	local info = GetDemoFileDetails( filename )
 	if ( !info ) then return "Couldn't get demo information!" end
 
-	steamworks.Publish( { "demo", info.mapname }, filename, imagename, name, desc )
+	steamworks.Publish( filename, imagename, name, desc, { "demo", info.mapname }, other.Callback, other.WorkshopID, other.ChangeNotes )
 
 end
 

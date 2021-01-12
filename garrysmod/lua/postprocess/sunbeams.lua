@@ -15,7 +15,7 @@ function DrawSunbeams( darken, multiply, sunsize, sunx, suny )
 
 	if ( !render.SupportsPixelShaders_2_0() ) then return end
 
-	render.UpdateScreenEffectTexture()
+	render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
 
 	matSunbeams:SetFloat( "$darken", darken )
 	matSunbeams:SetFloat( "$multiply", multiply )

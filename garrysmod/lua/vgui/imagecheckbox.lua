@@ -11,7 +11,7 @@ function PANEL:SetMaterial( On )
 	self.MatOn:SetSize( 16, 16 )
 	self.MatOn:SetMaterial( On )
 
-	self:PerformLayout()
+	self:InvalidateLayout( true )
 
 end
 

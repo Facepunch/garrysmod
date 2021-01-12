@@ -30,12 +30,27 @@ local tblRow = vgui.RegisterTable( {
 
 		local Name = "DProperty_" .. type
 
-		self.Inner = self.Container:Add( Name )
+		if ( vgui.GetControlTable( Name ) ) then
+			self.Inner = self.Container:Add( Name )
+		else
+			print( "DProperties: Failed to create panel (" .. Name .. ")" )
+		end
 		if ( !IsValid( self.Inner ) ) then self.Inner = self.Container:Add( "DProperty_Generic" ) end
 
 		self.Inner:SetRow( self )
 		self.Inner:Dock( FILL )
 		self.Inner:Setup( vars )
+
+		-- First copy the value if it was somehow set before Setup() was
+		self.Inner:SetEnabled( self:IsEnabled() )
+
+		-- Then override our methods so they affect Inner element instead
+		self.IsEnabled = function( self )
+			return self.Inner:IsEnabled()
+		end
+		self.SetEnabled = function( self, b )
+			self.Inner:SetEnabled( b )
+		end
 
 	end,
 
@@ -55,11 +70,16 @@ local tblRow = vgui.RegisterTable( {
 
 	Paint = function( self, w, h )
 
-		local Skin = self:GetSkin()
 		if ( !IsValid( self.Inner ) ) then return end
-		local editing = self.Inner:IsEditing()
 
-		if ( editing ) then
+		local Skin = self:GetSkin()
+		local editing = self.Inner:IsEditing()
+		local disabled = !self.Inner:IsEnabled() || !self:IsEnabled()
+
+		if ( disabled ) then
+			surface.SetDrawColor( Skin.Colours.Properties.Column_Disabled )
+			surface.DrawRect( w * 0.45, 0, w, h )
+		elseif ( editing ) then
 			surface.SetDrawColor( Skin.Colours.Properties.Column_Selected )
 			surface.DrawRect( 0, 0, w * 0.45, h )
 		end
@@ -67,9 +87,11 @@ local tblRow = vgui.RegisterTable( {
 		surface.SetDrawColor( Skin.Colours.Properties.Border )
 		surface.DrawRect( w - 1, 0, 1, h )
 		surface.DrawRect( w * 0.45, 0, 1, h )
-		surface.DrawRect( 0, h-1, w, 1 )
+		surface.DrawRect( 0, h - 1, w, 1 )
 
-		if ( editing ) then
+		if ( disabled ) then
+			self.Label:SetTextColor( Skin.Colours.Properties.Label_Disabled )
+		elseif ( editing ) then
 			self.Label:SetTextColor( Skin.Colours.Properties.Label_Selected )
 		else
 			self.Label:SetTextColor( Skin.Colours.Properties.Label_Normal )
@@ -114,7 +136,7 @@ local tblCategory = vgui.RegisterTable( {
 		self.Container:Dock( TOP )
 		self.Container:DockMargin( 16, 0, 0, 0 )
 		self.Container.Paint = function( pnl, w, h )
-			surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+			surface.SetDrawColor( color_white )
 			surface.DrawRect( 0, 0, w, h )
 		end
 
@@ -138,9 +160,9 @@ local tblCategory = vgui.RegisterTable( {
 
 		local row = self.Container:Add( tblRow )
 
-			row.Label:SetText( name )
+		row.Label:SetText( name )
 
-			self.Rows[ name ] = row
+		self.Rows[ name ] = row
 
 		return row
 
@@ -199,14 +221,14 @@ end
 --
 function PANEL:GetCategory( name, bCreate )
 
-	local cat = self.Categories[name]
+	local cat = self.Categories[ name ]
 	if ( IsValid( cat ) ) then return cat end
 
 	if ( !bCreate ) then return end
 
 	cat = self:GetCanvas():Add( tblCategory )
 	cat.Label:SetText( name )
-	self.Categories[name] = cat
+	self.Categories[ name ] = cat
 	return cat
 
 end

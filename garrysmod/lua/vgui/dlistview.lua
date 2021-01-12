@@ -332,7 +332,7 @@ end
 function PANEL:GetSelectedLine()
 
 	for k, Line in pairs( self.Lines ) do
-		if ( Line:IsSelected() ) then return k end
+		if ( Line:IsSelected() ) then return k, Line end
 	end
 
 end
@@ -480,7 +480,7 @@ function PANEL:SortByColumn( ColumnID, Desc )
 		local aval = a:GetSortValue( ColumnID ) || a:GetColumnText( ColumnID )
 		local bval = b:GetSortValue( ColumnID ) || b:GetColumnText( ColumnID )
 
-		return aval < bval
+		return tostring( aval ) < tostring( bval )
 
 	end )
 

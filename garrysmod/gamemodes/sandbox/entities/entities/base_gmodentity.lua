@@ -37,7 +37,7 @@ if ( CLIENT ) then
 	function ENT:Think()
 		local text = self:GetOverlayText()
 
-		if ( text != "" && self:BeingLookedAtByLocalPlayer() ) then
+		if ( text != "" && self:BeingLookedAtByLocalPlayer() && !self:GetNoDraw() ) then
 			AddWorldTip( self:EntIndex(), text, 0.5, self:GetPos(), self )
 
 			halo.Add( { self }, color_white, 1, 1, 1, true, true )
@@ -69,12 +69,19 @@ end
 
 function ENT:SetPlayer( ply )
 
+	self.Founder = ply
+
 	if ( IsValid( ply ) ) then
 
-		self:SetVar( "Founder", ply )
-		self:SetVar( "FounderIndex", ply:UniqueID() )
-
 		self:SetNWString( "FounderName", ply:Nick() )
+		self.FounderSID = ply:SteamID64()
+		self.FounderIndex = ply:UniqueID()
+
+	else
+
+		self:SetNWString( "FounderName", "" )
+		self.FounderSID = nil
+		self.FounderIndex = nil
 
 	end
 
@@ -82,13 +89,42 @@ end
 
 function ENT:GetPlayer()
 
-	return self:GetVar( "Founder", NULL )
+	if ( self.Founder == nil ) then
+
+		-- SetPlayer has not been called
+		return NULL
+
+	elseif ( IsValid( self.Founder ) ) then
+
+		-- Normal operations
+		return self.Founder
+
+	end
+
+	-- See if the player has left the server then rejoined
+	local ply = player.GetBySteamID64( self.FounderSID )
+	if ( not IsValid( ply ) ) then
+
+		-- Oh well
+		return NULL
+
+	end
+
+	-- Save us the check next time
+	self:SetPlayer( ply )
+	return ply
 
 end
 
 function ENT:GetPlayerIndex()
 
-	return self:GetVar( "FounderIndex", 0 )
+	return self.FounderIndex or 0
+
+end
+
+function ENT:GetPlayerSteamID()
+
+	return self.FounderSID or ""
 
 end
 

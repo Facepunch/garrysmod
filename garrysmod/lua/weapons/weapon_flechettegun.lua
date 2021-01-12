@@ -44,6 +44,10 @@ end
 function SWEP:Reload()
 end
 
+function SWEP:CanBePickedUpByNPCs()
+	return true
+end
+
 function SWEP:PrimaryAttack()
 
 	self:SetNextPrimaryFire( CurTime() + 0.1 )
@@ -58,7 +62,7 @@ function SWEP:PrimaryAttack()
 	local ent = ents.Create( "hunter_flechette" )
 	if ( !IsValid( ent ) ) then return end
 
-	local Forward = self.Owner:EyeAngles():Forward()
+	local Forward = self.Owner:GetAimVector()
 
 	ent:SetPos( self.Owner:GetShootPos() + Forward * 32 )
 	ent:SetAngles( self.Owner:EyeAngles() )
@@ -79,5 +83,33 @@ end
 function SWEP:ShouldDropOnDie()
 
 	return false
+
+end
+
+function SWEP:GetNPCRestTimes()
+
+	-- Handles the time between bursts
+	-- Min rest time in seconds, max rest time in seconds
+
+	return 0.3, 0.6
+
+end
+
+function SWEP:GetNPCBurstSettings()
+
+	-- Handles the burst settings
+	-- Minimum amount of shots, maximum amount of shots, and the delay between each shot
+	-- The amount of shots can end up lower than specificed
+
+	return 1, 6, 0.1
+
+end
+
+function SWEP:GetNPCBulletSpread( proficiency )
+
+	-- Handles the bullet spread based on the given proficiency
+	-- return value is in degrees
+
+	return 1
 
 end

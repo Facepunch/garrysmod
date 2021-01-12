@@ -75,16 +75,8 @@ function TOOL:Think()
 
 		local Name = ent:GetFlexName( i )
 
-		if ( IsUselessFaceFlex( Name ) ) then
-
-			ent:SetFlexWeight( i, 0 )
-
-		else
-
-			local num = self:GetClientNumber( "flex" .. i )
-			ent:SetFlexWeight( i, num )
-
-		end
+		local num = self:GetClientNumber( "flex" .. i )
+		ent:SetFlexWeight( i, num )
 
 	end
 
@@ -423,7 +415,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 
 	filter.OnValueChange = function( pnl, txt )
 		for id, flxpnl in pairs( flexControllers ) do
-			if ( !flxpnl:GetText():lower():find( txt:lower() ) && !flxpnl.originalName:lower():find( txt:lower() ) ) then
+			if ( !flxpnl:GetText():lower():find( txt:lower(), nil, true ) && !flxpnl.originalName:lower():find( txt:lower(), nil, true ) ) then
 				flxpnl:SetVisible( false )
 			else
 				flxpnl:SetVisible( true )

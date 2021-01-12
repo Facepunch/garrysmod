@@ -1,8 +1,9 @@
+
 if ( !render ) then return end
 
 --[[---------------------------------------------------------
   Short aliases for stencil constants
------------------------------------------------------------]]  
+-----------------------------------------------------------]]
 
 STENCIL_NEVER = STENCILCOMPARISONFUNCTION_NEVER
 STENCIL_LESS = STENCILCOMPARISONFUNCTION_LESS
@@ -26,7 +27,7 @@ STENCIL_DECR = STENCILOPERATION_DECR
    Name:	ClearRenderTarget
    Params: 	<texture> <color>
    Desc:	Clear a render target
------------------------------------------------------------]]   
+-----------------------------------------------------------]]
 function render.ClearRenderTarget( rt, color )
 
 	local OldRT = render.GetRenderTarget();
@@ -39,15 +40,15 @@ end
 
 --[[---------------------------------------------------------
    Name:	SupportsHDR
-   Params: 	
+   Params:
    Desc:	Return true if the client supports HDR
------------------------------------------------------------]]   
+-----------------------------------------------------------]]
 function render.SupportsHDR( )
 
 	if ( render.GetDXLevel() < 80 ) then return false end
 
 	return true
-	
+
 end
 
 
@@ -55,14 +56,14 @@ end
    Name:	CopyTexture
    Params: 	<texture from> <texture to>
    Desc:	Copy the contents of one texture to another
------------------------------------------------------------]]   
+-----------------------------------------------------------]]
 function render.CopyTexture( from, to )
 
 	local OldRT = render.GetRenderTarget();
-		
+
 		render.SetRenderTarget( from )
 		render.CopyRenderTargetToTexture( to )
-		
+
 	render.SetRenderTarget( OldRT )
 
 end
@@ -86,10 +87,10 @@ local tex_Bloom1		= render.GetBloomTex1()
 function render.BlurRenderTarget( rt, sizex, sizey, passes )
 
 	mat_BlurX:SetTexture( "$basetexture", rt )
-	mat_BlurY:SetTexture( "$basetexture", tex_Bloom1  )
+	mat_BlurY:SetTexture( "$basetexture", tex_Bloom1 )
 	mat_BlurX:SetFloat( "$size", sizex )
 	mat_BlurY:SetFloat( "$size", sizey )
-	
+
 	for i=1, passes+1 do
 
 		render.SetRenderTarget( tex_Bloom1 )
@@ -126,7 +127,7 @@ function cam.Start3D( pos, ang, fov, x, y, w, h, znear, zfar )
 		tab.y			= y
 		tab.w			= w
 		tab.h			= h
-		tab.aspect		= (w / h)
+		tab.aspect		= ( w / h )
 
 	end
 
@@ -141,7 +142,7 @@ function cam.Start3D( pos, ang, fov, x, y, w, h, znear, zfar )
 
 end
 
-local matFSB			= Material( "pp/motionblur" )
+local matFSB = Material( "pp/motionblur" )
 
 function render.DrawTextureToScreen( tex )
 
@@ -165,8 +166,8 @@ end
 
 
 --
--- This isn't very fast. If you're doing something every frame you should find a way to 
--- cache a ClientsideModel and keep it around! This is fine for rendering to a render 
+-- This isn't very fast. If you're doing something every frame you should find a way to
+-- cache a ClientsideModel and keep it around! This is fine for rendering to a render
 -- target once - or something.
 --
 
@@ -177,14 +178,14 @@ function render.Model( tbl, ent )
 	if ( ent == nil ) then
 		ent = ClientsideModel( tbl.model or "error.mdl", RENDERGROUP_OTHER )
 	end
-	
+
 	if ( !IsValid( ent ) ) then return end
 
 	ent:SetModel( tbl.model or "error.mdl" )
 	ent:SetNoDraw( true )
 
-	ent:SetPos( tbl.pos or Vector( 0, 0, 0 ) )
-	ent:SetAngles( tbl.angle or Angle( 0, 0, 0 ) )
+	ent:SetPos( tbl.pos or vector_origin )
+	ent:SetAngles( tbl.angle or angle_zero )
 	ent:DrawModel()
 
 	--

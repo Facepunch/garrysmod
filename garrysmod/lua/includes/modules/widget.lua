@@ -10,7 +10,7 @@ widgets = {}
 -- Holds the currently hovered widget
 -- 
 widgets.Hovered = nil
-widgets.HoveredPos = Vector( 0, 0, 0 )
+widgets.HoveredPos = vector_origin
 
 --
 -- Holds the current pressed widget

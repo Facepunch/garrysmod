@@ -4,6 +4,7 @@ local baseclass = baseclass
 local setmetatable = setmetatable
 local SERVER = SERVER
 local string = string
+local table = table
 local util = util
 
 module( "player_manager" )
@@ -296,6 +297,12 @@ AddValidHands( "dod_american", "models/weapons/c_arms_dod.mdl", 1, "10000000" )
 
 local Type = {}
 
+function GetPlayerClasses()
+
+	return table.Copy( Type )
+
+end
+
 local function LookupPlayerClass( ply )
 
 	local id = ply:GetClassID()
@@ -305,7 +312,10 @@ local function LookupPlayerClass( ply )
 	-- Check the cache
 	--
 	local method = ply.m_CurrentPlayerClass
-	if ( method && method.Player == ply && method.ClassID == id && method.Func ) then return method end
+	if ( method && method.Player == ply ) then
+		if ( method.ClassID == id && method.Func ) then return method end -- current class is still good, behave normally
+		if ( method.ClassChanged ) then method:ClassChanged() end -- the class id changed, remove the old class
+	end
 
 	--
 	-- No class, lets create one
@@ -408,7 +418,7 @@ end
 -- Should be called on spawn automatically to set the variables below
 -- This is called in the base gamemode :PlayerSpawn function
 --
-function OnPlayerSpawn( ply )
+function OnPlayerSpawn( ply, transiton )
 
 	local class = LookupPlayerClass( ply )
 	if ( !class ) then return end
@@ -420,11 +430,15 @@ function OnPlayerSpawn( ply )
 	ply:SetUnDuckSpeed( class.UnDuckSpeed )
 	ply:SetJumpPower( class.JumpPower )
 	ply:AllowFlashlight( class.CanUseFlashlight )
-	ply:SetMaxHealth( class.MaxHealth )
-	ply:SetHealth( class.StartHealth )
-	ply:SetArmor( class.StartArmor )
 	ply:ShouldDropWeapon( class.DropWeaponOnDie )
 	ply:SetNoCollideWithTeammates( class.TeammateNoCollide )
 	ply:SetAvoidPlayers( class.AvoidPlayers )
+
+	if ( !transiton ) then 
+		ply:SetMaxHealth( class.MaxHealth )
+		ply:SetMaxArmor( class.MaxArmor )
+		ply:SetHealth( class.StartHealth )
+		ply:SetArmor( class.StartArmor )
+	end
 
 end

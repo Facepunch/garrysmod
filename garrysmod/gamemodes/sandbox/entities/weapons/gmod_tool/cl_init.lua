@@ -114,7 +114,7 @@ function SWEP:DrawHUD()
 	local h2 = 0
 
 	for k, v in pairs( self:GetToolObject().Information ) do
-		if ( type( v ) == "string" ) then v = { name = v } end
+		if ( isstring( v ) ) then v = { name = v } end
 
 		if ( !v.name ) then continue end
 		if ( v.stage && v.stage != self:GetStage() ) then continue end

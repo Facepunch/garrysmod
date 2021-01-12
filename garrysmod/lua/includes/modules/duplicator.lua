@@ -89,7 +89,7 @@ local EntityPhysics =
 		for objectid = 0, num-1 do
 	
 			local obj = Entity:GetPhysicsObjectNum( objectid )
-			if ( !obj:IsValid() ) then continue end
+			if ( !IsValid( obj ) ) then continue end
 
 			data[ objectid ] = {}
 			PhysicsObject.Save( data[ objectid ], obj )
@@ -214,8 +214,8 @@ local EntitySaver =
 				local p = ent:GetManipulateBonePosition( i )
 			
 				if ( s != Vector( 1, 1, 1 ) ) then t[ 's' ] = s end -- scale
-				if ( a != Angle( 0, 0, 0 ) ) then t[ 'a' ] = a end -- angle
-				if ( p != Vector( 0, 0, 0 ) ) then t[ 'p' ] = p end -- position
+				if ( a != angle_zero ) then t[ 'a' ] = a end -- angle
+				if ( p != vector_origin ) then t[ 'p' ] = p end -- position
 		
 				if ( !table.IsEmpty( t ) ) then
 					data.BoneManip[ i ] = t
@@ -774,13 +774,14 @@ function Paste( Player, EntityList, ConstraintList )
 	-- Create constraints
 	--
 	for k, Constraint in pairs( ConstraintList ) do
-	
-		local Entity = CreateConstraintFromTable( Constraint, CreatedEntities )
-		
-		if ( Entity && Entity:IsValid() ) then
+
+		local Entity = nil
+		ProtectedCall( function() Entity = CreateConstraintFromTable( Constraint, CreatedEntities ) end )
+
+		if ( IsValid( Entity ) ) then
 			table.insert( CreatedConstraints, Entity )
 		end
-	
+
 	end
 
 	ActionPlayer = oldplayer

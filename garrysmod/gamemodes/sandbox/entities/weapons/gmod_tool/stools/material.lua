@@ -142,7 +142,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	filter.OnValueChange = function( s, txt )
 		for id, pnl in pairs( matlist.Controls ) do
-			if ( !pnl.Value:lower():find( txt:lower() ) ) then
+			if ( !pnl.Value:lower():find( txt:lower(), nil, true ) ) then
 				pnl:SetVisible( false )
 			else
 				pnl:SetVisible( true )

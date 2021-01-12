@@ -269,7 +269,9 @@ L.set_mute_tip      = "Actívalo para que se enmudezcan los vivos cuando estás 
 
 L.set_title_lang    = "Ajustes de idioma"
 
-L.set_lang          = "Elegir idioma:"
+-- It may be best to leave this next one english, so english players can always
+-- find the language setting even if it's set to a language they don't know.
+L.set_lang          = "Elegir idioma (Select language):"
 
 
 --- Weapons and equipment, HUD and messages

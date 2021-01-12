@@ -1,8 +1,8 @@
 
 surface.CreateFont( "GModNotify", {
 	font	= "Arial",
-	size	= 20,
-	weight	= 1000
+	size	= 21,
+	weight	= 0
 } )
 
 NOTIFY_GENERIC	= 0
@@ -23,14 +23,14 @@ NoticeMaterial[ NOTIFY_CLEANUP ]	= Material( "vgui/notices/cleanup" )
 
 local Notices = {}
 
-function AddProgress( uid, text )
+function AddProgress( uid, text, frac )
 
 	if ( IsValid( Notices[ uid ] ) ) then
 
 		Notices[ uid ].StartTime = SysTime()
-		Notices[ uid ].Length = 1000000
+		Notices[ uid ].Length = -1
 		Notices[ uid ]:SetText( text )
-		Notices[ uid ]:SetProgress()
+		Notices[ uid ]:SetProgress( frac )
 		return
 
 	end
@@ -40,7 +40,7 @@ function AddProgress( uid, text )
 
 	local Panel = vgui.Create( "NoticePanel", parent )
 	Panel.StartTime = SysTime()
-	Panel.Length = 1000000
+	Panel.Length = -1
 	Panel.VelX = -5
 	Panel.VelY = 0
 	Panel.fx = ScrW() + 200
@@ -48,7 +48,7 @@ function AddProgress( uid, text )
 	Panel:SetAlpha( 255 )
 	Panel:SetText( text )
 	Panel:SetPos( Panel.fx, Panel.fy )
-	Panel:SetProgress()
+	Panel:SetProgress( frac )
 
 	Notices[ uid ] = Panel
 
@@ -70,7 +70,7 @@ function AddLegacy( text, type, length )
 
 	local Panel = vgui.Create( "NoticePanel", parent )
 	Panel.StartTime = SysTime()
-	Panel.Length = length
+	Panel.Length = math.max( length, 0 )
 	Panel.VelX = -5
 	Panel.VelY = 0
 	Panel.fx = ScrW() + 200
@@ -97,6 +97,7 @@ local function UpdateNotice( pnl, total_h )
 	local ideal_x = ScrW() - w - 20
 
 	local timeleft = pnl.StartTime - ( SysTime() - pnl.Length )
+	if ( pnl.Length < 0 ) then timeleft = 1 end
 
 	-- Cartoon style about to go thing
 	if ( timeleft < 0.7 ) then
@@ -166,7 +167,7 @@ function PANEL:Init()
 	self.Label = vgui.Create( "DLabel", self )
 	self.Label:Dock( FILL )
 	self.Label:SetFont( "GModNotify" )
-	self.Label:SetTextColor( Color( 255, 255, 255, 255 ) )
+	self.Label:SetTextColor( color_white )
 	self.Label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 	self.Label:SetContentAlignment( 5 )
 
@@ -225,36 +226,59 @@ end
 
 function PANEL:Paint( w, h )
 
+	local shouldDraw = !( LocalPlayer && IsValid( LocalPlayer() ) && IsValid( LocalPlayer():GetActiveWeapon() ) && LocalPlayer():GetActiveWeapon():GetClass() == "gmod_camera" )
+
+	if ( IsValid( self.Label ) ) then self.Label:SetVisible( shouldDraw ) end
+	if ( IsValid( self.Image ) ) then self.Image:SetVisible( shouldDraw ) end
+
+	if ( !shouldDraw ) then return end
+
 	self.BaseClass.Paint( self, w, h )
 
 	if ( !self.Progress ) then return end
 
+	local boxX, boxY = 10, self:GetTall() - 13
+	local boxW, boxH = self:GetWide() - 20, 5
+	local boxInnerW = boxW - 2
+
 	surface.SetDrawColor( 0, 100, 0, 150 )
-	surface.DrawRect( 4, self:GetTall() - 10, self:GetWide() - 8, 5 )
+	surface.DrawRect( boxX, boxY, boxW, boxH )
 
 	surface.SetDrawColor( 0, 50, 0, 255 )
-	surface.DrawRect( 5, self:GetTall() - 9, self:GetWide() - 10, 3 )
+	surface.DrawRect( boxX + 1, boxY + 1, boxW - 2, boxH - 2 )
 
-	local w = self:GetWide() * 0.25
-	local x = math.fmod( SysTime() * 200, self:GetWide() + w ) - w
+	local w = math.ceil( boxInnerW * 0.25 )
+	local x = math.fmod( math.floor( SysTime() * 200 ), boxInnerW + w ) - w
 
-	if ( x + w > self:GetWide() - 11 ) then w = ( self:GetWide() - 11 ) - x end
-	if ( x < 0 ) then w = w + x; x = 0 end
+	if ( self.ProgressFrac ) then
+		x = 0
+		w = math.ceil( boxInnerW * self.ProgressFrac )
+	end
+
+	if ( x + w > boxInnerW ) then w = math.ceil( boxInnerW - x ) end
+	if ( x < 0 ) then
+		w = w + x
+		x = 0
+	end
 
 	surface.SetDrawColor( 0, 255, 0, 255 )
-	surface.DrawRect( 5 + x, self:GetTall() - 9, w, 3 )
+	surface.DrawRect( boxX + 1 + x, boxY + 1, w, boxH - 2 )
 
 end
 
-function PANEL:SetProgress()
+function PANEL:SetProgress( frac )
 
 	self.Progress = true
+	self.ProgressFrac = frac
 
 	self:SizeToContents()
 
 end
 
 function PANEL:KillSelf()
+
+	-- Infinite length
+	if ( self.Length < 0 ) then return false end
 
 	if ( self.StartTime + self.Length < SysTime() ) then
 

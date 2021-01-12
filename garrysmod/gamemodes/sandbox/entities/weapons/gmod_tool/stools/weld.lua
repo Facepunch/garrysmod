@@ -274,9 +274,14 @@ function TOOL:Holster()
 
 end
 
+local ConVarsDefault = TOOL:BuildConVarList()
+
 function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Header", { Description = "#tool.weld.help" } )
+
+	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "weld", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+
 	CPanel:AddControl( "Slider", { Label = "#tool.forcelimit", Command = "weld_forcelimit", Type = "Float", Min = 0, Max = 1000, Help = true } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.nocollide", Command = "weld_nocollide" } )
 

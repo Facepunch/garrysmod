@@ -330,7 +330,7 @@ end
 
 function SWEP:GetPrimaryCone()
    local cone = self.Primary.Cone or 0.2
-   -- 10% accuracy bonus when sighting
+   -- 15% accuracy bonus when sighting
    return self:GetIronsights() and (cone * 0.85) or cone
 end
 
@@ -380,7 +380,7 @@ function SWEP:PreDrop()
       local ammo = self:Ammo1()
 
       -- Do not drop ammo if we have another gun that uses this type
-      for _, w in pairs(self:GetOwner():GetWeapons()) do
+      for _, w in ipairs(self:GetOwner():GetWeapons()) do
          if IsValid(w) and w != self and w:GetPrimaryAmmoType() == self:GetPrimaryAmmoType() then
             ammo = 0
          end

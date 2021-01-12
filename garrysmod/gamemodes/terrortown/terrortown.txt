@@ -164,7 +164,7 @@
 			"name"		"ttt_detective_hats"
 			"text"		"Detective Hats"
 			"type"		"CheckBox"
-			"default"	"0"
+			"default"	"1"
 		}
 		
 		23
@@ -180,7 +180,7 @@
 			"name"		"ttt_no_nade_throw_during_prep"
 			"text"		"Preround Grenade Throwing"
 			"type"		"CheckBox"
-			"default"	"0"
+			"default"	"1"
 		}
 		
 		25
@@ -188,7 +188,7 @@
 			"name"		"ttt_teleport_telefrags"
 			"text"		"Teleporter Fragging"
 			"type"		"CheckBox"
-			"default"	"0"
+			"default"	"1"
 		}
 		
 		26

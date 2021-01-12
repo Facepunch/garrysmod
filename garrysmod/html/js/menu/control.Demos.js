@@ -24,9 +24,18 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 
 	$scope.CategoriesSecondary =
 	[
+		"followed",
+		"favorite",
 		"friends",
 		"mine",
 	];
+
+	$scope.Disabled = false;
+	if ( !IS_SPAWN_MENU ) lua.Run( "UpdateAddonDisabledState();" );
+
+	$scope.Subscribe = function( file ) { subscriptions.Subscribe( file.id ); }
+	$scope.Unsubscribe = function( file ) { subscriptions.Unsubscribe( file.id ); }
+	$scope.IsSubscribed = function( file ) { return subscriptions.Contains( String( file.id ) ); };
 
 	$scope.PlayDemo = function ( entry )
 	{
@@ -37,7 +46,7 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 		// TODO: Some kind of `please wait` while we download 200kb
 		//
 
-		lua.Run( "demo:DownloadAndPlay( %s );", entry.info.fileid );
+		lua.Run( "demo:DownloadAndPlay( %s );", entry.info.id );
 
 	}
 
@@ -50,7 +59,7 @@ function ControllerDemos( $scope, $element, $rootScope, $location )
 		// TODO: Some kind of `please wait` while we download 200kb
 		//
 
-		lua.Run( "demo:DownloadAndToVideo( %s );", entry.info.fileid );
+		lua.Run( "demo:DownloadAndToVideo( %s );", entry.info.id );
 	}
 
 	$scope.DeleteLocal = function ( entry )

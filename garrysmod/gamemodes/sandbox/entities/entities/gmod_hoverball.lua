@@ -3,10 +3,11 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Hoverball"
-ENT.RenderGroup = RENDERGROUP_BOTH
 ENT.Editable = true
 
 function ENT:SetupDataTables()
+
+	self:NetworkVar( "Bool", 0, "Enabled" )
 
 	self:NetworkVar( "Float", 0, "TargetZ" )
 	self:NetworkVar( "Float", 1, "SpeedVar", { KeyName = "speed", Edit = { type = "Float", order = 1, min = 0, max = 20, title = "#tool.hoverball.speed" } } )
@@ -18,10 +19,7 @@ function ENT:Initialize()
 
 	if ( CLIENT ) then
 
-		self.Refraction = Material( "sprites/heatwave" )
 		self.Glow = Material( "sprites/light_glow02_add" )
-
-		self.NextSmokeEffect = 0
 
 	end
 
@@ -45,6 +43,7 @@ function ENT:Initialize()
 		self.ZVelocity = 0
 		self:SetTargetZ( self:GetPos().z )
 		self:SetSpeed( 1 )
+		self:SetEnabled( true )
 
 	end
 
@@ -73,11 +72,15 @@ end
 
 function ENT:UpdateLabel()
 
-	self:SetOverlayText( string.format( "Speed: %i\nResistance: %.2f", self:GetSpeed(), self:GetAirResistance() ) )
+	local strength = 0
+	if ( self:GetPhysicsObject() ) then strength = self:GetPhysicsObject():GetMass() / 150 end
+
+	self:SetOverlayText( string.format( "Speed: %g\nResistance: %g\nStrength: %g", self:GetSpeed(), self:GetAirResistance(), strength ) )
 
 end
 
-function ENT:DrawTranslucent()
+function ENT:DrawEffects()
+	if ( !self:GetEnabled() ) then return end
 
 	local vOffset = self:GetPos()
 	local vPlayerEyes = LocalPlayer():EyePos()
@@ -94,12 +97,18 @@ function ENT:DrawTranslucent()
 
 	render.DrawSprite( vOffset + vDiff * 4, 48, 48, color )
 	render.DrawSprite( vOffset + vDiff * 4, 52, 52, color )
+end
 
-	BaseClass.DrawTranslucent( self )
-
+-- We have to do this to ensure DrawTranslucent is called for Opaque only models to draw our effects
+ENT.RenderGroup = RENDERGROUP_BOTH
+function ENT:DrawTranslucent( flags )
+	self:DrawEffects()
+	BaseClass.DrawTranslucent( self, flags )
 end
 
 function ENT:PhysicsSimulate( phys, deltatime )
+
+	if ( !self:GetEnabled() ) then return end
 
 	if ( self.ZVelocity != 0 ) then
 
@@ -111,7 +120,6 @@ function ENT:PhysicsSimulate( phys, deltatime )
 	phys:Wake()
 
 	local Pos = phys:GetPos()
-	local Vel = phys:GetVelocity()
 	local Distance = self:GetTargetZ() - Pos.z
 	local AirResistance = self:GetAirResistance()
 
@@ -135,10 +143,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 
 	Exponent = math.Clamp( Exponent, -5000, 5000 )
 
-	local Linear = Vector( 0, 0, 0 )
-	local Angular = Vector( 0, 0, 0 )
-
-	Linear.z = Exponent
+	local Linear = Vector( 0, 0, Exponent )
 
 	if ( AirResistance > 0 ) then
 
@@ -147,7 +152,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 
 	end
 
-	return Angular, Linear, SIM_GLOBAL_ACCELERATION
+	return vector_origin, Linear, SIM_GLOBAL_ACCELERATION
 
 end
 
@@ -158,6 +163,22 @@ function ENT:SetZVelocity( z )
 	end
 
 	self.ZVelocity = z * FrameTime() * 5000
+
+end
+
+function ENT:Toggle()
+
+	self:SetEnabled( !self:GetEnabled() )
+
+	if ( self:GetEnabled() ) then
+		self:SetTargetZ( self:GetPos().z )
+	end
+
+	local phys = self:GetPhysicsObject()
+	if ( IsValid( phys ) ) then
+		phys:EnableGravity( !self:GetEnabled() )
+		phys:Wake()
+	end
 
 end
 
@@ -209,6 +230,15 @@ if ( SERVER ) then
 		if ( !IsValid( ent ) ) then return false end
 
 		if ( keydown ) then ent:SetZVelocity( -1 ) else ent:SetZVelocity( 0 ) end
+		return true
+
+	end )
+
+	numpad.Register( "Hoverball_Toggle", function( pl, ent, keydown )
+
+		if ( !IsValid( ent ) ) then return false end
+
+		ent:Toggle()
 		return true
 
 	end )

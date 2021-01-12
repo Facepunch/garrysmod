@@ -13,6 +13,9 @@ properties.Add( "drive", {
 		if ( !gamemode.Call( "CanProperty", ply, "drive", ent ) ) then return false end
 		if ( !gamemode.Call( "CanDrive", ply, ent ) ) then return false end
 
+		-- We cannot drive these, maybe this should have a custom GetEntityDriveMode?
+		if ( ent:GetClass() == "prop_vehicle_jeep" || ent:GetClass() == "prop_vehicle_jeep_old" ) then return false end
+
 		return true
 
 	end,

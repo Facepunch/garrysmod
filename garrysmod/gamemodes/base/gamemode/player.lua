@@ -39,7 +39,7 @@ end
 -----------------------------------------------------------]]
 function GM:OnPhysgunReload( weapon, ply )
 
-	ply:PhysgunUnfreeze( weapon )
+	ply:PhysgunUnfreeze()
 
 end
 
@@ -175,6 +175,8 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	end
 
+	player_manager.RunClass( ply, "Death", inflictor, attacker )
+
 	if ( attacker == ply ) then
 
 		net.Start( "PlayerKilledSelf" )
@@ -215,7 +217,7 @@ end
 	Name: gamemode:PlayerInitialSpawn()
 	Desc: Called just before the player's first spawn
 -----------------------------------------------------------]]
-function GM:PlayerInitialSpawn( pl )
+function GM:PlayerInitialSpawn( pl, transiton )
 
 	pl:SetTeam( TEAM_UNASSIGNED )
 
@@ -249,7 +251,7 @@ end
 	Name: gamemode:PlayerSpawn()
 	Desc: Called when a player spawns
 -----------------------------------------------------------]]
-function GM:PlayerSpawn( pl )
+function GM:PlayerSpawn( pl, transiton )
 
 	--
 	-- If the player doesn't have a team in a TeamBased game
@@ -267,11 +269,14 @@ function GM:PlayerSpawn( pl )
 
 	pl:SetupHands()
 
-	player_manager.OnPlayerSpawn( pl )
+	player_manager.OnPlayerSpawn( pl, transiton )
 	player_manager.RunClass( pl, "Spawn" )
 
-	-- Call item loadout function
-	hook.Call( "PlayerLoadout", GAMEMODE, pl )
+	-- If we are in transition, do not touch player's weapons
+	if ( !transiton ) then
+		-- Call item loadout function
+		hook.Call( "PlayerLoadout", GAMEMODE, pl )
+	end
 
 	-- Set player model
 	hook.Call( "PlayerSetModel", GAMEMODE, pl )
@@ -382,7 +387,10 @@ end
 	Name: gamemode:PlayerSelectSpawn( player )
 	Desc: Find a spawn point entity for this player
 -----------------------------------------------------------]]
-function GM:PlayerSelectSpawn( pl )
+function GM:PlayerSelectSpawn( pl, transiton )
+
+	-- If we are in transition, do not reset player's position
+	if ( transiton ) then return end
 
 	if ( self.TeamBased ) then
 
@@ -447,8 +455,15 @@ function GM:PlayerSelectSpawn( pl )
 		-- ZM Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombiemaster" ) )
 
-		-- L4D2
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_position" ) )
+		-- FOF Maps
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_fof" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_desperado" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_vigilante" ) )
+
+		-- L4D Maps
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_rescue" ) )
+		-- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
+		--self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_position" ) )
 
 	end
 
@@ -728,9 +743,11 @@ end
 	Name: gamemode:GetFallDamage()
 	Desc: return amount of damage to do due to fall
 -----------------------------------------------------------]]
+local mp_falldamage = GetConVar( "mp_falldamage" )
+
 function GM:GetFallDamage( ply, flFallSpeed )
 
-	if( GetConVarNumber( "mp_falldamage" ) > 0 ) then -- realistic fall damage is on
+	if ( mp_falldamage:GetBool() ) then -- realistic fall damage is on
 		return ( flFallSpeed - 526.5 ) * ( 100 / 396 ) -- the Source SDK value
 	end
 

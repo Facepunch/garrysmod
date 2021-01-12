@@ -12,8 +12,8 @@ ENT.Spawnable = false
 function ENT:Initialize()
 
 	local Radius = 6
-	local min = Vector( 1, 1, 1 ) * Radius * -0.5
-	local max = Vector( 1, 1, 1 ) * Radius * 0.5
+	local mins = Vector( 1, 1, 1 ) * Radius * -0.5
+	local maxs = Vector( 1, 1, 1 ) * Radius * 0.5
 
 	if ( SERVER ) then
 
@@ -32,7 +32,7 @@ function ENT:Initialize()
 		self.AttachedEntity:DeleteOnRemove( self )
 
 		-- Don't use the model's physics - create a box instead
-		self:PhysicsInitBox( min, max )
+		self:PhysicsInitBox( mins, maxs )
 		self:SetSolid( SOLID_VPHYSICS )
 
 		-- Set up our physics object here
@@ -48,7 +48,9 @@ function ENT:Initialize()
 
 	else
 
+		-- So addons can override this
 		self.GripMaterial = Material( "sprites/grip" )
+		self.GripMaterialHover = Material( "sprites/grip_hover" )
 
 		-- Get the attached entity so that clientside functions like properties can interact with it
 		local tab = ents.FindByClassAndParent( "prop_dynamic", self )
@@ -57,11 +59,16 @@ function ENT:Initialize()
 	end
 
 	-- Set collision bounds exactly
-	self:SetCollisionBounds( min, max )
+	self:SetCollisionBounds( mins, maxs )
 
 end
 
 function ENT:Draw()
+
+	if ( halo.RenderedEntity() == self ) then
+		self.AttachedEntity:DrawModel()
+		return
+	end
 
 	if ( GetConVarNumber( "cl_draweffectrings" ) == 0 ) then return end
 
@@ -76,9 +83,43 @@ function ENT:Draw()
 		return
 	end
 
-	render.SetMaterial( self.GripMaterial )
+	if ( self:BeingLookedAtByLocalPlayer() ) then
+		render.SetMaterial( self.GripMaterialHover )
+	else
+		render.SetMaterial( self.GripMaterial )
+	end
+
 	render.DrawSprite( self:GetPos(), 16, 16, color_white )
 
+end
+
+-- Copied from base_gmodentity.lua
+ENT.MaxWorldTipDistance = 256
+function ENT:BeingLookedAtByLocalPlayer()
+	local ply = LocalPlayer()
+	if ( !IsValid( ply ) ) then return false end
+
+	local view = ply:GetViewEntity()
+	local dist = self.MaxWorldTipDistance
+	dist = dist * dist
+
+	-- If we're spectating a player, perform an eye trace
+	if ( view:IsPlayer() ) then
+		return view:EyePos():DistToSqr( self:GetPos() ) <= dist && view:GetEyeTrace().Entity == self
+	end
+
+	-- If we're not spectating a player, perform a manual trace from the entity's position
+	local pos = view:GetPos()
+
+	if ( pos:DistToSqr( self:GetPos() ) <= dist ) then
+		return util.TraceLine( {
+			start = pos,
+			endpos = pos + ( view:GetAngles():Forward() * dist ),
+			filter = view
+		} ).Entity == self
+	end
+
+	return false
 end
 
 function ENT:PhysicsUpdate( physobj )
@@ -88,7 +129,7 @@ function ENT:PhysicsUpdate( physobj )
 	-- Don't do anything if the player isn't holding us
 	if ( !self:IsPlayerHolding() && !self:IsConstrained() ) then
 
-		physobj:SetVelocity( Vector( 0, 0, 0 ) )
+		physobj:SetVelocity( vector_origin )
 		physobj:Sleep()
 
 	end

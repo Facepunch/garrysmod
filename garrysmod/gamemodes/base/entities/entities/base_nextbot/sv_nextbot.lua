@@ -63,10 +63,12 @@ function ENT:BodyUpdate()
 	-- This helper function does a lot of useful stuff for us.
 	-- It sets the bot's move_x move_y pose parameters, sets their animation speed relative to the ground speed, and calls FrameAdvance.
 	--
-	--
 	if ( act == ACT_RUN || act == ACT_WALK ) then
 
 		self:BodyMoveXY()
+
+		-- BodyMoveXY() already calls FrameAdvance, calling it twice will affect animation playback, specifically on layers
+		return
 
 	end
 
@@ -380,4 +382,22 @@ end
 -- Desc: Called for serverside events
 --
 function ENT:HandleAnimEvent( event, eventtime, cycle, typee, options )
+end
+
+--
+-- Name: NEXTBOT:OnTraceAttack
+-- Desc: Called serverside when the nextbot is attacked
+--
+function ENT:OnTraceAttack( dmginfo, dir, trace )
+
+	hook.Run( "ScaleNPCDamage", self, trace.HitGroup, dmginfo )
+
+end
+
+-- Called when we see a player or another nextbot
+function ENT:OnEntitySight( subject )
+end
+
+-- Called when we see lose sight of a player or a nextbot we saw earlier
+function ENT:OnEntitySightLost( subject )
 end

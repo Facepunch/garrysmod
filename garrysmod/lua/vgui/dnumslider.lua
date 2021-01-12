@@ -206,6 +206,13 @@ function PANEL:UpdateNotches()
 
 end
 
+function PANEL:SetEnabled( b )
+	self.TextArea:SetEnabled( b )
+	self.Slider:SetEnabled( b )
+	self.Scratch:SetEnabled( b )
+	FindMetaTable( "Panel" ).SetEnabled( self, b ) -- There has to be a better way!
+end
+
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )

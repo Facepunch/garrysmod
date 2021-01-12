@@ -191,7 +191,7 @@ function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
 	y = math.Round( y )
 	w = math.Round( w )
 	h = math.Round( h )
-	bordersize = math.min( math.Round( bordersize ), math.floor( w / 2 ) )
+	bordersize = math.min( math.Round( bordersize ), math.floor( w / 2 ), math.floor( h / 2 ) )
 
 	-- Draw as much of the rect as we can without textures
 	surface.DrawRect( x + bordersize, y, w - bordersize * 2, h )

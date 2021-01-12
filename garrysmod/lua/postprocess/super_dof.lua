@@ -137,6 +137,19 @@ function PANEL:ChangeDistanceTo( dist )
 
 end
 
+function PANEL:PositionMyself()
+
+	self:AlignBottom( 50 )
+	self:CenterHorizontal()
+
+end
+
+function PANEL:OnScreenSizeChanged( what, ever )
+
+	self:PositionMyself()
+
+end
+
 local paneltypeSuperDOF = vgui.RegisterTable( PANEL, "DFrame" )
 local texFSB = render.GetSuperFPTex()
 local matFSB = Material( "pp/motionblur" )
@@ -224,8 +237,8 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 				cam.Start2D()
 					local add = ( i / ( math.pi * 2 ) ) * ( 1 / passes )
 					local percent = string.format( "%.1f", ( mul - ( 1 / passes ) + add ) * 100 )
-					draw.DrawText( percent .. "%", "GModWorldtip", view.w - 100, view.h - 100, Color( 0, 0, 0, 255 ), TEXT_ALIGN_CENTER )
-					draw.DrawText( percent .. "%", "GModWorldtip", view.w - 101, view.h - 101, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER )
+					draw.DrawText( percent .. "%", "GModWorldtip", view.w - 100, view.h - 100, color_black, TEXT_ALIGN_CENTER )
+					draw.DrawText( percent .. "%", "GModWorldtip", view.w - 101, view.h - 101, color_white, TEXT_ALIGN_CENTER )
 				cam.End2D()
 
 				render.Spin()
@@ -323,9 +336,7 @@ concommand.Add( "pp_superdof", function()
 
 	SuperDOFWindow:InvalidateLayout( true )
 	SuperDOFWindow:MakePopup()
-	SuperDOFWindow:AlignBottom( 50 )
-	SuperDOFWindow:CenterHorizontal()
-	SuperDOFWindow:SetKeyboardInputEnabled( true )
+	SuperDOFWindow:PositionMyself()
 
 end )
 

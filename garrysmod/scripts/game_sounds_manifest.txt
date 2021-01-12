@@ -166,6 +166,10 @@ game_sounds_manifest
 	// Left 4 Dead
 	"precache_file"		"scripts/sounds/l4d_game_sounds_weapons.txt"
 
+	// Stanley Parable
+	"precache_file"		"scripts/soundscapes_stanley.txt"
+	"precache_file"		"scripts/npc_sounds_narration.txt"
+
 	// Leaving this here for now, they need to be prefixed in the future
 	"precache_file"		"scripts/game_sounds_vo.txt"
  	"precache_file"		"scripts/game_sounds_player.txt"

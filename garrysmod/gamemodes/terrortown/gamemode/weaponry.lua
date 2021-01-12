@@ -38,7 +38,7 @@ local function GetLoadoutWeapons(r)
       };
 
       for k, w in pairs(weapons.GetList()) do
-         if w and type(w.InLoadoutFor) == "table" then
+         if w and istable(w.InLoadoutFor) then
             for _, wrole in pairs(w.InLoadoutFor) do
                table.insert(tbl[wrole], WEPS.GetClass(w))
             end
@@ -103,7 +103,7 @@ local function CanWearHat(ply)
    return table.HasValue(Hattables, path[3])
 end
 
-CreateConVar("ttt_detective_hats", "0")
+CreateConVar("ttt_detective_hats", "1")
 -- Just hats right now
 local function GiveLoadoutSpecial(ply)
    if ply:IsActiveDetective() and GetConVar("ttt_detective_hats"):GetBool() and CanWearHat(ply) then
@@ -175,24 +175,6 @@ function GM:UpdatePlayerLoadouts()
    end
 end
 
----- Weapon switching
-local function ForceWeaponSwitch(ply, cmd, args)
-   if not ply:IsPlayer() or not args[1] then return end
-   -- Turns out even SelectWeapon refuses to switch to empty guns, gah.
-   -- Worked around it by giving every weapon a single Clip2 round.
-   -- Works because no weapon uses those.
-   local wepname = args[1]
-   local wep = ply:GetWeapon(wepname)
-   if IsValid(wep) then
-      -- Weapons apparently not guaranteed to have this
-      if wep.SetClip2 then
-         wep:SetClip2(1)
-      end
-      ply:SelectWeapon(wepname)
-   end
-end
-concommand.Add("wepswitch", ForceWeaponSwitch)
-
 ---- Weapon dropping
 
 function WEPS.DropNotifiedWeapon(ply, wep, death_drop)
@@ -238,7 +220,7 @@ local function DropActiveWeapon(ply)
       return
    end
 
-   ply:AnimPerformGesture(ACT_ITEM_PLACE)
+   ply:AnimPerformGesture(ACT_GMOD_GESTURE_ITEM_PLACE)
 
    WEPS.DropNotifiedWeapon(ply, wep)
 end
@@ -266,7 +248,7 @@ local function DropActiveAmmo(ply)
 
    wep:SetClip1(0)
 
-   ply:AnimPerformGesture(ACT_ITEM_GIVE)
+   ply:AnimPerformGesture(ACT_GMOD_GESTURE_ITEM_GIVE)
 
    local box = ents.Create(wep.AmmoEnt)
    if not IsValid(box) then return end
