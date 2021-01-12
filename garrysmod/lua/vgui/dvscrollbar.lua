@@ -45,11 +45,13 @@
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_HideButtons", "HideButtons" )
+AccessorFunc( PANEL, "m_SmoothScroll", "SmoothScroll" )
 
 function PANEL:Init()
 
 	self.Offset = 0
 	self.Scroll = 0
+	self.DeltaBuffer = 0
 	self.CanvasSize = 1
 	self.BarSize = 1
 
@@ -116,7 +118,8 @@ end
 function PANEL:SetUp( _barsize_, _canvassize_ )
 
 	self.BarSize = _barsize_
-	self.CanvasSize = math.max( _canvassize_ - _barsize_, 1 )
+	self.CanvasSize = _canvassize_ - _barsize_
+	if ( 1 > self.CanvasSize ) then self.CanvasSize = 1 end
 
 	self:SetEnabled( _canvassize_ > _barsize_ )
 
@@ -139,8 +142,9 @@ function PANEL:AddScroll( dlta )
 
 	local OldScroll = self:GetScroll()
 
-	dlta = dlta * 25
-	self:SetScroll( self:GetScroll() + dlta )
+	self.DeltaBuffer = OldScroll + ( dlta * ( self:GetSmoothScroll() && 75 || 50 ) )
+	if ( self.DeltaBuffer < -self.BarSize ) then self.DeltaBuffer = -self.BarSize end
+	if ( self.DeltaBuffer > ( self.CanvasSize + self.BarSize ) ) then self.DeltaBuffer = self.CanvasSize + self.BarSize end
 
 	return OldScroll != self:GetScroll()
 
@@ -150,7 +154,9 @@ function PANEL:SetScroll( scrll )
 
 	if ( !self.Enabled ) then self.Scroll = 0 return end
 
-	self.Scroll = math.Clamp( scrll, 0, self.CanvasSize )
+	if ( scrll > self.CanvasSize ) then scrll = self.CanvasSize end
+	if ( 0 > scrll ) then scrll = 0 end
+	self.Scroll = scrll
 
 	self:InvalidateLayout()
 
@@ -172,14 +178,15 @@ end
 
 function PANEL:AnimateTo( scrll, length, delay, ease )
 
-	local anim = self:NewAnimation( length, delay, ease )
-	anim.StartPos = self.Scroll
-	anim.TargetPos = scrll
-	anim.Think = function( anim, pnl, fraction )
+	self.DeltaBuffer = scrll
 
-		pnl:SetScroll( Lerp( fraction, anim.StartPos, anim.TargetPos ) )
+end
 
-	end
+function PANEL:GetDeltaBuffer()
+
+	if ( self.Dragging ) then self.DeltaBuffer = self:GetScroll() end
+	if ( !self.Enabled ) then self.DeltaBuffer = 0 end
+	return self.DeltaBuffer
 
 end
 
@@ -198,6 +205,15 @@ function PANEL:GetOffset()
 end
 
 function PANEL:Think()
+
+	if ( !self.Enabled ) then return end
+
+	local FrameRate = ( self.CanvasSize / 10 ) > math.abs( self:GetDeltaBuffer() - self:GetScroll() ) && 2 || 5
+	self:SetScroll( Lerp( FrameTime() * ( self:GetSmoothScroll() && FrameRate || 10 ), self:GetScroll(), self:GetDeltaBuffer() ) )
+
+	if ( self.CanvasSize > self.DeltaBuffer && self.Scroll == self.CanvasSize ) then self.DeltaBuffer = self.CanvasSize end
+	if ( 0 > self.DeltaBuffer && self.Scroll == 0 ) then self.DeltaBuffer = 0 end
+
 end
 
 function PANEL:Paint( w, h )
@@ -274,7 +290,8 @@ function PANEL:PerformLayout()
 	local BtnHeight = Wide
 	if ( self:GetHideButtons() ) then BtnHeight = 0 end
 	local Scroll = self:GetScroll() / self.CanvasSize
-	local BarSize = math.max( self:BarScale() * ( self:GetTall() - ( BtnHeight * 2 ) ), 10 )
+	local BarSize = self:BarScale() * ( self:GetTall() - ( BtnHeight * 2 ) )
+	if ( 10 > BarSize ) then BarSize = 10 end
 	local Track = self:GetTall() - ( BtnHeight * 2 ) - BarSize
 	Track = Track + 1
 
