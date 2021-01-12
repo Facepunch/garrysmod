@@ -70,6 +70,9 @@ function PANEL:Init()
 	self:SetSize( 15, 15 )
 	self:SetHideButtons( false )
 
+	-- Nicer default smooth
+	self:SetSmoothScroll( true )
+
 end
 
 function PANEL:SetEnabled( b )
