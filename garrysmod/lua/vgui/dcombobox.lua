@@ -24,6 +24,7 @@ function PANEL:Init()
 
 end
 
+-- Closes the context menu
 function PANEL:CloseMenu()
 
 	if ( self.Menu ) then
