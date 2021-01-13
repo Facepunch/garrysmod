@@ -24,6 +24,17 @@ function PANEL:Init()
 
 end
 
+-- Closes the context menu
+function PANEL:CloseMenu()
+
+	if ( IsValid( self.Menu ) ) then
+		self.Menu:Remove()
+	end
+
+	self.Menu = nil
+
+end
+
 function PANEL:Clear()
 
 	self:SetText( "" )
@@ -31,11 +42,7 @@ function PANEL:Clear()
 	self.Data = {}
 	self.ChoiceIcons = {}
 	self.selected = nil
-
-	if ( self.Menu ) then
-		self.Menu:Remove()
-		self.Menu = nil
-	end
+	self:CloseMenu()
 
 end
 
@@ -84,11 +91,7 @@ end
 
 function PANEL:ChooseOption( value, index )
 
-	if ( self.Menu ) then
-		self.Menu:Remove()
-		self.Menu = nil
-	end
-
+	self:CloseMenu()
 	self:SetText( value )
 
 	-- This should really be the here, but it is too late now and convar changes are handled differently by different child elements
@@ -133,7 +136,7 @@ function PANEL:AddChoice( value, data, select, icon )
 	if ( data ) then
 		self.Data[ i ] = data
 	end
-	
+
 	if ( icon ) then
 		self.ChoiceIcons[ i ] = icon
 	end
@@ -165,10 +168,7 @@ function PANEL:OpenMenu( pControlOpener )
 
 	-- If the menu still exists and hasn't been deleted
 	-- then just close it and don't open a new one.
-	if ( IsValid( self.Menu ) ) then
-		self.Menu:Remove()
-		self.Menu = nil
-	end
+	self:CloseMenu()
 
 	self.Menu = DermaMenu( false, self )
 
@@ -198,14 +198,6 @@ function PANEL:OpenMenu( pControlOpener )
 
 	self.Menu:SetMinimumWidth( self:GetWide() )
 	self.Menu:Open( x, y, false, self )
-
-end
-
-function PANEL:CloseMenu()
-
-	if ( IsValid( self.Menu ) ) then
-		self.Menu:Remove()
-	end
 
 end
 
