@@ -157,12 +157,12 @@ function PANEL:RemoveChoiceID( id )
 	
 end
 
-function PANEL:GetChoiceID( value )
+local function GetChoiceID( value, choice, data )
 	
-	local id, tc = 0, self.Choices
+	local id, where = 0, ( data or choice )
 	
-	for ic = 1, #tc do
-		if( tc[ ic ] == value ) then
+	for ic = 1, #choice do
+		if( where[ ic ] == value ) then
 			id = ic
 			break
 		end
@@ -174,7 +174,13 @@ end
 
 function PANEL:RemoveChoiceName( value )
 		
-	self:RemoveChoiceID( self:GetChoiceID( value ) )
+	self:RemoveChoiceID( GetChoiceID( value, self.Choices ) )
+	
+end
+
+function PANEL:RemoveChoiceData( data )
+		
+	self:RemoveChoiceID( GetChoiceID( data, self.Choices, self.Data ) )
 	
 end
 
