@@ -142,13 +142,40 @@ function PANEL:AddChoice( value, data, select, icon )
 	end
 
 	if ( select ) then
-
 		self:ChooseOption( value, i )
-
 	end
 
 	return i
 
+end
+
+function PANEL:RemoveChoiceID( id )
+
+  -- Removing an entry with zero or negative ID does nothing
+	table.remove( self.Data   , id )
+	table.remove( self.Choices, id )
+	
+end
+
+function PANEL:GetChoiceID( value )
+	
+	local id, tc = 0, self.Choices
+	
+	for ic = 1, #tc do
+		if( tc[ ic ] == value ) then
+			id = ic
+			break
+		end
+	end
+	
+	return id
+	
+end
+
+function PANEL:RemoveChoiceName( value )
+		
+	self:RemoveChoiceID( self:GetChoiceID( value ) )
+	
 end
 
 function PANEL:IsMenuOpen()
