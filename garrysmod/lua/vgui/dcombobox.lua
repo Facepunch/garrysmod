@@ -94,8 +94,9 @@ function PANEL:ChooseOption( value, index )
 	self:CloseMenu()
 	self:SetText( value )
 
-	-- This should really be the here, but it is too late now and convar changes are handled differently by different child elements
-	--self:ConVarChanged( self.Data[ index ] )
+	-- This should really be the here, but it is too late now and convar
+	-- changes are handled differently by different child elements
+	-- self:ConVarChanged( self.Data[ index ] )
 
 	self.selected = index
 	self:OnSelect( index, value, self.Data[ index ] )
@@ -117,9 +118,11 @@ end
 
 function PANEL:GetSelected()
 
-	if ( !self.selected ) then return end
+	local id = self:GetSelectedID()
 
-	return self:GetOptionText( self.selected ), self:GetOptionData( self.selected )
+	if ( !id ) then return end
+
+	return self:GetOptionText( id ), self:GetOptionData( id )
 
 end
 
@@ -131,57 +134,52 @@ end
 
 function PANEL:AddChoice( value, data, select, icon )
 
-	local i = table.insert( self.Choices, value )
+	local id = table.insert( self.Choices, value )
 
 	if ( data ) then
-		self.Data[ i ] = data
+		self.Data[ id ] = data
 	end
 
 	if ( icon ) then
-		self.ChoiceIcons[ i ] = icon
+		self.ChoiceIcons[ id ] = icon
 	end
 
 	if ( select ) then
-		self:ChooseOption( value, i )
+		self:ChooseOption( value, id )
 	end
 
-	return i
-
-end
-
-function PANEL:RemoveChoiceID( id )
-
-  -- Removing an entry with zero or negative ID does nothing
-	table.remove( self.Data   , id )
-	table.remove( self.Choices, id )
-	
-end
-
-local function GetChoiceID( value, choice, data )
-	
-	local id, where = 0, ( data or choice )
-	
-	for ic = 1, #choice do
-		if( where[ ic ] == value ) then
-			id = ic
-			break
-		end
-	end
-	
 	return id
-	
+
+end
+
+function PANEL:RemoveChoiceID( index )
+
+	-- The second argument must be convertable to number
+	-- Removing non-positive or fractional does nothing
+	-- Entry will be removed only on positive integers
+	table.remove( self.Data   , index )
+	table.remove( self.Choices, index )
+
 end
 
 function PANEL:RemoveChoiceName( value )
-		
-	self:RemoveChoiceID( GetChoiceID( value, self.Choices ) )
-	
+
+	local id = table.KeyFromValue( self.Choices, value )
+	self:RemoveChoiceID( id or 0 )
+
 end
 
 function PANEL:RemoveChoiceData( data )
-		
-	self:RemoveChoiceID( GetChoiceID( data, self.Choices, self.Data ) )
-	
+
+	local id = table.KeyFromValue( self.Data, value )
+	self:RemoveChoiceID( id or 0 )
+
+end
+
+function PANEL:RemoveSelected()
+
+	self:RemoveChoiceID( self:GetSelectedID() )
+
 end
 
 function PANEL:IsMenuOpen()
