@@ -126,7 +126,6 @@ lua\includes\modules\construct.lua
 lua\includes\modules\list.lua
 lua\includes\modules\cvars.lua
 lua\includes\modules\http.lua
-lua\includes\modules\ease.lua
 lua\includes\modules\draw.lua
 lua\includes\modules\markup.lua
 lua\includes\modules\effects.lua
@@ -150,6 +149,7 @@ lua\includes\extensions\debug.lua
 lua\includes\extensions\entity.lua
 lua\includes\extensions\net.lua
 lua\includes\extensions\math.lua
+lua\includes\extensions\math\ease.lua
 lua\includes\extensions\player.lua
 lua\includes\extensions\player_auth.lua
 lua\includes\extensions\string.lua

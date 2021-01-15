@@ -1,6 +1,4 @@
-local math = math
-
-module( "ease" )
+math.ease = {}
 
 --[[---------------------------------------------------------
 	Source code of functions
@@ -26,75 +24,75 @@ local d1 = 2.75
 	Easing functions
 -----------------------------------------------------------]]
 
-function InSine( x )
+function math.ease.InSine( x )
 	return 1 - math.cos( ( x * math.pi ) / 2 )
 end
 
-function OutSine( x )
+function math.ease.OutSine( x )
 	return math.sin( ( x * math.pi ) / 2 )
 end
 
-function InOutSine( x )
+function math.ease.InOutSine( x )
 	return -( math.cos( math.pi * x ) - 1 ) / 2
 end
 
-function InQuad( x )
+function math.ease.InQuad( x )
 	return x * x
 end
 
-function OutQuad( x )
+function math.ease.OutQuad( x )
 	return 1 - ( 1 - x ) * ( 1 - x )
 end
 
-function InOutQuad( x )
+function math.ease.InOutQuad( x )
 	return x < 0.5 && 2 * x * x || 1 - ( ( -2 * x + 2 ) ^ 2 ) / 2
 end
 
-function InCubic( x )
+function math.ease.InCubic( x )
 	return x * x * x
 end
 
-function OutCubic( x )
+function math.ease.OutCubic( x )
 	return 1 - ( ( 1 - x ) ^ 3 )
 end
 
-function InOutCubic( x )
+function math.ease.InOutCubic( x )
 	return x < 0.5 && 4 * x * x * x || 1 - ( ( -2 * x + 2 ) ^ 3 ) / 2
 end
 
-function InQuart( x )
+function math.ease.InQuart( x )
 	return x * x * x * x
 end
 
-function OutQuart( x )
+function math.ease.OutQuart( x )
 	return 1 - ( ( 1 - x ) ^ 4 )
 end
 
-function InOutQuart( x )
+function math.ease.InOutQuart( x )
 	return x < 0.5 && 8 * x * x * x * x || 1 - ( ( -2 * x + 2 ) ^ 4 ) / 2
 end
 
-function InQuint( x )
+function math.ease.InQuint( x )
 	return x * x * x * x * x
 end
 
-function OutQuint( x )
+function math.ease.OutQuint( x )
 	return 1 - ( ( 1 - x ) ^ 5 )
 end
 
-function InOutQuint( x )
+function math.ease.InOutQuint( x )
 	return x < 0.5 && 16 * x * x * x * x * x || 1 - ( ( -2 * x + 2 ) ^ 5 ) / 2
 end
 
-function InExpo( x )
+function math.ease.InExpo( x )
 	return x == 0 && 0 || ( 2 ^ ( 10 * x - 10 ) )
 end
 
-function OutExpo( x )
+function math.ease.OutExpo( x )
 	return x == 1 && 1 || 1 - ( 2 ^ ( -10 * x ) )
 end
 
-function InOutExpo( x )
+function math.ease.InOutExpo( x )
 	return x == 0
 		&& 0
 		|| x == 1
@@ -103,35 +101,35 @@ function InOutExpo( x )
 		|| ( 2 - ( 2 ^ ( -20 * x + 10 ) ) ) / 2
 end
 
-function InCirc( x )
+function math.ease.InCirc( x )
 	return 1 - math.sqrt( 1 - ( x ^ 2 ) )
 end
 
-function OutCirc( x )
+function math.ease.OutCirc( x )
 	return math.sqrt( 1 - ( ( x - 1 ) ^ 2 ) )
 end
 
-function InOutCirc( x )
+function math.ease.InOutCirc( x )
 	return x < 0.5
 		&& ( 1 - math.sqrt( 1 - ( ( 2 * x ) ^ 2 ) ) ) / 2
 		|| ( math.sqrt( 1 - ( ( -2 * x + 2 ) ^ 2 ) ) + 1 ) / 2
 end
 
-function InBack( x )
+function math.ease.InBack( x )
 	return c3 * x * x * x - c1 * x * x
 end
 
-function OutBack( x )
+function math.ease.OutBack( x )
 	return 1 + c3 * ( ( x - 1 ) ^ 3 ) + c1 * ( ( x - 1 ) ^ 2 )
 end
 
-function InOutBack( x )
+function math.ease.InOutBack( x )
 	return x < 0.5
 		&& ( ( ( 2 * x ) ^ 2 ) * ( ( c2 + 1 ) * 2 * x - c2 ) ) / 2
 		|| ( ( ( 2 * x - 2 ) ^ 2 ) * ( ( c2 + 1 ) * ( x * 2 - 2 ) + c2 ) + 2 ) / 2
 end
 
-function InElastic( x )
+function math.ease.InElastic( x )
 	return x == 0
 		&& 0
 		|| x == 1
@@ -139,7 +137,7 @@ function InElastic( x )
 		|| -( 2 ^ ( 10 * x - 10 ) ) * math.sin( ( x * 10 - 10.75 ) * c4 )
 end
 
-function OutElastic( x )
+function math.ease.OutElastic( x )
 	return x == 0
 		&& 0
 		|| x == 1
@@ -147,7 +145,7 @@ function OutElastic( x )
 		|| ( 2 ^ ( -10 * x ) ) * math.sin( ( x * 10 - 0.75 ) * c4 ) + 1
 end
 
-function InOutElastic( x )
+function math.ease.InOutElastic( x )
 	return x == 0
 		&& 0
 		|| x == 1
@@ -157,11 +155,11 @@ function InOutElastic( x )
 		|| ( ( 2 ^ ( -20 * x + 10 ) ) * math.sin( ( 20 * x - 11.125 ) * c5 ) ) / 2 + 1
 end
 
-function InBounce( x )
+function math.ease.InBounce( x )
 	return 1 - easeOutBounce( 1 - x )
 end
 
-function OutBounce( x )
+function math.ease.OutBounce( x )
 	if ( x < 1 / d1 ) then
 		return n1 * x * x
 	elseif ( x < 2 / d1 ) then
@@ -176,7 +174,7 @@ function OutBounce( x )
 	end
 end
 
-function InOutBounce( x )
+function math.ease.InOutBounce( x )
 	return x < 0.5
 		&& ( 1 - easeOutBounce( 1 - 2 * x ) ) / 2
 		|| ( 1 + easeOutBounce( 2 * x - 1 ) ) / 2

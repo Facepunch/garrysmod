@@ -59,7 +59,6 @@ end
 
 if ( CLIENT ) then
 
-	require ( "ease" )			-- Easing function library
 	require ( "draw" )			-- 2D Draw library
 	require ( "markup" )		-- Text markup library
 	require ( "effects" )

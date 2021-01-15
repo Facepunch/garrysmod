@@ -12,7 +12,6 @@ include( "util/sql.lua" ) -- Include sql here so it's available at loadtime to m
 require( "concommand" )
 require( "list" )
 require( "hook" )
-require( "ease" )
 require( "draw" )
 require( "http" )
 require( "cvars" )
