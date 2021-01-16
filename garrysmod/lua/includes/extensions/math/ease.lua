@@ -156,7 +156,7 @@ function math.ease.InOutElastic( x )
 end
 
 function math.ease.InBounce( x )
-	return 1 - easeOutBounce( 1 - x )
+	return 1 - math.ease.OutBounce( 1 - x )
 end
 
 function math.ease.OutBounce( x )
@@ -176,6 +176,6 @@ end
 
 function math.ease.InOutBounce( x )
 	return x < 0.5
-		&& ( 1 - easeOutBounce( 1 - 2 * x ) ) / 2
-		|| ( 1 + easeOutBounce( 2 * x - 1 ) ) / 2
+		&& ( 1 - math.ease.OutBounce( 1 - 2 * x ) ) / 2
+		|| ( 1 + math.ease.OutBounce( 2 * x - 1 ) ) / 2
 end
