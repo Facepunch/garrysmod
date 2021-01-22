@@ -75,6 +75,8 @@ function TOOL:RightClick( trace )
 
 end
 
+local color_white = Color( 255, 255, 255, 255 )
+
 function TOOL:Reload( trace )
 
 	local ent = trace.Entity
@@ -83,7 +85,7 @@ function TOOL:Reload( trace )
 	if ( !IsValid( ent ) ) then return false end -- The entity is valid and isn't worldspawn
 	if ( CLIENT ) then return true end
 
-	SetColour( self:GetOwner(), ent, { Color = Color( 255, 255, 255, 255 ), RenderMode = 0, RenderFX = 0 } )
+	SetColour( self:GetOwner(), ent, { Color = color_white, RenderMode = 0, RenderFX = 0 } )
 	return true
 
 end
