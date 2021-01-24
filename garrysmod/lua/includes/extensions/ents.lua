@@ -27,11 +27,20 @@ end
 
 
 
-local EntityCache = nil
+local EntityCache = {}
+
 function ents.Iterator()
-	if EntityCache == nil then EntityCache = ents.GetAll() end
-	return ipairs(EntityCache)
+	
+	return ipairs( EntityCache )
+	
 end
 
-hook.Add("OnEntityCreated", "ents.Iterator", function(ent) EntityCache = nil end)
-hook.Add("EntityRemoved", "ents.Iterator", function(ent) EntityCache = nil end)
+local function RefreshEntityCache( ent )
+	
+	EntityCache = ents.GetAll()
+	
+end
+
+hook.Add( "OnEntityCreated", "ents.Iterator", RefreshEntityCache )
+
+hook.Add( "EntityRemoved", "ents.Iterator", RefreshEntityCache )
