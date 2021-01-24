@@ -610,7 +610,7 @@ writing = {
 			net.WriteData( compressed, compressed:len() )
 		else
 			net.WriteBool( false )
-			net.WriteString( x:len() )
+			net.WriteString( x )
 		end
 	end,
 
