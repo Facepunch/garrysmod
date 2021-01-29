@@ -157,9 +157,11 @@ function PANEL:RemoveChoiceID( index )
 	-- The second argument must be convertable to number
 	-- Removing non-positive or fractional does nothing
 	-- Entry will be removed only on positive integers
-	table.remove( self.Data   , index )
-	table.remove( self.Choices, index )
-
+	local name = table.remove( self.Choices, index )
+	local data = table.remove( self.Data   , index )
+	
+	return name, data -- Using the logic of `GetSelected`
+	
 end
 
 function PANEL:RemoveChoiceName( value )
