@@ -13,7 +13,7 @@ lua\postprocess\motion_blur.lua
 lua\vgui\contextbase.lua
 lua\postprocess\overlay.lua
 lua\vgui\dadjustablemodelpanel.lua
-lua\vgui\dcolorbutton.lua 
+lua\vgui\dcolorbutton.lua
 lua\vgui\dalphabar.lua
 lua\vgui\dbinder.lua
 lua\postprocess\sharpen.lua
