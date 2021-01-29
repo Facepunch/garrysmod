@@ -410,9 +410,10 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 
 	-- Add some padding to the bottom of the list
 	local padding = vgui.Create( "Panel", CPanel )
-	padding:Dock( TOP )
 	padding:SetHeight( 7 )
+	CPanel:AddItem( padding )
 
+	-- Actual searching
 	filter.OnValueChange = function( pnl, txt )
 		for id, flxpnl in pairs( flexControllers ) do
 			if ( !flxpnl:GetText():lower():find( txt:lower(), nil, true ) && !flxpnl.originalName:lower():find( txt:lower(), nil, true ) ) then
