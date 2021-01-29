@@ -327,9 +327,13 @@ local function RefreshMaps( skip )
 
 end
 
-hook.Add( "MenuStart", "FindMaps", RefreshMaps )
+local function DelayedRefreshMaps()
+	-- Update only after a short while for when these hooks are called very rapidly back to back
+	timer.Create( "menu_refreshmaps", 0.1, 1, RefreshMaps )
+end
 
-hook.Add( "GameContentChanged", "RefreshMaps", RefreshMaps )
+hook.Add( "MenuStart", "FindMaps", DelayedRefreshMaps )
+hook.Add( "GameContentChanged", "RefreshMaps", DelayedRefreshMaps )
 
 function GetMapList()
 	-- Nice maplist accessor instead of a global table
