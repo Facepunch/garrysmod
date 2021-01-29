@@ -62,7 +62,10 @@
 
 	<ul class="center" ng-show="InGame">
 
-		<li class="bigicon" ng-show="ShowFavButton" ng-click="AddServerToFavorites()"><a href="#/"><img src='img/favourite_server.png'><span ng-Tranny="'favorite_this_server'"></span></a></li>
+		<span ng-show="ShowFavButton">
+			<li class="bigicon" ng-hide="IsCurrentServerFav" ng-click="ToggleServerFavorites( true )"><a href="#/"><img src='img/favourite_server.png'><span ng-Tranny="'favorite_this_server'"></span></a></li>
+			<li class="bigicon" ng-show="IsCurrentServerFav" ng-click="ToggleServerFavorites( false )"><a href="#/"><img src='img/favourite_server_del.png'><span ng-Tranny="'unfavorite_this_server'"></span></a></li>
+		</span>
 		<li class="bigicon" ng-click="BackToGame()"><a href="#/"><img src='img/back_to_game.png'><span ng-Tranny="'back_to_game'"></span></a></li>
 		<!--
 		<li ng-click="Disconnect()"><a href="#/"><img src='img/disconnect.png'><span ng-Tranny="'disconnect'"></span></a></li>

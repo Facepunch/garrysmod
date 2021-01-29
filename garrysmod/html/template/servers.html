@@ -78,7 +78,7 @@
 					<div ng-repeat="server in CurrentGamemode.servers|filter:CurrentGamemode.Search|orderBy:CurrentGamemode.OrderBy:CurrentGamemode.OrderReverse|limitTo:256"
 						class="server {{ServerClass(server)}} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-mouseup="SelectServer( server, $event )" >
 						<name>
-							<a class='unfavbutton {{IfElse( !server.favorite, "removed", "" )}}' ng-show="ServerType == 'favorite'" ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
+							<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
 							<img src='img/server-passworded.png' style="margin-right: 8px;" ng-show="server.pass"/>
 							<span>{{server.name}}</span>
 						</name>

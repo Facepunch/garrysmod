@@ -237,7 +237,7 @@ function GetGamemode( name, type )
 	return ServerTypes[type].gamemodes[name];
 }
 
-function AddServer( type, id, ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid, isAnon, steamID )
+function AddServer( type, id, ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid, isAnon, steamID, isFav )
 {
 	if ( id != RequestNum[ type ] ) return;
 
@@ -261,12 +261,8 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		workshopid:		workshopid,
 		isAnon:			isAnon,
 		steamID:		steamID,
-		favorite:		false // This needs to be set properly
+		favorite:		isFav == "true"
 	};
-
-	if ( type == "favorite" ) {
-		data.favorite = true; // This needs to be set properly
-	}
 
 	data.hasmap = DoWeHaveMap( data.map );
 

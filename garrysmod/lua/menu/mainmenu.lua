@@ -78,19 +78,17 @@ function PANEL:Paint()
 		end
 	end
 
-	if ( self.CanAddServerToFavorites != CanAddServerToFavorites() ) then
+	if ( !self.IsInGame ) then return end
 
-		self.CanAddServerToFavorites = CanAddServerToFavorites()
+	local canAdd = CanAddServerToFavorites()
+	local isFav = serverlist.IsCurrentServerFavorite()
+	if ( self.CanAddServerToFavorites != canAdd || self.IsCurrentServerFavorite != isFav ) then
 
-		if ( self.CanAddServerToFavorites ) then
+		self.CanAddServerToFavorites = canAdd
+		self.IsCurrentServerFavorite = isFav
 
-			self.HTML:QueueJavascript( "SetShowFavButton( true )" )
+		self.HTML:QueueJavascript( "SetShowFavButton( " .. tostring( self.CanAddServerToFavorites ) ..", " .. tostring( self.IsCurrentServerFavorite ) .. " )" )
 
-		else
-
-			self.HTML:QueueJavascript( "SetShowFavButton( false )" )
-
-		end
 	end
 
 end
@@ -305,7 +303,7 @@ function GetServers( category, id )
 	local data = {
 		Callback = function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, workshopid, isAnon, steamID64 )
 
-			if Servers[ category ] && Servers[ category ][ address ] then print( "Server Browser Error!", address, category ) return end
+			if ( Servers[ category ] && Servers[ category ][ address ] ) then print( "Server Browser Error!", address, category ) return end
 			Servers[ category ][ address ] = true
 
 			local blackListMatch = IsServerBlacklisted( address, name, desc, gm, map )
@@ -318,8 +316,8 @@ function GetServers( category, id )
 				gm = string.JavascriptSafe( gm )
 				workshopid = string.JavascriptSafe( workshopid )
 
-				pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s" );',
-					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid, tostring( isAnon ), steamID64 ) )
+				pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s" );',
+					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid, tostring( isAnon ), steamID64, tostring( serverlist.IsServerFavorite( address ) ) ) )
 
 			else
 
@@ -333,11 +331,11 @@ function GetServers( category, id )
 
 		CallbackFailed = function( address )
 
-			if Servers[ category ] && Servers[ category ][ address ] then print( "Server Browser Error!", address, category ) return end
+			if ( Servers[ category ] && Servers[ category ][ address ] ) then print( "Server Browser Error!", address, category ) return end
 			Servers[ category ][ address ] = true
 
-			pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s" );',
-					category, id, 9999, "The server at address " .. address .. " failed to respond", "Unreachable Servers", "no_map", 0, 2, 0, 'false', 0, address, 'unkn', '0', 'true', '' ) )
+			pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s" );',
+					category, id, 9999, "The server at address " .. address .. " failed to respond", "Unreachable Servers", "no_map", 0, 2, 0, 'false', 0, address, 'unkn', '0', 'true', '', tostring( serverlist.IsServerFavorite( address ) ) ) )
 
 			return !ShouldStop[ category ]
 
