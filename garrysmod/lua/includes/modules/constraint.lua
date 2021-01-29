@@ -303,8 +303,11 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 	rope:SetKeyValue( "Width", width )
 
 	if ( isstring( material ) ) then
+		-- Avoid materials with this shader, it either caused crashes or severe graphical glitches
 		local mat = Material( material )
-		if ( material && !string.find( mat:GetShader():lower(), "spritecard" ) ) then rope:SetKeyValue( "RopeMaterial", material ) end
+		if ( mat && !string.find( mat:GetShader():lower(), "spritecard" ) ) then
+			rope:SetKeyValue( "RopeMaterial", material )
+		end
 	end
 
 	-- Attachment point 1
