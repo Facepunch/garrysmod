@@ -22,6 +22,12 @@ Subscriptions.prototype.Enabled = function( id )
 	return this.Files[ String( id ) ].mounted;
 }
 
+Subscriptions.prototype.GetInvalidReason = function( id )
+{
+	if ( !this.Files[ String( id ) ] ) return;
+	return this.Files[ String( id ) ].invalid_reason;
+}
+
 Subscriptions.prototype.SetAllEnabled = function( bBool )
 {
 	for ( k in this.Files )
