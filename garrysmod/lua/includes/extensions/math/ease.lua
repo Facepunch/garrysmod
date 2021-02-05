@@ -37,7 +37,7 @@ function math.ease.InOutSine( x )
 end
 
 function math.ease.InQuad( x )
-	return x * x
+	return x ^ 2
 end
 
 function math.ease.OutQuad( x )
@@ -45,11 +45,11 @@ function math.ease.OutQuad( x )
 end
 
 function math.ease.InOutQuad( x )
-	return x < 0.5 && 2 * x * x || 1 - ( ( -2 * x + 2 ) ^ 2 ) / 2
+	return x < 0.5 && 2 * x ^ 2 || 1 - ( ( -2 * x + 2 ) ^ 2 ) / 2
 end
 
 function math.ease.InCubic( x )
-	return x * x * x
+	return x ^ 3
 end
 
 function math.ease.OutCubic( x )
@@ -57,11 +57,11 @@ function math.ease.OutCubic( x )
 end
 
 function math.ease.InOutCubic( x )
-	return x < 0.5 && 4 * x * x * x || 1 - ( ( -2 * x + 2 ) ^ 3 ) / 2
+	return x < 0.5 && 4 * x ^ 3 || 1 - ( ( -2 * x + 2 ) ^ 3 ) / 2
 end
 
 function math.ease.InQuart( x )
-	return x * x * x * x
+	return x ^ 4
 end
 
 function math.ease.OutQuart( x )
@@ -69,11 +69,11 @@ function math.ease.OutQuart( x )
 end
 
 function math.ease.InOutQuart( x )
-	return x < 0.5 && 8 * x * x * x * x || 1 - ( ( -2 * x + 2 ) ^ 4 ) / 2
+	return x < 0.5 && 8 * x ^ 4 || 1 - ( ( -2 * x + 2 ) ^ 4 ) / 2
 end
 
 function math.ease.InQuint( x )
-	return x * x * x * x * x
+	return x ^ 5
 end
 
 function math.ease.OutQuint( x )
@@ -81,7 +81,7 @@ function math.ease.OutQuint( x )
 end
 
 function math.ease.InOutQuint( x )
-	return x < 0.5 && 16 * x * x * x * x * x || 1 - ( ( -2 * x + 2 ) ^ 5 ) / 2
+	return x < 0.5 && 16 * x ^ 5 || 1 - ( ( -2 * x + 2 ) ^ 5 ) / 2
 end
 
 function math.ease.InExpo( x )
@@ -116,7 +116,7 @@ function math.ease.InOutCirc( x )
 end
 
 function math.ease.InBack( x )
-	return c3 * x * x * x - c1 * x * x
+	return c3 * x ^ 3 - c1 * x ^ 2
 end
 
 function math.ease.OutBack( x )
@@ -161,16 +161,16 @@ end
 
 function math.ease.OutBounce( x )
 	if ( x < 1 / d1 ) then
-		return n1 * x * x
+		return n1 * x ^ 2
 	elseif ( x < 2 / d1 ) then
 		x = x - ( 1.5 / d1 )
-		return n1 * x * x + 0.75
+		return n1 * x ^ 2 + 0.75
 	elseif ( x < 2.5 / d1 ) then
 		x = x - ( 2.25 / d1 )
-		return n1 * x * x + 0.9375
+		return n1 * x ^ 2 + 0.9375
 	else
 		x = x - ( 2.625 / d1 )
-		return n1 * x * x + 0.984375
+		return n1 * x ^ 2 + 0.984375
 	end
 end
 
