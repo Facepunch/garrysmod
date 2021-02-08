@@ -356,7 +356,9 @@ function Do_Undo( undo )
 
 	if ( !undo ) then return false end
 	
-	hook.Run( "PreUndo", undo )
+	local call = hook.Run( "PreUndo", undo )
+
+	if ( !call ) then return end
 	
 	local count = 0
 
@@ -391,6 +393,8 @@ function Do_Undo( undo )
 			end
 		net.Send( undo.Owner )
 	end
+
+	hook.Run( "PostUndo", undo, count )
 
 	return count
 
