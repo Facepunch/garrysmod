@@ -698,3 +698,22 @@ function table.GetKeys( tab )
 	return keys
 
 end
+
+--[[---------------------------------------------------------
+	Name: table.Where( table a, boolean condition, *optional ipairs/pairs )
+	Desc: A simple Where method like c#
+-----------------------------------------------------------]]
+
+function table.Where(a, b, iterator)
+    local c = {}
+
+    iterator = iterator or pairs
+    for i, v in iterator(a or {}) do
+        local res = b(i, v)
+        if (res) then
+            c[i] = v
+        end
+    end
+
+    return c
+end
