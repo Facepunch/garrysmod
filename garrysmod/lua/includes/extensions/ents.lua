@@ -27,11 +27,13 @@ end
 
 
 
+local inext = ipairs({})
+
 local EntityCache = {}
 
 function ents.Iterator()
 	
-	return ipairs( EntityCache )
+	return inext, EntityCache, 0
 	
 end
 
