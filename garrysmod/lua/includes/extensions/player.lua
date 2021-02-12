@@ -88,11 +88,13 @@ function player.GetBySteamID64( ID )
 	return false
 end
 
+local inext = ipairs({})
+
 local PlayerCache = {}
 
 function player.Iterator()
 	
-	return ipairs( PlayerCache )
+	return inext, PlayerCache, 0
 	
 end
 
