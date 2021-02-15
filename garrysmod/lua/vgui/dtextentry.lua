@@ -237,6 +237,14 @@ function PANEL:Think()
 
 end
 
+function PANEL:OnRemove()
+
+	if ( IsValid( self.Menu ) ) then
+		self.Menu:Remove()
+	end
+
+end
+
 function PANEL:OnEnter( val )
 
 	-- For override
