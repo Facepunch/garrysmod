@@ -50,7 +50,7 @@ function ControllerMain( $scope, $element, $rootScope )
 
 	$scope.OpenInSteam = function( url )
 	{
-		lua.Run( "gui.OpenURL( '" + url + "' )" );
+		lua.Run( "gui.OpenURL( %s )", url );
 	}
 
 	$scope.SetHideNewsList = function( bHide, bSave )
@@ -58,7 +58,10 @@ function ControllerMain( $scope, $element, $rootScope )
 		$scope.HideNews = bHide;
 		$rootScope.HideNews = $scope.HideNews;
 
-		if ( bSave ) lua.Run( "SaveHideNews( '" + $scope.HideNews + "' )" );
+		if ( bSave )
+		{
+			lua.Run( "SaveHideNews( %s )", $scope.HideNews ? "true" : "false" );
+		}
 	}
 	$scope.ToggleNewsList = function()
 	{

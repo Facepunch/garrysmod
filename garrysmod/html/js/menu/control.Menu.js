@@ -51,7 +51,7 @@ function MenuController( $scope, $rootScope )
 	{
 		$scope.Gamemode = gm.name;
 		$scope.GamemodeTitle = gm.title;
-		lua.Run( "RunConsoleCommand( \"gamemode\", \"" + gm.name + "\" )" );
+		lua.Run( "RunConsoleCommand( \"gamemode\", %s )", gm.name );
 
 		$( '.gamemode_list' ).hide();
 	}
@@ -59,14 +59,14 @@ function MenuController( $scope, $rootScope )
 	$scope.SelectLanguage = function( lang )
 	{
 		$rootScope.Language = lang;
-		lua.Run( "RunConsoleCommand( \"gmod_language\", \"" + lang + "\" )" );
+		lua.Run( "RunConsoleCommand( \"gmod_language\", %s )", lang );
 
 		$( '.language_list' ).hide();
 	}
 
 	$scope.MenuOption = function( btn, v )
 	{
-		lua.Run( "RunGameUICommand( '" + v + "' )" )
+		lua.Run( "RunGameUICommand( %s )", v );
 	}
 
 	$scope.IfElse = function( b, a, c )
@@ -93,7 +93,8 @@ function MenuController( $scope, $rootScope )
 	//
 	$scope.GameMountChanged = function( mount )
 	{
-		lua.Run( "engine.SetMounted( " + mount.depot + ", " + mount.mounted + " )" );
+		var bMount = mount.mounted ? "true" : "false";
+		lua.Run( "engine.SetMounted( %s, " + bMount + " )", String( mount.depot ) );
 	}
 
 	//
@@ -106,6 +107,7 @@ function MenuController( $scope, $rootScope )
 
 	$scope.ToggleServerFavorites = function( bAdd )
 	{
+		var bAdd = bAdd ? "true" : "false";
 		lua.Run( "serverlist.AddCurrentServerToFavorites( " + bAdd + " )" );
 	}
 

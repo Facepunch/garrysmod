@@ -13,12 +13,12 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	if ( !Scope.CurrentGamemode )
 		Scope.CurrentGamemode = null;
 
-	if ( !Scope.Refreshing )
-		Scope.Refreshing = {}
-
+	if ( !Scope.Refreshing ) Scope.Refreshing = {}
 	$scope.DoStopRefresh = function()
 	{
-		lua.Run( "DoStopServers( '" + Scope.ServerType + "' )" );
+		if ( !Scope.ServerType ) return;
+
+		lua.Run( "DoStopServers( %s )", Scope.ServerType );
 	}
 
 	$scope.$on( "$destroy", function()
@@ -30,7 +30,14 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	{
 		if ( !Scope.ServerType ) return;
 
-		if ( !RequestNum[ Scope.ServerType ] ) RequestNum[ Scope.ServerType ] = 1; else RequestNum[ Scope.ServerType ]++;
+		if ( !RequestNum[ Scope.ServerType ] )
+		{
+			RequestNum[ Scope.ServerType ] = 1;
+		}
+		else
+		{
+			RequestNum[ Scope.ServerType ]++;
+		}
 
 		//
 		// Clear out all of the servers
@@ -44,7 +51,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		//
 		// Get the server list from the engine
 		//
-		lua.Run( "GetServers( '" + Scope.ServerType + "', '" + RequestNum[ Scope.ServerType ] + "' )" );
+		lua.Run( "GetServers( %s, %s )", Scope.ServerType, String( RequestNum[ Scope.ServerType ] ) );
 
 		Scope.Refreshing[ Scope.ServerType ] = "true";
 		UpdateDigest( Scope, 50 );
@@ -54,7 +61,8 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	{
 		if ( event && event.which != 1 )
 		{
-			lua.Run( "SetClipboardText( '" + server.address + " - " + server.steamID + " (Anon:" + server.isAnon + ")' )" );
+			var txt = server.address + " - " + server.steamID + " (Anon:" + server.isAnon + ")";
+			lua.Run( "SetClipboardText( %s )", txt );
 			event.preventDefault();
 			return;
 		}
@@ -64,7 +72,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( !IN_ENGINE )
 			SetPlayerList( server.address, { "1": { "time": 3037.74, "score": 5, "name": "Sethxi" }, "2": { "time": 2029.34, "score": 0, "name": "RedDragon124" }, "3": { "time": 1405.02, "score": 0, "name": "Joke (0_0)" }, "4": { "time": 462.15, "score": 0, "name": "TheAimBot" }, "5": { "time": 301.32, "score": 0, "name": "DesanPL"} } );
 
-		lua.Run( "GetPlayerList( '" + server.address + "' )" );
+		lua.Run( "GetPlayerList( %s )", server.address );
 
 		if ( server.DoubleClick )
 		{
@@ -136,9 +144,9 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		// if ( srv.players >= srv.maxplayers ) return;
 
 		if ( srv.password )
-			lua.Run( "RunConsoleCommand( \"password\", \"" + srv.password + "\" )" )
+			lua.Run( "RunConsoleCommand( \"password\", %s )", srv.password )
 
-		lua.Run( "JoinServer( \"" + srv.address + "\" )" )
+		lua.Run( "JoinServer( %s )", srv.address )
 		$scope.DoStopRefresh();
 	}
 

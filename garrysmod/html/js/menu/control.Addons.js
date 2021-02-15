@@ -89,7 +89,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 				for ( var i = 0; i < file.info.children.length; i++ )
 				{
 					var wsid = file.info.children[ i ];
-					lua.Run( "MenuGetAddonData( %i );", wsid );
+					lua.Run( "MenuGetAddonData( %s )", String( wsid ) );
 				}
 
 				$scope.PopupMessageFiles = file.info.children;
