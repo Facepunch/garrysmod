@@ -45,7 +45,6 @@ function ENT:OnTakeDamage( dmginfo )
 	Msg( "Reported Pos:\t" .. tostring(dmginfo:GetReportedPosition()) .. "\n" ) -- ??
 --]]
 
-	-- Do not return so we perform the default reduce health and ragdoll on death action
 	-- return 1
 
 end
