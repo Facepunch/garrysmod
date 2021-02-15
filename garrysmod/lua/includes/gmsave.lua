@@ -16,7 +16,7 @@ include( "gmsave/player.lua" )
 
 local g_WavSound = 1
 
-function gmsave.LoadMap( strMapContents, ply )
+function gmsave.LoadMap( strMapContents, ply, callback )
 
 	-- TODO: Do this in engine before sending it to this function.
 
@@ -69,6 +69,8 @@ function gmsave.LoadMap( strMapContents, ply )
 		if ( IsValid( ply ) ) then
 			gmsave.PlayerLoad( ply, tab.Player )
 		end
+
+		if ( callback ) then callback() end
 
 	end )
 
