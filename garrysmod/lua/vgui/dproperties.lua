@@ -24,11 +24,21 @@ local tblRow = vgui.RegisterTable( {
 
 	end,
 
-	Setup = function( self, type, vars )
+	Setup = function( self, rowType, vars )
 
 		self.Container:Clear()
 
-		local Name = "DProperty_" .. type
+		local Name = "DProperty_" .. rowType
+
+		-- Nice shortcuts for Entity:NetworkVar()
+		if ( !vgui.GetControlTable( Name ) ) then
+			if ( rowType == "Bool" ) then rowType = "Boolean" end
+			if ( rowType == "Vector" ) then rowType = "Generic" end
+			if ( rowType == "Angle" ) then rowType = "Generic" end
+			if ( rowType == "String" ) then rowType = "Generic" end
+
+			Name = "DProperty_" .. rowType
+		end
 
 		if ( vgui.GetControlTable( Name ) ) then
 			self.Inner = self.Container:Add( Name )
