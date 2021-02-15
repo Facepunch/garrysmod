@@ -213,6 +213,19 @@ local function LoadFavourites()
 
 end
 
+-- Called from JS when starting a new game
+function UpdateMapList()
+
+	local MapList = GetMapList()
+	if ( !MapList ) then return end
+
+	local json = util.TableToJSON( MapList )
+	if ( !json ) then return end
+
+	pnlMainMenu:Call( "UpdateMaps(" .. json .. ")" )
+
+end
+
 local IgnorePatterns = {
 	"^background",
 	"^devtest",
@@ -325,18 +338,21 @@ local function RefreshMaps( skip )
 
 	end
 
+	-- Send the new list to the HTML menu
+	UpdateMapList()
+
 end
 
+-- Update only after a short while for when these hooks are called very rapidly back to back
 local function DelayedRefreshMaps()
-	-- Update only after a short while for when these hooks are called very rapidly back to back
 	timer.Create( "menu_refreshmaps", 0.1, 1, RefreshMaps )
 end
 
 hook.Add( "MenuStart", "FindMaps", DelayedRefreshMaps )
 hook.Add( "GameContentChanged", "RefreshMaps", DelayedRefreshMaps )
 
+-- Nice maplist accessor instead of a global table
 function GetMapList()
-	-- Nice maplist accessor instead of a global table
 	return MapList
 end
 

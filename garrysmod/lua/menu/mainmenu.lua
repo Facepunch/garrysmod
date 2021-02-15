@@ -147,21 +147,6 @@ vgui.Register( "MainMenuPanel", PANEL, "EditablePanel" )
 --
 -- Called from JS when starting a new game
 --
-function UpdateMapList()
-
-	local MapList = GetMapList()
-	if ( !MapList ) then return end
-
-	local json = util.TableToJSON( MapList )
-	if ( !json ) then return end
-
-	pnlMainMenu:Call( "UpdateMaps(" .. json .. ")" )
-
-end
-
---
--- Called from JS when starting a new game
---
 function UpdateServerSettings()
 
 	local array = {
@@ -458,10 +443,6 @@ hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 	UpdateGames()
 	UpdateServerSettings()
 	UpdateSubscribedAddons()
-
-	-- We update the maps with a delay because another hook updates the maps on content changed
-	-- so we really only want to update this after that.
-	timer.Simple( 0.5, function() UpdateMapList() end )
 
 end )
 
