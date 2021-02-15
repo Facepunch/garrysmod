@@ -61,7 +61,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.UGCSettingsOpen = false;
 	$scope.UGCSortMethod = "subscribed";
 
-	lua.Run( "UpdateAddonDisabledState();" );
+	lua.Run( "UpdateAddonDisabledState()" );
 
 	addon.Init( 'addon', $scope, $rootScope );
 

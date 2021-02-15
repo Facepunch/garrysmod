@@ -38,22 +38,22 @@ Subscriptions.prototype.SetAllEnabled = function( bBool )
 
 Subscriptions.prototype.Subscribe = function( wsid )
 {
-	lua.Run( "steamworks.Subscribe( %s );", String( wsid ) );
+	lua.Run( "steamworks.Subscribe( %s )", String( wsid ) );
 }
 Subscriptions.prototype.Unsubscribe = function( wsid )
 {
-	lua.Run( "steamworks.Unsubscribe( %s );", String( wsid ) );
+	lua.Run( "steamworks.Unsubscribe( %s )", String( wsid ) );
 }
 
 Subscriptions.prototype.ApplyChanges = function()
 {
-	lua.Run( "steamworks.ApplyAddons();" )
+	lua.Run( "steamworks.ApplyAddons()" )
 }
 
 Subscriptions.prototype.SetShouldMountAddon = function( wsid, bBool )
 {
 	bBool = bBool ? "true" : "false";
-	lua.Run( "steamworks.SetShouldMountAddon( %s, " + bBool + " );", String( wsid ) );
+	lua.Run( "steamworks.SetShouldMountAddon( %s, " + bBool + " )", String( wsid ) );
 }
 
 Subscriptions.prototype.UnsubscribeAll = function()

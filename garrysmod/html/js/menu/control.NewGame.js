@@ -109,7 +109,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 		if ( !IN_ENGINE ) return "img/downloading.png"
 
-		return "asset://mapimage/" + m
+		return "asset://mapimage/" + m;
 	}
 
 	$scope.IsFavMap = function( m )
@@ -195,7 +195,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 			$scope.ServerSettingsSaved = undefined;
 		}, 200 );
 
-		$location.url( "/" )
+		$location.url( "/" );
 	}
 
 	$scope.UpdateMaxPlayers = function( mp )

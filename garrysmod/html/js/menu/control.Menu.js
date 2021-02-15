@@ -138,7 +138,6 @@ function MenuController( $scope, $rootScope )
 		lua.Run( "gui.OpenURL( 'http://gmod.facepunch.com/changes/' )" );
 	}
 
-
 	// InGame
 	$scope.InGame = false;
 	$scope.ShowFavButton = false;

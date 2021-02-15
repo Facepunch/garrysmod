@@ -84,7 +84,7 @@ if ( SERVER ) then
 
 	function ENT:OnSwitch( bOn )
 
-		if ( bOn == self:GetOn() ) then return end
+		if ( bOn && IsValid( self.flashlight ) ) then return end
 
 		if ( !bOn ) then
 
