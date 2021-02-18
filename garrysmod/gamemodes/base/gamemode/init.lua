@@ -163,3 +163,16 @@ function GM:VehicleMove( ply, vehicle, mv )
 	end
 
 end
+
+--[[---------------------------------------------------------
+   Name: gamemode:PreUndo( undo )
+-----------------------------------------------------------]]
+function GM:PreUndo( undo )
+	return true
+end
+
+--[[---------------------------------------------------------
+   Name: gamemode:PreUndo( undo )
+-----------------------------------------------------------]]
+function GM:PostUndo( undo, count )
+end
