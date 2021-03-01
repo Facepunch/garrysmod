@@ -45,7 +45,6 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 	this.Scope.Switch = function( type, offset )
 	{
 		this.SwitchWithTag( type, offset, "", scope.MapName );
-		scope.Category = type; // Do we need this here?
 	}
 
 	this.Scope.HandleFilterChange = function( which )
@@ -64,7 +63,8 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 	this.Scope.HandleOnSearch = function()
 	{
 		clearTimeout( hackyWackyTimer );
-		hackyWackyTimer = setTimeout( function() {
+		hackyWackyTimer = setTimeout( function()
+		{
 			scope.SwitchWithTag( scope.Category, 0, scope.Tagged, scope.MapName )
 		}, 500 );
 	}
@@ -75,6 +75,8 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 
 		// Fills in perpage
 		self.RefreshDimensions();
+
+		if ( scope.Category != type ) scope.TotalResults = 0;
 
 		scope.Category	= type;
 		scope.Tagged	= searchtag;
@@ -104,11 +106,16 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		else
 		{
 			// fumble
-			if ( scope.MapName && scope.Tagged ) {
+			if ( scope.MapName && scope.Tagged )
+			{
 				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged + "," + scope.MapName, scope.SubscriptionSearchText, filter, scope.UGCSortMethod );
-			} else if ( scope.MapName ) {
+			}
+			else if ( scope.MapName )
+			{
 				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.MapName, scope.SubscriptionSearchText, filter, scope.UGCSortMethod );
-			} else {
+			}
+			else
+			{
 				gmod.FetchItems( self.NameSpace, scope.Category, scope.Offset, scope.PerPage, scope.Tagged, scope.SubscriptionSearchText, filter, scope.UGCSortMethod );
 			}
 		}
@@ -148,7 +155,7 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 WorkshopFiles.prototype.ReceiveLocal = function( data )
 {
 	this.Scope.Loading		= false;
-	this.Scope.TotalResults	= data.totalresults;
+	this.Scope.TotalResults	= Math.max( this.Scope.TotalResults, data.totalresults );
 	this.Scope.NumResults	= data.results.length;
 
 	this.Scope.Files = []
@@ -183,7 +190,7 @@ WorkshopFiles.prototype.ReceiveLocal = function( data )
 WorkshopFiles.prototype.ReceiveIndex = function( data )
 {
 	this.Scope.Loading		= false;
-	this.Scope.TotalResults	= data.totalresults;
+	this.Scope.TotalResults	= Math.max( this.Scope.TotalResults, data.totalresults );
 	this.Scope.NumResults	= data.numresults;
 
 	this.Scope.Files = [];

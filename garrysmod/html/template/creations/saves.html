@@ -6,7 +6,7 @@
 		<workshopcontainer>
 
 			<workshopmessage ng-show="Loading" ng-Tranny="'saves.loading'">...</workshopmessage>
-			<workshopmessage ng-show="TotalResults == 0 && !Loading" ng-Tranny="'saves.noneonmap'">...</workshopmessage>
+			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading" ng-Tranny="'saves.noneonmap'">...</workshopmessage>
 
 			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px">
 
