@@ -20,7 +20,7 @@ matproxy.Add( {
 
 		-- A hack for the mega gravity gun
 		local wep = owner:GetActiveWeapon()
-		if ( IsValid( wep ) && wep:GetClass() == "weapon_physcannon" ) then
+		if ( IsValid( wep ) && wep:GetClass() == "weapon_physcannon" && !wep:IsScripted() ) then
 			col = Vector( 0.4, 1, 1 )
 		end
 
