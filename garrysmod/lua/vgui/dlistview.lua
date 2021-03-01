@@ -480,6 +480,9 @@ function PANEL:SortByColumn( ColumnID, Desc )
 		local aval = a:GetSortValue( ColumnID ) || a:GetColumnText( ColumnID )
 		local bval = b:GetSortValue( ColumnID ) || b:GetColumnText( ColumnID )
 
+		-- Maintain nicer sorting for numbers
+		if ( isnumber( aval ) && isnumber( bval ) ) then return aval < bval end
+
 		return tostring( aval ) < tostring( bval )
 
 	end )
