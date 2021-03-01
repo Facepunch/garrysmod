@@ -21,6 +21,7 @@ AccessorFunc( PANEL, "m_bDoubleClickToOpen", "DoubleClickToOpen", FORCE_BOOL )
 
 AccessorFunc( PANEL, "m_bLastChild", "LastChild", FORCE_BOOL )
 AccessorFunc( PANEL, "m_bDrawLines", "DrawLines", FORCE_BOOL )
+AccessorFunc( PANEL, "m_bExpanded", "Expanded", FORCE_BOOL )
 AccessorFunc( PANEL, "m_strDraggableName", "DraggableName" )
 
 function PANEL:Init()
@@ -35,7 +36,7 @@ function PANEL:Init()
 	self.Label.DragHover = function( s, t ) self:DragHover( t ) end
 
 	self.Expander = vgui.Create( "DExpandButton", self )
-	self.Expander.DoClick = function() self:SetExpanded( !self.m_bExpanded ) end
+	self.Expander.DoClick = function() self:SetExpanded( !self:GetExpanded() ) end
 	self.Expander:SetVisible( false )
 
 	self.Icon = vgui.Create( "DImage", self )
@@ -63,7 +64,7 @@ function PANEL:InternalDoClick()
 	if ( self:GetRoot():DoClick( self ) ) then return end
 
 	if ( !self.m_bDoubleClickToOpen || ( SysTime() - self.fLastClick < 0.3 ) ) then
-		self:SetExpanded( !self.m_bExpanded )
+		self:SetExpanded( !self:GetExpanded() )
 	end
 
 	self.fLastClick = SysTime()
@@ -77,6 +78,10 @@ function PANEL:OnNodeSelected( node )
 		parent:OnNodeSelected( node )
 	end
 
+end
+
+function PANEL:OnNodeAdded( node )
+	-- Called when Panel.AddNode is called on this node
 end
 
 function PANEL:InternalDoRightClick()
@@ -304,7 +309,7 @@ function PANEL:CreateChildNodes()
 
 	self.ChildNodes = vgui.Create( "DListLayout", self )
 	self.ChildNodes:SetDropPos( "852" )
-	self.ChildNodes:SetVisible( self.m_bExpanded )
+	self.ChildNodes:SetVisible( self:GetExpanded() )
 	self.ChildNodes.OnChildRemoved = function()
 
 		self.ChildNodes:InvalidateLayout()
@@ -351,6 +356,9 @@ function PANEL:AddNode( strName, strIcon )
 
 	self.ChildNodes:Add( pNode )
 	self:InvalidateLayout()
+
+	-- Let addons do whatever they need
+	self:OnNodeAdded( pNode )
 
 	return pNode
 
@@ -538,7 +546,7 @@ end
 --
 function PANEL:DragHoverClick( HoverTime )
 
-	if ( !self.m_bExpanded ) then
+	if ( !self:GetExpanded() ) then
 		self:SetExpanded( true )
 	end
 
