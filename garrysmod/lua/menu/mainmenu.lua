@@ -248,25 +248,25 @@ local function IsServerBlacklisted( address, hostname, description, gm, map )
 	end
 
 	for k, v in ipairs( BlackList.Hostnames ) do
-		if string.match( hostname, v ) then
+		if string.match( hostname, v ) || string.match( hostname:lower(), v ) then
 			return v
 		end
 	end
 
 	for k, v in ipairs( BlackList.Descripts ) do
-		if string.match( description, v ) then
+		if string.match( description, v ) || string.match( description:lower(), v ) then
 			return v
 		end
 	end
 
 	for k, v in ipairs( BlackList.Gamemodes ) do
-		if string.match( gm, v ) then
+		if string.match( gm, v ) || string.match( gm:lower(), v ) then
 			return v
 		end
 	end
 
 	for k, v in ipairs( BlackList.Maps ) do
-		if string.match( map, v ) then
+		if string.match( map, v ) || string.match( map:lower(), v ) then
 			return v
 		end
 	end
