@@ -72,7 +72,7 @@ function PANEL:Spawn()
 
 end
 
-function PANEL:PrepareDownloading( id, title, iSize )
+function PANEL:PrepareDownloading()
 
 	if ( self.Rocket ) then self.Rocket:Remove() end
 
@@ -98,9 +98,9 @@ function PANEL:StartDownloading( id, iImageID, title, iSize )
 
 end
 
-function PANEL:FinishedDownloading( id, title )
+function PANEL:FinishedDownloading( id )
 
-	self.Progress = 0
+	self.Progress = -1
 	--self:SetDrawProgress( false )
 	--self.ProgressLabel:Hide()
 	--self.TotalsLabel:Hide()
@@ -139,8 +139,10 @@ function PANEL:Paint()
 		draw.RoundedBox( 4, x + 33 + off, 45 + 18, w * math.Clamp( self.TotalProgress, 0.05, 1 ) - 2, 8, Color( 255, 255, 255, 200 ) )
 
 		-- Current file Progress
-		draw.RoundedBox( 4, x + 32, 40, w, 15, Color( 0, 0, 0, 150 ) )
-		draw.RoundedBox( 4, x + 33, 41, w * math.Clamp( self.Progress, 0.05, 1 )-2, 15-2, Color( 255, 255, 255, 200 ) )
+		if ( self.Progress >= 0 ) then
+			draw.RoundedBox( 4, x + 32, 40, w, 15, Color( 0, 0, 0, 150 ) )
+			draw.RoundedBox( 4, x + 33, 41, w * math.Clamp( self.Progress, 0.05, 1 )-2, 15-2, Color( 255, 255, 255, 200 ) )
+		end
 
 	end
 
@@ -161,6 +163,12 @@ function PANEL:Paint()
 end
 
 function PANEL:UpdateProgress( downloaded, expected )
+
+	if ( expected <= 0 ) then
+		self.Progress = 0
+		self.ProgressLabel:SetText( "" )
+		return
+	end
 
 	self.Progress = downloaded / expected
 
