@@ -30,25 +30,34 @@
 {
 	float: right;
 	text-align: right;
-	margin-right: 6px;
-	width: 350px;
+	/*width: 350px;*/
 	right: 0;
 	display: block;
 	margin: 0;
 	padding: 0;
+	margin-left: 10%;
 }
 
 #NavBar .smallicon
 {
-	width: 40px;
+	min-width: 40px;
 	padding: 0;
 	text-align: center;
+}
+#NavBar .smallicon.hidelabel span
+{
+	padding-left: 35px;
 }
 
 #NavBar .smallicon img
 {
 	margin-top: 7px;
 	margin-left: 7px;
+}
+
+#NavBar .bigicon
+{
+	min-width: 5px;
 }
 
 #NavBar .bigicon img
@@ -121,8 +130,8 @@
 	color: #333;
 	position: relative;
 	top: 13px;
-	padding-left: 8px;
-	padding-right: 16px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 #NavBar LI IMG, UL.gamemode_list LI IMG, UL.language_list LI IMG
@@ -274,8 +283,18 @@ UL.language_list LI:hover
 	border-radius: 3px;
 	list-style: none;
 	margin: 3px;
-	cursor: pointer;
+	/*cursor: pointer;*/
 	display: none;
+}
+
+UL.games_list.popup LI
+{
+	cursor: default;
+}
+
+.popup HR
+{
+	margin-right: 2px;
 }
 
 .kinect_settings
@@ -294,4 +313,17 @@ UL.language_list LI:hover
 	margin: 0 !important;
 	height: auto !important;
 	padding: 2px 16px !important;
+}
+
+/* 800x600 and lower */
+@media (max-width: 940px)
+{
+	#NavBar .hidelabel span
+	{
+		display: none;
+	}
+	#NavBar .right
+	{
+		margin-left: 15px;
+	}
 }
