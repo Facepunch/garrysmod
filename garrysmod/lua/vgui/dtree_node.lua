@@ -424,6 +424,15 @@ function PANEL:MakeFolder( strFolder, strPath, bShowFiles, strWildCard, bDontFor
 		self:SetForceShowExpander( true )
 	end
 
+	-- If the parent is already open, populate myself. Do not require the user to collapse and expand for this to happen
+	if ( self:GetParentNode():GetExpanded() ) then
+		-- Yuck! This is basically a hack for gameprops.lua
+		timer.Simple( 0, function()
+			if ( !IsValid( self ) ) then return end
+			self:PopulateChildrenAndSelf()
+		end )
+	end
+
 end
 
 function PANEL:FilePopulateCallback( files, folders, foldername, path, bAndChildren, wildcard )
