@@ -56,7 +56,7 @@ local function RefreshAddons( MyNode )
 
 			ViewPanel:Clear( true )
 
-			local anyAdded = false//AddRecursive( ViewPanel, "models/", addon.title, "*.mdl" )
+			local anyAdded = AddRecursive( ViewPanel, "models/", addon.title, "*.mdl" )
 			if ( !anyAdded ) then
 				local cp = spawnmenu.GetContentType( "header" )
 				if ( cp ) then cp( ViewPanel, { text = "#spawnmenu.failedtofindmodels" } ) end
