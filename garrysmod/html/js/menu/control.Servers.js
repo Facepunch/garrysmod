@@ -283,11 +283,13 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( data.isAnon ) data.recommended += 1000; // Anonymous server
 
 	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
-	if ( data.players >= 4 ) data.recommended -= 10;
+	if ( data.players >= 4 ) data.recommended -= 20;
 	if ( data.players >= 8 ) data.recommended -= 15;
 	if ( data.players >= 16 ) data.recommended -= 15;
-	if ( data.players >= 32 ) data.recommended -= 10;
-	if ( data.players >= 64 ) data.recommended -= 10;
+	if ( data.players >= 32 ) data.recommended += 20;
+	if ( data.players >= 64 ) data.recommended += 30;
+	if ( data.players >= 80 ) data.recommended += 60;
+	if ( data.players >= 128 ) data.recommended += 90;
 
 	data.listen = data.desc.indexOf( '[L]' ) >= 0;
 	if ( data.listen ) data.desc = data.desc.substr( 4 );
