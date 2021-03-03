@@ -286,8 +286,8 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( data.players >= 4 ) data.recommended -= 20;
 	if ( data.players >= 8 ) data.recommended -= 15;
 	if ( data.players >= 16 ) data.recommended -= 15;
-	if ( data.players >= 32 ) data.recommended += 20;
-	if ( data.players >= 64 ) data.recommended += 30;
+	if ( data.players >= 32 ) data.recommended -= 5;
+	if ( data.players >= 43 ) data.recommended += 30;
 	if ( data.players >= 80 ) data.recommended += 60;
 	if ( data.players >= 128 ) data.recommended += 90;
 
