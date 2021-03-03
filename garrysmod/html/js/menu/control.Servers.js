@@ -282,7 +282,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( data.pass ) data.recommended += 300; // Password protected, can't join it
 	if ( data.isAnon ) data.recommended += 1000; // Anonymous server
 
-	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
+	// Penalize massive servers while giving bonuses to small to medium servers
 	if ( data.players >= 4 ) data.recommended -= 20;
 	if ( data.players >= 8 ) data.recommended -= 15;
 	if ( data.players >= 16 ) data.recommended -= 15;
