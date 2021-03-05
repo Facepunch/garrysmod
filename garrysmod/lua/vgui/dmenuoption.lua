@@ -9,7 +9,6 @@ function PANEL:Init()
 
 	self:SetContentAlignment( 4 )
 	self:SetTextInset( 32, 0 ) -- Room for icon on left
-	self:SetTextColor( Color( 10, 10, 10 ) )
 	self:SetChecked( false )
 
 end
