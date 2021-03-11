@@ -94,6 +94,7 @@ UL.category LI.icon
 
 .btn-primary-disabled
 {
+	border-color: #424242;
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#888), to(#555));
 }
 
