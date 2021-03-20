@@ -21,6 +21,41 @@ function PANEL:Init()
 	--self.IconList:SetUseLiveDrag( true )
 	self.IconList:Dock( TOP )
 	self.IconList.OnModified = function() self:OnModified() end
+	self.IconList.OnMousePressed = function( s, btn )
+
+		-- A bit of a hack
+		s:EndBoxSelection()
+		if ( btn != MOUSE_RIGHT ) then DPanel.OnMousePressed( s, btn ) end
+
+	end
+	self.IconList.OnMouseReleased = function( s, btn )
+
+		DPanel.OnMouseReleased( s, btn )
+
+		if ( btn != MOUSE_RIGHT || s:GetReadOnly() ) then return end
+
+		local menu = DermaMenu()
+		menu:AddOption( "#spawnmenu.newlabel", function()
+
+			local label = vgui.Create( "ContentHeader" )
+			self:Add( label )
+
+			-- Move the label to player's cursor, but make sure it's per line, not per icon
+			local x, y = self.IconList:ScreenToLocal( input.GetCursorPos() )
+			label:MoveToAfter( self.IconList:GetClosestChild( self:GetCanvas():GetWide(), y ) )
+
+			self:OnModified()
+
+			-- Scroll to the newly added item
+			--[[timer.Simple( 0, function()
+				local x, y = label:GetPos()
+				self.VBar:AnimateTo( y - self:GetTall() / 2 + label:GetTall() / 2, 0.5, 0, 0.5 )
+			end )]]
+
+		end ):SetIcon( "icon16/text_heading_1.png" )
+		menu:Open()
+
+	end
 
 end
 
@@ -43,9 +78,9 @@ function PANEL:Layout()
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
-	BaseClass.PerformLayout( self )
+	BaseClass.PerformLayout( self, w, h )
 	self.IconList:SetMinHeight( self:GetTall() - 16 )
 
 end

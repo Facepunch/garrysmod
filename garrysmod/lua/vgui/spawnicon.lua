@@ -18,6 +18,7 @@ function PANEL:Init()
 	self:SetSize( 64, 64 )
 
 	self.m_strBodyGroups = "000000000"
+	self.OverlayFade = 0
 
 end
 
@@ -38,8 +39,12 @@ function PANEL:OpenMenu()
 end
 
 function PANEL:Paint( w, h )
+	-- Do not draw the default background
+end
 
-	self.OverlayFade = math.Clamp( ( self.OverlayFade or 0 ) - RealFrameTime() * 640 * 2, 0, 255 )
+function PANEL:Think()
+
+	self.OverlayFade = math.Clamp( self.OverlayFade - RealFrameTime() * 640 * 2, 0, 255 )
 
 	if ( dragndrop.IsDragging() || !self:IsHovered() ) then return end
 
@@ -170,6 +175,9 @@ end
 -- what should we do?
 function PANEL:SkinChanged( i )
 
+	-- This is called from Icon Editor. Mark the spawnlist as changed. Ideally this would check for GetTriggerSpawnlistChange on the parent
+	hook.Run( "SpawnlistContentChanged" )
+
 	-- Change the skin, and change the model
 	-- this way we can edit the spawnmenu....
 	self:SetSkinID( i )
@@ -178,6 +186,9 @@ function PANEL:SkinChanged( i )
 end
 
 function PANEL:BodyGroupChanged( k, v )
+
+	-- This is called from Icon Editor. Mark the spawnlist as changed. Ideally this would check for GetTriggerSpawnlistChange on the parent
+	hook.Run( "SpawnlistContentChanged" )
 
 	self:SetBodyGroup( k, v )
 	self:SetModel( self:GetModelName(), self:GetSkinID(), self:GetBodyGroup() )

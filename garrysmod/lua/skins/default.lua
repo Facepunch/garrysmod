@@ -231,7 +231,8 @@ SKIN.tex.ProgressBar.Front	= GWEN.CreateTextureBorder( 384+32, 0, 31, 31, 8, 8, 
 
 SKIN.tex.CategoryList = {}
 SKIN.tex.CategoryList.Outer		= GWEN.CreateTextureBorder( 256, 384, 63, 63, 8, 8, 8, 8 )
-SKIN.tex.CategoryList.Inner		= GWEN.CreateTextureBorder( 320, 384, 63, 63, 8, 21, 8, 8 )
+SKIN.tex.CategoryList.InnerH	= GWEN.CreateTextureBorder( 320, 384, 63, 20, 8, 8, 8, 8 )
+SKIN.tex.CategoryList.Inner		= GWEN.CreateTextureBorder( 320, 384 + 21, 63, 63 - 21, 8, 0, 8, 8 )
 SKIN.tex.CategoryList.Header	= GWEN.CreateTextureBorder( 320, 352, 63, 31, 8, 8, 8, 8 )
 
 SKIN.tex.Tooltip = GWEN.CreateTextureBorder( 384, 64, 31, 31, 8, 8, 8, 8 )
@@ -934,15 +935,16 @@ end
 
 function SKIN:PaintCollapsibleCategory( panel, w, h )
 
-	if ( h < 21 ) then
+	if ( h <= panel:GetHeaderHeight() ) then
 		self.tex.CategoryList.Header( 0, 0, w, h )
 
 		-- Little hack, draw the ComboBox's dropdown arrow to tell the player the category is collapsed and not empty
-		if ( !panel:GetExpanded() ) then self.tex.Input.ComboBox.Button.Down( w - 18, 2, 15, 15 ) end
+		if ( !panel:GetExpanded() ) then self.tex.Input.ComboBox.Button.Down( w - 18, h / 2 - 8, 15, 15 ) end
 		return
 	end
 
-	self.tex.CategoryList.Inner( 0, 0, w, 63 )
+	self.tex.CategoryList.InnerH( 0, 0, w, panel:GetHeaderHeight() )
+	self.tex.CategoryList.Inner( 0, panel:GetHeaderHeight(), w, h - panel:GetHeaderHeight() )
 
 end
 

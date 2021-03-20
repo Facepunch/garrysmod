@@ -45,6 +45,8 @@ end
 -----------------------------------------------------------]]
 function Register( t, name )
 
+	if ( hook.Run( "PreRegisterSWEP", t, name ) == false ) then return end
+
 	local old = WeaponList[ name ]
 
 	t.ClassName = name
@@ -58,7 +60,8 @@ function Register( t, name )
 		Category = t.Category or "Other",
 		Spawnable = t.Spawnable,
 		AdminOnly = t.AdminOnly,
-		ScriptedEntityType = t.ScriptedEntityType
+		ScriptedEntityType = t.ScriptedEntityType,
+		IconOverride = t.IconOverride
 	} )
 
 	-- Allow all SWEPS to be duplicated, unless specified
@@ -72,29 +75,26 @@ function Register( t, name )
 	--
 	if ( old != nil ) then
 
-		--
-		-- For each entity using this class
-		--
-		for _, entity in pairs( ents.FindByClass( name ) ) do
+		-- Update SWEP table of entities that are based on this SWEP
+		for _, e in ipairs( ents.GetAll() ) do
+			local class = e:GetClass()
 
-			--
-			-- Replace the contents with this entity table
-			--
-			table.Merge( entity, t )
+			if ( class == name ) then
+				--
+				-- Replace the contents with this entity table
+				--
+				table.Merge( e, t )
 
-			--
-			-- Call OnReloaded hook (if it has one)
-			--
-			if ( entity.OnReloaded ) then
-				entity:OnReloaded()
+				--
+				-- Call OnReloaded hook (if it has one)
+				--
+				if ( e.OnReloaded ) then
+					e:OnReloaded()
+				end
 			end
 
-		end
-
-		-- Update SWEP table of entities that are based on this SWEP
-		for _, e in pairs( ents.GetAll() ) do
-			if ( IsBasedOn( e:GetClass(), name ) ) then
-				table.Merge( e, Get( e:GetClass() ) )
+			if ( IsBasedOn( class, name ) ) then
+				table.Merge( e, Get( class ) )
 
 				if ( e.OnReloaded ) then
 					e:OnReloaded()

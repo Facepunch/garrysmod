@@ -14,9 +14,23 @@ ENT.m_iClass = CLASS_CITIZEN_REBEL -- NPC Class
 AccessorFunc( ENT, "m_iClass", "NPCClass" )
 AccessorFunc( ENT, "m_fMaxYawSpeed", "MaxYawSpeed" )
 
+function ENT:Initialize()
+
+	-- Some default calls to make the NPC function
+	self:SetModel( "models/alyx.mdl" )
+	self:SetHullType( HULL_HUMAN )
+	self:SetHullSizeNormal()
+	self:SetSolid( SOLID_BBOX )
+	self:SetMoveType( MOVETYPE_STEP )
+	self:CapabilitiesAdd( bit.bor( CAP_MOVE_GROUND, CAP_OPEN_DOORS, CAP_ANIMATEDFACE, CAP_SQUAD, CAP_USE_WEAPONS, CAP_DUCK, CAP_MOVE_SHOOT, CAP_TURN_HEAD, CAP_USE_SHOT_REGULATOR, CAP_AIM_GUN ) )
+
+	self:SetHealth( 100 )
+
+end
+
 --[[---------------------------------------------------------
 	Name: OnTakeDamage
-	Desc: Entity takes damage
+	Desc: Called when the NPC takes damage
 -----------------------------------------------------------]]
 function ENT:OnTakeDamage( dmginfo )
 
@@ -31,9 +45,11 @@ function ENT:OnTakeDamage( dmginfo )
 	Msg( "Reported Pos:\t" .. tostring(dmginfo:GetReportedPosition()) .. "\n" ) -- ??
 --]]
 
-	return true
+	-- return 1
 
 end
+
+
 
 --[[---------------------------------------------------------
 	Name: Use
@@ -80,10 +96,29 @@ function ENT:ExpressionFinished( strExp )
 end
 
 --[[---------------------------------------------------------
+	Name: OnChangeActivity
+-----------------------------------------------------------]]
+function ENT:OnChangeActivity( act )
+
+end
+
+--[[---------------------------------------------------------
 	Name: Think
 -----------------------------------------------------------]]
 function ENT:Think()
 
+end
+
+-- Called when NPC's movement fails
+function ENT:OnMovementFailed()
+end
+
+-- Called when NPC's movement succeeds
+function ENT:OnMovementComplete()
+end
+
+-- Called when the NPC's active weapon changes
+function ENT:OnActiveWeaponChanged( old, new )
 end
 
 --[[---------------------------------------------------------

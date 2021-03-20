@@ -30,6 +30,7 @@ function PANEL:Clear()
 	self.Choices = {}
 	self.Data = {}
 	self.ChoiceIcons = {}
+	self.Spacers = {}
 	self.selected = nil
 
 	if ( self.Menu ) then
@@ -77,6 +78,9 @@ function PANEL:PerformLayout()
 	self.DropButton:AlignRight( 4 )
 	self.DropButton:CenterVertical()
 
+	-- Make sure the text color is updated
+	DButton.PerformLayout( self, w, h )
+
 end
 
 function PANEL:ChooseOption( value, index )
@@ -120,6 +124,12 @@ end
 function PANEL:OnSelect( index, value, data )
 
 	-- For override
+
+end
+
+function PANEL:AddSpacer()
+
+	self.Spacers[ #self.Choices ] = true
 
 end
 
@@ -181,12 +191,18 @@ function PANEL:OpenMenu( pControlOpener )
 			if ( self.ChoiceIcons[ v.id ] ) then
 				option:SetIcon( self.ChoiceIcons[ v.id ] )
 			end
+			if ( self.Spacers[ v.id ] ) then
+				self.Menu:AddSpacer()
+			end
 		end
 	else
 		for k, v in pairs( self.Choices ) do
 			local option = self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
 			if ( self.ChoiceIcons[ k ] ) then
 				option:SetIcon( self.ChoiceIcons[ k ] )
+			end
+			if ( self.Spacers[ k ] ) then
+				self.Menu:AddSpacer()
 			end
 		end
 	end

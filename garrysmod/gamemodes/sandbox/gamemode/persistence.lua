@@ -5,7 +5,7 @@ hook.Add( "ShutDown", "SavePersistenceOnShutdown", function() hook.Run( "Persist
 
 hook.Add( "PersistenceSave", "PersistenceSave", function( name )
 
-	local PersistPage = name or GetConVarString( "sbox_persist" )
+	local PersistPage = ( name or GetConVarString( "sbox_persist" ) ):Trim()
 	if ( PersistPage == "" ) then return end
 
 	local Ents = ents.GetAll()
@@ -50,20 +50,22 @@ cvars.AddChangeCallback( "sbox_persist", function( name, old, new )
 
 	-- A timer in case someone tries to rapily change the convar, such as addons with "live typing" or whatever
 	timer.Create( "sbox_persist_change_timer", 1, 1, function()
-		hook.Run( "PersistenceSave", old )
+		if ( old:Trim() == new:Trim() ) then return end
+
+		hook.Run( "PersistenceSave", old:Trim() )
 
 		game.CleanUpMap() -- Maybe this should be moved to PersistenceLoad?
 
-		if ( new == "" ) then return end
+		if ( new:Trim() == "" ) then return end
 
-		hook.Run( "PersistenceLoad", new )
+		hook.Run( "PersistenceLoad", new:Trim() )
 	end )
 
 end, "sbox_persist_load" )
 
 hook.Add( "InitPostEntity", "PersistenceInit", function()
 
-	local PersistPage = GetConVarString( "sbox_persist" )
+	local PersistPage = GetConVarString( "sbox_persist" ):Trim()
 	if ( PersistPage == "" ) then return end
 
 	hook.Run( "PersistenceLoad", PersistPage )

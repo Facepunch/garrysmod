@@ -3,10 +3,8 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Light"
-ENT.RenderGroup = RENDERGROUP_BOTH
 ENT.Editable = true
 
-local matLight = Material( "sprites/light_ignorez" )
 local MODEL = Model( "models/maxofs2d/light_tubular.mdl" )
 
 --
@@ -50,10 +48,13 @@ function ENT:Initialize()
 
 end
 
-function ENT:Draw()
+function ENT:OnTakeDamage( dmginfo )
+	-- React to physics damage
+	self:TakePhysicsDamage( dmginfo )
+end
 
-	BaseClass.Draw( self, true )
-
+function ENT:Toggle()
+	self:SetOn( !self:GetOn() )
 end
 
 function ENT:Think()
@@ -97,43 +98,35 @@ function ENT:Think()
 
 end
 
-function ENT:DrawTranslucent()
-
-	BaseClass.DrawTranslucent( self, true )
-
-	local up = self:GetAngles():Up()
-
-	local LightPos = self:GetPos()
-	render.SetMaterial( matLight )
-
-	local ViewNormal = self:GetPos() - EyePos()
-	local Distance = ViewNormal:Length()
-	ViewNormal:Normalize()
-
-	local Visibile = util.PixelVisible( LightPos, 4, self.PixVis )
-
-	if ( !Visibile || Visibile < 0.1 ) then return end
-
-	if ( !self:GetOn() ) then return end
-
-	local c = self:GetColor()
-	local Alpha = 255 * Visibile
-
-	render.DrawSprite( LightPos - up * 2, 8, 8, Color( 255, 255, 255, Alpha ), Visibile )
-	render.DrawSprite( LightPos - up * 4, 8, 8, Color( 255, 255, 255, Alpha ), Visibile )
-	render.DrawSprite( LightPos - up * 6, 8, 8, Color( 255, 255, 255, Alpha ), Visibile )
-	render.DrawSprite( LightPos - up * 5, 64, 64, Color( c.r, c.g, c.b, 64 ), Visibile )
-
-end
-
 function ENT:GetOverlayText()
 	return self:GetPlayerName()
 end
 
-function ENT:OnTakeDamage( dmginfo )
-	self:TakePhysicsDamage( dmginfo )
+local matLight = Material( "sprites/light_ignorez" )
+function ENT:DrawEffects()
+
+	if ( !self:GetOn() ) then return end
+
+	local LightPos = self:GetPos()
+
+	local Visibile = util.PixelVisible( LightPos, 4, self.PixVis )
+	if ( !Visibile || Visibile < 0.1 ) then return end
+
+	local c = self:GetColor()
+	local Alpha = 255 * Visibile
+	local up = self:GetAngles():Up()
+
+	render.SetMaterial( matLight )
+	render.DrawSprite( LightPos - up * 2, 8, 8, Color( 255, 255, 255, Alpha ) )
+	render.DrawSprite( LightPos - up * 4, 8, 8, Color( 255, 255, 255, Alpha ) )
+	render.DrawSprite( LightPos - up * 6, 8, 8, Color( 255, 255, 255, Alpha ) )
+	render.DrawSprite( LightPos - up * 5, 64, 64, Color( c.r, c.g, c.b, 64 ) )
+
 end
 
-function ENT:Toggle()
-	self:SetOn( !self:GetOn() )
+-- We have to do this to ensure DrawTranslucent is called for Opaque only models to draw our effects
+ENT.RenderGroup = RENDERGROUP_BOTH
+function ENT:DrawTranslucent( flags )
+	BaseClass.DrawTranslucent( self, flags )
+	self:DrawEffects()
 end

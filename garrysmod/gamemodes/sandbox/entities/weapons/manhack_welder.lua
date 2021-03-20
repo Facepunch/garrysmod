@@ -72,6 +72,8 @@ function SWEP:PrimaryAttack()
 
 	-- Make a manhack
 	local ent = ents.Create( "npc_manhack" )
+	if ( !IsValid( ent ) ) then return end
+
 	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
 	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
@@ -128,6 +130,8 @@ function SWEP:SecondaryAttack()
 
 	-- Make a manhack
 	local ent = ents.Create( "npc_rollermine" )
+	if ( !IsValid( ent ) ) then return end
+
 	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
 	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()

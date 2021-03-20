@@ -176,6 +176,18 @@ function PANEL:EndKeyFocus( pPanel )
 
 end
 
+function PANEL:OnSizeChanged( newW, newH )
+	local divW = self.HorizontalDivider:GetWide()
+	local divL = self.HorizontalDivider:GetLeftWidth()
+	self:InvalidateLayout( true ) 
+	local divWnew = self.HorizontalDivider:GetWide()
+
+	if ( divW > divL && divW < divWnew ) then
+		local ratio = divL / divW
+		self.HorizontalDivider:SetLeftWidth( ratio * divWnew )
+	end
+end
+
 vgui.Register( "SpawnMenu", PANEL, "EditablePanel" )
 
 --[[---------------------------------------------------------

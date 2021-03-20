@@ -13,25 +13,37 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	if ( !Scope.CurrentGamemode )
 		Scope.CurrentGamemode = null;
 
-	if ( !Scope.Refreshing )
-		Scope.Refreshing = {}
-
+	if ( !Scope.Refreshing ) Scope.Refreshing = {}
 	$scope.DoStopRefresh = function()
 	{
-		lua.Run( "DoStopServers( '" + Scope.ServerType + "' )" );
+		if ( !Scope.ServerType ) return;
+
+		lua.Run( "DoStopServers( %s )", Scope.ServerType );
 	}
+
+	$scope.$on( "$destroy", function()
+	{
+		$scope.DoStopRefresh();
+	} );
 
 	$scope.Refresh = function()
 	{
 		if ( !Scope.ServerType ) return;
 
-		if ( !RequestNum[ Scope.ServerType ] ) RequestNum[ Scope.ServerType ] = 1; else RequestNum[ Scope.ServerType ]++;
+		if ( !RequestNum[ Scope.ServerType ] )
+		{
+			RequestNum[ Scope.ServerType ] = 1;
+		}
+		else
+		{
+			RequestNum[ Scope.ServerType ]++;
+		}
 
 		//
 		// Clear out all of the servers
 		//
-		ServerTypes[Scope.ServerType].gamemodes = {};
-		ServerTypes[Scope.ServerType].list.length = 0;
+		ServerTypes[ Scope.ServerType ].gamemodes = {};
+		ServerTypes[ Scope.ServerType ].list.length = 0;
 
 		if ( !IN_ENGINE )
 			TestUpdateServers( Scope.ServerType, RequestNum[ Scope.ServerType ] );
@@ -39,9 +51,9 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		//
 		// Get the server list from the engine
 		//
-		lua.Run( "GetServers( '" + Scope.ServerType + "', '" + RequestNum[ Scope.ServerType ] + "' )" );
+		lua.Run( "GetServers( %s, %s )", Scope.ServerType, String( RequestNum[ Scope.ServerType ] ) );
 
-		Scope.Refreshing[ Scope.ServerType] = "true";
+		Scope.Refreshing[ Scope.ServerType ] = "true";
 		UpdateDigest( Scope, 50 );
 	}
 
@@ -49,7 +61,8 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	{
 		if ( event && event.which != 1 )
 		{
-			lua.Run( "SetClipboardText( '" + server.name.replace( "'", "\\'") + " @ " + server.address + " - " + server.steamID + " (Anon:" + server.isAnon + ")' )" );
+			var txt = server.address + " - " + server.steamID + " (Anon:" + server.isAnon + ")";
+			lua.Run( "SetClipboardText( %s )", txt );
 			event.preventDefault();
 			return;
 		}
@@ -59,7 +72,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( !IN_ENGINE )
 			SetPlayerList( server.address, { "1": { "time": 3037.74, "score": 5, "name": "Sethxi" }, "2": { "time": 2029.34, "score": 0, "name": "RedDragon124" }, "3": { "time": 1405.02, "score": 0, "name": "Joke (0_0)" }, "4": { "time": 462.15, "score": 0, "name": "TheAimBot" }, "5": { "time": 301.32, "score": 0, "name": "DesanPL"} } );
 
-		lua.Run( "GetPlayerList( '" + server.address + "' )" );
+		lua.Run( "GetPlayerList( %s )", server.address );
 
 		if ( server.DoubleClick )
 		{
@@ -127,10 +140,13 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 
 	$scope.JoinServer = function ( srv )
 	{
-		if ( srv.password )
-			lua.Run( "RunConsoleCommand( \"password\", \"" + srv.password + "\" )" )
+		// It's full, why even bother...
+		// if ( srv.players >= srv.maxplayers ) return;
 
-		lua.Run( "JoinServer( \"" + srv.address + "\" )" )
+		if ( srv.password )
+			lua.Run( "RunConsoleCommand( \"password\", %s )", srv.password )
+
+		lua.Run( "JoinServer( %s )", srv.address )
 		$scope.DoStopRefresh();
 	}
 
@@ -229,7 +245,7 @@ function GetGamemode( name, type )
 	return ServerTypes[type].gamemodes[name];
 }
 
-function AddServer( type, id, ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid, isAnon, steamID )
+function AddServer( type, id, ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid, isAnon, steamID, isFav )
 {
 	if ( id != RequestNum[ type ] ) return;
 
@@ -243,7 +259,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		desc:			desc,
 		map:			map,
 		players:		parseInt( players ) - parseInt( botplayers ),
-		maxplayers:		parseInt( maxplayers ),
+		maxplayers:		parseInt( maxplayers ) - parseInt( botplayers ),
 		botplayers:		parseInt( botplayers ),
 		pass:			pass,
 		lastplayed:		parseInt( lastplayed ),
@@ -253,18 +269,14 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		workshopid:		workshopid,
 		isAnon:			isAnon,
 		steamID:		steamID,
-		favorite:		false // This needs to be set properly
+		favorite:		isFav == "true"
 	};
-
-	if ( type == "favorite" ) {
-		data.favorite = true; // This needs to be set properly
-	}
 
 	data.hasmap = DoWeHaveMap( data.map );
 
 	data.recommended = 40;
-	if(data.ping >= 60) data.recommended = data.ping;
-	
+	if ( data.ping >= 60 ) data.recommended = data.ping;
+
 	if ( data.players == 0 ) data.recommended += 75; // Server is empty
 	if ( data.players >= data.maxplayers ) data.recommended += 100; // Server is full, can't join it
 	if ( data.pass ) data.recommended += 300; // Password protected, can't join it
@@ -312,7 +324,7 @@ function MissingGamemodeIcon( element )
 
 function SetPlayerList( serverip, players )
 {
-	if ( !Scope.CurrentGamemode.Selected ) return;
+	if ( !Scope.CurrentGamemode || !Scope.CurrentGamemode.Selected ) return;
 	if ( Scope.CurrentGamemode.Selected.address != serverip ) return;
 
 	Scope.CurrentGamemode.Selected.playerlist = players
@@ -367,7 +379,7 @@ function UpdateGamemodeInfo( server )
 	//
 	// Use the most common workshop id
 	//
-	//if ( server.workshopid != "" )
+	if ( server.workshopid != "" )
 	{
 		if ( !gi.wsid ) gi.wsid = {}
 		if ( !gi.wsid[ server.workshopid ] ) { gi.wsid[ server.workshopid ] = 1; } else { gi.wsid[ server.workshopid ]++; }

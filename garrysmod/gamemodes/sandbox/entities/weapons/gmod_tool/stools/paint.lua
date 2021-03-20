@@ -17,18 +17,19 @@ TOOL.Information = {
 local function PlaceDecal( ply, ent, data )
 
 	if ( !IsValid( ent ) && !ent:IsWorld() ) then return end
+	if ( CLIENT ) then return end
 
-	local bone = ent:GetPhysicsObjectNum( data.bone or 0 )
+	local bone
+	if ( data.bone && data.bone < ent:GetPhysicsObjectCount() ) then bone = ent:GetPhysicsObjectNum( data.bone ) end
+	if ( !IsValid( bone ) ) then bone = ent:GetPhysicsObject() end
 	if ( !IsValid( bone ) ) then bone = ent end
 
-	if ( SERVER ) then
-		util.Decal( data.decal, bone:LocalToWorld( data.Pos1 ), bone:LocalToWorld( data.Pos2 ), ply )
+	util.Decal( data.decal, bone:LocalToWorld( data.Pos1 ), bone:LocalToWorld( data.Pos2 ), ply )
 
-		local i = ent.DecalCount or 0
-		i = i + 1
-		duplicator.StoreEntityModifier( ent, "decal" .. i, data )
-		ent.DecalCount = i
-	end
+	local i = ent.DecalCount or 0
+	i = i + 1
+	duplicator.StoreEntityModifier( ent, "decal" .. i, data )
+	ent.DecalCount = i
 
 end
 
@@ -72,7 +73,9 @@ function TOOL:RightClick( trace, bNoDelay )
 	local Pos1 = trace.HitPos + trace.HitNormal
 	local Pos2 = trace.HitPos - trace.HitNormal
 
-	local Bone = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone or 0 )
+	local Bone
+	if ( trace.PhysicsBone && trace.PhysicsBone < trace.Entity:GetPhysicsObjectCount() ) then Bone = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone ) end
+	if ( !IsValid( Bone ) ) then Bone = trace.Entity:GetPhysicsObject() end
 	if ( !IsValid( Bone ) ) then Bone = trace.Entity end
 
 	Pos1 = Bone:WorldToLocal( Pos1 )

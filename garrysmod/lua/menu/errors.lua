@@ -7,41 +7,37 @@
 
 local Errors = {}
 
-hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, addontitle, addonid )
+hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, stack, addontitle, addonid )
 
-	local text = language.GetPhrase( "errors.something" )
+	-- This error is caused by a specific workshop addon
+	--[[if ( isstring( addonid ) ) then
 
-	--
-	-- This error is caused by a specific addon
-	--
-	if ( isstring( addonid ) ) then
-
-		--
 		-- Down Vote
-		--
-		-- steamworks.Vote( addonid, false )
+		steamworks.Vote( addonid, false )
 
-		--
 		-- Disable Naughty Addon
-		--
-		--timer.Simple( 5, function()
-		--	MsgN( "Disabling addon '", addontitle, "' due to lua errors" )
-		--	steamworks.SetShouldMountAddon( addonid, false )
-		--	steamworks.ApplyAddons()
-		--end )
+		timer.Simple( 5, function()
+			MsgN( "Disabling addon '", addontitle, "' due to lua errors" )
+			steamworks.SetShouldMountAddon( addonid, false )
+			steamworks.ApplyAddons()
+		end )
 
-		text = string.format( language.GetPhrase( "errors.addon" ), addontitle )
-
-	end
+	end]]
 
 	if ( addonid == nil ) then addonid = 0 end
 
 	if ( Errors[ addonid ] ) then
-
 		Errors[ addonid ].times	= Errors[ addonid ].times + 1
 		Errors[ addonid ].last	= SysTime()
 
 		return
+	end
+
+	local text = language.GetPhrase( "errors.something" )
+
+	-- We know the name, display it to the user
+	if ( isstring( addontitle ) ) then
+		text = string.format( language.GetPhrase( "errors.addon" ), addontitle )
 	end
 
 	local error = {

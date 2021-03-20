@@ -52,6 +52,8 @@ end
 
 function Register( t, name )
 
+	if ( hook.Run( "PreRegisterSENT", t, name ) == false ) then return end
+
 	local Base = t.Base
 	if ( !Base ) then Base = BaseClasses[ t.Type ] end
 
@@ -127,7 +129,8 @@ function Register( t, name )
 		Author			= t.Author,
 		AdminOnly		= t.AdminOnly,
 		Information		= t.Information,
-		ScriptedEntityType = t.ScriptedEntityType
+		ScriptedEntityType = t.ScriptedEntityType,
+		IconOverride	= t.IconOverride
 	} )
 
 end

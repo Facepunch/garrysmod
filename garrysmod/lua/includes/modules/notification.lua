@@ -167,7 +167,7 @@ function PANEL:Init()
 	self.Label = vgui.Create( "DLabel", self )
 	self.Label:Dock( FILL )
 	self.Label:SetFont( "GModNotify" )
-	self.Label:SetTextColor( Color( 255, 255, 255, 255 ) )
+	self.Label:SetTextColor( color_white )
 	self.Label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 	self.Label:SetContentAlignment( 5 )
 

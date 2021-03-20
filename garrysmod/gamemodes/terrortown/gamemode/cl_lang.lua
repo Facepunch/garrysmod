@@ -49,6 +49,7 @@ function LANG.AddToLanguage(lang_name, string_name, string_text)
 
    if not LANG.IsLanguage(lang_name) then
       ErrorNoHalt(Format("Failed to add '%s' to language '%s': language does not exist.\n", tostring(string_name), tostring(lang_name)))
+      return false
    end
 
    LANG.Strings[lang_name][string_name] = string_text

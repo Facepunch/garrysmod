@@ -4,7 +4,7 @@ local MenuGradient = Material( "html/img/gradient.png", "nocull smooth" )
 local FreeMaterial = nil
 
 local function CreateBackgroundMaterial( path )
-	if FreeMaterial then
+	if ( FreeMaterial ) then
 		FreeMaterial:SetDynamicImage( path )
 
 		local ret = FreeMaterial
@@ -16,8 +16,8 @@ local function CreateBackgroundMaterial( path )
 end
 
 local function FreeBackgroundMaterial( mat )
-	if FreeMaterial then
-		DevWarning( "Menu shouldn't be releasing a material when one is already queued for use" )
+	if ( FreeMaterial ) then
+		MsgN( "Warning! Menu shouldn't be releasing a material when one is already queued for use!" )
 	end
 
 	FreeMaterial = mat
@@ -49,6 +49,8 @@ end
 
 local function Render( tbl )
 
+	if ( !tbl.mat ) then return end
+
 	surface.SetMaterial( tbl.mat )
 	surface.SetDrawColor( 255, 255, 255, tbl.Alpha )
 
@@ -78,10 +80,8 @@ function DrawBackground()
 		end
 
 		if ( Outgoing ) then
-
 			Think( Outgoing )
 			Render( Outgoing )
-
 		end
 
 	end
@@ -114,8 +114,16 @@ function ChangeBackground( currentgm )
 	if ( currentgm ) then LastGamemode = currentgm end
 
 	local img = table.Random( Images )
+	if ( !img ) then
+		print( "No main menu backgrounds found!" )
+		return
+	end
 
-	if ( !img ) then return end
+	-- We just rolled the same image, no thank you, reroll
+	if ( Active && img == Active.Name && #Images > 1 ) then
+		ChangeBackground()
+		return
+	end
 
 	if ( Outgoing ) then
 		FreeBackgroundMaterial( Outgoing.mat )
@@ -128,7 +136,12 @@ function ChangeBackground( currentgm )
 	end
 
 	local mat = CreateBackgroundMaterial( img )
-	if ( !mat || mat:IsError() ) then return end
+	if ( !mat || mat:IsError() ) then
+		print( "Failed to create material for background ", img )
+		table.RemoveByValue( Images, img )
+		ChangeBackground()
+		return
+	end
 
 	Active = {
 		Ratio = mat:GetInt( "$realwidth" ) / mat:GetInt( "$realheight" ),

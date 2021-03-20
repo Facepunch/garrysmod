@@ -247,7 +247,17 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 		pnlLoading:ShowURL( serverurl, true )
 	end
 
-	pnlLoading.JavascriptRun = string.format( 'if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s" );',
-		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe(), GetConVarNumber( "volume" ), GetConVarString( "gmod_language" ) )
+	-- TODO: This should be pulled from the server
+	local niceGamemode = g_GameMode
+	for k, v in pairs( engine.GetGamemodes() ) do
+		if ( niceGamemode == v.name ) then
+			niceGamemode = v.title
+			break
+		end
+	end
+
+	pnlLoading.JavascriptRun = string.format( 'if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s", "%s" );',
+		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe(),
+		GetConVarNumber( "volume" ), GetConVarString( "gmod_language" ), niceGamemode:JavascriptSafe() )
 
 end

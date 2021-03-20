@@ -33,6 +33,15 @@ function GetForEdit( list )
 end
 
 --
+--	Get all list names
+--
+function GetTable()
+
+	return table.GetKeys( g_Lists )
+
+end
+
+--
 --	Set a key value
 --
 function Set( list, key, value )
@@ -48,7 +57,7 @@ end
 function Add( list, value )
 
 	local list = GetForEdit( list )
-	table.insert( list, value )
+	return table.insert( list, value )
 
 end
 

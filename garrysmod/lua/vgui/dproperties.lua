@@ -24,13 +24,27 @@ local tblRow = vgui.RegisterTable( {
 
 	end,
 
-	Setup = function( self, type, vars )
+	Setup = function( self, rowType, vars )
 
 		self.Container:Clear()
 
-		local Name = "DProperty_" .. type
+		local Name = "DProperty_" .. rowType
 
-		self.Inner = self.Container:Add( Name )
+		-- Nice shortcuts for Entity:NetworkVar()
+		if ( !vgui.GetControlTable( Name ) ) then
+			if ( rowType == "Bool" ) then rowType = "Boolean" end
+			if ( rowType == "Vector" ) then rowType = "Generic" end
+			if ( rowType == "Angle" ) then rowType = "Generic" end
+			if ( rowType == "String" ) then rowType = "Generic" end
+
+			Name = "DProperty_" .. rowType
+		end
+
+		if ( vgui.GetControlTable( Name ) ) then
+			self.Inner = self.Container:Add( Name )
+		else
+			print( "DProperties: Failed to create panel (" .. Name .. ")" )
+		end
 		if ( !IsValid( self.Inner ) ) then self.Inner = self.Container:Add( "DProperty_Generic" ) end
 
 		self.Inner:SetRow( self )
@@ -132,7 +146,7 @@ local tblCategory = vgui.RegisterTable( {
 		self.Container:Dock( TOP )
 		self.Container:DockMargin( 16, 0, 0, 0 )
 		self.Container.Paint = function( pnl, w, h )
-			surface.SetDrawColor( Color( 255, 255, 255, 255 ) )
+			surface.SetDrawColor( color_white )
 			surface.DrawRect( 0, 0, w, h )
 		end
 

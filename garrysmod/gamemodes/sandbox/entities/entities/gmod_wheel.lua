@@ -3,7 +3,6 @@ AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
 ENT.PrintName = "Wheel"
-ENT.RenderGroup = RENDERGROUP_BOTH
 
 -- Set up our data table
 function ENT:SetupDataTables()
@@ -76,7 +75,7 @@ function ENT:GetMotor()
 	-- Fuck knows why it's doing this here.
 	if ( !IsValid( self.Motor ) ) then
 
-		self.Motor = constraint.FindConstraintEntity( self.Entity, "Motor" )
+		self.Motor = constraint.FindConstraintEntity( self, "Motor" )
 
 	end
 
@@ -176,11 +175,9 @@ function ENT:DoDirectionEffect()
 	if ( !IsValid( Motor ) ) then return end
 
 	local effectdata = EffectData()
-
-		effectdata:SetOrigin( self.Axis )
-		effectdata:SetEntity( self.Entity )
-		effectdata:SetScale( Motor.direction )
-
+	effectdata:SetOrigin( self.Axis * 100 ) -- Ugly hack, but necessary due to network precision problems of EffectData()
+	effectdata:SetEntity( self )
+	effectdata:SetScale( Motor.direction )
 	util.Effect( "wheel_indicator", effectdata, true, true )
 
 end

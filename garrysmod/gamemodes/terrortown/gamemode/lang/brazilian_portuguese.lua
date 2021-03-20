@@ -1,6 +1,6 @@
----- Portuguese language strings
+---- Brazilian Portuguese language strings
 
-local L = LANG.CreateLanguage("Português")
+local L = LANG.CreateLanguage("Português (Brasil)")
 
 --- General text used in various places
 L.traitor    = "Traidor"
@@ -262,7 +262,7 @@ L.set_cues            = "Reproduzir um barulho quando uma rodada começar ou ter
 L.set_title_play    = "Configurações de jogabilidade"
 
 L.set_specmode      = "Modo Somente-Espectador (fique sempre espectando)"
-L.set_specmode_tip  = "No modo Somente-Espectador você não renascerá quando uma nova rodada começar, ao invés disso você continuará como Espectador."
+L.set_specmode_tip  = "No modo Somente-Espectador você não renascerá quando uma nova rodada começar, ao invés disto você continuará como Espectador."
 L.set_mute          = "Emudecer jogadores vivos enquanto morto"
 L.set_mute_tip      = "Habilite para emudecer jogadores vivos enquanto você estiver morto/espectando."
 
@@ -621,7 +621,7 @@ L.spec_help    = "Clique para observar jogadores, ou pressione {usekey} em um ob
 L.info_popup_innocent = [[Você é um Terrorista inocente! Mas há Traidores à solta...
 Em quem você pode confiar, e quem está por aí para te encher de balas?
 
-Tenha cuidado e trabalhe em conjunto com seus camaradas para saírem dessa vivos!]]
+Tenha cuidado e trabalhe em conjunto com seus camaradas para saírem desta vivos!]]
 
 L.info_popup_detective = [[Você é um Detetive! O QG de Terroristas disponibilizou recursos especiais para você encontrar os traidores.
 Use-os para ajudar os inocentes a sobreviver, mas tenha cuidado:
@@ -670,7 +670,7 @@ L.tip1 = "Traidores podem investigar cadáveres furtivamente, sem confirmar a mo
 
 L.tip2 = "Armar um explosivo C4 com um longo tempo de duração irá aumentar o número de fios que causarão sua detonação instantânea quando um inocente tentar desarmá-lo. Ele também emitirá um bipe mais suave e com menos frequência."
 
-L.tip3 = "Detetives podem investigar cadáveres para descobrir quem estava 'refletindo em seus olhos'. Esta é a última pessoa que o terrorista morto viu. Isso não necessariamente indica quem é o assassino, pois o terrorista pode ter sido baleado pelas costas."
+L.tip3 = "Detetives podem investigar cadáveres para descobrir quem estava 'refletindo em seus olhos'. Esta é a última pessoa que o terrorista morto viu. Isto não necessariamente indica quem é o assassino, pois o terrorista pode ter sido baleado pelas costas."
 
 L.tip4 = "Ninguém saberá que você morreu até encontrarem seu cadáver e o investigarem."
 

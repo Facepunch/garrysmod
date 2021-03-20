@@ -18,6 +18,12 @@ matproxy.Add( {
 		local col = owner:GetWeaponColor()
 		if ( !isvector( col ) ) then return end
 
+		-- A hack for the mega gravity gun
+		local wep = owner:GetActiveWeapon()
+		if ( IsValid( wep ) && wep:GetClass() == "weapon_physcannon" && !wep:IsScripted() ) then
+			col = Vector( 0.4, 1, 1 )
+		end
+
 		local mul = ( 1 + math.sin( CurTime() * 5 ) ) * 0.5
 
 		mat:SetVector( self.ResultTo, col + col * mul )

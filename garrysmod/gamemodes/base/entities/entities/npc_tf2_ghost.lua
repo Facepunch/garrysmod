@@ -16,10 +16,20 @@ function ENT:RunBehaviour()
 
 	while ( true ) do
 
-		-- walk somewhere random
 		self:StartActivity( ACT_WALK ) -- walk anims
 		self.loco:SetDesiredSpeed( 100 ) -- walk speeds
-		self:MoveToPos( self:GetPos() + Vector( math.Rand( -1, 1 ), math.Rand( -1, 1 ), 0 ) * 200 ) -- walk to a random place within about 200 units (yielding)
+
+		-- Choose a random location within 400 units of our position
+		local targetPos = self:GetPos() + Vector( math.Rand( -1, 1 ), math.Rand( -1, 1 ), 0 ) * 400
+
+		-- Search for walkable space there, or nearby
+		local area = navmesh.GetNearestNavArea( targetPos )
+
+		-- We found walkable space, get the closest point on that area to where we want to be
+		if ( IsValid( area ) ) then targetPos = area:GetClosestPointOnArea( targetPos ) end
+
+		-- walk to the target place (yielding)
+		self:MoveToPos( targetPos )
 
 		self:StartActivity( ACT_IDLE ) -- revert to idle activity
 

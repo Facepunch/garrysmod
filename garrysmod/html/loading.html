@@ -6,26 +6,57 @@
 	</head>
 	<body>
 
-		<div id="container">
+		<div id="background">
+			<div id="container">
 
-			<img src='img/gmod_logo_brave.png' class="bounce"/>
+				<img src='img/gmod_logo_brave.png' class="bounce"/>
 
-			<center>
-				<br />
-				<div class="walk">:v</div>
-			</center>
+				<center>
+					<br />
+					<div class="walk">:v</div>
+				</center>
+
+			</div>
+
+			<div class="server_info">
+				<img id="mapimg" src="asset://mapimage/invalid_map"></img><div class="text">
+					<span id="serverName">A really long server name will be here that will be too long to fit on the loading screen</span><br>
+					<span id="serverMap">gm_hilldirt</span><br>
+					<span id="serverGamemode">Snadbox</span>
+				</div>
+			</div>
+
+			<div id="spambox">
+			</div>
 
 		</div>
-
-		<!--<div id="spambox">
-		</div>-->
-
 		<script type="text/javascript">
-			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang )
+			window.onload = function()
 			{
+				var isHalloween = false;
+
+				var today = new Date()
+				if ( today.getMonth() == 10 && today.getDate() >= 15 || today.getMonth() == 11 && today.getDate() <= 5 ) isHalloween = true;
+
+				// Force it to dark on Spooktober or when it's late
+				if ( isHalloween || ( today.getHours() >= 19 || today.getHours() <= 7 ) )
+				{
+					$("body").addClass( "dark" );
+				}
+			}
+
+			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang, gamemodeNice )
+			{
+				$("#serverName").html( servername );
+				$("#serverMap").html( mapname );
+				$("#serverGamemode").html( gamemodeNice );
+				$("#mapimg").attr("src", "asset://mapimage/" + mapname );
+				$("body").css( "background-image", "url( 'asset://mapimage/" + mapname + "' )" );
+
+				$(".server_info").addClass( "visible" );
+
 				// Do with these what you will :)
 				// this function gets called only when joining a multiplayer server
-
 				/*$("#spambox").append("serverurl: " + serverurl + "<br>");
 				$("#spambox").append("servername: " + servername + "<br>");
 				$("#spambox").append("maxplayers: " + maxplayers + "<br>");

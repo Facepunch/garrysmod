@@ -24,6 +24,8 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 
 	$scope.CategoriesSecondary =
 	[
+		"followed",
+		"favorite",
 		"friends",
 		"mine"
 	];
@@ -38,7 +40,7 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 	];
 
 	$scope.Disabled = false;
-	if ( !IS_SPAWN_MENU ) lua.Run( "UpdateAddonDisabledState();" );
+	if ( !IS_SPAWN_MENU ) lua.Run( "UpdateAddonDisabledState()" );
 
 	$scope.Subscribe = function( file ) { subscriptions.Subscribe( file.id ); }
 	$scope.Unsubscribe = function( file ) { subscriptions.Unsubscribe( file.id ); }

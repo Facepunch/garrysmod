@@ -71,7 +71,7 @@ function PANEL:PositionTooltip()
 		return
 	end
 
-	self:PerformLayout()
+	self:InvalidateLayout( true )
 
 	local x, y = input.GetCursorPos()
 	local w, h = self:GetSize()
@@ -99,6 +99,9 @@ function PANEL:OpenForPanel( panel )
 
 	self.TargetPanel = panel
 	self:PositionTooltip()
+
+	-- Use the parent panel's skin
+	self:SetSkin( panel:GetSkin().Name )
 
 	if ( tooltip_delay:GetFloat() > 0 ) then
 

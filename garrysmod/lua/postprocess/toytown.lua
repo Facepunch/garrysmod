@@ -17,7 +17,7 @@ function DrawToyTown( NumPasses, H )
 
 	for i = 1, NumPasses do
 
-		render.UpdateScreenEffectTexture()
+		render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
 
 		surface.DrawTexturedRect( 0, 0, ScrW(), H )
 		surface.DrawTexturedRectUV( 0, ScrH() - H, ScrW(), H, 0, 1, 1, 0 )

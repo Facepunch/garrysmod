@@ -307,6 +307,7 @@ A.bglink
 {
 	text-align: left;
 	font-size: 12px;
+	user-select: text;
 }
 
 .serverinfo subinfo
@@ -534,20 +535,20 @@ SPAN.installgamemode:hover
 	}
 }
 
-name .unfavbutton {
-	background: url( '../../img/favourite.png' );
-	margin-right: 8px;
+name .favbutton {
+	background: url( '../../img/notfavourite.png' );
+	margin-right: 4px;
 	height: 16px;
 	width: 16px;
 	display: inline-block;
 }
-name .unfavbutton:hover {
-	background: url( '../../img/favourite_remove.png' );
-}
-name .unfavbutton.removed {
-	background: url( '../../img/notfavourite.png' );
-}
-name .unfavbutton.removed:hover {
+name .favbutton:hover {
 	background: url( '../../img/notfavourite_add.png' );
+}
+name .favbutton.favorited {
+	background: url( '../../img/favourite.png' );
+}
+name .favbutton.favorited:hover {
+	background: url( '../../img/favourite_remove.png' );
 }
 

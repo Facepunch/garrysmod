@@ -7,7 +7,7 @@ function PANEL:Init()
 
 	self:SetSize( 256, 256 )
 	self:BuildControls()
-	self:SetColor( Color( 255, 255, 255, 255 ) )
+	self:SetColor( color_white )
 
 end
 

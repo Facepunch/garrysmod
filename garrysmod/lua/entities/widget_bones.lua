@@ -139,7 +139,7 @@ function ENT:Setup( ent )
 
 	self:SetTarget( ent )
 	self:SetParent( ent )
-	self:SetLocalPos( Vector( 0, 0, 0 ) )
+	self:SetLocalPos( vector_origin )
 
 	for k = 0, ent:GetBoneCount() - 1 do
 
@@ -148,8 +148,8 @@ function ENT:Setup( ent )
 
 		local btn = ents.Create( "widget_bone" )
 		btn:FollowBone( ent, k )
-		btn:SetLocalPos( Vector( 0, 0, 0 ) )
-		btn:SetLocalAngles( Angle( 0, 0, 0 ) )
+		btn:SetLocalPos( vector_origin )
+		btn:SetLocalAngles( angle_zero )
 		btn:Spawn()
 		btn:SetSize( ent:BoneLength( k ) * 2 )
 

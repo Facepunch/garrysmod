@@ -93,9 +93,7 @@ function TOOL:LeftClick( trace, attach )
 		if ( attach ) then
 
 			-- The real model should have an attachment!
-			local attachpoint = Pos + Vector( 0, 0, 0 )
-
-			local LPos1 = balloon:WorldToLocal( attachpoint )
+			local LPos1 = balloon:WorldToLocal( Pos )
 			local LPos2 = trace.Entity:WorldToLocal( trace.HitPos )
 
 			if ( IsValid( trace.Entity ) ) then
@@ -139,6 +137,8 @@ if ( SERVER ) then
 		duplicator.DoGeneric( balloon, Data )
 
 		balloon:Spawn()
+
+		DoPropSpawnedEffect( balloon )
 
 		duplicator.DoGenericPhysics( balloon, pl, Data )
 
@@ -187,7 +187,7 @@ function TOOL:UpdateGhostBalloon( ent, ply )
 	if ( modeltable.skin ) then ent:SetSkin( modeltable.skin ) end
 
 	ent:SetPos( pos )
-	ent:SetAngles( Angle( 0, 0, 0 ) )
+	ent:SetAngles( angle_zero )
 
 	ent:SetNoDraw( false )
 
@@ -200,7 +200,7 @@ function TOOL:Think()
 		local modeltable = list.Get( "BalloonModels" )[ self:GetClientInfo( "model" ) ]
 		if ( !modeltable ) then self:ReleaseGhostEntity() return end
 
-		self:MakeGhostEntity( modeltable.model, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( modeltable.model, vector_origin, angle_zero )
 		if ( IsValid( self.GhostEntity ) ) then self.GhostEntity.model = self:GetClientInfo( "model" ) end
 
 	end

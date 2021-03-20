@@ -289,12 +289,10 @@ local meta = getmetatable( "" )
 
 function meta:__index( key )
 	local val = string[ key ]
-	if ( val ) then
+	if ( val ~= nil ) then
 		return val
 	elseif ( tonumber( key ) ) then
 		return self:sub( key, key )
-	else
-		error( "attempt to index a string value with bad key ('" .. tostring( key ) .. "' is not part of the string library)", 2 )
 	end
 end
 
