@@ -653,7 +653,7 @@ Você pode alternar o modo Somente-Espectador a qualquer momento ao pressionar {
 L.idle_popup_close = "Fazer nada"
 L.idle_popup_off   = "Desabilitar o modo Somente-Espectador agora"
 
-L.idle_warning = "Aviso: você aparenta estar ausente/AFK e será movido para o time dos Espectadores, a não ser que você demonstre alguma atividade!"
+L.idle_warning = "Aviso: você aparenta estar ausente/AFK e será movido para a equipe dos Espectadores, a não ser que você demonstre alguma atividade!"
 
 L.spec_mode_warning = "Você está no Modo Espectador e não renascerá quando uma nova rodada começar. Para desabilitar este modo, pressione F1, clique na aba Configurações e desmarque a opção 'Modo Somente-Espectador'."
 
@@ -844,35 +844,35 @@ L.ev_win_time    = "Os traidores ficaram sem tempo e perderam!"
 
 --- Awards/highlights
 
-L.aw_sui1_title = "Líder da Seita Suicída"
-L.aw_sui1_text  = "mostrou aos outros suicídas como as coisas funcionam sendo o primeiro a partir."
+L.aw_sui1_title = "Líder da Seita Suicida"
+L.aw_sui1_text  = "mostrou aos outros suicidas como as coisas funcionam sendo o primeiro a partir."
 
 L.aw_sui2_title = "Sozinho e Depressivo"
 L.aw_sui2_text  = "foi o único que se matou."
 
-L.aw_exp1_title = "Bolsa de Pesquisa em Explosivos"
+L.aw_exp1_title = "Bolsa para Pesquisa de Explosivos"
 L.aw_exp1_text  = "foi reconhecido por sua pesquisa com explosivos. {num} cobaias o ajudaram."
 
 L.aw_exp2_title = "Pesquisa de Campo"
 L.aw_exp2_text  = "testou sua própria resistência a explosões. Não era alta o suficiente."
 
-L.aw_fst1_title = "Primeira Morte"
-L.aw_fst1_text  = "entregou a morte do primeiro inocente nas mãos de um Traidor."
+L.aw_fst1_title = "First Blood"
+L.aw_fst1_text  = "entregou a primeira morte de um inocente nas mãos de um traidor."
 
-L.aw_fst2_title = "Primeira Morte Estúpida"
-L.aw_fst2_text  = "marcou a primeira morte matando um Traidor aliado. Bom trabalho."
+L.aw_fst2_title = "First Blood Reverso"
+L.aw_fst2_text  = "marcou a primeira morte matando um traidor aliado. Bom trabalho."
 
-L.aw_fst3_title = "Primeiro Assassino"
+L.aw_fst3_title = "Ataque de Pânico"
 L.aw_fst3_text  = "foi o primeiro a matar. Pena que era um camarada inocente."
 
 L.aw_fst4_title = "Tiro Certo"
-L.aw_fst4_text  = "foi o inocente que marcou a primeira morte matando um Traidor."
+L.aw_fst4_text  = "foi o inocente que marcou a primeira morte matando um traidor."
 
 L.aw_all1_title = "Mais Mortal Entre Iguais"
 L.aw_all1_text  = "foi responsável por cada morte causada pelos inocentes nesta rodada."
 
 L.aw_all2_title = "Lobo Solitário"
-L.aw_all2_text  = "foi responsável por cada morte causada por um traidor nesta rodada."
+L.aw_all2_text  = "foi responsável por cada morte causada pelos traidores nesta rodada."
 
 L.aw_nkt1_title = "Eu Peguei Um, Chefe!"
 L.aw_nkt1_text  = "conseguiu matar apenas um inocente. Congratulações!"
@@ -887,19 +887,19 @@ L.aw_nkt4_title = "O Lobo entre Lobos que mais parecem Ovelhas"
 L.aw_nkt4_text  = "comeu terroristas inocentes no jantar. Um jantar de {num} pratos."
 
 L.aw_nkt5_title = "Operação Contra-Terrorista"
-L.aw_nkt5_text  = "é pago por cada assassinato. Agora pode comprar outro iate luxuoso."
+L.aw_nkt5_text  = "é pago por cada assassinato. Já pode comprar outro iate luxuoso."
 
-L.aw_nki1_title = "Traia Isto!"
-L.aw_nki1_text  = "achou um Traidor. Atirou num Traidor. Fácil."
+L.aw_nki1_title = "Traia Isto"
+L.aw_nki1_text  = "achou um traidor. Atirou num traidor. Fácil."
 
 L.aw_nki2_title = "Japonês da Federal"
-L.aw_nki2_text  = "escoltou dois Traidores para o além."
+L.aw_nki2_text  = "escoltou dois traidores para o além."
 
 L.aw_nki3_title = "Traidores Contam Carneirinhos?"
-L.aw_nki3_text  = "colocou três Traidores para dormir."
+L.aw_nki3_text  = "colocou três traidores para dormir."
 
 L.aw_nki4_title = "Funcionário de Assuntos Internos"
-L.aw_nki4_text  = "é pago por cada assassinato. Já pode comprar sua quinquagésima piscina olímpica."
+L.aw_nki4_text  = "é pago por cada assassinato. Agora já pode comprar sua quinquagésima piscina olímpica."
 
 L.aw_fal1_title = "Não, Sr. Bond, espero que você caia"
 L.aw_fal1_text  = "empurrou alguém de um lugar alto."
@@ -923,10 +923,10 @@ L.aw_cbr1_title = "Thunk Thunk Thunk"
 L.aw_cbr1_text  = "descobriu que este é o barulho que o Pé de Cabra faz ao matar, como {num} vítimas também descobriram."
 
 L.aw_cbr2_title = "Freeman"
-L.aw_cbr2_text  = "cobriu o cerébro de nada menos que {num} pessoas com o seu Pé de Cabra."
+L.aw_cbr2_text  = "cobriu seu Pé de Cabra com nada menos do que {num} cérebros."
 
 L.aw_pst1_title = "Inseto Pequeno Persistente"
-L.aw_pst1_text  = "marcou {num} mortes usando a pistola. Logo após, ele abraçou alguém até a morte."
+L.aw_pst1_text  = "marcou {num} mortes usando uma pistola. Logo após, ele abraçou alguém até a morte."
 
 L.aw_pst2_title = "Chacina de Pequeno Calibre"
 L.aw_pst2_text  = "matou um pequeno exército de {num} com uma pistola. Provavelmente instalou uma pequena escopeta dentro do cano."
@@ -935,16 +935,16 @@ L.aw_sgn1_title = "Modo Fácil"
 L.aw_sgn1_text  = "aplicou tiro onde dói, conseguindo matar {num} alvos."
 
 L.aw_sgn2_title = "Milhares de Pequenas Balas"
-L.aw_sgn2_text  = "realmente não gostava de seus tiros, então ele revelou tudo. {num} recipientes não viveram para aproveitá-los."
+L.aw_sgn2_text  = "não gostou muito do chumbo grosso, e decidiu doá-lo. {num} destinatários não viveram para aproveitá-lo."
 
 L.aw_rfl1_title = "Apontar e Clicar"
 L.aw_rfl1_text  = "mostrou que tudo que você precisa para cometer {num} assassinatos é um rifle e uma mão firme."
 
 L.aw_rfl2_title = "Eu Posso Ver Sua Cabeça Daqui"
-L.aw_rfl2_text  = "conhece o rifle que tem. Agora {num} pessoas conhecem seu rifle também."
+L.aw_rfl2_text  = "conhece o rifle que tem. Agora {num} pessoas conhecem o seu rifle também."
 
 L.aw_dgl1_title = "É Como Um Pequeno Rifle"
-L.aw_dgl1_text  = "está pegando o jeito de jogar com a Desert Eagle e conseguiu matar {num} pessoas."
+L.aw_dgl1_text  = "está pegando o jeito de jogar com a Desert Eagle, conseguindo matar {num} pessoas."
 
 L.aw_dgl2_title = "Mestre da Desert Eagle"
 L.aw_dgl2_text  = "surpreendeu {num} pessoas com sua Desert Eagle."
@@ -965,7 +965,7 @@ L.aw_knf1_title = "Foi Bom Esfaquear Você"
 L.aw_knf1_text  = "esfaqueou a cara de alguém pela internet."
 
 L.aw_knf2_title = "Onde Você Conseguiu Isto?"
-L.aw_knf2_text  = "não era Traidor, mas ainda matou alguém com uma faca."
+L.aw_knf2_text  = "não era um traidor, e mesmo assim matou alguém com uma faca."
 
 L.aw_knf3_title = "O Tal Homem Faca"
 L.aw_knf3_text  = "achou {num} facas espalhadas, e fez bom uso delas."
@@ -977,37 +977,37 @@ L.aw_flg1_title = "Ao Resgate"
 L.aw_flg1_text  = "usou seu sinalizador para sinalizar {num} mortes."
 
 L.aw_flg2_title = "Sinalizador Indica Fogo"
-L.aw_flg2_text  = "ensinou a {num} homens o perigo de vestir roupas inflamáveis."
+L.aw_flg2_text  = "ensinou a {num} homens sobre o perigo de vestir roupas inflamáveis."
 
-L.aw_hug1_title = "Uma H.U.G.E Expandida"
-L.aw_hug1_text  = "estava em sintonia com sua H.U.G.E, de alguma forma conseguindo fazer com que suas balas atingissem {num} pessoas."
+L.aw_hug1_title = "Uma H.U.G.E Sintonizada"
+L.aw_hug1_text  = "estava em sintonia com sua H.U.G.E, fazendo com que suas balas atingissem {num} pessoas."
 
 L.aw_hug2_title = "Um Paciente Esquizofrênico"
 L.aw_hug2_text  = "só ficou atirando, e viu sua H.U.G.E ser recompensada com {num} mortes."
 
 L.aw_msx1_title = "Putt Putt Putt"
-L.aw_msx1_text  = "levou {num} pessoas com a M16."
+L.aw_msx1_text  = "levou {num} pessoas com o M16."
 
 L.aw_msx2_title = "Loucura de Alcance Médio"
-L.aw_msx2_text  = "sabe derrubar uns alvos com a M16, marcando {num} mortes."
+L.aw_msx2_text  = "sabe derrubar pessoas com o M16, conseguindo marcar {num} mortes."
 
 L.aw_tkl1_title = "Foi Sem Querer"
-L.aw_tkl1_text  = "pressionou o gatilho enquanto mirava em um companheiro."
+L.aw_tkl1_text  = "pressionou o gatilho enquanto mirava em um aliado."
 
 L.aw_tkl2_title = "Foi Sem Querer Querendo"
-L.aw_tkl2_text  = "pensou que matou dois Traidores, mas estava errado sobre ambos."
+L.aw_tkl2_text  = "pensou que havia matado dois traidores, mas estava errado sobre ambos."
 
-L.aw_tkl3_title = "Karma-A-Arma-Ae"
-L.aw_tkl3_text  = "não conseguiu parar depois de matar dois companheiros. Três é seu número da sorte."
+L.aw_tkl3_title = "Karma-A-Arma-Aê"
+L.aw_tkl3_text  = "não conseguiu parar depois de matar dois aliados. Três é seu número da sorte."
 
 L.aw_tkl4_title = "Os Meus Aliados São Os Meus Inimigos"
-L.aw_tkl4_text  = "matou seu time inteiro. OLOKINHO MEU."
+L.aw_tkl4_text  = "matou toda a sua equipe. OLOKINHO MEU."
 
 L.aw_tkl5_title = "Papéis Diferentes"
-L.aw_tkl5_text  = "estava interpretando um louco honesto. E é por isto que ele matou quase todo seu time."
+L.aw_tkl5_text  = "estava interpretando um louco honesto. E é por isto que ele matou quase toda a sua equipe."
 
 L.aw_tkl6_title = "Anta"
-L.aw_tkl6_text  = "não conseguiu descobrir em que time estava, e matou mais da metade de seus companheiros."
+L.aw_tkl6_text  = "não conseguiu descobrir em que equipe estava, e matou mais da metade de seus aliados."
 
 L.aw_tkl7_title = "Pescoço Vermelho"
 L.aw_tkl7_text  = "protegeu seu território de maneira fantástica ao matar mais de um quarto de seus aliados."
@@ -1025,16 +1025,16 @@ L.aw_fnd1_title = "Médico Legista"
 L.aw_fnd1_text  = "achou {num} cadáveres por aí."
 
 L.aw_fnd2_title = "Temos Que Pegar Todos Eles"
-L.aw_fnd2_text  = "achou {num} cadáveres para sua coleção."
+L.aw_fnd2_text  = "encontrou {num} cadáveres para a sua coleção."
 
 L.aw_fnd3_title = "Cheiro de Morte"
 L.aw_fnd3_text  = "continua tropeçando em cadáveres, conseguindo tropeçar {num} vezes nesta rodada."
 
 L.aw_crd1_title = "Reciclador"
-L.aw_crd1_text  = "coletou {num} créditos de cadáveres."
+L.aw_crd1_text  = "coletou {num} créditos perdidos em cadáveres."
 
 L.aw_tod1_title = "Uma-Quase-Vitória"
-L.aw_tod1_text  = "morreu segundos antes de seu time vencer a partida."
+L.aw_tod1_text  = "morreu segundos antes de sua equipe vencer a partida."
 
 L.aw_tod2_title = "Eu Odeio Este Jogo"
 L.aw_tod2_text  = "morreu no começo da rodada."
