@@ -84,7 +84,7 @@ function KARMA.ApplyKarma(ply)
 
    -- any karma at 1000 or over guarantees a df of 1, only when it's lower do we
    -- need the penalty curve
-   if ply:GetBaseKarma() < 1000 then
+   if ply:GetBaseKarma() < 1000 and KARMA.IsEnabled() then
       local k = ply:GetBaseKarma() - 1000
       if config.strict:GetBool() then
          -- this penalty curve sinks more quickly, less parabolic
