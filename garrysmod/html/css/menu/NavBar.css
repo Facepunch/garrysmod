@@ -141,6 +141,21 @@
 	top: 5px;
 }
 
+#NavBar number
+{
+	background: #d9d9d9;
+	padding: 5px;
+	position: absolute;
+	top: -10px;
+	left: -7px;
+	border-radius: 4px;
+}
+
+#NavBar number.severe
+{
+	background: #ffc800;
+}
+
 UL.games_list
 {
 	right: 150px;

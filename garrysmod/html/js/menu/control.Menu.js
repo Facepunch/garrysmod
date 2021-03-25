@@ -316,6 +316,14 @@ function UpdateVersion( version, branch )
 	UpdateDigest( gScope, 100 );
 }
 
+function SetProblemCount( num, bSevere )
+{
+	gScope.ProblemCount		= num;
+	gScope.ProblemSevere	= bSevere;
+
+	UpdateDigest( gScope, 100 );
+}
+
 //
 // Setup sounds..
 //

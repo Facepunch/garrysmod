@@ -56,9 +56,12 @@
 	<ul class="right">
 		<li class="bigicon" ng-click="ToggleGamemodes()"><img ng-src='../gamemodes/{{Gamemode}}/icon24.png'><span>{{GamemodeTitle}}</span></li>
 		<li class="smallicon" ng-click="ToggleLanguage()"><img style="margin-top: 9px;" ng-src='../resource/localization/{{Language}}.png'><span></span></li>
-		<li class="smallicon hidelabel" ng-click="ToggleGames()"><img style="" ng-src='img/games.png'><span ng-Tranny="'games'"></span></li>
+		<li class="smallicon hidelabel" ng-click="ToggleGames()"><img ng-src='img/games.png'><span ng-Tranny="'games'"></span></li>
 		<li class="smallicon" ng-click="TogglePopup('.kinect_settings')" ng-show="kinect.available"><img ng-src='img/kinect.png'><span></span></li>
-		<li class="smallicon hidelabel" ng-click="ToggleProblems()"><img style="" ng-src='img/error.png'><span ng-Tranny="'problems'"></span></li>
+		<li class="smallicon hidelabel" style="overflow: visible;" ng-click="ToggleProblems()"><img ng-src='img/error.png'>
+			<span ng-Tranny="'problems'"></span>
+			<number ng-show="ProblemCount > 0" class="{{IfElse( ProblemSevere, 'severe', '' )}}">{{ProblemCount}}</number>
+		</li>
 	</ul>
 
 	<ul class="center" ng-show="InGame">
