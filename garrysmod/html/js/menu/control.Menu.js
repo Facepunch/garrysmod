@@ -16,6 +16,8 @@ function MenuController( $scope, $rootScope )
 {
 	$rootScope.ShowBack = false;
 	$scope.Version = "0";
+	$scope.ProblemCount = 0;
+	$scope.ProblemSevere = false;
 
 	subscriptions.Init( $scope );
 
@@ -306,6 +308,8 @@ function UpdateGames( games )
 
 function UpdateVersion( version, branch )
 {
+	GMOD_VERSION_INT = parseInt( version.replace( /\./g, "" ).substr( 2 ) ); // For server browser
+
 	gScope.Version	= version;
 	gScope.Branch	= branch;
 

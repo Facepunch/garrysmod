@@ -2,6 +2,7 @@
 {
 	"base"		"base"
 	"title"		"Trouble in Terrorist Town"
+	"category"	"pvp"
 	"maps"		"^ttt_"
 	"menusystem"	"1"
 
