@@ -49,8 +49,8 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 
 	this.Scope.HandleFilterChange = function( which )
 	{
-		if ( which == 1 ) scope.FilerDisabledOnly = false;
-		if ( which == 0 ) scope.FilerEnabledOnly = false;
+		if ( which == 1 ) scope.FilterDisabledOnly = false;
+		if ( which == 0 ) scope.FilterEnabledOnly = false;
 		scope.SwitchWithTag( scope.Category, 0, scope.Tagged, scope.MapName )
 	}
 
@@ -94,8 +94,8 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		}
 
 		var filter = "";
-		if ( scope.FilerEnabledOnly ) filter = "enabledonly";
-		if ( scope.FilerDisabledOnly ) filter = "disabledonly";
+		if ( scope.FilterEnabledOnly ) filter = "enabledonly";
+		if ( scope.FilterDisabledOnly ) filter = "disabledonly";
 
 		self.UpdatePageNav();
 
