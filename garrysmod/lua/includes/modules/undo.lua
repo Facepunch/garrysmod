@@ -357,7 +357,7 @@ function Do_Undo( undo )
 	if ( !undo ) then return false end
 
 	if ( hook.Run( "PreUndo", undo ) == false ) then return end
-	
+
 	local count = 0
 
 	-- Call each function

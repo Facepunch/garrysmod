@@ -179,7 +179,7 @@ end
 function PANEL:OnSizeChanged( newW, newH )
 	local divW = self.HorizontalDivider:GetWide()
 	local divL = self.HorizontalDivider:GetLeftWidth()
-	self:InvalidateLayout( true ) 
+	self:InvalidateLayout( true )
 	local divWnew = self.HorizontalDivider:GetWide()
 
 	if ( divW > divL && divW < divWnew ) then
