@@ -1,5 +1,6 @@
 
 include( "problem_lua.lua" )
+include( "problem_generic.lua" )
 
 local PANEL = {}
 
@@ -9,6 +10,7 @@ function PANEL:Init()
 	self:MakePopup()
 
 	self.ErrorPanels = {}
+	self.ProblemPanels = {}
 
 	local ProblemsFrame = vgui.Create( "DFrame", self )
 	ProblemsFrame:SetSize( ScrW() * 0.75, ScrH() * 0.75 )
@@ -22,11 +24,17 @@ function PANEL:Init()
 
 	local sheet = vgui.Create( "DPropertySheet", ProblemsFrame )
 	sheet:Dock( FILL )
+	self.Tabs = sheet
 
 	-- Lua errors
 	local luaErrorList = ProblemsFrame:Add( "DScrollPanel" )
-	sheet:AddSheet( "Lua Errors", luaErrorList, "icon16/error.png" )
+	sheet:AddSheet( "#problems.lua_errors", luaErrorList, "icon16/error.png" )
 	self.LuaErrorList = luaErrorList
+
+	-- Generic problems
+	local problemsList = ProblemsFrame:Add( "DScrollPanel" )
+	sheet:AddSheet( "#problems.problems", problemsList, "icon16/tick.png" )
+	self.ProblemsList = problemsList
 
 	ProblemsFrame.btnClose:MoveToFront()
 	ProblemsFrame.btnMaxim:MoveToFront()
@@ -61,7 +69,11 @@ end
 function PANEL:PerformLayout()
 
 	if ( self.LuaErrorList:GetCanvas():ChildCount() < 1 ) then
-		self.NoErrorsLabel = self:AddEmptyWarning( "No Lua Errors reported so far", self.LuaErrorList )
+		self.NoErrorsLabel = self:AddEmptyWarning( "#problems.no_lua_errors", self.LuaErrorList )
+	end
+
+	if ( self.ProblemsList:GetCanvas():ChildCount() < 1 ) then
+		self.NoProblemsLabel = self:AddEmptyWarning( "#problems.no_problems", self.ProblemsList )
 	end
 
 end
@@ -90,6 +102,24 @@ function PANEL:ReceivedError( uid, err )
 	end
 
 	pnl:ReceivedError( uid, err )
+
+end
+
+function PANEL:ReceivedProblem( uid, prob )
+
+	if ( IsValid( self.NoProblemsLabel ) ) then self.NoProblemsLabel:Remove() end
+
+	local groupID = prob.type or "other"
+	local pnl = self.ProblemPanels[ groupID ]
+	if ( !IsValid( pnl ) ) then
+		pnl = self.ProblemsList:Add( "GenericProblemGroup" )
+		pnl:SetGroup( groupID )
+		self.ProblemPanels[ groupID ] = pnl
+
+		self:InvalidateLayout()
+	end
+
+	pnl:ReceivedProblem( uid, prob )
 
 end
 
