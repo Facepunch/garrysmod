@@ -430,7 +430,7 @@ end
 --[[---------------------------------------------------------
 	Convar access functions
 -----------------------------------------------------------]]
-
+-
 local ConVarCache = {}
 
 function GetConVar( name )
@@ -457,4 +457,8 @@ function GetConVarString( name )
 	if ( name == "maxplayers" ) then return tostring( game.MaxPlayers() ) end -- ew
 	local c = GetConVar( name )
 	return ( c and c:GetString() ) or ""
+end
+
+function GetConVarCache()
+	return ConVarCache	
 end
