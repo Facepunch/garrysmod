@@ -5,7 +5,7 @@
 		ent.GetPlayerColor, a normalized vector colour.
 -----------------------------------------------------------]]
 
-local vector_ = Vector( 62 / 255, 88 / 255, 106 / 255 )
+local clrFallback = Vector( 62 / 255, 88 / 255, 106 / 255 )
 
 matproxy.Add( {
 	name = "PlayerColor",
@@ -33,7 +33,7 @@ matproxy.Add( {
 				mat:SetVector( self.ResultTo, col )
 			end
 		else
-			mat:SetVector( self.ResultTo, vector_ )
+			mat:SetVector( self.ResultTo, clrFallback )
 		end
 	end
 } )
