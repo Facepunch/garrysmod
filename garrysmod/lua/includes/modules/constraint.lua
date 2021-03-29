@@ -1001,11 +1001,19 @@ local function MotorControl( pl, motor, onoff, dir )
 
 	if ( activate ) then
 
-		motor:Fire( "Activate", "", 0 ) -- Turn on the motor
-		motor:Fire( "Scale", dir, 0 ) -- This makes the direction change
-
+		motor:Fire( "Scale", dir ) -- This makes the direction change
+		motor:Fire( "Activate" ) -- Turn on the motor
+	
 	else
-		motor:Fire( "Deactivate", "", 0 ) -- Turn off the motor
+
+		-- Turn off the motor, mimicking the wheel tool
+		motor:Fire( "Scale", 0 )
+		motor:Fire( "Activate" )
+
+		-- For some reason Deactivate causes the torque axis to be fucked up, or rather..
+		-- Reinitialized without taking into account possibly new rotation of the "parent" prop
+		-- motor:Fire( "Deactivate" )
+
 	end
 
 	motor.direction = dir
