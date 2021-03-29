@@ -320,7 +320,7 @@ function GetServers( category, id )
 			Servers[ category ][ address ] = true
 
 			pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s", "%s" );',
-					category, id, 9999, "The server at address " .. address .. " failed to respond", "Unreachable Servers", "no_map", 0, 2, 0, 'false', 0, address, 'unkn', '0', 'true', tostring( VERSION ), tostring( serverlist.IsServerFavorite( address ) ), "", "" ) )
+					category, id, 2000, "The server at address " .. address .. " failed to respond", "Unreachable Servers", "no_map", 0, 2, 0, 'false', 0, address, 'unkn', '0', 'true', tostring( VERSION ), tostring( serverlist.IsServerFavorite( address ) ), "", "" ) )
 
 			return !ShouldStop[ category ]
 

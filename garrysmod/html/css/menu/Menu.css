@@ -20,7 +20,7 @@ INPUT
 
 INPUT.searchbox, INPUT.gm_search
 {
-	border: 1px solid #08f;
+	border: 1px solid #ABADB3;
 	border-radius: 3px;
 	height: 24px;
 	margin-top: 6px;
@@ -36,6 +36,12 @@ INPUT.gm_search
 {
 	width: 80%;
 	margin-bottom: 5px;
+}
+INPUT[type="text"], INPUT[type="number"]
+{
+	border: 1px solid #ABADB3;
+	border-radius: 2px;
+	outline-color: #08f;
 }
 
 A

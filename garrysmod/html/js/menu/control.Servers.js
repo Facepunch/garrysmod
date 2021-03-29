@@ -9,6 +9,8 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 {
 	Scope = $rootScope;
 	Scope.ShowTab = 'internet';
+	Scope.GMCats = [ 'rp', 'pvp', 'pve', 'other', 'none' ];
+
 	Scope.SVGMSort = '-(order)';
 	Scope.SVFilterHasPly = false;
 	Scope.SVFilterNotFull = false;
@@ -16,9 +18,10 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	Scope.SVFilterMaxPing = 2000;
 	Scope.SVFilterPlyMin = 0;
 	Scope.SVFilterPlyMax = 128;
+	Scope.SVFilterFlags = {};
+	Scope.SVHasPreferFlags = false;
 	Scope.GMFilterTags = {};
 	Scope.GMHasFilterTags = false;
-	Scope.GMCats = [ 'rp', 'pvp', 'pve', 'other', 'none' ];
 
 	if ( !Scope.CurrentGamemode ) Scope.CurrentGamemode = null;
 
@@ -221,6 +224,27 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		return true;
 	}
 
+	$scope.FilterFlag = function( flag )
+	{
+		if ( $scope.SVFilterFlags[ flag ] == false )
+		{
+			$scope.SVFilterFlags[ flag ] = undefined;
+		}
+		else
+		{
+			$scope.SVFilterFlags[ flag ] = !$scope.SVFilterFlags[ flag ];
+		}
+
+		// Kinda ugly hack :(
+		$scope.SVHasPreferFlags = Object.keys( $scope.SVFilterFlags ).filter( function( key ) { return $scope.SVFilterFlags[ key ] === true; } ).length > 0;
+	}
+	$scope.FilterFlagClass = function( flag )
+	{
+		if ( $scope.SVFilterFlags[ flag ] == undefined ) return "";
+		if ( $scope.SVFilterFlags[ flag ] == true ) return "prefer";
+		return "avoid";
+	}
+
 	$scope.serverFilter = function( server )
 	{
 		if ( $scope.CurrentGamemode.Search && server.name.toLowerCase().indexOf( $scope.CurrentGamemode.Search.toLowerCase() ) == -1 && server.map.toLowerCase().indexOf( $scope.CurrentGamemode.Search.toLowerCase() ) == -1 ) return false;
@@ -231,6 +255,8 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( server.ping > $scope.SVFilterMaxPing ) return false;
 		if ( server.players < $scope.SVFilterPlyMin ) return false;
 		if ( server.players > $scope.SVFilterPlyMax ) return false;
+		if ( server.flag && $scope.SVFilterFlags[ server.flag ] == false ) return false;
+		if ( $scope.SVHasPreferFlags && $scope.SVFilterFlags[ server.flag ] != true ) return false;
 
 		return true;
 	}
@@ -404,12 +430,12 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	var gm = GetGamemode( data.gamemode, type );
 	gm.servers.push( data );
 
-	UpdateGamemodeInfo( data )
+	UpdateGamemodeInfo( data );
 
 	gm.num_servers += 1;
-	gm.num_players += data.players
+	gm.num_players += data.players;
 
-	if ( !data.isAnon ) gm.sort_players += data.players
+	if ( !data.isAnon ) gm.sort_players += data.players;
 
 	gm.element_class = "";
 	if ( gm.num_players == 0 ) gm.element_class = "noplayers";
@@ -535,6 +561,14 @@ function UpdateGamemodeInfo( server )
 		if ( !gi.categories[ server.category ] ) { gi.categories[ server.category ] = 1; } else { gi.categories[ server.category ]++; }
 		gi.tag = GetHighestKey( gi.categories );
 		if ( gi.tag ) gi.tag_set = true;
+	}
+
+	// flags, for filtering
+	if ( !gi.flags ) gi.flags = {}
+	if ( server.flag != "" )
+	{
+		gi.flags[ server.flag ] = true;
+		gi.hasflags = true;
 	}
 
 	// temporary measure while everyone adjusts
