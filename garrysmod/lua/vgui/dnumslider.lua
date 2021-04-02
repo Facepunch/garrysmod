@@ -60,8 +60,23 @@ function PANEL:SetMinMax( min, max )
 	self:UpdateNotches()
 end
 
+function PANEL:ApplySchemeSettings()
+
+	-- Copy the color of the label to the slider notches and the text entry
+	local col = self.Label:GetTextStyleColor()
+	if ( self.Label:GetTextColor() ) then col = self.Label:GetTextColor() end
+
+	self.TextArea:SetTextColor( col )
+
+	local col = table.Copy( col )
+	col.a = 100 -- Fade it out a bit so it looks right
+	self.Slider:SetNotchColor( col )
+
+end
+
 function PANEL:SetDark( b )
 	self.Label:SetDark( b )
+	self:ApplySchemeSettings()
 end
 
 function PANEL:GetMin()
