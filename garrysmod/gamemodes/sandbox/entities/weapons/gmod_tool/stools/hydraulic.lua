@@ -132,7 +132,7 @@ function TOOL:RightClick( trace )
 	end
 
 	-- Check to see if the player can create a hydraulic constraint with the entity in the trace
-	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "hydraulic" ) ) then
+	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "hydraulic", self, 2 ) ) then
 		self:ClearObjects()
 		return
 	end

@@ -103,7 +103,7 @@ function TOOL:RightClick( trace )
 	end
 
 	-- Check to see if the player can create a slider constraint with the entity in the trace
-	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "slider" ) ) then
+	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "slider", self, 2 ) ) then
 		self:ClearObjects()
 		return
 	end

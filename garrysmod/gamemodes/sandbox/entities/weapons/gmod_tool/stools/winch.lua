@@ -117,7 +117,7 @@ function TOOL:RightClick( trace )
 	end
 
 	-- Check to see if the player can create a winch constraint with the entity in the trace
-	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "winch" ) ) then
+	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "winch", self, 2 ) ) then
 		self:ClearObjects()
 		return
 	end
