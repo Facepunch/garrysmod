@@ -76,7 +76,7 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		// Fills in perpage
 		self.RefreshDimensions();
 
-		if ( scope.Category != type ) scope.TotalResults = 0;
+		if ( scope.Category != type || scope.Tagged != searchtag ) scope.TotalResults = 0;
 
 		scope.Category	= type;
 		scope.Tagged	= searchtag;
