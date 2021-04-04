@@ -29,6 +29,7 @@ local function BanID( player, command, arguments )
 	local id 		= arguments[2]
 
 	RunConsoleCommand( "banid", length, id )
+	RunConsoleCommand( "writeid" )
 
 end
 
