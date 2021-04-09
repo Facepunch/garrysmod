@@ -255,7 +255,9 @@ spawnmenu.AddContentType( "model", function( container, obj )
 	icon.OpenMenu = function( icon )
 
 		-- Use the containter that we are dragged onto, not the one we were created on
-		local container = icon:GetParent()
+		if ( icon:GetParent() && icon:GetParent().ContentContainer ) then
+			container = icon:GetParent().ContentContainer
+		end
 
 		local menu = DermaMenu()
 		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( string.gsub( obj.model, "\\", "/" ) ) end ):SetIcon( "icon16/page_copy.png" )
