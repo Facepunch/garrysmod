@@ -1,3 +1,4 @@
+
 workshopicon
 {
 	width: 200px;
@@ -43,17 +44,29 @@ workshopicon name
 	text-align: left;
 	background-color: rgba( 255, 255, 255, 0.99 );
 	font-size: 14px;
-	padding: 2px 5px;
-	padding-bottom: 4px;
 	font-weight: bold;
 	letter-spacing: -1px;
 	z-index: 10;
+	font-family: "Arial";
+	color: #666;
+	height: 22px;
+}
+workshopicon name label
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 2px;
+
+	padding: 2px 0px 4px 2px;
 	cursor: pointer;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	font-family: "Arial";
-	color: #666;
+}
+workshopicon name.subscription label
+{
+	right: 24px;
 }
 
 workshopicon author, workshopicon votes, workshopicon size
@@ -143,8 +156,10 @@ workshopicon .checkbox
 	position: absolute;
 	top: 0px;
 	right: 0px;
-	margin: 3px 3px;
+	margin: 0;
 	z-index: 32;
+	height: 19px;
+	width: 19px;
 }
 
 workshopicon:hover description
