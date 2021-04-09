@@ -21,9 +21,9 @@
 				<li>&nbsp;</li>
 				<li class="sb_filters" ng-hide="CurrentGamemode != null">
 					<span ng-Tranny="'addons.sort_by'"></span><br/>
-					<input type="radio" name=gmsort" value="-(order)" ng-model="SVGMSort"/><label ng-Tranny="'gmsort_players'"></label><br>
-					<input type="radio" name=gmsort" value="-(num_servers)" ng-model="SVGMSort"/><label ng-Tranny="'gmsort_servers'"></label><br>
-					<input type="radio" name=gmsort" value="info.title" ng-model="SVGMSort"/><label ng-Tranny="'gmsort_name'"></label><br>
+					<input type="radio" name=gmsort" value="-(order)" ng-model="GMSort"/><label ng-Tranny="'gmsort_players'"></label><br>
+					<input type="radio" name=gmsort" value="-(num_servers)" ng-model="GMSort"/><label ng-Tranny="'gmsort_servers'"></label><br>
+					<input type="radio" name=gmsort" value="info.title" ng-model="GMSort"/><label ng-Tranny="'gmsort_name'"></label><br>
 					<span ng-Tranny="'addons.filter_by'"></span><br/>
 					<div ng-repeat="cat in GMCats">
 						<input type="checkbox" id="gmfltr_hide_{{cat}}" onclick="SwitchFilter( '{{cat}}', this )"/><label ng-Tranny="'gmfltr_hide_' + cat"></label>
@@ -42,8 +42,8 @@
 					<input type="checkbox" ng-model="SVFilterHasPly"/><label ng-Tranny="'svfltr_has_players'"></label><br>
 					<input type="checkbox" ng-model="SVFilterHidePass"/><label ng-Tranny="'svfltr_no_password'"></label> <img class="passworded" src='img/server-passworded.png'/>
 
-					<div class="flags_filter" ng-show="CurrentGamemode.info.hasflags">
-						<img ng-repeat="(flag, whatever) in CurrentGamemode.info.flags" class="flag {{FilterFlagClass( flag )}}" src='asset://garrysmod/materials/flags16/{{flag}}.png' ng-click="FilterFlag( flag, this );" onerror="MissingFlag( this )"/>
+					<div class="flags_filter" ng-show="CurrentGamemode.hasflags">
+						<img ng-repeat="(flag, whatever) in CurrentGamemode.flags" class="flag {{FilterFlagClass( flag )}}" src='asset://garrysmod/materials/flags16/{{flag}}.png' ng-click="FilterFlag( flag, this );" onerror="MissingFlag( this )"/>
 					</div>
 				</li>
 			</ul>
@@ -59,7 +59,7 @@
 
 			<div class='server_gamemodes whiterounded scrollable'>
 
-				<div class='gamemode {{gamemode.element_class}}' ng-repeat="gamemode in GamemodeList | filter: gamemodeFilter | orderBy:[SVGMSort, '-(num_players)', 'name' ]" ng-click="SelectGamemode( gamemode )">
+				<div class='gamemode {{gamemode.element_class}}' ng-repeat="gamemode in GamemodeList | filter: gamemodeFilter | orderBy:[GMSort, '-(num_players)', 'name' ]" ng-click="SelectGamemode( gamemode )">
 
 					<img src='../gamemodes/{{gamemode.name}}/icon24.png' onerror="MissingGamemodeIcon( this )"/>
 

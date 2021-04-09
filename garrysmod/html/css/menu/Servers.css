@@ -143,8 +143,8 @@ H1 small
 
 .serverlist name tag.future
 {
-	background: #445994;
-	color: #fff;
+	background: #e6e6e6;
+	color: #000;
 }
 
 .serverlist name .passworded
@@ -514,6 +514,9 @@ SPAN.installgamemode:hover
 .gmfilter_rev
 {
 	cursor: hand;
+	vertical-align: middle;
+	margin-left: 3px;
+	margin-top: -2px;
 }
 
 .sb_filters
