@@ -124,7 +124,7 @@ end
 timer.Create( "menu_check_for_problems", 1, 0, function()
 
 	if ( math.floor( GetConVarNumber( "mat_hdr_level" ) ) != 2 ) then
-		FireProblem( { id = "hdr_off", text = "#problem.mat_hdr_level", type = "config", fix = function() print("da") RunConsoleCommand( "mat_hdr_level", "2" ) end } )
+		FireProblem( { id = "hdr_off", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end } )
 	else
 		ClearProblem( "hdr_off" )
 	end
