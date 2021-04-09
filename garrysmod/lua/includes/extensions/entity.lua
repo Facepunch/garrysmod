@@ -187,6 +187,7 @@ end
 function meta:InstallDataTable()
 
 	self.dt = {}
+	local typetable = {}
 	local datatable = {}
 	local keytable = {}
 	local meta = {}
@@ -209,26 +210,57 @@ function meta:InstallDataTable()
 		dt.SetFunc( self, dt.index, value )
 
 	end
+	
+	local function FindUnusedIndex( typename )
+	
+		local tbl = typetable[ typename ]
+		if ( !tbl ) then return 0 end
+		
+		for i=0, 31 do
+			if ( !tbl[i] ) then return i end
+		end
+		
+	end
+	
+	self.IsDTVarSlotUsed = function( self, typename, index )
+	
+		local tbl = typetable[ typename ]
+		if ( !tbl || !tbl[index] ) then return false end
+		return true
+		
+	end
 
 	self.DTVar = function( ent, typename, index, name )
+
+		if ( isstring( index ) ) then
+			name = index
+			index = FindUnusedIndex( typename )
+		elseif ( !index && isstring( name ) ) then
+			index = FindUnusedIndex(typename)
+		end
 
 		local SetFunc = ent[ "SetDT" .. typename ]
 		local GetFunc = ent[ "GetDT" .. typename ]
 
 		if ( !SetFunc || !GetFunc ) then
-			MsgN( "Couldn't addvar " , name, " - type ", typename," is invalid!" )
+			MsgN( "Couldn't addvar ", name, " - type ", typename, " is invalid!" )
 			return
 		end
 
-		datatable[ name ] = {
+		local data = {
 			index = index,
+			name = name,
 			SetFunc = SetFunc,
 			GetFunc = GetFunc,
 			typename = typename,
 			Notify = {}
 		}
+		
+		typetable[ typename ] = typetable[ typename ] || {}
+		typetable[ typename ][ index ] = data
+		datatable[ name ] = data
 
-		return datatable[ name ]
+		return data
 
 	end
 
@@ -273,32 +305,40 @@ function meta:InstallDataTable()
 
 	local CallProxies = function( ent, tbl, name, oldval, newval )
 
-		for k, v in pairs( tbl ) do
-			v( ent, name, oldval, newval )
+		for i = 1, #tbl do
+			tbl[ i ]( ent, name, oldval, newval )
 		end
 
 	end
 
 	self.CallDTVarProxies = function( ent, typename, index, newVal )
-		for name, t in pairs( datatable ) do
-			if ( t.index == index && t.typename == typename ) then
-				CallProxies( ent, t.Notify, name, self.dt[ name ], newVal )
-				break
-			end
+		
+		local t = typetable[ typename ] && typetable[ typename ][ index ] || nil
+		if ( t ) then
+			CallProxies( ent, t.Notify, t.name, t.GetFunc( ent, index ), newVal )
 		end
+		
 	end
 
 	self.NetworkVar = function( ent, typename, index, name, other_data )
 
+		if ( isstring( index ) ) then
+			other_data = name
+			name = index
+			index = FindUnusedIndex( typename )
+		elseif ( !index && isstring( name ) ) then
+			index = FindUnusedIndex( typename )
+		end
+
 		local t = ent.DTVar( ent, typename, index, name )
 
 		ent[ "Set" .. name ] = function( self, value )
-			CallProxies( ent, t.Notify, name, self.dt[ name ], value )
-			self.dt[ name ] = value
+			CallProxies( ent, t.Notify, name, t.GetFunc( self, index ), value )
+			t.SetFunc( self, index, value )
 		end
 
 		ent[ "Get" .. name ] = function( self )
-			return self.dt[ name ]
+			return t.GetFunc( self, index )
 		end
 
 		if ( !other_data ) then return end
@@ -330,17 +370,26 @@ function meta:InstallDataTable()
 	--
 	self.NetworkVarElement = function( ent, typename, index, element, name, other_data )
 
-		local datatab = ent.DTVar( ent, typename, index, name, keyname )
-		datatab.element = element
+		if ( isstring( index ) ) then
+			other_data = name
+			name = element
+			element = index
+			index = FindUnusedIndex( typename )
+		elseif ( !index && isstring( name ) ) then
+			index = FindUnusedIndex( typename )
+		end
+
+		local t = ent.DTVar( ent, typename, index, name )
+		t.element = element
 
 		ent[ "Set" .. name ] = function( self, value )
-			local old = self.dt[ name ]
+			local old = t.GetFunc( self, index )
 			old[ element ] = value
-			self.dt[ name ] = old
+			t.SetFunc( self, index, old )
 		end
 
 		ent[ "Get" .. name ] = function( self )
-			return self.dt[ name ][ element ]
+			return t.GetFunc( self, index )[ element ]
 		end
 
 		if ( !other_data ) then return end
