@@ -70,6 +70,15 @@ function gmsave.LoadMap( strMapContents, ply, callback )
 			gmsave.PlayerLoad( ply, tab.Player )
 		end
 
+		-- Since this save system is inferior to Source's, we gotta make sure this entity is disabled on load of a save
+		-- On maps like Portal's testchmb_a_00.bsp this entity takes away player control and will not restore it
+		-- if the player is not in a very specific place.
+		timer.Simple( 1, function()
+			for id, ent in ipairs( ents.FindByClass( "point_viewcontrol" ) ) do
+				ent:Fire( "Disable" )
+			end
+		end )
+
 		if ( callback ) then callback() end
 
 	end )

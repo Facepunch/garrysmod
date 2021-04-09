@@ -58,6 +58,26 @@ if ( SERVER ) then
 
 	end, nil, "", { FCVAR_DONTRECORD } )
 
+	local function LoadGModSave( savedata )
+
+		-- If we loaded the save from main menu and the player entity is not ready yet
+		if ( game.SinglePlayer() && !IsValid( Entity( 1 ) ) ) then
+
+			timer.Create( "LoadGModSave_WaitForPlayer", 0.1, 0, function()
+				if ( !IsValid( Entity( 1 ) ) ) then return end
+
+				timer.Destroy( "LoadGModSave_WaitForPlayer" )
+				LoadGModSave( savedata )
+			end )
+
+			return
+
+		end
+
+		gmsave.LoadMap( savedata, game.SinglePlayer() && Entity( 1 ) || nil )
+
+	end
+
 	hook.Add( "LoadGModSave", "LoadGModSave", function( savedata, mapname, maptime )
 
 		savedata = util.Decompress( savedata )
@@ -67,7 +87,7 @@ if ( SERVER ) then
 			return
 		end
 
-		gmsave.LoadMap( savedata, game.SinglePlayer() && Entity( 1 ) || nil )
+		LoadGModSave( savedata )
 
 	end )
 
