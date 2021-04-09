@@ -89,13 +89,13 @@ function WorkshopFileBase( namespace, requiredtags )
 			-- Search for tags
 			local found = true
 			for id, tag in pairs( tags ) do
-				if ( !item.tags:lower():find( tag ) ) then found = false end
+				if ( !item.tags:lower():find( tag, 1, true ) ) then found = false end
 			end
 			if ( !found ) then continue end
 
 			-- Search for searchText
 			if ( searchText:Trim() != "" ) then
-				if ( !item.title:lower():find( searchText:lower() ) ) then continue end
+				if ( !item.title:lower():find( searchText:lower(), 1, true ) ) then continue end
 			end
 
 			if ( filter && filter == "enabledonly" ) then
