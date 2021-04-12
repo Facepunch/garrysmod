@@ -95,7 +95,7 @@ end
 function SetDoubleThickness( thickness )
 
 	local old_thickness = OutlineThickness == 2
-	OutlineThickness = thickness and 2 or 1
+	OutlineThickness = thickness && 2 || 1
 	
 	return old_thickness
 	
@@ -140,7 +140,7 @@ local function Render()
 				
 				if ( mode == OUTLINE_MODE_BOTH || mode == OUTLINE_MODE_VISIBLE ) then
 					
-					render.SetStencilZFailOperation( mode == OUTLINE_MODE_BOTH and STENCIL_REPLACE or STENCIL_KEEP )
+					render.SetStencilZFailOperation( mode == OUTLINE_MODE_BOTH && STENCIL_REPLACE || STENCIL_KEEP )
 					render.SetStencilPassOperation( STENCIL_REPLACE )
 					
 					for j = 1, #ents do
