@@ -24,7 +24,7 @@ function PANEL:Init()
 		if ( !self.Problem ) then return end
 
 		local prepend = ""
-		if ( self.Problem.title && self.Problem.title:len() > 0 ) then prepend = "[" .. self.Problem.title .. "] " end
+		if ( self.Problem.title && self.Problem.title:len() > 0 && self.Problem.title != "Other" ) then prepend = "[" .. self.Problem.title .. "] " end
 		SetClipboardText( prepend .. self.Problem.text )
 	end
 
@@ -96,6 +96,8 @@ end
 
 vgui.Register( "LuaProblem", PANEL, "Panel" )
 
+--[[ ////////////////////////////////////////////////// GROUP ////////////////////////////////////////////////// ]] --
+
 local PANEL = {}
 
 local arrowMat = Material( "gui/point.png" )
@@ -110,6 +112,11 @@ function PANEL:Init()
 	self.ErrorPanels = {}
 
 	self.LuaErrorList = self:Add( "Panel" )
+
+	self.ClearButton = self:Add( "DImageButton" )
+	self.ClearButton:SetImage( "gui/cross.png" )
+	self.ClearButton:SetSize( 18, 18 )
+	self.ClearButton.DoClick = function( s ) self:ClearThisGroup() end
 
 	self.Collapsed = false
 
@@ -127,7 +134,7 @@ function PANEL:Paint( w, h )
 
 	surface.SetMaterial( arrowMat )
 	surface.SetDrawColor( white )
-	surface.DrawTexturedRectRotated( w - 20, 20, 20, 20, self.Collapsed && 180 || 0 )
+	surface.DrawTexturedRectRotated( w - 20, 18, 20, 12, self.Collapsed && 180 || 0 )
 
 	local h2 = self.LuaErrorList:GetTall()
 	local _, lY = self.LuaErrorList:GetPos()
@@ -136,7 +143,15 @@ function PANEL:Paint( w, h )
 
 end
 
-function PANEL:OnMousePressed()
+function PANEL:ClearThisGroup()
+
+	ClearLuaErrorGroup( self.GroupID )
+
+end
+
+function PANEL:OnMousePressed( code )
+
+	if ( code != MOUSE_LEFT ) then return end
 
 	self.Collapsed = !self.Collapsed
 	self:InvalidateLayout()
@@ -147,7 +162,7 @@ end
 
 function PANEL:GetExplainerText()
 
-	if ( self.Title == "Other" ) then
+	if ( self.Title == "Other" && self.AddonID && self.AddonID:len() < 2 ) then
 		return language.GetPhrase( "problems.generic_lua_error" )
 	end
 
@@ -160,10 +175,11 @@ function PANEL:GetExplainerText()
 
 end
 
-function PANEL:SetTitleAndID( title, id )
+function PANEL:SetTitleAndID( title, id, groupid )
 
 	self.Title = title
 	self.AddonID = id
+	self.GroupID = groupid
 
 	self.Collapsed = collapsedCache[ self.Title ]
 
@@ -192,6 +208,8 @@ function PANEL:SetTitleAndID( title, id )
 end
 
 function PANEL:PerformLayout( w, h )
+
+	self.ClearButton:SetPos( w - 56, 9 )
 
 	self.LuaErrorList:InvalidateLayout( true )
 	self.LuaErrorList:SizeToChildren( false, true )

@@ -82,14 +82,11 @@ function PANEL:ReceivedError( uid, err )
 
 	if ( IsValid( self.NoErrorsLabel ) ) then self.NoErrorsLabel:Remove() end
 
-	-- Can't be just one of these
-	-- TODO: 2 floating addons with the same name will have the same ID of 0
-	local groupID = err.title .. "-" .. err.addonid
-
+	local groupID = err.type or "Other"
 	local pnl = self.ErrorPanels[ groupID ]
 	if ( !IsValid( pnl ) ) then
 		pnl = self.LuaErrorList:Add( "LuaProblemGroup" )
-		pnl:SetTitleAndID( err.title, err.addonid )
+		pnl:SetTitleAndID( err.title, err.addonid, groupID )
 		self.ErrorPanels[ groupID ] = pnl
 
 		-- Sort

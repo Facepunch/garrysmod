@@ -7,25 +7,7 @@ local ProblemSeverity = 0
 Problems = Problems or {}
 ErrorLog = ErrorLog or {}
 
-local function CountProb( severity, add )
-
-	ProblemsCount = ProblemsCount + ( add || 1 )
-	ProblemSeverity = math.max( severity, 1 )
-
-	if ( IsValid( pnlMainMenu ) ) then
-		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. tostring( severity > 0 ) .. ")" )
-	end
-end
-
-function ClearProblem( id )
-
-	if ( !Problems[ id ] ) then return end
-
-	Problems[ id ] = nil
-
-	CountProb( 0, -1 )
-	-- TODO: Recalc severity
-
+local function RefreshGenericProblemList()
 	if ( IsValid( ProblemsPanel ) ) then
 		ProblemsPanel.ProblemsList:Clear()
 		ProblemsPanel.ProblemPanels = {}
@@ -34,6 +16,75 @@ function ClearProblem( id )
 		end
 		ProblemsPanel:InvalidateLayout()
 	end
+end
+
+local function RefreshLuaErrorList()
+	if ( IsValid( ProblemsPanel ) ) then
+		ProblemsPanel.LuaErrorList:Clear()
+		ProblemsPanel.ErrorPanels = {}
+		for id, err in pairs( ErrorLog ) do
+			ProblemsPanel:ReceivedError( id, err )
+		end
+		ProblemsPanel:InvalidateLayout()
+	end
+end
+
+local function CountProblem( severity )
+
+	ProblemsCount = ProblemsCount + 1
+	ProblemSeverity = math.max( ProblemSeverity, severity || 0 )
+
+	if ( IsValid( pnlMainMenu ) ) then
+		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. tostring( ProblemSeverity > 0 ) .. ")" )
+	end
+
+end
+
+local function RecountProblems()
+
+	ProblemsCount = 0
+	ProblemSeverity = 0
+
+	for id, err in pairs( ErrorLog ) do
+		ProblemsCount = ProblemsCount + 1
+		ProblemSeverity = math.max( err.severity || 0, ProblemSeverity )
+	end
+
+	for id, prob in pairs( Problems ) do
+		ProblemsCount = ProblemsCount + 1
+		ProblemSeverity = math.max( prob.severity || 0, ProblemSeverity )
+	end
+
+	if ( IsValid( pnlMainMenu ) ) then
+		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. tostring( ProblemSeverity > 0 ) .. ")" )
+	end
+
+end
+
+function ClearLuaErrorGroup( group_id )
+
+	-- pairs should guard us against changing the array we are looping through
+	for id, err in pairs( ErrorLog ) do
+		if ( err.type == group_id ) then
+			ErrorLog[ id ] = nil
+		end
+	end
+
+	RecountProblems()
+
+	RefreshLuaErrorList()
+
+end
+
+function ClearProblem( id )
+
+	if ( !Problems[ id ] ) then return end
+
+	Problems[ id ] = nil
+
+	RecountProblems()
+
+	RefreshGenericProblemList()
 
 end
 
@@ -42,7 +93,7 @@ function FireProblem( prob )
 	local probID = prob.id || prob.text
 
 	if ( !Problems[ probID ] ) then
-		CountProb( prob.severity || 0 )
+		CountProblem( prob.severity )
 	end
 
 	Problems[ probID ] = prob
@@ -67,17 +118,20 @@ local function FireError( str, realm, stack, addontitle, addonid )
 	if ( !addontitle || addontitle == "" ) then addontitle = "Other" end
 
 	if ( !ErrorLog[ errorUniqueID ] ) then
-		ErrorLog[ errorUniqueID ] = {
+		local newErr = {
 			text = errorText,
 			realm = realm,
 			addonid = addonid or "",
 			title = addontitle,
 			count = 1,
+			severity = 1,
 			lastOccurence = SysTime(),
 			firstOccurence = SysTime()
 		}
+		newErr.type = newErr.title .. "-" .. newErr.addonid
 
-		CountProb( 1 )
+		CountProblem( newErr.severity )
+		ErrorLog[ errorUniqueID ] = newErr
 	else
 		ErrorLog[ errorUniqueID ].count = ErrorLog[ errorUniqueID ].count + 1
 		ErrorLog[ errorUniqueID ].lastOccurence = SysTime()
@@ -94,7 +148,7 @@ hook.Add( "OnLuaError", "MenuErrorLogger", function( str, realm, stack, addontit
 	end )
 
 	if ( !good ) then
-		print( "Failed to list a Lua error!\n", err)
+		print( "Failed to log a Lua error!\n", err)
 	end
 
 end )
@@ -163,7 +217,7 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 		ClearProblem( "cl_speeds" )
 	end
 
-	if ( render.GetDXLevel() < 95 ) then
+	if ( render.GetDXLevel() != 95 && render.GetDXLevel() != 90 ) then
 		FireProblem( { id = "dxlevel", text = language.GetPhrase("problem.mat_dxlevel"):format( render.GetDXLevel() ), type = "config" } )
 	else
 		ClearProblem( "dxlevel" )
