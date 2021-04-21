@@ -17,6 +17,15 @@ local function CountProb( severity, add )
 	end
 end
 
+function SetProblems(count, severity)
+	ProblemsCount = count or 0
+	ProblemSeverity = math.max( severity, 1 )
+
+	if ( IsValid( pnlMainMenu ) ) then
+		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. tostring( ProblemSeverity > 0 ) .. ")" )
+	end
+end
+
 function ClearProblem( id )
 
 	if ( !Problems[ id ] ) then return end
