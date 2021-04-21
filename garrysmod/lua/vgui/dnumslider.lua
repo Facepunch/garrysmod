@@ -62,6 +62,8 @@ end
 
 function PANEL:ApplySchemeSettings()
 
+	self.Label:ApplySchemeSettings()
+
 	-- Copy the color of the label to the slider notches and the text entry
 	local col = self.Label:GetTextStyleColor()
 	if ( self.Label:GetTextColor() ) then col = self.Label:GetTextColor() end
