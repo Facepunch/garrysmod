@@ -39,20 +39,20 @@ function PANEL:Init()
 	self.ProblemsList = problemsList
 
 	-- Clear button
-	ProblemsFrame.btnClear = ProblemsFrame:Add("DButton")
-	ProblemsFrame.btnClear:SetPos(ProblemsFrame.btnMaxim:GetPos())
+	ProblemsFrame.btnClear = ProblemsFrame:Add( "DButton" )
+	ProblemsFrame.btnClear:SetPos( ProblemsFrame.btnMaxim:GetPos() )
 	ProblemsFrame.btnClear.X = ProblemsFrame.btnClear.X - 4
 	ProblemsFrame.btnClear.Y = ProblemsFrame.btnClear.Y + 3
-	ProblemsFrame.btnClear:SetText("Clear")
+	ProblemsFrame.btnClear:SetText( "Clear" )
 	ProblemsFrame.btnClear:SizeToContents()
 	ProblemsFrame.btnClear:MoveToFront()
 	ProblemsFrame.btnClear.DoClick = function()
 		ErrorLog = {}
-		SetProblems(table.Count(Problems), 0)
+		SetProblems( table.Count(Problems), 0 )
 
-		for i, child in ipairs(self.LuaErrorList:GetCanvas():GetChildren()) do child:Remove() end
+		for i, child in ipairs( self.LuaErrorList:GetCanvas():GetChildren() ) do child:Remove() end
 
-		self.NoErrorsLabel = self:AddEmptyWarning("#problems.no_lua_errors", self.LuaErrorList)
+		self.NoErrorsLabel = self:AddEmptyWarning( "#problems.no_lua_errors", self.LuaErrorList )
 	end
 
 	ProblemsFrame.btnClose:MoveToFront()
