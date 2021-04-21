@@ -269,8 +269,8 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 		if ( $scope.GMSearch )
 		{
 			var found = false;
-			if ( gm.name.toLowerCase().indexOf( $scope.GMSearch ) != -1 ) found = true;
-			if ( !found && gm.info && gm.info.title.toLowerCase().indexOf( $scope.GMSearch ) != -1 ) found = true;
+			if ( gm.name.toLowerCase().indexOf( $scope.GMSearch.toLowerCase() ) != -1 ) found = true;
+			if ( !found && gm.info && gm.info.title.toLowerCase().indexOf( $scope.GMSearch.toLowerCase() ) != -1 ) found = true;
 			if ( !found ) return false;
 		}
 
