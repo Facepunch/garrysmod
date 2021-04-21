@@ -2,6 +2,7 @@
 include( "background.lua" )
 include( "cef_credits.lua" )
 include( "openurl.lua" )
+include( "askconnect.lua" )
 include( "ugcpublish.lua" )
 
 pnlMainMenu = nil

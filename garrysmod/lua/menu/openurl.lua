@@ -46,8 +46,6 @@ PANEL.Base = "DFrame"
 
 function PANEL:Init()
 
-	self.Type = "openurl"
-
 	self:SetTitle( "#openurl.title" )
 
 	self.Garble = vgui.Create( "DLabel", self )
@@ -103,30 +101,7 @@ function PANEL:Init()
 
 end
 
-function PANEL:LoadServerInfo()
-	self.CustomPanel:SetVisible( true )
-	self.CustomPanel:SetText( "Loading server info..." )
-	self.CustomPanel:SizeToContents()
-
-	serverlist.PingServer( self:GetURL(), function( ping, name, desc, map, players, maxplayers, bot, pass, lp, ip, gamemode )
-		if ( !IsValid( self ) ) then return end
-	
-		if ( !ping ) then
-			self.CustomPanel.Color = Color( 200, 50, 50 )
-			self.CustomPanel:SetText( "#askconnect.no_response" )
-		else
-			self.CustomPanel:SetText( string.format( "%s\n%i/%i players | %s | %s | %ims", name, players, maxplayers, map, desc, ping ) )
-		end
-		self.CustomPanel:SizeToContents()
-	end )
-end
-
 function PANEL:AlwaysThink()
-	-- Ping the server for details
-	if ( SysTime() - self.StartTime > 0.1 && self.Type == "askconnect" && !self.CustomPanel:IsVisible() ) then
-		self:LoadServerInfo()
-	end
-
 	if ( self.StartTime + 1 > SysTime() ) then
 		return
 	end
@@ -175,18 +150,7 @@ function PANEL:DoYes()
 end
 
 function PANEL:DoYesAction()
-	if ( self.Type == "openurl" ) then
-		gui.OpenURL( self.URL:GetText() )
-	elseif ( self.Type == "askconnect" ) then
-		JoinServer( self.URL:GetText() )
-	end
-end
-
-function PANEL:SetType( t )
-	self.Type = t
-
-	self:SetTitle( "#" .. t .. ".title" )
-	self.Garble:SetText( "#" .. t .. ".text" )
+	gui.OpenURL( self.URL:GetText() )
 end
 
 local PanelInst = nil
@@ -195,7 +159,6 @@ local function OpenConfirmationDialog( address, confirm_type )
 	if ( IsValid( PanelInst ) && PanelInst:GetURL() == address ) then return end
 	if ( !IsValid( PanelInst ) ) then PanelInst = vgui.CreateFromTable( PANEL ) end
 
-	PanelInst:SetType( confirm_type )
 	PanelInst:SetURL( address )
 
 	timer.Simple( 0, function()
@@ -210,12 +173,3 @@ function RequestOpenURL( url )
 	OpenConfirmationDialog( url, "openurl" )
 
 end
-
--- Called from the engine
-function RequestConnectToServer( serverip )
-
-	OpenConfirmationDialog( serverip, "askconnect" )
-
-end
-
-
