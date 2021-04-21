@@ -29,16 +29,35 @@ function PANEL:Init()
 	-- Lua errors
 	local luaErrorList = ProblemsFrame:Add( "DScrollPanel" )
 	sheet:AddSheet( "#problems.lua_errors", luaErrorList, "icon16/error.png" )
+	luaErrorList.IsErrorList = true
 	self.LuaErrorList = luaErrorList
 
 	-- Generic problems
 	local problemsList = ProblemsFrame:Add( "DScrollPanel" )
 	sheet:AddSheet( "#problems.problems", problemsList, "icon16/tick.png" )
+	problemsList.IsProblemsList = true
 	self.ProblemsList = problemsList
 
+	-- Clear button
+	ProblemsFrame.btnClear = ProblemsFrame:Add("DButton")
+	ProblemsFrame.btnClear:SetPos(ProblemsFrame.btnMaxim:GetPos())
+	ProblemsFrame.btnClear.X = ProblemsFrame.btnClear.X - 4
+	ProblemsFrame.btnClear.Y = ProblemsFrame.btnClear.Y + 3
+	ProblemsFrame.btnClear:SetText("Clear")
+	ProblemsFrame.btnClear:SizeToContents()
+	ProblemsFrame.btnClear:MoveToFront()
+	ProblemsFrame.btnClear.DoClick = function()
+		ErrorLog = {}
+		SetProblems(table.Count(Problems), 0)
+
+		for i, child in ipairs(self.LuaErrorList:GetCanvas():GetChildren()) do child:Remove() end
+
+		self.NoErrorsLabel = self:AddEmptyWarning("#problems.no_lua_errors", self.LuaErrorList)
+	end
+
 	ProblemsFrame.btnClose:MoveToFront()
-	ProblemsFrame.btnMaxim:MoveToFront()
-	ProblemsFrame.btnMinim:MoveToFront()
+	ProblemsFrame.btnMaxim:Hide()
+	ProblemsFrame.btnMinim:Hide()
 
 end
 
