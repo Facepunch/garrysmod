@@ -450,8 +450,6 @@ function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 	Phys1:Wake()
 	Phys2:Wake()
 
-	_G.C = Constraint
-
 	return Constraint
 
 end
