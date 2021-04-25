@@ -69,13 +69,10 @@ local function parseAddress(serverip)
 	return 1, Host, Port
 end
 local function writeWhitelist(newWhitelist)
-	PrintTable(newWhitelist)
 	-- TODO: Protect this filepath, or maybe write to a different directory where only the menu Context can write
 	local f = file.Open(_whitelistFilePath, "wb", _whitelistDir)
 	if ( !f ) then MsgN("FAILED WRITING WHITELIST") return false end
 	f:Write(util.TableToJSON(newWhitelist))
-	MsgN("writing to file")
-	MsgN(util.TableToJSON(newWhitelist))
 	f:Close()
 	return true
 end
@@ -88,8 +85,6 @@ local function readWhitelist()
 		f:Close()
 		if ( !str ) then str = "" end
 		whitelist = util.JSONToTable(str)
-		MsgN("Read Whitelist File")
-		PrintTable(whitelist)
 	end
 	return whitelist
 end
@@ -105,7 +100,7 @@ local function getEntryForAddress( address )
 			if #HostParts > 2 then -- if we have a subdomain, lets just take the domain+tld itself
 				Domain = HostParts[ #HostParts - 1 ] .. "." .. HostParts[ #HostParts ]
 			end
-			return Domain .. ":" .. Port
+			return Domain
 		else -- if IPv4
 			return Host .. ":" .. Port
 		end
