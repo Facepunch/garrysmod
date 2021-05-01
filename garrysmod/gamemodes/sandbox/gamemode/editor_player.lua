@@ -115,6 +115,33 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		local bgtab = sheet:AddSheet( "#smwidget.bodygroups", bdcontrols, "icon16/cog.png" )
 
+		local animPanel = window:Add( "DPanel" )
+		animPanel:DockPadding( 8, 8, 8, 8 )
+
+		local animcontrolspanel = animPanel:Add( "DScrollPanel" )
+		animcontrolspanel:Dock( FILL )
+
+		local animsTable = {
+			"idle_all_scared",
+			"menu_gman",
+			"menu_zombie_01",
+			"menu_combine",
+			"pose_standing_02",
+		}
+
+		for v, n in pairs( animsTable ) do
+			local an = animcontrolspanel:Add( "DButton" )
+			an:Dock( TOP )
+			an:SetText( n )
+			an.DoClick = function()
+				local act = mdl:GetEntity():LookupSequence( n )
+
+				mdl:GetEntity():SetSequence( act )
+			end
+		end
+
+		sheet:AddSheet( "Animations", animPanel, "icon16/emoticon_tongue.png" )
+
 		-- Helper functions
 
 		local function MakeNiceName( str )
