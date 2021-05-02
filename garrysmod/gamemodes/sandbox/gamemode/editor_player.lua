@@ -129,7 +129,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			"pose_standing_02",
 		}
 
-		for v, n in pairs( animsTable ) do
+		for v, n in ipairs( animsTable ) do
 			local an = animcontrolspanel:Add( "DButton" )
 			an:Dock( TOP )
 			an:SetText( n )
