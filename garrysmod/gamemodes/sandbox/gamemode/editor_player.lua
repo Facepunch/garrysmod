@@ -121,7 +121,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		local animcontrolspanel = animPanel:Add( "DScrollPanel" )
 		animcontrolspanel:Dock( FILL )
 
-		for v, n in pairs( LocalPlayer():GetSequenceList() ) do
+		for v, n in ipairs( LocalPlayer():GetSequenceList() ) do
 			local an = animcontrolspanel:Add( "DButton" )
 			an:Dock( TOP )
 			an:SetText( n )
