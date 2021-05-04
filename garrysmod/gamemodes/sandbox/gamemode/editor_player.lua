@@ -121,15 +121,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		local animcontrolspanel = animPanel:Add( "DScrollPanel" )
 		animcontrolspanel:Dock( FILL )
 
-		local animsTable = {
-			"idle_all_scared",
-			"menu_gman",
-			"menu_zombie_01",
-			"menu_combine",
-			"pose_standing_02",
-		}
-
-		for v, n in ipairs( animsTable ) do
+		for v, n in pairs( LocalPlayer():GetSequenceList() ) do
 			local an = animcontrolspanel:Add( "DButton" )
 			an:Dock( TOP )
 			an:SetText( n )
