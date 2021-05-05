@@ -27,8 +27,7 @@ function meta:__index( key )
 	--
 	local tab = entity.GetTable( self )
 	if ( tab ) then
-		local val = tab[ key ]
-		if ( val != nil ) then return val end
+		return tab[ key ]
 	end
 
 	return nil
