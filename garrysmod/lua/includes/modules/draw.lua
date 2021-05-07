@@ -179,7 +179,9 @@ end
 -----------------------------------------------------------]]
 function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
 
-	surface.SetDrawColor( color.r, color.g, color.b, color.a )
+	if ( color ) then
+		surface.SetDrawColor( color.r, color.g, color.b, color.a )
+	end
 
 	-- Do not waste performance if they don't want rounded corners
 	if ( bordersize <= 0 ) then
