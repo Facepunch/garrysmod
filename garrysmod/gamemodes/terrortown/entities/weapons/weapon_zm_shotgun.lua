@@ -169,8 +169,10 @@ function SWEP:GetHeadshotMultiplier(victim, dmginfo)
    local dist = victim:GetPos():Distance(att:GetPos())
    local d = math.max(0, dist - 140)
 
-   -- decay from 3.1 to 1 slowly as distance increases
-   return 1 + math.max(0, (2.1 - 0.002 * (d ^ 1.25)))
+   -- Decay from 2 to 1 slowly as distance increases. Note that this used to be
+   -- 3+, but at that time shotgun bullets were treated like in HL2 where half
+   -- of them were hull traces that could not headshot.
+   return 1 + math.max(0, (1.0 - 0.002 * (d ^ 1.25)))
 end
 
 function SWEP:SecondaryAttack()
