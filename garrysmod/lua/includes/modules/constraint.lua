@@ -615,7 +615,7 @@ function Keepupright( Ent, Ang, Bone, angularlimit )
 	if ( Ent:GetClass() != "prop_physics" && Ent:GetClass() != "prop_ragdoll" ) then return false end
 	if ( !angularlimit or angularlimit < 0 ) then return end
 
-	local Phys = Ent:GetPhysicsObjectNum(Bone)
+	local Phys = Ent:GetPhysicsObjectNum( Bone )
 
 	-- Remove any KU's already on entity
 	RemoveConstraints( Ent, "Keepupright" )
@@ -1001,7 +1001,7 @@ local function MotorControl( pl, motor, onoff, dir )
 
 		motor:Fire( "Scale", dir ) -- This makes the direction change
 		motor:Fire( "Activate" ) -- Turn on the motor
-	
+
 	else
 
 		-- Turn off the motor, mimicking the wheel tool
