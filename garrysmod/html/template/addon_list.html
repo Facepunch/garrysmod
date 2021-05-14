@@ -58,6 +58,7 @@
 
 				<preview style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
 					<img src='../{{file.background || "img/downloading.png"}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
+					<disabled></disabled>
 				</preview>
 
 				<name class="{{IfElse( Category == 'subscribed', 'subscription', '' )}}">
@@ -68,7 +69,7 @@
 				<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" >+{{file.info.up-file.info.down|number:0}}</votes>
 				<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" class="negative">{{file.info.up-file.info.down|number:0}}</votes>
 				<description>{{GetAddonDescription( file )}}</description>
-				<input type="checkbox" class="checkbox" ng-show="Category == 'subscribed'" ng-model="SelectedItems[ file.id ]" />
+				<input type="checkbox" class="checkbox" ng-show="(Category == 'subscribed') && !file.info.floating" ng-model="SelectedItems[ file.id ]" />
 
 				<controls ng-show="!file.info.floating">
 					<left>
@@ -128,14 +129,19 @@
 				</div>
 				<div ng-show="IsAnySelected()">
 					<a ng-click="UnselectAll()" ng-Tranny="'addons.unselectall'"></a>
-					<a ng-click="EnableAllSelected();/*DisplayPopupMessage( 'addons.enable_selected.warning', EnableAllSelected )*/" ng-Tranny="'addons.enable_selected'"></a>
-					<a ng-click="DisableAllSelected(); /*DisplayPopupMessage( 'addons.disable_selected.warning', DisableAllSelected )*/" ng-Tranny="'addons.disable_selected'"></a>
+					<a ng-click="EnableAllSelected();" ng-Tranny="'addons.enable_selected'"></a>
+					<a ng-click="DisableAllSelected();" ng-Tranny="'addons.disable_selected'"></a>
 					<a ng-click="DisplayPopupMessage( 'addons.uninstall_selected.warning', UninstallAllSelected )" ng-Tranny="'addons.uninstall_selected'"></a>
 				</div>
 			</div>
 			<div class="ugc_settings_cat"><!--<span>Presets:</span>-->
 				<a ng-click="OpenCreatePresetMenu()" ng-Tranny="'addons.create_preset'"></a>
 				<a ng-click="OpenLoadPresetMenu()" ng-Tranny="'addons.load_preset'"></a>
+			</div>
+			
+			<div class="ugc_settings_cat"><!--<span>Stats:</span>-->
+				<span><font ng-Tranny="'addons.total_subscriptions'"></font> {{GetSubscribedCount()}}</span>
+				<span><font ng-Tranny="'addons.total_selected'"></font>  {{GetSelectedCount()}}</span>
 			</div>
 		</div>
 	</div>

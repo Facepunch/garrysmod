@@ -177,17 +177,37 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	}
 	$scope.SelectAllPage = function()
 	{
-		for ( var k in $scope.Files ) $scope.SelectedItems[ $scope.Files[ k ].id ] = true;
+		$scope.UnselectAll(); // Unselect items that might be not in $scope.Files
+
+		for ( var k in $scope.Files )
+		{
+			$scope.SelectedItems[ $scope.Files[ k ].id ] = true;
+		}
 	}
 	$scope.SelectAll = function()
 	{
+		$scope.UnselectAll(); // Unselect items that might be not in $scope.FilesOther
+
+		if ( !$scope.FilesOther ) return;
+
+		for ( var k in $scope.FilesOther )
+		{
+			var wsid = $scope.FilesOther[ k ];
+			if ( parseInt( wsid ) < 1 ) continue;
+			$scope.SelectedItems[ wsid ] = true;
+		}
+	}
+	$scope.SelectAllSubs = function()
+	{
+		$scope.UnselectAll(); // Unselect items that might be not in subscriptions.GetAll()
+
 		for ( var k in subscriptions.GetAll() ) $scope.SelectedItems[ k ] = true;
 	}
 	$scope.EnableAllSelected = function()
 	{
 		for ( var k in $scope.SelectedItems )
 		{
-			if ( !$scope.SelectedItems[ k ] ) continue;
+			if ( !$scope.SelectedItems[ k ] || k < 1 ) continue;
 
 			subscriptions.SetShouldMountAddon( k, true );
 			$scope.SelectedItems[ k ] = false;
@@ -198,7 +218,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	{
 		for ( var k in $scope.SelectedItems )
 		{
-			if ( !$scope.SelectedItems[ k ] ) continue;
+			if ( !$scope.SelectedItems[ k ] || k < 1 ) continue;
 
 			subscriptions.SetShouldMountAddon( k, false );
 			$scope.SelectedItems[ k ] = false;
@@ -223,6 +243,21 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 			if ( $scope.SelectedItems[ k ] ) return true;
 		}
 		return false;
+	}
+	$scope.GetSelectedCount = function()
+	{
+		var i = 0;
+		for ( var k in $scope.SelectedItems )
+		{
+			if ( !$scope.SelectedItems[ k ] ) continue;
+
+			i++;
+		}
+		return i;
+	}
+	$scope.GetSubscribedCount = function()
+	{
+		return subscriptions.GetCount();
 	}
 
 	$scope.ToggleSettings = function()
@@ -338,6 +373,9 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 			classes.push( $scope.IsEnabled( file ) ? "installed" : "disabled" );
 			if ( subscriptions.GetInvalidReason( file.id ) ) classes.push( "invalid" );
 		}
+
+		if ( file.info && file.info.floating ) classes.push( "floating" );
+
 		return classes.join( " " );
 	}
 
