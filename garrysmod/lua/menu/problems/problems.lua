@@ -175,30 +175,46 @@ function OpenProblemsPanel()
 
 end
 
+-- Called from the engine to notify the player about a problem in a more user friendly way compared to a console message
+function FireProblemFromEngine( id )
+	if ( id == "menu_cleanupgmas" ) then
+		FireProblem( { id = id, text = "#problem." .. id, type = "addons", fix = function() RunConsoleCommand( "menu_cleanupgmas" ) ClearProblem( id ) end } )
+	else
+		-- missing_addon_file
+		FireProblem( { id = id, text = "#problem." .. id, type = "addons" } )
+	end
+end
+
 timer.Create( "menu_check_for_problems", 1, 0, function()
 
 	if ( math.floor( GetConVarNumber( "mat_hdr_level" ) ) != 2 ) then
-		FireProblem( { id = "hdr_off", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end } )
+		FireProblem( { id = "mat_hdr_level", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end } )
 	else
-		ClearProblem( "hdr_off" )
+		ClearProblem( "mat_hdr_level" )
 	end
 
 	if ( math.floor( math.abs( GetConVarNumber( "mat_bumpmap" ) ) ) == 0 ) then
-		FireProblem( { id = "bumpmap", text = "#problem.mat_bumpmap", type = "config", fix = function() RunConsoleCommand( "mat_bumpmap", "1" ) end } )
+		FireProblem( { id = "mat_bumpmap", text = "#problem.mat_bumpmap", type = "config", fix = function() RunConsoleCommand( "mat_bumpmap", "1" ) end } )
 	else
-		ClearProblem( "bumpmap" )
+		ClearProblem( "mat_bumpmap" )
+	end
+
+	if ( math.floor( math.abs( GetConVarNumber( "mat_specular" ) ) ) == 0 ) then
+		FireProblem( { id = "mat_specular", text = "#problem.mat_specular", type = "config", fix = function() RunConsoleCommand( "mat_specular", "1" ) end } )
+	else
+		ClearProblem( "mat_specular" )
 	end
 
 	if ( math.floor( math.abs( GetConVarNumber( "gmod_mcore_test" ) ) ) != 0 ) then
-		FireProblem( { id = "mcore", text = "#problem.gmod_mcore_test", type = "config" } )
+		FireProblem( { id = "gmod_mcore_test", text = "#problem.gmod_mcore_test", type = "config" } )
 	else
-		ClearProblem( "mcore" )
+		ClearProblem( "gmod_mcore_test" )
 	end
 
 	if ( math.abs( GetConVarNumber( "voice_fadeouttime" ) - 0.1 ) > 0.001 ) then
-		FireProblem( { id = "voice_fadeout", text = "#problem.voice_fadeouttime", type = "config", fix = function() RunConsoleCommand( "voice_fadeouttime", "0.1" ) end } )
+		FireProblem( { id = "voice_fadeouttime", text = "#problem.voice_fadeouttime", type = "config", fix = function() RunConsoleCommand( "voice_fadeouttime", "0.1" ) end } )
 	else
-		ClearProblem( "voice_fadeout" )
+		ClearProblem( "voice_fadeouttime" )
 	end
 
 	if ( ScrW() < 1000 || ScrH() < 700 ) then
@@ -207,6 +223,7 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 		ClearProblem( "screen_res" )
 	end
 
+	-- These are not saved, but still affect gameplay
 	if ( GetConVarNumber( "cl_forwardspeed" ) != 10000 || GetConVarNumber( "cl_sidespeed" ) != 10000 || GetConVarNumber( "cl_backspeed" ) != 10000 ) then
 		FireProblem( { id = "cl_speeds", text = "#problem.cl_speeds", type = "config", fix = function()
 			RunConsoleCommand( "cl_forwardspeed", "10000" )
@@ -218,9 +235,9 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 	end
 
 	if ( render.GetDXLevel() != 95 && render.GetDXLevel() != 90 ) then
-		FireProblem( { id = "dxlevel", text = language.GetPhrase("problem.mat_dxlevel"):format( render.GetDXLevel() ), type = "config" } )
+		FireProblem( { id = "mat_dxlevel", text = language.GetPhrase( "problem.mat_dxlevel" ):format( render.GetDXLevel() ), type = "config" } )
 	else
-		ClearProblem( "dxlevel" )
+		ClearProblem( "mat_dxlevel" )
 	end
 
 end )
