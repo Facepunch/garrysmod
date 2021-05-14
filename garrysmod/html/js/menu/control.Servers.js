@@ -334,8 +334,7 @@ function FormatVersion( ver )
 // Calculates the default server ranking
 function CalculateRank( server )
 {
-	var recommended = 40;
-	if ( server.ping >= 60 ) recommended = server.ping;
+	var recommended = server.ping;
 
 	if ( server.players == 0 ) recommended += 75; // Server is empty
 	if ( server.players >= server.maxplayers ) recommended += 100; // Server is full, can't join it
