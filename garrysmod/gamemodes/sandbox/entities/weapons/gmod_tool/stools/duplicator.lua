@@ -114,6 +114,8 @@ function TOOL:RightClick( trace )
 	--
 	net.Start( "CopiedDupe" )
 		net.WriteUInt( 1, 1 )
+		net.WriteVector( Dupe.Mins )
+		net.WriteVector( Dupe.Maxs )
 	net.Send( self:GetOwner() )
 
 	--
@@ -126,18 +128,19 @@ function TOOL:RightClick( trace )
 
 end
 
---[[---------------------------------------------------------
-	Builds the context menu
------------------------------------------------------------]]
-function TOOL.BuildCPanel( CPanel )
-
-	CPanel:AddControl( "Header", { Description = "#tool.duplicator.desc" } )
-
-	CPanel:AddControl( "Button", { Text = "#tool.duplicator.showsaves", Command = "dupe_show" } )
-
-end
 
 if ( CLIENT ) then
+
+	--
+	-- Builds the context menu
+	--
+	function TOOL.BuildCPanel( CPanel )
+
+		CPanel:AddControl( "Header", { Description = "#tool.duplicator.desc" } )
+
+		CPanel:AddControl( "Button", { Text = "#tool.duplicator.showsaves", Command = "dupe_show" } )
+
+	end
 
 	--
 	-- Received by the client to alert us that we have something copied
@@ -151,6 +154,37 @@ if ( CLIENT ) then
 			hook.Run( "DupeSaveUnavailable" )
 		end
 
+		local mins = net.ReadVector()
+		local maxs = net.ReadVector()
+
+		if ( !IsValid( LocalPlayer() ) ) then return end
+
+		local tool = LocalPlayer():GetTool( "duplicator" )
+		if ( tool ) then
+			tool.CurrentDupeMins = mins
+			tool.CurrentDupeMaxs = maxs
+		end
+
 	end )
+
+	-- This is not perfect, but let the player see roughly the outline of what they are about to paste
+	function TOOL:DrawHUD()
+
+		if ( !self.CurrentDupeMins || !self.CurrentDupeMaxs || !IsValid( LocalPlayer() ) ) then return end
+
+		local tr = LocalPlayer():GetEyeTrace()
+
+		local pos = tr.HitPos
+		pos.z = pos.z - self.CurrentDupeMins.z
+
+		local ang = LocalPlayer():GetAngles()
+		ang.p = 0
+		ang.r = 0
+
+		cam.Start3D()
+		render.DrawWireframeBox( pos, ang, self.CurrentDupeMins, self.CurrentDupeMaxs )
+		cam.End3D()
+
+	end
 
 end
