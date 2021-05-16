@@ -22,7 +22,7 @@ SWEP.WeaponID              = AMMO_SHOTGUN
 
 SWEP.Primary.Ammo          = "Buckshot"
 SWEP.Primary.Damage        = 11
-SWEP.Primary.Cone          = 0.085
+SWEP.Primary.Cone          = 0.082
 SWEP.Primary.Delay         = 0.8
 SWEP.Primary.ClipSize      = 8
 SWEP.Primary.ClipMax       = 24
@@ -52,7 +52,6 @@ end
 
 function SWEP:Reload()
 
-   --if self:GetNWBool( "reloading", false ) then return end
    if self:GetReloading() then return end
 
    if self:Clip1() < self.Primary.ClipSize and self:GetOwner():GetAmmoCount( self.Primary.Ammo ) > 0 then
@@ -65,7 +64,6 @@ function SWEP:Reload()
 end
 
 function SWEP:StartReload()
-   --if self:GetNWBool( "reloading", false ) then
    if self:GetReloading() then
       return false
    end
@@ -90,7 +88,6 @@ function SWEP:StartReload()
 
    self:SetReloadTimer(CurTime() + wep:SequenceDuration())
 
-   --wep:SetNWBool("reloading", true)
    self:SetReloading(true)
 
    return true
@@ -177,7 +174,6 @@ end
 
 function SWEP:SecondaryAttack()
    if self.NoSights or (not self.IronSightsPos) or self:GetReloading() then return end
-   --if self:GetNextSecondaryFire() > CurTime() then return end
 
    self:SetIronsights(not self:GetIronsights())
 
