@@ -164,16 +164,16 @@ function PANEL:RemoveChoiceID( index )
 	
 end
 
-function PANEL:RemoveChoiceName( value )
+function PANEL:RemoveChoiceName( name )
 
-	local id = table.KeyFromValue( self.Choices, value )
+	local id = table.KeyFromValue( self.Choices, name )
 	self:RemoveChoiceID( id or 0 )
 
 end
 
 function PANEL:RemoveChoiceData( data )
 
-	local id = table.KeyFromValue( self.Data, value )
+	local id = table.KeyFromValue( self.Data, data )
 	self:RemoveChoiceID( id or 0 )
 
 end
