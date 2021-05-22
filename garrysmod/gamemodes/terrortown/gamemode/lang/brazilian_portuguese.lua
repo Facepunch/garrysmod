@@ -690,7 +690,7 @@ L.tip11 = "Como Traidor ou Detetive, tenha em mente que você será recompensado
 
 L.tip12 = "O Scanner de DNA dos Detetives pode ser usado para coletar amostras de DNA de armas e itens. Então, o Detetive pode usar as amostras para descobrir quem os usou. Isso é útil quando você consegue coletar uma amostra de um cadáver ou de um C4 desarmado!"
 
-L.tip13 = "Quando você estiver perto de uma vítima ao mata-la, um pouco do seu DNA será deixado no cadáver da vítima. Esse DNA pode ser coletado por um Scanner de DNA de um Detetive para encontrar sua localização atual. Depois de esfaquear alguém, é melhor você esconder o cadáver da vítima!"
+L.tip13 = "Quando você estiver perto de uma vítima ao mata-la, um pouco do seu DNA será deixado no cadáver dela. Esse DNA pode ser coletado por um Scanner de DNA de um Detetive para encontrar sua localização atual. É melhor você esconder o cadáver da vítima depois de esfaqueá-la!"
 
 L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapidamente a amostra do seu DNA no cadáver da sua vítima irá se deteriorar."
 
