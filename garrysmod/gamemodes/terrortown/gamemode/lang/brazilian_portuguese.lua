@@ -1,6 +1,6 @@
 ---- Brazilian Portuguese language strings
 
-local L = LANG.CreateLanguage("Português brasileiro")
+local L = LANG.CreateLanguage("Português (Brasil)")
 
 --- General text used in various places
 L.traitor    = "Traidor"
@@ -202,7 +202,7 @@ L.search_dna    = "Recupere uma amostra do DNA do assassino utilizando um Scanne
 
 L.search_kills1 = "Você encontrou uma lista de assassinatos que comprovam a morte de {player}."
 L.search_kills2 = "Você encontrou uma lista de assassinatos com estes nomes:"
-L.search_eyes   = "Usando suas técnicas de detetive, você identificou a última pessoa que ele viu: {player}. O assassino, ou uma coincidência?"
+L.search_eyes   = "Usando suas técnicas de Detetive, você identificou a última pessoa que ele viu: {player}. O assassino, ou uma coincidência?"
 
 
 -- Scoreboard
@@ -365,7 +365,7 @@ L.decoy_broken    = "Sua Isca foi destruída!"
 L.decoy_help_pri  = "{primaryfire} planta a Isca."
 
 L.decoy_desc      = [[
-Mostra um sinal de radar falso para detetives,
+Mostra um sinal de radar falso para Detetives,
 e faz os Scanners de DNA deles indicar a
 localização da sua Isca se eles procurarem
 a amostra do seu DNA.]]
@@ -623,9 +623,9 @@ Em quem você pode confiar, e quem está por aí para te encher de balas?
 
 Tenha cuidado e trabalhe em conjunto com seus camaradas para saírem vivos dessa!]]
 
-L.info_popup_detective = [[Você é um Detetive! O QG de Terroristas disponibilizou recursos especiais para você encontrar os traidores.
+L.info_popup_detective = [[Você é um Detetive! O QG de Terroristas disponibilizou recursos especiais para você encontrar os Traidores.
 Use-os para ajudar os inocentes a sobreviver, mas tenha cuidado:
-os traidores podem querer que você bata as botas primeiro!
+os Traidores podem querer que você bata as botas primeiro!
 
 Pressione {menukey} para pegar seu equipamento!]]
 
@@ -838,205 +838,205 @@ L.ev_c4_disarm2  = "{player} falhou em desarmar o C4 de {owner}"
 L.ev_credit      = "{finder} achou {num} crédito(s) no cadáver de {player}"
 
 L.ev_start       = "A rodada começou"
-L.ev_win_traitor = "Os traidores covardes venceram a rodada!"
+L.ev_win_traitor = "Os Traidores covardes venceram a rodada!"
 L.ev_win_inno    = "Os adoráveis terroristas inocentes venceram a rodada!"
-L.ev_win_time    = "Os traidores ficaram sem tempo e perderam!"
+L.ev_win_time    = "Os Traidores ficaram sem tempo e perderam!"
 
 --- Awards/highlights
 
-L.aw_sui1_title = "Líder da Seita Suicida"
+L.aw_sui1_title = "LÍDER DA SEITA SUICIDA"
 L.aw_sui1_text  = "mostrou aos outros suicidas como as coisas funcionam sendo o primeiro a partir."
 
-L.aw_sui2_title = "Sozinho e Depressivo"
+L.aw_sui2_title = "SOZINHO E DEPRESSIVO"
 L.aw_sui2_text  = "foi o único que se matou."
 
-L.aw_exp1_title = "Bolsa para Pesquisa de Explosivos"
+L.aw_exp1_title = "BOLSA PARA PESQUISA DE EXPLOSIVOS"
 L.aw_exp1_text  = "foi reconhecido por sua pesquisa com explosivos. {num} cobaias o ajudaram."
 
-L.aw_exp2_title = "Pesquisa de Campo"
+L.aw_exp2_title = "PESQUISA DE CAMPO"
 L.aw_exp2_text  = "testou sua própria resistência a explosões. Não era alta o suficiente."
 
-L.aw_fst1_title = "First Blood"
-L.aw_fst1_text  = "entregou a primeira morte de um inocente nas mãos de um traidor."
+L.aw_fst1_title = "FIRST BLOOD"
+L.aw_fst1_text  = "entregou a primeira morte de um inocente nas mãos de um Traidor."
 
-L.aw_fst2_title = "First Blood Reverso"
-L.aw_fst2_text  = "marcou a primeira morte matando um traidor aliado. Bom trabalho."
+L.aw_fst2_title = "FIRST BLOOD REVERSO"
+L.aw_fst2_text  = "marcou a primeira morte matando um Traidor aliado. Bom trabalho."
 
-L.aw_fst3_title = "Ataque de Pânico"
+L.aw_fst3_title = "ATAQUE DE PÂNICO"
 L.aw_fst3_text  = "foi o primeiro a matar. Pena que era um camarada inocente."
 
-L.aw_fst4_title = "Tiro Certo"
-L.aw_fst4_text  = "foi o inocente que marcou a primeira morte matando um traidor."
+L.aw_fst4_title = "TIRO CERTO"
+L.aw_fst4_text  = "foi o inocente que marcou a primeira morte matando um Traidor."
 
-L.aw_all1_title = "Mais Mortal Entre Iguais"
+L.aw_all1_title = "MAIS MORTAL ENTRE IGUAIS"
 L.aw_all1_text  = "foi responsável por cada morte causada pelos inocentes nesta rodada."
 
-L.aw_all2_title = "Lobo Solitário"
-L.aw_all2_text  = "foi responsável por cada morte causada pelos traidores nesta rodada."
+L.aw_all2_title = "LOBO SOLITÁRIO"
+L.aw_all2_text  = "foi responsável por cada morte causada pelos Traidores nesta rodada."
 
-L.aw_nkt1_title = "Eu Peguei Um, Chefe!"
+L.aw_nkt1_title = "EU PEGUEI UM, CHEFE!"
 L.aw_nkt1_text  = "conseguiu matar apenas um inocente. Congratulações!"
 
-L.aw_nkt2_title = "Uma Bala Para Dois"
+L.aw_nkt2_title = "UMA BALA PARA DOIS"
 L.aw_nkt2_text  = "mostrou que a primeira vítima não foi alva de um tiro de sorte ao matar outra vítima com a mesma bala."
 
-L.aw_nkt3_title = "Traidor em Série"
+L.aw_nkt3_title = "TRAIDOR EM SÉRIE"
 L.aw_nkt3_text  = "acabou com três vidas inocentes de terrorismo hoje."
 
-L.aw_nkt4_title = "O Lobo entre Lobos que mais parecem Ovelhas"
+L.aw_nkt4_title = "O LOBO ENTRE LOBOS QUE MAIS PARECEM OVELHAS"
 L.aw_nkt4_text  = "comeu terroristas inocentes no jantar. Um jantar de {num} pratos."
 
-L.aw_nkt5_title = "Operação Contra-Terrorista"
+L.aw_nkt5_title = "OPERAÇÃO CONTRA-TERRORISTA"
 L.aw_nkt5_text  = "é pago por cada assassinato. Já pode comprar outro iate luxuoso."
 
-L.aw_nki1_title = "Traia Isso"
-L.aw_nki1_text  = "achou um traidor. Atirou num traidor. Fácil."
+L.aw_nki1_title = "TRAIA ISSO"
+L.aw_nki1_text  = "achou um Traidor. Atirou num Traidor. Fácil."
 
-L.aw_nki2_title = "Japonês da Federal"
-L.aw_nki2_text  = "escoltou dois traidores para o além."
+L.aw_nki2_title = "JAPONÊS DA FEDERAL"
+L.aw_nki2_text  = "escoltou dois Traidores para o além."
 
-L.aw_nki3_title = "Traidores Contam Carneirinhos?"
-L.aw_nki3_text  = "colocou três traidores para dormir."
+L.aw_nki3_title = "TRAIDORES CONTAM CARNEIRINHOS?"
+L.aw_nki3_text  = "colocou três Traidores para dormir."
 
-L.aw_nki4_title = "Funcionário de Assuntos Internos"
+L.aw_nki4_title = "FUNCIONÁRIO DE ASSUNTOS INTERNOS"
 L.aw_nki4_text  = "é pago por cada assassinato. Agora já pode comprar sua quinquagésima piscina olímpica."
 
-L.aw_fal1_title = "Não, Sr. Bond, espero que você caia"
+L.aw_fal1_title = "NÃO, SR. BOND, ESPERO QUE VOCÊ CAIA"
 L.aw_fal1_text  = "empurrou alguém de um lugar alto."
 
-L.aw_fal2_title = "Pavimentado"
+L.aw_fal2_title = "PAVIMENTADO"
 L.aw_fal2_text  = "deixou seu corpo bater no chão depois de cair de uma altura significativa."
 
-L.aw_fal3_title = "O Meteorito Humano"
+L.aw_fal3_title = "O METEORITO HUMANO"
 L.aw_fal3_text  = "esmagou alguém caindo sobre este de uma grande altura."
 
-L.aw_hed1_title = "Eficiência"
+L.aw_hed1_title = "EFICIÊNCIA"
 L.aw_hed1_text  = "descobriu a alegria dos tiros na cabeça e atirou em {num} cabeças."
 
-L.aw_hed2_title = "Neurologia"
+L.aw_hed2_title = "NEUROLOGIA"
 L.aw_hed2_text  = "removeu o cérebro de {num} cabeças para um exame minucioso."
 
-L.aw_hed3_title = "A Culpa da Violência é dos Videogames"
+L.aw_hed3_title = "A CULPA É DOS VIDEOGAMES"
 L.aw_hed3_text  = "aplicou seu treinamento de simulação de assassinato e atirou em {num} cabeças de inimigos."
 
-L.aw_cbr1_title = "Thunk Thunk Thunk"
+L.aw_cbr1_title = "THUNK THUNK THUNK"
 L.aw_cbr1_text  = "descobriu que esse é o barulho que o Pé de Cabra faz ao matar, como {num} vítimas também descobriram."
 
-L.aw_cbr2_title = "Freeman"
+L.aw_cbr2_title = "FREEMAN"
 L.aw_cbr2_text  = "cobriu seu Pé de Cabra com nada menos do que {num} cérebros."
 
-L.aw_pst1_title = "Inseto Pequeno Persistente"
+L.aw_pst1_title = "INSETO PEQUENO PERSISTENTE"
 L.aw_pst1_text  = "marcou {num} mortes usando uma pistola. Logo após, ele abraçou alguém até a morte."
 
-L.aw_pst2_title = "Chacina de Pequeno Calibre"
+L.aw_pst2_title = "CHACINA DE PEQUENO CALIBRE"
 L.aw_pst2_text  = "matou um pequeno exército de {num} com uma pistola. Provavelmente instalou uma pequena escopeta dentro do cano."
 
-L.aw_sgn1_title = "Modo Fácil"
+L.aw_sgn1_title = "MODO FÁCIL"
 L.aw_sgn1_text  = "aplicou tiro onde dói, conseguindo matar {num} alvos."
 
-L.aw_sgn2_title = "Milhares de Pequenas Balas"
+L.aw_sgn2_title = "MILHARES DE BALAS PEQUENAS"
 L.aw_sgn2_text  = "não gostou muito do chumbo grosso, e decidiu doá-lo. {num} destinatários não viveram para aproveitá-lo."
 
-L.aw_rfl1_title = "Apontar e Clicar"
+L.aw_rfl1_title = "APONTAR E CLICAR"
 L.aw_rfl1_text  = "mostrou que tudo que você precisa para cometer {num} assassinatos é um rifle e uma mão firme."
 
-L.aw_rfl2_title = "Eu Posso Ver Sua Cabeça Daqui"
+L.aw_rfl2_title = "EU POSSO VER SUA CABEÇA DAQUI"
 L.aw_rfl2_text  = "conhece o rifle que tem. Agora {num} pessoas conhecem o seu rifle também."
 
-L.aw_dgl1_title = "É Como Um Pequeno Rifle"
+L.aw_dgl1_title = "É COMO UM PEQUENO RIFLE"
 L.aw_dgl1_text  = "está pegando o jeito de jogar com a Desert Eagle, conseguindo matar {num} pessoas."
 
-L.aw_dgl2_title = "Mestre da Desert Eagle"
+L.aw_dgl2_title = "MESTRE DA DESERT EAGLE"
 L.aw_dgl2_text  = "surpreendeu {num} pessoas com sua Desert Eagle."
 
-L.aw_mac1_title = "Rezar e Matar"
+L.aw_mac1_title = "REZAR E MATAR"
 L.aw_mac1_text  = "matou {num} pessoas com a MAC10, mas não dirá quanta munição precisou."
 
-L.aw_mac2_title = "Mac com Queijo"
+L.aw_mac2_title = "MAC COM QUEIJO"
 L.aw_mac2_text  = "imagina o que aconteceria se ele estivesse com duas MAC10 em suas mãos. {num} vezes dois?"
 
-L.aw_sip1_title = "Fica Quieto"
+L.aw_sip1_title = "FIQUE QUIETO"
 L.aw_sip1_text  = "calou a boca de {num} pessoas com sua pistola silenciada."
 
-L.aw_sip2_title = "Assassino Silencioso"
+L.aw_sip2_title = "ASSASSINO SILENCIOSO"
 L.aw_sip2_text  = "matou {num} pessoas que não ouviram sua própria morte."
 
-L.aw_knf1_title = "Foi Bom Esfaquear Você"
+L.aw_knf1_title = "FOI BOM ESFAQUEAR VOCÊ"
 L.aw_knf1_text  = "esfaqueou a cara de alguém pela internet."
 
-L.aw_knf2_title = "Onde Você Conseguiu Isso?"
-L.aw_knf2_text  = "não era um traidor, e mesmo assim matou alguém com uma faca."
+L.aw_knf2_title = "ONDE VOCÊ CONSEGUIU ISSO?"
+L.aw_knf2_text  = "não era um Traidor, e mesmo assim matou alguém com uma faca."
 
-L.aw_knf3_title = "O Tal Homem Faca"
+L.aw_knf3_title = "O TAL HOMEM FACA"
 L.aw_knf3_text  = "achou {num} facas espalhadas, e fez bom uso delas."
 
-L.aw_knf4_title = "O Melhor Homem Faca do Mundo"
+L.aw_knf4_title = "O MELHOR HOMEM FACA DO MUNDO"
 L.aw_knf4_text  = "matou {num} pessoas com uma faca. Não me pergunte como."
 
-L.aw_flg1_title = "Ao Resgate"
+L.aw_flg1_title = "AO RESGATE"
 L.aw_flg1_text  = "usou seu sinalizador para sinalizar {num} mortes."
 
-L.aw_flg2_title = "Sinalizador Indica Fogo"
+L.aw_flg2_title = "SINALIZADOR INDICA FOGO"
 L.aw_flg2_text  = "ensinou a {num} homens sobre o perigo de vestir roupas inflamáveis."
 
-L.aw_hug1_title = "Uma H.U.G.E Sintonizada"
+L.aw_hug1_title = "UMA H.U.G.E SINTONIZADA"
 L.aw_hug1_text  = "estava em sintonia com sua H.U.G.E, fazendo com que suas balas atingissem {num} pessoas."
 
-L.aw_hug2_title = "Um Paciente Esquizofrênico"
+L.aw_hug2_title = "UM PACIENTE ESQUIZOFRÊNICO"
 L.aw_hug2_text  = "só ficou atirando, e viu sua H.U.G.E ser recompensada com {num} mortes."
 
-L.aw_msx1_title = "Putt Putt Putt"
+L.aw_msx1_title = "PUTT PUTT PUTT"
 L.aw_msx1_text  = "levou {num} pessoas com o M16."
 
-L.aw_msx2_title = "Loucura de Alcance Médio"
+L.aw_msx2_title = "LOUCURA DE ALCANCE MÉDIO"
 L.aw_msx2_text  = "sabe derrubar pessoas com o M16, conseguindo marcar {num} mortes."
 
-L.aw_tkl1_title = "Foi Sem Querer"
+L.aw_tkl1_title = "FOI SEM QUERER"
 L.aw_tkl1_text  = "pressionou o gatilho enquanto mirava em um aliado."
 
-L.aw_tkl2_title = "Foi Sem Querer Querendo"
-L.aw_tkl2_text  = "pensou que havia matado dois traidores, mas estava errado sobre ambos."
+L.aw_tkl2_title = "FOI SEM QUERER QUERENDO"
+L.aw_tkl2_text  = "pensou que havia matado dois Traidores, mas estava errado sobre ambos."
 
-L.aw_tkl3_title = "Karma-A-Arma-Aê"
+L.aw_tkl3_title = "KARMA-A-ARMA-AÊ"
 L.aw_tkl3_text  = "não conseguiu parar depois de matar dois aliados. Três é seu número da sorte."
 
-L.aw_tkl4_title = "Os Meus Aliados São Os Meus Inimigos"
+L.aw_tkl4_title = "OS MEUS ALIADOS SÃO MEUS INIMIGOS"
 L.aw_tkl4_text  = "matou toda a sua equipe. OLOKINHO MEU."
 
-L.aw_tkl5_title = "Papéis Diferentes"
+L.aw_tkl5_title = "PAPÉIS DIFERENTES"
 L.aw_tkl5_text  = "estava interpretando um louco honesto. E é por isso que ele matou quase toda a sua equipe."
 
-L.aw_tkl6_title = "Anta"
+L.aw_tkl6_title = "ANTA"
 L.aw_tkl6_text  = "não conseguiu descobrir em que equipe estava, e matou mais da metade de seus aliados."
 
-L.aw_tkl7_title = "Pescoço Vermelho"
+L.aw_tkl7_title = "PEÃO"
 L.aw_tkl7_text  = "protegeu seu território de maneira fantástica ao matar mais de um quarto de seus aliados."
 
-L.aw_brn1_title = "Como a Vovó Fazia"
+L.aw_brn1_title = "COMO A VOVÓ FAZIA"
 L.aw_brn1_text  = "fritou várias pessoas para fazer uma batata frita agradável."
 
-L.aw_brn2_title = "Piromaníaco"
+L.aw_brn2_title = "PIROMANÍACO"
 L.aw_brn2_text  = "foi ouvido gargalhando alto depois de queimar uma de suas muitas vítimas."
 
-L.aw_brn3_title = "Piromaníaco Granadeiro"
+L.aw_brn3_title = "PIROMANÍACO GRANADEIRO"
 L.aw_brn3_text  = "queimou todos, mas agora está sem granadas incendiárias! Como ele vai lidar com isso!?"
 
-L.aw_fnd1_title = "Médico Legista"
+L.aw_fnd1_title = "MÉDICO LEGISTA"
 L.aw_fnd1_text  = "achou {num} cadáveres por aí."
 
-L.aw_fnd2_title = "Temos Que Pegar Todos Eles"
+L.aw_fnd2_title = "TEMOS QUE PEGAR TODOS ELES"
 L.aw_fnd2_text  = "encontrou {num} cadáveres para a sua coleção."
 
-L.aw_fnd3_title = "Cheiro de Morte"
+L.aw_fnd3_title = "CHEIRO DE MORTE"
 L.aw_fnd3_text  = "continua tropeçando em cadáveres, conseguindo tropeçar {num} vezes nesta rodada."
 
-L.aw_crd1_title = "Reciclador"
+L.aw_crd1_title = "RECICLADOR"
 L.aw_crd1_text  = "coletou {num} créditos perdidos em cadáveres."
 
-L.aw_tod1_title = "Uma-Quase-Vitória"
+L.aw_tod1_title = "UMA-QUASE-VITÓRIA"
 L.aw_tod1_text  = "morreu segundos antes de sua equipe vencer a partida."
 
-L.aw_tod2_title = "Eu Odeio Este Jogo"
+L.aw_tod2_title = "EU ODEIO ESTE JOGO"
 L.aw_tod2_text  = "morreu no começo da rodada."
 
 
