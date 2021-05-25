@@ -389,17 +389,17 @@ eles nunca sejam encontrados. Munição limitada.
 Queimar um cadáver irá reproduzir um som estranho.]]
 
 -- Health station
-L.hstation_name   = "Dispositivo de Cura"
-L.hstation_hint   = "Pressione {usekey} para se curar. Carga: {num}."
-L.hstation_broken = "Seu Dispositivo de Cura foi destruído!"
-L.hstation_help   = "{primaryfire} posiciona o Dispositivo de Cura."
+L.hstation_name   = "Estação de Cura"
+L.hstation_hint   = "Pressione {usekey} para curar-se. Carga: {num}."
+L.hstation_broken = "Sua Estação de Cura foi destruída!"
+L.hstation_help   = "{primaryfire} posiciona a Estação de Cura."
 
 L.hstation_desc   = [[
-Permite que as pessoas se curem quando posicionado.
+Permite que as pessoas se curem quando posicionada.
 
-Seu tempo de recarga é lento. Qualquer um pode usar,
-e ele pode ser danificado. Pode ser utilizado para
-verificar as amostras dos DNAs de seus utilizadores.]]
+Seu tempo de recarga é lento. Qualquer um pode usá-la,
+e ela pode ser danificada. Pode ser utilizada para
+verificar as amostras de DNA dos seus utilizadores.]]
 
 -- Knife
 L.knife_name      = "Faca"
@@ -706,9 +706,9 @@ L.tip19 = "Como Detetive, se você estiver com alguns créditos sobrando, você 
 
 L.tip20 = "Os Binóculos dos Detetives permitem localizar e identificar cadáveres à distância. Más notícias se os Traidores estiverem usando um cadáver como uma isca. Mas é claro que, quando um Detetive estiver usando os Binóculos, ele estará desarmado e distraído..."
 
-L.tip21 =  "O Dispositivo de Cura permite que jogadores feridos se curem. Mas é claro que, os jogadores feridos podem ser Traidores!"
+L.tip21 =  "A Estação de Cura permite que jogadores feridos se curem. Mas é claro que, os jogadores feridos podem ser Traidores..."
 
-L.tip22 = "O Dispositivo de Cura armazena uma amostra do DNA de cada jogador que o utilizar. Assim, os Detetives podem utilizar o Scanner de DNA no Dispositivo de Cura para descobrir quem andou se curando."
+L.tip22 = "A Estação de Cura armazena uma amostra do DNA de cada jogador que a utilizar. Assim, os Detetives podem utilizar o Scanner de DNA na Estação de Cura para descobrir quem andou se curando."
 
 L.tip23 = "Diferentemente de armas e do C4, o Rádio dos Traidores não contem uma amostra do DNA de quem o posicionou. Não se preocupe com Detetives encontrando sua amostra de DNA e descobrindo sua verdadeira identidade."
 
