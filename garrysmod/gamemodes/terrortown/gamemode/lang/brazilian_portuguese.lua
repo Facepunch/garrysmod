@@ -789,7 +789,7 @@ L.col_total  = "Total de pontos"
 L.something      = "alguma coisa"
 
 -- Kill events
-L.ev_blowup      = "{victim} se explodiu"
+L.ev_blowup      = "{victim} explodiu-se"
 L.ev_blowup_trap = "{victim} foi explodido pelo(a) {trap}"
 
 L.ev_tele_self   = "{victim} deu telefrag em si mesmo"
@@ -827,7 +827,7 @@ L.ev_crush       = "{victim} foi esmagado por {attacker}"
 L.ev_crush_using = "{victim} foi esmagado pelo(a) {trap} de {attacker}"
 
 L.ev_other       = "{victim} foi morto por {attacker}"
-L.ev_other_using = "{victim} foi morto {attacker} usando {trap}"
+L.ev_other_using = "{victim} foi morto por {attacker} usando {trap}"
 
 -- Other events
 L.ev_body        = "{finder} encontrou o cadáver de {victim}"
