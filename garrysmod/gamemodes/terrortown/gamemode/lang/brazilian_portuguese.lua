@@ -390,7 +390,7 @@ Queimar um cadáver irá reproduzir um som estranho.]]
 
 -- Health station
 L.hstation_name   = "Estação de Cura"
-L.hstation_hint   = "Pressione {usekey} para curar-se. Carga: {num}."
+L.hstation_hint   = "Pressione {usekey} para se curar. Carga: {num}."
 L.hstation_broken = "Sua Estação de Cura foi destruída!"
 L.hstation_help   = "{primaryfire} posiciona a Estação de Cura."
 
