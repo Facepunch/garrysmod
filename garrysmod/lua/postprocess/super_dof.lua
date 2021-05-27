@@ -160,6 +160,13 @@ local texFSB = render.GetSuperFPTex()
 local matFSB = Material( "pp/motionblur" )
 local matFB = Material( "pp/fb" )
 
+surface.CreateFont( "SuperDofText",
+{
+	font		= "Helvetica",
+	size		= 20,
+	weight		= 700
+})
+
 function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, bSpin, inView, ViewFOV )
 
 	local OldRT = render.GetRenderTarget()
@@ -242,8 +249,8 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 				cam.Start2D()
 					local add = ( i / ( math.pi * 2 ) ) * ( 1 / passes )
 					local percent = string.format( "%.1f", ( mul - ( 1 / passes ) + add ) * 100 )
-					draw.DrawText( percent .. "%", "GModWorldtip", view.w - 100, view.h - 100, color_black, TEXT_ALIGN_CENTER )
-					draw.DrawText( percent .. "%", "GModWorldtip", view.w - 101, view.h - 101, color_white, TEXT_ALIGN_CENTER )
+					draw.DrawText( percent .. "%", "SuperDofText", view.w - 100, view.h - 100, color_black, TEXT_ALIGN_CENTER )
+					draw.DrawText( percent .. "%", "SuperDofText", view.w - 101, view.h - 101, color_white, TEXT_ALIGN_CENTER )
 				cam.End2D()
 
 				render.Spin()
