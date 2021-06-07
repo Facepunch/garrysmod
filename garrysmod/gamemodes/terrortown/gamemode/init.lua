@@ -648,6 +648,9 @@ function BeginRound()
    -- Remove their ragdolls
    ents.TTT.RemoveRagdolls(true)
 
+   -- Check for low-karma players that weren't banned on round end
+   if KARMA.cv.autokick:GetBool() then KARMA.CheckAutoKickAll() end
+
    if CheckForAbort() then return end
 
    -- Select traitors & co. This is where things really start so we can't abort

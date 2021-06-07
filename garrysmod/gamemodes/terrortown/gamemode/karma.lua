@@ -259,9 +259,7 @@ function KARMA.RoundEnd()
       KARMA.RememberAll()
 
       if config.autokick:GetBool() then
-         for _, ply in ipairs(player.GetAll()) do
-            KARMA.CheckAutoKick(ply)
-         end
+         KARMA.CheckAutoKickAll()
       end
    end
 end
@@ -356,6 +354,12 @@ function KARMA.CheckAutoKick(ply)
       else
          ply:Kick(reason)
       end
+   end
+end
+
+function KARMA.CheckAutoKickAll()
+   for _, ply in ipairs(player.GetAll()) do
+      KARMA.CheckAutoKick(ply)
    end
 end
 
