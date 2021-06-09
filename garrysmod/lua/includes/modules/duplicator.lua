@@ -842,22 +842,22 @@ function ApplyBoneModifiers( Player, Ent )
 end
 
 
---[[---------------------------------------------------------
-  Returns all constrained Entities and constraints
-  This is kind of in the wrong place. No not call this
-  from outside of this code. It will probably get moved to
-  constraint.lua soon.
------------------------------------------------------------]]
+--
+-- Returns all constrained Entities and constraints
+-- This is kind of in the wrong place.
+--
+-- This function will accept the world entity to save constrains, but will not actually save the world entity itself
+--
 function GetAllConstrainedEntitiesAndConstraints( ent, EntTable, ConstraintTable )
 
-	if ( !IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) && !ent:IsWorld() ) then return end
 
 	-- Translate the class name
 	local classname = ent:GetClass()
 	if ( ent.ClassOverride ) then classname = ent.ClassOverride end
 
 	-- Is the entity in the dupe whitelist?
-	if ( !IsAllowed( classname ) ) then
+	if ( !IsAllowed( classname ) && !ent:IsWorld() ) then
 		-- MsgN( "duplicator: ", classname, " isn't allowed to be duplicated!" )
 		return
 	end
@@ -865,7 +865,7 @@ function GetAllConstrainedEntitiesAndConstraints( ent, EntTable, ConstraintTable
 	-- Entity doesn't want to be duplicated.
 	if ( ent.DoNotDuplicate ) then return end
 
-	EntTable[ ent:EntIndex() ] = ent
+	if ( !ent:IsWorld() ) then EntTable[ ent:EntIndex() ] = ent end
 
 	if ( !constraint.HasConstraints( ent ) ) then return end
 
@@ -883,7 +883,11 @@ function GetAllConstrainedEntitiesAndConstraints( ent, EntTable, ConstraintTable
 			-- Run the Function for any ents attached to this constraint
 			for _, ConstrainedEnt in pairs( constr.Entity ) do
 
-				GetAllConstrainedEntitiesAndConstraints( ConstrainedEnt.Entity, EntTable, ConstraintTable )
+				if ( !ConstrainedEnt.Entity:IsWorld() ) then
+
+					GetAllConstrainedEntitiesAndConstraints( ConstrainedEnt.Entity, EntTable, ConstraintTable )
+
+				end
 
 			end
 

@@ -97,6 +97,10 @@ function gmsave.SaveMap( ply )
 
 	end
 
+	-- This is to copy the constraints that are applied to the world only (ropes, etc)
+	-- It will not actually save and then try to restore the world entity, as that would cause issues
+	table.insert( Ents, game.GetWorld() )
+
 	local tab = duplicator.CopyEnts( Ents )
 	if ( !tab ) then return end
 

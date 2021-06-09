@@ -202,6 +202,7 @@ function RemoveAll( Ent )
 			v:Remove()
 			i = i + 1
 		end
+
 	end
 
 	-- Update the network var and clear the constraints table.
@@ -348,7 +349,7 @@ function AddConstraintTable( Ent, Constraint, Ent2, Ent3, Ent4 )
 
 	if ( !IsValid( Constraint ) ) then return end
 
-	if ( IsValid( Ent ) ) then
+	if ( IsValid( Ent ) || ( Ent && Ent:IsWorld() ) ) then
 
 		Ent.Constraints = Ent.Constraints or {}
 		table.insert( Ent.Constraints, Constraint )
@@ -370,7 +371,7 @@ function AddConstraintTableNoDelete( Ent, Constraint, Ent2, Ent3, Ent4 )
 
 	if ( !IsValid( Constraint ) ) then return end
 
-	if ( IsValid( Ent ) ) then
+	if ( IsValid( Ent ) || ( Ent && Ent:IsWorld() ) ) then
 
 		Ent.Constraints = Ent.Constraints or {}
 		table.insert( Ent.Constraints, Constraint )
@@ -1445,7 +1446,7 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 
 	if ( fixed == 1 ) then
 		slider = Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, 0 )
-		slider:SetTable( {} ) -- ??
+		slider:SetTable( {} ) -- Remove data for duplicator
 		Constraint:DeleteOnRemove( slider )
 	end
 
@@ -1626,7 +1627,7 @@ function GetAllConstrainedEntities( ent, ResultTable )
 
 	local ResultTable = ResultTable or {}
 
-	if ( !IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) && !ent:IsWorld() ) then return end
 	if ( ResultTable[ ent ] ) then return end
 
 	ResultTable[ ent ] = ent
