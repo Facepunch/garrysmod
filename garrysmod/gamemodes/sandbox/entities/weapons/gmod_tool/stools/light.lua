@@ -204,6 +204,10 @@ function TOOL:Think()
 		self:MakeGhostEntity( "models/maxofs2d/light_tubular.mdl", vector_origin, angle_zero )
 	end
 
+end
+
+function TOOL:DrawHUD()
+
 	self:UpdateGhostLight( self.GhostEntity, self:GetOwner() )
 
 end
