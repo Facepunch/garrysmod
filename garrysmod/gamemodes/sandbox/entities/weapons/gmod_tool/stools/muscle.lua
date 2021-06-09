@@ -9,6 +9,9 @@ TOOL.ClientConVar[ "fixed" ] = "1"
 TOOL.ClientConVar[ "period" ] = "1"
 TOOL.ClientConVar[ "material" ] = "cable/rope"
 TOOL.ClientConVar[ "starton" ] = "0"
+TOOL.ClientConVar[ "color_r" ] = "255"
+TOOL.ClientConVar[ "color_g" ] = "255"
+TOOL.ClientConVar[ "color_b" ] = "255"
 
 TOOL.Information = {
 	{ name = "left", stage = 0 },
@@ -52,6 +55,9 @@ function TOOL:LeftClick( trace )
 		local period = self:GetClientNumber( "period", 1 )
 		local starton = self:GetClientNumber( "starton" ) == 1
 		local material = self:GetClientInfo( "material" )
+		local colorR = self:GetClientNumber( "color_r" )
+		local colorG = self:GetClientNumber( "color_g" )
+		local colorB = self:GetClientNumber( "color_b" )
 
 		-- If AddLength is 0 then what's the point.
 		if ( AddLength == 0 ) then
@@ -74,7 +80,7 @@ function TOOL:LeftClick( trace )
 
 		local amp = Length2 - Length1
 
-		local constraint, rope, controller, slider = constraint.Muscle( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, period, amp, starton, material )
+		local constraint, rope, controller, slider = constraint.Muscle( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, period, amp, starton, material, Color( colorR, colorG, colorB, 255 ) )
 
 		undo.Create( "Muscle" )
 			if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
@@ -161,6 +167,9 @@ function TOOL:RightClick( trace )
 	local period = self:GetClientNumber( "period", 64 )
 	local starton = self:GetClientNumber( "starton" )
 	local material = self:GetClientInfo( "material" )
+	local colorR = self:GetClientNumber( "color_r" )
+	local colorG = self:GetClientNumber( "color_g" )
+	local colorB = self:GetClientNumber( "color_b" )
 
 	-- Get information we're about to use
 	local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
@@ -173,7 +182,7 @@ function TOOL:RightClick( trace )
 
 	local amp = Length2 - Length1
 
-	local constraint, rope, controller, slider = constraint.Muscle( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, period, amp, starton, material )
+	local constraint, rope, controller, slider = constraint.Muscle( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, bind, fixed, period, amp, starton, material, Color( colorR, colorG, colorB, 255 ) )
 
 	undo.Create( "Muscle" )
 		if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
@@ -226,5 +235,6 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Slider", { Label = "#tool.muscle.width", Command = "muscle_width", Type = "Float", Min = 0, Max = 5 } )
 	CPanel:AddControl( "RopeMaterial", { Label = "#tool.muscle.material", ConVar = "muscle_material" } )
+	CPanel:AddControl( "Color", { Label = "#tool.muscle.color", Red = "muscle_color_r", Green = "muscle_color_g", Blue = "muscle_color_b" } )
 
 end
