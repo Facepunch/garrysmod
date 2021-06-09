@@ -517,27 +517,27 @@ function WorkoutSize( Ents )
 		--
 		-- Rotate according to the entity!
 		--
-		local RotMins = v.Mins * 1
-		local RotMaxs = v.Maxs * 1
-		RotMins:Rotate( v.Angle )
-		RotMaxs:Rotate( v.Angle )
+		local mi = v.Mins
+		local ma = v.Maxs
 
-		--
-		-- This is dumb and the logic is wrong, but it works for now.
-		--
-		mins.x = math.min( mins.x, v.Pos.x + RotMins.x )
-		mins.y = math.min( mins.y, v.Pos.y + RotMins.y )
-		mins.z = math.min( mins.z, v.Pos.z + RotMins.z )
-		mins.x = math.min( mins.x, v.Pos.x + RotMaxs.x )
-		mins.y = math.min( mins.y, v.Pos.y + RotMaxs.y )
-		mins.z = math.min( mins.z, v.Pos.z + RotMaxs.z )
+		-- There has to be a better way
+		local t1 = LocalToWorld( Vector( mi.x, mi.y, mi.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+		local t2 = LocalToWorld( Vector( ma.x, mi.y, mi.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+		local t3 = LocalToWorld( Vector( mi.x, ma.y, mi.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+		local t4 = LocalToWorld( Vector( ma.x, ma.y, mi.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
 
-		maxs.x = math.max( maxs.x, v.Pos.x + RotMins.x )
-		maxs.y = math.max( maxs.y, v.Pos.y + RotMins.y )
-		maxs.z = math.max( maxs.z, v.Pos.z + RotMins.z )
-		maxs.x = math.max( maxs.x, v.Pos.x + RotMaxs.x )
-		maxs.y = math.max( maxs.y, v.Pos.y + RotMaxs.y )
-		maxs.z = math.max( maxs.z, v.Pos.z + RotMaxs.z )
+		local b1 = LocalToWorld( Vector( mi.x, mi.y, ma.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+		local b2 = LocalToWorld( Vector( ma.x, mi.y, ma.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+		local b3 = LocalToWorld( Vector( mi.x, ma.y, ma.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+		local b4 = LocalToWorld( Vector( ma.x, ma.y, ma.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+
+		mins.x = math.min( mins.x, t1.x, t2.x, t3.x, t4.x, b1.x, b2.x, b3.x, b4.x )
+		mins.y = math.min( mins.y, t1.y, t2.y, t3.y, t4.y, b1.y, b2.y, b3.y, b4.y )
+		mins.z = math.min( mins.z, t1.z, t2.z, t3.z, t4.z, b1.z, b2.z, b3.z, b4.z )
+
+		maxs.x = math.max( maxs.x, t1.x, t2.x, t3.x, t4.x, b1.x, b2.x, b3.x, b4.x )
+		maxs.y = math.max( maxs.y, t1.y, t2.y, t3.y, t4.y, b1.y, b2.y, b3.y, b4.y )
+		maxs.z = math.max( maxs.z, t1.z, t2.z, t3.z, t4.z, b1.z, b2.z, b3.z, b4.z )
 
 	end
 
