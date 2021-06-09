@@ -234,6 +234,10 @@ function TOOL:Think()
 		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
+end
+
+function TOOL:DrawHUD()
+
 	self:UpdateGhostWheel( self.GhostEntity, self:GetOwner() )
 
 end
