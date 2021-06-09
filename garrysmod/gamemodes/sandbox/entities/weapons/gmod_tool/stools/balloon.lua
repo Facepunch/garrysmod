@@ -16,6 +16,8 @@ TOOL.Information = {
 
 cleanup.Register( "balloons" )
 
+local hitangle_offset = Angle( 90, 0, 0 )
+
 function TOOL:LeftClick( trace, attach )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
@@ -84,8 +86,10 @@ function TOOL:LeftClick( trace, attach )
 	local Offset = CurPos - NearestPoint
 
 	local Pos = trace.HitPos + Offset
+	local Ang = trace.HitNormal:Angle() + hitangle_offset
 
 	balloon:SetPos( Pos )
+	balloon:SetAngles( Ang )
 
 	undo.Create( "Balloon" )
 		undo.AddEntity( balloon )
@@ -182,12 +186,13 @@ function TOOL:UpdateGhostBalloon( ent, ply )
 	local Offset = CurPos - NearestPoint
 
 	local pos = trace.HitPos + Offset
+	local ang = trace.HitNormal:Angle() + hitangle_offset
 
 	local modeltable = list.Get( "BalloonModels" )[ self:GetClientInfo( "model" ) ]
 	if ( modeltable.skin ) then ent:SetSkin( modeltable.skin ) end
 
 	ent:SetPos( pos )
-	ent:SetAngles( angle_zero )
+	ent:SetAngles( ang )
 
 	ent:SetNoDraw( false )
 
@@ -204,6 +209,11 @@ function TOOL:Think()
 		if ( IsValid( self.GhostEntity ) ) then self.GhostEntity.model = self:GetClientInfo( "model" ) end
 
 	end
+
+end
+
+-- DrawHUD is called every frame making it a better option than Think for updating the ghost balloon
+function TOOL:DrawHUD()
 
 	self:UpdateGhostBalloon( self.GhostEntity, self:GetOwner() )
 
