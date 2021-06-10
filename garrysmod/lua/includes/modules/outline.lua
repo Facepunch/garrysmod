@@ -114,7 +114,7 @@ local function Render()
 	
 	local w, h = ScrW(), ScrH()
 	
-	render.Clear( 0, 0, 0, 0, false, true )
+	render.ClearStencil()
 	
 	render.SetStencilEnable( true )
 		render.SuppressEngineLighting( true )
@@ -126,7 +126,7 @@ local function Render()
 		render.SetStencilFailOperation( STENCIL_KEEP )
 		
 		cam.Start3D()
-			render.SetBlend(0)
+			render.SetBlend(1)
 			
 			for i = 1, ListSize do
 				
@@ -205,6 +205,8 @@ local function Render()
 		render.SetStencilCompareFunction( STENCIL_EQUAL )
 		render.SetStencilZFailOperation( STENCIL_KEEP )
 		render.SetStencilPassOperation( STENCIL_KEEP )
+		
+		render.Clear( 0, 0, 0, 0, false, false )
 		
 		cam.Start2D()
 			
