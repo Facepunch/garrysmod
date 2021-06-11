@@ -157,32 +157,31 @@ if ( CLIENT ) then
 		local mins = net.ReadVector()
 		local maxs = net.ReadVector()
 
-		if ( !IsValid( LocalPlayer() ) ) then return end
+		local ply = LocalPlayer()
+		if ( !IsValid( ply ) ) then return end
 
-		local tool = LocalPlayer():GetTool( "duplicator" )
-		if ( tool ) then
-			tool.CurrentDupeMins = mins
-			tool.CurrentDupeMaxs = maxs
-		end
+		ply.CurrentDupeMins = mins
+		ply.CurrentDupeMaxs = maxs
 
 	end )
 
 	-- This is not perfect, but let the player see roughly the outline of what they are about to paste
 	function TOOL:DrawHUD()
 
-		if ( !self.CurrentDupeMins || !self.CurrentDupeMaxs || !IsValid( LocalPlayer() ) ) then return end
+		local ply = LocalPlayer()
+		if ( !IsValid( ply ) || !ply.CurrentDupeMins || !ply.CurrentDupeMaxs ) then return end
 
 		local tr = LocalPlayer():GetEyeTrace()
 
 		local pos = tr.HitPos
-		pos.z = pos.z - self.CurrentDupeMins.z
+		pos.z = pos.z - ply.CurrentDupeMins.z
 
 		local ang = LocalPlayer():GetAngles()
 		ang.p = 0
 		ang.r = 0
 
 		cam.Start3D()
-		render.DrawWireframeBox( pos, ang, self.CurrentDupeMins, self.CurrentDupeMaxs )
+		render.DrawWireframeBox( pos, ang, ply.CurrentDupeMins, ply.CurrentDupeMaxs )
 		cam.End3D()
 
 	end
