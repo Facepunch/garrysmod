@@ -90,27 +90,29 @@ end
 
 local inext = ipairs({})
 
-local PlayerCache = {}
+local PlayerCache = nil
 
 function player.Iterator()
+	
+	if ( PlayerCache == nil ) then PlayerCache = player.GetAll() end
 	
 	return inext, PlayerCache, 0
 	
 end
 
-local function RefreshPlayerCache( ent )
+local function InvalidatePlayerCache( ent )
 	
 	if ( ent:IsPlayer() ) then
 		
-		PlayerCache = player.GetAll()
+		PlayerCache = nil
 		
 	end
 	
 end
 
-hook.Add( "OnEntityCreated", "player.Iterator", RefreshPlayerCache )
+hook.Add( "OnEntityCreated", "player.Iterator", InvalidatePlayerCache )
 
-hook.Add( "EntityRemoved", "player.Iterator", RefreshPlayerCache )
+hook.Add( "EntityRemoved", "player.Iterator", InvalidatePlayerCache )
 
 --[[---------------------------------------------------------
 	Name: DebugInfo
