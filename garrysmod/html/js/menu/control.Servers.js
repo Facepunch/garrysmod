@@ -334,7 +334,7 @@ function FormatVersion( ver )
 function getRandomInt(min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+	return Math.floor(Math.random() * (max - min) + min); 
   }
 
 // Calculates the default server ranking
@@ -346,9 +346,11 @@ function CalculateRank( server )
 	if ( server.players >= server.maxplayers ) recommended += 100; // Server is full, can't join it
 	if ( server.pass ) recommended += 300; // Password protected, can't join it
 	if ( server.isAnon ) recommended += 1000; // Anonymous server
-	if (server.players < 10) {recommended -= getRandomInt(2,30 - server.players);} // A little bit of randomness to give smaller servers a chance :)
-	else if (server.players < 15) {recommended -= getRandomInt(0,20 - server.players);} // A little bit of randomness to give smaller servers a chance :)
-	if (server.ping > 100 ) recommend += 100; // Server has a high ping
+	if (server.players < 10) {recommended -= getRandomInt(0,30 - server.players);} // A little bit of randomness to give smaller servers a chance :)
+	else if (server.players < 20) {recommended -= getRandomInt(0,40 - server.players);} // A little bit of randomness to give smaller servers a chance :)
+	else if (server.players > 50 ) {recommended += getRandomInt(10, server.players)} // random chance to screw a large server ;)
+	else if (server.players > 100) {recommended += getRandomInt(30, server.players)} // random chance to screw a larger server ;)
+	if (server.ping > 150 ) recommended += 150; // Server has a high ping
 	return recommended;
 }
 
