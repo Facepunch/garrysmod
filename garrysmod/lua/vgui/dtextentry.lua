@@ -378,7 +378,10 @@ end
 
 function PANEL:GetInt()
 
-	return math.floor( tonumber( self:GetText() ) + 0.5 )
+	local num = tonumber( self:GetText() )
+	if !num then return end
+
+	return math.floor( num + 0.5 )
 
 end
 
