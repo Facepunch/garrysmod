@@ -23,6 +23,7 @@ function GetTable() return Hooks end
 function Add( event_name, name, func )
 
 	if ( !isfunction( func ) ) then return end
+	if ( !isstring( name ) and !IsValid( name ) ) then return end
 	if ( !isstring( event_name ) ) then return end
 
 	if (Hooks[ event_name ] == nil) then
@@ -41,6 +42,7 @@ end
 -----------------------------------------------------------]]
 function Remove( event_name, name )
 
+	if ( !isstring( name ) and !IsValid( name ) ) then return end
 	if ( !isstring( event_name ) ) then return end
 	if ( !Hooks[ event_name ] ) then return end
 
