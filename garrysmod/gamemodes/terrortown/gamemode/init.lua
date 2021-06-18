@@ -175,7 +175,7 @@ function GM:Initialize()
 
    -- More map config ent defaults
    GAMEMODE.force_plymodel = ""
-   GAMEMODE.propspec_allow_named = true
+   GAMEMODE.propspec_allow_named = false
 
    GAMEMODE.MapWin = WIN_NONE
    GAMEMODE.AwardedCredits = false
