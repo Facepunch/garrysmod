@@ -233,14 +233,20 @@ function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
 end
 
 --[[---------------------------------------------------------
-	Name: WordBox( bordersize, x, y, font, color )
+	Name: WordBox( bordersize, x, y, font, color, fontcolor, xalign )
 	Desc: Draws a rounded box - ideally bordersize will be 8 or 16
 	Usage: color is a table with r/g/b/a elements
 -----------------------------------------------------------]]
-function WordBox( bordersize, x, y, text, font, color, fontcolor )
+function WordBox( bordersize, x, y, text, font, color, fontcolor, xalign )
 
 	surface.SetFont( font )
 	local w, h = surface.GetTextSize( text )
+
+	if ( xalign == TEXT_ALIGN_CENTER ) then
+		x = x - (bordersize + w / 2)
+	elseif ( xalign == TEXT_ALIGN_RIGHT ) then
+		x = x - (bordersize * 2 + w)
+	end
 
 	RoundedBox( bordersize, x, y, w+bordersize * 2, h+bordersize * 2, color )
 
