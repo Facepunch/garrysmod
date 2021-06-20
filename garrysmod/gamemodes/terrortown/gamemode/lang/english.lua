@@ -1081,3 +1081,6 @@ L.binoc_zoom_level = "LEVEL"
 L.binoc_body = "BODY DETECTED"
 
 L.idle_popup_title = "Idle"
+
+--- 2021-06-07
+L.sb_playervolume = "Player Volume"

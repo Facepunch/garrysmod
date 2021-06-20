@@ -1082,3 +1082,6 @@ L.binoc_zoom_level = "NÍVEL"
 L.binoc_body = "CADÁVER DETECTADO"
 
 L.idle_popup_title = "Ausência"
+
+--- 2021-06-07
+L.sb_playervolume = "Volume do jogador"
