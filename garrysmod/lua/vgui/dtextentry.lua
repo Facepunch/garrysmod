@@ -379,9 +379,9 @@ end
 function PANEL:GetInt()
 
 	local num = tonumber( self:GetText() )
-	if !num then return end
+	if ( !num ) then return nil end
 
-	return math.floor( num + 0.5 )
+	return math.Round( num )
 
 end
 
