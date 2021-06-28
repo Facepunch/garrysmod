@@ -1081,3 +1081,6 @@ L.binoc_zoom_level = "УРОВЕНЬ"
 L.binoc_body = "ОБНАРУЖЕНО ТЕЛО"
 
 L.idle_popup_title = "Бездействие"
+
+--- 2021-06-07
+L.sb_playervolume = "Громкость игрока"
