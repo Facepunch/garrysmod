@@ -97,7 +97,18 @@ end
 
 function PANEL:StatusChanged( strStatus )
 
-	local startPos, endPos = string.find( strStatus, "Downloading " )
+	-- new FastDL/ServerDL format
+	local matchedFileName = string.match( strStatus, "%w+/%w+ [-] (.+) is downloading" )
+	if ( matchedFileName ) then
+
+		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. matchedFileName:JavascriptSafe() .. "' )" )
+
+		return
+
+	end
+
+	-- WorkshopDL and old FastDL
+	local startPos, _ = string.find( strStatus, "Downloading " )
 	if ( startPos ) then
 		-- Snip everything before the Download part
 		strStatus = string.sub( strStatus, startPos )
@@ -108,9 +119,9 @@ function PANEL:StatusChanged( strStatus )
 			strStatus = string.gsub( strStatus, "Downloading '", "" ) -- We need to handle the quote marks
 		end
 
-		local Filename = string.gsub( strStatus, "Downloading ", "" )
+		local fileName = string.gsub( strStatus, "Downloading ", "" )
 
-		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. Filename:JavascriptSafe() .. "' )" )
+		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. fileName:JavascriptSafe() .. "' )" )
 
 		return
 
