@@ -658,7 +658,7 @@ end
 --[[---------------------------------------------------------
   Make a constraint from a constraint table
 -----------------------------------------------------------]]
-function CreateConstraintFromTable( Constraint, EntityList )
+function CreateConstraintFromTable( Constraint, EntityList, Player )
 
 	local Factory = ConstraintType[ Constraint.Type ]
 	if ( !Factory ) then return end
@@ -686,6 +686,9 @@ function CreateConstraintFromTable( Constraint, EntityList )
 
 			end
 		end
+
+		-- A little hack to give the duped constraints the correct player object
+		if ( Key:lower() == "pl" || Key:lower() == "ply" || Key:lower() == "player" ) then Val = Player end
 
 		-- If there's a missing argument then unpack will stop sending at that argument
 		if ( Val == nil ) then Val = false end
@@ -780,7 +783,7 @@ function Paste( Player, EntityList, ConstraintList )
 	for k, Constraint in pairs( ConstraintList ) do
 
 		local Entity = nil
-		ProtectedCall( function() Entity = CreateConstraintFromTable( Constraint, CreatedEntities ) end )
+		ProtectedCall( function() Entity = CreateConstraintFromTable( Constraint, CreatedEntities, Player ) end )
 
 		if ( IsValid( Entity ) ) then
 			table.insert( CreatedConstraints, Entity )
