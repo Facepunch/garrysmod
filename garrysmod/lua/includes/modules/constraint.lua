@@ -503,7 +503,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 	if ( rigid ) then kv.Type = 2 end
 
 	local rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
-	if ( color ) then rope:SetColor( color ) end
+	if ( IsValid( rope ) && color ) then rope:SetColor( color ) end
 
 	-- What the fuck
 	if ( !Constraint ) then Constraint, rope = rope, nil end
@@ -601,7 +601,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 			Type = 0
 		}
 		rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
-		if ( color ) then rope:SetColor( color ) end
+		if ( IsValid( rope ) && color ) then rope:SetColor( color ) end
 
 	end
 
@@ -732,7 +732,7 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, color 
 		Subdiv = 1,
 	}
 	local rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
-	if ( color ) then rope:SetColor( color ) end
+	if ( IsValid( rope ) && color ) then rope:SetColor( color ) end
 
 	-- If we have a static anchor - delete it when we die.
 	if ( StaticAnchor ) then
@@ -1193,9 +1193,9 @@ function Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimi
 	local rope2 = CreateKeyframeRope( WPos1, width, material, Constraint, World, WPos3, 0, World, WPos2, 0, kv )
 	local rope3 = CreateKeyframeRope( WPos1, width, material, Constraint, World, WPos3, 0, Ent4, LPos4, Bone4, kv )
 	if ( color ) then
-		rope1:SetColor( color )
-		rope2:SetColor( color )
-		rope3:SetColor( color )
+		if ( IsValid( rope1 ) ) then rope1:SetColor( color ) end
+		if ( IsValid( rope2 ) ) then rope2:SetColor( color ) end
+		if ( IsValid( rope3 ) ) then rope3:SetColor( color ) end
 	end
 
 	return Constraint, rope1, rope2, rope3
