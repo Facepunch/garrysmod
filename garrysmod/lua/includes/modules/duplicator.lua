@@ -200,6 +200,10 @@ local EntitySaver =
 
 		end
 
+		-- Non Sandbox tool set colors and material
+		if ( ent:GetColor() != color_white ) then data._DuplicatedColor = ent:GetColor() end
+		if ( ent:GetMaterial() != "" ) then data._DuplicatedMaterial = ent:GetMaterial() end
+
 		-- Bone Manipulator
 		if ( ent:HasBoneManipulations() ) then
 
@@ -274,6 +278,8 @@ local EntitySaver =
 		if ( data.ModelScale ) then ent:SetModelScale( data.ModelScale, 0 ) end
 		if ( data.ColGroup ) then ent:SetCollisionGroup( data.ColGroup ) end
 		if ( data.Name ) then ent:SetName( data.Name ) end
+		if ( data._DuplicatedColor ) then ent:SetColor( data._DuplicatedColor ) end
+		if ( data._DuplicatedMaterial ) then ent:SetMaterial( data._DuplicatedMaterial ) end
 
 		-- Body Groups
 		if ( data.BodyG ) then

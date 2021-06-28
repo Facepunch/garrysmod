@@ -178,6 +178,10 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 
 		render.SetColorModulation( 1, 1, 1, 1 )
 
+		-- EntityMods override this
+		if ( v._DuplicatedColor ) then render.SetColorModulation( v._DuplicatedColor.r / 255, v._DuplicatedColor.g / 255, v._DuplicatedColor.b / 255, v._DuplicatedColor.a / 255 ) end
+		if ( v._DuplicatedMaterial ) then render.MaterialOverride( Material( v._DuplicatedMaterial ) ) end
+
 		if ( istable( v.EntityMods ) ) then
 
 			if ( istable( v.EntityMods.colour ) ) then
