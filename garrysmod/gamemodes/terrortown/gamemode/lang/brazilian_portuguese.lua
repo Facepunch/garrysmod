@@ -177,7 +177,7 @@ L.search_role_t = "Este jogador era um Traidor!"
 L.search_role_d = "Este jogador era um Detetive."
 L.search_role_i = "Este jogador era um terrorista inocente."
 
-L.search_words  = "Algo te diz que as últimas palavras desta pessoa foram: '{lastwords}'"
+L.search_words  = "Algo lhe diz que as últimas palavras desta pessoa foram: '{lastwords}'"
 L.search_armor  = "Ele estava vestindo um colete balístico clandestino."
 L.search_disg   = "Ele estava carregando um dispositivo que podia ocultar sua identidade."
 L.search_radar  = "Ele estava carregando algum tipo de radar. Não está mais funcionando."
@@ -619,7 +619,7 @@ L.spec_help    = "Clique para observar jogadores, ou pressione {usekey} em um ob
 -- These are spread over multiple lines, hence the square brackets instead of
 -- quotes. That's a Lua thing. Every line break (enter) will show up in-game.
 L.info_popup_innocent = [[Você é um Terrorista inocente! Mas há Traidores à solta...
-Em quem você pode confiar, e quem está por aí para te encher de balas?
+Em quem você pode confiar, e quem está por aí para lhe encher de balas?
 
 Tenha cuidado e trabalhe em conjunto com seus camaradas para saírem vivos dessa!]]
 
@@ -696,7 +696,7 @@ L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapi
 
 L.tip15 = "Você é um Traidor e quer tentar matar alguém com alguma Sniper? Considere habilitar o Disfarce antes. Se você errar um tiro, fuja para um local seguro, desabilite o Disfarce, e ninguém saberá que era você quem estava atirando neles."
 
-L.tip16 = "Como Traidor, o Teletransportador pode te ajudar a escapar enquanto você estiver sendo perseguido, além de permitir com que você se desloque rapidamente em um grande mapa. Certifique-se de sempre ter uma posição segura marcada."
+L.tip16 = "Como Traidor, o Teletransportador pode lhe ajudar a escapar enquanto você estiver sendo perseguido, além de permitir com que você se desloque rapidamente em um grande mapa. Certifique-se de sempre ter uma posição segura marcada."
 
 L.tip17 = "Os Inocentes estão todos agrupados sendo difíceis de serem mortos? Considere experimentar o Rádio para reproduzir sons de um C4 ou de um tiroteio para fazer com que eles se desagrupem."
 
@@ -1046,7 +1046,7 @@ L.aw_tod2_text  = "morreu no começo da rodada."
 
 --- v23
 L.set_avoid_det     = "Evitar ser selecionado como Detetive"
-L.set_avoid_det_tip = "Habilite isto para solicitar ao servidor a não te selecionar como Detetive, se possível. Isso não significa que você terá mais chances de ser um Traidor."
+L.set_avoid_det_tip = "Habilite isto para solicitar ao servidor a não lhe selecionar como Detetive, se possível. Isso não significa que você terá mais chances de ser um Traidor."
 
 --- v24
 L.drop_no_ammo = "Munição insuficiente no clipe da sua arma para largar como uma caixa de munição."
