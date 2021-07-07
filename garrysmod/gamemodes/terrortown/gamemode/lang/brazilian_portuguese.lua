@@ -73,10 +73,10 @@ L.equip_status    = "Status da compra"
 L.equip_cost      = "Você tem {num} crédito(s) restante(s)."
 L.equip_help_cost = "Cada equipamento que você comprar irá custar 1 crédito."
 
-L.equip_help_carry = "Você só pode comprar coisas as quais você tenha algum slot para guardá-las."
+L.equip_help_carry = "Você só pode comprar coisas as quais você tenha algum compartimento para guardá-las."
 L.equip_carry      = "Você pode comprar este equipamento."
 L.equip_carry_own  = "Você já tem este equipamento."
-L.equip_carry_slot = "Você já tem um equipamento no slot {slot}."
+L.equip_carry_slot = "Você já tem um equipamento no compartimento {slot}."
 
 L.equip_help_stock = "Certos itens só poderão ser comprados uma única vez a cada rodada."
 L.equip_stock_deny = "Este item não está mais em estoque."
@@ -694,7 +694,7 @@ L.tip13 = "Quando você estiver perto de uma vítima ao matá-la, um pouco do se
 
 L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapidamente a amostra do seu DNA no cadáver da sua vítima irá deteriorar-se."
 
-L.tip15 = "Você é um Traidor e quer tentar matar alguém com algum rifle de precisão? Considere habilitar o Disfarce antes. Se você errar um tiro, fuja para um local seguro, desabilite o Disfarce, e ninguém saberá que era você que estava atirando neles."
+L.tip15 = "Você é um Traidor e quer tentar matar alguém com um rifle de precisão? Considere habilitar o Disfarce antes. Se você errar um tiro, fuja para um local seguro, desabilite o Disfarce, e ninguém saberá que era você que estava atirando neles."
 
 L.tip16 = "Como Traidor, o Teletransportador pode lhe ajudar a escapar enquanto você estiver sendo perseguido, além de permitir que você se desloque rapidamente em um grande mapa. Certifique-se de sempre ter uma posição segura marcada."
 
