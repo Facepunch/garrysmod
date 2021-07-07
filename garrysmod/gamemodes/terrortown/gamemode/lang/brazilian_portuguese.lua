@@ -38,8 +38,8 @@ L.credit_tr_all    = "Traidores, vocês foram recompensados com {num} crédito(s
 L.credit_kill      = "Você ganhou {num} crédito(s) por matar um {role}."
 
 --- Karma
-L.karma_dmg_full   = "Seu Karma é {amount}, então você causará dano total nesta rodada!"
-L.karma_dmg_other  = "Seu Karma é {amount}. Portanto, todo dano que você causar será reduzido em {num}%"
+L.karma_dmg_full   = "Seu Carma é {amount}, então você causará dano total nesta rodada!"
+L.karma_dmg_other  = "Seu Carma é {amount}. Portanto, todo dano que você causar será reduzido em {num}%"
 
 --- Body identification messages
 L.body_found       = "{finder} encontrou o corpo de {victim}. {role}"
@@ -96,7 +96,7 @@ L.disg_menutitle = "Controle do Disfarce"
 L.disg_not_owned = "Você não possui um Disfarce!"
 L.disg_enable    = "Habilitar Disfarce"
 
-L.disg_help1     = "Quando você está disfarçado, seu nome, saúde e karma não são exibidos quando alguém olha para você. Em adição, você será escondido dos radares dos Detetives."
+L.disg_help1     = "Quando você está disfarçado, seu nome, saúde e carma não são exibidos quando alguém olha para você. Em adição, você será escondido dos radares dos Detetives."
 L.disg_help2     = "Pressione a tecla Enter do teclado numérico para habilitar ou desabilitar o Disfarce sem usar o menu. Você também pode fazer uma bind com o comando 'ttt_toggle_disguise' usando o console."
 
 -- Radar tab in equipment menu
@@ -215,7 +215,7 @@ L.sb_confirmed  = "Mortes Confirmadas"
 L.sb_ping       = "Ping"
 L.sb_deaths     = "Mortes"
 L.sb_score      = "Pontuação"
-L.sb_karma      = "Karma"
+L.sb_karma      = "Carma"
 
 L.sb_info_help  = "Investigue o cadáver deste jogador e então você poderá rever os resultados aqui."
 
@@ -390,7 +390,7 @@ Queimar um cadáver irá reproduzir um som estranho.]]
 
 -- Health station
 L.hstation_name   = "Estação de Cura"
-L.hstation_hint   = "Pressione {usekey} para se curar. Carga: {num}."
+L.hstation_hint   = "Pressione {usekey} para curar-se. Carga: {num}."
 L.hstation_broken = "Sua Estação de Cura foi destruída!"
 L.hstation_help   = "{primaryfire} posiciona a Estação de Cura."
 
@@ -524,12 +524,12 @@ L.tele_name       = "Teletransportador"
 L.tele_failed     = "O teletransporte falhou."
 L.tele_marked     = "Local de teletransporte marcado."
 
-L.tele_no_ground  = "Você não pode se teletransportar se você não estiver em um chão sólido!"
-L.tele_no_crouch  = "Você não pode se teletransportar enquanto estiver agachado!"
-L.tele_no_mark    = "Nenhum local marcado. Marque um local para se teletransportar."
+L.tele_no_ground  = "Você não pode teletransportar-se se você não estiver em um chão sólido!"
+L.tele_no_crouch  = "Você não pode teletransportar-se enquanto estiver agachado!"
+L.tele_no_mark    = "Nenhum local marcado. Marque um local para teletransportar-se."
 
-L.tele_no_mark_ground = "Você não pode marcar um local para se teletransportar se você não estiver em um chão sólido!"
-L.tele_no_mark_crouch = "Você não pode marcar um local para se teletransportar enquanto estiver agachado!"
+L.tele_no_mark_ground = "Você não pode marcar um local para teletransportar-se se você não estiver em um chão sólido!"
+L.tele_no_mark_crouch = "Você não pode marcar um local para teletransportar-se enquanto estiver agachado!"
 
 L.tele_help_pri   = "{primaryfire} teletransporta para o local marcado."
 L.tele_help_sec   = "{secondaryfire} marca um local de teletransporte."
@@ -692,7 +692,7 @@ L.tip12 = "O Scanner de DNA dos Detetives pode ser usado para coletar amostras d
 
 L.tip13 = "Quando você estiver perto de uma vítima ao matá-la, um pouco do seu DNA será deixado no cadáver dela. Esse DNA pode ser coletado por um Scanner de DNA de um Detetive para encontrar sua localização atual. É melhor você esconder o cadáver da vítima depois de esfaqueá-la!"
 
-L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapidamente a amostra do seu DNA no cadáver da sua vítima irá se deteriorar."
+L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapidamente a amostra do seu DNA no cadáver da sua vítima irá deteriorar-se."
 
 L.tip15 = "Você é um Traidor e quer tentar matar alguém com algum rifle de precisão? Considere habilitar o Disfarce antes. Se você errar um tiro, fuja para um local seguro, desabilite o Disfarce, e ninguém saberá que era você que estava atirando neles."
 
@@ -997,7 +997,7 @@ L.aw_tkl1_text  = "pressionou o gatilho enquanto mirava em um aliado."
 L.aw_tkl2_title = "FOI SEM QUERER QUERENDO"
 L.aw_tkl2_text  = "pensou que havia matado dois Traidores, mas estava errado sobre ambos."
 
-L.aw_tkl3_title = "KARMA-A-ARMA-AÊ"
+L.aw_tkl3_title = "CARMA-A-ARMA-AÊ"
 L.aw_tkl3_text  = "não conseguiu parar depois de matar dois aliados. Três é seu número da sorte."
 
 L.aw_tkl4_title = "OS MEUS ALIADOS SÃO MEUS INIMIGOS"
