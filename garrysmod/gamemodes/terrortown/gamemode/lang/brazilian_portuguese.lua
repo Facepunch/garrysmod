@@ -141,7 +141,7 @@ L.radio_button_steps   = "Passos"
 
 
 -- Intro screen shown after joining
-L.intro_help     = "Caso você seja novato, pressione F1 para ver instruções!"
+L.intro_help     = "Caso você seja novato, pressione F1 para abrir o tutorial."
 
 -- Radiocommands/quickchat
 L.quick_title   = "Atalhos do chat"
@@ -399,7 +399,7 @@ Permite que as pessoas se curem quando posicionada.
 
 Seu tempo de recarga é lento. Qualquer um pode usá-la,
 e ela pode ser danificada. Pode ser utilizada para
-verificar as amostras de DNA dos seus utilizadores.]]
+analisar as amostras de DNA dos seus utilizadores.]]
 
 -- Knife
 L.knife_name      = "Faca"
@@ -481,7 +481,7 @@ L.dna_gone        = "Não há nenhuma amostra de DNA nesta área."
 
 L.dna_desc        = [[
 Colete amostras de DNA de objetos
-e as use para saber quem os usou.
+e analise-as para saber quem os usou.
 
 Utilize-o em terroristas recentemente mortos
 para coletar a amostra do DNA do assassino e assim
@@ -688,15 +688,15 @@ L.tip10 = "Como Traidor ou Detetive, fique de olho em mensagens vermelhas no can
 
 L.tip11 = "Como Traidor ou Detetive, tenha em mente que você será recompensado com créditos se você e seus comparsas progredirem bem. Lembre-se de gastá-los!"
 
-L.tip12 = "O Scanner de DNA dos Detetives pode ser usado para coletar amostras de DNA de armas e itens. Então, o Detetive pode usar as amostras para descobrir quem os usou. Isso é útil quando você consegue coletar uma amostra de um cadáver ou de um C4 desarmado!"
+L.tip12 = "O Scanner de DNA dos Detetives pode ser usado para coletar amostras de DNA de armas e itens. Então, o Detetive pode analisar as amostras para descobrir quem os usou. Isso é útil quando você consegue coletar uma amostra de um cadáver ou de um C4 desarmado!"
 
 L.tip13 = "Quando você estiver perto de uma vítima ao matá-la, um pouco do seu DNA será deixado no cadáver dela. Esse DNA pode ser coletado por um Scanner de DNA de um Detetive para encontrar sua localização atual. É melhor você esconder o cadáver da vítima depois de esfaqueá-la!"
 
 L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapidamente a amostra do seu DNA no cadáver da sua vítima irá se deteriorar."
 
-L.tip15 = "Você é um Traidor e quer tentar matar alguém com alguma Sniper? Considere habilitar o Disfarce antes. Se você errar um tiro, fuja para um local seguro, desabilite o Disfarce, e ninguém saberá que era você quem estava atirando neles."
+L.tip15 = "Você é um Traidor e quer tentar matar alguém com algum rifle de precisão? Considere habilitar o Disfarce antes. Se você errar um tiro, fuja para um local seguro, desabilite o Disfarce, e ninguém saberá que era você que estava atirando neles."
 
-L.tip16 = "Como Traidor, o Teletransportador pode lhe ajudar a escapar enquanto você estiver sendo perseguido, além de permitir com que você se desloque rapidamente em um grande mapa. Certifique-se de sempre ter uma posição segura marcada."
+L.tip16 = "Como Traidor, o Teletransportador pode lhe ajudar a escapar enquanto você estiver sendo perseguido, além de permitir que você se desloque rapidamente em um grande mapa. Certifique-se de sempre ter uma posição segura marcada."
 
 L.tip17 = "Os Inocentes estão todos agrupados sendo difíceis de serem mortos? Considere experimentar o Rádio para reproduzir sons de um C4 ou de um tiroteio para fazer com que eles se desagrupem."
 
@@ -710,7 +710,7 @@ L.tip21 =  "A Estação de Cura permite que jogadores feridos se curem. Mas é c
 
 L.tip22 = "A Estação de Cura armazena uma amostra do DNA de cada jogador que a utilizar. Assim, os Detetives podem utilizar o Scanner de DNA na Estação de Cura para descobrir quem andou se curando."
 
-L.tip23 = "Diferentemente de armas e do C4, o Rádio dos Traidores não contem uma amostra do DNA de quem o posicionou. Não se preocupe com Detetives encontrando sua amostra de DNA e descobrindo sua verdadeira identidade."
+L.tip23 = "Diferentemente de armas e do C4, o Rádio dos Traidores não contém uma amostra do DNA de quem o posicionou. Não se preocupe com Detetives encontrando sua amostra de DNA e descobrindo sua verdadeira identidade."
 
 L.tip24 = "Pressione {helpkey} para ver um curto tutorial ou modificar suas configurações do TTT. Por exemplo, você pode desabilitar permanentemente estas dicas lá."
 
