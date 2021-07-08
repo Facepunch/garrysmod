@@ -373,20 +373,19 @@ end
 
 function util.StringToBinary( str )
 
-	local bin = ""
-	str = str:reverse()
+	local bin = {}
 
-	for i = 1, str:len() do
-		local num = str[ i ]:byte()
+	for i = str:len(), 1, -1 do
+		local num = str:byte(i)
 		for j = 7, 0, -1 do -- 8 bits in each char
-			bin = bin .. math.floor( num / 2 ^ j )
+			bin[#bin + 1] = math.floor( num / 2 ^ j )
 			num = num % 2 ^ j
 		end
 
-		bin = bin .. " "
+		bin[#bin + 1] = " "
 	end
 
-	return bin:TrimRight()
+	return table.concat(bin)
 
 end
 
@@ -397,21 +396,20 @@ end
 
 function util.BinaryToString( binary )
 
-	binary = binary:reverse()
-	local str = ""
+	local str = {}
 
 	for byte in binary:gmatch("%S+") do
 		local dec = 0
 
 		for i = 1, 8 do
-			if ( byte[ i ] == "1" ) then
-				dec = dec + math.pow( 2, i - 1 )
+			if ( byte[ 9 - i ] == "1" ) then
+				dec = dec + 2 ^ (i - 1)
 			end
 		end
 
-		str = str .. string.char( dec )
+		str[#str + 1] = string.char( dec )
 	end
 
-	return str
+	return table.concat(str):reverse()
 
 end
