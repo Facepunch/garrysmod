@@ -365,3 +365,53 @@ function util.RemovePData( steamid, name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
 
 end
+
+--[[---------------------------------------------------------
+	Name: StringToBinary( str )
+	Desc: Converts a string to a binary string
+-----------------------------------------------------------]]
+
+function util.StringToBinary( str )
+
+	local bin = ""
+	str = str:reverse()
+
+	for i = 1, str:len() do
+		local num = str[ i ]:byte()
+		for j = 7, 0, -1 do -- 8 bits in each char
+			bin = bin .. math.floor( num / 2 ^ j )
+			num = num % 2 ^ j
+		end
+
+		bin = bin .. " "
+	end
+
+	return bin:TrimRight()
+
+end
+
+--[[---------------------------------------------------------
+	Name: BinaryToString( binary )
+	Desc: Converts a binary string to a readable string
+-----------------------------------------------------------]]
+
+function util.BinaryToString( binary )
+
+	binary = binary:reverse()
+	local str = ""
+
+	for byte in binary:gmatch("%S+") do
+		local dec = 0
+
+		for i = 1, 8 do
+			if ( byte[ i ] == "1" ) then
+				dec = dec + math.pow( 2, i - 1 )
+			end
+		end
+
+		str = str .. string.char( dec )
+	end
+
+	return str
+
+end
