@@ -141,7 +141,7 @@ L.radio_button_steps   = "Passos"
 
 
 -- Intro screen shown after joining
-L.intro_help     = "Caso você seja novato, pressione F1 para abrir o tutorial."
+L.intro_help     = "Caso você seja novato, pressione F1 para abrir o tutorial!"
 
 -- Radiocommands/quickchat
 L.quick_title   = "Atalhos do chat"
