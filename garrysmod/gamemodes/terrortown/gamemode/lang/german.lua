@@ -95,7 +95,7 @@ L.disg_menutitle = "Tarnung-Einstellungen"
 L.disg_not_owned = "Du trägst keine Tarnung!"
 L.disg_enable    = "Tarnung aktivieren"
 
-L.disg_help1     = "Wenn deine Tarnung aktiv ist, werden dein Name, Leben und Karma nicht angezeigt, wenn dich jemand anschaut. Zusätzlich tauchst du nicht auf dem Radar des Detektivs auf."
+L.disg_help1     = "Während deine Tarnung aktiv ist, werden dein Name, Leben und Karma nicht angezeigt, wenn dich jemand anschaut. Zusätzlich tauchst du nicht auf dem Radar des Detektivs auf."
 L.disg_help2     = "Drücke Enter auf dem Numpad um die Tarnung an oder aus zu schalten, ohne das Menü zu nutzen. Du kannst alternativ 'ttt_toggle_diguise' durch die Konsole auf eine andere Taste legen."
 
 -- Radar tab in equipment menu
@@ -260,8 +260,8 @@ L.set_cues            = "Spiele einen Ton ab, wenn eine Runde beginnt oder endet
 
 L.set_title_play    = "Spieleinstellungen"
 
-L.set_specmode      = "Nur-Zuschauer-Modus (bleibe immer Zuschauer)"
-L.set_specmode_tip  = "Der Nur-Zuschauer-Modus verhindert, dass du bei einer neuen Runde wieder einsteigst. Stattdessen bleibst du Zuschauer."
+L.set_specmode      = "Zuschauer-Modus (bleibe immer Zuschauer)"
+L.set_specmode_tip  = "Der Zuschauer-Modus verhindert, dass du bei einer neuen Runde wieder einsteigst. Stattdessen bleibst du Zuschauer."
 L.set_mute          = "Stelle lebende Spieler stumm, wenn du tot bist"
 L.set_mute_tip      = "Aktiviere dies, um lebende Spieler stumm zu stellen, während du tot bist oder zuschaust."
 
@@ -633,16 +633,16 @@ Drücke {menukey} um den Verräter Shop zu öffnen!]]
 --- Various other text
 L.name_kick = "Ein Spieler wurde automatisch gekickt, weil er seinen Namen während einer laufenden Runde geändert hat."
 
-L.idle_popup = [[Du warst untätig für {num} Sekunden und wurdest deshalb in den Zuschauer-Modus gesetzt. Während du in diesem Modus bist, kannst du nicht an einer neuen Runde teilnehmen.
+L.idle_popup = [[Du warst für {num} Sekunden untätig und wurdest in den Zuschauer-Modus gesetzt. Währenddessen ist es dir nicht möglich, an einer neuen Runde teilzunehmen.
 
-Du kannst den Nur-Zuschauer-Modus ausschalten, indem du {helpkey} drückst und den Haken im Einstellungsreiter rausmachst. Du kannst es aber auch jetzt sofort ausschalten.]]
+Du kannst den Zuschauer-Modus ausschalten, indem du {helpkey} drückst und den Haken in den Einstellungen entfernst. Du kannst es auch jetzt sofort ausschalten.]]
 
 L.idle_popup_close = "Nichts tun"
-L.idle_popup_off   = "Deaktiviere Nur-Zuschauer-Modus"
+L.idle_popup_off   = "Deaktiviere Zuschauer-Modus"
 
 L.idle_warning = "Warnung: Du scheinst AFK zu sein und wirst zum Zuschauer, außer du zeigst Aktivität!"
 
-L.spec_mode_warning = "Du bist im Zuschauermodus und wirst nicht spielen, wenn eine Runde beginnt. Um diesen Modus zu verlassen, drücke F1, gehe in die Einstellungen und nimm den Haken bei ‘Nur-Zuschauer-Modus’ raus."
+L.spec_mode_warning = "Du bist im Zuschauermodus und wirst nicht spielen, wenn eine Runde beginnt. Um diesen Modus zu verlassen, drücke F1, gehe in die Einstellungen und nimm den Haken bei ‘Zuschauer-Modus’ raus."
 
 
 --- Tips, shown at bottom of screen to spectators
