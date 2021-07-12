@@ -1047,3 +1047,28 @@ L.hat_retrieve = "Du hast den Hut eines Detektivs aufgehoben."
 
 --- 3-9-2017
 L.sb_sortby = "Sortiere nach:"
+
+--- 2018-07-24	
+L.equip_tooltip_main = "Ausrüstungsmenü"
+L.equip_tooltip_radar = "Radar-Einstellungen"
+L.equip_tooltip_disguise = "Tarnungs-Einstellungen"
+L.equip_tooltip_radio = "Radio-Einstellungen"
+L.equip_tooltip_xfer = "Credits transferieren"
+
+L.confgrenade_name = "Discombobulator"
+L.polter_name = "Poltergeist"
+L.stungun_name = "UMP Prototyp"
+
+L.knife_instant = "SOFORT TÖTUNG"
+
+L.dna_hud_type = "TYP"
+L.dna_hud_body = "KÖRPER"
+L.dna_hud_item = "GEGENSTAND"
+
+L.binoc_zoom_level = "NIVEAU"
+L.binoc_body = "KÖRPER GEFUNDEN"
+
+L.idle_popup_title = "Untätig"
+
+--- 2021-06-07
+L.sb_playervolume = "Spielerlautstärke"
