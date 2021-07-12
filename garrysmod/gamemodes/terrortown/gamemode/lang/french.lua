@@ -1065,7 +1065,7 @@ L.sb_sortby = "Trier Par :"
 L.equip_tooltip_main = "Menu d'Équipement"
 L.equip_tooltip_radar = "Contrôle Radar"
 L.equip_tooltip_disguise = "Contrôle Déguisement"
-L.equip_tooltip_radio = "Contrôle Radar"
+L.equip_tooltip_radio = "Contrôle Radio"
 L.equip_tooltip_xfer = "Transfert crédits"
 
 L.confgrenade_name = "Discombobulateur"
