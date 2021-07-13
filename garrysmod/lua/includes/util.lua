@@ -171,29 +171,45 @@ FORCE_STRING	= 1
 FORCE_NUMBER	= 2
 FORCE_BOOL		= 3
 
+CASING_PASCAL = 1
+CASING_CAMEL = 2
+CASING_SNAKE = 3
+CASING_UPPER_SNAKE = 4
+
+local CasingStyles = {
+	[CASING_PASCAL] = {"Get", "Set"},
+	[CASING_CAMEL] = {"get", "set"},
+	[CASING_SNAKE] = {"get_", "set_"},
+	[CASING_UPPER_SNAKE] = {"GET_", "SET_"}
+}
+
 --[[---------------------------------------------------------
 	AccessorFunc
 	Quickly make Get/Set accessor fuctions on the specified table
 -----------------------------------------------------------]]
-function AccessorFunc( tab, varname, name, iForce )
+function AccessorFunc( tab, varname, name, iForce, iCasing )
+
+	iCasing = iCasing || CASING_PASCAL
+
+	local set = CasingStyles[iCasing][2]
 
 	if ( !tab ) then debug.Trace() end
 
-	tab[ "Get" .. name ] = function( self ) return self[ varname ] end
+	tab[ CasingStyles[iCasing][1] .. name ] = function( self ) return self[ varname ] end
 
 	if ( iForce == FORCE_STRING ) then
-		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tostring( v ) end
+		tab[ set .. name ] = function( self, v ) self[ varname ] = tostring( v ) end
 	return end
 
 	if ( iForce == FORCE_NUMBER ) then
-		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tonumber( v ) end
+		tab[ set .. name ] = function( self, v ) self[ varname ] = tonumber( v ) end
 	return end
 
 	if ( iForce == FORCE_BOOL ) then
-		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tobool( v ) end
+		tab[ set .. name ] = function( self, v ) self[ varname ] = tobool( v ) end
 	return end
 
-	tab[ "Set" .. name ] = function( self, v ) self[ varname ] = v end
+	tab[ set .. name ] = function( self, v ) self[ varname ] = v end
 
 end
 
