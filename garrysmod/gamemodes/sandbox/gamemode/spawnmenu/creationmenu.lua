@@ -22,6 +22,8 @@ function PANEL:Populate()
 
 	for k, v in SortedPairsByMemberValue( tabs, "Order" ) do
 
+		if hook.Call("AddCreationTab", v, k) == false then continue end 
+		
 		--
 		-- Here we create a panel and populate it on the first paint
 		-- that way everything is created on the first view instead of
