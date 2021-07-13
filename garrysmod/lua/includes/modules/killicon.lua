@@ -36,6 +36,15 @@ function Add( name, material, color )
 
 end
 
+function AddTexture( name, texture, color )
+
+	Icons[name] = {}
+	Icons[name].type 		= TYPE_TEXTURE
+	Icons[name].texture		= texture
+	Icons[name].color 		= color
+
+end
+
 function AddAlias( name, alias )
 
 	Icons[name] = Icons[alias]
