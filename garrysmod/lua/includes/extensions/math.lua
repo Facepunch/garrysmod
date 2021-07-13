@@ -1,3 +1,4 @@
+include( "math/ease.lua" )
 
 --[[---------------------------------------------------------
 	Name: Distance( low, high )
