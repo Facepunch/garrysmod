@@ -103,3 +103,17 @@ local request = {
 HTTP( request )
 
 --]]
+
+function Promise(request)	
+	return util.Promise(function(resolve, reject)		
+		request.success = function(code, body, headers)
+			resolve({
+				code = code,
+				body = body,
+				headers = headers
+			})
+		end
+		request.failure = reject			
+		if not HTTP(request) then reject("HTTP failed") end
+	end)	
+end
