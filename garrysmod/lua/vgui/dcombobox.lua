@@ -24,6 +24,17 @@ function PANEL:Init()
 
 end
 
+-- Closes the context menu
+function PANEL:CloseMenu()
+
+	if ( IsValid( self.Menu ) ) then
+		self.Menu:Remove()
+	end
+
+	self.Menu = nil
+
+end
+
 function PANEL:Clear()
 
 	self:SetText( "" )
@@ -32,11 +43,7 @@ function PANEL:Clear()
 	self.ChoiceIcons = {}
 	self.Spacers = {}
 	self.selected = nil
-
-	if ( self.Menu ) then
-		self.Menu:Remove()
-		self.Menu = nil
-	end
+	self:CloseMenu()
 
 end
 
@@ -85,15 +92,12 @@ end
 
 function PANEL:ChooseOption( value, index )
 
-	if ( self.Menu ) then
-		self.Menu:Remove()
-		self.Menu = nil
-	end
-
+	self:CloseMenu()
 	self:SetText( value )
 
-	-- This should really be the here, but it is too late now and convar changes are handled differently by different child elements
-	--self:ConVarChanged( self.Data[ index ] )
+	-- This should really be the here, but it is too late now and convar
+	-- changes are handled differently by different child elements
+	-- self:ConVarChanged( self.Data[ index ] )
 
 	self.selected = index
 	self:OnSelect( index, value, self.Data[ index ] )
@@ -115,9 +119,11 @@ end
 
 function PANEL:GetSelected()
 
-	if ( !self.selected ) then return end
+	local id = self:GetSelectedID()
 
-	return self:GetOptionText( self.selected ), self:GetOptionData( self.selected )
+	if ( !id ) then return end
+
+	return self:GetOptionText( id ), self:GetOptionData( id )
 
 end
 
@@ -135,23 +141,53 @@ end
 
 function PANEL:AddChoice( value, data, select, icon )
 
-	local i = table.insert( self.Choices, value )
+	local id = table.insert( self.Choices, value )
 
 	if ( data ) then
-		self.Data[ i ] = data
+		self.Data[ id ] = data
 	end
-	
+
 	if ( icon ) then
-		self.ChoiceIcons[ i ] = icon
+		self.ChoiceIcons[ id ] = icon
 	end
 
 	if ( select ) then
-
-		self:ChooseOption( value, i )
-
+		self:ChooseOption( value, id )
 	end
 
-	return i
+	return id
+
+end
+
+function PANEL:RemoveChoiceID( index )
+
+	-- The second argument must be convertable to number
+	-- Removing non-positive or fractional does nothing
+	-- Entry will be removed only on positive integers
+	local name = table.remove( self.Choices, index )
+	local data = table.remove( self.Data   , index )
+	
+	return name, data -- Using the logic of `GetSelected`
+	
+end
+
+function PANEL:RemoveChoiceName( name )
+
+	local id = table.KeyFromValue( self.Choices, name )
+	self:RemoveChoiceID( id or 0 )
+
+end
+
+function PANEL:RemoveChoiceData( data )
+
+	local id = table.KeyFromValue( self.Data, data )
+	self:RemoveChoiceID( id or 0 )
+
+end
+
+function PANEL:RemoveSelected()
+
+	self:RemoveChoiceID( self:GetSelectedID() )
 
 end
 
@@ -172,10 +208,7 @@ function PANEL:OpenMenu( pControlOpener )
 
 	-- If the menu still exists and hasn't been deleted
 	-- then just close it and don't open a new one.
-	if ( IsValid( self.Menu ) ) then
-		self.Menu:Remove()
-		self.Menu = nil
-	end
+	self:CloseMenu()
 
 	self.Menu = DermaMenu( false, self )
 
@@ -211,14 +244,6 @@ function PANEL:OpenMenu( pControlOpener )
 
 	self.Menu:SetMinimumWidth( self:GetWide() )
 	self.Menu:Open( x, y, false, self )
-
-end
-
-function PANEL:CloseMenu()
-
-	if ( IsValid( self.Menu ) ) then
-		self.Menu:Remove()
-	end
 
 end
 
