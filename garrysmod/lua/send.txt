@@ -42,6 +42,7 @@ lua\includes\modules\presets.lua
 lua\includes\modules\cookie.lua
 lua\includes\modules\notification.lua
 lua\includes\modules\halo.lua
+lua\includes\modules\outline.lua
 lua\includes\gmsave.lua
 lua\includes\util\model_database.lua
 lua\includes\util\vgui_showlayout.lua
