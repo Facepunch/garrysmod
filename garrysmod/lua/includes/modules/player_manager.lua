@@ -27,9 +27,9 @@ end
 --
 -- Valid hands
 --
-function AddValidHands( name, model, skin, body )
+function AddValidHands( name, model, skin, body, matchBodySkin )
 
-	HandNames[ name ] = { model = model, skin = skin, body = body }
+	HandNames[ name ] = { model = model, skin = skin, body = body, matchBodySkin = matchBodySkin }
 
 end
 
