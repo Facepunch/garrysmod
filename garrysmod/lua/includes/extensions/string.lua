@@ -8,7 +8,7 @@ local math = math
 function string.ToTable( str )
 	local tbl = {}
 
-	for i = 1, string.len( str ) do
+	for i = 1, #str do
 		tbl[i] = string.sub( str, i, i )
 	end
 
@@ -34,11 +34,11 @@ local javascript_escape_replacements = {
 
 function string.JavascriptSafe( str )
 
-	str = str:gsub( ".", javascript_escape_replacements )
+	str = string.gsub( str, ".", javascript_escape_replacements )
 
 	-- U+2028 and U+2029 are treated as line separators in JavaScript, handle separately as they aren't single-byte
-	str = str:gsub( "\226\128\168", "\\\226\128\168" )
-	str = str:gsub( "\226\128\169", "\\\226\128\169" )
+	str = string.gsub( str, "\226\128\168", "\\\226\128\168" )
+	str = string.gsub( str, "\226\128\169", "\\\226\128\169" )
 
 	return str
 
@@ -65,7 +65,7 @@ local pattern_escape_replacements = {
 }
 
 function string.PatternSafe( str )
-	return ( str:gsub( ".", pattern_escape_replacements ) )
+	return ( string.gsub( str, ".", pattern_escape_replacements ) )
 end
 
 --[[---------------------------------------------------------
@@ -115,16 +115,14 @@ end
 	Usage: string.GetExtensionFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetExtensionFromFilename( path )
-	return path:match( "%.([^%.]+)$" )
+	return string.match( path, "%.([^%.]+)$" )
 end
 
 --[[---------------------------------------------------------
 	Name: StripExtension( path )
 -----------------------------------------------------------]]
 function string.StripExtension( path )
-	local i = path:match( ".+()%.%w+$" )
-	if ( i ) then return path:sub( 1, i - 1 ) end
-	return path
+	return string.match( path, "(.+)%." ) or path
 end
 
 --[[---------------------------------------------------------
@@ -133,7 +131,7 @@ end
 	Usage: string.GetPathFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetPathFromFilename( path )
-	return path:match( "^(.*[/\\])[^/\\]-$" ) or ""
+	return string.match( path, "(.*[/\\])" ) or ""
 end
 
 --[[---------------------------------------------------------
@@ -142,8 +140,7 @@ end
 	Usage: string.GetFileFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetFileFromFilename( path )
-	if ( !path:find( "\\" ) && !path:find( "/" ) ) then return path end 
-	return path:match( "[\\/]([^/\\]+)$" ) or ""
+	return string.match( path, "[\\/]([^/\\]+)$" ) or path
 end
 
 --[[-----------------------------------------------------------------
