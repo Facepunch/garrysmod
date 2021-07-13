@@ -249,8 +249,7 @@ end
 	Convert Var to Bool
 -----------------------------------------------------------]]
 function tobool( val )
-	if ( val == nil || val == false || val == 0 || val == "0" || val == "false" ) then return false end
-	return true
+	return !(!val) || val != 0 || val != "0" || val != "false"
 end
 
 --[[---------------------------------------------------------
