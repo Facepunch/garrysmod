@@ -700,7 +700,7 @@ L.tip16 = "Como Traidor, o Teletransportador pode lhe ajudar a escapar enquanto 
 
 L.tip17 = "Os Inocentes estão todos agrupados sendo difíceis de serem mortos? Considere experimentar o Rádio para reproduzir sons de um C4 ou de um tiroteio para fazer com que eles se desagrupem."
 
-L.tip18 = "Ao usar o Rádio como Traidor, você pode reproduzir sons através do seu Menu de Equipamentos depois do rádio ser posicionado. Coloque vários sons para serem reproduzidos em sequência ao clicar nos botões usando a ordem que você desejar."
+L.tip18 = "Ao usar o Rádio como Traidor, você pode reproduzir sons através do seu Menu de Equipamento depois que o Rádio for posicionado. Coloque vários sons para serem reproduzidos em sequência ao clicar nos botões usando a ordem desejada."
 
 L.tip19 = "Como Detetive, se você estiver com alguns créditos sobrando, você pode dar um Kit de Desarme para um Inocente confiável. Assim, você pode gastar seu tempo com um trabalho mais sério de investigação enquanto você deixa a missão arriscada de desarmamento para ele."
 
@@ -1001,7 +1001,7 @@ L.aw_tkl3_title = "CARMA-A-ARMA-AÊ"
 L.aw_tkl3_text  = "não conseguiu parar depois de matar dois aliados. Três é seu número da sorte."
 
 L.aw_tkl4_title = "OS MEUS ALIADOS SÃO MEUS INIMIGOS"
-L.aw_tkl4_text  = "matou toda a sua equipe. OLOKINHO MEU."
+L.aw_tkl4_text  = "matou toda a sua equipe. PIMBA!"
 
 L.aw_tkl5_title = "PAPÉIS DIFERENTES"
 L.aw_tkl5_text  = "estava interpretando um louco honesto. E é por isso que ele matou quase toda a sua equipe."
