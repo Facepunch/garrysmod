@@ -887,7 +887,7 @@ L.aw_nkt4_title = "O LOBO ENTRE LOBOS QUE MAIS PARECEM OVELHAS"
 L.aw_nkt4_text  = "comeu terroristas inocentes no jantar. Um jantar de {num} pratos."
 
 L.aw_nkt5_title = "OPERAÇÃO CONTRA-TERRORISTA"
-L.aw_nkt5_text  = "é pago por cada assassinato. Já pode comprar outro iate luxuoso."
+L.aw_nkt5_text  = "é pago por cada assassinato. Agora já pode comprar outro iate luxuoso."
 
 L.aw_nki1_title = "TRAIA ISSO"
 L.aw_nki1_text  = "achou um Traidor. Atirou num Traidor. Fácil."
@@ -899,7 +899,7 @@ L.aw_nki3_title = "TRAIDORES CONTAM CARNEIRINHOS?"
 L.aw_nki3_text  = "colocou três Traidores para dormir."
 
 L.aw_nki4_title = "FUNCIONÁRIO DE ASSUNTOS INTERNOS"
-L.aw_nki4_text  = "é pago por cada assassinato. Agora já pode comprar sua quinquagésima piscina olímpica."
+L.aw_nki4_text  = "é pago por cada assassinato. Agora já pode encomendar sua quinta piscina olímpica."
 
 L.aw_fal1_title = "NÃO, SR. BOND, ESPERO QUE VOCÊ CAIA"
 L.aw_fal1_text  = "empurrou alguém de um lugar alto."
@@ -925,7 +925,7 @@ L.aw_cbr1_text  = "descobriu que esse é o barulho que o Pé de Cabra faz ao mat
 L.aw_cbr2_title = "FREEMAN"
 L.aw_cbr2_text  = "cobriu seu Pé de Cabra com nada menos do que {num} cérebros."
 
-L.aw_pst1_title = "INSETO PEQUENO PERSISTENTE"
+L.aw_pst1_title = "PEQUENO INSETO PERSISTENTE"
 L.aw_pst1_text  = "marcou {num} mortes usando uma pistola. Logo após, ele abraçou alguém até a morte."
 
 L.aw_pst2_title = "CHACINA DE PEQUENO CALIBRE"
