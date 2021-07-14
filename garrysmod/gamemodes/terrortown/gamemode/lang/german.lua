@@ -91,7 +91,7 @@ L.equip_confirm    = "Ausrüstung kaufen"
 
 -- Disguiser tab in equipment menu
 L.disg_name      = "Tarnung"
-L.disg_menutitle = "Tarnung-Einstellungen"
+L.disg_menutitle = "Tarnungs-Einstellungen"
 L.disg_not_owned = "Du trägst keine Tarnung!"
 L.disg_enable    = "Tarnung aktivieren"
 
@@ -635,7 +635,7 @@ L.name_kick = "Ein Spieler wurde automatisch gekickt, weil er seinen Namen währ
 
 L.idle_popup = [[Du warst für {num} Sekunden untätig und wurdest in den Zuschauer-Modus gesetzt. Währenddessen ist es dir nicht möglich, an einer neuen Runde teilzunehmen.
 
-Du kannst den Zuschauer-Modus ausschalten, indem du {helpkey} drückst und den Haken in den Einstellungen entfernst. Du kannst es auch jetzt sofort ausschalten.]]
+Du kannst den Zuschauer-Modus ausschalten, indem du {helpkey} drückst und den Haken in den Einstellungen entfernst. Du kannst ihn aber auch jetzt ausschalten.]]
 
 L.idle_popup_close = "Nichts tun"
 L.idle_popup_off   = "Deaktiviere Zuschauer-Modus"
@@ -1053,13 +1053,13 @@ L.equip_tooltip_main = "Ausrüstungsmenü"
 L.equip_tooltip_radar = "Radar-Einstellungen"
 L.equip_tooltip_disguise = "Tarnungs-Einstellungen"
 L.equip_tooltip_radio = "Radio-Einstellungen"
-L.equip_tooltip_xfer = "Credits transferieren"
+L.equip_tooltip_xfer = "Credits übertragen"
 
 L.confgrenade_name = "Discombobulator"
 L.polter_name = "Poltergeist"
 L.stungun_name = "UMP Prototyp"
 
-L.knife_instant = "SOFORT TÖTUNG"
+L.knife_instant = "SOFORTIGE TÖTUNG"
 
 L.dna_hud_type = "TYP"
 L.dna_hud_body = "KÖRPER"
@@ -1071,4 +1071,4 @@ L.binoc_body = "KÖRPER GEFUNDEN"
 L.idle_popup_title = "Untätig"
 
 --- 2021-06-07
-L.sb_playervolume = "Spielerlautstärke"
+L.sb_playervolume = "Lautstärke"
