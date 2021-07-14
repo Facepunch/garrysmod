@@ -354,8 +354,8 @@ L.vis_desc        = [[
 Permite visualizar uma cena de crime.
 
 Analisa um cadáver para mostrar como
-a vítima foi morta, mas somente se
-ela morreu para ferimentos de balas.]]
+a vítima morreu, mas somente se
+ela tiver morrido por ferimentos de armas de fogo.]]
 
 -- Decoy
 L.decoy_name      = "Isca"
@@ -706,7 +706,7 @@ L.tip19 = "Como Detetive, se você estiver com alguns créditos sobrando, você 
 
 L.tip20 = "Os Binóculos dos Detetives permitem localizar e identificar cadáveres à distância. Más notícias se os Traidores estiverem usando um cadáver como uma isca. Mas é claro que, quando um Detetive estiver usando os Binóculos, ele estará desarmado e distraído..."
 
-L.tip21 =  "A Estação de Cura permite que jogadores feridos se curem. Mas é claro que, os jogadores feridos podem ser Traidores..."
+L.tip21 = "A Estação de Cura permite que jogadores feridos se curem. Mas é claro que, os jogadores feridos podem ser Traidores..."
 
 L.tip22 = "A Estação de Cura armazena uma amostra do DNA de cada jogador que a utilizar. Assim, os Detetives podem utilizar o Scanner de DNA na Estação de Cura para descobrir quem andou se curando."
 
