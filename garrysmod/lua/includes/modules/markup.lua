@@ -3,11 +3,11 @@ local string = string
 local table = table
 local surface = surface
 local tostring = tostring
-local pairs = pairs
+local ipairs = ipairs
 local setmetatable = setmetatable
 local math = math
 local utf8 = utf8
-local Color = Color
+local _Color = Color
 
 local MarkupObject = {}
 MarkupObject.__index = MarkupObject
@@ -24,6 +24,28 @@ TEXT_ALIGN_CENTER	= 1
 TEXT_ALIGN_RIGHT	= 2
 TEXT_ALIGN_TOP		= 3
 TEXT_ALIGN_BOTTOM	= 4
+
+--[[---------------------------------------------------------
+	Name: Color(Color(r, g, b, a))
+	Desc: Convenience function which converts a Color object into a string
+	      which can be used in the <color=r,g,b,a></color> tag
+
+	      e.g. Color(255, 0, 0, 150) -> 255,0,0,150
+	           Color(255, 0, 0)      -> 255,0,0
+	           Color(255, 0, 0, 255) -> 255,0,0
+
+	Usage: markup.Color(Color(r, g, b, a))
+-----------------------------------------------------------]]
+function Color( col )
+	return
+		col.r .. "," ..
+		col.g .. "," ..
+		col.b ..
+		-- If the alpha value is 255, we don't need to include it in the <color> tag, so just omit it:
+		( col.a == 255 and "" or ( "," .. col.a ) )
+end
+
+local Color = _Color
 
 --[[---------------------------------------------------------
 	Name: Temporary information used when building text frames.
@@ -174,6 +196,15 @@ function MarkupObject:GetWidth()
 end
 
 --[[---------------------------------------------------------
+	Name: MarkupObject:GetMaxWidth()
+	Desc: Returns the maximum width of a markup block
+	Usage: ml:GetMaxWidth()
+-----------------------------------------------------------]]
+function MarkupObject:GetMaxWidth()
+	return self.maxWidth or self.totalWidth
+end
+
+--[[---------------------------------------------------------
 	Name: MarkupObject:GetHeight()
 	Desc: Returns the height of a markup block
 	Usage: ml:GetHeight()
@@ -188,14 +219,14 @@ end
 
 --[[---------------------------------------------------------
 	Name: MarkupObject:Draw(xOffset, yOffset, halign, valign, alphaoverride)
-	Desc: Draw the markup text to the screen as position
-		  xOffset, yOffset. Halign and Valign can be used
-		  to align the text. Alphaoverride can be used to override
-		  the alpha value of the text-colour.
+	Desc: Draw the markup text to the screen as position xOffset, yOffset.
+		  Halign and Valign can be used to align the text relative to its offset.
+		  Alphaoverride can be used to override the alpha value of the text-colour.
+		  textAlign can be used to align the actual text inside of its bounds.
 	Usage: MarkupObject:Draw(100, 100)
 -----------------------------------------------------------]]
-function MarkupObject:Draw( xOffset, yOffset, halign, valign, alphaoverride )
-	for i, blk in pairs( self.blocks ) do
+function MarkupObject:Draw( xOffset, yOffset, halign, valign, alphaoverride, textAlign )
+	for i, blk in ipairs( self.blocks ) do
 		local y = yOffset + ( blk.height - blk.thisY ) + blk.offset.y
 		local x = xOffset
 
@@ -214,9 +245,39 @@ function MarkupObject:Draw( xOffset, yOffset, halign, valign, alphaoverride )
 
 		surface.SetFont( blk.font )
 		surface.SetTextColor( blk.colour.r, blk.colour.g, blk.colour.b, alpha )
+
 		surface.SetTextPos( x, y )
+		if ( textAlign ~= TEXT_ALIGN_LEFT and self.maxWidth ) then
+			local lineWidth = self.lineWidths[ blk.offset.y ]
+			if ( lineWidth ) then
+				if ( textAlign == TEXT_ALIGN_CENTER ) then
+					surface.SetTextPos( x + ( ( self.maxWidth - lineWidth ) / 2 ), y )
+				elseif ( textAlign == TEXT_ALIGN_RIGHT ) then
+					surface.SetTextPos( x + ( self.maxWidth - lineWidth ), y )
+				end
+			end
+		end
+
 		surface.DrawText( blk.text )
 	end
+end
+
+--[[---------------------------------------------------------
+	Name: Escape(str)
+	Desc: Converts a string to its escaped, markup-safe equivalent
+	Usage: markup.Escape("<font=Default>The font will remain unchanged & these < > & symbols will also appear normally</font>")
+-----------------------------------------------------------]]
+local escapeEntities, unescapeEntities = {
+	["&"] = "&amp;",
+	["<"] = "&lt;",
+	[">"] = "&gt;"
+}, {
+	["&amp;"] = "&",
+	["&lt;"] = "<",
+	["&gt;"] = ">"
+}
+function Escape( str )
+	return ( string.gsub( tostring( str ), "[&<>]", escapeEntities ) )
 end
 
 --[[---------------------------------------------------------
@@ -227,7 +288,8 @@ end
 		  \n and \t are also available to move to the next line,
 		  or insert a tab character.
 		  Maxwidth can be used to make the text wrap to a specific
-		  width.
+		  width and allows for text alignment (e.g. centering) inside
+		  the bounds.
 	Usage: markup.Parse("<font=Default>changed font</font>\n<colour=255,0,255,255>changed colour</colour>")
 -----------------------------------------------------------]]
 function Parse( ml, maxwidth )
@@ -251,18 +313,18 @@ function Parse( ml, maxwidth )
 	local thisMaxY = 0
 	local new_block_list = {}
 	local ymaxes = {}
+	local lineWidths = {}
 
 	local lineHeight = 0
-	for i, blk in pairs( blocks ) do
+	for i, blk in ipairs( blocks ) do
 
-		surface.SetFont( blocks[ i ].font )
+		surface.SetFont( blk.font )
+		
+		blk.text = string.gsub( blk.text, "(&.-;)", unescapeEntities )
 
 		local thisY = 0
 		local curString = ""
-		blocks[ i ].text = string.gsub( blocks[i].text, "&gt;", ">" )
-		blocks[ i ].text = string.gsub( blocks[i].text, "&lt;", "<" )
-		blocks[ i ].text = string.gsub( blocks[i].text, "&amp;", "&" )
-		for j, c in utf8.codes( blocks[ i ].text ) do
+		for j, c in utf8.codes( blk.text ) do
 
 			local ch = utf8.char( c )
 
@@ -276,17 +338,19 @@ function Parse( ml, maxwidth )
 				end
 
 				if ( string.len( curString ) > 0 ) then
-					local x1, y1 = surface.GetTextSize( curString )
+					local x1 = surface.GetTextSize( curString )
 
-					local new_block = {}
-					new_block.text = curString
-					new_block.font = blocks[ i ].font
-					new_block.colour = blocks[ i ].colour
-					new_block.thisY = thisY
-					new_block.thisX = x1
-					new_block.offset = {}
-					new_block.offset.x = xOffset
-					new_block.offset.y = yOffset
+					local new_block = {
+						text = curString,
+						font = blk.font,
+						colour = blk.colour,
+						thisY = thisY,
+						thisX = x1,
+						offset = {
+							x = xOffset,
+							y = yOffset
+						}
+					}
 					table.insert( new_block_list, new_block )
 					if ( xOffset + x1 > xMax ) then
 						xMax = xOffset + x1
@@ -303,31 +367,48 @@ function Parse( ml, maxwidth )
 			elseif ( ch == "\t" ) then
 
 				if ( string.len( curString ) > 0 ) then
-					local x1, y1 = surface.GetTextSize( curString )
+					local x1 = surface.GetTextSize( curString )
 
-					local new_block = {}
-					new_block.text = curString
-					new_block.font = blocks[ i ].font
-					new_block.colour = blocks[ i ].colour
-					new_block.thisY = thisY
-					new_block.thisX = x1
-					new_block.offset = {}
-					new_block.offset.x = xOffset
-					new_block.offset.y = yOffset
+					local new_block = {
+						text = curString,
+						font = blk.font,
+						colour = blk.colour,
+						thisY = thisY,
+						thisX = x1,
+						offset = {
+							x = xOffset,
+							y = yOffset
+						}
+					}
 					table.insert( new_block_list, new_block )
 					if ( xOffset + x1 > xMax ) then
 						xMax = xOffset + x1
 					end
 				end
+				
+				curString = ""
 
 				local xOldSize = xSize
 				xSize = 0
-				curString = ""
 				local xOldOffset = xOffset
 				xOffset = math.ceil( ( xOffset + xOldSize ) / 50 ) * 50
 
 				if ( xOffset == xOldOffset ) then
 					xOffset = xOffset + 50
+					
+					if ( maxwidth and xOffset > maxwidth ) then
+						-- Needs a new line
+						if ( thisY == 0 ) then
+							thisY = lineHeight
+							thisMaxY = lineHeight
+						else
+							lineHeight = thisY
+						end
+						xOffset = 0
+						yOffset = yOffset + thisMaxY
+						thisY = 0
+						thisMaxY = 0
+					end
 				end
 			else
 				local x, y = surface.GetTextSize( ch )
@@ -339,7 +420,6 @@ function Parse( ml, maxwidth )
 
 						-- need to: find the previous space in the curString
 						--          if we can't find one, take off the last character
-						--          and add a -. add the character to ch
 						--          and insert as a new block, incrementing the y etc
 
 						local lastSpacePos = string.len( curString )
@@ -350,44 +430,61 @@ function Parse( ml, maxwidth )
 							end
 						end
 
-						if ( lastSpacePos == string.len( curString ) && lastSpacePos > 0 ) then
-							local sequenceStartPos = utf8.offset( curString, 0, lastSpacePos )
-							ch = string.match( curString, utf8.charpattern, sequenceStartPos ) .. ch
-							j = utf8.offset( curString, 1, sequenceStartPos )
-							curString = string.sub( curString, 1, sequenceStartPos - 1 )
+						local previous_block = new_block_list[ #new_block_list ]
+						local wrap = lastSpacePos == string.len( curString ) && lastSpacePos > 0
+						if ( previous_block and previous_block.text:match(" $") and wrap and surface.GetTextSize( blk.text ) < maxwidth ) then
+							-- If the block was preceded by a space, wrap the block onto the next line first, as we can probably fit it there
+							local trimmed, trimCharNum = previous_block.text:gsub(" +$", "")
+							if ( trimCharNum > 0 ) then
+								previous_block.text = trimmed
+								previous_block.thisX = surface.GetTextSize( previous_block.text )
+							end
 						else
-							ch = string.sub( curString, lastSpacePos + 1 ) .. ch
-							j = lastSpacePos + 1
-							curString = string.sub( curString, 1, lastSpacePos )
-						end
+							if ( wrap ) then
+								-- If the block takes up multiple lines (and has no spaces), split it up
+								local sequenceStartPos = utf8.offset( curString, 0, lastSpacePos )
+								ch = string.match( curString, utf8.charpattern, sequenceStartPos ) .. ch
+								j = utf8.offset( curString, 1, sequenceStartPos )
+								curString = string.sub( curString, 1, sequenceStartPos - 1 )
+							else
+								-- Otherwise, strip the trailing space and start a new line
+								ch = string.sub( curString, lastSpacePos + 1 ) .. ch
+								j = lastSpacePos + 1
+								curString = string.sub( curString, 1, math.max( lastSpacePos - 1, 0 ) )
+							end
 
-						local m = 1
-						while string.sub( ch, m, m ) == " " do
-							m = m + 1
-						end
-						ch = string.sub( ch, m )
+							local m = 1
+							while string.sub( ch, m, m ) == " " do
+								m = m + 1
+							end
+							ch = string.sub( ch, m )
 
-						local x1,y1 = surface.GetTextSize( curString )
+							local x1,y1 = surface.GetTextSize( curString )
 
-						if ( y1 > thisMaxY ) then
-							thisMaxY = y1
-							ymaxes[ yOffset ] = thisMaxY
-							lineHeight = y1
-						end
+							if ( y1 > thisMaxY ) then
+								thisMaxY = y1
+								ymaxes[ yOffset ] = thisMaxY
+								lineHeight = y1
+							end
 
-						local new_block = {}
-						new_block.text = curString
-						new_block.font = blocks[ i ].font
-						new_block.colour = blocks[ i ].colour
-						new_block.thisY = thisY
-						new_block.thisX = x1
-						new_block.offset = {}
-						new_block.offset.x = xOffset
-						new_block.offset.y = yOffset
-						table.insert( new_block_list, new_block )
+							local new_block = {
+								text = curString,
+								font = blk.font,
+								colour = blk.colour,
+								thisY = thisY,
+								thisX = x1,
+								offset = {
+									x = xOffset,
+									y = yOffset
+								}
+							}
+							table.insert( new_block_list, new_block )
 
-						if ( xOffset + x1 > xMax ) then
-							xMax = xOffset + x1
+							if ( xOffset + x1 > xMax ) then
+								xMax = xOffset + x1
+							end
+
+							curString = ""
 						end
 
 						xOffset = 0
@@ -395,7 +492,6 @@ function Parse( ml, maxwidth )
 						x, y = surface.GetTextSize( ch )
 						yOffset = yOffset + thisMaxY
 						thisY = 0
-						curString = ""
 						thisMaxY = 0
 					end
 				end
@@ -415,17 +511,19 @@ function Parse( ml, maxwidth )
 
 		if ( string.len( curString ) > 0 ) then
 
-			local x1, y1 = surface.GetTextSize( curString )
+			local x1 = surface.GetTextSize( curString )
 
-			local new_block = {}
-			new_block.text = curString
-			new_block.font = blocks[ i ].font
-			new_block.colour = blocks[ i ].colour
-			new_block.thisY = thisY
-			new_block.thisX = x1
-			new_block.offset = {}
-			new_block.offset.x = xOffset
-			new_block.offset.y = yOffset
+			local new_block = {
+				text = curString,
+				font = blk.font,
+				colour = blk.colour,
+				thisY = thisY,
+				thisX = x1,
+				offset = {
+					x = xOffset,
+					y = yOffset
+				}
+			}
 			table.insert( new_block_list, new_block )
 
 			lineHeight = thisY
@@ -439,17 +537,21 @@ function Parse( ml, maxwidth )
 	end
 
 	local totalHeight = 0
-	for i, blk in pairs( new_block_list ) do
-		new_block_list[ i ].height = ymaxes[ new_block_list[ i ].offset.y ]
+	for i, blk in ipairs( new_block_list ) do
+		blk.height = ymaxes[ blk.offset.y ]
 
-		if ( new_block_list[ i ].offset.y + new_block_list[ i ].height > totalHeight ) then
-			totalHeight = new_block_list[ i ].offset.y + new_block_list[ i ].height
+		if ( blk.offset.y + blk.height > totalHeight ) then
+			totalHeight = blk.offset.y + blk.height
 		end
+
+		lineWidths[ blk.offset.y ] = math.max( lineWidths[ blk.offset.y ] or 0, blk.offset.x + blk.thisX )
 	end
 
 	return setmetatable( {
 		totalHeight = totalHeight,
 		totalWidth = xMax,
+		maxWidth = maxwidth,
+		lineWidths = lineWidths,
 		blocks = new_block_list
 	}, MarkupObject )
 end
