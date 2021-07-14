@@ -328,3 +328,57 @@ local function SpawnMenuOpenGUIMouseReleased()
 end
 
 hook.Add( "GUIMouseReleased", "SpawnMenuOpenGUIMouseReleased", SpawnMenuOpenGUIMouseReleased )
+
+--[[---------------------------------------------------------
+	Handle spawn menu language switching
+
+	- The spawn menu needs to be recreated ("refreshed") after a language switch
+
+	- We SHOULDN'T refresh it if the user has unsaved changes to their spawn list (these would be lost!)
+	- We SHOULDN'T refresh it if the user has the spawn menu open (that would be bad user experience)
+	- But, we SHOULD refresh it if the user saves or reverts any changes and closes the spawn menu
+
+	- What if the user switches BACK to the original language they were using? Surely, a refresh is not needed now?
+		- No, in this case we should still refresh the spawn menu because some text and labels do actually update during use of the spawn menu and might be left "dirty"
+-----------------------------------------------------------]]
+local function SpawnMenuLanguageChanged()
+	if ( !IsValid( g_SpawnMenu ) ) then return end
+
+	if ( g_SpawnMenu.m_UnsavedModifications || g_SpawnMenu:IsVisible() ) then
+		-- If there are unsaved modifications, or the spawn menu is somehow open, mark the spawn menu for recreation when the opportunity arises
+		g_SpawnMenu.m_NeedsLanguageRefresh = true
+	else
+		-- If there are no unsaved modifications, and the spawn menu isn't open, we can go ahead and safely refresh the spawn menu
+		CreateSpawnMenu()
+	end
+end
+-- When gmod_language changes, call SpawnMenuLanguageChanged
+cvars.AddChangeCallback( "gmod_language", SpawnMenuLanguageChanged, "spawnmenu_reload" )
+
+local function ProtectSpawnMenuChanges()
+	if ( !IsValid( g_SpawnMenu ) ) then return end
+
+	-- Mark the spawn menu as having unsaved modifications
+	g_SpawnMenu.m_UnsavedModifications = true
+end
+hook.Add( "SpawnlistContentChanged", "ProtectSpawnMenuChanges", ProtectSpawnMenuChanges )
+
+local function SpawnMenuChangesFinished()
+	if ( !IsValid( g_SpawnMenu ) ) then return end
+
+	-- Mark the spawn menu as no longer having unsaved modifications
+	g_SpawnMenu.m_UnsavedModifications = nil
+end
+hook.Add( "OnRevertSpawnlist", "SpawnMenuChangesFinished", SpawnMenuChangesFinished )
+hook.Add( "OnSaveSpawnlist", "SpawnMenuChangesFinished", SpawnMenuChangesFinished )
+
+local function SpawnMenuLanguageRefresh()
+	if ( !IsValid( g_SpawnMenu ) ) then return end
+
+	-- When the spawn menu is closed, check if it needs a language refresh. If it has no unsaved modifications, refresh it!
+	if ( !g_SpawnMenu.m_UnsavedModifications && g_SpawnMenu.m_NeedsLanguageRefresh ) then
+		g_SpawnMenu.m_NeedsLanguageRefresh = nil
+		CreateSpawnMenu()
+	end
+end
+hook.Add( "OnSpawnMenuClose", "SpawnMenuLanguageRefresh", SpawnMenuLanguageRefresh )
