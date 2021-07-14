@@ -320,11 +320,19 @@ function PANEL:AboveLayout()
 
 	local ent = self.ModelPanel:GetEntity()
 	local pos = ent:GetPos()
-	local campos = pos + Vector( 0, 0, 200 )
+	local ang, campos
+	
+	if (ent:GetSequence() != 0) and (#ent:GetSequenceList() > 1) then
+		campos = pos + Vector( 150, 0, 50 )
+		ang = Angle(10, 180, 0)
+	else
+		campos = pos + Vector( 200, 0, 0 )
+		ang = Angle(0, 180, 0)
+	end
 
 	self.ModelPanel:SetCamPos( campos )
 	self.ModelPanel:SetFOV( 45 )
-	self.ModelPanel:SetLookAng( ( campos * -1 ):Angle() )
+	self.ModelPanel:SetLookAng( ang )
 
 end
 
