@@ -71,7 +71,7 @@ L.equip_tabtitle  = "Adquirir Equipamento"
 
 L.equip_status    = "Status da compra"
 L.equip_cost      = "Você tem {num} crédito(s) restante(s)."
-L.equip_help_cost = "Cada equipamento que você comprar irá custar 1 crédito."
+L.equip_help_cost = "Cada equipamento que você comprar custará 1 crédito."
 
 L.equip_help_carry = "Você só pode comprar coisas as quais você tenha algum compartimento para guardá-las."
 L.equip_carry      = "Você pode comprar este equipamento."
@@ -198,7 +198,7 @@ L.search_dmg_other  = "Você não pôde encontrar uma causa específica da morte
 L.search_weapon = "Aparentemente, um(a) {weapon} foi usado(a) para matá-lo."
 L.search_head   = "O disparo foi direto na cabeça. A vítima não teve tempo para gritar."
 L.search_time   = "Ele morreu aproximadamente após {time} antes de seu cadáver ser encontrado."
-L.search_dna    = "Recupere uma amostra do DNA do assassino utilizando um Scanner de DNA. A amostra do DNA irá sumir em aproximadamente {time} a partir de agora."
+L.search_dna    = "Recupere uma amostra do DNA do assassino utilizando um Scanner de DNA. A amostra do DNA sumirá em aproximadamente {time} a partir de agora."
 
 L.search_kills1 = "Você encontrou uma lista de assassinatos que comprovam a morte de {player}."
 L.search_kills2 = "Você encontrou uma lista de assassinatos com estes nomes:"
@@ -253,9 +253,9 @@ L.set_lowsights_tip   = "Habilite esta opção para posicionar sua arma na parte
 L.set_fastsw          = "Troca rápida de arma"
 L.set_fastsw_tip      = "Habilite esta opção para trocar de arma sem precisar realizar uma confirmação com um clique. Habilite a opção de mostrar o menu para deixar o menu de troca de armas visível enquanto você troca de arma."
 L.set_fastsw_menu     = "Habilitar o menu com a troca rápida de arma"
-L.set_fastswmenu_tip  = "Quando a troca rápida de arma está ativada, o popup do menu de troca de armas irá aparecer."
+L.set_fastswmenu_tip  = "Quando a troca rápida de arma está ativada, o popup do menu de troca de armas aparecerá."
 L.set_wswitch         = "Desabilitar fechamento automático do menu de troca de armas"
-L.set_wswitch_tip     = "Por padrão, o menu de troca de armas irá fechar automaticamente após alguns segundos de sua última troca de arma. Habilite isto para o menu nunca fechar."
+L.set_wswitch_tip     = "Por padrão, o menu de troca de armas fechará automaticamente após alguns segundos de sua última troca de arma. Habilite isto para o menu nunca fechar."
 L.set_cues            = "Reproduzir um barulho quando uma rodada começar ou terminar"
 
 
@@ -386,7 +386,7 @@ L.flare_desc      = [[
 Pode ser usado para queimar cadáveres para que
 eles nunca sejam encontrados. Munição limitada.
 
-Queimar um cadáver irá reproduzir um som estranho.]]
+Queimar um cadáver reproduzirá um som estranho.]]
 
 -- Health station
 L.hstation_name   = "Estação de Cura"
@@ -668,7 +668,7 @@ L.tips_panel_tip   = "Dica:"
 
 L.tip1 = "Traidores podem investigar cadáveres furtivamente, sem confirmar a morte deles, ao segurar {walkkey} e pressionar {usekey} no cadáver."
 
-L.tip2 = "Armar um explosivo C4 com um longo tempo de duração irá aumentar o número de fios que causarão sua detonação instantânea quando um inocente tentar desarmá-lo. Ele também emitirá um bipe mais suave e com menos frequência."
+L.tip2 = "Armar um explosivo C4 com um longo tempo de duração aumentará o número de fios que causarão sua detonação instantânea quando um inocente tentar desarmá-lo. Ele também emitirá um bipe mais suave e com menos frequência."
 
 L.tip3 = "Detetives podem investigar cadáveres para descobrir quem estava 'refletindo em seus olhos'. Essa é a última pessoa que o terrorista morto viu. Isso não necessariamente indica quem é o assassino, pois o terrorista pode ter sido baleado pelas costas."
 
@@ -692,7 +692,7 @@ L.tip12 = "O Scanner de DNA dos Detetives pode ser usado para coletar amostras d
 
 L.tip13 = "Quando você estiver perto de uma vítima ao matá-la, um pouco do seu DNA será deixado no cadáver dela. Esse DNA pode ser coletado por um Scanner de DNA de um Detetive para encontrar sua localização atual. É melhor você esconder o cadáver da vítima depois de esfaqueá-la!"
 
-L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapidamente a amostra do seu DNA no cadáver da sua vítima irá deteriorar-se."
+L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapidamente a amostra do seu DNA no cadáver da sua vítima vai deteriorar-se."
 
 L.tip15 = "Você é um Traidor e quer tentar matar alguém com um rifle de precisão? Considere habilitar o Disfarce antes. Se você errar um tiro, fuja para um local seguro, desabilite o Disfarce, e ninguém saberá que era você que estava atirando neles."
 
@@ -728,9 +728,9 @@ L.tip30 = "Os atalhos do chat ou comandos do 'rádio' podem ser utilizados ao pr
 
 L.tip31 = "Como Espectador, pressione {duckkey} para destravar o cursor do seu mouse e ser possibilitado de clicar neste painel de dicas. Pressione {duckkey} novamente para voltar à visualização normal."
 
-L.tip32 = "O ataque alternativo do Pé de Cabra irá empurrar outros jogadores."
+L.tip32 = "O ataque alternativo do Pé de Cabra empurrará outros jogadores."
 
-L.tip33 = "Atirar usando a retícula de ferro de uma arma irá levemente aumentar sua precisão e diminuir o seu recuo. Agachar-se não fará diferença."
+L.tip33 = "Atirar usando a retícula de ferro de uma arma aumentará levemente a sua precisão e diminuirá o seu recuo. Agachar-se não fará diferença."
 
 L.tip34 = "Granadas de fumaça são eficazes em ambientes fechados, especialmente para criar confusão em salas lotadas."
 
@@ -742,7 +742,7 @@ L.tip37 = "No placar, clique no nome de um jogador vivo e então você poderá m
 
 L.tip38 = "A maioria dos equipamentos especiais posicionáveis (como o C4, o Rádio, entre outros) podem ser presos nas paredes ao usar o botão de ataque alternativo."
 
-L.tip39 = "Um explosivo C4 que explodir devido à uma falha no seu desarmamento irá emitir uma explosão menor do que um explosivo C4 que explodir devido ao seu temporizador ter chegado a zero."
+L.tip39 = "Um explosivo C4 que explodir devido a uma falha no seu desarmamento emitirá uma explosão menor do que um explosivo C4 que explodir devido ao seu temporizador ter chegado a zero."
 
 L.tip40 = "Caso esteja escrito 'MODO PRESSA' acima do tempo da rodada, a rodada terá inicialmente apenas alguns minutos, mas a cada morte o tempo restante aumentará (como capturar um ponto no TF2). Esse modo pressiona os Traidores para que eles mantenham as coisas em movimento."
 
