@@ -1,4 +1,4 @@
-
+local color_purple = Color( 255, 160, 255 )
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bScrollbars",	"Scrollbars",	FORCE_BOOL )
@@ -23,7 +23,7 @@ function PANEL:Think()
 
 	if ( self.JS && !self:IsLoading() ) then
 
-		for k, v in pairs( self.JS ) do
+		for k, v in ipairs( self.JS ) do
 
 			self:RunJavascript( v )
 
@@ -53,8 +53,8 @@ function PANEL:QueueJavascript( js )
 	end
 
 	self.JS = self.JS or {}
-
-	table.insert( self.JS, js )
+	self.JS[self.JS + 1] = js
+	
 	self:Think()
 
 end
@@ -76,8 +76,8 @@ function PANEL:ConsoleMessage( msg, file, line )
 			file = string.sub( file, 1, 64 ) .. "..."
 		end
 
-		MsgC( Color( 255, 160, 255 ), "[HTML] " )
-		MsgC( Color( 255, 255, 255 ), file, ":", line, ": ", msg, "\n" )
+		MsgC( color_purple, "[HTML] " )
+		MsgC( color_white, file, ":", line, ": ", msg, "\n" )
 		return
 
 	end
@@ -99,8 +99,8 @@ function PANEL:ConsoleMessage( msg, file, line )
 	--
 	-- Plain ol' console.log
 	--
-	MsgC( Color( 255, 160, 255 ), "[HTML] " )
-	MsgC( Color( 255, 255, 255 ), msg, "\n" )
+	MsgC( color_purple, "[HTML] " )
+	MsgC( color_white, msg, "\n" )
 
 end
 
