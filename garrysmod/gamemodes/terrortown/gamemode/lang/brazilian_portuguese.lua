@@ -337,7 +337,7 @@ L.c4_remove_destroy2 = "Confirmar: destruir"
 L.c4_disarm       = "Desarmar C4"
 L.c4_disarm_cut   = "Clique para cortar o fio {num}"
 
-L.c4_disarm_t     = "Corte um fio para desarmar a bomba. Como você é um Traidor, todos os fios são seguros. Para os Inocentes porém, não é tão fácil assim!"
+L.c4_disarm_t     = "Corte um fio para desarmar a bomba. Como você é um Traidor, todos os fios são seguros. Para os Inocentes, porém, não é tão fácil assim!"
 L.c4_disarm_owned = "Corte um fio para desarmar a bomba. É a sua bomba, então todos os fios a desarmarão."
 L.c4_disarm_other = "Corte um fio seguro para desarmar a bomba. Vai explodir se você errar!"
 
