@@ -698,3 +698,15 @@ function table.GetKeys( tab )
 	return keys
 
 end
+
+function table.Flip( tab )
+
+	local res = {}
+
+	for k, v in pairs( tab ) do
+		res[ v ] = k
+	end
+
+	return res
+
+end
