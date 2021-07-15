@@ -365,3 +365,20 @@ function util.RemovePData( steamid, name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
 
 end
+
+--[[---------------------------------------------------------
+   Name:	IsPointInBounds
+   Params: 	<ent> <vector>
+   Desc:	Returns true if the ent is inside the passed vector
+-----------------------------------------------------------]]   
+function util.IsPointInBounds( ent, vecWorldPt )
+
+	local vecLocalSpace = ent:WorldToLocal(vecWorldPt)
+	local vecMins = ent:OBBMins()
+	local vecMaxs = ent:OBBMaxs()
+	
+	return (vecLocalSpace.x >= vecMins.x && vecLocalSpace.x <= vecMaxs.x) &&
+			(vecLocalSpace.y >= vecMins.y && vecLocalSpace.y <= vecMaxs.y) &&
+			(vecLocalSpace.z >= vecMins.z && vecLocalSpace.z <= vecMaxs.z)
+			
+end
