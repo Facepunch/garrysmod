@@ -49,7 +49,7 @@ local function IdentifyBody(ply, rag)
       CORPSE.SetFound(rag, true)
       return
    end
-   
+
    if not hook.Run("TTTCanIdentifyCorpse", ply, rag, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
@@ -57,7 +57,7 @@ local function IdentifyBody(ply, rag)
    local finder = ply:Nick()
    local nick = CORPSE.GetPlayerNick(rag, "")
    local traitor = (rag.was_role == ROLE_TRAITOR)
-   
+
    -- Announce body
    if bodyfound:GetBool() and not CORPSE.GetFound(rag, false) then
       local roletext = nil
@@ -147,6 +147,7 @@ local function CallDetective(ply, cmd, args)
    if not IsValid(ply) then return end
    if #args != 1 then return end
    if not ply:IsActive() then return end
+   if CurTime() < (ply.nextCallCooldown or 0) then return end
 
    local eidx = tonumber(args[1])
    if not eidx then return end
@@ -158,6 +159,8 @@ local function CallDetective(ply, cmd, args)
          net.Start("TTT_CorpseCall")
             net.WriteVector(rag:GetPos())
          net.Send(GetDetectiveFilter(true))
+
+         ply.nextCallCooldown = CurTime() + 0.5
 
          LANG.Msg("body_call", {player = ply:Nick(),
                                 victim = CORPSE.GetPlayerNick(rag, "someone")})
@@ -191,7 +194,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
       LANG.Msg(ply, "body_burning")
       return
    end
-   
+
    if not hook.Run("TTTCanSearchCorpse", ply, rag, covert, long_range, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
@@ -207,7 +210,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    local words = rag.last_words or ""
    local hshot = rag.was_headshot or false
    local dtime = rag.time or 0
-   
+
    local owner = player.GetBySteamID(rag.sid)
    owner = IsValid(owner) and owner:EntIndex() or -1
 
@@ -388,7 +391,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
    rag:SetModel(ply:GetModel())
    rag:SetSkin(ply:GetSkin())
    for key, value in pairs(ply:GetBodyGroups()) do
-      rag:SetBodygroup(value.id, ply:GetBodygroup(value.id))	
+      rag:SetBodygroup(value.id, ply:GetBodygroup(value.id))
    end
    rag:SetAngles(ply:GetAngles())
    rag:SetColor(ply:GetColor())
@@ -460,7 +463,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
       local efn = ply.effect_fn
       timer.Simple(0, function() efn(rag) end)
    end
-   
+
    hook.Run("TTTOnCorpseCreated", rag, ply)
 
    return rag -- we'll be speccing this
