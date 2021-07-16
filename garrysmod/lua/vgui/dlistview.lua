@@ -559,6 +559,23 @@ function PANEL:SizeToContents()
 
 end
 
+function PANEL:GetValues(bOnlySelected)
+	local tbl = {}
+	local columns = self.Columns
+	local linesToExtract = bOnlySelected && self:GetSelected() || self:GetLines()
+
+	for lineID, line in ipairs(linesToExtract) do
+		local lineTbl = {}
+
+		for columnID, column in ipairs(columns) do
+			lineTbl[columnID] = line:GetValue(columnID)
+		end
+		table.insert(tbl, lineTbl)
+	end
+
+	return tbl
+end
+
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
