@@ -150,7 +150,7 @@ function SWEP:Think()
 
 		if ( lastmode_obj ) then
 			-- We want to release the ghost entity just in case
-			lastmode_obj:Holster()
+			lastmode_obj:ReleaseGhostEntity()
 		end
 	end
 
@@ -318,7 +318,7 @@ end
 
 function SWEP:GetToolObject( tool )
 
-	local mode = tool or self:GetMode()
+	local mode = tool or self:GetMode() or ( self:GetOwner():IsPlayer() and self:GetOwner():GetInfo( "gmod_toolmode" ) )
 
 	if ( !self.Tool[ mode ] ) then return false end
 
