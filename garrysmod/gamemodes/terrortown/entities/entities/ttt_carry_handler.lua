@@ -30,7 +30,7 @@ function ENT:Initialize()
 
 
 --   local ply = self:GetOwner()
---   self.Owner = ply
+--   self:SetOwner(ply)
 --   if IsValid(ply) then
 --      self.TargetPos = ply:GetShootPos() + (ply:GetAimVector() * 70)
 --      self.TargetAng = ply:GetAimVector()

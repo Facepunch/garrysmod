@@ -103,7 +103,7 @@ function ToolObj:Init() end
 
 function ToolObj:GetMode()		return self.Mode end
 function ToolObj:GetSWEP()		return self.SWEP end
-function ToolObj:GetOwner()		return self:GetSWEP().Owner or self.Owner end
+function ToolObj:GetOwner()		return self:GetSWEP():GetOwner() or self:GetOwner() end
 function ToolObj:GetWeapon()	return self:GetSWEP().Weapon or self.Weapon end
 
 function ToolObj:LeftClick()	return false end

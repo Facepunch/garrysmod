@@ -70,8 +70,8 @@ end
 -- Reload resets the FOV and Roll
 --
 function SWEP:Reload()
-
-	if ( !self.Owner:KeyDown( IN_ATTACK2 ) ) then self:SetZoom( self.Owner:IsBot() && 75 || self.Owner:GetInfoNum( "fov_desired", 75 ) ) end
+	local Owner = self:GetOwner()
+	if ( !Owner:KeyDown( IN_ATTACK2 ) ) then self:SetZoom( Owner:IsBot() && 75 || Owner:GetInfoNum( "fov_desired", 75 ) ) end
 	self:SetRoll( 0 )
 
 end
@@ -87,7 +87,7 @@ function SWEP:PrimaryAttack()
 	if ( !game.SinglePlayer() && SERVER ) then return end
 	if ( CLIENT && !IsFirstTimePredicted() ) then return end
 
-	self.Owner:ConCommand( "jpeg" )
+	self:GetOwner():ConCommand( "jpeg" )
 
 end
 
@@ -101,10 +101,11 @@ end
 -- Mouse 2 action
 --
 function SWEP:Tick()
+	
+	local Owner = self:GetOwner()
+	if ( CLIENT && Owner != LocalPlayer() ) then return end -- If someone is spectating a player holding this weapon, bail
 
-	if ( CLIENT && self.Owner != LocalPlayer() ) then return end -- If someone is spectating a player holding this weapon, bail
-
-	local cmd = self.Owner:GetCurrentCommand()
+	local cmd = Owner:GetCurrentCommand()
 
 	if ( !cmd:KeyDown( IN_ATTACK2 ) ) then return end -- Not holding Mouse 2, bail
 
@@ -135,9 +136,10 @@ end
 -- Set FOV to players desired FOV
 --
 function SWEP:Equip()
-
-	if ( self:GetZoom() == 70 && self.Owner:IsPlayer() && !self.Owner:IsBot() ) then
-		self:SetZoom( self.Owner:GetInfoNum( "fov_desired", 75 ) )
+	
+	local Owner = self:GetOwner()
+	if ( self:GetZoom() == 70 && Owner:IsPlayer() && !Owner:IsBot() ) then
+		self:SetZoom( Owner:GetInfoNum( "fov_desired", 75 ) )
 	end
 
 end
@@ -148,10 +150,11 @@ function SWEP:ShouldDropOnDie() return false end
 -- The effect when a weapon is fired successfully
 --
 function SWEP:DoShootEffect()
-
+	local Owner = self:GetOwner()
+	
 	self:EmitSound( self.ShootSound )
 	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
-	self.Owner:SetAnimation( PLAYER_ATTACK1 )
+	Owner:SetAnimation( PLAYER_ATTACK1 )
 
 	if ( SERVER && !game.SinglePlayer() ) then
 
@@ -160,13 +163,13 @@ function SWEP:DoShootEffect()
 		-- shown to other players!
 		--
 
-		local vPos = self.Owner:GetShootPos()
-		local vForward = self.Owner:GetAimVector()
+		local vPos = Owner:GetShootPos()
+		local vForward = Owner:GetAimVector()
 
 		local trace = {}
 		trace.start = vPos
 		trace.endpos = vPos + vForward * 256
-		trace.filter = self.Owner
+		trace.filter = Owner
 
 		local tr = util.TraceLine( trace )
 
@@ -196,10 +199,11 @@ function SWEP:HUDShouldDraw( name )
 
 end
 
-function SWEP:FreezeMovement()
-
+function SWEP:FreezeMovement()	
+	local Owner = self:GetOwner()
+	
 	-- Don't aim if we're holding the right mouse button
-	if ( self.Owner:KeyDown( IN_ATTACK2 ) || self.Owner:KeyReleased( IN_ATTACK2 ) ) then
+	if ( Owner:KeyDown( IN_ATTACK2 ) || Owner:KeyReleased( IN_ATTACK2 ) ) then
 		return true
 	end
 
@@ -219,7 +223,7 @@ end
 
 function SWEP:AdjustMouseSensitivity()
 
-	if ( self.Owner:KeyDown( IN_ATTACK2 ) ) then return 1 end
+	if ( self:GetOwner():KeyDown( IN_ATTACK2 ) ) then return 1 end
 
 	return self:GetZoom() / 80
 

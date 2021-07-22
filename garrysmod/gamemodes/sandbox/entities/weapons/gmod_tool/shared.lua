@@ -43,7 +43,7 @@ function SWEP:InitializeTools()
 
 		temp[k] = table.Copy( v )
 		temp[k].SWEP = self
-		temp[k].Owner = self.Owner
+		temp[k].Owner = self:GetOwner()
 		temp[k].Weapon = self
 		temp[k]:Init()
 
@@ -117,10 +117,10 @@ end
 -- Think does stuff every frame
 function SWEP:Think()
 
-	local owner = self:GetOwner()
-	if ( !owner:IsPlayer() ) then return end
+	local Owner = self:GetOwner()
+	if ( !Owner:IsPlayer() ) then return end
 
-	local curmode = owner:GetInfo( "gmod_toolmode" )
+	local curmode = Owner:GetInfo( "gmod_toolmode" )
 	self.Mode = curmode
 
 	local tool = self:GetToolObject( curmode )
@@ -167,10 +167,11 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 
 	self:EmitSound( self.ShootSound )
 	self:SendWeaponAnim( ACT_VM_PRIMARYATTACK ) -- View model animation
-
+	
+	local Owner = self:GetOwner()
 	-- There's a bug with the model that's causing a muzzle to
 	-- appear on everyone's screen when we fire this animation.
-	self.Owner:SetAnimation( PLAYER_ATTACK1 ) -- 3rd Person Animation
+	Owner:SetAnimation( PLAYER_ATTACK1 ) -- 3rd Person Animation
 
 	if ( !bFirstTimePredicted ) then return end
 	if ( GetConVarNumber( "gmod_drawtooleffects" ) == 0 ) then return end
@@ -184,7 +185,7 @@ function SWEP:DoShootEffect( hitpos, hitnormal, entity, physbone, bFirstTimePred
 
 	local effectdata = EffectData()
 	effectdata:SetOrigin( hitpos )
-	effectdata:SetStart( self.Owner:GetShootPos() )
+	effectdata:SetStart( Owner:GetShootPos() )
 	effectdata:SetAttachment( 1 )
 	effectdata:SetEntity( self )
 	util.Effect( "ToolTracer", effectdata )
@@ -193,8 +194,9 @@ end
 
 -- Trace a line then send the result to a mode function
 function SWEP:PrimaryAttack()
-
-	local tr = util.GetPlayerTrace( self.Owner )
+	
+	local Owner = self:GetOwner()
+	local tr = util.GetPlayerTrace( Owner )
 	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
 	local trace = util.TraceLine( tr )
 	if ( !trace.Hit ) then return end
@@ -209,7 +211,7 @@ function SWEP:PrimaryAttack()
 
 	-- Ask the gamemode if it's ok to do this
 	local mode = self:GetMode()
-	if ( !gamemode.Call( "CanTool", self.Owner, trace, mode, tool, 1 ) ) then return end
+	if ( !gamemode.Call( "CanTool", Owner, trace, mode, tool, 1 ) ) then return end
 
 	if ( !tool:LeftClick( trace ) ) then return end
 
@@ -218,8 +220,9 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-
-	local tr = util.GetPlayerTrace( self.Owner )
+	
+	local Owner = self:GetOwner()
+	local tr = util.GetPlayerTrace( Owner )
 	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
 	local trace = util.TraceLine( tr )
 	if ( !trace.Hit ) then return end
@@ -234,7 +237,7 @@ function SWEP:SecondaryAttack()
 
 	-- Ask the gamemode if it's ok to do this
 	local mode = self:GetMode()
-	if ( !gamemode.Call( "CanTool", self.Owner, trace, mode, tool, 2 ) ) then return end
+	if ( !gamemode.Call( "CanTool", Owner, trace, mode, tool, 2 ) ) then return end
 
 	if ( !tool:RightClick( trace ) ) then return end
 
@@ -243,11 +246,12 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Reload()
-
+	
+	local Owner = self:GetOwner()
 	-- This makes the reload a semi-automatic thing rather than a continuous thing
-	if ( !self.Owner:KeyPressed( IN_RELOAD ) ) then return end
+	if ( !Owner:KeyPressed( IN_RELOAD ) ) then return end
 
-	local tr = util.GetPlayerTrace( self.Owner )
+	local tr = util.GetPlayerTrace( Owner )
 	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
 	local trace = util.TraceLine( tr )
 	if ( !trace.Hit ) then return end
@@ -262,7 +266,7 @@ function SWEP:Reload()
 
 	-- Ask the gamemode if it's ok to do this
 	local mode = self:GetMode()
-	if ( !gamemode.Call( "CanTool", self.Owner, trace, mode, tool, 3 ) ) then return end
+	if ( !gamemode.Call( "CanTool", Owner, trace, mode, tool, 3 ) ) then return end
 
 	if ( !tool:Reload( trace ) ) then return end
 

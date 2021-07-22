@@ -8,7 +8,9 @@ local mid = 32
 local final_height = top
 
 function EFFECT:Init(data)
-   self.Owner = data:GetEntity()
+
+   local Owner = data:GetEntity()
+   self:SetOwner(Owner)
 
    self:SetPos(data:GetOrigin())
    self:SetAngles(data:GetAngles())
@@ -23,8 +25,8 @@ function EFFECT:Init(data)
 
    self.BeamDown = false
 
-   if IsValid(self.Owner) then
-      self.Dummy = ClientsideModel(self.Owner:GetModel(), RENDERGROUP_OPAQUE)
+   if IsValid(Owner) then
+      self.Dummy = ClientsideModel(Owner:GetModel(), RENDERGROUP_OPAQUE)
       self.Dummy:SetPos(self.BasePos)
       self.Dummy:SetAngles(data:GetAngles())
       self.Dummy:AddEffects(EF_NODRAW)
@@ -44,7 +46,7 @@ function EFFECT:Think()
       return
    end
 
-   if not (IsValid(self.Owner) and IsValid(self.Dummy)) then
+   if not (IsValid(self:GetOwner()) and IsValid(self.Dummy)) then
       return false
    end
 
@@ -84,7 +86,7 @@ function EFFECT:Render()
    if not self.BeamDown then
       self.Dummy:DrawModel()
    else
-      self.Owner:DrawModel()
+      self:GetOwner():DrawModel()
    end
    render.PopCustomClipPlane()
    render.EnableClipping(false)
