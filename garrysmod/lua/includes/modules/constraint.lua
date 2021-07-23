@@ -306,7 +306,7 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 	if ( isstring( material ) ) then
 		-- Avoid materials with this shader, it either caused crashes or severe graphical glitches
 		local mat = Material( material )
-		if ( mat && !string.find( mat:GetShader():lower(), "spritecard" ) ) then
+		if ( mat && !string.find( mat:GetShader():lower(), "spritecard", nil, true ) && !string.find( mat:GetShader():lower(), "shadow", nil, true ) ) then
 			rope:SetKeyValue( "RopeMaterial", material )
 		end
 	end
