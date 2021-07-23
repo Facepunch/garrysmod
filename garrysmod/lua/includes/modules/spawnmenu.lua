@@ -11,6 +11,12 @@ local PropTableCustom = {}
 local ActiveToolPanel = nil
 local ActiveSpawnlistID = 1000
 
+--[[---------------------------------------------------------
+
+	Tool Tabs
+
+-----------------------------------------------------------]]
+
 function SetActiveControlPanel( pnl )
 	ActiveToolPanel = pnl
 end
@@ -19,16 +25,10 @@ function ActiveControlPanel()
 	return ActiveToolPanel
 end
 
---[[---------------------------------------------------------
-	GetTools
------------------------------------------------------------]]
 function GetTools()
 	return g_ToolMenu
 end
 
---[[---------------------------------------------------------
-	GetToolMenu - This is WRONG. Probably.
------------------------------------------------------------]]
 function GetToolMenu( name, label, icon )
 
 	--
@@ -58,7 +58,9 @@ function GetToolMenu( name, label, icon )
 end
 
 function ClearToolMenus()
+
 	g_ToolMenu = {}
+
 end
 
 function AddToolTab( strName, strLabel, Icon )
@@ -114,7 +116,9 @@ function AddToolMenuOption( tab, category, itemname, text, command, controls, cp
 end
 
 --[[---------------------------------------------------------
-	AddCreationTab
+
+	Creation Tabs
+
 -----------------------------------------------------------]]
 function AddCreationTab( strName, pFunction, pMaterial, iOrder, strTooltip )
 
@@ -126,17 +130,25 @@ function AddCreationTab( strName, pFunction, pMaterial, iOrder, strTooltip )
 
 end
 
---[[---------------------------------------------------------
-	GetCreationTabs
------------------------------------------------------------]]
 function GetCreationTabs()
 
 	return CreationMenus
 
 end
 
+function SwitchCreationTab( id )
+
+	local tab = g_SpawnMenu:GetCreationMenu():GetCreationTab( id )
+	if ( !tab or !IsValid( tab.Tab ) ) then return end
+
+	tab.Tab:DoClick()
+
+end
+
 --[[---------------------------------------------------------
-	GetPropTable
+
+	Spawn lists
+
 -----------------------------------------------------------]]
 function GetPropTable()
 
@@ -144,18 +156,12 @@ function GetPropTable()
 
 end
 
---[[---------------------------------------------------------
-	GetCustomPropTable
------------------------------------------------------------]]
 function GetCustomPropTable()
 
 	return PropTableCustom
 
 end
 
---[[---------------------------------------------------------
-	AddPropCategory
------------------------------------------------------------]]
 function AddPropCategory( strFilename, strName, tabContents, icon, id, parentid, needsapp )
 
 	PropTableCustom[ strFilename ] = {
@@ -171,9 +177,7 @@ function AddPropCategory( strFilename, strName, tabContents, icon, id, parentid,
 
 end
 
---[[---------------------------------------------------------
-	Populate the spawnmenu from the text files (engine)
------------------------------------------------------------]]
+-- Populate the spawnmenu from the text files (engine)
 function PopulateFromEngineTextFiles()
 
 	-- Reset the already loaded prop list before loading them again.
@@ -193,9 +197,7 @@ function PopulateFromEngineTextFiles()
 
 end
 
---[[---------------------------------------------------------
-	Populate the spawnmenu from the text files (engine)
------------------------------------------------------------]]
+-- Save the spawnfists to text files (engine)
 function DoSaveToTextFiles( props )
 
 	spawnmenu_engine.SaveToTextFiles( props )
