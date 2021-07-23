@@ -107,12 +107,23 @@ if ( SERVER ) then
 		client:ConCommand( "gmod_tool duplicator" )
 
 		--
-		-- Disable the Spawnmenu button
+		-- Tell the client we got a dupe on server, ready to paste
 		--
+		local workshopCount = 0
+		if ( Dupe.RequiredAddons ) then workshopCount = #Dupe.RequiredAddons end
+
 		net.Start( "CopiedDupe" )
-			net.WriteUInt( 0, 1 )
+			net.WriteUInt( 0, 1 ) -- Can save
 			net.WriteVector( Dupe.Mins )
 			net.WriteVector( Dupe.Maxs )
+			net.WriteString( "Loaded dupe" )
+			net.WriteUInt( table.Count( Dupe.Entities ), 24 )
+			net.WriteUInt( workshopCount, 16 )
+			if ( Dupe.RequiredAddons ) then
+				for _, wsid in ipairs( Dupe.RequiredAddons ) do
+					net.WriteString( wsid )
+				end
+			end
 		net.Send( client )
 
 	end )

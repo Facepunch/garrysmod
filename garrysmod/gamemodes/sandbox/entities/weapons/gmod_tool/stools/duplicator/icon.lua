@@ -231,11 +231,16 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	} )
 
 	--
+	-- Try to figure out if any of the models/materials/etc came from some addon
+	--
+	duplicator.FigureOutRequiredAddons( Dupe )
+
+	--
 	-- Encode and compress the dupe
 	--
 	local Dupe = util.TableToJSON( Dupe )
 	if ( !isstring( Dupe ) ) then
-		Msg( "There was an error converting the dupe to a json string" )
+		MsgN( "There was an error converting the dupe to a json string" )
 	end
 
 	Dupe = util.Compress( Dupe )
@@ -251,7 +256,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 
 		MsgN( "Saved!" )
 
-		-- TODO: Open tab and show dupe!
+		spawnmenu.SwitchCreationTab( "#spawnmenu.category.dupes" )
 
 	end
 
