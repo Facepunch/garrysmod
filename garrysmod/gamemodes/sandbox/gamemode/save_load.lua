@@ -29,6 +29,11 @@ if ( SERVER ) then
 		local save = gmsave.SaveMap( ply )
 		if ( !save ) then return end
 
+		--
+		-- Try to figure out if any of the models/materials/etc came from some addon
+		--
+		duplicator.FigureOutRequiredAddons( save )
+
 		local compressed_save = util.Compress( save )
 		if ( !compressed_save ) then compressed_save = save end
 
@@ -108,14 +113,20 @@ else
 		MsgN( "Received save. Size: " .. buffer:len() )
 
 		local uncompressed = util.Decompress( buffer )
-
 		if ( !uncompressed ) then
 			MsgN( "Received save - but couldn't decompress!?" )
 			buffer = ""
 			return
 		end
 
-		engine.WriteSave( buffer, game.GetMap() .. " " .. util.DateStamp(), CurTime(), game.GetMap() )
+		local MapAddon = nil
+		for id, addon in pairs( engine.GetAddons() ) do
+			if ( file.Exists( "maps/" .. game.GetMap() .. ".bsp", addon.title ) ) then
+				MapAddon = addon.wsid
+			end
+		end
+
+		engine.WriteSave( buffer, game.GetMap() .. " " .. util.DateStamp(), CurTime(), game.GetMap(), MapAddon )
 		buffer = ""
 
 		if ( showsave ) then
