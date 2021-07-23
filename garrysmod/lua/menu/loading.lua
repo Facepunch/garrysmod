@@ -260,7 +260,7 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 
 	-- TODO: This should be pulled from the server
 	local niceGamemode = g_GameMode
-	for k, v in pairs( engine.GetGamemodes() ) do
+	for k, v in ipairs( engine.GetGamemodes() ) do
 		if ( niceGamemode == v.name ) then
 			niceGamemode = v.title
 			break

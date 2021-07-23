@@ -105,7 +105,7 @@ end
 function TotalDeaths(index)
 
 	local score = 0
-	for id,pl in pairs( player.GetAll() ) do
+	for id,pl in ipairs( player.GetAll() ) do
 		if (pl:Team() == index) then
 			score = score + pl:Deaths()
 		end
@@ -117,7 +117,7 @@ end
 function TotalFrags(index)
 
 	local score = 0
-	for id,pl in pairs( player.GetAll() ) do
+	for id,pl in ipairs( player.GetAll() ) do
 		if (pl:Team() == index) then
 			score = score + pl:Frags()
 		end
@@ -136,7 +136,7 @@ function GetPlayers(index)
 
 	local TeamPlayers = {}
 
-	for id,pl in pairs( player.GetAll() ) do
+	for id,pl in ipairs( player.GetAll() ) do
 		if (IsValid(pl) and pl:Team() == index) then
 			table.insert(TeamPlayers, pl)
 		end

@@ -120,7 +120,7 @@ else
 		end
 
 		local MapAddon = nil
-		for id, addon in pairs( engine.GetAddons() ) do
+		for id, addon in ipairs( engine.GetAddons() ) do
 			if ( file.Exists( "maps/" .. game.GetMap() .. ".bsp", addon.title ) ) then
 				MapAddon = addon.wsid
 			end

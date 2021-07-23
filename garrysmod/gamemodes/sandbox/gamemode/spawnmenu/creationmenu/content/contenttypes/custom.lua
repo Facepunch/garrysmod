@@ -16,7 +16,7 @@ local function SetupCustomNode( node, pnlContent, needsapp )
 
 			-- Give a detailed tooltip explaining why it looks different
 			local name = language.GetPhrase( "spawnmenu.mountablegame" )
-			for id, t in pairs( engine.GetGames() ) do
+			for id, t in ipairs( engine.GetGames() ) do
 				if ( needsapp == t.folder ) then name = t.title break end
 			end
 			node:SetTooltip( string.format( language.GetPhrase( "spawnmenu.spawnlistnocontent" ), name ) )

@@ -948,7 +948,7 @@ function FigureOutRequiredAddons( Dupe )
 
 	local addons = {}
 	for id, ent in pairs( Dupe.Entities ) do
-		for id, addon in pairs( engine.GetAddons() ) do
+		for id, addon in ipairs( engine.GetAddons() ) do
 			-- Model
 			if ( ent.Model and file.Exists( ent.Model, addon.title ) ) then
 				addons[ addon.wsid ] = true
