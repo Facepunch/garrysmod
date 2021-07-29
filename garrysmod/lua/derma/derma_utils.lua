@@ -191,7 +191,7 @@ end
 
 --]]
 
-local function Derma_StringRequest( strTitle, strText, strDefaultText, fnEnter, fnCancel, strButtonText, strButtonCancelText )
+function Derma_StringRequest( strTitle, strText, strDefaultText, fnEnter, fnCancel, strButtonText, strButtonCancelText )
 
 	local Window = vgui.Create( "DFrame" )
 	Window:SetTitle( strTitle or "Message Title (First Parameter)" )
