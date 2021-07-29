@@ -191,7 +191,7 @@ end
 
 --]]
 
-function Derma_StringRequest( strTitle, strText, strDefaultText, fnEnter, fnCancel, strButtonText, strButtonCancelText )
+local function Derma_StringRequest( strTitle, strText, strDefaultText, fnEnter, fnCancel, strButtonText, strButtonCancelText )
 
 	local Window = vgui.Create( "DFrame" )
 	Window:SetTitle( strTitle or "Message Title (First Parameter)" )
@@ -200,60 +200,60 @@ function Derma_StringRequest( strTitle, strText, strDefaultText, fnEnter, fnCanc
 	Window:SetBackgroundBlur( true )
 	Window:SetDrawOnTop( true )
 
-	local InnerPanel = vgui.Create( "DPanel", Window )
-	InnerPanel:SetPaintBackground( false )
+	Window.InnerPanel = vgui.Create( "DPanel", Window )
+	Window.InnerPanel:SetPaintBackground( false )
 
-	local Text = vgui.Create( "DLabel", InnerPanel )
-	Text:SetText( strText or "Message Text (Second Parameter)" )
-	Text:SizeToContents()
-	Text:SetContentAlignment( 5 )
-	Text:SetTextColor( color_white )
+    	Window.Text = vgui.Create( "DLabel", Window.InnerPanel )
+	Window.Text:SetText( strText or "Message Text (Second Parameter)" )
+	Window.Text:SizeToContents()
+	Window.Text:SetContentAlignment( 5 )
+	Window.Text:SetTextColor( color_white )
 
-	local TextEntry = vgui.Create( "DTextEntry", InnerPanel )
-	TextEntry:SetText( strDefaultText or "" )
-	TextEntry.OnEnter = function() Window:Close() fnEnter( TextEntry:GetValue() ) end
+	Window.TextEntry = vgui.Create( "DTextEntry", Window.InnerPanel )
+	Window.TextEntry:SetText( strDefaultText or "" )
+	Window.TextEntry.OnEnter = function() Window:Close() fnEnter( Window.TextEntry:GetValue() ) end
 
-	local ButtonPanel = vgui.Create( "DPanel", Window )
-	ButtonPanel:SetTall( 30 )
-	ButtonPanel:SetPaintBackground( false )
+	Window.ButtonPanel = vgui.Create( "DPanel", Window )
+	Window.ButtonPanel:SetTall( 30 )
+	Window.ButtonPanel:SetPaintBackground( false )
 
-	local Button = vgui.Create( "DButton", ButtonPanel )
-	Button:SetText( strButtonText or "OK" )
-	Button:SizeToContents()
-	Button:SetTall( 20 )
-	Button:SetWide( Button:GetWide() + 20 )
-	Button:SetPos( 5, 5 )
-	Button.DoClick = function() Window:Close() fnEnter( TextEntry:GetValue() ) end
+	Window.Button = vgui.Create( "DButton", Window.ButtonPanel )
+	Window.Button:SetText( strButtonText or "OK" )
+	Window.Button:SizeToContents()
+	Window.Button:SetTall( 20 )
+	Window.Button:SetWide( Window.Button:GetWide() + 20 )
+	Window.Button:SetPos( 5, 5 )
+	Window.Button.DoClick = function() Window:Close() fnEnter( Window.TextEntry:GetValue() ) end
 
-	local ButtonCancel = vgui.Create( "DButton", ButtonPanel )
-	ButtonCancel:SetText( strButtonCancelText or "Cancel" )
-	ButtonCancel:SizeToContents()
-	ButtonCancel:SetTall( 20 )
-	ButtonCancel:SetWide( Button:GetWide() + 20 )
-	ButtonCancel:SetPos( 5, 5 )
-	ButtonCancel.DoClick = function() Window:Close() if ( fnCancel ) then fnCancel( TextEntry:GetValue() ) end end
-	ButtonCancel:MoveRightOf( Button, 5 )
+	Window.ButtonCancel = vgui.Create( "DButton", Window.ButtonPanel )
+	Window.ButtonCancel:SetText( strButtonCancelText or "Cancel" )
+	Window.ButtonCancel:SizeToContents()
+	Window.ButtonCancel:SetTall( 20 )
+	Window.ButtonCancel:SetWide( Window.Button:GetWide() + 20 )
+	Window.ButtonCancel:SetPos( 5, 5 )
+	Window.ButtonCancel.DoClick = function() Window:Close() if ( fnCancel ) then fnCancel( Window.TextEntry:GetValue() ) end end
+	Window.ButtonCancel:MoveRightOf( Window.Button, 5 )
 
-	ButtonPanel:SetWide( Button:GetWide() + 5 + ButtonCancel:GetWide() + 10 )
+	Window.ButtonPanel:SetWide( Window.Button:GetWide() + 5 + Window.ButtonCancel:GetWide() + 10 )
 
-	local w, h = Text:GetSize()
+	local w, h = Window.Text:GetSize()
 	w = math.max( w, 400 )
 
 	Window:SetSize( w + 50, h + 25 + 75 + 10 )
 	Window:Center()
 
-	InnerPanel:StretchToParent( 5, 25, 5, 45 )
+	Window.InnerPanel:StretchToParent( 5, 25, 5, 45 )
 
-	Text:StretchToParent( 5, 5, 5, 35 )
+	Window.Text:StretchToParent( 5, 5, 5, 35 )
 
-	TextEntry:StretchToParent( 5, nil, 5, nil )
-	TextEntry:AlignBottom( 5 )
+	Window.TextEntry:StretchToParent( 5, nil, 5, nil )
+	Window.TextEntry:AlignBottom( 5 )
 
-	TextEntry:RequestFocus()
-	TextEntry:SelectAllText( true )
+	Window.TextEntry:RequestFocus()
+	Window.TextEntry:SelectAllText( true )
 
-	ButtonPanel:CenterHorizontal()
-	ButtonPanel:AlignBottom( 8 )
+	Window.ButtonPanel:CenterHorizontal()
+	Window.ButtonPanel:AlignBottom( 8 )
 
 	Window:MakePopup()
 	Window:DoModal()
