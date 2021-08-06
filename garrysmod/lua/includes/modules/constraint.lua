@@ -1651,7 +1651,9 @@ function GetAllConstrainedEntities( ent, ResultTable )
 	for k, con in ipairs( ConTable ) do
 
 		for EntNum, Ent in pairs( con.Entity ) do
-			GetAllConstrainedEntities( Ent.Entity, ResultTable )
+			if ( !Ent.Entity:IsWorld() ) then
+				GetAllConstrainedEntities( Ent.Entity, ResultTable )
+			end
 		end
 
 	end
