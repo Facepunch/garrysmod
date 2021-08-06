@@ -14,8 +14,9 @@ end
 	Name: gamemode:SetPlayerSpeed( )
 	Desc: Sets the player's run/walk speed
 -----------------------------------------------------------]]
-function GM:SetPlayerSpeed( ply, walk, run )
+function GM:SetPlayerSpeed( ply, walk, run, slowWalk )
 
+	ply:SetSlowWalkSpeed( slowWalk )
 	ply:SetWalkSpeed( walk )
 	ply:SetRunSpeed( run )
 
