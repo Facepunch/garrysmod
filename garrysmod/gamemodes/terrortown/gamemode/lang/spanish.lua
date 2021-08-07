@@ -1070,3 +1070,28 @@ L.hat_retrieve = "Recogiste el sombrero de un detective."
 
 --- 3-9-2017
 L.sb_sortby = "Ordene por:"
+
+--- 2018-07-24
+L.equip_tooltip_main = "Menú de equipamiento"
+L.equip_tooltip_radar = "Control de radar"
+L.equip_tooltip_disguise = "Control de disfraz"
+L.equip_tooltip_radio = "Control de radio"
+L.equip_tooltip_xfer = "Transferir créditos"
+
+L.confgrenade_name = "Granada propulsora"
+L.polter_name = "Poltergeist"
+L.stungun_name = "Prototipo UMP"
+
+L.knife_instant = "MUERTE INSTANTÁNEA"
+
+L.dna_hud_type = "TIPO"
+L.dna_hud_body = "CADÁVER"
+L.dna_hud_item = "OBJETO"
+
+L.binoc_zoom_level = "NIVEL"
+L.binoc_body = "CADÁVER DETECTADO"
+
+L.idle_popup_title = "Ausente"
+
+--- 2021-06-07
+L.sb_playervolume = "Volumen del jugador"
