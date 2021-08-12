@@ -29,11 +29,6 @@ if ( SERVER ) then
 		local save = gmsave.SaveMap( ply )
 		if ( !save ) then return end
 
-		--
-		-- Try to figure out if any of the models/materials/etc came from some addon
-		--
-		duplicator.FigureOutRequiredAddons( save )
-
 		local compressed_save = util.Compress( save )
 		if ( !compressed_save ) then compressed_save = save end
 
