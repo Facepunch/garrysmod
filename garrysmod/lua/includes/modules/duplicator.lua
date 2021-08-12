@@ -965,29 +965,6 @@ function RemoveMapCreatedEntities()
 end
 
 --
--- Try to work out which workshop addons are used by this dupe. This is far from perfect.
---
-function FigureOutRequiredAddons( Dupe )
-
-	local addons = {}
-	for id, ent in pairs( Dupe.Entities ) do
-		for id, addon in ipairs( engine.GetAddons() ) do
-			-- Model
-			if ( ent.Model and file.Exists( ent.Model, addon.title ) ) then
-				addons[ addon.wsid ] = true
-			end
-
-			-- Material override
-			if ( ent._DuplicatedMaterial and file.Exists( "materials/" .. ent._DuplicatedMaterial .. ".vmt", addon.title ) ) then
-				addons[ addon.wsid ] = true
-			end
-		end
-	end
-	Dupe.RequiredAddons = table.GetKeys( addons )
-
-end
-
---
 -- BACKWARDS COMPATIBILITY - PHASE OUT, RENAME?
 --
 function DoGenericPhysics( Entity, Player, data )
