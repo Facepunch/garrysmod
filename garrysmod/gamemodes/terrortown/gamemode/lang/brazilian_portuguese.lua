@@ -178,7 +178,7 @@ L.search_role_d = "Este jogador era um Detetive."
 L.search_role_i = "Este jogador era um terrorista inocente."
 
 L.search_words  = "Algo lhe diz que as últimas palavras desta pessoa foram: '{lastwords}'"
-L.search_armor  = "Ele estava vestindo um colete balístico clandestino."
+L.search_armor  = "Ele estava vestindo um colete balístico atípico."
 L.search_disg   = "Ele estava carregando um dispositivo que podia ocultar sua identidade."
 L.search_radar  = "Ele estava carregando algum tipo de radar. Não está mais funcionando."
 L.search_c4     = "Você encontra uma nota em um bolso. Ela diz que ao cortar o fio {num}, a bomba será desarmada com segurança."
@@ -597,7 +597,7 @@ L.tbut_retime  = "Reutilizável após {num} seg"
 L.tbut_help    = "Pressione {key} para ativar"
 
 -- Equipment info lines (on the left above the health/ammo panel)
-L.disg_hud     = "Disfarce ativado. Seu nome está oculto."
+L.disg_hud     = "Disfarce habilitado. Seu nome está oculto."
 L.radar_hud    = "Radar disponível novamente em: {time}"
 
 -- Spectator muting of living/dead
@@ -619,7 +619,7 @@ L.spec_help    = "Clique para observar jogadores, ou pressione {usekey} em um ob
 -- These are spread over multiple lines, hence the square brackets instead of
 -- quotes. That's a Lua thing. Every line break (enter) will show up in-game.
 L.info_popup_innocent = [[Você é um Terrorista inocente! Mas há Traidores à solta...
-Em quem você pode confiar, e quem está por aí para lhe encher de balas?
+Em quem você pode confiar, e quem está por aí para encher-lhe de balas?
 
 Tenha cuidado e trabalhe em conjunto com seus camaradas para saírem vivos dessa!]]
 
@@ -696,9 +696,9 @@ L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapi
 
 L.tip15 = "Você é um Traidor e quer tentar matar alguém com um rifle de precisão? Considere habilitar o Disfarce antes. Se você errar um tiro, fuja para um local seguro, desabilite o Disfarce, e ninguém saberá que era você que estava atirando neles."
 
-L.tip16 = "Como Traidor, o Teletransportador pode lhe ajudar a escapar enquanto você estiver sendo perseguido, além de permitir que você se desloque rapidamente em um grande mapa. Certifique-se de sempre ter uma posição segura marcada."
+L.tip16 = "Como Traidor, o Teletransportador pode ajudar-lhe a escapar enquanto você estiver sendo perseguido, além de permitir que você se desloque rapidamente em um grande mapa. Certifique-se de sempre ter uma posição segura marcada."
 
-L.tip17 = "Os Inocentes estão todos agrupados sendo difíceis de serem mortos? Considere experimentar o Rádio para reproduzir sons de um C4 ou de um tiroteio para fazer com que eles se desagrupem."
+L.tip17 = "Os Inocentes estão todos agrupados de uma forma que dificulte um possível massacre? Considere experimentar o Rádio para reproduzir sons de um C4 ou de um tiroteio para fazer com que eles se desagrupem."
 
 L.tip18 = "Ao usar o Rádio como Traidor, você pode reproduzir sons através do seu Menu de Equipamento depois que o Rádio for posicionado. Coloque vários sons para serem reproduzidos em sequência ao clicar nos botões usando a ordem desejada."
 
@@ -708,7 +708,7 @@ L.tip20 = "Os Binóculos dos Detetives permitem localizar e identificar cadáver
 
 L.tip21 = "A Estação de Cura permite que jogadores feridos se curem. Mas é claro que, os jogadores feridos podem ser Traidores..."
 
-L.tip22 = "A Estação de Cura armazena uma amostra do DNA de cada jogador que a utilizar. Assim, os Detetives podem utilizar o Scanner de DNA na Estação de Cura para descobrir quem andou se curando."
+L.tip22 = "A Estação de Cura armazena uma amostra do DNA de cada jogador que a utilizar. Assim, os Detetives podem utilizar o Scanner de DNA na Estação de Cura para descobrir quem andou curando-se."
 
 L.tip23 = "Diferentemente de armas e do C4, o Rádio dos Traidores não contém uma amostra do DNA de quem o posicionou. Não se preocupe com Detetives encontrando sua amostra de DNA e descobrindo sua verdadeira identidade."
 
@@ -789,7 +789,7 @@ L.col_total  = "Total de pontos"
 L.something      = "alguma coisa"
 
 -- Kill events
-L.ev_blowup      = "{victim} explodiu-se"
+L.ev_blowup      = "{victim} se explodiu"
 L.ev_blowup_trap = "{victim} foi explodido pelo(a) {trap}"
 
 L.ev_tele_self   = "{victim} deu telefrag em si mesmo"
@@ -1046,7 +1046,7 @@ L.aw_tod2_text  = "morreu no começo da rodada."
 
 --- v23
 L.set_avoid_det     = "Evitar ser selecionado como Detetive"
-L.set_avoid_det_tip = "Habilite isto para solicitar ao servidor a não lhe selecionar como Detetive, se possível. Isso não significa que você terá mais chances de ser um Traidor."
+L.set_avoid_det_tip = "Habilite isto para solicitar ao servidor a não selecionar-lhe como Detetive, se possível. Isso não significa que você terá mais chances de ser um Traidor."
 
 --- v24
 L.drop_no_ammo = "Munição insuficiente no clipe da sua arma para largar como uma caixa de munição."
@@ -1068,7 +1068,7 @@ L.equip_tooltip_disguise = "Controle do Disfarce"
 L.equip_tooltip_radio = "Controle do Rádio"
 L.equip_tooltip_xfer = "Transferir créditos"
 
-L.confgrenade_name = "Granada de Impulso"
+L.confgrenade_name = "Granada de impulso"
 L.polter_name = "Poltergeist"
 L.stungun_name = "Protótipo UMP"
 
