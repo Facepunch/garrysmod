@@ -97,7 +97,7 @@ L.disg_not_owned = "Você não possui um Disfarce!"
 L.disg_enable    = "Habilitar Disfarce"
 
 L.disg_help1     = "Quando você está disfarçado, seu nome, saúde e carma não são exibidos quando alguém olha para você. Em adição, você será escondido dos radares dos Detetives."
-L.disg_help2     = "Pressione a tecla Enter do teclado numérico para habilitar ou desabilitar o Disfarce sem usar o menu. Você também pode fazer uma bind com o comando 'ttt_toggle_disguise' usando o console."
+L.disg_help2     = "Pressione a tecla Enter do teclado numérico para disfarçar-se sem usar o menu. Você também pode fazer uma bind com o comando 'ttt_toggle_disguise' usando o console."
 
 -- Radar tab in equipment menu
 L.radar_name      = "Radar"
@@ -489,7 +489,7 @@ poder rastreá-lo.]]
 
 L.dna_menu_title  = "Controles do Scanner de DNA"
 L.dna_menu_sample = "Amostra de DNA encontrada em {source}"
-L.dna_menu_remove = "Remover a amostra de DNA selecionada"
+L.dna_menu_remove = "Remover selecionada"
 L.dna_menu_help1  = "Estas são as amostras de DNA que você coletou."
 L.dna_menu_help2  = [[
 Quando carregado, você pode rastrear a localização
@@ -510,8 +510,8 @@ L.magnet_name     = "Magneto-stick"
 L.magnet_help     = "{primaryfire} para deslocar objetos e cadáveres."
 
 -- Grenades and misc
-L.grenade_smoke   = "Granada de fumaça"
-L.grenade_fire    = "Granada incendiária"
+L.grenade_smoke   = "Granada de Fumaça"
+L.grenade_fire    = "Granada Incendiária"
 
 L.unarmed_name    = "Coldre"
 L.crowbar_name    = "Pé de Cabra"
@@ -597,7 +597,7 @@ L.tbut_retime  = "Reutilizável após {num} seg"
 L.tbut_help    = "Pressione {key} para ativar"
 
 -- Equipment info lines (on the left above the health/ammo panel)
-L.disg_hud     = "Disfarce habilitado. Seu nome está oculto."
+L.disg_hud     = "Disfarçado. Seu nome está oculto."
 L.radar_hud    = "Radar disponível novamente em: {time}"
 
 -- Spectator muting of living/dead
@@ -698,7 +698,7 @@ L.tip15 = "Você é um Traidor e quer tentar matar alguém com um rifle de preci
 
 L.tip16 = "Como Traidor, o Teletransportador pode ajudar-lhe a escapar enquanto você estiver sendo perseguido, além de permitir que você se desloque rapidamente em um grande mapa. Certifique-se de sempre ter uma posição segura marcada."
 
-L.tip17 = "Os Inocentes estão todos agrupados de uma forma que dificulte um possível massacre? Considere experimentar o Rádio para reproduzir sons de um C4 ou de um tiroteio para fazer com que eles se desagrupem."
+L.tip17 = "Os Inocentes estão todos agrupados sendo difíceis de serem mortos? Considere experimentar o Rádio para reproduzir sons de um C4 ou de um tiroteio para fazer com que eles se desagrupem."
 
 L.tip18 = "Ao usar o Rádio como Traidor, você pode reproduzir sons através do seu Menu de Equipamento depois que o Rádio for posicionado. Coloque vários sons para serem reproduzidos em sequência ao clicar nos botões usando a ordem desejada."
 
@@ -708,7 +708,7 @@ L.tip20 = "Os Binóculos dos Detetives permitem localizar e identificar cadáver
 
 L.tip21 = "A Estação de Cura permite que jogadores feridos se curem. Mas é claro que, os jogadores feridos podem ser Traidores..."
 
-L.tip22 = "A Estação de Cura armazena uma amostra do DNA de cada jogador que a utilizar. Assim, os Detetives podem utilizar o Scanner de DNA na Estação de Cura para descobrir quem andou curando-se."
+L.tip22 = "A Estação de Cura armazena uma amostra do DNA de cada jogador que a utilizar. Assim, os Detetives podem utilizar o Scanner de DNA na Estação de Cura para descobrir quem andou se curando."
 
 L.tip23 = "Diferentemente de armas e do C4, o Rádio dos Traidores não contém uma amostra do DNA de quem o posicionou. Não se preocupe com Detetives encontrando sua amostra de DNA e descobrindo sua verdadeira identidade."
 
@@ -732,7 +732,7 @@ L.tip32 = "O ataque alternativo do Pé de Cabra empurrará outros jogadores."
 
 L.tip33 = "Atirar usando a retícula de ferro de uma arma aumentará levemente a sua precisão e diminuirá o seu recuo. Agachar-se não fará diferença."
 
-L.tip34 = "Granadas de fumaça são eficazes em ambientes fechados, especialmente para criar confusão em salas lotadas."
+L.tip34 = "Granadas de Fumaça são eficazes em ambientes fechados, especialmente para criar confusão em salas lotadas."
 
 L.tip35 = "Como Traidor, lembre-se de que você pode deslocar corpos e escondê-los dos Inocentes e dos Detetives."
 
@@ -1046,7 +1046,7 @@ L.aw_tod2_text  = "morreu no começo da rodada."
 
 --- v23
 L.set_avoid_det     = "Evitar ser selecionado como Detetive"
-L.set_avoid_det_tip = "Habilite isto para solicitar ao servidor a não selecionar-lhe como Detetive, se possível. Isso não significa que você terá mais chances de ser um Traidor."
+L.set_avoid_det_tip = "Habilite isto para solicitar ao servidor a não lhe selecionar como Detetive, se possível. Isso não significa que você terá mais chances de ser um Traidor."
 
 --- v24
 L.drop_no_ammo = "Munição insuficiente no clipe da sua arma para largar como uma caixa de munição."
@@ -1068,7 +1068,7 @@ L.equip_tooltip_disguise = "Controle do Disfarce"
 L.equip_tooltip_radio = "Controle do Rádio"
 L.equip_tooltip_xfer = "Transferir créditos"
 
-L.confgrenade_name = "Granada de impulso"
+L.confgrenade_name = "Granada de Impulso"
 L.polter_name = "Poltergeist"
 L.stungun_name = "Protótipo UMP"
 
