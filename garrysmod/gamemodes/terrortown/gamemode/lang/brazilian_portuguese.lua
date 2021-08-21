@@ -619,7 +619,7 @@ L.spec_help    = "Clique para observar jogadores, ou pressione {usekey} em um ob
 -- These are spread over multiple lines, hence the square brackets instead of
 -- quotes. That's a Lua thing. Every line break (enter) will show up in-game.
 L.info_popup_innocent = [[Você é um Terrorista inocente! Mas há Traidores à solta...
-Em quem você pode confiar, e quem está por aí para encher-lhe de balas?
+Em quem você pode confiar, e quem está por aí para lhe encher de balas?
 
 Tenha cuidado e trabalhe em conjunto com seus camaradas para saírem vivos dessa!]]
 
