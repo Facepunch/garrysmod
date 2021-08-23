@@ -52,16 +52,16 @@ end
 	name: Snap( value, snap )
 	Desc: Generates snap quantizator function
 ------------------------------------------------------------]]
-function math.Snap(value, snap)
-	local snap = tonumber(snap)
-	if(not snap) then return value and
-	local m = math.abs(snap)
-	local c = math.Round(value / m) * m
-	if(snap > 0 and c > value) then return c end
-	if(snap > 0 and c < value) then return (c + m) end
-	if(snap < 0 and c > value) then return (c - m) end
-	if(snap < 0 and c < value) then return c end
-	return (value + snap)
+function math.Snap( value, snap )
+	local snap = tonumber( snap )
+	if ( not snap ) then return value and
+	local m = math.abs( snap )
+	local c = math.Round( value / m ) * m
+	if ( snap > 0 and c > value ) then return c end
+	if ( snap > 0 and c < value ) then return ( c + m ) end
+	if ( snap < 0 and c > value ) then return ( c - m ) end
+	if ( snap < 0 and c < value ) then return c end
+	return ( value + snap )
 end
 
 --[[---------------------------------------------------------
@@ -69,13 +69,13 @@ end
 	Desc: Applies closest grid snap to a value
 ------------------------------------------------------------]]
 function math.Grid(value, snap)
-	local snap = tonumber(snap)
-	if(not snap) then return value and
-	local na = math.Snap(value,  snap)
-	local nc = math.Snap(value, -snap)
-	local va = math.abs(value - na)
-	local vc = math.abs(value - nc)
-	return (va < vc) and na or nc
+	local snap = tonumber( snap )
+	if ( not snap ) then return value and
+	local na = math.Snap( value,  snap )
+	local nc = math.Snap( value, -snap )
+	local va = math.abs( value - na )
+	local vc = math.abs( value - nc )
+	return ( va < vc ) and na or nc
 end
 
 math.Max = math.max
@@ -83,8 +83,8 @@ math.Min = math.min
 
 --[[---------------------------------------------------------
 	Name: EaseInOut(fProgress, fEaseIn, fEaseOut)
-	Desc: Provided by garry from the facewound source and converted
-			to Lua by me :p
+	Desc: Provided by garry from the facewound source and
+	      converted to Lua by me :p
 	Usage: math.EaseInOut(0.1, 0.5, 0.5) - all parameters shoule be between 0 and 1
 -----------------------------------------------------------]]
 function math.EaseInOut( fProgress, fEaseIn, fEaseOut )
