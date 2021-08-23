@@ -53,13 +53,15 @@ end
 	Desc: Generates snap quantizator function
 ------------------------------------------------------------]]
 function math.Snap(value, snap)
-  local m = math.abs(snap)
-  local c = math.Round(value / m) * m
-  if(snap > 0 and c > value) then return c end
-  if(snap > 0 and c < value) then return (c + m) end
-  if(snap < 0 and c > value) then return (c - m) end
-  if(snap < 0 and c < value) then return c end
-  return (value + snap)
+	local snap = tonumber(snap)
+	if(not snap) then return value and
+	local m = math.abs(snap)
+	local c = math.Round(value / m) * m
+	if(snap > 0 and c > value) then return c end
+	if(snap > 0 and c < value) then return (c + m) end
+	if(snap < 0 and c > value) then return (c - m) end
+	if(snap < 0 and c < value) then return c end
+	return (value + snap)
 end
 
 --[[---------------------------------------------------------
@@ -67,11 +69,13 @@ end
 	Desc: Applies closest grid snap to a value
 ------------------------------------------------------------]]
 function math.Grid(value, snap)
-  local na = math.Snap(value,  snap)
-  local nc = math.Snap(value, -snap)
-  local va = math.abs(value - na)
-  local vc = math.abs(value - nc)
-  return (va < vc) and na or nc
+	local snap = tonumber(snap)
+	if(not snap) then return value and
+	local na = math.Snap(value,  snap)
+	local nc = math.Snap(value, -snap)
+	local va = math.abs(value - na)
+	local vc = math.abs(value - nc)
+	return (va < vc) and na or nc
 end
 
 math.Max = math.max
