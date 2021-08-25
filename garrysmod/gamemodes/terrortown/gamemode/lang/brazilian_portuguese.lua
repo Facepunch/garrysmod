@@ -97,7 +97,7 @@ L.disg_not_owned = "Você não possui um Disfarce!"
 L.disg_enable    = "Habilitar Disfarce"
 
 L.disg_help1     = "Quando você está disfarçado, seu nome, saúde e carma não são exibidos quando alguém olha para você. Em adição, você será escondido dos radares dos Detetives."
-L.disg_help2     = "Pressione a tecla Enter do teclado numérico para habilitar ou desabilitar o Disfarce sem usar o menu. Você também pode fazer uma bind com o comando 'ttt_toggle_disguise' usando o console."
+L.disg_help2     = "Pressione a tecla Enter do teclado numérico para disfarçar-se sem usar o menu. Você também pode fazer uma bind com o comando 'ttt_toggle_disguise' usando o console."
 
 -- Radar tab in equipment menu
 L.radar_name      = "Radar"
@@ -178,7 +178,7 @@ L.search_role_d = "Este jogador era um Detetive."
 L.search_role_i = "Este jogador era um terrorista inocente."
 
 L.search_words  = "Algo lhe diz que as últimas palavras desta pessoa foram: '{lastwords}'"
-L.search_armor  = "Ele estava vestindo um colete balístico clandestino."
+L.search_armor  = "Ele estava vestindo um colete balístico atípico."
 L.search_disg   = "Ele estava carregando um dispositivo que podia ocultar sua identidade."
 L.search_radar  = "Ele estava carregando algum tipo de radar. Não está mais funcionando."
 L.search_c4     = "Você encontra uma nota em um bolso. Ela diz que ao cortar o fio {num}, a bomba será desarmada com segurança."
@@ -489,7 +489,7 @@ poder rastreá-lo.]]
 
 L.dna_menu_title  = "Controles do Scanner de DNA"
 L.dna_menu_sample = "Amostra de DNA encontrada em {source}"
-L.dna_menu_remove = "Remover a amostra de DNA selecionada"
+L.dna_menu_remove = "Remover selecionada"
 L.dna_menu_help1  = "Estas são as amostras de DNA que você coletou."
 L.dna_menu_help2  = [[
 Quando carregado, você pode rastrear a localização
@@ -510,8 +510,8 @@ L.magnet_name     = "Magneto-stick"
 L.magnet_help     = "{primaryfire} para deslocar objetos e cadáveres."
 
 -- Grenades and misc
-L.grenade_smoke   = "Granada de fumaça"
-L.grenade_fire    = "Granada incendiária"
+L.grenade_smoke   = "Granada de Fumaça"
+L.grenade_fire    = "Granada Incendiária"
 
 L.unarmed_name    = "Coldre"
 L.crowbar_name    = "Pé de Cabra"
@@ -597,7 +597,7 @@ L.tbut_retime  = "Reutilizável após {num} seg"
 L.tbut_help    = "Pressione {key} para ativar"
 
 -- Equipment info lines (on the left above the health/ammo panel)
-L.disg_hud     = "Disfarce ativado. Seu nome está oculto."
+L.disg_hud     = "Disfarçado. Seu nome está oculto."
 L.radar_hud    = "Radar disponível novamente em: {time}"
 
 -- Spectator muting of living/dead
@@ -696,7 +696,7 @@ L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapi
 
 L.tip15 = "Você é um Traidor e quer tentar matar alguém com um rifle de precisão? Considere habilitar o Disfarce antes. Se você errar um tiro, fuja para um local seguro, desabilite o Disfarce, e ninguém saberá que era você que estava atirando neles."
 
-L.tip16 = "Como Traidor, o Teletransportador pode lhe ajudar a escapar enquanto você estiver sendo perseguido, além de permitir que você se desloque rapidamente em um grande mapa. Certifique-se de sempre ter uma posição segura marcada."
+L.tip16 = "Como Traidor, o Teletransportador pode ajudar-lhe a escapar enquanto você estiver sendo perseguido, além de permitir que você se desloque rapidamente em um grande mapa. Certifique-se de sempre ter uma posição segura marcada."
 
 L.tip17 = "Os Inocentes estão todos agrupados sendo difíceis de serem mortos? Considere experimentar o Rádio para reproduzir sons de um C4 ou de um tiroteio para fazer com que eles se desagrupem."
 
@@ -732,7 +732,7 @@ L.tip32 = "O ataque alternativo do Pé de Cabra empurrará outros jogadores."
 
 L.tip33 = "Atirar usando a retícula de ferro de uma arma aumentará levemente a sua precisão e diminuirá o seu recuo. Agachar-se não fará diferença."
 
-L.tip34 = "Granadas de fumaça são eficazes em ambientes fechados, especialmente para criar confusão em salas lotadas."
+L.tip34 = "Granadas de Fumaça são eficazes em ambientes fechados, especialmente para criar confusão em salas lotadas."
 
 L.tip35 = "Como Traidor, lembre-se de que você pode deslocar corpos e escondê-los dos Inocentes e dos Detetives."
 
@@ -789,7 +789,7 @@ L.col_total  = "Total de pontos"
 L.something      = "alguma coisa"
 
 -- Kill events
-L.ev_blowup      = "{victim} explodiu-se"
+L.ev_blowup      = "{victim} se explodiu"
 L.ev_blowup_trap = "{victim} foi explodido pelo(a) {trap}"
 
 L.ev_tele_self   = "{victim} deu telefrag em si mesmo"
