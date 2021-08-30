@@ -21,6 +21,7 @@ AddVehicle( {
 
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/jeep_test.txt"
+		enablegun = 1
 	}
 }, "Jeep" )
 
@@ -35,6 +36,7 @@ AddVehicle( {
 
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/airboat.txt"
+		enablegun = 1
 	}
 }, "Airboat" )
 
@@ -65,6 +67,7 @@ if ( IsMounted( "ep2" ) ) then
 
 		KeyValues = {
 			vehiclescript = "scripts/vehicles/jalopy.txt"
+			cargovisible = 1,
 		}
 	}, "Jalopy" )
 end
