@@ -185,7 +185,7 @@ AddNPC( {
 	Name = "Antlion",
 	Class = "npc_antlion",
 	Category = Category,
-	KeyValues = { SquadName = "antlions",  }
+	KeyValues = { SquadName = "antlions"  }
 } )
 
 AddNPC( {
