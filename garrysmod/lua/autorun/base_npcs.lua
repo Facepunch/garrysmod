@@ -14,7 +14,7 @@ AddNPC( {
 	Name = "Alyx Vance",
 	Class = "npc_alyx",
 	Category = Category,
-	Weapons = { "weapon_alyxgun", "weapon_smg1", "weapon_shotgun" },
+	Weapons = { "weapon_alyxgun" },
 	KeyValues = { SquadName = "resistance" }
 } )
 
@@ -22,7 +22,7 @@ AddNPC( {
 	Name = "Barney Calhoun",
 	Class = "npc_barney",
 	Category = Category,
-	Weapons = { "weapon_smg1", "weapon_shotgun", "weapon_ar2" },
+	Weapons = { "weapon_ar2" },
 	KeyValues = { SquadName = "resistance" }
 } )
 
@@ -51,6 +51,7 @@ AddNPC( {
 } )
 
 -- Did you know that this MAN can shoot annabelle like he's been doing it his whole life?
+ -- ^ Bullshit. HE cant shot SHIT. except pistols strangely..... but man can he shoot pistols
 AddNPC( {
 	Name = "Dr. Isaac Kleiner",
 	Class = "npc_kleiner",
@@ -82,10 +83,19 @@ AddNPC( {
 	Name = "Rebel",
 	Class = "npc_citizen",
 	Category = Category,
-	SpawnFlags = SF_CITIZEN_RANDOM_HEAD,
-	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
-	Weapons = { "weapon_pistol", "weapon_ar2", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+	SpawnFlags = SERVER and bit.bor( SF_CITIZEN_RANDOM_HEAD, SF_NPC_LONG_RANGE, SF_CITIZEN_AMMORESUPPLIER ) or nil,
+	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance", ammosupply = "SMG1", ammoamount = 45 }, 
+	Weapons = {"weapon_ar2", "weapon_smg1", }
 }, "Rebel" )
+
+AddNPC( {
+	Name = "Rebel Shotgunner",
+	Class = "npc_citizen",
+	Category = Category,
+	SpawnFlags = SERVER and bit.bor( SF_CITIZEN_RANDOM_HEAD, SF_CITIZEN_AMMORESUPPLIER ) or nil,
+	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance", ammosupply = "buckshot", ammoamount = 6 }, 
+	Weapons = { "weapon_shotgun" }
+}, "Rebel_shotgunner" )
 
 AddNPC( {
 	Name = "Odessa Cubbage",
@@ -100,9 +110,9 @@ AddNPC( {
 	Name = "Medic",
 	Class = "npc_citizen",
 	Category = Category,
-	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC ) or nil,
+	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_CITIZEN_MEDIC, SF_NPC_LONG_RANGE ) or nil,
 	KeyValues = { citizentype = CT_REBEL, SquadName = "resistance" },
-	Weapons = { "weapon_pistol", "weapon_smg1", "weapon_ar2", "weapon_shotgun" }
+	Weapons = { "weapon_smg1" }
 }, "Medic" )
 
 AddNPC( {
@@ -175,14 +185,14 @@ AddNPC( {
 	Name = "Antlion",
 	Class = "npc_antlion",
 	Category = Category,
-	KeyValues = { SquadName = "antlions" }
+	KeyValues = { SquadName = "antlions",  }
 } )
 
 AddNPC( {
 	Name = "Antlion Guard",
 	Class = "npc_antlionguard",
+	KeyValues = { SquadName = "antlions", Allowbark = 1 },
 	Category = Category,
-	KeyValues = { SquadName = "antlions" }
 } )
 
 AddNPC( {
@@ -246,7 +256,7 @@ if ( IsMounted( "ep2" ) ) then
 			Name = "Antlion Guardian",
 			Class = "npc_antlionguard",
 			Category = Category,
-			KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
+			KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions", Allowbark = 1 },
 			Material = "Models/antlion_guard/antlionGuard2"
 	}, "npc_antlionguardian" )
 
@@ -306,10 +316,28 @@ AddNPC( {
 	Name = "Metro Police",
 	Class = "npc_metropolice",
 	Category = Category,
-	Weapons = { "weapon_stunstick", "weapon_pistol", "weapon_smg1" },
-	SpawnFlags = SF_NPC_DROP_HEALTHKIT,
-	KeyValues = { SquadName = "overwatch" }
+	Weapons = { "weapon_pistol", "weapon_smg1" },
+	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_NPC_LONG_RANGE ) or nil,
+	KeyValues = { SquadName = "overwatch", manhacks = 2 }
 } )
+
+AddNPC( {
+	Name = "Metro Police(Simple)",
+	Class = "npc_metropolice",
+	Category = Category,
+	Weapons = { "weapon_stunstick", "weapon_pistol", },
+	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_NPC_LONG_RANGE,131072 ) or nil,
+	KeyValues = { SquadName = "overwatch", manhacks = 1 }
+}, "Simple Metropolice" )
+
+AddNPC( {
+	Name = "Metro Police Manhack Spammer ",
+	Class = "npc_metropolice",
+	Category = Category,
+	Weapons = { "weapon_357" },
+	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_NPC_LONG_RANGE ) or nil,
+	KeyValues = { SquadName = "overwatch", manhacks = 9999 }
+}, "MetroPolice Manhack Spammer")
 
 AddNPC( {
 	Name = "Rollermine",
@@ -336,8 +364,9 @@ AddNPC( {
 	Class = "npc_combine_s",
 	Category = Category,
 	Model = "models/combine_soldier.mdl",
-	Weapons = { "weapon_smg1", "weapon_ar2" },
-	KeyValues = { SquadName = "overwatch", Numgrenades = 5 }
+	Weapons = { "weapon_smg1", "weapon_ar2", },
+	KeyValues = { SquadName = "overwatch", Numgrenades = 500 },
+	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_NPC_LONG_RANGE ) or nil,
 } )
 
 AddNPC( {
@@ -347,7 +376,8 @@ AddNPC( {
 	Model = "models/combine_soldier.mdl",
 	Skin = 1,
 	Weapons = { "weapon_shotgun" },
-	KeyValues = { SquadName = "overwatch", Numgrenades = 5 }
+	KeyValues = { SquadName = "overwatch", Numgrenades = 500 },
+	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_NPC_LONG_RANGE ) or nil,
 }, "ShotgunSoldier" )
 
 AddNPC( {
@@ -356,7 +386,8 @@ AddNPC( {
 	Category = Category,
 	Model = "models/combine_soldier_prisonguard.mdl",
 	Weapons = { "weapon_smg1", "weapon_ar2" },
-	KeyValues = { SquadName = "novaprospekt", Numgrenades = 5 }
+	KeyValues = { SquadName = "novaprospekt", Numgrenades = 500 },
+	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_NPC_LONG_RANGE ) or nil,
 }, "CombinePrison" )
 
 AddNPC( {
@@ -366,7 +397,8 @@ AddNPC( {
 	Model = "models/combine_soldier_prisonguard.mdl",
 	Skin = 1,
 	Weapons = { "weapon_shotgun" },
-	KeyValues = { SquadName = "novaprospekt", Numgrenades = 5 }
+	KeyValues = { SquadName = "novaprospekt", Numgrenades = 500 },
+	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_NPC_LONG_RANGE ) or nil,
 }, "PrisonShotgunner" )
 
 AddNPC( {
@@ -375,8 +407,8 @@ AddNPC( {
 	Category = Category,
 	Model = "models/combine_super_soldier.mdl",
 	Weapons = { "weapon_ar2" },
-	KeyValues = { Numgrenades = 10, SquadName = "overwatch" },
-	SpawnFlags = SF_NPC_NO_PLAYER_PUSHAWAY
+	KeyValues = { Numgrenades = 500, SquadName = "overwatch" },
+	SpawnFlags = SERVER and bit.bor( SF_NPC_DROP_HEALTHKIT, SF_NPC_LONG_RANGE ) or nil,
 }, "CombineElite" )
 
 AddNPC( {
@@ -393,6 +425,7 @@ AddNPC( {
 	Class = "npc_clawscanner",
 	Category = Category,
 	Offset = 20,
+	Spawnflags = 131072,
 	KeyValues = { SquadName = "overwatch" },
 	NoDrop = true
 } )
@@ -420,9 +453,10 @@ AddNPC( {
 	Class = "npc_helicopter",
 	Category = Category,
 	Offset = 300,
-	Health = 600,
+	Health = 5600,
 	KeyValues = { SquadName = "overwatch" },
-	NoDrop = true
+	NoDrop = true,
+	SpawnFlags = 262144
 } )
 
 AddNPC( {
@@ -483,27 +517,172 @@ if ( IsMounted( "hl1" ) || IsMounted( "hl1mp" ) ) then
 
 	Category = "Half-Life: Source"
 
-	AddNPC( { Name = "Alien Grunt", Class = "monster_alien_grunt", Category = Category } )
-	AddNPC( { Name = "Nihilanth", Class = "monster_nihilanth", Category = Category, Offset = 1200, SpawnFlags = 262144, NoDrop = true } )
-	AddNPC( { Name = "Tentacle", Class = "monster_tentacle", Category = Category } )
-	AddNPC( { Name = "Alien Slave", Class = "monster_alien_slave", Category = Category } )
-	AddNPC( { Name = "Gonarch", Class = "monster_bigmomma", Category = Category } )
-	AddNPC( { Name = "Bullsquid", Class = "monster_bullchicken", Category = Category } )
-	AddNPC( { Name = "Gargantua", Class = "monster_gargantua", Category = Category } )
-	AddNPC( { Name = "Assassin", Class = "monster_human_assassin", Category = Category } )
-	AddNPC( { Name = "Baby Crab", Class = "monster_babycrab", Category = Category } )
-	AddNPC( { Name = "Grunt", Class = "monster_human_grunt", Category = Category } )
-	AddNPC( { Name = "Cockroach", Class = "monster_cockroach", Category = Category } )
-	AddNPC( { Name = "Houndeye", Class = "monster_houndeye", Category = Category } )
-	AddNPC( { Name = "Scientist", Class = "monster_scientist", Category = Category, KeyValues = { body = "-1" } } )
-	AddNPC( { Name = "Snark", Class = "monster_snark", Category = Category, Offset = 6, NoDrop = true } )
-	AddNPC( { Name = "Zombie", Class = "monster_zombie", Category = Category } )
-	AddNPC( { Name = "Headcrab", Class = "monster_headcrab", Category = Category } )
-	AddNPC( { Name = "Controller", Class = "monster_alien_controller", Category = Category, NoDrop = true } )
-	AddNPC( { Name = "Security Officer", Class = "monster_barney", Category = Category } )
+AddNPC( { 
+	Name = "Alien Grunt",
+	Class = "monster_alien_grunt",
+	Category = Category 
+	} )
 
-	AddNPC( { Name = "Heavy Turret", Class = "monster_turret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
-	AddNPC( { Name = "Mini Turret", Class = "monster_miniturret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
-	AddNPC( { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = 0, OnFloor = true, SpawnFlags = 32 } )
+AddNPC( {
+	Name = "Nihilanth",
+	Class = "monster_nihilanth",
+	Category = Category, Offset = 1200,
+	SpawnFlags = 262144,
+	NoDrop = true 
+	} )
+	
+AddNPC( {
+	Name = "Tentacle",
+	Class = "monster_tentacle",
+	Category = Category
+	} )
+
+AddNPC( {
+	Name = "Alien Slave",
+	Class = "monster_alien_slave",
+	Category = Category 
+	} )
+
+AddNPC( {
+	Name = "Gonarch",
+	Class = "monster_bigmomma",
+	Category = Category 
+	} )
+	
+AddNPC( {
+	Name = "Bullsquid",
+	Class = "monster_bullchicken",
+	Category = Category 
+	} )
+	
+AddNPC( {
+	Name = "Gargantua",
+	Class = "monster_gargantua",
+	Category = Category 
+	} )
+	
+AddNPC( {
+	Name = "Assassin",
+	Class = "monster_human_assassin",
+	Category = Category 
+	} )
+	
+AddNPC( {
+	Name = "Baby Crab",
+	Class = "monster_babycrab",
+	Category = Category
+	} )
+	
+AddNPC( {
+	Name = "Grunt",
+	Class = "monster_human_grunt",
+	Category = Category,
+	KeyValues = { Weapons = 3 },
+	} )
+	
+AddNPC( {
+	Name = "Grunt Leader",
+	Class = "monster_human_grunt",
+	Category = Category,
+	SpawnFlags = 32,
+	KeyValues = { Weapons = 5 },
+	}, "Grunt Leader" )
+		
+AddNPC( {
+	Name = "Grunt Shotgunner",
+	Class = "monster_human_grunt",
+	Category = Category,
+	KeyValues = { Weapons = 10 },
+	},"Grunt Shotgunner" )
+
+AddNPC(	{
+	Name = "Apache",
+	Class = "monster_apache",
+	Category = Category,
+	Offset = 300,
+	} )
+
+AddNPC( { Name = "Cockroach",
+	Class = "monster_cockroach",
+	Category = Category 
+	} )
+	
+AddNPC( {
+	Name = "Houndeye",
+	Class = "monster_houndeye",
+	Category = Category,
+	} )
+	
+AddNPC( {
+	Name = "Houndeye Pack Leader",
+	Class = "monster_houndeye",
+	SpawnFlags = 32,
+	Category = Category,
+	},"Houndeye Pack Leader" )
+	
+AddNPC( { Name = "Scientist",
+	Class = "monster_scientist",
+	Category = Category,
+	KeyValues = { body = "-1" } 
+	} )
+AddNPC( { Name = "Snark",
+
+	Class = "monster_snark",
+	Category = Category,
+	Offset = 6,
+	NoDrop = true 
+	} )
+	
+AddNPC( { Name = "Zombie",
+	Class = "monster_zombie",
+	Category = Category
+	} )
+	
+AddNPC( {
+	Name = "Headcrab",
+	Class = "monster_headcrab",
+	Category = Category
+	} )
+	
+AddNPC( {
+	Name = "Controller",
+	Class = "monster_alien_controller",
+	Category = Category,
+	NoDrop = true 
+	} )
+	
+AddNPC( { 
+	Name = "Security Officer",
+	Class = "monster_barney", 
+	Category = Category 
+	} )
+
+AddNPC( {
+	Name = "Heavy Turret",
+	Class = "monster_turret",
+	Category = Category,
+	Offset = 0,
+	KeyValues = { orientation = 1 },
+	OnCeiling = true,
+	SpawnFlags = 32 
+	} )
+	
+AddNPC( {
+	Name = "Mini Turret",
+	Class = "monster_miniturret",
+	Category = Category, Offset = 0,
+	KeyValues = { orientation = 1 },
+	OnCeiling = true,
+	SpawnFlags = 32
+	} )
+	
+AddNPC( {
+	Name = "Sentry",
+	Class = "monster_sentry",
+	Category = Category,
+	Offset = 0,
+	OnFloor = true,
+	SpawnFlags = 32 
+	} )
 
 end
