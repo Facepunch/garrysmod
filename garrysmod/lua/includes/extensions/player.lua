@@ -159,9 +159,11 @@ end
 	GetPData
 	Saves persist data for this player
 -----------------------------------------------------------]]
-function meta:GetPData( name, default )
+function meta:GetPData( name, default, usesteamid )
+	
+	usesteamid = usesteamid or false
 
-	name = Format( "%s[%s]", self:SteamID64(), name )
+	name = Format( "%s[%s]", if usesteamid then self:SteamID64() else self:UniqueID() end, name )
 	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr( name ) .. " LIMIT 1" )
 	if ( val == nil ) then return default end
 
@@ -173,9 +175,11 @@ end
 	SetPData
 	Set persistant data
 -----------------------------------------------------------]]
-function meta:SetPData( name, value )
+function meta:SetPData( name, value, usesteamid )
 
-	name = Format( "%s[%s]", self:SteamID64(), name )
+	usesteamid = usesteamid or false
+	
+	name = Format( "%s[%s]", if usesteamid then self:SteamID64() else self:UniqueID() end, name )
 	return sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" ) ~= false
 
 end
@@ -184,9 +188,11 @@ end
 	RemovePData
 	Remove persistant data
 -----------------------------------------------------------]]
-function meta:RemovePData( name )
+function meta:RemovePData( name, usesteamid )
+	
+	usesteamid = usesteamid or false
 
-	name = Format( "%s[%s]", self:SteamID64(), name )
+	name = Format( "%s[%s]", if usesteamid then self:SteamID64() else self:UniqueID() end, name )
 	return sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) ) ~= false
 
 end
