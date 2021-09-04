@@ -88,7 +88,7 @@ L.equip_spec_name  = "Имя"
 L.equip_spec_type  = "Тип"
 L.equip_spec_desc  = "Описание"
 
-L.equip_confirm    = "Купить"
+L.equip_confirm    = "Купить оборудование"
 
 -- Disguiser tab in equipment menu
 L.disg_name      = "Маскировка"
@@ -152,8 +152,8 @@ L.quick_help    = "На помощь!"
 L.quick_imwith  = "Я с {player}."
 L.quick_see     = "Я вижу {player}."
 L.quick_suspect = "{player} ведёт себя подозрительно."
-L.quick_traitor = "{player} предатель!"
-L.quick_inno    = "{player} невиновный."
+L.quick_traitor = "{player} - предатель!"
+L.quick_inno    = "{player} - невиновный."
 L.quick_check   = "Есть кто живой?"
 
 -- {player} in the quickchat text normally becomes a player nickname, but can
@@ -217,7 +217,7 @@ L.sb_deaths     = "Смертей"
 L.sb_score      = "Счёт"
 L.sb_karma      = "Карма"
 
-L.sb_info_help  = "Осмотрите тело этого игрока и вы сможете пересмотреть результаты здесь."
+L.sb_info_help  = "Обыскав тело этого игрока, вы сможете ознакомиться с результами здесь."
 
 L.sb_tag_friend = "ДРУГ"
 L.sb_tag_susp   = "ПОДОЗРЕВАЕМЫЙ"
@@ -499,7 +499,7 @@ L.dna_menu_scan   = "Поиск"
 L.dna_menu_repeat = "Автоповтор"
 L.dna_menu_ready  = "ГОТОВ"
 L.dna_menu_charge = "ЗАРЯДКА"
-L.dna_menu_select = "ВЫБЕРИТЕ ОБРАЗЕЦ"
+L.dna_menu_select = "ВЫБЕРЕТЕ ОБРАЗЕЦ"
 
 L.dna_help_primary   = "{primaryfire}: собрать образец ДНК."
 L.dna_help_secondary = "{secondaryfire}: открыть меню управления."
@@ -717,7 +717,7 @@ L.tip25 = "Когда детектив осматривает тело, резу
 
 L.tip26 = "В таблице счёта значок лупы возле чьего-либо имени означает, что у вас есть результаты осмотра тела этого человека. Если значок яркий, результаты получены от детектива и могут содержать дополнительную информацию."
 
-L.tip27 = "Тела со значком лупы после имени осмотрены детективом и результаты их осмотра доступны всем игрокам через таблицу счёта."
+L.tip27 = "Тела со значком лупы после имени осмотрены детективом, и результаты их осмотра доступны всем игрокам через таблицу счёта."
 
 L.tip28 = "Наблюдатели могут нажать {mutekey}, чтобы заглушить других наблюдателей, живых игроков или всех."
 
