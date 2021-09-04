@@ -159,11 +159,20 @@ end
 	GetPData
 	Saves persist data for this player
 -----------------------------------------------------------]]
-function meta:GetPData( name, default, usesteamid )
-	
-	usesteamid = usesteamid or false
+function meta:GetPData( name, default )
 
-	name = Format( "%s[%s]", if usesteamid then self:SteamID64() else self:UniqueID() end, name )
+	name = Format( "%s[%s]", self:UniqueID(), name )
+	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr( name ) .. " LIMIT 1" )
+	if ( val == nil ) then return default end
+
+	return val
+
+end
+
+-- New SteamID64 using equivalent
+function meta:GetPData64( name, default )
+
+	name = Format( "%s[%s]", self:SteamID64(), name )
 	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr( name ) .. " LIMIT 1" )
 	if ( val == nil ) then return default end
 
@@ -175,11 +184,17 @@ end
 	SetPData
 	Set persistant data
 -----------------------------------------------------------]]
-function meta:SetPData( name, value, usesteamid )
-
-	usesteamid = usesteamid or false
+function meta:SetPData( name, value )
 	
-	name = Format( "%s[%s]", if usesteamid then self:SteamID64() else self:UniqueID() end, name )
+	name = Format( "%s[%s]", self:UniqueID(), name )
+	return sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" ) ~= false
+
+end
+
+-- New SteamID64 using equivalent
+function meta:SetPData64( name, value )
+	
+	name = Format( "%s[%s]", self:SteamID64(), name )
 	return sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" ) ~= false
 
 end
@@ -188,14 +203,22 @@ end
 	RemovePData
 	Remove persistant data
 -----------------------------------------------------------]]
-function meta:RemovePData( name, usesteamid )
-	
-	usesteamid = usesteamid or false
+function meta:RemovePData( name )
 
-	name = Format( "%s[%s]", if usesteamid then self:SteamID64() else self:UniqueID() end, name )
+	name = Format( "%s[%s]", self:UniqueID(), name )
 	return sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) ) ~= false
 
 end
+
+-- New SteamID64 using equivalent
+function meta:RemovePData64( name )
+
+	name = Format( "%s[%s]", self:SteamID64(), name )
+	return sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) ) ~= false
+
+end
+
+
 
 --
 -- If they have their preferred default weapon then switch to it
