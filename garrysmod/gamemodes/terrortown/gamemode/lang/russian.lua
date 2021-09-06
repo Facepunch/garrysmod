@@ -499,7 +499,7 @@ L.dna_menu_scan   = "Поиск"
 L.dna_menu_repeat = "Автоповтор"
 L.dna_menu_ready  = "ГОТОВ"
 L.dna_menu_charge = "ЗАРЯДКА"
-L.dna_menu_select = "ВЫБЕРЕТЕ ОБРАЗЕЦ"
+L.dna_menu_select = "ВЫБЕРИТЕ ОБРАЗЕЦ"
 
 L.dna_help_primary   = "{primaryfire}: собрать образец ДНК."
 L.dna_help_secondary = "{secondaryfire}: открыть меню управления."
