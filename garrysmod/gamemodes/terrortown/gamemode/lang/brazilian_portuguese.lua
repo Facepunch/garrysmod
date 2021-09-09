@@ -889,7 +889,7 @@ L.aw_nkt4_text  = "comeu terroristas inocentes no jantar. Um jantar de {num} pra
 L.aw_nkt5_title = "OPERAÇÃO CONTRA-TERRORISTA"
 L.aw_nkt5_text  = "é pago por cada assassinato. Agora já pode comprar outro iate luxuoso."
 
-L.aw_nki1_title = "TRAIA ISSO"
+L.aw_nki1_title = "TRAIA ISTO"
 L.aw_nki1_text  = "achou um Traidor. Atirou num Traidor. Fácil."
 
 L.aw_nki2_title = "JAPONÊS DA FEDERAL"
