@@ -307,9 +307,8 @@ Configure-o na aba Radar deste menu.]]
 
 L.item_disg       = "Disfarce"
 L.item_disg_desc  = [[
-Oculta sua identidade enquanto estiver habilitado.
-Também evita ser a última pessoa vista
-por uma vítima.
+Oculta sua identidade enquanto habilitado. Também
+evita ser a última pessoa vista por uma vítima.
 
 Habilite-o na aba Disfarce deste menu
 ou aperte a tecla Enter do teclado numérico.]]
@@ -889,7 +888,7 @@ L.aw_nkt4_text  = "comeu terroristas inocentes no jantar. Um jantar de {num} pra
 L.aw_nkt5_title = "OPERAÇÃO CONTRA-TERRORISTA"
 L.aw_nkt5_text  = "é pago por cada assassinato. Agora já pode comprar outro iate luxuoso."
 
-L.aw_nki1_title = "TRAIA ISSO"
+L.aw_nki1_title = "TRAIA ISTO"
 L.aw_nki1_text  = "achou um Traidor. Atirou num Traidor. Fácil."
 
 L.aw_nki2_title = "JAPONÊS DA FEDERAL"
