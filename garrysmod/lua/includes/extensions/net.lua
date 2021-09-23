@@ -69,24 +69,28 @@ end
 --
 -- Read/Write a color to/from the stream
 --
-function net.WriteColor( col )
+function net.WriteColor( col, writeAlpha )
+	if ( writeAlpha == nil ) then writeAlpha = true end
 
 	assert( IsColor( col ), "net.WriteColor: color expected, got ".. type( col ) )
 
 	net.WriteUInt( col.r, 8 )
 	net.WriteUInt( col.g, 8 )
 	net.WriteUInt( col.b, 8 )
-	net.WriteUInt( col.a, 8 )
 
+	if ( writeAlpha ) then
+		net.WriteUInt( col.a, 8 )
+	end
 end
 
-function net.ReadColor()
+function net.ReadColor( readAlpha )
+	if ( readAlpha == nil ) then readAlpha = true end
 
 	local r, g, b, a = 
 		net.ReadUInt( 8 ),
 		net.ReadUInt( 8 ),
 		net.ReadUInt( 8 ),
-		net.ReadUInt( 8 )
+		readAlpha and net.ReadUInt( 8 ) or 255
 
 	return Color( r, g, b, a )
 
