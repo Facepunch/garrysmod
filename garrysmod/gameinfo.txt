@@ -6,8 +6,8 @@
 	type 	multiplayer_only
 
 	"developer" 		"Facepunch Studios"
-	"developer_url" 	"http://www.garrysmod.com/"
-	"manual"			"http://wiki.garrysmod.com/"
+	"developer_url" 	"https://gmod.facepunch.com/"
+	"manual"		"https://wiki.facepunch.com/gmod/"
 
 	FileSystem
 	{
