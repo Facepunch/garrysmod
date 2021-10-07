@@ -217,7 +217,7 @@ L.sb_deaths     = "Deaths"
 L.sb_score      = "Score"
 L.sb_karma      = "Karma"
 
-L.sb_info_help  = "Search this player's body, and you can review the results here."
+L.sb_info_help  = "Search this player's body to review the results here."
 
 L.sb_tag_friend = "FRIEND"
 L.sb_tag_susp   = "SUSPECT"
@@ -746,7 +746,7 @@ L.tip39 = "C4 that explodes due to a mistake in disarming it has a smaller explo
 L.tip40 = "If it says 'HASTE MODE' above the round timer, the round will at first be only a few minutes long, but with every death the available time increases (like capturing a point in TF2). This mode puts the pressure on the traitors to keep things moving."
 
 -- 9/22/21
-L.tip41 = "You can adjust a player's microphone volume by right-clicking their mute button at the end of the scoreboard."
+L.tip41 = "You can adjust a player's microphone volume by right-clicking on their mute icon in the scoreboard."
 
 --- Round report
 
