@@ -1,125 +1,207 @@
-local gmod                        = gmod
-local pairs                        = pairs
-local isfunction        = isfunction
-local isstring                = isstring
-local IsValid                = IsValid
+local gmod			= gmod
+local pairs 		= pairs
+local isstring 		= isstring
+local isfunction 	= isfunction
 
-module( "hook" )
+module("hook")
 
-local Hooks = {}
-
---[[---------------------------------------------------------
-    Name: GetTable
-    Desc: Returns a table of all hooks.
------------------------------------------------------------]]
-function GetTable() return Hooks end
-
+local events = {}
 
 --[[---------------------------------------------------------
-    Name: Add
-    Args: string hookName, any identifier, function func
-    Desc: Add a hook to listen to the specified event.
+	Name: Add
+	Args: string hookName, any identifier, function func
+	Desc: Add a hook to listen to the specified event.
 -----------------------------------------------------------]]
 function Add( event_name, name, func )
 
-	if ( !isfunction( func ) ) then return end
 	if ( !isstring( event_name ) ) then return end
+	if ( !isfunction( func ) ) then return end
+	if ( !name ) then return end
 
-	if (Hooks[ event_name ] == nil) then
-			Hooks[ event_name ] = {}
+	if ( !events[ event_name ] ) then
+		events[ event_name ] = { n = 0 }
 	end
 
-	Hooks[ event_name ][ name ] = func
+	local event = events[ event_name ]
+
+	local new_hook = {
+		name = name,
+		func = func,
+		object = !isstring( name ) && name || false
+	}
+
+	--
+	-- If hook exists, then update it
+	--
+	for i = 1, event.n do
+
+		local hook = event[ i ]
+		if ( hook && hook.name == name ) then
+			event[ i ] = new_hook
+			return
+		end
+
+	end
+
+	event[ event.n + 1 ] = new_hook
+
+	event.n = event.n + 1
 
 end
 
-
 --[[---------------------------------------------------------
-    Name: Remove
-    Args: string hookName, identifier
-    Desc: Removes the hook with the given indentifier.
+	Name: Remove
+	Args: string hookName, identifier
+	Desc: Removes the hook with the given indentifier.
 -----------------------------------------------------------]]
 function Remove( event_name, name )
 
-	if ( !isstring( event_name ) ) then return end
-	if ( !Hooks[ event_name ] ) then return end
+	local event = events[ event_name ]
+	if (!event) then return end
 
-	Hooks[ event_name ][ name ] = nil
+	for i = 1, event.n do
+
+		local hook = event[ i ]
+		if ( hook && hook.name == name ) then
+			event[ i ] = nil
+			break
+		end
+
+	end
 
 end
 
-
 --[[---------------------------------------------------------
-    Name: Run
-    Args: string hookName, vararg args
-    Desc: Calls hooks associated with the hook name.
+	Name: GetTable
+	Desc: Returns a table of all hooks.
 -----------------------------------------------------------]]
-function Run( name, ... )
-	return Call( name, gmod and gmod.GetGamemode() or nil, ... )
+function GetTable()
+
+	local new_events = {}
+
+	for event_name, event in pairs( events ) do
+
+		local hooks = {}
+
+		for i = 1, event.n do
+
+			local hook = event[ i ]
+			if ( hook ) then
+				hooks[ hook.name ] = hook.func
+			end
+
+		end
+
+		new_events[ event_name ] = hooks
+
+	end
+
+	return new_events
+
 end
 
-
 --[[---------------------------------------------------------
-    Name: Run
-    Args: string hookName, table gamemodeTable, vararg args
-    Desc: Calls hooks associated with the hook name.
+	Name: Call
+	Args: string hookName, table gamemodeTable, vararg args
+	Desc: Calls hooks associated with the hook name.
 -----------------------------------------------------------]]
-function Call( name, gm, ... )
+function Call( event_name, gm, ... )
 
-	--
-	-- Run hooks
-	--
-	local HookTable = Hooks[ name ]
-	if ( HookTable != nil ) then
-	
-		local a, b, c, d, e, f;
+	local event = events[ event_name ]
+	if ( event ) then
 
-		for k, v in pairs( HookTable ) do 
-			
-			if ( isstring( k ) ) then
-				
-				--
-				-- If it's a string, it's cool
-				--
-				a, b, c, d, e, f = v( ... )
+		local i, n = 1, event.n
 
-			else
+		--
+		-- Using normal loops causes the function to be blacklisted by jit (Credits to meepen)
+		--
+		::loop::
 
-				--
-				-- If the key isn't a string - we assume it to be an entity
-				-- Or panel, or something else that IsValid works on.
-				--
-				if ( IsValid( k ) ) then
+		local hook = event[ i ]
+		if ( hook ) then
+
+			if ( hook.object ) then
+
+				local object = hook.object
+				if ( object.IsValid && object:IsValid() ) then
 					--
-					-- If the object is valid - pass it as the first argument (self)
+					-- The object is valid - pass it as the first argument (self)
 					--
-					a, b, c, d, e, f = v( k, ... )
+					local a, b, c, d, e, f = hook.func( object, ... )
+					if ( a != nil ) then
+						return a, b, c, d, e, f
+					end
 				else
 					--
-					-- If the object has become invalid - remove it
+					-- The object has become invalid - remove it
 					--
-					HookTable[ k ] = nil
+					event[ i ] = nil
+				end
+
+			else
+				local a, b, c, d, e, f = hook.func( ... )
+				if ( a != nil ) then
+					return a, b, c, d, e, f
 				end
 			end
 
+			i = i + 1
+
+		else
+
 			--
-			-- Hook returned a value - it overrides the gamemode function
+			-- the hook got removed, we gotta do some work!
 			--
-			if ( a != nil ) then
-				return a, b, c, d, e, f
+
+			if ( event.n != n ) then
+				--
+				-- a new hook was added in this call, we will replace the removed one with it then continue
+				--
+				event[ i ], event [ event.n ] = event [ event.n ], nil
+				i = i + 1
+			else
+				--
+				-- replace the removed hook with the last hook in the table then repeat
+				--
+				event[ i ], event [ n ] = event [ n ], nil
+				n = n - 1
 			end
-				
+
+			event.n = event.n - 1
+
+			--
+			-- no hooks left, so no need to keep the event in events table
+			--
+			if ( event.n == 0 ) then
+				events[ event_name ] = nil
+			end
+
 		end
+
+		if ( i <= n ) then
+			goto loop
+		end
+
 	end
-	
+
 	--
 	-- Call the gamemode function
 	--
+
 	if ( !gm ) then return end
-	
-	local GamemodeFunction = gm[ name ]
-	if ( GamemodeFunction == nil ) then return end
-			
-	return GamemodeFunction( gm, ... )        
-	
+
+	local GamemodeFunction = gm[ event_name ]
+	if ( !GamemodeFunction ) then return end
+
+	return GamemodeFunction( gm, ... )
+
+end
+
+--[[---------------------------------------------------------
+	Name: Run
+	Args: string hookName, vararg args
+	Desc: Calls hooks associated with the hook name.
+-----------------------------------------------------------]]
+function Run( name, ... )
+	return Call( name, gmod.GetGamemode(), ... )
 end
