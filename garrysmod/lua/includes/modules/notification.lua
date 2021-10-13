@@ -1,8 +1,8 @@
 
 surface.CreateFont( "GModNotify", {
 	font	= "Arial",
-	size	= 20,
-	weight	= 1000
+	size	= 21,
+	weight	= 0
 } )
 
 NOTIFY_GENERIC	= 0
@@ -167,7 +167,7 @@ function PANEL:Init()
 	self.Label = vgui.Create( "DLabel", self )
 	self.Label:Dock( FILL )
 	self.Label:SetFont( "GModNotify" )
-	self.Label:SetTextColor( Color( 255, 255, 255, 255 ) )
+	self.Label:SetTextColor( color_white )
 	self.Label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 	self.Label:SetContentAlignment( 5 )
 

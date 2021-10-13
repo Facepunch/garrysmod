@@ -17,58 +17,25 @@ if ( CLIENT ) then return end
 -- I think 128 constraints is around the max that causes the crash
 -- So at this number we'll refuse to add more to the system
 local MAX_CONSTRAINTS_PER_SYSTEM = 100
-local ConstraintSystems = {}
+local CurrentSystem = nil
+local SystemLookup = {}
 
---[[----------------------------------------------------------------------
-	Go through each constraint system and check it for redundancy
-------------------------------------------------------------------------]]
-local function GarbageCollectConstraintSystems()
+hook.Add( "EntityRemoved", "Constraint Library - ConstraintRemoved", function( Ent )
+	local System = SystemLookup[ Ent ]
+	if ( !IsValid( System ) ) then return end
 
-	for k, System in pairs( ConstraintSystems ) do
+	System.__ConstraintCount = ( System.__ConstraintCount or 0 ) - 1
 
-		-- System was already deleted (most likely by CleanUpMap)
-		if ( !IsValid( System ) ) then
-
-			ConstraintSystems[ k ] = nil
-
-		else
-
-			local Count = 0
-			local Constraints = {}
-			local UsedEntitiesNew = {}
-			for id, ent in pairs( System.UsedEntities ) do
-
-				-- Note: this will not let the world entity pass, but we don't want that anyway
-				if ( !IsValid( ent ) ) then continue end
-
-				Count = Count + 1
-				UsedEntitiesNew[ ent ] = true
-
-				-- Dirtily calculate how many constraints this system has
-				for i, c in pairs( ent.Constraints or {} ) do
-					if ( IsValid( c ) ) then Constraints[ c ] = true end
-				end
-
-			end
-
-			-- TODO: Delete if System.constraints == 0?
-			if ( Count == 0 ) then
-
-				System:Remove()
-				ConstraintSystems[ k ] = nil
-
-			else
-
-				System.constraints = #table.GetKeys( Constraints )
-				System.UsedEntities = table.GetKeys( UsedEntitiesNew ) -- Maintain format for addon usage
-
-			end
-
-
-		end
-
+	if System.__ConstraintCount <= 0 then
+		System.__BadConstraintSystem = true
+		System:Remove()
 	end
+end )
 
+local function ConstraintCreated( Constraint )
+	assert( IsValid( CurrentSystem ) )
+	SystemLookup[ Constraint ] = CurrentSystem
+	CurrentSystem.__ConstraintCount = ( CurrentSystem.__ConstraintCount or 0 ) + 1
 end
 
 
@@ -83,9 +50,7 @@ local function CreateConstraintSystem()
 	System:SetKeyValue( "additionaliterations", iterations )
 	System:Spawn()
 	System:Activate()
-
-	table.insert( ConstraintSystems, System )
-	System.UsedEntities = {}
+	System.__ConstraintCount = 0
 
 	return System
 
@@ -102,29 +67,25 @@ end
 ------------------------------------------------------------------------]]
 local function FindOrCreateConstraintSystem( Ent1, Ent2 )
 
-	-- This is probably the best place to be calling this
-	-- Calling this here will cause empty constraintsystems to NOT be reused, but maybe that is better than worse
-	GarbageCollectConstraintSystems()
-
 	local System = nil
 
 	Ent2 = Ent2 or Ent1
 
 	-- Does Ent1 have a constraint system?
-	if ( !Ent1:IsWorld() && IsValid( Ent1.ConstraintSystem ) ) then
+	if ( !Ent1:IsWorld() && IsValid( Ent1.ConstraintSystem ) && !Ent1.ConstraintSystem.__BadConstraintSystem ) then
 		System = Ent1.ConstraintSystem
 	end
 
 	-- Don't add to this system - we have too many constraints on it already.
-	if ( IsValid( System ) && System:GetVar( "constraints", 0 ) > MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
+	if ( IsValid( System ) && ( System.__ConstraintCount or 0 ) >= MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
 
 	-- Does Ent2 have a constraint system?
-	if ( !IsValid( System ) && !Ent2:IsWorld() && IsValid( Ent2.ConstraintSystem ) ) then
+	if ( !IsValid( System ) && !Ent2:IsWorld() && IsValid( Ent2.ConstraintSystem ) && !Ent2.ConstraintSystem.__BadConstraintSystem ) then
 		System = Ent2.ConstraintSystem
 	end
 
 	-- Don't add to this system - we have too many constraints on it already.
-	if ( IsValid( System ) && System:GetVar( "constraints", 0 ) > MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
+	if ( IsValid( System ) && ( System.__ConstraintCount or 0 ) >= MAX_CONSTRAINTS_PER_SYSTEM ) then System = nil end
 
 	-- No constraint system yet (Or they're both full) - make a new one
 	if ( !IsValid( System ) ) then
@@ -136,16 +97,6 @@ local function FindOrCreateConstraintSystem( Ent1, Ent2 )
 
 	Ent1.ConstraintSystem = System
 	Ent2.ConstraintSystem = System
-
-	-- This is a bit slow and ugly, but ensure no duplicates
-	System.UsedEntities = System.UsedEntities or {}
-	if ( !table.HasValue( System.UsedEntities, Ent1 ) ) then table.insert( System.UsedEntities, Ent1 ) end
-	if ( !table.HasValue( System.UsedEntities, Ent2 ) ) then table.insert( System.UsedEntities, Ent2 ) end
-
-	local ConstraintNum = System:GetVar( "constraints", 0 )
-	System:SetVar( "constraints", ConstraintNum + 1 )
-
-	--Msg( "System has " .. tostring( System:GetVar( "constraints", 0 ) ) .. " constraints\n" )
 
 	return System
 
@@ -159,10 +110,10 @@ end
 local function onStartConstraint( Ent1, Ent2 )
 
 	-- Get constraint system
-	local system = FindOrCreateConstraintSystem( Ent1, Ent2 )
+	CurrentSystem = FindOrCreateConstraintSystem( Ent1, Ent2 )
 
 	-- Any constraints called after this call will use this system
-	SetPhysConstraintSystem( system )
+	SetPhysConstraintSystem( CurrentSystem )
 
 end
 
@@ -173,6 +124,7 @@ end
 local function onFinishConstraint( Ent1, Ent2 )
 
 	-- Turn off constraint system override
+	CurrentSystem = nil
 	SetPhysConstraintSystem( NULL )
 
 end
@@ -250,6 +202,7 @@ function RemoveAll( Ent )
 			v:Remove()
 			i = i + 1
 		end
+
 	end
 
 	-- Update the network var and clear the constraints table.
@@ -344,15 +297,18 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 	if ( width <= 0 ) then return nil end
 
 	-- Clamp the rope to a sensible width
-	width = math.Clamp( width, 1, 100 )
+	width = math.Clamp( width, 0.2, 100 )
 
 	local rope = ents.Create( "keyframe_rope" )
 	rope:SetPos( Pos )
 	rope:SetKeyValue( "Width", width )
 
 	if ( isstring( material ) ) then
+		-- Avoid materials with this shader, it either caused crashes or severe graphical glitches
 		local mat = Material( material )
-		if ( material && !string.find( mat:GetShader():lower(), "spritecard" ) ) then rope:SetKeyValue( "RopeMaterial", material ) end
+		if ( mat && !string.find( mat:GetShader():lower(), "spritecard", nil, true ) && !string.find( mat:GetShader():lower(), "shadow", nil, true ) ) then
+			rope:SetKeyValue( "RopeMaterial", material )
+		end
 	end
 
 	-- Attachment point 1
@@ -393,7 +349,7 @@ function AddConstraintTable( Ent, Constraint, Ent2, Ent3, Ent4 )
 
 	if ( !IsValid( Constraint ) ) then return end
 
-	if ( IsValid( Ent ) ) then
+	if ( IsValid( Ent ) || ( Ent && Ent:IsWorld() ) ) then
 
 		Ent.Constraints = Ent.Constraints or {}
 		table.insert( Ent.Constraints, Constraint )
@@ -415,7 +371,7 @@ function AddConstraintTableNoDelete( Ent, Constraint, Ent2, Ent3, Ent4 )
 
 	if ( !IsValid( Constraint ) ) then return end
 
-	if ( IsValid( Ent ) ) then
+	if ( IsValid( Ent ) || ( Ent && Ent:IsWorld() ) ) then
 
 		Ent.Constraints = Ent.Constraints or {}
 		table.insert( Ent.Constraints, Constraint )
@@ -462,6 +418,7 @@ function Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide, deleteonbreak )
 
 		-- Create the constraint
 		local Constraint = ents.Create( "phys_constraint" )
+		ConstraintCreated( Constraint )
 		if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
 		if ( nocollide ) then Constraint:SetKeyValue( "spawnflags", 1 ) end
 		Constraint:SetPhysConstraintObjects( Phys2, Phys1 )
@@ -504,7 +461,7 @@ duplicator.RegisterConstraint( "Weld", Weld, "Ent1", "Ent2", "Bone1", "Bone2", "
 	Rope( ... )
 	Creates a rope constraint - with rope!
 ------------------------------------------------------------------------]]
-function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcelimit, width, material, rigid )
+function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcelimit, width, material, rigid, color )
 
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
@@ -523,6 +480,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 
 			-- Create the constraint
 			Constraint = ents.Create( "phys_lengthconstraint" )
+			ConstraintCreated( Constraint )
 			Constraint:SetPos( WPos1 )
 			Constraint:SetKeyValue( "attachpoint", tostring( WPos2 ) )
 			Constraint:SetKeyValue( "minlength", "0.0" )
@@ -545,6 +503,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 	if ( rigid ) then kv.Type = 2 end
 
 	local rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
+	if ( IsValid( rope ) && color ) then rope:SetColor( color ) end
 
 	-- What the fuck
 	if ( !Constraint ) then Constraint, rope = rope, nil end
@@ -562,7 +521,8 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 		forcelimit = forcelimit,
 		width = width,
 		material = material,
-		rigid = rigid
+		rigid = rigid,
+		color = color
 	}
 
 	if ( IsValid( Constraint ) ) then
@@ -573,13 +533,13 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 	return Constraint, rope
 
 end
-duplicator.RegisterConstraint( "Rope", Rope, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "length", "addlength", "forcelimit", "width", "material", "rigid" )
+duplicator.RegisterConstraint( "Rope", Rope, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "length", "addlength", "forcelimit", "width", "material", "rigid", "color" )
 
 --[[----------------------------------------------------------------------
 	Elastic( ... )
 	Creates an elastic constraint
 ------------------------------------------------------------------------]]
-function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rdamping, material, width, stretchonly )
+function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rdamping, material, width, stretchonly, color )
 
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
@@ -598,6 +558,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 		onStartConstraint( Ent1, Ent2 )
 
 			Constraint = ents.Create( "phys_spring" )
+			ConstraintCreated( Constraint )
 			Constraint:SetPos( WPos1 )
 			Constraint:SetKeyValue( "springaxis", tostring( WPos2 ) )
 			Constraint:SetKeyValue( "constant", constant )
@@ -629,6 +590,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 			width = width,
 			length = ( WPos1 - WPos2 ):Length(),
 			stretchonly = stretchonly,
+			color = color
 		}
 
 		Constraint:SetTable( ctable )
@@ -638,13 +600,14 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 			Collide = 1,
 			Type = 0
 		}
-
 		rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
+		if ( IsValid( rope ) && color ) then rope:SetColor( color ) end
+
 	end
 
 	return Constraint, rope
 end
-duplicator.RegisterConstraint("Elastic", Elastic, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "constant", "damping", "rdamping", "material", "width", "stretchonly")
+duplicator.RegisterConstraint( "Elastic", Elastic, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "constant", "damping", "rdamping", "material", "width", "stretchonly", "color" )
 
 
 --[[----------------------------------------------------------------------
@@ -657,7 +620,7 @@ function Keepupright( Ent, Ang, Bone, angularlimit )
 	if ( Ent:GetClass() != "prop_physics" && Ent:GetClass() != "prop_ragdoll" ) then return false end
 	if ( !angularlimit or angularlimit < 0 ) then return end
 
-	local Phys = Ent:GetPhysicsObjectNum(Bone)
+	local Phys = Ent:GetPhysicsObjectNum( Bone )
 
 	-- Remove any KU's already on entity
 	RemoveConstraints( Ent, "Keepupright" )
@@ -665,6 +628,7 @@ function Keepupright( Ent, Ang, Bone, angularlimit )
 	onStartConstraint( Ent )
 
 		local Constraint = ents.Create( "phys_keepupright" )
+		ConstraintCreated( Constraint )
 		Constraint:SetAngles( Ang )
 		Constraint:SetKeyValue( "angularlimit", angularlimit )
 		Constraint:SetPhysConstraintObjects( Phys, Phys )
@@ -703,7 +667,7 @@ function CreateStaticAnchorPoint( Pos )
 	Anchor:Spawn()
 	Anchor:Activate()
 
-	return Anchor, Anchor:GetPhysicsObject(), 0, Vector( 0, 0, 0 )
+	return Anchor, Anchor:GetPhysicsObject(), 0, vector_origin
 
 end
 
@@ -712,7 +676,7 @@ end
 	Slider( ... )
 	Creates a slider constraint
 ------------------------------------------------------------------------]]
-function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
+function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, color )
 
 	-- TODO: If we get rid of sliders we can get rid of gmod_anchor too!
 
@@ -727,13 +691,6 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 
 	-- Make Constraint
 	if ( Phys1 == Phys2 ) then return end
-
-	-- Make Rope
-	local kv = {
-		Collide = 0,
-		Type = 2,
-		Subdiv = 1,
-	}
 
 	-- Start World Hack.
 	-- Attaching a slider to the world makes it really sucks so we make
@@ -757,7 +714,8 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 
 	onStartConstraint( Ent1, Ent2 )
 
-		local Constraint = ents.Create("phys_slideconstraint")
+		local Constraint = ents.Create( "phys_slideconstraint" )
+		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "slideaxis", tostring( WPos2 ) )
 		Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
@@ -767,7 +725,14 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 	onFinishConstraint( Ent1, Ent2 )
 	AddConstraintTable( Ent1, Constraint, Ent2 )
 
+	-- Make Rope
+	local kv = {
+		Collide = 0,
+		Type = 2,
+		Subdiv = 1,
+	}
 	local rope = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
+	if ( IsValid( rope ) && color ) then rope:SetColor( color ) end
 
 	-- If we have a static anchor - delete it when we die.
 	if ( StaticAnchor ) then
@@ -785,7 +750,8 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 		LPos1 = LPos1,
 		LPos2 = LPos2,
 		width = width,
-		material = material
+		material = material,
+		color = color
 	}
 
 	Constraint:SetTable( ctable )
@@ -793,7 +759,7 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
 	return Constraint, rope
 
 end
-duplicator.RegisterConstraint( "Slider", Slider, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "width", "material" )
+duplicator.RegisterConstraint( "Slider", Slider, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "width", "material", "color" )
 
 --[[----------------------------------------------------------------------
 	Axis( ... )
@@ -818,7 +784,8 @@ function Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, 
 
 	onStartConstraint( Ent1, Ent2 )
 
-		local Constraint = ents.Create("phys_hinge")
+		local Constraint = ents.Create( "phys_hinge" )
+		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "hingeaxis", tostring( WPos2 ) )
 		if ( forcelimit && forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
@@ -881,7 +848,8 @@ function AdvBallsocket( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torq
 		if ( onlyrotation && onlyrotation > 0 ) then flags = flags + 2 end
 		if ( nocollide && nocollide > 0 ) then flags = flags + 1 end
 
-		local Constraint = ents.Create("phys_ragdollconstraint")
+		local Constraint = ents.Create( "phys_ragdollconstraint" )
+		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "xmin", xmin )
 		Constraint:SetKeyValue( "xmax", xmax )
@@ -930,7 +898,7 @@ function AdvBallsocket( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torq
 	return Constraint
 
 end
-duplicator.RegisterConstraint( "AdvBallsocket", AdvBallsocket, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "forcelimit", "torquelimit", "xmin", "ymin", "zmin", "xmax", "ymax", "zmax", "xfric", "yfric", "zfric", "onlyrotation", "nocollide")
+duplicator.RegisterConstraint( "AdvBallsocket", AdvBallsocket, "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "forcelimit", "torquelimit", "xmin", "ymin", "zmin", "xmax", "ymax", "zmax", "xfric", "yfric", "zfric", "onlyrotation", "nocollide" )
 
 
 --[[----------------------------------------------------------------------
@@ -956,7 +924,8 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	-- Make Constraint
 	onStartConstraint( Ent1, Ent2 )
 
-		local Constraint = ents.Create("logic_collision_pair")
+		local Constraint = ents.Create( "logic_collision_pair" )
+		ConstraintCreated( Constraint )
 		Constraint:SetKeyValue( "startdisabled", 1 )
 		Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
 		Constraint:Spawn()
@@ -1036,11 +1005,19 @@ local function MotorControl( pl, motor, onoff, dir )
 
 	if ( activate ) then
 
-		motor:Fire( "Activate", "", 0 ) -- Turn on the motor
-		motor:Fire( "Scale", dir, 0 ) -- This makes the direction change
+		motor:Fire( "Scale", dir ) -- This makes the direction change
+		motor:Fire( "Activate" ) -- Turn on the motor
 
 	else
-		motor:Fire( "Deactivate", "", 0 ) -- Turn off the motor
+
+		-- Turn off the motor, mimicking the wheel tool
+		motor:Fire( "Scale", 0 )
+		motor:Fire( "Activate" )
+
+		-- For some reason Deactivate causes the torque axis to be fucked up, or rather..
+		-- Reinitialized without taking into account possibly new rotation of the "parent" prop
+		-- motor:Fire( "Deactivate" )
+
 	end
 
 	motor.direction = dir
@@ -1072,7 +1049,7 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 	end
 
 	-- The true at the end stops it adding the axis table to the entity's count stuff.
-	local axis = Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, 0, 0, friction, nocollide, LocalAxis, true )
+	local axis = Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, 0, friction, nocollide, LocalAxis, true )
 
 	-- Delete the axis when either object dies
 	Ent1:DeleteOnRemove( axis )
@@ -1082,6 +1059,7 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 	onStartConstraint( Ent1, Ent2 )
 
 		local Constraint = ents.Create( "phys_torque" )
+		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
 		Constraint:SetKeyValue( "axis", tostring( WPos2 ) )
 		Constraint:SetKeyValue( "force", torque )
@@ -1153,7 +1131,7 @@ duplicator.RegisterConstraint( "Motor", Motor, "Ent1", "Ent2", "Bone1", "Bone2",
 	Pulley( ... )
 	Creates a pulley constraint
 ------------------------------------------------------------------------]]
-function Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimit, rigid, width, material )
+function Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimit, rigid, width, material, color )
 
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent4, Bone4 ) ) then return false end
@@ -1169,6 +1147,7 @@ function Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimi
 	onStartConstraint( Ent1, Ent4 )
 
 		local Constraint = ents.Create( "phys_pulleyconstraint" )
+		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos2 )
 		Constraint:SetKeyValue( "position2", tostring( WPos3 ) )
 		Constraint:SetKeyValue( "ObjOffset1", tostring( LPos1 ) )
@@ -1196,7 +1175,8 @@ function Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimi
 		forcelimit = forcelimit,
 		rigid = rigid,
 		width = width,
-		material = material
+		material = material,
+		color = color
 	}
 	Constraint:SetTable( ctable )
 
@@ -1209,14 +1189,19 @@ function Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimi
 		Subdiv = 1,
 	}
 
-	CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, World, WPos2, 0, kv )
-	CreateKeyframeRope( WPos1, width, material, Constraint, World, WPos3, 0, World, WPos2, 0, kv )
-	CreateKeyframeRope( WPos1, width, material, Constraint, World, WPos3, 0, Ent4, LPos4, Bone4, kv )
+	local rope1 = CreateKeyframeRope( WPos1, width, material, Constraint, Ent1, LPos1, Bone1, World, WPos2, 0, kv )
+	local rope2 = CreateKeyframeRope( WPos1, width, material, Constraint, World, WPos3, 0, World, WPos2, 0, kv )
+	local rope3 = CreateKeyframeRope( WPos1, width, material, Constraint, World, WPos3, 0, Ent4, LPos4, Bone4, kv )
+	if ( color ) then
+		if ( IsValid( rope1 ) ) then rope1:SetColor( color ) end
+		if ( IsValid( rope2 ) ) then rope2:SetColor( color ) end
+		if ( IsValid( rope3 ) ) then rope3:SetColor( color ) end
+	end
 
-	return Constraint
+	return Constraint, rope1, rope2, rope3
 
 end
-duplicator.RegisterConstraint( "Pulley", Pulley, "Ent1", "Ent4", "Bone1", "Bone4", "LPos1", "LPos4", "WPos2", "WPos3", "forcelimit", "rigid", "width", "material" )
+duplicator.RegisterConstraint( "Pulley", Pulley, "Ent1", "Ent4", "Bone1", "Bone4", "LPos1", "LPos4", "WPos2", "WPos3", "forcelimit", "rigid", "width", "material", "color" )
 
 
 --[[----------------------------------------------------------------------
@@ -1237,7 +1222,8 @@ function Ballsocket( Ent1, Ent2, Bone1, Bone2, LPos, forcelimit, torquelimit, no
 
 	onStartConstraint( Ent1, Ent2 )
 
-		local Constraint = ents.Create("phys_ballsocket")
+		local Constraint = ents.Create( "phys_ballsocket" )
+		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos )
 		if ( forcelimit && forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
 		if ( torquelimit && torquelimit > 0 ) then Constraint:SetKeyValue( "torquelimit", torquelimit ) end
@@ -1273,7 +1259,7 @@ duplicator.RegisterConstraint( "Ballsocket", Ballsocket, "Ent1", "Ent2", "Bone1"
 	Winch( ... )
 	Creates a Winch constraint
 ------------------------------------------------------------------------]]
-function Winch( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material, toggle )
+function Winch( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material, toggle, color )
 
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
@@ -1287,7 +1273,7 @@ function Winch( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd
 
 	local const, dampen = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, false )
 
-	local Constraint, rope = Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, const, dampen, 0, material, width, true )
+	local Constraint, rope = Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, const, dampen, 0, material, width, true, color )
 
 	if ( !Constraint ) then return nil, rope end
 
@@ -1306,7 +1292,8 @@ function Winch( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd
 		fwd_speed = fwd_speed,
 		bwd_speed = bwd_speed,
 		material = material,
-		toggle = toggle
+		toggle = toggle,
+		color = color
 	}
 	Constraint:SetTable( ctable )
 
@@ -1337,14 +1324,14 @@ function Winch( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd
 	return Constraint, rope, controller
 
 end
-duplicator.RegisterConstraint( "Winch", Winch, "pl", "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "width", "fwd_bind", "bwd_bind", "fwd_speed", "bwd_speed", "material", "toggle" )
+duplicator.RegisterConstraint( "Winch", Winch, "pl", "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "width", "fwd_bind", "bwd_bind", "fwd_speed", "bwd_speed", "material", "toggle", "color" )
 
 
 --[[----------------------------------------------------------------------
 	Hydraulic( ... )
 	Creates a Hydraulic constraint
 ------------------------------------------------------------------------]]
-function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, key, fixed, speed, material, toggle )
+function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, key, fixed, speed, material, toggle, color )
 
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
@@ -1359,7 +1346,7 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 
 	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, fixed )
 
-	local Constraint, rope = Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, const, dampn, 0, material, width, false )
+	local Constraint, rope = Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, const, dampn, 0, material, width, false, color )
 	local ctable = {
 		Type = "Hydraulic",
 		pl = pl,
@@ -1377,7 +1364,8 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 		fwd_speed = speed,
 		bwd_speed = speed,
 		toggle = toggle,
-		material = material
+		material = material,
+		color = color
 	}
 	Constraint:SetTable( ctable )
 
@@ -1421,14 +1409,14 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 	end
 
 end
-duplicator.RegisterConstraint( "Hydraulic", Hydraulic, "pl", "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "Length1", "Length2", "width", "key", "fixed", "fwd_speed", "material", "toggle" )
+duplicator.RegisterConstraint( "Hydraulic", Hydraulic, "pl", "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "Length1", "Length2", "width", "key", "fixed", "fwd_speed", "material", "toggle", "color" )
 
 
 --[[----------------------------------------------------------------------
 	Muscle( ... )
 	Creates a Muscle constraint
 ------------------------------------------------------------------------]]
-function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, key, fixed, period, amplitude, starton, material )
+function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, width, key, fixed, period, amplitude, starton, material, color )
 
 	if ( !CanConstrain( Ent1, Bone1 ) ) then return false end
 	if ( !CanConstrain( Ent2, Bone2 ) ) then return false end
@@ -1442,7 +1430,7 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 
 	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, fixed )
 
-	local Constraint, rope = Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, const, dampn, 0, material, width, false )
+	local Constraint, rope = Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, const, dampn, 0, material, width, false, color )
 	if ( !Constraint ) then return false end
 
 	local ctable = {
@@ -1463,7 +1451,8 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 		amplitude = amplitude,
 		toggle = true,
 		starton = starton,
-		material = material
+		material = material,
+		color = color
 	}
 	Constraint:SetTable( ctable )
 
@@ -1471,7 +1460,7 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 
 	if ( fixed == 1 ) then
 		slider = Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, 0 )
-		slider:SetTable( {} ) -- ??
+		slider:SetTable( {} ) -- Remove data for duplicator
 		Constraint:DeleteOnRemove( slider )
 	end
 
@@ -1501,7 +1490,7 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 	return Constraint, rope, controller, slider
 
 end
-duplicator.RegisterConstraint( "Muscle", Muscle, "pl", "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "Length1", "Length2", "width", "key", "fixed", "period", "amplitude", "starton", "material" )
+duplicator.RegisterConstraint( "Muscle", Muscle, "pl", "Ent1", "Ent2", "Bone1", "Bone2", "LPos1", "LPos2", "Length1", "Length2", "width", "key", "fixed", "period", "amplitude", "starton", "material", "color" )
 
 
 --[[----------------------------------------------------------------------
@@ -1652,7 +1641,7 @@ function GetAllConstrainedEntities( ent, ResultTable )
 
 	local ResultTable = ResultTable or {}
 
-	if ( !IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) && !ent:IsWorld() ) then return end
 	if ( ResultTable[ ent ] ) then return end
 
 	ResultTable[ ent ] = ent
@@ -1662,7 +1651,9 @@ function GetAllConstrainedEntities( ent, ResultTable )
 	for k, con in ipairs( ConTable ) do
 
 		for EntNum, Ent in pairs( con.Entity ) do
-			GetAllConstrainedEntities( Ent.Entity, ResultTable )
+			if ( !Ent.Entity:IsWorld() ) then
+				GetAllConstrainedEntities( Ent.Entity, ResultTable )
+			end
 		end
 
 	end

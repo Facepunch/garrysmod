@@ -20,7 +20,7 @@ function PANEL:Init()
 
 	self.AddonListLabel = self.AddonList:Add( "DLabel" )
 	self.AddonListLabel:Dock( FILL )
-	self.AddonListLabel:SetTextColor( Color( 0, 0, 0 ) )
+	self.AddonListLabel:SetTextColor( color_black )
 	self.AddonListLabel:SetContentAlignment( 5 )
 	self.AddonListLabel:SetZPos( 100 )
 	self.AddonListLabel.Paint = function( s, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 100 ) ) end -- TODO: Prolly should be hooked to skin
@@ -80,7 +80,7 @@ function PANEL:Init()
 
 	self.UpdateProgress = self:Add( "DLabel" )
 	self.UpdateProgress:SetText( "Publising your content, please wait..." )
-	self.UpdateProgress:SetTextColor( Color( 0, 0, 0 ) )
+	self.UpdateProgress:SetTextColor( color_black )
 	self.UpdateProgress:SetContentAlignment( 5 )
 	self.UpdateProgress:SetZPos( 100 )
 	self.UpdateProgress:SetVisible( false )

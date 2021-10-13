@@ -11,21 +11,6 @@ function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
 
 	phys:EnableMotion( false )
 
-	-- With the jeep we need to pause all of its physics objects
-	-- to stop it spazzing out and killing the server.
-	if ( ent:GetClass() == "prop_vehicle_jeep" ) then
-
-		local objects = ent:GetPhysicsObjectCount()
-
-		for i = 0, objects - 1 do
-
-			local physobject = ent:GetPhysicsObjectNum( i )
-			physobject:EnableMotion( false )
-
-		end
-
-	end
-
 	-- Add it to the player's frozen props
 	ply:AddFrozenPhysicsObject( ent, phys )
 
@@ -174,6 +159,8 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 		if ( !IsValid( inflictor ) ) then inflictor = attacker end
 
 	end
+
+	player_manager.RunClass( ply, "Death", inflictor, attacker )
 
 	if ( attacker == ply ) then
 
@@ -741,9 +728,11 @@ end
 	Name: gamemode:GetFallDamage()
 	Desc: return amount of damage to do due to fall
 -----------------------------------------------------------]]
+local mp_falldamage = GetConVar( "mp_falldamage" )
+
 function GM:GetFallDamage( ply, flFallSpeed )
 
-	if( GetConVarNumber( "mp_falldamage" ) > 0 ) then -- realistic fall damage is on
+	if ( mp_falldamage:GetBool() ) then -- realistic fall damage is on
 		return ( flFallSpeed - 526.5 ) * ( 100 / 396 ) -- the Source SDK value
 	end
 

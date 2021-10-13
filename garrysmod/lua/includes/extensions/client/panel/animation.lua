@@ -291,6 +291,7 @@ function meta:MoveBy( x, y, length, delay, ease, callback )
 
 end
 
+-- This code is bad and will run forever, never reaching the targetpos.
 local function LerpPositions( anim, panel )
 
 	if ( !panel.TargetPos ) then return end
@@ -302,6 +303,8 @@ local function LerpPositions( anim, panel )
 
 	if ( anim.UseGravity && Length > 1 ) then
 		Speed = Speed * ( Length * 0.1 )
+	else
+		Speed = Speed * 10
 	end
 
 	if ( Length < Speed ) then
@@ -323,6 +326,12 @@ local function NewSetPos( self, x, y )
 
 end
 
+local function NewGetPos( self )
+
+	return self.TargetPos.x, self.TargetPos.y
+
+end
+
 --[[---------------------------------------------------------
 	Name: LerpPositions
 -----------------------------------------------------------]]
@@ -330,8 +339,12 @@ function meta:LerpPositions( speed, usegravity )
 
 	if ( self.SetPosReal ) then return end
 
+	NewSetPos( self, self:GetPos() )
+
 	self.SetPosReal = self.SetPos
 	self.SetPos = NewSetPos
+	self.GetPosReal = self.GetPos
+	self.GetPos = NewGetPos
 
 	self.LerpAnim = self:NewAnimation( 86400 )
 	self.LerpAnim.Speed = speed
@@ -347,5 +360,6 @@ function meta:DisableLerp()
 
 	self.LerpAnim = nil
 	self.SetPos = self.SetPosReal
+	self.GetPos = self.GetPosReal
 
 end

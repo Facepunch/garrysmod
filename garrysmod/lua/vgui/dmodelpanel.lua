@@ -31,7 +31,7 @@ function PANEL:Init()
 	self:SetDirectionalLight( BOX_TOP, Color( 255, 255, 255 ) )
 	self:SetDirectionalLight( BOX_FRONT, Color( 255, 255, 255 ) )
 
-	self:SetColor( Color( 255, 255, 255, 255 ) )
+	self:SetColor( color_white )
 
 end
 
@@ -91,6 +91,9 @@ function PANEL:DrawModel()
 		bottomy = math.min( bottomy, y2 )
 		previous = curparent
 	end
+
+	-- Causes issues with stencils, but only for some people?
+	-- render.ClearDepth()
 
 	render.SetScissorRect( leftx, topy, rightx, bottomy, true )
 

@@ -1042,7 +1042,7 @@
 
 "ChainLink.StepLeft"
 {
-	"soundlevel"		"SNDLVL_75dB"
+	"soundlevel"		"SNDLVL_40dB" // GMOD: Make it quieter
 	"volume"		"1.0"
 	"pitch"			"PITCH_NORM"
 	"rndwave"
@@ -1054,7 +1054,7 @@
 
 "ChainLink.StepRight"
 {
-	"soundlevel"		"SNDLVL_75dB"
+	"soundlevel"		"SNDLVL_40dB"
 	"volume"		"1.0"
 	"pitch"			"PITCH_NORM"
 	"rndwave"
@@ -2725,16 +2725,16 @@
 {
 	"soundlevel"		"SNDLVL_75dB"
 	"pitch"			"98,102"
-	"volume"			"0.2"
-	"wave"		"physics/rubber/rubber_tire_impact_soft1.wav"
+	"volume"			"1.0"
+	"wave"		"player/footsteps/rubber.wav" // GMOD: From "physics/rubber/rubber_tire_impact_soft1.wav"
 }
 
 "Rubber.StepRight"
 {
 	"soundlevel"		"SNDLVL_75dB"
 	"pitch"			"98,102"
-	"volume"		"0.2"
-	"wave"		"physics/rubber/rubber_tire_impact_soft1.wav"
+	"volume"		"1.0"
+	"wave"		"player/footsteps/rubber.wav"
 }
 
 "Rubber.BulletImpact"

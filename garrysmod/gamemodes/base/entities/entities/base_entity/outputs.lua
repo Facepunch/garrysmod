@@ -6,9 +6,13 @@
 -- Usage: self:StoreOutput("<name of output>","<entities to fire>,<input name>,<param>,<delay>,<times to be used>")
 -- If called from ENT:KeyValue, then the first parameter is the key, and
 -- the second is value.
-
 function ENT:StoreOutput( name, info )
-	local rawData = string.Explode( ",", info )
+
+	-- Newer Source Engine games use this symbol as a delimiter
+	local rawData = string.Explode( "\x1B", info )
+	if ( #rawData < 2 ) then
+		rawData = string.Explode( ",", info )
+	end
 
 	local Output = {}
 	Output.entities = rawData[1] or ""
@@ -21,11 +25,11 @@ function ENT:StoreOutput( name, info )
 	self.m_tOutputs[ name ] = self.m_tOutputs[ name ] or {}
 
 	table.insert( self.m_tOutputs[ name ], Output )
+
 end
 
 -- Nice helper function, this does all the work. Returns false if the
 -- output should be removed from the list.
-
 local function FireSingleOutput( output, this, activator, data )
 
 	if ( output.times == 0 ) then return false end
@@ -43,17 +47,7 @@ local function FireSingleOutput( output, this, activator, data )
 	end
 
 	for _, ent in pairs( entitiesToFire ) do
-		if ( output.delay == 0 ) then
-			if ( IsValid( ent ) ) then
-				ent:Input( output.input, activator, this, data or output.param )
-			end
-		else
-			timer.Simple( output.delay, function()
-				if ( IsValid( ent ) ) then
-					ent:Input( output.input, activator, this, data or output.param )
-				end
-			end )
-		end
+		ent:Fire( output.input, data or output.param, output.delay, activator, this )
 	end
 
 	if ( output.times ~= -1 ) then
@@ -61,11 +55,12 @@ local function FireSingleOutput( output, this, activator, data )
 	end
 
 	return ( output.times > 0 ) || ( output.times == -1 )
+
 end
 
 -- This function is used to trigger an output.
-
 function ENT:TriggerOutput( name, activator, data )
+
 	if ( !self.m_tOutputs ) then return end
 	if ( !self.m_tOutputs[ name ] ) then return end
 
@@ -75,9 +70,11 @@ function ENT:TriggerOutput( name, activator, data )
 
 		if ( OutputList[ idx ] and !FireSingleOutput( OutputList[ idx ], self.Entity, activator, data ) ) then
 
-			self.m_tOutputs[ name ][ idx ] = nil
+			-- Shift the indexes so this loop doesn't fail later
+			table.remove( self.m_tOutputs[ name ], idx )
 
 		end
 
 	end
+
 end

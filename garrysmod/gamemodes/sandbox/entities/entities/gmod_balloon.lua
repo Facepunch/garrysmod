@@ -5,8 +5,6 @@ DEFINE_BASECLASS( "base_gmodentity" )
 ENT.PrintName = "Balloon"
 ENT.Editable = true
 
-ENT.RenderGroup = RENDERGROUP_BOTH
-
 function ENT:SetupDataTables()
 
 	self:NetworkVar( "Float", 0, "Force", { KeyName = "force", Edit = { type = "Float", order = 1, min = -2000, max = 2000, title = "#tool.balloon.force" } } )
@@ -83,7 +81,7 @@ end
 function ENT:PhysicsSimulate( phys, deltatime )
 
 	local vLinear = Vector( 0, 0, self:GetForce() * 5000 ) * deltatime
-	local vAngular = Vector( 0, 0, 0 )
+	local vAngular = vector_origin
 
 	return vAngular, vLinear, SIM_GLOBAL_FORCE
 

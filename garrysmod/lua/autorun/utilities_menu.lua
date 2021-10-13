@@ -65,6 +65,43 @@ local function ServerSettings( pnl )
 
 end
 
+local function SandboxClientSettings( pnl )
+
+	pnl:AddControl( "Header", { Description = "#utilities.sandboxsettings_cl" } )
+
+	local ConVarsDefault = {
+		sbox_search_maxresults = "1024",
+		cl_drawhud = "1",
+		gmod_drawhelp = "1",
+		gmod_drawtooleffects = "1",
+		cl_drawworldtooltips = "1",
+		cl_drawspawneffect = "1",
+		cl_draweffectrings = "1",
+		cl_drawcameras = "1",
+		cl_drawthrusterseffects = "1",
+		cl_showhints = "1",
+	}
+
+	pnl:AddControl( "ComboBox", { MenuButton = 1, Folder = "util_sandbox_cl", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+
+	pnl:AddControl( "Slider", { Label = "#utilities.max_results", Type = "Integer", Command = "sbox_search_maxresults", Min = "1024", Max = "8192", Help = true } )
+
+	local function AddCheckbox( title, cvar )
+		pnl:AddControl( "CheckBox", { Label = title, Command = cvar } )
+	end
+
+	AddCheckbox( "#menubar.drawing.hud", "cl_drawhud" )
+	AddCheckbox( "#menubar.drawing.toolhelp", "gmod_drawhelp" )
+	AddCheckbox( "#menubar.drawing.toolui", "gmod_drawtooleffects" )
+	AddCheckbox( "#menubar.drawing.world_tooltips", "cl_drawworldtooltips" )
+	AddCheckbox( "#menubar.drawing.spawn_effect", "cl_drawspawneffect" )
+	AddCheckbox( "#menubar.drawing.effect_rings", "cl_draweffectrings" )
+	AddCheckbox( "#menubar.drawing.cameras", "cl_drawcameras" )
+	AddCheckbox( "#menubar.drawing.thrusters", "cl_drawthrusterseffects" )
+	AddCheckbox( "#menubar.drawing.hints", "cl_showhints" )
+
+end
+
 local function SandboxSettings( pnl )
 
 	pnl:AddControl( "Header", { Description = "#utilities.sandboxsettings" } )
@@ -126,6 +163,8 @@ local function PhysgunSettings( pnl )
 	local ConVarsDefault = {
 		physgun_halo = "1",
 		physgun_drawbeams = "1",
+		effects_freeze = "1",
+		effects_unfreeze = "1",
 		gm_snapgrid = "0",
 		gm_snapangles = "45",
 		physgun_rotation_sensitivity = "0.05",
@@ -135,6 +174,8 @@ local function PhysgunSettings( pnl )
 
 	pnl:AddControl( "CheckBox", { Label = "#utilities.physgun_halo", Command = "physgun_halo" } )
 	pnl:AddControl( "CheckBox", { Label = "#utilities.physgun_drawbeams", Command = "physgun_drawbeams" } )
+	pnl:AddControl( "CheckBox", { Label = "#menubar.drawing.freeze", Command = "effects_freeze" } )
+	pnl:AddControl( "CheckBox", { Label = "#menubar.drawing.unfreeze", Command = "effects_unfreeze" } )
 
 	pnl:AddControl( "Slider", { Label = "#utilities.gm_snapgrid", Type = "Integer", Command = "gm_snapgrid", Min = "0", Max = "128" } )
 	pnl:AddControl( "Slider", { Label = "#utilities.gm_snapangles", Type = "Integer", Command = "gm_snapangles", Min = "5", Max = "90" } )
@@ -176,6 +217,7 @@ hook.Add( "PopulateToolMenu", "PopulateUtilityMenus", function()
 	spawnmenu.AddToolMenuOption( "Utilities", "User", "User_Cleanup", "#spawnmenu.utilities.cleanup", "", "", User_Cleanup )
 	spawnmenu.AddToolMenuOption( "Utilities", "User", "Undo", "#spawnmenu.utilities.undo", "", "", Undo )
 	spawnmenu.AddToolMenuOption( "Utilities", "User", "PhysgunSettings", "#spawnmenu.utilities.physgunsettings", "", "", PhysgunSettings )
+	spawnmenu.AddToolMenuOption( "Utilities", "User", "SandboxClientSettings", "#spawnmenu.utilities.sandbox_settings", "", "", SandboxClientSettings )
 
 	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "Admin_Cleanup", "#spawnmenu.utilities.cleanup", "", "", User_Cleanup )
 	spawnmenu.AddToolMenuOption( "Utilities", "Admin", "ServerSettings", "#spawnmenu.utilities.server_settings", "", "", ServerSettings )

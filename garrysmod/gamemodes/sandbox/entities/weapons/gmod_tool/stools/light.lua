@@ -9,7 +9,7 @@ TOOL.ClientConVar[ "g" ] = "255"
 TOOL.ClientConVar[ "b" ] = "255"
 TOOL.ClientConVar[ "brightness" ] = "2"
 TOOL.ClientConVar[ "size" ] = "256"
-TOOL.ClientConVar[ "key" ] = "-1"
+TOOL.ClientConVar[ "key" ] = "37"
 TOOL.ClientConVar[ "toggle" ] = "1"
 
 TOOL.Information = {
@@ -35,7 +35,7 @@ function TOOL:LeftClick( trace, attach )
 	local r = math.Clamp( self:GetClientNumber( "r" ), 0, 255 )
 	local g = math.Clamp( self:GetClientNumber( "g" ), 0, 255 )
 	local b = math.Clamp( self:GetClientNumber( "b" ), 0, 255 )
-	local brght = math.Clamp( self:GetClientNumber( "brightness" ), 0, 20 )
+	local brght = math.Clamp( self:GetClientNumber( "brightness" ), -10, 20 )
 	local size = self:GetClientNumber( "size" )
 	local toggle = self:GetClientNumber( "toggle" ) != 1
 
@@ -78,7 +78,7 @@ function TOOL:LeftClick( trace, attach )
 			local length = math.Clamp( self:GetClientNumber( "ropelength" ), 4, 1024 )
 			local material = self:GetClientInfo( "ropematerial" )
 
-			local LPos1 = Vector( 0, 0, 5 )
+			local LPos1 = Vector( 0, 0, 6.5 )
 			local LPos2 = trace.Entity:WorldToLocal( trace.HitPos )
 
 			if ( IsValid( trace.Entity ) ) then
@@ -130,6 +130,8 @@ if ( SERVER ) then
 		lamp:SetOn( on )
 
 		lamp:Spawn()
+
+		DoPropSpawnedEffect( lamp )
 
 		duplicator.DoGenericPhysics( lamp, pl, Data )
 
@@ -199,7 +201,7 @@ end
 function TOOL:Think()
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != "models/maxofs2d/light_tubular.mdl" ) then
-		self:MakeGhostEntity( "models/maxofs2d/light_tubular.mdl", Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( "models/maxofs2d/light_tubular.mdl", vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostLight( self.GhostEntity, self:GetOwner() )
@@ -217,7 +219,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl( "Numpad", { Label = "#tool.light.key", Command = "light_key", ButtonSize = 22 } )
 
 	CPanel:AddControl( "Slider", { Label = "#tool.light.ropelength", Command = "light_ropelength", Type = "Float", Min = 0, Max = 256 } )
-	CPanel:AddControl( "Slider", { Label = "#tool.light.brightness", Command = "light_brightness", Type = "Int", Min = 0, Max = 6 } )
+	CPanel:AddControl( "Slider", { Label = "#tool.light.brightness", Command = "light_brightness", Type = "Int", Min = -6, Max = 6 } )
 	CPanel:AddControl( "Slider", { Label = "#tool.light.size", Command = "light_size", Type = "Float", Min = 0, Max = 1024 } )
 
 	CPanel:AddControl( "Checkbox", { Label = "#tool.light.toggle", Command = "light_toggle" } )

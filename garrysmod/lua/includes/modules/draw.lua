@@ -191,7 +191,7 @@ function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
 	y = math.Round( y )
 	w = math.Round( w )
 	h = math.Round( h )
-	bordersize = math.min( math.Round( bordersize ), math.floor( w / 2 ) )
+	bordersize = math.min( math.Round( bordersize ), math.floor( w / 2 ), math.floor( h / 2 ) )
 
 	-- Draw as much of the rect as we can without textures
 	surface.DrawRect( x + bordersize, y, w - bordersize * 2, h )
@@ -233,14 +233,26 @@ function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
 end
 
 --[[---------------------------------------------------------
-	Name: WordBox( bordersize, x, y, font, color )
+	Name: WordBox( bordersize, x, y, font, color, font, color, fontcolor, xalign, yalign )
 	Desc: Draws a rounded box - ideally bordersize will be 8 or 16
 	Usage: color is a table with r/g/b/a elements
 -----------------------------------------------------------]]
-function WordBox( bordersize, x, y, text, font, color, fontcolor )
+function WordBox( bordersize, x, y, text, font, color, fontcolor, xalign, yalign )
 
 	surface.SetFont( font )
 	local w, h = surface.GetTextSize( text )
+
+	if ( xalign == TEXT_ALIGN_CENTER ) then
+		x = x - ( bordersize + w / 2 )
+	elseif ( xalign == TEXT_ALIGN_RIGHT ) then
+		x = x - ( bordersize * 2 + w )
+	end
+
+	if ( yalign == TEXT_ALIGN_CENTER ) then
+		y = y - ( bordersize + h / 2 )
+	elseif ( yalign == TEXT_ALIGN_BOTTOM ) then
+		y = y - ( bordersize * 2 + h )
+	end
 
 	RoundedBox( bordersize, x, y, w+bordersize * 2, h+bordersize * 2, color )
 

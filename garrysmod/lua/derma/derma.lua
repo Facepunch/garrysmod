@@ -20,7 +20,9 @@ local SkinMetaTable = {}
 local iSkinChangeIndex = 1
 
 SkinMetaTable.__index = function ( self, key )
+
 	return DefaultSkin[ key ]
+
 end
 
 local function FindPanelsByClass( SeekingClass )
@@ -141,6 +143,9 @@ function DefineSkin( strName, strDescription, strTable )
 
 	SkinList[ strName ] = strTable
 
+	-- Make all panels update their skin
+	RefreshSkins()
+
 end
 
 --[[---------------------------------------------------------
@@ -169,13 +174,16 @@ function GetDefaultSkin()
 	if ( !skin ) then skin = DefaultSkin end
 
 	return skin
+
 end
 
 --[[---------------------------------------------------------
 	Returns 'Named' Skin
 -----------------------------------------------------------]]
 function GetNamedSkin( name )
+
 	return SkinList[ name ]
+
 end
 
 --[[---------------------------------------------------------
@@ -184,8 +192,8 @@ end
 function SkinHook( strType, strName, panel, w, h )
 
 	local Skin = panel:GetSkin()
-
 	if ( !Skin ) then return end
+
 	local func = Skin[ strType .. strName ]
 	if ( !func ) then return end
 
@@ -199,11 +207,9 @@ end
 function SkinTexture( strName, panel, default )
 
 	local Skin = panel:GetSkin()
-
 	if ( !Skin ) then return default end
 
 	local Textures = Skin.tex
-
 	if ( !Textures ) then return default end
 
 	return Textures[ strName ] or default
@@ -216,7 +222,6 @@ end
 function Color( strName, panel, default )
 
 	local Skin = panel:GetSkin()
-
 	if ( !Skin ) then return default end
 
 	return Skin[ strName ] or default
@@ -227,12 +232,16 @@ end
 	SkinChangeIndex
 -----------------------------------------------------------]]
 function SkinChangeIndex()
+
 	return iSkinChangeIndex
+
 end
 
 --[[---------------------------------------------------------
 	RefreshSkins - clears all cache'd panels (so they will reassess which skin they should be using)
 -----------------------------------------------------------]]
 function RefreshSkins()
+
 	iSkinChangeIndex = iSkinChangeIndex + 1
+
 end

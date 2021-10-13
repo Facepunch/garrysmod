@@ -1,0 +1,30 @@
+"Example Sprinkle" // This is what shows up in Type
+{
+	base
+	{
+		// The base key-values of what you want to sprinkle. Every entity will have these values, but you do not need to put anything here
+		"classname" "prop_static"
+		// ...
+
+		// The default grid size of this type, this can be overridden in Hammer
+		"grid" "64 64" 
+	}
+
+	10 // This is the chance of this set of values being used, this can be any number
+	{
+		// The key-value(s) of this case, left part is the key as seen without SmartEdit, the right part is the value
+		"model" "models\props_junk\garbage128_composite001a.mdl" 
+	}
+	10
+	{
+		"model" "models\props_junk\garbage128_composite001b.mdl"
+	}
+	10
+	{
+		"model" "models\props_junk\garbage128_composite001c.mdl"
+	}
+	10 // Since there's 4 cases with the same chance, each case has a 1/4 chance of being placed
+	{
+		"model" "models\props_junk\garbage_carboard001a.mdl"
+	}
+}

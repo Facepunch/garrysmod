@@ -9,7 +9,7 @@ AccessorFunc( PANEL, "m_strMatNameFailsafe",	"FailsafeMatName" )
 
 function PANEL:Init()
 
-	self:SetImageColor( Color( 255, 255, 255, 255 ) )
+	self:SetImageColor( color_white )
 	self:SetMouseInputEnabled( false )
 	self:SetKeyboardInputEnabled( false )
 

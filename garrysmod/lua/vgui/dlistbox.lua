@@ -18,7 +18,7 @@ function PANEL:OnMousePressed( mcode )
 		self:Select( true )
 	end
 
-	self:SetTextColor( Color( 0, 0, 0, 255 ) )
+	self:SetTextColor( color_black )
 end
 
 function PANEL:Paint( w, h )

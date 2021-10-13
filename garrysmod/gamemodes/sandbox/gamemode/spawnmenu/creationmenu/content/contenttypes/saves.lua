@@ -10,9 +10,6 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 	ws_save = WorkshopFileBase( "save", { "save" } )
 	ws_save.HTML = HTML
 
-	HTML:OpenURL( "asset://garrysmod/html/saves.html" )
-	HTML:Call( "SetMap( '" .. game.GetMap() .. "' );" )
-
 	function ws_save:FetchLocal( offset, perpage )
 
 		local f = file.Find( "saves/*.gms", "MOD", "datedesc" )
@@ -27,7 +24,8 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 			local entry = {
 				file	= "saves/" .. v,
 				name	= v:StripExtension(),
-				preview	= "saves/" .. v:StripExtension() .. ".jpg"
+				preview	= "saves/" .. v:StripExtension() .. ".jpg",
+				description	= "Local map saves stored on your computer. Local content can be deleted in the main menu."
 			}
 
 			table.insert( saves, entry )
@@ -56,6 +54,9 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 
 	function ws_save:Load( filename ) RunConsoleCommand( "gm_load", filename ) end
 	function ws_save:Publish( filename, imagename ) RunConsoleCommand( "save_publish", filename, imagename ) end
+
+	HTML:OpenURL( "asset://garrysmod/html/saves.html" )
+	HTML:Call( "SetMap( '" .. game.GetMap() .. "' );" )
 
 	return HTML
 

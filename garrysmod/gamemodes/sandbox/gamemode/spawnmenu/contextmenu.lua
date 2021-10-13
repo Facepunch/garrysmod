@@ -191,7 +191,7 @@ function CreateContextMenu()
 		label:Dock( BOTTOM )
 		label:SetText( v.title )
 		label:SetContentAlignment( 5 )
-		label:SetTextColor( Color( 255, 255, 255, 255 ) )
+		label:SetTextColor( color_white )
 		label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 
 		icon.DoClick = function()
@@ -201,8 +201,9 @@ function CreateContextMenu()
 			--
 			local newv = list.Get( "DesktopWindows" )[ k ]
 
-			if ( v.onewindow ) then
-				if ( IsValid( icon.Window ) ) then icon.Window:Center() return end
+			if ( v.onewindow and IsValid( icon.Window ) ) then
+				icon.Window:Center()
+				return
 			end
 
 			-- Make the window

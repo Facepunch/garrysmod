@@ -22,12 +22,12 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		local mdl = window:Add( "DModelPanel" )
 		mdl:Dock( FILL )
 		mdl:SetFOV( 36 )
-		mdl:SetCamPos( Vector( 0, 0, 0 ) )
+		mdl:SetCamPos( vector_origin )
 		mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 160, 80, 255 ) )
 		mdl:SetDirectionalLight( BOX_LEFT, Color( 80, 160, 255, 255 ) )
 		mdl:SetAmbientLight( Vector( -64, -64, -64 ) )
 		mdl:SetAnimated( true )
-		mdl.Angles = Angle( 0, 0, 0 )
+		mdl.Angles = angle_zero
 		mdl:SetLookAt( Vector( -100, 0, -22 ) )
 
 		local sheet = window:Add( "DPropertySheet" )
@@ -54,6 +54,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			icon:SetTooltip( name )
 			icon.playermodel = name
 			icon.model_path = model
+			icon.OpenMenu = function( button )
+				local menu = DermaMenu()
+				menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( model ) end ):SetIcon( "icon16/page_copy.png" )
+				menu:Open()
+			end
 
 			PanelSelect:AddPanel( icon, { cl_playermodel = name } )
 
@@ -263,7 +268,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			if ( self.bAnimated ) then self:RunAnimation() end
 
 			if ( self.Pressed ) then
-				local mx, my = gui.MousePos()
+				local mx = gui.MousePos()
 				self.Angles = self.Angles - Angle( 0, ( ( self.PressX or mx ) - mx ) / 2, 0 )
 
 				self.PressX, self.PressY = gui.MousePos()

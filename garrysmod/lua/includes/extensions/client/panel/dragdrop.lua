@@ -459,13 +459,6 @@ function meta:DragMouseRelease( mcode )
 		return false
 	end
 
-	for k, v in pairs( dragndrop.m_Dragging ) do
-
-		if ( !IsValid( v ) ) then continue end
-		v:OnStopDragging()
-
-	end
-
 	dragndrop.Drop()
 
 	-- Todo.. we should only do this if we enabled it!

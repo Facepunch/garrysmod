@@ -9,7 +9,7 @@ AccessorFunc( PANEL, "m_BarColor", "BarColor" )
 
 function PANEL:Init()
 
-	self:SetBarColor( Color( 255, 255, 255, 255 ) )
+	self:SetBarColor( color_white )
 	self:SetSize( 26, 26 )
 	self:SetValue( 1 )
 

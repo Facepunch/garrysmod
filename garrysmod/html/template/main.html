@@ -32,15 +32,16 @@
 
 		</div>
 
-		<div class='news' ng-hide="NewsList.length == 0">
-			<div class="news_item" style="{{NewsItemBackground( CurrentNewsItem.HeaderImage )}}">
+		<div class="news" ng-hide="NewsList.length == 0">
+			<div class="news_item" style="{{NewsItemBackground( CurrentNewsItem.HeaderImage )}}" ng-hide="HideNews">
 				<div>
 					<span ng-click="OpenInSteam( CurrentNewsItem.Url )">{{CurrentNewsItem.Title}}</span>
 					<font>{{CurrentNewsItem.SummaryHtml}}</font>
 				</div>
 			</div>
 			<div class='news_buttons'>
-				<div class="{{IfElse( NewsItem.Url == CurrentNewsItem.Url, 'selected', '' )}}" ng-repeat="NewsItem in NewsList | orderBy: 'Date'" ng-click="SelectItem(NewsItem)"></div>
+				<div ng-click="ToggleNewsList()" ng-hide="HideNews || AnyNewNewsItems"><img src="../materials/icon16/cross.png"></div>
+				<div class="{{IfElse( NewsItem.Url == CurrentNewsItem.Url, 'selected', '' )}} {{NewsItemClass( NewsItem )}}" ng-repeat="NewsItem in NewsList | orderBy: 'Date'" ng-click="SelectItem(NewsItem)"></div>
 			</div>
 		</div>
 

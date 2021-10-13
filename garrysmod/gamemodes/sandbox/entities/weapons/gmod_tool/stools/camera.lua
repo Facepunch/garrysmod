@@ -26,8 +26,8 @@ local function CheckLimit( ply, key )
 		break
 	end
 
-	if ( !found ) then
-		if ( !ply:CheckLimit( "cameras" ) ) then return false end
+	if ( !found and !ply:CheckLimit( "cameras" ) ) then
+		return false
 	end
 
 	return true
@@ -59,6 +59,8 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 	ent.locked = locked
 
 	ent:Spawn()
+
+	DoPropSpawnedEffect( ent )
 
 	ent:SetTracking( NULL, Vector( 0 ) )
 	ent:SetLocked( locked )
@@ -115,8 +117,13 @@ function TOOL:RightClick( trace )
 	if ( trace.Entity:IsWorld() ) then
 
 		trace.Entity = self:GetOwner()
-		trace.HitPos = self:GetOwner():GetPos()
+		trace.HitPos = trace.Entity:GetPos()
 
+	end
+
+	-- We apply the view offset for players in camera entity
+	if ( trace.Entity:IsPlayer() ) then
+		trace.HitPos = trace.Entity:GetPos()
 	end
 
 	camera:SetTracking( trace.Entity, trace.Entity:WorldToLocal( trace.HitPos ) )
@@ -125,7 +132,11 @@ function TOOL:RightClick( trace )
 
 end
 
+local ConVarsDefault = TOOL:BuildConVarList()
+
 function TOOL.BuildCPanel( CPanel )
+
+	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "camera", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
 	CPanel:AddControl( "Numpad", { Label = "#tool.camera.key", Command = "camera_key" } )
 	CPanel:AddControl( "CheckBox", { Label = "#tool.camera.static", Command = "camera_locked", Help = true } )

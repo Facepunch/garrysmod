@@ -64,12 +64,18 @@ function PANEL:SwitchPanel( panel )
 
 	self.SelectedPanel = panel
 
+	if ( !IsValid( panel ) ) then return end
+
 	self.HorizontalDivider:SetRight( self.SelectedPanel )
 	self.HorizontalDivider:InvalidateLayout( true )
 
 	self.SelectedPanel:SetVisible( true )
 	self:InvalidateParent()
 
+end
+
+function PANEL:OnSizeChanged()
+	self.HorizontalDivider:LoadCookies()
 end
 
 vgui.Register( "SpawnmenuContentPanel", PANEL, "DPanel" )

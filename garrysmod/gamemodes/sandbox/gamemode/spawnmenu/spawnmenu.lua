@@ -61,7 +61,15 @@ function PANEL:OpenCreationMenuTab( name )
 end
 
 function PANEL:GetToolMenu()
+
 	return self.ToolMenu
+
+end
+
+function PANEL:GetCreationMenu()
+
+	return self.CreateMenu
+
 end
 
 --[[---------------------------------------------------------
@@ -77,14 +85,18 @@ end
 	Name: HangOpen
 -----------------------------------------------------------]]
 function PANEL:HangOpen( bHang )
+
 	self.m_bHangOpen = bHang
+
 end
 
 --[[---------------------------------------------------------
 	Name: HangingOpen
 -----------------------------------------------------------]]
 function PANEL:HangingOpen()
+
 	return self.m_bHangOpen
+
 end
 
 --[[---------------------------------------------------------
@@ -174,6 +186,18 @@ function PANEL:EndKeyFocus( pPanel )
 	if ( self.m_pKeyFocus != pPanel ) then return end
 	self:SetKeyboardInputEnabled( false )
 
+end
+
+function PANEL:OnSizeChanged( newW, newH )
+	local divW = self.HorizontalDivider:GetWide()
+	local divL = self.HorizontalDivider:GetLeftWidth()
+	self:InvalidateLayout( true )
+	local divWnew = self.HorizontalDivider:GetWide()
+
+	if ( divW > divL && divW < divWnew ) then
+		local ratio = divL / divW
+		self.HorizontalDivider:SetLeftWidth( ratio * divWnew )
+	end
 end
 
 vgui.Register( "SpawnMenu", PANEL, "EditablePanel" )

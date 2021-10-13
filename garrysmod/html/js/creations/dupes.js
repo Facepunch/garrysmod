@@ -18,8 +18,7 @@ function CDupes( $scope, $timeout, $location )
 	CreationScope.MyCategories =
 	[
 		"local",
-		"subscribed_ugc",
-		//"favorites_ugc"
+		"subscribed_ugc"
 	];
 
 	CreationScope.Categories =
@@ -31,6 +30,8 @@ function CDupes( $scope, $timeout, $location )
 
 	CreationScope.CategoriesSecondary =
 	[
+		"followed",
+		"favorite",
 		"friends",
 		"mine"
 	];
@@ -84,4 +85,19 @@ function ShowLocalDupes()
 	CreationLocation.path( "/list/local/" );
 
 	CreationScope.$apply();
+}
+
+
+function WindowResized()
+{
+	// dupe is from control.Dupes.js
+	dupe.RefreshDimensions();
+	dupe.UpdatePageNav();
+
+	// Refresh HTML
+	dupe.DigestUpdate = setTimeout( function()
+	{
+		self.DigestUpdate = 0;
+		Scope.Go( 0 );
+	}, 500 )
 }
