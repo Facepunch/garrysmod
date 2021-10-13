@@ -7,6 +7,7 @@ local PLAYER = {}
 
 PLAYER.DisplayName			= "Default Class"
 
+PLAYER.SlowWalkSpeed		= 200		-- How fast to move when slow-walking (+WALK)
 PLAYER.WalkSpeed			= 400		-- How fast to move when not running
 PLAYER.RunSpeed				= 600		-- How fast to move when running
 PLAYER.CrouchedWalkSpeed	= 0.3		-- Multiply move speed by this when crouching
