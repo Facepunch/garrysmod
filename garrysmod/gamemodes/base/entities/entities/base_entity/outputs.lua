@@ -55,14 +55,14 @@ function ENT:AddOutputFromAcceptInput( name, value )
 
 	end
 
-	local pos = string.find(value, " ", 1, true )
+	local pos = string.find( value, " ", 1, true )
 	if ( pos == nil ) then
 
 		return false
 
 	end
 
-	name, value = value:sub(1, pos - 1), value:sub(pos + 1)
+	name, value = value:sub( 1, pos - 1 ), value:sub( pos + 1 )
 
 	-- This is literally KeyValue but as an input and with ,s as :s.
 	value = value:gsub( ":", "," )
