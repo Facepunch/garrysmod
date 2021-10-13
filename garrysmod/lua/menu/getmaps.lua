@@ -33,6 +33,7 @@ local function UpdateMaps()
 	MapNames[ "gd_" ] = "Counter-Strike"
 	MapNames[ "dz_" ] = "Counter-Strike"
 	MapNames[ "training1" ] = "Counter-Strike"
+	MapNames[ "lobby_mapveto" ] = "Counter-Strike"
 
 	-- Various custom cs maps
 	MapNames[ "35hp_" ] = "Counter-Strike (Custom)"

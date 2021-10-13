@@ -61,7 +61,15 @@ function PANEL:OpenCreationMenuTab( name )
 end
 
 function PANEL:GetToolMenu()
+
 	return self.ToolMenu
+
+end
+
+function PANEL:GetCreationMenu()
+
+	return self.CreateMenu
+
 end
 
 --[[---------------------------------------------------------
@@ -77,14 +85,18 @@ end
 	Name: HangOpen
 -----------------------------------------------------------]]
 function PANEL:HangOpen( bHang )
+
 	self.m_bHangOpen = bHang
+
 end
 
 --[[---------------------------------------------------------
 	Name: HangingOpen
 -----------------------------------------------------------]]
 function PANEL:HangingOpen()
+
 	return self.m_bHangOpen
+
 end
 
 --[[---------------------------------------------------------

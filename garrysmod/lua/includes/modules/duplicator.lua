@@ -200,6 +200,10 @@ local EntitySaver =
 
 		end
 
+		-- Non Sandbox tool set colors and material
+		if ( ent:GetColor() != color_white ) then data._DuplicatedColor = ent:GetColor() end
+		if ( ent:GetMaterial() != "" ) then data._DuplicatedMaterial = ent:GetMaterial() end
+
 		-- Bone Manipulator
 		if ( ent:HasBoneManipulations() ) then
 
@@ -274,6 +278,8 @@ local EntitySaver =
 		if ( data.ModelScale ) then ent:SetModelScale( data.ModelScale, 0 ) end
 		if ( data.ColGroup ) then ent:SetCollisionGroup( data.ColGroup ) end
 		if ( data.Name ) then ent:SetName( data.Name ) end
+		if ( data._DuplicatedColor ) then ent:SetColor( data._DuplicatedColor ) end
+		if ( data._DuplicatedMaterial ) then ent:SetMaterial( data._DuplicatedMaterial ) end
 
 		-- Body Groups
 		if ( data.BodyG ) then
@@ -364,6 +370,29 @@ EntityModifiers = EntityModifiers or {}
 
 function RegisterBoneModifier( _name_, _function_ ) BoneModifiers[ _name_ ] = _function_ end
 function RegisterEntityModifier( _name_, _function_ ) EntityModifiers[ _name_ ] = _function_ end
+
+--
+-- Try to work out which workshop addons are used by this dupe. This is far from perfect.
+--
+function FigureOutRequiredAddons( Dupe )
+
+	local addons = {}
+	for id, ent in pairs( Dupe.Entities ) do
+		for id, addon in pairs( engine.GetAddons() ) do
+			-- Model
+			if ( ent.Model and file.Exists( ent.Model, addon.title ) ) then
+				addons[ addon.wsid ] = true
+			end
+
+			-- Material override
+			if ( ent._DuplicatedMaterial and file.Exists( "materials/" .. ent._DuplicatedMaterial .. ".vmt", addon.title ) ) then
+				addons[ addon.wsid ] = true
+			end
+		end
+	end
+	Dupe.RequiredAddons = table.GetKeys( addons )
+
+end
 
 if ( CLIENT ) then return end
 
@@ -652,7 +681,7 @@ end
 --[[---------------------------------------------------------
   Make a constraint from a constraint table
 -----------------------------------------------------------]]
-function CreateConstraintFromTable( Constraint, EntityList )
+function CreateConstraintFromTable( Constraint, EntityList, Player )
 
 	local Factory = ConstraintType[ Constraint.Type ]
 	if ( !Factory ) then return end
@@ -680,6 +709,9 @@ function CreateConstraintFromTable( Constraint, EntityList )
 
 			end
 		end
+
+		-- A little hack to give the duped constraints the correct player object
+		if ( Key:lower() == "pl" || Key:lower() == "ply" || Key:lower() == "player" ) then Val = Player end
 
 		-- If there's a missing argument then unpack will stop sending at that argument
 		if ( Val == nil ) then Val = false end
@@ -774,7 +806,7 @@ function Paste( Player, EntityList, ConstraintList )
 	for k, Constraint in pairs( ConstraintList ) do
 
 		local Entity = nil
-		ProtectedCall( function() Entity = CreateConstraintFromTable( Constraint, CreatedEntities ) end )
+		ProtectedCall( function() Entity = CreateConstraintFromTable( Constraint, CreatedEntities, Player ) end )
 
 		if ( IsValid( Entity ) ) then
 			table.insert( CreatedConstraints, Entity )

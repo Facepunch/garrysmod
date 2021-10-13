@@ -173,12 +173,12 @@ end
 function util.noop() end
 function util.passthrough(x) return x end
 
--- Nice Fisher-Yates implementation, from Wikipedia
+-- Fisher-Yates shuffle
 local rand = math.random
 function table.Shuffle(t)
   local n = #t
 
-  while n > 2 do
+  while n > 1 do
     -- n is now the last pertinent index
     local k = rand(n) -- 1 <= k <= n
     -- Quick swap

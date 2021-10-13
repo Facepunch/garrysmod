@@ -179,7 +179,7 @@
 		24
 		{
 			"name"		"ttt_no_nade_throw_during_prep"
-			"text"		"Preround Grenade Throwing"
+			"text"		"No Preround Grenade Throwing"
 			"type"		"CheckBox"
 			"default"	"1"
 		}

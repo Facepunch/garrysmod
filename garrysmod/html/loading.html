@@ -47,9 +47,9 @@
 
 			function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, lang, gamemodeNice )
 			{
-				$("#serverName").html( servername );
-				$("#serverMap").html( mapname );
-				$("#serverGamemode").html( gamemodeNice );
+				$("#serverName").text( servername );
+				$("#serverMap").text( mapname );
+				$("#serverGamemode").text( gamemodeNice );
 				$("#mapimg").attr("src", "asset://mapimage/" + mapname );
 				$("body").css( "background-image", "url( 'asset://mapimage/" + mapname + "' )" );
 
