@@ -127,6 +127,12 @@ function PANEL:OnSelect( index, value, data )
 
 end
 
+function PANEL:OnMenuOpened( menu )
+
+	-- For override
+
+end
+
 function PANEL:AddSpacer()
 
 	self.Spacers[ #self.Choices ] = true
@@ -218,6 +224,8 @@ function PANEL:OpenMenu( pControlOpener )
 
 	self.Menu:SetMinimumWidth( self:GetWide() )
 	self.Menu:Open( x, y, false, self )
+
+	self:OnMenuOpened( self.Menu )
 
 end
 
