@@ -651,7 +651,12 @@ function table.RemoveByValue( tbl, val )
 	local key = table.KeyFromValue( tbl, val )
 	if ( !key ) then return false end
 
-	table.remove( tbl, key )
+	if ( isnumber( key ) ) then
+		table.remove( tbl, key )
+	else
+		tbl[ key ] = nil
+	end
+
 	return key
 
 end
