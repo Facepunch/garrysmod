@@ -28,6 +28,49 @@ function ENT:StoreOutput( name, info )
 
 end
 
+-- This works like SetNetworkKeyValue, call it from ENT:KeyValue and it'll
+-- return true if it successfully added an output from the passed KV pair.
+function ENT:AddOutputFromKeyValue( key, value )
+
+	if ( key:sub( 1, 2 ) == "On" ) then
+
+		self:StoreOutput( key, value )
+		return true
+
+	end
+
+	return false
+
+end
+
+-- Call from ENT:AcceptInput and it'll return true if the input was AddOutput
+-- and if it successfully added an output.
+-- Note that to be strictly compatible with Source entities, AddOutput should
+-- allow setting arbitrary keyvalues, but this implementation does not.
+function ENT:AddOutputFromAcceptInput( name, value )
+
+	if ( name ~= "AddOutput" ) then
+
+		return false
+
+	end
+
+	local pos = string.find(value, " ", 1, true )
+	if ( pos == nil ) then
+
+		return false
+
+	end
+
+	name, value = value:sub(1, pos - 1), value:sub(pos + 1)
+
+	-- This is literally KeyValue but as an input and with ,s as :s.
+	value = value:gsub( ":", "," )
+
+	return self:AddOutputFromKeyValue( name, value )
+
+end
+
 -- Nice helper function, this does all the work. Returns false if the
 -- output should be removed from the list.
 local function FireSingleOutput( output, this, activator, data )
