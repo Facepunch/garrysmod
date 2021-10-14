@@ -1,0 +1,136 @@
+// weapon_pistol.txt
+
+"Weapon_Alyx_Shotgun.Cock"
+{
+	"channel"	"CHAN_ITEM"
+	"volume"	"0.7"
+	"soundlevel"	"SNDLVL_NORM"
+	"pitch"		"98, 102"
+
+	"wave"		"weapons/alyx_gun/alyx_shotgun_cock1.wav"
+}
+
+"Weapon_Alyx_Gun.Reload"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"0.5"
+	"soundlevel"	"SNDLVL_NORM"
+	"pitch"		"200"
+
+	"wave"		"weapons/pistol/pistol_reload1.wav"
+}
+
+"Weapon_Alyx_Gun.NPC_Reload"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"0.5"
+	"soundlevel"	"SNDLVL_NORM"
+	"pitch"		"200"
+
+	"wave"		"weapons/smg1/smg1_reload.wav"
+}
+
+"Weapon_Alyx_Gun.Empty"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"		"weapons/pistol/pistol_empty.wav"
+}
+
+"Weapon_Alyx_Gun.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"pitch"			"98,102"
+	"rndwave"
+	{
+		"wave"		"weapons/alyx_gun/alyx_gun_fire3.wav"
+		"wave"		"weapons/alyx_gun/alyx_gun_fire4.wav"
+//		"wave"		"weapons/alyx_gun/alyx_gun_fire5.wav"
+//		"wave"		"weapons/alyx_gun/alyx_gun_fire6.wav"
+	}
+}
+
+"Weapon_Alyx_Gun.NPC_Single"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.9"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"pitch"			"98,102"
+
+	"rndwave"
+	{
+//		"wave"		"weapons/alyx_gun/alyx_gun_fire1.wav"
+//		"wave"		"weapons/alyx_gun/alyx_gun_fire2.wav"
+//		"wave"		"weapons/alyx_gun/alyx_gun_fire3.wav"
+//		"wave"		"weapons/alyx_gun/alyx_gun_fire4.wav"
+		"wave"		"^weapons/alyx_gun/alyx_gun_fire5.wav"
+		"wave"		"^weapons/alyx_gun/alyx_gun_fire6.wav"
+	}
+}
+
+"Weapon_Alyx_Gun.Special1"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"		"weapons/smg1/switch_single.wav"
+}
+
+"Weapon_Alyx_Gun.Special2"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"weapons/smg1/switch_burst.wav"
+}
+
+"Weapon_Alyx_Gun.Burst"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"pitch"			"98,105"
+
+	"wave"			"^weapons/smg1/smg1_fireburst1.wav"
+}
+
+
+"Weapon_PhysCannon.SuperCharge"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.5"
+	"soundlevel"	"SNDLVL_100dB"
+	"wave"		"weapons/physcannon/superphys_chargeup.wav"
+}
+
+"weapon_functank.CombineCannon.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_90dB"
+	"pitch"			"95,105"
+
+	// FIXME: Temp!
+	"wave"			"npc/env_headcrabcanister/launch.wav"
+}
+
+"RagdollBoogie.Zap"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_NORM"
+	"pitch"			"98,102"
+
+	"rndwave"
+	{
+		"wave"			"weapons/stunstick/spark1.wav"
+		"wave"			"weapons/stunstick/spark2.wav"
+		"wave"			"weapons/stunstick/spark3.wav"
+	}
+}

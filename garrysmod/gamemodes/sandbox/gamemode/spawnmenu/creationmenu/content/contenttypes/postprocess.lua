@@ -10,10 +10,12 @@ hook.Add( "PopulatePostProcess", "AddPostProcess", function( pnlContent, tree, n
 
 		for k, v in pairs( PostProcess ) do
 
-			v.category = v.category or "Other"
+			local Category = v.category or "Other"
+			if ( !isstring( Category ) ) then Category = tostring( Category ) end
+			Categorised[ Category ] = Categorised[ Category ] or {}
+
 			v.name = k
-			Categorised[ v.category ] = Categorised[ v.category ] or {}
-			table.insert( Categorised[ v.category ], v )
+			table.insert( Categorised[ Category ], v )
 
 		end
 

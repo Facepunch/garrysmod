@@ -56,7 +56,7 @@
 		<workshopcontainer>
 
 			<workshopmessage ng-show="Loading" ng-Tranny="'saves.loading'">...</workshopmessage>
-			<workshopmessage ng-show="TotalResults == 0 && !Loading && ( !Disabled || Category != 'subscribed_ugc' )" ng-Tranny="'saves.none'">...</workshopmessage>
+			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading && ( !Disabled || Category != 'subscribed_ugc' )" ng-Tranny="'saves.none'">...</workshopmessage>
 			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled && Category == 'subscribed_ugc'" ng-Tranny="'ugc.disabled'">...</workshopmessage>
 
 			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{IfElse( IsSubscribed( file ), 'installed', '' )}}">
@@ -65,7 +65,9 @@
 					<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
 				</preview>
 
-				<name ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}</name>
+				<name>
+					<label ng-click="OpenWorkshopFile( file.id )">{{file.info.title || "Loading..."}}</label>
+				</name>
 				<author ng-hide="file.local">{{file.info.ownername}}</author>
 				<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" style="color: #4a4">+{{file.info.up-file.info.down|number:0}}</votes>
 				<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" style="color: #a44">{{file.info.up-file.info.down|number:0}}</votes>

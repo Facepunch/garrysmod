@@ -2,6 +2,7 @@
 {
 	"base"		"base"
 	"title"		"Sandbox"
+	"category"	"other"
 	"maps"		"^gm_|^gmod_|^phys_"
 	"menusystem"	"1"
 

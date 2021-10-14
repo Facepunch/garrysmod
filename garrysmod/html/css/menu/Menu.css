@@ -18,15 +18,30 @@ INPUT
 	font-size: 12px;
 }
 
+INPUT.searchbox, INPUT.gm_search
+{
+	border: 1px solid #ABADB3;
+	border-radius: 3px;
+	height: 24px;
+	margin-top: 6px;
+	padding: 4px;
+}
 INPUT.searchbox
 {
 	float: right;
-	border:0;
-	border-radius: 3px;
-	height: 24px;
 	margin-right: 320px;
-	margin-top: 6px;
-	padding: 4px;
+	width: 15%;
+}
+INPUT.gm_search
+{
+	width: 80%;
+	margin-bottom: 5px;
+}
+INPUT[type="text"], INPUT[type="number"]
+{
+	border: 1px solid #ABADB3;
+	border-radius: 2px;
+	outline-color: #08f;
 }
 
 A
@@ -94,6 +109,7 @@ UL.category LI.icon
 
 .btn-primary-disabled
 {
+	border-color: #424242;
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#888), to(#555));
 }
 
@@ -309,24 +325,31 @@ loading
 }
 
 /* 800x600 and lower */
-@media (max-width: 800px) {
-	.news_item {
+@media (max-width: 800px)
+{
+	.news_item
+	{
 		height: 128px;
 		width: 256px;
 	}
 
-	.news_item div font {
+	.news_item div font
+	{
 		font-size: x-small;
 	}
-	.news_item div {
+	.news_item div
+	{
 		font-size: medium;
 	}
 }
 
 /* 640x480 and lower */
-@media (max-width: 640px) {
-	.news {
+@media (max-width: 640px)
+{
+	.news
+	{
 		right: 5px;
 		top: 65px;
 	}
 }
+

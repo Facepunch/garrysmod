@@ -152,6 +152,25 @@ function PANEL:AddCategory( name, lbl, tItems )
 
 end
 
+-- Internal, makes the given tool highlighted in its DCategoryList
+function PANEL:SetActiveToolText( str )
+
+	for id, category in pairs( self.List.pnlCanvas:GetChildren() ) do
+
+		for id, item in pairs( category:GetChildren() ) do
+			if ( item == category.Header ) then continue end
+
+			if ( item.Name == str ) then
+				self.List:UnselectAll()
+				item:SetSelected( true )
+				return
+			end
+		end
+
+	end
+
+end
+
 function PANEL:SetActive( cp )
 
 	local kids = self.Content:GetCanvas():GetChildren()

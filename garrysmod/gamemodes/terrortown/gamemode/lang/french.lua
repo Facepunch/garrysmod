@@ -271,7 +271,7 @@ L.set_title_lang    = "Langue"
 
 -- It may be best to leave this next one english, so english players can always
 -- find the language setting even if it's set to a language they don't know.
-L.set_lang          = "Choisir une langue :"
+L.set_lang          = "Choisir une langue (Select language) :"
 
 
 --- Weapons and equipment, HUD and messages
@@ -706,7 +706,7 @@ L.tip19 = "En tant que Détective, si vous avez des crédits en réserve, vous p
 
 L.tip20 = "Les Binocles des Détectives permettent une vue et une fouille longue portée des corps. C'est pas bon pour les Traitres s'ils espéraient utiliser un corps comme appât. Bien sûr, ceux qui utilisent les Binocles sont désarmés et distraits..."
 
-L.tip21 =  "La Station de Soins des Détectives laisse les joueurs blessés guérir. Bien sûr, ces gens blessés pourraient bien être des Traitres..."
+L.tip21 = "La Station de Soins des Détectives laisse les joueurs blessés guérir. Bien sûr, ces gens blessés pourraient bien être des Traitres..."
 
 L.tip22 = "La Station de Soins enregistre un échantillon ADN de quiconque l'utilise. Les détectives peuvent l'utiliser avec le Scanner ADN pour trouver qui s'est soigné avec."
 
@@ -1065,7 +1065,7 @@ L.sb_sortby = "Trier Par :"
 L.equip_tooltip_main = "Menu d'Équipement"
 L.equip_tooltip_radar = "Contrôle Radar"
 L.equip_tooltip_disguise = "Contrôle Déguisement"
-L.equip_tooltip_radio = "Contrôle Radar"
+L.equip_tooltip_radio = "Contrôle Radio"
 L.equip_tooltip_xfer = "Transfert crédits"
 
 L.confgrenade_name = "Discombobulateur"

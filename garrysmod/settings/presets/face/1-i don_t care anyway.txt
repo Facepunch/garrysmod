@@ -65,5 +65,5 @@
 	"faceposer_flex7"		"0.530778"
 	"faceposer_flex8"		"0.757805"
 	"faceposer_flex9"		"0.334452"
-	"Faceposer_scale"		"7.338000"
+	"Faceposer_scale"		"2"
 }

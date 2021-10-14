@@ -13,7 +13,7 @@ DIV.page DIV.options
 DIV.page DIV.innerpage
 {
 	position: absolute;
-	left: 300px;
+	left: 320px;
 	top: 16px;
 	bottom: 16px;
 	right: 16px;
@@ -91,7 +91,8 @@ div.ugc_content
 	padding-top: 0;
 }
 
-@media screen and (max-height: 768px) {
+@media screen and (max-height: 768px)
+{
 	DIV.page DIV.options UL.submenu LI
 	{
 		margin-bottom: -8px;

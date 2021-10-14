@@ -107,32 +107,6 @@ function SWEP:Precache()
 
 end
 
-function SWEP:Reload()
-
-	-- This makes the reload a semi-automatic thing rather than a continuous thing
-	if ( !self.Owner:KeyPressed( IN_RELOAD ) ) then return end
-
-	local mode = self:GetMode()
-	local trace = self.Owner:GetEyeTrace()
-	if ( !trace.Hit ) then return end
-
-	local tool = self:GetToolObject()
-	if ( !tool ) then return end
-
-	tool:CheckObjects()
-
-	-- Does the server setting say it's ok?
-	if ( !tool:Allowed() ) then return end
-
-	-- Ask the gamemode if it's ok to do this
-	if ( !gamemode.Call( "CanTool", self.Owner, trace, mode ) ) then return end
-
-	if ( !tool:Reload( trace ) ) then return end
-
-	self:DoShootEffect( trace.HitPos, trace.HitNormal, trace.Entity, trace.PhysicsBone, IsFirstTimePredicted() )
-
-end
-
 -- Returns the mode we're in
 function SWEP:GetMode()
 
@@ -220,7 +194,6 @@ end
 -- Trace a line then send the result to a mode function
 function SWEP:PrimaryAttack()
 
-	local mode = self:GetMode()
 	local tr = util.GetPlayerTrace( self.Owner )
 	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
 	local trace = util.TraceLine( tr )
@@ -235,7 +208,8 @@ function SWEP:PrimaryAttack()
 	if ( !tool:Allowed() ) then return end
 
 	-- Ask the gamemode if it's ok to do this
-	if ( !gamemode.Call( "CanTool", self.Owner, trace, mode ) ) then return end
+	local mode = self:GetMode()
+	if ( !gamemode.Call( "CanTool", self.Owner, trace, mode, tool, 1 ) ) then return end
 
 	if ( !tool:LeftClick( trace ) ) then return end
 
@@ -245,7 +219,6 @@ end
 
 function SWEP:SecondaryAttack()
 
-	local mode = self:GetMode()
 	local tr = util.GetPlayerTrace( self.Owner )
 	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
 	local trace = util.TraceLine( tr )
@@ -256,11 +229,42 @@ function SWEP:SecondaryAttack()
 
 	tool:CheckObjects()
 
-	-- Ask the gamemode if it's ok to do this
+	-- Does the server setting say it's ok?
 	if ( !tool:Allowed() ) then return end
-	if ( !gamemode.Call( "CanTool", self.Owner, trace, mode ) ) then return end
+
+	-- Ask the gamemode if it's ok to do this
+	local mode = self:GetMode()
+	if ( !gamemode.Call( "CanTool", self.Owner, trace, mode, tool, 2 ) ) then return end
 
 	if ( !tool:RightClick( trace ) ) then return end
+
+	self:DoShootEffect( trace.HitPos, trace.HitNormal, trace.Entity, trace.PhysicsBone, IsFirstTimePredicted() )
+
+end
+
+function SWEP:Reload()
+
+	-- This makes the reload a semi-automatic thing rather than a continuous thing
+	if ( !self.Owner:KeyPressed( IN_RELOAD ) ) then return end
+
+	local tr = util.GetPlayerTrace( self.Owner )
+	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
+	local trace = util.TraceLine( tr )
+	if ( !trace.Hit ) then return end
+
+	local tool = self:GetToolObject()
+	if ( !tool ) then return end
+
+	tool:CheckObjects()
+
+	-- Does the server setting say it's ok?
+	if ( !tool:Allowed() ) then return end
+
+	-- Ask the gamemode if it's ok to do this
+	local mode = self:GetMode()
+	if ( !gamemode.Call( "CanTool", self.Owner, trace, mode, tool, 3 ) ) then return end
+
+	if ( !tool:Reload( trace ) ) then return end
 
 	self:DoShootEffect( trace.HitPos, trace.HitNormal, trace.Entity, trace.PhysicsBone, IsFirstTimePredicted() )
 

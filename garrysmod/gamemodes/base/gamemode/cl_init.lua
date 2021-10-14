@@ -295,7 +295,7 @@ end
 function GM:CalcVehicleView( Vehicle, ply, view )
 
 	if ( Vehicle.GetThirdPersonMode == nil || ply:GetViewEntity() != ply ) then
-		-- This hsouldn't ever happen.
+		-- This shouldn't ever happen.
 		return
 	end
 
@@ -349,13 +349,14 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 	local Vehicle	= ply:GetVehicle()
 	local Weapon	= ply:GetActiveWeapon()
 
-	local view = {}
-	view.origin		= origin
-	view.angles		= angles
-	view.fov		= fov
-	view.znear		= znear
-	view.zfar		= zfar
-	view.drawviewer	= false
+	local view = {
+		["origin"] = origin,
+		["angles"] = angles,
+		["fov"] = fov,
+		["znear"] = znear,
+		["zfar"] = zfar,
+		["drawviewer"] = false,
+	}
 
 	--
 	-- Let the vehicle override the view and allows the vehicle view to be hooked

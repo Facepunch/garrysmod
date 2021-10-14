@@ -2,7 +2,7 @@
 ENT.Base = "base_entity"
 ENT.Type = "ai"
 
-ENT.PrintName		= ""
+ENT.PrintName		= "Base SNPC"
 ENT.Author			= ""
 ENT.Contact			= ""
 ENT.Purpose			= ""
