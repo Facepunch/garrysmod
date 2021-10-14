@@ -234,8 +234,8 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		local function UpdateFromControls()
 
-			RunConsoleCommand( "cl_playercolor", tostring( plycol:GetVector() ) )
-			RunConsoleCommand( "cl_weaponcolor", tostring( wepcol:GetVector() ) )
+			RunConsoleCommand( "cl_playercolor", plycol:GetVector():Serialize() )
+			RunConsoleCommand( "cl_weaponcolor", wepcol:GetVector():Serialize() )
 
 		end
 

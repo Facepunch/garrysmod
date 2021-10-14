@@ -88,7 +88,9 @@ function PANEL:EditVariable( varname, editdata )
 	--
 	row.DataChanged = function( _, val )
 		if ( !IsValid( self.m_Entity ) ) then self:EntityLost() return end
-		self.m_Entity:EditValue( varname, tostring( val ) )
+		
+		local success, serial = SafeSerialize( val )
+		if ( success && serial != nil ) then self.m_Entity:EditValue( varname, serial ) end
 	end
 
 end

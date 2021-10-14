@@ -105,3 +105,10 @@ function COLOR:ToTable()
 	return { self.r, self.g, self.b, self.a }
 
 end
+
+function COLOR:Serialize( separator )
+
+	if ( separator == nil ) then separator = " " end
+	return string.format( "%u%s%u%s%u", self.r, separator, self.g, separator, self.b )
+
+end

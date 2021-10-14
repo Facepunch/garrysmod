@@ -313,19 +313,18 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 
 	-- Attachment point 1
 	rope:SetEntity( "StartEntity", Ent1 )
-	rope:SetKeyValue( "StartOffset", tostring( LPos1 ) )
+	rope:SetKeyValue( "StartOffset", LPos1:Serialize() )
 	rope:SetKeyValue( "StartBone", Bone1 )
 
 	-- Attachment point 2
 	rope:SetEntity( "EndEntity", Ent2 )
-	rope:SetKeyValue( "EndOffset", tostring( LPos2 ) )
+	rope:SetKeyValue( "EndOffset", LPos2:Serialize() )
 	rope:SetKeyValue( "EndBone", Bone2 )
 
 	if ( kv ) then
 		for k, v in pairs( kv ) do
-
-			rope:SetKeyValue( k, tostring( v ) )
-
+			local success, val = SafeSerialize( v )
+			if ( success && val != nil ) then rope:SetKeyValue( k, val ) end
 		end
 	end
 
@@ -482,7 +481,7 @@ function Rope( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, length, addlength, forcel
 			Constraint = ents.Create( "phys_lengthconstraint" )
 			ConstraintCreated( Constraint )
 			Constraint:SetPos( WPos1 )
-			Constraint:SetKeyValue( "attachpoint", tostring( WPos2 ) )
+			Constraint:SetKeyValue( "attachpoint", WPos2:Serialize() )
 			Constraint:SetKeyValue( "minlength", "0.0" )
 			Constraint:SetKeyValue( "length", length + addlength )
 			if ( forcelimit ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
@@ -560,7 +559,7 @@ function Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rda
 			Constraint = ents.Create( "phys_spring" )
 			ConstraintCreated( Constraint )
 			Constraint:SetPos( WPos1 )
-			Constraint:SetKeyValue( "springaxis", tostring( WPos2 ) )
+			Constraint:SetKeyValue( "springaxis", WPos2:Serialize() )
 			Constraint:SetKeyValue( "constant", constant )
 			Constraint:SetKeyValue( "damping", damping )
 			Constraint:SetKeyValue( "relativedamping", rdamping )
@@ -717,7 +716,7 @@ function Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, color 
 		local Constraint = ents.Create( "phys_slideconstraint" )
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
-		Constraint:SetKeyValue( "slideaxis", tostring( WPos2 ) )
+		Constraint:SetKeyValue( "slideaxis", WPos2:Serialize() )
 		Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
 		Constraint:Spawn()
 		Constraint:Activate()
@@ -787,7 +786,7 @@ function Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, 
 		local Constraint = ents.Create( "phys_hinge" )
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
-		Constraint:SetKeyValue( "hingeaxis", tostring( WPos2 ) )
+		Constraint:SetKeyValue( "hingeaxis", WPos2:Serialize() )
 		if ( forcelimit && forcelimit > 0 ) then Constraint:SetKeyValue( "forcelimit", forcelimit ) end
 		if ( torquelimit && torquelimit > 0 ) then Constraint:SetKeyValue( "torquelimit", torquelimit ) end
 		if ( friction && friction > 0 ) then Constraint:SetKeyValue( "hingefriction", friction ) end
@@ -1061,7 +1060,7 @@ function Motor( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, friction, torque, forcet
 		local Constraint = ents.Create( "phys_torque" )
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos1 )
-		Constraint:SetKeyValue( "axis", tostring( WPos2 ) )
+		Constraint:SetKeyValue( "axis", WPos2:Serialize() )
 		Constraint:SetKeyValue( "force", torque )
 		Constraint:SetKeyValue( "forcetime", forcetime )
 		Constraint:SetKeyValue( "spawnflags", 4 )
@@ -1149,9 +1148,9 @@ function Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimi
 		local Constraint = ents.Create( "phys_pulleyconstraint" )
 		ConstraintCreated( Constraint )
 		Constraint:SetPos( WPos2 )
-		Constraint:SetKeyValue( "position2", tostring( WPos3 ) )
-		Constraint:SetKeyValue( "ObjOffset1", tostring( LPos1 ) )
-		Constraint:SetKeyValue( "ObjOffset2", tostring( LPos4 ) )
+		Constraint:SetKeyValue( "position2", WPos3:Serialize() )
+		Constraint:SetKeyValue( "ObjOffset1", LPos1:Serialize() )
+		Constraint:SetKeyValue( "ObjOffset2", LPos4:Serialize() )
 		Constraint:SetKeyValue( "forcelimit", forcelimit )
 		Constraint:SetKeyValue( "addlength", ( WPos3 - WPos4 ):Length() )
 		if ( rigid ) then Constraint:SetKeyValue( "spawnflags", 2 ) end

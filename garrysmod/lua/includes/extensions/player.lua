@@ -95,7 +95,7 @@ end
 function meta:DebugInfo()
 
 	Msg( "Name: " .. self:Name() .. "\n" )
-	Msg( "Pos: " .. tostring( self:GetPos() ) .. "\n" )
+	Msg( "Pos: " .. self:GetPos():Serialize( " " ) .. "\n" )
 
 end
 

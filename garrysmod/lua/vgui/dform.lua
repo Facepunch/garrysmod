@@ -99,7 +99,10 @@ function PANEL:ComboBox( strLabel, strConVar )
 	right:Dock( FILL )
 	function right:OnSelect( index, value, data )
 		if ( !self.m_strConVar ) then return end
-		RunConsoleCommand( self.m_strConVar, tostring( data or value ) )
+		
+		if ( data == nil ) then data = value end
+		local success, serial = SafeSerialize( data )
+		if ( success && serial != nil ) then RunConsoleCommand( self.m_strConVar, serial ) end
 	end
 
 	self:AddItem( left, right )

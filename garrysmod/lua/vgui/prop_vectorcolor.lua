@@ -5,9 +5,6 @@
 -- So when you derive from this class - you should ideally only override Setup.
 --
 
-local function ColorToString( col )
-	return math.floor( col.r ) .. " " .. math.floor( col.g ) .. " " .. math.floor( col.b ) .. " " .. math.floor( col.a )
-end
 
 DEFINE_BASECLASS( "DProperty_Generic" )
 
@@ -73,10 +70,9 @@ function PANEL:Setup( vars )
 
 			if ( isvector( self.VectorValue ) ) then
 				-- convert color to vector
-				local vec = Vector( newcol.r / 255, newcol.g / 255, newcol.b / 255 )
-				self:ValueChanged( tostring( vec ), true )
+				self:ValueChanged( newcol:ToVector():Serialize(), true )
 			else
-				self:ValueChanged( ColorToString( newcol ), true )
+				self:ValueChanged( newcol:Serialize(), true )
 			end
 
 		end
@@ -99,7 +95,7 @@ function PANEL:Setup( vars )
 		if ( isvector( self.VectorValue ) ) then
 			__SetValue( self, val )
 		else
-			__SetValue( self, ColorToString( val ) )
+			__SetValue( self, val:Serialize() )
 		end
 	end
 

@@ -66,7 +66,7 @@ end
 function ENT:OnAngleChange( newang )
 
 	if ( IsValid( self.EnvSun ) ) then
-		self.EnvSun:SetKeyValue( "sun_dir", tostring( newang:Forward() ) )
+		self.EnvSun:SetKeyValue( "sun_dir", newang:Forward():Serialize() )
 	end
 
 end
