@@ -487,8 +487,7 @@ do
 		
 		-- If var is a table
 		-- skip all of the extra checks verifying if a non-table can be indexed
-		if ( istable( var ) ) then goto TableIndex end
-		
+		if ( not istable( var ) ) then
 			local meta = debug_getmetatable( var )
 			if ( meta == nil ) then return false, "no metatable" end
 			
@@ -498,8 +497,7 @@ do
 			index_type = TypeID( index )
 			if ( index_type == TYPE_FUNCTION ) then return IndexPassThru( pcall( index, var, key ) ) end
 			if ( index_type != TYPE_TABLE ) then return false, string_format( "expected \"__index\" key to be a table or function, got %s", type( index ) ) end
-		
-		::TableIndex::
+		end
 		
 		-- To prevent cyclic references
 		local metas = { [ meta ] = true }
