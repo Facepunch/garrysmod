@@ -188,9 +188,9 @@ end
 
 function PANEL:AddSpacer()
 
-	local cnt = self:GetChoiceCount()
+	local id = self:GetChoiceCount()
 
-	self.Spacers[ cnt ] = true
+	self.Spacers[ id ] = true
 
 end
 
