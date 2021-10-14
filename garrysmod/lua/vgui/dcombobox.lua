@@ -61,21 +61,41 @@ function PANEL:GetSelectedID()
 
 end
 
-function PANEL:GetOptionText( id )
-
-	return self.Choices[ id ]
-
-end
-
 function PANEL:GetChoiceCount()
 
 	return #self.Choices
 
 end
 
+function PANEL:GetOptionText( id )
+
+	return self.Choices[ id ]
+
+end
+
 function PANEL:GetOptionData( id )
 
 	return self.Data[ id ]
+
+end
+
+function PANEL:GetOptionIcon( id )
+
+	return self.ChoiceIcons[ id ]
+
+end
+
+function PANEL:GetOptionSpacer( id )
+
+	return self.Spacers[ id ]
+
+end
+
+function PANEL:AddSpacer()
+
+	local id = self:GetChoiceCount()
+
+	self.Spacers[ id ] = true
 
 end
 
@@ -136,10 +156,14 @@ function PANEL:RemoveChoiceID( id )
 	-- The second argument must be convertable to number
 	-- Removing non-positive or fractional does nothing
 	-- Entry will be removed only on positive integers
-	local name = table.remove( self.Choices, id )
-	local data = table.remove( self.Data   , id )
+	local index = tonumber(id) or self:GetChoiceCount()
 
-	return name, data -- Using the logic of `GetSelected`
+	local text = table.remove( self.Choices    , index )
+	local data = table.remove( self.Data       , index )
+	local icon = table.remove( self.ChoiceIcons, index )
+	local spac = table.remove( self.Spacers    , index )
+
+	return text, data, icon, spac -- Using the logic of `GetSelected`
 
 end
 
@@ -170,7 +194,12 @@ function PANEL:GetSelected()
 
 	if ( !id ) then return end
 
-	return self:GetOptionText( id ), self:GetOptionData( id )
+	local text = self:GetOptionText( id )
+	local data = self:GetOptionData( id )
+	local icon = self:GetOptionIcon( id )
+	local spac = self:GetOptionSpacer( id )
+
+	return text, data, icon, spac
 
 end
 
@@ -183,14 +212,6 @@ end
 function PANEL:OnMenuOpened( menu )
 
 	-- For override
-
-end
-
-function PANEL:AddSpacer()
-
-	local id = self:GetChoiceCount()
-
-	self.Spacers[ id ] = true
 
 end
 
@@ -279,14 +300,6 @@ function PANEL:OpenMenu( pControlOpener )
 	self.Menu:Open( x, y, false, self )
 
 	self:OnMenuOpened( self.Menu )
-
-end
-
-function PANEL:CloseMenu()
-
-	if ( IsValid( self.Menu ) ) then
-		self.Menu:Remove()
-	end
 
 end
 
