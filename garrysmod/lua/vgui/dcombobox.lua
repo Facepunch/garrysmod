@@ -61,7 +61,7 @@ function PANEL:GetSelectedID()
 
 end
 
-function PANEL:GetChoiceCount()
+function PANEL:GetOptionCount()
 
 	return #self.Choices
 
@@ -81,7 +81,7 @@ end
 
 function PANEL:AddSpacer()
 
-	local id = self:GetChoiceCount()
+	local id = self:GetOptionCount()
 
 	self.Spacers[ id ] = true
 
@@ -144,6 +144,8 @@ function PANEL:RemoveChoiceID( id )
 	-- The second argument must be convertable to number
 	-- Removing non-positive or fractional does nothing
 	-- Entry will be removed only on positive integers
+
+	if ( !id ) then return end
 
 	local text = table.remove( self.Choices, id )
 	local data = table.remove( self.Data   , id )
@@ -239,7 +241,7 @@ function PANEL:OpenMenu( pControlOpener )
 	end
 
 	-- Don't do anything if there aren't any options..
-	if ( self:GetChoiceCount() == 0 ) then return end
+	if ( self:GetOptionCount() == 0 ) then return end
 
 	-- If the menu still exists and hasn't been deleted
 	-- then just close it and don't open a new one.
