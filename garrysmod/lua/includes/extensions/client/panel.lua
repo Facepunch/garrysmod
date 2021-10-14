@@ -55,6 +55,25 @@ function meta:SetWidth( w )
 end
 meta.SetWide = meta.SetWidth
 
+
+--[[---------------------------------------------------------
+	Name: Set/GetX/Y
+-----------------------------------------------------------]]
+function meta:GetX()
+	local x, y = self:GetPos()
+	return x
+end
+function meta:GetY()
+	local x, y = self:GetPos()
+	return y
+end
+function meta:SetX( x )
+	self:SetPos( x, self:GetY() )
+end
+function meta:SetY( y )
+	self:SetPos( self:GetX(), y )
+end
+
 --[[---------------------------------------------------------
 	Name: StretchToParent (borders)
 -----------------------------------------------------------]]
@@ -130,14 +149,14 @@ function meta:StretchBottomTo( pnl, m ) self:SetTall( pnl.y - self.y - ( m or 0 
 	Name: CenterVertical
 -----------------------------------------------------------]]
 function meta:CenterVertical( fraction )
-	self:SetPos( self.x, self:GetParent():GetTall() * ( fraction or 0.5 ) - self:GetTall() * 0.5 )
+	self:SetY( self:GetParent():GetTall() * ( fraction or 0.5 ) - self:GetTall() * 0.5 )
 end
 
 --[[---------------------------------------------------------
 	Name: CenterHorizontal
 -----------------------------------------------------------]]
 function meta:CenterHorizontal( fraction )
-	self:SetPos( self:GetParent():GetWide() * ( fraction or 0.5 ) - self:GetWide() * 0.5, self.y )
+	self:SetX( self:GetParent():GetWide() * ( fraction or 0.5 ) - self:GetWide() * 0.5 )
 end
 
 --[[---------------------------------------------------------

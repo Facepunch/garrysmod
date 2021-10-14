@@ -17,6 +17,8 @@ require( "http" )
 require( "cvars" )
 require( "cookie" )
 require( "baseclass" )
+require( "utf8" )
+require( "markup" )
 
 --[[---------------------------------------------------------
 	Extensions

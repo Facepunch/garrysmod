@@ -106,12 +106,11 @@ properties.Add( "statue", {
 		ent:SetNWBool( "IsStatue", true )
 
 		undo.AddFunction( function()
+			if ( !IsValid( ent ) ) then return false end
 
-			if ( IsValid( ent ) ) then
-				ent:SetNWBool( "IsStatue", false )
-				ent.StatueInfo = nil
-				StatueDuplicator( ply, ent, nil )
-			end
+			ent:SetNWBool( "IsStatue", false )
+			ent.StatueInfo = nil
+			StatueDuplicator( ply, ent, nil )
 
 		end )
 

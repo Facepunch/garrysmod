@@ -8,13 +8,15 @@ if ( system.IsLinux() ) then
 	surface.CreateFont( "DermaDefault", {
 		font		= "DejaVu Sans",
 		size		= 14,
-		weight		= 500
+		weight		= 500,
+		extended	= true
 	} )
 
 	surface.CreateFont( "DermaDefaultBold", {
 		font		= "DejaVu Sans",
 		size		= 14,
-		weight		= 800
+		weight		= 800,
+		extended	= true
 	} )
 
 else
@@ -22,13 +24,15 @@ else
 	surface.CreateFont( "DermaDefault", {
 		font		= "Tahoma",
 		size		= 13,
-		weight		= 500
+		weight		= 500,
+		extended	= true
 	} )
 
 	surface.CreateFont( "DermaDefaultBold", {
 		font		= "Tahoma",
 		size		= 13,
-		weight		= 800
+		weight		= 800,
+		extended	= true
 	} )
 
 end
@@ -36,7 +40,8 @@ end
 surface.CreateFont( "DermaLarge", {
 	font		= "Roboto",
 	size		= 32,
-	weight		= 500
+	weight		= 500,
+	extended	= true
 } )
 
 include( "derma.lua" )

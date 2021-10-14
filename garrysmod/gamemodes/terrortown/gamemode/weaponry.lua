@@ -192,13 +192,22 @@ function WEPS.DropNotifiedWeapon(ply, wep, death_drop)
       -- auto-pickup when nearby.
       wep.IsDropped = true
 
+      -- After dropping a weapon, always switch to holstered, so that traitors
+      -- will never accidentally pull out a traitor weapon.
+      --
+      -- Perform this *before* the drop in order to abuse the fact that this
+      -- holsters the weapon, which in turn aborts any reload that's in
+      -- progress. We don't want a dropped weapon to be in a reloading state
+      -- because the relevant timer is reset when picking it up, making the
+      -- reload happen instantly. This allows one to dodge the delay by dropping
+      -- during reload. All of this is a workaround for not having access to
+      -- CBaseWeapon::AbortReload() (and that not being handled in
+      -- CBaseWeapon::Drop in the first place).
+      ply:SelectWeapon("weapon_ttt_unarmed")
+
       ply:DropWeapon(wep)
 
       wep:PhysWake()
-
-      -- After dropping a weapon, always switch to holstered, so that traitors
-      -- will never accidentally pull out a traitor weapon
-      ply:SelectWeapon("weapon_ttt_unarmed")
    end
 end
 

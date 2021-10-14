@@ -128,6 +128,18 @@ function ENT:OnUnStuck()
 end
 
 --
+-- Name: NEXTBOT:OnTakeDamage
+-- Desc: Called when the bot is about to take damage
+-- Arg1: CTakeDamageInfo|info|damage info
+-- Ret1: number|how much damage was taken, prevents default damage code from running
+--
+function ENT:OnTakeDamage( damageinfo )
+
+	-- return 0
+
+end
+
+--
 -- Name: NEXTBOT:OnInjured
 -- Desc: Called when the bot gets hurt
 -- Arg1: CTakeDamageInfo|info|damage info

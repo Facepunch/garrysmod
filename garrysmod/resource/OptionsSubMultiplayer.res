@@ -223,8 +223,8 @@
 		"fieldName"		"Label3"
 		"xpos"		"246"
 		"ypos"		"40" //+24
-		"wide"		"204"
-		"tall"		"64"
+		"wide"		"214"
+		"tall"		"40"
 		"autoResize"		"0"
 		"pinCorner"		"0"
 		"RoundedCorners"		"15"

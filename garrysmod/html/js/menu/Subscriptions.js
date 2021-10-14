@@ -22,6 +22,12 @@ Subscriptions.prototype.Enabled = function( id )
 	return this.Files[ String( id ) ].mounted;
 }
 
+Subscriptions.prototype.GetInvalidReason = function( id )
+{
+	if ( !this.Files[ String( id ) ] ) return;
+	return this.Files[ String( id ) ].invalid_reason;
+}
+
 Subscriptions.prototype.SetAllEnabled = function( bBool )
 {
 	for ( k in this.Files )
@@ -32,22 +38,22 @@ Subscriptions.prototype.SetAllEnabled = function( bBool )
 
 Subscriptions.prototype.Subscribe = function( wsid )
 {
-	lua.Run( "steamworks.Subscribe( %s );", String( wsid ) );
+	lua.Run( "steamworks.Subscribe( %s )", String( wsid ) );
 }
 Subscriptions.prototype.Unsubscribe = function( wsid )
 {
-	lua.Run( "steamworks.Unsubscribe( %s );", String( wsid ) );
+	lua.Run( "steamworks.Unsubscribe( %s )", String( wsid ) );
 }
 
 Subscriptions.prototype.ApplyChanges = function()
 {
-	lua.Run( "steamworks.ApplyAddons();" )
+	lua.Run( "steamworks.ApplyAddons()" )
 }
 
 Subscriptions.prototype.SetShouldMountAddon = function( wsid, bBool )
 {
 	bBool = bBool ? "true" : "false";
-	lua.Run( "steamworks.SetShouldMountAddon( %s, " + bBool + " );", String( wsid ) );
+	lua.Run( "steamworks.SetShouldMountAddon( %s, " + bBool + " )", String( wsid ) );
 }
 
 Subscriptions.prototype.UnsubscribeAll = function()
@@ -64,6 +70,16 @@ Subscriptions.prototype.GetAll = function()
 	return this.Files;
 }
 
+Subscriptions.prototype.GetCount = function()
+{
+	var i = 0;
+	for ( var k in this.Files )
+	{
+		i++;
+	}
+	return i;
+}
+
 // Called from engine for Subscriptions
 Subscriptions.prototype.Update = function( json )
 {
@@ -71,7 +87,9 @@ Subscriptions.prototype.Update = function( json )
 
 	for ( k in json )
 	{
-		this.Files[ String( json[k].wsid ) ] = json[ k ];
+		var wsid = String( json[k].wsid );
+		if ( wsid == "0" ) continue;
+		this.Files[ wsid ] = json[ k ];
 	}
 }
 

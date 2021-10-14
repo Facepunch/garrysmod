@@ -61,7 +61,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.UGCSettingsOpen = false;
 	$scope.UGCSortMethod = "subscribed";
 
-	lua.Run( "UpdateAddonDisabledState();" );
+	lua.Run( "UpdateAddonDisabledState()" );
 
 	addon.Init( 'addon', $scope, $rootScope );
 
@@ -70,7 +70,6 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.Subscribe = function( file )
 	{
 		if ( !file.info ) file.info = { children: [] };
-		//if ( file.info.children.length < 1 ) { file.info.children = [ 177717299, 1629004850 ] };
 
 		if ( file.info.children.length > 0 )
 		{
@@ -90,7 +89,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 				for ( var i = 0; i < file.info.children.length; i++ )
 				{
 					var wsid = file.info.children[ i ];
-					lua.Run( "MenuGetAddonData( %i );", wsid );
+					lua.Run( "MenuGetAddonData( %s )", String( wsid ) );
 				}
 
 				$scope.PopupMessageFiles = file.info.children;
@@ -178,17 +177,37 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	}
 	$scope.SelectAllPage = function()
 	{
-		for ( var k in $scope.Files ) $scope.SelectedItems[ $scope.Files[ k ].id ] = true;
+		$scope.UnselectAll(); // Unselect items that might be not in $scope.Files
+
+		for ( var k in $scope.Files )
+		{
+			$scope.SelectedItems[ $scope.Files[ k ].id ] = true;
+		}
 	}
 	$scope.SelectAll = function()
 	{
+		$scope.UnselectAll(); // Unselect items that might be not in $scope.FilesOther
+
+		if ( !$scope.FilesOther ) return;
+
+		for ( var k in $scope.FilesOther )
+		{
+			var wsid = $scope.FilesOther[ k ];
+			if ( parseInt( wsid ) < 1 ) continue;
+			$scope.SelectedItems[ wsid ] = true;
+		}
+	}
+	$scope.SelectAllSubs = function()
+	{
+		$scope.UnselectAll(); // Unselect items that might be not in subscriptions.GetAll()
+
 		for ( var k in subscriptions.GetAll() ) $scope.SelectedItems[ k ] = true;
 	}
 	$scope.EnableAllSelected = function()
 	{
 		for ( var k in $scope.SelectedItems )
 		{
-			if ( !$scope.SelectedItems[ k ] ) continue;
+			if ( !$scope.SelectedItems[ k ] || k < 1 ) continue;
 
 			subscriptions.SetShouldMountAddon( k, true );
 			$scope.SelectedItems[ k ] = false;
@@ -199,7 +218,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	{
 		for ( var k in $scope.SelectedItems )
 		{
-			if ( !$scope.SelectedItems[ k ] ) continue;
+			if ( !$scope.SelectedItems[ k ] || k < 1 ) continue;
 
 			subscriptions.SetShouldMountAddon( k, false );
 			$scope.SelectedItems[ k ] = false;
@@ -224,6 +243,21 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 			if ( $scope.SelectedItems[ k ] ) return true;
 		}
 		return false;
+	}
+	$scope.GetSelectedCount = function()
+	{
+		var i = 0;
+		for ( var k in $scope.SelectedItems )
+		{
+			if ( !$scope.SelectedItems[ k ] ) continue;
+
+			i++;
+		}
+		return i;
+	}
+	$scope.GetSubscribedCount = function()
+	{
+		return subscriptions.GetCount();
 	}
 
 	$scope.ToggleSettings = function()
@@ -337,11 +371,24 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		if ( $scope.IsSubscribed( file ) )
 		{
 			classes.push( $scope.IsEnabled( file ) ? "installed" : "disabled" );
-			if ( file.extra && file.extra.invalid_reason ) classes.push( "invalid" );
+			if ( subscriptions.GetInvalidReason( file.id ) ) classes.push( "invalid" );
 		}
+
+		if ( file.info && file.info.floating ) classes.push( "floating" );
+
 		return classes.join( " " );
 	}
-	
+
+	$scope.GetAddonDescription = function( file )
+	{
+		var invalid = subscriptions.GetInvalidReason( file.id )
+		if ( invalid ) return invalid;
+
+		if ( !file.info ) return "ERROR?";
+
+		return file.info.description
+	}
+
 	$scope.GetNiceSize = function( size )
 	{
 		if ( !size || size <= 0 ) return "0 Bytes"

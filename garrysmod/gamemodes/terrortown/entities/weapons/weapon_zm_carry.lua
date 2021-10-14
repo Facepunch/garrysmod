@@ -542,7 +542,7 @@ end
 if SERVER then
    function SWEP:Initialize()
       self.dt.can_rag_pin = pin_rag:GetBool()
-      self.dt.can_pin_rag_inno = pin_rag_inno:GetBool()
+      self.dt.can_rag_pin_inno = pin_rag_inno:GetBool()
       self.dt.carried_rag = nil
 
       return self.BaseClass.Initialize(self)

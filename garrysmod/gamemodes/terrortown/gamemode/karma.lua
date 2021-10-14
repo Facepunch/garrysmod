@@ -84,7 +84,7 @@ function KARMA.ApplyKarma(ply)
 
    -- any karma at 1000 or over guarantees a df of 1, only when it's lower do we
    -- need the penalty curve
-   if ply:GetBaseKarma() < 1000 then
+   if ply:GetBaseKarma() < 1000 and KARMA.IsEnabled() then
       local k = ply:GetBaseKarma() - 1000
       if config.strict:GetBool() then
          -- this penalty curve sinks more quickly, less parabolic
@@ -259,9 +259,7 @@ function KARMA.RoundEnd()
       KARMA.RememberAll()
 
       if config.autokick:GetBool() then
-         for _, ply in ipairs(player.GetAll()) do
-            KARMA.CheckAutoKick(ply)
-         end
+         KARMA.CheckAutoKickAll()
       end
    end
 end
@@ -356,6 +354,12 @@ function KARMA.CheckAutoKick(ply)
       else
          ply:Kick(reason)
       end
+   end
+end
+
+function KARMA.CheckAutoKickAll()
+   for _, ply in ipairs(player.GetAll()) do
+      KARMA.CheckAutoKick(ply)
    end
 end
 

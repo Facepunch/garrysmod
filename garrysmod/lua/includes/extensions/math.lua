@@ -1,4 +1,6 @@
 
+include( "math/ease.lua" )
+
 --[[---------------------------------------------------------
 	Name: Distance( low, high )
 	Desc: Distance between two 2d points

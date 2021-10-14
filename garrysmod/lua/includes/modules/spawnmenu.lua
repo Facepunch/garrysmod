@@ -11,6 +11,12 @@ local PropTableCustom = {}
 local ActiveToolPanel = nil
 local ActiveSpawnlistID = 1000
 
+--[[---------------------------------------------------------
+
+	Tool Tabs
+
+-----------------------------------------------------------]]
+
 function SetActiveControlPanel( pnl )
 	ActiveToolPanel = pnl
 end
@@ -19,16 +25,10 @@ function ActiveControlPanel()
 	return ActiveToolPanel
 end
 
---[[---------------------------------------------------------
-	GetTools
------------------------------------------------------------]]
 function GetTools()
 	return g_ToolMenu
 end
 
---[[---------------------------------------------------------
-	GetToolMenu - This is WRONG. Probably.
------------------------------------------------------------]]
 function GetToolMenu( name, label, icon )
 
 	--
@@ -58,12 +58,73 @@ function GetToolMenu( name, label, icon )
 end
 
 function ClearToolMenus()
+
 	g_ToolMenu = {}
+
 end
 
 function AddToolTab( strName, strLabel, Icon )
 
 	GetToolMenu( strName, strLabel, Icon )
+
+end
+
+function SwitchToolTab( id )
+
+	local Tab = g_SpawnMenu:GetToolMenu():GetToolPanel( id )
+	if ( !IsValid( Tab ) or !IsValid( Tab.PropertySheetTab ) ) then return end
+
+	Tab.PropertySheetTab:DoClick()
+
+end
+
+function ActivateToolPanel( tabId, ctrlPnl, toolName )
+
+	local Tab = g_SpawnMenu:GetToolMenu():GetToolPanel( tabId )
+	if ( !IsValid( Tab ) ) then return end
+
+	spawnmenu.SetActiveControlPanel( ctrlPnl )
+
+	if ( ctrlPnl ) then
+		Tab:SetActive( ctrlPnl )
+	end
+
+	SwitchToolTab( tabId )
+
+	if ( toolName && Tab.SetActiveToolText ) then
+		Tab:SetActiveToolText( toolName )
+	end
+
+end
+
+-- While technically tool class names CAN be duplicate, it normally should never happen.
+function ActivateTool( strName, noCommand )
+
+	-- I really don't like this triple loop
+	for tab, v in ipairs( g_ToolMenu ) do
+		for _, items in pairs( v.Items ) do
+			for _, item in pairs( items ) do
+
+				if ( istable( item ) && item.ItemName && item.ItemName == strName ) then
+
+					if ( !noCommand && item.Command ) then
+						RunConsoleCommand( unpack( string.Explode( " ", item.Command ) ) )
+					end
+
+					local cp = controlpanel.Get( strName )
+					if ( !cp:GetInitialized() ) then
+						cp:FillViaTable( { Text = item.Text, ControlPanelBuildFunction = item.CPanelFunction } )
+					end
+
+					ActivateToolPanel( tab, cp, strName )
+
+					return
+
+				end
+
+			end
+		end
+	end
 
 end
 
@@ -114,7 +175,9 @@ function AddToolMenuOption( tab, category, itemname, text, command, controls, cp
 end
 
 --[[---------------------------------------------------------
-	AddCreationTab
+
+	Creation Tabs
+
 -----------------------------------------------------------]]
 function AddCreationTab( strName, pFunction, pMaterial, iOrder, strTooltip )
 
@@ -126,17 +189,25 @@ function AddCreationTab( strName, pFunction, pMaterial, iOrder, strTooltip )
 
 end
 
---[[---------------------------------------------------------
-	GetCreationTabs
------------------------------------------------------------]]
 function GetCreationTabs()
 
 	return CreationMenus
 
 end
 
+function SwitchCreationTab( id )
+
+	local tab = g_SpawnMenu:GetCreationMenu():GetCreationTab( id )
+	if ( !tab or !IsValid( tab.Tab ) ) then return end
+
+	tab.Tab:DoClick()
+
+end
+
 --[[---------------------------------------------------------
-	GetPropTable
+
+	Spawn lists
+
 -----------------------------------------------------------]]
 function GetPropTable()
 
@@ -144,18 +215,12 @@ function GetPropTable()
 
 end
 
---[[---------------------------------------------------------
-	GetCustomPropTable
------------------------------------------------------------]]
 function GetCustomPropTable()
 
 	return PropTableCustom
 
 end
 
---[[---------------------------------------------------------
-	AddPropCategory
------------------------------------------------------------]]
 function AddPropCategory( strFilename, strName, tabContents, icon, id, parentid, needsapp )
 
 	PropTableCustom[ strFilename ] = {
@@ -171,9 +236,7 @@ function AddPropCategory( strFilename, strName, tabContents, icon, id, parentid,
 
 end
 
---[[---------------------------------------------------------
-	Populate the spawnmenu from the text files (engine)
------------------------------------------------------------]]
+-- Populate the spawnmenu from the text files (engine)
 function PopulateFromEngineTextFiles()
 
 	-- Reset the already loaded prop list before loading them again.
@@ -193,9 +256,7 @@ function PopulateFromEngineTextFiles()
 
 end
 
---[[---------------------------------------------------------
-	Populate the spawnmenu from the text files (engine)
------------------------------------------------------------]]
+-- Save the spawnfists to text files (engine)
 function DoSaveToTextFiles( props )
 
 	spawnmenu_engine.SaveToTextFiles( props )
@@ -241,60 +302,5 @@ function CreateContentIcon( type, parent, tbl )
 
 	local cp = GetContentType( type )
 	if ( cp ) then return cp( parent, tbl ) end
-
-end
-
-function SwitchToolTab( id )
-
-	local Tab = g_SpawnMenu:GetToolMenu():GetToolPanel( id )
-	if ( !IsValid( Tab ) ) then return end
-
-	--Tab:GetParent():GetParent().Tab:DoClick()
-
-end
-
-function ActivateToolPanel( id, cp )
-
-	local Tab = g_SpawnMenu:GetToolMenu():GetToolPanel( id )
-	if ( !IsValid( Tab ) ) then return end
-
-	spawnmenu.SetActiveControlPanel( cp )
-
-	if ( cp ) then
-		Tab:SetActive( cp )
-	end
-
-	SwitchToolTab( id )
-
-end
-
--- While technically tool class names CAN be duplicate, it normally should never happen.
-function ActivateTool( strName, noCommand )
-
-	-- I really don't like this triple loop
-	for tab, v in ipairs( g_ToolMenu ) do
-		for _, items in pairs( v.Items ) do
-			for _, item in pairs( items ) do
-
-				if ( istable( item ) && item.ItemName && item.ItemName == strName ) then
-
-					if ( !noCommand && item.Command ) then
-						RunConsoleCommand( unpack( string.Explode( " ", item.Command ) ) )
-					end
-
-					local cp = controlpanel.Get( strName )
-					if ( !cp:GetInitialized() ) then
-						cp:FillViaTable( { Text = item.Text, ControlPanelBuildFunction = item.CPanelFunction } )
-					end
-
-					ActivateToolPanel( tab, cp )
-
-					return
-
-				end
-
-			end
-		end
-	end
 
 end
