@@ -9,14 +9,22 @@ AccessorFunc( PANEL, "m_bDoSort", "SortItems", FORCE_BOOL )
 
 function PANEL:Init()
 
+	-- Create data tables
+	self.Choices = {}
+	self.Data = {}
+	self.ChoiceIcons = {}
+	self.Spacers = {}
+
+	-- Create button
 	self.DropButton = vgui.Create( "DPanel", self )
 	self.DropButton.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ComboDownArrow", panel, w, h ) end
 	self.DropButton:SetMouseInputEnabled( false )
 	self.DropButton.ComboBox = self
 
+	-- Apply default panel hight
 	self:SetTall( 22 )
-	self:Clear()
 
+	-- Setup internals
 	self:SetContentAlignment( 4 )
 	self:SetTextInset( 8, 0 )
 	self:SetIsMenu( true )
@@ -24,7 +32,6 @@ function PANEL:Init()
 
 end
 
--- Closes the context menu
 function PANEL:CloseMenu()
 
 	if ( IsValid( self.Menu ) ) then
@@ -37,18 +44,32 @@ end
 
 function PANEL:Clear()
 
+	-- Does not allocate another table
 	self:SetText( "" )
-	self.Choices = {}
-	self.Data = {}
-	self.ChoiceIcons = {}
+	table.Empty( self.Choices )
+	table.Empty( self.Data )
+	table.Empty( self.ChoiceIcons )
+	table.Empty( self.Spacers )
 	self.selected = nil
 	self:CloseMenu()
+
+end
+
+function PANEL:GetSelectedID()
+
+	return self.selected
 
 end
 
 function PANEL:GetOptionText( id )
 
 	return self.Choices[ id ]
+
+end
+
+function PANEL:GetChoiceCount()
+
+	return #self.Choices
 
 end
 
@@ -89,30 +110,57 @@ function PANEL:PerformLayout()
 
 end
 
-function PANEL:ChooseOption( value, index )
+function PANEL:ChooseOption( value, id )
 
 	self:CloseMenu()
 	self:SetText( value )
 
 	-- This should really be the here, but it is too late now and convar
 	-- changes are handled differently by different child elements
-	-- self:ConVarChanged( self.Data[ index ] )
+	-- self:ConVarChanged( self.Data[ id ] )
 
-	self.selected = index
-	self:OnSelect( index, value, self.Data[ index ] )
-
-end
-
-function PANEL:ChooseOptionID( index )
-
-	local value = self:GetOptionText( index )
-	self:ChooseOption( value, index )
+	self.selected = id
+	self:OnSelect( id, value, self.Data[ id ] )
 
 end
 
-function PANEL:GetSelectedID()
+function PANEL:ChooseOptionID( id )
 
-	return self.selected
+	local value = self:GetOptionText( id )
+	self:ChooseOption( value, id )
+
+end
+
+function PANEL:RemoveChoiceID( id )
+
+	-- The second argument must be convertable to number
+	-- Removing non-positive or fractional does nothing
+	-- Entry will be removed only on positive integers
+	local name = table.remove( self.Choices, id )
+	local data = table.remove( self.Data   , id )
+
+	return name, data -- Using the logic of `GetSelected`
+
+end
+
+function PANEL:RemoveChoiceName( name )
+
+	local id = table.KeyFromValue( self.Choices, name )
+	return self:RemoveChoiceID( id || 0 )
+
+end
+
+function PANEL:RemoveChoiceData( data )
+
+	local id = table.KeyFromValue( self.Data, data )
+	return self:RemoveChoiceID( id || 0 )
+
+end
+
+function PANEL:RemoveSelected()
+
+	local id = self:GetSelectedID()
+	return self:RemoveChoiceID( id )
 
 end
 
@@ -126,13 +174,27 @@ function PANEL:GetSelected()
 
 end
 
-function PANEL:OnSelect( index, value, data )
+function PANEL:OnSelect( id, value, data )
 
 	-- For override
 
 end
 
-function PANEL:AddChoice( value, data, select, icon )
+function PANEL:OnMenuOpened( menu )
+
+	-- For override
+
+end
+
+function PANEL:AddSpacer()
+
+	local cnt = self:GetChoiceCount()
+
+	self.Spacers[ cnt ] = true
+
+end
+
+function PANEL:AddChoice( value, data, choose, icon )
 
 	local id = table.insert( self.Choices, value )
 
@@ -144,43 +206,13 @@ function PANEL:AddChoice( value, data, select, icon )
 		self.ChoiceIcons[ id ] = icon
 	end
 
-	if ( select ) then
+	if ( choose ) then
+
 		self:ChooseOption( value, id )
+
 	end
 
 	return id
-
-end
-
-function PANEL:RemoveChoiceID( index )
-
-	-- The second argument must be convertable to number
-	-- Removing non-positive or fractional does nothing
-	-- Entry will be removed only on positive integers
-	local name = table.remove( self.Choices, index )
-	local data = table.remove( self.Data   , index )
-	
-	return name, data -- Using the logic of `GetSelected`
-	
-end
-
-function PANEL:RemoveChoiceName( name )
-
-	local id = table.KeyFromValue( self.Choices, name )
-	self:RemoveChoiceID( id or 0 )
-
-end
-
-function PANEL:RemoveChoiceData( data )
-
-	local id = table.KeyFromValue( self.Data, data )
-	self:RemoveChoiceID( id or 0 )
-
-end
-
-function PANEL:RemoveSelected()
-
-	self:RemoveChoiceID( self:GetSelectedID() )
 
 end
 
@@ -197,13 +229,21 @@ function PANEL:OpenMenu( pControlOpener )
 	end
 
 	-- Don't do anything if there aren't any options..
-	if ( #self.Choices == 0 ) then return end
+	if ( self:GetChoiceCount() == 0 ) then return end
 
 	-- If the menu still exists and hasn't been deleted
 	-- then just close it and don't open a new one.
 	self:CloseMenu()
 
-	self.Menu = DermaMenu( false, self )
+	-- If we have a modal parent at some level, we gotta parent to
+	-- that or our menu items are not gonna be selectable
+	local parent = self
+	while ( IsValid( parent ) && !parent:IsModal() ) do
+		parent = parent:GetParent()
+	end
+	if ( !IsValid( parent ) ) then parent = self end
+
+	self.Menu = DermaMenu( false, parent )
 
 	if ( self:GetSortItems() ) then
 		local sorted = {}
@@ -217,12 +257,18 @@ function PANEL:OpenMenu( pControlOpener )
 			if ( self.ChoiceIcons[ v.id ] ) then
 				option:SetIcon( self.ChoiceIcons[ v.id ] )
 			end
+			if ( self.Spacers[ v.id ] ) then
+				self.Menu:AddSpacer()
+			end
 		end
 	else
 		for k, v in pairs( self.Choices ) do
 			local option = self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
 			if ( self.ChoiceIcons[ k ] ) then
 				option:SetIcon( self.ChoiceIcons[ k ] )
+			end
+			if ( self.Spacers[ k ] ) then
+				self.Menu:AddSpacer()
 			end
 		end
 	end
@@ -231,6 +277,16 @@ function PANEL:OpenMenu( pControlOpener )
 
 	self.Menu:SetMinimumWidth( self:GetWide() )
 	self.Menu:Open( x, y, false, self )
+
+	self:OnMenuOpened( self.Menu )
+
+end
+
+function PANEL:CloseMenu()
+
+	if ( IsValid( self.Menu ) ) then
+		self.Menu:Remove()
+	end
 
 end
 
