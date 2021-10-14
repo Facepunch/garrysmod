@@ -88,57 +88,84 @@ function PANEL:TextEntry( strLabel, strConVar )
 
 end
 
-function PANEL:PropSelect( strLab, strVar, arList )
+function PANEL:PropSelect( label, convar, models, height )
 
 	local props = vgui.Create( "PropSelect", self )
 
-	props:ControlValues( { convar = strVar, label = strLab } )
+	props:SetConVar( convar or "" )
+	props.Label:SetText( label or "" )
 
-	for ID = 1, #arList do
-		local dat = arList[ID]
-		local mdl = tostring( dat.model or dat[1] or "")
-		local tip = tostring( dat.tooltip or dat[2] or mdl )
+	props.Height = height or 2
 
-		props:AddModel(mdl):SetToolTip(tip)
+	-- Build a list of models for sorting, support both ways
+	local modellist = {}
+
+	local firstKey, firstVal = next( models )
+	if ( firstVal.model == nil ) then
+
+		-- Lowercase model names for sorting purposes
+		local models = table.LowerKeyNames( models )
+
+		-- list.Get where key is the model and value is the cvars to set when that model is selected
+		for k, v in SortedPairs( models ) do
+			props:AddModel( k, v )
+		end
+
+	else
+
+		local tmp = {} -- HACK: Order by skin too
+		for k, v in SortedPairsByMemberValue( models, "model" ) do
+			tmp[ k ] = v.model:lower() .. ( v.skin || 0 )
+		end
+
+		for k, v in SortedPairsByValue( tmp ) do
+			v = models[ k ]
+			local icon = props:AddModelEx( k, v.model, v.skin || 0 )
+			if ( v.tooltip ) then icon:SetToolTip( v.tooltip ) end
+		end
+
 	end
 
-	self:AddPanel(props)
+	props:InvalidateLayout( true )
+
+	self:AddPanel( props )
 
 	return props
+
 end
 
-function PANEL:ControlPresets( strDir, cvList )
+function PANEL:ToolPresets( group, cvarlist )
 
-	local preset = vgui.Create("ControlPresets", self )
+	local preset = vgui.Create( "ControlPresets", self )
 
-	preset:SetPreset( strDir )
-	preset:AddOption( "Default", cvList )
-	for key, val in pairs( table.GetKeys( cvList ) ) do
-		preset:AddConVar(val)
+	preset:SetPreset( group )
+	preset:AddOption( "#preset.default", cvarlist )
+	for key, val in pairs( table.GetKeys( cvarlist ) ) do
+		preset:AddConVar( val )
 	end
 
 	self:AddItem( preset )
 
 	return preset
+
 end
 
-function PANEL:NumpadControl( strLab1, strVar1, strLab2, strVar2 )
+function PANEL:KeyBinder( label1, convar1, label2, convar2 )
 
-	if ( strLab1 == nil or strVar1 == nil ) then return nil end
+	local binder = vgui.Create( "CtrlNumPad", self )
 
-	local numpad = vgui.Create( "CtrlNumPad", self )
+	binder:SetLabel1( label1 )
+	binder:SetConVar1( convar1 )
 
-	numpad:SetLabel1( tostring( strLabel1 or "" ) )
-	numpad:SetConVar1( tostring( strConVar1 or "" ) )
-
-	if ( strLab2 != nil and strVar2 != nil) then
-		numpad:SetLabel2( tostring( strLab2 or "" ) )
-		numpad:SetConVar2( tostring( strVar2 or "" ) )
+	if ( label2 != nil and convar2 != nil ) then
+		binder:SetLabel2( label2 )
+		binder:SetConVar2( convar2 )
 	end
 
-	self:AddPanel(numpad)
+	self:AddPanel( binder )
 
-	return numpad
+	return binder
+
 end
 
 function PANEL:ComboBox( strLabel, strConVar )
