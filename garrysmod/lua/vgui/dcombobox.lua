@@ -79,18 +79,6 @@ function PANEL:GetOptionData( id )
 
 end
 
-function PANEL:GetOptionIcon( id )
-
-	return self.ChoiceIcons[ id ]
-
-end
-
-function PANEL:GetOptionSpacer( id )
-
-	return self.Spacers[ id ]
-
-end
-
 function PANEL:AddSpacer()
 
 	local id = self:GetChoiceCount()
@@ -156,28 +144,31 @@ function PANEL:RemoveChoiceID( id )
 	-- The second argument must be convertable to number
 	-- Removing non-positive or fractional does nothing
 	-- Entry will be removed only on positive integers
-	local index = tonumber(id) or self:GetChoiceCount()
 
-	local text = table.remove( self.Choices    , index )
-	local data = table.remove( self.Data       , index )
-	local icon = table.remove( self.ChoiceIcons, index )
-	local spac = table.remove( self.Spacers    , index )
+	local text = table.remove( self.Choices, id )
+	local data = table.remove( self.Data   , id )
 
-	return text, data, icon, spac -- Using the logic of `GetSelected`
+	return text, data -- Using the logic of reading an ID
 
 end
 
 function PANEL:RemoveChoiceName( name )
 
 	local id = table.KeyFromValue( self.Choices, name )
-	return self:RemoveChoiceID( id || 0 )
+
+	if ( !id ) then return end
+
+	return self:RemoveChoiceID( id )
 
 end
 
 function PANEL:RemoveChoiceData( data )
 
 	local id = table.KeyFromValue( self.Data, data )
-	return self:RemoveChoiceID( id || 0 )
+
+	if ( !id ) then return end
+
+	return self:RemoveChoiceID( id )
 
 end
 
@@ -196,10 +187,8 @@ function PANEL:GetSelected()
 
 	local text = self:GetOptionText( id )
 	local data = self:GetOptionData( id )
-	local icon = self:GetOptionIcon( id )
-	local spac = self:GetOptionSpacer( id )
 
-	return text, data, icon, spac
+	return text, data
 
 end
 
