@@ -746,7 +746,7 @@ L.tip39 = "Um explosivo C4 que explodir devido a uma falha no seu desarmamento e
 L.tip40 = "Caso esteja escrito 'MODO PRESSA' acima do tempo da rodada, a rodada terá inicialmente apenas alguns minutos, mas a cada morte o tempo restante aumentará (como capturar um ponto no TF2). Esse modo pressiona os Traidores para que eles mantenham as coisas em movimento."
 
 -- 9/22/21
-L.tip41 = "Você pode ajustar o volume do microfone de um jogador ao clicar com o botão direito no ícone de silencar no final do placar."
+L.tip41 = "Você pode ajustar o volume do microfone de um jogador ao clicar com o botão direito no ícone de silencar dele no placar."
 
 --- Round report
 
