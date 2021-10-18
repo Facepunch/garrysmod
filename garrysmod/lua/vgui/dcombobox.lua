@@ -9,12 +9,6 @@ AccessorFunc( PANEL, "m_bDoSort", "SortItems", FORCE_BOOL )
 
 function PANEL:Init()
 
-	-- Create data tables
-	self.Choices = {}
-	self.Data = {}
-	self.ChoiceIcons = {}
-	self.Spacers = {}
-
 	-- Create button
 	self.DropButton = vgui.Create( "DPanel", self )
 	self.DropButton.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ComboDownArrow", panel, w, h ) end
@@ -23,6 +17,7 @@ function PANEL:Init()
 
 	-- Apply default panel hight
 	self:SetTall( 22 )
+	self:Clear()
 
 	-- Setup internals
 	self:SetContentAlignment( 4 )
@@ -46,10 +41,10 @@ function PANEL:Clear()
 
 	-- Does not allocate another table
 	self:SetText( "" )
-	table.Empty( self.Choices )
-	table.Empty( self.Data )
-	table.Empty( self.ChoiceIcons )
-	table.Empty( self.Spacers )
+	self.Data = {}
+	self.Choices = {}
+	self.Spacers = {}
+	self.ChoiceIcons = {}
 	self.selected = nil
 	self:CloseMenu()
 
