@@ -39,7 +39,6 @@ end
 
 function PANEL:Clear()
 
-	-- Does not allocate another table
 	self:SetText( "" )
 	self.Data = {}
 	self.Choices = {}
