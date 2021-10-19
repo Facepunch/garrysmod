@@ -14,6 +14,7 @@ function PANEL:Init()
 	self.DropButton:SetMouseInputEnabled( false )
 	self.DropButton.ComboBox = self
 
+	-- Apply default panel hight
 	self:SetTall( 22 )
 	self:Clear()
 
