@@ -159,7 +159,6 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 			lua.Run( "RunConsoleCommand( \"password\", %s )", srv.password );
 
 		lua.Run( "JoinServer( %s )", srv.address );
-		$scope.DoStopRefresh();
 	}
 
 	$scope.SwitchType = function( type )
