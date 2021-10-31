@@ -13,8 +13,12 @@ debug.getregistry().Color = COLOR
 -----------------------------------------------------------]]
 function Color( r, g, b, a )
 
-	a = a or 255
-	return setmetatable( { r = math.min( tonumber(r), 255 ), g =  math.min( tonumber(g), 255 ), b =  math.min( tonumber(b), 255 ), a =  math.min( tonumber(a), 255 ) }, COLOR )
+	r = math.min( tonumber(r) or 255, 255 )
+	g = math.min( tonumber(g) or 255, 255 )
+	b = math.min( tonumber(b) or 255, 255 )
+	a = math.min( tonumber(a) or 255, 255 )
+
+	return setmetatable( { r = r, g = g, b = b, a = a }, COLOR )
 
 end
 
@@ -83,6 +87,33 @@ function COLOR:ToVector()
 end
 
 --[[---------------------------------------------------------
+	Converts color to array of four values
+-----------------------------------------------------------]]
+function COLOR:ToTable()
+
+	return { self.r, self.g, self.b, self.a }
+
+end
+
+--[[---------------------------------------------------------
+	Converts color to hash table of four values
+-----------------------------------------------------------]]
+function COLOR:ToHash()
+
+	return { r = self.r, g = self.g, b = self.b, a = self.a }
+
+end
+
+--[[---------------------------------------------------------
+	Copy the data from one color to another
+-----------------------------------------------------------]]
+function COLOR:Set( c )
+
+  self:SetUnpacked( c.r, c.g, c.b, c.a )
+
+end
+
+--[[---------------------------------------------------------
 	Unpacks the color into four variables
 -----------------------------------------------------------]]
 function COLOR:Unpack()
@@ -97,11 +128,5 @@ function COLOR:SetUnpacked( r, g, b, a )
 	self.g = g or 255
 	self.b = b or 255
 	self.a = a or 255
-
-end
-
-function COLOR:ToTable()
-
-	return { self.r, self.g, self.b, self.a }
 
 end
