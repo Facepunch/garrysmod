@@ -168,6 +168,27 @@ function PANEL:KeyBinder( label1, convar1, label2, convar2 )
 
 end
 
+function PANEL:ColorBox(label, convarr, convarg, convarb, convara)
+
+	local color = vgui.Create("CtrlColor", self)
+
+	color:Dock( TOP )
+	color:SetLabel( label )
+
+	color:SetConVarR( convar )
+	color:SetConVarG( convag )
+	color:SetConVarB( convab )
+
+	if ( convara ) then
+		color:SetConVarA( convara )
+	end
+
+	self:AddPanel( color )
+
+	return color
+
+end
+
 function PANEL:ComboBox( strLabel, strConVar )
 
 	local left = vgui.Create( "DLabel", self )
