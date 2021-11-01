@@ -15,14 +15,14 @@ function Color( r, g, b, a )
 
   if( istable( r ) ) then
     a = math.min( tonumber(r[4]) or tonumber(r.a) or 255, 255 )
-    b = math.min( tonumber(r[3]) or tonumber(r.b) or 255, 255 )
-    g = math.min( tonumber(r[2]) or tonumber(r.g) or 255, 255 )
-    r = math.min( tonumber(r[1]) or tonumber(r.r) or 255, 255 )
+    b = math.min( tonumber(r[3]) or tonumber(r.b), 255 )
+    g = math.min( tonumber(r[2]) or tonumber(r.g), 255 )
+    r = math.min( tonumber(r[1]) or tonumber(r.r), 255 )
   else
     a = math.min( tonumber(a) or 255, 255 )
-    b = math.min( tonumber(b) or 255, 255 )
-    g = math.min( tonumber(g) or 255, 255 )
-    r = math.min( tonumber(r) or 255, 255 )
+    b = math.min( tonumber(b), 255 )
+    g = math.min( tonumber(g), 255 )
+    r = math.min( tonumber(r), 255 )
   end
 
 	return setmetatable( { r = r, g = g, b = b, a = a }, COLOR )
