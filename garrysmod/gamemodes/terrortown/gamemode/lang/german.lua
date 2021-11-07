@@ -1028,7 +1028,7 @@ L.aw_tod2_text  = "starb direkt am Anfang der Runde."
 
 
 --- New and modified pieces of text are placed below this point, marked with the
---- version in which they were added, to make updating translations easier.
+--- version or the date in which they were added, to make updating translations easier.
 
 
 --- v23
@@ -1042,10 +1042,10 @@ L.drop_no_ammo = "Du hast zu wenig Munition im Magazin, um eine Munitionskiste f
 L.set_cross_brightness = "Fadenkreuz Helligkeit"
 L.set_cross_size       = "Fadenkreuz Größe"
 
--- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "Du hast den Hut eines Detektivs aufgehoben."
 
---- 3-9-2017
+--- 2017-03-09
 L.sb_sortby = "Sortiere nach:"
 
 --- 2018-07-24	

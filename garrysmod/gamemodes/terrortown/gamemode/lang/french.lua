@@ -1041,7 +1041,7 @@ L.aw_tod2_text  = "est mort juste après que le round ait commencé."
 
 
 --- New and modified pieces of text are placed below this point, marked with the
---- version in which they were added, to make updating translations easier.
+--- version or the date in which they were added, to make updating translations easier.
 
 
 --- v23
@@ -1055,10 +1055,10 @@ L.drop_no_ammo = "Pas assez de munitions dans le chargeur de votre arme pour les
 L.set_cross_brightness = "Luminosité du réticule"
 L.set_cross_size = "Taille du réticule"
 
---- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "Vous avez ramassé le chapeau d'un Détective."
 
---- 3-9-2017
+--- 2017-03-09
 L.sb_sortby = "Trier Par :"
 
 --- 2018-07-24

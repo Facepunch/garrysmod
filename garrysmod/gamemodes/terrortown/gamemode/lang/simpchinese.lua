@@ -1027,7 +1027,7 @@ L.aw_tod2_text  = "在这回合刚开始不久即被杀害。"
 
 
 --- New and modified pieces of text are placed below this point, marked with the
---- version in which they were added, to make updating translations easier.
+--- version or the date in which they were added, to make updating translations easier.
 
 
 --- v23
@@ -1041,13 +1041,13 @@ L.drop_no_ammo = "你弹夹内的子弹不足以丢弃成弹药盒。"
 L.set_cross_brightness = "准心亮度"
 L.set_cross_size = "准心尺寸"
 
---- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "你捡起了一顶探长的帽子。"
 
---- 3-9-2017
+--- 2017-03-09
 L.sb_sortby = "排序方法:"
 
--- 2018-07-24
+--- 2018-07-24
 L.equip_tooltip_main = "装备菜单"
 L.equip_tooltip_radar = "雷达控制"
 L.equip_tooltip_disguise = "伪装器控制"
@@ -1068,17 +1068,3 @@ L.binoc_zoom_level = "放大"
 L.binoc_body = "发现尸体"
 
 L.idle_popup_title = "挂机"
-
--- 6-22-17 (Crosshair)
-L.set_title_cross = "十字准心设置"
-
-L.set_cross_color_enable = "启用自定义准心颜色"
-L.set_cross_color = "自定义准心颜色:"
-L.set_cross_gap_enable = "启用自定义准心大小"
-L.set_cross_gap = "自定义准心大小"
-L.set_cross_static_enable = "启用固定准心"
-L.set_ironsight_cross_opacity = "准心透明度"
-L.set_cross_weaponscale_enable = "启用武器特有准心大小"
-L.set_cross_thickness = "准心厚度"
-L.set_cross_outlinethickness = "准心外框厚度"
-L.set_cross_dot_enable = "启用准心中点"
