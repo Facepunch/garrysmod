@@ -139,14 +139,14 @@ if ( CLIENT ) then
 	--
 	function TOOL.BuildCPanel( CPanel, self )
 
-		if ( !self && IsValid( LocalPlayer() ) ) then self = LocalPlayer():GetTool( "duplicator" ) end
 		CPanel:ClearControls()
 
 		CPanel:AddControl( "Header", { Description = "#tool.duplicator.desc" } )
 
 		CPanel:AddControl( "Button", { Text = "#tool.duplicator.showsaves", Command = "dupe_show" } )
 
-		if ( !self.CurrentDupeName ) then return end
+		if ( !self && IsValid( LocalPlayer() ) ) then self = LocalPlayer():GetTool( "duplicator" ) end
+		if ( !self || !self.CurrentDupeName ) then return end
 
 		local info = "Name: " .. self.CurrentDupeName
 		info = info .. "\nEntities: " .. self.CurrentDupeEntCount

@@ -756,9 +756,6 @@ L.tip39 = "Los C4 que explotan como producto de cortar el cable equivocado duran
 
 L.tip40 = "Si aparece 'MODO PRISA' bajo el cronómetro, la rondas durará solo unos minutos, pero con cada muerte el tiempo aumentará (como la captura de puntos en TF2). Este modo presiona a los traidores para mantener las cosas en movimiento."
 
--- 9/22/21
-L.tip41 = "Puedes ajustar el volumen del micrófono de un jugador haciendo click derecho en el botón de silenciar al final de la tabla de puntuaciones."
-
 --- Round report
 
 L.report_title = "Información de la ronda"
@@ -1097,3 +1094,6 @@ L.idle_popup_title = "Ausente"
 
 --- 2021-06-07
 L.sb_playervolume = "Volumen del jugador"
+
+-- 9/22/21
+L.tip41 = "Puedes ajustar el volumen del micrófono de un jugador haciendo click derecho en el botón de silenciar al final de la tabla de puntuaciones."
