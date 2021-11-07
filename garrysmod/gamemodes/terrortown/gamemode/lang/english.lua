@@ -1039,7 +1039,7 @@ L.aw_tod2_text  = "died right after the start of the round."
 
 
 --- New and modified pieces of text are placed below this point, marked with the
---- version in which they were added, to make updating translations easier.
+--- version or the date in which they were added, to make updating translations easier.
 
 
 --- v23
@@ -1053,10 +1053,10 @@ L.drop_no_ammo = "Insufficient ammo in your weapon's clip to drop as an ammo box
 L.set_cross_brightness = "Crosshair brightness"
 L.set_cross_size = "Crosshair size"
 
---- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "You picked up a Detective's hat."
 
---- 3-9-2017
+--- 2017-03-09
 L.sb_sortby = "Sort By:"
 
 --- 2018-07-24
@@ -1084,5 +1084,5 @@ L.idle_popup_title = "Idle"
 --- 2021-06-07
 L.sb_playervolume = "Player Volume"
 
--- 9/22/21
+--- 2021-09-22
 L.tip41 = "You can adjust a player's microphone volume by right-clicking their mute icon in the scoreboard."

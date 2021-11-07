@@ -1039,7 +1039,7 @@ L.aw_tod2_text  = "morreu no começo da rodada."
 
 
 --- New and modified pieces of text are placed below this point, marked with the
---- version in which they were added, to make updating translations easier.
+--- version or the date in which they were added, to make updating translations easier.
 
 
 --- v23
@@ -1053,10 +1053,10 @@ L.drop_no_ammo = "Munição insuficiente no clipe da sua arma para largar como u
 L.set_cross_brightness = "Brilho da mira"
 L.set_cross_size = "Tamanho da mira"
 
---- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "Você pegou o chapéu de um Detetive."
 
---- 3-9-2017
+--- 2017-03-09
 L.sb_sortby = "Classificar por:"
 
 --- 2018-07-24
@@ -1084,5 +1084,5 @@ L.idle_popup_title = "Ausência"
 --- 2021-06-07
 L.sb_playervolume = "Volume do jogador"
 
--- 9/22/21
+--- 2021-09-22
 L.tip41 = "Você pode ajustar o volume do microfone de um jogador ao clicar com o botão direito no ícone de silencar dele no placar."

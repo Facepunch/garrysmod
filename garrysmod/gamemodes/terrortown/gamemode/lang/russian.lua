@@ -1039,7 +1039,7 @@ L.aw_tod2_text  = "умер сразу после начала раунда."
 
 
 --- New and modified pieces of text are placed below this point, marked with the
---- version in which they were added, to make updating translations easier.
+--- version or the date in which they were added, to make updating translations easier.
 
 
 --- v23
@@ -1053,10 +1053,10 @@ L.drop_no_ammo = "Недостаточно патронов в обойме дл
 L.set_cross_brightness = "Яркость прицела"
 L.set_cross_size = "Размер прицела"
 
---- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "Вы подобрали шляпу детектива."
 
---- 3-9-2017
+--- 2017-03-09
 L.sb_sortby = "Сортировка:"
 
 --- 2018-07-24
@@ -1084,5 +1084,5 @@ L.idle_popup_title = "Бездействие"
 --- 2021-06-07
 L.sb_playervolume = "Громкость игрока"
 
--- 9/22/21
+--- 2021-09-22
 L.tip41 = "Вы можете настроить громкость микрофона игрока, нажав правой кнопкой мыши по его иконке заглушения в таблице счёта."
