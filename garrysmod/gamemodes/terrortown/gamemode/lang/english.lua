@@ -745,9 +745,6 @@ L.tip39 = "C4 that explodes due to a mistake in disarming it has a smaller explo
 
 L.tip40 = "If it says 'HASTE MODE' above the round timer, the round will at first be only a few minutes long, but with every death the available time increases (like capturing a point in TF2). This mode puts the pressure on the traitors to keep things moving."
 
--- 9/22/21
-L.tip41 = "You can adjust a player's microphone volume by right-clicking their mute icon in the scoreboard."
-
 --- Round report
 
 L.report_title = "Round report"
@@ -1086,3 +1083,6 @@ L.idle_popup_title = "Idle"
 
 --- 2021-06-07
 L.sb_playervolume = "Player Volume"
+
+-- 9/22/21
+L.tip41 = "You can adjust a player's microphone volume by right-clicking their mute icon in the scoreboard."
