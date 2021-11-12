@@ -780,7 +780,7 @@ L.col_role   = "Cargo"
 L.col_kills1 = "Inocentes mortos"
 L.col_kills2 = "Traidores mortos"
 L.col_points = "Pontos"
-L.col_team   = "Bônus de time"
+L.col_team   = "Bônus de equipe"
 L.col_total  = "Total de pontos"
 
 -- Name of a trap that killed us that has not been named by the mapper
