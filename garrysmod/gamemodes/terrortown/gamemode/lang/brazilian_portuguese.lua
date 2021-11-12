@@ -758,7 +758,7 @@ L.report_tab_scores = "Pontuações"
 L.report_tab_scores_tip = "Pontos marcados por cada jogador nesta rodada"
 
 -- Event log saving
-L.report_save     = "Salvar o Registro de Acontecimentos em formato .txt"
+L.report_save     = "Salvar Log .txt"
 L.report_save_tip = "Salvar o Registro de Acontecimentos para um documento de texto"
 L.report_save_error  = "Não há nenhum Registro de Acontecimentos a ser salvo."
 L.report_save_result = "O Registro de Acontecimentos foi salvo em:"
