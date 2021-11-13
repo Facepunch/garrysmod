@@ -104,7 +104,7 @@ L.radar_name      = "Radar"
 L.radar_menutitle = "Controle do Radar"
 L.radar_not_owned = "Você não possui um Radar!"
 L.radar_scan      = "Realizar varredura"
-L.radar_auto      = "Realizar varreduras automaticamente"
+L.radar_auto      = "Automatizar"
 L.radar_help      = "Os resultados serão exibidos por {num} segundos. Logo após, o Radar será recarregado para poder ser utilizado novamente."
 L.radar_charging  = "O seu Radar ainda está sendo recarregado!"
 
@@ -256,7 +256,7 @@ L.set_fastsw_menu     = "Habilitar o menu com a troca rápida de arma"
 L.set_fastswmenu_tip  = "Quando a troca rápida de arma estiver ativada, o popup do menu de troca de armas aparecerá."
 L.set_wswitch         = "Desabilitar fechamento automático do menu de troca de armas"
 L.set_wswitch_tip     = "Por padrão, o menu de troca de armas fechará automaticamente após alguns segundos de seu aparecimento. Habilite isto para o menu nunca fechar."
-L.set_cues            = "Reproduzir um som quando uma rodada começar ou terminar"
+L.set_cues            = "Tocar um som quando uma rodada começar ou terminar"
 
 
 L.set_title_play    = "Configurações de jogabilidade"
@@ -965,7 +965,7 @@ L.aw_knf1_text  = "esfaqueou a cara de alguém pela internet."
 L.aw_knf2_title = "ONDE VOCÊ CONSEGUIU ISSO?"
 L.aw_knf2_text  = "não era um Traidor, e mesmo assim matou alguém com uma faca."
 
-L.aw_knf3_title = "O TAL HOMEM FACA"
+L.aw_knf3_title = "O TAL ESFAQUEADOR"
 L.aw_knf3_text  = "encontrou {num} facas espalhadas, e fez bom uso delas."
 
 L.aw_knf4_title = "O MELHOR ESFAQUEADOR DO MUNDO"
@@ -980,7 +980,7 @@ L.aw_flg2_text  = "ensinou a {num} homens sobre o perigo de vestir roupas inflam
 L.aw_hug1_title = "UMA H.U.G.E SINTONIZADA"
 L.aw_hug1_text  = "estava em sintonia com sua H.U.G.E, fazendo com que suas balas atingissem {num} pessoas."
 
-L.aw_hug2_title = "O CAÇADOR DE RECOMPENSAS"
+L.aw_hug2_title = "ESQUIZOFRENIA BALÍSTICA"
 L.aw_hug2_text  = "só ficou atirando, e viu sua H.U.G.E ser recompensada com {num} mortes."
 
 L.aw_msx1_title = "PUTT PUTT PUTT"
