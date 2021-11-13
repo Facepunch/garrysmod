@@ -396,9 +396,9 @@ L.hstation_help   = "{primaryfire} posiciona a Estação de Cura."
 L.hstation_desc   = [[
 Permite que as pessoas se curem quando posicionada.
 
-Seu tempo de recarga é lento. Qualquer um pode usá-la,
-e ela pode ser danificada. Pode ser usada para
-analisar as amostras de DNA dos seus utilizadores.]]
+Seu tempo de recarga é lento. Qualquer um pode
+usá-la, e ela pode ser danificada. Pode ser usada
+para analisar o DNA de seus utilizadores.]]
 
 -- Knife
 L.knife_name      = "Faca"
@@ -496,7 +496,7 @@ do jogador ao qual a amostra selecionada pertence.
 Rastrear alvos distantes consome mais energia.]]
 
 L.dna_menu_scan   = "Rastrear"
-L.dna_menu_repeat = "Rastrear automaticamente"
+L.dna_menu_repeat = "Automatizar"
 L.dna_menu_ready  = "PRONTO"
 L.dna_menu_charge = "CARREGANDO"
 L.dna_menu_select = "SELECIONAR AMOSTRA"
@@ -650,7 +650,7 @@ L.idle_popup = [[Você esteve inativo por {num} segundos e foi movido para o mod
 Você pode alterná-lo a qualquer momento ao pressionar {helpkey} e desmarcar a opção correspondente na aba Configurações. Você pode optar por desabilitá-lo agora mesmo.]]
 
 L.idle_popup_close = "Fazer nada"
-L.idle_popup_off   = "Desabilitar modo Somente-Espectador"
+L.idle_popup_off   = "Desabilitar Somente-Espectador"
 
 L.idle_warning = "Aviso: você aparenta estar ausente, e será movido para a equipe dos espectadores a não ser que demonstre alguma atividade!"
 
