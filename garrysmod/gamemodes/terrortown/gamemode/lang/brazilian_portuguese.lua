@@ -54,7 +54,7 @@ L.body_confirm     = "{finder} confirmou a morte de {victim}."
 L.body_call        = "{player} chamou um Detetive para investigar o corpo de {victim}!"
 L.body_call_error  = "Você deve confirmar a morte deste jogador antes de chamar um Detetive!"
 
-L.body_burning     = "Eita! Este corpo está pegando fogo!"
+L.body_burning     = "Eita! Este cadáver está pegando fogo!"
 L.body_credits     = "Você encontrou {num} crédito(s) no corpo!"
 
 --- Menus and windows
@@ -506,7 +506,7 @@ L.dna_help_secondary = "{secondaryfire} para abrir o menu de controle do Scanner
 
 -- Magneto stick
 L.magnet_name     = "Magneto-stick"
-L.magnet_help     = "{primaryfire} para prender um cadáver a uma superfície."
+L.magnet_help     = "{primaryfire} para prender um corpo a uma superfície."
 
 -- Grenades and misc
 L.grenade_smoke   = "Granada de Fumaça"
@@ -671,7 +671,7 @@ L.tip2 = "Armar um explosivo C4 com um longo tempo de duração aumentará o nú
 
 L.tip3 = "Detetives podem investigar cadáveres para descobrir quem estava 'refletindo em seus olhos'. Essa é a última pessoa que o terrorista morto viu. Isso não necessariamente indica quem é o assassino, pois o terrorista pode ter sido baleado pelas costas."
 
-L.tip4 = "Ninguém saberá que você morreu até encontrarem o seu cadáver e o investigarem."
+L.tip4 = "Ninguém saberá que você morreu até que encontrem seu cadáver e o investiguem."
 
 L.tip5 = "Quando um Traidor mata um Detetive, todos os Traidores são instantaneamente recompensados com créditos."
 
@@ -689,9 +689,9 @@ L.tip11 = "Como Traidor ou Detetive, tenha em mente que você será recompensado
 
 L.tip12 = "O Scanner de DNA dos Detetives pode ser usado para coletar amostras de DNA de armas e itens e analisá-las para descobrir a localização do jogador que os usou. Isso é útil quando você consegue coletar uma amostra de um cadáver ou de um C4 desarmado!"
 
-L.tip13 = "Quando estiver perto de alguém que você matou, um pouco do seu DNA será deixado no cadáver. Esse DNA pode ser coletado por um Scanner de DNA de um Detetive para encontrar sua localização atual. É melhor você esconder o cadáver da vítima depois de esfaqueá-la!"
+L.tip13 = "Quando estiver perto de alguém que você matou, um pouco do seu DNA será deixado no cadáver. Esse DNA pode ser coletado por um Scanner de DNA de um Detetive para encontrar sua localização atual. É melhor esconder o corpo da vítima depois de esfaqueá-la!"
 
-L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapidamente a amostra do seu DNA no cadáver da sua vítima vai deteriorar-se."
+L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapidamente a amostra do seu DNA no corpo da sua vítima vai deteriorar-se."
 
 L.tip15 = "Você é um Traidor e quer tentar matar alguém com um rifle de precisão? Considere habilitar o Disfarce antes. Se você errar um tiro, fuja para um local seguro, desabilite o Disfarce, e ninguém saberá que era você que estava atirando neles."
 
