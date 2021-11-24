@@ -175,26 +175,30 @@ FORCE_BOOL		= 3
 	AccessorFunc
 	Quickly make Get/Set accessor fuctions on the specified table
 -----------------------------------------------------------]]
-function AccessorFunc( tab, varname, name, iForce )
+function AccessorFunc( tab, varname, name, iForce, default )
 
 	if ( !tab ) then debug.Trace() end
 
 	tab[ "Get" .. name ] = function( self ) return self[ varname ] end
-
-	if ( iForce == FORCE_STRING ) then
-		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tostring( v ) end
-	return end
-
-	if ( iForce == FORCE_NUMBER ) then
-		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tonumber( v ) end
-	return end
-
-	if ( iForce == FORCE_BOOL ) then
-		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tobool( v ) end
-	return end
-
-	tab[ "Set" .. name ] = function( self, v ) self[ varname ] = v end
-
+	
+	local setFunc
+	
+	if ( isfunction( iForce ) ) then
+		setFunc = function( self, v ) self[ varname ] = iForce( v ) end
+	elseif ( iForce == FORCE_STRING ) then
+		setFunc = function( self, v ) self[ varname ] = tostring( v ) end
+	elseif ( iForce == FORCE_NUMBER ) then
+		setFunc = function( self, v ) self[ varname ] = tonumber( v ) end
+	elseif ( iForce == FORCE_BOOL ) then
+		setFunc = function( self, v ) self[ varname ] = tobool( v ) end
+	else
+		setFunc = function( self, v ) self[ varname ] = v end
+	end
+	
+	tab[ "Set" .. name ] = setFunc
+	
+	if ( default != nil ) then setFunc( tab, default ) end
+	
 end
 
 --[[---------------------------------------------------------
