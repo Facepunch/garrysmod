@@ -78,12 +78,8 @@ function SimpleText( text, font, x, y, colour, xalign, yalign )
 	end
 
 	surface.SetTextPos( math.ceil( x ), math.ceil( y ) )
-
-	if ( colour != nil ) then
-		surface.SetTextColor( colour.r, colour.g, colour.b, colour.a )
-	else
-		surface.SetTextColor( 255, 255, 255, 255 )
-	end
+	
+	surface.SetTextColor( colour and Color(colour.r, colour.g, colour.b, colour.a) or Color(255, 0, 255, 255) )
 
 	surface.DrawText( text )
 
