@@ -67,7 +67,7 @@ function PANEL:Paint( w, h )
 		return
 	end
 
-	-- Background color
+	-- Background
 	local bgClrH = bgClr
 	if ( self.Problem.lastOccurence ) then
 		local add = 75 + math.max( 25 - ( SysTime() - self.Problem.lastOccurence ) * 25, 0 )
@@ -76,13 +76,10 @@ function PANEL:Paint( w, h )
 
 	draw.RoundedBox( 0, 0, 0, w, h, bgClrH )
 
+	-- Severity indicator
 	local color = severityColors[ self.Problem.severity ]
 	if ( color == nil ) then color = severityColors[ 0 ] end
 	draw.RoundedBox( 0, 0, 0, severityWidth, h, color )
-
-	-- Draw background
-	local count = 0
-	if ( self.Problem && self.Problem.count ) then count = self.Problem.count end
 
 	-- The error
 	self.Markup:Draw( textPaddingX + severityOffset, textPaddingY, nil, nil, self:GetAlpha() )

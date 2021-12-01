@@ -116,7 +116,7 @@ end
 function PANEL:LoadServerInfo()
 
 	self.CustomPanel:SetVisible( true )
-	self.CustomPanel:SetText( "Loading server info..." )
+	self.CustomPanel:SetText( "#askconnect.loading" )
 	self.CustomPanel:SizeToContents()
 
 	serverlist.PingServer( self:GetURL(), function( ping, name, desc, map, players, maxplayers, bot, pass, lp, ip, gamemode )
