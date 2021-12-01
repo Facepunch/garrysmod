@@ -1,3 +1,6 @@
+
+include( "math/ease.lua" )
+
 --[[---------------------------------------------------------
 	Name: DistToSqr( low, high )
 	Desc: Squared Distance between two 2d points, use this instead of math.Distance as it is more cpu efficient.
@@ -7,8 +10,6 @@ function math.DistToSqr( x1, y1, x2, y2 )
 	local yd = y2 - y1
 	return  xd * xd + yd * yd
 end
-
-include( "math/ease.lua" )
 
 --[[---------------------------------------------------------
 	Name: Distance( low, high )
