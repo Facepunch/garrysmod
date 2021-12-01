@@ -134,40 +134,6 @@ function PANEL:PropSelect( label, convar, models, height )
 
 end
 
-function PANEL:ToolPresets( group, cvarlist )
-
-	local preset = vgui.Create( "ControlPresets", self )
-
-	preset:SetPreset( group )
-	preset:AddOption( "#preset.default", cvarlist )
-	for key, val in pairs( table.GetKeys( cvarlist ) ) do
-		preset:AddConVar( val )
-	end
-
-	self:AddItem( preset )
-
-	return preset
-
-end
-
-function PANEL:KeyBinder( label1, convar1, label2, convar2 )
-
-	local binder = vgui.Create( "CtrlNumPad", self )
-
-	binder:SetLabel1( label1 )
-	binder:SetConVar1( convar1 )
-
-	if ( label2 != nil and convar2 != nil ) then
-		binder:SetLabel2( label2 )
-		binder:SetConVar2( convar2 )
-	end
-
-	self:AddPanel( binder )
-
-	return binder
-
-end
-
 function PANEL:ComboBox( strLabel, strConVar )
 
 	local left = vgui.Create( "DLabel", self )
