@@ -330,19 +330,8 @@ function string.ToColor( str )
 end
 
 function string.Comma( number )
-
-	if ( isnumber( number ) ) then
-		number = string.format( "%f", number )
-		number = string.match( number, "^(.-)%.?0*$" ) -- Remove trailing zeros
-	end
-
-	local k
-
-	while true do
-		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", "%1,%2" )
-		if ( k == 0 ) then break end
-	end
-
+	if ( isnumber( number ) ) then number = tostring( number ) end
+	local index = -1
+	while index ~= 0 do number, index = number:gsub( "^(-?%d+)(%d%d%d)", "%1,%2" ) end
 	return number
-
 end
