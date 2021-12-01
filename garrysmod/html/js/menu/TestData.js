@@ -26,6 +26,6 @@ function TestUpdateServers( type, id )
 {
 	$.each( TestServers, function( k, v )
 	{
-		setTimeout( function(){  AddServer( type, id, v.ping, v.name, v.desc, v.map, v.players, v.maxplayers, v.botplayers, v.pass, v.lastplayed, v.address ) }, k * 10 )
-	})
+		setTimeout( function() { AddServer( type, id, v.ping, v.name, v.desc, v.map, v.players, v.maxplayers, v.botplayers, v.pass, v.lastplayed, v.address, "", "", false, v.ver || "", "false", "", "" ) }, k * 10 )
+	} )
 }

@@ -170,6 +170,9 @@ end
 FORCE_STRING	= 1
 FORCE_NUMBER	= 2
 FORCE_BOOL		= 3
+FORCE_ANGLE		= 4
+FORCE_COLOR		= 5
+FORCE_VECTOR	= 6
 
 CASING_PASCAL = 1
 CASING_CAMEL = 2
@@ -207,6 +210,24 @@ function AccessorFunc( tab, varname, name, iForce, iCasing )
 
 	if ( iForce == FORCE_BOOL ) then
 		tab[ set .. name ] = function( self, v ) self[ varname ] = tobool( v ) end
+	return end
+
+	if ( iForce == FORCE_ANGLE ) then
+		tab[ set .. name ] = function( self, v ) self[ varname ] = Angle( v ) end
+	return end
+
+	if ( iForce == FORCE_COLOR ) then
+		tab[ set .. name ] = function( self, v )
+			if ( type( v ) == "Vector" ) then self[ varname ] = v:ToColor()
+			else self[ varname ] = string.ToColor( tostring( v ) ) end
+		end
+	return end
+
+	if ( iForce == FORCE_VECTOR ) then
+		tab[ set .. name ] = function( self, v )
+			if ( IsColor( v ) ) then self[ varname ] = v:ToVector()
+			else self[ varname ] = Vector( v ) end
+		end
 	return end
 
 	tab[ set .. name ] = function( self, v ) self[ varname ] = v end

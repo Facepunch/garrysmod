@@ -516,7 +516,10 @@ end
 
 function PANEL:PopulateChildren()
 
+	if ( !IsValid( self.ChildNodes ) ) then return end
+
 	for k, v in pairs( self.ChildNodes:GetChildren() ) do
+
 		timer.Simple( k * 0.1, function()
 
 			if ( IsValid( v ) ) then
@@ -524,6 +527,7 @@ function PANEL:PopulateChildren()
 			end
 
 		end )
+
 	end
 
 end

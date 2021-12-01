@@ -60,11 +60,13 @@ end
 local function SetCache( key, value )
 	if ( value == nil ) then return Delete( key ) end
 
-	if !CachedEntries[ key ] then
+	if CachedEntries[ key ] then
+		CachedEntries[ key ][ 1 ] = SysTime() + 30
+		CachedEntries[ key ][ 2 ] = value
+	else
 		CachedEntries[ key ] = { SysTime() + 30, value }
 	end
 
-	CachedEntries[ key ][ 2 ] = value
 	BufferedWrites[ key ] = value
 
 	ScheduleCommit()

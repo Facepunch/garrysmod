@@ -1,3 +1,4 @@
+
 workshopicon
 {
 	width: 200px;
@@ -18,6 +19,24 @@ workshopicon preview
 	position: absolute;
 	left: 50%;
 	top: 50%;
+}
+
+workshopicon disabled
+{
+	opacity: 0;
+
+	display: block;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+workshopicon.disabled disabled
+{
+	opacity: 0.5;
 }
 
 workshopicon controls
@@ -43,17 +62,33 @@ workshopicon name
 	text-align: left;
 	background-color: rgba( 255, 255, 255, 0.99 );
 	font-size: 14px;
-	padding: 2px 5px;
-	padding-bottom: 4px;
 	font-weight: bold;
 	letter-spacing: -1px;
 	z-index: 10;
+	font-family: "Arial";
+	color: #666;
+	height: 22px;
+}
+workshopicon name label
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 2px;
+
+	padding: 2px 0px 4px 2px;
 	cursor: pointer;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	font-family: "Arial";
-	color: #666;
+}
+workshopicon name.subscription label
+{
+	right: 24px;
+}
+workshopicon.floating name label
+{
+	right: 2px;
 }
 
 workshopicon author, workshopicon votes, workshopicon size
@@ -133,6 +168,7 @@ workshopicon description
 	padding: 32px 8px;
 	color: #fff;
 	cursor: default;
+	word-break: break-all;
 
 	opacity: 0;
 	-webkit-transition: opacity 100ms ease-in 0ms;
@@ -143,8 +179,10 @@ workshopicon .checkbox
 	position: absolute;
 	top: 0px;
 	right: 0px;
-	margin: 3px 3px;
+	margin: 0;
 	z-index: 32;
+	height: 19px;
+	width: 19px;
 }
 
 workshopicon:hover description

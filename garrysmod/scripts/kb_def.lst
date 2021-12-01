@@ -14,15 +14,16 @@
 "TAB"			"+showscores"
 "SHIFT"			"+speed"
 "ENTER"			"+attack"
-"ALT"			"lastinv"
+"ALT"			"+walk"
 "MOUSE1"		"+attack"
 "MOUSE2"		"+attack2"
+"MOUSE4"		"lastinv"
+"MOUSE5"		"+voicerecord"
 "MWHEELUP"		"invprev"
 "MWHEELDOWN"	"invnext"
 
 "PAUSE"			"pause"
 "ESCAPE"		"cancelselect"
-"~"				"toggleconsole"
 "`"				"toggleconsole"
 
 "F1" 			"gm_showhelp2"

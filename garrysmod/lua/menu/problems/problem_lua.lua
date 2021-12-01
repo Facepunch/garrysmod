@@ -24,7 +24,7 @@ function PANEL:Init()
 		if ( !self.Problem ) then return end
 
 		local prepend = ""
-		if ( self.Problem.title && self.Problem.title:len() > 0 ) then prepend = "[" .. self.Problem.title .. "] " end
+		if ( self.Problem.title && self.Problem.title:len() > 0 && self.Problem.title != "Other" ) then prepend = "[" .. self.Problem.title .. "] " end
 		SetClipboardText( prepend .. self.Problem.text )
 	end
 
@@ -45,6 +45,7 @@ function PANEL:PerformLayout( w, h )
 end
 
 local bgClr = Color( 75, 75, 75, 255 )
+local fgClr = Color( 255, 255, 255, 255 )
 function PANEL:Paint( w, h )
 
 	bgClr.a = self:GetAlpha()
@@ -56,7 +57,7 @@ function PANEL:Paint( w, h )
 	end
 
 	-- Get the colors
-	local clr = table.Copy( realmColors[ self.Problem.realm ] or color_white )
+	local clr = table.Copy( realmColors[ self.Problem.realm ] or fgClr )
 	clr.a = self:GetAlpha()
 
 	-- Background color
@@ -95,6 +96,8 @@ end
 
 vgui.Register( "LuaProblem", PANEL, "Panel" )
 
+--[[ ////////////////////////////////////////////////// GROUP ////////////////////////////////////////////////// ]] --
+
 local PANEL = {}
 
 local arrowMat = Material( "gui/point.png" )
@@ -110,31 +113,45 @@ function PANEL:Init()
 
 	self.LuaErrorList = self:Add( "Panel" )
 
+	self.ClearButton = self:Add( "DImageButton" )
+	self.ClearButton:SetImage( "gui/cross.png" )
+	self.ClearButton:SetSize( 18, 18 )
+	self.ClearButton.DoClick = function( s ) self:ClearThisGroup() end
+
 	self.Collapsed = false
 
 end
 
-local textOther = "Looks like you have encountered some errors. We could not figure out where they came from."
-local textAddon = "Looks like the addon '%s' is creating errors.\nYou can uninstall the addon to make the errors go away.\nYou should also report the error(s) to the Addon author so they can be fixed."
-local textWSAddon = "Looks like the addon '%s' is creating errors.\nYou can uninstall or disable the addon to make the errors go away.\nYou should also report the error(s) to the Addon author (on its Steam Workshop page) so they can be fixed."
-
+local white = Color( 255, 255, 255, 255 )
+local bg = Color( 50, 50, 50, 255 )
 function PANEL:Paint( w, h )
 
-	draw.RoundedBox( 4, 0, 0, w, h, Color( 50, 50, 50, self:GetAlpha() ) )
-	draw.SimpleText( self.Title, "DermaLarge", 4, 2, color_white, draw.TEXT_ALIGN_LEFT, draw.TEXT_ALIGN_TOP )
+	white.a = self:GetAlpha()
+	bg.a = self:GetAlpha()
+
+	draw.RoundedBox( 4, 0, 0, w, h, bg )
+	draw.SimpleText( self.Title, "DermaLarge", 4, 2, white, draw.TEXT_ALIGN_LEFT, draw.TEXT_ALIGN_TOP )
 
 	surface.SetMaterial( arrowMat )
-	surface.SetDrawColor( color_white )
-	surface.DrawTexturedRectRotated( w - 20, 20, 20, 20, self.Collapsed && 180 || 0 )
+	surface.SetDrawColor( white )
+	surface.DrawTexturedRectRotated( w - 20, 18, 20, 12, self.Collapsed && 180 || 0 )
 
 	local h2 = self.LuaErrorList:GetTall()
 	local _, lY = self.LuaErrorList:GetPos()
 
-	draw.DrawText( self:GetExplainerText(), "DermaDefault", w / 2, lY + h2 + 5, color_white, draw.TEXT_ALIGN_CENTER, draw.TEXT_ALIGN_TOP )
+	draw.DrawText( self:GetExplainerText(), "DermaDefault", w / 2, lY + h2 + 5, white, draw.TEXT_ALIGN_CENTER, draw.TEXT_ALIGN_TOP )
 
 end
 
-function PANEL:OnMousePressed()
+function PANEL:ClearThisGroup()
+
+	ClearLuaErrorGroup( self.GroupID )
+
+end
+
+function PANEL:OnMousePressed( code )
+
+	if ( code != MOUSE_LEFT ) then return end
 
 	self.Collapsed = !self.Collapsed
 	self:InvalidateLayout()
@@ -145,39 +162,40 @@ end
 
 function PANEL:GetExplainerText()
 
-	if ( self.Title == "Other" ) then
-		return textOther
+	if ( self.Title == "Other" && self.AddonID && self.AddonID:len() < 2 ) then
+		return language.GetPhrase( "problems.generic_lua_error" )
 	end
 
 	-- Not a workshop addon, or a floating .gma (WSID=0)
 	if ( self.AddonID && self.AddonID:len() < 2 ) then
-		return textAddon:format( self.Title )
+		return language.GetPhrase( "problems.addon_lua_error" ):format( self.Title )
 	end
 
-	return textWSAddon:format( self.Title )
+	return language.GetPhrase( "problems.workshop_lua_error" ):format( self.Title )
 
 end
 
-function PANEL:SetTitleAndID( title, id )
+function PANEL:SetTitleAndID( title, id, groupid )
 
 	self.Title = title
 	self.AddonID = id
+	self.GroupID = groupid
 
 	self.Collapsed = collapsedCache[ self.Title ]
 
 	if ( self.AddonID && self.AddonID:len() > 1 ) then
 		self.DisableBtn = self:Add( "DButton" )
-		self.DisableBtn:SetText( "Disable" )
+		self.DisableBtn:SetText( "#problems.disable" )
 		self.DisableBtn:SizeToContentsX( 10 )
 		self.DisableBtn.DoClick = function() steamworks.SetShouldMountAddon( self.AddonID, false ) steamworks.ApplyAddons() end
 
 		self.OpenWSBtn = self:Add( "DButton" )
-		self.OpenWSBtn:SetText( "Open on Workshop" )
+		self.OpenWSBtn:SetText( "#problems.open_on_workshop" )
 		self.OpenWSBtn:SizeToContentsX( 10 )
 		self.OpenWSBtn.DoClick = function() steamworks.ViewFile( self.AddonID ) end
 
 		self.UninstallBtn = self:Add( "DButton" )
-		self.UninstallBtn:SetText( "Uninstall" )
+		self.UninstallBtn:SetText( "#problems.uninstall" )
 		self.UninstallBtn:SizeToContentsX( 10 )
 		self.UninstallBtn.DoClick = function() steamworks.Unsubscribe( self.AddonID ) end
 
@@ -190,6 +208,8 @@ function PANEL:SetTitleAndID( title, id )
 end
 
 function PANEL:PerformLayout( w, h )
+
+	self.ClearButton:SetPos( w - 56, 9 )
 
 	self.LuaErrorList:InvalidateLayout( true )
 	self.LuaErrorList:SizeToChildren( false, true )

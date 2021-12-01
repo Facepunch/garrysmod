@@ -107,7 +107,8 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 			return "img/incompatible.png"
 		}
 
-		if ( !IN_ENGINE ) return "img/downloading.png"
+		// Hopefully this also improves performance of the first click on "Start new game".
+		if ( !IN_ENGINE || $scope.CurrentCategory != cat ) return "img/downloading.png"
 
 		return "asset://mapimage/" + m;
 	}

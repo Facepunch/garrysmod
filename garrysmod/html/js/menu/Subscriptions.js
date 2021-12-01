@@ -70,6 +70,16 @@ Subscriptions.prototype.GetAll = function()
 	return this.Files;
 }
 
+Subscriptions.prototype.GetCount = function()
+{
+	var i = 0;
+	for ( var k in this.Files )
+	{
+		i++;
+	}
+	return i;
+}
+
 // Called from engine for Subscriptions
 Subscriptions.prototype.Update = function( json )
 {
@@ -77,7 +87,9 @@ Subscriptions.prototype.Update = function( json )
 
 	for ( k in json )
 	{
-		this.Files[ String( json[k].wsid ) ] = json[ k ];
+		var wsid = String( json[k].wsid );
+		if ( wsid == "0" ) continue;
+		this.Files[ wsid ] = json[ k ];
 	}
 }
 

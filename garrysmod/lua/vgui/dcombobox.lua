@@ -127,6 +127,12 @@ function PANEL:OnSelect( index, value, data )
 
 end
 
+function PANEL:OnMenuOpened( menu )
+
+	-- For override
+
+end
+
 function PANEL:AddSpacer()
 
 	self.Spacers[ #self.Choices ] = true
@@ -177,7 +183,14 @@ function PANEL:OpenMenu( pControlOpener )
 		self.Menu = nil
 	end
 
-	self.Menu = DermaMenu( false, self )
+	-- If we have a modal parent at some level, we gotta parent to that or our menu items are not gonna be selectable
+	local parent = self
+	while ( IsValid( parent ) && !parent:IsModal() ) do
+		parent = parent:GetParent()
+	end
+	if ( !IsValid( parent ) ) then parent = self end
+
+	self.Menu = DermaMenu( false, parent )
 
 	if ( self:GetSortItems() ) then
 		local sorted = {}
@@ -211,6 +224,8 @@ function PANEL:OpenMenu( pControlOpener )
 
 	self.Menu:SetMinimumWidth( self:GetWide() )
 	self.Menu:Open( x, y, false, self )
+
+	self:OnMenuOpened( self.Menu )
 
 end
 

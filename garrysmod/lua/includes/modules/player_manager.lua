@@ -423,6 +423,7 @@ function OnPlayerSpawn( ply, transiton )
 	local class = LookupPlayerClass( ply )
 	if ( !class ) then return end
 
+	ply:SetSlowWalkSpeed( class.SlowWalkSpeed )
 	ply:SetWalkSpeed( class.WalkSpeed )
 	ply:SetRunSpeed( class.RunSpeed )
 	ply:SetCrouchedWalkSpeed( class.CrouchedWalkSpeed )

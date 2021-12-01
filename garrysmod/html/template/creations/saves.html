@@ -14,7 +14,10 @@
 					<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
 				</preview>
 
-				<name ng-click="OpenWorkshopFile( file.id )">{{file.info.title}}</name>
+				<name>
+					<label ng-click="OpenWorkshopFile( file.id )">{{file.info.title || "Loading..."}}</label>
+				</name>
+
 				<author ng-hide="file.local">{{file.info.ownername}}</author>
 
 				<votes ng-show="!file.local && (file.vote.up-file.vote.down) > 0" style="color: #4a4">+{{file.vote.up-file.vote.down|number:0}}</votes>

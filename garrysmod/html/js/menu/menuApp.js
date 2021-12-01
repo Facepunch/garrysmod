@@ -15,25 +15,6 @@ App.config(function ( $routeProvider, $locationProvider )
 	$routeProvider.when('/dupes/', { templateUrl: 'template/dupes.html' } );
 } );
 
-// This is a bit silly
-App.filter( 'gamemodeFilter', function() {
-	return function( inputs, searchText ) {
-		if ( !searchText ) return inputs;
-		searchText = searchText.toLowerCase();
-
-		var output = [];
-		angular.forEach( inputs, function( input ) {
-			var found = false;
-			
-			if ( input.name.toLowerCase().indexOf( searchText ) != -1 ) found = true;
-			if ( !found && input.info && input.info.title.toLowerCase().indexOf( searchText ) != -1 ) found = true;
-			
-			if ( found ) output.push( input ); 
-		} );
-		return output;
-	};
-} );
-
 function UpdateDigest( scope, timeout )
 {
 	if ( !scope ) return;
@@ -44,7 +25,7 @@ function UpdateDigest( scope, timeout )
 		scope.DigestUpdate = 0;
 		scope.$digest();
 
-	}, timeout )
+	}, timeout );
 }
 
 //We already have a limitTo filter built-in to angular,
