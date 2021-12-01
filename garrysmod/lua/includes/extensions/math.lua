@@ -149,7 +149,7 @@ function math.BSplinePoint( tDiff, tPoints, tMax )
 
 end
 
--- Round to the nearest interger
+-- Round to the nearest integer
 function math.Round( num, idp )
 
 	local mult = 10 ^ ( idp or 0 )
