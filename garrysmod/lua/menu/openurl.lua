@@ -133,6 +133,16 @@ function PANEL:LoadServerInfo()
 
 end
 
+function PANEL:DisplayPermissionInfo()
+
+	self.CustomPanel.Color = Color( 200, 200, 200 )
+	self.CustomPanel:SetVisible( true )
+	self.CustomPanel:SetDark( true )
+	self.CustomPanel:SetText( "\n" .. language.GetPhrase( "permission." .. self:GetURL() ) .. "\n" .. language.GetPhrase( "permission." .. self:GetURL() .. ".help" ) .. "\n" )
+	self.CustomPanel:SizeToContents()
+
+end
+
 function PANEL:AlwaysThink()
 
 	-- Ping the server for details
@@ -171,6 +181,10 @@ function PANEL:SetURL( url )
 	self.CustomPanel:SetVisible( false )
 	self.CustomPanel.Color = Color( 0, 0, 0, 0 )
 	self:InvalidateLayout()
+
+	if ( self.Type == "permission" ) then
+		self:DisplayPermissionInfo()
+	end
 
 end
 
@@ -260,6 +274,6 @@ function RequestConnectToServer( serverip )
 end
 function RequestPermission( perm )
 
-	-- OpenConfirmationDialog( perm, "permission" )
+	OpenConfirmationDialog( perm, "permission" )
 
 end
