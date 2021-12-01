@@ -117,15 +117,14 @@ function PANEL:AddCategory( name, lbl, tItems )
 
 	local tools = {}
 	for k, v in pairs( tItems ) do
-		local str = v.Text
-		if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
-		tools[ language.GetPhrase( str ) ] = v
+		local name = v.Text or v.ItemName or v.Controls or v.Command or tostring( k )
+		tools[ language.GetPhrase( name ) ] = v
 	end
 
 	local currentMode = GetConVarString( "gmod_toolmode" )
 	for k, v in SortedPairs( tools ) do
 
-		local item = Category:Add( v.Text )
+		local item = Category:Add( v.Text or k )
 
 		item.DoClick = function( button )
 
