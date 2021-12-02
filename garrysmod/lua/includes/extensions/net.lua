@@ -74,23 +74,26 @@ function net.WriteColor( col, writeAlpha )
 
 	assert( IsColor( col ), "net.WriteColor: color expected, got ".. type( col ) )
 
-	net.WriteUInt( col.r, 8 )
-	net.WriteUInt( col.g, 8 )
-	net.WriteUInt( col.b, 8 )
+	local r, g, b, a = col:Unpack()
+	net.WriteUInt( r, 8 )
+	net.WriteUInt( g, 8 )
+	net.WriteUInt( b, 8 )
 
 	if ( writeAlpha ) then
-		net.WriteUInt( col.a, 8 )
+		net.WriteUInt( a, 8 )
 	end
 end
 
 function net.ReadColor( readAlpha )
 	if ( readAlpha == nil ) then readAlpha = true end
 
-	local r, g, b, a = 
+	local r, g, b = 
 		net.ReadUInt( 8 ),
 		net.ReadUInt( 8 ),
-		net.ReadUInt( 8 ),
-		readAlpha and net.ReadUInt( 8 ) or 255
+		net.ReadUInt( 8 )
+	
+	local a = 255
+	if ( readAlpha ) then a = net.ReadUInt( 8 ) end
 
 	return Color( r, g, b, a )
 
