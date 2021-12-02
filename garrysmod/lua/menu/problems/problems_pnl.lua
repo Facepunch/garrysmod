@@ -1,6 +1,7 @@
 
 include( "problem_lua.lua" )
 include( "problem_generic.lua" )
+include( "permissions.lua" )
 
 local PANEL = {}
 
@@ -35,6 +36,11 @@ function PANEL:Init()
 	local problemsList = ProblemsFrame:Add( "DScrollPanel" )
 	sheet:AddSheet( "#problems.problems", problemsList, "icon16/tick.png" )
 	self.ProblemsList = problemsList
+
+	-- Permissions
+	local permissionList = ProblemsFrame:Add( "PermissionViewer" )
+	permissionList.ParentFrame = self
+	sheet:AddSheet( "#permissions.title", permissionList, "icon16/lock.png" )
 
 	ProblemsFrame.btnClose:MoveToFront()
 	ProblemsFrame.btnMaxim:MoveToFront()

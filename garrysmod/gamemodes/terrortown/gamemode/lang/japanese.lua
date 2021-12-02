@@ -1039,8 +1039,8 @@ L.aw_tod2_title = "クソゲー"
 L.aw_tod2_text  = "はラウンド開始してすぐに死亡した。"
 
 
--- New and modified pieces of text are placed below this point, marked with the
--- version in which they were added, to make updating translations easier.
+--- New and modified pieces of text are placed below this point, marked with the
+--- version or the date in which they were added, to make updating translations easier.
 
 
 --- v23
@@ -1054,10 +1054,10 @@ L.drop_no_ammo = "弾薬箱として捨てるのに武器に装填されてい�
 L.set_cross_brightness = "クロスヘアの明るさ"
 L.set_cross_size = "クロスヘアの大きさ"
 
---- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "Detectiveの帽子を拾った。"
 
---- 3-9-2017
+--- 2017-03-09
 L.sb_sortby = "並び変え順:"
 
 --- 2018-07-24
