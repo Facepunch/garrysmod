@@ -63,7 +63,7 @@ function PANEL:ToolPresets( group, cvarlist )
 
 	preset:SetPreset( group )
 	preset:AddOption( "#preset.default", cvarlist )
-	for key, val in pairs( table.GetKeys( cvarlist ) ) do
+	for key, val in ipairs( table.GetKeys( cvarlist ) ) do
 		preset:AddConVar( val )
 	end
 
