@@ -1,4 +1,4 @@
---
+
 --
 --	Note: This is only really here as a layer between the spawnmenu
 --			and the DForm Derma control. You shouldn't ever really be
@@ -12,32 +12,20 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "m_bInitialized", "Initialized" )
 
---[[---------------------------------------------------------
-	Name: Paint
------------------------------------------------------------]]
 function PANEL:Init()
 	self:SetInitialized( false )
 end
 
---[[---------------------------------------------------------
-	Name: ClearControls
------------------------------------------------------------]]
 function PANEL:ClearControls()
 	self:Clear()
 end
 
---[[---------------------------------------------------------
-	Name: GetEmbeddedPanel
------------------------------------------------------------]]
 function PANEL:GetEmbeddedPanel()
 
 	return self
 
 end
 
---[[---------------------------------------------------------
-	Name: AddPanel
------------------------------------------------------------]]
 function PANEL:AddPanel( pnl )
 
 	self:AddItem( pnl, nil )
@@ -45,9 +33,6 @@ function PANEL:AddPanel( pnl )
 
 end
 
---[[---------------------------------------------------------
-	Name: MatSelect
------------------------------------------------------------]]
 function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 
 	local MatSelect = vgui.Create( "MatSelect", self )
@@ -72,9 +57,61 @@ function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 
 end
 
---[[---------------------------------------------------------
-	Name: FillViaTable
------------------------------------------------------------]]
+function PANEL:ToolPresets( group, cvarlist )
+
+	local preset = vgui.Create( "ControlPresets", self )
+
+	preset:SetPreset( group )
+	preset:AddOption( "#preset.default", cvarlist )
+	for key, val in pairs( table.GetKeys( cvarlist ) ) do
+		preset:AddConVar( val )
+	end
+
+	self:AddItem( preset )
+
+	return preset
+
+end
+
+function PANEL:KeyBinder( label1, convar1, label2, convar2 )
+
+	local binder = vgui.Create( "CtrlNumPad", self )
+
+	binder:SetLabel1( label1 )
+	binder:SetConVar1( convar1 )
+
+	if ( label2 != nil and convar2 != nil ) then
+		binder:SetLabel2( label2 )
+		binder:SetConVar2( convar2 )
+	end
+
+	self:AddPanel( binder )
+
+	return binder
+
+end
+
+function PANEL:ColorBox(label, convarr, convarg, convarb, convara)
+
+	local color = vgui.Create("CtrlColor", self)
+
+	color:Dock( TOP )
+	color:SetLabel( label )
+
+	color:SetConVarR( convar )
+	color:SetConVarG( convag )
+	color:SetConVarB( convab )
+
+	if ( convara ) then
+		color:SetConVarA( convara )
+	end
+
+	self:AddPanel( color )
+
+	return color
+
+end
+
 function PANEL:FillViaTable( Table )
 
 	self:SetInitialized( true )
@@ -92,18 +129,12 @@ function PANEL:FillViaTable( Table )
 
 end
 
---[[---------------------------------------------------------
-	Name: FillViaFunction
------------------------------------------------------------]]
 function PANEL:FillViaFunction( func )
 
 	func( self )
 
 end
 
---[[---------------------------------------------------------
-	Name: ControlValues
------------------------------------------------------------]]
 function PANEL:ControlValues( data )
 	if ( data.label) then
 		self:SetLabel( data.label )
@@ -113,9 +144,7 @@ function PANEL:ControlValues( data )
 	end
 end
 
---[[---------------------------------------------------------
-	Name: AddControl
------------------------------------------------------------]]
+
 function PANEL:AddControl( control, data )
 
 	local data = table.LowerKeyNames( data )
