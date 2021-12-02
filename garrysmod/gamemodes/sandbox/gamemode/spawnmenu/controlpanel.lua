@@ -91,19 +91,19 @@ function PANEL:KeyBinder( label1, convar1, label2, convar2 )
 
 end
 
-function PANEL:ColorPicker( label, convar_r, convar_g, convar_b, convar_a )
+function PANEL:ColorPicker( label, convarR, convarG, convarB, convarA )
 
 	local color = vgui.Create( "CtrlColor", self )
 
 	color:Dock( TOP )
 	color:SetLabel( label )
 
-	color:SetConVarR( convar_r )
-	color:SetConVarG( convar_g )
-	color:SetConVarB( convar_b )
+	color:SetConVarR( convarR )
+	color:SetConVarG( convarG )
+	color:SetConVarB( convarB )
 
-	if ( convar_a ) then
-		color:SetConVarA( convar_a )
+	if ( convarA ) then
+		color:SetConVarA( convarA )
 	end
 
 	self:AddPanel( color )
