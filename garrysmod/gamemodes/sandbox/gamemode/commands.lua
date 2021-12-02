@@ -774,11 +774,31 @@ function Spawn_SENT( ply, EntityName, tr )
 		if ( !EntTable ) then return end
 
 		PrintName = EntTable.PrintName
+		
+		-- If the player is aimed at an entity, do not place below the entity
+		if ( !tr.HitWorld ) then
+			tr.HitNormal.z = 0
+		end
 
 		local SpawnPos = tr.HitPos + tr.HitNormal * 16
 		if ( EntTable.NormalOffset ) then SpawnPos = SpawnPos + tr.HitNormal * EntTable.NormalOffset end
+		
+		-- Make sure the new position is not out of bounds
+		local trace = {}
+		trace.start = tr.HitPos
+		trace.endpos = SpawnPos
+
+		local newTr = util.TraceLine( trace )
+		if newTr.Hit then
+			SpawnPos = newTr.HitPos
+		end
 
 		entity = ents.Create( EntTable.ClassName )
+		
+		-- Move the entity half of it's height above the surface
+		-- DropToFloor will take care of the rest
+		SpawnPos = SpawnPos + Vector( 0, 0, entity:OBBCenter().z )
+		
 		entity:SetPos( SpawnPos )
 
 		if ( EntTable.KeyValues ) then
