@@ -63,8 +63,8 @@ function PANEL:ToolPresets( group, cvarlist )
 
 	preset:SetPreset( group )
 	preset:AddOption( "#preset.default", cvarlist )
-	for key, val in ipairs( table.GetKeys( cvarlist ) ) do
-		preset:AddConVar( val )
+	for cvar, defv in pairs( cvarlist ) do
+		preset:AddConVar( cvar )
 	end
 
 	self:AddItem( preset )
@@ -91,19 +91,19 @@ function PANEL:KeyBinder( label1, convar1, label2, convar2 )
 
 end
 
-function PANEL:ColorPicker( label, convarr, convarg, convarb, convara )
+function PANEL:ColorPicker( label, convar_r, convar_g, convar_b, convar_a )
 
 	local color = vgui.Create( "CtrlColor", self )
 
 	color:Dock( TOP )
 	color:SetLabel( label )
 
-	color:SetConVarR( convar )
-	color:SetConVarG( convag )
-	color:SetConVarB( convab )
+	color:SetConVarR( convar_r )
+	color:SetConVarG( convar_g )
+	color:SetConVarB( convar_b )
 
-	if ( convara ) then
-		color:SetConVarA( convara )
+	if ( convar_a ) then
+		color:SetConVarA( convar_a )
 	end
 
 	self:AddPanel( color )
