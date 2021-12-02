@@ -140,7 +140,7 @@ function PANEL:ToolPresets( group, cvarlist )
 
 	preset:SetPreset( group )
 	preset:AddOption( "#preset.default", cvarlist )
-	for key, val in pairs( table.GetKeys( cvarlist ) ) do
+	for key, val in ipairs( table.GetKeys( cvarlist ) ) do
 		preset:AddConVar( val )
 	end
 
@@ -168,9 +168,9 @@ function PANEL:KeyBinder( label1, convar1, label2, convar2 )
 
 end
 
-function PANEL:ColorBox(label, convarr, convarg, convarb, convara)
+function PANEL:ColorPicker( label, convarr, convarg, convarb, convara )
 
-	local color = vgui.Create("CtrlColor", self)
+	local color = vgui.Create( "CtrlColor", self )
 
 	color:Dock( TOP )
 	color:SetLabel( label )

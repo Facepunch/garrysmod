@@ -91,9 +91,9 @@ function PANEL:KeyBinder( label1, convar1, label2, convar2 )
 
 end
 
-function PANEL:ColorBox(label, convarr, convarg, convarb, convara)
+function PANEL:ColorPicker( label, convarr, convarg, convarb, convara )
 
-	local color = vgui.Create("CtrlColor", self)
+	local color = vgui.Create( "CtrlColor", self )
 
 	color:Dock( TOP )
 	color:SetLabel( label )
