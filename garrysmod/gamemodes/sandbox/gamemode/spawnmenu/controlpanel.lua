@@ -48,6 +48,7 @@ function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 		for k, v in pairs( tblOptions ) do
 			local label = k
 			if ( isnumber( label ) ) then label = v end
+
 			MatSelect:AddMaterial( label, v )
 		end
 	end
@@ -63,8 +64,9 @@ function PANEL:ToolPresets( group, cvarlist )
 
 	preset:SetPreset( group )
 	preset:AddOption( "#preset.default", cvarlist )
-	for cvar, defv in pairs( cvarlist ) do
-		preset:AddConVar( cvar )
+
+	for k, v in pairs( cvarlist ) do
+		preset:AddConVar( k )
 	end
 
 	self:AddItem( preset )
@@ -102,7 +104,7 @@ function PANEL:ColorPicker( label, convarR, convarG, convarB, convarA )
 	color:SetConVarG( convarG )
 	color:SetConVarB( convarB )
 
-	if ( convarA ) then
+	if ( convarA != nil ) then
 		color:SetConVarA( convarA )
 	end
 
