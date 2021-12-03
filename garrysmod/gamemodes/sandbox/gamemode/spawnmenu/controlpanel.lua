@@ -46,10 +46,8 @@ function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 
 	if ( tblOptions != nil ) then
 		for k, v in pairs( tblOptions ) do
-			local label = k
-			if ( isnumber( label ) ) then label = v end
-
-			MatSelect:AddMaterial( label, v )
+			local nam = isnumber( k ) and v or k
+			MatSelect:AddMaterial( nam, v )
 		end
 	end
 
