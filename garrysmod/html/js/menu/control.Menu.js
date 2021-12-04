@@ -16,6 +16,8 @@ function MenuController( $scope, $rootScope )
 {
 	$rootScope.ShowBack = false;
 	$scope.Version = "0";
+	$scope.ProblemCount = 0;
+	$scope.ProblemSeverity = 0;
 
 	subscriptions.Init( $scope );
 
@@ -135,7 +137,7 @@ function MenuController( $scope, $rootScope )
 
 	$scope.ShowNews = function()
 	{
-		if ( gScope.Branch != "unknown" ) return lua.Run( "gui.OpenURL( 'https://commits.facepunch.com/r/garrysmod' )" );
+		if ( gScope.Branch != "unknown" ) return lua.Run( "gui.OpenURL( 'https://commits.facepunch.com/r/Garrys%20Mod' )" );
 
 		lua.Run( "gui.OpenURL( 'http://gmod.facepunch.com/changes/' )" );
 	}
@@ -306,8 +308,18 @@ function UpdateGames( games )
 
 function UpdateVersion( version, branch )
 {
+	GMOD_VERSION_INT = parseInt( version.replace( /\./g, "" ).substr( 2 ) ); // For server browser
+
 	gScope.Version	= version;
 	gScope.Branch	= branch;
+
+	UpdateDigest( gScope, 100 );
+}
+
+function SetProblemCount( num, severity )
+{
+	gScope.ProblemCount		= num;
+	gScope.ProblemSeverity	= severity;
 
 	UpdateDigest( gScope, 100 );
 }

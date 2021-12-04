@@ -41,7 +41,7 @@ local GetPTranslation = LANG.GetParamTranslation
 local tips_bg = Color(0, 0, 0, 200)
 
 local tip_ids = {}
-for i=1, 40 do
+for i=1, 41 do
    table.insert(tip_ids, i)
 end
 

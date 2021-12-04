@@ -57,6 +57,8 @@ function PANEL:Init()
 
 	end
 
+	self.IconList.ContentContainer = self
+
 end
 
 function PANEL:Add( pnl )

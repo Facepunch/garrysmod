@@ -50,9 +50,11 @@ function ENT:PlayerCanPickup(ply)
    if ply == self:GetOwner() then return false end
 
    local result = hook.Call("TTTCanPickupAmmo", nil, ply, self)
-   if result then
+
+   if result != nil then
       return result
    end
+
 
    local ent = self
    local phys = ent:GetPhysicsObject()

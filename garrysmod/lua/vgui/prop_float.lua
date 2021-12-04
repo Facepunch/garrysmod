@@ -22,6 +22,7 @@ function PANEL:Setup( vars )
 
 	local ctrl = self:Add( "DNumSlider" )
 	ctrl:Dock( FILL )
+	ctrl:SetDark( true )
 	ctrl:SetDecimals( self:GetDecimals() )
 
 	-- Apply vars

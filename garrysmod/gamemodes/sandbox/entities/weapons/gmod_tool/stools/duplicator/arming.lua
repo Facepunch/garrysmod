@@ -60,57 +60,72 @@ if ( SERVER ) then
 	util.AddNetworkString( "ArmDupe" )
 
 	net.Receive( "ArmDupe", function( size, client )
-			if ( !IsValid( client ) || size < 48 ) then return end
 
-			local res = hook.Run( "CanArmDupe", client )
-			if ( res == false ) then client:ChatPrint( "Server has blocked usage of the Duplicator tool!" ) return end
+		if ( !IsValid( client ) || size < 48 ) then return end
 
-			local part = net.ReadUInt( 8 )
-			local total = net.ReadUInt( 8 )
+		local res = hook.Run( "CanArmDupe", client )
+		if ( res == false ) then client:ChatPrint( "Server has blocked usage of the Duplicator tool!" ) return end
 
-			local length = net.ReadUInt( 32 )
-			if ( length > DUPE_SEND_SIZE ) then return end
+		local part = net.ReadUInt( 8 )
+		local total = net.ReadUInt( 8 )
 
-			local data = net.ReadData( length )
+		local length = net.ReadUInt( 32 )
+		if ( length > DUPE_SEND_SIZE ) then return end
 
-			client.CurrentDupeBuffer = client.CurrentDupeBuffer or {}
-			client.CurrentDupeBuffer[ part ] = data
+		local data = net.ReadData( length )
 
-			if ( part != total ) then return end
+		client.CurrentDupeBuffer = client.CurrentDupeBuffer or {}
+		client.CurrentDupeBuffer[ part ] = data
 
-			local data = table.concat( client.CurrentDupeBuffer )
-			client.CurrentDupeBuffer = nil
+		if ( part != total ) then return end
 
-			if ( ( client.LastDupeArm or 0 ) > CurTime() && !game.SinglePlayer() ) then ServerLog( tostring( client ) .. " tried to arm a dupe too quickly!\n" ) return end
-			client.LastDupeArm = CurTime() + 1
+		local data = table.concat( client.CurrentDupeBuffer )
+		client.CurrentDupeBuffer = nil
 
-			ServerLog( tostring( client ) .. " is arming a dupe, size: " .. data:len() .. "\n" )
+		if ( ( client.LastDupeArm or 0 ) > CurTime() && !game.SinglePlayer() ) then ServerLog( tostring( client ) .. " tried to arm a dupe too quickly!\n" ) return end
+		client.LastDupeArm = CurTime() + 1
 
-			local uncompressed = util.Decompress( data, 5242880 )
-			if ( !uncompressed ) then
-				client:ChatPrint( "Server failed to decompress the duplication!" )
-				MsgN( "Couldn't decompress dupe from " .. client:Nick() .. "!" )
-				return
+		ServerLog( tostring( client ) .. " is arming a dupe, size: " .. data:len() .. "\n" )
+
+		local uncompressed = util.Decompress( data, 5242880 )
+		if ( !uncompressed ) then
+			client:ChatPrint( "Server failed to decompress the duplication!" )
+			MsgN( "Couldn't decompress dupe from " .. client:Nick() .. "!" )
+			return
+		end
+
+		local Dupe = util.JSONToTable( uncompressed )
+		if ( !istable( Dupe ) ) then return end
+		if ( !istable( Dupe.Constraints ) ) then return end
+		if ( !istable( Dupe.Entities ) ) then return end
+		if ( !isvector( Dupe.Mins ) ) then return end
+		if ( !isvector( Dupe.Maxs ) ) then return end
+
+		client.CurrentDupeArmed = true
+		client.CurrentDupe = Dupe
+
+		client:ConCommand( "gmod_tool duplicator" )
+
+		--
+		-- Tell the client we got a dupe on server, ready to paste
+		--
+		local workshopCount = 0
+		if ( Dupe.RequiredAddons ) then workshopCount = #Dupe.RequiredAddons end
+
+		net.Start( "CopiedDupe" )
+			net.WriteUInt( 0, 1 ) -- Can save
+			net.WriteVector( Dupe.Mins )
+			net.WriteVector( Dupe.Maxs )
+			net.WriteString( "Loaded dupe" )
+			net.WriteUInt( table.Count( Dupe.Entities ), 24 )
+			net.WriteUInt( workshopCount, 16 )
+			if ( Dupe.RequiredAddons ) then
+				for _, wsid in ipairs( Dupe.RequiredAddons ) do
+					net.WriteString( wsid )
+				end
 			end
+		net.Send( client )
 
-			local Dupe = util.JSONToTable( uncompressed )
-			if ( !istable( Dupe ) ) then return end
-			if ( !istable( Dupe.Constraints ) ) then return end
-			if ( !istable( Dupe.Entities ) ) then return end
-			if ( !isvector( Dupe.Mins ) ) then return end
-			if ( !isvector( Dupe.Maxs ) ) then return end
-
-			client.CurrentDupeArmed = true
-			client.CurrentDupe = Dupe
-
-			client:ConCommand( "gmod_tool duplicator" )
-
-			--
-			-- Disable the Spawnmenu button
-			--
-			net.Start( "CopiedDupe" )
-				net.WriteUInt( 0, 1 )
-			net.Send( client )
 	end )
 
 end

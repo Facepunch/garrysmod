@@ -172,6 +172,18 @@ function table.Random( t )
 	end
 end
 
+--[[---------------------------------------------------------
+	Name: table.Shuffle( table )
+	Desc: Performs an inline Fisher-Yates shuffle on the table in O(n) time
+-----------------------------------------------------------]]
+function table.Shuffle( t )
+	local n = #t
+	for i = 1, n - 1 do
+		local j = math.random( i, n )
+		t[ i ], t[ j ] = t[ j ], t[ i ]
+	end
+end
+
 --[[----------------------------------------------------------------------
 	Name: table.IsSequential( table )
 	Desc: Returns true if the tables
@@ -651,7 +663,12 @@ function table.RemoveByValue( tbl, val )
 	local key = table.KeyFromValue( tbl, val )
 	if ( !key ) then return false end
 
-	table.remove( tbl, key )
+	if ( isnumber( key ) ) then
+		table.remove( tbl, key )
+	else
+		tbl[ key ] = nil
+	end
+
 	return key
 
 end
@@ -660,6 +677,14 @@ function table.KeysFromValue( tbl, val )
 	local res = {}
 	for key, value in pairs( tbl ) do
 		if ( value == val ) then res[ #res + 1 ] = key end
+	end
+	return res
+end
+
+function table.MemberValuesFromKey( tab, key )
+	local res = {}
+	for k, v in pairs( tab ) do
+		if ( istable( v ) && v[ key ] != nil ) then res[ #res + 1 ] = v[ key ] end
 	end
 	return res
 end

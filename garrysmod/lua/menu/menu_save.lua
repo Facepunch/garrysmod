@@ -15,7 +15,8 @@ function ws_save:FetchLocal( offset, perpage )
 		local entry = {
 			file	= "saves/" .. v,
 			name	= v:StripExtension(),
-			preview	= "saves/" .. v:StripExtension() .. ".jpg"
+			preview	= "saves/" .. v:StripExtension() .. ".jpg",
+			description	= "Local map save stored on your computer. Local content can be deleted in the main menu."
 		}
 
 		table.insert( saves, entry )

@@ -189,7 +189,7 @@ function ENT:TrackEntity( ent, lpos )
 
 end
 
-function ENT:CanTool( ply, trace, mode )
+function ENT:CanTool( ply, trace, mode, tool, click )
 
 	if ( self:GetMoveType() == MOVETYPE_NONE ) then return false end
 

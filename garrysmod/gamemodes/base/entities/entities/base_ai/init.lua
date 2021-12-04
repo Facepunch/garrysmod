@@ -109,6 +109,12 @@ function ENT:Think()
 
 end
 
+-- Called to update which sounds the NPC should be able to hear
+function ENT:GetSoundInterests()
+	-- Hear thumper sound hints
+	-- return 256
+end
+
 -- Called when NPC's movement fails
 function ENT:OnMovementFailed()
 end

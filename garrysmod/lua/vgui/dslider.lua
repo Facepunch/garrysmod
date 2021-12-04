@@ -65,6 +65,18 @@ function PANEL:SetImageColor( color )
 	-- RETIRED
 end
 
+function PANEL:SetNotchColor( color )
+
+	self.m_cNotchClr = color
+
+end
+
+function PANEL:GetNotchColor()
+
+	return self.m_cNotchClr || self:GetSkin().colNumSliderNotch
+
+end
+
 function PANEL:SetEnabled( b )
 	self.Knob:SetEnabled( b )
 	FindMetaTable( "Panel" ).SetEnabled( self, b ) -- There has to be a better way!
