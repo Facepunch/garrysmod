@@ -18,7 +18,7 @@ SWEP.Base                  = "weapon_tttbase"
 SWEP.Kind                  = WEAPON_HEAVY
 SWEP.WeaponID              = AMMO_M16
 
-SWEP.Primary.Delay         = 0.17 --default 0.15
+SWEP.Primary.Delay         = 0.14 --default 0.15
 SWEP.Primary.Recoil        = 1.6 --default 1.6
 SWEP.Primary.Automatic     = true --default true
 SWEP.Primary.Ammo          = "Pistol"

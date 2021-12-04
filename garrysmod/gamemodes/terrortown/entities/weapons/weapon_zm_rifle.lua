@@ -25,7 +25,7 @@ SWEP.Primary.Ammo          = "357"
 SWEP.Primary.Damage        = 50
 SWEP.Primary.Cone          = 0.003 --default 0.005
 SWEP.Primary.ClipSize      = 5 --default 10
-SWEP.Primary.ClipMax       = 20 -- keep mirrored to ammo
+SWEP.Primary.ClipMax       = 15 --default 20
 SWEP.Primary.DefaultClip   = 5 --default 10
 SWEP.Primary.Sound         = Sound("Weapon_Scout.Single")
 
