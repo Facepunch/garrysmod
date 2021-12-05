@@ -11,6 +11,7 @@ SWEP.ViewModelFOV	= 62
 SWEP.ViewModelFlip	= false
 SWEP.ViewModel		= "models/weapons/v_pistol.mdl"
 SWEP.WorldModel		= "models/weapons/w_357.mdl"
+SWEP.HoldType           = "pistol"
 
 SWEP.Spawnable		= false
 SWEP.AdminOnly		= false
@@ -31,7 +32,7 @@ SWEP.Secondary.Ammo			= "Pistol"
 -----------------------------------------------------------]]
 function SWEP:Initialize()
 
-	self:SetHoldType( "pistol" )
+	self:SetHoldType( self.HoldType )
 
 end
 
