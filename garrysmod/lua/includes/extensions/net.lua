@@ -1,3 +1,4 @@
+
 TYPE_COLOR = 255
 
 net.Receivers = {}
@@ -6,7 +7,7 @@ net.Receivers = {}
 -- Set up a function to receive network messages
 --
 function net.Receive( name, func )
-		
+
 	net.Receivers[ name:lower() ] = func
 
 end
@@ -18,9 +19,9 @@ function net.Incoming( len, client )
 
 	local i = net.ReadHeader()
 	local strName = util.NetworkIDToString( i )
-	
+
 	if ( !strName ) then return end
-	
+
 	local func = net.Receivers[ strName:lower() ]
 	if ( !func ) then return end
 
@@ -28,7 +29,7 @@ function net.Incoming( len, client )
 	-- len includes the 16 bit int which told us the message name
 	--
 	len = len - 16
-	
+
 	func( len, client )
 
 end
@@ -41,7 +42,7 @@ net.WriteBool = net.WriteBit
 function net.ReadBool()
 
 	return net.ReadBit() == 1
-	
+
 end
 
 --
@@ -49,7 +50,7 @@ end
 --
 function net.WriteEntity( ent )
 
-	if ( !IsValid( ent ) ) then 
+	if ( !IsValid( ent ) ) then
 		net.WriteUInt( 0, 16 )
 	else
 		net.WriteUInt( ent:EntIndex(), 16 )
@@ -61,9 +62,9 @@ function net.ReadEntity()
 
 	local i = net.ReadUInt( 16 )
 	if ( !i ) then return end
-	
+
 	return Entity( i )
-	
+
 end
 
 --
@@ -87,11 +88,11 @@ end
 function net.ReadColor( readAlpha )
 	if ( readAlpha == nil ) then readAlpha = true end
 
-	local r, g, b = 
+	local r, g, b =
 		net.ReadUInt( 8 ),
 		net.ReadUInt( 8 ),
 		net.ReadUInt( 8 )
-	
+
 	local a = 255
 	if ( readAlpha ) then a = net.ReadUInt( 8 ) end
 
@@ -108,12 +109,12 @@ end
 function net.WriteTable( tab )
 
 	for k, v in pairs( tab ) do
-	
+
 		net.WriteType( k )
 		net.WriteType( v )
-	
+
 	end
-	
+
 	-- End of table
 	net.WriteType( nil )
 
@@ -122,19 +123,19 @@ end
 function net.ReadTable()
 
 	local tab = {}
-	
+
 	while true do
-	
+
 		local k = net.ReadType()
 		if ( k == nil ) then return tab end
-		
+
 		tab[ k ] = net.ReadType()
-		
+
 	end
 
 end
 
-net.WriteVars = 
+net.WriteVars =
 {
 	[TYPE_NIL]			= function ( t, v )	net.WriteUInt( t, 8 )								end,
 	[TYPE_STRING]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteString( v )		end,
@@ -146,7 +147,6 @@ net.WriteVars =
 	[TYPE_ANGLE]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteAngle( v )			end,
 	[TYPE_MATRIX]		= function ( t, v ) net.WriteUInt( t, 8 )	net.WriteMatrix( v )		end,
 	[TYPE_COLOR]		= function ( t, v ) net.WriteUInt( t, 8 )	net.WriteColor( v )			end,
-	
 }
 
 function net.WriteType( v )
@@ -160,12 +160,12 @@ function net.WriteType( v )
 
 	local wv = net.WriteVars[ typeid ]
 	if ( wv ) then return wv( typeid, v ) end
-	
+
 	error( "net.WriteType: Couldn't write " .. type( v ) .. " (type " .. typeid .. ")" )
 
 end
 
-net.ReadVars = 
+net.ReadVars =
 {
 	[TYPE_NIL]		= function ()	return nil end,
 	[TYPE_STRING]	= function ()	return net.ReadString() end,
@@ -187,4 +187,5 @@ function net.ReadType( typeid )
 	if ( rv ) then return rv() end
 
 	error( "net.ReadType: Couldn't read type " .. typeid )
+
 end
