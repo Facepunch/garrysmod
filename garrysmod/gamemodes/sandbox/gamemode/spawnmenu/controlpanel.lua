@@ -46,9 +46,8 @@ function PANEL:MatSelect( strConVar, tblOptions, bAutoStretch, iWidth, iHeight )
 
 	if ( tblOptions != nil ) then
 		for k, v in pairs( tblOptions ) do
-			local label = k
-			if ( isnumber( label ) ) then label = v end
-			MatSelect:AddMaterial( label, v )
+			local nam = isnumber( k ) and v or k
+			MatSelect:AddMaterial( nam, v )
 		end
 	end
 
@@ -63,8 +62,9 @@ function PANEL:ToolPresets( group, cvarlist )
 
 	preset:SetPreset( group )
 	preset:AddOption( "#preset.default", cvarlist )
-	for key, val in pairs( table.GetKeys( cvarlist ) ) do
-		preset:AddConVar( val )
+
+	for k, v in pairs( cvarlist ) do
+		preset:AddConVar( k )
 	end
 
 	self:AddItem( preset )
@@ -88,6 +88,27 @@ function PANEL:KeyBinder( label1, convar1, label2, convar2 )
 	self:AddPanel( binder )
 
 	return binder
+
+end
+
+function PANEL:ColorPicker( label, convarR, convarG, convarB, convarA )
+
+	local color = vgui.Create( "CtrlColor", self )
+
+	color:Dock( TOP )
+	color:SetLabel( label )
+
+	color:SetConVarR( convarR )
+	color:SetConVarG( convarG )
+	color:SetConVarB( convarB )
+
+	if ( convarA != nil ) then
+		color:SetConVarA( convarA )
+	end
+
+	self:AddPanel( color )
+
+	return color
 
 end
 
