@@ -633,7 +633,7 @@ function VOICE.Tick()
 
       if not VOICE.CanSpeak() then
          client.voice_battery = 0
-         RunConsoleCommand("-voicerecord")
+         permissions.EnableVoiceChat( false )
       end
    elseif client.voice_battery < battery_max then
       client.voice_battery = client.voice_battery + GetRechargeRate()
