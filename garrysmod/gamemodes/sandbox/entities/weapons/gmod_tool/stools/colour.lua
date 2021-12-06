@@ -94,9 +94,9 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Header", { Description = "#tool.colour.desc" } )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "colour", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ToolPresets( "colour", ConVarsDefault )
 
-	CPanel:AddControl( "Color", { Label = "#tool.colour.color", Red = "colour_r", Green = "colour_g", Blue = "colour_b", Alpha = "colour_a" } )
+	CPanel:ColorPicker( "#tool.colour.color", "colour_r", "colour_g", "colour_b", "colour_a" )
 
 	CPanel:AddControl( "ListBox", { Label = "#tool.colour.mode", Options = list.Get( "RenderModes" ) } )
 	CPanel:AddControl( "ListBox", { Label = "#tool.colour.fx", Options = list.Get( "RenderFX" ) } )
