@@ -299,11 +299,13 @@ function meta:__index( key )
 
 end
 
-function string.StartWith( String, Start )
+function string.StartsWith( String, Start )
 
 	return string.sub( String, 1, string.len( Start ) ) == Start
 
 end
+
+string.StartWith = string.StartsWith
 
 function string.EndsWith( String, End )
 
