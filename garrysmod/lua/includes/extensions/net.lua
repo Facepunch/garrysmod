@@ -152,7 +152,7 @@ function net.ReadTable( seq )
 		while true do
 
 			local k = net.ReadType()
-			if ( k == nil ) then return tab end
+			if ( k == nil ) then break end
 
 			tab[ k ] = net.ReadType()
 
