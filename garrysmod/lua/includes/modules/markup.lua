@@ -247,13 +247,13 @@ function MarkupObject:Draw( xOffset, yOffset, halign, valign, alphaoverride, tex
 		surface.SetTextColor( blk.colour.r, blk.colour.g, blk.colour.b, alpha )
 
 		surface.SetTextPos( x, y )
-		if ( textAlign ~= TEXT_ALIGN_LEFT and self.maxWidth ) then
+		if ( textAlign ~= TEXT_ALIGN_LEFT ) then
 			local lineWidth = self.lineWidths[ blk.offset.y ]
 			if ( lineWidth ) then
 				if ( textAlign == TEXT_ALIGN_CENTER ) then
-					surface.SetTextPos( x + ( ( self.maxWidth - lineWidth ) / 2 ), y )
+					surface.SetTextPos( x + ( ( self:GetMaxWidth() - lineWidth ) / 2 ), y )
 				elseif ( textAlign == TEXT_ALIGN_RIGHT ) then
-					surface.SetTextPos( x + ( self.maxWidth - lineWidth ), y )
+					surface.SetTextPos( x + ( self:GetMaxWidth() - lineWidth ), y )
 				end
 			end
 		end
