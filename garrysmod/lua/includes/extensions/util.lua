@@ -95,14 +95,18 @@ function util.LocalToWorld( ent, lpos, bone )
 end
 
 --[[---------------------------------------------------------
-	Name: ModuleInstalled( name )
+	Name: ModuleExists( name )
 	Desc: Checks if a binary module is installed
 -----------------------------------------------------------]]
-function util.ModuleInstalled( name )
+function util.ModuleExists( name )
     
     local realm = CLIENT and "cl" or "sv"
-    local arch = string.sub( jit.arch, 2 )
+    local arch = jit.arch == "x86" and "32" or "64"
     local ops = system.IsWindows() and "win" or ( system.IsOSX() and "osx" or "linux" )
+    if ( ops == "osx" or (ops == "linux" and arch == "32") ) then
+        arch = ""
+    end
+	
     local f = string.format( "lua/bin/gm%s_%s_%s%s.dll", realm, name, ops, arch )
 
     return file.Exists( f, "GAME" )
