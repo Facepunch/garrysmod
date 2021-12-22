@@ -94,6 +94,20 @@ function util.LocalToWorld( ent, lpos, bone )
 
 end
 
+--[[---------------------------------------------------------
+	Name: ModuleInstalled( name )
+	Desc: Checks if a binary module is installed
+-----------------------------------------------------------]]
+function util.ModuleInstalled( name )
+    
+    local realm = CLIENT and "cl" or "sv"
+    local arch = string.sub( jit.arch, 2 )
+    local ops = system.IsWindows() and "win" or ( system.IsOSX() and "osx" or "linux" )
+    local f = string.format( "lua/bin/gm%s_%s_%s%s.dll", realm, name, ops, arch )
+
+    return file.Exists( f, "GAME" )
+
+end
 
 --[[---------------------------------------------------------
 	Returns year, month, day and hour, minute, second in a formatted string.
