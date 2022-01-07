@@ -14,9 +14,12 @@ function PANEL:Setup( vars )
 	combo:Dock( FILL )
 	combo:DockMargin( 0, 1, 2, 2 )
 	combo:SetValue( vars.text or "Select..." )
-
+	
+	local bicon = istable( vars.icons )
+	
 	for id, thing in pairs( vars.values or {} ) do
-		combo:AddChoice( id, thing )
+		local icon = bicon and vars.icons[id] or vars.icons
+		combo:AddChoice( id, thing, vars.select, icon )
 	end
 
 	self.IsEditing = function( self )
