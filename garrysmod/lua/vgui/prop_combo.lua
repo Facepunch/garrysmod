@@ -10,15 +10,15 @@ function PANEL:Setup( vars )
 
 	self:Clear()
 
-	local bicon = istable( vars.icons )
+	local bico = istable( vars.icons )
 	local combo = vgui.Create( "DComboBox", self )
 	combo:Dock( FILL )
 	combo:DockMargin( 0, 1, 2, 2 )
 	combo:SetValue( vars.text or "Select..." )
 
 	for id, thing in pairs( vars.values or {} ) do
-		local icon = bicon and vars.icons[id] or vars.icons
-		combo:AddChoice( id, thing, vars.select, icon )
+		local icon = bico and vars.icons[id] or vars.icons
+		combo:AddChoice( id, thing, id == vars.select, icon )
 	end
 
 	self.IsEditing = function( self )
