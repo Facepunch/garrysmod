@@ -705,7 +705,7 @@ L.tip19 = "As Detective, if you have leftover credits you could give a trusted I
 
 L.tip20 = "The Detectives' Binoculars allow long-range searching and identifying of corpses. Bad news if the Traitors were hoping to use a corpse as bait. Of course, while using the Binoculars a Detective is unarmed and distracted..."
 
-L.tip21 =  "The Detectives' Health Station lets wounded players recover. Of course, those wounded people could be Traitors..."
+L.tip21 = "The Detectives' Health Station lets wounded players recover. Of course, those wounded people could be Traitors..."
 
 L.tip22 = "The Health Station records a DNA sample of everyone who uses it. Detectives can use this with the DNA Scanner to find out who has been healing up."
 
@@ -744,7 +744,6 @@ L.tip38 = "Many of the placeable equipment items (such as C4, Radio) can be stuc
 L.tip39 = "C4 that explodes due to a mistake in disarming it has a smaller explosion than C4 that reaches zero on its timer."
 
 L.tip40 = "If it says 'HASTE MODE' above the round timer, the round will at first be only a few minutes long, but with every death the available time increases (like capturing a point in TF2). This mode puts the pressure on the traitors to keep things moving."
-
 
 --- Round report
 
@@ -1040,7 +1039,7 @@ L.aw_tod2_text  = "died right after the start of the round."
 
 
 --- New and modified pieces of text are placed below this point, marked with the
---- version in which they were added, to make updating translations easier.
+--- version or the date in which they were added, to make updating translations easier.
 
 
 --- v23
@@ -1054,10 +1053,10 @@ L.drop_no_ammo = "Insufficient ammo in your weapon's clip to drop as an ammo box
 L.set_cross_brightness = "Crosshair brightness"
 L.set_cross_size = "Crosshair size"
 
---- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "You picked up a Detective's hat."
 
---- 3-9-2017
+--- 2017-03-09
 L.sb_sortby = "Sort By:"
 
 --- 2018-07-24
@@ -1084,3 +1083,6 @@ L.idle_popup_title = "Idle"
 
 --- 2021-06-07
 L.sb_playervolume = "Player Volume"
+
+--- 2021-09-22
+L.tip41 = "You can adjust a player's microphone volume by right-clicking their mute icon in the scoreboard."

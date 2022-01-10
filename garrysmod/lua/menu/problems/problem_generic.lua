@@ -24,24 +24,35 @@ function PANEL:Init()
 
 end
 
+local severityWidth = 8
+local severityOffset = severityWidth + 4
+local textPaddingX = 5
+local textPaddingY = 10
+local copyIconPad = 8
+
+local severityColors = {}
+severityColors[ 0 ] = Color( 217, 217, 217 )
+severityColors[ 1 ] = Color( 255, 200, 0 )
+severityColors[ 2 ] = Color( 255, 64, 0 )
+
 function PANEL:PerformLayout( w, h )
 
-	self.Markup = markup.Parse( "<font=DermaDefault>" .. language.GetPhrase( self.Problem.text ) .. "</font>", w - 32 )
+	self.Markup = markup.Parse( "<font=DermaDefault>" .. language.GetPhrase( self.Problem.text ) .. "</font>", w - self.CopyBtn:GetWide() - copyIconPad * 2 - severityOffset - textPaddingX * 2 )
 
-	local targetH = 0
+	local targetH = textPaddingY
 
 	if ( self.Problem ) then
-		targetH = targetH + self.Markup:GetHeight() + 5
+		targetH = targetH + self.Markup:GetHeight() + textPaddingY
 	end
 
 	local fixW, fixH = self.FixBtn:GetSize()
-	self.FixBtn:SetPos( 4, targetH + 5 )
-	targetH = targetH + fixH + 10
-
-	local bW, bH = self.CopyBtn:GetSize()
-	self.CopyBtn:SetPos( w - bW - 8, targetH / 2 - bH / 2 )
+	self.FixBtn:SetPos( textPaddingX + severityOffset, targetH )
+	targetH = targetH + fixH + textPaddingY
 
 	self:SetTall( targetH )
+
+	local bW, bH = self.CopyBtn:GetSize()
+	self.CopyBtn:SetPos( w - bW - copyIconPad, targetH / 2 - bH / 2 )
 
 end
 
@@ -56,7 +67,7 @@ function PANEL:Paint( w, h )
 		return
 	end
 
-	-- Background color
+	-- Background
 	local bgClrH = bgClr
 	if ( self.Problem.lastOccurence ) then
 		local add = 75 + math.max( 25 - ( SysTime() - self.Problem.lastOccurence ) * 25, 0 )
@@ -65,12 +76,13 @@ function PANEL:Paint( w, h )
 
 	draw.RoundedBox( 0, 0, 0, w, h, bgClrH )
 
-	-- Draw background
-	local count = 0
-	if ( self.Problem && self.Problem.count ) then count = self.Problem.count end
+	-- Severity indicator
+	local color = severityColors[ self.Problem.severity ]
+	if ( color == nil ) then color = severityColors[ 0 ] end
+	draw.RoundedBox( 0, 0, 0, severityWidth, h, color )
 
 	-- The error
-	self.Markup:Draw( 5, 5, nil, nil, self:GetAlpha() )
+	self.Markup:Draw( textPaddingX + severityOffset, textPaddingY, nil, nil, self:GetAlpha() )
 
 end
 
@@ -81,7 +93,7 @@ function PANEL:Setup( problem )
 
 	self.Problem = problem
 
-	self.Markup = markup.Parse( "<font=DermaDefault>" .. language.GetPhrase( self.Problem.text ) .. "</font>", self:GetWide() - 32 )
+	self.Markup = markup.Parse( "<font=DermaDefault>" .. language.GetPhrase( self.Problem.text ) .. "</font>", self:GetWide() - self.CopyBtn:GetWide() - copyIconPad * 2 - severityOffset - textPaddingX * 2 )
 
 	self.FixBtn:SetEnabled( problem.fix != nil )
 	self.FixBtn:SetText( problem.fix && "#problems.quick_fix" || "#problems.no_quick_fix" )

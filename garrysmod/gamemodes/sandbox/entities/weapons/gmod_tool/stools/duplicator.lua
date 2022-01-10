@@ -116,6 +116,9 @@ function TOOL:RightClick( trace )
 		net.WriteUInt( 1, 1 )
 		net.WriteVector( Dupe.Mins )
 		net.WriteVector( Dupe.Maxs )
+		net.WriteString( "Unsaved dupe" )
+		net.WriteUInt( table.Count( Dupe.Entities ), 24 )
+		net.WriteUInt( 0, 16 )
 	net.Send( self:GetOwner() )
 
 	--
@@ -134,12 +137,48 @@ if ( CLIENT ) then
 	--
 	-- Builds the context menu
 	--
-	function TOOL.BuildCPanel( CPanel )
+	function TOOL.BuildCPanel( CPanel, self )
+
+		CPanel:ClearControls()
 
 		CPanel:AddControl( "Header", { Description = "#tool.duplicator.desc" } )
 
 		CPanel:AddControl( "Button", { Text = "#tool.duplicator.showsaves", Command = "dupe_show" } )
 
+		if ( !self && IsValid( LocalPlayer() ) ) then self = LocalPlayer():GetTool( "duplicator" ) end
+		if ( !self || !self.CurrentDupeName ) then return end
+
+		local info = "Name: " .. self.CurrentDupeName
+		info = info .. "\nEntities: " .. self.CurrentDupeEntCount
+
+		CPanel:AddControl( "Label", { Text = info } )
+
+		if ( self.CurrentDupeWSIDs && #self.CurrentDupeWSIDs > 0 ) then
+			CPanel:AddControl( "Label", { Text = "Required workshop content:" } )
+			for _, wsid in pairs( self.CurrentDupeWSIDs ) do
+				local subbed = ""
+				if ( steamworks.IsSubscribed( wsid ) ) then subbed = " (Subscribed)" end
+				local b = CPanel:AddControl( "Button", { Text = wsid .. subbed } )
+				b.DoClick = function( s, ... ) steamworks.ViewFile( wsid ) end
+				steamworks.FileInfo( wsid, function( result )
+					if ( !IsValid( b ) ) then return end
+					b:SetText( result.title .. subbed )
+				end )
+			end
+		end
+
+		if ( self.CurrentDupeCanSave ) then
+			local b = CPanel:AddControl( "Button", { Text = "#dupes.savedupe", Command = "dupe_save" } )
+			hook.Add( "DupeSaveUnavailable", b, function() b:Remove() end )
+		end
+
+	end
+
+	function TOOL:RefreshCPanel()
+		local CPanel = controlpanel.Get( "duplicator" )
+		if ( !CPanel ) then return end
+
+		self.BuildCPanel( CPanel, self )
 	end
 
 	--
@@ -148,20 +187,34 @@ if ( CLIENT ) then
 	--
 	net.Receive( "CopiedDupe", function( len, client )
 
-		if ( net.ReadUInt( 1 ) == 1 ) then
+		local canSave = net.ReadUInt( 1 )
+		if ( canSave == 1 ) then
 			hook.Run( "DupeSaveAvailable" )
 		else
 			hook.Run( "DupeSaveUnavailable" )
 		end
 
-		local mins = net.ReadVector()
-		local maxs = net.ReadVector()
-
 		local ply = LocalPlayer()
-		if ( !IsValid( ply ) ) then return end
+		if ( !IsValid( ply ) || !ply.GetTool ) then return end
 
-		ply.CurrentDupeMins = mins
-		ply.CurrentDupeMaxs = maxs
+		local tool = ply:GetTool( "duplicator" )
+		if ( !tool ) then return end
+
+		tool.CurrentDupeCanSave = canSave == 1
+		tool.CurrentDupeMins = net.ReadVector()
+		tool.CurrentDupeMaxs = net.ReadVector()
+
+		tool.CurrentDupeName = net.ReadString()
+		tool.CurrentDupeEntCount = net.ReadUInt( 24 )
+
+		local workshopCount = net.ReadUInt( 16 )
+		local addons = {}
+		for i = 1, workshopCount do
+			table.insert( addons, net.ReadString() )
+		end
+		tool.CurrentDupeWSIDs = addons
+
+		tool:RefreshCPanel()
 
 	end )
 
@@ -169,19 +222,19 @@ if ( CLIENT ) then
 	function TOOL:DrawHUD()
 
 		local ply = LocalPlayer()
-		if ( !IsValid( ply ) || !ply.CurrentDupeMins || !ply.CurrentDupeMaxs ) then return end
+		if ( !IsValid( ply ) || !self.CurrentDupeMins || !self.CurrentDupeMaxs ) then return end
 
 		local tr = LocalPlayer():GetEyeTrace()
 
 		local pos = tr.HitPos
-		pos.z = pos.z - ply.CurrentDupeMins.z
+		pos.z = pos.z - self.CurrentDupeMins.z
 
 		local ang = LocalPlayer():GetAngles()
 		ang.p = 0
 		ang.r = 0
 
 		cam.Start3D()
-		render.DrawWireframeBox( pos, ang, ply.CurrentDupeMins, ply.CurrentDupeMaxs )
+		render.DrawWireframeBox( pos, ang, self.CurrentDupeMins, self.CurrentDupeMaxs )
 		cam.End3D()
 
 	end

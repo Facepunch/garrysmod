@@ -80,9 +80,7 @@ function SimpleText( text, font, x, y, colour, xalign, yalign )
 	surface.SetTextPos( math.ceil( x ), math.ceil( y ) )
 
 	if ( colour != nil ) then
-		local alpha = 255
-		if ( colour.a ) then alpha = colour.a end
-		surface.SetTextColor( colour.r, colour.g, colour.b, alpha )
+		surface.SetTextColor( colour.r, colour.g, colour.b, colour.a )
 	else
 		surface.SetTextColor( 255, 255, 255, 255 )
 	end

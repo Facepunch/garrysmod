@@ -106,6 +106,11 @@ function gmsave.SaveMap( ply )
 
 	tab.Player = gmsave.PlayerSave( ply )
 
+	--
+	-- Try to figure out if any of the models/materials/etc came from some addon
+	--
+	duplicator.FigureOutRequiredAddons( tab )
+
 	return util.TableToJSON( tab )
 
 end

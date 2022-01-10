@@ -1,8 +1,12 @@
-local gmod                        = gmod
-local pairs                        = pairs
-local isfunction        = isfunction
-local isstring                = isstring
-local IsValid                = IsValid
+local gmod = gmod
+local pairs = pairs
+local isfunction = isfunction
+local isstring = isstring
+local isnumber = isnumber
+local isbool = isbool
+local IsValid = IsValid
+local type = type
+local ErrorNoHaltWithStack = ErrorNoHaltWithStack
 
 module( "hook" )
 
@@ -12,8 +16,9 @@ local Hooks = {}
     Name: GetTable
     Desc: Returns a table of all hooks.
 -----------------------------------------------------------]]
-function GetTable() return Hooks end
-
+function GetTable()
+	return Hooks
+end
 
 --[[---------------------------------------------------------
     Name: Add
@@ -22,11 +27,14 @@ function GetTable() return Hooks end
 -----------------------------------------------------------]]
 function Add( event_name, name, func )
 
-	if ( !isfunction( func ) ) then return end
-	if ( !isstring( event_name ) ) then return end
+	if ( !isstring( event_name ) ) then ErrorNoHaltWithStack( "bad argument #1 to 'Add' (string expected, got " .. type( event_name ) .. ")" ) return end
+	if ( !isfunction( func ) ) then ErrorNoHaltWithStack( "bad argument #3 to 'Add' (function expected, got " .. type( func ) .. ")" ) return end
 
-	if (Hooks[ event_name ] == nil) then
-			Hooks[ event_name ] = {}
+	local notValid = isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid or !IsValid( name )
+	if ( !isstring( name ) and notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Add' (string expected, got " .. type( name ) .. ")" ) return end
+
+	if ( Hooks[ event_name ] == nil ) then
+		Hooks[ event_name ] = {}
 	end
 
 	Hooks[ event_name ][ name ] = func
@@ -41,7 +49,11 @@ end
 -----------------------------------------------------------]]
 function Remove( event_name, name )
 
-	if ( !isstring( event_name ) ) then return end
+	if ( !isstring( event_name ) ) then ErrorNoHaltWithStack( "bad argument #1 to 'Remove' (string expected, got " .. type( event_name ) .. ")" ) return end
+
+	local notValid = isnumber( name ) or isbool( name ) or isfunction( name ) or !name.IsValid or !IsValid( name )
+	if ( !isstring( name ) and notValid ) then ErrorNoHaltWithStack( "bad argument #2 to 'Add' (string expected, got " .. type( name ) .. ")" ) return end
+
 	if ( !Hooks[ event_name ] ) then return end
 
 	Hooks[ event_name ][ name ] = nil
@@ -71,13 +83,13 @@ function Call( name, gm, ... )
 	--
 	local HookTable = Hooks[ name ]
 	if ( HookTable != nil ) then
-	
+
 		local a, b, c, d, e, f;
 
-		for k, v in pairs( HookTable ) do 
-			
+		for k, v in pairs( HookTable ) do
+
 			if ( isstring( k ) ) then
-				
+
 				--
 				-- If it's a string, it's cool
 				--
@@ -108,18 +120,18 @@ function Call( name, gm, ... )
 			if ( a != nil ) then
 				return a, b, c, d, e, f
 			end
-				
+
 		end
 	end
-	
+
 	--
 	-- Call the gamemode function
 	--
 	if ( !gm ) then return end
-	
+
 	local GamemodeFunction = gm[ name ]
 	if ( GamemodeFunction == nil ) then return end
-			
-	return GamemodeFunction( gm, ... )        
-	
+
+	return GamemodeFunction( gm, ... )
+
 end

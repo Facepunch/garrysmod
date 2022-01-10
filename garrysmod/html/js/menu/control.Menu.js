@@ -17,7 +17,7 @@ function MenuController( $scope, $rootScope )
 	$rootScope.ShowBack = false;
 	$scope.Version = "0";
 	$scope.ProblemCount = 0;
-	$scope.ProblemSevere = false;
+	$scope.ProblemSeverity = 0;
 
 	subscriptions.Init( $scope );
 
@@ -316,10 +316,10 @@ function UpdateVersion( version, branch )
 	UpdateDigest( gScope, 100 );
 }
 
-function SetProblemCount( num, bSevere )
+function SetProblemCount( num, severity )
 {
 	gScope.ProblemCount		= num;
-	gScope.ProblemSevere	= bSevere;
+	gScope.ProblemSeverity	= severity;
 
 	UpdateDigest( gScope, 100 );
 }

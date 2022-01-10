@@ -306,7 +306,7 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 	if ( isstring( material ) ) then
 		-- Avoid materials with this shader, it either caused crashes or severe graphical glitches
 		local mat = Material( material )
-		if ( mat && !string.find( mat:GetShader():lower(), "spritecard" ) ) then
+		if ( mat && !string.find( mat:GetShader():lower(), "spritecard", nil, true ) && !string.find( mat:GetShader():lower(), "shadow", nil, true ) ) then
 			rope:SetKeyValue( "RopeMaterial", material )
 		end
 	end
@@ -922,17 +922,13 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	end
 
 	-- Make Constraint
-	onStartConstraint( Ent1, Ent2 )
+	local Constraint = ents.Create( "logic_collision_pair" )
+	Constraint:SetKeyValue( "startdisabled", 1 )
+	Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
+	Constraint:Spawn()
+	Constraint:Activate()
+	Constraint:Input( "DisableCollisions", nil, nil, nil )
 
-		local Constraint = ents.Create( "logic_collision_pair" )
-		ConstraintCreated( Constraint )
-		Constraint:SetKeyValue( "startdisabled", 1 )
-		Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
-		Constraint:Spawn()
-		Constraint:Activate()
-		Constraint:Input( "DisableCollisions", nil, nil, nil )
-
-	onFinishConstraint( Ent1, Ent2 )
 	AddConstraintTable( Ent1, Constraint, Ent2 )
 
 	local ctable = {
@@ -1651,7 +1647,9 @@ function GetAllConstrainedEntities( ent, ResultTable )
 	for k, con in ipairs( ConTable ) do
 
 		for EntNum, Ent in pairs( con.Entity ) do
-			GetAllConstrainedEntities( Ent.Entity, ResultTable )
+			if ( !Ent.Entity:IsWorld() ) then
+				GetAllConstrainedEntities( Ent.Entity, ResultTable )
+			end
 		end
 
 	end

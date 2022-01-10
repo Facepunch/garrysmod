@@ -60,7 +60,7 @@
 		<li class="smallicon" ng-click="TogglePopup('.kinect_settings')" ng-show="kinect.available"><img ng-src='img/kinect.png'><span></span></li>
 		<li class="smallicon hidelabel" style="overflow: visible;" ng-click="ToggleProblems()"><img ng-src='img/error.png'>
 			<span ng-Tranny="'problems'"></span>
-			<number ng-show="ProblemCount > 0" class="{{IfElse( ProblemSevere, 'severe', '' )}}">{{ProblemCount}}</number>
+			<number ng-show="ProblemCount > 0" class="{{IfElse( ProblemSeverity > 0, 'severity' + ProblemSeverity, '' )}}">{{ProblemCount}}</number>
 		</li>
 	</ul>
 

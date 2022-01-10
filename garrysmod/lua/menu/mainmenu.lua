@@ -446,8 +446,11 @@ hook.Add( "GameContentChanged", "RefreshMainMenu", function()
 
 end )
 
-hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str )
-	Derma_Message( str, "Failed to load save!", "OK" )
+hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str, wsid )
+	local button2 = nil
+	if ( wsid && wsid:len() > 0 ) then button2 = "Open map on Steam Workshop" end
+
+	Derma_Query( str, "Failed to load save!", "OK", nil, button2, function() steamworks.ViewFile( wsid ) end )
 end )
 
 --

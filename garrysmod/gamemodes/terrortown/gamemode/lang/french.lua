@@ -706,7 +706,7 @@ L.tip19 = "En tant que Détective, si vous avez des crédits en réserve, vous p
 
 L.tip20 = "Les Binocles des Détectives permettent une vue et une fouille longue portée des corps. C'est pas bon pour les Traitres s'ils espéraient utiliser un corps comme appât. Bien sûr, ceux qui utilisent les Binocles sont désarmés et distraits..."
 
-L.tip21 =  "La Station de Soins des Détectives laisse les joueurs blessés guérir. Bien sûr, ces gens blessés pourraient bien être des Traitres..."
+L.tip21 = "La Station de Soins des Détectives laisse les joueurs blessés guérir. Bien sûr, ces gens blessés pourraient bien être des Traitres..."
 
 L.tip22 = "La Station de Soins enregistre un échantillon ADN de quiconque l'utilise. Les détectives peuvent l'utiliser avec le Scanner ADN pour trouver qui s'est soigné avec."
 
@@ -1041,7 +1041,7 @@ L.aw_tod2_text  = "est mort juste après que le round ait commencé."
 
 
 --- New and modified pieces of text are placed below this point, marked with the
---- version in which they were added, to make updating translations easier.
+--- version or the date in which they were added, to make updating translations easier.
 
 
 --- v23
@@ -1055,17 +1055,17 @@ L.drop_no_ammo = "Pas assez de munitions dans le chargeur de votre arme pour les
 L.set_cross_brightness = "Luminosité du réticule"
 L.set_cross_size = "Taille du réticule"
 
---- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "Vous avez ramassé le chapeau d'un Détective."
 
---- 3-9-2017
+--- 2017-03-09
 L.sb_sortby = "Trier Par :"
 
 --- 2018-07-24
 L.equip_tooltip_main = "Menu d'Équipement"
 L.equip_tooltip_radar = "Contrôle Radar"
 L.equip_tooltip_disguise = "Contrôle Déguisement"
-L.equip_tooltip_radio = "Contrôle Radar"
+L.equip_tooltip_radio = "Contrôle Radio"
 L.equip_tooltip_xfer = "Transfert crédits"
 
 L.confgrenade_name = "Discombobulateur"

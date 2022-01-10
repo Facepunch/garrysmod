@@ -35,7 +35,7 @@ local function CountProblem( severity )
 	ProblemSeverity = math.max( ProblemSeverity, severity || 0 )
 
 	if ( IsValid( pnlMainMenu ) ) then
-		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. tostring( ProblemSeverity > 0 ) .. ")" )
+		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. ProblemSeverity .. ")" )
 	end
 
 end
@@ -56,7 +56,7 @@ local function RecountProblems()
 	end
 
 	if ( IsValid( pnlMainMenu ) ) then
-		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. tostring( ProblemSeverity > 0 ) .. ")" )
+		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. ProblemSeverity .. ")" )
 	end
 
 end
@@ -176,12 +176,16 @@ function OpenProblemsPanel()
 end
 
 -- Called from the engine to notify the player about a problem in a more user friendly way compared to a console message
-function FireProblemFromEngine( id )
+function FireProblemFromEngine( id, severity, params )
 	if ( id == "menu_cleanupgmas" ) then
 		FireProblem( { id = id, text = "#problem." .. id, type = "addons", fix = function() RunConsoleCommand( "menu_cleanupgmas" ) ClearProblem( id ) end } )
 	else
 		-- missing_addon_file
-		FireProblem( { id = id, text = "#problem." .. id, type = "addons" } )
+		-- addon_download_failed = title;reason
+		local text = language.GetPhrase( "problem." .. id )
+		text = text:format( unpack( string.Explode( ";", params ) ) )
+
+		FireProblem( { id = id .. params, text = text, severity = severity, type = "addons" } )
 	end
 end
 
