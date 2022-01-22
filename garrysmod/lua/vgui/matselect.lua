@@ -217,4 +217,16 @@ function PANEL:TestForChanges()
 
 end
 
+function PANEL:Clear()
+
+	for k, Mat in pairs( self.Controls ) do
+		Mat:Remove()
+		self.Controls[k] = nil
+	end
+
+	self.List:CleanList()
+	self.SelectedMaterial = nil
+
+end
+
 vgui.Register( "MatSelect", PANEL, "ContextBase" )
