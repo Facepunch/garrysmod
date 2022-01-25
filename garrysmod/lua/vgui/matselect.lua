@@ -45,7 +45,7 @@ function PANEL:SetAutoHeight( bAutoHeight )
 
 end
 
-function PANEL:UpdatePaintOver( Mat )
+function PANEL:UpdatePaintOver( mat )
 
 	-- Restore the current overlay
 	if ( self.SelectedMaterial ) then
@@ -53,9 +53,9 @@ function PANEL:UpdatePaintOver( Mat )
 	end
 
 	-- Add the overlay to this button
-	self.OldSelectedPaintOver = Mat.PaintOver
-	Mat.PaintOver = HighlightedButtonPaint
-	self.SelectedMaterial = Mat
+	self.OldSelectedPaintOver = mat.PaintOver
+	mat.PaintOver = HighlightedButtonPaint
+	self.SelectedMaterial = mat
 
 end
 
@@ -69,6 +69,35 @@ function PANEL:Clear()
 	self.List:CleanList()
 	self.SelectedMaterial = nil
 	self.OldSelectedPaintOver = nil
+
+end
+
+function PANEL:FindByValue( value )
+
+	for k, Mat in pairs( self.Controls ) do
+		if ( Mat.Value == value ) then return Mat end
+	end -- Otherwise nothing is returned
+
+end
+
+function PANEL:SetItemSize( pnl )
+
+	local maxW = self:GetWide()
+	if ( self.List.VBar && self.List.VBar.Enabled ) then maxW = maxW - self.List.VBar:GetWide() end
+
+	local w = self.ItemWidth
+	if ( w < 1 ) then
+		local numIcons = math.floor( 1 / w )
+		w = math.floor( ( maxW - self.List:GetPadding() * 2 - self.List:GetSpacing() * ( numIcons - 1 ) ) / numIcons )
+	end
+
+	local h = self.ItemHeight
+	if ( h < 1 ) then
+		local numIcons = math.floor( 1 / h )
+		h = math.floor( ( maxW - self.List:GetPadding() * 2 - self.List:GetSpacing() * ( numIcons - 1 ) ) / numIcons )
+	end
+
+	pnl:SetSize( w, h )
 
 end
 
@@ -100,27 +129,6 @@ function PANEL:AddMaterial( label, value )
 	self:InvalidateLayout()
 
 	return Mat
-
-end
-
-function PANEL:SetItemSize( pnl )
-
-	local maxW = self:GetWide()
-	if ( self.List.VBar && self.List.VBar.Enabled ) then maxW = maxW - self.List.VBar:GetWide() end
-
-	local w = self.ItemWidth
-	if ( w < 1 ) then
-		local numIcons = math.floor( 1 / w )
-		w = math.floor( ( maxW - self.List:GetPadding() * 2 - self.List:GetSpacing() * ( numIcons - 1 ) ) / numIcons )
-	end
-
-	local h = self.ItemHeight
-	if ( h < 1 ) then
-		local numIcons = math.floor( 1 / h )
-		h = math.floor( ( maxW - self.List:GetPadding() * 2 - self.List:GetSpacing() * ( numIcons - 1 ) ) / numIcons )
-	end
-
-	pnl:SetSize( w, h )
 
 end
 
@@ -212,19 +220,13 @@ function PANEL:PerformLayout()
 
 end
 
-function PANEL:FindAndSelectMaterial( Value )
+function PANEL:FindAndSelectMaterial( value )
 
-	self.CurrentValue = Value
+	self.CurrentValue = value
+	local Mat = self:FindByValue( value )
+	if ( !Mat ) then return end
 
-	for k, Mat in pairs( self.Controls ) do
-
-		if ( Mat.Value == Value ) then
-
-			self:UpdatePaintOver( Mat )
-
-		end
-
-	end
+	self:UpdatePaintOver( Mat )
 
 end
 
