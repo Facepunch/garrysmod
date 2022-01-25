@@ -45,6 +45,33 @@ function PANEL:SetAutoHeight( bAutoHeight )
 
 end
 
+function PANEL:UpdatePaintOver( Mat )
+
+	-- Remove the current overlay
+	if ( self.Material ) then
+		self.Material.PaintOver = self.SavePaintOver
+	end
+
+	-- Add the overlay to this button
+	self.SavePaintOver = Mat.PaintOver
+	Mat.PaintOver = HighlightedButtonPaint
+	self.Material = Mat
+
+end
+
+function PANEL:Clear()
+
+	for k, Mat in pairs( self.Controls ) do
+		Mat:Remove()
+		self.Controls[k] = nil
+	end
+
+	self.List:CleanList()
+	self.Material = nil
+	self.SavePaintOver = nil
+
+end
+
 function PANEL:AddMaterial( label, value )
 
 	-- Creeate a spawnicon and set the model
@@ -189,15 +216,7 @@ function PANEL:FindAndSelectMaterial( Value )
 
 		if ( Mat.Value == Value ) then
 
-			-- Remove the old overlay
-			if ( self.SelectedMaterial ) then
-				self.SelectedMaterial.PaintOver = self.OldSelectedPaintOver
-			end
-
-			-- Add the overlay to this button
-			self.OldSelectedPaintOver = Mat.PaintOver
-			Mat.PaintOver = HighlightedButtonPaint
-			self.SelectedMaterial = Mat
+			self:UpdatePaintOver( Mat )
 
 		end
 
@@ -214,18 +233,6 @@ function PANEL:TestForChanges()
 	if ( Value == self.CurrentValue ) then return end
 
 	self:FindAndSelectMaterial( Value )
-
-end
-
-function PANEL:Clear()
-
-	for k, Mat in pairs( self.Controls ) do
-		Mat:Remove()
-		self.Controls[k] = nil
-	end
-
-	self.List:CleanList()
-	self.SelectedMaterial = nil
 
 end
 
