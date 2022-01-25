@@ -47,7 +47,7 @@ end
 
 function PANEL:UpdatePaintOver( Mat )
 
-	-- Remove the current overlay
+	-- Restore the current overlay
 	if ( self.Material ) then
 		self.Material.PaintOver = self.SavePaintOver
 	end
@@ -99,6 +99,8 @@ function PANEL:AddMaterial( label, value )
 
 	self:InvalidateLayout()
 
+	return Mat
+
 end
 
 function PANEL:SetItemSize( pnl )
@@ -145,6 +147,8 @@ function PANEL:AddMaterialEx( label, material, value, convars )
 	table.insert( self.Controls, Mat )
 
 	self:InvalidateLayout()
+
+	return Mat
 
 end
 
