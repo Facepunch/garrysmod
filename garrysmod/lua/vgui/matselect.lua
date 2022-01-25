@@ -48,14 +48,14 @@ end
 function PANEL:UpdatePaintOver( Mat )
 
 	-- Restore the current overlay
-	if ( self.Material ) then
-		self.Material.PaintOver = self.SavePaintOver
+	if ( self.SelectedMaterial ) then
+		self.SelectedMaterial.PaintOver = self.OldSelectedPaintOver
 	end
 
 	-- Add the overlay to this button
-	self.SavePaintOver = Mat.PaintOver
+	self.OldSelectedPaintOver = Mat.PaintOver
 	Mat.PaintOver = HighlightedButtonPaint
-	self.Material = Mat
+	self.SelectedMaterial = Mat
 
 end
 
@@ -67,8 +67,8 @@ function PANEL:Clear()
 	end
 
 	self.List:CleanList()
-	self.Material = nil
-	self.SavePaintOver = nil
+	self.SelectedMaterial = nil
+	self.OldSelectedPaintOver = nil
 
 end
 
