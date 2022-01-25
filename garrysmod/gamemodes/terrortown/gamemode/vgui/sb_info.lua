@@ -59,7 +59,7 @@ function PANEL:PerformLayout()
    self.List:SetSize(self:GetWide(), 70)
    self.List:SetSpacing(1)
    self.List:SetPadding(2)
-   self.List:SetDrawBackground(false)
+   self.List:SetPaintBackground(false)
 
    self.Scroll:StretchToParent(3,3,3,3)
 
@@ -204,7 +204,7 @@ function PANEL:Init()
    self:SetPaintBackgroundEnabled(false)
    self:SetPaintBorderEnabled(false)
 
-   self:SetDrawBackground(false)
+   self:SetPaintBackground(false)
    self:SetDrawBorder(false)
 
    self:SetFont("treb_small")

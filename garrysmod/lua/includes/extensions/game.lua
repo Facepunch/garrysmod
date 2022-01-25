@@ -21,27 +21,34 @@ local AmmoTypes = {}
 --			maxsplash	=	100
 --		})
 --
-game.AddAmmoType = function ( tbl )
+function game.AddAmmoType( tbl )
+	if ( !isstring( tbl.name ) ) then
+		ErrorNoHalt( "bad argument #1 to 'AddAmmoType' ('name' key expected a string, got " .. type( tbl.name ) .. ")\n" )
+		return
+	end
 
-	if ( !tbl.name ) then return end
+	local name = string.lower( tbl.name )
+
+	for id, ammo in ipairs( AmmoTypes ) do
+		if ( name == string.lower( ammo.name ) ) then
+			AmmoTypes[ id ] = tbl
+			return
+		end
+	end
 
 	table.insert( AmmoTypes, tbl )
-
 end
 
 --
 -- Called by the engine to retrive the ammo types. 
 -- You should never have to call this manually.
 --
-game.BuildAmmoTypes = function()
-
+function game.BuildAmmoTypes()
 	--
 	-- Sort the table by name here to assure that the ammo types
 	--  are inserted in the same order on both server and client
 	--
 	table.SortByMember( AmmoTypes, "name", true )
 
-	return AmmoTypes;
-
+	return AmmoTypes
 end
-

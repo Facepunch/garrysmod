@@ -28,16 +28,16 @@ function Register( t, name )
 	if ( old != nil ) then
 
 		--
-		-- Foreach entity using this class
+		-- For each entity using this class
 		--
-		table.ForEach( ents.FindByClass( name ), function( _, entity )
+		for _, entity in pairs( ents.FindByClass( name ) ) do
 
 			--
 			-- Replace the contents with this entity table
 			--
 			table.Merge( entity, t )
 
-		end )
+		end
 
 	end
 
@@ -67,4 +67,14 @@ function Create( name )
 
 	return NewEffect
 
+end
+
+function GetList()
+	local result = {}
+
+	for k, v in pairs( EffectList ) do
+		table.insert( result, v )
+	end
+
+	return result
 end

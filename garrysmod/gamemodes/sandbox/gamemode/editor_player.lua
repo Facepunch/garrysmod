@@ -1,32 +1,50 @@
+
 AddCSLuaFile()
 
 local default_animations = { "idle_all_01", "menu_walk" }
 
 list.Set( "DesktopWindows", "PlayerEditor", {
 
-	title		= "Player Model",
+	title		= "#smwidget.playermodel",
 	icon		= "icon64/playermodel.png",
 	width		= 960,
 	height		= 700,
 	onewindow	= true,
 	init		= function( icon, window )
 
+		window:SetTitle( "#smwidget.playermodel_title" )
+		window:SetSize( math.min( ScrW() - 16, window:GetWide() ), math.min( ScrH() - 16, window:GetTall() ) )
+		window:SetSizable( true )
+		window:SetMinWidth( window:GetWide() )
+		window:SetMinHeight( window:GetTall() )
+		window:Center()
+
 		local mdl = window:Add( "DModelPanel" )
 		mdl:Dock( FILL )
 		mdl:SetFOV( 36 )
-		mdl:SetCamPos( Vector( 0, 0, 0 ) )
+		mdl:SetCamPos( vector_origin )
 		mdl:SetDirectionalLight( BOX_RIGHT, Color( 255, 160, 80, 255 ) )
 		mdl:SetDirectionalLight( BOX_LEFT, Color( 80, 160, 255, 255 ) )
 		mdl:SetAmbientLight( Vector( -64, -64, -64 ) )
 		mdl:SetAnimated( true )
-		mdl.Angles = Angle( 0, 0, 0 )
+		mdl.Angles = angle_zero
 		mdl:SetLookAt( Vector( -100, 0, -22 ) )
 
 		local sheet = window:Add( "DPropertySheet" )
 		sheet:Dock( RIGHT )
 		sheet:SetSize( 430, 0 )
 
-		local PanelSelect = sheet:Add( "DPanelSelect" )
+		local modelListPnl = window:Add( "DPanel" )
+		modelListPnl:DockPadding( 8, 8, 8, 8 )
+
+		local SearchBar = modelListPnl:Add( "DTextEntry" )
+		SearchBar:Dock( TOP )
+		SearchBar:DockMargin( 0, 0, 0, 8 )
+		SearchBar:SetUpdateOnType( true )
+		SearchBar:SetPlaceholderText( "#spawnmenu.quick_filter" )
+
+		local PanelSelect = modelListPnl:Add( "DPanelSelect" )
+		PanelSelect:Dock( FILL )
 
 		for name, model in SortedPairs( player_manager.AllValidModels() ) do
 
@@ -35,18 +53,35 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			icon:SetSize( 64, 64 )
 			icon:SetTooltip( name )
 			icon.playermodel = name
+			icon.model_path = model
+			icon.OpenMenu = function( button )
+				local menu = DermaMenu()
+				menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( model ) end ):SetIcon( "icon16/page_copy.png" )
+				menu:Open()
+			end
 
 			PanelSelect:AddPanel( icon, { cl_playermodel = name } )
 
 		end
 
-		sheet:AddSheet( "Model", PanelSelect, "icon16/user.png" )
+		SearchBar.OnValueChange = function( s, str )
+			for id, pnl in pairs( PanelSelect:GetItems() ) do
+				if ( !pnl.playermodel:find( str, 1, true ) && !pnl.model_path:find( str, 1, true ) ) then
+					pnl:SetVisible( false )
+				else
+					pnl:SetVisible( true )
+				end
+			end
+			PanelSelect:InvalidateLayout()
+		end
+
+		sheet:AddSheet( "#smwidget.model", modelListPnl, "icon16/user.png" )
 
 		local controls = window:Add( "DPanel" )
 		controls:DockPadding( 8, 8, 8, 8 )
 
 		local lbl = controls:Add( "DLabel" )
-		lbl:SetText( "Player color" )
+		lbl:SetText( "#smwidget.color_plr" )
 		lbl:SetTextColor( Color( 0, 0, 0, 255 ) )
 		lbl:Dock( TOP )
 
@@ -54,10 +89,10 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		plycol:SetAlphaBar( false )
 		plycol:SetPalette( false )
 		plycol:Dock( TOP )
-		plycol:SetSize( 200, 260 )
+		plycol:SetSize( 200, math.min( window:GetTall() / 3, 260 ) )
 
 		local lbl = controls:Add( "DLabel" )
-		lbl:SetText( "Physgun color" )
+		lbl:SetText( "#smwidget.color_wep" )
 		lbl:SetTextColor( Color( 0, 0, 0, 255 ) )
 		lbl:DockMargin( 0, 32, 0, 0 )
 		lbl:Dock( TOP )
@@ -66,10 +101,10 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		wepcol:SetAlphaBar( false )
 		wepcol:SetPalette( false )
 		wepcol:Dock( TOP )
-		wepcol:SetSize( 200, 260 )
+		wepcol:SetSize( 200, math.min( window:GetTall() / 3, 260 ) )
 		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
 
-		sheet:AddSheet( "Colors", controls, "icon16/color_wheel.png" )
+		sheet:AddSheet( "#smwidget.colors", controls, "icon16/color_wheel.png" )
 
 		local bdcontrols = window:Add( "DPanel" )
 		bdcontrols:DockPadding( 8, 8, 8, 8 )
@@ -78,7 +113,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		bdcontrolspanel:EnableVerticalScrollbar( true )
 		bdcontrolspanel:Dock( FILL )
 
-		local bgtab = sheet:AddSheet( "Bodygroups", bdcontrols, "icon16/cog.png" )
+		local bgtab = sheet:AddSheet( "#smwidget.bodygroups", bdcontrols, "icon16/cog.png" )
 
 		-- Helper functions
 
@@ -111,7 +146,6 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		end
 
 		-- Updating
-
 		local function UpdateBodyGroups( pnl, val )
 			if ( pnl.type == "bgroup" ) then
 
@@ -132,7 +166,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		local function RebuildBodygroupTab()
 			bdcontrolspanel:Clear()
-			
+
 			bgtab.Tab:SetVisible( false )
 
 			local nskins = mdl.Entity:SkinCount() - 1
@@ -147,11 +181,11 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				skins:SetValue( GetConVarNumber( "cl_playerskin" ) )
 				skins.type = "skin"
 				skins.OnValueChanged = UpdateBodyGroups
-				
+
 				bdcontrolspanel:AddItem( skins )
 
 				mdl.Entity:SetSkin( GetConVarNumber( "cl_playerskin" ) )
-				
+
 				bgtab.Tab:SetVisible( true )
 			end
 
@@ -170,13 +204,15 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 				bgroup:SetMax( mdl.Entity:GetBodygroupCount( k ) - 1 )
 				bgroup:SetValue( groups[ k + 1 ] or 0 )
 				bgroup.OnValueChanged = UpdateBodyGroups
-				
+
 				bdcontrolspanel:AddItem( bgroup )
-	
+
 				mdl.Entity:SetBodygroup( k, groups[ k + 1 ] or 0 )
-				
+
 				bgtab.Tab:SetVisible( true )
 			end
+
+			sheet.tabScroller:InvalidateLayout()
 		end
 
 		local function UpdateFromConvars()
@@ -228,17 +264,17 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 
 		function mdl:DragMouseRelease() self.Pressed = false end
 
-		function mdl:LayoutEntity( Entity )
+		function mdl:LayoutEntity( ent )
 			if ( self.bAnimated ) then self:RunAnimation() end
 
 			if ( self.Pressed ) then
-				local mx, my = gui.MousePos()
-				self.Angles = self.Angles - Angle( 0, ( self.PressX or mx ) - mx, 0 )
-				
+				local mx = gui.MousePos()
+				self.Angles = self.Angles - Angle( 0, ( ( self.PressX or mx ) - mx ) / 2, 0 )
+
 				self.PressX, self.PressY = gui.MousePos()
 			end
 
-			Entity:SetAngles( self.Angles )
+			ent:SetAngles( self.Angles )
 		end
 
 	end

@@ -1,0 +1,93 @@
+
+/* Makes Checkboxes and Radio buttons in Awesomium look like the ones in CEF/Chrome */
+
+input[ type="checkbox" ]
+{
+	-webkit-appearance: none;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-color: #fff;
+	border: 1px solid #767676;
+	border-radius: 2px;
+
+	/* Default values */
+	width: 13px;
+	height: 13px;
+	margin: 3px 3px 0px 4px;
+}
+input[ type="checkbox" ]:hover
+{
+	border-color: #4F4F4F;
+}
+input[ type="checkbox" ]:checked
+{
+	background-color: #0075FF;
+	border-color: #0075FF;
+	background-image: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'><path style='fill: rgb(255,255,255);' d='M 74 285 Q 206 422 206 422 L 442 129 L 377 77 L 200 295 L 131 229 L 74 285' /></svg>");
+}
+input[ type="checkbox" ]:checked:hover
+{
+	background-color: #005CC8;
+	border-color: #005CC8;
+}
+
+input[ type="checkbox" ]:active
+{
+	background-color: #3793FF;
+	border-color: #3793FF;
+}
+input[ type="checkbox" ]:disabled
+{
+	background-color: #F7F7F7;
+	border-color: #D0D0D0;
+}
+input[ type="checkbox" ]:disabled:checked
+{
+	background-color: #D0D0D0;
+	border-color: #D0D0D0;
+}
+
+/* Radio buttons */
+input[ type="radio" ]
+{
+	-webkit-appearance: none;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-color: #fff;
+	border: 1px solid #767676;
+	border-radius: 9999px;
+
+	/* Default values */
+	width: 13px;
+	height: 13px;
+	margin: 3px 3px 0px 5px;
+}
+input[ type="radio" ]:hover
+{
+	border-color: #4F4F4F;
+}
+input[ type="radio" ]:checked
+{
+	border-color: #0075FF;
+	background-image: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='512px' height='512px' viewBox='0 0 512 512'><circle cx='256' cy='256' r='164' style='fill: rgb(0, 117, 255);'/></svg>");
+}
+input[ type="radio" ]:checked:hover
+{
+	border-color: #005CC8;
+	background-image: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='512px' height='512px' viewBox='0 0 512 512'><circle cx='256' cy='256' r='164' style='fill: rgb(0, 92, 200);'/></svg>");
+}
+
+input[ type="radio" ]:active
+{
+	border-color: #A2A2A2;
+}
+input[ type="radio" ]:disabled
+{
+	background-color: #F3F3F3;
+	border-color: #CDCDCD;
+}
+input[ type="radio" ]:disabled:checked
+{
+	background-image: url("data:image/svg+xml;utf8,<svg version='1.1' xmlns='http://www.w3.org/2000/svg' width='512px' height='512px' viewBox='0 0 512 512'><circle cx='256' cy='256' r='164' style='fill: rgb(205, 205, 205);'/></svg>");
+	border-color: #CDCDCD;
+}

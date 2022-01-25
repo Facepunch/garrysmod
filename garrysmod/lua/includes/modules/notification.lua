@@ -1,8 +1,8 @@
 
 surface.CreateFont( "GModNotify", {
 	font	= "Arial",
-	size	= 20,
-	weight	= 1000
+	size	= 21,
+	weight	= 0
 } )
 
 NOTIFY_GENERIC	= 0
@@ -23,14 +23,14 @@ NoticeMaterial[ NOTIFY_CLEANUP ]	= Material( "vgui/notices/cleanup" )
 
 local Notices = {}
 
-function AddProgress( uid, text )
+function AddProgress( uid, text, frac )
 
 	if ( IsValid( Notices[ uid ] ) ) then
 
 		Notices[ uid ].StartTime = SysTime()
-		Notices[ uid ].Length = 1000000
+		Notices[ uid ].Length = -1
 		Notices[ uid ]:SetText( text )
-		Notices[ uid ]:SetProgress()
+		Notices[ uid ]:SetProgress( frac )
 		return
 
 	end
@@ -40,7 +40,7 @@ function AddProgress( uid, text )
 
 	local Panel = vgui.Create( "NoticePanel", parent )
 	Panel.StartTime = SysTime()
-	Panel.Length = 1000000
+	Panel.Length = -1
 	Panel.VelX = -5
 	Panel.VelY = 0
 	Panel.fx = ScrW() + 200
@@ -48,7 +48,7 @@ function AddProgress( uid, text )
 	Panel:SetAlpha( 255 )
 	Panel:SetText( text )
 	Panel:SetPos( Panel.fx, Panel.fy )
-	Panel:SetProgress()
+	Panel:SetProgress( frac )
 
 	Notices[ uid ] = Panel
 
@@ -70,7 +70,7 @@ function AddLegacy( text, type, length )
 
 	local Panel = vgui.Create( "NoticePanel", parent )
 	Panel.StartTime = SysTime()
-	Panel.Length = length
+	Panel.Length = math.max( length, 0 )
 	Panel.VelX = -5
 	Panel.VelY = 0
 	Panel.fx = ScrW() + 200
@@ -85,18 +85,19 @@ function AddLegacy( text, type, length )
 end
 
 -- This is ugly because it's ripped straight from the old notice system
-local function UpdateNotice( i, Panel, Count )
+local function UpdateNotice( pnl, total_h )
 
-	local x = Panel.fx
-	local y = Panel.fy
+	local x = pnl.fx
+	local y = pnl.fy
 
-	local w = Panel:GetWide() + 16
-	local h = Panel:GetTall() + 16
+	local w = pnl:GetWide() + 16
+	local h = pnl:GetTall() + 4
 
-	local ideal_y = ScrH() - ( Count - i ) * ( h - 12 ) - 150
+	local ideal_y = ScrH() - 150 - h - total_h
 	local ideal_x = ScrW() - w - 20
 
-	local timeleft = Panel.StartTime - ( SysTime() - Panel.Length )
+	local timeleft = pnl.StartTime - ( SysTime() - pnl.Length )
+	if ( pnl.Length < 0 ) then timeleft = 1 end
 
 	-- Cartoon style about to go thing
 	if ( timeleft < 0.7 ) then
@@ -108,25 +109,31 @@ local function UpdateNotice( i, Panel, Count )
 		ideal_x = ideal_x + w * 2
 	end
 
-	local spd = FrameTime() * 15
+	local spd = RealFrameTime() * 15
 
-	y = y + Panel.VelY * spd
-	x = x + Panel.VelX * spd
+	y = y + pnl.VelY * spd
+	x = x + pnl.VelX * spd
 
 	local dist = ideal_y - y
-	Panel.VelY = Panel.VelY + dist * spd * 1
-	if ( math.abs( dist ) < 2 && math.abs( Panel.VelY ) < 0.1 ) then Panel.VelY = 0 end
+	pnl.VelY = pnl.VelY + dist * spd * 1
+	if ( math.abs( dist ) < 2 && math.abs( pnl.VelY ) < 0.1 ) then pnl.VelY = 0 end
 	dist = ideal_x - x
-	Panel.VelX = Panel.VelX + dist * spd * 1
-	if ( math.abs( dist ) < 2 && math.abs( Panel.VelX ) < 0.1 ) then Panel.VelX = 0 end
+	pnl.VelX = pnl.VelX + dist * spd * 1
+	if ( math.abs( dist ) < 2 && math.abs( pnl.VelX ) < 0.1 ) then pnl.VelX = 0 end
 
 	-- Friction.. kind of FPS independant.
-	Panel.VelX = Panel.VelX * ( 0.95 - FrameTime() * 8 )
-	Panel.VelY = Panel.VelY * ( 0.95 - FrameTime() * 8 )
+	pnl.VelX = pnl.VelX * ( 0.95 - RealFrameTime() * 8 )
+	pnl.VelY = pnl.VelY * ( 0.95 - RealFrameTime() * 8 )
 
-	Panel.fx = x
-	Panel.fy = y
-	Panel:SetPos( Panel.fx, Panel.fy )
+	pnl.fx = x
+	pnl.fy = y
+
+	-- If the panel is too high up (out of screen), do not update its position. This lags a lot when there are lot of panels outside of the screen
+	if ( ideal_y > -ScrH() ) then
+		pnl:SetPos( pnl.fx, pnl.fy )
+	end
+
+	return total_h + h
 
 end
 
@@ -134,12 +141,10 @@ local function Update()
 
 	if ( !Notices ) then return end
 
-	local i = 0
-	local Count = table.Count( Notices )
-	for key, Panel in pairs( Notices ) do
+	local h = 0
+	for key, pnl in pairs( Notices ) do
 
-		i = i + 1
-		UpdateNotice( i, Panel, Count )
+		h = UpdateNotice( pnl, h )
 
 	end
 
@@ -155,9 +160,6 @@ hook.Add( "Think", "NotificationThink", Update )
 
 local PANEL = {}
 
---[[---------------------------------------------------------
-   Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self:DockPadding( 3, 3, 3, 3 )
@@ -165,7 +167,7 @@ function PANEL:Init()
 	self.Label = vgui.Create( "DLabel", self )
 	self.Label:Dock( FILL )
 	self.Label:SetFont( "GModNotify" )
-	self.Label:SetTextColor( Color( 255, 255, 255, 255 ) )
+	self.Label:SetTextColor( color_white )
 	self.Label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 	self.Label:SetContentAlignment( 5 )
 
@@ -184,16 +186,24 @@ function PANEL:SizeToContents()
 
 	self.Label:SizeToContents()
 
-	local width = self.Label:GetWide()
+	local width, tall = self.Label:GetSize()
+
+	tall = math.max( tall, 32 ) + 6
+	width = width + 20
 
 	if ( IsValid( self.Image ) ) then
 		width = width + 32 + 8
+
+		local x = ( tall - 36 ) / 2
+		self.Image:DockMargin( 0, x, 0, x )
 	end
 
-	width = width + 20
-	self:SetWidth( width )
+	if ( self.Progress ) then
+		tall = tall + 10
+		self.Label:DockMargin( 0, 0, 0, 10 )
+	end
 
-	self:SetHeight( 32 + 6 )
+	self:SetSize( width, tall )
 
 	self:InvalidateLayout()
 
@@ -214,33 +224,61 @@ function PANEL:SetLegacyType( t )
 
 end
 
-function PANEL:SetProgress()
+function PANEL:Paint( w, h )
 
-	-- Quick and dirty, just how I like it.
-	self.Paint = function( s, w, h )
+	local shouldDraw = !( LocalPlayer && IsValid( LocalPlayer() ) && IsValid( LocalPlayer():GetActiveWeapon() ) && LocalPlayer():GetActiveWeapon():GetClass() == "gmod_camera" )
 
-		self.BaseClass.Paint( self, w, h )
+	if ( IsValid( self.Label ) ) then self.Label:SetVisible( shouldDraw ) end
+	if ( IsValid( self.Image ) ) then self.Image:SetVisible( shouldDraw ) end
 
-		surface.SetDrawColor( 0, 100, 0, 150 )
-		surface.DrawRect( 4, self:GetTall() - 10, self:GetWide() - 8, 5 )
+	if ( !shouldDraw ) then return end
 
-		surface.SetDrawColor( 0, 50, 0, 255 )
-		surface.DrawRect( 5, self:GetTall() - 9, self:GetWide() - 10, 3 )
+	self.BaseClass.Paint( self, w, h )
 
-		local w = self:GetWide() * 0.25
-		local x = math.fmod( SysTime() * 200, self:GetWide() + w ) - w
+	if ( !self.Progress ) then return end
 
-		if ( x + w > self:GetWide() - 11 ) then w = ( self:GetWide() - 11 ) - x end
-		if ( x < 0 ) then w = w + x; x = 0 end
+	local boxX, boxY = 10, self:GetTall() - 13
+	local boxW, boxH = self:GetWide() - 20, 5
+	local boxInnerW = boxW - 2
 
-		surface.SetDrawColor( 0, 255, 0, 255 )
-		surface.DrawRect( 5 + x, self:GetTall() - 9, w, 3 )
+	surface.SetDrawColor( 0, 100, 0, 150 )
+	surface.DrawRect( boxX, boxY, boxW, boxH )
 
+	surface.SetDrawColor( 0, 50, 0, 255 )
+	surface.DrawRect( boxX + 1, boxY + 1, boxW - 2, boxH - 2 )
+
+	local w = math.ceil( boxInnerW * 0.25 )
+	local x = math.fmod( math.floor( SysTime() * 200 ), boxInnerW + w ) - w
+
+	if ( self.ProgressFrac ) then
+		x = 0
+		w = math.ceil( boxInnerW * self.ProgressFrac )
 	end
+
+	if ( x + w > boxInnerW ) then w = math.ceil( boxInnerW - x ) end
+	if ( x < 0 ) then
+		w = w + x
+		x = 0
+	end
+
+	surface.SetDrawColor( 0, 255, 0, 255 )
+	surface.DrawRect( boxX + 1 + x, boxY + 1, w, boxH - 2 )
+
+end
+
+function PANEL:SetProgress( frac )
+
+	self.Progress = true
+	self.ProgressFrac = frac
+
+	self:SizeToContents()
 
 end
 
 function PANEL:KillSelf()
+
+	-- Infinite length
+	if ( self.Length < 0 ) then return false end
 
 	if ( self.StartTime + self.Length < SysTime() ) then
 
@@ -250,6 +288,7 @@ function PANEL:KillSelf()
 	end
 
 	return false
+
 end
 
 vgui.Register( "NoticePanel", PANEL, "DPanel" )

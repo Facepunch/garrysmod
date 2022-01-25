@@ -136,31 +136,6 @@ function ENT:Use(ply)
    end
 end
 
--- traditional equipment destruction effects
-function ENT:OnTakeDamage(dmginfo)
-   if dmginfo:GetAttacker() == self:GetPlacer() then return end
-
-   self:TakePhysicsDamage(dmginfo)
-
-   self:SetHealth(self:Health() - dmginfo:GetDamage())
-
-   local att = dmginfo:GetAttacker()
-   if IsPlayer(att) then
-      DamageLog(Format("%s damaged health station for %d dmg",
-                       att:Nick(), dmginfo:GetDamage()))
-   end
-
-   if self:Health() < 0 then
-      self:Remove()
-
-      util.EquipmentDestroyed(self:GetPos())
-
-      if IsValid(self:GetPlacer()) then
-         LANG.Msg(self:GetPlacer(), "hstation_broken")
-      end
-   end
-end
-
 if SERVER then
    -- recharge
    local nextcharge = 0
@@ -171,5 +146,31 @@ if SERVER then
          nextcharge = CurTime() + self.RechargeFreq
       end
    end
-end
 
+   local ttt_damage_own_healthstation = CreateConVar("ttt_damage_own_healthstation", "0") -- 0 as detective cannot damage their own health station
+	
+   -- traditional equipment destruction effects
+   function ENT:OnTakeDamage(dmginfo)
+      if dmginfo:GetAttacker() == self:GetPlacer() and not ttt_damage_own_healthstation:GetBool() then return end
+   
+      self:TakePhysicsDamage(dmginfo)
+
+      self:SetHealth(self:Health() - dmginfo:GetDamage())
+
+      local att = dmginfo:GetAttacker()
+      local placer = self:GetPlacer()
+      if IsPlayer(att) then
+         DamageLog(Format("DMG: \t %s [%s] damaged health station [%s] for %d dmg", att:Nick(), att:GetRoleString(),  (IsPlayer(placer) and placer:Nick() or "<disconnected>"), dmginfo:GetDamage()))
+      end
+
+      if self:Health() < 0 then
+         self:Remove()
+
+         util.EquipmentDestroyed(self:GetPos())
+
+         if IsValid(self:GetPlacer()) then
+            LANG.Msg(self:GetPlacer(), "hstation_broken")
+         end
+      end
+   end
+end

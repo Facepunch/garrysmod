@@ -5,13 +5,13 @@ local g_Active = nil
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_numMin", 		"Min" )
-AccessorFunc( PANEL, "m_numMax", 		"Max" )
-AccessorFunc( PANEL, "m_Zoom",	 		"Zoom" )
-AccessorFunc( PANEL, "m_fFloatValue", 	"FloatValue" )
-AccessorFunc( PANEL, "m_bActive", 		"Active" )
-AccessorFunc( PANEL, "m_iDecimals", 	"Decimals" )
-AccessorFunc( PANEL, "m_bDrawScreen", 	"ShouldDrawScreen" )
+AccessorFunc( PANEL, "m_numMin",		"Min" )
+AccessorFunc( PANEL, "m_numMax",		"Max" )
+AccessorFunc( PANEL, "m_Zoom",			"Zoom" )
+AccessorFunc( PANEL, "m_fFloatValue",	"FloatValue" )
+AccessorFunc( PANEL, "m_bActive",		"Active" )
+AccessorFunc( PANEL, "m_iDecimals",		"Decimals" )
+AccessorFunc( PANEL, "m_bDrawScreen",	"ShouldDrawScreen" )
 
 Derma_Install_Convar_Functions( PANEL )
 
@@ -24,8 +24,8 @@ function PANEL:Init()
 	self:SetFloatValue( 1.5 )
 	self:SetShouldDrawScreen( false )
 
-	self.MouseX = 0;
-	self.MouseY = 0;
+	self.MouseX = 0
+	self.MouseY = 0
 	self.UnderMaterial = Material( "gui/numberscratch_under.png" )
 	self.CoverMaterial = Material( "gui/numberscratch_cover.png" )
 
@@ -39,39 +39,47 @@ end
 
 function PANEL:SetValue( val )
 
-	local val = tonumber( val );
+	local val = tonumber( val )
 	if ( val == nil ) then return end
 	if ( val == self:GetFloatValue() ) then return end
 
 	self:SetFloatValue( val )
-	self:OnValueChanged();
-	self:UpdateConVar();
+	self:OnValueChanged( val )
+	self:UpdateConVar()
 
 end
 
 function PANEL:SetFraction( fFraction )
 
-	self:SetFloatValue( self:GetMin() + (fFraction * self:GetRange()) )
+	self:SetFloatValue( self:GetMin() + ( fFraction * self:GetRange() ) )
 
 end
 
 function PANEL:GetFraction()
 
-	return (self:GetFloatValue() - self:GetMin()) / ( self:GetRange() )
+	return ( self:GetFloatValue() - self:GetMin() ) / self:GetRange()
+
+end
+
+function PANEL:GetDecimals()
+
+	return ( self.m_iDecimals or 0 )
 
 end
 
 function PANEL:GetRange()
-	return ( self:GetMax() - self:GetMin() )
+	return self:GetMax() - self:GetMin()
 end
 
 function PANEL:IdealZoom()
 
-	return 400 / self:GetRange();
+	return 400 / self:GetRange()
 
 end
 
 function PANEL:OnMousePressed( mousecode )
+
+	if ( !self:IsEnabled() ) then return end
 
 	if ( self:GetZoom() == 0 ) then self:SetZoom( self:IdealZoom() ) end
 
@@ -79,7 +87,13 @@ function PANEL:OnMousePressed( mousecode )
 	self:MouseCapture( true )
 
 	self:LockCursor()
-	self:SetCursor( "none" )
+
+	-- Temporary fix for Linux
+	-- Something keeps snapping the cursor to the center of the screen when it is invisible
+	-- and we definitely don't want that, let's keep the cursor visible for now
+	if ( !system.IsLinux() ) then
+		self:SetCursor( "none" )
+	end
 
 	self:SetShouldDrawScreen( mousecode == MOUSE_LEFT )
 
@@ -99,7 +113,7 @@ end
 
 function PANEL:LockCursor()
 
-	local x, y = self:LocalToScreen( math.floor( self:GetWide() * 0.5),  math.floor( self:GetTall() * 0.5 ) )
+	local x, y = self:LocalToScreen( math.floor( self:GetWide() * 0.5 ), math.floor( self:GetTall() * 0.5 ) )
 	input.SetCursorPos( x, y )
 
 end
@@ -113,25 +127,22 @@ function PANEL:OnCursorMoved( x, y )
 
 	local zoom = self:GetZoom()
 
-	local ControlScale = 100 / zoom;
+	local ControlScale = 100 / zoom
 
-	local maxzoom = 20
+	local maxzoom = 10 ^ ( 1 + self:GetDecimals() )
 
-	if ( self:GetDecimals() ) then
-		maxzoom = 10000
-	end
-	
-	zoom = math.Clamp( zoom + ((y * -0.6) / ControlScale), 0.01, maxzoom );
-	self:SetZoom( zoom )
+	zoom = math.Clamp( zoom + ( ( y * -0.6 ) / ControlScale ), 0.01, maxzoom )
+	if ( !input.IsKeyDown( KEY_LSHIFT ) ) then self:SetZoom( zoom ) end
 
+	local oldValue = self:GetFloatValue()
 	local value = self:GetFloatValue()
-	value = math.Clamp( value + (x * ControlScale * 0.002), self:GetMin(), self:GetMax() );
+	value = math.Clamp( value + ( x * ControlScale * 0.002 ), self:GetMin(), self:GetMax() )
 	self:SetFloatValue( value )
 
 	self:LockCursor()
 
-	self:OnValueChanged( value )
-	self:UpdateConVar();
+	if ( oldValue != value ) then self:OnValueChanged( value ) end
+	self:UpdateConVar()
 
 end
 
@@ -142,7 +153,7 @@ function PANEL:GetTextValue()
 		return Format( "%i", self:GetFloatValue() )
 	end
 
-	return Format( "%."..iDecimals.."f", self:GetFloatValue() )
+	return Format( "%." .. iDecimals .. "f", self:GetFloatValue() )
 
 end
 
@@ -152,82 +163,88 @@ function PANEL:UpdateConVar()
 
 end
 
-
 function PANEL:DrawNotches( level, x, y, w, h, range, value, min, max )
 
-	local size = level * self:GetZoom();
+	local size = level * self:GetZoom()
 	if ( size < 5 ) then return end
-	if ( size > w*2 ) then return end
+	if ( size > w * 2 ) then return end
 
 	local alpha = 255
 
-	if ( size < 150 )  then alpha = alpha * ((size - 2) / 140) end
-	if ( size > (w*2) - 100 )  then alpha = alpha * (1 - ((size - (w - 50)) / 50)) end
-	
+	if ( size < 150 ) then alpha = alpha * ( ( size - 2 ) / 140 ) end
+	if ( size > ( w * 2 ) - 100 ) then alpha = alpha * ( 1 - ( ( size - ( w - 50 ) ) / 50 ) ) end
+
 	local halfw = w * 0.5
 	local span = math.ceil( w / size )
-	local realmid = x + w * 0.5 - (value * self:GetZoom());
-	local mid = x + w * 0.5 - math.mod( value * self:GetZoom(), size );
-	local top = h * 0.4;
-	local nh = h - (top);
+	local realmid = x + w * 0.5 - ( value * self:GetZoom() )
+	local mid = x + w * 0.5 - math.fmod( value * self:GetZoom(), size )
+	local top = h * 0.4
+	local nh = h - top
 
-	local frame_min = realmid + min * self:GetZoom()
-	local frame_width = range * self:GetZoom()
+	local frame_min = math.floor( realmid + min * self:GetZoom() )
+	local frame_width = math.ceil( range * self:GetZoom() )
+	local targetW = math.min( w - math.max( 0, frame_min - x ), frame_width - math.max( 0, x - frame_min ) )
 
 	surface.SetDrawColor( 0, 0, 0, alpha )
-	surface.DrawRect( frame_min, y + top, frame_width, 2 );
+	surface.DrawRect( math.max( x, frame_min ), y + top, targetW, 2 )
 
 	surface.SetFont( "DermaDefault" )
-	
+
 	for n = -span, span, 1 do
 
-		local nx = ((mid) + n * size)
-		
-		local dist = 1 - (math.abs( halfw - nx + x ) / w);
-		
-		local val = (nx - realmid) / self:GetZoom();
+		local nx = mid + n * size
 
-		if ( val <= min+0.001 ) then continue end
-		if ( val >= max-0.001 ) then continue end
+		if ( nx > x + w || nx < x ) then continue end
+
+		local dist = 1 - ( math.abs( halfw - nx + x ) / w )
+
+		local val = ( nx - realmid ) / self:GetZoom()
+
+		if ( val <= min + 0.001 ) then continue end
+		if ( val >= max - 0.001 ) then continue end
 
 		surface.SetDrawColor( 0, 0, 0, alpha * dist )
 		surface.SetTextColor( 0, 0, 0, alpha * dist )
 
-		surface.DrawRect( nx, y+top, 2, nh )
+		surface.DrawRect( nx, y + top, 2, nh )
 
 		local tw, th = surface.GetTextSize( val )
 
-		surface.SetTextPos( nx - (tw * 0.5), y + top - th )
+		surface.SetTextPos( nx - ( tw * 0.5 ), y + top - th )
 		surface.DrawText( val )
 
 	end
 
 	surface.SetDrawColor( 0, 0, 0, alpha )
-	surface.SetTextColor( 0, 0, 0, alpha  )
+	surface.SetTextColor( 0, 0, 0, alpha )
 
 	--
 	-- Draw the last one.
 	--
 	local nx = realmid + max * self:GetZoom()
-	surface.DrawRect( nx, y+top, 2, nh )
+	if ( nx < x + w ) then
+		surface.DrawRect( nx, y + top, 2, nh )
 
-	local val = max;
-	local tw, th = surface.GetTextSize( val )
+		local val = max
+		local tw, th = surface.GetTextSize( val )
 
-	surface.SetTextPos( nx - (tw * 0.5), y + top - th )
-	surface.DrawText( val )
+		surface.SetTextPos( nx - ( tw * 0.5 ), y + top - th )
+		surface.DrawText( val )
+	end
 
 	--
 	-- Draw the first
 	--
 	local nx = realmid + min * self:GetZoom()
-	surface.DrawRect( nx, y+top, 2, nh )
+	if ( nx > x ) then
+		surface.DrawRect( nx, y + top, 2, nh )
 
-	local val = min;
-	local tw, th = surface.GetTextSize( val )
+		local val = min
+		local tw, th = surface.GetTextSize( val )
 
-	surface.SetTextPos( nx - (tw * 0.5), y + top - th )
-	surface.DrawText( val )
+		surface.SetTextPos( nx - ( tw * 0.5 ), y + top - th )
+		surface.DrawText( val )
+	end
 
 end
 
@@ -247,7 +264,7 @@ function PANEL:DrawScreen( x, y, w, h )
 
 	if ( !self:GetShouldDrawScreen() ) then return end
 
-	DisableClipping( true )
+	local wasEnabled = DisableClipping( true )
 
 	--
 	-- Background
@@ -258,26 +275,25 @@ function PANEL:DrawScreen( x, y, w, h )
 
 	local min = self:GetMin()
 	local max = self:GetMax()
-	local range = ( self:GetMax()-self:GetMin() );
-	local value = ( self:GetFloatValue() );
+	local range = self:GetMax() - self:GetMin()
+	local value = self:GetFloatValue()
 
 	--
 	-- Background colour block
 	--
 	surface.SetDrawColor( 255, 250, 180, 100 )
-	surface.DrawRect( x + w * 0.5 - ((value-min) * self:GetZoom()), y + h *0.4, range * self:GetZoom(), h )
+	local targetX = x + w * 0.5 - ( ( value - min ) * self:GetZoom() )
+	local targetW = range * self:GetZoom()
+	targetW = targetW - math.max( 0, x - targetX )
+	targetW = math.min( targetW, w - math.max( 0, targetX - x ) )
+	surface.DrawRect( math.max( targetX, x ) + 3, y + h * 0.4, targetW - 6, h * 0.6 )
 
-	-- how 2 loop
-	self:DrawNotches( 10000, x, y, w, h, range, value, min, max )
-	self:DrawNotches( 1000, x, y, w, h, range, value, min, max )
-	self:DrawNotches( 100, x, y, w, h, range, value, min, max )
-	self:DrawNotches( 10, x, y, w, h, range, value, min, max )
-	
-	if ( self:GetDecimals() ) then
-		self:DrawNotches( 1, x, y, w, h, range, value, min, max )
-		self:DrawNotches( 0.1, x, y, w, h, range, value, min, max )
-		self:DrawNotches( 0.01, x, y, w, h, range, value, min, max )
-		self:DrawNotches( 0.001, x, y, w, h, range, value, min, max )
+	for i = 1, 4 do
+		self:DrawNotches( 10 ^ i, x, y, w, h, range, value, min, max )
+	end
+
+	for i = 0, self:GetDecimals() do
+		self:DrawNotches( 1 / 10 ^ i, x, y, w, h, range, value, min, max )
 	end
 
 	--
@@ -290,20 +306,18 @@ function PANEL:DrawScreen( x, y, w, h )
 	--
 	-- Text Value
 	--
-	surface.SetTextColor( 255, 255, 255, 255 )
 	surface.SetFont( "DermaLarge" )
-	
-	local str = Format( "%i", self:GetFloatValue() );
-	if ( self:GetDecimals() ) then
-		str = Format( "%.2f", self:GetFloatValue() );
-	end
+	local str = self:GetTextValue()
 	str = string.Comma( str )
-
 	local tw, th = surface.GetTextSize( str )
-	surface.SetTextPos( x + w * 0.5 - tw * 0.5, y + h - th - 5 )
+
+	draw.RoundedBoxEx( 8, x + w * 0.5 - tw / 2 - 10, y + h - 43, tw + 20, 39, Color( 0, 186, 255, 255 ), true, true, false, false )
+
+	surface.SetTextColor( 255, 255, 255, 255 )
+	surface.SetTextPos( x + w * 0.5 - tw * 0.5, y + h - th - 6 )
 	surface.DrawText( str )
 
-	DisableClipping( false )
+	DisableClipping( wasEnabled )
 
 end
 
@@ -315,25 +329,26 @@ function PANEL:PaintScratchWindow()
 
 	local w, h = 512, 256
 	local x, y = self:LocalToScreen( 0, 0 )
-		
+
 	x = x + self:GetWide() * 0.5 - w * 0.5
-	y = y + -8 - h
+	y = y - 8 - h
 
 	if ( x + w + 32 > ScrW() ) then x = ScrW() - w - 32 end
 	if ( y + h + 32 > ScrH() ) then y = ScrH() - h - 32 end
 	if ( x < 32 ) then x = 32 end
 	if ( y < 32 ) then y = 32 end
 
-	render.SetScissorRect( x, y, x+w, y+h, true )
+	if ( render ) then render.SetScissorRect( x, y, x + w, y + h, true ) end
 		self:DrawScreen( x, y, w, h )
-	render.SetScissorRect( x, y, w, h, false )
+	if ( render ) then render.SetScissorRect( x, y, w, h, false ) end
 
 end
 
 --
 -- For your pleasure.
 --
-function PANEL:OnValueChanged() end
+function PANEL:OnValueChanged()
+end
 
 PANEL.AllowAutoRefresh = true
 
@@ -347,8 +362,7 @@ end
 
 derma.DefineControl( "DNumberScratch", "", PANEL, "DImageButton" )
 
-
-hook.Add( "DrawOverlay", "DrawNumberScratch", function() 
+hook.Add( "DrawOverlay", "DrawNumberScratch", function()
 
 	if ( !IsValid( g_Active ) ) then return end
 

@@ -1,33 +1,33 @@
 
 AddCSLuaFile()
 
-SWEP.PrintName				= "Fists"
-SWEP.Author					= "Kilburn, robotboy655, MaxOfS2D & Tenrys"
-SWEP.Purpose				= "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
+SWEP.PrintName = "#GMOD_Fists"
+SWEP.Author = "Kilburn, robotboy655, MaxOfS2D & Tenrys"
+SWEP.Purpose = "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
 
-SWEP.Slot					= 0
-SWEP.SlotPos				= 4
+SWEP.Slot = 0
+SWEP.SlotPos = 4
 
-SWEP.Spawnable				= true
+SWEP.Spawnable = true
 
-SWEP.ViewModel				= Model( "models/weapons/c_arms.mdl" )
-SWEP.WorldModel				= ""
-SWEP.ViewModelFOV			= 54
-SWEP.UseHands				= true
+SWEP.ViewModel = Model( "models/weapons/c_arms.mdl" )
+SWEP.WorldModel = ""
+SWEP.ViewModelFOV = 54
+SWEP.UseHands = true
 
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo			= "none"
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = -1
+SWEP.Primary.Automatic = true
+SWEP.Primary.Ammo = "none"
 
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= true
-SWEP.Secondary.Ammo			= "none"
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = true
+SWEP.Secondary.Ammo = "none"
 
-SWEP.DrawAmmo				= false
+SWEP.DrawAmmo = false
 
-SWEP.HitDistance			= 48
+SWEP.HitDistance = 48
 
 local SwingSound = Sound( "WeaponFrag.Throw" )
 local HitSound = Sound( "Flesh.ImpactHard" )
@@ -49,7 +49,7 @@ end
 function SWEP:UpdateNextIdle()
 
 	local vm = self.Owner:GetViewModel()
-	self:SetNextIdle( CurTime() + vm:SequenceDuration() )
+	self:SetNextIdle( CurTime() + vm:SequenceDuration() / vm:GetPlaybackRate() )
 
 end
 
@@ -70,7 +70,7 @@ function SWEP:PrimaryAttack( right )
 
 	self:UpdateNextIdle()
 	self:SetNextMeleeAttack( CurTime() + 0.2 )
-	
+
 	self:SetNextPrimaryFire( CurTime() + 0.9 )
 	self:SetNextSecondaryFire( CurTime() + 0.9 )
 
@@ -82,12 +82,14 @@ function SWEP:SecondaryAttack()
 
 end
 
+local phys_pushscale = GetConVar( "phys_pushscale" )
+
 function SWEP:DealDamage()
 
 	local anim = self:GetSequenceName(self.Owner:GetViewModel():GetSequence())
 
 	self.Owner:LagCompensation( true )
-	
+
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
 		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
@@ -95,7 +97,7 @@ function SWEP:DealDamage()
 		mask = MASK_SHOT_HULL
 	} )
 
-	if ( !IsValid( tr.Entity ) ) then 
+	if ( !IsValid( tr.Entity ) ) then
 		tr = util.TraceHull( {
 			start = self.Owner:GetShootPos(),
 			endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * self.HitDistance,
@@ -112,10 +114,11 @@ function SWEP:DealDamage()
 	end
 
 	local hit = false
+	local scale = phys_pushscale:GetFloat()
 
 	if ( SERVER && IsValid( tr.Entity ) && ( tr.Entity:IsNPC() || tr.Entity:IsPlayer() || tr.Entity:Health() > 0 ) ) then
 		local dmginfo = DamageInfo()
-	
+
 		local attacker = self.Owner
 		if ( !IsValid( attacker ) ) then attacker = self end
 		dmginfo:SetAttacker( attacker )
@@ -124,23 +127,26 @@ function SWEP:DealDamage()
 		dmginfo:SetDamage( math.random( 8, 12 ) )
 
 		if ( anim == "fists_left" ) then
-			dmginfo:SetDamageForce( self.Owner:GetRight() * 4912 + self.Owner:GetForward() * 9998 ) -- Yes we need those specific numbers
+			dmginfo:SetDamageForce( self.Owner:GetRight() * 4912 * scale + self.Owner:GetForward() * 9998 * scale ) -- Yes we need those specific numbers
 		elseif ( anim == "fists_right" ) then
-			dmginfo:SetDamageForce( self.Owner:GetRight() * -4912 + self.Owner:GetForward() * 9989 )
+			dmginfo:SetDamageForce( self.Owner:GetRight() * -4912 * scale + self.Owner:GetForward() * 9989 * scale )
 		elseif ( anim == "fists_uppercut" ) then
-			dmginfo:SetDamageForce( self.Owner:GetUp() * 5158 + self.Owner:GetForward() * 10012 )
+			dmginfo:SetDamageForce( self.Owner:GetUp() * 5158 * scale + self.Owner:GetForward() * 10012 * scale )
 			dmginfo:SetDamage( math.random( 12, 24 ) )
 		end
 
+		SuppressHostEvents( NULL ) -- Let the breakable gibs spawn in multiplayer on client
 		tr.Entity:TakeDamageInfo( dmginfo )
+		SuppressHostEvents( self.Owner )
+
 		hit = true
 
 	end
 
-	if ( SERVER && IsValid( tr.Entity ) ) then
+	if ( IsValid( tr.Entity ) ) then
 		local phys = tr.Entity:GetPhysicsObject()
 		if ( IsValid( phys ) ) then
-			phys:ApplyForceOffset( self.Owner:GetAimVector() * 80 * phys:GetMass(), tr.HitPos )
+			phys:ApplyForceOffset( self.Owner:GetAimVector() * 80 * phys:GetMass() * scale, tr.HitPos )
 		end
 	end
 
@@ -164,14 +170,27 @@ end
 
 function SWEP:Deploy()
 
+	local speed = GetConVarNumber( "sv_defaultdeployspeed" )
+
 	local vm = self.Owner:GetViewModel()
 	vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_draw" ) )
-	
+	vm:SetPlaybackRate( speed )
+
+	self:SetNextPrimaryFire( CurTime() + vm:SequenceDuration() / speed )
+	self:SetNextSecondaryFire( CurTime() + vm:SequenceDuration() / speed )
 	self:UpdateNextIdle()
-	
+
 	if ( SERVER ) then
 		self:SetCombo( 0 )
 	end
+
+	return true
+
+end
+
+function SWEP:Holster()
+
+	self:SetNextMeleeAttack( 0 )
 
 	return true
 

@@ -6,32 +6,31 @@ if ( !VideoSettings ) then return end
 
 PrintTable( VideoSettings )
 
-local SmoothedAng		= nil
-local SmoothedFOV		= nil
-local SmoothedPos		= nil
-local AutoFocusPoint	= nil
+local SmoothedAng = nil
+local SmoothedFOV = nil
+local SmoothedPos = nil
+local AutoFocusPoint = nil
 
 hook.Add( "Initialize", "DemoRenderInit", function()
 
 	if ( VideoSettings.frameblend < 2 ) then
-		RunConsoleCommand( "pp_fb",	"0" )
+		RunConsoleCommand( "pp_fb", "0" )
 	else
-		RunConsoleCommand( "pp_fb",	"1" )
-		RunConsoleCommand( "pp_fb_frames",	VideoSettings.frameblend )
+		RunConsoleCommand( "pp_fb", "1" )
+		RunConsoleCommand( "pp_fb_frames", VideoSettings.frameblend )
 		RunConsoleCommand( "pp_fb_shutter", VideoSettings.fbshutter )
 	end
 
 end )
-
 
 hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, ViewFOV )
 
 	if ( gui.IsGameUIVisible() ) then return false end
 
 	render.Clear( 0, 0, 0, 255, true, true, true )
-	
+
 	local FramesPerFrame = 1
-	
+
 	if ( frame_blend.IsActive() ) then
 
 		FramesPerFrame = frame_blend.RenderableFrames()
@@ -40,7 +39,7 @@ hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, Vie
 		if ( frame_blend.ShouldSkipFrame() ) then
 
 			frame_blend.DrawPreview()
-			return true 
+			return true
 
 		end
 
@@ -52,23 +51,20 @@ hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, Vie
 	if ( !AutoFocusPoint ) then AutoFocusPoint = SmoothedPos * 1 end
 
 	if ( VideoSettings.viewsmooth > 0 ) then
-		SmoothedAng = LerpAngle( (1 - VideoSettings.viewsmooth) / FramesPerFrame, SmoothedAng, ViewAngles )
-		SmoothedFOV = Lerp( (1 - VideoSettings.viewsmooth) / FramesPerFrame, SmoothedFOV, ViewFOV )
+		SmoothedAng = LerpAngle( ( 1 - VideoSettings.viewsmooth ) / FramesPerFrame, SmoothedAng, ViewAngles )
+		SmoothedFOV = Lerp( ( 1 - VideoSettings.viewsmooth ) / FramesPerFrame, SmoothedFOV, ViewFOV )
 	else
 		SmoothedAng = ViewAngles * 1
 		SmoothedFOV = ViewFOV
 	end
 
 	if ( VideoSettings.possmooth > 0 ) then
-		SmoothedPos = LerpVector( (1 - VideoSettings.possmooth) / FramesPerFrame, SmoothedPos, ViewOrigin )
+		SmoothedPos = LerpVector( ( 1 - VideoSettings.possmooth ) / FramesPerFrame, SmoothedPos, ViewOrigin )
 	else
 		SmoothedPos = ViewOrigin * 1
 	end
-		
-	
 
-	local view = 
-	{
+	local view = {
 		x				= 0,
 		y				= 0,
 		w				= math.Round( VideoSettings.width ),
@@ -89,10 +85,10 @@ hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, Vie
 			endpos	= view.origin + ( view.angles:Forward() * 8000 ),
 			mins	= Vector( -2, -2, -2 ),
 			maxs	= Vector( 2, 2, 2 ),
-			filter	= { GetViewEntity() } 
-		})
+			filter	= { GetViewEntity() }
+		} )
 
-		local focuspeed = math.Clamp( (VideoSettings.doffocusspeed / FramesPerFrame) * 0.2, 0, 1 )
+		local focuspeed = math.Clamp( ( VideoSettings.doffocusspeed / FramesPerFrame ) * 0.2, 0, 1 )
 		AutoFocusPoint = LerpVector( focuspeed, AutoFocusPoint, trace.HitPos )
 		local UsableFocusPoint = view.origin + view.angles:Forward() * AutoFocusPoint:Distance( view.origin )
 
@@ -112,13 +108,13 @@ hook.Add( "RenderScene", "RenderForDemo", function ( ViewOrigin, ViewAngles, Vie
 	if ( frame_blend.IsActive() ) then
 
 		frame_blend.BlendFrame()
-		frame_blend.DrawPreview();
+		frame_blend.DrawPreview()
 
 	end
 
 	if ( ShouldRecordThisFrme ) then
-		menu.RecordFrame();
-	end	
+		menu.RecordFrame()
+	end
 
 	return true
 

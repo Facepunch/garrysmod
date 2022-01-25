@@ -90,6 +90,8 @@ function GM:PlayerBindPress(ply, bind, pressed)
    elseif (bind == "gmod_undo" or bind == "undo") and pressed then
       RunConsoleCommand("ttt_dropammo")
       return true
+   elseif bind == "phys_swap" and pressed then
+      RunConsoleCommand("ttt_quickslot", "5")
    end
 end
 
@@ -100,7 +102,7 @@ function GM:KeyPress(ply, key)
    if not IsValid(ply) or ply != LocalPlayer() then return end
 
    if key == IN_SPEED and ply:IsActiveTraitor() then
-      timer.Simple(0.05, function() RunConsoleCommand("+voicerecord") end)
+      timer.Simple(0.05, function() permissions.EnableVoiceChat( true ) end)
    end
 end
 
@@ -109,7 +111,15 @@ function GM:KeyRelease(ply, key)
    if not IsValid(ply) or ply != LocalPlayer() then return end
 
    if key == IN_SPEED and ply:IsActiveTraitor() then
-      timer.Simple(0.05, function() RunConsoleCommand("-voicerecord") end)
+      timer.Simple(0.05, function() permissions.EnableVoiceChat( false ) end)
    end
 end
 
+function GM:PlayerButtonUp(ply, btn)
+   if not IsFirstTimePredicted() then return end
+   -- Would be nice to clean up this whole "all key handling in massive
+   -- functions" thing. oh well
+   if btn == KEY_PAD_ENTER then
+      WEPS.DisguiseToggle(ply)
+   end
+end

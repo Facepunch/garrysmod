@@ -12,7 +12,6 @@ surface.CreateFont("Trebuchet22", {font = "Trebuchet MS",
                                    size = 22,
                                    weight = 900})
 
-include("scoring_shd.lua")
 include("corpse_shd.lua")
 include("player_ext_shd.lua")
 include("weaponry_shd.lua")
@@ -51,12 +50,14 @@ function GM:Initialize()
    LANG.Init()
 
    self.BaseClass:Initialize()
-
-   RunConsoleCommand("ttt_spectate", GetConVar("ttt_spectator_mode"):GetInt())
 end
 
 function GM:InitPostEntity()
    MsgN("TTT Client post-init...")
+
+   net.Start("TTT_Spectate")
+     net.WriteBool(GetConVar("ttt_spectator_mode"):GetBool())
+   net.SendToServer()
 
    if not game.SinglePlayer() then
       timer.Create("idlecheck", 5, 0, CheckIdle)
@@ -109,7 +110,7 @@ local function RoundStateChange(o, n)
       CLSCORE:ClearPanel()
 
       -- people may have died and been searched during prep
-      for _, p in pairs(player.GetAll()) do
+      for _, p in ipairs(player.GetAll()) do
          p.search_result = nil
       end
 
@@ -134,7 +135,7 @@ local function RoundStateChange(o, n)
    end
 
    -- whatever round state we get, clear out the voice flags
-   for k,v in pairs(player.GetAll()) do
+   for k,v in ipairs(player.GetAll()) do
       v.traitor_gvoice = false
    end
 end
@@ -226,7 +227,7 @@ function GM:ClearClientState()
 
    VOICE.InitBattery()
 
-   for _, p in pairs(player.GetAll()) do
+   for _, p in ipairs(player.GetAll()) do
       if IsValid(p) then
          p.sb_tag = nil
          p:SetRole(ROLE_INNOCENT)
@@ -246,7 +247,7 @@ net.Receive("TTT_ClearClientState", GM.ClearClientState)
 function GM:CleanUpMap()
    -- Ragdolls sometimes stay around on clients. Deleting them can create issues
    -- so all we can do is try to hide them.
-   for _, ent in pairs(ents.FindByClass("prop_ragdoll")) do
+   for _, ent in ipairs(ents.FindByClass("prop_ragdoll")) do
       if IsValid(ent) and CORPSE.GetPlayerNick(ent, "") != "" then
          ent:SetNoDraw(true)
          ent:SetSolid(SOLID_NONE)
@@ -368,6 +369,9 @@ function CheckIdle()
 
          timer.Simple(0.3, function()
                               RunConsoleCommand("ttt_spectator_mode", 1)
+                               net.Start("TTT_Spectate")
+                                 net.WriteBool(true)
+                               net.SendToServer()
                               RunConsoleCommand("ttt_cl_idlepopup")
                            end)
       elseif CurTime() > (idle.t + (idle_limit / 2)) then
@@ -375,4 +379,26 @@ function CheckIdle()
          LANG.Msg("idle_warning")
       end
    end
+end
+
+function GM:OnEntityCreated(ent)
+   -- Make ragdolls look like the player that has died
+   if ent:IsRagdoll() then
+      local ply = CORPSE.GetPlayer(ent)
+
+      if IsValid(ply) then
+         -- Only copy any decals if this ragdoll was recently created
+         if ent:GetCreationTime() > CurTime() - 1 then
+            ent:SnatchModelInstance(ply)
+         end
+
+         -- Copy the color for the PlayerColor matproxy
+         local playerColor = ply:GetPlayerColor()
+         ent.GetPlayerColor = function()
+            return playerColor
+         end
+      end
+   end
+
+   return self.BaseClass.OnEntityCreated(self, ent)
 end

@@ -151,7 +151,7 @@ DIV.disabled
 	border-radius: 4px;
 }
 
-pagnation
+pagination
 {
 	position: absolute;
 	bottom: 4px;
@@ -309,7 +309,7 @@ workshopmessage
 
 .options UL LI a
 {
-	//text-shadow: 1px 1px 1px rgba( 0, 0, 0, 0.5 );
+	/*text-shadow: 1px 1px 1px rgba( 0, 0, 0, 0.5 );*/
 	color: rgba( 255, 255, 255, 0.9 );
 }
 
@@ -319,3 +319,64 @@ workshopmessage
 	text-shadow: 0px 0px 8px rgba( 255, 255, 255, 1.0 );
 }
 
+/* 1152x864 and lower */
+@media (max-width: 700px) {
+	workshopicon
+	{
+		margin: 0px;
+		margin-right: 5px;
+		margin-bottom: 5px;
+	}
+}
+
+/* 1024x768 and lower */
+@media (max-width: 670px) {
+	.options {
+		width: 150px !important;
+	}
+
+	.clickable {
+		padding-left: 5px !important;
+	}
+
+	DIV.page
+	{
+		left: 150px !important;
+	}
+
+	workshopicon
+	{
+		width: 170px !important;
+		height: 170px !important;
+		margin: 0px;
+		margin-right: 1px;
+		margin-bottom: 1px;
+	}
+}
+
+/* 800x600 and lower */
+@media (max-width: 530px) {
+	.options {
+		width: 130px !important;
+	}
+
+	.clickable {
+		padding-left: 5px !important;
+	}
+
+	DIV.page
+	{
+		left: 130px !important;
+	}
+	.options UL {
+		margin: 0px;
+	}
+	workshopicon
+	{
+		width: 90px !important;
+		height: 90px !important;
+		margin: 0px;
+		margin-right: 0px;
+		margin-bottom: 0px;
+	}
+}

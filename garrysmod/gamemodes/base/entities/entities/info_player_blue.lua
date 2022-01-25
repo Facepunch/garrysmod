@@ -7,5 +7,4 @@
 
 -- This file only exists so that the entity is created
 
-
 ENT.Type = "point"

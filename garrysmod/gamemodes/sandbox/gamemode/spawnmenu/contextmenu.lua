@@ -3,7 +3,6 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "m_bHangOpen", "HangOpen" )
 
-
 function PANEL:Init()
 
 	--
@@ -14,39 +13,35 @@ function PANEL:Init()
 
 	self.Canvas = vgui.Create( "DCategoryList", self )
 	self.m_bHangOpen = false
-	
-	--self.Canvas:EnableVerticalScrollbar( true )
-	--self.Canvas:SetSpacing( 0 )
-	--self.Canvas:SetPadding( 5 )
-	--self.Canvas:SetDrawBackground( false )
-	
-end
 
+	self:Dock( FILL )
+
+end
 
 function PANEL:Open()
 
 	self:SetHangOpen( false )
-	
+
 	-- If the spawn menu is open, try to close it..
-	if ( g_SpawnMenu:IsVisible() ) then
+	if ( IsValid( g_SpawnMenu ) && g_SpawnMenu:IsVisible() ) then
 		g_SpawnMenu:Close( true )
 	end
-	
+
 	if ( self:IsVisible() ) then return end
-	
+
 	CloseDermaMenus()
-	
+
 	self:MakePopup()
 	self:SetVisible( true )
 	self:SetKeyboardInputEnabled( false )
 	self:SetMouseInputEnabled( true )
-	
+
 	RestoreCursorPosition()
 
-	local bShouldShow = true;
+	local bShouldShow = true
 
 	-- TODO: Any situation in which we shouldn't show the tool menu on the context menu?
-	
+
 	-- Set up the active panel..
 	if ( bShouldShow && IsValid( spawnmenu.ActiveControlPanel() ) ) then
 
@@ -63,11 +58,10 @@ function PANEL:Open()
 		self.Canvas:SetVisible( false )
 
 	end
-	
+
 	self:InvalidateLayout( true )
 
 end
-
 
 function PANEL:Close( bSkipAnim )
 
@@ -75,54 +69,43 @@ function PANEL:Close( bSkipAnim )
 		self:SetHangOpen( false )
 		return
 	end
-	
+
 	RememberCursorPosition()
-	
+
 	CloseDermaMenus()
 
 	self:SetKeyboardInputEnabled( false )
 	self:SetMouseInputEnabled( false )
-	
+
 	self:SetAlpha( 255 )
 	self:SetVisible( false )
 	self:RestoreControlPanel()
-	
-end
 
+end
 
 function PANEL:PerformLayout()
-	
-	self:SetPos( 0, 0 )
-	self:SetSize( ScrW(), ScrH() )
 
-	self.Canvas:SetWide( 311 )
-	self.Canvas:SetPos( ScrW() - self.Canvas:GetWide() - 50, self.y )
-	
 	if ( IsValid( spawnmenu.ActiveControlPanel() ) ) then
-	
-		spawnmenu.ActiveControlPanel():InvalidateLayout( true )
-		
-		local Tall = spawnmenu.ActiveControlPanel():GetTall() + 10
-		local MaxTall = ScrH() * 0.8
-		if ( Tall > MaxTall ) then Tall = MaxTall end
-		
-		self.Canvas:SetTall( Tall )
-		self.Canvas.y = ScrH() - 50 - Tall
-	
-	end
-	
-	self.Canvas:InvalidateLayout( true )
-	
-end
 
+		spawnmenu.ActiveControlPanel():InvalidateLayout( true )
+
+		local Tall = math.min( spawnmenu.ActiveControlPanel():GetTall() + 10, ScrH() * 0.8 )
+		if ( self.Canvas:GetTall() != Tall ) then self.Canvas:SetTall( Tall ) end
+		if ( self.Canvas:GetWide() != 320 ) then self.Canvas:SetWide( 320 ) end
+
+		self.Canvas:SetPos( ScrW() - self.Canvas:GetWide() - 50, ScrH() - 50 - Tall )
+		self.Canvas:InvalidateLayout( true )
+
+	end
+
+end
 
 function PANEL:StartKeyFocus( pPanel )
 
 	self:SetKeyboardInputEnabled( true )
 	self:SetHangOpen( true )
-	
-end
 
+end
 
 function PANEL:EndKeyFocus( pPanel )
 
@@ -130,16 +113,15 @@ function PANEL:EndKeyFocus( pPanel )
 
 end
 
-
 function PANEL:RestoreControlPanel()
 
 	-- Restore the active panel
 	if ( !spawnmenu.ActiveControlPanel() ) then return end
 	if ( !self.OldParent ) then return end
-	
+
 	spawnmenu.ActiveControlPanel():SetParent( self.OldParent )
 	spawnmenu.ActiveControlPanel():SetPos( self.OldPosX, self.OldPosY )
-	
+
 	self.OldParent = nil
 
 end
@@ -151,8 +133,9 @@ end
 --
 vgui.Register( "ContextMenu", PANEL, "EditablePanel" )
 
-
 function CreateContextMenu()
+
+	if ( !hook.Run( "ContextMenuEnabled" ) ) then return end
 
 	if ( IsValid( g_ContextMenu ) ) then
 		g_ContextMenu:Remove()
@@ -160,8 +143,11 @@ function CreateContextMenu()
 	end
 
 	g_ContextMenu = vgui.Create( "ContextMenu" )
+
+	if ( !IsValid( g_ContextMenu ) ) then return end
+
 	g_ContextMenu:SetVisible( false )
-	
+
 	--
 	-- We're blocking clicks to the world - but we don't want to
 	-- so feed clicks to the proper functions..
@@ -172,38 +158,41 @@ function CreateContextMenu()
 	g_ContextMenu.OnMouseReleased = function( p, code )
 		hook.Run( "GUIMouseReleased", code, gui.ScreenToVector( gui.MousePos() ) )
 	end
-	
+
 	hook.Run( "ContextMenuCreated", g_ContextMenu )
 
-
 	local IconLayout = g_ContextMenu:Add( "DIconLayout" )
-	IconLayout:Dock( LEFT )
-	IconLayout:SetWorldClicker( true )
 	IconLayout:SetBorder( 8 )
 	IconLayout:SetSpaceX( 8 )
 	IconLayout:SetSpaceY( 8 )
-	IconLayout:SetWide( 200 )
 	IconLayout:SetLayoutDir( LEFT )
+	IconLayout:SetWorldClicker( true )
+	IconLayout:SetStretchWidth( true )
+	IconLayout:SetStretchHeight( false ) -- No infinite re-layouts
+	IconLayout:Dock( LEFT )
+
+	-- This overrides DIconLayout's OnMousePressed (which is inherited from DPanel), but we don't care about that in this case
+	IconLayout.OnMousePressed = function( s, ... ) s:GetParent():OnMousePressed( ... ) end
 
 	for k, v in pairs( list.Get( "DesktopWindows" ) ) do
-		
+
 		local icon = IconLayout:Add( "DButton" )
 		icon:SetText( "" )
 		icon:SetSize( 80, 82 )
-		icon.Paint = function()end
-
-		local label = icon:Add( "DLabel" )
-		label:Dock( BOTTOM )
-		label:SetText( v.title )
-		label:SetContentAlignment( 5 )
-		label:SetTextColor( Color( 255, 255, 255, 255 ) )
-		label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
+		icon.Paint = function() end
 
 		local image = icon:Add( "DImage" )
 		image:SetImage( v.icon )
 		image:SetSize( 64, 64 )
 		image:Dock( TOP )
 		image:DockMargin( 8, 0, 8, 0 )
+
+		local label = icon:Add( "DLabel" )
+		label:Dock( BOTTOM )
+		label:SetText( v.title )
+		label:SetContentAlignment( 5 )
+		label:SetTextColor( color_white )
+		label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 
 		icon.DoClick = function()
 
@@ -212,8 +201,9 @@ function CreateContextMenu()
 			--
 			local newv = list.Get( "DesktopWindows" )[ k ]
 
-			if ( v.onewindow ) then
-				if ( IsValid( icon.Window ) ) then icon.Window:Center() return end
+			if ( v.onewindow and IsValid( icon.Window ) ) then
+				icon.Window:Center()
+				return
 			end
 
 			-- Make the window
@@ -230,25 +220,23 @@ function CreateContextMenu()
 
 end
 
-
 function GM:OnContextMenuOpen()
 
 	-- Let the gamemode decide whether we should open or not..
-	if ( !hook.Call( "ContextMenuOpen", GAMEMODE ) ) then return end
-		
+	if ( !hook.Call( "ContextMenuOpen", self ) ) then return end
+
 	if ( IsValid( g_ContextMenu ) && !g_ContextMenu:IsVisible() ) then
 		g_ContextMenu:Open()
 		menubar.ParentTo( g_ContextMenu )
 	end
-	
-end
 
+	hook.Call( "ContextMenuOpened", self )
+
+end
 
 function GM:OnContextMenuClose()
 
-	if ( IsValid( g_ContextMenu ) ) then
-		g_ContextMenu:Close()
-	end
-	
-end
+	if ( IsValid( g_ContextMenu ) ) then g_ContextMenu:Close() end
+	hook.Call( "ContextMenuClosed", self )
 
+end

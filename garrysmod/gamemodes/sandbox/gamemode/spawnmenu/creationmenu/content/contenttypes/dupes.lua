@@ -7,8 +7,6 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 	HTML = vgui.Create( "DHTML" )
 	JS_Language( HTML )
 	JS_Workshop( HTML )
-	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
-	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ).. " );" )
 
 	ws_dupe = WorkshopFileBase( "dupe", { "dupe" } )
 	ws_dupe.HTML = HTML
@@ -24,25 +22,24 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 			if ( k <= offset ) then continue end
 			if ( k > offset + perpage ) then break end
 
-			local entry =
-			{
+			local entry = {
 				file	= "dupes/" .. v,
 				name	= v:StripExtension(),
-				preview	= "dupes/" .. v:StripExtension() .. ".jpg"
+				preview	= "dupes/" .. v:StripExtension() .. ".jpg",
+				description	= "Local duplication stored on your computer. Local content can be deleted in the main menu."
 			}
 
 			table.insert( saves, entry )
 
 		end
 
-		local results =
-		{
+		local results = {
 			totalresults	= #f,
 			results			= saves
 		}
 
 		local json = util.TableToJSON( results, false )
-		HTML:Call( "dupe.ReceiveLocal( "..json.." )" )
+		HTML:Call( "dupe.ReceiveLocal( " .. json .. " )" )
 
 	end
 
@@ -54,10 +51,14 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 
 	function ws_dupe:DownloadAndArm( id )
 
-		MsgN( "Downloading Dupe...\n" )
-		steamworks.Download( id, true, function( name )
+		-- Server doesn't allow us to arm dupes, don't even try to download anything
+		local res = hook.Run( "CanArmDupe", LocalPlayer() )
+		if ( res == false ) then LocalPlayer():ChatPrint( "Refusing to download Workshop dupe, server has blocked usage of the Duplicator tool!" ) return end
 
-			MsgN( "Finished - arming!\n" )
+		MsgN( "Downloading Dupe..." )
+		steamworks.DownloadUGC( id, function( name )
+
+			MsgN( "Finished - arming!" )
 			ws_dupe:Arm( name )
 
 		end )
@@ -70,10 +71,12 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 
 	end
 
+	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
+	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ) .. " );" )
+
 	return HTML
 
 end, "icon16/control_repeat_blue.png", 200 )
-
 
 hook.Add( "DupeSaveAvailable", "UpdateDupeSpawnmenuAvailable", function()
 
@@ -102,7 +105,6 @@ hook.Add( "DupeSaved", "DuplicationSavedSpawnMenu", function()
 	HTML:Call( "ShowLocalDupes();" )
 
 end )
-
 
 concommand.Add( "dupe_show", function()
 

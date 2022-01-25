@@ -1,5 +1,27 @@
 
-local MenuGradient = Material( "../html/img/gradient.png", "nocull smooth" )
+local MenuGradient = Material( "html/img/gradient.png", "nocull smooth" )
+
+local FreeMaterial = nil
+
+local function CreateBackgroundMaterial( path )
+	if ( FreeMaterial ) then
+		FreeMaterial:SetDynamicImage( path )
+
+		local ret = FreeMaterial
+		FreeMaterial = nil
+		return ret
+	end
+
+	return DynamicMaterial( path, "0100010" ) -- nocull smooth
+end
+
+local function FreeBackgroundMaterial( mat )
+	if ( FreeMaterial ) then
+		MsgN( "Warning! Menu shouldn't be releasing a material when one is already queued for use!" )
+	end
+
+	FreeMaterial = mat
+end
 
 local Images = {}
 
@@ -27,6 +49,8 @@ end
 
 local function Render( tbl )
 
+	if ( !tbl.mat ) then return end
+
 	surface.SetMaterial( tbl.mat )
 	surface.SetDrawColor( 255, 255, 255, tbl.Alpha )
 
@@ -40,9 +64,15 @@ local function Render( tbl )
 
 end
 
+local function ShouldBackgroundUpdate()
+
+	return !IsInGame() && !IsInLoading()
+
+end
+
 function DrawBackground()
 
-	if ( !IsInGame() ) then 
+	if ( ShouldBackgroundUpdate() ) then
 
 		if ( Active ) then
 			Think( Active )
@@ -50,14 +80,8 @@ function DrawBackground()
 		end
 
 		if ( Outgoing ) then
-
 			Think( Outgoing )
 			Render( Outgoing )
-
-			if ( Outgoing.Alpha <= 0 ) then
-				Outgoing = nil
-			end
-
 		end
 
 	end
@@ -84,20 +108,40 @@ local LastGamemode = "none"
 
 function ChangeBackground( currentgm )
 
+	if ( !ShouldBackgroundUpdate() ) then return end -- Don't try to load new images while in-game or loading
+
 	if ( currentgm && currentgm == LastGamemode ) then return end
 	if ( currentgm ) then LastGamemode = currentgm end
-	
+
 	local img = table.Random( Images )
-	
-	if ( !img ) then return end
+	if ( !img ) then
+		print( "No main menu backgrounds found!" )
+		return
+	end
+
+	-- We just rolled the same image, no thank you, reroll
+	if ( Active && img == Active.Name && #Images > 1 ) then
+		ChangeBackground()
+		return
+	end
+
+	if ( Outgoing ) then
+		FreeBackgroundMaterial( Outgoing.mat )
+		Outgoing.mat = nil
+	end
 
 	Outgoing = Active
 	if ( Outgoing ) then
 		Outgoing.AlphaVel = 255
 	end
 
-	local mat = Material( img, "nocull smooth" )
-	if ( !mat || mat:IsError() ) then return end
+	local mat = CreateBackgroundMaterial( img )
+	if ( !mat || mat:IsError() ) then
+		print( "Failed to create material for background ", img )
+		table.RemoveByValue( Images, img )
+		ChangeBackground()
+		return
+	end
 
 	Active = {
 		Ratio = mat:GetInt( "$realwidth" ) / mat:GetInt( "$realheight" ),
@@ -107,7 +151,8 @@ function ChangeBackground( currentgm )
 		SizeVel = ( 0.3 / 30 ),
 		Alpha = 255,
 		DieTime = 30,
-		mat = mat
+		mat = mat,
+		Name = img
 	}
 
 	if ( Active.Ratio < ScrW() / ScrH() ) then

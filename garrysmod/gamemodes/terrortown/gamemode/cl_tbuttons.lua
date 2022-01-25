@@ -22,7 +22,7 @@ end
 function TBHUD:CacheEnts()
    if IsValid(LocalPlayer()) and LocalPlayer():IsActiveTraitor() then
       self.buttons = {}
-      for _, ent in pairs(ents.FindByClass("ttt_traitor_button")) do
+      for _, ent in ipairs(ents.FindByClass("ttt_traitor_button")) do
          if IsValid(ent) then
             self.buttons[ent:EntIndex()] = ent
          end
@@ -59,7 +59,7 @@ net.Receive("TTT_ConfirmUseTButton", TBHUD.ReceiveUseConfirm)
 
 local function ComputeRangeFactor(plypos, tgtpos)
    local d = tgtpos - plypos
-   d = d:DotProduct(d)
+   d = d:Dot(d)
    return d / range
 end
 
@@ -94,7 +94,7 @@ function TBHUD:Draw(client)
 
             if (not IsOffScreen(scrpos)) and but:IsUsable() then
                d = pos - plypos
-               d = d:DotProduct(d) / (but:GetUsableRange() ^ 2)
+               d = d:Dot(d) / (but:GetUsableRange() ^ 2)
                -- draw if this button is within range, with alpha based on distance
                if d < 1 then
                   surface.SetDrawColor(255, 255, 255, 200 * (1 - d))

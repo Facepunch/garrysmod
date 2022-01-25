@@ -2,23 +2,23 @@
 AddCSLuaFile()
 
 properties.Add( "editentity", {
-	MenuLabel = "Edit Properties..",
+	MenuLabel = "#entedit",
 	Order = 90001,
 	PrependSpacer = true,
 	MenuIcon = "icon16/pencil.png",
-	
-	Filter = function( self, ent, ply ) 
+
+	Filter = function( self, ent, ply )
 
 		if ( !IsValid( ent ) ) then return false end
 		if ( !ent.Editable ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "editentity", ent ) ) then return false end
 
-		return true 
+		return true
 
 	end,
 
 	Action = function( self, ent )
-	
+
 		local window = g_ContextMenu:Add( "DFrame" )
 		window:SetSize( 320, 400 )
 		window:SetTitle( tostring( ent ) )

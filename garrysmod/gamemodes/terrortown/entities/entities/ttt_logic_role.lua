@@ -23,13 +23,16 @@ end
 
 function ENT:AcceptInput(name, activator)
    if name == "TestActivator" then
+      if IsValid(activator) and activator:IsPlayer() then
+         local activator_role = (GetRoundState() == ROUND_PREP) and ROLE_INNOCENT or activator:GetRole()
 
-      if IsValid(activator) and activator:IsPlayer() and (self.Role == ROLE_ANY or activator:IsRole(self.Role)) then
-         Dev(2, activator, "passed logic_role test of", self:GetName())
-         self:TriggerOutput("OnPass", activator)
-      else
-         Dev(2, activator, "failed logic_role test of", self:GetName())
-         self:TriggerOutput("OnFail", activator)
+         if self.Role == ROLE_ANY or self.Role == activator_role then
+            Dev(2, activator, "passed logic_role test of", self:GetName())
+            self:TriggerOutput("OnPass", activator)
+         else
+            Dev(2, activator, "failed logic_role test of", self:GetName())
+            self:TriggerOutput("OnFail", activator)
+         end
       end
 
       return true

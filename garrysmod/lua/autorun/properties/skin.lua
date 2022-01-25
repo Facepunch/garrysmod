@@ -5,8 +5,8 @@ properties.Add( "skin", {
 	MenuLabel = "#skin",
 	Order = 601,
 	MenuIcon = "icon16/picture_edit.png",
-	
-	Filter = function( self, ent, ply ) 
+
+	Filter = function( self, ent, ply )
 
 		if ( !IsValid( ent ) ) then return false end
 		if ( ent:IsPlayer() ) then return false end
@@ -25,29 +25,28 @@ properties.Add( "skin", {
 		--
 		local submenu = option:AddSubMenu()
 
-
 		--
 		-- Create a check item for each skin
 		--
-		local num = ent:SkinCount()
-		if ( IsValid( ent.AttachedEntity ) ) then num = ent.AttachedEntity:SkinCount() end
+		local target = IsValid( ent.AttachedEntity ) and ent.AttachedEntity or ent
 
-		for i=0, num-1 do
+		local num = target:SkinCount()
+
+		for i = 0, num - 1 do
 
 			local option = submenu:AddOption( "Skin " .. i, function() self:SetSkin( ent, i ) end )
-			if ( ent:GetSkin() == i ) then
+			if ( target:GetSkin() == i ) then
 				option:SetChecked( true )
 			end
 
 		end
-		
 
 	end,
 
 	Action = function( self, ent )
 
 		-- Nothing - we use SetSkin below
-		
+
 	end,
 
 	SetSkin = function( self, ent, id )
@@ -59,16 +58,17 @@ properties.Add( "skin", {
 
 	end,
 
-	Receive = function( self, length, player )
-	
+	Receive = function( self, length, ply )
+
 		local ent = net.ReadEntity()
 		local skinid = net.ReadUInt( 8 )
-		
-		if ( !self:Filter( ent, player ) ) then return end
 
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
+
+		ent = IsValid( ent.AttachedEntity ) and ent.AttachedEntity or ent
 		ent:SetSkin( skinid )
-		if ( IsValid( ent.AttachedEntity ) ) then ent.AttachedEntity:SetSkin( skinid ) end
-		
-	end	
+
+	end
 
 } )

@@ -16,7 +16,7 @@ local function GetTextForRole(role)
 
    else
       local traitors = {}
-      for _, ply in pairs(player.GetAll()) do
+      for _, ply in ipairs(player.GetAll()) do
          if ply:IsTraitor() then
             table.insert(traitors, ply)
          end
@@ -26,7 +26,7 @@ local function GetTextForRole(role)
       if #traitors > 1 then
          local traitorlist = ""
 
-         for k, ply in pairs(traitors) do
+         for k, ply in ipairs(traitors) do
             if ply != LocalPlayer() then
                traitorlist = traitorlist .. string.rep(" ", 42) .. ply:Nick()  .. "\n"
             end
@@ -93,7 +93,7 @@ local function IdlePopup()
    local dframe = vgui.Create("DFrame")
    dframe:SetSize(w, h)
    dframe:Center()
-   dframe:SetTitle("Idle")
+   dframe:SetTitle(GetTranslation("idle_popup_title"))
    dframe:SetVisible(true)
    dframe:SetMouseInputEnabled(true)
 
@@ -128,6 +128,3 @@ local function IdlePopup()
 
 end
 concommand.Add("ttt_cl_idlepopup", IdlePopup)
-
-
-

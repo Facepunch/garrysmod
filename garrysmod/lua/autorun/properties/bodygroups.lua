@@ -1,11 +1,12 @@
+
 AddCSLuaFile()
 
 properties.Add( "bodygroups", {
 	MenuLabel = "#bodygroups",
 	Order = 600,
 	MenuIcon = "icon16/link_edit.png",
-	
-	Filter = function( self, ent, ply ) 
+
+	Filter = function( self, ent, ply )
 
 		if ( !IsValid( ent ) ) then return false end
 		if ( ent:IsPlayer() ) then return false end
@@ -32,12 +33,11 @@ properties.Add( "bodygroups", {
 
 	MenuOpen = function( self, option, ent, tr )
 
-		if ( IsValid( ent.AttachedEntity ) ) then ent = ent.AttachedEntity end
-
+		local target = IsValid( ent.AttachedEntity ) and ent.AttachedEntity or ent
 		--
 		-- Get a list of bodygroups
 		--
-		local options = ent:GetBodyGroups()
+		local options = target:GetBodyGroups()
 
 		--
 		-- Add a submenu to our automatically created menu option
@@ -56,7 +56,7 @@ properties.Add( "bodygroups", {
 			--
 			if ( v.num == 2 ) then
 
-				local current = ent:GetBodygroup( v.id )
+				local current = target:GetBodygroup( v.id )
 				local opposite = 1
 				if ( current == opposite ) then opposite = 0 end
 
@@ -76,7 +76,7 @@ properties.Add( "bodygroups", {
 					local modelname = "model #" .. i
 					if ( v.submodels && v.submodels[ i-1 ] != "" ) then modelname = v.submodels[ i-1 ] end
 					local option = groups:AddOption( modelname, function() self:SetBodyGroup( ent, v.id, i-1 ) end )
-					if ( ent:GetBodygroup( v.id ) == i-1 ) then
+					if ( target:GetBodygroup( v.id ) == i-1 ) then
 						option:SetChecked( true )
 					end
 				end
@@ -90,7 +90,7 @@ properties.Add( "bodygroups", {
 	Action = function( self, ent )
 
 		-- Nothing - we use SetBodyGroup below
-		
+
 	end,
 
 	SetBodyGroup = function( self, ent, body, id )
@@ -103,16 +103,19 @@ properties.Add( "bodygroups", {
 
 	end,
 
-	Receive = function( self, length, player )
-	
+	Receive = function( self, length, ply )
+
 		local ent = net.ReadEntity()
 		local body = net.ReadUInt( 8 )
 		local id = net.ReadUInt( 8 )
-		
-		if ( !self:Filter( ent, player ) ) then return end
+
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
+
+		ent = IsValid( ent.AttachedEntity ) and ent.AttachedEntity or ent
 
 		ent:SetBodygroup( body, id )
-		
-	end	
+
+	end
 
 } )

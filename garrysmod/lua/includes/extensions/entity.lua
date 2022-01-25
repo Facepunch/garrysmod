@@ -4,7 +4,13 @@ local meta = FindMetaTable( "Entity" )
 -- Return if there's nothing to add on to
 if ( !meta ) then return end
 
-AccessorFunc( meta, "m_bPlayPickupSound", "ShouldPlayPickupSound" )
+function meta:GetShouldPlayPickupSound()
+	return self.m_bPlayPickupSound || false
+end
+
+function meta:SetShouldPlayPickupSound( bPlaySound )
+	self.m_bPlayPickupSound = tobool( bPlaySound ) || false
+end
 
 --
 -- Entity index accessor. This used to be done in engine, but it's done in Lua now because it's faster
@@ -50,12 +56,18 @@ end
 
 if ( SERVER ) then
 
-	function meta:SetCreator( ply )
+	function meta:SetCreator( ply --[[= NULL]] )
+		if ( ply == nil ) then
+			ply = NULL
+		elseif ( !isentity( ply ) ) then
+			error( "bad argument #1 to 'SetCreator' (Entity expected, got " .. type( ply ) .. ")", 2 )
+		end
+
 		self.m_PlayerCreator = ply
 	end
 
 	function meta:GetCreator()
-		return self.m_PlayerCreator
+		return self.m_PlayerCreator || NULL
 	end
 
 end
@@ -65,7 +77,7 @@ end
 -----------------------------------------------------------]]
 function meta:IsConstrained()
 
-	if ( CLIENT ) then return self:GetNetworkedBool( "IsConstrained" ) end
+	if ( CLIENT ) then return self:GetNWBool( "IsConstrained" ) end
 
 	local c = self:GetTable().Constraints
 	local bIsConstrained = false
@@ -79,7 +91,7 @@ function meta:IsConstrained()
 
 	end
 
-	self:SetNetworkedBool( "IsConstrained", bIsConstrained )
+	self:SetNWBool( "IsConstrained", bIsConstrained )
 	return bIsConstrained
 
 end
@@ -141,9 +153,6 @@ end
 
 hook.Add( "EntityRemoved", "DoDieFunction", DoDieFunction )
 
---[[---------------------------------------------------------
-	Name: PhysWake
------------------------------------------------------------]]
 function meta:PhysWake()
 
 	local phys = self:GetPhysicsObject()
@@ -167,6 +176,12 @@ function meta:GetChildBones( bone )
 
 	return bones
 
+end
+
+function DTVar_ReceiveProxyGL( ent, name, id, val )
+	if ( ent.CallDTVarProxies ) then
+		ent:CallDTVarProxies( name, id, val )
+	end
 end
 
 function meta:InstallDataTable()
@@ -210,7 +225,6 @@ function meta:InstallDataTable()
 			SetFunc = SetFunc,
 			GetFunc = GetFunc,
 			typename = typename,
-			keyname = keyname,
 			Notify = {}
 		}
 
@@ -246,9 +260,7 @@ function meta:InstallDataTable()
 			KeyName		= keyname,
 			Set			= setfunc,
 			Get			= getfunc,
-			Type		= type,
-			EditType	= EditType,
-			EditData	= EditData
+			Type		= type
 		}
 
 		if ( other_data ) then
@@ -267,6 +279,15 @@ function meta:InstallDataTable()
 
 	end
 
+	self.CallDTVarProxies = function( ent, typename, index, newVal )
+		for name, t in pairs( datatable ) do
+			if ( t.index == index && t.typename == typename ) then
+				CallProxies( ent, t.Notify, name, self.dt[ name ], newVal )
+				break
+			end
+		end
+	end
+
 	self.NetworkVar = function( ent, typename, index, name, other_data )
 
 		local t = ent.DTVar( ent, typename, index, name )
@@ -282,6 +303,8 @@ function meta:InstallDataTable()
 
 		if ( !other_data ) then return end
 
+		-- This KeyName stuff is absolutely unnecessary, there's absolutely no reason for it to exist
+		-- But we cannot remove it now because dupes will break. It should've used the "name" variable
 		if ( other_data.KeyName ) then
 			ent:SetupKeyValue( other_data.KeyName, typename, ent[ "Set" .. name ], ent[ "Get" .. name ], other_data )
 			ent:SetupEditing( name, other_data.KeyName, other_data.Edit )
@@ -307,7 +330,8 @@ function meta:InstallDataTable()
 	--
 	self.NetworkVarElement = function( ent, typename, index, element, name, other_data )
 
-		ent.DTVar( ent, typename, index, name, keyname )
+		local datatab = ent.DTVar( ent, typename, index, name, keyname )
+		datatab.element = element
 
 		ent[ "Set" .. name ] = function( self, value )
 			local old = self.dt[ name ]
@@ -321,6 +345,8 @@ function meta:InstallDataTable()
 
 		if ( !other_data ) then return end
 
+		-- This KeyName stuff is absolutely unnecessary, there's absolutely no reason for it to exist
+		-- But we cannot remove it now because dupes will break. It should've used the "name" variable
 		if ( other_data.KeyName ) then
 			ent:SetupKeyValue( other_data.KeyName, "float", ent[ "Set" .. name ], ent[ "Get" .. name ], other_data )
 			ent:SetupEditing( name, other_data.KeyName, other_data.Edit )
@@ -366,14 +392,18 @@ function meta:InstallDataTable()
 			-- Don't try to save entities (yet?)
 			if ( v.typename == "Entity" ) then continue end
 
-			dt[ k ] = v.GetFunc( ent, v.index )
+			if ( v.element ) then
+				dt[ k ] = v.GetFunc( ent, v.index )[ v.element ]
+			else
+				dt[ k ] = v.GetFunc( ent, v.index )
+			end
 
 		end
 
 		--
 		-- If there's nothing in our table - then return nil.
 		--
-		if ( table.Count( dt ) == 0 ) then return nil end
+		if ( table.IsEmpty( dt ) ) then return nil end
 
 		return dt
 
@@ -392,8 +422,17 @@ function meta:InstallDataTable()
 			-- If it contains this entry
 			if ( tab[ k ] == nil ) then continue end
 
+			-- Support old saves/dupes with incorrectly saved data
+			if ( v.element && ( isangle( tab[ k ] ) || isvector( tab[ k ] ) ) ) then
+				tab[ k ] = tab[ k ][ v.element ]
+			end
+
 			-- Set it.
-			ent[ "Set" .. k ]( ent, tab[ k ] )
+			if ( ent[ "Set" .. k ] ) then
+				ent[ "Set" .. k ]( ent, tab[ k ] )
+			else
+				v.SetFunc( ent, v.index, tab[ k ] )
+			end
 
 		end
 
@@ -454,9 +493,9 @@ function meta:InstallDataTable()
 
 			if ( !IsValid( ent ) ) then return end
 			if ( !isfunction( ent.GetEditingData ) ) then return end
+			if ( ent.AdminOnly && !client:IsAdmin() ) then return end
 
 			local key = net.ReadString()
-
 
 			-- Is this key in our edit table?
 			local editor = ent:GetEditingData()[ key ]
@@ -473,14 +512,20 @@ end
 
 if ( SERVER ) then
 
-	AccessorFunc( meta, "m_bUnFreezable", "UnFreezable" )
+	function meta:GetUnFreezable()
+		return self.m_bUnFreezable || false
+	end
+
+	function meta:SetUnFreezable( bFreeze )
+		self.m_bUnFreezable = tobool( bFreeze ) || false
+	end
 
 end
 
 --
 -- Networked var proxies
 --
-function meta:SetNetworkedVarProxy( name, func )
+function meta:SetNetworked2VarProxy( name, func )
 
 	if ( !self.NWVarProxies ) then
 		self.NWVarProxies = {}
@@ -490,7 +535,7 @@ function meta:SetNetworkedVarProxy( name, func )
 
 end
 
-function meta:GetNetworkedVarProxy( name )
+function meta:GetNetworked2VarProxy( name )
 
 	if ( self.NWVarProxies ) then
 		local func = self.NWVarProxies[ name ]
@@ -503,8 +548,8 @@ function meta:GetNetworkedVarProxy( name )
 
 end
 
-meta.SetNWVarProxy = meta.SetNetworkedVarProxy
-meta.GetNWVarProxy = meta.GetNetworkedVarProxy
+meta.SetNW2VarProxy = meta.SetNetworked2VarProxy
+meta.GetNW2VarProxy = meta.GetNetworked2VarProxy
 
 hook.Add( "EntityNetworkedVarChanged", "NetworkedVars", function( ent, name, oldValue, newValue )
 

@@ -1,62 +1,60 @@
-
 AddCSLuaFile()
 
-SWEP.HoldType			= "shotgun"
+DEFINE_BASECLASS "weapon_tttbase"
+
+SWEP.HoldType              = "shotgun"
 
 if CLIENT then
-   SWEP.PrintName = "shotgun_name"
+   SWEP.PrintName          = "shotgun_name"
+   SWEP.Slot               = 2
 
-   SWEP.Slot = 2
-   SWEP.Icon = "vgui/ttt/icon_shotgun"
-   SWEP.IconLetter = "B"
+   SWEP.ViewModelFlip      = false
+   SWEP.ViewModelFOV       = 54
+
+   SWEP.Icon               = "vgui/ttt/icon_shotgun"
+   SWEP.IconLetter         = "B"
 end
 
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.Base				= "weapon_tttbase"
-SWEP.Spawnable = true
+SWEP.Kind                  = WEAPON_HEAVY
+SWEP.WeaponID              = AMMO_SHOTGUN
 
-SWEP.Kind = WEAPON_HEAVY
-SWEP.WeaponID = AMMO_SHOTGUN
+SWEP.Primary.Ammo          = "Buckshot"
+SWEP.Primary.Damage        = 11
+SWEP.Primary.Cone          = 0.082
+SWEP.Primary.Delay         = 0.8
+SWEP.Primary.ClipSize      = 8
+SWEP.Primary.ClipMax       = 24
+SWEP.Primary.DefaultClip   = 8
+SWEP.Primary.Automatic     = true
+SWEP.Primary.NumShots      = 8
+SWEP.Primary.Sound         = Sound( "Weapon_XM1014.Single" )
+SWEP.Primary.Recoil        = 7
 
-SWEP.Primary.Ammo = "Buckshot"
-SWEP.Primary.Damage = 11
-SWEP.Primary.Cone = 0.085
-SWEP.Primary.Delay = 0.8
-SWEP.Primary.ClipSize = 8
-SWEP.Primary.ClipMax = 24
-SWEP.Primary.DefaultClip = 8
-SWEP.Primary.Automatic = true
-SWEP.Primary.NumShots = 8
-SWEP.AutoSpawnable      = true
-SWEP.AmmoEnt = "item_box_buckshot_ttt"
+SWEP.AutoSpawnable         = true
+SWEP.Spawnable             = true
+SWEP.AmmoEnt               = "item_box_buckshot_ttt"
 
-SWEP.UseHands			= true
-SWEP.ViewModelFlip		= false
-SWEP.ViewModelFOV		= 54
-SWEP.ViewModel			= "models/weapons/cstrike/c_shot_xm1014.mdl"
-SWEP.WorldModel			= "models/weapons/w_shot_xm1014.mdl"
-SWEP.Primary.Sound			= Sound( "Weapon_XM1014.Single" )
-SWEP.Primary.Recoil			= 7
+SWEP.UseHands              = true
+SWEP.ViewModel             = "models/weapons/cstrike/c_shot_xm1014.mdl"
+SWEP.WorldModel            = "models/weapons/w_shot_xm1014.mdl"
 
-SWEP.IronSightsPos = Vector(-6.881, -9.214, 2.66)
-SWEP.IronSightsAng = Vector(-0.101, -0.7, -0.201)
-
-SWEP.reloadtimer = 0
+SWEP.IronSightsPos         = Vector(-6.881, -9.214, 2.66)
+SWEP.IronSightsAng         = Vector(-0.101, -0.7, -0.201)
 
 function SWEP:SetupDataTables()
-   self:DTVar("Bool", 0, "reloading")
+   self:NetworkVar("Bool", 0, "Reloading")
+   self:NetworkVar("Float", 0, "ReloadTimer")
 
-   return self.BaseClass.SetupDataTables(self)
+   return BaseClass.SetupDataTables(self)
 end
 
 function SWEP:Reload()
 
-   --if self:GetNetworkedBool( "reloading", false ) then return end
-   if self.dt.reloading then return end
+   if self:GetReloading() then return end
 
-   if not IsFirstTimePredicted() then return end
-
-   if self:Clip1() < self.Primary.ClipSize and self.Owner:GetAmmoCount( self.Primary.Ammo ) > 0 then
+   if self:Clip1() < self.Primary.ClipSize and self:GetOwner():GetAmmoCount( self.Primary.Ammo ) > 0 then
 
       if self:StartReload() then
          return
@@ -66,18 +64,15 @@ function SWEP:Reload()
 end
 
 function SWEP:StartReload()
-   --if self:GetNWBool( "reloading", false ) then
-   if self.dt.reloading then
+   if self:GetReloading() then
       return false
    end
 
    self:SetIronsights( false )
 
-   if not IsFirstTimePredicted() then return false end
-
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 
-   local ply = self.Owner
+   local ply = self:GetOwner()
 
    if not ply or ply:GetAmmoCount(self.Primary.Ammo) <= 0 then
       return false
@@ -91,16 +86,15 @@ function SWEP:StartReload()
 
    wep:SendWeaponAnim(ACT_SHOTGUN_RELOAD_START)
 
-   self.reloadtimer =  CurTime() + wep:SequenceDuration()
+   self:SetReloadTimer(CurTime() + wep:SequenceDuration())
 
-   --wep:SetNWBool("reloading", true)
-   self.dt.reloading = true
+   self:SetReloading(true)
 
    return true
 end
 
 function SWEP:PerformReload()
-   local ply = self.Owner
+   local ply = self:GetOwner()
 
    -- prevent normal shooting in between reloads
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
@@ -109,19 +103,19 @@ function SWEP:PerformReload()
 
    if self:Clip1() >= self.Primary.ClipSize then return end
 
-   self.Owner:RemoveAmmo( 1, self.Primary.Ammo, false )
+   self:GetOwner():RemoveAmmo( 1, self.Primary.Ammo, false )
    self:SetClip1( self:Clip1() + 1 )
 
    self:SendWeaponAnim(ACT_VM_RELOAD)
 
-   self.reloadtimer = CurTime() + self:SequenceDuration()
+   self:SetReloadTimer(CurTime() + self:SequenceDuration())
 end
 
 function SWEP:FinishReload()
-   self.dt.reloading = false
+   self:SetReloading(false)
    self:SendWeaponAnim(ACT_SHOTGUN_RELOAD_FINISH)
 
-   self.reloadtimer = CurTime() + self:SequenceDuration()
+   self:SetReloadTimer(CurTime() + self:SequenceDuration())
 end
 
 function SWEP:CanPrimaryAttack()
@@ -134,15 +128,16 @@ function SWEP:CanPrimaryAttack()
 end
 
 function SWEP:Think()
-   if self.dt.reloading and IsFirstTimePredicted() then
-      if self.Owner:KeyDown(IN_ATTACK) then
+   BaseClass.Think(self)
+   if self:GetReloading() then
+      if self:GetOwner():KeyDown(IN_ATTACK) then
          self:FinishReload()
          return
       end
 
-      if self.reloadtimer <= CurTime() then
+      if self:GetReloadTimer() <= CurTime() then
 
-         if self.Owner:GetAmmoCount(self.Primary.Ammo) <= 0 then
+         if self:GetOwner():GetAmmoCount(self.Primary.Ammo) <= 0 then
             self:FinishReload()
          elseif self:Clip1() < self.Primary.ClipSize then
             self:PerformReload()
@@ -155,9 +150,9 @@ function SWEP:Think()
 end
 
 function SWEP:Deploy()
-   self.dt.reloading = false
-   self.reloadtimer = 0
-   return self.BaseClass.Deploy(self)
+   self:SetReloading(false)
+   self:SetReloadTimer(0)
+   return BaseClass.Deploy(self)
 end
 
 -- The shotgun's headshot damage multiplier is based on distance. The closer it
@@ -171,13 +166,14 @@ function SWEP:GetHeadshotMultiplier(victim, dmginfo)
    local dist = victim:GetPos():Distance(att:GetPos())
    local d = math.max(0, dist - 140)
 
-   -- decay from 3.1 to 1 slowly as distance increases
-   return 1 + math.max(0, (2.1 - 0.002 * (d ^ 1.25)))
+   -- Decay from 2 to 1 slowly as distance increases. Note that this used to be
+   -- 3+, but at that time shotgun bullets were treated like in HL2 where half
+   -- of them were hull traces that could not headshot.
+   return 1 + math.max(0, (1.0 - 0.002 * (d ^ 1.25)))
 end
 
 function SWEP:SecondaryAttack()
-   if self.NoSights or (not self.IronSightsPos) or self.dt.reloading then return end
-   --if self:GetNextSecondaryFire() > CurTime() then return end
+   if self.NoSights or (not self.IronSightsPos) or self:GetReloading() then return end
 
    self:SetIronsights(not self:GetIronsights())
 

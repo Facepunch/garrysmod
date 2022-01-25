@@ -54,7 +54,7 @@ function PANEL:Init()
    self:SetCursor( "hand" )
 end
 
-function PANEL:AddColumn( label, func, width )
+function PANEL:AddColumn( label, func, width, _, _ )
    local lbl = vgui.Create( "DLabel", self )
    lbl.GetPlayerText = func
    lbl.IsHeading = false
@@ -64,12 +64,24 @@ function PANEL:AddColumn( label, func, width )
    return lbl
 end
 
+-- Mirror sb_main, of which it and this file both call using the
+--    TTTScoreboardColumns hook, but it is useless in this file
+-- Exists only so the hook wont return an error if it tries to
+--    use the AddFakeColumn function of `sb_main`, which would
+--    cause this file to raise a `function not found` error or others
+function PANEL:AddFakeColumn() end
 
 local namecolor = {
    default = COLOR_WHITE,
    admin = Color(220, 180, 0, 255),
    dev = Color(100, 240, 105, 255)
-};
+}
+
+local rolecolor = {
+   default = Color(0, 0, 0, 0),
+   traitor = Color(255, 0, 0, 30),
+   detective = Color(0, 0, 255, 30)
+}
 
 function GM:TTTScoreboardColorForPlayer(ply)
    if not IsValid(ply) then return namecolor.default end
@@ -82,12 +94,24 @@ function GM:TTTScoreboardColorForPlayer(ply)
    return namecolor.default
 end
 
+function GM:TTTScoreboardRowColorForPlayer(ply)
+   if not IsValid(ply) then return rolecolor.default end
+
+   if ply:IsTraitor() then
+      return rolecolor.traitor
+   elseif ply:IsDetective() then
+      return rolecolor.detective
+   end
+
+   return rolecolor.default
+end
+
 local function ColorForPlayer(ply)
    if IsValid(ply) then
       local c = hook.Call("TTTScoreboardColorForPlayer", GAMEMODE, ply)
 
       -- verify that we got a proper color
-      if c and type(c) == "table" and c.r and c.b and c.g and c.a then
+      if c and istable(c) and c.r and c.b and c.g and c.a then
          return c
       else
          ErrorNoHalt("TTTScoreboardColorForPlayer hook returned something that isn't a color!\n")
@@ -96,7 +120,7 @@ local function ColorForPlayer(ply)
    return namecolor.default
 end
 
-function PANEL:Paint()
+function PANEL:Paint(width, height)
    if not IsValid(self.Player) then return end
 
 --   if ( self.Player:GetFriendStatus() == "friend" ) then
@@ -105,18 +129,15 @@ function PANEL:Paint()
 
    local ply = self.Player
 
-   if ply:IsTraitor() then
-      surface.SetDrawColor(255, 0, 0, 30)
-      surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT)
-   elseif ply:IsDetective() then
-      surface.SetDrawColor(0, 0, 255, 30)
-      surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT)
-   end
+   local c = hook.Call("TTTScoreboardRowColorForPlayer", GAMEMODE, ply)
+
+   surface.SetDrawColor(c)
+   surface.DrawRect(0, 0, width, SB_ROW_HEIGHT)
 
 
    if ply == LocalPlayer() then
       surface.SetDrawColor( 200, 200, 200, math.Clamp(math.sin(RealTime() * 2) * 50, 0, 100))
-      surface.DrawRect(0, 0, self:GetWide(), SB_ROW_HEIGHT )
+      surface.DrawRect(0, 0, width, SB_ROW_HEIGHT )
    end
 
    return true
@@ -149,6 +170,12 @@ function PANEL:SetPlayer(ply)
                               ply:SetMuted(not ply:IsMuted())
                            end
                         end
+
+   self.voice.DoRightClick = function()
+      if IsValid(ply) and ply != LocalPlayer() then
+         self:ShowMicVolumeSlider()
+      end
+   end
 
    self:UpdatePlayerData()
 end
@@ -293,4 +320,97 @@ function PANEL:DoRightClick()
    menu:Open()
 end
 
-vgui.Register( "TTTScorePlayerRow", PANEL, "Button" )
+
+function PANEL:ShowMicVolumeSlider()
+   local width = 300
+   local height = 50
+   local padding = 10
+
+   local sliderHeight = 16
+   local sliderDisplayHeight = 8
+
+   local x = math.max(gui.MouseX() - width, 0)
+   local y = math.min(gui.MouseY(), ScrH() - height)
+
+   local currentPlayerVolume = self:GetPlayer():GetVoiceVolumeScale()
+   currentPlayerVolume = currentPlayerVolume != nil and currentPlayerVolume or 1
+
+
+   -- Frame for the slider
+   local frame = vgui.Create("DFrame")
+   frame:SetPos(x, y)
+   frame:SetSize(width, height)
+   frame:MakePopup()
+   frame:SetTitle("")
+   frame:ShowCloseButton(false)
+   frame:SetDraggable(false)
+   frame:SetSizable(false)
+   frame.Paint = function(self, w, h)
+      draw.RoundedBox(5, 0, 0, w, h, Color(24, 25, 28, 255))
+   end
+
+   -- Automatically close after 10 seconds (something may have gone wrong)
+   timer.Simple(10, function() if IsValid(frame) then frame:Close() end end)
+
+
+   -- "Player volume"
+   local label = vgui.Create("DLabel", frame)
+   label:SetPos(padding, padding)
+   label:SetFont("cool_small")
+   label:SetSize(width - padding * 2, 20)
+   label:SetColor(Color(255, 255, 255, 255))
+   label:SetText(LANG.GetTranslation("sb_playervolume"))
+
+
+   -- Slider
+   local slider = vgui.Create("DSlider", frame)
+   slider:SetHeight(sliderHeight)
+   slider:Dock(TOP)
+   slider:DockMargin(padding, 0, padding, 0)
+   slider:SetSlideX(currentPlayerVolume)
+   slider:SetLockY(0.5)
+   slider.TranslateValues = function(slider, x, y)
+      if IsValid(self:GetPlayer()) then self:GetPlayer():SetVoiceVolumeScale(x) end
+      return x, y
+   end
+
+   -- Close the slider panel once the player has selected a volume
+   slider.OnMouseReleased = function(panel, mcode) frame:Close() end
+   slider.Knob.OnMouseReleased = function(panel, mcode) frame:Close() end
+
+
+   -- Slider rendering
+   -- Render slider bar
+   slider.Paint = function(self, w, h)
+      local volumePercent = slider:GetSlideX()
+
+      -- Filled in box
+      draw.RoundedBox(5, 0, sliderDisplayHeight / 2, w * volumePercent, sliderDisplayHeight, Color(200, 46, 46, 255))
+
+      -- Grey box
+      draw.RoundedBox(5, w * volumePercent, sliderDisplayHeight / 2, w * (1 - volumePercent), sliderDisplayHeight, Color(79, 84, 92, 255))
+   end
+
+   -- Render slider "knob" & text
+   slider.Knob.Paint = function(self, w, h)
+      if slider:IsEditing() then
+         local textValue = math.Round(slider:GetSlideX() * 100) .. "%"
+         local textPadding = 5
+
+         -- The position of the text and size of rounded box are not relative to the text size. May cause problems if font size changes
+         draw.RoundedBox(
+            5, -- Radius
+            -sliderHeight * 0.5 - textPadding, -- X
+            -25, -- Y
+            sliderHeight * 2 + textPadding * 2, -- Width
+            sliderHeight + textPadding * 2, -- Height
+            Color(52, 54, 57, 255)
+         )
+         draw.DrawText(textValue, "cool_small", sliderHeight / 2, -20, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
+      end
+      
+      draw.RoundedBox(100, 0, 0, sliderHeight, sliderHeight, Color(255, 255, 255, 255))
+   end
+end
+
+vgui.Register( "TTTScorePlayerRow", PANEL, "DButton" )

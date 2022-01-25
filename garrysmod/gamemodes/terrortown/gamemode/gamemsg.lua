@@ -3,7 +3,7 @@
 local net = net
 local string = string
 local table = table
-local pairs = pairs
+local ipairs = ipairs
 local IsValid = IsValid
 
 -- NOTE: most uses of the Msg functions here have been moved to the LANG
@@ -55,7 +55,7 @@ end
 
 -- Round start info popup
 function ShowRoundStartPopup()
-   for k, v in pairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       if IsValid(v) and v:Team() == TEAM_TERROR and v:Alive() then
          v:ConCommand("ttt_cl_startpopup")
       end
@@ -64,7 +64,7 @@ end
 
 local function GetPlayerFilter(pred)
    local filter = {}
-   for k, v in pairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       if IsValid(v) and pred(v) then
          table.insert(filter, v)
       end
@@ -73,19 +73,19 @@ local function GetPlayerFilter(pred)
 end
 
 function GetTraitorFilter(alive_only)
-   return GetPlayerFilter(function(p) return p:GetTraitor() and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return p:GetTraitor() and (not alive_only or p:IsTerror()) end)
 end
 
 function GetDetectiveFilter(alive_only)
-   return GetPlayerFilter(function(p) return p:IsDetective() and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return p:IsDetective() and (not alive_only or p:IsTerror()) end)
 end
 
 function GetInnocentFilter(alive_only)
-   return GetPlayerFilter(function(p) return (not p:IsTraitor()) and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return (not p:IsTraitor()) and (not alive_only or p:IsTerror()) end)
 end
 
 function GetRoleFilter(role, alive_only)
-   return GetPlayerFilter(function(p) return p:IsRole(role) and (not alive_only or p:Alive()) end)
+   return GetPlayerFilter(function(p) return p:IsRole(role) and (not alive_only or p:IsTerror()) end)
 end
 
 ---- Communication control
@@ -130,7 +130,7 @@ function GM:PlayerSay(ply, text, team_only)
       local team = ply:Team() == TEAM_SPEC
       if team and not DetectiveMode() then
          local filtered = {}
-         for k, v in pairs(string.Explode(" ", text)) do
+         for k, v in ipairs(string.Explode(" ", text)) do
             -- grab word characters and whitelisted interpunction
             -- necessary or leetspeek will be used (by trolls especially)
             local word, interp = string.match(v, "(%a*)([%.,;!%?]*)")
@@ -140,7 +140,7 @@ function GM:PlayerSay(ply, text, team_only)
          end
 
          -- make sure we have something to say
-         if table.Count(filtered) < 1 then
+         if table.IsEmpty(filtered) then
             table.insert(filtered, mumbles[math.random(1, #mumbles)])
          end
 
@@ -186,7 +186,7 @@ function GM:PlayerCanHearPlayersVoice(listener, speaker)
    end
 
    -- Specific mute
-   if listener:IsSpec() and listener.mute_team == speaker:Team() then
+   if listener:IsSpec() and listener.mute_team == speaker:Team() or listener.mute_team == MUTE_ALL then
       return false, false
    end
 
@@ -226,7 +226,7 @@ end
 
 local function TraitorGlobalVoice(ply, cmd, args)
    if not IsValid(ply) or not ply:IsActiveTraitor() then return end
-   if not #args == 1 then return end
+   if #args != 1 then return end
    local state = tonumber(args[1])
 
    ply.traitor_gvoice = (state == 1)
@@ -237,7 +237,7 @@ concommand.Add("tvog", TraitorGlobalVoice)
 
 local function MuteTeam(ply, cmd, args)
    if not IsValid(ply) then return end
-   if not #args == 1 and tonumber(args[1]) then return end
+   if not (#args == 1 and tonumber(args[1])) then return end
    if not ply:IsSpec() then
       ply.mute_team = -1
       return
@@ -246,8 +246,13 @@ local function MuteTeam(ply, cmd, args)
    local t = tonumber(args[1])
    ply.mute_team = t
 
-   local name = (t != 0) and team.GetName(t) or "None"
-   ply:ChatPrint(name .. " muted.")
+   if t == MUTE_ALL then
+      ply:ChatPrint("All muted.")
+   elseif t == MUTE_NONE or t == TEAM_UNASSIGNED or not team.Valid(t) then
+      ply:ChatPrint("None muted.")
+   else
+      ply:ChatPrint(team.GetName(t) .. " muted.")
+   end
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 
@@ -266,11 +271,14 @@ local function LastWordsMsg(ply, words)
 
    -- add optional context relating to death type
    local context = LastWordContext[ply.death_type] or ""
+   local lastWordsStr = words .. (final and "" or "--") .. context
 
    net.Start("TTT_LastWordsMsg")
       net.WriteEntity(ply)
-      net.WriteString(words .. (final and "" or "--") .. context)
+      net.WriteString(lastWordsStr)
    net.Broadcast()
+
+   hook.Run("TTTLastWordsMsg", ply, lastWordsStr)
 end
 
 local function LastWords(ply, cmd, args)
@@ -302,7 +310,7 @@ local function LastWords(ply, cmd, args)
          if string.len(words) < 2 then return end
 
          -- ignore admin commands
-         local firstchar = string.GetChar(words, 1)
+         local firstchar = string.sub(words, 1, 1)
          if firstchar == "!" or firstchar == "@" or firstchar == "/" then return end
 
 
@@ -323,6 +331,8 @@ concommand.Add("_deathrec", LastWords)
 -- Override or hook in plugin for spam prevention and whatnot. Return true
 -- to block a command.
 function GM:TTTPlayerRadioCommand(ply, msg_name, msg_target)
+   if ply.LastRadioCommand and ply.LastRadioCommand > (CurTime() - 0.5) then return true end
+   ply.LastRadioCommand = CurTime()
 end
 
 local function RadioCommand(ply, cmd, args)

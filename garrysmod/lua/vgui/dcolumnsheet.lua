@@ -3,9 +3,6 @@ local PANEL = {}
 
 AccessorFunc( PANEL, "ActiveButton", "ActiveButton" )
 
---[[---------------------------------------------------------
-	Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.Navigation = vgui.Create( "DScrollPanel", self )
@@ -24,9 +21,6 @@ function PANEL:UseButtonOnlyStyle()
 	self.ButtonOnly = true
 end
 
---[[---------------------------------------------------------
-	Name: AddSheet
------------------------------------------------------------]]
 function PANEL:AddSheet( label, panel, material )
 
 	if ( !IsValid( panel ) ) then return end
@@ -55,7 +49,7 @@ function PANEL:AddSheet( label, panel, material )
 
 	if ( self.ButtonOnly ) then
 		Sheet.Button:SizeToContents()
-		-- Sheet.Button:SetColor( Color( 150, 150, 150, 100 ) )
+		--Sheet.Button:SetColor( Color( 150, 150, 150, 100 ) )
 	end
 
 	table.insert( self.Items, Sheet )
@@ -63,12 +57,10 @@ function PANEL:AddSheet( label, panel, material )
 	if ( !IsValid( self.ActiveButton ) ) then
 		self:SetActiveButton( Sheet.Button )
 	end
-
+	
+	return Sheet
 end
 
---[[---------------------------------------------------------
-	Name: SetActiveTab
------------------------------------------------------------]]
 function PANEL:SetActiveButton( active )
 
 	if ( self.ActiveButton == active ) then return end
@@ -77,14 +69,14 @@ function PANEL:SetActiveButton( active )
 		self.ActiveButton.Target:SetVisible( false )
 		self.ActiveButton:SetSelected( false )
 		self.ActiveButton:SetToggle( false )
-		-- self.ActiveButton:SetColor( Color( 150, 150, 150, 100 ) )
+		--self.ActiveButton:SetColor( Color( 150, 150, 150, 100 ) )
 	end
 
 	self.ActiveButton = active
 	active.Target:SetVisible( true )
 	active:SetSelected( true )
 	active:SetToggle( true )
-	-- active:SetColor( Color( 255, 255, 255, 255 ) )
+	--active:SetColor( color_white )
 
 	self.Content:InvalidateLayout()
 

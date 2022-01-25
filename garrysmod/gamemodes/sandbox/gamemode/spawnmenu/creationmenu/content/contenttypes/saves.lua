@@ -6,8 +6,6 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 	HTML = vgui.Create( "DHTML" )
 	JS_Language( HTML )
 	JS_Workshop( HTML )
-	HTML:OpenURL( "asset://garrysmod/html/saves.html" )
-	HTML:Call( "SetMap( '" .. game.GetMap() .. "' );" )
 
 	ws_save = WorkshopFileBase( "save", { "save" } )
 	ws_save.HTML = HTML
@@ -23,32 +21,30 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 			if ( k <= offset ) then continue end
 			if ( k > offset + perpage ) then break end
 
-			local entry =
-			{
+			local entry = {
 				file	= "saves/" .. v,
 				name	= v:StripExtension(),
-				preview	= "saves/" .. v:StripExtension() .. ".jpg"
+				preview	= "saves/" .. v:StripExtension() .. ".jpg",
+				description	= "Local map saves stored on your computer. Local content can be deleted in the main menu."
 			}
 
 			table.insert( saves, entry )
 
 		end
 
-		local results =
-		{
+		local results = {
 			totalresults	= #f,
 			results			= saves
 		}
 
 		local json = util.TableToJSON( results, false )
-		HTML:Call( "save.ReceiveLocal( "..json.." )" )
+		HTML:Call( "save.ReceiveLocal( " .. json .. " )" )
 
 	end
 
-
 	function ws_save:DownloadAndLoad( id )
 
-		steamworks.Download( id, true, function( name )
+		steamworks.DownloadUGC( id, function( name )
 
 			ws_save:Load( name )
 
@@ -56,14 +52,15 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 
 	end
 
-	function ws_save:Load( filename ) RunConsoleCommand( "gm_load", filename ); end
+	function ws_save:Load( filename ) RunConsoleCommand( "gm_load", filename ) end
 	function ws_save:Publish( filename, imagename ) RunConsoleCommand( "save_publish", filename, imagename ) end
+
+	HTML:OpenURL( "asset://garrysmod/html/saves.html" )
+	HTML:Call( "SetMap( '" .. game.GetMap() .. "' );" )
 
 	return HTML
 
 end, "icon16/disk_multiple.png", 200 )
-
-
 
 hook.Add( "PostGameSaved", "OnCreationsSaved", function()
 
@@ -72,4 +69,3 @@ hook.Add( "PostGameSaved", "OnCreationsSaved", function()
 	HTML:Call( "OnGameSaved()" )
 
 end )
-

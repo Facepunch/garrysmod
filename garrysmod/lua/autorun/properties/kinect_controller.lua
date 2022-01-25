@@ -9,23 +9,23 @@ if ( SERVER ) then
 end
 
 properties.Add( "motioncontrol_ragdoll", {
-	MenuLabel = "Control With Motion Sensor",
+	MenuLabel = "#control_with_motion_sensor",
 	Order = 2500,
 	MenuIcon = "icon16/controller.png",
-	
-	Filter = function( self, ent, ply ) 
+
+	Filter = function( self, ent, ply )
 
 		if ( CLIENT && !motionsensor ) then return false end
 		if ( CLIENT && !motionsensor.IsAvailable() ) then return false end
 		if ( !ent:IsRagdoll() ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "motioncontrol_ragdoll", ent ) ) then return false end
-		
-		return true 
+
+		return true
 
 	end,
 
 	Action = function( self, ent )
-	
+
 		self:MsgStart()
 			net.WriteEntity( ent )
 		self:MsgEnd()
@@ -36,7 +36,7 @@ properties.Add( "motioncontrol_ragdoll", {
 		if ( !motionsensor.IsActive() ) then
 			motionsensor.Start()
 		end
-		
+
 	end,
 
 	Receive = function( self, length, player )
@@ -52,10 +52,10 @@ properties.Add( "motioncontrol_ragdoll", {
 		ragdoll_motion:Spawn()
 
 		undo.Create( "MotionController" )
-			undo.AddEntity( ragdoll_motion )							
+			undo.AddEntity( ragdoll_motion )
 			undo.SetPlayer( player )
 		undo.Finish()
-		
-	end	
+
+	end
 
 } )

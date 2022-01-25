@@ -19,7 +19,7 @@ Scheme
 		"Gray"				"178 178 178 255"
 		"Blank"				"0 0 0 0"
 	}
-	
+
 	///////////////////// BASE SETTINGS ////////////////////////
 	//
 	// default settings for all panels
@@ -30,8 +30,8 @@ Scheme
 		"BgColor"			"0 0 0 76"
 
 		"Panel.FgColor"			"255 220 0 255"
-		"Panel.BgColor"			"0 0 0 0"
-		
+		"Panel.BgColor"			"Blank"
+
 		"BrightFg"		"255 220 0 255"
 
 		"DamagedBg"			"180 0 0 200"
@@ -44,7 +44,7 @@ Scheme
 		"SelectionEmptyBoxBg" 	"0 0 0 80"
 		"SelectionBoxBg" 		"0 0 0 80"
 		"SelectionSelectedBoxBg" "0 0 0 80"
-		
+
 		"ZoomReticleColor"	"255 220 0 255"
 
 		// HL1-style HUD colors
@@ -66,18 +66,18 @@ Scheme
 		"Main.Menu.X"		"76"
 		"Main.Menu.Y"		"240"
 
-		Menu.TextColor					"235 235 235 255"
-		Menu.BgColor					"0 0 0 230"
-		Menu.ArmedTextColor				"0 0 0 255"
-		Menu.ArmedBgColor				"255 255 255 255"
-		Menu.TextInset					"6"
-		
+		Menu.TextColor					"3 3 3 255"
+		Menu.BgColor					"248 248 248 255"
+		Menu.BorderColor				"96 96 96 255"
+		Menu.ArmedTextColor				"3 3 3 255"
+		Menu.ArmedBgColor				"202 221 248 255"
+		Menu.TextInset					"8"
+
 		RichText.TextColor				"178 178 178 255"
-		RichText.BgColor				"0 0 0 0"
+		RichText.BgColor				"Blank"
 		RichText.SelectedTextColor		"178 178 178 255"
 		RichText.SelectedBgColor		"192 28 0 140"
-		
-		
+
 		// Blank space to leave beneath the menu on the main screen
 		"Main.BottomBorder"	"32"
 
@@ -91,14 +91,13 @@ Scheme
 		ScrollBarSlider.FgColor				"Gray"		// nob color
 		ScrollBarSlider.BgColor				"Blank"		// slider background color
 
-
 		Slider.NobColor				"108 108 108 255"
 		Slider.TextColor			"127 140 127 255"
 		Slider.TrackColor			"31 31 31 255"
 		Slider.DisabledTextColor1	"117 117 117 255"
 		Slider.DisabledTextColor2	"30 30 30 255"
 	}
-	
+
 	//////////////////////// FONTS /////////////////////////////
 	//
 	// describes all the fonts
@@ -145,7 +144,7 @@ Scheme
 			{
 				"name"		"Tahoma"
 				"tall"		"12"
-				"weight"	"500"
+				"weight"	"700" // GMod: Changed from 500 to match Default
 				"underline" "1"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
 			}
@@ -199,6 +198,18 @@ Scheme
 				"antialias" "1"
 				"blur"		"5"
 				"scanlines"	"2"
+				"additive"	"1"
+				"custom"	"1"
+			}
+		}
+		WeaponIconsSmall
+		{
+			"1"
+			{
+				"name"		"HalfLife2"
+				"tall"		"32"
+				"weight"	"0"
+				"antialias" "1"
 				"additive"	"1"
 				"custom"	"1"
 			}
@@ -569,7 +580,7 @@ Scheme
 				"custom" "1" [$OSX]
 		   }
 		}
-		
+
 		"ChatFont"
 		{
 			"1"
@@ -613,7 +624,7 @@ Scheme
 				"dropshadow"	"1"
 			}
 		}
-		
+
 		"TargetID"
 		{
 			"1"
@@ -657,7 +668,7 @@ Scheme
 				"dropshadow"	"1"
 			}
 		}
-		
+
 		"TargetIDSmall"
 		{
 			"1"
@@ -722,7 +733,7 @@ Scheme
 		}
 	}
 
-	
+
 	//////////////////////// CUSTOM FONT FILES /////////////////////////////
 	//
 	// specifies all the custom (non-system) font files that need to be loaded to service the above described fonts
@@ -731,6 +742,51 @@ Scheme
 		"1"		"resource/HALFLIFE2.ttf"
 		"1"		"resource/HL2MP.ttf"
 		"2"		"resource/HL2crosshairs.ttf"
+	}
+
+	Borders
+	{
+		// Make Menu elements look like DMenu elements!
+		MenuBorder
+		{
+			"inset" "0 0 0 0"
+
+			Left
+			{
+				"1"
+				{
+					"color"		"Menu.BorderColor"
+					"offset"	"0 0"
+				}
+			}
+
+			Right
+			{
+				"1"
+				{
+					"color"		"Menu.BorderColor"
+					"offset"	"0 0"
+				}
+			}
+
+			Top
+			{
+				"1"
+				{
+					"color"		"Menu.BorderColor"
+					"offset"	"0 0"
+				}
+			}
+
+			Bottom
+			{
+				"1"
+				{
+					"color"		"Menu.BorderColor"
+					"offset"	"0 0"
+				}
+			}
+		}
 	}
 
 }

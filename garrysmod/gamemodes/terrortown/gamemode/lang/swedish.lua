@@ -29,7 +29,6 @@ L.win_showreport   = "Låt oss ta en titt på rund-rapporten i {num} sekunder."
 
 L.limit_round      = "Gränsen för antalet rundor har nåtts. {mapname} kommer laddas snart."
 L.limit_time       = "Tidsgränsen har tagit slut. {mapname} kommer laddas snart."
-L.limit_vote       = "Gränsen för tid eller antalet rundor har nåtts. Röstningsdags!"
 L.limit_left       = "{num} rundor eller {time} minuter återstår innan kartan ändras till {mapname}."
 
 --- Credit awards
@@ -145,10 +144,6 @@ L.radio_button_steps   = "Fotsteg"
 -- Intro screen shown after joining
 L.intro_help     = "Om du är ny till detta spel, tryck F1 för att få instruktioner!"
 
--- "Continue playing" vote
-L.contvote_continue = "Fortsätt att spela denna"
-L.contvote_change   = "Påbörja en omröstning"
-
 -- Radiocommands/quickchat
 L.quick_title   = "Snabb-knappar"
 
@@ -239,14 +234,8 @@ L.help_title = "Hjälp och Inställningar"
 L.help_tut     = "Handledning"
 L.help_tut_tip = "Hur man spelar TTT, i 6 steg"
 
-L.help_fretta_tip = "Rösta för att byta karta eller spelläge"
-
 L.help_settings = "Inställningar"
 L.help_settings_tip = "Klient-inställningar"
-
--- Fretta
-L.help_vote     = "Rösta för byte"
-L.help_vote_tip = "När tillräckligt många har röstat för byte kommer servern antingen starta en kart- eller spellägesomröstning, beroende på dess konfigurationer."
 
 -- Settings
 L.set_title_gui = "Gränssnittsinställningar"
@@ -280,7 +269,9 @@ L.set_mute_tip      = "Sätt på detta så hörs inte levande spelare när du ä
 
 L.set_title_lang    = "Språkinställningar"
 
-L.set_lang          = "Välj språk:"
+-- It may be best to leave this next one english, so english players can always
+-- find the language setting even if it's set to a language they don't know.
+L.set_lang          = "Välj språk (Select language):"
 
 
 --- Weapons and equipment, HUD and messages
@@ -1063,6 +1054,11 @@ L.aw_tod1_text  = "dog bara några sekunder innan hans lag vann rundan."
 L.aw_tod2_title = "Jag Hatar Detta Spel"
 L.aw_tod2_text  = "dog precis efter att rundan påbörjats."
 
+
+--- New and modified pieces of text are placed below this point, marked with the
+--- version or the date in which they were added, to make updating translations easier.
+
+
 --- v23
 L.set_avoid_det     = "Undvik att bli vald som Detective"
 L.set_avoid_det_tip = "Aktivera det här för att be servern att inte välja dig som Detective om möjligt. Betyder inte att du är Traitor oftare."
@@ -1074,5 +1070,5 @@ L.drop_no_ammo = "Otillräcklig ammunition i vapnets klipp att släppa som en am
 L.set_cross_brightness = "Hårkors ljushet"
 L.set_cross_size = "Hårkors storlek"
 
--- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "Du plockade upp hatten av en detektiv."

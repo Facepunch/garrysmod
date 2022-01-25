@@ -7,7 +7,7 @@ function PANEL:Init()
 
 	self.mx = 0
 	self.my = 0
-	self.aLookAngle = Angle( 0, 0, 0 )
+	self.aLookAngle = angle_zero
 
 end
 
@@ -20,6 +20,22 @@ function PANEL:OnMousePressed( mousecode )
 	self:SetFirstPerson( true )
 
 	self:CaptureMouse()
+
+	-- Helpers for the orbit movement
+	local mins, maxs = self.Entity:GetModelBounds()
+	local center = ( mins + maxs ) / 2
+
+	local hit1 = util.IntersectRayWithPlane( self.vCamPos, self.aLookAngle:Forward(), vector_origin, Vector( 0, 0, 1 ) )
+	self.OrbitPoint = hit1
+
+	local hit2 = util.IntersectRayWithPlane( self.vCamPos, self.aLookAngle:Forward(), vector_origin, Vector( 0, 1, 0 ) )
+	if ( ( !hit1 && hit2 ) || hit2 && hit2:Distance( self.Entity:GetPos() ) < hit1:Distance( self.Entity:GetPos() ) ) then self.OrbitPoint = hit2 end
+
+	local hit3 = util.IntersectRayWithPlane( self.vCamPos, self.aLookAngle:Forward(), vector_origin, Vector( 1, 0, 0 ) )
+	if ( ( ( !hit1 || !hit2 ) && hit3 ) || hit3 && hit3:Distance( self.Entity:GetPos() ) < hit2:Distance( self.Entity:GetPos() ) ) then self.OrbitPoint = hit3 end
+
+	self.OrbitPoint = self.OrbitPoint or center
+	self.OrbitDistance = ( self.OrbitPoint - self.vCamPos ):Length()
 
 end
 
@@ -58,33 +74,33 @@ function PANEL:FirstPersonControls()
 	y = y * 0.5 * scale
 
 	if ( self.MouseKey == MOUSE_LEFT ) then
-	
+
 		if ( input.IsShiftDown() ) then y = 0 end
-		
+
 		self.aLookAngle = self.aLookAngle + Angle( y * 4, x * 4, 0 )
-		
-		self.vCamPos = self.Entity:OBBCenter() - self.aLookAngle:Forward() * self.vCamPos:Length()
-		
+
+		self.vCamPos = self.OrbitPoint - self.aLookAngle:Forward() * self.OrbitDistance
+
 		return
 	end
 
 	-- Look around
 	self.aLookAngle = self.aLookAngle + Angle( y, x, 0 )
 
-	local Movement = Vector( 0, 0, 0 )
+	local Movement = vector_origin
 
 	-- TODO: Use actual key bindings, not hardcoded keys.
 	if ( input.IsKeyDown( KEY_W ) || input.IsKeyDown( KEY_UP ) ) then Movement = Movement + self.aLookAngle:Forward() end
 	if ( input.IsKeyDown( KEY_S ) || input.IsKeyDown( KEY_DOWN ) ) then Movement = Movement - self.aLookAngle:Forward() end
 	if ( input.IsKeyDown( KEY_A ) || input.IsKeyDown( KEY_LEFT ) ) then Movement = Movement - self.aLookAngle:Right() end
 	if ( input.IsKeyDown( KEY_D ) || input.IsKeyDown( KEY_RIGHT ) ) then Movement = Movement + self.aLookAngle:Right() end
-	if ( input.IsKeyDown( KEY_SPACE ) || input.IsKeyDown( KEY_SPACE ) ) then Movement = Movement + self.aLookAngle:Up() end
-	if ( input.IsKeyDown( KEY_LCONTROL ) || input.IsKeyDown( KEY_LCONTROL ) ) then Movement = Movement - self.aLookAngle:Up() end
+	if ( input.IsKeyDown( KEY_SPACE ) ) then Movement = Movement + self.aLookAngle:Up() end
+	if ( input.IsKeyDown( KEY_LCONTROL ) ) then Movement = Movement - self.aLookAngle:Up() end
 
-	local scale = 0.5
-	if ( input.IsShiftDown() ) then scale = 4.0 end
+	local speed = 0.5
+	if ( input.IsShiftDown() ) then speed = 4.0 end
 
-	self.vCamPos = self.vCamPos + Movement * scale
+	self.vCamPos = self.vCamPos + Movement * speed
 
 end
 
@@ -99,6 +115,19 @@ function PANEL:OnMouseReleased( mousecode )
 
 	self:MouseCapture( false )
 	self.Capturing = false
+
+end
+
+function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
+
+	local ctrl = vgui.Create( ClassName )
+	ctrl:SetSize( 300, 300 )
+	ctrl:SetModel( "models/props_junk/PlasticCrate01a.mdl" )
+	ctrl:GetEntity():SetSkin( 2 )
+	ctrl:SetLookAng( Angle( 45, 0, 0 ) )
+	ctrl:SetCamPos( Vector( -20, 0, 20 ) )
+
+	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 
 end
 

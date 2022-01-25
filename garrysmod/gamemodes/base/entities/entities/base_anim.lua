@@ -9,7 +9,6 @@ ENT.Author			= ""
 ENT.Contact			= ""
 ENT.Purpose			= ""
 ENT.Instructions	= ""
-ENT.RenderGroup		= RENDERGROUP_OPAQUE
 
 -- Defaulting this to OFF. This will automatically save bandwidth
 -- on stuff that is already out there, but might break a few things
@@ -34,26 +33,26 @@ end
 function ENT:PhysicsUpdate( physobj )
 end
 
-if ( CLIENT ) then 
+if ( CLIENT ) then
 
-	function ENT:Draw()
+	function ENT:Draw( flags )
 
-		self:DrawModel()
+		self:DrawModel( flags )
 
 	end
 
-	function ENT:DrawTranslucent()
+	function ENT:DrawTranslucent( flags )
 
 		-- This is here just to make it backwards compatible.
 		-- You shouldn't really be drawing your model here unless it's translucent
 
-		self:Draw()
-		
+		self:Draw( flags )
+
 	end
 
 end
 
-if ( SERVER ) then 
+if ( SERVER ) then
 
 	function ENT:OnTakeDamage( dmginfo )
 
@@ -88,7 +87,7 @@ if ( SERVER ) then
 
 	--[[---------------------------------------------------------
 	   Name: Simulate
-	   Desc: Controls/simulates the physics on the entity. 
+	   Desc: Controls/simulates the physics on the entity.
 		Officially the most complicated callback in the whole mod.
 		 Returns 3 variables..
 		 1. A SIM_ enum

@@ -8,7 +8,7 @@ function PANEL:Init()
 	self.LabelName:SetFont( "GModNotify" )
 	self.LabelName:Dock( FILL )
 	self.LabelName:DockMargin( 8, 0, 0, 0 )
-	self.LabelName:SetTextColor( Color( 255, 255, 255, 255 ) )
+	self.LabelName:SetTextColor( color_white )
 
 	self.Avatar = vgui.Create( "AvatarImage", self )
 	self.Avatar:Dock( LEFT )
@@ -137,7 +137,7 @@ local function CreateVoiceVGUI()
 	g_VoicePanelList:ParentToHUD()
 	g_VoicePanelList:SetPos( ScrW() - 300, 100 )
 	g_VoicePanelList:SetSize( 250, ScrH() - 200 )
-	g_VoicePanelList:SetDrawBackground( false )
+	g_VoicePanelList:SetPaintBackground( false )
 
 end
 

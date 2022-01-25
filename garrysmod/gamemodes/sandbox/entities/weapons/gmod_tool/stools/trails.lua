@@ -13,48 +13,59 @@ TOOL.ClientConVar[ "endsize" ] = 0
 
 TOOL.ClientConVar[ "material" ] = "trails/lol"
 
+TOOL.Information = {
+	{ name = "left" },
+	{ name = "right" }
+}
+
 cleanup.Register( "trails" )
 
-local function SetTrails( Player, Entity, Data )
+local function SetTrails( ply, ent, data )
 
-	if ( IsValid( Entity.SToolTrail ) ) then
-	
-		Entity.SToolTrail:Remove()
-		Entity.SToolTrail = nil
-	
+	if ( IsValid( ent.SToolTrail ) ) then
+
+		ent.SToolTrail:Remove()
+		ent.SToolTrail = nil
+
 	end
-	
-	if ( !Data ) then
-	
-		duplicator.ClearEntityModifier( Entity, "trail" )
+
+	if ( !data ) then
+
+		duplicator.ClearEntityModifier( ent, "trail" )
 		return
-		
-	end
-	
-	if ( Data.StartSize == 0 ) then
-	
-		Data.StartSize = 0.0001
-		
+
 	end
 
-	--
-	-- Lock down the trail material - only allow what the server allows
-	-- This is here to fix a crash exploit
-	--
-	if ( !game.SinglePlayer() && !list.Contains( "trail_materials", Data.Material ) ) then return end
+	-- Just don't even bother with invisible trails
+	if ( data.StartSize <= 0 && data.EndSize <= 0 ) then return end
 
-	local trail_entity = util.SpriteTrail( Entity, 0, Data.Color, false, Data.StartSize, Data.EndSize, Data.Length, 1 / ( ( Data.StartSize + Data.EndSize ) * 0.5 ), Data.Material .. ".vmt" )
-	
-	Entity.SToolTrail = trail_entity
+		-- This is here to fix crash exploits
+	if ( !game.SinglePlayer() ) then
 
-	if ( IsValid( Player ) ) then
-		Player:AddCleanup( "trails", trail_entity )
+		-- Lock down the trail material - only allow what the server allows
+		if ( !list.Contains( "trail_materials", data.Material ) ) then return end
+
+		-- Clamp sizes in multiplayer
+		data.Length = math.Clamp( data.Length, 0.1, 10 )
+		data.EndSize = math.Clamp( data.EndSize, 0, 128 )
+		data.StartSize = math.Clamp( data.StartSize, 0, 128 )
+
 	end
 
-	duplicator.StoreEntityModifier( Entity, "trail", Data )
+	data.StartSize = math.max( 0.0001, data.StartSize )
+
+	local trail_entity = util.SpriteTrail( ent, 0, data.Color, false, data.StartSize, data.EndSize, data.Length, 1 / ( ( data.StartSize + data.EndSize ) * 0.5 ), data.Material .. ".vmt" )
+
+	ent.SToolTrail = trail_entity
+
+	if ( IsValid( ply ) ) then
+		ply:AddCleanup( "trails", trail_entity )
+	end
+
+	duplicator.StoreEntityModifier( ent, "trail", data )
 
 	return trail_entity
-	
+
 end
 duplicator.RegisterEntityModifier( "trail", SetTrails )
 
@@ -64,32 +75,23 @@ function TOOL:LeftClick( trace )
 	if ( !trace.Entity:EntIndex() == 0 ) then return false end
 	if ( trace.Entity:IsPlayer() ) then return false end
 	if ( CLIENT ) then return true end
-	
+
 	local r = math.Clamp( self:GetClientNumber( "r", 255 ), 0, 255 )
 	local g = math.Clamp( self:GetClientNumber( "g", 255 ), 0, 255 )
 	local b = math.Clamp( self:GetClientNumber( "b", 255 ), 0, 255 )
 	local a = math.Clamp( self:GetClientNumber( "a", 255 ), 0, 255 )
-	
+
 	local length = self:GetClientNumber( "length", 5 )
 	local endsize = self:GetClientNumber( "endsize", 0 )
-	local startsize	= self:GetClientNumber( "startsize", 32 )
-	local Mat = self:GetClientInfo( "material", "sprites/obsolete" )
-	
-	-- Clamp sizes in multiplayer
-	if ( !game.SinglePlayer() ) then
-	
-		length = math.Clamp( length, 0.1, 10 )
-		endsize = math.Clamp( endsize, 0, 128 )
-		startsize = math.Clamp( startsize, 0, 128 )
-	
-	end
+	local startsize = self:GetClientNumber( "startsize", 32 )
+	local mat = self:GetClientInfo( "material", "sprites/obsolete" )
 
 	local Trail = SetTrails( self:GetOwner(), trace.Entity, {
 		Color = Color( r, g, b, a ),
 		Length = length,
 		StartSize = startsize,
 		EndSize = endsize,
-		Material = Mat
+		Material = mat
 	} )
 
 	undo.Create( "Trail" )
@@ -98,7 +100,7 @@ function TOOL:LeftClick( trace )
 	undo.Finish()
 
 	return true
-	
+
 end
 
 function TOOL:RightClick( trace )
@@ -142,10 +144,10 @@ local ConVarsDefault = TOOL:BuildConVarList()
 
 function TOOL.BuildCPanel( CPanel )
 
-	CPanel:AddControl( "Header", { Description	= "#tool.trails.desc" } )
+	CPanel:AddControl( "Header", { Description = "#tool.trails.desc" } )
 
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "trails", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
-	
+
 	CPanel:AddControl( "Color", { Label = "#tool.trails.color", Red = "trails_r", Green = "trails_g", Blue = "trails_b", Alpha = "trails_a" } )
 
 	CPanel:NumSlider( "#tool.trails.length", "trails_length", 0, 10, 2 )

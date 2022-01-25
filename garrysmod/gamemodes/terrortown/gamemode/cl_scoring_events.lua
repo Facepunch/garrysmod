@@ -130,7 +130,7 @@ local function GetWeaponName(gun)
    -- Standard TTT weapons are sent as numeric IDs to save bandwidth
    if tonumber(gun) then
       wname = EnumToWep(gun)
-   elseif type(gun) == "string" then
+   elseif isstring(gun) then
       -- Custom weapons or ones that are otherwise ID-less are sent as
       -- string
       local wep = util.WeaponForClass(gun)
@@ -161,7 +161,7 @@ local function KillText(e)
 
    local txt = nil
 
-   if e.att.uid == e.vic.uid then
+   if e.att.sid == e.vic.sid then
       if is_dmg(dmg.t, DMG_BLAST) then
 
          txt = trap and "ev_blowup_trap" or "ev_blowup"
@@ -235,7 +235,7 @@ end
 Event(EVENT_KILL,
       { text = KillText,
         icon = function(e)
-                  if e.att.uid == e.vic.uid or e.att.uid == -1 then
+                  if e.att.sid == e.vic.sid or e.att.sid == -1 then
                      return smile_icon, "Suicide"
                   end
 

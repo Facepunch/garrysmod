@@ -24,16 +24,16 @@ hook.Add( "WorkshopDownloadFile", "WorkshopDownloadFile", function( id, iImageID
 		vgui_workshop = GetOverlayPanel():Add( pnlWorkshop )
 	end
 
-	vgui_workshop:PrepareDownloading( id, title, iSize )
+	vgui_workshop:PrepareDownloading()
 	vgui_workshop:StartDownloading( id, iImageID, title, iSize )
 
 end )
 
-hook.Add( "WorkshopDownloadedFile", "WorkshopDownloadedFile", function( id, title, authorid )
+hook.Add( "WorkshopDownloadedFile", "WorkshopDownloadedFile", function( id )
 
 	if ( !IsValid( vgui_workshop ) ) then return end
 
-	vgui_workshop:FinishedDownloading( id, title, authorid )
+	vgui_workshop:FinishedDownloading( id )
 
 end )
 
@@ -41,7 +41,7 @@ hook.Add( "WorkshopDownloadProgress", "WorkshopDownloadProgress", function( id, 
 
 	if ( !IsValid( vgui_workshop ) ) then
 		vgui_workshop = GetOverlayPanel():Add( pnlWorkshop )
-		vgui_workshop:PrepareDownloading( id, title, expected )
+		vgui_workshop:PrepareDownloading()
 		vgui_workshop:StartDownloading( id, iImageID, title, expected )
 	end
 
@@ -53,8 +53,8 @@ hook.Add( "WorkshopExtractProgress", "WorkshopExtractProgress", function( id, iI
 
 	if ( !IsValid( vgui_workshop ) ) then
 		vgui_workshop = GetOverlayPanel():Add( pnlWorkshop )
-		vgui_workshop:PrepareDownloading( id, title, expected )
-		vgui_workshop:StartDownloading( id, iImageID, title, expected )
+		vgui_workshop:PrepareDownloading()
+		vgui_workshop:StartDownloading( id, iImageID, title, percent )
 	end
 
 	vgui_workshop:ExtractProgress( title, percent )
@@ -81,3 +81,24 @@ hook.Add( "WorkshopDownloadTotals", "WorkshopDownloadTotals", function( iRemain,
 	end
 
 end )
+
+hook.Add( "WorkshopSubscriptionsProgress", "WorkshopSubscriptionsProgress", function( iCurrent, iMax )
+
+	if ( !IsValid( vgui_workshop ) ) then
+		vgui_workshop = GetOverlayPanel():Add( pnlWorkshop )
+	end
+
+	vgui_workshop:SubscriptionsProgress( iCurrent, iMax )
+
+end )
+
+hook.Add( "WorkshopSubscriptionsMessage", "WorkshopSubscriptionsMessage", function( msg )
+
+	if ( !IsValid( vgui_workshop ) ) then
+		vgui_workshop = GetOverlayPanel():Add( pnlWorkshop )
+	end
+
+	vgui_workshop:SetMessage( msg )
+
+end )
+

@@ -1,9 +1,6 @@
 
 EFFECT.Mat = Material( "effects/spark" )
 
---[[---------------------------------------------------------
-	Init( data table )
------------------------------------------------------------]]
 function EFFECT:Init( data )
 
 	self.StartPos = data:GetStart()
@@ -25,7 +22,7 @@ function EFFECT:Init( data )
 
 	self:SetRenderBoundsWS( self.StartPos, self.EndPos )
 
-	self.TracerTime = math.min( 1, self.StartPos:Distance( self.EndPos ) / 10000 )//math.Rand( 0.2, 0.3 )
+	self.TracerTime = math.min( 1, self.StartPos:Distance( self.EndPos ) / 10000 )
 	self.Length = math.Rand( 0.1, 0.15 )
 
 	-- Die when it reaches its target
@@ -33,9 +30,6 @@ function EFFECT:Init( data )
 
 end
 
---[[---------------------------------------------------------
-	Think
------------------------------------------------------------]]
 function EFFECT:Think()
 
 	if ( CurTime() > self.DieTime ) then
@@ -49,16 +43,13 @@ function EFFECT:Think()
 		effectdata:SetRadius( 6 )
 		util.Effect( "Sparks", effectdata )
 
-		return false 
+		return false
 	end
 
 	return true
 
 end
 
---[[---------------------------------------------------------
-	Draw the effect
------------------------------------------------------------]]
 function EFFECT:Render()
 
 	local fDelta = ( self.DieTime - CurTime() ) / self.TracerTime

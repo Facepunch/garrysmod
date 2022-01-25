@@ -1,26 +1,14 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
-
-	DFileBrowser
-
-	Tree and list-based file browser
-
---]]
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_strName", 			"Name" )
-AccessorFunc( PANEL, "m_strPath", 			"Path" )
+AccessorFunc( PANEL, "m_strName",			"Name" )
+AccessorFunc( PANEL, "m_strPath",			"Path" )
 AccessorFunc( PANEL, "m_strFilter",			"FileTypes" )
 AccessorFunc( PANEL, "m_strBaseFolder",		"BaseFolder" )
 AccessorFunc( PANEL, "m_strCurrentFolder",	"CurrentFolder" )
-AccessorFunc( PANEL, "m_strSearch", 		"Search" )
-AccessorFunc( PANEL, "m_bModels", 			"Models" )
-AccessorFunc( PANEL, "m_bOpen", 			"Open" )
+AccessorFunc( PANEL, "m_strSearch",			"Search" )
+AccessorFunc( PANEL, "m_bModels",			"Models" )
+AccessorFunc( PANEL, "m_bOpen",				"Open" )
 
 function PANEL:Init()
 
@@ -38,7 +26,7 @@ function PANEL:Init()
 
 	self.Tree.DoClick = function( _, node )
 		local folder = node:GetFolder()
-		if !folder then return end
+		if ( !folder ) then return end
 
 		self:SetCurrentFolder( folder )
 	end
@@ -47,13 +35,13 @@ end
 
 function PANEL:SetName( strName )
 
-	if strName then
+	if ( strName ) then
 		self.m_strName = tostring( strName )
 	else
 		self.m_strName = nil
 	end
 
-	if !self.bSetup then return end
+	if ( !self.bSetup ) then return end
 
 	self:SetupTree()
 
@@ -62,7 +50,7 @@ end
 function PANEL:SetBaseFolder( strBase )
 
 	self.m_strBaseFolder = tostring( strBase )
-	if !self.bSetup then return end
+	if ( !self.bSetup ) then return end
 
 	self:SetupTree()
 
@@ -71,7 +59,7 @@ end
 function PANEL:SetPath( strPath )
 
 	self.m_strPath = tostring( strPath )
-	if !self.bSetup then return end
+	if ( !self.bSetup ) then return end
 
 	self:SetupTree()
 
@@ -79,12 +67,12 @@ end
 
 function PANEL:SetSearch( strSearch )
 
-	if !strSearch || strSearch == "" then
+	if ( !strSearch || strSearch == "" ) then
 		strSearch = "*"
 	end
 
 	self.m_strSearch = tostring( strSearch )
-	if !self.bSetup then return end
+	if ( !self.bSetup ) then return end
 
 	self:SetupTree()
 
@@ -93,9 +81,9 @@ end
 function PANEL:SetFileTypes( strTypes )
 
 	self.m_strFilter = tostring( strTypes || "*.*" )
-	if !self.bSetup then return end
+	if ( !self.bSetup ) then return end
 
-	if self.m_strCurrentFolder then
+	if ( self.m_strCurrentFolder ) then
 		self:ShowFolder( self.m_strCurrentFolder )
 	end
 
@@ -104,10 +92,10 @@ end
 function PANEL:SetModels( bUseModels )
 
 	self.m_bModels = tobool( bUseModels )
-	if !self.bSetup then return end
+	if ( !self.bSetup ) then return end
 
 	self:SetupFiles()
-	if self.m_strCurrentFolder then
+	if ( self.m_strCurrentFolder ) then
 		self:ShowFolder( self.m_strCurrentFolder )
 	end
 
@@ -118,12 +106,12 @@ function PANEL:SetCurrentFolder( strDir )
 	strDir = tostring( strDir )
 	strDir = string.Trim( strDir, "/" )
 
-	if self.m_strBaseFolder && !string.StartWith( strDir, self.m_strBaseFolder ) then
+	if ( self.m_strBaseFolder && !string.StartWith( strDir, self.m_strBaseFolder ) ) then
 		strDir = string.Trim( self.m_strBaseFolder, "/" ) .. "/" .. string.Trim( strDir, "/" )
 	end
 
 	self.m_strCurrentFolder = strDir
-	if !self.bSetup then return end
+	if ( !self.bSetup ) then return end
 
 	self:ShowFolder( strDir )
 
@@ -134,11 +122,11 @@ function PANEL:SetOpen( bOpen, bAnim )
 	bOpen = tobool( bOpen )
 	self.m_bOpen = bOpen
 
-	if !self.bSetup then return end
+	if ( !self.bSetup ) then return end
 
 	self.FolderNode:SetExpanded( bOpen, !bAnim )
 	self.m_bOpen = bOpen
-	self:SetCookie( "Open", ( bOpen && "1" || "0" ) )
+	self:SetCookie( "Open", bOpen && "1" || "0" )
 
 end
 
@@ -146,7 +134,7 @@ function PANEL:Paint( w, h )
 
 	DPanel.Paint( self, w, h )
 
-	if !self.bSetup then
+	if ( !self.bSetup ) then
 		self.bSetup = self:Setup()
 	end
 
@@ -155,10 +143,10 @@ end
 function PANEL:SetupTree()
 
 	local name = self.m_strName
-	if !name then name = string.Trim( string.match( self.m_strBaseFolder, "/.+$" ) || self.m_strBaseFolder, "/" ) end
+	if ( !name ) then name = string.Trim( string.match( self.m_strBaseFolder, "/.+$" ) || self.m_strBaseFolder, "/" ) end
 
 	local children = self.Tree.RootNode.ChildNodes
-	if IsValid( children ) then
+	if ( IsValid( children ) ) then
 		children:Clear()
 	end
 
@@ -166,11 +154,11 @@ function PANEL:SetupTree()
 	self.Tree.RootNode.ChildExpanded = function( node, bExpand )
 		DTree_Node.ChildExpanded( node, bExpand )
 		self.m_bOpen = tobool( self.FolderNode.m_bExpanded )
-		self:SetCookie( "Open", ( self.m_bOpen && "1" || "0" ) )
+		self:SetCookie( "Open", self.m_bOpen && "1" || "0" )
 	end
 
 	self.FolderNode:SetExpanded( self.m_bOpen, true )
-	self:SetCookie( "Open", ( self.m_bOpen && "1" || "0" ) )
+	self:SetCookie( "Open", self.m_bOpen && "1" || "0" )
 
 	self:ShowFolder()
 
@@ -180,9 +168,9 @@ end
 
 function PANEL:SetupFiles()
 
-	if IsValid( self.Files ) then self.Files:Remove() end
+	if ( IsValid( self.Files ) ) then self.Files:Remove() end
 
-	if self.m_bModels then
+	if ( self.m_bModels ) then
 		self.Files = self.Divider:Add( "DIconBrowser" )
 		self.Files:SetManual( true )
 		self.Files:SetBackgroundColor( Color( 234, 234, 234 ) )
@@ -192,18 +180,18 @@ function PANEL:SetupFiles()
 		self.FileHeader = self.Files:AddColumn( "Files" ).Header
 
 		self.Files.DoDoubleClick = function( pnl, _, line )
-			self:OnDoubleClick( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), line )
+			self:OnDoubleClick( string.Trim( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), "/" ), line )
 		end
 		self.Files.OnRowSelected = function( pnl, _, line )
-			self:OnSelect( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), line )
+			self:OnSelect( string.Trim( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), "/" ), line )
 		end
 		self.Files.OnRowRightClick = function( pnl, _, line )
-			self:OnRightClick( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), line )
+			self:OnRightClick( string.Trim( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), "/" ), line )
 		end
 	end
 	self.Divider:SetRight( self.Files )
 
-	if self.m_strCurrentFolder && self.m_strCurrentFolder != "" then
+	if ( self.m_strCurrentFolder && self.m_strCurrentFolder != "" ) then
 		self:ShowFolder( self.m_strCurrentFolder )
 	end
 
@@ -213,37 +201,37 @@ end
 
 function PANEL:Setup()
 
-	if !self.m_strBaseFolder then return false end
+	if ( !self.m_strBaseFolder ) then return false end
 
-	return ( self:SetupTree() && self:SetupFiles() )
+	return self:SetupTree() && self:SetupFiles()
 
 end
 
 function PANEL:ShowFolder( path )
 
-	if !IsValid( self.Files ) then return end
+	if ( !IsValid( self.Files ) ) then return end
 
 	self.Files:Clear()
 
-	if IsValid(self.FileHeader) then
+	if ( IsValid( self.FileHeader ) ) then
 		self.FileHeader:SetText( path || "Files" )
 	end
 
-	if !path then return end
+	if ( !path ) then return end
 
 	local filters = self.m_strFilter
-	if  !filters || filters == "" then
+	if ( !filters || filters == "" ) then
 		filters = "*.*"
 	end
 
 	for _, filter in pairs( string.Explode( " ", filters ) ) do
 
 		local files = file.Find( string.Trim( path .. "/" .. ( filter || "*.*" ), "/" ), self.m_strPath )
-		if !istable( files ) then continue end
+		if ( !istable( files ) ) then continue end
 
 		for _, v in pairs( files ) do
 
-			if self.m_bModels then
+			if ( self.m_bModels ) then
 
 				local icon = self.Files:Add( "SpawnIcon" )
 				icon:SetModel( path .. "/" .. v )
@@ -270,7 +258,7 @@ end
 
 function PANEL:SortFiles( desc )
 
-	if !self:GetModels() then
+	if ( !self:GetModels() ) then
 		self.Files:SortByColumn( 1, tobool( desc ) )
 	end
 
@@ -286,7 +274,7 @@ function PANEL:Clear()
 
 	DPanel.Clear( self )
 
-	self.m_strBaseFolder, self.m_strCurrentFolder, self.m_strFilter, self.m_strName, self.m_strSearch, self.Divider.m_pRight =_
+	self.m_strBaseFolder, self.m_strCurrentFolder, self.m_strFilter, self.m_strName, self.m_strSearch, self.Divider.m_pRight = nil
 	self.m_bOpen, self.m_bModels, self.m_strPath = false, false, "GAME"
 	self.bSetup = nil
 
@@ -315,6 +303,24 @@ end
 function PANEL:OnRightClick( path, pnl )
 
 	-- For override
+
+end
+
+function PANEL:GenerateExample( class, sheet, w, h )
+
+	local browser = vgui.Create( class, frame )
+	browser:Dock( FILL )
+	browser:DockMargin( 5, 0, 5, 5 )
+
+	browser:SetPath( "GAME" ) -- The access path i.e. GAME, LUA, DATA etc.
+	browser:SetBaseFolder( "data" ) -- The root folder
+	browser:SetOpen( true ) -- Open the tree to show sub-folders
+
+	function browser:OnSelect( path, pnl ) -- Called when a file is clicked
+		-- Do something
+	end
+
+	sheet:AddSheet( class, browser, nil, true, true )
 
 end
 

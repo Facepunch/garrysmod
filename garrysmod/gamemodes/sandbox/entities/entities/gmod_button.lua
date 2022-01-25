@@ -2,20 +2,20 @@
 AddCSLuaFile()
 DEFINE_BASECLASS( "base_gmodentity" )
 
-ENT.PrintName		= ""
-ENT.Author			= ""
-ENT.Contact			= ""
-ENT.Purpose			= ""
-ENT.Instructions	= ""
+ENT.PrintName = "Button"
+ENT.Editable = true
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Int",		0,	"Key" );
-	self:NetworkVar( "Bool",	0,	"On" );
-	self:NetworkVar( "Bool",	1,	"IsToggle" );
+	self:NetworkVar( "Int", 0, "Key" )
+	self:NetworkVar( "Bool", 0, "On" )
+	self:NetworkVar( "Bool", 1, "IsToggle", { KeyName = "tg", Edit = { type = "Boolean", order = 1, title = "#tool.button.toggle" } } )
+	self:NetworkVar( "String", 0, "Label", { KeyName = "lbl", Edit = { type = "Generic", order = 2, title = "#tool.button.text" } } )
 
-	self:SetOn( false )
-	self:SetIsToggle( false );
+	if ( SERVER ) then
+		self:SetOn( false )
+		self:SetIsToggle( false )
+	end
 
 end
 
@@ -30,51 +30,52 @@ function ENT:Initialize()
 
 	else
 
-		self.PosePosition = 0;
+		self.PosePosition = 0
 
 	end
-	
+
 end
 
+function ENT:GetOverlayText()
 
-function ENT:SetLabel( text )
+	local text = self:GetLabel()
 
 	text = string.gsub( text, "\\", "" )
 	text = string.sub( text, 0, 20 )
-	
-	if ( text != "" ) then
-	
-		text = "\""..text.."\""
-	
-	end
-	
-	self:SetOverlayText( text )
-	
+
+	if ( text == "" ) then return "" end
+
+	local txt =  "\"" .. text .. "\""
+
+	if ( txt == "" ) then return "" end
+	if ( game.SinglePlayer() ) then return txt end
+
+	return txt .. "\n(" .. self:GetPlayerName() .. ")"
+
 end
 
 function ENT:Use( activator, caller, type, value )
 
-	if ( !activator:IsPlayer() ) then return end		-- Who the frig is pressing this shit!?
-	
+	if ( !activator:IsPlayer() ) then return end -- Who the frig is pressing this shit!?
+
 	if ( self:GetIsToggle() ) then
 
 		if ( type == USE_ON ) then
 			self:Toggle( !self:GetOn(), activator )
 		end
-		return;
+		return
 
 	end
 
-	if ( IsValid( self.LastUser ) ) then return end		-- Someone is already using this button
+	if ( IsValid( self.LastUser ) ) then return end -- Someone is already using this button
 
 	--
 	-- Switch off
 	--
-	if ( self:GetOn() ) then 
-	
+	if ( self:GetOn() ) then
 		self:Toggle( false, activator )
-		
-	return end
+		return
+	end
 
 	--
 	-- Switch on
@@ -82,23 +83,18 @@ function ENT:Use( activator, caller, type, value )
 	self:Toggle( true, activator )
 	self:NextThink( CurTime() )
 	self.LastUser = activator
-	
+
 end
 
 function ENT:Think()
 
+	-- Add a world tip if the player is looking at it
 	self.BaseClass.Think( self )
 
-	--
-	-- Add a world tip if the player is looking at it
-	--
+	-- Update the animation
 	if ( CLIENT ) then
-	
-		self:UpdateLever()
 
-		if ( self:GetOverlayText() != "" && self:BeingLookedAtByLocalPlayer() ) then
-			AddWorldTip( self:EntIndex(), self:GetOverlayText(), 0.5, self:GetPos(), self.Entity  )
-		end
+		self:UpdateLever()
 
 	end
 
@@ -106,19 +102,19 @@ function ENT:Think()
 	-- If the player looks away while holding down use it will stay on
 	-- Lets fix that..
 	--
-	if ( SERVER && self:GetOn() && !self:GetIsToggle() ) then 
-	
+	if ( SERVER && self:GetOn() && !self:GetIsToggle() ) then
+
 		if ( !IsValid( self.LastUser ) || !self.LastUser:KeyDown( IN_USE ) ) then
-			
+
 			self:Toggle( false, self.LastUser )
 			self.LastUser = nil
-			
-		end	
+
+		end
 
 		self:NextThink( CurTime() )
-	
+
 	end
-	
+
 end
 
 --
@@ -126,19 +122,18 @@ end
 --
 function ENT:Toggle( bEnable, ply )
 
-
 	if ( bEnable ) then
-	
+
 		numpad.Activate( self:GetPlayer(), self:GetKey(), true )
 		self:SetOn( true )
-		
+
 	else
-	
+
 		numpad.Deactivate( self:GetPlayer(), self:GetKey(), true )
 		self:SetOn( false )
-		
+
 	end
-	
+
 end
 
 --
@@ -146,18 +141,12 @@ end
 --
 function ENT:UpdateLever()
 
-	local TargetPos = 0.0;
-	if ( self:GetOn() ) then TargetPos = 1.0; end
+	local TargetPos = 0.0
+	if ( self:GetOn() ) then TargetPos = 1.0 end
 
-	self.PosePosition = math.Approach( self.PosePosition, TargetPos, FrameTime() * 5.0 )	
+	self.PosePosition = math.Approach( self.PosePosition, TargetPos, FrameTime() * 5.0 )
 
 	self:SetPoseParameter( "switch", self.PosePosition )
 	self:InvalidateBoneCache()
 
-end
-
-function ENT:Draw()	
-
-	self:DrawModel()
-	
 end

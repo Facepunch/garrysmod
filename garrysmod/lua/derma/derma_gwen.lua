@@ -1,26 +1,20 @@
---[[   _
-	( )
-   _| |   __   _ __   ___ ___     _ _
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_)
 
---]]
 local meta = FindMetaTable( "Panel" )
 
 GWEN = {}
 
-function GWEN.CreateTextureBorder( _x, _y, _w, _h, l, t, r, b )
+function GWEN.CreateTextureBorder( _xo, _yo, _wo, _ho, l, t, r, b, material_override )
 
-	local mat = SKIN.GwenTexture
-	local tex = mat:GetTexture( "$basetexture" )
-
-	_x = _x / tex:Width()
-	_y = _y / tex:Height()
-	_w = _w / tex:Width()
-	_h = _h / tex:Height()
+	local mat = SKIN && SKIN.GwenTexture || material_override
+	if ( material_override && !material_override:IsError() ) then mat = material_override end
 
 	return function( x, y, w, h, col )
+
+		local tex = mat:GetTexture( "$basetexture" )
+		local _x = _xo / tex:Width()
+		local _y = _yo / tex:Height()
+		local _w = _wo / tex:Width()
+		local _h = _ho / tex:Height()
 
 		surface.SetMaterial( mat )
 		if ( col ) then
@@ -58,17 +52,18 @@ function GWEN.CreateTextureBorder( _x, _y, _w, _h, l, t, r, b )
 
 end
 
-function GWEN.CreateTextureNormal( _x, _y, _w, _h )
+function GWEN.CreateTextureNormal( _xo, _yo, _wo, _ho, material_override )
 
-	local mat = SKIN.GwenTexture
-	local tex = mat:GetTexture( "$basetexture" )
-
-	_x = _x / tex:Width()
-	_y = _y / tex:Height()
-	_w = _w / tex:Width()
-	_h = _h / tex:Height()
+	local mat = SKIN && SKIN.GwenTexture || material_override
+	if ( material_override && !material_override:IsError() ) then mat = material_override end
 
 	return function( x, y, w, h, col )
+
+		local tex = mat:GetTexture( "$basetexture" )
+		local _x = _xo / tex:Width()
+		local _y = _yo / tex:Height()
+		local _w = _wo / tex:Width()
+		local _h = _ho / tex:Height()
 
 		surface.SetMaterial( mat )
 
@@ -84,25 +79,23 @@ function GWEN.CreateTextureNormal( _x, _y, _w, _h )
 
 end
 
-function GWEN.CreateTextureCentered( _x, _y, _w, _h )
+function GWEN.CreateTextureCentered( _xo, _yo, _wo, _ho, material_override )
 
-	local mat = SKIN.GwenTexture
-	local tex = mat:GetTexture( "$basetexture" )
-
-	local width = _w
-	local height = _h
-
-	_x = _x / tex:Width()
-	_y = _y / tex:Height()
-	_w = _w / tex:Width()
-	_h = _h / tex:Height()
+	local mat = SKIN && SKIN.GwenTexture || material_override
+	if ( material_override && !material_override:IsError() ) then mat = material_override end
 
 	return function( x, y, w, h, col )
 
-		x = x + ( w - width ) * 0.5
-		y = y + ( h - height ) * 0.5
-		w = width
-		h = height
+		local tex = mat:GetTexture( "$basetexture" )
+		local _x = _xo / tex:Width()
+		local _y = _yo / tex:Height()
+		local _w = _wo / tex:Width()
+		local _h = _ho / tex:Height()
+
+		x = x + ( w - _wo ) * 0.5
+		y = y + ( h - _ho ) * 0.5
+		w = _wo
+		h = _ho
 
 		surface.SetMaterial( mat )
 
@@ -118,9 +111,10 @@ function GWEN.CreateTextureCentered( _x, _y, _w, _h )
 
 end
 
-function GWEN.TextureColor( x, y )
+function GWEN.TextureColor( x, y, material_override )
 
-	local mat = SKIN.GwenTexture
+	local mat = SKIN && SKIN.GwenTexture || material_override
+	if ( material_override && !material_override:IsError() ) then mat = material_override end
 	return mat:GetColor( x, y )
 
 end

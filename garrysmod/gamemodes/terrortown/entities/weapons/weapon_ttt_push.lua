@@ -1,56 +1,55 @@
-
 AddCSLuaFile()
 
-SWEP.HoldType = "physgun"
+DEFINE_BASECLASS "weapon_tttbase"
+
+SWEP.HoldType               = "physgun"
 
 if CLIENT then
-   SWEP.PrintName = "newton_name"
-   SWEP.Slot = 7
+   SWEP.PrintName           = "newton_name"
+   SWEP.Slot                = 7
+
+   SWEP.ViewModelFlip       = false
+   SWEP.ViewModelFOV        = 54
 
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "newton_desc"
    };
 
-   SWEP.Icon = "vgui/ttt/icon_launch"
-
-   SWEP.ViewModelFlip = false
-   SWEP.ViewModelFOV = 54
+   SWEP.Icon               = "vgui/ttt/icon_launch"
 end
 
-SWEP.Base				= "weapon_tttbase"
+SWEP.Base                  = "weapon_tttbase"
 
-SWEP.Primary.Ammo   = "none"
-SWEP.Primary.ClipSize		= -1
-SWEP.Primary.DefaultClip	= -1
-SWEP.Primary.Automatic		= true
-SWEP.Primary.Delay = 3
-SWEP.Primary.Ammo  = "none"
-SWEP.Primary.Cone  = 0.005
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo  = "none"
-SWEP.Secondary.Delay = 0.5
+SWEP.Primary.Ammo          = "none"
+SWEP.Primary.ClipSize      = -1
+SWEP.Primary.DefaultClip   = -1
+SWEP.Primary.Automatic     = true
+SWEP.Primary.Delay         = 3
+SWEP.Primary.Cone          = 0.005
+SWEP.Primary.Sound         = Sound( "weapons/ar2/fire1.wav" )
+SWEP.Primary.SoundLevel    = 54
 
-SWEP.AutoSpawnable = false
-SWEP.NoSights = true
+SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic   = false
+SWEP.Secondary.Ammo        = "none"
+SWEP.Secondary.Delay       = 0.5
 
-SWEP.Kind = WEAPON_EQUIP2
-SWEP.CanBuy = {ROLE_TRAITOR}
+SWEP.NoSights              = true
 
-SWEP.WeaponID = AMMO_PUSH
+SWEP.Kind                  = WEAPON_EQUIP2
+SWEP.CanBuy                = {ROLE_TRAITOR}
+SWEP.WeaponID              = AMMO_PUSH
 
-SWEP.Primary.Sound = Sound( "weapons/ar2/fire1.wav" )
-SWEP.Primary.SoundLevel = 54
+SWEP.UseHands              = true
+SWEP.ViewModel             = "models/weapons/c_superphyscannon.mdl"
+SWEP.WorldModel            = "models/weapons/w_physics.mdl"
 
-SWEP.UseHands			= true
-SWEP.ViewModel  = "models/weapons/c_superphyscannon.mdl"
-SWEP.WorldModel = "models/weapons/w_physics.mdl"
 AccessorFuncDT(SWEP, "charge", "Charge")
 
-SWEP.IsCharging = false
-SWEP.NextCharge = 0
+SWEP.IsCharging            = false
+SWEP.NextCharge            = 0
 
 local CHARGE_AMOUNT = 0.02
 local CHARGE_DELAY = 0.025
@@ -69,6 +68,8 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:PrimaryAttack()
+   if self.IsCharging then return end
+
    self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
    self:SetNextSecondaryFire( CurTime() + self.Primary.Delay )
 
@@ -85,9 +86,9 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:FirePulse(force_fwd, force_up)
-   if not IsValid(self.Owner) then return end
+   if not IsValid(self:GetOwner()) then return end
 
-   self.Owner:SetAnimation( PLAYER_ATTACK1 )
+   self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
 
    sound.Play(self.Primary.Sound, self:GetPos(), self.Primary.SoundLevel)
 
@@ -98,15 +99,15 @@ function SWEP:FirePulse(force_fwd, force_up)
 
    local bullet = {}
    bullet.Num    = num
-   bullet.Src    = self.Owner:GetShootPos()
-   bullet.Dir    = self.Owner:GetAimVector()
+   bullet.Src    = self:GetOwner():GetShootPos()
+   bullet.Dir    = self:GetOwner():GetAimVector()
    bullet.Spread = Vector( cone, cone, 0 )
    bullet.Tracer = 1
    bullet.Force  = force_fwd / 10
    bullet.Damage = 1
    bullet.TracerName = "AirboatGunHeavyTracer"
 
-   local owner = self.Owner
+   local owner = self:GetOwner()
    local fwd = force_fwd / num
    local up = force_up / num
    bullet.Callback = function(att, tr, dmginfo)
@@ -124,7 +125,7 @@ function SWEP:FirePulse(force_fwd, force_up)
                         end
                      end
 
-   self.Owner:FireBullets( bullet )
+   self:GetOwner():FireBullets( bullet )
 
 end
 
@@ -182,9 +183,10 @@ function SWEP:Holster()
 end
 
 function SWEP:Think()
-   if self.IsCharging and IsValid(self.Owner) and self.Owner:IsTerror() then
+   BaseClass.Think(self)
+   if self.IsCharging and IsValid(self:GetOwner()) and self:GetOwner():IsTerror() then
       -- on client this is prediction
-      if not self.Owner:KeyDown(IN_ATTACK2) then
+      if not self:GetOwner():KeyDown(IN_ATTACK2) then
          self:ChargedAttack()
          return true
       end

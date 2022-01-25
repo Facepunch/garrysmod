@@ -1,0 +1,76 @@
+// Glock
+
+WeaponData
+{
+	// Weapon data is loaded by both the Game and Client DLLs.
+	"printname"		"#HL1_Glock"
+	"viewmodel"		"models/v_9mmhandgun.mdl"
+	"playermodel"		"models/weapons/w_9mmhandgun.mdl"
+	"anim_prefix"		"glock"
+	"bucket"		"1"
+	"bucket_position"	"11"
+
+	"clip_size"		"17"
+	"default_clip"		"17"
+
+	"primary_ammo"		"9mmRound"
+	"secondary_ammo"	"None"
+
+	"weight"		"10"
+	"item_flags"		"0"
+	"ITEM_FLAG_NOAUTOSWITCHEMPTY"	"1"
+
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+		"empty"		"HL1Weapons.Empty"
+		"single_shot"	"HL1Weapon_Glock.Single"
+		"special1"	"HL1Weapon_Glock.Special1"
+		"special2"	"HL1Weapon_Glock.Special2"
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"sprites/640hud1"
+			"x"		"0"
+			"y"		"45"
+			"width"		"170"
+			"height"	"45"
+		}
+		"weapon_s"
+		{
+			"file"		"sprites/640hud4"
+			"x"		"0"
+			"y"		"45"
+			"width"		"170"
+			"height"	"45"
+		}
+		"ammo"
+		{
+			"file"		"sprites/640hud7"
+			"x"			"0"
+			"y"			"72"
+			"width"		"24"
+			"height"	"24"
+		}
+		"crosshair"
+		{
+			"file"		"sprites/crosshairs"
+			"x"			"24"
+			"y"			"0"
+			"width"		"24"
+			"height"	"24"
+		}
+		"autoaim"
+		{
+			"file"		"sprites/crosshairs"
+			"x"			"0"
+			"y"			"72"
+			"width"		"24"
+			"height"	"24"
+		}
+	}
+}

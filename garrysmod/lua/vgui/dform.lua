@@ -1,91 +1,68 @@
---[[   _                                
-	( )                               
-   _| |   __   _ __   ___ ___     _ _ 
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
 
-	DForm
-
---]]
 local PANEL = {}
 
 DEFINE_BASECLASS( "DCollapsibleCategory" )
 
-AccessorFunc( PANEL, "m_bSizeToContents", 		"AutoSize", 		FORCE_BOOL)
-AccessorFunc( PANEL, "m_iSpacing", 				"Spacing" )
-AccessorFunc( PANEL, "m_Padding", 				"Padding" )
+AccessorFunc( PANEL, "m_bSizeToContents",	"AutoSize", FORCE_BOOL)
+AccessorFunc( PANEL, "m_iSpacing",			"Spacing" )
+AccessorFunc( PANEL, "m_Padding",			"Padding" )
 
---[[---------------------------------------------------------
-   Name: Init
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.Items = {}
-	
+
 	self:SetSpacing( 4 )
 	self:SetPadding( 10 )
-	
-	self:SetDrawBackground( true )
-	
+
+	self:SetPaintBackground( true )
+
 	self:SetMouseInputEnabled( true )
 	self:SetKeyboardInputEnabled( true )
 
 end
 
-
---[[---------------------------------------------------------
-   Name: SetName
------------------------------------------------------------]]
 function PANEL:SetName( name )
 
 	self:SetLabel( name )
 
 end
 
---[[---------------------------------------------------------
-   Name: Clear
------------------------------------------------------------]]
 function PANEL:Clear()
 
 	for k, v in pairs( self.Items ) do
-		
+
 		if ( IsValid(v) ) then v:Remove() end
 
 	end
 
 	self.Items = {}
-	
+
 end
 
-
---[[---------------------------------------------------------
-   Name: AddItem
------------------------------------------------------------]]
 function PANEL:AddItem( left, right )
-	
+
 	self:InvalidateLayout()
-	
+
 	local Panel = vgui.Create( "DSizeToContents", self )
---	Panel.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "CategoryButton", panel, w, h ) end
+	--Panel.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "CategoryButton", panel, w, h ) end
 	Panel:SetSizeX( false )
 	Panel:Dock( TOP )
-	Panel:DockPadding( 10, 10, 10, 0 );
+	Panel:DockPadding( 10, 10, 10, 0 )
 	Panel:InvalidateLayout()
-		
+
 	if ( IsValid( right ) ) then
-	
+
 		left:SetParent( Panel )
 		left:Dock( LEFT )
 		left:InvalidateLayout( true )
 		left:SetSize( 100, 20 )
-		
+
 		right:SetParent( Panel )
 		right:SetPos( 110, 0 )
 		right:InvalidateLayout( true )
 
 	elseif ( IsValid( left ) ) then
-	
+
 		left:SetParent( Panel )
 		left:Dock( TOP )
 
@@ -95,36 +72,74 @@ function PANEL:AddItem( left, right )
 
 end
 
-
---[[---------------------------------------------------------
-   Name: TextEntry
------------------------------------------------------------]]
 function PANEL:TextEntry( strLabel, strConVar )
 
 	local left = vgui.Create( "DLabel", self )
 	left:SetText( strLabel )
 	left:SetDark( true )
-	
+
 	local right = vgui.Create( "DTextEntry", self )
 	right:SetConVar( strConVar )
 	right:Dock( TOP )
-	
+
 	self:AddItem( left, right )
-	
+
 	return right, left
 
 end
 
+function PANEL:PropSelect( label, convar, models, height )
 
---[[---------------------------------------------------------
-   Name: ComboBox
------------------------------------------------------------]]
+	local props = vgui.Create( "PropSelect", self )
+
+	props:SetConVar( convar or "" )
+	props.Label:SetText( label or "" )
+
+	props.Height = height or 2
+
+	-- Build a list of models for sorting, support both ways
+	local modellist = {}
+
+	local firstKey, firstVal = next( models )
+	if ( firstVal.model == nil ) then
+
+		-- Lowercase model names for sorting purposes
+		local models = table.LowerKeyNames( models )
+
+		-- list.Get where key is the model and value is the cvars to set when that model is selected
+		for k, v in SortedPairs( models ) do
+			props:AddModel( k, v )
+		end
+
+	else
+
+		local tmp = {} -- HACK: Order by skin too
+		for k, v in SortedPairsByMemberValue( models, "model" ) do
+			tmp[ k ] = v.model:lower() .. ( v.skin || 0 )
+		end
+
+		for k, v in SortedPairsByValue( tmp ) do
+			v = models[ k ]
+			local icon = props:AddModelEx( k, v.model, v.skin || 0 )
+			if ( v.tooltip ) then icon:SetToolTip( v.tooltip ) end
+		end
+
+	end
+
+	props:InvalidateLayout( true )
+
+	self:AddPanel( props )
+
+	return props
+
+end
+
 function PANEL:ComboBox( strLabel, strConVar )
 
 	local left = vgui.Create( "DLabel", self )
 	left:SetText( strLabel )
 	left:SetDark( true )
-	
+
 	local right = vgui.Create( "DComboBox", self )
 	right:SetConVar( strConVar )
 	right:Dock( FILL )
@@ -132,62 +147,51 @@ function PANEL:ComboBox( strLabel, strConVar )
 		if ( !self.m_strConVar ) then return end
 		RunConsoleCommand( self.m_strConVar, tostring( data or value ) )
 	end
-	
+
 	self:AddItem( left, right )
-	
+
 	return right, left
 
 end
 
---[[---------------------------------------------------------
-   Name: NumberWang
------------------------------------------------------------]]
 function PANEL:NumberWang( strLabel, strConVar, numMin, numMax, numDecimals )
 
 	local left = vgui.Create( "DLabel", self )
 	left:SetText( strLabel )
 	left:SetDark( true )
-	
+
 	local right = vgui.Create( "DNumberWang", self )
 	right:SetMinMax( numMin, numMax )
-	
+
 	if ( numDecimals != nil ) then right:SetDecimals( numDecimals ) end
-	
+
 	right:SetConVar( strConVar )
 	right:SizeToContents()
-	
+
 	self:AddItem( left, right )
-	
+
 	return right, left
 
 end
 
---[[---------------------------------------------------------
-   Name: NumSlider
------------------------------------------------------------]]
 function PANEL:NumSlider( strLabel, strConVar, numMin, numMax, numDecimals )
 
 	local left = vgui.Create( "DNumSlider", self )
 	left:SetText( strLabel )
 	left:SetMinMax( numMin, numMax )
 	left:SetDark( true )
-	
+
 	if ( numDecimals != nil ) then left:SetDecimals( numDecimals ) end
-	
+
 	left:SetConVar( strConVar )
 	left:SizeToContents()
-	
+
 	self:AddItem( left, nil )
-	
+
 	return left
 
 end
 
-
-
---[[---------------------------------------------------------
-   Name: CheckBox
------------------------------------------------------------]]
 function PANEL:CheckBox( strLabel, strConVar )
 
 	local left = vgui.Create( "DCheckBoxLabel", self )
@@ -196,14 +200,11 @@ function PANEL:CheckBox( strLabel, strConVar )
 	left:SetConVar( strConVar )
 
 	self:AddItem( left, nil )
-	
+
 	return left
 
 end
 
---[[---------------------------------------------------------
-   Name: Help
------------------------------------------------------------]]
 function PANEL:Help( strHelp )
 
 	local left = vgui.Create( "DLabel", self )
@@ -215,18 +216,15 @@ function PANEL:Help( strHelp )
 	left:SetContentAlignment( 7 )
 	left:SetAutoStretchVertical( true )
 	left:DockMargin( 8, 0, 8, 8 )
-	
+
 	self:AddItem( left, nil )
-	
+
 	left:InvalidateLayout( true )
-	
+
 	return left
 
 end
 
---[[---------------------------------------------------------
-   Name: ControlHelp
------------------------------------------------------------]]
 function PANEL:ControlHelp( strHelp )
 
 	local Panel = vgui.Create( "DSizeToContents", self )
@@ -252,10 +250,9 @@ function PANEL:ControlHelp( strHelp )
 end
 
 --[[---------------------------------------------------------
-   Name: Button
-		Note: If you're running a console command like "maxplayers 10" you
-		need to add the "10" to the arguments, like so
-		Button( "LabelName", "maxplayers", "10" )
+	Note: If you're running a console command like "maxplayers 10" you
+	need to add the "10" to the arguments, like so
+	Button( "LabelName", "maxplayers", "10" )
 -----------------------------------------------------------]]
 function PANEL:Button( strName, strConCommand, ... --[[ console command args!! --]] )
 
@@ -264,17 +261,14 @@ function PANEL:Button( strName, strConCommand, ... --[[ console command args!! -
 	if ( strConCommand ) then
 		left:SetConsoleCommand( strConCommand, ... )
 	end
-		
+
 	left:SetText( strName )
 	self:AddItem( left, nil )
-	
+
 	return left
 
 end
 
---[[---------------------------------------------------------
-   Name: PanelSelect
------------------------------------------------------------]]
 function PANEL:PanelSelect()
 
 	local left = vgui.Create( "DPanelSelect", self )
@@ -283,9 +277,6 @@ function PANEL:PanelSelect()
 
 end
 
---[[---------------------------------------------------------
-   Name: ListBox
------------------------------------------------------------]]
 function PANEL:ListBox( strLabel )
 
 	if ( strLabel ) then
@@ -294,22 +285,18 @@ function PANEL:ListBox( strLabel )
 		self:AddItem( left )
 		left:SetDark( true )
 	end
-	
+
 	local right = vgui.Create( "DListBox", self )
 	--right:SetConVar( strConVar )
 	right.Stretch = true
-	
+
 	self:AddItem( right )
-	
+
 	return right, left
 
 end
 
---[[---------------------------------------------------------
-   Name: Rebuild
------------------------------------------------------------]]
 function PANEL:Rebuild()
-
 end
 
 -- No example for this control

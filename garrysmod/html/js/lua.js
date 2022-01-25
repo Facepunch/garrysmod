@@ -25,7 +25,7 @@ var lua =
 				if ( cmd[i] == 's' )
 				{
 					str += "\"";
-					str += arguments[arg].replace(/"/g, "\\\"");
+					str += arguments[arg].replace(/["\\]/g, '\\$&');
 					str += "\"";
 
 					arg++;
@@ -44,7 +44,7 @@ var lua =
 		}
 
 		console.log( "RUNLUA:" + str );
-		
+
 	},
 
 	PlaySound: function( name )

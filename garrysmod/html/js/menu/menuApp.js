@@ -12,8 +12,8 @@ App.config(function ( $routeProvider, $locationProvider )
 	$routeProvider.when('/servers/', { templateUrl: 'template/servers.html' } );
 	$routeProvider.when('/demos/', { templateUrl: 'template/demos.html' } );
 	$routeProvider.when('/saves/', { templateUrl: 'template/saves.html' } );
+	$routeProvider.when('/dupes/', { templateUrl: 'template/dupes.html' } );
 } );
-
 
 function UpdateDigest( scope, timeout )
 {
@@ -25,7 +25,7 @@ function UpdateDigest( scope, timeout )
 		scope.DigestUpdate = 0;
 		scope.$digest();
 
-	}, timeout )
+	}, timeout );
 }
 
 //We already have a limitTo filter built-in to angular,

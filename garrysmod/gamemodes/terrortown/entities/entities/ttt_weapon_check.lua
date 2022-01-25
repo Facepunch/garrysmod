@@ -18,7 +18,7 @@ end
 -- We use stuff from weaponry.lua here, like weapon types
 
 local function HasWeaponType(ply, weptype)
-   for _, wep in pairs(ply:GetWeapons()) do
+   for _, wep in ipairs(ply:GetWeapons()) do
       if IsValid(wep) and WEPS.TypeForWeapon(wep:GetClass()) == weptype then
          return true
       end
@@ -61,7 +61,7 @@ local checkers = {
 };
 
 function ENT:GetWeaponChecker(check)
-   if type(check) == "string" then
+   if isstring(check) then
       return HasNamed(check)
    else
       return checkers[check]
@@ -79,7 +79,7 @@ function ENT:TestWeapons(weptype)
       return 0
    end
 
-   for _,ply in pairs(player.GetAll()) do
+   for _,ply in ipairs(player.GetAll()) do
       if IsValid(ply) and ply:IsTerror() then
          local pos = ply:GetPos()
          local center = ply:LocalToWorld(ply:OBBCenter())
@@ -106,13 +106,7 @@ function ENT:AcceptInput(name, activator, caller, data)
 
       local weapons = self:TestWeapons(weptype or wepname)
 
-      if not self.Outputs["WeaponsFound"] then return end
-
-      for idx, op in pairs(self.Outputs["WeaponsFound"]) do
-         op.param = weapons
-      end
-
-      self:TriggerOutput("WeaponsFound", activator)
+      self:TriggerOutput("WeaponsFound", activator, weapons)
 
       return true
    end

@@ -5,7 +5,6 @@ var rootScope = null;
 
 function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 {
-
 	for ( var i = 0; i < gScope.MapList.length; i++ )
 	{
 		if ( gScope.MapList[i][ "category" ] == "Favourites" )
@@ -70,7 +69,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 	$scope.SelectMap = function ( m )
 	{
 		$rootScope.Map = m;
-		$rootScope.LastCategory = $scope.CurrentCategory
+		$rootScope.LastCategory = $scope.CurrentCategory;
 	}
 
 	$scope.DoubleClick = ""
@@ -97,18 +96,21 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 	$scope.FavMap = function( m )
 	{
-		lua.Run( 'ToggleFavourite( "' + m + '" )' );
+		lua.Run( 'ToggleFavourite( %s )', m );
 	}
 
 	$scope.MapIcon = function( m, cat )
 	{
 		// BSP version 21
-		if ( cat == "Left 4 Dead 2" || cat == "Portal 2"  || cat == "CS: Global Offensive" || cat == "Blade Symphony" || cat == "Alien Swarm" || cat == "Dino D-Day" )
+		if ( /*cat == "Left 4 Dead 2" || cat == "Portal 2"  || cat == "CS: Global Offensive" || cat == "Blade Symphony" || cat == "Alien Swarm" || cat == "Dino D-Day" ||*/ cat == "INFRA" )
 		{
 			return "img/incompatible.png"
 		}
 
-		return "asset://mapimage/" + m
+		// Hopefully this also improves performance of the first click on "Start new game".
+		if ( !IN_ENGINE || $scope.CurrentCategory != cat ) return "img/downloading.png"
+
+		return "asset://mapimage/" + m;
 	}
 
 	$scope.IsFavMap = function( m )
@@ -142,45 +144,53 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 	$scope.StartGame = function()
 	{
-		lua.Run( 'SaveLastMap( "' + $rootScope.Map + '", "' + $rootScope.LastCategory + '" )' );
+		lua.Run( 'SaveLastMap( %s, %s )', $rootScope.Map, $rootScope.LastCategory );
 
-		lua.Run( 'hook.Run( "StartGame" )' )
-		lua.Run( 'RunConsoleCommand( "progress_enable" )' )
+		lua.Run( 'hook.Run( "StartGame" )' );
+		lua.Run( 'RunConsoleCommand( "progress_enable" )' );
 
-		lua.Run( 'RunConsoleCommand( "disconnect" )' )
-		lua.Run( 'RunConsoleCommand( "maxplayers", "'+$rootScope.MaxPlayers+'" )' )
+		lua.Run( 'RunConsoleCommand( "disconnect" )' );
+		lua.Run( 'RunConsoleCommand( "maxplayers", %s )', String( $rootScope.MaxPlayers ) );
 
 		if ( $rootScope.MaxPlayers > 0 )
 		{
-			lua.Run( 'RunConsoleCommand( "sv_cheats", "0" )' )
-			lua.Run( 'RunConsoleCommand( "commentary", "0" )' )
+			lua.Run( 'RunConsoleCommand( "sv_cheats", "0" )' );
+			lua.Run( 'RunConsoleCommand( "commentary", "0" )' );
 		}
+
+		// $scope.ServerSettings gets changed from Lua between this point and the timeout below
+		// Perhaps UpdateServerSettings() in mainmenu.lua shouldn't call to JS if the gamemode wasn't actually changed?
+		// Or maybe this entire system needs changing
+		$scope.ServerSettingsSaved = $scope.ServerSettings;
 
 		setTimeout( function()
 		{
-			for ( k in $scope.ServerSettings.Numeric )
+			for ( k in $scope.ServerSettingsSaved.Numeric )
 			{
-				lua.Run( 'RunConsoleCommand( "'+$scope.ServerSettings.Numeric[k].name+'", "'+$scope.ServerSettings.Numeric[k].Value+'" )' )
+				lua.Run( 'RunConsoleCommand( %s, %s )', $scope.ServerSettingsSaved.Numeric[ k ].name, String( $scope.ServerSettingsSaved.Numeric[ k ].Value ) );
 			}
 
-			for ( k in $scope.ServerSettings.Text )
+			for ( k in $scope.ServerSettingsSaved.Text )
 			{
-				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettings.Text[k].name + '", "' + $scope.ServerSettings.Text[k].Value + '" )' )
+				lua.Run( 'RunConsoleCommand( %s, %s )', $scope.ServerSettingsSaved.Text[ k ].name, $scope.ServerSettingsSaved.Text[ k ].Value );
 			}
 
-			for ( k in $scope.ServerSettings.CheckBox )
+			for ( k in $scope.ServerSettingsSaved.CheckBox )
 			{
-				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettings.CheckBox[k].name + '", "' + ($scope.ServerSettings.CheckBox[k].Value?1:0) + '" )' )
+				lua.Run( 'RunConsoleCommand( %s, %s )', $scope.ServerSettingsSaved.CheckBox[ k ].name, $scope.ServerSettingsSaved.CheckBox[ k ].Value ? "1" : "0" );
 			}
 
-			lua.Run( 'RunConsoleCommand( "hostname", "'+$rootScope.ServerSettings.hostname+'" )' )
-			lua.Run( 'RunConsoleCommand( "sv_lan", "'+($rootScope.ServerSettings.sv_lan?1:0)+'" )' )
-			lua.Run( 'RunConsoleCommand( "maxplayers", "'+$rootScope.MaxPlayers+'" )' )
-			lua.Run( 'RunConsoleCommand( "map", "'+$rootScope.Map+'" )' )
-			lua.Run( 'RunConsoleCommand( "hostname", "'+$rootScope.ServerSettings.hostname+'" )' )
+			lua.Run( 'RunConsoleCommand( "hostname", %s )', $scope.ServerSettingsSaved.hostname );
+			lua.Run( 'RunConsoleCommand( "p2p_enabled", %s )', $scope.ServerSettingsSaved.p2p_enabled ? "1" : "0" );
+			lua.Run( 'RunConsoleCommand( "p2p_friendsonly", %s )', $scope.ServerSettingsSaved.p2p_friendsonly ? "1" : "0" );
+			lua.Run( 'RunConsoleCommand( "sv_lan", %s )', $scope.ServerSettingsSaved.sv_lan ? "1" : "0" );
+			lua.Run( 'RunConsoleCommand( "maxplayers", %s )', String( $rootScope.MaxPlayers ) );
+			lua.Run( 'RunConsoleCommand( "map", %s )', $rootScope.Map.trim() );
+
+			$scope.ServerSettingsSaved = undefined;
 		}, 200 );
 
-		$location.url( "/" )
+		$location.url( "/" );
 	}
 
 	$scope.UpdateMaxPlayers = function( mp )
@@ -197,11 +207,40 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 		return $filter('filter')(maps, $scope.SearchText).length;
 	}
+
+	var oldSvLan = 0;
+	var oldp2p = 0;
+
+	$scope.CheckboxCheck = function()
+	{
+		$scope.ServerSettings.sv_lan = Number( $scope.ServerSettings.sv_lan ) == 1;
+		$scope.ServerSettings.p2p_enabled = Number( $scope.ServerSettings.p2p_enabled ) == 1;
+
+		if ( oldSvLan != $scope.ServerSettings.sv_lan && $scope.ServerSettings.sv_lan == true && $scope.ServerSettings.p2p_enabled == true ) {
+			$scope.ServerSettings.p2p_enabled = false;
+			UpdateDigest( $scope, 50 );
+		} else if ( oldp2p != $scope.ServerSettings.p2p_enabled && $scope.ServerSettings.p2p_enabled == true && $scope.ServerSettings.sv_lan == true ) {
+			$scope.ServerSettings.sv_lan = false;
+			UpdateDigest( $scope, 50 );
+		}
+
+		oldp2p = $scope.ServerSettings.p2p_enabled;
+		oldSvLan = $scope.ServerSettings.sv_lan;
+
+		if ( !$scope.ServerSettings.p2p_enabled ) {
+			if ( document.getElementById( "p2p_friendsonly" ) !== null ) {
+				document.getElementById( "p2p_friendsonly" ).disabled = true;
+			}
+			$scope.ServerSettings.p2p_friendsonly = false;
+			UpdateDigest( $scope, 50 );
+		} else if ( document.getElementById( "p2p_friendsonly" ) !== null ) {
+			document.getElementById( "p2p_friendsonly" ).disabled = false;
+		}
+	}
 }
 
 function SetLastMap( map, category )
 {
-
 	if ( scope ) {
 		scope.CurrentCategory = category;
 		UpdateDigest( scope, 50 );
@@ -213,25 +252,31 @@ function SetLastMap( map, category )
 		UpdateDigest( rootScope, 50 );
 	}
 
+	setTimeout( function() {
+		var elem = document.querySelector( '.mapicon.selected' );
+		if ( elem ) elem.scrollIntoView( { behavior: 'smooth', block: 'center' } );
+	}, 100 );
 }
 
 function UpdateServerSettings( sttngs )
 {
-	sttngs.CheckBox = []
-	sttngs.Numeric = []
-	sttngs.Text = []
+	sttngs.CheckBox = [];
+	sttngs.Numeric = [];
+	sttngs.Text = [];
 
-	sttngs.sv_lan		= parseInt( sttngs.sv_lan );
-	sttngs.maxplayers	= parseInt( sttngs.maxplayers );
+	sttngs.maxplayers = parseInt( sttngs.maxplayers );
+	sttngs.p2p_friendsonly = Number( sttngs.p2p_friendsonly ) == 1;
+	sttngs.p2p_enabled = Number( sttngs.p2p_enabled ) == 1;
+	sttngs.sv_lan = Number( sttngs.sv_lan ) == 1;
 
 	if ( sttngs.settings )
 	{
 		for ( k in sttngs.settings )
 		{
 			var s = sttngs.settings[k]
-			if ( s.type == "CheckBox" ){ s.Value = s.Value == "1"; sttngs.CheckBox.push( s ); }
-			if ( s.type == "Numeric" ){	sttngs.Numeric.push( s ); }
-			if ( s.type == "Text" ){	sttngs.Text.push( s ); }
+			if ( s.type == "CheckBox" ) { s.Value = s.Value == "1"; sttngs.CheckBox.push( s ); }
+			if ( s.type == "Numeric" ) { sttngs.Numeric.push( s ); }
+			if ( s.type == "Text" ) { sttngs.Text.push( s ); }
 		}
 	}
 

@@ -133,8 +133,11 @@ if CLIENT then
    local crosshair_size = CreateConVar("ttt_crosshair_size", "1.0", FCVAR_ARCHIVE)
    local disable_crosshair = CreateConVar("ttt_disable_crosshair", "0", FCVAR_ARCHIVE)
 
-
    function SWEP:DrawHUD()
+      if self.HUDHelp then
+         self:DrawHelp()
+      end
+
       local client = LocalPlayer()
       if disable_crosshair:GetBool() or (not IsValid(client)) then return end
 
@@ -170,13 +173,8 @@ if CLIENT then
       surface.DrawLine( x + length, y, x + gap, y )
       surface.DrawLine( x, y - length, x, y - gap )
       surface.DrawLine( x, y + length, x, y + gap )
-
-      if self.HUDHelp then
-         self:DrawHelp()
-      end
    end
 
-   local GetTranslation  = LANG.GetTranslation
    local GetPTranslation = LANG.GetParamTranslation
 
    -- Many non-gun weapons benefit from some help
@@ -243,14 +241,14 @@ function SWEP:PrimaryAttack(worldsnd)
 
    self:TakePrimaryAmmo( 1 )
 
-   local owner = self.Owner
+   local owner = self:GetOwner()
    if not IsValid(owner) or owner:IsNPC() or (not owner.ViewPunch) then return end
 
-   owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0 ) )
+   owner:ViewPunch( Angle( util.SharedRandom(self:GetClass(),-0.2,-0.1,0) * self.Primary.Recoil, util.SharedRandom(self:GetClass(),-0.1,0.1,1) * self.Primary.Recoil, 0 ) )
 end
 
 function SWEP:DryFire(setnext)
-   if CLIENT and LocalPlayer() == self.Owner then
+   if CLIENT and LocalPlayer() == self:GetOwner() then
       self:EmitSound( "Weapon_Pistol.Empty" )
    end
 
@@ -260,7 +258,7 @@ function SWEP:DryFire(setnext)
 end
 
 function SWEP:CanPrimaryAttack()
-   if not IsValid(self.Owner) then return end
+   if not IsValid(self:GetOwner()) then return end
 
    if self:Clip1() <= 0 then
       self:DryFire(self.SetNextPrimaryFire)
@@ -270,7 +268,7 @@ function SWEP:CanPrimaryAttack()
 end
 
 function SWEP:CanSecondaryAttack()
-   if not IsValid(self.Owner) then return end
+   if not IsValid(self:GetOwner()) then return end
 
    if self:Clip2() <= 0 then
       self:DryFire(self.SetNextSecondaryFire)
@@ -292,10 +290,8 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 
    self:SendWeaponAnim(self.PrimaryAnim)
 
-   self.Owner:MuzzleFlash()
-   self.Owner:SetAnimation( PLAYER_ATTACK1 )
-
-   if not IsFirstTimePredicted() then return end
+   self:GetOwner():MuzzleFlash()
+   self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
 
    local sights = self:GetIronsights()
 
@@ -304,8 +300,8 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
 
    local bullet = {}
    bullet.Num    = numbul
-   bullet.Src    = self.Owner:GetShootPos()
-   bullet.Dir    = self.Owner:GetAimVector()
+   bullet.Src    = self:GetOwner():GetShootPos()
+   bullet.Dir    = self:GetOwner():GetAimVector()
    bullet.Spread = Vector( cone, cone, 0 )
    bullet.Tracer = 4
    bullet.TracerName = self.Tracer or "Tracer"
@@ -315,10 +311,10 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
       bullet.Callback = Sparklies
    end
 
-   self.Owner:FireBullets( bullet )
+   self:GetOwner():FireBullets( bullet )
 
    -- Owner can die after firebullets
-   if (not IsValid(self.Owner)) or (not self.Owner:Alive()) or self.Owner:IsNPC() then return end
+   if (not IsValid(self:GetOwner())) or (not self:GetOwner():Alive()) or self:GetOwner():IsNPC() then return end
 
    if ((game.SinglePlayer() and SERVER) or
        ((not game.SinglePlayer()) and CLIENT and IsFirstTimePredicted())) then
@@ -326,16 +322,15 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
       -- reduce recoil if ironsighting
       recoil = sights and (recoil * 0.6) or recoil
 
-      local eyeang = self.Owner:EyeAngles()
+      local eyeang = self:GetOwner():EyeAngles()
       eyeang.pitch = eyeang.pitch - recoil
-      self.Owner:SetEyeAngles( eyeang )
+      self:GetOwner():SetEyeAngles( eyeang )
    end
-
 end
 
 function SWEP:GetPrimaryCone()
    local cone = self.Primary.Cone or 0.2
-   -- 10% accuracy bonus when sighting
+   -- 15% accuracy bonus when sighting
    return self:GetIronsights() and (cone * 0.85) or cone
 end
 
@@ -351,7 +346,6 @@ function SWEP:DrawWeaponSelection() end
 
 function SWEP:SecondaryAttack()
    if self.NoSights or (not self.IronSightsPos) then return end
-   --if self:GetNextSecondaryFire() > CurTime() then return end
 
    self:SetIronsights(not self:GetIronsights())
 
@@ -364,7 +358,7 @@ function SWEP:Deploy()
 end
 
 function SWEP:Reload()
-	if ( self:Clip1() == self.Primary.ClipSize or self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
+   if ( self:Clip1() == self.Primary.ClipSize or self:GetOwner():GetAmmoCount( self.Primary.Ammo ) <= 0 ) then return end
    self:DefaultReload(self.ReloadAnim)
    self:SetIronsights( false )
 end
@@ -376,17 +370,17 @@ function SWEP:OnRestore()
 end
 
 function SWEP:Ammo1()
-   return IsValid(self.Owner) and self.Owner:GetAmmoCount(self.Primary.Ammo) or false
+   return IsValid(self:GetOwner()) and self:GetOwner():GetAmmoCount(self.Primary.Ammo) or false
 end
 
 -- The OnDrop() hook is useless for this as it happens AFTER the drop. OwnerChange
 -- does not occur when a drop happens for some reason. Hence this thing.
 function SWEP:PreDrop()
-   if SERVER and IsValid(self.Owner) and self.Primary.Ammo != "none" then
+   if SERVER and IsValid(self:GetOwner()) and self.Primary.Ammo != "none" then
       local ammo = self:Ammo1()
 
       -- Do not drop ammo if we have another gun that uses this type
-      for _, w in pairs(self.Owner:GetWeapons()) do
+      for _, w in ipairs(self:GetOwner():GetWeapons()) do
          if IsValid(w) and w != self and w:GetPrimaryAmmoType() == self:GetPrimaryAmmoType() then
             ammo = 0
          end
@@ -395,7 +389,7 @@ function SWEP:PreDrop()
       self.StoredAmmo = ammo
 
       if ammo > 0 then
-         self.Owner:RemoveAmmo(ammo, self.Primary.Ammo)
+         self:GetOwner():RemoveAmmo(ammo, self.Primary.Ammo)
       end
    end
 end
@@ -450,17 +444,31 @@ end
 function SWEP:WasBought(buyer)
 end
 
--- Dummy functions that will be replaced when SetupDataTables runs. These are
--- here for when that does not happen (due to e.g. stacking base classes)
-function SWEP:GetIronsights() return false end
-function SWEP:SetIronsights() end
+function SWEP:SetIronsights(b)
+   if (b ~= self:GetIronsights()) then
+      self:SetIronsightsPredicted(b)
+      self:SetIronsightsTime(CurTime())
+      if CLIENT then
+         self:CalcViewModel()
+      end
+   end
+end
+function SWEP:GetIronsights()
+   return self:GetIronsightsPredicted()
+end
+
+--- Dummy functions that will be replaced when SetupDataTables runs. These are
+--- here for when that does not happen (due to e.g. stacking base classes)
+function SWEP:GetIronsightsTime() return -1 end
+function SWEP:SetIronsightsTime() end
+function SWEP:GetIronsightsPredicted() return false end
+function SWEP:SetIronsightsPredicted() end
 
 -- Set up ironsights dt bool. Weapons using their own DT vars will have to make
 -- sure they call this.
 function SWEP:SetupDataTables()
-   -- Put it in the last slot, least likely to interfere with derived weapon's
-   -- own stuff.
-   self:NetworkVar("Bool", 3, "Ironsights")
+   self:NetworkVar("Bool", 3, "IronsightsPredicted")
+   self:NetworkVar("Float", 3, "IronsightsTime")
 end
 
 function SWEP:Initialize()
@@ -480,7 +488,18 @@ function SWEP:Initialize()
    end
 end
 
+function SWEP:CalcViewModel()
+   if (not CLIENT) or (not IsFirstTimePredicted()) then return end
+   self.bIron = self:GetIronsights()
+   self.fIronTime = self:GetIronsightsTime()
+   self.fCurrentTime = CurTime()
+   self.fCurrentSysTime = SysTime()
+end
+
+-- Note that if you override Think in your SWEP, you should call
+-- BaseClass.Think(self) so as not to break ironsights
 function SWEP:Think()
+   self:CalcViewModel()
 end
 
 function SWEP:DyingShot()
@@ -493,18 +512,18 @@ function SWEP:DyingShot()
       end
 
       -- Owner should still be alive here
-      if IsValid(self.Owner) then
+      if IsValid(self:GetOwner()) then
          local punch = self.Primary.Recoil or 5
 
          -- Punch view to disorient aim before firing dying shot
-         local eyeang = self.Owner:EyeAngles()
+         local eyeang = self:GetOwner():EyeAngles()
          eyeang.pitch = eyeang.pitch - math.Rand(-punch, punch)
          eyeang.yaw = eyeang.yaw - math.Rand(-punch, punch)
-         self.Owner:SetEyeAngles( eyeang )
+         self:GetOwner():SetEyeAngles( eyeang )
 
-         MsgN(self.Owner:Nick() .. " fired his DYING SHOT")
+         MsgN(self:GetOwner():Nick() .. " fired his DYING SHOT")
 
-         self.Owner.dying_wep = self
+         self:GetOwner().dying_wep = self
 
          self:PrimaryAttack(true)
 
@@ -516,39 +535,34 @@ function SWEP:DyingShot()
 end
 
 local ttt_lowered = CreateConVar("ttt_ironsights_lowered", "1", FCVAR_ARCHIVE)
+local host_timescale = GetConVar("host_timescale")
 
 local LOWER_POS = Vector(0, 0, -2)
 
 local IRONSIGHT_TIME = 0.25
 function SWEP:GetViewModelPosition( pos, ang )
-   if not self.IronSightsPos then return pos, ang end
+   if (not self.IronSightsPos) or (self.bIron == nil) then return pos, ang end
 
-   local bIron = self:GetIronsights()
+   local bIron = self.bIron
+   local time = self.fCurrentTime + (SysTime() - self.fCurrentSysTime) * game.GetTimeScale() * host_timescale:GetFloat()
 
-   if bIron != self.bLastIron then
-      self.bLastIron = bIron
-      self.fIronTime = CurTime()
-
-      if bIron then
-         self.SwayScale = 0.3
-         self.BobScale = 0.1
-      else
-         self.SwayScale = 1.0
-         self.BobScale = 1.0
-      end
-
+   if bIron then
+      self.SwayScale = 0.3
+      self.BobScale = 0.1
+   else
+      self.SwayScale = 1.0
+      self.BobScale = 1.0
    end
 
-   local fIronTime = self.fIronTime or 0
-   if (not bIron) and fIronTime < CurTime() - IRONSIGHT_TIME then
+   local fIronTime = self.fIronTime
+   if (not bIron) and fIronTime < time - IRONSIGHT_TIME then
       return pos, ang
    end
 
    local mul = 1.0
 
-   if fIronTime > CurTime() - IRONSIGHT_TIME then
-
-      mul = math.Clamp( (CurTime() - fIronTime) / IRONSIGHT_TIME, 0, 1 )
+   if fIronTime > time - IRONSIGHT_TIME then
+      mul = math.Clamp( (time - fIronTime) / IRONSIGHT_TIME, 0, 1 )
 
       if not bIron then mul = 1 - mul end
    end

@@ -14,7 +14,7 @@ function TauntCamera()
 
 	local WasOn					= false
 
-	local CustomAngles			= Angle( 0, 0, 0 )
+	local CustomAngles			= angle_zero
 	local PlayerLockAngles		= nil
 
 	local InLerp				= 0

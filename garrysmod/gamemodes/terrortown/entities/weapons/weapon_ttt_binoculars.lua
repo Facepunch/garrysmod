@@ -1,47 +1,47 @@
-
 AddCSLuaFile()
 
-SWEP.HoldType = "normal"
+DEFINE_BASECLASS "weapon_tttbase"
+
+SWEP.HoldType               = "normal"
 
 if CLIENT then
-   SWEP.PrintName = "binoc_name"
-   SWEP.Slot = 7
+   SWEP.PrintName           = "binoc_name"
+   SWEP.Slot                = 7
 
-   SWEP.ViewModelFOV = 10
+   SWEP.ViewModelFOV        = 10
+   SWEP.ViewModelFlip       = false
+   SWEP.DrawCrosshair       = false
 
    SWEP.EquipMenuData = {
       type  = "item_weapon",
       desc  = "binoc_desc"
    };
 
-   SWEP.Icon = "vgui/ttt/icon_binoc"
+   SWEP.Icon                = "vgui/ttt/icon_binoc"
 end
 
-SWEP.Base = "weapon_tttbase"
+SWEP.Base                   = "weapon_tttbase"
 
-SWEP.ViewModel          = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel         = "models/props/cs_office/paper_towels.mdl"
+SWEP.ViewModel              = "models/weapons/v_crowbar.mdl"
+SWEP.WorldModel             = "models/props/cs_office/paper_towels.mdl"
 
-SWEP.DrawCrosshair      = false
-SWEP.ViewModelFlip      = false
 SWEP.Primary.ClipSize       = -1
 SWEP.Primary.DefaultClip    = -1
 SWEP.Primary.Automatic      = false
-SWEP.Primary.Ammo       = "none"
-SWEP.Primary.Delay = 1.0
+SWEP.Primary.Ammo           = "none"
+SWEP.Primary.Delay          = 1.0
 
 SWEP.Secondary.ClipSize     = -1
 SWEP.Secondary.DefaultClip  = -1
 SWEP.Secondary.Automatic    = true
-SWEP.Secondary.Ammo     = "none"
-SWEP.Secondary.Delay = 0.2
+SWEP.Secondary.Ammo         = "none"
+SWEP.Secondary.Delay        = 0.2
 
-SWEP.Kind = WEAPON_EQUIP2
-SWEP.CanBuy = {ROLE_DETECTIVE} -- only detectives can buy
-SWEP.WeaponID = AMMO_BINOCULARS
+SWEP.Kind                   = WEAPON_EQUIP2
+SWEP.CanBuy                 = {ROLE_DETECTIVE} -- only detectives can buy
+SWEP.WeaponID               = AMMO_BINOCULARS
 
-
-SWEP.AllowDrop = true
+SWEP.AllowDrop              = true
 
 SWEP.ZoomLevels = {
    0,
@@ -50,7 +50,7 @@ SWEP.ZoomLevels = {
    10
 };
 
-SWEP.ProcessingDelay = 5
+SWEP.ProcessingDelay       = 5
 
 function SWEP:SetupDataTables()
    self:DTVar("Bool",  0, "processing")
@@ -91,9 +91,9 @@ end
 function SWEP:SetZoom(level)
    if SERVER then
       self.dt.zoom = level
-      self.Owner:SetFOV(self.ZoomLevels[level], 0.3)
+      self:GetOwner():SetFOV(self.ZoomLevels[level], 0.3)
 
-      self.Owner:DrawViewModel(false)
+      self:GetOwner():DrawViewModel(false)
    end
 end
 
@@ -119,8 +119,8 @@ function SWEP:Holster()
 end
 
 function SWEP:Deploy()
-   if SERVER and IsValid(self.Owner) then
-      self.Owner:DrawViewModel(false)
+   if SERVER and IsValid(self:GetOwner()) then
+      self:GetOwner():DrawViewModel(false)
    end
    return true
 end
@@ -131,7 +131,7 @@ function SWEP:Reload()
 end
 
 function SWEP:IsTargetingCorpse()
-   local tr = self.Owner:GetEyeTrace(MASK_SHOT)
+   local tr = self:GetOwner():GetEyeTrace(MASK_SHOT)
    local ent = tr.Entity
 
    return (IsValid(ent) and ent:GetClass() == "prop_ragdoll" and
@@ -141,14 +141,15 @@ end
 local confirm = Sound("npc/turret_floor/click1.wav")
 function SWEP:IdentifyCorpse()
    if SERVER then
-      local tr = self.Owner:GetEyeTrace(MASK_SHOT)
-      CORPSE.ShowSearch(self.Owner, tr.Entity, false, true)
+      local tr = self:GetOwner():GetEyeTrace(MASK_SHOT)
+      CORPSE.ShowSearch(self:GetOwner(), tr.Entity, false, true)
    elseif IsFirstTimePredicted() then
       LocalPlayer():EmitSound(confirm)
    end
 end
 
 function SWEP:Think()
+   BaseClass.Think(self)
    if self.dt.processing then
       if self:IsTargetingCorpse() then
          if CurTime() > (self.dt.start_time + self.ProcessingDelay) then
@@ -166,7 +167,7 @@ end
 
 
 function SWEP:OnRemove()
-   if CLIENT and IsValid(self.Owner) and self.Owner == LocalPlayer() and self.Owner:Alive() then
+   if CLIENT and IsValid(self:GetOwner()) and self:GetOwner() == LocalPlayer() and self:GetOwner():Alive() then
       RunConsoleCommand("lastinv")
    end
 end
@@ -177,7 +178,8 @@ if CLIENT then
 
       return self.BaseClass.Initialize(self)
    end
-
+   
+   local T = LANG.GetTranslation
    function SWEP:DrawHUD()
       self:DrawHelp()
 
@@ -206,11 +208,11 @@ if CLIENT then
       surface.SetFont("DefaultFixedDropShadow")
       surface.SetTextColor(0, 255, 0, 200)
       surface.SetTextPos( x + length, y - length )
-      surface.DrawText("LEVEL " .. self.dt.zoom)
+      surface.DrawText(T("binoc_zoom_level") .. " " .. self.dt.zoom)
 
       if corpse then
          surface.SetTextPos( x + length, y - length + 15)
-         surface.DrawText("BODY DETECTED")
+         surface.DrawText(T("binoc_body"))
       end
 
       if self.dt.processing then
@@ -229,7 +231,7 @@ if CLIENT then
 
 
    function SWEP:DrawWorldModel()
-      if not IsValid(self.Owner) then
+      if not IsValid(self:GetOwner()) then
          self:DrawModel()
       end
    end

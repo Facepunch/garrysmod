@@ -1,51 +1,48 @@
 
 AddCSLuaFile()
 
-SWEP.HoldType = "pistol"
+SWEP.HoldType              = "pistol"
 
 if CLIENT then
+   SWEP.PrintName          = "flare_name"
+   SWEP.Slot               = 6
 
-   SWEP.PrintName = "flare_name"
-   SWEP.Slot = 6
-
-   SWEP.ViewModelFOV  = 54
-   SWEP.ViewModelFlip = false
+   SWEP.ViewModelFOV       = 54
+   SWEP.ViewModelFlip      = false
 
    SWEP.EquipMenuData = {
       type = "item_weapon",
       desc = "flare_desc"
    };
 
-
-   SWEP.Icon = "vgui/ttt/icon_flare"
+   SWEP.Icon               = "vgui/ttt/icon_flare"
 end
 
-SWEP.Base = "weapon_tttbase"
-SWEP.Primary.Recoil	= 4
-SWEP.Primary.Damage = 7
-SWEP.Primary.Delay = 1.0
-SWEP.Primary.Cone = 0.01
-SWEP.Primary.ClipSize = 4
-SWEP.Primary.Automatic = false
-SWEP.Primary.DefaultClip = 4
-SWEP.Primary.ClipMax = 4
-
-SWEP.Kind = WEAPON_EQUIP
-SWEP.CanBuy = {ROLE_TRAITOR} -- only traitors can buy
-SWEP.LimitedStock = true -- only buyable once
-SWEP.WeaponID = AMMO_FLARE
+SWEP.Base                  = "weapon_tttbase"
 
 -- if I run out of ammo types, this weapon is one I could move to a custom ammo
 -- handling strategy, because you never need to pick up ammo for it
-SWEP.Primary.Ammo = "AR2AltFire"
+SWEP.Primary.Ammo          = "AR2AltFire"
+SWEP.Primary.Recoil        = 4
+SWEP.Primary.Damage        = 7
+SWEP.Primary.Delay         = 1.0
+SWEP.Primary.Cone          = 0.01
+SWEP.Primary.ClipSize      = 4
+SWEP.Primary.Automatic     = false
+SWEP.Primary.DefaultClip   = 4
+SWEP.Primary.ClipMax       = 4
+SWEP.Primary.Sound         = Sound( "Weapon_USP.SilencedShot" )
 
-SWEP.UseHands			= true
-SWEP.ViewModel	= Model("models/weapons/c_357.mdl")
-SWEP.WorldModel	= Model("models/weapons/w_357.mdl")
+SWEP.Kind                  = WEAPON_EQUIP
+SWEP.CanBuy                = {ROLE_TRAITOR} -- only traitors can buy
+SWEP.LimitedStock          = true -- only buyable once
+SWEP.WeaponID              = AMMO_FLARE
 
-SWEP.Primary.Sound = Sound( "Weapon_USP.SilencedShot" )
+SWEP.Tracer                = "AR2Tracer"
 
-SWEP.Tracer = "AR2Tracer"
+SWEP.UseHands              = true
+SWEP.ViewModel             = Model("models/weapons/c_357.mdl")
+SWEP.WorldModel            = Model("models/weapons/w_357.mdl")
 
 local function RunIgniteTimer(ent, timer_name)
    if IsValid(ent) and ent:IsOnFire() then
@@ -60,7 +57,7 @@ local function RunIgniteTimer(ent, timer_name)
       end
    end
 
-   timer.Destroy(timer_name) -- stop running timer
+   timer.Remove(timer_name) -- stop running timer
 end
 
 local SendScorches
@@ -85,7 +82,7 @@ else
       net.Start("TTT_FlareScorch")
          net.WriteEntity(ent)
          net.WriteUInt(#tbl, 8)
-         for _, p in pairs(tbl) do
+         for _, p in ipairs(tbl) do
             net.WriteVector(p)
          end
       net.Broadcast()
@@ -169,8 +166,8 @@ function SWEP:ShootFlare()
    local cone = self.Primary.Cone
    local bullet = {}
    bullet.Num       = 1
-   bullet.Src       = self.Owner:GetShootPos()
-   bullet.Dir       = self.Owner:GetAimVector()
+   bullet.Src       = self:GetOwner():GetShootPos()
+   bullet.Dir       = self:GetOwner():GetAimVector()
    bullet.Spread    = Vector( cone, cone, 0 )
    bullet.Tracer    = 1
    bullet.Force     = 2
@@ -178,7 +175,7 @@ function SWEP:ShootFlare()
    bullet.TracerName = self.Tracer
    bullet.Callback = IgniteTarget
 
-   self.Owner:FireBullets( bullet )
+   self:GetOwner():FireBullets( bullet )
 end
 
 function SWEP:PrimaryAttack()
@@ -194,14 +191,14 @@ function SWEP:PrimaryAttack()
 
    self:TakePrimaryAmmo( 1 )
 
-   if IsValid(self.Owner) then
-      self.Owner:SetAnimation( PLAYER_ATTACK1 )
+   if IsValid(self:GetOwner()) then
+      self:GetOwner():SetAnimation( PLAYER_ATTACK1 )
 
-      self.Owner:ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0 ) )
+      self:GetOwner():ViewPunch( Angle( math.Rand(-0.2,-0.1) * self.Primary.Recoil, math.Rand(-0.1,0.1) *self.Primary.Recoil, 0 ) )
    end
 
    if ( (game.SinglePlayer() && SERVER) || CLIENT ) then
-      self:SetNetworkedFloat( "LastShootTime", CurTime() )
+      self:SetNWFloat( "LastShootTime", CurTime() )
    end
 end
 

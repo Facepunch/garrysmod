@@ -1,0 +1,590 @@
+"TableToKeyValues"
+{
+	"parentid"		"0"
+	"icon"		"games/16/left4dead.png"
+	"id"		"4"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Heroes"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/survivors/survivor_biker.mdl"
+			"wide"		"128"
+			"tall"		"512"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/survivors/survivor_manager.mdl"
+			"wide"		"128"
+			"tall"		"512"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/survivors/survivor_namvet.mdl"
+			"wide"		"128"
+			"tall"		"512"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/survivors/survivor_teenangst.mdl"
+			"wide"		"128"
+			"tall"		"512"
+		}
+		"6"
+		{
+			"type"		"header"
+			"text"		"Zombies"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/infected/boomer.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/infected/hulk.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/infected/hunter.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/infected/smoker.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/infected/witch.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_female01.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_female_nurse01.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_female_rural01.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_male01.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_male_baggagehandler_01.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_male_pilot.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_male_rural01.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_male_suit.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_military_male01.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_patient_male01.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_police_male01.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_surgeon_male01.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_tsaagent_male01.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/infected/common_worker_male01.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/bodies128_a.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/bodies128_b.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/bodies96_a.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/bodies96_b.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/bodieshall128.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/bodieshall96.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_female02_suit.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_female_civilian_01.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_female_civilian_02.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_female_civilian_draped_01.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_female_civilian_draped_02.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_male_civilian_01.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_male_civilian_02.mdl"
+		}
+		"39"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_male_civilian_body.mdl"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_male_civilian_draped_01.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_male_legs_01.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_male_suit_01.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_male_torso_01.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_male_tsaagent_01.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_military_male01.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_pilot_01.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/deadbodies/dead_police_male01.mdl"
+		}
+		"48"
+		{
+			"type"		"header"
+			"text"		"Props"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/props_debris/airliner_wreckage1.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/props_debris/dead_cow.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/props_debris/dead_cow_smallpile.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/sleeping_bag1.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/sleeping_bag2.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/sleeping_bag3.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/gas_pump.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/gas_pump_nodebris.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/fountain_drinks.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/props_equipment/cooler.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/props_fortifications/fortification_indoor_01.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/props_signs/burgersign.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/props_signs/eastern_waterworks_sign.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/props_signs/highway_sign01.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/props_signs/raisedbillboard.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/props_signs/sign_apartment.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/props_signs/sign_bookstore.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/props_signs/sign_bookstore_overhang.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/props_signs/sign_diner01.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/props_signs/sign_eat01.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/props_signs/sign_riverside.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/props_signs/sign_theater01.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/props_street/trashbin01.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/props_street/firehydrant.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/props_street/bus_stop.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/mopbucket01.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/luggagecart01.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/mop01.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/airport_monitors.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/airport_monitors.mdl"
+		}
+		"79"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/atlas.mdl"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/atlas_break_ball.mdl"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/carousel.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/line_post.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/luggage1.mdl"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/luggage2.mdl"
+		}
+		"85"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/luggage3.mdl"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/luggage4.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/luggage_pile1.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/phone_booth_airport.mdl"
+		}
+		"89"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/skylight.mdl"
+		}
+		"90"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/standup_board.mdl"
+		}
+		"91"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/temp_barricade.mdl"
+		}
+		"92"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/airport/trash_bin1.mdl"
+		}
+		"93"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/hospital/exam_table.mdl"
+		}
+		"94"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/hospital/gurney.mdl"
+		}
+		"95"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/hospital/hospital_bed.mdl"
+		}
+		"96"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/hospital/iv_pole.mdl"
+		}
+		"97"
+		{
+			"type"		"model"
+			"model"		"models/props_unique/hospital/surgery_lamp.mdl"
+		}
+		"98"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_autoshot_m4super.mdl"
+		}
+		"99"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_dual_pistol_1911.mdl"
+		}
+		"100"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_eq_medkit.mdl"
+		}
+		"101"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_eq_molotov.mdl"
+		}
+		"102"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_eq_painpills.mdl"
+		}
+		"103"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_eq_pipebomb.mdl"
+		}
+		"104"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_minigun.mdl"
+		}
+		"105"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_pistol_1911.mdl"
+		}
+		"106"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_rifle_m16a2.mdl"
+		}
+		"107"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_shotgun.mdl"
+		}
+		"108"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_smg_uzi.mdl"
+		}
+		"109"
+		{
+			"type"		"model"
+			"model"		"models/w_models/weapons/w_sniper_mini14.mdl"
+		}
+		"110"
+		{
+			"type"		"model"
+			"model"		"models/effects/urban_puddle_model01a.mdl"
+		}
+		"111"
+		{
+			"type"		"model"
+			"model"		"models/effects/urban_puddle_model01a.mdl"
+		}
+		"112"
+		{
+			"type"		"model"
+			"model"		"models/effects/urban_puddle_model02a.mdl"
+		}
+		"113"
+		{
+			"type"		"model"
+			"model"		"models/effects/urban_puddle_model03a.mdl"
+		}
+		"114"
+		{
+			"type"		"model"
+			"model"		"models/hybridphysx/lawnmower_bloodpool.mdl"
+		}
+	}
+	"needsapp"		"left4dead"
+	"name"		"Left 4 Dead"
+	"version"		"3"
+}

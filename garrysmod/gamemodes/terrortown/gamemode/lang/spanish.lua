@@ -29,7 +29,6 @@ L.win_showreport   = "¡Echa un vistazo al informe de la ronda durante {num} seg
 
 L.limit_round      = "Se ha alcanzado el límite de rondas. El próximo mapa será {mapname}."
 L.limit_time       = "Se ha alcanzado el límite de tiempo. El próximo mapa será {mapname}."
-L.limit_vote       = "Ha finalizado la partida. ¡Es hora de votar!"
 L.limit_left       = "Quedan {num} ronda{s} o {time} minutos para cambiar de mapa a {mapname}."
 
 --- Credit awards
@@ -144,10 +143,6 @@ L.radio_button_steps   = "Pasos"
 -- Intro screen shown after joining
 L.intro_help     = "¡Si eres nuevo en el juego pulsa F1 para ver las instrucciones!"
 
--- "Continue playing" vote
-L.contvote_continue = "Seguir jugando este"
-L.contvote_change   = "Iniciar una votación"
-
 -- Radiocommands/quickchat
 L.quick_title   = "Teclas de acceso rápido a chat"
 
@@ -257,6 +252,8 @@ L.set_lowsights     = "Bajar el arma al usar la mira"
 L.set_lowsights_tip = "Actívalo para posicionar el arma más abajo cuando apuntes con ella. Esto hará más fácil dar en el blanco, pero será menos realista."
 L.set_fastsw        = "Cambio rápido de arma"
 L.set_fastsw_tip    = "Actívalo para pasar de un arma a otra rápidamente sin abrir el menú de cambio de arma."
+L.set_fastsw_menu   = "Activar arma rápida conmutación"
+L.set_fastswmenu_tip  = "Si se activa la arma rápida conmutación, el intercambiador de menú aparecerá"
 L.set_wswitch       = "Desactivar autocierre del menú de cambio de arma"
 L.set_wswitch_tip   = "Por defecto, el menú de cambio de arma se cierra automáticamente al pasar unos segundos. Activa esto para que no se cierre."
 L.set_cues          = "Reproducir una señal cuando la ronda empieza o acaba"
@@ -272,7 +269,9 @@ L.set_mute_tip      = "Actívalo para que se enmudezcan los vivos cuando estás 
 
 L.set_title_lang    = "Ajustes de idioma"
 
-L.set_lang          = "Elegir idioma:"
+-- It may be best to leave this next one english, so english players can always
+-- find the language setting even if it's set to a language they don't know.
+L.set_lang          = "Elegir idioma (Select language):"
 
 
 --- Weapons and equipment, HUD and messages
@@ -614,6 +613,7 @@ L.radar_hud    = "El radar estará listo en: {time}"
 -- Spectator muting of living/dead
 L.mute_living  = "Jugadores vivos enmudecidos"
 L.mute_specs   = "Espectadores enmudecidos"
+L.mute_all     = "Cada enmudecido"
 L.mute_off     = "Nadie enmudecido"
 
 -- Spectators and prop possession
@@ -755,7 +755,6 @@ L.tip38 = "Algunos de los objetos de equipamiento colocables (como el C4 o la ra
 L.tip39 = "Los C4 que explotan como producto de cortar el cable equivocado durante su desactivación, causan una explosión menor a la que causa un C4 que haya llegado a cero."
 
 L.tip40 = "Si aparece 'MODO PRISA' bajo el cronómetro, la rondas durará solo unos minutos, pero con cada muerte el tiempo aumentará (como la captura de puntos en TF2). Este modo presiona a los traidores para mantener las cosas en movimiento."
-
 
 --- Round report
 
@@ -1051,7 +1050,7 @@ L.aw_tod2_text  = "ha muerto al inicio de la ronda."
 
 
 --- New and modified pieces of text are placed below this point, marked with the
---- version in which they were added, to make updating translations easier.
+--- version or the date in which they were added, to make updating translations easier.
 
 
 --- v23
@@ -1065,5 +1064,36 @@ L.drop_no_ammo = "No tienes munición suficiente como para soltar una caja de mu
 L.set_cross_brightness = "Luminosidad de la mira"
 L.set_cross_size = "Tamaño de la mira"
 
--- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "Recogiste el sombrero de un detective."
+
+--- 2017-03-09
+L.sb_sortby = "Ordene por:"
+
+--- 2018-07-24
+L.equip_tooltip_main = "Menú de equipamiento"
+L.equip_tooltip_radar = "Control de radar"
+L.equip_tooltip_disguise = "Control de disfraz"
+L.equip_tooltip_radio = "Control de radio"
+L.equip_tooltip_xfer = "Transferir créditos"
+
+L.confgrenade_name = "Granada propulsora"
+L.polter_name = "Poltergeist"
+L.stungun_name = "Prototipo UMP"
+
+L.knife_instant = "MUERTE INSTANTÁNEA"
+
+L.dna_hud_type = "TIPO"
+L.dna_hud_body = "CADÁVER"
+L.dna_hud_item = "OBJETO"
+
+L.binoc_zoom_level = "NIVEL"
+L.binoc_body = "CADÁVER DETECTADO"
+
+L.idle_popup_title = "Ausente"
+
+--- 2021-06-07
+L.sb_playervolume = "Volumen del jugador"
+
+--- 2021-09-22
+L.tip41 = "Puedes ajustar el volumen del micrófono de un jugador haciendo click derecho en el botón de silenciar al final de la tabla de puntuaciones."

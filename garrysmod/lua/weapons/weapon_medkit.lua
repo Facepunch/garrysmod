@@ -1,32 +1,32 @@
 
 AddCSLuaFile()
 
-SWEP.PrintName				= "Medkit"
-SWEP.Author					= "robotboy655 & MaxOfS2D"
-SWEP.Purpose			= "Heal people with your primary attack, or yourself with the secondary."
+SWEP.PrintName = "#GMOD_MedKit"
+SWEP.Author = "robotboy655 & MaxOfS2D"
+SWEP.Purpose = "Heal people with your primary attack, or yourself with the secondary."
 
-SWEP.Slot					= 5
-SWEP.SlotPos				= 3
+SWEP.Slot = 5
+SWEP.SlotPos = 3
 
-SWEP.Spawnable				= true
+SWEP.Spawnable = true
 
-SWEP.ViewModel				= Model( "models/weapons/c_medkit.mdl" )
-SWEP.WorldModel				= Model( "models/weapons/w_medkit.mdl" )
-SWEP.ViewModelFOV			= 54
-SWEP.UseHands				= true
+SWEP.ViewModel = Model( "models/weapons/c_medkit.mdl" )
+SWEP.WorldModel = Model( "models/weapons/w_medkit.mdl" )
+SWEP.ViewModelFOV = 54
+SWEP.UseHands = true
 
-SWEP.Primary.ClipSize		= 100
-SWEP.Primary.DefaultClip	= 100
-SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo			= "none"
+SWEP.Primary.ClipSize = 100
+SWEP.Primary.DefaultClip = 100
+SWEP.Primary.Automatic = false
+SWEP.Primary.Ammo = "none"
 
-SWEP.Secondary.ClipSize		= -1
-SWEP.Secondary.DefaultClip	= -1
-SWEP.Secondary.Automatic	= false
-SWEP.Secondary.Ammo			= "none"
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = false
+SWEP.Secondary.Ammo = "none"
 
-SWEP.HealAmount				= 20	-- Maximum heal amount per use
-SWEP.MaxAmmo				= 100	-- Maxumum ammo
+SWEP.HealAmount = 20 -- Maximum heal amount per use
+SWEP.MaxAmmo = 100 -- Maxumum ammo
 
 local HealSound = Sound( "HealthKit.Touch" )
 local DenySound = Sound( "WallHealth.Deny" )
@@ -47,18 +47,26 @@ function SWEP:PrimaryAttack()
 
 	if ( CLIENT ) then return end
 
+	if ( self.Owner:IsPlayer() ) then
+		self.Owner:LagCompensation( true )
+	end
+
 	local tr = util.TraceLine( {
 		start = self.Owner:GetShootPos(),
 		endpos = self.Owner:GetShootPos() + self.Owner:GetAimVector() * 64,
 		filter = self.Owner
 	} )
 
+	if ( self.Owner:IsPlayer() ) then
+		self.Owner:LagCompensation( false )
+	end
+
 	local ent = tr.Entity
-	
+
 	local need = self.HealAmount
 	if ( IsValid( ent ) ) then need = math.min( ent:GetMaxHealth() - ent:Health(), self.HealAmount ) end
 
-	if ( IsValid( ent ) && self:Clip1() >= need && ( ent:IsPlayer() || ent:IsNPC() ) && ent:Health() < 100 ) then
+	if ( IsValid( ent ) && self:Clip1() >= need && ( ent:IsPlayer() or ent:IsNPC() ) && ent:Health() < ent:GetMaxHealth() ) then
 
 		self:TakePrimaryAmmo( need )
 
@@ -87,7 +95,7 @@ function SWEP:SecondaryAttack()
 	if ( CLIENT ) then return end
 
 	local ent = self.Owner
-	
+
 	local need = self.HealAmount
 	if ( IsValid( ent ) ) then need = math.min( ent:GetMaxHealth() - ent:Health(), self.HealAmount ) end
 
@@ -124,14 +132,14 @@ end
 function SWEP:Holster()
 
 	timer.Stop( "weapon_idle" .. self:EntIndex() )
-	
+
 	return true
 
 end
 
 function SWEP:CustomAmmoDisplay()
 
-	self.AmmoDisplay = self.AmmoDisplay or {} 
+	self.AmmoDisplay = self.AmmoDisplay or {}
 	self.AmmoDisplay.Draw = true
 	self.AmmoDisplay.PrimaryClip = self:Clip1()
 

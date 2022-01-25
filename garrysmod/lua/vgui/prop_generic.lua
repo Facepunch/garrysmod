@@ -1,6 +1,6 @@
 
 --
--- prop_generic is the base for all other properties. 
+-- prop_generic is the base for all other properties.
 -- All the business should be done in :Setup using inline functions.
 -- So when you derive from this class - you should ideally only override Setup.
 --
@@ -31,7 +31,7 @@ end
 function PANEL:ValueChanged( newval, bForce )
 
 	if ( (self:IsEditing() || bForce) && isfunction( self.m_pRow.DataChanged ) ) then
-	
+
 		self.m_pRow:DataChanged( newval )
 
 	end
@@ -44,7 +44,7 @@ function PANEL:Setup( vars )
 
 	local text = self:Add( "DTextEntry" )
 	if ( !vars || !vars.waitforenter ) then text:SetUpdateOnType( true ) end
-	text:SetDrawBackground( false )
+	text:SetPaintBackground( false )
 	text:Dock( FILL )
 
 	-- Return true if we're editing
@@ -52,14 +52,22 @@ function PANEL:Setup( vars )
 		return text:IsEditing()
 	end
 
+	-- Enabled/disabled support
+	self.IsEnabled = function( self )
+		return text:IsEnabled()
+	end
+	self.SetEnabled = function( self, b )
+		text:SetEnabled( b )
+	end
+
 	-- Set the value
 	self.SetValue = function( self, val )
-		text:SetText( util.TypeToString( val ) ) 
+		text:SetText( util.TypeToString( val ) )
 	end
 
 	-- Alert row that value changed
 	text.OnValueChange = function( text, newval )
-	
+
 		self:ValueChanged( newval )
 
 	end

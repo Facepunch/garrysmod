@@ -3,7 +3,7 @@
 		<div class="maplist icons">
 
 			<div class="controls">
-				
+
 				<ul>
 					<li class="noisy category {{IfElse( category.category == CurrentCategory, 'active', '' )}}" ng-repeat="category in MapList | orderBy:'order'" ng-hide="CountFiltered(category.maps) == 0" ng-click="SwitchCategory(category.category)">
 						<div class='name'>{{category.category}}</div>
@@ -19,13 +19,13 @@
 			<div class="scrollable" style="margin: 0px; top: 0px; left: 200px">
 
 				<ul class="category" ng-repeat="category in MapList | orderBy:'order'" ng-hide="category.maps.length == 0" ng-show="CurrentCategory == category.category">
-				
+
 					<li>{{category.category}} <small>{{CountFiltered(category.maps)}} </small><small ng-tranny="category.maps.length == 1 && 'newgame_map' || 'newgame_maps'"></small></li>
 
 					<li class="icon mapicon {{MapClass( map )}}" ng-repeat="map in category.maps | orderBy:'toString()' | filter:SearchText" >
 						<img ng-click="FavMap( map )" class="{{FavMapClass( map )}} {{FavMapHover( map )}}" src="img/empty.png" />
-						<img ng-click="ClickMap( map )" ng-src="{{MapIcon( map, category.category )}}" class="thumbnail" /><br /> 
-						{{map}}
+						<img ng-click="ClickMap( map )" ng-src="{{MapIcon( map, category.category )}}" class="thumbnail" /><br />
+						<span>{{map}}</span>
 					</li>
 
 				</ul>
@@ -48,33 +48,43 @@
 					</div>
 				</div>
 
-				<div class="scrollable" style="margin: 10px; bottom: 65px; top: 32px" ng-show="MaxPlayers > 1">
+				<div class="scrollable" style="margin: 10px; bottom: 80px; top: 32px">
 
-					<div class='control'>
+					<div class='control' ng-show="MaxPlayers > 1">
 						<label ng-Tranny="'server_name'"></label>
 						<input type="text" ng-model="ServerSettings.hostname" />
 					</div>
 
-					<div class='control'>
-						<input type="checkbox" ng-model="ServerSettings.sv_lan" />
+					<div class='control' ng-show="MaxPlayers > 1">
+						<input type="checkbox" ng-model="ServerSettings.sv_lan" ng-bind="CheckboxCheck()" />
 						<label ng-Tranny="'lan_server'"></label>
 					</div>
 
-					<div class='control control-text' ng-repeat="s in ServerSettings.Text">
+					<div class='control' ng-show="MaxPlayers > 1">
+						<input type="checkbox" ng-model="ServerSettings.p2p_enabled" ng-bind="CheckboxCheck()" />
+						<label ng-Tranny="'p2p_server'"></label>
+					</div>
+
+					<div class='control' ng-show="MaxPlayers > 1">
+						<input type="checkbox" ng-model="ServerSettings.p2p_friendsonly" id="p2p_friendsonly" />
+						<label ng-Tranny="'p2p_server_friendsonly'"></label>
+					</div>
+
+					<div class='control control-text' ng-repeat="s in ServerSettings.Text" ng-show="MaxPlayers > 1 || s.Singleplayer">
 						<label ng-Tranny="s.text"></label>
 						<input type="text" ng-model="s.Value"/>
 					</div>
 
-					<div class='control control-numeric' ng-repeat="s in ServerSettings.Numeric">
+					<div class='control control-numeric' ng-repeat="s in ServerSettings.Numeric" ng-show="MaxPlayers > 1 || s.Singleplayer">
 						<label ng-Tranny="s.text"></label>
 						<input type="text" ng-model="s.Value"/>
 					</div>
 
-					<div class='control' ng-repeat="s in ServerSettings.CheckBox">
+					<div class='control' ng-repeat="s in ServerSettings.CheckBox" ng-show="MaxPlayers > 1 || s.Singleplayer">
 						<input type="checkbox" ng-model="s.Value" />
 						<label ng-Tranny="s.text"></label>
 					</div>
-					
+
 				</div>
 
 

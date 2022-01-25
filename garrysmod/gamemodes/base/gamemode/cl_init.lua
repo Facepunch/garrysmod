@@ -141,7 +141,7 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 	--
 	-- I've made this all look more complicated than it is. Here's the easy version
 	--
-	-- chat.AddText( player, Color( 255, 255, 255 ), ": ", strText )
+	-- chat.AddText( player, color_white, ": ", strText )
 	--
 
 	local tab = {}
@@ -162,7 +162,7 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 		table.insert( tab, "Console" )
 	end
 
-	table.insert( tab, Color( 255, 255, 255 ) )
+	table.insert( tab, color_white )
 	table.insert( tab, ": " .. strText )
 
 	chat.AddText( unpack(tab) )
@@ -178,7 +178,7 @@ end
 function GM:OnChatTab( str )
 
 	str = string.TrimRight(str)
-	
+
 	local LastWord
 	for word in string.gmatch( str, "[^ ]+" ) do
 		LastWord = word
@@ -190,7 +190,7 @@ function GM:OnChatTab( str )
 
 		local nickname = v:Nick()
 
-		if ( string.len( LastWord ) < string.len( nickname ) && string.find( string.lower( nickname ), string.lower( LastWord ) ) == 1 ) then
+		if ( string.len( LastWord ) < string.len( nickname ) && string.find( string.lower( nickname ), string.lower( LastWord ), 0, true ) == 1 ) then
 
 			str = string.sub( str, 1, ( string.len( LastWord ) * -1 ) - 1 )
 			str = str .. nickname
@@ -295,7 +295,7 @@ end
 function GM:CalcVehicleView( Vehicle, ply, view )
 
 	if ( Vehicle.GetThirdPersonMode == nil || ply:GetViewEntity() != ply ) then
-		-- This hsouldn't ever happen.
+		-- This shouldn't ever happen.
 		return
 	end
 
@@ -320,7 +320,7 @@ function GM:CalcVehicleView( Vehicle, ply, view )
 		endpos = TargetOrigin,
 		filter = function( e )
 			local c = e:GetClass() -- Avoid contact with entities that can potentially be attached to the vehicle. Ideally, we should check if "e" is constrained to "Vehicle".
-			return !c:StartWith( "prop_physics" ) &&!c:StartWith( "prop_dynamic" ) && !c:StartWith( "prop_ragdoll" ) && !e:IsVehicle() && !c:StartWith( "gmod_" )
+			return !c:StartWith( "prop_physics" ) &&!c:StartWith( "prop_dynamic" ) && !c:StartWith( "phys_bone_follower" ) && !c:StartWith( "prop_ragdoll" ) && !e:IsVehicle() && !c:StartWith( "gmod_" )
 		end,
 		mins = Vector( -WallOffset, -WallOffset, -WallOffset ),
 		maxs = Vector( WallOffset, WallOffset, WallOffset ),
@@ -349,13 +349,14 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 	local Vehicle	= ply:GetVehicle()
 	local Weapon	= ply:GetActiveWeapon()
 
-	local view = {}
-	view.origin		= origin
-	view.angles		= angles
-	view.fov		= fov
-	view.znear		= znear
-	view.zfar		= zfar
-	view.drawviewer	= false
+	local view = {
+		["origin"] = origin,
+		["angles"] = angles,
+		["fov"] = fov,
+		["znear"] = znear,
+		["zfar"] = zfar,
+		["drawviewer"] = false,
+	}
 
 	--
 	-- Let the vehicle override the view and allows the vehicle view to be hooked
@@ -372,12 +373,13 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 	--
 	player_manager.RunClass( ply, "CalcView", view )
 
-	-- Give the active weapon a go at changing the viewmodel position
+	-- Give the active weapon a go at changing the view
 	if ( IsValid( Weapon ) ) then
 
 		local func = Weapon.CalcView
 		if ( func ) then
-			view.origin, view.angles, view.fov = func( Weapon, ply, origin * 1, angles * 1, fov ) -- Note: *1 to copy the object so the child function can't edit it.
+			local origin, angles, fov = func( Weapon, ply, Vector( view.origin ), Angle( view.angles ), view.fov ) -- Note: Constructor to copy the object so the child function can't edit it.
+			view.origin, view.angles, view.fov = origin or view.origin, angles or view.angles, fov or view.fov
 		end
 
 	end
@@ -592,7 +594,7 @@ function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 	if ( Weapon.UseHands || !Weapon:IsScripted() ) then
 
 		local hands = Player:GetHands()
-		if ( IsValid( hands ) ) then
+		if ( IsValid( hands ) && IsValid( hands:GetParent() ) ) then
 
 			if ( not hook.Call( "PreDrawPlayerHands", self, hands, ViewModel, Player, Weapon ) ) then
 
@@ -603,7 +605,7 @@ function GM:PostDrawViewModel( ViewModel, Player, Weapon )
 			end
 
 			hook.Call( "PostDrawPlayerHands", self, hands, ViewModel, Player, Weapon )
-			
+
 		end
 
 	end
@@ -674,6 +676,23 @@ end
 	Desc: The mouse has been released on the game screen
 -----------------------------------------------------------]]
 function GM:GUIMouseReleased( mousecode, AimVector )
+end
+
+--[[---------------------------------------------------------
+	Player class has been changed
+-----------------------------------------------------------]]
+function GM:PlayerClassChanged( ply, newID )
+
+	-- No class is set
+	if ( newID < 1 ) then return end
+
+	-- Invalid class ID?
+	local classname = util.NetworkIDToString( newID )
+	if ( !classname ) then return end
+
+	-- Initialize the class on client
+	player_manager.SetPlayerClass( ply, classname )
+
 end
 
 function GM:PreDrawHUD()

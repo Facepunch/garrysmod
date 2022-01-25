@@ -1,32 +1,16 @@
---[[   _                                
-    ( )                               
-   _| |   __   _ __   ___ ___     _ _ 
- /'_` | /'__`\( '__)/' _ ` _ `\ /'_` )
-( (_| |(  ___/| |   | ( ) ( ) |( (_| |
-`\__,_)`\____)(_)   (_) (_) (_)`\__,_) 
-
-	DImage
-
---]]
 
 local PANEL = {}
 
-AccessorFunc( PANEL, "m_Name", 				"Name" )
+AccessorFunc( PANEL, "m_Name", "Name" )
 
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:Init()
 
 	self.m_Name = ""
 	self.m_fOffset = 0
 	self:NoClipping( true )
-	
+
 end
 
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:SizeToContents()
 
 	local w, h = killicon.GetSize( self.m_Name )
@@ -35,14 +19,10 @@ function PANEL:SizeToContents()
 
 end
 
-
---[[---------------------------------------------------------
-
------------------------------------------------------------]]
 function PANEL:Paint()
 
-	killicon.Draw( self:GetWide() * 0.5, self.m_fOffset, self.m_Name, 255 )	
-	
+	killicon.Draw( self:GetWide() * 0.5, self.m_fOffset, self.m_Name, 255 )
+
 end
 
 derma.DefineControl( "DKillIcon", "A kill icon", PANEL, "Panel" )

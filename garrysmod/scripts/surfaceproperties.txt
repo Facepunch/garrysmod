@@ -1,12 +1,12 @@
-// "surface group" 
-// { 
-// "property" 	"value"
+// "surface group"
+// {
+// "property"	"value"
 // ...
 // }
 //
 // thickness: If this value is present, the material is not volumetrically solid
 // it means that the volume should be computed as the surface area times this
-// thickness (for automatic mass).  The inside space beneath the thickness value is air.
+// thickness (for automatic mass). The inside space beneath the thickness value is air.
 //
 // physics parameters are:
 // density: this is the material density in kg / m^3 (water is 1000)
@@ -17,7 +17,7 @@
 // !!! Do not edit the physics properties (especially density) without the proper references !!!
 //
 // Sounds
-// 
+//
 // stepleft: footstep sound for left foot
 // stepright: footstep sound for right foot
 // impactsoft: Physical impact sound when hitting soft surfaces
@@ -26,10 +26,10 @@
 // scraperough: Looping physics friction sound (when scraping rough surfaces)
 // bulletimpact: bullet impact sound
 // gamematerial: game material index (can be a single letter or a number)
-// 
+//
 
 // NOTE: The properties of "default" will get copied into EVERY material who does not
-// 	 override them!!!
+//	 override them!!!
 //
 // "base" means to use the parameters from that material as a base.
 // "base" must appear as the first key in a material
@@ -174,7 +174,7 @@
 	"stepleft"	"MetalVent.StepLeft"
 	"stepright"	"MetalVent.StepRight"
 	"impacthard"	"MetalVent.ImpactHard"
-	
+
 	"audioreflectivity" "0.33"
 	"audioroughnessfactor" "0.1"
 
@@ -223,7 +223,7 @@
 
 	"stepleft"	 "Mud.StepLeft"
 	"stepright"	 "Mud.StepRight"
-	
+
 	"audiohardnessfactor" "0.0"
 	"audioroughnessfactor" "0.1"
 }
@@ -269,7 +269,7 @@
 
 // generic wood (NOTE: materials should use wood_box, wood_crate, wood_plank, wood_panel etc)
 
-"Wood"	
+"Wood"
 {
 	"density"	"700"
 	"elasticity"	"0.1"
@@ -413,6 +413,9 @@
 	"stepright"	"Water.StepRight"
 	"bulletimpact"	"Water.BulletImpact"
 
+	"impacthard" "Water.ImpactHard"
+	"impactsoft" "Water.ImpactSoft"
+
 	"audioreflectivity" "0.33"
 	"audioroughnessfactor" "0.1"
 	"audiohardnessfactor" "0.0"
@@ -502,9 +505,9 @@
 	"scrapesmooth"	"Glass.ScrapeSmooth"
 	"impacthard"	"Glass.ImpactHard"
 	"impactsoft"	"Glass.ImpactSoft"
-		
+
 	"bulletimpact"	"Glass.BulletImpact"
-	
+
 	// "strain"		"Glass.Strain"
 	"break"			"Glass.Break"
 
@@ -558,12 +561,6 @@
 
 }
 
-//For the materials that use it
-"stone"
-{
-	"base"		"rock"
-}
-
 // tubs, urinals, sinks
 
 "porcelain"
@@ -584,7 +581,7 @@
 "gravel"
 {
 	"base"		"rock"
-	"friction"	"0.4"  //0.8 for cs
+	"friction"	"0.6" //0.4 original, 0.8 for cs
 	"stepleft"	"Gravel.StepLeft"
 	"stepright""Gravel.StepRight"
 }
@@ -598,7 +595,7 @@
 
 "concrete_block"
 {
-	
+
 	"base"		"concrete"
 	"impacthard"	"Concrete_Block.ImpactHard"
 }
@@ -706,8 +703,8 @@
 {
 	"base"		"dirt"
 	"density"	"800"
-	"friction"	"0.35" //0.8 for cs
-	
+	"friction"	"0.6" //0.35 original, 0.8 for css
+
 	"stepleft"		"Snow.StepLeft"
 	"stepright"		"Snow.StepRight"
 
@@ -735,7 +732,7 @@
 	"thickness"	"0.1"
 	"elasticity"	"0.01"
 	"friction"	"0.8"
-	
+
 	"impacthard"	"Carpet.Impact"
 	"bulletimpact"	"Carpet.BulletImpact"
 	"scraperough"	"Carpet.Scrape"
@@ -849,7 +846,7 @@
 
 "plastic"
 {
- 	"base"		"Plastic_Box"
+	"base"		"Plastic_Box"
 	"audioroughnessfactor" "0.1"
 
 	"bulletimpact"	"Plastic_Box.ImpactHard"
@@ -1182,130 +1179,9 @@
 	"gamematerial"	"O"
 }
 
-
-// Episode 2
-"cavern_rock"
-{
-	"base"  "rock"
-	
-	"density" "700"
-	"elasticity" "0.1"
-	"friction" "0.8"
-	"bulletimpact" "CavernRock.ImpactHard"
-	"scraperough"	"Rock.ImpactHard"
-	"scrapesmooth"	"Rock.ImpactSoft"
-	"impacthard" "CavernRock.ImpactHard"
-	"impactsoft" "CavernRock.ImpactSoft"
-	
-	"gamematerial" "O"
-}
-
-"advisor_shield"
-{
-	"base"  "rock"
-	
-	"density" "700"
-	"elasticity" "0.1"
-	"friction" "0.8"
-	"bulletimpact" "NPC_Advisor.shieldblock"
-	"scraperough" "NPC_Advisor.shieldblock"
-	"scrapesmooth" "NPC_Advisor.shieldblock"
-	"impacthard" "NPC_Advisor.shieldblock"
-	"impactsoft" "NPC_Advisor.shieldblock"
-	
-	"gamematerial" "Z"  // <--- Whatever you make the character index in decals.h
-}
-
-"antlion_eggshell"
-{
-	"base"  "flesh"
-	"bulletimpact"	"Flesh.ImpactHard"
-	"impacthard"	"Flesh.ImpactHard"
-	"impactsoft"	"Flesh.ImpactHard"
-
-	"gamematerial" "E"
-}
-
-
-"hunter"
-{
-	"base" "flesh"
-	"gamematerial" "F"
-}
-
-"jalopytire"
-{
-	"base"			"jeeptire"
-	"elasticity"		"0.1"
-}
-
-"slidingrubbertire_jalopyfront"
-{
-	"base"			"jalopytire"
-	"friction"		"0.15"
-}
-
-"slidingrubbertire_jalopyrear"
-{
-	"base"			"jalopytire"
-	"friction"		"0.15"
-}
-
-"water"
-{
-	"density"	"1000"
-	"elasticity"	"0.1"
-	"friction"	"0.8"
-
-	"stepleft"	"Water.StepLeft"
-	"stepright"	"Water.StepRight"
-	"bulletimpact"	"Water.BulletImpact"
-
-	"impacthard" "Water.ImpactHard"
-	"impactsoft" "Water.ImpactSoft"
-
-	"audioreflectivity" "0.33"
-	"audioroughnessfactor" "0.1"
-	"audiohardnessfactor" "0.0"
-
-	"gamematerial"	"S"
-}
-
-"jalopy"
-{
-	"base"			"metal"
-	"impacthard"	"ATV_impact_medium"
-	"impactsoft"	"ATV_impact_medium"
-}
-
-//Garry's Mod
-"gmod_ice"
-{
-	"friction"	"0.01"
-	"elasticity"	"0.01"
-	"audioroughnessfactor" "0.1"
-}
-
-"gmod_bouncy"
-{
-	"elasticity"	"1000"
-	"friction"		"0.5"
-	"density"		"10000"
-}
-
-"gmod_silent"
-{
-
-	"impacthard"	"DoorSound.Null"
-	"impactsoft"	"DoorSound.Null"
-
-	"audiohardnessfactor" "0.0"
-	"audioroughnessfactor" "0.0"
-
-	"scrapeRoughThreshold" "1.0"
-	"impactHardThreshold" "1.0"
-
-}
+//=============================================
+// Half Life 2 - 12 props
+//=============================================
 
 "metalvehicle"
 {
@@ -1319,8 +1195,8 @@
 	"audioroughnessfactor" "0.1"
 	"audioHardMinVelocity"	"500" // 500
 
-	"impactHardThreshold" "0.5"   
-  
+	"impactHardThreshold" "0.5"
+
 
 	"impacthard"	"MetalVehicle.ImpactHard"
 	"impactsoft"	"MetalVehicle.ImpactSoft"
@@ -1367,20 +1243,18 @@
 "antlion"
 {
 	"base"		"alienflesh"
-	
+
 	"gamematerial"	"A"
 }
 
 "combine_metal"
 {
 	"base"		"solidmetal"
-
 }
 
 "combine_glass"
 {
 	"base"		"glass"
-
 }
 
 "zombieflesh"
@@ -1390,7 +1264,93 @@
 }
 
 //=============================================
-//----------------- PHX 2011 ------------------
+// Half Life 2: Episode 2 - 6 props
+//=============================================
+
+"cavern_rock"
+{
+	"base" "rock"
+
+	"density" "700"
+	"elasticity" "0.1"
+	"friction" "0.8"
+	"bulletimpact" "CavernRock.ImpactHard"
+	"scraperough"	"Rock.ImpactHard"
+	"scrapesmooth"	"Rock.ImpactSoft"
+	"impacthard" "CavernRock.ImpactHard"
+	"impactsoft" "CavernRock.ImpactSoft"
+
+	"gamematerial" "O"
+}
+
+"hunter"
+{
+	"base" "flesh"
+	"gamematerial" "F"
+}
+
+"jalopytire"
+{
+	"base"			"jeeptire"
+	"elasticity"		"0.1"
+}
+
+"slidingrubbertire_jalopyfront"
+{
+	"base"			"jalopytire"
+	"friction"		"0.15"
+}
+
+"slidingrubbertire_jalopyrear"
+{
+	"base"			"jalopytire"
+	"friction"		"0.15"
+}
+
+"jalopy"
+{
+	"base"			"metal"
+	"impacthard"	"ATV_impact_medium"
+	"impactsoft"	"ATV_impact_medium"
+}
+
+//=============================================
+// Garry's Mod - 4 props
+//=============================================
+
+"gmod_ice"
+{
+	"friction"	"0.01"
+	"elasticity"	"0.01"
+	"audioroughnessfactor" "0.1"
+}
+
+"gmod_bouncy"
+{
+	"elasticity"	"1000"
+	"friction"		"0.5"
+	"density"		"10000"
+}
+
+"gmod_silent"
+{
+	"impacthard"	"DoorSound.Null"
+	"impactsoft"	"DoorSound.Null"
+
+	"audiohardnessfactor" "0.0"
+	"audioroughnessfactor" "0.0"
+
+	"scrapeRoughThreshold" "1.0"
+	"impactHardThreshold" "1.0"
+}
+
+"stone"
+{
+	"base"		"rock"
+}
+
+//=============================================
+// PHX 2011 - 11 props
 //=============================================
 
 "phx_tire_normal"
@@ -1400,7 +1360,6 @@
 	"friction"	"3"
 	"density"	"15000"
 }
-
 
 "gm_ps_egg"
 {
@@ -1422,6 +1381,7 @@
 	"break"			"Explo.ww2bomb"
 
 }
+
 "phx_flakshell"
 {
 	"base"		"solidmetal"
@@ -1434,7 +1394,6 @@
 	"roll"			"Canister.Roll"
 	"break"			"Explo.ww2bomb"
 }
-
 
 "phx_ww2bomb"
 {
@@ -1463,6 +1422,7 @@
 	"roll"			"Canister.Roll"
 	"break"			"Explo.ww2bomb"
 }
+
 //Wooden Wheels
 "gm_ps_woodentire"
 {
@@ -1486,6 +1446,7 @@
 	"audiohardnessfactor"	"0.25"
 
 }
+
 //Metallic wheels
 "gm_ps_metaltire"
 {
@@ -1505,6 +1466,7 @@
 
 	"gamematerial"	"M"
 }
+
 "gm_ps_soccerball"
 {
 	"base"		"rubbertire"
@@ -1512,6 +1474,7 @@
 	"friction"	"0.2"
 	"density"	"4500"
 }
+
 "phx_rubbertire"
 {
 	"base"			"rubber"
@@ -1521,12 +1484,13 @@
 	"impactsoft"	"Rubber_Tire.ImpactSoft"
 
 	"strain"		"Phx_Rubber_Tire.Strain"
-	
+
 	"scraperough"	"Phx_Rubber_Tire.Strain"
 	"scrapesmooth"	"Phx_Rubber_Tire.Strain"
 
 	"friction"		"3.0"
 }
+
 "phx_rubbertire2"
 {
 	"base"			"rubber"
@@ -1536,44 +1500,16 @@
 	"impactsoft"	"Rubber_Tire.ImpactSoft"
 
 	"strain"		"Phx_Rubber_Tire.Strain"
-	
+
 	"scraperough"	"Phx_Rubber_Tire.Strain"
 	"scrapesmooth"	"Phx_Rubber_Tire.Strain"
 
 	"friction"		"5.0"
 }
 
-// Team Fortress 2?
-"grenade_napalm"
-{
-	"base"		"grenade"
-	"friction"		"0.05"
-	"elasticity"	"2"
-
-//	"audiohardnessfactor" "1.0"
-//	"audioroughnessfactor" "0.4"
-
-//	"bulletimpact"	"Grenade.ImpactHard"
-//	"scraperough"	"Grenade.ScrapeRough"
-//	"scrapesmooth"	"Grenade.ScrapeSmooth"
-//	"impacthard"	"Grenade.ImpactHard"
-//	"impactsoft"	"Grenade.ImpactSoft"
-//	"roll"		"Grenade.Roll"
-}
-
-"demoman_grenade"
-{
-	"base"		"metal"
-
-	"bulletimpact"	"Grenade.ImpactHard"
-	"scraperough"	"Grenade.ScrapeRough"
-	"scrapesmooth"	"Grenade.ScrapeSmooth"
-	"impacthard"	"Grenade.ImpactHard"
-	"impactsoft"	"Grenade.ImpactSoft"
-	"rolling"	"Grenade.Roll"
-}
-
-// Counter-Strike: Source
+//=============================================
+// Counter-Strike: Source - 5 props
+//=============================================
 
 "brass_bell_large"
 {
@@ -1602,7 +1538,9 @@
 	"stepright"	"Grass.StepRight"
 }
 
-// Half-Life: Source
+//=============================================
+// Half-Life: Source - 9 props
+//=============================================
 
 "metal_barrellight_hl"
 {
@@ -1630,8 +1568,6 @@
 	"density"	"630"
 }
 
-
-// low friction tool materials
 "friction_00"
 {
 	"friction"	"0.0"
@@ -1649,7 +1585,6 @@
 	"friction"	"0.25"
 	"density"	"917"
 }
-
 
 "frictionM_00"
 {
@@ -1670,22 +1605,4 @@
 	"base"		"metal"
 	"friction"	"0.25"
 	"density"	"917"
-}
-
-// Portal
-
-"energyball"
-{
-	"base"		"glass"
-	"elasticity"	"1000"
-	"friction"	"0"
-}
-
-"sphere"
-{
-	"base"		"metal"
-	"elasticity"	"3"
-	"dampening"	"0.2"
-	"friction"	"0.2"
-	"density"	"1000"
 }

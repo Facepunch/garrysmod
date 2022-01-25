@@ -6,6 +6,17 @@ TOOL.ClientConVar[ "width" ] = "3"
 TOOL.ClientConVar[ "forcelimit" ] = "0"
 TOOL.ClientConVar[ "rigid" ] = "0"
 TOOL.ClientConVar[ "material" ] = "cable/cable"
+TOOL.ClientConVar[ "color_r" ] = "255"
+TOOL.ClientConVar[ "color_g" ] = "255"
+TOOL.ClientConVar[ "color_b" ] = "255"
+
+TOOL.Information = {
+	{ name = "left", stage = 0 },
+	{ name = "left_1", stage = 1 },
+	{ name = "left_2", stage = 2 },
+	{ name = "left_3", stage = 3 },
+	{ name = "reload" }
+}
 
 function TOOL:LeftClick( trace )
 
@@ -21,14 +32,17 @@ function TOOL:LeftClick( trace )
 	self:SetObject( iNum + 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
 
 	if ( iNum > 2 ) then
-	
+
 		if ( CLIENT ) then return true end
-		
+
 		local width = self:GetClientNumber( "width" )
 		local forcelimit = self:GetClientNumber( "forcelimit" )
 		local rigid = self:GetClientNumber( "rigid" ) == 1
 		local material = self:GetClientInfo( "material" )
-		
+		local colorR = self:GetClientNumber( "color_r" )
+		local colorG = self:GetClientNumber( "color_g" )
+		local colorB = self:GetClientNumber( "color_b" )
+
 		-- Get information we're about to use
 		local Ent1 = self:GetEnt( 1 )
 		local Ent4 = self:GetEnt( 4 )
@@ -39,13 +53,13 @@ function TOOL:LeftClick( trace )
 		local WPos2 = self:GetPos( 2 )
 		local WPos3 = self:GetPos( 3 )
 
-		local constraint = constraint.Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimit, rigid, width, material )
+		local constraint, rop1, rop2, rop3 = constraint.Pulley( Ent1, Ent4, Bone1, Bone4, LPos1, LPos4, WPos2, WPos3, forcelimit, rigid, width, material, Color( colorR, colorG, colorB, 255 ) )
 
 		undo.Create( "Pulley" )
 			undo.AddEntity( constraint )
 			undo.SetPlayer( self:GetOwner() )
 		undo.Finish()
-		
+
 		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
 
 		self:ClearObjects()
@@ -53,9 +67,9 @@ function TOOL:LeftClick( trace )
 	else
 
 		self:SetStage( iNum + 1 )
-		
+
 	end
-	
+
 	return true
 
 end
@@ -66,7 +80,7 @@ function TOOL:Reload( trace )
 	if ( CLIENT ) then return true end
 
 	return constraint.RemoveConstraints( trace.Entity, "Pulley" )
-	
+
 end
 
 function TOOL:Holster()
@@ -88,5 +102,6 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Slider", { Label = "#tool.pulley.width", Command = "pulley_width", Type = "Float", Min = 0, Max = 10 } )
 	CPanel:AddControl( "RopeMaterial", { Label = "#tool.pulley.material", ConVar = "pulley_material" } )
+	CPanel:AddControl( "Color", { Label = "#tool.pulley.color", Red = "pulley_color_r", Green = "pulley_color_g", Blue = "pulley_color_b" } )
 
 end

@@ -1,4 +1,3 @@
-
 function GetTraitors()
    local trs = {}
    for k,v in ipairs(player.GetAll()) do
@@ -14,7 +13,7 @@ function CountTraitors() return #GetTraitors() end
 
 -- Send every player their role
 local function SendPlayerRoles()
-   for k, v in pairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       net.Start("TTT_Role")
          net.WriteUInt(v:GetRole(), 2)
       net.Send(v)
@@ -38,7 +37,7 @@ end
 
 local function SendRoleList(role, ply_or_rf, pred)
    local role_ids = {}
-   for k, v in pairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       if v:IsRole(role) then
          if not pred or (pred and pred(v)) then
             table.insert(role_ids, v:EntIndex())
@@ -61,7 +60,7 @@ function SendInnocentList(ply_or_rf)
    -- sending traitors only a list of actual innocents.
    local inno_ids = {}
    local traitor_ids = {}
-   for k, v in pairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       if v:IsRole(ROLE_INNOCENT) then
          table.insert(inno_ids, v:EntIndex())
       elseif v:IsRole(ROLE_TRAITOR) then
@@ -99,7 +98,7 @@ function SendRoleReset(ply_or_rf)
       net.WriteUInt(ROLE_INNOCENT, 2)
 
       net.WriteUInt(#plys, 8)
-      for k, v in pairs(plys) do
+      for k, v in ipairs(plys) do
          net.WriteUInt(v:EntIndex() - 1, 7)
       end
 
@@ -127,38 +126,32 @@ end
 concommand.Add("_ttt_request_rolelist", request_rolelist)
 
 local function force_terror(ply)
-   if cvars.Bool("sv_cheats") then
-      ply:SetRole(ROLE_INNOCENT)
-      ply:UnSpectate()
-      ply:SetTeam(TEAM_TERROR)
+   ply:SetRole(ROLE_INNOCENT)
+   ply:UnSpectate()
+   ply:SetTeam(TEAM_TERROR)
 
-      ply:StripAll()
+   ply:StripAll()
 
-      ply:Spawn()
-      ply:PrintMessage(HUD_PRINTTALK, "You are now on the terrorist team.")
+   ply:Spawn()
+   ply:PrintMessage(HUD_PRINTTALK, "You are now on the terrorist team.")
 
-      SendFullStateUpdate()
-   end
+   SendFullStateUpdate()
 end
-concommand.Add("ttt_force_terror", force_terror)
+concommand.Add("ttt_force_terror", force_terror, nil, nil, FCVAR_CHEAT)
 
 local function force_traitor(ply)
-   if cvars.Bool("sv_cheats") then
-      ply:SetRole(ROLE_TRAITOR)
+   ply:SetRole(ROLE_TRAITOR)
 
-      SendFullStateUpdate()
-   end
+   SendFullStateUpdate()
 end
-concommand.Add("ttt_force_traitor", force_traitor)
+concommand.Add("ttt_force_traitor", force_traitor, nil, nil, FCVAR_CHEAT)
 
 local function force_detective(ply)
-   if cvars.Bool("sv_cheats") then
-      ply:SetRole(ROLE_DETECTIVE)
+   ply:SetRole(ROLE_DETECTIVE)
 
-      SendFullStateUpdate()
-   end
+   SendFullStateUpdate()
 end
-concommand.Add("ttt_force_detective", force_detective)
+concommand.Add("ttt_force_detective", force_detective, nil, nil, FCVAR_CHEAT)
 
 
 local function force_spectate(ply, cmd, arg)
@@ -180,5 +173,6 @@ local function force_spectate(ply, cmd, arg)
    end
 end
 concommand.Add("ttt_spectate", force_spectate)
-
-
+net.Receive("TTT_Spectate", function(l, pl)
+   force_spectate(pl, nil, { net.ReadBool() and 1 or 0 })
+end)

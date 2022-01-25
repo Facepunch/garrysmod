@@ -1,0 +1,63 @@
+// Hornetgun
+
+WeaponData
+{
+	// Weapon data is loaded by both the Game and Client DLLs.
+	"printname"		"#HL1_HornetGun"
+	"viewmodel"		"models/v_hgun.mdl"
+	"playermodel"		"models/weapons/w_hgun_hls.mdl"
+	"anim_prefix"		"hive"
+	"bucket"		"3"
+	"bucket_position"	"13"
+
+	"clip_size"		"-1"
+	"default_clip"		"8"
+	"primary_ammo"		"Hornet"
+	"secondary_ammo"	"None"
+
+	"weight"		"10"
+	"item_flags"		"6"	// ITEM_FLAG_NOAUTOSWITCHEMPTY | ITEM_FLAG_NOAUTORELOAD
+
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+		"single_shot"	"Weapon_Hornetgun.Single"
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"sprites/640hud2"
+			"x"			"0"
+			"y"			"180"
+			"width"		"170"
+			"height"	"45"
+		}
+		"weapon_s"
+		{	
+			"file"		"sprites/640hud5"
+			"x"			"0"
+			"y"			"180"
+			"width"		"170"
+			"height"	"45"
+		}
+		"ammo"
+		{
+			"file"		"sprites/640hud7"
+			"x"			"24"
+			"y"			"96"
+			"width"		"24"
+			"height"	"24"
+		}
+		"crosshair"
+		{
+			"file"		"sprites/crosshairs"
+			"x"			"72"
+			"y"			"24"
+			"width"		"24"
+			"height"	"24"
+		}
+	}
+}

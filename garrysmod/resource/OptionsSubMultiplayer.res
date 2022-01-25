@@ -17,9 +17,9 @@
 		"enabled"		"1"
 		"tabPosition"		"0"
 	}
-	
+
 	////////////////////////////////////// DOWNLOAD FILTER
-	
+
 	"DownloadFilterLabel"
 	{
 		"ControlName"		"Label"
@@ -53,7 +53,7 @@
 		"fieldName"		"DownloadFilterCheck"
 		"xpos"		"32" // +6
 		"ypos"		"180" // +48
-		"wide"		"250"
+		"wide"		"300" // GMOD: Fit the workshop one
 		"tall"		"24"
 		"autoResize"		"0"
 		"pinCorner"		"0"
@@ -69,7 +69,7 @@
 		"NumericInputOnly"		"0"
 		"unicode"		"0"
 	}
-	
+
 	////////////////////////////////////// DIVIDER
 
 	"Divider2"
@@ -89,9 +89,59 @@
 		"enabled"		"1"
 		"tabPosition"		"0"
 	}
-	
+
+	////////////////////////////////////// GMOD: LOADING SCREEN FLAG
+
+	"Divider3"
+	{
+		"ControlName"		"Divider"
+		"fieldName"		"Divider2"
+		"xpos"		"32"
+		"ypos"		"215"
+		"wide"		"432"
+		"tall"		"2"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"RoundedCorners"		"15"
+		"pin_corner_to_sibling"		"0"
+		"pin_to_sibling_corner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"		"0"
+	}
+
+	"HTMLLoadingScreen"
+	{
+		"ControlName"		"CCvarToggleCheckButton"
+		"fieldName"		"HTMLLoadingScreen"
+		"xpos"		"28"
+		"ypos"		"220"
+		//"tooltiptext"		"#GameUI_HTMLLoadingScreenTooltip"
+		"wide"		"250"
+		"tall"		"28"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"RoundedCorners"		"15"
+		"pin_corner_to_sibling"		"0"
+		"pin_to_sibling_corner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"		"2"
+		"labelText"		"#GameUI_HTMLLoadingScreen"
+		"textAlignment"		"west"
+		"dulltext"		"0"
+		"brighttext"		"0"
+		"wrap"		"0"
+		"centerwrap"		"0"
+		"textinsetx"		"6"
+		"textinsety"		"0"
+		"auto_wide_tocontents"		"0"
+		"use_proportional_insets"		"0"
+		"Default"		"1"
+	}
+
 	////////////////////////////////////// SPRAY
-	
+
 	"Label2"
 	{
 		"ControlName"		"Label"
@@ -143,7 +193,7 @@
 		"tileHorizontally"		"0"
 		"tileVertically"		"0"
 	}
-	
+
 	"SpraypaintList"
 	{
 		"ControlName"		"CLabeledCommandComboBox"
@@ -166,15 +216,15 @@
 		"NumericInputOnly"		"0"
 		"unicode"		"0"
 	}
-	
+
 	"Label3"
 	{
 		"ControlName"		"Label"
 		"fieldName"		"Label3"
 		"xpos"		"246"
 		"ypos"		"40" //+24
-		"wide"		"204"
-		"tall"		"64"
+		"wide"		"214"
+		"tall"		"40"
 		"autoResize"		"0"
 		"pinCorner"		"0"
 		"RoundedCorners"		"15"
@@ -194,7 +244,7 @@
 		"textinsety"		"0"
 		"auto_wide_tocontents"		"0"
 	}
-	
+
 	"ImportSprayImage"
 	{
 		"ControlName"		"Button"
@@ -225,6 +275,35 @@
 		"selected"		"0"
 	}
 
+	"DisableSprays"
+	{
+		"ControlName"		"CCvarToggleCheckButton"
+		"fieldName"		"DisableSprays"
+		"xpos"		"240"
+		"ypos"		"76"
+		"wide"		"250"
+		"tall"		"28"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"RoundedCorners"		"15"
+		"pin_corner_to_sibling"		"0"
+		"pin_to_sibling_corner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"		"2"
+		"labelText"		"#GameUI_DisableSprays"
+		"textAlignment"		"west"
+		"dulltext"		"0"
+		"brighttext"		"0"
+		"wrap"		"0"
+		"centerwrap"		"0"
+		"textinsetx"		"6"
+		"textinsety"		"0"
+		"auto_wide_tocontents"		"0"
+		"use_proportional_insets"		"0"
+		"Default"		"1"
+	}
+
 	"EnableSprays"
 	{
 		"ControlName"		"CCvarToggleCheckButton"
@@ -253,9 +332,9 @@
 		"Default"		"0"
 		"selected"		"0"
 	}
-	
+
 	////////////////////////////////////// THE REST
-	
+
 	"Cancel"
 	{
 		"ControlName"		"Button"
@@ -372,7 +451,7 @@
 		"Default"		"0"
 		"selected"		"0"
 	}
-	
+
 	"Primary Color Slider"
 	{
 		"ControlName"		"CCvarSlider"
@@ -461,7 +540,7 @@
 		"NumericInputOnly"		"0"
 		"unicode"		"0"
 	}
-	
+
 	"ModelImage"
 	{
 		"ControlName"		"Panel"
@@ -479,7 +558,7 @@
 		"enabled"		"1"
 		"tabPosition"		"0"
 	}
-	
+
 	"CrosshairColorComboBox"
 	{
 		"ControlName"		"ComboBox"
@@ -698,7 +777,7 @@
 		"tileHorizontally"		"0"
 		"tileVertically"		"0"
 	}
-	
+
 	"CrosshairLabel"
 	{
 		"ControlName"		"Label"
@@ -899,7 +978,7 @@
 		"textinsety"		"0"
 		"auto_wide_tocontents"		"0"
 	}
-	
+
 	"AdvCrosshairLabel"
 	{
 		"ControlName"		"Label"

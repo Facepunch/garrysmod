@@ -8,6 +8,7 @@ local function UpdateMaps()
 	MapNames = {}
 
 	MapNames[ "aoc_" ] = "Age of Chivalry"
+	MapNames[ "infra_" ] = "INFRA"
 
 	MapPatterns[ "^asi-" ] = "Alien Swarm"
 	MapNames[ "lobby" ] = "Alien Swarm"
@@ -22,6 +23,7 @@ local function UpdateMaps()
 	MapNames[ "free_" ] = "Blade Symphony"
 	MapNames[ "practice_box" ] = "Blade Symphony"
 	MapNames[ "tut_training" ] = "Blade Symphony"
+	MapNames[ "lightstyle_test" ] = "Blade Symphony"
 
 	MapNames[ "ar_" ] = "Counter-Strike"
 	MapNames[ "cs_" ] = "Counter-Strike"
@@ -29,7 +31,17 @@ local function UpdateMaps()
 	MapNames[ "es_" ] = "Counter-Strike"
 	MapNames[ "fy_" ] = "Counter-Strike"
 	MapNames[ "gd_" ] = "Counter-Strike"
+	MapNames[ "dz_" ] = "Counter-Strike"
 	MapNames[ "training1" ] = "Counter-Strike"
+	MapNames[ "lobby_mapveto" ] = "Counter-Strike"
+
+	-- Various custom cs maps
+	MapNames[ "35hp_" ] = "Counter-Strike (Custom)"
+	MapNames[ "aim_" ] = "Counter-Strike (Custom)"
+	MapNames[ "awp_" ] = "Counter-Strike (Custom)"
+	MapNames[ "am_" ] = "Counter-Strike (Custom)"
+	MapNames[ "fy_" ] = "Counter-Strike (Custom)"
+	MapNames[ "1v1_" ] = "Counter-Strike (Custom)"
 
 	MapNames[ "dod_" ] = "Day Of Defeat"
 
@@ -86,6 +98,7 @@ local function UpdateMaps()
 	MapNames[ "l4d_" ] = "Left 4 Dead"
 
 	MapPatterns[ "^c[%d]m" ] = "Left 4 Dead 2"
+	MapPatterns[ "^c1[%d]m" ] = "Left 4 Dead 2"
 	MapNames[ "curling_stadium" ] = "Left 4 Dead 2"
 	MapNames[ "tutorial_standards" ] = "Left 4 Dead 2"
 	MapNames[ "tutorial_standards_vs" ] = "Left 4 Dead 2"
@@ -136,6 +149,13 @@ local function UpdateMaps()
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
 	MapNames[ "zpo_" ] = "Zombie Panic! Source"
 	MapNames[ "zps_" ] = "Zombie Panic! Source"
+	MapNames[ "zph_" ] = "Zombie Panic! Source"
+
+	MapNames[ "fof_" ] = "Fistful of Frags"
+	MapNames[ "cm_" ] = "Fistful of Frags"
+	MapNames[ "gt_" ] = "Fistful of Frags"
+	MapNames[ "tp_" ] = "Fistful of Frags"
+	MapNames[ "vs_" ] = "Fistful of Frags"
 
 	MapNames[ "bhop_" ] = "Bunny Hop"
 	MapNames[ "cinema_" ] = "Cinema"
@@ -163,6 +183,7 @@ local function UpdateMaps()
 	MapNames[ "zm_" ] = "Zombie Survival"
 	MapNames[ "zombiesurvival_" ] = "Zombie Survival"
 	MapNames[ "zs_" ] = "Zombie Survival"
+	MapNames[ "coop_" ] = "Cooperative"
 
 	local GamemodeList = engine.GetGamemodes()
 
@@ -189,7 +210,20 @@ local favmaps
 local function LoadFavourites()
 
 	local cookiestr = cookie.GetString( "favmaps" )
-	favmaps = favmaps || (cookiestr && string.Explode( ";", cookiestr ) || {})
+	favmaps = favmaps || ( cookiestr && string.Explode( ";", cookiestr ) || {} )
+
+end
+
+-- Called from JS when starting a new game
+function UpdateMapList()
+
+	local MapList = GetMapList()
+	if ( !MapList ) then return end
+
+	local json = util.TableToJSON( MapList )
+	if ( !json ) then return end
+
+	pnlMainMenu:Call( "UpdateMaps(" .. json .. ")" )
 
 end
 
@@ -213,6 +247,7 @@ local IgnoreMaps = {
 	[ "d2_coast_02" ] = true,
 	[ "d3_c17_02_camera" ] = true,
 	[ "ep1_citadel_00_demo" ] = true,
+	[ "c5m1_waterfront_sndscape" ] = true,
 	[ "intro" ] = true,
 	[ "test" ] = true
 }
@@ -268,14 +303,14 @@ local function RefreshMaps( skip )
 			fav = true
 		end
 
-		local csgo
+		local csgo = false
 
 		if ( Category == "Counter-Strike" ) then
 			if ( file.Exists( "maps/" .. name .. ".bsp", "csgo" ) ) then
 				if ( file.Exists( "maps/" .. name .. ".bsp", "cstrike" ) ) then -- Map also exists in CS:GO
 					csgo = true
 				else
-					Category = "CS: Global Offensive"
+					Category = "Counter-Strike: GO"
 				end
 			end
 		end
@@ -295,23 +330,30 @@ local function RefreshMaps( skip )
 		end
 
 		if ( csgo ) then
-			if ( !MapList[ "CS: Global Offensive" ] ) then
-				MapList[ "CS: Global Offensive" ] = {}
+			if ( !MapList[ "Counter-Strike: GO" ] ) then
+				MapList[ "Counter-Strike: GO" ] = {}
 			end
 			-- We have to make the CS:GO name different from the CS:S name to prevent Favourites conflicts
-			table.insert( MapList[ "CS: Global Offensive" ], name .. " " )
+			table.insert( MapList[ "Counter-Strike: GO" ], name .. " " )
 		end
 
 	end
 
+	-- Send the new list to the HTML menu
+	UpdateMapList()
+
 end
 
-hook.Add( "MenuStart", "FindMaps", RefreshMaps )
+-- Update only after a short while for when these hooks are called very rapidly back to back
+local function DelayedRefreshMaps()
+	timer.Create( "menu_refreshmaps", 0.1, 1, RefreshMaps )
+end
 
-hook.Add( "GameContentChanged", "RefreshMaps", RefreshMaps )
+hook.Add( "MenuStart", "FindMaps", DelayedRefreshMaps )
+hook.Add( "GameContentChanged", "RefreshMaps", DelayedRefreshMaps )
 
+-- Nice maplist accessor instead of a global table
 function GetMapList()
-	-- Nice maplist accessor instead of a global table
 	return MapList
 end
 
@@ -352,6 +394,8 @@ function LoadLastMap()
 
 	cat = string.gsub( cat, "'", "\\'" )
 
-	pnlMainMenu:Call( "SetLastMap('" .. map .. "','" .. cat .. "')" )
+	if ( !file.Exists( "maps/" .. map .. ".bsp", "GAME" ) ) then return end
+
+	pnlMainMenu:Call( "SetLastMap('" .. map:JavascriptSafe() .. "','" .. cat:JavascriptSafe() .. "')" )
 
 end

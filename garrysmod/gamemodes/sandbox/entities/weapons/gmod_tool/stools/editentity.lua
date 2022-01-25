@@ -16,13 +16,13 @@ function TOOL:LeftClick( trace )
 	self.Weapon:SetTargetEntity1( trace.Entity )
 
 	return true
-	
+
 end
 
 function TOOL:RightClick( trace )
 
 	return self:LeftClick( trace )
-	
+
 end
 
 function TOOL:Think()
@@ -40,7 +40,7 @@ function TOOL:Think()
 		self.BuildCPanel( CPanel, CurrentEditing )
 
 	end
-	
+
 end
 
 function TOOL.BuildCPanel( CPanel, ent )

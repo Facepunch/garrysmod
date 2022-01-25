@@ -13,8 +13,8 @@ function GM:HandlePlayerJumping( ply, velocity )
 		if ( !ply.m_fGroundTime ) then
 
 			ply.m_fGroundTime = CurTime()
-			
-		elseif ( CurTime() - ply.m_fGroundTime ) > 0 && velocity:Length2D() < 0.5 then
+
+		elseif ( CurTime() - ply.m_fGroundTime ) > 0 && velocity:Length2DSqr() < 0.25 then
 
 			ply.m_bJumping = true
 			ply.m_bFirstJumpFrame = false
@@ -24,14 +24,14 @@ function GM:HandlePlayerJumping( ply, velocity )
 	end
 
 	if ply.m_bJumping then
-	
+
 		if ply.m_bFirstJumpFrame then
 
 			ply.m_bFirstJumpFrame = false
 			ply:AnimRestartMainSequence()
 
 		end
-		
+
 		if ( ply:WaterLevel() >= 2 ) || ( ( CurTime() - ply.m_flJumpStartTime ) > 0.2 && ply:OnGround() ) then
 
 			ply.m_bJumping = false
@@ -39,7 +39,7 @@ function GM:HandlePlayerJumping( ply, velocity )
 			ply:AnimRestartMainSequence()
 
 		end
-		
+
 		if ply.m_bJumping then
 			ply.CalcIdeal = ACT_MP_JUMP
 			return true
@@ -52,9 +52,9 @@ end
 
 function GM:HandlePlayerDucking( ply, velocity )
 
-	if ( !ply:Crouching() ) then return false end
+	if ( !ply:IsFlagSet( FL_ANIMDUCKING ) ) then return false end
 
-	if ( velocity:Length2D() > 0.5 ) then
+	if ( velocity:Length2DSqr() > 0.25 ) then
 		ply.CalcIdeal = ACT_MP_CROUCHWALK
 	else
 		ply.CalcIdeal = ACT_MP_CROUCH_IDLE
@@ -93,7 +93,7 @@ end
 
 function GM:HandlePlayerVaulting( ply, velocity )
 
-	if ( velocity:Length() < 1000 ) then return end
+	if ( velocity:LengthSqr() < 1000000 ) then return end
 	if ( ply:IsOnGround() ) then return end
 
 	ply.CalcIdeal = ACT_MP_SWIM
@@ -104,7 +104,7 @@ end
 
 function GM:HandlePlayerSwimming( ply, velocity )
 
-	if ( ply:WaterLevel() < 2 or ply:IsOnGround() ) then
+	if ( ply:WaterLevel() < 2 || ply:IsOnGround() ) then
 		ply.m_bInSwim = false
 		return false
 	end
@@ -128,7 +128,8 @@ end
 
 function GM:HandlePlayerDriving( ply )
 
-	if ( !ply:InVehicle() ) then return false end
+	-- The player must have a parent to be in a vehicle. If there's no parent, we are in the exit anim, so don't do sitting in 3rd person anymore
+	if ( !ply:InVehicle() || !IsValid( ply:GetParent() ) ) then return false end
 
 	local pVehicle = ply:GetVehicle()
 
@@ -142,8 +143,6 @@ function GM:HandlePlayerDriving( ply )
 		end
 	end
 
-	local class = pVehicle:GetClass()
-
 	if ( isfunction( pVehicle.HandleAnimation ) ) then
 		local seq = pVehicle:HandleAnimation( ply )
 		if ( seq != nil ) then
@@ -152,6 +151,7 @@ function GM:HandlePlayerDriving( ply )
 	end
 
 	if ( ply.CalcSeqOverride == -1 ) then -- pVehicle.HandleAnimation did not give us an animation
+		local class = pVehicle:GetClass()
 		if ( class == "prop_vehicle_jeep" ) then
 			ply.CalcSeqOverride = ply:LookupSequence( "drive_jeep" )
 		elseif ( class == "prop_vehicle_airboat" ) then
@@ -163,7 +163,7 @@ function GM:HandlePlayerDriving( ply )
 			ply.CalcSeqOverride = ply:LookupSequence( "sit_rollercoaster" )
 		end
 	end
-	
+
 	local use_anims = ( ply.CalcSeqOverride == ply:LookupSequence( "sit_rollercoaster" ) || ply.CalcSeqOverride == ply:LookupSequence( "sit" ) )
 	if ( use_anims && ply:GetAllowWeaponsInVehicle() && IsValid( ply:GetActiveWeapon() ) ) then
 		local holdtype = ply:GetActiveWeapon():GetHoldType()
@@ -202,21 +202,18 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 
 	ply:SetPlaybackRate( rate )
 
-	if ( ply:InVehicle() ) then
-
-		local Vehicle = ply:GetVehicle()
-		
-		-- We only need to do this clientside..
-		if ( CLIENT ) then
+	-- We only need to do this clientside..
+	if ( CLIENT ) then
+		if ( ply:InVehicle() ) then
 			--
 			-- This is used for the 'rollercoaster' arms
 			--
+			local Vehicle = ply:GetVehicle()
 			local Velocity = Vehicle:GetVelocity()
 			local fwd = Vehicle:GetUp()
 			local dp = fwd:Dot( Vector( 0, 0, 1 ) )
-			local dp2 = fwd:Dot( Velocity )
 
-			ply:SetPoseParameter( "vertical_velocity", ( dp < 0 and dp or 0 ) + dp2 * 0.005 )
+			ply:SetPoseParameter( "vertical_velocity", ( dp < 0 && dp || 0 ) + fwd:Dot( Velocity ) * 0.005 )
 
 			-- Pass the vehicles steer param down to the player
 			local steer = Vehicle:GetPoseParameter( "vehicle_steer" )
@@ -225,10 +222,6 @@ function GM:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 			ply:SetPoseParameter( "vehicle_steer", steer )
 
 		end
-		
-	end
-
-	if ( CLIENT ) then
 		GAMEMODE:GrabEarAnimation( ply )
 		GAMEMODE:MouthMoveAnimation( ply )
 	end
@@ -241,7 +234,7 @@ end
 --
 function GM:GrabEarAnimation( ply )
 
-	ply.ChatGestureWeight = ply.ChatGestureWeight or 0
+	ply.ChatGestureWeight = ply.ChatGestureWeight || 0
 
 	-- Don't show this when we're playing a taunt!
 	if ( ply:IsPlayingTaunt() ) then return end
@@ -253,10 +246,10 @@ function GM:GrabEarAnimation( ply )
 	end
 
 	if ( ply.ChatGestureWeight > 0 ) then
-	
+
 		ply:AnimRestartGesture( GESTURE_SLOT_VCD, ACT_GMOD_IN_CHAT, true )
 		ply:AnimSetGestureWeight( GESTURE_SLOT_VCD, ply.ChatGestureWeight )
-	
+
 	end
 
 end
@@ -266,21 +259,19 @@ end
 --
 function GM:MouthMoveAnimation( ply )
 
-	local FlexNum = ply:GetFlexNum() - 1
-	if ( FlexNum <= 0 ) then return end
+	local flexes = {
+		ply:GetFlexIDByName( "jaw_drop" ),
+		ply:GetFlexIDByName( "left_part" ),
+		ply:GetFlexIDByName( "right_part" ),
+		ply:GetFlexIDByName( "left_mouth_drop" ),
+		ply:GetFlexIDByName( "right_mouth_drop" )
+	}
 
-	for i = 0, FlexNum - 1 do
-	
-		local Name = ply:GetFlexName( i )
+	local weight = ply:IsSpeaking() && math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) || 0
 
-		if ( Name == "jaw_drop" || Name == "right_part" || Name == "left_part" || Name == "right_mouth_drop" || Name == "left_mouth_drop" ) then
+	for k, v in pairs( flexes ) do
 
-			if ( ply:IsSpeaking() ) then
-				ply:SetFlexWeight( i, math.Clamp( ply:VoiceVolume() * 2, 0, 2 ) )
-			else
-				ply:SetFlexWeight( i, 0 )
-			end
-		end
+		ply:SetFlexWeight( v, weight )
 
 	end
 
@@ -293,17 +284,15 @@ function GM:CalcMainActivity( ply, velocity )
 
 	self:HandlePlayerLanding( ply, velocity, ply.m_bWasOnGround )
 
-	if ( self:HandlePlayerNoClipping( ply, velocity ) ||
+	if !( self:HandlePlayerNoClipping( ply, velocity ) ||
 		self:HandlePlayerDriving( ply ) ||
 		self:HandlePlayerVaulting( ply, velocity ) ||
 		self:HandlePlayerJumping( ply, velocity ) ||
-		self:HandlePlayerDucking( ply, velocity ) ||
-		self:HandlePlayerSwimming( ply, velocity ) ) then
+		self:HandlePlayerSwimming( ply, velocity ) ||
+		self:HandlePlayerDucking( ply, velocity ) ) then
 
-	else
-
-		local len2d = velocity:Length2D()
-		if ( len2d > 150 ) then ply.CalcIdeal = ACT_MP_RUN elseif ( len2d > 0.5 ) then ply.CalcIdeal = ACT_MP_WALK end
+		local len2d = velocity:Length2DSqr()
+		if ( len2d > 22500 ) then ply.CalcIdeal = ACT_MP_RUN elseif ( len2d > 0.25 ) then ply.CalcIdeal = ACT_MP_WALK end
 
 	end
 
@@ -346,44 +335,44 @@ end
 function GM:DoAnimationEvent( ply, event, data )
 
 	if ( event == PLAYERANIMEVENT_ATTACK_PRIMARY ) then
-	
-		if ply:Crouching() then
+
+		if ply:IsFlagSet( FL_ANIMDUCKING ) then
 			ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, true )
 		else
 			ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PRIMARYFIRE, true )
 		end
-		
+
 		return ACT_VM_PRIMARYATTACK
-	
+
 	elseif ( event == PLAYERANIMEVENT_ATTACK_SECONDARY ) then
-	
+
 		-- there is no gesture, so just fire off the VM event
 		return ACT_VM_SECONDARYATTACK
-		
+
 	elseif ( event == PLAYERANIMEVENT_RELOAD ) then
-	
-		if ply:Crouching() then
+
+		if ply:IsFlagSet( FL_ANIMDUCKING ) then
 			ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_CROUCH, true )
 		else
 			ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND, true )
 		end
-		
+
 		return ACT_INVALID
-		
+
 	elseif ( event == PLAYERANIMEVENT_JUMP ) then
-	
+
 		ply.m_bJumping = true
 		ply.m_bFirstJumpFrame = true
 		ply.m_flJumpStartTime = CurTime()
-	
+
 		ply:AnimRestartMainSequence()
-	
+
 		return ACT_INVALID
-	
+
 	elseif ( event == PLAYERANIMEVENT_CANCEL_RELOAD ) then
-	
+
 		ply:AnimResetGestureSlot( GESTURE_SLOT_ATTACK_AND_RELOAD )
-		
+
 		return ACT_INVALID
 	end
 
