@@ -23,6 +23,9 @@ end
 	Desc: Called as soon as all map entities have been spawned
 -----------------------------------------------------------]]
 function GM:InitPostEntity()
+
+	if ( !system.HasFocus() ) then system.FlashWindow() end
+
 end
 
 --[[---------------------------------------------------------
