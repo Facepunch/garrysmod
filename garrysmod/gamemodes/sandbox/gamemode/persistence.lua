@@ -1,6 +1,17 @@
 
 if ( CLIENT ) then return end
 
+local CurrentlyActivePersistencePage = ""
+
+hook.Add( "InitPostEntity", "PersistenceInit", function()
+
+	local PersistPage = GetConVarString( "sbox_persist" ):Trim()
+	if ( PersistPage == "" ) then return end
+
+	hook.Run( "PersistenceLoad", PersistPage )
+
+end )
+
 hook.Add( "ShutDown", "SavePersistenceOnShutdown", function() hook.Run( "PersistenceSave" ) end )
 
 hook.Add( "PersistenceSave", "PersistenceSave", function( name )
@@ -30,6 +41,8 @@ end )
 
 hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
 
+	CurrentlyActivePersistencePage = name
+
 	local file = file.Read( "persist/" .. game.GetMap() .. "_" .. name .. ".txt" )
 	if ( !file ) then return end
 
@@ -48,26 +61,24 @@ end )
 
 cvars.AddChangeCallback( "sbox_persist", function( name, old, new )
 
-	-- A timer in case someone tries to rapily change the convar, such as addons with "live typing" or whatever
-	timer.Create( "sbox_persist_change_timer", 1, 1, function()
-		if ( old:Trim() == new:Trim() ) then return end
+	-- A timer in case someone tries to rapidly change the convar, such as addons with "live typing" or whatever
+	timer.Create( "sbox_persist_change_timer", 2, 1, function()
 
-		hook.Run( "PersistenceSave", old:Trim() )
+		local newPage = new:Trim()
+
+		if ( CurrentlyActivePersistencePage == newPage ) then return end
+
+		-- old:Trim() would be incorrect for more than 1 convar change within the 2 second timer window
+		hook.Run( "PersistenceSave", CurrentlyActivePersistencePage )
+
+		CurrentlyActivePersistencePage = ""
+
+		if ( newPage == "" ) then return end
 
 		game.CleanUpMap() -- Maybe this should be moved to PersistenceLoad?
 
-		if ( new:Trim() == "" ) then return end
+		hook.Run( "PersistenceLoad", newPage )
 
-		hook.Run( "PersistenceLoad", new:Trim() )
 	end )
 
 end, "sbox_persist_load" )
-
-hook.Add( "InitPostEntity", "PersistenceInit", function()
-
-	local PersistPage = GetConVarString( "sbox_persist" ):Trim()
-	if ( PersistPage == "" ) then return end
-
-	hook.Run( "PersistenceLoad", PersistPage )
-
-end )

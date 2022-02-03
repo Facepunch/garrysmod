@@ -13,7 +13,7 @@ end
 -----------------------------------------------------------]]
 function GM:CanPlayerUnfreeze( ply, entity, physobject )
 
-	if ( entity:GetPersistent() ) then return false end
+	if ( entity:GetPersistent() && GetConVarString( "sbox_persist" ):Trim() != "" ) then return false end
 
 	return true
 end
