@@ -289,6 +289,13 @@ function meta:GetTooltipPanel()
 end
 
 --[[---------------------------------------------------------
+	Name: GetTooltipDelay
+-----------------------------------------------------------]]
+function meta:GetTooltipDelay()
+	return self.numTooltipDelay
+end
+
+--[[---------------------------------------------------------
 	Name: SetTooltip
 -----------------------------------------------------------]]
 function meta:SetTooltip( tooltip )
@@ -308,6 +315,13 @@ meta.SetToolTipPanel = meta.SetTooltipPanel
 -- Override which panel will be created instead of DTooltip
 function meta:SetTooltipPanelOverride( panel )
 	self.pnlTooltipPanelOverride = panel
+end
+
+--[[---------------------------------------------------------
+	Name: SetTooltipDelay
+-----------------------------------------------------------]]
+function meta:SetTooltipDelay( delay )
+	self.numTooltipDelay = delay
 end
 
 --[[---------------------------------------------------------
