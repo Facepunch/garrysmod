@@ -10,14 +10,19 @@ function PANEL:Setup( vars )
 
 	self:Clear()
 
-	local bico = istable( vars.icons )
 	local combo = vgui.Create( "DComboBox", self )
 	combo:Dock( FILL )
 	combo:DockMargin( 0, 1, 2, 2 )
 	combo:SetValue( vars.text or "Select..." )
 
+	local hasIcons, icon = istable( vars.icons )
 	for id, thing in pairs( vars.values or {} ) do
-		local icon = bico and vars.icons[id] or vars.icons
+		if(hasIcons) then
+			icon = vars.icons[id]
+		else
+			icon = vars.icons
+		end
+
 		combo:AddChoice( id, thing, id == vars.select, icon )
 	end
 
