@@ -17,6 +17,7 @@ function PANEL:Setup( vars )
 
 	local hasIcons, icon = istable( vars.icons )
 	for id, thing in pairs( vars.values or {} ) do
+
 		if(hasIcons) then
 			icon = vars.icons[id]
 		else
