@@ -9,24 +9,25 @@ matproxy.Add( {
 
 		if ( !IsValid( g_SkyPaint ) ) then return end
 
-		mat:SetVector( "$TOPCOLOR",		g_SkyPaint:GetTopColor() )
-		mat:SetVector( "$BOTTOMCOLOR",	g_SkyPaint:GetBottomColor() )
-		mat:SetVector( "$SUNNORMAL",	g_SkyPaint:GetSunNormal() )
-		mat:SetVector( "$SUNCOLOR",		g_SkyPaint:GetSunColor() )
-		mat:SetVector( "$DUSKCOLOR",	g_SkyPaint:GetDuskColor() )
-		mat:SetFloat( "$FADEBIAS",		g_SkyPaint:GetFadeBias() )
-		mat:SetFloat( "$HDRSCALE",		g_SkyPaint:GetHDRScale() )
-		mat:SetFloat( "$DUSKSCALE",		g_SkyPaint:GetDuskScale() )
-		mat:SetFloat( "$DUSKINTENSITY",	g_SkyPaint:GetDuskIntensity() )
-		mat:SetFloat( "$SUNSIZE",		g_SkyPaint:GetSunSize() )
+		local eSkyPaint = g_SkyPaint
+		mat:SetVector( "$TOPCOLOR",		eSkyPaint:GetTopColor() )
+		mat:SetVector( "$BOTTOMCOLOR",	eSkyPaint:GetBottomColor() )
+		mat:SetVector( "$SUNNORMAL",	eSkyPaint:GetSunNormal() )
+		mat:SetVector( "$SUNCOLOR",		eSkyPaint:GetSunColor() )
+		mat:SetVector( "$DUSKCOLOR",	eSkyPaint:GetDuskColor() )
+		mat:SetFloat( "$FADEBIAS",		eSkyPaint:GetFadeBias() )
+		mat:SetFloat( "$HDRSCALE",		eSkyPaint:GetHDRScale() )
+		mat:SetFloat( "$DUSKSCALE",		eSkyPaint:GetDuskScale() )
+		mat:SetFloat( "$DUSKINTENSITY",	eSkyPaint:GetDuskIntensity() )
+		mat:SetFloat( "$SUNSIZE",		eSkyPaint:GetSunSize() )
 
-		if ( g_SkyPaint:GetDrawStars() ) then
+		if ( eSkyPaint:GetDrawStars() ) then
 
-			mat:SetInt( "$STARLAYERS",		g_SkyPaint:GetStarLayers() )
-			mat:SetFloat( "$STARSCALE",		g_SkyPaint:GetStarScale() )
-			mat:SetFloat( "$STARFADE",		g_SkyPaint:GetStarFade() )
-			mat:SetFloat( "$STARPOS",		RealTime() * g_SkyPaint:GetStarSpeed() )
-			mat:SetTexture( "$STARTEXTURE",	g_SkyPaint:GetStarTexture() )
+			mat:SetInt( "$STARLAYERS",		eSkyPaint:GetStarLayers() )
+			mat:SetFloat( "$STARSCALE",		eSkyPaint:GetStarScale() )
+			mat:SetFloat( "$STARFADE",		eSkyPaint:GetStarFade() )
+			mat:SetFloat( "$STARPOS",		RealTime() * eSkyPaint:GetStarSpeed() )
+			mat:SetTexture( "$STARTEXTURE",	eSkyPaint:GetStarTexture() )
 
 		else
 
