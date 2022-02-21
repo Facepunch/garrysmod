@@ -20,6 +20,13 @@ function ENT:SetupDataTables()
 
 end
 
+-- Custom drive mode
+function ENT:GetEntityDriveMode()
+
+	return "drive_noclip"
+
+end
+
 function ENT:Initialize()
 
 	if ( SERVER ) then
@@ -182,7 +189,7 @@ function ENT:TrackEntity( ent, lpos )
 
 end
 
-function ENT:CanTool( ply, trace, mode )
+function ENT:CanTool( ply, trace, mode, tool, click )
 
 	if ( self:GetMoveType() == MOVETYPE_NONE ) then return false end
 

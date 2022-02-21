@@ -117,10 +117,10 @@ function ENT:DrawEffects()
 	local up = self:GetAngles():Up()
 
 	render.SetMaterial( matLight )
-	render.DrawSprite( LightPos - up * 2, 8, 8, Color( 255, 255, 255, Alpha ), Visibile )
-	render.DrawSprite( LightPos - up * 4, 8, 8, Color( 255, 255, 255, Alpha ), Visibile )
-	render.DrawSprite( LightPos - up * 6, 8, 8, Color( 255, 255, 255, Alpha ), Visibile )
-	render.DrawSprite( LightPos - up * 5, 64, 64, Color( c.r, c.g, c.b, 64 ), Visibile )
+	render.DrawSprite( LightPos - up * 2, 8, 8, Color( 255, 255, 255, Alpha ) )
+	render.DrawSprite( LightPos - up * 4, 8, 8, Color( 255, 255, 255, Alpha ) )
+	render.DrawSprite( LightPos - up * 6, 8, 8, Color( 255, 255, 255, Alpha ) )
+	render.DrawSprite( LightPos - up * 5, 64, 64, Color( c.r, c.g, c.b, 64 ) )
 
 end
 

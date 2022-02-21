@@ -93,6 +93,19 @@ search.AddProvider( function( str )
 
 end, "props" )
 
+hook.Add( "GameContentChanged", "ResetModelSearchCache", function()
+
+	-- Addons got remounted, reset the model search cache
+	model_list = nil
+
+	-- Reset any ongoing search process
+	totalCalls = 0
+	expectedCalls = 1
+	queuedSearch = {}
+
+end )
+
+
 --
 -- Entity, vehicles
 --

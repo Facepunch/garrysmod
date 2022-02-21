@@ -48,8 +48,8 @@ end
 -----------------------------------------------------------]]
 function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
 
-	-- Don't freeze persistent props (should already be froze)
-	if ( ent:GetPersistent() ) then return false end
+	-- Don't freeze persistent props (should already be frozen)
+	if ( ent:GetPersistent() && GetConVarString( "sbox_persist" ):Trim() != "" ) then return false end
 
 	BaseClass.OnPhysgunFreeze( self, weapon, phys, ent, ply )
 

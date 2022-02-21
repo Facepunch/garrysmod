@@ -78,7 +78,7 @@ concommand.Add( "gm_spawn", CCSpawn, nil, "Spawns props/ragdolls" )
 
 local function MakeRagdoll( ply, _, _, model, _, Data )
 
-	if ( !gamemode.Call( "PlayerSpawnRagdoll", ply, model ) ) then return end
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnRagdoll", ply, model ) ) then return end
 
 	local Ent = ents.Create( "prop_ragdoll" )
 	duplicator.DoGeneric( Ent, Data )
@@ -106,7 +106,7 @@ duplicator.RegisterEntityClass( "prop_ragdoll", MakeRagdoll, "Pos", "Ang", "Mode
 -----------------------------------------------------------]]
 function GMODSpawnRagdoll( ply, model, iSkin, strBody )
 
-	if ( !gamemode.Call( "PlayerSpawnRagdoll", ply, model ) ) then return end
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnRagdoll", ply, model ) ) then return end
 	local e = DoPlayerEntitySpawn( ply, "prop_ragdoll", model, iSkin, strBody )
 
 	if ( IsValid( ply ) ) then
@@ -230,7 +230,7 @@ end
 -----------------------------------------------------------]]
 function GMODSpawnProp( ply, model, iSkin, strBody )
 
-	if ( !gamemode.Call( "PlayerSpawnProp", ply, model ) ) then return end
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnProp", ply, model ) ) then return end
 
 	local e = DoPlayerEntitySpawn( ply, "prop_physics", model, iSkin, strBody )
 	if ( !IsValid( e ) ) then return end
@@ -260,7 +260,7 @@ end
 -----------------------------------------------------------]]
 function GMODSpawnEffect( ply, model, iSkin, strBody )
 
-	if ( !gamemode.Call( "PlayerSpawnEffect", ply, model ) ) then return end
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnEffect", ply, model ) ) then return end
 
 	local e = DoPlayerEntitySpawn( ply, "prop_effect", model, iSkin, strBody )
 	if ( !IsValid( e ) ) then return end
@@ -574,7 +574,7 @@ concommand.Add( "gmod_spawnnpc", function( ply, cmd, args ) Spawn_NPC( ply, args
 -- This should be in base_npcs.lua really
 local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, data )
 
-	if ( !gamemode.Call( "PlayerSpawnNPC", ply, class, equipment ) ) then return end
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnNPC", ply, class, equipment ) ) then return end
 
 	local normal = Vector( 0, 0, 1 )
 
@@ -916,10 +916,7 @@ end )
 
 local function MakeVehicle( ply, Pos, Ang, model, Class, VName, VTable, data )
 
-	-- We don't support this command from dedicated server console
-	if ( !IsValid( ply ) ) then return end
-
-	if ( !gamemode.Call( "PlayerSpawnVehicle", ply, model, VName, VTable ) ) then return end
+	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnVehicle", ply, model, VName, VTable ) ) then return end
 
 	local Ent = ents.Create( Class )
 	if ( !IsValid( Ent ) ) then return NULL end
@@ -984,6 +981,9 @@ duplicator.RegisterEntityClass( "prop_vehicle_prisoner_pod", MakeVehicle, "Pos",
 	Desc: Player attempts to spawn vehicle
 -----------------------------------------------------------]]
 function Spawn_Vehicle( ply, vname, tr )
+
+	-- We don't support this command from dedicated server console
+	if ( !IsValid( ply ) ) then return end
 
 	if ( !vname ) then return end
 

@@ -18,6 +18,7 @@ function PANEL:Init()
 	self:SetSize( 64, 64 )
 
 	self.m_strBodyGroups = "000000000"
+	self.OverlayFade = 0
 
 end
 
@@ -38,8 +39,12 @@ function PANEL:OpenMenu()
 end
 
 function PANEL:Paint( w, h )
+	-- Do not draw the default background
+end
 
-	self.OverlayFade = math.Clamp( ( self.OverlayFade or 0 ) - RealFrameTime() * 640 * 2, 0, 255 )
+function PANEL:Think()
+
+	self.OverlayFade = math.Clamp( self.OverlayFade - RealFrameTime() * 640 * 2, 0, 255 )
 
 	if ( dragndrop.IsDragging() || !self:IsHovered() ) then return end
 
@@ -249,6 +254,11 @@ spawnmenu.AddContentType( "model", function( container, obj )
 	icon.DoClick = function( s ) surface.PlaySound( "ui/buttonclickrelease.wav") RunConsoleCommand( "gm_spawn", s:GetModelName(), s:GetSkinID() or 0, s:GetBodyGroup() or "" ) end
 	icon.OpenMenu = function( icon )
 
+		-- Use the containter that we are dragged onto, not the one we were created on
+		if ( icon:GetParent() && icon:GetParent().ContentContainer ) then
+			container = icon:GetParent().ContentContainer
+		end
+
 		local menu = DermaMenu()
 		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( string.gsub( obj.model, "\\", "/" ) ) end ):SetIcon( "icon16/page_copy.png" )
 		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "4" ) RunConsoleCommand( "creator_name", obj.model ) end ):SetIcon( "icon16/brick_add.png" )
@@ -293,7 +303,7 @@ spawnmenu.AddContentType( "model", function( container, obj )
 		container:Add( icon )
 	end
 
-/*
+--[[
 	if ( iSkin != 0 ) then return end
 
 	local iSkinCount = NumModelSkins( strModel )
@@ -304,7 +314,7 @@ spawnmenu.AddContentType( "model", function( container, obj )
 		self:AddModel( strModel, i )
 
 	end
-*/
+]]
 
 	return icon
 

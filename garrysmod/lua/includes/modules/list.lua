@@ -57,7 +57,7 @@ end
 function Add( list, value )
 
 	local list = GetForEdit( list )
-	table.insert( list, value )
+	return table.insert( list, value )
 
 end
 

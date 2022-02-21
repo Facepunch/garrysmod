@@ -1,4 +1,3 @@
-
 local meta = FindMetaTable( "Player" )
 local entity = FindMetaTable( "Entity" )
 
@@ -27,8 +26,7 @@ function meta:__index( key )
 	--
 	local tab = entity.GetTable( self )
 	if ( tab ) then
-		local val = tab[ key ]
-		if ( val != nil ) then return val end
+		return tab[ key ]
 	end
 
 	return nil
@@ -115,7 +113,7 @@ if ( CLIENT ) then
 
 	function meta:ConCommand( command, bSkipQueue )
 
-		if ( bSkipQueue ) then
+		if ( bSkipQueue || IsConCommandBlocked( command ) ) then
 			SendConCommand( self, command )
 		else
 			CommandList = CommandList or {}

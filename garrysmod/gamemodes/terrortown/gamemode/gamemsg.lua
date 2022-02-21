@@ -271,11 +271,14 @@ local function LastWordsMsg(ply, words)
 
    -- add optional context relating to death type
    local context = LastWordContext[ply.death_type] or ""
+   local lastWordsStr = words .. (final and "" or "--") .. context
 
    net.Start("TTT_LastWordsMsg")
       net.WriteEntity(ply)
-      net.WriteString(words .. (final and "" or "--") .. context)
+      net.WriteString(lastWordsStr)
    net.Broadcast()
+
+   hook.Run("TTTLastWordsMsg", ply, lastWordsStr)
 end
 
 local function LastWords(ply, cmd, args)

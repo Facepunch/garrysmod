@@ -162,10 +162,13 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 		table.insert( tab, "Console" )
 	end
 
-	table.insert( tab, color_white )
-	table.insert( tab, ": " .. strText )
+	local filter_context = TEXT_FILTER_GAME_CONTENT
+	if ( bit.band( GetConVarNumber( "cl_chatfilters" ), 64 ) != 0 ) then filter_context = TEXT_FILTER_CHAT end
 
-	chat.AddText( unpack(tab) )
+	table.insert( tab, color_white )
+	table.insert( tab, ": " .. util.FilterText( strText, filter_context, IsValid( player ) and player or nil ) )
+
+	chat.AddText( unpack( tab ) )
 
 	return true
 
@@ -295,7 +298,7 @@ end
 function GM:CalcVehicleView( Vehicle, ply, view )
 
 	if ( Vehicle.GetThirdPersonMode == nil || ply:GetViewEntity() != ply ) then
-		-- This hsouldn't ever happen.
+		-- This shouldn't ever happen.
 		return
 	end
 
@@ -349,13 +352,14 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 	local Vehicle	= ply:GetVehicle()
 	local Weapon	= ply:GetActiveWeapon()
 
-	local view = {}
-	view.origin		= origin
-	view.angles		= angles
-	view.fov		= fov
-	view.znear		= znear
-	view.zfar		= zfar
-	view.drawviewer	= false
+	local view = {
+		["origin"] = origin,
+		["angles"] = angles,
+		["fov"] = fov,
+		["znear"] = znear,
+		["zfar"] = zfar,
+		["drawviewer"] = false,
+	}
 
 	--
 	-- Let the vehicle override the view and allows the vehicle view to be hooked
@@ -372,12 +376,13 @@ function GM:CalcView( ply, origin, angles, fov, znear, zfar )
 	--
 	player_manager.RunClass( ply, "CalcView", view )
 
-	-- Give the active weapon a go at changing the viewmodel position
+	-- Give the active weapon a go at changing the view
 	if ( IsValid( Weapon ) ) then
 
 		local func = Weapon.CalcView
 		if ( func ) then
-			view.origin, view.angles, view.fov = func( Weapon, ply, origin * 1, angles * 1, fov ) -- Note: *1 to copy the object so the child function can't edit it.
+			local origin, angles, fov = func( Weapon, ply, Vector( view.origin ), Angle( view.angles ), view.fov ) -- Note: Constructor to copy the object so the child function can't edit it.
+			view.origin, view.angles, view.fov = origin or view.origin, angles or view.angles, fov or view.fov
 		end
 
 	end

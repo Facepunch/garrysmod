@@ -39,7 +39,7 @@ function PANEL:LayoutIcons_TOP()
 	local x = self.m_iBorder
 	local y = self.m_iBorder
 	local RowHeight = 0
-	local MaxWidth = self:GetWide() - self.m_iBorder * 2
+	local MaxWidth = self:GetWide() - self.m_iBorder
 
 	for k, v in ipairs( self:GetChildren() ) do
 

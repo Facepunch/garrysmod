@@ -119,7 +119,7 @@ function PANEL:OnPresetSelected( item )
 
 	self.pnlDetails:Clear()
 	for cvar, val in SortedPairs( item:GetTable().Data ) do
-		local Row = self.pnlDetails:CreateRow( name, cvar )
+		local Row = self.pnlDetails:CreateRow( name, cvar:lower() )
 
 		if ( tonumber( val ) != nil && false ) then
 			Row:Setup( "Float", { min = 0, max = 1000 } )
@@ -183,11 +183,15 @@ function PANEL:SaveChangesInternal( Selected, ToName )
 
 	local tabValues = {}
 	local cat = self.pnlDetails:GetCategory( Selected )
+
+	-- WARNING: This will discard ConVars in the preset that no longer exist on the tool/whatever this preset is for
 	for k, v in pairs( self:GetConVars() ) do
-		tabValues[ v ] = cat:GetRow( v ).__Value
+		if ( cat:GetRow( v:lower() ) ) then
+			tabValues[ v:lower() ] = cat:GetRow( v:lower() ).__Value
+		end
 	end
 
-	presets.Rename( self:GetType(), Selected, ToName )
+	presets.Rename( self:GetType(), Selected, ToName ) -- Raname the preset if necessary
 	presets.Add( self:GetType(), ToName, tabValues ) -- Update the values
 
 	self:Update()
@@ -224,7 +228,7 @@ function PANEL:InternalAdd( ToName )
 
 	local tabValues = {}
 	for k, v in pairs( self:GetConVars() ) do
-		tabValues[ v ] = GetConVarString( v )
+		tabValues[ v ] = GetConVarString( v:lower() )
 	end
 
 	presets.Add( self:GetType(), ToName, tabValues )

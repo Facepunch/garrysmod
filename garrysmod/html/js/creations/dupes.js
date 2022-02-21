@@ -18,8 +18,7 @@ function CDupes( $scope, $timeout, $location )
 	CreationScope.MyCategories =
 	[
 		"local",
-		"subscribed_ugc",
-		//"favorites_ugc"
+		"subscribed_ugc"
 	];
 
 	CreationScope.Categories =
@@ -31,6 +30,8 @@ function CDupes( $scope, $timeout, $location )
 
 	CreationScope.CategoriesSecondary =
 	[
+		"followed",
+		"favorite",
 		"friends",
 		"mine"
 	];

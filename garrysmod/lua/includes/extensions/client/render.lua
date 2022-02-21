@@ -1,5 +1,6 @@
 
-if ( !render ) then return end
+-- We don't want this to run in menu state, and render.GetAmbientLightColor doesn't exist in menu state
+if ( !render || !render.GetAmbientLightColor ) then return end
 
 --[[---------------------------------------------------------
   Short aliases for stencil constants

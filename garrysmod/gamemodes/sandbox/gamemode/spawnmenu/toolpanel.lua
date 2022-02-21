@@ -1,4 +1,3 @@
-
 include( "controlpanel.lua" )
 
 local PANEL = {}
@@ -26,7 +25,7 @@ function PANEL:Init()
 	self.SearchBar:SetUpdateOnType( true )
 	self.SearchBar.OnValueChange = function( s, text )
 		local text = text:Trim():lower()
-    
+
 		for id, category in ipairs( self.List.pnlCanvas:GetChildren() ) do
 			local count = 0
 			local category_matched = false
@@ -117,15 +116,14 @@ function PANEL:AddCategory( name, lbl, tItems )
 
 	local tools = {}
 	for k, v in pairs( tItems ) do
-		local str = v.Text
-		if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
-		tools[ language.GetPhrase( str ) ] = v
+		local name = v.Text or v.ItemName or v.Controls or v.Command or tostring( k )
+		tools[ language.GetPhrase( name ) ] = v
 	end
 
 	local currentMode = GetConVarString( "gmod_toolmode" )
 	for k, v in SortedPairs( tools ) do
 
-		local item = Category:Add( v.Text )
+		local item = Category:Add( v.Text or k )
 
 		item.DoClick = function( button )
 
@@ -152,9 +150,29 @@ function PANEL:AddCategory( name, lbl, tItems )
 
 end
 
+-- Internal, makes the given tool highlighted in its DCategoryList
+function PANEL:SetActiveToolText( str )
+
+	for id, category in ipairs( self.List.pnlCanvas:GetChildren() ) do
+
+		for id, item in ipairs( category:GetChildren() ) do
+			if ( item == category.Header ) then continue end
+
+			if ( item.Name == str ) then
+				self.List:UnselectAll()
+				item:SetSelected( true )
+				return
+			end
+		end
+
+	end
+
+end
+
 function PANEL:SetActive( cp )
 
-	for k, v in ipairs( self.Content:GetCanvas():GetChildren() ) do
+	local kids = self.Content:GetCanvas():GetChildren()
+	for k, v in pairs( kids ) do
 		v:SetVisible( false )
 	end
 

@@ -756,7 +756,6 @@ L.tip39 = "Los C4 que explotan como producto de cortar el cable equivocado duran
 
 L.tip40 = "Si aparece 'MODO PRISA' bajo el cronómetro, la rondas durará solo unos minutos, pero con cada muerte el tiempo aumentará (como la captura de puntos en TF2). Este modo presiona a los traidores para mantener las cosas en movimiento."
 
-
 --- Round report
 
 L.report_title = "Información de la ronda"
@@ -1051,7 +1050,7 @@ L.aw_tod2_text  = "ha muerto al inicio de la ronda."
 
 
 --- New and modified pieces of text are placed below this point, marked with the
---- version in which they were added, to make updating translations easier.
+--- version or the date in which they were added, to make updating translations easier.
 
 
 --- v23
@@ -1065,8 +1064,36 @@ L.drop_no_ammo = "No tienes munición suficiente como para soltar una caja de mu
 L.set_cross_brightness = "Luminosidad de la mira"
 L.set_cross_size = "Tamaño de la mira"
 
--- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "Recogiste el sombrero de un detective."
 
---- 3-9-2017
+--- 2017-03-09
 L.sb_sortby = "Ordene por:"
+
+--- 2018-07-24
+L.equip_tooltip_main = "Menú de equipamiento"
+L.equip_tooltip_radar = "Control de radar"
+L.equip_tooltip_disguise = "Control de disfraz"
+L.equip_tooltip_radio = "Control de radio"
+L.equip_tooltip_xfer = "Transferir créditos"
+
+L.confgrenade_name = "Granada propulsora"
+L.polter_name = "Poltergeist"
+L.stungun_name = "Prototipo UMP"
+
+L.knife_instant = "MUERTE INSTANTÁNEA"
+
+L.dna_hud_type = "TIPO"
+L.dna_hud_body = "CADÁVER"
+L.dna_hud_item = "OBJETO"
+
+L.binoc_zoom_level = "NIVEL"
+L.binoc_body = "CADÁVER DETECTADO"
+
+L.idle_popup_title = "Ausente"
+
+--- 2021-06-07
+L.sb_playervolume = "Volumen del jugador"
+
+--- 2021-09-22
+L.tip41 = "Puedes ajustar el volumen del micrófono de un jugador haciendo click derecho en el botón de silenciar al final de la tabla de puntuaciones."

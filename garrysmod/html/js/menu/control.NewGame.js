@@ -96,7 +96,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 	$scope.FavMap = function( m )
 	{
-		lua.Run( 'ToggleFavourite( "' + m + '" )' );
+		lua.Run( 'ToggleFavourite( %s )', m );
 	}
 
 	$scope.MapIcon = function( m, cat )
@@ -107,9 +107,10 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 			return "img/incompatible.png"
 		}
 
-		if ( !IN_ENGINE ) return "img/downloading.png"
+		// Hopefully this also improves performance of the first click on "Start new game".
+		if ( !IN_ENGINE || $scope.CurrentCategory != cat ) return "img/downloading.png"
 
-		return "asset://mapimage/" + m
+		return "asset://mapimage/" + m;
 	}
 
 	$scope.IsFavMap = function( m )
@@ -141,26 +142,20 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		return "favtoggle";
 	}
 
-	EscapeConVarValue = function( str )
-	{
-		str = str.replace( /\\/g,'\\\\' );
-		return str.replace( new RegExp( '"', 'g' ), '\\\"' );
-	}
-
 	$scope.StartGame = function()
 	{
-		lua.Run( 'SaveLastMap( "' + $rootScope.Map + '", "' + $rootScope.LastCategory + '" )' );
+		lua.Run( 'SaveLastMap( %s, %s )', $rootScope.Map, $rootScope.LastCategory );
 
-		lua.Run( 'hook.Run( "StartGame" )' )
-		lua.Run( 'RunConsoleCommand( "progress_enable" )' )
+		lua.Run( 'hook.Run( "StartGame" )' );
+		lua.Run( 'RunConsoleCommand( "progress_enable" )' );
 
-		lua.Run( 'RunConsoleCommand( "disconnect" )' )
-		lua.Run( 'RunConsoleCommand( "maxplayers", "' + $rootScope.MaxPlayers + '" )' )
+		lua.Run( 'RunConsoleCommand( "disconnect" )' );
+		lua.Run( 'RunConsoleCommand( "maxplayers", %s )', String( $rootScope.MaxPlayers ) );
 
 		if ( $rootScope.MaxPlayers > 0 )
 		{
-			lua.Run( 'RunConsoleCommand( "sv_cheats", "0" )' )
-			lua.Run( 'RunConsoleCommand( "commentary", "0" )' )
+			lua.Run( 'RunConsoleCommand( "sv_cheats", "0" )' );
+			lua.Run( 'RunConsoleCommand( "commentary", "0" )' );
 		}
 
 		// $scope.ServerSettings gets changed from Lua between this point and the timeout below
@@ -172,30 +167,30 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		{
 			for ( k in $scope.ServerSettingsSaved.Numeric )
 			{
-				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettingsSaved.Numeric[ k ].name + '", "' + EscapeConVarValue( $scope.ServerSettingsSaved.Numeric[ k ].Value ) + '" )' )
+				lua.Run( 'RunConsoleCommand( %s, %s )', $scope.ServerSettingsSaved.Numeric[ k ].name, String( $scope.ServerSettingsSaved.Numeric[ k ].Value ) );
 			}
 
 			for ( k in $scope.ServerSettingsSaved.Text )
 			{
-				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettingsSaved.Text[ k ].name + '", "' + EscapeConVarValue( $scope.ServerSettingsSaved.Text[ k ].Value ) + '" )' )
+				lua.Run( 'RunConsoleCommand( %s, %s )', $scope.ServerSettingsSaved.Text[ k ].name, $scope.ServerSettingsSaved.Text[ k ].Value );
 			}
 
 			for ( k in $scope.ServerSettingsSaved.CheckBox )
 			{
-				lua.Run( 'RunConsoleCommand( "' + $scope.ServerSettingsSaved.CheckBox[ k ].name + '", "' + ( $scope.ServerSettingsSaved.CheckBox[ k ].Value ? 1 : 0 ) + '" )' )
+				lua.Run( 'RunConsoleCommand( %s, %s )', $scope.ServerSettingsSaved.CheckBox[ k ].name, $scope.ServerSettingsSaved.CheckBox[ k ].Value ? "1" : "0" );
 			}
 
-			lua.Run( 'RunConsoleCommand( "hostname", "' + EscapeConVarValue( $scope.ServerSettingsSaved.hostname ) + '" )' )
-			lua.Run( 'RunConsoleCommand( "p2p_enabled", "' + ( $scope.ServerSettingsSaved.p2p_enabled ? 1 : 0 ) + '" )' )
-			lua.Run( 'RunConsoleCommand( "p2p_friendsonly", "' + ( $scope.ServerSettingsSaved.p2p_friendsonly ? 1 : 0 ) + '" )' )
-			lua.Run( 'RunConsoleCommand( "sv_lan", "' + ( $scope.ServerSettingsSaved.sv_lan ? 1 : 0 ) + '" )' )
-			lua.Run( 'RunConsoleCommand( "maxplayers", "' + $rootScope.MaxPlayers + '" )' )
-			lua.Run( 'RunConsoleCommand( "map", "' + $rootScope.Map.trim() + '" )' )
+			lua.Run( 'RunConsoleCommand( "hostname", %s )', $scope.ServerSettingsSaved.hostname );
+			lua.Run( 'RunConsoleCommand( "p2p_enabled", %s )', $scope.ServerSettingsSaved.p2p_enabled ? "1" : "0" );
+			lua.Run( 'RunConsoleCommand( "p2p_friendsonly", %s )', $scope.ServerSettingsSaved.p2p_friendsonly ? "1" : "0" );
+			lua.Run( 'RunConsoleCommand( "sv_lan", %s )', $scope.ServerSettingsSaved.sv_lan ? "1" : "0" );
+			lua.Run( 'RunConsoleCommand( "maxplayers", %s )', String( $rootScope.MaxPlayers ) );
+			lua.Run( 'RunConsoleCommand( "map", %s )', $rootScope.Map.trim() );
 
 			$scope.ServerSettingsSaved = undefined;
 		}, 200 );
 
-		$location.url( "/" )
+		$location.url( "/" );
 	}
 
 	$scope.UpdateMaxPlayers = function( mp )

@@ -8,12 +8,14 @@ hook.Add( "PopulateVehicles", "AddEntityContent", function( pnlContent, tree, no
 	if ( Vehicles ) then
 		for k, v in pairs( Vehicles ) do
 
-			v.Category = v.Category or "Other"
-			Categorised[ v.Category ] = Categorised[ v.Category ] or {}
+			local Category = v.Category or "Other"
+			if ( !isstring( Category ) ) then Category = tostring( Category ) end
+			Categorised[ Category ] = Categorised[ Category ] or {}
+
 			v.ClassName = k
 			v.PrintName = v.Name
 			v.ScriptedEntityType = "vehicle"
-			table.insert( Categorised[ v.Category ], v )
+			table.insert( Categorised[ Category ], v )
 
 		end
 	end

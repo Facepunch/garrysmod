@@ -119,7 +119,21 @@ local PLAYER_LINE = {
 				self.Mute:SetImage( "icon32/unmuted.png" )
 			end
 
-			self.Mute.DoClick = function() self.Player:SetMuted( !self.Muted ) end
+			self.Mute.DoClick = function( s ) self.Player:SetMuted( !self.Muted ) end
+			self.Mute.OnMouseWheeled = function( s, delta )
+				self.Player:SetVoiceVolumeScale( self.Player:GetVoiceVolumeScale() + ( delta / 100 * 5 ) )
+				s.LastTick = CurTime()
+			end
+
+			self.Mute.PaintOver = function( s, w, h )
+				if ( !IsValid( self.Player ) ) then return end
+			
+				local a = 255 - math.Clamp( CurTime() - ( s.LastTick or 0 ), 0, 3 ) * 255
+				if ( a <= 0 ) then return end
+				
+				draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, a * 0.75 ) )
+				draw.SimpleText( math.ceil( self.Player:GetVoiceVolumeScale() * 100 ) .. "%", "DermaDefaultBold", w / 2, h / 2, Color( 255, 255, 255, a ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+			end
 
 		end
 

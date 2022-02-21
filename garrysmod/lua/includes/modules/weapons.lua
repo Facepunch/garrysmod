@@ -1,4 +1,3 @@
-
 module( "weapons", package.seeall )
 
 local WeaponList = {}
@@ -44,6 +43,8 @@ end
 	Desc: Used to register your SWEP with the engine
 -----------------------------------------------------------]]
 function Register( t, name )
+
+	if ( hook.Run( "PreRegisterSWEP", t, name ) == false ) then return end
 
 	local old = WeaponList[ name ]
 

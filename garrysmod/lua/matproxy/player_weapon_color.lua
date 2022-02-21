@@ -1,4 +1,6 @@
 
+local megaGravClr = Vector( 0.4, 1, 1 )
+
 matproxy.Add( {
 	name = "PlayerWeaponColor",
 
@@ -20,8 +22,8 @@ matproxy.Add( {
 
 		-- A hack for the mega gravity gun
 		local wep = owner:GetActiveWeapon()
-		if ( IsValid( wep ) && wep:GetClass() == "weapon_physcannon" ) then
-			col = Vector( 0.4, 1, 1 )
+		if ( IsValid( wep ) && wep:GetClass() == "weapon_physcannon" && !wep:IsScripted() ) then
+			col = megaGravClr
 		end
 
 		local mul = ( 1 + math.sin( CurTime() * 5 ) ) * 0.5

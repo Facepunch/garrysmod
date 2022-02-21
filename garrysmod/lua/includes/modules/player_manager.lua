@@ -423,6 +423,7 @@ function OnPlayerSpawn( ply, transiton )
 	local class = LookupPlayerClass( ply )
 	if ( !class ) then return end
 
+	ply:SetSlowWalkSpeed( class.SlowWalkSpeed )
 	ply:SetWalkSpeed( class.WalkSpeed )
 	ply:SetRunSpeed( class.RunSpeed )
 	ply:SetCrouchedWalkSpeed( class.CrouchedWalkSpeed )
@@ -436,6 +437,7 @@ function OnPlayerSpawn( ply, transiton )
 
 	if ( !transiton ) then 
 		ply:SetMaxHealth( class.MaxHealth )
+		ply:SetMaxArmor( class.MaxArmor )
 		ply:SetHealth( class.StartHealth )
 		ply:SetArmor( class.StartArmor )
 	end

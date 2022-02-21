@@ -99,6 +99,10 @@ function ENT:OnRemove()
 		local ragdoll = self:GetTarget()
 		if ( IsValid( ragdoll ) ) then
 			ragdoll:SetRagdollBuildFunction( nil )
+
+			if ( IsValid( ragdoll.MotionSensorController ) && ragdoll.MotionSensorController == self ) then
+				ragdoll.MotionSensorController = nil
+			end
 		end
 
 	end
@@ -200,6 +204,8 @@ function ENT:DrawDebug( ragdoll, controller, pos, ang, rotation, scale, center, 
 end
 
 function ENT:SetRagdoll( ragdoll )
+
+	ragdoll.MotionSensorController = self
 
 	self:SetTarget( ragdoll )
 	ragdoll:PhysWake()

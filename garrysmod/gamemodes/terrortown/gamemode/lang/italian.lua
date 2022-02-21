@@ -51,7 +51,7 @@ L.body_found = "{finder} ha trovato il corpo di {victim}. {role}"
 
 -- Il {role} in body_found sarà sostituito con una di queste stringhe:
 -- The {role} in body_found will be replaced by one of the following:
-L.body_found_t= "Era un Traditore!"
+L.body_found_t = "Era un Traditore!"
 L.body_found_d = "Era un Detective."
 L.body_found_i = "Era un Innocente."
 
@@ -1082,29 +1082,30 @@ L.aw_tod2_title = "Odio Questo Gioco"
 L.aw_tod2_text = "morto proprio all'inizio del round."
 
 
--- Stringhe nuove e modificate sono inserite qui sotto, segnati con la versione
--- nella quale sono state inserite, per rendere più facile aggiornare le traduzioni
--- New and modified pieces of text are placed below this point, marked with the
--- version in which they were added, to make updating translations easier.
+--- Stringhe nuove e modificate sono inserite qui sotto, segnati con la versione
+--- nella quale sono state inserite, per rendere più facile aggiornare le traduzioni
+--- New and modified pieces of text are placed below this point, marked with the
+--- version or the date in which they were added, to make updating translations easier.
+
 
 --- v23
 L.set_avoid_det     = "Evita di essere scelto come Detective"
 L.set_avoid_det_tip = "Abilita questa opzione per chiedere al server di non selezionarti come Detective se possibile. Non vuole dire che sarai Traditore più spesso."
 
--- v24
+--- v24
 L.drop_no_ammo = "Munizioni insufficienti nel tuo caricatore per lasciare un pacchetto di munizioni."
 
 --- v31
 L.set_cross_brightness = "Luminosità mirino"
 L.set_cross_size = "Grandezza mirino"
 
--- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "Hai raccolto il cappello di un Detective."
 
--- 3-9-2017
+--- 2017-03-09
 L.sb_sortby = "Ordina per:"
 
--- 2018-07-24
+--- 2018-07-24
 L.equip_tooltip_main = "Menù equipaggiamento"
 L.equip_tooltip_radar = "Controllo Radar"
 L.equip_tooltip_disguise = "Controllo Travestimento"

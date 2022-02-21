@@ -64,6 +64,8 @@ function PANEL:SwitchPanel( panel )
 
 	self.SelectedPanel = panel
 
+	if ( !IsValid( panel ) ) then return end
+
 	self.HorizontalDivider:SetRight( self.SelectedPanel )
 	self.HorizontalDivider:InvalidateLayout( true )
 

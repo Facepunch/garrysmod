@@ -29,7 +29,8 @@ local javascript_escape_replacements = {
 	["\f"] = "\\f" ,
 	["\r"] = "\\r" ,
 	["\""] = "\\\"",
-	["\'"] = "\\\'"
+	["\'"] = "\\\'",
+	["`"] = "\\`"
 }
 
 function string.JavascriptSafe( str )
@@ -288,14 +289,14 @@ end
 local meta = getmetatable( "" )
 
 function meta:__index( key )
+
 	local val = string[ key ]
-	if ( val ) then
+	if ( val ~= nil ) then
 		return val
 	elseif ( tonumber( key ) ) then
 		return self:sub( key, key )
-	else
-		error( "attempt to index a string value with bad key ('" .. tostring( key ) .. "' is not part of the string library)", 2 )
 	end
+
 end
 
 function string.StartWith( String, Start )
@@ -333,17 +334,10 @@ end
 
 function string.Comma( number )
 
-	if ( isnumber( number ) ) then
-		number = string.format( "%f", number )
-		number = string.match( number, "^(.-)%.?0*$" ) -- Remove trailing zeros
-	end
+	if ( isnumber( number ) ) then number = tostring( number ) end
 
-	local k
-
-	while true do
-		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", "%1,%2" )
-		if ( k == 0 ) then break end
-	end
+	local index = -1
+	while index ~= 0 do number, index = number:gsub( "^(-?%d+)(%d%d%d)", "%1,%2" ) end
 
 	return number
 

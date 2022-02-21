@@ -41,8 +41,19 @@ drive.Register( "drive_noclip",
 		--
 		-- Set up a speed, go faster if shift is held down
 		--
-		local speed = 0.0005 * FrameTime()
-		if ( mv:KeyDown( IN_SPEED ) ) then speed = 0.005 * FrameTime() end
+		local speed = 1
+		if ( mv:KeyDown( IN_SPEED ) ) then speed = 3 end
+		if ( mv:KeyDown( IN_DUCK ) ) then speed = 0.1 end
+
+		-- Simulate noclip's action when holding space
+		if ( mv:KeyDown( IN_JUMP ) ) then mv:SetUpSpeed( 10000 ) end
+
+		-- Doesn't work correctly
+		--[[if ( mv:KeyDown( IN_RELOAD ) ) then
+			local ang = mv:GetMoveAngles()
+			ang.r = 0
+			mv:SetMoveAngles( ang )
+		end]]
 
 		--
 		-- Get information from the movedata
@@ -52,31 +63,29 @@ drive.Register( "drive_noclip",
 		local vel = mv:GetVelocity()
 
 		--
-		-- Add velocities. This can seem complicated. On the first line
-		-- we're basically saying get the forward vector, then multiply it
-		-- by our forward speed (which will be > 0 if we're holding W, < 0 if we're
-		-- holding S and 0 if we're holding neither) - and add that to velocity.
-		-- We do that for right and up too, which gives us our free movement.
+		-- Calculate our velocity
 		--
-		vel = vel + ang:Forward() * mv:GetForwardSpeed() * speed
-		vel = vel + ang:Right() * mv:GetSideSpeed() * speed
-		vel = vel + ang:Up() * mv:GetUpSpeed() * speed
+		local accel = speed * FrameTime() * 0.3
+		vel = vel + ang:Forward() * mv:GetForwardSpeed() * accel
+		vel = vel + ang:Right() * mv:GetSideSpeed() * accel
+		vel = vel + ang:Up() * mv:GetUpSpeed() * accel
+
+		local maxSpeed = 400 * speed
+		if ( vel:Length() > maxSpeed ) then
+			vel = vel:GetNormalized() * maxSpeed
+		end
 
 		--
-		-- We don't want our velocity to get out of hand so we apply
-		-- a little bit of air resistance. If no keys are down we apply
-		-- more resistance so we slow down more.
+		-- Apply friction when we are not trying to move
 		--
 		if ( math.abs( mv:GetForwardSpeed() ) + math.abs( mv:GetSideSpeed() ) + math.abs( mv:GetUpSpeed() ) < 0.1 ) then
-			vel = vel * 0.90
-		else
-			vel = vel * 0.99
+			vel = vel * 0.86
 		end
 
 		--
 		-- Add the velocity to the position (this is the movement)
 		--
-		pos = pos + vel
+		pos = pos + vel * FrameTime()
 
 		--
 		-- We don't set the newly calculated values on the entity itself
@@ -112,20 +121,6 @@ drive.Register( "drive_noclip",
 
 		end
 
-	end,
-
-	--
-	-- Calculates the view when driving the entity
-	--
-	CalcView = function( self, view )
-
-		--
-		-- Use the utility method on drive_base.lua to give us a 3rd person view
-		--
-		local idealdist = math.max( 10, self.Entity:BoundingRadius() ) * 4
-
-		self:CalcView_ThirdPerson( view, idealdist, 2, { self.Entity } )
-
-	end,
+	end
 
 }, "drive_base" )

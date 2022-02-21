@@ -97,7 +97,18 @@ end
 
 function PANEL:StatusChanged( strStatus )
 
-	local startPos, endPos = string.find( strStatus, "Downloading " )
+	-- new FastDL/ServerDL format
+	local matchedFileName = string.match( strStatus, "%w+/%w+ [-] (.+) is downloading" )
+	if ( matchedFileName ) then
+
+		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. matchedFileName:JavascriptSafe() .. "' )" )
+
+		return
+
+	end
+
+	-- WorkshopDL and old FastDL
+	local startPos, _ = string.find( strStatus, "Downloading " )
 	if ( startPos ) then
 		-- Snip everything before the Download part
 		strStatus = string.sub( strStatus, startPos )
@@ -108,9 +119,9 @@ function PANEL:StatusChanged( strStatus )
 			strStatus = string.gsub( strStatus, "Downloading '", "" ) -- We need to handle the quote marks
 		end
 
-		local Filename = string.gsub( strStatus, "Downloading ", "" )
+		local fileName = string.gsub( strStatus, "Downloading ", "" )
 
-		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. Filename:JavascriptSafe() .. "' )" )
+		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. fileName:JavascriptSafe() .. "' )" )
 
 		return
 
@@ -243,11 +254,21 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 	serverurl = serverurl:Replace( "%s", steamid )
 	serverurl = serverurl:Replace( "%m", mapname )
 
-	if ( maxplayers > 1 && GetConVar( "cl_enable_loadingurl" ):GetBool() ) then
+	if ( maxplayers > 1 && GetConVar( "cl_enable_loadingurl" ):GetBool() && serverurl:StartWith( "http" ) ) then
 		pnlLoading:ShowURL( serverurl, true )
 	end
 
-	pnlLoading.JavascriptRun = string.format( 'if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s" );',
-		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe(), GetConVarNumber( "volume" ), GetConVarString( "gmod_language" ) )
+	-- TODO: This should be pulled from the server
+	local niceGamemode = g_GameMode
+	for k, v in pairs( engine.GetGamemodes() ) do
+		if ( niceGamemode == v.name ) then
+			niceGamemode = v.title
+			break
+		end
+	end
+
+	pnlLoading.JavascriptRun = string.format( 'if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s", "%s" );',
+		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe(),
+		GetConVarNumber( "volume" ), GetConVarString( "gmod_language" ), niceGamemode:JavascriptSafe() )
 
 end

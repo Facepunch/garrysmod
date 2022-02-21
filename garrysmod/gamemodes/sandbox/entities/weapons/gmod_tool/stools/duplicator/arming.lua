@@ -1,4 +1,6 @@
 
+local DUPE_SEND_SIZE = 60000
+
 if ( CLIENT ) then
 
 	--
@@ -28,12 +30,11 @@ if ( CLIENT ) then
 		-- And send it to the server
 		--
 		local length = dupe.data:len()
-		local send_size = 60000
-		local parts = math.ceil( length / send_size )
+		local parts = math.ceil( length / DUPE_SEND_SIZE )
 
 		local start = 0
 		for i = 1, parts do
-			local endbyte = math.min( start + send_size, length )
+			local endbyte = math.min( start + DUPE_SEND_SIZE, length )
 			local size = endbyte - start
 
 			net.Start( "ArmDupe" )
@@ -59,55 +60,72 @@ if ( SERVER ) then
 	util.AddNetworkString( "ArmDupe" )
 
 	net.Receive( "ArmDupe", function( size, client )
-			if ( !IsValid( client ) ) then return end
 
-			local res = hook.Run( "CanArmDupe", client )
-			if ( res == false ) then client:ChatPrint( "Server has blocked usage of the Duplicator tool!" ) return end
+		if ( !IsValid( client ) || size < 48 ) then return end
 
-			local part = net.ReadUInt( 8 )
-			local total = net.ReadUInt( 8 )
+		local res = hook.Run( "CanArmDupe", client )
+		if ( res == false ) then client:ChatPrint( "Server has blocked usage of the Duplicator tool!" ) return end
 
-			local length = net.ReadUInt( 32 )
-			local data = net.ReadData( length )
+		local part = net.ReadUInt( 8 )
+		local total = net.ReadUInt( 8 )
 
-			client.CurrentDupeBuffer = client.CurrentDupeBuffer or {}
-			client.CurrentDupeBuffer[ part ] = data
+		local length = net.ReadUInt( 32 )
+		if ( length > DUPE_SEND_SIZE ) then return end
 
-			if ( part != total ) then return end
+		local data = net.ReadData( length )
 
-			local data = table.concat( client.CurrentDupeBuffer )
-			client.CurrentDupeBuffer = nil
+		client.CurrentDupeBuffer = client.CurrentDupeBuffer or {}
+		client.CurrentDupeBuffer[ part ] = data
 
-			if ( ( client.LastDupeArm or 0 ) > CurTime() && !game.SinglePlayer() ) then ServerLog( tostring( client ) .. " tried to arm a dupe too quickly!\n" ) return end
-			client.LastDupeArm = CurTime() + 1
+		if ( part != total ) then return end
 
-			ServerLog( tostring( client ) .. " is arming a dupe, size: " .. data:len() .. "\n" )
+		local data = table.concat( client.CurrentDupeBuffer )
+		client.CurrentDupeBuffer = nil
 
-			local uncompressed = util.Decompress( data, 5242880 )
-			if ( !uncompressed ) then
-				client:ChatPrint( "Server failed to decompress the duplication!" )
-				MsgN( "Couldn't decompress dupe from " .. client:Nick() .. "!" )
-				return
+		if ( ( client.LastDupeArm or 0 ) > CurTime() && !game.SinglePlayer() ) then ServerLog( tostring( client ) .. " tried to arm a dupe too quickly!\n" ) return end
+		client.LastDupeArm = CurTime() + 1
+
+		ServerLog( tostring( client ) .. " is arming a dupe, size: " .. data:len() .. "\n" )
+
+		local uncompressed = util.Decompress( data, 5242880 )
+		if ( !uncompressed ) then
+			client:ChatPrint( "Server failed to decompress the duplication!" )
+			MsgN( "Couldn't decompress dupe from " .. client:Nick() .. "!" )
+			return
+		end
+
+		local Dupe = util.JSONToTable( uncompressed )
+		if ( !istable( Dupe ) ) then return end
+		if ( !istable( Dupe.Constraints ) ) then return end
+		if ( !istable( Dupe.Entities ) ) then return end
+		if ( !isvector( Dupe.Mins ) ) then return end
+		if ( !isvector( Dupe.Maxs ) ) then return end
+
+		client.CurrentDupeArmed = true
+		client.CurrentDupe = Dupe
+
+		client:ConCommand( "gmod_tool duplicator" )
+
+		--
+		-- Tell the client we got a dupe on server, ready to paste
+		--
+		local workshopCount = 0
+		if ( Dupe.RequiredAddons ) then workshopCount = #Dupe.RequiredAddons end
+
+		net.Start( "CopiedDupe" )
+			net.WriteUInt( 0, 1 ) -- Can save
+			net.WriteVector( Dupe.Mins )
+			net.WriteVector( Dupe.Maxs )
+			net.WriteString( "Loaded dupe" )
+			net.WriteUInt( table.Count( Dupe.Entities ), 24 )
+			net.WriteUInt( workshopCount, 16 )
+			if ( Dupe.RequiredAddons ) then
+				for _, wsid in ipairs( Dupe.RequiredAddons ) do
+					net.WriteString( wsid )
+				end
 			end
+		net.Send( client )
 
-			local Dupe = util.JSONToTable( uncompressed )
-			if ( !istable( Dupe ) ) then return end
-			if ( !istable( Dupe.Constraints ) ) then return end
-			if ( !istable( Dupe.Entities ) ) then return end
-			if ( !isvector( Dupe.Mins ) ) then return end
-			if ( !isvector( Dupe.Maxs ) ) then return end
-
-			client.CurrentDupeArmed = true
-			client.CurrentDupe = Dupe
-
-			client:ConCommand( "gmod_tool duplicator" )
-
-			--
-			-- Disable the Spawnmenu button
-			--
-			net.Start( "CopiedDupe" )
-				net.WriteUInt( 0, 1 )
-			net.Send( client )
 	end )
 
 end

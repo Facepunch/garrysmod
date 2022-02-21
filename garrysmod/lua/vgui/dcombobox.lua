@@ -30,6 +30,7 @@ function PANEL:Clear()
 	self.Choices = {}
 	self.Data = {}
 	self.ChoiceIcons = {}
+	self.Spacers = {}
 	self.selected = nil
 
 	if ( self.Menu ) then
@@ -77,6 +78,9 @@ function PANEL:PerformLayout()
 	self.DropButton:AlignRight( 4 )
 	self.DropButton:CenterVertical()
 
+	-- Make sure the text color is updated
+	DButton.PerformLayout( self, w, h )
+
 end
 
 function PANEL:ChooseOption( value, index )
@@ -120,6 +124,18 @@ end
 function PANEL:OnSelect( index, value, data )
 
 	-- For override
+
+end
+
+function PANEL:OnMenuOpened( menu )
+
+	-- For override
+
+end
+
+function PANEL:AddSpacer()
+
+	self.Spacers[ #self.Choices ] = true
 
 end
 
@@ -167,7 +183,14 @@ function PANEL:OpenMenu( pControlOpener )
 		self.Menu = nil
 	end
 
-	self.Menu = DermaMenu( false, self )
+	-- If we have a modal parent at some level, we gotta parent to that or our menu items are not gonna be selectable
+	local parent = self
+	while ( IsValid( parent ) && !parent:IsModal() ) do
+		parent = parent:GetParent()
+	end
+	if ( !IsValid( parent ) ) then parent = self end
+
+	self.Menu = DermaMenu( false, parent )
 
 	if ( self:GetSortItems() ) then
 		local sorted = {}
@@ -181,12 +204,18 @@ function PANEL:OpenMenu( pControlOpener )
 			if ( self.ChoiceIcons[ v.id ] ) then
 				option:SetIcon( self.ChoiceIcons[ v.id ] )
 			end
+			if ( self.Spacers[ v.id ] ) then
+				self.Menu:AddSpacer()
+			end
 		end
 	else
 		for k, v in pairs( self.Choices ) do
 			local option = self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
 			if ( self.ChoiceIcons[ k ] ) then
 				option:SetIcon( self.ChoiceIcons[ k ] )
+			end
+			if ( self.Spacers[ k ] ) then
+				self.Menu:AddSpacer()
 			end
 		end
 	end
@@ -195,6 +224,8 @@ function PANEL:OpenMenu( pControlOpener )
 
 	self.Menu:SetMinimumWidth( self:GetWide() )
 	self.Menu:Open( x, y, false, self )
+
+	self:OnMenuOpened( self.Menu )
 
 end
 

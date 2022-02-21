@@ -1,4 +1,16 @@
 
+include( "math/ease.lua" )
+
+--[[---------------------------------------------------------
+	Name: DistanceSqr( low, high )
+	Desc: Squared Distance between two 2d points, use this instead of math.Distance as it is more cpu efficient.
+------------------------------------------------------------]]
+function math.DistanceSqr( x1, y1, x2, y2 )
+	local xd = x2 - x1
+	local yd = y2 - y1
+	return xd * xd + yd * yd
+end
+
 --[[---------------------------------------------------------
 	Name: Distance( low, high )
 	Desc: Distance between two 2d points
@@ -147,7 +159,7 @@ function math.BSplinePoint( tDiff, tPoints, tMax )
 
 end
 
--- Round to the nearest interger
+-- Round to the nearest integer
 function math.Round( num, idp )
 
 	local mult = 10 ^ ( idp or 0 )

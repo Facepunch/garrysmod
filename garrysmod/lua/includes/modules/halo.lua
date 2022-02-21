@@ -68,10 +68,9 @@ function Render( entry )
 				render.SetStencilFailOperation( STENCIL_KEEP )
 				render.SetStencilZFailOperation( STENCIL_KEEP )
 
-				
 					for k, v in pairs( entry.Ents ) do
 
-						if ( !IsValid( v ) ) then continue end
+						if ( !IsValid( v ) || v:GetNoDraw() ) then continue end
 
 						RenderEnt = v
 
@@ -105,6 +104,7 @@ function Render( entry )
 	-- Restore the original scene
 	render.SetRenderTarget( rt_Scene )
 	mat_Copy:SetTexture( "$basetexture", rt_Store )
+	mat_Copy:SetString( "$color", "1 1 1" )
 	render.SetMaterial( mat_Copy )
 	render.DrawScreenQuad()
 

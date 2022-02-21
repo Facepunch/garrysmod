@@ -25,7 +25,7 @@ local function TableInherit( t, base )
 
 		if ( t[ k ] == nil ) then
 			t[ k ] = v
-		elseif ( k != "BaseClass" && istable( t[ k ] ) ) then
+		elseif ( k != "BaseClass" && istable( t[ k ] ) && istable( v ) ) then
 			TableInherit( t[ k ], v )
 		end
 
@@ -51,6 +51,8 @@ function IsBasedOn( name, base )
 end
 
 function Register( t, name )
+
+	if ( hook.Run( "PreRegisterSENT", t, name ) == false ) then return end
 
 	local Base = t.Base
 	if ( !Base ) then Base = BaseClasses[ t.Type ] end

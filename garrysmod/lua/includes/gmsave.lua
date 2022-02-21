@@ -16,7 +16,7 @@ include( "gmsave/player.lua" )
 
 local g_WavSound = 1
 
-function gmsave.LoadMap( strMapContents, ply )
+function gmsave.LoadMap( strMapContents, ply, callback )
 
 	-- TODO: Do this in engine before sending it to this function.
 
@@ -70,6 +70,17 @@ function gmsave.LoadMap( strMapContents, ply )
 			gmsave.PlayerLoad( ply, tab.Player )
 		end
 
+		-- Since this save system is inferior to Source's, we gotta make sure this entity is disabled on load of a save
+		-- On maps like Portal's testchmb_a_00.bsp this entity takes away player control and will not restore it
+		-- if the player is not in a very specific place.
+		timer.Simple( 1, function()
+			for id, ent in ipairs( ents.FindByClass( "point_viewcontrol" ) ) do
+				ent:Fire( "Disable" )
+			end
+		end )
+
+		if ( callback ) then callback() end
+
 	end )
 
 end
@@ -86,10 +97,19 @@ function gmsave.SaveMap( ply )
 
 	end
 
+	-- This is to copy the constraints that are applied to the world only (ropes, etc)
+	-- It will not actually save and then try to restore the world entity, as that would cause issues
+	table.insert( Ents, game.GetWorld() )
+
 	local tab = duplicator.CopyEnts( Ents )
 	if ( !tab ) then return end
 
 	tab.Player = gmsave.PlayerSave( ply )
+
+	--
+	-- Try to figure out if any of the models/materials/etc came from some addon
+	--
+	duplicator.FigureOutRequiredAddons( tab )
 
 	return util.TableToJSON( tab )
 
