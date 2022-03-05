@@ -365,3 +365,24 @@ function util.RemovePData( steamid, name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
 
 end
+
+if ( SERVER ) then
+	function util.MakeColoredTextMessage( name )
+		util.AddNetworkString( name )
+
+		return function( filter )
+			net.Start( name )
+			net.Send( filter )
+		end
+	end
+else
+	function util.MakeColoredTextMessage( name, ... )
+		local func = function()
+			chat.AddText( ... )
+		end
+
+		net.Receive( name, func )
+
+		return func
+	end
+end
