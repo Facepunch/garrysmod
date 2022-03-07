@@ -88,8 +88,8 @@ function player.GetBySteamID64( ID )
 end
 
 if (SERVER) then
-	player.AddNetworkString("GMOD_player_SendMsg_Text")
-	player.AddNetworkString("GMOD_player_SendMsg_Color")
+	util.AddNetworkString("GMOD_player_SendMsg_Text")
+	util.AddNetworkString("GMOD_player_SendMsg_Color")
 
 	local function SendMsgError(uArg, v)
 		error(string.format("bad argument #%u to player.SendMsg (string or Color expected, got %s)",
