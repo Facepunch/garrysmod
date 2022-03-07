@@ -36,6 +36,17 @@ function IsColor( obj )
 
 end
 
+local function IsColorComponent( v )
+	return isnumber( v ) and v >= 0 and v <= 255 and math.floor( v ) == v
+end
+
+function IsTableColor( obj, alpha )
+	return istable( obj ) and
+		IsColorComponent( obj.r ) and
+		IsColorComponent( obj.g ) and
+		IsColorComponent( obj.b ) and
+		( not alpha or IsColorComponent( obj.a ) )
+end
 
 --[[---------------------------------------------------------
 	Returns color as a string
