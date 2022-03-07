@@ -87,6 +87,108 @@ function player.GetBySteamID64( ID )
 	return false
 end
 
+if (SERVER) then
+	player.AddNetworkString("GMOD_player_SendMsg_Text")
+	player.AddNetworkString("GMOD_player_SendMsg_Color")
+
+	local function SendMsgError(uArg, v)
+		error(string.format("bad argument #%u to player.SendMsg (string or Color expected, got %s)",
+			uArg + 1, type(v)), 3)
+	end
+
+	function player.SendMsg(filter, ...)
+		local tParts = {...}
+		local bLastString = false
+
+		local bFirstColor = false
+		local tWriteParts = {}
+		local uWriteParts = 0
+
+		for i = 1, select("#", ...) do
+			local part = tParts[i]
+
+			if (bLastString) then
+				if (IsTableColor(part, false)) then
+					uWriteParts = uWriteParts + 1
+					tWriteParts[uWriteParts] = part
+					bLastString = false
+				elseif (isstring(part)) then
+					tWriteParts[uWriteParts] = tWriteParts[uWriteParts] .. part
+				else
+					SendMsgError(i, part)
+				end
+			elseif (isstring(part)) then
+				uWriteParts = uWriteParts + 1
+				tWriteParts[uWriteParts] = part
+				bLastString = true
+			elseif (IsTableColor(part, false)) then
+				if (tWriteParts == 0) then
+					bFirstColor = true
+					uWriteParts = uWriteParts + 1
+				end
+
+				tWriteParts[uWriteParts] = part
+			else
+				SendMsgError(i, part)
+			end
+		end
+
+		if (bFirstColor) then
+			-- Don't proceed if there's nothing to send
+			if (uWriteParts == 1) then return end
+
+			net.Start("GMOD_player_SendMsg_Color")
+			net.WriteUInt(uWriteParts, 32)
+		else
+			if (uWriteParts == 0) then return end
+
+			net.Start("GMOD_player_SendMsg_Text")
+			net.WriteUInt(uWriteParts, 32)
+
+			-- Align for the loop below
+			net.WriteString(tWriteParts[1])
+		end
+
+		for i = bFirstColor and 1 or 2, uWriteParts, 2 do
+			net.WriteColor(tWriteParts[i], false)
+			net.WriteString(tWriteParts[i + 1])
+		end
+
+		net.Send(filter)
+	end
+else
+	net.Receive("GMOD_player_SendMsg_Text", function()
+		local uPartCount = net.ReadUInt(32)
+
+		if (uPartCount == 0) then return end
+
+		local tParts = {}
+		tParts[1] = net.ReadString()
+
+		for i = 2, uPartCount, 2 do
+			tParts[i] = net.ReadColor(false)
+			tParts[i + 1] = net.ReadString()
+		end
+
+		chat.AddText(unpack(tParts))
+	end)
+
+	net.Receive("GMOD_player_SendMsg_Color", function()
+		local uPartCount = net.ReadUInt(32)
+
+		if (uPartCount == 0) then return end
+
+		local tParts = {}
+
+		for i = 1, uPartCount, 2 do
+			tParts[i] = net.ReadColor(false)
+			tParts[i + 1] = net.ReadString()
+		end
+
+		chat.AddText(unpack(tParts))
+	end)
+end
+
 --[[---------------------------------------------------------
 	Name: DebugInfo
 	Desc: Prints debug information for the player
