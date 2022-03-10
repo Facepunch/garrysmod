@@ -109,9 +109,10 @@ end
 
 if ( SERVER ) then
 
-	numpad.Register( "Camera_On", function ( pl, ent )
+	numpad.Register( "Camera_On", function( pl, ent )
 
 		if ( !IsValid( ent ) ) then return false end
+		if ( !IsValid( pl ) ) then return false end
 
 		pl:SetViewEntity( ent )
 		pl.UsingCamera = ent
@@ -119,7 +120,7 @@ if ( SERVER ) then
 
 	end )
 
-	numpad.Register( "Camera_Toggle", function ( pl, ent, idx, buttoned )
+	numpad.Register( "Camera_Toggle", function( pl, ent, idx, buttoned )
 
 		-- The camera was deleted or something - return false to remove this entry
 		if ( !IsValid( ent ) ) then return false end
@@ -150,6 +151,7 @@ if ( SERVER ) then
 	numpad.Register( "Camera_Off", function( pl, ent )
 
 		if ( !IsValid( ent ) ) then return false end
+		if ( !IsValid( pl ) ) then return false end
 
 		if ( pl.UsingCamera && pl.UsingCamera == ent ) then
 			pl:SetViewEntity( pl )
