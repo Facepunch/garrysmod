@@ -300,9 +300,12 @@ function GetServers( category, id )
 				address = string.JavascriptSafe( address )
 				gm = string.JavascriptSafe( gm )
 				workshopid = string.JavascriptSafe( workshopid )
+				version = string.JavascriptSafe( tostring( version ) )
+				loc = string.JavascriptSafe( loc )
+				gmcat = string.JavascriptSafe( gmcat )
 
 				pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s" , "%s" );',
-					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid, tostring( isAnon ), tostring( version ), tostring( serverlist.IsServerFavorite( address ) ), loc, gmcat ) )
+					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid, tostring( isAnon ), version, tostring( serverlist.IsServerFavorite( address ) ), loc, gmcat ) )
 
 			else
 
