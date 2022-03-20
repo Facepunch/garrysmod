@@ -56,7 +56,7 @@ include( "util/color.lua" )
 --[[---------------------------------------------------------
 	Prints a table to the console
 -----------------------------------------------------------]]
-function PrintTable( t, indent, done )
+function PrintTable( t, indent, done, noNestedGlobal )
 	local Msg = Msg
 
 	done = done or {}
@@ -75,11 +75,11 @@ function PrintTable( t, indent, done )
 		local value = t[ key ]
 		Msg( string.rep( "\t", indent ) )
 
-		if  ( istable( value ) && !done[ value ] ) then
+		if  ( istable( value ) && !done[ value ] && !( value == _G && noNestedGlobal ) ) then
 
 			done[ value ] = true
 			Msg( key, ":\n" )
-			PrintTable ( value, indent + 2, done )
+			PrintTable ( value, indent + 2, done, noNestedGlobal )
 			done[ value ] = nil
 
 		else
