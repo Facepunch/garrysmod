@@ -231,6 +231,67 @@ function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
 end
 
 --[[---------------------------------------------------------
+	Name: ComplexRoundedBox( x, y, w, h, color, tl, tr, bl, br )
+	Desc: Draws a rounded box - ideally bordersize will be 8 or 16
+	Usage: color is a table with r/g/b/a elements
+		tl/tr/bl/br - radiuses for corresponding rounded corners
+-----------------------------------------------------------]]
+
+function ComplexRoundedBox( x, y, w, h, color, tl, tr, bl, br )
+
+	surface.SetDrawColor( color.r, color.g, color.b, color.a )
+
+	-- Do not waste performance if they don't want rounded corners
+	if ( tl + tr + bl + br ) <= 0 then
+		surface.DrawRect( x, y, w, h )
+		return
+	end
+
+	x = math.Round( x )
+	y = math.Round( y )
+	w = math.Round( w )
+	h = math.Round( h )
+
+	local half_w, half_h = math.floor( w * 0.5 ), math.floor( h * 0.5 )
+	tl = tl and math.min( math.Round( tl ), half_w, half_h ) or 0
+	tr = tr and math.min( math.Round( tr ), half_w, half_h ) or 0
+	bl = bl and math.min( math.Round( bl ), half_w, half_h ) or 0
+	br = br and math.min( math.Round( br ), half_w, half_h ) or 0
+
+	surface.DrawRect( x + bl, y + tl, w - bl - tr, h - tl - br )
+
+	local tex = tex_corner8
+	local bordersize = math.max( tl, tr, br, bl )
+	if ( bordersize > 8 ) then tex = tex_corner16 end
+	if ( bordersize > 16 ) then tex = tex_corner32 end
+	if ( bordersize > 32 ) then tex = tex_corner64 end
+	if ( bordersize > 64 ) then tex = tex_corner512 end
+
+	surface.SetTexture( tex )
+
+	if tl > 0 then
+		surface.DrawTexturedRectUV( x, y, tl, tl, 0, 0, 1, 1 )
+		surface.DrawRect( x + tl, y, w - tl - tr, tl )
+	end
+
+	if tr > 0 then
+		surface.DrawTexturedRectUV( x + w - tr, y, tr, tr, 1, 0, 0, 1 )
+		surface.DrawRect( x + w - tr, y + tr, tr, h - br - tr )
+	end
+
+	if bl > 0 then
+		surface.DrawTexturedRectUV( x, y + h - bl, bl, bl, 0, 1, 1, 0 )
+		surface.DrawRect( x, y + tl, bl, h - tl - bl )
+	end
+
+	if br > 0 then
+		surface.DrawTexturedRectUV( x + w - br, y + h - br, br, br, 1, 1, 0, 0 )
+		surface.DrawRect( x + bl, y + h - br, w - bl - br, br )
+	end
+
+end
+
+--[[---------------------------------------------------------
 	Name: WordBox( bordersize, x, y, font, color, font, color, fontcolor, xalign, yalign )
 	Desc: Draws a rounded box - ideally bordersize will be 8 or 16
 	Usage: color is a table with r/g/b/a elements
