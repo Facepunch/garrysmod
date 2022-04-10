@@ -372,12 +372,8 @@ function string.NiceNumber( num )
         return string.format( "%sInfinity", isNegative and "-" or "" )
     end
 
-    for i = 1, #nice_number_suffixes do
-        if absNum >= ( 10 ^ ( i * 3 ) ) then
-            suffixid = i
-        else
-            break
-        end
+    if ( absNum >= 1000 ) then
+        suffixid = math.min( #nice_number_suffixes, math.floor( math.log10( absNum ) / 3 ) )
     end
 
     return suffixid and string.format( "%s%s%s",
