@@ -71,6 +71,8 @@ function GM:PlayerSpawn(ply)
    ply.spawn_nick = ply:Nick()
    ply.has_spawned = true
 
+   ply.prevent_pickup_until = nil
+
    -- let the client do things on spawn
    net.Start("TTT_PlayerSpawned")
       net.WriteBit(ply:IsSpec())
