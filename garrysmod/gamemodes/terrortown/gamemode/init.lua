@@ -389,6 +389,10 @@ local function CleanUp()
    for k,v in ipairs(player.GetAll()) do
       if IsValid(v) then
          v:StripWeapons()
+            if v:IsTerror() then
+               -- don't let players pick up weapons until they respawn
+               v.prevent_pickup_until = CurTime() + 1
+            end
       end
    end
 
