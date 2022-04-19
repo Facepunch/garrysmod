@@ -10,6 +10,8 @@ function GM:PlayerCanPickupWeapon(ply, wep)
    if not IsValid(wep) or not IsValid(ply) then return end
    if ply:IsSpec() then return false end
 
+   if ply.prevent_pickup_until and CurTime() <= ply.prevent_pickup_until then return false end
+
    -- Disallow picking up for ammo
    if ply:HasWeapon(wep:GetClass()) then
       return false
