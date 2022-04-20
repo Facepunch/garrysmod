@@ -227,3 +227,8 @@ end
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
 end
+
+-- Snaps the provided number to the nearest multiple
+function math.SnapTo( num, multiple )
+	return math.floor( num / multiple + 0.5 ) * multiple
+end
