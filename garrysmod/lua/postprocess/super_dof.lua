@@ -120,7 +120,11 @@ function PANEL:Init()
 	local THIS = self
 	function Break:DoClick()
 		THIS:SetVisible( false )
-		timer.Simple( 5, function() THIS:SetVisible( true ) end )
+		timer.Simple( 5, function()
+			if IsValid(THIS) then  
+				THIS:SetVisible( true )
+			end
+		end )
 	end
 	Break:Dock( LEFT )
 	Break:SetSize( 20, 20 )
