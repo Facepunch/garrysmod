@@ -560,7 +560,7 @@ do
 		
 		local success, out = pcall( func, var )
 		if ( !success ) then return false, string_format( "\"%s\" function errored (%s)", funcname, out ) end
-		if ( !isstring( out ) ) then return false, "expected \"%s\" function to return a string, got " .. type( out ) end
+		if ( !isstring( out ) ) then return false, string_format( "expected \"%s\" function to return a string, got %s", funcname, type( out ) ) end
 		
 		return true, out
 	end
