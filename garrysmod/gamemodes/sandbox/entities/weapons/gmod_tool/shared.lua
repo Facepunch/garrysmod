@@ -196,7 +196,9 @@ function SWEP:PrimaryAttack()
 
 	local tr = util.GetPlayerTrace( self.Owner )
 	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
-	local trace = util.TraceLine( tr )
+	tr.mins = Vector(0,0,0)
+	tr.maxs = tr.mins
+	local trace = util.TraceHull( tr )
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
@@ -221,7 +223,9 @@ function SWEP:SecondaryAttack()
 
 	local tr = util.GetPlayerTrace( self.Owner )
 	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
-	local trace = util.TraceLine( tr )
+	tr.mins = Vector(0,0,0)
+	tr.maxs = tr.mins
+	local trace = util.TraceHull( tr )
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
@@ -249,7 +253,9 @@ function SWEP:Reload()
 
 	local tr = util.GetPlayerTrace( self.Owner )
 	tr.mask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, CONTENTS_WINDOW, CONTENTS_DEBRIS, CONTENTS_GRATE, CONTENTS_AUX )
-	local trace = util.TraceLine( tr )
+	tr.mins = Vector(0,0,0)
+	tr.maxs = tr.mins
+	local trace = util.TraceHull( tr )
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
