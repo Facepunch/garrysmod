@@ -450,8 +450,8 @@ function table.LowerKeyNames( Table )
 end
 
 --[[---------------------------------------------------------
-	Name: table.LowerKeyNames( table )
-	Desc: Lowercase the keynames of all tables
+	Name: table.CollapseKeyValue( table )
+	Desc: Collapses a table with keyvalue structure
 -----------------------------------------------------------]]
 function table.CollapseKeyValue( Table )
 
