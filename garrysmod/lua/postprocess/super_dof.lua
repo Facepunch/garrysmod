@@ -121,7 +121,7 @@ function PANEL:Init()
 	function Break:DoClick()
 		THIS:SetVisible( false )
 		timer.Simple( 5, function()
-			if IsValid(THIS) then  
+			if IsValid( THIS ) then  
 				THIS:SetVisible( true )
 			end
 		end )
