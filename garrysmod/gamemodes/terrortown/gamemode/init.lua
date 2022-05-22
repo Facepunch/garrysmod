@@ -411,6 +411,9 @@ local function SpawnEntities()
       et.PlaceExtraWeapons()
    end
 
+   -- We're done resetting the map, unlock weapon pickups for the players about to respawn
+   GAMEMODE.RespawningWeapons = false
+
    -- Finally, get players in there
    SpawnWillingPlayers()
 end
@@ -459,7 +462,8 @@ function PrepareRound()
       return
    end
 
-   -- Cleanup
+   -- Reset the map entities
+   GAMEMODE.RespawningWeapons = true
    CleanUp()
 
    GAMEMODE.MapWin = WIN_NONE
