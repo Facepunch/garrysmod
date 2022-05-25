@@ -1085,4 +1085,4 @@ L.idle_popup_title = "Ausência"
 L.sb_playervolume = "Volume do jogador"
 
 --- 2021-09-22
-L.tip41 = "Você pode ajustar o volume do microfone de um jogador ao clicar com o botão direito no ícone de silencar dele no placar."
+L.tip41 = "Você pode ajustar o volume do microfone de um jogador ao clicar com o botão direito no ícone de silenciar dele no placar."
