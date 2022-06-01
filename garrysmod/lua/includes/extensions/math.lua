@@ -67,14 +67,14 @@ math.Min = math.min
 	Name: EaseInOut(fProgress, fEaseIn, fEaseOut)
 	Desc: Provided by garry from the facewound source and converted
 			to Lua by me :p
-	Usage: math.EaseInOut(0.1, 0.5, 0.5) - all parameters shoule be between 0 and 1
+	Usage: math.EaseInOut(0.1, 0.5, 0.5) - all parameters should be between 0 and 1
 -----------------------------------------------------------]]
 function math.EaseInOut( fProgress, fEaseIn, fEaseOut )
 
 	if ( fEaseIn == nil ) then fEaseIn = 0 end
 	if ( fEaseOut == nil ) then fEaseOut = 1 end
 
-	if ( fProgress == 0 || fProgress == 1 ) then return fProgress end
+	if ( fProgress == 0 or fProgress == 1 ) then return fProgress end
 
 	local fSumEase = fEaseIn + fEaseOut
 
@@ -86,9 +86,9 @@ function math.EaseInOut( fProgress, fEaseIn, fEaseOut )
 
 	local fProgressCalc = 1 / ( 2 - fEaseIn - fEaseOut )
 
-	if( fProgress < fEaseIn ) then
+	if ( fProgress < fEaseIn ) then
 		return ( ( fProgressCalc / fEaseIn ) * fProgress * fProgress )
-	elseif( fProgress < 1 - fEaseOut ) then
+	elseif ( fProgress < 1 - fEaseOut ) then
 		return ( fProgressCalc * ( 2 * fProgress - fEaseIn ) )
 	else
 		fProgress = 1 - fProgress
@@ -103,7 +103,7 @@ function math.calcBSplineN( i, k, t, tinc )
 
 	if ( k == 1 ) then
 
-		if ( ( KNOT( i, tinc ) <= t ) && ( t < KNOT( i + 1, tinc ) ) ) then
+		if ( ( KNOT( i, tinc ) <= t ) and ( t < KNOT( i + 1, tinc ) ) ) then
 
 			return 1
 
@@ -199,7 +199,6 @@ function math.NormalizeAngle( a )
 	return ( a + 180 ) % 360 - 180
 end
 
-
 function math.AngleDifference( a, b )
 
 	local diff = math.NormalizeAngle( a - b )
@@ -226,4 +225,9 @@ end
 
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
+end
+
+-- Snaps the provided number to the nearest multiple
+function math.SnapTo( num, multiple )
+	return math.floor( num / multiple + 0.5 ) * multiple
 end
