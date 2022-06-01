@@ -1,9 +1,9 @@
 
 local Category = ""
 
-local function ADD_ITEM( name, class )
+local function ADD_ITEM( name, class, offset )
 
-	list.Set( "SpawnableEntities", class, { PrintName = name, ClassName = class, Category = Category, NormalOffset = 32, DropToFloor = true, Author = "VALVe" } )
+	list.Set( "SpawnableEntities", class, { PrintName = name, ClassName = class, Category = Category, NormalOffset = offset or 32, DropToFloor = true, Author = "VALVe" } )
 	duplicator.Allow( class )
 
 end
@@ -18,39 +18,39 @@ end
 Category = "Half-Life 2"
 
 -- Ammo
-ADD_ITEM( "AR2 Ammo", "item_ammo_ar2" )
-ADD_ITEM( "AR2 Ammo (Large)", "item_ammo_ar2_large" )
+ADD_ITEM( "AR2 Ammo", "item_ammo_ar2", -8 )
+ADD_ITEM( "AR2 Ammo (Large)", "item_ammo_ar2_large", -8 )
 
-ADD_ITEM( "Pistol Ammo", "item_ammo_pistol" )
-ADD_ITEM( "Pistol Ammo (Large)", "item_ammo_pistol_large" )
+ADD_ITEM( "Pistol Ammo", "item_ammo_pistol", -4 )
+ADD_ITEM( "Pistol Ammo (Large)", "item_ammo_pistol_large", -4 )
 
-ADD_ITEM( "357 Ammo", "item_ammo_357" )
-ADD_ITEM( "357 Ammo (Large)", "item_ammo_357_large" )
+ADD_ITEM( "357 Ammo", "item_ammo_357", -4 )
+ADD_ITEM( "357 Ammo (Large)", "item_ammo_357_large", -4 )
 
-ADD_ITEM( "SMG Ammo", "item_ammo_smg1" )
-ADD_ITEM( "SMG Ammo (Large)", "item_ammo_smg1_large" )
+ADD_ITEM( "SMG Ammo", "item_ammo_smg1", -2 )
+ADD_ITEM( "SMG Ammo (Large)", "item_ammo_smg1_large", -2 )
 
-ADD_ITEM( "SMG Grenade", "item_ammo_smg1_grenade" )
-ADD_ITEM( "Crossbow Bolts", "item_ammo_crossbow" )
-ADD_ITEM( "Shotgun Ammo", "item_box_buckshot" )
-ADD_ITEM( "AR2 Orb", "item_ammo_ar2_altfire" )
-ADD_ITEM( "RPG Rocket", "item_rpg_round" )
+ADD_ITEM( "SMG Grenade", "item_ammo_smg1_grenade", -10 )
+ADD_ITEM( "Crossbow Bolts", "item_ammo_crossbow", -10 )
+ADD_ITEM( "Shotgun Ammo", "item_box_buckshot", -10 )
+ADD_ITEM( "AR2 Orb", "item_ammo_ar2_altfire", -2 )
+ADD_ITEM( "RPG Rocket", "item_rpg_round", -10 )
 
 -- Dynamic materials; gives player what he needs most (health, shotgun ammo, suit energy, etc)
 -- ADD_ITEM( "Dynamic Supplies", "item_dynamic_resupply" )
 
 -- Items
-ADD_ITEM( "Suit Battery", "item_battery" )
-ADD_ITEM( "Health Kit", "item_healthkit" )
-ADD_ITEM( "Health Vial", "item_healthvial" )
+ADD_ITEM( "Suit Battery", "item_battery", -4 )
+ADD_ITEM( "Health Kit", "item_healthkit", -8 )
+ADD_ITEM( "Health Vial", "item_healthvial", -4 )
 ADD_ITEM( "Suit Charger", "item_suitcharger" )
 ADD_ITEM( "Health Charger", "item_healthcharger" )
-ADD_ITEM( "HEV Suit", "item_suit" )
+ADD_ITEM( "HEV Suit", "item_suit", 0 )
 
 ADD_ITEM( "Thumper", "prop_thumper" )
-ADD_ITEM( "Combine Mine", "combine_mine" )
-ADD_ITEM( "Zombine Grenade", "npc_grenade_frag" )
-ADD_ITEM( "Helicopter Grenade", "grenade_helicopter" )
+ADD_ITEM( "Combine Mine", "combine_mine", -8 )
+ADD_ITEM( "Zombine Grenade", "npc_grenade_frag", -8 )
+ADD_ITEM( "Helicopter Grenade", "grenade_helicopter", 4 )
 
 if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/striderbuster.pcf" )
@@ -105,19 +105,19 @@ if ( IsMounted( "hl1" ) || IsMounted( "hl1mp" ) ) then
 	ADD_WEAPON( "Gluon Gun", "weapon_egon" )
 	ADD_WEAPON( "Crowbar", "weapon_crowbar_hl1" )
 
-	ADD_ITEM( "Crossbow Bolts", "ammo_crossbow" )
-	ADD_ITEM( "Uranium", "ammo_gaussclip" )
-	ADD_ITEM( "Glock Clip", "ammo_glockclip" )
-	ADD_ITEM( "MP5 Clip", "ammo_mp5clip" )
-	ADD_ITEM( "MP5 Ammo Crate", "ammo_9mmbox" )
-	ADD_ITEM( "MP5 Grenades", "ammo_mp5grenades" )
-	ADD_ITEM( ".357 Ammo", "ammo_357" )
-	ADD_ITEM( "RPG Rockets", "ammo_rpgclip" )
-	ADD_ITEM( "SPAS-12 Ammo", "ammo_buckshot" )
-	--ADD_ITEM( "Uranium (Egon)", "ammo_egonclip" )
-	--ADD_ITEM( "MP5 Ammo", "ammo_9mmclip" )
-	--ADD_ITEM( "MP5 Ammo", "ammo_9mmar" )
-	--ADD_ITEM( "MP5 Grenade", "ammo_argrenades" )
+	ADD_ITEM( "Crossbow Bolts", "ammo_crossbow", 0 )
+	ADD_ITEM( "Uranium", "ammo_gaussclip", 0 )
+	ADD_ITEM( "Glock Clip", "ammo_glockclip", 0 )
+	ADD_ITEM( "MP5 Clip", "ammo_mp5clip", 0 )
+	ADD_ITEM( "MP5 Ammo Crate", "ammo_9mmbox", 0 )
+	ADD_ITEM( "MP5 Grenades", "ammo_mp5grenades", 0 )
+	ADD_ITEM( ".357 Ammo", "ammo_357", 0 )
+	ADD_ITEM( "RPG Rockets", "ammo_rpgclip", 0 )
+	ADD_ITEM( "SPAS-12 Ammo", "ammo_buckshot", 0 )
+	--ADD_ITEM( "Uranium (Egon)", "ammo_egonclip", 0 )
+	--ADD_ITEM( "MP5 Ammo", "ammo_9mmclip", 0 )
+	--ADD_ITEM( "MP5 Ammo", "ammo_9mmar", 0 )
+	--ADD_ITEM( "MP5 Grenade", "ammo_argrenades", 0 )
 
 	list.Add( "NPCUsableWeapons", { class = "weapon_glock_hl1", title = "#weapon_glock_hl1" } )
 end

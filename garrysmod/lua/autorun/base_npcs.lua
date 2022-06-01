@@ -505,5 +505,7 @@ if ( IsMounted( "hl1" ) || IsMounted( "hl1mp" ) ) then
 	AddNPC( { Name = "Heavy Turret", Class = "monster_turret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
 	AddNPC( { Name = "Mini Turret", Class = "monster_miniturret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
 	AddNPC( { Name = "Sentry", Class = "monster_sentry", Category = Category, Offset = 0, OnFloor = true, SpawnFlags = 32 } )
+	--AddNPC( { Name = "Ground Heavy Turret", Class = "monster_turret", Category = Category, Offset = 0, KeyValues = { orientation = 0 }, OnFloor = true, SpawnFlags = 32 }, "monster_turret_gnd" )
+	--AddNPC( { Name = "Ground Mini Turret", Class = "monster_miniturret", Category = Category, Offset = 0, KeyValues = { orientation = 0 }, OnFloor = true, SpawnFlags = 32 }, "monster_miniturret_gnd" )
 
 end
