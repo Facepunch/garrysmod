@@ -80,7 +80,8 @@ function MenuController( $scope, $rootScope )
 	//
 	// Map List
 	//
-	$rootScope.MapList = []
+	$rootScope.MapList = [];
+	$rootScope.AddonMapList = [];
 	lua.Run( "UpdateMapList()" );
 
 	//
@@ -237,6 +238,12 @@ function GetGamemodeInfo( name )
 	if ( !GamemodeDetails[name] ) GamemodeDetails[name] = {}
 
 	return GamemodeDetails[name];
+}
+
+function UpdateAddonMaps( inmaps )
+{
+	gScope.AddonMapList = inmaps;
+	UpdateDigest( gScope, 50 );
 }
 
 function UpdateMaps( inmaps )
