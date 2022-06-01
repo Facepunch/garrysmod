@@ -528,12 +528,11 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 		local vStart = ply:GetShootPos()
 		local vForward = ply:GetAimVector()
 
-		local trace = {}
-		trace.start = vStart
-		trace.endpos = vStart + vForward * 2048
-		trace.filter = ply
-
-		tr = util.TraceLine( trace )
+		tr = util.TraceLine( {
+			start = vStart,
+			endpos = vStart + ( vForward * 2048 ),
+			filter = ply
+		} )
 
 	end
 
@@ -732,17 +731,16 @@ function Spawn_SENT( ply, EntityName, tr )
 	-- Ask the gamemode if it's ok to spawn this
 	if ( !gamemode.Call( "PlayerSpawnSENT", ply, EntityName ) ) then return end
 
-	local vStart = ply:EyePos()
-	local vForward = ply:GetAimVector()
-
 	if ( !tr ) then
 
-		local trace = {}
-		trace.start = vStart
-		trace.endpos = vStart + ( vForward * 4096 )
-		trace.filter = ply
+		local vStart = ply:EyePos()
+		local vForward = ply:GetAimVector()
 
-		tr = util.TraceLine( trace )
+		tr = util.TraceLine( {
+			start = vStart,
+			endpos = vStart + ( vForward * 4096 ),
+			filter = ply
+		} )
 
 	end
 
@@ -782,6 +780,17 @@ function Spawn_SENT( ply, EntityName, tr )
 
 		local SpawnPos = tr.HitPos + tr.HitNormal * 16
 		if ( EntTable.NormalOffset ) then SpawnPos = SpawnPos + tr.HitNormal * EntTable.NormalOffset end
+
+		-- Make sure the spawn position is not out of bounds
+		local oobTr = util.TraceLine( {
+			start = tr.HitPos,
+			endpos = SpawnPos,
+			mask = MASK_SOLID_BRUSHONLY
+		} )
+
+		if ( oobTr.Hit ) then
+			SpawnPos = oobTr.HitPos + oobTr.HitNormal * ( tr.HitPos:Distance( oobTr.HitPos ) / 2 )
+		end
 
 		entity = ents.Create( EntTable.ClassName )
 		entity:SetPos( SpawnPos )
@@ -898,7 +907,20 @@ function Spawn_Weapon( ply, wepname, tr )
 
 	DoPropSpawnedEffect( entity )
 
-	entity:SetPos( tr.HitPos + tr.HitNormal * 32 )
+	local SpawnPos = tr.HitPos + tr.HitNormal * 32
+
+	-- Make sure the spawn position is not out of bounds
+	local oobTr = util.TraceLine( {
+		start = tr.HitPos,
+		endpos = SpawnPos,
+		mask = MASK_SOLID_BRUSHONLY
+	} )
+
+	if ( oobTr.Hit ) then
+		SpawnPos = oobTr.HitPos + oobTr.HitNormal * ( tr.HitPos:Distance( oobTr.HitPos ) / 2 )
+	end
+
+	entity:SetPos( SpawnPos )
 	entity:Spawn()
 
 	undo.Create( "SWEP" )
