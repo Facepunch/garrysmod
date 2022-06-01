@@ -493,7 +493,7 @@ function meta:InstallDataTable()
 
 			if ( !IsValid( ent ) ) then return end
 			if ( !isfunction( ent.GetEditingData ) ) then return end
-			if ( ent.AdminOnly && !client:IsAdmin() ) then return end
+			if ( ent.AdminOnly && !( client:IsAdmin() || game.SinglePlayer() ) ) then return end
 
 			local key = net.ReadString()
 

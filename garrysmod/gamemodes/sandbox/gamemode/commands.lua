@@ -376,7 +376,8 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 		return
 	end
 
-	if ( NPCData.AdminOnly && !ply:IsAdmin() ) then return end
+	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	if ( NPCData.AdminOnly && !isAdmin ) then return end
 
 	local bDropToFloor = false
 
@@ -687,6 +688,8 @@ AddNPCToDuplicator( "monster_sentry" )
 -----------------------------------------------------------]]
 local function CanPlayerSpawnSENT( ply, EntityName )
 
+	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+
 	-- Make sure this is a SWEP
 	local sent = scripted_ents.GetStored( EntityName )
 	if ( sent == nil ) then
@@ -696,7 +699,7 @@ local function CanPlayerSpawnSENT( ply, EntityName )
 		if ( !SpawnableEntities ) then return false end
 		local EntTable = SpawnableEntities[ EntityName ]
 		if ( !EntTable ) then return false end
-		if ( EntTable.AdminOnly && !ply:IsAdmin() ) then return false end
+		if ( EntTable.AdminOnly && !isAdmin ) then return false end
 		return true
 
 	end
@@ -706,8 +709,8 @@ local function CanPlayerSpawnSENT( ply, EntityName )
 	if ( !isfunction( SpawnFunction ) ) then return false end
 
 	-- You're not allowed to spawn this unless you're an admin!
-	if ( !scripted_ents.GetMember( EntityName, "Spawnable" ) && !ply:IsAdmin() ) then return false end
-	if ( scripted_ents.GetMember( EntityName, "AdminOnly" ) && !ply:IsAdmin() ) then return false end
+	if ( !scripted_ents.GetMember( EntityName, "Spawnable" ) && !isAdmin ) then return false end
+	if ( scripted_ents.GetMember( EntityName, "AdminOnly" ) && !isAdmin ) then return false end
 
 	return true
 
@@ -754,7 +757,8 @@ function Spawn_SENT( ply, EntityName, tr )
 		ClassName = EntityName
 
 			local SpawnFunction = scripted_ents.GetMember( EntityName, "SpawnFunction" )
-			if ( !SpawnFunction ) then return end
+			if ( !SpawnFunction ) then return end -- Fallback to default behavior below?
+
 			entity = SpawnFunction( sent, ply, tr, EntityName )
 
 			if ( IsValid( entity ) ) then
@@ -770,6 +774,7 @@ function Spawn_SENT( ply, EntityName, tr )
 		-- Spawn from list table
 		local SpawnableEntities = list.Get( "SpawnableEntities" )
 		if ( !SpawnableEntities ) then return end
+
 		local EntTable = SpawnableEntities[ EntityName ]
 		if ( !EntTable ) then return end
 
@@ -793,6 +798,8 @@ function Spawn_SENT( ply, EntityName, tr )
 
 		entity:Spawn()
 		entity:Activate()
+
+		DoPropSpawnedEffect( entity )
 
 		if ( EntTable.DropToFloor ) then
 			entity:DropToFloor()
@@ -838,7 +845,8 @@ function CCGiveSWEP( ply, command, arguments )
 	if ( swep == nil ) then return end
 
 	-- You're not allowed to spawn this!
-	if ( ( !swep.Spawnable && !ply:IsAdmin() ) or ( swep.AdminOnly && !ply:IsAdmin() ) ) then
+	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	if ( ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) ) then
 		return
 	end
 
@@ -871,7 +879,8 @@ function Spawn_Weapon( ply, wepname, tr )
 	if ( swep == nil ) then return end
 
 	-- You're not allowed to spawn this!
-	if ( ( !swep.Spawnable && !ply:IsAdmin() ) or ( swep.AdminOnly && !ply:IsAdmin() ) ) then
+	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	if ( ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) ) then
 		return
 	end
 
