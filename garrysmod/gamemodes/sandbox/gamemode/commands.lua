@@ -376,7 +376,7 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 		return
 	end
 
-	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) || game.SinglePlayer()
 	if ( NPCData.AdminOnly && !isAdmin ) then return end
 
 	local bDropToFloor = false
@@ -687,7 +687,7 @@ AddNPCToDuplicator( "monster_sentry" )
 -----------------------------------------------------------]]
 local function CanPlayerSpawnSENT( ply, EntityName )
 
-	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) || game.SinglePlayer()
 
 	-- Make sure this is a SWEP
 	local sent = scripted_ents.GetStored( EntityName )
