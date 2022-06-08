@@ -490,7 +490,8 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 
 	-- For those NPCs that set their model in Spawn function
 	-- We have to keep the call above for NPCs that want a model set by Spawn() time
-	if ( NPCData.Model && NPC:GetModel() != NPCData.Model ) then
+	-- BAD: They may adversly affect entity collision bounds
+	if ( NPCData.Model && NPC:GetModel():lower() != NPCData.Model:lower() ) then
 		NPC:SetModel( NPCData.Model )
 	end
 
