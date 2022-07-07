@@ -52,10 +52,11 @@ function PANEL:Setup( vars )
 		return text:IsEditing()
 	end
 
-	-- Enabled/disabled support
+	-- Enabled and disabled support
 	self.IsEnabled = function( self )
 		return text:IsEnabled()
 	end
+
 	self.SetEnabled = function( self, b )
 		text:SetEnabled( b )
 	end
@@ -67,9 +68,13 @@ function PANEL:Setup( vars )
 
 	-- Alert row that value changed
 	text.OnValueChange = function( text, newval )
-
 		self:ValueChanged( newval )
+	end
 
+	if(tobool(vars.enabled) or vars.enabled == nil) then
+	  text:SetEnabled( true )
+	else
+		text:SetEnabled( false )
 	end
 
 end
