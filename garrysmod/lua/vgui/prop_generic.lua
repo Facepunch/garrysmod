@@ -47,7 +47,7 @@ function PANEL:Setup( vars )
 	text:SetPaintBackground( false )
 	text:Dock( FILL )
 
-	if(tobool( vars.enabled ) || vars.enabled == nil) then
+	if ( tobool( vars.enabled ) || vars.enabled == nil ) then
 		text:SetEnabled( true )
 	else
 		text:SetEnabled( false )
