@@ -106,9 +106,15 @@ function COLOR:ToTable()
 
 end
 
-function COLOR:Serialize( separator )
+function COLOR:Serialize( separator, withAlpha )
 
 	if ( separator == nil ) then separator = " " end
+	if ( withAlpha == nil ) then withAlpha = true end
+
+	if ( withAlpha ) then
+		return string.format( "%u%s%u%s%u%s%u", self.r, separator, self.g, separator, self.b, separator, self.a )
+	end
+
 	return string.format( "%u%s%u%s%u", self.r, separator, self.g, separator, self.b )
 
 end
