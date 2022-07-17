@@ -110,14 +110,9 @@ function PANEL:PerformLayoutInternal()
 
 	local Tall = self.pnlCanvas:GetTall()
 	local Wide = self:GetWide()
-	local YPos = 0
-
-	self:Rebuild()
 
 	self.VBar:SetUp( self:GetTall(), self.pnlCanvas:GetTall() )
-	YPos = self.VBar:GetOffset()
-
-	if ( self.VBar.Enabled ) then Wide = Wide - self.VBar:GetWide() end
+	local YPos = self.VBar:GetOffset()
 
 	self.pnlCanvas:SetPos( 0, YPos )
 	self.pnlCanvas:SetWide( Wide )
