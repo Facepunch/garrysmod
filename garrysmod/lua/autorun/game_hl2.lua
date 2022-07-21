@@ -33,6 +33,7 @@ ADD_ITEM( "SMG Ammo (Large)", "item_ammo_smg1_large", -2 )
 ADD_ITEM( "SMG Grenade", "item_ammo_smg1_grenade", -10 )
 ADD_ITEM( "Crossbow Bolts", "item_ammo_crossbow", -10 )
 ADD_ITEM( "Shotgun Ammo", "item_box_buckshot", -10 )
+ADD_ITEM( "Grenade", "weapon_frag", -8 )
 ADD_ITEM( "AR2 Orb", "item_ammo_ar2_altfire", -2 )
 ADD_ITEM( "RPG Rocket", "item_rpg_round", -10 )
 
@@ -49,7 +50,7 @@ ADD_ITEM( "HEV Suit", "item_suit", 0 )
 
 ADD_ITEM( "Thumper", "prop_thumper" )
 ADD_ITEM( "Combine Mine", "combine_mine", -8 )
-ADD_ITEM( "Zombine Grenade", "npc_grenade_frag", -8 )
+ADD_ITEM( "Armed Grenade", "npc_grenade_frag", -8 )
 ADD_ITEM( "Helicopter Grenade", "grenade_helicopter", 4 )
 
 if ( IsMounted( "ep2" ) ) then
