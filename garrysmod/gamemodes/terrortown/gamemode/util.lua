@@ -87,6 +87,34 @@ function util.GetNextAlivePlayer(ply)
    return choice
 end
 
+function util.GetPreviousAlivePlayer(ply)
+    local alive = util.GetAlivePlayers()
+
+    if #alive < 1 then return nil end
+
+    local nxt = nil
+    local choice = nil
+    local p = nil
+
+    if IsValid(ply) then
+       for i = #alive, 1, -1 do
+          p = alive[i]
+
+          if nxt == ply then
+             choice = p
+          end
+
+          nxt = p
+       end
+    end
+
+    if not IsValid(choice) then
+       choice = alive[#alive - 1]
+    end
+
+    return choice
+end
+
 -- Uppercases the first character only
 function string.Capitalize(str)
    return string.upper(string.sub(str, 1, 1)) .. string.sub(str, 2)
