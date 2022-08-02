@@ -252,7 +252,6 @@ function GM:PlayerSpawn( pl, transiton )
 	-- Stop observer mode
 	pl:UnSpectate()
 
-	pl:SetupHands()
 
 	player_manager.OnPlayerSpawn( pl, transiton )
 	player_manager.RunClass( pl, "Spawn" )
@@ -265,6 +264,7 @@ function GM:PlayerSpawn( pl, transiton )
 
 	-- Set player model
 	hook.Call( "PlayerSetModel", GAMEMODE, pl )
+	pl:SetupHands()
 
 end
 
@@ -292,7 +292,7 @@ function GM:PlayerSetHandsModel( pl, ent )
 
 	if ( info ) then
 		ent:SetModel( info.model )
-		ent:SetSkin( info.skin )
+		ent:SetSkin( info.matchBodySkin and pl:GetSkin() or info.skin )
 		ent:SetBodyGroups( info.body )
 	end
 
