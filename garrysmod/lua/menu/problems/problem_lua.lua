@@ -220,10 +220,6 @@ function PANEL:PerformLayout( w, h )
 	self.LuaErrorList:SetPos( 4, 4 + headerSize )
 	self.LuaErrorList:SetWide( self:GetWide() - 8 )
 
-	if ( self.Collapsed ) then
-		self:SetTall( headerSize + 5 )
-		return
-	end
 
 	surface.SetFont( "DermaDefault" )
 	local _, etH = surface.GetTextSize( self:GetExplainerText() )
@@ -237,6 +233,11 @@ function PANEL:PerformLayout( w, h )
 		self.DisableBtn:SetPos( w * 0.5 - self.DisableBtn:GetWide() / 2, y )
 		self.UninstallBtn:SetPos( w * 0.75 - self.UninstallBtn:GetWide() / 2, y )
 		etH = etH + self.DisableBtn:GetTall() + 5
+	end
+
+	if ( self.Collapsed ) then
+		self:SetTall( headerSize + 5 )
+		return
 	end
 
 	self:SetTall( self.LuaErrorList:GetTall() + ( 8 + headerSize ) + ( etH + 5 ) )
