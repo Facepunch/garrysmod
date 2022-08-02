@@ -119,7 +119,7 @@ function ENT:PhysicsCollide( data, physobj )
 
 	end
 
-	-- Bounce like a crazy bitch
+	-- Bounce like a crazy bouncy ball
 	local LastSpeed = math.max( data.OurOldVelocity:Length(), data.Speed )
 	local NewVelocity = physobj:GetVelocity()
 	NewVelocity:Normalize()
