@@ -118,8 +118,10 @@ if ( IsMounted( "hl1" ) || IsMounted( "hl1mp" ) ) then
 	--ADD_ITEM( "MP5 Ammo", "ammo_9mmclip", 0 )
 	--ADD_ITEM( "MP5 Ammo", "ammo_9mmar", 0 )
 	--ADD_ITEM( "MP5 Grenade", "ammo_argrenades", 0 )
-
+	
+	list.Add( "NPCUsableWeapons", { class = "weapon_357_hl1", title = "#weapon_357_hl1" } )
 	list.Add( "NPCUsableWeapons", { class = "weapon_glock_hl1", title = "#weapon_glock_hl1" } )
+	list.Add( "NPCUsableWeapons", { class = "weapon_shotgun_hl1", title = "#weapon_shotgun_hl1" } )
 end
 
 Category = "Other"
