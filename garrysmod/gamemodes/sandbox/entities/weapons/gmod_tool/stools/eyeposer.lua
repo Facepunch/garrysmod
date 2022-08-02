@@ -122,8 +122,6 @@ function TOOL:DrawHUD()
 	local LocalPos = ConvertRelativeToEyesAttachment( selected, trace.HitPos )
 	selected:SetEyeTarget( LocalPos )
 
-	-- Todo, make look less like ass
-
 	surface.SetDrawColor( 0, 0, 0, 100 )
 	surface.DrawLine( Leye.x - 1, Leye.y + 1, x - 1, y + 1 )
 	surface.DrawLine( Leye.x - 1, Leye.y - 1, x - 1, y - 1 )
