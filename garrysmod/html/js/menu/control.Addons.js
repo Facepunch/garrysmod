@@ -177,10 +177,11 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	}
 	$scope.SelectAllPage = function()
 	{
-		$scope.UnselectAll(); // Unselect items that might be not in $scope.Files
+		//$scope.UnselectAll(); // Unselect items that might be not in $scope.Files
 
 		for ( var k in $scope.Files )
 		{
+			if ( parseInt( $scope.Files[ k ].id ) < 1 ) continue;
 			$scope.SelectedItems[ $scope.Files[ k ].id ] = true;
 		}
 	}

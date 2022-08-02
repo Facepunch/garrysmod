@@ -123,12 +123,14 @@
 			<div class="ugc_settings_cat"><!--<span>Selection:</span>-->
 				<div ng-show="!IsAnySelected()">
 					<a ng-click="SelectAll()" ng-Tranny="'addons.selectall'"></a>
+					<a ng-click="SelectAllPage()" ng-Tranny="'addons.selectpage'"></a>
 					<a ng-click="DisplayPopupMessage( 'addons.enableall.warning', EnableAllSubscribed )" ng-Tranny="'addons.enableall'"></a>
 					<a ng-click="DisplayPopupMessage( 'addons.disableall.warning', DisableAllSubscribed )" ng-Tranny="'addons.disableall'"></a>
 					<a ng-click="DisplayPopupMessage( 'addons.uninstallall.warning', UninstallAllSubscribed )" ng-Tranny="'addons.uninstallall'"></a>
 				</div>
 				<div ng-show="IsAnySelected()">
 					<a ng-click="UnselectAll()" ng-Tranny="'addons.unselectall'"></a>
+					<a ng-click="SelectAllPage()" ng-Tranny="'addons.selectpage'"></a>
 					<a ng-click="EnableAllSelected();" ng-Tranny="'addons.enable_selected'"></a>
 					<a ng-click="DisableAllSelected();" ng-Tranny="'addons.disable_selected'"></a>
 					<a ng-click="DisplayPopupMessage( 'addons.uninstall_selected.warning', UninstallAllSelected )" ng-Tranny="'addons.uninstall_selected'"></a>
