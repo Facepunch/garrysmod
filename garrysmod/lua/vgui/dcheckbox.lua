@@ -36,11 +36,15 @@ function PANEL:SetValue( val )
 end
 
 function PANEL:DoClick()
+
 	self:Toggle()
+
 end
 
 function PANEL:Toggle()
-	self:SetValue(not self:GetChecked())
+
+	self:SetValue( !self:GetChecked() )
+
 end
 
 function PANEL:OnChange( bVal )
