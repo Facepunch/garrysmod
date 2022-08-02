@@ -86,7 +86,7 @@ function Derma_Install_Convar_Functions( PANEL )
 	function PANEL:ConVarChanged( strNewValue )
 
 		if ( !self.m_strConVar ) then return end
-		RunConsoleCommand( self.m_strConVar, tostring( strNewValue ) )
+		RunConsoleCommand( self.m_strConVar, strNewValue )
 
 	end
 

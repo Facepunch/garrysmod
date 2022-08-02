@@ -13,8 +13,8 @@ function gmsave.PhysicsSave( ent )
 		local obj = ent:GetPhysicsObjectNum( k )
 
 		tab[ k ] = {}
-		tab[ k ].origin = tostring( obj:GetPos() )
-		tab[ k ].angles = tostring( obj:GetAngles() )
+		tab[ k ].origin = obj:GetPos():Serialize()
+		tab[ k ].angles = obj:GetAngles():Serialize()
 		tab[ k ].mass = tostring( obj:GetMass() )
 		tab[ k ].material = tostring( obj:GetMaterial() )
 		if ( !obj:IsMotionEnabled() ) then tab[ k ].frozen = 1 end

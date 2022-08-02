@@ -357,13 +357,13 @@ function PANEL:UpdateEntity( ent )
 	ent:SetEyeTarget( self.ModelPanel:GetCamPos() )
 
 	if ( IsValid( self.TargetAnglePanel ) && !self.TargetAnglePanel:IsEditing() ) then
-		self.TargetAnglePanel:SetText( tostring( ent:GetAngles() ) )
+		self.TargetAnglePanel:SetText( ent:GetAngles():Serialize( " " ) )
 	end
 	if ( IsValid( self.TargetCamAnglePanel ) && !self.TargetCamAnglePanel:IsEditing() ) then
-		self.TargetCamAnglePanel:SetText( tostring( self.ModelPanel:GetLookAng() ) )
+		self.TargetCamAnglePanel:SetText( self.ModelPanel:GetLookAng():Serialize( " " ) )
 	end
 	if ( IsValid( self.TargetCamPosPanel ) && !self.TargetCamPosPanel:IsEditing() ) then
-		self.TargetCamPosPanel:SetText( tostring( self.ModelPanel:GetCamPos() ) )
+		self.TargetCamPosPanel:SetText( self.ModelPanel:GetCamPos():Serialize( " " ) )
 	end
 
 	if ( self.AnimTrack:GetDragging() ) then

@@ -33,7 +33,8 @@ function PANEL:OnSelect( index, value, data )
 
 	for k, v in pairs( data ) do
 
-		RunConsoleCommand( k, tostring( v ) )
+		local success, serial = SafeSerialize( v )
+		if ( success && serial != nil ) then RunConsoleCommand( k, serial ) end
 
 	end
 
