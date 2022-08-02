@@ -100,22 +100,29 @@
 					<rank ng-click="ChangeOrder( CurrentGamemode, 'recommended' )" ng-tranny="'server_ranking'"></rank>
 				</div>
 
-				<div class='body scrollable'>
+				<div class='body scrollable' onscroll="UpdateInfiniteScroll( this );">
 
-					<div ng-repeat="server in CurrentGamemode.servers | filter: serverFilter | orderBy: CurrentGamemode.OrderBy : CurrentGamemode.OrderReverse | limitTo:256"
-						class="server {{ServerClass(server)}} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-mouseup="SelectServer( server, $event )" >
+					<div id="placeholder_pre" style="height: {{CurrentGamemode.server_offset * 22}}px"></div>
+
+					<div ng-repeat="server in CurrentGamemode.servers | orderBy: CurrentGamemode.OrderBy : CurrentGamemode.OrderReverse | filter: serverFilter | startFrom : CurrentGamemode.server_offset | limitTo : ServersPerPage"
+						class="server {{ ServerClass( server ) }} {{IfElse( CurrentGamemode.Selected == server, 'activeserver', '' )}}" ng-mouseup="SelectServer( server, $event )" >
+
 						<name>
 							<a class='favbutton {{IfElse( server.favorite, "favorited", "" )}}' ng-click="ToggleFavorite( server );$event.stopPropagation();"></a>
 							<img class="flag" src='asset://garrysmod/materials/flags16/{{server.flag}}.png' onerror="MissingFlag( this )" ng-show="server.flag"/>
 							<img class="passworded" src='img/server-passworded.png' ng-show="server.pass"/>
-							<span>{{server.name}}<tag ng-show="server.version_c<0">Outdated: {{server.version}}</tag><tag class="future" ng-show="server.version_c>0">Future version: {{server.version}}</tag></span>
+							<span>{{server.name}}
+								<tag class="{{IfElse( server.version_c > 0, 'future', '' )}}" ng-show="server.version_c != 0">{{IfElse( server.version_c > 0, 'Invalid version', 'Outdated' )}}: {{server.version}}</tag>
+							</span>
 						</name>
 						<ping>{{server.ping}}</ping>
 						<players>{{server.players}} / {{server.maxplayers}}</players>
 						<map>{{server.map}}</map>
-						<rank class='{{ServerRank(server)}}'>&nbsp;
-						</rank>
+						<rank class='{{ServerRank(server)}}'>&nbsp;</rank>
+
 					</div>
+
+					<div id="placeholder_post" style="height: {{(CurrentGamemode.servers.length - ServersPerPage - CurrentGamemode.server_offset) * 22}}px"></div>
 
 				</div>
 

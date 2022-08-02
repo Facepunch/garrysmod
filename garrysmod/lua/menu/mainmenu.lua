@@ -288,7 +288,7 @@ function GetServers( category, id )
 	Servers[ category ] = {}
 
 	local data = {
-		Callback = function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, workshopid, isAnon, version, loc, gmcat )
+		Callback = function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, workshopid, isAnon, netVersion, luaVersion, loc, gmcat )
 
 			if ( Servers[ category ] && Servers[ category ][ address ] ) then print( "Server Browser Error!", address, category ) return end
 			Servers[ category ][ address ] = true
@@ -302,12 +302,12 @@ function GetServers( category, id )
 				address = string.JavascriptSafe( address )
 				gm = string.JavascriptSafe( gm )
 				workshopid = string.JavascriptSafe( workshopid )
-				version = string.JavascriptSafe( tostring( version ) )
+				netVersion = string.JavascriptSafe( tostring( netVersion ) )
 				loc = string.JavascriptSafe( loc )
 				gmcat = string.JavascriptSafe( gmcat )
 
 				pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s" , "%s" );',
-					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid, tostring( isAnon ), version, tostring( serverlist.IsServerFavorite( address ) ), loc, gmcat ) )
+					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid, tostring( isAnon ), netVersion, tostring( serverlist.IsServerFavorite( address ) ), loc, gmcat ) )
 
 			else
 
@@ -466,7 +466,7 @@ end )
 timer.Simple( 0, function()
 
 	pnlMainMenu = vgui.Create( "MainMenuPanel" )
-	pnlMainMenu:Call( "UpdateVersion( '" .. VERSIONSTR:JavascriptSafe() .. "', '" .. BRANCH:JavascriptSafe() .. "' )" )
+	pnlMainMenu:Call( "UpdateVersion( '" .. VERSIONSTR:JavascriptSafe() .. "', '" .. NETVERSIONSTR:JavascriptSafe() .. "', '" .. BRANCH:JavascriptSafe() .. "' )" )
 
 	local language = GetConVarString( "gmod_language" )
 	LanguageChanged( language )

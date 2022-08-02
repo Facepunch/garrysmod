@@ -313,9 +313,9 @@ function UpdateGames( games )
 	UpdateDigest( gScope, 50 );
 }
 
-function UpdateVersion( version, branch )
+function UpdateVersion( version, netVersion, branch )
 {
-	GMOD_VERSION_INT = parseInt( version.replace( /\./g, "" ).substr( 2 ) ); // For server browser
+	GMOD_VERSION_INT = parseInt( netVersion.replace( /\./g, "" ) ); // For server browser
 
 	gScope.Version	= version;
 	gScope.Branch	= branch;
