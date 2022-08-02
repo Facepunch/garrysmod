@@ -252,7 +252,6 @@ function GM:PlayerSpawn( pl, transiton )
 	-- Stop observer mode
 	pl:UnSpectate()
 
-
 	player_manager.OnPlayerSpawn( pl, transiton )
 	player_manager.RunClass( pl, "Spawn" )
 
@@ -264,6 +263,7 @@ function GM:PlayerSpawn( pl, transiton )
 
 	-- Set player model
 	hook.Call( "PlayerSetModel", GAMEMODE, pl )
+
 	pl:SetupHands()
 
 end
