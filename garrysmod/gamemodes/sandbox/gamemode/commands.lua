@@ -987,6 +987,9 @@ local function MakeVehicle( ply, Pos, Ang, model, Class, VName, VTable, data )
 	Ent:Spawn()
 	Ent:Activate()
 
+	-- Some vehicles reset this in Spawn()
+	if ( data && data.ColGroup ) then Ent:SetCollisionGroup( data.ColGroup ) end
+
 	if ( Ent.SetVehicleClass && VName ) then Ent:SetVehicleClass( VName ) end
 	Ent.VehicleName = VName
 	Ent.VehicleTable = VTable
