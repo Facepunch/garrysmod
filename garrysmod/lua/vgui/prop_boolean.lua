@@ -44,10 +44,10 @@ function PANEL:Setup( vars )
 
 	end
 
-	if ( tobool( vars.readonly ) || vars.readonly == nil ) then
-		ctrl:SetEnabled( true )
-	else
+	if ( vars.readonly && tobool( vars.readonly ) ) then
 		ctrl:SetEnabled( false )
+	else
+		ctrl:SetEnabled( true )
 	end
 
 end

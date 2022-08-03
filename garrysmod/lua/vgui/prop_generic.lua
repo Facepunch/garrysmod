@@ -71,10 +71,10 @@ function PANEL:Setup( vars )
 		self:ValueChanged( newval )
 	end
 
-	if ( tobool( vars.readonly ) || vars.readonly == nil ) then
-		text:SetEnabled( true )
-	else
+	if ( vars.readonly && tobool( vars.readonly ) ) then
 		text:SetEnabled( false )
+	else
+		text:SetEnabled( true )
 	end
 
 end

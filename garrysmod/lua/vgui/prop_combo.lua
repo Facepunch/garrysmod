@@ -67,10 +67,10 @@ function PANEL:Setup( vars )
 		combo:SetEnabled( b )
 	end
 
-	if ( tobool( vars.readonly ) || vars.readonly == nil ) then
-		combo:SetEnabled( true )
-	else
+	if ( vars.readonly && tobool( vars.readonly ) ) then
 		combo:SetEnabled( false )
+	else
+		combo:SetEnabled( true )
 	end
 
 end

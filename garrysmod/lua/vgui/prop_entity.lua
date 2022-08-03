@@ -54,10 +54,10 @@ function PANEL:Setup( vars )
 		oldSetEnabled( b ) -- Also handle the text entry
 	end
 
-	if ( tobool( vars.readonly ) || vars.readonly == nil ) then
-		btn:SetEnabled( true )
-	else
+	if ( vars.readonly && tobool( vars.readonly ) ) then
 		btn:SetEnabled( false )
+	else
+		btn:SetEnabled( true )
 	end
 
 end
