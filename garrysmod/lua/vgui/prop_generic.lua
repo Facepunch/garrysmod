@@ -47,12 +47,6 @@ function PANEL:Setup( vars )
 	text:SetPaintBackground( false )
 	text:Dock( FILL )
 
-	if ( tobool( vars.enabled ) || vars.enabled == nil ) then
-		text:SetEnabled( true )
-	else
-		text:SetEnabled( false )
-	end
-
 	-- Return true if we're editing
 	self.IsEditing = function( self )
 		return text:IsEditing()
@@ -75,6 +69,12 @@ function PANEL:Setup( vars )
 	-- Alert row that value changed
 	text.OnValueChange = function( text, newval )
 		self:ValueChanged( newval )
+	end
+
+	if ( tobool( vars.readonly ) || vars.readonly == nil ) then
+		text:SetEnabled( true )
+	else
+		text:SetEnabled( false )
 	end
 
 end

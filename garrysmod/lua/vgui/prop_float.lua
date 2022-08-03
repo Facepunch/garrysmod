@@ -72,6 +72,12 @@ function PANEL:Setup( vars )
 
 	end
 
+	if ( tobool( vars.readonly ) || vars.readonly == nil ) then
+		ctrl:SetEnabled( true )
+	else
+		ctrl:SetEnabled( false )
+	end
+
 end
 
 derma.DefineControl( "DProperty_Float", "", PANEL, "DProperty_Generic" )

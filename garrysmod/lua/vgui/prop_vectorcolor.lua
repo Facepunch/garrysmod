@@ -113,6 +113,12 @@ function PANEL:Setup( vars )
 		oldSetEnabled( b ) -- Also handle the text entry
 	end
 
+	if ( tobool( vars.readonly ) || vars.readonly == nil ) then
+		color:SetEnabled( true )
+	else
+		color:SetEnabled( false )
+	end
+
 end
 
 derma.DefineControl( "DProperty_VectorColor", "", PANEL, "DProperty_Generic" )
