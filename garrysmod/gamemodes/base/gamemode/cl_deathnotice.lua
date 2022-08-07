@@ -119,9 +119,9 @@ local function RecvNPCKilledNPC()
 
 	local victim	= "#" .. net.ReadString()
 	local inflictor	= net.ReadString()
-	local attacker	= "#" .. net.ReadString()
+	local attacker	= net.ReadString()
 
-	GAMEMODE:AddDeathNotice( attacker, -1, ( inflictor != "worldspawn" && inflictor || attacker ), victim, -1 )
+	GAMEMODE:AddDeathNotice( "#" .. attacker, -1, ( inflictor != "worldspawn" && inflictor || attacker ), victim, -1 )
 
 end
 net.Receive( "NPCKilledNPC", RecvNPCKilledNPC )
