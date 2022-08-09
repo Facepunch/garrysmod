@@ -113,10 +113,8 @@ function PANEL:Setup( vars )
 		oldSetEnabled( b ) -- Also handle the text entry
 	end
 
-	if ( vars.readonly && tobool( vars.readonly ) ) then
-		color:SetEnabled( false )
-	else
-		color:SetEnabled( true )
+	if ( vars && vars.readonly ) then
+		self:SetEnabled( false )
 	end
 
 end
