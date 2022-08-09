@@ -52,11 +52,10 @@ function PANEL:Setup( vars )
 		return text:IsEditing()
 	end
 
-	-- Enabled and disabled support
+	-- Enabled/disabled support
 	self.IsEnabled = function( self )
 		return text:IsEnabled()
 	end
-
 	self.SetEnabled = function( self, b )
 		text:SetEnabled( b )
 	end
@@ -71,10 +70,8 @@ function PANEL:Setup( vars )
 		self:ValueChanged( newval )
 	end
 
-	if ( vars.readonly && tobool( vars.readonly ) ) then
-		text:SetEnabled( false )
-	else
-		text:SetEnabled( true )
+	if ( vars && vars.readonly ) then
+		self:SetEnabled( false )
 	end
 
 end
