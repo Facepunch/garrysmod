@@ -67,12 +67,6 @@ function PANEL:Setup( vars )
 		combo:SetEnabled( b )
 	end
 
-	if ( vars.readonly && tobool( vars.readonly ) ) then
-		combo:SetEnabled( false )
-	else
-		combo:SetEnabled( true )
-	end
-
 end
 
 derma.DefineControl( "DProperty_Combo", "", PANEL, "DProperty_Generic" )

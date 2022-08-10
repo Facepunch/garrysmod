@@ -67,11 +67,9 @@ function PANEL:Setup( vars )
 
 	-- Alert row that value changed
 	text.OnValueChange = function( text, newval )
-		self:ValueChanged( newval )
-	end
 
-	if ( vars && vars.readonly ) then
-		self:SetEnabled( false )
+		self:ValueChanged( newval )
+
 	end
 
 end

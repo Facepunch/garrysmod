@@ -54,12 +54,6 @@ function PANEL:Setup( vars )
 		oldSetEnabled( b ) -- Also handle the text entry
 	end
 
-	if ( vars.readonly && tobool( vars.readonly ) ) then
-		btn:SetEnabled( false )
-	else
-		btn:SetEnabled( true )
-	end
-
 end
 
 derma.DefineControl( "DProperty_Entity", "", PANEL, "DProperty_Generic" )
