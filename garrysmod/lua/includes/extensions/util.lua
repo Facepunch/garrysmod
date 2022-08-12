@@ -379,8 +379,10 @@ do
 	]
 	local fmt = "lua/bin/gm" .. (CLIENT && "cl" || "sv") .. "_%s_%s.dll"
 	function util.IsBinaryModuleInstalled( name )
-		if ( !isstring( name ) || #name == 0 ) then
-			return false
+		if ( !isstring( name ) ) then
+			error( "bad argument #1 to 'IsBinaryModuleInstalled' (string expected, got " .. type( name ) .. ")" )
+		elseif ( #name == 0 ) then
+			error( "bad argument #1 to 'IsBinaryModuleInstalled' (string cannot be empty)" )
 		end
 
 		if ( file.Exists( string.format( fmt, name, suffix ), "GAME" ) ) then
