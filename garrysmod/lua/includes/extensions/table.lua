@@ -282,7 +282,7 @@ function table.Sanitise( t, done )
 
 	for k, v in pairs ( t ) do
 
-		if ( istable( v ) and !done[ v ] ) then
+		if ( istable( v ) and not IsColor( v ) and !done[ v ] ) then
 
 			done[ v ] = true
 			tbl[ k ] = table.Sanitise( v, done )
@@ -303,6 +303,15 @@ function table.Sanitise( t, done )
 				if y == 0 then y = nil end
 				if r == 0 then r = nil end
 				tbl[ k ] = { __type = "Angle", p = p, y = y, r = r }
+
+			elseif ( IsColor( v ) ) then
+
+				local r, g, b, a = v.r, v.g, v.b, v.a
+				if r == 255 then r = nil end
+				if g == 255 then g = nil end
+				if b == 255 then b = nil end
+				if a == 255 then a = nil end
+				tbl[ k ] = { __type = "Color", r = r, g = g, b = b, a = a }
 
 			elseif ( isbool( v ) ) then
 
@@ -333,7 +342,7 @@ function table.DeSanitise( t, done )
 
 	for k, v in pairs ( t ) do
 
-		if ( istable( v ) and !done[ v ] ) then
+		if ( istable( v ) and not IsColor(v) and !done[ v ] ) then
 
 			done[ v ] = true
 
@@ -341,11 +350,15 @@ function table.DeSanitise( t, done )
 
 				if ( v.__type == "Vector" ) then
 
-					tbl[ k ] = Vector( v.x, v.y, v.z )
+					tbl[ k ] = Vector( v.x or 0, v.y, v.z )
 
 				elseif ( v.__type == "Angle" ) then
 
-					tbl[ k ] = Angle( v.p, v.y, v.r )
+					tbl[ k ] = Angle( v.p or 0, v.y, v.r )
+
+				elseif ( v.__type == "Color" ) then
+
+					tbl[ k ] = Color( v.r or 255, v.g or 255, v.b or 255, v.a or 255 )
 
 				elseif ( v.__type == "Bool" ) then
 
