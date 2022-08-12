@@ -367,7 +367,7 @@ function util.RemovePData( steamid, name )
 end
 
 --[[---------------------------------------------------------
-	Name: BinaryModuleInstalled( name )
+	Name: IsBinaryModuleInstalled( name )
 	Desc: Returns whether a binary module with the given name is present on disk
 -----------------------------------------------------------]]
 do
@@ -378,7 +378,7 @@ do
 		+ 1
 	]
 	local fmt = "lua/bin/gm" .. (CLIENT && "cl" || "sv") .. "_%s_%s.dll"
-	function util.BinaryModuleInstalled( name )
+	function util.IsBinaryModuleInstalled( name )
 		if ( !isstring( name ) || #name == 0 ) then
 			return false
 		end
