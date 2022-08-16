@@ -592,7 +592,7 @@ L.target_credits = "Vasculhe para receber créditos não gastos"
 -- Traitor buttons (HUD buttons with hand icons that only traitors can see)
 L.tbut_single  = "Uso único"
 L.tbut_reuse   = "Reutilizável"
-L.tbut_retime  = "Reutilizável após {num} seg"
+L.tbut_retime  = "Reutilizável após {num} segundos"
 L.tbut_help    = "Pressione {key} para ativar"
 
 -- Equipment info lines (on the left above the health/ammo panel)
