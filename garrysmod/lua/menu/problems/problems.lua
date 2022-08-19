@@ -178,7 +178,8 @@ end
 -- Called from the engine to notify the player about a problem in a more user friendly way compared to a console message
 function FireProblemFromEngine( id, severity, params )
 	if ( id == "menu_cleanupgmas" ) then
-		FireProblem( { id = id, text = "#problem." .. id, type = "addons", fix = function() RunConsoleCommand( "menu_cleanupgmas" ) ClearProblem( id ) end } )
+		local text = language.GetPhrase( "problem." .. id ) .. "\n\n" .. params:Replace( ";", "\n" )
+		FireProblem( { id = id, text = text, type = "addons", fix = function() RunConsoleCommand( "menu_cleanupgmas" ) ClearProblem( id ) end } )
 	else
 		-- missing_addon_file
 		-- addon_download_failed = title;reason
@@ -251,3 +252,73 @@ if ( !render.SupportsHDR() ) then FireProblem( { text = "#problem.no_hdr", type 
 if ( !render.SupportsPixelShaders_1_4() ) then FireProblem( { text = "#problem.no_ps14", type = "hardware" } ) end
 if ( !render.SupportsPixelShaders_2_0() ) then FireProblem( { text = "#problem.no_ps20", type = "hardware" } ) end
 if ( !render.SupportsVertexShaders_2_0() ) then FireProblem( { text = "#problem.no_vs20", type = "hardware" } ) end
+
+
+
+local AddonConflicts = {}
+
+hook.Add( "OnNotifyAddonConflict", "AddonConflictNotification", function( addon1, addon2, fileName )
+
+	local id  = addon1 .. "vs" .. addon2
+	local id1 = addon2 .. "vs" .. addon1
+	if ( AddonConflicts[ id1 ] ) then id = id1 end
+
+	if ( AddonConflicts[ id ] == nil ) then
+		AddonConflicts[ id ] = {
+			addon1 = addon1,
+			addon2 = addon2,
+			files = {}
+		}
+
+		steamworks.FileInfo( addon1, function( result )
+
+			if ( !result ) then return end
+
+			AddonConflicts[ id ].addon1 = result.title
+			RefreshAddonConflicts()
+
+		end )
+
+		steamworks.FileInfo( addon2, function( result )
+
+			if ( !result ) then return end
+
+			AddonConflicts[ id ].addon2 = result.title
+			RefreshAddonConflicts()
+
+		end )
+
+	end
+
+	table.insert( AddonConflicts[ id ].files, fileName )
+
+	RefreshAddonConflicts()
+
+end )
+
+function RefreshAddonConflicts()
+	timer.Create( "addon_conflicts", 1, 1, FireAddonConflicts )
+end
+
+function FireAddonConflicts()
+
+	for id, tbl in pairs( AddonConflicts ) do
+
+		local files = ""
+		for _, file in ipairs( tbl.files ) do
+			files = files .. file .. "\n"
+		end
+
+		local text = language.GetPhrase( "problem.addon_conflict" )
+		text = text:format( "<color=255,128,0>" .. tbl.addon1 .. "</color>", "<color=255,128,0>" .. tbl.addon2 .. "</color>", files )
+
+		FireProblem( {
+			id = id,
+			type = "addons",
+			severity = 0,
+			text = text
+		} )
+
+	end
+
+end

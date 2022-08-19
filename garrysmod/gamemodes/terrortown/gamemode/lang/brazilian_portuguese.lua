@@ -592,7 +592,7 @@ L.target_credits = "Vasculhe para receber créditos não gastos"
 -- Traitor buttons (HUD buttons with hand icons that only traitors can see)
 L.tbut_single  = "Uso único"
 L.tbut_reuse   = "Reutilizável"
-L.tbut_retime  = "Reutilizável após {num} seg"
+L.tbut_retime  = "Reutilizável após {num} segundos"
 L.tbut_help    = "Pressione {key} para ativar"
 
 -- Equipment info lines (on the left above the health/ammo panel)
@@ -1085,4 +1085,4 @@ L.idle_popup_title = "Ausência"
 L.sb_playervolume = "Volume do jogador"
 
 --- 2021-09-22
-L.tip41 = "Você pode ajustar o volume do microfone de um jogador ao clicar com o botão direito no ícone de silencar dele no placar."
+L.tip41 = "Você pode ajustar o volume do microfone de um jogador ao clicar com o botão direito no ícone de silenciar dele no placar."

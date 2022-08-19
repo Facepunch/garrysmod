@@ -299,11 +299,13 @@ function meta:__index( key )
 
 end
 
-function string.StartWith( String, Start )
+function string.StartsWith( String, Start )
 
 	return string.sub( String, 1, string.len( Start ) ) == Start
 
 end
+
+string.StartWith = string.StartsWith
 
 function string.EndsWith( String, End )
 
@@ -334,7 +336,10 @@ end
 
 function string.Comma( number )
 
-	if ( isnumber( number ) ) then number = tostring( number ) end
+	if ( isnumber( number ) ) then
+		number = string.format( "%f", number )
+		number = string.match( number, "^(.-)%.?0*$" ) -- Remove trailing zeros
+	end
 
 	local index = -1
 	while index ~= 0 do number, index = number:gsub( "^(-?%d+)(%d%d%d)", "%1,%2" ) end

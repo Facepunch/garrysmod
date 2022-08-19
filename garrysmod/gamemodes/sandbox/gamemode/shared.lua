@@ -115,7 +115,7 @@ end
 function GM:PhysgunPickup( ply, ent )
 
 	-- Don't pick up persistent props
-	if ( ent:GetPersistent() ) then return false end
+	if ( ent:GetPersistent() && GetConVarString( "sbox_persist" ):Trim() != "" ) then return false end
 
 	if ( ent:IsValid() && ent.PhysgunPickup ) then
 		return ent:PhysgunPickup( ply )

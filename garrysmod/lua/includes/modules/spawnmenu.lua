@@ -107,7 +107,7 @@ function ActivateTool( strName, noCommand )
 
 				if ( istable( item ) && item.ItemName && item.ItemName == strName ) then
 
-					if ( !noCommand && item.Command ) then
+					if ( !noCommand && item.Command && string.len( item.Command ) > 1 ) then
 						RunConsoleCommand( unpack( string.Explode( " ", item.Command ) ) )
 					end
 

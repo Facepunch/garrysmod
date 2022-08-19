@@ -74,7 +74,11 @@ if ( SERVER ) then
 
 		end
 
-		gmsave.LoadMap( savedata, game.SinglePlayer() && Entity( 1 ) || nil )
+		local ply = nil
+		if ( IsValid( Entity( 1 ) ) && ( game.SinglePlayer() || Entity( 1 ):IsListenServerHost() ) ) then ply = Entity( 1 ) end
+		if ( !IsValid( ply ) && #player.GetHumans() == 1 ) then ply = player.GetHumans()[ 1 ] end
+
+		gmsave.LoadMap( savedata, ply )
 
 	end
 

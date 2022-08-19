@@ -37,7 +37,10 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	if ( IsValid( attacker ) ) then
 
 		AttackerClass = attacker:GetClass()
-	
+
+		-- If there is no valid inflictor, use the attacker (i.e. manhacks)
+		if ( !IsValid( inflictor ) ) then InflictorClass = attacker:GetClass() end
+
 		if ( attacker:IsPlayer() ) then
 
 			net.Start( "PlayerKilledNPC" )

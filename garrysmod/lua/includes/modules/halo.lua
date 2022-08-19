@@ -104,6 +104,7 @@ function Render( entry )
 	-- Restore the original scene
 	render.SetRenderTarget( rt_Scene )
 	mat_Copy:SetTexture( "$basetexture", rt_Store )
+	mat_Copy:SetString( "$color", "1 1 1" )
 	render.SetMaterial( mat_Copy )
 	render.DrawScreenQuad()
 

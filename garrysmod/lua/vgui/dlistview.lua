@@ -61,6 +61,18 @@ end
 
 function PANEL:AddColumn( strName, iPosition )
 
+	if ( iPosition ) then
+		if ( iPosition <= 0 ) then
+			ErrorNoHaltWithStack( "Attempted to insert column at invalid position ", iPosition )
+			return
+		end
+	
+		if ( IsValid( self.Columns[ iPosition ] ) ) then
+			ErrorNoHaltWithStack( "Attempted to insert duplicate column." )
+			return
+		end
+	end
+
 	local pColumn = nil
 
 	if ( self.m_bSortable ) then
@@ -76,8 +88,10 @@ function PANEL:AddColumn( strName, iPosition )
 
 		table.insert( self.Columns, iPosition, pColumn )
 
-		for i = 1, #self.Columns do
-			self.Columns[ i ]:SetColumnID( i )
+		local i = 1
+		for id, pnl in pairs( self.Columns ) do
+			pnl:SetColumnID( i )
+			i = i + 1
 		end
 
 	else
@@ -119,7 +133,7 @@ end
 
 function PANEL:FixColumnsLayout()
 
-	local NumColumns = #self.Columns
+	local NumColumns = table.Count( self.Columns )
 	if ( NumColumns == 0 ) then return end
 
 	local AllWidth = 0
@@ -234,7 +248,7 @@ function PANEL:OnRequestResize( SizingColumn, iSize )
 	-- Find the column to the right of this one
 	local Passed = false
 	local RightColumn = nil
-	for k, Column in ipairs( self.Columns ) do
+	for k, Column in pairs( self.Columns ) do
 
 		if ( Passed ) then
 			RightColumn = Column

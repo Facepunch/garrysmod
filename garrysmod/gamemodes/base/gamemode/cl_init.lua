@@ -54,9 +54,16 @@ function GM:HUDShouldDraw( name )
 
 		local wep = ply:GetActiveWeapon()
 
-		if ( IsValid( wep ) && wep.HUDShouldDraw != nil ) then
+		if ( IsValid( wep ) ) then
 
-			return wep.HUDShouldDraw( wep, name )
+			local fShouldDraw = wep.HUDShouldDraw
+
+			if ( isfunction( fShouldDraw ) ) then
+
+				local ret = fShouldDraw( wep, name )
+				if ( ret != nil ) then return ret end
+
+			end
 
 		end
 
@@ -162,10 +169,13 @@ function GM:OnPlayerChat( player, strText, bTeamOnly, bPlayerIsDead )
 		table.insert( tab, "Console" )
 	end
 
-	table.insert( tab, color_white )
-	table.insert( tab, ": " .. strText )
+	local filter_context = TEXT_FILTER_GAME_CONTENT
+	if ( bit.band( GetConVarNumber( "cl_chatfilters" ), 64 ) != 0 ) then filter_context = TEXT_FILTER_CHAT end
 
-	chat.AddText( unpack(tab) )
+	table.insert( tab, color_white )
+	table.insert( tab, ": " .. util.FilterText( strText, filter_context, IsValid( player ) and player or nil ) )
+
+	chat.AddText( unpack( tab ) )
 
 	return true
 

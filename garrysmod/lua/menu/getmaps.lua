@@ -2,6 +2,8 @@
 local MapPatterns = {}
 local MapNames = {}
 
+local AddonMaps = {}
+
 local function UpdateMaps()
 
 	MapPatterns = {}
@@ -203,6 +205,16 @@ local function UpdateMaps()
 
 	end
 
+	AddonMaps = {}
+	for k, addon in ipairs( engine.GetAddons() ) do
+
+		local name = addon.title or "Unnammed Addon"
+
+		local files, folders = file.Find( "maps/*.bsp", name )
+		if ( #files > 0 ) then AddonMaps[ name ] = files end
+
+	end
+
 end
 
 local favmaps
@@ -214,13 +226,24 @@ local function LoadFavourites()
 
 end
 
+function UpdateAddonMapList()
+
+	local json = util.TableToJSON( AddonMaps )
+	if ( !json ) then return end
+
+	pnlMainMenu:Call( "UpdateAddonMaps(" .. json .. ")" )
+
+end
+
 -- Called from JS when starting a new game
 function UpdateMapList()
 
-	local MapList = GetMapList()
-	if ( !MapList ) then return end
+	UpdateAddonMapList()
 
-	local json = util.TableToJSON( MapList )
+	local mapList = GetMapList()
+	if ( !mapList ) then return end
+
+	local json = util.TableToJSON( mapList )
 	if ( !json ) then return end
 
 	pnlMainMenu:Call( "UpdateMaps(" .. json .. ")" )
@@ -333,7 +356,7 @@ local function RefreshMaps( skip )
 			if ( !MapList[ "Counter-Strike: GO" ] ) then
 				MapList[ "Counter-Strike: GO" ] = {}
 			end
-			-- We have to make the CS:GO name different from the CS:S name to prevent Favourites conflicts
+			-- HACK: We have to make the CS:GO name different from the CS:S name to prevent Favourites conflicts
 			table.insert( MapList[ "Counter-Strike: GO" ], name .. " " )
 		end
 

@@ -86,6 +86,10 @@ function PANEL:OnDeactivate()
 	self.LoadedURL = nil
 	self.NumDownloadables = 0
 
+	-- Notify the user that the game is ready.
+	-- TODO: A convar for this?
+	system.FlashWindow()
+
 end
 
 function PANEL:Think()

@@ -376,7 +376,8 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 		return
 	end
 
-	if ( NPCData.AdminOnly && !ply:IsAdmin() ) then return end
+	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) || game.SinglePlayer()
+	if ( NPCData.AdminOnly && !isAdmin ) then return end
 
 	local bDropToFloor = false
 
@@ -489,7 +490,8 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 
 	-- For those NPCs that set their model in Spawn function
 	-- We have to keep the call above for NPCs that want a model set by Spawn() time
-	if ( NPCData.Model && NPC:GetModel() != NPCData.Model ) then
+	-- BAD: They may adversly affect entity collision bounds
+	if ( NPCData.Model && NPC:GetModel():lower() != NPCData.Model:lower() ) then
 		NPC:SetModel( NPCData.Model )
 	end
 
@@ -527,12 +529,11 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 		local vStart = ply:GetShootPos()
 		local vForward = ply:GetAimVector()
 
-		local trace = {}
-		trace.start = vStart
-		trace.endpos = vStart + vForward * 2048
-		trace.filter = ply
-
-		tr = util.TraceLine( trace )
+		tr = util.TraceLine( {
+			start = vStart,
+			endpos = vStart + ( vForward * 2048 ),
+			filter = ply
+		} )
 
 	end
 
@@ -687,6 +688,8 @@ AddNPCToDuplicator( "monster_sentry" )
 -----------------------------------------------------------]]
 local function CanPlayerSpawnSENT( ply, EntityName )
 
+	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) || game.SinglePlayer()
+
 	-- Make sure this is a SWEP
 	local sent = scripted_ents.GetStored( EntityName )
 	if ( sent == nil ) then
@@ -696,7 +699,7 @@ local function CanPlayerSpawnSENT( ply, EntityName )
 		if ( !SpawnableEntities ) then return false end
 		local EntTable = SpawnableEntities[ EntityName ]
 		if ( !EntTable ) then return false end
-		if ( EntTable.AdminOnly && !ply:IsAdmin() ) then return false end
+		if ( EntTable.AdminOnly && !isAdmin ) then return false end
 		return true
 
 	end
@@ -706,8 +709,8 @@ local function CanPlayerSpawnSENT( ply, EntityName )
 	if ( !isfunction( SpawnFunction ) ) then return false end
 
 	-- You're not allowed to spawn this unless you're an admin!
-	if ( !scripted_ents.GetMember( EntityName, "Spawnable" ) && !ply:IsAdmin() ) then return false end
-	if ( scripted_ents.GetMember( EntityName, "AdminOnly" ) && !ply:IsAdmin() ) then return false end
+	if ( !scripted_ents.GetMember( EntityName, "Spawnable" ) && !isAdmin ) then return false end
+	if ( scripted_ents.GetMember( EntityName, "AdminOnly" ) && !isAdmin ) then return false end
 
 	return true
 
@@ -729,17 +732,16 @@ function Spawn_SENT( ply, EntityName, tr )
 	-- Ask the gamemode if it's ok to spawn this
 	if ( !gamemode.Call( "PlayerSpawnSENT", ply, EntityName ) ) then return end
 
-	local vStart = ply:EyePos()
-	local vForward = ply:GetAimVector()
-
 	if ( !tr ) then
 
-		local trace = {}
-		trace.start = vStart
-		trace.endpos = vStart + ( vForward * 4096 )
-		trace.filter = ply
+		local vStart = ply:EyePos()
+		local vForward = ply:GetAimVector()
 
-		tr = util.TraceLine( trace )
+		tr = util.TraceLine( {
+			start = vStart,
+			endpos = vStart + ( vForward * 4096 ),
+			filter = ply
+		} )
 
 	end
 
@@ -754,7 +756,8 @@ function Spawn_SENT( ply, EntityName, tr )
 		ClassName = EntityName
 
 			local SpawnFunction = scripted_ents.GetMember( EntityName, "SpawnFunction" )
-			if ( !SpawnFunction ) then return end
+			if ( !SpawnFunction ) then return end -- Fallback to default behavior below?
+
 			entity = SpawnFunction( sent, ply, tr, EntityName )
 
 			if ( IsValid( entity ) ) then
@@ -770,6 +773,7 @@ function Spawn_SENT( ply, EntityName, tr )
 		-- Spawn from list table
 		local SpawnableEntities = list.Get( "SpawnableEntities" )
 		if ( !SpawnableEntities ) then return end
+
 		local EntTable = SpawnableEntities[ EntityName ]
 		if ( !EntTable ) then return end
 
@@ -777,6 +781,17 @@ function Spawn_SENT( ply, EntityName, tr )
 
 		local SpawnPos = tr.HitPos + tr.HitNormal * 16
 		if ( EntTable.NormalOffset ) then SpawnPos = SpawnPos + tr.HitNormal * EntTable.NormalOffset end
+
+		-- Make sure the spawn position is not out of bounds
+		local oobTr = util.TraceLine( {
+			start = tr.HitPos,
+			endpos = SpawnPos,
+			mask = MASK_SOLID_BRUSHONLY
+		} )
+
+		if ( oobTr.Hit ) then
+			SpawnPos = oobTr.HitPos + oobTr.HitNormal * ( tr.HitPos:Distance( oobTr.HitPos ) / 2 )
+		end
 
 		entity = ents.Create( EntTable.ClassName )
 		entity:SetPos( SpawnPos )
@@ -793,6 +808,8 @@ function Spawn_SENT( ply, EntityName, tr )
 
 		entity:Spawn()
 		entity:Activate()
+
+		DoPropSpawnedEffect( entity )
 
 		if ( EntTable.DropToFloor ) then
 			entity:DropToFloor()
@@ -838,7 +855,8 @@ function CCGiveSWEP( ply, command, arguments )
 	if ( swep == nil ) then return end
 
 	-- You're not allowed to spawn this!
-	if ( ( !swep.Spawnable && !ply:IsAdmin() ) or ( swep.AdminOnly && !ply:IsAdmin() ) ) then
+	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	if ( ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) ) then
 		return
 	end
 
@@ -871,7 +889,8 @@ function Spawn_Weapon( ply, wepname, tr )
 	if ( swep == nil ) then return end
 
 	-- You're not allowed to spawn this!
-	if ( ( !swep.Spawnable && !ply:IsAdmin() ) or ( swep.AdminOnly && !ply:IsAdmin() ) ) then
+	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	if ( ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) ) then
 		return
 	end
 
@@ -889,7 +908,20 @@ function Spawn_Weapon( ply, wepname, tr )
 
 	DoPropSpawnedEffect( entity )
 
-	entity:SetPos( tr.HitPos + tr.HitNormal * 32 )
+	local SpawnPos = tr.HitPos + tr.HitNormal * 32
+
+	-- Make sure the spawn position is not out of bounds
+	local oobTr = util.TraceLine( {
+		start = tr.HitPos,
+		endpos = SpawnPos,
+		mask = MASK_SOLID_BRUSHONLY
+	} )
+
+	if ( oobTr.Hit ) then
+		SpawnPos = oobTr.HitPos + oobTr.HitNormal * ( tr.HitPos:Distance( oobTr.HitPos ) / 2 )
+	end
+
+	entity:SetPos( SpawnPos )
 	entity:Spawn()
 
 	undo.Create( "SWEP" )
@@ -954,6 +986,9 @@ local function MakeVehicle( ply, Pos, Ang, model, Class, VName, VTable, data )
 
 	Ent:Spawn()
 	Ent:Activate()
+
+	-- Some vehicles reset this in Spawn()
+	if ( data && data.ColGroup ) then Ent:SetCollisionGroup( data.ColGroup ) end
 
 	if ( Ent.SetVehicleClass && VName ) then Ent:SetVehicleClass( VName ) end
 	Ent.VehicleName = VName
