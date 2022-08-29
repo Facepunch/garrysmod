@@ -80,7 +80,7 @@ function PANEL:PositionTooltip()
 
 	y = y - 50
 
-	y = math.min( y, ly - h )
+	y = math.min( y, ly - h - 10 )
 	if ( y < 2 ) then y = 2 end
 
 	-- Fixes being able to be drawn off screen
