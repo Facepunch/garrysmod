@@ -25,7 +25,9 @@ function PANEL:Init()
 end
 
 function PANEL:OnClose()
-	self:OnReject()
+	if not self.handled then
+		self:OnReject()
+	end
 end
 
 -- No mercy
@@ -86,6 +88,7 @@ function PANEL:RebuildContents()
 		self.rejectButton:Dock( RIGHT )
 		self.rejectButton:DockMargin( 0, 4, 4, 4 ) -- Outer
 		self.rejectButton.DoClick = function()
+			self.handled = true
 			self:OnReject()
 			self:Close()
 		end
@@ -101,6 +104,7 @@ function PANEL:RebuildContents()
 		self.acceptButton:Dock( RIGHT )
 		self.acceptButton:DockMargin( 0, 4, 4, 4 ) -- Outer
 		self.acceptButton.DoClick = function()
+			self.handled = true
 			self:OnAccept()
 			self:Close()
 		end
