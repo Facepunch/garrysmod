@@ -24,6 +24,10 @@ function PANEL:Init()
 	self:SetRejectButtonEnabled( true )
 end
 
+function PANEL:OnClose()
+	self:OnReject()
+end
+
 -- No mercy
 function PANEL:KillChildren()
 	for _, child in pairs( self.children ) do
