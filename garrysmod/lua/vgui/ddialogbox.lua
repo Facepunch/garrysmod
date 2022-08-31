@@ -76,7 +76,7 @@ function PANEL:RebuildContents()
 	-- Delete all the previous VGUI child elements in this panel
 	self:KillChildren()
 	
-	self.primaryPanel = self:Add( "DPanel" )
+	self.primaryPanel = vgui.Create( "DPanel", self )
 	self.primaryPanel:DockMargin( 0, 0, 0, 0 ) -- Outer
 	self.primaryPanel:DockPadding( 4, 4, 4, 4 ) -- Inner
 	self.primaryPanel:Dock( TOP )
@@ -86,7 +86,7 @@ function PANEL:RebuildContents()
 	-- Main read-only text content of the dialog
 	if #self.text > 0 then
 		-- Create the primary label, set text, and resize to fit content
-		self.label = self.primaryPanel:Add( "DLabel" )
+		self.label = vgui.Create( "DLabel", self.primaryPanel )
 		self.label:Dock( TOP )
 		self.label:DockMargin( 0, 0, 0, 4 ) -- Outer
 		self.label:SetText( self.text )
@@ -95,7 +95,7 @@ function PANEL:RebuildContents()
 		self.label:SetAutoStretchVertical( true )
 	end
 	
-	self.secondaryPanel = self:Add( "DPanel" )
+	self.secondaryPanel = vgui.Create( "DPanel", self )
 	self.secondaryPanel:DockMargin( 0, 0, 0, 0 ) -- Outer
 	self.secondaryPanel:DockPadding( 0, 0, 0, 0 ) -- Inner
 	self.secondaryPanel:Dock( TOP )
@@ -104,7 +104,7 @@ function PANEL:RebuildContents()
 	table.insert( self.children, self.secondaryPanel )
 	
 	if self:GetRejectButtonEnabled() then
-		self.rejectButton = self.secondaryPanel:Add( "DButton" )
+		self.rejectButton = vgui.Create( "DButton", self.secondaryPanel )
 		self.rejectButton:SetText( self:GetRejectButtonText() )
 		self.rejectButton:SizeToContents()
 		local width = self.rejectButton:GetWide()
@@ -120,7 +120,7 @@ function PANEL:RebuildContents()
 	end
 	
 	if self:GetAcceptButtonEnabled() then
-		self.acceptButton = self.secondaryPanel:Add( "DButton" )
+		self.acceptButton = vgui.Create( "DButton", self.secondaryPanel )
 		self.acceptButton:SetText( self:GetAcceptButtonText() )
 		self.acceptButton:SizeToContents()
 		local width = self.acceptButton:GetWide()
@@ -186,7 +186,7 @@ function PANEL:SetRejectButtonText( value )
 	self:RebuildContents()
 end
 
-function PANEL:AddPanel( newPanelName )
+function PANEL:Add( newPanelName )
 	return self.primaryPanel:Add( newPanelName )
 end
 
