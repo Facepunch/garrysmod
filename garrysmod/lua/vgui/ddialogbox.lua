@@ -14,8 +14,7 @@ function PANEL:Init()
 	
 	---
 	
-	self:SetLabelText( "This is a dialog box.\n\nUse SetLabelText to change this label." )
-	self:SetLabelEnabled( true )
+	self:SetText( "" )
 	
 	self:SetAcceptButtonText( "#GameUI_OK" )
 	self:SetAcceptButtonEnabled( true )
@@ -59,12 +58,12 @@ function PANEL:RebuildContents()
 	table.insert( self.children, self.primaryPanel )
 	
 	-- Main read-only text content of the dialog
-	if self:GetLabelEnabled() then
+	if #self.text > 0 then
 		-- Create the primary label, set text, and resize to fit content
 		self.label = self.primaryPanel:Add( "DLabel" )
 		self.label:Dock( TOP )
 		self.label:DockMargin( 0, 0, 0, 4 ) -- Outer
-		self.label:SetText( self:GetLabelText() )
+		self.label:SetText( self.text )
 		self.label:SizeToContents()
 		self.label:SetWrap( true )
 		self.label:SetAutoStretchVertical( true )
@@ -114,22 +113,12 @@ function PANEL:RebuildContents()
 	self:Invalidate()
 end
 
--- The primary label is the label shown inside the dialog box
-function PANEL:GetLabelEnabled()
-	return self.isLabelEnabled
+function PANEL:GetText()
+	return self.text
 end
 
-function PANEL:SetLabelEnabled( value )
-	self.isLabelEnabled = value
-	self:RebuildContents()
-end
-
-function PANEL:GetLabelText()
-	return self.labelText
-end
-
-function PANEL:SetLabelText( value )
-	self.labelText = value
+function PANEL:SetText( value )
+	self.text = value
 	self:RebuildContents()
 end
 
