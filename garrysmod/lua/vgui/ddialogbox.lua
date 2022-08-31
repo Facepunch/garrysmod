@@ -186,8 +186,13 @@ function PANEL:SetRejectButtonText( value )
 	self:RebuildContents()
 end
 
-function PANEL:Add( newPanelName )
-	return self.primaryPanel:Add( newPanelName )
+-- Dock a new/existing panel to the dialog box
+-- newPanel is either a string with the panel class name or an existing panel
+function PANEL:Add( newPanel )
+	local pnl = self.primaryPanel:Add( newPanel )
+	pnl:Dock( TOP )
+	self:Invalidate()
+	return pnl
 end
 
 
