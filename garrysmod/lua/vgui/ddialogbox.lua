@@ -30,21 +30,17 @@ function PANEL:GenerateExample( className, propertySheet, width, height )
 	dialog:SetText( "This is an example dialog box.\n\nYou can display information to the user here and request an action be taken.\n" )
 	dialog:SetAcceptButtonText( "Custom Accept Button Text" )
 	
-	local firstNameInput = dialog:AddPanel( "DTextEntry" )
+	local firstNameInput = dialog:Add( "DTextEntry" )
 	firstNameInput:SetPlaceholderText( "First name" )
-	firstNameInput:Dock( TOP )  -- Do not use Dock( FILL )
 	firstNameInput:DockMargin( 0, 0, 0, 0 )
 	
-	local lastNameInput = dialog:AddPanel( "DTextEntry" )
+	local lastNameInput = dialog:Add( "DTextEntry" )
 	lastNameInput:SetPlaceholderText( "Last name" )
-	lastNameInput:Dock( TOP )  -- Do not use Dock( FILL )
 	lastNameInput:DockMargin( 0, 4, 0, 0 )
 	lastNameInput.OnEnter = function()
 		dialog:OnAccept()
 		dialog:Close()
 	end
-	
-	dialog:Invalidate()
 
 	propertySheet:AddSheet( className, dialog, nil, true, true )
 end
