@@ -959,7 +959,7 @@ L.aw_sip1_text  = "calou a boca de {num} pessoas com sua pistola silenciada."
 L.aw_sip2_title = "ASSASSINO SILENCIOSO"
 L.aw_sip2_text  = "matou {num} pessoas que não ouviram sua própria morte."
 
-L.aw_knf1_title = "ESFAQUEAR-LHE-EI"
+L.aw_knf1_title = "ESFAQUEÁ-LO-EI"
 L.aw_knf1_text  = "esfaqueou a cara de alguém pela internet."
 
 L.aw_knf2_title = "ONDE VOCÊ CONSEGUIU ISSO?"
