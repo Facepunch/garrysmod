@@ -695,7 +695,7 @@ L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapi
 
 L.tip15 = "Você é um Traidor e quer tentar matar alguém com um rifle de precisão? Considere habilitar o Disfarce antes. Se você errar um tiro, fuja para um local seguro, desabilite o Disfarce, e ninguém saberá que era você que estava atirando neles."
 
-L.tip16 = "Como Traidor, o Teletransportador pode ajudar-lhe a escapar enquanto você estiver sendo perseguido, além de permitir que você se desloque rapidamente em um mapa grande. Certifique-se de sempre ter uma posição segura marcada."
+L.tip16 = "Como Traidor, o Teletransportador pode ajudá-lo a escapar enquanto você estiver sendo perseguido, além de permitir que você se desloque rapidamente em um mapa grande. Certifique-se de sempre ter uma posição segura marcada."
 
 L.tip17 = "Os inocentes estão todos agrupados sendo difíceis de serem mortos? Considere experimentar o Rádio para reproduzir sons de um C4 ou de um tiroteio para fazer com que eles se desagrupem."
 
@@ -884,7 +884,7 @@ L.aw_nkt3_text  = "acabou com três vidas inocentes de terrorismo hoje."
 L.aw_nkt4_title = "O LOBO ENTRE LOBOS QUE MAIS PARECEM OVELHAS"
 L.aw_nkt4_text  = "comeu terroristas inocentes no jantar. Um jantar de {num} pratos."
 
-L.aw_nkt5_title = "OPERAÇÃO CONTRA-TERRORISTA"
+L.aw_nkt5_title = "OPERAÇÃO CONTRATERRORISTA"
 L.aw_nkt5_text  = "é pago por cada assassinato. Agora já pode comprar outro iate luxuoso."
 
 L.aw_nki1_title = "TRAIA ISTO"
