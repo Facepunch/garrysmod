@@ -60,7 +60,7 @@ function GM:PlayerBindPress(ply, bind, pressed)
          WSWITCH:SelectSlot(idx)
       end
       return true
-   elseif string.find(bind, "zoom") and pressed then
+   elseif bind == "+zoom" and pressed then
       -- open or close radio
       RADIO:ShowRadioCommands(not RADIO.Show)
       return true
