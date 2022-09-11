@@ -162,13 +162,13 @@ workshopicon description
 	top: 0px;
 	bottom: 0px;
 	right: 0;
-	text-align: justify;
+	text-align: left;
 	background-color: rgba( 70, 180, 250, 0.95 );
 	font-size: 11px;
 	padding: 32px 8px;
 	color: #fff;
 	cursor: default;
-	word-break: break-all;
+	word-break: break-word;
 
 	opacity: 0;
 	-webkit-transition: opacity 100ms ease-in 0ms;
