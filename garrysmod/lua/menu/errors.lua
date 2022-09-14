@@ -58,7 +58,7 @@ local matAlert = Material( "icon16/error.png" )
 hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 
 	if ( table.IsEmpty( Errors ) ) then return end
-	if ( GetConVarNumber( "cl_drawhud" ) == 0 ) then return end
+	if ( ! GetConVar("cl_drawhud"):GetBool() ) then return end
 
 	local idealy = 32
 	local height = 30
