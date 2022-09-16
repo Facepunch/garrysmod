@@ -60,7 +60,7 @@ local cl_drawhud = GetConVar("cl_drawhud")
 hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 
 	if ( table.IsEmpty( Errors ) ) then return end
-	if (! cl_drawhud:GetBool() ) then return end
+	if ( !cl_drawhud:GetBool() ) then return end
 
 	local idealy = 32
 	local height = 30
