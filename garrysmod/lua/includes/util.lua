@@ -274,6 +274,10 @@ function tobool( val )
 	return true
 end
 
+function util.PrecacheLuaTable(table)
+	return {table}
+end
+
 --[[---------------------------------------------------------
 	Universal function to filter out crappy models by name
 -----------------------------------------------------------]]
