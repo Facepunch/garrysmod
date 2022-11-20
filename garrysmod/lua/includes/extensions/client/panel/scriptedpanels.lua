@@ -16,7 +16,7 @@ function vgui.GetControlTable( name )
 	return PanelFactory[ name ]
 end
 
-function vgui.Create( classname, parent, name, ... )
+function vgui.Create( classname, parent, name )
 
 	-- Is this a user-created panel?
 	if ( PanelFactory[ classname ] ) then
@@ -47,7 +47,7 @@ function vgui.Create( classname, parent, name, ... )
 
 end
 
-function vgui.CreateFromTable( metatable, parent, name, ... )
+function vgui.CreateFromTable( metatable, parent, name )
 
 	if ( !istable( metatable ) ) then return nil end
 
