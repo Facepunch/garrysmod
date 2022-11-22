@@ -22,15 +22,11 @@ function ENT:Initialize()
 
    self:PhysicsInit( SOLID_VPHYSICS )
    self:SetMoveType( MOVETYPE_VPHYSICS )
-   self:SetSolid( SOLID_BBOX )
+   self:AddSolidFlags( FSOLID_TRIGGER )
 
-   self:SetCollisionGroup( COLLISION_GROUP_WEAPON)
-   local b = 26
-   self:SetCollisionBounds(Vector(-b, -b, -b), Vector(b,b,b))
+   self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 
-   if SERVER then
-      self:SetTrigger(true)
-   end
+   self:UseTriggerBounds( true, 24 )
 
    self.tickRemoval = false
 
@@ -50,9 +46,11 @@ function ENT:PlayerCanPickup(ply)
    if ply == self:GetOwner() then return false end
 
    local result = hook.Call("TTTCanPickupAmmo", nil, ply, self)
-   if result then
+
+   if result != nil then
       return result
    end
+
 
    local ent = self
    local phys = ent:GetPhysicsObject()

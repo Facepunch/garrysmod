@@ -109,7 +109,7 @@ if ( SERVER ) then
 
 			for key, val in pairs( cleanup_list[ id ] ) do
 
-				for key, ent in pairs( val ) do
+				for _, ent in pairs( val ) do
 
 					if ( IsValid( ent ) ) then ent:Remove() end
 					count = count + 1
@@ -153,9 +153,9 @@ if ( SERVER ) then
 
 			for key, ply in pairs( cleanup_list ) do
 
-				for key, type in pairs( ply ) do
+				for _, type in pairs( ply ) do
 
-					for key, ent in pairs( type ) do
+					for __, ent in pairs( type ) do
 
 						if ( IsValid( ent ) ) then ent:Remove() end
 
@@ -213,7 +213,7 @@ else
 
 		local Panel = controlpanel.Get( "User_Cleanup" )
 		if ( IsValid( Panel ) ) then
-			Panel:ClearControls()
+			Panel:Clear()
 			Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.cleanup.help" } )
 			Panel:Button( "#CleanupAll", "gmod_cleanup" )
 
@@ -224,7 +224,7 @@ else
 
 		local Panel = controlpanel.Get( "Admin_Cleanup" )
 		if ( IsValid( Panel ) ) then
-			Panel:ClearControls()
+			Panel:Clear()
 			Panel:AddControl( "Header", { Description = "#spawnmenu.utilities.cleanup.help" } )
 			Panel:Button( "#CleanupAll", "gmod_admin_cleanup" )
 

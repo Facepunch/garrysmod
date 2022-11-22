@@ -41,17 +41,33 @@ end
 
 function PANEL:CreateSaveNotification()
 
-	local SavePanel = vgui.Create( "DButton", self )
+	local SavePanel = vgui.Create( "Panel", self )
 	SavePanel:Dock( TOP )
-	SavePanel:DockMargin( 16, 1, 16, 4 )
-	SavePanel:SetIcon( "icon16/disk.png" )
-	SavePanel:SetText( "#spawnmenu.savechanges" )
 	SavePanel:SetVisible( false )
+	SavePanel:DockMargin( 8, 1, 8, 4 )
 
-	SavePanel.DoClick = function()
+	local SaveButton = vgui.Create( "DButton", SavePanel )
+	SaveButton:Dock( FILL )
+	SaveButton:SetIcon( "icon16/disk.png" )
+	SaveButton:SetText( "#spawnmenu.savechanges" )
+	SaveButton.DoClick = function()
 
 		SavePanel:SlideUp( 0.2 )
 		hook.Run( "OnSaveSpawnlist" )
+
+	end
+
+	local RevertButton = vgui.Create( "DButton", SavePanel )
+	RevertButton:Dock( RIGHT )
+	RevertButton:SetIcon( "icon16/arrow_rotate_clockwise.png" )
+	RevertButton:SetText( "" )
+	RevertButton:SetTooltip( "#spawnmenu.revert_tooptip" )
+	RevertButton:SetWide( 26 )
+	RevertButton:DockMargin( 4, 0, 0, 0 )
+	RevertButton.DoClick = function()
+
+		SavePanel:SlideUp( 0.2 )
+		hook.Run( "OnRevertSpawnlist" )
 
 	end
 

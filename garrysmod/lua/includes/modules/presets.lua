@@ -40,7 +40,8 @@ function Add( presetname, strName, pTable )
 	Presets[ presetname ] = Presets[ presetname ] or {}
 	Presets[ presetname ][ strName ] = pTable
 
-	SavePresets( Presets )
+	-- Only save the specific preset group, not ALL of them
+	SavePresets( { [ presetname ] = Presets[ presetname ] } )
 
 end
 
@@ -56,7 +57,8 @@ function Rename( presetname, strName, strToName )
 	Presets[ presetname ][ strToName ] = Presets[ presetname ][ strName ]
 	Presets[ presetname ][ strName ] = nil
 
-	SavePresets( Presets )
+	-- Only save the specific preset group, not ALL of them
+	SavePresets( { [ presetname ] = Presets[ presetname ] } )
 
 end
 
@@ -70,7 +72,8 @@ function Remove( presetname, strName )
 	Presets[ presetname ] = Presets[ presetname ] or {}
 	Presets[ presetname ][ strName ] = nil
 
-	SavePresets( Presets )
+	-- Only save the specific preset group, not ALL of them
+	SavePresets( { [ presetname ] = Presets[ presetname ] } )
 
 end
 

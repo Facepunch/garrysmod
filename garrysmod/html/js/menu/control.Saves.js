@@ -24,6 +24,8 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 
 	$scope.CategoriesSecondary =
 	[
+		"followed",
+		"favorite",
 		"friends",
 		"mine"
 	];
@@ -36,6 +38,13 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 		"courses",
 		"others"
 	];
+
+	$scope.Disabled = false;
+	if ( !IS_SPAWN_MENU ) lua.Run( "UpdateAddonDisabledState()" );
+
+	$scope.Subscribe = function( file ) { subscriptions.Subscribe( file.id ); }
+	$scope.Unsubscribe = function( file ) { subscriptions.Unsubscribe( file.id ); }
+	$scope.IsSubscribed = function( file ) { return subscriptions.Contains( String( file.id ) ); };
 
 	$scope.LoadSave = function( entry )
 	{
@@ -50,7 +59,7 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 		// TODO: Some kind of `please wait` while we download 200kb
 		//
 
-		gmod.DownloadSave( entry.info.fileid );
+		gmod.DownloadSave( entry.info.id );
 	}
 
 	$scope.DeleteLocal = function( entry )
@@ -58,7 +67,7 @@ function ControllerSaves($scope, $rootScope, $location, $timeout, $routeParams)
 		if ( IN_ENGINE )
 		{
 			gmod.DeleteLocal( entry.info.file );
-			gmod.DeleteLocal( entry.info.background );
+			gmod.DeleteLocal( entry.background );
 		}
 
 		$scope.Switch( $scope.Category, $scope.Offset );

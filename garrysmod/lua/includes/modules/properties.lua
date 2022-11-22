@@ -111,7 +111,9 @@ function CanBeTargeted( ent, ply )
 		local mins = ent:OBBMins()
 		local maxs = ent:OBBMaxs()
 		local maxRange = math.max( math.abs( mins.x ) + maxs.x, math.abs( mins.y ) + maxs.y, math.abs( mins.z ) + maxs.z )
-		if ( ent:GetPos():Distance( ply:GetShootPos() ) > maxRange + 1024 ) then return false end
+		local pos = ent:LocalToWorld( ent:OBBCenter() ) --ent:GetPos()
+
+		if ( pos:Distance( ply:GetShootPos() ) > maxRange + 1024 ) then return false end
 	end
 
 	return !( ent:GetPhysicsObjectCount() < 1 && ent:GetSolid() == SOLID_NONE && bit.band( ent:GetSolidFlags(), FSOLID_USE_TRIGGER_BOUNDS ) == 0 && bit.band( ent:GetSolidFlags(), FSOLID_CUSTOMRAYTEST ) == 0 )

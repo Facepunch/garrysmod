@@ -108,8 +108,8 @@ function SWEP:Tick()
 
 	if ( !cmd:KeyDown( IN_ATTACK2 ) ) then return end -- Not holding Mouse 2, bail
 
-	self:SetZoom( math.Clamp( self:GetZoom() + cmd:GetMouseY() * 0.1, 0.1, 175 ) ) -- Handles zooming
-	self:SetRoll( self:GetRoll() + cmd:GetMouseX() * 0.025 ) -- Handles rotation
+	self:SetZoom( math.Clamp( self:GetZoom() + cmd:GetMouseY() * FrameTime() * 6.6, 0.1, 175 ) ) -- Handles zooming
+	self:SetRoll( self:GetRoll() + cmd:GetMouseX() * FrameTime() * 1.65 ) -- Handles rotation
 
 end
 

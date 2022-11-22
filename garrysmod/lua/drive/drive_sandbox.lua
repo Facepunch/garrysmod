@@ -132,6 +132,10 @@ drive.Register( "drive_sandbox",
 		--
 		local speed = 0.0005 * FrameTime()
 		if ( mv:KeyDown( IN_SPEED ) ) then speed = 0.005 * FrameTime() end
+		if ( mv:KeyDown( IN_DUCK ) ) then speed = 0.00005 * FrameTime() end
+
+		-- Simulate noclip's action when holding space
+		if ( mv:KeyDown( IN_JUMP ) ) then mv:SetUpSpeed( 10000 ) end
 
 		--
 		-- Get information from the movedata

@@ -15,7 +15,8 @@ function ws_dupe:FetchLocal( offset, perpage )
 		local entry = {
 			file	= "dupes/" .. v,
 			name	= v:StripExtension(),
-			preview	= "dupes/" .. v:StripExtension() .. ".jpg"
+			preview	= "dupes/" .. v:StripExtension() .. ".jpg",
+			description	= "Local duplication stored on your computer. Local content can be deleted in the main menu."
 		}
 
 		table.insert( saves, entry )
@@ -32,9 +33,9 @@ function ws_dupe:FetchLocal( offset, perpage )
 
 end
 
-function ws_dupe:FinishPublish( filename, imagename, name, desc, ChosenTag )
+function ws_dupe:FinishPublish( filename, imagename, name, desc, chosenTag, other )
 
-	steamworks.Publish( { "dupe", ChosenTag }, filename, imagename, name, desc )
+	steamworks.Publish( filename, imagename, name, desc, { "dupe", chosenTag }, other.Callback, other.WorkshopID, other.ChangeNotes )
 
 end
 

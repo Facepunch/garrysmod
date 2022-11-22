@@ -47,7 +47,7 @@ SWEP.DeploySpeed           = 1.5
 
 AccessorFunc(SWEP, "det_time", "DetTime")
 
-CreateConVar("ttt_no_nade_throw_during_prep", "0")
+CreateConVar("ttt_no_nade_throw_during_prep", "1")
 
 function SWEP:SetupDataTables()
    self:NetworkVar("Bool", 0, "Pin")

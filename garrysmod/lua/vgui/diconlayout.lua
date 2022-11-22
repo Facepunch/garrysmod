@@ -39,7 +39,7 @@ function PANEL:LayoutIcons_TOP()
 	local x = self.m_iBorder
 	local y = self.m_iBorder
 	local RowHeight = 0
-	local MaxWidth = self:GetWide() - self.m_iBorder * 2
+	local MaxWidth = self:GetWide() - self.m_iBorder
 
 	local chld = self:GetChildren()
 	for k, v in pairs( chld ) do
@@ -74,7 +74,7 @@ function PANEL:LayoutIcons_LEFT()
 	local x = self.m_iBorder
 	local y = self.m_iBorder
 	local RowWidth = 0
-	local MaxHeight = self:GetTall() - self.m_iBorder * 2
+	local MaxHeight = self:GetTall() - self.m_iBorder
 
 	local chld = self:GetChildren()
 	for k, v in pairs( chld ) do

@@ -11,21 +11,6 @@ function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
 
 	phys:EnableMotion( false )
 
-	-- With the jeep we need to pause all of its physics objects
-	-- to stop it spazzing out and killing the server.
-	if ( ent:GetClass() == "prop_vehicle_jeep" ) then
-
-		local objects = ent:GetPhysicsObjectCount()
-
-		for i = 0, objects - 1 do
-
-			local physobject = ent:GetPhysicsObjectNum( i )
-			physobject:EnableMotion( false )
-
-		end
-
-	end
-
 	-- Add it to the player's frozen props
 	ply:AddFrozenPhysicsObject( ent, phys )
 
@@ -175,6 +160,8 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	end
 
+	player_manager.RunClass( ply, "Death", inflictor, attacker )
+
 	if ( attacker == ply ) then
 
 		net.Start( "PlayerKilledSelf" )
@@ -265,8 +252,6 @@ function GM:PlayerSpawn( pl, transiton )
 	-- Stop observer mode
 	pl:UnSpectate()
 
-	pl:SetupHands()
-
 	player_manager.OnPlayerSpawn( pl, transiton )
 	player_manager.RunClass( pl, "Spawn" )
 
@@ -278,6 +263,8 @@ function GM:PlayerSpawn( pl, transiton )
 
 	-- Set player model
 	hook.Call( "PlayerSetModel", GAMEMODE, pl )
+
+	pl:SetupHands()
 
 end
 
@@ -305,7 +292,7 @@ function GM:PlayerSetHandsModel( pl, ent )
 
 	if ( info ) then
 		ent:SetModel( info.model )
-		ent:SetSkin( info.skin )
+		ent:SetSkin( info.matchBodySkin and pl:GetSkin() or info.skin )
 		ent:SetBodyGroups( info.body )
 	end
 
@@ -452,6 +439,11 @@ function GM:PlayerSelectSpawn( pl, transiton )
 
 		-- ZM Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombiemaster" ) )
+
+		-- FOF Maps
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_fof" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_desperado" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_vigilante" ) )
 
 		-- L4D Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_rescue" ) )
@@ -736,9 +728,11 @@ end
 	Name: gamemode:GetFallDamage()
 	Desc: return amount of damage to do due to fall
 -----------------------------------------------------------]]
+local mp_falldamage = GetConVar( "mp_falldamage" )
+
 function GM:GetFallDamage( ply, flFallSpeed )
 
-	if( GetConVarNumber( "mp_falldamage" ) > 0 ) then -- realistic fall damage is on
+	if ( mp_falldamage:GetBool() ) then -- realistic fall damage is on
 		return ( flFallSpeed - 526.5 ) * ( 100 / 396 ) -- the Source SDK value
 	end
 

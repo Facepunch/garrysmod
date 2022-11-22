@@ -2,6 +2,7 @@
 {
 	"base"		"base"
 	"title"		"Sandbox"
+	"category"	"other"
 	"maps"		"^gm_|^gmod_|^phys_"
 	"menusystem"	"1"
 
@@ -33,6 +34,7 @@
 			"help"		"If enabled, all players will be invincible"
 			"type"		"CheckBox"
 			"default"	"0"
+			"singleplayer" "1"
 		}
 
 		4
@@ -221,6 +223,17 @@
 
 		24
 		{
+			"name"		"mp_falldamage"
+			"text"		"realistic_falldamage"
+			"help"		"Enable realistic fall damage"
+			"type"		"CheckBox"
+			"default"	"0"
+			"singleplayer"	"1"
+			"dontcreate"	"1"
+		}
+
+		25
+		{
 			"name"		"sbox_bonemanip_npc"
 			"text"		"bone_manipulate_npcs"
 			"help"		"If enabled then manipulating NPC bones will be allowed"
@@ -228,7 +241,7 @@
 			"default"	"1"
 		}
 
-		25
+		26
 		{
 			"name"		"sbox_bonemanip_player"
 			"text"		"bone_manipulate_players"
@@ -237,7 +250,7 @@
 			"default"	"0"
 		}
 
-		26
+		27
 		{
 			"name"		"sbox_bonemanip_misc"
 			"text"		"bone_manipulate_others"
@@ -246,11 +259,11 @@
 			"default"	"0"
 		}
 
-		27
+		28
 		{
 			"name"		"sbox_persist"
-			"text"		"persistent_mode"
-			"help"		"Enables 'Make Persistent' option when you right click on props while holding C, allowing you to save them across sessions. Leave empty to disable"
+			"text"		"persistent_mode_menu"
+			"help"		"If not empty, enables 'Make Persistent' option when you right click on props while holding C, allowing you to save them across sessions. Changing this convar will save existing persistent props, cleanup the whole map and load props from given file."
 			"type"		"Text"
 			"default"	""
 			"singleplayer" "1"

@@ -2,6 +2,8 @@
 TOOL.Category = "Poser"
 TOOL.Name = "#tool.faceposer.name"
 
+local MAXSTUDIOFLEXCTRL = 96
+
 local gLastFacePoseEntity = NULL
 local gLastFacePoseEntityCheckedNULL = false
 TOOL.FaceTimer = 0
@@ -75,16 +77,8 @@ function TOOL:Think()
 
 		local Name = ent:GetFlexName( i )
 
-		if ( IsUselessFaceFlex( Name ) ) then
-
-			ent:SetFlexWeight( i, 0 )
-
-		else
-
-			local num = self:GetClientNumber( "flex" .. i )
-			ent:SetFlexWeight( i, num )
-
-		end
+		local num = self:GetClientNumber( "flex" .. i )
+		ent:SetFlexWeight( i, num )
 
 	end
 
@@ -165,7 +159,7 @@ if ( SERVER ) then
 
 	function CC_Face_Randomize( pl, command, arguments )
 
-		for i = 0, 128 do
+		for i = 0, MAXSTUDIOFLEXCTRL do
 			local num = math.Rand( 0, 1 )
 			pl:ConCommand( "faceposer_flex" .. i .. " " .. string.format( "%.3f", num ) )
 		end
@@ -179,7 +173,7 @@ end
 -- The rest of the code is clientside only, it is not used on server
 if ( SERVER ) then return end
 
-for i = 0, 128 do
+for i = 0, MAXSTUDIOFLEXCTRL do
 	TOOL.ClientConVar[ "flex" .. i ] = "0"
 end
 
@@ -248,7 +242,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 	QuickFace:SetAutoHeight( true )
 
 	local Clear = {}
-	for i = 0, 128 do
+	for i = 0, MAXSTUDIOFLEXCTRL do
 		Clear[ "faceposer_flex" .. i ] = GenerateDefaultFlexValue( FaceEntity, i );
 	end
 	QuickFace:AddMaterialEx( "#faceposer.clear", "vgui/face/clear", nil, Clear )
@@ -418,9 +412,10 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 
 	-- Add some padding to the bottom of the list
 	local padding = vgui.Create( "Panel", CPanel )
-	padding:Dock( TOP )
 	padding:SetHeight( 7 )
+	CPanel:AddItem( padding )
 
+	-- Actual searching
 	filter.OnValueChange = function( pnl, txt )
 		for id, flxpnl in pairs( flexControllers ) do
 			if ( !flxpnl:GetText():lower():find( txt:lower(), nil, true ) && !flxpnl.originalName:lower():find( txt:lower(), nil, true ) ) then

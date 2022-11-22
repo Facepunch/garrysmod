@@ -11,9 +11,10 @@ function PANEL:Init()
 	self.HorizontalDivider:Dock( FILL )
 	self.HorizontalDivider:SetLeftWidth( 130 )
 	self.HorizontalDivider:SetLeftMin( 130 )
-	self.HorizontalDivider:SetRightMin( 256 )
+	self.HorizontalDivider:SetRightMin( 200 )
+	if ( ScrW() >= 1024 ) then self.HorizontalDivider:SetRightMin( 256 ) end
 	self.HorizontalDivider:SetDividerWidth( 6 )
-	--self.HorizontalDivider:SetCookieName( "SpawnMenuToolMenuDiv" )
+	self.HorizontalDivider:SetCookieName( "SpawnMenuToolMenuDiv" )
 
 	local leftContainer = vgui.Create( "Panel", self.HorizontalDivider )
 
@@ -24,11 +25,13 @@ function PANEL:Init()
 	self.SearchBar:Dock( TOP )
 	self.SearchBar:SetUpdateOnType( true )
 	self.SearchBar.OnValueChange = function( s, text )
+		local text = text:Trim():lower()
+
 		for id, category in pairs( self.List.pnlCanvas:GetChildren() ) do
 			local count = 0
 			local category_matched = false
 
-			if ( string.find( category.Header:GetText():lower(), text:lower(), nil, true ) ) then
+			if ( string.find( category.Header:GetText():lower(), text, nil, true ) ) then
 				category_matched = true
 			end
 
@@ -39,7 +42,7 @@ function PANEL:Init()
 				if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
 				str = language.GetPhrase( str )
 
-				if ( !category_matched && !string.find( str:lower(), text:lower(), nil, true ) ) then
+				if ( !category_matched && !string.find( str:lower(), text, nil, true ) ) then
 					item:SetVisible( false )
 				else
 					item:SetVisible( true )
@@ -52,6 +55,17 @@ function PANEL:Init()
 				category:SetVisible( false )
 			else
 				category:SetVisible( true )
+
+				 -- Make sure the category is expanded, but restore the state when we quit searching
+				if ( text == "" ) then
+					if ( category._preSearchState != nil ) then
+						category:SetExpanded( category._preSearchState )
+						category._preSearchState = nil
+					end
+				else
+					if ( category._preSearchState == nil ) then category._preSearchState = category:GetExpanded() end
+					category:SetExpanded( true )
+				end
 			end
 			category:InvalidateLayout()
 		end
@@ -103,15 +117,14 @@ function PANEL:AddCategory( name, lbl, tItems )
 
 	local tools = {}
 	for k, v in pairs( tItems ) do
-		local str = v.Text
-		if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
-		tools[ language.GetPhrase( str ) ] = v
+		local name = v.Text or v.ItemName or v.Controls or v.Command or tostring( k )
+		tools[ language.GetPhrase( name ) ] = v
 	end
 
 	local currentMode = GetConVarString( "gmod_toolmode" )
 	for k, v in SortedPairs( tools ) do
 
-		local item = Category:Add( v.Text )
+		local item = Category:Add( v.Text or k )
 
 		item.DoClick = function( button )
 
@@ -135,6 +148,25 @@ function PANEL:AddCategory( name, lbl, tItems )
 	end
 
 	self:InvalidateLayout()
+
+end
+
+-- Internal, makes the given tool highlighted in its DCategoryList
+function PANEL:SetActiveToolText( str )
+
+	for id, category in pairs( self.List.pnlCanvas:GetChildren() ) do
+
+		for id, item in pairs( category:GetChildren() ) do
+			if ( item == category.Header ) then continue end
+
+			if ( item.Name == str ) then
+				self.List:UnselectAll()
+				item:SetSelected( true )
+				return
+			end
+		end
+
+	end
 
 end
 

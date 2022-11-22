@@ -54,7 +54,7 @@ function SWEP:PrimaryAttack()
 	self:TakePrimaryAmmo( 1 )
 
 	-- Punch the player's view
-	self.Owner:ViewPunch( Angle( -1, 0, 0 ) )
+	if ( !self.Owner:IsNPC() ) then self.Owner:ViewPunch( Angle( -1, 0, 0 ) ) end
 
 end
 
@@ -77,7 +77,7 @@ function SWEP:SecondaryAttack()
 	self:TakeSecondaryAmmo( 1 )
 
 	-- Punch the player's view
-	self.Owner:ViewPunch( Angle( -10, 0, 0 ) )
+	if ( !self.Owner:IsNPC() ) then self.Owner:ViewPunch( Angle( -10, 0, 0 ) ) end
 
 end
 

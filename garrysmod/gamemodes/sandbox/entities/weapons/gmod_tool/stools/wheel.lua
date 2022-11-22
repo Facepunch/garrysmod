@@ -160,6 +160,8 @@ if ( SERVER ) then
 		wheel:SetAngles( ang )
 		wheel:Spawn()
 
+		DoPropSpawnedEffect( wheel )
+
 		wheel:SetPlayer( pl )
 
 		duplicator.DoGenericPhysics( wheel, pl, Data )
@@ -210,13 +212,12 @@ function TOOL:UpdateGhostWheel( ent, ply )
 	end
 
 	local Ang = trace.HitNormal:Angle() + self.wheelAngle
+	ent:SetAngles( Ang )
+
 	local CurPos = ent:GetPos()
 	local NearestPoint = ent:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
 	local WheelOffset = CurPos - NearestPoint
-
-	local min = ent:OBBMins()
 	ent:SetPos( trace.HitPos + WheelOffset )
-	ent:SetAngles( Ang )
 
 	ent:SetNoDraw( false )
 
@@ -230,7 +231,7 @@ function TOOL:Think()
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
 		self.wheelAngle = Angle( math.NormalizeAngle( self:GetClientNumber( "rx" ) ), math.NormalizeAngle( self:GetClientNumber( "ry" ) ), math.NormalizeAngle( self:GetClientNumber( "rz" ) ) )
-		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostWheel( self.GhostEntity, self:GetOwner() )

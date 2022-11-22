@@ -9,7 +9,7 @@ function WorkshopFileBase( namespace, requiredtags )
 	local ret = {}
 	ret.HTML = nil
 
-	function ret:Fetch( type, offset, perpage, extratags, searchText, filter )
+	function ret:Fetch( type, offset, perpage, extratags, searchText, filter, sort )
 
 		local tags = table.Copy( requiredtags )
 		for k, v in pairs( extratags ) do
@@ -21,10 +21,10 @@ function WorkshopFileBase( namespace, requiredtags )
 			return self:FetchLocal( offset, perpage )
 		end
 		if ( type == "subscribed" ) then
-			return self:FetchSubscribed( offset, perpage, tags, searchText, false, filter )
+			return self:FetchSubscribed( offset, perpage, tags, searchText, false, filter, sort )
 		end
 		if ( type == "subscribed_ugc" ) then
-			return self:FetchSubscribed( offset, perpage, tags, searchText, true, filter )
+			return self:FetchSubscribed( offset, perpage, tags, searchText, true, filter, sort )
 		end
 
 		local userid = "0"
@@ -44,7 +44,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 	end
 
-	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC, filter )
+	function ret:FetchSubscribed( offset, perpage, tags, searchText, isUGC, filter, sort )
 
 		local subscriptions = {}
 		if ( isUGC ) then
@@ -56,9 +56,24 @@ function WorkshopFileBase( namespace, requiredtags )
 		for id, e in pairs( subscriptions ) do
 			if ( e.timeadded == 0 ) then e.timeadded = os.time() end
 		end
-		table.sort( subscriptions, function( a, b )
-			return a.timeadded > b.timeadded
-		end )
+
+		if ( sort == "title" ) then
+			table.sort( subscriptions, function( a, b )
+				return a.title:lower() < b.title:lower()
+			end )
+		elseif ( sort == "size" ) then
+			table.sort( subscriptions, function( a, b )
+				return a.size > b.size
+			end )
+		elseif ( sort == "updated" ) then
+			table.sort( subscriptions, function( a, b )
+				return a.updated > b.updated
+			end )
+		else
+			table.sort( subscriptions, function( a, b )
+				return a.timeadded > b.timeadded
+			end )
+		end
 
 		-- First build a list of items that fit our search terms
 		local searchedItems = {}
@@ -74,13 +89,13 @@ function WorkshopFileBase( namespace, requiredtags )
 			-- Search for tags
 			local found = true
 			for id, tag in pairs( tags ) do
-				if ( !item.tags:lower():find( tag ) ) then found = false end
+				if ( !item.tags:lower():find( tag, 1, true ) ) then found = false end
 			end
 			if ( !found ) then continue end
 
 			-- Search for searchText
 			if ( searchText:Trim() != "" ) then
-				if ( !item.title:lower():find( searchText:lower() ) ) then continue end
+				if ( !item.title:lower():find( searchText:lower(), 1, true ) ) then continue end
 			end
 
 			if ( filter && filter == "enabledonly" ) then
@@ -97,10 +112,19 @@ function WorkshopFileBase( namespace, requiredtags )
 		-- Build the page!
 		local data = {
 			totalresults = #searchedItems,
-			extraresults = {},
+			extraresults = {}, -- The local info about the addon
+			otherresults = {}, -- The complete list of IDs that match the search query for the Addons menu UI
 			results = {}
 		}
 
+		-- Add the list of all items for "select all" in the UI
+		local i = 0
+		for id, item in ipairs( searchedItems ) do
+			data.otherresults[ i ] = item.wsid
+			i = i + 1
+		end
+
+		-- Add the actual results for the requested range
 		local i = 0
 		while ( i < perpage ) do
 
@@ -115,7 +139,7 @@ function WorkshopFileBase( namespace, requiredtags )
 
 		end
 
-		self:FillFileInfo( data )
+		self:FillFileInfo( data, isUGC )
 
 	end
 
@@ -126,7 +150,7 @@ function WorkshopFileBase( namespace, requiredtags )
 		end )
 	end
 
-	function ret:FillFileInfo( results )
+	function ret:FillFileInfo( results, isUGC )
 
 		--
 		-- File info failed..
@@ -165,7 +189,7 @@ function WorkshopFileBase( namespace, requiredtags )
 				if ( !extra ) then extra = {} end
 
 				extra.ownername = "Local"
-				extra.description = "Non workshop local floating addon."
+				extra.description = "Non workshop .gma addon. (" .. extra.file .. ")"
 				extra.floating = true
 
 				local json = util.TableToJSON( extra, false )
@@ -184,7 +208,17 @@ function WorkshopFileBase( namespace, requiredtags )
 
 				steamworks.FileInfo( v, function( result )
 
-					if ( !result && result.error != nil ) then return end
+					if ( !result || result.error != nil ) then
+						-- Try to get the title from the GetAddons(), this probably could be done more efficiently
+						local title = "Offline addon"
+						for id, t in pairs( isUGC && engine.GetUserContent() || engine.GetAddons() ) do
+							if ( tonumber( v ) == tonumber( t.wsid ) ) then title = t.title break end
+						end
+
+						local json = util.TableToJSON( { title = title, description = "Failed to get addon info, error code " .. ( result && result.error || "unknown" ) }, false )
+						self.HTML:Call( namespace .. ".ReceiveFileInfo( \"" .. v .. "\", " .. json .. " )" )
+						return
+					end
 
 					if ( result.description ) then
 						result.description = string.gsub( result.description, "%[img%]([^%]]*)%[/img%]", "" ) -- Gotta remove inner content of img tags
@@ -208,7 +242,7 @@ function WorkshopFileBase( namespace, requiredtags )
 					--
 					-- Now we have the preview id - get the preview image!
 					--
-					if ( !PreviewCache[ v ] ) then
+					if ( !PreviewCache[ v ] && result.previewid ) then
 
 						steamworks.Download( result.previewid, false, function( name )
 
@@ -235,9 +269,7 @@ function WorkshopFileBase( namespace, requiredtags )
 		--MsgN( "Image ", image )
 
 		local window = vgui.Create( "UGCPublishWindow" )
-		window:SetSize( 600, 400 )
 		window:Setup( namespace, filename, image, self )
-		window:Center()
 		window:MakePopup()
 		window:DoModal() -- We want the user to either finish this or quit
 

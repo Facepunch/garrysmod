@@ -134,13 +134,14 @@ function PANEL:OnCursorMoved( x, y )
 	zoom = math.Clamp( zoom + ( ( y * -0.6 ) / ControlScale ), 0.01, maxzoom )
 	if ( !input.IsKeyDown( KEY_LSHIFT ) ) then self:SetZoom( zoom ) end
 
+	local oldValue = self:GetFloatValue()
 	local value = self:GetFloatValue()
 	value = math.Clamp( value + ( x * ControlScale * 0.002 ), self:GetMin(), self:GetMax() )
 	self:SetFloatValue( value )
 
 	self:LockCursor()
 
-	self:OnValueChanged( value )
+	if ( oldValue != value ) then self:OnValueChanged( value ) end
 	self:UpdateConVar()
 
 end
@@ -263,7 +264,7 @@ function PANEL:DrawScreen( x, y, w, h )
 
 	if ( !self:GetShouldDrawScreen() ) then return end
 
-	DisableClipping( true )
+	local wasEnabled = DisableClipping( true )
 
 	--
 	-- Background
@@ -285,7 +286,7 @@ function PANEL:DrawScreen( x, y, w, h )
 	local targetW = range * self:GetZoom()
 	targetW = targetW - math.max( 0, x - targetX )
 	targetW = math.min( targetW, w - math.max( 0, targetX - x ) )
-	surface.DrawRect( math.max( targetX, x ), y + h * 0.4, targetW, h * 0.6 )
+	surface.DrawRect( math.max( targetX, x ) + 3, y + h * 0.4, targetW - 6, h * 0.6 )
 
 	for i = 1, 4 do
 		self:DrawNotches( 10 ^ i, x, y, w, h, range, value, min, max )
@@ -305,17 +306,18 @@ function PANEL:DrawScreen( x, y, w, h )
 	--
 	-- Text Value
 	--
-	surface.SetTextColor( 255, 255, 255, 255 )
 	surface.SetFont( "DermaLarge" )
-
 	local str = self:GetTextValue()
 	str = string.Comma( str )
-
 	local tw, th = surface.GetTextSize( str )
-	surface.SetTextPos( x + w * 0.5 - tw * 0.5, y + h - th - 5 )
+
+	draw.RoundedBoxEx( 8, x + w * 0.5 - tw / 2 - 10, y + h - 43, tw + 20, 39, Color( 0, 186, 255, 255 ), true, true, false, false )
+
+	surface.SetTextColor( 255, 255, 255, 255 )
+	surface.SetTextPos( x + w * 0.5 - tw * 0.5, y + h - th - 6 )
 	surface.DrawText( str )
 
-	DisableClipping( false )
+	DisableClipping( wasEnabled )
 
 end
 

@@ -55,6 +55,25 @@ function meta:SetWidth( w )
 end
 meta.SetWide = meta.SetWidth
 
+
+--[[---------------------------------------------------------
+	Name: Set/GetX/Y
+-----------------------------------------------------------]]
+function meta:GetX()
+	local x, y = self:GetPos()
+	return x
+end
+function meta:GetY()
+	local x, y = self:GetPos()
+	return y
+end
+function meta:SetX( x )
+	self:SetPos( x, self:GetY() )
+end
+function meta:SetY( y )
+	self:SetPos( self:GetX(), y )
+end
+
 --[[---------------------------------------------------------
 	Name: StretchToParent (borders)
 -----------------------------------------------------------]]
@@ -107,7 +126,7 @@ end
 --[[---------------------------------------------------------
 	Name: Align with the edge of the parent
 -----------------------------------------------------------]]
-function meta:AlignBottom( m ) self:SetPos( self.x, self:GetParent():GetTall() - self:GetTall() - ( m or 0 ) ) end 
+function meta:AlignBottom( m ) self:SetPos( self.x, self:GetParent():GetTall() - self:GetTall() - ( m or 0 ) ) end
 function meta:AlignRight( m ) self:SetPos( self:GetParent():GetWide() - self:GetWide() - ( m or 0 ), self.y ) end
 function meta:AlignTop( m ) self:SetPos( self.x, m or 0 ) end
 function meta:AlignLeft( m ) self:SetPos( m or 0, self.y ) end
@@ -130,14 +149,14 @@ function meta:StretchBottomTo( pnl, m ) self:SetTall( pnl.y - self.y - ( m or 0 
 	Name: CenterVertical
 -----------------------------------------------------------]]
 function meta:CenterVertical( fraction )
-	self:SetPos( self.x, self:GetParent():GetTall() * ( fraction or 0.5 ) - self:GetTall() * 0.5 )
+	self:SetY( self:GetParent():GetTall() * ( fraction or 0.5 ) - self:GetTall() * 0.5 )
 end
 
 --[[---------------------------------------------------------
 	Name: CenterHorizontal
 -----------------------------------------------------------]]
 function meta:CenterHorizontal( fraction )
-	self:SetPos( self:GetParent():GetWide() * ( fraction or 0.5 ) - self:GetWide() * 0.5, self.y )
+	self:SetX( self:GetParent():GetWide() * ( fraction or 0.5 ) - self:GetWide() * 0.5 )
 end
 
 --[[---------------------------------------------------------
@@ -242,7 +261,7 @@ end
 
 --[[---------------------------------------------------------
 	Name: PositionLabel
------------------------------------------------------------]] 
+-----------------------------------------------------------]]
 function meta:PositionLabel( labelWidth, x, y, lbl, ctrl )
 
 	lbl:SetWide( labelWidth )
@@ -286,6 +305,11 @@ function meta:SetTooltipPanel( panel )
 end
 meta.SetToolTipPanel = meta.SetTooltipPanel
 
+-- Override which panel will be created instead of DTooltip
+function meta:SetTooltipPanelOverride( panel )
+	self.pnlTooltipPanelOverride = panel
+end
+
 --[[---------------------------------------------------------
 	Name: SizeToContentsY (Only works on Labels)
 -----------------------------------------------------------]]
@@ -310,6 +334,16 @@ function meta:SizeToContentsX( addval )
 
 end
 
+-- Make sure all children update their skin, if SOMEHOW they cached their skin before the parent
+local function InvalidateSkinRecurse( self )
+
+	for id, pnl in pairs( self:GetChildren() ) do
+		InvalidateSkinRecurse( pnl )
+		pnl.m_iSkinIndex = nil
+	end
+
+end
+
 --[[---------------------------------------------------------
 	Name: SetSkin
 -----------------------------------------------------------]]
@@ -319,7 +353,8 @@ function meta:SetSkin( strSkin )
 
 	self.m_ForceSkinName = strSkin
 	self.m_iSkinIndex = nil
-	derma.RefreshSkins()
+
+	InvalidateSkinRecurse( self )
 
 end
 
@@ -417,7 +452,7 @@ function ValidPanel( pnl )
 
 	if ( !pnl ) then return false end
 
-	return pnl:IsValid() 
+	return pnl:IsValid()
 
 end
 

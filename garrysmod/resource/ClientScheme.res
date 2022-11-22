@@ -144,7 +144,7 @@ Scheme
 			{
 				"name"		"Tahoma"
 				"tall"		"12"
-				"weight"	"500"
+				"weight"	"700" // GMod: Changed from 500 to match Default
 				"underline" "1"
 				"range"		"0x0000 0x017F" //	Basic Latin, Latin-1 Supplement, Latin Extended-A
 			}

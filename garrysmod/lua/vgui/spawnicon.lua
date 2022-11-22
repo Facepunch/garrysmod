@@ -18,13 +18,14 @@ function PANEL:Init()
 	self:SetSize( 64, 64 )
 
 	self.m_strBodyGroups = "000000000"
+	self.OverlayFade = 0
 
 end
 
 function PANEL:DoRightClick()
 
 	local pCanvas = self:GetSelectionCanvas()
-	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 ) then
+	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 && self:IsSelected() ) then
 		return hook.Run( "SpawnlistOpenGenericMenu", pCanvas )
 	end
 
@@ -38,8 +39,12 @@ function PANEL:OpenMenu()
 end
 
 function PANEL:Paint( w, h )
+	-- Do not draw the default background
+end
 
-	self.OverlayFade = math.Clamp( ( self.OverlayFade or 0 ) - RealFrameTime() * 640 * 2, 0, 255 )
+function PANEL:Think()
+
+	self.OverlayFade = math.Clamp( self.OverlayFade - RealFrameTime() * 640 * 2, 0, 255 )
 
 	if ( dragndrop.IsDragging() || !self:IsHovered() ) then return end
 
@@ -170,6 +175,9 @@ end
 -- what should we do?
 function PANEL:SkinChanged( i )
 
+	-- This is called from Icon Editor. Mark the spawnlist as changed. Ideally this would check for GetTriggerSpawnlistChange on the parent
+	hook.Run( "SpawnlistContentChanged" )
+
 	-- Change the skin, and change the model
 	-- this way we can edit the spawnmenu....
 	self:SetSkinID( i )
@@ -179,8 +187,39 @@ end
 
 function PANEL:BodyGroupChanged( k, v )
 
+	-- This is called from Icon Editor. Mark the spawnlist as changed. Ideally this would check for GetTriggerSpawnlistChange on the parent
+	hook.Run( "SpawnlistContentChanged" )
+
 	self:SetBodyGroup( k, v )
 	self:SetModel( self:GetModelName(), self:GetSkinID(), self:GetBodyGroup() )
+
+end
+
+-- A little hack to prevent code duplication
+function PANEL:InternalAddResizeMenu( menu, callback, label )
+
+	local submenu_r, submenu_r_option = menu:AddSubMenu( label or "#spawnmenu.menu.resize", function() end )
+	submenu_r_option:SetIcon( "icon16/arrow_out.png" )
+
+	-- Generate the sizes
+	local function AddSizeOption( submenu_r, w, h, curW, curH )
+
+		local p = submenu_r:AddOption( w .. " x " .. h, function() callback( w, h ) end )
+		if ( w == ( curW or 64 ) && h == ( curH or 64 ) ) then p:SetIcon( "icon16/accept.png" ) end
+
+	end
+	local sizes = { 64, 128, 256, 512 }
+	for id, size in pairs( sizes ) do
+
+		for _, size2 in pairs( sizes ) do
+			AddSizeOption( submenu_r, size, size2, self:GetWide(), self:GetTall() )
+		end
+
+		if ( id <= #sizes - 1 ) then
+			submenu_r:AddSpacer()
+		end
+
+	end
 
 end
 
@@ -195,7 +234,7 @@ spawnmenu.AddContentType( "model", function( container, obj )
 	local icon = vgui.Create( "SpawnIcon", container )
 
 	if ( obj.body ) then
-		obj.body = string.Trim( tostring(obj.body), "B" )
+		obj.body = string.Trim( tostring( obj.body ), "B" )
 	end
 
 	if ( obj.wide ) then
@@ -215,16 +254,21 @@ spawnmenu.AddContentType( "model", function( container, obj )
 	icon.DoClick = function( s ) surface.PlaySound( "ui/buttonclickrelease.wav") RunConsoleCommand( "gm_spawn", s:GetModelName(), s:GetSkinID() or 0, s:GetBodyGroup() or "" ) end
 	icon.OpenMenu = function( icon )
 
+		-- Use the containter that we are dragged onto, not the one we were created on
+		if ( icon:GetParent() && icon:GetParent().ContentContainer ) then
+			container = icon:GetParent().ContentContainer
+		end
+
 		local menu = DermaMenu()
 		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( string.gsub( obj.model, "\\", "/" ) ) end ):SetIcon( "icon16/page_copy.png" )
 		menu:AddOption( "#spawnmenu.menu.spawn_with_toolgun", function() RunConsoleCommand( "gmod_tool", "creator" ) RunConsoleCommand( "creator_type", "4" ) RunConsoleCommand( "creator_name", obj.model ) end ):SetIcon( "icon16/brick_add.png" )
 
-		local submenu, submenu_opt = menu:AddSubMenu( "Re-Render", function() icon:RebuildSpawnIcon() end )
+		local submenu, submenu_opt = menu:AddSubMenu( "#spawnmenu.menu.rerender", function() icon:RebuildSpawnIcon() end )
 		submenu_opt:SetIcon( "icon16/picture_save.png" )
-		submenu:AddOption( "This Icon", function() icon:RebuildSpawnIcon() end ):SetIcon( "icon16/picture.png" )
-		submenu:AddOption( "All Icons", function() container:RebuildAll() end ):SetIcon( "icon16/pictures.png" )
+		submenu:AddOption( "#spawnmenu.menu.rerender_this", function() icon:RebuildSpawnIcon() end ):SetIcon( "icon16/picture.png" )
+		submenu:AddOption( "#spawnmenu.menu.rerender_all", function() container:RebuildAll() end ):SetIcon( "icon16/pictures.png" )
 
-		menu:AddOption( "Edit Icon", function()
+		menu:AddOption( "#spawnmenu.menu.edit_icon", function()
 
 			local editor = vgui.Create( "IconEditor" )
 			editor:SetIcon( icon )
@@ -234,7 +278,10 @@ spawnmenu.AddContentType( "model", function( container, obj )
 
 		end ):SetIcon( "icon16/pencil.png" )
 
-		local ChangeIconSize = function( w, h )
+		-- Do not allow removal/size changes from read only panels
+		if ( IsValid( icon:GetParent() ) && icon:GetParent().GetReadOnly && icon:GetParent():GetReadOnly() ) then menu:Open() return end
+
+		icon:InternalAddResizeMenu( menu, function( w, h )
 
 			icon:SetSize( w, h )
 			icon:InvalidateLayout( true )
@@ -242,30 +289,7 @@ spawnmenu.AddContentType( "model", function( container, obj )
 			container:Layout()
 			icon:SetModel( obj.model, obj.skin or 0, obj.body )
 
-		end
-
-		local submenu_r, submenu_r_option = menu:AddSubMenu( "Resize", function() end )
-		submenu_r_option:SetIcon( "icon16/arrow_out.png" )
-
-		submenu_r:AddOption( "64 x 64 (default)", function() ChangeIconSize( 64, 64 ) end )
-		submenu_r:AddOption( "64 x 128", function() ChangeIconSize( 64, 128 ) end )
-		submenu_r:AddOption( "64 x 256", function() ChangeIconSize( 64, 256 ) end )
-		submenu_r:AddOption( "64 x 512", function() ChangeIconSize( 64, 512 ) end )
-		submenu_r:AddSpacer()
-		submenu_r:AddOption( "128 x 64", function() ChangeIconSize( 128, 64 ) end )
-		submenu_r:AddOption( "128 x 128", function() ChangeIconSize( 128, 128 ) end )
-		submenu_r:AddOption( "128 x 256", function() ChangeIconSize( 128, 256 ) end )
-		submenu_r:AddOption( "128 x 512", function() ChangeIconSize( 128, 512 ) end )
-		submenu_r:AddSpacer()
-		submenu_r:AddOption( "256 x 64", function() ChangeIconSize( 256, 64 ) end )
-		submenu_r:AddOption( "256 x 128", function() ChangeIconSize( 256, 128 ) end )
-		submenu_r:AddOption( "256 x 256", function() ChangeIconSize( 256, 256 ) end )
-		submenu_r:AddOption( "256 x 512", function() ChangeIconSize( 256, 512 ) end )
-		submenu_r:AddSpacer()
-		submenu_r:AddOption( "512 x 64", function() ChangeIconSize( 512, 64 ) end )
-		submenu_r:AddOption( "512 x 128", function() ChangeIconSize( 512, 128 ) end )
-		submenu_r:AddOption( "512 x 256", function() ChangeIconSize( 512, 256 ) end )
-		submenu_r:AddOption( "512 x 512", function() ChangeIconSize( 512, 512 ) end )
+		end )
 
 		menu:AddSpacer()
 		menu:AddOption( "#spawnmenu.menu.delete", function() icon:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/bin_closed.png" )
@@ -279,7 +303,7 @@ spawnmenu.AddContentType( "model", function( container, obj )
 		container:Add( icon )
 	end
 
-/*
+--[[
 	if ( iSkin != 0 ) then return end
 
 	local iSkinCount = NumModelSkins( strModel )
@@ -290,7 +314,7 @@ spawnmenu.AddContentType( "model", function( container, obj )
 		self:AddModel( strModel, i )
 
 	end
-*/
+]]
 
 	return icon
 

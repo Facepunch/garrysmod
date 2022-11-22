@@ -144,13 +144,15 @@ function PANEL:SetWidth( iSize )
 
 end
 
-derma.DefineControl( "DListView_Column", "", table.Copy( PANEL ), "Panel" )
+derma.DefineControl( "DListView_Column", "Sortable DListView Column", PANEL, "Panel" )
 
 --[[---------------------------------------------------------
 	DListView_ColumnPlain
 -----------------------------------------------------------]]
 
+local PANEL = {}
+
 function PANEL:DoClick()
 end
 
-derma.DefineControl( "DListView_ColumnPlain", "", PANEL, "DListView_Column" )
+derma.DefineControl( "DListView_ColumnPlain", "Non sortable DListView Column", PANEL, "DListView_Column" )

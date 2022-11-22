@@ -68,3 +68,13 @@ function Create( name )
 	return NewEffect
 
 end
+
+function GetList()
+	local result = {}
+
+	for k, v in pairs( EffectList ) do
+		table.insert( result, v )
+	end
+
+	return result
+end

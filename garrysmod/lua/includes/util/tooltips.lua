@@ -25,8 +25,8 @@ function FindTooltip( panel )
 	-- Look at the parent panel for tooltips.
 	while ( IsValid( panel ) ) do
 
-		if ( panel.strTooltipText || panel.pnlTooltipPanel ) then
-			return panel.strTooltipText, panel.pnlTooltipPanel, panel
+		if ( panel.strTooltipText || panel.pnlTooltipPanel || panel.pnlTooltipPanelOverride ) then
+			return panel.strTooltipText, panel.pnlTooltipPanel, panel, panel.pnlTooltipPanelOverride
 		end
 
 		panel = panel:GetParent()
@@ -43,18 +43,18 @@ function ChangeTooltip( panel )
 
 	RemoveTooltip()
 
-	local Text, Panel, PositionPanel = FindTooltip( panel )
-	if ( !Text && !IsValid( Panel ) ) then return end
+	local Text, ContentPanel, PositionPanel, PanelOverride = FindTooltip( panel )
+	if ( !Text && !IsValid( ContentPanel ) && !PanelOverride ) then return end
 
-	Tooltip = vgui.Create( "DTooltip" )
+	Tooltip = vgui.Create( PanelOverride or "DTooltip" )
 
 	if ( Text ) then
 
 		Tooltip:SetText( Text )
 
-	else
+	elseif ( IsValid( ContentPanel ) ) then
 
-		Tooltip:SetContents( Panel, false )
+		Tooltip:SetContents( ContentPanel, false )
 
 	end
 

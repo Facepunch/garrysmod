@@ -1,0 +1,110 @@
+
+<div class="page" ng-controller="ControllerDupes">
+
+	<div class="options">
+
+		<ul>
+
+			<li><h2 ng-tranny="'dupes'"></h2></li>
+
+			<li ng-repeat="cat in MyCategories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+				<a ng-click="Switch( cat, 0 )" ng-Tranny="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+
+				<ul ng-show="Category == cat && cat != 'local'" style="margin-top: 4px; margin-bottom: 15px;">
+					<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'dupes.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+					</li>
+				</ul>
+			</li>
+
+			<li>&nbsp;</li>
+
+			<li ng-repeat="cat in Categories" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+				<a ng-click="Switch( cat, 0 )" ng-Tranny="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+
+				<ul ng-show="Category == cat" style="margin-top: 4px; margin-bottom: 15px;">
+					<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'dupes.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+					</li>
+				</ul>
+			</li>
+
+			<li>&nbsp;</li>
+
+			<li ng-repeat="cat in CategoriesSecondary" class="clickable {{IfElse( Category == cat, 'active', 'notactive' )}}">
+				<a ng-click="Switch( cat, 0 )" ng-Tranny="'dupes.'+cat" ng-show="cat != ''" class="{{IfElse( Category == cat, 'active', 'notactive' )}}"></a>
+
+				<ul ng-show="Category == cat" style="margin-top: 4px; margin-bottom: 15px;">
+					<li ng-repeat="tag in SubCategories" class="clickable {{IfElse( Tagged == tag, 'active', 'notactive' )}}">
+						<a ng-click="SwitchWithTag( cat, 0, tag )" ng-Tranny="'dupes.'+tag" ng-show="tag != ''" class="{{IfElse( Tagged == tag, 'active', 'notactive' )}}">{{subcat}}</a>
+					</li>
+				</ul>
+			</li>
+
+			<li>&nbsp;</li>
+
+			<li><a ng-click="OpenFolder( 'dupes' )" ng-Tranny="'dupes.openfolder'"></a></li>
+
+		</ul>
+
+	</div>
+
+	<div class="ugc_content">
+
+		<h1 class="menuheader"><span ng-Tranny="'dupes.'+Category">...</span><small ng-Tranny="'dupes.'+Category + '.subtitle'">...</small></h1>
+
+		<workshopcontainer>
+
+			<workshopmessage ng-show="Loading" ng-Tranny="'dupes.loading'">...</workshopmessage>
+			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading && ( !Disabled || Category != 'subscribed_ugc' )" ng-Tranny="'dupes.none'">...</workshopmessage>
+			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled && Category == 'subscribed_ugc'" ng-Tranny="'ugc.disabled'">...</workshopmessage>
+
+			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{IfElse( IsSubscribed( file ), 'installed', '' )}}">
+
+				<preview ng-hide="file.background == nil" style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
+					<img src='../{{file.background}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
+				</preview>
+
+				<name>
+					<label ng-click="OpenWorkshopFile( file.id )">{{file.info.title || "Loading..."}}</label>
+				</name>
+				<author ng-hide="file.local">{{file.info.ownername}}</author>
+				<votes ng-show="!file.local && (file.info.up-file.info.down) > 0" style="color: #4a4">+{{file.info.up-file.info.down|number:0}}</votes>
+				<votes ng-show="!file.local && (file.info.up-file.info.down) < 0" style="color: #a44">{{file.info.up-file.info.down|number:0}}</votes>
+				<description>{{file.info.description}}</description>
+
+				<controls>
+
+					<left>
+						<control ng-hide="file.local || file.rated" ng-click="Rate( file, true )"><img src='img/thumb-up.png' /></control>
+						<control ng-hide="file.local || file.rated" ng-click="Rate( file, false )"><img src='img/thumb-down.png' /></control>
+						<control ng-show="file.local" ng-click="PublishLocal( file )" ng-Tranny="'dupes.publish'">..</control>
+						<control ng-show="file.local" ng-click="DeleteLocal( file )" ng-Tranny="'dupes.delete'">..</control>
+					</left>
+
+					<right ng-show="!file.local">
+						<control ng-show="!IsSubscribed( file ) && !Disabled" ng-click="Subscribe( file )" ng-Tranny="'ugc.subscribe'">..</control>
+						<control ng-show="IsSubscribed( file )" ng-click="Unsubscribe( file )" ng-Tranny="'ugc.unsubscribe'">..</control>
+					</right>
+
+				</controls>
+
+			</workshopicon>
+
+			<center>
+				<pagination ng-hide="Loading || TotalResults == 0">
+					<a class="back" ng-click="Go( PerPage * -1 )">&nbsp;</a>
+					<a class="next" ng-click="Go( PerPage * 1 )">&nbsp;</a>
+
+					<div class="pages">
+						<span ng-repeat="p in Pages"><a class="{{IfElse( p == Page, 'active', '' )}} page" ng-click="GoToPage( p )"><img src='img/pagination_page.png?1' /></a></span><br>
+					</div>
+					<span class="pagenum">{{Page}}</span>
+				</pagination>
+			</center>
+
+		</workshopcontainer>
+
+	</div>
+
+</div>

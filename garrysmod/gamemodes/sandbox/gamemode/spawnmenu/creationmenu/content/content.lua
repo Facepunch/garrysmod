@@ -30,10 +30,11 @@ function PANEL:Init()
 	self.HorizontalDivider = vgui.Create( "DHorizontalDivider", self )
 	self.HorizontalDivider:Dock( FILL )
 	self.HorizontalDivider:SetLeftWidth( 192 )
-	self.HorizontalDivider:SetLeftMin( 192 )
-	self.HorizontalDivider:SetRightMin( 400 )
+	self.HorizontalDivider:SetLeftMin( 100 )
+	self.HorizontalDivider:SetRightMin( 100 )
+	if ( ScrW() >= 1024 ) then self.HorizontalDivider:SetLeftMin( 192 ) self.HorizontalDivider:SetRightMin( 400 ) end
 	self.HorizontalDivider:SetDividerWidth( 6 )
-	--self.HorizontalDivider:SetCookieName( "SpawnMenuCreationMenuDiv" )
+	self.HorizontalDivider:SetCookieName( "SpawnMenuCreationMenuDiv" )
 
 	self.ContentNavBar = vgui.Create( "ContentSidebar", self.HorizontalDivider )
 	self.HorizontalDivider:SetLeft( self.ContentNavBar )
@@ -63,12 +64,18 @@ function PANEL:SwitchPanel( panel )
 
 	self.SelectedPanel = panel
 
+	if ( !IsValid( panel ) ) then return end
+
 	self.HorizontalDivider:SetRight( self.SelectedPanel )
 	self.HorizontalDivider:InvalidateLayout( true )
 
 	self.SelectedPanel:SetVisible( true )
 	self:InvalidateParent()
 
+end
+
+function PANEL:OnSizeChanged()
+	self.HorizontalDivider:LoadCookies()
 end
 
 vgui.Register( "SpawnmenuContentPanel", PANEL, "DPanel" )

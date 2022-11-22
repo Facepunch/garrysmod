@@ -43,7 +43,6 @@ include("shared.lua")
 
 include("karma.lua")
 include("entity.lua")
-include("scoring_shd.lua")
 include("radar.lua")
 include("admin.lua")
 include("traitor_state.lua")
@@ -135,6 +134,7 @@ util.AddNetworkString("TTT_TraitorVoiceState")
 util.AddNetworkString("TTT_LastWordsMsg")
 util.AddNetworkString("TTT_RadioMsg")
 util.AddNetworkString("TTT_ReportStream")
+util.AddNetworkString("TTT_ReportStream_Part")
 util.AddNetworkString("TTT_LangMsg")
 util.AddNetworkString("TTT_ServerLang")
 util.AddNetworkString("TTT_Equipment")
@@ -175,7 +175,7 @@ function GM:Initialize()
 
    -- More map config ent defaults
    GAMEMODE.force_plymodel = ""
-   GAMEMODE.propspec_allow_named = true
+   GAMEMODE.propspec_allow_named = false
 
    GAMEMODE.MapWin = WIN_NONE
    GAMEMODE.AwardedCredits = false
@@ -411,6 +411,9 @@ local function SpawnEntities()
       et.PlaceExtraWeapons()
    end
 
+   -- We're done resetting the map, unlock weapon pickups for the players about to respawn
+   GAMEMODE.RespawningWeapons = false
+
    -- Finally, get players in there
    SpawnWillingPlayers()
 end
@@ -459,7 +462,8 @@ function PrepareRound()
       return
    end
 
-   -- Cleanup
+   -- Reset the map entities
+   GAMEMODE.RespawningWeapons = true
    CleanUp()
 
    GAMEMODE.MapWin = WIN_NONE
@@ -647,6 +651,9 @@ function BeginRound()
 
    -- Remove their ragdolls
    ents.TTT.RemoveRagdolls(true)
+
+   -- Check for low-karma players that weren't banned on round end
+   if KARMA.cv.autokick:GetBool() then KARMA.CheckAutoKickAll() end
 
    if CheckForAbort() then return end
 
@@ -871,7 +878,7 @@ function SelectRoles()
 
    -- first select traitors
    local ts = 0
-   while ts < traitor_count do
+   while (ts < traitor_count) and (#choices >= 1) do
       -- select random index in choices table
       local pick = math.random(1, #choices)
 

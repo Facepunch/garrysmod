@@ -62,6 +62,7 @@ function PANEL:AddModel( model, ConVars )
 	self.List:AddItem( Icon )
 	table.insert( self.Controls, Icon )
 
+	return Icon
 end
 
 function PANEL:AddModelEx( name, model, skin )
@@ -88,6 +89,7 @@ function PANEL:AddModelEx( name, model, skin )
 	self.List:AddItem( Icon )
 	table.insert( self.Controls, Icon )
 
+	return Icon
 end
 
 function PANEL:ControlValues( kv )
@@ -111,7 +113,7 @@ function PANEL:ControlValues( kv )
 	if ( kv.modelstable ) then
 		local tmp = {} -- HACK: Order by skin too.
 		for k, v in SortedPairsByMemberValue( kv.modelstable, "model" ) do
-			tmp[ k ] = v.model .. ( v.skin || 0 )
+			tmp[ k ] = v.model:lower() .. ( v.skin || 0 )
 		end
 
 		for k, v in SortedPairsByValue( tmp ) do
@@ -124,9 +126,9 @@ function PANEL:ControlValues( kv )
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
-	local y = self.BaseClass.PerformLayout( self )
+	local y = self.BaseClass.PerformLayout( self, w, h )
 
 	if ( self.Height >= 1 ) then
 		local Height = ( 64 + self.List:GetSpacing() ) * math.max( self.Height, 1 ) + self.List:GetPadding() * 2 - self.List:GetSpacing()

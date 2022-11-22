@@ -7,7 +7,6 @@ end
 
 ENT.Type = "anim"
 ENT.PrintName = "Camera"
-ENT.RenderGroup = RENDERGROUP_BOTH
 
 local CAMERA_MODEL = Model( "models/dav0r/camera.mdl" )
 
@@ -18,6 +17,13 @@ function ENT:SetupDataTables()
 	self:NetworkVar( "Vector", 0, "vecTrack" )
 	self:NetworkVar( "Entity", 0, "entTrack" )
 	self:NetworkVar( "Entity", 1, "Player" )
+
+end
+
+-- Custom drive mode
+function ENT:GetEntityDriveMode()
+
+	return "drive_noclip"
 
 end
 
@@ -103,9 +109,10 @@ end
 
 if ( SERVER ) then
 
-	numpad.Register( "Camera_On", function ( pl, ent )
+	numpad.Register( "Camera_On", function( pl, ent )
 
 		if ( !IsValid( ent ) ) then return false end
+		if ( !IsValid( pl ) ) then return false end
 
 		pl:SetViewEntity( ent )
 		pl.UsingCamera = ent
@@ -113,7 +120,7 @@ if ( SERVER ) then
 
 	end )
 
-	numpad.Register( "Camera_Toggle", function ( pl, ent, idx, buttoned )
+	numpad.Register( "Camera_Toggle", function( pl, ent, idx, buttoned )
 
 		-- The camera was deleted or something - return false to remove this entry
 		if ( !IsValid( ent ) ) then return false end
@@ -144,6 +151,7 @@ if ( SERVER ) then
 	numpad.Register( "Camera_Off", function( pl, ent )
 
 		if ( !IsValid( ent ) ) then return false end
+		if ( !IsValid( pl ) ) then return false end
 
 		if ( pl.UsingCamera && pl.UsingCamera == ent ) then
 			pl:SetViewEntity( pl )
@@ -183,7 +191,7 @@ function ENT:TrackEntity( ent, lpos )
 
 end
 
-function ENT:CanTool( ply, trace, mode )
+function ENT:CanTool( ply, trace, mode, tool, click )
 
 	if ( self:GetMoveType() == MOVETYPE_NONE ) then return false end
 
@@ -191,16 +199,16 @@ function ENT:CanTool( ply, trace, mode )
 
 end
 
-function ENT:Draw()
+function ENT:Draw( flags )
 
 	if ( GetConVarNumber( "cl_drawcameras" ) == 0 ) then return end
 
 	-- Don't draw the camera if we're taking pics
 	local wep = LocalPlayer():GetActiveWeapon()
-	if ( IsValid( wep ) ) then
-		if ( wep:GetClass() == "gmod_camera" ) then return end
+	if ( IsValid( wep ) and wep:GetClass() == "gmod_camera" ) then
+		return
 	end
 
-	self:DrawModel()
+	self:DrawModel( flags )
 
 end

@@ -11,9 +11,6 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 	ws_dupe = WorkshopFileBase( "dupe", { "dupe" } )
 	ws_dupe.HTML = HTML
 
-	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
-	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ) .. " );" )
-
 	function ws_dupe:FetchLocal( offset, perpage )
 
 		local f = file.Find( "dupes/*.dupe", "MOD", "datedesc" )
@@ -28,7 +25,8 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 			local entry = {
 				file	= "dupes/" .. v,
 				name	= v:StripExtension(),
-				preview	= "dupes/" .. v:StripExtension() .. ".jpg"
+				preview	= "dupes/" .. v:StripExtension() .. ".jpg",
+				description	= "Local duplication stored on your computer. Local content can be deleted in the main menu."
 			}
 
 			table.insert( saves, entry )
@@ -53,10 +51,14 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 
 	function ws_dupe:DownloadAndArm( id )
 
-		MsgN( "Downloading Dupe...\n" )
-		steamworks.Download( id, true, function( name )
+		-- Server doesn't allow us to arm dupes, don't even try to download anything
+		local res = hook.Run( "CanArmDupe", LocalPlayer() )
+		if ( res == false ) then LocalPlayer():ChatPrint( "Refusing to download Workshop dupe, server has blocked usage of the Duplicator tool!" ) return end
 
-			MsgN( "Finished - arming!\n" )
+		MsgN( "Downloading Dupe..." )
+		steamworks.DownloadUGC( id, function( name )
+
+			MsgN( "Finished - arming!" )
 			ws_dupe:Arm( name )
 
 		end )
@@ -68,6 +70,9 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 		RunConsoleCommand( "dupe_publish", filename, imagename )
 
 	end
+
+	HTML:OpenURL( "asset://garrysmod/html/dupes.html" )
+	HTML:Call( "SetDupeSaveState( " .. tostring( DupeInClipboard ) .. " );" )
 
 	return HTML
 
