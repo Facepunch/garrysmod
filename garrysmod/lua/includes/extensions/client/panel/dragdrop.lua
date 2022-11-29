@@ -5,16 +5,17 @@ dragndrop = {}
 
 function dragndrop.Clear()
 
-	dragndrop.m_Receiver		= nil
-	dragndrop.m_ReceiverSlot	= nil
-	dragndrop.m_HoverStart		= nil
-	dragndrop.m_MouseCode		= 0
-	dragndrop.m_DragWatch		= nil
-	dragndrop.m_MouseX			= 0
-	dragndrop.m_MouseY			= 0
-	dragndrop.m_DraggingMain	= nil
-	dragndrop.m_Dragging		= nil
-	dragndrop.m_DropMenu		= nil
+	dragndrop.m_Receiver		   = nil
+	dragndrop.m_ReceiverSlot	   = nil
+	dragndrop.m_HoverStart		   = nil
+	dragndrop.m_MouseCode		   = 0
+	dragndrop.m_DragWatch		   = nil
+	dragndrop.m_MouseX			   = 0
+	dragndrop.m_MouseY			   = 0
+	dragndrop.m_DraggingMain	   = nil
+	dragndrop.m_Dragging		   = nil
+	dragndrop.m_DropMenu		   = nil
+	dragndrop.m_DraggingClickedPos = nil
 
 end
 
@@ -209,6 +210,9 @@ function dragndrop.Think()
 	--
 	if ( IsValid( dragndrop.m_DragWatch ) ) then
 
+		if ( !dragndrop.m_DraggingClickedPos ) then
+			dragndrop.m_DraggingClickedPos = {x = gui.MouseX(), y = gui.MouseY()}
+		end
 		local dist = math.abs( dragndrop.m_MouseX - gui.MouseX() ) + math.abs( dragndrop.m_MouseY - gui.MouseY() )
 		if ( dist > 20 ) then
 			dragndrop.StartDragging()
@@ -255,8 +259,8 @@ hook.Add( "DrawOverlay", "DragNDropPaint", function()
 		if ( IsValid( dragndrop.m_Hovered ) ) then Alpha = 0.8 end
 		surface.SetAlphaMultiplier( Alpha )
 
-			local ox = gui.MouseX() - hold_offset_x + 8
-			local oy = gui.MouseY() - hold_offset_y + 8
+			local ox = gui.MouseX() - hold_offset_x
+			local oy = gui.MouseY() - hold_offset_y
 
 			for k, v in pairs( dragndrop.m_Dragging ) do
 
@@ -270,7 +274,15 @@ hook.Add( "DrawOverlay", "DragNDropPaint", function()
 				surface.SetAlphaMultiplier( Alpha * dist )
 
 				v.PaintingDragging = true
-				v:PaintAt( ox + v.x - v:GetWide() / 2, oy + v.y - v:GetTall() / 2 ) // fill the gap between the top left corner and the mouse position
+				if v.m_DragType == "CENTER" then
+					v:PaintAt( ox + v.x - v:GetWide() / 2, oy + v.y - v:GetTall() / 2 ) // fill the gap between the top left corner and the mouse position
+				elseif v.m_DragType == "RELATIVE" then
+					local s_x, s_y = v:LocalToScreen( 0, 0 )
+					v:PaintAt(
+						ox + s_x - dragndrop.m_DraggingClickedPos.x,
+						oy + s_y - dragndrop.m_DraggingClickedPos.y
+					)
+				end
 				v.PaintingDragging = nil
 
 			end
@@ -295,6 +307,16 @@ hook.Add( "Think", "DragNDropThink", dragndrop.Think )
 --
 
 local meta = FindMetaTable( "Panel" )
+--
+-- Set a draggable type on this panel.
+--
+function meta:SetDragType( type )
+	-- CENTER OR RELATIVE.
+	
+	self.m_DragType = type
+
+end
+
 
 --
 -- Make this panel droppable
@@ -304,6 +326,8 @@ function meta:Droppable( name )
 	self.m_DragSlot = self.m_DragSlot or {}
 
 	self.m_DragSlot[ name ] = {}
+
+	self:SetDragType( "CENTER" )
 
 	return self.m_DragSlot[ name ]
 
