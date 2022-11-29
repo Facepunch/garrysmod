@@ -137,19 +137,19 @@ end
 
 net.WriteVars =
 {
-	[0]		= function (t, v) net.WriteUInt(t, 4)							end,
-	[1]		= function (t, v) net.WriteUInt(t, 4)	net.WriteString(v)		end,
-	[2]		= function (t, v) net.WriteUInt(t, 4)	net.WriteDouble(v)		end,
-	[3]		= function (t, v) net.WriteUInt(t, 4)	net.WriteTable(v)		end,
-	[4]		= function (t, v) net.WriteUInt(t, 4)	net.WriteBool(v)		end,
-	[5]		= function (t, v) net.WriteUInt(t, 4)	net.WriteEntity(v)		end,
-	[6]		= function (t, v) net.WriteUInt(t, 4)	net.WriteVector(v)		end,
-	[7]		= function (t, v) net.WriteUInt(t, 4)	net.WriteAngle(v)		end,
-	[8]		= function (t, v) net.WriteUInt(t, 4)	net.WriteMatrix(v)		end,
-	[9]		= function (t, v) net.WriteUInt(t, 4)	net.WriteColor(v)		end,
+	[0]		= function ( t, v ) net.WriteUInt( t, 4 )							end,
+	[1]		= function ( t, v ) net.WriteUInt( t, 4 )	net.WriteString( v )	end,
+	[2]		= function ( t, v ) net.WriteUInt( t, 4 )	net.WriteDouble( v )	end,
+	[3]		= function ( t, v ) net.WriteUInt( t, 4 )	net.WriteTable( v )		end,
+	[4]		= function ( t, v ) net.WriteUInt( t, 4 )	net.WriteBool( v )		end,
+	[5]		= function ( t, v ) net.WriteUInt( t, 4 )	net.WriteEntity( v )	end,
+	[6]		= function ( t, v ) net.WriteUInt( t, 4 )	net.WriteVector( v )	end,
+	[7]		= function ( t, v ) net.WriteUInt( t, 4 )	net.WriteAngle( v )		end,
+	[8]		= function ( t, v ) net.WriteUInt( t, 4 )	net.WriteMatrix( v )	end,
+	[9]		= function ( t, v ) net.WriteUInt( t, 4 )	net.WriteColor( v )		end,
 }
 
-local types = {
+local Net_Types = {
 	[1] 	= 4, -- boolean
 	[3] 	= 2, -- number
 	[4] 	= 1, -- string
@@ -162,19 +162,19 @@ local types = {
 
 local IsColor = IsColor
 local TypeID = TypeID
-local function NetTypeID(v)
+local function Net_TypeID( v )
 	if !v then return 0 end
 
-	if IsColor(v) then
+	if IsColor( v ) then
 		return 9
 	else
-		return types[TypeID(v)] or 0
+		return Net_Types[ TypeID( v ) ] or 0
 	end
 end
 
 function net.WriteType( v )
 
-	local typeid = NetTypeID( v )
+	local typeid = Net_TypeID( v )
 
 	local wv = net.WriteVars[ typeid ]
 	if ( wv ) then return wv( typeid, v ) end
@@ -185,10 +185,10 @@ end
 
 net.ReadVars =
 {
-	[0]	= function ()	return nil 				end,
+	[0]	= function ()	return nil 					end,
 	[1]	= function ()	return net.ReadString() 	end,
 	[2]	= function ()	return net.ReadDouble() 	end,
-	[3]	= function ()	return net.ReadTable() 	end,
+	[3]	= function ()	return net.ReadTable() 		end,
 	[4]	= function ()	return net.ReadBool() 		end,
 	[5]	= function ()	return net.ReadEntity() 	end,
 	[6]	= function ()	return net.ReadVector() 	end,
