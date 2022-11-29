@@ -51,16 +51,16 @@ end
 function net.WriteEntity( ent )
 
 	if ( !IsValid( ent ) ) then
-		net.WriteUInt( 0, 16 )
+		net.WriteUInt( 0, 14 )
 	else
-		net.WriteUInt( ent:EntIndex(), 16 )
+		net.WriteUInt( ent:EntIndex(), 14 )
 	end
 
 end
 
 function net.ReadEntity()
 
-	local i = net.ReadUInt( 16 )
+	local i = net.ReadUInt( 14 )
 	if ( !i ) then return end
 
 	return Entity( i )
@@ -137,26 +137,44 @@ end
 
 net.WriteVars =
 {
-	[TYPE_NIL]			= function ( t, v )	net.WriteUInt( t, 8 )								end,
-	[TYPE_STRING]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteString( v )		end,
-	[TYPE_NUMBER]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteDouble( v )		end,
-	[TYPE_TABLE]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteTable( v )			end,
-	[TYPE_BOOL]			= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteBool( v )			end,
-	[TYPE_ENTITY]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteEntity( v )		end,
-	[TYPE_VECTOR]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteVector( v )		end,
-	[TYPE_ANGLE]		= function ( t, v )	net.WriteUInt( t, 8 )	net.WriteAngle( v )			end,
-	[TYPE_MATRIX]		= function ( t, v ) net.WriteUInt( t, 8 )	net.WriteMatrix( v )		end,
-	[TYPE_COLOR]		= function ( t, v ) net.WriteUInt( t, 8 )	net.WriteColor( v )			end,
+	[0]		= function (t, v) net.WriteUInt(t, 4)							end,
+	[1]		= function (t, v) net.WriteUInt(t, 4)	net.WriteString(v)		end,
+	[2]		= function (t, v) net.WriteUInt(t, 4)	net.WriteDouble(v)		end,
+	[3]		= function (t, v) net.WriteUInt(t, 4)	net.WriteTable(v)		end,
+	[4]		= function (t, v) net.WriteUInt(t, 4)	net.WriteBool(v)		end,
+	[5]		= function (t, v) net.WriteUInt(t, 4)	net.WriteEntity(v)		end,
+	[6]		= function (t, v) net.WriteUInt(t, 4)	net.WriteVector(v)		end,
+	[7]		= function (t, v) net.WriteUInt(t, 4)	net.WriteAngle(v)		end,
+	[8]		= function (t, v) net.WriteUInt(t, 4)	net.WriteMatrix(v)		end,
+	[9]		= function (t, v) net.WriteUInt(t, 4)	net.WriteColor(v)		end,
 }
 
-function net.WriteType( v )
-	local typeid = nil
+local types = {
+	[1] 	= 4, -- boolean
+	[3] 	= 2, -- number
+	[4] 	= 1, -- string
+	[5] 	= 3, -- table
+	[9] 	= 5, -- Entity
+	[10] 	= 6, -- Vector
+	[11] 	= 7, -- Angle
+	[29] 	= 8, -- VMatrix
+}
 
-	if IsColor( v ) then
-		typeid = TYPE_COLOR
+local IsColor = IsColor
+local TypeID = TypeID
+local function NetTypeID(v)
+	if !v then return 0 end
+
+	if IsColor(v) then
+		return 9
 	else
-		typeid = TypeID( v )
+		return types[TypeID(v)] or 0
 	end
+end
+
+function net.WriteType( v )
+
+	local typeid = NetTypeID( v )
 
 	local wv = net.WriteVars[ typeid ]
 	if ( wv ) then return wv( typeid, v ) end
@@ -167,21 +185,21 @@ end
 
 net.ReadVars =
 {
-	[TYPE_NIL]		= function ()	return nil end,
-	[TYPE_STRING]	= function ()	return net.ReadString() end,
-	[TYPE_NUMBER]	= function ()	return net.ReadDouble() end,
-	[TYPE_TABLE]	= function ()	return net.ReadTable() end,
-	[TYPE_BOOL]		= function ()	return net.ReadBool() end,
-	[TYPE_ENTITY]	= function ()	return net.ReadEntity() end,
-	[TYPE_VECTOR]	= function ()	return net.ReadVector() end,
-	[TYPE_ANGLE]	= function ()	return net.ReadAngle() end,
-	[TYPE_MATRIX]	= function ()	return net.ReadMatrix() end,
-	[TYPE_COLOR]	= function ()	return net.ReadColor() end,
+	[0]	= function ()	return nil 				end,
+	[1]	= function ()	return net.ReadString() 	end,
+	[2]	= function ()	return net.ReadDouble() 	end,
+	[3]	= function ()	return net.ReadTable() 	end,
+	[4]	= function ()	return net.ReadBool() 		end,
+	[5]	= function ()	return net.ReadEntity() 	end,
+	[6]	= function ()	return net.ReadVector() 	end,
+	[7]	= function ()	return net.ReadAngle() 		end,
+	[8]	= function ()	return net.ReadMatrix() 	end,
+	[9]	= function ()	return net.ReadColor() 		end,
 }
 
 function net.ReadType( typeid )
 
-	typeid = typeid or net.ReadUInt( 8 )
+	typeid = typeid or net.ReadUInt( 4 )
 
 	local rv = net.ReadVars[ typeid ]
 	if ( rv ) then return rv() end
