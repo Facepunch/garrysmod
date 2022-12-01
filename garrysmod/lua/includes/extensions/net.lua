@@ -162,7 +162,7 @@ net.WriteVars =
 
 net.Types = {
 	[1] 	= NET_TYPE_BOOLEAN, -- boolean
-	[3] 	= NET_TYPE_NUMBER,´ -- number
+	[3] 	= NET_TYPE_NUMBER,  -- number
 	[4] 	= NET_TYPE_STRING,  -- string
 	[5] 	= NET_TYPE_TABLE,   -- table
 	[9] 	= NET_TYPE_ENTITY,  -- Entity
