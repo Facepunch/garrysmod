@@ -36,6 +36,19 @@ function PANEL:Init()
 
 end
 
+function PANEL:SetCustomPaintOver(sMat, nSize, nOrig, cPaint)
+
+	local rpnto = cPaint or color_white
+	local rorig = tonumber(nOrig) or border
+	local rsize = tonumber(nSize) or border_w
+	local rmhov = sMat and Material( sMat, "nocull" ) or matHover
+	local rboxp = GWEN.CreateTextureBorder( rorig, rorig, 64 - rorig * 2, 64 - rorig * 2,
+	                                        rsize, rsize, rsize, rsize, rmhov )
+
+	self.CustomPaintOver = function( self, w, h ) rboxp( 0, 0, w, h, rpnto ) end
+
+end
+
 function PANEL:SetAutoHeight( bAutoHeight )
 
 	self.m_bSizeToContent = bAutoHeight
@@ -54,7 +67,7 @@ function PANEL:UpdatePaintOver( mat )
 
 	-- Add the overlay to this button
 	self.OldSelectedPaintOver = mat.PaintOver
-	mat.PaintOver = HighlightedButtonPaint
+	mat.PaintOver = self.CustomPaintOver or HighlightedButtonPaint
 	self.SelectedMaterial = mat
 
 end
