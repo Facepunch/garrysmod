@@ -382,15 +382,25 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	local bDropToFloor = false
 
 	--
-	-- This NPC has to be spawned on a ceiling ( Barnacle )
+	-- monster_turret & monster_miniturret can be spawned either on the floor or on the ceiling
 	--
-	if ( NPCData.OnCeiling ) then
-		if ( Vector( 0, 0, -1 ):Dot( Normal ) < 0.95 ) then
+	if ( ( Class == "monster_turret" ) or ( Class == "monster_miniturret" ) ) then
+		if ( Vector( 0, 0, 1 ):Dot( Normal ) >= 0.95 ) then -- Check if on floor
+			NPCData.KeyValues.orientation = 0
+		elseif ( Vector( 0, 0, -1 ):Dot( Normal ) >= 0.95 ) then -- Check if on ceiling
+			NPCData.KeyValues.orientation = 1
+		else
 			return nil
 		end
+	end
 
 	--
-	-- This NPC has to be spawned on a floor ( Turrets )
+	-- This NPC has to be spawned on a ceiling ( Barnacle )
+	--
+	if ( NPCData.OnCeiling && Vector( 0, 0, -1 ):Dot( Normal ) < 0.95 ) then
+			return nil
+	--
+	-- This NPC has to be spawned on a floor ( Floor Turret )
 	--
 	elseif ( NPCData.OnFloor && Vector( 0, 0, 1 ):Dot( Normal ) < 0.95 ) then
 		return nil
@@ -426,14 +436,14 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	NPC:SetAngles( Angles )
 
 	--
-	-- This NPC has a special model we want to define
+	-- Does this NPC have a specified model? If so, use it.
 	--
 	if ( NPCData.Model ) then
 		NPC:SetModel( NPCData.Model )
 	end
 
 	--
-	-- This NPC has a special texture we want to define
+	-- Does this NPC have a specified material? If so, use it.
 	--
 	if ( NPCData.Material ) then
 		NPC:SetMaterial( NPCData.Material )
@@ -459,17 +469,17 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	end
 
 	--
-	-- This NPC has a special skin we want to define
+	-- Does this NPC have a specified skin? If so, use it.
 	--
 	if ( NPCData.Skin ) then
 		NPC:SetSkin( NPCData.Skin )
 	end
 
 	--
-	-- What weapon should this mother be carrying
+	-- What weapon this NPC should be carrying
 	--
 
-	-- Check if this is a valid entity from the list, or the user is trying to fool us.
+	-- Check if this is a valid weapon from the list, or the user is trying to fool us.
 	local valid = false
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
 		if v.class == Equipment then valid = true break end
@@ -488,8 +498,8 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	NPC:Spawn()
 	NPC:Activate()
 
-	-- For those NPCs that set their model in Spawn function
-	-- We have to keep the call above for NPCs that want a model set by Spawn() time
+	-- For NPCs that set their model in Spawn function,
+	-- We have to keep the call above for NPCs that want a model set by Spawn() time.
 	-- BAD: They may adversly affect entity collision bounds
 	if ( NPCData.Model && NPC:GetModel():lower() != NPCData.Model:lower() ) then
 		NPC:SetModel( NPCData.Model )
@@ -537,7 +547,7 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 
 	end
 
-	-- Create the NPC is you can.
+	-- Create the NPC if you can.
 	local SpawnedNPC = InternalSpawnNPC( ply, tr.HitPos, tr.HitNormal, NPCClassName, WeaponName )
 	if ( !IsValid( SpawnedNPC ) ) then return end
 
@@ -586,7 +596,7 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 	local ent = InternalSpawnNPC( ply, data.Pos, normal, class, equipment, spawnflags, true )
 
 	if ( IsValid( ent ) ) then
-		local pos = ent:GetPos() -- Hack! Prevnets the NPCs from falling through the floor
+		local pos = ent:GetPos() -- Hack! Prevents the NPCs from falling through the floor
 
 		duplicator.DoGeneric( ent, data )
 
@@ -613,12 +623,9 @@ local function AddNPCToDuplicator( class ) duplicator.RegisterEntityClass( class
 
 -- HL2
 AddNPCToDuplicator( "npc_alyx" )
-AddNPCToDuplicator( "npc_magnusson" )
 AddNPCToDuplicator( "npc_breen" )
 AddNPCToDuplicator( "npc_kleiner" )
 AddNPCToDuplicator( "npc_antlion" )
-AddNPCToDuplicator( "npc_antlion_worker" )
-AddNPCToDuplicator( "npc_antlion_grub" )
 AddNPCToDuplicator( "npc_antlionguard" )
 AddNPCToDuplicator( "npc_barnacle" )
 AddNPCToDuplicator( "npc_barney" )
@@ -647,18 +654,23 @@ AddNPCToDuplicator( "npc_turret_ceiling" )
 AddNPCToDuplicator( "npc_combine_camera" )
 AddNPCToDuplicator( "npc_turret_floor" )
 AddNPCToDuplicator( "npc_vortigaunt" )
-AddNPCToDuplicator( "npc_hunter" )
 AddNPCToDuplicator( "npc_sniper" )
 AddNPCToDuplicator( "npc_seagull" )
 AddNPCToDuplicator( "npc_citizen" )
 AddNPCToDuplicator( "npc_stalker" )
-AddNPCToDuplicator( "npc_fisherman" )
 AddNPCToDuplicator( "npc_zombie" )
 AddNPCToDuplicator( "npc_zombie_torso" )
 AddNPCToDuplicator( "npc_zombine" )
 AddNPCToDuplicator( "npc_poisonzombie" )
 AddNPCToDuplicator( "npc_fastzombie" )
 AddNPCToDuplicator( "npc_fastzombie_torso" )
+-- EP2
+AddNPCToDuplicator( "npc_hunter" )
+AddNPCToDuplicator( "npc_antlion_worker" )
+AddNPCToDuplicator( "npc_antlion_grub" )
+AddNPCToDuplicator( "npc_magnusson" )
+
+AddNPCToDuplicator( "npc_fisherman" )
 
 -- HL1
 AddNPCToDuplicator( "monster_alien_grunt" )
@@ -690,11 +702,11 @@ local function CanPlayerSpawnSENT( ply, EntityName )
 
 	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) || game.SinglePlayer()
 
-	-- Make sure this is a SWEP
+	-- Make sure that given EntityName is actually a SENT
 	local sent = scripted_ents.GetStored( EntityName )
 	if ( sent == nil ) then
 
-		-- Is this in the SpawnableEntities list?
+		-- Is the entity spawnable?
 		local SpawnableEntities = list.Get( "SpawnableEntities" )
 		if ( !SpawnableEntities ) then return false end
 		local EntTable = SpawnableEntities[ EntityName ]
@@ -729,7 +741,7 @@ function Spawn_SENT( ply, EntityName, tr )
 
 	if ( !CanPlayerSpawnSENT( ply, EntityName ) ) then return end
 
-	-- Ask the gamemode if it's ok to spawn this
+	-- Ask the gamemode if it's OK to spawn this
 	if ( !gamemode.Call( "PlayerSpawnSENT", ply, EntityName ) ) then return end
 
 	if ( !tr ) then
@@ -840,7 +852,7 @@ end
 concommand.Add( "gm_spawnsent", function( ply, cmd, args ) Spawn_SENT( ply, args[ 1 ] ) end )
 
 --[[---------------------------------------------------------
-	-- Give a swep.. duh.
+	-- Give a swep.
 -----------------------------------------------------------]]
 function CCGiveSWEP( ply, command, arguments )
 
@@ -957,7 +969,7 @@ local function MakeVehicle( ply, Pos, Ang, model, Class, VName, VTable, data )
 
 	Ent:SetModel( model )
 
-	-- Fallback vehiclescripts for HL2 maps ( dupe support )
+	-- Fallback vehiclescripts for HL2 ( dupe support )
 	if ( model == "models/buggy.mdl" ) then Ent:SetKeyValue( "vehiclescript", "scripts/vehicles/jeep_test.txt" ) end
 	if ( model == "models/vehicle.mdl" ) then Ent:SetKeyValue( "vehiclescript", "scripts/vehicles/jalopy.txt" ) end
 
@@ -1012,7 +1024,7 @@ duplicator.RegisterEntityClass( "prop_vehicle_airboat", MakeVehicle, "Pos", "Ang
 duplicator.RegisterEntityClass( "prop_vehicle_prisoner_pod", MakeVehicle, "Pos", "Ang", "Model", "Class", "VehicleName", "VehicleTable", "Data" )
 
 --[[---------------------------------------------------------
-	Name: CCSpawnVehicle
+	Name: Spawn_Vehicle
 	Desc: Player attempts to spawn vehicle
 -----------------------------------------------------------]]
 function Spawn_Vehicle( ply, vname, tr )
