@@ -23,6 +23,7 @@ function EFFECT:Init( data )
 	self:SetAngles( ent:GetAngles() )
 	self:SetParent( ent )
 
+	self.OldRenderOverride = self.ParentEntity.RenderOverride
 	self.ParentEntity.RenderOverride = self.RenderParent
 	self.ParentEntity.SpawnEffect = self
 
@@ -41,7 +42,10 @@ function EFFECT:Think()
 		return true
 	end
 
-	self.ParentEntity.RenderOverride = nil
+	-- Remove the override only if our override was not overridden.
+	if ( self.ParentEntity.RenderOverride == self.RenderParent ) then
+		self.ParentEntity.RenderOverride = self.OldRenderOverride
+	end
 	self.ParentEntity.SpawnEffect = nil
 
 	return false
