@@ -1,18 +1,16 @@
 module( "team", package.seeall )
 
-local TeamInfo = {}
+local TeamList = {}
+local TeamLookup = {}
 local DefaultColor = Color(255, 255, 100, 255)
-
-TeamInfo[TEAM_CONNECTING] 	= { Name = "Joining/Connecting", 	Color = DefaultColor, 	Score = 0, 	Joinable = false }
-TeamInfo[TEAM_UNASSIGNED] 	= { Name = "Unassigned", 			Color = DefaultColor, 	Score = 0, 	Joinable = false }
-TeamInfo[TEAM_SPECTATOR] 	= { Name = "Spectator", 			Color = DefaultColor, 	Score = 0, 	Joinable = true }
 
 --[[------------------------------------------------------------
 
-	Call this to set up your team. It should be called in
-	a shared file. This system assumes that your teams are
-	static. If you want to have dynamic teams you need to
-	code this yourself.
+	Call team.SetUp to quickly set up your team. You can also
+	call team.Register to create a team object to handle custom
+	logic per team. It should be called in a shared file. This
+	system assumes that your teams are static. If you want to
+	have dynamic teams you need to code this yourself.
 
 	id should be a number. It's best to do something like
 
@@ -22,168 +20,178 @@ TeamInfo[TEAM_SPECTATOR] 	= { Name = "Spectator", 			Color = DefaultColor, 	Scor
 	teams via a variable rather than a number.
 
 --------------------------------------------------------------]]
+
+local TEAM = {}
+TEAM.__index = TEAM
+
+--[[------------------------------------------------------------
+
+	Register our metatable to make it accessible using FindMetaTable
+
+--------------------------------------------------------------]]
+
+debug.getregistry().Team = TEAM
+
+function Register( tbl, name )
+
+	if ( !tbl.Name && name ) then tbl.Name = name end
+	
+	setmetatable( tbl, TEAM )
+	TeamList[tbl.TeamID] = tbl
+	TeamLookup[tbl.Name] = tbl
+	
+end
+
 function SetUp( id, name, color, joinable )
 
 	if ( joinable == nil ) then joinable = true end
 
-	TeamInfo[id] = { Name = name, Color = color, Score = 0, Joinable = joinable }
+	Register( { TeamID = id, Name = name, Color = color, Score = 0, Joinable = joinable }, name )
+	
+end
+
+SetUp( TEAM_CONNECTING,	"Joining/Connecting",	DefaultColor,	false )
+SetUp( TEAM_UNASSIGNED,	"Unassigned",			DefaultColor,	false )
+SetUp( TEAM_SPECTATOR,	"Spectator",			DefaultColor,	true )
+
+function GetByID( id )
+
+	return TeamList[id]
 
 end
 
+function GetByName( name )
+
+	return TeamLookup[name]
+
+end
 
 function GetAllTeams()
 
-	return TeamInfo -- copyof?
+	return TeamList -- copyof?
 
 end
 
 function Valid( id )
 
-	if ( !TeamInfo[id] ) then return false end
+	if ( !TeamList[id] ) then return false end
 	return true
 
 end
 
 function Joinable( id )
 
-	if ( !TeamInfo[id] ) then return false end
-	return TeamInfo[id].Joinable
+	if ( !TeamList[id] ) then return false end
+	return TeamList[id]:IsJoinable()
 
 end
 
 function GetSpawnPoint( id )
 
-	if ( !TeamInfo[id] ) then return end
-	return TeamInfo[id].SpawnPointTable
+	if ( !TeamList[id] ) then return end
+	return TeamList[id]:GetSpawnPointTable()
 
 end
 
 function GetSpawnPoints( id )
 
-	if ( IsTableOfEntitiesValid( TeamInfo[id].SpawnPoints ) ) then return TeamInfo[id].SpawnPoints end
-
-	local SpawnPointTable = team.GetSpawnPoint( id )
-	if ( !SpawnPointTable ) then return end
-
-	TeamInfo[id].SpawnPoints = {}
-
-	for k, entname in pairs( SpawnPointTable ) do
-
-		TeamInfo[id].SpawnPoints = table.Add( TeamInfo[id].SpawnPoints, ents.FindByClass( entname ) )
-
-	end
-
-	return TeamInfo[id].SpawnPoints
+	if ( !TeamList[id] ) then return end
+	return TeamList[id]:GetSpawnPoints()
 
 end
 
 function SetSpawnPoint( id, ent_name )
 
-	if ( !TeamInfo[id] ) then return end
-	if ( !istable( ent_name ) ) then ent_name = {ent_name} end
+	if ( !TeamList[id] ) then return end
+	if ( !istable( ent_name ) ) then ent_name = { ent_name } end
 
-	TeamInfo[id].SpawnPointTable = ent_name
+	TeamList[id]:SetSpawnPointTable( ent_name )
 
 end
 
 function SetClass( id, classtable )
 
-	if ( !TeamInfo[id] ) then return end
-	if ( !istable( classtable ) ) then classtable = {classtable} end
+	if ( !TeamList[id] ) then return end
+	if ( !istable( classtable ) ) then classtable = { classtable } end
 
-	TeamInfo[id].SelectableClasses = classtable
+	TeamList[id]:SetSelectableClasses( classtable )
 
 end
 
 function GetClass( id )
 
-	if ( !TeamInfo[id] ) then return end
-	return TeamInfo[id].SelectableClasses
+	if ( !TeamList[id] ) then return end
+	return TeamList[id]:GetSelectableClasses()
 
 end
 
-function TotalDeaths(index)
+function TotalDeaths( id )
 
-	local score = 0
-	for id,pl in pairs( player.GetAll() ) do
-		if (pl:Team() == index) then
-			score = score + pl:Deaths()
-		end
-	end
-	return score
+	if ( !TeamList[id] ) then return 0 end
+	return TeamList[id]:GetTotalDeaths()
 
 end
 
-function TotalFrags(index)
+function TotalFrags( id )
 
-	local score = 0
-	for id,pl in pairs( player.GetAll() ) do
-		if (pl:Team() == index) then
-			score = score + pl:Frags()
-		end
-	end
-	return score
+	if ( !TeamList[id] ) then return 0 end
+	return TeamList[id]:GetTotalFrags()
 
 end
 
-function NumPlayers(index)
+function NumPlayers( id )
 
-	return #GetPlayers(index)
-
-end
-
-function GetPlayers(index)
-
-	local TeamPlayers = {}
-
-	for id,pl in pairs( player.GetAll() ) do
-		if (IsValid(pl) and pl:Team() == index) then
-			table.insert(TeamPlayers, pl)
-		end
-	end
-
-	return TeamPlayers
+	if ( !TeamList[id] ) then return 0 end
+	return TeamList[id]:GetPlayerCount()
 
 end
 
-function GetScore(index)
+function GetPlayers( id )
 
-	return GetGlobalInt( "Team."..tostring(index)..".Score", 0 )
-
-end
-
-function GetName( index )
-
-	if (!TeamInfo[index]) then return "" end
-	return TeamInfo[index].Name
+	if ( !TeamList[id] ) then return {} end
+	return TeamList[id]:GetPlayers()
 
 end
 
-function SetColor( index, color )
+function GetScore( id )
 
-	if ( !TeamInfo[ index ] ) then return false; end
-	TeamInfo[ index ].Color = color
+	if ( !TeamList[id] ) then return 0 end
+	return TeamList[id]:GetScore()
 
+end
+
+function GetName( id )
+
+	if ( !TeamList[id] ) then return "" end
+	return TeamList[id]:GetName()
+
+end
+
+function SetColor( id, color )
+
+	if ( !TeamList[id] ) then return false end
+	TeamList[id]:SetColor( color )
 	return color
 
 end
 
-function GetColor( index )
+function GetColor( id )
 
-	if (!TeamInfo[index]) then return DefaultColor end
-	return table.Copy( TeamInfo[index].Color )
-
-end
-
-function SetScore(index, score)
-
-	return SetGlobalInt( "Team."..tostring(index)..".Score", score )
+	if ( !TeamList[id] ) then return DefaultColor end
+	return table.Copy( TeamList[id]:GetColor() )
 
 end
 
-function AddScore(index, score)
+function SetScore( id, score )
 
-	SetScore( index, GetScore( index ) + score )
+	if ( !TeamList[id] ) then return end
+	TeamList[id]:SetScore( score )
+
+end
+
+function AddScore( id, score )
+
+	SetScore( id, GetScore( id ) + score )
 
 end
 
@@ -196,7 +204,7 @@ function BestAutoJoinTeam()
 
 		if ( id != TEAM_SPECTATOR && id != TEAM_UNASSIGNED && id != TEAM_CONNECTING && tm.Joinable ) then
 
-			local PlayerCount = team.NumPlayers( id )
+			local PlayerCount = tm:GetPlayerCount()
 			if ( PlayerCount < SmallestPlayers || (PlayerCount == SmallestPlayers && id < SmallestTeam ) ) then
 				SmallestPlayers = PlayerCount
 				SmallestTeam = id
@@ -207,5 +215,121 @@ function BestAutoJoinTeam()
 	end
 
 	return SmallestTeam
+
+end
+
+--[[------------------------------------------------------------
+
+	Class stuff.
+
+--------------------------------------------------------------]]
+
+AccessorFunc( TEAM, "Color", "Color" )
+AccessorFunc( TEAM, "SpawnPointTable", "SpawnPointTable" )
+AccessorFunc( TEAM, "SelectableClasses", "SelectableClasses" )
+
+function TEAM:GetID()
+
+	return self.TeamID
+
+end
+
+function TEAM:GetName()
+
+	return self.Name
+
+end
+
+function TEAM:IsJoinable()
+
+	return self.Joinable
+
+end
+
+function TEAM:SetJoinable( joinable )
+
+	self.Joinable = joinable
+
+end
+
+function TEAM:GetSpawnPoints()
+	
+	if ( IsTableOfEntitiesValid( self.SpawnPoints ) ) then return self.SpawnPoints end
+
+	local spawnPointTable = Self:GetSpawnPointTable()
+	if ( !spawnPointTable ) then return end
+
+	spawnPoints = {}
+
+	for k, entname in pairs( spawnPointTable ) do
+
+		spawnPoints = table.Add( spawnPoints, ents.FindByClass( entname ) )
+
+	end
+
+	self.SpawnPoints = spawnPoints
+	
+	return spawnPoints
+	
+end
+
+function TEAM:GetTotalDeaths()
+	
+	local deaths, id = 0, self:GetID()
+	local players, pl = player.GetAll()
+	for i = 1, #players do
+		pl = players[i]
+		if ( pl:IsValid() && pl:Team() == id ) then
+			deaths = deaths + pl:Deaths()
+		end
+	end
+	return deaths
+	
+end
+
+function TEAM:GetTotalFrags()
+
+	local frags, id = 0, self:GetID()
+	local players, pl = player.GetAll()
+	for i = 1, #players do
+		pl = players[i]
+		if ( pl:IsValid() && pl:Team() == id ) then
+			frags = frags + pl:Frags()
+		end
+	end
+	return frags
+	
+end
+
+function TEAM:GetPlayers()
+
+	local tbl, size, id = {}, 0, self:GetID()
+	local players, pl = player.GetAll()
+	for i = 1, #players do
+		pl = players[i]
+		if ( pl:IsValid() && pl:Team() == id ) then
+			size = size + 1
+			tbl[size] = pl
+		end
+	end
+	return tbl
+
+end
+
+function TEAM:GetPlayerCount()
+	
+	return #self:GetPlayers()
+
+end
+
+function TEAM:GetScore()
+	
+	return GetGlobalInt( "Team." .. self:GetID() .. ".Score", 0 )
+
+end
+
+function TEAM:SetScore( score )
+
+	SetGlobalInt( "Team." .. self:GetID() .. ".Score", score )
 
 end
