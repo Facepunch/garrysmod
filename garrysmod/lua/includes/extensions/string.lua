@@ -30,7 +30,10 @@ local javascript_escape_replacements = {
 	["\r"] = "\\r" ,
 	["\""] = "\\\"",
 	["\'"] = "\\\'",
-	["`"] = "\\`"
+	["`"] = "\\`",
+	["$"] = "\\$",
+	["{"] = "\\{",
+	["}"] = "\\}"
 }
 
 function string.JavascriptSafe( str )
@@ -304,7 +307,6 @@ function string.StartsWith( String, Start )
 	return string.sub( String, 1, string.len( Start ) ) == Start
 
 end
-
 string.StartWith = string.StartsWith
 
 function string.EndsWith( String, End )
