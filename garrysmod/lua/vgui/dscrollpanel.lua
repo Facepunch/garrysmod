@@ -5,20 +5,23 @@ AccessorFunc( PANEL, "Padding", "Padding" )
 AccessorFunc( PANEL, "pnlCanvas", "Canvas" )
 
 function PANEL:Init()
-
 	self.pnlCanvas = vgui.Create( "Panel", self )
-	self.pnlCanvas.OnMousePressed = function( self, code ) self:GetParent():OnMousePressed( code ) end
+	self.pnlCanvas.OnMousePressed = function( pnl, code )
+		pnl:GetParent():OnMousePressed( code )
+	end
+
 	self.pnlCanvas:SetMouseInputEnabled( true )
 	self.pnlCanvas.PerformLayout = function( pnl )
-
 		self:PerformLayoutInternal()
 		self:InvalidateParent()
-
 	end
 
 	-- Create the scroll bar
-	self.VBar = vgui.Create( "DVScrollBar", self )
-	self.VBar:Dock( RIGHT )
+	local scrollBar = vgui.Create( "DVScrollBar", self )
+	if IsValid( scrollBar ) then
+		self.VBar = scrollBar
+		scrollBar:Dock( RIGHT )
+	end
 
 	self:SetPadding( 0 )
 	self:SetMouseInputEnabled( true )
@@ -27,119 +30,106 @@ function PANEL:Init()
 	self:SetPaintBackgroundEnabled( false )
 	self:SetPaintBorderEnabled( false )
 	self:SetPaintBackground( false )
-
 end
 
 function PANEL:AddItem( pnl )
-
 	pnl:SetParent( self:GetCanvas() )
-
 end
 
 function PANEL:OnChildAdded( child )
-
 	self:AddItem( child )
-
 end
 
 function PANEL:SizeToContents()
-
-	self:SetSize( self.pnlCanvas:GetSize() )
-
+	local canvas = self:GetCanvas()
+	if IsValid( canvas ) then
+		self:SetSize( canvas:GetSize() )
+	end
 end
 
 function PANEL:GetVBar()
-
 	return self.VBar
-
 end
 
 function PANEL:GetCanvas()
-
 	return self.pnlCanvas
-
 end
 
 function PANEL:InnerWidth()
-
 	return self:GetCanvas():GetWide()
-
-end
-
-function PANEL:Rebuild()
-
-	self:GetCanvas():SizeToChildren( false, true )
-
-	-- Although this behaviour isn't exactly implied, center vertically too
-	if ( self.m_bNoSizing && self:GetCanvas():GetTall() < self:GetTall() ) then
-
-		self:GetCanvas():SetPos( 0, ( self:GetTall() - self:GetCanvas():GetTall() ) * 0.5 )
-
-	end
-
 end
 
 function PANEL:OnMouseWheeled( dlta )
-
-	return self.VBar:OnMouseWheeled( dlta )
-
+	local vbar = self:GetVBar()
+	if IsValid( vbar ) then
+		return vbar:OnMouseWheeled( dlta )
+	end
 end
 
 function PANEL:OnVScroll( iOffset )
-
-	self.pnlCanvas:SetPos( 0, iOffset )
-
+	local canvas = self:GetCanvas()
+	if IsValid( canvas ) then
+		canvas:SetPos( 0, iOffset )
+	end
 end
 
 function PANEL:ScrollToChild( panel )
-
 	self:InvalidateLayout( true )
 
-	local x, y = self.pnlCanvas:GetChildPosition( panel )
-	local w, h = panel:GetSize()
-
-	y = y + h * 0.5
-	y = y - self:GetTall() * 0.5
-
-	self.VBar:AnimateTo( y, 0.5, 0, 0.5 )
-
+	local canvas = self:GetCanvas()
+	if IsValid( canvas ) then
+		local vbar = self:GetVBar()
+		if IsValid( vbar ) then
+			local _, y = canvas:GetChildPosition( panel )
+			vbar:AnimateTo( (y + panel:GetTall() / 2) - self:GetTall() / 2, 0.5, 0, 0.5 )
+		end
+	end
 end
 
--- Avoid an infinite loop
-function PANEL:PerformLayoutInternal()
+function PANEL:Rebuild()
+	local canvas = self:GetCanvas()
+	if IsValid( canvas ) then
+		canvas:SizeToChildren( false, true )
 
-	local Tall = self.pnlCanvas:GetTall()
-	local Wide = self:GetWide()
-	local YPos = 0
-
-	self:Rebuild()
-
-	self.VBar:SetUp( self:GetTall(), self.pnlCanvas:GetTall() )
-	YPos = self.VBar:GetOffset()
-
-	if ( self.VBar.Enabled ) then Wide = Wide - self.VBar:GetWide() end
-
-	self.pnlCanvas:SetPos( 0, YPos )
-	self.pnlCanvas:SetWide( Wide )
-
-	self:Rebuild()
-
-	if ( Tall != self.pnlCanvas:GetTall() ) then
-		self.VBar:SetScroll( self.VBar:GetScroll() ) -- Make sure we are not too far down!
+		-- Although this behaviour isn't exactly implied, center vertically too
+		local canvasHeight = canvas:GetTall()
+		if self.m_bNoSizing and (canvasHeight < self:GetTall()) then
+			canvas:SetPos( 0, (self:GetTall() - canvasHeight) / 2 )
+		end
 	end
+end
 
+function PANEL:PerformLayoutInternal()
+	local canvas = self:GetCanvas()
+	if IsValid( canvas ) then
+		local canvasHeight = canvas:GetTall()
+		local width = self:GetWide()
+
+		self:Rebuild()
+
+		local vbar = self:GetVBar()
+		if IsValid( vbar ) then
+			local height = self:GetTall()
+			vbar:SetUp( height, canvasHeight )
+			if vbar.Enabled and (canvasHeight < height) then
+				canvas:SetPos( 0, vbar:GetOffset() )
+				width = width - vbar:GetWide()
+			end
+
+			canvas:SetWide( width )
+		end
+	end
 end
 
 function PANEL:PerformLayout()
-
 	self:PerformLayoutInternal()
-
 end
 
 function PANEL:Clear()
-
-	return self.pnlCanvas:Clear()
-
+	local canvas = self:GetCanvas()
+	if IsValid( canvas ) then
+		return canvas:Clear()
+	end
 end
 
 derma.DefineControl( "DScrollPanel", "", PANEL, "DPanel" )
