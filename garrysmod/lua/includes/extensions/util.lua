@@ -376,7 +376,7 @@ local suffix = ({"osx64","osx","linux64","linux","win64","win32"})[
 	+ ( jit.arch == "x86" && 1 || 0 )
 	+ 1
 ]
-local fmt = "lua/bin/gm" .. (CLIENT && "cl" || "sv") .. "_%s_%s.dll"
+local fmt = "lua/bin/gm" .. ((CLIENT && !MENU_DLL) && "cl" || "sv") .. "_%s_%s.dll"
 function util.IsBinaryModuleInstalled( name )
 	if ( !isstring( name ) ) then
 		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string expected, got " .. type( name ) .. ")" )
