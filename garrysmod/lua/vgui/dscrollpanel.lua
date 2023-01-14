@@ -99,7 +99,6 @@ function PANEL:Rebuild()
 	end
 end
 
--- Avoid an infinite loop
 function PANEL:PerformLayoutInternal()
 	local canvas = self:GetCanvas()
 	if IsValid( canvas ) then
