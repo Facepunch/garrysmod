@@ -30,7 +30,10 @@ local javascript_escape_replacements = {
 	["\r"] = "\\r" ,
 	["\""] = "\\\"",
 	["\'"] = "\\\'",
-	["`"] = "\\`"
+	["`"] = "\\`",
+	["$"] = "\\$",
+	["{"] = "\\{",
+	["}"] = "\\}"
 }
 
 function string.JavascriptSafe( str )
@@ -304,7 +307,6 @@ function string.StartsWith( String, Start )
 	return string.sub( String, 1, string.len( Start ) ) == Start
 
 end
-
 string.StartWith = string.StartsWith
 
 function string.EndsWith( String, End )
@@ -334,7 +336,9 @@ function string.ToColor( str )
 
 end
 
-function string.Comma( number )
+function string.Comma( number, str )
+
+	local replace = str == nil and "%1,%2" or "%1" .. str .. "%2"
 
 	if ( isnumber( number ) ) then
 		number = string.format( "%f", number )
@@ -342,7 +346,7 @@ function string.Comma( number )
 	end
 
 	local index = -1
-	while index ~= 0 do number, index = number:gsub( "^(-?%d+)(%d%d%d)", "%1,%2" ) end
+	while index ~= 0 do number, index = number:gsub( "^(-?%d+)(%d%d%d)", replace ) end
 
 	return number
 

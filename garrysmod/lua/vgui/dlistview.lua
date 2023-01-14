@@ -138,7 +138,7 @@ function PANEL:FixColumnsLayout()
 
 	local AllWidth = 0
 	for k, Column in pairs( self.Columns ) do
-		AllWidth = AllWidth + Column:GetWide()
+		AllWidth = AllWidth + math.ceil( Column:GetWide() )
 	end
 
 	local ChangeRequired = self.pnlCanvas:GetWide() - AllWidth
@@ -147,7 +147,7 @@ function PANEL:FixColumnsLayout()
 
 	for k, Column in pairs( self.Columns ) do
 
-		local TargetWidth = Column:GetWide() + ChangePerColumn
+		local TargetWidth = math.ceil( Column:GetWide() ) + ChangePerColumn
 		Remainder = Remainder + ( TargetWidth - Column:SetWidth( TargetWidth ) )
 
 	end
@@ -163,12 +163,12 @@ function PANEL:FixColumnsLayout()
 
 			Remainder = math.Approach( Remainder, 0, PerPanel )
 
-			local TargetWidth = Column:GetWide() + PerPanel
+			local TargetWidth = math.ceil( Column:GetWide() ) + PerPanel
 			Remainder = Remainder + ( TargetWidth - Column:SetWidth( TargetWidth ) )
 
 			if ( Remainder == 0 ) then break end
 
-			TotalMaxWidth = TotalMaxWidth + Column:GetMaxWidth()
+			TotalMaxWidth = TotalMaxWidth + math.ceil( Column:GetMaxWidth() )
 
 		end
 
@@ -184,9 +184,9 @@ function PANEL:FixColumnsLayout()
 	for k, Column in pairs( self.Columns ) do
 
 		Column.x = x
-		x = x + Column:GetWide()
+		x = x + math.ceil( Column:GetWide() )
 
-		Column:SetTall( self:GetHeaderHeight() )
+		Column:SetTall( math.ceil( self:GetHeaderHeight() ) )
 		Column:SetVisible( !self:GetHideHeaders() )
 
 	end

@@ -213,10 +213,10 @@ GetAPIManifest( function( result )
 	for k, v in pairs( result.Servers and result.Servers.Banned or {} ) do
 		if ( v:StartWith( "map:" ) ) then
 			table.insert( BlackList.Maps, v:sub( 5 ) )
+		elseif ( v:StartWith( "host:" ) || v:StartWith( "name:" ) ) then
+			table.insert( BlackList.Hostnames, v:sub( 6 ) )
 		elseif ( v:StartWith( "desc:" ) ) then
 			table.insert( BlackList.Descripts, v:sub( 6 ) )
-		elseif ( v:StartWith( "host:" ) ) then
-			table.insert( BlackList.Hostnames, v:sub( 6 ) )
 		elseif ( v:StartWith( "gm:" ) ) then
 			table.insert( BlackList.Gamemodes, v:sub( 4 ) )
 		else
@@ -238,7 +238,7 @@ function SaveHideNews( bHide )
 	cookie.Set( "hide_newslist", tostring( bHide ) )
 end
 
-local function IsServerBlacklisted( address, hostname, description, gm, map )
+function IsServerBlacklisted( address, hostname, description, gm, map )
 	local addressNoPort = address:match( "[^:]*" )
 
 	for k, v in ipairs( BlackList.Addresses ) do
@@ -247,29 +247,42 @@ local function IsServerBlacklisted( address, hostname, description, gm, map )
 		end
 
 		if ( v:EndsWith( "*" ) && address:sub( 1, v:len() - 1 ) == v:sub( 1, v:len() - 1 ) ) then return v end
+
+		-- IP Ranges
+		if ( string.find( v, "/", 1, false ) ) then
+			local o1, o2, o3, o4, o5 = string.match( v, "(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)/(%d%d?)" )
+			local blacklistedIP = 2 ^ 24 * o1 + 2 ^ 16 * o2 + 2 ^ 8 * o3 + o4
+
+			local mask = bit.lshift( 0xFFFFFFFF, 32-o5 )
+
+			local o1, o2, o3, o4 =  string.match( address, "(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
+			local testIP = 2 ^ 24 * o1 + 2 ^ 16 * o2 + 2 ^ 8 * o3 + o4
+
+			if ( bit.band( testIP, mask ) == bit.band( blacklistedIP, mask ) ) then return v end
+		end
 	end
 
 	for k, v in ipairs( BlackList.Hostnames ) do
-		if string.match( hostname, v ) || string.match( hostname:lower(), v ) then
-			return v
+		if ( string.match( hostname, v ) || string.match( hostname:lower(), v ) ) then
+			return "host: " .. v
 		end
 	end
 
 	for k, v in ipairs( BlackList.Descripts ) do
-		if string.match( description, v ) || string.match( description:lower(), v ) then
-			return v
+		if ( string.match( description, v ) || string.match( description:lower(), v ) ) then
+			return "desc: " .. v
 		end
 	end
 
 	for k, v in ipairs( BlackList.Gamemodes ) do
-		if string.match( gm, v ) || string.match( gm:lower(), v ) then
-			return v
+		if ( string.match( gm, v ) || string.match( gm:lower(), v ) ) then
+			return "gm: " .. v
 		end
 	end
 
 	for k, v in ipairs( BlackList.Maps ) do
-		if string.match( map, v ) || string.match( map:lower(), v ) then
-			return v
+		if ( string.match( map, v ) || string.match( map:lower(), v ) ) then
+			return "map: " .. v
 		end
 	end
 
