@@ -1,3 +1,4 @@
+
 local meta = FindMetaTable( "Player" )
 local entity = FindMetaTable( "Entity" )
 
