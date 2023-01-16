@@ -77,7 +77,7 @@ end
 
 function GM:OnCleanup( name )
 
-	local str = "#Cleaned" .. name
+	local str = "#Cleaned_" .. name
 	local translated = language.GetPhrase( str )
 	if ( str == translated ) then
 		-- No translation available, apply our own
