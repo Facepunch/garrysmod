@@ -25,6 +25,17 @@ function ENT:SpawnFunction( ply, tr, ClassName )
 	SpawnAng.p = 0
 	SpawnAng.y = SpawnAng.y + 180
 
+	-- Make sure the spawn position is not out of bounds
+	local oobTr = util.TraceLine( {
+		start = tr.HitPos,
+		endpos = SpawnPos,
+		mask = MASK_SOLID_BRUSHONLY
+	} )
+
+	if ( oobTr.Hit ) then
+		SpawnPos = oobTr.HitPos + oobTr.HitNormal * ( tr.HitPos:Distance( oobTr.HitPos ) / 2 )
+	end
+
 	local ent = ents.Create( ClassName )
 	ent:SetPos( SpawnPos )
 	ent:SetAngles( SpawnAng )

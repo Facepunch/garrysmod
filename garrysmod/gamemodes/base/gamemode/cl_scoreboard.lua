@@ -91,7 +91,7 @@ local PLAYER_LINE = {
 			self.PName = self.Player:Nick()
 			self.Name:SetText( self.PName )
 		end
-		
+
 		if ( self.NumKills == nil || self.NumKills != self.Player:Frags() ) then
 			self.NumKills = self.Player:Frags()
 			self.Kills:SetText( self.NumKills )
@@ -119,7 +119,21 @@ local PLAYER_LINE = {
 				self.Mute:SetImage( "icon32/unmuted.png" )
 			end
 
-			self.Mute.DoClick = function() self.Player:SetMuted( !self.Muted ) end
+			self.Mute.DoClick = function( s ) self.Player:SetMuted( !self.Muted ) end
+			self.Mute.OnMouseWheeled = function( s, delta )
+				self.Player:SetVoiceVolumeScale( self.Player:GetVoiceVolumeScale() + ( delta / 100 * 5 ) )
+				s.LastTick = CurTime()
+			end
+
+			self.Mute.PaintOver = function( s, w, h )
+				if ( !IsValid( self.Player ) ) then return end
+			
+				local a = 255 - math.Clamp( CurTime() - ( s.LastTick or 0 ), 0, 3 ) * 255
+				if ( a <= 0 ) then return end
+				
+				draw.RoundedBox( 4, 0, 0, w, h, Color( 0, 0, 0, a * 0.75 ) )
+				draw.SimpleText( math.ceil( self.Player:GetVoiceVolumeScale() * 100 ) .. "%", "DermaDefaultBold", w / 2, h / 2, Color( 255, 255, 255, a ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
+			end
 
 		end
 
@@ -188,7 +202,7 @@ local SCORE_BOARD = {
 
 		self.Name = self.Header:Add( "DLabel" )
 		self.Name:SetFont( "ScoreboardDefaultTitle" )
-		self.Name:SetTextColor( Color( 255, 255, 255, 255 ) )
+		self.Name:SetTextColor( color_white )
 		self.Name:Dock( TOP )
 		self.Name:SetHeight( 40 )
 		self.Name:SetContentAlignment( 5 )
@@ -196,7 +210,7 @@ local SCORE_BOARD = {
 
 		--self.NumPlayers = self.Header:Add( "DLabel" )
 		--self.NumPlayers:SetFont( "ScoreboardDefault" )
-		--self.NumPlayers:SetTextColor( Color( 255, 255, 255, 255 ) )
+		--self.NumPlayers:SetTextColor( color_white )
 		--self.NumPlayers:SetPos( 0, 100 - 30 )
 		--self.NumPlayers:SetSize( 300, 30 )
 		--self.NumPlayers:SetContentAlignment( 4 )
@@ -226,8 +240,8 @@ local SCORE_BOARD = {
 		--
 		-- Loop through each player, and if one doesn't have a score entry - create it.
 		--
-		local plyrs = player.GetAll()
-		for id, pl in pairs( plyrs ) do
+		
+		for id, pl in ipairs( player.GetAll() ) do
 
 			if ( IsValid( pl.ScoreEntry ) ) then continue end
 

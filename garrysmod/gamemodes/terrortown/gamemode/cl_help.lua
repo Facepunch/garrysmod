@@ -10,10 +10,12 @@ CreateClientConVar("ttt_avoid_detective", "0", true, true)
 
 HELPSCRN = {}
 
+local dframe
 function HELPSCRN:Show()
+   if IsValid(dframe) then return end
    local margin = 15
 
-   local dframe = vgui.Create("DFrame")
+   dframe = vgui.Create("DFrame")
    local w, h = 630, 470
    dframe:SetSize(w, h)
    dframe:Center()
@@ -92,7 +94,7 @@ function HELPSCRN:Show()
 
    cb = dgui:CheckBox(GetTranslation("set_fastsw"), "ttt_weaponswitcher_fast")
    cb:SetTooltip(GetTranslation("set_fastsw_tip"))
-      
+
    cb = dgui:CheckBox(GetTranslation("set_fastsw_menu"), "ttt_weaponswitcher_displayfast")
    cb:SetTooltip(GetTranslation("set_fastswmenu_tip"))
 
@@ -130,9 +132,10 @@ function HELPSCRN:Show()
    dlang:SetConVar("ttt_language")
 
    dlang:AddChoice("Server default", "auto")
-   for _, lang in pairs(LANG.GetLanguages()) do
-      dlang:AddChoice(string.Capitalize(lang), lang)
+   for lang, lang_name in pairs(LANG.GetLanguageNames()) do
+      dlang:AddChoice(lang_name, lang)
    end
+
    -- Why is DComboBox not updating the cvar by default?
    dlang.OnSelect = function(idx, val, data)
                        RunConsoleCommand("ttt_language", data)

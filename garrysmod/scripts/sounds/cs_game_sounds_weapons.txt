@@ -1429,3 +1429,30 @@
 
 	"wave"			"items/defuser_equip.wav"
 }
+
+// GMOD: Weapon shells
+"Bounce.PistolShell"
+{
+	"pitch"		"PITCH_NORM"
+	"volume"	"0.8"
+	"CompatibilityAttenuation"	"1.0"
+	"rndwave"
+	{
+		"wave" "player/pl_shell1.wav"
+		"wave" "player/pl_shell2.wav"
+		"wave" "player/pl_shell3.wav"
+	}
+}
+
+"Bounce.RifleShell"
+{
+	"pitch"		"PITCH_NORM"
+	"volume"	"0.8"
+	"CompatibilityAttenuation"	"1.0"
+	"rndwave"
+	{
+		"wave" "player/pl_shell1.wav"
+		"wave" "player/pl_shell2.wav"
+		"wave" "player/pl_shell3.wav"
+	}
+}

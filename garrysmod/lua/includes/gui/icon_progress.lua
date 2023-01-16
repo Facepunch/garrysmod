@@ -22,7 +22,7 @@ hook.Add( "SpawniconGenerated", "SpawniconGenerated", function( lastmodel, image
 		local label = g_Progress:Add( "DLabel" )
 		label:Dock( BOTTOM )
 		label:SetText( "remaining" )
-		label:SetTextColor( Color( 255, 255, 255, 255 ) )
+		label:SetTextColor( color_white )
 		label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 		label:SetContentAlignment( 5 )
 		label:SetHeight( 14 )
@@ -30,7 +30,7 @@ hook.Add( "SpawniconGenerated", "SpawniconGenerated", function( lastmodel, image
 
 		g_Progress.Label = g_Progress:Add( "DLabel" )
 		g_Progress.Label:Dock( BOTTOM )
-		g_Progress.Label:SetTextColor( Color( 255, 255, 255, 255 ) )
+		g_Progress.Label:SetTextColor( color_white )
 		g_Progress.Label:SetExpensiveShadow( 1, Color( 0, 0, 0, 200 ) )
 		g_Progress.Label:SetContentAlignment( 5 )
 		g_Progress.Label:SetFont( "DermaDefaultBold" )

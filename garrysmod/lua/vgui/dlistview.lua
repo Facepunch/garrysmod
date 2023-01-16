@@ -61,6 +61,18 @@ end
 
 function PANEL:AddColumn( strName, iPosition )
 
+	if ( iPosition ) then
+		if ( iPosition <= 0 ) then
+			ErrorNoHaltWithStack( "Attempted to insert column at invalid position ", iPosition )
+			return
+		end
+	
+		if ( IsValid( self.Columns[ iPosition ] ) ) then
+			ErrorNoHaltWithStack( "Attempted to insert duplicate column." )
+			return
+		end
+	end
+
 	local pColumn = nil
 
 	if ( self.m_bSortable ) then
@@ -76,8 +88,10 @@ function PANEL:AddColumn( strName, iPosition )
 
 		table.insert( self.Columns, iPosition, pColumn )
 
-		for i = 1, #self.Columns do
-			self.Columns[ i ]:SetColumnID( i )
+		local i = 1
+		for id, pnl in pairs( self.Columns ) do
+			pnl:SetColumnID( i )
+			i = i + 1
 		end
 
 	else
@@ -119,12 +133,12 @@ end
 
 function PANEL:FixColumnsLayout()
 
-	local NumColumns = #self.Columns
+	local NumColumns = table.Count( self.Columns )
 	if ( NumColumns == 0 ) then return end
 
 	local AllWidth = 0
 	for k, Column in pairs( self.Columns ) do
-		AllWidth = AllWidth + Column:GetWide()
+		AllWidth = AllWidth + math.ceil( Column:GetWide() )
 	end
 
 	local ChangeRequired = self.pnlCanvas:GetWide() - AllWidth
@@ -133,7 +147,7 @@ function PANEL:FixColumnsLayout()
 
 	for k, Column in pairs( self.Columns ) do
 
-		local TargetWidth = Column:GetWide() + ChangePerColumn
+		local TargetWidth = math.ceil( Column:GetWide() ) + ChangePerColumn
 		Remainder = Remainder + ( TargetWidth - Column:SetWidth( TargetWidth ) )
 
 	end
@@ -149,12 +163,12 @@ function PANEL:FixColumnsLayout()
 
 			Remainder = math.Approach( Remainder, 0, PerPanel )
 
-			local TargetWidth = Column:GetWide() + PerPanel
+			local TargetWidth = math.ceil( Column:GetWide() ) + PerPanel
 			Remainder = Remainder + ( TargetWidth - Column:SetWidth( TargetWidth ) )
 
 			if ( Remainder == 0 ) then break end
 
-			TotalMaxWidth = TotalMaxWidth + Column:GetMaxWidth()
+			TotalMaxWidth = TotalMaxWidth + math.ceil( Column:GetMaxWidth() )
 
 		end
 
@@ -170,9 +184,9 @@ function PANEL:FixColumnsLayout()
 	for k, Column in pairs( self.Columns ) do
 
 		Column.x = x
-		x = x + Column:GetWide()
+		x = x + math.ceil( Column:GetWide() )
 
-		Column:SetTall( self:GetHeaderHeight() )
+		Column:SetTall( math.ceil( self:GetHeaderHeight() ) )
 		Column:SetVisible( !self:GetHideHeaders() )
 
 	end
@@ -234,7 +248,7 @@ function PANEL:OnRequestResize( SizingColumn, iSize )
 	-- Find the column to the right of this one
 	local Passed = false
 	local RightColumn = nil
-	for k, Column in ipairs( self.Columns ) do
+	for k, Column in pairs( self.Columns ) do
 
 		if ( Passed ) then
 			RightColumn = Column
@@ -332,7 +346,7 @@ end
 function PANEL:GetSelectedLine()
 
 	for k, Line in pairs( self.Lines ) do
-		if ( Line:IsSelected() ) then return k end
+		if ( Line:IsSelected() ) then return k, Line end
 	end
 
 end
@@ -480,7 +494,10 @@ function PANEL:SortByColumn( ColumnID, Desc )
 		local aval = a:GetSortValue( ColumnID ) || a:GetColumnText( ColumnID )
 		local bval = b:GetSortValue( ColumnID ) || b:GetColumnText( ColumnID )
 
-		return aval < bval
+		-- Maintain nicer sorting for numbers
+		if ( isnumber( aval ) && isnumber( bval ) ) then return aval < bval end
+
+		return tostring( aval ) < tostring( bval )
 
 	end )
 

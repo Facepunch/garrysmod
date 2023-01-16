@@ -8,7 +8,7 @@ AccessorFunc( PANEL, "m_bCustomIcon", "CustomIcon" )
 function PANEL:Init()
 
 	self:SetSize( 762, 502 )
-	self:SetTitle( "Icon Editor" )
+	self:SetTitle( "#smwidget.icon_editor" )
 
 	local left = self:Add( "Panel" )
 	left:Dock( LEFT )
@@ -21,7 +21,7 @@ function PANEL:Init()
 		bg.Paint = function( self, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
 
 		self.SpawnIcon = bg:Add( "SpawnIcon" )
-		//self.SpawnIcon.DoClick = function() self:RenderIcon() end
+		--self.SpawnIcon.DoClick = function() self:RenderIcon() end
 
 		self.ModelPanel = bg:Add( "DAdjustableModelPanel" )
 		self.ModelPanel:Dock( FILL )
@@ -30,9 +30,9 @@ function PANEL:Init()
 		local mat_wireframe = Material( "models/wireframe" )
 		function self.ModelPanel.PostDrawModel( mdlpnl, ent )
 			if ( self.ShowOrigin ) then
-				render.DrawLine( Vector( 0, 0, 0 ), Vector( 0, 0, 100 ), Color( 0, 0, 255 ) )
-				render.DrawLine( Vector( 0, 0, 0 ), Vector( 0, 100, 0 ), Color( 0, 255, 0 ) )
-				render.DrawLine( Vector( 0, 0, 0 ), Vector( 100, 0, 0 ), Color( 255, 0, 0 ) )
+				render.DrawLine( vector_origin, Vector( 0, 0, 100 ), Color( 0, 0, 255 ) )
+				render.DrawLine( vector_origin, Vector( 0, 100, 0 ), Color( 0, 255, 0 ) )
+				render.DrawLine( vector_origin, Vector( 100, 0, 0 ), Color( 255, 0, 0 ) )
 			end
 
 			if ( self.ShowBBox ) then
@@ -151,27 +151,34 @@ function PANEL:Init()
 			end )
 		end
 
-	local ps = self:Add( "DPropertySheet" )
-	ps:Dock( FILL )
-	ps:DockMargin( 4, 0, 0, 0 )
-
-	local right = ps:Add( "Panel" )
+	local right = self:Add( "DPropertySheet" )
 	right:Dock( FILL )
-	ps:AddSheet( "Animations", right )
+	right:SetPadding( 0 )
+	right:DockMargin( 4, 0, 0, 0 )
+	self.PropertySheet = right
 
-		self.AnimList = right:Add( "DListView" )
+	-- Animations
+
+	local anims = right:Add( "Panel" )
+	anims:Dock( FILL )
+	anims:DockPadding( 2, 0, 2, 2 )
+	right:AddSheet( "#smwidget.animations", anims, "icon16/monkey.png" )
+
+		self.AnimList = anims:Add( "DListView" )
 		self.AnimList:AddColumn( "name" )
 		self.AnimList:Dock( FILL )
 		self.AnimList:SetMultiSelect( false )
 		self.AnimList:SetHideHeaders( true )
 
-	local pnl = ps:Add( "Panel" )
+	-- Bodygroups
+
+	local pnl = right:Add( "Panel" )
 	pnl:Dock( FILL )
-	pnl:DockPadding( 3, 0, 3, 0 )
+	pnl:DockPadding( 7, 0, 7, 7 )
 
-	ps:AddSheet( "Bodygroups", pnl )
+	self.BodygroupTab = right:AddSheet( "#smwidget.bodygroups", pnl, "icon16/brick.png" )
 
-		self.BodyList = pnl:Add( "DListLayout" )
+		self.BodyList = pnl:Add( "DScrollPanel" )
 		self.BodyList:Dock( FILL )
 
 			--This kind of works but they don't move their stupid mouths. So fuck off.
@@ -193,10 +200,12 @@ function PANEL:Init()
 			local materials = self.Scenes.RootNode:AddFolder( "Scenes", "scenes/", true )
 			materials:SetIcon( "icon16/photos.png" )--]]
 
-	local settings = ps:Add( "Panel" )
+	-- Settings
+
+	local settings = right:Add( "Panel" )
 	settings:Dock( FILL )
-	settings:DockPadding( 7, 0, 7, 0 )
-	ps:AddSheet( "Settings", settings )
+	settings:DockPadding( 7, 0, 7, 7 )
+	right:AddSheet( "#smwidget.settings", settings, "icon16/cog.png" )
 
 		local bbox = settings:Add( "DCheckBoxLabel" )
 		bbox:SetText( "Show Bounding Box" )
@@ -248,9 +257,20 @@ function PANEL:Init()
 		cam_pos:DockMargin( 0, 0, 0, 3 )
 		cam_pos:SetZPos( 102 )
 		cam_pos.OnChange = function( p, b )
-			self.ModelPanel:SetCamPos( Angle( cam_pos:GetText() ) )
+			self.ModelPanel:SetCamPos( Vector( cam_pos:GetText() ) )
 		end
 		self.TargetCamPosPanel = cam_pos
+
+		local playSpeed = settings:Add( "DNumSlider" )
+		playSpeed:SetText( "Playback Speed" )
+		playSpeed:Dock( TOP )
+		playSpeed:DockMargin( 0, 0, 0, 3 )
+		playSpeed:SetMin( -1 )
+		playSpeed:SetDark( true )
+		playSpeed:SetMax( 2 )
+		playSpeed.OnValueChanged = function( s, value )
+			self.ModelPanel:GetEntity():SetPlaybackRate( value )
+		end
 
 end
 
@@ -324,7 +344,7 @@ function PANEL:OriginLayout()
 
 	local ent = self.ModelPanel:GetEntity()
 	local pos = ent:GetPos()
-	local campos = pos + Vector( 0, 0, 0 )
+	local campos = pos + vector_origin
 
 	self.ModelPanel:SetCamPos( campos )
 	self.ModelPanel:SetFOV( 45 )
@@ -353,7 +373,9 @@ function PANEL:UpdateEntity( ent )
 
 	elseif ( ent:GetCycle() != self.AnimTrack:GetSlideX() ) then
 
-		self.AnimTrack:SetSlideX( ent:GetCycle() )
+		local cyc = ent:GetCycle()
+		if ( cyc < 0 ) then cyc = cyc + 1 end
+		self.AnimTrack:SetSlideX( cyc )
 
 	end
 
@@ -397,7 +419,7 @@ function PANEL:SetIcon( icon )
 		self.LeftPanel:SetWide( 400 )
 	end
 
-	if ( !model || model == "" ) then
+	if ( !model or model == "" ) then
 
 		self:SetModel( "error.mdl" )
 		self.SpawnIcon:SetSpawnIcon( icon:GetIconName() )
@@ -421,9 +443,6 @@ function PANEL:Refresh()
 	self.ModelPanel.LayoutEntity = function() self:UpdateEntity( self.ModelPanel:GetEntity() )  end
 
 	local ent = self.ModelPanel:GetEntity()
-	local pos = ent:GetPos()
-
-	local tab = PositionSpawnIcon( ent, pos )
 
 	ent:SetSkin( self.SpawnIcon:GetSkinID() )
 	ent:SetBodyGroups( self.SpawnIcon:GetBodyGroup() )
@@ -438,45 +457,49 @@ function PANEL:FillAnimations( ent )
 
 	self.AnimList:Clear()
 
-	for k, v in SortedPairsByValue( ent:GetSequenceList() ) do
+	for k, v in SortedPairsByValue( ent:GetSequenceList() or {} ) do
 
 		local line = self.AnimList:AddLine( string.lower( v ) )
 
 		line.OnSelect = function()
 
+			local speed = ent:GetPlaybackRate()
 			ent:ResetSequence( v )
 			ent:SetCycle( 0 )
+			ent:SetPlaybackRate( speed )
+			if ( speed < 0 ) then ent:SetCycle( 1 ) end
 
 		end
 
 	end
 
 	self.BodyList:Clear()
+	local newItems = 0
 
 	if ( ent:SkinCount() > 1 ) then
 
-		local combo = self.BodyList:Add( "DComboBox" )
+		local skinSlider = self.BodyList:Add( "DNumSlider" )
+		skinSlider:Dock( TOP )
+		skinSlider:DockMargin( 0, 0, 0, 3 )
+		skinSlider:SetText( "Skin" )
+		skinSlider:SetDark( true )
+		skinSlider:SetDecimals( 0 )
+		skinSlider:SetMinMax( 0, ent:SkinCount() - 1 )
+		skinSlider:SetValue( ent:GetSkin() )
+		skinSlider.OnValueChanged = function( s, newVal )
+			newVal = math.Round( newVal )
 
-		for l = 0, ent:SkinCount() - 1 do
-			combo:AddChoice( "Skin " .. l, function()
+			ent:SetSkin( newVal )
 
-				ent:SetSkin( l )
+			if ( IsValid( self:GetOrigin() ) ) then self:GetOrigin():SkinChanged( newVal ) end
 
-				if ( self:GetOrigin() ) then
-					self:GetOrigin():SkinChanged( l )
-				end
-
-				-- If we're not using a custom, change our spawnicon
-				-- so we save the new skin in the right place...
-				if ( !self:GetCustomIcon() ) then
-					self.SpawnIcon:SetModel( self.SpawnIcon:GetModelName(), l, self.SpawnIcon:GetBodyGroup() )
-				end
-
-			end )
+			-- If we're not using a custom, change our spawnicon
+			-- so we save the new skin in the right place...
+			if ( !self:GetCustomIcon() ) then
+				self.SpawnIcon:SetModel( self.SpawnIcon:GetModelName(), newVal, self.SpawnIcon:GetBodyGroup() )
+			end
 		end
-
-		combo:ChooseOptionID( ent:GetSkin( l ) + 1 )
-		combo.OnSelect = function( pnl, index, value, data ) data()	end
+		newItems = newItems + 1
 
 	end
 
@@ -484,35 +507,40 @@ function PANEL:FillAnimations( ent )
 
 		if ( ent:GetBodygroupCount( k ) <= 1 ) then continue end
 
-		local combo = self.BodyList:Add( "DComboBox" )
+		local bgSlider = self.BodyList:Add( "DNumSlider" )
+		bgSlider:Dock( TOP )
+		bgSlider:DockMargin( 0, 0, 0, 3 )
+		bgSlider:SetDark( true )
+		bgSlider:SetDecimals( 0 )
+		bgSlider:SetText( ent:GetBodygroupName( k ) )
+		bgSlider:SetMinMax( 0, ent:GetBodygroupCount( k ) - 1 )
+		bgSlider:SetValue( ent:GetBodygroup( k ) )
+		bgSlider.BodyGroupID = k
+		bgSlider.OnValueChanged = function( s, newVal )
+			newVal = math.Round( newVal )
 
-		for l = 0, ent:GetBodygroupCount( k ) - 1 do
+			ent:SetBodygroup( s.BodyGroupID, newVal )
 
-			combo:AddChoice( ent:GetBodygroupName( k ) .. " " .. l, function()
+			if ( IsValid( self:GetOrigin() ) ) then self:GetOrigin():BodyGroupChanged( s.BodyGroupID, newVal ) end
 
-				-- Body Group Changed..
-				ent:SetBodygroup( k, l )
-
-				if ( self:GetOrigin() ) then
-					self:GetOrigin():BodyGroupChanged( k, l )
-				end
-
-				-- If we're not using a custom, change our spawnicon
-				-- so we save the new skin in the right place...
-				if ( !self:GetCustomIcon() ) then
-					self.SpawnIcon:SetBodyGroup( k, l )
-					self.SpawnIcon:SetModel( self.SpawnIcon:GetModelName(), self.SpawnIcon:GetSkinID(), self.SpawnIcon:GetBodyGroup() )
-				end
-
-			end )
-
+			-- If we're not using a custom, change our spawnicon
+			-- so we save the new skin in the right place...
+			if ( !self:GetCustomIcon() ) then
+				self.SpawnIcon:SetBodyGroup( s.BodyGroupID, newVal )
+				self.SpawnIcon:SetModel( self.SpawnIcon:GetModelName(), self.SpawnIcon:GetSkinID(), self.SpawnIcon:GetBodyGroup() )
+			end
 		end
-
-		combo:ChooseOptionID( ent:GetBodygroup( k ) + 1 )
-
-		combo.OnSelect = function( pnl, index, value, data ) data() end
+		newItems = newItems + 1
 
 	end
+
+	if ( newItems > 0 ) then
+		self.BodygroupTab.Tab:SetVisible( true )
+	else
+		self.BodygroupTab.Tab:SetVisible( false )
+	end
+	local propertySheet = self.PropertySheet
+	propertySheet.tabScroller:InvalidateLayout()
 
 end
 
@@ -520,7 +548,12 @@ function PANEL:SetFromEntity( ent )
 
 	if ( !IsValid( ent ) ) then return end
 
-	self.SpawnIcon:SetModel( ent:GetModel(), ent:GetSkin() )//, ent:GetBodyGroup() )
+	local bodyStr = ""
+	for i = 0, 8 do
+		bodyStr = bodyStr .. math.min( ent:GetBodygroup( i ) or 0, 9 )
+	end
+
+	self.SpawnIcon:SetModel( ent:GetModel(), ent:GetSkin(), bodyStr )
 	self:SetModel( ent:GetModel() )
 	self:Refresh()
 

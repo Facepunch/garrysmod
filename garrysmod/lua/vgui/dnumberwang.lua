@@ -5,6 +5,7 @@ AccessorFunc( PANEL, "m_numMin",		"Min" )
 AccessorFunc( PANEL, "m_numMax",		"Max" )
 AccessorFunc( PANEL, "m_iDecimals",		"Decimals" ) -- The number of decimal places in the output
 AccessorFunc( PANEL, "m_fFloatValue",	"FloatValue" )
+AccessorFunc( PANEL, "m_iInterval",		"Interval" )
 
 -- AnchorValue and UnAnchorValue functions are internally used for "drag-changing" the value
 local function AnchorValue( wang, button, mcode )
@@ -36,6 +37,8 @@ function PANEL:Init()
 	self:SetTall( 20 )
 	self:SetMinMax( 0, 100 )
 
+	self:SetInterval( 1 )
+
 	self:SetUpdateOnType( true )
 	self:SetNumeric( true )
 
@@ -43,7 +46,7 @@ function PANEL:Init()
 
 	self.Up = vgui.Create( "DButton", self )
 	self.Up:SetText( "" )
-	self.Up.DoClick = function( button, mcode ) self:SetValue( self:GetValue() + 1 ) end
+	self.Up.DoClick = function( button, mcode ) self:SetValue( self:GetValue() + self:GetInterval() ) end
 	self.Up.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "NumberUp", panel, w, h ) end
 
 	self.Up.OldOnMousePressed = self.Up.OnMousePressed
@@ -54,7 +57,7 @@ function PANEL:Init()
 
 	self.Down = vgui.Create( "DButton", self )
 	self.Down:SetText( "" )
-	self.Down.DoClick = function( button, mcode ) self:SetValue( self:GetValue() - 1 ) end
+	self.Down.DoClick = function( button, mcode ) self:SetValue( self:GetValue() - self:GetInterval() ) end
 	self.Down.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "NumberDown", panel, w, h ) end
 
 	self.Down.OldOnMousePressed = self.Down.OnMousePressed
@@ -146,6 +149,8 @@ function PANEL:SetValue( val )
 
 	end
 
+	local hasChanged = tonumber( val ) != tonumber( self:GetValue() )
+
 	--
 	-- Don't change the value while we're typing into it!
 	-- It causes confusion!
@@ -155,7 +160,9 @@ function PANEL:SetValue( val )
 		self:ConVarChanged( val )
 	end
 
-	self:OnValueChanged( val )
+	if ( hasChanged ) then
+		self:OnValueChanged( val )
+	end
 
 end
 

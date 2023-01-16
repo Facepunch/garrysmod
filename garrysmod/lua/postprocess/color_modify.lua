@@ -18,7 +18,7 @@ local pp_colormod_mulb = CreateClientConVar( "pp_colormod_mulb", "0", true, fals
 
 function DrawColorModify( tab )
 
-	render.UpdateScreenEffectTexture()
+	render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
 
 	for k, v in pairs( tab ) do
 

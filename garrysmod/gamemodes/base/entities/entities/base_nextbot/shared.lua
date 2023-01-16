@@ -45,4 +45,11 @@ else
 
 	end
 
+	--[[---------------------------------------------------------
+		Name: FireAnimationEvent
+		Desc: Called when an animation event is fired. Return true to suppress
+	-----------------------------------------------------------]]
+	function ENT:FireAnimationEvent( pos, ang, event, options )
+	end
+
 end

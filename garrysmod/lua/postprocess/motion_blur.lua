@@ -54,7 +54,7 @@ function DrawMotionBlur( addalpha, drawalpha, delay )
 	end
 
 	render.SetMaterial( mat_MotionBlur )
-	render.DrawScreenQuad()
+	render.DrawScreenQuad( true )
 
 	LastDraw = CurTime()
 

@@ -24,6 +24,7 @@ function Material( name, words )
 	str = str .. (words:find("mips") and "1" or "0")
 	str = str .. (words:find("noclamp") and "1" or "0")
 	str = str .. (words:find("smooth") and "1" or "0")
+	str = str .. (words:find("ignorez") and "1" or "0")
 
 	return C_Material( name, str )
 
@@ -56,6 +57,7 @@ include( "util/color.lua" )
 	Prints a table to the console
 -----------------------------------------------------------]]
 function PrintTable( t, indent, done )
+	local Msg = Msg
 
 	done = done or {}
 	indent = indent or 0
@@ -76,14 +78,13 @@ function PrintTable( t, indent, done )
 		if  ( istable( value ) && !done[ value ] ) then
 
 			done[ value ] = true
-			Msg( tostring( key ) .. ":" .. "\n" )
+			Msg( key, ":\n" )
 			PrintTable ( value, indent + 2, done )
 			done[ value ] = nil
 
 		else
 
-			Msg( tostring( key ) .. "\t=\t" )
-			Msg( tostring( value ) .. "\n" )
+			Msg( key, "\t=\t", value, "\n" )
 
 		end
 
@@ -94,15 +95,17 @@ end
 --[[---------------------------------------------------------
 	Returns a random vector
 -----------------------------------------------------------]]
-function VectorRand()
-	return Vector( math.Rand( -1.0, 1.0 ), math.Rand( -1.0, 1.0 ), math.Rand( -1.0, 1.0 ) )
+function VectorRand( min, max )
+	min = min || -1
+	max = max || 1
+	return Vector( math.Rand( min, max ), math.Rand( min, max ), math.Rand( min, max ) )
 end
 
 --[[---------------------------------------------------------
 	Returns a random angle
 -----------------------------------------------------------]]
-function AngleRand()
-	return Angle( math.Rand( -90, 90 ), math.Rand( -180, 180 ), math.Rand( -180, 180 ) )
+function AngleRand( min, max )
+	return Angle( math.Rand( min || -90, max || 90 ), math.Rand( min || -180, max || 180 ), math.Rand( min || -180, max || 180 ) )
 end
 
 --[[---------------------------------------------------------
@@ -167,6 +170,9 @@ end
 FORCE_STRING	= 1
 FORCE_NUMBER	= 2
 FORCE_BOOL		= 3
+FORCE_ANGLE		= 4
+FORCE_COLOR		= 5
+FORCE_VECTOR	= 6
 
 --[[---------------------------------------------------------
 	AccessorFunc
@@ -188,6 +194,24 @@ function AccessorFunc( tab, varname, name, iForce )
 
 	if ( iForce == FORCE_BOOL ) then
 		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tobool( v ) end
+	return end
+
+	if ( iForce == FORCE_ANGLE ) then
+		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = Angle( v ) end
+	return end
+
+	if ( iForce == FORCE_COLOR ) then
+		tab[ "Set" .. name ] = function( self, v )
+			if ( type( v ) == "Vector" ) then self[ varname ] = v:ToColor()
+			else self[ varname ] = string.ToColor( tostring( v ) ) end
+		end
+	return end
+
+	if ( iForce == FORCE_VECTOR ) then
+		tab[ "Set" .. name ] = function( self, v )
+			if ( IsColor( v ) ) then self[ varname ] = v:ToVector()
+			else self[ varname ] = Vector( v ) end
+		end
 	return end
 
 	tab[ "Set" .. name ] = function( self, v ) self[ varname ] = v end
@@ -264,7 +288,7 @@ function IsUselessModel( modelname )
 
 	if ( !modelname:find( ".mdl", 1, true ) ) then return true end
 
-	for k, v in pairs( UselessModels ) do
+	for k, v in ipairs( UselessModels ) do
 		if ( modelname:find( v, 1, true ) ) then
 			return true
 		end
@@ -408,7 +432,7 @@ end
 --
 -- This is supposed to be clientside, but was exposed to both states for years due to a bug.
 --
-function CreateClientConVar( name, default, shouldsave, userdata, helptext )
+function CreateClientConVar( name, default, shouldsave, userdata, helptext, min, max )
 
 	local iFlags = 0
 
@@ -420,7 +444,7 @@ function CreateClientConVar( name, default, shouldsave, userdata, helptext )
 		iFlags = bit.bor( iFlags, FCVAR_USERINFO )
 	end
 
-	return CreateConVar( name, default, iFlags, helptext )
+	return CreateConVar( name, default, iFlags, helptext, min, max )
 
 end
 

@@ -1,6 +1,7 @@
 
-local gmod_drawhelp = CreateClientConVar( "gmod_drawhelp", "1", true, false )
+local gmod_drawhelp = CreateClientConVar( "gmod_drawhelp", "1", true, false, "Should the tool HUD be displayed when the tool gun is active?" )
 local gmod_toolmode = CreateClientConVar( "gmod_toolmode", "rope", true, true )
+CreateClientConVar( "gmod_drawtooleffects", "1", true, false, "Should tools draw certain UI elements or effects? ( Will not work for all tools )" )
 
 cvars.AddChangeCallback( "gmod_toolmode", function( name, old, new )
 	if ( old == new ) then return end
@@ -113,7 +114,7 @@ function SWEP:DrawHUD()
 	local h2 = 0
 
 	for k, v in pairs( self:GetToolObject().Information ) do
-		if ( type( v ) == "string" ) then v = { name = v } end
+		if ( isstring( v ) ) then v = { name = v } end
 
 		if ( !v.name ) then continue end
 		if ( v.stage && v.stage != self:GetStage() ) then continue end

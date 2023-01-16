@@ -49,7 +49,7 @@ local function IdentifyBody(ply, rag)
       CORPSE.SetFound(rag, true)
       return
    end
-   
+
    if not hook.Run("TTTCanIdentifyCorpse", ply, rag, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
@@ -57,7 +57,7 @@ local function IdentifyBody(ply, rag)
    local finder = ply:Nick()
    local nick = CORPSE.GetPlayerNick(rag, "")
    local traitor = (rag.was_role == ROLE_TRAITOR)
-   
+
    -- Announce body
    if bodyfound:GetBool() and not CORPSE.GetFound(rag, false) then
       local roletext = nil
@@ -90,10 +90,6 @@ local function IdentifyBody(ply, rag)
       end
       hook.Call( "TTTBodyFound", GAMEMODE, ply, deadply, rag )
       CORPSE.SetFound(rag, true)
-   else
-      -- re-set because nwvars are unreliable
-      --CORPSE.SetFound(rag, true)
-      --CORPSE.SetPlayerNick(rag, nick)
    end
 
    -- Handle kill list
@@ -107,11 +103,6 @@ local function IdentifyBody(ply, rag)
 
          -- update scoreboard status
          vic:SetNWBool("body_found", true)
-
-         -- however, do not mark body as found. This lets players find the
-         -- body later and get the benefits of that
-         --local vicrag = vic.server_ragdoll
-         --CORPSE.SetFound(vicrag, true)
       end
    end
 end
@@ -125,7 +116,6 @@ local function IdentifyCommand(ply, cmd, args)
    local id = tonumber(args[2])
    if (not eidx) or (not id) then return end
 
-
    if (not ply.search_id) or ply.search_id.id != id or ply.search_id.eidx != eidx then
       ply.search_id = nil
       return
@@ -134,7 +124,7 @@ local function IdentifyCommand(ply, cmd, args)
    ply.search_id = nil
 
    local rag = Entity(eidx)
-   if IsValid(rag) and rag:GetPos():Distance(ply:GetPos()) < 128 then
+   if IsValid(rag) and rag.player_ragdoll and rag:GetPos():Distance(ply:GetPos()) < 128 then
       if not CORPSE.GetFound(rag, false) then
          IdentifyBody(ply, rag)
       end
@@ -152,7 +142,12 @@ local function CallDetective(ply, cmd, args)
    if not eidx then return end
 
    local rag = Entity(eidx)
-   if IsValid(rag) and rag:GetPos():Distance(ply:GetPos()) < 128 then
+   if not (IsValid(rag) and rag.player_ragdoll) then return end
+
+   if ((rag.last_detective_call or 0) < (CurTime() - 5)) and (rag:GetPos():Distance(ply:GetPos()) < 128) then
+
+      rag.last_detective_call = CurTime()
+
       if CORPSE.GetFound(rag, false) then
          -- show indicator to detectives
          net.Start("TTT_CorpseCall")
@@ -191,7 +186,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
       LANG.Msg(ply, "body_burning")
       return
    end
-   
+
    if not hook.Run("TTTCanSearchCorpse", ply, rag, covert, long_range, (rag.was_role == ROLE_TRAITOR)) then
       return
    end
@@ -207,7 +202,7 @@ function CORPSE.ShowSearch(ply, rag, covert, long_range)
    local words = rag.last_words or ""
    local hshot = rag.was_headshot or false
    local dtime = rag.time or 0
-   
+
    local owner = player.GetBySteamID(rag.sid)
    owner = IsValid(owner) and owner:EntIndex() or -1
 
@@ -388,7 +383,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
    rag:SetModel(ply:GetModel())
    rag:SetSkin(ply:GetSkin())
    for key, value in pairs(ply:GetBodyGroups()) do
-      rag:SetBodygroup(value.id, ply:GetBodygroup(value.id))	
+      rag:SetBodygroup(value.id, ply:GetBodygroup(value.id))
    end
    rag:SetAngles(ply:GetAngles())
    rag:SetColor(ply:GetColor())
@@ -460,7 +455,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
       local efn = ply.effect_fn
       timer.Simple(0, function() efn(rag) end)
    end
-   
+
    hook.Run("TTTOnCorpseCreated", rag, ply)
 
    return rag -- we'll be speccing this

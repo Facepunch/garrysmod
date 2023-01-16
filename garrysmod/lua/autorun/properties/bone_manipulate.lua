@@ -28,11 +28,12 @@ properties.Add( "bone_manipulate", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 		if ( !IsValid( ent ) ) then return end
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		ent.widget = ents.Create( "widget_bones" )
 		ent.widget:Setup( ent )
@@ -92,7 +93,7 @@ properties.Add( "bone_manipulate_end", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 		if ( !IsValid( ent ) ) then return end

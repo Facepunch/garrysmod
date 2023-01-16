@@ -8,9 +8,9 @@ AccessorFunc( PANEL, "m_Handle", "Handle" )
 
 function PANEL:Init()
 
-	self:SetColor( Color( 255, 255, 255, 255 ) )
+	self:SetColor( color_white )
 	self:SetRotation( 0 )
-	self:SetHandle( Vector(0.5, 0.5, 0) )
+	self:SetHandle( Vector( 0.5, 0.5, 0 ) )
 
 	self:SetMouseInputEnabled( false )
 	self:SetKeyboardInputEnabled( false )

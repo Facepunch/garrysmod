@@ -11,21 +11,6 @@ function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
 
 	phys:EnableMotion( false )
 
-	-- With the jeep we need to pause all of its physics objects
-	-- to stop it spazzing out and killing the server.
-	if ( ent:GetClass() == "prop_vehicle_jeep" ) then
-
-		local objects = ent:GetPhysicsObjectCount()
-
-		for i = 0, objects - 1 do
-
-			local physobject = ent:GetPhysicsObjectNum( i )
-			physobject:EnableMotion( false )
-
-		end
-
-	end
-
 	-- Add it to the player's frozen props
 	ply:AddFrozenPhysicsObject( ent, phys )
 
@@ -39,7 +24,7 @@ end
 -----------------------------------------------------------]]
 function GM:OnPhysgunReload( weapon, ply )
 
-	ply:PhysgunUnfreeze( weapon )
+	ply:PhysgunUnfreeze()
 
 end
 
@@ -175,6 +160,8 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	end
 
+	player_manager.RunClass( ply, "Death", inflictor, attacker )
+
 	if ( attacker == ply ) then
 
 		net.Start( "PlayerKilledSelf" )
@@ -215,7 +202,7 @@ end
 	Name: gamemode:PlayerInitialSpawn()
 	Desc: Called just before the player's first spawn
 -----------------------------------------------------------]]
-function GM:PlayerInitialSpawn( pl )
+function GM:PlayerInitialSpawn( pl, transiton )
 
 	pl:SetTeam( TEAM_UNASSIGNED )
 
@@ -249,7 +236,7 @@ end
 	Name: gamemode:PlayerSpawn()
 	Desc: Called when a player spawns
 -----------------------------------------------------------]]
-function GM:PlayerSpawn( pl )
+function GM:PlayerSpawn( pl, transiton )
 
 	--
 	-- If the player doesn't have a team in a TeamBased game
@@ -265,16 +252,19 @@ function GM:PlayerSpawn( pl )
 	-- Stop observer mode
 	pl:UnSpectate()
 
-	pl:SetupHands()
-
-	player_manager.OnPlayerSpawn( pl )
+	player_manager.OnPlayerSpawn( pl, transiton )
 	player_manager.RunClass( pl, "Spawn" )
 
-	-- Call item loadout function
-	hook.Call( "PlayerLoadout", GAMEMODE, pl )
+	-- If we are in transition, do not touch player's weapons
+	if ( !transiton ) then
+		-- Call item loadout function
+		hook.Call( "PlayerLoadout", GAMEMODE, pl )
+	end
 
 	-- Set player model
 	hook.Call( "PlayerSetModel", GAMEMODE, pl )
+
+	pl:SetupHands()
 
 end
 
@@ -302,7 +292,7 @@ function GM:PlayerSetHandsModel( pl, ent )
 
 	if ( info ) then
 		ent:SetModel( info.model )
-		ent:SetSkin( info.skin )
+		ent:SetSkin( info.matchBodySkin and pl:GetSkin() or info.skin )
 		ent:SetBodyGroups( info.body )
 	end
 
@@ -325,7 +315,7 @@ end
 function GM:PlayerSelectTeamSpawn( TeamID, pl )
 
 	local SpawnPoints = team.GetSpawnPoints( TeamID )
-	if ( !SpawnPoints || table.Count( SpawnPoints ) == 0 ) then return end
+	if ( !SpawnPoints || table.IsEmpty( SpawnPoints ) ) then return end
 
 	local ChosenSpawnPoint = nil
 
@@ -347,6 +337,8 @@ end
 	Name: gamemode:IsSpawnpointSuitable( player )
 	Desc: Find out if the spawnpoint is suitable or not
 -----------------------------------------------------------]]
+local spawnpointmin = Vector( -16, -16, 0 )
+local spawnpointmax = Vector( 16, 16, 64 )
 function GM:IsSpawnpointSuitable( pl, spawnpointent, bMakeSuitable )
 
 	local Pos = spawnpointent:GetPos()
@@ -354,13 +346,10 @@ function GM:IsSpawnpointSuitable( pl, spawnpointent, bMakeSuitable )
 	-- Note that we're searching the default hull size here for a player in the way of our spawning.
 	-- This seems pretty rough, seeing as our player's hull could be different.. but it should do the job
 	-- (HL2DM kills everything within a 128 unit radius)
-	local Ents = ents.FindInBox( Pos + Vector( -16, -16, 0 ), Pos + Vector( 16, 16, 64 ) )
-
 	if ( pl:Team() == TEAM_SPECTATOR ) then return true end
 
 	local Blockers = 0
-
-	for k, v in pairs( Ents ) do
+	for k, v in ipairs( ents.FindInBox( Pos + spawnpointmin, Pos + spawnpointmax ) ) do
 		if ( IsValid( v ) && v != pl && v:GetClass() == "player" && v:Alive() ) then
 
 			Blockers = Blockers + 1
@@ -382,7 +371,10 @@ end
 	Name: gamemode:PlayerSelectSpawn( player )
 	Desc: Find a spawn point entity for this player
 -----------------------------------------------------------]]
-function GM:PlayerSelectSpawn( pl )
+function GM:PlayerSelectSpawn( pl, transiton )
+
+	-- If we are in transition, do not reset player's position
+	if ( transiton ) then return end
 
 	if ( self.TeamBased ) then
 
@@ -447,8 +439,15 @@ function GM:PlayerSelectSpawn( pl )
 		-- ZM Maps
 		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_zombiemaster" ) )
 
-		-- L4D2
-		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_position" ) )
+		-- FOF Maps
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_fof" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_desperado" ) )
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_player_vigilante" ) )
+
+		-- L4D Maps
+		self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_rescue" ) )
+		-- Removing this one for the time being, c1m4_atrium has one of these in a box under the map
+		--self.SpawnPoints = table.Add( self.SpawnPoints, ents.FindByClass( "info_survivor_position" ) )
 
 	end
 
@@ -728,9 +727,11 @@ end
 	Name: gamemode:GetFallDamage()
 	Desc: return amount of damage to do due to fall
 -----------------------------------------------------------]]
+local mp_falldamage = GetConVar( "mp_falldamage" )
+
 function GM:GetFallDamage( ply, flFallSpeed )
 
-	if( GetConVarNumber( "mp_falldamage" ) > 0 ) then -- realistic fall damage is on
+	if ( mp_falldamage:GetBool() ) then -- realistic fall damage is on
 		return ( flFallSpeed - 526.5 ) * ( 100 / 396 ) -- the Source SDK value
 	end
 

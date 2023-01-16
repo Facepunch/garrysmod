@@ -43,11 +43,7 @@ end
 
 function PANEL:Toggle()
 
-	if ( self:GetChecked() == nil || !self:GetChecked() ) then
-		self:SetValue( true )
-	else
-		self:SetValue( false )
-	end
+	self:SetValue( !self:GetChecked() )
 
 end
 
@@ -124,7 +120,7 @@ function PANEL:PerformLayout()
 	self.Button:SetPos( x, math.floor( ( self:GetTall() - self.Button:GetTall() ) / 2 ) )
 
 	self.Label:SizeToContents()
-	self.Label:SetPos( x + self.Button:GetWide() + 9, 0 )
+	self.Label:SetPos( x + self.Button:GetWide() + 9, math.floor( ( self:GetTall() - self.Label:GetTall() ) / 2 ) )
 
 end
 

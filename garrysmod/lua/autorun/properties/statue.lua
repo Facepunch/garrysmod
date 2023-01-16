@@ -1,6 +1,53 @@
 
 AddCSLuaFile()
 
+-- The following is for the server's eyes only
+local StatueDuplicator
+if ( SERVER ) then
+
+	function StatueDuplicator( ply, ent, data )
+
+		if ( !data ) then
+
+			duplicator.ClearEntityModifier( ent, "statue_property" )
+			return
+
+		end
+
+		-- We have been pasted from duplicator, restore the necessary variables for the unstatue to work
+		if ( ent.StatueInfo == nil ) then
+
+			-- Ew. Have to wait a frame for the constraints to get pasted
+			timer.Simple( 0, function()
+				if ( !IsValid( ent ) ) then return end
+
+				local bones = ent:GetPhysicsObjectCount()
+				if ( bones < 2 ) then return end
+
+				ent:SetNWBool( "IsStatue", true )
+				ent.StatueInfo = {}
+
+				local con = constraint.FindConstraints( ent, "Weld" )
+				for id, t in pairs( con ) do
+					if ( t.Ent1 != t.Ent2 || t.Ent1 != ent || t.Bone1 != 0 ) then continue end
+
+					ent.StatueInfo[ t.Bone2 ] = t.Constraint
+				end
+
+				local numC = table.Count( ent.StatueInfo )
+				if ( numC < 1 --[[or numC != bones - 1]] ) then duplicator.ClearEntityModifier( ent, "statue_property" ) end
+			end )
+		end
+
+		duplicator.StoreEntityModifier( ent, "statue_property", data )
+
+	end
+	duplicator.RegisterEntityModifier( "statue_property", StatueDuplicator )
+
+end
+
+local playerTimeouts = {}
+
 properties.Add( "statue", {
 	MenuLabel = "#makestatue",
 	Order = 1501,
@@ -22,14 +69,26 @@ properties.Add( "statue", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 
 		if ( !IsValid( ent ) ) then return end
-		if ( !IsValid( player ) ) then return end
+		if ( !IsValid( ply ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
 		if ( ent:GetClass() != "prop_ragdoll" ) then return end
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
+
+		-- Do not spam please!
+		local timeout = playerTimeouts[ ply ]
+		if ( timeout && timeout.time > CurTime() ) then
+			if ( !timeout.sentMessage ) then
+				ServerLog( "Player " .. tostring( ply ) .. " tried to use 'statue' property too rapidly!\n" )
+				ply:PrintMessage( HUD_PRINTTALK, "Please wait at least 0.2 seconds before trying to make another ragdoll a statue." )
+				timeout.sentMessage = true
+			end
+			return
+		end
 
 		local bones = ent:GetPhysicsObjectCount()
 		if ( bones < 2 ) then return end
@@ -39,22 +98,22 @@ properties.Add( "statue", {
 
 		undo.Create( "Statue" )
 
-		for bone = 1, bones-1 do
+		for bone = 1, bones - 1 do
 
-			local constraint = constraint.Weld( ent, ent, 0, bone, forcelimit )
+			local constraint = constraint.Weld( ent, ent, 0, bone, 0 )
 
 			if ( constraint ) then
 
-				ent.StatueInfo[bone] = constraint
-				player:AddCleanup( "constraints", constraint )
+				ent.StatueInfo[ bone ] = constraint
+				ply:AddCleanup( "constraints", constraint )
 				undo.AddEntity( constraint )
 
 			end
 
 			local effectdata = EffectData()
-				 effectdata:SetOrigin( ent:GetPhysicsObjectNum( bone ):GetPos() )
-				 effectdata:SetScale( 1 )
-				 effectdata:SetMagnitude( 1 )
+			effectdata:SetOrigin( ent:GetPhysicsObjectNum( bone ):GetPos() )
+			effectdata:SetScale( 1 )
+			effectdata:SetMagnitude( 1 )
 			util.Effect( "GlassImpact", effectdata, true, true )
 
 		end
@@ -62,16 +121,20 @@ properties.Add( "statue", {
 		ent:SetNWBool( "IsStatue", true )
 
 		undo.AddFunction( function()
+			if ( !IsValid( ent ) ) then return false end
 
-			if ( IsValid( ent ) ) then
-				ent:SetNWBool( "IsStatue", false )
-				ent.StatueInfo = nil
-			end
+			ent:SetNWBool( "IsStatue", false )
+			ent.StatueInfo = nil
+			StatueDuplicator( ply, ent, nil )
 
 		end )
 
-		undo.SetPlayer( player )
+		undo.SetPlayer( ply )
 		undo.Finish()
+
+		StatueDuplicator( ply, ent, {} )
+
+		playerTimeouts[ ply ] = { time = CurTime() + 0.2, sentMessage = false }
 
 	end
 
@@ -98,12 +161,13 @@ properties.Add( "statue_stop", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 
 		if ( !IsValid( ent ) ) then return end
-		if ( !IsValid( player ) ) then return end
+		if ( !IsValid( ply ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
 		if ( ent:GetClass() != "prop_ragdoll" ) then return end
 
 		local bones = ent:GetPhysicsObjectCount()
@@ -120,6 +184,8 @@ properties.Add( "statue_stop", {
 
 		ent:SetNWBool( "IsStatue", false )
 		ent.StatueInfo = nil
+
+		StatueDuplicator( ply, ent, nil )
 
 	end
 

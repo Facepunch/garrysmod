@@ -15,7 +15,7 @@ function PANEL:Init()
 
 	self.BGValue = vgui.Create( "DImage", self )
 	self.BGValue:SetImage( "vgui/gradient-d" )
-	self.BGValue:SetImageColor( Color( 0, 0, 0, 255 ) )
+	self.BGValue:SetImageColor( color_black )
 
 	self:SetBaseRGB( Color( 255, 0, 0 ) )
 	self:SetRGB( Color( 255, 0, 0 ) )
@@ -26,9 +26,9 @@ function PANEL:Init()
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
-	DSlider.PerformLayout( self )
+	DSlider.PerformLayout( self, w, h )
 
 	self.BGSaturation:StretchToParent( 0,0,0,0 )
 	self.BGSaturation:SetZPos( -9 )

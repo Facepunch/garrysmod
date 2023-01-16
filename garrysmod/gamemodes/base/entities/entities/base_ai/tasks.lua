@@ -60,8 +60,7 @@ end
 -----------------------------------------------------------]]
 function ENT:TaskStart_FindEnemy( data )
 
-	local et = ents.FindInSphere( self:GetPos(), data.Radius or 512 )
-	for k, v in ipairs( et ) do
+	for k, v in ipairs( ents.FindInSphere( self:GetPos(), data.Radius or 512 ) ) do
 
 		if ( v:IsValid() && v != self && v:GetClass() == data.Class ) then
 

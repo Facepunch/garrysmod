@@ -25,7 +25,7 @@ local function TableInherit( t, base )
 
 		if ( t[ k ] == nil ) then
 			t[ k ] = v
-		elseif ( k != "BaseClass" && istable( t[ k ] ) ) then
+		elseif ( k != "BaseClass" && istable( t[ k ] ) && istable( v ) ) then
 			TableInherit( t[ k ], v )
 		end
 
@@ -51,6 +51,8 @@ function IsBasedOn( name, base )
 end
 
 function Register( t, name )
+
+	if ( hook.Run( "PreRegisterSENT", t, name ) == false ) then return end
 
 	local Base = t.Base
 	if ( !Base ) then Base = BaseClasses[ t.Type ] end
@@ -84,7 +86,7 @@ function Register( t, name )
 		--
 		-- For each entity using this class
 		--
-		for _, entity in pairs( ents.FindByClass( t.ClassName ) ) do
+		for _, entity in ipairs( ents.FindByClass( t.ClassName ) ) do
 
 			--
 			-- Replace the contents with this entity table
@@ -101,8 +103,9 @@ function Register( t, name )
 		end
 
 		-- Update entity table of entities that are based on this entity
-		for _, e in pairs( ents.GetAll() ) do
+		for _, e in ipairs( ents.GetAll() ) do
 			if ( IsBasedOn( e:GetClass(), t.ClassName ) ) then
+
 				table.Merge( e, Get( e:GetClass() ) )
 
 				if ( e.OnReloaded ) then
@@ -127,7 +130,8 @@ function Register( t, name )
 		Author			= t.Author,
 		AdminOnly		= t.AdminOnly,
 		Information		= t.Information,
-		ScriptedEntityType = t.ScriptedEntityType
+		ScriptedEntityType = t.ScriptedEntityType,
+		IconOverride	= t.IconOverride
 	} )
 
 end
@@ -150,7 +154,7 @@ function OnLoaded()
 
 end
 
-function Get( name )
+function Get( name, retval )
 
 	-- Do we have an alias?
 	if ( Aliases[ name ] ) then
@@ -160,24 +164,24 @@ function Get( name )
 	if ( SEntList[ name ] == nil ) then return nil end
 
 	-- Create/copy a new table
-	local retval = {}
+	local retval = retval or {}
 	for k, v in pairs( SEntList[ name ].t ) do
-		retval[k] = v
+		if ( istable( v ) ) then
+			retval[ k ] = table.Copy( v )
+		else
+			retval[ k ] = v
+		end
 	end
 
 	-- Derive from base class
-	if ( name != SEntList[ name ].Base ) then
+	if ( SEntList[ name ].Base != name ) then
 
 		local base = Get( SEntList[ name ].Base )
 
 		if ( !base ) then
-
 			Msg("ERROR: Trying to derive entity " .. tostring( name ) .. " from non existant entity " .. tostring( SEntList[ name ].Base ) .. "!\n" )
-
 		else
-
 			retval = TableInherit( retval, base )
-
 		end
 
 	end

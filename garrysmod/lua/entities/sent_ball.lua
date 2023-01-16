@@ -21,7 +21,9 @@ function ENT:SetupDataTables()
 	self:NetworkVar( "Float", 0, "BallSize", { KeyName = "ballsize", Edit = { type = "Float", min = self.MinSize, max = self.MaxSize, order = 1 } } )
 	self:NetworkVar( "Vector", 0, "BallColor", { KeyName = "ballcolor", Edit = { type = "VectorColor", order = 2 } } )
 
-	self:NetworkVarNotify( "BallSize", self.OnBallSizeChanged )
+	if ( SERVER ) then
+		self:NetworkVarNotify( "BallSize", self.OnBallSizeChanged )
+	end
 
 end
 
@@ -36,9 +38,21 @@ function ENT:SpawnFunction( ply, tr, ClassName )
 	if ( !tr.Hit ) then return end
 
 	local size = math.random( 16, 48 )
+	local SpawnPos = tr.HitPos + tr.HitNormal * size
+
+	-- Make sure the spawn position is not out of bounds
+	local oobTr = util.TraceLine( {
+		start = tr.HitPos,
+		endpos = SpawnPos,
+		mask = MASK_SOLID_BRUSHONLY
+	} )
+
+	if ( oobTr.Hit ) then
+		SpawnPos = oobTr.HitPos + oobTr.HitNormal * ( tr.HitPos:Distance( oobTr.HitPos ) / 2 )
+	end
 
 	local ent = ents.Create( ClassName )
-	ent:SetPos( tr.HitPos + tr.HitNormal * size )
+	ent:SetPos( SpawnPos )
 	ent:SetBallSize( size )
 	ent:Spawn()
 	ent:Activate()
@@ -82,13 +96,15 @@ function ENT:RebuildPhysics( value )
 
 end
 
-function ENT:OnBallSizeChanged( varname, oldvalue, newvalue )
+if ( SERVER ) then
+	function ENT:OnBallSizeChanged( varname, oldvalue, newvalue )
 
-	-- Do not rebuild if the size wasn't changed
-	if ( oldvalue == newvalue ) then return end
+		-- Do not rebuild if the size wasn't changed
+		if ( oldvalue == newvalue ) then return end
 
-	self:RebuildPhysics( newvalue )
+		self:RebuildPhysics( newvalue )
 
+	end
 end
 
 local BounceSound = Sound( "garrysmod/balloon_pop_cute.wav" )

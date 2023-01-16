@@ -29,7 +29,11 @@ local javascript_escape_replacements = {
 	["\f"] = "\\f" ,
 	["\r"] = "\\r" ,
 	["\""] = "\\\"",
-	["\'"] = "\\\'"
+	["\'"] = "\\\'",
+	["`"] = "\\`",
+	["$"] = "\\$",
+	["{"] = "\\{",
+	["}"] = "\\}"
 }
 
 function string.JavascriptSafe( str )
@@ -259,11 +263,11 @@ function string.NiceSize( size )
 	size = tonumber( size )
 
 	if ( size <= 0 ) then return "0" end
-	if ( size < 1024 ) then return size .. " Bytes" end
-	if ( size < 1024 * 1024 ) then return math.Round( size / 1024, 2 ) .. " KB" end
-	if ( size < 1024 * 1024 * 1024 ) then return math.Round( size / ( 1024 * 1024 ), 2 ) .. " MB" end
+	if ( size < 1000 ) then return size .. " Bytes" end
+	if ( size < 1000 * 1000 ) then return math.Round( size / 1000, 2 ) .. " KB" end
+	if ( size < 1000 * 1000 * 1000 ) then return math.Round( size / ( 1000 * 1000 ), 2 ) .. " MB" end
 
-	return math.Round( size / ( 1024 * 1024 * 1024 ), 2 ) .. " GB"
+	return math.Round( size / ( 1000 * 1000 * 1000 ), 2 ) .. " GB"
 
 end
 
@@ -288,21 +292,22 @@ end
 local meta = getmetatable( "" )
 
 function meta:__index( key )
+
 	local val = string[ key ]
-	if ( val ) then
+	if ( val ~= nil ) then
 		return val
 	elseif ( tonumber( key ) ) then
 		return self:sub( key, key )
-	else
-		error( "attempt to index a string value with bad key ('" .. tostring( key ) .. "' is not part of the string library)", 2 )
 	end
+
 end
 
-function string.StartWith( String, Start )
+function string.StartsWith( String, Start )
 
 	return string.sub( String, 1, string.len( Start ) ) == Start
 
 end
+string.StartWith = string.StartsWith
 
 function string.EndsWith( String, End )
 
@@ -331,19 +336,17 @@ function string.ToColor( str )
 
 end
 
-function string.Comma( number )
+function string.Comma( number, str )
+
+	local replace = str == nil and "%1,%2" or "%1" .. str .. "%2"
 
 	if ( isnumber( number ) ) then
 		number = string.format( "%f", number )
 		number = string.match( number, "^(.-)%.?0*$" ) -- Remove trailing zeros
 	end
 
-	local k
-
-	while true do
-		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", "%1,%2" )
-		if ( k == 0 ) then break end
-	end
+	local index = -1
+	while index ~= 0 do number, index = number:gsub( "^(-?%d+)(%d%d%d)", replace ) end
 
 	return number
 

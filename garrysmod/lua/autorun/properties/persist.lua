@@ -9,7 +9,7 @@ properties.Add( "persist", {
 	Filter = function( self, ent, ply )
 
 		if ( ent:IsPlayer() ) then return false end
-		if ( GetConVarString( "sbox_persist" ) == "0" ) then return false end
+		if ( GetConVarString( "sbox_persist" ):Trim() == "" ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "persist", ent ) ) then return false end
 
 		return !ent:GetPersistent()
@@ -24,11 +24,12 @@ properties.Add( "persist", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 		if ( !IsValid( ent ) ) then return end
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		-- TODO: Start some kind of animation, take 5 seconds to make something persistent
 
@@ -47,6 +48,7 @@ properties.Add( "persist_end", {
 	Filter = function( self, ent, ply )
 
 		if ( ent:IsPlayer() ) then return false end
+		if ( GetConVarString( "sbox_persist" ):Trim() == "" ) then return false end
 		if ( !gamemode.Call( "CanProperty", ply, "persist", ent ) ) then return false end
 
 		return ent:GetPersistent()
@@ -61,11 +63,12 @@ properties.Add( "persist_end", {
 
 	end,
 
-	Receive = function( self, length, player )
+	Receive = function( self, length, ply )
 
 		local ent = net.ReadEntity()
 		if ( !IsValid( ent ) ) then return end
-		if ( !self:Filter( ent, player ) ) then return end
+		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
+		if ( !self:Filter( ent, ply ) ) then return end
 
 		-- TODO: Start some kind of animation, take 5 seconds to make something persistent
 

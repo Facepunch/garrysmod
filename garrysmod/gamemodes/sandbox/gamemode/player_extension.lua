@@ -12,9 +12,17 @@ function meta:CheckLimit( str )
 	if ( game.SinglePlayer() ) then return true end
 
 	local c = cvars.Number( "sbox_max" .. str, 0 )
+	local count = self:GetCount( str )
+
+	local ret = hook.Run( "PlayerCheckLimit", self, str, count, c )
+	if ( ret != nil ) then
+		if ( !ret && SERVER ) then self:LimitHit( str ) end
+		return ret
+	end
 
 	if ( c < 0 ) then return true end
-	if ( self:GetCount( str ) > c - 1 ) then
+
+	if ( count > c - 1 ) then
 		if ( SERVER ) then self:LimitHit( str ) end
 		return false
 	end
@@ -38,16 +46,16 @@ function meta:GetCount( str, minus )
 
 	if ( !tab || !tab[ str ] ) then
 
-		self:SetNWInt( "Count."..str, 0 )
+		self:SetNWInt( "Count." .. str, 0 )
 		return 0
 
 	end
 
 	local c = 0
 
-	for k, v in pairs ( tab[ str ] ) do
+	for k, v in pairs( tab[ str ] ) do
 
-		if ( IsValid( v ) ) then
+		if ( IsValid( v ) && !v:IsMarkedForDeletion() ) then
 			c = c + 1
 		else
 			tab[ str ][ k ] = nil
@@ -55,7 +63,7 @@ function meta:GetCount( str, minus )
 
 	end
 
-	self:SetNWInt( "Count." .. str, c - minus )
+	self:SetNWInt( "Count." .. str, math.max( c - minus, 0 ) )
 
 	return c
 
@@ -76,7 +84,7 @@ function meta:AddCount( str, ent )
 		-- Update count (for client)
 		self:GetCount( str )
 
-		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, str ) ply:GetCount( str, 1 ) end, self, str )
+		ent:CallOnRemove( "GetCountUpdate", function( ent, ply, str ) ply:GetCount( str ) end, self, str )
 
 	end
 
@@ -133,10 +141,10 @@ else
 	function meta:GetTool( mode )
 
 		local wep
-		for _, ent in pairs( ents.FindByClass( "gmod_tool" ) ) do
+		for _, ent in ipairs( ents.FindByClass( "gmod_tool" ) ) do
 			if ( ent:GetOwner() == self ) then wep = ent break end
 		end
-		if (!IsValid( wep )) then return nil end
+		if ( !IsValid( wep ) || !wep.GetToolObject ) then return nil end
 
 		local tool = wep:GetToolObject( mode )
 		if ( !tool ) then return nil end

@@ -67,11 +67,11 @@ end
 function PANEL:PositionTooltip()
 
 	if ( !IsValid( self.TargetPanel ) ) then
-		self:Remove()
+		self:Close()
 		return
 	end
 
-	self:PerformLayout()
+	self:InvalidateLayout( true )
 
 	local x, y = input.GetCursorPos()
 	local w, h = self:GetSize()
@@ -80,7 +80,7 @@ function PANEL:PositionTooltip()
 
 	y = y - 50
 
-	y = math.min( y, ly - h * 1.5 )
+	y = math.min( y, ly - h - 10 )
 	if ( y < 2 ) then y = 2 end
 
 	-- Fixes being able to be drawn off screen
@@ -99,6 +99,9 @@ function PANEL:OpenForPanel( panel )
 
 	self.TargetPanel = panel
 	self:PositionTooltip()
+
+	-- Use the parent panel's skin
+	self:SetSkin( panel:GetSkin().Name )
 
 	if ( tooltip_delay:GetFloat() > 0 ) then
 
