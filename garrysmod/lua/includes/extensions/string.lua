@@ -351,3 +351,40 @@ function string.Comma( number, str )
 	return number
 
 end
+
+--[[---------------------------------------------------------
+	Name: NiceNumber( num )
+	Desc: Abbreviates numbers and adds a suffix	
+	Examples: string.NiceNumber( 69420 ) ==> "69.42K"
+			string.NiceNumber( -123456789 ) ==> "-123.46M"
+-----------------------------------------------------------]]
+local nice_number_suffixes = {
+    "K","M","B","T","Qa",
+    "Qi","Sx","Sp","Oc","No",
+    "Dc","Ud","Dd","Td","Qad",
+    "Qid","Sxd","Spd","Ocd","Nod",
+    "Vg","Uvg","Dvg","Tvg","Qavg",
+    "Qivg","Sxvg","Spvg","Ocvg"
+}
+
+function string.NiceNumber( num )
+    local suffixid, absNum, isNegative = nil, tonumber( num ), false
+    if not absNum then return num end
+    
+    isNegative = absNum < 0
+    absNum = math.abs( absNum )
+
+    if absNum == math.huge then
+        return string.format( "%sInfinity", isNegative and "-" or "" )
+    end
+
+    if ( absNum >= 1000 ) then
+        suffixid = math.min( #nice_number_suffixes, math.floor( math.log10( absNum ) / 3 ) )
+    end
+
+    return suffixid and string.format( "%s%s%s",
+        isNegative and "-" or "",
+        math.Round( ( absNum / ( 10 ^ ( suffixid * 3 ) ) ), 2 ),
+        nice_number_suffixes[ suffixid ] 
+    ) or num
+end
