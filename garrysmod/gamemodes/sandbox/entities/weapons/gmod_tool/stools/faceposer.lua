@@ -2,6 +2,8 @@
 TOOL.Category = "Poser"
 TOOL.Name = "#tool.faceposer.name"
 
+local MAXSTUDIOFLEXCTRL = 96
+
 local gLastFacePoseEntity = NULL
 local gLastFacePoseEntityCheckedNULL = false
 TOOL.FaceTimer = 0
@@ -157,7 +159,7 @@ if ( SERVER ) then
 
 	function CC_Face_Randomize( pl, command, arguments )
 
-		for i = 0, 128 do
+		for i = 0, MAXSTUDIOFLEXCTRL do
 			local num = math.Rand( 0, 1 )
 			pl:ConCommand( "faceposer_flex" .. i .. " " .. string.format( "%.3f", num ) )
 		end
@@ -171,7 +173,7 @@ end
 -- The rest of the code is clientside only, it is not used on server
 if ( SERVER ) then return end
 
-for i = 0, 128 do
+for i = 0, MAXSTUDIOFLEXCTRL do
 	TOOL.ClientConVar[ "flex" .. i ] = "0"
 end
 
@@ -196,7 +198,7 @@ local function PrettifyName( name )
 
 	-- Try to split text into words, where words would start with single uppercase character
 	local newParts = {}
-	for id, str in pairs( string.Explode( " ", name ) ) do
+	for id, str in ipairs( string.Explode( " ", name ) ) do
 		local wordStart = 1
 		for i = 2, str:len() do
 			local c = str[ i ]
@@ -213,7 +215,7 @@ local function PrettifyName( name )
 	end
 
 	-- Uppercase all first characters
-	for id, str in pairs( newParts ) do
+	for id, str in ipairs( newParts ) do
 		if ( str:len() < 2 ) then continue end
 		newParts[ id ] = str:Left( 1 ):upper() .. str:sub( 2 )
 	end
@@ -240,7 +242,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 	QuickFace:SetAutoHeight( true )
 
 	local Clear = {}
-	for i = 0, 128 do
+	for i = 0, MAXSTUDIOFLEXCTRL do
 		Clear[ "faceposer_flex" .. i ] = GenerateDefaultFlexValue( FaceEntity, i );
 	end
 	QuickFace:AddMaterialEx( "#faceposer.clear", "vgui/face/clear", nil, Clear )
@@ -415,7 +417,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 
 	-- Actual searching
 	filter.OnValueChange = function( pnl, txt )
-		for id, flxpnl in pairs( flexControllers ) do
+		for id, flxpnl in ipairs( flexControllers ) do
 			if ( !flxpnl:GetText():lower():find( txt:lower(), nil, true ) && !flxpnl.originalName:lower():find( txt:lower(), nil, true ) ) then
 				flxpnl:SetVisible( false )
 			else

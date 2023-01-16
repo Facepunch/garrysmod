@@ -17,7 +17,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 
 		local saves = {}
 
-		for k, v in pairs( f ) do
+		for k, v in ipairs( f ) do
 
 			if ( k <= offset ) then continue end
 			if ( k > offset + perpage ) then break end
@@ -25,7 +25,8 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.dupes", function()
 			local entry = {
 				file	= "dupes/" .. v,
 				name	= v:StripExtension(),
-				preview	= "dupes/" .. v:StripExtension() .. ".jpg"
+				preview	= "dupes/" .. v:StripExtension() .. ".jpg",
+				description	= "Local duplication stored on your computer. Local content can be deleted in the main menu."
 			}
 
 			table.insert( saves, entry )

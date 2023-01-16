@@ -4,6 +4,7 @@ local PANEL_Browser = {}
 PANEL_Browser.Base = "DFrame"
 
 function PANEL_Browser:Init()
+
 	self.HTML = vgui.Create( "HTML", self )
 
 	if ( !self.HTML ) then
@@ -13,17 +14,20 @@ function PANEL_Browser:Init()
 	end
 
 	self.HTML:Dock( FILL )
-	self.HTML:SetOpenLinksExternally( true )
+	--self.HTML:SetOpenLinksExternally( true )
 
 	self:SetTitle( "Steam overlay replacement" )
 	self:SetSize( ScrW() * 0.75, ScrH() * 0.75 )
 	self:SetSizable( true )
 	self:Center()
 	self:MakePopup()
+
 end
 
 function PANEL_Browser:SetURL( url )
+
 	self.HTML:OpenURL( url )
+
 end
 
 -- Called from the engine
@@ -92,6 +96,12 @@ function PANEL:Init()
 	self.Yes:DockMargin( 0, 0, 5, 0 )
 	self.Yes:Dock( RIGHT )
 
+	self.YesPerma = vgui.Create( "DCheckBoxLabel", self.Buttons )
+	self.YesPerma:SetText( "#openurl.yes_remember" )
+	self.YesPerma:DockMargin( 0, 0, 5, 0 )
+	self.YesPerma:Dock( RIGHT )
+	self.YesPerma:SetVisible( false )
+
 	self:SetSize( 680, 104 )
 	self:Center()
 	self:MakePopup()
@@ -104,13 +114,14 @@ function PANEL:Init()
 end
 
 function PANEL:LoadServerInfo()
+
 	self.CustomPanel:SetVisible( true )
-	self.CustomPanel:SetText( "Loading server info..." )
+	self.CustomPanel:SetText( "#askconnect.loading" )
 	self.CustomPanel:SizeToContents()
 
 	serverlist.PingServer( self:GetURL(), function( ping, name, desc, map, players, maxplayers, bot, pass, lp, ip, gamemode )
 		if ( !IsValid( self ) ) then return end
-	
+
 		if ( !ping ) then
 			self.CustomPanel.Color = Color( 200, 50, 50 )
 			self.CustomPanel:SetText( "#askconnect.no_response" )
@@ -119,9 +130,21 @@ function PANEL:LoadServerInfo()
 		end
 		self.CustomPanel:SizeToContents()
 	end )
+
+end
+
+function PANEL:DisplayPermissionInfo()
+
+	self.CustomPanel.Color = Color( 200, 200, 200 )
+	self.CustomPanel:SetVisible( true )
+	self.CustomPanel:SetDark( true )
+	self.CustomPanel:SetText( "\n" .. language.GetPhrase( "permission." .. self:GetURL() ) .. "\n" .. language.GetPhrase( "permission." .. self:GetURL() .. ".help" ) .. "\n" )
+	self.CustomPanel:SizeToContents()
+
 end
 
 function PANEL:AlwaysThink()
+
 	-- Ping the server for details
 	if ( SysTime() - self.StartTime > 0.1 && self.Type == "askconnect" && !self.CustomPanel:IsVisible() ) then
 		self:LoadServerInfo()
@@ -134,18 +157,23 @@ function PANEL:AlwaysThink()
 	if ( !self.Yes:IsEnabled() ) then
 		self.Yes:SetEnabled( true )
 	end
+
 	if ( !gui.IsGameUIVisible() ) then
 		self:Remove()
 	end
+
 end
 
 function PANEL:PerformLayout( w, h )
+
 	DFrame.PerformLayout( self, w, h )
 
 	self:SizeToChildren( false, true )
+
 end
 
 function PANEL:SetURL( url )
+
 	self.URL:SetText( url )
 
 	self.StartTime = SysTime()
@@ -153,40 +181,65 @@ function PANEL:SetURL( url )
 	self.CustomPanel:SetVisible( false )
 	self.CustomPanel.Color = Color( 0, 0, 0, 0 )
 	self:InvalidateLayout()
+
+	if ( self.Type == "permission" ) then
+		self:DisplayPermissionInfo()
+	end
+
 end
 
 function PANEL:GetURL()
+
 	return self.URL:GetText()
+
 end
 
 function PANEL:DoNope()
+
 	self:Remove()
 	gui.HideGameUI()
+
 end
 
 function PANEL:DoYes()
+
 	if ( self.StartTime + 1 > SysTime() ) then
 		return
 	end
 
-	self:DoYesAction()
+	local saveYes = self.YesPerma:GetChecked()
+	self:DoYesAction( !saveYes )
 	self:Remove()
 	gui.HideGameUI()
+
 end
 
-function PANEL:DoYesAction()
+function PANEL:DoYesAction( bSessionOnly )
+
 	if ( self.Type == "openurl" ) then
 		gui.OpenURL( self.URL:GetText() )
 	elseif ( self.Type == "askconnect" ) then
-		JoinServer( self.URL:GetText() )
+		permissions.Grant( "connect", bSessionOnly )
+		permissions.Connect( self.URL:GetText() )
+	elseif ( self.Type == "permission" ) then
+		permissions.Grant( self.URL:GetText(), bSessionOnly )
+	else
+		ErrorNoHaltWithStack( "Unhandled confirmation type '" .. tostring( self.Type ) .. "'!" )
 	end
+
 end
 
 function PANEL:SetType( t )
+
 	self.Type = t
 
 	self:SetTitle( "#" .. t .. ".title" )
 	self.Garble:SetText( "#" .. t .. ".text" )
+
+	if ( self.Type == "permission" || self.Type == "askconnect" ) then
+		self.YesPerma:SetVisible( true )
+	end
+
 end
 
 local PanelInst = nil
@@ -210,12 +263,17 @@ function RequestOpenURL( url )
 	OpenConfirmationDialog( url, "openurl" )
 
 end
-
--- Called from the engine
 function RequestConnectToServer( serverip )
 
-	OpenConfirmationDialog( serverip, "askconnect" )
+	if ( permissions.IsGranted( "connect" ) ) then
+		permissions.Connect( serverip )
+	else
+		OpenConfirmationDialog( serverip, "askconnect" )
+	end
 
 end
+function RequestPermission( perm )
 
+	OpenConfirmationDialog( perm, "permission" )
 
+end

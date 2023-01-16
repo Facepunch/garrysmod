@@ -164,8 +164,9 @@ function RADIO:ShowRadioCommands(state)
          radioframe:SetKeyboardInputEnabled(false)
 
          radioframe:CenterVertical()
-
-         -- ASS
+         
+         
+         -- This is not how you should do things
          radioframe.ForceResize = function(s)
                                      local w, label = 0, nil
                                      for k,v in pairs(s.Items) do

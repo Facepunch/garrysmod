@@ -10,6 +10,13 @@ function GM:PlayerCanPickupWeapon(ply, wep)
    if not IsValid(wep) or not IsValid(ply) then return end
    if ply:IsSpec() then return false end
 
+   -- While resetting the map, players should not be allowed to pick up the newly-reset weapon
+   -- entities, because they would be stripped again during the player spawning process and
+   -- subsequently be missing.
+   if GAMEMODE.RespawningWeapons then
+      return false
+   end
+
    -- Disallow picking up for ammo
    if ply:HasWeapon(wep:GetClass()) then
       return false

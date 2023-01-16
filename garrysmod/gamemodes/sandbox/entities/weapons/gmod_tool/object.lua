@@ -8,7 +8,7 @@ end
 function ToolObj:SetStage( i )
 
 	if ( SERVER ) then
-		self:GetWeapon():SetNWInt( "Stage", i, true )
+		self:GetWeapon():SetNWInt( "Stage", i )
 	end
 
 end
@@ -20,7 +20,7 @@ end
 function ToolObj:SetOperation( i )
 
 	if ( SERVER ) then
-		self:GetWeapon():SetNWInt( "Op", i, true )
+		self:GetWeapon():SetNWInt( "Op", i )
 	end
 
 end

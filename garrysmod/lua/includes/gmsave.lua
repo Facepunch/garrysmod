@@ -89,7 +89,7 @@ function gmsave.SaveMap( ply )
 
 	local Ents = ents.GetAll()
 
-	for k, v in pairs( Ents ) do
+	for k, v in ipairs( Ents ) do
 
 		if ( !gmsave.ShouldSaveEntity( v, v:GetSaveTable() ) || v:IsConstraint() ) then
 			Ents[ k ] = nil
@@ -97,10 +97,19 @@ function gmsave.SaveMap( ply )
 
 	end
 
+	-- This is to copy the constraints that are applied to the world only (ropes, etc)
+	-- It will not actually save and then try to restore the world entity, as that would cause issues
+	table.insert( Ents, game.GetWorld() )
+
 	local tab = duplicator.CopyEnts( Ents )
 	if ( !tab ) then return end
 
 	tab.Player = gmsave.PlayerSave( ply )
+
+	--
+	-- Try to figure out if any of the models/materials/etc came from some addon
+	--
+	duplicator.FigureOutRequiredAddons( tab )
 
 	return util.TableToJSON( tab )
 

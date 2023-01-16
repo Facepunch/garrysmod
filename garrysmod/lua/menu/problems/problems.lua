@@ -35,7 +35,7 @@ local function CountProblem( severity )
 	ProblemSeverity = math.max( ProblemSeverity, severity || 0 )
 
 	if ( IsValid( pnlMainMenu ) ) then
-		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. tostring( ProblemSeverity > 0 ) .. ")" )
+		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. ProblemSeverity .. ")" )
 	end
 
 end
@@ -56,7 +56,7 @@ local function RecountProblems()
 	end
 
 	if ( IsValid( pnlMainMenu ) ) then
-		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. tostring( ProblemSeverity > 0 ) .. ")" )
+		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. ProblemSeverity .. ")" )
 	end
 
 end
@@ -175,30 +175,51 @@ function OpenProblemsPanel()
 
 end
 
+-- Called from the engine to notify the player about a problem in a more user friendly way compared to a console message
+function FireProblemFromEngine( id, severity, params )
+	if ( id == "menu_cleanupgmas" ) then
+		local text = language.GetPhrase( "problem." .. id ) .. "\n\n" .. params:Replace( ";", "\n" )
+		FireProblem( { id = id, text = text, type = "addons", fix = function() RunConsoleCommand( "menu_cleanupgmas" ) ClearProblem( id ) end } )
+	else
+		-- missing_addon_file
+		-- addon_download_failed = title;reason
+		local text = language.GetPhrase( "problem." .. id )
+		text = text:format( unpack( string.Explode( ";", params ) ) )
+
+		FireProblem( { id = id .. params, text = text, severity = severity, type = "addons" } )
+	end
+end
+
 timer.Create( "menu_check_for_problems", 1, 0, function()
 
 	if ( math.floor( GetConVarNumber( "mat_hdr_level" ) ) != 2 ) then
-		FireProblem( { id = "hdr_off", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end } )
+		FireProblem( { id = "mat_hdr_level", text = "#problem.mat_hdr_level", type = "config", fix = function() RunConsoleCommand( "mat_hdr_level", "2" ) end } )
 	else
-		ClearProblem( "hdr_off" )
+		ClearProblem( "mat_hdr_level" )
 	end
 
 	if ( math.floor( math.abs( GetConVarNumber( "mat_bumpmap" ) ) ) == 0 ) then
-		FireProblem( { id = "bumpmap", text = "#problem.mat_bumpmap", type = "config", fix = function() RunConsoleCommand( "mat_bumpmap", "1" ) end } )
+		FireProblem( { id = "mat_bumpmap", text = "#problem.mat_bumpmap", type = "config", fix = function() RunConsoleCommand( "mat_bumpmap", "1" ) end } )
 	else
-		ClearProblem( "bumpmap" )
+		ClearProblem( "mat_bumpmap" )
+	end
+
+	if ( math.floor( math.abs( GetConVarNumber( "mat_specular" ) ) ) == 0 ) then
+		FireProblem( { id = "mat_specular", text = "#problem.mat_specular", type = "config", fix = function() RunConsoleCommand( "mat_specular", "1" ) end } )
+	else
+		ClearProblem( "mat_specular" )
 	end
 
 	if ( math.floor( math.abs( GetConVarNumber( "gmod_mcore_test" ) ) ) != 0 ) then
-		FireProblem( { id = "mcore", text = "#problem.gmod_mcore_test", type = "config" } )
+		FireProblem( { id = "gmod_mcore_test", text = "#problem.gmod_mcore_test", type = "config" } )
 	else
-		ClearProblem( "mcore" )
+		ClearProblem( "gmod_mcore_test" )
 	end
 
 	if ( math.abs( GetConVarNumber( "voice_fadeouttime" ) - 0.1 ) > 0.001 ) then
-		FireProblem( { id = "voice_fadeout", text = "#problem.voice_fadeouttime", type = "config", fix = function() RunConsoleCommand( "voice_fadeouttime", "0.1" ) end } )
+		FireProblem( { id = "voice_fadeouttime", text = "#problem.voice_fadeouttime", type = "config", fix = function() RunConsoleCommand( "voice_fadeouttime", "0.1" ) end } )
 	else
-		ClearProblem( "voice_fadeout" )
+		ClearProblem( "voice_fadeouttime" )
 	end
 
 	if ( ScrW() < 1000 || ScrH() < 700 ) then
@@ -207,6 +228,7 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 		ClearProblem( "screen_res" )
 	end
 
+	-- These are not saved, but still affect gameplay
 	if ( GetConVarNumber( "cl_forwardspeed" ) != 10000 || GetConVarNumber( "cl_sidespeed" ) != 10000 || GetConVarNumber( "cl_backspeed" ) != 10000 ) then
 		FireProblem( { id = "cl_speeds", text = "#problem.cl_speeds", type = "config", fix = function()
 			RunConsoleCommand( "cl_forwardspeed", "10000" )
@@ -218,9 +240,9 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 	end
 
 	if ( render.GetDXLevel() != 95 && render.GetDXLevel() != 90 ) then
-		FireProblem( { id = "dxlevel", text = language.GetPhrase("problem.mat_dxlevel"):format( render.GetDXLevel() ), type = "config" } )
+		FireProblem( { id = "mat_dxlevel", text = language.GetPhrase( "problem.mat_dxlevel" ):format( render.GetDXLevel() ), type = "config" } )
 	else
-		ClearProblem( "dxlevel" )
+		ClearProblem( "mat_dxlevel" )
 	end
 
 end )
@@ -230,3 +252,73 @@ if ( !render.SupportsHDR() ) then FireProblem( { text = "#problem.no_hdr", type 
 if ( !render.SupportsPixelShaders_1_4() ) then FireProblem( { text = "#problem.no_ps14", type = "hardware" } ) end
 if ( !render.SupportsPixelShaders_2_0() ) then FireProblem( { text = "#problem.no_ps20", type = "hardware" } ) end
 if ( !render.SupportsVertexShaders_2_0() ) then FireProblem( { text = "#problem.no_vs20", type = "hardware" } ) end
+
+
+
+local AddonConflicts = {}
+
+hook.Add( "OnNotifyAddonConflict", "AddonConflictNotification", function( addon1, addon2, fileName )
+
+	local id  = addon1 .. "vs" .. addon2
+	local id1 = addon2 .. "vs" .. addon1
+	if ( AddonConflicts[ id1 ] ) then id = id1 end
+
+	if ( AddonConflicts[ id ] == nil ) then
+		AddonConflicts[ id ] = {
+			addon1 = addon1,
+			addon2 = addon2,
+			files = {}
+		}
+
+		steamworks.FileInfo( addon1, function( result )
+
+			if ( !result ) then return end
+
+			AddonConflicts[ id ].addon1 = result.title
+			RefreshAddonConflicts()
+
+		end )
+
+		steamworks.FileInfo( addon2, function( result )
+
+			if ( !result ) then return end
+
+			AddonConflicts[ id ].addon2 = result.title
+			RefreshAddonConflicts()
+
+		end )
+
+	end
+
+	table.insert( AddonConflicts[ id ].files, fileName )
+
+	RefreshAddonConflicts()
+
+end )
+
+function RefreshAddonConflicts()
+	timer.Create( "addon_conflicts", 1, 1, FireAddonConflicts )
+end
+
+function FireAddonConflicts()
+
+	for id, tbl in pairs( AddonConflicts ) do
+
+		local files = ""
+		for _, file in ipairs( tbl.files ) do
+			files = files .. file .. "\n"
+		end
+
+		local text = language.GetPhrase( "problem.addon_conflict" )
+		text = text:format( "<color=255,128,0>" .. tbl.addon1 .. "</color>", "<color=255,128,0>" .. tbl.addon2 .. "</color>", files )
+
+		FireProblem( {
+			id = id,
+			type = "addons",
+			severity = 0,
+			text = text
+		} )
+
+	end
+
+end

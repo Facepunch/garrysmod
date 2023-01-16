@@ -263,7 +263,7 @@
 		{
 			"name"		"sbox_persist"
 			"text"		"persistent_mode_menu"
-			"help"		"Enables 'Make Persistent' option when you right click on props while holding C, allowing you to save them across sessions. Leave empty to disable"
+			"help"		"If not empty, enables 'Make Persistent' option when you right click on props while holding C, allowing you to save them across sessions. Changing this convar will save existing persistent props, cleanup the whole map and load props from given file."
 			"type"		"Text"
 			"default"	""
 			"singleplayer" "1"

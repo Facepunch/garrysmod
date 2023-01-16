@@ -172,6 +172,18 @@ function table.Random( t )
 	end
 end
 
+--[[---------------------------------------------------------
+	Name: table.Shuffle( table )
+	Desc: Performs an inline Fisher-Yates shuffle on the table in O(n) time
+-----------------------------------------------------------]]
+function table.Shuffle( t )
+	local n = #t
+	for i = 1, n - 1 do
+		local j = math.random( i, n )
+		t[ i ], t[ j ] = t[ j ], t[ i ]
+	end
+end
+
 --[[----------------------------------------------------------------------
 	Name: table.IsSequential( table )
 	Desc: Returns true if the tables
@@ -270,7 +282,7 @@ function table.Sanitise( t, done )
 
 	for k, v in pairs ( t ) do
 
-		if ( istable( v ) and !done[ v ] ) then
+		if ( istable( v ) and not IsColor( v ) and !done[ v ] ) then
 
 			done[ v ] = true
 			tbl[ k ] = table.Sanitise( v, done )
@@ -291,6 +303,15 @@ function table.Sanitise( t, done )
 				if y == 0 then y = nil end
 				if r == 0 then r = nil end
 				tbl[ k ] = { __type = "Angle", p = p, y = y, r = r }
+
+			elseif ( IsColor( v ) ) then
+
+				local r, g, b, a = v.r, v.g, v.b, v.a
+				if r == 255 then r = nil end
+				if g == 255 then g = nil end
+				if b == 255 then b = nil end
+				if a == 255 then a = nil end
+				tbl[ k ] = { __type = "Color", r = r, g = g, b = b, a = a }
 
 			elseif ( isbool( v ) ) then
 
@@ -321,7 +342,7 @@ function table.DeSanitise( t, done )
 
 	for k, v in pairs ( t ) do
 
-		if ( istable( v ) and !done[ v ] ) then
+		if ( istable( v ) and not IsColor(v) and !done[ v ] ) then
 
 			done[ v ] = true
 
@@ -329,11 +350,15 @@ function table.DeSanitise( t, done )
 
 				if ( v.__type == "Vector" ) then
 
-					tbl[ k ] = Vector( v.x, v.y, v.z )
+					tbl[ k ] = Vector( v.x or 0, v.y, v.z )
 
 				elseif ( v.__type == "Angle" ) then
 
-					tbl[ k ] = Angle( v.p, v.y, v.r )
+					tbl[ k ] = Angle( v.p or 0, v.y, v.r )
+
+				elseif ( v.__type == "Color" ) then
+
+					tbl[ k ] = Color( v.r or 255, v.g or 255, v.b or 255, v.a or 255 )
 
 				elseif ( v.__type == "Bool" ) then
 
@@ -438,8 +463,8 @@ function table.LowerKeyNames( Table )
 end
 
 --[[---------------------------------------------------------
-	Name: table.LowerKeyNames( table )
-	Desc: Lowercase the keynames of all tables
+	Name: table.CollapseKeyValue( table )
+	Desc: Collapses a table with keyvalue structure
 -----------------------------------------------------------]]
 function table.CollapseKeyValue( Table )
 
@@ -651,7 +676,12 @@ function table.RemoveByValue( tbl, val )
 	local key = table.KeyFromValue( tbl, val )
 	if ( !key ) then return false end
 
-	table.remove( tbl, key )
+	if ( isnumber( key ) ) then
+		table.remove( tbl, key )
+	else
+		tbl[ key ] = nil
+	end
+
 	return key
 
 end
@@ -660,6 +690,14 @@ function table.KeysFromValue( tbl, val )
 	local res = {}
 	for key, value in pairs( tbl ) do
 		if ( value == val ) then res[ #res + 1 ] = key end
+	end
+	return res
+end
+
+function table.MemberValuesFromKey( tab, key )
+	local res = {}
+	for k, v in pairs( tab ) do
+		if ( istable( v ) && v[ key ] != nil ) then res[ #res + 1 ] = v[ key ] end
 	end
 	return res
 end

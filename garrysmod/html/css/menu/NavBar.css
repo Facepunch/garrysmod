@@ -151,9 +151,15 @@
 	border-radius: 4px;
 }
 
-#NavBar number.severe
+#NavBar number.severity1
 {
 	background: #ffc800;
+}
+
+#NavBar number.severity2
+{
+	background: #ff4000;
+	color: white;
 }
 
 UL.games_list

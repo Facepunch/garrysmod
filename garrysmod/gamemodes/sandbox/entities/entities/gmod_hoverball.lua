@@ -32,7 +32,7 @@ function ENT:Initialize()
 		-- Wake up our physics object so we don't start asleep
 		local phys = self:GetPhysicsObject()
 		if ( IsValid( phys ) ) then
-			phys:EnableGravity( false )
+			phys:EnableGravity( !self:GetEnabled() )
 			phys:Wake()
 		end
 
@@ -178,6 +178,15 @@ function ENT:Toggle()
 	if ( IsValid( phys ) ) then
 		phys:EnableGravity( !self:GetEnabled() )
 		phys:Wake()
+
+		-- Make the mass not insane when they are turned off
+		if ( self.Strength ) then
+			if ( self:GetEnabled() ) then
+				phys:SetMass( 150 * self.Strength )
+			else
+				phys:SetMass( 15 )
+			end
+		end
 	end
 
 end
@@ -193,10 +202,11 @@ end
 
 function ENT:SetStrength( strength )
 
-	local phys = self:GetPhysicsObject()
+	self.Strength = strength
 
+	local phys = self:GetPhysicsObject()
 	if ( IsValid( phys ) ) then
-		phys:SetMass( 150 * strength )
+		phys:SetMass( 150 * self.Strength )
 	end
 
 	self:UpdateLabel()
@@ -211,6 +221,11 @@ end
 function ENT:OnDuplicated( v )
 
 	self:SetTargetZ( v.Pos.z )
+
+	local phys = self:GetPhysicsObject()
+	if ( IsValid( phys ) && !self:GetEnabled() ) then
+		phys:SetMass( 15 )
+	end
 
 end
 

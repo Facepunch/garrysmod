@@ -4,6 +4,7 @@ AddCSLuaFile()
 -- The following is for the server's eyes only
 local StatueDuplicator
 if ( SERVER ) then
+
 	function StatueDuplicator( ply, ent, data )
 
 		if ( !data ) then
@@ -42,7 +43,10 @@ if ( SERVER ) then
 
 	end
 	duplicator.RegisterEntityModifier( "statue_property", StatueDuplicator )
+
 end
+
+local playerTimeouts = {}
 
 properties.Add( "statue", {
 	MenuLabel = "#makestatue",
@@ -74,6 +78,17 @@ properties.Add( "statue", {
 		if ( !properties.CanBeTargeted( ent, ply ) ) then return end
 		if ( ent:GetClass() != "prop_ragdoll" ) then return end
 		if ( !self:Filter( ent, ply ) ) then return end
+
+		-- Do not spam please!
+		local timeout = playerTimeouts[ ply ]
+		if ( timeout && timeout.time > CurTime() ) then
+			if ( !timeout.sentMessage ) then
+				ServerLog( "Player " .. tostring( ply ) .. " tried to use 'statue' property too rapidly!\n" )
+				ply:PrintMessage( HUD_PRINTTALK, "Please wait at least 0.2 seconds before trying to make another ragdoll a statue." )
+				timeout.sentMessage = true
+			end
+			return
+		end
 
 		local bones = ent:GetPhysicsObjectCount()
 		if ( bones < 2 ) then return end
@@ -118,6 +133,8 @@ properties.Add( "statue", {
 		undo.Finish()
 
 		StatueDuplicator( ply, ent, {} )
+
+		playerTimeouts[ ply ] = { time = CurTime() + 0.2, sentMessage = false }
 
 	end
 

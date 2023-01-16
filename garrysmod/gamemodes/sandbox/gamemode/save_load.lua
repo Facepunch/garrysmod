@@ -74,7 +74,11 @@ if ( SERVER ) then
 
 		end
 
-		gmsave.LoadMap( savedata, game.SinglePlayer() && Entity( 1 ) || nil )
+		local ply = nil
+		if ( IsValid( Entity( 1 ) ) && ( game.SinglePlayer() || Entity( 1 ):IsListenServerHost() ) ) then ply = Entity( 1 ) end
+		if ( !IsValid( ply ) && #player.GetHumans() == 1 ) then ply = player.GetHumans()[ 1 ] end
+
+		gmsave.LoadMap( savedata, ply )
 
 	end
 
@@ -108,14 +112,20 @@ else
 		MsgN( "Received save. Size: " .. buffer:len() )
 
 		local uncompressed = util.Decompress( buffer )
-
 		if ( !uncompressed ) then
 			MsgN( "Received save - but couldn't decompress!?" )
 			buffer = ""
 			return
 		end
 
-		engine.WriteSave( buffer, game.GetMap() .. " " .. util.DateStamp(), CurTime(), game.GetMap() )
+		local MapAddon = nil
+		for id, addon in pairs( engine.GetAddons() ) do
+			if ( file.Exists( "maps/" .. game.GetMap() .. ".bsp", addon.title ) ) then
+				MapAddon = addon.wsid
+			end
+		end
+
+		engine.WriteSave( buffer, game.GetMap() .. " " .. util.DateStamp(), CurTime(), game.GetMap(), MapAddon )
 		buffer = ""
 
 		if ( showsave ) then

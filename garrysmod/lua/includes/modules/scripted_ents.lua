@@ -25,7 +25,7 @@ local function TableInherit( t, base )
 
 		if ( t[ k ] == nil ) then
 			t[ k ] = v
-		elseif ( k != "BaseClass" && istable( t[ k ] ) ) then
+		elseif ( k != "BaseClass" && istable( t[ k ] ) && istable( v ) ) then
 			TableInherit( t[ k ], v )
 		end
 
@@ -56,25 +56,25 @@ function Register( t, name )
 
 	local Base = t.Base
 	if ( !Base ) then Base = BaseClasses[ t.Type ] end
+	t.ClassName = t.ClassName or name
 
-	local old = SEntList[ name ]
+	local old = SEntList[ t.ClassName ]
 	local tab = {}
 
 	tab.type		= t.Type
 	tab.t			= t
 	tab.isBaseType	= true
 	tab.Base		= Base
-	tab.t.ClassName	= name
 
 	if ( !Base ) then
-		Msg( "WARNING: Scripted entity " .. name .. " has an invalid base entity!\n" )
+		Msg( "WARNING: Scripted entity "..t.ClassName.." has an invalid base entity!\n" )
 	end
 
-	SEntList[ name ] = tab
+	SEntList[ t.ClassName ] = tab
 
 	-- Allow all SENTS to be duplicated, unless specified
 	if ( !t.DisableDuplicator ) then
-		duplicator.Allow( name )
+		duplicator.Allow( t.ClassName )
 	end
 
 	--
@@ -86,7 +86,7 @@ function Register( t, name )
 		--
 		-- For each entity using this class
 		--
-		for _, entity in pairs( ents.FindByClass( name ) ) do
+		for _, entity in ipairs( ents.FindByClass( t.ClassName ) ) do
 
 			--
 			-- Replace the contents with this entity table
@@ -103,8 +103,9 @@ function Register( t, name )
 		end
 
 		-- Update entity table of entities that are based on this entity
-		for _, e in pairs( ents.GetAll() ) do
-			if ( IsBasedOn( e:GetClass(), name ) ) then
+		for _, e in ipairs( ents.GetAll() ) do
+			if ( IsBasedOn( e:GetClass(), t.ClassName ) ) then
+
 				table.Merge( e, Get( e:GetClass() ) )
 
 				if ( e.OnReloaded ) then
@@ -117,10 +118,10 @@ function Register( t, name )
 
 	if ( !t.Spawnable ) then return end
 
-	list.Set( "SpawnableEntities", name, {
+	list.Set( "SpawnableEntities", t.ClassName, {
 		-- Required information
 		PrintName		= t.PrintName,
-		ClassName		= name,
+		ClassName		= t.ClassName,
 		Category		= t.Category,
 
 		-- Optional information

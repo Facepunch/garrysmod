@@ -3,6 +3,28 @@ var ServerSettings = []
 var scope = null;
 var rootScope = null;
 
+App.filter( 'mapFilter', function() {
+	return function( items, search )
+	{
+		if ( !search ) return items;
+
+		var addonMaps = [];
+		for ( var addonName in gScope.AddonMapList )
+		{
+			if ( addonName.toLowerCase().indexOf( search.toLowerCase() ) == -1 ) continue;
+
+			addonMaps = addonMaps.concat( gScope.AddonMapList[ addonName ] );
+		}
+
+		return items.filter( function( item, index, array )
+		{
+			if ( addonMaps.indexOf( item + ".bsp" ) != -1 ) return true;
+
+			return item.toLowerCase().indexOf( search.toLowerCase() ) != -1;
+		} );
+	}
+} );
+
 function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 {
 	for ( var i = 0; i < gScope.MapList.length; i++ )
@@ -29,10 +51,13 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 	$scope.MaxPlayersOption = $scope.Players[0];
 
-	if ( localStorage.MaxPlayers ) {
+	if ( localStorage.MaxPlayers )
+	{
 		var maxPlayers = localStorage.MaxPlayers;
-		for (var i = 0; i < $scope.Players.length; i++) {
-			if ( $scope.Players[i].num == maxPlayers ) {
+		for ( var i = 0; i < $scope.Players.length; i++ )
+		{
+			if ( $scope.Players[i].num == maxPlayers )
+			{
 				$scope.MaxPlayersOption = $scope.Players[i];
 				$rootScope.MaxPlayers = maxPlayers;
 				break;
@@ -102,7 +127,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 	$scope.MapIcon = function( m, cat )
 	{
 		// BSP version 21
-		if ( /*cat == "Left 4 Dead 2" || cat == "Portal 2"  || cat == "CS: Global Offensive" || cat == "Blade Symphony" || cat == "Alien Swarm" || cat == "Dino D-Day" ||*/ cat == "INFRA" )
+		if ( /*cat == "Left 4 Dead 2" || cat == "Portal 2" || cat == "CS: Global Offensive" || cat == "Blade Symphony" || cat == "Alien Swarm" || cat == "Dino D-Day" ||*/ cat == "INFRA" )
 		{
 			return "img/incompatible.png"
 		}
@@ -205,7 +230,7 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		if ( !$scope.SearchText )
 			return maps.length;
 
-		return $filter('filter')(maps, $scope.SearchText).length;
+		return $filter('mapFilter')( maps, $scope.SearchText ).length;
 	}
 
 	var oldSvLan = 0;
@@ -216,10 +241,13 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		$scope.ServerSettings.sv_lan = Number( $scope.ServerSettings.sv_lan ) == 1;
 		$scope.ServerSettings.p2p_enabled = Number( $scope.ServerSettings.p2p_enabled ) == 1;
 
-		if ( oldSvLan != $scope.ServerSettings.sv_lan && $scope.ServerSettings.sv_lan == true && $scope.ServerSettings.p2p_enabled == true ) {
+		if ( oldSvLan != $scope.ServerSettings.sv_lan && $scope.ServerSettings.sv_lan == true && $scope.ServerSettings.p2p_enabled == true )
+		{
 			$scope.ServerSettings.p2p_enabled = false;
 			UpdateDigest( $scope, 50 );
-		} else if ( oldp2p != $scope.ServerSettings.p2p_enabled && $scope.ServerSettings.p2p_enabled == true && $scope.ServerSettings.sv_lan == true ) {
+		}
+		else if ( oldp2p != $scope.ServerSettings.p2p_enabled && $scope.ServerSettings.p2p_enabled == true && $scope.ServerSettings.sv_lan == true )
+		{
 			$scope.ServerSettings.sv_lan = false;
 			UpdateDigest( $scope, 50 );
 		}
@@ -227,13 +255,17 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 		oldp2p = $scope.ServerSettings.p2p_enabled;
 		oldSvLan = $scope.ServerSettings.sv_lan;
 
-		if ( !$scope.ServerSettings.p2p_enabled ) {
-			if ( document.getElementById( "p2p_friendsonly" ) !== null ) {
+		if ( !$scope.ServerSettings.p2p_enabled )
+		{
+			if ( document.getElementById( "p2p_friendsonly" ) !== null )
+			{
 				document.getElementById( "p2p_friendsonly" ).disabled = true;
 			}
 			$scope.ServerSettings.p2p_friendsonly = false;
 			UpdateDigest( $scope, 50 );
-		} else if ( document.getElementById( "p2p_friendsonly" ) !== null ) {
+		}
+		else if ( document.getElementById( "p2p_friendsonly" ) !== null )
+		{
 			document.getElementById( "p2p_friendsonly" ).disabled = false;
 		}
 	}
@@ -241,12 +273,14 @@ function ControllerNewGame( $scope, $element, $rootScope, $location, $filter )
 
 function SetLastMap( map, category )
 {
-	if ( scope ) {
+	if ( scope )
+	{
 		scope.CurrentCategory = category;
 		UpdateDigest( scope, 50 );
 	}
 
-	if ( rootScope ) {
+	if ( rootScope )
+	{
 		rootScope.Map = map;
 		rootScope.LastCategory = category;
 		UpdateDigest( rootScope, 50 );

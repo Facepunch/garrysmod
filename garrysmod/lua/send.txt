@@ -55,6 +55,7 @@ lua\includes\extensions\debug.lua
 lua\includes\extensions\entity.lua
 lua\includes\extensions\net.lua
 lua\includes\extensions\math.lua
+lua\includes\extensions\math\ease.lua
 lua\includes\extensions\player.lua
 lua\includes\extensions\player_auth.lua
 lua\includes\extensions\string.lua

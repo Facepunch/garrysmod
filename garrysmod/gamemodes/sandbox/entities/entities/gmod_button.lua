@@ -122,14 +122,18 @@ end
 --
 function ENT:Toggle( bEnable, ply )
 
+	-- If a button has a valid player on it, use that, if not, use activator
+	local targetPly = self:GetPlayer()
+	if ( !IsValid( targetPly ) ) then targetPly = ply end
+
 	if ( bEnable ) then
 
-		numpad.Activate( self:GetPlayer(), self:GetKey(), true )
+		numpad.Activate( targetPly, self:GetKey(), true )
 		self:SetOn( true )
 
 	else
 
-		numpad.Deactivate( self:GetPlayer(), self:GetKey(), true )
+		numpad.Deactivate( targetPly, self:GetKey(), true )
 		self:SetOn( false )
 
 	end

@@ -30,7 +30,7 @@ function WorkshopFileBase( namespace, requiredtags )
 		local userid = "0"
 		if ( type == "mine" ) then userid = "1" end
 
-		local cachename = type .. "-" .. string.Implode( "/", tags ) .. offset .. "-" .. perpage .. "-" .. userid
+		local cachename = type .. "-" .. table.concat( tags, "/" ) .. offset .. "-" .. perpage .. "-" .. userid
 
 		if ( ListCache[ cachename ] ) then
 			self:FillFileInfo( ListCache[ cachename ] )
@@ -112,10 +112,19 @@ function WorkshopFileBase( namespace, requiredtags )
 		-- Build the page!
 		local data = {
 			totalresults = #searchedItems,
-			extraresults = {},
+			extraresults = {}, -- The local info about the addon
+			otherresults = {}, -- The complete list of IDs that match the search query for the Addons menu UI
 			results = {}
 		}
 
+		-- Add the list of all items for "select all" in the UI
+		local i = 0
+		for id, item in ipairs( searchedItems ) do
+			data.otherresults[ i ] = item.wsid
+			i = i + 1
+		end
+
+		-- Add the actual results for the requested range
 		local i = 0
 		while ( i < perpage ) do
 
@@ -180,7 +189,7 @@ function WorkshopFileBase( namespace, requiredtags )
 				if ( !extra ) then extra = {} end
 
 				extra.ownername = "Local"
-				extra.description = "Non workshop .gma addon."
+				extra.description = "Non workshop .gma addon. (" .. extra.file .. ")"
 				extra.floating = true
 
 				local json = util.TableToJSON( extra, false )

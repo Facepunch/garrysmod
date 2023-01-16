@@ -128,6 +128,18 @@ function ENT:OnUnStuck()
 end
 
 --
+-- Name: NEXTBOT:OnTakeDamage
+-- Desc: Called when the bot is about to take damage
+-- Arg1: CTakeDamageInfo|info|damage info
+-- Ret1: number|how much damage was taken, prevents default damage code from running
+--
+function ENT:OnTakeDamage( damageinfo )
+
+	-- return 0
+
+end
+
+--
 -- Name: NEXTBOT:OnInjured
 -- Desc: Called when the bot gets hurt
 -- Arg1: CTakeDamageInfo|info|damage info
@@ -207,14 +219,14 @@ function ENT:FindSpots( tbl )
 	local found = {}
 
 	-- In each area
-	for _, area in pairs( areas ) do
+	for _, area in ipairs( areas ) do
 
 		-- get the spots
 		local spots
 
 		if ( tbl.type == 'hiding' ) then spots = area:GetHidingSpots() end
 
-		for k, vec in pairs( spots ) do
+		for k, vec in ipairs( spots ) do
 
 			-- Work out the length, and add them to a table
 			path:Invalidate()

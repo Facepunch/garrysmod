@@ -1,12 +1,6 @@
 
 if ( SERVER ) then return end
 
---[[
-
- -- hairy cocks
-
---]]
-
 dragndrop = {}
 
 function dragndrop.Clear()
@@ -403,7 +397,7 @@ function meta:OnStartDragging()
 
 		local canvas = self:GetSelectionCanvas()
 
-		if ( !self:IsSelected() ) then
+		if ( IsValid( canvas ) && !self:IsSelected() ) then
 			canvas:UnselectAll()
 		end
 

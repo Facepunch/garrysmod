@@ -160,7 +160,7 @@ WorkshopFiles.prototype.ReceiveLocal = function( data )
 
 	this.Scope.Files = []
 
-	for ( k in data.results )
+	for ( var k in data.results )
 	{
 		var entry =
 		{
@@ -172,6 +172,7 @@ WorkshopFiles.prototype.ReceiveLocal = function( data )
 			{
 				title	: data.results[k].name,
 				file	: data.results[k].file,
+				description	: data.results[k].description,
 			}
 		};
 
@@ -194,8 +195,7 @@ WorkshopFiles.prototype.ReceiveIndex = function( data )
 	this.Scope.NumResults	= data.numresults;
 
 	this.Scope.Files = [];
-
-	for ( k in data.results )
+	for ( var k in data.results )
 	{
 		var entry =
 		{
@@ -208,6 +208,15 @@ WorkshopFiles.prototype.ReceiveIndex = function( data )
 		this.Scope.Files.push( entry );
 	}
 
+	this.Scope.FilesOther = [];
+	if ( data.otherresults ) 
+	{
+		for ( var j in data.otherresults )
+		{
+			this.Scope.FilesOther.push( data.otherresults[ j ] );
+		}
+	}
+
 	this.UpdatePageNav();
 	this.Changed();
 }
@@ -217,7 +226,7 @@ WorkshopFiles.prototype.ReceiveIndex = function( data )
 //
 WorkshopFiles.prototype.ReceiveFileInfo = function( id, data )
 {
-	for ( k in this.Scope.Files )
+	for ( var k in this.Scope.Files )
 	{
 		if ( this.Scope.Files[k].id != id ) continue;
 
@@ -233,7 +242,7 @@ WorkshopFiles.prototype.ReceiveFileInfo = function( id, data )
 //
 WorkshopFiles.prototype.ReceiveUserName = function( id, data )
 {
-	for ( k in this.Scope.Files )
+	for ( var k in this.Scope.Files )
 	{
 		if ( !this.Scope.Files[k].filled || !this.Scope.Files[k] || this.Scope.Files[k].info.owner != id ) continue;
 
@@ -249,7 +258,7 @@ WorkshopFiles.prototype.ReceiveUserName = function( id, data )
 //
 WorkshopFiles.prototype.ReceiveImage = function( id, url )
 {
-	for ( k in this.Scope.Files )
+	for ( var k in this.Scope.Files )
 	{
 		if ( this.Scope.Files[k].id != id ) continue;
 
@@ -268,7 +277,7 @@ WorkshopFiles.prototype.Changed = function()
 	var self = this;
 
 	// Update the digest in 10ms
-	this.DigestUpdate = setTimeout( function ()
+	this.DigestUpdate = setTimeout( function()
 	{
 		self.DigestUpdate = 0;
 		self.Scope.$digest();

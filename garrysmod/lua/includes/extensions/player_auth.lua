@@ -33,7 +33,7 @@ function meta:IsUserGroup( name )
 
 	if ( not self:IsValid() ) then return false end
 
-	return self:GetNWString( "UserGroup" ) == name
+	return self:GetUserGroup() == name
 
 end
 
