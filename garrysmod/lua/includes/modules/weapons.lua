@@ -45,17 +45,17 @@ end
 -----------------------------------------------------------]]
 function Register( t, name )
 
-	if ( hook.Run( "PreRegisterSWEP", t, name ) == false ) then return end
+	t.ClassName = t.ClassName or name
 
-	local old = WeaponList[ name ]
+	if ( hook.Run( "PreRegisterSWEP", t, t.ClassName ) == false ) then return end
 
-	t.ClassName = name
-	WeaponList[ name ] = t
+	local old = WeaponList[ t.ClassName ]
+	WeaponList[ t.ClassName ] = t
 
 	--baseclass.Set( name, t )
 
-	list.Set( "Weapon", name, {
-		ClassName = name,
+	list.Set( "Weapon", t.ClassName, {
+		ClassName = t.ClassName,
 		PrintName = t.PrintName or t.ClassName,
 		Category = t.Category or "Other",
 		Spawnable = t.Spawnable,
@@ -66,7 +66,7 @@ function Register( t, name )
 
 	-- Allow all SWEPS to be duplicated, unless specified
 	if ( !t.DisableDuplicator ) then
-		duplicator.Allow( name )
+		duplicator.Allow( t.ClassName )
 	end
 
 	--
@@ -79,7 +79,7 @@ function Register( t, name )
 		for _, e in ipairs( ents.GetAll() ) do
 			local class = e:GetClass()
 
-			if ( class == name ) then
+			if ( class == t.ClassName ) then
 				--
 				-- Replace the contents with this entity table
 				--
@@ -93,7 +93,7 @@ function Register( t, name )
 				end
 			end
 
-			if ( IsBasedOn( class, name ) ) then
+			if ( IsBasedOn( class, t.ClassName ) ) then
 				table.Merge( e, Get( class ) )
 
 				if ( e.OnReloaded ) then
