@@ -27,7 +27,7 @@ function PANEL:Init()
 	self.SearchBar.OnValueChange = function( s, text )
 		local text = text:Trim():lower()
 
-		for id, category in pairs( self.List.pnlCanvas:GetChildren() ) do
+		for id, category in ipairs( self.List.pnlCanvas:GetChildren() ) do
 			local count = 0
 			local category_matched = false
 
@@ -35,7 +35,7 @@ function PANEL:Init()
 				category_matched = true
 			end
 
-			for id, item in pairs( category:GetChildren() ) do
+			for id, item in ipairs( category:GetChildren() ) do
 				if ( item == category.Header ) then continue end
 
 				local str = item.Text
@@ -154,9 +154,9 @@ end
 -- Internal, makes the given tool highlighted in its DCategoryList
 function PANEL:SetActiveToolText( str )
 
-	for id, category in pairs( self.List.pnlCanvas:GetChildren() ) do
+	for id, category in ipairs( self.List.pnlCanvas:GetChildren() ) do
 
-		for id, item in pairs( category:GetChildren() ) do
+		for id, item in ipairs( category:GetChildren() ) do
 			if ( item == category.Header ) then continue end
 
 			if ( item.Name == str ) then

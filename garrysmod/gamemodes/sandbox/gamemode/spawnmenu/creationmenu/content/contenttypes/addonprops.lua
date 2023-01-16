@@ -6,7 +6,7 @@ local function AddRecursive( pnl, folder, path, wildcard )
 
 	local added = false
 
-	for k, v in pairs( files ) do
+	for k, v in ipairs( files ) do
 
 		if ( !string.EndsWith( v, ".mdl" ) ) then continue end
 
@@ -18,7 +18,7 @@ local function AddRecursive( pnl, folder, path, wildcard )
 
 	end
 
-	for k, v in pairs( folders ) do
+	for k, v in ipairs( folders ) do
 
 		local added_rec = AddRecursive( pnl, folder .. v .. "/", path, wildcard )
 		added = added or added_rec

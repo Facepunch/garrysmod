@@ -198,7 +198,7 @@ local function PrettifyName( name )
 
 	-- Try to split text into words, where words would start with single uppercase character
 	local newParts = {}
-	for id, str in pairs( string.Explode( " ", name ) ) do
+	for id, str in ipairs( string.Explode( " ", name ) ) do
 		local wordStart = 1
 		for i = 2, str:len() do
 			local c = str[ i ]
@@ -215,7 +215,7 @@ local function PrettifyName( name )
 	end
 
 	-- Uppercase all first characters
-	for id, str in pairs( newParts ) do
+	for id, str in ipairs( newParts ) do
 		if ( str:len() < 2 ) then continue end
 		newParts[ id ] = str:Left( 1 ):upper() .. str:sub( 2 )
 	end
@@ -417,7 +417,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 
 	-- Actual searching
 	filter.OnValueChange = function( pnl, txt )
-		for id, flxpnl in pairs( flexControllers ) do
+		for id, flxpnl in ipairs( flexControllers ) do
 			if ( !flxpnl:GetText():lower():find( txt:lower(), nil, true ) && !flxpnl.originalName:lower():find( txt:lower(), nil, true ) ) then
 				flxpnl:SetVisible( false )
 			else

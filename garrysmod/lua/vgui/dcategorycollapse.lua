@@ -121,8 +121,7 @@ end
 
 function PANEL:UnselectAll()
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		if ( v.SetSelected ) then
 			v:SetSelected( false )
@@ -134,8 +133,7 @@ end
 
 function PANEL:UpdateAltLines()
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 		v.AltLine = k % 2 != 1
 	end
 
@@ -288,7 +286,7 @@ function PANEL:AnimSlide( anim, delta, data )
 			-- We are not using self.Contents and our designated height is less
 			-- than the header size, something is clearly wrong, try to rectify
 			self.OldHeight = 0
-			for id, pnl in pairs( self:GetChildren() ) do
+			for id, pnl in ipairs( self:GetChildren() ) do
 				self.OldHeight = self.OldHeight + pnl:GetTall()
 			end
 		end

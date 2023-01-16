@@ -17,7 +17,7 @@ local function GetAllFiles( tab, folder, extension, path )
 		return
 	end
 
-	for k, v in pairs( files ) do
+	for k, v in ipairs( files ) do
 
 		if ( v:EndsWith( extension ) ) then
 			table.insert( tab, ( folder .. v ):lower() )
@@ -25,7 +25,7 @@ local function GetAllFiles( tab, folder, extension, path )
 
 	end
 
-	for k, v in pairs( folders ) do
+	for k, v in ipairs( folders ) do
 		expectedCalls = expectedCalls + 1
 		table.insert( queuedSearch, { tab, folder .. v .. "/", extension, path } )
 	end
@@ -64,7 +64,7 @@ search.AddProvider( function( str )
 
 	local models = {}
 
-	for k, v in pairs( model_list ) do
+	for k, v in ipairs( model_list ) do
 
 		-- Don't search in the models/ and .mdl bit of every model, because every model has this bit, unless they are looking for direct model path
 		local modelpath = v
@@ -123,7 +123,7 @@ local function AddSearchProvider( listname, ctype, stype )
 			table.insert( entities, v )
 		end
 
-		for k, v in pairs( entities ) do
+		for k, v in ipairs( entities ) do
 
 			local name = v.PrintName
 			local name_c = v.ClassName

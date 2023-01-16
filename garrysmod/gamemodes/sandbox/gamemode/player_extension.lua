@@ -141,7 +141,7 @@ else
 	function meta:GetTool( mode )
 
 		local wep
-		for _, ent in pairs( ents.FindByClass( "gmod_tool" ) ) do
+		for _, ent in ipairs( ents.FindByClass( "gmod_tool" ) ) do
 			if ( ent:GetOwner() == self ) then wep = ent break end
 		end
 		if ( !IsValid( wep ) || !wep.GetToolObject ) then return nil end

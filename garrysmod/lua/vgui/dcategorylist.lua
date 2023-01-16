@@ -36,7 +36,7 @@ end
 
 function PANEL:UnselectAll()
 
-	for k, v in pairs( self:GetChildren() ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		if ( v.UnselectAll ) then
 			v:UnselectAll()

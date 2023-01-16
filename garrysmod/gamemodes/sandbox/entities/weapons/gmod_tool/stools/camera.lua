@@ -19,7 +19,7 @@ local function CheckLimit( ply, key )
 	if ( CLIENT ) then return true end
 
 	local found = false
-	for id, camera in pairs( ents.FindByClass( "gmod_cameraprop" ) ) do
+	for id, camera in ipairs( ents.FindByClass( "gmod_cameraprop" ) ) do
 		if ( !camera.controlkey || camera.controlkey != key ) then continue end
 		if ( IsValid( camera:GetPlayer() ) && ply != camera:GetPlayer() ) then continue end
 		found = true
@@ -43,7 +43,7 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 	duplicator.DoGeneric( ent, Data )
 
 	if ( key ) then
-		for id, camera in pairs( ents.FindByClass( "gmod_cameraprop" ) ) do
+		for id, camera in ipairs( ents.FindByClass( "gmod_cameraprop" ) ) do
 			if ( !camera.controlkey || camera.controlkey != key ) then continue end
 			if ( IsValid( ply ) && IsValid( camera:GetPlayer() ) && ply != camera:GetPlayer() ) then continue end
 			camera:Remove()

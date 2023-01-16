@@ -30,7 +30,7 @@ function Register( t, name )
 		--
 		-- For each entity using this class
 		--
-		for _, entity in pairs( ents.FindByClass( name ) ) do
+		for _, entity in ipairs( ents.FindByClass( name ) ) do
 
 			--
 			-- Replace the contents with this entity table
