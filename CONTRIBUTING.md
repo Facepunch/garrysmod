@@ -13,7 +13,7 @@ Code Formatting
   * Preferred casing is UpperCamelCase for function names, and lowerCamelCase for variable and argument names
     * ```local myResult = MyObject:MyMethod( myArgument )```
     * Do not include type in the variable name
-  * An empty line both at the start and at the end of a file
+  * An empty line both at the start and at the end of a file, as well as the first and last lines of a function
 * Do not add unnecessary changes to your code - do not "fix" white space or remove comments
   * Keep your diffs as simple as possible for highest chance of your proposal being accepted
 
