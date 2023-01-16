@@ -91,7 +91,6 @@ local function FireSingleOutput( output, this, activator, data )
 
 	for _, ent in ipairs( entitiesToFire ) do
 		ent:Fire( output.input, data or output.param, output.delay, activator, this )
-		end
 	end
 
 	if ( output.times ~= -1 ) then
