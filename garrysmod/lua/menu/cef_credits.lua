@@ -40,9 +40,5 @@ concommand.Add( "gmod_modding", function()
 end )
 
 concommand.Add( "gmod_servers", function()
-	gui.OpenURL( "https://gmod.facepunch.com/legal/servers" )
-end )
-
-concommand.Add( "gmod_sor", function()
 	gui.OpenURL( "https://wiki.facepunch.com/gmod/server_operator_rules" )
 end )
