@@ -31,7 +31,7 @@ local function UpdateHovered( pl, mv )
 	
 	local eyePos = pl:EyePos()
 	local aimVector = pl:GetAimVector()
-	aimVector:Mult( 256 )
+	aimVector:Mul( 256 )
 	aimVector:Add( eyePos )
 	
 	local trace =
