@@ -1,4 +1,3 @@
-
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_bFirstPerson", "FirstPerson" )
@@ -13,6 +12,7 @@ end
 
 function PANEL:OnMousePressed( mousecode )
 
+	self:SetCursor( "none" )
 	self:MouseCapture( true )
 	self.Capturing = true
 	self.MouseKey = mousecode
@@ -86,19 +86,36 @@ function PANEL:FirstPersonControls()
 
 	-- Look around
 	self.aLookAngle = self.aLookAngle + Angle( y, x, 0 )
+	self.aLookAngle.p = math.Clamp( self.aLookAngle.p, -90, 90 )
 
 	local Movement = vector_origin
 
-	-- TODO: Use actual key bindings, not hardcoded keys.
-	if ( input.IsKeyDown( KEY_W ) || input.IsKeyDown( KEY_UP ) ) then Movement = Movement + self.aLookAngle:Forward() end
-	if ( input.IsKeyDown( KEY_S ) || input.IsKeyDown( KEY_DOWN ) ) then Movement = Movement - self.aLookAngle:Forward() end
-	if ( input.IsKeyDown( KEY_A ) || input.IsKeyDown( KEY_LEFT ) ) then Movement = Movement - self.aLookAngle:Right() end
-	if ( input.IsKeyDown( KEY_D ) || input.IsKeyDown( KEY_RIGHT ) ) then Movement = Movement + self.aLookAngle:Right() end
-	if ( input.IsKeyDown( KEY_SPACE ) ) then Movement = Movement + self.aLookAngle:Up() end
-	if ( input.IsKeyDown( KEY_LCONTROL ) ) then Movement = Movement - self.aLookAngle:Up() end
+	if ( input.IsKeyDown( input.GetKeyCode( input.LookupBinding("forward") or KEY_NONE ) ) or input.IsKeyDown( KEY_UP ) ) then 
+		Movement = Movement + self.aLookAngle:Forward()
+	end
+	
+	if ( input.IsKeyDown( input.GetKeyCode( input.LookupBinding("back") or KEY_NONE ) ) or input.IsKeyDown( KEY_DOWN ) ) then
+		Movement = Movement - self.aLookAngle:Forward()
+	end
+	
+	if ( input.IsKeyDown( input.GetKeyCode( input.LookupBinding("moveleft") or KEY_NONE ) ) or input.IsKeyDown( KEY_LEFT ) ) then
+		Movement = Movement - self.aLookAngle:Right()
+	end
+	
+	if ( input.IsKeyDown( input.GetKeyCode( input.LookupBinding("moveright") or KEY_NONE ) ) or input.IsKeyDown( KEY_RIGHT ) ) then
+		Movement = Movement + self.aLookAngle:Right()
+	end
+	
+	if ( input.IsKeyDown( input.GetKeyCode( input.LookupBinding("jump") or KEY_NONE ) ) or input.IsKeyDown( KEY_SPACE ) ) then 
+		Movement = Movement + vector_up
+	end
+	
+	if ( input.IsKeyDown( input.GetKeyCode( input.LookupBinding("duck") or KEY_NONE ) ) or input.IsKeyDown( KEY_LCONTROL ) ) then 
+		Movement = Movement - vector_up
+	end
 
 	local speed = 0.5
-	if ( input.IsShiftDown() ) then speed = 4.0 end
+	if ( input.IsShiftDown() ) then speed = 3.0 end
 
 	self.vCamPos = self.vCamPos + Movement * speed
 
@@ -113,6 +130,7 @@ end
 
 function PANEL:OnMouseReleased( mousecode )
 
+	self:SetCursor( "arrow" )
 	self:MouseCapture( false )
 	self.Capturing = false
 
