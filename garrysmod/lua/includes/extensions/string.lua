@@ -119,15 +119,25 @@ end
 	Usage: string.GetExtensionFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetExtensionFromFilename( path )
-	return string.match( path, "%.([^%.]+)$" )
+	for i = #path, 1, -1 do
+		local c = string.sub( path, i, i )
+		if ( c == "/" or c == "\\" ) then return nil end
+		if ( c == "." ) then return string.sub( path, i + 1 ) end
+	end
+
+	return nil
 end
 
 --[[---------------------------------------------------------
 	Name: StripExtension( path )
 -----------------------------------------------------------]]
 function string.StripExtension( path )
-	local i = string.match( path, ".+()%.%w+$" )
-	if ( i ) then return string.sub( path, 1, i - 1 ) end
+	for i = #path, 1, -1 do
+		local c = string.sub( path, i, i )
+		if ( c == "/" or c == "\\" ) then return path end
+		if ( c == "." ) then return string.sub( path, 1, i - 1 ) end
+	end
+
 	return path
 end
 
@@ -137,7 +147,12 @@ end
 	Usage: string.GetPathFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetPathFromFilename( path )
-	return string.match( path, "^(.*[/\\])[^/\\]-$" ) or ""
+	for i = #path, 1, -1 do
+		local c = string.sub( path, i, i )
+		if ( c == "/" or c == "\\" ) then return string.sub( path, 1, i ) end
+	end
+
+	return ""
 end
 
 --[[---------------------------------------------------------
@@ -146,7 +161,12 @@ end
 	Usage: string.GetFileFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetFileFromFilename( path )
-	return string.match( path, "[\\/]([^/\\]+)$" ) or path
+	for i = #path, 1, -1 do
+		local c = string.sub( path, i, i )
+		if ( c == "/" or c == "\\" ) then return string.sub( path, i + 1 ) end
+	end
+
+	return path
 end
 
 --[[-----------------------------------------------------------------
