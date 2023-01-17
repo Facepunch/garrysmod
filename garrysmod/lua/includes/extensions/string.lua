@@ -122,7 +122,9 @@ end
 	Name: StripExtension( path )
 -----------------------------------------------------------]]
 function string.StripExtension( path )
-	return string.match( path, "(.+)%." ) or path
+	local i = string.match( path, ".+()%.%w+$" )
+	if ( i ) then return string.sub( path, 1, i - 1 ) end
+	return path
 end
 
 --[[---------------------------------------------------------
@@ -131,7 +133,7 @@ end
 	Usage: string.GetPathFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetPathFromFilename( path )
-	return string.match( path, "(.*[/\\])" ) or ""
+	return string.match( path, "^(.*[/\\])[^/\\]-$" ) or ""
 end
 
 --[[---------------------------------------------------------
