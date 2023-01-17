@@ -314,7 +314,14 @@ end
 
 function SWEP:GetToolObject( tool )
 
-	local mode = tool or self:GetMode() or ( self:GetOwner():IsPlayer() and self:GetOwner():GetInfo( "gmod_toolmode" ) )
+	local mode = tool or self:GetMode()
+
+	if ( !mode ) then
+		local owner = self:GetOwner()
+		if ( IsValid( owner ) and owner:IsPlayer() ) then
+			mode = owner:GetInfo( "gmod_toolmode" )
+		end
+	end
 
 	if ( !self.Tool[ mode ] ) then return false end
 
