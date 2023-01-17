@@ -81,7 +81,7 @@ local totable = string.ToTable
 local string_sub = string.sub
 local string_find = string.find
 local string_len = string.len
-function string.Explode(separator, str, withpattern)
+function string.Explode( separator, str, withpattern )
 	if ( separator == "" ) then return totable( str ) end
 	if ( withpattern == nil ) then withpattern = false end
 
@@ -253,7 +253,7 @@ end
 			Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.Trim( s, char )
-	if ( char ) then char = char:PatternSafe() else char = "%s" end
+	if ( char ) then char = string.PatternSafe( char ) else char = "%s" end
 	return string.match( s, "^" .. char .. "*(.-)" .. char .. "*$" ) or s
 end
 
@@ -263,7 +263,7 @@ end
 			Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimRight( s, char )
-	if ( char ) then char = char:PatternSafe() else char = "%s" end
+	if ( char ) then char = string.PatternSafe( char ) else char = "%s" end
 	return string.match( s, "^(.-)" .. char .. "*$" ) or s
 end
 
@@ -273,7 +273,7 @@ end
 			Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimLeft( s, char )
-	if ( char ) then char = char:PatternSafe() else char = "%s" end
+	if ( char ) then char = string.PatternSafe( char ) else char = "%s" end
 	return string.match( s, "^" .. char .. "*(.+)$" ) or s
 end
 
@@ -295,16 +295,13 @@ end
 
 function string.SetChar( s, k, v )
 
-	local start = s:sub( 0, k - 1 )
-	local send = s:sub( k + 1 )
-
-	return start .. v .. send
+	return string.sub( s, 0, k - 1 ) .. v .. string.sub( s, k + 1 )
 
 end
 
 function string.GetChar( s, k )
 
-	return s:sub( k, k )
+	return string.sub( s, k, k )
 
 end
 
@@ -316,21 +313,21 @@ function meta:__index( key )
 	if ( val ~= nil ) then
 		return val
 	elseif ( tonumber( key ) ) then
-		return self:sub( key, key )
+		return string.sub( self, key, key )
 	end
 
 end
 
-function string.StartsWith( String, Start )
+function string.StartsWith( str, start )
 
-	return string.sub( String, 1, string.len( Start ) ) == Start
+	return string.sub( str, 1, string.len( start ) ) == start
 
 end
 string.StartWith = string.StartsWith
 
-function string.EndsWith( String, End )
+function string.EndsWith( str, endStr )
 
-	return End == "" or string.sub( String, -string.len( End ) ) == End
+	return endStr == "" or string.sub( str, -string.len( endStr ) ) == endStr
 
 end
 
@@ -342,10 +339,9 @@ end
 
 function string.ToColor( str )
 
+	local r, g, b, a = string.match( str, "(%d+) (%d+) (%d+) (%d+)" )
+
 	local col = Color( 255, 255, 255, 255 )
-
-	local r, g, b, a = str:match( "(%d+) (%d+) (%d+) (%d+)" )
-
 	col.r = tonumber( r ) or 255
 	col.g = tonumber( g ) or 255
 	col.b = tonumber( b ) or 255
@@ -365,7 +361,7 @@ function string.Comma( number, str )
 	end
 
 	local index = -1
-	while index ~= 0 do number, index = number:gsub( "^(-?%d+)(%d%d%d)", replace ) end
+	while index ~= 0 do number, index = string.gsub( number, "^(-?%d+)(%d%d%d)", replace ) end
 
 	return number
 
