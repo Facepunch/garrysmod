@@ -4,30 +4,25 @@ TOOL.Name = "#tool.eyeposer.name"
 
 TOOL.Information = {
 	{ name = "left" },
+	{ name = "left_use" },
 	{ name = "right" },
-	{ name = "reload" }
+	{ name = "reload" },
 }
 
-if ( CLIENT ) then
-	CreateClientConVar( "eye_x", "0", false, false )
-	CreateClientConVar( "eye_y", "0", false, false )
-	CreateClientConVar( "eye_z", "360", false, false )
-	CreateClientConVar( "eye_strabismus" , "false", false, false )
-else	
-	util.AddNetworkString( "EyeMouseClickSide" )
-end
+TOOL.ClientConVar[ "x" ] = "0"
+TOOL.ClientConVar[ "y" ] = "0"
+TOOL.ClientConVar[ "strabismus" ] = "0"
 
-local eye_x = GetConVar( "eye_x" )
-local eye_y = GetConVar( "eye_y" )
-local eye_z = GetConVar( "eye_z" )
-local eye_strabismus = GetConVar( "eye_strabismus" )
+local function SetEyeTarget( ply, ent, data )
 
-local function SetEyeTarget( Player, Entity, Data )
-
-	if ( Data.EyeTarget ) then Entity:SetEyeTarget( Data.EyeTarget ) end
+	if ( data.EyeTarget ) then ent:SetEyeTarget( data.EyeTarget ) end
 
 	if ( SERVER ) then
-		duplicator.StoreEntityModifier( Entity, "eyetarget", Data )
+		if ( data.EyeTarget == vector_origin ) then
+			duplicator.ClearEntityModifier( ent, "eyetarget" )
+		else
+			duplicator.StoreEntityModifier( ent, "eyetarget", data )
+		end
 	end
 
 end
@@ -40,107 +35,131 @@ local function ConvertRelativeToEyesAttachment( ent, pos )
 	-- Convert relative to eye attachment
 	local eyeattachment = ent:LookupAttachment( "eyes" )
 	if ( eyeattachment == 0 ) then return end
+
 	local attachment = ent:GetAttachment( eyeattachment )
 	if ( !attachment ) then return end
 
-	local LocalPos = WorldToLocal( pos, angle_zero, attachment.Pos, attachment.Ang )
+	return WorldToLocal( pos, angle_zero, attachment.Pos, attachment.Ang )
 
-	return LocalPos
+end
 
+function TOOL:CalculateEyeTarget()
+
+	local x = math.Remap( self:GetClientNumber( "x" ), 0, 1, -1, 1 )
+	local y = math.Remap( self:GetClientNumber( "y" ), 0, 1, -1, 1 )
+	local fwd = Angle( y * 45, x * 45, 0 ):Forward()
+	local s = math.Clamp( self:GetClientNumber( "strabismus" ), -1, 1 )
+	local distance = 1000
+
+	if ( s < 0 ) then
+		s = math.Remap( s, -1, 0, 0, 1 )
+		distance = distance * math.pow( 10000, s - 1 )
+	elseif ( s > 0 ) then
+		distance = distance * -math.pow( 10000, -s )
+	end
+
+	-- Gotta do this for NPCs...
+	local ent = self:GetSelectedEntity()
+	if ( IsValid( ent ) and ent:IsNPC() ) then
+		local eyeattachment = ent:LookupAttachment( "eyes" )
+		if ( eyeattachment == 0 ) then return fwd * distance end
+
+		local attachment = ent:GetAttachment( eyeattachment )
+		if ( !attachment ) then return fwd * distance end
+
+		return LocalToWorld( fwd * distance, angle_zero, attachment.Pos, attachment.Ang )
+	end
+
+	return fwd * distance
+
+end
+
+function TOOL:GetSelectedEntity()
+	return self:GetWeapon():GetNWEntity( "eyeposer_ent" )
+end
+
+function TOOL:SetSelectedEntity( ent )
+
+	if ( !IsValid( ent ) ) then self:SetOperation( 0 ) end
+
+	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	return self:GetWeapon():SetNWEntity( "eyeposer_ent", ent )
 end
 
 -- Selects entity and aims their eyes
 function TOOL:LeftClick( trace )
 
-	if ( !self.SelectedEntity ) then
-		if ( SERVER ) then
-			net.Start( "EyeMouseClickSide" )
-			net.WriteString( "Left" )
-			net.Send( self:GetOwner() )
-		end	
+	if ( self:GetOwner():KeyDown( IN_USE ) ) then
+		return self:MakeLookAtMe( trace )
+	end
 
-		local ent = trace.Entity
-		if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	if ( !IsValid( self:GetSelectedEntity() ) or self:GetOperation() != 1 ) then
 
-		if ( !IsValid( ent ) ) then return end
+		self:SetSelectedEntity( trace.Entity )
+		if ( !IsValid( self:GetSelectedEntity() ) ) then return false end
 
-		self.SelectedEntity = ent
+		local eyeAtt = self:GetSelectedEntity():LookupAttachment( "eyes" )
+		if ( eyeAtt == 0 ) then
+			self:SetSelectedEntity( NULL )
+			return false
+		end
 
-		local eyeattachment = self.SelectedEntity:LookupAttachment( "eyes" )
-		if ( eyeattachment == 0 ) then return end
-
-		self:GetWeapon():SetNWEntity( 0, self.SelectedEntity )
+		self:SetOperation( 1 ) -- For UI
 
 		return true
 
 	end
 
-	local selectedent = self.SelectedEntity
-	self.SelectedEntity = nil
-	self:GetWeapon():SetNWEntity( 0, NULL )
+	local selectedEnt = self:GetSelectedEntity()
 
-	if ( !IsValid( selectedent ) ) then return end
+	self:SetSelectedEntity( NULL )
+	self:SetOperation( 0 )
 
-	local LocalPos = ConvertRelativeToEyesAttachment( selectedent, trace.HitPos )
+	if ( !IsValid( selectedEnt ) ) then return false end
+
+	local LocalPos = ConvertRelativeToEyesAttachment( selectedEnt, trace.HitPos )
 	if ( !LocalPos ) then return false end
 
-	SetEyeTarget( self:GetOwner(), selectedent, { EyeTarget = LocalPos } )
+	SetEyeTarget( self:GetOwner(), selectedEnt, { EyeTarget = LocalPos } )
 
 	return true
 
 end
 
--- Makes the eyes look as per the position of the dot on the Panel
-function TOOL:RightClick( trace )  
+-- Select the eyes for posing through UI
+function TOOL:RightClick( trace )
 
-	if ( !self.SelectedEntity ) then
-		if ( SERVER ) then
-			net.Start( "EyeMouseClickSide" )
-			net.WriteString( "Right" )
-			net.Send( self:GetOwner() )
-		end	
+	local hadEntity = IsValid( self:GetSelectedEntity() )
 
-		local ent = trace.Entity
-		if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	self:SetSelectedEntity( trace.Entity )
+	if ( !IsValid( self:GetSelectedEntity() ) ) then return hadEntity end
 
-		if ( !IsValid( ent ) ) then return end
-
-		self.SelectedEntity = ent
-
-		local eyeattachment = self.SelectedEntity:LookupAttachment( "eyes" )
-		if ( eyeattachment == 0 ) then return end
-
-		self:GetWeapon():SetNWEntity( 0, self.SelectedEntity )
-
-		return true
-
+	local eyeAtt = self:GetSelectedEntity():LookupAttachment( "eyes" )
+	if ( eyeAtt == 0 ) then
+		self:SetSelectedEntity( NULL )
+		return false
 	end
 
-	local selectedent = self.SelectedEntity
-	self.SelectedEntity = nil
-	self:GetWeapon():SetNWEntity( 0, NULL )
+	-- TODO: Reset? Save and load these raw values from the entity modifier?
+	--RunConsoleCommand( "eyeposer_x", 0.5 )
+	--RunConsoleCommand( "eyeposer_y", 0.5 )
+	--RunConsoleCommand( "eyeposer_strabismus", 0 )
 
-	if ( !IsValid( selectedent ) ) then return end
-
-	local LocalPos = ConvertRelativeToEyesAttachment( selectedent, trace.HitPos )
-	if ( !LocalPos ) then return false end
-
-	SetEyeTarget( self:GetOwner(), selectedent, { EyeTarget = LocalPos } )
+	self:SetOperation( 2 ) -- For UI
 
 	return true
 
 end
 
--- Makes the eyes look at the player
-function TOOL:Reload( trace )
+function TOOL:MakeLookAtMe( trace )
 
-	self:GetWeapon():SetNWEntity( 0, NULL )
-	self.SelectedEntity = nil
+	self:SetSelectedEntity( NULL )
+	self:SetOperation( 0 )
 
 	local ent = trace.Entity
 	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	if ( !IsValid( ent ) ) then return false end
 
-	if ( !IsValid( ent ) ) then return end
 	if ( CLIENT ) then return true end
 
 	local pos = self:GetOwner():EyePos()
@@ -154,22 +173,57 @@ function TOOL:Reload( trace )
 
 end
 
+-- Makes the eyes look at the player
+function TOOL:Reload( trace )
+
+	self:SetSelectedEntity( NULL )
+	self:SetOperation( 0 )
+
+	local ent = trace.Entity
+	if ( IsValid( ent ) && ent:GetClass() == "prop_effect" ) then ent = ent.AttachedEntity end
+	if ( !IsValid( ent ) ) then return false end
+
+	if ( CLIENT ) then return true end
+
+	SetEyeTarget( self:GetOwner(), ent, { EyeTarget = vector_origin } )
+
+	return true
+
+end
+
+local validEntityLast = false
+function TOOL:Think()
+
+	local ent = self:GetSelectedEntity()
+
+	-- If we're on the client just make sure the context menu is up to date
+	if ( CLIENT ) then
+		if ( IsValid( ent ) == validEntityLast ) then return end
+
+		validEntityLast = IsValid( ent )
+		self:RebuildControlPanel( validEntityLast )
+
+		return
+	end
+
+	if ( !IsValid( ent ) ) then self:SetOperation( 0 ) return end
+	
+	if ( self:GetOperation() != 2 ) then return end
+
+	-- On the server we continually set the eye position
+	SetEyeTarget( self:GetOwner(), ent, { EyeTarget = self:CalculateEyeTarget() } )
+
+end
+
 -- The rest of the code is clientside only, it is not used on server
 if ( SERVER ) then return end
 
-local FacePoser = surface.GetTextureID( "gui/faceposer_indicator" )
-local EyeMouseClickSide
-
-net.Receive( "EyeMouseClickSide", function( len )
-     local message = net.ReadString()
-     EyeMouseClickSide = message
-end )
+local SelectionRing = surface.GetTextureID( "gui/faceposer_indicator" )
 
 -- Draw a box indicating the face we have selected
 function TOOL:DrawHUD()
 
-	local selected = self:GetWeapon():GetNWEntity( 0 )
-
+	local selected = self:GetSelectedEntity()
 	if ( !IsValid( selected ) ) then return end
 
 	local eyeattachment = selected:LookupAttachment( "eyes" )
@@ -179,23 +233,25 @@ function TOOL:DrawHUD()
 	local scrpos = attachment.Pos:ToScreen()
 	if ( !scrpos.visible ) then return end
 
-	if ( EyeMouseClickSide == "Left" ) then	
+	if ( self:GetOperation() == 1 ) then
+
+		-- Get Target
+		local trace = self:GetOwner():GetEyeTrace()
+
+		-- Clientside preview
+		local LocalPos = ConvertRelativeToEyesAttachment( selected, trace.HitPos )
+		if ( LocalPos ) then
+			selected:SetEyeTarget( LocalPos )
+		end
 
 		-- Try to get each eye position.. this is a real guess and won't work on non-humans
 		local Leye = ( attachment.Pos + attachment.Ang:Right() * 1.5 ):ToScreen()
 		local Reye = ( attachment.Pos - attachment.Ang:Right() * 1.5 ):ToScreen()
 
-		-- Get Target
-		local Owner = self:GetOwner()
-		local trace = Owner:GetEyeTrace()
+		-- Todo, make the line look less like ass
 		local scrhit = trace.HitPos:ToScreen()
 		local x = scrhit.x
 		local y = scrhit.y
-
-		local LocalPos = ConvertRelativeToEyesAttachment( selected, trace.HitPos )
-		selected:SetEyeTarget( LocalPos )
-
-		-- Todo, make look less like ass
 
 		surface.SetDrawColor( 0, 0, 0, 100 )
 		surface.DrawLine( Leye.x - 1, Leye.y + 1, x - 1, y + 1 )
@@ -209,17 +265,17 @@ function TOOL:DrawHUD()
 
 		surface.SetDrawColor( 0, 255, 0, 255 )
 		surface.DrawLine( Leye.x, Leye.y, x, y )
-		surface.DrawLine( Reye.x, Reye.y, x, y )
 		surface.DrawLine( Leye.x, Leye.y - 1, x, y - 1 )
+		surface.DrawLine( Reye.x, Reye.y, x, y )
 		surface.DrawLine( Reye.x, Reye.y - 1, x, y - 1 )
 
 	end
 
-	if ( EyeMouseClickSide == "Right" ) then
+	if ( self:GetOperation() == 2 ) then
 
-		local PanelPos  = Vector(eye_z:GetInt(), eye_x:GetInt(), eye_y:GetInt())		
-		selected:SetEyeTarget( PanelPos )
-		
+		-- Clientside preview
+		selected:SetEyeTarget( self:CalculateEyeTarget() )
+
 		local pos = selected:GetPos()
 
 		-- Work out the side distance to give a rough headsize box..
@@ -227,119 +283,68 @@ function TOOL:DrawHUD()
 		local side = ( attachment.Pos + player_eyes:Right() * 20 ):ToScreen()
 		local size = math.abs( side.x - scrpos.x )
 
+		-- Draw the selection ring
 		surface.SetDrawColor( 255, 255, 255, 255 )
-		surface.SetTexture( FacePoser )
+		surface.SetTexture( SelectionRing )
 		surface.DrawTexturedRect( scrpos.x - size, scrpos.y - size, size * 2, size * 2 )
 
 	end
 
 end
 
-function TOOL.BuildCPanel( CPanel )
+function TOOL.BuildCPanel( CPanel, hasEntity )
 
-	CPanel:AddControl( "Header", { Description = "#tool.eyeposer.desc" } )	
+	CPanel:AddControl( "Header", { Description = "#tool.eyeposer.desc" } )
 
-	-- Panel for Slider ( limiting edge )
-	local PanelSlider = vgui.Create( "DPanel", CPanel )
-	PanelSlider:SetPos( 19, 50 )
-	PanelSlider:SetSize( 225, 225 )
+	if ( hasEntity ) then
 
-	-- Slider '3D'
-	local Slider = vgui.Create( "DSlider", PanelSlider )
-	Slider:SetPos( 7, 7 )
-	Slider:SetSize( 211, 211 )
-	Slider:SetLockY( nil )	
-	-- Draw the 'button' different from the slider
-	Slider.Knob.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "Button", panel, w, h ) end
+		-- Panel for Slider ( limiting edge )
+		local SliderBackground = vgui.Create( "DPanel", CPanel )
+		SliderBackground:Dock( TOP )
+		SliderBackground:DockPadding( 7, 7, 7, 7 )
+		SliderBackground:SetSize( 225, 225 )
+		CPanel:AddItem( SliderBackground )
 
-	-- Moving the '3D button' manipulates the eyes of the selected entity
-	Slider.TranslateValues = function( Slider, x, y )
-		if ( eye_strabismus:GetBool() == false ) then
-			RunConsoleCommand( "eye_x", (x-0.5)*720 )
-			RunConsoleCommand( "eye_y", (y-0.5)*-720 )					
-		else
-			RunConsoleCommand( "eye_x", (x-0.5)*6 )
-			RunConsoleCommand( "eye_y", (y-0.5)*-6 )
+		-- 2 axis slider for the eye position
+		local EyeSlider = vgui.Create( "DSlider", SliderBackground )
+		EyeSlider:Dock( FILL )
+		EyeSlider:SetLockY()
+		-- Draw the 'button' different from the slider
+		EyeSlider.Knob.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "Button", panel, w, h ) end
+
+		EyeSlider.TranslateValues = function( _, x, y )
+
+			RunConsoleCommand( "eyeposer_x", x )
+			RunConsoleCommand( "eyeposer_y", y )
+
+			return x, y
+
 		end
 
-		-- Draw the Line between the '3D button' and the center of the square
-		function Slider:Paint( w, h )								
-			local Knob_X, Knob_Y = Slider.Knob:GetPos()
+		function EyeSlider:Paint( w, h )
+			local knobX, knobY = self.Knob:GetPos()
+			local knobW, knobH = self.Knob:GetSize()
 			surface.SetDrawColor( 0, 0, 0, 250 )
-			surface.DrawLine( Knob_X + 7, Knob_Y + 7, w/2, h/2 )	
-			surface.DrawRect( w/2 - 1, h/2-1, 4, 4 )	
+			surface.DrawLine( knobX + knobW / 2, knobY + knobH / 2, w / 2, h / 2 )
+			surface.DrawRect( w / 2 - 2, h / 2 - 2, 5, 5 )
 		end
 
-		return x, y
+		-- When pressing MOUSE_MIDDLE the position of the button returns to the default (center)
+		EyeSlider.Knob.OnMousePressed = function( panel, mcode )
+			if ( mcode == MOUSE_MIDDLE ) then
+				EyeSlider:SetSlideX( 0.5 )
+				EyeSlider:SetSlideY( 0.5 )
+				EyeSlider:TranslateValues( 0.5, 0.5 )
+				return
+			end
 
-	end	
-		
-	-- When pressing MOUSE_MIDDLE the position of the button returns to the default (center)
-	Slider.Knob.OnMousePressed = function( panel, mcode )
-		if ( mcode == MOUSE_MIDDLE ) then
-			Slider:SetSlideX( "0.5" )
-			Slider:SetSlideY( "0.5" )
-			RunConsoleCommand( "eye_x", 0.5 )
-			RunConsoleCommand( "eye_y", 0.5 )
-			return
+			EyeSlider:OnMousePressed( mcode )
 		end
-		Slider:OnMousePressed( mcode )
+
+		CPanel:AddControl( "Slider", { Label = "#tool.eyeposer.strabismus", Command = "eyeposer_strabismus", Type = "Float", Min = -1, Max = 1, Default = 0 } )
+
 	end
 
-	-- Slider: Strabismus - eye_z
-	local SliderStrabismus = vgui.Create( "DNumSlider", CPanel )
-	SliderStrabismus:SetPos( 19, 280 )
-	SliderStrabismus:SetSize( 40, 25 )
-	SliderStrabismus:SetMinMax( -5, 5 )
-	SliderStrabismus:SetDecimals( 0 )
-	SliderStrabismus:SetWide( 255 )
-	SliderStrabismus:SetConVar( "eye_z" )
-	SliderStrabismus:SetDefaultValue( "0" )	
-	SliderStrabismus:SetDark( true )
-	SliderStrabismus.Slider:SetEnabled( false )
-	SliderStrabismus.Label:SetVisible( false ) 
+	CPanel:AddControl( "Slider", { Label = "#tool.eyeposer.size_eyes", Command = "r_eyesize", Type = "Float", Min = -0.5, Max = 2, Help = true, Default = 0 } )
 
-	-- Checkbox:Strabismus
-	CheckBoxStrabismus = vgui.Create( "DCheckBoxLabel", SliderStrabismus )
-	CheckBoxStrabismus:SetText( "#tool.eyeposer.strabismus" )
-	CheckBoxStrabismus:SetConVar( "eye_strabismus" )
-	CheckBoxStrabismus:SetValue( false )
-	CheckBoxStrabismus:SetDark( true )
-	CheckBoxStrabismus:SetWide( 80 )
-	CheckBoxStrabismus:Dock( LEFT )
-	
-	function CheckBoxStrabismus:OnChange( val )
-		if ( val ) then
-			RunConsoleCommand( "eye_x", 0 )
-			RunConsoleCommand( "eye_y", 0 )
-			RunConsoleCommand( "eye_z", "2" )
-			Slider:SetSlideX( "0.5" )
-			Slider:SetSlideY( "0.5" )
-			SliderStrabismus.Slider:SetSlideX( "0.7" )
-			SliderStrabismus:SetEnabled( true )
-
-		else
-			RunConsoleCommand( "eye_x", 0 )
-			RunConsoleCommand( "eye_y", 0 )
-			RunConsoleCommand( "eye_z", "360" )
-			Slider:SetSlideX( "0.5" )
-			Slider:SetSlideY( "0.5" )
-			SliderStrabismus.Slider:SetSlideX( "360" )
-			SliderStrabismus:SetEnabled( false )
-
-		end
-	end
-	
-	-- Slider Size Eyes / r_eyesize
-	local Slider_r_eyesize = vgui.Create( "DNumSlider", CPanel )
-	Slider_r_eyesize:SetText( "#tool.eyeposer.size_eyes" )
-	Slider_r_eyesize:SetConVar( "r_eyesize" )	
-	Slider_r_eyesize:SetMinMax( -0.5 , 10 )
-	Slider_r_eyesize:SetDefaultValue( "0" )	
-	Slider_r_eyesize:SetDecimals( 1 )
-	Slider_r_eyesize:SetPos( 19, 315 )
-	Slider_r_eyesize:SetSize( 37, 25 )
-	Slider_r_eyesize:SetWide( 255 )
-	Slider_r_eyesize:SetDark( true )
-	
 end
