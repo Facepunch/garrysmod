@@ -53,7 +53,7 @@ function gmsave.LoadMap( strMapContents, ply, callback )
 		g_WavSound = g_WavSound + 1
 		if ( g_WavSound > 4 ) then g_WavSound = 1 end
 
-		ply:SendLua( "surface.PlaySound( \"garrysmod/save_load" .. g_WavSound .. ".wav\" )" )
+		ply:SendLua( string.format( "surface.PlaySound( \"garrysmod/save_load%d.wav\" )", g_WavSound ) )
 
 		gmsave.PlayerLoad( ply, tab.Player )
 
