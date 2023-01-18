@@ -113,45 +113,48 @@ function SWEP:DrawHUD()
 
 	local h2 = 0
 
-	for k, v in pairs( self:GetToolObject().Information ) do
+	for _, v in pairs( self:GetToolObject().Information ) do
 		if ( isstring( v ) ) then v = { name = v } end
 
-		if ( !v.name ) then continue end
+		local name = v.name
+
+		if ( !name ) then continue end
 		if ( v.stage && v.stage != self:GetStage() ) then continue end
 		if ( v.op && v.op != self:GetToolObject():GetOperation() ) then continue end
 
-		local txt = "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. v.name
-		if ( v.name == "info" ) then
-			txt = self:GetToolObject():GetHelpText()
-		end
+		local txt = "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. name
+		if ( name == "info" ) then txt = self:GetToolObject():GetHelpText() end
 
 		TextTable.text = txt
 		TextTable.pos = { x + 21, y + h2 }
 
 		w, h = draw.TextShadow( TextTable, 1 )
 
-		if ( !v.icon ) then
-			if ( v.name:StartWith( "info" ) ) then v.icon = "gui/info" end
-			if ( v.name:StartWith( "left" ) ) then v.icon = "gui/lmb.png" end
-			if ( v.name:StartWith( "right" ) ) then v.icon = "gui/rmb.png" end
-			if ( v.name:StartWith( "reload" ) ) then v.icon = "gui/r.png" end
-			if ( v.name:StartWith( "use" ) ) then v.icon = "gui/e.png" end
+		local icon1 = v.icon
+		local icon2 = v.icon2
+
+		if ( !icon1 ) then
+			if ( string.StartsWith( name, "info" ) ) then icon1 = "gui/info" end
+			if ( string.StartsWith( name, "left" ) ) then icon1 = "gui/lmb.png" end
+			if ( string.StartsWith( name, "right" ) ) then icon1 = "gui/rmb.png" end
+			if ( string.StartsWith( name, "reload" ) ) then icon1 = "gui/r.png" end
+			if ( string.StartsWith( name, "use" ) ) then icon1 = "gui/e.png" end
 		end
-		if ( !v.icon2 && !v.name:StartWith( "use" ) && v.name:EndsWith( "use" ) ) then v.icon2 = "gui/e.png" end
+		if ( !icon2 && !string.StartsWith( name, "use" ) && string.EndsWith( name, "use" ) ) then icon2 = "gui/e.png" end
 
 		self.Icons = self.Icons or {}
-		if ( v.icon && !self.Icons[ v.icon ] ) then self.Icons[ v.icon ] = Material( v.icon ) end
-		if ( v.icon2 && !self.Icons[ v.icon2 ] ) then self.Icons[ v.icon2 ] = Material( v.icon2 ) end
+		if ( icon1 && !self.Icons[ icon1 ] ) then self.Icons[ icon1 ] = Material( icon1 ) end
+		if ( icon2 && !self.Icons[ icon2 ] ) then self.Icons[ icon2 ] = Material( icon2 ) end
 
-		if ( v.icon && self.Icons[ v.icon ] && !self.Icons[ v.icon ]:IsError() ) then
+		if ( icon1 && self.Icons[ icon1 ] && !self.Icons[ icon1 ]:IsError() ) then
 			surface.SetDrawColor( 255, 255, 255, 255 )
-			surface.SetMaterial( self.Icons[ v.icon ] )
+			surface.SetMaterial( self.Icons[ icon1 ] )
 			surface.DrawTexturedRect( x, y + h2, 16, 16 )
 		end
 
-		if ( v.icon2 && self.Icons[ v.icon2 ] && !self.Icons[ v.icon2 ]:IsError() ) then
+		if ( icon2 && self.Icons[ icon2 ] && !self.Icons[ icon2 ]:IsError() ) then
 			surface.SetDrawColor( 255, 255, 255, 255 )
-			surface.SetMaterial( self.Icons[ v.icon2 ] )
+			surface.SetMaterial( self.Icons[ icon2 ] )
 			surface.DrawTexturedRect( x - 25, y + h2, 16, 16 )
 
 			draw.SimpleText( "+", "default", x - 8, y + h2 + 2, color_white )
