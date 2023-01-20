@@ -85,7 +85,7 @@ function Derma_Install_Convar_Functions( PANEL )
 
 	function PANEL:ConVarChanged( strNewValue )
 
-		if ( !self.m_strConVar || self.m_strConVar:len() < 2 ) then return end
+		if ( !self.m_strConVar || #self.m_strConVar < 2 ) then return end
 		RunConsoleCommand( self.m_strConVar, tostring( strNewValue ) )
 
 	end
@@ -93,7 +93,7 @@ function Derma_Install_Convar_Functions( PANEL )
 	-- Todo: Think only every 0.1 seconds?
 	function PANEL:ConVarStringThink()
 
-		if ( !self.m_strConVar ) then return end
+		if ( !self.m_strConVar || #self.m_strConVar < 2 ) then return end
 
 		local strValue = GetConVarString( self.m_strConVar )
 		if ( self.m_strConVarValue == strValue ) then return end
@@ -105,15 +105,15 @@ function Derma_Install_Convar_Functions( PANEL )
 
 	function PANEL:ConVarNumberThink()
 
-		if ( !self.m_strConVar ) then return end
+		if ( !self.m_strConVar || #self.m_strConVar < 2 ) then return end
 
-		local strValue = GetConVarNumber( self.m_strConVar )
+		local numValue = GetConVarNumber( self.m_strConVar )
 
 		-- In case the convar is a "nan"
-		if ( strValue != strValue ) then return end
-		if ( self.m_strConVarValue == strValue ) then return end
+		if ( numValue != numValue ) then return end
+		if ( self.m_strConVarValue == numValue ) then return end
 
-		self.m_strConVarValue = strValue
+		self.m_strConVarValue = numValue
 		self:SetValue( self.m_strConVarValue )
 
 	end
