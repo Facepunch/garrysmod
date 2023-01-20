@@ -274,7 +274,7 @@ function TOOL:DrawHUD()
 	if ( self:GetOperation() == 2 ) then
 
 		-- Clientside preview
-		selected:SetEyeTarget( self:CalculateEyeTarget() )
+		--selected:SetEyeTarget( self:CalculateEyeTarget() )
 
 		local pos = selected:GetPos()
 
@@ -301,25 +301,19 @@ function TOOL.BuildCPanel( CPanel, hasEntity )
 		-- Panel for Slider ( limiting edge )
 		local SliderBackground = vgui.Create( "DPanel", CPanel )
 		SliderBackground:Dock( TOP )
-		SliderBackground:DockPadding( 7, 7, 7, 7 )
-		SliderBackground:SetSize( 225, 225 )
+		SliderBackground:SetTall( 225 )
 		CPanel:AddItem( SliderBackground )
 
 		-- 2 axis slider for the eye position
 		local EyeSlider = vgui.Create( "DSlider", SliderBackground )
 		EyeSlider:Dock( FILL )
 		EyeSlider:SetLockY()
+		EyeSlider:SetSlideX( 0.5 )
+		EyeSlider:SetSlideY( 0.5 )
+		EyeSlider:SetConVarX( "eyeposer_x" )
+		EyeSlider:SetConVarY( "eyeposer_y" )
 		-- Draw the 'button' different from the slider
 		EyeSlider.Knob.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "Button", panel, w, h ) end
-
-		EyeSlider.TranslateValues = function( _, x, y )
-
-			RunConsoleCommand( "eyeposer_x", x )
-			RunConsoleCommand( "eyeposer_y", y )
-
-			return x, y
-
-		end
 
 		function EyeSlider:Paint( w, h )
 			local knobX, knobY = self.Knob:GetPos()
@@ -327,18 +321,6 @@ function TOOL.BuildCPanel( CPanel, hasEntity )
 			surface.SetDrawColor( 0, 0, 0, 250 )
 			surface.DrawLine( knobX + knobW / 2, knobY + knobH / 2, w / 2, h / 2 )
 			surface.DrawRect( w / 2 - 2, h / 2 - 2, 5, 5 )
-		end
-
-		-- When pressing MOUSE_MIDDLE the position of the button returns to the default (center)
-		EyeSlider.Knob.OnMousePressed = function( panel, mcode )
-			if ( mcode == MOUSE_MIDDLE ) then
-				EyeSlider:SetSlideX( 0.5 )
-				EyeSlider:SetSlideY( 0.5 )
-				EyeSlider:TranslateValues( 0.5, 0.5 )
-				return
-			end
-
-			EyeSlider:OnMousePressed( mcode )
 		end
 
 		CPanel:AddControl( "Slider", { Label = "#tool.eyeposer.strabismus", Command = "eyeposer_strabismus", Type = "Float", Min = -1, Max = 1, Default = 0 } )
