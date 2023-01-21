@@ -151,6 +151,7 @@ function TOOL:RightClick( trace )
 
 end
 
+-- Makes the eyes look at the player
 function TOOL:MakeLookAtMe( trace )
 
 	self:SetSelectedEntity( NULL )
@@ -173,7 +174,7 @@ function TOOL:MakeLookAtMe( trace )
 
 end
 
--- Makes the eyes look at the player
+-- Reset eye position
 function TOOL:Reload( trace )
 
 	self:SetSelectedEntity( NULL )
@@ -310,6 +311,7 @@ function TOOL.BuildCPanel( CPanel, hasEntity )
 		EyeSlider:SetLockY()
 		EyeSlider:SetSlideX( 0.5 )
 		EyeSlider:SetSlideY( 0.5 )
+		EyeSlider:SetTrapInside( true )
 		EyeSlider:SetConVarX( "eyeposer_x" )
 		EyeSlider:SetConVarY( "eyeposer_y" )
 		-- Draw the 'button' different from the slider
