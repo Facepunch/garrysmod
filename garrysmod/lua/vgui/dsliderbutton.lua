@@ -137,13 +137,13 @@ end
 
 function PANEL:SetAction(fLef, fRgh, vIdx)
 	local tBut = self.Array
-	local nIdx = math.floor( tonumber(vD) or 0 )
+	local nIdx = math.floor( tonumber(vIdx) or 0 )
 	if ( not tBut ) then return self end
 	if ( not tBut.Size ) then return self end
 	if ( tBut.Size <= 0 ) then return self end
 	local bIdx = ( nIdx > 0 and nIdx <= tBut.Size )
 	local iIdx = ( bIdx and nIdx or tBut.Size )
-	local pBut, pSer = tBut[tBut.Size], self.Slider
+	local pBut, pSer = tBut[ tBut.Size ], self.Slider
 	pBut.DoClick = function()
 		local pS, sE = pcall( fLef, pBut, pSer, pSer:GetValue() )
 		if ( not pS ) then error( "["..pBut:GetText().."]: "..sE ) end
@@ -177,30 +177,32 @@ function PANEL:RemoveButton(vD)
 	if ( pBut ) then
 		pBut:Remove()
 		tBut.Size = tBut.Size - 1
-	end; return self
+	end; self:SetWide()
+	return self
 end
 
 function PANEL:ClearButtons()
-  local tBut = self.Array
-  if ( not tBut ) then return self end
-  for iD = 1, tBut.Size do
-    local pBut = table.remove( tBut )
-    if ( IsValid(pBut) ) then pBut:Remove() end
-  end; tBut.Size = 0
-  self.SPY = self.SSY + 2 * self.PDY
-  return self
+	local tBut = self.Array
+	if ( not tBut ) then return self end
+	for iD = 1, tBut.Size do
+		local pBut = table.remove( tBut )
+		if ( IsValid(pBut) ) then pBut:Remove() end
+	end
+	table.Empty( tBut ) -- Clear array
+	self.Array = nil -- Wipe table
+	self.SPY = self.SSY + 2 * self.PDY
+	return self
 end
 
-function PANEL:UpdateColours(tSkin)
-	if ( self.Slider.UpdateColours ) then
-		self.Slider:UpdateColours(tSkin)
+function PANEL:UpdateColours( tSkin )
+	if( self.Slider.UpdateColours ) then
+		self.Slider:UpdateColours( tSkin )
 	end; local tBut = self.Array
-	if ( tBut and tBut.Size > 0 ) then
-		for iD = 1, self.Array.Size do pBut = self.Array[iD]
-			if ( pBut.UpdateColours ) then
-				pBut:UpdateColours( tSkin )
-			end
-		end
+	if ( not tBut ) then return self end
+	if ( not tBut.Size ) then return self end
+	if ( tBut.Size <= 0 ) then return self end
+	for iD = 1, tBut.Size do pBut = tBut[ iD ]
+		if( pBut.UpdateColours ) then pBut:UpdateColours( tSkin ) end
 	end
 end
 
@@ -211,9 +213,9 @@ function PANEL:ApplySchemeSettings()
 	if ( not tBut.Size ) then return self end
 	if ( tBut.Size <= 0 ) then return self end
 	for iD = 1, tBut.Size do
-		local vBut = tBut[iD]
-		if ( vBut.ApplySchemeSettings ) then
-			vBut:ApplySchemeSettings() end
+		local pBut = tBut[iD]
+		if ( pBut.ApplySchemeSettings ) then
+			pBut:ApplySchemeSettings() end
 	end; return self
 end
 
