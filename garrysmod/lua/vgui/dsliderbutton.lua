@@ -27,13 +27,27 @@ function PANEL:IsAutoResize( bR )
 	end; return self.bAutoResz
 end
 
-function PANEL:SetPadding( eX, eY, eM )
-	local iX = ( tonumber( eX ) or 2 )
-	if ( iX >= 0 ) then self.PDX = iX end
-	local iY = ( tonumber( eY ) or 2 )
-	if ( iY >= 0 ) then self.PDY = iY end
-	local iM = ( tonumber( eM ) or 2 )
-	if ( iM >= 0 ) then self.PDM = iM end
+function PANEL:SetTall( nP, nS, nB )
+  local nP = tonumber( nP )
+  local nS = tonumber( nS )
+  local nB = tonumber( nB )
+	if ( nP ) then self.SPY = nP end
+	if ( nS ) then self.SSY = nS end
+	if ( nB ) then self.SBY = nB end
+	return self
+end
+
+function PANEL:GetTall()
+	return self.SPY, self.SSY, self.SBY
+end
+
+function PANEL:SetPadding( nX, nY, nM )
+  local nX = tonumber( nX )
+  local nY = tonumber( nY )
+  local nM = tonumber( nM )
+	if ( nX ) then self.PDX = nX end
+	if ( nY ) then self.PDY = nY end
+	if ( nM ) then self.PDM = nM end
 	return self
 end
 
@@ -42,10 +56,10 @@ function PANEL:GetPadding()
 end
 
 function PANEL:SetDelta( eX, eY )
-	local iX = ( tonumber( eX ) or 2 )
-	if ( iX >= 0 ) then self.EDX = iX end
-	local iY = ( tonumber( eY ) or 2 )
-	if ( iY >= 0 ) then self.EDY = iY end
+  local eX = tonumber( eX )
+  local eY = tonumber( eY )
+	if ( eX ) then self.EDX = eX end
+	if ( eY ) then self.EDY = eY end
 	return self
 end
 
@@ -76,17 +90,6 @@ function PANEL:Configure( nMin, nMax, nDef, iDig )
 	if ( iDig ~= nil ) then self.Slider:SetDecimals( iDig ) end
 	if ( nDef ~= nil ) then self.Slider:SetDefaultValue( nDef ) end
 	self.Slider:UpdateNotches(); return self
-end
-
-function PANEL:SetTall( nP, nS, nB )
-	if ( nP ) then self.SPY = nP end
-	if ( nS ) then self.SSY = nS end
-	if ( nB ) then self.SBY = nB end
-	return self
-end
-
-function PANEL:GetTall()
-	return self.SPY, self.SSY, self.SBY
 end
 
 function PANEL:SetWide( vW )
