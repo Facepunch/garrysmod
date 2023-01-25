@@ -159,11 +159,11 @@ color_transparent	= Color( 255, 255, 255, 0 )
 	Includes the file - and adds it so the CS file list
 -----------------------------------------------------------]]
 function IncludeCS( filename )
-	include( filename )
-
 	if ( SERVER ) then
 		AddCSLuaFile( filename )
 	end
+	
+	return include( filename )
 end
 
 -- Globals
