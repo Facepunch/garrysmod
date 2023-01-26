@@ -241,6 +241,12 @@ function math.Factorial( num )
 		return 1
 	end
 
-	return ( num * math.Factorial( num - 1 ) )	
+	local res = 1
+
+	for i = 2, num do
+		res = res * i
+	end
+
+	return res
 	
 end
