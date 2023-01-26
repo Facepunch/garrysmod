@@ -369,12 +369,7 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 
 	-- Don't let them spawn this entity if it isn't in our NPC Spawn list.
 	-- We don't want them spawning any entity they like!
-	if ( !NPCData ) then
-		if ( IsValid( ply ) ) then
-			ply:SendLua( "Derma_Message( \"Sorry! You can't spawn that NPC!\" )" )
-		end
-		return
-	end
+	if ( !NPCData ) then return end
 
 	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) || game.SinglePlayer()
 	if ( NPCData.AdminOnly && !isAdmin ) then return end

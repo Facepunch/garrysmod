@@ -219,14 +219,14 @@ function ENT:FindSpots( tbl )
 	local found = {}
 
 	-- In each area
-	for _, area in pairs( areas ) do
+	for _, area in ipairs( areas ) do
 
 		-- get the spots
 		local spots
 
 		if ( tbl.type == 'hiding' ) then spots = area:GetHidingSpots() end
 
-		for k, vec in pairs( spots ) do
+		for k, vec in ipairs( spots ) do
 
 			-- Work out the length, and add them to a table
 			path:Invalidate()

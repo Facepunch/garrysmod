@@ -63,6 +63,10 @@ function ENT:GetOverlayText()
 
 	local PlayerName = self:GetPlayerName()
 
+	if ( !PlayerName or PlayerName == "" ) then
+		return txt
+	end
+
 	return txt .. "\n(" .. PlayerName .. ")"
 
 end
@@ -135,6 +139,6 @@ function ENT:GetPlayerName()
 		return ply:Nick()
 	end
 
-	return self:GetNWString( "FounderName" )
+	return self:GetNWString( "FounderName", "" )
 
 end

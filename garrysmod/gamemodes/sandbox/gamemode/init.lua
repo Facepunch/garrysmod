@@ -67,7 +67,7 @@ function GM:OnPhysgunReload( weapon, ply )
 	local num = ply:PhysgunUnfreeze()
 
 	if ( num > 0 ) then
-		ply:SendLua( "GAMEMODE:UnfrozeObjects(" .. num .. ")" )
+		ply:SendLua( string.format( "GAMEMODE:UnfrozeObjects(%d)", num ) )
 	end
 
 	ply:SuppressHint( "PhysgunUnfreeze" )

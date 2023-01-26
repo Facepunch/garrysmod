@@ -92,7 +92,7 @@ end
 
 function meta:LimitHit( str )
 
-	self:SendLua( 'hook.Run("LimitHit","' .. str .. '")' )
+	self:SendLua( string.format( 'hook.Run("LimitHit",%q)', str ) )
 
 end
 
@@ -121,7 +121,7 @@ if ( SERVER ) then
 		self.Hints = self.Hints or {}
 		if ( self.Hints[ str ] ) then return end
 
-		self:SendLua( 'hook.Run("AddHint","' .. str .. '","' .. delay .. '")' )
+		self:SendLua( string.format( 'hook.Run("AddHint",%q,%d)', str, delay ) )
 		self.Hints[ str ] = true
 
 	end
@@ -131,7 +131,7 @@ if ( SERVER ) then
 		self.Hints = self.Hints or {}
 		if ( self.Hints[ str ] ) then return end
 
-		self:SendLua( 'hook.Run("SuppressHint","' .. str .. '")' )
+		self:SendLua( string.format( 'hook.Run("SuppressHint",%q)', str ) )
 		self.Hints[ str ] = true
 
 	end
@@ -141,7 +141,7 @@ else
 	function meta:GetTool( mode )
 
 		local wep
-		for _, ent in pairs( ents.FindByClass( "gmod_tool" ) ) do
+		for _, ent in ipairs( ents.FindByClass( "gmod_tool" ) ) do
 			if ( ent:GetOwner() == self ) then wep = ent break end
 		end
 		if ( !IsValid( wep ) || !wep.GetToolObject ) then return nil end

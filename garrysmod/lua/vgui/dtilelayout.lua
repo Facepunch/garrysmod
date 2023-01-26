@@ -126,7 +126,7 @@ function PANEL:LayoutTiles()
 
 	self:ClearTiles()
 
-	for k, v in pairs( self:GetChildren() ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		if ( !v:IsVisible() ) then continue end
 
@@ -229,7 +229,7 @@ end
 
 function PANEL:CopyContents( from )
 
-	for k, v in pairs( from:GetChildren() ) do
+	for k, v in ipairs( from:GetChildren() ) do
 
 		v:Copy():SetParent( self )
 

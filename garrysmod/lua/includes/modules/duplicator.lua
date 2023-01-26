@@ -954,7 +954,7 @@ end
 --
 function RemoveMapCreatedEntities()
 
-	for k, v in pairs( ents.GetAll() ) do
+	for k, v in ipairs( ents.GetAll() ) do
 
 		if ( v:CreatedByMap() && ShouldMapEntityBeRemoved( v, v:GetClass() ) ) then
 			v:Remove()

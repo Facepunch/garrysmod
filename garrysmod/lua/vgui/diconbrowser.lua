@@ -8,7 +8,7 @@ function PANEL:SelectIcon( name )
 
 	self.m_strSelectedIcon = name
 
-	for k, v in pairs( self.IconLayout:GetChildren() ) do
+	for k, v in ipairs( self.IconLayout:GetChildren() ) do
 
 		if ( v:GetImage() == name ) then
 			self.m_pSelectedIcon = v
@@ -105,7 +105,7 @@ function PANEL:FilterByText( text )
 
 	local text = string.lower( text )
 
-	for k, v in pairs( self.IconLayout:GetChildren() ) do
+	for k, v in ipairs( self.IconLayout:GetChildren() ) do
 
 		v:SetVisible( v.FilterText:find( text ) != nil )
 

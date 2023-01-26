@@ -196,7 +196,7 @@ function SWEP:FireAnimationEvent( pos, ang, event, options )
 
 		local data = EffectData()
 		data:SetFlags( 0 )
-		data:SetEntity( self.Owner:GetViewModel() )
+		data:SetEntity( self:GetOwner():GetViewModel() )
 		data:SetAttachment( math.floor( ( event - 4991 ) / 10 ) )
 		data:SetScale( 1 )
 
