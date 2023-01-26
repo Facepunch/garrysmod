@@ -139,6 +139,6 @@ function ENT:GetPlayerName()
 		return ply:Nick()
 	end
 
-	return self:GetNWString( "FounderName" )
+	return self:GetNWString( "FounderName", "" )
 
 end
