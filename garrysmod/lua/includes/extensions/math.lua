@@ -241,6 +241,6 @@ function math.Factorial( num )
 		return 1
 	end
 
-	return ( num * math.Factorial(num - 1) )	
+	return ( num * math.Factorial( num - 1 ) )	
 	
 end
