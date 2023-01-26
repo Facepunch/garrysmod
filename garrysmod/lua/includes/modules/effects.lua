@@ -1,5 +1,6 @@
 local ents = ents
 local pairs = pairs
+local ipairs = ipairs
 local string = string
 local table = table
 
