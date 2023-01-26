@@ -251,9 +251,9 @@ function MarkupObject:Draw( xOffset, yOffset, halign, valign, alphaoverride, tex
 			local lineWidth = self.lineWidths[ blk.offset.y ]
 			if ( lineWidth ) then
 				if ( textAlign == TEXT_ALIGN_CENTER ) then
-					surface.SetTextPos( x + ( ( self.totalWidth - lineWidth ) / 2 ), y )
+					surface.SetTextPos( x + ( ( self:GetMaxWidth() - lineWidth ) / 2 ), y )
 				elseif ( textAlign == TEXT_ALIGN_RIGHT ) then
-					surface.SetTextPos( x + ( self.totalWidth - lineWidth ), y )
+					surface.SetTextPos( x + ( self:GetMaxWidth() - lineWidth ), y )
 				end
 			end
 		end
