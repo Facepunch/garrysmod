@@ -232,7 +232,7 @@ function math.SnapTo( num, multiple )
 	return math.floor( num / multiple + 0.5 ) * multiple
 end
 
--- Calculate the factorial value of num recursively
+-- Calculate the factorial value of num
 function math.Factorial( num )
 
 	if ( num < 0 ) then
