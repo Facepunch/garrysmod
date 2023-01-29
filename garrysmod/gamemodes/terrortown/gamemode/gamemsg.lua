@@ -235,7 +235,20 @@ local function TraitorGlobalVoice(ply, cmd, args)
 end
 concommand.Add("tvog", TraitorGlobalVoice)
 
+-- from shared.lua
+-- MUTE_NONE = 0
+-- MUTE_TERROR = 1
+-- MUTE_ALL = 2
+-- MUTE_SPEC = 1002
+local MuteModes = {
+   [0] = "mute_off",
+   [1] = "mute_living",
+   [2] = "mute_all",
+   [1002] = "mute_specs"
+}
+
 local function MuteTeam(ply, cmd, args)
+
    if not IsValid(ply) then return end
    if not (#args == 1 and tonumber(args[1])) then return end
    if not ply:IsSpec() then
@@ -246,13 +259,9 @@ local function MuteTeam(ply, cmd, args)
    local t = tonumber(args[1])
    ply.mute_team = t
 
-   if t == MUTE_ALL then
-      ply:ChatPrint("All muted.")
-   elseif t == MUTE_NONE or t == TEAM_UNASSIGNED or not team.Valid(t) then
-      ply:ChatPrint("None muted.")
-   else
-      ply:ChatPrint(team.GetName(t) .. " muted.")
-   end
+   -- We have actual translated messages for this now. 
+   -- So much for ifs and hardcodes. This is way better
+   LANG.Msg(ply, MuteModes[t])
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 

@@ -6,13 +6,14 @@ ENT.Base = "ttt_basegrenade_proj"
 ENT.Model = Model("models/weapons/w_eq_fraggrenade_thrown.mdl")
 
 local ttt_allow_jump = CreateConVar("ttt_allow_discomb_jump", "0")
-
-local function PushPullRadius(pos, pusher)
+ 
+local function PushRadius(pos, pusher)
    local radius = 400
    local phys_force = 1500
-   local push_force = 256
-
-   -- pull physics objects and push players
+   -- just a bit stronger to have a better feeling, combined with the new effect
+   local push_force = 300
+ 
+   -- only push stuff away, players and props
    for k, target in ipairs(ents.FindInSphere(pos, radius)) do
       if IsValid(target) then
          local tpos = target:LocalToWorld(target:OBBCenter())
@@ -42,12 +43,15 @@ local function PushPullRadius(pos, pusher)
             target.was_pushed = {att=pusher, t=CurTime(), wep="weapon_ttt_confgrenade"}
 
          elseif IsValid(phys) then
-            phys:ApplyForceCenter(dir * -1 * phys_force)
+            -- only push stuff away, but not that much, unlike players,
+            -- which will have a bit of upwards force
+            phys:ApplyForceCenter(dir * phys_force)
          end
       end
    end
 
-   local phexp = ents.Create("env_physexplosion")
+   -- change this effect to be more interesting
+   local phexp = ents.Create("prop_combine_ball")
    if IsValid(phexp) then
       phexp:SetPos(pos)
       phexp:SetKeyValue("magnitude", 100) --max
@@ -59,7 +63,6 @@ local function PushPullRadius(pos, pusher)
    end
 end
 
-local zapsound = Sound("npc/assassin/ball_zap1.wav")
 function ENT:Explode(tr)
    if SERVER then
       self:SetNoDraw(true)
@@ -75,7 +78,7 @@ function ENT:Explode(tr)
       -- make sure we are removed, even if errors occur later
       self:Remove()
 
-      PushPullRadius(pos, self:GetThrower())
+      PushRadius(pos, self:GetThrower())
 
       local effect = EffectData()
       effect:SetStart(pos)
@@ -88,7 +91,6 @@ function ENT:Explode(tr)
       util.Effect("Explosion", effect, true, true)
       util.Effect("cball_explode", effect, true, true)
 
-      sound.Play(zapsound, pos, 100, 100)
    else
       local spos = self:GetPos()
       local trs = util.TraceLine({start=spos + Vector(0,0,64), endpos=spos + Vector(0,0,-128), filter=self})

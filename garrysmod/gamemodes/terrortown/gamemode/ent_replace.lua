@@ -28,37 +28,73 @@ local function ReplaceSingle(ent, newname)
    ent:Remove()
 end
 
-local hl2_ammo_replace = {
-   ["item_ammo_pistol"] = "item_ammo_pistol_ttt",
-   ["item_box_buckshot"] = "item_box_buckshot_ttt",
-   ["item_ammo_smg1"] = "item_ammo_smg1_ttt",
-   ["item_ammo_357"] = "item_ammo_357_ttt",
-   ["item_ammo_357_large"] = "item_ammo_357_ttt",
-   ["item_ammo_revolver"] = "item_ammo_revolver_ttt", -- zm
-   ["item_ammo_ar2"] = "item_ammo_pistol_ttt",
-   ["item_ammo_ar2_large"] = "item_ammo_smg1_ttt",
-   ["item_ammo_smg1_grenade"] = "weapon_zm_pistol",
-   ["item_battery"] = "item_ammo_357_ttt",
-   ["item_healthkit"] = "weapon_zm_shotgun",
-   ["item_suitcharger"] = "weapon_zm_mac10",
-   ["item_ammo_ar2_altfire"] = "weapon_zm_mac10",
-   ["item_rpg_round"] = "item_ammo_357_ttt",
-   ["item_ammo_crossbow"] = "item_box_buckshot_ttt",
-   ["item_healthvial"] = "weapon_zm_molotov",
-   ["item_healthcharger"] = "item_ammo_revolver_ttt",
-   ["item_ammo_crate"] = "weapon_ttt_confgrenade",
-   ["item_item_crate"] = "ttt_random_ammo"
-};
+local hl2_ents = {
+   item_ammo_pistol = true,
+   item_box_buckshot = true,
+   item_ammo_smg1 = true,
+   item_ammo_357 = true,
+   item_ammo_357_large = true,
+   item_ammo_revolver = true,
+   item_ammo_ar2 = true,
+   item_ammo_ar2_large = true,
+   item_ammo_smg1_grenade = true,
+   item_battery = true,
+   item_healthkit = true,
+   item_suitcharger = true,
+   item_ammo_ar2_altfire = true,
+   item_rpg_round = true,
+   item_ammo_crossbow = true,
+   item_healthvial = true,
+   item_healthcharger = true,
+   item_ammo_crate = true,
+   item_item_crate = true
+}
+
+local hl2_weapons = {
+   weapon_smg1 = true,
+   weapon_shotgun = true,
+   weapon_ar2 = true,
+   weapon_357 = true,
+   weapon_crossbow = true,
+   weapon_rpg = true,
+   weapon_slam = true,
+   weapon_frag = true,
+   weapon_crowbar = true
+}
+
+local ttt_ents = {
+   item_ammo_pistol_ttt = true,
+   item_box_buckshot_ttt = true,
+   item_ammo_smg1_ttt = true,
+   item_ammo_357_ttt = true,
+   item_ammo_revolver_ttt = true,
+   weapon_ttt_confgrenade = true,
+   weapon_ttt_smokegrenade = true,
+   weapon_zm_molotov = true,
+   ttt_random_ammo = true
+}
+
+local ttt_weapons = {
+   weapon_ttt_glock = true,
+   weapon_ttt_m16 = true,
+   weapon_zm_mac10 = true,
+   weapon_zm_pistol = true,
+   weapon_zm_rifle = true,
+   weapon_zm_shotgun = true,
+   weapon_zm_revolver = true,
+   weapon_zm_sledge = true
+}
 
 -- Replace an ammo entity with the TTT version
 -- Optional cls param is the classname, if the caller already has it handy
 local function ReplaceAmmoSingle(ent, cls)
    if cls == nil then cls = ent:GetClass() end
-
-   local rpl = hl2_ammo_replace[cls]
-   if rpl then
-      ReplaceSingle(ent, rpl)
-   end
+   
+   -- refactor that hardcoded stuff and add support for all of TTT's ents
+   -- and abuse of some table good practices
+   if !hl2_ents[cls] then return end
+   
+   ReplaceSingle(ent, ttt_ents[ math.random( #ttt_ents ) ])
 end
 
 local function ReplaceAmmo()
@@ -66,18 +102,6 @@ local function ReplaceAmmo()
       ReplaceAmmoSingle(ent)
    end
 end
-
-local hl2_weapon_replace = {
-   ["weapon_smg1"] = "weapon_zm_mac10",
-   ["weapon_shotgun"] = "weapon_zm_shotgun",
-   ["weapon_ar2"] = "weapon_ttt_m16",
-   ["weapon_357"] = "weapon_zm_rifle",
-   ["weapon_crossbow"] = "weapon_zm_pistol",
-   ["weapon_rpg"] = "weapon_zm_sledge",
-   ["weapon_slam"] = "item_ammo_pistol_ttt",
-   ["weapon_frag"] = "weapon_zm_revolver",
-   ["weapon_crowbar"] = "weapon_zm_molotov"
-};
 
 local function ReplaceWeaponSingle(ent, cls)
    -- Loadout weapons immune
@@ -87,10 +111,10 @@ local function ReplaceWeaponSingle(ent, cls)
    else
       if cls == nil then cls = ent:GetClass() end
 
-      local rpl = hl2_weapon_replace[cls]
-      if rpl then
-         ReplaceSingle(ent, rpl)
-      end
+      -- and also weapons
+      if !hl2_weapons[cls] then return end
+      
+      ReplaceSingle(ent, ttt_weapons[ math.random( #ttt_weapons ) ])
 
    end
 end
