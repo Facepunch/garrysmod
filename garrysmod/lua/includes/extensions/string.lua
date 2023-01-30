@@ -5,8 +5,11 @@ local math = math
 --[[---------------------------------------------------------
 	Name: string.ToTable( string )
 -----------------------------------------------------------]]
-function string.ToTable( str )
+function string.ToTable( input )
 	local tbl = {}
+
+	-- For numbers, as some addons do this..
+	local str = tostring( input )
 
 	for i = 1, #str do
 		tbl[i] = string.sub( str, i, i )
@@ -14,6 +17,7 @@ function string.ToTable( str )
 
 	return tbl
 end
+
 
 --[[---------------------------------------------------------
 	Name: string.JavascriptSafe( string )
