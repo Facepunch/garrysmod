@@ -3,9 +3,9 @@ local string_lower = string.lower
 local Msg = Msg
 
 --[[---------------------------------------------------------
-	Name: concommand
-	Desc: A module to take care of the registration and calling
-		of Lua console commands.
+   Name: concommand
+   Desc: A module to take care of the registration and calling
+         of Lua console commands.
 -----------------------------------------------------------]]
 module( "concommand" )
 
@@ -13,24 +13,24 @@ local commandList = {}
 local completeList = {}
 
 --[[---------------------------------------------------------
-	Name: concommand.GetTable( )
-	Desc: Returns the table of console commands and auto complete
+   Name: concommand.GetTable( )
+   Desc: Returns the table of console commands and auto complete
 -----------------------------------------------------------]]
 function GetTable()
 	return commandList, completeList
 end
 
 --[[---------------------------------------------------------
-	Name: concommand.Exists( name )
-	Desc: Returns true if concommand exists
+   Name: concommand.Exists( name )
+   Desc: Returns true if concommand exists
 -----------------------------------------------------------]]
 function Exists( name )
 	return commandList[ string_lower( name ) ] != nil
 end
 
 --[[---------------------------------------------------------
-	Name: concommand.Add( name, func, completefunc )
-	Desc: Register a new console command
+   Name: concommand.Add( name, func, completefunc )
+   Desc: Register a new console command
 -----------------------------------------------------------]]
 function Add( name, func, completefunc, help, flags )
 	local LowerName = string_lower( name )
@@ -40,8 +40,8 @@ function Add( name, func, completefunc, help, flags )
 end
 
 --[[---------------------------------------------------------
-	Name: concommand.Remove( name )
-	Desc: Removes a console command
+   Name: concommand.Remove( name )
+   Desc: Removes a console command
 -----------------------------------------------------------]]
 function Remove( name )
 	local LowerName = string_lower( name )
@@ -50,8 +50,8 @@ function Remove( name )
 end
 
 --[[---------------------------------------------------------
-	Name: concommand.Run( )
-	Desc: Called by the engine when an unknown console command is run
+   Name: concommand.Run( )
+   Desc: Called by the engine when an unknown console command is run
 -----------------------------------------------------------]]
 function Run( ply, command, arguments, argumentsString )
 	local lowerCommand = string_lower( command )
@@ -65,8 +65,8 @@ function Run( ply, command, arguments, argumentsString )
 end
 
 --[[---------------------------------------------------------
-	Name: concommand.AutoComplete( )
-	Desc: Returns a table for the autocompletion
+   Name: concommand.AutoComplete( )
+   Desc: Returns a table for the autocompletion
 -----------------------------------------------------------]]
 function AutoComplete( command, arguments )
 	local lowerCommand = string_lower( command )
