@@ -1,75 +1,76 @@
-
 local AddConsoleCommand = AddConsoleCommand
-local string = string
+local string_lower = string.lower
 local Msg = Msg
 
 --[[---------------------------------------------------------
-   Name: concommand
-   Desc: A module to take care of the registration and calling
-         of Lua console commands.
+	Name: concommand
+	Desc: A module to take care of the registration and calling
+		of Lua console commands.
 -----------------------------------------------------------]]
 module( "concommand" )
 
-local CommandList = {}
-local CompleteList = {}
+local commandList = {}
+local completeList = {}
 
 --[[---------------------------------------------------------
-   Name: concommand.GetTable( )
-   Desc: Returns the table of console commands and auto complete
+	Name: concommand.GetTable( )
+	Desc: Returns the table of console commands and auto complete
 -----------------------------------------------------------]]
 function GetTable()
-	return CommandList, CompleteList
+	return commandList, completeList
 end
 
 --[[---------------------------------------------------------
-   Name: concommand.Add( name, func, completefunc )
-   Desc: Register a new console command
+	Name: concommand.Exists( name )
+	Desc: Returns true if concommand exists
+-----------------------------------------------------------]]
+function Exists( name )
+	return commandList[ string_lower( name ) ] != nil
+end
+
+--[[---------------------------------------------------------
+	Name: concommand.Add( name, func, completefunc )
+	Desc: Register a new console command
 -----------------------------------------------------------]]
 function Add( name, func, completefunc, help, flags )
-	local LowerName = string.lower( name )
-	CommandList[ LowerName ] = func
-	CompleteList[ LowerName ] = completefunc
+	local LowerName = string_lower( name )
+	commandList[ LowerName ] = func
+	completeList[ LowerName ] = completefunc
 	AddConsoleCommand( name, help, flags )
 end
 
 --[[---------------------------------------------------------
-   Name: concommand.Remove( name )
-   Desc: Removes a console command
+	Name: concommand.Remove( name )
+	Desc: Removes a console command
 -----------------------------------------------------------]]
 function Remove( name )
-	local LowerName = string.lower( name )
-	CommandList[ LowerName ] = nil
-	CompleteList[ LowerName ] = nil
+	local LowerName = string_lower( name )
+	commandList[ LowerName ] = nil
+	completeList[ LowerName ] = nil
 end
 
 --[[---------------------------------------------------------
-   Name: concommand.Run( )
-   Desc: Called by the engine when an unknown console command is run
+	Name: concommand.Run( )
+	Desc: Called by the engine when an unknown console command is run
 -----------------------------------------------------------]]
-function Run( player, command, arguments, args )
-
-	local LowerCommand = string.lower( command )
-
-	if ( CommandList[ LowerCommand ] != nil ) then
-		CommandList[ LowerCommand ]( player, command, arguments, args )
+function Run( ply, command, arguments, argumentsString )
+	local lowerCommand = string_lower( command )
+	if (commandList[ lowerCommand ] != nil) then
+		commandList[ lowerCommand ]( ply, command, arguments, argumentsString )
 		return true
 	end
 
 	Msg( "Unknown command: " .. command .. "\n" )
-
 	return false
 end
 
 --[[---------------------------------------------------------
-   Name: concommand.AutoComplete( )
-   Desc: Returns a table for the autocompletion
+	Name: concommand.AutoComplete( )
+	Desc: Returns a table for the autocompletion
 -----------------------------------------------------------]]
 function AutoComplete( command, arguments )
-
-	local LowerCommand = string.lower( command )
-
-	if ( CompleteList[ LowerCommand ] != nil ) then
-		return CompleteList[ LowerCommand ]( command, arguments )
+	local lowerCommand = string_lower( command )
+	if (completeList[ lowerCommand ] != nil) then
+		return completeList[ lowerCommand ]( command, arguments )
 	end
-
 end
