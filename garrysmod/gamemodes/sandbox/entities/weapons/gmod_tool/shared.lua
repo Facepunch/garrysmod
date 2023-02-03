@@ -303,6 +303,8 @@ function SWEP:Holster()
 	-- the extra Think call after calling Player:SelectWeapon in multiplayer
 	if ( CLIENT && CanHolster == true ) then self.m_uHolsterFrame = FrameNumber() end
 
+	if ( CanHolster == true and toolobj ) then toolobj:ReleaseGhostEntity() end
+
 	return CanHolster
 
 end
