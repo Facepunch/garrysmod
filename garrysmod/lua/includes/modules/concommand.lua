@@ -1,6 +1,6 @@
 
 local AddConsoleCommand = AddConsoleCommand
-local string = string
+local string_lower = string.lower
 local Msg = Msg
 
 --[[---------------------------------------------------------
@@ -22,11 +22,19 @@ function GetTable()
 end
 
 --[[---------------------------------------------------------
+   Name: concommand.Exists( name )
+   Desc: Returns true if concommand exists
+-----------------------------------------------------------]]
+function Exists( name )
+	return commandList[ string_lower( name ) ] != nil
+end
+
+--[[---------------------------------------------------------
    Name: concommand.Add( name, func, completefunc )
    Desc: Register a new console command
 -----------------------------------------------------------]]
 function Add( name, func, completefunc, help, flags )
-	local LowerName = string.lower( name )
+	local LowerName = string_lower( name )
 	CommandList[ LowerName ] = func
 	CompleteList[ LowerName ] = completefunc
 	AddConsoleCommand( name, help, flags )
@@ -37,7 +45,7 @@ end
    Desc: Removes a console command
 -----------------------------------------------------------]]
 function Remove( name )
-	local LowerName = string.lower( name )
+	local LowerName = string_lower( name )
 	CommandList[ LowerName ] = nil
 	CompleteList[ LowerName ] = nil
 end
@@ -46,12 +54,13 @@ end
    Name: concommand.Run( )
    Desc: Called by the engine when an unknown console command is run
 -----------------------------------------------------------]]
-function Run( player, command, arguments, args )
+function Run( ply, command, arguments, args )
 
-	local LowerCommand = string.lower( command )
+	local LowerCommand = string_lower( command )
 
-	if ( CommandList[ LowerCommand ] != nil ) then
-		CommandList[ LowerCommand ]( player, command, arguments, args )
+	local func = CommandList[ LowerCommand ]
+	if ( func != nil ) then
+		func( ply, command, arguments, args )
 		return true
 	end
 
@@ -66,10 +75,11 @@ end
 -----------------------------------------------------------]]
 function AutoComplete( command, arguments )
 
-	local LowerCommand = string.lower( command )
+	local LowerCommand = string_lower( command )
 
-	if ( CompleteList[ LowerCommand ] != nil ) then
-		return CompleteList[ LowerCommand ]( command, arguments )
+	local func = CompleteList[ LowerCommand ]
+	if ( func != nil ) then
+		return func( command, arguments )
 	end
 
 end
