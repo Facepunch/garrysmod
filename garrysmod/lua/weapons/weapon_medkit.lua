@@ -18,12 +18,12 @@ SWEP.UseHands = true
 SWEP.Primary.ClipSize = 100
 SWEP.Primary.DefaultClip = 100
 SWEP.Primary.Automatic = false
-SWEP.Primary.Ammo = "none"
+SWEP.Primary.Ammo = ""
 
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
-SWEP.Secondary.Ammo = "none"
+SWEP.Secondary.Ammo = ""
 
 SWEP.HoldType = "slam"
 
@@ -108,7 +108,7 @@ end
 function SWEP:HealEntity( ent, amount )
 
 	-- Heal ent
-	self:TakePrimaryAmmo( amount )
+	self:SetClip1( math.min( self:GetClip1() - amount, 0 ) )
 	ent:SetHealth( ent:Health() + amount )
 
 	-- Do effects
@@ -169,9 +169,8 @@ function SWEP:Think()
 
 		if ( clip1 < maxammo ) then
 			self:SetClip1( math.min( clip1 + self.AmmoRegenAmount, maxammo ) )
+			self:SetNextAmmoRegen( curtime + self.AmmoRegenFrequency )
 		end
-
-		self:SetNextAmmoRegen( curtime + self.AmmoRegenFrequency )
 	end
 
 	if ( curtime >= self:GetNextIdle() ) then
