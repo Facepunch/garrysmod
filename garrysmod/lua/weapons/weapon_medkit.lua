@@ -181,6 +181,9 @@ function SWEP:Think()
 
 end
 
+function SWEP:Reload()
+end
+
 if ( CLIENT ) then
 	function SWEP:CustomAmmoDisplay()
 
