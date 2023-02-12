@@ -259,6 +259,14 @@ function SWEP:Ammo2()
 end
 
 --[[---------------------------------------------------------
+	Name: GetDeploySpeed
+	Desc: Gets the weapon deploy speed.
+-----------------------------------------------------------]]
+function SWEP:GetDeploySpeed()
+	return self.m_WeaponDeploySpeed or 1
+end
+
+--[[---------------------------------------------------------
 	Name: SetDeploySpeed
 	Desc: Sets the weapon deploy speed.
 		 This value needs to match on client and server.
