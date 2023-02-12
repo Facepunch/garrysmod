@@ -108,7 +108,7 @@ end
 function SWEP:HealEntity( ent, amount )
 
 	-- Heal ent
-	self:SetClip1( math.min( self:GetClip1() - amount, 0 ) )
+	self:SetClip1( math.max( self:Clip1() - amount, 0 ) )
 	ent:SetHealth( ent:Health() + amount )
 
 	-- Do effects
@@ -121,10 +121,16 @@ function SWEP:HealEntity( ent, amount )
 		owner:SetAnimation( PLAYER_ATTACK1 )
 	end
 
-	local endtime = CurTime() + self:SequenceDuration()
+	local curtime = CurTime()
+
+	-- Set next regen time
+	self:SetNextAmmoRegen( curtime + self.AmmoRegenFrequency )
+
+	-- Set next idle time
+	local endtime = curtime + self:SequenceDuration()
 	self:SetNextIdle( endtime )
 
-	-- Setup next firing time
+	-- Set next firing time
 	endtime = endtime + self.HealCooldown
 	self:SetNextPrimaryFire( endtime )
 	self:SetNextSecondaryFire( endtime )
