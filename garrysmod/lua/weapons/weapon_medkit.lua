@@ -109,7 +109,7 @@ function SWEP:HealEntity( ent, amount )
 
 	-- Heal ent
 	self:TakePrimaryAmmo( amount )
-	ent:SetHealth( ent:GetHealth() + amount )
+	ent:SetHealth( ent:Health() + amount )
 
 	-- Do effects
 	self:EmitSound( self.HealSound )
