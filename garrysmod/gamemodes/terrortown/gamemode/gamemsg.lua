@@ -235,16 +235,11 @@ local function TraitorGlobalVoice(ply, cmd, args)
 end
 concommand.Add("tvog", TraitorGlobalVoice)
 
--- from shared.lua
--- MUTE_NONE = 0
--- MUTE_TERROR = 1
--- MUTE_ALL = 2
--- MUTE_SPEC = 1002
 local MuteModes = {
-   [0] = "mute_off",
-   [1] = "mute_living",
-   [2] = "mute_all",
-   [1002] = "mute_specs"
+   [MUTE_NONE] = "mute_off",
+   [MUTE_TERROR] = "mute_living",
+   [MUTE_ALL] = "mute_all",
+   [MUTE_SPEC] = "mute_specs"
 }
 
 local function MuteTeam(ply, cmd, args)
