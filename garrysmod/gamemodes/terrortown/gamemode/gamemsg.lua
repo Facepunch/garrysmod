@@ -235,6 +235,13 @@ local function TraitorGlobalVoice(ply, cmd, args)
 end
 concommand.Add("tvog", TraitorGlobalVoice)
 
+local MuteModes = {
+   [MUTE_NONE] = "mute_off",
+   [MUTE_TERROR] = "mute_living",
+   [MUTE_ALL] = "mute_all",
+   [MUTE_SPEC] = "mute_specs"
+}
+
 local function MuteTeam(ply, cmd, args)
    if not IsValid(ply) then return end
    if not (#args == 1 and tonumber(args[1])) then return end
@@ -246,13 +253,9 @@ local function MuteTeam(ply, cmd, args)
    local t = tonumber(args[1])
    ply.mute_team = t
 
-   if t == MUTE_ALL then
-      ply:ChatPrint("All muted.")
-   elseif t == MUTE_NONE or t == TEAM_UNASSIGNED or not team.Valid(t) then
-      ply:ChatPrint("None muted.")
-   else
-      ply:ChatPrint(team.GetName(t) .. " muted.")
-   end
+   -- remove all ifs
+   LANG.Msg(ply, MuteModes[t])
+   
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 

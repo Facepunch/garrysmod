@@ -337,7 +337,11 @@ local styledmessages = {
    chat_plain = {
       "body_call",
       "disg_turned_on",
-      "disg_turned_off"
+      "disg_turned_off",
+      "mute_all",
+      "mute_off",
+      "mute_specs",
+      "mute_living"
    },
 
    chat_warn = {
