@@ -150,7 +150,7 @@ end
 
 hook.Add( "PostDrawEffects", "RenderHalos", function()
 
-	if hook.Run( "PreDrawHalos" ) == false then return end
+	if ( hook.Run( "PreDrawHalos" ) == false ) then return end
 
 	if ( #List == 0 ) then return end
 
