@@ -195,7 +195,7 @@ if ( CLIENT ) then
 		local display = self.AmmoDisplay
 		display.PrimaryClip = self:Clip1()
 
-		return self.AmmoDisplay
+		return display
 
 	end
 end
