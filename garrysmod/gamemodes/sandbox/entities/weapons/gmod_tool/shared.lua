@@ -349,7 +349,7 @@ function SWEP:GetToolObject( tool )
 
 	if ( !mode ) then
 		local owner = self:GetOwner()
-		if ( IsValid( owner ) and owner:IsPlayer() ) then
+		if ( IsValid( owner ) and owner:IsPlayer() and ( SERVER or owner == LocalPlayer() ) ) then
 			mode = owner:GetInfo( "gmod_toolmode" )
 		end
 	end
