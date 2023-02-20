@@ -34,7 +34,7 @@ function ents.FindFirstClass( classname )
 
 	if type(classname) ~= "string" then return end
 	
-	for _, v in ipairs( ents.FindByClass( classname ) do
+	for _, v in ipairs( ents.FindByClass( classname ) ) do
 		return v
 	end
 
@@ -50,7 +50,7 @@ function ents.FindFirstModel( model )
 
 	if type(model) ~= "string" then return end
 	
-	for _, v in ipairs( ents.FindByModel( model ) do
+	for _, v in ipairs( ents.FindByModel( model ) ) do
 		return v
 	end
 
