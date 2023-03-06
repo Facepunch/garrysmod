@@ -303,6 +303,8 @@ function SWEP:Holster()
 	-- the extra Think call after calling Player:SelectWeapon in multiplayer
 	if ( CLIENT && CanHolster == true ) then self.m_uHolsterFrame = FrameNumber() end
 
+	if ( CanHolster == true and toolobj ) then toolobj:ReleaseGhostEntity() end
+
 	return CanHolster
 
 end
@@ -347,7 +349,7 @@ function SWEP:GetToolObject( tool )
 
 	if ( !mode ) then
 		local owner = self:GetOwner()
-		if ( IsValid( owner ) and owner:IsPlayer() ) then
+		if ( IsValid( owner ) and owner:IsPlayer() and ( SERVER or owner == LocalPlayer() ) ) then
 			mode = owner:GetInfo( "gmod_toolmode" )
 		end
 	end

@@ -126,8 +126,10 @@ end
 
 function SWEP:OnRemove()
 
-	timer.Stop( "medkit_ammo" .. self:EntIndex() )
-	timer.Stop( "weapon_idle" .. self:EntIndex() )
+	if ( CLIENT ) then return end
+
+	timer.Remove( "medkit_ammo" .. self:EntIndex() )
+	timer.Remove( "weapon_idle" .. self:EntIndex() )
 
 end
 
