@@ -78,10 +78,10 @@ end
 	Name: Merge
 	Desc: xx
 -----------------------------------------------------------]]
-function table.Merge( dest, source )
+function table.Merge( dest, source, forceOverride )
 
 	for k, v in pairs( source ) do
-		if ( istable( v ) && istable( dest[ k ] ) ) then
+		if ( not forceOverride && istable( v ) && istable( dest[ k ] ) ) then
 			-- don't overwrite one table with another
 			-- instead merge them recurisvely
 			table.Merge( dest[ k ], v )
