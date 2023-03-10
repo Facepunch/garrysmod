@@ -74,11 +74,6 @@ function ENT:Think()
 
 			local size = self:GetLightSize()
 			local brght = self:GetBrightness()
-			-- Clamp for multiplayer
-			if ( !game.SinglePlayer() ) then
-				size = math.Clamp( size, 0, 1024 )
-				brght = math.Clamp( brght, 0, 6 )
-			end
 
 			dlight.Pos = self:GetPos()
 			dlight.r = c.r

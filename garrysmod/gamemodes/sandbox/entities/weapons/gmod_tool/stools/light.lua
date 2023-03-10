@@ -39,6 +39,12 @@ function TOOL:LeftClick( trace, attach )
 	local size = self:GetClientNumber( "size" )
 	local toggle = self:GetClientNumber( "toggle" ) != 1
 
+	-- Clamp for multiplayer
+	if ( !game.SinglePlayer() ) then
+		size = math.Clamp( size, 0, 1024 )
+		brght = math.Clamp( brght, 0, 6 )
+	end
+
 	local key = self:GetClientNumber( "key" )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_light" && trace.Entity:GetPlayer() == ply ) then
