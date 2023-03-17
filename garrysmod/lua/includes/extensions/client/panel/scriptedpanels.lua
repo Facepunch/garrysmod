@@ -12,8 +12,12 @@ baseclass.Set( "EditablePanel",		panel_metatable )
 -- Keep the old function
 vgui.CreateX = vgui.Create
 
-function vgui.GetControlTable( name )
-	return PanelFactory[ name ]
+function vgui.GetControlTable( classname )
+	return PanelFactory[ classname ]
+end
+
+function vgui.Exists( classname )
+	return PanelFactory[ classname ] != nil
 end
 
 function vgui.Create( classname, parent, name )
@@ -68,7 +72,7 @@ function vgui.CreateFromTable( metatable, parent, name )
 
 end
 
-function vgui.Register( name, mtable, base )
+function vgui.Register( classname, mtable, base )
 
 	-- Remove the global
 	PANEL = nil
@@ -77,8 +81,8 @@ function vgui.Register( name, mtable, base )
 	mtable.Base = base or "Panel"
 	mtable.Init = mtable.Init or function() end
 
-	PanelFactory[ name ] = mtable
-	baseclass.Set( name, mtable )
+	PanelFactory[ classname ] = mtable
+	baseclass.Set( classname, mtable )
 
 	local mt = {}
 	mt.__index = function( t, k )
