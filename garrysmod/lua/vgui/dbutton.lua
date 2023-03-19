@@ -102,6 +102,8 @@ function PANEL:PerformLayout( w, h )
 	--
 	if ( IsValid( self.m_Image ) ) then
 
+		self.m_Image:SetWide(math.min(self.m_Image:GetWide(), self:GetTall()-4))
+		self.m_Image:SetTall(math.min(self.m_Image:GetTall(), self:GetTall()-4))
 		self.m_Image:SetPos( 4, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
 
 		self:SetTextInset( self.m_Image:GetWide() + 16, 0 )
