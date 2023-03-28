@@ -489,7 +489,7 @@ SPAN.installgamemode:hover
 {
 	.server_gamemodes
 	{
-		margin: 0 auto;
+		margin: 0px;
 		width: 80%;
 		max-width: 1000px;
 	}
