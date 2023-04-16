@@ -339,19 +339,19 @@ function FormatVersion( ver )
 // Calculates the default server ranking
 function CalculateRank( server )
 {
-	var recommended = server.ping;
+	// Add some fuzzines/discoverability to the server list
+	var recommended = server.fuzziness;
+
+	// Give more popular servers a higher ranking, starting at more than 2 players
+	recommended -= Math.max(Math.log2(Math.min(server.players, 96) + 1) - 2, 0) * 10;
+
+	// Penalise very high pings, anything below 60 ping makes little difference
+	recommended += Math.max(server.ping, 60) / 2;
 
 	if ( server.players == 0 ) recommended += 75; // Server is empty
 	if ( server.players >= server.maxplayers ) recommended += 100; // Server is full, can't join it
 	if ( server.pass ) recommended += 300; // Password protected, can't join it
 	if ( server.isAnon ) recommended += 1000; // Anonymous server
-
-	// The first few bunches of players reduce the impact of the server's ping on the ranking a little
-	if ( server.players >= 4 ) recommended -= 10;
-	if ( server.players >= 8 ) recommended -= 15;
-	if ( server.players >= 16 ) recommended -= 15;
-	if ( server.players >= 32 ) recommended -= 10;
-	if ( server.players >= 64 ) recommended -= 10;
 
 	return recommended;
 }
@@ -423,6 +423,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 		botplayers:		parseInt( botplayers ),
 		pass:			pass == "1",
 		lastplayed:		parseInt( lastplayed ),
+		fuzziness:		Math.random() * 15,
 		address:		address,
 		flag: 			loc.toLowerCase(),
 		category: 		gmcat || "",
