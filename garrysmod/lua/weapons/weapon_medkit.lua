@@ -68,19 +68,12 @@ function SWEP:PrimaryAttack()
 		owner:LagCompensation( true )
 	end
 
-	local startpos, endpos = owner:GetShootPos(), owner:GetAimVector()
-	endpos:Mul( self.HealRange )
-	endpos:Add( startpos )
-
-	local tr = {
+	local startpos = owner:GetShootPos()
+	local tr = util.TraceLine( {
 		start = startpos,
-		endpos = endpos,
-		filter = owner,
-		output = nil
-	}
-	tr.output = tr -- Reuse our trace data table for our return data
-
-	util.TraceLine( tr )
+		endpos = startpos + owner:GetAimVector() * 64,
+		filter = owner
+	} )
 
 	if ( isplayer ) then
 		owner:LagCompensation( false )
@@ -189,13 +182,14 @@ end
 function SWEP:Reload()
 end
 
-if ( CLIENT ) then
-	function SWEP:CustomAmmoDisplay()
+-- The following code does not need to exist on the server, so bail
+if ( SERVER ) then return end
 
-		local display = self.AmmoDisplay
-		display.PrimaryClip = self:Clip1()
+function SWEP:CustomAmmoDisplay()
 
-		return display
+	local display = self.AmmoDisplay
+	display.PrimaryClip = self:Clip1()
 
-	end
+	return display
+
 end
