@@ -273,6 +273,6 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 
 	pnlLoading.JavascriptRun = string.format( 'if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s", "%s" );',
 		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe(),
-		GetConVarNumber( "volume" ), GetConVarString( "gmod_language" ), niceGamemode:JavascriptSafe() )
+		GetConVarNumber( "snd_musicvolume" ), GetConVarString( "gmod_language" ), niceGamemode:JavascriptSafe() )
 
 end
