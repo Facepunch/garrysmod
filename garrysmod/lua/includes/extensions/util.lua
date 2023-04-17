@@ -395,3 +395,21 @@ function util.IsBinaryModuleInstalled( name )
 
 	return false
 end
+
+function util.ScaleFOVByAspectRatio(fovDegrees, ratio)
+    local halfAngleRadians = fovDegrees * (0.5 * math.pi / 180.0)
+    local halfTanScaled = math.tan(halfAngleRadians) * ratio
+
+    return (180.0 / math.pi) * math.atan(halfTanScaled) * 2.0
+end
+
+-- returns a directional vector for a position on screen, corrects for mismatched fov
+function util.ScreenToWorld(x, y)
+    local view = render.GetViewSetup()
+    local w, h = view.width, view.height
+    local fov = view.fov_unscaled
+
+    fov = swcs.ScaleFOVByAspectRatio(fov, (w / h) / (4 / 3))
+
+    return util.AimVector(view.angles, fov, x, y, w, h)
+end
