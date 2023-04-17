@@ -50,6 +50,7 @@ include( "derma_menus.lua" )
 include( "derma_animation.lua" )
 include( "derma_utils.lua" )
 include( "derma_gwen.lua" )
+include( "derma_icon_browser.lua" )
 
 function Derma_Hook( panel, functionname, hookname, typename )
 
