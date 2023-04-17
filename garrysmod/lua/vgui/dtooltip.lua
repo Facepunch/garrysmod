@@ -99,7 +99,7 @@ end
 function PANEL:OpenForPanel( panel )
 
 	self.TargetPanel = panel
-	self.OpenDelay = isnumber(panel.numTooltipDelay) and panel.numTooltipDelay or tooltip_delay:GetFloat()
+	self.OpenDelay = isnumber( panel.numTooltipDelay ) and panel.numTooltipDelay or tooltip_delay:GetFloat()
 	self:PositionTooltip()
 
 	-- Use the parent panel's skin
