@@ -473,96 +473,149 @@ local tostring = tostring
 local string_format = string.format
 local debug_getmetatable = debug.getmetatable
 
-local fSafeIndex
-
 do
+
 	local function IndexPassThru( success, err, ... )
+
 		if ( success ) then return true, err, ... end
 		return false, string_format( "\"__index\" function errored (%s)", err )
+
 	end
 
-	fSafeIndex = function( var, key )
+	local function fSafeIndex( var, key )
+
 		local index = var
 		local index_type
-		
+
 		-- If var is a table
 		-- skip all of the extra checks verifying if a non-table can be indexed
 		if ( not istable( var ) ) then
 			local meta = debug_getmetatable( var )
 			if ( meta == nil ) then return false, "no metatable" end
-			
+
 			index = rawget( meta, "__index" )
 			if ( index == nil ) then return false, "no \"__index\" key defined" end
-		
+
 			index_type = TypeID( index )
 			if ( index_type == TYPE_FUNCTION ) then return IndexPassThru( pcall( index, var, key ) ) end
 			if ( index_type != TYPE_TABLE ) then return false, string_format( "expected \"__index\" key to be a table or function, got %s", type( index ) ) end
 		end
-		
+
 		-- To prevent cyclic references
 		local metas = { [ meta ] = true }
-		
+
 		-- Repeat the same process for __index sub-tables
 		-- but not having __index present or it being the wrong type is no longer halting
 		repeat
 			-- Try raw indexing first
 			local out = rawget( index, key )
 			if ( out != nil ) then return true, out end
-			
+
 			-- Then check the metatable
 			local meta = debug_getmetatable( index )
 			if ( meta == nil ) then return true, nil end
 			if ( metas[ meta ] ) then return false, "cyclic \"__index\" reference" end
 			metas[ meta ] = true
-			
+
 			index = rawget( meta, "__index" )
 			if ( index == nil ) then return true, nil end
-			
+
 			index_type = TypeID( index )
 			if ( index_type == TYPE_FUNCTION ) then return IndexPassThru( pcall( index, var, key ) ) end
 		until ( index_type != TYPE_TABLE )
-		
+
 		return true, nil
+
 	end
-	
+
 	SafeIndex = fSafeIndex
-end
 
-do
-	local DefaultMappings = {
-		[TYPE_BOOL] = function( b )
-			if ( b ) return "1" end
-			return "0"
-		end,
-		[TYPE_NUMBER] = tostring,
-		[TYPE_STRING] = tostring
-	}
 
-	function SafeSerialize( var, funcname, mappings )
-		if ( funcname == nil ) then funcname = "Serialize" end
-		if ( mappings == nil ) then mappings = DefaultMappings end
-		
-		local func = mappings[ TypeID( var ) ]
-		if ( func != nil ) then return true, func( var ) end
-		
+	local function fSafeCall( var, funcname, defaultmappings )
+
+		if ( defaultmappings ~= nil ) then
+			local func = defaultmappings[ TypeID( var ) ]
+
+			if ( func != nil )
+				local ret = func( var )
+
+				if ( ret == nil ) then return false, string_format( "invalid type %s", type( ret ) ) end
+
+				return true, ret
+			end
+		end
+
 		-- Skip indexing var itself by indexing its metatable directly
 		-- If var is a table and has a Serialize method present, it is probably not an object instance
 		-- but rather a metatable, ex. SafeSerialze( FindMetaTable("Vector") )
 		-- This prevents calling Serialize incorrectly on either a binded object or metatable
 		local meta = debug_getmetatable( var )
 		if ( meta == nil ) then return false, "no metatable" end
-		
+
 		local success
 		success, func = fSafeIndex( meta, funcname )
 		if ( !success ) then return false, string_format( "failed to index the metatable (%s)", func ) end
 		if ( func == nil ) then return false, string_format( "no \"%s\" function", funcname ) end
 		if ( !isfunction( func ) ) then return false, string_format( "expected \"%s\" to be a function, got %s", funcname, type( func ) ) end
-		
+
 		local success, out = pcall( func, var )
 		if ( !success ) then return false, string_format( "\"%s\" function errored (%s)", funcname, out ) end
-		if ( !isstring( out ) ) then return false, string_format( "expected \"%s\" function to return a string, got %s", funcname, type( out ) ) end
-		
-		return true, out
-	end
-end
 
+		return true, out
+
+	end
+
+	SafeCallMetaFunction = fSafeCall
+
+
+	local function Passthru( v )
+		return v
+	end
+
+	local CopyMappings = {
+		[ TYPE_NIL ] = Passthru,
+		[ TYPE_BOOL ] = Passthru,
+		[ TYPE_NUMBER ] = Passthru,
+		[ TYPE_STRING ] = Passthru
+		[ TYPE_FUNCTION ] = Passthru,
+		[ TYPE_THREAD ] = Passthru
+	}
+
+	function SafeCopy( var, funcname, mappings )
+
+		if ( funcname == nil ) then funcname = "Copy" end
+		if ( mappings == nil ) then mappings = CopyMappings end
+
+		return fSafeCall( var, funcname, mappings )
+
+	end
+
+
+	local function InvalidType()
+		return nil
+	end
+
+	local SerializeMappings = {
+		[ TYPE_NIL ] = function()
+			return nil
+		end,
+		[ TYPE_BOOL ] = function( b )
+			if ( b ) return "1" end
+			return "0"
+		end,
+		[ TYPE_NUMBER ] = tostring,
+		[ TYPE_STRING ] = tostring,
+		[ TYPE_FUNCTION ] = InvalidType, -- string.dump would go here if it worked
+		[ TYPE_THREAD ] = InvalidType
+	}
+
+	function SafeSerialize( var, funcname, mappings )
+
+		if ( funcname == nil ) then funcname = "Serialize" end
+		if ( mappings == nil ) then mappings = SerializeMappings end
+
+		return fSafeCall( var, funcname, mappings )
+
+	end
+
+end
