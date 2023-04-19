@@ -83,6 +83,7 @@ lua\derma\derma_menus.lua
 lua\derma\derma_animation.lua
 lua\derma\derma_utils.lua
 lua\derma\derma_gwen.lua
+lua\derma\derma_icon_browser.lua
 lua\drive\drive_base.lua
 lua\drive\drive_noclip.lua
 lua\drive\drive_sandbox.lua
