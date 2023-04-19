@@ -1,5 +1,3 @@
--- Keep the icon browser as part of the menu UI - convenient for quickly pressing ESC to open/close icon browser once derma_icon_browser has been run
-if not MENU_DLL then return end
 
 function Derma_OpenIconBrowser()
 	-- Because the icon browser will be part of the menu, activate the menu so that it definitely shows up otherwise a derma_icon_browser bind does nothing

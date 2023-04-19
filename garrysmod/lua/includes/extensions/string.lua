@@ -18,7 +18,6 @@ function string.ToTable( input )
 	return tbl
 end
 
-
 --[[---------------------------------------------------------
 	Name: string.JavascriptSafe( string )
 	Desc: Takes a string and escapes it for insertion in to a JavaScript string
