@@ -71,7 +71,7 @@ function SWEP:PrimaryAttack()
 	local startpos = owner:GetShootPos()
 	local tr = util.TraceLine( {
 		start = startpos,
-		endpos = startpos + owner:GetAimVector() * 64,
+		endpos = startpos + owner:GetAimVector() * self.HealRange,
 		filter = owner
 	} )
 
