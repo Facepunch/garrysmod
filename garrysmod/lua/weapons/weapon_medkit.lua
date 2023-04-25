@@ -43,6 +43,8 @@ function SWEP:Initialize()
 
 	self:SetHoldType( self.HoldType )
 
+	self:CreateRegenHook()
+
 	if ( CLIENT ) then
 		self.AmmoDisplay = {
 			Draw = true,
@@ -59,23 +61,30 @@ function SWEP:SetupDataTables()
 
 end
 
+function SWEP:OnRemove()
+
+	self:RemoveRegenHook()
+
+end
+
 function SWEP:PrimaryAttack()
 
 	local owner = self:GetOwner()
-	local isplayer = SERVER and owner:IsPlayer()
+	local dolagcomp = SERVER and owner:IsPlayer()
 
-	if ( isplayer ) then
+	if ( dolagcomp ) then
 		owner:LagCompensation( true )
 	end
 
 	local startpos = owner:GetShootPos()
+
 	local tr = util.TraceLine( {
 		start = startpos,
 		endpos = startpos + owner:GetAimVector() * self.HealRange,
 		filter = owner
 	} )
 
-	if ( isplayer ) then
+	if ( dolagcomp ) then
 		owner:LagCompensation( false )
 	end
 
@@ -89,12 +98,34 @@ function SWEP:SecondaryAttack()
 
 end
 
+function SWEP:Reload()
+end
+
+local DAMAGE_YES = 2
+
 -- Basic black/whitelist function
 -- Checking if the entity's health is below its max is done in SWEP:DoHeal
 function SWEP:CanHeal( ent )
 
 	-- ent may be NULL here, but these functions return false for it
-	return ent:IsPlayer() or ent:IsNPC()
+	-- takedamage check: don't heal turrets and helicopters
+	return ( ent:IsPlayer() or ent:IsNPC() ) and ent:GetInternalVariable( "m_takedamage" ) == DAMAGE_YES
+
+end
+
+function SWEP:DoHeal( ent )
+
+	if ( !self:CanHeal( ent ) ) then self:HealFail( ent ) return false end
+
+	local health, maxhealth = ent:Health(), ent:GetMaxHealth()
+	if ( health >= maxhealth ) then self:HealFail( ent ) return false end
+
+	local need = math.min( maxhealth - health, self.HealAmount )
+	if ( self:Clip1() < need ) then self:HealFail( ent ) return false end
+
+	self:HealEntity( ent, need )
+
+	return true
 
 end
 
@@ -142,23 +173,58 @@ function SWEP:HealFail( ent )
 
 end
 
-function SWEP:DoHeal( ent )
+function SWEP:Think()
 
-	if ( !self:CanHeal( ent ) ) then self:HealFail( ent ) return false end
+	-- Update idle anim
+	local curtime = CurTime()
 
-	local health, maxhealth = ent:Health(), ent:GetMaxHealth()
-	if ( health >= maxhealth ) then self:HealFail( ent ) return false end
-
-	local need = math.min( maxhealth - health, self.HealAmount )
-	if ( self:Clip1() < need ) then self:HealFail( ent ) return false end
-
-	self:HealEntity( ent, need )
-
-	return true
+	if ( curtime >= self:GetNextIdle() ) then
+		self:SendWeaponAnim( ACT_VM_IDLE )
+		self:SetNextIdle( curtime + self:SequenceDuration() )
+	end
 
 end
 
-function SWEP:Think()
+function SWEP:GetRegenHookIdentifier()
+
+	return string.format( "GMOD_%s_regen_%u", self.ClassName, self:EntIndex() )
+
+end
+
+function SWEP:CreateRegenHook()
+
+	local hookname = self:GetRegenHookIdentifier()
+
+	-- SetupMove is chosen because it is the earliest shared predicted hook
+	-- that syncs NetworkVars at the correct time.
+	-- Using one hook that does essentially nothing
+	-- when no medkits are deployed would scale better
+	-- than having n hooks per regening medkit,
+	-- but it would be prone to breakage
+	-- without careful autorefresh and external error handling.
+	-- This provides the most basic predicted, safe implementation
+	-- of health refresh while holstered that can be improved upon
+	-- in inheriting SWEPs by overriding the Create and RemoveRegenHook funcs
+	hook.Add( "SetupMove", hookname, function( ply, ucmd )
+
+		if ( !self:IsValid() ) then
+			hook.Remove( hookname )
+			return
+		end
+
+		self:Regen()
+
+	end )
+
+end
+
+function SWEP:RemoveRegenHook()
+
+	hook.Remove( "SetupMove", self:GetRegenHookIdentifier() )
+
+end
+
+function SWEP:Regen()
 
 	local curtime = CurTime()
 
@@ -172,14 +238,6 @@ function SWEP:Think()
 		end
 	end
 
-	if ( curtime >= self:GetNextIdle() ) then
-		self:SendWeaponAnim( ACT_VM_IDLE )
-		self:SetNextIdle( curtime + self:SequenceDuration() )
-	end
-
-end
-
-function SWEP:Reload()
 end
 
 -- The following code does not need to exist on the server, so bail
