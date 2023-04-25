@@ -108,8 +108,12 @@ local DAMAGE_YES = 2
 function SWEP:CanHeal( ent )
 
 	-- ent may be NULL here, but these functions return false for it
-	-- takedamage check: don't heal turrets and helicopters
-	return ( ent:IsPlayer() or ent:IsNPC() ) and ent:GetInternalVariable( "m_takedamage" ) == DAMAGE_YES
+	if ( ent:IsPlayer() or ent:IsNPC() ) then
+		local takedamage = ent:GetInternalVariable( "m_takedamage" )
+
+		-- Don't heal turrets and helicopters
+		return takedamage == nil or takedamage == DAMAGE_YES 
+	end
 
 end
 
