@@ -126,6 +126,8 @@ end
 
 function SWEP:DoHeal( ent )
 
+	local amount = self.HealAmount
+
 	if ( !self:CanHeal( ent ) ) then self:HealFail( ent ) return false end
 
 	local health, maxhealth = ent:Health(), ent:GetMaxHealth()
@@ -135,20 +137,28 @@ function SWEP:DoHeal( ent )
 	-- to make sure we're up to date
 	self:Regen( true )
 
-	local need = math.min( maxhealth - health, self.HealAmount )
-	if ( self:Clip1() < need ) then self:HealFail( ent ) return false end
+	local healamount = self.HealAmount
 
-	self:HealEntity( ent, need )
+	-- No support for "damage kits"
+	if ( healamount > 0 ) then
+		healamount = math.min( maxhealth - health, healamount )
+		local ammo = self:Clip1()
+		if ( ammo < healamount ) then self:HealFail( ent ) return false end
+
+		-- Heal ent
+		self:SetClip1( ammo - healamount )
+		ent:SetHealth( health + healamount )
+	else
+		healamount = 0
+	end
+
+	self:HealSuccess( ent, healamount )
 
 	return true
 
 end
 
-function SWEP:HealEntity( ent, amount )
-
-	-- Heal ent
-	self:SetClip1( math.max( self:Clip1() - amount, 0 ) )
-	ent:SetHealth( ent:Health() + amount )
+function SWEP:HealSuccess( ent, healamount )
 
 	-- Do effects
 	self:EmitSound( self.HealSound )
@@ -207,7 +217,7 @@ function SWEP:Regen( keepaligned )
 	local regenrate = self.AmmoRegenRate
 
 	-- Not ready to regenerate
-	if ( timepassed < regenrate ) return false end
+	if ( timepassed < regenrate ) then return false end
 
 	local ammo = self:Clip1()
 	local maxammo = self.Primary.ClipSize
