@@ -16,7 +16,7 @@ SWEP.ViewModelFOV = 54
 SWEP.UseHands = true
 
 SWEP.Primary.ClipSize = 100
-SWEP.Primary.DefaultClip = 100
+SWEP.Primary.DefaultClip = SWEP.Primary.ClipSize
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = ""
 
@@ -30,20 +30,22 @@ SWEP.HoldType = "slam"
 SWEP.HealSound = Sound( "HealthKit.Touch" )
 SWEP.DenySound = Sound( "WallHealth.Deny" )
 
-SWEP.HealCooldown = 0.5
-SWEP.DenyCooldown = 1
+SWEP.HealCooldown = 0.5 -- Time between successful heals
+SWEP.DenyCooldown = 1 -- Time between unsuccessful heals
 
 SWEP.HealAmount = 20 -- Maximum heal amount per use
-SWEP.HealRange = 64
+SWEP.HealRange = 64 -- Range in units at which healing works
 
-SWEP.AmmoRegenFrequency = 1 -- Number of seconds before each ammo regen
-SWEP.AmmoRegenAmount = 2 -- Amount of ammo refilled every AmmoRegenFrequency seconds
+SWEP.AmmoRegenRate = 1 -- Number of seconds before each ammo regen
+SWEP.AmmoRegenAmount = 2 -- Amount of ammo refilled every AmmoRegenRate seconds
 
 function SWEP:Initialize()
 
 	self:SetHoldType( self.HoldType )
-
-	self:CreateRegenHook()
+	
+	-- Prevent large ammo jumps on-creation
+	-- if DefaultClip < ClipSize
+	self:SetLastAmmoRegen( CurTime() )
 
 	if ( CLIENT ) then
 		self.AmmoDisplay = {
@@ -54,16 +56,20 @@ function SWEP:Initialize()
 
 end
 
-function SWEP:SetupDataTables()
+function SWEP:Deploy()
 
-	self:NetworkVar( "Float", 0, "NextAmmoRegen" )
-	self:NetworkVar( "Float", 1, "NextIdle" )
+	-- Regen what we've gained since we've holstered
+	-- and realign the timer
+	self:Regen( false )
+	
+	return true
 
 end
 
-function SWEP:OnRemove()
+function SWEP:SetupDataTables()
 
-	self:RemoveRegenHook()
+	self:NetworkVar( "Float", 0, "LastAmmoRegen" )
+	self:NetworkVar( "Float", 1, "NextIdle" )
 
 end
 
@@ -77,7 +83,6 @@ function SWEP:PrimaryAttack()
 	end
 
 	local startpos = owner:GetShootPos()
-
 	local tr = util.TraceLine( {
 		start = startpos,
 		endpos = startpos + owner:GetAimVector() * self.HealRange,
@@ -124,6 +129,10 @@ function SWEP:DoHeal( ent )
 	local health, maxhealth = ent:Health(), ent:GetMaxHealth()
 	if ( health >= maxhealth ) then self:HealFail( ent ) return false end
 
+	-- Check regen right before we access the clip
+	-- to make sure we're up to date
+	self:Regen( true )
+	
 	local need = math.min( maxhealth - health, self.HealAmount )
 	if ( self:Clip1() < need ) then self:HealFail( ent ) return false end
 
@@ -151,8 +160,8 @@ function SWEP:HealEntity( ent, amount )
 
 	local curtime = CurTime()
 
-	-- Set next regen time
-	self:SetNextAmmoRegen( curtime + self.AmmoRegenFrequency )
+	-- Reset regen time
+	self:SetLastAmmoRegen( curtime )
 
 	-- Set next idle time
 	local endtime = curtime + self:SequenceDuration()
@@ -179,67 +188,51 @@ end
 
 function SWEP:Think()
 
+	-- Try ammo regen
+	-- but keep it aligned to the last action time
+	self:Regen( true )
+
+	-- Do idle anim
+	self:Idle()
+
+end
+
+function SWEP:Regen( keepaligned )
+
+	local curtime = CurTime()
+	local lastregen = self:GetLastAmmoRegen()
+	local timepassed = curtime - lastregen
+	local regenrate = self.AmmoRegenRate
+
+	if ( timepassed < regenrate ) return end
+	
+	local ammo = self:Clip1()
+	local maxammo = self.Primary.ClipSize
+
+	if ( ammo >= maxammo ) then return end
+	
+	if ( regenrate > 0 ) then
+		self:SetClip1( math.min( ammo + math.floor( timepassed / regenrate ) * self.AmmoRegenAmount, maxammo ) )
+		
+		-- If we are setting the last regen time from the Think function,
+		-- keep it aligned with the last action time to prevent late Thinks from
+		-- creating hiccups in the rate
+		self:SetLastAmmoRegen( keepaligned == true and curtime + timepassed % regenrate or curtime )
+	else
+		self:SetClip1( maxammo )
+		self:SetLastAmmoRegen( curtime )
+	end
+
+end
+
+function SWEP:Idle()
+
 	-- Update idle anim
 	local curtime = CurTime()
 
 	if ( curtime >= self:GetNextIdle() ) then
 		self:SendWeaponAnim( ACT_VM_IDLE )
 		self:SetNextIdle( curtime + self:SequenceDuration() )
-	end
-
-end
-
-function SWEP:GetRegenHookIdentifier()
-
-	return string.format( "GMOD_%s_regen_%u", self.ClassName, self:EntIndex() )
-
-end
-
-function SWEP:CreateRegenHook()
-
-	local hookname = self:GetRegenHookIdentifier()
-
-	-- SetupMove is chosen because it is the earliest shared predicted hook
-	-- that syncs NetworkVars at the correct time.
-	-- Using one hook that does essentially nothing
-	-- when no medkits are deployed would scale better
-	-- than having n hooks per regening medkit,
-	-- but it would be prone to breakage
-	-- without careful autorefresh and external error handling.
-	-- This provides the most basic predicted, safe implementation
-	-- of health refresh while holstered that can be improved upon
-	-- in inheriting SWEPs by overriding the Create and RemoveRegenHook funcs
-	hook.Add( "SetupMove", hookname, function( ply, ucmd )
-
-		if ( !self:IsValid() ) then
-			hook.Remove( hookname )
-			return
-		end
-
-		self:Regen()
-
-	end )
-
-end
-
-function SWEP:RemoveRegenHook()
-
-	hook.Remove( "SetupMove", self:GetRegenHookIdentifier() )
-
-end
-
-function SWEP:Regen()
-
-	local curtime = CurTime()
-
-	if ( curtime >= self:GetNextAmmoRegen() ) then
-		local clip1 = self:Clip1()
-		local maxammo = self.Primary.ClipSize
-
-		if ( clip1 < maxammo ) then
-			self:SetClip1( math.min( clip1 + self.AmmoRegenAmount, maxammo ) )
-			self:SetNextAmmoRegen( curtime + self.AmmoRegenFrequency )
-		end
 	end
 
 end
