@@ -1,6 +1,5 @@
 
-
-CreateClientConVar( "cl_showhints", "1", true, false )
+local cl_showhints = CreateClientConVar( "cl_showhints", "1", true, false )
 
 -- A list of hints we've already done so we don't repeat ourselves`
 local ProcessedHints = {}
@@ -8,25 +7,26 @@ local ProcessedHints = {}
 --
 -- Throw's a Hint to the screen
 --
-local function ThrowHint( name )
+local function ThrowHint( GM, name, force, length )
 
-	local show = GetConVarNumber( "cl_showhints" )
-	if ( show == 0 ) then return end
-
-	if ( engine.IsPlayingDemo() ) then return end
+	if ( !cl_showhints:GetBool() ) then return end
 
 	local text = language.GetPhrase( "Hint_" .. name )
 
 	local s, e, group = string.find( text, "%%([^%%]+)%%" )
 	while ( s ) do
 		local key = input.LookupBinding( group )
-		if ( !key ) then key = "<NOT BOUND>" end
+		if ( !key ) then
+			if ( !force ) then return end
+			key = "<NOT BOUND>"
+		end
 
 		text = string.gsub( text, "%%([^%%]+)%%", "'" .. key:upper() .. "'" )
 		s, e, group = string.find( text, "%%([^%%]+)%%" )
 	end
 
-	GAMEMODE:AddNotify( text, NOTIFY_HINT, 20 )
+	if ( length == nil ) then length = 20 end
+	GM:AddNotify( text, NOTIFY_HINT, length )
 
 	surface.PlaySound( "ambient/water/drip" .. math.random( 1, 4 ) .. ".wav" )
 
@@ -36,11 +36,16 @@ end
 --
 -- Adds a hint to the queue
 --
-function GM:AddHint( name, delay )
+function GM:AddHint( name, delay, force, length )
 
 	if ( ProcessedHints[ name ] ) then return end
 
-	timer.Create( "HintSystem_" .. name, delay, 1, function() ThrowHint( name ) end )
+	if ( !engine.IsPlayingDemo() ) then
+		timer.Create( "HintSystem_" .. name, delay, 1, function()
+			ThrowHint( self, name, force, length )
+		end )
+	end
+
 	ProcessedHints[ name ] = true
 
 end
@@ -54,9 +59,15 @@ function GM:SuppressHint( name )
 
 end
 
+function GM:UnprocessHint( name )
+
+	ProcessedHints[ name ] = nil
+
+end
+
 -- Show opening menu hint if they haven't opened the menu within 30 seconds
 GM:AddHint( "OpeningMenu", 30 )
 
--- Tell them how to turn the hints off after 1 minute
-GM:AddHint( "Annoy1", 5 )
-GM:AddHint( "Annoy2", 7 )
+-- Tell them that they can turn off hints as they load in
+GM:AddHint( "Annoy1", 10 )
+GM:AddHint( "Annoy2", 12 )
