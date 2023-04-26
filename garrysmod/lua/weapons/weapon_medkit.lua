@@ -42,7 +42,7 @@ SWEP.AmmoRegenAmount = 2 -- Amount of ammo refilled every AmmoRegenRate seconds
 function SWEP:Initialize()
 
 	self:SetHoldType( self.HoldType )
-	
+
 	-- Prevent large ammo jumps on-creation
 	-- if DefaultClip < ClipSize
 	self:SetLastAmmoRegen( CurTime() )
@@ -61,7 +61,7 @@ function SWEP:Deploy()
 	-- Regen what we've gained since we've holstered
 	-- and realign the timer
 	self:Regen( false )
-	
+
 	return true
 
 end
@@ -117,8 +117,10 @@ function SWEP:CanHeal( ent )
 		local takedamage = ent:GetInternalVariable( "m_takedamage" )
 
 		-- Don't heal turrets and helicopters
-		return takedamage == nil or takedamage == DAMAGE_YES 
+		return takedamage == nil or takedamage == DAMAGE_YES
 	end
+
+	return false
 
 end
 
@@ -132,7 +134,7 @@ function SWEP:DoHeal( ent )
 	-- Check regen right before we access the clip
 	-- to make sure we're up to date
 	self:Regen( true )
-	
+
 	local need = math.min( maxhealth - health, self.HealAmount )
 	if ( self:Clip1() < need ) then self:HealFail( ent ) return false end
 
@@ -204,16 +206,18 @@ function SWEP:Regen( keepaligned )
 	local timepassed = curtime - lastregen
 	local regenrate = self.AmmoRegenRate
 
-	if ( timepassed < regenrate ) return end
-	
+	-- Not ready to regenerate
+	if ( timepassed < regenrate ) return false end
+
 	local ammo = self:Clip1()
 	local maxammo = self.Primary.ClipSize
 
-	if ( ammo >= maxammo ) then return end
-	
+	-- Already at/over max ammo
+	if ( ammo >= maxammo ) then return false end
+
 	if ( regenrate > 0 ) then
 		self:SetClip1( math.min( ammo + math.floor( timepassed / regenrate ) * self.AmmoRegenAmount, maxammo ) )
-		
+
 		-- If we are setting the last regen time from the Think function,
 		-- keep it aligned with the last action time to prevent late Thinks from
 		-- creating hiccups in the rate
@@ -223,6 +227,8 @@ function SWEP:Regen( keepaligned )
 		self:SetLastAmmoRegen( curtime )
 	end
 
+	return true
+
 end
 
 function SWEP:Idle()
@@ -230,10 +236,12 @@ function SWEP:Idle()
 	-- Update idle anim
 	local curtime = CurTime()
 
-	if ( curtime >= self:GetNextIdle() ) then
-		self:SendWeaponAnim( ACT_VM_IDLE )
-		self:SetNextIdle( curtime + self:SequenceDuration() )
-	end
+	if ( curtime < self:GetNextIdle() ) then return false end
+
+	self:SendWeaponAnim( ACT_VM_IDLE )
+	self:SetNextIdle( curtime + self:SequenceDuration() )
+
+	return true
 
 end
 
