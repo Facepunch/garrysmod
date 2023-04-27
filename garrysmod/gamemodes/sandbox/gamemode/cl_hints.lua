@@ -73,8 +73,8 @@ function GM:UnprocessHint( name )
 end
 
 -- Show opening menu hint if they haven't opened the menu within 30 seconds
-GM:AddHint( "OpeningMenu", 10 )
+GM:AddHint( "OpeningMenu", 30 )
 
 -- Tell them that they can turn off hints as they fully load in
-GM:AddHint( "Annoy1", 5 )
-GM:AddHint( "Annoy2", 7 )
+GM:AddHint( "Annoy1", 10 )
+GM:AddHint( "Annoy2", 13 )
