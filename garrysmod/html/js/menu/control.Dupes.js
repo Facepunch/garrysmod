@@ -108,3 +108,10 @@ function OnGameSaved()
 {
 	Scope.Switch( 'local', 0 );
 }
+
+function UpdateDupes()
+{
+	if ( !Scope ) return;
+
+	Scope.SwitchWithTag( 'subscribed_ugc', 0, '' );
+}
