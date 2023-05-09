@@ -16,7 +16,7 @@ SWEP.ViewModelFOV = 54
 SWEP.UseHands = true
 
 SWEP.Primary.ClipSize = 100
-SWEP.Primary.DefaultClip = 100
+SWEP.Primary.DefaultClip = SWEP.Primary.ClipSize
 SWEP.Primary.Automatic = false
 SWEP.Primary.Ammo = ""
 
@@ -30,18 +30,22 @@ SWEP.HoldType = "slam"
 SWEP.HealSound = Sound( "HealthKit.Touch" )
 SWEP.DenySound = Sound( "WallHealth.Deny" )
 
-SWEP.HealCooldown = 0.5
-SWEP.DenyCooldown = 1
+SWEP.HealCooldown = 0.5 -- Time between successful heals
+SWEP.DenyCooldown = 1 -- Time between unsuccessful heals
 
 SWEP.HealAmount = 20 -- Maximum heal amount per use
-SWEP.HealRange = 64
+SWEP.HealRange = 64 -- Range in units at which healing works
 
-SWEP.AmmoRegenFrequency = 1 -- Number of seconds before each ammo regen
-SWEP.AmmoRegenAmount = 2 -- Amount of ammo refilled every AmmoRegenFrequency seconds
+SWEP.AmmoRegenRate = 1 -- Number of seconds before each ammo regen
+SWEP.AmmoRegenAmount = 2 -- Amount of ammo refilled every AmmoRegenRate seconds
 
 function SWEP:Initialize()
 
 	self:SetHoldType( self.HoldType )
+
+	-- Prevent large ammo jumps on-creation
+	-- if DefaultClip < ClipSize
+	self:SetLastAmmoRegen( CurTime() )
 
 	if ( CLIENT ) then
 		self.AmmoDisplay = {
@@ -52,9 +56,19 @@ function SWEP:Initialize()
 
 end
 
+function SWEP:Deploy()
+
+	-- Regen what we've gained since we've holstered
+	-- and realign the timer
+	self:Regen( false )
+
+	return true
+
+end
+
 function SWEP:SetupDataTables()
 
-	self:NetworkVar( "Float", 0, "NextAmmoRegen" )
+	self:NetworkVar( "Float", 0, "LastAmmoRegen" )
 	self:NetworkVar( "Float", 1, "NextIdle" )
 
 end
@@ -62,9 +76,9 @@ end
 function SWEP:PrimaryAttack()
 
 	local owner = self:GetOwner()
-	local isplayer = SERVER and owner:IsPlayer()
+	local dolagcomp = SERVER and owner:IsPlayer()
 
-	if ( isplayer ) then
+	if ( dolagcomp ) then
 		owner:LagCompensation( true )
 	end
 
@@ -75,7 +89,7 @@ function SWEP:PrimaryAttack()
 		filter = owner
 	} )
 
-	if ( isplayer ) then
+	if ( dolagcomp ) then
 		owner:LagCompensation( false )
 	end
 
@@ -89,20 +103,62 @@ function SWEP:SecondaryAttack()
 
 end
 
+function SWEP:Reload()
+end
+
+local DAMAGE_YES = 2
+
 -- Basic black/whitelist function
 -- Checking if the entity's health is below its max is done in SWEP:DoHeal
 function SWEP:CanHeal( ent )
 
 	-- ent may be NULL here, but these functions return false for it
-	return ent:IsPlayer() or ent:IsNPC()
+	if ( ent:IsPlayer() or ent:IsNPC() ) then
+		local takedamage = ent:GetInternalVariable( "m_takedamage" )
+
+		-- Don't heal turrets and helicopters
+		return takedamage == nil or takedamage == DAMAGE_YES
+	end
+
+	return false
 
 end
 
-function SWEP:HealEntity( ent, amount )
+function SWEP:DoHeal( ent )
 
-	-- Heal ent
-	self:SetClip1( math.max( self:Clip1() - amount, 0 ) )
-	ent:SetHealth( ent:Health() + amount )
+	local amount = self.HealAmount
+
+	if ( !self:CanHeal( ent ) ) then self:HealFail( ent ) return false end
+
+	local health, maxhealth = ent:Health(), ent:GetMaxHealth()
+	if ( health >= maxhealth ) then self:HealFail( ent ) return false end
+
+	-- Check regen right before we access the clip
+	-- to make sure we're up to date
+	self:Regen( true )
+
+	local healamount = self.HealAmount
+
+	-- No support for "damage kits"
+	if ( healamount > 0 ) then
+		healamount = math.min( maxhealth - health, healamount )
+		local ammo = self:Clip1()
+		if ( ammo < healamount ) then self:HealFail( ent ) return false end
+
+		-- Heal ent
+		self:SetClip1( ammo - healamount )
+		ent:SetHealth( health + healamount )
+	else
+		healamount = 0
+	end
+
+	self:HealSuccess( ent, healamount )
+
+	return true
+
+end
+
+function SWEP:HealSuccess( ent, healamount )
 
 	-- Do effects
 	self:EmitSound( self.HealSound )
@@ -116,8 +172,8 @@ function SWEP:HealEntity( ent, amount )
 
 	local curtime = CurTime()
 
-	-- Set next regen time
-	self:SetNextAmmoRegen( curtime + self.AmmoRegenFrequency )
+	-- Reset regen time
+	self:SetLastAmmoRegen( curtime )
 
 	-- Set next idle time
 	local endtime = curtime + self:SequenceDuration()
@@ -142,44 +198,61 @@ function SWEP:HealFail( ent )
 
 end
 
-function SWEP:DoHeal( ent )
+function SWEP:Think()
 
-	if ( !self:CanHeal( ent ) ) then self:HealFail( ent ) return false end
+	-- Try ammo regen
+	-- but keep it aligned to the last action time
+	self:Regen( true )
 
-	local health, maxhealth = ent:Health(), ent:GetMaxHealth()
-	if ( health >= maxhealth ) then self:HealFail( ent ) return false end
+	-- Do idle anim
+	self:Idle()
 
-	local need = math.min( maxhealth - health, self.HealAmount )
-	if ( self:Clip1() < need ) then self:HealFail( ent ) return false end
+end
 
-	self:HealEntity( ent, need )
+function SWEP:Regen( keepaligned )
+
+	local curtime = CurTime()
+	local lastregen = self:GetLastAmmoRegen()
+	local timepassed = curtime - lastregen
+	local regenrate = self.AmmoRegenRate
+
+	-- Not ready to regenerate
+	if ( timepassed < regenrate ) then return false end
+
+	local ammo = self:Clip1()
+	local maxammo = self.Primary.ClipSize
+
+	-- Already at/over max ammo
+	if ( ammo >= maxammo ) then return false end
+
+	if ( regenrate > 0 ) then
+		self:SetClip1( math.min( ammo + math.floor( timepassed / regenrate ) * self.AmmoRegenAmount, maxammo ) )
+
+		-- If we are setting the last regen time from the Think function,
+		-- keep it aligned with the last action time to prevent late Thinks from
+		-- creating hiccups in the rate
+		self:SetLastAmmoRegen( keepaligned == true and curtime + timepassed % regenrate or curtime )
+	else
+		self:SetClip1( maxammo )
+		self:SetLastAmmoRegen( curtime )
+	end
 
 	return true
 
 end
 
-function SWEP:Think()
+function SWEP:Idle()
 
+	-- Update idle anim
 	local curtime = CurTime()
 
-	if ( curtime >= self:GetNextAmmoRegen() ) then
-		local clip1 = self:Clip1()
-		local maxammo = self.Primary.ClipSize
+	if ( curtime < self:GetNextIdle() ) then return false end
 
-		if ( clip1 < maxammo ) then
-			self:SetClip1( math.min( clip1 + self.AmmoRegenAmount, maxammo ) )
-			self:SetNextAmmoRegen( curtime + self.AmmoRegenFrequency )
-		end
-	end
+	self:SendWeaponAnim( ACT_VM_IDLE )
+	self:SetNextIdle( curtime + self:SequenceDuration() )
 
-	if ( curtime >= self:GetNextIdle() ) then
-		self:SendWeaponAnim( ACT_VM_IDLE )
-		self:SetNextIdle( curtime + self:SequenceDuration() )
-	end
+	return true
 
-end
-
-function SWEP:Reload()
 end
 
 -- The following code does not need to exist on the server, so bail
