@@ -148,7 +148,7 @@ function ENT:Use( activator, caller )
 		-- Give the collecting player some free health
 		local health = activator:Health()
 		activator:SetHealth( health + 5 )
-		activator:SendLua( "achievements.EatBall()" )
+		activator:SendAchievement( "EatBall" )
 
 	end
 

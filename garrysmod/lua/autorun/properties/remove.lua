@@ -50,7 +50,7 @@ properties.Add( "remove", {
 		ed:SetEntity( ent )
 		util.Effect( "entity_remove", ed, true, true )
 
-		ply:SendLua( "achievements.Remover()" )
+		ply:SendAchievement( "Remover" )
 
 	end
 

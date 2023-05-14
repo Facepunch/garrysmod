@@ -103,6 +103,7 @@ function meta:AddCleanup( type, ent )
 end
 
 if ( SERVER ) then
+	util.AddNetworkString( "SendAchievement" )
 
 	function meta:GetTool( mode )
 
@@ -136,7 +137,31 @@ if ( SERVER ) then
 
 	end
 
+
+	function meta:SendAchievement( achievement, count )
+		count = count or 1
+
+		net.Start( 'SendAchievement' )
+		net.WriteString( achievement )
+		net.WriteUInt( count, 16 )
+		net.Send( self )
+
+	end
 else
+
+	net.Receive( 'SendAchievement', function( len )
+
+		local achievement = net.ReadString()
+		local count = net.ReadUInt( 16 )
+
+		local func = achievements[ achievement ]
+		if !achievement then return end
+
+		for _ = 1, count do
+			func()
+		end
+
+	end )
 
 	function meta:GetTool( mode )
 
