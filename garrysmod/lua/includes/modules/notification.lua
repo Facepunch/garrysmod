@@ -84,6 +84,21 @@ function AddLegacy( text, type, length )
 
 end
 
+function AddLegacyType( legacyName, materialName )
+	if ( !isstring( legacyName ) ) then error( "bad argument #1 to 'AddLegacyType' (string expected, got " .. type( legacyName ) .. ")", 2 ) return end
+	if ( !isstring( materialName ) ) then error( "bad argument #2 to 'AddLegacyType' (string expected, got " .. type( materialName ) .. ")", 2 ) return end
+
+	local mat = Material( materialName )
+
+	if ( !mat || mat:IsError() ) then return end
+
+	NoticeMaterial[ legacyName ] = mat
+end
+
+function GetLegacyTypes()
+	return NoticeMaterial
+end
+
 -- This is ugly because it's ripped straight from the old notice system
 local function UpdateNotice( pnl, total_h )
 
