@@ -154,7 +154,7 @@ local HTTPcodes = {
 	[508] = {"Loop Detected", 	"This status indicates that the entire operation failed, the server terminated an operation because it encountered an infinite loop"},
 }
 
-function HandleCode(code)
+function GetStatusDescription(code)
 	if not HTTPcodes[code] then return nil end
 
 	local name, message = HTTPcodes[code][1], HTTPcodes[code][2]
