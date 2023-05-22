@@ -422,10 +422,3 @@ function UpdateAddonDisabledState( noaddons, noworkshop )
 	Scope.Disabled = noworkshop;
 	UpdateDigest( Scope, 50 );
 }
-
-function UpdateAddons()
-{
-	if ( !Scope ) return;
-
-	Scope.SwitchWithTag( 'subscribed', 0, '' );
-}

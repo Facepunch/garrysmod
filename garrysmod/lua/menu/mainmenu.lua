@@ -97,7 +97,6 @@ function PANEL:RefreshContent()
 
 	self:RefreshGamemodes()
 	self:RefreshAddons()
-	self:RefreshDupes()
 
 end
 
@@ -113,13 +112,7 @@ end
 
 function PANEL:RefreshAddons()
 
-	self:Call( "UpdateAddons()" )
-
-end
-
-function PANEL:RefreshDupes()
-
-	self:Call( "UpdateDupes()" )
+	self:Call( "UpdateCurrentCategory()" )
 
 end
 

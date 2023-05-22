@@ -323,6 +323,13 @@ function UpdateVersion( version, netVersion, branch )
 	UpdateDigest( gScope, 100 );
 }
 
+function UpdateCurrentCategory()
+{
+	if ( !Scope ) return;
+
+	Scope.Switch( Scope.Category, 0 );
+}
+
 function SetProblemCount( num, severity )
 {
 	gScope.ProblemCount		= num;
