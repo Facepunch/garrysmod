@@ -47,6 +47,86 @@ function COLOR:__tostring()
 end
 
 --[[---------------------------------------------------------
+	Returns unary color
+-----------------------------------------------------------]]
+function COLOR:__unm()
+
+	local col = self:Copy()
+	col:Invert()
+
+	return col
+
+end
+
+--[[---------------------------------------------------------
+	Returns colors summ
+-----------------------------------------------------------]]
+
+function COLOR:__add( other )
+
+	return Color( self.r + other.r, self.g + other.g, self.b + other.b, self.a + other.a )
+
+end
+
+--[[---------------------------------------------------------
+	Returns colors subtraction
+-----------------------------------------------------------]]
+
+function COLOR:__sub(other)
+
+	return Color( self.r - other.r, self.g - other.g, self.b - other.b, self.a - other.a )
+
+end
+
+--[[---------------------------------------------------------
+	Returns color multiplication with another color or number
+-----------------------------------------------------------]]
+
+function COLOR:__mul(other)
+
+	if ( type( other ) == "number" ) then
+		return Color( self.r * other, self.g * other, self.b * other, self.a * other )
+	end
+
+	return Color( self.r * other.r, self.g * other.g, self.b * other.b, self.a * other.a )
+
+end
+
+--[[---------------------------------------------------------
+	Returns color division with another color or number
+-----------------------------------------------------------]]
+
+function COLOR:__div( other )
+
+	if ( type( other ) == "number" ) then
+		return Color( self.r / other, self.g / other, self.b / other, self.a / other )
+	end
+
+	return Color( self.r / other.r, self.g / other.g, self.b / other.b, self.a / other.a )
+
+end
+
+--[[---------------------------------------------------------
+	Returns is color darker than other
+-----------------------------------------------------------]]
+
+function COLOR:__lt( other )
+
+	return select( 3, self:ToHSL() ) < select( 3, other:ToHSL() )
+
+end
+
+--[[---------------------------------------------------------
+	Returns is color darker than other or have the same lightness
+-----------------------------------------------------------]]
+
+function COLOR:__le( other )
+
+	return select( 3, self:ToHSL() ) <= select( 3, other:ToHSL() )
+
+end
+
+--[[---------------------------------------------------------
 	Compares two colors
 -----------------------------------------------------------]]
 function COLOR:__eq( c )
@@ -103,5 +183,37 @@ end
 function COLOR:ToTable()
 
 	return { self.r, self.g, self.b, self.a }
+
+end
+
+function COLOR:Invert()
+
+	self.r = math.abs( 255 - self.r )
+	self.g = math.abs( 255 - self.g )
+	self.b = math.abs( 255 - self.b )
+
+end
+
+function COLOR:Copy()
+
+	return Color( self.r, self.g, self.b, self.a )
+
+end
+
+function COLOR:Normalize()
+
+	self.r = self.r / 255
+	self.g = self.r / 255
+	self.b = self.r / 255
+	self.a = self.r / 255
+
+end
+
+function COLOR:GetNormalized()
+
+	local col = self:Copy()
+	col:Normalize()
+
+	return col
 
 end
