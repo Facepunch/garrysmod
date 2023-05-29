@@ -59,6 +59,12 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		scope.SwitchWithTag( scope.Category, 0, scope.Tagged, scope.MapName )
 	}
 
+	// Refresh current page, etc
+	this.Scope.RefreshCurrentView = function()
+	{
+		scope.SwitchWithTag( scope.Category, scope.Offset, scope.Tagged, scope.MapName )
+	}
+
 	var hackyWackyTimer = 0;
 	this.Scope.HandleOnSearch = function()
 	{
