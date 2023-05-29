@@ -9,7 +9,7 @@ Code Formatting
     * ```if ( ( expression1 or expression2 ) and expression3 ) then end```
   * Spaces around operators and inside brackets
     * ```if ( expression1 == expression2 ) then myVariable = ( 1 + 2 ) / 4 end```
-  * Use tabulation to indent your code - TAB size = 4 spaces
+  * Use `Tab` characters to indent your code, not spaces. Indent size is 1 Tab = 4 spaces
   * Preferred casing is UpperCamelCase for function names, and lowerCamelCase for variable and argument names
     * ```local myResult = MyObject:MyMethod( myArgument )```
     * Do not include type in the variable name
