@@ -395,3 +395,11 @@ function util.IsBinaryModuleInstalled( name )
 
 	return false
 end
+
+--[[---------------------------------------------------------
+	Name: IsLuaModuleInstalled( name )
+	Desc: Returns whether a lua module with the given name is present on disk
+-----------------------------------------------------------]]
+function util.IsLuaModuleInstalled( name )
+	return file.Exists( "includes/modules/" .. name .. ".lua", "GAME" )
+end
