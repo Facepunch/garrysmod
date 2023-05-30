@@ -203,9 +203,9 @@ end
 function COLOR:Normalize()
 
 	self.r = self.r / 255
-	self.g = self.r / 255
-	self.b = self.r / 255
-	self.a = self.r / 255
+	self.g = self.g / 255
+	self.b = self.b / 255
+	self.a = self.a / 255
 
 end
 
