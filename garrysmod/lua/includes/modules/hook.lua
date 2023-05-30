@@ -135,3 +135,22 @@ function Call( name, gm, ... )
 	return GamemodeFunction( gm, ... )
 
 end
+
+--[[---------------------------------------------------------
+    Name: GetData
+    Args: string hookName, vararg args
+    Desc: Calls hooks associated with the hook name and returns all data from all hooks.
+-----------------------------------------------------------]]
+function GetData( name, ... )
+	local args = {}
+	local tab = Hooks[name]
+
+	if not tab then return args end -- if we don't have a hook, we return an empty table
+
+	for _, fn in pairs(tab) do
+		local fn_args = {fn(...)}
+		args[#args+1] = fn_args
+	end
+
+	return args
+end
