@@ -51,10 +51,7 @@ end
 -----------------------------------------------------------]]
 function COLOR:__unm()
 
-	local col = self:Copy()
-	col:Invert()
-
-	return col
+	return self:GetInverted()
 
 end
 
@@ -186,17 +183,26 @@ function COLOR:ToTable()
 
 end
 
-function COLOR:Invert()
-
-	self.r = math.abs( 255 - self.r )
-	self.g = math.abs( 255 - self.g )
-	self.b = math.abs( 255 - self.b )
-
-end
-
 function COLOR:Copy()
 
 	return Color( self.r, self.g, self.b, self.a )
+
+end
+
+function COLOR:Invert()
+
+	self.r = 255 - self.r
+	self.g = 255 - self.g
+	self.b = 255 - self.b
+
+end
+
+function COLOR:GetInverted()
+
+	local col = self:Copy()
+	col:Invert()
+
+	return col
 
 end
 
