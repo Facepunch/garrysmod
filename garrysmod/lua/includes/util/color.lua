@@ -223,3 +223,39 @@ function COLOR:GetNormalized()
 	return col
 
 end
+
+function COLOR:Add( other )
+
+	self.r = self.r + other.r
+	self.g = self.g + other.g
+	self.b = self.b + other.b
+	self.a = self.a + other.a
+
+end
+
+function COLOR:Sub( other )
+
+	self.r = self.r - other.r
+	self.g = self.g - other.g
+	self.b = self.b - other.b
+	self.a = self.a - other.a
+
+end
+
+function COLOR:Mul( multiplier )
+
+	self.r = self.r * multiplier
+	self.g = self.g * multiplier
+	self.b = self.b * multiplier
+	self.a = self.a * multiplier
+
+end
+
+function COLOR:Div( divisor )
+
+	self.r = self.r / divisor
+	self.g = self.g / divisor
+	self.b = self.b / divisor
+	self.a = self.a / divisor
+
+end
