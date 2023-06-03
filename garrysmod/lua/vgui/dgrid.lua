@@ -106,4 +106,13 @@ function PANEL:SortByMember( key, desc )
 
 end
 
+function PANEL:Clear()
+
+	for k, panel in ipairs( self:GetChildren() ) do
+		panel:Remove()
+	end
+	self.Items = {}
+
+end
+
 derma.DefineControl( "DGrid", "A really simple grid layout panel", PANEL, "Panel" )
