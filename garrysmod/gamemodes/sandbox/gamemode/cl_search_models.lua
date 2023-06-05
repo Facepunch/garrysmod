@@ -117,6 +117,7 @@ local function AddSearchProvider( listname, ctype, stype )
 
 		for k, v in pairs( list.Get( listname ) ) do
 			if ( listname == "Weapon" && !v.Spawnable ) then continue end
+
 			v.ClassName = k
 			v.PrintName = v.PrintName or v.Name
 			v.ScriptedEntityType = ctype
@@ -127,9 +128,9 @@ local function AddSearchProvider( listname, ctype, stype )
 
 			local name = v.PrintName
 			local name_c = v.ClassName
-			if ( !name && !name_c ) then continue end
+			if ( !isstring( name ) && !isstring( name_c ) ) then continue end
 
-			if ( ( name && name:lower():find( str, nil, true ) ) || ( name_c && name_c:lower():find( str, nil, true ) ) ) then
+			if ( ( isstring( name ) && name:lower():find( str, nil, true ) ) || ( isstring( name_c ) && name_c:lower():find( str, nil, true ) ) ) then
 
 				local entry = {
 					text = v.PrintName or v.ClassName,
