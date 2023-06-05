@@ -15,6 +15,7 @@ local pp_colormod_color = CreateClientConVar( "pp_colormod_color", "1", true, fa
 local pp_colormod_mulr = CreateClientConVar( "pp_colormod_mulr", "0", true, false )
 local pp_colormod_mulg = CreateClientConVar( "pp_colormod_mulg", "0", true, false )
 local pp_colormod_mulb = CreateClientConVar( "pp_colormod_mulb", "0", true, false )
+local pp_colormod_inv = CreateClientConVar( "pp_colormod_inv", "0", true, false )
 
 function DrawColorModify( tab )
 
@@ -47,6 +48,7 @@ hook.Add( "RenderScreenspaceEffects", "RenderColorModify", function()
 	tab[ "$pp_colour_mulr" ] = pp_colormod_mulr:GetFloat() * 0.1
 	tab[ "$pp_colour_mulg" ] = pp_colormod_mulg:GetFloat() * 0.1
 	tab[ "$pp_colour_mulb" ] = pp_colormod_mulb:GetFloat() * 0.1
+	tab[ "$pp_colour_inv" ] = pp_colormod_inv:GetFloat()
 
 	DrawColorModify( tab )
 
@@ -71,6 +73,7 @@ list.Set( "PostProcess", "#colormod_pp", {
 		CPanel:AddControl( "Slider", { Label = "#colormod_pp.brightness", Command = "pp_colormod_brightness", Type = "Float", Min = "-2", Max = "2" } )
 		CPanel:AddControl( "Slider", { Label = "#colormod_pp.contrast", Command = "pp_colormod_contrast", Type = "Float", Min = "0", Max = "10" } )
 		CPanel:AddControl( "Slider", { Label = "#colormod_pp.color", Command = "pp_colormod_color", Type = "Float", Min = "0", Max = "5" } )
+		CPanel:AddControl( "Slider", { Label = "#colormod_pp.invert", Command = "pp_colormod_inv", Type = "Float", Min = "0", Max = "1" } )
 
 		CPanel:AddControl( "Color", { Label = "#colormod_pp.color_add", Red = "pp_colormod_addr", Green = "pp_colormod_addg", Blue = "pp_colormod_addb", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" } )
 		CPanel:AddControl( "Color", { Label = "#colormod_pp.color_multiply", Red = "pp_colormod_mulr", Green = "pp_colormod_mulg", Blue = "pp_colormod_mulb", ShowAlpha = "0", ShowHSV = "1", ShowRGB = "1" } )
