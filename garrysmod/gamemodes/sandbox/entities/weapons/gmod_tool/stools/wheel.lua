@@ -62,6 +62,7 @@ function TOOL:LeftClick( trace )
 
 	-- Create the wheel
 	local wheelEnt = MakeWheel( ply, trace.HitPos, trace.HitNormal:Angle() + self.wheelAngle, model, fwd, bck, nil, nil, toggle, torque )
+	if ( !IsValid( wheelEnt ) ) then return false end
 
 	-- Position
 	local CurPos = wheelEnt:GetPos()
@@ -78,20 +79,23 @@ function TOOL:LeftClick( trace )
 	local LPos1 = wheelEnt:GetPhysicsObject():WorldToLocal( wheelEnt:GetPos() + trace.HitNormal )
 	local LPos2 = targetPhys:WorldToLocal( trace.HitPos )
 
-	local constraint, axis = constraint.Motor( wheelEnt, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, friction, torque, 0, nocollide, toggle, ply, limit )
+	local constr, axis = constraint.Motor( wheelEnt, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, friction, torque, 0, nocollide, toggle, ply, limit )
 
 	undo.Create( "Wheel" )
-		undo.AddEntity( axis )
-		undo.AddEntity( constraint )
+		if ( IsValid( constr ) ) then
+			undo.AddEntity( constr )
+			ply:AddCleanup( "wheels", constr )
+		end
+		if ( IsValid( axis ) ) then
+			undo.AddEntity( axis )
+			ply:AddCleanup( "wheels", axis )
+		end
 		undo.AddEntity( wheelEnt )
 		undo.SetPlayer( ply )
 	undo.Finish()
 
-	ply:AddCleanup( "wheels", axis )
-	ply:AddCleanup( "wheels", constraint )
-
-	wheelEnt:SetMotor( constraint )
-	wheelEnt:SetDirection( constraint.direction )
+	wheelEnt:SetMotor( constr )
+	wheelEnt:SetDirection( constr.direction )
 	wheelEnt:SetAxis( trace.HitNormal )
 	wheelEnt:DoDirectionEffect()
 
