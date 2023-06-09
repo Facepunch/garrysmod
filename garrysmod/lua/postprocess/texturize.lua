@@ -46,7 +46,7 @@ list.Set( "PostProcess", "#texturize_pp", {
 
 			spawnmenu.CreateContentIcon( "postprocess", content, {
 				name = "#texturize_pp",
-				label = string.gsub(k, "^%a", string.upper(string.sub(k, 1, 1))),
+				label = string.gsub( k, "^%a", string.upper( string.sub( k, 1, 1 ) ) ),
 				icon = textr.Icon,
 				convars = {
 					pp_texturize = {
