@@ -42,6 +42,7 @@ end
 
 local local_IconList = nil
 local local_IconList_Split = 0
+local local_IconList_FlagSplit = 0
 
 function PANEL:Fill()
 
@@ -51,6 +52,8 @@ function PANEL:Fill()
 	if ( !local_IconList ) then
 		local_IconList = file.Find( "materials/icon16/*.png", "MOD" )
 		local_IconList_Split = #local_IconList
+		table.Add( local_IconList, file.Find( "materials/flags16/*.png", "MOD" ) )
+		local_IconList_FlagSplit = #local_IconList
 		table.Add( local_IconList, file.Find( "materials/games/16/*.png", "MOD" ) )
 	end
 
@@ -63,8 +66,10 @@ function PANEL:Fill()
 
 			local btn = self.IconLayout:Add( "DImageButton" )
 			btn.FilterText = string.lower( v )
-			if ( k > local_IconList_Split ) then
+			if ( k > local_IconList_Split and k > local_IconList_FlagSplit ) then
 				btn:SetOnViewMaterial( "games/16/" .. v )
+			elseif  (k > local_IconList_Split ) then
+				btn:SetOnViewMaterial( "flags16/" .. v )
 			else
 				btn:SetOnViewMaterial( "icon16/" .. v )
 			end
