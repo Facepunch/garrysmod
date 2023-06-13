@@ -59,7 +59,6 @@ function vgui.CreateFromTable( metatable, parent, name )
 
 	table.Merge( panel:GetTable(), metatable )
 	panel.BaseClass = PanelFactory[ metatable.Base ]
-	panel.ClassName = classname
 
 	-- Call the Init function if we have it
 	if ( panel.Init ) then
