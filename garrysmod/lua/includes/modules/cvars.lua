@@ -1,6 +1,9 @@
 
 local table				= table
 local type				= type
+local istable 			= istable
+local assert			= assert
+local format			= string.format
 local GetConVar			= GetConVar
 
 --[[---------------------------------------------------------
@@ -19,7 +22,8 @@ function GetConVarCallbacks( name, createIfNotFound )
 
 	local tab = ConVars[ name ]
 	if ( createIfNotFound and !tab ) then
-		tab = {}; ConVars[ name ] = tab
+		tab = {}
+		ConVars[ name ] = tab
 	end
 
 	return tab
@@ -37,7 +41,7 @@ function OnConVarChanged( name, old, new )
 
 	for i = 1, #tab do
 		local callback = tab[ i ]
-		if ( type( callback ) == "table" ) then
+		if ( istable( callback ) ) then
 			callback[ 1 ]( name, old, new )
 		else
 			callback( name, old, new )
@@ -52,6 +56,10 @@ end
 -----------------------------------------------------------]]
 function AddChangeCallback( name, func, identifier )
 
+	if ( identifier ) then
+		assert( type( identifier ) == "string", format( "bad argument #%i (string expected, got %s)", 2, type( identifier ) ) )
+	end
+
 	local tab = GetConVarCallbacks( name, true )
 
 	if ( !identifier ) then
@@ -61,7 +69,7 @@ function AddChangeCallback( name, func, identifier )
 
 	for i = 1, #tab do
 		local callback = tab[ i ]
-		if ( type( callback ) == "table" and callback[ 2 ] == identifier ) then
+		if ( istable( callback ) and callback[ 2 ] == identifier ) then
 			callback[ 1 ] = func
 			return
 		end
@@ -77,10 +85,14 @@ end
 -----------------------------------------------------------]]
 function RemoveChangeCallback( name, identifier )
 
+	if ( identifier ) then
+		assert( type( identifier ) == "string", format( "bad argument #%i (string expected, got %s)", 2, type( identifier ) ) )
+	end
+
 	local tab = GetConVarCallbacks( name, true )
 	for i = 1, #tab do
 		local callback = tab[ i ]
-		if ( type( callback ) == "table" and callback[ 2 ] == identifier ) then
+		if ( istable( callback ) and callback[ 2 ] == identifier ) then
 			table.remove( tab, i )
 			break
 		end
