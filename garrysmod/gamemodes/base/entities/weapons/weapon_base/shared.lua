@@ -259,15 +259,6 @@ function SWEP:Ammo2()
 end
 
 --[[---------------------------------------------------------
-	Name: SetDeploySpeed
-	Desc: Sets the weapon deploy speed.
-		 This value needs to match on client and server.
------------------------------------------------------------]]
-function SWEP:SetDeploySpeed( speed )
-	self.m_WeaponDeploySpeed = tonumber( speed )
-end
-
---[[---------------------------------------------------------
 	Name: DoImpactEffect
 	Desc: Callback so the weapon can override the impact effects it makes
 		 return true to not do the default thing - which is to call UTIL_ImpactTrace in c++
