@@ -81,10 +81,11 @@ function PANEL:Init()
 
 end
 
-function PANEL:SetFixedWidth( i )
+function PANEL:SetFixedWidth( iSize )
 
-	self:SetMinWidth( i )
-	self:SetMaxWidth( i )
+	self:SetMinWidth( iSize )
+	self:SetMaxWidth( iSize )
+	self:SetWide( iSize )
 
 end
 
