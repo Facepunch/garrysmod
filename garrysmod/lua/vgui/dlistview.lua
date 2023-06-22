@@ -580,8 +580,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	local Col1 = ctrl:AddColumn( "Address" )
 	local Col2 = ctrl:AddColumn( "Port" )
 
-	Col2:SetMinWidth( 30 )
-	Col2:SetMaxWidth( 30 )
+	Col2:SetFixedWidth( 30 )
 
 	for i = 1, 128 do
 		ctrl:AddLine( "192.168.0." .. i, "80" )
