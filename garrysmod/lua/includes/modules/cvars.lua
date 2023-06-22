@@ -2,6 +2,7 @@
 local table				= table
 local type				= type
 local istable 			= istable
+local isstring			= isstring
 local assert			= assert
 local format			= string.format
 local GetConVar			= GetConVar
@@ -57,7 +58,7 @@ end
 function AddChangeCallback( name, func, identifier )
 
 	if ( identifier ) then
-		assert( type( identifier ) == "string", format( "bad argument #%i (string expected, got %s)", 2, type( identifier ) ) )
+		assert( isstring( identifier ), format( "bad argument #%i (string expected, got %s)", 3, type( identifier ) ) )
 	end
 
 	local tab = GetConVarCallbacks( name, true )
@@ -86,7 +87,7 @@ end
 function RemoveChangeCallback( name, identifier )
 
 	if ( identifier ) then
-		assert( type( identifier ) == "string", format( "bad argument #%i (string expected, got %s)", 2, type( identifier ) ) )
+		assert( isstring( identifier ), format( "bad argument #%i (string expected, got %s)", 2, type( identifier ) ) )
 	end
 
 	local tab = GetConVarCallbacks( name, true )
