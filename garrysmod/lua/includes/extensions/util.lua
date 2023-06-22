@@ -401,5 +401,5 @@ end
 	Desc: Returns whether a lua module with the given name is present on disk
 -----------------------------------------------------------]]
 function util.IsLuaModuleInstalled( name )
-	return file.Exists( "lua/includes/modules/" .. name .. ".lua", "GAME" )
+	return file.Exists( "includes/modules/" .. name .. ".lua", "LUA" )
 end
