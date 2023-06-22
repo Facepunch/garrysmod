@@ -78,6 +78,7 @@ function TOOL:LeftClick( trace, attach )
 	if ( !self:GetSWEP():CheckLimit( "balloons" ) ) then return false end
 
 	local balloon = MakeBalloon( ply, r, g, b, force, { Pos = trace.HitPos, Model = modeltable.model, Skin = modeltable.skin } )
+	if ( !IsValid( balloon ) ) then return false end
 
 	local CurPos = balloon:GetPos()
 	local NearestPoint = balloon:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
