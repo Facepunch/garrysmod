@@ -150,20 +150,18 @@ end
 
 function SWEP:StartPunch( right )
 
+	local owner = self:GetOwner()
+	if ( !owner:IsValid() ) then return end
+
 	self:SetRightPunch( right )
 
 	self:EmitSound( self.SwingSound )
 	self:PlayAnim( self:GetPunchActivity( right ) )
+	owner:SetAnimation( PLAYER_ATTACK1 )
 
 	local cooldown = CurTime() + self.PunchCooldown
 	self:SetNextPrimaryFire( cooldown )
 	self:SetNextSecondaryFire( cooldown )
-
-	local owner = self:GetOwner()
-
-	if ( owner:IsValid() ) then
-		owner:SetAnimation( PLAYER_ATTACK1 )
-	end
 
 	local delay = self.PunchDelay
 
