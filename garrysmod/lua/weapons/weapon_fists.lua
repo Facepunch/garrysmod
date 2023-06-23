@@ -2,7 +2,7 @@
 AddCSLuaFile()
 
 SWEP.PrintName = "#GMOD_Fists"
-SWEP.Author = "Kilburn, robotboy655, MaxOfS2D & Tenrys"
+SWEP.Author = "Kilburn, robotboy655, MaxOfS2D, Tenrys, code_gs"
 SWEP.Purpose = "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
 
 SWEP.Slot = 0
@@ -18,152 +18,273 @@ SWEP.UseHands = true
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Automatic = true
-SWEP.Primary.Ammo = "none"
+SWEP.Primary.Ammo = ""
 
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = true
-SWEP.Secondary.Ammo = "none"
+SWEP.Secondary.Ammo = ""
 
 SWEP.DrawAmmo = false
 
-SWEP.HitDistance = 48
+SWEP.HoldType = "fist"
 
-local SwingSound = Sound( "WeaponFrag.Throw" )
-local HitSound = Sound( "Flesh.ImpactHard" )
+SWEP.SwingSound = Sound( "WeaponFrag.Throw" )	-- Sound of the fists swinging
+SWEP.HitSound = Sound( "Flesh.ImpactHard" )		-- Sound of the fists hitting an entity
+
+SWEP.PunchCooldown = 0.9	-- Cooldown between punches
+SWEP.PunchDelay = 0.2		-- Delay between the punch being thrown and hitting an object
+SWEP.PunchDistance = 48		-- Distance of the punch
+SWEP.PunchForceScale = 80	-- Scalar force of the punch
+SWEP.ComboCount = 2			-- Number of successive punches needed for a combo punch
+SWEP.ComboResetTime = 0.1	-- Time between the next punch being available and the combo couner resetting
+
+-- Bounds of the punch's hull trace
+SWEP.PunchSize = {
+	Min = Vector( -10, -10, -8 ),
+	Max = Vector( 10, 10, 8 )
+}
+
+-- Bounds of the punch's random damage
+SWEP.PunchDamage = {
+	Min = 8,
+	Max = 12
+}
+
+-- Bounds of the combo punch's random damage
+SWEP.ComboDamage = {
+	Min = 12,
+	Max = 24
+}
+
+-- Directional scalars for the punch's force
+-- Punches thrown with the right hand will have the Right scalar negated (-Right)
+SWEP.PunchForce = {
+	Forward = 9998,
+	Right = 4192,
+	Up = 0
+}
+
+-- Directional scalars of the combo punch's force
+-- Punches thrown with the right hand will have the Right scalar negated (-Right)
+SWEP.ComboForce = {
+	Forward = 10012,
+	Right = 0,
+	Up = 5158
+}
 
 function SWEP:Initialize()
 
-	self:SetHoldType( "fist" )
+	self:SetHoldType( self.HoldType )
+
+end
+
+function SWEP:Deploy()
+
+	self:SetCombo( 0 )
+	self:SetPunchHitTime( 0 )
+
+	return true
 
 end
 
 function SWEP:SetupDataTables()
 
-	self:NetworkVar( "Float", 0, "NextMeleeAttack" )
+	self:NetworkVar( "Bool", 0, "RightPunch" )
+	self:NetworkVar( "Int", 0, "Combo" )
+	self:NetworkVar( "Float", 0, "PunchHitTime" )
 	self:NetworkVar( "Float", 1, "NextIdle" )
-	self:NetworkVar( "Int", 2, "Combo" )
 
 end
 
-function SWEP:UpdateNextIdle()
+-- FIXME: Catch deploy anim?
+function SWEP:Idle()
 
-	local vm = self:GetOwner():GetViewModel()
-	self:SetNextIdle( CurTime() + vm:SequenceDuration() / vm:GetPlaybackRate() )
+	-- Update idle anim
+	local curtime = CurTime()
+	if ( curtime < self:GetNextIdle() ) then return false end
+
+	self:SendWeaponAnim( ACT_VM_IDLE )
+	self:SetNextIdle( curtime + self:SequenceDuration() )
+
+	return true
 
 end
 
-function SWEP:PrimaryAttack( right )
+function SWEP:PrimaryAttack()
 
-	local owner = self:GetOwner()
-
-	owner:SetAnimation( PLAYER_ATTACK1 )
-
-	local anim = "fists_left"
-	if ( right ) then anim = "fists_right" end
-	if ( self:GetCombo() >= 2 ) then
-		anim = "fists_uppercut"
-	end
-
-	local vm = owner:GetViewModel()
-	vm:SendViewModelMatchingSequence( vm:LookupSequence( anim ) )
-
-	self:EmitSound( SwingSound )
-
-	self:UpdateNextIdle()
-	self:SetNextMeleeAttack( CurTime() + 0.2 )
-
-	self:SetNextPrimaryFire( CurTime() + 0.9 )
-	self:SetNextSecondaryFire( CurTime() + 0.9 )
+	self:StartPunch( false )
 
 end
 
 function SWEP:SecondaryAttack()
 
-	self:PrimaryAttack( true )
+	self:StartPunch( true )
+
+end
+
+function SWEP:PlayAnim( act )
+
+	local owner = self:GetOwner()
+	if ( !owner:IsValid() ) then return false end
+
+	local pViewModel = owner:GetViewModel()
+	if ( !pViewModel:IsValid() ) then return false end
+	if ( pViewModel:SelectWeightedSequence( act ) == -1 ) then return false end
+
+	self:SendWeaponAnim( act )
+	self:SetNextIdle( CurTime() + self:SequenceDuration() )
+
+	return true
+end
+
+function SWEP:GetPunchActivity( right )
+
+	if ( self:GetCombo() >= self.ComboCount ) then
+		return right and ACT_VM_HITRIGHT2 or ACT_VM_HITLEFT2
+	end
+
+	return right and ACT_VM_HITRIGHT or ACT_VM_HITLEFT
+
+end
+
+function SWEP:StartPunch( right )
+
+	self:SetRightPunch( right )
+
+	self:EmitSound( self.SwingSound )
+	self:PlayAnim( self:GetPunchActivity( right ) )
+
+	local cooldown = CurTime() + self.PunchCooldown
+	self:SetNextPrimaryFire( cooldown )
+	self:SetNextSecondaryFire( cooldown )
+
+	local owner = self:GetOwner()
+
+	if ( owner:IsValid() ) then
+		owner:SetAnimation( PLAYER_ATTACK1 )
+	end
+
+	local delay = self.PunchDelay
+
+	if ( delay != 0 ) then
+		self:SetPunchHitTime( curtime + delay )
+	else
+		self:PunchHit()
+	end
+end
+
+function SWEP:CanHit( ent )
+
+	return ent:IsValid()
+
+end
+
+function SWEP:CanDamage( ent )
+
+	return ent:IsPlayer() or ent:IsNPC() or ( ent:IsValid() and ent:Health() > 0 )
 
 end
 
 local phys_pushscale = GetConVar( "phys_pushscale" )
 
-function SWEP:DealDamage()
+function SWEP:PunchTrace()
 
 	local owner = self:GetOwner()
+	if ( !owner:IsValid() ) then return end
 
-	local anim = self:GetSequenceName(owner:GetViewModel():GetSequence())
+	local isplayer = owner:IsPlayer()
 
-	owner:LagCompensation( true )
+	if ( isplayer ) then
+		owner:LagCompensation( true )
+	end
 
-	local tr = util.TraceLine( {
-		start = owner:GetShootPos(),
-		endpos = owner:GetShootPos() + owner:GetAimVector() * self.HitDistance,
+	local startpos = owner:GetShootPos()
+	local aimvector = owner:GetAimVector()
+	local trdata = {
+		start = startpos,
+		endpos = startpos + aimvector * self.PunchDistance,
 		filter = owner,
 		mask = MASK_SHOT_HULL
-	} )
+	}
+	local tr = util.TraceLine( trdata )
 
-	if ( !IsValid( tr.Entity ) ) then
-		tr = util.TraceHull( {
-			start = owner:GetShootPos(),
-			endpos = owner:GetShootPos() + owner:GetAimVector() * self.HitDistance,
-			filter = owner,
-			mins = Vector( -10, -10, -8 ),
-			maxs = Vector( 10, 10, 8 ),
-			mask = MASK_SHOT_HULL
-		} )
+	if ( !tr.Entity:IsValid() ) then
+		local size = self.PunchSize
+		trdata.mins = size.Min
+		trdata.maxs = size.Max
+		trdata.output = tr
+
+		util.TraceHull( trdata )
 	end
 
-	-- We need the second part for single player because SWEP:Think is ran shared in SP
-	if ( tr.Hit && !( game.SinglePlayer() && CLIENT ) ) then
-		self:EmitSound( HitSound )
+	if ( isplayer ) then
+		owner:LagCompensation( false )
 	end
 
-	local hit = false
-	local scale = phys_pushscale:GetFloat()
+	return tr
 
-	if ( SERVER && IsValid( tr.Entity ) && ( tr.Entity:IsNPC() || tr.Entity:IsPlayer() || tr.Entity:Health() > 0 ) ) then
-		local dmginfo = DamageInfo()
+end
 
-		local attacker = owner
-		if ( !IsValid( attacker ) ) then attacker = self end
-		dmginfo:SetAttacker( attacker )
+function SWEP:PunchHit()
 
-		dmginfo:SetInflictor( self )
-		dmginfo:SetDamage( math.random( 8, 12 ) )
+	local owner = self:GetOwner()
+	if ( !owner:IsValid() ) then return end
 
-		if ( anim == "fists_left" ) then
-			dmginfo:SetDamageForce( owner:GetRight() * 4912 * scale + owner:GetForward() * 9998 * scale ) -- Yes we need those specific numbers
-		elseif ( anim == "fists_right" ) then
-			dmginfo:SetDamageForce( owner:GetRight() * -4912 * scale + owner:GetForward() * 9989 * scale )
-		elseif ( anim == "fists_uppercut" ) then
-			dmginfo:SetDamageForce( owner:GetUp() * 5158 * scale + owner:GetForward() * 10012 * scale )
-			dmginfo:SetDamage( math.random( 12, 24 ) )
-		end
+	local tr = self:PunchTrace()
+	local hitent = tr.Entity
 
-		SuppressHostEvents( NULL ) -- Let the breakable gibs spawn in multiplayer on client
-		tr.Entity:TakeDamageInfo( dmginfo )
-		SuppressHostEvents( owner )
-
-		hit = true
-
+	if ( !self:CanHit( hitent ) ) then
+		self:SetCombo( 0 )
+		return
 	end
 
-	if ( IsValid( tr.Entity ) ) then
-		local phys = tr.Entity:GetPhysicsObject()
-		if ( IsValid( phys ) ) then
-			phys:ApplyForceOffset( owner:GetAimVector() * 80 * phys:GetMass() * scale, tr.HitPos )
-		end
+	self:EmitSound( self.HitSound )
+
+	local phys = hitent:GetPhysicsObject()
+	local physscale = phys_pushscale:GetFloat()
+	local hitpos = tr.HitPos
+
+	if ( phys:IsValid() ) then
+		-- FIXME: This cannot be right
+		phys:ApplyForceOffset( aimvector * phys:GetMass() * physscale * self.PunchForceScale, hitpos )
 	end
 
-	if ( SERVER ) then
-		if ( hit && anim != "fists_uppercut" ) then
-			self:SetCombo( self:GetCombo() + 1 )
-		else
-			self:SetCombo( 0 )
-		end
+	if ( !self:CanDamage( hitent ) ) then
+		self:SetCombo( 0 )
+		return
 	end
 
-	owner:LagCompensation( false )
+	local dmginfo = DamageInfo()
+	dmginfo:SetAttacker( owner )
+	dmginfo:SetInflictor( self )
+	dmginfo:SetDamagePosition( hitpos )
+	dmginfo:SetDamageType( DMG_CLUB )
+	dmginfo:SetReportedPosition( tr.StartPos )
 
+	local dmg, force
+	local combo = self:GetCombo()
+
+	if ( combo >= self.ComboCount ) then
+		dmg = self.ComboDamage
+		force = self.ComboForce
+		self:SetCombo( 0 )
+	else
+		dmg = self.PunchDamage
+		force = self.PunchForce
+		self:SetCombo( combo + 1 )
+	end
+
+	dmginfo:SetDamage( util.SharedRandom( "GMOD_" .. self:GetClass() .. self:EntIndex(), dmg.Min, dmg.Max ) )
+	dmginfo:SetDamageForce(
+		owner:GetForward() * force.Forward * physscale +
+		owner:GetRight() * force.Right * physscale * ( self:GetRightPunch() && -1 || 1 ) +
+		owner:GetUp() * force.Up * physscale )
+
+	-- FIXME
+	SuppressHostEvents( NULL ) -- Let the breakable gibs spawn in multiplayer on client
+	hitent:DispatchTraceAttack( dmginfo, tr )
+	SuppressHostEvents( owner )
 end
 
 function SWEP:OnDrop()
@@ -172,62 +293,30 @@ function SWEP:OnDrop()
 
 end
 
-function SWEP:Deploy()
-
-	local speed = GetConVarNumber( "sv_defaultdeployspeed" )
-
-	local vm = self:GetOwner():GetViewModel()
-	vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_draw" ) )
-	vm:SetPlaybackRate( speed )
-
-	self:SetNextPrimaryFire( CurTime() + vm:SequenceDuration() / speed )
-	self:SetNextSecondaryFire( CurTime() + vm:SequenceDuration() / speed )
-	self:UpdateNextIdle()
-
-	if ( SERVER ) then
-		self:SetCombo( 0 )
-	end
-
-	return true
-
-end
-
 function SWEP:Holster()
 
-	self:SetNextMeleeAttack( 0 )
+	self:SetCombo( 0 )
+	self:SetPunchHitTime( 0 )
 
 	return true
 
 end
+
+-- Punching should only be done on the server in single-player
+if ( CLIENT and game.SinglePlayer() ) then return end
 
 function SWEP:Think()
 
-	local vm = self:GetOwner():GetViewModel()
 	local curtime = CurTime()
-	local idletime = self:GetNextIdle()
+	local punchhit = self:GetPunchHitTime()
 
-	if ( idletime > 0 && CurTime() > idletime ) then
-
-		vm:SendViewModelMatchingSequence( vm:LookupSequence( "fists_idle_0" .. math.random( 1, 2 ) ) )
-
-		self:UpdateNextIdle()
-
+	if ( punchhit > 0 && punchhit <= curtime ) then
+		self:PunchHit()
+		self:SetPunchHitTime( 0 )
 	end
 
-	local meleetime = self:GetNextMeleeAttack()
-
-	if ( meleetime > 0 && CurTime() > meleetime ) then
-
-		self:DealDamage()
-
-		self:SetNextMeleeAttack( 0 )
-
-	end
-
-	if ( SERVER && CurTime() > self:GetNextPrimaryFire() + 0.1 ) then
-
+	if ( math.min( self:GetNextPrimaryFire(), self:GetNextSecondaryFire() ) + self.ComboResetTime <= curtime ) then
 		self:SetCombo( 0 )
-
 	end
 
 end
