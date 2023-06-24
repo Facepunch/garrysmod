@@ -126,7 +126,8 @@ function PANEL:PerformLayout()
 end
 
 function PANEL:ResizeColumn( iSize )
-
+	iSize = math.Clamp( iSize, self:GetMinWidth(), self:GetMaxWidth() )
+	
 	self:GetParent():OnRequestResize( self, iSize )
 
 end
