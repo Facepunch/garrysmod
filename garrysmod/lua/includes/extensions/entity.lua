@@ -464,7 +464,7 @@ function meta:InstallDataTable()
 		if ( CLIENT ) then
 
 			net.Start( "editvariable" )
-				net.WriteUInt( self:EntIndex(), 32 )
+				net.WriteEntity( self )
 				net.WriteString( variable )
 				net.WriteString( value )
 			net.SendToServer()
@@ -490,8 +490,7 @@ if ( SERVER ) then
 
 	net.Receive( "editvariable", function( len, client )
 
-		local iIndex = net.ReadUInt( 32 )
-		local ent = Entity( iIndex )
+		local ent = net.ReadEntity()
 
 		if ( !IsValid( ent ) ) then return end
 		if ( !isfunction( ent.GetEditingData ) ) then return end
