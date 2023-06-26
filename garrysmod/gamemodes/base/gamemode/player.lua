@@ -177,7 +177,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 		net.Start( "PlayerKilledByPlayer" )
 
 			net.WriteEntity( ply )
-			net.WriteString( inflictor:GetClass() )
+			net.WriteEntity( inflictor )
 			net.WriteEntity( attacker )
 
 		net.Broadcast()
@@ -189,8 +189,8 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	net.Start( "PlayerKilled" )
 
 		net.WriteEntity( ply )
-		net.WriteString( inflictor:GetClass() )
-		net.WriteString( attacker:GetClass() )
+		net.WriteEntity( inflictor )
+		net.WriteEntity( attacker )
 
 	net.Broadcast()
 

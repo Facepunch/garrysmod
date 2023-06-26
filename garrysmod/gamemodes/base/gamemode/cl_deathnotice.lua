@@ -49,13 +49,13 @@ end
 local function RecvPlayerKilledByPlayer()
 
 	local victim	= net.ReadEntity()
-	local inflictor	= net.ReadString()
+	local inflictor	= net.ReadEntity()
 	local attacker	= net.ReadEntity()
 
 	if ( !IsValid( attacker ) ) then return end
 	if ( !IsValid( victim ) ) then return end
 
-	GAMEMODE:AddDeathNotice( attacker:Name(), attacker:Team(), inflictor, victim:Name(), victim:Team() )
+	GAMEMODE:AddDeathNotice( attacker:Name(), attacker:Team(), inflictor:GetClass(), victim:Name(), victim:Team() )
 
 end
 net.Receive( "PlayerKilledByPlayer", RecvPlayerKilledByPlayer )
@@ -73,19 +73,20 @@ local function RecvPlayerKilled()
 
 	local victim	= net.ReadEntity()
 	if ( !IsValid( victim ) ) then return end
-	local inflictor	= net.ReadString()
-	local attacker	= "#" .. net.ReadString()
+	local inflictor	= net.ReadEntity()
+	local attacker	= net.ReadEntity()
 
-	GAMEMODE:AddDeathNotice( attacker, -1, inflictor, victim:Name(), victim:Team() )
+	GAMEMODE:AddDeathNotice( "#" .. attacker:GetClass(), -1, inflictor:GetClass(), victim:Name(), victim:Team() )
 
 end
 net.Receive( "PlayerKilled", RecvPlayerKilled )
 
 local function RecvPlayerKilledNPC()
 
-	local victimtype = net.ReadString()
+	local victimEntity = net.ReadEntity()
+	local victimtype = victimEntity:GetClass()
 	local victim	= "#" .. victimtype
-	local inflictor	= net.ReadString()
+	local inflictor	= net.ReadEntity()
 	local attacker	= net.ReadEntity()
 
 	--
@@ -93,7 +94,7 @@ local function RecvPlayerKilledNPC()
 	--
 	if ( !IsValid( attacker ) ) then return end
 
-	GAMEMODE:AddDeathNotice( attacker:Name(), attacker:Team(), inflictor, victim, -1 )
+	GAMEMODE:AddDeathNotice( attacker:Name(), attacker:Team(), inflictor:GetClass(), victim, -1 )
 
 	local bIsLocalPlayer = ( IsValid(attacker) && attacker == LocalPlayer() )
 
@@ -117,11 +118,13 @@ net.Receive( "PlayerKilledNPC", RecvPlayerKilledNPC )
 
 local function RecvNPCKilledNPC()
 
-	local victim	= "#" .. net.ReadString()
-	local inflictor	= net.ReadString()
-	local attacker	= "#" .. net.ReadString()
+	local victimEntity = net.ReadEntity()
+	local victim	= "#" .. victimEntity:GetClass()
+	local inflictor	= net.ReadEntity()
+	local attackerEntity = net.ReadEntity()
+	local attacker	= "#" .. attackerEntity:GetClass()
 
-	GAMEMODE:AddDeathNotice( attacker, -1, inflictor, victim, -1 )
+	GAMEMODE:AddDeathNotice( attacker, -1, inflictor:GetClass(), victim, -1 )
 
 end
 net.Receive( "NPCKilledNPC", RecvNPCKilledNPC )

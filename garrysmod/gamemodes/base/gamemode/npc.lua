@@ -3,6 +3,8 @@
 util.AddNetworkString( "PlayerKilledNPC" )
 util.AddNetworkString( "NPCKilledNPC" )
 
+local worldspawn = Entity(0)
+
 --[[---------------------------------------------------------
    Name: gamemode:OnNPCKilled( entity, attacker, inflictor )
    Desc: The NPC has died
@@ -30,8 +32,8 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	
 	end
 	
-	local InflictorClass = "worldspawn"
-	local AttackerClass = "worldspawn"
+	local InflictorClass = worldspawn
+	local AttackerClass = worldspawn
 	
 	if ( IsValid( inflictor ) ) then InflictorClass = inflictor:GetClass() end
 	if ( IsValid( attacker ) ) then
@@ -45,8 +47,8 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 
 			net.Start( "PlayerKilledNPC" )
 		
-				net.WriteString( ent:GetClass() )
-				net.WriteString( InflictorClass )
+				net.WriteEntity( ent )
+				net.WriteEntity( InflictorClass )
 				net.WriteEntity( attacker )
 		
 			net.Broadcast()
@@ -60,9 +62,9 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 
 	net.Start( "NPCKilledNPC" )
 	
-		net.WriteString( ent:GetClass() )
-		net.WriteString( InflictorClass )
-		net.WriteString( AttackerClass )
+		net.WriteEntity( ent )
+		net.WriteEntity( InflictorClass )
+		net.WriteEntity( AttackerClass )
 	
 	net.Broadcast()
 
