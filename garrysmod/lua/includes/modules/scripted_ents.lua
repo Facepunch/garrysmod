@@ -131,29 +131,29 @@ function Register( t, name, forcename )
 
 	end
 
-	if ( t.Spawnable != true ) then return true end
+	if ( t.Spawnable == true ) then
+		local printname = t.PrintName
+		if ( !isstring( printname ) ) then printname = name end
 
-	local printname = t.PrintName
-	if ( !isstring( printname ) ) then printname = name end
+		local category = t.Category
+		if ( !isstring( category ) ) then category = "Other" end
 
-	local category = t.Category
-	if ( !isstring( category ) ) then category = "Other" end
+		list.Set( "SpawnableEntities", name, {
+			-- Required information
+			ClassName		= name,
+			PrintName		= printname,
+			Category		= category,
 
-	list.Set( "SpawnableEntities", name, {
-		-- Required information
-		ClassName		= name,
-		PrintName		= printname,
-		Category		= category,
-
-		-- Optional information
-		NormalOffset	= t.NormalOffset,
-		DropToFloor		= t.DropToFloor,
-		Author			= t.Author,
-		AdminOnly		= t.AdminOnly,
-		Information		= t.Information,
-		ScriptedEntityType = t.ScriptedEntityType,
-		IconOverride	= t.IconOverride
-	} )
+			-- Optional information
+			NormalOffset	= t.NormalOffset,
+			DropToFloor		= t.DropToFloor,
+			Author			= t.Author,
+			AdminOnly		= t.AdminOnly,
+			Information		= t.Information,
+			ScriptedEntityType = t.ScriptedEntityType,
+			IconOverride	= t.IconOverride
+		} )
+	end
 
 	return true
 
