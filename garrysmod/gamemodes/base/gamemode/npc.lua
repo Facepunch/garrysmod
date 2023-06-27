@@ -3,8 +3,6 @@
 util.AddNetworkString( "PlayerKilledNPC" )
 util.AddNetworkString( "NPCKilledNPC" )
 
-local worldspawn = Entity(0)
-
 --[[---------------------------------------------------------
    Name: gamemode:OnNPCKilled( entity, attacker, inflictor )
    Desc: The NPC has died
@@ -32,23 +30,24 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 	
 	end
 	
-	local InflictorClass = worldspawn
-	local AttackerClass = worldspawn
+	local world = game.GetWorld()
+	local InflictorEntity = world
+	local AttackerEntity = world
 	
-	if ( IsValid( inflictor ) ) then InflictorClass = inflictor:GetClass() end
+	if ( IsValid( inflictor ) ) then InflictorEntity = inflictor end
 	if ( IsValid( attacker ) ) then
 
-		AttackerClass = attacker:GetClass()
+		AttackerEntity = attacker
 
 		-- If there is no valid inflictor, use the attacker (i.e. manhacks)
-		if ( !IsValid( inflictor ) ) then InflictorClass = attacker:GetClass() end
+		if ( !IsValid( inflictor ) ) then InflictorEntity = attacker end
 
 		if ( attacker:IsPlayer() ) then
 
 			net.Start( "PlayerKilledNPC" )
 		
 				net.WriteEntity( ent )
-				net.WriteEntity( InflictorClass )
+				net.WriteEntity( InflictorEntity )
 				net.WriteEntity( attacker )
 		
 			net.Broadcast()
@@ -58,13 +57,13 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 
 	end
 
-	if ( ent:GetClass() == "npc_turret_floor" ) then AttackerClass = ent:GetClass() end
+	if ( ent:GetClass() == "npc_turret_floor" ) then AttackerEntity = ent end
 
 	net.Start( "NPCKilledNPC" )
 	
 		net.WriteEntity( ent )
-		net.WriteEntity( InflictorClass )
-		net.WriteEntity( AttackerClass )
+		net.WriteEntity( InflictorEntity )
+		net.WriteEntity( AttackerEntity )
 	
 	net.Broadcast()
 
