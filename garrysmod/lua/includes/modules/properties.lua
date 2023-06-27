@@ -178,7 +178,7 @@ end
 
 if ( CLIENT ) then
 
-	local lastEyePos = vector_zero
+	local lastEyePos = vector_origin
 	hook.Add( "PreDrawHalos", "PropertiesHover", function()
 
 		if ( !IsValid( vgui.GetHoveredPanel() ) || !vgui.GetHoveredPanel():IsWorldClicker() ) then return end
