@@ -61,6 +61,7 @@ function Register( t, name, forcename )
 	end
 
 	if ( !forcename && isstring( t.ClassName ) ) then name = t.ClassName end
+	t.ClassName = name
 
 	local old = WeaponList[ name ]
 	WeaponList[ name ] = t
