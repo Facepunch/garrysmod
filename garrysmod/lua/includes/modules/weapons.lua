@@ -43,30 +43,50 @@ end
 	Name: Register( table, string, bool )
 	Desc: Used to register your SWEP with the engine
 -----------------------------------------------------------]]
-function Register( t, name )
+function Register( t, name, forcename )
 
-	t.ClassName = t.ClassName or name
+	if ( !istable( t ) ) then error( string.format( "bad argument #1 to 'Register' (table expected, got %s)", type( t ) ), 2 ) end
+	if ( !isstring( name ) ) then error( string.format( "bad argument #2 to 'Register' (table expected, got %s)", type( name ) ), 2 ) end
 
-	if ( hook.Run( "PreRegisterSWEP", t, t.ClassName ) == false ) then return end
+	if ( hook.Run( "PreRegisterSWEP", t, name ) == false ) then return false end
 
-	local old = WeaponList[ t.ClassName ]
-	WeaponList[ t.ClassName ] = t
+	local baseclass = t.Base
 
-	--baseclass.Set( name, t )
+	if ( !isstring( baseclass ) ) then
+		if ( baseclass != nil ) then
+			error( string.format( "bad argument #1 to 'Register' (string or nil expected for the 'Base' key of entity '%s', got %s)", name, type( baseclass ) ), 2 )
+		end
 
-	list.Set( "Weapon", t.ClassName, {
-		ClassName = t.ClassName,
-		PrintName = t.PrintName or t.ClassName,
-		Category = t.Category or "Other",
+		baseclass = "weapon_base"
+	end
+
+	if ( !forcename && isstring( t.ClassName ) ) then name = t.ClassName end
+
+	local old = WeaponList[ name ]
+	WeaponList[ name ] = t
+
+	local printname = t.PrintName
+	if ( !isstring( printname ) ) then printname = name end
+
+	local category = t.Category
+	if ( !isstring( category ) ) then category = "Other" end
+
+	list.Set( "Weapon", name, {
+		-- Required information
+		ClassName = name,
+		PrintName = printname,
+		Category = category,
+
+		-- Optional information
 		Spawnable = t.Spawnable,
 		AdminOnly = t.AdminOnly,
 		ScriptedEntityType = t.ScriptedEntityType,
-		IconOverride = t.IconOverride
+		IconOverride = t.IconOverride -- Unlike the other keys, this can be nil as it's an override path
 	} )
 
 	-- Allow all SWEPS to be duplicated, unless specified
 	if ( !t.DisableDuplicator ) then
-		duplicator.Allow( t.ClassName )
+		duplicator.Allow( name )
 	end
 
 	--
@@ -79,7 +99,7 @@ function Register( t, name )
 		for _, e in ipairs( ents.GetAll() ) do
 			local class = e:GetClass()
 
-			if ( class == t.ClassName ) then
+			if ( class == name ) then
 				--
 				-- Replace the contents with this entity table
 				--
@@ -93,7 +113,7 @@ function Register( t, name )
 				end
 			end
 
-			if ( IsBasedOn( class, t.ClassName ) ) then
+			if ( IsBasedOn( class, name ) ) then
 				table.Merge( e, Get( class ) )
 
 				if ( e.OnReloaded ) then
@@ -103,6 +123,8 @@ function Register( t, name )
 		end
 
 	end
+
+	return true
 
 end
 
