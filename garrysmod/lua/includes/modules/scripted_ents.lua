@@ -56,25 +56,25 @@ function Register( t, name )
 
 	local Base = t.Base
 	if ( !Base ) then Base = BaseClasses[ t.Type ] end
-	t.ClassName = t.ClassName or name
 
-	local old = SEntList[ t.ClassName ]
+	local old = SEntList[ name ]
 	local tab = {}
 
 	tab.type		= t.Type
 	tab.t			= t
 	tab.isBaseType	= true
 	tab.Base		= Base
+	tab.t.ClassName	= name
 
 	if ( !Base ) then
-		Msg( "WARNING: Scripted entity "..t.ClassName.." has an invalid base entity!\n" )
+		Msg( "WARNING: Scripted entity " .. name .. " has an invalid base entity!\n" )
 	end
 
-	SEntList[ t.ClassName ] = tab
+	SEntList[ name ] = tab
 
 	-- Allow all SENTS to be duplicated, unless specified
 	if ( !t.DisableDuplicator ) then
-		duplicator.Allow( t.ClassName )
+		duplicator.Allow( name )
 	end
 
 	--
@@ -86,7 +86,7 @@ function Register( t, name )
 		--
 		-- For each entity using this class
 		--
-		for _, entity in ipairs( ents.FindByClass( t.ClassName ) ) do
+		for _, entity in ipairs( ents.FindByClass( name ) ) do
 
 			--
 			-- Replace the contents with this entity table
@@ -104,7 +104,7 @@ function Register( t, name )
 
 		-- Update entity table of entities that are based on this entity
 		for _, e in ipairs( ents.GetAll() ) do
-			if ( IsBasedOn( e:GetClass(), t.ClassName ) ) then
+			if ( IsBasedOn( e:GetClass(), name ) ) then
 
 				table.Merge( e, Get( e:GetClass() ) )
 
@@ -118,10 +118,10 @@ function Register( t, name )
 
 	if ( !t.Spawnable ) then return end
 
-	list.Set( "SpawnableEntities", t.ClassName, {
+	list.Set( "SpawnableEntities", name, {
 		-- Required information
 		PrintName		= t.PrintName,
-		ClassName		= t.ClassName,
+		ClassName		= name,
 		Category		= t.Category,
 
 		-- Optional information
