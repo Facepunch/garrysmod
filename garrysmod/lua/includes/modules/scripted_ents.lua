@@ -9,11 +9,14 @@ module( "scripted_ents", package.seeall )
 local Aliases = {}
 local SEntList = {}
 
-local BaseClasses = {}
-BaseClasses[ "anim" ] = "base_anim"
-BaseClasses[ "point" ] = "base_point"
-BaseClasses[ "brush" ] = "base_brush"
-BaseClasses[ "filter" ] = "base_filter"
+local BaseClasses = {
+	[ "ai" ]		= "base_ai",
+	[ "anim" ]		= "base_anim",
+	[ "brush" ]		= "base_brush",
+	[ "filter" ]	= "base_filter",
+	[ "nextbot" ]	= "base_nextbot",
+	[ "point" ]		= "base_point"
+}
 
 --[[---------------------------------------------------------
 	Name: TableInherit( t, base )
@@ -50,31 +53,43 @@ function IsBasedOn( name, base )
 	return IsBasedOn( t.Base, base )
 end
 
-function Register( t, name )
+function Register( t, name, forcename )
 
-	if ( hook.Run( "PreRegisterSENT", t, name ) == false ) then return end
+	if ( !istable( t ) ) then error( string.format( "bad argument #1 to 'Register' (table expected, got %s)", type( t ) ), 2 ) end
+	if ( !isstring( name ) ) then error( string.format( "bad argument #2 to 'Register' (table expected, got %s)", type( name ) ), 2 ) end
 
-	local Base = t.Base
-	if ( !Base ) then Base = BaseClasses[ t.Type ] end
-	t.ClassName = t.ClassName or name
+	if ( hook.Run( "PreRegisterSENT", t, name ) == false ) then return false end
 
-	local old = SEntList[ t.ClassName ]
-	local tab = {}
+	local baseclass = t.Base
+	if ( baseclass != nil && !isstring( baseclass ) ) then error( string.format( "bad argument #1 to 'Register' (string or nil expected for the 'Base' key of entity '%s', got %s)", name, type( baseclass ) ), 2 ) end
 
-	tab.type		= t.Type
-	tab.t			= t
-	tab.isBaseType	= true
-	tab.Base		= Base
-
-	if ( !Base ) then
-		Msg( "WARNING: Scripted entity "..t.ClassName.." has an invalid base entity!\n" )
+	local enttype = t.Type
+	if ( enttype != nil ) then
+		if ( !isstring( enttype ) ) then error( string.format( "bad argument #1 to 'Register' (string or nil expected for the 'Type' key of entity '%s', got %s)", name, type( enttype ) ), 2 ) end
+		if ( BaseClasses[ enttype ] == nil ) then error( string.format( "bad argument #1 to 'Register' (invalid 'Type' key '%s' of entity '%s')", enttype, name ), 2 ) end
 	end
 
-	SEntList[ t.ClassName ] = tab
+	if ( baseclass == nil ) then
+		if ( enttype == nil ) then error( string.format( "bad argument #1 to 'Register' (no 'Type' or 'Base' keys specified for entity '%s')", name ), 2 ) end
+		baseclass = BaseClasses[ enttype ]
+	end
+
+	if ( !forcename && isstring( t.ClassName ) ) then name = t.ClassName end
+
+	local old = SEntList[ name ]
+	local tab = {}
+
+	tab.type		= enttype
+	tab.t			= t
+	tab.isBaseType	= true
+	tab.Base		= baseclass
+	tab.ClassName	= name
+
+	SEntList[ name ] = tab
 
 	-- Allow all SENTS to be duplicated, unless specified
 	if ( !t.DisableDuplicator ) then
-		duplicator.Allow( t.ClassName )
+		duplicator.Allow( name )
 	end
 
 	--
@@ -86,7 +101,7 @@ function Register( t, name )
 		--
 		-- For each entity using this class
 		--
-		for _, entity in ipairs( ents.FindByClass( t.ClassName ) ) do
+		for _, entity in ipairs( ents.FindByClass( name ) ) do
 
 			--
 			-- Replace the contents with this entity table
@@ -104,7 +119,7 @@ function Register( t, name )
 
 		-- Update entity table of entities that are based on this entity
 		for _, e in ipairs( ents.GetAll() ) do
-			if ( IsBasedOn( e:GetClass(), t.ClassName ) ) then
+			if ( IsBasedOn( e:GetClass(), name ) ) then
 
 				table.Merge( e, Get( e:GetClass() ) )
 
@@ -116,13 +131,19 @@ function Register( t, name )
 
 	end
 
-	if ( !t.Spawnable ) then return end
+	if ( t.Spawnable != true ) then return true end
 
-	list.Set( "SpawnableEntities", t.ClassName, {
+	local printname = t.PrintName
+	if ( !isstring( printname ) ) then printname = name end
+
+	local category = t.Category
+	if ( !isstring( category ) ) then category = "Other" end
+
+	list.Set( "SpawnableEntities", name, {
 		-- Required information
-		PrintName		= t.PrintName,
-		ClassName		= t.ClassName,
-		Category		= t.Category,
+		ClassName		= name,
+		PrintName		= printname,
+		Category		= category,
 
 		-- Optional information
 		NormalOffset	= t.NormalOffset,
@@ -133,6 +154,8 @@ function Register( t, name )
 		ScriptedEntityType = t.ScriptedEntityType,
 		IconOverride	= t.IconOverride
 	} )
+
+	return true
 
 end
 
