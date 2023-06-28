@@ -224,6 +224,7 @@ end
 function IsValid( object )
 
 	if ( !object ) then return false end
+	if ( isnumber(object) || isbool(object) ) then return false end
 
 	local isvalid = object.IsValid
 	if ( !isvalid ) then return false end
