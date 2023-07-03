@@ -38,10 +38,11 @@ function PANEL:Open()
 
 	RestoreCursorPosition()
 
-	local bShouldShow = hook.Run( "ContextMenuShowTool" )  
+	local bShouldShow = hook.Run( "ContextMenuShowTool" ) 
+	local bShow = bShouldShow == nil and true or bShouldShow
 
 	-- Set up the active panel..
-	if ( bShouldShow && IsValid( spawnmenu.ActiveControlPanel() ) ) then
+	if ( bShow && IsValid( spawnmenu.ActiveControlPanel() ) ) then
 
 		self.OldParent = spawnmenu.ActiveControlPanel():GetParent()
 		self.OldPosX, self.OldPosY = spawnmenu.ActiveControlPanel():GetPos()
