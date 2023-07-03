@@ -288,6 +288,7 @@ function PANEL:DataLayout()
 
 		Line:SetAltLine( k % 2 == 1 )
 
+		if ( !Line:IsVisible() ) then continue end
 		y = y + Line:GetTall()
 
 	end
