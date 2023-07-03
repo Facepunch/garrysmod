@@ -131,7 +131,7 @@ function MSTACK:WrapText(text, width)
 end
 
 sound.Add({
-   name = "Hud.Hint",
+   name = "TTT.MessageCue",
    channel = CHAN_STATIC,
    volume = 1.0,
    level = SNDLVL_NONE,
@@ -139,7 +139,7 @@ sound.Add({
    sound = "ui/hint.wav"
 })
 
-local msg_sound = Sound("Hud.Hint")
+local msg_sound = Sound("TTT.MessageCue")
 local base_spec = {
    font = msgfont,
    xalign = TEXT_ALIGN_CENTER,
