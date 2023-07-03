@@ -103,8 +103,6 @@ function HELPSCRN:Show()
 
    cb = dgui:CheckBox(GetTranslation("set_cues"), "ttt_cl_soundcues")
 
-   cb = dgui:CheckBox(GetTranslation("set_msg_cue"), "ttt_cl_msg_soundcue")
-
    dsettings:AddItem(dgui)
 
    --- Gameplay area
