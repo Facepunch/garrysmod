@@ -280,15 +280,18 @@ function PANEL:DataLayout()
 	local y = 0
 	local h = self.m_iDataHeight
 
+	local alt = false
 	for k, Line in ipairs( self.Sorted ) do
+
+		if ( !Line:IsVisible() ) then continue end
 
 		Line:SetPos( 1, y )
 		Line:SetSize( self:GetWide() - 2, h )
 		Line:DataLayout( self )
 
-		Line:SetAltLine( k % 2 == 1 )
+		Line:SetAltLine( alt )
+		alt = !alt
 
-		if ( !Line:IsVisible() ) then continue end
 		y = y + Line:GetTall()
 
 	end
