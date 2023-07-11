@@ -293,7 +293,7 @@ function GM:PlayerSetHandsModel( pl, ent )
 	if ( info ) then
 		ent:SetModel( info.model )
 		ent:SetSkin( info.matchBodySkin and pl:GetSkin() or info.skin )
-		ent:SetBodyGroups( info.body )
+		ent:SetBodyGroups( info.matchBodyGroups and player_manager.GetBodyGroupsAsStr( pl ) or info.body )
 	end
 
 end

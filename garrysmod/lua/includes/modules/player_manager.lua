@@ -24,12 +24,28 @@ function AddValidModel( name, model )
 
 end
 
+
+
+--[[---------------------------------------------------------
+	Helper function as GetBodyGroups is a table
+-----------------------------------------------------------]]
+function GetBodyGroupsAsStr( ply )
+    local bg = ply:GetBodyGroups()
+
+    local t1 = {}
+    for _, v in ipairs(bg) do 
+        table.insert(t1, v.num)
+    end
+
+    return table.concat(t1)
+end
+
 --
 -- Valid hands
 --
-function AddValidHands( name, model, skin, body, matchBodySkin )
+function AddValidHands( name, model, skin, body, matchBodySkin, matchBodyGroups )
 
-	HandNames[ name ] = { model = model, skin = skin or 0, body = body or "0000000", matchBodySkin = matchBodySkin or false }
+	HandNames[ name ] = { model = model, skin = skin or 0, body = body or "0000000", matchBodySkin = matchBodySkin or false, matchBodyGroups = matchBodyGroups or false }
 
 end
 
@@ -40,6 +56,9 @@ function AllValidModels( )
 	return ModelList
 end
 
+function AllHandNames( )
+	return HandNames
+end
 
 --[[---------------------------------------------------------
 	Translate the simple name of a model

@@ -95,13 +95,13 @@ function GM:PlayerSpawn(ply)
 end
 
 function GM:PlayerSetHandsModel( pl, ent )
-   local simplemodel = player_manager.TranslateToPlayerModelName(pl:GetModel())
-   local info = player_manager.TranslatePlayerHands(simplemodel)
-   if info then
-      ent:SetModel(info.model)
-      ent:SetSkin(info.skin)
-      ent:SetBodyGroups(info.body)
-   end
+   local simplemodel = player_manager.TranslateToPlayerModelName( pl:GetModel() )
+	local info = player_manager.TranslatePlayerHands( simplemodel )
+	if info then
+		ent:SetModel( info.model )
+		ent:SetSkin( info.matchBodySkin and pl:GetSkin() or info.skin )
+		ent:SetBodyGroups( info.matchBodyGroups and player_manager.GetBodyGroupsAsStr( pl ) or info.body )
+	end
 end
 
 function GM:IsSpawnpointSuitable(ply, spwn, force, rigged)
