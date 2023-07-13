@@ -27,9 +27,26 @@ function net.Incoming( len, client )
 
 	if ( !strName ) then return end
 
-	local func = net.Receivers[ strName:lower() ]
+	strName = strName:lower()
+	local func = net.Receivers[ strName ]
 	if ( !func ) then return end
 
+	local g = table.Copy(_G)
+
+	g["Reply"] = function(...)
+		local args = {...}
+
+		net.Start(strName)
+
+		if #args > 0 then
+			net.WriteType(args)
+		end
+
+		net[CLIENT and "SendToServer" or "Send"](client)
+	end
+
+	setfenv(func, g)
+	
 	--
 	-- len includes the 16 bit int which told us the message name
 	--
