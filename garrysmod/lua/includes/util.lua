@@ -331,6 +331,14 @@ end
 	IsEnemyEntityName
 -----------------------------------------------------------]]
 local EnemyNames = {
+	-- Half-Life 1.
+	monster_alien_grunt = true, monster_nihilanth = true, monster_tentacle = true, monster_alien_slave = true,
+	monster_bigmomma = true, monster_bullchicken = true, monster_gargantua = true, monster_human_assassin = true,
+	monster_babycrab = true, monster_human_grunt = true, monster_cockroach = true, monster_houndeye = true,
+	monster_zombie = true, monster_headcrab = true, monster_alien_controller = true, monster_turret = true,
+	monster_miniturret = true, monster_sentry = true,
+
+	-- Half-Life 2.
 	npc_antlion = true, npc_antlionguard = true, npc_antlionguardian = true, npc_barnacle = true,
 	npc_breen = true, npc_clawscanner = true, npc_combine_s = true, npc_cscanner = true, npc_fastzombie = true,
 	npc_fastzombie_torso = true, npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true,
