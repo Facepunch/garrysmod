@@ -334,8 +334,10 @@ local EnemyNames = {
 	npc_antlion = true, npc_antlionguard = true, npc_antlionguardian = true, npc_barnacle = true,
 	npc_breen = true, npc_clawscanner = true, npc_combine_s = true, npc_cscanner = true, npc_fastzombie = true,
 	npc_fastzombie_torso = true, npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true,
-	npc_hunter = true, npc_metropolice = true, npc_manhack = true, npc_poisonzombie = true,
-	npc_strider = true, npc_stalker = true, npc_zombie = true, npc_zombie_torso = true, npc_zombine = true
+	npc_hunter = true, npc_metropolice = true, npc_manhack = true, npc_poisonzombie = true, npc_strider = true,
+	npc_stalker = true, npc_zombie = true, npc_zombie_torso = true, npc_zombine = true, npc_combine_camera = true,
+	npc_turret_ceiling = true, npc_combinedropship = true, npc_combinegunship = true, npc_helicopter = true,
+	npc_turret_floor = true, npc_antlion_worker = true, npc_headcrab_black = true
 }
 
 function IsEnemyEntityName( victimtype )
