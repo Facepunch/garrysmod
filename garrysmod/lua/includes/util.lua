@@ -267,24 +267,6 @@ function Lerp( delta, from, to )
 end
 
 --[[---------------------------------------------------------
-	Cubic hermite spline
------------------------------------------------------------]]
-function CHSpline( t, p0, m0, p1, m1 )
-	
-	if ( t >= 1 ) then return p1 end
-	if ( t <= 0 ) then return p0 end
-	
-	local t2 = t * t
-	local t3 = t * t2
-
-	return p0 * ( 2 * t3 - 3 * t2 + 1 ) +
-		m0 * ( t3 - 2 * t2 + t ) +
-		p1 * ( -2 * t3 + 3 * t2 ) +
-		m1 * ( t3 - t2 )
-	
-end
-
---[[---------------------------------------------------------
 	Convert Var to Bool
 -----------------------------------------------------------]]
 function tobool( val )
