@@ -59,7 +59,7 @@ local function GetPlayerIndex( ply )
 
 	if ( !IsValid( ply ) ) then return 0 end
 
-	return ply:UniqueID()
+	return ply:SteamID64()
 
 end
 

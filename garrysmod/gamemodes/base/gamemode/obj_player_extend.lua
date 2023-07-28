@@ -160,7 +160,7 @@ local g_UniqueIDTable = {}
 function meta:UniqueIDTable( key )
 
 	local id = 0
-	if ( SERVER ) then id = self:UniqueID() end
+	if ( SERVER ) then id = self:SteamID64() end
 
 	g_UniqueIDTable[ id ] = g_UniqueIDTable[ id ] or {}
 	g_UniqueIDTable[ id ][ key ] = g_UniqueIDTable[ id ][ key ] or {}
