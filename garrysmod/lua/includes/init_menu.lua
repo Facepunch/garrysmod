@@ -17,6 +17,8 @@ require( "http" )
 require( "cvars" )
 require( "cookie" )
 require( "baseclass" )
+require( "utf8" )
+require( "markup" )
 
 --[[---------------------------------------------------------
 	Extensions
@@ -40,3 +42,5 @@ include( "util/javascript_util.lua" )
 include( "util/tooltips.lua" )
 
 require( "notification" )
+
+include( "menu/derma_icon_browser.lua" )

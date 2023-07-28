@@ -76,7 +76,7 @@ function PANEL:OnKeyCodeTyped( code )
 		end
 
 		self:FocusNext()
-		self:OnEnter()
+		self:OnEnter( self:GetText() )
 		self.HistoryPos = 0
 
 	end
@@ -237,7 +237,15 @@ function PANEL:Think()
 
 end
 
-function PANEL:OnEnter()
+function PANEL:OnRemove()
+
+	if ( IsValid( self.Menu ) ) then
+		self.Menu:Remove()
+	end
+
+end
+
+function PANEL:OnEnter( val )
 
 	-- For override
 	self:UpdateConvarValue()
@@ -349,7 +357,9 @@ end
 
 function PANEL:OnMousePressed( mcode )
 
-	self:OnGetFocus()
+	if ( mcode == MOUSE_LEFT ) then
+		self:OnGetFocus()
+	end
 
 end
 
@@ -368,7 +378,10 @@ end
 
 function PANEL:GetInt()
 
-	return math.floor( tonumber( self:GetText() ) + 0.5 )
+	local num = tonumber( self:GetText() )
+	if ( !num ) then return nil end
+
+	return math.Round( num )
 
 end
 
@@ -401,7 +414,16 @@ function TextEntryLoseFocus( panel, mcode )
 	if ( pnl == panel ) then return end
 	if ( !pnl.m_bLoseFocusOnClickAway ) then return end
 
-	pnl:FocusNext()
+	-- We gotta find the EdtiablePanel parent and call KillFocus on it
+	-- We do it from the panel clicked, not the KB focus, which is necessary for DTextEntry autocomplete to not break
+	local prnt = panel
+	while ( IsValid( prnt ) ) do
+		if ( prnt:GetClassName() == "EditablePanel" || prnt:GetClassName() == "LuaEditablePanel" ) then
+			prnt:KillFocus()
+			return
+		end
+		prnt = prnt:GetParent()
+	end
 
 end
 hook.Add( "VGUIMousePressed", "TextEntryLoseFocus", TextEntryLoseFocus )

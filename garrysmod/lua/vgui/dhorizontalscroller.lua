@@ -79,8 +79,10 @@ function PANEL:ScrollToChild( panel )
 end
 
 function PANEL:SetScroll( x )
+
 	self.OffsetX = x
-	self:PerformLayout()
+	self:InvalidateLayout( true )
+
 end
 
 function PANEL:SetUseLiveDrag( bool )
@@ -161,7 +163,7 @@ function PANEL:PerformLayout()
 
 		v:SetPos( x, 0 )
 		v:SetTall( h )
-		v:ApplySchemeSettings()
+		if ( v.ApplySchemeSettings ) then v:ApplySchemeSettings() end
 
 		x = x + v:GetWide() - self.m_iOverlap
 

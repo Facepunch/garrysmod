@@ -12,9 +12,17 @@ function meta:CheckLimit( str )
 	if ( game.SinglePlayer() ) then return true end
 
 	local c = cvars.Number( "sbox_max" .. str, 0 )
+	local count = self:GetCount( str )
+
+	local ret = hook.Run( "PlayerCheckLimit", self, str, count, c )
+	if ( ret != nil ) then
+		if ( !ret && SERVER ) then self:LimitHit( str ) end
+		return ret
+	end
 
 	if ( c < 0 ) then return true end
-	if ( self:GetCount( str ) > c - 1 ) then
+
+	if ( count > c - 1 ) then
 		if ( SERVER ) then self:LimitHit( str ) end
 		return false
 	end
@@ -84,7 +92,7 @@ end
 
 function meta:LimitHit( str )
 
-	self:SendLua( 'hook.Run("LimitHit","' .. str .. '")' )
+	self:SendLua( string.format( 'hook.Run("LimitHit",%q)', str ) )
 
 end
 
@@ -113,7 +121,7 @@ if ( SERVER ) then
 		self.Hints = self.Hints or {}
 		if ( self.Hints[ str ] ) then return end
 
-		self:SendLua( 'hook.Run("AddHint","' .. str .. '","' .. delay .. '")' )
+		self:SendLua( string.format( 'hook.Run("AddHint",%q,%d)', str, delay ) )
 		self.Hints[ str ] = true
 
 	end
@@ -123,7 +131,7 @@ if ( SERVER ) then
 		self.Hints = self.Hints or {}
 		if ( self.Hints[ str ] ) then return end
 
-		self:SendLua( 'hook.Run("SuppressHint","' .. str .. '")' )
+		self:SendLua( string.format( 'hook.Run("SuppressHint",%q)', str ) )
 		self.Hints[ str ] = true
 
 	end
@@ -133,10 +141,10 @@ else
 	function meta:GetTool( mode )
 
 		local wep
-		for _, ent in pairs( ents.FindByClass( "gmod_tool" ) ) do
+		for _, ent in ipairs( ents.FindByClass( "gmod_tool" ) ) do
 			if ( ent:GetOwner() == self ) then wep = ent break end
 		end
-		if ( !IsValid( wep ) ) then return nil end
+		if ( !IsValid( wep ) || !wep.GetToolObject ) then return nil end
 
 		local tool = wep:GetToolObject( mode )
 		if ( !tool ) then return nil end

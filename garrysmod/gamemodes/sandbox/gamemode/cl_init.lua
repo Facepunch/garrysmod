@@ -1,9 +1,9 @@
 
 --[[---------------------------------------------------------
 
-  Sandbox Gamemode
+	Sandbox Gamemode
 
-  This is GMod's default gamemode
+	This is GMod's default gamemode
 
 -----------------------------------------------------------]]
 
@@ -26,24 +26,45 @@ local physgun_halo = CreateConVar( "physgun_halo", "1", { FCVAR_ARCHIVE }, "Draw
 function GM:Initialize()
 
 	BaseClass.Initialize( self )
-	
+
 end
 
 function GM:LimitHit( name )
 
-	self:AddNotify( "#SBoxLimit_"..name, NOTIFY_ERROR, 6 )
+	local str = "#SBoxLimit_" .. name
+	local translated = language.GetPhrase( str )
+	if ( str == translated ) then
+		-- No translation available, apply our own
+		translated = string.format( language.GetPhrase( "hint.hitXlimit" ), language.GetPhrase( name ) )
+	end
+
+	self:AddNotify( translated, NOTIFY_ERROR, 6 )
 	surface.PlaySound( "buttons/button10.wav" )
 
 end
 
 function GM:OnUndo( name, strCustomString )
-	
-	if ( !strCustomString ) then
-		self:AddNotify( "#Undone_"..name, NOTIFY_UNDO, 2 )
-	else	
-		self:AddNotify( strCustomString, NOTIFY_UNDO, 2 )
+
+	local text = strCustomString
+
+	if ( !text ) then
+		local strId = "#Undone_" .. name
+		text = language.GetPhrase( strId )
+		if ( strId == text ) then
+			-- No translation available, generate our own
+			text = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( name ) )
+		end
 	end
-	
+
+	-- This is a hack for SWEPs, Tools, etc, that already have hardcoded English only translations
+	-- TODO: Do this for non English languages only
+	local strMatch = string.match( text, "^Undone (.*)$" )
+	if ( strMatch ) then
+		text = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( strMatch ) )
+	end
+
+	self:AddNotify( text, NOTIFY_UNDO, 2 )
+
 	-- Find a better sound :X
 	surface.PlaySound( "buttons/button15.wav" )
 
@@ -51,8 +72,15 @@ end
 
 function GM:OnCleanup( name )
 
-	self:AddNotify( "#Cleaned_"..name, NOTIFY_CLEANUP, 5 )
-	
+	local str = "#Cleaned_" .. name
+	local translated = language.GetPhrase( str )
+	if ( str == translated ) then
+		-- No translation available, apply our own
+		translated = string.format( language.GetPhrase( "hint.cleanedX" ), language.GetPhrase( name ) )
+	end
+
+	self:AddNotify( translated, NOTIFY_CLEANUP, 5 )
+
 	-- Find a better sound :X
 	surface.PlaySound( "buttons/button15.wav" )
 
@@ -60,8 +88,8 @@ end
 
 function GM:UnfrozeObjects( num )
 
-	self:AddNotify( "Unfroze "..num.." Objects", NOTIFY_GENERIC, 3 )
-	
+	self:AddNotify( string.format( language.GetPhrase( "hint.unfrozeX" ), num ), NOTIFY_GENERIC, 3 )
+
 	-- Find a better sound :X
 	surface.PlaySound( "npc/roller/mine/rmine_chirp_answer1.wav" )
 
@@ -73,9 +101,9 @@ function GM:HUDPaint()
 
 	-- Draw all of the default stuff
 	BaseClass.HUDPaint( self )
-	
+
 	self:PaintNotes()
-	
+
 end
 
 --[[---------------------------------------------------------
@@ -90,8 +118,8 @@ end
 local PhysgunHalos = {}
 
 --[[---------------------------------------------------------
-   Name: gamemode:DrawPhysgunBeam()
-   Desc: Return false to override completely
+	Name: gamemode:DrawPhysgunBeam()
+	Desc: Return false to override completely
 -----------------------------------------------------------]]
 function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 
@@ -100,7 +128,7 @@ function GM:DrawPhysgunBeam( ply, weapon, bOn, target, boneid, pos )
 	if ( IsValid( target ) ) then
 		PhysgunHalos[ ply ] = target
 	end
-	
+
 	return true
 
 end
@@ -109,26 +137,25 @@ hook.Add( "PreDrawHalos", "AddPhysgunHalos", function()
 
 	if ( !PhysgunHalos || table.IsEmpty( PhysgunHalos ) ) then return end
 
-
 	for k, v in pairs( PhysgunHalos ) do
 
 		if ( !IsValid( k ) ) then continue end
 
 		local size = math.random( 1, 2 )
 		local colr = k:GetWeaponColor() + VectorRand() * 0.3
-		 
+
 		halo.Add( PhysgunHalos, Color( colr.x * 255, colr.y * 255, colr.z * 255 ), size, size, 1, true, false )
-		
+
 	end
-	
+
 	PhysgunHalos = {}
 
 end )
 
 
 --[[---------------------------------------------------------
-   Name: gamemode:NetworkEntityCreated()
-   Desc: Entity is created over the network
+	Name: gamemode:NetworkEntityCreated()
+	Desc: Entity is created over the network
 -----------------------------------------------------------]]
 function GM:NetworkEntityCreated( ent )
 
@@ -139,8 +166,8 @@ function GM:NetworkEntityCreated( ent )
 	-- on every entity when joining a server)
 	--
 
-	if ( ent:GetSpawnEffect() && ent:GetCreationTime() > (CurTime() - 1.0) ) then
-	
+	if ( ent:GetSpawnEffect() && ent:GetCreationTime() > ( CurTime() - 1.0 ) ) then
+
 		local ed = EffectData()
 			ed:SetOrigin( ent:GetPos() )
 			ed:SetEntity( ent )

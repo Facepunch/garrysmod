@@ -34,11 +34,11 @@ DEFINE_BASECLASS( "gamemode_base" )
 	Name: gamemode:PlayerSpawn()
 	Desc: Called when a player spawns
 -----------------------------------------------------------]]
-function GM:PlayerSpawn( pl )
+function GM:PlayerSpawn( pl, transiton )
 
 	player_manager.SetPlayerClass( pl, "player_sandbox" )
 
-	BaseClass.PlayerSpawn( self, pl )
+	BaseClass.PlayerSpawn( self, pl, transiton )
 
 end
 
@@ -48,8 +48,8 @@ end
 -----------------------------------------------------------]]
 function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
 
-	-- Don't freeze persistent props (should already be froze)
-	if ( ent:GetPersistent() ) then return false end
+	-- Don't freeze persistent props (should already be frozen)
+	if ( ent:GetPersistent() && GetConVarString( "sbox_persist" ):Trim() != "" ) then return false end
 
 	BaseClass.OnPhysgunFreeze( self, weapon, phys, ent, ply )
 
@@ -67,7 +67,7 @@ function GM:OnPhysgunReload( weapon, ply )
 	local num = ply:PhysgunUnfreeze()
 
 	if ( num > 0 ) then
-		ply:SendLua( "GAMEMODE:UnfrozeObjects(" .. num .. ")" )
+		ply:SendLua( string.format( "GAMEMODE:UnfrozeObjects(%d)", num ) )
 	end
 
 	ply:SuppressHint( "PhysgunUnfreeze" )
@@ -83,14 +83,11 @@ end
 -----------------------------------------------------------]]
 function GM:PlayerShouldTakeDamage( ply, attacker )
 
-	-- The player should always take damage in single player..
-	if ( game.SinglePlayer() ) then return true end
-
 	-- Global godmode, players can't be damaged in any way
 	if ( cvars.Bool( "sbox_godmode", false ) ) then return false end
 
 	-- No player vs player damage
-	if ( attacker:IsValid() && attacker:IsPlayer() ) then
+	if ( attacker:IsValid() && attacker:IsPlayer() && ply != attacker ) then
 		return cvars.Bool( "sbox_playershurtplayers", true )
 	end
 
@@ -111,9 +108,9 @@ end
 --[[---------------------------------------------------------
 	Called once on the player's first spawn
 -----------------------------------------------------------]]
-function GM:PlayerInitialSpawn( ply )
+function GM:PlayerInitialSpawn( ply, transiton )
 
-	BaseClass.PlayerInitialSpawn( self, ply )
+	BaseClass.PlayerInitialSpawn( self, ply, transiton )
 
 end
 
@@ -162,8 +159,9 @@ end
 function GM:CanEditVariable( ent, ply, key, val, editor )
 
 	-- Only allow admins to edit admin only variables!
-	if ( editor.AdminOnly ) then
-		return ply:IsAdmin()
+	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	if ( editor.AdminOnly && !isAdmin ) then
+		return false
 	end
 
 	-- This entity decides who can edit its variables

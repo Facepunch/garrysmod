@@ -25,6 +25,10 @@ Scheme
 
 		"Blank"				"0 0 0 0"
 
+		"GMod_BG_Opaque"	"108 111 114 250"
+		"GMod_BG"			"108 111 114 0" // SRCDS cannot do transparency, so we gotta replace Blank with this.
+		"GMod_WhiteBlank"	"255 255 255 0"
+
 		"SteamLightGreen"			"157 194 80 255"
 		"AchievementsLightGrey"		"79 79 79 255"
 		"AchievementsDarkGrey"		"55 55 55 255"
@@ -56,24 +60,24 @@ Scheme
 		CheckButton.TextColor			"White"
 		CheckButton.SelectedTextColor	"White"
 		CheckButton.BgColor				"White"
-		CheckButton.Border1  			"Border.Subtle" 		// the left checkbutton border
-		CheckButton.Border2  			"Border.Subtle"		// the right checkbutton border
+		CheckButton.Border1				"Border.Subtle" 		// the left checkbutton border
+		CheckButton.Border2				"Border.Subtle"		// the right checkbutton border
 		CheckButton.Check				"Black"	// color of the check itself
 		CheckButton.DisabledFgColor		"Black"	// color of the check itself when disabled
 		CheckButton.HighlightFgColor	"OffWhite"
 		CheckButton.ArmedBgColor		"Blank"
 		CheckButton.DepressedBgColor	"Blank"
-		CheckButton.DisabledBgColor	   	"180 180 180 255"
+		CheckButton.DisabledBgColor		"180 180 180 255"
 
 		ComboBoxButton.ArrowColor		"81 81 81 255"
 		ComboBoxButton.ArmedArrowColor	"110 110 110 255"
-		ComboBoxButton.BgColor			"Blank"
-		ComboBoxButton.DisabledBgColor	"Blank"
+		ComboBoxButton.BgColor			"GMod_WhiteBlank"
+		ComboBoxButton.DisabledBgColor	"GMod_WhiteBlank"
 
 		Frame.TitleTextInsetX			16
 		Frame.ClientInsetX				8
 		Frame.ClientInsetY				6
-		Frame.BgColor					"108 111 114 250"	[$WIN32]
+		Frame.BgColor					"GMod_BG_Opaque"	[$WIN32]
 		Frame.BgColor					"80 80 80 192"		[$X360]
 		Frame.OutOfFocusBgColor			"97 100 102 240"	[$WIN32]
 		Frame.OutOfFocusBgColor			"80 80 80 192"		[$X360]
@@ -84,9 +88,9 @@ Scheme
 		FrameGrip.Color1				"200 200 200 196"
 		FrameGrip.Color2				"0 0 0 196"
 		FrameTitleButton.FgColor		"200 200 200 196"
-		FrameTitleButton.BgColor		"Blank"
+		FrameTitleButton.BgColor		"GMod_BG"
 		FrameTitleButton.DisabledFgColor	"255 255 255 192"
-		FrameTitleButton.DisabledBgColor	"Blank"
+		FrameTitleButton.DisabledBgColor	"GMod_BG"
 		FrameSystemButton.FgColor		"Blank"
 		FrameSystemButton.BgColor		"Blank"
 		FrameSystemButton.Icon			""
@@ -94,18 +98,18 @@ Scheme
 		FrameTitleBar.Font				"UiBold"		[$WIN32]
 		FrameTitleBar.Font				"DefaultLarge"	[$WIN32]
 		FrameTitleBar.TextColor			"255 255 255 204"
-		FrameTitleBar.BgColor			"Blank"
+		FrameTitleBar.BgColor			"GMod_BG"
 		FrameTitleBar.DisabledTextColor	"255 255 255 91"
-		FrameTitleBar.DisabledBgColor	"Blank"
+		FrameTitleBar.DisabledBgColor	"GMod_BG"
 
 		GraphPanel.FgColor				"White"
 		GraphPanel.BgColor				"TransparentBlack"
 
-        Label.TextDullColor             "OffWhite"
-		Label.TextColor					"DullWhite"
+		Label.TextDullColor				"DullWhite"
+		Label.TextColor					"OffWhite"
 		Label.TextBrightColor			"White"
 		Label.SelectedTextColor			"White"
-		Label.BgColor					"Blank"
+		Label.BgColor					"GMod_BG"
 		Label.DisabledFgColor1			"110 110 110 255"
 		Label.DisabledFgColor2			"50 50 50 255"
 
@@ -125,7 +129,7 @@ Scheme
 		Menu.TextInset					"6"
 
 		Panel.FgColor					"DullWhite"
-		Panel.BgColor					"Blank"
+		Panel.BgColor					"GMod_BG"
 
 		ProgressBar.FgColor				"White"
 		ProgressBar.BgColor				"TransparentBlack"

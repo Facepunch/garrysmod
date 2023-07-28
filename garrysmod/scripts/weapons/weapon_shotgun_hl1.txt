@@ -5,7 +5,7 @@ WeaponData
 	// Weapon data is loaded by both the Game and Client DLLs.
 	"printname"		"#HL1_Shotgun"
 	"viewmodel"		"models/v_shotgun.mdl"
-	"playermodel"		"models/w_shotgun.mdl"
+	"playermodel"		"models/weapons/w_shotgun_hls.mdl"
 	"anim_prefix"		"shotgun"
 	"bucket"		"2"
 	"bucket_position"	"12"
@@ -22,7 +22,7 @@ WeaponData
 	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
 	SoundData
 	{
-		"empty"			"Weapons.Empty"
+		"empty"			"HL1Weapons.Empty"
 		"reload"		"HL1Weapon_Shotgun.Reload"
 		"special1"		"HL1Weapon_Shotgun.Special1"
 		"single_shot"		"HL1Weapon_Shotgun.Single"

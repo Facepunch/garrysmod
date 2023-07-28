@@ -1,6 +1,7 @@
 
 --
 -- The delay before a tooltip appears
+-- Can be overridden with PANEL:SetTooltipDelay
 --
 local tooltip_delay = CreateClientConVar( "tooltip_delay", "0.5", true, false )
 
@@ -67,11 +68,11 @@ end
 function PANEL:PositionTooltip()
 
 	if ( !IsValid( self.TargetPanel ) ) then
-		self:Remove()
+		self:Close()
 		return
 	end
 
-	self:PerformLayout()
+	self:InvalidateLayout( true )
 
 	local x, y = input.GetCursorPos()
 	local w, h = self:GetSize()
@@ -80,7 +81,7 @@ function PANEL:PositionTooltip()
 
 	y = y - 50
 
-	y = math.min( y, ly - h * 1.5 )
+	y = math.min( y, ly - h - 10 )
 	if ( y < 2 ) then y = 2 end
 
 	-- Fixes being able to be drawn off screen
@@ -98,12 +99,16 @@ end
 function PANEL:OpenForPanel( panel )
 
 	self.TargetPanel = panel
+	self.OpenDelay = isnumber( panel.numTooltipDelay ) and panel.numTooltipDelay or tooltip_delay:GetFloat()
 	self:PositionTooltip()
 
-	if ( tooltip_delay:GetFloat() > 0 ) then
+	-- Use the parent panel's skin
+	self:SetSkin( panel:GetSkin().Name )
+
+	if ( self.OpenDelay > 0 ) then
 
 		self:SetVisible( false )
-		timer.Simple( tooltip_delay:GetFloat(), function()
+		timer.Simple( self.OpenDelay, function()
 
 			if ( !IsValid( self ) ) then return end
 			if ( !IsValid( panel ) ) then return end

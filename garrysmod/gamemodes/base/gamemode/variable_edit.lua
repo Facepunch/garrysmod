@@ -27,6 +27,6 @@ end
 --
 function GM:CanEditVariable( ent, ply, key, val, editor )
 
-	return ply:IsAdmin()
+	return ply:IsAdmin() || game.SinglePlayer()
 
 end

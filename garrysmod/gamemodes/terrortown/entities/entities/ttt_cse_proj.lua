@@ -47,9 +47,8 @@ function ENT:GetNearbyCorpses()
 
    local near_corpses = {}
 
-   local n = #near
    local ent = nil
-   for i=1, n do
+   for i=1, #near do
       ent = near[i]
       if IsValid(ent) and ent.player_ragdoll and ent.scene then
          table.insert(near_corpses, {ent=ent, dist=pos:LengthSqr()})
@@ -74,6 +73,7 @@ function ENT:OnTakeDamage(dmginfo)
    end
 end
 
+local dummy_keys = {"victim", "killer"}
 function ENT:ShowSceneForCorpse(corpse)
    local scene = corpse.scene
    local hit = scene.hit_trace
@@ -93,7 +93,7 @@ function ENT:ShowSceneForCorpse(corpse)
 
    if not scene then return end
 
-   for _, dummy_key in pairs({"victim", "killer"}) do
+   for _, dummy_key in ipairs(dummy_keys) do
       local dummy = scene[dummy_key]
 
       if dummy then
@@ -174,7 +174,7 @@ function ENT:Explode(tr)
 
       local corpses = self:GetNearbyCorpses()
       if #corpses > self.MaxScenesPerPulse then
-         table.SortByMember(corpses, "dist", function(a, b) return a > b end)
+         table.SortByMember(corpses, "dist", true)
       end
 
       local e = EffectData()
@@ -203,5 +203,3 @@ function ENT:Explode(tr)
 
    end
 end
-
-

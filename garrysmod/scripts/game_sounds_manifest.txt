@@ -64,6 +64,30 @@ game_sounds_manifest
 	"precache_file"		"scripts/sounds/npc_sounds_vortigaunt.txt"
 	"precache_file"		"scripts/sounds/npc_sounds_zombie.txt"
 
+	// Episode 1
+	"precache_file"		"scripts/sounds/game_sounds_weapons_episodic.txt"
+	"precache_file"		"scripts/sounds/npc_sounds_alyx_episodic.txt"
+	"precache_file"		"scripts/sounds/npc_sounds_ministrider_episodic.txt"
+	"precache_file"		"scripts/sounds/npc_sounds_stalker.txt"
+	"precache_file"		"scripts/npc_sounds_advisor.txt"
+	"precache_file"		"scripts/npc_sounds_antlionguard_episodic.txt"
+	"precache_file"		"scripts/npc_sounds_citizen_ep1.txt"
+	"precache_file"		"scripts/npc_sounds_citizen_episodic.txt"
+	"precache_file"		"scripts/npc_sounds_combine_ball_episodic.txt"
+	"precache_file"		"scripts/npc_sounds_dog_episodic.txt"
+	"precache_file"		"scripts/npc_sounds_roller_episodic.txt"
+	"precache_file"		"scripts/npc_sounds_soldier_episodic.txt"
+	"precache_file"		"scripts/npc_sounds_strider_episodic.txt"
+	"precache_file"		"scripts/npc_sounds_turret_episodic.txt"
+	"precache_file"		"scripts/npc_sounds_zombine.txt"
+	"precache_file"		"scripts/level_voices_episode_01.txt"
+	"precache_file"		"scripts/level_sounds_e3_c17.txt"
+	"precache_file"		"scripts/level_sounds_e3_town.txt"
+	"precache_file"		"scripts/level_sounds_e3_bugbait.txt"
+	"precache_file"		"scripts/level_sounds_music_episodic.txt"
+	"precache_file"		"scripts/level_sounds_aftermath_episodic.txt"
+	"precache_file"		"scripts/level_sounds_c17_02a.txt"
+
 	// Episode 2
 	"precache_file"		"scripts/sounds/game_sounds_addendum_ep2.txt"
 	"precache_file"		"scripts/game_sounds_ambient_generic_ep2.txt"
@@ -88,10 +112,13 @@ game_sounds_manifest
 	"precache_file"		"scripts/sounds/npc_sounds_strider_episodic2.txt"
 	"precache_file"		"scripts/sounds/npc_sounds_turret_episodic2.txt"
 
+	// Lost coast
+	"precache_file"		"scripts/sounds/level_sounds_lostcoast.txt"
+	"precache_file"		"scripts/sounds/level_voices_lostcoast.txt"
+
 	// Portal
 	"precache_file"		"scripts/game_sounds_portal.txt"
 	"precache_file"		"scripts/game_sounds_player_portal.txt"
-	"precache_file"		"scripts/game_sounds_weapons_episodic.txt"
 	"precache_file"		"scripts/game_sounds_weapons_portal.txt"
 	"precache_file"		"scripts/level_sounds_music_portal.txt"
 	"precache_file"		"scripts/level_sounds_escape.txt"
@@ -110,37 +137,6 @@ game_sounds_manifest
 
 	"precache_file"		"scripts/game_sounds_ger_commands.txt"
 	"precache_file"		"scripts/game_sounds_us_commands.txt"
-
-	// Episodic content sounds
-	"precache_file"		"scripts/npc_sounds_advisor.txt"
-
-	"precache_file"		"scripts/npc_sounds_antlionguard_episodic.txt"
-	"precache_file"		"scripts/sounds/npc_sounds_alyx_episodic.txt"
-	"precache_file"		"scripts/npc_sounds_citizen_ep1.txt"
-	"precache_file"		"scripts/npc_sounds_citizen_episodic.txt"
-	"precache_file"		"scripts/npc_sounds_combine_ball_episodic.txt"
-	"precache_file"		"scripts/npc_sounds_dog_episodic.txt"
-	"precache_file"		"scripts/sounds/npc_sounds_ministrider_episodic.txt"
-	"precache_file"		"scripts/npc_sounds_roller_episodic.txt"
-	"precache_file"		"scripts/npc_sounds_soldier_episodic.txt"
-	"precache_file"		"scripts/sounds/npc_sounds_stalker.txt"
-	"precache_file"		"scripts/npc_sounds_strider_episodic.txt"
-	"precache_file"		"scripts/npc_sounds_turret_episodic.txt"
-	"precache_file"		"scripts/npc_sounds_zombine.txt"
-
-	"precache_file"		"scripts/level_sounds_e3_c17.txt"
-	"precache_file"		"scripts/level_sounds_e3_town.txt"
-	"precache_file"		"scripts/level_sounds_e3_bugbait.txt"
-
-	"precache_file"		"scripts/level_sounds_music_episodic.txt"
-	"precache_file"		"scripts/level_voices_episode_01.txt"
-
-	"precache_file"		"scripts/level_sounds_aftermath_episodic.txt"
-	"precache_file"		"scripts/level_sounds_c17_02a.txt"
-
-	// Lost coast
-	"precache_file"		"scripts/sounds/level_sounds_lostcoast.txt"
-	"precache_file"		"scripts/sounds/level_voices_lostcoast.txt"
 
 	// Team Fortress 2
 	"precache_file"		"scripts/sounds/tf2_game_sounds_weapons.txt"
@@ -165,6 +161,10 @@ game_sounds_manifest
 
 	// Left 4 Dead
 	"precache_file"		"scripts/sounds/l4d_game_sounds_weapons.txt"
+
+	// Stanley Parable
+	"precache_file"		"scripts/soundscapes_stanley.txt"
+	"precache_file"		"scripts/npc_sounds_narration.txt"
 
 	// Leaving this here for now, they need to be prefixed in the future
 	"precache_file"		"scripts/game_sounds_vo.txt"

@@ -81,7 +81,7 @@ end
 function table.Merge( dest, source )
 
 	for k, v in pairs( source ) do
-		if ( type( v ) == "table" && type( dest[ k ] ) == "table" ) then
+		if ( istable( v ) && istable( dest[ k ] ) ) then
 			-- don't overwrite one table with another
 			-- instead merge them recurisvely
 			table.Merge( dest[ k ], v )
@@ -112,8 +112,8 @@ end
 function table.Add( dest, source )
 
 	-- At least one of them needs to be a table or this whole thing will fall on its ass
-	if ( type( source ) != "table" ) then return dest end
-	if ( type( dest ) != "table" ) then dest = {} end
+	if ( !istable( source ) ) then return dest end
+	if ( !istable( dest ) ) then dest = {} end
 
 	for k, v in pairs( source ) do
 		table.insert( dest, v )
@@ -172,6 +172,18 @@ function table.Random( t )
 	end
 end
 
+--[[---------------------------------------------------------
+	Name: table.Shuffle( table )
+	Desc: Performs an inline Fisher-Yates shuffle on the table in O(n) time
+-----------------------------------------------------------]]
+function table.Shuffle( t )
+	local n = #t
+	for i = 1, n - 1 do
+		local j = math.random( i, n )
+		t[ i ], t[ j ] = t[ j ], t[ i ]
+	end
+end
+
 --[[----------------------------------------------------------------------
 	Name: table.IsSequential( table )
 	Desc: Returns true if the tables
@@ -209,7 +221,7 @@ local function MakeTable( t, nice, indent, done )
 		str = str .. idt .. tab .. tab
 
 		if !sequential then
-			if type( key ) == "number" or type( key ) == "boolean" then
+			if ( isnumber( key ) or isbool( key ) ) then
 				key = "[" .. tostring( key ) .. "]" .. tab .. "="
 			else
 				key = tostring( key ) .. tab .. "="
@@ -220,17 +232,23 @@ local function MakeTable( t, nice, indent, done )
 
 		if ( istable( value ) && !done[ value ] ) then
 
-			done [ value ] = true
-			str = str .. key .. tab .. "{" .. nl .. MakeTable( value, nice, indent + 1, done )
-			str = str .. idt .. tab .. tab .. tab .. tab .."},".. nl
+			if ( IsColor( value ) ) then
+				done[ value ] = true
+				value = "Color(" .. value.r .. "," .. value.g .. "," .. value.b .. "," .. value.a .. ")"
+				str = str .. key .. tab .. value .. "," .. nl
+			else
+				done[ value ] = true
+				str = str .. key .. tab .. '{' .. nl .. MakeTable (value, nice, indent + 1, done)
+				str = str .. idt .. tab .. tab ..tab .. tab .."},".. nl
+			end
 
 		else
 
-			if ( type( value ) == "string" ) then
+			if ( isstring( value ) ) then
 				value = '"' .. tostring( value ) .. '"'
-			elseif ( type( value ) == "Vector" ) then
+			elseif ( isvector( value ) ) then
 				value = "Vector(" .. value.x .. "," .. value.y .. "," .. value.z .. ")"
-			elseif ( type( value ) == "Angle" ) then
+			elseif ( isangle( value ) ) then
 				value = "Angle(" .. value.pitch .. "," .. value.yaw .. "," .. value.roll .. ")"
 			else
 				value = tostring( value )
@@ -264,21 +282,21 @@ function table.Sanitise( t, done )
 
 	for k, v in pairs ( t ) do
 
-		if ( istable( v ) and !done[ v ] ) then
+		if ( istable( v ) and not IsColor( v ) and !done[ v ] ) then
 
 			done[ v ] = true
 			tbl[ k ] = table.Sanitise( v, done )
 
 		else
 
-			if ( type( v ) == "Vector" ) then
+			if ( isvector( v ) ) then
 
 				local x, y, z = v.x, v.y, v.z
 				if y == 0 then y = nil end
 				if z == 0 then z = nil end
 				tbl[ k ] = { __type = "Vector", x = x, y = y, z = z }
 
-			elseif ( type( v ) == "Angle" ) then
+			elseif ( isangle( v ) ) then
 
 				local p, y, r = v.pitch, v.yaw, v.roll
 				if p == 0 then p = nil end
@@ -286,7 +304,16 @@ function table.Sanitise( t, done )
 				if r == 0 then r = nil end
 				tbl[ k ] = { __type = "Angle", p = p, y = y, r = r }
 
-			elseif ( type( v ) == "boolean" ) then
+			elseif ( IsColor( v ) ) then
+
+				local r, g, b, a = v.r, v.g, v.b, v.a
+				if r == 255 then r = nil end
+				if g == 255 then g = nil end
+				if b == 255 then b = nil end
+				if a == 255 then a = nil end
+				tbl[ k ] = { __type = "Color", r = r, g = g, b = b, a = a }
+
+			elseif ( isbool( v ) ) then
 
 				tbl[ k ] = { __type = "Bool", tostring( v ) }
 
@@ -315,7 +342,7 @@ function table.DeSanitise( t, done )
 
 	for k, v in pairs ( t ) do
 
-		if ( istable( v ) and !done[ v ] ) then
+		if ( istable( v ) and not IsColor(v) and !done[ v ] ) then
 
 			done[ v ] = true
 
@@ -323,11 +350,15 @@ function table.DeSanitise( t, done )
 
 				if ( v.__type == "Vector" ) then
 
-					tbl[ k ] = Vector( v.x, v.y, v.z )
+					tbl[ k ] = Vector( v.x or 0, v.y, v.z )
 
 				elseif ( v.__type == "Angle" ) then
 
-					tbl[ k ] = Angle( v.p, v.y, v.r )
+					tbl[ k ] = Angle( v.p or 0, v.y, v.r )
+
+				elseif ( v.__type == "Color" ) then
+
+					tbl[ k ] = Color( v.r or 255, v.g or 255, v.b or 255, v.a or 255 )
 
 				elseif ( v.__type == "Bool" ) then
 
@@ -379,7 +410,7 @@ function table.SortByMember( Table, MemberName, bAsc )
 		if ( !a[ MemberName ] ) then return !bReverse end
 		if ( !b[ MemberName ] ) then return bReverse end
 
-		if ( type( a[ MemberName ] ) == "string" ) then
+		if ( isstring( a[ MemberName ] ) ) then
 
 			if ( bReverse ) then
 				return a[ MemberName ]:lower() < b[ MemberName ]:lower()
@@ -432,8 +463,8 @@ function table.LowerKeyNames( Table )
 end
 
 --[[---------------------------------------------------------
-	Name: table.LowerKeyNames( table )
-	Desc: Lowercase the keynames of all tables
+	Name: table.CollapseKeyValue( table )
+	Desc: Collapses a table with keyvalue structure
 -----------------------------------------------------------]]
 function table.CollapseKeyValue( Table )
 
@@ -645,7 +676,12 @@ function table.RemoveByValue( tbl, val )
 	local key = table.KeyFromValue( tbl, val )
 	if ( !key ) then return false end
 
-	table.remove( tbl, key )
+	if ( isnumber( key ) ) then
+		table.remove( tbl, key )
+	else
+		tbl[ key ] = nil
+	end
+
 	return key
 
 end
@@ -654,6 +690,14 @@ function table.KeysFromValue( tbl, val )
 	local res = {}
 	for key, value in pairs( tbl ) do
 		if ( value == val ) then res[ #res + 1 ] = key end
+	end
+	return res
+end
+
+function table.MemberValuesFromKey( tab, key )
+	local res = {}
+	for k, v in pairs( tab ) do
+		if ( istable( v ) && v[ key ] != nil ) then res[ #res + 1 ] = v[ key ] end
 	end
 	return res
 end

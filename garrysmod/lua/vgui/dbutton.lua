@@ -51,6 +51,27 @@ function PANEL:SetImage( img )
 end
 PANEL.SetIcon = PANEL.SetImage
 
+function PANEL:SetMaterial( mat )
+
+	if ( !mat ) then
+
+		if ( IsValid( self.m_Image ) ) then
+			self.m_Image:Remove()
+		end
+
+		return
+	end
+
+	if ( !IsValid( self.m_Image ) ) then
+		self.m_Image = vgui.Create( "DImage", self )
+	end
+
+	self.m_Image:SetMaterial( mat )
+	self.m_Image:SizeToContents()
+	self:InvalidateLayout()
+
+end
+
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "Button", self, w, h )
@@ -72,7 +93,7 @@ function PANEL:UpdateColours( skin )
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
 	--
 	-- If we have an image we have to place the image on the left
@@ -81,13 +102,26 @@ function PANEL:PerformLayout()
 	--
 	if ( IsValid( self.m_Image ) ) then
 
-		self.m_Image:SetPos( 4, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
+		local targetSize = math.min( self:GetWide() - 4, self:GetTall() - 4 )
+
+		local zoom = math.min( targetSize / self.m_Image:GetWide(), targetSize / self.m_Image:GetTall(), 1 )
+		local newSizeX = math.ceil( self.m_Image:GetWide() * zoom )
+		local newSizeY = math.ceil( self.m_Image:GetTall() * zoom )
+
+		self.m_Image:SetWide( newSizeX )
+		self.m_Image:SetTall( newSizeY )
+
+		if ( self:GetWide() < self:GetTall() ) then
+			self.m_Image:SetPos( 4, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
+		else
+			self.m_Image:SetPos( 2 + ( targetSize - self.m_Image:GetWide() ) * 0.5, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
+		end 
 
 		self:SetTextInset( self.m_Image:GetWide() + 16, 0 )
 
 	end
 
-	DLabel.PerformLayout( self )
+	DLabel.PerformLayout( self, w, h )
 
 end
 

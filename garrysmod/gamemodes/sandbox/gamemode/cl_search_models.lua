@@ -1,4 +1,6 @@
 
+local sbox_search_maxresults = CreateClientConVar( "sbox_search_maxresults", "1024", true, false, "The maximum amount of results the spawnmenu search should show. Model amount limited to 1/2 of this value, entities are limited to 1/4", 1024 )
+
 local totalCalls = 0
 local expectedCalls = 1
 
@@ -11,11 +13,11 @@ local function GetAllFiles( tab, folder, extension, path )
 	local files, folders = file.Find( folder .. "*", path )
 
 	if ( !files ) then
-		MsgN( "Warning! Ignoring '" .. folder .. "' because we cannot search in it!"  )
+		MsgN( "Warning! Ignoring '" .. folder .. "' because we cannot search in it!" )
 		return
 	end
 
-	for k, v in pairs( files ) do
+	for k, v in ipairs( files ) do
 
 		if ( v:EndsWith( extension ) ) then
 			table.insert( tab, ( folder .. v ):lower() )
@@ -23,45 +25,28 @@ local function GetAllFiles( tab, folder, extension, path )
 
 	end
 
-	for k, v in pairs( folders ) do
+	for k, v in ipairs( folders ) do
 		expectedCalls = expectedCalls + 1
 		table.insert( queuedSearch, { tab, folder .. v .. "/", extension, path } )
 	end
 
+	notification.AddProgress( "SandboxSearchIndexing", "#spawnmenu.searchindex", totalCalls / expectedCalls )
+	if ( totalCalls >= expectedCalls ) then notification.Kill( "SandboxSearchIndexing" ) end
+
 end
 
 hook.Add( "Think", "sandbox_queued_search", function()
+
 	if ( #queuedSearch < 1 ) then return end
 
 	local call = queuedSearch[ 1 ]
-	GetAllFiles( call[ 1 ], call[ 2 ], call[ 3 ], call[ 4 ] )
+	GetAllFiles( unpack( call ) )
 	table.remove( queuedSearch, 1 )
 
 	if ( !timer.Exists( "search_models_update" ) || #queuedSearch < 1 ) then
 		timer.Create( "search_models_update", 1, 1, function() hook.Run( "SearchUpdate" ) end )
 	end
-end )
 
-hook.Add( "DrawOverlay","sandbox_search_progress", function()
-	if ( !IsValid( g_SpawnMenu ) || !IsValid( g_SpawnMenu.SearchPropPanel ) || expectedCalls == 1 || totalCalls == expectedCalls ) then return end
-
-	-- This code is bad
-	--[[local pnl = g_SpawnMenu.SearchPropPanel
-	local c = pnl:GetChildren()[1]:GetChildren()[1]:GetChildren()[1]
-	if ( IsValid( c ) ) then
-		c.OriginalText = c.OriginalText or c:GetText()
-		c:SetText( c.OriginalText .. " ( Scanning: " .. math.ceil( totalCalls / expectedCalls * 100 ) .. "% )")
-	end]]
-
-	local pnl = g_SpawnMenu.SearchPropPanel
-	if ( !g_SpawnMenu:IsVisible() || !pnl:IsVisible() ) then return end
-
-	local x, y = pnl:LocalToScreen( 0, 0 )
-	local maxw = pnl:GetWide()
-	if ( pnl.VBar && pnl.VBar.Enabled ) then maxw = maxw - 20 end
-
-	draw.RoundedBox( 0, x, y, maxw, 8, Color( 0, 0, 0, 200 ) )
-	draw.RoundedBox( 0, x, y, maxw * ( totalCalls / expectedCalls ), 8, Color( 0, 128, 255, 200 ) )
 end )
 
 --
@@ -69,8 +54,6 @@ end )
 --
 local model_list = nil
 search.AddProvider( function( str )
-
-	str = str:PatternSafe()
 
 	if ( model_list == nil ) then
 
@@ -81,13 +64,13 @@ search.AddProvider( function( str )
 
 	local models = {}
 
-	for k, v in pairs( model_list ) do
+	for k, v in ipairs( model_list ) do
 
-		-- Don't search in the models/ bit of every model, because every model has this bit
+		-- Don't search in the models/ and .mdl bit of every model, because every model has this bit, unless they are looking for direct model path
 		local modelpath = v
-		if ( modelpath:StartWith( "models/" ) ) then modelpath = modelpath:sub( 8 ) end
+		if ( modelpath:StartWith( "models/" ) && modelpath:EndsWith( ".mdl" ) && !str:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8, modelpath:len() - 4 ) end
 
-		if ( modelpath:find( str ) ) then
+		if ( modelpath:find( str, nil, true ) ) then
 
 			if ( IsUselessModel( v ) ) then continue end
 
@@ -102,7 +85,7 @@ search.AddProvider( function( str )
 
 		end
 
-		if ( #models >= 512 ) then break end
+		if ( #models >= sbox_search_maxresults:GetInt() / 2 ) then break end
 
 	end
 
@@ -110,32 +93,44 @@ search.AddProvider( function( str )
 
 end, "props" )
 
+hook.Add( "GameContentChanged", "ResetModelSearchCache", function()
+
+	-- Addons got remounted, reset the model search cache
+	model_list = nil
+
+	-- Reset any ongoing search process
+	totalCalls = 0
+	expectedCalls = 1
+	queuedSearch = {}
+
+end )
+
+
 --
 -- Entity, vehicles
 --
 local function AddSearchProvider( listname, ctype, stype )
 	search.AddProvider( function( str )
 
-		str = str:PatternSafe()
-
 		local results = {}
 		local entities = {}
 
 		for k, v in pairs( list.Get( listname ) ) do
 			if ( listname == "Weapon" && !v.Spawnable ) then continue end
+
 			v.ClassName = k
 			v.PrintName = v.PrintName or v.Name
 			v.ScriptedEntityType = ctype
 			table.insert( entities, v )
 		end
 
-		for k, v in pairs( entities ) do
+		for k, v in ipairs( entities ) do
 
 			local name = v.PrintName
 			local name_c = v.ClassName
-			if ( !name && !name_c ) then continue end
+			if ( !isstring( name ) && !isstring( name_c ) ) then continue end
 
-			if ( ( name && name:lower():find( str ) ) || ( name_c && name_c:lower():find( str ) ) ) then
+			if ( ( isstring( name ) && name:lower():find( str, nil, true ) ) || ( isstring( name_c ) && name_c:lower():find( str, nil, true ) ) ) then
 
 				local entry = {
 					text = v.PrintName or v.ClassName,
@@ -153,7 +148,7 @@ local function AddSearchProvider( listname, ctype, stype )
 
 			end
 
-			if ( #results >= 128 ) then break end
+			if ( #results >= sbox_search_maxresults:GetInt() / 4 ) then break end
 
 		end
 

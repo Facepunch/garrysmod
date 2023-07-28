@@ -4,6 +4,9 @@ TOOL.Name = "#tool.slider.name"
 
 TOOL.ClientConVar[ "width" ] = "1.5"
 TOOL.ClientConVar[ "material" ] = "cable/cable"
+TOOL.ClientConVar[ "color_r" ] = "255"
+TOOL.ClientConVar[ "color_g" ] = "255"
+TOOL.ClientConVar[ "color_b" ] = "255"
 
 TOOL.Information = {
 	{ name = "left", stage = 0 },
@@ -36,21 +39,26 @@ function TOOL:LeftClick( trace )
 		local width = self:GetClientNumber( "width", 1.5 )
 		local material = self:GetClientInfo( "material" )
 
+		local colorR = self:GetClientNumber( "color_r" )
+		local colorG = self:GetClientNumber( "color_g" )
+		local colorB = self:GetClientNumber( "color_b" )
+
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 
-		local constraint, rope = constraint.Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
+		local constr, rope = constraint.Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, Color( colorR, colorG, colorB, 255 ) )
+		if ( IsValid( constr ) ) then
+			undo.Create( "Slider" )
+				undo.AddEntity( constr )
+				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+				undo.SetPlayer( self:GetOwner() )
+			undo.Finish()
 
-		undo.Create( "Slider" )
-			undo.AddEntity( constraint )
-			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-
-		self:GetOwner():AddCleanup( "ropeconstraints", constraint )
-		self:GetOwner():AddCleanup( "ropeconstraints", rope )
+			self:GetOwner():AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+		end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()
@@ -68,8 +76,6 @@ end
 function TOOL:RightClick( trace )
 
 	if ( self:GetOperation() == 1 ) then return false end
-
-	local iNum = self:NumObjects()
 
 	local Phys = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone )
 	self:SetObject( 1, trace.Entity, trace.HitPos, Phys, trace.PhysicsBone, trace.HitNormal )
@@ -105,7 +111,7 @@ function TOOL:RightClick( trace )
 	end
 
 	-- Check to see if the player can create a slider constraint with the entity in the trace
-	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "slider" ) ) then
+	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "slider", self, 2 ) ) then
 		self:ClearObjects()
 		return
 	end
@@ -121,21 +127,26 @@ function TOOL:RightClick( trace )
 	local width = self:GetClientNumber( "width", 1.5 )
 	local material = self:GetClientInfo( "material" )
 
+	local colorR = self:GetClientNumber( "color_r" )
+	local colorG = self:GetClientNumber( "color_g" )
+	local colorB = self:GetClientNumber( "color_b" )
+
 	-- Get information we're about to use
 	local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 	local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 	local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
 
-	local constraint, rope = constraint.Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material )
+	local constr, rope = constraint.Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, Color( colorR, colorG, colorB, 255 ) )
+	if ( IsValid( constr ) ) then
+		undo.Create( "Slider" )
+			undo.AddEntity( constr )
+			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+			undo.SetPlayer( self:GetOwner() )
+		undo.Finish()
 
-	undo.Create( "Slider" )
-		undo.AddEntity( constraint )
-		if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-		undo.SetPlayer( self:GetOwner() )
-	undo.Finish()
-
-	self:GetOwner():AddCleanup( "ropeconstraints", constraint )
-	self:GetOwner():AddCleanup( "ropeconstraints", rope )
+		self:GetOwner():AddCleanup( "ropeconstraints", constr )
+		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+	end
 
 	-- Clear the objects so we're ready to go again
 	self:ClearObjects()
@@ -169,5 +180,7 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Slider", { Label = "#tool.slider.width", Command = "slider_width", Type = "Float", Min = 0, Max = 10 } )
 	CPanel:AddControl( "RopeMaterial", { Label = "#tool.slider.material", ConVar = "slider_material" } )
+
+	CPanel:AddControl( "Color", { Label = "#tool.slider.color", Red = "slider_color_r", Green = "slider_color_g", Blue = "slider_color_b" } )
 
 end

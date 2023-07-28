@@ -22,15 +22,11 @@ function ENT:Initialize()
 
    self:PhysicsInit( SOLID_VPHYSICS )
    self:SetMoveType( MOVETYPE_VPHYSICS )
-   self:SetSolid( SOLID_BBOX )
+   self:AddSolidFlags( FSOLID_TRIGGER )
 
-   self:SetCollisionGroup( COLLISION_GROUP_WEAPON)
-   local b = 26
-   self:SetCollisionBounds(Vector(-b, -b, -b), Vector(b,b,b))
+   self:SetCollisionGroup( COLLISION_GROUP_WEAPON )
 
-   if SERVER then
-      self:SetTrigger(true)
-   end
+   self:UseTriggerBounds( true, 24 )
 
    self.tickRemoval = false
 
@@ -50,9 +46,11 @@ function ENT:PlayerCanPickup(ply)
    if ply == self:GetOwner() then return false end
 
    local result = hook.Call("TTTCanPickupAmmo", nil, ply, self)
-   if result then
+
+   if result != nil then
       return result
    end
+
 
    local ent = self
    local phys = ent:GetPhysicsObject()
@@ -81,7 +79,7 @@ function ENT:CheckForWeapon(ply)
    -- Check if player has a weapon that we know needs us. This is called in
    -- Touch, which is called many a time, so we use the cache here to avoid
    -- looping through every weapon the player has to check their AmmoEnt.
-   for _, w in pairs(self.CachedWeapons) do
+   for _, w in ipairs(self.CachedWeapons) do
       if ply:HasWeapon(w) then return true end
    end
    return false
@@ -90,7 +88,7 @@ end
 function ENT:Touch(ent)
    if (SERVER and self.tickRemoval ~= true) and ent:IsValid() and ent:IsPlayer() and self:CheckForWeapon(ent) and self:PlayerCanPickup(ent) then
      local ammo = ent:GetAmmoCount(self.AmmoType)
-     
+
      -- need clipmax info and room for at least 1/4th
      if self.AmmoMax >= (ammo + math.ceil(self.AmmoAmount * 0.25)) then
        local given = self.AmmoAmount
@@ -99,7 +97,7 @@ function ENT:Touch(ent)
 
        local newEntAmount = self.AmmoAmount - given
        self.AmmoAmount = newEntAmount
-       
+
        if self.AmmoAmount <= 0 or math.ceil(self.AmmoEntMax * 0.25) > self.AmmoAmount then
          self.tickRemoval = true
          self:Remove()

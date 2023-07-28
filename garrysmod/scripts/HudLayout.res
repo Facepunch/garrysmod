@@ -51,7 +51,7 @@
 
 		"text_xpos" "8"
 		"text_ypos" "20"
-		"digit_xpos" "44"
+		"digit_xpos" "40" // GMOD: Was 44
 		"digit_ypos" "2"
 		"digit2_xpos" "98"
 		"digit2_ypos" "16"
@@ -60,9 +60,9 @@
 	HudAmmoSecondary
 	{
 		"fieldName" "HudAmmoSecondary"
-		"xpos"	"r76"
+		"xpos"	"r82" // GMOD: Was 76
 		"ypos"	"432"
-		"wide"	"60"
+		"wide"	"72" // GMOD: Was 60
 		"tall"  "36"
 		"visible" "1"
 		"enabled" "1"
@@ -73,7 +73,7 @@
 		//"digit_ypos" "2"
 		"text_xpos" "8"
 		"text_ypos" "22"
-		"digit_xpos" "36"
+		"digit_xpos" "26" // GMOD: Was 36
 		"digit_ypos" "2"
 	}
 	

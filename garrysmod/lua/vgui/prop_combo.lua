@@ -15,8 +15,16 @@ function PANEL:Setup( vars )
 	combo:DockMargin( 0, 1, 2, 2 )
 	combo:SetValue( vars.text or "Select..." )
 
+	local hasIcons, icon = istable( vars.icons )
 	for id, thing in pairs( vars.values or {} ) do
-		combo:AddChoice( id, thing )
+
+		if ( hasIcons ) then
+			icon = vars.icons[ id ]
+		else
+			icon = vars.icons
+		end
+
+		combo:AddChoice( id, thing, id == vars.select, icon )
 	end
 
 	self.IsEditing = function( self )
@@ -49,6 +57,14 @@ function PANEL:Setup( vars )
 
 	self:GetRow().SetSelected = function( self, id )
 		combo:ChooseOptionID( id )
+	end
+
+	-- Enabled/disabled support
+	self.IsEnabled = function( self )
+		return combo:IsEnabled()
+	end
+	self.SetEnabled = function( self, b )
+		combo:SetEnabled( b )
 	end
 
 end

@@ -40,7 +40,7 @@ function SWEP:Reload()
 end
 
 --[[---------------------------------------------------------
-   Think does nothing
+	Think does nothing
 -----------------------------------------------------------]]
 function SWEP:Think()
 end
@@ -50,7 +50,9 @@ end
 -----------------------------------------------------------]]
 function SWEP:PrimaryAttack()
 
-	local tr = self.Owner:GetEyeTrace()
+	local owner = self:GetOwner()
+
+	local tr = util.TraceLine( util.GetPlayerTrace( owner ) )
 	--if ( tr.HitWorld ) then return end
 
 	if ( IsFirstTimePredicted() ) then
@@ -72,7 +74,9 @@ function SWEP:PrimaryAttack()
 
 	-- Make a manhack
 	local ent = ents.Create( "npc_manhack" )
-	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
+	if ( !IsValid( ent ) ) then return end
+
+	ent:SetPos( tr.HitPos + owner:GetAimVector() * -16 )
 	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
 
@@ -90,12 +94,14 @@ function SWEP:PrimaryAttack()
 
 	end
 
-	undo.Create("Manhack")
-		undo.AddEntity( weld )
-		undo.AddEntity( nocl )
-		undo.AddEntity( ent )
-		undo.SetPlayer( self.Owner )
-	undo.Finish()
+	if ( owner:IsPlayer() ) then
+		undo.Create( "Manhack" )
+			undo.AddEntity( weld )
+			undo.AddEntity( nocl )
+			undo.AddEntity( ent )
+			undo.SetPlayer( owner )
+		undo.Finish()
+	end
 
 end
 
@@ -104,7 +110,9 @@ end
 -----------------------------------------------------------]]
 function SWEP:SecondaryAttack()
 
-	local tr = self.Owner:GetEyeTrace()
+	local owner = self:GetOwner()
+
+	local tr = util.TraceLine( util.GetPlayerTrace( owner ) )
 	--if ( tr.HitWorld ) then return end
 
 	self:EmitSound( ShootSound )
@@ -126,7 +134,9 @@ function SWEP:SecondaryAttack()
 
 	-- Make a manhack
 	local ent = ents.Create( "npc_rollermine" )
-	ent:SetPos( tr.HitPos + self.Owner:GetAimVector() * -16 )
+	if ( !IsValid( ent ) ) then return end
+
+	ent:SetPos( tr.HitPos + owner:GetAimVector() * -16 )
 	ent:SetAngles( tr.HitNormal:Angle() )
 	ent:Spawn()
 
@@ -139,19 +149,21 @@ function SWEP:SecondaryAttack()
 
 	end
 
-	undo.Create("Rollermine")
-		undo.AddEntity( weld )
-		undo.AddEntity( nocl )
-		undo.AddEntity( ent )
-		undo.SetPlayer( self.Owner )
-	undo.Finish()
+	if ( owner:IsPlayer() ) then
+		undo.Create( "Rollermine" )
+			undo.AddEntity( weld )
+			undo.AddEntity( nocl )
+			undo.AddEntity( ent )
+			undo.SetPlayer( owner )
+		undo.Finish()
+	end
 
 end
 
 
 --[[---------------------------------------------------------
-   Name: ShouldDropOnDie
-   Desc: Should this weapon be dropped when its owner dies?
+	Name: ShouldDropOnDie
+	Desc: Should this weapon be dropped when its owner dies?
 -----------------------------------------------------------]]
 function SWEP:ShouldDropOnDie()
 	return false

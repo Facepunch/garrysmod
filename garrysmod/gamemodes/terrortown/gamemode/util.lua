@@ -53,7 +53,7 @@ end
 
 function util.GetAlivePlayers()
    local alive = {}
-   for k, p in pairs(player.GetAll()) do
+   for k, p in ipairs(player.GetAll()) do
       if IsValid(p) and p:Alive() and p:IsTerror() then
          table.insert(alive, p)
       end
@@ -71,7 +71,7 @@ function util.GetNextAlivePlayer(ply)
    local choice = nil
 
    if IsValid(ply) then
-      for k,p in pairs(alive) do
+      for k,p in ipairs(alive) do
          if prev == ply then
             choice = p
          end
@@ -148,6 +148,10 @@ function util.StartBleeding(ent, dmg, t)
                 function() DoBleed(ent) end)
 end
 
+function util.StopBleeding(ent)
+   timer.Remove("bleed" .. ent:EntIndex())
+end
+
 local zapsound = Sound("npc/assassin/ball_zap1.wav")
 function util.EquipmentDestroyed(pos)
    local effect = EffectData()
@@ -169,12 +173,12 @@ end
 function util.noop() end
 function util.passthrough(x) return x end
 
--- Nice Fisher-Yates implementation, from Wikipedia
+-- Fisher-Yates shuffle
 local rand = math.random
 function table.Shuffle(t)
   local n = #t
 
-  while n > 2 do
+  while n > 1 do
     -- n is now the last pertinent index
     local k = rand(n) -- 1 <= k <= n
     -- Quick swap
@@ -231,7 +235,7 @@ function table.CopyKeys(tbl, keys)
    local val = nil
    for _, k in pairs(keys) do
       val = tbl[k]
-      if type(val) == "table" then
+      if istable(val) then
          out[k] = table.Copy(val)
       else
          out[k] = val

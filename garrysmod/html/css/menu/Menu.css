@@ -18,15 +18,30 @@ INPUT
 	font-size: 12px;
 }
 
+INPUT.searchbox, INPUT.gm_search
+{
+	border: 1px solid #ABADB3;
+	border-radius: 3px;
+	height: 24px;
+	margin-top: 6px;
+	padding: 4px;
+}
 INPUT.searchbox
 {
 	float: right;
-	border:0;
-	border-radius: 3px;
-	height: 24px;
 	margin-right: 320px;
-	margin-top: 6px;
-	padding: 4px;
+	width: 15%;
+}
+INPUT.gm_search
+{
+	width: 80%;
+	margin-bottom: 5px;
+}
+INPUT[type="text"], INPUT[type="number"]
+{
+	border: 1px solid #ABADB3;
+	border-radius: 2px;
+	outline-color: #08f;
 }
 
 A
@@ -79,7 +94,7 @@ UL.category LI.icon
 	position: absolute;
 }
 
-.btn-primary
+.btn-primary, .btn-primary-disabled
 {
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08C), to(#05C));
 	border: 1px solid #CCC;
@@ -90,6 +105,12 @@ UL.category LI.icon
 	cursor: pointer;
 	vertical-align: middle;
 	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary-disabled
+{
+	border-color: #424242;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#888), to(#555));
 }
 
 .btn-primary:hover
@@ -124,7 +145,7 @@ DIV.gridicon
 	width: 300px;
 	float: left;
 	margin: 3px;
-	//border-radius: 2px;
+	/*border-radius: 2px;*/
 	background-position:center;
 }
 
@@ -188,7 +209,7 @@ DIV.disabled
 	border-radius: 4px;
 }
 
-pagnation
+pagination
 {
 	position: absolute;
 	bottom: 4px;
@@ -255,6 +276,12 @@ loading
 	box-shadow: 0 0 10px 1px rgba( 0, 0, 0, 0.4 );
 	cursor: hand;
 }
+.news_buttons div.new {
+	background: #f55;
+}
+.news_buttons div.selected.new {
+	background: #fcc;
+}
 .news_buttons div.selected {
 	background: #eee;
 }
@@ -267,9 +294,8 @@ loading
 	box-shadow: 0 0 10px 1px rgba( 0, 0, 0, 0.4 );
 	height: 256px;
 	width: 512px;
-	position:relative;
+	position: relative;
 }
-
 .news_item div font {
 	font-weight: normal;
 	font-size: small;
@@ -299,24 +325,31 @@ loading
 }
 
 /* 800x600 and lower */
-@media (max-width: 800px) {
-	.news_item {
+@media (max-width: 800px)
+{
+	.news_item
+	{
 		height: 128px;
 		width: 256px;
 	}
 
-	.news_item div font {
+	.news_item div font
+	{
 		font-size: x-small;
 	}
-	.news_item div {
+	.news_item div
+	{
 		font-size: medium;
 	}
 }
 
 /* 640x480 and lower */
-@media (max-width: 640px) {
-	.news {
+@media (max-width: 640px)
+{
+	.news
+	{
 		right: 5px;
 		top: 65px;
 	}
 }
+

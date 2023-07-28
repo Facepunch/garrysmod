@@ -65,6 +65,7 @@ function TOOL:LeftClick( trace, worldweld )
 	ang:RotateAroundAxis( trace.HitNormal, 0 )
 
 	local emitter = MakeEmitter( ply, key, delay, toggle, effect, starton, nil, scale, { Pos = pos, Angle = ang } )
+	if ( !IsValid( emitter ) ) then return false end
 
 	undo.Create( "Emitter" )
 		undo.AddEntity( emitter )
@@ -72,12 +73,13 @@ function TOOL:LeftClick( trace, worldweld )
 		-- Don't weld to world
 		if ( trace.Entity != NULL && ( !trace.Entity:IsWorld() || worldweld ) ) then
 			local weld = constraint.Weld( emitter, trace.Entity, 0, trace.PhysicsBone, 0, true, true )
+			if ( IsValid( weld ) ) then
+				ply:AddCleanup( "emitters", weld )
+				undo.AddEntity( weld )
+			end
 
 			if ( IsValid( emitter:GetPhysicsObject() ) ) then emitter:GetPhysicsObject():EnableCollisions( false ) end
 			emitter.nocollide = true
-
-			ply:AddCleanup( "emitters", weld )
-			undo.AddEntity( weld )
 		end
 
 		undo.SetPlayer( ply )
@@ -169,7 +171,7 @@ end
 function TOOL:Think()
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != "models/props_lab/tpplug.mdl" ) then
-		self:MakeGhostEntity( "models/props_lab/tpplug.mdl", Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( "models/props_lab/tpplug.mdl", vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostEmitter( self.GhostEntity, self:GetOwner() )

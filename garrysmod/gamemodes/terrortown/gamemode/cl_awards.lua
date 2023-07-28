@@ -145,7 +145,7 @@ local function AllKills(events, scores, players, traitors)
       end
    end
 
-   if table.Count(tr_killers) == 1 then
+   if #tr_killers == 1 then
       local id = tr_killers[1]
       if not table.HasValue(traitors, id) then
          local killer = players[id]
@@ -155,7 +155,7 @@ local function AllKills(events, scores, players, traitors)
       end
    end
 
-   if table.Count(in_killers) == 1 then
+   if #in_killers == 1 then
       local id = in_killers[1]
       if table.HasValue(traitors, id) then
          local killer = players[id]
