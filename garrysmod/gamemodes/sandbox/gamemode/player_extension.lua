@@ -33,7 +33,7 @@ function meta:GetCount( str, minus )
 
 	if ( !self:IsValid() ) then return end
 
-	local key = self:AccountID() or 0
+	local key = self:UniqueID()
 	local tab = g_SBoxObjects[ key ]
 
 	if ( !tab || !tab[ str ] ) then
@@ -65,7 +65,7 @@ function meta:AddCount( str, ent )
 
 	if ( SERVER ) then
 
-		local key = self:AccountID() or 0
+		local key = self:UniqueID()
 		g_SBoxObjects[ key ] = g_SBoxObjects[ key ] or {}
 		g_SBoxObjects[ key ][ str ] = g_SBoxObjects[ key ][ str ] or {}
 
