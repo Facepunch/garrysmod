@@ -64,7 +64,7 @@ function MSTACK:AddColoredBgMessage(text, bg_clr)
    self:AddMessageEx(item)
 end
 
-local ttt_msg_soundcue = CreateClientConVar("ttt_cl_msg_soundcue", "1", true)
+local ttt_msg_soundcue = CreateClientConVar("ttt_cl_msg_soundcue", "0", true)
 
 -- Internal
 function MSTACK:AddMessageEx(item)
