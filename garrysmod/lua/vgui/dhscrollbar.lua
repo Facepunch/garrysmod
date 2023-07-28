@@ -1,3 +1,4 @@
+
 local PANEL = {}
 
 AccessorFunc( PANEL, "m_HideButtons", "HideButtons" )
@@ -11,16 +12,16 @@ function PANEL:Init()
 
 	self.btnLeft = vgui.Create( "DButton", self )
 	self.btnLeft:SetText( "" )
-	self.btnLeft.DoClick = function( self ) print(-1) self:GetParent():AddScroll( -1 ) end
+	self.btnLeft.DoClick = function( self ) self:GetParent():AddScroll( -1 ) end
 	self.btnLeft.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonLeft", panel, w, h ) end
 
 	self.btnRight = vgui.Create( "DButton", self )
 	self.btnRight:SetText( "" )
-	self.btnRight.DoClick = function( self ) print(1) self:GetParent():AddScroll( 1 ) end
+	self.btnRight.DoClick = function( self ) self:GetParent():AddScroll( 1 ) end
 	self.btnRight.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonRight", panel, w, h ) end
 
 	self.btnGrip = vgui.Create( "DScrollBarGrip", self )
-	self.btnGrip.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ScrollBarGrip", panel, w, h ) end
+	--self.btnGrip.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ScrollBarGrip", panel, w, h ) end
 
 	self:SetSize( 15, 15 )
 	self:SetHideButtons( false )
@@ -171,7 +172,7 @@ function PANEL:OnMousePressed()
 
 	local PageSize = self.BarSize
 
-	if ( y > self.btnGrip.y ) then
+	if ( x > self.btnGrip.x ) then
 		self:SetScroll( self:GetScroll() + PageSize )
 	else
 		self:SetScroll( self:GetScroll() - PageSize )
