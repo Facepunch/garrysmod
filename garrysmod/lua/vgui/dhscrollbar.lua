@@ -21,7 +21,6 @@ function PANEL:Init()
 	self.btnRight.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonRight", panel, w, h ) end
 
 	self.btnGrip = vgui.Create( "DScrollBarGrip", self )
-	--self.btnGrip.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ScrollBarGrip", panel, w, h ) end
 
 	self:SetSize( 15, 15 )
 	self:SetHideButtons( false )
