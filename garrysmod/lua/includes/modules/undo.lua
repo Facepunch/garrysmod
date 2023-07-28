@@ -326,7 +326,6 @@ function Finish( NiceText )
 	end
 
 	local index = Current_Undo.Owner:UniqueID()
-
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
 	Current_Undo.NiceText = NiceText or Current_Undo.Name
@@ -464,7 +463,6 @@ local function CC_UndoNum( ply, command, args )
 	if ( !args[ 1 ] ) then return end
 
 	local index = ply:UniqueID()
-
 	PlayerUndo[ index ] = PlayerUndo[ index ] or {}
 
 	local UndoNum = tonumber( args[ 1 ] )
