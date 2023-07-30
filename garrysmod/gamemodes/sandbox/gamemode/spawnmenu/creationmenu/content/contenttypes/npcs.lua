@@ -17,11 +17,12 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
 
 	end
 
+	local CustomIcons = list.Get( "CategoryIconNPC" )
 	-- Create an icon for each one and put them on the panel
 	for CategoryName, v in SortedPairs( Categories ) do
 
 		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, "icon16/monkey.png" )
+		local node = tree:AddNode( CategoryName, CustomIcons[CategoryName] or "icon16/monkey.png" )
 
 		-- When we click on the node - populate it using this function
 		node.DoPopulate = function( self )
