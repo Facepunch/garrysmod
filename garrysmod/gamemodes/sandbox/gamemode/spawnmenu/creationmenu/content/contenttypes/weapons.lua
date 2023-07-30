@@ -1,4 +1,6 @@
 
+list.Set( "CategoryIconWeapons", "Half-Life 2", "games/16/hl2.png" )
+
 hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, node )
 
 	-- Loop through the weapons and add them to the menu
@@ -20,11 +22,12 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, nod
 
 	Weapons = nil
 
+	local CustomIcons = list.Get( "CategoryIconWeapons" )
 	-- Loop through each category
 	for CategoryName, v in SortedPairs( Categorised ) do
 
 		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, "icon16/gun.png" )
+		local node = tree:AddNode( CategoryName, CustomIcons[CategoryName] or "icon16/gun.png" )
 
 		-- When we click on the node - populate it using this function
 		node.DoPopulate = function( self )
