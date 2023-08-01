@@ -250,3 +250,59 @@ end
 function math.SnapTo( num, multiple )
 	return math.floor( num / multiple + 0.5 ) * multiple
 end
+
+--[[---------------------------------------------------------
+	Name: BezierLerp( frac, points )
+	Desc: Lerp point between points with bezier algorithms
+-----------------------------------------------------------]]
+
+function math.BezierLerp( frac, points )
+	local mu = frac * frac
+	local mum = 1 - frac
+	local mum2 = mum * mum
+
+	if ( points[4] ) then -- Cubic
+		return mum2 * mum * points[1] + 3 * mum2 * frac * points[2] + 3 * mum * mu * points[3] + mu * frac * points[4]
+	elseif ( points[3] ) then -- Quadratic
+		return mum2 * points[1] + 2 * mum * frac * points[2] + mu * points[3]
+	else -- Linear
+		return mum * points[1] + frac * points[2]
+	end
+end
+
+--[[---------------------------------------------------------
+	Name: BezierSpline( points, steps, spline )
+	Desc: Calc spline between points with bezier algorithms
+-----------------------------------------------------------]]
+
+do
+	local function GetDistance( p1, p2 )
+		return math.sqrt( ( p2.x - p1.x ) ^ 2 + ( p2.y - p1.y ) ^ 2 )
+	end
+
+	local bezierStepSize = 1 / ( math.pi * 10 )
+
+	function math.BezierSpline( points, steps, spline )
+		if steps == nil then
+			local distance = GetDistance( points[1], points[2] )
+			if points[3] then
+				distance = distance + GetDistance( points[2], points[3] )
+			end
+			if points[4] then
+				distance = distance + GetDistance( points[3], points[4] )
+			end
+
+			steps = math.max( 1, math.floor( distance * bezierStepSize ) )
+		end
+
+		spline = spline or {}
+		local i = 1
+
+		for frac = 0, 1, 1 / steps do
+			spline[ i ] = math.BezierLerp( frac, points )
+			i = i + 1
+		end
+
+		return spline
+	end
+end
