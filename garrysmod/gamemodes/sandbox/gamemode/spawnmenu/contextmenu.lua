@@ -39,7 +39,7 @@ function PANEL:Open()
 	RestoreCursorPosition()
 
 	local bShouldShow = hook.Run( "ContextMenuShowTool" ) 
-	local bShow = bShouldShow == nil and true or bShouldShow
+	local bShow = bShouldShow == nil or bShouldShow
 
 	-- Set up the active panel..
 	if ( bShow && IsValid( spawnmenu.ActiveControlPanel() ) ) then
