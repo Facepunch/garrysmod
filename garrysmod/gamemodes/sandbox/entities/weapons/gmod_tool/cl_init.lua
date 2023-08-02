@@ -201,8 +201,6 @@ end
 
 function SWEP:FreezeMovement()
 
-	local mode = self:GetMode()
-
 	if ( !self:GetToolObject() ) then return false end
 
 	return self:GetToolObject():FreezeMovement()
