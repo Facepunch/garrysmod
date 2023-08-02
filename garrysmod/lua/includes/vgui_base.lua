@@ -1,3 +1,4 @@
+
 include( "vgui/DFrame.lua" )
 include( "vgui/DButton.lua" )
 include( "vgui/DTooltip.lua" )
@@ -50,3 +51,4 @@ include( "vgui/DColorMixer.lua" )
 include( "vgui/DColorCube.lua" )
 include( "vgui/DAlphaBar.lua" )
 include( "vgui/DRGBPicker.lua" )
+include( "vgui/DPanPanel.lua" )

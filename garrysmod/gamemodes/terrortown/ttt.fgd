@@ -6,19 +6,19 @@
 
 @include "base.fgd" 
 
-@BaseClass color(0 0 200) base(Targetname, Angles, Shadow) = Item
+@BaseClass color(0 0 200) base(Targetname, Angles, Shadow) = TTTItem
 [
 	output OnPlayerTouch(void) : "Fires when the player touches this object"
 ]
 
-@PointClass base(Item) studio("models/items/boxsrounds.mdl")= item_ammo_pistol_ttt : "Box of Pistol ammo" []
-@PointClass base(Item) studio("models/items/boxmrounds.mdl")= item_ammo_smg1_ttt : "MAC10 ammo" []
-@PointClass base(Item) studio("models/items/357ammo.mdl")= item_ammo_357_ttt : "Box of Carbine ammo" []
-@PointClass base(Item) studio("models/items/BoxBuckshot.mdl")= item_box_buckshot_ttt : "Box Buckshot" []
-@PointClass base(Item) studio("models/items/357ammo.mdl")= item_ammo_revolver_ttt : "Box of Deagle ammo" []
+@PointClass base(TTTItem) studio("models/items/boxsrounds.mdl")= item_ammo_pistol_ttt : "Box of Pistol ammo" []
+@PointClass base(TTTItem) studio("models/items/boxmrounds.mdl")= item_ammo_smg1_ttt : "MAC10 ammo" []
+@PointClass base(TTTItem) studio("models/items/357ammo.mdl")= item_ammo_357_ttt : "Box of Carbine ammo" []
+@PointClass base(TTTItem) studio("models/items/BoxBuckshot.mdl")= item_box_buckshot_ttt : "Box Buckshot" []
+@PointClass base(TTTItem) studio("models/items/357ammo.mdl")= item_ammo_revolver_ttt : "Box of Deagle ammo" []
 
-@PointClass base(Item) studio("models/items/boxflares.mdl")= ttt_random_ammo : "Random ammo" []
-@PointClass base(Item) studio("models/weapons/w_shotgun.mdl")= ttt_random_weapon : "Random weapon" [
+@PointClass base(TTTItem) studio("models/items/boxflares.mdl")= ttt_random_ammo : "Random ammo" []
+@PointClass base(TTTItem) studio("models/weapons/w_shotgun.mdl")= ttt_random_weapon : "Random weapon" [
 	auto_ammo(integer) : "Autospawn ammo items" : 0 : "Number of matching ammo entities to spawn around the weapon. Leave some room above this entity for the ammo, it will be spawned there, fall and end up around the gun. Set to 0 to disable."
 ]
 
@@ -46,6 +46,19 @@
 @PointClass base(Weapon) studio("models/weapons/w_mach_m249para.mdl") = weapon_zm_sledge : "HUGE249" []
 @PointClass base(Weapon) studio("models/weapons/w_rif_m4a1.mdl") = weapon_ttt_m16 : "M16" []
 @PointClass base(Weapon) studio("models/weapons/w_pist_glock18.mdl") = weapon_ttt_glock : "Glock" []
+@PointClass base(Weapon) studio("models/weapons/w_knife_t.mdl") = weapon_ttt_knife : "Knife" []
+@PointClass base(Weapon) studio("models/weapons/w_pist_usp_silencer.mdl") = weapon_ttt_sipistol : "Silent Pistol" []
+@PointClass base(Weapon) studio("models/weapons/w_357.mdl") = weapon_ttt_flaregun : "Flaregun" []
+@PointClass base(Weapon) studio("models/weapons/w_physics.mdl") = weapon_ttt_push : "Newton launcher" []
+@PointClass base(Weapon) studio("models/weapons/w_IRifle.mdl") = weapon_ttt_phammer : "Poltergeist" []
+@PointClass base(Weapon) studio("models/weapons/w_c4.mdl") = weapon_ttt_c4 : "C4" []
+@PointClass base(Weapon) studio("models/weapons/w_slam.mdl") = weapon_ttt_teleport : "Teleporter" []
+@PointClass base(Weapon) studio("models/weapons/w_smg_ump45.mdl") = weapon_ttt_stungun : "UMP Prototype" []
+@PointClass base(Weapon) studio("models/props/cs_office/microwave.mdl") = ttt_health_station : "Health Station" []
+@PointClass base(Weapon) studio("models/props/cs_office/paper_towels.mdl") = weapon_ttt_binoculars : "Binoculars" []
+@PointClass base(Weapon) studio("models/Items/battery.mdl") = weapon_ttt_cse : "Visualizer" []
+@PointClass base(Weapon) studio("models/props_lab/huladoll.mdl") = weapon_ttt_wtester : "DNA Scanner" []
+@PointClass base(Weapon) studio("models/weapons/w_defuser.mdl") = weapon_ttt_defuser : "Defuser" []
 
 @SolidClass base(Trigger, Targetname) iconsprite("editor/obsolete.vmt") = ttt_traitor_check :
 	"A trigger volume that checks if there is a traitor inside."
@@ -156,7 +169,7 @@
 	input Display(void) : "Display the message text."
 ]
 
-@PointClass base(Targetname, Parentname, Origin) = ttt_traitor_button :
+@PointClass base(Targetname, Parentname, Origin) sphere(UsableRange) = ttt_traitor_button :
 	"A button only usable by traitors, and only shown on their HUD. Can be used from any point within 1024 units of the button."
 [
 	description(string) : "Description" : "" : "Text describing the function of this button, shown on player HUD."

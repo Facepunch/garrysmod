@@ -52,6 +52,14 @@ function PANEL:Setup( vars )
 		return text:IsEditing()
 	end
 
+	-- Enabled/disabled support
+	self.IsEnabled = function( self )
+		return text:IsEnabled()
+	end
+	self.SetEnabled = function( self, b )
+		text:SetEnabled( b )
+	end
+
 	-- Set the value
 	self.SetValue = function( self, val )
 		text:SetText( util.TypeToString( val ) )

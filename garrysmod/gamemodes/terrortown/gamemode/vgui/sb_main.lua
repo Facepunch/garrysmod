@@ -177,9 +177,10 @@ function PANEL:Init()
 
    self.sort_headers = {}
    -- Reuse some translations
-   self:AddFakeColumn( GetTranslation("sb_sortby"), nil, nil,       nil ) -- "Sort by:"
-   self:AddFakeColumn( GetTranslation("equip_spec_name"), nil, nil, "name" )
-   self:AddFakeColumn( GetTranslation("col_role"), nil, nil,        "role" )
+   -- Columns spaced out a bit to allow for more room for translations
+   self:AddFakeColumn( GetTranslation("sb_sortby"), nil, 70,       nil ) -- "Sort by:"
+   self:AddFakeColumn( GetTranslation("equip_spec_name"), nil, 70, "name" )
+   self:AddFakeColumn( GetTranslation("col_role"), nil, 70,        "role" )
 
    -- Let hooks add their column headers (via AddColumn() or AddFakeColumn())
    hook.Call( "TTTScoreboardColumns", nil, self )
@@ -407,7 +408,7 @@ function PANEL:UpdateScoreboard( force )
 
    -- Put players where they belong. Groups will dump them as soon as they don't
    -- anymore.
-   for k, p in pairs(player.GetAll()) do
+   for k, p in ipairs(player.GetAll()) do
       if IsValid(p) then
          local group = ScoreGroup(p)
          if self.ply_groups[group] and not self.ply_groups[group]:HasPlayerRow(p) then

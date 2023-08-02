@@ -12,15 +12,12 @@ if ( !SERVER ) then return end
 local tonumber		= tonumber
 local pairs			= pairs
 local unpack		= unpack
-local type			= type
 local table			= table
-local concommand	= concommand
-local PrintTable	= PrintTable
-local ErrorNoHalt	= ErrorNoHalt
 local saverestore	= saverestore
-local tostring		= tostring
 local math			= math
 local IsValid		= IsValid
+local type			= type
+local ErrorNoHaltWithStack = ErrorNoHaltWithStack
 
 module( "numpad" )
 
@@ -62,7 +59,7 @@ local function GetPlayerIndex( ply )
 
 	if ( !IsValid( ply ) ) then return 0 end
 
-	return ply:UniqueID()
+	return ply:SteamID64()
 
 end
 
@@ -176,7 +173,7 @@ end
 -----------------------------------------------------------]]
 function OnDown( ply, key, name, ... )
 
-	if ( !key ) then ErrorNoHalt( "ERROR: numpad.OnDown key is nil!\n" ) return end
+	if ( !key || key ~= key ) then ErrorNoHaltWithStack( "bad argument #2 to 'numpad.OnDown' (number expected, got ", type( key ), ")" ) return end
 	keys_in[ key ] = keys_in[ key ] or {}
 
 	local impulse = {}
@@ -194,7 +191,7 @@ end
 -----------------------------------------------------------]]
 function OnUp( ply, key, name, ... )
 
-	if ( !key ) then ErrorNoHalt("ERROR: numpad.OnUp key is nil!\n") return end
+	if ( !key || key ~= key ) then ErrorNoHaltWithStack( "bad argument #2 to 'numpad.OnUp' (number expected, got ", type( key ), ")" ) return end
 	keys_out[ key ] = keys_out[ key ] or {}
 
 	local impulse = {}

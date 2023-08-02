@@ -16,9 +16,9 @@ local function DrawColorBox()
 	local h = 480 * size
 
 	local x = sensor_color_x:GetInt()
-	if ( x < 0 ) then 
-		x = x * -1 
-		x = ScrW() - x - w 
+	if ( x < 0 ) then
+		x = x * -1
+		x = ScrW() - x - w
 	end
 
 	local y = sensor_color_y:GetInt()
@@ -35,7 +35,7 @@ local function DrawColorBox()
 	if ( vgui.CursorVisible() ) then
 		local mx, my = gui.MousePos()
 		local dist = Vector( mx, my, 0 ):Distance( Vector( x + w *0.5, y + h * 0.5, 0 ) )
-		alpha = math.Clamp( alpha - (512 - dist), 10, 255 )
+		alpha = math.Clamp( alpha - ( 512 - dist ), 10, 255 )
 	end
 
 	surface.SetDrawColor( 0, 0, 0, alpha )

@@ -1,8 +1,0 @@
-"TableToKeyValues"
-{
-	"parentid"		"0"
-	"icon"		"icon16/wrench_orange.png"
-	"id"		"22"
-	"name"		"Builder"
-	"version"		"3"
-}

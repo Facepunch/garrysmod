@@ -1,15 +1,7 @@
 
-local CurTime = CurTime
-local pairs = pairs
-local table = table
 local string = string
-local type = type
 local surface = surface
-local Msg = Msg
 local math = math
-local setmetatable = setmetatable
-local ScrW = ScrW
-local ScrH = ScrH
 local Color = Color
 local tostring = tostring
 local color_white = color_white
@@ -31,7 +23,9 @@ TEXT_ALIGN_BOTTOM	= 4
 -----------------------------------------------------------]]
 local tex_corner8	= surface.GetTextureID( "gui/corner8" )
 local tex_corner16	= surface.GetTextureID( "gui/corner16" )
+local tex_corner32	= surface.GetTextureID( "gui/corner32" )
 local tex_corner64	= surface.GetTextureID( "gui/corner64" )
+local tex_corner512	= surface.GetTextureID( "gui/corner512" )
 local tex_white		= surface.GetTextureID( "vgui/white" )
 
 local CachedFontHeights = {}
@@ -86,9 +80,7 @@ function SimpleText( text, font, x, y, colour, xalign, yalign )
 	surface.SetTextPos( math.ceil( x ), math.ceil( y ) )
 
 	if ( colour != nil ) then
-		local alpha = 255
-		if ( colour.a ) then alpha = colour.a end
-		surface.SetTextColor( colour.r, colour.g, colour.b, alpha )
+		surface.SetTextColor( colour.r, colour.g, colour.b, colour.a )
 	else
 		surface.SetTextColor( 255, 255, 255, 255 )
 	end
@@ -197,7 +189,7 @@ function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
 	y = math.Round( y )
 	w = math.Round( w )
 	h = math.Round( h )
-	bordersize = math.min( math.Round( bordersize ), math.floor( w / 2 ) )
+	bordersize = math.min( math.Round( bordersize ), math.floor( w / 2 ), math.floor( h / 2 ) )
 
 	-- Draw as much of the rect as we can without textures
 	surface.DrawRect( x + bordersize, y, w - bordersize * 2, h )
@@ -206,7 +198,9 @@ function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
 
 	local tex = tex_corner8
 	if ( bordersize > 8 ) then tex = tex_corner16 end
+	if ( bordersize > 16 ) then tex = tex_corner32 end
 	if ( bordersize > 32 ) then tex = tex_corner64 end
+	if ( bordersize > 64 ) then tex = tex_corner512 end
 
 	surface.SetTexture( tex )
 
@@ -237,14 +231,26 @@ function RoundedBoxEx( bordersize, x, y, w, h, color, tl, tr, bl, br )
 end
 
 --[[---------------------------------------------------------
-	Name: WordBox( bordersize, x, y, font, color )
+	Name: WordBox( bordersize, x, y, font, color, font, color, fontcolor, xalign, yalign )
 	Desc: Draws a rounded box - ideally bordersize will be 8 or 16
 	Usage: color is a table with r/g/b/a elements
 -----------------------------------------------------------]]
-function WordBox( bordersize, x, y, text, font, color, fontcolor )
+function WordBox( bordersize, x, y, text, font, color, fontcolor, xalign, yalign )
 
 	surface.SetFont( font )
 	local w, h = surface.GetTextSize( text )
+
+	if ( xalign == TEXT_ALIGN_CENTER ) then
+		x = x - ( bordersize + w / 2 )
+	elseif ( xalign == TEXT_ALIGN_RIGHT ) then
+		x = x - ( bordersize * 2 + w )
+	end
+
+	if ( yalign == TEXT_ALIGN_CENTER ) then
+		y = y - ( bordersize + h / 2 )
+	elseif ( yalign == TEXT_ALIGN_BOTTOM ) then
+		y = y - ( bordersize * 2 + h )
+	end
 
 	RoundedBox( bordersize, x, y, w+bordersize * 2, h+bordersize * 2, color )
 

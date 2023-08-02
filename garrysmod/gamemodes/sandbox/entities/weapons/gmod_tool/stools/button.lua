@@ -21,7 +21,7 @@ local function IsValidButtonModel( model )
 	return false
 end
 
-function TOOL:RightClick( trace )
+function TOOL:RightClick( trace, worldweld )
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then return false end
 	if ( SERVER && !util.IsValidPhysicsObject( trace.Entity, trace.PhysicsBone ) ) then return false end
@@ -35,13 +35,11 @@ function TOOL:RightClick( trace )
 
 	-- If we shot a button change its settings
 	if ( IsValid( trace.Entity ) && trace.Entity:GetClass() == "gmod_button" && trace.Entity:GetPlayer() == ply ) then
-
 		trace.Entity:SetKey( key )
 		trace.Entity:SetLabel( description )
 		trace.Entity:SetIsToggle( toggle )
 
-		return true, NULL, true
-
+		return true
 	end
 
 	-- Check the model's validity
@@ -52,50 +50,50 @@ function TOOL:RightClick( trace )
 	Ang.pitch = Ang.pitch + 90
 
 	local button = MakeButton( ply, model, Ang, trace.HitPos, key, description, toggle )
+	if ( !IsValid( button ) ) then return false end
 
 	local min = button:OBBMins()
 	button:SetPos( trace.HitPos - trace.HitNormal * min.z )
 
 	undo.Create( "Button" )
 		undo.AddEntity( button )
+
+		if ( worldweld && trace.Entity != NULL ) then
+			local weld = constraint.Weld( button, trace.Entity, 0, trace.PhysicsBone, 0, 0, true )
+			if ( IsValid( weld ) ) then
+				ply:AddCleanup( "buttons", weld )
+				undo.AddEntity( weld )
+			end
+
+			if ( IsValid( button:GetPhysicsObject() ) ) then button:GetPhysicsObject():EnableCollisions( false ) end
+			button:SetCollisionGroup( COLLISION_GROUP_WORLD )
+			button.nocollide = true
+		end
+
 		undo.SetPlayer( ply )
 	undo.Finish()
-
-	return true, button
-
-end
-
-function TOOL:LeftClick( trace )
-
-	local bool, button, set_key = self:RightClick( trace, true )
-	if ( CLIENT ) then return bool end
-
-	if ( set_key ) then return true end
-	if ( !IsValid( button ) ) then return false end
-	if ( !IsValid( trace.Entity ) && !trace.Entity:IsWorld() ) then return false end
-
-	local weld = constraint.Weld( button, trace.Entity, 0, trace.PhysicsBone, 0, 0, true )
-	trace.Entity:DeleteOnRemove( weld )
-	button:DeleteOnRemove( weld )
-
-	button:GetPhysicsObject():EnableCollisions( false )
-	button.nocollide = true
 
 	return true
 
 end
 
+function TOOL:LeftClick( trace )
+
+	return self:RightClick( trace, true )
+
+end
+
 if ( SERVER ) then
 
-	function MakeButton( pl, model, ang, pos, key, description, toggle )
+	function MakeButton( pl, model, ang, pos, key, description, toggle, nocollide )
 
 		if ( IsValid( pl ) && !pl:CheckLimit( "buttons" ) ) then return false end
 		if ( !IsValidButtonModel( model ) ) then return false end
 
 		local button = ents.Create( "gmod_button" )
 		if ( !IsValid( button ) ) then return false end
+	
 		button:SetModel( model )
-
 		button:SetAngles( ang )
 		button:SetPos( pos )
 		button:Spawn()
@@ -105,10 +103,16 @@ if ( SERVER ) then
 		button:SetLabel( description )
 		button:SetIsToggle( toggle )
 
+		if ( nocollide == true ) then
+			if ( IsValid( button:GetPhysicsObject() ) ) then button:GetPhysicsObject():EnableCollisions( false ) end
+			button:SetCollisionGroup( COLLISION_GROUP_WORLD )
+		end
+
 		table.Merge( button:GetTable(), {
 			key = key,
 			pl = pl,
 			toggle = toggle,
+			nocollide = nocollide,
 			description = description
 		} )
 
@@ -123,7 +127,7 @@ if ( SERVER ) then
 
 	end
 
-	duplicator.RegisterEntityClass( "gmod_button", MakeButton, "Model", "Ang", "Pos", "key", "description", "toggle" )
+	duplicator.RegisterEntityClass( "gmod_button", MakeButton, "Model", "Ang", "Pos", "key", "description", "toggle", "nocollide" )
 
 end
 
@@ -154,7 +158,7 @@ function TOOL:Think()
 	if ( !IsValidButtonModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
-		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostButton( self.GhostEntity, self:GetOwner() )

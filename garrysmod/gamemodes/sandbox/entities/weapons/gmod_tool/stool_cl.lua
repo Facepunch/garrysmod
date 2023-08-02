@@ -7,3 +7,14 @@ end
 -- The tool's opportunity to draw to the HUD
 function ToolObj:DrawHUD()
 end
+
+-- Force rebuild the Control Panel
+function ToolObj:RebuildControlPanel( ... )
+
+	local cPanel = controlpanel.Get( self.Mode )
+	if ( !cPanel ) then ErrorNoHalt( "Couldn't find control panel to rebuild!" ) return end
+
+	cPanel:ClearControls()
+	self.BuildCPanel( cPanel, ... )
+
+end

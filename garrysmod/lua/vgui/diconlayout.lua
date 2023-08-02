@@ -39,10 +39,9 @@ function PANEL:LayoutIcons_TOP()
 	local x = self.m_iBorder
 	local y = self.m_iBorder
 	local RowHeight = 0
-	local MaxWidth = self:GetWide() - self.m_iBorder * 2
+	local MaxWidth = self:GetWide() - self.m_iBorder
 
-	local chld = self:GetChildren()
-	for k, v in pairs( chld ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		if ( !v:IsVisible() ) then continue end
 
@@ -74,10 +73,9 @@ function PANEL:LayoutIcons_LEFT()
 	local x = self.m_iBorder
 	local y = self.m_iBorder
 	local RowWidth = 0
-	local MaxHeight = self:GetTall() - self.m_iBorder * 2
+	local MaxHeight = self:GetTall() - self.m_iBorder
 
-	local chld = self:GetChildren()
-	for k, v in pairs( chld ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		if ( !v:IsVisible() ) then continue end
 
@@ -173,7 +171,7 @@ end
 
 function PANEL:CopyContents( from )
 
-	for k, v in pairs( from:GetChildren() ) do
+	for k, v in ipairs( from:GetChildren() ) do
 
 		v:Copy():SetParent( self )
 

@@ -60,7 +60,7 @@ function GM:PlayerBindPress(ply, bind, pressed)
          WSWITCH:SelectSlot(idx)
       end
       return true
-   elseif string.find(bind, "zoom") and pressed then
+   elseif bind == "+zoom" and pressed then
       -- open or close radio
       RADIO:ShowRadioCommands(not RADIO.Show)
       return true
@@ -102,7 +102,7 @@ function GM:KeyPress(ply, key)
    if not IsValid(ply) or ply != LocalPlayer() then return end
 
    if key == IN_SPEED and ply:IsActiveTraitor() then
-      timer.Simple(0.05, function() RunConsoleCommand("+voicerecord") end)
+      timer.Simple(0.05, function() permissions.EnableVoiceChat( true ) end)
    end
 end
 
@@ -111,11 +111,12 @@ function GM:KeyRelease(ply, key)
    if not IsValid(ply) or ply != LocalPlayer() then return end
 
    if key == IN_SPEED and ply:IsActiveTraitor() then
-      timer.Simple(0.05, function() RunConsoleCommand("-voicerecord") end)
+      timer.Simple(0.05, function() permissions.EnableVoiceChat( false ) end)
    end
 end
 
 function GM:PlayerButtonUp(ply, btn)
+   if not IsFirstTimePredicted() then return end
    -- Would be nice to clean up this whole "all key handling in massive
    -- functions" thing. oh well
    if btn == KEY_PAD_ENTER then

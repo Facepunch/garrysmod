@@ -173,7 +173,7 @@ motionsensor.ProcessAnglesTable = function( translator, sensor, pos, rotation )
 
 		end
 
-		if ( table.Count( reprocess ) == 0 ) then
+		if ( table.IsEmpty( reprocess ) ) then
 			--DebugInfo( 0, iPasses .. " Passes" )
 			return ang
 		end

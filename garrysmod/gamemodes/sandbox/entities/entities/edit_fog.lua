@@ -25,7 +25,7 @@ end
 
 function ENT:SetupWorldFog()
 
-	render.FogMode( 1 )
+	render.FogMode( MATERIAL_FOG_LINEAR )
 	render.FogStart( self:GetFogStart() )
 	render.FogEnd( self:GetFogEnd() )
 	render.FogMaxDensity( self:GetDensity() )
@@ -39,7 +39,7 @@ end
 
 function ENT:SetupSkyFog( skyboxscale )
 
-	render.FogMode( 1 )
+	render.FogMode( MATERIAL_FOG_LINEAR )
 	render.FogStart( self:GetFogStart() * skyboxscale )
 	render.FogEnd( self:GetFogEnd() * skyboxscale )
 	render.FogMaxDensity( self:GetDensity() )

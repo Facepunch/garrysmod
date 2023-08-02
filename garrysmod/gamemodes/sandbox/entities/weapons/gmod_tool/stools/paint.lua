@@ -17,18 +17,19 @@ TOOL.Information = {
 local function PlaceDecal( ply, ent, data )
 
 	if ( !IsValid( ent ) && !ent:IsWorld() ) then return end
+	if ( CLIENT ) then return end
 
-	local bone = ent:GetPhysicsObjectNum( data.bone or 0 )
+	local bone
+	if ( data.bone && data.bone < ent:GetPhysicsObjectCount() ) then bone = ent:GetPhysicsObjectNum( data.bone ) end
+	if ( !IsValid( bone ) ) then bone = ent:GetPhysicsObject() end
 	if ( !IsValid( bone ) ) then bone = ent end
 
-	if ( SERVER ) then
-		util.Decal( data.decal, bone:LocalToWorld( data.Pos1 ), bone:LocalToWorld( data.Pos2 ), ply )
+	util.Decal( data.decal, bone:LocalToWorld( data.Pos1 ), bone:LocalToWorld( data.Pos2 ), ply )
 
-		local i = ent.DecalCount or 0
-		i = i + 1
-		duplicator.StoreEntityModifier( ent, "decal" .. i, data )
-		ent.DecalCount = i
-	end
+	local i = ent.DecalCount or 0
+	i = i + 1
+	duplicator.StoreEntityModifier( ent, "decal" .. i, data )
+	ent.DecalCount = i
 
 end
 
@@ -48,6 +49,13 @@ function TOOL:Reload( trace )
 
 	trace.Entity:RemoveAllDecals()
 
+	if ( SERVER ) then
+		for i = 1, 32 do
+			duplicator.ClearEntityModifier( trace.Entity, "decal" .. i )
+		end
+		trace.Entity.DecalCount = nil
+	end
+
 	return true
 end
 
@@ -65,10 +73,10 @@ function TOOL:RightClick( trace, bNoDelay )
 	local Pos1 = trace.HitPos + trace.HitNormal
 	local Pos2 = trace.HitPos - trace.HitNormal
 
-	local Bone = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone or 0 )
-	if ( !Bone ) then
-		Bone = trace.Entity
-	end
+	local Bone
+	if ( trace.PhysicsBone && trace.PhysicsBone < trace.Entity:GetPhysicsObjectCount() ) then Bone = trace.Entity:GetPhysicsObjectNum( trace.PhysicsBone ) end
+	if ( !IsValid( Bone ) ) then Bone = trace.Entity:GetPhysicsObject() end
+	if ( !IsValid( Bone ) ) then Bone = trace.Entity end
 
 	Pos1 = Bone:WorldToLocal( Pos1 )
 	Pos2 = Bone:WorldToLocal( Pos2 )
@@ -127,11 +135,18 @@ list.Add( "PaintMaterials", "Cross" )
 
 function TOOL.BuildCPanel( CPanel )
 
-	local Options = list.Get( "PaintMaterials" )
+	-- Remove duplicates.
+	local Options = {}
+	for id, str in ipairs( list.Get( "PaintMaterials" ) ) do
+		if ( !table.HasValue( Options, str ) ) then
+			table.insert( Options, str )
+		end
+	end
+
 	table.sort( Options )
 
 	local listbox = CPanel:AddControl( "ListBox", { Label = "#tool.paint.texture", Height = 17 + table.Count( Options ) * 17 } )
-	for k, decal in pairs( Options ) do
+	for k, decal in ipairs( Options ) do
 		local line = listbox:AddLine( decal )
 		line.data = { paint_decal = decal }
 

@@ -1,0 +1,856 @@
+"TableToKeyValues"
+{
+	"parentid"		"6"
+	"icon"		"icon16/page.png"
+	"id"		"7"
+	"contents"
+	{
+		"1"
+		{
+			"type"		"header"
+			"text"		"Metal"
+		}
+		"2"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate1.mdl"
+		}
+		"3"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate1_tri.mdl"
+		}
+		"4"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate1x2.mdl"
+		}
+		"5"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate1x2_tri.mdl"
+		}
+		"6"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate2x2.mdl"
+		}
+		"7"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate2x2_tri.mdl"
+		}
+		"8"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate2x4.mdl"
+		}
+		"9"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate2x4_tri.mdl"
+		}
+		"10"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate4x4.mdl"
+		}
+		"11"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate4x4_tri.mdl"
+		}
+		"12"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_tube.mdl"
+		}
+		"13"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_tubex2.mdl"
+		}
+		"14"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_angle360.mdl"
+		}
+		"15"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_angle180.mdl"
+		}
+		"16"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_angle90.mdl"
+		}
+		"17"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate_curve360.mdl"
+		}
+		"18"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate_curve180.mdl"
+		}
+		"19"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate_curve.mdl"
+		}
+		"20"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate_curve360x2.mdl"
+		}
+		"21"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate_curve180x2.mdl"
+		}
+		"22"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_plate_curve2x2.mdl"
+		}
+		"23"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_dome360.mdl"
+		}
+		"24"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_dome180.mdl"
+		}
+		"25"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_dome90.mdl"
+		}
+		"26"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri1x1solid.mdl"
+		}
+		"27"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri1x1x1solid.mdl"
+		}
+		"28"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri1x1x2solid.mdl"
+		}
+		"29"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri2x1solid.mdl"
+		}
+		"30"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri2x1x1solid.mdl"
+		}
+		"31"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri2x1x2solid.mdl"
+		}
+		"32"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri2x2solid.mdl"
+		}
+		"33"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri2x2x1solid.mdl"
+		}
+		"34"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri2x2x2solid.mdl"
+		}
+		"35"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/trieq1x1x1solid.mdl"
+		}
+		"36"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/trieq1x1x2solid.mdl"
+		}
+		"37"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/trieq2x2x1solid.mdl"
+		}
+		"38"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/trieq2x2x2solid.mdl"
+		}
+		"39"
+		{
+			"type"		"header"
+			"text"		"Metal Frames"
+		}
+		"40"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/bar1x.mdl"
+		}
+		"41"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/bar1x45a.mdl"
+		}
+		"42"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/bar1x45b.mdl"
+		}
+		"43"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/bar2x.mdl"
+		}
+		"44"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/bar2x45a.mdl"
+		}
+		"45"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/bar2x45b.mdl"
+		}
+		"46"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire1x1.mdl"
+		}
+		"47"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/cab1x1x1.mdl"
+		}
+		"48"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire1x1x1.mdl"
+		}
+		"49"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire1x2b.mdl"
+		}
+		"50"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire1x2.mdl"
+		}
+		"51"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/cab2x1x1.mdl"
+		}
+		"52"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire1x1x2b.mdl"
+		}
+		"53"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire1x1x2.mdl"
+		}
+		"54"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire2x2b.mdl"
+		}
+		"55"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire2x2.mdl"
+		}
+		"56"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/cab2x2x1.mdl"
+		}
+		"57"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire1x2x2b.mdl"
+		}
+		"58"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/cab2x2x2.mdl"
+		}
+		"59"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire2x2x2b.mdl"
+		}
+		"60"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire_angle360x1.mdl"
+		}
+		"61"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire_angle180x1.mdl"
+		}
+		"62"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire_angle90x1.mdl"
+		}
+		"63"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire_angle360x2.mdl"
+		}
+		"64"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire_angle180x2.mdl"
+		}
+		"65"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/metal_wire_angle90x2.mdl"
+		}
+		"66"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri1x1.mdl"
+		}
+		"67"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri1x1x1.mdl"
+		}
+		"68"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri1x1x2.mdl"
+		}
+		"69"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri2x1.mdl"
+		}
+		"70"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri2x1x1.mdl"
+		}
+		"71"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri2x1x2.mdl"
+		}
+		"72"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri2x2.mdl"
+		}
+		"73"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri2x2x1.mdl"
+		}
+		"74"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/tri2x2x2.mdl"
+		}
+		"75"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/trieq1x1x1.mdl"
+		}
+		"76"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/trieq1x1x2.mdl"
+		}
+		"77"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/trieq2x2x1.mdl"
+		}
+		"78"
+		{
+			"type"		"model"
+			"model"		"models/phxtended/trieq2x2x2.mdl"
+		}
+		"79"
+		{
+			"type"		"header"
+			"text"		"Glass"
+		}
+		"80"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_plate1x1.mdl"
+		}
+		"81"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_plate1x2.mdl"
+		}
+		"82"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_plate2x2.mdl"
+		}
+		"83"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_plate2x4.mdl"
+		}
+		"84"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_plate4x4.mdl"
+		}
+		"85"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_angle360.mdl"
+		}
+		"86"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_angle180.mdl"
+		}
+		"87"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_angle90.mdl"
+		}
+		"88"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_curve360x1.mdl"
+		}
+		"89"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_curve180x1.mdl"
+		}
+		"90"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_curve90x1.mdl"
+		}
+		"91"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_curve360x2.mdl"
+		}
+		"92"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_curve180x2.mdl"
+		}
+		"93"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_curve90x2.mdl"
+		}
+		"94"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_dome360.mdl"
+		}
+		"95"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_dome180.mdl"
+		}
+		"96"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/glass/glass_dome90.mdl"
+		}
+		"97"
+		{
+			"type"		"header"
+			"text"		"Windows"
+		}
+		"98"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window1x1.mdl"
+		}
+		"99"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window1x2.mdl"
+		}
+		"100"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window2x2.mdl"
+		}
+		"101"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window2x4.mdl"
+		}
+		"102"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window4x4.mdl"
+		}
+		"103"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window_angle360.mdl"
+		}
+		"104"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window_angle180.mdl"
+		}
+		"105"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window_angle90.mdl"
+		}
+		"106"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window_curve360x1.mdl"
+		}
+		"107"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window_curve180x1.mdl"
+		}
+		"108"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window_curve90x1.mdl"
+		}
+		"109"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window_curve360x2.mdl"
+		}
+		"110"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window_curve180x2.mdl"
+		}
+		"111"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window_curve90x2.mdl"
+		}
+		"112"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window_dome360.mdl"
+		}
+		"113"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window_dome180.mdl"
+		}
+		"114"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/windows/window_dome90.mdl"
+		}
+		"115"
+		{
+			"type"		"header"
+			"text"		"Wooden"
+		}
+		"116"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_boardx1.mdl"
+		}
+		"117"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_boardx2.mdl"
+		}
+		"118"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_boardx4.mdl"
+		}
+		"119"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_panel1x1.mdl"
+		}
+		"120"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_panel1x2.mdl"
+		}
+		"121"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_panel2x2.mdl"
+		}
+		"122"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_panel2x4.mdl"
+		}
+		"123"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_panel4x4.mdl"
+		}
+		"124"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_angle360.mdl"
+		}
+		"125"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_angle180.mdl"
+		}
+		"126"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_angle90.mdl"
+		}
+		"127"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_curve360x1.mdl"
+		}
+		"128"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_curve180x1.mdl"
+		}
+		"129"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_curve90x1.mdl"
+		}
+		"130"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_curve360x2.mdl"
+		}
+		"131"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_curve180x2.mdl"
+		}
+		"132"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_curve90x2.mdl"
+		}
+		"133"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_dome360.mdl"
+		}
+		"134"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_dome180.mdl"
+		}
+		"135"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_dome90.mdl"
+		}
+		"136"
+		{
+			"type"		"header"
+			"text"		"Wooden Frames"
+		}
+		"137"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire1x1.mdl"
+		}
+		"138"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire1x1x1.mdl"
+		}
+		"139"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire1x2b.mdl"
+		}
+		"140"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire1x2.mdl"
+		}
+		"141"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire1x1x2b.mdl"
+		}
+		"142"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire1x1x2.mdl"
+		}
+		"143"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire2x2b.mdl"
+		}
+		"144"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire2x2.mdl"
+		}
+		"145"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire1x2x2b.mdl"
+		}
+		"146"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire2x2x2b.mdl"
+		}
+		"147"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire_angle360x1.mdl"
+		}
+		"148"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire_angle180x1.mdl"
+		}
+		"149"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire_angle90x1.mdl"
+		}
+		"150"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire_angle360x2.mdl"
+		}
+		"151"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire_angle180x2.mdl"
+		}
+		"152"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/wood/wood_wire_angle90x2.mdl"
+		}
+		"153"
+		{
+			"type"		"header"
+			"text"		"Plastic"
+		}
+		"154"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel1x1.mdl"
+		}
+		"155"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel1x2.mdl"
+		}
+		"156"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel1x3.mdl"
+		}
+		"157"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel1x4.mdl"
+		}
+		"158"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel1x8.mdl"
+		}
+		"159"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel2x2.mdl"
+		}
+		"160"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel2x3.mdl"
+		}
+		"161"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel2x4.mdl"
+		}
+		"162"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel2x8.mdl"
+		}
+		"163"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel3x3.mdl"
+		}
+		"164"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel4x4.mdl"
+		}
+		"165"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel4x8.mdl"
+		}
+		"166"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_panel8x8.mdl"
+		}
+		"167"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_angle_360.mdl"
+		}
+		"168"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_angle_90.mdl"
+		}
+		"169"
+		{
+			"type"		"model"
+			"model"		"models/props_phx/construct/plastic/plastic_angle_180.mdl"
+		}
+	}
+	"name"		"Basic"
+	"version"		"3"
+}

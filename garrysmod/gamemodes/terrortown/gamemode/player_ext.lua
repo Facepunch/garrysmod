@@ -205,16 +205,12 @@ end
 
 
 function plymeta:SetSpeed(slowed)
-   local mul = hook.Call("TTTPlayerSpeed", GAMEMODE, self, slowed) or 1
-   if slowed then
-      self:SetWalkSpeed(120 * mul)
-      self:SetRunSpeed(120 * mul)
-      self:SetMaxSpeed(120 * mul)
-   else
-      self:SetWalkSpeed(220 * mul)
-      self:SetRunSpeed(220 * mul)
-      self:SetMaxSpeed(220 * mul)
-   end
+   -- For player movement prediction to work properly, ply:SetSpeed turned out
+   -- to be a bad idea. It now uses GM:SetupMove, and the TTTPlayerSpeedModifier
+   -- hook is provided to let you change player speed without messing up
+   -- prediction. It needs to be hooked on both client and server and return the
+   -- same results (ie. same implementation).
+   error "Player:SetSpeed has been removed - please remove this call and use the TTTPlayerSpeedModifier hook in both CLIENT and SERVER environments"
 end
 
 function plymeta:ResetLastWords()
@@ -307,8 +303,10 @@ function plymeta:InitialSpawn()
    -- Change some gmod defaults
    self:SetCanZoom(false)
    self:SetJumpPower(160)
-   self:SetSpeed(false)
    self:SetCrouchedWalkSpeed(0.3)
+   self:SetRunSpeed(220)
+   self:SetWalkSpeed(220)
+   self:SetMaxSpeed(220)
 
    -- Always spawn innocent initially, traitor will be selected later
    self:ResetStatus()

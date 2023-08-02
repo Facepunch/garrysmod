@@ -29,6 +29,8 @@ function PANEL:Clear()
 	self:SetText( "" )
 	self.Choices = {}
 	self.Data = {}
+	self.ChoiceIcons = {}
+	self.Spacers = {}
 	self.selected = nil
 
 	if ( self.Menu ) then
@@ -76,6 +78,9 @@ function PANEL:PerformLayout()
 	self.DropButton:AlignRight( 4 )
 	self.DropButton:CenterVertical()
 
+	-- Make sure the text color is updated
+	DButton.PerformLayout( self, w, h )
+
 end
 
 function PANEL:ChooseOption( value, index )
@@ -122,12 +127,28 @@ function PANEL:OnSelect( index, value, data )
 
 end
 
-function PANEL:AddChoice( value, data, select )
+function PANEL:OnMenuOpened( menu )
+
+	-- For override
+
+end
+
+function PANEL:AddSpacer()
+
+	self.Spacers[ #self.Choices ] = true
+
+end
+
+function PANEL:AddChoice( value, data, select, icon )
 
 	local i = table.insert( self.Choices, value )
 
 	if ( data ) then
 		self.Data[ i ] = data
+	end
+	
+	if ( icon ) then
+		self.ChoiceIcons[ i ] = icon
 	end
 
 	if ( select ) then
@@ -162,7 +183,14 @@ function PANEL:OpenMenu( pControlOpener )
 		self.Menu = nil
 	end
 
-	self.Menu = DermaMenu( false, self )
+	-- If we have a modal parent at some level, we gotta parent to that or our menu items are not gonna be selectable
+	local parent = self
+	while ( IsValid( parent ) && !parent:IsModal() ) do
+		parent = parent:GetParent()
+	end
+	if ( !IsValid( parent ) ) then parent = self end
+
+	self.Menu = DermaMenu( false, parent )
 
 	if ( self:GetSortItems() ) then
 		local sorted = {}
@@ -172,11 +200,23 @@ function PANEL:OpenMenu( pControlOpener )
 			table.insert( sorted, { id = k, data = v, label = val } )
 		end
 		for k, v in SortedPairsByMemberValue( sorted, "label" ) do
-			self.Menu:AddOption( v.data, function() self:ChooseOption( v.data, v.id ) end )
+			local option = self.Menu:AddOption( v.data, function() self:ChooseOption( v.data, v.id ) end )
+			if ( self.ChoiceIcons[ v.id ] ) then
+				option:SetIcon( self.ChoiceIcons[ v.id ] )
+			end
+			if ( self.Spacers[ v.id ] ) then
+				self.Menu:AddSpacer()
+			end
 		end
 	else
 		for k, v in pairs( self.Choices ) do
-			self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
+			local option = self.Menu:AddOption( v, function() self:ChooseOption( v, k ) end )
+			if ( self.ChoiceIcons[ k ] ) then
+				option:SetIcon( self.ChoiceIcons[ k ] )
+			end
+			if ( self.Spacers[ k ] ) then
+				self.Menu:AddSpacer()
+			end
 		end
 	end
 
@@ -184,6 +224,8 @@ function PANEL:OpenMenu( pControlOpener )
 
 	self.Menu:SetMinimumWidth( self:GetWide() )
 	self.Menu:Open( x, y, false, self )
+
+	self:OnMenuOpened( self.Menu )
 
 end
 
@@ -235,7 +277,9 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
 	ctrl:AddChoice( "Some Choice" )
-	ctrl:AddChoice( "Another Choice" )
+	ctrl:AddChoice( "Another Choice", "myData" )
+	ctrl:AddChoice( "Default Choice", "myData2", true )
+	ctrl:AddChoice( "Icon Choice", "myData3", false, "icon16/star.png" )
 	ctrl:SetWide( 150 )
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )

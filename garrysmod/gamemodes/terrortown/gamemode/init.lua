@@ -43,7 +43,6 @@ include("shared.lua")
 
 include("karma.lua")
 include("entity.lua")
-include("scoring_shd.lua")
 include("radar.lua")
 include("admin.lua")
 include("traitor_state.lua")
@@ -135,6 +134,7 @@ util.AddNetworkString("TTT_TraitorVoiceState")
 util.AddNetworkString("TTT_LastWordsMsg")
 util.AddNetworkString("TTT_RadioMsg")
 util.AddNetworkString("TTT_ReportStream")
+util.AddNetworkString("TTT_ReportStream_Part")
 util.AddNetworkString("TTT_LangMsg")
 util.AddNetworkString("TTT_ServerLang")
 util.AddNetworkString("TTT_Equipment")
@@ -161,7 +161,6 @@ util.AddNetworkString("TTT_Spectate")
 ---- Round mechanics
 function GM:Initialize()
    MsgN("Trouble In Terrorist Town gamemode initializing...")
-   ShowVersion()
 
    -- Force friendly fire to be enabled. If it is off, we do not get lag compensation.
    RunConsoleCommand("mp_friendlyfire", "1")
@@ -176,7 +175,7 @@ function GM:Initialize()
 
    -- More map config ent defaults
    GAMEMODE.force_plymodel = ""
-   GAMEMODE.propspec_allow_named = true
+   GAMEMODE.propspec_allow_named = false
 
    GAMEMODE.MapWin = WIN_NONE
    GAMEMODE.AwardedCredits = false
@@ -208,7 +207,7 @@ function GM:Initialize()
    end
 
    local cstrike = false
-   for _, g in pairs(engine.GetGames()) do
+   for _, g in ipairs(engine.GetGames()) do
       if g.folder == 'cstrike' then cstrike = true end
    end
    if not cstrike then
@@ -272,7 +271,7 @@ end
 local function EnoughPlayers()
    local ready = 0
    -- only count truly available players, ie. no forced specs
-   for _, ply in pairs(player.GetAll()) do
+   for _, ply in ipairs(player.GetAll()) do
       if IsValid(ply) and ply:ShouldSpawn() then
          ready = ready + 1
       end
@@ -305,7 +304,7 @@ end
 -- we regularly check for these broken spectators while we wait for players
 -- and immediately fix them.
 function FixSpectators()
-   for k, ply in pairs(player.GetAll()) do
+   for k, ply in ipairs(player.GetAll()) do
       if ply:IsSpec() and not ply:GetRagdollSpec() and ply:GetMoveType() < MOVETYPE_NOCLIP then
          ply:Spectate(OBS_MODE_ROAMING)
       end
@@ -333,9 +332,9 @@ local function NameChangeKick()
    end
 
    if GetRoundState() == ROUND_ACTIVE then
-      for _, ply in pairs(player.GetHumans()) do
+      for _, ply in ipairs(player.GetHumans()) do
          if ply.spawn_nick then
-            if ply.has_spawned and ply.spawn_nick != ply:Nick() then
+            if ply.has_spawned and ply.spawn_nick != ply:Nick() and not hook.Call("TTTNameChangeKick", GAMEMODE, ply) then
                local t = GetConVar("ttt_namechange_bantime"):GetInt()
                local msg = "Changed name during a round"
                if t > 0 then
@@ -355,7 +354,7 @@ function StartNameChangeChecks()
    if not GetConVar("ttt_namechange_kick"):GetBool() then return end
 
    -- bring nicks up to date, may have been changed during prep/post
-   for _, ply in pairs(player.GetAll()) do
+   for _, ply in ipairs(player.GetAll()) do
       ply.spawn_nick = ply:Nick()
    end
 
@@ -387,14 +386,14 @@ local function CleanUp()
    et.FixParentedPostCleanup()
 
    -- Strip players now, so that their weapons are not seen by ReplaceEntities
-   for k,v in pairs(player.GetAll()) do
+   for k,v in ipairs(player.GetAll()) do
       if IsValid(v) then
          v:StripWeapons()
       end
    end
 
    -- a different kind of cleanup
-   util.SafeRemoveHook("PlayerSay", "ULXMeCheck")
+   hook.Remove("PlayerSay", "ULXMeCheck")
 end
 
 local function SpawnEntities()
@@ -411,6 +410,9 @@ local function SpawnEntities()
       -- Populate CS:S/TF2 maps with extra guns
       et.PlaceExtraWeapons()
    end
+
+   -- We're done resetting the map, unlock weapon pickups for the players about to respawn
+   GAMEMODE.RespawningWeapons = false
 
    -- Finally, get players in there
    SpawnWillingPlayers()
@@ -460,7 +462,8 @@ function PrepareRound()
       return
    end
 
-   -- Cleanup
+   -- Reset the map entities
+   GAMEMODE.RespawningWeapons = true
    CleanUp()
 
    GAMEMODE.MapWin = WIN_NONE
@@ -524,8 +527,10 @@ function IncRoundEnd(incr)
 end
 
 function TellTraitorsAboutTraitors()
+  local plys = player.GetAll()
+
    local traitornicks = {}
-   for k,v in pairs(player.GetAll()) do
+   for k,v in ipairs(plys) do
       if v:IsTraitor() then
          table.insert(traitornicks, v:Nick())
       end
@@ -533,14 +538,14 @@ function TellTraitorsAboutTraitors()
 
    -- This is ugly as hell, but it's kinda nice to filter out the names of the
    -- traitors themselves in the messages to them
-   for k,v in pairs(player.GetAll()) do
+   for k,v in ipairs(plys) do
       if v:IsTraitor() then
          if #traitornicks < 2 then
             LANG.Msg(v, "round_traitors_one")
             return
          else
             local names = ""
-            for i,name in pairs(traitornicks) do
+            for i,name in ipairs(traitornicks) do
                if name != v:Nick() then
                   names = names .. name .. ", "
                end
@@ -560,7 +565,7 @@ function SpawnWillingPlayers(dead_only)
    -- simple method, should make this a case of the other method once that has
    -- been tested.
    if wave_delay <= 0 or dead_only then
-      for k, ply in pairs(player.GetAll()) do
+      for k, ply in ipairs(plys) do
          if IsValid(ply) then
             ply:SpawnForRound(dead_only)
          end
@@ -582,7 +587,7 @@ function SpawnWillingPlayers(dead_only)
                      -- fill the available spawnpoints with players that need
                      -- spawning
                      while c < num_spawns and #to_spawn > 0 do
-                        for k, ply in pairs(to_spawn) do
+                        for k, ply in ipairs(to_spawn) do
                            if IsValid(ply) and ply:SpawnForRound() then
                               -- a spawn ent is now occupied
                               c = c + 1
@@ -637,8 +642,6 @@ function BeginRound()
 
    if CheckForAbort() then return end
 
-   AnnounceVersion()
-
    InitRoundEndTime()
 
    if CheckForAbort() then return end
@@ -648,6 +651,9 @@ function BeginRound()
 
    -- Remove their ragdolls
    ents.TTT.RemoveRagdolls(true)
+
+   -- Check for low-karma players that weren't banned on round end
+   if KARMA.cv.autokick:GetBool() then KARMA.CheckAutoKickAll() end
 
    if CheckForAbort() then return end
 
@@ -789,7 +795,7 @@ function GM:TTTCheckForWin()
 
    local traitor_alive = false
    local innocent_alive = false
-   for k,v in pairs(player.GetAll()) do
+   for k,v in ipairs(player.GetAll()) do
       if v:Alive() and v:IsTerror() then
          if v:GetTraitor() then
             traitor_alive = true
@@ -846,7 +852,9 @@ function SelectRoles()
 
    if not GAMEMODE.LastRole then GAMEMODE.LastRole = {} end
 
-   for k,v in pairs(player.GetAll()) do
+   local plys = player.GetAll()
+
+   for k,v in ipairs(plys) do
       -- everyone on the spec team is in specmode
       if IsValid(v) and (not v:IsSpec()) then
          -- save previous role and sign up as possible traitor/detective
@@ -870,7 +878,7 @@ function SelectRoles()
 
    -- first select traitors
    local ts = 0
-   while ts < traitor_count do
+   while (ts < traitor_count) and (#choices >= 1) do
       -- select random index in choices table
       local pick = math.random(1, #choices)
 
@@ -898,7 +906,7 @@ function SelectRoles()
       -- sometimes we need all remaining choices to be detective to fill the
       -- roles up, this happens more often with a lot of detective-deniers
       if #choices <= (det_count - ds) then
-         for k, pply in pairs(choices) do
+         for k, pply in ipairs(choices) do
             if IsValid(pply) then
                pply:SetRole(ROLE_DETECTIVE)
             end
@@ -931,7 +939,7 @@ function SelectRoles()
 
    GAMEMODE.LastRole = {}
 
-   for _, ply in pairs(player.GetAll()) do
+   for _, ply in ipairs(plys) do
       -- initialize credit count for everyone based on their role
       ply:SetDefaultCredits()
 
@@ -956,7 +964,6 @@ local function ForceRoundRestart(ply, command, args)
 end
 concommand.Add("ttt_roundrestart", ForceRoundRestart)
 
--- Version announce also used in Initialize
 function ShowVersion(ply)
    local text = Format("This is TTT version %s\n", GAMEMODE.Version)
    if IsValid(ply) then
@@ -966,14 +973,3 @@ function ShowVersion(ply)
    end
 end
 concommand.Add("ttt_version", ShowVersion)
-
-function AnnounceVersion()
-   local text = Format("You are playing %s, version %s.\n", GAMEMODE.Name, GAMEMODE.Version)
-
-   -- announce to players
-   for k, ply in pairs(player.GetAll()) do
-      if IsValid(ply) then
-         ply:PrintMessage(HUD_PRINTTALK, text)
-      end
-   end
-end

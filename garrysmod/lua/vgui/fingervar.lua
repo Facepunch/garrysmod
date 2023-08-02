@@ -10,16 +10,13 @@ function PANEL:Init()
 
 	self.Value = { 0, 0 }
 	self.UpdateTimer = 0
+	self.LastShiftState = false
 
 	-- Don't update convars straight away.
 	self.NextUpdate = CurTime() + 0.5
 
 	-- The parent will feed mouse presses to us
 	self:SetMouseInputEnabled( false )
-
-end
-
-function PANEL:PerformLayout()
 
 	self:SetSize( 48, 48 )
 
@@ -72,7 +69,7 @@ end
 
 function PANEL:OnMousePressed( mousecode )
 
-	if ( mousecode == MOUSE_RIGHT ) then
+	if ( mousecode == MOUSE_RIGHT || mousecode == MOUSE_MIDDLE ) then
 		self:SetValue( 0, 0 )
 		self:UpdateConVar()
 
@@ -81,12 +78,14 @@ function PANEL:OnMousePressed( mousecode )
 
 	self:SetMouseInputEnabled( true )
 	self:MouseCapture( true )
-	self.Dragging = 1
+	self.Dragging = true
 	self:GetParent().Dragging = true
+
+	self:OnCursorMoved( self:LocalCursorPos() )
 
 end
 
-function PANEL:OnMouseReleased()
+function PANEL:OnMouseReleased( mousecode )
 
 	self:MouseCapture( false )
 	self.Dragging = nil
@@ -102,12 +101,26 @@ function PANEL:OnCursorMoved( x, y )
 	local w = self:GetWide()
 	local h = self:GetTall()
 
+	-- If holding shift, give double the "precision"
+	if ( input.IsShiftDown() ) then
+		x = x / 2 + w / 4
+		y = y / 2 + h / 4
+	end
+
 	self:SetValue( ( x / w ) - 0.5, ( y / h ) - 0.5 )
 	self:UpdateConVar()
 
 end
 
 function PANEL:Think()
+
+	-- Update shift state change when cursor not moving
+	if ( self.Dragging && self.LastShiftState != input.IsShiftDown() ) then
+
+		self.LastShiftState = input.IsShiftDown()
+		self:OnCursorMoved( self:LocalCursorPos() )
+
+	end
 
 	if ( self.UpdateTimer > CurTime() ) then return end
 	self.UpdateTimer = CurTime() + 0.1

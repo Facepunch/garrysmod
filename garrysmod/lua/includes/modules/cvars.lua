@@ -1,102 +1,99 @@
-local Msg               = Msg
-local table             = table
-local pairs             = pairs
-local type              = type
-local assert            = assert
-local format            = string.format
-local GetConVarString   = GetConVarString
-local GetConVarNumber   = GetConVarNumber
-local ConVarExists      = ConVarExists
+
+local table				= table
+local type				= type
+local istable 			= istable
+local isstring			= isstring
+local assert			= assert
+local format			= string.format
+local GetConVar			= GetConVar
 
 --[[---------------------------------------------------------
-   Name: cvar
-   Desc: Callbacks when cvars change
+	Name: cvar
+	Desc: Callbacks when cvars change
 -----------------------------------------------------------]]
 module( "cvars" )
 
 local ConVars = {}
 
-
 --[[---------------------------------------------------------
-   Name: GetConVarCallbacks
+	Name: GetConVarCallbacks
+	Desc: Returns a table of the given ConVars callbacks
 -----------------------------------------------------------]]
-function GetConVarCallbacks( name, CreateIfNotFound )
+function GetConVarCallbacks( name, createIfNotFound )
 
-	local Tab = ConVars[ name ]
-
-	if ( CreateIfNotFound && !Tab ) then
-		Tab = {}
-		ConVars[ name ] = Tab
+	local tab = ConVars[ name ]
+	if ( createIfNotFound and !tab ) then
+		tab = {}
+		ConVars[ name ] = tab
 	end
 
-	return Tab
-end
-
---[[---------------------------------------------------------
-   Name: OnConVarChanged
-   Desc: Called by the engine
------------------------------------------------------------]]
-function OnConVarChanged( name, oldvalue, newvalue )
-
-	local Callbacks = GetConVarCallbacks( name )
-	if (!Callbacks) then return end
-
-	for k, v in pairs( Callbacks ) do
-
-		if type( v ) == "table" then
-			v[ 1 ]( name, oldvalue, newvalue )
-		else
-			v( name, oldvalue, newvalue )
-		end
-	
-	end
+	return tab
 
 end
 
 --[[---------------------------------------------------------
-   Name: OnConvarChanged
-   Desc: Called by the engine
+	Name: OnConVarChanged
+	Desc: Called by the engine
 -----------------------------------------------------------]]
-function AddChangeCallback( name, func, sIdentifier )
+function OnConVarChanged( name, old, new )
 
-	if ( sIdentifier ) then
-		assert( type( sIdentifier ) == "string", format( "bad argument #%i (string expected, got %s)", 3, type( sIdentifier ) ) )
-	end
-
-	local tab = GetConVarCallbacks( name, true )
-
-	if sIdentifier then
-		for i = 1, #tab do
-			local a = tab[ i ];
-			if type( a ) == "table" and a[ 2 ] == sIdentifier then
-				tab[ i ][ 1 ] = func
-				return
-			end
-		end
-
-		table.insert( tab, { func, sIdentifier } )
-	else
-		table.insert( tab, func )
-	end
-
-end
-
---[[---------------------------------------------------------
-   Name: RemoveChangeCallback
-   Desc: Removes callback with identifier
------------------------------------------------------------]]
-function RemoveChangeCallback( name, sIdentifier )
-
-	if ( sIdentifier ) then
-		assert( type( sIdentifier ) == "string", format( "bad argument #%i (string expected, got %s)", 2, type( sIdentifier ) ) )
-	end
-
-	local tab = GetConVarCallbacks( name, true )
+	local tab = GetConVarCallbacks( name )
+	if ( !tab ) then return end
 
 	for i = 1, #tab do
-		local a = tab[ i ]
+		local callback = tab[ i ]
+		if ( istable( callback ) ) then
+			callback[ 1 ]( name, old, new )
+		else
+			callback( name, old, new )
+		end
+	end
 
-		if type( a ) == "table" and a[ 2 ] == sIdentifier then
+end
+
+--[[---------------------------------------------------------
+	Name: AddChangeCallback
+	Desc: Adds a callback to be called when convar changes
+-----------------------------------------------------------]]
+function AddChangeCallback( name, func, identifier )
+
+	if ( identifier ) then
+		assert( isstring( identifier ), format( "bad argument #%i (string expected, got %s)", 3, type( identifier ) ) )
+	end
+
+	local tab = GetConVarCallbacks( name, true )
+
+	if ( !identifier ) then
+		table.insert( tab, func )
+		return
+	end
+
+	for i = 1, #tab do
+		local callback = tab[ i ]
+		if ( istable( callback ) and callback[ 2 ] == identifier ) then
+			callback[ 1 ] = func
+			return
+		end
+	end
+
+	table.insert( tab, { func, identifier } )
+
+end
+
+--[[---------------------------------------------------------
+	Name: RemoveChangeCallback
+	Desc: Removes callback with identifier
+-----------------------------------------------------------]]
+function RemoveChangeCallback( name, identifier )
+
+	if ( identifier ) then
+		assert( isstring( identifier ), format( "bad argument #%i (string expected, got %s)", 2, type( identifier ) ) )
+	end
+
+	local tab = GetConVarCallbacks( name, true )
+	for i = 1, #tab do
+		local callback = tab[ i ]
+		if ( istable( callback ) and callback[ 2 ] == identifier ) then
 			table.remove( tab, i )
 			break
 		end
@@ -105,34 +102,46 @@ function RemoveChangeCallback( name, sIdentifier )
 end
 
 --[[---------------------------------------------------------
-   String
+	Name: String
+	Desc: Retrieves console variable as a string
 -----------------------------------------------------------]]
 function String( name, default )
 
-	if ( !ConVarExists( name ) ) then return default end
+	local convar = GetConVar( name )
+	if ( convar ~= nil ) then
+		return convar:GetString()
+	end
 
-	return GetConVarString( name )
+	return default
 
 end
 
 --[[---------------------------------------------------------
-   Number
+	Name: Number
+	Desc: Retrieves console variable as a number
 -----------------------------------------------------------]]
 function Number( name, default )
 
-	if ( !ConVarExists( name ) ) then return default end
+	local convar = GetConVar( name )
+	if ( convar ~= nil ) then
+		return convar:GetFloat()
+	end
 
-	return GetConVarNumber( name )
+	return default
 
 end
 
 --[[---------------------------------------------------------
-   Bool
+	Name: Bool
+	Desc: Retrieves console variable as a boolean
 -----------------------------------------------------------]]
 function Bool( name, default )
 
-	if ( default ) then default = 1 else default = 0 end
+	local convar = GetConVar( name )
+	if ( convar ~= nil ) then
+		return convar:GetBool()
+	end
 
-	return Number( name, default ) != 0
+	return default
 
 end

@@ -180,13 +180,13 @@ function PANEL:SetupFiles()
 		self.FileHeader = self.Files:AddColumn( "Files" ).Header
 
 		self.Files.DoDoubleClick = function( pnl, _, line )
-			self:OnDoubleClick( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), line )
+			self:OnDoubleClick( string.Trim( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), "/" ), line )
 		end
 		self.Files.OnRowSelected = function( pnl, _, line )
-			self:OnSelect( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), line )
+			self:OnSelect( string.Trim( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), "/" ), line )
 		end
 		self.Files.OnRowRightClick = function( pnl, _, line )
-			self:OnRightClick( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), line )
+			self:OnRightClick( string.Trim( self:GetCurrentFolder() .. "/" .. line:GetColumnText( 1 ), "/" ), line )
 		end
 	end
 	self.Divider:SetRight( self.Files )
@@ -224,12 +224,12 @@ function PANEL:ShowFolder( path )
 		filters = "*.*"
 	end
 
-	for _, filter in pairs( string.Explode( " ", filters ) ) do
+	for _, filter in ipairs( string.Explode( " ", filters ) ) do
 
 		local files = file.Find( string.Trim( path .. "/" .. ( filter || "*.*" ), "/" ), self.m_strPath )
 		if ( !istable( files ) ) then continue end
 
-		for _, v in pairs( files ) do
+		for _, v in ipairs( files ) do
 
 			if ( self.m_bModels ) then
 
@@ -303,6 +303,24 @@ end
 function PANEL:OnRightClick( path, pnl )
 
 	-- For override
+
+end
+
+function PANEL:GenerateExample( class, sheet, w, h )
+
+	local browser = vgui.Create( class, frame )
+	browser:Dock( FILL )
+	browser:DockMargin( 5, 0, 5, 5 )
+
+	browser:SetPath( "GAME" ) -- The access path i.e. GAME, LUA, DATA etc.
+	browser:SetBaseFolder( "data" ) -- The root folder
+	browser:SetOpen( true ) -- Open the tree to show sub-folders
+
+	function browser:OnSelect( path, pnl ) -- Called when a file is clicked
+		-- Do something
+	end
+
+	sheet:AddSheet( class, browser, nil, true, true )
 
 end
 

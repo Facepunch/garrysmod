@@ -8,13 +8,15 @@ if ( system.IsLinux() ) then
 	surface.CreateFont( "DermaDefault", {
 		font		= "DejaVu Sans",
 		size		= 14,
-		weight		= 500
+		weight		= 500,
+		extended	= true
 	} )
 
 	surface.CreateFont( "DermaDefaultBold", {
 		font		= "DejaVu Sans",
 		size		= 14,
-		weight		= 800
+		weight		= 800,
+		extended	= true
 	} )
 
 else
@@ -22,13 +24,15 @@ else
 	surface.CreateFont( "DermaDefault", {
 		font		= "Tahoma",
 		size		= 13,
-		weight		= 500
+		weight		= 500,
+		extended	= true
 	} )
 
 	surface.CreateFont( "DermaDefaultBold", {
 		font		= "Tahoma",
 		size		= 13,
-		weight		= 800
+		weight		= 800,
+		extended	= true
 	} )
 
 end
@@ -36,7 +40,8 @@ end
 surface.CreateFont( "DermaLarge", {
 	font		= "Roboto",
 	size		= 32,
-	weight		= 500
+	weight		= 500,
+	extended	= true
 } )
 
 include( "derma.lua" )
@@ -80,7 +85,7 @@ function Derma_Install_Convar_Functions( PANEL )
 
 	function PANEL:ConVarChanged( strNewValue )
 
-		if ( !self.m_strConVar ) then return end
+		if ( !self.m_strConVar || #self.m_strConVar < 2 ) then return end
 		RunConsoleCommand( self.m_strConVar, tostring( strNewValue ) )
 
 	end
@@ -88,7 +93,7 @@ function Derma_Install_Convar_Functions( PANEL )
 	-- Todo: Think only every 0.1 seconds?
 	function PANEL:ConVarStringThink()
 
-		if ( !self.m_strConVar ) then return end
+		if ( !self.m_strConVar || #self.m_strConVar < 2 ) then return end
 
 		local strValue = GetConVarString( self.m_strConVar )
 		if ( self.m_strConVarValue == strValue ) then return end
@@ -100,12 +105,15 @@ function Derma_Install_Convar_Functions( PANEL )
 
 	function PANEL:ConVarNumberThink()
 
-		if ( !self.m_strConVar ) then return end
+		if ( !self.m_strConVar || #self.m_strConVar < 2 ) then return end
 
-		local strValue = GetConVarNumber( self.m_strConVar )
-		if ( self.m_strConVarValue == strValue ) then return end
+		local numValue = GetConVarNumber( self.m_strConVar )
 
-		self.m_strConVarValue = strValue
+		-- In case the convar is a "nan"
+		if ( numValue != numValue ) then return end
+		if ( self.m_strConVarValue == numValue ) then return end
+
+		self.m_strConVarValue = numValue
 		self:SetValue( self.m_strConVarValue )
 
 	end

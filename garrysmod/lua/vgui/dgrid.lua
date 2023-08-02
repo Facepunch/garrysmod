@@ -66,6 +66,8 @@ function PANEL:PerformLayout()
 
 	for k, panel in pairs( self.Items ) do
 
+		if ( !panel:IsVisible() ) then continue end
+
 		local x = ( i % self.m_iCols ) * self.m_iColWide
 		local y = math.floor( i / self.m_iCols ) * self.m_iRowHeight
 
@@ -81,7 +83,9 @@ end
 
 function PANEL:SortByMember( key, desc )
 
-	desc = desc or true
+	if ( desc == nil ) then 
+		desc = true
+	end
 
 	table.sort( self.Items, function( a, b )
 
@@ -101,6 +105,15 @@ function PANEL:SortByMember( key, desc )
 		return a[ key ] > b[ key ]
 
 	end )
+
+end
+
+function PANEL:Clear()
+
+	for k, panel in ipairs( self:GetChildren() ) do
+		panel:Remove()
+	end
+	self.Items = {}
 
 end
 

@@ -18,10 +18,11 @@ local function CreateWangFunction( self, colindex )
 	local function OnValueChanged( ptxt, strvar )
 		if ( ptxt.notuserchange ) then return end
 
-		self:GetColor()[ colindex ] = tonumber( strvar ) or 0
+		local targetValue = tonumber( strvar ) or 0
+		self:GetColor()[ colindex ] = targetValue
 		if ( colindex == "a" ) then
 			self.Alpha:SetBarColor( ColorAlpha( self:GetColor(), 255 ) )
-			self.Alpha:SetValue( self:GetColor().a / 255 )
+			self.Alpha:SetValue( targetValue / 255 )
 		else
 			self.HSV:SetColor( self:GetColor() )
 
@@ -194,7 +195,7 @@ function PANEL:SetConVarA( cvar )
 	self:SetAlphaBar( cvar != nil )
 end
 
-function PANEL:PerformLayout( x, y )
+function PANEL:PerformLayout( w, h )
 
 	local h, s, v = ColorToHSV( self.HSV:GetBaseRGB() )
 	self.RGB.LastY = ( 1 - h / 360 ) * self.RGB:GetTall()

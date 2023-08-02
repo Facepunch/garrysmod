@@ -59,8 +59,9 @@ local function FrameCurve( f, num )
 
 end
 
+local texFB = GetRenderTargetEx( "_GMOD_FrameBlend", -1, -1, RT_SIZE_FULL_FRAME_BUFFER, MATERIAL_RT_DEPTH_NONE, 0, 0, IMAGE_FORMAT_DEFAULT )
+local matFB = Material( "pp/frame_blend" )
 local matFSB = Material( "pp/motionblur" )
-local matFB = Material( "pp/fb" )
 local texMB0 = render.GetMoBlurTex0()
 local texMB1 = render.GetMoBlurTex1()
 local NumFramesTaken = 0
@@ -148,7 +149,9 @@ frame_blend.BlendFrame = function()
 	local padding = math.floor( pp_fb_frames:GetInt() * pp_fb_shutter:GetFloat() * 0.5 )
 	local frames = pp_fb_frames:GetInt()
 
-	render.UpdateScreenEffectTexture()
+	render.PushRenderTarget( texFB )
+		render.UpdateScreenEffectTexture()
+	render.PopRenderTarget()
 
 	local delta = ( NumFramesTaken - padding ) / ( frames - padding * 2 )
 	local curve = FrameCurve( NumFramesTaken - padding, frames-padding * 2 )
@@ -175,22 +178,13 @@ hook.Add( "PostRender", "RenderFrameBlend", function()
 
 	if ( !frame_blend.IsActive() ) then return end
 
-	frame_blend.BlendFrame()
-	frame_blend.DrawPreview()
-
-end )
-
-hook.Add( "PreRender", "PreRenderFrameBlend", function()
-
-	if ( !frame_blend.IsActive() ) then return end
-
-	frame_blend.AddFrame()
-
-	if ( frame_blend.ShouldSkipFrame() ) then
-		return true
+	if ( !frame_blend.ShouldSkipFrame() ) then
+		render.CopyRenderTargetToTexture( texFB )
+		frame_blend.BlendFrame()
 	end
-
-	return
+	
+	frame_blend.AddFrame()
+	frame_blend.DrawPreview()
 
 end )
 
@@ -213,7 +207,7 @@ list.Set( "PostProcess", "#frame_blend_pp", {
 		CPanel:AddControl( "ComboBox", params )
 
 		CPanel:AddControl( "Slider", { Label = "#frame_blend_pp.frames", Command = "pp_fb_frames", Type = "Int", Min = "3", Max = "64" } )
-		CPanel:AddControl( "Slider", { Label = "#frame_blend_pp.shutter", Command = "pp_fb_shutter", Type = "Float", Min = "0", Max = "1" } )
+		CPanel:AddControl( "Slider", { Label = "#frame_blend_pp.shutter", Command = "pp_fb_shutter", Type = "Float", Min = "0", Max = "0.99" } )
 
 	end
 

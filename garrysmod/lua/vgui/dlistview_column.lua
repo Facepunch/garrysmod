@@ -77,14 +77,15 @@ function PANEL:Init()
 	self.DraggerBar = vgui.Create( "DListView_DraggerBar", self )
 
 	self:SetMinWidth( 10 )
-	self:SetMaxWidth( 1920 * 10 )
+	self:SetMaxWidth( 19200 )
 
 end
 
-function PANEL:SetFixedWidth( i )
+function PANEL:SetFixedWidth( iSize )
 
-	self:SetMinWidth( i )
-	self:SetMaxWidth( i )
+	self:SetMinWidth( iSize )
+	self:SetMaxWidth( iSize )
+	self:SetWide( iSize )
 
 end
 
@@ -111,8 +112,8 @@ end
 
 function PANEL:PerformLayout()
 
-	if ( self.m_iTextAlign ) then
-		self.Header:SetContentAlignment( self.m_iTextAlign )
+	if ( self:GetTextAlign() ) then
+		self.Header:SetContentAlignment( self:GetTextAlign() )
 	end
 
 	self.Header:SetPos( 0, 0 )
@@ -132,10 +133,11 @@ end
 
 function PANEL:SetWidth( iSize )
 
-	iSize = math.Clamp( iSize, self.m_iMinWidth, self.m_iMaxWidth )
+	iSize = math.Clamp( iSize, self:GetMinWidth(), math.max( self:GetMaxWidth(), 0 ) )
+	iSize = math.ceil( iSize )
 
 	-- If the column changes size we need to lay the data out too
-	if ( math.floor( iSize ) != self:GetWide() ) then
+	if ( iSize != math.ceil( self:GetWide() ) ) then
 		self:GetParent():SetDirty( true )
 	end
 
@@ -144,21 +146,15 @@ function PANEL:SetWidth( iSize )
 
 end
 
-derma.DefineControl( "DListView_Column", "", table.Copy( PANEL ), "Panel" )
+derma.DefineControl( "DListView_Column", "Sortable DListView Column", PANEL, "Panel" )
 
 --[[---------------------------------------------------------
 	DListView_ColumnPlain
 -----------------------------------------------------------]]
 
-function PANEL:Init()
+local PANEL = {}
 
-	self.Header = vgui.Create( "DListViewHeaderLabel", self )
-
-	self.DraggerBar = vgui.Create( "DListView_DraggerBar", self )
-
-	self:SetMinWidth( 10 )
-	self:SetMaxWidth( 1920 * 10 )
-
+function PANEL:DoClick()
 end
 
-derma.DefineControl( "DListView_ColumnPlain", "", PANEL, "Panel" )
+derma.DefineControl( "DListView_ColumnPlain", "Non sortable DListView Column", PANEL, "DListView_Column" )

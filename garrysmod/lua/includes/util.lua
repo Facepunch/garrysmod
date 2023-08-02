@@ -17,14 +17,15 @@ local C_Material = Material
 function Material( name, words )
 
 	if ( !words ) then return C_Material( name ) end
-	
+
 	local str = (words:find("vertexlitgeneric") and "1" or "0")
 	str = str .. (words:find("nocull") and "1" or "0")
 	str = str .. (words:find("alphatest") and "1" or "0")
 	str = str .. (words:find("mips") and "1" or "0")
 	str = str .. (words:find("noclamp") and "1" or "0")
 	str = str .. (words:find("smooth") and "1" or "0")
-	
+	str = str .. (words:find("ignorez") and "1" or "0")
+
 	return C_Material( name, str )
 
 end
@@ -56,6 +57,7 @@ include( "util/color.lua" )
 	Prints a table to the console
 -----------------------------------------------------------]]
 function PrintTable( t, indent, done )
+	local Msg = Msg
 
 	done = done or {}
 	indent = indent or 0
@@ -66,6 +68,8 @@ function PrintTable( t, indent, done )
 		return tostring( a ) < tostring( b )
 	end )
 
+	done[ t ] = true
+
 	for i = 1, #keys do
 		local key = keys[ i ]
 		local value = t[ key ]
@@ -74,14 +78,13 @@ function PrintTable( t, indent, done )
 		if  ( istable( value ) && !done[ value ] ) then
 
 			done[ value ] = true
-			Msg( tostring( key ) .. ":" .. "\n" )
+			Msg( key, ":\n" )
 			PrintTable ( value, indent + 2, done )
 			done[ value ] = nil
 
 		else
 
-			Msg( tostring( key ) .. "\t=\t" )
-			Msg( tostring( value ) .. "\n" )
+			Msg( key, "\t=\t", value, "\n" )
 
 		end
 
@@ -92,15 +95,17 @@ end
 --[[---------------------------------------------------------
 	Returns a random vector
 -----------------------------------------------------------]]
-function VectorRand()
-	return Vector( math.Rand( -1.0, 1.0 ), math.Rand( -1.0, 1.0 ), math.Rand( -1.0, 1.0 ) )
+function VectorRand( min, max )
+	min = min || -1
+	max = max || 1
+	return Vector( math.Rand( min, max ), math.Rand( min, max ), math.Rand( min, max ) )
 end
 
 --[[---------------------------------------------------------
 	Returns a random angle
 -----------------------------------------------------------]]
-function AngleRand()
-	return Angle( math.Rand( -90, 90 ), math.Rand( -180, 180 ), math.Rand( -180, 180 ) )
+function AngleRand( min, max )
+	return Angle( math.Rand( min || -90, max || 90 ), math.Rand( min || -180, max || 180 ), math.Rand( min || -180, max || 180 ) )
 end
 
 --[[---------------------------------------------------------
@@ -154,17 +159,20 @@ color_transparent	= Color( 255, 255, 255, 0 )
 	Includes the file - and adds it so the CS file list
 -----------------------------------------------------------]]
 function IncludeCS( filename )
-	include( filename )
-
 	if ( SERVER ) then
 		AddCSLuaFile( filename )
 	end
+	
+	return include( filename )
 end
 
 -- Globals
 FORCE_STRING	= 1
 FORCE_NUMBER	= 2
 FORCE_BOOL		= 3
+FORCE_ANGLE		= 4
+FORCE_COLOR		= 5
+FORCE_VECTOR	= 6
 
 --[[---------------------------------------------------------
 	AccessorFunc
@@ -179,15 +187,33 @@ function AccessorFunc( tab, varname, name, iForce )
 	if ( iForce == FORCE_STRING ) then
 		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tostring( v ) end
 	return end
-	
+
 	if ( iForce == FORCE_NUMBER ) then
 		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tonumber( v ) end
 	return end
-	
+
 	if ( iForce == FORCE_BOOL ) then
 		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = tobool( v ) end
 	return end
-	
+
+	if ( iForce == FORCE_ANGLE ) then
+		tab[ "Set" .. name ] = function( self, v ) self[ varname ] = Angle( v ) end
+	return end
+
+	if ( iForce == FORCE_COLOR ) then
+		tab[ "Set" .. name ] = function( self, v )
+			if ( type( v ) == "Vector" ) then self[ varname ] = v:ToColor()
+			else self[ varname ] = string.ToColor( tostring( v ) ) end
+		end
+	return end
+
+	if ( iForce == FORCE_VECTOR ) then
+		tab[ "Set" .. name ] = function( self, v )
+			if ( IsColor( v ) ) then self[ varname ] = v:ToVector()
+			else self[ varname ] = Vector( v ) end
+		end
+	return end
+
 	tab[ "Set" .. name ] = function( self, v ) self[ varname ] = v end
 
 end
@@ -198,9 +224,11 @@ end
 function IsValid( object )
 
 	if ( !object ) then return false end
-	if ( !object.IsValid ) then return false end
 
-	return object:IsValid()
+	local isvalid = object.IsValid
+	if ( !isvalid ) then return false end
+
+	return isvalid( object )
 
 end
 
@@ -249,23 +277,23 @@ end
 --[[---------------------------------------------------------
 	Universal function to filter out crappy models by name
 -----------------------------------------------------------]]
-local UselessModels = { 
-	"_gesture", "_anim", "_gst", "_pst", "_shd", "_ss", "_posture", "_anm", 
+local UselessModels = {
+	"_gesture", "_anim", "_gst", "_pst", "_shd", "_ss", "_posture", "_anm",
 	"ghostanim","_paths", "_shared", "anim_", "gestures_", "shared_ragdoll_"
 }
 
-function IsUselessModel( modelname ) 
+function IsUselessModel( modelname )
 
 	local modelname = modelname:lower()
 
 	if ( !modelname:find( ".mdl", 1, true ) ) then return true end
-	
-	for k, v in pairs( UselessModels ) do
-		if ( modelname:find( v, 1, true ) ) then 
-			return true 
+
+	for k, v in ipairs( UselessModels ) do
+		if ( modelname:find( v, 1, true ) ) then
+			return true
 		end
 	end
-	
+
 	return false
 
 end
@@ -290,24 +318,34 @@ end
 -----------------------------------------------------------]]
 function TimedSin( freq, min, max, offset )
 	return math.sin( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
-end 
+end
 
 --[[---------------------------------------------------------
 	From Simple Gamemode Base (Rambo_9)
 -----------------------------------------------------------]]
 function TimedCos( freq, min, max, offset )
 	return math.cos( freq * math.pi * 2 * CurTime() + offset ) * ( max - min ) * 0.5 + min
-end 
+end
 
 --[[---------------------------------------------------------
 	IsEnemyEntityName
 -----------------------------------------------------------]]
 local EnemyNames = {
-	npc_antlion = true, npc_antlionguard = true, npc_antlionguardian = true, npc_barnacle = true, 
-	npc_breen = true, npc_clawscanner = true, npc_combine_s = true, npc_cscanner = true, npc_fastzombie = true, 
-	npc_fastzombie_torso = true, npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true, 
-	npc_hunter = true, npc_metropolice = true, npc_manhack = true, npc_poisonzombie = true, 
-	npc_strider = true, npc_stalker = true, npc_zombie = true, npc_zombie_torso = true, npc_zombine = true
+	-- Half-Life 1.
+	monster_alien_grunt = true, monster_nihilanth = true, monster_tentacle = true, monster_alien_slave = true,
+	monster_bigmomma = true, monster_bullchicken = true, monster_gargantua = true, monster_human_assassin = true,
+	monster_babycrab = true, monster_human_grunt = true, monster_cockroach = true, monster_houndeye = true,
+	monster_zombie = true, monster_headcrab = true, monster_alien_controller = true, monster_turret = true,
+	monster_miniturret = true, monster_sentry = true,
+
+	-- Half-Life 2.
+	npc_antlion = true, npc_antlionguard = true, npc_antlionguardian = true, npc_barnacle = true,
+	npc_breen = true, npc_clawscanner = true, npc_combine_s = true, npc_cscanner = true, npc_fastzombie = true,
+	npc_fastzombie_torso = true, npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true,
+	npc_hunter = true, npc_metropolice = true, npc_manhack = true, npc_poisonzombie = true, npc_strider = true,
+	npc_stalker = true, npc_zombie = true, npc_zombie_torso = true, npc_zombine = true, npc_combine_camera = true,
+	npc_turret_ceiling = true, npc_combinedropship = true, npc_combinegunship = true, npc_helicopter = true,
+	npc_turret_floor = true, npc_antlion_worker = true, npc_headcrab_black = true
 }
 
 function IsEnemyEntityName( victimtype )
@@ -318,8 +356,12 @@ end
 	IsFriendEntityName
 -----------------------------------------------------------]]
 local FriendlyNames = {
-	npc_alyx = true, npc_barney = true, npc_citizen = true, npc_dog = true, npc_eli = true, 
-	npc_fisherman = true, npc_gman = true, npc_kleiner = true, npc_magnusson = true, 
+	-- Half-Life 1.
+	monster_scientist = true, monster_barney = true,
+	
+	-- Half-Life 2.
+	npc_alyx = true, npc_barney = true, npc_citizen = true, npc_dog = true, npc_eli = true,
+	npc_fisherman = true, npc_gman = true, npc_kleiner = true, npc_magnusson = true,
 	npc_monk = true, npc_mossman = true, npc_odessa = true, npc_vortigaunt = true
 }
 
@@ -352,7 +394,7 @@ end
 --[[---------------------------------------------------------
 	Replacement for C++'s iff ? aa : bb
 -----------------------------------------------------------]]
-function Either( iff, aa, bb ) 
+function Either( iff, aa, bb )
 	if ( iff ) then return aa end
 	return bb
 end
@@ -404,7 +446,7 @@ end
 --
 -- This is supposed to be clientside, but was exposed to both states for years due to a bug.
 --
-function CreateClientConVar( name, default, shouldsave, userdata, helptext )
+function CreateClientConVar( name, default, shouldsave, userdata, helptext, min, max )
 
 	local iFlags = 0
 
@@ -416,7 +458,7 @@ function CreateClientConVar( name, default, shouldsave, userdata, helptext )
 		iFlags = bit.bor( iFlags, FCVAR_USERINFO )
 	end
 
-	return CreateConVar( name, default, iFlags, helptext )
+	return CreateConVar( name, default, iFlags, helptext, min, max )
 
 end
 
@@ -433,10 +475,10 @@ function GetConVar( name )
 		if not c then
 			return
 		end
-		
+
 		ConVarCache[ name ] = c
 	end
-	
+
 	return c
 end
 

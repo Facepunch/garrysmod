@@ -7,7 +7,7 @@ ENT.Editable = true
 
 function ENT:SetupDataTables()
 
-	self:NetworkVar( "Float", 0, "Force", { KeyName = "force", Edit = { type = "Float", order = 1, min = -2000, max = 2000 } } )
+	self:NetworkVar( "Float", 0, "Force", { KeyName = "force", Edit = { type = "Float", order = 1, min = -2000, max = 2000, title = "#tool.balloon.force" } } )
 
 	if ( SERVER ) then
 		self:NetworkVarNotify( "Force", function() self:PhysWake() end )
@@ -20,7 +20,7 @@ function ENT:Initialize()
 	if ( CLIENT ) then return end
 
 	self:PhysicsInit( SOLID_VPHYSICS )
-	self:SetRenderMode( RENDERMODE_TRANSALPHA )
+	self:SetRenderMode( RENDERMODE_TRANSCOLOR )
 
 	-- Set up our physics object here
 	local phys = self:GetPhysicsObject()
@@ -81,7 +81,7 @@ end
 function ENT:PhysicsSimulate( phys, deltatime )
 
 	local vLinear = Vector( 0, 0, self:GetForce() * 5000 ) * deltatime
-	local vAngular = Vector( 0, 0, 0 )
+	local vAngular = vector_origin
 
 	return vAngular, vLinear, SIM_GLOBAL_FORCE
 

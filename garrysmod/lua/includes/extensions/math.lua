@@ -1,4 +1,16 @@
 
+include( "math/ease.lua" )
+
+--[[---------------------------------------------------------
+	Name: DistanceSqr( low, high )
+	Desc: Squared Distance between two 2d points, use this instead of math.Distance as it is more cpu efficient.
+------------------------------------------------------------]]
+function math.DistanceSqr( x1, y1, x2, y2 )
+	local xd = x2 - x1
+	local yd = y2 - y1
+	return xd * xd + yd * yd
+end
+
 --[[---------------------------------------------------------
 	Name: Distance( low, high )
 	Desc: Distance between two 2d points
@@ -37,9 +49,7 @@ end
 	Desc: Clamp value between 2 values
 ------------------------------------------------------------]]
 function math.Clamp( _in, low, high )
-	if ( _in < low ) then return low end
-	if ( _in > high ) then return high end
-	return _in
+	return math.min( math.max( _in, low ), high )
 end
 
 --[[---------------------------------------------------------
@@ -57,14 +67,14 @@ math.Min = math.min
 	Name: EaseInOut(fProgress, fEaseIn, fEaseOut)
 	Desc: Provided by garry from the facewound source and converted
 			to Lua by me :p
-	Usage: math.EaseInOut(0.1, 0.5, 0.5) - all parameters shoule be between 0 and 1
+	Usage: math.EaseInOut(0.1, 0.5, 0.5) - all parameters should be between 0 and 1
 -----------------------------------------------------------]]
 function math.EaseInOut( fProgress, fEaseIn, fEaseOut )
 
 	if ( fEaseIn == nil ) then fEaseIn = 0 end
 	if ( fEaseOut == nil ) then fEaseOut = 1 end
 
-	if ( fProgress == 0 || fProgress == 1 ) then return fProgress end
+	if ( fProgress == 0 or fProgress == 1 ) then return fProgress end
 
 	local fSumEase = fEaseIn + fEaseOut
 
@@ -76,9 +86,9 @@ function math.EaseInOut( fProgress, fEaseIn, fEaseOut )
 
 	local fProgressCalc = 1 / ( 2 - fEaseIn - fEaseOut )
 
-	if( fProgress < fEaseIn ) then
+	if ( fProgress < fEaseIn ) then
 		return ( ( fProgressCalc / fEaseIn ) * fProgress * fProgress )
-	elseif( fProgress < 1 - fEaseOut ) then
+	elseif ( fProgress < 1 - fEaseOut ) then
 		return ( fProgressCalc * ( 2 * fProgress - fEaseIn ) )
 	else
 		fProgress = 1 - fProgress
@@ -93,7 +103,7 @@ function math.calcBSplineN( i, k, t, tinc )
 
 	if ( k == 1 ) then
 
-		if ( ( KNOT( i, tinc ) <= t ) && ( t < KNOT( i + 1, tinc ) ) ) then
+		if ( ( KNOT( i, tinc ) <= t ) and ( t < KNOT( i + 1, tinc ) ) ) then
 
 			return 1
 
@@ -149,7 +159,26 @@ function math.BSplinePoint( tDiff, tPoints, tMax )
 
 end
 
--- Round to the nearest interger
+--[[---------------------------------------------------------
+	Cubic hermite spline
+	p0, p1 - points; m0, m1 - tangets; t - fraction along the curve (0-1)
+-----------------------------------------------------------]]
+function math.CHSpline( t, p0, m0, p1, m1 )
+
+	if ( t >= 1 ) then return p1 end
+	if ( t <= 0 ) then return p0 end
+
+	local t2 = t * t
+	local t3 = t * t2
+
+	return p0 * ( 2 * t3 - 3 * t2 + 1 ) +
+		m0 * ( t3 - 2 * t2 + t ) +
+		p1 * ( -2 * t3 + 3 * t2 ) +
+		m1 * ( t3 - t2 )
+
+end
+
+-- Round to the nearest integer
 function math.Round( num, idp )
 
 	local mult = 10 ^ ( idp or 0 )
@@ -189,7 +218,6 @@ function math.NormalizeAngle( a )
 	return ( a + 180 ) % 360 - 180
 end
 
-
 function math.AngleDifference( a, b )
 
 	local diff = math.NormalizeAngle( a - b )
@@ -216,4 +244,9 @@ end
 
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
+end
+
+-- Snaps the provided number to the nearest multiple
+function math.SnapTo( num, multiple )
+	return math.floor( num / multiple + 0.5 ) * multiple
 end

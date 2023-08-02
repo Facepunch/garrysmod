@@ -7,7 +7,7 @@ local pp_texturize_scale = CreateClientConVar( "pp_texturize_scale", "1", true, 
 
 function DrawTexturize( scale, pMaterial )
 
-	render.UpdateScreenEffectTexture()
+	render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
 
 	matMaterial:SetFloat( "$scalex", ( ScrW() / 64 ) * scale )
 	matMaterial:SetFloat( "$scaley", ( ScrH() / 64 / 8 ) * scale )
@@ -46,6 +46,7 @@ list.Set( "PostProcess", "#texturize_pp", {
 
 			spawnmenu.CreateContentIcon( "postprocess", content, {
 				name = "#texturize_pp",
+				label = string.gsub( k, "^%a", string.upper( string.sub( k, 1, 1 ) ) ),
 				icon = textr.Icon,
 				convars = {
 					pp_texturize = {

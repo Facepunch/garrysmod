@@ -11,7 +11,7 @@ function PANEL:Init()
 	self.pnlCanvas:SetMouseInputEnabled( true )
 	self.pnlCanvas.PerformLayout = function( pnl )
 
-		self:PerformLayout()
+		self:PerformLayoutInternal()
 		self:InvalidateParent()
 
 	end
@@ -93,7 +93,7 @@ end
 
 function PANEL:ScrollToChild( panel )
 
-	self:PerformLayout()
+	self:InvalidateLayout( true )
 
 	local x, y = self.pnlCanvas:GetChildPosition( panel )
 	local w, h = panel:GetSize()
@@ -105,7 +105,8 @@ function PANEL:ScrollToChild( panel )
 
 end
 
-function PANEL:PerformLayout()
+-- Avoid an infinite loop
+function PANEL:PerformLayoutInternal()
 
 	local Tall = self.pnlCanvas:GetTall()
 	local Wide = self:GetWide()
@@ -126,6 +127,12 @@ function PANEL:PerformLayout()
 	if ( Tall != self.pnlCanvas:GetTall() ) then
 		self.VBar:SetScroll( self.VBar:GetScroll() ) -- Make sure we are not too far down!
 	end
+
+end
+
+function PANEL:PerformLayout()
+
+	self:PerformLayoutInternal()
 
 end
 

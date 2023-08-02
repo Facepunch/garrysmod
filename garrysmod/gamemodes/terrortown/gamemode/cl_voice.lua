@@ -164,8 +164,9 @@ function RADIO:ShowRadioCommands(state)
          radioframe:SetKeyboardInputEnabled(false)
 
          radioframe:CenterVertical()
-
-         -- ASS
+         
+         
+         -- This is not how you should do things
          radioframe.ForceResize = function(s)
                                      local w, label = 0, nil
                                      for k,v in pairs(s.Items) do
@@ -268,7 +269,7 @@ end
 
 
 function RADIO.ToPrintable(target)
-   if type(target) == "string" then
+   if isstring(target) then
       return GetTranslation(target)
    elseif IsValid(target) then
       if target:IsPlayer() then
@@ -344,7 +345,7 @@ local function RadioCommand(ply, cmd, arg)
    RADIO.LastRadio.msg = text
 
    -- target is either a lang string or an entity
-   target = type(target) == "string" and target or tostring(target:EntIndex())
+   target = isstring(target) and target or tostring(target:EntIndex())
 
    RunConsoleCommand("_ttt_radio_send", msg_name, tostring(target))
 end

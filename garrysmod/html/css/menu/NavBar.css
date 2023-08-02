@@ -16,7 +16,7 @@
 	padding: 0;
 }
 
-#NavBar .left 
+#NavBar .left
 {
 	text-align: left;
 	margin-left: 10px;
@@ -26,19 +26,47 @@
 	padding: 0;
 }
 
-#NavBar .right 
+#NavBar .right
 {
 	float: right;
 	text-align: right;
-	margin-right: 6px;
-	width: 350px;
+	/*width: 350px;*/
 	right: 0;
 	display: block;
 	margin: 0;
 	padding: 0;
+	margin-left: 10%;
 }
 
-#NavBar UL.center 
+#NavBar .smallicon
+{
+	min-width: 40px;
+	padding: 0;
+	text-align: center;
+}
+#NavBar .smallicon.hidelabel span
+{
+	padding-left: 35px;
+}
+
+#NavBar .smallicon img
+{
+	margin-top: 7px;
+	margin-left: 7px;
+}
+
+#NavBar .bigicon
+{
+	min-width: 5px;
+}
+
+#NavBar .bigicon img
+{
+	margin-top: -1px;
+	margin-left: -1px;
+}
+
+#NavBar UL.center
 {
 	text-align: center;
 	left: 0;
@@ -101,9 +129,9 @@
 {
 	color: #333;
 	position: relative;
-	top: 11px;
-	padding-left: 8px;
-	padding-right: 16px;
+	top: 13px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 #NavBar LI IMG, UL.gamemode_list LI IMG, UL.language_list LI IMG
@@ -111,6 +139,27 @@
 	position: absolute;
 	left: 5px;
 	top: 5px;
+}
+
+#NavBar number
+{
+	background: #d9d9d9;
+	padding: 5px;
+	position: absolute;
+	top: -10px;
+	left: -7px;
+	border-radius: 4px;
+}
+
+#NavBar number.severity1
+{
+	background: #ffc800;
+}
+
+#NavBar number.severity2
+{
+	background: #ff4000;
+	color: white;
 }
 
 UL.games_list
@@ -255,8 +304,18 @@ UL.language_list LI:hover
 	border-radius: 3px;
 	list-style: none;
 	margin: 3px;
-	cursor: pointer;
+	/*cursor: pointer;*/
 	display: none;
+}
+
+UL.games_list.popup LI
+{
+	cursor: default;
+}
+
+.popup HR
+{
+	margin-right: 2px;
 }
 
 .kinect_settings
@@ -275,4 +334,17 @@ UL.language_list LI:hover
 	margin: 0 !important;
 	height: auto !important;
 	padding: 2px 16px !important;
+}
+
+/* 800x600 and lower */
+@media (max-width: 940px)
+{
+	#NavBar .hidelabel span
+	{
+		display: none;
+	}
+	#NavBar .right
+	{
+		margin-left: 15px;
+	}
 }

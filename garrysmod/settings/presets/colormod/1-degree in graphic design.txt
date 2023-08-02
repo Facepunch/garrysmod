@@ -1,0 +1,13 @@
+"Degree in Graphic Design"
+{
+	"pp_colormod"		"1"
+	"pp_colormod_addb"		"0"
+	"pp_colormod_addg"		"7"
+	"pp_colormod_addr"		"0"
+	"pp_colormod_brightness"		"-0.490000"
+	"pp_colormod_color"		"0.650000"
+	"pp_colormod_contrast"		"9.390000"
+	"pp_colormod_mulb"		"0"
+	"pp_colormod_mulg"		"0"
+	"pp_colormod_mulr"		"0"
+}

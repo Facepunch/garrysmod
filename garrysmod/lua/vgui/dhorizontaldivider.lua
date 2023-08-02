@@ -44,11 +44,15 @@ function PANEL:Init()
 
 	self.m_DragBar = vgui.Create( "DHorizontalDividerBar", self )
 
+	self._OldCookieW = 0
+
 end
+
 
 function PANEL:LoadCookies()
 
 	self:SetLeftWidth( self:GetCookieNumber( "LeftWidth", self:GetLeftWidth() ) )
+	self._OldCookieW = self:GetCookieNumber( "LeftWidth", self:GetLeftWidth() )
 
 end
 
@@ -124,6 +128,16 @@ function PANEL:OnCursorMoved( x, y )
 
 	self:SetLeftWidth( x )
 	if ( oldLeftWidth != x ) then self:InvalidateLayout() end
+
+end
+
+function PANEL:Think()
+
+	-- If 2 or more panels use the same cookie name, make every panel resize automatically to the same size
+	if ( self._OldCookieW != self:GetCookieNumber( "LeftWidth", self:GetLeftWidth() ) && !self:GetDragging() ) then
+		self:LoadCookies()
+		self:InvalidateLayout()
+	end
 
 end
 
