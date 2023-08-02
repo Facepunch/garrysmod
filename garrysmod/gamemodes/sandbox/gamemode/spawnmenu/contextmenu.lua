@@ -38,12 +38,11 @@ function PANEL:Open()
 
 	RestoreCursorPosition()
 
-	local bShouldShow = true
-
-	-- TODO: Any situation in which we shouldn't show the tool menu on the context menu?
+	local bShouldShow = hook.Run( "ContextMenuShowTool" ) 
+	local bShow = bShouldShow == nil or bShouldShow
 
 	-- Set up the active panel..
-	if ( bShouldShow && IsValid( spawnmenu.ActiveControlPanel() ) ) then
+	if ( bShow && IsValid( spawnmenu.ActiveControlPanel() ) ) then
 
 		self.OldParent = spawnmenu.ActiveControlPanel():GetParent()
 		self.OldPosX, self.OldPosY = spawnmenu.ActiveControlPanel():GetPos()
