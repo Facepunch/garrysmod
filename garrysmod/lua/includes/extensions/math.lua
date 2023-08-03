@@ -255,24 +255,22 @@ end
 	Name: CubicBezier( frac, p0, p1, p2, p3 )
 	Desc: Lerp point between points with cubic bezier
 -----------------------------------------------------------]]
-
 function math.CubicBezier( frac, p0, p1, p2, p3 )
-	local mu = frac * frac
-	local mum = 1 - frac
-	local mum2 = mum * mum
+	local frac2 = frac * frac
+	local inv = 1 - frac
+	local inv2 = inv * inv
 
-	return mum2 * mum * p0 + 3 * mum2 * frac * p1 + 3 * mum * mu * p2 + mu * frac * p3
+	return inv2 * inv * p0 + 3 * inv2 * frac * p1 + 3 * inv * frac2 * p2 + frac2 * frac * p3
 end
 
 --[[---------------------------------------------------------
 	Name: QuadraticBezier( frac, p0, p1, p2 )
 	Desc: Lerp point between points with quadratic bezier
 -----------------------------------------------------------]]
-
 function math.QuadraticBezier( frac, p0, p1, p2 )
-	local mu = frac * frac
-	local mum = 1 - frac
-	local mum2 = mum * mum
+	local frac2 = frac * frac
+	local inv = 1 - frac
+	local inv2 = inv * inv
 
-	return mum2 * p0 + 2 * mum * frac * p1 + mu * p2
+	return inv2 * p0 + 2 * inv * frac * p1 + frac2 * p2
 end
