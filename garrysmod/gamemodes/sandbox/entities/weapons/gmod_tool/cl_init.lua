@@ -47,11 +47,12 @@ surface.CreateFont( "GModToolHelp", {
 function SWEP:DrawHUD()
 
 	local mode = gmod_toolmode:GetString()
-
+	local toolObject = self:GetToolObject()
+	
 	-- Don't draw help for a nonexistant tool!
-	if ( !self:GetToolObject() ) then return end
+	if ( !toolObject ) then return end
 
-	self:GetToolObject():DrawHUD()
+	toolObject:DrawHUD()
 
 	if ( !gmod_drawhelp:GetBool() ) then return end
 
@@ -89,7 +90,7 @@ function SWEP:DrawHUD()
 
 	QuadTable.y = y
 	QuadTable.h = self.InfoBoxHeight
-	local alpha = math.Clamp( 255 + ( self:GetToolObject().LastMessage - CurTime() ) * 800, 10, 255 )
+	local alpha = math.Clamp( 255 + ( toolObject.LastMessage - CurTime() ) * 800, 10, 255 )
 	QuadTable.color = Color( alpha, alpha, alpha, 230 )
 	draw.TexturedQuad( QuadTable )
 
@@ -97,9 +98,9 @@ function SWEP:DrawHUD()
 
 	TextTable.font = "GModToolHelp"
 
-	if ( !self:GetToolObject().Information ) then
+	if ( !toolObject.Information ) then
 		TextTable.pos = { x + self.InfoBoxHeight, y }
-		TextTable.text = self:GetToolObject():GetHelpText()
+		TextTable.text = toolObject:GetHelpText()
 		w, h = draw.TextShadow( TextTable, 1 )
 
 		surface.SetDrawColor( 255, 255, 255, 255 )
@@ -113,17 +114,17 @@ function SWEP:DrawHUD()
 
 	local h2 = 0
 
-	for _, v in pairs( self:GetToolObject().Information ) do
+	for _, v in pairs( toolObject.Information ) do
 		if ( isstring( v ) ) then v = { name = v } end
 
 		local name = v.name
 
 		if ( !name ) then continue end
 		if ( v.stage && v.stage != self:GetStage() ) then continue end
-		if ( v.op && v.op != self:GetToolObject():GetOperation() ) then continue end
+		if ( v.op && v.op != toolObject:GetOperation() ) then continue end
 
 		local txt = "#tool." .. GetConVarString( "gmod_toolmode" ) .. "." .. name
-		if ( name == "info" ) then txt = self:GetToolObject():GetHelpText() end
+		if ( name == "info" ) then txt = toolObject:GetHelpText() end
 
 		TextTable.text = txt
 		TextTable.pos = { x + 21, y + h2 }
@@ -200,8 +201,6 @@ function SWEP:PrintWeaponInfo( x, y, alpha )
 end
 
 function SWEP:FreezeMovement()
-
-	local mode = self:GetMode()
 
 	if ( !self:GetToolObject() ) then return false end
 
