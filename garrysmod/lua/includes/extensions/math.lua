@@ -252,27 +252,27 @@ function math.SnapTo( num, multiple )
 end
 
 --[[---------------------------------------------------------
-	Name: CubicBezier( frac, p1, p2, p3, p4 )
+	Name: CubicBezier( frac, p0, p1, p2, p3 )
 	Desc: Lerp point between points with cubic bezier
 -----------------------------------------------------------]]
 
-function math.CubicBezier( frac, p1, p2, p3, p4 )
+function math.CubicBezier( frac, p0, p1, p2, p3 )
 	local mu = frac * frac
 	local mum = 1 - frac
 	local mum2 = mum * mum
 
-	return mum2 * mum * p1 + 3 * mum2 * frac * p2 + 3 * mum * mu * p3 + mu * frac * p4
+	return mum2 * mum * p0 + 3 * mum2 * frac * p1 + 3 * mum * mu * p2 + mu * frac * p3
 end
 
 --[[---------------------------------------------------------
-	Name: QuadraticBezier( frac, p1, p2, p3 )
+	Name: QuadraticBezier( frac, p0, p1, p2 )
 	Desc: Lerp point between points with quadratic bezier
 -----------------------------------------------------------]]
 
-function math.QuadraticBezier( frac, p1, p2, p3 )
+function math.QuadraticBezier( frac, p0, p1, p2 )
 	local mu = frac * frac
 	local mum = 1 - frac
 	local mum2 = mum * mum
 
-	return mum2 * p1 + 2 * mum * frac * p2 + mu * p3
+	return mum2 * p0 + 2 * mum * frac * p1 + mu * p2
 end
