@@ -114,7 +114,7 @@ local function Find( ply, command, arguments )
 end
 
 if ( SERVER ) then
-	concommand.Add( "lua_find", Find, nil, "Find any variable by name on the server.", { FCVAR_DONTRECORD } )
+	concommand.Add( "lua_find", Find, nil, "Find any variable by name on the server.", FCVAR_DONTRECORD )
 	concommand.Add( "lua_findhooks", Find, nil, "Find hooks by event name and hook identifier on the server.", FCVAR_DONTRECORD )
 else
 	concommand.Add( "lua_find_cl", Find, nil, "Find any variable by name on the client.", FCVAR_DONTRECORD )
