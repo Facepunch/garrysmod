@@ -200,11 +200,26 @@ local EntitySaver =
 
 		end
 
-		-- Non Sandbox tool set colors and material
+		-- Non Sandbox tool set color and materials
 		if ( ent:GetColor() != color_white ) then data._DuplicatedColor = ent:GetColor() end
 		if ( ent:GetMaterial() != "" ) then data._DuplicatedMaterial = ent:GetMaterial() end
 
-		-- Bone Manipulator
+		-- Sub materials
+		local subMaterials = {}
+
+		for i = 0, 31 do
+
+			local mat = ent:GetSubMaterial( i )
+
+			if ( mat:len() > 0 ) then
+				subMaterials[ i ] = mat
+			end
+
+		end
+
+		if ( !table.IsEmpty( subMaterials ) ) then data._DuplicatedSubMaterials = subMaterials end
+
+		-- Bone Manipulations
 		if ( ent:HasBoneManipulations() ) then
 
 			data.BoneManip = {}
@@ -235,7 +250,6 @@ local EntitySaver =
 		if ( ent.GetNetworkVars ) then
 			data.DT = ent:GetNetworkVars()
 		end
-
 
 		-- Make this function on your SENT if you want to modify the
 		-- returned table specifically for your entity.
@@ -280,6 +294,17 @@ local EntitySaver =
 		if ( data.Name ) then ent:SetName( data.Name ) end
 		if ( data._DuplicatedColor ) then ent:SetColor( data._DuplicatedColor ) end
 		if ( data._DuplicatedMaterial ) then ent:SetMaterial( data._DuplicatedMaterial ) end
+
+		-- Sub materials
+		if ( data._DuplicatedSubMaterials ) then
+
+			for id, mat in pairs( data._DuplicatedSubMaterials ) do
+
+				ent:SetSubMaterial( id, mat )
+
+			end
+
+		end
 
 		-- Body Groups
 		if ( data.BodyG ) then
