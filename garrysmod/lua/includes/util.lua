@@ -358,7 +358,7 @@ end
 local FriendlyNames = {
 	-- Half-Life 1.
 	monster_scientist = true, monster_barney = true,
-	
+
 	-- Half-Life 2.
 	npc_alyx = true, npc_barney = true, npc_citizen = true, npc_dog = true, npc_eli = true,
 	npc_fisherman = true, npc_gman = true, npc_kleiner = true, npc_magnusson = true,

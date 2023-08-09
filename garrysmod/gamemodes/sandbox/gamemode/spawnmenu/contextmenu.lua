@@ -38,7 +38,7 @@ function PANEL:Open()
 
 	RestoreCursorPosition()
 
-	local bShouldShow = hook.Run( "ContextMenuShowTool" ) 
+	local bShouldShow = hook.Run( "ContextMenuShowTool" )
 	local bShow = bShouldShow == nil or bShouldShow
 
 	-- Set up the active panel..
