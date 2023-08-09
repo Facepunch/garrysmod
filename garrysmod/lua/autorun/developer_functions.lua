@@ -3,21 +3,21 @@ local function FindInTable( tab, find, parents, depth )
 
 	depth = depth or 0
 	parents = parents or ""
-	
+
 	if ( !istable( tab ) ) then return end
 	if ( depth > 3 ) then return end
 	depth = depth + 1
-	
+
 	for k, v in pairs ( tab ) do
-	
+
 		if ( isstring(k) ) then
-		
+
 			if ( k && k:lower():find( find:lower() ) ) then
 
 				Msg("\t", parents, k, " - (", type(v), " - ", v, ")\n")
-			
+
 			end
-			
+
 			-- Recurse
 			if ( istable(v) &&
 				k != "_R" &&
@@ -26,14 +26,14 @@ local function FindInTable( tab, find, parents, depth )
 				k != "_M" &&
 				k != "_LOADED" &&
 				k != "__index" ) then
-				
+
 				local NewParents = parents .. k .. "."
 				FindInTable( v, find, NewParents, depth )
-			
+
 			end
-		
+
 		end
-	
+
 	end
 
 end
@@ -64,15 +64,31 @@ local function FindInHooks( base, name )
 
 end
 
+local function UTIL_IsCommandIssuedByServerAdmin( ply )
+	if ( game.SinglePlayer() ) then return true end -- Singleplayer
+	if ( !IsValid( ply ) ) then return SERVER end -- Dedicated server console
+
+	return ply:IsListenServerHost() -- Only if we are a listen server host
+end
 
 --[[---------------------------------------------------------
-   Name:	Find
------------------------------------------------------------]]   
+	Name: Find
+-----------------------------------------------------------]]
 local function Find( ply, command, arguments )
 
-	if ( !game.SinglePlayer() && IsValid(ply) && ply:IsPlayer() && !ply:IsAdmin() ) then return end
-	if ( !arguments[1] ) then return end
+	if ( !UTIL_IsCommandIssuedByServerAdmin( ply ) ) then return end
+
+	if ( !arguments[1] ) then
 	
+		if ( command:StartWith( "lua_findhooks" ) ) then
+			MsgN( "Usage: lua_findhooks <event name> [hook identifier]" );
+			return
+		end
+	
+		MsgN( "Usage: lua_find <text>" );
+		return
+	end
+
 	if ( command:StartWith( "lua_findhooks" ) ) then
 
 		Msg( "Finding '", arguments[1], "' hooks ",
@@ -90,17 +106,17 @@ local function Find( ply, command, arguments )
 	end
 
 	Msg("\n\n")
-	
+
 	if ( SERVER && IsValid(ply) && ply:IsPlayer() && ply:IsListenServerHost() ) then
 		RunConsoleCommand( command .. "_cl", arguments[1], arguments[2] )
 	end
-	
+
 end
 
 if ( SERVER ) then
-	concommand.Add( "lua_find", Find, _, "", { FCVAR_DONTRECORD } )
-	concommand.Add( "lua_findhooks", Find, _, "", { FCVAR_DONTRECORD } )
+	concommand.Add( "lua_find", Find, nil, "Find any variable by name on the server.", { FCVAR_DONTRECORD } )
+	concommand.Add( "lua_findhooks", Find, nil, "Find hooks by event name and hook identifier on the server.", FCVAR_DONTRECORD )
 else
-	concommand.Add( "lua_find_cl", Find, _, "", { FCVAR_DONTRECORD } )
-	concommand.Add( "lua_findhooks_cl", Find, _, "", { FCVAR_DONTRECORD } )
+	concommand.Add( "lua_find_cl", Find, nil, "Find any variable by name on the client.", FCVAR_DONTRECORD )
+	concommand.Add( "lua_findhooks_cl", Find, nil, "Find hooks by event name and hook identifier on the client.", FCVAR_DONTRECORD )
 end
