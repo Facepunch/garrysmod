@@ -262,7 +262,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		-- Hold to rotate
 
 		function mdl:DragMousePress()
-			self.PressX, self.PressY = gui.MousePos()
+			self.PressX, self.PressY = input.GetCursorPos()
 			self.Pressed = true
 		end
 
@@ -272,10 +272,10 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 			if ( self.bAnimated ) then self:RunAnimation() end
 
 			if ( self.Pressed ) then
-				local mx = gui.MousePos()
+				local mx = input.GetCursorPos()
 				self.Angles = self.Angles - Angle( 0, ( ( self.PressX or mx ) - mx ) / 2, 0 )
 
-				self.PressX, self.PressY = gui.MousePos()
+				self.PressX, self.PressY = input.GetCursorPos()
 			end
 
 			ent:SetAngles( self.Angles )
