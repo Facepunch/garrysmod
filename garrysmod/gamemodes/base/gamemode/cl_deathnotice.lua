@@ -55,7 +55,7 @@ local function RecvPlayerKilledByPlayer()
 	if ( !IsValid( attacker ) ) then return end
 	if ( !IsValid( victim ) ) then return end
 
-	GAMEMODE:AddDeathNotice( attacker:Name(), attacker:Team(), inflictor, victim:Name(), victim:Team() )
+	hook.Run( "AddDeathNotice", attacker:Name(), attacker:Team(), inflictor, victim:Name(), victim:Team() )
 
 end
 net.Receive( "PlayerKilledByPlayer", RecvPlayerKilledByPlayer )
@@ -64,7 +64,7 @@ local function RecvPlayerKilledSelf()
 
 	local victim = net.ReadEntity()
 	if ( !IsValid( victim ) ) then return end
-	GAMEMODE:AddDeathNotice( nil, 0, "suicide", victim:Name(), victim:Team() )
+	hook.Run( "AddDeathNotice", nil, 0, "suicide", victim:Name(), victim:Team() )
 
 end
 net.Receive( "PlayerKilledSelf", RecvPlayerKilledSelf )
@@ -76,7 +76,7 @@ local function RecvPlayerKilled()
 	local inflictor	= net.ReadString()
 	local attacker	= "#" .. net.ReadString()
 
-	GAMEMODE:AddDeathNotice( attacker, -1, inflictor, victim:Name(), victim:Team() )
+	hook.Run( "AddDeathNotice", attacker, -1, inflictor, victim:Name(), victim:Team() )
 
 end
 net.Receive( "PlayerKilled", RecvPlayerKilled )
@@ -93,7 +93,7 @@ local function RecvPlayerKilledNPC()
 	--
 	if ( !IsValid( attacker ) ) then return end
 
-	GAMEMODE:AddDeathNotice( attacker:Name(), attacker:Team(), inflictor, victim, -1 )
+	hook.Run( "AddDeathNotice", attacker:Name(), attacker:Team(), inflictor, victim, -1 )
 
 	local bIsLocalPlayer = ( IsValid(attacker) && attacker == LocalPlayer() )
 
@@ -121,7 +121,7 @@ local function RecvNPCKilledNPC()
 	local inflictor	= net.ReadString()
 	local attacker	= "#" .. net.ReadString()
 
-	GAMEMODE:AddDeathNotice( attacker, -1, inflictor, victim, -1 )
+	hook.Run( "AddDeathNotice", attacker, -1, inflictor, victim, -1 )
 
 end
 net.Receive( "NPCKilledNPC", RecvNPCKilledNPC )
