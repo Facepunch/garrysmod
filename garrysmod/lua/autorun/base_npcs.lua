@@ -228,7 +228,7 @@ AddNPC( {
 	KeyValues = { SquadName = "zombies" }
 } )
 
-if ( IsMounted( "episodic" ) ) then
+if ( IsMounted( "episodic" ) or IsMounted( "ep2" ) ) then
 	AddNPC( {
 		Name = "Zombine",
 		Class = "npc_zombine",
