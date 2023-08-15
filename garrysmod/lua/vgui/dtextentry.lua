@@ -147,7 +147,7 @@ function PANEL:UpdateFromHistory()
 	if ( !text ) then text = "" end
 
 	self:SetText( text )
-	self:SetCaretPos( text:len() )
+	self:SetCaretPos( utf8.len( text ) )
 
 	self:OnTextChanged()
 
@@ -177,7 +177,7 @@ function PANEL:UpdateFromMenu()
 	local txt = item:GetText()
 
 	self:SetText( txt )
-	self:SetCaretPos( txt:len() )
+	self:SetCaretPos( utf8.len( txt ) )
 
 	self:OnTextChanged( true )
 
@@ -219,7 +219,7 @@ function PANEL:OpenAutoComplete( tab )
 
 	for k, v in pairs( tab ) do
 
-		self.Menu:AddOption( v, function() self:SetText( v ) self:SetCaretPos( v:len() ) self:RequestFocus() end )
+		self.Menu:AddOption( v, function() self:SetText( v ) self:SetCaretPos( utf8.len( v ) ) self:RequestFocus() end )
 
 	end
 
