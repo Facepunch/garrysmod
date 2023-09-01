@@ -102,19 +102,19 @@ function meta:AddCleanup( type, ent )
 
 end
 
+function meta:GetTool( mode )
+
+	local wep = self:GetWeapon( "gmod_tool" )
+	if ( !IsValid( wep ) || !wep.GetToolObject ) then return nil end
+
+	local tool = wep:GetToolObject( mode )
+	if ( !tool ) then return nil end
+
+	return tool
+
+end
+
 if ( SERVER ) then
-
-	function meta:GetTool( mode )
-
-		local wep = self:GetWeapon( "gmod_tool" )
-		if ( !IsValid( wep ) ) then return nil end
-
-		local tool = wep:GetToolObject( mode )
-		if ( !tool ) then return nil end
-
-		return tool
-
-	end
 
 	function meta:SendHint( str, delay )
 
@@ -133,23 +133,6 @@ if ( SERVER ) then
 
 		self:SendLua( string.format( 'hook.Run("SuppressHint",%q)', str ) )
 		self.Hints[ str ] = true
-
-	end
-
-else
-
-	function meta:GetTool( mode )
-
-		local wep
-		for _, ent in ipairs( ents.FindByClass( "gmod_tool" ) ) do
-			if ( ent:GetOwner() == self ) then wep = ent break end
-		end
-		if ( !IsValid( wep ) || !wep.GetToolObject ) then return nil end
-
-		local tool = wep:GetToolObject( mode )
-		if ( !tool ) then return nil end
-
-		return tool
 
 	end
 
