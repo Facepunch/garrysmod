@@ -425,7 +425,7 @@ if ( CLIENT ) then
 
 	function RememberCursorPosition()
 
-		local x, y = gui.MousePos()
+		local x, y = input.GetCursorPos()
 
 		-- If the cursor isn't visible it will return 0,0 ignore it.
 		if ( x == 0 && y == 0 ) then return end

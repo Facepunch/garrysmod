@@ -33,7 +33,7 @@ local function DrawColorBox()
 	-- fade the box down if we get close, so we can click on stuff that's under it.
 	--
 	if ( vgui.CursorVisible() ) then
-		local mx, my = gui.MousePos()
+		local mx, my = input.GetCursorPos()
 		local dist = Vector( mx, my, 0 ):Distance( Vector( x + w *0.5, y + h * 0.5, 0 ) )
 		alpha = math.Clamp( alpha - ( 512 - dist ), 10, 255 )
 	end
