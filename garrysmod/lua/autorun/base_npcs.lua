@@ -466,3 +466,25 @@ if ( IsMounted( "hl1" ) || IsMounted( "hl1mp" ) ) then
 	--AddNPC( { Name = "Ground Mini Turret", Class = "monster_miniturret", Category = Category, Offset = 0, KeyValues = { orientation = 0 }, OnFloor = true, SpawnFlags = 32 }, "monster_miniturret_gnd" )
 
 end
+
+if ( IsMounted( "portal" ) ) then
+
+	Category = "Portal"
+
+	AddNPC( {
+		Class = "npc_portal_turret_floor",
+		Category = Category,
+		OnFloor = true,
+		Rotate = Angle( 0, 180, 0 ),
+		Offset = 2,
+		TotalSpawnFlags = 0,
+	} )
+
+	AddNPC( {
+		Class = "npc_rocket_turret",
+		Category = Category,
+		OnFloor = true,
+		Rotate = Angle( 0, 180, 0 ),
+	} )
+
+end
