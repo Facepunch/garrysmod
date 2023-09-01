@@ -3,7 +3,8 @@ local hud_deathnotice_time = CreateConVar( "hud_deathnotice_time", "6", FCVAR_RE
 
 -- These are our kill icons
 local Color_Icon = Color( 255, 80, 0, 255 )
-local NPC_Color = Color( 250, 50, 50, 255 )
+local NPC_Color_Enemy = Color( 250, 50, 50, 255 )
+local NPC_Color_Friendly = Color( 50, 200, 50, 255 )
 
 killicon.AddFont( "prop_physics",		"HL2MPTypeDeath",	"9",	Color_Icon )
 killicon.AddFont( "weapon_smg1",		"HL2MPTypeDeath",	"/",	Color_Icon )
@@ -28,25 +29,8 @@ killicon.AddAlias( "prop_physics_respawnable", "prop_physics" )
 killicon.AddAlias( "func_pushable", "prop_physics" )
 killicon.AddAlias( "func_physbox", "prop_physics" )
 
-local Deaths = {}
-
-local function PlayerIDOrNameToString( var )
-
-	if ( isstring( var ) ) then
-		if ( var == "" ) then return "" end
-		return "#" .. var
-	end
-
-	local ply = Entity( var )
-
-	if ( !IsValid( ply ) ) then return "NULL!" end
-
-	return ply:Name()
-
-end
-
-
-local function RecvPlayerKilledByPlayer()
+-- Backwards compatiblity for addons
+net.Receive( "PlayerKilledByPlayer", function()
 
 	local victim	= net.ReadEntity()
 	local inflictor	= net.ReadString()
@@ -55,47 +39,45 @@ local function RecvPlayerKilledByPlayer()
 	if ( !IsValid( attacker ) ) then return end
 	if ( !IsValid( victim ) ) then return end
 
-	hook.Run( "AddDeathNotice", attacker:Name(), attacker:Team(), inflictor, victim:Name(), victim:Team() )
+	hook.Run( "AddDeathNotice", attacker:Name(), attacker:Team(), inflictor, victim:Name(), victim:Team(), 0 )
 
-end
-net.Receive( "PlayerKilledByPlayer", RecvPlayerKilledByPlayer )
+end )
 
-local function RecvPlayerKilledSelf()
+net.Receive( "PlayerKilledSelf", function()
 
 	local victim = net.ReadEntity()
 	if ( !IsValid( victim ) ) then return end
-	hook.Run( "AddDeathNotice", nil, 0, "suicide", victim:Name(), victim:Team() )
 
-end
-net.Receive( "PlayerKilledSelf", RecvPlayerKilledSelf )
+	hook.Run( "AddDeathNotice", nil, 0, "suicide", victim:Name(), victim:Team(), 0 )
 
-local function RecvPlayerKilled()
+end )
 
-	local victim	= net.ReadEntity()
+net.Receive( "PlayerKilled", function()
+
+	local victim = net.ReadEntity()
 	if ( !IsValid( victim ) ) then return end
-	local inflictor	= net.ReadString()
-	local attacker	= "#" .. net.ReadString()
 
-	hook.Run( "AddDeathNotice", attacker, -1, inflictor, victim:Name(), victim:Team() )
+	local inflictor = net.ReadString()
+	local attacker = net.ReadString()
 
-end
-net.Receive( "PlayerKilled", RecvPlayerKilled )
+	hook.Run( "AddDeathNotice", "#" .. attacker, -1, inflictor, victim:Name(), victim:Team(), 0 )
 
-local function RecvPlayerKilledNPC()
+end )
+
+net.Receive( "PlayerKilledNPC", function()
 
 	local victimtype = net.ReadString()
-	local victim	= "#" .. victimtype
-	local inflictor	= net.ReadString()
-	local attacker	= net.ReadEntity()
+	local inflictor = net.ReadString()
+	local attacker = net.ReadEntity()
 
 	--
 	-- For some reason the killer isn't known to us, so don't proceed.
 	--
 	if ( !IsValid( attacker ) ) then return end
 
-	hook.Run( "AddDeathNotice", attacker:Name(), attacker:Team(), inflictor, victim, -1 )
+	hook.Run( "AddDeathNotice", attacker:Name(), attacker:Team(), inflictor, "#" .. victimtype, -1, 0 )
 
-	local bIsLocalPlayer = ( IsValid(attacker) && attacker == LocalPlayer() )
+	local bIsLocalPlayer = ( IsValid( attacker ) && attacker == LocalPlayer() )
 
 	local bIsEnemy = IsEnemyEntityName( victimtype )
 	local bIsFriend = IsFriendEntityName( victimtype )
@@ -112,43 +94,90 @@ local function RecvPlayerKilledNPC()
 		achievements.IncBystander()
 	end
 
-end
-net.Receive( "PlayerKilledNPC", RecvPlayerKilledNPC )
+end )
 
-local function RecvNPCKilledNPC()
+net.Receive( "NPCKilledNPC", function()
 
 	local victim	= "#" .. net.ReadString()
 	local inflictor	= net.ReadString()
 	local attacker	= "#" .. net.ReadString()
 
-	hook.Run( "AddDeathNotice", attacker, -1, inflictor, victim, -1 )
+	hook.Run( "AddDeathNotice", attacker, -1, inflictor, victim, -1, 0 )
+
+end )
+
+-- The new way
+DEATH_NOTICE_FRIENDLY_VICTIM = 1
+DEATH_NOTICE_FRIENDLY_ATTACKER = 2
+--DEATH_NOTICE_HEADSHOT = 4
+--DEATH_NOTICE_PENETRATION = 8
+net.Receive( "DeathNoticeEvent", function()
+
+	local attacker = nil
+	local attackerType = net.ReadUInt( 2 )
+	if ( attackerType == 1 ) then
+		attacker = net.ReadString()
+	elseif ( attackerType == 2 ) then
+		attacker = net.ReadEntity()
+	end
+
+	local inflictor	= net.ReadString()
+
+	local victim = nil
+	local victimType = net.ReadUInt( 2 )
+	if ( victimType == 1 ) then
+		victim = net.ReadString()
+	elseif ( victimType == 2 ) then
+		victim = net.ReadEntity()
+	end
+
+	local flags = net.ReadUInt( 8 )
+
+	local team_a = -1
+	local team_v = -1
+	if ( bit.band( flags, DEATH_NOTICE_FRIENDLY_VICTIM ) != 0 ) then team_v = -2 end
+	if ( bit.band( flags, DEATH_NOTICE_FRIENDLY_ATTACKER ) != 0 ) then team_a = -2 end
+	if ( isentity( attacker ) ) then	team_a = attacker:Team()	attacker = attacker:Name() end
+	if ( isentity( victim ) ) then		team_v = victim:Team()		victim = victim:Name()  end
+
+	hook.Run( "AddDeathNotice", attacker, team_a, inflictor, victim, team_v, flags )
+
+end )
+
+local Deaths = {}
+
+local function getDeathColor( teamID, target )
+
+	if ( teamID == -1 ) then
+		return table.Copy( NPC_Color_Enemy )
+	end
+
+	if ( teamID == -2 ) then
+		return table.Copy( NPC_Color_Friendly )
+	end
+
+	return table.Copy( team.GetColor( teamID ) )
 
 end
-net.Receive( "NPCKilledNPC", RecvNPCKilledNPC )
 
 --[[---------------------------------------------------------
-   Name: gamemode:AddDeathNotice( Attacker, team1, Inflictor, Victim, team2 )
-   Desc: Adds an death notice entry
+	Name: gamemode:AddDeathNotice( Attacker, team1, Inflictor, Victim, team2, flags )
+	Desc: Adds an death notice entry
 -----------------------------------------------------------]]
-function GM:AddDeathNotice( Attacker, team1, Inflictor, Victim, team2 )
+function GM:AddDeathNotice( attacker, team1, inflictor, victim, team2, flags )
+
+	if ( inflictor == "suicide" ) then attacker = nil end
 
 	local Death = {}
 	Death.time		= CurTime()
 
-	Death.left		= Attacker
-	Death.right		= Victim
-	Death.icon		= Inflictor
+	Death.left		= attacker
+	Death.right		= victim
+	Death.icon		= inflictor
+	Death.flags		= flags
 
-	if ( team1 == -1 ) then Death.color1 = table.Copy( NPC_Color )
-	else Death.color1 = table.Copy( team.GetColor( team1 ) ) end
-
-	if ( team2 == -1 ) then Death.color2 = table.Copy( NPC_Color )
-	else Death.color2 = table.Copy( team.GetColor( team2 ) ) end
-
-	if (Death.left == Death.right) then
-		Death.left = nil
-		Death.icon = "suicide"
-	end
+	Death.color1	= getDeathColor( team1, Death.left )
+	Death.color2	= getDeathColor( team2, Death.right )
 
 	table.insert( Deaths, Death )
 
