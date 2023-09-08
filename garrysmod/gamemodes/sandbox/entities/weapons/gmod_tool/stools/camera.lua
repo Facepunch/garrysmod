@@ -38,7 +38,7 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 	if ( IsValid( ply ) && !CheckLimit( ply, key ) ) then return false end
 
 	local ent = ents.Create( "gmod_cameraprop" )
-	if ( !IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) ) then return false end
 
 	duplicator.DoGeneric( ent, Data )
 
@@ -96,6 +96,7 @@ function TOOL:LeftClick( trace )
 	local toggle = self:GetClientNumber( "toggle" )
 
 	local ent = MakeCamera( ply, key, locked, toggle, { Pos = trace.StartPos, Angle = ply:EyeAngles() } )
+	if ( !IsValid( ent ) ) then return false end
 
 	undo.Create( "Camera" )
 		undo.AddEntity( ent )

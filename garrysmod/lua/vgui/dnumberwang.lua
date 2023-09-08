@@ -123,7 +123,6 @@ function PANEL:SetValue( val )
 
 	if ( val == nil ) then return end
 
-	local OldValue = val
 	val = tonumber( val )
 	val = val or 0
 
@@ -135,17 +134,22 @@ function PANEL:SetValue( val )
 		val = math.max( self.m_numMin, val )
 	end
 
+	local valText
 	if ( self.m_iDecimals == 0 ) then
 
-		val = Format( "%i", val )
+		valText = Format( "%i", val )
 
 	elseif ( val != 0 ) then
 
-		val = Format( "%." .. self.m_iDecimals .. "f", val )
+		valText = Format( "%." .. self.m_iDecimals .. "f", val )
 
 		-- Trim trailing 0's and .'s 0 this gets rid of .00 etc
-		val = string.TrimRight( val, "0" )
-		val = string.TrimRight( val, "." )
+		valText = string.TrimRight( valText, "0" )
+		valText = string.TrimRight( valText, "." )
+
+	else
+
+		valText = tostring( val )
 
 	end
 
@@ -156,8 +160,8 @@ function PANEL:SetValue( val )
 	-- It causes confusion!
 	--
 	if ( !self:HasFocus() ) then
-		self:SetText( val )
-		self:ConVarChanged( val )
+		self:SetText( valText )
+		self:ConVarChanged( valText )
 	end
 
 	if ( hasChanged ) then

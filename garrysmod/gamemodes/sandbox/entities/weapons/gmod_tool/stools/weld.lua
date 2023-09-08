@@ -52,15 +52,15 @@ function TOOL:LeftClick( trace )
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 
-		local constraint = constraint.Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide )
-		if ( constraint ) then
+		local constr = constraint.Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide )
+		if ( IsValid( constr ) ) then
 
 			undo.Create( "Weld" )
-				undo.AddEntity( constraint )
+				undo.AddEntity( constr )
 				undo.SetPlayer( self:GetOwner() )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "constraints", constraint )
+			self:GetOwner():AddCleanup( "constraints", constr )
 
 		end
 
@@ -186,17 +186,17 @@ function TOOL:RightClick( trace )
 
 		end
 
-		local constraint = constraint.Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide )
-		if ( constraint ) then
+		local constr = constraint.Weld( Ent1, Ent2, Bone1, Bone2, forcelimit, nocollide )
+		if ( IsValid( constr ) ) then
 
 			Phys1:EnableMotion( true )
 
 			undo.Create( "Weld" )
-				undo.AddEntity( constraint )
+				undo.AddEntity( constr )
 				undo.SetPlayer( self:GetOwner() )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "constraints", constraint )
+			self:GetOwner():AddCleanup( "constraints", constr )
 
 		end
 

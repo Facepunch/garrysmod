@@ -648,6 +648,15 @@ function SKIN:PaintVScrollBar( panel, w, h )
 end
 
 --[[---------------------------------------------------------
+	HScrollBar
+-----------------------------------------------------------]]
+function SKIN:PaintHScrollBar( panel, w, h )
+
+	self.tex.Scroller.TrackH( 0, 0, w, h )
+
+end
+
+--[[---------------------------------------------------------
 	ScrollBarGrip
 -----------------------------------------------------------]]
 function SKIN:PaintScrollBarGrip( panel, w, h )

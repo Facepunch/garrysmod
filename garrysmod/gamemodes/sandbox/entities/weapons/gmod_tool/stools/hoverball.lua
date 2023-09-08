@@ -76,6 +76,7 @@ function TOOL:LeftClick( trace )
 	if ( !self:GetSWEP():CheckLimit( "hoverballs" ) ) then return false end
 
 	local ball = MakeHoverBall( ply, trace.HitPos, key_d, key_u, speed, resistance, strength, model, nil, nil, nil, nil, key_o )
+	if ( !IsValid( ball ) ) then return false end
 
 	local ang = trace.HitNormal:Angle()
 	ang.pitch = ang.pitch + 90
@@ -92,14 +93,15 @@ function TOOL:LeftClick( trace )
 		-- Don't weld to world
 		if ( IsValid( trace.Entity ) ) then
 
-			local const = constraint.Weld( ball, trace.Entity, 0, trace.PhysicsBone, 0, 0, true )
+			local weld = constraint.Weld( ball, trace.Entity, 0, trace.PhysicsBone, 0, 0, true )
+			if ( IsValid( weld ) ) then
+				ply:AddCleanup( "hoverballs", weld )
+				undo.AddEntity( weld )
+			end
 
 			if ( IsValid( ball:GetPhysicsObject() ) ) then ball:GetPhysicsObject():EnableCollisions( false ) end
 			ball:SetCollisionGroup( COLLISION_GROUP_WORLD )
 			ball.nocollide = true
-
-			ply:AddCleanup( "hoverballs", const )
-			undo.AddEntity( const )
 
 		end
 

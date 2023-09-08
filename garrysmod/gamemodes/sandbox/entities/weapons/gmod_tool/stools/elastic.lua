@@ -54,17 +54,23 @@ function TOOL:LeftClick( trace )
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
-		local constraint, rope = constraint.Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rdamping, material, width, stretchonly, Color( colorR, colorG, colorB, 255 ) )
 
-		-- Add The constraint to the players undo table
-		undo.Create( "Elastic" )
-			if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
-			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
+		-- Create the constraint
+		local constr, rope = constraint.Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rdamping, material, width, stretchonly, Color( colorR, colorG, colorB, 255 ) )
 
-		if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
-		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+		-- Create an undo if the constraint was created
+		if ( IsValid( constr ) ) then
+			undo.Create( "Elastic" )
+				undo.AddEntity( constr )
+				self:GetOwner():AddCleanup( "ropeconstraints", constr )
+
+				if ( IsValid( rope ) ) then
+					undo.AddEntity( rope )
+					self:GetOwner():AddCleanup( "ropeconstraints", rope )
+				end
+				undo.SetPlayer( self:GetOwner() )
+			undo.Finish()
+		end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()

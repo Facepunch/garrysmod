@@ -38,12 +38,11 @@ function PANEL:Open()
 
 	RestoreCursorPosition()
 
-	local bShouldShow = true
-
-	-- TODO: Any situation in which we shouldn't show the tool menu on the context menu?
+	local bShouldShow = hook.Run( "ContextMenuShowTool" )
+	local bShow = bShouldShow == nil or bShouldShow
 
 	-- Set up the active panel..
-	if ( bShouldShow && IsValid( spawnmenu.ActiveControlPanel() ) ) then
+	if ( bShow && IsValid( spawnmenu.ActiveControlPanel() ) ) then
 
 		self.OldParent = spawnmenu.ActiveControlPanel():GetParent()
 		self.OldPosX, self.OldPosY = spawnmenu.ActiveControlPanel():GetPos()
@@ -153,10 +152,10 @@ function CreateContextMenu()
 	-- so feed clicks to the proper functions..
 	--
 	g_ContextMenu.OnMousePressed = function( p, code )
-		hook.Run( "GUIMousePressed", code, gui.ScreenToVector( gui.MousePos() ) )
+		hook.Run( "GUIMousePressed", code, gui.ScreenToVector( input.GetCursorPos() ) )
 	end
 	g_ContextMenu.OnMouseReleased = function( p, code )
-		hook.Run( "GUIMouseReleased", code, gui.ScreenToVector( gui.MousePos() ) )
+		hook.Run( "GUIMouseReleased", code, gui.ScreenToVector( input.GetCursorPos() ) )
 	end
 
 	hook.Run( "ContextMenuCreated", g_ContextMenu )

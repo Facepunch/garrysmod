@@ -159,6 +159,25 @@ function math.BSplinePoint( tDiff, tPoints, tMax )
 
 end
 
+--[[---------------------------------------------------------
+	Cubic hermite spline
+	p0, p1 - points; m0, m1 - tangets; t - fraction along the curve (0-1)
+-----------------------------------------------------------]]
+function math.CHSpline( t, p0, m0, p1, m1 )
+
+	if ( t >= 1 ) then return p1 end
+	if ( t <= 0 ) then return p0 end
+
+	local t2 = t * t
+	local t3 = t * t2
+
+	return p0 * ( 2 * t3 - 3 * t2 + 1 ) +
+		m0 * ( t3 - 2 * t2 + t ) +
+		p1 * ( -2 * t3 + 3 * t2 ) +
+		m1 * ( t3 - t2 )
+
+end
+
 -- Round to the nearest integer
 function math.Round( num, idp )
 
@@ -230,4 +249,28 @@ end
 -- Snaps the provided number to the nearest multiple
 function math.SnapTo( num, multiple )
 	return math.floor( num / multiple + 0.5 ) * multiple
+end
+
+--[[---------------------------------------------------------
+	Name: CubicBezier( frac, p0, p1, p2, p3 )
+	Desc: Lerp point between points with cubic bezier
+-----------------------------------------------------------]]
+function math.CubicBezier( frac, p0, p1, p2, p3 )
+	local frac2 = frac * frac
+	local inv = 1 - frac
+	local inv2 = inv * inv
+
+	return inv2 * inv * p0 + 3 * inv2 * frac * p1 + 3 * inv * frac2 * p2 + frac2 * frac * p3
+end
+
+--[[---------------------------------------------------------
+	Name: QuadraticBezier( frac, p0, p1, p2 )
+	Desc: Lerp point between points with quadratic bezier
+-----------------------------------------------------------]]
+function math.QuadraticBezier( frac, p0, p1, p2 )
+	local frac2 = frac * frac
+	local inv = 1 - frac
+	local inv2 = inv * inv
+
+	return inv2 * p0 + 2 * inv * frac * p1 + frac2 * p2
 end

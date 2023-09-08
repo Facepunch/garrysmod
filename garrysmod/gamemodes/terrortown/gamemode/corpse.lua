@@ -376,6 +376,9 @@ local rag_collide = CreateConVar("ttt_ragdoll_collide", "0")
 function CORPSE.Create(ply, attacker, dmginfo)
    if not IsValid(ply) then return end
 
+   local efn = ply.effect_fn
+   ply.effect_fn = nil
+
    local rag = ents.Create("prop_ragdoll")
    if not IsValid(rag) then return nil end
 
@@ -450,10 +453,9 @@ function CORPSE.Create(ply, attacker, dmginfo)
    end
 
    -- create advanced death effects (knives)
-   if ply.effect_fn then
+   if efn then
       -- next frame, after physics is happy for this ragdoll
-      local efn = ply.effect_fn
-      timer.Simple(0, function() efn(rag) end)
+      timer.Simple(0, function() if IsValid(rag) then efn(rag) end end)
    end
 
    hook.Run("TTTOnCorpseCreated", rag, ply)

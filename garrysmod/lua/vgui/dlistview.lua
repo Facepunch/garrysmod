@@ -280,13 +280,17 @@ function PANEL:DataLayout()
 	local y = 0
 	local h = self.m_iDataHeight
 
+	local alt = false
 	for k, Line in ipairs( self.Sorted ) do
+
+		if ( !Line:IsVisible() ) then continue end
 
 		Line:SetPos( 1, y )
 		Line:SetSize( self:GetWide() - 2, h )
 		Line:DataLayout( self )
 
-		Line:SetAltLine( k % 2 == 1 )
+		Line:SetAltLine( alt )
+		alt = !alt
 
 		y = y + Line:GetTall()
 
@@ -580,8 +584,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	local Col1 = ctrl:AddColumn( "Address" )
 	local Col2 = ctrl:AddColumn( "Port" )
 
-	Col2:SetMinWidth( 30 )
-	Col2:SetMaxWidth( 30 )
+	Col2:SetFixedWidth( 30 )
 
 	for i = 1, 128 do
 		ctrl:AddLine( "192.168.0." .. i, "80" )

@@ -125,11 +125,6 @@ function GM:PlayerSilentDeath( Victim )
 
 end
 
--- Pool network strings used for PlayerDeaths.
-util.AddNetworkString( "PlayerKilled" )
-util.AddNetworkString( "PlayerKilledSelf" )
-util.AddNetworkString( "PlayerKilledByPlayer" )
-
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerDeath()
 	Desc: Called when a player dies.
@@ -164,9 +159,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if ( attacker == ply ) then
 
-		net.Start( "PlayerKilledSelf" )
-			net.WriteEntity( ply )
-		net.Broadcast()
+		self:SendDeathNotice( nil, "suicide", ply, 0 )
 
 		MsgAll( attacker:Nick() .. " suicided!\n" )
 
@@ -174,25 +167,16 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if ( attacker:IsPlayer() ) then
 
-		net.Start( "PlayerKilledByPlayer" )
-
-			net.WriteEntity( ply )
-			net.WriteString( inflictor:GetClass() )
-			net.WriteEntity( attacker )
-
-		net.Broadcast()
+		self:SendDeathNotice( attacker, inflictor:GetClass(), ply, 0 )
 
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 
 	return end
 
-	net.Start( "PlayerKilled" )
+	local flags = 0
+	if ( attacker:IsNPC() and attacker:Disposition( ply ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
 
-		net.WriteEntity( ply )
-		net.WriteString( inflictor:GetClass() )
-		net.WriteString( attacker:GetClass() )
-
-	net.Broadcast()
+	self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, 0 )
 
 	MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
 

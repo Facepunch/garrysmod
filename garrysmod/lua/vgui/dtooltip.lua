@@ -1,6 +1,7 @@
 
 --
 -- The delay before a tooltip appears
+-- Can be overridden with PANEL:SetTooltipDelay
 --
 local tooltip_delay = CreateClientConVar( "tooltip_delay", "0.5", true, false )
 
@@ -98,15 +99,16 @@ end
 function PANEL:OpenForPanel( panel )
 
 	self.TargetPanel = panel
+	self.OpenDelay = isnumber( panel.numTooltipDelay ) and panel.numTooltipDelay or tooltip_delay:GetFloat()
 	self:PositionTooltip()
 
 	-- Use the parent panel's skin
 	self:SetSkin( panel:GetSkin().Name )
 
-	if ( tooltip_delay:GetFloat() > 0 ) then
+	if ( self.OpenDelay > 0 ) then
 
 		self:SetVisible( false )
-		timer.Simple( tooltip_delay:GetFloat(), function()
+		timer.Simple( self.OpenDelay, function()
 
 			if ( !IsValid( self ) ) then return end
 			if ( !IsValid( panel ) ) then return end

@@ -1,4 +1,9 @@
 
+-- This is just enough for the entity index. This however is not perfect
+-- as the entity at given index may have changed during transport.
+-- If this becomes a problem, inclusion of entity's serial will also be necessary
+local MAX_EDICT_BITS = 13
+
 TYPE_COLOR = 255
 
 net.Receivers = {}
@@ -51,16 +56,16 @@ end
 function net.WriteEntity( ent )
 
 	if ( !IsValid( ent ) ) then
-		net.WriteUInt( 0, 16 )
+		net.WriteUInt( 0, MAX_EDICT_BITS )
 	else
-		net.WriteUInt( ent:EntIndex(), 16 )
+		net.WriteUInt( ent:EntIndex(), MAX_EDICT_BITS )
 	end
 
 end
 
 function net.ReadEntity()
 
-	local i = net.ReadUInt( 16 )
+	local i = net.ReadUInt( MAX_EDICT_BITS )
 	if ( !i ) then return end
 
 	return Entity( i )

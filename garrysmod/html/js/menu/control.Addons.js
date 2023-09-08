@@ -422,3 +422,10 @@ function UpdateAddonDisabledState( noaddons, noworkshop )
 	Scope.Disabled = noworkshop;
 	UpdateDigest( Scope, 50 );
 }
+
+function OnSubscriptionsChanged()
+{
+	if ( !Scope || !Scope.RefreshCurrentView ) return;
+
+	Scope.RefreshCurrentView();
+}

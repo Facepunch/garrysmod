@@ -48,16 +48,17 @@ function TOOL:LeftClick( trace )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 
-		local constraint, rope = constraint.Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, Color( colorR, colorG, colorB, 255 ) )
+		local constr, rope = constraint.Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, Color( colorR, colorG, colorB, 255 ) )
+		if ( IsValid( constr ) ) then
+			undo.Create( "Slider" )
+				undo.AddEntity( constr )
+				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+				undo.SetPlayer( self:GetOwner() )
+			undo.Finish()
 
-		undo.Create( "Slider" )
-			if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
-			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-
-		if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
-		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+			self:GetOwner():AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+		end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()
@@ -135,16 +136,17 @@ function TOOL:RightClick( trace )
 	local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 	local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
 
-	local constraint, rope = constraint.Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, Color( colorR, colorG, colorB, 255 ) )
+	local constr, rope = constraint.Slider( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, material, Color( colorR, colorG, colorB, 255 ) )
+	if ( IsValid( constr ) ) then
+		undo.Create( "Slider" )
+			undo.AddEntity( constr )
+			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+			undo.SetPlayer( self:GetOwner() )
+		undo.Finish()
 
-	undo.Create( "Slider" )
-		if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
-		if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-		undo.SetPlayer( self:GetOwner() )
-	undo.Finish()
-
-	if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
-	if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+		self:GetOwner():AddCleanup( "ropeconstraints", constr )
+		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+	end
 
 	-- Clear the objects so we're ready to go again
 	self:ClearObjects()

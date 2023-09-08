@@ -234,10 +234,10 @@ function UpdateCurrentGamemode( gm )
 
 function GetGamemodeInfo( name )
 {
-	name = name.toLowerCase();
-	if ( !GamemodeDetails[name] ) GamemodeDetails[name] = {}
+	var nameL = name.toLowerCase();
+	if ( !GamemodeDetails[nameL] ) GamemodeDetails[nameL] = { title: name, name: nameL }
 
-	return GamemodeDetails[name];
+	return GamemodeDetails[nameL];
 }
 
 function UpdateAddonMaps( inmaps )

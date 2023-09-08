@@ -163,11 +163,14 @@ function UpdateServerSettings()
 
 		if ( istable( Settings.settings ) ) then
 
-			array.settings = Settings.settings
+			array.settings = {}
+			for k, v in pairs( Settings.settings ) do
+				local cvar = GetConVar( v.name )
+				if ( !cvar ) then continue end
 
-			for k, v in pairs( array.settings ) do
-				v.Value = GetConVarString( v.name )
-				v.Singleplayer = v.singleplayer && true || false
+				array.settings[ k ] = v
+				array.settings[ k ].Value = cvar:GetString()
+				array.settings[ k ].Singleplayer = v.singleplayer && true || false
 			end
 
 		end

@@ -68,10 +68,11 @@ function TOOL:LeftClick( trace, attach )
 
 	if ( !self:GetSWEP():CheckLimit( "lights" ) ) then return false end
 
-	local lamp = MakeLight( ply, r, g, b, brght, size, toggle, !toggle, key, { Pos = pos, Angle = ang } )
+	local light = MakeLight( ply, r, g, b, brght, size, toggle, !toggle, key, { Pos = pos, Angle = ang } )
+	if ( !IsValid( light ) ) then return false end
 
 	undo.Create( "Light" )
-		undo.AddEntity( lamp )
+		undo.AddEntity( light )
 
 		if ( attach ) then
 
@@ -90,12 +91,15 @@ function TOOL:LeftClick( trace, attach )
 
 			end
 
-			local constraint, rope = constraint.Rope( lamp, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 1, material )
-
-			undo.AddEntity( rope )
-			undo.AddEntity( constraint )
-			ply:AddCleanup( "lights", rope )
-			ply:AddCleanup( "lights", constraint )
+			local constr, rope = constraint.Rope( light, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 1, material )
+			if ( IsValid( constr ) ) then
+				undo.AddEntity( constr )
+				ply:AddCleanup( "lights", constr )
+			end
+			if ( IsValid( rope ) ) then
+				undo.AddEntity( rope )
+				ply:AddCleanup( "lights", rope )
+			end
 
 		end
 
@@ -118,42 +122,42 @@ if ( SERVER ) then
 
 		if ( IsValid( pl ) && !pl:CheckLimit( "lights" ) ) then return false end
 
-		local lamp = ents.Create( "gmod_light" )
-		if ( !IsValid( lamp ) ) then return end
+		local light = ents.Create( "gmod_light" )
+		if ( !IsValid( light ) ) then return end
 
-		duplicator.DoGeneric( lamp, Data )
+		duplicator.DoGeneric( light, Data )
 
-		lamp:SetColor( Color( r, g, b, 255 ) )
-		lamp:SetBrightness( brght )
-		lamp:SetLightSize( size )
-		lamp:SetToggle( !toggle )
-		lamp:SetOn( on )
+		light:SetColor( Color( r, g, b, 255 ) )
+		light:SetBrightness( brght )
+		light:SetLightSize( size )
+		light:SetToggle( !toggle )
+		light:SetOn( on )
 
-		lamp:Spawn()
+		light:Spawn()
 
-		DoPropSpawnedEffect( lamp )
+		DoPropSpawnedEffect( light )
 
-		duplicator.DoGenericPhysics( lamp, pl, Data )
+		duplicator.DoGenericPhysics( light, pl, Data )
 
-		lamp:SetPlayer( pl )
+		light:SetPlayer( pl )
 
-		lamp.lightr = r
-		lamp.lightg = g
-		lamp.lightb = b
-		lamp.Brightness = brght
-		lamp.Size = size
-		lamp.KeyDown = KeyDown
-		lamp.on = on
+		light.lightr = r
+		light.lightg = g
+		light.lightb = b
+		light.Brightness = brght
+		light.Size = size
+		light.KeyDown = KeyDown
+		light.on = on
 
-		lamp.NumDown = numpad.OnDown( pl, KeyDown, "LightToggle", lamp, 1 )
-		lamp.NumUp = numpad.OnUp( pl, KeyDown, "LightToggle", lamp, 0 )
+		light.NumDown = numpad.OnDown( pl, KeyDown, "LightToggle", light, 1 )
+		light.NumUp = numpad.OnUp( pl, KeyDown, "LightToggle", light, 0 )
 
 		if ( IsValid( pl ) ) then
-			pl:AddCount( "lights", lamp )
-			pl:AddCleanup( "lights", lamp )
+			pl:AddCount( "lights", light )
+			pl:AddCleanup( "lights", light )
 		end
 
-		return lamp
+		return light
 
 	end
 	duplicator.RegisterEntityClass( "gmod_light", MakeLight, "lightr", "lightg", "lightb", "Brightness", "Size", "Toggle", "on", "KeyDown", "Data" )

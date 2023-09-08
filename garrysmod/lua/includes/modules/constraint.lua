@@ -46,13 +46,15 @@ local function CreateConstraintSystem()
 
 	local iterations = GetConVarNumber( "gmod_physiterations" )
 
-	local System = ents.Create( "phys_constraintsystem" )
-	System:SetKeyValue( "additionaliterations", iterations )
-	System:Spawn()
-	System:Activate()
-	System.__ConstraintCount = 0
+	local csystem = ents.Create( "phys_constraintsystem" )
+	if ( !IsValid( csystem ) ) then return end
 
-	return System
+	csystem:SetKeyValue( "additionaliterations", iterations )
+	csystem:Spawn()
+	csystem:Activate()
+	csystem.__ConstraintCount = 0
+
+	return csystem
 
 end
 
@@ -294,12 +296,14 @@ end
 function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone1, Ent2, LPos2, Bone2, kv )
 
 	-- No rope if 0 or minus
-	if ( width <= 0 ) then return nil end
+	if ( width <= 0 ) then return end
 
 	-- Clamp the rope to a sensible width
 	width = math.Clamp( width, 0.2, 100 )
 
 	local rope = ents.Create( "keyframe_rope" )
+	if ( !IsValid( rope ) ) then return end
+
 	rope:SetPos( Pos )
 	rope:SetKeyValue( "Width", width )
 
@@ -322,11 +326,11 @@ function CreateKeyframeRope( Pos, width, material, Constraint, Ent1, LPos1, Bone
 	rope:SetKeyValue( "EndBone", Bone2 )
 
 	if ( kv ) then
+
 		for k, v in pairs( kv ) do
-
 			rope:SetKeyValue( k, tostring( v ) )
-
 		end
+
 	end
 
 	rope:Spawn()
@@ -658,16 +662,17 @@ end
 duplicator.RegisterConstraint( "Keepupright", Keepupright, "Ent1", "Ang", "Bone", "angularlimit" )
 
 
-function CreateStaticAnchorPoint( Pos )
+function CreateStaticAnchorPoint( pos )
 
 	-- Creates an invisible frozen, not interactive prop.
-	local Anchor = ents.Create( "gmod_anchor" )
+	local anchor = ents.Create( "gmod_anchor" )
+	if ( !IsValid( anchor ) ) then return end
 
-	Anchor:SetPos( Pos )
-	Anchor:Spawn()
-	Anchor:Activate()
+	anchor:SetPos( pos )
+	anchor:Spawn()
+	anchor:Activate()
 
-	return Anchor, Anchor:GetPhysicsObject(), 0, vector_origin
+	return anchor, anchor:GetPhysicsObject(), 0, vector_origin
 
 end
 
@@ -922,14 +927,16 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 	end
 
 	-- Make Constraint
-	local Constraint = ents.Create( "logic_collision_pair" )
-	Constraint:SetKeyValue( "startdisabled", 1 )
-	Constraint:SetPhysConstraintObjects( Phys1, Phys2 )
-	Constraint:Spawn()
-	Constraint:Activate()
-	Constraint:Input( "DisableCollisions", nil, nil, nil )
+	local constr = ents.Create( "logic_collision_pair" )
+	if ( !IsValid( constr ) ) then return end
 
-	AddConstraintTable( Ent1, Constraint, Ent2 )
+	constr:SetKeyValue( "startdisabled", 1 )
+	constr:SetPhysConstraintObjects( Phys1, Phys2 )
+	constr:Spawn()
+	constr:Activate()
+	constr:Input( "DisableCollisions", nil, nil, nil )
+
+	AddConstraintTable( Ent1, constr, Ent2 )
 
 	local ctable = {
 		Type = "NoCollide",
@@ -939,9 +946,9 @@ function NoCollide( Ent1, Ent2, Bone1, Bone2 )
 		Bone2 = Bone2,
 	}
 
-	Constraint:SetTable( ctable )
+	constr:SetTable( ctable )
 
-	return Constraint
+	return constr
 
 end
 duplicator.RegisterConstraint( "NoCollide", NoCollide, "Ent1", "Ent2", "Bone1", "Bone2" )

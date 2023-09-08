@@ -493,8 +493,10 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	NPC:Spawn()
 	NPC:Activate()
 
-	-- For NPCs that set their model in Spawn function,
-	-- We have to keep the call above for NPCs that want a model set by Spawn() time.
+	-- Store spawnmenu data for addons and stuff
+	NPC.NPCName = Class
+	NPC.NPCTable = NPCData
+
 	-- BAD: They may adversly affect entity collision bounds
 	if ( NPCData.Model && NPC:GetModel():lower() != NPCData.Model:lower() ) then
 		NPC:SetModel( NPCData.Model )
@@ -997,6 +999,7 @@ local function MakeVehicle( ply, Pos, Ang, model, Class, VName, VTable, data )
 	-- Some vehicles reset this in Spawn()
 	if ( data && data.ColGroup ) then Ent:SetCollisionGroup( data.ColGroup ) end
 
+	-- Store spawnmenu data for addons and stuff
 	if ( Ent.SetVehicleClass && VName ) then Ent:SetVehicleClass( VName ) end
 	Ent.VehicleName = VName
 	Ent.VehicleTable = VTable

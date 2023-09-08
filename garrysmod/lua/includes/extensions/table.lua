@@ -1,4 +1,8 @@
 
+function table.Pack( ... )
+	return { ... }, select( "#", ... )
+end
+
 --[[---------------------------------------------------------
 	Name: Inherit( t, base )
 	Desc: Copies any missing data from base to t
@@ -734,5 +738,17 @@ function table.GetKeys( tab )
 	end
 
 	return keys
+
+end
+
+function table.Flip( tab )
+
+	local res = {}
+
+	for k, v in pairs( tab ) do
+		res[ v ] = k
+	end
+
+	return res
 
 end

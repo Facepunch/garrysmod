@@ -21,9 +21,9 @@
 				<li>&nbsp;</li>
 				<li class="sb_filters" ng-hide="CurrentGamemode != null">
 					<span ng-Tranny="'addons.sort_by'"></span><br/>
-					<input type="radio" name=gmsort" value="-(order)" ng-model="GMSort"/><label ng-Tranny="'gmsort_players'"></label><br>
-					<input type="radio" name=gmsort" value="-(num_servers)" ng-model="GMSort"/><label ng-Tranny="'gmsort_servers'"></label><br>
-					<input type="radio" name=gmsort" value="info.title" ng-model="GMSort"/><label ng-Tranny="'gmsort_name'"></label><br>
+					<input type="radio" name="gmsort" value="-(order)" ng-model="GMSort"/><label ng-Tranny="'gmsort_players'"></label><br>
+					<input type="radio" name="gmsort" value="-(num_servers)" ng-model="GMSort"/><label ng-Tranny="'gmsort_servers'"></label><br>
+					<input type="radio" name="gmsort" value="info.title" ng-model="GMSort"/><label ng-Tranny="'gmsort_name'"></label><br>
 					<span ng-Tranny="'addons.filter_by'"></span><br/>
 					<div ng-repeat="cat in GMCats">
 						<input type="checkbox" id="gmfltr_hide_{{cat}}" onclick="SwitchFilter( '{{cat}}', this )"/><label ng-Tranny="'gmfltr_hide_' + cat"></label>

@@ -319,7 +319,7 @@ function GetGamemode( name, type )
 		HasPreferFlags:	false
 	};
 
-	ServerTypes[type].list.push( ServerTypes[type].gamemodes[name] )
+	ServerTypes[type].list.push( ServerTypes[type].gamemodes[name] );
 
 	return ServerTypes[type].gamemodes[name];
 }
@@ -550,10 +550,10 @@ function GetHighestKey( obj )
 //
 function UpdateGamemodeInfo( server, type )
 {
-	var gi = GetGamemodeInfo( server.gamemode )
+	var gi = GetGamemodeInfo( server.gamemode );
 
 	// Use the most common title
-	if ( !gi.titles ) gi.titles = {}
+	if ( !gi.titles ) gi.titles = {};
 
 	// First try to see if we have a capitalized version already (i.e. sandbox should be Sandbox)
 	if ( server.desc == server.gamemode.toLowerCase() )
@@ -570,13 +570,15 @@ function UpdateGamemodeInfo( server, type )
 		}
 	}
 
-	if ( !gi.titles[ server.desc ] ) { gi.titles[ server.desc ] = 1; } else { gi.titles[ server.desc ]++; }
+	if ( !gi.titles[ server.desc ] ) { gi.titles[ server.desc ] = 0; }
+	gi.titles[ server.desc ] += Math.min( server.players, 10 );
+	if ( server.desc == server.gamemode ) gi.titles[ server.desc ] = 0; // Internal name is always a fallback
 	gi.title = GetHighestKey( gi.titles );
 
 	// categories
 	if ( server.category != "" )
 	{
-		if ( !gi.categories ) gi.categories = {}
+		if ( !gi.categories ) gi.categories = {};
 		if ( !gi.categories[ server.category ] ) { gi.categories[ server.category ] = 1; } else { gi.categories[ server.category ]++; }
 		gi.tag = GetHighestKey( gi.categories );
 		if ( gi.tag ) gi.tag_set = true;
@@ -599,16 +601,16 @@ function UpdateGamemodeInfo( server, type )
 	// Use the most common workshop id
 	if ( server.workshopid != "" && server.workshopid != "0" )
 	{
-		if ( !gi.wsid ) gi.wsid = {}
+		if ( !gi.wsid ) gi.wsid = {};
 		if ( !gi.wsid[ server.workshopid ] ) { gi.wsid[ server.workshopid ] = 1; } else { gi.wsid[ server.workshopid ]++; }
 		gi.workshopid = GetHighestKey( gi.wsid );
 	}
 
 	// flags, for filtering
-	gi = GetGamemode( server.gamemode, type )
+	gi = GetGamemode( server.gamemode, type );
 	if ( server.flag != "" )
 	{
-		if ( !gi.flags ) gi.flags = {}
+		if ( !gi.flags ) gi.flags = {};
 		gi.flags[ server.flag ] = true;
 		gi.hasflags = true;
 	}
