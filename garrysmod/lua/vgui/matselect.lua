@@ -11,9 +11,10 @@ local border_w = 8
 local matHover = Material( "gui/ps_hover.png", "nocull" )
 local boxHover = GWEN.CreateTextureBorder( border, border, 64 - border * 2, 64 - border * 2, border_w, border_w, border_w, border_w, matHover )
 
--- This function is used as the paint function for selected buttons.
-local function HighlightedButtonPaint( self, w, h )
+-- This function is used as the paint function for selected buttons
+function PANEL:SelectedItemPaintOver( w, h )
 
+	-- self in this context would be the selected item!
 	boxHover( 0, 0, w, h, color_white )
 
 end
@@ -36,19 +37,6 @@ function PANEL:Init()
 
 end
 
-function PANEL:SetCustomPaintOver(sMat, nSize, nOrig, cPaint)
-
-	local rpnto = cPaint or color_white
-	local rorig = tonumber( nOrig ) or border
-	local rsize = tonumber( nSize ) or border_w
-	local rmhov = sMat and Material( sMat, "nocull" ) or matHover
-	local rboxp = GWEN.CreateTextureBorder( rorig, rorig, 64 - rorig * 2, 64 - rorig * 2,
-	                                        rsize, rsize, rsize, rsize, rmhov )
-
-	self.CustomPaintOver = function( self, w, h ) rboxp( 0, 0, w, h, rpnto ) end
-
-end
-
 function PANEL:SetAutoHeight( bAutoHeight )
 
 	self.m_bSizeToContent = bAutoHeight
@@ -58,7 +46,41 @@ function PANEL:SetAutoHeight( bAutoHeight )
 
 end
 
-function PANEL:UpdatePaintOver( mat )
+function PANEL:AddMaterial( label, value )
+
+	-- Creeate a spawnicon and set the model
+	local Mat = vgui.Create( "DImageButton", self )
+	Mat:SetOnViewMaterial( value, "models/wireframe" )
+	Mat.AutoSize = false
+	Mat.Value = value
+	Mat:SetSize( self.ItemWidth, self.ItemHeight )
+	Mat:SetTooltip( label )
+
+	Mat.DoClick = function( button )
+		-- Select the material
+		self:SelectMaterial( button )
+
+		-- Update the convar
+		RunConsoleCommand( self:ConVar(), value )
+	end
+
+	Mat.DoRightClick = function( button )
+		local menu = DermaMenu()
+		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( value ) end ):SetIcon( "icon16/page_copy.png" )
+		menu:Open()
+	end
+
+	-- Add the Icon us
+	self.List:AddItem( Mat )
+	table.insert( self.Controls, Mat )
+
+	self:InvalidateLayout()
+
+	return Mat
+
+end
+
+function PANEL:SelectMaterial( mat )
 
 	-- Restore the current overlay
 	if ( self.SelectedMaterial ) then
@@ -67,8 +89,11 @@ function PANEL:UpdatePaintOver( mat )
 
 	-- Add the overlay to this button
 	self.OldSelectedPaintOver = mat.PaintOver
-	mat.PaintOver = self.CustomPaintOver or HighlightedButtonPaint
+	mat.PaintOver = self.SelectedItemPaintOver
+
+	-- Set our selected values
 	self.SelectedMaterial = mat
+	self.CurrentValue = mat.Value
 
 end
 
@@ -85,11 +110,11 @@ function PANEL:Clear()
 
 end
 
-function PANEL:FindByValue( value )
+function PANEL:FindMaterialByValue( value )
 
 	for k, Mat in pairs( self.Controls ) do
 		if ( Mat.Value == value ) then return Mat end
-	end -- Otherwise nothing is returned
+	end
 
 end
 
@@ -111,37 +136,6 @@ function PANEL:SetItemSize( pnl )
 	end
 
 	pnl:SetSize( w, h )
-
-end
-
-function PANEL:AddMaterial( label, value )
-
-	-- Creeate a spawnicon and set the model
-	local Mat = vgui.Create( "DImageButton", self )
-	Mat:SetOnViewMaterial( value, "models/wireframe" )
-	Mat.AutoSize = false
-	Mat.Value = value
-	Mat:SetSize( self.ItemWidth, self.ItemHeight )
-	Mat:SetTooltip( label )
-
-	-- Run a console command when the Icon is clicked
-	Mat.DoClick = function( button )
-		RunConsoleCommand( self:ConVar(), value )
-	end
-
-	Mat.DoRightClick = function( button )
-		local menu = DermaMenu()
-		menu:AddOption( "#spawnmenu.menu.copy", function() SetClipboardText( value ) end ):SetIcon( "icon16/page_copy.png" )
-		menu:Open()
-	end
-
-	-- Add the Icon us
-	self.List:AddItem( Mat )
-	table.insert( self.Controls, Mat )
-
-	self:InvalidateLayout()
-
-	return Mat
 
 end
 
@@ -236,10 +230,10 @@ end
 function PANEL:FindAndSelectMaterial( value )
 
 	self.CurrentValue = value
-	local Mat = self:FindByValue( value )
-	if ( !Mat ) then return end
+	local mat = self:FindMaterialByValue( value )
+	if ( !mat ) then return end
 
-	self:UpdatePaintOver( Mat )
+	self:SelectMaterial( mat )
 
 end
 
@@ -248,10 +242,10 @@ function PANEL:TestForChanges()
 	local cvar = self:ConVar()
 	if ( !cvar ) then return end
 
-	local Value = GetConVarString( cvar )
-	if ( Value == self.CurrentValue ) then return end
+	local value = GetConVarString( cvar )
+	if ( value == self.CurrentValue ) then return end
 
-	self:FindAndSelectMaterial( Value )
+	self:FindAndSelectMaterial( value )
 
 end
 
