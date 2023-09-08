@@ -1,5 +1,8 @@
 
 function GM:HandlePlayerJumping( ply, velocity, plyTable )
+	if !plyTable then
+		plyTable = ply:GetTable()
+	end
 
 	if ( ply:GetMoveType() == MOVETYPE_NOCLIP ) then
 		plyTable.m_bJumping = false
@@ -51,6 +54,9 @@ function GM:HandlePlayerJumping( ply, velocity, plyTable )
 end
 
 function GM:HandlePlayerDucking( ply, velocity, plyTable )
+	if !plyTable then
+		plyTable = ply:GetTable()
+	end
 
 	if ( !ply:IsFlagSet( FL_ANIMDUCKING ) ) then return false end
 
@@ -65,6 +71,9 @@ function GM:HandlePlayerDucking( ply, velocity, plyTable )
 end
 
 function GM:HandlePlayerNoClipping( ply, velocity, plyTable )
+	if !plyTable then
+		plyTable = ply:GetTable()
+	end
 
 	if ( ply:GetMoveType() != MOVETYPE_NOCLIP || ply:InVehicle() ) then
 
@@ -92,6 +101,9 @@ function GM:HandlePlayerNoClipping( ply, velocity, plyTable )
 end
 
 function GM:HandlePlayerVaulting( ply, velocity, plyTable )
+	if !plyTable then
+		plyTable = ply:GetTable()
+	end
 
 	if ( velocity:LengthSqr() < 1000000 ) then return end
 	if ( ply:IsOnGround() ) then return end
@@ -103,6 +115,9 @@ function GM:HandlePlayerVaulting( ply, velocity, plyTable )
 end
 
 function GM:HandlePlayerSwimming( ply, velocity, plyTable )
+	if !plyTable then
+		plyTable = ply:GetTable()
+	end
 
 	if ( ply:WaterLevel() < 2 || ply:IsOnGround() ) then
 		plyTable.m_bInSwim = false
@@ -127,6 +142,9 @@ function GM:HandlePlayerLanding( ply, velocity, WasOnGround )
 end
 
 function GM:HandlePlayerDriving( ply, plyTable )
+	if !plyTable then
+		plyTable = ply:GetTable()
+	end
 
 	-- The player must have a parent to be in a vehicle. If there's no parent, we are in the exit anim, so don't do sitting in 3rd person anymore
 	if ( !ply:InVehicle() || !IsValid( ply:GetParent() ) ) then return false end
@@ -234,6 +252,9 @@ end
 -- just override this.
 --
 function GM:GrabEarAnimation( ply, plyTable )
+	if !plyTable then
+		plyTable = ply:GetTable()
+	end
 
 	plyTable.ChatGestureWeight = plyTable.ChatGestureWeight || 0
 
