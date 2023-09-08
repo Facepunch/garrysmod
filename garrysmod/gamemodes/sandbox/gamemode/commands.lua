@@ -393,7 +393,7 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	-- This NPC has to be spawned on a ceiling ( Barnacle )
 	--
 	if ( NPCData.OnCeiling && Vector( 0, 0, -1 ):Dot( Normal ) < 0.95 ) then
-			return nil
+		return nil
 	--
 	-- This NPC has to be spawned on a floor ( Floor Turret )
 	--
@@ -477,10 +477,10 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	-- Check if this is a valid weapon from the list, or the user is trying to fool us.
 	local valid = false
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
-		if v.class == Equipment then valid = true break end
+		if ( v.class == Equipment ) then valid = true break end
 	end
 	for _, v in pairs( NPCData.Weapons or {} ) do
-		if v == Equipment then valid = true break end
+		if ( v == Equipment ) then valid = true break end
 	end
 
 	if ( Equipment && Equipment != "none" && valid ) then
@@ -496,7 +496,9 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	-- Store spawnmenu data for addons and stuff
 	NPC.NPCName = Class
 	NPC.NPCTable = NPCData
-
+	
+	-- For those NPCs that set their model in Spawn function
+	-- We have to keep the call above for NPCs that want a model set by Spawn() time
 	-- BAD: They may adversly affect entity collision bounds
 	if ( NPCData.Model && NPC:GetModel():lower() != NPCData.Model:lower() ) then
 		NPC:SetModel( NPCData.Model )
