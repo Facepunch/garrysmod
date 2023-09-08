@@ -15,11 +15,10 @@ function PANEL:Init()
 	self.DropButton:SetMouseInputEnabled( false )
 	self.DropButton.ComboBox = self
 
-	-- Apply default panel hight
+	-- Setup internals
 	self:SetTall( 22 )
 	self:Clear()
 
-	-- Setup internals
 	self:SetContentAlignment( 4 )
 	self:SetTextInset( 8, 0 )
 	self:SetIsMenu( true )
@@ -27,57 +26,28 @@ function PANEL:Init()
 
 end
 
-function PANEL:CloseMenu()
-
-	if ( IsValid( self.Menu ) ) then
-		self.Menu:Remove()
-	end
-
-	self.Menu = nil
-
-end
-
 function PANEL:Clear()
 
 	self:SetText( "" )
-	self.Data = {}
 	self.Choices = {}
-	self.Spacers = {}
+	self.Data = {}
 	self.ChoiceIcons = {}
+	self.Spacers = {}
 	self.selected = nil
+
 	self:CloseMenu()
 
 end
 
-function PANEL:GetSelectedID()
+function PANEL:GetOptionText( index )
 
-	return self.selected
-
-end
-
-function PANEL:GetOptionCount()
-
-	return #self.Choices
+	return self.Choices[ index ]
 
 end
 
-function PANEL:GetOptionText( id )
+function PANEL:GetOptionData( index )
 
-	return self.Choices[ id ]
-
-end
-
-function PANEL:GetOptionData( id )
-
-	return self.Data[ id ]
-
-end
-
-function PANEL:AddSpacer()
-
-	local id = self:GetOptionCount()
-
-	self.Spacers[ id ] = true
+	return self.Data[ index ]
 
 end
 
@@ -112,83 +82,42 @@ function PANEL:PerformLayout()
 
 end
 
-function PANEL:ChooseOption( value, id )
+function PANEL:ChooseOption( value, index )
 
 	self:CloseMenu()
 	self:SetText( value )
 
 	-- This should really be the here, but it is too late now and convar
 	-- changes are handled differently by different child elements
-	-- self:ConVarChanged( self.Data[ id ] )
+	-- self:ConVarChanged( self.Data[ index ] )
 
-	self.selected = id
-	self:OnSelect( id, value, self.Data[ id ] )
-
-end
-
-function PANEL:ChooseOptionID( id )
-
-	local value = self:GetOptionText( id )
-	self:ChooseOption( value, id )
+	self.selected = index
+	self:OnSelect( index, value, self.Data[ index ] )
 
 end
 
-function PANEL:RemoveChoiceID( id )
+function PANEL:ChooseOptionID( index )
 
-	-- The second argument must be convertable to number
-	-- Removing non-positive or fractional does nothing
-	-- Entry will be removed only on positive integers
-
-	if ( !id ) then return end
-
-	local text = table.remove( self.Choices, id )
-	local data = table.remove( self.Data   , id )
-
-	return text, data -- Using the logic of reading an ID
+	local value = self:GetOptionText( index )
+	self:ChooseOption( value, index )
 
 end
 
-function PANEL:RemoveChoiceName( name )
+function PANEL:GetSelectedID()
 
-	local id = table.KeyFromValue( self.Choices, name )
-
-	if ( !id ) then return end
-
-	return self:RemoveChoiceID( id )
-
-end
-
-function PANEL:RemoveChoiceData( data )
-
-	local id = table.KeyFromValue( self.Data, data )
-
-	if ( !id ) then return end
-
-	return self:RemoveChoiceID( id )
-
-end
-
-function PANEL:RemoveSelected()
-
-	local id = self:GetSelectedID()
-	return self:RemoveChoiceID( id )
+	return self.selected
 
 end
 
 function PANEL:GetSelected()
 
-	local id = self:GetSelectedID()
+	if ( !self.selected ) then return end
 
-	if ( !id ) then return end
-
-	local text = self:GetOptionText( id )
-	local data = self:GetOptionData( id )
-
-	return text, data
+	return self:GetOptionText( self.selected ), self:GetOptionData( self.selected )
 
 end
 
-function PANEL:OnSelect( id, value, data )
+function PANEL:OnSelect( index, value, data )
 
 	-- For override
 
@@ -200,25 +129,41 @@ function PANEL:OnMenuOpened( menu )
 
 end
 
-function PANEL:AddChoice( value, data, choose, icon )
+function PANEL:AddSpacer()
 
-	local id = table.insert( self.Choices, value )
+	self.Spacers[ #self.Choices ] = true
+
+end
+
+function PANEL:AddChoice( value, data, select, icon )
+
+	local index = table.insert( self.Choices, value )
 
 	if ( data ) then
-		self.Data[ id ] = data
+		self.Data[ index ] = data
 	end
 
 	if ( icon ) then
-		self.ChoiceIcons[ id ] = icon
+		self.ChoiceIcons[ index ] = icon
 	end
 
-	if ( choose ) then
+	if ( select ) then
 
-		self:ChooseOption( value, id )
+		self:ChooseOption( value, index )
 
 	end
 
-	return id
+	return index
+
+end
+
+function PANEL:RemoveChoice( index )
+
+	if ( !isnumber( index ) ) then return end
+
+	local text = table.remove( self.Choices, index )
+	local data = table.remove( self.Data, index )
+	return text, data
 
 end
 
@@ -235,7 +180,7 @@ function PANEL:OpenMenu( pControlOpener )
 	end
 
 	-- Don't do anything if there aren't any options..
-	if ( self:GetOptionCount() == 0 ) then return end
+	if ( #self.Choices == 0 ) then return end
 
 	-- If the menu still exists and hasn't been deleted
 	-- then just close it and don't open a new one.
@@ -285,6 +230,16 @@ function PANEL:OpenMenu( pControlOpener )
 	self.Menu:Open( x, y, false, self )
 
 	self:OnMenuOpened( self.Menu )
+
+end
+
+function PANEL:CloseMenu()
+
+	if ( IsValid( self.Menu ) ) then
+		self.Menu:Remove()
+	end
+
+	self.Menu = nil
 
 end
 
