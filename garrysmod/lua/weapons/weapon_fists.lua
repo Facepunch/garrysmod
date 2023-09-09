@@ -141,10 +141,10 @@ end
 function SWEP:GetPunchActivity( right )
 
 	if ( self:GetCombo() >= self.ComboCount ) then
-		return right and ACT_VM_HITRIGHT2 or ACT_VM_HITLEFT2
+		return right && ACT_VM_HITRIGHT2 || ACT_VM_HITLEFT2
 	end
 
-	return right and ACT_VM_HITRIGHT or ACT_VM_HITLEFT
+	return right && ACT_VM_HITRIGHT || ACT_VM_HITLEFT
 
 end
 
@@ -159,7 +159,8 @@ function SWEP:StartPunch( right )
 	self:PlayAnim( self:GetPunchActivity( right ) )
 	owner:SetAnimation( PLAYER_ATTACK1 )
 
-	local cooldown = CurTime() + self.PunchCooldown
+	local curtime = CurTime()
+	local cooldown = curtime + self.PunchCooldown
 	self:SetNextPrimaryFire( cooldown )
 	self:SetNextSecondaryFire( cooldown )
 
@@ -180,7 +181,7 @@ end
 
 function SWEP:CanDamage( ent )
 
-	return ent:IsPlayer() or ent:IsNPC() or ( ent:IsValid() and ent:Health() > 0 )
+	return ent:IsPlayer() || ent:IsNPC() || ( ent:IsValid() && ent:Health() > 0 )
 
 end
 
@@ -198,10 +199,9 @@ function SWEP:PunchTrace()
 	end
 
 	local startpos = owner:GetShootPos()
-	local aimvector = owner:GetAimVector()
 	local trdata = {
 		start = startpos,
-		endpos = startpos + aimvector * self.PunchDistance,
+		endpos = startpos + owner:GetAimVector() * self.PunchDistance,
 		filter = owner,
 		mask = MASK_SHOT_HULL
 	}
@@ -245,7 +245,7 @@ function SWEP:PunchHit()
 
 	if ( phys:IsValid() ) then
 		-- FIXME: This cannot be right
-		phys:ApplyForceOffset( aimvector * phys:GetMass() * physscale * self.PunchForceScale, hitpos )
+		phys:ApplyForceOffset( owner:GetAimVector() * ( phys:GetMass() * physscale * self.PunchForceScale ), hitpos )
 	end
 
 	if ( !self:CanDamage( hitent ) ) then
@@ -279,7 +279,7 @@ function SWEP:PunchHit()
 		owner:GetRight() * force.Right * physscale * ( self:GetRightPunch() && -1 || 1 ) +
 		owner:GetUp() * force.Up * physscale )
 
-	-- FIXME
+	-- FIXME: Is this still necessary?
 	SuppressHostEvents( NULL ) -- Let the breakable gibs spawn in multiplayer on client
 	hitent:DispatchTraceAttack( dmginfo, tr )
 	SuppressHostEvents( owner )
@@ -301,7 +301,7 @@ function SWEP:Holster()
 end
 
 -- Punching should only be done on the server in single-player
-if ( CLIENT and game.SinglePlayer() ) then return end
+if ( CLIENT && game.SinglePlayer() ) then return end
 
 function SWEP:Think()
 
