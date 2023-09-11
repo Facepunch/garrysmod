@@ -248,7 +248,7 @@ local function DropActiveAmmo(ply)
    local wep = ply:GetActiveWeapon()
    if not IsValid(wep) then return end
 
-   if not wep.AmmoEnt then return end
+   if not IsValid(wep.AmmoEnt) then return end
 
    local amt = wep:Clip1()
    if amt < 1 or amt <= (wep.Primary.ClipSize * 0.25) then
