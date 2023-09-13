@@ -159,11 +159,11 @@ color_transparent	= Color( 255, 255, 255, 0 )
 	Includes the file - and adds it so the CS file list
 -----------------------------------------------------------]]
 function IncludeCS( filename )
-	include( filename )
-
 	if ( SERVER ) then
 		AddCSLuaFile( filename )
 	end
+	
+	return include( filename )
 end
 
 -- Globals
@@ -288,7 +288,7 @@ function IsUselessModel( modelname )
 
 	if ( !modelname:find( ".mdl", 1, true ) ) then return true end
 
-	for k, v in pairs( UselessModels ) do
+	for k, v in ipairs( UselessModels ) do
 		if ( modelname:find( v, 1, true ) ) then
 			return true
 		end
@@ -331,11 +331,21 @@ end
 	IsEnemyEntityName
 -----------------------------------------------------------]]
 local EnemyNames = {
+	-- Half-Life 1.
+	monster_alien_grunt = true, monster_nihilanth = true, monster_tentacle = true, monster_alien_slave = true,
+	monster_bigmomma = true, monster_bullchicken = true, monster_gargantua = true, monster_human_assassin = true,
+	monster_babycrab = true, monster_human_grunt = true, monster_cockroach = true, monster_houndeye = true,
+	monster_zombie = true, monster_headcrab = true, monster_alien_controller = true, monster_turret = true,
+	monster_miniturret = true, monster_sentry = true,
+
+	-- Half-Life 2.
 	npc_antlion = true, npc_antlionguard = true, npc_antlionguardian = true, npc_barnacle = true,
 	npc_breen = true, npc_clawscanner = true, npc_combine_s = true, npc_cscanner = true, npc_fastzombie = true,
 	npc_fastzombie_torso = true, npc_headcrab = true, npc_headcrab_fast = true, npc_headcrab_poison = true,
-	npc_hunter = true, npc_metropolice = true, npc_manhack = true, npc_poisonzombie = true,
-	npc_strider = true, npc_stalker = true, npc_zombie = true, npc_zombie_torso = true, npc_zombine = true
+	npc_hunter = true, npc_metropolice = true, npc_manhack = true, npc_poisonzombie = true, npc_strider = true,
+	npc_stalker = true, npc_zombie = true, npc_zombie_torso = true, npc_zombine = true, npc_combine_camera = true,
+	npc_turret_ceiling = true, npc_combinedropship = true, npc_combinegunship = true, npc_helicopter = true,
+	npc_turret_floor = true, npc_antlion_worker = true, npc_headcrab_black = true
 }
 
 function IsEnemyEntityName( victimtype )
@@ -346,6 +356,10 @@ end
 	IsFriendEntityName
 -----------------------------------------------------------]]
 local FriendlyNames = {
+	-- Half-Life 1.
+	monster_scientist = true, monster_barney = true,
+
+	-- Half-Life 2.
 	npc_alyx = true, npc_barney = true, npc_citizen = true, npc_dog = true, npc_eli = true,
 	npc_fisherman = true, npc_gman = true, npc_kleiner = true, npc_magnusson = true,
 	npc_monk = true, npc_mossman = true, npc_odessa = true, npc_vortigaunt = true
@@ -411,7 +425,7 @@ if ( CLIENT ) then
 
 	function RememberCursorPosition()
 
-		local x, y = gui.MousePos()
+		local x, y = input.GetCursorPos()
 
 		-- If the cursor isn't visible it will return 0,0 ignore it.
 		if ( x == 0 && y == 0 ) then return end

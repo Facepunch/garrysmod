@@ -125,11 +125,6 @@ function GM:PlayerSilentDeath( Victim )
 
 end
 
--- Pool network strings used for PlayerDeaths.
-util.AddNetworkString( "PlayerKilled" )
-util.AddNetworkString( "PlayerKilledSelf" )
-util.AddNetworkString( "PlayerKilledByPlayer" )
-
 --[[---------------------------------------------------------
 	Name: gamemode:PlayerDeath()
 	Desc: Called when a player dies.
@@ -164,9 +159,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if ( attacker == ply ) then
 
-		net.Start( "PlayerKilledSelf" )
-			net.WriteEntity( ply )
-		net.Broadcast()
+		self:SendDeathNotice( nil, "suicide", ply, 0 )
 
 		MsgAll( attacker:Nick() .. " suicided!\n" )
 
@@ -174,25 +167,16 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if ( attacker:IsPlayer() ) then
 
-		net.Start( "PlayerKilledByPlayer" )
-
-			net.WriteEntity( ply )
-			net.WriteString( inflictor:GetClass() )
-			net.WriteEntity( attacker )
-
-		net.Broadcast()
+		self:SendDeathNotice( attacker, inflictor:GetClass(), ply, 0 )
 
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 
 	return end
 
-	net.Start( "PlayerKilled" )
+	local flags = 0
+	if ( attacker:IsNPC() and attacker:Disposition( ply ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
 
-		net.WriteEntity( ply )
-		net.WriteString( inflictor:GetClass() )
-		net.WriteString( attacker:GetClass() )
-
-	net.Broadcast()
+	self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, 0 )
 
 	MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
 
@@ -252,8 +236,6 @@ function GM:PlayerSpawn( pl, transiton )
 	-- Stop observer mode
 	pl:UnSpectate()
 
-	pl:SetupHands()
-
 	player_manager.OnPlayerSpawn( pl, transiton )
 	player_manager.RunClass( pl, "Spawn" )
 
@@ -265,6 +247,8 @@ function GM:PlayerSpawn( pl, transiton )
 
 	-- Set player model
 	hook.Call( "PlayerSetModel", GAMEMODE, pl )
+
+	pl:SetupHands()
 
 end
 
@@ -292,7 +276,7 @@ function GM:PlayerSetHandsModel( pl, ent )
 
 	if ( info ) then
 		ent:SetModel( info.model )
-		ent:SetSkin( info.skin )
+		ent:SetSkin( info.matchBodySkin and pl:GetSkin() or info.skin )
 		ent:SetBodyGroups( info.body )
 	end
 
@@ -337,6 +321,8 @@ end
 	Name: gamemode:IsSpawnpointSuitable( player )
 	Desc: Find out if the spawnpoint is suitable or not
 -----------------------------------------------------------]]
+local spawnpointmin = Vector( -16, -16, 0 )
+local spawnpointmax = Vector( 16, 16, 64 )
 function GM:IsSpawnpointSuitable( pl, spawnpointent, bMakeSuitable )
 
 	local Pos = spawnpointent:GetPos()
@@ -344,13 +330,10 @@ function GM:IsSpawnpointSuitable( pl, spawnpointent, bMakeSuitable )
 	-- Note that we're searching the default hull size here for a player in the way of our spawning.
 	-- This seems pretty rough, seeing as our player's hull could be different.. but it should do the job
 	-- (HL2DM kills everything within a 128 unit radius)
-	local Ents = ents.FindInBox( Pos + Vector( -16, -16, 0 ), Pos + Vector( 16, 16, 64 ) )
-
 	if ( pl:Team() == TEAM_SPECTATOR ) then return true end
 
 	local Blockers = 0
-
-	for k, v in pairs( Ents ) do
+	for k, v in ipairs( ents.FindInBox( Pos + spawnpointmin, Pos + spawnpointmax ) ) do
 		if ( IsValid( v ) && v != pl && v:GetClass() == "player" && v:Alive() ) then
 
 			Blockers = Blockers + 1

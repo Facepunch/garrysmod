@@ -48,7 +48,6 @@ function Register( t, name )
 	if ( hook.Run( "PreRegisterSWEP", t, name ) == false ) then return end
 
 	local old = WeaponList[ name ]
-
 	t.ClassName = name
 	WeaponList[ name ] = t
 
@@ -56,7 +55,7 @@ function Register( t, name )
 
 	list.Set( "Weapon", name, {
 		ClassName = name,
-		PrintName = t.PrintName or t.ClassName,
+		PrintName = t.PrintName or name,
 		Category = t.Category or "Other",
 		Spawnable = t.Spawnable,
 		AdminOnly = t.AdminOnly,

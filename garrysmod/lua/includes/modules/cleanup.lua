@@ -141,7 +141,7 @@ if ( SERVER ) then
 		table.Empty( cleanup_list[id][ args[1] ] )
 
 		-- Send tooltip command to client
-		pl:SendLua( 'hook.Run("OnCleanup","' .. args[1] .. '")' )
+		pl:SendLua( string.format( 'hook.Run("OnCleanup",%q)', args[1] ) )
 
 	end
 
@@ -195,7 +195,7 @@ if ( SERVER ) then
 		end
 
 		-- Send tooltip command to client
-		if ( IsValid( pl ) ) then pl:SendLua( 'hook.Run("OnCleanup","' .. args[1] .. '")' ) end
+		if ( IsValid( pl ) ) then pl:SendLua( string.format( 'hook.Run("OnCleanup",%q)', args[1] ) ) end
 
 	end
 

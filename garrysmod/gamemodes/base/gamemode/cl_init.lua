@@ -54,9 +54,16 @@ function GM:HUDShouldDraw( name )
 
 		local wep = ply:GetActiveWeapon()
 
-		if ( IsValid( wep ) && wep.HUDShouldDraw != nil ) then
+		if ( IsValid( wep ) ) then
 
-			return wep.HUDShouldDraw( wep, name )
+			local fShouldDraw = wep.HUDShouldDraw
+
+			if ( isfunction( fShouldDraw ) ) then
+
+				local ret = fShouldDraw( wep, name )
+				if ( ret != nil ) then return ret end
+
+			end
 
 		end
 
@@ -189,7 +196,7 @@ function GM:OnChatTab( str )
 
 	if ( LastWord == nil ) then return str end
 
-	for k, v in pairs( player.GetAll() ) do
+	for k, v in ipairs( player.GetAll() ) do
 
 		local nickname = v:Nick()
 

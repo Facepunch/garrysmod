@@ -257,6 +257,7 @@ L.set_fastswmenu_tip  = "When fast weapons switch is enabled, the menu switcher 
 L.set_wswitch         = "Disable weapon switch menu auto-closing"
 L.set_wswitch_tip     = "By default the weapon switcher automatically closes a few seconds after you last scroll. Enable this to make it stay up."
 L.set_cues            = "Play sound cue when a round begins or ends"
+L.set_msg_cue         = "Play sound cue when a notification appears"
 
 
 L.set_title_play    = "Gameplay settings"
@@ -592,7 +593,7 @@ L.target_credits = "Search to receive unspent credits"
 -- Traitor buttons (HUD buttons with hand icons that only traitors can see)
 L.tbut_single  = "Single use"
 L.tbut_reuse   = "Reusable"
-L.tbut_retime  = "Reusable after {num} sec"
+L.tbut_retime  = "Reusable after {num} seconds"
 L.tbut_help    = "Press {key} to activate"
 
 -- Equipment info lines (on the left above the health/ammo panel)

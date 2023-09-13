@@ -464,7 +464,7 @@ function meta:InstallDataTable()
 		if ( CLIENT ) then
 
 			net.Start( "editvariable" )
-				net.WriteUInt( self:EntIndex(), 32 )
+				net.WriteEntity( self )
 				net.WriteString( variable )
 				net.WriteString( value )
 			net.SendToServer()
@@ -482,35 +482,30 @@ function meta:InstallDataTable()
 
 	end
 
-	if ( SERVER ) then
-
-		util.AddNetworkString( "editvariable" )
-
-		net.Receive( "editvariable", function( len, client )
-
-			local iIndex = net.ReadUInt( 32 )
-			local ent = Entity( iIndex )
-
-			if ( !IsValid( ent ) ) then return end
-			if ( !isfunction( ent.GetEditingData ) ) then return end
-			if ( ent.AdminOnly && !( client:IsAdmin() || game.SinglePlayer() ) ) then return end
-
-			local key = net.ReadString()
-
-			-- Is this key in our edit table?
-			local editor = ent:GetEditingData()[ key ]
-			if ( !istable( editor ) ) then return end
-
-			local val = net.ReadString()
-			hook.Run( "VariableEdited", ent, client, key, val, editor )
-
-		end )
-
-	end
-
 end
 
 if ( SERVER ) then
+
+	util.AddNetworkString( "editvariable" )
+
+	net.Receive( "editvariable", function( len, client )
+
+		local ent = net.ReadEntity()
+
+		if ( !IsValid( ent ) ) then return end
+		if ( !isfunction( ent.GetEditingData ) ) then return end
+		if ( ent.AdminOnly && !( client:IsAdmin() || game.SinglePlayer() ) ) then return end
+
+		local key = net.ReadString()
+
+		-- Is this key in our edit table?
+		local editor = ent:GetEditingData()[ key ]
+		if ( !istable( editor ) ) then return end
+
+		local val = net.ReadString()
+		hook.Run( "VariableEdited", ent, client, key, val, editor )
+
+	end )
 
 	function meta:GetUnFreezable()
 		return self.m_bUnFreezable || false

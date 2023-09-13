@@ -160,7 +160,7 @@ detail
 
 			Model2
 			{
-				"model" "modelsperftest/Grass_tuft_001b.mdl"
+				"model" "models/perftest/Grass_tuft_001b.mdl"
 				"amount" "0.1"
 			}
 	

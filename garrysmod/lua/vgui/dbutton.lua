@@ -102,7 +102,20 @@ function PANEL:PerformLayout( w, h )
 	--
 	if ( IsValid( self.m_Image ) ) then
 
-		self.m_Image:SetPos( 4, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
+		local targetSize = math.min( self:GetWide() - 4, self:GetTall() - 4 )
+
+		local zoom = math.min( targetSize / self.m_Image:GetWide(), targetSize / self.m_Image:GetTall(), 1 )
+		local newSizeX = math.ceil( self.m_Image:GetWide() * zoom )
+		local newSizeY = math.ceil( self.m_Image:GetTall() * zoom )
+
+		self.m_Image:SetWide( newSizeX )
+		self.m_Image:SetTall( newSizeY )
+
+		if ( self:GetWide() < self:GetTall() ) then
+			self.m_Image:SetPos( 4, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
+		else
+			self.m_Image:SetPos( 2 + ( targetSize - self.m_Image:GetWide() ) * 0.5, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
+		end 
 
 		self:SetTextInset( self.m_Image:GetWide() + 16, 0 )
 

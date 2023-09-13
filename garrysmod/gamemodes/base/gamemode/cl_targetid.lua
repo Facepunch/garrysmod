@@ -23,7 +23,7 @@ function GM:HUDDrawTargetID()
 	surface.SetFont( font )
 	local w, h = surface.GetTextSize( text )
 	
-	local MouseX, MouseY = gui.MousePos()
+	local MouseX, MouseY = input.GetCursorPos()
 	
 	if ( MouseX == 0 && MouseY == 0 ) then
 	

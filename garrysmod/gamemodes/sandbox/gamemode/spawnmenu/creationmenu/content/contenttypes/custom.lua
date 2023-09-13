@@ -111,7 +111,7 @@ local function ReadSpawnlists( node, parentid )
 
 	if ( node.ChildNodes ) then
 
-		for k, v in pairs( node.ChildNodes:GetChildren() ) do
+		for k, v in ipairs( node.ChildNodes:GetChildren() ) do
 
 			ReadSpawnlists( v, tab.id )
 

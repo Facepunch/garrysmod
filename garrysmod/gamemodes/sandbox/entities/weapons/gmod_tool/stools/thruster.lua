@@ -81,6 +81,7 @@ function TOOL:LeftClick( trace )
 	Ang.pitch = Ang.pitch + 90
 
 	local thruster = MakeThruster( ply, model, Ang, trace.HitPos, key, key_bk, force, toggle, effect, damageable, soundname )
+	if ( !IsValid( thruster ) ) then return false end
 
 	local min = thruster:OBBMins()
 	thruster:SetPos( trace.HitPos - trace.HitNormal * min.z )
@@ -91,7 +92,11 @@ function TOOL:LeftClick( trace )
 		-- Don't weld to world
 		if ( IsValid( trace.Entity ) ) then
 
-			local const = constraint.Weld( thruster, trace.Entity, 0, trace.PhysicsBone, 0, collision, true )
+			local weld = constraint.Weld( thruster, trace.Entity, 0, trace.PhysicsBone, 0, collision, true )
+			if ( IsValid( weld ) ) then
+				ply:AddCleanup( "thrusters", weld )
+				undo.AddEntity( weld )
+			end
 
 			-- Don't disable collision if it's not attached to anything
 			if ( collision ) then
@@ -101,9 +106,6 @@ function TOOL:LeftClick( trace )
 				thruster.nocollide = true
 
 			end
-
-			ply:AddCleanup( "thrusters", const )
-			undo.AddEntity( const )
 
 		end
 

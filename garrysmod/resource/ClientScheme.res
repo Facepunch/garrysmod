@@ -15,9 +15,19 @@ Scheme
 	// this is a list of all the colors used by the scheme
 	Colors
 	{
+		"White"				"255 255 255 255"
+		"OffWhite"			"221 221 221 255"
+		"DullWhite"			"190 190 190 255"
 		"Black"				"46 43 42 255"
 		"Gray"				"178 178 178 255"
+
+		"TransparentBlack"	"0 0 0 128"
 		"Blank"				"0 0 0 0"
+
+		"GMod_BG_Opaque"	"108 111 114 250"
+		"GMod_BG"			"108 111 114 0" // SRCDS cannot do transparency, so we gotta replace Blank with this.
+		"GMod_WhiteBlank"	"255 255 255 0"
+		
 	}
 
 	///////////////////// BASE SETTINGS ////////////////////////
@@ -96,6 +106,17 @@ Scheme
 		Slider.TrackColor			"31 31 31 255"
 		Slider.DisabledTextColor1	"117 117 117 255"
 		Slider.DisabledTextColor2	"30 30 30 255"
+
+		ProgressBar.FgColor				"White"
+		ProgressBar.BgColor				"TransparentBlack"
+
+		Label.TextDullColor				"DullWhite"
+		Label.TextColor					"OffWhite"
+		Label.TextBrightColor			"White"
+		Label.SelectedTextColor			"White"
+		Label.BgColor					"GMod_BG"
+		Label.DisabledFgColor1			"110 110 110 255"
+		Label.DisabledFgColor2			"50 50 50 255"
 	}
 
 	//////////////////////// FONTS /////////////////////////////

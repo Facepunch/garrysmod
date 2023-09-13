@@ -282,7 +282,7 @@ function RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
 
 	if ( FocusGrabber ) then
 
-		local x, y = gui.MousePos()
+		local x, y = input.GetCursorPos()
 		local dir = util.AimVector( ViewAngles, ViewFOV, x, y, ScrW(), ScrH() )
 
 		local tr = util.TraceLine( util.GetPlayerTrace( LocalPlayer(), dir ) )

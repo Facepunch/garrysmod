@@ -128,6 +128,17 @@ game_sounds_manifest
 	"precache_file"		"scripts/npc_sounds_rocket_turret.txt"
 	"precache_file"		"scripts/npc_sounds_glados_cores.txt"
 
+	// Portal 2
+	"precache_file"		"scripts/game_sounds_props_aperture.txt"
+	"precache_file"		"scripts/game_sounds_auto_generated.txt"
+	"precache_file"		"scripts/game_sounds_turret_auto_generated.txt"
+	"precache_file"		"scripts/game_sounds_cave_auto_generated.txt"
+	"precache_file"		"scripts/game_sounds_sphere03_auto_generated.txt"
+	"precache_file"		"scripts/game_sounds_announcer_auto_generated.txt"
+	"precache_file"		"scripts/game_sounds_cores_auto_generated.txt"
+	"precache_file"		"scripts/game_sounds_paint_player.txt"
+	"precache_file"		"scripts/game_sounds_paint.txt"
+
 	// Counter-Strike: Source
 	"precache_file"		"scripts/sounds/cs_game_sounds_radio.txt"
 	"precache_file"		"scripts/sounds/cs_game_sounds_weapons.txt"

@@ -75,17 +75,17 @@ ADD_WEAPON( ".357 Magnum", "weapon_357" )
 --ADD_WEAPON( "Annabelle", "weapon_annabelle" )
 
 -- NPC Weapons
-list.Add( "NPCUsableWeapons", { class = "weapon_pistol", title = "#weapon_pistol" } )
-list.Add( "NPCUsableWeapons", { class = "weapon_357", title = "#weapon_357" } )
-list.Add( "NPCUsableWeapons", { class = "weapon_smg1", title = "#weapon_smg1" } )
-list.Add( "NPCUsableWeapons", { class = "weapon_shotgun", title = "#weapon_shotgun" } )
-list.Add( "NPCUsableWeapons", { class = "weapon_ar2", title = "#weapon_ar2" } )
-list.Add( "NPCUsableWeapons", { class = "weapon_rpg", title = "#weapon_rpg" } )
-list.Add( "NPCUsableWeapons", { class = "weapon_alyxgun", title = "#weapon_alyxgun" } )
-list.Add( "NPCUsableWeapons", { class = "weapon_annabelle", title = "#weapon_annabelle" } )
-list.Add( "NPCUsableWeapons", { class = "weapon_crossbow", title = "#weapon_crossbow" } )
-list.Add( "NPCUsableWeapons", { class = "weapon_stunstick", title = "#weapon_stunstick" } )
-list.Add( "NPCUsableWeapons", { class = "weapon_crowbar", title = "#weapon_crowbar" } )
+list.Add( "NPCUsableWeapons", { class = "weapon_pistol", title = "#weapon_pistol", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_357", title = "#weapon_357", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_smg1", title = "#weapon_smg1", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_shotgun", title = "#weapon_shotgun", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_ar2", title = "#weapon_ar2", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_rpg", title = "#weapon_rpg", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_alyxgun", title = "#weapon_alyxgun", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_annabelle", title = "#weapon_annabelle", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_crossbow", title = "#weapon_crossbow", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_stunstick", title = "#weapon_stunstick", category = Category } )
+list.Add( "NPCUsableWeapons", { class = "weapon_crowbar", title = "#weapon_crowbar", category = Category } )
 
 if ( IsMounted( "hl1" ) || IsMounted( "hl1mp" ) ) then
 	Category = "Half-Life: Source"
@@ -119,7 +119,9 @@ if ( IsMounted( "hl1" ) || IsMounted( "hl1mp" ) ) then
 	--ADD_ITEM( "MP5 Ammo", "ammo_9mmar", 0 )
 	--ADD_ITEM( "MP5 Grenade", "ammo_argrenades", 0 )
 
-	list.Add( "NPCUsableWeapons", { class = "weapon_glock_hl1", title = "#weapon_glock_hl1" } )
+	list.Add( "NPCUsableWeapons", { class = "weapon_357_hl1", title = "#weapon_357_hl1", category = Category } )
+	list.Add( "NPCUsableWeapons", { class = "weapon_glock_hl1", title = "#weapon_glock_hl1", category = Category } )
+	list.Add( "NPCUsableWeapons", { class = "weapon_shotgun_hl1", title = "#weapon_shotgun_hl1", category = Category } )
 end
 
 Category = "Other"

@@ -20,6 +20,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	Scope.GMSort = '-(order)';
 	Scope.GMFilterTags = {};
 	Scope.GMHasFilterTags = false;
+	Scope.ServersPerPage = 128;
 
 	if ( !Scope.CurrentGamemode ) Scope.CurrentGamemode = null;
 
@@ -73,7 +74,7 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	{
 		if ( event && event.which != 1 )
 		{
-			var txt = server.address + " (Anon:" + server.isAnon + ")";
+			var txt = server.address;
 			lua.Run( "SetClipboardText( %s )", txt );
 			event.preventDefault();
 			return;
@@ -106,6 +107,9 @@ function ControllerServers( $scope, $element, $rootScope, $location )
 	$scope.SelectGamemode = function( gm )
 	{
 		Scope.CurrentGamemode = gm;
+		
+		if ( gm ) gm.server_offset = 0;
+		UpdateDigest( Scope, 50 );
 	}
 
 	$scope.ServerClass = function( sv )
@@ -306,6 +310,7 @@ function GetGamemode( name, type )
 		servers:		[],
 		num_servers:	0,
 		num_players:	0,
+		server_offset:	0,
 		sort_players:	0,
 		OrderByMain:	'recommended',
 		OrderBy:		[ 'recommended', 'ping', 'address' ],
@@ -314,7 +319,7 @@ function GetGamemode( name, type )
 		HasPreferFlags:	false
 	};
 
-	ServerTypes[type].list.push( ServerTypes[type].gamemodes[name] )
+	ServerTypes[type].list.push( ServerTypes[type].gamemodes[name] );
 
 	return ServerTypes[type].gamemodes[name];
 }
@@ -328,7 +333,7 @@ function FormatVersion( ver )
 	var y = Math.floor( ver / 10000 );
 	var m = Math.floor( ( ver - y * 10000 ) / 100 );
 	var d = ver - y * 10000 - m * 100;
-	return "20" + pad( y ) + "." + pad( m ) + "." + pad( d )
+	return ( y > 99 ? pad( y ) : ( "20" + pad( y ) ) ) + "." + pad( m ) + "." + pad( d )
 }
 
 // Calculates the default server ranking
@@ -367,6 +372,15 @@ function GenerateFlag( server )
 	return "";
 }
 
+function UpdateInfiniteScroll( elem )
+{
+	if ( !Scope.CurrentGamemode ) return;
+
+	Scope.CurrentGamemode.server_offset = Math.max( Math.floor( elem.scrollTop / 22 ) - ( Scope.ServersPerPage / 4 ), 0 );
+	Scope.CurrentGamemode.server_offset -= Scope.CurrentGamemode.server_offset % 2; // Keeps the style of every other line consistent.
+	UpdateDigest( Scope, 50 );
+}
+
 function AddServer( type, id, ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gamemode, workshopid, isAnon, version, isFav, loc, gmcat )
 {
 	if ( id != RequestNum[ type ] ) return;
@@ -375,7 +389,7 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	if ( maxplayers <= 1 ) return;
 
 	version = parseInt( version ) || 0;
-	if ( !IN_ENGINE ) GMOD_VERSION_INT = 200101;
+	if ( !IN_ENGINE ) GMOD_VERSION_INT = 20200101;
 
 	// Validate gamemode category
 	if ( gmcat )
@@ -452,7 +466,6 @@ function AddServer( type, id, ping, name, desc, map, players, maxplayers, botpla
 	Scope.ServerCount[ type ] += 1;
 
 	UpdateDigest( Scope, 50 );
-
 }
 
 function MissingGamemodeIcon( element )
@@ -537,10 +550,10 @@ function GetHighestKey( obj )
 //
 function UpdateGamemodeInfo( server, type )
 {
-	var gi = GetGamemodeInfo( server.gamemode )
+	var gi = GetGamemodeInfo( server.gamemode );
 
 	// Use the most common title
-	if ( !gi.titles ) gi.titles = {}
+	if ( !gi.titles ) gi.titles = {};
 
 	// First try to see if we have a capitalized version already (i.e. sandbox should be Sandbox)
 	if ( server.desc == server.gamemode.toLowerCase() )
@@ -557,13 +570,15 @@ function UpdateGamemodeInfo( server, type )
 		}
 	}
 
-	if ( !gi.titles[ server.desc ] ) { gi.titles[ server.desc ] = 1; } else { gi.titles[ server.desc ]++; }
+	if ( !gi.titles[ server.desc ] ) { gi.titles[ server.desc ] = 0; }
+	gi.titles[ server.desc ] += Math.min( server.players, 10 );
+	if ( server.desc == server.gamemode ) gi.titles[ server.desc ] = 0; // Internal name is always a fallback
 	gi.title = GetHighestKey( gi.titles );
 
 	// categories
 	if ( server.category != "" )
 	{
-		if ( !gi.categories ) gi.categories = {}
+		if ( !gi.categories ) gi.categories = {};
 		if ( !gi.categories[ server.category ] ) { gi.categories[ server.category ] = 1; } else { gi.categories[ server.category ]++; }
 		gi.tag = GetHighestKey( gi.categories );
 		if ( gi.tag ) gi.tag_set = true;
@@ -586,16 +601,16 @@ function UpdateGamemodeInfo( server, type )
 	// Use the most common workshop id
 	if ( server.workshopid != "" && server.workshopid != "0" )
 	{
-		if ( !gi.wsid ) gi.wsid = {}
+		if ( !gi.wsid ) gi.wsid = {};
 		if ( !gi.wsid[ server.workshopid ] ) { gi.wsid[ server.workshopid ] = 1; } else { gi.wsid[ server.workshopid ]++; }
 		gi.workshopid = GetHighestKey( gi.wsid );
 	}
 
 	// flags, for filtering
-	gi = GetGamemode( server.gamemode, type )
+	gi = GetGamemode( server.gamemode, type );
 	if ( server.flag != "" )
 	{
-		if ( !gi.flags ) gi.flags = {}
+		if ( !gi.flags ) gi.flags = {};
 		gi.flags[ server.flag ] = true;
 		gi.hasflags = true;
 	}

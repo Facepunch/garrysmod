@@ -165,7 +165,7 @@ function PANEL:OnMousePressed( mousecode )
 	end
 
 	-- Do not do selections if playing is spawning things while moving
-	local isPlyMoving = LocalPlayer && ( LocalPlayer():KeyDown( IN_FORWARD ) || LocalPlayer():KeyDown( IN_BACK ) || LocalPlayer():KeyDown( IN_MOVELEFT ) || LocalPlayer():KeyDown( IN_MOVERIGHT ) )
+	local isPlyMoving = LocalPlayer && IsValid( LocalPlayer() ) && ( LocalPlayer():KeyDown( IN_FORWARD ) || LocalPlayer():KeyDown( IN_BACK ) || LocalPlayer():KeyDown( IN_MOVELEFT ) || LocalPlayer():KeyDown( IN_MOVERIGHT ) )
 
 	-- If we're selectable and have shift held down then go up
 	-- the parent until we find a selection canvas and start box selection

@@ -89,7 +89,7 @@ local function FireSingleOutput( output, this, activator, data )
 		entitiesToFire = ents.FindByName( output.entities )
 	end
 
-	for _, ent in pairs( entitiesToFire ) do
+	for _, ent in ipairs( entitiesToFire ) do
 		ent:Fire( output.input, data or output.param, output.delay, activator, this )
 	end
 

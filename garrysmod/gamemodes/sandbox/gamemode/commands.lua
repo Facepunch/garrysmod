@@ -369,14 +369,9 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 
 	-- Don't let them spawn this entity if it isn't in our NPC Spawn list.
 	-- We don't want them spawning any entity they like!
-	if ( !NPCData ) then
-		if ( IsValid( ply ) ) then
-			ply:SendLua( "Derma_Message( \"Sorry! You can't spawn that NPC!\" )" )
-		end
-		return
-	end
+	if ( !NPCData ) then return end
 
-	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) || game.SinglePlayer()
 	if ( NPCData.AdminOnly && !isAdmin ) then return end
 
 	local bDropToFloor = false
@@ -488,9 +483,14 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	NPC:Spawn()
 	NPC:Activate()
 
+	-- Store spawnmenu data for addons and stuff
+	NPC.NPCName = Class
+	NPC.NPCTable = NPCData
+
 	-- For those NPCs that set their model in Spawn function
 	-- We have to keep the call above for NPCs that want a model set by Spawn() time
-	if ( NPCData.Model && NPC:GetModel() != NPCData.Model ) then
+	-- BAD: They may adversly affect entity collision bounds
+	if ( NPCData.Model && NPC:GetModel():lower() != NPCData.Model:lower() ) then
 		NPC:SetModel( NPCData.Model )
 	end
 
@@ -687,7 +687,7 @@ AddNPCToDuplicator( "monster_sentry" )
 -----------------------------------------------------------]]
 local function CanPlayerSpawnSENT( ply, EntityName )
 
-	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) || game.SinglePlayer()
 
 	-- Make sure this is a SWEP
 	local sent = scripted_ents.GetStored( EntityName )
@@ -986,6 +986,10 @@ local function MakeVehicle( ply, Pos, Ang, model, Class, VName, VTable, data )
 	Ent:Spawn()
 	Ent:Activate()
 
+	-- Some vehicles reset this in Spawn()
+	if ( data && data.ColGroup ) then Ent:SetCollisionGroup( data.ColGroup ) end
+
+	-- Store spawnmenu data for addons and stuff
 	if ( Ent.SetVehicleClass && VName ) then Ent:SetVehicleClass( VName ) end
 	Ent.VehicleName = VName
 	Ent.VehicleTable = VTable

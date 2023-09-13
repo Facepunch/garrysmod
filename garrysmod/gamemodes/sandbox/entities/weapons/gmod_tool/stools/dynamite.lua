@@ -51,6 +51,7 @@ function TOOL:LeftClick( trace )
 	if ( !self:GetSWEP():CheckLimit( "dynamite" ) ) then return false end
 
 	local dynamite = MakeDynamite( ply, trace.HitPos, angle_zero, group, damage, model, remove, delay )
+	if ( !IsValid( dynamite ) ) then return false end
 
 	local CurPos = dynamite:GetPos()
 	local Offset = CurPos - dynamite:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )

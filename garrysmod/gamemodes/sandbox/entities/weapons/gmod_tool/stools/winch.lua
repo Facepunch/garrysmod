@@ -56,18 +56,19 @@ function TOOL:LeftClick( trace )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 
-		local constraint, rope, controller = constraint.Winch( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material, toggle, Color( colorR, colorG, colorB, 255 ) )
+		local constr, rope, controller = constraint.Winch( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material, toggle, Color( colorR, colorG, colorB, 255 ) )
+		if ( IsValid( constr ) ) then
+			undo.Create( "Winch" )
+				undo.AddEntity( constr )
+				if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+				if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
+				undo.SetPlayer( self:GetOwner() )
+			undo.Finish()
 
-		undo.Create( "Winch" )
-			if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
-			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-			if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-
-		if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
-		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
-		if ( IsValid( controller ) ) then self:GetOwner():AddCleanup( "ropeconstraints", controller ) end
+			self:GetOwner():AddCleanup( "ropeconstraints", constr )
+			if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+			if ( IsValid( controller ) ) then self:GetOwner():AddCleanup( "ropeconstraints", controller ) end
+		end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()
@@ -104,28 +105,28 @@ function TOOL:RightClick( trace )
 	local tr = util.TraceLine( tr )
 	if ( !tr.Hit ) then
 		self:ClearObjects()
-		return
+		return false
 	end
 
 	-- Don't try to constrain world to world
 	if ( trace.HitWorld && tr.HitWorld ) then
 		self:ClearObjects()
-		return
+		return false
 	end
 
 	if ( IsValid( trace.Entity ) && trace.Entity:IsPlayer() ) then
 		self:ClearObjects()
-		return
+		return false
 	end
 	if ( IsValid( tr.Entity ) && tr.Entity:IsPlayer() ) then
 		self:ClearObjects()
-		return
+		return false
 	end
 
 	-- Check to see if the player can create a winch constraint with the entity in the trace
 	if ( !hook.Run( "CanTool", self:GetOwner(), tr, "winch", self, 2 ) ) then
 		self:ClearObjects()
-		return
+		return false
 	end
 
 	local Phys2 = tr.Entity:GetPhysicsObjectNum( tr.PhysicsBone )
@@ -152,18 +153,19 @@ function TOOL:RightClick( trace )
 	local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 	local LPos1, LPos2 = self:GetLocalPos( 1 ), self:GetLocalPos( 2 )
 
-	local constraint, rope, controller = constraint.Winch( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material, Color( colorR, colorG, colorB, 255 ) )
+	local constr, rope, controller = constraint.Winch( self:GetOwner(), Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, width, fwd_bind, bwd_bind, fwd_speed, bwd_speed, material, Color( colorR, colorG, colorB, 255 ) )
+	if ( IsValid( constr ) ) then
+		undo.Create( "Winch" )
+			undo.AddEntity( constr )
+			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
+			if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
+			undo.SetPlayer( self:GetOwner() )
+		undo.Finish()
 
-	undo.Create( "Winch" )
-		if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
-		if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-		if ( IsValid( controller ) ) then undo.AddEntity( controller ) end
-		undo.SetPlayer( self:GetOwner() )
-	undo.Finish()
-
-	if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
-	if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
-	if ( IsValid( controller ) ) then self:GetOwner():AddCleanup( "ropeconstraints", controller ) end
+		self:GetOwner():AddCleanup( "ropeconstraints", constr )
+		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+		if ( IsValid( controller ) ) then self:GetOwner():AddCleanup( "ropeconstraints", controller ) end
+	end
 
 	-- Clear the objects so we're ready to go again
 	self:ClearObjects()

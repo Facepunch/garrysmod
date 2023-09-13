@@ -66,7 +66,7 @@ if ( SERVER ) then
 			timer.Create( "LoadGModSave_WaitForPlayer", 0.1, 0, function()
 				if ( !IsValid( Entity( 1 ) ) ) then return end
 
-				timer.Destroy( "LoadGModSave_WaitForPlayer" )
+				timer.Remove( "LoadGModSave_WaitForPlayer" )
 				LoadGModSave( savedata )
 			end )
 

@@ -31,37 +31,39 @@ end
 
 function GM:LimitHit( name )
 
-	self:AddNotify( "#SBoxLimit_" .. name, NOTIFY_ERROR, 6 )
+	local str = "#SBoxLimit_" .. name
+	local translated = language.GetPhrase( str )
+	if ( str == translated ) then
+		-- No translation available, apply our own
+		translated = string.format( language.GetPhrase( "hint.hitXlimit" ), language.GetPhrase( name ) )
+	end
+
+	self:AddNotify( translated, NOTIFY_ERROR, 6 )
 	surface.PlaySound( "buttons/button10.wav" )
 
 end
 
 function GM:OnUndo( name, strCustomString )
 
-	if ( !strCustomString ) then
-		local str = "#Undone_" .. name
-		local translated = language.GetPhrase( str )
-		if ( str == translated ) then
-			-- No translation available, apply our own
-			translated = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( name ) )
-		else
-			-- Try to translate some of this
-			local strmatch = string.match( translated, "^Undone (.*)$" )
-			if ( strmatch ) then
-				translated = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( strmatch ) )
-			end
-		end
+	local text = strCustomString
 
-		self:AddNotify( translated, NOTIFY_UNDO, 2 )
-	else
-		-- This is a hack for SWEPs, etc, to support #translations from server
-		local str = string.match( strCustomString, "^Undone (.*)$" )
-		if ( str ) then
-			strCustomString = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( str ) )
+	if ( !text ) then
+		local strId = "#Undone_" .. name
+		text = language.GetPhrase( strId )
+		if ( strId == text ) then
+			-- No translation available, generate our own
+			text = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( name ) )
 		end
-
-		self:AddNotify( strCustomString, NOTIFY_UNDO, 2 )
 	end
+
+	-- This is a hack for SWEPs, Tools, etc, that already have hardcoded English only translations
+	-- TODO: Do this for non English languages only
+	local strMatch = string.match( text, "^Undone (.*)$" )
+	if ( strMatch ) then
+		text = string.format( language.GetPhrase( "hint.undoneX" ), language.GetPhrase( strMatch ) )
+	end
+
+	self:AddNotify( text, NOTIFY_UNDO, 2 )
 
 	-- Find a better sound :X
 	surface.PlaySound( "buttons/button15.wav" )
@@ -70,7 +72,14 @@ end
 
 function GM:OnCleanup( name )
 
-	self:AddNotify( "#Cleaned_" .. name, NOTIFY_CLEANUP, 5 )
+	local str = "#Cleaned_" .. name
+	local translated = language.GetPhrase( str )
+	if ( str == translated ) then
+		-- No translation available, apply our own
+		translated = string.format( language.GetPhrase( "hint.cleanedX" ), language.GetPhrase( name ) )
+	end
+
+	self:AddNotify( translated, NOTIFY_CLEANUP, 5 )
 
 	-- Find a better sound :X
 	surface.PlaySound( "buttons/button15.wav" )
