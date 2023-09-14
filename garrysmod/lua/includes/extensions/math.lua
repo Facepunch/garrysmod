@@ -50,11 +50,9 @@ end
 ------------------------------------------------------------]]
 function math.Clamp( _in, low, high )
 	-- if NaN then return 0 clamped by the given bounds
-	if _in != _in then
-		return math.min( math.max( 0, low ), high )
-	else
-		return math.min( math.max( _in, low ), high )
-	end
+	if _in != _in then _in = 0 end
+
+	return math.min( math.max( _in, low ), high )
 end
 
 --[[---------------------------------------------------------
