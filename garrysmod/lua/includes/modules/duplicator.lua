@@ -411,7 +411,7 @@ function RegisterEntityModifier( _name_, _function_ ) EntityModifiers[ _name_ ] 
 function FigureOutRequiredAddons( Dupe )
 
 	local addons = {}
-	for id, ent in pairs( Dupe.Entities ) do
+	for _, ent in pairs( Dupe.Entities ) do
 		for id, addon in pairs( engine.GetAddons() ) do
 			-- Model
 			if ( ent.Model and file.Exists( ent.Model, addon.title ) ) then
@@ -663,6 +663,10 @@ end
 -----------------------------------------------------------]]
 function CreateEntityFromTable( Player, EntTable )
 
+	-- Get rid of stored outputs, they are being abused
+	-- Do it here, so that entities can store new ones on creation
+	EntTable.m_tOutputs = nil
+
 	--
 	-- Convert position/angle to `local`
 	--
@@ -762,7 +766,7 @@ end
    Given entity list and constranit list, create all entities
    and return their tables
 -----------------------------------------------------------]]
-function Paste( Player, EntityList, ConstraintList )
+function Paste( Player, entityList, constraintList )
 
 	--
 	-- Store the player
@@ -773,8 +777,8 @@ function Paste( Player, EntityList, ConstraintList )
 	--
 	-- Copy the table - because we're gonna be changing some stuff on it.
 	--
-	local EntityList = table.Copy( EntityList )
-	local ConstraintList = table.Copy( ConstraintList )
+	local EntityList = table.Copy( entityList )
+	local ConstraintList = table.Copy( constraintList )
 
 	local CreatedEntities = {}
 
