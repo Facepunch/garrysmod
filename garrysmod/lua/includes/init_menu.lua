@@ -35,6 +35,7 @@ include( "extensions/util.lua" )
 include( "extensions/file.lua" )
 include( "extensions/debug.lua" )
 include( "extensions/client/render.lua" )
+include( "extensions/client/globals.lua" )
 
 include( "util/vgui_showlayout.lua" )
 include( "util/workshop_files.lua" )

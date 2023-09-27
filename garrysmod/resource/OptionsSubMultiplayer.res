@@ -140,6 +140,23 @@
 		"Default"		"1"
 	}
 
+	"CrosshairSettings"
+	{
+		"ControlName"		"Button"
+		"fieldName"		"CrosshairSettings"
+		"xpos"		"32"
+		"ypos"		"250"
+		"wide"		"250"
+		"tall"		"24"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"tabPosition"		"2"
+		"labelText"		"#GameUI_CrosshairCustomize"
+		"textAlignment"		"west"
+		"textinsetx"		"6"
+		"command"		"crosshair_setup"
+	}
+
 	////////////////////////////////////// SPRAY
 
 	"Label2"
