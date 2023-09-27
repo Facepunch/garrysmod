@@ -21,7 +21,7 @@ local function AddRecursive( pnl, folder, path, wildcard )
 	for k, v in ipairs( folders ) do
 
 		local added_rec = AddRecursive( pnl, folder .. v .. "/", path, wildcard )
-		added = added or added_rec
+		added = added || added_rec
 
 	end
 
@@ -42,6 +42,7 @@ local function AddonsRightClick( self )
 
 end
 
+
 local function RefreshAddons( MyNode )
 
 	local ViewPanel = MyNode.ViewPanel
@@ -58,12 +59,22 @@ local function RefreshAddons( MyNode )
 
 			local anyAdded = AddRecursive( ViewPanel, "models/", addon.title, "*.mdl" )
 			if ( !anyAdded ) then
-				local cp = spawnmenu.GetContentType( "header" )
-				if ( cp ) then cp( ViewPanel, { text = "#spawnmenu.failedtofindmodels" } ) end
+				local text = "<font=ContentHeader>" .. language.GetPhrase( "spawnmenu.failedtofindmodels" ) .. "\n\n" ..  tostring( addon.title ) .. " (ID: " .. tostring( addon.wsid ) .. ")" .. "</font>"
 
-				-- For debugging
-				local cp = spawnmenu.GetContentType( "header" )
-				if ( cp ) then cp( ViewPanel, { text = tostring( addon.title ) .. " (ID: " .. tostring( addon.wsid ) .. ")" } ) end
+				local msg = vgui.Create( "Panel", ViewPanel )
+				msg.Paint = function( s, w, h )
+					-- Shadow. Ew.
+					local parsedShadow = markup.Parse( "<colour=0,0,0,130>" .. text .. "</colour>", s:GetParent():GetWide() )
+					parsedShadow:Draw( 2, 2 )
+
+					-- The actual text
+					local parsed = markup.Parse( text, s:GetParent():GetWide() )
+					parsed:Draw( 0, 0 )
+
+					-- Size to contents. Ew.
+					s:SetSize( parsed:GetWidth(), parsed:GetHeight() )
+				end
+				ViewPanel:Add( msg )
 			end
 
 			MyNode.pnlContent:SwitchPanel( ViewPanel )
