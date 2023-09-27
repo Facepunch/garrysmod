@@ -6,15 +6,13 @@
 function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
 
 	-- Object is already frozen (!?)
-	if ( !phys:IsMoveable() ) then return false end
-	if ( ent:GetUnFreezable() ) then return false end
+	if ( !phys:IsMoveable() ) then return end
+	if ( ent:GetUnFreezable() ) then return end
 
 	phys:EnableMotion( false )
 
 	-- Add it to the player's frozen props
 	ply:AddFrozenPhysicsObject( ent, phys )
-
-	return true
 
 end
 
@@ -305,7 +303,7 @@ function GM:PlayerSelectTeamSpawn( TeamID, pl )
 
 	for i = 0, 6 do
 
-		local ChosenSpawnPoint = table.Random( SpawnPoints )
+		ChosenSpawnPoint = table.Random( SpawnPoints )
 		if ( hook.Call( "IsSpawnpointSuitable", GAMEMODE, pl, ChosenSpawnPoint, i == 6 ) ) then
 			return ChosenSpawnPoint
 		end
@@ -590,7 +588,7 @@ end
 function GM:PlayerCanJoinTeam( ply, teamid )
 
 	local TimeBetweenSwitches = GAMEMODE.SecondsBetweenTeamSwitches or 10
-	if ( ply.LastTeamSwitch && RealTime()-ply.LastTeamSwitch < TimeBetweenSwitches ) then
+	if ( ply.LastTeamSwitch && RealTime() - ply.LastTeamSwitch < TimeBetweenSwitches ) then
 		ply.LastTeamSwitch = ply.LastTeamSwitch + 1
 		ply:ChatPrint( Format( "Please wait %i more seconds before trying to change team again", ( TimeBetweenSwitches - ( RealTime() - ply.LastTeamSwitch ) ) + 1 ) )
 		return false

@@ -189,12 +189,12 @@ duplicator.RegisterEntityClass( "prop_effect", MakeEffect, "Model", "Data" )
 
 --[[---------------------------------------------------------
 	Name: FixInvalidPhysicsObject
-			Attempts to detect and correct the physics object
-			on models such as the TF2 Turrets
+	Desc: Attempts to detect and correct the physics object
+	on models such as the TF2 Turrets
 -----------------------------------------------------------]]
-function FixInvalidPhysicsObject( Prop )
+function FixInvalidPhysicsObject( prop )
 
-	local PhysObj = Prop:GetPhysicsObject()
+	local PhysObj = prop:GetPhysicsObject()
 	if ( !IsValid( PhysObj ) ) then return end
 
 	local min, max = PhysObj:GetAABB()
@@ -203,21 +203,21 @@ function FixInvalidPhysicsObject( Prop )
 	local PhysSize = ( min - max ):Length()
 	if ( PhysSize > 5 ) then return end
 
-	local min = Prop:OBBMins()
-	local max = Prop:OBBMaxs()
-	if ( !min or !max ) then return end
+	local mins = prop:OBBMins()
+	local maxs = prop:OBBMaxs()
+	if ( !mins or !maxs ) then return end
 
-	local ModelSize = ( min - max ):Length()
+	local ModelSize = ( mins - maxs ):Length()
 	local Difference = math.abs( ModelSize - PhysSize )
 	if ( Difference < 10 ) then return end
 
 	-- This physics object is definitiely weird.
 	-- Make a new one.
+	prop:PhysicsInitBox( mins, maxs )
+	prop:SetCollisionGroup( COLLISION_GROUP_DEBRIS )
 
-	Prop:PhysicsInitBox( min, max )
-	Prop:SetCollisionGroup( COLLISION_GROUP_DEBRIS )
-
-	local PhysObj = Prop:GetPhysicsObject()
+	-- Check for success
+	PhysObj = prop:GetPhysicsObject()
 	if ( !IsValid( PhysObj ) ) then return end
 
 	PhysObj:SetMass( 100 )
@@ -226,7 +226,7 @@ function FixInvalidPhysicsObject( Prop )
 end
 
 --[[---------------------------------------------------------
-	Name: CCSpawnProp - player spawns a prop
+	Name: GMODSpawnProp - player spawns a prop
 -----------------------------------------------------------]]
 function GMODSpawnProp( ply, model, iSkin, strBody )
 
@@ -299,7 +299,7 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 	local tr = util.TraceLine( trace )
 
 	-- Prevent spawning too close
-	--[[if ( !tr.Hit || tr.Fraction < 0.05 ) then
+	--[[if ( !tr.Hit or tr.Fraction < 0.05 ) then
 		return
 	end]]
 
@@ -371,7 +371,7 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	-- We don't want them spawning any entity they like!
 	if ( !NPCData ) then return end
 
-	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) || game.SinglePlayer()
+	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) or game.SinglePlayer()
 	if ( NPCData.AdminOnly && !isAdmin ) then return end
 
 	local bDropToFloor = false
@@ -687,7 +687,7 @@ AddNPCToDuplicator( "monster_sentry" )
 -----------------------------------------------------------]]
 local function CanPlayerSpawnSENT( ply, EntityName )
 
-	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) || game.SinglePlayer()
+	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) or game.SinglePlayer()
 
 	-- Make sure this is a SWEP
 	local sent = scripted_ents.GetStored( EntityName )
@@ -750,14 +750,14 @@ function Spawn_SENT( ply, EntityName, tr )
 
 	if ( sent ) then
 
-		local sent = sent.t
+		local sentTable = sent.t
 
 		ClassName = EntityName
 
 			local SpawnFunction = scripted_ents.GetMember( EntityName, "SpawnFunction" )
 			if ( !SpawnFunction ) then return end -- Fallback to default behavior below?
 
-			entity = SpawnFunction( sent, ply, tr, EntityName )
+			entity = SpawnFunction( sentTable, ply, tr, EntityName )
 
 			if ( IsValid( entity ) ) then
 				entity:SetCreator( ply )
@@ -765,7 +765,7 @@ function Spawn_SENT( ply, EntityName, tr )
 
 		ClassName = nil
 
-		PrintName = sent.PrintName
+		PrintName = sentTable.PrintName
 
 	else
 
@@ -854,7 +854,7 @@ function CCGiveSWEP( ply, command, arguments )
 	if ( swep == nil ) then return end
 
 	-- You're not allowed to spawn this!
-	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	local isAdmin = ply:IsAdmin() or game.SinglePlayer()
 	if ( ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) ) then
 		return
 	end
@@ -888,7 +888,7 @@ function Spawn_Weapon( ply, wepname, tr )
 	if ( swep == nil ) then return end
 
 	-- You're not allowed to spawn this!
-	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	local isAdmin = ply:IsAdmin() or game.SinglePlayer()
 	if ( ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) ) then
 		return
 	end

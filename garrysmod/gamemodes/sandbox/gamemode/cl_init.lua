@@ -7,13 +7,13 @@
 
 -----------------------------------------------------------]]
 
-include( 'shared.lua' )
-include( 'cl_spawnmenu.lua' )
-include( 'cl_notice.lua' )
-include( 'cl_hints.lua' )
-include( 'cl_worldtips.lua' )
-include( 'cl_search_models.lua' )
-include( 'gui/IconEditor.lua' )
+include( "shared.lua" )
+include( "cl_spawnmenu.lua" )
+include( "cl_notice.lua" )
+include( "cl_hints.lua" )
+include( "cl_worldtips.lua" )
+include( "cl_search_models.lua" )
+include( "gui/IconEditor.lua" )
 
 --
 -- Make BaseClass available
