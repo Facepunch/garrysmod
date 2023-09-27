@@ -5,6 +5,9 @@
 -----------------------------------------------------------]]
 function GM:OnPhysgunFreeze( weapon, phys, ent, ply )
 
+	-- Non vphysics entity, we don't know how to handle that
+	if ( !IsValid( phys ) ) then return end
+
 	-- Object is already frozen (!?)
 	if ( !phys:IsMoveable() ) then return end
 	if ( ent:GetUnFreezable() ) then return end
