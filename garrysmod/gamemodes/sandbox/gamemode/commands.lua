@@ -682,6 +682,10 @@ AddNPCToDuplicator( "monster_turret" )
 AddNPCToDuplicator( "monster_miniturret" )
 AddNPCToDuplicator( "monster_sentry" )
 
+-- Portal
+AddNPCToDuplicator( "npc_portal_turret_floor" )
+AddNPCToDuplicator( "npc_rocket_turret" )
+
 --[[---------------------------------------------------------
 	Name: CanPlayerSpawnSENT
 -----------------------------------------------------------]]

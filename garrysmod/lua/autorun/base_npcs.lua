@@ -484,6 +484,7 @@ if ( IsMounted( "portal" ) ) then
 		Class = "npc_rocket_turret",
 		Category = Category,
 		OnFloor = true,
+		Offset = 0,
 		Rotate = Angle( 0, 180, 0 ),
 	} )
 
