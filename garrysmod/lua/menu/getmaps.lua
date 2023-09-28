@@ -47,6 +47,8 @@ local function UpdateMaps()
 
 	MapNames[ "dod_" ] = "Day Of Defeat"
 
+	MapNames[ "dpb_" ] = "Digital Paintball"
+
 	MapNames[ "ddd_" ] = "Dino D-Day"
 
 	MapNames[ "de_dam" ] = "DIPRIP"
