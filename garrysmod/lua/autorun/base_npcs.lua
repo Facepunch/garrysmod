@@ -459,11 +459,12 @@ if ( IsMounted( "hl1" ) || IsMounted( "hl1mp" ) ) then
 	AddNPC( { Class = "monster_alien_controller", Category = Category, NoDrop = true } )
 	AddNPC( { Class = "monster_barney", Category = Category } )
 
-	AddNPC( { Class = "monster_turret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
-	AddNPC( { Class = "monster_miniturret", Category = Category, Offset = 0, KeyValues = { orientation = 1 }, OnCeiling = true, SpawnFlags = 32 } )
+	-- Hack to have it not invert angles again
+	local turretOnDupe = function( npc, data ) npc:SetKeyValue( "spawnflags", bit.bor( npc.SpawnFlags, 2048 ) ) end
+	local turretOnCeiling = function( npc ) npc:SetKeyValue( "orientation", 1 ) end
+	AddNPC( { Class = "monster_turret", Category = Category, Offset = 0, OnCeiling = turretOnCeiling, OnFloor = true, SpawnFlags = 32, OnDuplicated = turretOnDupe } )
+	AddNPC( { Class = "monster_miniturret", Category = Category, Offset = 0, OnCeiling = turretOnCeiling, OnFloor = true, SpawnFlags = 32, OnDuplicated = turretOnDupe } )
 	AddNPC( { Class = "monster_sentry", Category = Category, Offset = 0, OnFloor = true, SpawnFlags = 32 } )
-	--AddNPC( { Name = "Ground Heavy Turret", Class = "monster_turret", Category = Category, Offset = 0, KeyValues = { orientation = 0 }, OnFloor = true, SpawnFlags = 32 }, "monster_turret_gnd" )
-	--AddNPC( { Name = "Ground Mini Turret", Class = "monster_miniturret", Category = Category, Offset = 0, KeyValues = { orientation = 0 }, OnFloor = true, SpawnFlags = 32 }, "monster_miniturret_gnd" )
 
 end
 
