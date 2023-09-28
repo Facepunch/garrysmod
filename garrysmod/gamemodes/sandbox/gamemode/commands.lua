@@ -189,12 +189,12 @@ duplicator.RegisterEntityClass( "prop_effect", MakeEffect, "Model", "Data" )
 
 --[[---------------------------------------------------------
 	Name: FixInvalidPhysicsObject
-			Attempts to detect and correct the physics object
-			on models such as the TF2 Turrets
+	Desc: Attempts to detect and correct the physics object
+	on models such as the TF2 Turrets
 -----------------------------------------------------------]]
-function FixInvalidPhysicsObject( Prop )
+function FixInvalidPhysicsObject( prop )
 
-	local PhysObj = Prop:GetPhysicsObject()
+	local PhysObj = prop:GetPhysicsObject()
 	if ( !IsValid( PhysObj ) ) then return end
 
 	local min, max = PhysObj:GetAABB()
@@ -203,21 +203,21 @@ function FixInvalidPhysicsObject( Prop )
 	local PhysSize = ( min - max ):Length()
 	if ( PhysSize > 5 ) then return end
 
-	local min = Prop:OBBMins()
-	local max = Prop:OBBMaxs()
-	if ( !min or !max ) then return end
+	local mins = prop:OBBMins()
+	local maxs = prop:OBBMaxs()
+	if ( !mins or !maxs ) then return end
 
-	local ModelSize = ( min - max ):Length()
+	local ModelSize = ( mins - maxs ):Length()
 	local Difference = math.abs( ModelSize - PhysSize )
 	if ( Difference < 10 ) then return end
 
 	-- This physics object is definitiely weird.
 	-- Make a new one.
+	prop:PhysicsInitBox( mins, maxs )
+	prop:SetCollisionGroup( COLLISION_GROUP_DEBRIS )
 
-	Prop:PhysicsInitBox( min, max )
-	Prop:SetCollisionGroup( COLLISION_GROUP_DEBRIS )
-
-	local PhysObj = Prop:GetPhysicsObject()
+	-- Check for success
+	PhysObj = prop:GetPhysicsObject()
 	if ( !IsValid( PhysObj ) ) then return end
 
 	PhysObj:SetMass( 100 )
@@ -226,7 +226,7 @@ function FixInvalidPhysicsObject( Prop )
 end
 
 --[[---------------------------------------------------------
-	Name: CCSpawnProp - player spawns a prop
+	Name: GMODSpawnProp - player spawns a prop
 -----------------------------------------------------------]]
 function GMODSpawnProp( ply, model, iSkin, strBody )
 
@@ -299,7 +299,7 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 	local tr = util.TraceLine( trace )
 
 	-- Prevent spawning too close
-	--[[if ( !tr.Hit || tr.Fraction < 0.05 ) then
+	--[[if ( !tr.Hit or tr.Fraction < 0.05 ) then
 		return
 	end]]
 
@@ -371,34 +371,31 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	-- We don't want them spawning any entity they like!
 	if ( !NPCData ) then return end
 
-	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) || game.SinglePlayer()
+	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) or game.SinglePlayer()
 	if ( NPCData.AdminOnly && !isAdmin ) then return end
 
 	local bDropToFloor = false
+	local wasSpawnedOnCeiling = false
+	local wasSpawnedOnFloor = false
 
 	--
-	-- monster_turret & monster_miniturret can be spawned either on the floor or on the ceiling
+	-- This NPC has to be spawned on a ceiling (Barnacle) or a floor (Turrets)
 	--
-	if ( ( Class == "monster_turret" ) or ( Class == "monster_miniturret" ) ) then
-		if ( Vector( 0, 0, 1 ):Dot( Normal ) >= 0.95 ) then -- Check if on floor
-			NPCData.KeyValues.orientation = 0
-		elseif ( Vector( 0, 0, -1 ):Dot( Normal ) >= 0.95 ) then -- Check if on ceiling
-			NPCData.KeyValues.orientation = 1
-		else
-			return nil
-		end
-	end
+	if ( NPCData.OnCeiling or NPCData.OnFloor ) then
+		local isOnCeiling	= Vector( 0, 0, -1 ):Dot( Normal ) >= 0.95
+		local isOnFloor		= Vector( 0, 0,  1 ):Dot( Normal ) >= 0.95
 
-	--
-	-- This NPC has to be spawned on a ceiling ( Barnacle )
-	--
-	if ( NPCData.OnCeiling && Vector( 0, 0, -1 ):Dot( Normal ) < 0.95 ) then
-		return nil
-	--
-	-- This NPC has to be spawned on a floor ( Floor Turret )
-	--
-	elseif ( NPCData.OnFloor && Vector( 0, 0, 1 ):Dot( Normal ) < 0.95 ) then
-		return nil
+		-- Not on ceiling, and we can't be on floor
+		if ( !isOnCeiling && !NPCData.OnFloor ) then return end
+
+		-- Not on floor, and we can't be on ceiling
+		if ( !isOnFloor && !NPCData.OnCeiling ) then return end
+
+		-- We can be on either, and we are on neither
+		if ( !isOnFloor && !isOnCeiling ) then return end
+
+		wasSpawnedOnCeiling = isOnCeiling
+		wasSpawnedOnFloor = isOnFloor
 	else
 		bDropToFloor = true
 	end
@@ -488,6 +485,17 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 		NPC.Equipment = Equipment
 	end
 
+	if ( wasSpawnedOnCeiling && isfunction( NPCData.OnCeiling ) ) then
+		NPCData.OnCeiling( NPC )
+	elseif ( wasSpawnedOnFloor && isfunction( NPCData.OnFloor ) ) then
+		NPCData.OnFloor( NPC )
+	end
+
+	-- Allow special case for duplicator stuff
+	if ( isfunction( NPCData.OnDuplicated ) ) then
+		NPC.OnDuplicated = NPCData.OnDuplicated
+	end
+
 	DoPropSpawnedEffect( NPC )
 
 	NPC:Spawn()
@@ -496,7 +504,8 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 	-- Store spawnmenu data for addons and stuff
 	NPC.NPCName = Class
 	NPC.NPCTable = NPCData
-	
+	NPC._wasSpawnedOnCeiling = wasSpawnedOnCeiling
+
 	-- For those NPCs that set their model in Spawn function
 	-- We have to keep the call above for NPCs that want a model set by Spawn() time
 	-- BAD: They may adversly affect entity collision bounds
@@ -586,11 +595,12 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 
 	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnNPC", ply, class, equipment ) ) then return end
 
-	local normal = Vector( 0, 0, 1 )
+	local NPCData = list.Get( "NPC" )[ class ]
 
-	local NPCList = list.Get( "NPC" )
-	local NPCData = NPCList[ class ]
-	if ( NPCData && NPCData.OnCeiling ) then normal = Vector( 0, 0, -1 ) end
+	local normal = Vector( 0, 0, 1 )
+	if ( NPCData && NPCData.OnCeiling && ( NPCData.OnFloor && data._wasSpawnedOnCeiling or !NPCData.OnFloor ) ) then
+		normal = Vector( 0, 0, -1 )
+	end
 
 	local ent = InternalSpawnNPC( ply, data.Pos, normal, class, equipment, spawnflags, true )
 
@@ -694,12 +704,16 @@ AddNPCToDuplicator( "monster_turret" )
 AddNPCToDuplicator( "monster_miniturret" )
 AddNPCToDuplicator( "monster_sentry" )
 
+-- Portal
+AddNPCToDuplicator( "npc_portal_turret_floor" )
+AddNPCToDuplicator( "npc_rocket_turret" )
+
 --[[---------------------------------------------------------
 	Name: CanPlayerSpawnSENT
 -----------------------------------------------------------]]
 local function CanPlayerSpawnSENT( ply, EntityName )
 
-	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) || game.SinglePlayer()
+	local isAdmin = ( IsValid( ply ) && ply:IsAdmin() ) or game.SinglePlayer()
 
 	-- Make sure that given EntityName is actually a SENT
 	local sent = scripted_ents.GetStored( EntityName )
@@ -762,14 +776,14 @@ function Spawn_SENT( ply, EntityName, tr )
 
 	if ( sent ) then
 
-		local sent = sent.t
+		local sentTable = sent.t
 
 		ClassName = EntityName
 
 			local SpawnFunction = scripted_ents.GetMember( EntityName, "SpawnFunction" )
 			if ( !SpawnFunction ) then return end -- Fallback to default behavior below?
 
-			entity = SpawnFunction( sent, ply, tr, EntityName )
+			entity = SpawnFunction( sentTable, ply, tr, EntityName )
 
 			if ( IsValid( entity ) ) then
 				entity:SetCreator( ply )
@@ -777,7 +791,7 @@ function Spawn_SENT( ply, EntityName, tr )
 
 		ClassName = nil
 
-		PrintName = sent.PrintName
+		PrintName = sentTable.PrintName
 
 	else
 
@@ -866,7 +880,7 @@ function CCGiveSWEP( ply, command, arguments )
 	if ( swep == nil ) then return end
 
 	-- You're not allowed to spawn this!
-	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	local isAdmin = ply:IsAdmin() or game.SinglePlayer()
 	if ( ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) ) then
 		return
 	end
@@ -900,7 +914,7 @@ function Spawn_Weapon( ply, wepname, tr )
 	if ( swep == nil ) then return end
 
 	-- You're not allowed to spawn this!
-	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	local isAdmin = ply:IsAdmin() or game.SinglePlayer()
 	if ( ( !swep.Spawnable && !isAdmin ) or ( swep.AdminOnly && !isAdmin ) ) then
 		return
 	end
@@ -968,7 +982,7 @@ local function MakeVehicle( ply, Pos, Ang, model, Class, VName, VTable, data )
 
 	Ent:SetModel( model )
 
-	-- Fallback vehiclescripts for HL2 ( dupe support )
+	-- Fallback vehiclescripts for HL2 maps ( dupe support )
 	if ( model == "models/buggy.mdl" ) then Ent:SetKeyValue( "vehiclescript", "scripts/vehicles/jeep_test.txt" ) end
 	if ( model == "models/vehicle.mdl" ) then Ent:SetKeyValue( "vehiclescript", "scripts/vehicles/jalopy.txt" ) end
 
