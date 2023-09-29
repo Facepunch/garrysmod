@@ -47,6 +47,8 @@ function Register( t, name )
 
 	if ( hook.Run( "PreRegisterSWEP", t, name ) == false ) then return end
 
+	if ( isstring( t.ClassNameOverride ) ) then name = t.ClassNameOverride end
+
 	local old = WeaponList[ name ]
 	t.ClassName = name
 	WeaponList[ name ] = t
