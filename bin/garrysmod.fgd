@@ -1,0 +1,209 @@
+
+@include "base.fgd"
+@include "halflife2.fgd"
+
+@SolidClass = func_ladder :
+	"Ladder. Players will be able to move freely along this brush, as if it was a ladder." +
+	"Apply the toolsinvisibleladder material to a func_ladder brush."
+[
+]
+
+@SolidClass base(Targetname, Parentname) = func_detail_blocker : 
+	"A brush entity that prevents detail sprites from being placed inside its volume."
+[
+]
+
+@PointClass base(Targetname) iconsprite("editor/lua_run.vmt") = lua_run : "Runs Lua Code"
+[
+	Code(string) : "Code" : "" : "Lua code to run when triggered"
+
+	spawnflags(flags) =
+	[
+		1  : "Run code on spawn": 0
+	]
+
+	input RunCode(void) : "Run Code that was defined in the entity"
+	input RunPassedCode(string) : "Run code that was passed as a variable"
+]
+
+@PointClass base(Targetname, Parentname, Angles) studioprop( "models/editor/spot.mdl" ) frustum(lightfov,nearz,farz,lightcolor,-1) = env_projectedtexture : "Projected texture entity."
+[
+	spawnflags(flags) =
+	[
+		1  : "Enabled"			: 1
+	]
+
+	target(target_destination)	: "target" : : "target"
+	lightfov(float)				: "FOV" : "90.0" : "FOV"
+	nearz(float)				: "NearZ" : "4.0" : "Near Z for projected texture"
+	farz(float)					: "FarZ" : "750.0" : "Far Z for projected texture"
+
+	enableshadows(Choices) : "Enable Shadows" : 1 : "Enables/disables shadows from this projected texture." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	lightonlytarget(Choices) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	lightworld(Choices) : "Light World" : 1 : "Control whether flashlight effects static world geometry." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	lightcolor(color255)		: "Light Color" : "255 255 255" : "Light Color RGB-Intensity"
+	lightstrength(float)		: "Light Strength" : "1.0" : "How bright the light appears"
+	cameraspace(integer)		: "Camera Space" : 0 : "Angles are interpreted as being relative to camera."
+
+	texturename(*string) 		: "Texture Name" : "effects/flashlight001" : "The name of the texture to use"
+	textureframe(integer) 		: "Texture Frame" : 0 : "The frame of the texture"
+
+	// Inputs
+	input TurnOn(void)					: "Turn on the texture"
+	input TurnOff(void)					: "Turn off the texture"
+	input SetFOV(float)					: "Set FOV"
+	input SpotlightTexture(string)		: "Set Spotlight Texture"
+	input Ambient(float)				: "Set Spotlight Ambient"
+
+]
+
+@PointClass base(Targetname) iconsprite("editor/env_skypaint.vmt") = env_skypaint : "Control the sky colours"
+[
+	topcolor(color1)		: "Sky Top Color" : "0.2 0.5 1.0" : "The colour of the top of the sky"
+	bottomcolor(color1)		: "Sky Bottom Color" : "0.8 1.0 1.0" : "The colour of the bottom of the sky"
+	fadebias(float)			: "Sky Fade Bias" : "1.0" : "Controls the bias of the fade between top/bottom (1.0 is even)"
+
+	sunsize(float)			: "Sun Size" : "2.0" : "Controls the size of the sun glow"
+	sunnormal(vector )		: "Sun Normal" : "0.4 0.0 0.01" : "The position of the sun, expressed as a normal from the center of the world"
+	sunposmethod(choices)	: "Sun Position Method" : 0 : "How should we determine the position of the sun?" =
+	[
+		0 : "Custom - Use the Sun Normal to position the sun"
+		1 : "Automatic - Find a env_sun entity and use that"
+	]
+	suncolor(color1)		: "Sun Color" : "0.2 0.1 0.0" : "The color of the sun glow (this is additive)"
+
+	duskscale(float)		: "Dusk Scale" : "1.0" : "The size of the dusk effect (colouring of the horizon)"
+	duskintensity(float)	: "Dusk Intensity" : "1.0" : "How powerful the dusk effect is"
+	duskcolor(color1)		: "Dusk Color" : "1.0 0.2 0.0" : "The color of the dusk effect"
+
+	drawstars(choices)		: "Draw Stars" : 0 : "" =
+	[
+		0 : "No - Don't draw stars"
+		1 : "Yes - Draw the stars please"
+	]
+
+	startexture(string) 	: "Star Texture" : "skybox/starfield" : "The star texture"
+	starscale(float)		: "Star Scale" : "0.5" : "How big the star texture should be"
+	starfade(float)			: "Star Fade" : "1.0" : "Fade the star texture towards the horizon"
+	starspeed(float)		: "Star Speed" : "0.01" : "How fast the star texture should scroll across the sky"
+
+	hdrscale(float)			: "HDR Scale" : "0.66" : "When rendering your skybox in HDR mode, output will be scaled by this amount."
+]
+
+@PointClass base(Targetname, Parentname, RenderFields, Angles, DXLevelChoice) studio("models/editor/cone_helper.mdl") = beam_spotlight : 
+	"An entity to draw a spotlight. Will draw a beam when the player views it side on, and a halo when it's facing towards the player. "+
+	"Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests." +
+	"This spotlight is entirely client side, it is not sync'd across clients."
+[
+	spawnflags(Flags) = 
+	[
+		1 : "Start On" : 1
+		2 : "No Dynamic Light" : 0
+		4 : "Start rotation on" : 0
+		8 : "Reverse Direction" : 0
+		16 : "X Axis"  : 0
+		32 : "Y Axis"  : 0
+	]
+
+	maxspeed(integer) : "Max Rotation Speed" : 100 : "The maximum rotation speed of the spotlight, in degrees per second."
+
+	spotlightlength(integer) : "Spotlight Length" : 500 : "Length of the spotlight beam."
+	spotlightwidth(integer) : "Spotlight Width" : 50 : "Width of the spotlight beam."
+	rendercolor(color255) : "Color (R G B)" : "255 255 255"
+	HDRColorScale(float) : "HDR color scale." : "0.7" : "float value to multiply sprite color by when running in HDR mode."
+	
+	// Inputs
+	input LightOn(void) : "Turn the spotlight on."
+	input LightOff(void) : "Turn the spotlight off"
+	input Start(void) : "Start the rotator rotating."
+	input Stop(void) : "Stop the rotator from rotating."
+	input Reverse(void) : "Reverse the direction of rotation of the rotator."
+	
+	// outputs
+	output OnLightOn(void) : "Fires when light turns on."
+	output OnLightOff(void) : "Fires when light turns off."
+]
+
+@SolidClass base(Trigger) = trigger_catapult : "Catapult the player in a given diretion at a given velocity."
+[
+	playerSpeed(float) : "Player Speed" : 450 : "Speed at which to launch the players (u/sec)"
+	physicsSpeed(float) : "Physics Object Speed" : 450 : "Speed at which to launch physics objects (u/sec)"
+	useThresholdCheck(integer) : "Use Threshold Check" : 0
+	entryAngleTolerance(float) : "Entry Angle Tolerance" : "0.0" : "Flung object's velocity must be pointing this much at the target. Specify a value between [-1...1] 1 means exactly, 0 means within 180 degrees -1 means any angle is accepted. This is only used if Use Threshold Check is set to yes."
+	useExactVelocity(integer) : "Use Exact Velocity" : 0 : "Try to fling exactly at the speed specified - this prevents the added upward velocity from a launch target."
+	exactVelocityChoiceType(choices) : "Exact Solution Method" : 0 :
+	"Using exact velocity generates two correct solutions. Use this to force which one you choose." =
+	[
+		0 : "Best"
+		1 : "Solution One"
+		2 : "Solution Two"
+	]
+	lowerThreshold(float) : "Lower Threshold" : "0.15" : "Flung object must be within this percentage value in order to activate fling. Specify a value between [0...1] (default is .15) This is only used if Use Threshold Check is set to yes."
+	upperThreshold(float) : "Upper Threshold" : "0.30" : "Flung object must be within this percentage value in order to activate fling. Specify a value between [0...1] (default is .30) This is only used if Use Threshold Check is set to yes."
+	launchDirection(angle) : "Launch direction" : "0 0 0" : "Direction to launch the player in."
+	launchTarget(target_destination) : "Launch target" : "" : "Entity to try to 'hit' when we're launched."
+	onlyVelocityCheck(integer) : "Only check velocity" : 0 : "Only check velocity of the touching object - don't actually catapult it.  Use in conjunction with OnCatapulted to create velocity checking triggers.  Only works when Use Threshhold Check is enabled."
+	applyAngularImpulse(integer) : "Apply angular impulse" : 1 : "If a random angular impulse should be applied to physics objects being catapulted."
+	//AirCtrlSupressionTime(float) : "Air Control SupressionTime" : "-1.0" : "[Launch by target only!]If greater than zero, supress player aircontrol for this number (in seconds). If less than zero use the default (quarter second)."
+
+	output OnCatapulted(void) : "The object has been launched."
+]
+
+@SolidClass base(Targetname) = func_nav_blocker : "A brush entity that can block nav areas touching its AABB." 
+[
+	input BlockNav(string) : "Starts blocking nav areas."
+	input UnblockNav(void) : "Stops blocking nav areas."
+
+	StartDisabled(choices) : "Start Disabled" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	teamToBlock(choices) : "Team(s) to block" : -2 : "Team(s) this entity should block" =
+	[
+		-2 : "Everyone"
+		0 : "Team 0"
+		1 : "Team 1"
+	]
+]
+
+@SolidClass base(Targetname, EnableDisable) = func_nav_avoidance_obstacle : "A brush entity that tells bots to avoid nav areas touching its AABB." 
+[
+]
+
+@SolidClass base(Targetname, EnableDisable) = func_nav_avoid : "Influence bots to avoid this region by increasing the pathfinding cost within it."
+[
+	tags(string) : "Tags" : "" : "A space delimited list of tags. A tag is a label with no spaces. If a TFBot has at least one matching tag, it will pay attention to this entity. Tags that are automatically set on TFBots include bomb_carrier, common, mission_sniper, mission_spy, mission_sentry_buster, or any class name." 
+
+	team(choices) : "Team" : -2 : "Which team will avoid this region" =
+	[
+		-2 : "Everyone"
+		0 : "Team 0"
+		1 : "Team 1"
+	]
+]
+
+@SolidClass base(Targetname, EnableDisable) = func_nav_prefer : "Influence bots to prefer this region by decreasing the pathfinding cost within it."
+[
+	tags(string) : "Tags" : "" : "A space delimited list of tags. A tag is a label with no spaces. If a TFBot has at least one matching tag, it will pay attention to this entity. Tags that are automatically set on TFBots include bomb_carrier, common, mission_sniper, mission_spy, mission_sentry_buster, or any class name." 
+
+	team(choices) : "Team" : -2 : "Which team will prefer this region" =
+	[
+		-2 : "Everyone"
+		0 : "Team 0"
+		1 : "Team 1"
+	]
+]
