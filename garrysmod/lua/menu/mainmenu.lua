@@ -83,12 +83,12 @@ function PANEL:Paint()
 
 	local canAdd = CanAddServerToFavorites()
 	local isFav = serverlist.IsCurrentServerFavorite()
-	if ( self.CanAddServerToFavorites != canAdd || self.IsCurrentServerFavorite != isFav ) then
+	if ( self.CanAddServerToFavorites != canAdd or self.IsCurrentServerFavorite != isFav ) then
 
 		self.CanAddServerToFavorites = canAdd
 		self.IsCurrentServerFavorite = isFav
 
-		self:Call( "SetShowFavButton( " .. tostring( self.CanAddServerToFavorites ) ..", " .. tostring( self.IsCurrentServerFavorite ) .. " )" )
+		self:Call( "SetShowFavButton( " .. tostring( self.CanAddServerToFavorites ) .. ", " .. tostring( self.IsCurrentServerFavorite ) .. " )" )
 
 	end
 
@@ -171,7 +171,7 @@ function UpdateServerSettings()
 
 				array.settings[ k ] = v
 				array.settings[ k ].Value = cvar:GetString()
-				array.settings[ k ].Singleplayer = v.singleplayer && true || false
+				array.settings[ k ].Singleplayer = v.singleplayer and true or false
 			end
 
 		end
@@ -217,7 +217,7 @@ GetAPIManifest( function( result )
 	for k, v in pairs( result.Servers and result.Servers.Banned or {} ) do
 		if ( v:StartWith( "map:" ) ) then
 			table.insert( BlackList.Maps, v:sub( 5 ) )
-		elseif ( v:StartWith( "host:" ) || v:StartWith( "name:" ) ) then
+		elseif ( v:StartWith( "host:" ) or v:StartWith( "name:" ) ) then
 			table.insert( BlackList.Hostnames, v:sub( 6 ) )
 		elseif ( v:StartWith( "desc:" ) ) then
 			table.insert( BlackList.Descripts, v:sub( 6 ) )
@@ -246,11 +246,11 @@ function IsServerBlacklisted( address, hostname, description, gm, map )
 	local addressNoPort = address:match( "[^:]*" )
 
 	for k, v in ipairs( BlackList.Addresses ) do
-		if ( address == v || addressNoPort == v ) then
+		if ( address == v or addressNoPort == v ) then
 			return v
 		end
 
-		if ( v:EndsWith( "*" ) && address:sub( 1, v:len() - 1 ) == v:sub( 1, v:len() - 1 ) ) then return v end
+		if ( v:EndsWith( "*" ) and address:sub( 1, v:len() - 1 ) == v:sub( 1, v:len() - 1 ) ) then return v end
 
 		-- IP Ranges
 		if ( string.find( v, "/", 1, false ) ) then
@@ -259,7 +259,7 @@ function IsServerBlacklisted( address, hostname, description, gm, map )
 
 			local mask = bit.lshift( 0xFFFFFFFF, 32-o5 )
 
-			local o1, o2, o3, o4 =  string.match( address, "(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
+			o1, o2, o3, o4 = string.match( address, "(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)%.(%d%d?%d?)" )
 			local testIP = 2 ^ 24 * o1 + 2 ^ 16 * o2 + 2 ^ 8 * o3 + o4
 
 			if ( bit.band( testIP, mask ) == bit.band( blacklistedIP, mask ) ) then return v end
@@ -267,25 +267,25 @@ function IsServerBlacklisted( address, hostname, description, gm, map )
 	end
 
 	for k, v in ipairs( BlackList.Hostnames ) do
-		if ( string.match( hostname, v ) || string.match( hostname:lower(), v ) ) then
+		if ( string.match( hostname, v ) or string.match( hostname:lower(), v ) ) then
 			return "host: " .. v
 		end
 	end
 
 	for k, v in ipairs( BlackList.Descripts ) do
-		if ( string.match( description, v ) || string.match( description:lower(), v ) ) then
+		if ( string.match( description, v ) or string.match( description:lower(), v ) ) then
 			return "desc: " .. v
 		end
 	end
 
 	for k, v in ipairs( BlackList.Gamemodes ) do
-		if ( string.match( gm, v ) || string.match( gm:lower(), v ) ) then
+		if ( string.match( gm, v ) or string.match( gm:lower(), v ) ) then
 			return "gm: " .. v
 		end
 	end
 
 	for k, v in ipairs( BlackList.Maps ) do
-		if ( string.match( map, v ) || string.match( map:lower(), v ) ) then
+		if ( string.match( map, v ) or string.match( map:lower(), v ) ) then
 			return "map: " .. v
 		end
 	end
@@ -307,7 +307,7 @@ function GetServers( category, id )
 	local data = {
 		Callback = function( ping, name, desc, map, players, maxplayers, botplayers, pass, lastplayed, address, gm, workshopid, isAnon, netVersion, luaVersion, loc, gmcat )
 
-			if ( Servers[ category ] && Servers[ category ][ address ] ) then print( "Server Browser Error!", address, category ) return end
+			if ( Servers[ category ] and Servers[ category ][ address ] ) then print( "Server Browser Error!", address, category ) return end
 			Servers[ category ][ address ] = true
 
 			local blackListMatch = IsServerBlacklisted( address, name, desc, gm, map )
@@ -323,7 +323,7 @@ function GetServers( category, id )
 				loc = string.JavascriptSafe( loc )
 				gmcat = string.JavascriptSafe( gmcat )
 
-				pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s" , "%s" );',
+				pnlMainMenu:Call( string.format( [[AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s" , "%s" );]],
 					category, id, ping, name, desc, map, players, maxplayers, botplayers, tostring( pass ), lastplayed, address, gm, workshopid, tostring( isAnon ), netVersion, tostring( serverlist.IsServerFavorite( address ) ), loc, gmcat ) )
 
 			else
@@ -338,13 +338,13 @@ function GetServers( category, id )
 
 		CallbackFailed = function( address )
 
-			if ( Servers[ category ] && Servers[ category ][ address ] ) then print( "Server Browser Error!", address, category ) return end
+			if ( Servers[ category ] and Servers[ category ][ address ] ) then print( "Server Browser Error!", address, category ) return end
 			Servers[ category ][ address ] = true
 
 			local version = string.JavascriptSafe( tostring( VERSION ) )
 
-			pnlMainMenu:Call( string.format( 'AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s", "%s" );',
-					category, id, 2000, "The server at address " .. address .. " failed to respond", "Unreachable Servers", "no_map", 0, 2, 0, 'false', 0, address, 'unkn', '0', 'true', version, tostring( serverlist.IsServerFavorite( address ) ), "", "" ) )
+			pnlMainMenu:Call( string.format( [[AddServer( "%s", "%s", %i, "%s", "%s", "%s", %i, %i, %i, %s, %i, "%s", "%s", "%s", %s, "%s", "%s", "%s", "%s" );]],
+					category, id, 2000, "The server at address " .. address .. " failed to respond", "Unreachable Servers", "no_map", 0, 2, 0, "false", 0, address, "unkn", "0", "true", version, tostring( serverlist.IsServerFavorite( address ) ), "", "" ) )
 
 			return !ShouldStop[ category ]
 
@@ -427,16 +427,39 @@ function MenuGetAddonData( wsid )
 end
 
 local presetCache = {}
-function CreateNewAddonPreset( data )
-	if ( table.IsEmpty( presetCache ) ) then presetCache = util.JSONToTable( LoadAddonPresets() or "" ) or {} end
+local function EnsurePresetsLoaded()
+	if ( table.IsEmpty( presetCache ) ) then
+		presetCache = util.JSONToTable( LoadAddonPresets() or "", true, true ) or {}
+	end
+end
+function CreateNewAddonPreset( json )
+	EnsurePresetsLoaded()
 
-	local data = util.JSONToTable( data )
+	local data = util.JSONToTable( json )
 	presetCache[ data.name ] = data
 
 	SaveAddonPresets( util.TableToJSON( presetCache ) )
 end
+function ImportAddonPreset( id, json )
+	EnsurePresetsLoaded()
+
+	steamworks.FileInfo( id, function( fileInfo )
+
+		if ( !fileInfo.children or #fileInfo.children < 1 ) then
+			pnlMainMenu:Call( "OnImportPresetFailed()" )
+			return
+		end
+
+		local data = util.JSONToTable( json )
+		presetCache[ data.name ] = data
+		presetCache[ data.name ].enabled = fileInfo.children
+
+		SaveAddonPresets( util.TableToJSON( presetCache ) )
+		ListAddonPresets()
+	end )
+end
 function DeleteAddonPreset( name )
-	if ( table.IsEmpty( presetCache ) ) then presetCache = util.JSONToTable( LoadAddonPresets() or "" ) or {} end
+	EnsurePresetsLoaded()
 
 	presetCache[ name ] = {}
 	presetCache[ name ] = nil
@@ -446,7 +469,7 @@ function DeleteAddonPreset( name )
 	ListAddonPresets()
 end
 function ListAddonPresets()
-	if ( table.IsEmpty( presetCache ) ) then presetCache = util.JSONToTable( LoadAddonPresets() or "" ) or {} end
+	EnsurePresetsLoaded()
 
 	pnlMainMenu:Call( "OnReceivePresetList(" .. util.TableToJSON( presetCache ) .. ")" )
 end
@@ -472,7 +495,7 @@ end )
 
 hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str, wsid )
 	local button2 = nil
-	if ( wsid && wsid:len() > 0 ) then button2 = "Open map on Steam Workshop" end
+	if ( wsid and wsid:len() > 0 ) then button2 = "Open map on Steam Workshop" end
 
 	Derma_Query( str, "Failed to load save!", "OK", nil, button2, function() steamworks.ViewFile( wsid ) end )
 end )
@@ -485,8 +508,8 @@ timer.Simple( 0, function()
 	pnlMainMenu = vgui.Create( "MainMenuPanel" )
 	pnlMainMenu:Call( "UpdateVersion( '" .. VERSIONSTR:JavascriptSafe() .. "', '" .. NETVERSIONSTR:JavascriptSafe() .. "', '" .. BRANCH:JavascriptSafe() .. "' )" )
 
-	local language = GetConVarString( "gmod_language" )
-	LanguageChanged( language )
+	local lang = GetConVarString( "gmod_language" )
+	LanguageChanged( lang )
 
 	hook.Run( "GameContentChanged" )
 

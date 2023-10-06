@@ -262,6 +262,9 @@ div.centermessage a.create {
 div.centermessage a.create:hover {
 	background: #63bb66;
 }
+div.centermessage a.create.disabled {
+	background: #b1b1b1;
+}
 
 input.preset_name
 {
