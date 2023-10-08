@@ -141,9 +141,9 @@ end
 
 function ENT:Use( activator, caller )
 
-	self:Remove()
+	if ( activator:IsPlayer() ) and ( ( game.SinglePlayer() and CLIENT ) or SERVER ) then
 
-	if ( activator:IsPlayer() ) then
+		self:Remove()
 
 		-- Give the collecting player some free health
 		local health = activator:Health()
