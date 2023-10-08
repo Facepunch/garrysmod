@@ -141,7 +141,7 @@ end
 
 function ENT:Use( activator, caller )
 
-	if SERVER and activator:IsPlayer() then
+	if ( SERVER && activator:IsPlayer() ) then
 
 		self:Remove()
 
