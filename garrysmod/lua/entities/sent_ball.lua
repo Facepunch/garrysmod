@@ -141,7 +141,7 @@ end
 
 function ENT:Use( activator, caller )
 
-	if ( activator:IsPlayer() ) and ( ( game.SinglePlayer() and CLIENT ) or SERVER ) then
+	if SERVER and activator:IsPlayer() then
 
 		self:Remove()
 
