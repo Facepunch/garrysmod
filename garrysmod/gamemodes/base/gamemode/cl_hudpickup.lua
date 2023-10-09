@@ -5,7 +5,7 @@ GM.PickupHistoryTop = ScrH() / 2
 GM.PickupHistoryWide = 300
 GM.PickupHistoryCorner = surface.GetTextureID( "gui/corner8" )
 
-local function AddGeneticPickup( self, itemname )
+local function AddGenericPickup( self, itemname )
 	local pickup		= {}
 	pickup.time			= CurTime()
 	pickup.name			= itemname
@@ -39,7 +39,7 @@ function GM:HUDWeaponPickedUp( wep )
 	if ( !IsValid( wep ) ) then return end
 	if ( !isfunction( wep.GetPrintName ) ) then return end
 
-	local pickup = AddGeneticPickup( self, wep:GetPrintName() )
+	local pickup = AddGenericPickup( self, wep:GetPrintName() )
 	pickup.color = Color( 255, 200, 50, 255 )
 
 end
@@ -52,7 +52,7 @@ function GM:HUDItemPickedUp( itemname )
 
 	if ( !IsValid( LocalPlayer() ) || !LocalPlayer():Alive() ) then return end
 
-	local pickup = AddGeneticPickup( self, "#" .. itemname )
+	local pickup = AddGenericPickup( self, "#" .. itemname )
 	pickup.color = Color( 180, 255, 180, 255 )
 
 end
@@ -82,7 +82,7 @@ function GM:HUDAmmoPickedUp( itemname, amount )
 
 	end
 
-	local pickup = AddGeneticPickup( self, "#" .. itemname .. "_ammo" )
+	local pickup = AddGenericPickup( self, "#" .. itemname .. "_ammo" )
 	pickup.color = Color( 180, 200, 255, 255 )
 	pickup.amount = tostring( amount )
 
@@ -128,7 +128,7 @@ function GM:HUDDrawPickupHistory()
 				alpha = math.Clamp( delta * ( 255 / v.fadeout ), 0, 255 )
 			end
 
-			v.x = x + self.PickupHistoryWide - (self.PickupHistoryWide * ( alpha / 255 ) )
+			v.x = x + self.PickupHistoryWide - ( self.PickupHistoryWide * ( alpha / 255 ) )
 
 			local rx, ry, rw, rh = math.Round( v.x - 4 ), math.Round( v.y - ( v.height / 2 ) - 4 ), math.Round( self.PickupHistoryWide + 9 ), math.Round( v.height + 8 )
 			local bordersize = 8
@@ -142,25 +142,24 @@ function GM:HUDDrawPickupHistory()
 			surface.DrawRect( rx + bordersize, ry, v.height - 4, rh )
 
 			surface.SetDrawColor( 230 * colordelta, 230 * colordelta, 230 * colordelta, alpha )
-			surface.DrawRect( rx + bordersize + v.height - 4, ry, rw - ( v.height - 4 ) - bordersize * 2, rh )
 			surface.DrawTexturedRectRotated( rx + rw - bordersize / 2 , ry + rh - bordersize / 2, bordersize, bordersize, 180 )
 			surface.DrawTexturedRectRotated( rx + rw - bordersize / 2 , ry + bordersize / 2, bordersize, bordersize, 270 )
-			surface.DrawRect( rx + rw-bordersize, ry + bordersize, bordersize, rh-bordersize * 2 )
+			surface.DrawRect( rx + rw - bordersize, ry + bordersize, bordersize, rh-bordersize * 2 )
+			surface.DrawRect( rx + bordersize + v.height - 4, ry, rw - ( v.height - 4 ) - bordersize * 2, rh )
 
-			draw.SimpleText( v.name, v.font, v.x + v.height + 9, v.y - ( v.height / 2 ) + 1, Color( 0, 0, 0, alpha * 0.5 ) )
-
-			draw.SimpleText( v.name, v.font, v.x + v.height + 8, v.y - ( v.height / 2 ), Color( 255, 255, 255, alpha ) )
+			draw.SimpleText( v.name, v.font, v.x + v.height + 9, ry + ( rh / 2 ) + 1, Color( 0, 0, 0, alpha * 0.5 ), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
+			draw.SimpleText( v.name, v.font, v.x + v.height + 8, ry + ( rh / 2 ), Color( 255, 255, 255, alpha ), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
 
 			if ( v.amount ) then
 
-				draw.SimpleText( v.amount, v.font, v.x + self.PickupHistoryWide + 1, v.y - ( v.height / 2 ) + 1, Color( 0, 0, 0, alpha * 0.5 ), TEXT_ALIGN_RIGHT )
-				draw.SimpleText( v.amount, v.font, v.x + self.PickupHistoryWide, v.y - ( v.height / 2 ), Color( 255, 255, 255, alpha ), TEXT_ALIGN_RIGHT )
+				draw.SimpleText( v.amount, v.font, v.x + self.PickupHistoryWide + 1, ry + ( rh / 2 ) + 1, Color( 0, 0, 0, alpha * 0.5 ), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER )
+				draw.SimpleText( v.amount, v.font, v.x + self.PickupHistoryWide, ry + ( rh / 2 ), Color( 255, 255, 255, alpha ), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER )
 
 			end
 
 			y = y + ( v.height + 16 )
 			tall = tall + v.height + 18
-			wide = math.Max( wide, v.width + v.height + 24 )
+			wide = math.max( wide, v.width + v.height + 24 )
 
 			if ( alpha == 0 ) then self.PickupHistory[ k ] = nil end
 

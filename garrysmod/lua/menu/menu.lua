@@ -11,6 +11,7 @@ include( "menu_demo.lua" )
 include( "menu_addon.lua" )
 include( "menu_dupe.lua" )
 include( "errors.lua" )
+include( "problems/problems.lua" )
 
 include( "motionsensor.lua" )
 include( "util.lua" )

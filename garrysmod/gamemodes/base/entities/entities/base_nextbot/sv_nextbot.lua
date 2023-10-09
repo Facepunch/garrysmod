@@ -11,6 +11,9 @@ function ENT:BehaveStart()
 
 end
 
+function ENT:RunBehaviour()
+end
+
 --
 -- Name: NEXTBOT:BehaveUpdate
 -- Desc: Called to update the bot's behaviour
@@ -60,10 +63,12 @@ function ENT:BodyUpdate()
 	-- This helper function does a lot of useful stuff for us.
 	-- It sets the bot's move_x move_y pose parameters, sets their animation speed relative to the ground speed, and calls FrameAdvance.
 	--
-	--
 	if ( act == ACT_RUN || act == ACT_WALK ) then
 
 		self:BodyMoveXY()
+
+		-- BodyMoveXY() already calls FrameAdvance, calling it twice will affect animation playback, specifically on layers
+		return
 
 	end
 
@@ -119,6 +124,18 @@ end
 function ENT:OnUnStuck()
 
 	--MsgN( "OnUnStuck" )
+
+end
+
+--
+-- Name: NEXTBOT:OnTakeDamage
+-- Desc: Called when the bot is about to take damage
+-- Arg1: CTakeDamageInfo|info|damage info
+-- Ret1: number|how much damage was taken, prevents default damage code from running
+--
+function ENT:OnTakeDamage( damageinfo )
+
+	-- return 0
 
 end
 
@@ -202,14 +219,14 @@ function ENT:FindSpots( tbl )
 	local found = {}
 
 	-- In each area
-	for _, area in pairs( areas ) do
+	for _, area in ipairs( areas ) do
 
 		-- get the spots
 		local spots
 
 		if ( tbl.type == 'hiding' ) then spots = area:GetHidingSpots() end
 
-		for k, vec in pairs( spots ) do
+		for k, vec in ipairs( spots ) do
 
 			-- Work out the length, and add them to a table
 			path:Invalidate()
@@ -370,4 +387,29 @@ end
 -- Ret1:
 --
 function ENT:Think()
+end
+
+--
+-- Name: NEXTBOT:HandleAnimEvent
+-- Desc: Called for serverside events
+--
+function ENT:HandleAnimEvent( event, eventtime, cycle, typee, options )
+end
+
+--
+-- Name: NEXTBOT:OnTraceAttack
+-- Desc: Called serverside when the nextbot is attacked
+--
+function ENT:OnTraceAttack( dmginfo, dir, trace )
+
+	hook.Run( "ScaleNPCDamage", self, trace.HitGroup, dmginfo )
+
+end
+
+-- Called when we see a player or another nextbot
+function ENT:OnEntitySight( subject )
+end
+
+-- Called when we see lose sight of a player or a nextbot we saw earlier
+function ENT:OnEntitySightLost( subject )
 end

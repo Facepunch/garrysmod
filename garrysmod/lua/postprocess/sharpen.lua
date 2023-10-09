@@ -11,7 +11,7 @@ local pp_sharpen_distance = CreateClientConVar( "pp_sharpen_distance", "1", true
 
 function DrawSharpen( contrast, distance )
 
-	render.UpdateScreenEffectTexture()
+	render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
 
 	matSharpen:SetFloat( "$contrast", contrast )
 	matSharpen:SetFloat( "$distance", distance / ScrW() )

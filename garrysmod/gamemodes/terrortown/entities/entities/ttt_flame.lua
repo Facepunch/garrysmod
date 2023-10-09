@@ -76,7 +76,7 @@ function StartFires(pos, tr, num, lifetime, explode, dmgowner)
       end
 
    end
-   
+
 end
 
 function SpawnFire(pos, size, attack, fuel, owner, parent)
@@ -92,7 +92,7 @@ function SpawnFire(pos, size, attack, fuel, owner, parent)
    fire:SetKeyValue("fireattack", attack)
    fire:SetKeyValue("health", fuel)
    fire:SetKeyValue("damagescale", "-10") -- only neg. value prevents dmg
-   
+
    fire:Spawn()
    fire:Activate()
 
@@ -102,10 +102,8 @@ end
 -- greatly simplified version of SDK's game_shard/gamerules.cpp:RadiusDamage
 -- does no block checking, radius should be very small
 function RadiusDamage(dmginfo, pos, radius, inflictor)
-   local victims = ents.FindInSphere(pos, radius)
-
    local tr = nil
-   for k, vic in pairs(victims) do
+   for k, vic in ipairs(ents.FindInSphere(pos, radius)) do
       if IsValid(vic) and inflictor:Visible(vic) then
          if vic:IsPlayer() and vic:Alive() and vic:Team() == TEAM_TERROR then
             vic:TakeDamageInfo(dmginfo)
@@ -180,7 +178,7 @@ function ENT:Think()
             dmg:SetAttacker(self)
          end
          dmg:SetInflictor(self.firechild)
-         
+
          RadiusDamage(dmg, self:GetPos(), 132, self)
 
          self.next_hurt = CurTime() + self.hurt_interval

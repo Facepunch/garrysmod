@@ -32,7 +32,7 @@ function CreateTransferMenu(parent)
 
    -- fill combobox
    local r = LocalPlayer():GetRole()
-   for _, p in pairs(player.GetAll()) do
+   for _, p in ipairs(player.GetAll()) do
       if IsValid(p) and p:IsActiveRole(r) and p != LocalPlayer() then
          dpick:AddChoice(p:Nick(), p:SteamID())
       end

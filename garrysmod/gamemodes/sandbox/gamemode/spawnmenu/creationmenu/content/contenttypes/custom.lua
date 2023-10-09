@@ -9,6 +9,18 @@ local function SetupCustomNode( node, pnlContent, needsapp )
 	if ( needsapp && needsapp != "" ) then
 		node:SetVisible( IsMounted( needsapp ) )
 		node.NeedsApp = needsapp
+
+		if ( !IsMounted( needsapp ) ) then
+			-- Make it look different
+			node:SetAlpha( 200 )
+
+			-- Give a detailed tooltip explaining why it looks different
+			local name = language.GetPhrase( "spawnmenu.mountablegame" )
+			for id, t in pairs( engine.GetGames() ) do
+				if ( needsapp == t.folder ) then name = t.title break end
+			end
+			node:SetTooltip( string.format( language.GetPhrase( "spawnmenu.spawnlistnocontent" ), name ) )
+		end
 	end
 
 
@@ -35,9 +47,10 @@ local function SetupCustomNode( node, pnlContent, needsapp )
 		node.DoRightClick = function( self )
 
 			local menu = DermaMenu()
-			menu:AddOption( "Edit", function() self:InternalDoClick() hook.Run( "OpenToolbox" )  end )
-			menu:AddOption( "New Category", function() AddCustomizableNode( pnlContent, "New Category", "", self ) self:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end )
-			menu:AddOption( "Delete", function() node:Remove() hook.Run( "SpawnlistContentChanged" ) end )
+			menu:AddOption( "#spawnmenu.menu.edit", function() self:InternalDoClick() hook.Run( "OpenToolbox" )  end ):SetIcon( "icon16/folder_edit.png" )
+			menu:AddOption( "#spawnmenu.menu.add_subcategory", function() AddCustomizableNode( pnlContent, "New Category", "", self ) self:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/folder_add.png" )
+			menu:AddSpacer()
+			menu:AddOption( "#spawnmenu.menu.delete", function() node:Remove() hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/folder_delete.png" )
 
 			menu:Open()
 
@@ -98,7 +111,7 @@ local function ReadSpawnlists( node, parentid )
 
 	if ( node.ChildNodes ) then
 
-		for k, v in pairs( node.ChildNodes:GetChildren() ) do
+		for k, v in ipairs( node.ChildNodes:GetChildren() ) do
 
 			ReadSpawnlists( v, tab.id )
 
@@ -126,19 +139,22 @@ end
 function AddPropsOfParent( pnlContent, node, parentid, customProps )
 
 	local Props = customProps or spawnmenu.GetPropTable()
+
 	for FileName, Info in SortedPairs( Props ) do
 
 		if ( parentid != Info.parentid ) then continue end
 
 		local pnlnode = AddCustomizableNode( pnlContent, Info.name, Info.icon, node, Info.needsapp )
 		pnlnode:SetExpanded( true )
+		pnlnode.OnRemove = function( self ) if ( IsValid( self.PropPanel ) ) then self.PropPanel:Remove() end end
 		pnlnode.DoPopulate = function( self )
 
-			if ( self.PropPanel ) then return end
+			if ( IsValid( self.PropPanel ) ) then return end
 
 			self.PropPanel = vgui.Create( "ContentContainer", pnlContent )
 			self.PropPanel:SetVisible( false )
 			self.PropPanel:SetTriggerSpawnlistChange( true )
+			if ( node.AddonSpawnlist ) then self.PropPanel.IconList:SetReadOnly( true ) end
 
 			for i, object in SortedPairs( Info.contents ) do
 
@@ -149,10 +165,34 @@ function AddPropsOfParent( pnlContent, node, parentid, customProps )
 
 		end
 
-		AddPropsOfParent( pnlContent, pnlnode, Info.id )
+		AddPropsOfParent( pnlContent, pnlnode, Info.id, customProps )
 
 	end
 
+end
+
+-- This helps avoid empty spawnlist list when you delete some but the hidden ones remain so the default spawnlists never regenerate
+-- TODO: Maybe show spawnlists that need games when any spawnlist was changed? Allow to set needed game from in-game?
+local function CheckIfAnyVisible( node )
+	local pnlContent = node.SMContentPanel
+
+	if ( node:GetChildNodeCount() < 1 ) then
+		spawnmenu.PopulateFromEngineTextFiles()
+		AddPropsOfParent( pnlContent, node, 0 )
+		node:SetExpanded( true )
+		return
+	end
+
+	local visible = 0
+	for id, pnl in pairs( node:GetChildNodes() ) do
+		if ( pnl:IsVisible() ) then visible = visible + 1 end
+	end
+
+	if ( visible < 1 ) then
+		for id, pnl in pairs( node:GetChildNodes() ) do
+			pnl:SetVisible( true )
+		end
+	end
 end
 
 hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, node )
@@ -161,11 +201,12 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 	node:SetDraggableName( "CustomContent" )
 	node:SetExpanded( true )
 	node.CustomSpawnlist = nil
+	node.SMContentPanel = pnlContent
 
 	node.DoRightClick = function( self )
 
 		local menu = DermaMenu()
-		menu:AddOption( "New Category", function() AddCustomizableNode( pnlContent, "New Category", "", node ) node:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end )
+		menu:AddOption( "New Category", function() AddCustomizableNode( pnlContent, "New Category", "", node ) node:SetExpanded( true ) hook.Run( "SpawnlistContentChanged" ) end ):SetIcon( "icon16/folder_add.png" )
 		menu:Open()
 
 	end
@@ -177,19 +218,24 @@ hook.Add( "PopulateContent", "AddCustomContent", function( pnlContent, tree, nod
 
 	AddPropsOfParent( pnlContent, node, 0 )
 
+	CheckIfAnyVisible( node )
+
 	node:MoveToBack()
 
-	CustomizableSpawnlistNode = node
+	g_SpawnMenu.CustomizableSpawnlistNode = node
 
-	-- Select the first panel
-	local FirstNode = node:GetChildNode( 0 )
-	if ( IsValid( FirstNode ) ) then
-		FirstNode:InternalDoClick()
+	-- Select the first visible panel
+	for id, pnl in pairs( node:GetChildNodes() ) do
+		if ( pnl:IsVisible() ) then
+			pnl:InternalDoClick()
+			pnl:SetExpanded( true )
+			break
+		end
 	end
 
 	-- Custom stuff from addons
 	local CustomProps = spawnmenu.GetCustomPropTable()
-	if ( table.Count( CustomProps ) > 0 ) then
+	if ( !table.IsEmpty( CustomProps ) ) then
 		local node = AddCustomizableNode( pnlContent, "#spawnmenu.category.addon_spawnlists", "", tree )
 		node:SetExpanded( true )
 		--node:SetDraggableName( "CustomContent" )
@@ -205,8 +251,36 @@ end )
 
 hook.Add( "OnSaveSpawnlist", "DoSaveSpawnlist", function()
 
-	local Spawnlist = ConstructSpawnlist( CustomizableSpawnlistNode )
+	local Spawnlist = ConstructSpawnlist( g_SpawnMenu.CustomizableSpawnlistNode )
 
 	spawnmenu.DoSaveToTextFiles( Spawnlist )
+
+	CheckIfAnyVisible( g_SpawnMenu.CustomizableSpawnlistNode )
+
+end )
+ 
+hook.Add( "OnRevertSpawnlist", "DoRevertSpawnlists", function()
+
+	-- First delete all of the existing spawnlists
+	g_SpawnMenu.CustomizableSpawnlistNode:Clear()
+
+	-- Next load all the custom spawnlists again
+	spawnmenu.PopulateFromEngineTextFiles()
+	AddPropsOfParent( g_SpawnMenu.CustomizableSpawnlistNode.SMContentPanel, g_SpawnMenu.CustomizableSpawnlistNode, 0 )
+
+	-- Select the first visible panel. TODO: why this requires a timer?
+	timer.Simple( 0, function()
+		CheckIfAnyVisible( g_SpawnMenu.CustomizableSpawnlistNode )
+
+		for id, pnl in pairs( g_SpawnMenu.CustomizableSpawnlistNode:GetChildNodes() ) do
+			if ( pnl:IsVisible() ) then
+				pnl:InternalDoClick()
+				pnl:SetExpanded( true )
+				break
+			end
+		end
+
+		g_SpawnMenu.CustomizableSpawnlistNode:SetExpanded( true )
+	end )
 
 end )

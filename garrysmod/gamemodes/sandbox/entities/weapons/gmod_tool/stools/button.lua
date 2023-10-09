@@ -50,6 +50,7 @@ function TOOL:RightClick( trace, worldweld )
 	Ang.pitch = Ang.pitch + 90
 
 	local button = MakeButton( ply, model, Ang, trace.HitPos, key, description, toggle )
+	if ( !IsValid( button ) ) then return false end
 
 	local min = button:OBBMins()
 	button:SetPos( trace.HitPos - trace.HitNormal * min.z )
@@ -59,13 +60,14 @@ function TOOL:RightClick( trace, worldweld )
 
 		if ( worldweld && trace.Entity != NULL ) then
 			local weld = constraint.Weld( button, trace.Entity, 0, trace.PhysicsBone, 0, 0, true )
+			if ( IsValid( weld ) ) then
+				ply:AddCleanup( "buttons", weld )
+				undo.AddEntity( weld )
+			end
 
 			if ( IsValid( button:GetPhysicsObject() ) ) then button:GetPhysicsObject():EnableCollisions( false ) end
 			button:SetCollisionGroup( COLLISION_GROUP_WORLD )
 			button.nocollide = true
-
-			ply:AddCleanup( "buttons", weld )
-			undo.AddEntity( weld )
 		end
 
 		undo.SetPlayer( ply )
@@ -90,8 +92,8 @@ if ( SERVER ) then
 
 		local button = ents.Create( "gmod_button" )
 		if ( !IsValid( button ) ) then return false end
+	
 		button:SetModel( model )
-
 		button:SetAngles( ang )
 		button:SetPos( pos )
 		button:Spawn()
@@ -156,7 +158,7 @@ function TOOL:Think()
 	if ( !IsValidButtonModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
-		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostButton( self.GhostEntity, self:GetOwner() )

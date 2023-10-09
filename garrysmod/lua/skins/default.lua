@@ -64,6 +64,8 @@ SKIN.colTextEntryTextHighlight	= Color( 20, 200, 250, 255 )
 SKIN.colTextEntryTextCursor		= Color( 0, 0, 100, 255 )
 SKIN.colTextEntryTextPlaceholder= Color( 128, 128, 128, 255 )
 
+SKIN.colNumSliderNotch			= Color( 0, 0, 0, 100 )
+
 SKIN.colMenuBG					= Color( 255, 255, 255, 200 )
 SKIN.colMenuBorder				= Color( 0, 0, 0, 200 )
 
@@ -231,7 +233,8 @@ SKIN.tex.ProgressBar.Front	= GWEN.CreateTextureBorder( 384+32, 0, 31, 31, 8, 8, 
 
 SKIN.tex.CategoryList = {}
 SKIN.tex.CategoryList.Outer		= GWEN.CreateTextureBorder( 256, 384, 63, 63, 8, 8, 8, 8 )
-SKIN.tex.CategoryList.Inner		= GWEN.CreateTextureBorder( 320, 384, 63, 63, 8, 21, 8, 8 )
+SKIN.tex.CategoryList.InnerH	= GWEN.CreateTextureBorder( 320, 384, 63, 20, 8, 8, 8, 8 )
+SKIN.tex.CategoryList.Inner		= GWEN.CreateTextureBorder( 320, 384 + 21, 63, 63 - 21, 8, 0, 8, 8 )
 SKIN.tex.CategoryList.Header	= GWEN.CreateTextureBorder( 320, 352, 63, 31, 8, 8, 8, 8 )
 
 SKIN.tex.Tooltip = GWEN.CreateTextureBorder( 384, 64, 31, 31, 8, 8, 8, 8 )
@@ -281,10 +284,12 @@ SKIN.Colours.Properties.Title				= GWEN.TextureColor( 4 + 8 * 13, 500 )
 SKIN.Colours.Properties.Column_Normal		= GWEN.TextureColor( 4 + 8 * 14, 508 )
 SKIN.Colours.Properties.Column_Selected		= GWEN.TextureColor( 4 + 8 * 15, 508 )
 SKIN.Colours.Properties.Column_Hover		= GWEN.TextureColor( 4 + 8 * 14, 500 )
+SKIN.Colours.Properties.Column_Disabled		= Color( 240, 240, 240 )
 SKIN.Colours.Properties.Border				= GWEN.TextureColor( 4 + 8 * 15, 500 )
 SKIN.Colours.Properties.Label_Normal		= GWEN.TextureColor( 4 + 8 * 16, 508 )
 SKIN.Colours.Properties.Label_Selected		= GWEN.TextureColor( 4 + 8 * 17, 508 )
 SKIN.Colours.Properties.Label_Hover			= GWEN.TextureColor( 4 + 8 * 16, 500 )
+SKIN.Colours.Properties.Label_Disabled		= GWEN.TextureColor( 4 + 8 * 16, 508 )
 
 SKIN.Colours.Category = {}
 SKIN.Colours.Category.Header				= GWEN.TextureColor( 4 + 8 * 18, 500 )
@@ -321,7 +326,7 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintShadow( panel, w, h )
 
-	SKIN.tex.Shadow( 0, 0, w, h )
+	self.tex.Shadow( 0, 0, w, h )
 
 end
 
@@ -332,9 +337,9 @@ function SKIN:PaintFrame( panel, w, h )
 
 	if ( panel.m_bPaintShadow ) then
 
-		DisableClipping( true )
-		SKIN.tex.Shadow( -4, -4, w+10, h+10 )
-		DisableClipping( false )
+		local wasEnabled = DisableClipping( true )
+		self.tex.Shadow( -4, -4, w+10, h+10 )
+		DisableClipping( wasEnabled )
 
 	end
 
@@ -403,6 +408,31 @@ function SKIN:PaintCheckBox( panel, w, h )
 			self.tex.CheckboxD( 0, 0, w, h )
 		else
 			self.tex.Checkbox( 0, 0, w, h )
+		end
+
+	end
+
+end
+
+--[[---------------------------------------------------------
+	RadioButton
+-----------------------------------------------------------]]
+function SKIN:PaintRadioButton( panel, w, h )
+
+	if ( panel:GetChecked() ) then
+
+		if ( panel:GetDisabled() ) then
+			self.tex.RadioButtonD_Checked( 0, 0, w, h )
+		else
+			self.tex.RadioButton_Checked( 0, 0, w, h )
+		end
+
+	else
+
+		if ( panel:GetDisabled() ) then
+			self.tex.RadioButtonD( 0, 0, w, h )
+		else
+			self.tex.RadioButton( 0, 0, w, h )
 		end
 
 	end
@@ -487,12 +517,17 @@ end
 -----------------------------------------------------------]]
 function SKIN:PaintMenuOption( panel, w, h )
 
-	if ( panel.m_bBackground && (panel.Hovered || panel.Highlight) ) then
+	if ( panel.m_bBackground && !panel:IsEnabled() ) then
+		surface.SetDrawColor( Color( 0, 0, 0, 50 ) )
+		surface.DrawRect( 0, 0, w, h )
+	end
+
+	if ( panel.m_bBackground && ( panel.Hovered || panel.Highlight) ) then
 		self.tex.MenuBG_Hover( 0, 0, w, h )
 	end
 
 	if ( panel:GetChecked() ) then
-		self.tex.Menu_Check( 5, h/2-7, 15, 15 )
+		self.tex.Menu_Check( 5, h / 2 - 7, 15, 15 )
 	end
 
 end
@@ -609,6 +644,15 @@ end
 function SKIN:PaintVScrollBar( panel, w, h )
 
 	self.tex.Scroller.TrackV( 0, 0, w, h )
+
+end
+
+--[[---------------------------------------------------------
+	HScrollBar
+-----------------------------------------------------------]]
+function SKIN:PaintHScrollBar( panel, w, h )
+
+	self.tex.Scroller.TrackH( 0, 0, w, h )
 
 end
 
@@ -876,7 +920,13 @@ local function PaintNotches( x, y, w, h, num )
 
 	local space = w / num
 
-	for i=0, num do
+	-- Ensure at least 1 px between each notch
+	if ( space < 2 ) then
+		space = 2
+		num = w / space
+	end
+
+	for i = 0, math.ceil( num ) do
 
 		surface.DrawRect( x + i * space, y + 4, 1, 5 )
 
@@ -886,10 +936,11 @@ end
 
 function SKIN:PaintNumSlider( panel, w, h )
 
-	surface.SetDrawColor( Color( 0, 0, 0, 100 ) )
+	-- GetNotchColor() returns SKIN.colNumSliderNotch if custom override is not set
+	surface.SetDrawColor( panel:GetNotchColor() )
 	surface.DrawRect( 8, h / 2 - 1, w - 15, 1 )
 
-	PaintNotches( 8, h / 2 - 1, w - 16, 1, panel.m_iNotches )
+	PaintNotches( 8, h / 2 - 1, w - 16, 1, panel:GetNotches() )
 
 end
 
@@ -902,17 +953,22 @@ end
 
 function SKIN:PaintCollapsibleCategory( panel, w, h )
 
-	if ( h < 21 ) then
-		return self.tex.CategoryList.Header( 0, 0, w, h )
+	if ( h <= panel:GetHeaderHeight() ) then
+		self.tex.CategoryList.Header( 0, 0, w, h )
+
+		-- Little hack, draw the ComboBox's dropdown arrow to tell the player the category is collapsed and not empty
+		if ( !panel:GetExpanded() ) then self.tex.Input.ComboBox.Button.Down( w - 18, h / 2 - 8, 15, 15 ) end
+		return
 	end
 
-	self.tex.CategoryList.Inner( 0, 0, w, 63 )
+	self.tex.CategoryList.InnerH( 0, 0, w, panel:GetHeaderHeight() )
+	self.tex.CategoryList.Inner( 0, panel:GetHeaderHeight(), w, h - panel:GetHeaderHeight() )
 
 end
 
 function SKIN:PaintCategoryList( panel, w, h )
 
-	self.tex.CategoryList.Outer( 0, 0, w, h )
+	self.tex.CategoryList.Outer( 0, 0, w, h, panel:GetBackgroundColor() )
 
 end
 

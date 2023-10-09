@@ -1,4 +1,6 @@
 
+var languageCache = {};
+
 angular.module( 'tranny', [] )
 
 .directive( 'ngTranny', function ( $parse )
@@ -6,38 +8,46 @@ angular.module( 'tranny', [] )
 	return function( scope, element, attrs )
 	{
 		var strName = "";
+		var strSuffix = "";
 
 		var update = function()
 		{
-			if ( IN_ENGINE )
+			if ( !IN_ENGINE )
 			{
-				var outStr_old = language.Update( strName, function( outStr )
-				{
-					$(element).html( outStr );
-					$(element).attr( "placeholder", outStr );
-				} );
-
-				// Compatibility with Awesomium
-				$(element).html( outStr_old );
-				$(element).attr( "placeholder", outStr_old );
+				$(element).html( strName + " " + strSuffix );
+				$(element).attr( "placeholder", strName + " " + strSuffix );
+				return;
 			}
-			else
+
+			var outStr_old = languageCache[ strName ] || language.Update( strName, function( outStr )
 			{
-				$(element).html( strName );
-				$(element).attr( "placeholder", strName );
+				languageCache[ strName ] = outStr;
+				$(element).html( outStr + " " + strSuffix );
+				$(element).attr( "placeholder", outStr + " " + strSuffix );
+			} );
+
+			if ( outStr_old )
+			{
+				// Compatibility with Awesomium
+				languageCache[ strName ] = outStr_old;
+				$(element).html( outStr_old + " " + strSuffix );
+				$(element).attr( "placeholder", outStr_old + " " + strSuffix );
 			}
 		}
 
-		scope.$watch( attrs.ngTranny, function ( value )
+		scope.$watch( attrs.ngTranny, function( value )
 		{
-			strName = value;
+			var parts = value.split( " " );
+			strName = parts.shift();
+			strSuffix = parts.join( " " );
 			update();
-		});
+		} );
 
 		scope.$on( 'languagechanged', function()
 		{
+			languageCache = {};
 			update();
-		})
+		} );
 
 	}
 } )

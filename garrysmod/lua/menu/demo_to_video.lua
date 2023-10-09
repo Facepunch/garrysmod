@@ -75,9 +75,14 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 
 	-- TODO!!!
 	inSize.OnSelect = function( _, index, value, data ) settings.width = data[1] settings.height = data[2] end
-	inSize:AddChoice( ScrW() .. " x " .. ScrH() .. " (highest)", { ScrW(), ScrH() }, true )
-	inSize:AddChoice( math.ceil( ScrW() * 0.66666 ) .. " x " .. math.ceil( ScrH() * 0.66666 ), { ScrW() * 0.666666, ScrH() * 0.666666 } )
-	inSize:AddChoice( math.ceil( ScrW() * 0.33333 ) .. " x " .. math.ceil( ScrH() * 0.33333 ), { ScrW() * 0.333333, ScrH() * 0.333333 } )
+	local sw, sh = ScrW(), ScrH()
+	inSize:AddChoice( sw .. " x " .. sh .. " (highest)", { sw, sh }, true )
+
+	sw, sh = sw * 0.66666, sh * 0.66666
+	inSize:AddChoice( math.ceil(sw) .. " x " .. math.ceil(sh), { sw, sh }, true )
+		
+	sw, sh = sw * 0.5, sh * 0.5
+	inSize:AddChoice( math.ceil(sw) .. " x " .. math.ceil(sh), { sw, sh }, true )
 
 	inFrameBlend.OnSelect = function( _, index, value, data ) settings.frameblend = data end
 	inFrameBlend:AddChoice( "Off", 1, true )
@@ -245,7 +250,7 @@ local function DrawOverlay()
 	if ( VideoSettings.possmooth > 0 ) then table.insert( with, "Position Smoothing" ) end
 
 	if ( #with > 0 ) then
-		with = string.Implode( ", ", with )
+		with = table.concat( with, ", " )
 		info = info .. "with " .. with
 	end
 

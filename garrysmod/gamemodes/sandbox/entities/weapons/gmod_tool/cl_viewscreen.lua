@@ -1,9 +1,11 @@
 
 local matScreen = Material( "models/weapons/v_toolgun/screen" )
 local txBackground = surface.GetTextureID( "models/weapons/v_toolgun/screen_bg" )
+local toolmode = GetConVar( "gmod_toolmode" )
+local TEX_SIZE = 256
 
 -- GetRenderTarget returns the texture if it exists, or creates it if it doesn't
-local RTTexture = GetRenderTarget( "GModToolgunScreen", 256, 256 )
+local RTTexture = GetRenderTarget( "GModToolgunScreen", TEX_SIZE, TEX_SIZE )
 
 surface.CreateFont( "GModToolScreen", {
 	font	= "Helvetica",
@@ -42,19 +44,11 @@ end
 -----------------------------------------------------------]]
 function SWEP:RenderScreen()
 
-	local TEX_SIZE = 256
-	local mode = GetConVarString( "gmod_toolmode" )
-	local oldW = ScrW()
-	local oldH = ScrH()
-
 	-- Set the material of the screen to our render target
 	matScreen:SetTexture( "$basetexture", RTTexture )
 
-	local OldRT = render.GetRenderTarget()
-
 	-- Set up our view for drawing to the texture
-	render.SetRenderTarget( RTTexture )
-	render.SetViewPort( 0, 0, TEX_SIZE, TEX_SIZE )
+	render.PushRenderTarget( RTTexture )
 	cam.Start2D()
 
 		-- Background
@@ -70,12 +64,11 @@ function SWEP:RenderScreen()
 		else
 
 			surface.SetFont( "GModToolScreen" )
-			DrawScrollingText( "#tool." .. mode .. ".name", 104, TEX_SIZE )
+			DrawScrollingText( "#tool." .. toolmode:GetString() .. ".name", 104, TEX_SIZE )
 
 		end
 
 	cam.End2D()
-	render.SetRenderTarget( OldRT )
-	render.SetViewPort( 0, 0, oldW, oldH )
+	render.PopRenderTarget()
 
 end

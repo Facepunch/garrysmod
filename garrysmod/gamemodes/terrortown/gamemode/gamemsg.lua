@@ -3,7 +3,7 @@
 local net = net
 local string = string
 local table = table
-local pairs = pairs
+local ipairs = ipairs
 local IsValid = IsValid
 
 -- NOTE: most uses of the Msg functions here have been moved to the LANG
@@ -55,7 +55,7 @@ end
 
 -- Round start info popup
 function ShowRoundStartPopup()
-   for k, v in pairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       if IsValid(v) and v:Team() == TEAM_TERROR and v:Alive() then
          v:ConCommand("ttt_cl_startpopup")
       end
@@ -64,7 +64,7 @@ end
 
 local function GetPlayerFilter(pred)
    local filter = {}
-   for k, v in pairs(player.GetAll()) do
+   for k, v in ipairs(player.GetAll()) do
       if IsValid(v) and pred(v) then
          table.insert(filter, v)
       end
@@ -130,7 +130,7 @@ function GM:PlayerSay(ply, text, team_only)
       local team = ply:Team() == TEAM_SPEC
       if team and not DetectiveMode() then
          local filtered = {}
-         for k, v in pairs(string.Explode(" ", text)) do
+         for k, v in ipairs(string.Explode(" ", text)) do
             -- grab word characters and whitelisted interpunction
             -- necessary or leetspeek will be used (by trolls especially)
             local word, interp = string.match(v, "(%a*)([%.,;!%?]*)")
@@ -140,7 +140,7 @@ function GM:PlayerSay(ply, text, team_only)
          end
 
          -- make sure we have something to say
-         if table.Count(filtered) < 1 then
+         if table.IsEmpty(filtered) then
             table.insert(filtered, mumbles[math.random(1, #mumbles)])
          end
 
@@ -235,6 +235,13 @@ local function TraitorGlobalVoice(ply, cmd, args)
 end
 concommand.Add("tvog", TraitorGlobalVoice)
 
+local MuteModes = {
+   [MUTE_NONE] = "mute_off",
+   [MUTE_TERROR] = "mute_living",
+   [MUTE_ALL] = "mute_all",
+   [MUTE_SPEC] = "mute_specs"
+}
+
 local function MuteTeam(ply, cmd, args)
    if not IsValid(ply) then return end
    if not (#args == 1 and tonumber(args[1])) then return end
@@ -246,13 +253,9 @@ local function MuteTeam(ply, cmd, args)
    local t = tonumber(args[1])
    ply.mute_team = t
 
-   if t == MUTE_ALL then
-      ply:ChatPrint("All muted.")
-   elseif t == MUTE_NONE or t == TEAM_UNASSIGNED or not team.Valid(t) then
-      ply:ChatPrint("None muted.")
-   else
-      ply:ChatPrint(team.GetName(t) .. " muted.")
-   end
+   -- remove all ifs
+   LANG.Msg(ply, MuteModes[t])
+   
 end
 concommand.Add("ttt_mute_team", MuteTeam)
 
@@ -271,11 +274,14 @@ local function LastWordsMsg(ply, words)
 
    -- add optional context relating to death type
    local context = LastWordContext[ply.death_type] or ""
+   local lastWordsStr = words .. (final and "" or "--") .. context
 
    net.Start("TTT_LastWordsMsg")
       net.WriteEntity(ply)
-      net.WriteString(words .. (final and "" or "--") .. context)
+      net.WriteString(lastWordsStr)
    net.Broadcast()
+
+   hook.Run("TTTLastWordsMsg", ply, lastWordsStr)
 end
 
 local function LastWords(ply, cmd, args)

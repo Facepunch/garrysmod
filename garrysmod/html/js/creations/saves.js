@@ -18,8 +18,7 @@ function CSaves( $scope, $timeout, $location )
 	CreationScope.MyCategories =
 	[
 		"local",
-		"subscribed_ugc",
-		//"favorites_ugc"
+		"subscribed_ugc"
 	];
 
 	CreationScope.Categories =
@@ -31,6 +30,8 @@ function CSaves( $scope, $timeout, $location )
 
 	CreationScope.CategoriesSecondary =
 	[
+		"followed",
+		"favorite",
 		"friends",
 		"mine"
 	];
@@ -78,4 +79,18 @@ function SetMap( mapname )
 {
 	CreationScope.MapName = mapname;
 	UpdateDigest( CreationScope, 10 );
+}
+
+function WindowResized()
+{
+	// save is from control.Saves.js
+	save.RefreshDimensions();
+	save.UpdatePageNav();
+
+	// Refresh HTML
+	save.DigestUpdate = setTimeout( function()
+	{
+		self.DigestUpdate = 0;
+		Scope.Go( 0 );
+	}, 500 )
 }

@@ -17,6 +17,11 @@ local ClassHint = {
    }
 };
 
+-- Access for servers to display hints using their own HUD/UI.
+function GM:GetClassHints()
+    return ClassHint
+end
+
 -- Basic access for servers to add/modify hints. They override hints stored on
 -- the entities themselves.
 function GM:AddClassHint(cls, hint)
@@ -92,7 +97,7 @@ local function DrawPropSpecLabels(client)
    local scrpos = nil
    local text = nil
    local w = 0
-   for _, ply in pairs(player.GetAll()) do
+   for _, ply in ipairs(player.GetAll()) do
       if ply:IsSpec() then
          surface.SetTextColor(220,200,0,120)
 

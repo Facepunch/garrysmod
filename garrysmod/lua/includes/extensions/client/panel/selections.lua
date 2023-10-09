@@ -36,8 +36,7 @@ function meta:UnselectAll()
 
 	self:SetSelected( false )
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 		v:UnselectAll()
 	end
 
@@ -145,10 +144,9 @@ function meta:StartBoxSelection()
 
 	end
 
-
 	self:MouseCapture( true )
 
-	if ( !input.IsShiftDown() ) then
+	if ( !input.IsShiftDown() && !input.IsControlDown() ) then
 		self:UnselectAll()
 	end
 
@@ -165,8 +163,7 @@ function meta:GetChildrenInRect( x, y, w, h )
 
 	local tab = {}
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		local vw, vh = v:GetSize()
 
@@ -193,8 +190,7 @@ function meta:GetSelectedChildren()
 
 	local tab = {}
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		if ( v:IsSelected() ) then
 			table.insert( tab, v )
@@ -212,8 +208,7 @@ function meta:NumSelectedChildren()
 
 	local i = 0
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		if ( v:IsSelected() ) then
 			i = i + 1
@@ -234,12 +229,15 @@ function meta:EndBoxSelection()
 	self.PaintOver = self.PaintOver_Old
 	self.PaintOver_Old = nil
 
-	local x, y, w, h = GetSelectionRect()
+	for k, v in ipairs( self:GetChildrenInRect( GetSelectionRect() ) ) do
 
-	local children = self:GetChildrenInRect( x, y, w, h, true )
-	for k, v in pairs( children ) do
-
-		v:ToggleSelection()
+		-- If player is holding shift, add new planels to existing selections, do not toggle
+		-- This mimics already familiar behavior of Windows Explorer, etc
+		if ( input.IsShiftDown() ) then
+			v:SetSelected( true )
+		else
+			v:ToggleSelection()
+		end
 
 	end
 

@@ -28,7 +28,7 @@ function DrawBloom( darken, multiply, sizex, sizey, passes, color, colr, colg, c
 	if ( !render.SupportsPixelShaders_2_0() ) then return end
 
 	-- Copy the backbuffer to the screen effect texture
-	render.UpdateScreenEffectTexture()
+	render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
 
 	-- Store the render target so we can swap back at the end
 	local OldRT = render.GetRenderTarget()

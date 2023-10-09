@@ -41,7 +41,7 @@ hook.Add( "VGUIMousePressAllowed", "WorldPickerMouseDisable", function( code )
 
 	if ( !bDoing ) then return false end
 
-	local dir = gui.ScreenToVector( gui.MousePos() )
+	local dir = gui.ScreenToVector( input.GetCursorPos() )
 	local tr = util.TraceLine( {
 		start = LocalPlayer():GetShootPos(),
 		endpos = LocalPlayer():GetShootPos() + dir * 32768,

@@ -34,7 +34,7 @@ function TOOL:LeftClick( trace )
 
 	local ply = self:GetOwner()
 
-	local force = math.Clamp( self:GetClientNumber( "force" ), 0, 1E35 )
+	local force = math.Clamp( self:GetClientNumber( "force" ), 0, 1E10 )
 	local model = self:GetClientInfo( "model" )
 	local key = self:GetClientNumber( "keygroup" )
 	local key_bk = self:GetClientNumber( "keygroup_back" )
@@ -81,6 +81,7 @@ function TOOL:LeftClick( trace )
 	Ang.pitch = Ang.pitch + 90
 
 	local thruster = MakeThruster( ply, model, Ang, trace.HitPos, key, key_bk, force, toggle, effect, damageable, soundname )
+	if ( !IsValid( thruster ) ) then return false end
 
 	local min = thruster:OBBMins()
 	thruster:SetPos( trace.HitPos - trace.HitNormal * min.z )
@@ -91,7 +92,11 @@ function TOOL:LeftClick( trace )
 		-- Don't weld to world
 		if ( IsValid( trace.Entity ) ) then
 
-			local const = constraint.Weld( thruster, trace.Entity, 0, trace.PhysicsBone, 0, collision, true )
+			local weld = constraint.Weld( thruster, trace.Entity, 0, trace.PhysicsBone, 0, collision, true )
+			if ( IsValid( weld ) ) then
+				ply:AddCleanup( "thrusters", weld )
+				undo.AddEntity( weld )
+			end
 
 			-- Don't disable collision if it's not attached to anything
 			if ( collision ) then
@@ -101,9 +106,6 @@ function TOOL:LeftClick( trace )
 				thruster.nocollide = true
 
 			end
-
-			ply:AddCleanup( "thrusters", const )
-			undo.AddEntity( const )
 
 		end
 
@@ -129,7 +131,7 @@ if ( SERVER ) then
 		thruster:SetPos( pos )
 		thruster:Spawn()
 
-		force = math.Clamp( force, 0, 1E35 )
+		force = math.Clamp( force, 0, 1E10 )
 
 		thruster:SetEffect( effect )
 		thruster:SetForce( force )
@@ -205,7 +207,7 @@ function TOOL:Think()
 	if ( !IsValidThrusterModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
-		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostThruster( self.GhostEntity, self:GetOwner() )
@@ -267,13 +269,16 @@ list.Set( "ThrusterModels", "models/props_c17/canister02a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trainstation_ornament002.mdl", {} )
 list.Set( "ThrusterModels", "models/props_junk/TrafficCone001a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_c17/clock01.mdl", {} )
-list.Set( "ThrusterModels", "models/props_c17/pottery02a.mdl", {} )
-list.Set( "ThrusterModels", "models/props_c17/pottery03a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_junk/terracotta01.mdl", {} )
 list.Set( "ThrusterModels", "models/props_c17/TrapPropeller_Engine.mdl", {} )
 list.Set( "ThrusterModels", "models/props_c17/FurnitureSink001a.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trainstation_ornament001.mdl", {} )
 list.Set( "ThrusterModels", "models/props_trainstation/trashcan_indoor001b.mdl", {} )
+
+if ( IsMounted( "cstrike" ) ) then
+	list.Set( "ThrusterModels", "models/props_c17/pottery02a.mdl", {} )
+	list.Set( "ThrusterModels", "models/props_c17/pottery03a.mdl", {} )
+end
 
 --PHX
 list.Set( "ThrusterModels", "models/props_phx2/garbage_metalcan001a.mdl", {} )

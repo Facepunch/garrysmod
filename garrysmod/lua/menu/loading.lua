@@ -86,6 +86,10 @@ function PANEL:OnDeactivate()
 	self.LoadedURL = nil
 	self.NumDownloadables = 0
 
+	-- Notify the user that the game is ready.
+	-- TODO: A convar for this?
+	system.FlashWindow()
+
 end
 
 function PANEL:Think()
@@ -97,11 +101,31 @@ end
 
 function PANEL:StatusChanged( strStatus )
 
-	if ( string.find( strStatus, "Downloading " ) ) then
+	-- new FastDL/ServerDL format
+	local matchedFileName = string.match( strStatus, "%w+/%w+ [-] (.+) is downloading" )
+	if ( matchedFileName ) then
 
-		local Filename = string.gsub( strStatus, "Downloading ", "" )
+		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. matchedFileName:JavascriptSafe() .. "' )" )
 
-		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. Filename:JavascriptSafe() .. "' )" )
+		return
+
+	end
+
+	-- WorkshopDL and old FastDL
+	local startPos, _ = string.find( strStatus, "Downloading " )
+	if ( startPos ) then
+		-- Snip everything before the Download part
+		strStatus = string.sub( strStatus, startPos )
+
+		-- Special case needed for workshop, snip the "' via Workshop" part
+		if ( string.EndsWith( strStatus, "via Workshop" ) ) then
+			strStatus = string.gsub( strStatus, "' via Workshop", "" )
+			strStatus = string.gsub( strStatus, "Downloading '", "" ) -- We need to handle the quote marks
+		end
+
+		local fileName = string.gsub( strStatus, "Downloading ", "" )
+
+		self:RunJavascript( "if ( window.DownloadingFile ) DownloadingFile( '" .. fileName:JavascriptSafe() .. "' )" )
 
 		return
 
@@ -194,6 +218,17 @@ function GetLoadPanel()
 
 end
 
+
+function IsInLoading()
+
+	if ( !IsValid( pnlLoading ) || !IsValid( pnlLoading.HTML ) ) then
+		return false
+	end
+
+	return true
+
+end
+
 function UpdateLoadPanel( strJavascript )
 
 	if ( !pnlLoading ) then return end
@@ -223,11 +258,21 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 	serverurl = serverurl:Replace( "%s", steamid )
 	serverurl = serverurl:Replace( "%m", mapname )
 
-	if ( maxplayers > 1 ) then
+	if ( maxplayers > 1 && GetConVar( "cl_enable_loadingurl" ):GetBool() && serverurl:StartWith( "http" ) ) then
 		pnlLoading:ShowURL( serverurl, true )
 	end
 
-	pnlLoading.JavascriptRun = string.format( 'if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s" );',
-		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe() )
+	-- TODO: This should be pulled from the server
+	local niceGamemode = g_GameMode
+	for k, v in pairs( engine.GetGamemodes() ) do
+		if ( niceGamemode == v.name ) then
+			niceGamemode = v.title
+			break
+		end
+	end
+
+	pnlLoading.JavascriptRun = string.format( 'if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s", "%s" );',
+		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe(),
+		GetConVarNumber( "snd_musicvolume" ), GetConVarString( "gmod_language" ), niceGamemode:JavascriptSafe() )
 
 end

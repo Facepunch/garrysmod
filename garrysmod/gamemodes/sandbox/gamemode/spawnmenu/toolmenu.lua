@@ -32,7 +32,7 @@ function PANEL:LoadTools()
 end
 
 --[[---------------------------------------------------------
-	LoadTools
+	AddToolPanel
 -----------------------------------------------------------]]
 function PANEL:AddToolPanel( Name, ToolTable )
 
@@ -42,8 +42,9 @@ function PANEL:AddToolPanel( Name, ToolTable )
 	local Panel = vgui.Create( "ToolPanel" )
 	Panel:SetTabID( Name )
 	Panel:LoadToolsFromTable( ToolTable.Items )
+	Panel.PropertySheet = self
+	Panel.PropertySheetTab = self:AddSheet( ToolTable.Label, Panel, ToolTable.Icon ).Tab
 
-	self:AddSheet( ToolTable.Label, Panel, ToolTable.Icon )
 	self.ToolPanels[ Name ] = Panel
 
 end

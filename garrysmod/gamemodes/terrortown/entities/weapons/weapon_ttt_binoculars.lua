@@ -178,7 +178,8 @@ if CLIENT then
 
       return self.BaseClass.Initialize(self)
    end
-
+   
+   local T = LANG.GetTranslation
    function SWEP:DrawHUD()
       self:DrawHelp()
 
@@ -207,11 +208,11 @@ if CLIENT then
       surface.SetFont("DefaultFixedDropShadow")
       surface.SetTextColor(0, 255, 0, 200)
       surface.SetTextPos( x + length, y - length )
-      surface.DrawText("LEVEL " .. self.dt.zoom)
+      surface.DrawText(T("binoc_zoom_level") .. " " .. self.dt.zoom)
 
       if corpse then
          surface.SetTextPos( x + length, y - length + 15)
-         surface.DrawText("BODY DETECTED")
+         surface.DrawText(T("binoc_body"))
       end
 
       if self.dt.processing then

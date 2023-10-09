@@ -121,8 +121,7 @@ end
 
 function PANEL:UnselectAll()
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		if ( v.SetSelected ) then
 			v:SetSelected( false )
@@ -134,8 +133,7 @@ end
 
 function PANEL:UpdateAltLines()
 
-	local children = self:GetChildren()
-	for k, v in pairs( children ) do
+	for k, v in ipairs( self:GetChildren() ) do
 		v.AltLine = k % 2 != 1
 	end
 
@@ -150,6 +148,18 @@ end
 function PANEL:SetLabel( strLabel )
 
 	self.Header:SetText( strLabel )
+
+end
+
+function PANEL:SetHeaderHeight( height )
+
+	self.Header:SetTall( height )
+
+end
+
+function PANEL:GetHeaderHeight()
+
+	return self.Header:GetTall()
 
 end
 
@@ -246,7 +256,7 @@ function PANEL:PerformLayout()
 	else
 
 		if ( IsValid( self.Contents ) && !self.OldHeight ) then self.OldHeight = self.Contents:GetTall() end
-		self:SetTall( self.Header:GetTall() )
+		self:SetTall( self:GetHeaderHeight() )
 
 	end
 
@@ -276,7 +286,7 @@ function PANEL:AnimSlide( anim, delta, data )
 			-- We are not using self.Contents and our designated height is less
 			-- than the header size, something is clearly wrong, try to rectify
 			self.OldHeight = 0
-			for id, pnl in pairs( self:GetChildren() ) do
+			for id, pnl in ipairs( self:GetChildren() ) do
 				self.OldHeight = self.OldHeight + pnl:GetTall()
 			end
 		end
@@ -311,6 +321,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	ctrl:SetLabel( "Category List Test Category" )
 	ctrl:SetSize( 300, 300 )
 	ctrl:SetPadding( 10 )
+	ctrl:SetHeaderHeight( 32 )
 
 	-- The contents can be any panel, even a DPanelList
 	local Contents = vgui.Create( "DButton" )

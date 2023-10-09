@@ -1,0 +1,63 @@
+// Gauss
+
+WeaponData
+{
+	// Weapon data is loaded by both the Game and Client DLLs.
+	"printname"		"#HL1_TauCannon"
+	"viewmodel"		"models/v_gauss.mdl"
+	"playermodel"		"models/weapons/w_gauss_hls.mdl"
+	"anim_prefix"		"gauss"
+	"bucket"		"3"
+	"bucket_position"	"11"
+
+	"clip_size"		"-1"
+	"default_clip"		"20"
+	"primary_ammo"		"Uranium"
+	"secondary_ammo"	"None"
+
+	"weight"		"20"
+	"item_flags"		"0"
+	"ITEM_FLAG_NOAUTOSWITCHEMPTY"	"1"
+
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"sprites/640hud2"
+			"x"			"0"
+			"y"			"90"
+			"width"		"170"
+			"height"	"45"
+		}
+		"weapon_s"
+		{
+			"file"		"sprites/640hud5"
+			"x"			"0"
+			"y"			"90"
+			"width"		"170"
+			"height"	"45"
+		}
+		"ammo"
+		{
+			"file"		"sprites/640hud7"
+			"x"			"0"
+			"y"			"96"
+			"width"		"24"
+			"height"	"24"
+		}
+		"crosshair"
+		{
+			"file"		"sprites/crosshairs"
+			"x"			"48"
+			"y"			"48"
+			"width"		"24"
+			"height"	"24"
+		}
+	}
+}

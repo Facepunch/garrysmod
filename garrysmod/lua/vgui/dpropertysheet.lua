@@ -52,7 +52,7 @@ function PANEL:PerformLayout()
 	if ( !self:IsActive() ) then
 		self.Image:SetImageColor( Color( 255, 255, 255, 155 ) )
 	else
-		self.Image:SetImageColor( Color( 255, 255, 255, 255 ) )
+		self.Image:SetImageColor( color_white )
 	end
 
 end
@@ -117,6 +117,24 @@ end
 function PANEL:GenerateExample()
 
 	-- Do nothing!
+
+end
+
+function PANEL:DoRightClick()
+
+	if ( !IsValid( self:GetPropertySheet() ) ) then return end
+
+	local tabs = DermaMenu()
+	for k, v in pairs( self:GetPropertySheet().Items ) do
+		if ( !v || !IsValid( v.Tab ) || !v.Tab:IsVisible() ) then continue end
+		local option = tabs:AddOption( v.Tab:GetText(), function()
+			if ( !v || !IsValid( v.Tab ) || !IsValid( self:GetPropertySheet() ) || !IsValid( self:GetPropertySheet().tabScroller ) ) then return end
+			v.Tab:DoClick()
+			self:GetPropertySheet().tabScroller:ScrollToChild( v.Tab )
+		end )
+		if ( IsValid( v.Tab.Image ) ) then option:SetIcon( v.Tab.Image:GetImage() ) end
+	end
+	tabs:Open()
 
 end
 

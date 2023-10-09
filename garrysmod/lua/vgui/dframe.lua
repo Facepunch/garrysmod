@@ -171,14 +171,16 @@ function PANEL:Think()
 
 	end
 
-	if ( self.Hovered && self.m_bSizable && mousex > ( self.x + self:GetWide() - 20 ) && mousey > ( self.y + self:GetTall() - 20 ) ) then
+	local screenX, screenY = self:LocalToScreen( 0, 0 )
+
+	if ( self.Hovered && self.m_bSizable && mousex > ( screenX + self:GetWide() - 20 ) && mousey > ( screenY + self:GetTall() - 20 ) ) then
 
 		self:SetCursor( "sizenwse" )
 		return
 
 	end
 
-	if ( self.Hovered && self:GetDraggable() && mousey < ( self.y + 24 ) ) then
+	if ( self.Hovered && self:GetDraggable() && mousey < ( screenY + 24 ) ) then
 		self:SetCursor( "sizeall" )
 		return
 	end
@@ -205,13 +207,15 @@ end
 
 function PANEL:OnMousePressed()
 
-	if ( self.m_bSizable && gui.MouseX() > ( self.x + self:GetWide() - 20 ) && gui.MouseY() > ( self.y + self:GetTall() - 20 ) ) then
+	local screenX, screenY = self:LocalToScreen( 0, 0 )
+
+	if ( self.m_bSizable && gui.MouseX() > ( screenX + self:GetWide() - 20 ) && gui.MouseY() > ( screenY + self:GetTall() - 20 ) ) then
 		self.Sizing = { gui.MouseX() - self:GetWide(), gui.MouseY() - self:GetTall() }
 		self:MouseCapture( true )
 		return
 	end
 
-	if ( self:GetDraggable() && gui.MouseY() < (self.y + 24) ) then
+	if ( self:GetDraggable() && gui.MouseY() < ( screenY + 24 ) ) then
 		self.Dragging = { gui.MouseX() - self.x, gui.MouseY() - self.y }
 		self:MouseCapture( true )
 		return
