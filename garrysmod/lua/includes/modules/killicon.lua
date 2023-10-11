@@ -37,7 +37,7 @@ function Add( name, material, color )
 
 end
 
-function AddUV( name, material, color, x, y, w, h )
+function AddTexCoord( name, material, color, x, y, w, h )
 	
 	Icons[name] = {}
 	Icons[name].type		= TYPE_MATERIAL
