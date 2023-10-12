@@ -71,7 +71,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 
 	$scope.Switch( "subscribed", 0 );
 
-	$scope.Subscribe = function( file )
+	$scope.Subscribe = function( file, event )
 	{
 		if ( !file.info ) file.info = { children: [] };
 
@@ -106,10 +106,12 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		}
 
 		subscriptions.Subscribe( file.id );
+		if ( event ) event.stopPropagation();
 	}
-	$scope.Unsubscribe = function( file )
+	$scope.Unsubscribe = function( file, event )
 	{
 		subscriptions.Unsubscribe( file.id );
+		if ( event ) event.stopPropagation();
 	}
 	$scope.UninstallAllSubscribed = function()
 	{
@@ -139,15 +141,17 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	{
 		return subscriptions.Enabled( file.id );
 	}
-	$scope.Disable = function( file )
+	$scope.Disable = function( file, event )
 	{
 		subscriptions.SetShouldMountAddon( String( file.id ), false );
 		subscriptions.ApplyChanges();
+		if ( event ) event.stopPropagation();
 	}
-	$scope.Enable = function( file )
+	$scope.Enable = function( file, event )
 	{
 		subscriptions.SetShouldMountAddon( String( file.id ), true );
 		subscriptions.ApplyChanges();
+		if ( event ) event.stopPropagation();
 	}
 
 	$scope.DisplayPopupMessage = function( txt, func )
@@ -211,6 +215,11 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		$scope.UnselectAll(); // Unselect items that might be not in subscriptions.GetAll()
 
 		for ( var k in subscriptions.GetAll() ) $scope.SelectedItems[ k ] = true;
+	}
+	$scope.ToggleSelect = function( file, event )
+	{
+		$scope.SelectedItems[file.id] = !$scope.SelectedItems[file.id];
+		if ( event ) event.stopPropagation();
 	}
 	$scope.EnableAllSelected = function()
 	{
@@ -487,6 +496,10 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		if ( size < 1000 * 1000 * 1000 ) return Math.round( size / ( 1000 * 1000 ), 2 ) + " MB"
 
 		return Math.round( size / ( 1000 * 1000 * 1000 ), 2 ) + " GB"
+	}
+
+	$scope.stopPropagation = function( event ) {
+		event.stopPropagation();
 	}
 }
 

@@ -119,11 +119,12 @@ function MenuController( $scope, $rootScope )
 		lua.Run( "RunConsoleCommand( 'disconnect' )" );
 	}
 
-	$scope.OpenWorkshopFile = function( id )
+	$scope.OpenWorkshopFile = function( id, event )
 	{
 		if ( !id ) return;
 
 		lua.Run( "steamworks.ViewFile( %s )", String( id ) );
+		if ( event ) event.stopPropogation();
 	}
 
 	$scope.OpenFolder = function( foldername )

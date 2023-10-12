@@ -127,7 +127,7 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		}
 	}
 
-	this.Scope.Rate = function( entry, b )
+	this.Scope.Rate = function( entry, b, event )
 	{
 		if ( !entry.id ) return;
 
@@ -147,11 +147,13 @@ WorkshopFiles.prototype.Init = function( namespace, scope, RootScope )
 		if ( b )	lua.PlaySound( "npc/roller/mine/rmine_chirp_answer1.wav" );
 		else 		lua.PlaySound( "buttons/button10.wav" );
 
+		if ( event ) event.stopPropagation();
 	}
 
-	this.Scope.PublishLocal = function( entry )
+	this.Scope.PublishLocal = function( entry, event )
 	{
 		gmod.Publish( self.NameSpace, entry.info.file, entry.background )
+		if ( event ) event.stopPropagation();
 	}
 }
 
