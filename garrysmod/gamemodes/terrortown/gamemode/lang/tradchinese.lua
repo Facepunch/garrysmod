@@ -1026,7 +1026,7 @@ L.aw_tod2_text  = "在這回合剛開始不久即被殺害。"
 
 
 --- New and modified pieces of text are placed below this point, marked with the
---- version in which they were added, to make updating translations easier.
+--- version or the date in which they were added, to make updating translations easier.
 
 
 --- v23
@@ -1040,5 +1040,5 @@ L.drop_no_ammo = "當武器快沒子彈的時候，點擊後將他丟掉並變�
 L.set_cross_brightness = "準心亮度"
 L.set_cross_size = "準心尺寸"
 
---- 5-25-15
+--- 2015-05-25
 L.hat_retrieve = "您撿起了一頂探長的帽子。"

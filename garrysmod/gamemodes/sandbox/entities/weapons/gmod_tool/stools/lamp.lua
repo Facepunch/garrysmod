@@ -83,6 +83,7 @@ function TOOL:LeftClick( trace )
 	if ( !self:GetSWEP():CheckLimit( "lamps" ) ) then return false end
 
 	local lamp = MakeLamp( ply, r, g, b, key, toggle, texture, mdl, fov, distance, bright, !toggle, { Pos = pos, Angle = angle_zero } )
+	if ( !IsValid( lamp ) ) then return false end
 
 	local CurPos = lamp:GetPos()
 	local NearestPoint = lamp:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -135,7 +136,7 @@ if ( SERVER ) then
 		if ( !IsValidLampModel( model ) ) then return false end
 
 		local lamp = ents.Create( "gmod_lamp" )
-		if ( !IsValid( lamp ) ) then return end
+		if ( !IsValid( lamp ) ) then return false end
 
 		lamp:SetModel( model )
 		lamp:SetFlashlightTexture( texture )

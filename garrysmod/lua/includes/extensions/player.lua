@@ -27,8 +27,7 @@ function meta:__index( key )
 	--
 	local tab = entity.GetTable( self )
 	if ( tab ) then
-		local val = tab[ key ]
-		if ( val != nil ) then return val end
+		return tab[ key ]
 	end
 
 	return nil
@@ -49,7 +48,7 @@ function player.GetByAccountID( ID )
 			return players[i]
 		end
 	end
-	
+
 	return false
 end
 
@@ -60,7 +59,7 @@ function player.GetByUniqueID( ID )
 			return players[i]
 		end
 	end
-	
+
 	return false
 end
 
@@ -72,7 +71,7 @@ function player.GetBySteamID( ID )
 			return players[i]
 		end
 	end
-	
+
 	return false
 end
 
@@ -84,34 +83,28 @@ function player.GetBySteamID64( ID )
 			return players[i]
 		end
 	end
-	
+
 	return false
 end
 
 local inext = ipairs({})
-
 local PlayerCache = nil
 
 function player.Iterator()
-	
+
 	if ( PlayerCache == nil ) then PlayerCache = player.GetAll() end
-	
+
 	return inext, PlayerCache, 0
-	
+
 end
 
 local function InvalidatePlayerCache( ent )
-	
-	if ( ent:IsPlayer() ) then
-		
-		PlayerCache = nil
-		
-	end
-	
+
+	if ( ent:IsPlayer() ) then PlayerCache = nil end
+
 end
 
 hook.Add( "OnEntityCreated", "player.Iterator", InvalidatePlayerCache )
-
 hook.Add( "EntityRemoved", "player.Iterator", InvalidatePlayerCache )
 
 --[[---------------------------------------------------------
@@ -141,7 +134,7 @@ if ( CLIENT ) then
 
 	function meta:ConCommand( command, bSkipQueue )
 
-		if ( bSkipQueue ) then
+		if ( bSkipQueue || IsConCommandBlocked( command ) ) then
 			SendConCommand( self, command )
 		else
 			CommandList = CommandList or {}

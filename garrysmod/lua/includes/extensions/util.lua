@@ -118,6 +118,7 @@ function util.StringToType( str, typename )
 	if ( typename == "int" )	then return math.Round( tonumber( str ) ) end
 	if ( typename == "bool" )	then return tobool( str ) end
 	if ( typename == "string" )	then return tostring( str ) end
+	if ( typename == "entity" )	then return Entity( str ) end
 
 	MsgN( "util.StringToType: unknown type \"", typename, "\"!" )
 
@@ -363,4 +364,34 @@ function util.RemovePData( steamid, name )
 	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
 	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
 
+end
+
+--[[---------------------------------------------------------
+	Name: IsBinaryModuleInstalled( name )
+	Desc: Returns whether a binary module with the given name is present on disk
+-----------------------------------------------------------]]
+local suffix = ({"osx64","osx","linux64","linux","win64","win32"})[
+	( system.IsWindows() && 4 || 0 )
+	+ ( system.IsLinux() && 2 || 0 )
+	+ ( jit.arch == "x86" && 1 || 0 )
+	+ 1
+]
+local fmt = "lua/bin/gm" .. ((CLIENT && !MENU_DLL) && "cl" || "sv") .. "_%s_%s.dll"
+function util.IsBinaryModuleInstalled( name )
+	if ( !isstring( name ) ) then
+		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string expected, got " .. type( name ) .. ")" )
+	elseif ( #name == 0 ) then
+		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string cannot be empty)" )
+	end
+
+	if ( file.Exists( string.format( fmt, name, suffix ), "GAME" ) ) then
+		return true
+	end
+
+	-- Edge case - on Linux 32-bit x86-64 branch, linux32 is also supported as a suffix
+	if ( jit.versionnum != 20004 && jit.arch == "x86" && system.IsLinux() ) then
+		return file.Exists( string.format( fmt, name, "linux32" ), "GAME" )
+	end
+
+	return false
 end

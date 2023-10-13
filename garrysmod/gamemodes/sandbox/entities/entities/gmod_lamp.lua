@@ -84,7 +84,7 @@ if ( SERVER ) then
 
 	function ENT:OnSwitch( bOn )
 
-		if ( bOn == self:GetOn() ) then return end
+		if ( bOn && IsValid( self.flashlight ) ) then return end
 
 		if ( !bOn ) then
 
@@ -216,8 +216,8 @@ function ENT:DrawEffects()
 		local Col = self:GetColor()
 		Col.a = Alpha
 
-		render.DrawSprite( LightPos, Size, Size, Col, Visibile * ViewDot )
-		render.DrawSprite( LightPos, Size * 0.4, Size * 0.4, Color( 255, 255, 255, Alpha ), Visibile * ViewDot )
+		render.DrawSprite( LightPos, Size, Size, Col )
+		render.DrawSprite( LightPos, Size * 0.4, Size * 0.4, Color( 255, 255, 255, Alpha ) )
 
 	end
 

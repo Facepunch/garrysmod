@@ -4,7 +4,13 @@ local meta = FindMetaTable( "Entity" )
 -- Return if there's nothing to add on to
 if ( !meta ) then return end
 
-AccessorFunc( meta, "m_bPlayPickupSound", "ShouldPlayPickupSound" )
+function meta:GetShouldPlayPickupSound()
+	return self.m_bPlayPickupSound || false
+end
+
+function meta:SetShouldPlayPickupSound( bPlaySound )
+	self.m_bPlayPickupSound = tobool( bPlaySound ) || false
+end
 
 --
 -- Entity index accessor. This used to be done in engine, but it's done in Lua now because it's faster
@@ -50,7 +56,13 @@ end
 
 if ( SERVER ) then
 
-	function meta:SetCreator( ply )
+	function meta:SetCreator( ply --[[= NULL]] )
+		if ( ply == nil ) then
+			ply = NULL
+		elseif ( !isentity( ply ) ) then
+			error( "bad argument #1 to 'SetCreator' (Entity expected, got " .. type( ply ) .. ")", 2 )
+		end
+
 		self.m_PlayerCreator = ply
 	end
 
@@ -147,6 +159,37 @@ function meta:PhysWake()
 	if ( !IsValid( phys ) ) then return end
 
 	phys:Wake()
+
+end
+
+local GetColorOriginal4 = meta.GetColor4Part  -- Do not use me! I will be removed
+local GetColorOriginal = meta.GetColor
+function meta:GetColor()
+
+	-- Backwards comp slower method
+	if ( !GetColorOriginal4 ) then
+		return GetColorOriginal( self )
+	end
+
+	return Color( GetColorOriginal4( self ) )
+
+end
+
+local SetColorOriginal4 = meta.SetColor4Part  -- Do not use me! I will be removed
+local SetColorOriginal = meta.SetColor
+function meta:SetColor( col )
+
+	-- Backwards comp slower method
+	if ( !SetColorOriginal4 ) then
+		return SetColorOriginal( self, col )
+	end
+
+	-- Even more backwards compat
+	if ( !col ) then
+		return SetColorOriginal4( self, 255, 255, 255, 255 )
+	end
+
+	SetColorOriginal4( self, col.r, col.g, col.b, col.a )
 
 end
 
@@ -452,7 +495,7 @@ function meta:InstallDataTable()
 		if ( CLIENT ) then
 
 			net.Start( "editvariable" )
-				net.WriteUInt( self:EntIndex(), 32 )
+				net.WriteEntity( self )
 				net.WriteString( variable )
 				net.WriteString( value )
 			net.SendToServer()
@@ -470,37 +513,38 @@ function meta:InstallDataTable()
 
 	end
 
-	if ( SERVER ) then
-
-		util.AddNetworkString( "editvariable" )
-
-		net.Receive( "editvariable", function( len, client )
-
-			local iIndex = net.ReadUInt( 32 )
-			local ent = Entity( iIndex )
-
-			if ( !IsValid( ent ) ) then return end
-			if ( !isfunction( ent.GetEditingData ) ) then return end
-			if ( ent.AdminOnly && !client:IsAdmin() ) then return end
-
-			local key = net.ReadString()
-
-			-- Is this key in our edit table?
-			local editor = ent:GetEditingData()[ key ]
-			if ( !istable( editor ) ) then return end
-
-			local val = net.ReadString()
-			hook.Run( "VariableEdited", ent, client, key, val, editor )
-
-		end )
-
-	end
-
 end
 
 if ( SERVER ) then
 
-	AccessorFunc( meta, "m_bUnFreezable", "UnFreezable" )
+	util.AddNetworkString( "editvariable" )
+
+	net.Receive( "editvariable", function( len, client )
+
+		local ent = net.ReadEntity()
+
+		if ( !IsValid( ent ) ) then return end
+		if ( !isfunction( ent.GetEditingData ) ) then return end
+		if ( ent.AdminOnly && !( client:IsAdmin() || game.SinglePlayer() ) ) then return end
+
+		local key = net.ReadString()
+
+		-- Is this key in our edit table?
+		local editor = ent:GetEditingData()[ key ]
+		if ( !istable( editor ) ) then return end
+
+		local val = net.ReadString()
+		hook.Run( "VariableEdited", ent, client, key, val, editor )
+
+	end )
+
+	function meta:GetUnFreezable()
+		return self.m_bUnFreezable || false
+	end
+
+	function meta:SetUnFreezable( bFreeze )
+		self.m_bUnFreezable = tobool( bFreeze ) || false
+	end
 
 end
 

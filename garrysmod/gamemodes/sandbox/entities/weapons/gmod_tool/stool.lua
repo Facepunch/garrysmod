@@ -34,36 +34,63 @@ function ToolObj:CreateConVars()
 
 	local mode = self:GetMode()
 
+	self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, 1, { FCVAR_NOTIFY, FCVAR_REPLICATED } )
+	self.ClientConVars = {}
+	self.ServerConVars = {}
+
 	if ( CLIENT ) then
 
 		for cvar, default in pairs( self.ClientConVar ) do
-
-			CreateClientConVar( mode .. "_" .. cvar, default, true, true )
-
+			self.ClientConVars[ cvar ] = CreateClientConVar( mode .. "_" .. cvar, default, true, true )
 		end
-
-		return
-	end
-
-	-- Note: I changed this from replicated because replicated convars don't work
-	-- when they're created via Lua.
-
-	if ( SERVER ) then
-
-		self.AllowedCVar = CreateConVar( "toolmode_allow_" .. mode, 1, FCVAR_NOTIFY )
+		
+	else
 
 		for cvar, default in pairs( self.ServerConVar ) do
-			CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE )
+			self.ServerConVars[ cvar ] = CreateConVar( mode .. "_" .. cvar, default, FCVAR_ARCHIVE )
 		end
+
 	end
 
 end
 
 function ToolObj:GetServerInfo( property )
 
-	local mode = self:GetMode()
+	if ( self.ServerConVars[ property ] and SERVER ) then
+		return self.ServerConVars[ property ]:GetString()
+	end
 
-	return GetConVarString( mode .. "_" .. property )
+	return GetConVarString( self:GetMode() .. "_" .. property )
+
+end
+
+function ToolObj:GetClientInfo( property )
+
+	if ( self.ClientConVars[ property ] and CLIENT ) then
+		return self.ClientConVars[ property ]:GetString()
+	end
+
+	return self:GetOwner():GetInfo( self:GetMode() .. "_" .. property )
+
+end
+
+function ToolObj:GetClientNumber( property, default )
+
+	if ( self.ClientConVars[ property ] and CLIENT ) then
+		return self.ClientConVars[ property ]:GetFloat()
+	end
+
+	return self:GetOwner():GetInfoNum( self:GetMode() .. "_" .. property, tonumber( default ) or 0 )
+
+end
+
+function ToolObj:GetClientBool( property, default )
+
+	if ( self.ClientConVars[ property ] and CLIENT ) then
+		return self.ClientConVars[ property ]:GetBool()
+	end
+
+	return math.floor( self:GetOwner():GetInfoNum( self:GetMode() .. "_" .. property, tonumber( default ) or 0 ) ) != 0
 
 end
 
@@ -78,21 +105,8 @@ function ToolObj:BuildConVarList()
 
 end
 
-function ToolObj:GetClientInfo( property )
-
-	return self:GetOwner():GetInfo( self:GetMode() .. "_" .. property )
-
-end
-
-function ToolObj:GetClientNumber( property, default )
-
-	return self:GetOwner():GetInfoNum( self:GetMode() .. "_" .. property, tonumber( default ) or 0 )
-
-end
-
 function ToolObj:Allowed()
 
-	if ( CLIENT ) then return true end
 	return self.AllowedCVar:GetBool()
 
 end
@@ -129,9 +143,7 @@ function ToolObj:CheckObjects()
 
 end
 
-local toolmodes = file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" )
-
-for key, val in pairs( toolmodes ) do
+for _, val in ipairs( file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" ) ) do
 
 	local char1, char2, toolmode = string.find( val, "([%w_]*).lua" )
 
@@ -163,13 +175,15 @@ hook.Add( "PopulateToolMenu", "AddSToolsToMenu", function()
 
 		if ( TOOL.AddToMenu != false ) then
 
-			spawnmenu.AddToolMenuOption( TOOL.Tab or "Main",
-										TOOL.Category or "New Category",
-										ToolName,
-										TOOL.Name or "#" .. ToolName,
-										TOOL.Command or "gmod_tool " .. ToolName,
-										TOOL.ConfigName or ToolName,
-										TOOL.BuildCPanel )
+			spawnmenu.AddToolMenuOption(
+				TOOL.Tab or "Main",
+				TOOL.Category or "New Category",
+				ToolName,
+				TOOL.Name or "#" .. ToolName,
+				TOOL.Command or "gmod_tool " .. ToolName,
+				TOOL.ConfigName or ToolName,
+				TOOL.BuildCPanel
+			)
 
 		end
 

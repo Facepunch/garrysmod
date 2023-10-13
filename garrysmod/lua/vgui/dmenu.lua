@@ -155,7 +155,7 @@ function PANEL:PerformLayout( w, h )
 	local w = self:GetMinimumWidth()
 
 	-- Find the widest one
-	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
+	for k, pnl in ipairs( self:GetCanvas():GetChildren() ) do
 
 		pnl:InvalidateLayout( true )
 		w = math.max( w, pnl:GetWide() )
@@ -166,7 +166,7 @@ function PANEL:PerformLayout( w, h )
 
 	local y = 0 -- for padding
 
-	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
+	for k, pnl in ipairs( self:GetCanvas():GetChildren() ) do
 
 		pnl:SetWide( w )
 		pnl:SetPos( 0, y )
@@ -219,10 +219,26 @@ function PANEL:Open( x, y, skipanimation, ownerpanel )
 	if ( y < 1 ) then y = 1 end
 	if ( x < 1 ) then x = 1 end
 
-	self:SetPos( x, y )
+	local p = self:GetParent()
+	if ( IsValid( p ) && p:IsModal() ) then
+		-- Can't popup while we are parented to a modal panel
+		-- We will end up behind the modal panel in that case
 
-	-- Popup!
-	self:MakePopup()
+		x, y = p:ScreenToLocal( x, y )
+
+		-- We have to reclamp the values
+		if ( y + h > p:GetTall() ) then y = p:GetTall() - h end
+		if ( x + w > p:GetWide() ) then x = p:GetWide() - w end
+		if ( y < 1 ) then y = 1 end
+		if ( x < 1 ) then x = 1 end
+
+		self:SetPos( x, y )
+	else
+		self:SetPos( x, y )
+
+		-- Popup!
+		self:MakePopup()
+	end
 
 	-- Make sure it's visible!
 	self:SetVisible( true )
@@ -249,7 +265,7 @@ end
 
 function PANEL:ClearHighlights()
 
-	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
+	for k, pnl in ipairs( self:GetCanvas():GetChildren() ) do
 		pnl.Highlight = nil
 	end
 
@@ -257,7 +273,7 @@ end
 
 function PANEL:HighlightItem( item )
 
-	for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
+	for k, pnl in ipairs( self:GetCanvas():GetChildren() ) do
 		if ( pnl == item ) then
 			pnl.Highlight = true
 		end

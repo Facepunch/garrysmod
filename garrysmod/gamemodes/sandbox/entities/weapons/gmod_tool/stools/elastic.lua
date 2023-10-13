@@ -8,6 +8,9 @@ TOOL.ClientConVar[ "rdamping" ] = "0.01"
 TOOL.ClientConVar[ "material" ] = "cable/cable"
 TOOL.ClientConVar[ "width" ] = "2"
 TOOL.ClientConVar[ "stretch_only" ] = "1"
+TOOL.ClientConVar[ "color_r" ] = "255"
+TOOL.ClientConVar[ "color_g" ] = "255"
+TOOL.ClientConVar[ "color_b" ] = "255"
 
 TOOL.Information = {
 	{ name = "left", stage = 0 },
@@ -43,23 +46,31 @@ function TOOL:LeftClick( trace )
 		local rdamping = self:GetClientNumber( "rdamping" )
 		local constant = self:GetClientNumber( "constant" )
 		local stretchonly = self:GetClientNumber( "stretch_only" )
+		local colorR = self:GetClientNumber( "color_r" )
+		local colorG = self:GetClientNumber( "color_g" )
+		local colorB = self:GetClientNumber( "color_b" )
 
 		-- Get information we're about to use
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 		local LPos1, LPos2 = self:GetLocalPos( 1 ),	self:GetLocalPos( 2 )
-		local constraint, rope = constraint.Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rdamping, material, width, stretchonly )
 
-		-- Add The constraint to the players undo table
+		-- Create the constraint
+		local constr, rope = constraint.Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, constant, damping, rdamping, material, width, stretchonly, Color( colorR, colorG, colorB, 255 ) )
 
-		undo.Create( "Elastic" )
-			if ( IsValid( constraint ) ) then undo.AddEntity( constraint ) end
-			if ( IsValid( rope ) ) then undo.AddEntity( rope ) end
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
+		-- Create an undo if the constraint was created
+		if ( IsValid( constr ) ) then
+			undo.Create( "Elastic" )
+				undo.AddEntity( constr )
+				self:GetOwner():AddCleanup( "ropeconstraints", constr )
 
-		if ( IsValid( constraint ) ) then self:GetOwner():AddCleanup( "ropeconstraints", constraint ) end
-		if ( IsValid( rope ) ) then self:GetOwner():AddCleanup( "ropeconstraints", rope ) end
+				if ( IsValid( rope ) ) then
+					undo.AddEntity( rope )
+					self:GetOwner():AddCleanup( "ropeconstraints", rope )
+				end
+				undo.SetPlayer( self:GetOwner() )
+			undo.Finish()
+		end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()
@@ -104,5 +115,6 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Slider", { Label = "#tool.elastic.width", Command = "elastic_width", Type = "Float", Min = 0, Max = 20 } )
 	CPanel:AddControl( "RopeMaterial", { Label = "#tool.elastic.material", ConVar = "elastic_material" } )
+	CPanel:AddControl( "Color", { Label = "#tool.elastic.color", Red = "elastic_color_r", Green = "elastic_color_g", Blue = "elastic_color_b" } )
 
 end

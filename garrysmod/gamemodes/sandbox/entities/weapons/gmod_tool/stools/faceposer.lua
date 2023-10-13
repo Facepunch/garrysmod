@@ -2,8 +2,8 @@
 TOOL.Category = "Poser"
 TOOL.Name = "#tool.faceposer.name"
 
-local gLastFacePoseEntity = NULL
-local gLastFacePoseEntityCheckedNULL = false
+local MAXSTUDIOFLEXCTRL = 96
+
 TOOL.FaceTimer = 0
 
 TOOL.Information = {
@@ -43,21 +43,16 @@ function TOOL:SetFacePoserEntity( ent )
 	return self:GetWeapon():SetNWEntity( 1, ent )
 end
 
+local gLastFacePoseEntity = NULL
 function TOOL:Think()
 
 	-- If we're on the client just make sure the context menu is up to date
 	if ( CLIENT ) then
-		if ( !IsValid( self:FacePoserEntity() ) && !gLastFacePoseEntityCheckedNULL ) then
-			gLastFacePoseEntityCheckedNULL = true
-			self:UpdateFaceControlPanel()
-		end
 
 		if ( self:FacePoserEntity() == gLastFacePoseEntity ) then return end
 
 		gLastFacePoseEntity = self:FacePoserEntity()
-		gLastFacePoseEntityCheckedNULL = false
-
-		self:UpdateFaceControlPanel()
+		self:RebuildControlPanel( self:FacePoserEntity() )
 
 		return
 	end
@@ -157,7 +152,7 @@ if ( SERVER ) then
 
 	function CC_Face_Randomize( pl, command, arguments )
 
-		for i = 0, 128 do
+		for i = 0, MAXSTUDIOFLEXCTRL do
 			local num = math.Rand( 0, 1 )
 			pl:ConCommand( "faceposer_flex" .. i .. " " .. string.format( "%.3f", num ) )
 		end
@@ -171,22 +166,11 @@ end
 -- The rest of the code is clientside only, it is not used on server
 if ( SERVER ) then return end
 
-for i = 0, 128 do
+for i = 0, MAXSTUDIOFLEXCTRL do
 	TOOL.ClientConVar[ "flex" .. i ] = "0"
 end
 
 TOOL.ClientConVar[ "scale" ] = "1.0"
-
--- Updates the spawn menu panel
-function TOOL:UpdateFaceControlPanel( index )
-
-	local CPanel = controlpanel.Get( "faceposer" )
-	if ( !CPanel ) then Msg( "Couldn't find faceposer panel!\n" ) return end
-
-	CPanel:ClearControls()
-	self.BuildCPanel( CPanel, self:FacePoserEntity() )
-
-end
 
 local ConVarsDefault = TOOL:BuildConVarList()
 
@@ -196,7 +180,7 @@ local function PrettifyName( name )
 
 	-- Try to split text into words, where words would start with single uppercase character
 	local newParts = {}
-	for id, str in pairs( string.Explode( " ", name ) ) do
+	for id, str in ipairs( string.Explode( " ", name ) ) do
 		local wordStart = 1
 		for i = 2, str:len() do
 			local c = str[ i ]
@@ -213,7 +197,7 @@ local function PrettifyName( name )
 	end
 
 	-- Uppercase all first characters
-	for id, str in pairs( newParts ) do
+	for id, str in ipairs( newParts ) do
 		if ( str:len() < 2 ) then continue end
 		newParts[ id ] = str:Left( 1 ):upper() .. str:sub( 2 )
 	end
@@ -225,7 +209,6 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 
 	CPanel:AddControl( "Header", { Description = "#tool.faceposer.desc" } )
 
-	FaceEntity = FaceEntity || gLastFacePoseEntity
 	if ( !IsValid( FaceEntity ) || FaceEntity:GetFlexNum() == 0 ) then return end
 
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "face", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
@@ -240,7 +223,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 	QuickFace:SetAutoHeight( true )
 
 	local Clear = {}
-	for i = 0, 128 do
+	for i = 0, MAXSTUDIOFLEXCTRL do
 		Clear[ "faceposer_flex" .. i ] = GenerateDefaultFlexValue( FaceEntity, i );
 	end
 	QuickFace:AddMaterialEx( "#faceposer.clear", "vgui/face/clear", nil, Clear )
@@ -410,11 +393,12 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 
 	-- Add some padding to the bottom of the list
 	local padding = vgui.Create( "Panel", CPanel )
-	padding:Dock( TOP )
 	padding:SetHeight( 7 )
+	CPanel:AddItem( padding )
 
+	-- Actual searching
 	filter.OnValueChange = function( pnl, txt )
-		for id, flxpnl in pairs( flexControllers ) do
+		for id, flxpnl in ipairs( flexControllers ) do
 			if ( !flxpnl:GetText():lower():find( txt:lower(), nil, true ) && !flxpnl.originalName:lower():find( txt:lower(), nil, true ) ) then
 				flxpnl:SetVisible( false )
 			else

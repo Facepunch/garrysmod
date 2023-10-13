@@ -356,14 +356,18 @@ function Do_Undo( undo )
 
 	if ( !undo ) then return false end
 
+	if ( hook.Run( "PreUndo", undo ) == false ) then return end
+
 	local count = 0
 
 	-- Call each function
 	if ( undo.Functions ) then
 		for index, func in pairs( undo.Functions ) do
 
-			func[ 1 ]( undo, unpack( func[ 2 ] ) )
-			count = count + 1
+			local success = func[ 1 ]( undo, unpack( func[ 2 ] ) )
+			if ( success != false ) then
+				count = count + 1
+			end
 
 		end
 	end
@@ -389,6 +393,8 @@ function Do_Undo( undo )
 			end
 		net.Send( undo.Owner )
 	end
+
+	hook.Run( "PostUndo", undo, count )
 
 	return count
 

@@ -36,15 +36,14 @@ function TOOL:LeftClick( trace )
 		local Ent1, Ent2 = self:GetEnt( 1 ), self:GetEnt( 2 )
 		local Bone1, Bone2 = self:GetBone( 1 ), self:GetBone( 2 )
 
-		local constraint = constraint.NoCollide( Ent1, Ent2, Bone1, Bone2 )
-
-		if ( constraint ) then
+		local constr = constraint.NoCollide( Ent1, Ent2, Bone1, Bone2 )
+		if ( IsValid( constr ) ) then
 			undo.Create( "NoCollide" )
-				undo.AddEntity( constraint )
+				undo.AddEntity( constr )
 				undo.SetPlayer( self:GetOwner() )
 			undo.Finish()
 
-			self:GetOwner():AddCleanup( "nocollide", constraint )
+			self:GetOwner():AddCleanup( "nocollide", constr )
 		end
 
 		self:ClearObjects()

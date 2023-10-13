@@ -82,14 +82,15 @@ function TOOL:LeftClick( trace )
 		LPos1 = Phys1:WorldToLocal( WPos2 + Norm2 )
 
 		-- Create a constraint axis
-		local constraint = constraint.Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, friction, nocollide )
+		local constr = constraint.Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, friction, nocollide )
+		if ( IsValid( constr ) ) then
+			undo.Create( "Axis" )
+				undo.AddEntity( constr )
+				undo.SetPlayer( self:GetOwner() )
+			undo.Finish()
 
-		undo.Create( "Axis" )
-			undo.AddEntity( constraint )
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-
-		self:GetOwner():AddCleanup( "constraints", constraint )
+			self:GetOwner():AddCleanup( "constraints", constr )
+		end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()
@@ -156,14 +157,15 @@ function TOOL:RightClick( trace )
 		-- Set the hinge Axis perpendicular to the trace hit surface
 		LPos1 = Phys1:WorldToLocal( WPos2 + Norm2 )
 
-		local constraint = constraint.Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, friction, nocollide )
+		local constr = constraint.Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, friction, nocollide )
+		if ( IsValid( constr ) ) then
+			undo.Create( "Axis" )
+				undo.AddEntity( constr )
+				undo.SetPlayer( self:GetOwner() )
+			undo.Finish()
 
-		undo.Create( "Axis" )
-			undo.AddEntity( constraint )
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-
-		self:GetOwner():AddCleanup( "constraints", constraint )
+			self:GetOwner():AddCleanup( "constraints", constr )
+		end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()

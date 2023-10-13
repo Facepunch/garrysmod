@@ -33,11 +33,11 @@ hook.Add( "OnLuaError", "MenuErrorHandler", function( str, realm, stack, addonti
 		return
 	end
 
-	local text = language.GetPhrase( "errors.something" )
+	local text = language.GetPhrase( "errors.something_p" )
 
 	-- We know the name, display it to the user
 	if ( isstring( addontitle ) ) then
-		text = string.format( language.GetPhrase( "errors.addon" ), addontitle )
+		text = string.format( language.GetPhrase( "errors.addon_p" ), addontitle )
 	end
 
 	local error = {
@@ -55,9 +55,12 @@ end )
 
 local matAlert = Material( "icon16/error.png" )
 
+local cl_drawhud = GetConVar("cl_drawhud")
+
 hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 
 	if ( table.IsEmpty( Errors ) ) then return end
+	if ( !cl_drawhud:GetBool() ) then return end
 
 	local idealy = 32
 	local height = 30

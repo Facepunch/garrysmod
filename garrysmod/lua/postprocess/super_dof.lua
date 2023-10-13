@@ -30,6 +30,7 @@ function PANEL:Init()
 	self.BlurSize:SetDecimals( 3 )
 	self.BlurSize:SetText( "#superdof_pp.size" )
 	self.BlurSize:SetValue( BlurSize )
+	self.BlurSize:SetDefaultValue( 0.5 )
 	function self.BlurSize:OnValueChanged( val ) BlurSize = val end
 	self.BlurSize:Dock( TOP )
 	self.BlurSize:DockMargin( 0, 0, 0, 16 )
@@ -40,6 +41,7 @@ function PANEL:Init()
 	self.Distance:SetMax( 4096 )
 	self.Distance:SetText( "#superdof_pp.distance" )
 	self.Distance:SetValue( Distance )
+	self.Distance:SetDefaultValue( 256 )
 	function self.Distance:OnValueChanged( val ) Distance = val end
 	self.Distance:Dock( TOP )
 	self.Distance:SetDark( true )
@@ -64,6 +66,7 @@ function PANEL:Init()
 	PassesCtrl:SetDecimals( 0 )
 	PassesCtrl:SetText( "#superdof_pp.passes" )
 	PassesCtrl:SetValue( Passes )
+	PassesCtrl:SetDefaultValue( 12 )
 	function PassesCtrl:OnValueChanged( val ) Passes = val end
 	PassesCtrl:Dock( TOP )
 	PassesCtrl:DockMargin( 0, 0, 0, 4 )
@@ -75,6 +78,7 @@ function PANEL:Init()
 	RadialsCtrl:SetDecimals( 0 )
 	RadialsCtrl:SetText( "#superdof_pp.radials" )
 	RadialsCtrl:SetValue( Steps )
+	RadialsCtrl:SetDefaultValue( 24 )
 	function RadialsCtrl:OnValueChanged( val ) Steps = val end
 	RadialsCtrl:Dock( TOP )
 	RadialsCtrl:DockMargin( 0, 0, 0, 4 )
@@ -86,6 +90,7 @@ function PANEL:Init()
 	ShapeCtrl:SetDecimals( 3 )
 	ShapeCtrl:SetText( "#superdof_pp.shape" )
 	ShapeCtrl:SetValue( Shape )
+	ShapeCtrl:SetDefaultValue( 0.5 )
 	function ShapeCtrl:OnValueChanged( val ) Shape = val end
 	ShapeCtrl:Dock( TOP )
 	ShapeCtrl:DockMargin( 0, 0, 0, 4 )
@@ -115,7 +120,11 @@ function PANEL:Init()
 	local THIS = self
 	function Break:DoClick()
 		THIS:SetVisible( false )
-		timer.Simple( 5, function() THIS:SetVisible( true ) end )
+		timer.Simple( 5, function()
+			if IsValid( THIS ) then  
+				THIS:SetVisible( true )
+			end
+		end )
 	end
 	Break:Dock( LEFT )
 	Break:SetSize( 20, 20 )
@@ -154,6 +163,13 @@ local paneltypeSuperDOF = vgui.RegisterTable( PANEL, "DFrame" )
 local texFSB = render.GetSuperFPTex()
 local matFSB = Material( "pp/motionblur" )
 local matFB = Material( "pp/fb" )
+
+surface.CreateFont( "SuperDofText",
+{
+	font		= "Helvetica",
+	size		= 20,
+	weight		= 700
+})
 
 function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, bSpin, inView, ViewFOV )
 
@@ -237,8 +253,8 @@ function RenderDoF( vOrigin, vAngle, vFocus, fAngleSize, radial_steps, passes, b
 				cam.Start2D()
 					local add = ( i / ( math.pi * 2 ) ) * ( 1 / passes )
 					local percent = string.format( "%.1f", ( mul - ( 1 / passes ) + add ) * 100 )
-					draw.DrawText( percent .. "%", "GModWorldtip", view.w - 100, view.h - 100, color_black, TEXT_ALIGN_CENTER )
-					draw.DrawText( percent .. "%", "GModWorldtip", view.w - 101, view.h - 101, color_white, TEXT_ALIGN_CENTER )
+					draw.DrawText( percent .. "%", "SuperDofText", view.w - 100, view.h - 100, color_black, TEXT_ALIGN_CENTER )
+					draw.DrawText( percent .. "%", "SuperDofText", view.w - 101, view.h - 101, color_white, TEXT_ALIGN_CENTER )
 				cam.End2D()
 
 				render.Spin()
@@ -266,7 +282,7 @@ function RenderSuperDoF( ViewOrigin, ViewAngles, ViewFOV )
 
 	if ( FocusGrabber ) then
 
-		local x, y = gui.MousePos()
+		local x, y = input.GetCursorPos()
 		local dir = util.AimVector( ViewAngles, ViewFOV, x, y, ScrW(), ScrH() )
 
 		local tr = util.TraceLine( util.GetPlayerTrace( LocalPlayer(), dir ) )

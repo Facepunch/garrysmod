@@ -5,10 +5,13 @@ local math = math
 --[[---------------------------------------------------------
 	Name: string.ToTable( string )
 -----------------------------------------------------------]]
-function string.ToTable( str )
+function string.ToTable( input )
 	local tbl = {}
 
-	for i = 1, string.len( str ) do
+	-- For numbers, as some addons do this..
+	local str = tostring( input )
+
+	for i = 1, #str do
 		tbl[i] = string.sub( str, i, i )
 	end
 
@@ -29,16 +32,20 @@ local javascript_escape_replacements = {
 	["\f"] = "\\f" ,
 	["\r"] = "\\r" ,
 	["\""] = "\\\"",
-	["\'"] = "\\\'"
+	["\'"] = "\\\'",
+	["`"] = "\\`",
+	["$"] = "\\$",
+	["{"] = "\\{",
+	["}"] = "\\}"
 }
 
 function string.JavascriptSafe( str )
 
-	str = str:gsub( ".", javascript_escape_replacements )
+	str = string.gsub( str, ".", javascript_escape_replacements )
 
 	-- U+2028 and U+2029 are treated as line separators in JavaScript, handle separately as they aren't single-byte
-	str = str:gsub( "\226\128\168", "\\\226\128\168" )
-	str = str:gsub( "\226\128\169", "\\\226\128\169" )
+	str = string.gsub( str, "\226\128\168", "\\\226\128\168" )
+	str = string.gsub( str, "\226\128\169", "\\\226\128\169" )
 
 	return str
 
@@ -65,7 +72,7 @@ local pattern_escape_replacements = {
 }
 
 function string.PatternSafe( str )
-	return ( str:gsub( ".", pattern_escape_replacements ) )
+	return ( string.gsub( str, ".", pattern_escape_replacements ) )
 end
 
 --[[---------------------------------------------------------
@@ -77,7 +84,7 @@ local totable = string.ToTable
 local string_sub = string.sub
 local string_find = string.find
 local string_len = string.len
-function string.Explode(separator, str, withpattern)
+function string.Explode( separator, str, withpattern )
 	if ( separator == "" ) then return totable( str ) end
 	if ( withpattern == nil ) then withpattern = false end
 
@@ -115,15 +122,25 @@ end
 	Usage: string.GetExtensionFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetExtensionFromFilename( path )
-	return path:match( "%.([^%.]+)$" )
+	for i = #path, 1, -1 do
+		local c = string.sub( path, i, i )
+		if ( c == "/" or c == "\\" ) then return nil end
+		if ( c == "." ) then return string.sub( path, i + 1 ) end
+	end
+
+	return nil
 end
 
 --[[---------------------------------------------------------
 	Name: StripExtension( path )
 -----------------------------------------------------------]]
 function string.StripExtension( path )
-	local i = path:match( ".+()%.%w+$" )
-	if ( i ) then return path:sub( 1, i - 1 ) end
+	for i = #path, 1, -1 do
+		local c = string.sub( path, i, i )
+		if ( c == "/" or c == "\\" ) then return path end
+		if ( c == "." ) then return string.sub( path, 1, i - 1 ) end
+	end
+
 	return path
 end
 
@@ -133,7 +150,12 @@ end
 	Usage: string.GetPathFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetPathFromFilename( path )
-	return path:match( "^(.*[/\\])[^/\\]-$" ) or ""
+	for i = #path, 1, -1 do
+		local c = string.sub( path, i, i )
+		if ( c == "/" or c == "\\" ) then return string.sub( path, 1, i ) end
+	end
+
+	return ""
 end
 
 --[[---------------------------------------------------------
@@ -142,8 +164,12 @@ end
 	Usage: string.GetFileFromFilename("garrysmod/lua/modules/string.lua")
 -----------------------------------------------------------]]
 function string.GetFileFromFilename( path )
-	if ( !path:find( "\\" ) && !path:find( "/" ) ) then return path end 
-	return path:match( "[\\/]([^/\\]+)$" ) or ""
+	for i = #path, 1, -1 do
+		local c = string.sub( path, i, i )
+		if ( c == "/" or c == "\\" ) then return string.sub( path, i + 1 ) end
+	end
+
+	return path
 end
 
 --[[-----------------------------------------------------------------
@@ -230,7 +256,7 @@ end
 			Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.Trim( s, char )
-	if ( char ) then char = char:PatternSafe() else char = "%s" end
+	if ( char ) then char = string.PatternSafe( char ) else char = "%s" end
 	return string.match( s, "^" .. char .. "*(.-)" .. char .. "*$" ) or s
 end
 
@@ -240,7 +266,7 @@ end
 			Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimRight( s, char )
-	if ( char ) then char = char:PatternSafe() else char = "%s" end
+	if ( char ) then char = string.PatternSafe( char ) else char = "%s" end
 	return string.match( s, "^(.-)" .. char .. "*$" ) or s
 end
 
@@ -250,7 +276,7 @@ end
 			Optionally pass char to trim that character from the ends instead of space
 -----------------------------------------------------------]]
 function string.TrimLeft( s, char )
-	if ( char ) then char = char:PatternSafe() else char = "%s" end
+	if ( char ) then char = string.PatternSafe( char ) else char = "%s" end
 	return string.match( s, "^" .. char .. "*(.+)$" ) or s
 end
 
@@ -272,41 +298,39 @@ end
 
 function string.SetChar( s, k, v )
 
-	local start = s:sub( 0, k - 1 )
-	local send = s:sub( k + 1 )
-
-	return start .. v .. send
+	return string.sub( s, 0, k - 1 ) .. v .. string.sub( s, k + 1 )
 
 end
 
 function string.GetChar( s, k )
 
-	return s:sub( k, k )
+	return string.sub( s, k, k )
 
 end
 
 local meta = getmetatable( "" )
 
 function meta:__index( key )
+
 	local val = string[ key ]
-	if ( val ) then
+	if ( val ~= nil ) then
 		return val
 	elseif ( tonumber( key ) ) then
-		return self:sub( key, key )
-	else
-		error( "attempt to index a string value with bad key ('" .. tostring( key ) .. "' is not part of the string library)", 2 )
+		return string.sub( self, key, key )
 	end
-end
-
-function string.StartWith( String, Start )
-
-	return string.sub( String, 1, string.len( Start ) ) == Start
 
 end
 
-function string.EndsWith( String, End )
+function string.StartsWith( str, start )
 
-	return End == "" or string.sub( String, -string.len( End ) ) == End
+	return string.sub( str, 1, string.len( start ) ) == start
+
+end
+string.StartWith = string.StartsWith
+
+function string.EndsWith( str, endStr )
+
+	return endStr == "" or string.sub( str, -string.len( endStr ) ) == endStr
 
 end
 
@@ -318,10 +342,9 @@ end
 
 function string.ToColor( str )
 
+	local r, g, b, a = string.match( str, "(%d+) (%d+) (%d+) (%d+)" )
+
 	local col = Color( 255, 255, 255, 255 )
-
-	local r, g, b, a = str:match( "(%d+) (%d+) (%d+) (%d+)" )
-
 	col.r = tonumber( r ) or 255
 	col.g = tonumber( g ) or 255
 	col.b = tonumber( b ) or 255
@@ -331,20 +354,24 @@ function string.ToColor( str )
 
 end
 
-function string.Comma( number )
+function string.Comma( number, str )
+
+	local replace = str == nil and "%1,%2" or "%1" .. str .. "%2"
 
 	if ( isnumber( number ) ) then
 		number = string.format( "%f", number )
 		number = string.match( number, "^(.-)%.?0*$" ) -- Remove trailing zeros
 	end
 
-	local k
-
-	while true do
-		number, k = string.gsub( number, "^(-?%d+)(%d%d%d)", "%1,%2" )
-		if ( k == 0 ) then break end
-	end
+	local index = -1
+	while index ~= 0 do number, index = string.gsub( number, "^(-?%d+)(%d%d%d)", replace ) end
 
 	return number
+
+end
+
+function string.Interpolate( str, lookuptable )
+
+	return ( string.gsub( str, "{([_%a][_%w]*)}", lookuptable) )
 
 end

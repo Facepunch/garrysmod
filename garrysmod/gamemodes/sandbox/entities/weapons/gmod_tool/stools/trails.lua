@@ -86,7 +86,7 @@ function TOOL:LeftClick( trace )
 	local startsize = self:GetClientNumber( "startsize", 32 )
 	local mat = self:GetClientInfo( "material", "sprites/obsolete" )
 
-	local Trail = SetTrails( self:GetOwner(), trace.Entity, {
+	local trail = SetTrails( self:GetOwner(), trace.Entity, {
 		Color = Color( r, g, b, a ),
 		Length = length,
 		StartSize = startsize,
@@ -94,10 +94,12 @@ function TOOL:LeftClick( trace )
 		Material = mat
 	} )
 
-	undo.Create( "Trail" )
-		undo.AddEntity( Trail )
-		undo.SetPlayer( self:GetOwner() )
-	undo.Finish()
+	if ( IsValid( trail ) ) then
+		undo.Create( "Trail" )
+			undo.AddEntity( trail )
+			undo.SetPlayer( self:GetOwner() )
+		undo.Finish()
+	end
 
 	return true
 

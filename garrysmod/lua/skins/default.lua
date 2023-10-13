@@ -64,6 +64,8 @@ SKIN.colTextEntryTextHighlight	= Color( 20, 200, 250, 255 )
 SKIN.colTextEntryTextCursor		= Color( 0, 0, 100, 255 )
 SKIN.colTextEntryTextPlaceholder= Color( 128, 128, 128, 255 )
 
+SKIN.colNumSliderNotch			= Color( 0, 0, 0, 100 )
+
 SKIN.colMenuBG					= Color( 255, 255, 255, 200 )
 SKIN.colMenuBorder				= Color( 0, 0, 0, 200 )
 
@@ -646,6 +648,15 @@ function SKIN:PaintVScrollBar( panel, w, h )
 end
 
 --[[---------------------------------------------------------
+	HScrollBar
+-----------------------------------------------------------]]
+function SKIN:PaintHScrollBar( panel, w, h )
+
+	self.tex.Scroller.TrackH( 0, 0, w, h )
+
+end
+
+--[[---------------------------------------------------------
 	ScrollBarGrip
 -----------------------------------------------------------]]
 function SKIN:PaintScrollBarGrip( panel, w, h )
@@ -909,7 +920,13 @@ local function PaintNotches( x, y, w, h, num )
 
 	local space = w / num
 
-	for i=0, num do
+	-- Ensure at least 1 px between each notch
+	if ( space < 2 ) then
+		space = 2
+		num = w / space
+	end
+
+	for i = 0, math.ceil( num ) do
 
 		surface.DrawRect( x + i * space, y + 4, 1, 5 )
 
@@ -919,10 +936,11 @@ end
 
 function SKIN:PaintNumSlider( panel, w, h )
 
-	surface.SetDrawColor( Color( 0, 0, 0, 100 ) )
+	-- GetNotchColor() returns SKIN.colNumSliderNotch if custom override is not set
+	surface.SetDrawColor( panel:GetNotchColor() )
 	surface.DrawRect( 8, h / 2 - 1, w - 15, 1 )
 
-	PaintNotches( 8, h / 2 - 1, w - 16, 1, panel.m_iNotches )
+	PaintNotches( 8, h / 2 - 1, w - 16, 1, panel:GetNotches() )
 
 end
 

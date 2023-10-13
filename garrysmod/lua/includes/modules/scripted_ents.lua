@@ -25,7 +25,7 @@ local function TableInherit( t, base )
 
 		if ( t[ k ] == nil ) then
 			t[ k ] = v
-		elseif ( k != "BaseClass" && istable( t[ k ] ) ) then
+		elseif ( k != "BaseClass" && istable( t[ k ] ) && istable( v ) ) then
 			TableInherit( t[ k ], v )
 		end
 
@@ -51,6 +51,10 @@ function IsBasedOn( name, base )
 end
 
 function Register( t, name )
+
+	if ( hook.Run( "PreRegisterSENT", t, name ) == false ) then return end
+
+	if ( isstring( t.ClassNameOverride ) ) then name = t.ClassNameOverride end
 
 	local Base = t.Base
 	if ( !Base ) then Base = BaseClasses[ t.Type ] end
@@ -84,7 +88,7 @@ function Register( t, name )
 		--
 		-- For each entity using this class
 		--
-		for _, entity in pairs( ents.FindByClass( name ) ) do
+		for _, entity in ipairs( ents.FindByClass( name ) ) do
 
 			--
 			-- Replace the contents with this entity table
@@ -101,8 +105,9 @@ function Register( t, name )
 		end
 
 		-- Update entity table of entities that are based on this entity
-		for _, e in pairs( ents.GetAll() ) do
+		for _, e in ipairs( ents.GetAll() ) do
 			if ( IsBasedOn( e:GetClass(), name ) ) then
+
 				table.Merge( e, Get( e:GetClass() ) )
 
 				if ( e.OnReloaded ) then

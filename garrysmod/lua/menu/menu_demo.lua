@@ -7,7 +7,7 @@ function demo:FetchLocal( offset, perpage )
 
 	local saves = {}
 
-	for k, v in pairs( f ) do
+	for k, v in ipairs( f ) do
 
 		if ( k <= offset ) then continue end
 		if ( k > offset + perpage ) then break end
@@ -15,7 +15,8 @@ function demo:FetchLocal( offset, perpage )
 		local entry = {
 			file	= "demos/" .. v,
 			name	= v:StripExtension(),
-			preview	= "demos/" .. v:StripExtension() .. ".jpg"
+			preview	= "demos/" .. v:StripExtension() .. ".jpg",
+			description	= "Local demo stored on your computer. Local content can be deleted in the main menu."
 		}
 
 		table.insert( saves, entry )
@@ -75,4 +76,3 @@ function demo:FinishPublish( filename, imagename, name, desc, chosenTag, other )
 	steamworks.Publish( filename, imagename, name, desc, { "demo", info.mapname }, other.Callback, other.WorkshopID, other.ChangeNotes )
 
 end
-

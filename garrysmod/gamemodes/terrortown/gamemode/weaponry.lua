@@ -10,6 +10,13 @@ function GM:PlayerCanPickupWeapon(ply, wep)
    if not IsValid(wep) or not IsValid(ply) then return end
    if ply:IsSpec() then return false end
 
+   -- While resetting the map, players should not be allowed to pick up the newly-reset weapon
+   -- entities, because they would be stripped again during the player spawning process and
+   -- subsequently be missing.
+   if GAMEMODE.RespawningWeapons then
+      return false
+   end
+
    -- Disallow picking up for ammo
    if ply:HasWeapon(wep:GetClass()) then
       return false
@@ -103,7 +110,7 @@ local function CanWearHat(ply)
    return table.HasValue(Hattables, path[3])
 end
 
-CreateConVar("ttt_detective_hats", "0")
+CreateConVar("ttt_detective_hats", "1")
 -- Just hats right now
 local function GiveLoadoutSpecial(ply)
    if ply:IsActiveDetective() and GetConVar("ttt_detective_hats"):GetBool() and CanWearHat(ply) then
@@ -192,13 +199,22 @@ function WEPS.DropNotifiedWeapon(ply, wep, death_drop)
       -- auto-pickup when nearby.
       wep.IsDropped = true
 
+      -- After dropping a weapon, always switch to holstered, so that traitors
+      -- will never accidentally pull out a traitor weapon.
+      --
+      -- Perform this *before* the drop in order to abuse the fact that this
+      -- holsters the weapon, which in turn aborts any reload that's in
+      -- progress. We don't want a dropped weapon to be in a reloading state
+      -- because the relevant timer is reset when picking it up, making the
+      -- reload happen instantly. This allows one to dodge the delay by dropping
+      -- during reload. All of this is a workaround for not having access to
+      -- CBaseWeapon::AbortReload() (and that not being handled in
+      -- CBaseWeapon::Drop in the first place).
+      ply:SelectWeapon("weapon_ttt_unarmed")
+
       ply:DropWeapon(wep)
 
       wep:PhysWake()
-
-      -- After dropping a weapon, always switch to holstered, so that traitors
-      -- will never accidentally pull out a traitor weapon
-      ply:SelectWeapon("weapon_ttt_unarmed")
    end
 end
 

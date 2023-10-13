@@ -489,7 +489,7 @@ function SWEP:Initialize()
 end
 
 function SWEP:CalcViewModel()
-   if (not CLIENT) or (not IsFirstTimePredicted()) then return end
+   if (not CLIENT) or (not IsFirstTimePredicted() and not game.SinglePlayer()) then return end
    self.bIron = self:GetIronsights()
    self.fIronTime = self:GetIronsightsTime()
    self.fCurrentTime = CurTime()

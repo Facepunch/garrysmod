@@ -10,8 +10,12 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.CreatePresetOpen = false;
 	$scope.CreatePresetSaveEnabled = true;
 	$scope.CreatePresetSaveDisabled = true;
-	$scope.CreatePresetNew = "disable";
+	$scope.CreatePresetNewAct = "disable";
 	$scope.CreatePresetName = "";
+
+	$scope.ImportPresetOpen = false;
+	$scope.ImportPresetLoading = false;
+	$scope.ImportPresetSource = "";
 
 	$scope.PresetList = {}
 	$scope.LoadPresetMenuOpen = false;
@@ -61,16 +65,15 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.UGCSettingsOpen = false;
 	$scope.UGCSortMethod = "subscribed";
 
-	lua.Run( "UpdateAddonDisabledState();" );
+	lua.Run( "UpdateAddonDisabledState()" );
 
-	addon.Init( 'addon', $scope, $rootScope );
+	addon.Init( "addon", $scope, $rootScope );
 
-	$scope.Switch( 'subscribed', 0 );
+	$scope.Switch( "subscribed", 0 );
 
 	$scope.Subscribe = function( file )
 	{
 		if ( !file.info ) file.info = { children: [] };
-		//if ( file.info.children.length < 1 ) { file.info.children = [ 177717299, 1629004850 ] };
 
 		if ( file.info.children.length > 0 )
 		{
@@ -90,7 +93,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 				for ( var i = 0; i < file.info.children.length; i++ )
 				{
 					var wsid = file.info.children[ i ];
-					lua.Run( "MenuGetAddonData( %i );", wsid );
+					lua.Run( "MenuGetAddonData( %s )", String( wsid ) );
 				}
 
 				$scope.PopupMessageFiles = file.info.children;
@@ -153,18 +156,22 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		$scope.PopupMessageDisplayedMessage = txt;
 		$scope.PopupMessageDisplayedFunc = func;
 	}
-	$scope.ClosePopupMessage = function( txt, func )
+	$scope.ClosePopupMessage = function( notPresetLoad )
 	{
 		$scope.PopupMessageDisplayed = false;
 		$scope.PopupMessageFiles = [];
 
 		$scope.CreatePresetOpen = false;
-		$scope.LoadPresetMenuOpen = false;
-		$scope.SelectedPreset = undefined;
+		$scope.ImportPresetOpen = false;
+		if ( !notPresetLoad )
+		{
+			$scope.LoadPresetMenuOpen = false;
+			$scope.SelectedPreset = undefined;
+		}
 	}
 	$scope.ExecutePopupFunction = function()
 	{
-		$scope.ClosePopupMessage();
+		$scope.ClosePopupMessage( true );
 		if ( $scope.PopupMessageDisplayedFunc )
 		{
 			$scope.PopupMessageDisplayedFunc()
@@ -178,17 +185,38 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	}
 	$scope.SelectAllPage = function()
 	{
-		for ( var k in $scope.Files ) $scope.SelectedItems[ $scope.Files[ k ].id ] = true;
+		//$scope.UnselectAll(); // Unselect items that might be not in $scope.Files
+
+		for ( var k in $scope.Files )
+		{
+			if ( parseInt( $scope.Files[ k ].id ) < 1 ) continue;
+			$scope.SelectedItems[ $scope.Files[ k ].id ] = true;
+		}
 	}
 	$scope.SelectAll = function()
 	{
+		$scope.UnselectAll(); // Unselect items that might be not in $scope.FilesOther
+
+		if ( !$scope.FilesOther ) return;
+
+		for ( var k in $scope.FilesOther )
+		{
+			var wsid = $scope.FilesOther[ k ];
+			if ( parseInt( wsid ) < 1 ) continue;
+			$scope.SelectedItems[ wsid ] = true;
+		}
+	}
+	$scope.SelectAllSubs = function()
+	{
+		$scope.UnselectAll(); // Unselect items that might be not in subscriptions.GetAll()
+
 		for ( var k in subscriptions.GetAll() ) $scope.SelectedItems[ k ] = true;
 	}
 	$scope.EnableAllSelected = function()
 	{
 		for ( var k in $scope.SelectedItems )
 		{
-			if ( !$scope.SelectedItems[ k ] ) continue;
+			if ( !$scope.SelectedItems[ k ] || k < 1 ) continue;
 
 			subscriptions.SetShouldMountAddon( k, true );
 			$scope.SelectedItems[ k ] = false;
@@ -199,7 +227,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	{
 		for ( var k in $scope.SelectedItems )
 		{
-			if ( !$scope.SelectedItems[ k ] ) continue;
+			if ( !$scope.SelectedItems[ k ] || k < 1 ) continue;
 
 			subscriptions.SetShouldMountAddon( k, false );
 			$scope.SelectedItems[ k ] = false;
@@ -225,10 +253,37 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		}
 		return false;
 	}
+	$scope.GetSelectedCount = function()
+	{
+		var i = 0;
+		for ( var k in $scope.SelectedItems )
+		{
+			if ( !$scope.SelectedItems[ k ] ) continue;
+
+			i++;
+		}
+		return i;
+	}
+	$scope.GetSubscribedCount = function()
+	{
+		return subscriptions.GetCount();
+	}
 
 	$scope.ToggleSettings = function()
 	{
 		$scope.UGCSettingsOpen = !$scope.UGCSettingsOpen;
+	}
+
+	$scope.OpenImportPresetMenu = function()
+	{
+		// Reset to defaults..
+		$scope.CreatePresetSaveEnabled = true;
+		$scope.CreatePresetSaveDisabled = true;
+		$scope.CreatePresetNewAct = "disable";
+		$scope.CreatePresetName = "";
+		$scope.ImportPresetSource = "";
+
+		$scope.ImportPresetOpen = true
 	}
 
 	$scope.OpenCreatePresetMenu = function()
@@ -236,17 +291,19 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		// Reset to defaults..
 		$scope.CreatePresetSaveEnabled = true;
 		$scope.CreatePresetSaveDisabled = true;
-		$scope.CreatePresetNew = "disable";
+		$scope.CreatePresetNewAct = "disable";
 		$scope.CreatePresetName = "";
 
 		$scope.CreatePresetOpen = true;
 	}
 	$scope.CreateNewPreset = function()
 	{
+		if ( $scope.CreatePresetName == "" ) return;
+
 		var newPreset = {
 			enabled: [], disabled: [],
 			name: $scope.CreatePresetName,
-			newAction: $scope.CreatePresetNew
+			newAction: $scope.CreatePresetNewAct
 		}
 
 		var files = subscriptions.GetAll();
@@ -272,17 +329,19 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	$scope.SelectPreset = function( preset, newAction )
 	{
 		$scope.SelectedPreset = preset;
-		$scope.CreatePresetNew = newAction;
+		$scope.CreatePresetNewAct = newAction;
 	}
 	$scope.DeletePreset = function( preset )
 	{
-		lua.Run( "DeleteAddonPreset( %s )", preset );
-		$scope.SelectedPreset = undefined;
+		$scope.DisplayPopupMessage( "addons.delete_preset_warn " + preset, function() {
+			lua.Run( "DeleteAddonPreset( %s )", preset );
+			$scope.SelectedPreset = undefined;
+		} );
 	}
 	$scope.LoadSelectedPreset = function()
 	{
 		var preset = $scope.PresetList[ $scope.SelectedPreset ];
-		var newAct = $scope.CreatePresetNew;
+		var newAct = $scope.CreatePresetNewAct;
 
 		// Resub to missing stuff
 		if ( $scope.LoadPresetResub )
@@ -331,15 +390,103 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		$scope.SelectedPreset = undefined;
 	}
 
+	$scope.CopySelectedPreset = function()
+	{
+		var preset = $scope.PresetList[ $scope.SelectedPreset ];
+		var oldHashKey = preset[ "$$hashKey" ]; // Bit of a hack
+		preset[ "$$hashKey" ] = undefined;
+		lua.Run( "SetClipboardText( %s )", JSON.stringify( preset ) );
+		preset[ "$$hashKey" ] = oldHashKey;
+	}
+
+	$scope.ImportPreset = function()
+	{
+		if ( $scope.CreatePresetName == "" ) return;
+
+		$scope.ImportPresetOpen = false;
+
+		// Try extracting workshop ID
+		if ( $scope.ImportPresetSource.indexOf( "http" ) == 0 || /([0-9]+)/.test( $scope.ImportPresetSource ) )
+		{
+			$scope.ImportPresetLoading = true;
+			var re = /https?:\/\/steamcommunity\.com\/sharedfiles\/filedetails\/\?(?:.*)id=([0-9]+)(?:.*)/;
+			var d = re.exec( $scope.ImportPresetSource );
+
+			// Try just the ID
+			if ( !d || !d[ 1 ] )
+			{
+				var re2 = /([0-9]+)/;
+				d = re2.exec( $scope.ImportPresetSource );
+			}
+
+			if ( !d || !d[ 1 ] )
+			{
+				OnImportPresetFailed();
+			}
+			else
+			{
+				var newPreset = {
+					enabled: [], disabled: [],
+					name: $scope.CreatePresetName,
+					newAction: $scope.CreatePresetNewAct
+				}
+
+				lua.Run( "ImportAddonPreset( %s, %s )", d[ 1 ], JSON.stringify( newPreset ) );
+			}
+		}
+		else
+		{
+			try
+			{
+				var importedPreset = JSON.parse( $scope.ImportPresetSource );
+				var newPreset = {
+					enabled: importedPreset.enabled || [],
+					disabled: importedPreset.disabled || [],
+					name: $scope.CreatePresetName,
+					newAction: $scope.CreatePresetNewAct
+				}
+
+				lua.Run( "CreateNewAddonPreset( %s )", JSON.stringify( newPreset ) );
+			}
+			catch ( err )
+			{
+				OnImportPresetFailed();
+			}
+		}
+	}
+
 	$scope.GetAddonClasses = function( file )
 	{
 		var classes = [];
 		if ( $scope.IsSubscribed( file ) )
 		{
 			classes.push( $scope.IsEnabled( file ) ? "installed" : "disabled" );
-			if ( file.extra && file.extra.invalid_reason ) classes.push( "invalid" );
+			if ( subscriptions.GetInvalidReason( file.id ) ) classes.push( "invalid" );
 		}
+
+		if ( file.info && file.info.floating ) classes.push( "floating" );
+
 		return classes.join( " " );
+	}
+
+	$scope.GetAddonDescription = function( file )
+	{
+		var invalid = subscriptions.GetInvalidReason( file.id )
+		if ( invalid ) return invalid;
+
+		if ( !file.info ) return "ERROR?";
+
+		return file.info.description
+	}
+
+	$scope.GetNiceSize = function( size )
+	{
+		if ( !size || size <= 0 ) return "0 Bytes"
+		if ( size < 1000 ) return size + " Bytes"
+		if ( size < 1000 * 1000 ) return Math.round( size / 1000, 2 ) + " KB"
+		if ( size < 1000 * 1000 * 1000 ) return Math.round( size / ( 1000 * 1000 ), 2 ) + " MB"
+
+		return Math.round( size / ( 1000 * 1000 * 1000 ), 2 ) + " GB"
 	}
 }
 
@@ -354,6 +501,16 @@ function OnReceivePresetList( list )
 	if ( !Scope ) return;
 
 	Scope.PresetList = list;
+	Scope.ImportPresetLoading = false;
+	UpdateDigest( Scope, 50 );
+}
+
+function OnImportPresetFailed()
+{
+	if ( !Scope ) return;
+
+	Scope.ImportPresetLoading = false;
+	Scope.DisplayPopupMessage( "addons.import_preset_notcollection" );
 	UpdateDigest( Scope, 50 );
 }
 
@@ -363,4 +520,11 @@ function UpdateAddonDisabledState( noaddons, noworkshop )
 
 	Scope.Disabled = noworkshop;
 	UpdateDigest( Scope, 50 );
+}
+
+function OnSubscriptionsChanged()
+{
+	if ( !Scope || !Scope.RefreshCurrentView ) return;
+
+	Scope.RefreshCurrentView();
 }

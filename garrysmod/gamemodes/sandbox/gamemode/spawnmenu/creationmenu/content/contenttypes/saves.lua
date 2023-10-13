@@ -16,7 +16,7 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 
 		local saves = {}
 
-		for k, v in pairs( f ) do
+		for k, v in ipairs( f ) do
 
 			if ( k <= offset ) then continue end
 			if ( k > offset + perpage ) then break end
@@ -24,7 +24,8 @@ spawnmenu.AddCreationTab( "#spawnmenu.category.saves", function()
 			local entry = {
 				file	= "saves/" .. v,
 				name	= v:StripExtension(),
-				preview	= "saves/" .. v:StripExtension() .. ".jpg"
+				preview	= "saves/" .. v:StripExtension() .. ".jpg",
+				description	= "Local map saves stored on your computer. Local content can be deleted in the main menu."
 			}
 
 			table.insert( saves, entry )

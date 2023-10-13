@@ -2,6 +2,8 @@
 local MapPatterns = {}
 local MapNames = {}
 
+local AddonMaps = {}
+
 local function UpdateMaps()
 
 	MapPatterns = {}
@@ -33,6 +35,7 @@ local function UpdateMaps()
 	MapNames[ "gd_" ] = "Counter-Strike"
 	MapNames[ "dz_" ] = "Counter-Strike"
 	MapNames[ "training1" ] = "Counter-Strike"
+	MapNames[ "lobby_mapveto" ] = "Counter-Strike"
 
 	-- Various custom cs maps
 	MapNames[ "35hp_" ] = "Counter-Strike (Custom)"
@@ -143,6 +146,8 @@ local function UpdateMaps()
 	MapNames[ "tr_" ] = "Team Fortress 2"
 	MapNames[ "trade_" ] = "Team Fortress 2"
 	MapNames[ "pass_" ] = "Team Fortress 2"
+	MapNames[ "vsh_" ] = "Team Fortress 2"
+	MapNames[ "zi_" ] = "Team Fortress 2"
 
 	MapNames[ "zpa_" ] = "Zombie Panic! Source"
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
@@ -151,6 +156,7 @@ local function UpdateMaps()
 	MapNames[ "zph_" ] = "Zombie Panic! Source"
 
 	MapNames[ "fof_" ] = "Fistful of Frags"
+	MapNames[ "fofhr_" ] = "Fistful of Frags"
 	MapNames[ "cm_" ] = "Fistful of Frags"
 	MapNames[ "gt_" ] = "Fistful of Frags"
 	MapNames[ "tp_" ] = "Fistful of Frags"
@@ -202,6 +208,16 @@ local function UpdateMaps()
 
 	end
 
+	AddonMaps = {}
+	for k, addon in ipairs( engine.GetAddons() ) do
+
+		local name = addon.title or "Unnammed Addon"
+
+		local files, folders = file.Find( "maps/*.bsp", name )
+		if ( #files > 0 ) then AddonMaps[ name ] = files end
+
+	end
+
 end
 
 local favmaps
@@ -210,6 +226,30 @@ local function LoadFavourites()
 
 	local cookiestr = cookie.GetString( "favmaps" )
 	favmaps = favmaps || ( cookiestr && string.Explode( ";", cookiestr ) || {} )
+
+end
+
+function UpdateAddonMapList()
+
+	local json = util.TableToJSON( AddonMaps )
+	if ( !json ) then return end
+
+	pnlMainMenu:Call( "UpdateAddonMaps(" .. json .. ")" )
+
+end
+
+-- Called from JS when starting a new game
+function UpdateMapList()
+
+	UpdateAddonMapList()
+
+	local mapList = GetMapList()
+	if ( !mapList ) then return end
+
+	local json = util.TableToJSON( mapList )
+	if ( !json ) then return end
+
+	pnlMainMenu:Call( "UpdateMaps(" .. json .. ")" )
 
 end
 
@@ -319,20 +359,27 @@ local function RefreshMaps( skip )
 			if ( !MapList[ "Counter-Strike: GO" ] ) then
 				MapList[ "Counter-Strike: GO" ] = {}
 			end
-			-- We have to make the CS:GO name different from the CS:S name to prevent Favourites conflicts
+			-- HACK: We have to make the CS:GO name different from the CS:S name to prevent Favourites conflicts
 			table.insert( MapList[ "Counter-Strike: GO" ], name .. " " )
 		end
 
 	end
 
+	-- Send the new list to the HTML menu
+	UpdateMapList()
+
 end
 
-hook.Add( "MenuStart", "FindMaps", RefreshMaps )
+-- Update only after a short while for when these hooks are called very rapidly back to back
+local function DelayedRefreshMaps()
+	timer.Create( "menu_refreshmaps", 0.1, 1, RefreshMaps )
+end
 
-hook.Add( "GameContentChanged", "RefreshMaps", RefreshMaps )
+hook.Add( "MenuStart", "FindMaps", DelayedRefreshMaps )
+hook.Add( "GameContentChanged", "RefreshMaps", DelayedRefreshMaps )
 
+-- Nice maplist accessor instead of a global table
 function GetMapList()
-	-- Nice maplist accessor instead of a global table
 	return MapList
 end
 
