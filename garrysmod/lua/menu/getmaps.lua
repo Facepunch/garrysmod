@@ -147,6 +147,7 @@ local function UpdateMaps()
 	MapNames[ "trade_" ] = "Team Fortress 2"
 	MapNames[ "pass_" ] = "Team Fortress 2"
 	MapNames[ "vsh_" ] = "Team Fortress 2"
+	MapNames[ "zi_" ] = "Team Fortress 2"
 
 	MapNames[ "zpa_" ] = "Zombie Panic! Source"
 	MapNames[ "zpl_" ] = "Zombie Panic! Source"
