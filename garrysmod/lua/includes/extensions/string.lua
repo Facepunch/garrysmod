@@ -378,6 +378,28 @@ end
 
 function string.CardinalToOrdinal( cardinal )
 
-	return cardinal .. STNDRD( cardinal )
+	local basedigit = cardinal % 10
+
+	if ( basedigit == 1 ) then
+		if ( cardinal % 100 == 11 ) then
+			return cardinal .. "th"
+		end
+
+		return cardinal .. "st"
+	elseif ( basedigit == 2 ) then
+		if ( cardinal % 100 == 12 ) then
+			return cardinal .. "th"
+		end
+
+		return cardinal .. "nd"
+	elseif ( basedigit == 3 ) then
+		if ( cardinal % 100 == 13 ) then
+			return cardinal .. "th"
+		end
+
+		return cardinal .. "rd"
+	end
+
+	return cardinal .. "th"
 
 end
