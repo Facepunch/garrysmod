@@ -98,6 +98,8 @@ function GM:PlayerDeathThink( pl )
 
 	if ( pl:IsBot() || pl:KeyPressed( IN_ATTACK ) || pl:KeyPressed( IN_ATTACK2 ) || pl:KeyPressed( IN_JUMP ) ) then
 
+		hook.Run( "OnPlayerRequestRespawn ", pl )
+
 		pl:Spawn()
 
 	end
