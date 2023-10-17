@@ -372,7 +372,7 @@ end
 
 function string.Interpolate( str, lookuptable )
 
-	return ( string.gsub( str, "{([_%a][_%w]*)}", lookuptable) )
+	return ( string.gsub( str, "{([_%a][_%w]*)}", lookuptable ) )
 
 end
 
