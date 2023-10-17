@@ -148,16 +148,16 @@ function net.WriteTable( tab, seq )
 			net.WriteType( tab[ i ] )
 
 		end
-		
+
 	else
 
 		for k, v in pairs( tab ) do
-	
+
 			net.WriteType( k )
 			net.WriteType( v )
-	
+
 		end
-	
+
 		-- End of table
 		net.WriteType( nil )
 
@@ -189,7 +189,7 @@ function net.ReadTable( seq )
 		end
 
 	end
-	
+
 	return tab
 
 end
