@@ -5,7 +5,7 @@
 local surface	= surface
 local Msg		= Msg
 local Color		= Color
-
+local Material	= Material
 
 --[[---------------------------------------------------------
    Name: killicon
@@ -16,6 +16,7 @@ module("killicon")
 local Icons = {}
 local TYPE_FONT 	= 0
 local TYPE_TEXTURE 	= 1
+local TYPE_MATERIAL	= 2
 
 function AddFont( name, font, character, color )
 
@@ -34,6 +35,19 @@ function Add( name, material, color )
 	Icons[name].texture		= surface.GetTextureID( material )
 	Icons[name].color 		= color
 
+end
+
+function AddTexCoord( name, material, color, x, y, w, h )
+	
+	Icons[name] = {}
+	Icons[name].type		= TYPE_MATERIAL
+	Icons[name].material	= Material( material )
+	Icons[name].color		= color
+	Icons[name].x			= x
+	Icons[name].y			= y
+	Icons[name].w			= w
+	Icons[name].h			= h
+	
 end
 
 function AddAlias( name, alias )
@@ -71,7 +85,7 @@ function GetSize( name )
 		
 	end
 	
-	if ( t.type == TYPE_TEXTURE ) then
+	if ( t.type == TYPE_TEXTURE || t.type == TYPE_MATERIAL ) then
 	
 		-- Estimate the size from the size of the font
 		surface.SetFont( "HL2MPTypeDeath" )
@@ -81,7 +95,15 @@ function GetSize( name )
 		h = h * 0.75
 		
 		-- Make h/w 1:1
-		local tw, th = surface.GetTextureSize( t.texture )
+		local tw, th
+		
+		if ( t.type == TYPE_TEXTURE ) then
+			tw, th = surface.GetTextureSize( t.texture )
+		elseif ( t.type == TYPE_MATERIAL ) then
+			tw = t.w
+			th = t.h
+		end
+		
 		w = tw * (h / th)
 		
 	end
@@ -130,6 +152,17 @@ function Draw( x, y, name, alpha )
 		surface.SetDrawColor( t.color.r, t.color.g, t.color.b, alpha )
 		surface.DrawTexturedRect( x, y, w, h )
 
+	end
+	
+	if ( t.type == TYPE_MATERIAL ) then
+		
+		y = y - h * 0.3
+		local tw = t.material:Width()
+		local th = t.material:Height()
+		surface.SetMaterial( t.material )
+		surface.SetDrawColor( t.color.r, t.color.g, t.color.b, alpha )
+		surface.DrawTexturedRectUV( x, y, w, h, t.x / tw, t.y / th, (t.x + t.w) / tw, (t.y + t.h) / th )
+		
 	end
 	
 end
