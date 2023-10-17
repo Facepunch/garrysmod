@@ -143,7 +143,7 @@ function PANEL:Close( bSkipAnim )
 		return
 	end
 
-	RememberCursorPosition()
+	if ( self:IsVisible() ) then RememberCursorPosition() end
 
 	CloseDermaMenus()
 
