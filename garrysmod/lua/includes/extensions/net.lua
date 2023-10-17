@@ -115,7 +115,7 @@ function net.WriteTable( tab, seq )
 
 		for i = 1, len do
 
-			net.WriteType( tab[i] )
+			net.WriteType( tab[ i ] )
 
 		end
 		
@@ -141,9 +141,9 @@ function net.ReadTable( seq )
 
 	if ( seq ) then
 
-		for i = 1, net.ReadUInt(32) do
+		for i = 1, net.ReadUInt( 32 ) do
 
-			tab[i] = net.ReadType()
+			tab[ i ] = net.ReadType()
 
 		end
 
