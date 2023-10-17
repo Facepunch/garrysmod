@@ -6,22 +6,22 @@ local Color_Icon = Color( 255, 80, 0, 255 )
 local NPC_Color_Enemy = Color( 250, 50, 50, 255 )
 local NPC_Color_Friendly = Color( 50, 200, 50, 255 )
 
-killicon.AddFont( "prop_physics",		"HL2MPTypeDeath",	"9",	Color_Icon )
-killicon.AddFont( "weapon_smg1",		"HL2MPTypeDeath",	"/",	Color_Icon )
-killicon.AddFont( "weapon_357",			"HL2MPTypeDeath",	".",	Color_Icon )
-killicon.AddFont( "weapon_ar2",			"HL2MPTypeDeath",	"2",	Color_Icon )
-killicon.AddFont( "crossbow_bolt",		"HL2MPTypeDeath",	"1",	Color_Icon )
-killicon.AddFont( "weapon_shotgun",		"HL2MPTypeDeath",	"0",	Color_Icon )
-killicon.AddFont( "rpg_missile",		"HL2MPTypeDeath",	"3",	Color_Icon )
-killicon.AddFont( "npc_grenade_frag",	"HL2MPTypeDeath",	"4",	Color_Icon )
-killicon.AddFont( "weapon_pistol",		"HL2MPTypeDeath",	"-",	Color_Icon )
-killicon.AddFont( "prop_combine_ball",	"HL2MPTypeDeath",	"8",	Color_Icon )
-killicon.AddFont( "grenade_ar2",		"HL2MPTypeDeath",	"7",	Color_Icon )
-killicon.AddFont( "weapon_stunstick",	"HL2MPTypeDeath",	"!",	Color_Icon )
-killicon.AddFont( "npc_satchel",		"HL2MPTypeDeath",	"*",	Color_Icon )
-killicon.AddFont( "npc_tripmine",		"HL2MPTypeDeath",	"*",	Color_Icon )
-killicon.AddFont( "weapon_crowbar",		"HL2MPTypeDeath",	"6",	Color_Icon )
-killicon.AddFont( "weapon_physcannon",	"HL2MPTypeDeath",	",",	Color_Icon )
+killicon.AddFont( "prop_physics",		"HL2MPTypeDeath",	"9",	Color_Icon, 0.52 )
+killicon.AddFont( "weapon_smg1",		"HL2MPTypeDeath",	"/",	Color_Icon, 0.55 )
+killicon.AddFont( "weapon_357",			"HL2MPTypeDeath",	".",	Color_Icon, 0.55 )
+killicon.AddFont( "weapon_ar2",			"HL2MPTypeDeath",	"2",	Color_Icon, 0.6 )
+killicon.AddFont( "crossbow_bolt",		"HL2MPTypeDeath",	"1",	Color_Icon, 0.5 )
+killicon.AddFont( "weapon_shotgun",		"HL2MPTypeDeath",	"0",	Color_Icon, 0.45 )
+killicon.AddFont( "rpg_missile",		"HL2MPTypeDeath",	"3",	Color_Icon, 0.35 )
+killicon.AddFont( "npc_grenade_frag",	"HL2MPTypeDeath",	"4",	Color_Icon, 0.56 )
+killicon.AddFont( "weapon_pistol",		"HL2MPTypeDeath",	"-",	Color_Icon, 0.52 )
+killicon.AddFont( "prop_combine_ball",	"HL2MPTypeDeath",	"8",	Color_Icon, 0.5 )
+killicon.AddFont( "grenade_ar2",		"HL2MPTypeDeath",	"7",	Color_Icon, 0.35 )
+killicon.AddFont( "weapon_stunstick",	"HL2MPTypeDeath",	"!",	Color_Icon, 0.6 )
+killicon.AddFont( "npc_satchel",		"HL2MPTypeDeath",	"*",	Color_Icon, 0.53 )
+killicon.AddAlias( "npc_tripmine", "npc_satchel" )
+killicon.AddFont( "weapon_crowbar",		"HL2MPTypeDeath",	"6",	Color_Icon, 0.45 )
+killicon.AddFont( "weapon_physcannon",	"HL2MPTypeDeath",	",",	Color_Icon, 0.55 )
 
 -- Prop like objects get the prop kill icon
 killicon.AddAlias( "prop_ragdoll", "prop_physics" )
@@ -146,8 +146,8 @@ net.Receive( "DeathNoticeEvent", function()
 	local team_v = -1
 	if ( bit.band( flags, DEATH_NOTICE_FRIENDLY_VICTIM ) != 0 ) then team_v = -2 end
 	if ( bit.band( flags, DEATH_NOTICE_FRIENDLY_ATTACKER ) != 0 ) then team_a = -2 end
-	if ( isentity( attacker ) ) then	team_a = attacker:Team()	attacker = attacker:Name() end
-	if ( isentity( victim ) ) then		team_v = victim:Team()		victim = victim:Name()  end
+	if ( isentity( attacker ) ) then team_a = attacker:Team() attacker = attacker:Name() end
+	if ( isentity( victim ) ) then team_v = victim:Team() victim = victim:Name()  end
 
 	hook.Run( "AddDeathNotice", attacker, team_a, inflictor, victim, team_v, flags )
 
@@ -192,29 +192,32 @@ function GM:AddDeathNotice( attacker, team1, inflictor, victim, team2, flags )
 
 end
 
-local function DrawDeath( x, y, death, hud_deathnotice_time )
+local function DrawDeath( x, y, death, time )
 
 	local w, h = killicon.GetSize( death.icon )
-	if ( !w || !h ) then return end
+	if ( !w or !h ) then return end
 
-	local fadeout = ( death.time + hud_deathnotice_time ) - CurTime()
+	local fadeout = ( death.time + time ) - CurTime()
 
 	local alpha = math.Clamp( fadeout * 255, 0, 255 )
 	death.color1.a = alpha
 	death.color2.a = alpha
 
 	-- Draw Icon
-	killicon.Draw( x, y, death.icon, alpha )
+	killicon.Render( x - w / 2, y, death.icon, alpha )
 
 	-- Draw KILLER
 	if ( death.left ) then
-		draw.SimpleText( death.left,	"ChatFont", x - ( w / 2 ) - 16, y, death.color1, TEXT_ALIGN_RIGHT )
+		draw.SimpleText( death.left, "ChatFont", x - ( w / 2 ) - 16, y + h / 2, death.color1, TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER )
 	end
 
 	-- Draw VICTIM
-	draw.SimpleText( death.right,		"ChatFont", x + ( w / 2 ) + 16, y, death.color2, TEXT_ALIGN_LEFT )
+	draw.SimpleText( death.right, "ChatFont", x + ( w / 2 ) + 16, y + h / 2, death.color2, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER )
 
-	return ( y + h * 0.70 )
+	return math.ceil( y + h * 0.75 )
+
+	-- Font killicons are too high when height corrected, and changing that is not backwards compatible
+	--return math.ceil( y + math.max( h, 28 ) )
 
 end
 
@@ -223,7 +226,7 @@ function GM:DrawDeathNotice( x, y )
 
 	if ( GetConVarNumber( "cl_drawhud" ) == 0 ) then return end
 
-	local hud_deathnotice_time = hud_deathnotice_time:GetFloat()
+	local time = hud_deathnotice_time:GetFloat()
 
 	x = x * ScrW()
 	y = y * ScrH()
@@ -231,7 +234,7 @@ function GM:DrawDeathNotice( x, y )
 	-- Draw
 	for k, Death in ipairs( Deaths ) do
 
-		if ( Death.time + hud_deathnotice_time > CurTime() ) then
+		if ( Death.time + time > CurTime() ) then
 
 			if ( Death.lerp ) then
 				x = x * 0.3 + Death.lerp.x * 0.7
@@ -242,7 +245,7 @@ function GM:DrawDeathNotice( x, y )
 			Death.lerp.x = x
 			Death.lerp.y = y
 
-			y = DrawDeath( x, y, Death, hud_deathnotice_time )
+			y = DrawDeath( math.floor( x ), math.floor( y ), Death, time )
 
 		end
 
@@ -252,7 +255,7 @@ function GM:DrawDeathNotice( x, y )
 	-- expired entries one by one we will just clear the entire table
 	-- once everything is expired.
 	for k, Death in ipairs( Deaths ) do
-		if ( Death.time + hud_deathnotice_time > CurTime() ) then
+		if ( Death.time + time > CurTime() ) then
 			return
 		end
 	end
