@@ -136,32 +136,61 @@ end
 -- item indivdually and in a specific order
 -- because it adds type information before each var
 --
-function net.WriteTable( tab )
+function net.WriteTable( tab, seq )
 
-	for k, v in pairs( tab ) do
+	if ( seq ) then
 
-		net.WriteType( k )
-		net.WriteType( v )
+		local len = #tab
+		net.WriteUInt( len, 32 )
+
+		for i = 1, len do
+
+			net.WriteType( tab[ i ] )
+
+		end
+		
+	else
+
+		for k, v in pairs( tab ) do
+	
+			net.WriteType( k )
+			net.WriteType( v )
+	
+		end
+	
+		-- End of table
+		net.WriteType( nil )
 
 	end
-
-	-- End of table
-	net.WriteType( nil )
 
 end
 
-function net.ReadTable()
+function net.ReadTable( seq )
 
 	local tab = {}
 
-	while true do
+	if ( seq ) then
 
-		local k = net.ReadType()
-		if ( k == nil ) then return tab end
+		for i = 1, net.ReadUInt( 32 ) do
 
-		tab[ k ] = net.ReadType()
+			tab[ i ] = net.ReadType()
+
+		end
+
+	else
+
+		while true do
+
+			local k = net.ReadType()
+			if ( k == nil ) then break end
+
+			tab[ k ] = net.ReadType()
+
+		end
 
 	end
+	
+	return tab
 
 end
 
