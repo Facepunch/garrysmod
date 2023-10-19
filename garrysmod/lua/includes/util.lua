@@ -73,6 +73,7 @@ function PrintTable( t, indent, done )
 	for i = 1, #keys do
 		local key = keys[ i ]
 		local value = t[ key ]
+		key = (type( key ) == "string") && "[\"" ..  key .. "\"]" || "[" .. tostring( key ) .. "]"
 		Msg( string.rep( "\t", indent ) )
 
 		if  ( istable( value ) && !done[ value ] ) then
