@@ -314,8 +314,7 @@ function SWEP:ShootBullet( dmg, recoil, numbul, cone )
    self:GetOwner():FireBullets( bullet )
 
    -- Owner can die after firebullets
-   if self:GetOwner():IsNPC() then return end
-   if (not IsValid(self:GetOwner())) or (not self:GetOwner():Alive()) then return end
+   if (not IsValid(self:GetOwner())) or self:GetOwner():IsNPC() or (not self:GetOwner():Alive()) then return end
 
    if ((game.SinglePlayer() and SERVER) or
        ((not game.SinglePlayer()) and CLIENT and IsFirstTimePredicted())) then
