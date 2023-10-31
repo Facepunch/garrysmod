@@ -155,7 +155,7 @@ for _, val in ipairs( file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" ) ) do
 
 	TOOL:CreateConVars()
 
-	if ( hook.Run( "PreRegisterTOOL", t, name ) != false ) then
+	if ( hook.Run( "PreRegisterTOOL", TOOL, toolmode ) != false ) then
 		SWEP.Tool[ toolmode ] = TOOL
 	end
 
