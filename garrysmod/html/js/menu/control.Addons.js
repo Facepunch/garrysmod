@@ -71,7 +71,7 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 
 	$scope.Switch( "subscribed", 0 );
 
-	$scope.Subscribe = function( file, event )
+	$scope.Subscribe = function( file )
 	{
 		if ( !file.info ) file.info = { children: [] };
 
@@ -106,12 +106,10 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		}
 
 		subscriptions.Subscribe( file.id );
-		if ( event ) event.stopPropagation();
 	}
-	$scope.Unsubscribe = function( file, event )
+	$scope.Unsubscribe = function( file )
 	{
 		subscriptions.Unsubscribe( file.id );
-		if ( event ) event.stopPropagation();
 	}
 	$scope.UninstallAllSubscribed = function()
 	{
@@ -141,17 +139,15 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	{
 		return subscriptions.Enabled( file.id );
 	}
-	$scope.Disable = function( file, event )
+	$scope.Disable = function( file )
 	{
 		subscriptions.SetShouldMountAddon( String( file.id ), false );
 		subscriptions.ApplyChanges();
-		if ( event ) event.stopPropagation();
 	}
-	$scope.Enable = function( file, event )
+	$scope.Enable = function( file )
 	{
 		subscriptions.SetShouldMountAddon( String( file.id ), true );
 		subscriptions.ApplyChanges();
-		if ( event ) event.stopPropagation();
 	}
 
 	$scope.DisplayPopupMessage = function( txt, func )
@@ -218,6 +214,9 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 	}
 	$scope.ToggleSelect = function( file, event )
 	{
+		var en = event.target.nodeName.toLowerCase();
+		if ( en != "controls" && en != "description" && en != "workshopicon" ) return;
+
 		$scope.SelectedItems[file.id] = !$scope.SelectedItems[file.id];
 		if ( event ) event.stopPropagation();
 	}
@@ -496,10 +495,6 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 		if ( size < 1000 * 1000 * 1000 ) return Math.round( size / ( 1000 * 1000 ), 2 ) + " MB"
 
 		return Math.round( size / ( 1000 * 1000 * 1000 ), 2 ) + " GB"
-	}
-
-	$scope.stopPropagation = function( event ) {
-		event.stopPropagation();
 	}
 }
 
