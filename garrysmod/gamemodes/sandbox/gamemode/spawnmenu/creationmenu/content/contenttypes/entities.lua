@@ -1,7 +1,9 @@
 
-list.Set( "CategoryIconSENTS", "Half-Life 2", "games/16/hl2.png" )
+list.Set( "ContentCategoryIcons", "Half-Life: Source", "games/16/hl1.png" )
+list.Set( "ContentCategoryIcons", "Half-Life 2", "games/16/hl2.png" )
+list.Set( "ContentCategoryIcons", "Portal", "games/16/portal.png" )
 
-hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, node )
+hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, browseNode )
 
 	local Categorised = {}
 
@@ -20,16 +22,16 @@ hook.Add( "PopulateEntities", "AddEntityContent", function( pnlContent, tree, no
 		end
 	end
 
-	local CustomIcons = list.Get( "CategoryIconSENTS" )
 	--
 	-- Add a tree node for each category
 	--
+	local CustomIcons = list.Get( "ContentCategoryIcons" )
 	for CategoryName, v in SortedPairs( Categorised ) do
 
 		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, CustomIcons[CategoryName] or "icon16/bricks.png" )
+		local node = tree:AddNode( CategoryName, CustomIcons[ CategoryName ] or "icon16/bricks.png" )
 
-			-- When we click on the node - populate it using this function
+		-- When we click on the node - populate it using this function
 		node.DoPopulate = function( self )
 
 			-- If we've already populated it - forget it.
