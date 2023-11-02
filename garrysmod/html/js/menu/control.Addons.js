@@ -212,6 +212,14 @@ function ControllerAddons( $scope, $element, $rootScope, $location )
 
 		for ( var k in subscriptions.GetAll() ) $scope.SelectedItems[ k ] = true;
 	}
+	$scope.ToggleSelect = function( file, event )
+	{
+		var en = event.target.nodeName.toLowerCase();
+		if ( en != "controls" && en != "description" && en != "workshopicon" ) return;
+
+		$scope.SelectedItems[file.id] = !$scope.SelectedItems[file.id];
+		if ( event ) event.stopPropagation();
+	}
 	$scope.EnableAllSelected = function()
 	{
 		for ( var k in $scope.SelectedItems )

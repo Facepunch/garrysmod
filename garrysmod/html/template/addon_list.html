@@ -54,7 +54,7 @@
 			<workshopmessage ng-show="( TotalResults == 0 || NumResults == 0 ) && !Loading && ( !Disabled || Category != 'subscribed' )" ng-Tranny="'addons.none'">...</workshopmessage>
 			<workshopmessage ng-show="TotalResults == 0 && !Loading && Disabled && Category == 'subscribed'" ng-Tranny="'addons.disabled'">...</workshopmessage>
 
-			<workshopicon ng-hide="Loading" ng-repeat="file in Files" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{GetAddonClasses( file )}}">
+			<workshopicon ng-hide="Loading" ng-repeat="file in Files" ng-click="ToggleSelect( file, $event )" style="width: {{IconWidth|number:0}}px; height: {{IconHeight|number:0}}px" class="{{GetAddonClasses( file )}}">
 
 				<preview style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px; margin-left: -{{IconMax*0.5|number:0}}px; margin-top: -{{IconMax*0.5|number:0}}px">
 					<img src='../{{file.background || "img/downloading.png"}}' style="width: {{IconMax|number:0}}px; height: {{IconMax|number:0}}px;"/>
