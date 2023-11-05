@@ -1,9 +1,3 @@
---=============================================================================--
---
---  A really simple module to allow easy additions to lists of items
---
---=============================================================================--
-
 local pairs		= pairs
 local table 	= table
 
