@@ -1,90 +1,62 @@
---=============================================================================--							 
+--=============================================================================--
 --
 --  A really simple module to allow easy additions to lists of items
 --
 --=============================================================================--
 
-local table 	= table
 local pairs		= pairs
+local table 	= table
+
 
 module( "list" )
 
 
-local g_Lists = {}
+local Lists = {}
 
---
---	Get a list
---
-function Get( list )
-
-	g_Lists[ list ] = g_Lists[ list ] or {}
-	return table.Copy( g_Lists[ list ] )
-	
+function GetStored( listid )
+	return Lists[ listid ]
 end
 
---
---	Get a list
---
-function GetForEdit( list )
+function GetForEdit( listid )
+	local list = Lists[ listid ]
 
-	g_Lists[ list ] = g_Lists[ list ] or {}
-	return g_Lists[ list ]
-	
+	if ( list == nil ) then
+		list = {}
+		Lists[ listid ] = list
+	end
+
+	return list
 end
 
---
---	Get all list names
---
+function Get( listid )
+	return table.Copy( GetForEdit( listid ) )
+end
+
 function GetTable()
-
-	return table.GetKeys( g_Lists )
-
+	return table.GetKeys( Lists )
 end
 
---
---	Set a key value
---
-function Set( list, key, value )
-
-	local list = GetForEdit( list )
-	list[ key ] = value
-
+function Set( listid, key, val )
+	GetForEdit( listid )[ key ] = val
 end
 
---
---	Add a value to a list
---
-function Add( list, value )
-
-	local list = GetForEdit( list )
-	return table.insert( list, value )
-
+function Add( listid, val )
+	return table.insert( GetForEdit( listid ), val )
 end
 
---
---	Returns true if the list contains the value (as a value - not a key)
---
-function Contains( list, value )
+function Contains( listid, val )
+	local list = Lists[ listid ]
+	if ( list == nil ) then return false end
 
-	if ( !g_Lists[ list ] ) then return false end
-
-	for k, v in pairs( g_Lists[ list ] ) do
-
-		-- If it contains this entry, bail early
-		if ( v == value ) then return true end
-
+	for k, v in pairs( list ) do
+		if ( v == val ) then return true end
 	end
 
 	return false
-
 end
 
---
---	Returns true if the list has an entry
---
-function HasEntry( list, key )
+function HasEntry( listid, key )
+	local list = Lists[ listid ]
 
-	if ( !g_Lists[ list ] ) then return false end
-	return g_Lists[ list ][ key ] ~= nil
-
+	return list != nil && list[ key ] != nil
 end
