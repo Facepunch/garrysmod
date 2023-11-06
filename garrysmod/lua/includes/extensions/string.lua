@@ -355,8 +355,7 @@ function string.ToColor( str )
 end
 
 function string.Comma( number, str )
-
-	local replace = str == nil and "%1,%2" or "%1" .. str .. "%2"
+	local replace = ( str == nil or isnumber( str ) ) and "%1,%2" or "%1" .. str .. "%2"
 
 	if ( isnumber( number ) ) then
 		number = string.format( "%f", number )
