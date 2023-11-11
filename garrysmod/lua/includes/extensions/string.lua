@@ -358,7 +358,7 @@ function string.Comma( number, str )
 
 	if ( str ~= nil and !isstring( str ) ) then
 		error( "bad argument #2 to 'string.Comma' (string expected, got " .. type( str ) .. ")" )
-	elseif ( string.match(str, "%d") ~= nil ) then
+	elseif ( str ~= nil and string.match(str, "%d") ~= nil ) then
 		error( "bad argument #2 to 'string.Comma' (Non-numerical values expected, got " .. str .. " )" )
 	end
 
