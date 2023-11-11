@@ -356,7 +356,9 @@ end
 
 function string.Comma( number, str )
 
-	if ( isnumber( str ) ) then
+	if ( str ~= nil and !isstring( str ) ) then
+		error( "bad argument #2 to 'string.Comma' (string expected, got " .. type( str ) .. ")" )
+	elseif ( str ~= nil and isnumber( str ) ) then
 		error( "bad argument #2 to 'string.Comma' (Non-numerical value expected, got " .. str .. " )" )
 	end
 
