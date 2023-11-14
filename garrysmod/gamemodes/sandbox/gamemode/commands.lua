@@ -319,13 +319,13 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 	ent:SetModel( model )
 	ent:SetSkin( iSkin )
 	ent:SetAngles( ang )
-	ent:SetBodyGroups( strBody )
+	if ( strBody ) then ent:SetBodyGroups( strBody ) end
 	ent:SetPos( tr.HitPos )
 	ent:Spawn()
 	ent:Activate()
 
 	-- Special case for effects
-	if ( entity_name == "prop_effect" && IsValid( ent.AttachedEntity ) ) then
+	if ( strBody && entity_name == "prop_effect" && IsValid( ent.AttachedEntity ) ) then
 		ent.AttachedEntity:SetBodyGroups( strBody )
 	end
 
