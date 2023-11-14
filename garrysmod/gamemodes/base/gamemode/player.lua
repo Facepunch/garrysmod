@@ -811,3 +811,40 @@ function GM:PlayerButtonDown( ply, btn ) end
 function GM:PlayerButtonUp( ply, btn ) end
 
 concommand.Add( "changeteam", function( pl, cmd, args ) hook.Call( "PlayerRequestTeam", GAMEMODE, pl, tonumber( args[ 1 ] ) ) end )
+
+--[[---------------------------------------------------------
+	Name: gamemode:HandlePlayerArmorReduction()
+	Desc: Handle player armor reduction
+-----------------------------------------------------------]]
+function GM:HandlePlayerArmorReduction( ply, dmginfo )
+
+	-- If no armor, or special damage types, bypass armor 
+	if ( ply:Armor() <= 0 || bit.band( dmginfo:GetDamageType(), DMG_FALL + DMG_DROWN + DMG_POISON + DMG_RADIATION ) != 0 ) then return end
+
+	local flBonus = 1.0 -- Each Point of Armor is worth 1/x points of health
+	local flRatio = 0.2 -- Armor Takes 80% of the damage
+	if ( GetConVar( "player_old_armor" ):GetBool() ) then
+		flBonus = 0.5
+	end
+
+	local flNew = dmginfo:GetDamage() * flRatio
+	local flArmor = (dmginfo:GetDamage() - flNew) * flBonus
+
+	if ( !GetConVar( "player_old_armor" ):GetBool() ) then
+		if ( flArmor < 1.0 ) then flArmor = 1.0 end
+	end
+
+	-- Does this use more armor than we have?
+	if ( flArmor > ply:Armor() ) then
+
+		flArmor = ply:Armor() * ( 1 / flBonus )
+		flNew = dmginfo:GetDamage() - flArmor
+		ply:SetArmor( 0 )
+
+	else
+		ply:SetArmor( ply:Armor() - flArmor )
+	end
+
+	dmginfo:SetDamage( flNew )
+
+end
