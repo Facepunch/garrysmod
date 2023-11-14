@@ -256,6 +256,13 @@ controls control:hover
 	background-color: white;
 }
 
+
+controls control.disabled
+{
+	background-color: #bfbfbf;
+	cursor: default;
+}
+
 .ugc_settings_button
 {
 	height: 44px;
