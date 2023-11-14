@@ -356,6 +356,12 @@ end
 
 function string.Comma( number, str )
 
+	if ( str ~= nil and not isstring( str ) ) then
+		error( "bad argument #2 to 'string.Comma' (string expected, got " .. type( str ) .. ")" )
+	elseif ( str ~= nil and string.match( str, "%d" ) ~= nil ) then
+		error( "bad argument #2 to 'string.Comma' (non-numerical values expected, got " .. str .. ")" )
+	end
+
 	local replace = str == nil and "%1,%2" or "%1" .. str .. "%2"
 
 	if ( isnumber( number ) ) then
