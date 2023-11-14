@@ -18,6 +18,16 @@ end
 
 hook.Add( "Think", "RealFrameTime", RealFrameTimeThink ) -- Think is called after every frame on the client.
 
+-- Make Portal 2 materials work out of the box
+matproxy.Add( {
+	name = "FizzlerVortex",
+	init = function( self, mat, values )
+	end,
+	bind = function( self, mat, ent )
+		mat:SetFloat( "$flow_color_intensity", 1 )
+	end
+} )
+
 local function RenderSpawnIcon_Prop( model, pos, middle, size )
 
 	if ( size < 900 ) then
