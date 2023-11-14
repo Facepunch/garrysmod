@@ -362,10 +362,7 @@ function DoPlayerEntitySpawn( ply, entity_name, model, iSkin, strBody )
 
 end
 
-local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnFlagsSaved, NoDropToFloor )
-
-	local NPCList = list.Get( "NPC" )
-	local NPCData = NPCList[ Class ]
+local function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipment, SpawnFlagsSaved, NoDropToFloor )
 
 	-- Don't let them spawn this entity if it isn't in our NPC Spawn list.
 	-- We don't want them spawning any entity they like!
@@ -519,6 +516,7 @@ local function InternalSpawnNPC( ply, Position, Normal, Class, Equipment, SpawnF
 
 	if ( NPCData.Health ) then
 		NPC:SetHealth( NPCData.Health )
+		NPC:SetMaxHealth( NPCData.Health )
 	end
 
 	-- Body groups
@@ -555,8 +553,10 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 
 	end
 
+	local NPCData = list.Get( "NPC" )[ NPCClassName ]
+
 	-- Create the NPC if you can.
-	local SpawnedNPC = InternalSpawnNPC( ply, tr.HitPos, tr.HitNormal, NPCClassName, WeaponName )
+	local SpawnedNPC = InternalSpawnNPC( NPCData, ply, tr.HitPos, tr.HitNormal, NPCClassName, WeaponName )
 	if ( !IsValid( SpawnedNPC ) ) then return end
 
 	TryFixPropPosition( ply, SpawnedNPC, tr.HitPos )
@@ -567,10 +567,9 @@ function Spawn_NPC( ply, NPCClassName, WeaponName, tr )
 	end
 
 	-- See if we can find a nice name for this NPC..
-	local NPCList = list.Get( "NPC" )
 	local NiceName = nil
-	if ( NPCList[ NPCClassName ] ) then
-		NiceName = NPCList[ NPCClassName ].Name
+	if ( NPCData ) then
+		NiceName = NPCData.Name
 	end
 
 	-- Add to undo list
@@ -593,23 +592,28 @@ concommand.Add( "gmod_spawnnpc", function( ply, cmd, args ) Spawn_NPC( ply, args
 -- This should be in base_npcs.lua really
 local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, data )
 
+	-- Match the behavior of Spawn_NPC above - class should be the one in the list, NOT the entity class!
+	if ( data.NPCName ) then class = data.NPCName end
+
 	if ( IsValid( ply ) && !gamemode.Call( "PlayerSpawnNPC", ply, class, equipment ) ) then return end
 
 	local NPCData = list.Get( "NPC" )[ class ]
+	-- I don't think we are ready for this
+	-- if ( !NPCData ) then NPCData = data.NPCTable end
 
 	local normal = Vector( 0, 0, 1 )
 	if ( NPCData && NPCData.OnCeiling && ( NPCData.OnFloor && data._wasSpawnedOnCeiling or !NPCData.OnFloor ) ) then
 		normal = Vector( 0, 0, -1 )
 	end
 
-	local ent = InternalSpawnNPC( ply, data.Pos, normal, class, equipment, spawnflags, true )
-
+	local ent = InternalSpawnNPC( NPCData, ply, data.Pos, normal, class, equipment, spawnflags, true )
 	if ( IsValid( ent ) ) then
+
 		local pos = ent:GetPos() -- Hack! Prevents the NPCs from falling through the floor
 
 		duplicator.DoGeneric( ent, data )
 
-		if ( !NPCData.OnCeiling && !NPCData.NoDrop ) then
+		if ( NPCData && !NPCData.OnCeiling && !NPCData.NoDrop ) then
 			ent:SetPos( pos )
 			ent:DropToFloor()
 		end
@@ -618,6 +622,9 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 			gamemode.Call( "PlayerSpawnedNPC", ply, ent )
 			ply:AddCleanup( "npcs", ent )
 		end
+
+		if ( data.Health ) then ent:SetHealth( data.Health ) end
+		if ( data.MaxHealth ) then ent:SetMaxHealth( data.MaxHealth ) end
 
 		table.Add( ent:GetTable(), data )
 
