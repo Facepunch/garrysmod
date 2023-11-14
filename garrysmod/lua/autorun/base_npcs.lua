@@ -207,7 +207,7 @@ AddNPC( {
 	KeyValues = { SquadName = "zombies" }
 } )
 
-if ( IsMounted( "episodic" ) || IsMounted( "ep2" ) ) then
+if ( IsMounted( "episodic" ) or IsMounted( "ep2" ) ) then
 	AddNPC( {
 		Class = "npc_zombine",
 		Category = Category,
@@ -436,7 +436,7 @@ if ( IsMounted( "ep2" ) ) then
 end
 
 
-if ( IsMounted( "hl1" ) || IsMounted( "hl1mp" ) ) then
+if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 
 	Category = "Half-Life: Source"
 

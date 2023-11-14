@@ -43,7 +43,7 @@ function ToolObj:CreateConVars()
 		for cvar, default in pairs( self.ClientConVar ) do
 			self.ClientConVars[ cvar ] = CreateClientConVar( mode .. "_" .. cvar, default, true, true )
 		end
-		
+
 	else
 
 		for cvar, default in pairs( self.ServerConVar ) do
@@ -135,7 +135,7 @@ function ToolObj:CheckObjects()
 
 	for k, v in pairs( self.Objects ) do
 
-		if ( !v.Ent:IsWorld() && !v.Ent:IsValid() ) then
+		if ( !v.Ent:IsWorld() and !v.Ent:IsValid() ) then
 			self:ClearObjects()
 		end
 
@@ -145,7 +145,7 @@ end
 
 for _, val in ipairs( file.Find( SWEP.Folder .. "/stools/*.lua", "LUA" ) ) do
 
-	local char1, char2, toolmode = string.find( val, "([%w_]*).lua" )
+	local _, _, toolmode = string.find( val, "([%w_]*).lua" )
 
 	TOOL = ToolObj:Create()
 	TOOL.Mode = toolmode
@@ -173,18 +173,18 @@ local TOOLS_LIST = SWEP.Tool
 -- Add the STOOLS to the tool menu
 hook.Add( "PopulateToolMenu", "AddSToolsToMenu", function()
 
-	for ToolName, TOOL in pairs( TOOLS_LIST ) do
+	for ToolName, tool in pairs( TOOLS_LIST ) do
 
-		if ( TOOL.AddToMenu != false ) then
+		if ( tool.AddToMenu != false ) then
 
 			spawnmenu.AddToolMenuOption(
-				TOOL.Tab or "Main",
-				TOOL.Category or "New Category",
+				tool.Tab or "Main",
+				tool.Category or "New Category",
 				ToolName,
-				TOOL.Name or "#" .. ToolName,
-				TOOL.Command or "gmod_tool " .. ToolName,
-				TOOL.ConfigName or ToolName,
-				TOOL.BuildCPanel
+				tool.Name or "#" .. ToolName,
+				tool.Command or "gmod_tool " .. ToolName,
+				tool.ConfigName or ToolName,
+				tool.BuildCPanel
 			)
 
 		end
@@ -205,7 +205,7 @@ search.AddProvider( function( str )
 		local niceName = v.Name or "#" .. k
 		if ( niceName:StartWith( "#" ) ) then niceName = language.GetPhrase( niceName:sub( 2 ) ) end
 
-		if ( !k:lower():find( str, nil, true ) && !niceName:lower():find( str, nil, true ) ) then continue end
+		if ( !k:lower():find( str, nil, true ) and !niceName:lower():find( str, nil, true ) ) then continue end
 
 		local entry = {
 			text = niceName,
@@ -247,14 +247,14 @@ spawnmenu.AddContentType( "tool", function( container, obj )
 
 	end
 
-	icon.OpenMenu = function( icon )
+	icon.OpenMenu = function( pnl )
 
 		-- Do not allow removal from read only panels
-		if ( IsValid( icon:GetParent() ) && icon:GetParent().GetReadOnly && icon:GetParent():GetReadOnly() ) then return end
+		if ( IsValid( pnl:GetParent() ) and pnl:GetParent().GetReadOnly and pnl:GetParent():GetReadOnly() ) then return end
 
 		local menu = DermaMenu()
 			menu:AddOption( "#spawnmenu.menu.delete", function()
-				icon:Remove()
+				pnl:Remove()
 				hook.Run( "SpawnlistContentChanged" )
 			end ):SetIcon( "icon16/bin_closed.png" )
 		menu:Open()

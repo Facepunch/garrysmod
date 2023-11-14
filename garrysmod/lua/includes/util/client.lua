@@ -273,8 +273,8 @@ SpawniconGenFunctions[ "models/infected/common_female_rural01.mdl" ] = Spawnicon
 
 SpawniconGenFunctions[ "models/infected/common_male01.mdl" ] = SpawniconGenFunctions[ "models/infected/common_female01.mdl" ]
 SpawniconGenFunctions[ "models/infected/common_test.mdl" ] = SpawniconGenFunctions[ "models/infected/common_female01.mdl" ]
-SpawniconGenFunctions[ "models/infected/common_morph_test.mdl" ] = SpawniconGenFunctions[ "models/infected/common_female01.mdl" ] // Bad start animation
-SpawniconGenFunctions[ "models/infected/common_male_fallen_survivor.mdl" ] = SpawniconGenFunctions[ "models/infected/common_female01.mdl" ] // Bad start animation
+SpawniconGenFunctions[ "models/infected/common_morph_test.mdl" ] = SpawniconGenFunctions[ "models/infected/common_female01.mdl" ] -- Bad start animation
+SpawniconGenFunctions[ "models/infected/common_male_fallen_survivor.mdl" ] = SpawniconGenFunctions[ "models/infected/common_female01.mdl" ] -- Bad start animation
 
 SpawniconGenFunctions[ "models/infected/common_male_baggagehandler_01.mdl" ] = SpawniconGenFunctions[ "models/infected/common_male01.mdl" ]
 SpawniconGenFunctions[ "models/infected/common_male_pilot.mdl" ] = SpawniconGenFunctions[ "models/infected/common_male01.mdl" ]
@@ -283,7 +283,7 @@ SpawniconGenFunctions[ "models/infected/common_male_suit.mdl" ] = SpawniconGenFu
 SpawniconGenFunctions[ "models/infected/common_military_male01.mdl" ] = SpawniconGenFunctions[ "models/infected/common_male01.mdl" ]
 SpawniconGenFunctions[ "models/infected/common_police_male01.mdl" ] = SpawniconGenFunctions[ "models/infected/common_male01.mdl" ]
 SpawniconGenFunctions[ "models/infected/common_patient_male01.mdl" ] = SpawniconGenFunctions[ "models/infected/common_male01.mdl" ]
-SpawniconGenFunctions[ "models/infected/common_surgeon_male01.mdl" ] = SpawniconGenFunctions[ "models/infected/common_male01.mdl" ] // Bad start animation
+SpawniconGenFunctions[ "models/infected/common_surgeon_male01.mdl" ] = SpawniconGenFunctions[ "models/infected/common_male01.mdl" ] -- Bad start animation
 SpawniconGenFunctions[ "models/infected/common_tsaagent_male01.mdl" ] = SpawniconGenFunctions[ "models/infected/common_male01.mdl" ]
 SpawniconGenFunctions[ "models/infected/common_worker_male01.mdl" ] = SpawniconGenFunctions[ "models/infected/common_male01.mdl" ]
 
@@ -299,5 +299,5 @@ SpawniconGenFunctions[ "models/zombies/zombie5/zombie5.mdl" ] = function( a, b, 
 SpawniconGenFunctions[ "models/infected/boomette.mdl" ] = function( a, b, c, d ) return RenderSpawnIcon_Special( a, b, c, d, -50, 28, 0 ) end
 SpawniconGenFunctions[ "models/infected/charger.mdl" ] = function( a, b, c, d ) return RenderSpawnIcon_Special( a, b, c, d, -70, 14, 20 ) end
 SpawniconGenFunctions[ "models/infected/jockey.mdl" ] = function( a, b, c, d ) return RenderSpawnIcon_Special( a, b, c, d, -50, 0, 7 ) end
-SpawniconGenFunctions[ "models/infected/spitter.mdl" ] = function( a, b, c, d ) return RenderSpawnIcon_Special( a, b, c, d, -1, 0, -70 ) end // as good as deleted
+SpawniconGenFunctions[ "models/infected/spitter.mdl" ] = function( a, b, c, d ) return RenderSpawnIcon_Special( a, b, c, d, -1, 0, -70 ) end -- as good as deleted
 SpawniconGenFunctions[ "models/infected/hulk_dlc3.mdl" ] = SpawniconGenFunctions[ "models/infected/hulk.mdl" ]
