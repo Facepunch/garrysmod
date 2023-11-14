@@ -535,7 +535,7 @@ function GetHighestKey( obj )
 
 	for ( k in obj )
 	{
-		if ( obj[k] > h )
+		if ( h == 0 || obj[k] > h )
 		{
 			h = obj[k];
 			v = k;
