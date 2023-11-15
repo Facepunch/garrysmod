@@ -167,9 +167,15 @@ function PANEL:SetAction(fLef, fRgh, vIdx)
 	local iIdx = self:GetButtonID(vIdx)
 	if(iIdx == 0) then return self end
 	local pBut, pSer = self.Array[iIdx], self.Slider
-	pBut.DoClick = function()
-		local pS, sE = pcall(fLef, pBut, pSer, pSer:GetValue())
-		if(not pS) then error("["..pBut:GetText().."]: "..sE) end
+	if(fLef) then
+		pBut.DoClick = function()
+			local pS, sE = pcall(fLef, pBut, pSer, pSer:GetValue())
+			if(not pS) then error("["..pBut:GetText().."]: "..sE) end
+		end
+	else
+		if(not pBut.DoClick) then
+			pBut.DoClick = function() SetClipboardText(pBut:GetText()) end
+		end
 	end
 	if(fRgh) then
 		pBut.DoRightClick = function()
@@ -177,7 +183,9 @@ function PANEL:SetAction(fLef, fRgh, vIdx)
 			if(not pS) then error("["..pBut:GetText().."]: "..sE) end
 		end
 	else
-		pBut.DoRightClick = function() SetClipboardText(pBut:GetText()) end
+		if(not pBut.DoRightClick) then
+			pBut.DoRightClick = function() SetClipboardText(pBut:GetText()) end
+		end
 	end; return self
 end
 
@@ -264,4 +272,4 @@ function PANEL:Think()
 	end
 end
 
-derma.DefineControl("trackassembly_BIS", "Button-interactive slider", PANEL, "DSizeToContents")
+derma.DefineControl("DSliderButton", "Button-interactive slider", PANEL, "DSizeToContents")
