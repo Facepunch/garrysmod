@@ -134,8 +134,8 @@ end
 function SWEP:GatherRagdollSample(ent)
    local sample = ent.killer_sample or {t=0, killer=nil}
    local ply = sample.killer
-   if (not IsValid(ply)) and sample.killer_sid then
-      ply = player.GetBySteamID(sample.killer_sid)
+   if (not IsValid(ply)) and sample.killer_sid64 then
+      ply = player.GetBySteamID64(sample.killer_sid64)
    end
 
 
