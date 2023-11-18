@@ -98,9 +98,9 @@ function SCORE:HandleSelection()
    local detectives = {}
    for k, ply in ipairs(player.GetAll()) do
       if ply:GetTraitor() then
-         table.insert(traitors, ply:SteamID())
+         table.insert(traitors, ply:SteamID64())
       elseif ply:GetDetective() then
-         table.insert(detectives, ply:SteamID())
+         table.insert(detectives, ply:SteamID64())
       end
    end
 
@@ -147,12 +147,12 @@ function SCORE:ApplyEventLogScores(wintype)
    local traitors = {}
    local detectives = {}
    for k, ply in ipairs(player.GetAll()) do
-      scores[ply:SteamID()] = {}
+      scores[ply:SteamID64()] = {}
 
       if ply:GetTraitor() then
-         table.insert(traitors, ply:SteamID())
+         table.insert(traitors, ply:SteamID64())
       elseif ply:GetDetective() then
-         table.insert(detectives, ply:SteamID())
+         table.insert(detectives, ply:SteamID64())
       end
    end
 
