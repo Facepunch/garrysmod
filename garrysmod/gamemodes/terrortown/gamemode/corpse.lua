@@ -401,7 +401,7 @@ function CORPSE.Create(ply, attacker, dmginfo)
    rag.player_ragdoll = true
    rag.sid64 = ply:SteamID64()
 
-   rad.sid = ply:SteamID() -- backwards compatibility; use rag.sid64 instead
+   rag.sid = ply:SteamID() -- backwards compatibility; use rag.sid64 instead
    rag.uqid = ply:UniqueID() -- backwards compatibility; use rag.sid64 instead
 
    -- network data
