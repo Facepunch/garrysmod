@@ -18,12 +18,12 @@ function CreateTransferMenu(parent)
    dsubmit:SetDisabled(true)
    dsubmit:SetText(GetTranslation("xfer_send"))
 
-   local selected_sid = nil
+   local selected_sid64 = nil
 
    local dpick = vgui.Create("DComboBox", dform)
    dpick.OnSelect = function(s, idx, val, data)
                        if data then
-                          selected_sid = data
+                          selected_sid64 = data
                           dsubmit:SetDisabled(false)
                        end
                     end
@@ -42,8 +42,8 @@ function CreateTransferMenu(parent)
    if dpick:GetOptionText(1) then dpick:ChooseOptionID(1) end
 
    dsubmit.DoClick = function(s)
-                        if selected_sid then
-                           RunConsoleCommand("ttt_transfer_credits", selected_sid, "1")
+                        if selected_sid64 then
+                           RunConsoleCommand("ttt_transfer_credits", selected_sid64, "1")
                         end
                      end
 
