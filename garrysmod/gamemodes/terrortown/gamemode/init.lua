@@ -859,7 +859,7 @@ function SelectRoles()
       if IsValid(v) and (not v:IsSpec()) then
          -- save previous role and sign up as possible traitor/detective
 
-         local r = GAMEMODE.LastRole[v:SteamID()] or v:GetRole() or ROLE_INNOCENT
+         local r = GAMEMODE.LastRole[v:SteamID64()] or v:GetRole() or ROLE_INNOCENT
 
          table.insert(prev_roles[r], v)
 
@@ -943,8 +943,8 @@ function SelectRoles()
       -- initialize credit count for everyone based on their role
       ply:SetDefaultCredits()
 
-      -- store a steamid -> role map
-      GAMEMODE.LastRole[ply:SteamID()] = ply:GetRole()
+      -- store a steamid64 -> role map
+      GAMEMODE.LastRole[ply:SteamID64()] = ply:GetRole()
    end
 end
 
