@@ -263,3 +263,10 @@ end
 function GM:CanProperty( pl, property, ent )
 	return false
 end
+
+--[[---------------------------------------------------------
+	Allow hooks to override bullet without ignoring all other hooks
+-----------------------------------------------------------]]
+function GM:EntityFireBullets( ent, bullets )
+	return true
+end
