@@ -1018,7 +1018,7 @@ L.aw_fnd1_title = "Adli tabip"
 L.aw_fnd1_text = "etrafta {num} ceset buldu."
 
 L.aw_fnd2_title = "Hepsini Yakalamalıyım"
-L.aw_fnd2_text = "koleksiyonları için {num} ceset buldu.
+L.aw_fnd2_text = "koleksiyonları için {num} ceset buldu."
 
 L.aw_fnd3_title = "Ölüm Kokusu"
 L.aw_fnd3_text = "bu rauntta {num} kez rastgele cesetler üzerinde tökezler."
