@@ -204,7 +204,9 @@ local toolmask = bit.bor( CONTENTS_SOLID, CONTENTS_MOVEABLE, CONTENTS_MONSTER, C
 -- Trace a line then send the result to a mode function
 function SWEP:PrimaryAttack()
 
-	local tr = util.GetPlayerTrace( self.Owner )
+	local owner = self:GetOwner()
+
+	local tr = util.GetPlayerTrace( owner )
 	tr.mask = toolmask
 	tr.mins = vector_origin
 	tr.maxs = tr.mins
@@ -231,7 +233,9 @@ end
 
 function SWEP:SecondaryAttack()
 
-	local tr = util.GetPlayerTrace( self.Owner )
+	local owner = self:GetOwner()
+
+	local tr = util.GetPlayerTrace( owner )
 	tr.mask = toolmask
 	tr.mins = vector_origin
 	tr.maxs = tr.mins
