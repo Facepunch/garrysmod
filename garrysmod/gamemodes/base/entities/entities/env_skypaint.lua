@@ -130,6 +130,6 @@ end
 --
 function ENT:CanEditVariables( ply )
 
-	return ply:IsAdmin()
+	return ply:IsAdmin() || game.SinglePlayer()
 
 end

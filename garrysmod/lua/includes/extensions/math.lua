@@ -67,14 +67,14 @@ math.Min = math.min
 	Name: EaseInOut(fProgress, fEaseIn, fEaseOut)
 	Desc: Provided by garry from the facewound source and converted
 			to Lua by me :p
-	Usage: math.EaseInOut(0.1, 0.5, 0.5) - all parameters shoule be between 0 and 1
+	Usage: math.EaseInOut(0.1, 0.5, 0.5) - all parameters should be between 0 and 1
 -----------------------------------------------------------]]
 function math.EaseInOut( fProgress, fEaseIn, fEaseOut )
 
 	if ( fEaseIn == nil ) then fEaseIn = 0 end
 	if ( fEaseOut == nil ) then fEaseOut = 1 end
 
-	if ( fProgress == 0 || fProgress == 1 ) then return fProgress end
+	if ( fProgress == 0 or fProgress == 1 ) then return fProgress end
 
 	local fSumEase = fEaseIn + fEaseOut
 
@@ -86,9 +86,9 @@ function math.EaseInOut( fProgress, fEaseIn, fEaseOut )
 
 	local fProgressCalc = 1 / ( 2 - fEaseIn - fEaseOut )
 
-	if( fProgress < fEaseIn ) then
+	if ( fProgress < fEaseIn ) then
 		return ( ( fProgressCalc / fEaseIn ) * fProgress * fProgress )
-	elseif( fProgress < 1 - fEaseOut ) then
+	elseif ( fProgress < 1 - fEaseOut ) then
 		return ( fProgressCalc * ( 2 * fProgress - fEaseIn ) )
 	else
 		fProgress = 1 - fProgress
@@ -103,7 +103,7 @@ function math.calcBSplineN( i, k, t, tinc )
 
 	if ( k == 1 ) then
 
-		if ( ( KNOT( i, tinc ) <= t ) && ( t < KNOT( i + 1, tinc ) ) ) then
+		if ( ( KNOT( i, tinc ) <= t ) and ( t < KNOT( i + 1, tinc ) ) ) then
 
 			return 1
 
@@ -159,6 +159,25 @@ function math.BSplinePoint( tDiff, tPoints, tMax )
 
 end
 
+--[[---------------------------------------------------------
+	Cubic hermite spline
+	p0, p1 - points; m0, m1 - tangets; t - fraction along the curve (0-1)
+-----------------------------------------------------------]]
+function math.CHSpline( t, p0, m0, p1, m1 )
+
+	if ( t >= 1 ) then return p1 end
+	if ( t <= 0 ) then return p0 end
+
+	local t2 = t * t
+	local t3 = t * t2
+
+	return p0 * ( 2 * t3 - 3 * t2 + 1 ) +
+		m0 * ( t3 - 2 * t2 + t ) +
+		p1 * ( -2 * t3 + 3 * t2 ) +
+		m1 * ( t3 - t2 )
+
+end
+
 -- Round to the nearest integer
 function math.Round( num, idp )
 
@@ -199,7 +218,6 @@ function math.NormalizeAngle( a )
 	return ( a + 180 ) % 360 - 180
 end
 
-
 function math.AngleDifference( a, b )
 
 	local diff = math.NormalizeAngle( a - b )
@@ -226,4 +244,55 @@ end
 
 function math.Remap( value, inMin, inMax, outMin, outMax )
 	return outMin + ( ( ( value - inMin ) / ( inMax - inMin ) ) * ( outMax - outMin ) )
+end
+
+-- Snaps the provided number to the nearest multiple
+function math.SnapTo( num, multiple )
+	return math.floor( num / multiple + 0.5 ) * multiple
+end
+
+--[[---------------------------------------------------------
+	Name: CubicBezier( frac, p0, p1, p2, p3 )
+	Desc: Lerp point between points with cubic bezier
+-----------------------------------------------------------]]
+function math.CubicBezier( frac, p0, p1, p2, p3 )
+	local frac2 = frac * frac
+	local inv = 1 - frac
+	local inv2 = inv * inv
+
+	return inv2 * inv * p0 + 3 * inv2 * frac * p1 + 3 * inv * frac2 * p2 + frac2 * frac * p3
+end
+
+--[[---------------------------------------------------------
+	Name: QuadraticBezier( frac, p0, p1, p2 )
+	Desc: Lerp point between points with quadratic bezier
+-----------------------------------------------------------]]
+function math.QuadraticBezier( frac, p0, p1, p2 )
+	local frac2 = frac * frac
+	local inv = 1 - frac
+	local inv2 = inv * inv
+
+	return inv2 * p0 + 2 * inv * frac * p1 + frac2 * p2
+end
+
+--[[---------------------------------------------------------
+	Name: Factorial( num )
+	Desc: Calculate the factorial value of num
+-----------------------------------------------------------]]
+function math.Factorial( num )
+
+	if ( num < 0 ) then
+		return nil
+	elseif ( num < 2 ) then
+		return 1
+	end
+
+	local res = 1
+
+	for i = 2, num do
+		res = res * i
+	end
+
+	return res
+
 end

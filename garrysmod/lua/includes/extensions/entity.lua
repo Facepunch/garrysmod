@@ -162,6 +162,37 @@ function meta:PhysWake()
 
 end
 
+local GetColorOriginal4 = meta.GetColor4Part  -- Do not use me! I will be removed
+local GetColorOriginal = meta.GetColor
+function meta:GetColor()
+
+	-- Backwards comp slower method
+	if ( !GetColorOriginal4 ) then
+		return GetColorOriginal( self )
+	end
+
+	return Color( GetColorOriginal4( self ) )
+
+end
+
+local SetColorOriginal4 = meta.SetColor4Part  -- Do not use me! I will be removed
+local SetColorOriginal = meta.SetColor
+function meta:SetColor( col )
+
+	-- Backwards comp slower method
+	if ( !SetColorOriginal4 ) then
+		return SetColorOriginal( self, col )
+	end
+
+	-- Even more backwards compat
+	if ( !col ) then
+		return SetColorOriginal4( self, 255, 255, 255, 255 )
+	end
+
+	SetColorOriginal4( self, col.r, col.g, col.b, col.a )
+
+end
+
 function meta:GetChildBones( bone )
 
 	local bonecount = self:GetBoneCount()
@@ -464,7 +495,7 @@ function meta:InstallDataTable()
 		if ( CLIENT ) then
 
 			net.Start( "editvariable" )
-				net.WriteUInt( self:EntIndex(), 32 )
+				net.WriteEntity( self )
 				net.WriteString( variable )
 				net.WriteString( value )
 			net.SendToServer()
@@ -482,35 +513,30 @@ function meta:InstallDataTable()
 
 	end
 
-	if ( SERVER ) then
-
-		util.AddNetworkString( "editvariable" )
-
-		net.Receive( "editvariable", function( len, client )
-
-			local iIndex = net.ReadUInt( 32 )
-			local ent = Entity( iIndex )
-
-			if ( !IsValid( ent ) ) then return end
-			if ( !isfunction( ent.GetEditingData ) ) then return end
-			if ( ent.AdminOnly && !client:IsAdmin() ) then return end
-
-			local key = net.ReadString()
-
-			-- Is this key in our edit table?
-			local editor = ent:GetEditingData()[ key ]
-			if ( !istable( editor ) ) then return end
-
-			local val = net.ReadString()
-			hook.Run( "VariableEdited", ent, client, key, val, editor )
-
-		end )
-
-	end
-
 end
 
 if ( SERVER ) then
+
+	util.AddNetworkString( "editvariable" )
+
+	net.Receive( "editvariable", function( len, client )
+
+		local ent = net.ReadEntity()
+
+		if ( !IsValid( ent ) ) then return end
+		if ( !isfunction( ent.GetEditingData ) ) then return end
+		if ( ent.AdminOnly && !( client:IsAdmin() || game.SinglePlayer() ) ) then return end
+
+		local key = net.ReadString()
+
+		-- Is this key in our edit table?
+		local editor = ent:GetEditingData()[ key ]
+		if ( !istable( editor ) ) then return end
+
+		local val = net.ReadString()
+		hook.Run( "VariableEdited", ent, client, key, val, editor )
+
+	end )
 
 	function meta:GetUnFreezable()
 		return self.m_bUnFreezable || false

@@ -112,14 +112,14 @@ function PANEL:RefreshResults( str )
 	if ( !str or str == "" ) then return end
 
 	local results = search.GetResults( str, self.m_strSearchType, GetConVarNumber( "sbox_search_maxresults" ) )
-	for id, result in pairs( results ) do
+	for id, result in ipairs( results ) do
 		if ( !IsValid( result.icon ) ) then ErrorNoHalt( "Failed to create icon for " .. ( result.words && isstring( result.words[ 1 ] ) && result.words[ 1 ] || result.text ).. "\n" ) continue end
 		result.icon:SetParent( vgui.GetWorldPanel() ) -- Don't parent the icons to search panel prematurely
 	end
 
 	-- I know this is not perfect, but this is the best I am willing to do with how the search library was set up
 	if ( self.OldResults == #results ) then -- No updates, don't rebuild
-		for id, result in pairs( results ) do
+		for id, result in ipairs( results ) do
 			if ( IsValid( result.icon ) ) then result.icon:Remove() end -- Kill all icons
 		end
 		return
@@ -132,7 +132,7 @@ function PANEL:RefreshResults( str )
 	Header:SetText( #results .. " Results for \"" .. str .. "\"" )
 	self.PropPanel:Add( Header )
 
-	for k, v in pairs( results ) do
+	for k, v in ipairs( results ) do
 		self:AddSearchResult( v.text, v.func, v.icon )
 	end
 

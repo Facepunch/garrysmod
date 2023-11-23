@@ -592,7 +592,7 @@ L.target_credits = "Vasculhe para receber créditos não gastos"
 -- Traitor buttons (HUD buttons with hand icons that only traitors can see)
 L.tbut_single  = "Uso único"
 L.tbut_reuse   = "Reutilizável"
-L.tbut_retime  = "Reutilizável após {num} seg"
+L.tbut_retime  = "Reutilizável após {num} segundos"
 L.tbut_help    = "Pressione {key} para ativar"
 
 -- Equipment info lines (on the left above the health/ammo panel)
@@ -695,7 +695,7 @@ L.tip14 = "Quanto mais longe você estiver de alguém que você matar, mais rapi
 
 L.tip15 = "Você é um Traidor e quer tentar matar alguém com um rifle de precisão? Considere habilitar o Disfarce antes. Se você errar um tiro, fuja para um local seguro, desabilite o Disfarce, e ninguém saberá que era você que estava atirando neles."
 
-L.tip16 = "Como Traidor, o Teletransportador pode ajudar-lhe a escapar enquanto você estiver sendo perseguido, além de permitir que você se desloque rapidamente em um mapa grande. Certifique-se de sempre ter uma posição segura marcada."
+L.tip16 = "Como Traidor, o Teletransportador pode ajudá-lo a escapar enquanto estiver sendo perseguido, além de permitir que você se desloque rapidamente em um mapa grande. Certifique-se de sempre ter uma posição segura marcada."
 
 L.tip17 = "Os inocentes estão todos agrupados sendo difíceis de serem mortos? Considere experimentar o Rádio para reproduzir sons de um C4 ou de um tiroteio para fazer com que eles se desagrupem."
 
@@ -884,7 +884,7 @@ L.aw_nkt3_text  = "acabou com três vidas inocentes de terrorismo hoje."
 L.aw_nkt4_title = "O LOBO ENTRE LOBOS QUE MAIS PARECEM OVELHAS"
 L.aw_nkt4_text  = "comeu terroristas inocentes no jantar. Um jantar de {num} pratos."
 
-L.aw_nkt5_title = "OPERAÇÃO CONTRA-TERRORISTA"
+L.aw_nkt5_title = "OPERAÇÃO CONTRATERRORISTA"
 L.aw_nkt5_text  = "é pago por cada assassinato. Agora já pode comprar outro iate luxuoso."
 
 L.aw_nki1_title = "TRAIA ISTO"
@@ -959,7 +959,7 @@ L.aw_sip1_text  = "calou a boca de {num} pessoas com sua pistola silenciada."
 L.aw_sip2_title = "ASSASSINO SILENCIOSO"
 L.aw_sip2_text  = "matou {num} pessoas que não ouviram sua própria morte."
 
-L.aw_knf1_title = "ESFAQUEAR-LHE-EI"
+L.aw_knf1_title = "ESFAQUEÁ-LO-EI"
 L.aw_knf1_text  = "esfaqueou a cara de alguém pela internet."
 
 L.aw_knf2_title = "ONDE VOCÊ CONSEGUIU ISSO?"
@@ -1085,4 +1085,4 @@ L.idle_popup_title = "Ausência"
 L.sb_playervolume = "Volume do jogador"
 
 --- 2021-09-22
-L.tip41 = "Você pode ajustar o volume do microfone de um jogador ao clicar com o botão direito no ícone de silencar dele no placar."
+L.tip41 = "Você pode ajustar o volume do microfone de um jogador ao clicar com o botão direito no ícone de silenciar dele no placar."

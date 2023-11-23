@@ -1,7 +1,7 @@
 
 AddCSLuaFile()
 
-include( 'taunt_camera.lua' )
+include( "taunt_camera.lua" )
 
 local PLAYER = {}
 

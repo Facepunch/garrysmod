@@ -12,6 +12,7 @@ local BufferedWrites = {}
 local BufferedDeletes = {}
 
 local function GetCache( key )
+
 	if ( BufferedDeletes[ key ] ) then return nil end
 
 	local entry = CachedEntries[ key ]
@@ -28,15 +29,19 @@ local function GetCache( key )
 	end
 
 	return CachedEntries[ key ][ 2 ]
+
 end
 
 local function FlushCache()
+
 	CachedEntries = {}
 	BufferedWrites = {}
 	BufferedDeletes = {}
+
 end
 
 local function CommitToSQLite()
+
 	sql.Begin()
 
 	for k, v in pairs( BufferedWrites ) do
@@ -51,13 +56,17 @@ local function CommitToSQLite()
 	BufferedDeletes = {}
 
 	sql.Commit()
+
 end
 
 local function ScheduleCommit()
+
 	timer.Create( "Cookie_CommitToSQLite", 0.1, 1, CommitToSQLite )
+
 end
 
 local function SetCache( key, value )
+
 	if ( value == nil ) then return Delete( key ) end
 
 	if CachedEntries[ key ] then
@@ -70,6 +79,7 @@ local function SetCache( key, value )
 	BufferedWrites[ key ] = value
 
 	ScheduleCommit()
+
 end
 
 -- Get a String Value
@@ -105,8 +115,12 @@ end
 
 -- Set a Value
 function Set( name, value )
+
 	SetCache( name, value )
+
 end
+
+hook.Add( "ShutDown", "SaveCookiesOnShutdown", CommitToSQLite )
 
 if ( !CLIENT_DLL ) then return end
 
@@ -116,3 +130,4 @@ concommand.Add( "lua_cookieclear", function( ply, command, arguments )
 	FlushCache()
 
 end )
+

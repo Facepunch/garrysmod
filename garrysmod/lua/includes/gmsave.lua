@@ -53,7 +53,7 @@ function gmsave.LoadMap( strMapContents, ply, callback )
 		g_WavSound = g_WavSound + 1
 		if ( g_WavSound > 4 ) then g_WavSound = 1 end
 
-		ply:SendLua( "surface.PlaySound( \"garrysmod/save_load" .. g_WavSound .. ".wav\" )" )
+		ply:SendLua( string.format( "surface.PlaySound( \"garrysmod/save_load%d.wav\" )", g_WavSound ) )
 
 		gmsave.PlayerLoad( ply, tab.Player )
 
@@ -89,7 +89,7 @@ function gmsave.SaveMap( ply )
 
 	local Ents = ents.GetAll()
 
-	for k, v in pairs( Ents ) do
+	for k, v in ipairs( Ents ) do
 
 		if ( !gmsave.ShouldSaveEntity( v, v:GetSaveTable() ) || v:IsConstraint() ) then
 			Ents[ k ] = nil

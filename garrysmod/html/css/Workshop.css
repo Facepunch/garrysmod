@@ -162,13 +162,13 @@ workshopicon description
 	top: 0px;
 	bottom: 0px;
 	right: 0;
-	text-align: justify;
+	text-align: left;
 	background-color: rgba( 70, 180, 250, 0.95 );
 	font-size: 11px;
 	padding: 32px 8px;
 	color: #fff;
 	cursor: default;
-	word-break: break-all;
+	word-break: break-word;
 
 	opacity: 0;
 	-webkit-transition: opacity 100ms ease-in 0ms;
@@ -256,13 +256,20 @@ controls control:hover
 	background-color: white;
 }
 
+
+controls control.disabled
+{
+	background-color: #bfbfbf;
+	cursor: default;
+}
+
 .ugc_settings_button
 {
 	height: 44px;
 	width: 44px;
 
 	padding: 6px;
-	background: #eee;
+	background: #2387ed;
 	border-radius: 4px;
 	box-sizing: border-box;
 
@@ -273,7 +280,7 @@ controls control:hover
 }
 .ugc_settings_button:hover
 {
-	background: #ddd;
+	background: #2691FF;
 }
 
 .ugc_settings
@@ -319,10 +326,10 @@ controls control:hover
 	text-align: center;
 	border-radius: 4px;
 	cursor: default;
+	min-width: 140px;
 }
 .ugc_settings a:hover
 {
-	colo2r: #ff7;
 	background: #ccc;
 }
 
@@ -350,7 +357,7 @@ controls control:hover
 	width: 150px;
 	display: inline-block;
 	max-height: 400px;
-	min-height: 230px;
+	min-height: 290px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }

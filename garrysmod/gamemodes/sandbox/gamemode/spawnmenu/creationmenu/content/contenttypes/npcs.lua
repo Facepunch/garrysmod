@@ -1,5 +1,5 @@
 
-hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
+hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, browseNode )
 
 	-- Get a list of available NPCs
 	local NPCList = list.Get( "NPC" )
@@ -18,10 +18,11 @@ hook.Add( "PopulateNPCs", "AddNPCContent", function( pnlContent, tree, node )
 	end
 
 	-- Create an icon for each one and put them on the panel
+	local CustomIcons = list.Get( "ContentCategoryIcons" )
 	for CategoryName, v in SortedPairs( Categories ) do
 
 		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, "icon16/monkey.png" )
+		local node = tree:AddNode( CategoryName, CustomIcons[ CategoryName ] or "icon16/monkey.png" )
 
 		-- When we click on the node - populate it using this function
 		node.DoPopulate = function( self )
@@ -105,18 +106,22 @@ function PANEL:Init()
 
 	DComboBox:AddChoice( "#menubar.npcs.defaultweapon", "" )
 	DComboBox:AddChoice( "#menubar.npcs.noweapon", "none" )
-	DComboBox:AddSpacer()
 
-	-- Sort the items by name, also has the benefit of deduplication
-	local weaponsForSort = {}
+	-- Sort the items by name, and group by category
+	local groupedWeps = {}
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
-		weaponsForSort[ language.GetPhrase( v.title ) ] = v.class
+		local cat = (v.category or ""):lower()
+		groupedWeps[ cat ] = groupedWeps[ cat ] or {}
+		groupedWeps[ cat ][ v.class ] = language.GetPhrase( v.title )
 	end
 
-	for title, class in SortedPairs( weaponsForSort ) do
-		DComboBox:AddChoice( title, class )
+	for group, items in SortedPairs( groupedWeps ) do
+		DComboBox:AddSpacer()
+		for class, title in SortedPairsByValue( items ) do
+			DComboBox:AddChoice( title, class )
+		end
 	end
-	
+
 	function DComboBox:OnSelect( index, value )
 		self:ConVarChanged( self.Data[ index ] )
 	end

@@ -148,6 +148,8 @@ local EntitySaver =
 		data.ColGroup			= ent:GetCollisionGroup()
 		data.Name				= ent:GetName()
 		data.WorkshopID			= ent:GetWorkshopID()
+		data.Health				= ent:Health()
+		data.MaxHealth			= ent:GetMaxHealth()
 
 		data.Pos, data.Angle	= WorldToLocal( data.Pos, data.Angle, LocalPos, LocalAng )
 
@@ -200,11 +202,26 @@ local EntitySaver =
 
 		end
 
-		-- Non Sandbox tool set colors and material
+		-- Non Sandbox tool set color and materials
 		if ( ent:GetColor() != color_white ) then data._DuplicatedColor = ent:GetColor() end
 		if ( ent:GetMaterial() != "" ) then data._DuplicatedMaterial = ent:GetMaterial() end
 
-		-- Bone Manipulator
+		-- Sub materials
+		local subMaterials = {}
+
+		for i = 0, 31 do
+
+			local mat = ent:GetSubMaterial( i )
+
+			if ( mat:len() > 0 ) then
+				subMaterials[ i ] = mat
+			end
+
+		end
+
+		if ( !table.IsEmpty( subMaterials ) ) then data._DuplicatedSubMaterials = subMaterials end
+
+		-- Bone Manipulations
 		if ( ent:HasBoneManipulations() ) then
 
 			data.BoneManip = {}
@@ -235,7 +252,6 @@ local EntitySaver =
 		if ( ent.GetNetworkVars ) then
 			data.DT = ent:GetNetworkVars()
 		end
-
 
 		-- Make this function on your SENT if you want to modify the
 		-- returned table specifically for your entity.
@@ -281,6 +297,17 @@ local EntitySaver =
 		if ( data._DuplicatedColor ) then ent:SetColor( data._DuplicatedColor ) end
 		if ( data._DuplicatedMaterial ) then ent:SetMaterial( data._DuplicatedMaterial ) end
 
+		-- Sub materials
+		if ( data._DuplicatedSubMaterials ) then
+
+			for id, mat in pairs( data._DuplicatedSubMaterials ) do
+
+				ent:SetSubMaterial( id, mat )
+
+			end
+
+		end
+
 		-- Body Groups
 		if ( data.BodyG ) then
 			for k, v in pairs( data.BodyG ) do
@@ -306,6 +333,15 @@ local DuplicateAllowed = {}
 function Allow( classname )
 
 	DuplicateAllowed[ classname ] = true
+
+end
+
+--
+-- Disallow this entity to be duplicated
+--
+function Disallow( classname )
+
+	DuplicateAllowed[ classname ] = false
 
 end
 
@@ -377,7 +413,7 @@ function RegisterEntityModifier( _name_, _function_ ) EntityModifiers[ _name_ ] 
 function FigureOutRequiredAddons( Dupe )
 
 	local addons = {}
-	for id, ent in pairs( Dupe.Entities ) do
+	for _, ent in pairs( Dupe.Entities ) do
 		for id, addon in pairs( engine.GetAddons() ) do
 			-- Model
 			if ( ent.Model and file.Exists( ent.Model, addon.title ) ) then
@@ -629,6 +665,10 @@ end
 -----------------------------------------------------------]]
 function CreateEntityFromTable( Player, EntTable )
 
+	-- Get rid of stored outputs, they are being abused
+	-- Do it here, so that entities can store new ones on creation
+	EntTable.m_tOutputs = nil
+
 	--
 	-- Convert position/angle to `local`
 	--
@@ -728,7 +768,7 @@ end
    Given entity list and constranit list, create all entities
    and return their tables
 -----------------------------------------------------------]]
-function Paste( Player, EntityList, ConstraintList )
+function Paste( Player, entityList, constraintList )
 
 	--
 	-- Store the player
@@ -739,8 +779,8 @@ function Paste( Player, EntityList, ConstraintList )
 	--
 	-- Copy the table - because we're gonna be changing some stuff on it.
 	--
-	local EntityList = table.Copy( EntityList )
-	local ConstraintList = table.Copy( ConstraintList )
+	local EntityList = table.Copy( entityList )
+	local ConstraintList = table.Copy( constraintList )
 
 	local CreatedEntities = {}
 
@@ -793,7 +833,7 @@ function Paste( Player, EntityList, ConstraintList )
 		ApplyBoneModifiers( Player, Ent )
 
 		if ( Ent.PostEntityPaste ) then
-			Ent:PostEntityPaste( Player, Ent, CreatedEntities )
+			Ent:PostEntityPaste( Player || NULL, Ent, CreatedEntities )
 		end
 
 	end
@@ -954,7 +994,7 @@ end
 --
 function RemoveMapCreatedEntities()
 
-	for k, v in pairs( ents.GetAll() ) do
+	for k, v in ipairs( ents.GetAll() ) do
 
 		if ( v:CreatedByMap() && ShouldMapEntityBeRemoved( v, v:GetClass() ) ) then
 			v:Remove()

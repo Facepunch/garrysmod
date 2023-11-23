@@ -13,11 +13,15 @@ local NUM_DOF_NODES = 16
 
 function DOF_Kill()
 
-	for k, v in pairs( DOF_Ents ) do
+	for i = #DOF_Ents, 1, -1 do
+
+		local v = DOF_Ents[i]
 
 		if ( IsValid( v ) ) then
 			v:Remove()
 		end
+
+		DOF_Ents[i] = nil
 
 	end
 

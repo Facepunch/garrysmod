@@ -7,7 +7,7 @@ Next Update
 ---
 Current game discussion as well as update progress can be found on [Discord](https://discord.gg/gmod).
 
-You can test [changes for the next update](https://docs.google.com/document/d/e/2PACX-1vTzEJEpdEje8e-FgsbyWGydu_Ez7p82MwOUPmRlUAAJ-KpkNJhHctyadZosfUYjVTz26KGip7bI7M9T/pub) on the [Garry's Mod Dev Branch](https://wiki.facepunch.com/gmod/Dev_Branch) through Steam.
+You can test [changes for the next update](https://wiki.facepunch.com/gmod/Update_Preview_Changelog) on the [Garry's Mod Dev Branch](https://wiki.facepunch.com/gmod/Dev_Branch) through Steam.
 
 Pull Requests
 ---

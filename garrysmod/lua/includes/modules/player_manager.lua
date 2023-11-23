@@ -27,9 +27,9 @@ end
 --
 -- Valid hands
 --
-function AddValidHands( name, model, skin, body )
+function AddValidHands( name, model, skin, body, matchBodySkin )
 
-	HandNames[ name ] = { model = model, skin = skin, body = body }
+	HandNames[ name ] = { model = model, skin = skin or 0, body = body or "0000000", matchBodySkin = matchBodySkin or false }
 
 end
 
@@ -119,7 +119,7 @@ AddValidModel( "kleiner",		"models/player/kleiner.mdl" )
 AddValidHands( "kleiner",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
 
 AddValidModel( "monk",			"models/player/monk.mdl" )
-AddValidHands( "monk",		"models/weapons/c_arms_citizen.mdl",			0, "0000000" )
+AddValidHands( "monk",			"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
 
 AddValidModel( "mossman",		"models/player/mossman.mdl" )
 AddValidHands( "mossman",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" )
@@ -256,17 +256,17 @@ AddValidHands( "refugee04",		"models/weapons/c_arms_citizen.mdl",		0, "0000000" 
 -- Game specific player models! (EP2, CSS, DOD)
 -- Moving them to here since we're now shipping all required files / fallbacks
 
-AddValidModel( "magnusson", "models/player/magnusson.mdl" )
-AddValidHands( "magnusson","models/weapons/c_arms_citizen.mdl", 0, "0000000" )
+AddValidModel( "magnusson",	"models/player/magnusson.mdl" )
+AddValidHands( "magnusson",	"models/weapons/c_arms_citizen.mdl", 0, "0000000" )
 AddValidModel( "skeleton",	"models/player/skeleton.mdl" )
 AddValidHands( "skeleton",	"models/weapons/c_arms_citizen.mdl", 2, "0000000" )
 AddValidModel( "zombine",	"models/player/zombie_soldier.mdl" )
 AddValidHands( "zombine",	"models/weapons/c_arms_combine.mdl", 0, "0000000" )
 
-AddValidModel( "hostage01", "models/player/hostage/hostage_01.mdl" )
-AddValidModel( "hostage02", "models/player/hostage/hostage_02.mdl" )
-AddValidModel( "hostage03", "models/player/hostage/hostage_03.mdl" )
-AddValidModel( "hostage04", "models/player/hostage/hostage_04.mdl" )
+AddValidModel( "hostage01",	"models/player/hostage/hostage_01.mdl" )
+AddValidModel( "hostage02",	"models/player/hostage/hostage_02.mdl" )
+AddValidModel( "hostage03",	"models/player/hostage/hostage_03.mdl" )
+AddValidModel( "hostage04",	"models/player/hostage/hostage_04.mdl" )
 
 AddValidModel( "css_arctic",	"models/player/arctic.mdl" )
 AddValidHands( "css_arctic",	"models/weapons/c_arms_cstrike.mdl", 0, "10000000" )
@@ -285,10 +285,10 @@ AddValidHands( "css_swat",		"models/weapons/c_arms_cstrike.mdl", 0, "10000000" )
 AddValidModel( "css_urban",		"models/player/urban.mdl" )
 AddValidHands( "css_urban",		"models/weapons/c_arms_cstrike.mdl", 7, "10000000" )
 
-AddValidModel( "dod_german", "models/player/dod_german.mdl" )
-AddValidHands( "dod_german", "models/weapons/c_arms_dod.mdl", 0, "10000000" )
-AddValidModel( "dod_american", "models/player/dod_american.mdl" )
-AddValidHands( "dod_american", "models/weapons/c_arms_dod.mdl", 1, "10000000" )
+AddValidModel( "dod_german",	"models/player/dod_german.mdl" )
+AddValidHands( "dod_german",	"models/weapons/c_arms_dod.mdl", 0, "10000000" )
+AddValidModel( "dod_american",	"models/player/dod_american.mdl" )
+AddValidHands( "dod_american",	"models/weapons/c_arms_dod.mdl", 1, "10000000" )
 
 
 --
@@ -311,10 +311,10 @@ local function LookupPlayerClass( ply )
 	--
 	-- Check the cache
 	--
-	local method = ply.m_CurrentPlayerClass
-	if ( method && method.Player == ply ) then
-		if ( method.ClassID == id && method.Func ) then return method end -- current class is still good, behave normally
-		if ( method.ClassChanged ) then method:ClassChanged() end -- the class id changed, remove the old class
+	local plyClass = ply.m_CurrentPlayerClass
+	if ( plyClass && plyClass.Player == ply ) then
+		if ( plyClass.ClassID == id && plyClass.Func ) then return plyClass end -- current class is still good, behave normally
+		if ( plyClass.ClassChanged ) then plyClass:ClassChanged() end -- the class id changed, remove the old class
 	end
 
 	--
@@ -329,26 +329,27 @@ local function LookupPlayerClass( ply )
 	local t = Type[ classname ]
 	if ( !t ) then return end
 
-	local method = {}
-	method.Player	= ply
-	method.ClassID	= id
-	method.Func		= function() end
+	local newClass = {
+		Player = ply,
+		ClassID = id,
+		Func = function() end
+	}
 
-	setmetatable( method, { __index = t } )
+	setmetatable( newClass, { __index = t } )
 
-	ply.m_CurrentPlayerClass = method
+	ply.m_CurrentPlayerClass = newClass
 
 	-- TODO: We probably want to reset previous DTVar stuff on the player
-	method.Player:InstallDataTable()
-	method:SetupDataTables()
-	method:Init()
-	return method
+	newClass.Player:InstallDataTable()
+	newClass:SetupDataTables()
+	newClass:Init()
+	return newClass
 
 end
 
-function RegisterClass( name, table, base )
+function RegisterClass( name, tab, base )
 
-	Type[ name ] = table
+	Type[ name ] = tab
 
 	--
 	-- If we have a base method then hook
@@ -375,7 +376,6 @@ end
 
 function SetPlayerClass( ply, classname )
 
-	local t = Type[ classname ]
 	if ( !Type[ classname ] ) then ErrorNoHalt( "SetPlayerClass - attempt to use unknown player class " .. classname .. "!\n" ) end
 
 	local id = util.NetworkStringToID( classname )
@@ -435,7 +435,7 @@ function OnPlayerSpawn( ply, transiton )
 	ply:SetNoCollideWithTeammates( class.TeammateNoCollide )
 	ply:SetAvoidPlayers( class.AvoidPlayers )
 
-	if ( !transiton ) then 
+	if ( !transiton ) then
 		ply:SetMaxHealth( class.MaxHealth )
 		ply:SetMaxArmor( class.MaxArmor )
 		ply:SetHealth( class.StartHealth )

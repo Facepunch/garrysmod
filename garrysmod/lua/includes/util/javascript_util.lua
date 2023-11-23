@@ -24,7 +24,8 @@ function JS_Workshop( html )
 		_G[ namespace ]:Fetch( cat, tonumber( offset ), tonumber( perpage ), string.Explode( ",", extraTags ), searchText, filter, sort )
 	end )
 	html:AddFunction( "gmod", "Vote", function( id, vote ) steamworks.Vote( id, tobool( vote ) ) end )
-	html:AddFunction( "gmod", "Publish", function( namespace, file, background ) _G[ namespace ]:Publish( file, background ) end )
+	html:AddFunction( "gmod", "SetFavorite", function( id, vote ) steamworks.SetFavorite( id, tobool( vote ) ) end )
+	html:AddFunction( "gmod", "Publish", function( namespace, filePath, background ) _G[ namespace ]:Publish( filePath, background ) end )
 
 	// Dupes
 	html:AddFunction( "gmod", "DownloadDupe", function( param ) ws_dupe:DownloadAndArm( param ) end )

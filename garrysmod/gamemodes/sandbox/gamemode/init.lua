@@ -67,7 +67,7 @@ function GM:OnPhysgunReload( weapon, ply )
 	local num = ply:PhysgunUnfreeze()
 
 	if ( num > 0 ) then
-		ply:SendLua( "GAMEMODE:UnfrozeObjects(" .. num .. ")" )
+		ply:SendLua( string.format( "GAMEMODE:UnfrozeObjects(%d)", num ) )
 	end
 
 	ply:SuppressHint( "PhysgunUnfreeze" )
@@ -159,8 +159,9 @@ end
 function GM:CanEditVariable( ent, ply, key, val, editor )
 
 	-- Only allow admins to edit admin only variables!
-	if ( editor.AdminOnly ) then
-		return ply:IsAdmin()
+	local isAdmin = ply:IsAdmin() || game.SinglePlayer()
+	if ( editor.AdminOnly && !isAdmin ) then
+		return false
 	end
 
 	-- This entity decides who can edit its variables

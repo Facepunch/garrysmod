@@ -80,7 +80,8 @@ function MenuController( $scope, $rootScope )
 	//
 	// Map List
 	//
-	$rootScope.MapList = []
+	$rootScope.MapList = [];
+	$rootScope.AddonMapList = [];
 	lua.Run( "UpdateMapList()" );
 
 	//
@@ -233,10 +234,16 @@ function UpdateCurrentGamemode( gm )
 
 function GetGamemodeInfo( name )
 {
-	name = name.toLowerCase();
-	if ( !GamemodeDetails[name] ) GamemodeDetails[name] = {}
+	var nameL = name.toLowerCase();
+	if ( !GamemodeDetails[nameL] ) GamemodeDetails[nameL] = { title: name, name: nameL }
 
-	return GamemodeDetails[name];
+	return GamemodeDetails[nameL];
+}
+
+function UpdateAddonMaps( inmaps )
+{
+	gScope.AddonMapList = inmaps;
+	UpdateDigest( gScope, 50 );
 }
 
 function UpdateMaps( inmaps )
@@ -306,9 +313,9 @@ function UpdateGames( games )
 	UpdateDigest( gScope, 50 );
 }
 
-function UpdateVersion( version, branch )
+function UpdateVersion( version, netVersion, branch )
 {
-	GMOD_VERSION_INT = parseInt( version.replace( /\./g, "" ).substr( 2 ) ); // For server browser
+	GMOD_VERSION_INT = parseInt( netVersion.replace( /\./g, "" ) ); // For server browser
 
 	gScope.Version	= version;
 	gScope.Branch	= branch;
