@@ -34,7 +34,7 @@ local function DrawColorBox()
 	--
 	if ( vgui.CursorVisible() ) then
 		local mx, my = input.GetCursorPos()
-		local dist = Vector( mx, my, 0 ):Distance( Vector( x + w *0.5, y + h * 0.5, 0 ) )
+		local dist = Vector( mx, my, 0 ):Distance( Vector( x + w * 0.5, y + h * 0.5, 0 ) )
 		alpha = math.Clamp( alpha - ( 512 - dist ), 10, 255 )
 	end
 

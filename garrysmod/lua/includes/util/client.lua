@@ -25,6 +25,28 @@ matproxy.Add( {
 	end,
 	bind = function( self, mat, ent )
 		mat:SetFloat( "$flow_color_intensity", 1 )
+
+		-- Less than ideal, but serves as an example
+		--[[local entities = {}
+		for k, v in pairs( ents.FindInSphere( ent:GetPos(), ent:BoundingRadius() ) ) do
+			if ( v == ent || v:GetMoveType() != MOVETYPE_VPHYSICS ) then continue end
+
+			table.insert( entities, v )
+		end
+		table.sort( entities, function( a, b ) return a:GetPos():Distance( ent:GetPos() ) < b:GetPos():Distance( ent:GetPos() ) end )
+
+		if ( entities[ 1 ] ) then
+			mat:SetFloat( "$FLOW_VORTEX1", 1 )
+			mat:SetVector( "$FLOW_VORTEX_POS1", entities[ 1 ]:GetPos() )
+		else
+			mat:SetFloat( "$FLOW_VORTEX1", 0 )
+		end
+		if ( entities[ 2 ] ) then
+			mat:SetFloat( "$FLOW_VORTEX2", 1 )
+			mat:SetVector( "$FLOW_VORTEX_POS2", entities[ 2 ]:GetPos() )
+		else
+			mat:SetFloat( "$FLOW_VORTEX2", 0 )
+		end]]
 	end
 } )
 

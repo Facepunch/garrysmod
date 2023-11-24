@@ -141,7 +141,7 @@ function PANEL:Paint()
 		-- Current file Progress
 		if ( self.Progress >= 0 ) then
 			draw.RoundedBox( 4, x + 32, 40, w, 15, Color( 0, 0, 0, 150 ) )
-			draw.RoundedBox( 4, x + 33, 41, w * math.Clamp( self.Progress, 0.05, 1 )-2, 15-2, Color( 255, 255, 255, 200 ) )
+			draw.RoundedBox( 4, x + 33, 41, w * math.Clamp( self.Progress, 0.05, 1 ) - 2, 15-2, Color( 255, 255, 255, 200 ) )
 		end
 
 	end
@@ -173,7 +173,7 @@ function PANEL:UpdateProgress( downloaded, expected )
 	self.Progress = downloaded / expected
 
 	if ( self.Progress > 0 ) then
-		self.ProgressLabel:SetText( language.GetPhrase( "ugc.XoutofY" ):format( Format( "%.0f%%", (self.Progress) * 100 ), string.NiceSize( expected ) ) )
+		self.ProgressLabel:SetText( language.GetPhrase( "ugc.XoutofY" ):format( Format( "%.0f%%", self.Progress * 100 ), string.NiceSize( expected ) ) )
 	else
 		self.ProgressLabel:SetText( string.NiceSize( expected ) )
 	end

@@ -55,7 +55,7 @@ end )
 
 local matAlert = Material( "icon16/error.png" )
 
-local cl_drawhud = GetConVar("cl_drawhud")
+local cl_drawhud = GetConVar( "cl_drawhud" )
 
 hook.Add( "DrawOverlay", "MenuDrawLuaErrors", function()
 

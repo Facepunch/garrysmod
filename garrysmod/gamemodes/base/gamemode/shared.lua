@@ -10,12 +10,12 @@
 
 -----------------------------------------------------------]]
 
-include( 'obj_player_extend.lua' )
+include( "obj_player_extend.lua" )
 
-include( 'gravitygun.lua' )
-include( 'player_shd.lua' )
-include( 'animations.lua' )
-include( 'player_class/player_default.lua' )
+include( "gravitygun.lua" )
+include( "player_shd.lua" )
+include( "animations.lua" )
+include( "player_class/player_default.lua" )
 
 GM.Name			= "Base Gamemode"
 GM.Author		= "Garry Newman"
