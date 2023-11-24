@@ -19,7 +19,27 @@ function ENT:Initialize()
 	if ( CLIENT ) then
 
 		if ( IsValid( g_SkyPaint ) ) then
-			-- TODO: Copy settings from `current` sky to here.
+
+			-- A bit of a hack
+			self:EditValue( "topcolor", tostring( g_SkyPaint:GetTopColor() ) )
+			self:EditValue( "bottomcolor", tostring( g_SkyPaint:GetBottomColor() ) )
+			self:EditValue( "fadebias", tostring( g_SkyPaint:GetFadeBias() ) )
+			self:EditValue( "hdrscale", tostring( g_SkyPaint:GetHDRScale() ) )
+
+			self:EditValue( "starlayers", tostring( g_SkyPaint:GetStarLayers() ) )
+			self:EditValue( "drawstars", tostring( g_SkyPaint:GetDrawStars() and 1 or 0 ) )
+			self:EditValue( "startexture", g_SkyPaint:GetStarTexture() )
+			self:EditValue( "starspeed", tostring( g_SkyPaint:GetStarSpeed() ) )
+			self:EditValue( "starfade", tostring( g_SkyPaint:GetStarFade() ) )
+			self:EditValue( "starscale", tostring( g_SkyPaint:GetStarScale() ) )
+
+			self:EditValue( "duskintensity", tostring( g_SkyPaint:GetDuskIntensity() ) )
+			self:EditValue( "duskscale", tostring( g_SkyPaint:GetDuskScale() ) )
+			self:EditValue( "duskcolor", tostring( g_SkyPaint:GetDuskColor() ) )
+
+			self:EditValue( "sunsize", tostring( g_SkyPaint:GetSunSize() ) )
+			self:EditValue( "suncolor", tostring( g_SkyPaint:GetSunColor() ) )
+
 		end
 
 		g_SkyPaint = self
@@ -33,7 +53,7 @@ function ENT:Think()
 	--
 	-- Find an env_sun - if we don't already have one.
 	--
-	if ( SERVER && self.EnvSun == nil ) then
+	if ( SERVER and self.EnvSun == nil ) then
 
 		-- so this closure only gets called once - even if it fails
 		self.EnvSun = false
@@ -48,7 +68,7 @@ function ENT:Think()
 	--
 	-- If we have a sun - force our sun normal to its value
 	--
-	if ( SERVER && IsValid( self.EnvSun ) ) then
+	if ( SERVER and IsValid( self.EnvSun ) ) then
 
 		local vec = self.EnvSun:GetInternalVariable( "m_vDirection" )
 
@@ -71,7 +91,7 @@ function ENT:SetupDataTables()
 end
 
 --
--- This edits something global - so always network - even wjen not in PVS
+-- This edits something global - so always network - even when not in PVS
 --
 function ENT:UpdateTransmitState()
 
