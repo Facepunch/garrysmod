@@ -290,7 +290,7 @@ hook.Add( "OnNotifyAddonConflict", "AddonConflictNotification", function( addon1
 
 	end
 
-	table.insert( AddonConflicts[ id ].files, fileName )
+	AddonConflicts[ id ].files[ fileName ] = true
 
 	RefreshAddonConflicts()
 
@@ -305,7 +305,7 @@ function FireAddonConflicts()
 	for id, tbl in pairs( AddonConflicts ) do
 
 		local files = ""
-		for _, file in ipairs( tbl.files ) do
+		for file, _ in pairs( tbl.files ) do
 			files = files .. file .. "\n"
 		end
 
