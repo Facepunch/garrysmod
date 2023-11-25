@@ -39,7 +39,7 @@ L.credit_kill = "Bir {role} öldürdüğünüz için {num} kredi aldınız."
 
 -- Karma
 L.karma_dmg_full = "Karman {amount}, bu yüzden bu raunt tam hasar veriyorsun!"
-L.karma_dmg_other = "Karman {amount}. |||UNTRANSLATED_CONTENT_START|||As a result all damage you deal is reduced by {num}%"|||UNTRANSLATED_CONTENT_END|||
+L.karma_dmg_other = "Karman {amount}. bu yüzden verdiğin hasar %{num} azaltılacak"
 
 -- Body identification messages
 L.body_found = "{finder}, {victim} adlı kişinin cesedini buldu. {role}"
