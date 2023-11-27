@@ -1,6 +1,8 @@
 
 include( "math/ease.lua" )
 
+math.tau = 2 * math.pi
+
 --[[---------------------------------------------------------
 	Name: DistanceSqr( low, high )
 	Desc: Squared Distance between two 2d points, use this instead of math.Distance as it is more cpu efficient.
