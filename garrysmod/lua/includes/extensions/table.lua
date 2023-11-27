@@ -532,7 +532,7 @@ local function toKeyValues( tbl )
 
 end
 
-local function getGeys( tbl )
+local function getKeys( tbl )
 
 	local keys = {}
 
@@ -550,9 +550,9 @@ end
 -----------------------------------------------------------]]
 function SortedPairs( pTable, Desc )
 
-	local keys = getGeys( pTable )
+	local keys = getKeys( pTable )
 
-	if Desc then
+	if ( Desc ) then
 		table.sort( keys, function( a, b )
 			return a > b
 		end )
