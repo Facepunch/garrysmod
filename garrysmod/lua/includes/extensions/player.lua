@@ -14,13 +14,13 @@ function meta:__index( key )
 	-- Search the metatable. We can do this without dipping into C, so we do it first.
 	--
 	local val = meta[key]
-	if ( val != nil ) then return val end
+	if ( val ~= nil ) then return val end
 
 	--
 	-- Search the entity metatable
 	--
-	local val = entity[key]
-	if ( val != nil ) then return val end
+	local entval = entity[key]
+	if ( entval ~= nil ) then return entval end
 
 	--
 	-- Search the entity table
@@ -39,73 +39,6 @@ if ( !sql.TableExists( "playerpdata" ) ) then
 	sql.Query( "CREATE TABLE IF NOT EXISTS playerpdata ( infoid TEXT NOT NULL PRIMARY KEY, value TEXT );" )
 
 end
-
--- These are totally in the wrong place.
-function player.GetByAccountID( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:AccountID() == ID ) then
-			return players[i]
-		end
-	end
-
-	return false
-end
-
-function player.GetByUniqueID( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:UniqueID() == ID ) then
-			return players[i]
-		end
-	end
-
-	return false
-end
-
-function player.GetBySteamID( ID )
-	ID = string.upper( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID() == ID ) then
-			return players[i]
-		end
-	end
-
-	return false
-end
-
-function player.GetBySteamID64( ID )
-	ID = tostring( ID )
-	local players = player.GetAll()
-	for i = 1, #players do
-		if ( players[i]:SteamID64() == ID ) then
-			return players[i]
-		end
-	end
-
-	return false
-end
-
-local inext = ipairs({})
-local PlayerCache = nil
-
-function player.Iterator()
-
-	if ( PlayerCache == nil ) then PlayerCache = player.GetAll() end
-
-	return inext, PlayerCache, 0
-
-end
-
-local function InvalidatePlayerCache( ent )
-
-	if ( ent:IsPlayer() ) then PlayerCache = nil end
-
-end
-
-hook.Add( "OnEntityCreated", "player.Iterator", InvalidatePlayerCache )
-hook.Add( "EntityRemoved", "player.Iterator", InvalidatePlayerCache )
 
 --[[---------------------------------------------------------
 	Name: DebugInfo
@@ -134,7 +67,7 @@ if ( CLIENT ) then
 
 	function meta:ConCommand( command, bSkipQueue )
 
-		if ( bSkipQueue || IsConCommandBlocked( command ) ) then
+		if ( bSkipQueue or IsConCommandBlocked( command ) ) then
 			SendConCommand( self, command )
 		else
 			CommandList = CommandList or {}
@@ -308,3 +241,70 @@ function meta:HasGodMode()
 	return self:IsFlagSet( FL_GODMODE )
 
 end
+
+-- These are totally in the wrong place.
+function player.GetByAccountID( ID )
+	local players = player.GetAll()
+	for i = 1, #players do
+		if ( players[i]:AccountID() == ID ) then
+			return players[i]
+		end
+	end
+
+	return false
+end
+
+function player.GetByUniqueID( ID )
+	local players = player.GetAll()
+	for i = 1, #players do
+		if ( players[i]:UniqueID() == ID ) then
+			return players[i]
+		end
+	end
+
+	return false
+end
+
+function player.GetBySteamID( ID )
+	ID = string.upper( ID )
+	local players = player.GetAll()
+	for i = 1, #players do
+		if ( players[i]:SteamID() == ID ) then
+			return players[i]
+		end
+	end
+
+	return false
+end
+
+function player.GetBySteamID64( ID )
+	ID = tostring( ID )
+	local players = player.GetAll()
+	for i = 1, #players do
+		if ( players[i]:SteamID64() == ID ) then
+			return players[i]
+		end
+	end
+
+	return false
+end
+
+local inext = ipairs( {} )
+local PlayerCache = nil
+
+function player.Iterator()
+
+	if ( PlayerCache == nil ) then PlayerCache = player.GetAll() end
+
+	return inext, PlayerCache, 0
+
+end
+
+local function InvalidatePlayerCache( ent )
+
+	if ( ent:IsPlayer() ) then PlayerCache = nil end
+
+end
+
+hook.Add( "OnEntityCreated", "player.Iterator", InvalidatePlayerCache )
+hook.Add( "EntityRemoved", "player.Iterator", InvalidatePlayerCache )

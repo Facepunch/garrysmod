@@ -224,7 +224,7 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 
 	local Clear = {}
 	for i = 0, MAXSTUDIOFLEXCTRL do
-		Clear[ "faceposer_flex" .. i ] = GenerateDefaultFlexValue( FaceEntity, i );
+		Clear[ "faceposer_flex" .. i ] = GenerateDefaultFlexValue( FaceEntity, i )
 	end
 	QuickFace:AddMaterialEx( "#faceposer.clear", "vgui/face/clear", nil, Clear )
 
