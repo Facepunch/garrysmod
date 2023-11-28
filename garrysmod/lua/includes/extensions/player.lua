@@ -114,9 +114,17 @@ end
 -----------------------------------------------------------]]
 function meta:GetPData( name, default )
 
-	name = Format( "%s[%s]", self:UniqueID(), name )
-	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr( name ) .. " LIMIT 1" )
-	if ( val == nil ) then return default end
+	-- First try looking up using the new key
+	local key = Format( "%s[%s]", self:SteamID64(), name )
+	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr( key ) .. " LIMIT 1" )
+	if ( val == nil ) then
+
+		-- Not found? Look using the old key
+		local oldkey = Format( "%s[%s]", self:UniqueID(), name )
+		val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr( oldkey ) .. " LIMIT 1" )
+		if ( val == nil ) then return default end
+
+	end
 
 	return val
 
@@ -128,8 +136,12 @@ end
 -----------------------------------------------------------]]
 function meta:SetPData( name, value )
 
-	name = Format( "%s[%s]", self:UniqueID(), name )
-	return sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" ) ~= false
+	-- Remove old value
+	local oldkey = Format( "%s[%s]", self:UniqueID(), name )
+	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( oldkey ) )
+
+	local key = Format( "%s[%s]", self:SteamID64(), name )
+	return sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( key ) .. ", " .. SQLStr( value ) .. " )" ) ~= false
 
 end
 
@@ -139,8 +151,15 @@ end
 -----------------------------------------------------------]]
 function meta:RemovePData( name )
 
-	name = Format( "%s[%s]", self:UniqueID(), name )
-	return sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) ) ~= false
+	-- First old key
+	local oldkey = Format( "%s[%s]", self:UniqueID(), name )
+	local removed = sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( oldkey ) ) ~= false
+
+	-- Then new key
+	local key = Format( "%s[%s]", self:SteamID64(), name )
+	local removed2 = sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( key ) ) ~= false
+
+	return removed or removed2
 
 end
 
