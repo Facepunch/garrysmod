@@ -532,21 +532,41 @@ local function toKeyValues( tbl )
 
 end
 
+local function getKeys( tbl )
+
+	local keys = {}
+
+	for k in pairs( tbl ) do
+		table.insert( keys, k )
+	end
+
+	return keys
+
+end
+
 --[[---------------------------------------------------------
 	A Pairs function
 		Sorted by TABLE KEY
 -----------------------------------------------------------]]
 function SortedPairs( pTable, Desc )
 
-	local sortedTbl = toKeyValues( pTable )
+	local keys = getKeys( pTable )
 
 	if ( Desc ) then
-		table.sort( sortedTbl, function( a, b ) return a.key > b.key end )
+		table.sort( keys, function( a, b )
+			return a > b
+		end )
 	else
-		table.sort( sortedTbl, function( a, b ) return a.key < b.key end )
+		table.sort( keys, function( a, b )
+			return a < b
+		end )
 	end
 
-	return keyValuePairs, { Index = 0, KeyValues = sortedTbl }
+	local i, key
+	return function()
+		i, key = next( keys, i )
+		return key, pTable[key]
+	end
 
 end
 
