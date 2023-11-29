@@ -336,9 +336,17 @@ end
 -----------------------------------------------------------]]
 function util.GetPData( steamid, name, default )
 
-	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
-	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr( name ) .. " LIMIT 1" )
-	if ( val == nil ) then return default end
+	-- First try looking up using the new key
+	local key = Format( "%s[%s]", util.SteamIDTo64( steamid ), name )
+	local val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr( key ) .. " LIMIT 1" )
+	if ( val == nil ) then
+
+		-- Not found? Look using the old key
+		local oldkey = Format( "%s[%s]", GetUniqueID( steamid ), name )
+		val = sql.QueryValue( "SELECT value FROM playerpdata WHERE infoid = " .. SQLStr( oldkey ) .. " LIMIT 1" )
+		if ( val == nil ) then return default end
+
+	end
 
 	return val
 
@@ -350,8 +358,8 @@ end
 -----------------------------------------------------------]]
 function util.SetPData( steamid, name, value )
 
-	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
-	sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( name ) .. ", " .. SQLStr( value ) .. " )" )
+	local key = Format( "%s[%s]", util.SteamIDTo64( steamid ), name )
+	sql.Query( "REPLACE INTO playerpdata ( infoid, value ) VALUES ( " .. SQLStr( key ) .. ", " .. SQLStr( value ) .. " )" )
 
 end
 
@@ -361,8 +369,13 @@ end
 -----------------------------------------------------------]]
 function util.RemovePData( steamid, name )
 
-	name = Format( "%s[%s]", GetUniqueID( steamid ), name )
-	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( name ) )
+	-- First the old key
+	local oldkey = Format( "%s[%s]", GetUniqueID( steamid ), name )
+	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( oldkey ) )
+
+	-- Then the new key. util.SteamIDTo64 is not ideal, but nothing we can do about it now
+	local key = Format( "%s[%s]", util.SteamIDTo64( steamid ), name )
+	sql.Query( "DELETE FROM playerpdata WHERE infoid = " .. SQLStr( key ) )
 
 end
 
