@@ -539,7 +539,7 @@ local function getKeys( tbl )
 	local keys = {}
 
 	for k in pairs( tbl ) do
-		table.insert( keys, k )
+		keys[ #keys + 1 ] = k
 	end
 
 	return keys
@@ -564,10 +564,10 @@ function SortedPairs( pTable, Desc )
 		end )
 	end
 
-	local i, key
+	local i, key = 1
 	return function()
-		i, key = next( keys, i )
-		return key, pTable[key]
+		key, i = keys[ i ], i + 1
+		return key, pTable[ key ]
 	end
 
 end
