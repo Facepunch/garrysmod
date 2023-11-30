@@ -536,10 +536,11 @@ end
 
 local function getKeys( tbl )
 
-	local keys = {}
+	local keys, i = {}, 0
 
 	for k in pairs( tbl ) do
-		keys[ #keys + 1 ] = k
+		i = i + 1
+		keys[ i ] = k
 	end
 
 	return keys
