@@ -80,7 +80,10 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 	return ent
 
 end
-duplicator.RegisterEntityClass( "gmod_cameraprop", MakeCamera, "controlkey", "locked", "toggle", "Data" )
+
+if ( SERVER ) then
+	duplicator.RegisterEntityClass( "gmod_cameraprop", MakeCamera, "controlkey", "locked", "toggle", "Data" )
+end
 
 function TOOL:LeftClick( trace )
 

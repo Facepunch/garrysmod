@@ -26,7 +26,9 @@ local function SetEyeTarget( ply, ent, data )
 	end
 
 end
-duplicator.RegisterEntityModifier( "eyetarget", SetEyeTarget )
+if ( SERVER ) then
+	duplicator.RegisterEntityModifier( "eyetarget", SetEyeTarget )
+end
 
 local function ConvertRelativeToEyesAttachment( ent, pos )
 

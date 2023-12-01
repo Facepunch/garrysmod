@@ -36,12 +36,14 @@ end
 --
 -- Register decal duplicator
 --
-for i = 1, 32 do
+if ( SERVER ) then
+	for i = 1, 32 do
 
-	duplicator.RegisterEntityModifier( "decal" .. i, function( ply, ent, data )
-		timer.Simple( i * 0.05, function() PlaceDecal( ply, ent, data ) end )
-	end )
+		duplicator.RegisterEntityModifier( "decal" .. i, function( ply, ent, data )
+			timer.Simple( i * 0.05, function() PlaceDecal( ply, ent, data ) end )
+		end )
 
+	end
 end
 
 function TOOL:Reload( trace )
