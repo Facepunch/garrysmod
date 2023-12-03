@@ -313,7 +313,7 @@ local function GetKillerSample(victim, attacker, dmg)
 
    local sample = {}
    sample.killer = attacker
-   sample.killer_sid = attacker:SteamID()
+   sample.killer_sid = attacker:SteamID() -- backwards compatibility; use sample.killer_sid64 instead
    sample.killer_sid64 = attacker:SteamID64()
    sample.victim = victim
    sample.t      = CurTime() + (-1 * (0.019 * dist)^2 + GetConVarNumber("ttt_killer_dna_basetime"))
