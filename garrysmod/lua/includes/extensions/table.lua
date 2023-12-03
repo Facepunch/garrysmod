@@ -810,10 +810,10 @@ end
 local tostringGmodTypes
 
 do
-	local format1 = "%s(%s)"
-	local format2 = "%s(%s, %s)"
-	local format3 = "%s(%s, %s, %s)"
-	local format4 = "%s(%s, %s, %s, %s)"
+	local format1 = "%s( %s )"
+	local format2 = "%s( %s, %s )"
+	local format3 = "%s( %s, %s, %s )"
+	local format4 = "%s( %s, %s, %s, %s )"
 
 	local function Round( num )
 		return math.Round( num, 3 )
@@ -854,8 +854,10 @@ do
 	end
 
 	function tostringGmodTypes( val )
-		if ( formaters[ type( val ) ] ) then
-			return formaters[ type( val ) ](val)
+		local format = formaters[ type( val ) ]
+
+		if ( format ) then
+			return format(val)
 		end
 
 		if ( IsColor( val ) ) then
@@ -866,10 +868,24 @@ do
 	end
 end
 
+local IsValidKeyName
+
+do
+	local reserved = {["and"] = true, ["break"] = true, ["do"] = true, ["else"] = true, ["elseif"] = true, ["end"] = true, ["false"] = true, ["for"] = true, ["function"] = true, ["if"] = true, ["in"] = true, ["local"] = true, ["nil"] = true, ["not"] = true, ["or"] = true, ["repeat"] = true, ["return"] = true, ["then"] = true, ["true"] = true, ["until"] = true, ["while"] = true}
+
+	function IsValidKeyName( key )
+		-- name cant be reserved word
+		if reserved[ key ] then return false end
+
+		-- it should start with letters or underscore, It should continue with alphanumerics
+		if ( key:match("^[%a_][%w_]*$") == nil ) then return false end
+
+		return true
+	end
+end
+
 function table.ToPlain( tbl, nopretty, lvl, already )
-	already = already or {
-		[ tbl ] = true
-	}
+	already = already or {[ tbl ] = true}
 	lvl = lvl or 1
 
 	local out = {}
@@ -917,11 +933,11 @@ function table.ToPlain( tbl, nopretty, lvl, already )
 		if ( isSeq ) then
 			k = ""
 		elseif ( isstring( k ) == false ) then
-			k = "[" .. tostringGmodTypes( k ) .. "] = "
-		elseif ( k:find( " ", 1, true ) ) then
-			k = "[\"" .. k .. "\"] = "
-		else
+			k = "[ " .. tostringGmodTypes( k ) .. " ] = "
+		elseif ( IsValidKeyName( k ) ) then
 			k = k .. " = "
+		else
+			k = "[ \"" .. k .. "\" ] = "
 		end
 
 		if ( type( v ) == "table" and already[ v ] == nil ) then
@@ -937,7 +953,7 @@ function table.ToPlain( tbl, nopretty, lvl, already )
 	end
 
 	if ( len == 1 and istable( latest ) == false ) then
-		return "{" .. out[1] .. "}"
+		return "{" .. out[ 1 ] .. "}"
 	end
 
 	if ( nopretty ) then
