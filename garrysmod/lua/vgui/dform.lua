@@ -31,7 +31,7 @@ function PANEL:Clear()
 
 	for k, v in pairs( self.Items ) do
 
-		if ( IsValid(v) ) then v:Remove() end
+		if ( IsValid( v ) ) then v:Remove() end
 
 	end
 

@@ -1,31 +1,31 @@
 --
 -- These are the physics bone numbers
 --
-local PLVS		= 0;
-local RTHY		= 1;
-local RCLF		= 2;
-local LTHY		= 3;
-local LCLF		= 4;
-local LFOT		= 5;
-local SPNE		= 6;
-local TRSO		= 7;
-local RSLD		= 8;
-local LSLD		= 9;
-local LARM		= 10;
-local LHND		= 11;
-local RARM		= 12;
-local NECK		= 13;
-local RHND		= 14;
-local HEAD		= 15;
-local RFOT		= 16;
+local PLVS		= 0
+local RTHY		= 1
+local RCLF		= 2
+local LTHY		= 3
+local LCLF		= 4
+local LFOT		= 5
+local SPNE		= 6
+local TRSO		= 7
+local RSLD		= 8
+local LSLD		= 9
+local LARM		= 10
+local LHND		= 11
+local RARM		= 12
+local NECK		= 13
+local RHND		= 14
+local HEAD		= 15
+local RFOT		= 16
 
-local Builder = 
+local Builder =
 {
 	PrePosition = function( self, sensor )
 
 		local spinestretch = ( sensor[SENSORBONE.SHOULDER] - sensor[SENSORBONE.SPINE] )  * 0.8
 
-		local acrossshoulders = (sensor[SENSORBONE.SHOULDER_RIGHT] - sensor[SENSORBONE.SHOULDER_LEFT]):GetNormal() * 0.08
+		local acrossshoulders = ( sensor[SENSORBONE.SHOULDER_RIGHT] - sensor[SENSORBONE.SHOULDER_LEFT] ):GetNormal() * 0.08
 
 		sensor[SENSORBONE.SHOULDER]:Add( spinestretch * 0.7 )
 		sensor[SENSORBONE.SHOULDER_RIGHT]:Add( spinestretch + acrossshoulders )
@@ -38,23 +38,23 @@ local Builder =
 		sensor[SENSORBONE.HAND_RIGHT]:Add( spinestretch  + acrossshoulders )
 		sensor[SENSORBONE.HEAD]:Add( spinestretch * 0.8 )
 
-		local acrosships = (sensor[SENSORBONE.HIP_LEFT] - sensor[SENSORBONE.HIP_RIGHT]):GetNormal() * 0.08
+		local acrosships = ( sensor[SENSORBONE.HIP_LEFT] - sensor[SENSORBONE.HIP_RIGHT] ):GetNormal() * 0.08
 
 		sensor[SENSORBONE.HIP_LEFT]:Add( spinestretch * -0.1 + acrosships )
 		sensor[SENSORBONE.HIP_RIGHT]:Add( spinestretch * -0.1 + acrosships * -1 )
 
-		sensor[SENSORBONE.KNEE_LEFT]:Add( (sensor[SENSORBONE.KNEE_LEFT]-sensor[SENSORBONE.HIP_LEFT]) * 0.3 + acrosships )
-		sensor[SENSORBONE.KNEE_RIGHT]:Add( (sensor[SENSORBONE.KNEE_RIGHT] - sensor[SENSORBONE.HIP_RIGHT]) * 0.3 - acrosships )
+		sensor[SENSORBONE.KNEE_LEFT]:Add( ( sensor[SENSORBONE.KNEE_LEFT]-sensor[SENSORBONE.HIP_LEFT] ) * 0.3 + acrosships )
+		sensor[SENSORBONE.KNEE_RIGHT]:Add( ( sensor[SENSORBONE.KNEE_RIGHT] - sensor[SENSORBONE.HIP_RIGHT] ) * 0.3 - acrosships )
 
-		sensor[SENSORBONE.ANKLE_LEFT]:Add( (sensor[SENSORBONE.ANKLE_LEFT] - sensor[SENSORBONE.KNEE_LEFT]) * 0.8 + acrosships )
-		sensor[SENSORBONE.ANKLE_RIGHT]:Add( (sensor[SENSORBONE.ANKLE_RIGHT] - sensor[SENSORBONE.KNEE_RIGHT]) * 0.8 - acrosships )
+		sensor[SENSORBONE.ANKLE_LEFT]:Add( ( sensor[SENSORBONE.ANKLE_LEFT] - sensor[SENSORBONE.KNEE_LEFT] ) * 0.8 + acrosships )
+		sensor[SENSORBONE.ANKLE_RIGHT]:Add( ( sensor[SENSORBONE.ANKLE_RIGHT] - sensor[SENSORBONE.KNEE_RIGHT] ) * 0.8 - acrosships )
 
 	end,
 
 	--
 	-- Which on the sensor should we use for which ones on our model
 	--
-	PositionTable = 
+	PositionTable =
 	{
 		[PLVS]	= SENSORBONE.HIP,
 		[TRSO]	= { type = "lerp", value = 0.2, from = SENSORBONE.SHOULDER, to = SENSORBONE.SPINE },
@@ -78,7 +78,7 @@ local Builder =
 	--
 	-- Which bones should we use to determine our bone angles
 	--
-	AnglesTable = 
+	AnglesTable =
 	{
 		[PLVS]	= { from = PLVS, to = SPNE, up = "hips_back" },
 		[SPNE]	= { from = SPNE, to = TRSO, up = "chest_bck" },
@@ -110,7 +110,7 @@ local Builder =
 		-- Feet are insanely spazzy, so we lock the feet to the angle of the calf
 		--
 		ang[RFOT]	= ang[RCLF]:Right():AngleEx( ang[RCLF]:Up() ) + Angle( 0, 90, -70 )
-		ang[LFOT]	= (ang[LCLF]:Right()):AngleEx( ang[LCLF]:Up() ) + Angle( 0, -90, 110 )
+		ang[LFOT]	= ang[LCLF]:Right():AngleEx( ang[LCLF]:Up() ) + Angle( 0, -90, 110 )
 
 		--
 		-- TODO: Get the hands working.
@@ -132,23 +132,22 @@ local Builder =
 
 		--ang[LHND]:RotateAroundAxis( ang[LHND]:Right(), 180 )
 
-
 	end,
 
-	IsApplicable = function( self, ent ) 
-		
-		local mdl = ent:GetModel();
+	IsApplicable = function( self, ent )
+
+		local mdl = ent:GetModel()
 
 		if ( mdl:EndsWith( "models/player/hwm/soldier.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/soldier.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/spy.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/player/hwm/spy.mdl" ) ) then return true end
 		if ( mdl:EndsWith( "models/bots/soldier/bot_soldier.mdl" ) ) then return true end
-		if ( mdl:EndsWith( "models/bots/spy/bot_spy.mdl" ) ) then return true end	
-		if ( mdl:EndsWith( "models/bots/soldier_boss/bot_soldier_boss.mdl" ) ) then return true end				
+		if ( mdl:EndsWith( "models/bots/spy/bot_spy.mdl" ) ) then return true end
+		if ( mdl:EndsWith( "models/bots/soldier_boss/bot_soldier_boss.mdl" ) ) then return true end
 
 		return false
-	
+
 	end,
 }
 

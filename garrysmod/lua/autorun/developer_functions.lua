@@ -10,21 +10,21 @@ local function FindInTable( tab, find, parents, depth )
 
 	for k, v in pairs ( tab ) do
 
-		if ( isstring(k) ) then
+		if ( isstring( k ) ) then
 
-			if ( k && k:lower():find( find:lower() ) ) then
+			if ( k and k:lower():find( find:lower() ) ) then
 
-				Msg("\t", parents, k, " - (", type(v), " - ", v, ")\n")
+				Msg( "\t", parents, k, " - (", type( v ), " - ", v, ")\n" )
 
 			end
 
 			-- Recurse
-			if ( istable(v) &&
-				k != "_R" &&
-				k != "_E" &&
-				k != "_G" &&
-				k != "_M" &&
-				k != "_LOADED" &&
+			if ( istable( v ) and
+				k != "_R" and
+				k != "_E" and
+				k != "_G" and
+				k != "_M" and
+				k != "_LOADED" and
 				k != "__index" ) then
 
 				local NewParents = parents .. k .. "."
@@ -44,11 +44,11 @@ local function FindInHooks( base, name )
 
 		local head = true
 
-		if ( istable( t ) && b:lower():find( base:lower() ) ) then
+		if ( istable( t ) and b:lower():find( base:lower() ) ) then
 
 			for n, f in pairs( t ) do
 
-				if ( !name || tostring( n ):lower():find( tostring( name ):lower() ) ) then
+				if ( !name or tostring( n ):lower():find( tostring( name ):lower() ) ) then
 
 					if ( head ) then Msg( "\n\t", b, " hooks:\n" ) head = false end
 
@@ -79,35 +79,35 @@ local function Find( ply, command, arguments )
 	if ( !UTIL_IsCommandIssuedByServerAdmin( ply ) ) then return end
 
 	if ( !arguments[1] ) then
-	
+
 		if ( command:StartWith( "lua_findhooks" ) ) then
-			MsgN( "Usage: lua_findhooks <event name> [hook identifier]" );
+			MsgN( "Usage: lua_findhooks <event name> [hook identifier]" )
 			return
 		end
-	
-		MsgN( "Usage: lua_find <text>" );
+
+		MsgN( "Usage: lua_find <text>" )
 		return
 	end
 
 	if ( command:StartWith( "lua_findhooks" ) ) then
 
 		Msg( "Finding '", arguments[1], "' hooks ",
-			( arguments[2] && "with name '" .. arguments[2] .. "' " || "" ),
-			( SERVER && "SERVERSIDE" || "CLIENTSIDE" ), ":\n\n"
+			( arguments[2] and "with name '" .. arguments[2] .. "' " or "" ),
+			( SERVER and "SERVERSIDE" or "CLIENTSIDE" ), ":\n\n"
 		)
 		FindInHooks( arguments[1], arguments[2] )
 
 	else
 
-		Msg( "Finding '", arguments[1], "' ", ( SERVER && "SERVERSIDE" || "CLIENTSIDE" ), ":\n\n" )
+		Msg( "Finding '", arguments[1], "' ", ( SERVER and "SERVERSIDE" or "CLIENTSIDE" ), ":\n\n" )
 		FindInTable( _G, arguments[1] )
 		FindInTable( debug.getregistry(), arguments[1] )
 
 	end
 
-	Msg("\n\n")
+	Msg( "\n\n" )
 
-	if ( SERVER && IsValid(ply) && ply:IsPlayer() && ply:IsListenServerHost() ) then
+	if ( SERVER and IsValid( ply ) and ply:IsPlayer() and ply:IsListenServerHost() ) then
 		RunConsoleCommand( command .. "_cl", arguments[1], arguments[2] )
 	end
 

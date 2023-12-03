@@ -125,7 +125,7 @@ end
 --
 function meta:LoadGWENFile( filename, path )
 
-	local contents = file.Read( filename, path or "GAME" )
+	local contents = file.Read( filename, path || "GAME" )
 	if ( !contents ) then return end
 
 	self:LoadGWENString( contents )

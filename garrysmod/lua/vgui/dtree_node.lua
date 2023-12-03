@@ -576,7 +576,7 @@ end
 function PANEL:MoveToTop()
 
 	local parent = self:GetParentNode()
-	if ( !IsValid(parent) ) then return end
+	if ( !IsValid( parent ) ) then return end
 
 	self:GetParentNode():MoveChildTo( self, 1 )
 

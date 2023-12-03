@@ -79,10 +79,10 @@ concommand.Add( "gm_demo_to_video", function( ply, cmd, args )
 	inSize:AddChoice( sw .. " x " .. sh .. " (highest)", { sw, sh }, true )
 
 	sw, sh = sw * 0.66666, sh * 0.66666
-	inSize:AddChoice( math.ceil(sw) .. " x " .. math.ceil(sh), { sw, sh }, true )
-		
+	inSize:AddChoice( math.ceil( sw ) .. " x " .. math.ceil( sh ), { sw, sh }, true )
+
 	sw, sh = sw * 0.5, sh * 0.5
-	inSize:AddChoice( math.ceil(sw) .. " x " .. math.ceil(sh), { sw, sh }, true )
+	inSize:AddChoice( math.ceil( sw ) .. " x " .. math.ceil( sh ), { sw, sh }, true )
 
 	inFrameBlend.OnSelect = function( _, index, value, data ) settings.frameblend = data end
 	inFrameBlend:AddChoice( "Off", 1, true )
@@ -209,25 +209,25 @@ local function DrawOverlay()
 
 	local complete = engine.GetDemoPlaybackTick() / engine.GetDemoPlaybackTotalTicks()
 
-	local x = ScrW()*0.1
-	local y = ScrH()*0.8
-	local w = ScrW()*0.8
-	local h = ScrH()*0.05
+	local x = ScrW() * 0.1
+	local y = ScrH() * 0.8
+	local w = ScrW() * 0.8
+	local h = ScrH() * 0.05
 
 	surface.SetFont( "DermaDefault" )
 	surface.SetTextColor( 255, 255, 255, 255 )
 
 	surface.SetDrawColor( 0, 0, 0, 50 )
-	surface.DrawRect( x-3, y-3, w+6, h+6 )
+	surface.DrawRect( x-3, y-3, w + 6, h + 6 )
 
 	surface.SetDrawColor( 255, 255, 255, 200 )
-	surface.DrawRect( x-2, y-2, w+4, 2 )
-	surface.DrawRect( x-2, y, 2, h )
-	surface.DrawRect( x+w, y, 2, h )
-	surface.DrawRect( x-2, y+h, w+4, 2 )
+	surface.DrawRect( x -2, y-2, w + 4, 2 )
+	surface.DrawRect( x - 2, y, 2, h )
+	surface.DrawRect( x + w, y, 2, h )
+	surface.DrawRect( x-2, y + h, w + 4, 2 )
 
 	surface.SetDrawColor( 255, 255, 100, 150 )
-	surface.DrawRect( x+1, y+1, w * complete - 2, h - 2 )
+	surface.DrawRect( x + 1, y + 1, w * complete - 2, h - 2 )
 
 	surface.SetTextPos( x, y + h + 10 )
 	surface.DrawText( "Time Taken: " .. string.NiceTime( SysTime() - stats.starttime ) )
@@ -236,12 +236,12 @@ local function DrawOverlay()
 	surface.SetTextPos( x + w - tw, y + h + 10 )
 	surface.DrawText( "Time Left: " .. string.NiceTime( stats.timeremaining ) )
 
-	local demolength = "Demo Length: ".. string.FormattedTime( engine.GetDemoPlaybackTotalTicks() * engine.TickInterval(), "%2i:%02i" )
+	local demolength = "Demo Length: " .. string.FormattedTime( engine.GetDemoPlaybackTotalTicks() * engine.TickInterval(), "%2i:%02i" )
 	local tw, th = surface.GetTextSize( demolength )
 	surface.SetTextPos( x + w - tw, y - th - 10 )
 	surface.DrawText( demolength )
 
-	local info = "Rendering ".. math.floor( VideoSettings.width ) .. "x" .. math.floor( VideoSettings.height ) .. " at " .. math.floor( VideoSettings.fps ).. "fps "
+	local info = "Rendering " .. math.floor( VideoSettings.width ) .. "x" .. math.floor( VideoSettings.height ) .. " at " .. math.floor( VideoSettings.fps ) .. "fps "
 
 	local with = {}
 	if ( VideoSettings.dofsteps > 0 ) then table.insert( with, "DOF" ) end
@@ -254,13 +254,13 @@ local function DrawOverlay()
 		info = info .. "with " .. with
 	end
 
-	info = info .. " (rendering " .. (VideoSettings.frameblend*VideoSettings.dofsteps*VideoSettings.dofpasses) .. " frames per frame)"
+	info = info .. " (rendering " .. ( VideoSettings.frameblend * VideoSettings.dofsteps * VideoSettings.dofpasses ) .. " frames per frame)"
 
 	local tw, th = surface.GetTextSize( info )
 	surface.SetTextPos( x, y - th - 10 )
 	surface.DrawText( info )
 
-	local demotime = string.FormattedTime( (engine.GetDemoPlaybackTick() * engine.TickInterval()), "%2i:%02i" )
+	local demotime = string.FormattedTime( engine.GetDemoPlaybackTick() * engine.TickInterval(), "%2i:%02i" )
 	local tw, th = surface.GetTextSize( demotime )
 	if ( w * complete > tw + 20 ) then
 		surface.SetTextColor( 0, 0, 0, 200 )
@@ -268,7 +268,7 @@ local function DrawOverlay()
 		surface.DrawText( demotime )
 	end
 
-	local demotime = string.FormattedTime( ((engine.GetDemoPlaybackTotalTicks()-engine.GetDemoPlaybackTick()) * engine.TickInterval()), "%2i:%02i" )
+	local demotime = string.FormattedTime( ( engine.GetDemoPlaybackTotalTicks() - engine.GetDemoPlaybackTick() ) * engine.TickInterval(), "%2i:%02i" )
 	local tw, th = surface.GetTextSize( demotime )
 	if ( w - w * complete > tw + 20 ) then
 		surface.SetTextColor( 255, 255, 255, 200 )
@@ -297,7 +297,7 @@ hook.Add( "CaptureVideo", "CaptureDemoFrames", function()
 		local timetaken = SysTime() - stats.starttime
 		local fractioncomplete = engine.GetDemoPlaybackTotalTicks() / engine.GetDemoPlaybackTick()
 
-		stats.timeremaining = (timetaken * fractioncomplete) - timetaken
+		stats.timeremaining = ( timetaken * fractioncomplete ) - timetaken
 		if ( stats.timeremaining < 0 ) then stats.timeremaining = 0 end
 
 	end

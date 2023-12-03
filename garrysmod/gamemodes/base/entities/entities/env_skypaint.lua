@@ -45,7 +45,6 @@ function ENT:SetupDataTables()
 		self:SetBottomColor( Vector( 0.8, 1.0, 1.0 ) )
 		self:SetFadeBias( 1 )
 
-
 		self:SetSunNormal( Vector( 0.4, 0.0, 0.01 ) )
 		self:SetSunColor( Vector( 0.2, 0.1, 0.0 ) )
 		self:SetSunSize( 2.0 )
@@ -92,9 +91,9 @@ function ENT:Think()
 		-- so this closure only gets called once - even if it fails
 		self.EnvSun = false
 
-		local list = ents.FindByClass( "env_sun" )
-		if ( #list > 0 ) then
-			self.EnvSun = list[1]
+		local sunlist = ents.FindByClass( "env_sun" )
+		if ( #sunlist > 0 ) then
+			self.EnvSun = sunlist[1]
 		end
 
 	end
@@ -115,11 +114,9 @@ function ENT:Think()
 	--
 	-- Become the active sky again if we're not already
 	--
-	if ( CLIENT && g_SkyPaint != self ) then
+	if ( CLIENT && g_SkyPaint != self && !IsValid( g_SkyPaint ) ) then
 
-		if ( !IsValid( g_SkyPaint ) ) then
-			g_SkyPaint = self
-		end
+		g_SkyPaint = self
 
 	end
 

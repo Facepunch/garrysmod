@@ -39,11 +39,11 @@ hook.Add( "PopulateMenuBar", "DisplayOptions_MenuBar", function( menubar )
 
 	m:AddCVar( "#menubar.drawing.showfps", "cl_showfps", "1", "0" )
 
-	local opt = m:AddCVar( "#menubar.drawing.minecraftify", "mat_showlowresimage", "1", "0", function() timer.Simple( 0.1, function() RunConsoleCommand( "mat_reloadallmaterials" ) end ) end )
-	InstallSVCheatsEnable( opt )
+	local opt_lri = m:AddCVar( "#menubar.drawing.minecraftify", "mat_showlowresimage", "1", "0", function() timer.Simple( 0.1, function() RunConsoleCommand( "mat_reloadallmaterials" ) end ) end )
+	InstallSVCheatsEnable( opt_lri )
 
-	local opt = m:AddCVar( "#menubar.drawing.wireframe", "mat_wireframe", "1", "0" )
-	InstallSVCheatsEnable( opt )
+	local opt_wf = m:AddCVar( "#menubar.drawing.wireframe", "mat_wireframe", "1", "0" )
+	InstallSVCheatsEnable( opt_wf )
 
 	m:AddSpacer()
 
@@ -70,7 +70,7 @@ hook.Add( "PopulateMenuBar", "NPCOptions_MenuBar", function( menubar )
 
 	local groupedWeps = {}
 	for _, v in pairs( list.Get( "NPCUsableWeapons" ) ) do
-		local cat = (v.category or ""):lower()
+		local cat = ( v.category or "" ):lower()
 		groupedWeps[ cat ] = groupedWeps[ cat ] or {}
 		groupedWeps[ cat ][ v.class ] = language.GetPhrase( v.title )
 	end
@@ -78,7 +78,7 @@ hook.Add( "PopulateMenuBar", "NPCOptions_MenuBar", function( menubar )
 	for group, items in SortedPairs( groupedWeps ) do
 		wpns:AddSpacer()
 		for class, title in SortedPairsByValue( items ) do
-			wpns:AddCVar( title,"gmod_npcweapon", class )
+			wpns:AddCVar( title, "gmod_npcweapon", class )
 		end
 	end
 

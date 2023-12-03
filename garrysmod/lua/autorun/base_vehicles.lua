@@ -69,7 +69,7 @@ if ( IsMounted( "ep2" ) ) then
 	}, "Jalopy" )
 end
 
-local Category = "Chairs"
+Category = "Chairs"
 
 local function HandleRollercoasterAnimation( vehicle, player )
 	return player:SelectWeightedSequence( ACT_GMOD_SIT_ROLLERCOASTER )
@@ -200,7 +200,7 @@ if ( IsMounted( "ep2" ) ) then
 		Members = {
 			HandleAnimation = HandleRollercoasterAnimation,
 		}
-	} , "Seat_Jalopy" )
+	}, "Seat_Jalopy" )
 end
 
 -- PhoeniX-Storms Vehicles

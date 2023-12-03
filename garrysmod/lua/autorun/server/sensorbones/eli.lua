@@ -1,22 +1,22 @@
 --
 -- These are the physics bone numbers
 --
-local PLVS		= 0;	
-local LTHY		= 1;
-local SPNE		= 2;
-local RSLD		= 3;
-local RARM		= 4;
-local LSLD		= 5;
-local LARM		= 6;
-local LHND		= 7;
-local HEAD		= 8;
-local RHND		= 9;
-local RTHY		= 10;
-local RCLF		= 11;
-local LCLF		= 12;
-local RFOT		= 13;
+local PLVS		= 0
+local LTHY		= 1
+local SPNE		= 2
+local RSLD		= 3
+local RARM		= 4
+local LSLD		= 5
+local LARM		= 6
+local LHND		= 7
+local HEAD		= 8
+local RHND		= 9
+local RTHY		= 10
+local RCLF		= 11
+local LCLF		= 12
+local RFOT		= 13
 
-local Builder = 
+local Builder =
 {
 	PrePosition = function( self, sensor )
 
@@ -36,14 +36,14 @@ local Builder =
 		sensor[SENSORBONE.HIP_LEFT]:Add( spinestretch * 0.3 )
 		sensor[SENSORBONE.HIP_RIGHT]:Add( spinestretch * 0.3 )
 
-		sensor[SENSORBONE.KNEE_RIGHT]:Add( (sensor[SENSORBONE.HIP_RIGHT] - sensor[SENSORBONE.KNEE_RIGHT]) * 0.2 )
-		sensor[SENSORBONE.KNEE_LEFT]:Add( (sensor[SENSORBONE.HIP_LEFT] - sensor[SENSORBONE.KNEE_LEFT]) * 0.2 )
+		sensor[SENSORBONE.KNEE_RIGHT]:Add( ( sensor[SENSORBONE.HIP_RIGHT] - sensor[SENSORBONE.KNEE_RIGHT] ) * 0.2 )
+		sensor[SENSORBONE.KNEE_LEFT]:Add( ( sensor[SENSORBONE.HIP_LEFT] - sensor[SENSORBONE.KNEE_LEFT] ) * 0.2 )
 
 	end,
 	--
 	-- Which on the sensor should we use for which ones on our model
 	--
-	PositionTable = 
+	PositionTable =
 	{
 		[PLVS]	= SENSORBONE.HIP,
 		[RSLD]	= SENSORBONE.SHOULDER_RIGHT,
@@ -64,7 +64,7 @@ local Builder =
 	--
 	-- Which bones should we use to determine our bone angles
 	--
-	AnglesTable = 
+	AnglesTable =
 	{
 		[PLVS]	= { from = LTHY, to = RTHY, up = "hips_fwd" },
 		[SPNE]	= { from = HEAD, to = SPNE, up = "chest_rgt" },
@@ -86,7 +86,7 @@ local Builder =
 	--
 	Complete = function( self, player, sensor, rotation, pos, ang )
 
-		pos[SPNE] = LerpVector( 0.4, pos[SPNE], pos[HEAD] );
+		pos[SPNE] = LerpVector( 0.4, pos[SPNE], pos[HEAD] )
 
 		-- Feet are insanely spazzy, so we lock the feet to the angle of the calf
 		ang[RFOT]	= ang[RCLF]:Right():AngleEx( ang[RCLF]:Up() ) + Angle( 20, 0, 0 )
@@ -94,10 +94,10 @@ local Builder =
 	end,
 
 	-- Should this entity use this builder?
-	IsApplicable = function( self, ent ) 
-		
-		return ent:GetModel():EndsWith( "models/eli.mdl" );
-	
+	IsApplicable = function( self, ent )
+
+		return ent:GetModel():EndsWith( "models/eli.mdl" )
+
 	end,
 }
 

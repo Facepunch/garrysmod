@@ -67,7 +67,9 @@ local function SetTrails( ply, ent, data )
 	return trail_entity
 
 end
-duplicator.RegisterEntityModifier( "trail", SetTrails )
+if ( SERVER ) then
+	duplicator.RegisterEntityModifier( "trail", SetTrails )
+end
 
 function TOOL:LeftClick( trace )
 

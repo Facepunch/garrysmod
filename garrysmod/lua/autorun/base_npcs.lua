@@ -221,18 +221,18 @@ if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/antlion_worker.pcf" )
 
 	AddNPC( {
-			Name = "Antlion Guardian",
-			Class = "npc_antlionguard",
-			Category = Category,
-			KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
-			Material = "Models/antlion_guard/antlionGuard2"
+		Name = "Antlion Guardian",
+		Class = "npc_antlionguard",
+		Category = Category,
+		KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
+		Material = "Models/antlion_guard/antlionGuard2"
 	}, "npc_antlionguardian" )
 
 	AddNPC( {
 		Class = "npc_antlion_grub",
 		Category = Category,
-			NoDrop = true,
-			Offset = 1
+		NoDrop = true,
+		Offset = 1
 	} )
 
 	AddNPC( {

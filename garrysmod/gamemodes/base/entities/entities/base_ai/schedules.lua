@@ -127,7 +127,7 @@ end
 	Name: StartTask - called once on starting task
 -----------------------------------------------------------]]
 function ENT:StartTask( task )
-	task:Start( self.Entity )
+	task:Start( self )
 end
 
 --[[---------------------------------------------------------
@@ -136,7 +136,7 @@ end
 			the task is finished.
 -----------------------------------------------------------]]
 function ENT:RunTask( task )
-	task:Run( self.Entity )
+	task:Run( self )
 end
 
 --[[---------------------------------------------------------
@@ -195,5 +195,12 @@ function ENT:DoingEngineSchedule()	return self.bDoingEngineSchedule end
 function ENT:OnCondition( iCondition )
 
 	--Msg( self, " Condition: ", iCondition, " - ", self:ConditionName(iCondition), "\n" )
+
+end
+
+function ENT:TranslateActivity( act )
+
+	-- Return a value to translate the activity to a new one
+	-- if ( act == ACT_WALK ) then return ACT_RUN end
 
 end

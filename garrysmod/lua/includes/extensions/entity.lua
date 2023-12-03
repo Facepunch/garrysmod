@@ -5,11 +5,11 @@ local meta = FindMetaTable( "Entity" )
 if ( !meta ) then return end
 
 function meta:GetShouldPlayPickupSound()
-	return self.m_bPlayPickupSound || false
+	return self.m_bPlayPickupSound or false
 end
 
 function meta:SetShouldPlayPickupSound( bPlaySound )
-	self.m_bPlayPickupSound = tobool( bPlaySound ) || false
+	self.m_bPlayPickupSound = tobool( bPlaySound ) or false
 end
 
 --
@@ -28,8 +28,8 @@ function meta:__index( key )
 	--
 	local tab = self:GetTable()
 	if ( tab ) then
-		local val = tab[ key ]
-		if ( val != nil ) then return val end
+		local tabval = tab[ key ]
+		if ( tabval != nil ) then return tabval end
 	end
 
 	--
@@ -67,7 +67,7 @@ if ( SERVER ) then
 	end
 
 	function meta:GetCreator()
-		return self.m_PlayerCreator || NULL
+		return self.m_PlayerCreator or NULL
 	end
 
 end
@@ -136,7 +136,7 @@ end
 -----------------------------------------------------------]]
 local function DoDieFunction( ent )
 
-	if ( !ent || !ent.OnDieFunctions ) then return end
+	if ( !ent or !ent.OnDieFunctions ) then return end
 
 	for k, v in pairs( ent.OnDieFunctions ) do
 
@@ -196,7 +196,7 @@ end
 function meta:GetChildBones( bone )
 
 	local bonecount = self:GetBoneCount()
-	if ( bonecount == 0 || bonecount < bone ) then return end
+	if ( bonecount == 0 or bonecount < bone ) then return end
 
 	local bones = {}
 
@@ -221,10 +221,10 @@ function meta:InstallDataTable()
 	local typetable = {}
 	local datatable = {}
 	local keytable = {}
-	local meta = {}
+	local dtmeta = {}
 	local editing = {}
 
-	meta.__index = function ( ent, key )
+	dtmeta.__index = function ( ent, key )
 
 		local dt = datatable[ key ]
 		if ( dt == nil ) then return end
@@ -233,7 +233,7 @@ function meta:InstallDataTable()
 
 	end
 
-	meta.__newindex = function( ent, key, value )
+	dtmeta.__newindex = function( ent, key, value )
 
 		local dt = datatable[ key ]
 		if ( dt == nil ) then return end
@@ -241,24 +241,24 @@ function meta:InstallDataTable()
 		dt.SetFunc( self, dt.index, value )
 
 	end
-	
+
 	local function FindUnusedIndex( typename )
-	
+
 		local tbl = typetable[ typename ]
 		if ( !tbl ) then return 0 end
-		
-		for i=0, 31 do
+
+		for i = 0, 31 do
 			if ( !tbl[i] ) then return i end
 		end
-		
+
 	end
-	
-	self.IsDTVarSlotUsed = function( self, typename, index )
-	
+
+	self.IsDTVarSlotUsed = function( ent, typename, index )
+
 		local tbl = typetable[ typename ]
-		if ( !tbl || !tbl[index] ) then return false end
+		if ( !tbl or !tbl[index] ) then return false end
 		return true
-		
+
 	end
 
 	self.DTVar = function( ent, typename, index, name )
@@ -267,13 +267,13 @@ function meta:InstallDataTable()
 			name = index
 			index = FindUnusedIndex( typename )
 		elseif ( !index && isstring( name ) ) then
-			index = FindUnusedIndex(typename)
+			index = FindUnusedIndex( typename )
 		end
 
 		local SetFunc = ent[ "SetDT" .. typename ]
 		local GetFunc = ent[ "GetDT" .. typename ]
 
-		if ( !SetFunc || !GetFunc ) then
+		if ( !SetFunc or !GetFunc ) then
 			MsgN( "Couldn't addvar ", name, " - type ", typename, " is invalid!" )
 			return
 		end
@@ -286,8 +286,8 @@ function meta:InstallDataTable()
 			typename = typename,
 			Notify = {}
 		}
-		
-		typetable[ typename ] = typetable[ typename ] || {}
+
+		typetable[ typename ] = typetable[ typename ] or {}
 		typetable[ typename ][ index ] = data
 		datatable[ name ] = data
 
@@ -315,7 +315,7 @@ function meta:InstallDataTable()
 
 	end
 
-	self.SetupKeyValue = function( ent, keyname, type, setfunc, getfunc, other_data )
+	self.SetupKeyValue = function( ent, keyname, kvtype, setfunc, getfunc, other_data )
 
 		keyname = keyname:lower()
 
@@ -323,7 +323,7 @@ function meta:InstallDataTable()
 			KeyName		= keyname,
 			Set			= setfunc,
 			Get			= getfunc,
-			Type		= type
+			Type		= kvtype
 		}
 
 		if ( other_data ) then
@@ -343,12 +343,12 @@ function meta:InstallDataTable()
 	end
 
 	self.CallDTVarProxies = function( ent, typename, index, newVal )
-		
-		local t = typetable[ typename ] && typetable[ typename ][ index ] || nil
+
+		local t = typetable[ typename ] && typetable[ typename ][ index ] or nil
 		if ( t ) then
 			CallProxies( ent, t.Notify, t.name, t.GetFunc( ent, index ), newVal )
 		end
-		
+
 	end
 
 	self.NetworkVar = function( ent, typename, index, name, other_data )
@@ -363,13 +363,13 @@ function meta:InstallDataTable()
 
 		local t = ent.DTVar( ent, typename, index, name )
 
-		ent[ "Set" .. name ] = function( self, value )
-			CallProxies( ent, t.Notify, name, t.GetFunc( self, index ), value )
-			t.SetFunc( self, index, value )
+		ent[ "Set" .. name ] = function( selfent, value )
+			CallProxies( ent, t.Notify, name, t.GetFunc( selfent, index ), value )
+			t.SetFunc( selfent, index, value )
 		end
 
-		ent[ "Get" .. name ] = function( self )
-			return t.GetFunc( self, index )
+		ent[ "Get" .. name ] = function( selfent )
+			return t.GetFunc( selfent, index )
 		end
 
 		if ( !other_data ) then return end
@@ -413,14 +413,14 @@ function meta:InstallDataTable()
 		local t = ent.DTVar( ent, typename, index, name )
 		t.element = element
 
-		ent[ "Set" .. name ] = function( self, value )
-			local old = t.GetFunc( self, index )
+		ent[ "Set" .. name ] = function( selfent, value )
+			local old = t.GetFunc( selfent, index )
 			old[ element ] = value
-			t.SetFunc( self, index, old )
+			t.SetFunc( selfent, index, old )
 		end
 
-		ent[ "Get" .. name ] = function( self )
-			return t.GetFunc( self, index )[ element ]
+		ent[ "Get" .. name ] = function( selfent )
+			return t.GetFunc( selfent, index )[ element ]
 		end
 
 		if ( !other_data ) then return end
@@ -434,7 +434,7 @@ function meta:InstallDataTable()
 
 	end
 
-	self.SetNetworkKeyValue = function( self, key, value )
+	self.SetNetworkKeyValue = function( ent, key, value )
 
 		key = key:lower()
 
@@ -444,19 +444,19 @@ function meta:InstallDataTable()
 		local v = util.StringToType( value, k.Type )
 		if ( v == nil ) then return end
 
-		k.Set( self, v )
+		k.Set( ent, v )
 		return true
 
 	end
 
-	self.GetNetworkKeyValue = function( self, key )
+	self.GetNetworkKeyValue = function( ent, key )
 
 		key = key:lower()
 
 		local k = keytable[ key ]
 		if ( !k ) then return end
 
-		return k.Get( self )
+		return k.Get( ent )
 
 	end
 
@@ -503,7 +503,7 @@ function meta:InstallDataTable()
 			if ( tab[ k ] == nil ) then continue end
 
 			-- Support old saves/dupes with incorrectly saved data
-			if ( v.element && ( isangle( tab[ k ] ) || isvector( tab[ k ] ) ) ) then
+			if ( v.element && ( isangle( tab[ k ] ) or isvector( tab[ k ] ) ) ) then
 				tab[ k ] = tab[ k ][ v.element ]
 			end
 
@@ -518,7 +518,7 @@ function meta:InstallDataTable()
 
 	end
 
-	setmetatable( self.dt, meta )
+	setmetatable( self.dt, dtmeta )
 
 	--
 	-- In sandbox the client can edit certain values on certain entities
@@ -532,7 +532,7 @@ function meta:InstallDataTable()
 	--
 	-- Called serverside it will set the value.
 	--
-	self.EditValue = function( self, variable, value )
+	self.EditValue = function( ent, variable, value )
 
 		if ( !isstring( variable ) ) then return end
 		if ( !isstring( value ) ) then return end
@@ -544,7 +544,7 @@ function meta:InstallDataTable()
 		if ( CLIENT ) then
 
 			net.Start( "editvariable" )
-				net.WriteEntity( self )
+				net.WriteEntity( ent )
 				net.WriteString( variable )
 				net.WriteString( value )
 			net.SendToServer()
@@ -556,7 +556,7 @@ function meta:InstallDataTable()
 		--
 		if ( SERVER ) then
 
-			self:SetNetworkKeyValue( variable, value )
+			ent:SetNetworkKeyValue( variable, value )
 
 		end
 
@@ -574,7 +574,7 @@ if ( SERVER ) then
 
 		if ( !IsValid( ent ) ) then return end
 		if ( !isfunction( ent.GetEditingData ) ) then return end
-		if ( ent.AdminOnly && !( client:IsAdmin() || game.SinglePlayer() ) ) then return end
+		if ( ent.AdminOnly && !( client:IsAdmin() or game.SinglePlayer() ) ) then return end
 
 		local key = net.ReadString()
 
@@ -588,11 +588,11 @@ if ( SERVER ) then
 	end )
 
 	function meta:GetUnFreezable()
-		return self.m_bUnFreezable || false
+		return self.m_bUnFreezable or false
 	end
 
 	function meta:SetUnFreezable( bFreeze )
-		self.m_bUnFreezable = tobool( bFreeze ) || false
+		self.m_bUnFreezable = tobool( bFreeze ) or false
 	end
 
 end

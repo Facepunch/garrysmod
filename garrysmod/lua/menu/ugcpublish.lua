@@ -168,10 +168,10 @@ function PANEL:Setup( ugcType, file, imageFile, handler )
 				self:CheckInput()
 
 				local num = 0
-				for k, v in pairs( s:GetParent():GetChildren() ) do
-					if ( v:GetChecked() ) then num = num + 1 end
-					if ( v == s || !val ) then continue end
-					v:SetValue( false ) -- Validate that only 1 is selected
+				for id, pnl in pairs( s:GetParent():GetChildren() ) do
+					if ( pnl:GetChecked() ) then num = num + 1 end
+					if ( pnl == s or !val ) then continue end
+					pnl:SetValue( false ) -- Validate that only 1 is selected
 				end
 				if ( !val && num == 0 ) then s:SetValue( true ) end -- Don't allow to unselect the only 1 selected
 			end
@@ -201,11 +201,11 @@ function PANEL:UpdateWorkshopItems()
 
 	steamworks.GetList( "mine", { self.ugcType }, 0, 9999, 0, "1", function( data )
 		for i, id in pairs( data.results ) do
-			steamworks.FileInfo( id, function( data )
-				local a = self.AddonList:AddLine( data.title )
+			steamworks.FileInfo( id, function( info )
+				local a = self.AddonList:AddLine( info.title )
 				a:SetTooltip( "#ugc_upload.rightclickopen" )
 				a.WorkshopID = id
-				a.WorkshopData = data
+				a.WorkshopData = info
 				a.OnRightClick = function( s )
 					if ( !s.WorkshopID ) then return end
 
@@ -306,7 +306,7 @@ function PANEL:DoPublish()
 	local err = self.ugcHandler:FinishPublish( self.ugcFile, self.ugcImage, self.Title:GetText(), self.Description:GetText(), ChosenTag, {
 		WorkshopID = workshopUpdateID,
 		ChangeNotes = self.ChangeNotes:GetText(),
-		Callback = function( wsid, err ) self:OnPublishFinished( wsid, err ) end
+		Callback = function( wsid, erro ) self:OnPublishFinished( wsid, erro ) end
 	} )
 	if ( err ) then self:DisplayError( err ) end
 
