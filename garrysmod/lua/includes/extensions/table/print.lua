@@ -106,7 +106,7 @@ local function MsgKey( indent, k )
 end
 
 function table.Print( tbl, lvl, already )
-	already = already or {[ tbl ] = true}
+	already = already or { [ tbl ] = true }
 	lvl = lvl or 1
 
 	local len = 0
@@ -146,7 +146,7 @@ function table.Print( tbl, lvl, already )
 	local table_indent = string.rep( "\t", lvl - 1 )
 	local i = 1
 
-	MsgC(red, len == 1 and "{ " or "{\n")
+	MsgC( red, len == 1 and "{ " or "{\n" )
 
 	for k, v in iter( tbl ) do
 		if ( isSeq ) then
@@ -169,9 +169,9 @@ function table.Print( tbl, lvl, already )
 
 		if ( len ~= 1 ) then
 			if i == len then
-				Msg("\n")
+				Msg( "\n" )
 			else
-				MsgC(red, ",\n")
+				MsgC( red, ",\n" )
 			end
 		end
 
@@ -179,9 +179,9 @@ function table.Print( tbl, lvl, already )
 	end
 
 	if ( len == 1 ) then
-		MsgC(" ", red, "}")
+		MsgC( " ", red, "}" )
 	else
-		MsgC(table_indent, red, "}")
+		MsgC( table_indent, red, "}" )
 	end
 
 	if ( lvl == 1 ) then Msg("\n") end
