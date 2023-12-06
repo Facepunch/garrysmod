@@ -93,7 +93,7 @@ local function MsgValue( v )
 		local info = debug.getinfo( v )
 		local defined = info.linedefined == info.lastlinedefined and info.linedefined or info.linedefined .. "-" .. info.lastlinedefined
 
-		MsgC( purple, v, dark, " --[[ ", info.short_src, ":", defined)
+		MsgC( purple, v, dark, " --[[ ", info.short_src, ":", defined, " ]]" )
 	else
 		MsgC( purple, v )
 	end
