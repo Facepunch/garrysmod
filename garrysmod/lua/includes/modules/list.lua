@@ -7,23 +7,19 @@ module( "list" )
 
 local Lists = {}
 
-function GetStored( listid )
-	return Lists[ listid ]
+function Get( listid )
+	return table.Copy( GetForEdit( listid ) )
 end
 
-function GetForEdit( listid )
+function GetForEdit( listid, nocreate )
 	local list = Lists[ listid ]
 
-	if ( list == nil ) then
+	if ( !nocreate && list == nil ) then
 		list = {}
 		Lists[ listid ] = list
 	end
 
 	return list
-end
-
-function Get( listid )
-	return table.Copy( GetForEdit( listid ) )
 end
 
 function GetTable()
