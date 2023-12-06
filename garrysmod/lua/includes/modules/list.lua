@@ -8,7 +8,7 @@ module( "list" )
 local Lists = {}
 
 function Get( listid )
-	return table.Copy( GetForEdit( listid ) )
+	return table.Copy( GetForEdit( listid, false ) )
 end
 
 function GetForEdit( listid, nocreate )
@@ -27,11 +27,11 @@ function GetTable()
 end
 
 function Set( listid, key, val )
-	GetForEdit( listid )[ key ] = val
+	GetForEdit( listid, false )[ key ] = val
 end
 
 function Add( listid, val )
-	return table.insert( GetForEdit( listid ), val )
+	return table.insert( GetForEdit( listid, false ), val )
 end
 
 function Contains( listid, val )
