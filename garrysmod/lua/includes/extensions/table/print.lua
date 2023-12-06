@@ -3,6 +3,7 @@ local red = Color( 212, 53, 109 )
 local yellow = Color( 212, 202, 107 )
 local purple = Color( 157, 110, 212 )
 local cyan = Color( 102, 217, 239 )
+local dark = Color( 105, 105, 105 )
 
 local IsValidKeyName
 
@@ -22,7 +23,7 @@ end
 
 local MsgC = MsgC
 
-if SERVER then
+if SERVER and system.IsLinux() then
 	function MsgC( ... ) -- polyfill to make MsgC works serverside
 		for _, v in ipairs( { ... } ) do
 			if ( IsColor( v ) ) then
@@ -88,6 +89,11 @@ local function MsgValue( v )
 		end
 
 		MsgC( white, " )" )
+	elseif isfunction( v ) then
+		local info = debug.getinfo( v )
+		local defined = info.linedefined == info.lastlinedefined and info.linedefined or info.linedefined .. "-" .. info.lastlinedefined
+
+		MsgC( purple, v, dark, " --[[ ", info.short_src, ":", defined)
 	else
 		MsgC( purple, v )
 	end
@@ -184,5 +190,5 @@ function table.Print( tbl, lvl, already )
 		MsgC( table_indent, red, "}" )
 	end
 
-	if ( lvl == 1 ) then Msg("\n") end
+	if ( lvl == 1 ) then Msg( "\n" ) end
 end
