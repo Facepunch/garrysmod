@@ -102,7 +102,7 @@ L.disg_help2 = "Menüyü kullanmadan kılık değiştirmek için Numpad Enter tu
 -- Radar tab in equipment menu
 L.radar_name = "Radar"
 L.radar_menutitle = "Radar kontrolü"
-L.radar_not_ owned = "Radar taşımıyorsun!"
+L.radar_not_owned = "Radar taşımıyorsun!"
 L.radar_scan = "Tarama yap"
 L.radar_auto = "Otomatik tekrarlı tarama"
 L.radar_help = "Tarama sonuçları {num} saniye boyunca gösterilir, bundan sonra Radar yeniden yüklenir ve tekrar kullanılabilir."
