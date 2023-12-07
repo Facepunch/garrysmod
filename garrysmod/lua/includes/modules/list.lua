@@ -26,20 +26,20 @@ function GetTable()
 	return table.GetKeys( Lists )
 end
 
-function Set( listid, key, val )
-	GetForEdit( listid, false )[ key ] = val
+function Set( listid, key, value )
+	GetForEdit( listid, false )[ key ] = value
 end
 
-function Add( listid, val )
-	return table.insert( GetForEdit( listid, false ), val )
+function Add( listid, value )
+	return table.insert( GetForEdit( listid, false ), value )
 end
 
-function Contains( listid, val )
+function Contains( listid, value )
 	local list = Lists[ listid ]
 	if ( list == nil ) then return false end
 
 	for k, v in pairs( list ) do
-		if ( v == val ) then return true end
+		if ( v == value ) then return true end
 	end
 
 	return false
