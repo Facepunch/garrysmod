@@ -120,7 +120,6 @@ end
 function PANEL:LayoutTiles()
 
 	local StartLine = 1
-	local LastX = 1
 	local tilesize = self:GetBaseSize()
 	local MaxWidth = math.floor( ( self:GetWide() - self:GetBorder() * 2 + self:GetSpaceX() ) / ( tilesize + self:GetSpaceX() ) )
 

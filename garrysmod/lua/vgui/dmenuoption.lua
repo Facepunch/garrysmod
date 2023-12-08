@@ -121,7 +121,7 @@ function PANEL:PerformLayout( w, h )
 	self:SizeToContents()
 	self:SetWide( self:GetWide() + 30 )
 
-	local w = math.max( self:GetParent():GetWide(), self:GetWide() )
+	w = math.max( self:GetParent():GetWide(), self:GetWide() )
 
 	self:SetSize( w, 22 )
 

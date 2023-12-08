@@ -396,7 +396,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 	local ctrl = vgui.Create( ClassName )
 	ctrl:SetText( "Edit Me!" )
 	ctrl:SetWide( 150 )
-	ctrl.OnEnter = function( self ) Derma_Message( "You Typed: " .. self:GetValue() ) end
+	ctrl.OnEnter = function( slf ) Derma_Message( "You Typed: " .. slf:GetValue() ) end
 
 	PropertySheet:AddSheet( ClassName, ctrl, nil, true, true )
 

@@ -24,13 +24,6 @@ local function UnAnchorValue( wang, button, mcode )
 
 end
 
--- ScrollValue function is internally used for "scrolling" the value using mouse wheel
-local function ScrollValue( wang, button, delta )
-
-	wang:SetValue( wang:GetValue() + delta )
-
-end
-
 function PANEL:Init()
 
 	self:SetDecimals( 2 )

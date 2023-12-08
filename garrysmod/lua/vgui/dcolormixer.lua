@@ -45,7 +45,7 @@ function PANEL:Init()
 	self.Palette:DockMargin( 0, 8, 0, 0 )
 	self.Palette:Reset()
 	self.Palette.DoClick = function( ctrl, color, btn )
-		self:SetColor( Color( color.r, color.g, color.b, self:GetAlphaBar() && color.a or 255 ) )
+		self:SetColor( Color( color.r, color.g, color.b, self:GetAlphaBar() and color.a or 255 ) )
 	end
 	self.Palette.OnRightClickButton = function( ctrl, btn )
 		local m = DermaMenu()
@@ -197,8 +197,8 @@ end
 
 function PANEL:PerformLayout( w, h )
 
-	local h, s, v = ColorToHSV( self.HSV:GetBaseRGB() )
-	self.RGB.LastY = ( 1 - h / 360 ) * self.RGB:GetTall()
+	local hue, s, v = ColorToHSV( self.HSV:GetBaseRGB() )
+	self.RGB.LastY = ( 1 - hue / 360 ) * self.RGB:GetTall()
 
 end
 
@@ -211,8 +211,8 @@ end
 
 function PANEL:SetColor( color )
 
-	local h, s, v = ColorToHSV( color )
-	self.RGB.LastY = ( 1 - h / 360 ) * self.RGB:GetTall()
+	local hue, s, v = ColorToHSV( color )
+	self.RGB.LastY = ( 1 - hue / 360 ) * self.RGB:GetTall()
 
 	self.HSV:SetColor( color )
 
@@ -342,7 +342,7 @@ function PANEL:DoConVarThink( convar )
 
 	local fValue = GetConVarNumber( convar )
 	local fOldValue = self[ "ConVarOld" .. convar ]
-	if ( fOldValue && fValue == fOldValue ) then return fOldValue, false end
+	if ( fOldValue and fValue == fOldValue ) then return fOldValue, false end
 
 	self[ "ConVarOld" .. convar ] = fValue
 

@@ -66,7 +66,7 @@ function PANEL:AddColumn( strName, iPosition )
 			ErrorNoHaltWithStack( "Attempted to insert column at invalid position ", iPosition )
 			return
 		end
-	
+
 		if ( IsValid( self.Columns[ iPosition ] ) ) then
 			ErrorNoHaltWithStack( "Attempted to insert duplicate column." )
 			return
@@ -581,7 +581,7 @@ function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
 
-	local Col1 = ctrl:AddColumn( "Address" )
+	ctrl:AddColumn( "Address" )
 	local Col2 = ctrl:AddColumn( "Port" )
 
 	Col2:SetFixedWidth( 30 )

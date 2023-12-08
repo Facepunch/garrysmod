@@ -115,7 +115,7 @@ function PANEL:PerformLayout( w, h )
 			self.m_Image:SetPos( 4, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
 		else
 			self.m_Image:SetPos( 2 + ( targetSize - self.m_Image:GetWide() ) * 0.5, ( self:GetTall() - self.m_Image:GetTall() ) * 0.5 )
-		end 
+		end
 
 		self:SetTextInset( self.m_Image:GetWide() + 16, 0 )
 
@@ -127,7 +127,7 @@ end
 
 function PANEL:SetConsoleCommand( strName, strArgs )
 
-	self.DoClick = function( self, val )
+	self.DoClick = function( slf, val )
 		RunConsoleCommand( strName, strArgs )
 	end
 
@@ -154,7 +154,7 @@ PANEL = table.Copy( PANEL )
 
 function PANEL:SetActionFunction( func )
 
-	self.DoClick = function( self, val ) func( self, "Command", 0, 0 ) end
+	self.DoClick = function( slf, val ) func( slf, "Command", 0, 0 ) end
 
 end
 

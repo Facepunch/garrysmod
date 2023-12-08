@@ -19,7 +19,7 @@ function SWEP:ShouldDropOnDie()
 end
 
 -- Console Command to switch weapon/toolmode
-function CC_GMOD_Tool( ply, command, arguments )
+local function CC_GMOD_Tool( ply, command, arguments )
 
 	local targetMode = arguments[1]
 

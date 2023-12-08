@@ -66,7 +66,6 @@ function PANEL:PerformLayout()
 	self.m_iRowHeight = math.floor( self.m_iRowHeight )
 	self.m_iColWide = math.floor( self.m_iColWide )
 
-
 	for k, panel in pairs( self.Items ) do
 
 		if ( !panel:IsVisible() ) then continue end
@@ -86,7 +85,7 @@ end
 
 function PANEL:SortByMember( key, desc )
 
-	if ( desc == nil ) then 
+	if ( desc == nil ) then
 		desc = true
 	end
 

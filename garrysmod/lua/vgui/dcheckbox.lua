@@ -22,7 +22,7 @@ end
 
 function PANEL:SetValue( val )
 
-	if ( tonumber( val ) == 0 ) then val = 0 end // Tobool bugs out with "0.00"
+	if ( tonumber( val ) == 0 ) then val = 0 end -- Tobool bugs out with "0.00"
 	val = tobool( val )
 
 	self:SetChecked( val )

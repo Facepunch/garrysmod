@@ -102,13 +102,13 @@ function PANEL:SetHTML( html )
 
 	end
 
-	local OldFunc = self.HTML.OnFinishLoadingDocument
+	local OldFunc2 = self.HTML.OnFinishLoadingDocument
 	self.HTML.OnFinishLoadingDocument = function( panel, url )
 
 		self:FinishedLoading()
 
-		if ( OldFunc ) then
-			OldFunc( panel, url )
+		if ( OldFunc2 ) then
+			OldFunc2( panel, url )
 		end
 
 	end

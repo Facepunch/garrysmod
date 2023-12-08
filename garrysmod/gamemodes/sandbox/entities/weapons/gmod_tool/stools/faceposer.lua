@@ -68,8 +68,6 @@ function TOOL:Think()
 
 	for i = 0, FlexNum do
 
-		local Name = ent:GetFlexName( i )
-
 		local num = self:GetClientNumber( "flex" .. i )
 		ent:SetFlexWeight( i, num )
 
@@ -150,7 +148,7 @@ end
 
 if ( SERVER ) then
 
-	function CC_Face_Randomize( pl, command, arguments )
+	local function CC_Face_Randomize( pl, command, arguments )
 
 		for i = 0, MAXSTUDIOFLEXCTRL do
 			local num = math.Rand( 0, 1 )

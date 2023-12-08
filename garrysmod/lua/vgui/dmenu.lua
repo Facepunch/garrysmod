@@ -152,23 +152,23 @@ end
 
 function PANEL:PerformLayout( w, h )
 
-	local w = self:GetMinimumWidth()
+	local minW = self:GetMinimumWidth()
 
 	-- Find the widest one
 	for k, pnl in ipairs( self:GetCanvas():GetChildren() ) do
 
 		pnl:InvalidateLayout( true )
-		w = math.max( w, pnl:GetWide() )
+		minW = math.max( minW, pnl:GetWide() )
 
 	end
 
-	self:SetWide( w )
+	self:SetWide( minW )
 
 	local y = 0 -- for padding
 
 	for k, pnl in ipairs( self:GetCanvas():GetChildren() ) do
 
-		pnl:SetWide( w )
+		pnl:SetWide( minW )
 		pnl:SetPos( 0, y )
 		pnl:InvalidateLayout( true )
 
@@ -182,7 +182,7 @@ function PANEL:PerformLayout( w, h )
 
 	derma.SkinHook( "Layout", "Menu", self )
 
-	DScrollPanel.PerformLayout( self, w, h )
+	DScrollPanel.PerformLayout( self, minW, h )
 
 end
 

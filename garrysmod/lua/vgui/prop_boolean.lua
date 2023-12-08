@@ -18,25 +18,25 @@ function PANEL:Setup( vars )
 	ctrl:SetPos( 0, 2 )
 
 	-- Return true if we're editing
-	self.IsEditing = function( self )
+	self.IsEditing = function( slf )
 		return ctrl:IsEditing()
 	end
 
 	-- Enabled/disabled support
-	self.IsEnabled = function( self )
+	self.IsEnabled = function( slf )
 		return ctrl:IsEnabled()
 	end
-	self.SetEnabled = function( self, b )
+	self.SetEnabled = function( slf, b )
 		ctrl:SetEnabled( b )
 	end
 
 	-- Set the value
-	self.SetValue = function( self, val )
+	self.SetValue = function( slf, val )
 		ctrl:SetChecked( tobool( val ) )
 	end
 
 	-- Alert row that value changed
-	ctrl.OnChange = function( ctrl, newval )
+	ctrl.OnChange = function( slf, newval )
 
 		if ( newval ) then newval = 1 else newval = 0 end
 

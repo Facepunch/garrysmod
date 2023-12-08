@@ -70,9 +70,9 @@ function PANEL:ApplySchemeSettings()
 
 	self.TextArea:SetTextColor( col )
 
-	local col = table.Copy( col )
-	col.a = 100 -- Fade it out a bit so it looks right
-	self.Slider:SetNotchColor( col )
+	local color = table.Copy( col )
+	color.a = 100 -- Fade it out a bit so it looks right
+	self.Slider:SetNotchColor( color )
 
 end
 
@@ -284,7 +284,7 @@ end
 
 function PANEL:SetActionFunction( func )
 
-	self.OnValueChanged = function( self, val ) func( self, "SliderMoved", val, 0 ) end
+	self.OnValueChanged = function( pnl, val ) func( pnl, "SliderMoved", val, 0 ) end
 
 end
 

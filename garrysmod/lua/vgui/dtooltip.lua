@@ -123,7 +123,7 @@ end
 
 function PANEL:Close()
 
-	if ( !self.DeleteContentsOnClose && IsValid( self.Contents ) ) then
+	if ( !self.DeleteContentsOnClose and IsValid( self.Contents ) ) then
 
 		self.Contents:SetVisible( false )
 		self.Contents:SetParent( nil )

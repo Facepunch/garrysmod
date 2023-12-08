@@ -270,7 +270,7 @@ function PANEL:CrossFade( anim, delta, data )
 		if ( IsValid( new ) ) then
 			new:SetAlpha( 255 )
 			new:SetZPos( 0 )
-			new:SetVisible( true ) // In case new == old
+			new:SetVisible( true ) -- In case new == old
 		end
 
 		return
