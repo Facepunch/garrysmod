@@ -1,6 +1,6 @@
-local pairs		= pairs
-local table 	= table
 
+local table 	= table
+local pairs		= pairs
 
 module( "list" )
 
@@ -8,10 +8,13 @@ module( "list" )
 local Lists = {}
 
 function Get( listid )
-	return table.Copy( GetForEdit( listid, false ) )
+
+	return table.Copy( GetForEdit( listid ) )
+
 end
 
 function GetForEdit( listid, nocreate )
+
 	local list = Lists[ listid ]
 
 	if ( !nocreate && list == nil ) then
@@ -20,21 +23,29 @@ function GetForEdit( listid, nocreate )
 	end
 
 	return list
+
 end
 
 function GetTable()
+
 	return table.GetKeys( Lists )
+
 end
 
 function Set( listid, key, value )
-	GetForEdit( listid, false )[ key ] = value
+
+	GetForEdit( listid )[ key ] = value
+
 end
 
 function Add( listid, value )
-	return table.insert( GetForEdit( listid, false ), value )
+
+	return table.insert( GetForEdit( listid ), value )
+
 end
 
 function Contains( listid, value )
+
 	local list = Lists[ listid ]
 	if ( list == nil ) then return false end
 
@@ -43,10 +54,13 @@ function Contains( listid, value )
 	end
 
 	return false
+
 end
 
 function HasEntry( listid, key )
+
 	local list = Lists[ listid ]
 
 	return list != nil && list[ key ] != nil
+
 end
