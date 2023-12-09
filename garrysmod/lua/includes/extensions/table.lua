@@ -20,30 +20,56 @@ function table.Inherit( t, base )
 end
 
 --[[---------------------------------------------------------
-	Name: Copy(t, lookup_table)
-	Desc: Taken straight from http://lua-users.org/wiki/PitLibTablestuff
-		and modified to the new Lua 5.1 code by me.
-		Original function by PeterPrade!
------------------------------------------------------------]]
-function table.Copy( t, lookup_table )
-	if ( t == nil ) then return nil end
+	Name: Copy( tbl, fullCopy, noMeta, lookupTable )
+	Desc: Creates a deep copy of the given table. 
+	      The fullCopy argument will make it copy Vector and Angles.
+	      The noMeta argument will make it ignore the metatable of the given table. 
+	      The lookupTable argument is optional and is for internal use.
 
-	local copy = {}
-	setmetatable( copy, debug.getmetatable( t ) )
-	for i, v in pairs( t ) do
-		if ( !istable( v ) ) then
-			copy[ i ] = v
-		else
-			lookup_table = lookup_table or {}
-			lookup_table[ t ] = copy
-			if ( lookup_table[ v ] ) then
-				copy[ i ] = lookup_table[ v ] -- we already copied this table. reuse the copy.
-			else
-				copy[ i ] = table.Copy( v, lookup_table ) -- not yet copied. copy it.
-			end
-		end
+	      Reference: http://lua-users.org/wiki/PitLibTablestuff 
+	      Original function by PeterPrade!
+-----------------------------------------------------------]]
+function table.Copy( tbl, fullCopy, noMeta, lookupTable )
+	if ( !istable( tbl ) ) then error( "bad argument #1 to 'Copy' (table expected, got " .. type(tbl) .. ")", 2 ) end
+
+	if ( fullCopy && istable( fullCopy ) ) then -- Backwards compatibility 
+		lookupTable = fullCopy
+		fullCopy = nil
 	end
-	return copy
+    
+    	local copy = {}
+    
+    	for k, v in pairs( tbl ) do
+        	if ( istable( v ) ) then
+            		if ( !lookupTable ) then lookupTable = {} end
+            
+            		lookupTable[ tbl ] = copy
+            
+            		local lookupRes = lookupTable[ v ]
+            
+            		if ( lookupRes ) then
+                		copy[ k ] = lookupRes
+            		else
+                		copy[ k ] = table.Copy( v, fullCopy, noMeta, lookupTable )
+            		end
+        	else
+            		if ( fullCopy ) then
+                		if ( isvector( v ) ) then
+                    			copy[ k ] = Vector( v )
+                		elseif ( isangle( v ) ) then
+                    			copy[ k ] = Angle( v )
+                		end
+            		else
+                		copy[ k ] = v
+            		end
+        	end
+    	end
+
+    	if ( !noMeta ) then
+        	setmetatable( copy, debug.getmetatable( tbl ) )
+    	end
+    
+    	return copy
 end
 
 --[[---------------------------------------------------------
