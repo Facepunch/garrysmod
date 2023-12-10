@@ -67,15 +67,13 @@ function table.Copy( tbl, fullCopy, noMeta, lookupTable )
         	else
             		if ( fullCopy ) then
                 		if ( isvector( v ) ) then
-                    			copy[ k ] = Vector( v )
+                    			v = Vector( v )
                 		elseif ( isangle( v ) ) then
-                    			copy[ k ] = Angle( v )
-				else
-					copy[ k ] = v
+                    			v = Angle( v )
 				end
-            		else
-                		copy[ k ] = v
-            		end
+			end
+			
+                	copy[ k ] = v
         	end
     	end
 
