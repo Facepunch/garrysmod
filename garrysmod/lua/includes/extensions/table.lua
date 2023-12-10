@@ -32,7 +32,8 @@ end
 function table.Copy( tbl, fullCopy, noMeta, lookupTable )
 	if ( !istable( tbl ) ) then error( "bad argument #1 to 'Copy' (table expected, got " .. type(tbl) .. ")", 2 ) end
 
-	if ( fullCopy && istable( fullCopy ) ) then -- Backwards compatibility 
+	-- Backwards compatibility 
+	if ( fullCopy && istable( fullCopy ) ) then
 		lookupTable = fullCopy
 		fullCopy = nil
 	end
@@ -50,7 +51,18 @@ function table.Copy( tbl, fullCopy, noMeta, lookupTable )
             		if ( lookupRes ) then
                 		copy[ k ] = lookupRes
             		else
-                		copy[ k ] = table.Copy( v, fullCopy, noMeta, lookupTable )
+				local col
+
+				-- Edge-case: It won't give color objects the Color metatable if noMeta is on
+				if ( noMeta && IsColor( v ) ) then
+					local r, g, b, a = v:Unpack()
+
+					if ( r && g && b ) then
+						col = Color( r, g, b, a )
+					end
+				end
+				
+                		copy[ k ] = col || table.Copy( v, fullCopy, noMeta, lookupTable )
             		end
         	else
             		if ( fullCopy ) then
@@ -58,7 +70,9 @@ function table.Copy( tbl, fullCopy, noMeta, lookupTable )
                     			copy[ k ] = Vector( v )
                 		elseif ( isangle( v ) ) then
                     			copy[ k ] = Angle( v )
-                		end
+				else
+					copy[ k ] = v
+				end
             		else
                 		copy[ k ] = v
             		end
