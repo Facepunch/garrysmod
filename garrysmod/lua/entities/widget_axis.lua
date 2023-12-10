@@ -12,12 +12,17 @@ local widget_axis_arrow = { Base = "widget_arrow" }
 function widget_axis_arrow:Initialize()
 
 	BaseClass.Initialize( self )
-
+	--///added by seafoury
+	BaseClass.Initialize( base )
+	--///
 end
 
 function widget_axis_arrow:SetupDataTables()
 
 	BaseClass.SetupDataTables( self )
+	--///added by seafoury
+	BaseClass.SetupDataTables( base )
+	--///
 	self:NetworkVar( "Int", 0, "AxisIndex" )
 
 end
@@ -68,7 +73,9 @@ DEFINE_BASECLASS( "widget_base" )
 function ENT:Initialize()
 
 	BaseClass.Initialize( self )
-
+	--///Added By Seafoury
+	BaseClass.Initialize( base )
+	--///
 	self:SetCollisionBounds( Vector( -1, -1, -1 ), Vector( 1, 1, 1 ) )
 	self:SetSolid( SOLID_NONE )
 
@@ -113,6 +120,24 @@ function ENT:Setup( ent, boneid, rotate )
 		if ( IsValid( self.ArrowZ ) ) then self.ArrowZ:SetIsScaleArrow( true ) end
 	end
 
+end
+
+--
+-- This was added by Seafoury
+-- widget_axis.lua
+--
+-- if ENT:SetXYZ() and ENT:SetAxisIndex() don't work
+-- then please tell me and I will try to fix it! (:
+function ENT:SetXYZ( x, y, z, d )
+	base.ArrowZ:SetColor( Color( x, y, z, d ) )
+end
+
+--
+-- This was added by Seafoury
+-- widget_axis.lua
+--
+function ENT:SetAxisIndex( x )
+	base.ArrowZ:SetAxisIndex( x )
 end
 
 function ENT:SetPriority( x )
