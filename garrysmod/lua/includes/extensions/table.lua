@@ -29,13 +29,13 @@ end
 	      Reference: http://lua-users.org/wiki/PitLibTablestuff 
 	      Original function by PeterPrade!
 -----------------------------------------------------------]]
-function table.Copy( tbl, fullCopy, noMeta, lookupTable )
+function table.Copy( tbl, copyVecAng, noMeta, lookupTable )
 	if ( !istable( tbl ) ) then error( "bad argument #1 to 'Copy' (table expected, got " .. type(tbl) .. ")", 2 ) end
 
 	-- Backwards compatibility 
-	if ( fullCopy && istable( fullCopy ) ) then
-		lookupTable = fullCopy
-		fullCopy = nil
+	if ( copyVecAng && istable( copyVecAng ) ) then
+		lookupTable = copyVecAng
+		copyVecAng = nil
 	end
     
     	local copy = {}
@@ -51,10 +51,10 @@ function table.Copy( tbl, fullCopy, noMeta, lookupTable )
             		if ( lookupRes ) then
                 		copy[ k ] = lookupRes
             		else
-                		copy[ k ] = table.Copy( v, fullCopy, nil, lookupTable )
+                		copy[ k ] = table.Copy( v, copyVecAng, nil, lookupTable )
             		end
         	else
-            		if ( fullCopy ) then
+            		if ( copyVecAng ) then
                 		if ( isvector( v ) ) then
                     			v = Vector( v )
                 		elseif ( isangle( v ) ) then
