@@ -20,10 +20,13 @@ function table.Inherit( t, base )
 end
 
 --[[---------------------------------------------------------
-	Name: Copy( tbl, fullCopy, noMeta, lookupTable )
+	Name: Copy( tbl, copyVecAng, noMeta, lookupTable )
 	Desc: Creates a deep copy of the given table. 
-	      The fullCopy argument will make it copy Vector and Angles.
-	      The noMeta argument will make it ignore the metatable of the given table. 
+	      The copyVecAng argument will make it copy Vectors and Angles.
+
+	      The noMeta argument will make it not set the metatable of the given table to the copy.
+	      This does not affect sub tables.
+
 	      The lookupTable argument is optional and is for internal use.
 
 	      Reference: http://lua-users.org/wiki/PitLibTablestuff 
