@@ -20,9 +20,9 @@ function table.Inherit( t, base )
 end
 
 --[[---------------------------------------------------------
-	Name: Copy( tbl, copyVecAng, noMeta, lookupTable )
+	Name: Copy( tbl, copyVecAngMx, noMeta, lookupTable )
 	Desc: Creates a deep copy of the given table. 
-	      The copyVecAng argument will make it copy Vectors and Angles.
+	      The copyVecAngMx argument will make it copy Vectors, Angles, and VMatrixes.
 
 	      The noMeta argument will make it not set the metatable of the given table to the copy.
 	      This does not affect sub tables.
@@ -32,13 +32,13 @@ end
 	      Reference: http://lua-users.org/wiki/PitLibTablestuff 
 	      Original function by PeterPrade!
 -----------------------------------------------------------]]
-function table.Copy( tbl, copyVecAng, noMeta, lookupTable )
-	if ( !istable( tbl ) ) then error( "bad argument #1 to 'Copy' (table expected, got " .. type(tbl) .. ")", 2 ) end
+function table.Copy( tbl, copyVecAngMx, noMeta, lookupTable )
+	if ( !istable( tbl ) ) then error( "bad argument #1 to 'Copy' (table expected, got " .. type( tbl ) .. ")", 2 ) end
 
 	-- Backwards compatibility 
-	if ( copyVecAng && istable( copyVecAng ) ) then
-		lookupTable = copyVecAng
-		copyVecAng = nil
+	if ( copyVecAngMx && istable( copyVecAngMx ) ) then
+		lookupTable = copyVecAngMx
+		copyVecAngMx = nil
 	end
     
     	local copy = {}
@@ -54,14 +54,16 @@ function table.Copy( tbl, copyVecAng, noMeta, lookupTable )
             		if ( lookupRes ) then
                 		copy[ k ] = lookupRes
             		else
-                		copy[ k ] = table.Copy( v, copyVecAng, nil, lookupTable )
+                		copy[ k ] = table.Copy( v, copyVecAngMx, nil, lookupTable )
             		end
         	else
-            		if ( copyVecAng ) then
+            		if ( copyVecAngMx ) then
                 		if ( isvector( v ) ) then
                     			v = Vector( v )
                 		elseif ( isangle( v ) ) then
                     			v = Angle( v )
+				elseif ( ismatrix( v ) ) then
+					v = Matrix( v )
 				end
 			end
 			
