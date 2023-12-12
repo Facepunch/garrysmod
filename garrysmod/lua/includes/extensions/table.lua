@@ -32,6 +32,8 @@ end
 	      Reference: http://lua-users.org/wiki/PitLibTablestuff 
 	      Original function by PeterPrade!
 -----------------------------------------------------------]]
+local type = type
+
 function table.Copy( tbl, copyVecAngMx, noMeta, lookupTable )
 	if ( !istable( tbl ) ) then error( "bad argument #1 to 'Copy' (table expected, got " .. type( tbl ) .. ")", 2 ) end
 
