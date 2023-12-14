@@ -61,6 +61,7 @@ local function MakeCamera( ply, key, locked, toggle, Data )
 	ent:Spawn()
 
 	DoPropSpawnedEffect( ent )
+	duplicator.DoGenericPhysics( ent, ply, Data )
 
 	ent:SetTracking( NULL, Vector( 0 ) )
 	ent:SetLocked( locked )

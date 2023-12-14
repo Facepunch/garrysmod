@@ -85,20 +85,24 @@ end
 
 if ( SERVER ) then
 
-	function MakeButton( pl, model, ang, pos, key, description, toggle, nocollide )
+	function MakeButton( ply, model, ang, pos, key, description, toggle, nocollide, Data )
 
-		if ( IsValid( pl ) && !pl:CheckLimit( "buttons" ) ) then return false end
+		if ( IsValid( ply ) && !ply:CheckLimit( "buttons" ) ) then return false end
 		if ( !IsValidButtonModel( model ) ) then return false end
 
 		local button = ents.Create( "gmod_button" )
 		if ( !IsValid( button ) ) then return false end
-	
-		button:SetModel( model )
+
+		duplicator.DoGeneric( button, Data )
+		button:SetModel( model ) -- Backwards compatible for addons directly calling this function
 		button:SetAngles( ang )
 		button:SetPos( pos )
 		button:Spawn()
 
-		button:SetPlayer( pl )
+		DoPropSpawnedEffect( button )
+		duplicator.DoGenericPhysics( button, ply, Data )
+
+		button:SetPlayer( ply )
 		button:SetKey( key )
 		button:SetLabel( description )
 		button:SetIsToggle( toggle )
@@ -110,24 +114,22 @@ if ( SERVER ) then
 
 		table.Merge( button:GetTable(), {
 			key = key,
-			pl = pl,
+			pl = ply,
 			toggle = toggle,
 			nocollide = nocollide,
 			description = description
 		} )
 
-		if ( IsValid( pl ) ) then
-			pl:AddCount( "buttons", button )
-			pl:AddCleanup( "buttons", button )
+		if ( IsValid( ply ) ) then
+			ply:AddCount( "buttons", button )
+			ply:AddCleanup( "buttons", button )
 		end
-
-		DoPropSpawnedEffect( button )
 
 		return button
 
 	end
 
-	duplicator.RegisterEntityClass( "gmod_button", MakeButton, "Model", "Ang", "Pos", "key", "description", "toggle", "nocollide" )
+	duplicator.RegisterEntityClass( "gmod_button", MakeButton, "Model", "Ang", "Pos", "key", "description", "toggle", "nocollide", "Data" )
 
 end
 

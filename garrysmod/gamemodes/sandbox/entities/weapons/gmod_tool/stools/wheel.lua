@@ -151,24 +151,25 @@ end
 if ( SERVER ) then
 
 	-- For duplicator, creates the wheel.
-	function MakeWheel( pl, pos, ang, model, key_f, key_r, axis, direction, toggle, BaseTorque, Data )
+	function MakeWheel( ply, pos, ang, model, key_f, key_r, axis, direction, toggle, baseTorque, Data )
 
-		if ( IsValid( pl ) && !pl:CheckLimit( "wheels" ) ) then return false end
+		if ( IsValid( ply ) and !ply:CheckLimit( "wheels" ) ) then return false end
 		if ( !IsValidWheelModel( model ) ) then return false end
 
 		local wheel = ents.Create( "gmod_wheel" )
 		if ( !IsValid( wheel ) ) then return end
 
-		wheel:SetModel( model )
+		duplicator.DoGeneric( wheel, Data )
+		wheel:SetModel( model ) -- Backwards compatible for addons directly calling this function
 		wheel:SetPos( pos )
 		wheel:SetAngles( ang )
 		wheel:Spawn()
 
 		DoPropSpawnedEffect( wheel )
 
-		wheel:SetPlayer( pl )
+		wheel:SetPlayer( ply )
 
-		duplicator.DoGenericPhysics( wheel, pl, Data )
+		duplicator.DoGenericPhysics( wheel, ply, Data )
 
 		wheel.key_f = key_f
 		wheel.key_r = key_r
@@ -180,20 +181,20 @@ if ( SERVER ) then
 		wheel:SetDirection( direction or 1 )
 		wheel:SetToggle( toggle or false )
 
-		wheel:SetBaseTorque( BaseTorque )
+		wheel:SetBaseTorque( baseTorque )
 		wheel:UpdateOverlayText()
 
 		wheel.KeyBinds = {}
 
 		-- Bind to keypad
-		wheel.KeyBinds[ 1 ] = numpad.OnDown( pl, key_f, "WheelForward", wheel, true )
-		wheel.KeyBinds[ 2 ] = numpad.OnUp( pl, key_f, "WheelForward", wheel, false )
-		wheel.KeyBinds[ 3 ] = numpad.OnDown( pl, key_r, "WheelReverse", wheel, true )
-		wheel.KeyBinds[ 4 ] = numpad.OnUp( pl, key_r, "WheelReverse", wheel, false )
+		wheel.KeyBinds[ 1 ] = numpad.OnDown( ply, key_f, "WheelForward", wheel, true )
+		wheel.KeyBinds[ 2 ] = numpad.OnUp( ply, key_f, "WheelForward", wheel, false )
+		wheel.KeyBinds[ 3 ] = numpad.OnDown( ply, key_r, "WheelReverse", wheel, true )
+		wheel.KeyBinds[ 4 ] = numpad.OnUp( ply, key_r, "WheelReverse", wheel, false )
 
-		if ( IsValid( pl ) ) then
-			pl:AddCount( "wheels", wheel )
-			pl:AddCleanup( "wheels", wheel )
+		if ( IsValid( ply ) ) then
+			ply:AddCount( "wheels", wheel )
+			ply:AddCleanup( "wheels", wheel )
 		end
 
 		return wheel

@@ -138,7 +138,8 @@ if ( SERVER ) then
 		local lamp = ents.Create( "gmod_lamp" )
 		if ( !IsValid( lamp ) ) then return false end
 
-		lamp:SetModel( model )
+		duplicator.DoGeneric( lamp, Data )
+		lamp:SetModel( model ) -- Backwards compatible for addons directly calling this function
 		lamp:SetFlashlightTexture( texture )
 		lamp:SetLightFOV( fov )
 		lamp:SetColor( Color( r, g, b, 255 ) )
@@ -146,8 +147,6 @@ if ( SERVER ) then
 		lamp:SetBrightness( brightness )
 		lamp:Switch( on )
 		lamp:SetToggle( !toggle )
-
-		duplicator.DoGeneric( lamp, Data )
 
 		lamp:Spawn()
 

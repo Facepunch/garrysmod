@@ -116,6 +116,7 @@ if ( SERVER ) then
 		emitter:Spawn()
 
 		DoPropSpawnedEffect( emitter )
+		duplicator.DoGenericPhysics( emitter, ply, Data )
 
 		emitter.NumDown = numpad.OnDown( ply, key, "Emitter_On", emitter )
 		emitter.NumUp = numpad.OnUp( ply, key, "Emitter_Off", emitter )

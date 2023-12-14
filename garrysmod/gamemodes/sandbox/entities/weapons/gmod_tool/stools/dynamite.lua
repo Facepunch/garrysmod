@@ -69,28 +69,33 @@ end
 
 if ( SERVER ) then
 
-	function MakeDynamite( pl, pos, ang, key, damage, model, remove, delay )
+	function MakeDynamite( ply, pos, ang, key, damage, model, remove, delay, Data )
 
-		if ( IsValid( pl ) && !pl:CheckLimit( "dynamite" ) ) then return nil end
+		if ( IsValid( ply ) && !ply:CheckLimit( "dynamite" ) ) then return nil end
 		if ( !IsValidDynamiteModel( model ) ) then return nil end
 
 		local dynamite = ents.Create( "gmod_dynamite" )
-		dynamite:SetPos( pos )
+
+		duplicator.DoGeneric( dynamite, Data )
+		dynamite:SetPos( pos ) -- Backwards compatible for addons directly calling this function
 		dynamite:SetAngles( ang )
 		dynamite:SetModel( model )
+
 		dynamite:SetShouldRemove( remove )
 		dynamite:SetDamage( damage )
 		dynamite:SetDelay( delay )
 		dynamite:Spawn()
-		dynamite:Activate()
 
-		if ( IsValid( pl ) ) then
-			dynamite:SetPlayer( pl )
+		DoPropSpawnedEffect( dynamite )
+		duplicator.DoGenericPhysics( dynamite, ply, Data )
+
+		if ( IsValid( ply ) ) then
+			dynamite:SetPlayer( ply )
 		end
 
 		table.Merge( dynamite:GetTable(), {
 			key = key,
-			pl = pl,
+			pl = ply,
 			nocollide = nocollide,
 			description = description,
 			Damage = damage,
@@ -99,19 +104,17 @@ if ( SERVER ) then
 			delay = delay
 		} )
 
-		dynamite.NumDown = numpad.OnDown( pl, key, "DynamiteBlow", dynamite )
+		dynamite.NumDown = numpad.OnDown( ply, key, "DynamiteBlow", dynamite )
 
-		if ( IsValid( pl ) ) then
-			pl:AddCount( "dynamite", dynamite )
-			pl:AddCleanup( "dynamite", dynamite )
+		if ( IsValid( ply ) ) then
+			ply:AddCount( "dynamite", dynamite )
+			ply:AddCleanup( "dynamite", dynamite )
 		end
-
-		DoPropSpawnedEffect( dynamite )
 
 		return dynamite
 
 	end
-	duplicator.RegisterEntityClass( "gmod_dynamite", MakeDynamite, "Pos", "Ang", "key", "Damage", "model", "remove", "delay" )
+	duplicator.RegisterEntityClass( "gmod_dynamite", MakeDynamite, "Pos", "Ang", "key", "Damage", "model", "remove", "delay", "Data" )
 
 	numpad.Register( "DynamiteBlow", function( ply, dynamite )
 
