@@ -263,7 +263,7 @@ function meta:InstallDataTable()
 
 	self.DTVar = function( ent, typename, index, name )
 
-		if ( isstring( index ) ) then
+		if ( isstring( index ) && !name ) then
 			name = index
 			index = FindUnusedIndex( typename )
 		elseif ( !index && isstring( name ) ) then
@@ -353,7 +353,7 @@ function meta:InstallDataTable()
 
 	self.NetworkVar = function( ent, typename, index, name, other_data )
 
-		if ( isstring( index ) ) then
+		if ( isstring( index ) && ( istable( name ) or !name ) ) then
 			other_data = name
 			name = index
 			index = FindUnusedIndex( typename )
@@ -401,7 +401,7 @@ function meta:InstallDataTable()
 	--
 	self.NetworkVarElement = function( ent, typename, index, element, name, other_data )
 
-		if ( isstring( index ) ) then
+		if ( isstring( index ) && isstring( element ) ) then
 			other_data = name
 			name = element
 			element = index
