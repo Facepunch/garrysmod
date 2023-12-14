@@ -150,6 +150,7 @@ local EntitySaver =
 		data.WorkshopID			= ent:GetWorkshopID()
 		data.Health				= ent:Health()
 		data.MaxHealth			= ent:GetMaxHealth()
+		data.Persistent			= ent:GetPersistent()
 
 		data.Pos, data.Angle	= WorldToLocal( data.Pos, data.Angle, LocalPos, LocalAng )
 
@@ -294,6 +295,7 @@ local EntitySaver =
 		if ( data.ModelScale ) then ent:SetModelScale( data.ModelScale, 0 ) end
 		if ( data.ColGroup ) then ent:SetCollisionGroup( data.ColGroup ) end
 		if ( data.Name ) then ent:SetName( data.Name ) end
+		if ( data.Persistent ) then ent:SetPersistent( data.Persistent ) end
 		if ( data._DuplicatedColor ) then ent:SetColor( data._DuplicatedColor ) end
 		if ( data._DuplicatedMaterial ) then ent:SetMaterial( data._DuplicatedMaterial ) end
 
