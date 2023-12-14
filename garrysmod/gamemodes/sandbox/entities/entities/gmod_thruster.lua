@@ -92,7 +92,7 @@ if ( CLIENT ) then
 
 	end
 
-	ENT.RenderGroup = RENDERGROUP_BOTH
+	ENT.WantsTranslucency = true -- If model is opaque, still call DrawTranslucent
 	function ENT:DrawTranslucent( flags )
 
 		BaseClass.DrawTranslucent( self, flags )

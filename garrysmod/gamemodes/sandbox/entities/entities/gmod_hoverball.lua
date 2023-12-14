@@ -97,8 +97,7 @@ function ENT:DrawEffects()
 	render.DrawSprite( vOffset + vDiff * 4, 52, 52, color )
 end
 
--- We have to do this to ensure DrawTranslucent is called for Opaque only models to draw our effects
-ENT.RenderGroup = RENDERGROUP_BOTH
+ENT.WantsTranslucency = true -- If model is opaque, still call DrawTranslucent
 function ENT:DrawTranslucent( flags )
 	self:DrawEffects()
 	BaseClass.DrawTranslucent( self, flags )

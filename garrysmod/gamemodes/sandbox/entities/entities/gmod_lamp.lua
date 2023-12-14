@@ -221,8 +221,7 @@ function ENT:DrawEffects()
 
 end
 
--- We have to do this to ensure DrawTranslucent is called for Opaque only models to draw our effects
-ENT.RenderGroup = RENDERGROUP_BOTH
+ENT.WantsTranslucency = true -- If model is opaque, still call DrawTranslucent
 function ENT:DrawTranslucent( flags )
 	BaseClass.DrawTranslucent( self, flags )
 	self:DrawEffects()
