@@ -401,7 +401,10 @@ function GetPlayerClassTable( ply )
 	local id = ply:GetClassID()
 	if ( id == 0 ) then return end
 
-	return table.Copy( Type )[ util.NetworkIDToString( id ) ]
+	local ct = Type[ util.NetworkIDToString( id ) ]
+	if ( !ct ) then return end
+	
+	return table.Copy(t)
 
 end
 
