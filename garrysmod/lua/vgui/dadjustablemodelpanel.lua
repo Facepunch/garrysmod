@@ -140,7 +140,7 @@ end
 function PANEL:OnMouseWheeled( dlta )
 
 	local scale = self:GetFOV() / 180
-	self.fFOV = self.fFOV + dlta * -10.0 * scale
+	self.fFOV = math.Clamp( self.fFOV + dlta * -10.0 * scale, 0.001, 179 )
 
 end
 
