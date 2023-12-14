@@ -11,7 +11,7 @@ function ENT:SetupDataTables()
 	--
 	-- Scale - how far the ragdoll will move in the game world in relation to how far it moved in the real world
 	--
-	self:NetworkVar( "Float", 0, "Scale", { KeyName = "scale", Edit = { type = "Float", min=1, max=512, order = 1 } } )
+	self:NetworkVar( "Float", 0, "Scale", { KeyName = "scale", Edit = { type = "Float", min = 1, max = 512, order = 1 } } )
 
 	--
 	-- Normalize - if enabled the limbs aren't stretched
@@ -56,11 +56,9 @@ function ENT:Initialize()
 
 		local phys = self:GetPhysicsObject()
 		if ( IsValid( phys ) ) then
-
 			phys:Wake()
 			phys:EnableGravity( false )
 			phys:EnableDrag( false )
-
 		end
 
 		local colors = {
@@ -116,8 +114,8 @@ function ENT:Draw()
 	--
 	local ply = LocalPlayer()
 	local wep = ply:GetActiveWeapon()
-	if ( wep:IsValid() ) then
-		if ( wep:GetClass() == "gmod_camera" ) then return end
+	if ( IsValid( wep ) && wep:GetClass() == "gmod_camera" ) then
+		return
 	end
 
 	self:DrawModel()
@@ -184,11 +182,11 @@ function ENT:DrawDebug( ragdoll, controller, pos, ang, rotation, scale, center, 
 	--
 	-- Draw ragdoll physics bones
 	--
-	for i=0, ragdoll:GetPhysicsObjectCount() - 1 do
+	for i = 0, ragdoll:GetPhysicsObjectCount() - 1 do
 
 		local phys = ragdoll:GetPhysicsObjectNum( i )
 
-		local pos = phys:GetPos()
+		local position = phys:GetPos()
 		local angle = phys:GetAngles()
 		local txt = i
 
@@ -196,8 +194,8 @@ function ENT:DrawDebug( ragdoll, controller, pos, ang, rotation, scale, center, 
 			txt = i .. " (UNSET)"
 		end
 
-		debugoverlay.Text( pos, txt, StayTime )
-		debugoverlay.Axis( pos, angle, 5, StayTime, true )
+		debugoverlay.Text( position, txt, StayTime )
+		debugoverlay.Axis( position, angle, 5, StayTime, true )
 
 	end
 

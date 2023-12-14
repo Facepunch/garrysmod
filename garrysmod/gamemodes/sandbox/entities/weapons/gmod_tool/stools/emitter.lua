@@ -57,7 +57,8 @@ function TOOL:LeftClick( trace, worldweld )
 	if ( !self:GetSWEP():CheckLimit( "emitters" ) ) then return false end
 
 	local pos = trace.HitPos
-	if ( trace.Entity != NULL && ( !trace.Entity:IsWorld() || worldweld ) ) then else
+	local shouldWeld = ( trace.Entity != NULL && ( !trace.Entity:IsWorld() or worldweld ) )
+	if ( !shouldWeld ) then
 		pos = pos + trace.HitNormal
 	end
 
@@ -71,7 +72,7 @@ function TOOL:LeftClick( trace, worldweld )
 		undo.AddEntity( emitter )
 
 		-- Don't weld to world
-		if ( trace.Entity != NULL && ( !trace.Entity:IsWorld() || worldweld ) ) then
+		if ( shouldWeld ) then
 			local weld = constraint.Weld( emitter, trace.Entity, 0, trace.PhysicsBone, 0, true, true )
 			if ( IsValid( weld ) ) then
 				ply:AddCleanup( "emitters", weld )
@@ -149,12 +150,12 @@ if ( SERVER ) then
 
 end
 
-function TOOL:UpdateGhostEmitter( ent, pl )
+function TOOL:UpdateGhostEmitter( ent, ply )
 
 	if ( !IsValid( ent ) ) then return end
 
-	local trace = pl:GetEyeTrace()
-	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:GetClass() == "gmod_emitter" || trace.Entity:IsPlayer() ) ) then
+	local trace = ply:GetEyeTrace()
+	if ( !trace.Hit or IsValid( trace.Entity ) && ( trace.Entity:GetClass() == "gmod_emitter" or trace.Entity:IsPlayer() ) ) then
 
 		ent:SetNoDraw( true )
 		return
@@ -170,7 +171,7 @@ end
 
 function TOOL:Think()
 
-	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != "models/props_lab/tpplug.mdl" ) then
+	if ( !IsValid( self.GhostEntity ) or self.GhostEntity:GetModel() != "models/props_lab/tpplug.mdl" ) then
 		self:MakeGhostEntity( "models/props_lab/tpplug.mdl", vector_origin, angle_zero )
 	end
 

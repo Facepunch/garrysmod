@@ -26,8 +26,6 @@ function ENT:Initialize()
 	if ( SERVER ) then
 
 		self:PhysicsInit( SOLID_VPHYSICS )
-		self:SetMoveType( MOVETYPE_VPHYSICS )
-		self:SetSolid( SOLID_VPHYSICS )
 
 		-- Wake up our physics object so we don't start asleep
 		local phys = self:GetPhysicsObject()
@@ -136,7 +134,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 	local physVel = phys:GetVelocity()
 	local zVel = physVel.z
 
-	Exponent = Exponent - (zVel * deltatime * 600 * ( AirResistance + 1 ) )
+	Exponent = Exponent - ( zVel * deltatime * 600 * ( AirResistance + 1 ) )
 	-- The higher you make this 300 the less it will flop about
 	-- I'm thinking it should actually be relative to any objects we're connected to
 	-- Since it seems to flop more and more the heavier the object
@@ -231,7 +229,7 @@ end
 
 if ( SERVER ) then
 
-	numpad.Register( "Hoverball_Up", function( pl, ent, keydown, idx )
+	numpad.Register( "Hoverball_Up", function( ply, ent, keydown, idx )
 
 		if ( !IsValid( ent ) ) then return false end
 
@@ -240,7 +238,7 @@ if ( SERVER ) then
 
 	end )
 
-	numpad.Register( "Hoverball_Down", function( pl, ent, keydown )
+	numpad.Register( "Hoverball_Down", function( ply, ent, keydown )
 
 		if ( !IsValid( ent ) ) then return false end
 
@@ -249,7 +247,7 @@ if ( SERVER ) then
 
 	end )
 
-	numpad.Register( "Hoverball_Toggle", function( pl, ent, keydown )
+	numpad.Register( "Hoverball_Toggle", function( ply, ent, keydown )
 
 		if ( !IsValid( ent ) ) then return false end
 

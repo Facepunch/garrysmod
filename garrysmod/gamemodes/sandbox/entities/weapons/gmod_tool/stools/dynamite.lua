@@ -113,11 +113,11 @@ if ( SERVER ) then
 	end
 	duplicator.RegisterEntityClass( "gmod_dynamite", MakeDynamite, "Pos", "Ang", "key", "Damage", "model", "remove", "delay" )
 
-	numpad.Register( "DynamiteBlow", function( pl, dynamite )
+	numpad.Register( "DynamiteBlow", function( ply, dynamite )
 
 		if ( !IsValid( dynamite ) ) then return end
 
-		dynamite:Explode( nil, pl )
+		dynamite:Explode( nil, ply )
 
 	end )
 

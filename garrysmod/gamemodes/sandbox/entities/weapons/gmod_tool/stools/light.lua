@@ -118,9 +118,9 @@ end
 
 if ( SERVER ) then
 
-	function MakeLight( pl, r, g, b, brght, size, toggle, on, KeyDown, Data )
+	function MakeLight( ply, r, g, b, brght, size, toggle, on, KeyDown, Data )
 
-		if ( IsValid( pl ) && !pl:CheckLimit( "lights" ) ) then return false end
+		if ( IsValid( ply ) && !ply:CheckLimit( "lights" ) ) then return false end
 
 		local light = ents.Create( "gmod_light" )
 		if ( !IsValid( light ) ) then return end
@@ -137,9 +137,9 @@ if ( SERVER ) then
 
 		DoPropSpawnedEffect( light )
 
-		duplicator.DoGenericPhysics( light, pl, Data )
+		duplicator.DoGenericPhysics( light, ply, Data )
 
-		light:SetPlayer( pl )
+		light:SetPlayer( ply )
 
 		light.lightr = r
 		light.lightg = g
@@ -149,12 +149,12 @@ if ( SERVER ) then
 		light.KeyDown = KeyDown
 		light.on = on
 
-		light.NumDown = numpad.OnDown( pl, KeyDown, "LightToggle", light, 1 )
-		light.NumUp = numpad.OnUp( pl, KeyDown, "LightToggle", light, 0 )
+		light.NumDown = numpad.OnDown( ply, KeyDown, "LightToggle", light, 1 )
+		light.NumUp = numpad.OnUp( ply, KeyDown, "LightToggle", light, 0 )
 
-		if ( IsValid( pl ) ) then
-			pl:AddCount( "lights", light )
-			pl:AddCleanup( "lights", light )
+		if ( IsValid( ply ) ) then
+			ply:AddCount( "lights", light )
+			ply:AddCleanup( "lights", light )
 		end
 
 		return light
@@ -162,7 +162,7 @@ if ( SERVER ) then
 	end
 	duplicator.RegisterEntityClass( "gmod_light", MakeLight, "lightr", "lightg", "lightb", "Brightness", "Size", "Toggle", "on", "KeyDown", "Data" )
 
-	local function Toggle( pl, ent, onoff )
+	local function Toggle( ply, ent, onoff )
 
 		if ( !IsValid( ent ) ) then return false end
 		if ( !ent:GetToggle() ) then ent:SetOn( onoff == 1 ) return end
@@ -183,11 +183,11 @@ if ( SERVER ) then
 
 end
 
-function TOOL:UpdateGhostLight( ent, pl )
+function TOOL:UpdateGhostLight( ent, ply )
 
 	if ( !IsValid( ent ) ) then return end
 
-	local trace = pl:GetEyeTrace()
+	local trace = ply:GetEyeTrace()
 	if ( !trace.Hit || IsValid( trace.Entity ) && ( trace.Entity:IsPlayer() || trace.Entity:GetClass() == "gmod_light" ) ) then
 
 		ent:SetNoDraw( true )

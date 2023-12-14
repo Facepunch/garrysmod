@@ -37,8 +37,6 @@ function ENT:Initialize()
 	if ( SERVER ) then
 
 		self:PhysicsInit( SOLID_VPHYSICS )
-		self:SetMoveType( MOVETYPE_VPHYSICS )
-		self:SetSolid( SOLID_VPHYSICS )
 		self:DrawShadow( false )
 
 		local phys = self:GetPhysicsObject()
@@ -103,7 +101,7 @@ if ( SERVER ) then
 
 		self.flashlight:SetKeyValue( "enableshadows", 1 )
 		self.flashlight:SetKeyValue( "nearz", 12 )
-		self.flashlight:SetKeyValue( "lightfov", math.Clamp( self:GetLightFOV(), 10, 170 ) ) 
+		self.flashlight:SetKeyValue( "lightfov", math.Clamp( self:GetLightFOV(), 10, 170 ) )
 
 		local dist = self:GetDistance()
 		if ( !game.SinglePlayer() ) then dist = math.Clamp( dist, 64, 2048 ) end

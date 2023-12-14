@@ -44,15 +44,15 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	--
 	local entities = {}
 	local i = 0
-	for k, v in pairs( Dupe.Entities ) do
+	for k, ent in pairs( Dupe.Entities ) do
 
-		if ( v.Class == "prop_ragdoll" ) then
+		if ( ent.Class == "prop_ragdoll" ) then
 
-			entities[ k ] = ClientsideRagdoll( v.Model or "error.mdl", RENDERGROUP_OTHER )
+			entities[ k ] = ClientsideRagdoll( ent.Model or "error.mdl", RENDERGROUP_OTHER )
 
-			if ( istable( v.PhysicsObjects ) ) then
+			if ( istable( ent.PhysicsObjects ) ) then
 
-				for boneid, v in pairs( v.PhysicsObjects ) do
+				for boneid, v in pairs( ent.PhysicsObjects ) do
 
 					local obj = entities[ k ]:GetPhysicsObjectNum( boneid )
 					if ( IsValid( obj ) ) then
@@ -68,7 +68,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 
 		else
 
-			entities[ k ] = ClientsideModel( v.Model or "error.mdl", RENDERGROUP_OTHER )
+			entities[ k ] = ClientsideModel( ent.Model or "error.mdl", RENDERGROUP_OTHER )
 
 		end
 		i = i + 1
@@ -102,14 +102,13 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 		-- Render each entity in a circle
 		for k, v in pairs( Dupe.Entities ) do
 
-			for i = 0, math.pi * 2, 0.2 do
+			-- Set the skin and bodygroups
+			entities[ k ]:SetSkin( v.Skin or 0 )
+			for bg_k, bg_v in pairs( v.BodyG or {} ) do entities[ k ]:SetBodygroup( bg_k, bg_v ) end
 
-				view.origin = CamPos + Up * math.sin( i ) + Right * math.cos( i )
+			for j = 0, math.pi * 2, 0.2 do
 
-				-- Set the skin and bodygroups
-				entities[ k ]:SetSkin( v.Skin or 0 )
-				for bg_k, bg_v in pairs( v.BodyG or {} ) do entities[ k ]:SetBodygroup( bg_k, bg_v ) end
-
+				view.origin = CamPos + Up * math.sin( j ) + Right * math.cos( j )
 				cam.Start( view )
 
 					render.Model( {
@@ -129,16 +128,16 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 		render.SetColorModulation( 0, 0, 0, 1 )
 
 		-- Try to keep the border size consistent with zoom size
-		local BorderSize	= CamDist * 0.002
-		local Up			= EyeAng:Up() * BorderSize
-		local Right			= EyeAng:Right() * BorderSize
+		BorderSize	= CamDist * 0.002
+		Up			= EyeAng:Up() * BorderSize
+		Right		= EyeAng:Right() * BorderSize
 
 		-- Render each entity in a circle
 		for k, v in pairs( Dupe.Entities ) do
 
-			for i = 0, math.pi * 2, 0.2 do
+			for j = 0, math.pi * 2, 0.2 do
 
-				view.origin = CamPos + Up * math.sin( i ) + Right * math.cos( i )
+				view.origin = CamPos + Up * math.sin( j ) + Right * math.cos( j )
 				cam.Start( view )
 
 				render.Model( {
@@ -238,17 +237,17 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	--
 	-- Encode and compress the dupe
 	--
-	local Dupe = util.TableToJSON( Dupe )
-	if ( !isstring( Dupe ) ) then
+	local DupeJSON = util.TableToJSON( Dupe )
+	if ( !isstring( DupeJSON ) ) then
 		MsgN( "There was an error converting the dupe to a json string" )
 	end
 
-	Dupe = util.Compress( Dupe )
+	DupeJSON = util.Compress( DupeJSON )
 
 	--
 	-- And save it! (filename is automatic md5 in dupes/)
 	--
-	if ( engine.WriteDupe( Dupe, jpegdata ) ) then
+	if ( engine.WriteDupe( DupeJSON, jpegdata ) ) then
 
 		-- Disable the save button!!
 		hook.Run( "DupeSaveUnavailable" )

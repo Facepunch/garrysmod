@@ -25,11 +25,9 @@ function ENT:Initialize()
 	-- Set up our physics object here
 	local phys = self:GetPhysicsObject()
 	if ( IsValid( phys ) ) then
-
 		phys:SetMass( 100 )
 		phys:Wake()
 		phys:EnableGravity( false )
-
 	end
 
 	self:SetForce( 1 )
@@ -61,11 +59,11 @@ function ENT:OnTakeDamage( dmginfo )
 
 	if ( self.Explosive ) then
 
-		local effectdata = EffectData()
-		effectdata:SetOrigin( self:GetPos() )
-		effectdata:SetScale( 1 )
-		effectdata:SetMagnitude( 25 )
-		util.Effect( "Explosion", effectdata, true, true )
+		local ed_expl = EffectData()
+		ed_expl:SetOrigin( self:GetPos() )
+		ed_expl:SetScale( 1 )
+		ed_expl:SetMagnitude( 25 )
+		util.Effect( "Explosion", ed_expl, true, true )
 
 	end
 

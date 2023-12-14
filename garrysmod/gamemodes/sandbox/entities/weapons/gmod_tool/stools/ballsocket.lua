@@ -35,7 +35,7 @@ function TOOL:LeftClick( trace )
 		-- Get client's CVars
 		local nocollide = self:GetClientNumber( "nocollide", 0 )
 		local forcelimit = self:GetClientNumber( "forcelimit", 0 )
-		
+
 		-- Force this to 0 for now, it does not do anything, and if we fix it in the future, this way existing contraptions won't break
 		local torquelimit = 0 --self:GetClientNumber( "torquelimit", 0 )
 

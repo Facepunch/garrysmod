@@ -81,11 +81,11 @@ function ENT:OnVariableChanged()
 	self.EnvSun:SetKeyValue( "size", self:GetSunSize() )
 	self.EnvSun:SetKeyValue( "overlaysize", self:GetOverlaySize() )
 
-	local vec = self:GetOverlayColor()
-	self.EnvSun:SetKeyValue( "overlaycolor", Format( "%i %i %i", vec.x * 255, vec.y * 255, vec.z * 255 ) )
+	local overlay = self:GetOverlayColor()
+	self.EnvSun:SetKeyValue( "overlaycolor", Format( "%i %i %i", overlay.x * 255, overlay.y * 255, overlay.z * 255 ) )
 
-	local vec = self:GetSunColor()
-	self.EnvSun:SetKeyValue( "suncolor", Format( "%i %i %i", vec.x * 255, vec.y * 255, vec.z * 255 ) )
+	local sun = self:GetSunColor()
+	self.EnvSun:SetKeyValue( "suncolor", Format( "%i %i %i", sun.x * 255, sun.y * 255, sun.z * 255 ) )
 
 end
 

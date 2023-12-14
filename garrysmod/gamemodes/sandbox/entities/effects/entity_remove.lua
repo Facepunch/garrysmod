@@ -29,7 +29,7 @@ function EFFECT:Init( data )
 			particle:SetEndAlpha( 0 )
 			particle:SetStartSize( 2 )
 			particle:SetEndSize( 0 )
-			particle:SetRoll( math.Rand(0, 360) )
+			particle:SetRoll( math.Rand( 0, 360 ) )
 			particle:SetRollDelta( 0 )
 
 			particle:SetAirResistance( 100 )

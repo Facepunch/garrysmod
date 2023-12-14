@@ -123,7 +123,7 @@ function EFFECT:StartClip( model, spd )
 	local Bottom = model:GetPos() + mn
 	local Top = model:GetPos() + mx
 
-	local Fraction = (self.LifeTime - CurTime()) / self.Time
+	local Fraction = ( self.LifeTime - CurTime() ) / self.Time
 	Fraction = math.Clamp( Fraction / spd, 0, 1 )
 
 	local Lerped = LerpVector( Fraction, Bottom, Top )

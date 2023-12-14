@@ -18,7 +18,7 @@ function PANEL:Init()
 		local bg = left:Add( "DPanel" )
 		bg:Dock( FILL )
 		bg:DockMargin( 0, 0, 0, 4 )
-		bg.Paint = function( self, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
+		bg.Paint = function( s, w, h ) draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 0, 0, 128 ) ) end
 
 		self.SpawnIcon = bg:Add( "SpawnIcon" )
 		--self.SpawnIcon.DoClick = function() self:RenderIcon() end
