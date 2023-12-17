@@ -55,7 +55,11 @@ local gmodAxisObjects = { Vector = true, Angle = true }
 
 local function MsgValue( v )
 	if isstring( v ) then
-		MsgC( yellow, "\"", v, "\"" )
+		if v:find( "\n", 1, true ) then
+			MsgC( yellow, "[[", v, "]]" )
+		else
+			MsgC( yellow, "\"", v, "\"" )
+		end
 	elseif IsColor( v ) then
 		MsgC(
 			cyan, "Color", white, "( ",
