@@ -24,7 +24,7 @@ end
 local MsgC = MsgC
 
 if SERVER and system.IsLinux() then
-	function MsgC( ... ) -- polyfill to make MsgC works serverside
+	function MsgC( ... ) -- polyfill to make MsgC works in linux srcds
 		for _, v in ipairs( { ... } ) do
 			if ( IsColor( v ) ) then
 				Msg( string.format( "\27[38;2;%d;%d;%dm", v.r, v.g, v.b ) )
@@ -121,7 +121,7 @@ function table.Print( tbl, lvl, already )
 	end
 
 	if ( len == 0 ) then
-		return "{}"
+		return MsgC( red, "{}" )
 	end
 
 	local isSeq = len == #tbl
@@ -148,11 +148,11 @@ function table.Print( tbl, lvl, already )
 	end
 
 	local iter = isSeq and ipairs or pairs
-	local indent = string.rep( "\t", len == 1 and 0 or lvl )
+	local indent = string.rep( "\t", lvl )
 	local table_indent = string.rep( "\t", lvl - 1 )
 	local i = 1
 
-	MsgC( red, len == 1 and "{ " or "{\n" )
+	MsgC( red, "{\n" )
 
 	for k, v in iter( tbl ) do
 		if ( isSeq ) then
@@ -173,22 +173,16 @@ function table.Print( tbl, lvl, already )
 			MsgValue( v )
 		end
 
-		if ( len ~= 1 ) then
-			if i == len then
-				Msg( "\n" )
-			else
-				MsgC( red, ",\n" )
-			end
+		if i == len then
+			Msg( "\n" )
+		else
+			MsgC( red, ",\n" )
 		end
 
 		i = i + 1
 	end
 
-	if ( len == 1 ) then
-		MsgC( " ", red, "}" )
-	else
-		MsgC( table_indent, red, "}" )
-	end
+	MsgC( table_indent, red, "}" )
 
 	if ( lvl == 1 ) then Msg( "\n" ) end
 end
