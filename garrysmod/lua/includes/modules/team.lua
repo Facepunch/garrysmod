@@ -26,7 +26,7 @@ function SetUp( id, name, color, joinable )
 
 	if ( joinable == nil ) then joinable = true end
 
-	TeamInfo[id] = { Name = name, Color = color, Score = 0, Joinable = joinable }
+	TeamInfo[id] = { ID = id, Name = name, Color = color, Score = 0, Joinable = joinable }
 
 end
 
@@ -132,6 +132,12 @@ function NumPlayers(index)
 
 end
 
+function NumAlivePlayers(index)
+
+	return #GetAlivePlayers(index)
+
+end
+
 function GetPlayers(index)
 
 	local TeamPlayers = {}
@@ -143,6 +149,20 @@ function GetPlayers(index)
 	end
 
 	return TeamPlayers
+
+end
+
+function GetAlivePlayers(index)
+
+	local TeamAlivePlayers = {}
+
+	for id,pl in ipairs( player.GetAll() ) do
+		if (IsValid(pl) and pl:Team() == index and pl:Alive()) then
+			table.insert(TeamAlivePlayers, pl)
+		end
+	end
+
+	return TeamAlivePlayers
 
 end
 
