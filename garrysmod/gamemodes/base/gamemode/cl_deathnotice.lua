@@ -146,8 +146,8 @@ net.Receive( "DeathNoticeEvent", function()
 	local team_v = -1
 	if ( bit.band( flags, DEATH_NOTICE_FRIENDLY_VICTIM ) != 0 ) then team_v = -2 end
 	if ( bit.band( flags, DEATH_NOTICE_FRIENDLY_ATTACKER ) != 0 ) then team_a = -2 end
-	if ( isentity( attacker ) ) then team_a = attacker:Team() attacker = attacker:Name() end
-	if ( isentity( victim ) ) then team_v = victim:Team() victim = victim:Name()  end
+	if ( isentity( attacker ) and attacker:IsPlayer() ) then team_a = attacker:Team() attacker = attacker:Name() end
+	if ( isentity( victim ) and victim:IsPlayer() ) then team_v = victim:Team() victim = victim:Name()  end
 
 	hook.Run( "AddDeathNotice", attacker, team_a, inflictor, victim, team_v, flags )
 
