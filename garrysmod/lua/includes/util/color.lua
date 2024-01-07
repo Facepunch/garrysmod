@@ -12,12 +12,6 @@ function Color( r, g, b, a )
 end
 
 --[[---------------------------------------------------------
-	Register our metatable to make it accessible using FindMetaTable
------------------------------------------------------------]]
-
-setmetatable(Color, COLOR)
-
---[[---------------------------------------------------------
 	Change the alpha of a color
 -----------------------------------------------------------]]
 function ColorAlpha( c, a )
