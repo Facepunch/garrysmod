@@ -1,12 +1,5 @@
-
 local COLOR = {}
 COLOR.__index = COLOR
-
---[[---------------------------------------------------------
-	Register our metatable to make it accessible using FindMetaTable
------------------------------------------------------------]]
-
-debug.getregistry().Color = COLOR
 
 --[[---------------------------------------------------------
 	To easily create a color table
@@ -17,6 +10,12 @@ function Color( r, g, b, a )
 	return setmetatable( { r = math.min( tonumber(r), 255 ), g =  math.min( tonumber(g), 255 ), b =  math.min( tonumber(b), 255 ), a =  math.min( tonumber(a), 255 ) }, COLOR )
 
 end
+
+--[[---------------------------------------------------------
+	Register our metatable to make it accessible using FindMetaTable
+-----------------------------------------------------------]]
+
+setmetatable(Color, COLOR)
 
 --[[---------------------------------------------------------
 	Change the alpha of a color
