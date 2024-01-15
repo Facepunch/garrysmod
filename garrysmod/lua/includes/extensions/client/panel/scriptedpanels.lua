@@ -127,3 +127,32 @@ function vgui.RegisterFile( filename )
 	return mtable
 
 end
+
+local function FindPanelsByClass( seekingClass, panelToCheck, tDone, panelsFound )
+
+    panelToCheck = panelToCheck or vgui.GetWorldPanel()
+    panelsFound = panelsFound or {}
+    tDone = tDone or {}
+
+    for k, panel in ipairs( panelToCheck:GetChildren() ) do
+        if ( panel.ClassName == seekingClass ) then
+            table.insert( panelsFound, panel )
+        end
+
+        if ( !tDone[ panel ] ) then
+            tDone[ panel ] = true
+
+            FindPanelsByClass( seekingClass, panel, tDone, panelsFound )
+        end
+    end
+
+    return panelsFound
+
+end
+
+function vgui.FindByClass( seekingClass )
+
+    return FindPanelsByClass( seekingClass )
+
+end
+
