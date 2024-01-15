@@ -128,11 +128,31 @@ function vgui.RegisterFile( filename )
 
 end
 
+local parentToHUDPanel
+
 local function FindPanelsByClass( seekingClass, panelToCheck, tDone, panelsFound )
+
+    local shouldCheckHUDPanels = CLIENT && !panelToCheck
 
     panelToCheck = panelToCheck or vgui.GetWorldPanel()
     panelsFound = panelsFound or {}
     tDone = tDone or {}
+
+    if ( !IsValid( panelToCheck ) ) then return panelsFound end
+
+    if ( shouldCheckHUDPanels ) then
+        FindPanelsByClass( seekingClass, GetHUDPanel(), tDone, panelsFound )
+
+        -- The panel Panel:ParentToHUD() sets as the parent is for some reason different from GetHUDPanel()
+        if ( !IsValid( parentToHUDPanel ) ) then
+            local tempPanel = vgui.CreateX('Panel')
+            tempPanel:ParentToHUD()
+            parentToHUDPanel = tempPanel:GetParent()
+            tempPanel:Remove()
+        end
+            
+        FindPanelsByClass( seekingClass, parentToHUDPanel, tDone, panelsFound )
+    end
 
     for k, panel in ipairs( panelToCheck:GetChildren() ) do
         if ( panel.ClassName == seekingClass ) then
