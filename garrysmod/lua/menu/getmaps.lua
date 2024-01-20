@@ -67,6 +67,8 @@ local function UpdateMaps()
 	MapNames[ "sav_dojo6" ] = "Dystopia"
 	MapNames[ "varena" ] = "Dystopia"
 
+	MapNames[ "ff_" ] = "Fortress Forever"
+	
 	MapNames[ "d1_" ] = "Half-Life 2"
 	MapNames[ "d2_" ] = "Half-Life 2"
 	MapNames[ "d3_" ] = "Half-Life 2"
