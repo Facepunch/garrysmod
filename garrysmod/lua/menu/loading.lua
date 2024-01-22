@@ -32,6 +32,7 @@ function PANEL:ShowURL( url, force )
 	self.HTML:OpenURL( url )
 
 	self:InvalidateLayout()
+	self:SetMouseInputEnabled( false )
 
 	self.LoadedURL = url
 
@@ -89,6 +90,12 @@ function PANEL:OnDeactivate()
 	-- Notify the user that the game is ready.
 	-- TODO: A convar for this?
 	system.FlashWindow()
+
+end
+
+function PANEL:OnScreenSizeChanged( oldW, oldH, newW, newH )
+
+	self:InvalidateLayout( true )
 
 end
 
@@ -229,14 +236,6 @@ function IsInLoading()
 
 end
 
-function UpdateLoadPanel( strJavascript )
-
-	if ( !pnlLoading ) then return end
-
-	pnlLoading:RunJavascript( strJavascript )
-
-end
-
 function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode )
 
 	if ( engine.IsPlayingDemo() ) then return end
@@ -271,7 +270,7 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 		end
 	end
 
-	pnlLoading.JavascriptRun = string.format( 'if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s", "%s" );',
+	pnlLoading.JavascriptRun = string.format( [[if ( window.GameDetails ) GameDetails( "%s", "%s", "%s", %i, "%s", "%s", %.2f, "%s", "%s" );]],
 		servername:JavascriptSafe(), serverurl:JavascriptSafe(), mapname:JavascriptSafe(), maxplayers, steamid:JavascriptSafe(), g_GameMode:JavascriptSafe(),
 		GetConVarNumber( "snd_musicvolume" ), GetConVarString( "gmod_language" ), niceGamemode:JavascriptSafe() )
 
