@@ -498,6 +498,7 @@ hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str, wsid )
 	if ( wsid and wsid:len() > 0 ) then button2 = "Open map on Steam Workshop" end
 
 	Derma_Query( str, "Failed to load save!", "OK", nil, button2, function() steamworks.ViewFile( wsid ) end )
+	gui.ActivateGameUI()
 end )
 
 --
