@@ -140,7 +140,7 @@ function PANEL:FixVertexLitMaterial()
 
 end
 
-function PANEL:SizeToContents( strImage )
+function PANEL:SizeToContents()
 
 	self:SetSize( self.ActualWidth, self.ActualHeight )
 
@@ -153,6 +153,7 @@ function PANEL:Paint()
 end
 
 function PANEL:PaintAt( x, y, dw, dh )
+
 	dw, dh = dw or self:GetWide(), dh or self:GetTall()
 	self:LoadMaterial()
 
