@@ -623,10 +623,10 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 			ply:AddCleanup( "npcs", ent )
 		end
 
-		if ( data.Health ) then ent:SetHealth( data.Health ) end
+		if ( data.CurHealth ) then ent:SetHealth( data.CurHealth ) end
 		if ( data.MaxHealth ) then ent:SetMaxHealth( data.MaxHealth ) end
 
-		table.Add( ent:GetTable(), data )
+		table.Merge( ent:GetTable(), data )
 
 	end
 
