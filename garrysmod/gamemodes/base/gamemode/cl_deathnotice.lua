@@ -221,12 +221,14 @@ local function DrawDeath( x, y, death, time )
 
 end
 
+local cl_drawhud = GetConVar( "cl_drawhud" )
 
 function GM:DrawDeathNotice( x, y )
 
-	if ( GetConVarNumber( "cl_drawhud" ) == 0 ) then return end
+	if ( cl_drawhud:GetInt() == 0 ) then return end
 
 	local time = hud_deathnotice_time:GetFloat()
+	local resetDeathsTable = Deaths[1] != nil -- Don't reset it if there's nothing in it
 
 	x = x * ScrW()
 	y = y * ScrH()
@@ -247,6 +249,8 @@ function GM:DrawDeathNotice( x, y )
 
 			y = DrawDeath( math.floor( x ), math.floor( y ), Death, time )
 
+			resetDeathsTable = false
+
 		end
 
 	end
@@ -254,12 +258,10 @@ function GM:DrawDeathNotice( x, y )
 	-- We want to maintain the order of the table so instead of removing
 	-- expired entries one by one we will just clear the entire table
 	-- once everything is expired.
-	for k, Death in ipairs( Deaths ) do
-		if ( Death.time + time > CurTime() ) then
-			return
-		end
-	end
+	if ( resetDeathsTable ) then
 
-	Deaths = {}
+		Deaths = {}
+
+	end
 
 end
