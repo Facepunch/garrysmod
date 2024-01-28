@@ -1,3 +1,4 @@
+
 TOOL.Category = "Poser"
 TOOL.Name = "#tool.finger.name"
 
@@ -400,14 +401,6 @@ function TOOL:ApplyValues( pEntity, iHand )
 				Ang = Angle( 0, tonumber( VecComp[2] ), tonumber( VecComp[1] ) )
 			else
 				Ang = Angle( 0, tonumber( VecComp[1] ), -tonumber( VecComp[2] ) )
-			end
-
-		elseif ( bFF ) then
-
-			if ( i < 3 ) then
-				Ang = Angle( tonumber( VecComp[1] ), tonumber( VecComp[2] ), 0 )
-			else
-				Ang = Angle( -tonumber( VecComp[2] ), tonumber( VecComp[1] ), 0 )
 			end
 
 		else
