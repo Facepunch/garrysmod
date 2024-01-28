@@ -1,4 +1,3 @@
-
 TOOL.Category = "Poser"
 TOOL.Name = "#tool.finger.name"
 
@@ -16,9 +15,9 @@ local function HasTF2Hands( pEntity )
 	return pEntity:LookupBone( "bip_hand_L" ) != nil
 end
 
--- Returns true if it has Portal 2 hands
+-- Returns true if it has Portal 2 or Fort. Forever hands
 local function HasP2Hands( pEntity )
-	return pEntity:LookupBone( "wrist_A_L" ) != nil || pEntity:LookupBone( "index_1_L" ) != nil
+	return pEntity:LookupBone( "wrist_A_L" ) != nil || pEntity:LookupBone( "index_1_L" ) != nil || pEntity:LookupBone( "ffSkel_LeftHand" ) != nil
 end
 
 local TranslateTable_TF2 = {}
@@ -229,6 +228,26 @@ TranslateTable_VORT[ "ValveBiped.Bip01_R_Finger4" ] = "ValveBiped.pinky1_R"
 TranslateTable_VORT[ "ValveBiped.Bip01_R_Finger41" ] = "ValveBiped.pinky2_R"
 TranslateTable_VORT[ "ValveBiped.Bip01_R_Finger42" ] = "ValveBiped.pinky3_R"
 
+local TranslateTable_FF = {}
+TranslateTable_FF[ "ValveBiped.Bip01_L_Finger0" ] = "ffSkel_LeftHandThumb1"
+TranslateTable_FF[ "ValveBiped.Bip01_L_Finger01" ] = "ffSkel_LeftHandThumb2"
+TranslateTable_FF[ "ValveBiped.Bip01_L_Finger02" ] = "ffSkel_LeftHandThumb3"
+TranslateTable_FF[ "ValveBiped.Bip01_L_Finger1" ] = "ffSkel_LeftHandIndex1"
+TranslateTable_FF[ "ValveBiped.Bip01_L_Finger11" ] = "ffSkel_LeftHandIndex2"
+TranslateTable_FF[ "ValveBiped.Bip01_L_Finger12" ] = "ffSkel_LeftHandIndex3"
+TranslateTable_FF[ "ValveBiped.Bip01_L_Finger2" ] = "ffSkel_LeftHandMiddle1"
+TranslateTable_FF[ "ValveBiped.Bip01_L_Finger21" ] = "ffSkel_LeftHandMiddle2"
+TranslateTable_FF[ "ValveBiped.Bip01_L_Finger22" ] = "ffSkel_LeftHandMiddle3"
+TranslateTable_FF[ "ValveBiped.Bip01_R_Finger0" ] = "ffSkel_RightHandThumb1"
+TranslateTable_FF[ "ValveBiped.Bip01_R_Finger01" ] = "ffSkel_RightHandThumb2"
+TranslateTable_FF[ "ValveBiped.Bip01_R_Finger02" ] = "ffSkel_RightHandThumb3"
+TranslateTable_FF[ "ValveBiped.Bip01_R_Finger1" ] = "ffSkel_RightHandIndex1"
+TranslateTable_FF[ "ValveBiped.Bip01_R_Finger11" ] = "ffSkel_RightHandIndex2"
+TranslateTable_FF[ "ValveBiped.Bip01_R_Finger12" ] = "ffSkel_RightHandIndex3"
+TranslateTable_FF[ "ValveBiped.Bip01_R_Finger2" ] = "ffSkel_RightHandMiddle1"
+TranslateTable_FF[ "ValveBiped.Bip01_R_Finger21" ] = "ffSkel_RightHandMiddle2"
+TranslateTable_FF[ "ValveBiped.Bip01_R_Finger22" ] = "ffSkel_RightHandMiddle3"
+
 function TOOL:HandEntity()
 	return self:GetWeapon():GetNWEntity( "HandEntity" )
 end
@@ -262,6 +281,14 @@ local function GetFingerBone( self, fingernum, part, hand )
 	end
 	---- END TF BONE LOOKUP ----------------------------------
 
+	---- START FORT. FOREVER BONE LOOKUP --------------------
+	local TranslatedName = TranslateTable_FF[ Name ]
+	if ( TranslatedName ) then
+		local bone = self:LookupBone( TranslatedName )
+		if ( bone ) then return bone end
+	end
+	---- END FORT. FOREVER BONE LOOKUP --------------------
+	
 	---- START Zeno BONE LOOKUP ----------------------------------
 	TranslatedName = TranslateTable_Zeno[ Name ]
 	if ( TranslatedName ) then
@@ -375,6 +402,14 @@ function TOOL:ApplyValues( pEntity, iHand )
 				Ang = Angle( 0, tonumber( VecComp[1] ), -tonumber( VecComp[2] ) )
 			end
 
+		elseif ( bFF ) then
+
+			if ( i < 3 ) then
+				Ang = Angle( tonumber( VecComp[1] ), tonumber( VecComp[2] ), 0 )
+			else
+				Ang = Angle( -tonumber( VecComp[2] ), tonumber( VecComp[1] ), 0 )
+			end
+
 		else
 			if ( i < 3 ) then
 				Ang = Angle( tonumber( VecComp[2] ), tonumber( VecComp[1] ), 0 )
@@ -400,6 +435,7 @@ function TOOL:GetHandPositions( pEntity )
 	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "Bip01_L_Hand" ) end
 	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "Dog_Model.Hand_L" ) end -- DOG
 	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "ValveBiped.Hand1_L" ) end -- Vortigaunt
+	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "ffSkel_LeftHand" ) end -- Fortress Forever
 	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "wrist_L" ) end -- Chell
 	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "L Hand" ) end -- Insurgency
 	if ( !LeftHand ) then LeftHand = pEntity:LookupBone( "wrist_A_L" ) end -- Portal 2 Egg bot
@@ -410,6 +446,7 @@ function TOOL:GetHandPositions( pEntity )
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "Bip01_R_Hand" ) end
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "Dog_Model.Hand_R" ) end
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "ValveBiped.Hand1_R" ) end
+	if ( !RightHand ) then RightHand = pEntity:LookupBone( "ffSkel_RightHand" ) end -- Fortress Forever
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "wrist_R" ) end
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "R Hand" ) end
 	if ( !RightHand ) then RightHand = pEntity:LookupBone( "wrist_A_R" ) end
