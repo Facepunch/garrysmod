@@ -12,7 +12,7 @@ AddVehicle( {
 	-- Required information
 	Name = "Jeep",
 	Model = "models/buggy.mdl",
-	Class = "prop_vehicle_jeep_old",
+	Class = "prop_vehicle_jeep",
 	Category = Category,
 
 	-- Optional information
@@ -20,7 +20,7 @@ AddVehicle( {
 	Information = "The regular old jeep",
 
 	KeyValues = {
-		vehiclescript = "scripts/vehicles/jeep_test.txt"
+		vehiclescript = "scripts/vehicles/jeep_test_new.txt"
 	}
 }, "Jeep" )
 
