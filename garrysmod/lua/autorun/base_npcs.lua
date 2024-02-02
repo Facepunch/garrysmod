@@ -113,6 +113,18 @@ AddNPC( {
 	Weapons = { "weapon_pistol", "weapon_smg1" }
 }, "Refugee" )
 
+-- Simple Cops (from starter chapters of HL2)
+-- Uses different squadname from standard overwatch units
+-- will only spawn with usp and play holster anims
+-- will ignore unseen enemies?
+AddNPC( {
+	Class = "npc_metropolice",
+	Category = Category,
+	Weapons = { "weapon_pistol" },
+	SpawnFlags = 131072, -- Simple Cops flag
+	KeyValues = { SquadName = "civil_protection", weapondrawn = true, ignoreunseenenemies = true }
+} )
+
 if ( IsMounted( "ep2" ) ) then
 	AddNPC( {
 		Name = "Uriah",
