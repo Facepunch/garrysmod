@@ -148,6 +148,7 @@ hook.Add("TTTEndRound", "ttt_damagelog_save_hook", SaveDamageLog)
 
 function DamageLog(txt)
    local t = math.max(0, CurTime() - GAMEMODE.RoundStartTime)
+   t = math.clamp(t, 0, 25)
 
    txt = util.SimpleTime(t, "%02i:%02i.%02i - ") .. txt
    ServerLog(txt .. "\n")
