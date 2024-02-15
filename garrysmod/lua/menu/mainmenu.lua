@@ -495,7 +495,7 @@ end )
 
 hook.Add( "LoadGModSaveFailed", "LoadGModSaveFailed", function( str, wsid )
 	local button2 = nil
-	if ( wsid and wsid:len() > 0 ) then button2 = "Open map on Steam Workshop" end
+	if ( wsid and wsid:len() > 0 and wsid != "0" ) then button2 = "Open map on Steam Workshop" end
 
 	Derma_Query( str, "Failed to load save!", "OK", nil, button2, function() steamworks.ViewFile( wsid ) end )
 	gui.ActivateGameUI()
@@ -514,4 +514,7 @@ timer.Simple( 0, function()
 
 	hook.Run( "GameContentChanged" )
 
+	if ( !file.Exists( "html/menu.html", "MOD" ) ) then
+		OnMenuFailedToLoad()
+	end
 end )
