@@ -145,6 +145,52 @@ end
 
 vgui.Register( "MainMenuPanel", PANEL, "EditablePanel" )
 
+local PANEL = {}
+
+function PANEL:SetText( txt )
+	self.Text = txt
+end
+
+function PANEL:Paint( w, h )
+	-- Draw the text
+	local parsed = markup.Parse( self.Text, self:GetParent():GetWide() )
+	parsed:Draw( 0, 0 )
+
+	-- Size to contents. Ew.
+	self:SetSize( parsed:GetWidth(), parsed:GetHeight() )
+end
+
+-- TODO: Maybe this panel belongs in client realm as well?
+local markupPanel = vgui.RegisterTable( PANEL, "Panel" )
+
+function OnMenuFailedToLoad()
+	local frame = vgui.Create( "DFrame" )
+	frame:SetSize( ScrW() / 2, ScrH() / 2 )
+	frame:Center()
+	frame:SetDraggable( false )
+	frame:ShowCloseButton( false )
+	frame:SetTitle( "Menu failed to load" )
+	frame:MakePopup()
+
+	local lbl = vgui.CreateFromTable( markupPanel, frame )
+	lbl:Dock( TOP )
+	lbl:DockMargin( 0, 0, 0, 5 )
+	lbl:SetText( "Looks like the main menu failed to load.\n\nThis could be due to missing game files (run verification of game file integrity through Steam), or the HTML engine failed to load.\n\nBelow are some simple options to exit the game." )
+
+	local btn_srv = frame:Add( "DButton" )
+	btn_srv:Dock( TOP )
+	btn_srv:DockMargin( 0, 0, 0, 5 )
+	btn_srv:SetText( "Open legacy server browser" )
+	btn_srv:SetConsoleCommand( "gamemenucommand", "openserverbrowser" )
+
+	local btn_exit = frame:Add( "DButton" )
+	btn_exit:Dock( TOP )
+	btn_exit:DockMargin( 0, 0, 0, 5 )
+	btn_exit:SetText( "Exit the game" )
+	btn_exit.DoClick = function() RunGameUICommand( "quit" ) end
+end
+
+
 --
 -- Called from JS when starting a new game
 --
