@@ -11,10 +11,10 @@ concommand.Add( "gm_demo", function( ply, cmd, arg )
 	RunConsoleCommand( "record", "demos/" .. dynamic_name .. ".dem" )
 	RunConsoleCommand( "record_screenshot", dynamic_name )
 
-end )
+end, nil, "Start or stop a demo", FCVAR_DONTRECORD )
 
 local matRecording = nil
-local drawicon = CreateClientConVar( "gm_demo_icon", 1, true )
+local drawicon = CreateConVar( "gm_demo_icon", 1, FCVAR_ARCHIVE + FCVAR_DONTRECORD )
 hook.Add( "HUDPaint", "DrawRecordingIcon", function()
 
 	if ( !engine.IsRecordingDemo() || !drawicon:GetBool() ) then return end
