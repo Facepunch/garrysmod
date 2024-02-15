@@ -18,30 +18,6 @@ function ENT:Initialize()
 	--
 	if ( CLIENT ) then
 
-		if ( IsValid( g_SkyPaint ) ) then
-
-			-- A bit of a hack
-			self:EditValue( "topcolor", tostring( g_SkyPaint:GetTopColor() ) )
-			self:EditValue( "bottomcolor", tostring( g_SkyPaint:GetBottomColor() ) )
-			self:EditValue( "fadebias", tostring( g_SkyPaint:GetFadeBias() ) )
-			self:EditValue( "hdrscale", tostring( g_SkyPaint:GetHDRScale() ) )
-
-			self:EditValue( "starlayers", tostring( g_SkyPaint:GetStarLayers() ) )
-			self:EditValue( "drawstars", tostring( g_SkyPaint:GetDrawStars() and 1 or 0 ) )
-			self:EditValue( "startexture", g_SkyPaint:GetStarTexture() )
-			self:EditValue( "starspeed", tostring( g_SkyPaint:GetStarSpeed() ) )
-			self:EditValue( "starfade", tostring( g_SkyPaint:GetStarFade() ) )
-			self:EditValue( "starscale", tostring( g_SkyPaint:GetStarScale() ) )
-
-			self:EditValue( "duskintensity", tostring( g_SkyPaint:GetDuskIntensity() ) )
-			self:EditValue( "duskscale", tostring( g_SkyPaint:GetDuskScale() ) )
-			self:EditValue( "duskcolor", tostring( g_SkyPaint:GetDuskColor() ) )
-
-			self:EditValue( "sunsize", tostring( g_SkyPaint:GetSunSize() ) )
-			self:EditValue( "suncolor", tostring( g_SkyPaint:GetSunColor() ) )
-
-		end
-
 		g_SkyPaint = self
 
 	end
@@ -98,3 +74,33 @@ function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS
 
 end
+
+-- Player just spawned this entity from the spawnmenu - not from a duplication.
+-- Copy over the settings of the maps' skypaint
+hook.Add( "PlayerSpawnedSENT", "CopyOverEditSkySettings", function( ply, ent )
+
+	if ( ent:GetClass() != "edit_sky" ) then return end
+
+	local skyPaint = ents.FindByClass( "env_skypaint" )[ 1 ];
+	if ( !IsValid( skyPaint ) ) then return end
+
+	ent:SetTopColor( skyPaint:GetTopColor() )
+	ent:SetBottomColor( skyPaint:GetBottomColor() )
+	ent:SetFadeBias( skyPaint:GetFadeBias() )
+	ent:SetHDRScale( skyPaint:GetHDRScale() )
+
+	ent:SetStarLayers( skyPaint:GetStarLayers() )
+	ent:SetDrawStars( skyPaint:GetDrawStars() )
+	ent:SetStarTexture( skyPaint:GetStarTexture() )
+	ent:SetStarSpeed( skyPaint:GetStarSpeed() )
+	ent:SetStarFade( skyPaint:GetStarFade() )
+	ent:SetStarFade( skyPaint:GetStarFade() )
+
+	ent:SetDuskIntensity( skyPaint:GetDuskIntensity() )
+	ent:SetDuskScale( skyPaint:GetDuskScale() )
+	ent:SetDuskColor( skyPaint:GetDuskColor() )
+
+	ent:SetSunSize( skyPaint:GetSunSize() )
+	ent:SetSunColor( skyPaint:GetSunColor() )
+
+end )
