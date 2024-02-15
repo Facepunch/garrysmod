@@ -347,7 +347,7 @@ end
 --
 -- For your pleasure.
 --
-function PANEL:OnValueChanged()
+function PANEL:OnValueChanged( value )
 end
 
 PANEL.AllowAutoRefresh = true

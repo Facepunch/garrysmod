@@ -139,7 +139,7 @@ function PANEL:Paint( w, h )
 	local h2 = self.LuaErrorList:GetTall()
 	local _, lY = self.LuaErrorList:GetPos()
 
-	draw.DrawText( self:GetExplainerText(), "DermaDefault", w / 2, lY + h2 + 5, white, draw.TEXT_ALIGN_CENTER, draw.TEXT_ALIGN_TOP )
+	draw.DrawText( self:GetExplainerText(), "DermaDefault", w / 2, lY + h2 + 5, white, draw.TEXT_ALIGN_CENTER )
 
 end
 

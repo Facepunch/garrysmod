@@ -96,8 +96,6 @@ if ( SERVER ) then
 		table.Merge( dynamite:GetTable(), {
 			key = key,
 			pl = ply,
-			nocollide = nocollide,
-			description = description,
 			Damage = damage,
 			model = model,
 			remove = remove,

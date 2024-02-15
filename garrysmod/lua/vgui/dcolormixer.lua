@@ -327,7 +327,7 @@ function PANEL:ConVarThink()
 	local a, changed_a = 255, false
 
 	if ( self.m_ConVarA ) then
-		a, changed_a = self:DoConVarThink( self.m_ConVarA, "a" )
+		a, changed_a = self:DoConVarThink( self.m_ConVarA )
 	end
 
 	if ( changed_r or changed_g or changed_b or changed_a ) then

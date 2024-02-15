@@ -73,7 +73,7 @@ function PANEL:AddModelEx( name, model, skin )
 	Icon:SetTooltip( model )
 	Icon.Model = model
 	Icon.Value = name
-	Icon.ConVars = ConVars || {}
+	Icon.ConVars = {}
 
 	local ConVarName = self:ConVar()
 

@@ -104,7 +104,7 @@ function TOOL:LeftClick( trace, attach )
 
 			end
 
-			local constr, rope = constraint.Rope( balloon, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 0.5, material, nil )
+			local constr, rope = constraint.Rope( balloon, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 0.5, material )
 			if ( IsValid( constr ) ) then
 				undo.AddEntity( constr )
 				ply:AddCleanup( "balloons", constr )

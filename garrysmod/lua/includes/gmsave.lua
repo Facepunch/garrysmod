@@ -18,7 +18,7 @@ function gmsave.LoadMap( strMapContents, ply, callback )
 		strMapContents = string.sub( strMapContents, startchar )
 	end
 
-	-- Stip off any crap after the end char..
+	-- Strip off any crap after the end char..
 	strMapContents = strMapContents:reverse()
 	local startchar = string.find( strMapContents, '' )
 	if ( startchar != nil ) then

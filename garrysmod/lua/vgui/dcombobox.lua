@@ -71,7 +71,7 @@ function PANEL:GetOptionTextByData( data )
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
 	self.DropButton:SetSize( 15, 15 )
 	self.DropButton:AlignRight( 4 )

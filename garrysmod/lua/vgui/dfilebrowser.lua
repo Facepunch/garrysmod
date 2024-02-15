@@ -308,7 +308,7 @@ end
 
 function PANEL:GenerateExample( class, sheet, w, h )
 
-	local browser = vgui.Create( class, frame )
+	local browser = vgui.Create( class )
 	browser:Dock( FILL )
 	browser:DockMargin( 5, 0, 5, 5 )
 

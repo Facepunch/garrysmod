@@ -392,7 +392,7 @@ function PANEL:InstallDraggable( pNode )
 	pNode:Droppable( DragName )
 
 	-- Allow item dropping onto us
-	self.ChildNodes:MakeDroppable( DragName, true, true )
+	self.ChildNodes:MakeDroppable( DragName, true )
 
 end
 

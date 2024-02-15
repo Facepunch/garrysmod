@@ -40,7 +40,7 @@ function ENT:Initialize()
 
 		-- Make the render bounds a bigger so the effect doesn't get snipped off
 		local mx, mn = self:GetRenderBounds()
-		self:SetRenderBounds( mn + Vector( 0, 0, 128 ), mx, 0 )
+		self:SetRenderBounds( mn + Vector( 0, 0, 128 ), mx )
 
 		self.Seed = math.Rand( 0, 10000 )
 

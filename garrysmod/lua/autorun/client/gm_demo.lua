@@ -25,6 +25,6 @@ hook.Add( "HUDPaint", "DrawRecordingIcon", function()
 
 	surface.SetDrawColor( 255, 255, 255, 255 )
 	surface.SetMaterial( matRecording )
-	surface.DrawTexturedRect( ScrW() - 512, 0, 512, 256, 0 )
+	surface.DrawTexturedRect( ScrW() - 512, 0, 512, 256 )
 
 end )
