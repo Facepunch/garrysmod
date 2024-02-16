@@ -114,6 +114,8 @@ end
 	Desc: Unlike merge this adds the two tables together and discards keys.
 -----------------------------------------------------------]]
 function table.Add( dest, source )
+	-- The tables should be different otherwise this will just freeze the whole game
+	if ( dest == source ) then return dest end
 
 	-- At least one of them needs to be a table or this whole thing will fall on its ass
 	if ( !istable( source ) ) then return dest end
