@@ -13,7 +13,7 @@ function PANEL:Init()
 	self.BackButton:Dock( LEFT )
 	self.BackButton:DockMargin( Spacing * 3, Margins, Spacing, Margins )
 	self.BackButton.DoClick = function()
-		self.BackButton:SetDisabled( true )
+		self.BackButton:SetEnabled( false )
 		self.Cur = self.Cur - 1
 		self.Navigating = true
 		self.HTML:GoBack()
@@ -25,7 +25,7 @@ function PANEL:Init()
 	self.ForwardButton:Dock( LEFT )
 	self.ForwardButton:DockMargin( Spacing, Margins, Spacing, Margins )
 	self.ForwardButton.DoClick = function()
-		self.ForwardButton:SetDisabled( true )
+		self.ForwardButton:SetEnabled( false )
 		self.Cur = self.Cur + 1
 		self.Navigating = true
 		self.HTML:GoForward()
@@ -148,22 +148,22 @@ end
 
 function PANEL:FinishedLoading()
 
-	self.StopButton:SetDisabled( true )
-	self.RefreshButton:SetDisabled( false )
+	self.StopButton:SetEnabled( false )
+	self.RefreshButton:SetEnabled( true )
 
 end
 
 function PANEL:StartedLoading()
 
-	self.StopButton:SetDisabled( false )
-	self.RefreshButton:SetDisabled( true )
+	self.StopButton:SetEnabled( true )
+	self.RefreshButton:SetEnabled( false )
 
 end
 
 function PANEL:UpdateNavButtonStatus()
 
-	self.ForwardButton:SetDisabled( self.Cur >= table.Count( self.History ) )
-	self.BackButton:SetDisabled( self.Cur == 1 )
+	self.ForwardButton:SetEnabled( self.Cur < table.Count( self.History ) )
+	self.BackButton:SetEnabled( self.Cur != 1 )
 
 end
 

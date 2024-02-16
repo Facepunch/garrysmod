@@ -21,7 +21,7 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	local Radius = Size:Length() * 0.5
 	local CamDist = Radius / math.sin( math.rad( FOV ) / 2 ) -- Works out how far the camera has to be away based on radius + fov!
 	local Center = LerpVector( 0.5, Dupe.Mins, Dupe.Maxs )
-	local CamPos = Center + Vector( -1, 0, 0.5 ):GetNormal() * CamDist
+	local CamPos = Center + Vector( -1, 0, 0.5 ):GetNormalized() * CamDist
 	local EyeAng = ( Center - CamPos ):GetNormal():Angle()
 
 	--
@@ -96,7 +96,8 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 		local Up			= EyeAng:Up() * BorderSize
 		local Right			= EyeAng:Right() * BorderSize
 
-		render.SetColorModulation( 1, 1, 1, 1 )
+		render.SetColorModulation( 1, 1, 1 )
+		render.SetBlend( 1 )
 		render.MaterialOverride( Material( "models/debug/debugwhite" ) )
 
 		-- Render each entity in a circle
@@ -125,7 +126,8 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 
 		-- Because we just messed up the depth
 		render.ClearDepth()
-		render.SetColorModulation( 0, 0, 0, 1 )
+		render.SetColorModulation( 0, 0, 0 )
+		render.SetBlend( 1 )
 
 		-- Try to keep the border size consistent with zoom size
 		BorderSize	= CamDist * 0.002
@@ -175,16 +177,21 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 	-- Render each model
 	for k, v in pairs( Dupe.Entities ) do
 
-		render.SetColorModulation( 1, 1, 1, 1 )
+		render.SetColorModulation( 1, 1, 1 )
+		render.SetBlend( 1 )
 
 		-- EntityMods override this
-		if ( v._DuplicatedColor ) then render.SetColorModulation( v._DuplicatedColor.r / 255, v._DuplicatedColor.g / 255, v._DuplicatedColor.b / 255, v._DuplicatedColor.a / 255 ) end
+		if ( v._DuplicatedColor ) then
+			render.SetColorModulation( v._DuplicatedColor.r / 255, v._DuplicatedColor.g / 255, v._DuplicatedColor.b / 255 )
+			--render.SetBlend( v._DuplicatedColor.a / 255 )
+		end
 		if ( v._DuplicatedMaterial ) then render.MaterialOverride( Material( v._DuplicatedMaterial ) ) end
 
 		if ( istable( v.EntityMods ) ) then
 
 			if ( istable( v.EntityMods.colour ) ) then
-				render.SetColorModulation( v.EntityMods.colour.Color.r / 255, v.EntityMods.colour.Color.g / 255, v.EntityMods.colour.Color.b / 255, v.EntityMods.colour.Color.a / 255 )
+				render.SetColorModulation( v.EntityMods.colour.Color.r / 255, v.EntityMods.colour.Color.g / 255, v.EntityMods.colour.Color.b / 255 )
+				--render.SetBlend( v.EntityMods.colour.Color.a / 255 )
 			end
 
 			if ( istable( v.EntityMods.material ) ) then
@@ -207,7 +214,8 @@ hook.Add( "PostRender", "RenderDupeIcon", function()
 
 	-- Enable lighting again (or it will affect outside of this loop!)
 	render.SuppressEngineLighting( false )
-	render.SetColorModulation( 1, 1, 1, 1 )
+	render.SetColorModulation( 1, 1, 1 )
+	render.SetBlend( 1 )
 
 	--
 	-- Finished with the entities - remove them all

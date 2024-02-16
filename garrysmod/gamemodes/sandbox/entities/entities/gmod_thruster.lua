@@ -200,8 +200,8 @@ if ( SERVER ) then
 			self:SetOffset( self.ThrustOffsetR )
 		end
 
-		self:SetNWVector( 1, self.ForceAngle )
-		self:SetNWVector( 2, self.ForceLinear )
+		self:SetNWVector( "1", self.ForceAngle )
+		self:SetNWVector( "2", self.ForceLinear )
 
 		self:SetOverlayText( "Force: " .. math.floor( self.force ) )
 

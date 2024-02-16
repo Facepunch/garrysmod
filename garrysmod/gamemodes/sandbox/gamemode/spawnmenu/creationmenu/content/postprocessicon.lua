@@ -177,4 +177,6 @@ spawnmenu.AddContentType( "postprocess", function( container, obj )
 
 	container:Add( icon )
 
+	return icon
+
 end )

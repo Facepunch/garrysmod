@@ -206,9 +206,6 @@ function PANEL:Paint()
 	-- Invisible background!
 end
 
-function PANEL:TranslateValues( x, y )
-end
-
 function PANEL:SetColor( color )
 
 	local hue, s, v = ColorToHSV( color )

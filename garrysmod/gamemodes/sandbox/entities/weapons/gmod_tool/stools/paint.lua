@@ -69,7 +69,7 @@ end
 
 function TOOL:RightClick( trace, bNoDelay )
 
-	self:GetSWEP():EmitSound( "SprayCan.Paint" )
+	self:GetWeapon():EmitSound( "SprayCan.Paint" )
 	local decal = self:GetClientInfo( "decal" )
 
 	local Pos1 = trace.HitPos + trace.HitNormal

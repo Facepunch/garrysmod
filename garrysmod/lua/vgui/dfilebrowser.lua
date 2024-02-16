@@ -106,7 +106,7 @@ function PANEL:SetCurrentFolder( strDir )
 	strDir = tostring( strDir )
 	strDir = string.Trim( strDir, "/" )
 
-	if ( self.m_strBaseFolder && !string.StartWith( strDir, self.m_strBaseFolder ) ) then
+	if ( self.m_strBaseFolder && !string.StartsWith( strDir, self.m_strBaseFolder ) ) then
 		strDir = string.Trim( self.m_strBaseFolder, "/" ) .. "/" .. string.Trim( strDir, "/" )
 	end
 
