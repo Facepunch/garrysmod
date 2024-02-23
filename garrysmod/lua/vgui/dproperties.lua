@@ -55,11 +55,11 @@ local tblRow = vgui.RegisterTable( {
 		self.Inner:SetEnabled( self:IsEnabled() )
 
 		-- Then override our methods so they affect Inner element instead
-		self.IsEnabled = function( self )
-			return self.Inner:IsEnabled()
+		self.IsEnabled = function( slf )
+			return slf.Inner:IsEnabled()
 		end
-		self.SetEnabled = function( self, b )
-			self.Inner:SetEnabled( b )
+		self.SetEnabled = function( slf, b )
+			slf.Inner:SetEnabled( b )
 		end
 
 		-- If the field is read only, disable it

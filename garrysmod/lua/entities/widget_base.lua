@@ -23,7 +23,7 @@ end
 -- Called on both client and server in multiplayer
 -- Only on the server in singleplayer.
 --
-function ENT:OnClick( ply )end
+function ENT:OnClick( ply ) end
 function ENT:OnRightClick( ply ) end
 function ENT:PressedThink( pl, mv ) end
 function ENT:PressedShouldDraw( widget ) return true end
@@ -59,7 +59,7 @@ function ENT:SetSize( size )
 
 	self:SetSizeVar( size )
 	self:SetSolid( SOLID_BBOX )
-	self:SetCollisionBounds( Vector( size, size, size) * -0.5, Vector( size, size, size) * 0.5 )
+	self:SetCollisionBounds( Vector( size, size, size ) * -0.5, Vector( size, size, size ) * 0.5 )
 
 end
 
@@ -69,7 +69,7 @@ function ENT:GetGrabPos( Pos, Forward )
 	local eye = Pos
 
 	local planepos = self:GetPos()
-	local planenrm = (eye-planepos):GetNormal()
+	local planenrm = ( eye - planepos ):GetNormal()
 
 	return util.IntersectRayWithPlane( eye, fwd, planepos, planenrm )
 
@@ -199,10 +199,10 @@ function ENT:OverlayRender()
 	local vSize = Vector( self:GetSize(), self:GetSize(), self:GetSize() )
 
 	render.SetColorMaterialIgnoreZ()
-	render.DrawBox( self:GetPos(), self:GetAngles(), -vSize, vSize, ColorAlpha( col, 0.8 ), false )
+	render.DrawBox( self:GetPos(), self:GetAngles(), -vSize, vSize, ColorAlpha( col, 0.8 ) )
 
 	render.SetColorMaterial()
-	render.DrawBox( self:GetPos(), self:GetAngles(), -vSize, vSize, col, false )
+	render.DrawBox( self:GetPos(), self:GetAngles(), -vSize, vSize, col )
 
 end
 

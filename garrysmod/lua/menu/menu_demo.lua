@@ -46,6 +46,7 @@ end
 
 function demo:Play( filename )
 
+	RunConsoleCommand( "progress_enable", "1" )
 	RunConsoleCommand( "playdemo", filename )
 
 end

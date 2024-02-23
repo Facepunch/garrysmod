@@ -76,7 +76,7 @@ function PANEL:UpdateColor( x, y )
 
 end
 
-function PANEL:OnUserChanged()
+function PANEL:OnUserChanged( color )
 
 	-- Override me
 

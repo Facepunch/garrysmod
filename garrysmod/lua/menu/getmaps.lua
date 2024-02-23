@@ -197,9 +197,9 @@ local function UpdateMaps()
 		local Name = gm.title or "Unnammed Gamemode"
 		local Maps = string.Split( gm.maps, "|" )
 
-		if ( Maps && gm.maps != "" ) then
+		if ( Maps and gm.maps != "" ) then
 
-			for k, pattern in ipairs( Maps ) do
+			for _, pattern in ipairs( Maps ) do
 				-- When in doubt, just try to match it with string.find
 				MapPatterns[ string.lower( pattern ) ] = Name
 			end
@@ -213,7 +213,7 @@ local function UpdateMaps()
 
 		local name = addon.title or "Unnammed Addon"
 
-		local files, folders = file.Find( "maps/*.bsp", name )
+		local files = file.Find( "maps/*.bsp", name )
 		if ( #files > 0 ) then AddonMaps[ name ] = files end
 
 	end
@@ -225,7 +225,7 @@ local favmaps
 local function LoadFavourites()
 
 	local cookiestr = cookie.GetString( "favmaps" )
-	favmaps = favmaps || ( cookiestr && string.Explode( ";", cookiestr ) || {} )
+	favmaps = favmaps or ( cookiestr and string.Explode( ";", cookiestr ) or {} )
 
 end
 
@@ -331,13 +331,11 @@ local function RefreshMaps( skip )
 
 		local csgo = false
 
-		if ( Category == "Counter-Strike" ) then
-			if ( file.Exists( "maps/" .. name .. ".bsp", "csgo" ) ) then
-				if ( file.Exists( "maps/" .. name .. ".bsp", "cstrike" ) ) then -- Map also exists in CS:GO
-					csgo = true
-				else
-					Category = "Counter-Strike: GO"
-				end
+		if ( Category == "Counter-Strike" and file.Exists( "maps/" .. name .. ".bsp", "csgo" ) ) then
+			if ( file.Exists( "maps/" .. name .. ".bsp", "cstrike" ) ) then -- Map also exists in CS:GO
+				csgo = true
+			else
+				Category = "Counter-Strike: GO"
 			end
 		end
 

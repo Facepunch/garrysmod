@@ -75,6 +75,7 @@ function PANEL:Init()
 
 	self:SetPadding( 1 )
 
+	self.m_bSelectionCanvas = true
 	self.SelectedItems = {}
 
 end

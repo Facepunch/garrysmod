@@ -8,7 +8,6 @@ if ( CLIENT ) then return end
 
 function ENT:Initialize()
 
-
 	self:SetModel( "models/Combine_Helicopter/helicopter_bomb01.mdl" )
 	self:PhysicsInit( SOLID_VPHYSICS )
 
@@ -18,10 +17,8 @@ function ENT:Initialize()
 
 	local phys = self:GetPhysicsObject()
 	if ( IsValid( phys ) ) then
-
 		phys:EnableMotion( false )
 		phys:EnableCollisions( false )
-
 	end
 
 	self:SetUnFreezable( true )

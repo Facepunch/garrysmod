@@ -97,7 +97,7 @@ function PANEL:Setup( name, icon, label )
 
 		end
 
-		self.Enabled = function() return checkbox:GetChecked() end
+		self.Enabled = function() return self.checkbox:GetChecked() end
 
 	end
 
@@ -176,5 +176,7 @@ spawnmenu.AddContentType( "postprocess", function( container, obj )
 	icon:Setup( obj.name, obj.icon, obj.label )
 
 	container:Add( icon )
+
+	return icon
 
 end )

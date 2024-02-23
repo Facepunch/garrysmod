@@ -153,7 +153,7 @@ function PANEL:Paint( w, h )
 end
 
 function PANEL:RunAnimation()
-	self.Entity:FrameAdvance( ( RealTime() - self.LastPaint ) * self.m_fAnimSpeed )
+	self.Entity:FrameAdvance( --[[( RealTime() - self.LastPaint ) * self.m_fAnimSpeed]] )
 end
 
 function PANEL:StartScene( name )

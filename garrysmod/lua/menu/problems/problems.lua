@@ -32,7 +32,7 @@ end
 local function CountProblem( severity )
 
 	ProblemsCount = ProblemsCount + 1
-	ProblemSeverity = math.max( ProblemSeverity, severity || 0 )
+	ProblemSeverity = math.max( ProblemSeverity, severity or 0 )
 
 	if ( IsValid( pnlMainMenu ) ) then
 		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. ProblemSeverity .. ")" )
@@ -47,12 +47,12 @@ local function RecountProblems()
 
 	for id, err in pairs( ErrorLog ) do
 		ProblemsCount = ProblemsCount + 1
-		ProblemSeverity = math.max( err.severity || 0, ProblemSeverity )
+		ProblemSeverity = math.max( err.severity or 0, ProblemSeverity )
 	end
 
 	for id, prob in pairs( Problems ) do
 		ProblemsCount = ProblemsCount + 1
-		ProblemSeverity = math.max( prob.severity || 0, ProblemSeverity )
+		ProblemSeverity = math.max( prob.severity or 0, ProblemSeverity )
 	end
 
 	if ( IsValid( pnlMainMenu ) ) then
@@ -90,7 +90,7 @@ end
 
 function FireProblem( prob )
 
-	local probID = prob.id || prob.text
+	local probID = prob.id or prob.text
 
 	if ( !Problems[ probID ] ) then
 		CountProblem( prob.severity )
@@ -115,7 +115,7 @@ local function FireError( str, realm, stack, addontitle, addonid )
 
 	local errorUniqueID = errorText .. realm
 
-	if ( !addontitle || addontitle == "" ) then addontitle = "Other" end
+	if ( !addontitle or addontitle == "" ) then addontitle = "Other" end
 
 	if ( !ErrorLog[ errorUniqueID ] ) then
 		local newErr = {
@@ -222,14 +222,14 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 		ClearProblem( "voice_fadeouttime" )
 	end
 
-	if ( ScrW() < 1000 || ScrH() < 700 ) then
+	if ( ScrW() < 1000 or ScrH() < 700 ) then
 		FireProblem( { id = "screen_res", text = "#problem.screen_res", type = "config" } )
 	else
 		ClearProblem( "screen_res" )
 	end
 
 	-- These are not saved, but still affect gameplay
-	if ( GetConVarNumber( "cl_forwardspeed" ) != 10000 || GetConVarNumber( "cl_sidespeed" ) != 10000 || GetConVarNumber( "cl_backspeed" ) != 10000 ) then
+	if ( GetConVarNumber( "cl_forwardspeed" ) != 10000 or GetConVarNumber( "cl_sidespeed" ) != 10000 or GetConVarNumber( "cl_backspeed" ) != 10000 ) then
 		FireProblem( { id = "cl_speeds", text = "#problem.cl_speeds", type = "config", fix = function()
 			RunConsoleCommand( "cl_forwardspeed", "10000" )
 			RunConsoleCommand( "cl_sidespeed", "10000" )
@@ -239,7 +239,7 @@ timer.Create( "menu_check_for_problems", 1, 0, function()
 		ClearProblem( "cl_speeds" )
 	end
 
-	if ( render.GetDXLevel() != 95 && render.GetDXLevel() != 90 ) then
+	if ( render.GetDXLevel() != 95 and render.GetDXLevel() != 90 ) then
 		FireProblem( { id = "mat_dxlevel", text = language.GetPhrase( "problem.mat_dxlevel" ):format( render.GetDXLevel() ), type = "config" } )
 	else
 		ClearProblem( "mat_dxlevel" )
@@ -290,7 +290,7 @@ hook.Add( "OnNotifyAddonConflict", "AddonConflictNotification", function( addon1
 
 	end
 
-	table.insert( AddonConflicts[ id ].files, fileName )
+	AddonConflicts[ id ].files[ fileName ] = true
 
 	RefreshAddonConflicts()
 
@@ -305,7 +305,7 @@ function FireAddonConflicts()
 	for id, tbl in pairs( AddonConflicts ) do
 
 		local files = ""
-		for _, file in ipairs( tbl.files ) do
+		for file, _ in pairs( tbl.files ) do
 			files = files .. file .. "\n"
 		end
 

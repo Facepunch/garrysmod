@@ -55,7 +55,7 @@ local function RefreshAddons( MyNode )
 		local models = MyNode:AddNode( addon.title .. " (" .. addon.models .. ")", "icon16/bricks.png" )
 		models.DoClick = function()
 
-			ViewPanel:Clear( true )
+			ViewPanel:Clear()
 
 			local anyAdded = AddRecursive( ViewPanel, "models/", addon.title, "*.mdl" )
 			if ( !anyAdded ) then
@@ -108,7 +108,7 @@ hook.Add( "GameContentChanged", "RefreshSpawnmenuAddons", function()
 
 	-- TODO: Maybe be more advaced and do not delete => recreate all the nodes, only delete nodes for addons that were removed, add only the new ones?
 	myAddonsNode:Clear()
-	myAddonsNode.ViewPanel:Clear( true )
+	myAddonsNode.ViewPanel:Clear()
 
 	RefreshAddons( myAddonsNode )
 

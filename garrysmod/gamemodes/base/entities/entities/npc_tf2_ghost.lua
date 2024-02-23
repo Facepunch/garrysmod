@@ -39,7 +39,7 @@ function ENT:RunBehaviour()
 		self:PlaySequenceAndWait( "sit_ground_to_idle" ) -- Get up
 
 		-- find the furthest away hiding spot
-		local pos = self:FindSpot( "random", { type = 'hiding', radius = 5000 } )
+		local pos = self:FindSpot( "random", { type = "hiding", radius = 5000 } )
 
 		-- if the position is valid
 		if ( pos ) then

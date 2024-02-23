@@ -92,7 +92,7 @@ local function AddBrowseContent( ViewPanel, node, name, icon, path, pathid, pnlC
 		end
 
 		-- Clear the viewpanel in preperation for displaying it
-		ViewPanel:Clear( true )
+		ViewPanel:Clear()
 		ViewPanel.CurrentNode = node
 
 		-- Fill the viewpanel with models that are in this node's folder
@@ -171,7 +171,7 @@ hook.Add( "GameContentChanged", "RefreshSpawnmenuGames", function()
 
 	-- TODO: Maybe be more advaced and do not delete => recreate all the nodes, only delete nodes for addons that were removed, add only the new ones?
 	myGamesNode:Clear()
-	myGamesNode.ViewPanel:Clear( true )
+	myGamesNode.ViewPanel:Clear()
 
 	RefreshGames( myGamesNode )
 

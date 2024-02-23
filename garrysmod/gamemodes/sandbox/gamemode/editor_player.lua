@@ -102,7 +102,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 		wepcol:SetPalette( false )
 		wepcol:Dock( TOP )
 		wepcol:SetSize( 200, math.min( window:GetTall() / 3, 260 ) )
-		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) );
+		wepcol:SetVector( Vector( GetConVarString( "cl_weaponcolor" ) ) )
 
 		sheet:AddSheet( "#smwidget.colors", controls, "icon16/color_wheel.png" )
 
@@ -125,7 +125,7 @@ list.Set( "DesktopWindows", "PlayerEditor", {
 					nicename[i] = string.upper( string.sub( word, 1, 1 ) )
 					continue
 				end
-				
+
 				nicename[i] = string.upper( string.sub( word, 1, 1 ) ) .. string.sub( word, 2 )
 			end
 

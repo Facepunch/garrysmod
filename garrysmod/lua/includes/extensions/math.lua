@@ -1,6 +1,8 @@
 
 include( "math/ease.lua" )
 
+math.tau = 2 * math.pi
+
 --[[---------------------------------------------------------
 	Name: DistanceSqr( low, high )
 	Desc: Squared Distance between two 2d points, use this instead of math.Distance as it is more cpu efficient.
@@ -273,4 +275,26 @@ function math.QuadraticBezier( frac, p0, p1, p2 )
 	local inv2 = inv * inv
 
 	return inv2 * p0 + 2 * inv * frac * p1 + frac2 * p2
+end
+
+--[[---------------------------------------------------------
+	Name: Factorial( num )
+	Desc: Calculate the factorial value of num
+-----------------------------------------------------------]]
+function math.Factorial( num )
+
+	if ( num < 0 ) then
+		return nil
+	elseif ( num < 2 ) then
+		return 1
+	end
+
+	local res = 1
+
+	for i = 2, num do
+		res = res * i
+	end
+
+	return res
+
 end

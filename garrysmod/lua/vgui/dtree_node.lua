@@ -392,7 +392,7 @@ function PANEL:InstallDraggable( pNode )
 	pNode:Droppable( DragName )
 
 	-- Allow item dropping onto us
-	self.ChildNodes:MakeDroppable( DragName, true, true )
+	self.ChildNodes:MakeDroppable( DragName, true )
 
 end
 
@@ -576,7 +576,7 @@ end
 function PANEL:MoveToTop()
 
 	local parent = self:GetParentNode()
-	if ( !IsValid(parent) ) then return end
+	if ( !IsValid( parent ) ) then return end
 
 	self:GetParentNode():MoveChildTo( self, 1 )
 

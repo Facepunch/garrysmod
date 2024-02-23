@@ -111,7 +111,7 @@ end
 
 function PANEL:Clear()
 
-	self.IconList:Clear( true )
+	self.IconList:Clear()
 
 end
 

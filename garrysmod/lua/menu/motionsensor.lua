@@ -1,8 +1,8 @@
 
-local sensor_color_show = CreateConVar( "sensor_color_show", "0" )
-local sensor_color_scale = CreateConVar( "sensor_color_scale", "0.5", FCVAR_ARCHIVE )
-local sensor_color_x = CreateConVar( "sensor_color_x", "32", FCVAR_ARCHIVE )
-local sensor_color_y = CreateConVar( "sensor_color_y", "-32", FCVAR_ARCHIVE )
+local sensor_color_show = CreateConVar( "sensor_color_show", "0", FCVAR_DONTRECORD )
+local sensor_color_scale = CreateConVar( "sensor_color_scale", "0.5", FCVAR_ARCHIVE + FCVAR_DONTRECORD )
+local sensor_color_x = CreateConVar( "sensor_color_x", "32", FCVAR_ARCHIVE + FCVAR_DONTRECORD )
+local sensor_color_y = CreateConVar( "sensor_color_y", "-32", FCVAR_ARCHIVE + FCVAR_DONTRECORD )
 
 local function DrawColorBox()
 
@@ -34,7 +34,7 @@ local function DrawColorBox()
 	--
 	if ( vgui.CursorVisible() ) then
 		local mx, my = input.GetCursorPos()
-		local dist = Vector( mx, my, 0 ):Distance( Vector( x + w *0.5, y + h * 0.5, 0 ) )
+		local dist = Vector( mx, my, 0 ):Distance( Vector( x + w * 0.5, y + h * 0.5, 0 ) )
 		alpha = math.Clamp( alpha - ( 512 - dist ), 10, 255 )
 	end
 

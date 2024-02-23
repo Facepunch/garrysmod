@@ -133,7 +133,7 @@ function DefineSkin( strName, strDescription, strTable )
 
 	strTable.Name = strName
 	strTable.Description = strDescription
-	strTable.Base = strBase or "Default"
+	strTable.Base = strTable.Base or "Default"
 
 	if ( strName != "Default" ) then
 		setmetatable( strTable, SkinMetaTable )

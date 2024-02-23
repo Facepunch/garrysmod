@@ -206,7 +206,7 @@ function PANEL:OnMouseReleased( mousecode )
 	if ( self:DragMouseRelease( mousecode ) ) then
 		return
 	end
-	
+
 	if ( self:IsSelectable() && mousecode == MOUSE_LEFT ) then
 
 		local canvas = self:GetSelectionCanvas()

@@ -81,7 +81,7 @@ function ToolObj:ReleaseGhostEntity()
 	-- This is unused!
 	if ( self.GhostEntities ) then
 
-		for k,v in pairs( self.GhostEntities ) do
+		for k, v in pairs( self.GhostEntities ) do
 			if ( IsValid( v ) ) then v:Remove() end
 			self.GhostEntities[ k ] = nil
 		end
@@ -92,7 +92,7 @@ function ToolObj:ReleaseGhostEntity()
 	-- This is unused!
 	if ( self.GhostOffset ) then
 
-		for k,v in pairs( self.GhostOffset ) do
+		for k, v in pairs( self.GhostOffset ) do
 			self.GhostOffset[ k ] = nil
 		end
 

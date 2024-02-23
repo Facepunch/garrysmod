@@ -43,17 +43,17 @@ hook.Add( "PersistenceLoad", "PersistenceLoad", function( name )
 
 	CurrentlyActivePersistencePage = name
 
-	local file = file.Read( "persist/" .. game.GetMap() .. "_" .. name .. ".txt" )
-	if ( !file ) then return end
+	local data = file.Read( "persist/" .. game.GetMap() .. "_" .. name .. ".txt" )
+	if ( !data ) then return end
 
-	local tab = util.JSONToTable( file )
+	local tab = util.JSONToTable( data )
 	if ( !tab ) then return end
 	if ( !tab.Entities ) then return end
 	if ( !tab.Constraints ) then return end
 
-	local Ents, Constraints = duplicator.Paste( nil, tab.Entities, tab.Constraints )
+	local entities = duplicator.Paste( nil, tab.Entities, tab.Constraints )
 
-	for k, v in pairs( Ents ) do
+	for k, v in pairs( entities ) do
 		v:SetPersistent( true )
 	end
 

@@ -36,12 +36,14 @@ end
 --
 -- Register decal duplicator
 --
-for i = 1, 32 do
+if ( SERVER ) then
+	for i = 1, 32 do
 
-	duplicator.RegisterEntityModifier( "decal" .. i, function( ply, ent, data )
-		timer.Simple( i * 0.05, function() PlaceDecal( ply, ent, data ) end )
-	end )
+		duplicator.RegisterEntityModifier( "decal" .. i, function( ply, ent, data )
+			timer.Simple( i * 0.05, function() PlaceDecal( ply, ent, data ) end )
+		end )
 
+	end
 end
 
 function TOOL:Reload( trace )
@@ -67,7 +69,7 @@ end
 
 function TOOL:RightClick( trace, bNoDelay )
 
-	self:GetSWEP():EmitSound( "SprayCan.Paint" )
+	self:GetWeapon():EmitSound( "SprayCan.Paint" )
 	local decal = self:GetClientInfo( "decal" )
 
 	local Pos1 = trace.HitPos + trace.HitNormal

@@ -99,7 +99,7 @@ function PANEL:Paint( w, h )
 
 	surface.SetMaterial( arrowMat )
 	surface.SetDrawColor( white )
-	surface.DrawTexturedRectRotated( w - 20, 20, 20, 20, self.Collapsed && 180 || 0 )
+	surface.DrawTexturedRectRotated( w - 20, 20, 20, 20, self.Collapsed and 180 or 0 )
 
 end
 
@@ -211,9 +211,9 @@ end
 
 function PANEL:Think()
 
-	if ( self:GetCanvas():ChildCount() < 1 && !IsValid( self.NoPermissionsLabel ) ) then
+	if ( self:GetCanvas():ChildCount() < 1 and !IsValid( self.NoPermissionsLabel ) ) then
 		self.NoPermissionsLabel = self.ParentFrame:AddEmptyWarning( "#permissions.none", self )
-	elseif ( self:GetCanvas():ChildCount() > 1 && IsValid( self.NoPermissionsLabel ) ) then
+	elseif ( self:GetCanvas():ChildCount() > 1 and IsValid( self.NoPermissionsLabel ) ) then
 		self.NoPermissionsLabel:Remove()
 	end
 

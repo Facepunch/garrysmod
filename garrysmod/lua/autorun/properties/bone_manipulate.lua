@@ -42,7 +42,7 @@ properties.Add( "bone_manipulate", {
 		ent.widget.BonePressCount = 0
 
 		-- What happens when we click on a bone?
-		ent.widget.OnBoneClick = function( w, boneid, ply )
+		ent.widget.OnBoneClick = function( w, boneid, pl )
 
 			-- If we have an old axis, remove it
 			if ( IsValid( w.axis ) ) then w.axis:Remove() end

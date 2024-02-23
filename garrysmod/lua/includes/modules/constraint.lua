@@ -263,21 +263,21 @@ end
 	This attempts to scale the elastic constraints such as the winch
 	to keep a stable but responsive constraint..
 ------------------------------------------------------------------------]]
-local function CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, iFixed )
+local function CalcElasticConsts( phys1, phys2, ent1, Ent2, fixed )
 
 	local minMass = 0
 
-	if ( Ent1:IsWorld() ) then minMass = Phys2:GetMass()
-	elseif ( Ent2:IsWorld() ) then minMass = Phys1:GetMass()
+	if ( ent1:IsWorld() ) then minMass = phys2:GetMass()
+	elseif ( Ent2:IsWorld() ) then minMass = phys1:GetMass()
 	else
-		minMass = math.min( Phys1:GetMass(), Phys2:GetMass() )
+		minMass = math.min( phys1:GetMass(), phys2:GetMass() )
 	end
 
 	-- const, damp
 	local const = minMass * 100
 	local damp = const * 0.2
 
-	if ( iFixed == 0 ) then
+	if ( !fixed ) then
 
 		const = minMass * 50
 		damp = const * 0.1
@@ -1347,7 +1347,7 @@ function Hydraulic( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2
 	if ( Phys1 == Phys2 ) then return false end
 	if ( toggle == nil ) then toggle = true end -- Retain original behavior
 
-	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, fixed )
+	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, tobool( fixed ) )
 
 	local Constraint, rope = Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, const, dampn, 0, material, width, false, color )
 	local ctable = {
@@ -1431,7 +1431,7 @@ function Muscle( pl, Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, Length1, Length2, w
 
 	if ( Phys1 == Phys2 ) then return false end
 
-	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, fixed )
+	local const, dampn = CalcElasticConsts( Phys1, Phys2, Ent1, Ent2, tobool( fixed ) )
 
 	local Constraint, rope = Elastic( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, const, dampn, 0, material, width, false, color )
 	if ( !Constraint ) then return false end

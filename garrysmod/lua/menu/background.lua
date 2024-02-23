@@ -148,7 +148,7 @@ function ChangeBackground( currentgm )
 		Size = 1,
 		Angle = 0,
 		AngleVel = -( 5 / 30 ),
-		SizeVel = ( 0.3 / 30 ),
+		SizeVel = 0.3 / 30,
 		Alpha = 255,
 		DieTime = 30,
 		mat = mat,

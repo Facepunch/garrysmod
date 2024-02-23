@@ -34,9 +34,9 @@ properties.Add( "skin", {
 
 		for i = 0, num - 1 do
 
-			local option = submenu:AddOption( "Skin " .. i, function() self:SetSkin( ent, i ) end )
+			local opt = submenu:AddOption( "Skin " .. i, function() self:SetSkin( ent, i ) end )
 			if ( target:GetSkin() == i ) then
-				option:SetChecked( true )
+				opt:SetChecked( true )
 			end
 
 		end

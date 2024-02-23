@@ -48,7 +48,7 @@ function SWEP:DrawHUD()
 
 	local mode = gmod_toolmode:GetString()
 	local toolObject = self:GetToolObject()
-	
+
 	-- Don't draw help for a nonexistant tool!
 	if ( !toolObject ) then return end
 

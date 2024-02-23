@@ -84,7 +84,7 @@ function GetSize( name, dontEqualizeHeight )
 		return t.size.w, t.size.h
 	end
 
-	local w, h = 0
+	local w, h = 0, 0
 
 	if ( t.type == TYPE_FONT ) then
 
@@ -118,7 +118,7 @@ function GetSize( name, dontEqualizeHeight )
 		fh = fh * 0.75 -- Fudge it slightly
 
 		-- Resize, maintaining aspect ratio
-		t.size.adj_w = w * (fh / h)
+		t.size.adj_w = w * ( fh / h )
 		t.size.adj_h = fh
 	end
 
@@ -179,7 +179,7 @@ local function DrawInternal( x, y, name, alpha, noCorrections, dontEqualizeHeigh
 		local th = t.material:Height()
 		surface.SetMaterial( t.material )
 		surface.SetDrawColor( t.color.r, t.color.g, t.color.b, alpha )
-		surface.DrawTexturedRectUV( x, y, w, h, t.tex_x / tw, t.tex_y / th, (t.tex_x + t.tex_w) / tw, (t.tex_y + t.tex_h) / th )
+		surface.DrawTexturedRectUV( x, y, w, h, t.tex_x / tw, t.tex_y / th, ( t.tex_x + t.tex_w ) / tw, ( t.tex_y + t.tex_h ) / th )
 
 	end
 

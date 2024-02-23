@@ -207,7 +207,7 @@ AddNPC( {
 	KeyValues = { SquadName = "zombies" }
 } )
 
-if ( IsMounted( "episodic" ) || IsMounted( "ep2" ) ) then
+if ( IsMounted( "episodic" ) or IsMounted( "ep2" ) ) then
 	AddNPC( {
 		Class = "npc_zombine",
 		Category = Category,
@@ -221,18 +221,18 @@ if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/antlion_worker.pcf" )
 
 	AddNPC( {
-			Name = "Antlion Guardian",
-			Class = "npc_antlionguard",
-			Category = Category,
-			KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
-			Material = "Models/antlion_guard/antlionGuard2"
+		Name = "Antlion Guardian",
+		Class = "npc_antlionguard",
+		Category = Category,
+		KeyValues = { cavernbreed = 1, incavern = 1, SquadName = "antlions" },
+		Material = "Models/antlion_guard/antlionGuard2"
 	}, "npc_antlionguardian" )
 
 	AddNPC( {
 		Class = "npc_antlion_grub",
 		Category = Category,
-			NoDrop = true,
-			Offset = 1
+		NoDrop = true,
+		Offset = 1
 	} )
 
 	AddNPC( {
@@ -436,7 +436,7 @@ if ( IsMounted( "ep2" ) ) then
 end
 
 
-if ( IsMounted( "hl1" ) || IsMounted( "hl1mp" ) ) then
+if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
 
 	Category = "Half-Life: Source"
 

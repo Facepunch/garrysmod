@@ -49,7 +49,7 @@ function TOOL:LeftClick( trace )
 		self:ClearObjects()
 
 	else
- 
+
 		self:SetStage( iNum + 1 )
 
 	end

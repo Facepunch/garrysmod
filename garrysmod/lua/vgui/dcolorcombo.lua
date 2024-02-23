@@ -16,21 +16,21 @@ function PANEL:BuildControls()
 	--
 	-- Mixer
 	--
-	local ctrl = self:Add( "DColorMixer" )
-	ctrl:Dock( FILL )
-	ctrl:DockMargin( 8, 0, 8, 8 )
-	ctrl:SetPalette( false )
-	ctrl:SetAlphaBar( false )
-	ctrl:SetWangs( false )
-	ctrl.ValueChanged = function( ctrl, color )
+	local mixer = self:Add( "DColorMixer" )
+	mixer:Dock( FILL )
+	mixer:DockMargin( 8, 0, 8, 8 )
+	mixer:SetPalette( false )
+	mixer:SetAlphaBar( false )
+	mixer:SetWangs( false )
+	mixer.ValueChanged = function( slf, color )
 		self.m_bEditing = true
 		self:OnValueChanged( color )
 		self.m_Color = color
 		self.m_bEditing = false
 	end
 
-	self.Mixer = ctrl
-	self:AddSheet( "", ctrl, "icon16/color_wheel.png" )
+	self.Mixer = mixer
+	self:AddSheet( "", mixer, "icon16/color_wheel.png" )
 
 	--
 	-- Palettes
@@ -41,7 +41,7 @@ function PANEL:BuildControls()
 	ctrl:SetButtonSize( 16 )
 	ctrl:SetNumRows( 35 )
 	ctrl:Reset()
-	ctrl.OnValueChanged = function( ctrl, color )
+	ctrl.OnValueChanged = function( slf, color )
 		self.m_bEditing = true
 		self.Mixer:SetColor( color )
 		self:OnValueChanged( color )

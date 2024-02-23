@@ -17,8 +17,6 @@ function ENT:Initialize()
 	if ( SERVER ) then
 
 		self:PhysicsInit( SOLID_VPHYSICS )
-		self:SetMoveType( MOVETYPE_VPHYSICS )
-		self:SetSolid( SOLID_VPHYSICS )
 		self:SetUseType( SIMPLE_USE )
 
 		self:SetToggle( false )
@@ -101,14 +99,14 @@ function ENT:Forward( onoff, mul )
 	-- If we're toggle mode and the key has been
 	-- released then just return.
 	--
-	if ( toggle && !onoff ) then return true end
+	if ( toggle and !onoff ) then return true end
 
 	mul = mul or 1
 	local Speed = Motor.direction * mul * self.TorqueScale
 
 	if ( !onoff ) then Speed = 0 end
 
-	if ( toggle && onoff ) then
+	if ( toggle and onoff ) then
 
 		self.ToggleState = !self.ToggleState
 
@@ -120,7 +118,7 @@ function ENT:Forward( onoff, mul )
 
 	Motor:Fire( "Scale", Speed, 0 )
 	Motor.forcescale = Speed
-	Motor:Fire( "Activate", "" , 0 )
+	Motor:Fire( "Activate", "", 0 )
 
 	return true
 
@@ -134,7 +132,7 @@ end
 -- Register numpad functions
 if ( SERVER ) then
 
-	numpad.Register( "WheelForward", function( pl, ent, onoff )
+	numpad.Register( "WheelForward", function( ply, ent, onoff )
 
 		if ( !IsValid( ent ) ) then return false end
 
@@ -142,7 +140,7 @@ if ( SERVER ) then
 
 	end )
 
-	numpad.Register( "WheelReverse", function( pl, ent, onoff )
+	numpad.Register( "WheelReverse", function( ply, ent, onoff )
 
 		if ( !IsValid( ent ) ) then return false end
 
@@ -161,7 +159,7 @@ function ENT:SetTorque( torque )
 
 	local Motor = self:GetMotor()
 	if ( !IsValid( Motor ) ) then return end
-	Motor:Fire( "Scale", Motor.direction * Motor.forcescale * self.TorqueScale , 0 )
+	Motor:Fire( "Scale", Motor.direction * Motor.forcescale * self.TorqueScale, 0 )
 
 	self:SetOverlayText( "Torque: " .. math.floor( torque ) )
 
@@ -188,7 +186,7 @@ function ENT:Use( activator, caller, type, value )
 	local Motor = self:GetMotor()
 	local Owner = self:GetPlayer()
 
-	if ( IsValid( Motor ) and (Owner == nil or Owner == activator) ) then
+	if ( IsValid( Motor ) and ( Owner == nil or Owner == activator ) ) then
 
 		if ( Motor.direction == 1 ) then
 			Motor.direction = -1

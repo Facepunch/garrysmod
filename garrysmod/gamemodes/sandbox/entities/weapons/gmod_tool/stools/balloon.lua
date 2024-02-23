@@ -104,7 +104,7 @@ function TOOL:LeftClick( trace, attach )
 
 			end
 
-			local constr, rope = constraint.Rope( balloon, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 0.5, material, nil )
+			local constr, rope = constraint.Rope( balloon, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 0.5, material )
 			if ( IsValid( constr ) ) then
 				undo.AddEntity( constr )
 				ply:AddCleanup( "balloons", constr )
@@ -132,9 +132,9 @@ end
 
 if ( SERVER ) then
 
-	function MakeBalloon( pl, r, g, b, force, Data )
+	function MakeBalloon( ply, r, g, b, force, Data )
 
-		if ( IsValid( pl ) && !pl:CheckLimit( "balloons" ) ) then return end
+		if ( IsValid( ply ) && !ply:CheckLimit( "balloons" ) ) then return end
 
 		local balloon = ents.Create( "gmod_balloon" )
 		if ( !IsValid( balloon ) ) then return end
@@ -145,23 +145,23 @@ if ( SERVER ) then
 
 		DoPropSpawnedEffect( balloon )
 
-		duplicator.DoGenericPhysics( balloon, pl, Data )
+		duplicator.DoGenericPhysics( balloon, ply, Data )
 
 		force = math.Clamp( force, -1E34, 1E34 )
 
 		balloon:SetColor( Color( r, g, b, 255 ) )
 		balloon:SetForce( force )
-		balloon:SetPlayer( pl )
+		balloon:SetPlayer( ply )
 
-		balloon.Player = pl
+		balloon.Player = ply
 		balloon.r = r
 		balloon.g = g
 		balloon.b = b
 		balloon.force = force
 
-		if ( IsValid( pl ) ) then
-			pl:AddCount( "balloons", balloon )
-			pl:AddCleanup( "balloons", balloon )
+		if ( IsValid( ply ) ) then
+			ply:AddCount( "balloons", balloon )
+			ply:AddCleanup( "balloons", balloon )
 		end
 
 		return balloon

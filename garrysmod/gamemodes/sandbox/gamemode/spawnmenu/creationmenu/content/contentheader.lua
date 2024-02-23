@@ -115,4 +115,6 @@ spawnmenu.AddContentType( "header", function( container, obj )
 
 	container:Add( label )
 
+	return label
+
 end )

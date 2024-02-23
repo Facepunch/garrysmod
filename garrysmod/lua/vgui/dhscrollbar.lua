@@ -12,12 +12,12 @@ function PANEL:Init()
 
 	self.btnLeft = vgui.Create( "DButton", self )
 	self.btnLeft:SetText( "" )
-	self.btnLeft.DoClick = function( self ) self:GetParent():AddScroll( -1 ) end
+	self.btnLeft.DoClick = function( s ) s:GetParent():AddScroll( -1 ) end
 	self.btnLeft.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonLeft", panel, w, h ) end
 
 	self.btnRight = vgui.Create( "DButton", self )
 	self.btnRight:SetText( "" )
-	self.btnRight.DoClick = function( self ) self:GetParent():AddScroll( 1 ) end
+	self.btnRight.DoClick = function( s ) s:GetParent():AddScroll( 1 ) end
 	self.btnRight.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "ButtonRight", panel, w, h ) end
 
 	self.btnGrip = vgui.Create( "DScrollBarGrip", self )
@@ -53,12 +53,6 @@ function PANEL:SetEnabled( b )
 	end
 
 	self.Enabled = b
-
-end
-
-function PANEL:Value()
-
-	return self.Pos
 
 end
 
@@ -132,9 +126,9 @@ function PANEL:AnimateTo( scrll, length, delay, ease )
 	local anim = self:NewAnimation( length, delay, ease )
 	anim.StartPos = self.Scroll
 	anim.TargetPos = scrll
-	anim.Think = function( anim, pnl, fraction )
+	anim.Think = function( anm, pnl, fraction )
 
-		pnl:SetScroll( Lerp( fraction, anim.StartPos, anim.TargetPos ) )
+		pnl:SetScroll( Lerp( fraction, anm.StartPos, anm.TargetPos ) )
 
 	end
 
@@ -160,7 +154,7 @@ end
 function PANEL:Paint( w, h )
 
 	derma.SkinHook( "Paint", "HScrollBar", self, w, h )
-	
+
 	return true
 
 end
@@ -189,12 +183,12 @@ function PANEL:OnMouseReleased()
 
 end
 
-function PANEL:OnCursorMoved( x, y )
+function PANEL:OnCursorMoved( lx, ly )
 
 	if ( !self.Enabled ) then return end
 	if ( !self.Dragging ) then return end
 
-	x, y = self:ScreenToLocal( gui.MouseX(), 0 )
+	local x, y = self:ScreenToLocal( gui.MouseX(), 0 )
 
 	-- Uck.
 	x = x - self.btnLeft:GetWide()
@@ -242,12 +236,12 @@ function PANEL:PerformLayout()
 	self.btnGrip:SetSize( BarSize, Tall )
 
 	if ( BtnWidth > 0 ) then
-		self.btnLeft:SetPos( 0, 0, Tall, Tall )
+		self.btnLeft:SetPos( 0, 0 )
 		self.btnLeft:SetSize( BtnWidth, Tall )
 
 		self.btnRight:SetPos( self:GetWide() - BtnWidth, 0 )
 		self.btnRight:SetSize( BtnWidth, Tall )
-		
+
 		self.btnLeft:SetVisible( true )
 		self.btnRight:SetVisible( true )
 	else

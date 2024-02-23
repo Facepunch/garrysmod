@@ -180,16 +180,16 @@ function PLAYER:FinishMove( move )
 
 		-- Clamp it to make sure they can't bunnyhop to ludicrous speed
 		if newSpeed > maxSpeed then
-			speedAddition = speedAddition - (newSpeed - maxSpeed)
+			speedAddition = speedAddition - ( newSpeed - maxSpeed )
 		end
 
 		-- Reverse it if the player is running backwards
-		if move:GetVelocity():Dot(forward) < 0 then
+		if move:GetVelocity():Dot( forward ) < 0 then
 			speedAddition = -speedAddition
 		end
 
 		-- Apply the speed boost
-		move:SetVelocity(forward * speedAddition + move:GetVelocity())
+		move:SetVelocity( forward * speedAddition + move:GetVelocity() )
 	end
 
 	JUMPING = nil

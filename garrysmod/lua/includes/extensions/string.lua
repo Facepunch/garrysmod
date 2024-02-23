@@ -92,8 +92,8 @@ function string.Explode( separator, str, withpattern )
 	local current_pos = 1
 
 	for i = 1, string_len( str ) do
-		local start_pos, end_pos = string_find( str, separator, current_pos, !withpattern )
-		if ( !start_pos ) then break end
+		local start_pos, end_pos = string_find( str, separator, current_pos, not withpattern )
+		if ( not start_pos ) then break end
 		ret[ i ] = string_sub( str, current_pos, start_pos - 1 )
 		current_pos = end_pos + 1
 	end
@@ -355,6 +355,12 @@ function string.ToColor( str )
 end
 
 function string.Comma( number, str )
+
+	if ( str ~= nil and not isstring( str ) ) then
+		error( "bad argument #2 to 'string.Comma' (string expected, got " .. type( str ) .. ")" )
+	elseif ( str ~= nil and string.match( str, "%d" ) ~= nil ) then
+		error( "bad argument #2 to 'string.Comma' (non-numerical values expected, got " .. str .. ")" )
+	end
 
 	local replace = str == nil and "%1,%2" or "%1" .. str .. "%2"
 

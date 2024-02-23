@@ -18,8 +18,6 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, bro
 
 	end
 
-	Weapons = nil
-
 	-- Loop through each category
 	local CustomIcons = list.Get( "ContentCategoryIcons" )
 	for CategoryName, v in SortedPairs( Categorised ) do

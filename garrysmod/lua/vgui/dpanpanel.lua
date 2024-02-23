@@ -1,13 +1,14 @@
 
 local PANEL = {}
+
 AccessorFunc( PANEL, "pnlCanvas", "Canvas" )
 
 function PANEL:Init()
 
 	self.pnlCanvas = vgui.Create( "Panel", self )
 
-	self:GetCanvas().OnMousePressed = function( self, code )
-		self:GetParent():OnMousePressed( code )
+	self:GetCanvas().OnMousePressed = function( s, code )
+		s:GetParent():OnMousePressed( code )
 	end
 
 	self:GetCanvas():SetMouseInputEnabled( true )
@@ -207,7 +208,7 @@ function PANEL:GenerateExample( class, propsheet, width, height )
 	local dpan = vgui.Create( "Panel" )
 	dpan:Dock( FILL )
 	propsheet:AddSheet( class, dpan )
-	
+
 	local dpl = vgui.Create( "DPanel", dpan )
 	dpl:SetSize( 200, 200 )
 	dpl:SetPos( 100, 100 )

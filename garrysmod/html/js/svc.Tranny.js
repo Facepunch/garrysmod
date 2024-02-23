@@ -14,7 +14,7 @@ angular.module( 'tranny', [] )
 		{
 			if ( !IN_ENGINE )
 			{
-				$(element).html( strName + " " + strSuffix );
+				$(element).text( strName + " " + strSuffix );
 				$(element).attr( "placeholder", strName + " " + strSuffix );
 				return;
 			}
@@ -22,7 +22,7 @@ angular.module( 'tranny', [] )
 			var outStr_old = languageCache[ strName ] || language.Update( strName, function( outStr )
 			{
 				languageCache[ strName ] = outStr;
-				$(element).html( outStr + " " + strSuffix );
+				$(element).text( outStr + " " + strSuffix );
 				$(element).attr( "placeholder", outStr + " " + strSuffix );
 			} );
 
@@ -30,7 +30,7 @@ angular.module( 'tranny', [] )
 			{
 				// Compatibility with Awesomium
 				languageCache[ strName ] = outStr_old;
-				$(element).html( outStr_old + " " + strSuffix );
+				$(element).text( outStr_old + " " + strSuffix );
 				$(element).attr( "placeholder", outStr_old + " " + strSuffix );
 			}
 		}
@@ -61,15 +61,15 @@ angular.module( 'tranny', [] )
 		scope.$watch( attrs.ngSeconds, function ( value )
 		{
 			if ( value < 60 )
-				return $(element).html( Math.floor( value ) + " sec" );
+				return $(element).text( Math.floor( value ) + " sec" );
 
 			if ( value < 60 * 60 )
-				return $( element ).html( Math.floor( value / 60 ) + " min" );
+				return $( element ).text( Math.floor( value / 60 ) + " min" );
 
 			if ( value < 60 * 60 * 24 )
-				return $( element ).html( Math.floor( value / 60 / 60 ) + " hr" );
+				return $( element ).text( Math.floor( value / 60 / 60 ) + " hr" );
 
-			$( element ).html( "a long time" );
+			$( element ).text( "a long time" );
 
 		});
 

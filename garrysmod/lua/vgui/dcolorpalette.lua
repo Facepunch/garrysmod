@@ -12,9 +12,9 @@ AccessorFunc( PANEL, "m_buttonsize", "ButtonSize", FORCE_NUMBER )
 
 AccessorFunc( PANEL, "m_NumRows", "NumRows", FORCE_NUMBER )
 
-local function CreateColorTable( rows )
+local function CreateColorTable( num_rows )
 
-	local rows = rows or 8
+	local rows = num_rows or 8
 	local index = 0
 	local ColorTable = {}
 
@@ -91,7 +91,7 @@ function PANEL:Init()
 	self:SetSize( 80, 120 )
 	self:SetNumRows( 8 )
 	self:Reset()
-	self:SetCookieName( "palette" ) 
+	self:SetCookieName( "palette" )
 
 	self:SetButtonSize( 10 )
 
@@ -107,10 +107,10 @@ function PANEL:NetworkColorChange()
 	end
 
 	for id, pnl in pairs( g_ColorPalettePanels ) do
-		if ( !IsValid( pnl ) || pnl == self ) then continue end
-		if ( pnl:GetNumRows() != self:GetNumRows() || pnl:GetCookieName() != self:GetCookieName() ) then continue end
+		if ( !IsValid( pnl ) or pnl == self ) then continue end
+		if ( pnl:GetNumRows() != self:GetNumRows() or pnl:GetCookieName() != self:GetCookieName() ) then continue end
 		local tab = {}
-		for id, p in ipairs( self:GetChildren() ) do
+		for pid, p in ipairs( self:GetChildren() ) do
 			tab[ p:GetID() ] = p:GetColor()
 		end
 		pnl:SetColorButtons( tab )

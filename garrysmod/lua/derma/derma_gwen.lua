@@ -125,7 +125,7 @@ end
 --
 function meta:LoadGWENFile( filename, path )
 
-	local contents = file.Read( filename, path or "GAME" )
+	local contents = file.Read( filename, path || "GAME" )
 	if ( !contents ) then return end
 
 	self:LoadGWENString( contents )
@@ -204,7 +204,7 @@ function meta:GWEN_SetText( tbl ) self:SetText( tbl ) end
 function meta:GWEN_SetControlName( tbl ) self:SetName( tbl ) end
 function meta:GWEN_SetMargin( tbl ) self:DockMargin( tbl.left, tbl.top, tbl.right, tbl.bottom ) end
 function meta:GWEN_SetMin( min ) self:SetMin( tonumber( min ) ) end
-function meta:GWEN_SetMax( min ) self:SetMax( tonumber( max ) ) end
+function meta:GWEN_SetMax( max ) self:SetMax( tonumber( max ) ) end
 function meta:GWEN_SetHorizontalAlign( txt )
 	if ( txt == "Right" ) then self:SetContentAlignment( 6 ) end
 	if ( txt == "Center" ) then self:SetContentAlignment( 5 ) end

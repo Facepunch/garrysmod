@@ -114,7 +114,7 @@ end
 
 if ( SERVER ) then
 
-	function MakeHoverBall( ply, Pos, key_d, key_u, speed, resistance, strength, model, Vel, aVel, frozen, nocollide, key_o )
+	function MakeHoverBall( ply, Pos, key_d, key_u, speed, resistance, strength, model, Vel, aVel, frozen, nocollide, key_o, Data )
 
 		if ( IsValid( ply ) && !ply:CheckLimit( "hoverballs" ) ) then return false end
 		if ( !IsValidHoverballModel( model ) ) then return false end
@@ -122,9 +122,14 @@ if ( SERVER ) then
 		local ball = ents.Create( "gmod_hoverball" )
 		if ( !IsValid( ball ) ) then return false end
 
-		ball:SetPos( Pos )
-		ball:SetModel( Model( model ) )
+		duplicator.DoGeneric( ball, Data )
+		ball:SetPos( Pos ) -- Backwards compatible for addons directly calling this function
+		ball:SetModel( model )
 		ball:Spawn()
+
+		DoPropSpawnedEffect( ball )
+		duplicator.DoGenericPhysics( ball, ply, Data )
+
 		ball:SetSpeed( speed )
 		ball:SetAirResistance( resistance )
 		ball:SetStrength( strength )
@@ -165,12 +170,10 @@ if ( SERVER ) then
 			ply:AddCleanup( "hoverballs", ball )
 		end
 
-		DoPropSpawnedEffect( ball )
-
 		return ball
 
 	end
-	duplicator.RegisterEntityClass( "gmod_hoverball", MakeHoverBall, "Pos", "key_d", "key_u", "speed", "resistance", "strength", "model", "Vel", "aVel", "frozen", "nocollide", "key_o" )
+	duplicator.RegisterEntityClass( "gmod_hoverball", MakeHoverBall, "Pos", "key_d", "key_u", "speed", "resistance", "strength", "model", "Vel", "aVel", "frozen", "nocollide", "key_o", "Data" )
 
 end
 

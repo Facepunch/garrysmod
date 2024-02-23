@@ -64,7 +64,7 @@ function PrintTable( t, indent, done )
 	local keys = table.GetKeys( t )
 
 	table.sort( keys, function( a, b )
-		if ( isnumber( a ) && isnumber( b ) ) then return a < b end
+		if ( isnumber( a ) and isnumber( b ) ) then return a < b end
 		return tostring( a ) < tostring( b )
 	end )
 
@@ -73,10 +73,10 @@ function PrintTable( t, indent, done )
 	for i = 1, #keys do
 		local key = keys[ i ]
 		local value = t[ key ]
-		key = (type( key ) == "string") && "[\"" ..  key .. "\"]" || "[" .. tostring( key ) .. "]"
+		key = ( type( key ) == "string" ) and "[\"" .. key .. "\"]" || "[" .. tostring( key ) .. "]"
 		Msg( string.rep( "\t", indent ) )
 
-		if  ( istable( value ) && !done[ value ] ) then
+		if  ( istable( value ) and !done[ value ] ) then
 
 			done[ value ] = true
 			Msg( key, ":\n" )
@@ -163,7 +163,7 @@ function IncludeCS( filename )
 	if ( SERVER ) then
 		AddCSLuaFile( filename )
 	end
-	
+
 	return include( filename )
 end
 
@@ -285,7 +285,7 @@ local UselessModels = {
 
 function IsUselessModel( modelname )
 
-	local modelname = modelname:lower()
+	modelname = modelname:lower()
 
 	if ( !modelname:find( ".mdl", 1, true ) ) then return true end
 
@@ -429,7 +429,7 @@ if ( CLIENT ) then
 		local x, y = input.GetCursorPos()
 
 		-- If the cursor isn't visible it will return 0,0 ignore it.
-		if ( x == 0 && y == 0 ) then return end
+		if ( x == 0 and y == 0 ) then return end
 
 		StoredCursorPos.x, StoredCursorPos.y = x, y
 
@@ -471,9 +471,9 @@ local ConVarCache = {}
 
 function GetConVar( name )
 	local c = ConVarCache[ name ]
-	if not c then
+	if ( !c ) then
 		c = GetConVar_Internal( name )
-		if not c then
+		if ( !c ) then
 			return
 		end
 

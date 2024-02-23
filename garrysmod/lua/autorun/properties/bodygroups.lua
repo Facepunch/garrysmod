@@ -16,14 +16,13 @@ properties.Add( "bodygroups", {
 		--
 		-- Get a list of bodygroups
 		--
-		local options = ent:GetBodyGroups();
+		local options = ent:GetBodyGroups()
 		if ( !options ) then return false end
 
 		--
 		-- If a bodygroup has more than one state - then we can configure it
 		--
 		for k, v in pairs( options ) do
-
 			if ( v.num > 1 ) then return true end
 		end
 
@@ -34,6 +33,7 @@ properties.Add( "bodygroups", {
 	MenuOpen = function( self, option, ent, tr )
 
 		local target = IsValid( ent.AttachedEntity ) and ent.AttachedEntity or ent
+
 		--
 		-- Get a list of bodygroups
 		--
@@ -60,9 +60,9 @@ properties.Add( "bodygroups", {
 				local opposite = 1
 				if ( current == opposite ) then opposite = 0 end
 
-				local option = submenu:AddOption( v.name, function() self:SetBodyGroup( ent, v.id, opposite ) end )
+				local opt = submenu:AddOption( v.name, function() self:SetBodyGroup( ent, v.id, opposite ) end )
 				if ( current == 1 ) then
-					option:SetChecked( true )
+					opt:SetChecked( true )
 				end
 
 			--
@@ -72,12 +72,12 @@ properties.Add( "bodygroups", {
 
 				local groups = submenu:AddSubMenu( v.name )
 
-				for i=1, v.num do
+				for i = 1, v.num do
 					local modelname = "model #" .. i
-					if ( v.submodels && v.submodels[ i-1 ] != "" ) then modelname = v.submodels[ i-1 ] end
-					local option = groups:AddOption( modelname, function() self:SetBodyGroup( ent, v.id, i-1 ) end )
-					if ( target:GetBodygroup( v.id ) == i-1 ) then
-						option:SetChecked( true )
+					if ( v.submodels and v.submodels[ i - 1 ] != "" ) then modelname = v.submodels[ i - 1 ] end
+					local opt = groups:AddOption( modelname, function() self:SetBodyGroup( ent, v.id, i - 1 ) end )
+					if ( target:GetBodygroup( v.id ) == i - 1 ) then
+						opt:SetChecked( true )
 					end
 				end
 
