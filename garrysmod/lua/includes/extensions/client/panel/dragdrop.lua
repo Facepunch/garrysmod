@@ -329,6 +329,7 @@ end
 -- dragging the defined parent
 --
 function meta:SetDragParent( parent )
+	if ( parent == self ) then return end
 	self.m_pDragParent = parent
 end
 
