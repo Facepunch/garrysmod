@@ -397,13 +397,13 @@ function util.IsBinaryModuleInstalled( name )
 		error( "bad argument #1 to 'IsBinaryModuleInstalled' (string cannot be empty)" )
 	end
 
-	if ( file.Exists( string.format( fmt, name, suffix ), "GAME" ) ) then
+	if ( file.Exists( string.format( fmt, name, suffix ), "MOD" ) ) then
 		return true
 	end
 
 	-- Edge case - on Linux 32-bit x86-64 branch, linux32 is also supported as a suffix
 	if ( jit.versionnum != 20004 and jit.arch == "x86" and system.IsLinux() ) then
-		return file.Exists( string.format( fmt, name, "linux32" ), "GAME" )
+		return file.Exists( string.format( fmt, name, "linux32" ), "MOD" )
 	end
 
 	return false
