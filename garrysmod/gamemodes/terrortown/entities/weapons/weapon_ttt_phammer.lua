@@ -116,7 +116,7 @@ function SWEP:PrimaryAttack()
       local ply = self:GetOwner()
       if not IsValid(ply) then return end
 
-      local tr = util.TraceLine({start=ply:GetShootPos(), endpos=ply:GetShootPos() + ply:GetAimVector() * self.MaxRange, filter={ply, self.Entity}, mask=MASK_SOLID})
+      local tr = util.TraceLine({start=ply:GetShootPos(), endpos=ply:GetShootPos() + ply:GetAimVector() * self.MaxRange, filter={ply, self}, mask=MASK_SOLID})
 
       if tr.HitNonWorld and ValidTarget(tr.Entity) and tr.Entity:GetPhysicsObject():IsMoveable() then
 
@@ -144,7 +144,7 @@ function SWEP:SecondaryAttack()
 
       local range = 30000
 
-      local tr = util.TraceLine({start=ply:GetShootPos(), endpos=ply:GetShootPos() + ply:GetAimVector() * range, filter={ply, self.Entity}, mask=MASK_SOLID})
+      local tr = util.TraceLine({start=ply:GetShootPos(), endpos=ply:GetShootPos() + ply:GetAimVector() * range, filter={ply, self}, mask=MASK_SOLID})
 
       if tr.HitNonWorld and ValidTarget(tr.Entity) and tr.Entity:GetPhysicsObject():IsMoveable() then
 
