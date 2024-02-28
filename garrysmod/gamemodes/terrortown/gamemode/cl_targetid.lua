@@ -97,7 +97,7 @@ local function DrawPropSpecLabels(client)
    local scrpos = nil
    local text = nil
    local w = 0
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       if ply:IsSpec() then
          surface.SetTextColor(220,200,0,120)
 

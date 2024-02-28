@@ -271,7 +271,7 @@ end
 local function EnoughPlayers()
    local ready = 0
    -- only count truly available players, ie. no forced specs
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       if IsValid(ply) and ply:ShouldSpawn() then
          ready = ready + 1
       end
@@ -304,7 +304,7 @@ end
 -- we regularly check for these broken spectators while we wait for players
 -- and immediately fix them.
 function FixSpectators()
-   for k, ply in ipairs(player.GetAll()) do
+   for k, ply in player.Iterator() do
       if ply:IsSpec() and not ply:GetRagdollSpec() and ply:GetMoveType() < MOVETYPE_NOCLIP then
          ply:Spectate(OBS_MODE_ROAMING)
       end
@@ -354,7 +354,7 @@ function StartNameChangeChecks()
    if not GetConVar("ttt_namechange_kick"):GetBool() then return end
 
    -- bring nicks up to date, may have been changed during prep/post
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       ply.spawn_nick = ply:Nick()
    end
 
@@ -386,7 +386,7 @@ local function CleanUp()
    et.FixParentedPostCleanup()
 
    -- Strip players now, so that their weapons are not seen by ReplaceEntities
-   for k,v in ipairs(player.GetAll()) do
+   for k,v in player.Iterator() do
       if IsValid(v) then
          v:StripWeapons()
       end
@@ -795,7 +795,7 @@ function GM:TTTCheckForWin()
 
    local traitor_alive = false
    local innocent_alive = false
-   for k,v in ipairs(player.GetAll()) do
+   for k,v in player.Iterator() do
       if v:Alive() and v:IsTerror() then
          if v:GetTraitor() then
             traitor_alive = true
