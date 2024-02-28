@@ -527,10 +527,10 @@ function IncRoundEnd(incr)
 end
 
 function TellTraitorsAboutTraitors()
-  local plys = player.GetAll()
+   local inext, plys, num = player.Iterator()
 
    local traitornicks = {}
-   for k,v in ipairs(plys) do
+   for k,v in inext, plys, num do
       if v:IsTraitor() then
          table.insert(traitornicks, v:Nick())
       end
@@ -538,7 +538,7 @@ function TellTraitorsAboutTraitors()
 
    -- This is ugly as hell, but it's kinda nice to filter out the names of the
    -- traitors themselves in the messages to them
-   for k,v in ipairs(plys) do
+   for k,v in inext, plys, num do
       if v:IsTraitor() then
          if #traitornicks < 2 then
             LANG.Msg(v, "round_traitors_one")
@@ -559,13 +559,13 @@ end
 
 
 function SpawnWillingPlayers(dead_only)
-   local plys = player.GetAll()
+   local inext, plys, num = player.Iterator()
    local wave_delay = GetConVar("ttt_spawn_wave_interval"):GetFloat()
 
    -- simple method, should make this a case of the other method once that has
    -- been tested.
    if wave_delay <= 0 or dead_only then
-      for k, ply in ipairs(plys) do
+      for k, ply in inext, plys, num do
          if IsValid(ply) then
             ply:SpawnForRound(dead_only)
          end
@@ -852,9 +852,9 @@ function SelectRoles()
 
    if not GAMEMODE.LastRole then GAMEMODE.LastRole = {} end
 
-   local plys = player.GetAll()
+   local inext, plys, num = player.Iterator()
 
-   for k,v in ipairs(plys) do
+   for k,v in inext, plys, num do
       -- everyone on the spec team is in specmode
       if IsValid(v) and (not v:IsSpec()) then
          -- save previous role and sign up as possible traitor/detective
@@ -939,7 +939,7 @@ function SelectRoles()
 
    GAMEMODE.LastRole = {}
 
-   for _, ply in ipairs(plys) do
+   for _, ply in inext, plys, num do
       -- initialize credit count for everyone based on their role
       ply:SetDefaultCredits()
 
