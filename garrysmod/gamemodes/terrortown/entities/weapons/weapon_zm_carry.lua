@@ -531,7 +531,7 @@ function SWEP:SetupDataTables()
    -- we've got these dt slots anyway, might as well use them instead of a
    -- globalvar, probably cheaper
    self:DTVar("Bool", 0, "can_rag_pin")
-   self:DTVar("Bool", 0, "can_rag_pin_inno")
+   self:DTVar("Bool", 1, "can_rag_pin_inno")
 
    -- client actually has no idea what we're holding, and almost never needs to
    -- know
