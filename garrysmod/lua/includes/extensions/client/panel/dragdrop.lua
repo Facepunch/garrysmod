@@ -414,9 +414,7 @@ function meta:DragMousePress( mcode )
 	if ( IsValid( dragndrop.m_DropMenu ) ) then return end
 	if ( dragndrop.IsDragging() ) then dragndrop.StopDragging() return end
 
-	if ( IsValid( self.m_pDragParent ) ) then
-		if ( self.m_pDragParent == self ) then return end
-
+	if ( IsValid( self.m_pDragParent ) and self.m_pDragParent ~= self ) then
 		return self.m_pDragParent:DragMousePress( mcode )
 	end
 
