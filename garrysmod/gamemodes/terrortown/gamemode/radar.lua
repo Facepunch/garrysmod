@@ -17,7 +17,11 @@ local function RadarScan(ply, cmd, args)
 
          ply.radar_charge =  CurTime() + chargetime
 
-         local scan_ents = player.GetAll()
+         local scan_ents = {}
+         for i, pl in player.Iterator() do
+            scan_ents[i] = pl
+         end
+
          table.Add(scan_ents, ents.FindByClass("ttt_decoy"))
 
          local targets = {}
