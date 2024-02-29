@@ -1058,12 +1058,9 @@ function GM:OnNPCKilled() end
 
 -- Drowning and such
 local tm = nil
-local inext, plys
-local num = 0
 function GM:Tick()
    -- three cheers for micro-optimizations
-   inext, plys = player.Iterator()
-   for _, ply in inext, plys, num do
+   for _, ply in player.Iterator() do
       tm = ply:Team()
       if tm == TEAM_TERROR and ply:Alive() then
          -- Drowning

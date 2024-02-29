@@ -34,9 +34,7 @@ end
 local indicator_mat = Material("vgui/ttt/sprite_traitor")
 local indicator_col = Color(255, 255, 255, 130)
 
-local client, inext, plys, pos, dir, tgt
-local num = 0
-local GetPlayers = player.Iterator
+local client, pos, dir, tgt
 
 local propspec_outline = Material("models/props_combine/portalball001_sheet")
 
@@ -44,7 +42,6 @@ local propspec_outline = Material("models/props_combine/portalball001_sheet")
 -- happen before certain entities are drawn, which then clip over the sprite
 function GM:PostDrawTranslucentRenderables()
    client = LocalPlayer()
-   inext, plys = GetPlayers()
 
    if client:GetTraitor() then
 
@@ -52,7 +49,7 @@ function GM:PostDrawTranslucentRenderables()
 
       render.SetMaterial(indicator_mat)
 
-      for _, ply in inext, plys, num do
+      for _, ply in player.Iterator() do
          if ply:IsActiveTraitor() and ply != client then
             pos = ply:GetPos()
             pos.z = pos.z + 74
@@ -65,7 +62,7 @@ function GM:PostDrawTranslucentRenderables()
    if client:Team() == TEAM_SPEC then
       cam.Start3D(EyePos(), EyeAngles())
 
-      for _, ply in inext, plys, num do
+      for _, ply in player.Iterator() do
          tgt = ply:GetObserverTarget()
          if IsValid(tgt) and tgt:GetNWEntity("spec_owner", nil) == ply then
             render.MaterialOverride(propspec_outline)
