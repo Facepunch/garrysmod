@@ -527,10 +527,8 @@ function IncRoundEnd(incr)
 end
 
 function TellTraitorsAboutTraitors()
-   local inext, plys, num = player.Iterator()
-
    local traitornicks = {}
-   for k,v in inext, plys, num do
+   for k,v in player.Iterator() do
       if v:IsTraitor() then
          table.insert(traitornicks, v:Nick())
       end
@@ -538,7 +536,7 @@ function TellTraitorsAboutTraitors()
 
    -- This is ugly as hell, but it's kinda nice to filter out the names of the
    -- traitors themselves in the messages to them
-   for k,v in inext, plys, num do
+   for k,v in player.Iterator() do
       if v:IsTraitor() then
          if #traitornicks < 2 then
             LANG.Msg(v, "round_traitors_one")
@@ -559,13 +557,12 @@ end
 
 
 function SpawnWillingPlayers(dead_only)
-   local inext, plys, num = player.Iterator()
    local wave_delay = GetConVar("ttt_spawn_wave_interval"):GetFloat()
 
    -- simple method, should make this a case of the other method once that has
    -- been tested.
    if wave_delay <= 0 or dead_only then
-      for k, ply in inext, plys, num do
+      for k, ply in player.Iterator() do
          if IsValid(ply) then
             ply:SpawnForRound(dead_only)
          end
@@ -575,7 +572,7 @@ function SpawnWillingPlayers(dead_only)
       local num_spawns = #GetSpawnEnts()
 
       local to_spawn = {}
-      for _, ply in RandomPairs(plys) do
+      for _, ply in RandomPairs(player.GetAll()) do
          if IsValid(ply) and ply:ShouldSpawn() then
             table.insert(to_spawn, ply)
             GAMEMODE:PlayerSpawnAsSpectator(ply)
@@ -852,9 +849,7 @@ function SelectRoles()
 
    if not GAMEMODE.LastRole then GAMEMODE.LastRole = {} end
 
-   local inext, plys, num = player.Iterator()
-
-   for k,v in inext, plys, num do
+   for k,v in player.Iterator() do
       -- everyone on the spec team is in specmode
       if IsValid(v) and (not v:IsSpec()) then
          -- save previous role and sign up as possible traitor/detective
@@ -939,7 +934,7 @@ function SelectRoles()
 
    GAMEMODE.LastRole = {}
 
-   for _, ply in inext, plys, num do
+   for _, ply in player.Iterator() do
       -- initialize credit count for everyone based on their role
       ply:SetDefaultCredits()
 

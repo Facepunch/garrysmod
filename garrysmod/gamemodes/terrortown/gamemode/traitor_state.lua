@@ -92,13 +92,11 @@ function SendFullStateUpdate()
 end
 
 function SendRoleReset(ply_or_rf)
-   local inext, plys, num = player.Iterator()
-
    net.Start("TTT_RoleList")
       net.WriteUInt(ROLE_INNOCENT, 2)
 
-      net.WriteUInt(#plys, 8)
-      for k, v in inext, plys, num do
+      net.WriteUInt(player.GetCount(), 8)
+      for k, v in player.Iterator() do
          net.WriteUInt(v:EntIndex() - 1, 7)
       end
 
