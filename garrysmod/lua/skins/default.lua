@@ -522,13 +522,30 @@ function SKIN:PaintMenuOption( panel, w, h )
 		surface.DrawRect( 0, 0, w, h )
 	end
 
-	if ( panel.m_bBackground && ( panel.Hovered || panel.Highlight) ) then
+	if ( panel.m_bBackground && ( panel.Hovered || panel.Highlight ) ) then
 		self.tex.MenuBG_Hover( 0, 0, w, h )
 	end
 
-	if ( panel:GetChecked() ) then
-		self.tex.Menu_Check( 5, h / 2 - 7, 15, 15 )
+	if ( panel:GetRadio() ) then
+		if ( panel:GetChecked() ) then
+			if ( panel:GetDisabled() ) then
+				self.tex.RadioButtonD_Checked( 5, h / 2 - 7, 15, 15)
+			else
+				self.tex.RadioButton_Checked( 5, h / 2 - 7, 15, 15)
+			end
+		else
+			if ( panel:GetDisabled() ) then
+				self.tex.RadioButtonD( 5, h / 2 - 7, 15, 15)
+			else
+				self.tex.RadioButton( 5, h / 2 - 7, 15, 15)
+			end
+		end
+	else
+		if ( panel:GetChecked() ) then
+			self.tex.Menu_Check( 5, h / 2 - 7, 15, 15 )
+		end
 	end
+
 
 end
 
