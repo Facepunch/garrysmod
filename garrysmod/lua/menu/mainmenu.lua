@@ -117,6 +117,12 @@ function PANEL:RefreshAddons()
 
 end
 
+function PANEL:SetProblemCount( problems, severity )
+
+	self:Call( "SetProblemCount(" .. problems .. ", " .. severity .. ")" )
+
+end
+
 function PANEL:UpdateBackgroundImages()
 
 	ClearBackgroundImages()

@@ -4,6 +4,8 @@ include( "problems_pnl.lua" )
 local ProblemsPanel
 local ProblemsCount = 0
 local ProblemSeverity = 0
+local MenuUpdated = false
+
 Problems = Problems or {}
 ErrorLog = ErrorLog or {}
 
@@ -35,7 +37,8 @@ local function CountProblem( severity )
 	ProblemSeverity = math.max( ProblemSeverity, severity or 0 )
 
 	if ( IsValid( pnlMainMenu ) ) then
-		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. ProblemSeverity .. ")" )
+		pnlMainMenu:SetProblemCount( ProblemsCount, ProblemSeverity )
+		MenuUpdated = true
 	end
 
 end
@@ -56,10 +59,16 @@ local function RecountProblems()
 	end
 
 	if ( IsValid( pnlMainMenu ) ) then
-		pnlMainMenu:Call( "SetProblemCount(" .. ProblemsCount .. ", " .. ProblemSeverity .. ")" )
+		pnlMainMenu:SetProblemCount( ProblemsCount, ProblemSeverity )
+		MenuUpdated = true
 	end
-
 end
+
+timer.Create( "menu_problem_counter", 1, 0, function()
+	if ( MenuUpdated ) then timer.Remove( "menu_problem_counter" ) return end
+
+	RecountProblems()
+end )
 
 function ClearLuaErrorGroup( group_id )
 
