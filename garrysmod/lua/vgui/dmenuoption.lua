@@ -120,8 +120,15 @@ function PANEL:ToggleCheck()
 	end
 
 	self:SetChecked( !self:GetChecked() )
-	self:OnChecked( self:GetChecked() )
 
+end
+
+function PANEL:SetChecked( b )
+	if ( self:GetChecked() != b ) then
+		self:OnChecked( b )
+	end
+
+	self.m_bChecked = b
 end
 
 function PANEL:OnChecked( b )
