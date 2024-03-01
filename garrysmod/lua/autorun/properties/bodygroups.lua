@@ -60,10 +60,10 @@ properties.Add( "bodygroups", {
 				local opposite = 1
 				if ( current == opposite ) then opposite = 0 end
 
-				local opt = submenu:AddOption( v.name, function() self:SetBodyGroup( ent, v.id, opposite ) end )
-				if ( current == 1 ) then
-					opt:SetChecked( true )
-				end
+				local opt = submenu:AddOption( v.name )
+				opt:SetChecked( current == 1 )
+				opt:SetIsCheckable( true )
+				opt.OnChecked = function( s, checked ) self:SetBodyGroup( ent, v.id, checked and 1 or 0 ) end
 
 			--
 			-- More than 2 options we add our own submenu
@@ -75,10 +75,16 @@ properties.Add( "bodygroups", {
 				for i = 1, v.num do
 					local modelname = "model #" .. i
 					if ( v.submodels and v.submodels[ i - 1 ] != "" ) then modelname = v.submodels[ i - 1 ] end
-					local opt = groups:AddOption( modelname, function() self:SetBodyGroup( ent, v.id, i - 1 ) end )
-					if ( target:GetBodygroup( v.id ) == i - 1 ) then
-						opt:SetChecked( true )
-					end
+					modelname = string.Trim( modelname, "." )
+					modelname = string.Trim( modelname, "/" )
+					modelname = string.Trim( modelname, "\\" )
+					modelname = string.StripExtension( modelname )
+
+					local opt = groups:AddOption( modelname )
+					opt:SetRadio( true )
+					opt:SetChecked( target:GetBodygroup( v.id ) == i - 1 )
+					opt:SetIsCheckable( true )
+					opt.OnChecked = function( s, checked ) if ( checked ) then self:SetBodyGroup( ent, v.id, i - 1 ) end end
 				end
 
 			end

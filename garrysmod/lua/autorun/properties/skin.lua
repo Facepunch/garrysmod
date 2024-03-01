@@ -34,10 +34,11 @@ properties.Add( "skin", {
 
 		for i = 0, num - 1 do
 
-			local opt = submenu:AddOption( "Skin " .. i, function() self:SetSkin( ent, i ) end )
-			if ( target:GetSkin() == i ) then
-				opt:SetChecked( true )
-			end
+			local opt = submenu:AddOption( "Skin " .. i )
+			opt:SetRadio( true )
+			opt:SetChecked( target:GetSkin() == i )
+			opt:SetIsCheckable( true )
+			opt.OnChecked = function( s, checked ) if ( checked ) then self:SetSkin( ent, i ) end end
 
 		end
 
