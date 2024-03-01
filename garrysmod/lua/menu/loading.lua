@@ -257,7 +257,7 @@ function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamem
 	serverurl = serverurl:Replace( "%s", steamid )
 	serverurl = serverurl:Replace( "%m", mapname )
 
-	if ( maxplayers > 1 && GetConVar( "cl_enable_loadingurl" ):GetBool() && serverurl:StartWith( "http" ) ) then
+	if ( maxplayers > 1 && GetConVar( "cl_enable_loadingurl" ):GetBool() && ( serverurl:StartsWith( "http" ) || serverurl:StartsWith( "asset://" ) ) ) then
 		pnlLoading:ShowURL( serverurl, true )
 	end
 
