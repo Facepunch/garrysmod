@@ -621,7 +621,9 @@ duplicator.RegisterConstraint( "Elastic", Elastic, "Ent1", "Ent2", "Bone1", "Bon
 function Keepupright( Ent, Ang, Bone, angularlimit )
 
 	if ( !CanConstrain( Ent, Bone ) ) then return false end
-	if ( Ent:GetClass() != "prop_physics" && Ent:GetClass() != "prop_ragdoll" ) then return false end
+	-- This was once here. Is there any specific reason this was the case?
+	--if ( Ent:GetClass() != "prop_physics" && Ent:GetClass() != "prop_ragdoll" ) then return false end
+	if ( Ent:IsPlayer() || Ent:IsWorld() ) then return false end
 	if ( !angularlimit or angularlimit < 0 ) then return end
 
 	local Phys = Ent:GetPhysicsObjectNum( Bone )
