@@ -4,7 +4,7 @@ var IS_SPAWN_MENU = false
 
 var App = angular.module( 'MenuApp', [ 'tranny', 'ui' ] );
 
-App.config(function ( $routeProvider, $locationProvider )
+App.config( function( $routeProvider, $locationProvider )
 {
 	$routeProvider.when('/', { templateUrl: 'template/main.html' } );
 	$routeProvider.when('/addons/', { templateUrl: 'template/addon_list.html' } );
@@ -20,7 +20,7 @@ function UpdateDigest( scope, timeout )
 	if ( !scope ) return;
 	if ( scope.DigestUpdate ) return;
 
-	scope.DigestUpdate = setTimeout( function ()
+	scope.DigestUpdate = setTimeout( function()
 	{
 		scope.DigestUpdate = 0;
 		scope.$digest();
@@ -30,9 +30,9 @@ function UpdateDigest( scope, timeout )
 
 //We already have a limitTo filter built-in to angular,
 //let's make a startFrom filter
-App.filter( 'startFrom', function ()
+App.filter( 'startFrom', function()
 {
-	return function ( input, start )
+	return function( input, start )
 	{
 		if ( !input ) return input;
 

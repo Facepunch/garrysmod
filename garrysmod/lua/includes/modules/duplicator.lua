@@ -157,7 +157,7 @@ local EntitySaver =
 		data.ModelScale			= ent:GetModelScale()
 		if ( data.ModelScale == 1 ) then data.ModelScale = nil end
 
-		-- We have no reason to keep the creation ID anymore - but we will
+		-- This is useful for addons to determine if the entity was map spawned or not
 		if ( ent:CreatedByMap() ) then
 			data.MapCreationID = ent:MapCreationID()
 		end
