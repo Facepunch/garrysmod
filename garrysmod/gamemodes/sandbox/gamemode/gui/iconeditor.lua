@@ -290,6 +290,8 @@ end
 function PANEL:BestGuessLayout()
 
 	local ent = self.ModelPanel:GetEntity()
+	if ( !IsValid( ent ) ) then return end
+
 	local pos = ent:GetPos()
 	local ang = ent:GetAngles()
 
@@ -307,6 +309,8 @@ end
 function PANEL:FullFrontalLayout()
 
 	local ent = self.ModelPanel:GetEntity()
+	if ( !IsValid( ent ) ) then return end
+
 	local pos = ent:GetPos()
 	local campos = pos + Vector( -200, 0, 0 )
 
@@ -319,6 +323,8 @@ end
 function PANEL:AboveLayout()
 
 	local ent = self.ModelPanel:GetEntity()
+	if ( !IsValid( ent ) ) then return end
+
 	local pos = ent:GetPos()
 	local campos = pos + Vector( 0, 0, 200 )
 
@@ -331,6 +337,8 @@ end
 function PANEL:RightLayout()
 
 	local ent = self.ModelPanel:GetEntity()
+	if ( !IsValid( ent ) ) then return end
+
 	local pos = ent:GetPos()
 	local campos = pos + Vector( 0, 200, 0 )
 
@@ -343,6 +351,8 @@ end
 function PANEL:OriginLayout()
 
 	local ent = self.ModelPanel:GetEntity()
+	if ( !IsValid( ent ) ) then return end
+
 	local pos = ent:GetPos()
 	local campos = pos + vector_origin
 
@@ -443,6 +453,7 @@ function PANEL:Refresh()
 	self.ModelPanel.LayoutEntity = function() self:UpdateEntity( self.ModelPanel:GetEntity() )  end
 
 	local ent = self.ModelPanel:GetEntity()
+	if ( !IsValid( ent ) ) then return end
 
 	ent:SetSkin( self.SpawnIcon:GetSkinID() )
 	ent:SetBodyGroups( self.SpawnIcon:GetBodyGroup() )

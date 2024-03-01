@@ -22,6 +22,12 @@ function PANEL:OnMousePressed( mousecode )
 
 	self:CaptureMouse()
 
+	if ( !IsValid( self.Entity ) ) then
+		self.OrbitPoint = vector_origin
+		self.OrbitDistance = ( self.OrbitPoint - self.vCamPos ):Length()
+		return
+	end
+
 	-- Helpers for the orbit movement
 	local mins, maxs = self.Entity:GetModelBounds()
 	local center = ( mins + maxs ) / 2
