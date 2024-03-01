@@ -75,9 +75,15 @@ cvars.AddChangeCallback( "sbox_persist", function( name, old, new )
 
 		if ( newPage == "" ) then return end
 
-		game.CleanUpMap() -- Maybe this should be moved to PersistenceLoad?
+		-- Addons are forcing us to use this hook
+		hook.Add( "PostCleanupMap", "GMod_Sandbox_PersistanceLoad", function()
+			hook.Remove( "PostCleanupMap", "GMod_Sandbox_PersistanceLoad" )
 
-		hook.Run( "PersistenceLoad", newPage )
+			hook.Run( "PersistenceLoad", newPage )
+		end )
+
+		-- Maybe this game.CleanUpMap call should be moved to PersistenceLoad?
+		game.CleanUpMap( false, nil, function() end )
 
 	end )
 
