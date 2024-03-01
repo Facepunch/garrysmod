@@ -5,6 +5,7 @@ local surface = surface
 local tostring = tostring
 local ipairs = ipairs
 local setmetatable = setmetatable
+local tonumber = tonumber
 local math = math
 local utf8 = utf8
 local _Color = Color
