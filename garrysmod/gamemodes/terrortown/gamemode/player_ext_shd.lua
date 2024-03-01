@@ -222,7 +222,7 @@ if CLIENT then
    function GM:GrabEarAnimation(ply) end
 
    net.Receive("TTT_PerformGesture", function()
-      local ply = net.ReadEntity()
+      local ply = net.ReadPlayer()
       local act = net.ReadUInt(16)
       if IsValid(ply) and act then
          ply:AnimPerformGesture(act)
@@ -239,7 +239,7 @@ else -- SERVER
       if not act then return end
 
       net.Start("TTT_PerformGesture")
-         net.WriteEntity(self)
+         net.WritePlayer(self)
          net.WriteUInt(act, 16)
       net.Broadcast()
    end
