@@ -6,6 +6,7 @@ include( "openurl.lua" )
 include( "ugcpublish.lua" )
 
 pnlMainMenu = nil
+local pnlMainMenuFallback = nil
 
 local PANEL = {}
 
@@ -20,6 +21,13 @@ function PANEL:Init()
 	JS_Language( self.HTML )
 	JS_Utility( self.HTML )
 	JS_Workshop( self.HTML )
+
+	-- Detect whenther the HTML engine is even there
+	self.menuLoaded = false
+	self.HTML.OnBeginLoadingDocument = function()
+		self.menuLoaded = true
+		if ( IsValid( pnlMainMenuFallback ) ) then pnlMainMenuFallback:Remove() end
+	end
 
 	self.HTML:Dock( FILL )
 	self.HTML:OpenURL( "asset://garrysmod/html/menu.html" )
@@ -178,6 +186,8 @@ function OnMenuFailedToLoad()
 	frame:SetTitle( "Menu failed to load" )
 	frame:MakePopup()
 
+	pnlMainMenuFallback = frame
+
 	local lbl = vgui.CreateFromTable( markupPanel, frame )
 	lbl:Dock( TOP )
 	lbl:DockMargin( 0, 0, 0, 5 )
@@ -187,7 +197,13 @@ function OnMenuFailedToLoad()
 	btn_srv:Dock( TOP )
 	btn_srv:DockMargin( 0, 0, 0, 5 )
 	btn_srv:SetText( "Open legacy server browser" )
-	btn_srv:SetConsoleCommand( "gamemenucommand", "openserverbrowser" )
+	btn_srv:SetConsoleCommand( "gamemenucommand", "OpenServerBrowser" )
+
+	local btn_opt = frame:Add( "DButton" )
+	btn_opt:Dock( TOP )
+	btn_opt:DockMargin( 0, 0, 0, 5 )
+	btn_opt:SetText( "Open Settings" )
+	btn_opt:SetConsoleCommand( "gamemenucommand", "OpenOptionsDialog" )
 
 	local btn_exit = frame:Add( "DButton" )
 	btn_exit:Dock( TOP )
@@ -569,4 +585,8 @@ timer.Simple( 0, function()
 	if ( !file.Exists( "html/menu.html", "MOD" ) ) then
 		OnMenuFailedToLoad()
 	end
+
+	timer.Simple( 5, function()
+		if ( !pnlMainMenu.menuLoaded ) then OnMenuFailedToLoad() end
+	end )
 end )
