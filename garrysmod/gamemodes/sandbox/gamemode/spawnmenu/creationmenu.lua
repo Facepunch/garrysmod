@@ -44,6 +44,7 @@ function PANEL:Populate()
 		-- We have to add the timer to make sure g_Spawnmenu is available
 		-- in case some addon needs it ready when populating the creation tab.
 		timer.Simple( 0, function()
+			if ( !IsValid( pnl ) ) then return end
 			local childpnl = v.Function()
 			childpnl:SetParent( pnl )
 			childpnl:Dock( FILL )
