@@ -22,7 +22,7 @@ function util.IsValidPhysicsObject( ent, num )
 	-- anyway - so we're not really losing anything.
 
 	local MoveType = ent:GetMoveType()
-	if ( !ent:IsWorld() and MoveType != MOVETYPE_VPHYSICS and !( ent:GetModel() and ent:GetModel():StartWith( "*" ) ) ) then return false end
+	if ( !ent:IsWorld() and MoveType != MOVETYPE_VPHYSICS and !( ent:GetModel() and ent:GetModel():StartsWith( "*" ) ) ) then return false end
 
 	local Phys = ent:GetPhysicsObjectNum( num )
 	return IsValid( Phys )

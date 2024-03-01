@@ -48,7 +48,7 @@ local function GamePropsRightClick( self )
 		-- Find the "root" node for this game
 		local parent = self
 		local icon = parent:GetIcon()
-		while ( !icon:StartWith( "games" ) ) do
+		while ( !icon:StartsWith( "games" ) ) do
 			parent = parent:GetParentNode()
 			if ( !IsValid( parent ) ) then break end
 			icon = parent:GetIcon()

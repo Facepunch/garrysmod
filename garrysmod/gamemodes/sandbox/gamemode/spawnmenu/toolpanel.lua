@@ -39,7 +39,7 @@ function PANEL:Init()
 				if ( item == category.Header ) then continue end
 
 				local str = item.Text
-				if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
+				if ( str:StartsWith( "#" ) ) then str = str:sub( 2 ) end
 				str = language.GetPhrase( str )
 
 				if ( !category_matched && !string.find( str:lower(), text, nil, true ) ) then

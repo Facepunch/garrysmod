@@ -261,13 +261,13 @@ GetAPIManifest( function( result )
 	LoadNewsList()
 
 	for k, v in pairs( result.Servers and result.Servers.Banned or {} ) do
-		if ( v:StartWith( "map:" ) ) then
+		if ( v:StartsWith( "map:" ) ) then
 			table.insert( BlackList.Maps, v:sub( 5 ) )
-		elseif ( v:StartWith( "host:" ) or v:StartWith( "name:" ) ) then
+		elseif ( v:StartsWith( "host:" ) or v:StartsWith( "name:" ) ) then
 			table.insert( BlackList.Hostnames, v:sub( 6 ) )
-		elseif ( v:StartWith( "desc:" ) ) then
+		elseif ( v:StartsWith( "desc:" ) ) then
 			table.insert( BlackList.Descripts, v:sub( 6 ) )
-		elseif ( v:StartWith( "gm:" ) ) then
+		elseif ( v:StartsWith( "gm:" ) ) then
 			table.insert( BlackList.Gamemodes, v:sub( 4 ) )
 		else
 			table.insert( BlackList.Addresses, v )

@@ -475,7 +475,7 @@ function SKIN:PaintTextEntry( panel, w, h )
 		local oldText = panel:GetText()
 
 		local str = panel:GetPlaceholderText()
-		if ( str:StartWith( "#" ) ) then str = str:sub( 2 ) end
+		if ( str:StartsWith( "#" ) ) then str = str:sub( 2 ) end
 		str = language.GetPhrase( str )
 
 		panel:SetText( str )

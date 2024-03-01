@@ -330,7 +330,7 @@ function GM:CalcVehicleView( Vehicle, ply, view )
 		endpos = TargetOrigin,
 		filter = function( e )
 			local c = e:GetClass() -- Avoid contact with entities that can potentially be attached to the vehicle. Ideally, we should check if "e" is constrained to "Vehicle".
-			return !c:StartWith( "prop_physics" ) &&!c:StartWith( "prop_dynamic" ) && !c:StartWith( "phys_bone_follower" ) && !c:StartWith( "prop_ragdoll" ) && !e:IsVehicle() && !c:StartWith( "gmod_" )
+			return !c:StartsWith( "prop_physics" ) &&!c:StartsWith( "prop_dynamic" ) && !c:StartsWith( "phys_bone_follower" ) && !c:StartsWith( "prop_ragdoll" ) && !e:IsVehicle() && !c:StartsWith( "gmod_" )
 		end,
 		mins = Vector( -WallOffset, -WallOffset, -WallOffset ),
 		maxs = Vector( WallOffset, WallOffset, WallOffset ),

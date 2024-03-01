@@ -68,7 +68,7 @@ search.AddProvider( function( str )
 
 		-- Don't search in the models/ and .mdl bit of every model, because every model has this bit, unless they are looking for direct model path
 		local modelpath = v
-		if ( modelpath:StartWith( "models/" ) && modelpath:EndsWith( ".mdl" ) && !str:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8, modelpath:len() - 4 ) end
+		if ( modelpath:StartsWith( "models/" ) && modelpath:EndsWith( ".mdl" ) && !str:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8, modelpath:len() - 4 ) end
 
 		if ( modelpath:find( str, nil, true ) ) then
 

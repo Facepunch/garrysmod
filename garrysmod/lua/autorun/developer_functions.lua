@@ -80,7 +80,7 @@ local function Find( ply, command, arguments )
 
 	if ( !arguments[1] ) then
 
-		if ( command:StartWith( "lua_findhooks" ) ) then
+		if ( command:StartsWith( "lua_findhooks" ) ) then
 			MsgN( "Usage: lua_findhooks <event name> [hook identifier]" )
 			return
 		end
@@ -89,7 +89,7 @@ local function Find( ply, command, arguments )
 		return
 	end
 
-	if ( command:StartWith( "lua_findhooks" ) ) then
+	if ( command:StartsWith( "lua_findhooks" ) ) then
 
 		Msg( "Finding '", arguments[1], "' hooks ",
 			( arguments[2] and "with name '" .. arguments[2] .. "' " or "" ),
