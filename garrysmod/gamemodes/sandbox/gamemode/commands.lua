@@ -615,7 +615,6 @@ local function GenericNPCDuplicator( ply, mdl, class, equipment, spawnflags, dat
 
 		if ( NPCData && !NPCData.OnCeiling && !NPCData.NoDrop ) then
 			ent:SetPos( pos )
-			ent:DropToFloor()
 		end
 
 		if ( IsValid( ply ) ) then
