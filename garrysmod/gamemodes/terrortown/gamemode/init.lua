@@ -271,7 +271,7 @@ end
 local function EnoughPlayers()
    local ready = 0
    -- only count truly available players, ie. no forced specs
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       if IsValid(ply) and ply:ShouldSpawn() then
          ready = ready + 1
       end
@@ -304,7 +304,7 @@ end
 -- we regularly check for these broken spectators while we wait for players
 -- and immediately fix them.
 function FixSpectators()
-   for k, ply in ipairs(player.GetAll()) do
+   for k, ply in player.Iterator() do
       if ply:IsSpec() and not ply:GetRagdollSpec() and ply:GetMoveType() < MOVETYPE_NOCLIP then
          ply:Spectate(OBS_MODE_ROAMING)
       end
@@ -354,7 +354,7 @@ function StartNameChangeChecks()
    if not GetConVar("ttt_namechange_kick"):GetBool() then return end
 
    -- bring nicks up to date, may have been changed during prep/post
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       ply.spawn_nick = ply:Nick()
    end
 
@@ -386,7 +386,7 @@ local function CleanUp()
    et.FixParentedPostCleanup()
 
    -- Strip players now, so that their weapons are not seen by ReplaceEntities
-   for k,v in ipairs(player.GetAll()) do
+   for k,v in player.Iterator() do
       if IsValid(v) then
          v:StripWeapons()
       end
@@ -527,10 +527,8 @@ function IncRoundEnd(incr)
 end
 
 function TellTraitorsAboutTraitors()
-  local plys = player.GetAll()
-
    local traitornicks = {}
-   for k,v in ipairs(plys) do
+   for k,v in player.Iterator() do
       if v:IsTraitor() then
          table.insert(traitornicks, v:Nick())
       end
@@ -538,7 +536,7 @@ function TellTraitorsAboutTraitors()
 
    -- This is ugly as hell, but it's kinda nice to filter out the names of the
    -- traitors themselves in the messages to them
-   for k,v in ipairs(plys) do
+   for k,v in player.Iterator() do
       if v:IsTraitor() then
          if #traitornicks < 2 then
             LANG.Msg(v, "round_traitors_one")
@@ -559,13 +557,12 @@ end
 
 
 function SpawnWillingPlayers(dead_only)
-   local plys = player.GetAll()
    local wave_delay = GetConVar("ttt_spawn_wave_interval"):GetFloat()
 
    -- simple method, should make this a case of the other method once that has
    -- been tested.
    if wave_delay <= 0 or dead_only then
-      for k, ply in ipairs(plys) do
+      for k, ply in player.Iterator() do
          if IsValid(ply) then
             ply:SpawnForRound(dead_only)
          end
@@ -575,7 +572,7 @@ function SpawnWillingPlayers(dead_only)
       local num_spawns = #GetSpawnEnts()
 
       local to_spawn = {}
-      for _, ply in RandomPairs(plys) do
+      for _, ply in RandomPairs(player.GetAll()) do
          if IsValid(ply) and ply:ShouldSpawn() then
             table.insert(to_spawn, ply)
             GAMEMODE:PlayerSpawnAsSpectator(ply)
@@ -795,7 +792,7 @@ function GM:TTTCheckForWin()
 
    local traitor_alive = false
    local innocent_alive = false
-   for k,v in ipairs(player.GetAll()) do
+   for k,v in player.Iterator() do
       if v:Alive() and v:IsTerror() then
          if v:GetTraitor() then
             traitor_alive = true
@@ -852,9 +849,7 @@ function SelectRoles()
 
    if not GAMEMODE.LastRole then GAMEMODE.LastRole = {} end
 
-   local plys = player.GetAll()
-
-   for k,v in ipairs(plys) do
+   for k,v in player.Iterator() do
       -- everyone on the spec team is in specmode
       if IsValid(v) and (not v:IsSpec()) then
          -- save previous role and sign up as possible traitor/detective
@@ -939,7 +934,7 @@ function SelectRoles()
 
    GAMEMODE.LastRole = {}
 
-   for _, ply in ipairs(plys) do
+   for _, ply in player.Iterator() do
       -- initialize credit count for everyone based on their role
       ply:SetDefaultCredits()
 

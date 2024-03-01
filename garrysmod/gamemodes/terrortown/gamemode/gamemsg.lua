@@ -55,7 +55,7 @@ end
 
 -- Round start info popup
 function ShowRoundStartPopup()
-   for k, v in ipairs(player.GetAll()) do
+   for k, v in player.Iterator() do
       if IsValid(v) and v:Team() == TEAM_TERROR and v:Alive() then
          v:ConCommand("ttt_cl_startpopup")
       end
@@ -64,7 +64,7 @@ end
 
 local function GetPlayerFilter(pred)
    local filter = {}
-   for k, v in ipairs(player.GetAll()) do
+   for k, v in player.Iterator() do
       if IsValid(v) and pred(v) then
          table.insert(filter, v)
       end

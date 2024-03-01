@@ -53,7 +53,7 @@ end
 
 function util.GetAlivePlayers()
    local alive = {}
-   for k, p in ipairs(player.GetAll()) do
+   for k, p in player.Iterator() do
       if IsValid(p) and p:Alive() and p:IsTerror() then
          table.insert(alive, p)
       end

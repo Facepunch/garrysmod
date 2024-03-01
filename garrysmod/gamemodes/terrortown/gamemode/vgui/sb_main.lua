@@ -408,7 +408,7 @@ function PANEL:UpdateScoreboard( force )
 
    -- Put players where they belong. Groups will dump them as soon as they don't
    -- anymore.
-   for k, p in ipairs(player.GetAll()) do
+   for k, p in player.Iterator() do
       if IsValid(p) then
          local group = ScoreGroup(p)
          if self.ply_groups[group] and not self.ply_groups[group]:HasPlayerRow(p) then

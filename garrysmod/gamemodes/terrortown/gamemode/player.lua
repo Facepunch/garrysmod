@@ -45,7 +45,7 @@ end
 
 function GM:NetworkIDValidated( name, steamid )
    -- edge case where player authed after initspawn
-   for _, p in ipairs(player.GetAll()) do
+   for _, p in player.Iterator() do
       if IsValid(p) and p:SteamID() == steamid and p.delay_karma_recall then
          KARMA.LateRecallAndSet(p)
          return
@@ -510,7 +510,7 @@ local function CheckCreditAward(victim, attacker)
    -- DETECTIVE AWARD
    if IsValid(attacker) and attacker:IsPlayer() and attacker:IsActiveDetective() and victim:IsTraitor() then
       local amt = GetConVarNumber("ttt_det_credits_traitordead") or 1
-      for _, ply in ipairs(player.GetAll()) do
+      for _, ply in player.Iterator() do
          if ply:IsActiveDetective() then
             ply:AddCredits(amt)
          end
@@ -526,7 +526,7 @@ local function CheckCreditAward(victim, attacker)
       local inno_dead = 0
       local inno_total = 0
 
-      for _, ply in ipairs(player.GetAll()) do
+      for _, ply in player.Iterator() do
          if not ply:GetTraitor() then
             if ply:IsTerror() then
                inno_alive = inno_alive + 1
@@ -556,7 +556,7 @@ local function CheckCreditAward(victim, attacker)
          if amt > 0 then
             LANG.Msg(GetTraitorFilter(true), "credit_tr_all", {num = amt})
 
-            for _, ply in ipairs(player.GetAll()) do
+            for _, ply in player.Iterator() do
                if ply:IsActiveTraitor() then
                   ply:AddCredits(amt)
                end
@@ -1058,13 +1058,9 @@ function GM:OnNPCKilled() end
 
 -- Drowning and such
 local tm = nil
-local ply = nil
-local plys = nil
 function GM:Tick()
    -- three cheers for micro-optimizations
-   plys = player.GetAll()
-   for i= 1, #plys do
-      ply = plys[i]
+   for _, ply in player.Iterator() do
       tm = ply:Team()
       if tm == TEAM_TERROR and ply:Alive() then
          -- Drowning

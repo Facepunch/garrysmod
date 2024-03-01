@@ -177,7 +177,7 @@ function GM:PlayerLoadout( ply )
 end
 
 function GM:UpdatePlayerLoadouts()
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       hook.Call("PlayerLoadout", GAMEMODE, ply)
    end
 end
