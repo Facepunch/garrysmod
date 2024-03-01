@@ -188,7 +188,10 @@ end
 function FireProblemFromEngine( id, severity, params )
 	if ( id == "menu_cleanupgmas" ) then
 		local text = language.GetPhrase( "problem." .. id ) .. "\n\n" .. params:Replace( ";", "\n" )
-		FireProblem( { id = id, text = text, type = "addons", fix = function() RunConsoleCommand( "menu_cleanupgmas" ) ClearProblem( id ) end } )
+		FireProblem( { id = id, text = text, severity = severity, type = "addons", fix = function() RunConsoleCommand( "menu_cleanupgmas" ) ClearProblem( id ) end } )
+	elseif ( id == "readonly_file" ) then
+		local text = params
+		FireProblem( { id = id .. params, text = text, severity = severity, type = "config" } )
 	else
 		-- missing_addon_file
 		-- addon_download_failed = title;reason
