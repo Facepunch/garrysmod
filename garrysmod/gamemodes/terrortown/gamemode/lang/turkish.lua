@@ -892,7 +892,7 @@ L.aw_nki3_title = "Hainler Hain Koyun Düşler mi?"
 L.aw_nki3_text = "üç haine tatlı rüyalar gördür."
 
 L.aw_nki4_title = "İçişleri Çalışanı"
-L.aw_nkt5_text = "öldürme başına ödeme alır. Artık beşinci yüzme havuzunu sipariş edebilir."
+L.aw_nki4_text = "öldürme başına ödeme alır. Artık beşinci yüzme havuzunu sipariş edebilir."
 
 L.aw_fal1_title = "Hayır Bay Bond, Düşmenizi Bekliyorum"
 L.aw_fal1_text = "birini büyük bir yükseklikten itti."
