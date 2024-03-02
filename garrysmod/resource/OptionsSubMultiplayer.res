@@ -17,15 +17,15 @@
 		"enabled"		"1"
 		"tabPosition"		"0"
 	}
-	
+
 	////////////////////////////////////// DOWNLOAD FILTER
-	
+
 	"DownloadFilterLabel"
 	{
 		"ControlName"		"Label"
 		"fieldName"		"DownloadFilterLabel"
 		"xpos"		"32"
-		"ypos"		"134"
+		"ypos"		"105"
 		"wide"		"260"
 		"tall"		"36"
 		"autoResize"		"0"
@@ -51,9 +51,9 @@
 	{
 		"ControlName"		"ComboBox"
 		"fieldName"		"DownloadFilterCheck"
-		"xpos"		"32" // +6
-		"ypos"		"180" // +48
-		"wide"		"250"
+		"xpos"		"32"
+		"ypos"		"155"
+		"wide"		"300"
 		"tall"		"24"
 		"autoResize"		"0"
 		"pinCorner"		"0"
@@ -69,7 +69,7 @@
 		"NumericInputOnly"		"0"
 		"unicode"		"0"
 	}
-	
+
 	////////////////////////////////////// DIVIDER
 
 	"Divider2"
@@ -77,7 +77,7 @@
 		"ControlName"		"Divider"
 		"fieldName"		"Divider2"
 		"xpos"		"32"
-		"ypos"		"128"
+		"ypos"		"110"
 		"wide"		"432"
 		"tall"		"2"
 		"autoResize"		"0"
@@ -89,15 +89,152 @@
 		"enabled"		"1"
 		"tabPosition"		"0"
 	}
-	
+
+	////////////////////////////////////// GMOD: LOADING SCREEN FLAG
+
+	"Divider3"
+	{
+		"ControlName"		"Divider"
+		"fieldName"		"Divider3"
+		"xpos"		"32"
+		"ypos"		"190"
+		"wide"		"432"
+		"tall"		"2"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"RoundedCorners"		"15"
+		"pin_corner_to_sibling"		"0"
+		"pin_to_sibling_corner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"		"0"
+	}
+
+	"HTMLLoadingScreen"
+	{
+		"ControlName"		"CCvarToggleCheckButton"
+		"fieldName"		"HTMLLoadingScreen"
+		"xpos"		"25"
+		"ypos"		"195"
+		"wide"		"250"
+		"tall"		"22"
+		//"tooltiptext"		"#GameUI_HTMLLoadingScreenTooltip"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"RoundedCorners"		"15"
+		"pin_corner_to_sibling"		"0"
+		"pin_to_sibling_corner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"		"2"
+		"labelText"		"#GameUI_HTMLLoadingScreen"
+		"textAlignment"		"west"
+		"dulltext"		"0"
+		"brighttext"		"0"
+		"wrap"		"0"
+		"centerwrap"		"0"
+		"textinsetx"		"6"
+		"textinsety"		"0"
+		"auto_wide_tocontents"		"0"
+		"use_proportional_insets"		"0"
+		"Default"		"1"
+	}
+
+	"FastSwitchCheckbox"
+	{
+		"ControlName"		"CCvarToggleCheckButton"
+		"fieldName"		"FastSwitchCheckbox"
+		"xpos"		"25"
+		"ypos"		"220"
+		"wide"		"250"
+		"tall"		"22"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"RoundedCorners"		"15"
+		"pin_corner_to_sibling"		"0"
+		"pin_to_sibling_corner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"		"2"
+		"labelText"		"#GameUI_FastSwitchCheck"
+		"textAlignment"		"west"
+		"dulltext"		"0"
+		"brighttext"		"0"
+		"wrap"		"0"
+		"centerwrap"		"0"
+		"textinsetx"		"6"
+		"textinsety"		"0"
+		"auto_wide_tocontents"		"0"
+		"use_proportional_insets"		"0"
+		"Default"		"1"
+		"cvar_name"		"hud_fastswitch"
+	}
+
+	"CrosshairSettings"
+	{
+		"ControlName"		"Button"
+		"fieldName"		"CrosshairSettings"
+		"xpos"		"32"
+		"ypos"		"245"
+		"wide"		"250"
+		"tall"		"24"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"tabPosition"		"2"
+		"labelText"		"#GameUI_CrosshairCustomize"
+		"textAlignment"		"west"
+		"textinsetx"		"6"
+		"command"		"crosshair_setup"
+	}
+
+	"FOVSliderLabel"
+	{
+		"ControlName"	"Label"
+		"fieldName"		"FOVSliderLabel"
+		"xpos"			"296"
+		"ypos"			"205"
+		"wide"			"176"
+		"tall"			"24"
+		"autoResize"	"0"
+		"pinCorner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"	"0"
+		"labelText"		"#GameUI_FOV"
+		"textAlignment"	"west"
+		"dulltext"		"0"
+		"brighttext"	"0"
+		"wrap"			"0"
+	}
+	"FovSliderSlider"
+	{
+		"ControlName"	"CCvarSlider"
+		"fieldName"		"FovSliderSlider"
+		"xpos"			"296"
+		"ypos"			"225"
+		"wide"			"176"
+		"tall"			"50"
+		"autoResize"	"0"
+		"pinCorner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"	"11"
+		"leftText"		"0.00"
+		"rightText"		"1.00"
+		"minvalue"		"75"
+		"maxvalue"		"100"
+		"cvar_name"		"fov_desired"
+		"allowoutofrange"		"0"
+	}
+
 	////////////////////////////////////// SPRAY
-	
+
 	"Label2"
 	{
 		"ControlName"		"Label"
 		"fieldName"		"Label2"
 		"xpos"		"32"
-		"ypos"		"16"
+		"ypos"		"14"
 		"wide"		"150"
 		"tall"		"24"
 		"autoResize"		"0"
@@ -124,7 +261,7 @@
 		"ControlName"		"ImagePanel"
 		"fieldName"		"LogoImage"
 		"xpos"		"32"
-		"ypos"		"40" //+24
+		"ypos"		"38"
 		"wide"		"64"
 		"tall"		"64"
 		"autoResize"		"0"
@@ -143,13 +280,13 @@
 		"tileHorizontally"		"0"
 		"tileVertically"		"0"
 	}
-	
+
 	"SpraypaintList"
 	{
 		"ControlName"		"CLabeledCommandComboBox"
 		"fieldName"		"SpraypaintList"
 		"xpos"		"106"
-		"ypos"		"40" //+24
+		"ypos"		"38"
 		"wide"		"124"
 		"tall"		"24"
 		"autoResize"		"0"
@@ -166,15 +303,15 @@
 		"NumericInputOnly"		"0"
 		"unicode"		"0"
 	}
-	
+
 	"Label3"
 	{
 		"ControlName"		"Label"
 		"fieldName"		"Label3"
 		"xpos"		"246"
-		"ypos"		"40" //+24
-		"wide"		"204"
-		"tall"		"64"
+		"ypos"		"38"
+		"wide"		"214"
+		"tall"		"40"
 		"autoResize"		"0"
 		"pinCorner"		"0"
 		"RoundedCorners"		"15"
@@ -194,13 +331,13 @@
 		"textinsety"		"0"
 		"auto_wide_tocontents"		"0"
 	}
-	
+
 	"ImportSprayImage"
 	{
 		"ControlName"		"Button"
 		"fieldName"		"ImportSprayImage"
 		"xpos"		"106"
-		"ypos"		"80" // +64
+		"ypos"		"78"
 		"wide"		"124"
 		"tall"		"24"
 		"autoResize"		"0"
@@ -223,6 +360,35 @@
 		"Command"		"ImportSprayImage"
 		"Default"		"0"
 		"selected"		"0"
+	}
+
+	"DisableSprays"
+	{
+		"ControlName"		"CCvarToggleCheckButton"
+		"fieldName"		"DisableSprays"
+		"xpos"		"240"
+		"ypos"		"74"
+		"wide"		"250"
+		"tall"		"28"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"RoundedCorners"		"15"
+		"pin_corner_to_sibling"		"0"
+		"pin_to_sibling_corner"		"0"
+		"visible"		"1"
+		"enabled"		"1"
+		"tabPosition"		"2"
+		"labelText"		"#GameUI_DisableSprays"
+		"textAlignment"		"west"
+		"dulltext"		"0"
+		"brighttext"		"0"
+		"wrap"		"0"
+		"centerwrap"		"0"
+		"textinsetx"		"6"
+		"textinsety"		"0"
+		"auto_wide_tocontents"		"0"
+		"use_proportional_insets"		"0"
+		"Default"		"1"
 	}
 
 	"EnableSprays"
@@ -253,9 +419,9 @@
 		"Default"		"0"
 		"selected"		"0"
 	}
-	
+
 	////////////////////////////////////// THE REST
-	
+
 	"Cancel"
 	{
 		"ControlName"		"Button"
@@ -372,7 +538,7 @@
 		"Default"		"0"
 		"selected"		"0"
 	}
-	
+
 	"Primary Color Slider"
 	{
 		"ControlName"		"CCvarSlider"
@@ -461,7 +627,7 @@
 		"NumericInputOnly"		"0"
 		"unicode"		"0"
 	}
-	
+
 	"ModelImage"
 	{
 		"ControlName"		"Panel"
@@ -479,7 +645,7 @@
 		"enabled"		"1"
 		"tabPosition"		"0"
 	}
-	
+
 	"CrosshairColorComboBox"
 	{
 		"ControlName"		"ComboBox"
@@ -698,7 +864,7 @@
 		"tileHorizontally"		"0"
 		"tileVertically"		"0"
 	}
-	
+
 	"CrosshairLabel"
 	{
 		"ControlName"		"Label"
@@ -899,7 +1065,7 @@
 		"textinsety"		"0"
 		"auto_wide_tocontents"		"0"
 	}
-	
+
 	"AdvCrosshairLabel"
 	{
 		"ControlName"		"Label"
@@ -1053,36 +1219,5 @@
 		"tabPosition"		"0"
 		"settitlebarvisible"		"1"
 		"title"		"#Frame_Untitled"
-	}
-
-	// GMOD
-	"ChromiumCredits"
-	{
-		"ControlName"		"Button"
-		"fieldName"		"ChromiumCredits"
-		"xpos"		"216"
-		"ypos"		"270"
-		"wide"		"260"
-		"tall"		"24"
-		"autoResize"		"0"
-		"pinCorner"		"0"
-		"RoundedCorners"		"15"
-		"pin_corner_to_sibling"		"0"
-		"pin_to_sibling_corner"		"0"
-		"visible"		"1"
-		"enabled"		"1"
-		"tabPosition"		"4"
-		"labelText"		"Chromium Embedded Framework Credits"
-		"textAlignment"		"west"
-		"dulltext"		"0"
-		"brighttext"		"0"
-		"wrap"		"0"
-		"centerwrap"		"0"
-		"textinsetx"		"6"
-		"textinsety"		"0"
-		"auto_wide_tocontents"		"0"
-		"Command"		"ChromiumCredits"
-		"Default"		"0"
-		"selected"		"0"
 	}
 }

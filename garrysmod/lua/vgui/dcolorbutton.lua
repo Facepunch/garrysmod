@@ -27,11 +27,15 @@ function PANEL:IsDown()
 
 end
 
-function PANEL:SetColor( color )
+function PANEL:SetColor( color, hideTooltip )
 
-	local colorStr = "R: " .. color.r .. "\nG: " .. color.g .. "\nB: " .. color.b .. "\nA: " .. color.a
+	if ( !hideTooltip ) then
 
-	self:SetTooltip( colorStr )
+		local colorStr = "R: " .. color.r .. "\nG: " .. color.g .. "\nB: " .. color.b .. "\nA: " .. color.a
+		self:SetTooltip( colorStr )
+
+	end
+
 	self.m_Color = color
 
 end

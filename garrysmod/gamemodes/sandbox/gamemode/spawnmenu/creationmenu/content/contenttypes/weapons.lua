@@ -1,5 +1,5 @@
 
-hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, node )
+hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, browseNode )
 
 	-- Loop through the weapons and add them to the menu
 	local Weapons = list.Get( "Weapon" )
@@ -10,18 +10,20 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, nod
 
 		if ( !weapon.Spawnable ) then continue end
 
-		Categorised[ weapon.Category ] = Categorised[ weapon.Category ] or {}
-		table.insert( Categorised[ weapon.Category ], weapon )
+		local Category = weapon.Category or "Other2"
+		if ( !isstring( Category ) ) then Category = tostring( Category ) end
+
+		Categorised[ Category ] = Categorised[ Category ] or {}
+		table.insert( Categorised[ Category ], weapon )
 
 	end
 
-	Weapons = nil
-
 	-- Loop through each category
+	local CustomIcons = list.Get( "ContentCategoryIcons" )
 	for CategoryName, v in SortedPairs( Categorised ) do
 
 		-- Add a node to the tree
-		local node = tree:AddNode( CategoryName, "icon16/gun.png" )
+		local node = tree:AddNode( CategoryName, CustomIcons[ CategoryName ] or "icon16/gun.png" )
 
 		-- When we click on the node - populate it using this function
 		node.DoPopulate = function( self )
@@ -39,7 +41,7 @@ hook.Add( "PopulateWeapons", "AddWeaponContent", function( pnlContent, tree, nod
 				spawnmenu.CreateContentIcon( ent.ScriptedEntityType or "weapon", self.PropPanel, {
 					nicename	= ent.PrintName or ent.ClassName,
 					spawnname	= ent.ClassName,
-					material	= "entities/" .. ent.ClassName .. ".png",
+					material	= ent.IconOverride or "entities/" .. ent.ClassName .. ".png",
 					admin		= ent.AdminOnly
 				} )
 

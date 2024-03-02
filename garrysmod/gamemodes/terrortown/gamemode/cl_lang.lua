@@ -17,13 +17,17 @@ LANG.ServerLanguage  = "english"
 
 local cached_default, cached_active
 
-function LANG.CreateLanguage(lang_name)
-   if not lang_name then return end
-   lang_name = string.lower(lang_name)
+function LANG.CreateLanguage(raw_lang_name)
+   if not raw_lang_name then return end
+   lang_name = string.lower(raw_lang_name)
 
    if not LANG.IsLanguage(lang_name) then
-      -- Empty string is very convenient to have, so init with that.
-      LANG.Strings[lang_name] = { [""] = "" }
+      LANG.Strings[lang_name] = {
+         -- Empty string is very convenient to have, so init with that.
+         [""] = "",
+         -- Presentational, not-lowercased language name
+         language_name = raw_lang_name
+      }
    end
 
    if lang_name == LANG.DefaultLanguage then
@@ -49,6 +53,7 @@ function LANG.AddToLanguage(lang_name, string_name, string_text)
 
    if not LANG.IsLanguage(lang_name) then
       ErrorNoHalt(Format("Failed to add '%s' to language '%s': language does not exist.\n", tostring(string_name), tostring(lang_name)))
+      return false
    end
 
    LANG.Strings[lang_name][string_name] = string_text
@@ -198,6 +203,15 @@ function LANG.GetLanguages()
    return langs
 end
 
+function LANG.GetLanguageNames()
+   -- Typically preferable to GetLanguages but separate to avoid API breakage.
+   local lang_names = {}
+   for lang, strings in pairs(LANG.Strings) do
+      lang_names[lang] = strings["language_name"] or string.Capitalize(lang)
+   end
+   return lang_names
+end
+
 ---- Styling
 
 local bgcolor = {
@@ -240,7 +254,7 @@ end
 
 -- Set a style by name or directly as style-function
 function LANG.SetStyle(name, style)
-   if type(style) == "string" then
+   if isstring(style) then
       style = LANG.Styles[style]
    end
 
@@ -259,17 +273,17 @@ function LANG.ProcessMsg(name, params)
    if params then
       -- some of our params may be string names themselves
       for k, v in pairs(params) do
-         if type(v) == "string" then
+         if isstring(v) then
             local name = LANG.GetNameParam(v)
             if not name then continue end
 
             params[k] = LANG.GetTranslation(name)
          end
       end
-      
+
       text = interp(raw, params)
    end
-   
+
    LANG.ShowStyledMsg(text, LANG.GetStyle(name))
 end
 
@@ -293,7 +307,7 @@ local styledmessages = {
       "buy_no_stock",
       "buy_pending",
       "buy_received",
-      
+
       "xfer_no_recip",
       "xfer_no_credits",
       "xfer_success",
@@ -323,7 +337,11 @@ local styledmessages = {
    chat_plain = {
       "body_call",
       "disg_turned_on",
-      "disg_turned_off"
+      "disg_turned_off",
+      "mute_all",
+      "mute_off",
+      "mute_specs",
+      "mute_living"
    },
 
    chat_warn = {
@@ -344,7 +362,7 @@ local styledmessages = {
 
 local set_style = LANG.SetStyle
 for style, msgs in pairs(styledmessages) do
-   for _, name in pairs(msgs) do
+   for _, name in ipairs(msgs) do
       set_style(name, style)
    end
 end

@@ -2,8 +2,8 @@
 TOOL.Category = "Poser"
 TOOL.Name = "#tool.faceposer.name"
 
-local gLastFacePoseEntity = NULL
-local gLastFacePoseEntityCheckedNULL = false
+local MAXSTUDIOFLEXCTRL = 96
+
 TOOL.FaceTimer = 0
 
 TOOL.Information = {
@@ -43,21 +43,16 @@ function TOOL:SetFacePoserEntity( ent )
 	return self:GetWeapon():SetNWEntity( 1, ent )
 end
 
+local gLastFacePoseEntity = NULL
 function TOOL:Think()
 
 	-- If we're on the client just make sure the context menu is up to date
 	if ( CLIENT ) then
-		if ( !IsValid( self:FacePoserEntity() ) && !gLastFacePoseEntityCheckedNULL ) then
-			gLastFacePoseEntityCheckedNULL = true
-			self:UpdateFaceControlPanel()
-		end
 
 		if ( self:FacePoserEntity() == gLastFacePoseEntity ) then return end
 
 		gLastFacePoseEntity = self:FacePoserEntity()
-		gLastFacePoseEntityCheckedNULL = false
-
-		self:UpdateFaceControlPanel()
+		self:RebuildControlPanel( self:FacePoserEntity() )
 
 		return
 	end
@@ -73,18 +68,8 @@ function TOOL:Think()
 
 	for i = 0, FlexNum do
 
-		local Name = ent:GetFlexName( i )
-
-		if ( IsUselessFaceFlex( Name ) ) then
-
-			ent:SetFlexWeight( i, 0 )
-
-		else
-
-			local num = self:GetClientNumber( "flex" .. i )
-			ent:SetFlexWeight( i, num )
-
-		end
+		local num = self:GetClientNumber( "flex" .. i )
+		ent:SetFlexWeight( i, num )
 
 	end
 
@@ -163,11 +148,11 @@ end
 
 if ( SERVER ) then
 
-	function CC_Face_Randomize( pl, command, arguments )
+	local function CC_Face_Randomize( ply, command, arguments )
 
-		for i = 0, 128 do
+		for i = 0, MAXSTUDIOFLEXCTRL do
 			local num = math.Rand( 0, 1 )
-			pl:ConCommand( "faceposer_flex" .. i .. " " .. string.format( "%.3f", num ) )
+			ply:ConCommand( "faceposer_flex" .. i .. " " .. string.format( "%.3f", num ) )
 		end
 
 	end
@@ -179,22 +164,11 @@ end
 -- The rest of the code is clientside only, it is not used on server
 if ( SERVER ) then return end
 
-for i = 0, 128 do
+for i = 0, MAXSTUDIOFLEXCTRL do
 	TOOL.ClientConVar[ "flex" .. i ] = "0"
 end
 
 TOOL.ClientConVar[ "scale" ] = "1.0"
-
--- Updates the spawn menu panel
-function TOOL:UpdateFaceControlPanel( index )
-
-	local CPanel = controlpanel.Get( "faceposer" )
-	if ( !CPanel ) then Msg( "Couldn't find faceposer panel!\n" ) return end
-
-	CPanel:ClearControls()
-	self.BuildCPanel( CPanel, self:FacePoserEntity() )
-
-end
 
 local ConVarsDefault = TOOL:BuildConVarList()
 
@@ -204,12 +178,12 @@ local function PrettifyName( name )
 
 	-- Try to split text into words, where words would start with single uppercase character
 	local newParts = {}
-	for id, str in pairs( string.Explode( " ", name ) ) do
+	for id, str in ipairs( string.Explode( " ", name ) ) do
 		local wordStart = 1
 		for i = 2, str:len() do
 			local c = str[ i ]
 			if ( c:upper() == c ) then
-				local toAdd = str:sub(wordStart, i - 1)
+				local toAdd = str:sub( wordStart, i - 1 )
 				if ( toAdd:upper() == toAdd ) then continue end
 				table.insert( newParts, toAdd )
 				wordStart = i
@@ -217,11 +191,11 @@ local function PrettifyName( name )
 
 		end
 
-		table.insert( newParts, str:sub(wordStart, str:len()))
+		table.insert( newParts, str:sub( wordStart, str:len() ) )
 	end
 
 	-- Uppercase all first characters
-	for id, str in pairs( newParts ) do
+	for id, str in ipairs( newParts ) do
 		if ( str:len() < 2 ) then continue end
 		newParts[ id ] = str:Left( 1 ):upper() .. str:sub( 2 )
 	end
@@ -229,12 +203,11 @@ local function PrettifyName( name )
 	return table.concat( newParts, " " )
 end
 
-function TOOL.BuildCPanel( CPanel, FaceEntity )
+function TOOL.BuildCPanel( CPanel, faceEntity )
 
 	CPanel:AddControl( "Header", { Description = "#tool.faceposer.desc" } )
 
-	FaceEntity = FaceEntity || gLastFacePoseEntity
-	if ( !IsValid( FaceEntity ) || FaceEntity:GetFlexNum() == 0 ) then return end
+	if ( !IsValid( faceEntity ) || faceEntity:GetFlexNum() == 0 ) then return end
 
 	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "face", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
 
@@ -248,8 +221,8 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 	QuickFace:SetAutoHeight( true )
 
 	local Clear = {}
-	for i = 0, 128 do
-		Clear[ "faceposer_flex" .. i ] = GenerateDefaultFlexValue( FaceEntity, i );
+	for i = 0, MAXSTUDIOFLEXCTRL do
+		Clear[ "faceposer_flex" .. i ] = GenerateDefaultFlexValue( faceEntity, i )
 	end
 	QuickFace:AddMaterialEx( "#faceposer.clear", "vgui/face/clear", nil, Clear )
 
@@ -398,29 +371,41 @@ function TOOL.BuildCPanel( CPanel, FaceEntity )
 	filter:SetUpdateOnType( true )
 
 	local flexControllers = {}
-	for i = 0, FaceEntity:GetFlexNum() - 1 do
+	for i = 0, faceEntity:GetFlexNum() - 1 do
 
-		local name = FaceEntity:GetFlexName( i )
+		local name = faceEntity:GetFlexName( i )
 
 		if ( !IsUselessFaceFlex( name ) ) then
 
-			local min, max = FaceEntity:GetFlexBounds( i )
+			if ( i == MAXSTUDIOFLEXCTRL ) then
+				CPanel:ControlHelp( "#tool.faceposer.too_many_flexes" ):DockMargin( 16, 16, 16, 4 )
+			end
 
-			local ctrl = CPanel:AddControl( "Slider", { Label = PrettifyName( name ), Command = "faceposer_flex" .. i, Type = "Float", Min = min, Max = max, Default = GenerateDefaultFlexValue( FaceEntity, i ) } )
+			local min, max = faceEntity:GetFlexBounds( i )
+
+			local ctrl = CPanel:AddControl( "Slider", { Label = PrettifyName( name ), Command = "faceposer_flex" .. i, Type = "Float", Min = min, Max = max, Default = GenerateDefaultFlexValue( faceEntity, i ) } )
 			ctrl:SetHeight( 11 ) -- This makes the controls all bunched up like how we want
 			ctrl:DockPadding( 0, -6, 0, -4 ) -- Try to make the lower part of the text visible
 			ctrl.originalName = name
 			table.insert( flexControllers, ctrl )
 
+			if ( i >= MAXSTUDIOFLEXCTRL ) then
+				ctrl:SetEnabled( false )
+			end
+
 		end
 
 	end
 
-	flexControllers[ #flexControllers ]:DockPadding( 0, 0, 0, 20 )
+	-- Add some padding to the bottom of the list
+	local padding = vgui.Create( "Panel", CPanel )
+	padding:SetHeight( 7 )
+	CPanel:AddItem( padding )
 
+	-- Actual searching
 	filter.OnValueChange = function( pnl, txt )
-		for id, flxpnl in pairs( flexControllers ) do
-			if ( !flxpnl:GetText():lower():find( txt:lower() ) && !flxpnl.originalName:lower():find( txt:lower() ) ) then
+		for id, flxpnl in ipairs( flexControllers ) do
+			if ( !flxpnl:GetText():lower():find( txt:lower(), nil, true ) && !flxpnl.originalName:lower():find( txt:lower(), nil, true ) ) then
 				flxpnl:SetVisible( false )
 			else
 				flxpnl:SetVisible( true )

@@ -1,7 +1,7 @@
 
-if ( CLIENT ) then return end
-
 ENT.Type = "point"
+
+if ( CLIENT ) then return end
 
 local DIR_BACKWARD = -1
 local DIR_NONE = 0
@@ -38,12 +38,10 @@ function ENT:Think()
 	if ( !self.direction ) then return true end
 	if ( self.direction == DIR_NONE ) then return true end
 
-	local old_length = self.current_length
 	local current_length = self.current_length
 
 	if ( self.type == TYPE_NORMAL ) then
 
-		local speed = 0
 		local dist = 0
 
 		if ( self.direction == DIR_FORWARD ) then
@@ -88,7 +86,7 @@ function ENT:Think()
 
 		if ( per == 0 ) then return true end
 
-		local spos = ( math.sin( ( self.ctime * math.pi * per ) ) + 1 ) * ( amp / 2 )
+		local spos = ( math.sin( self.ctime * math.pi * per ) + 1 ) * ( amp / 2 )
 
 		if ( spos > amp ) then spos = amp end
 		if ( spos < 0 ) then spos = 0 end
@@ -109,7 +107,7 @@ function ENT:Think()
 
 end
 
-function ENT:GetPos( ent, phys, lpos )
+function ENT:GetSomePos( ent, phys, lpos )
 
 	if ( ent:EntIndex() == 0 ) then
 		return lpos
@@ -129,11 +127,11 @@ function ENT:SetConstraint( c )
 	self.direction = DIR_NONE
 	self.toggle = c.toggle
 
-	local p1 = self:GetPos( c.Ent1, c.Phys1, c.LPos1 )
-	local p2 = self:GetPos( c.Ent2, c.Phys2, c.LPos2 )
-	local dist = ( p1 - p2 )
+	local p1 = self:GetSomePos( c.Ent1, c.Phys1, c.LPos1 )
+	local p2 = self:GetSomePos( c.Ent2, c.Phys2, c.LPos2 )
+	local dist = ( p1 - p2 ):Length()
 
-	self.current_length = dist:Length()
+	self.current_length = dist
 
 	if ( self.max_length ) then
 		self.isexpanded = ( self.current_length >= self.max_length )
@@ -170,9 +168,9 @@ function ENT:IsExpanded()
 end
 
 --[[----------------------------------------------------------------------
-	HydraulicToggle - Toggle hydraulic on off
+	HydraulicToggle - Toggle hydraulic on and off
 ------------------------------------------------------------------------]]
-local function HydraulicToggle( pl, hyd )
+local function HydraulicToggle( ply, hyd )
 
 	if ( !IsValid( hyd ) ) then return false end
 
@@ -201,16 +199,17 @@ numpad.Register( "HydraulicToggle", HydraulicToggle )
 --[[----------------------------------------------------------------------
 	WinchOn - Called to switch the winch on
 ------------------------------------------------------------------------]]
-local function WinchOn( pl, winch, dir )
+local function WinchOn( ply, winch, dir )
 	if ( !IsValid( winch ) ) then return false end
 	winch:SetDirection( dir )
 end
 numpad.Register( "WinchOn", WinchOn )
+numpad.Register( "HydraulicDir", WinchOn ) -- A little cheat
 
 --[[----------------------------------------------------------------------
 	WinchOff - Called to switch the winch off
 ------------------------------------------------------------------------]]
-local function WinchOff( pl, winch )
+local function WinchOff( ply, winch )
 	if ( !IsValid( winch ) ) then return false end
 	winch:SetDirection( 0 )
 end
@@ -219,7 +218,7 @@ numpad.Register( "WinchOff", WinchOff )
 --[[----------------------------------------------------------------------
 	WinchToggle - Called to toggle the winch
 ------------------------------------------------------------------------]]
-local function WinchToggle( pl, winch, dir )
+local function WinchToggle( ply, winch, dir )
 	if ( !IsValid( winch ) ) then return false end
 	if ( winch:GetDirection() == dir ) then
 		winch:SetDirection( 0 )
@@ -229,7 +228,10 @@ local function WinchToggle( pl, winch, dir )
 end
 numpad.Register( "WinchToggle", WinchToggle )
 
-local function MuscleToggle( pl, hyd )
+--[[----------------------------------------------------------------------
+	MuscleToggle - Called to toggle the muslce
+------------------------------------------------------------------------]]
+local function MuscleToggle( ply, hyd )
 
 	if ( !IsValid( hyd ) ) then return false end
 

@@ -1,8 +1,3 @@
---=============================================================================--							 
---
---  A really simple module to allow easy additions to lists of items
---
---=============================================================================--
 
 local table 	= table
 local pairs		= pairs
@@ -10,63 +5,62 @@ local pairs		= pairs
 module( "list" )
 
 
-local g_Lists = {}
+local Lists = {}
 
---
---	Get a list
---
-function Get( list )
+function Get( listid )
 
-	g_Lists[ list ] = g_Lists[ list ] or {}
-	return table.Copy( g_Lists[ list ] )
-	
-end
-
---
---	Get a list
---
-function GetForEdit( list )
-
-	g_Lists[ list ] = g_Lists[ list ] or {}
-	return g_Lists[ list ]
-	
-end
-
---
---	Set a key value
---
-function Set( list, key, value )
-
-	local list = GetForEdit( list )
-	list[ key ] = value
+	return table.Copy( GetForEdit( listid ) )
 
 end
 
+function GetForEdit( listid, nocreate )
 
---
---   Add a value to a list
---
-function Add( list, value )
+	local list = Lists[ listid ]
 
-	local list = GetForEdit( list )
-	table.insert( list, value )
+	if ( !nocreate && list == nil ) then
+		list = {}
+		Lists[ listid ] = list
+	end
+
+	return list
 
 end
 
---
---	Returns true if the list contains the value (as a value - not a key)
---
-function Contains( list, value )
+function GetTable()
 
-	if ( !g_Lists[ list ] ) then return false end
+	return table.GetKeys( Lists )
 
-	for k, v in pairs( g_Lists[ list ] ) do
+end
 
-		-- If it contains this entry, bail early
+function Set( listid, key, value )
+
+	GetForEdit( listid )[ key ] = value
+
+end
+
+function Add( listid, value )
+
+	return table.insert( GetForEdit( listid ), value )
+
+end
+
+function Contains( listid, value )
+
+	local list = Lists[ listid ]
+	if ( list == nil ) then return false end
+
+	for k, v in pairs( list ) do
 		if ( v == value ) then return true end
-
 	end
 
 	return false
+
+end
+
+function HasEntry( listid, key )
+
+	local list = Lists[ listid ]
+
+	return list != nil && list[ key ] != nil
 
 end

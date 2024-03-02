@@ -64,6 +64,8 @@ function MSTACK:AddColoredBgMessage(text, bg_clr)
    self:AddMessageEx(item)
 end
 
+local ttt_msg_soundcue = CreateClientConVar("ttt_cl_msg_soundcue", "0", true)
+
 -- Internal
 function MSTACK:AddMessageEx(item)
    item.col = table.Copy(item.col or msgcolors.generic_text)
@@ -78,7 +80,7 @@ function MSTACK:AddMessageEx(item)
    item.height = (#item.text * text_height) + (margin * (1 + #item.text))
 
    item.time = CurTime()
-   item.sounded = false
+   item.sounded = not ttt_msg_soundcue:GetBool()
    item.move_y = -item.height
 
    -- Stagger the fading a bit
@@ -89,7 +91,7 @@ function MSTACK:AddMessageEx(item)
    -- Insert at the top
    table.insert(self.msgs, 1, item)
 
-   self.last = item.time   
+   self.last = item.time
 end
 
 -- Add a given message to the stack, will be rendered in a different color if it
@@ -110,10 +112,8 @@ function MSTACK:WrapText(text, width)
       return {text} -- Nope, but wrap in table for uniformity
    end
    
-   local words = string.Explode(" ", text) -- No spaces means you're screwed
-
    local lines = {""}
-   for i, wrd in pairs(words) do
+   for i, wrd in ipairs(string.Explode(" ", text)) do -- No spaces means you're screwed
       local l = #lines
       local added = lines[l] .. " " .. wrd
       w, _ = surface.GetTextSize(added)
@@ -130,7 +130,16 @@ function MSTACK:WrapText(text, width)
    return lines
 end
 
-local msg_sound = Sound("Hud.Hint")
+sound.Add({
+   name = "TTT.MessageCue",
+   channel = CHAN_STATIC,
+   volume = 1.0,
+   level = SNDLVL_NONE,
+   pitch = 100,
+   sound = "ui/hint.wav"
+})
+
+local msg_sound = Sound("TTT.MessageCue")
 local base_spec = {
    font = msgfont,
    xalign = TEXT_ALIGN_CENTER,
@@ -192,8 +201,8 @@ function MSTACK:Draw(client)
             draw.TextShadow(spec, 1, alpha)
          end
 
-         if alpha == 0 then 
-            self.msgs[k] = nil 
+         if alpha == 0 then
+            self.msgs[k] = nil
          end
 
          running_y = y + height
@@ -225,4 +234,3 @@ local function ReceiveCustomMsg()
    MSTACK:AddColoredMessage(text, clr)
 end
 net.Receive("TTT_GameMsgColor", ReceiveCustomMsg)
-

@@ -13,7 +13,7 @@ local function TableInherit( t, base )
 
 		if ( t[ k ] == nil ) then
 			t[ k ] = v
-		elseif ( k != "BaseClass" && istable( t[ k ] ) ) then
+		elseif ( k != "BaseClass" && istable( t[ k ] ) && istable( v ) ) then
 			TableInherit( t[ k ], v )
 		end
 
@@ -45,8 +45,11 @@ end
 -----------------------------------------------------------]]
 function Register( t, name )
 
-	local old = WeaponList[ name ]
+	if ( hook.Run( "PreRegisterSWEP", t, name ) == false ) then return end
 
+	if ( isstring( t.ClassNameOverride ) ) then name = t.ClassNameOverride end
+
+	local old = WeaponList[ name ]
 	t.ClassName = name
 	WeaponList[ name ] = t
 
@@ -54,11 +57,12 @@ function Register( t, name )
 
 	list.Set( "Weapon", name, {
 		ClassName = name,
-		PrintName = t.PrintName or t.ClassName,
+		PrintName = t.PrintName or name,
 		Category = t.Category or "Other",
 		Spawnable = t.Spawnable,
 		AdminOnly = t.AdminOnly,
-		ScriptedEntityType = t.ScriptedEntityType
+		ScriptedEntityType = t.ScriptedEntityType,
+		IconOverride = t.IconOverride
 	} )
 
 	-- Allow all SWEPS to be duplicated, unless specified
@@ -72,29 +76,26 @@ function Register( t, name )
 	--
 	if ( old != nil ) then
 
-		--
-		-- For each entity using this class
-		--
-		for _, entity in pairs( ents.FindByClass( name ) ) do
+		-- Update SWEP table of entities that are based on this SWEP
+		for _, e in ipairs( ents.GetAll() ) do
+			local class = e:GetClass()
 
-			--
-			-- Replace the contents with this entity table
-			--
-			table.Merge( entity, t )
+			if ( class == name ) then
+				--
+				-- Replace the contents with this entity table
+				--
+				table.Merge( e, t )
 
-			--
-			-- Call OnReloaded hook (if it has one)
-			--
-			if ( entity.OnReloaded ) then
-				entity:OnReloaded()
+				--
+				-- Call OnReloaded hook (if it has one)
+				--
+				if ( e.OnReloaded ) then
+					e:OnReloaded()
+				end
 			end
 
-		end
-
-		-- Update SWEP table of entities that are based on this SWEP
-		for _, e in pairs( ents.GetAll() ) do
-			if ( IsBasedOn( e:GetClass(), name ) ) then
-				table.Merge( e, Get( e:GetClass() ) )
+			if ( IsBasedOn( class, name ) ) then
+				table.Merge( e, Get( class ) )
 
 				if ( e.OnReloaded ) then
 					e:OnReloaded()
@@ -128,25 +129,32 @@ end
 	Name: Get( string )
 	Desc: Get a weapon by name.
 -----------------------------------------------------------]]
-function Get( name )
+function Get( name, retval )
 
 	local Stored = GetStored( name )
 	if ( !Stored ) then return nil end
 
 	-- Create/copy a new table
-	local retval = table.Copy( Stored )
+	local retval = retval or {}
+	for k, v in pairs( Stored ) do
+		if ( istable( v ) ) then
+			retval[ k ] = table.Copy( v )
+		else
+			retval[ k ] = v
+		end
+	end
 	retval.Base = retval.Base or "weapon_base"
 
 	-- If we're not derived from ourselves (a base weapon)
 	-- then derive from our 'Base' weapon.
 	if ( retval.Base != name ) then
 
-		local BaseWeapon = Get( retval.Base )
+		local base = Get( retval.Base )
 
-		if ( !BaseWeapon ) then
-			Msg( "SWEP (", name, ") is derived from non existant SWEP (", retval.Base, ") - Expect errors!\n" )
+		if ( !base ) then
+			Msg( "ERROR: Trying to derive weapon " .. tostring( name ) .. " from non existant SWEP " .. tostring( retval.Base ) .. "!\n" )
 		else
-			retval = TableInherit( retval, Get( retval.Base ) )
+			retval = TableInherit( retval, base )
 		end
 
 	end

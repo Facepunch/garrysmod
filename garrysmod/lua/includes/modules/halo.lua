@@ -10,16 +10,16 @@ local rt_Blur		= render.GetScreenEffectTexture( 1 )
 local List = {}
 local RenderEnt = NULL
 
-function Add( ents, color, blurx, blury, passes, add, ignorez )
+function Add( entities, color, blurx, blury, passes, add, ignorez )
 
+	if ( table.IsEmpty( entities ) ) then return end
 	if ( add == nil ) then add = true end
 	if ( ignorez == nil ) then ignorez = false end
 
 	local t =
 	{
-		Ents = ents,
+		Ents = entities,
 		Color = color,
-		Hidden = when_hidden,
 		BlurX = blurx or 2,
 		BlurY = blury or 2,
 		DrawPasses = passes or 1,
@@ -55,7 +55,7 @@ function Render( entry )
 	-- Render colored props to the scene and set their pixels high
 	cam.Start3D()
 		render.SetStencilEnable( true )
-			render.SuppressEngineLighting(true)
+			render.SuppressEngineLighting( true )
 			cam.IgnoreZ( entry.IgnoreZ )
 
 				render.SetStencilWriteMask( 1 )
@@ -67,10 +67,9 @@ function Render( entry )
 				render.SetStencilFailOperation( STENCIL_KEEP )
 				render.SetStencilZFailOperation( STENCIL_KEEP )
 
-				
 					for k, v in pairs( entry.Ents ) do
 
-						if ( !IsValid( v ) ) then continue end
+						if ( !IsValid( v ) or v:GetNoDraw() ) then continue end
 
 						RenderEnt = v
 
@@ -91,7 +90,7 @@ function Render( entry )
 					cam.End2D()
 
 			cam.IgnoreZ( false )
-			render.SuppressEngineLighting(false)
+			render.SuppressEngineLighting( false )
 		render.SetStencilEnable( false )
 	cam.End3D()
 
@@ -104,6 +103,8 @@ function Render( entry )
 	-- Restore the original scene
 	render.SetRenderTarget( rt_Scene )
 	mat_Copy:SetTexture( "$basetexture", rt_Store )
+	mat_Copy:SetString( "$color", "1 1 1" )
+	mat_Copy:SetString( "$alpha", "1" )
 	render.SetMaterial( mat_Copy )
 	render.DrawScreenQuad()
 

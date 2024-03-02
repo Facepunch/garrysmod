@@ -82,14 +82,15 @@ function TOOL:LeftClick( trace )
 		LPos1 = Phys1:WorldToLocal( WPos2 + Norm2 )
 
 		-- Create a constraint axis
-		local constraint = constraint.Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, friction, nocollide )
+		local constr = constraint.Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, friction, nocollide )
+		if ( IsValid( constr ) ) then
+			undo.Create( "Axis" )
+				undo.AddEntity( constr )
+				undo.SetPlayer( self:GetOwner() )
+			undo.Finish()
 
-		undo.Create( "Axis" )
-			undo.AddEntity( constraint )
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-
-		self:GetOwner():AddCleanup( "constraints", constraint )
+			self:GetOwner():AddCleanup( "constraints", constr )
+		end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()
@@ -146,26 +147,25 @@ function TOOL:RightClick( trace )
 		local WPos2 = self:GetPos( 2 )
 
 		-- Note: To keep stuff ragdoll friendly try to treat things as physics objects rather than entities
-		local Ang1, Ang2 = Norm1:Angle(), ( -Norm2 ):Angle()
-		local TargetAngle = Phys1:AlignAngles( Ang1, Ang2 )
+		--local Ang1, Ang2 = Norm1:Angle(), ( -Norm2 ):Angle()
+		--local TargetAngle = Phys1:AlignAngles( Ang1, Ang2 )
 
 		--Phys1:SetAngles( TargetAngle )
-
-		local TargetPos = WPos2 + ( Phys1:GetPos() - self:GetPos( 1 ) ) + ( Norm2 * 0.2 )
 
 		Phys1:Wake()
 
 		-- Set the hinge Axis perpendicular to the trace hit surface
 		LPos1 = Phys1:WorldToLocal( WPos2 + Norm2 )
 
-		local constraint = constraint.Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, friction, nocollide )
+		local constr = constraint.Axis( Ent1, Ent2, Bone1, Bone2, LPos1, LPos2, forcelimit, torquelimit, friction, nocollide )
+		if ( IsValid( constr ) ) then
+			undo.Create( "Axis" )
+				undo.AddEntity( constr )
+				undo.SetPlayer( self:GetOwner() )
+			undo.Finish()
 
-		undo.Create( "Axis" )
-			undo.AddEntity( constraint )
-			undo.SetPlayer( self:GetOwner() )
-		undo.Finish()
-
-		self:GetOwner():AddCleanup( "constraints", constraint )
+			self:GetOwner():AddCleanup( "constraints", constr )
+		end
 
 		-- Clear the objects so we're ready to go again
 		self:ClearObjects()

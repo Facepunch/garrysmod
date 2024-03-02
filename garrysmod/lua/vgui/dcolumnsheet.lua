@@ -57,7 +57,7 @@ function PANEL:AddSheet( label, panel, material )
 	if ( !IsValid( self.ActiveButton ) ) then
 		self:SetActiveButton( Sheet.Button )
 	end
-	
+
 	return Sheet
 end
 
@@ -65,7 +65,7 @@ function PANEL:SetActiveButton( active )
 
 	if ( self.ActiveButton == active ) then return end
 
-	if ( self.ActiveButton && self.ActiveButton.Target ) then
+	if ( self.ActiveButton and self.ActiveButton.Target ) then
 		self.ActiveButton.Target:SetVisible( false )
 		self.ActiveButton:SetSelected( false )
 		self.ActiveButton:SetToggle( false )
@@ -76,7 +76,7 @@ function PANEL:SetActiveButton( active )
 	active.Target:SetVisible( true )
 	active:SetSelected( true )
 	active:SetToggle( true )
-	--active:SetColor( Color( 255, 255, 255, 255 ) )
+	--active:SetColor( color_white )
 
 	self.Content:InvalidateLayout()
 

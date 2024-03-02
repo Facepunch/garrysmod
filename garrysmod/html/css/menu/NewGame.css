@@ -190,6 +190,16 @@ gamesettings .control LABEL
 	color: #666;
 }
 
+gamesettings .control:not(.control-numeric) LABEL
+{
+	position: relative;
+	top: -2px;
+}
+gamesettings .control-numeric LABEL
+{
+	line-height: 20px;
+}
+
 gamesettings .control input[type=text]
 {
 	width: 100%;

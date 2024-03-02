@@ -50,6 +50,7 @@ function TOOL:RightClick( trace, worldweld )
 	Ang.pitch = Ang.pitch + 90
 
 	local button = MakeButton( ply, model, Ang, trace.HitPos, key, description, toggle )
+	if ( !IsValid( button ) ) then return false end
 
 	local min = button:OBBMins()
 	button:SetPos( trace.HitPos - trace.HitNormal * min.z )
@@ -59,13 +60,14 @@ function TOOL:RightClick( trace, worldweld )
 
 		if ( worldweld && trace.Entity != NULL ) then
 			local weld = constraint.Weld( button, trace.Entity, 0, trace.PhysicsBone, 0, 0, true )
+			if ( IsValid( weld ) ) then
+				ply:AddCleanup( "buttons", weld )
+				undo.AddEntity( weld )
+			end
 
 			if ( IsValid( button:GetPhysicsObject() ) ) then button:GetPhysicsObject():EnableCollisions( false ) end
 			button:SetCollisionGroup( COLLISION_GROUP_WORLD )
 			button.nocollide = true
-
-			ply:AddCleanup( "buttons", weld )
-			undo.AddEntity( weld )
 		end
 
 		undo.SetPlayer( ply )
@@ -83,20 +85,24 @@ end
 
 if ( SERVER ) then
 
-	function MakeButton( pl, model, ang, pos, key, description, toggle, nocollide )
+	function MakeButton( ply, model, ang, pos, key, description, toggle, nocollide, Data )
 
-		if ( IsValid( pl ) && !pl:CheckLimit( "buttons" ) ) then return false end
+		if ( IsValid( ply ) && !ply:CheckLimit( "buttons" ) ) then return false end
 		if ( !IsValidButtonModel( model ) ) then return false end
 
 		local button = ents.Create( "gmod_button" )
 		if ( !IsValid( button ) ) then return false end
-		button:SetModel( model )
 
+		duplicator.DoGeneric( button, Data )
+		button:SetModel( model ) -- Backwards compatible for addons directly calling this function
 		button:SetAngles( ang )
 		button:SetPos( pos )
 		button:Spawn()
 
-		button:SetPlayer( pl )
+		DoPropSpawnedEffect( button )
+		duplicator.DoGenericPhysics( button, ply, Data )
+
+		button:SetPlayer( ply )
 		button:SetKey( key )
 		button:SetLabel( description )
 		button:SetIsToggle( toggle )
@@ -108,24 +114,22 @@ if ( SERVER ) then
 
 		table.Merge( button:GetTable(), {
 			key = key,
-			pl = pl,
+			pl = ply,
 			toggle = toggle,
 			nocollide = nocollide,
 			description = description
 		} )
 
-		if ( IsValid( pl ) ) then
-			pl:AddCount( "buttons", button )
-			pl:AddCleanup( "buttons", button )
+		if ( IsValid( ply ) ) then
+			ply:AddCount( "buttons", button )
+			ply:AddCleanup( "buttons", button )
 		end
-
-		DoPropSpawnedEffect( button )
 
 		return button
 
 	end
 
-	duplicator.RegisterEntityClass( "gmod_button", MakeButton, "Model", "Ang", "Pos", "key", "description", "toggle", "nocollide" )
+	duplicator.RegisterEntityClass( "gmod_button", MakeButton, "Model", "Ang", "Pos", "key", "description", "toggle", "nocollide", "Data" )
 
 end
 
@@ -156,7 +160,7 @@ function TOOL:Think()
 	if ( !IsValidButtonModel( mdl ) ) then self:ReleaseGhostEntity() return end
 
 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != mdl ) then
-		self:MakeGhostEntity( mdl, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( mdl, vector_origin, angle_zero )
 	end
 
 	self:UpdateGhostButton( self.GhostEntity, self:GetOwner() )

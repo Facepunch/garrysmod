@@ -13,7 +13,7 @@ local Type = {}
 
 function Register( name, table, base )
 
-	Type[ name ] = table;
+	Type[ name ] = table
 
 	--
 	-- If we have a base method then hook
@@ -39,7 +39,7 @@ end
 function PlayerStartDriving( ply, ent, mode )
 
 	local method = Type[mode]
-	if ( !method ) then ErrorNoHalt( "Unknown drive type " .. (mode) .. "!\n" ) return; end
+	if ( !method ) then ErrorNoHalt( "Unknown drive type " .. ( mode ) .. "!\n" ) return end
 
 	local id = util.NetworkStringToID( mode )
 
@@ -60,8 +60,8 @@ function GetMethod( ply )
 	--
 	if ( !ply:IsDrivingEntity() ) then return end
 
-	local ent = ply:GetDrivingEntity();
-	local modeid = ply:GetDrivingMode();
+	local ent = ply:GetDrivingEntity()
+	local modeid = ply:GetDrivingMode()
 
 	--
 	-- Entity is invalid or mode isn't set - return out
@@ -71,7 +71,7 @@ function GetMethod( ply )
 	--
 	-- Have we already got a drive method? If so then reuse.
 	--
-	local method = ply.m_CurrentDriverMethod;
+	local method = ply.m_CurrentDriverMethod
 	if ( method && method.Entity == ent && method.ModeID == modeid ) then return method end
 
 	--
@@ -87,9 +87,9 @@ function GetMethod( ply )
 	if ( !type ) then return end
 
 	local method = {}
-		method.Entity = ent
-		method.Player = ply
-		method.ModeID = modeid
+	method.Entity = ent
+	method.Player = ply
+	method.ModeID = modeid
 
 	setmetatable( method, { __index = type } )
 
@@ -104,7 +104,7 @@ function DestroyMethod( pl )
 
 	if ( !IsValid( pl ) ) then return end
 
-	pl.m_CurrentDriverMethod = nil;
+	pl.m_CurrentDriverMethod = nil
 
 end
 --
@@ -235,7 +235,7 @@ function End( ply, ent )
 
 	end
 
-	DestroyMethod( ply );
+	DestroyMethod( ply )
 
 end
 

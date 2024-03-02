@@ -120,14 +120,12 @@ end
 function PANEL:LayoutTiles()
 
 	local StartLine = 1
-	local LastX = 1
 	local tilesize = self:GetBaseSize()
 	local MaxWidth = math.floor( ( self:GetWide() - self:GetBorder() * 2 + self:GetSpaceX() ) / ( tilesize + self:GetSpaceX() ) )
 
 	self:ClearTiles()
 
-	local chld = self:GetChildren()
-	for k, v in pairs( chld ) do
+	for k, v in ipairs( self:GetChildren() ) do
 
 		if ( !v:IsVisible() ) then continue end
 
@@ -183,11 +181,19 @@ end
 
 function PANEL:OnChildRemoved()
 
+	-- A panel got removed, we gotta recompress z positions
+	for k, v in pairs( self:GetChildren() ) do
+		v:SetZPos( k )
+	end
+
 	self:Layout()
 
 end
 
 function PANEL:OnChildAdded( child )
+
+	-- Set the Z position for child ordering. Without this self:GetChildren() might return unpredictable results
+	child:SetZPos( self:ChildCount() )
 
 	local dn = self:GetDnD()
 	if ( dn ) then
@@ -222,7 +228,7 @@ end
 
 function PANEL:CopyContents( from )
 
-	for k, v in pairs( from:GetChildren() ) do
+	for k, v in ipairs( from:GetChildren() ) do
 
 		v:Copy():SetParent( self )
 

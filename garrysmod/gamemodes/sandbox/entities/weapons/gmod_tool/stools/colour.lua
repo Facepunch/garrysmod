@@ -21,8 +21,8 @@ local function SetColour( ply, ent, data )
 	-- If we're trying to make them transparent them make the render mode
 	-- a transparent type. This used to fix in the engine - but made HL:S props invisible(!)
 	--
-	if ( data.Color && data.Color.a < 255 && data.RenderMode == 0 ) then
-		data.RenderMode = 1
+	if ( data.Color && data.Color.a < 255 && data.RenderMode == RENDERMODE_NORMAL ) then
+		data.RenderMode = RENDERMODE_TRANSCOLOR
 	end
 
 	if ( data.Color ) then ent:SetColor( Color( data.Color.r, data.Color.g, data.Color.b, data.Color.a ) ) end
@@ -34,7 +34,9 @@ local function SetColour( ply, ent, data )
 	end
 
 end
-duplicator.RegisterEntityModifier( "colour", SetColour )
+if ( SERVER ) then
+	duplicator.RegisterEntityModifier( "colour", SetColour )
+end
 
 function TOOL:LeftClick( trace )
 
@@ -94,9 +96,9 @@ function TOOL.BuildCPanel( CPanel )
 
 	CPanel:AddControl( "Header", { Description = "#tool.colour.desc" } )
 
-	CPanel:AddControl( "ComboBox", { MenuButton = 1, Folder = "colour", Options = { [ "#preset.default" ] = ConVarsDefault }, CVars = table.GetKeys( ConVarsDefault ) } )
+	CPanel:ToolPresets( "colour", ConVarsDefault )
 
-	CPanel:AddControl( "Color", { Label = "#tool.colour.color", Red = "colour_r", Green = "colour_g", Blue = "colour_b", Alpha = "colour_a" } )
+	CPanel:ColorPicker( "#tool.colour.color", "colour_r", "colour_g", "colour_b", "colour_a" )
 
 	CPanel:AddControl( "ListBox", { Label = "#tool.colour.mode", Options = list.Get( "RenderModes" ) } )
 	CPanel:AddControl( "ListBox", { Label = "#tool.colour.fx", Options = list.Get( "RenderFX" ) } )

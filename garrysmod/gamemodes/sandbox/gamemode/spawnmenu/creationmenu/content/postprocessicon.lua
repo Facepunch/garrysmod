@@ -97,7 +97,7 @@ function PANEL:Setup( name, icon, label )
 
 		end
 
-		self.Enabled = function() return checkbox:GetChecked() end
+		self.Enabled = function() return self.checkbox:GetChecked() end
 
 	end
 
@@ -106,7 +106,7 @@ end
 function PANEL:DoRightClick()
 
 	local pCanvas = self:GetSelectionCanvas()
-	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 ) then
+	if ( IsValid( pCanvas ) && pCanvas:NumSelectedChildren() > 0 && self:IsSelected() ) then
 		return hook.Run( "SpawnlistOpenGenericMenu", pCanvas )
 	end
 
@@ -118,6 +118,17 @@ function PANEL:DoClick()
 end
 
 function PANEL:OpenMenu()
+
+	-- Do not allow removal from read only panels
+	if ( IsValid( self:GetParent() ) && self:GetParent().GetReadOnly && self:GetParent():GetReadOnly() ) then return end
+
+	local menu = DermaMenu()
+		menu:AddOption( "#spawnmenu.menu.delete", function()
+			self:Remove()
+			hook.Run( "SpawnlistContentChanged" )
+		end ):SetIcon( "icon16/bin_closed.png" )
+	menu:Open()
+
 end
 
 function PANEL:Enabled()
@@ -165,5 +176,7 @@ spawnmenu.AddContentType( "postprocess", function( container, obj )
 	icon:Setup( obj.name, obj.icon, obj.label )
 
 	container:Add( icon )
+
+	return icon
 
 end )

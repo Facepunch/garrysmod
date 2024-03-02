@@ -30,13 +30,13 @@ function PANEL:Init()
 	self.btnMaxim:SetText( "" )
 	self.btnMaxim.DoClick = function ( button ) self:Close() end
 	self.btnMaxim.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "WindowMaximizeButton", panel, w, h ) end
-	self.btnMaxim:SetDisabled( true )
+	self.btnMaxim:SetEnabled( false )
 
 	self.btnMinim = vgui.Create( "DButton", self )
 	self.btnMinim:SetText( "" )
 	self.btnMinim.DoClick = function ( button ) self:Close() end
 	self.btnMinim.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "WindowMinimizeButton", panel, w, h ) end
-	self.btnMinim:SetDisabled( true )
+	self.btnMinim:SetEnabled( false )
 
 	self.lblTitle = vgui.Create( "DLabel", self )
 	self.lblTitle.UpdateColours = function( label, skin )

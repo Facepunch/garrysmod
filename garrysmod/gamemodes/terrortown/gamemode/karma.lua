@@ -2,7 +2,7 @@
 
 KARMA = {}
 
--- ply steamid -> karma table for disconnected players who might reconnect
+-- ply steamid64 -> karma table for disconnected players who might reconnect
 KARMA.RememberedPlayers = {}
 
 -- Convars, more convenient access than GetConVar bla bla
@@ -84,7 +84,7 @@ function KARMA.ApplyKarma(ply)
 
    -- any karma at 1000 or over guarantees a df of 1, only when it's lower do we
    -- need the penalty curve
-   if ply:GetBaseKarma() < 1000 then
+   if ply:GetBaseKarma() < 1000 and KARMA.IsEnabled() then
       local k = ply:GetBaseKarma() - 1000
       if config.strict:GetBool() then
          -- this penalty curve sinks more quickly, less parabolic
@@ -202,7 +202,7 @@ function KARMA.RoundIncrement()
    local healbonus = config.roundheal:GetFloat()
    local cleanbonus = config.clean:GetFloat()
 
-   for _, ply in pairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       if ply:IsDeadTerror() and ply.death_type ~= KILL_SUICIDE or not ply:IsSpec() then
          local bonus = healbonus + (ply:GetCleanRound() and cleanbonus or 0)
          KARMA.GiveReward(ply, bonus)
@@ -218,7 +218,7 @@ end
 
 -- When a new round starts, Live karma becomes Base karma
 function KARMA.Rebase()
-   for _, ply in pairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       if IsDebug() then
          print(ply, "rebased from", ply:GetBaseKarma(), "to", ply:GetLiveKarma())
       end
@@ -229,7 +229,7 @@ end
 
 -- Apply karma to damage factor for all players
 function KARMA.ApplyKarmaAll()
-   for _, ply in pairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       KARMA.ApplyKarma(ply)
    end
 end
@@ -259,9 +259,7 @@ function KARMA.RoundEnd()
       KARMA.RememberAll()
 
       if config.autokick:GetBool() then
-         for _, ply in pairs(player.GetAll()) do
-            KARMA.CheckAutoKick(ply)
-         end
+         KARMA.CheckAutoKickAll()
       end
    end
 end
@@ -270,7 +268,7 @@ function KARMA.RoundBegin()
    KARMA.InitState()
 
    if KARMA.IsEnabled() then
-      for _, ply in pairs(player.GetAll()) do
+      for _, ply in player.Iterator() do
          KARMA.ApplyKarma(ply)
 
          KARMA.NotifyPlayer(ply)
@@ -301,7 +299,7 @@ function KARMA.Remember(ply)
    end
 
    -- if persist is on, this is purely a backup method
-   KARMA.RememberedPlayers[ply:SteamID()] = ply:GetLiveKarma()
+   KARMA.RememberedPlayers[ply:SteamID64()] = ply:GetLiveKarma()
 end
 
 function KARMA.Recall(ply)
@@ -316,11 +314,11 @@ function KARMA.Recall(ply)
       end
    end
 
-   return KARMA.RememberedPlayers[ply:SteamID()]
+   return KARMA.RememberedPlayers[ply:SteamID64()]
 end
 
 function KARMA.LateRecallAndSet(ply)
-   local k = tonumber(ply:GetPData("karma_stored", KARMA.RememberedPlayers[ply:SteamID()]))
+   local k = tonumber(ply:GetPData("karma_stored", KARMA.RememberedPlayers[ply:SteamID64()]))
    if k and k < ply:GetLiveKarma() then
       ply:SetBaseKarma(k)
       ply:SetLiveKarma(k)
@@ -328,7 +326,7 @@ function KARMA.LateRecallAndSet(ply)
 end
 
 function KARMA.RememberAll()
-   for _, ply in pairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       KARMA.Remember(ply)
    end
 end
@@ -348,7 +346,7 @@ function KARMA.CheckAutoKick(ply)
       if config.persist:GetBool() then
          local k = math.Clamp(config.starting:GetFloat() * 0.8, config.kicklevel:GetFloat() * 1.1, config.max:GetFloat())
          ply:SetPData("karma_stored", k)
-         KARMA.RememberedPlayers[ply:SteamID()] = k
+         KARMA.RememberedPlayers[ply:SteamID64()] = k
       end
 
       if config.autoban:GetBool() then
@@ -359,8 +357,14 @@ function KARMA.CheckAutoKick(ply)
    end
 end
 
+function KARMA.CheckAutoKickAll()
+   for _, ply in player.Iterator() do
+      KARMA.CheckAutoKick(ply)
+   end
+end
+
 function KARMA.PrintAll(printfn)
-   for _, ply in pairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       printfn(Format("%s : Live = %f -- Base = %f -- Dmg = %f\n",
                      ply:Nick(),
                      ply:GetLiveKarma(), ply:GetBaseKarma(),

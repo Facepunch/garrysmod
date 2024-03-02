@@ -13,7 +13,6 @@ end
 
 local PLAYER = {}
 
-
 PLAYER.DuckSpeed			= 0.1		-- How fast to go from not ducking, to ducking
 PLAYER.UnDuckSpeed			= 0.1		-- How fast to go from ducking, to not ducking
 
@@ -25,6 +24,7 @@ PLAYER.TauntCam = TauntCamera()
 --
 -- See gamemodes/base/player_class/player_default.lua for all overridable variables
 --
+PLAYER.SlowWalkSpeed		= 100
 PLAYER.WalkSpeed 			= 200
 PLAYER.RunSpeed				= 400
 
@@ -43,7 +43,7 @@ function PLAYER:Loadout()
 	self.Player:RemoveAllAmmo()
 
 	if ( cvars.Bool( "sbox_weapons", true ) ) then
-	
+
 		self.Player:GiveAmmo( 256,	"Pistol", 		true )
 		self.Player:GiveAmmo( 256,	"SMG1", 		true )
 		self.Player:GiveAmmo( 5,	"grenade", 		true )
@@ -52,7 +52,7 @@ function PLAYER:Loadout()
 		self.Player:GiveAmmo( 32,	"XBowBolt", 	true )
 		self.Player:GiveAmmo( 6,	"AR2AltFire", 	true )
 		self.Player:GiveAmmo( 100,	"AR2", 			true )
-		
+
 		self.Player:Give( "weapon_crowbar" )
 		self.Player:Give( "weapon_pistol" )
 		self.Player:Give( "weapon_smg1" )
@@ -63,14 +63,14 @@ function PLAYER:Loadout()
 		self.Player:Give( "weapon_357" )
 		self.Player:Give( "weapon_rpg" )
 		self.Player:Give( "weapon_ar2" )
-		
+
 		-- The only reason I'm leaving this out is because
 		-- I don't want to add too many weapons to the first
 		-- row because that's where the gravgun is.
 		--pl:Give( "weapon_stunstick" )
-	
+
 	end
-	
+
 	self.Player:Give( "gmod_tool" )
 	self.Player:Give( "gmod_camera" )
 	self.Player:Give( "weapon_physgun" )
@@ -82,13 +82,14 @@ end
 function PLAYER:SetModel()
 
 	BaseClass.SetModel( self )
-	
+
 	local skin = self.Player:GetInfoNum( "cl_playerskin", 0 )
 	self.Player:SetSkin( skin )
 
-	local groups = self.Player:GetInfo( "cl_playerbodygroups" )
-	if ( groups == nil ) then groups = "" end
-	local groups = string.Explode( " ", groups )
+	local bodygroups = self.Player:GetInfo( "cl_playerbodygroups" )
+	if ( bodygroups == nil ) then bodygroups = "" end
+
+	local groups = string.Explode( " ", bodygroups )
 	for k = 0, self.Player:GetNumBodyGroups() - 1 do
 		self.Player:SetBodygroup( k, tonumber( groups[ k + 1 ] ) or 0 )
 	end
@@ -102,21 +103,21 @@ function PLAYER:Spawn()
 
 	BaseClass.Spawn( self )
 
-	local col = self.Player:GetInfo( "cl_playercolor" )
-	self.Player:SetPlayerColor( Vector( col ) )
+	local plyclr = self.Player:GetInfo( "cl_playercolor" )
+	self.Player:SetPlayerColor( Vector( plyclr ) )
 
-	local col = Vector( self.Player:GetInfo( "cl_weaponcolor" ) )
-	if col:Length() == 0 then
-		col = Vector( 0.001, 0.001, 0.001 )
+	local wepclr = Vector( self.Player:GetInfo( "cl_weaponcolor" ) )
+	if ( wepclr:Length() < 0.001 ) then
+		wepclr = Vector( 0.001, 0.001, 0.001 )
 	end
-	self.Player:SetWeaponColor( col )
+	self.Player:SetWeaponColor( wepclr )
 
 end
 
 --
 -- Return true to draw local (thirdperson) camera - false to prevent - nothing to use default behaviour
 --
-function PLAYER:ShouldDrawLocal() 
+function PLAYER:ShouldDrawLocal()
 
 	if ( self.TauntCam:ShouldDrawLocalPlayer( self.Player, self.Player:IsPlayingTaunt() ) ) then return true end
 
@@ -142,66 +143,57 @@ function PLAYER:CalcView( view )
 
 end
 
-function PLAYER:GetHandsModel()
-
-	-- return { model = "models/weapons/c_arms_cstrike.mdl", skin = 1, body = "0100000" }
-
-	local cl_playermodel = self.Player:GetInfo( "cl_playermodel" )
-	return player_manager.TranslatePlayerHands( cl_playermodel )
-
-end
-
 --
 -- Reproduces the jump boost from HL2 singleplayer
 --
 local JUMPING
 
 function PLAYER:StartMove( move )
-	
+
 	-- Only apply the jump boost in FinishMove if the player has jumped during this frame
 	-- Using a global variable is safe here because nothing else happens between SetupMove and FinishMove
 	if bit.band( move:GetButtons(), IN_JUMP ) ~= 0 and bit.band( move:GetOldButtons(), IN_JUMP ) == 0 and self.Player:OnGround() then
 		JUMPING = true
 	end
-	
+
 end
 
 function PLAYER:FinishMove( move )
-	
+
 	-- If the player has jumped this frame
-	if JUMPING then
+	if ( JUMPING ) then
 		-- Get their orientation
 		local forward = move:GetAngles()
 		forward.p = 0
 		forward = forward:Forward()
-		
+
 		-- Compute the speed boost
-		
+
 		-- HL2 normally provides a much weaker jump boost when sprinting
 		-- For some reason this never applied to GMod, so we won't perform
 		-- this check here to preserve the "authentic" feeling
 		local speedBoostPerc = ( ( not self.Player:Crouching() ) and 0.5 ) or 0.1
-		
+
 		local speedAddition = math.abs( move:GetForwardSpeed() * speedBoostPerc )
 		local maxSpeed = move:GetMaxSpeed() * ( 1 + speedBoostPerc )
 		local newSpeed = speedAddition + move:GetVelocity():Length2D()
-		
+
 		-- Clamp it to make sure they can't bunnyhop to ludicrous speed
 		if newSpeed > maxSpeed then
-			speedAddition = speedAddition - (newSpeed - maxSpeed)
+			speedAddition = speedAddition - ( newSpeed - maxSpeed )
 		end
-		
+
 		-- Reverse it if the player is running backwards
-		if move:GetVelocity():Dot(forward) < 0 then
+		if move:GetVelocity():Dot( forward ) < 0 then
 			speedAddition = -speedAddition
 		end
-		
+
 		-- Apply the speed boost
-		move:SetVelocity(forward * speedAddition + move:GetVelocity())
+		move:SetVelocity( forward * speedAddition + move:GetVelocity() )
 	end
-	
+
 	JUMPING = nil
-	
+
 end
 
 player_manager.RegisterClass( "player_sandbox", PLAYER, "player_default" )

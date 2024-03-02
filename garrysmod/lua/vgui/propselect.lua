@@ -42,9 +42,9 @@ function PANEL:AddModel( model, ConVars )
 	local ConVarName = self:ConVar()
 
 	-- Run a console command when the Icon is clicked
-	Icon.DoClick = function ( self )
+	Icon.DoClick = function ( pnl )
 
-		for k, v in pairs( self.ConVars ) do
+		for k, v in pairs( pnl.ConVars ) do
 			LocalPlayer():ConCommand( Format( "%s \"%s\"\n", k, v ) )
 		end
 
@@ -62,6 +62,7 @@ function PANEL:AddModel( model, ConVars )
 	self.List:AddItem( Icon )
 	table.insert( self.Controls, Icon )
 
+	return Icon
 end
 
 function PANEL:AddModelEx( name, model, skin )
@@ -72,12 +73,12 @@ function PANEL:AddModelEx( name, model, skin )
 	Icon:SetTooltip( model )
 	Icon.Model = model
 	Icon.Value = name
-	Icon.ConVars = ConVars || {}
+	Icon.ConVars = {}
 
 	local ConVarName = self:ConVar()
 
 	-- Run a console command when the Icon is clicked
-	Icon.DoClick = function ( self ) LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, Icon.Value ) ) end
+	Icon.DoClick = function ( pnl ) LocalPlayer():ConCommand( Format( "%s \"%s\"\n", ConVarName, Icon.Value ) ) end
 	Icon.OpenMenu = function( button )
 		local menu = DermaMenu()
 		menu:AddOption( "Copy to Clipboard", function() SetClipboardText( model ) end ):SetIcon( "icon16/page_copy.png" )
@@ -88,6 +89,7 @@ function PANEL:AddModelEx( name, model, skin )
 	self.List:AddItem( Icon )
 	table.insert( self.Controls, Icon )
 
+	return Icon
 end
 
 function PANEL:ControlValues( kv )
@@ -111,7 +113,7 @@ function PANEL:ControlValues( kv )
 	if ( kv.modelstable ) then
 		local tmp = {} -- HACK: Order by skin too.
 		for k, v in SortedPairsByMemberValue( kv.modelstable, "model" ) do
-			tmp[ k ] = v.model .. ( v.skin || 0 )
+			tmp[ k ] = v.model:lower() .. ( v.skin || 0 )
 		end
 
 		for k, v in SortedPairsByValue( tmp ) do
@@ -124,9 +126,9 @@ function PANEL:ControlValues( kv )
 
 end
 
-function PANEL:PerformLayout()
+function PANEL:PerformLayout( w, h )
 
-	local y = self.BaseClass.PerformLayout( self )
+	local y = self.BaseClass.PerformLayout( self, w, h )
 
 	if ( self.Height >= 1 ) then
 		local Height = ( 64 + self.List:GetSpacing() ) * math.max( self.Height, 1 ) + self.List:GetPadding() * 2 - self.List:GetSpacing()

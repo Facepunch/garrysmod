@@ -7,7 +7,7 @@ local GetPTranslation = LANG.GetParamTranslation
 local string = string
 
 local function LastWordsRecv()
-   local sender = net.ReadEntity()
+   local sender = net.ReadPlayer()
    local words  = net.ReadString()
 
    local was_detective = IsValid(sender) and sender:IsDetective()
@@ -25,7 +25,7 @@ net.Receive("TTT_LastWordsMsg", LastWordsRecv)
 local function RoleChatRecv()
    -- virtually always our role, but future equipment might allow listening in
    local role = net.ReadUInt(2)
-   local sender = net.ReadEntity()
+   local sender = net.ReadPlayer()
    if not IsValid(sender) then return end
 
    local text = net.ReadString()
@@ -164,8 +164,9 @@ function RADIO:ShowRadioCommands(state)
          radioframe:SetKeyboardInputEnabled(false)
 
          radioframe:CenterVertical()
-
-         -- ASS
+         
+         
+         -- This is not how you should do things
          radioframe.ForceResize = function(s)
                                      local w, label = 0, nil
                                      for k,v in pairs(s.Items) do
@@ -268,7 +269,7 @@ end
 
 
 function RADIO.ToPrintable(target)
-   if type(target) == "string" then
+   if isstring(target) then
       return GetTranslation(target)
    elseif IsValid(target) then
       if target:IsPlayer() then
@@ -344,7 +345,7 @@ local function RadioCommand(ply, cmd, arg)
    RADIO.LastRadio.msg = text
 
    -- target is either a lang string or an entity
-   target = type(target) == "string" and target or tostring(target:EntIndex())
+   target = isstring(target) and target or tostring(target:EntIndex())
 
    RunConsoleCommand("_ttt_radio_send", msg_name, tostring(target))
 end
@@ -361,7 +362,7 @@ concommand.Add("ttt_radio", RadioCommand, RadioComplete)
 
 
 local function RadioMsgRecv()
-   local sender = net.ReadEntity()
+   local sender = net.ReadPlayer()
    local msg    = net.ReadString()
    local param  = net.ReadString()
 

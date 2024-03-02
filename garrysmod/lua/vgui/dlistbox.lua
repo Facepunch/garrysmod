@@ -18,11 +18,11 @@ function PANEL:OnMousePressed( mcode )
 		self:Select( true )
 	end
 
-	self:SetTextColor( Color( 0, 0, 0, 255 ) )
+	self:SetTextColor( color_black )
 end
 
 function PANEL:Paint( w, h )
-	if ( self.m_pMother:GetSelectedValues() == self:GetText() ) then
+	if ( self:IsSelected() ) then
 		draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 128, 255, 200 ) )
 	elseif ( self.Hovered ) then
 		draw.RoundedBox( 0, 0, 0, w, h, Color( 0, 128, 255, 128 ) )
@@ -75,6 +75,7 @@ function PANEL:Init()
 
 	self:SetPadding( 1 )
 
+	self.m_bSelectionCanvas = true
 	self.SelectedItems = {}
 
 end

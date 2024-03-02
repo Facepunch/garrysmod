@@ -18,10 +18,11 @@ local function CreateWangFunction( self, colindex )
 	local function OnValueChanged( ptxt, strvar )
 		if ( ptxt.notuserchange ) then return end
 
-		self:GetColor()[ colindex ] = tonumber( strvar ) or 0
+		local targetValue = tonumber( strvar ) or 0
+		self:GetColor()[ colindex ] = targetValue
 		if ( colindex == "a" ) then
 			self.Alpha:SetBarColor( ColorAlpha( self:GetColor(), 255 ) )
-			self.Alpha:SetValue( self:GetColor().a / 255 )
+			self.Alpha:SetValue( targetValue / 255 )
 		else
 			self.HSV:SetColor( self:GetColor() )
 
@@ -44,7 +45,7 @@ function PANEL:Init()
 	self.Palette:DockMargin( 0, 8, 0, 0 )
 	self.Palette:Reset()
 	self.Palette.DoClick = function( ctrl, color, btn )
-		self:SetColor( Color( color.r, color.g, color.b, self:GetAlphaBar() && color.a or 255 ) )
+		self:SetColor( Color( color.r, color.g, color.b, self:GetAlphaBar() and color.a or 255 ) )
 	end
 	self.Palette.OnRightClickButton = function( ctrl, btn )
 		local m = DermaMenu()
@@ -194,10 +195,10 @@ function PANEL:SetConVarA( cvar )
 	self:SetAlphaBar( cvar != nil )
 end
 
-function PANEL:PerformLayout( x, y )
+function PANEL:PerformLayout( w, h )
 
-	local h, s, v = ColorToHSV( self.HSV:GetBaseRGB() )
-	self.RGB.LastY = ( 1 - h / 360 ) * self.RGB:GetTall()
+	local hue, s, v = ColorToHSV( self.HSV:GetBaseRGB() )
+	self.RGB.LastY = ( 1 - hue / 360 ) * self.RGB:GetTall()
 
 end
 
@@ -205,13 +206,10 @@ function PANEL:Paint()
 	-- Invisible background!
 end
 
-function PANEL:TranslateValues( x, y )
-end
-
 function PANEL:SetColor( color )
 
-	local h, s, v = ColorToHSV( color )
-	self.RGB.LastY = ( 1 - h / 360 ) * self.RGB:GetTall()
+	local hue, s, v = ColorToHSV( color )
+	self.RGB.LastY = ( 1 - hue / 360 ) * self.RGB:GetTall()
 
 	self.HSV:SetColor( color )
 
@@ -326,7 +324,7 @@ function PANEL:ConVarThink()
 	local a, changed_a = 255, false
 
 	if ( self.m_ConVarA ) then
-		a, changed_a = self:DoConVarThink( self.m_ConVarA, "a" )
+		a, changed_a = self:DoConVarThink( self.m_ConVarA )
 	end
 
 	if ( changed_r or changed_g or changed_b or changed_a ) then
@@ -341,7 +339,7 @@ function PANEL:DoConVarThink( convar )
 
 	local fValue = GetConVarNumber( convar )
 	local fOldValue = self[ "ConVarOld" .. convar ]
-	if ( fOldValue && fValue == fOldValue ) then return fOldValue, false end
+	if ( fOldValue and fValue == fOldValue ) then return fOldValue, false end
 
 	self[ "ConVarOld" .. convar ] = fValue
 

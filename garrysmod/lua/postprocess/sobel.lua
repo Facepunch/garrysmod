@@ -7,7 +7,7 @@ local pp_sobel_threshold = CreateClientConVar( "pp_sobel_threshold", "0.11", tru
 
 function DrawSobel( threshold )
 
-	render.UpdateScreenEffectTexture()
+	render.CopyRenderTargetToTexture( render.GetScreenEffectTexture() )
 
 	-- update threshold value
 	SobelMaterial:SetFloat( "$threshold", threshold )

@@ -41,7 +41,7 @@ local PhysicsObject =
 
 	Load = function( data, phys )
 
-		if ( isvector( data.Pos ) && isangle( data.Angle ) ) then
+		if ( isvector( data.Pos ) and isangle( data.Angle ) ) then
 
 			local pos, ang = LocalToWorld( data.Pos, data.Angle, LocalPos, LocalAng )
 			phys:SetPos( pos )
@@ -64,7 +64,7 @@ local PhysicsObject =
 
 			-- If we're being created by a player then add these to their frozen list so they can unfreeze them all
 			if ( IsValid( ActionPlayer ) ) then
-				ActionPlayer:AddFrozenPhysicsObject( Entity, phys )
+				ActionPlayer:AddFrozenPhysicsObject( phys:GetEntity(), phys )
 			end
 
 		end
@@ -87,13 +87,13 @@ local EntityPhysics =
 		local num = Entity:GetPhysicsObjectCount()
 
 		for objectid = 0, num-1 do
-	
+
 			local obj = Entity:GetPhysicsObjectNum( objectid )
-			if ( !obj:IsValid() ) then continue end
+			if ( !IsValid( obj ) ) then continue end
 
 			data[ objectid ] = {}
 			PhysicsObject.Save( data[ objectid ], obj )
-	
+
 		end
 
 	end,
@@ -104,14 +104,14 @@ local EntityPhysics =
 	Load = function( data, Entity )
 
 		if ( !istable( data ) ) then return end
-	
+
 		for objectid, objectdata in pairs( data ) do
-	
+
 			local Phys = Entity:GetPhysicsObjectNum( objectid )
 			if ( !IsValid( Phys ) ) then continue end
-		
+
 			PhysicsObject.Load( objectdata, Phys )
-		
+
 		end
 
 	end,
@@ -148,13 +148,16 @@ local EntitySaver =
 		data.ColGroup			= ent:GetCollisionGroup()
 		data.Name				= ent:GetName()
 		data.WorkshopID			= ent:GetWorkshopID()
+		data.CurHealth			= ent:Health()
+		data.MaxHealth			= ent:GetMaxHealth()
+		data.Persistent			= ent:GetPersistent()
 
 		data.Pos, data.Angle	= WorldToLocal( data.Pos, data.Angle, LocalPos, LocalAng )
 
 		data.ModelScale			= ent:GetModelScale()
 		if ( data.ModelScale == 1 ) then data.ModelScale = nil end
 
-		-- We have no reason to keep the creation ID anymore - but we will
+		-- This is useful for addons to determine if the entity was map spawned or not
 		if ( ent:CreatedByMap() ) then
 			data.MapCreationID = ent:MapCreationID()
 		end
@@ -167,17 +170,17 @@ local EntitySaver =
 		data.PhysicsObjects = data.PhysicsObjects or {}
 		EntityPhysics.Save( data.PhysicsObjects, ent )
 
-	
+
 		-- Flexes
 		data.FlexScale = ent:GetFlexScale()
 		for i = 0, ent:GetFlexNum() do
-	
+
 			local w = ent:GetFlexWeight( i )
 			if ( w != 0 ) then
 				data.Flex = data.Flex or {}
 				data.Flex[ i ] = w
 			end
-	
+
 		end
 
 		-- Body Groups
@@ -185,44 +188,63 @@ local EntitySaver =
 		if ( bg ) then
 
 			for k, v in pairs( bg ) do
-		
+
 				--
 				-- If it has a non default setting, save it.
 				--
 				if ( ent:GetBodygroup( v.id ) > 0 ) then
-	
+
 					data.BodyG = data.BodyG or {}
 					data.BodyG[ v.id ] = ent:GetBodygroup( v.id )
-	
+
 				end
-		
+
 			end
 
 		end
-		
-		-- Bone Manipulator
+
+		-- Non Sandbox tool set color and materials
+		if ( ent:GetColor() != color_white ) then data._DuplicatedColor = ent:GetColor() end
+		if ( ent:GetMaterial() != "" ) then data._DuplicatedMaterial = ent:GetMaterial() end
+
+		-- Sub materials
+		local subMaterials = {}
+
+		for i = 0, 31 do
+
+			local mat = ent:GetSubMaterial( i )
+
+			if ( mat:len() > 0 ) then
+				subMaterials[ i ] = mat
+			end
+
+		end
+
+		if ( !table.IsEmpty( subMaterials ) ) then data._DuplicatedSubMaterials = subMaterials end
+
+		-- Bone Manipulations
 		if ( ent:HasBoneManipulations() ) then
-	
+
 			data.BoneManip = {}
-	
-			for i=0, ent:GetBoneCount() do
-		
+
+			for i = 0, ent:GetBoneCount() do
+
 				local t = {}
-			
+
 				local s = ent:GetManipulateBoneScale( i )
 				local a = ent:GetManipulateBoneAngles( i )
 				local p = ent:GetManipulateBonePosition( i )
-			
+
 				if ( s != Vector( 1, 1, 1 ) ) then t[ 's' ] = s end -- scale
-				if ( a != Angle( 0, 0, 0 ) ) then t[ 'a' ] = a end -- angle
-				if ( p != Vector( 0, 0, 0 ) ) then t[ 'p' ] = p end -- position
-		
-				if ( table.Count( t ) > 0 ) then
+				if ( a != angle_zero ) then t[ 'a' ] = a end -- angle
+				if ( p != vector_origin ) then t[ 'p' ] = p end -- position
+
+				if ( !table.IsEmpty( t ) ) then
 					data.BoneManip[ i ] = t
 				end
-		
+
 			end
-	
+
 		end
 
 		--
@@ -231,8 +253,7 @@ local EntitySaver =
 		if ( ent.GetNetworkVars ) then
 			data.DT = ent:GetNetworkVars()
 		end
-		
-	
+
 		-- Make this function on your SENT if you want to modify the
 		-- returned table specifically for your entity.
 		if ( ent.OnEntityCopyTableFinish ) then
@@ -265,7 +286,7 @@ local EntitySaver =
 
 		-- We do the second check for models because apparently setting the model on an NPC causes some position changes
 		-- And to prevent NPCs going into T-pose briefly upon duplicating
-		if ( data.Model && data.Model != ent:GetModel() ) then ent:SetModel( data.Model ) end
+		if ( data.Model and data.Model != ent:GetModel() ) then ent:SetModel( data.Model ) end
 		if ( data.Angle ) then ent:SetAngles( data.Angle ) end
 		if ( data.Pos ) then ent:SetPos( data.Pos ) end
 		if ( data.Skin ) then ent:SetSkin( data.Skin ) end
@@ -274,6 +295,20 @@ local EntitySaver =
 		if ( data.ModelScale ) then ent:SetModelScale( data.ModelScale, 0 ) end
 		if ( data.ColGroup ) then ent:SetCollisionGroup( data.ColGroup ) end
 		if ( data.Name ) then ent:SetName( data.Name ) end
+		if ( data.Persistent ) then ent:SetPersistent( data.Persistent ) end
+		if ( data._DuplicatedColor ) then ent:SetColor( data._DuplicatedColor ) end
+		if ( data._DuplicatedMaterial ) then ent:SetMaterial( data._DuplicatedMaterial ) end
+
+		-- Sub materials
+		if ( data._DuplicatedSubMaterials ) then
+
+			for id, mat in pairs( data._DuplicatedSubMaterials ) do
+
+				ent:SetSubMaterial( id, mat )
+
+			end
+
+		end
 
 		-- Body Groups
 		if ( data.BodyG ) then
@@ -304,6 +339,15 @@ function Allow( classname )
 end
 
 --
+-- Disallow this entity to be duplicated
+--
+function Disallow( classname )
+
+	DuplicateAllowed[ classname ] = false
+
+end
+
+--
 -- Returns true if we can copy/paste this entity
 --
 function IsAllowed( classname )
@@ -324,7 +368,7 @@ function SetLocalAng( v ) LocalAng = v * 1 end
 --[[---------------------------------------------------------
 	Register a constraint to be duplicated
 -----------------------------------------------------------]]
-function RegisterConstraint( _name_ , _function_, ... )	
+function RegisterConstraint( _name_, _function_, ... )
 
 	ConstraintType[ _name_ ] = {}
 
@@ -338,7 +382,7 @@ EntityClasses = EntityClasses or {}
 --[[---------------------------------------------------------
 	Register an entity's class, to allow it to be duplicated
 -----------------------------------------------------------]]
-function RegisterEntityClass( _name_ , _function_, ... )
+function RegisterEntityClass( _name_, _function_, ... )
 
 	EntityClasses[ _name_ ] = {}
 
@@ -364,6 +408,29 @@ EntityModifiers = EntityModifiers or {}
 
 function RegisterBoneModifier( _name_, _function_ ) BoneModifiers[ _name_ ] = _function_ end
 function RegisterEntityModifier( _name_, _function_ ) EntityModifiers[ _name_ ] = _function_ end
+
+--
+-- Try to work out which workshop addons are used by this dupe. This is far from perfect.
+--
+function FigureOutRequiredAddons( Dupe )
+
+	local addons = {}
+	for _, ent in pairs( Dupe.Entities ) do
+		for id, addon in pairs( engine.GetAddons() ) do
+			-- Model
+			if ( ent.Model and file.Exists( ent.Model, addon.title ) ) then
+				addons[ addon.wsid ] = true
+			end
+
+			-- Material override
+			if ( ent._DuplicatedMaterial and file.Exists( "materials/" .. ent._DuplicatedMaterial .. ".vmt", addon.title ) ) then
+				addons[ addon.wsid ] = true
+			end
+		end
+	end
+	Dupe.RequiredAddons = table.GetKeys( addons )
+
+end
 
 if ( CLIENT ) then return end
 
@@ -416,7 +483,7 @@ function GenericDuplicatorFunction( Player, data )
 	--
 	-- Is this entity 'admin only'?
 	--
-	if ( IsValid( Player ) && !Player:IsAdmin() ) then
+	if ( IsValid( Player ) and !Player:IsAdmin() ) then
 
 		if ( !scripted_ents.GetMember( data.Class, "Spawnable" ) ) then return end
 		if ( scripted_ents.GetMember( data.Class, "AdminOnly" ) ) then return end
@@ -479,12 +546,12 @@ function StoreBoneModifier( Entity, BoneID, Type, Data )
 
 	-- Copy the data
 	NewData = {}
-	table.Merge( NewData , Data )
-	
+	table.Merge( NewData, Data )
+
 	-- Add it to the entity
 	Entity.BoneMods = Entity.BoneMods or {}
 	Entity.BoneMods[ BoneID ] = Entity.BoneMods[ BoneID ] or {}
-	
+
 	Entity.BoneMods[ BoneID ][ Type ] = NewData
 
 end
@@ -510,34 +577,34 @@ function WorkoutSize( Ents )
 
 
 	for k, v in pairs( Ents ) do
-	
-		if ( !v.Mins || !v.Maxs ) then continue end
-		if ( !v.Angle || !v.Pos ) then continue end
+
+		if ( !v.Mins or !v.Maxs ) then continue end
+		if ( !v.Angle or !v.Pos ) then continue end
 
 		--
 		-- Rotate according to the entity!
 		--
-		local RotMins = v.Mins * 1
-		local RotMaxs = v.Maxs * 1
-		RotMins:Rotate( v.Angle )
-		RotMaxs:Rotate( v.Angle )
+		local mi = v.Mins
+		local ma = v.Maxs
 
-		--
-		-- This is dumb and the logic is wrong, but it works for now.
-		--
-		mins.x = math.min( mins.x, v.Pos.x + RotMins.x )
-		mins.y = math.min( mins.y, v.Pos.y + RotMins.y )
-		mins.z = math.min( mins.z, v.Pos.z + RotMins.z )
-		mins.x = math.min( mins.x, v.Pos.x + RotMaxs.x )
-		mins.y = math.min( mins.y, v.Pos.y + RotMaxs.y )
-		mins.z = math.min( mins.z, v.Pos.z + RotMaxs.z )
+		-- There has to be a better way
+		local t1 = LocalToWorld( Vector( mi.x, mi.y, mi.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+		local t2 = LocalToWorld( Vector( ma.x, mi.y, mi.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+		local t3 = LocalToWorld( Vector( mi.x, ma.y, mi.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+		local t4 = LocalToWorld( Vector( ma.x, ma.y, mi.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
 
-		maxs.x = math.max( maxs.x, v.Pos.x + RotMins.x )
-		maxs.y = math.max( maxs.y, v.Pos.y + RotMins.y )
-		maxs.z = math.max( maxs.z, v.Pos.z + RotMins.z )
-		maxs.x = math.max( maxs.x, v.Pos.x + RotMaxs.x )
-		maxs.y = math.max( maxs.y, v.Pos.y + RotMaxs.y )
-		maxs.z = math.max( maxs.z, v.Pos.z + RotMaxs.z )
+		local b1 = LocalToWorld( Vector( mi.x, mi.y, ma.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+		local b2 = LocalToWorld( Vector( ma.x, mi.y, ma.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+		local b3 = LocalToWorld( Vector( mi.x, ma.y, ma.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+		local b4 = LocalToWorld( Vector( ma.x, ma.y, ma.z ), Angle( 0, 0, 0 ), v.Pos, v.Angle )
+
+		mins.x = math.min( mins.x, t1.x, t2.x, t3.x, t4.x, b1.x, b2.x, b3.x, b4.x )
+		mins.y = math.min( mins.y, t1.y, t2.y, t3.y, t4.y, b1.y, b2.y, b3.y, b4.y )
+		mins.z = math.min( mins.z, t1.z, t2.z, t3.z, t4.z, b1.z, b2.z, b3.z, b4.z )
+
+		maxs.x = math.max( maxs.x, t1.x, t2.x, t3.x, t4.x, b1.x, b2.x, b3.x, b4.x )
+		maxs.y = math.max( maxs.y, t1.y, t2.y, t3.y, t4.y, b1.y, b2.y, b3.y, b4.y )
+		maxs.z = math.max( maxs.z, t1.z, t2.z, t3.z, t4.z, b1.z, b2.z, b3.z, b4.z )
 
 	end
 
@@ -584,9 +651,9 @@ end
 function CopyEnts( Ents )
 
 	local Ret = { Entities = {}, Constraints = {} }
-	
+
 	for k, v in pairs( Ents ) do
-	
+
 		Ret = Copy( v, Ret )
 
 	end
@@ -600,10 +667,14 @@ end
 -----------------------------------------------------------]]
 function CreateEntityFromTable( Player, EntTable )
 
+	-- Get rid of stored outputs, they are being abused
+	-- Do it here, so that entities can store new ones on creation
+	EntTable.m_tOutputs = nil
+
 	--
 	-- Convert position/angle to `local`
 	--
-	if ( EntTable.Pos && EntTable.Angle ) then
+	if ( EntTable.Pos and EntTable.Angle ) then
 
 		EntTable.Pos, EntTable.Angle = LocalToWorld( EntTable.Pos, EntTable.Angle, LocalPos, LocalAng )
 
@@ -614,9 +685,9 @@ function CreateEntityFromTable( Player, EntTable )
 	-- This class is unregistered. Instead of failing try using a generic
 	-- Duplication function to make a new copy..
 	if ( !EntityClass ) then
-	
+
 		return GenericDuplicatorFunction( Player, EntTable )
-	
+
 	end
 
 	-- Build the argument list
@@ -625,26 +696,26 @@ function CreateEntityFromTable( Player, EntTable )
 	for iNumber, Key in pairs( EntityClass.Args ) do
 
 		local Arg = nil
-	
+
 		-- Translate keys from old system
-		if ( Key == "pos" || Key == "position" ) then Key = "Pos" end
-		if ( Key == "ang" || Key == "Ang" || Key == "angle" ) then Key = "Angle" end
+		if ( Key == "pos" or Key == "position" ) then Key = "Pos" end
+		if ( Key == "ang" or Key == "Ang" or Key == "angle" ) then Key = "Angle" end
 		if ( Key == "model" ) then Key = "Model" end
-		
+
 		Arg = EntTable[ Key ]
-		
+
 		-- Special keys
 		if ( Key == "Data" ) then Arg = EntTable end
-		
+
 		-- If there's a missing argument then unpack will stop sending at that argument so send it as `false`
 		if ( Arg == nil ) then Arg = false end
-		
+
 		ArgList[ iNumber ] = Arg
-		
+
 	end
 
 	-- Create and return the entity
-	return EntityClass.Func( Player, unpack(ArgList) )
+	return EntityClass.Func( Player, unpack( ArgList ) )
 
 end
 
@@ -652,21 +723,21 @@ end
 --[[---------------------------------------------------------
   Make a constraint from a constraint table
 -----------------------------------------------------------]]
-function CreateConstraintFromTable( Constraint, EntityList )
+function CreateConstraintFromTable( Constraint, EntityList, Player )
 
 	local Factory = ConstraintType[ Constraint.Type ]
 	if ( !Factory ) then return end
 
 	local Args = {}
 	for k, Key in pairs( Factory.Args ) do
-	
+
 		local Val = Constraint[ Key ]
-		
-		for i=1, 6 do
+
+		for i = 1, 6 do
 
 			if ( Constraint.Entity[ i ] ) then
 
-				if ( Key == "Ent"..i ) then
+				if ( Key == "Ent" .. i ) then
 					Val = EntityList[ Constraint.Entity[ i ].Index ]
 					if ( Constraint.Entity[ i ].World ) then
 						Val = game.GetWorld()
@@ -680,17 +751,18 @@ function CreateConstraintFromTable( Constraint, EntityList )
 
 			end
 		end
-		
+
+		-- A little hack to give the duped constraints the correct player object
+		if ( Key:lower() == "pl" or Key:lower() == "ply" or Key:lower() == "player" ) then Val = Player end
+
 		-- If there's a missing argument then unpack will stop sending at that argument
 		if ( Val == nil ) then Val = false end
-		
+
 		table.insert( Args, Val )
-	
+
 	end
 
-	local Entity = Factory.Func( unpack(Args) )
-
-	return Entity
+	return Factory.Func( unpack( Args ) )
 
 end
 
@@ -698,7 +770,7 @@ end
    Given entity list and constranit list, create all entities
    and return their tables
 -----------------------------------------------------------]]
-function Paste( Player, EntityList, ConstraintList )
+function Paste( Player, entityList, constraintList )
 
 	--
 	-- Store the player
@@ -709,8 +781,8 @@ function Paste( Player, EntityList, ConstraintList )
 	--
 	-- Copy the table - because we're gonna be changing some stuff on it.
 	--
-	local EntityList = table.Copy( EntityList )
-	local ConstraintList = table.Copy( ConstraintList )
+	local EntityList = table.Copy( entityList )
+	local ConstraintList = table.Copy( constraintList )
 
 	local CreatedEntities = {}
 
@@ -718,7 +790,7 @@ function Paste( Player, EntityList, ConstraintList )
 	-- Create the Entities
 	--
 	for k, v in pairs( EntityList ) do
-	
+
 		local e = nil
 		local b = ProtectedCall( function() e = CreateEntityFromTable( Player, v ) end )
 		if ( !b ) then continue end
@@ -739,33 +811,33 @@ function Paste( Player, EntityList, ConstraintList )
 		end
 
 		CreatedEntities[ k ] = e
-		
+
 		if ( CreatedEntities[ k ] ) then
-		
+
 			CreatedEntities[ k ].BoneMods = table.Copy( v.BoneMods )
 			CreatedEntities[ k ].EntityMods = table.Copy( v.EntityMods )
 			CreatedEntities[ k ].PhysicsObjects = table.Copy( v.PhysicsObjects )
-		
+
 		else
-		
+
 			CreatedEntities[ k ] = nil
-		
+
 		end
-		
+
 	end
 
 	--
 	-- Apply modifiers to the created entities
 	--
 	for EntID, Ent in pairs( CreatedEntities ) do
-	
-		ApplyEntityModifiers ( Player, Ent )
-		ApplyBoneModifiers ( Player, Ent )
-	
+
+		ApplyEntityModifiers( Player, Ent )
+		ApplyBoneModifiers( Player, Ent )
+
 		if ( Ent.PostEntityPaste ) then
-			Ent:PostEntityPaste( Player, Ent, CreatedEntities )
+			Ent:PostEntityPaste( Player or NULL, Ent, CreatedEntities )
 		end
-	
+
 	end
 
 	local CreatedConstraints = {}
@@ -774,13 +846,14 @@ function Paste( Player, EntityList, ConstraintList )
 	-- Create constraints
 	--
 	for k, Constraint in pairs( ConstraintList ) do
-	
-		local Entity = CreateConstraintFromTable( Constraint, CreatedEntities )
-		
-		if ( Entity && Entity:IsValid() ) then
+
+		local Entity = nil
+		ProtectedCall( function() Entity = CreateConstraintFromTable( Constraint, CreatedEntities, Player ) end )
+
+		if ( IsValid( Entity ) ) then
 			table.insert( CreatedConstraints, Entity )
 		end
-	
+
 	end
 
 	ActionPlayer = oldplayer
@@ -799,11 +872,11 @@ function ApplyEntityModifiers( Player, Ent )
 	if ( !Ent.EntityMods ) then return end
 
 	for Type, ModFunction in pairs( EntityModifiers ) do
-	
+
 		if ( Ent.EntityMods[ Type ] ) then
-	
+
 			ModFunction( Player, Ent, Ent.EntityMods[ Type ] )
-			
+
 		end
 	end
 
@@ -843,22 +916,22 @@ function ApplyBoneModifiers( Player, Ent )
 end
 
 
---[[---------------------------------------------------------
-  Returns all constrained Entities and constraints
-  This is kind of in the wrong place. No not call this
-  from outside of this code. It will probably get moved to
-  constraint.lua soon.
------------------------------------------------------------]]
+--
+-- Returns all constrained Entities and constraints
+-- This is kind of in the wrong place.
+--
+-- This function will accept the world entity to save constrains, but will not actually save the world entity itself
+--
 function GetAllConstrainedEntitiesAndConstraints( ent, EntTable, ConstraintTable )
 
-	if ( !IsValid( ent ) ) then return end
+	if ( !IsValid( ent ) and !ent:IsWorld() ) then return end
 
 	-- Translate the class name
 	local classname = ent:GetClass()
 	if ( ent.ClassOverride ) then classname = ent.ClassOverride end
-	
+
 	-- Is the entity in the dupe whitelist?
-	if ( !IsAllowed( classname ) ) then
+	if ( !IsAllowed( classname ) and !ent:IsWorld() ) then
 		-- MsgN( "duplicator: ", classname, " isn't allowed to be duplicated!" )
 		return
 	end
@@ -866,28 +939,32 @@ function GetAllConstrainedEntitiesAndConstraints( ent, EntTable, ConstraintTable
 	-- Entity doesn't want to be duplicated.
 	if ( ent.DoNotDuplicate ) then return end
 
-	EntTable[ ent:EntIndex() ] = ent
+	if ( !ent:IsWorld() ) then EntTable[ ent:EntIndex() ] = ent end
 
 	if ( !constraint.HasConstraints( ent ) ) then return end
 
 	local ConTable = constraint.GetTable( ent )
 
-	for key, constraint in pairs( ConTable ) do
+	for key, constr in pairs( ConTable ) do
 
-		local index = constraint.Constraint:GetCreationID()
-		
+		local index = constr.Constraint:GetCreationID()
+
 		if ( !ConstraintTable[ index ] ) then
 
 			-- Add constraint to the constraints table
-			ConstraintTable[ index ] = constraint
+			ConstraintTable[ index ] = constr
 
 			-- Run the Function for any ents attached to this constraint
-			for key, ConstrainedEnt in pairs( constraint.Entity ) do
+			for _, ConstrainedEnt in pairs( constr.Entity ) do
 
-				GetAllConstrainedEntitiesAndConstraints( ConstrainedEnt.Entity, EntTable, ConstraintTable )
-			
+				if ( !ConstrainedEnt.Entity:IsWorld() ) then
+
+					GetAllConstrainedEntitiesAndConstraints( ConstrainedEnt.Entity, EntTable, ConstraintTable )
+
+				end
+
 			end
-			
+
 		end
 	end
 
@@ -919,9 +996,9 @@ end
 --
 function RemoveMapCreatedEntities()
 
-	for k, v in pairs( ents.GetAll() ) do
+	for k, v in ipairs( ents.GetAll() ) do
 
-		if ( v:CreatedByMap() && ShouldMapEntityBeRemoved( v, v:GetClass() ) ) then
+		if ( v:CreatedByMap() and ShouldMapEntityBeRemoved( v, v:GetClass() ) ) then
 			v:Remove()
 		end
 
@@ -934,7 +1011,7 @@ end
 --
 function DoGenericPhysics( Entity, Player, data )
 
-	if ( !data || !data.PhysicsObjects ) then return end
+	if ( !data or !data.PhysicsObjects ) then return end
 
 	EntityPhysics.Load( data.PhysicsObjects, Entity )
 

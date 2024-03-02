@@ -60,8 +60,25 @@ function PANEL:SetMinMax( min, max )
 	self:UpdateNotches()
 end
 
+function PANEL:ApplySchemeSettings()
+
+	self.Label:ApplySchemeSettings()
+
+	-- Copy the color of the label to the slider notches and the text entry
+	local col = self.Label:GetTextStyleColor()
+	if ( self.Label:GetTextColor() ) then col = self.Label:GetTextColor() end
+
+	self.TextArea:SetTextColor( col )
+
+	local color = table.Copy( col )
+	color.a = 100 -- Fade it out a bit so it looks right
+	self.Slider:SetNotchColor( color )
+
+end
+
 function PANEL:SetDark( b )
 	self.Label:SetDark( b )
+	self:ApplySchemeSettings()
 end
 
 function PANEL:GetMin()
@@ -206,6 +223,13 @@ function PANEL:UpdateNotches()
 
 end
 
+function PANEL:SetEnabled( b )
+	self.TextArea:SetEnabled( b )
+	self.Slider:SetEnabled( b )
+	self.Scratch:SetEnabled( b )
+	FindMetaTable( "Panel" ).SetEnabled( self, b ) -- There has to be a better way!
+end
+
 function PANEL:GenerateExample( ClassName, PropertySheet, Width, Height )
 
 	local ctrl = vgui.Create( ClassName )
@@ -260,7 +284,7 @@ end
 
 function PANEL:SetActionFunction( func )
 
-	self.OnValueChanged = function( self, val ) func( self, "SliderMoved", val, 0 ) end
+	self.OnValueChanged = function( pnl, val ) func( pnl, "SliderMoved", val, 0 ) end
 
 end
 

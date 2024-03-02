@@ -11,7 +11,7 @@ function EFFECT:Init( data )
 
 end
 
-function EFFECT:Think( )
+function EFFECT:Think()
 
 	-- If the spacing or offset has changed we need to reconfigure our positions
 	local ply = LocalPlayer()
@@ -45,11 +45,11 @@ function EFFECT:Render()
 
 	-- Note: UpdateScreenEffectTexture fucks up the water, RefractTexture is lower quality
 	render.UpdateRefractTexture()
-	//render.UpdateScreenEffectTexture()
+	--render.UpdateScreenEffectTexture()
 
 	local SpriteSize = ( self.spacing + self.offset ) * 8
 
 	render.SetMaterial( self.Mat )
-	render.DrawSprite( self:GetPos(), SpriteSize, SpriteSize, Color( 255, 255, 255 ) )
+	render.DrawSprite( self:GetPos(), SpriteSize, SpriteSize, color_white )
 
 end

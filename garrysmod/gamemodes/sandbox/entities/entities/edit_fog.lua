@@ -83,3 +83,19 @@ function ENT:UpdateTransmitState()
 	return TRANSMIT_ALWAYS
 
 end
+
+-- Player just spawned this entity from the spawnmenu - not from a duplication.
+-- Copy over the settings of the map
+hook.Add( "PlayerSpawnedSENT", "CopyOverEditFogSettings", function( ply, ent )
+
+	if ( ent:GetClass() != "edit_fog" ) then return end
+
+	local fogCntrl = ents.FindByClass( "env_fog_controller" )[ 1 ];
+	if ( !IsValid( fogCntrl ) ) then return end
+
+	ent:SetFogStart( fogCntrl:GetInternalVariable( "fogstart" ) )
+	ent:SetFogEnd( fogCntrl:GetInternalVariable( "fogend" ) )
+	ent:SetDensity( fogCntrl:GetInternalVariable( "fogmaxdensity" ) )
+	ent:SetFogColor( Vector( fogCntrl:GetInternalVariable( "fogcolor" ) ) / 255 )
+
+end )

@@ -153,7 +153,7 @@ function SWEP:CheckValidity()
 end
 
 local function PlayerStandsOn(ent)
-   for _, ply in pairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       if ply:GetGroundEntity() == ent and ply:IsTerror() then
          return true
       end
@@ -259,11 +259,11 @@ function SWEP:AllowPickup(target)
 end
 
 function SWEP:DoAttack(pickup)
-   self.Weapon:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-   self.Weapon:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
+   self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+   self:SetNextSecondaryFire( CurTime() + self.Secondary.Delay )
 
    if IsValid(self.EntHolding) then
-      self.Weapon:SendWeaponAnim( ACT_VM_MISSCENTER )
+      self:SendWeaponAnim( ACT_VM_MISSCENTER )
 
       if (not pickup) and self.EntHolding:GetClass() == "prop_ragdoll" then
          -- see if we can pin this ragdoll to a wall in front of us
@@ -275,7 +275,7 @@ function SWEP:DoAttack(pickup)
          self:Drop()
       end
 
-      self.Weapon:SetNextSecondaryFire(CurTime() + 0.3)
+      self:SetNextSecondaryFire(CurTime() + 0.3)
       return
    end
 
@@ -298,12 +298,12 @@ function SWEP:DoAttack(pickup)
 
             if self:AllowPickup(ent) then
                self:Pickup()
-               self.Weapon:SendWeaponAnim( ACT_VM_HITCENTER )
+               self:SendWeaponAnim( ACT_VM_HITCENTER )
 
                -- make the refire slower to avoid immediately dropping
                local delay = (ent:GetClass() == "prop_ragdoll") and 0.8 or 0.5
 
-               self.Weapon:SetNextSecondaryFire(CurTime() + delay)
+               self:SetNextSecondaryFire(CurTime() + delay)
                return
             else
                local is_ragdoll = trace.Entity:GetClass() == "prop_ragdoll"
@@ -318,7 +318,7 @@ function SWEP:DoAttack(pickup)
                   phys = ent:GetPhysicsObjectNum(trace.PhysicsBone)
 
                   -- increase refire to make rags easier to drag
-                  --self.Weapon:SetNextSecondaryFire(CurTime() + 0.04)
+                  --self:SetNextSecondaryFire(CurTime() + 0.04)
                end
 
                if IsValid(phys) then
@@ -335,7 +335,7 @@ function SWEP:DoAttack(pickup)
                   local pdir = trace.Normal
                   self:MoveObject(phys, pdir, 6000, (trace.Entity:GetClass() == "prop_ragdoll"))
 
-                  self.Weapon:SetNextPrimaryFire(CurTime() + 0.03)
+                  self:SetNextPrimaryFire(CurTime() + 0.03)
                end
             end
          end
@@ -531,6 +531,7 @@ function SWEP:SetupDataTables()
    -- we've got these dt slots anyway, might as well use them instead of a
    -- globalvar, probably cheaper
    self:DTVar("Bool", 0, "can_rag_pin")
+   self:DTVar("Bool", 1, "can_rag_pin_inno")
 
    -- client actually has no idea what we're holding, and almost never needs to
    -- know
@@ -541,6 +542,7 @@ end
 if SERVER then
    function SWEP:Initialize()
       self.dt.can_rag_pin = pin_rag:GetBool()
+      self.dt.can_rag_pin_inno = pin_rag_inno:GetBool()
       self.dt.carried_rag = nil
 
       return self.BaseClass.Initialize(self)
@@ -582,7 +584,7 @@ if CLIENT then
       if self.dt.can_rag_pin and IsValid(self.dt.carried_rag) then
          local client = LocalPlayer()
 
-         if not client:IsSpec() and client:IsTraitor() then
+         if not client:IsSpec() and (self.dt.can_rag_pin_inno or client:IsTraitor()) then
             local tr = util.TraceLine({start  = client:EyePos(),
                endpos = client:EyePos() + (client:GetAimVector() * PIN_RAG_RANGE),
                filter = {client, self, self.dt.carried_rag},

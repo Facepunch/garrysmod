@@ -78,6 +78,7 @@ function TOOL:LeftClick( trace, attach )
 	if ( !self:GetSWEP():CheckLimit( "balloons" ) ) then return false end
 
 	local balloon = MakeBalloon( ply, r, g, b, force, { Pos = trace.HitPos, Model = modeltable.model, Skin = modeltable.skin } )
+	if ( !IsValid( balloon ) ) then return false end
 
 	local CurPos = balloon:GetPos()
 	local NearestPoint = balloon:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
@@ -93,9 +94,7 @@ function TOOL:LeftClick( trace, attach )
 		if ( attach ) then
 
 			-- The real model should have an attachment!
-			local attachpoint = Pos + Vector( 0, 0, 0 )
-
-			local LPos1 = balloon:WorldToLocal( attachpoint )
+			local LPos1 = balloon:WorldToLocal( Pos )
 			local LPos2 = trace.Entity:WorldToLocal( trace.HitPos )
 
 			if ( IsValid( trace.Entity ) ) then
@@ -105,12 +104,16 @@ function TOOL:LeftClick( trace, attach )
 
 			end
 
-			local constraint, rope = constraint.Rope( balloon, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 0.5, material, nil )
+			local constr, rope = constraint.Rope( balloon, trace.Entity, 0, trace.PhysicsBone, LPos1, LPos2, 0, length, 0, 0.5, material )
+			if ( IsValid( constr ) ) then
+				undo.AddEntity( constr )
+				ply:AddCleanup( "balloons", constr )
+			end
 
-			undo.AddEntity( rope )
-			undo.AddEntity( constraint )
-			ply:AddCleanup( "balloons", rope )
-			ply:AddCleanup( "balloons", constraint )
+			if ( IsValid( rope ) ) then
+				undo.AddEntity( rope )
+				ply:AddCleanup( "balloons", rope )
+			end
 
 		end
 
@@ -129,9 +132,9 @@ end
 
 if ( SERVER ) then
 
-	function MakeBalloon( pl, r, g, b, force, Data )
+	function MakeBalloon( ply, r, g, b, force, Data )
 
-		if ( IsValid( pl ) && !pl:CheckLimit( "balloons" ) ) then return end
+		if ( IsValid( ply ) && !ply:CheckLimit( "balloons" ) ) then return end
 
 		local balloon = ents.Create( "gmod_balloon" )
 		if ( !IsValid( balloon ) ) then return end
@@ -140,23 +143,25 @@ if ( SERVER ) then
 
 		balloon:Spawn()
 
-		duplicator.DoGenericPhysics( balloon, pl, Data )
+		DoPropSpawnedEffect( balloon )
+
+		duplicator.DoGenericPhysics( balloon, ply, Data )
 
 		force = math.Clamp( force, -1E34, 1E34 )
 
 		balloon:SetColor( Color( r, g, b, 255 ) )
 		balloon:SetForce( force )
-		balloon:SetPlayer( pl )
+		balloon:SetPlayer( ply )
 
-		balloon.Player = pl
+		balloon.Player = ply
 		balloon.r = r
 		balloon.g = g
 		balloon.b = b
 		balloon.force = force
 
-		if ( IsValid( pl ) ) then
-			pl:AddCount( "balloons", balloon )
-			pl:AddCleanup( "balloons", balloon )
+		if ( IsValid( ply ) ) then
+			ply:AddCount( "balloons", balloon )
+			ply:AddCleanup( "balloons", balloon )
 		end
 
 		return balloon
@@ -187,7 +192,7 @@ function TOOL:UpdateGhostBalloon( ent, ply )
 	if ( modeltable.skin ) then ent:SetSkin( modeltable.skin ) end
 
 	ent:SetPos( pos )
-	ent:SetAngles( Angle( 0, 0, 0 ) )
+	ent:SetAngles( angle_zero )
 
 	ent:SetNoDraw( false )
 
@@ -200,7 +205,7 @@ function TOOL:Think()
 		local modeltable = list.Get( "BalloonModels" )[ self:GetClientInfo( "model" ) ]
 		if ( !modeltable ) then self:ReleaseGhostEntity() return end
 
-		self:MakeGhostEntity( modeltable.model, Vector( 0, 0, 0 ), Angle( 0, 0, 0 ) )
+		self:MakeGhostEntity( modeltable.model, vector_origin, angle_zero )
 		if ( IsValid( self.GhostEntity ) ) then self.GhostEntity.model = self:GetClientInfo( "model" ) end
 
 	end

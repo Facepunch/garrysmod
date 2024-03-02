@@ -10,6 +10,13 @@ function GM:PlayerCanPickupWeapon(ply, wep)
    if not IsValid(wep) or not IsValid(ply) then return end
    if ply:IsSpec() then return false end
 
+   -- While resetting the map, players should not be allowed to pick up the newly-reset weapon
+   -- entities, because they would be stripped again during the player spawning process and
+   -- subsequently be missing.
+   if GAMEMODE.RespawningWeapons then
+      return false
+   end
+
    -- Disallow picking up for ammo
    if ply:HasWeapon(wep:GetClass()) then
       return false
@@ -38,7 +45,7 @@ local function GetLoadoutWeapons(r)
       };
 
       for k, w in pairs(weapons.GetList()) do
-         if w and type(w.InLoadoutFor) == "table" then
+         if w and istable(w.InLoadoutFor) then
             for _, wrole in pairs(w.InLoadoutFor) do
                table.insert(tbl[wrole], WEPS.GetClass(w))
             end
@@ -103,7 +110,7 @@ local function CanWearHat(ply)
    return table.HasValue(Hattables, path[3])
 end
 
-CreateConVar("ttt_detective_hats", "0")
+CreateConVar("ttt_detective_hats", "1")
 -- Just hats right now
 local function GiveLoadoutSpecial(ply)
    if ply:IsActiveDetective() and GetConVar("ttt_detective_hats"):GetBool() and CanWearHat(ply) then
@@ -170,28 +177,10 @@ function GM:PlayerLoadout( ply )
 end
 
 function GM:UpdatePlayerLoadouts()
-   for _, ply in ipairs(player.GetAll()) do
+   for _, ply in player.Iterator() do
       hook.Call("PlayerLoadout", GAMEMODE, ply)
    end
 end
-
----- Weapon switching
-local function ForceWeaponSwitch(ply, cmd, args)
-   if not ply:IsPlayer() or not args[1] then return end
-   -- Turns out even SelectWeapon refuses to switch to empty guns, gah.
-   -- Worked around it by giving every weapon a single Clip2 round.
-   -- Works because no weapon uses those.
-   local wepname = args[1]
-   local wep = ply:GetWeapon(wepname)
-   if IsValid(wep) then
-      -- Weapons apparently not guaranteed to have this
-      if wep.SetClip2 then
-         wep:SetClip2(1)
-      end
-      ply:SelectWeapon(wepname)
-   end
-end
-concommand.Add("wepswitch", ForceWeaponSwitch)
 
 ---- Weapon dropping
 
@@ -210,13 +199,22 @@ function WEPS.DropNotifiedWeapon(ply, wep, death_drop)
       -- auto-pickup when nearby.
       wep.IsDropped = true
 
+      -- After dropping a weapon, always switch to holstered, so that traitors
+      -- will never accidentally pull out a traitor weapon.
+      --
+      -- Perform this *before* the drop in order to abuse the fact that this
+      -- holsters the weapon, which in turn aborts any reload that's in
+      -- progress. We don't want a dropped weapon to be in a reloading state
+      -- because the relevant timer is reset when picking it up, making the
+      -- reload happen instantly. This allows one to dodge the delay by dropping
+      -- during reload. All of this is a workaround for not having access to
+      -- CBaseWeapon::AbortReload() (and that not being handled in
+      -- CBaseWeapon::Drop in the first place).
+      ply:SelectWeapon("weapon_ttt_unarmed")
+
       ply:DropWeapon(wep)
 
       wep:PhysWake()
-
-      -- After dropping a weapon, always switch to holstered, so that traitors
-      -- will never accidentally pull out a traitor weapon
-      ply:SelectWeapon("weapon_ttt_unarmed")
    end
 end
 
@@ -238,7 +236,7 @@ local function DropActiveWeapon(ply)
       return
    end
 
-   ply:AnimPerformGesture(ACT_ITEM_PLACE)
+   ply:AnimPerformGesture(ACT_GMOD_GESTURE_ITEM_PLACE)
 
    WEPS.DropNotifiedWeapon(ply, wep)
 end
@@ -266,7 +264,7 @@ local function DropActiveAmmo(ply)
 
    wep:SetClip1(0)
 
-   ply:AnimPerformGesture(ACT_ITEM_GIVE)
+   ply:AnimPerformGesture(ACT_GMOD_GESTURE_ITEM_GIVE)
 
    local box = ents.Create(wep.AmmoEnt)
    if not IsValid(box) then return end
@@ -297,12 +295,12 @@ concommand.Add("ttt_dropammo", DropActiveAmmo)
 -- Give a weapon to a player. If the initial attempt fails due to heisenbugs in
 -- the map, keep trying until the player has moved to a better spot where it
 -- does work.
-local function GiveEquipmentWeapon(sid, cls)
-   -- Referring to players by SteamID because a player may disconnect while his
+local function GiveEquipmentWeapon(sid64, cls)
+   -- Referring to players by SteamID64 because a player may disconnect while his
    -- unique timer still runs, in which case we want to be able to stop it. For
-   -- that we need its name, and hence his SteamID.
-   local ply = player.GetBySteamID(sid)
-   local tmr = "give_equipment" .. sid
+   -- that we need its name, and hence his SteamID64.
+   local ply = player.GetBySteamID64(sid64)
+   local tmr = "give_equipment" .. sid64
 
    if (not IsValid(ply)) or (not ply:IsActiveSpecial()) then
       timer.Remove(tmr)
@@ -315,7 +313,7 @@ local function GiveEquipmentWeapon(sid, cls)
 
    if (not IsValid(w)) or (not ply:HasWeapon(cls)) then
       if not timer.Exists(tmr) then
-         timer.Create(tmr, 1, 0, function() GiveEquipmentWeapon(sid, cls) end)
+         timer.Create(tmr, 1, 0, function() GiveEquipmentWeapon(sid64, cls) end)
       end
 
       -- we will be retrying
@@ -331,7 +329,7 @@ local function GiveEquipmentWeapon(sid, cls)
 end
 
 local function HasPendingOrder(ply)
-   return timer.Exists("give_equipment" .. tostring(ply:SteamID()))
+   return timer.Exists("give_equipment" .. tostring(ply:SteamID64()))
 end
 
 function GM:TTTCanOrderEquipment(ply, id, is_item)
@@ -402,7 +400,7 @@ local function OrderEquipment(ply, cmd, args)
       -- no longer restricted to only WEAPON_EQUIP weapons, just anything that
       -- is whitelisted and carryable
       if ply:CanCarryWeapon(swep_table) then
-         GiveEquipmentWeapon(ply:SteamID(), id)
+         GiveEquipmentWeapon(ply:SteamID64(), id)
 
          received = true
       end
@@ -461,10 +459,10 @@ local function TransferCredits(ply, cmd, args)
    if (not IsValid(ply)) or (not ply:IsActiveSpecial()) then return end
    if #args != 2 then return end
 
-   local sid = tostring(args[1])
+   local sid64 = tostring(args[1])
    local credits = tonumber(args[2])
-   if sid and credits then
-      local target = player.GetBySteamID(sid)
+   if sid64 and credits then
+      local target = player.GetBySteamID64(sid64)
       if (not IsValid(target)) or (not target:IsActiveSpecial()) or (target:GetRole() ~= ply:GetRole()) or (target == ply) then
          LANG.Msg(ply, "xfer_no_recip")
          return

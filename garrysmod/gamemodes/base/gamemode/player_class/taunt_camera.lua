@@ -14,7 +14,7 @@ function TauntCamera()
 
 	local WasOn					= false
 
-	local CustomAngles			= Angle( 0, 0, 0 )
+	local CustomAngles			= angle_zero
 	local PlayerLockAngles		= nil
 
 	local InLerp				= 0
@@ -48,6 +48,7 @@ function TauntCamera()
 		if ( !on && OutLerp >= 1 ) then
 
 			CustomAngles = view.angles * 1
+			CustomAngles.r = 0
 			PlayerLockAngles = nil
 			InLerp = 0
 			return

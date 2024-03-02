@@ -26,3 +26,19 @@ end
 concommand.Add( "cef_credits", function()
 	vgui.CreateFromTable( PANEL )
 end )
+
+concommand.Add( "gmod_tos", function()
+	gui.OpenURL( "https://facepunch.com/legal/tos" )
+end )
+
+concommand.Add( "gmod_privacy", function()
+	gui.OpenURL( "https://facepunch.com/legal/privacy" )
+end )
+
+concommand.Add( "gmod_modding", function()
+	gui.OpenURL( "https://facepunch.com/legal/modding" )
+end )
+
+concommand.Add( "gmod_servers", function()
+	gui.OpenURL( "https://wiki.facepunch.com/gmod/server_operator_rules" )
+end )

@@ -60,10 +60,10 @@ function GWEN.CreateTextureNormal( _xo, _yo, _wo, _ho, material_override )
 	return function( x, y, w, h, col )
 
 		local tex = mat:GetTexture( "$basetexture" )
-		_x = _xo / tex:Width()
-		_y = _yo / tex:Height()
-		_w = _wo / tex:Width()
-		_h = _ho / tex:Height()
+		local _x = _xo / tex:Width()
+		local _y = _yo / tex:Height()
+		local _w = _wo / tex:Width()
+		local _h = _ho / tex:Height()
 
 		surface.SetMaterial( mat )
 
@@ -87,10 +87,10 @@ function GWEN.CreateTextureCentered( _xo, _yo, _wo, _ho, material_override )
 	return function( x, y, w, h, col )
 
 		local tex = mat:GetTexture( "$basetexture" )
-		_x = _xo / tex:Width()
-		_y = _yo / tex:Height()
-		_w = _wo / tex:Width()
-		_h = _ho / tex:Height()
+		local _x = _xo / tex:Width()
+		local _y = _yo / tex:Height()
+		local _w = _wo / tex:Width()
+		local _h = _ho / tex:Height()
 
 		x = x + ( w - _wo ) * 0.5
 		y = y + ( h - _ho ) * 0.5
@@ -125,7 +125,7 @@ end
 --
 function meta:LoadGWENFile( filename, path )
 
-	local contents = file.Read( filename, path or "GAME" )
+	local contents = file.Read( filename, path || "GAME" )
 	if ( !contents ) then return end
 
 	self:LoadGWENString( contents )
@@ -204,7 +204,7 @@ function meta:GWEN_SetText( tbl ) self:SetText( tbl ) end
 function meta:GWEN_SetControlName( tbl ) self:SetName( tbl ) end
 function meta:GWEN_SetMargin( tbl ) self:DockMargin( tbl.left, tbl.top, tbl.right, tbl.bottom ) end
 function meta:GWEN_SetMin( min ) self:SetMin( tonumber( min ) ) end
-function meta:GWEN_SetMax( min ) self:SetMax( tonumber( max ) ) end
+function meta:GWEN_SetMax( max ) self:SetMax( tonumber( max ) ) end
 function meta:GWEN_SetHorizontalAlign( txt )
 	if ( txt == "Right" ) then self:SetContentAlignment( 6 ) end
 	if ( txt == "Center" ) then self:SetContentAlignment( 5 ) end

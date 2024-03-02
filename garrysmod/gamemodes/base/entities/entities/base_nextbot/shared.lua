@@ -7,7 +7,6 @@ ENT.Author			= ""
 ENT.Contact			= ""
 ENT.Purpose			= ""
 ENT.Instructions	= ""
-ENT.RenderGroup		= RENDERGROUP_OPAQUE
 
 ENT.Type = "nextbot"
 
@@ -43,6 +42,13 @@ else
 
 		self:Draw()
 
+	end
+
+	--[[---------------------------------------------------------
+		Name: FireAnimationEvent
+		Desc: Called when an animation event is fired. Return true to suppress
+	-----------------------------------------------------------]]
+	function ENT:FireAnimationEvent( pos, ang, event, options )
 	end
 
 end
