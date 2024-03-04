@@ -62,7 +62,7 @@ L.close = "Kapat"
 L.cancel = "İptal"
 
 -- For navigation buttons
-L.next = "İleri"
+L.next = "Sonraki"
 L.prev = "Önceki"
 
 -- Equipment buying menu
@@ -73,7 +73,7 @@ L.equip_status = "Sipariş durumu"
 L.equip_cost = "{num} krediniz kaldı."
 L.equip_help_cost = "Satın aldığınız her ekipman parçası 1 krediye mal olur."
 
-L.equip_help_carry = "Yalnızca yeriniz olan şeyleri satın alabilirsiniz."
+L.equip_help_carry = "Yalnızca yeriniz olduğunda bir şeyler satın alabilirsiniz."
 L.equip_carry = "Bu ekipmanı taşıyabilirsiniz."
 L.equip_carry_own = "Bu öğeyi zaten taşıyorsunuz."
 L.equip_carry_slot = "{slot} yuvasında zaten bir silah taşıyorsun."
@@ -82,7 +82,7 @@ L.equip_help_stock = "Belirli öğelerden her rauntta yalnızca bir tane satın 
 L.equip_stock_deny = "Bu ürün artık stokta yok."
 L.equip_stock_ok = "Bu ürün stokta mevcut."
 
-L.equip_custom = "Bu sunucu tarafından eklenen özel öğe."
+L.equip_custom = "Bu sunucu tarafından eklenen özel öğedir."
 
 L.equip_spec_name = "Ad"
 L.equip_spec_type = "Tür"
@@ -126,8 +126,8 @@ L.radio_help = "Radyonuzun bu sesi çalmasını sağlamak için bir düğmeye t�
 L.radio_notplaced = "Sesi çalmak için Radyoyu yerleştirmelisiniz."
 
 -- Radio soundboard buttons
-L.radio_button_scream = "Çığlık"
-L.radio_button_expl = "Patlama"
+L.radio_button_scream = "Çığlık sesi"
+L.radio_button_expl = "Patlama sesi"
 L.radio_button_pistol = "Tabanca atışları"
 L.radio_button_m16 = "M16 atışları"
 L.radio_button_deagle = "Deagle atışları"
@@ -136,8 +136,8 @@ L.radio_button_shotgun = "Pompalı tüfek atışları"
 L.radio_button_rifle = "Tüfek atışı"
 L.radio_button_huge = "H.U.G.E. patlaması"
 L.radio_button_c4 = "C4 bip sesi"
-L.radio_button_burn = "Yanma"
-L.radio_button_steps = "Ayak sesleri"
+L.radio_button_burn = "Yanma sesi"
+L.radio_button_steps = "Adım sesi"
 
 
 -- Intro screen shown after joining
@@ -193,7 +193,7 @@ L.search_dmg_stab = "Kanamadan hızlı bir şekilde ölmeden önce bıçaklandı
 L.search_dmg_burn = "Buralar kızartılmış terörist gibi kokuyor..."
 L.search_dmg_tele = "DNA'ları takyon emisyonları tarafından karıştırılmış gibi görünüyor!"
 L.search_dmg_car = "Bu terörist yolu geçtiğinde, dikkatsiz bir sürücü tarafından ezildi."
-L.search_dmg_other = "Bu teröristin ölümünün belirli bir nedenini bulamazsın."
+L.search_dmg_other = "Bu teröristin ölümünün belirli bir nedenini bulamıyorsun."
 
 L.search_weapon = "Görünüşe göre onları öldürmek için bir {weapon} kullanılmış."
 L.search_head = "Ölümcül yara bir kafa vuruşuymuş. Çığlık atacak zaman yok."
@@ -227,10 +227,10 @@ L.sb_tag_miss = "KAYIP"
 
 --- Help and settings menu (F1)
 
-L.help_title = "Yardım ve Ayarlar"
+L.help_title = "Ayarlar ve Yardım"
 
 -- Tabs
-L.help_tut     = "Eğitim"
+L.help_tut     = "Öğretici"
 L.help_tut_tip = "6 adımda TTT"
 
 L.help_settings = "Ayarlar"
@@ -262,8 +262,8 @@ L.set_msg_cue         = "Bir bildirim göründüğünde ses işaretini çal"
 
 L.set_title_play    = "Oynanış ayarları"
 
-L.set_specmode      = "Yalnızca izleme modu (her zaman izleyici olarak kal)"
-L.set_specmode_tip  = "Yalnızca İzle modu, yeni bir raunt başladığında yeniden canlanmanı önleyecek, bunun yerine İzleyici olarak kalacaksın."
+L.set_specmode      = "Yalnızca İzleme modu (her zaman izleyici olarak kal)"
+L.set_specmode_tip  = "Yalnızca İzleme modu, yeni bir raunt başladığında yeniden canlanmanı önleyecek, bunun yerine İzleyici olarak kalacaksın."
 L.set_mute          = "Ölüyken canlı oyuncuları sessize al"
 L.set_mute_tip      = "Ölüyken/izlerken canlı oyuncuları sessize almayı etkinleştir."
 
@@ -296,19 +296,19 @@ L.item_armor = "Vücut Zırhı"
 L.item_armor_desc = [[
 Vurulduğunda mermi hasarını %30 azaltır.
 
-Dedektifler için varsayılan ekipman.]]
+Dedektifler için varsayılan ekipmandır.]]
 
 L.item_radar = "Radar"
 L.item_radar_desc = [[
 Yaşam belirtilerini taramanızı sağlar. 
 
 Satın alır almaz otomatik taramaları başlatır.
-Bu menünün Radar sekmesinde yapılandırın.]]
+Bu menünün Radar sekmesinde yapılandırabilirsiniz.]]
 
 L.item_disg = "Kılık Değiştirici"
 L.item_disg_desc = [[
 Açıkken kimlik bilgilerinizi gizler.
-Ayrıca bir mağdur tarafından en son görülen kişi olmaktan korur. 
+Ayrıca bir kurban tarafından en son görülen kişi olmaktan korur. 
 
 Bu menünün Kılık Değiştirme sekmesinde aç/kapat
 veya Numpad Enter tuşuna basın.]]
@@ -336,8 +336,8 @@ L.c4_remove_destroy2 = "İmhayı onayla"
 L.c4_disarm = "C4'ü devre dışı bırak"
 L.c4_disarm_cut = "{num} telini kesmek için tıklayın"
 
-L.c4_disarm_t     = "Bombayı etkisiz hale getirmek için bir kablo kesin. Hain olduğun için her tel güvende. Masumlar için iş o kadar kolay değil!"
-L.c4_disarm_owned     = "Bombayı etkisiz hale getirmek için bir tel kesin. Bu senin bomban, bu yüzden her tel onu etkisiz hale getirecek."
+L.c4_disarm_t     = "Bombayı etkisiz hale getirmek için bir kablo kesin. Hain olduğun için her kablo güvende. Masumlar için iş o kadar kolay değil!"
+L.c4_disarm_owned     = "Bombayı etkisiz hale getirmek için bir kablo kesin. Bu senin bomban, bu yüzden her kablo onu etkisiz hale getirecek."
 L.c4_disarm_other    = "Bombayı etkisiz hale getirmek için bir kablo kesin. Yanlış yaparsan patlar!"
 
 L.c4_status_armed = "KURULDU"
@@ -353,7 +353,7 @@ L.vis_desc = [[
 Olay yeri görüntüleme cihazı. 
 
 Kurbanın nasıl öldürüldüğünü göstermek için bir cesedi analiz eder, 
-ancak sadece kurşun yaralarından ölmüşlerse.]]
+ancak sadece kurşun yaralarından ölmüşlerse işe yarar.]]
 
 -- Decoy
 L.decoy_name = "Tuzak"
@@ -423,7 +423,7 @@ L.radio_broken = "Radyonuz yok edildi!"
 L.radio_help_pri = "{primaryfire} radyoyu yerleştirir."
 
 L.radio_desc = [[
-Dikkat dağıtmak veya kandırmak için sesler çıkarır. 
+Dikkat dağıtmak veya şaşırtmak için sesler çıkarır. 
 
 Radyoyu bir yere yerleştirin ve 
 radyo sekmesini kullanarak bu menüde sesleri çal.]]
@@ -567,7 +567,7 @@ L.hp_death = "Ölüme Yakın"
 
 -- TargetID Karma status
 L.karma_max = "Saygın"
-L.karma_high = "Nezaketsiz"
+L.karma_high = "İyi"
 L.karma_med = "Tetik Çekmeye Hazır"
 L.karma_low = "Tehlikeli"
 L.karma_min = "Sorumsuz"
@@ -598,7 +598,7 @@ L.radar_hud    = "Radar bir sonraki tarama için {time} içinde hazır"
 L.mute_living = "Canlı oyuncular sessize alındı"
 L.mute_specs = "İzleyiciler sessize alındı"
 L.mute_all = "Tümü sessize alındı"
-L.mute_off = "Hiçbiri sessiz değil"
+L.mute_off = "Kimse sessize alınmadı"
 
 -- Spectators and prop possession
 L.punch_title = "GÜÇ ÖLÇER"
@@ -612,7 +612,7 @@ L.spec_help    = "Oyuncuları izlemek için tıkla veya bir fizik nesnesine sahi
 
 -- These are spread over multiple lines, hence the square brackets instead of
 -- quotes. That's a Lua thing. Every line break (enter) will show up in-game.
-L.info_popup_innocent = [[Sen masum bir Teröristsin! Ama etrafta hainler var... 
+L.info_popup_innocent = [[Sen masum bir Teröristsin ama etrafta hainler var... 
 Kime güvenebilirsin ve seni kurşuna dizmek isteyen kim olabilir? 
 
 Arkanı kolla ve bu işten canlı çıkmak için yoldaşlarınla birlikte çalış!]]
@@ -664,7 +664,7 @@ L.tip1 = "Hainler, {walkkey} tuşunu basılı tutarak ve {usekey} tuşuna basara
 
 L.tip2 = "Bir C4 patlayıcısını daha uzun bir zamanlayıcıyla donatmak, masum biri onu etkisiz hale getirmeye çalıştığında anında patlamasına neden olan tellerin sayısını artıracaktır. Ayrıca daha yumuşak ve daha az sıklıkta bip sesi çıkaracaktır."
 
-L.tip3 = "Dedektifler, 'gözlerine yansıyanı' bulmak için bir cesedi arayabilirler. Bu, ölü adamın gördüğü son kişi. Arkadan vurulduysa katil olmak zorunda değil."
+L.tip3 = "Dedektifler, 'gözlerine yansıyanı' bulmak için bir cesedi arayabilirler. Bu, ölünün gördüğü son kişi. Arkadan vurulduysa katil olmak zorunda değil."
 
 L.tip4 = "Kimse cesedinizi bulana ve sizi arayarak teşhis edene kadar öldüğünüzü bilmeyecek."
 
@@ -676,7 +676,7 @@ L.tip7 = "Hainler masumları öldürmede önemli ilerleme kaydettiklerinde, öd�
 
 L.tip8 = "Hainler ve Dedektifler, diğer Hainlerin ve Dedektiflerin cesetlerinden harcanmamış ekipman kredileri toplayabilir."
 
-L.tip9 = "Poltergeist herhangi bir fizik nesnesini ölümcül bir mermiye dönüştürebilir. Her yumruğa, yakındaki herkese zarar veren bir enerji patlaması eşlik eder."
+L.tip9 = "Poltergeist herhangi bir fizik nesnesini ölümcül bir mermiye dönüştürebilir. Her çarpışmada, yakındaki herkese zarar veren bir enerji patlaması eşlik eder."
 
 L.tip10 = "Hain veya Dedektifseniz, sağ üstteki kırmızı mesajlara dikkat edin. Bunlar sizin için önemli olacak."
 
@@ -692,7 +692,7 @@ L.tip15 = "Hain misin, keskin nişancılık mı yapıyorsun? Kılık Değiştiri
 
 L.tip16 = "Hain olarak Işınlayıcı, kovalandığında kaçmana yardımcı olabilir ve büyük bir harita üzerinde hızlı bir şekilde seyahat etmeni sağlar. Her zaman işaretli güvenli bir pozisyonunuz olduğundan emin olun."
 
-L.tip17 = "Masumların hepsi gruplanmış ve yakalanması zor mu? C4'ün seslerini çalmak için Radyoyu veya bazılarını uzaklaştırmak için bir ateş etmeyi denemeyi düşünün."
+L.tip17 = "Masumların hepsi gruplanmış ve yakalanması zor mu? C4'ün seslerini çalmak için Radyoyu veya onları uzaklaştırmak için bir ateş etmeyi denemeyi düşünün."
 
 L.tip18 = "Radyoyu Hainken, radyo yerleştirildikten sonra Ekipman Menünüzden sesleri çalabilirsiniz. İstediğiniz sırayla birden fazla düğmeye tıklayarak birden fazla sesi sıraya koyun."
 
@@ -726,7 +726,7 @@ L.tip32 = "Levyenin ikincil ateşi diğer oyuncuları itecektir."
 
 L.tip33 = "Gez ve arpacığı kullanarak ateş etmek, isabetini biraz artıracak ve geri tepmeyi azaltacaktır. Çömelmek işe yaramaz."
 
-L.tip34 = "Duman bombaları, özellikle kalabalık odalarda kafa karışıklığı yaratmak için özellikle iç mekanlarda etkilidir."
+L.tip34 = "Duman bombaları, özellikle kalabalık odalarda ve iç mekanlarda kafa karışıklığı yaratmak için etkilidir."
 
 L.tip35 = "Hain olarak, cesetleri taşıyabileceğinizi ve onları masumların ve Dedektiflerinin meraklı gözlerinden saklayabileceğinizi unutmayın."
 
@@ -745,7 +745,7 @@ L.tip40 = "Raunt zamanlayıcısının üzerinde 'HIZLI MOD' yazıyorsa, raunt il
 L.report_title = "Raunt Raporu"
 
 -- Tabs
-L.report_tab_hilite = "Önemli Çıkanlar"
+L.report_tab_hilite = "Öne Çıkanlar"
 L.report_tab_hilite_tip = "Rauntta Öne Çıkanlar"
 L.report_tab_events = "Olaylar"
 L.report_tab_events_tip = "Bu raunt gerçekleşen olayların kaydı"
@@ -892,7 +892,7 @@ L.aw_nki3_title = "Hainler Hain Koyun Düşler mi?"
 L.aw_nki3_text = "üç haine tatlı rüyalar gördür."
 
 L.aw_nki4_title = "İçişleri Çalışanı"
-L.aw_nkt5_text = "öldürme başına ödeme alır. Artık beşinci yüzme havuzunu sipariş edebilir."
+L.aw_nki4_text = "öldürme başına ödeme alır. Artık beşinci yüzme havuzunu sipariş edebilir."
 
 L.aw_fal1_title = "Hayır Bay Bond, Düşmenizi Bekliyorum"
 L.aw_fal1_text = "birini büyük bir yükseklikten itti."
@@ -1068,7 +1068,7 @@ L.stungun_name = "UMP Prototipi"
 L.knife_instant = "ANINDA ÖLDÜRME"
 
 L.dna_hud_type = "TÜR"
-L.dna_hud_body = "GÖVDE"
+L.dna_hud_body = "CESET"
 L.dna_hud_item = "ÖĞE"
 
 L.binoc_zoom_level = "SEVİYE"
