@@ -262,8 +262,8 @@ L.set_msg_cue         = "Bir bildirim göründüğünde ses işaretini çal"
 
 L.set_title_play    = "Oynanış ayarları"
 
-L.set_specmode      = "Yalnızca izleme modu (her zaman izleyici olarak kal)"
-L.set_specmode_tip  = "Yalnızca İzle modu, yeni bir raunt başladığında yeniden canlanmanı önleyecek, bunun yerine İzleyici olarak kalacaksın."
+L.set_specmode      = "Yalnızca İzleme modu (her zaman izleyici olarak kal)"
+L.set_specmode_tip  = "Yalnızca İzleme modu, yeni bir raunt başladığında yeniden canlanmanı önleyecek, bunun yerine İzleyici olarak kalacaksın."
 L.set_mute          = "Ölüyken canlı oyuncuları sessize al"
 L.set_mute_tip      = "Ölüyken/izlerken canlı oyuncuları sessize almayı etkinleştir."
 
@@ -296,14 +296,14 @@ L.item_armor = "Vücut Zırhı"
 L.item_armor_desc = [[
 Vurulduğunda mermi hasarını %30 azaltır.
 
-Dedektifler için varsayılan ekipman.]]
+Dedektifler için varsayılan ekipmandır.]]
 
 L.item_radar = "Radar"
 L.item_radar_desc = [[
 Yaşam belirtilerini taramanızı sağlar. 
 
 Satın alır almaz otomatik taramaları başlatır.
-Bu menünün Radar sekmesinde yapılandırın.]]
+Bu menünün Radar sekmesinde yapılandırabilirsiniz.]]
 
 L.item_disg = "Kılık Değiştirici"
 L.item_disg_desc = [[
@@ -353,7 +353,7 @@ L.vis_desc = [[
 Olay yeri görüntüleme cihazı. 
 
 Kurbanın nasıl öldürüldüğünü göstermek için bir cesedi analiz eder, 
-ancak sadece kurşun yaralarından ölmüşlerse.]]
+ancak sadece kurşun yaralarından ölmüşlerse işe yarar.]]
 
 -- Decoy
 L.decoy_name = "Tuzak"
@@ -423,7 +423,7 @@ L.radio_broken = "Radyonuz yok edildi!"
 L.radio_help_pri = "{primaryfire} radyoyu yerleştirir."
 
 L.radio_desc = [[
-Dikkat dağıtmak veya kandırmak için sesler çıkarır. 
+Dikkat dağıtmak veya şaşırtmak için sesler çıkarır. 
 
 Radyoyu bir yere yerleştirin ve 
 radyo sekmesini kullanarak bu menüde sesleri çal.]]
@@ -567,7 +567,7 @@ L.hp_death = "Ölüme Yakın"
 
 -- TargetID Karma status
 L.karma_max = "Saygın"
-L.karma_high = "Nezaketsiz"
+L.karma_high = "İyi"
 L.karma_med = "Tetik Çekmeye Hazır"
 L.karma_low = "Tehlikeli"
 L.karma_min = "Sorumsuz"
@@ -664,7 +664,7 @@ L.tip1 = "Hainler, {walkkey} tuşunu basılı tutarak ve {usekey} tuşuna basara
 
 L.tip2 = "Bir C4 patlayıcısını daha uzun bir zamanlayıcıyla donatmak, masum biri onu etkisiz hale getirmeye çalıştığında anında patlamasına neden olan tellerin sayısını artıracaktır. Ayrıca daha yumuşak ve daha az sıklıkta bip sesi çıkaracaktır."
 
-L.tip3 = "Dedektifler, 'gözlerine yansıyanı' bulmak için bir cesedi arayabilirler. Bu, ölü adamın gördüğü son kişi. Arkadan vurulduysa katil olmak zorunda değil."
+L.tip3 = "Dedektifler, 'gözlerine yansıyanı' bulmak için bir cesedi arayabilirler. Bu, ölünün gördüğü son kişi. Arkadan vurulduysa katil olmak zorunda değil."
 
 L.tip4 = "Kimse cesedinizi bulana ve sizi arayarak teşhis edene kadar öldüğünüzü bilmeyecek."
 
@@ -676,7 +676,7 @@ L.tip7 = "Hainler masumları öldürmede önemli ilerleme kaydettiklerinde, öd�
 
 L.tip8 = "Hainler ve Dedektifler, diğer Hainlerin ve Dedektiflerin cesetlerinden harcanmamış ekipman kredileri toplayabilir."
 
-L.tip9 = "Poltergeist herhangi bir fizik nesnesini ölümcül bir mermiye dönüştürebilir. Her yumruğa, yakındaki herkese zarar veren bir enerji patlaması eşlik eder."
+L.tip9 = "Poltergeist herhangi bir fizik nesnesini ölümcül bir mermiye dönüştürebilir. Her çarpışmada, yakındaki herkese zarar veren bir enerji patlaması eşlik eder."
 
 L.tip10 = "Hain veya Dedektifseniz, sağ üstteki kırmızı mesajlara dikkat edin. Bunlar sizin için önemli olacak."
 
@@ -692,7 +692,7 @@ L.tip15 = "Hain misin, keskin nişancılık mı yapıyorsun? Kılık Değiştiri
 
 L.tip16 = "Hain olarak Işınlayıcı, kovalandığında kaçmana yardımcı olabilir ve büyük bir harita üzerinde hızlı bir şekilde seyahat etmeni sağlar. Her zaman işaretli güvenli bir pozisyonunuz olduğundan emin olun."
 
-L.tip17 = "Masumların hepsi gruplanmış ve yakalanması zor mu? C4'ün seslerini çalmak için Radyoyu veya bazılarını uzaklaştırmak için bir ateş etmeyi denemeyi düşünün."
+L.tip17 = "Masumların hepsi gruplanmış ve yakalanması zor mu? C4'ün seslerini çalmak için Radyoyu veya onları uzaklaştırmak için bir ateş etmeyi denemeyi düşünün."
 
 L.tip18 = "Radyoyu Hainken, radyo yerleştirildikten sonra Ekipman Menünüzden sesleri çalabilirsiniz. İstediğiniz sırayla birden fazla düğmeye tıklayarak birden fazla sesi sıraya koyun."
 
@@ -726,7 +726,7 @@ L.tip32 = "Levyenin ikincil ateşi diğer oyuncuları itecektir."
 
 L.tip33 = "Gez ve arpacığı kullanarak ateş etmek, isabetini biraz artıracak ve geri tepmeyi azaltacaktır. Çömelmek işe yaramaz."
 
-L.tip34 = "Duman bombaları, özellikle kalabalık odalarda kafa karışıklığı yaratmak için özellikle iç mekanlarda etkilidir."
+L.tip34 = "Duman bombaları, özellikle kalabalık odalarda ve iç mekanlarda kafa karışıklığı yaratmak için etkilidir."
 
 L.tip35 = "Hain olarak, cesetleri taşıyabileceğinizi ve onları masumların ve Dedektiflerinin meraklı gözlerinden saklayabileceğinizi unutmayın."
 
