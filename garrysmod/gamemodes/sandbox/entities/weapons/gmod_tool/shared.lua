@@ -269,7 +269,9 @@ function SWEP:Reload()
 
 	local tr = util.GetPlayerTrace( owner )
 	tr.mask = toolmask
-	local trace = util.TraceLine( tr )
+	tr.mins = vector_origin
+	tr.maxs = tr.mins
+	local trace = util.TraceHull( tr )
 	if ( !trace.Hit ) then return end
 
 	local tool = self:GetToolObject()
