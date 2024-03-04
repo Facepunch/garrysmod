@@ -1,128 +1,147 @@
+local spawnableEntities = list.GetForEdit( "SpawnableEntities" )
+local npcWeapons = list.GetForEdit( "NPCUsableWeapons" )
+local playerWeapons = list.GetForEdit( "Weapon" )
+local Allow = duplicator.Allow
 
-local Category = ""
+local function AddWeapon( className, title, category, npcAllowed, spawnable, author )
+	local weapon = playerWeapons[ className ]
+	if ( weapon == nil ) then
+		weapon = { ClassName = className }
+		playerWeapons[ className ] = weapon
+	end
 
-local function ADD_ITEM( name, class, offset )
+	weapon.Spawnable = spawnable ~= false
+	weapon.Author = author or "VALVe"
+	weapon.Category = category
+	weapon.PrintName = title
+	Allow( className )
 
-	list.Set( "SpawnableEntities", class, { PrintName = name, ClassName = class, Category = Category, NormalOffset = offset or 32, DropToFloor = true, Author = "VALVe" } )
-	duplicator.Allow( class )
+	if npcAllowed then
+		for index = 1, #npcWeapons do
+			local data = npcWeapons[ index ]
+			if ( data and data.class == className ) then
+				data.category = category
+				data.title = title
+				return
+			end
+		end
 
+		npcWeapons[ #npcWeapons + 1 ] = {
+			class = className,
+			category = category,
+			title = title
+		}
+	end
 end
 
-local function ADD_WEAPON( name, class )
+local function AddEntity( className, title, category, offset, author )
+	local entity = spawnableEntities[ className ]
+	if ( entity == nil ) then
+		entity = { ClassName = className, DropToFloor = true }
+		spawnableEntities[ className ] = entity
+	end
 
-	list.Set( "Weapon", class, { ClassName = class, PrintName = name, Category = Category, Author = "VALVe", Spawnable = true } )
-	duplicator.Allow( class )
-
+	entity.NormalOffset = offset or 32
+	entity.Author = author or "VALVe"
+	entity.Category = category
+	entity.PrintName = title
+	Allow( className )
 end
 
-Category = "Half-Life 2"
+local category = "Half-Life 2"
 
--- Ammo
-ADD_ITEM( "AR2 Ammo", "item_ammo_ar2", -8 )
-ADD_ITEM( "AR2 Ammo (Large)", "item_ammo_ar2_large", -8 )
+-- Half-Life 2 (Ammo)
+AddEntity( "item_ammo_ar2", "#AR2_ammo", category, -8 )
+AddEntity( "item_ammo_ar2_large", "#AR2_ammo_large", category, -8 )
 
-ADD_ITEM( "Pistol Ammo", "item_ammo_pistol", -4 )
-ADD_ITEM( "Pistol Ammo (Large)", "item_ammo_pistol_large", -4 )
+AddEntity( "item_ammo_pistol", "#Pistol_ammo", category, -4 )
+AddEntity( "item_ammo_pistol_large", "#Pistol_ammo_large", category, -4 )
 
-ADD_ITEM( "357 Ammo", "item_ammo_357", -4 )
-ADD_ITEM( "357 Ammo (Large)", "item_ammo_357_large", -4 )
+AddEntity( "item_ammo_357", "#357_ammo", category, -4 )
+AddEntity( "item_ammo_357_large", "#357_ammo_large", category, -4 )
 
-ADD_ITEM( "SMG Ammo", "item_ammo_smg1", -2 )
-ADD_ITEM( "SMG Ammo (Large)", "item_ammo_smg1_large", -2 )
+AddEntity( "item_ammo_smg1", "#SMG1_ammo", category, -2 )
+AddEntity( "item_ammo_smg1_large", "#SMG1_ammo_large", category, -2 )
 
-ADD_ITEM( "SMG Grenade", "item_ammo_smg1_grenade", -10 )
-ADD_ITEM( "Crossbow Bolts", "item_ammo_crossbow", -10 )
-ADD_ITEM( "Shotgun Ammo", "item_box_buckshot", -10 )
-ADD_ITEM( "AR2 Orb", "item_ammo_ar2_altfire", -2 )
-ADD_ITEM( "RPG Rocket", "item_rpg_round", -10 )
+AddEntity( "item_ammo_smg1_grenade", "#SMG1_Grenade_ammo", category, -10 )
+AddEntity( "item_ammo_crossbow", "#XBowBolt_ammo", category, -10 )
+AddEntity( "item_box_buckshot", "#Buckshot_ammo", category, -10 )
+AddEntity( "item_ammo_ar2_altfire", "#AR2AltFire_ammo", category, -2 )
+AddEntity( "item_rpg_round", "#RPG_Round_ammo", category, -10 )
 
--- Dynamic materials; gives player what he needs most (health, shotgun ammo, suit energy, etc)
--- ADD_ITEM( "Dynamic Supplies", "item_dynamic_resupply" )
+-- Dynamic materials; gives player what he needs most ( health, shotgun ammo, suit energy, etc )
+-- AddEntity( "item_dynamic_resupply", "Dynamic Supplies", "Other" )
 
--- Items
-ADD_ITEM( "Suit Battery", "item_battery", -4 )
-ADD_ITEM( "Health Kit", "item_healthkit", -8 )
-ADD_ITEM( "Health Vial", "item_healthvial", -4 )
-ADD_ITEM( "Suit Charger", "item_suitcharger" )
-ADD_ITEM( "Health Charger", "item_healthcharger" )
-ADD_ITEM( "HEV Suit", "item_suit", 0 )
+-- Half-Life 2 (Items)
+AddEntity( "item_battery", "#item_battery", category, -4 )
+AddEntity( "item_healthkit", "#item_healthkit", category, -8 )
+AddEntity( "item_healthvial", "#item_healthvial", category, -4 )
+AddEntity( "item_suitcharger", "#item_suitcharger", category )
+AddEntity( "item_healthcharger", "#item_healthcharger", category )
+AddEntity( "item_suit", "#item_suit", category, 0 )
 
-ADD_ITEM( "Thumper", "prop_thumper" )
-ADD_ITEM( "Combine Mine", "combine_mine", -8 )
-ADD_ITEM( "Zombine Grenade", "npc_grenade_frag", -8 )
-ADD_ITEM( "Helicopter Grenade", "grenade_helicopter", 4 )
+-- Half-Life 2 (Misc)
+AddEntity( "prop_thumper", "#prop_thumper", category )
+AddEntity( "combine_mine", "#combine_mine", category, -8 )
+AddEntity( "npc_grenade_frag", "#npc_grenade_frag", category, -8 )
+AddEntity( "grenade_helicopter", "#grenade_helicopter", category, 4 )
 
+-- Half-Life 2: Episode 2 (Misc)
 if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/striderbuster.pcf" )
-	ADD_ITEM( "Magnusson", "weapon_striderbuster" )
+	AddEntity( "weapon_striderbuster", "#weapon_striderbuster", category )
 end
 
--- Weapons
-ADD_WEAPON( "Gravity Gun", "weapon_physcannon" )
-ADD_WEAPON( "Stunstick", "weapon_stunstick" )
-ADD_WEAPON( "Frag Grenade", "weapon_frag" )
-ADD_WEAPON( "Crossbow", "weapon_crossbow" )
-ADD_WEAPON( "Bug Bait", "weapon_bugbait" )
-ADD_WEAPON( "RPG Launcher", "weapon_rpg" )
-ADD_WEAPON( "Crowbar", "weapon_crowbar" )
-ADD_WEAPON( "Shotgun", "weapon_shotgun" )
-ADD_WEAPON( "9mm Pistol", "weapon_pistol" )
-ADD_WEAPON( "S.L.A.M", "weapon_slam" )
-ADD_WEAPON( "SMG", "weapon_smg1" )
-ADD_WEAPON( "Pulse-Rifle", "weapon_ar2" )
-ADD_WEAPON( ".357 Magnum", "weapon_357" )
---ADD_WEAPON( "Alyx Gun", "weapon_alyxgun" )
---ADD_WEAPON( "Annabelle", "weapon_annabelle" )
-
--- NPC Weapons
-list.Add( "NPCUsableWeapons", { class = "weapon_pistol", title = "#weapon_pistol", category = Category } )
-list.Add( "NPCUsableWeapons", { class = "weapon_357", title = "#weapon_357", category = Category } )
-list.Add( "NPCUsableWeapons", { class = "weapon_smg1", title = "#weapon_smg1", category = Category } )
-list.Add( "NPCUsableWeapons", { class = "weapon_shotgun", title = "#weapon_shotgun", category = Category } )
-list.Add( "NPCUsableWeapons", { class = "weapon_ar2", title = "#weapon_ar2", category = Category } )
-list.Add( "NPCUsableWeapons", { class = "weapon_rpg", title = "#weapon_rpg", category = Category } )
-list.Add( "NPCUsableWeapons", { class = "weapon_alyxgun", title = "#weapon_alyxgun", category = Category } )
-list.Add( "NPCUsableWeapons", { class = "weapon_annabelle", title = "#weapon_annabelle", category = Category } )
-list.Add( "NPCUsableWeapons", { class = "weapon_crossbow", title = "#weapon_crossbow", category = Category } )
-list.Add( "NPCUsableWeapons", { class = "weapon_stunstick", title = "#weapon_stunstick", category = Category } )
-list.Add( "NPCUsableWeapons", { class = "weapon_crowbar", title = "#weapon_crowbar", category = Category } )
+-- Half-Life 2 (Weapons)
+AddWeapon( "weapon_physcannon", "#HL2_GravityGun", category, false )
+AddWeapon( "weapon_stunstick", "#HL2_StunBaton", category, true )
+AddWeapon( "weapon_frag", "#HL2_Grenade", category, false )
+AddWeapon( "weapon_crossbow", "#HL2_Crossbow", category, true )
+AddWeapon( "weapon_bugbait", "#HL2_Bugbait", category, false )
+AddWeapon( "weapon_rpg", "#HL2_RPG", category, true )
+AddWeapon( "weapon_crowbar", "#HL2_Crowbar", category, true )
+AddWeapon( "weapon_shotgun", "#HL2_Shotgun", category, true )
+AddWeapon( "weapon_pistol", "#HL2_Pistol", category, true )
+AddWeapon( "weapon_slam", "#HL2_SLAM", category, false )
+AddWeapon( "weapon_smg1", "#HL2_SMG1", category, true )
+AddWeapon( "weapon_ar2", "#HL2_Pulse_Rifle", category, true )
+AddWeapon( "weapon_357", "#HL2_357Handgun", category, true )
+AddWeapon( "weapon_alyxgun", "#HL2_AlyxGun", category, true, false )
+AddWeapon( "weapon_annabelle", "#HL2_Annabelle", category, true, false )
 
 if ( IsMounted( "hl1" ) or IsMounted( "hl1mp" ) ) then
-	Category = "Half-Life: Source"
+	category = "Half-Life: Source"
 
-	ADD_WEAPON( "Snarks", "weapon_snark" )
-	ADD_WEAPON( "Hand Grenade", "weapon_handgrenade" )
-	ADD_WEAPON( "MP5", "weapon_mp5_hl1" )
-	ADD_WEAPON( "Hornet Gun", "weapon_hornetgun" )
-	ADD_WEAPON( "Satchel", "weapon_satchel" )
-	ADD_WEAPON( "Tripmine", "weapon_tripmine" )
-	ADD_WEAPON( "Crossbow", "weapon_crossbow_hl1" )
-	ADD_WEAPON( ".357 Handgun", "weapon_357_hl1" )
-	ADD_WEAPON( "RPG Launcher", "weapon_rpg_hl1" )
-	ADD_WEAPON( "SPAS-12", "weapon_shotgun_hl1" )
-	ADD_WEAPON( "Glock", "weapon_glock_hl1" )
-	ADD_WEAPON( "Tau Cannon", "weapon_gauss" )
-	ADD_WEAPON( "Gluon Gun", "weapon_egon" )
-	ADD_WEAPON( "Crowbar", "weapon_crowbar_hl1" )
+	-- Half-Life: Source (Weapons)
+	AddWeapon( "weapon_snark", "#HL1_Snarks", category )
+	AddWeapon( "weapon_handgrenade", "#HL1_HandGrenade", category )
+	AddWeapon( "weapon_mp5_hl1", "#HL1_MP5", category )
+	AddWeapon( "weapon_hornetgun", "#HL1_HornetGun", category )
+	AddWeapon( "weapon_satchel", "#HL1_Satchel", category )
+	AddWeapon( "weapon_tripmine", "#HL1_Tripmines", category )
+	AddWeapon( "weapon_crossbow_hl1", "#HL1_Crossbow", category )
+	AddWeapon( "weapon_357_hl1", "#HL1_357", category, true )
+	AddWeapon( "weapon_rpg_hl1", "#HL1_RPGLauncher", category )
+	AddWeapon( "weapon_shotgun_hl1", "#HL1_Shotgun", category, true )
+	AddWeapon( "weapon_glock_hl1", "#HL1_Glock", category, true )
+	AddWeapon( "weapon_gauss", "#HL1_TauCannon", category )
+	AddWeapon( "weapon_egon", "#HL1_GluonGun", category )
+	AddWeapon( "weapon_crowbar_hl1", "#HL1_Crowbar", category )
 
-	ADD_ITEM( "Crossbow Bolts", "ammo_crossbow", 0 )
-	ADD_ITEM( "Uranium", "ammo_gaussclip", 0 )
-	ADD_ITEM( "Glock Clip", "ammo_glockclip", 0 )
-	ADD_ITEM( "MP5 Clip", "ammo_mp5clip", 0 )
-	ADD_ITEM( "MP5 Ammo Crate", "ammo_9mmbox", 0 )
-	ADD_ITEM( "MP5 Grenades", "ammo_mp5grenades", 0 )
-	ADD_ITEM( ".357 Ammo", "ammo_357", 0 )
-	ADD_ITEM( "RPG Rockets", "ammo_rpgclip", 0 )
-	ADD_ITEM( "SPAS-12 Ammo", "ammo_buckshot", 0 )
-	--ADD_ITEM( "Uranium (Egon)", "ammo_egonclip", 0 )
-	--ADD_ITEM( "MP5 Ammo", "ammo_9mmclip", 0 )
-	--ADD_ITEM( "MP5 Ammo", "ammo_9mmar", 0 )
-	--ADD_ITEM( "MP5 Grenade", "ammo_argrenades", 0 )
-
-	list.Add( "NPCUsableWeapons", { class = "weapon_357_hl1", title = "#weapon_357_hl1", category = Category } )
-	list.Add( "NPCUsableWeapons", { class = "weapon_glock_hl1", title = "#weapon_glock_hl1", category = Category } )
-	list.Add( "NPCUsableWeapons", { class = "weapon_shotgun_hl1", title = "#weapon_shotgun_hl1", category = Category } )
+	-- Half-Life: Source (Ammo)
+	AddEntity( "ammo_crossbow", "#XBowBoltHL1_ammo", category, 0 )
+	AddEntity( "ammo_gaussclip", "#Uranium_ammo", category, 0 )
+	AddEntity( "ammo_glockclip", "#ammo_glockclip", category, 0 )
+	AddEntity( "ammo_mp5clip", "#ammo_mp5clip", category, 0 )
+	AddEntity( "ammo_9mmbox", "#ammo_9mmbox", category, 0 )
+	AddEntity( "ammo_mp5grenades", "#MP5_Grenade_ammo", category, 0 )
+	AddEntity( "ammo_357", "#357Round_ammo", category, 0 )
+	AddEntity( "ammo_rpgclip", "#RPG_Rocket_ammo", category, 0 )
+	AddEntity( "ammo_buckshot", "#ammo_buckshot", category, 0 )
+	-- AddEntity( "ammo_argrenades", "#MP5_Grenade_ammo", category, 0 )
+	-- AddEntity( "ammo_9mmclip", "#ammo_mp5clip", category, 0 )
+	-- AddEntity( "ammo_9mmar", "#ammo_mp5clip", category, 0 )
+	-- AddEntity( "ammo_egonclip", "#Uranium_ammo", category, 0 )
 end
 
-Category = "Other"
-ADD_WEAPON( "Physics Gun", "weapon_physgun" )
+AddWeapon( "weapon_physgun", "#GMOD_Physgun", "Other", false, true, "Facepunch" )
