@@ -12,14 +12,12 @@ module( "effects" )
 
 local EffectList = {}
 
---[[---------------------------------------------------------
-   Name: Register( table, string )
------------------------------------------------------------]]
 function Register( t, name )
+
+	name = string.lower( name )
 
 	local old = EffectList[ name ]
 
-	name = string.lower(name)
 	EffectList[ name ] = t
 
 	--
@@ -44,23 +42,19 @@ function Register( t, name )
 
 end
 
+function Create( name, retval )
 
---[[---------------------------------------------------------
-   Name: Create( string )
------------------------------------------------------------]]
-function Create( name )
-
-	name = string.lower(name)
+	name = string.lower( name )
 
 	--Msg( "Create.. ".. name .. "\n" )
 
-	if (EffectList[ name ] == nil) then return nil end
+	if ( EffectList[ name ] == nil ) then return nil end
 
-	local NewEffect = {}
+	local NewEffect = retval or {}
 
 	for k, v in pairs( EffectList[ name ] ) do
 
-		NewEffect[k] = v
+		NewEffect[ k ] = v
 
 	end
 
@@ -71,6 +65,7 @@ function Create( name )
 end
 
 function GetList()
+
 	local result = {}
 
 	for k, v in pairs( EffectList ) do
@@ -78,4 +73,5 @@ function GetList()
 	end
 
 	return result
+
 end
