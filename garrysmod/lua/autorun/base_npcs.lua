@@ -485,8 +485,18 @@ if ( IsMounted( "portal" ) ) then
 		Class = "npc_rocket_turret",
 		Category = Category,
 		OnFloor = true,
+		SpawnFlags = 2, --SF_ROCKET_TURRET_SPAWNMENU, makes it target NPCs
 		Offset = 0,
 		Rotate = Angle( 0, 180, 0 ),
+	} )
+
+	AddNPC( {
+		Class = "npc_security_camera",
+		Category = Category,
+		Offset = -1,
+		SpawnFlags = 32, --SF_SECURITY_CAMERA_AUTOACTIVATE
+		SnapToNormal = true,
+		NoDrop = true
 	} )
 
 end
