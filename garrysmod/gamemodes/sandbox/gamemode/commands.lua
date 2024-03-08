@@ -717,6 +717,7 @@ AddNPCToDuplicator( "monster_sentry" )
 -- Portal
 AddNPCToDuplicator( "npc_portal_turret_floor" )
 AddNPCToDuplicator( "npc_rocket_turret" )
+AddNPCToDuplicator( "npc_security_camera" )
 
 --[[---------------------------------------------------------
 	Name: CanPlayerSpawnSENT
