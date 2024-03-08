@@ -25,30 +25,6 @@ SkinMetaTable.__index = function ( self, key )
 
 end
 
-local function FindPanelsByClass( SeekingClass )
-
-	local outtbl = {}
-
-	--
-	-- Going through the registry is a hacky way to do this.
-	-- We're only doing it this way because it doesn't matter if it's a
-	-- bit slow - because this function is only used when reloading.
-	--
-	local tbl = debug.getregistry()
-	for k, v in pairs( tbl ) do
-
-		if ( ispanel( v ) && v.ClassName && v.ClassName == SeekingClass ) then
-
-			table.insert( outtbl, v )
-
-		end
-
-	end
-
-	return outtbl
-
-end
-
 --
 -- Find all the panels that use this class and
 -- if allowed replace the functions with the new ones.
@@ -58,7 +34,7 @@ local function ReloadClass( classname )
 	local ctrl = vgui.GetControlTable( classname )
 	if ( !ctrl ) then return end
 
-	local tbl = FindPanelsByClass( classname )
+	local tbl = vgui.FindByClass( classname )
 
 	for k, v in pairs ( tbl ) do
 
