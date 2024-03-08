@@ -424,6 +424,10 @@ local function InternalSpawnNPC( NPCData, ply, Position, Normal, Class, Equipmen
 
 	NPC:SetAngles( Angles )
 
+	if ( NPCData.SnapToNormal ) then
+		NPC:SetAngles( Normal:Angle() )
+	end
+
 	--
 	-- Does this NPC have a specified model? If so, use it.
 	--
