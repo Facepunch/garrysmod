@@ -32,6 +32,11 @@ end
 
 function PANEL:AddModel( model, ConVars )
 
+	if ( ConVars && !istable( ConVars ) ) then
+		ErrorNoHaltWithStack( "bad argument #2 to 'PropSelect.AddModel' (table expected, got " .. type( ConVars ) .. ")" )
+		ConVars = nil
+	end
+
 	-- Creeate a spawnicon and set the model
 	local Icon = vgui.Create( "SpawnIcon", self )
 	Icon:SetModel( model )
