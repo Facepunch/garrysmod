@@ -76,6 +76,7 @@ lua\includes\extensions\client\panel\animation.lua
 lua\includes\extensions\client\panel\dragdrop.lua
 lua\includes\extensions\client\panel\scriptedpanels.lua
 lua\includes\extensions\client\panel\selections.lua
+lua\includes\extensions\table\print.lua
 lua\derma\init.lua
 lua\derma\derma.lua
 lua\derma\derma_example.lua
