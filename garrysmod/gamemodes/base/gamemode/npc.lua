@@ -87,11 +87,11 @@ AccessorFunc( entMeta, "m_strKillIcon", "KilliconOverride", FORCE_STRING )
 -----------------------------------------------------------]]
 function entMeta:SetDeathKillicon( classOverride )
 	if ( !classOverride ) then return end
+
 	self:SetKilliconOverride( classOverride )
 	timer.Simple( 0, function()
 		if ( !IsValid( self ) ) then return end
 		self:SetKilliconOverride( nil )
-
 
 	end )
 end
@@ -101,6 +101,7 @@ end
    Desc: Finds the classname ( or override ) to pass along to the death notice system
 -----------------------------------------------------------]]
 function GM:GetDeathNoticeInflictorClass( killed, inflictor )
+
 	local override = killed:GetKilliconOverride()
 	if ( override ) then return override end
 	if ( IsValid( inflictor ) ) then return inflictor:GetClass() end
@@ -141,7 +142,6 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 
 	if ( !InflictorClass ) then
 		inflictorClass = "worldspawn"
-
 	end
 
 	if ( IsValid( attacker ) ) then
