@@ -40,11 +40,11 @@ end
 function ENT:SetupSkyFog( skyboxscale )
 
 	render.FogMode( MATERIAL_FOG_LINEAR )
-	render.FogStart( self:GetFogStart() * skyboxscale )
-	render.FogEnd( self:GetFogEnd() * skyboxscale )
-	render.FogMaxDensity( self:GetDensity() )
+	render.FogStart( self:GetSkyFogStart() * skyboxscale )
+	render.FogEnd( self:GetSkyFogEnd() * skyboxscale )
+	render.FogMaxDensity( self:GetSkyDensity() )
 
-	local col = self:GetFogColor()
+	local col = self:GetSkyFogColor()
 	render.FogColor( col.x * 255, col.y * 255, col.z * 255 )
 
 	return true
@@ -57,11 +57,13 @@ function ENT:SetupDataTables()
 	self:NetworkVar( "Float", 1, "FogEnd", { KeyName = "fogend", Edit = { type = "Float", min = 0, max = 1000000, order = 2 } } )
 	self:NetworkVar( "Float", 2, "Density", { KeyName = "density", Edit = { type = "Float", min = 0, max = 1, order = 3 } } )
 
-	self:NetworkVar( "Vector", 0, "FogColor", { KeyName = "fogcolor", Edit = { type = "VectorColor", order = 3 } } )
+	self:NetworkVar( "Float", 3, "SkyFogStart", { KeyName = "skyfogstart", Edit = { type = "Float", min = 0, max = 1000000, order = 5 } } )
+	self:NetworkVar( "Float", 4, "SkyFogEnd", { KeyName = "skyfogend", Edit = { type = "Float", min = 0, max = 1000000, order = 6 } } )
+	self:NetworkVar( "Float", 5, "SkyDensity", { KeyName = "skydensity", Edit = { type = "Float", min = 0, max = 1, order = 7 } } )
 
-	--
-	-- TODO: Should skybox fog be edited seperately?
-	--
+	self:NetworkVar( "Vector", 0, "FogColor", { KeyName = "fogcolor", Edit = { type = "VectorColor", order = 4 } } )
+
+	self:NetworkVar( "Vector", 1, "SkyFogColor", { KeyName = "skyfogcolor", Edit = { type = "VectorColor", order = 8 } } )
 
 	if ( SERVER ) then
 
@@ -70,6 +72,11 @@ function ENT:SetupDataTables()
 		self:SetFogEnd( 10000 )
 		self:SetDensity( 0.9 )
 		self:SetFogColor( Vector( 0.6, 0.7, 0.8 ) )
+
+		self:SetSkyFogStart( 0.0 )
+		self:SetSkyFogEnd( 10000 )
+		self:SetSkyDensity( 0.9 )
+		self:SetSkyFogColor( Vector( 0.6, 0.7, 0.8 ) )
 
 	end
 
