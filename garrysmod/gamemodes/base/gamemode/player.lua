@@ -160,7 +160,12 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if ( attacker == ply ) then
 
-		self:SendDeathNotice( nil, "suicide", ply, 0 )
+		local inflictorClass = self:GetDeathNoticeInflictorClass( ply )
+		if ( !inflictorClass ) then
+			inflictorClass = "suicide"
+		end
+
+		self:SendDeathNotice( nil, inflictorClass, ply, 0 )
 
 		MsgAll( attacker:Nick() .. " suicided!\n" )
 
@@ -168,7 +173,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 
 	if ( attacker:IsPlayer() ) then
 
-		self:SendDeathNotice( attacker, inflictor:GetClass(), ply, 0 )
+		self:SendDeathNotice( attacker, self:GetDeathNoticeInflictorClass( ply, inflictor ), ply, 0 )
 
 		MsgAll( attacker:Nick() .. " killed " .. ply:Nick() .. " using " .. inflictor:GetClass() .. "\n" )
 
@@ -177,7 +182,7 @@ function GM:PlayerDeath( ply, inflictor, attacker )
 	local flags = 0
 	if ( attacker:IsNPC() and attacker:Disposition( ply ) != D_HT ) then flags = flags + DEATH_NOTICE_FRIENDLY_ATTACKER end
 
-	self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), inflictor:GetClass(), ply, 0 )
+	self:SendDeathNotice( self:GetDeathNoticeEntityName( attacker ), self:GetDeathNoticeInflictorClass( ply, inflictor ), ply, 0 )
 
 	MsgAll( ply:Nick() .. " was killed by " .. attacker:GetClass() .. "\n" )
 
