@@ -71,6 +71,42 @@ function GM:GetDeathNoticeEntityName( ent )
 
 end
 
+local entMeta = FindMetaTable( "Entity" )
+
+--[[---------------------------------------------------------
+   Name: entity:SetKilliconOverride( classOverride )
+   Desc: Overrides the "class" string passed to the deathnotice system.
+   Allows for setting of killicons even without a "real" inflictor.
+-----------------------------------------------------------]]
+AccessorFunc( entMeta, "m_strKillIcon", "KilliconOverride", FORCE_STRING )
+
+--[[---------------------------------------------------------
+   Name: entity:SetDeathKillicon( classOverride )
+   Desc: Helper func, overrides the death killicon of an entity, for one tick.
+   Put this right before damage is applied, etc.
+-----------------------------------------------------------]]
+function entMeta:SetDeathKillicon( classOverride )
+	if ( !classOverride ) then return end
+	self:SetKilliconOverride( classOverride )
+	timer.Simple( 0, function()
+		if ( !IsValid( self ) ) then return end
+		self:SetKilliconOverride( nil )
+
+
+	end )
+end
+
+--[[---------------------------------------------------------
+   Name: gamemode:GetDeathNoticeInflictorClass( killed, inflictor )
+   Desc: Finds the classname ( or override ) to pass along to the death notice system
+-----------------------------------------------------------]]
+function GM:GetDeathNoticeInflictorClass( killed, inflictor )
+	local override = killed:GetKilliconOverride()
+	if ( override ) then return override end
+	if ( IsValid( inflictor ) ) then return inflictor:GetClass() end
+
+end
+
 --[[---------------------------------------------------------
    Name: gamemode:OnNPCKilled( entity, attacker, inflictor )
    Desc: The NPC has died
@@ -100,10 +136,14 @@ function GM:OnNPCKilled( ent, attacker, inflictor )
 
 	end
 
-	local InflictorClass = "worldspawn"
+	local InflictorClass = self:GetDeathNoticeInflictorClass( ent, inflictor )
 	local AttackerClass = game.GetWorld()
 
-	if ( IsValid( inflictor ) ) then InflictorClass = inflictor:GetClass() end
+	if ( !InflictorClass ) then
+		inflictorClass = "worldspawn"
+
+	end
+
 	if ( IsValid( attacker ) ) then
 
 		AttackerClass = attacker
