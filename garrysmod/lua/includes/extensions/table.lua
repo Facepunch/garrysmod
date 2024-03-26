@@ -7,16 +7,32 @@ end
 	Name: Inherit( t, base )
 	Desc: Copies any missing data from base to t
 -----------------------------------------------------------]]
-function table.Inherit( t, base )
+function table.Inherit( t, base, basekey )
+	if ( basekey == nil ) then basekey = "BaseClass" end
 
-	for k, v in pairs( base ) do
-		if ( t[ k ] == nil ) then t[ k ] = v end
+	for k, v in pairs( base ) do 
+		if ( t[ k ] == nil ) then
+			t[ k ] = v
+		elseif ( k != basekey && istable( t[ k ] ) && istable( v ) ) then
+			table.Inherit( t[ k ], v )
+		end
 	end
 
-	t[ "BaseClass" ] = base
+	t[ basekey ] = base
 
 	return t
+end
 
+function table.InheritNoBaseClass( t, base )
+	for k, v in pairs( base ) do 
+		if ( t[ k ] == nil ) then
+			t[ k ] = v
+		elseif ( istable( t[ k ] ) && istable( v ) ) then
+			table.Inherit( t[ k ], v )
+		end
+	end
+
+	return t
 end
 
 --[[---------------------------------------------------------
